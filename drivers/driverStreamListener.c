@@ -30,9 +30,11 @@ BOOL handleStreamInstruction(Buffer* inputBuffer,
 
 	if (inputBuffer == NULL) {
 		writeError(DRIVER_STREAM_LISTENER_INPUT_BUFFER_NULL);
+		return FALSE;
 	}
 	if (outputBuffer == NULL) {
 		writeError(DRIVER_STREAM_LISTENER_OUTPUT_BUFFER_NULL);
+		return FALSE;
 	}
 
     // We received data
