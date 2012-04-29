@@ -23,10 +23,17 @@
 #include "../drivers/dispatcher/driverDataDispatcher.h"
 
 BOOL handleStreamInstruction(Buffer* inputBuffer,
-        Buffer* outputBuffer,
-        OutputStream* outputStream,
-        filterCharFunction* inputFilterChar,
-        filterCharFunction* outputFilterChar) {
+					        Buffer* outputBuffer,
+					        OutputStream* outputStream,
+					        filterCharFunction* inputFilterChar,
+					        filterCharFunction* outputFilterChar) {
+
+	if (inputBuffer == NULL) {
+		writeError(DRIVER_STREAM_LISTENER_INPUT_BUFFER_NULL);
+	}
+	if (outputBuffer == NULL) {
+		writeError(DRIVER_STREAM_LISTENER_OUTPUT_BUFFER_NULL);
+	}
 
     // We received data
     int inputBufferCount = getBufferElementsCount(inputBuffer);

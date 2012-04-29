@@ -33,16 +33,20 @@ int getDriverCount() {
     return drivers.size;
 }
 
-void initDrivers(Buffer *driverRequestBuffer, char (*driverRequestBufferArray)[] , unsigned char requestLength,
-				 Buffer *driverResponseBuffer, char (*driverResponseBufferArray)[] , unsigned char responseLength) {
+void initDrivers(Buffer *aDriverRequestBuffer, char (*driverRequestBufferArray)[] , unsigned char requestLength,
+				 Buffer *aDriverResponseBuffer, char (*driverResponseBufferArray)[] , unsigned char responseLength) {
+	driverRequestBuffer = aDriverRequestBuffer;
+	driverResponseBuffer = aDriverResponseBuffer;
+
+    initBuffer(driverRequestBuffer, driverRequestBufferArray, requestLength, "DRV_REQ_BUF", "");
+    initBuffer(driverResponseBuffer, driverResponseBufferArray, responseLength, "DRV_RES_BUF", "");
+
     int size = drivers.size;
     int i;
     for (i = 0; i < size; i++) {
         DriverDescriptor* driverDescriptor = drivers.drivers[i];
         driverInit(driverDescriptor);
     }
-    initBuffer(driverRequestBuffer, driverRequestBufferArray, requestLength, "DRV_REQ_BUF", "");
-    initBuffer(driverResponseBuffer, driverResponseBufferArray, responseLength, "DRV_RES_BUF", "");
 }
 
 Buffer* getDriverRequestBuffer() {
