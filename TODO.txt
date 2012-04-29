@@ -20,7 +20,6 @@ SV
       -> LED 1 : Clignote pour indiquer que localement on arrive bien à piloter le JENNIC
       -> LED 2 : clignote lorsqu'on a reçu une trame puis off quand on en recoit une autre (alternativement)
 * Gestion au niveau du device du statut BeaconReceiver, pour afficher au niveau du LCD l'information
-* Gérer le RST au niveau de chaque carte
 * Gestion du démarrage des servos depuis la BeaconReceiver
 * Faire un nouveau DriverDataDispatcher spécial UART si c'est possible pour pouvoir relier des cartes en UART en maitre esclave :)
 * Se poser la question des deviceHandleCallbackRawData et du test != NULL correspondant

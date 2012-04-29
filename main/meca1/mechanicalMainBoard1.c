@@ -67,7 +67,9 @@
 static DeviceList devices;
 
 // serial DEBUG 
+static char debugInputBufferArray[MECA_BOARD_1_DEBUG_INPUT_BUFFER_LENGTH];
 static Buffer debugInputBuffer;
+static char debugOutputBufferArray[MECA_BOARD_1_DEBUG_OUTPUT_BUFFER_LENGTH];
 static Buffer debugOutputBuffer;
 static OutputStream debugOutputStream;
 static StreamLink debugSerialStreamLink;
@@ -76,7 +78,9 @@ static StreamLink debugSerialStreamLink;
 static LogHandler serialLogHandler;
 
 // i2c Link
+static char i2cSlaveInputBufferArray[MECA_BOARD_1_I2C_INPUT_BUFFER_LENGTH];
 static Buffer i2cSlaveInputBuffer;
+static char i2cSlaveOutputBufferArray[MECA_BOARD_1_I2C_OUTPUT_BUFFER_LENGTH];
 static Buffer i2cSlaveOutputBuffer;
 static StreamLink i2cSerialStreamLink;
 
@@ -127,7 +131,11 @@ int main(void) {
 	initMechanicalBoard1Pins();
 	openSerialLink(	&debugSerialStreamLink,
 					&debugInputBuffer,
+					&debugInputBufferArray,
+					MECA_BOARD_1_DEBUG_INPUT_BUFFER_LENGTH,
 					&debugOutputBuffer,
+					&debugOutputBufferArray,
+					MECA_BOARD_1_DEBUG_OUTPUT_BUFFER_LENGTH,
 					&debugOutputStream,
 					SERIAL_PORT_DEBUG);
 
@@ -138,7 +146,11 @@ int main(void) {
 
 	openSlaveI2cStreamLink(&i2cSerialStreamLink,
 							&i2cSlaveInputBuffer,
+							&i2cSlaveInputBufferArray,
+							MECA_BOARD_1_I2C_INPUT_BUFFER_LENGTH,
 							&i2cSlaveOutputBuffer,
+							&i2cSlaveOutputBufferArray,
+							MECA_BOARD_1_I2C_OUTPUT_BUFFER_LENGTH,
 							MECHANICAL_BOARD_1_I2C_ADDRESS
 						);
 
