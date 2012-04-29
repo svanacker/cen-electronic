@@ -152,7 +152,7 @@ void initDevicesDescriptor() {
  * Called when the network started.
  */ 
 void onNetworkStart(JennicEvent* jennicEvent) {
-	setNetworkStatus(JENNIC_WAITING_FOR_NODE);
+	setJennicNetworkStatus(JENNIC_WAITING_FOR_NODE);
 	appendString(getOutputStreamLogger(INFO), "NETWORK START ! \n");
 }
 
@@ -160,7 +160,7 @@ void onNetworkStart(JennicEvent* jennicEvent) {
  * Called when the child joined.
  */ 
 void onChildJoined(JennicEvent* jennicEvent) {
-	setNetworkStatus(JENNIC_LINK_CONNECTED);
+	setJennicNetworkStatus(JENNIC_LINK_CONNECTED);
 	appendString(getOutputStreamLogger(INFO), "CHILD JOINED ! \n");
 }
 
@@ -168,12 +168,12 @@ void onChildJoined(JennicEvent* jennicEvent) {
  * Called when the child leave.
  */ 
 void onChildLeave(JennicEvent* jennicEvent) {
-	setNetworkStatus(JENNIC_WAITING_FOR_NODE);
+	setJennicNetworkStatus(JENNIC_WAITING_FOR_NODE);
 	appendString(getOutputStreamLogger(INFO), "CHILD LEAVE ! \n");
 }
 
 void onConnectionReset(JennicEvent* jennicEvent) {
-	setNetworkStatus(JENNIC_WAITING_FOR_NODE);
+	setJennicNetworkStatus(JENNIC_WAITING_FOR_NODE);
 	appendString(getOutputStreamLogger(INFO), "CONNECTION RESET ! \n");
 	// TODO : Reset Robot Position
 	// TODO : Get the time of the position

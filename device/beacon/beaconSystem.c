@@ -106,7 +106,7 @@ float getNotifyTimeDelay() {
 	return beaconSystem.notifyTimeDelay;
 }
 
-BOOL notifyRobotPositionIfNecessary(OutputStream* dataOutputStream) {
+BOOL notifyRobotPositionIfNecessary() {
 	// Don't notify if the servo does not move
 	if (!beaconSystem.enabled) {
 		return FALSE;

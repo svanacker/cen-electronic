@@ -11,7 +11,7 @@
 
 #define JENNIC_DRIVER_COMMAND_BUFFER_LENGTH		45
 
-// State Machine for Coordinater - Router
+// NETWORK STATE for Coordinater - Router
 
 /** The jennic is not initialized. */
 #define JENNIC_NOT_INITIALIZED					0
@@ -26,14 +26,16 @@
 #define JENNIC_LINK_CONNECTED					2
 
 /**
- * State of the jennic link.
+ * State of the jennic connection.
  */
-int getLinkState();
+unsigned char getJennicNetworkStatus();
 
 /**
- * State of the link.
+ * Change the state of the NETWORK STATUS
  */
-void setLinkState(int linkState);
+void setJennicNetworkStatus(unsigned char aNetworkStatus);
+
+
 
 // Configuration - CFG Commands
 

@@ -239,6 +239,13 @@ void initBeaconIO() {
  */ 
 void onNetworkStart(JennicEvent* jennicEvent) {
 	appendString(getOutputStreamLogger(INFO), "NETWORK START ! \n");
+	setJennicNetworkStatus(JENNIC_WAITING_FOR_NODE);
+	pwmServo(LASER_SERVO_INDEX_1, 0xFF, 800.0f);
+	pwmServo(LASER_SERVO_INDEX_2, 0xFF, 800.0f);
+	delaymSec(300.0f);
+	pwmServo(LASER_SERVO_INDEX_1, 0xFF, 900.0f);
+	pwmServo(LASER_SERVO_INDEX_2, 0xFF, 900.0f);
+	delaymSec(300.0f);
 	pwmServo(LASER_SERVO_INDEX_1, 0xFF, 800.0f);
 	pwmServo(LASER_SERVO_INDEX_2, 0xFF, 800.0f);
 }
@@ -248,6 +255,7 @@ void onNetworkStart(JennicEvent* jennicEvent) {
  */ 
 void onChildJoined(JennicEvent* jennicEvent) {
 	appendString(getOutputStreamLogger(INFO), "CHILD JOINED ! \n");
+	setJennicNetworkStatus(JENNIC_LINK_CONNECTED);
 	pwmServo(LASER_SERVO_INDEX_1, 0xFF, 1500.0f);
 	pwmServo(LASER_SERVO_INDEX_2, 0xFF, 1500.0f);
 	delaymSec(500.0f);
@@ -259,7 +267,14 @@ void onChildJoined(JennicEvent* jennicEvent) {
  */ 
 void onChildLeave(JennicEvent* jennicEvent) {
 	appendString(getOutputStreamLogger(INFO), "CHILD LEAVE ! \n");
+	setJennicNetworkStatus(JENNIC_WAITING_FOR_NODE);
 	setBeaconSystemEnabled(FALSE);
+	pwmServo(LASER_SERVO_INDEX_1, 0xFF, 2200.0f);
+	pwmServo(LASER_SERVO_INDEX_2, 0xFF, 2200.0f);
+	delaymSec(300.0f);
+	pwmServo(LASER_SERVO_INDEX_1, 0xFF, 2100.0f);
+	pwmServo(LASER_SERVO_INDEX_2, 0xFF, 2100.0f);
+	delaymSec(300.0f);
 	pwmServo(LASER_SERVO_INDEX_1, 0xFF, 2200.0f);
 	pwmServo(LASER_SERVO_INDEX_2, 0xFF, 2200.0f);
 }
@@ -397,8 +412,7 @@ restart:
 	        copyInputToOutputStream(debugInputStream, &zigbeeOutputStream, NULL, COPY_ALL);
 		}
 		// Try to notify each Time the robot position through the zigbee
-		// TODO OutputStream* dataOutputStream = getAsciiDataOutputStream();
-		// TODO notifyRobotPositionIfNecessary(dataOutputStream);
+		notifyRobotPositionIfNecessary();
     }
     goto restart;
 }

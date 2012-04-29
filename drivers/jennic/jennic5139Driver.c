@@ -21,6 +21,9 @@
 
 #include "../../main/beaconBoard/beaconBoard.h"
 
+/** Status. */
+static unsigned char jennicNetworkStatus;
+
 #define NUMBER_OF_READ_BETWEEN_INSTRUCTION 20
 
 static InputStream* zigbeeInputStream;
@@ -40,12 +43,6 @@ void initJennic5139Streams(InputStream* aZigbeeInputStream,
 
 	initBuffer(&commandBuffer, &commandBufferArray, JENNIC_DRIVER_COMMAND_BUFFER_LENGTH, "jennicCmdBuffer", "CMD");
 }
-
-/*
-OutputStream* getAsciiDataOutputStream() {
-	return &(asciiDataBuffer.outputStream);
-}
-*/
 
 void waitAndCopyFromZigbeeToDebug(int delayMilliSecond) {
     // use delay to be sure that the connection is OK
@@ -308,6 +305,7 @@ void jennic5139ConfigureNetworkParameters(unsigned int pingPeriod,
  * @param nodeType NOTE_TYPE_COORDINATER / NOTE_TYPE_ROUTER
  */
 void initJennic5139Start(int nodeType) {
+	setJennicNetworkStatus(JENNIC_NOT_INITIALIZED);
 	appendCmdString(JENNIC_CMD_START);
 	appendComma();
 	appendCmdDec(nodeType);
@@ -442,4 +440,14 @@ void jennic5139RemoteLight(char* jennicAddress, int pinMask, BOOL on) {
 	appendCmdString(JENNIC_TUNEL_CLOSE);
 	appendCmdString("\"\n");
 	sendJennic5139CommandFromBuffer();
+}
+
+// NETWORK STATUS
+
+unsigned char getJennicNetworkStatus() {
+	return jennicNetworkStatus;
+}
+
+void setJennicNetworkStatus(unsigned char aJennicNetworkStatus) {
+	jennicNetworkStatus = aJennicNetworkStatus;
 }

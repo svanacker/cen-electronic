@@ -26,17 +26,6 @@
 /** Robot opponent point. */
 static Point opponentRobotPosition;
 
-/** Status. */
-static unsigned char networkStatus;
-
-unsigned char getNetworkStatus() {
-	return networkStatus;
-}
-
-void setNetworkStatus(unsigned char aNetworkStatus) {
-	networkStatus = aNetworkStatus;
-}
-
 void clearOpponentRobotPosition() {
 	opponentRobotPosition.x = 0;
 	opponentRobotPosition.y = 0;
@@ -69,7 +58,7 @@ void beaconReceiverDeviceHandleRawData(char header,
 	else if (header == COMMANG_GET_RECEIVER_NETWORK_STATUS) {
 		appendAck(outputStream);
 		append(outputStream, COMMANG_GET_RECEIVER_NETWORK_STATUS);
-		appendHex2(outputStream, networkStatus);
+		appendHex2(outputStream, getJennicNetworkStatus());
 	}
 	// Handle the notification sent by the beacon Main Board via Zigbee
 	else if (header == COMMAND_SET_OPPONENT_ROBOT_POSITION_FROM_LASER_TO_RECEIVER) {

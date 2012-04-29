@@ -3,10 +3,6 @@
 
 #include "../../device/deviceDescriptor.h"
 
-unsigned char getNetworkStatus();
-
-void setNetworkStatus(unsigned char aNetworkStatus);
-
 /**
  * The descriptor for the beacon receiver device.
  */

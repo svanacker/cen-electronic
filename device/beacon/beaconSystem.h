@@ -113,7 +113,7 @@ float getNotifyTimeDelay();
 * Notify the robot position.
 * @return TRUE if the method add data to be sent by the zigbee
 */
-BOOL notifyRobotPositionIfNecessary(OutputStream* dataOutputStream);
+BOOL notifyRobotPositionIfNecessary();
 
 /**
  * Set the position of the calibration point.
