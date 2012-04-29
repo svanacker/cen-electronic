@@ -61,6 +61,7 @@
 // -> Jennic
 #include "../../drivers/jennic/jennic5139Driver.h"
 #include "../../drivers/jennic/jennic5139EventParser.h"
+#include "../../drivers/jennic/jennic5139OutputStream.h"
 
 #ifndef MPBLAB_SIMULATION
 	// The port for which we debug (we can send instruction too)
@@ -74,15 +75,15 @@
 	#define SERIAL_PORT_ZIGBEE	 	SERIAL_PORT_1
 #endif
 
+// DEVICES
 
-/**
-* Device list.
-*/
 static Device testDevice;
 static Device systemDevice;
 static Device commonBeaconDevice;
 static Device beaconReceiverDevice;
 static Device beaconBoardDevice;
+
+// BUFFER
 
 // serial DEBUG 
 static char debugInputBufferArray[BEACON_RECEIVER_BOARD_DEBUG_INPUT_BUFFER_LENGTH];
@@ -100,7 +101,15 @@ static Buffer zigbeeOutputBuffer;
 static OutputStream zigbeeOutputStream;
 static StreamLink zigbeeSerialStreamLink;
 
-// zigbee->Beacon Board Main
+// -> Zigbee Response
+#define		RESPONSE_DATA_OUTPUT_BUFFER_LENGTH		20
+static Buffer responseDataOutputBuffer;
+static char responseDataOutputBufferArray[RESPONSE_DATA_OUTPUT_BUFFER_LENGTH];
+static OutputStream responseDataOutputStream; 
+
+// DISPATCHERS
+
+// -> zigbee->Beacon Board Main
 static DriverDataDispatcher beaconBoardDispatcher;
 static InputStream beaconBoardInputStream;
 static OutputStream beaconBoardOutputStream;
@@ -120,6 +129,7 @@ static JennicEvent dataEvent;
 static JennicEvent networkStartEvent;
 static JennicEvent childJoinedEvent;
 static JennicEvent childLeaveEvent;
+static JennicEvent resetEvent;
 
 // I2C Debug
 // static Buffer debugI2cInputBuffer;
@@ -162,15 +172,22 @@ void onChildLeave(JennicEvent* jennicEvent) {
 	appendString(getOutputStreamLogger(INFO), "CHILD LEAVE ! \n");
 }
 
+void onConnectionReset(JennicEvent* jennicEvent) {
+	setNetworkStatus(JENNIC_WAITING_FOR_NODE);
+	appendString(getOutputStreamLogger(INFO), "CONNECTION RESET ! \n");
+	// TODO : Reset Robot Position
+	// TODO : Get the time of the position
+}
+
 void onData(JennicEvent* jennicEvent) {
 	// Manage real Data into the Jennic Buffer
-	Buffer* inDataBuffer = getJennicInDataBuffer();
-	if (!isBufferEmpty(inDataBuffer)) {
+	Buffer* requestBuffer = getJennicInDataBuffer();
+	if (!isBufferEmpty(requestBuffer)) {
 		appendString(&debugOutputStream, "\nDATA ! ");
 
 		// printBuffer(&debugOutputStream, inDataBuffer);
 		// handle it like other source (UART, I2C ...)
-		// handleStreamInstruction(inDataBuffer, &nullBuffer, &nullOutputStream, &filterRemoveCRLF, NULL);
+		handleStreamInstruction(requestBuffer, &responseDataOutputBuffer, &responseDataOutputStream, &filterRemoveCRLF, NULL);
 	}
 }
 
@@ -179,6 +196,7 @@ void registerJennicEvents() {
 	addJennicEvent(&networkStartEvent, JENNIC_NETWORK_STARTED, ",?,", JENNIC_ROUTER_MAC_ADDRESS, "", NO_PAY_LOAD, onNetworkStart);
 	addJennicEvent(&childJoinedEvent, JENNIC_CHILD_JOINED, ",", JENNIC_COORDINATER_MAC_ADDRESS, "", NO_PAY_LOAD, onChildJoined);
 	addJennicEvent(&childLeaveEvent, JENNIC_CHILD_LEAVE, ",", JENNIC_COORDINATER_MAC_ADDRESS, "", NO_PAY_LOAD, onChildLeave);
+	addJennicEvent(&resetEvent, JENNIC_RESET, "", "", "", NO_PAY_LOAD, onConnectionReset);
 	// WARN : Length of data must be > 9 in hexadecimal (because size is on 2 char)
 	// Normally the argument is ",0,??," where 
 	addJennicEvent(&dataEvent, JENNIC_RECEIVE_DATA, ",", JENNIC_COORDINATER_MAC_ADDRESS, ",0,???", 4, onData);
@@ -208,6 +226,11 @@ int runZigBeeReceiver() {
 					BEACON_RECEIVER_BOARD_DEBUG_OUTPUT_BUFFER_LENGTH,
 					&debugOutputStream,
 					SERIAL_PORT_DEBUG);
+
+	// To response data
+    initBuffer(&responseDataOutputBuffer, &responseDataOutputBufferArray, RESPONSE_DATA_OUTPUT_BUFFER_LENGTH, "responseDataOutputBuffer", "RESPONSE");
+	initZigbeeOutputStream(&responseDataOutputStream, &responseDataOutputBuffer, JENNIC_COORDINATER_MAC_ADDRESS);
+
 
 	// Init the logs
 	initLog(DEBUG);

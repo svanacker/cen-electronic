@@ -88,6 +88,9 @@ void clearJennicEventSearch() {
 	clearBuffer(&(jennicEventList.searchDataBuffer));
 	clearBuffer(&(jennicEventList.dataRawInputBuffer));
 	jennicEventList.currentArgumentIndex = 0;
+	jennicEventList.currentCommand[0] = 0;
+	jennicEventList.currentCommand[1] = 0;
+	jennicEventList.currentCommand[2] = 0;
 }	
 
 /**
@@ -140,23 +143,41 @@ void handleJennicNextChar(char c) {
 	}
 	// Determine which command it is
 	if (jennicEventList.dataBlockBeginMatchIndex < LENGTH_OF_JENNIC_AT_COMMAND) {
-		int index = 0;
-		BOOL found = FALSE;
-		for (index = 0; index < jennicEventList.size; index++) {
-			JennicEvent* event = jennicEventList.events[index];
-			if (event->eventCommand[jennicEventList.dataBlockBeginMatchIndex] == c) {
-				jennicEventList.dataBlockBeginMatchIndex++;
-				// not the definitive but a candidate
-				jennicEventList.matchEvent = event;
-				// We build the right buffer
-				found = TRUE;
+		// store the char into the current command
+		jennicEventList.currentCommand[jennicEventList.dataBlockBeginMatchIndex] = c;
+		jennicEventList.dataBlockBeginMatchIndex++;
+		BOOL foundPossibleCandidate = FALSE;
+
+		int eventIndex = 0;
+		for (eventIndex = 0; eventIndex < jennicEventList.size; eventIndex++) {
+			JennicEvent* event = jennicEventList.events[eventIndex];
+			int charIndex;
+			BOOL matchCompletely = TRUE;
+			// we must check complete command
+			// Ex : DAT and RST have "T" at the end, we must not control only
+			// the last character
+			for (charIndex = 0; charIndex < jennicEventList.dataBlockBeginMatchIndex; charIndex++) {
+				// if we found a difference
+				if (event->eventCommand[charIndex] != jennicEventList.currentCommand[charIndex]) {
+					matchCompletely = FALSE;
+					break;
+				}
+			}
+			if (matchCompletely) {
+				// maybe this one
+				foundPossibleCandidate = TRUE;
+				// init search string only if we have 3 characters
+				if (jennicEventList.dataBlockBeginMatchIndex == LENGTH_OF_JENNIC_AT_COMMAND) {
+					// definitive candidate
+					jennicEventList.matchEvent = event;
+					// We build the search buffer
+					initJennic5139DataSearch(jennicEventList.matchEvent);
+				}
 				break;
 			}
 		}
-		if (jennicEventList.dataBlockBeginMatchIndex == LENGTH_OF_JENNIC_AT_COMMAND) {
-			initJennic5139DataSearch(jennicEventList.matchEvent);
-		}
-		if (!found) {
+		// This is another event which is not search, or unknown string
+		if (!foundPossibleCandidate) {
 			clearJennicEventSearch();
 			return;	
 		}

@@ -60,6 +60,8 @@ typedef struct {
     unsigned char size;
 	/** Current Argument Index : argument are separated by comma. */
 	char currentArgumentIndex;
+	/** Current command. */
+	char currentCommand[LENGTH_OF_JENNIC_AT_COMMAND];
 
 } JennicEventList;
 

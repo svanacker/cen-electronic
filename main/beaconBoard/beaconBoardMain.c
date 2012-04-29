@@ -80,7 +80,9 @@
 
 #include "../../robot/robotDetector.h"
 
-// serial DEBUG 
+// BUFFER
+
+// -> serial DEBUG 
 static char debugInputBufferArray[JENNIC_DEBUG_INPUT_BUFFER_LENGTH];
 static Buffer debugInputBuffer;
 static char debugOutputBufferArray[JENNIC_DEBUG_OUTPUT_BUFFER_LENGTH];
@@ -88,7 +90,7 @@ static Buffer debugOutputBuffer;
 static OutputStream debugOutputStream;
 static StreamLink debugSerialStreamLink;
 
-// serial ZIGBEE 
+// -> serial ZIGBEE 
 static char zigbeeInputBufferArray[JENNIC_ZIGBEE_INPUT_BUFFER_LENGTH];
 static Buffer zigbeeInputBuffer;
 static char zigbeeOutputBufferArray[JENNIC_ZIGBEE_OUTPUT_BUFFER_LENGTH];
@@ -96,13 +98,15 @@ static Buffer zigbeeOutputBuffer;
 static OutputStream zigbeeOutputStream;
 static StreamLink zigbeeSerialStreamLink;
 
-// Zigbee Response
+// -> Zigbee Response
 #define		RESPONSE_DATA_OUTPUT_BUFFER_LENGTH		20
 static Buffer responseDataOutputBuffer;
 static char responseDataOutputBufferArray[RESPONSE_DATA_OUTPUT_BUFFER_LENGTH];
 static OutputStream responseDataOutputStream; 
 
-// zigbee->Beacon Board Main
+// DISPATCHER
+
+// -> zigbee->Beacon Board Main
 static DriverDataDispatcher beaconReceiverDispatcher;
 static InputStream beaconReceiverInputStream;
 static OutputStream beaconReceiverOutputStream;
@@ -223,27 +227,13 @@ void initBeaconIO() {
 	TRISBbits.TRISB3 = 1;
 }
 
-void showNetworkStatusViaServo(int count) {
-	int i;
-	for (i = 0; i < count; i++) {
-		pwmServo(LASER_SERVO_INDEX_1, 0xFF, 1000.0f);
-		pwmServo(LASER_SERVO_INDEX_2, 0xFF, 1000.0f);
-		delaymSec(1000.0f);
-		pwmServo(LASER_SERVO_INDEX_1, 0xFF, 2000.0f);
-		pwmServo(LASER_SERVO_INDEX_2, 0xFF, 2000.0f);
-		delaymSec(1000.0f);
-		pwmServo(LASER_SERVO_INDEX_1, 0xFF, 1500.0f);
-		pwmServo(LASER_SERVO_INDEX_2, 0xFF, 1500.0f);
-		delaymSec(500.0f);
-	}
-}
-
 /**
  * Called when the network started.
  */ 
 void onNetworkStart(JennicEvent* jennicEvent) {
 	appendString(getOutputStreamLogger(INFO), "NETWORK START ! \n");
-	showNetworkStatusViaServo(1);
+	pwmServo(LASER_SERVO_INDEX_1, 0xFF, 800.0f);
+	pwmServo(LASER_SERVO_INDEX_2, 0xFF, 800.0f);
 }
 
 /**
@@ -251,7 +241,9 @@ void onNetworkStart(JennicEvent* jennicEvent) {
  */ 
 void onChildJoined(JennicEvent* jennicEvent) {
 	appendString(getOutputStreamLogger(INFO), "CHILD JOINED ! \n");
-	showNetworkStatusViaServo(2);
+	pwmServo(LASER_SERVO_INDEX_1, 0xFF, 1500.0f);
+	pwmServo(LASER_SERVO_INDEX_2, 0xFF, 1500.0f);
+	delaymSec(500.0f);
 	setBeaconSystemEnabled(TRUE);
 }
 
@@ -261,7 +253,8 @@ void onChildJoined(JennicEvent* jennicEvent) {
 void onChildLeave(JennicEvent* jennicEvent) {
 	appendString(getOutputStreamLogger(INFO), "CHILD LEAVE ! \n");
 	setBeaconSystemEnabled(FALSE);
-	showNetworkStatusViaServo(4);
+	pwmServo(LASER_SERVO_INDEX_1, 0xFF, 2200.0f);
+	pwmServo(LASER_SERVO_INDEX_2, 0xFF, 2200.0f);
 }
 
 void onData(JennicEvent* jennicEvent) {

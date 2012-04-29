@@ -1,8 +1,7 @@
 SV
 
-- Mettre le bout de téflon sur le côté gauche
 - Gestion de la vitesse au niveau des b-splines
-- Implémenter et tester la gestion de l'enchainement des trajectoires
+
 - Tester intensivement la gestion de collision / blocage de roues
 - Faire fonctionner la stratégie au niveau du projet Eclipse
 - Gestion des lasers et de la collision (Zigbee Jennic et le système de balise)
@@ -12,7 +11,6 @@ SV
 * => Gérer le fait de pouvoir détecter quand on considère qu'il y a une nouvelle position à envoyer ???
 * => Essayer de réduire le nombre d'instruction ou le temps d'attente entre chaque instruction sur le Jennic
 * => Recalibrer sur une table les servos
-* => Faire un système mécanique avec un tournevis permettant de régler facilement l'assiette des servos, un peu comme on avait fait pour la caméra
 * => Gérer le fait qu'on recoive ou non un ACK (=> Savoir si c'est ok)
 * => Définir la signification des Leds :
 	Sur le coordinateur :
@@ -22,11 +20,16 @@ SV
       -> LED 1 : Clignote pour indiquer que localement on arrive bien à piloter le JENNIC
       -> LED 2 : clignote lorsqu'on a reçu une trame puis off quand on en recoit une autre (alternativement)
 * Gestion au niveau du device du statut BeaconReceiver, pour afficher au niveau du LCD l'information
-* Démarrer directement la BEACON_BOARD en mode coordinater
 * Gérer le RST au niveau de chaque carte
 * Gestion du démarrage des servos depuis la BeaconReceiver
 * Faire un nouveau DriverDataDispatcher spécial UART si c'est possible pour pouvoir relier des cartes en UART en maitre esclave :)
 * Se poser la question des deviceHandleCallbackRawData et du test != NULL correspondant
+* Mettre un 2ème sonar pour les mouvements en arrières
+* Faire la gestion de la manoeuvre de recalibrage 
+
+NEXT YEAR
+
+- Implémenter et tester la gestion de l'enchainement des trajectoires
 
 AUTRES :
 
