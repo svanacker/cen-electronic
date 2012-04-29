@@ -1,0 +1,73 @@
+SV
+
+- Mettre le bout de téflon sur le côté gauche
+- Gestion de la vitesse au niveau des b-splines
+- Implémenter et tester la gestion de l'enchainement des trajectoires
+- Tester intensivement la gestion de collision / blocage de roues
+- Faire fonctionner la stratégie au niveau du projet Eclipse
+- Gestion des lasers et de la collision (Zigbee Jennic et le système de balise)
+* => Pouvoir activer ou non le fait d'afficher les Tops sur le réflecteur laser
+* => Mettre un interrupteur pour éviter de devoir débrancher au niveau du coordinateur
+* => Mettre une petite led qui clignote quand c ok et qu'on a la liaison avec le Jennic
+* => Gérer le fait de pouvoir détecter quand on considère qu'il y a une nouvelle position à envoyer ???
+* => Essayer de réduire le nombre d'instruction ou le temps d'attente entre chaque instruction sur le Jennic
+* => Recalibrer sur une table les servos
+* => Faire un système mécanique avec un tournevis permettant de régler facilement l'assiette des servos, un peu comme on avait fait pour la caméra
+* => Gérer le fait qu'on recoive ou non un ACK (=> Savoir si c'est ok)
+* => Définir la signification des Leds :
+	Sur le coordinateur :
+      -> LED 1 : Clignote pour indiquer que localement on arrive bien à piloter le JENNIC
+      -> LED 2 : S'active lorsque le router se connecte, se désactive lorsque le routeur se déconnecte
+        Sur le routeur :
+      -> LED 1 : Clignote pour indiquer que localement on arrive bien à piloter le JENNIC
+      -> LED 2 : clignote lorsqu'on a reçu une trame puis off quand on en recoit une autre (alternativement)
+* Gestion au niveau du device du statut BeaconReceiver, pour afficher au niveau du LCD l'information
+* Démarrer directement la BEACON_BOARD en mode coordinater
+* Gérer le RST au niveau de chaque carte
+* Gestion du démarrage des servos depuis la BeaconReceiver
+* Faire un nouveau DriverDataDispatcher spécial UART si c'est possible pour pouvoir relier des cartes en UART en maitre esclave :)
+* Se poser la question des deviceHandleCallbackRawData et du test != NULL correspondant
+
+AUTRES :
+
+- Idées pour l'année prochaine :
+- Mode PAS à PAS à faire au niveau de l'informatique
+
+
+ACHATS à FAIRE
+
+- Petits Colliers
+- Contacteurs grandes lames
+- Connecteurs vierges de 3 pattes pour Servo, ADC ...
+- Capteurs de couleurs
+
+destX=-256.0000,destY=0.0000,destAngle=0.0000,dist1=-80.0000,dist2=-80.0000,rel=1
+,a=20.0000,speed=150.0000a%
+pt=1.0000,t=0.005,nx=-1.212,ny=0.0000,na=3.141,rx=0.099,ry=-0.0000,ra=-0.001,ta=3.141,ae=-3.140,atdiff=-0.0000,catdiff=1.0000,au=1000.0000,ac=0.0000,te=112.299,tec=112.299,tu=22.0000
+pt=4.0000,t=0.005,nx=-1.388,ny=0.0000,na=3.141,rx=0.099,ry=-0.0000,ra=-0.001,ta=3.141,ae=-3.140,atdiff=-0.0000,catdiff=1.0000,au=1000.0000,ac=0.0000,te=127.316,tec=127.316,tu=13.0000
+pt=6.0000,t=0.006,nx=-1.622,ny=0.0000,na=3.141,rx=0.099,ry=-0.0000,ra=-0.001,ta=3.141,ae=-3.140,atdiff=-0.0000,catdiff=1.0000,au=1000.0000,ac=0.0000,te=147.346,tec=147.346,tu=16.0000
+pt=9.0000,t=0.008,nx=-2.149,ny=0.0000,na=3.141,rx=0.695,ry=-0.004,ra=-0.012,ta=3.140,ae=-3.129,atdiff=-0.001,catdiff=0.999,au=1000.0000,ac=0.003,te=243.440,tec=243.440,tu=34.0000
+pt=12.0000,t=0.012,nx=-2.886,ny=0.0000,na=3.141,rx=0.555,ry=-0.001,ra=-0.028,ta=3.141,ae=-3.113,atdiff=-0.0000,catdiff=0.999,au=1000.0000,ac=0.001,te=294.559,tec=294.559,tu=33.0000
+pt=14.0000,t=0.014,nx=-3.495,ny=0.0000,na=3.141,rx=0.245,ry=0.011,ra=-0.051,ta=-3.138,ae=-3.090,atdiff=0.002,catdiff=0.999,au=1000.0000,ac=-0.013,te=320.198,tec=320.197,tu=33.0000
+pt=17.0000,t=0.019,nx=-4.584,ny=0.0000,na=3.141,rx=-0.034,ry=0.029,ra=-0.079,ta=-3.135,ae=-3.062,atdiff=0.006,catdiff=0.999,au=1000.0000,ac=-0.042,te=389.430,tec=389.422,tu=45.0000
+pt=20.0000,t=0.024,nx=-5.884,ny=0.0000,na=3.141,rx=-0.383,ry=0.063,ra=-0.114,ta=-3.130,ae=-3.027,atdiff=0.011,catdiff=0.999,au=1000.0000,ac=-0.108,te=470.812,tec=470.781,tu=54.0000
+pt=23.0000,t=0.030,nx=-7.394,ny=0.0000,na=3.141,rx=-0.707,ry=0.106,ra=-0.154,ta=-3.125,ae=-2.987,atdiff=0.015,catdiff=0.999,au=1000.0000,ac=-0.210,te=572.350,tec=572.277,tu=66.0000
+pt=25.0000,t=0.035,nx=-8.518,ny=0.0000,na=3.141,rx=-1.040,ry=0.166,ra=-0.199,ta=-3.119,ae=-2.941,atdiff=0.022,catdiff=0.999,au=1000.0000,ac=-0.356,te=640.075,tec=639.916,tu=68.0000
+pt=28.0000,t=0.042,nx=-10.379,ny=0.0000,na=3.141,rx=-1.593,ry=0.293,ra=-0.250,ta=-3.108,ae=-2.890,atdiff=0.033,catdiff=0.999,au=1000.0000,ac=-0.702,te=752.336,tec=751.918,tu=83.0000
+pt=31.0000,t=0.051,nx=-12.451,ny=0.0000,na=3.141,rx=-2.345,ry=0.509,ra=-0.308,ta=-3.091,ae=-2.833,atdiff=0.050,catdiff=0.998,au=1000.0000,ac=-1.351,te=865.947,tec=864.851,tu=93.0000
+pt=34.0000,t=0.060,nx=-14.734,ny=0.0000,na=3.141,rx=-3.154,ry=0.795,ra=-0.372,ta=-3.072,ae=-2.768,atdiff=0.068,catdiff=0.997,au=1000.0000,ac=-2.317,te=993.275,tec=990.936,tu=106.0000
+pt=36.0000,t=0.067,nx=-16.372,ny=0.0000,na=3.141,rx=-4.002,ry=1.162,ra=-0.443,ta=-3.047,ae=-2.698,atdiff=0.093,catdiff=0.995,au=1000.0000,ac=-3.586,te=1063.331,tec=1058.668,tu=105.0000
+pt=39.0000,t=0.078,nx=-19.006,ny=0.0000,na=3.141,rx=-4.913,ry=1.638,ra=-0.519,ta=-3.025,ae=-2.622,atdiff=0.115,catdiff=0.993,au=1000.0000,ac=-5.479,te=1214.179,tec=1206.059,tu=127.0000
+pt=42.0000,t=0.089,nx=-21.850,ny=0.0000,na=3.141,rx=-6.016,ry=2.330,ra=-0.601,ta=-2.995,ae=-2.540,atdiff=0.146,catdiff=0.989,au=1000.0000,ac=-8.405,te=1369.638,tec=1355.042,tu=141.0000
+pt=45.0000,t=0.101,nx=-24.904,ny=0.0000,na=3.141,rx=-7.234,ry=3.247,ra=-0.689,ta=-2.959,ae=-2.451,atdiff=0.181,catdiff=0.983,au=1000.0000,ac=-12.575,te=1537.571,tec=1512.245,tu=155.0000
+pt=48.0000,t=0.114,nx=-28.170,ny=0.0000,na=3.141,rx=-8.556,ry=4.449,ra=-0.785,ta=-2.918,ae=-2.355,atdiff=0.223,catdiff=0.975,au=1000.0000,ac=-18.431,te=1721.191,tec=1678.534,tu=171.0000
+pt=51.0000,t=0.128,nx=-31.645,ny=0.0000,na=3.141,rx=-9.922,ry=5.962,ra=-0.886,ta=-2.873,ae=-2.255,atdiff=0.267,catdiff=0.964,au=1000.0000,ac=-26.336,te=1927.782,tec=1859.028,tu=188.0000
+pt=53.0000,t=0.138,nx=-34.079,ny=0.0000,na=3.141,rx=-11.227,ry=7.743,ra=-0.990,ta=-2.814,ae=-2.150,atdiff=0.326,catdiff=0.947,au=1000.0000,ac=-35.753,te=2064.895,tec=1955.681,tu=186.0000
+pt=56.0000,t=0.153,nx=-37.905,ny=0.0000,na=3.141,rx=-12.471,ry=9.890,ra=-1.100,ta=-2.770,ae=-2.040,atdiff=0.370,catdiff=0.932,au=1000.0000,ac=-48.505,te=2335.471,tec=2176.685,tu=220.0000
+pt=59.0000,t=0.169,nx=-41.942,ny=0.0000,na=3.141,rx=-13.615,ry=12.506,ra=-1.215,ta=-2.725,ae=-1.925,atdiff=0.415,catdiff=0.914,Zau=1000.0000,ac=-65.005,te=2649.972,tec=2424.203,tu=244.0000
+pt=62.0000,t=0.186,nx=-46.189,ny=0.0000,na=3.141,rx=-14.641,ry=15.893,ra=-1.337,ta=-2.674,ae=-1.804,atdiff=0.466,catdiff=0.893,au=1000.0000,ac=-87.468,te=3023.067,tec=2699.814,tu=270.0000
+pt=65.0000,t=0.203,nx=-50.646,ny=0.0000,na=3.141,rx=-15.320,ry=19.828,ra=-1.462,ta=-2.630,ae=-1.678,atdiff=0.511,catdiff=0.872,au=1000.0000,ac=-115.260,te=3466.834,tec=3023.144,tu=303.0000
+pt=68.0000,t=0.222,nx=-55.313,ny=0.0000,na=3.141,rx=-15.512,ry=24.197,ra=-1.591,ta=-2.595,ae=-1.550,atdiff=0.546,catdiff=0.854,au=1000.0000,ac=-148.069,te=3986.241,tec=3406.154,tu=342.0000
+pt=71.0000,t=0.241,nx=-60.191,ny=0.0000,na=3.141,rx=-15.105,ry=28.885,ra=-1.723,ta=-2.571,ae=-1.417,atdiff=0.569,catdiff=0.842,au=1000.0000,ac=-185.381,te=4582.388,tec=3858.433,tu=387.0000
+pt=74.0000,t=0.260,nx=-65.278,ny=0.0000,na=3.141,rx=-14.033,ry=33.664,ra=-1.859,ta=-2.560,ae=-1.282,atdiff=0.581,catdiff=0.835,au=1000.0000,ac=-225.689,te=5247.246,tec=4385.583,tu=440.0000
+pt=77.0000,t=0.281,nx=-70.576,ny=0.0000,na=3.141,rx=-12.231,ry=38.487,ra=-1.997,ta=-2.558,ae=-1.143,atdiff=0.583,catdiff=0.834,au=1000.0000,ac=-268.587,te=5981.725,tec=4993.190,tu=499.0000

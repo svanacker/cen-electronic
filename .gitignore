@@ -10,3 +10,19 @@
 *.lai
 *.la
 *.a
+
+# Special PICS
+*.svn
+*.cof
+*.hex
+*.map
+*.mcs
+*.cce
+*.lst
+*.rlf
+*.sdb
+*.cceadd 
+NMakefile
+Makefile
+*.X
+*.zip
