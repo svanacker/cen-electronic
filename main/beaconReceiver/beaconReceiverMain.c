@@ -268,7 +268,7 @@ int runZigBeeReceiver() {
 	InputStream* zigbeeInputStream = getInputStream(&zigbeeInputBuffer);
 	InputStream* debugInputStream = getInputStream(&debugInputBuffer);
 
-	// Init router
+	// Init router streams
 	initJennic5139Streams(zigbeeInputStream, &zigbeeOutputStream, &debugOutputStream);
 	registerJennicEvents();
 

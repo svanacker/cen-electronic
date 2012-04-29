@@ -155,6 +155,16 @@ static Buffer motorBoardInputBuffer;
 static InputStream motorBoardInputStream;
 static OutputStream motorBoardOutputStream;
 
+// DRIVER
+
+// DRIVERS
+static Buffer driverRequestBuffer;
+static char driverRequestBufferArray[MAIN_BOARD_REQUEST_DRIVER_BUFFER_LENGTH];
+static Buffer driverResponseBuffer;
+static char driverResponseBufferArray[MAIN_BOARD_RESPONSE_DRIVER_BUFFER_LENGTH];
+
+// DISPATCHER
+
 // i2c->Mechanical 1
 /*
 static DriverDataDispatcher mechanical1I2cDispatcher;
@@ -232,15 +242,15 @@ void mainBoardCallbackRawData(const Device* device,
  * @private
  */
 void initDriversDescriptor() {
+    // Init the drivers
+    initDrivers(&driverRequestBuffer, &driverRequestBufferArray, MAIN_BOARD_REQUEST_DRIVER_BUFFER_LENGTH,
+				&driverResponseBuffer, &driverResponseBufferArray, MAIN_BOARD_RESPONSE_DRIVER_BUFFER_LENGTH);
 
     // Get test driver for debug purpose
     addDriver(driverTestGetDescriptor(), TRANSMIT_LOCAL);
 
     // Direct Devantech Driver
     addDriver(getMD22DriverDescriptor(), TRANSMIT_NONE);
-
-    // Init the drivers
-    initDrivers();
 }
 
 /**

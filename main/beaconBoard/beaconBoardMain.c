@@ -99,10 +99,16 @@ static OutputStream zigbeeOutputStream;
 static StreamLink zigbeeSerialStreamLink;
 
 // -> Zigbee Response
-#define		RESPONSE_DATA_OUTPUT_BUFFER_LENGTH		20
+#define	RESPONSE_DATA_OUTPUT_BUFFER_LENGTH		20
 static Buffer responseDataOutputBuffer;
 static char responseDataOutputBufferArray[RESPONSE_DATA_OUTPUT_BUFFER_LENGTH];
 static OutputStream responseDataOutputStream; 
+
+// DRIVERS
+static Buffer driverRequestBuffer;
+static char driverRequestBufferArray[JENNIC_ZIGBEE_REQUEST_DRIVER_BUFFER_LENGTH];
+static Buffer driverResponseBuffer;
+static char driverResponseBufferArray[JENNIC_ZIGBEE_RESPONSE_DRIVER_BUFFER_LENGTH];
 
 // DISPATCHER
 
@@ -214,7 +220,8 @@ void initDevicesDescriptor() {
 
 void initDriversDescriptor() {
     // Init the drivers
-    initDrivers();
+    initDrivers(&driverRequestBuffer, &driverRequestBufferArray, JENNIC_ZIGBEE_REQUEST_DRIVER_BUFFER_LENGTH,
+				&driverResponseBuffer, &driverResponseBufferArray, JENNIC_ZIGBEE_RESPONSE_DRIVER_BUFFER_LENGTH);
 }
 
 void initBeaconIO() {
@@ -330,8 +337,7 @@ restart:
     initLaserDetectorSettings();
     initDevicesDescriptor();
 
-	// Zigbee OutputStream
-	
+	// Zigbee Dispatcher
     addZigbeeDriverDataDispatcher(&beaconReceiverDispatcher,
     						        "BEACON_RECEIVER_DISPATCHER",
 						            &beaconReceiverInputStream,
@@ -345,13 +351,14 @@ restart:
     startTimerList();
 	#endif
 
-	// To Avoid Rotation at startup Time during DEV
+	// To Avoid Rotation at startup Time. The beacon will be activated as soon the network will be connected
+	// to receiver
 	setBeaconSystemEnabled(FALSE);
 
     InputStream* zigbeeInputStream = getInputStream(&zigbeeInputBuffer);
     InputStream* debugInputStream = getInputStream(&debugInputBuffer);
 
-    // Init coordinater
+    // Init coordinater streams
     initJennic5139Streams(zigbeeInputStream, &zigbeeOutputStream, &debugOutputStream);
 	registerJennicEvents();
 	printJennicEventList(&debugOutputStream);

@@ -9,9 +9,6 @@
 /** The max limit of driver list. */
 #define MAX_DRIVER 5
 
-#define DRIVER_REQUEST_BUFFER_LENGTH	28
-#define DRIVER_RESPONSE_BUFFER_LENGTH	28
-
 /**
  * Tre struct defining a list of drivers.
  */
@@ -43,7 +40,8 @@ int getDriverCount();
 /**
  * Init the driver descriptor list.
  */
-void initDrivers();
+void initDrivers(Buffer *driverRequestBuffer, char (*driverRequestBufferArray)[] , unsigned char requestLength,
+				 Buffer *driverResponseBuffer, char (*driverResponseBufferArray)[] , unsigned char responseLength);
 
 /**
  * Get an OutputStream to write argument and parameters

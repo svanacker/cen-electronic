@@ -15,10 +15,8 @@
 static DriverDescriptorList drivers;
 
 // I/O for all drivers
-static char driverRequestBufferArray[DRIVER_REQUEST_BUFFER_LENGTH];
-static Buffer driverRequestBuffer;
-static char driverResponseBufferArray[DRIVER_RESPONSE_BUFFER_LENGTH];
-static Buffer driverResponseBuffer;
+static Buffer* driverRequestBuffer;
+static Buffer* driverResponseBuffer;
 
 void addDriver(DriverDescriptor* driverDescriptor, int transmitMode) {
     driverDescriptor->transmitMode = transmitMode;
@@ -35,32 +33,32 @@ int getDriverCount() {
     return drivers.size;
 }
 
-void initDrivers() {
+void initDrivers(Buffer *driverRequestBuffer, char (*driverRequestBufferArray)[] , unsigned char requestLength,
+				 Buffer *driverResponseBuffer, char (*driverResponseBufferArray)[] , unsigned char responseLength) {
     int size = drivers.size;
     int i;
     for (i = 0; i < size; i++) {
         DriverDescriptor* driverDescriptor = drivers.drivers[i];
         driverInit(driverDescriptor);
     }
-    initBuffer(&driverRequestBuffer, &driverRequestBufferArray, DRIVER_REQUEST_BUFFER_LENGTH, "DRV_REQ_BUF", "");
-    initBuffer(&driverResponseBuffer, &driverResponseBufferArray, DRIVER_RESPONSE_BUFFER_LENGTH, "DRV_RES_BUF", "");
+    initBuffer(driverRequestBuffer, driverRequestBufferArray, requestLength, "DRV_REQ_BUF", "");
+    initBuffer(driverResponseBuffer, driverResponseBufferArray, responseLength, "DRV_RES_BUF", "");
 }
 
 Buffer* getDriverRequestBuffer() {
-    return &driverRequestBuffer;
+    return driverRequestBuffer;
 }
 
 Buffer* getDriverResponseBuffer() {
-    return &driverResponseBuffer;
+    return driverResponseBuffer;
 }
 
 OutputStream* getDriverRequestOutputStream() {
-    OutputStream* result = getOutputStream(&driverRequestBuffer);
+    OutputStream* result = getOutputStream(driverRequestBuffer);
     return result;
 }
 
-
 InputStream* getDriverResponseInputStream() {
-    InputStream* result = getInputStream(&driverResponseBuffer);
+    InputStream* result = getInputStream(driverResponseBuffer);
     return result;
 }
