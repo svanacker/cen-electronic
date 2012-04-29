@@ -6,6 +6,8 @@
 #include "../common/commons.h"
 #include "../common/cmd/commonCommand.h"
 
+#include "../common/error/error.h"
+
 #include "../common/io/inputStream.h"
 #include "../common/io/ioUtils.h"
 #include "../common/io/outputStream.h"
@@ -25,6 +27,12 @@ BOOL transmitFromDriverRequestBuffer() {
     Buffer* requestBuffer = getDriverRequestBuffer();
     Buffer* responseBuffer = getDriverResponseBuffer();
 
+    InputStream* inputStream = getDriverResponseInputStream();
+	if (inputStream == NULL) {
+		writeError(DRIVER_INPUT_STREAM_NULL);
+		return FALSE;
+	}
+
     // The first char is the header
     char header = bufferGetFirstChar(requestBuffer);
 
@@ -39,7 +47,6 @@ BOOL transmitFromDriverRequestBuffer() {
             // No Output Filter
             NULL);
 
-    InputStream* inputStream = getDriverResponseInputStream();
     // We need ack
     checkIsAck(inputStream);
     // Device answer with the same header as the request

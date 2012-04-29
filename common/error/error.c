@@ -14,3 +14,4 @@ void writeError(int errorCode) {
 	appendHex4(outputStream, errorCode);
     appendCRLF(outputStream);
 }
+

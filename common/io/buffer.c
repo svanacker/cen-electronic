@@ -15,6 +15,14 @@
 
 // BUFFER
 
+BOOL checkBufferNotNull(Buffer* buffer) {
+	if (buffer == NULL) {
+		writeError(IO_BUFFER_NULL);
+		return FALSE;
+	}
+	return TRUE;
+}
+
 // -> OUTPUT STREAM INTERFACE
 
 /**
@@ -195,7 +203,6 @@ char bufferGetFirstChar(Buffer* buffer) {
 void clearBuffer(Buffer* buffer) {
     buffer->writeIndex = 0;
     buffer->readIndex = 0;
-    // buffer->currentSize = 0;
 }
 
 void deepClearBuffer(Buffer* buffer) {
@@ -210,11 +217,17 @@ void deepClearBuffer(Buffer* buffer) {
 }
 
 InputStream* getInputStream(Buffer* buffer) {
-    return &(buffer->inputStream);
+	if (checkBufferNotNull(buffer)) {
+    	return &(buffer->inputStream);
+	}
+	return NULL;
 }
 
 OutputStream* getOutputStream(Buffer* buffer) {
-    return &(buffer->outputStream);
+	if (checkBufferNotNull(buffer)) {
+    	return &(buffer->outputStream);
+	}
+	return NULL;
 }
 
 void printDebugBuffer(OutputStream* outputStream, Buffer* buffer) {

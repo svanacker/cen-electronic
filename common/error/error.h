@@ -17,6 +17,7 @@ void writeError(int errorCode);
 
 #define IO_BUFFER_EMPTY 			 	0x0100
 #define IO_BUFFER_FULL	 			 	0x0101
+#define IO_BUFFER_NULL					0x0102
 
 #define IO_PIN_INDEX_ERROR				0x0110
 
@@ -47,6 +48,7 @@ void writeError(int errorCode);
 
 #define DRIVER_STREAM_LISTENER_INPUT_BUFFER_NULL	0x2200
 #define DRIVER_STREAM_LISTENER_OUTPUT_BUFFER_NULL	0x2201
+#define DRIVER_INPUT_STREAM_NULL					0x2210
 
 // PID
 
