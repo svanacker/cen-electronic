@@ -5,32 +5,21 @@ SV
 - Tester intensivement la gestion de collision / blocage de roues
 - Faire fonctionner la stratégie au niveau du projet Eclipse
 - Gestion des lasers et de la collision (Zigbee Jennic et le système de balise)
-* => Pouvoir activer ou non le fait d'afficher les Tops sur le réflecteur laser
 * => Mettre un interrupteur pour éviter de devoir débrancher au niveau du coordinateur
-* => Mettre une petite led qui clignote quand c ok et qu'on a la liaison avec le Jennic
-* => Gérer le fait de pouvoir détecter quand on considère qu'il y a une nouvelle position à envoyer ???
-* => Essayer de réduire le nombre d'instruction ou le temps d'attente entre chaque instruction sur le Jennic
-* => Recalibrer sur une table les servos
-* => Gérer le fait qu'on recoive ou non un ACK (=> Savoir si c'est ok)
-* => Définir la signification des Leds :
-	Sur le coordinateur :
-      -> LED 1 : Clignote pour indiquer que localement on arrive bien à piloter le JENNIC
-      -> LED 2 : S'active lorsque le router se connecte, se désactive lorsque le routeur se déconnecte
-        Sur le routeur :
-      -> LED 1 : Clignote pour indiquer que localement on arrive bien à piloter le JENNIC
-      -> LED 2 : clignote lorsqu'on a reçu une trame puis off quand on en recoit une autre (alternativement)
-* Gestion au niveau du device du statut BeaconReceiver, pour afficher au niveau du LCD l'information
-* Gestion du démarrage des servos depuis la BeaconReceiver
-* Faire un nouveau DriverDataDispatcher spécial UART si c'est possible pour pouvoir relier des cartes en UART en maitre esclave :)
 * Se poser la question des deviceHandleCallbackRawData et du test != NULL correspondant
 * Mettre un 2ème sonar pour les mouvements en arrières
 * Faire la gestion de la manoeuvre de recalibrage 
 
 Problème au niveau de l'envoie de "'" pour arrêter les servos. Provoque un reboot de la carte alors que | marche correctement.
 
+- Installer GIT sur la carte mère embarquée du PC
+- Tester de pouvoir récupérer directement un programme en mettant un remote GIT différent
+
 NEXT YEAR
 
 - Implémenter et tester la gestion de l'enchainement des trajectoires
+- Faire un nouveau DriverDataDispatcher spécial UART si c'est possible pour pouvoir relier des cartes en UART en maitre esclave :)
+
 
 AUTRES :
 
