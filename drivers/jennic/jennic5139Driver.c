@@ -24,6 +24,73 @@
 /** Status. */
 static unsigned char jennicNetworkStatus;
 
+/** Indicates if we are in startup Phase. */
+static BOOL jennicStartup;
+
+/** Indicates if there is an error during startup. */
+static BOOL hasErrorDuringStartup;
+
+/** There is an error during last command. */
+static BOOL jennicError;
+
+/** Indicates if we are in ledCommand => if there is an error during this command, does nothing, else it will go to recursive error. */
+static BOOL ledCommand;
+
+/** Led status. */
+static BOOL ledRedOn;
+static BOOL ledBlueOn;
+
+void toggleLedRed() {
+	jennic5139LocalLight(JENNIC_LED_RED, ledRedOn);
+	ledRedOn = !ledRedOn;
+}
+
+void toggleLedBlue() {
+	jennic5139LocalLight(JENNIC_LED_BLUE, ledBlueOn);
+	ledBlueOn = !ledBlueOn;	
+}
+
+void clearLedStatus() {
+	ledRedOn = FALSE;
+	ledBlueOn = FALSE;
+	jennic5139LocalLight(JENNIC_LED_ALL, FALSE);
+}
+
+void onJennicError() {
+	jennicError = TRUE;
+}
+
+void showJennicError() {
+	if (!jennicError) {
+		return;
+	}
+	// for next instruction
+	jennicError = FALSE;
+
+	// if the error occured when sending Led, does nothing !
+	if (ledCommand) {
+		return;
+	}
+	// blind if several errors
+	toggleLedRed();
+	if (jennicStartup) {
+		hasErrorDuringStartup = TRUE;
+	}
+}
+
+void showStartupStatus() {
+	// if error
+	if (hasErrorDuringStartup) {
+		// startup error
+		jennic5139LocalLight(JENNIC_LED_YELLOW, TRUE);
+	}
+	else {
+		// green led
+		jennic5139LocalLight(JENNIC_LED_GREEN, TRUE);
+	}
+}
+
+
 #define NUMBER_OF_READ_BETWEEN_INSTRUCTION 20
 
 static InputStream* zigbeeInputStream;
@@ -34,15 +101,6 @@ static OutputStream* debugOutputStream;
 static char commandBufferArray[JENNIC_DRIVER_COMMAND_BUFFER_LENGTH];
 static Buffer commandBuffer;
 
-void initJennic5139Streams(InputStream* aZigbeeInputStream,
-        OutputStream* aZigbeeOutputStream,
-        OutputStream* aDebugOutputStream) {
-    zigbeeInputStream = aZigbeeInputStream;
-    zigbeeOutputStream = aZigbeeOutputStream;
-    debugOutputStream = aDebugOutputStream;
-
-	initBuffer(&commandBuffer, &commandBufferArray, JENNIC_DRIVER_COMMAND_BUFFER_LENGTH, "jennicCmdBuffer", "CMD");
-}
 
 void waitAndCopyFromZigbeeToDebug(int delayMilliSecond) {
     // use delay to be sure that the connection is OK
@@ -92,6 +150,7 @@ void sendJennic5139CommandFromBuffer() {
 	printBufferToDebugAndZigbee();
 	appendString(debugOutputStream, "WAIT ... : ");
     waitAndCopyFromZigbeeToDebug(NUMBER_OF_READ_BETWEEN_INSTRUCTION);
+	showJennicError();
 }
 
 /**
@@ -125,6 +184,25 @@ void appendCmdEnd() {
 	appendString(&(commandBuffer.outputStream), "\n");
 }
 
+void jennic5139SetAllPinOutput() {
+	// All digital pins to output
+	appendCmdString(JENNIC_PIN_CONFIGURE_IO);
+	appendCmdString(",0,xFFFF");
+	appendCmdEnd();
+	sendJennic5139CommandFromBuffer();
+}
+
+void initJennic5139Streams(InputStream* aZigbeeInputStream,
+        OutputStream* aZigbeeOutputStream,
+        OutputStream* aDebugOutputStream) {
+    zigbeeInputStream = aZigbeeInputStream;
+    zigbeeOutputStream = aZigbeeOutputStream;
+    debugOutputStream = aDebugOutputStream;
+
+	initBuffer(&commandBuffer, &commandBufferArray, JENNIC_DRIVER_COMMAND_BUFFER_LENGTH, "jennicCmdBuffer", "CMD");
+	jennic5139SetAllPinOutput();
+}
+
 /**
  * See header documentation
  * looks like : SND,0006066005650518898,0102AA,3,0
@@ -152,6 +230,9 @@ void sendJennic5138DataBuffer(InputStream* inputStream, char* macAddress, int fl
 	appendCmdEnd();
 	
 	sendJennic5139CommandFromBuffer();
+
+	// Show that we send data !
+	toggleLedBlue();
 }
 
 /**
@@ -227,8 +308,6 @@ void configureNetworkParameters(unsigned int pingPeriod,
 	appendComma();
 
 	appendCmdDec(maxNumberOfHopsForBroadcast);
-	appendComma();
-
 	appendCmdEnd();
 
 	sendJennic5139CommandFromBuffer();
@@ -315,6 +394,7 @@ void initJennic5139Start(int nodeType) {
 }
 
 void initJennic5139Coordinater() {
+	jennicStartup = TRUE;
 	initJennic5139Configuration(
 			CHANNEL_MASK_AUTO_SELECTION,
 			NUMBER_OF_CHILDREN,
@@ -332,9 +412,15 @@ void initJennic5139Coordinater() {
 
 
  	initJennic5139Start(NODE_TYPE_COORDINATER);
+
+	jennicStartup = FALSE;
+	showStartupStatus();
 }
 
 void initJennic5139Router() {
+	jennicStartup = TRUE;
+	clearLedStatus();
+
 	initJennic5139Configuration(
 			CHANNEL_MASK_AUTO_SELECTION,
 			NUMBER_OF_CHILDREN,
@@ -351,6 +437,9 @@ void initJennic5139Router() {
 					   ROUTING_ON);
 
 	initJennic5139Start(NODE_TYPE_ROUTER);
+
+	jennicStartup = FALSE;
+	showStartupStatus();
 }
 
 void jennic5139Reset() {
@@ -359,28 +448,24 @@ void jennic5139Reset() {
 	sendJennic5139CommandFromBuffer();
 }
 
-void jennic5139LocalLight(int pinMask, BOOL on) {
-	// All digital pins to output
-	appendCmdString(JENNIC_PIN_CONFIGURE_IO);
-	appendCmdString(",0,xFFFF");
-	appendCmdEnd();
-	sendJennic5139CommandFromBuffer();
-
+void jennic5139LocalLight(char* pinMask, BOOL on) {
+	ledCommand = TRUE;
     appendCmdString(JENNIC_PIN_WRITE_PIN);
 	if (on) {
-		appendCmdString(",x");	
-		appendHex4(getCommandOutputStream(), pinMask);
-		appendCmdString(",0");
+		appendCmdString(",0,x");
+		appendString(getCommandOutputStream(), pinMask);
 		appendCmdEnd();
     } else {
-		appendCmdString(",0,x");
-		appendHex4(getCommandOutputStream(), pinMask);
+		appendCmdString(",x");	
+		appendString(getCommandOutputStream(), pinMask);
+		appendCmdString(",0");
 		appendCmdEnd();
     }
 	sendJennic5139CommandFromBuffer();
+	ledCommand = FALSE;
 }
 
-void jennic5139RemoteLight(char* jennicAddress, int pinMask, BOOL on) {
+void jennic5139RemoteLight(char* jennicAddress, char* pinMask, BOOL on) {
 	// Establish a tunnel for transmit remote command
     appendCmdString(JENNIC_TUNNEL_CONNECTION);
 	appendCmdString(",3,");
@@ -424,13 +509,13 @@ void jennic5139RemoteLight(char* jennicAddress, int pinMask, BOOL on) {
 	appendCmdString(JENNIC_PIN_WRITE_PIN);
 
     if (on) {
-		appendCmdString(",x");
-		appendHex4(getCommandOutputStream(), pinMask);
-		appendCmdString(",0\"\n");
-    } else {
         appendCmdString(",0,x");
-		appendHex4(getCommandOutputStream(), pinMask);
+		appendString(getCommandOutputStream(), pinMask);
 		appendCmdString("\"\n");
+    } else {
+		appendCmdString(",x");
+		appendString(getCommandOutputStream(), pinMask);
+		appendCmdString(",0\"\n");
     }
 	sendJennic5139CommandFromBuffer();
 
@@ -451,3 +536,4 @@ unsigned char getJennicNetworkStatus() {
 void setJennicNetworkStatus(unsigned char aJennicNetworkStatus) {
 	jennicNetworkStatus = aJennicNetworkStatus;
 }
+

@@ -126,10 +126,9 @@ static StreamLink i2cSerialStreamLink;
 
 // events
 static JennicEvent dataEvent;
-static JennicEvent networkStartEvent;
-static JennicEvent childJoinedEvent;
-static JennicEvent childLeaveEvent;
-static JennicEvent resetEvent;
+static JennicEvent errorEvent;
+static JennicEvent connectionEstablishedEvent;
+static JennicEvent connectionResetEvent;
 
 // I2C Debug
 // static Buffer debugI2cInputBuffer;
@@ -148,32 +147,54 @@ void initDevicesDescriptor() {
 	initDevices();
 }
 
+void initBeaconReceiverIO() {
+	// Use All port as digital Port
+	ADPCFG = 0xFFFF;
+	// PORT B0->B3 as output (network Status)
+	// GREEN
+    TRISBbits.TRISB0 = 0;
+	// ORANGE
+	TRISBbits.TRISB1 = 0;
+	// RED
+	TRISBbits.TRISB2 = 0;
+	// BLUE
+	TRISBbits.TRISB3 = 0;
+}
+
+/**
+ * Inverse network event pin status to indicates that the jennic receive either event or either data.
+ * The other network status pin help to know if the event is RST, NTU, DATA ...
+ */
+void updatePinNetworkEventStatus() {
+	// on / off the led each time Data arrived
+	LATBbits.LATB3 = (!PORTBbits.RB3);
+}
+
+void updatePinNetworkStatus() {
+	int networkStatus = getJennicNetworkStatus();
+	LATBbits.LATB0 = networkStatus == JENNIC_LINK_CONNECTED;
+	LATBbits.LATB1 = networkStatus == JENNIC_WAITING_FOR_NODE;
+	LATBbits.LATB2 = networkStatus == JENNIC_NOT_INITIALIZED;
+	updatePinNetworkEventStatus();
+}
+
+void onErrorReset(JennicEvent* jennicEvent) {
+	appendString(getOutputStreamLogger(INFO), "ERROR ! \n");
+	onJennicError();
+}
+
 /**
  * Called when the network started.
  */ 
-void onNetworkStart(JennicEvent* jennicEvent) {
-	setJennicNetworkStatus(JENNIC_WAITING_FOR_NODE);
-	appendString(getOutputStreamLogger(INFO), "NETWORK START ! \n");
-}
-
-/**
- * Called when the child joined.
- */ 
-void onChildJoined(JennicEvent* jennicEvent) {
+void onConnectionEstablished(JennicEvent* jennicEvent) {
 	setJennicNetworkStatus(JENNIC_LINK_CONNECTED);
-	appendString(getOutputStreamLogger(INFO), "CHILD JOINED ! \n");
-}
-
-/**
- * Called when the child leave.
- */ 
-void onChildLeave(JennicEvent* jennicEvent) {
-	setJennicNetworkStatus(JENNIC_WAITING_FOR_NODE);
-	appendString(getOutputStreamLogger(INFO), "CHILD LEAVE ! \n");
+	updatePinNetworkStatus();
+	appendString(getOutputStreamLogger(INFO), "CONNECTION ESTABLISHED ! \n");
 }
 
 void onConnectionReset(JennicEvent* jennicEvent) {
 	setJennicNetworkStatus(JENNIC_WAITING_FOR_NODE);
+	updatePinNetworkStatus();
 	appendString(getOutputStreamLogger(INFO), "CONNECTION RESET ! \n");
 	// TODO : Reset Robot Position
 	// TODO : Get the time of the position
@@ -184,26 +205,30 @@ void onData(JennicEvent* jennicEvent) {
 	Buffer* requestBuffer = getJennicInDataBuffer();
 	if (!isBufferEmpty(requestBuffer)) {
 		appendString(&debugOutputStream, "\nDATA ! ");
-
-		// printBuffer(&debugOutputStream, inDataBuffer);
+		updatePinNetworkEventStatus();
 		// handle it like other source (UART, I2C ...)
 		handleStreamInstruction(requestBuffer, &responseDataOutputBuffer, &responseDataOutputStream, &filterRemoveCRLF, NULL);
+
+		jennic5139LocalLight(JENNIC_LED_BLUE, TRUE);
+		jennic5139LocalLight(JENNIC_LED_RED, FALSE);
+		jennic5139LocalLight(JENNIC_LED_YELLOW, TRUE);
+		jennic5139LocalLight(JENNIC_LED_GREEN, FALSE);
 	}
+	updatePinNetworkStatus();
 }
 
 void registerJennicEvents() {
 	initJennicEventList();
-	addJennicEvent(&networkStartEvent, JENNIC_NETWORK_STARTED, ",?,", JENNIC_ROUTER_MAC_ADDRESS, "", NO_PAY_LOAD, onNetworkStart);
-	addJennicEvent(&childJoinedEvent, JENNIC_CHILD_JOINED, ",", JENNIC_COORDINATER_MAC_ADDRESS, "", NO_PAY_LOAD, onChildJoined);
-	addJennicEvent(&childLeaveEvent, JENNIC_CHILD_LEAVE, ",", JENNIC_COORDINATER_MAC_ADDRESS, "", NO_PAY_LOAD, onChildLeave);
-	addJennicEvent(&resetEvent, JENNIC_RESET, "", "", "", NO_PAY_LOAD, onConnectionReset);
-	// WARN : Length of data must be > 9 in hexadecimal (because size is on 2 char)
-	// Normally the argument is ",0,??," where 
-	addJennicEvent(&dataEvent, JENNIC_RECEIVE_DATA, ",", JENNIC_COORDINATER_MAC_ADDRESS, ",0,???", 4, onData);
+	addJennicEvent(&connectionEstablishedEvent, JENNIC_NETWORK_STARTED, JENNIC_COORDINATER_MAC_ADDRESS, JENNIC_ROUTER_MAC_ADDRESS, NULL, NO_PAY_LOAD, onConnectionEstablished);
+	addJennicEvent(&connectionResetEvent, JENNIC_RESET, NULL, NULL, NULL, NO_PAY_LOAD, onConnectionReset);
+	// addJennicEvent(&errorEvent, JENNIC_RESPONSE_ERROR, NULL, NULL, NULL, NO_PAY_LOAD, onErrorReset);
+	// WARN : Length of data must be > 9 in hexadecimal (because size is on 2 char) => ???
+	addJennicEvent(&dataEvent, JENNIC_RECEIVE_DATA, JENNIC_COORDINATER_MAC_ADDRESS, "0", "???", 4, onData);
 }
 
 int runZigBeeReceiver() {
 	setPicName("BEACON RECEIVER BOARD");
+	initBeaconReceiverIO();
 
 	// zigBee link through UART connected to Zigbee
 	openSerialLink(	&zigbeeSerialStreamLink,
@@ -271,6 +296,8 @@ int runZigBeeReceiver() {
 	// Init router streams
 	initJennic5139Streams(zigbeeInputStream, &zigbeeOutputStream, &debugOutputStream);
 	registerJennicEvents();
+
+	updatePinNetworkStatus();
 
 	// Get interesting data 
     while (1) {

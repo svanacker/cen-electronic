@@ -26,6 +26,8 @@ SV
 * Mettre un 2ème sonar pour les mouvements en arrières
 * Faire la gestion de la manoeuvre de recalibrage 
 
+Problème au niveau de l'envoie de "'" pour arrêter les servos. Provoque un reboot de la carte alors que | marche correctement.
+
 NEXT YEAR
 
 - Implémenter et tester la gestion de l'enchainement des trajectoires
@@ -35,6 +37,7 @@ AUTRES :
 - Idées pour l'année prochaine :
 - Mode PAS à PAS à faire au niveau de l'informatique
 
+autre modif de test
 
 ACHATS à FAIRE
 

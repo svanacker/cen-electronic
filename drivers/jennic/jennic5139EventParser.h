@@ -21,14 +21,12 @@ typedef void JennicEventFunction(JennicEvent* jennicEvent);
 struct JennicEvent {
 	/** The event (3 characters) to find. */
 	char eventCommand[LENGTH_OF_JENNIC_AT_COMMAND];
-	/** String after address. */
-	char* beforeAddress;
-	/** The number of char before the address (eventCommand + length(beforeAddress)). */
-	char charBeforeAddressCount;
+	/** String for argument0. */
+	char* argument0;
 	/** The address of the event (if needed). */
-	char* jennicAddress;
-	/** The arguments. */
-	char* arguments;
+	char* argument1;
+	/** argument2. */
+	char* argument2;
     /** The function which must be called when a such event is found. */
     JennicEventFunction* onEvent;
 	/** Indicates that we are in payload data if value >= 0. If value = -1, payload search is disabled. */
@@ -76,9 +74,9 @@ void initJennicEventList();
  */
 void addJennicEvent(JennicEvent* jennicEvent,
 					 char* eventCommand,
-					 char* beforeAddress,
-					 char* jennicAddress,
-					 char* arguments,
+					 char* argument0,
+					 char* argument1,
+					 char* argument2,
 					 char payLoadArgumentIndex,
 					JennicEventFunction* onEvent);
 /**

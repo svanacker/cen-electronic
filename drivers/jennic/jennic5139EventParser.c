@@ -44,9 +44,9 @@ Buffer* getJennicInDataBuffer() {
 
 void addJennicEvent(JennicEvent* jennicEvent,
 					 char* eventCommand,
-					 char* beforeAddress,
-					 char* jennicAddress,
-					 char* arguments,
+					 char* argument0,
+					 char* argument1,
+					 char* argument2,
 					 char payLoadArgumentIndex,
 					JennicEventFunction* onEvent) {
     unsigned char size = jennicEventList.size;
@@ -60,11 +60,10 @@ void addJennicEvent(JennicEvent* jennicEvent,
 		eventCommand++;
 		jennicEvent->eventCommand[2] = *eventCommand;
 
-		jennicEvent->beforeAddress = beforeAddress;
-		jennicEvent->charBeforeAddressCount = LENGTH_OF_JENNIC_AT_COMMAND + strlen(beforeAddress);
-		jennicEvent->jennicAddress = jennicAddress;
+		jennicEvent->argument0 = argument0;
+		jennicEvent->argument1 = argument1;
+		jennicEvent->argument2 = argument2;
 		jennicEvent->onEvent = onEvent;
-		jennicEvent->arguments = arguments;
 		jennicEvent->payLoadArgumentIndex = payLoadArgumentIndex;
     } else {
         writeError(TOO_MUCH_JENNIC_EVENT);
@@ -103,11 +102,18 @@ void initJennic5139DataSearch(JennicEvent* matchEvent) {
 	append(searchOutputStream, matchEvent->eventCommand[0]);
 	append(searchOutputStream, matchEvent->eventCommand[1]);
 	append(searchOutputStream, matchEvent->eventCommand[2]);
-	appendString(searchOutputStream, matchEvent->beforeAddress);
-	// Address
-	appendString(searchOutputStream, matchEvent->jennicAddress);
-	// Arguments of the Event
-	appendString(searchOutputStream, matchEvent->arguments);
+	if (matchEvent->argument0 != NULL) {
+		append(searchOutputStream, ',');
+		appendString(searchOutputStream, matchEvent->argument0);
+	}
+	if (matchEvent->argument1 != NULL) {
+		append(searchOutputStream, ',');
+		appendString(searchOutputStream, matchEvent->argument1);
+	}
+	if (matchEvent->argument2 != NULL) {
+		append(searchOutputStream, ',');
+		appendString(searchOutputStream, matchEvent->argument2);
+	}
 }
 
 /**
@@ -203,8 +209,8 @@ void handleJennicNextChar(char c) {
 			if (blockBeginChar == '?' || c == blockBeginChar) {
 				jennicEventList.dataBlockBeginMatchIndex++;
 			} else {
-				// START DEBUG ONLY
 				/*
+				// START DEBUG ONLY
 				println(getDebugOutputStreamLogger());
 				appendStringAndDec(getDebugOutputStreamLogger(), "index=", jennicEventList.dataBlockBeginMatchIndex);
 				append(getDebugOutputStreamLogger(), ':');
@@ -236,16 +242,14 @@ void printJennicEvent(JennicEvent* event, OutputStream* outputStream) {
 	append(outputStream, event->eventCommand[1]);
 	append(outputStream, event->eventCommand[2]);
 
-	appendStringAndDec(outputStream, ",charBeforeAddressCount=", event->charBeforeAddressCount);
+	appendString(outputStream, ",arg0=\"");
+	appendString(outputStream, event->argument0);
 
-	appendString(outputStream, ",beforeAddress=\"");
-	appendString(outputStream, event->beforeAddress);
+	appendString(outputStream, "\",arg1=");
+	appendString(outputStream, event->argument1);
 
-	appendString(outputStream, "\",address=");
-	appendString(outputStream, event->jennicAddress);
-
-	appendString(outputStream, ",args=");
-	appendString(outputStream, event->arguments);
+	appendString(outputStream, ",arg2=");
+	appendString(outputStream, event->argument2);
 
 	appendString(outputStream, ",payLoadArgumentIndex=");
 	appendBOOL(outputStream, event->payLoadArgumentIndex);

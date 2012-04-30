@@ -63,13 +63,13 @@ void commonBeaconDeviceHandleRawData(char header,
 	// Local Jennic Light on
 	} else if (header == COMMAND_LOCAL_LIGHT_ON) {
         appendAck(outputStream);
-		jennic5139LocalLight(0xFFFF, TRUE);
+		jennic5139LocalLight(JENNIC_LED_ALL, TRUE);
         append(outputStream, COMMAND_LOCAL_LIGHT_ON);
 	}
 	// Local Jennic Light off
 	 else if (header == COMMAND_LOCAL_LIGHT_OFF) {
         appendAck(outputStream);
-		jennic5139LocalLight(0xFFFF, FALSE);
+		jennic5139LocalLight(JENNIC_LED_ALL, FALSE);
         append(outputStream, COMMAND_LOCAL_LIGHT_OFF);
 	}
 	// Print the data buffer

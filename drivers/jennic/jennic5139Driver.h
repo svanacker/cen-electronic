@@ -11,6 +11,15 @@
 
 #define JENNIC_DRIVER_COMMAND_BUFFER_LENGTH		45
 
+// LED MASK
+
+#define JENNIC_LED_BLUE						"0002"
+#define JENNIC_LED_YELLOW					"0004"
+#define JENNIC_LED_GREEN					"0008"
+#define JENNIC_LED_RED						"0100"
+
+#define JENNIC_LED_ALL						"FFFF"
+
 // NETWORK STATE for Coordinater - Router
 
 /** The jennic is not initialized. */
@@ -34,8 +43,6 @@ unsigned char getJennicNetworkStatus();
  * Change the state of the NETWORK STATUS
  */
 void setJennicNetworkStatus(unsigned char aNetworkStatus);
-
-
 
 // Configuration - CFG Commands
 
@@ -246,6 +253,15 @@ void setJennicNetworkStatus(unsigned char aNetworkStatus);
  */
 #define JENNIC_CHILD_LEAVE						"CHL"
 
+// -> Response to Command
+
+/** Previous command was ok. */
+#define JENNIC_RESPONSE_OK						"OK"
+
+/** Previous command was not good. */
+#define JENNIC_RESPONSE_ERROR					"ERR"
+
+
 // -> Tunneling
 
 /**
@@ -288,7 +304,7 @@ void setJennicNetworkStatus(unsigned char aNetworkStatus);
 // INIT
 
 /**
-* Init the streams used by Jennic
+* Init the streams used by Jennic.
 */
 void initJennic5139Streams( InputStream* aZigbeeInputStream,
 							OutputStream* aZigbeeOutputStream,
@@ -351,12 +367,16 @@ void jennic5139Reset();
 
 /**
 * off or on the light of the local zigbee.
+* @param pinMask : see JENNIC_LED_BLUE, JENNIC_LED_GREEN ... 
 */
-void jennic5139LocalLight(int pinMask, BOOL on) ;
+void jennic5139LocalLight(char* pinMask, BOOL on) ;
 
 /**
 * off or on the light of the remote node.
+* @param pinMask : see JENNIC_LED_BLUE, JENNIC_LED_GREEN ... 
 */
-void jennic5139RemoteLight(char* jennicAddress, int pinMask, BOOL light);
+void jennic5139RemoteLight(char* jennicAddress, char* pinMask, BOOL light);
+
+void onJennicError();
 
 #endif
