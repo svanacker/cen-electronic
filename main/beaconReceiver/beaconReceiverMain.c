@@ -178,8 +178,8 @@ void updatePinNetworkStatus() {
 	updatePinNetworkEventStatus();
 }
 
-void onErrorReset(JennicEvent* jennicEvent) {
-	// appendString(getOutputStreamLogger(ERROR), "ERROR ! \n");
+void onError(JennicEvent* jennicEvent) {
+	appendString(getOutputStreamLogger(ERROR), "ERROR ! \n");
 	onJennicError();
 }
 
@@ -208,11 +208,7 @@ void onData(JennicEvent* jennicEvent) {
 		updatePinNetworkEventStatus();
 		// handle it like other source (UART, I2C ...)
 		handleStreamInstruction(requestBuffer, &responseDataOutputBuffer, &responseDataOutputStream, &filterRemoveCRLF, NULL);
-
-		jennic5139LocalLight(JENNIC_LED_BLUE, TRUE);
-		jennic5139LocalLight(JENNIC_LED_RED, FALSE);
-		jennic5139LocalLight(JENNIC_LED_YELLOW, TRUE);
-		jennic5139LocalLight(JENNIC_LED_GREEN, FALSE);
+		onJennicData();
 	}
 	updatePinNetworkStatus();
 }
@@ -221,7 +217,7 @@ void registerJennicEvents() {
 	initJennicEventList();
 	addJennicEvent(&connectionEstablishedEvent, JENNIC_NETWORK_STARTED, JENNIC_COORDINATER_MAC_ADDRESS, JENNIC_ROUTER_MAC_ADDRESS, NULL, NO_PAY_LOAD, onConnectionEstablished);
 	addJennicEvent(&connectionResetEvent, JENNIC_RESET, NULL, NULL, NULL, NO_PAY_LOAD, onConnectionReset);
-	addJennicEvent(&errorEvent, JENNIC_RESPONSE_ERROR, NULL, NULL, NULL, NO_PAY_LOAD, onErrorReset);
+	addJennicEvent(&errorEvent, JENNIC_RESPONSE_ERROR, NULL, NULL, NULL, NO_PAY_LOAD, onError);
 	// WARN : Length of data must be > 9 in hexadecimal (because size is on 2 char) => ???
 	addJennicEvent(&dataEvent, JENNIC_RECEIVE_DATA, JENNIC_COORDINATER_MAC_ADDRESS, "0", "???", 4, onData);
 }

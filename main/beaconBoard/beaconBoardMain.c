@@ -145,6 +145,7 @@ static Device beaconReceiverDevice;
 
 // events
 static JennicEvent dataEvent;
+static JennicEvent errorEvent;
 static JennicEvent networkStartEvent;
 static JennicEvent childJoinedEvent;
 static JennicEvent childLeaveEvent;
@@ -234,6 +235,11 @@ void initBeaconIO() {
 	TRISBbits.TRISB3 = 1;
 }
 
+void onError(JennicEvent* jennicEvent) {
+	appendString(getOutputStreamLogger(ERROR), "ERROR ! \n");
+	onJennicError();
+}
+
 /**
  * Called when the network started.
  */ 
@@ -283,21 +289,23 @@ void onData(JennicEvent* jennicEvent) {
 	// Manage real Data into the Jennic Buffer
 	Buffer* requestBuffer = getJennicInDataBuffer();
 	if (!isBufferEmpty(requestBuffer)) {
-		// appendString(&debugOutputStream, "\nDATA : ");
+		// appendString(&debugOutputStream, "\nDATA !");
 		// printBuffer(&debugOutputStream, requestBuffer);
 		// println(&debugOutputStream);
 		// handle it like other source (UART, I2C ...)
 		handleStreamInstruction(requestBuffer, &responseDataOutputBuffer, &responseDataOutputStream, &filterRemoveCRLF, NULL);
+		onJennicData();
 	}
 }
 
 void registerJennicEvents() {
 	initJennicEventList();
-	addJennicEvent(&networkStartEvent, JENNIC_NETWORK_STARTED, ",?,", JENNIC_COORDINATER_MAC_ADDRESS, "", NO_PAY_LOAD, onNetworkStart);
-	addJennicEvent(&childJoinedEvent, JENNIC_CHILD_JOINED, ",", JENNIC_ROUTER_MAC_ADDRESS, "", NO_PAY_LOAD, onChildJoined);
-	addJennicEvent(&childLeaveEvent, JENNIC_CHILD_LEAVE, ",", JENNIC_ROUTER_MAC_ADDRESS, "", NO_PAY_LOAD, onChildLeave);
+	addJennicEvent(&networkStartEvent, JENNIC_NETWORK_STARTED, "?", JENNIC_COORDINATER_MAC_ADDRESS, NULL, NO_PAY_LOAD, onNetworkStart);
+	addJennicEvent(&childJoinedEvent, JENNIC_CHILD_JOINED, JENNIC_ROUTER_MAC_ADDRESS, NULL, NULL, NO_PAY_LOAD, onChildJoined);
+	addJennicEvent(&childLeaveEvent, JENNIC_CHILD_LEAVE, JENNIC_ROUTER_MAC_ADDRESS, NULL, NULL, NO_PAY_LOAD, onChildLeave);
+	addJennicEvent(&errorEvent, JENNIC_RESPONSE_ERROR, NULL, NULL, NULL, NO_PAY_LOAD, onError);
 	// WARN : Length of data must be > 9 in hexadecimal (because size is on 2 char)
-	addJennicEvent(&dataEvent, JENNIC_RECEIVE_DATA, ",", JENNIC_ROUTER_MAC_ADDRESS, ",0,???", 4, onData);
+	addJennicEvent(&dataEvent, JENNIC_RECEIVE_DATA, JENNIC_ROUTER_MAC_ADDRESS, "0", "???", 4, onData);
 }
 
 void showJennicLinkState() {

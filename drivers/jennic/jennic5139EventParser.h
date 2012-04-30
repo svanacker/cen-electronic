@@ -1,8 +1,8 @@
 #ifndef JENNIC_5139_EVENT_PARSER_H
 #define JENNIC_5139_EVENT_PARSER_H
 
-#define JENNIC_SEARCH_DATA_RAW_INPUT_BUFFER_LENGTH		60
-#define JENNIC_SEARCH_DATA_BUFFER_LENGTH				60
+#define JENNIC_SEARCH_DATA_RAW_INPUT_BUFFER_LENGTH		54
+#define JENNIC_SEARCH_DATA_BUFFER_LENGTH				54
 #define JENNIC_DATA_INPUT_BUFFER_LENGTH					30
 
 // forward declaration
@@ -36,7 +36,7 @@ struct JennicEvent {
 #define NO_PAY_LOAD 	-1
 
 /** The maximal number of event which can be parsed. */
-#define MAX_JENNIC_EVENT 10
+#define MAX_JENNIC_EVENT 6
 
 /**
  * The struct defining a list of jennic Event.

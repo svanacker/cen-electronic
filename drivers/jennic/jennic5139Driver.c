@@ -422,9 +422,20 @@ void initJennic5139Start(int nodeType) {
 	sendJennic5139CommandFromBuffer();
 }
 
-void initJennic5139Coordinater() {
+void jennic5139CommonStartupBegin() {
 	hasErrorDuringStartup = FALSE;
 	jennicStartup = TRUE;
+	clearLedStatus();	
+}
+
+void jennic5139CommonStartupEnd() {
+	jennicStartup = FALSE;
+	showStartupStatus();
+}
+
+void initJennic5139Coordinater() {
+	jennic5139CommonStartupBegin();
+
 	initJennic5139Configuration(
 			CHANNEL_MASK_AUTO_SELECTION,
 			NUMBER_OF_CHILDREN,
@@ -443,14 +454,11 @@ void initJennic5139Coordinater() {
 
  	initJennic5139Start(NODE_TYPE_COORDINATER);
 
-	jennicStartup = FALSE;
-	showStartupStatus();
+	jennic5139CommonStartupEnd();
 }
 
 void initJennic5139Router() {
-	hasErrorDuringStartup = FALSE;
-	jennicStartup = TRUE;
-	clearLedStatus();
+	jennic5139CommonStartupBegin();
 
 	initJennic5139Configuration(
 			CHANNEL_MASK_AUTO_SELECTION,
@@ -469,8 +477,7 @@ void initJennic5139Router() {
 
 	initJennic5139Start(NODE_TYPE_ROUTER);
 
-	jennicStartup = FALSE;
-	showStartupStatus();
+	jennic5139CommonStartupEnd();
 }
 
 void jennic5139Reset() {
