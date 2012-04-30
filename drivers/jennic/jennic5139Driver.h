@@ -322,7 +322,7 @@ void initJennic5139Router();
 
 // WAIT FOR DATA 
 
-void waitAndCopyFromZigbeeToDebug(int loopCount, BOOL handleZigbeeStream);
+void waitAndCopyFromZigbeeToDebug(int loopCount, int mSecDelay, BOOL handleZigbeeStream);
 
 /**
 * Search after the beginning of DAT,0006066005651610211,0,3,
@@ -378,5 +378,9 @@ void jennic5139LocalLight(char* pinMask, BOOL on) ;
 void jennic5139RemoteLight(char* jennicAddress, char* pinMask, BOOL light);
 
 void onJennicError();
+
+void onJennicData();
+
+void jennic5139SetAllPinOutput();
 
 #endif
