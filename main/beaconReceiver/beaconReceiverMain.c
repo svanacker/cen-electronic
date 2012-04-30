@@ -179,7 +179,7 @@ void updatePinNetworkStatus() {
 }
 
 void onErrorReset(JennicEvent* jennicEvent) {
-	appendString(getOutputStreamLogger(INFO), "ERROR ! \n");
+	// appendString(getOutputStreamLogger(ERROR), "ERROR ! \n");
 	onJennicError();
 }
 
@@ -195,7 +195,7 @@ void onConnectionEstablished(JennicEvent* jennicEvent) {
 void onConnectionReset(JennicEvent* jennicEvent) {
 	setJennicNetworkStatus(JENNIC_WAITING_FOR_NODE);
 	updatePinNetworkStatus();
-	appendString(getOutputStreamLogger(INFO), "CONNECTION RESET ! \n");
+	appendString(getOutputStreamLogger(ERROR), "CONNECTION RESET ! \n");
 	// TODO : Reset Robot Position
 	// TODO : Get the time of the position
 }
@@ -221,7 +221,7 @@ void registerJennicEvents() {
 	initJennicEventList();
 	addJennicEvent(&connectionEstablishedEvent, JENNIC_NETWORK_STARTED, JENNIC_COORDINATER_MAC_ADDRESS, JENNIC_ROUTER_MAC_ADDRESS, NULL, NO_PAY_LOAD, onConnectionEstablished);
 	addJennicEvent(&connectionResetEvent, JENNIC_RESET, NULL, NULL, NULL, NO_PAY_LOAD, onConnectionReset);
-	// addJennicEvent(&errorEvent, JENNIC_RESPONSE_ERROR, NULL, NULL, NULL, NO_PAY_LOAD, onErrorReset);
+	addJennicEvent(&errorEvent, JENNIC_RESPONSE_ERROR, NULL, NULL, NULL, NO_PAY_LOAD, onErrorReset);
 	// WARN : Length of data must be > 9 in hexadecimal (because size is on 2 char) => ???
 	addJennicEvent(&dataEvent, JENNIC_RECEIVE_DATA, JENNIC_COORDINATER_MAC_ADDRESS, "0", "???", 4, onData);
 }
@@ -307,9 +307,6 @@ int runZigBeeReceiver() {
 								NULL,
 								&filterRemoveCRLF,
 								NULL);
-
-		//handleStreamInstruction(&zigbeeInputBuffer, &zigbeeOutputBuffer, &zigbeeOutputStream, &filterRemoveCRLF, NULL);
-
 
         // Copy data from the Jennic to the debug outputStream
         copyFromZigbeeToDebugRetainingData();

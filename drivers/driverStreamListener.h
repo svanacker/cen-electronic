@@ -15,6 +15,7 @@
  * @param outputStream the outputStream in which we will write (can be NULL)
  * @param inputFilterChar the function for filtering (can be NULL)
  * @param outputFilterChar the function for filtering the output (can be NULL)
+ * @return TRUE if there is an instruction which was handled
  */
 BOOL handleStreamInstruction(Buffer* inputBuffer,
         Buffer* outputBuffer,

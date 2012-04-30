@@ -37,12 +37,12 @@ static BOOL jennicError;
 static BOOL ledCommand;
 
 /** Led status. */
-static BOOL ledRedOn;
+static BOOL ledYellowOn;
 static BOOL ledBlueOn;
 
-void toggleLedRed() {
-	jennic5139LocalLight(JENNIC_LED_RED, ledRedOn);
-	ledRedOn = !ledRedOn;
+void toggleLedYellow() {
+	jennic5139LocalLight(JENNIC_LED_YELLOW, ledYellowOn);
+	ledYellowOn = !ledYellowOn;
 }
 
 void toggleLedBlue() {
@@ -51,7 +51,7 @@ void toggleLedBlue() {
 }
 
 void clearLedStatus() {
-	ledRedOn = FALSE;
+	ledYellowOn = FALSE;
 	ledBlueOn = FALSE;
 	jennic5139LocalLight(JENNIC_LED_ALL, FALSE);
 }
@@ -72,7 +72,8 @@ void showJennicError() {
 		return;
 	}
 	// blind if several errors
-	toggleLedRed();
+	// TODO : Reboot when using THIS !!! : toggleLedYellow();
+	toggleLedYellow();
 	if (jennicStartup) {
 		hasErrorDuringStartup = TRUE;
 	}
@@ -82,7 +83,7 @@ void showStartupStatus() {
 	// if error
 	if (hasErrorDuringStartup) {
 		// startup error
-		jennic5139LocalLight(JENNIC_LED_YELLOW, TRUE);
+		jennic5139LocalLight(JENNIC_LED_RED, TRUE);
 	}
 	else {
 		// green led
@@ -91,7 +92,7 @@ void showStartupStatus() {
 }
 
 
-#define NUMBER_OF_READ_BETWEEN_INSTRUCTION 20
+#define NUMBER_OF_READ_BETWEEN_INSTRUCTION 10
 
 static InputStream* zigbeeInputStream;
 static OutputStream* zigbeeOutputStream;
@@ -102,16 +103,8 @@ static char commandBufferArray[JENNIC_DRIVER_COMMAND_BUFFER_LENGTH];
 static Buffer commandBuffer;
 
 
-void waitAndCopyFromZigbeeToDebug(int delayMilliSecond) {
-    // use delay to be sure that the connection is OK
-    long i;
-    for (i = 0; i < delayMilliSecond; i++) {
-        copyFromZigbeeToDebugRetainingData();
-		delaymSec(delayMilliSecond);
-    }
-}
 
-BOOL copyFromZigbeeToDebugRetainingData() {
+BOOL internalCopyFromZigbeeToDebugRetainingData(BOOL handleZigbeeStream) {
 	BOOL result = FALSE;
     // while data are available on inputStream
     while (zigbeeInputStream->availableData(zigbeeInputStream)) {
@@ -121,10 +114,25 @@ BOOL copyFromZigbeeToDebugRetainingData() {
 	    // Flush of debug Data
     	debugOutputStream->flush(debugOutputStream);
 
-		handleJennicNextChar(c);
+		if (handleZigbeeStream) {
+			handleJennicNextChar(c);
+		}
 		result = TRUE;
     }
 	return result;
+}
+
+BOOL copyFromZigbeeToDebugRetainingData() {
+	return internalCopyFromZigbeeToDebugRetainingData(TRUE);
+}
+
+void waitAndCopyFromZigbeeToDebug(int loopCount, BOOL handleZigbeeStream) {
+    // use delay to be sure that the connection is OK
+    long i;
+    for (i = 0; i < loopCount; i++) {
+        internalCopyFromZigbeeToDebugRetainingData(handleZigbeeStream);
+		delaymSec(20);
+    }
 }
 
 /**
@@ -146,11 +154,12 @@ void printBufferToDebugAndZigbee() {
  * 3. wait a delay to ensure the command was handled by the system
  */
 void sendJennic5139CommandFromBuffer() {
-	appendString(debugOutputStream, "\nSENDING CMD : ");
+	// to ensure that the jennic is ready
+	delaymSec(20);
+	appendString(debugOutputStream, "\nSENDING CMD : "); 
 	printBufferToDebugAndZigbee();
 	appendString(debugOutputStream, "WAIT ... : ");
-    waitAndCopyFromZigbeeToDebug(NUMBER_OF_READ_BETWEEN_INSTRUCTION);
-	showJennicError();
+    waitAndCopyFromZigbeeToDebug(NUMBER_OF_READ_BETWEEN_INSTRUCTION, !ledCommand);
 }
 
 /**
@@ -230,9 +239,6 @@ void sendJennic5138DataBuffer(InputStream* inputStream, char* macAddress, int fl
 	appendCmdEnd();
 	
 	sendJennic5139CommandFromBuffer();
-
-	// Show that we send data !
-	toggleLedBlue();
 }
 
 /**
@@ -263,6 +269,7 @@ void initJennic5139Configuration(char* channelMask,
 	appendCmdEnd();
 
 	sendJennic5139CommandFromBuffer();
+	showJennicError();
 }
 
 /**
@@ -311,6 +318,7 @@ void configureNetworkParameters(unsigned int pingPeriod,
 	appendCmdEnd();
 
 	sendJennic5139CommandFromBuffer();
+	showJennicError();
 }
 
 /**
@@ -351,6 +359,7 @@ void initJennic5139Init(char* panId, int channelId, char* applicationId, int res
 	appendCmdEnd();
 
 	sendJennic5139CommandFromBuffer();
+	showJennicError();
 }
 
 /**
@@ -391,6 +400,7 @@ void initJennic5139Start(int nodeType) {
 	appendCmdEnd();
 
 	sendJennic5139CommandFromBuffer();
+	showJennicError();
 }
 
 void initJennic5139Coordinater() {

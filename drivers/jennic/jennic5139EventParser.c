@@ -96,6 +96,9 @@ void clearJennicEventSearch() {
  * @private
  */
 void initJennic5139DataSearch(JennicEvent* matchEvent) {
+	if (matchEvent == NULL) {
+		return;
+	} 
 	OutputStream* searchOutputStream = &(jennicEventList.searchDataBuffer.outputStream);
 	clearBuffer(&(jennicEventList.searchDataBuffer));
 	// Command / Event
@@ -135,7 +138,6 @@ void jennicRawDataToData() {
 void handleJennicNextChar(char c) {
 	// while data are available on inputStream
 	int dataBlockLength = getBufferElementsCount(&(jennicEventList.searchDataBuffer));
-	/** Determines the index of the argument. */
 	// get the next char
 	if (c == CR || c == LF) {
 		// If a matchEvent was detected before, trigger the Event
@@ -166,7 +168,7 @@ void handleJennicNextChar(char c) {
 				// if we found a difference
 				if (event->eventCommand[charIndex] != jennicEventList.currentCommand[charIndex]) {
 					matchCompletely = FALSE;
-					break;
+					break; 
 				}
 			}
 			if (matchCompletely) {
@@ -209,7 +211,6 @@ void handleJennicNextChar(char c) {
 			if (blockBeginChar == '?' || c == blockBeginChar) {
 				jennicEventList.dataBlockBeginMatchIndex++;
 			} else {
-				/*
 				// START DEBUG ONLY
 				println(getDebugOutputStreamLogger());
 				appendStringAndDec(getDebugOutputStreamLogger(), "index=", jennicEventList.dataBlockBeginMatchIndex);
@@ -218,7 +219,6 @@ void handleJennicNextChar(char c) {
 				appendString(getDebugOutputStreamLogger(), "<>");
 				append(getDebugOutputStreamLogger(), c);
 				println(getDebugOutputStreamLogger());
-				*/
 				// END DEBUG ONLY
 	
 				// reset : we consider that the strings does not match

@@ -322,7 +322,7 @@ void initJennic5139Router();
 
 // WAIT FOR DATA 
 
-void waitAndCopyFromZigbeeToDebug(int delayMilliSecond);
+void waitAndCopyFromZigbeeToDebug(int loopCount, BOOL handleZigbeeStream);
 
 /**
 * Search after the beginning of DAT,0006066005651610211,0,3,
