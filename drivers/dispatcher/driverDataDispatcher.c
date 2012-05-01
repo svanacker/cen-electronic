@@ -21,7 +21,6 @@
 #include "../../device/dispatcher/deviceDataDispatcher.h"
 
 #include "../../drivers/driver.h"
-#include "../../drivers/driverList.h"
 
 void transmitDriverData(int transmitMode,
         int address,

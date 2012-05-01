@@ -122,6 +122,22 @@ void takeCDToDropZone1(int color) {
 	spline(color, 0x02F5, 0x00D5, ANGLE_NEG_90, 0x11, 0x26);
 }
 
+void cleanLintel1First(int color) {
+	spline(color, 0x0482, 0x0320, 0xF8F8, 0xE3, 0xDF);
+}
+
+void cleanLintel1Second(int color) {
+	spline(color, X_LINTEL_LEFT, 0x0448, ANGLE_90, 0x24, 0x21);
+}
+
+void backToReadyForLintel1(int color) {
+	spline(color, X_LINTEL_LEFT, 0x02A0, ANGLE_90, 0xF0, 0xF0);
+}	
+
+void takeLintelLeft(int color) {
+	spline(color, X_LINTEL_LEFT, 0x055C, ANGLE_90, 0x0D, 0x46);
+}
+
 // ----------------------------------------------------------- Homologation 1 ---------------------------------------------------------
 
 void homologation1(int color) {
@@ -309,6 +325,48 @@ void homologation6(int color) {
 		case 6:
 			takeCDToDropZone1(color);
 			break;
+		case 7:
+			cleanLintel1First(color);
+			break;
+		case 8:
+			cleanLintel1Second(color);
+			break;
+	}
+}
+
+void homologation7(int color) {
+    unsigned int index = getMotionInstructionIndex();
+
+    switch (index) {
+        case 1:
+            takeLintel1(color);
+            break;
+		case 2:
+			cleanLintel1First( color);
+			break;
+		case 3:
+			cleanLintel1Second(color);
+			break;
+		case 4:	
+			backToReadyForLintel1(color);
+			break;
+		case 5: // Open arm
+			armDown(color, ARM_RIGHT);
+			break;
+		case 6:
+			takeLintelLeft(color);
+			break;
+		case 7: // Rotation
+			left(color, 1700.0f);
+			break;
+		case 8: // Close ARM
+			armUp(color, ARM_RIGHT);
+			break;
+		case 9:
+			// go back home
+			spline(color, 0x0118, 0x016F, 0xFC7C, 0x33, 0x27);
+			break;
+
 	}
 }
 
@@ -341,6 +399,9 @@ void homologation(unsigned int homologationIndex, unsigned int color) {
     }
     else if (homologationIndex == 6) {
 		homologation6(color);
+    }
+    else if (homologationIndex == 7) {
+		homologation7(color);
     }
 }
 

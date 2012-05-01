@@ -18,8 +18,6 @@
 #include "../common/log/logger.h"
 
 #include "../device/dispatcher/deviceDataDispatcher.h"
-
-#include "../drivers/driverList.h"
 #include "../drivers/dispatcher/driverDataDispatcher.h"
 
 BOOL handleStreamInstruction(Buffer* inputBuffer,
