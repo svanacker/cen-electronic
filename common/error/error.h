@@ -61,11 +61,12 @@ void writeError(int errorCode);
 
 
 // Zigbee
-
 #define TOO_MUCH_JENNIC_EVENT			0x4000
 
 
 // Specific
 #define TOO_MUCH_GAME_BOARD_ELEMENTS	0x5000
+#define TOO_MUCH_STRATEGIES				0x5001
+#define TOO_MUCH_TARGETS				0x5002
 
 #endif

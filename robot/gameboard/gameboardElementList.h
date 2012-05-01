@@ -10,7 +10,7 @@
  * Tre struct defining a list of gameBoard Element.
  */
 typedef struct {
-    /** An array of pointer on gameBoard Element descriptor. */
+    /** An array of pointer on gameBoard Element. */
     GameboardElement* elements[MAX_GAME_BOARD_ELEMENT];
     /** the size of the list. */
     unsigned char size;
@@ -18,7 +18,7 @@ typedef struct {
 
 
 /**
- * Add a a game board element list.
+ * Add a game board element to the list.
  * @param element the game board element to add
  */
 void addGameboardElement(GameboardElement* element, gameboardElementPrintFunction* printFunction);
