@@ -50,6 +50,9 @@ void writeError(int errorCode);
 #define DRIVER_STREAM_LISTENER_OUTPUT_BUFFER_NULL	0x2201
 #define DRIVER_INPUT_STREAM_NULL					0x2210
 
+#define TOO_MUCH_DRIVERS				0x2300
+
+
 // PID
 
 #define PID_INDEX_INCORRECT				0x3000
@@ -57,6 +60,12 @@ void writeError(int errorCode);
 #define PID_ERROR_METHOD				0x3100
 
 
+// Zigbee
+
 #define TOO_MUCH_JENNIC_EVENT			0x4000
+
+
+// Specific
+#define TOO_MUCH_GAME_BOARD_ELEMENTS	0x5000
 
 #endif

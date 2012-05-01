@@ -31,6 +31,9 @@
 #include "../../device/device.h"
 #include "../../device/dispatcher/deviceDataDispatcher.h"
 
+#include "../../robot/gameboard/gameboard.h"
+#include "../../robot/2012/gameboardElement2012.h"
+
 // -> Devices
 
 // Test
@@ -44,7 +47,14 @@
 #include "../../drivers/driverStreamListener.h"
 
 // The port for which we debug (we can send instruction too)
-#define SERIAL_PORT_DEBUG 	SERIAL_PORT_2
+#include "../../robot/robot.h"
+
+#ifndef MPBLAB_SIMULATION
+	#define SERIAL_PORT_DEBUG 		SERIAL_PORT_2
+#else
+	// We use the same port for both
+	#define SERIAL_PORT_DEBUG 		SERIAL_PORT_1
+#endif
 
 /**
 * Device list.
@@ -82,7 +92,7 @@ void initDevicesDescriptor() {
 
 void initStrategyBoardIO() {
 	// 2011 : TODO : A regarder
-	ADPCFG = 0xFFFF;
+	// ADPCFG = 0xFFFF;
 }
 
 int main(void) {
@@ -101,8 +111,9 @@ int main(void) {
 
 	// Init the logs
 	initLog(DEBUG);
-	addLogHandler(&serialLogHandler, "UART", &debugOutputStream, DEBUG);
+	addLogHandler(&serialLogHandler, "UART", &debugOutputStream, INFO);
 	appendString(getOutputStreamLogger(INFO), getPicName());
+	println(getOutputStreamLogger(INFO));
 
 	openSlaveI2cStreamLink(&i2cSerialStreamLink,
 							&i2cSlaveInputBuffer,
@@ -116,6 +127,13 @@ int main(void) {
 
 	// init the devices
 	initDevicesDescriptor();
+
+	addElements2012();
+	printGameboard(&debugOutputStream);
+
+	while(1) {
+
+	}
 
 	// Init the timers management
 	startTimerList();

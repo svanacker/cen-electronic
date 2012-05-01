@@ -14,7 +14,7 @@
  */
 typedef struct {
     /** An array of pointer on driver Descriptor. */
-    DriverDescriptor * drivers[MAX_DRIVER];
+    DriverDescriptor* drivers[MAX_DRIVER];
     /** the size of the list. */
     unsigned char size;
 } DriverDescriptorList;
