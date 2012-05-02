@@ -6,13 +6,21 @@
 #include "../common/commons.h"
 #include "../common/io/outputStream.h"
 
+#define MAX_COST 			MAX_SIGNEDINT
+#define NO_COMPUTED_COST	-1
+
 /**
  * Encapsulates the location.
  */
 typedef struct Location {
+	/** The name. */
 	char* name;
+	/** The coordinates in x. */
 	int x;
+	/** The coordinates in y. */
 	int y;
+	/** Temporary information needed by path finding algorithm. */
+	int tmpCost;
 } Location;
 
 /**

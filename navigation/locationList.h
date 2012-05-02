@@ -17,6 +17,8 @@ typedef struct {
     Location* locations[MAX_LOCATION];
     /** the size of the list. */
     unsigned char size;
+	/** the count of element (which is different from size because of remove). */
+	unsigned char count;
 } LocationList;
 
 /**
@@ -34,6 +36,18 @@ BOOL isEmptyLocationList(LocationList* locationList);
  * @param location the location to add to the list
  */
 void addLocation(LocationList* locationList, Location* location, char* name, int x, int y);
+
+/**
+ * Add an already filled location (name, x, y).
+ */
+void addFilledLocation(LocationList* locationList, Location* location);
+
+/**
+ * Remove a location to the list.
+ * @param locationList the list in which we remove
+ * @param locationToRemove the location to remove
+ */
+void removeLocation(LocationList* locationList, Location* locationToRemove);
 
 /**
  * Get the location at index.

@@ -8,22 +8,45 @@
 
 void clearLocationList(LocationList* locationList) {
 	locationList->size = 0;
+	locationList->count = 0;
 }
 
 BOOL isEmptyLocationList(LocationList* locationList) {
-	return locationList->size == 0;
+	return locationList->count == 0;
 }
 
 void addLocation(LocationList* locationList, Location* location, char* name, int x, int y) {
+	location->name = name;
+	location->x = x;
+	location->y = y;
+}
+
+void addFilledLocation(LocationList* locationList, Location* location) {
     unsigned char size = locationList->size;
 	if (size < MAX_LOCATION) {
-		location->name = name;
 	    locationList->locations[size] = location;
 	    locationList->size++;
+		locationList->count++;
 	}
 	else {
 		writeError(TOO_MUCH_LOCATIONS);
     }
+}
+
+void removeLocation(LocationList* locationList, Location* locationToRemove) {
+	int i;
+    unsigned char size = locationList->size;
+	for (i = 0; i < size; i++) {
+		Location* location = locationList->locations[i];
+		// We can have hole because of "remove"
+		if (location == NULL) {
+			continue;
+		}
+		if (locationEquals(location, locationToRemove)) {
+			locationList->count--;
+			return;
+		}
+	}
 }
 
 Location* findLocationByName(LocationList* locationList, char* locationName) {
@@ -31,6 +54,10 @@ Location* findLocationByName(LocationList* locationList, char* locationName) {
 	int size = locationList->size;
 	for (i = 0; i < size; i++) {
 		Location* location = locationList->locations[i];
+		// We can have hole because of "remove"
+		if (location == NULL) {
+			continue;
+		}
 		if (stringEquals(locationName, location->name)) {
 			return location;
 		}
@@ -38,12 +65,16 @@ Location* findLocationByName(LocationList* locationList, char* locationName) {
 	return NULL;
 }
 
-BOOL containsLocation(LocationList* locationList, Location* location) {
+BOOL containsLocation(LocationList* locationList, Location* locationToFind) {
 	int i;
 	int size = locationList->size;
 	for (i = 0; i < size; i++) {
-		Location* location2 = locationList->locations[i];
-		if (locationEquals(location, location2)) {
+		Location* location = locationList->locations[i];
+		// We can have hole because of "remove"
+		if (location == NULL) {
+			continue;
+		}
+		if (locationEquals(location, locationToFind)) {
 			return TRUE;
 		}
 	}
@@ -63,6 +94,10 @@ void printLocationList(LocationList* locationList, OutputStream* outputStream) {
 	int size = locationList->size;
 	for (i = 0; i < size; i++) {
 		Location* location = locationList->locations[i];
+		// We can have hole because of "remove"
+		if (location == NULL) {
+			continue;
+		}
 		printLocation(location, outputStream);
 	}
 }
