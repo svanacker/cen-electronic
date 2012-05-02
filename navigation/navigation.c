@@ -16,9 +16,24 @@ static LocationList unhandled;
 static LocationList handled;
 // TODO : Map<Location, Location> previous
 // TODO : Map<Location, Integer> costs
+static PathList outgoingPaths;
+static Location nearestLocation;
 
 void addNavigationLocation(Location* location, char* name, int x, int y) {
 	addLocation(&locations, location, name, x, y);
+}
+
+void updateOutgoingPaths(Location* location) {
+	clearPathList(&outgoingPaths);
+	int i;
+	int pathSize = getPathCount(&paths);
+	for (i = 0; i < pathSize; i++) {
+		Path* path = getPath(&paths, i);
+		Location* otherEnd = getOtherEnd(path, location);
+		if (pathContainsLocation(path, location) && !containsLocation(&handled, otherEnd)) {
+			addFilledPath(&outgoingPaths, path);
+		}
+	}
 }
 
 int computeBestPath(LocationList* outLocationList, Location* start, Location* end) {

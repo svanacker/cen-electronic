@@ -19,7 +19,12 @@ typedef struct {
 
 
 /**
- * Add a path to the list.
+ * Clear the path list.
+ */
+void clearPathList(PathList* pathList);
+
+/**
+ * Fill a path and add a path to the list.
  * @param path the path to add to the list
  */
 void addPath(PathList* pathList,
@@ -32,6 +37,12 @@ void addPath(PathList* pathList,
 			 int angle2,
 			 int cost,
 			 int speedFactor);
+
+/**
+ * Add a path to the list which was already initialized.
+ * @param path the path to add to the list
+ */
+void addFilledPath(PathList* pathList, Path* path);
 
 /**
  * Get the path at index.

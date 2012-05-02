@@ -2,6 +2,7 @@
 #define LOCATION_LIST_H
 
 #include "../common/commons.h"
+#include "../common/io/outputStream.h"
 
 #include "location.h"
 
@@ -47,8 +48,18 @@ Location* getLocation(LocationList* locationList, int index);
 Location* findLocationByName(LocationList* locationList, char* locationName);
 
 /**
+ * Returns TRUE if the locationList contains the specified location.
+ */
+BOOL containsLocation(LocationList* locationList, Location* location);
+
+/**
  * Get the count of locations.
  */
 int getLocationCount(LocationList* locationList);
+
+/**
+ * Print on the outputStream the location.
+ */
+void printLocationList(LocationList* locationList, OutputStream* outputStream);
 
 #endif

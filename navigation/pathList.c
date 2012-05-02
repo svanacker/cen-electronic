@@ -5,6 +5,10 @@
 
 #include "../common/error/error.h"
 
+void clearPathList(PathList* pathList) {
+	pathList->size = 0;
+}
+
 void addPath(PathList* pathList,
 			 Path* path, 
 			 Location* location1,
@@ -15,16 +19,21 @@ void addPath(PathList* pathList,
 			 int angle2,
 			 int cost,
 			 int speedFactor) {
+	path->location1 = location1;
+	path->location2 = location2;
+	path->controlPointDistance1 = controlPointDistance1;
+	path->controlPointDistance2 = controlPointDistance2;
+	path->angle1 = angle1;
+	path->angle2 = angle2;
+	path->cost = cost;
+	path->speedFactor = speedFactor;
+	addFilledPath(pathList, path);
+}
+
+void addFilledPath(PathList* pathList, Path* path) {
     unsigned char size = pathList->size;
+
 	if (size < MAX_PATH) {
-		path->location1 = location1;
-		path->location2 = location2;
-		path->controlPointDistance1 = controlPointDistance1;
-		path->controlPointDistance2 = controlPointDistance2;
-		path->angle1 = angle1;
-		path->angle2 = angle2;
-		path->cost = cost;
-		path->speedFactor = speedFactor;
 	    pathList->paths[size] = path;
 	    pathList->size++;
 	}

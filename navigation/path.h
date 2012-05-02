@@ -25,4 +25,16 @@ typedef struct Path {
 	int speedFactor;
 } Path;
 
+/**
+ * Return if the path contains the location passed in parameter
+ */
+BOOL pathContainsLocation(Path* path, Location* location);
+
+/**
+ * Returns the opposite location on the path.
+ * @param path (this) the path for which we want to find the opposite location
+ * @param location the location for which we want to search the opposite
+ */
+Location* getOtherEnd(Path* path, Location* location);
+
 #endif
