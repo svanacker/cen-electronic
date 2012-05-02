@@ -68,5 +68,6 @@ void writeError(int errorCode);
 #define TOO_MUCH_GAME_BOARD_ELEMENTS	0x5000
 #define TOO_MUCH_STRATEGIES				0x5001
 #define TOO_MUCH_TARGETS				0x5002
+#define TOO_MUCH_LOCATIONS				0x5003
 
 #endif
