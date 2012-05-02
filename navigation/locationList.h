@@ -1,6 +1,8 @@
 #ifndef LOCATION_LIST_H
 #define LOCATION_LIST_H
 
+#include "../common/commons.h"
+
 #include "location.h"
 
 /** The max limit of location count. */
@@ -16,17 +18,33 @@ typedef struct {
     unsigned char size;
 } LocationList;
 
+/**
+ * Clear the location list.
+ */
+void clearLocationList(LocationList* locationList);
+
+/**
+ * Returns if the list is empty.
+ */
+BOOL isEmptyLocationList(LocationList* locationList);
 
 /**
  * Add a location to the list.
  * @param location the location to add to the list
  */
-void addGameStrategy(LocationList* locationList, Location* location, char* name, int x, int y);
+void addLocation(LocationList* locationList, Location* location, char* name, int x, int y);
 
 /**
  * Get the location at index.
  */
 Location* getLocation(LocationList* locationList, int index);
+
+/**
+ * Find the location by the name.
+ * @param locationList the list in which we search the location with the specified name
+ * @param locationName the name of location which is searched
+ */
+Location* findLocationByName(LocationList* locationList, char* locationName);
 
 /**
  * Get the count of locations.

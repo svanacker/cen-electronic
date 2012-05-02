@@ -1,9 +1,15 @@
 #ifndef NAVIGATION_H
 #define NAVIGATION_H
 
-#include "location.h"
 #include "locationList.h"
+#include "location.h"
+#include "pathList.h"
 #include "path.h"
+
+/**
+ * Add the location to the navigation graph.
+ */
+void addNavigationLocation(Location* location, char* name, int x, int y);
 
 /**
  * Computes the path.
@@ -11,6 +17,6 @@
  * @param start startPoint
  * @param end endPoint
  */
-int getPath(LocationList* outLocationList, Location start, Location end);
+int computeBestPath(LocationList* outLocationList, Location* start, Location* end);
 
 #endif
