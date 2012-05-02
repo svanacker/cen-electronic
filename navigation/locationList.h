@@ -27,6 +27,16 @@ typedef struct {
 void clearLocationList(LocationList* locationList);
 
 /**
+ * Clear the costs of each location of the list.
+ */
+void clearCosts(LocationList* locationList);
+
+/**
+ * Add all location to the list.
+ */
+void addLocationList(LocationList* targetLocationList, LocationList* sourceLocationList);
+
+/**
  * Returns if the list is empty.
  */
 BOOL isEmptyLocationList(LocationList* locationList);
@@ -74,6 +84,6 @@ int getLocationCount(LocationList* locationList);
 /**
  * Print on the outputStream the location.
  */
-void printLocationList(LocationList* locationList, OutputStream* outputStream);
+void printLocationList(OutputStream* outputStream, char* locationListName, LocationList* locationList);
 
 #endif

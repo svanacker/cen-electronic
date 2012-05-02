@@ -30,15 +30,15 @@ void printPath(OutputStream* outputStream, Path* path) {
 	appendStringAndDec(outputStream, "L2(", location2->x);
 	appendStringAndDec(outputStream, ",", location2->y);
 	append(outputStream, ')');
+	appendStringAndDec(outputStream, ", cost=", path->cost);
 
-	appendStringAndDec(outputStream, ",cp1=", path->controlPointDistance1);
-	appendStringAndDec(outputStream, ",cp2=", path->controlPointDistance2);
+	appendStringAndDec(outputStream, ", cp1=", path->controlPointDistance1);
+	appendStringAndDec(outputStream, ", cp2=", path->controlPointDistance2);
 
-	appendStringAndDec(outputStream, ",angle1=", path->angle1);
-	appendStringAndDec(outputStream, ",angle2=", path->angle2);
+	appendStringAndDec(outputStream, ", angle1=", path->angle1);
+	appendStringAndDec(outputStream, ", angle2=", path->angle2);
 
-	appendStringAndDec(outputStream, ",cost=", path->cost);
-	appendStringAndDec(outputStream, ",speedFactor=", path->speedFactor);
+	appendStringAndDec(outputStream, ", speedFactor=", path->speedFactor);
 
 	println(outputStream);
 }

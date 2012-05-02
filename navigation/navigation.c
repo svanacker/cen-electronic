@@ -15,12 +15,23 @@ static PathList paths;
 static LocationList unhandledLocationList;
 static LocationList handledLocationList;
 // TODO : Map<Location, Location> previous
-// TODO : Map<Location, Integer> costs
 static PathList outgoingPaths;
-static Location nearestLocation;
+// static Location nearestLocation;
 
 void addNavigationLocation(Location* location, char* name, int x, int y) {
 	addLocation(&locations, location, name, x, y);
+}
+
+void addNavigationPath(  Path* path, 
+						 Location* location1,
+						 Location* location2, 
+						 int cost,
+						 int controlPointDistance1,
+						 int controlPointDistance2,
+						 int angle1,
+						 int angle2,
+						 int speedFactor) {
+	addPath(&paths, path, location1, location2, cost, controlPointDistance1, controlPointDistance2, angle1, angle2, speedFactor); 
 }
 
 void updateOutgoingPaths(Location* location) {
@@ -36,36 +47,57 @@ void updateOutgoingPaths(Location* location) {
 	}
 }
 
+void clearLocationTmpCosts(LocationList* locationList) {
+	int i;
+	unsigned char size = locationList->size;
+	for (i = 0; i < size; i++) {
+		Location* location = locationList->locations[i];
+		// We can have hole because of "remove"
+		if (location == NULL) {
+			continue;
+		}
+		location->tmpCost = NO_COMPUTED_COST;
+	}
+}
+
 /** 
- *
+ * Returns the cost associated to location.
  */
 unsigned int getCost(Location* location) {
-	if (location == NULL) {
-		
+	if (location->tmpCost == NO_COMPUTED_COST) {
+		return MAX_SIGNEDINT;
 	}
+	return location->tmpCost;
+}
+
+/**
+ * Change the cost associated to the location.
+ */
+void setCost(Location* location, int cost) {
+	location->tmpCost = cost;
 }
 
 /**
  * @private
  * Search the nearest node in terms of cost
  */
-Location* extractMin() {
+Location* extractMinCostLocation() {
 	// Search the nearest node in terms of cost
 	Location* result = NULL;
 	int minCost = MAX_COST;
-	int i;
 	int size = unhandledLocationList.size;
+	int i;
 	for (i = 0; i < size; i++) {
-		Location* unhandledLocation = unhandledLocationList.locations[i];
+		Location* location = unhandledLocationList.locations[i];
 		// We can have hole because of remove operation
-		if (unhandledLocation == NULL) {
+		if (location == NULL) {
 			continue;
 		}
 		// get the cost (
-		int cost = getCost(unhandledLocation);
+		int cost = getCost(location);
 		if (cost <= minCost) {
 			minCost = cost;
-			result = unhandledLocation;
+			result = location;
 		}
 	}
 	removeLocation(&unhandledLocationList, result);
@@ -75,57 +107,62 @@ Location* extractMin() {
 }
 
 int computeBestPath(LocationList* outLocationList, Location* start, Location* end) {
+	int result = 0;
 	clearLocationList(outLocationList);
 	clearLocationList(&unhandledLocationList);
 	clearLocationList(&handledLocationList);
 
+	addLocationList(&unhandledLocationList, &locations);
+
 	// TODO : clear previous
 	// TODO : clear costs
+	// clearLocationTmpCosts();
 
 	Location* location1;
 
 	start->tmpCost = 0;
 	while (!isEmptyLocationList(&unhandledLocationList)) {
-		/*
-		// Recherche le noeud le plus proche parmis les noeuds restants
-		l1 = extractMin(unhandled, handled, costs);
-		*/
+		// search the nearest node of the nodeList
+		location1 = extractMinCostLocation();
+
 		// List of path going to the node (location)
 		updateOutgoingPaths(location1);
+
 		int i;
 		int size = outgoingPaths.size;
 		for (i = 0; i < size; i++) {
 			Path* path = getPath(&outgoingPaths, i);
-			// Recherche parmi ces chemins du plus court
+
 			Location* location2 = getOtherEnd(path, location1);
-			/*
-			int costLocation1 = getCost(costs, location1);
-			int costLocation2 = getCost(costs, location2);
-			int cost = costLocation1 + (int) v.getCost();
+			int costLocation1 = getCost(location1);
+			int costLocation2 = getCost(location2);
+
+			int cost = costLocation1 + path->cost;
 			if (cost < costLocation2) {
 				// Affectation de la distance absolue du noeud
-				setCost(costs, location2, cost);
-				setPrevious(previous, location2, location1);
+				setCost(location2, cost);
+				// setPrevious(previous, location2, location1);
 			}
-			*/
 		}		
 	}
+	result = getCost(end);
+	location1 = end;
+	
 	/*
-	// Coût
-	cost.setValue(getCost(costs, end));
-	// Liste des noeuds du résultat
-	List<Location> path = new ArrayList<Location>();
-	l1 = end;
-	*/
 	while ((location1 != start) && (location1 != NULL)) {
 		addFilledLocation(outLocationList, location1);
 		// location1 = getPrevious(previous, location1);
 	}
-	addFilledLocation(outLocationList, start);
+	*/
+	// addFilledLocation(outLocationList, start);
 	// Collections.reverse(path);
 
-	// TODO : return cost
-	return 0;
+	return result;
 }
 
+void printNavigationContext(OutputStream* outputStream) {
+	printLocationList(outputStream, "locations:", &locations);
+	printPathList(outputStream, "paths:", &paths);
 
+	printLocationList(outputStream, "handledLocationList:", &handledLocationList);
+}

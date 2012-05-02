@@ -3,6 +3,9 @@
 #include "locationList.h"
 #include "location.h"
 
+#include "../common/io/outputStream.h"
+#include "../common/io/printWriter.h"
+
 #include "../common/error/error.h"
 #include "../common/string/cenString.h"
 
@@ -15,10 +18,25 @@ BOOL isEmptyLocationList(LocationList* locationList) {
 	return locationList->count == 0;
 }
 
+void addLocationList(LocationList* targetLocationList, LocationList* sourceLocationList) {
+	int i;
+	unsigned char size = sourceLocationList->size;
+	for (i = 0; i < size; i++) {
+		Location* location = sourceLocationList->locations[i];
+		// We can have hole because of "remove"
+		if (location == NULL) {
+			continue;
+		}
+		addFilledLocation(targetLocationList, location);
+	}	
+}
+
 void addLocation(LocationList* locationList, Location* location, char* name, int x, int y) {
 	location->name = name;
 	location->x = x;
 	location->y = y;
+	location->tmpCost = NO_COMPUTED_COST;
+	addFilledLocation(locationList, location);
 }
 
 void addFilledLocation(LocationList* locationList, Location* location) {
@@ -89,9 +107,12 @@ int getLocationCount(LocationList* locationList) {
     return locationList->size;
 }
 
-void printLocationList(LocationList* locationList, OutputStream* outputStream) {
+void printLocationList(OutputStream* outputStream, char* locationListName, LocationList* locationList) {
 	int i;
 	int size = locationList->size;
+	appendKeyAndName(outputStream, "LocationList:", locationListName);
+	appendStringAndDec(outputStream, ", size=", locationList->size);
+	println(outputStream);	
 	for (i = 0; i < size; i++) {
 		Location* location = locationList->locations[i];
 		// We can have hole because of "remove"

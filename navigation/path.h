@@ -37,4 +37,9 @@ BOOL pathContainsLocation(Path* path, Location* location);
  */
 Location* getOtherEnd(Path* path, Location* location);
 
+/**
+ * Print debugguable path.
+ */
+void printPath(OutputStream* outputStream, Path* path);
+
 #endif

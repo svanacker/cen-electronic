@@ -3,6 +3,9 @@
 #include "pathList.h"
 #include "path.h"
 
+#include "../common/io/outputStream.h"
+#include "../common/io/printWriter.h"
+
 #include "../common/error/error.h"
 
 void clearPathList(PathList* pathList) {
@@ -13,11 +16,11 @@ void addPath(PathList* pathList,
 			 Path* path, 
 			 Location* location1,
 			 Location* location2, 
+			 int cost,
 			 int controlPointDistance1,
 			 int controlPointDistance2,
 			 int angle1,
 			 int angle2,
-			 int cost,
 			 int speedFactor) {
 	path->location1 = location1;
 	path->location2 = location2;
@@ -48,4 +51,17 @@ Path* getPath(PathList* pathList, int index) {
 
 int getPathCount(PathList* pathList) {
     return pathList->size;
+}
+
+void printPathList(OutputStream* outputStream, char* pathListName, PathList* pathList) {
+	int i;
+	int size = pathList->size;
+	appendKeyAndName(outputStream, "PathList:", pathListName);
+	appendStringAndDec(outputStream, ", size=", pathList->size);
+
+	println(outputStream);
+	for (i = 0; i < size; i++) {
+		Path* path = pathList->paths[i];
+		printPath(outputStream, path);
+	}
 }

@@ -42,13 +42,21 @@ void appendStringCRLF(OutputStream* outputStream, const char* s) {
     appendCRLF(outputStream);
 }
 
+void appendCR(OutputStream* outputStream) {
+    append(outputStream, CR);
+}
+
+void appendLF(OutputStream* outputStream) {
+    append(outputStream, LF);
+}
+
 void appendCRLF(OutputStream* outputStream) {
     append(outputStream, CR);
     append(outputStream, LF);
 }
 
 void println(OutputStream* outputStream) {
-    appendCRLF(outputStream);
+    appendLF(outputStream);
 }
 
 void appendAck(OutputStream* outputStream) {

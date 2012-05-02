@@ -31,11 +31,11 @@ void addPath(PathList* pathList,
 			 Path* path, 
 			 Location* location1,
 			 Location* location2, 
+			 int cost,
 			 int controlPointDistance1,
 			 int controlPointDistance2,
 			 int angle1,
 			 int angle2,
-			 int cost,
 			 int speedFactor);
 
 /**
@@ -53,5 +53,10 @@ Path* getPath(PathList* pathList, int index);
  * Get the count of paths.
  */
 int getPathCount(PathList* pathList);
+
+/**
+ * Print the list of path.
+ */
+void printPathList(OutputStream* outputStream, char* pathListName, PathList* pathList);
 
 #endif

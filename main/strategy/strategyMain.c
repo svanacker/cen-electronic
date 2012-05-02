@@ -34,6 +34,9 @@
 #include "../../robot/gameboard/gameboard.h"
 #include "../../robot/2012/gameboardElement2012.h"
 
+#include "../../navigation/navigation.h"
+#include "../../navigation/navigationTest.h"
+
 // -> Devices
 
 // Test
@@ -92,7 +95,7 @@ void initDevicesDescriptor() {
 
 void initStrategyBoardIO() {
 	// 2011 : TODO : A regarder
-	// ADPCFG = 0xFFFF;
+	ADPCFG = 0xFFFF;
 }
 
 int main(void) {
@@ -128,8 +131,15 @@ int main(void) {
 	// init the devices
 	initDevicesDescriptor();
 
-	addElements2012();
-	printGameboard(&debugOutputStream);
+	// addElements2012();
+	
+	int cost = addNavigationLocations();
+
+	printNavigationContext(&debugOutputStream);
+
+	appendStringAndDec(&debugOutputStream, "cost=", cost);
+
+	// printGameboard(&debugOutputStream);
 
 	while(1) {
 
