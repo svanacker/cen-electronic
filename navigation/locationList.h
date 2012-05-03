@@ -29,9 +29,14 @@ typedef struct {
 void clearLocationList(LocationList* locationList);
 
 /**
- * Clear the costs of each location of the list.
+ * Clear the costs and previous of each location of the list.
  */
-void clearCosts(LocationList* locationList);
+void clearLocationTmpCostsAndPrevious(LocationList* locationList);
+
+/**
+ * Clear the previous information of each location of the list.
+ */
+void clearPrevious(LocationList* locationList);
 
 /**
  * Add all location to the list.

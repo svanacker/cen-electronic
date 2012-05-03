@@ -43,6 +43,7 @@ static Path pathAE;
 static Path pathEJ;
 
 static LocationList locationList;
+static LocationList resultLocationList;
 
 int addNavigationLocations() {
 
@@ -76,7 +77,9 @@ int addNavigationLocations() {
 	addNavigationPath(&pathAE, "AE", &locationA, &locationE, 173, 0, 0, 0, 0, 0);
 	addNavigationPath(&pathEJ, "EJ", &locationE, &locationJ, 502, 0, 0, 0, 0, 0);
 
-	int cost = computeBestPath(&locationList, &locationA, &locationJ);
+	int cost = computeBestPath(&resultLocationList, &locationA, &locationJ);
+
+	printLocationList(getOutputStreamLogger(INFO), "Result=", &resultLocationList);
 
 	return cost;
 }

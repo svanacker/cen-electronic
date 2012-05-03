@@ -42,20 +42,11 @@ void addNavigationPath(  Path* path,
 }
 
 void updateOutgoingPaths(Location* location) {
-	OutputStream* outputStream = getOutputStreamLogger(DEBUG);
-	println(outputStream);
-	appendString(outputStream, "->updateOutgoingPaths");
-	appendKeyAndName(outputStream, "(location=", location->name);
-	appendString(outputStream, ")");
-	println(outputStream);
-	printLocationList(outputStream, "handledLocationList", &handledLocationList);
-
 	clearPathList(&outgoingPaths);
 	int i;
 	int pathSize = getPathCount(&paths);
 	for (i = 0; i < pathSize; i++) {
 		Path* path = getPath(&paths, i);
-		printPath(outputStream, path);
 
 		// For example : location = "A", check if path contains("A") : "AB" contains "A", but "DE" not
 		BOOL pathContainsLocationBool = pathContainsLocation(path, location);
@@ -74,21 +65,6 @@ void updateOutgoingPaths(Location* location) {
 		if (!handledLocationListContainsLocation) {
 			addFilledPath(&outgoingPaths, path);
 		}
-	}
-	printPathList(outputStream, "updateOutgoingPaths", &outgoingPaths);
-	println(outputStream);
-}
-
-void clearLocationTmpCosts(LocationList* locationList) {
-	int i;
-	unsigned char size = locationList->size;
-	for (i = 0; i < size; i++) {
-		Location* location = locationList->locations[i];
-		// We can have hole because of "remove"
-		if (location == NULL) {
-			continue;
-		}
-		location->tmpCost = NO_COMPUTED_COST;
 	}
 }
 
@@ -114,10 +90,6 @@ void setCost(Location* location, int cost) {
  * Search the nearest node in terms of cost
  */
 Location* extractMinCostLocation() {
-	OutputStream* outputStream = getOutputStreamLogger(DEBUG);
-	appendString(outputStream, "extractMinCostLocation=>");
-	println(outputStream);
-	printLocationList(outputStream, "\tunhandledLocationList", &unhandledLocationList);
 
 	// Search the nearest node in terms of cost
 	Location* result = NULL;
@@ -139,33 +111,28 @@ Location* extractMinCostLocation() {
 		}
 	}
 	removeLocation(&unhandledLocationList, result);
-	// TODO : Manage equals because it is a set !!!
 	addFilledLocation(&handledLocationList, result);
 	return result;
 }
 
 int computeBestPath(LocationList* outLocationList, Location* start, Location* end) {
 	OutputStream* outputStream = getOutputStreamLogger(DEBUG);
-	/*
-	Set<Location> locations = new HashSet<Location>();
-	for (IPathVector v : map.getPathVectors()) {
-		locations.add(v.getStart());
-		locations.add(v.getEnd());
-	}
-	*/
 
 	int result = 0;
 	clearLocationList(outLocationList);
 	clearLocationList(&unhandledLocationList);
-	unhandledLocationList.set = TRUE;
 	clearLocationList(&handledLocationList);
-	handledLocationList.set = TRUE;
+
+	// not necessary because handledLocationList elements are removed from unhandled to handled.
+	// we can not have doublon.
+	// unhandledLocationList.set = TRUE;	
+	// handledLocationList.set = TRUE;
+
+	clearLocationTmpCostsAndPrevious(&locations);
 
 	addLocationList(&unhandledLocationList, &locations);
 
 	// TODO : clear previous
-	// TODO : clear costs
-	// clearLocationTmpCosts();
 
 	Location* location1;
 
@@ -173,8 +140,6 @@ int computeBestPath(LocationList* outLocationList, Location* start, Location* en
 	while (!isEmptyLocationList(&unhandledLocationList)) {
 		// search the nearest node of the nodeList
 		location1 = extractMinCostLocation();
-		appendKeyAndName(outputStream, "MinCostLocation=", location1->name);
-		println(outputStream);
 
 		// List of path going to the node (location)
 		updateOutgoingPaths(location1);
@@ -184,35 +149,26 @@ int computeBestPath(LocationList* outLocationList, Location* start, Location* en
 		// loop on all outgoingPath
 		for (i = 0; i < size; i++) {
 			Path* path = getPath(&outgoingPaths, i);
-			printPath(outputStream, path);
 			Location* location2 = getOtherEnd(path, location1);
 			int costLocation1 = getCost(location1);
 			int costLocation2 = getCost(location2);
-			appendStringAndDec(outputStream, "\t\tcostLocation1=", costLocation1);
-			println(outputStream);
-			appendStringAndDec(outputStream, "\t\tcostLocation2=", costLocation2);
-			println(outputStream);
 			int cost = costLocation1 + path->cost;
-			appendStringAndDec(outputStream, "cost=", cost);
-			println(outputStream);
 			if (cost < costLocation2) {
 				// Affectation de la distance absolue du noeud
 				setCost(location2, cost);
-				// setPrevious(previous, location2, location1);
+				location2->tmpPreviousLocation = location1;
 			}
 		}		
 	}
+	// store best cost
 	result = getCost(end);
 	location1 = end;
 	
-	/*
 	while ((location1 != start) && (location1 != NULL)) {
 		addFilledLocation(outLocationList, location1);
-		// location1 = getPrevious(previous, location1);
+		location1 = location1->tmpPreviousLocation;
 	}
-	*/
-	// addFilledLocation(outLocationList, start);
-	// Collections.reverse(path);
+	addFilledLocation(outLocationList, start);
 
 	return result;
 }

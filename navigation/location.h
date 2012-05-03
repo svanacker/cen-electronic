@@ -9,10 +9,13 @@
 #define MAX_COST 			20000
 #define NO_COMPUTED_COST	-1
 
+struct Location;
+typedef struct Location Location;
+
 /**
  * Encapsulates the location.
  */
-typedef struct Location {
+struct Location {
 	/** The name. */
 	char* name;
 	/** The coordinates in x. */
@@ -21,7 +24,9 @@ typedef struct Location {
 	int y;
 	/** Temporary information needed by path finding algorithm. */
 	int tmpCost;
-} Location;
+	/** Temporary information needed by path finding algorithm. */
+	Location* tmpPreviousLocation;
+};
 
 /**
  * Equals function on Location. The equals is based on the

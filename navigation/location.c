@@ -18,5 +18,11 @@ void printLocation(OutputStream* outputStream, Location* location) {
 	appendStringAndDec(outputStream, ", x=", location->x);
 	appendStringAndDec(outputStream, ", y=", location->y);
 	appendStringAndDec(outputStream, ", tmpCost=", location->tmpCost);
+	if (location->tmpPreviousLocation != NULL) {
+		appendKeyAndName(outputStream, ", tmpPrevious.name=", location->tmpPreviousLocation->name);
+	}
+	else {
+		appendKeyAndName(outputStream, ", tmpPrevious.name=", "NULL");
+	}
 	println(outputStream);
 }

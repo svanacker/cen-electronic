@@ -119,6 +119,26 @@ int getLocationCount(LocationList* locationList) {
     return locationList->size;
 }
 
+// CLEAR
+
+
+void clearLocationTmpCostsAndPrevious(LocationList* locationList) {
+	int i;
+	unsigned char size = locationList->size;
+	for (i = 0; i < size; i++) {
+		Location* location = locationList->locations[i];
+		// We can have hole because of "remove"
+		if (location == NULL) {
+			continue;
+		}
+		location->tmpCost = NO_COMPUTED_COST;
+		location->tmpPreviousLocation = NULL;
+	}
+}
+
+
+// DEBUG
+
 void printLocationList(OutputStream* outputStream, char* locationListName, LocationList* locationList) {
 	int i;
 	int size = locationList->size;
