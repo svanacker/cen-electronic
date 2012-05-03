@@ -3,6 +3,9 @@
 
 #include "gameStrategy.h"
 
+#include "../../common/io/outputStream.h"
+#include "../../common/io/printWriter.h"
+
 /** The max limit of strategy count. */
 #define MAX_STRATEGY 		7
 
@@ -33,6 +36,10 @@ GameStrategy* getStrategy(int index);
  */
 int getStrategyCount();
 
+/**
+ * Print the game strategy list, and for each the detail of strategy game
+ */
+void printGameStrategyList(OutputStream* outputStream);
 
 #endif
 

@@ -3,6 +3,9 @@
 
 #include "../../common/error/error.h"
 
+#include "../../common/io/outputStream.h"
+#include "../../common/io/printWriter.h"
+
 /**
  * Strategy list.
  */
@@ -26,4 +29,14 @@ GameStrategy* getStrategy(int index) {
 
 int getStrategyCount() {
     return strategies.size;
+}
+
+void printGameStrategyList(OutputStream* outputStream) {
+	int i;
+	int size = strategies.size;
+	println(outputStream);	
+	for (i = 0; i < size; i++) {
+		GameStrategy* strategy = strategies.strategies[i];
+		printGameStrategy(outputStream, strategy);
+	}
 }
