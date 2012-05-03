@@ -114,7 +114,7 @@ int main(void) {
 
 	// Init the logs
 	initLog(DEBUG);
-	addLogHandler(&serialLogHandler, "UART", &debugOutputStream, INFO);
+	addLogHandler(&serialLogHandler, "UART", &debugOutputStream, DEBUG);
 	appendString(getOutputStreamLogger(INFO), getPicName());
 	println(getOutputStreamLogger(INFO));
 

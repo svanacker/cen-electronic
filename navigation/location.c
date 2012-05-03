@@ -13,7 +13,7 @@ BOOL locationEquals(Location* location1, Location* location2) {
 	return stringEquals(location1->name, location2->name);
 }
 
-void printLocation(Location* location, OutputStream* outputStream) {
+void printLocation(OutputStream* outputStream, Location* location) {
 	appendKeyAndName(outputStream, "location.name=", location->name);
 	appendStringAndDec(outputStream, ", x=", location->x);
 	appendStringAndDec(outputStream, ", y=", location->y);

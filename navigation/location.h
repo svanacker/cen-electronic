@@ -6,7 +6,7 @@
 #include "../common/commons.h"
 #include "../common/io/outputStream.h"
 
-#define MAX_COST 			MAX_SIGNEDINT
+#define MAX_COST 			20000
 #define NO_COMPUTED_COST	-1
 
 /**
@@ -32,6 +32,6 @@ BOOL locationEquals(Location* location1, Location* location2);
 /**
  * Print the location on the outputStream.
  */
-void printLocation(Location* location, OutputStream* outputStream);
+void printLocation(OutputStream* outputStream, Location* location);
 
 #endif

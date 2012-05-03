@@ -119,6 +119,6 @@ void printLocationList(OutputStream* outputStream, char* locationListName, Locat
 		if (location == NULL) {
 			continue;
 		}
-		printLocation(location, outputStream);
+		printLocation(outputStream, location);
 	}
 }

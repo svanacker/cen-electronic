@@ -5,6 +5,12 @@
 #include "locationList.h"
 #include "path.h"
 
+#include "../common/io/outputStream.h"
+#include "../common/io/printWriter.h"
+
+#include "../common/log/logger.h"
+#include "../common/log/logLevel.h"
+
 /** All locations. */
 static LocationList locations;
 
@@ -65,7 +71,7 @@ void clearLocationTmpCosts(LocationList* locationList) {
  */
 unsigned int getCost(Location* location) {
 	if (location->tmpCost == NO_COMPUTED_COST) {
-		return MAX_SIGNEDINT;
+		return MAX_COST;
 	}
 	return location->tmpCost;
 }
@@ -82,6 +88,8 @@ void setCost(Location* location, int cost) {
  * Search the nearest node in terms of cost
  */
 Location* extractMinCostLocation() {
+	OutputStream* outputStream = getOutputStreamLogger(DEBUG);
+	appendString(outputStream, "extractMinCostLocation\n");
 	// Search the nearest node in terms of cost
 	Location* result = NULL;
 	int minCost = MAX_COST;
@@ -93,11 +101,15 @@ Location* extractMinCostLocation() {
 		if (location == NULL) {
 			continue;
 		}
+		printLocation(outputStream, location);
+
 		// get the cost (
 		int cost = getCost(location);
 		if (cost <= minCost) {
 			minCost = cost;
 			result = location;
+			appendStringAndDec(outputStream, "result=", cost);
+			println(outputStream);
 		}
 	}
 	removeLocation(&unhandledLocationList, result);
@@ -107,6 +119,14 @@ Location* extractMinCostLocation() {
 }
 
 int computeBestPath(LocationList* outLocationList, Location* start, Location* end) {
+	/*
+	Set<Location> locations = new HashSet<Location>();
+	for (IPathVector v : map.getPathVectors()) {
+		locations.add(v.getStart());
+		locations.add(v.getEnd());
+	}
+	*/
+
 	int result = 0;
 	clearLocationList(outLocationList);
 	clearLocationList(&unhandledLocationList);
