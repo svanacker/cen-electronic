@@ -69,6 +69,7 @@ void removeLocation(LocationList* locationList, Location* locationToRemove) {
 			continue;
 		}
 		if (locationEquals(location, locationToRemove)) {
+			locationList->locations[i] = NULL;
 			locationList->count--;
 			return;
 		}

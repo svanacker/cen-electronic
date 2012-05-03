@@ -115,7 +115,10 @@ void setCost(Location* location, int cost) {
  */
 Location* extractMinCostLocation() {
 	OutputStream* outputStream = getOutputStreamLogger(DEBUG);
-	appendString(outputStream, "extractMinCostLocation\n");
+	appendString(outputStream, "extractMinCostLocation=>");
+	println(outputStream);
+	printLocationList(outputStream, "\tunhandledLocationList", &unhandledLocationList);
+
 	// Search the nearest node in terms of cost
 	Location* result = NULL;
 	int minCost = MAX_COST;
@@ -127,14 +130,12 @@ Location* extractMinCostLocation() {
 		if (location == NULL) {
 			continue;
 		}
-		printLocation(outputStream, location);
 
 		// get the cost (
 		int cost = getCost(location);
 		if (cost <= minCost) {
 			minCost = cost;
 			result = location;
-			println(outputStream);
 		}
 	}
 	removeLocation(&unhandledLocationList, result);
@@ -172,21 +173,24 @@ int computeBestPath(LocationList* outLocationList, Location* start, Location* en
 	while (!isEmptyLocationList(&unhandledLocationList)) {
 		// search the nearest node of the nodeList
 		location1 = extractMinCostLocation();
+		appendKeyAndName(outputStream, "MinCostLocation=", location1->name);
+		println(outputStream);
 
 		// List of path going to the node (location)
 		updateOutgoingPaths(location1);
 
 		int i;
 		int size = outgoingPaths.size;
+		// loop on all outgoingPath
 		for (i = 0; i < size; i++) {
 			Path* path = getPath(&outgoingPaths, i);
-
+			printPath(outputStream, path);
 			Location* location2 = getOtherEnd(path, location1);
 			int costLocation1 = getCost(location1);
 			int costLocation2 = getCost(location2);
-			appendStringAndDec(outputStream, "costLocation1=", costLocation1);
+			appendStringAndDec(outputStream, "\t\tcostLocation1=", costLocation1);
 			println(outputStream);
-			appendStringAndDec(outputStream, "costLocation2=", costLocation2);
+			appendStringAndDec(outputStream, "\t\tcostLocation2=", costLocation2);
 			println(outputStream);
 			int cost = costLocation1 + path->cost;
 			appendStringAndDec(outputStream, "cost=", cost);
