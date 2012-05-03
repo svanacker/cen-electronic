@@ -27,3 +27,14 @@ GameTarget* getGameTarget(int index) {
 int getGameTargetCount() {
     return targets.size;
 }
+
+
+void printGameTargetList(OutputStream* outputStream) {
+	int i;
+	int size = targets.size;
+	println(outputStream);	
+	for (i = 0; i < size; i++) {
+		GameTarget* target = targets.targets[i];
+		printGameTarget(outputStream, target);
+	}
+}

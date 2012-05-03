@@ -1,10 +1,12 @@
 #ifndef GAME_TARGET_H
 #define GAME_TARGET_H
 
-#include "gameTarget.h"
+#include "gameTargetActionList.h"
 
 #include "../../common/commons.h"
+
 #include "../../common/2d/2d.h"
+#include "../../common/io/outputStream.h"
 
 /**
  * Encapsulates the target.
@@ -18,7 +20,15 @@ typedef struct GameTarget {
 	BOOL available;	
 	// Returns the position of the target on the gameboard
 	Point point;
+	/** The actionList for this target. */
+	// GameTargetActionList actionList;
 } GameTarget;
+
+/**
+ * Print the detail of each target.
+ */
+void printGameTarget(OutputStream* outputStream, GameTarget* target);
+
 
 #endif
 

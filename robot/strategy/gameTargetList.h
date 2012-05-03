@@ -3,6 +3,8 @@
 
 #include "gameTarget.h"
 
+#include "../../common/io/outputStream.h"
+
 /** The max limit of target count. */
 #define MAX_TARGET 		10
 
@@ -32,6 +34,12 @@ GameTarget* getGameTarget(int index);
  * Get the count of targets.
  */
 int getGameTargetCount();
+
+/**
+ * Print the game target list, and for each the detail of target.
+ */
+void printGameTargetList(OutputStream* outputStream);
+
 
 #endif
 
