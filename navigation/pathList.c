@@ -14,6 +14,7 @@ void clearPathList(PathList* pathList) {
 
 void addPath(PathList* pathList,
 			 Path* path, 
+			 char* name,
 			 Location* location1,
 			 Location* location2, 
 			 int cost,
@@ -22,6 +23,7 @@ void addPath(PathList* pathList,
 			 int angle1,
 			 int angle2,
 			 int speedFactor) {
+	path->name = name;
 	path->location1 = location1;
 	path->location2 = location2;
 	path->controlPointDistance1 = controlPointDistance1;

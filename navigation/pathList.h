@@ -29,6 +29,7 @@ void clearPathList(PathList* pathList);
  */
 void addPath(PathList* pathList,
 			 Path* path, 
+			 char* pathName,
 			 Location* location1,
 			 Location* location2, 
 			 int cost,

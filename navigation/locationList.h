@@ -19,6 +19,8 @@ typedef struct {
     unsigned char size;
 	/** the count of element (which is different from size because of remove). */
 	unsigned char count;
+	/** Indicates that it is a set so we search after doublon. */
+	BOOL set;
 } LocationList;
 
 /**

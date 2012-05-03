@@ -11,6 +11,14 @@
 #include "pathList.h"
 #include "navigation.h"
 
+#include "../common/string/cenString.h"
+
+#include "../common/io/outputStream.h"
+#include "../common/io/printWriter.h"
+
+#include "../common/log/logger.h"
+#include "../common/log/logLevel.h"
+
 static Location locationA;
 static Location locationB;
 static Location locationC;
@@ -38,6 +46,8 @@ static LocationList locationList;
 
 int addNavigationLocations() {
 
+
+
 	// locations
 	addNavigationLocation(&locationA, "A", 0, 0);
 	addNavigationLocation(&locationB, "B", 0, 0);
@@ -51,20 +61,20 @@ int addNavigationLocations() {
 	addNavigationLocation(&locationJ, "J", 0, 0);
 
 	// paths
-	addNavigationPath(&pathAB, &locationA, &locationB, 85, 0, 0, 0, 0, 0);
-	addNavigationPath(&pathBF, &locationB, &locationF, 80, 0, 0, 0, 0, 0);
-	addNavigationPath(&pathFI, &locationF, &locationI, 250, 0, 0, 0, 0, 0);
-	addNavigationPath(&pathIJ, &locationI, &locationJ, 84, 0, 0, 0, 0, 0);
+	addNavigationPath(&pathAB, "AB", &locationA, &locationB, 85, 0, 0, 0, 0, 0);
+	addNavigationPath(&pathBF, "BF", &locationB, &locationF, 80, 0, 0, 0, 0, 0);
+	addNavigationPath(&pathFI, "FI", &locationF, &locationI, 250, 0, 0, 0, 0, 0);
+	addNavigationPath(&pathIJ, "IJ", &locationI, &locationJ, 84, 0, 0, 0, 0, 0);
 
-	addNavigationPath(&pathAC, &locationA, &locationC, 217, 0, 0, 0, 0, 0);
-	addNavigationPath(&pathCG, &locationC, &locationG, 186, 0, 0, 0, 0, 0);
+	addNavigationPath(&pathAC, "AC", &locationA, &locationC, 217, 0, 0, 0, 0, 0);
+	addNavigationPath(&pathCG, "CG", &locationC, &locationG, 186, 0, 0, 0, 0, 0);
 
-	addNavigationPath(&pathCH, &locationC, &locationH, 103, 0, 0, 0, 0, 0);
-	addNavigationPath(&pathHD, &locationH, &locationD, 183, 0, 0, 0, 0, 0);	
-	addNavigationPath(&pathHJ, &locationH, &locationJ, 167, 0, 0, 0, 0, 0);
+	addNavigationPath(&pathCH, "CH", &locationC, &locationH, 103, 0, 0, 0, 0, 0);
+	addNavigationPath(&pathHD, "HD", &locationH, &locationD, 183, 0, 0, 0, 0, 0);	
+	addNavigationPath(&pathHJ, "HJ", &locationH, &locationJ, 167, 0, 0, 0, 0, 0);
 
-	addNavigationPath(&pathAE, &locationA, &locationE, 173, 0, 0, 0, 0, 0);
-	addNavigationPath(&pathEJ, &locationE, &locationJ, 502, 0, 0, 0, 0, 0);
+	addNavigationPath(&pathAE, "AE", &locationA, &locationE, 173, 0, 0, 0, 0, 0);
+	addNavigationPath(&pathEJ, "EJ", &locationE, &locationJ, 502, 0, 0, 0, 0, 0);
 
 	int cost = computeBestPath(&locationList, &locationA, &locationJ);
 

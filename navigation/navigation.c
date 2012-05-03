@@ -29,6 +29,7 @@ void addNavigationLocation(Location* location, char* name, int x, int y) {
 }
 
 void addNavigationPath(  Path* path, 
+						 char* pathName,
 						 Location* location1,
 						 Location* location2, 
 						 int cost,
@@ -37,20 +38,45 @@ void addNavigationPath(  Path* path,
 						 int angle1,
 						 int angle2,
 						 int speedFactor) {
-	addPath(&paths, path, location1, location2, cost, controlPointDistance1, controlPointDistance2, angle1, angle2, speedFactor); 
+	addPath(&paths, path, pathName, location1, location2, cost, controlPointDistance1, controlPointDistance2, angle1, angle2, speedFactor); 
 }
 
 void updateOutgoingPaths(Location* location) {
+	OutputStream* outputStream = getOutputStreamLogger(DEBUG);
+	println(outputStream);
+	appendString(outputStream, "->updateOutgoingPaths");
+	appendKeyAndName(outputStream, "(location=", location->name);
+	appendString(outputStream, ")");
+	println(outputStream);
+	printLocationList(outputStream, "handledLocationList", &handledLocationList);
+
 	clearPathList(&outgoingPaths);
 	int i;
 	int pathSize = getPathCount(&paths);
 	for (i = 0; i < pathSize; i++) {
 		Path* path = getPath(&paths, i);
+		printPath(outputStream, path);
+
+		// For example : location = "A", check if path contains("A") : "AB" contains "A", but "DE" not
+		BOOL pathContainsLocationBool = pathContainsLocation(path, location);
+
+		if (!pathContainsLocationBool) {
+			continue;
+		}
+
+		// Check if the locationList that we handle contains the other end
+		// Ex : path = "AB", location="A" => otherEnd = "B"
 		Location* otherEnd = getOtherEnd(path, location);
-		if (pathContainsLocation(path, location) && !containsLocation(&handledLocationList, otherEnd)) {
+
+		// Ex : handledLocationList = {EF, GH} and other End = B
+		// => handledLocationListContainsLocation = FALSE
+		BOOL handledLocationListContainsLocation = containsLocation(&handledLocationList, otherEnd);
+		if (!handledLocationListContainsLocation) {
 			addFilledPath(&outgoingPaths, path);
 		}
 	}
+	printPathList(outputStream, "updateOutgoingPaths", &outgoingPaths);
+	println(outputStream);
 }
 
 void clearLocationTmpCosts(LocationList* locationList) {
@@ -108,7 +134,6 @@ Location* extractMinCostLocation() {
 		if (cost <= minCost) {
 			minCost = cost;
 			result = location;
-			appendStringAndDec(outputStream, "result=", cost);
 			println(outputStream);
 		}
 	}
@@ -119,6 +144,7 @@ Location* extractMinCostLocation() {
 }
 
 int computeBestPath(LocationList* outLocationList, Location* start, Location* end) {
+	OutputStream* outputStream = getOutputStreamLogger(DEBUG);
 	/*
 	Set<Location> locations = new HashSet<Location>();
 	for (IPathVector v : map.getPathVectors()) {
@@ -130,7 +156,9 @@ int computeBestPath(LocationList* outLocationList, Location* start, Location* en
 	int result = 0;
 	clearLocationList(outLocationList);
 	clearLocationList(&unhandledLocationList);
+	unhandledLocationList.set = TRUE;
 	clearLocationList(&handledLocationList);
+	handledLocationList.set = TRUE;
 
 	addLocationList(&unhandledLocationList, &locations);
 
@@ -156,8 +184,13 @@ int computeBestPath(LocationList* outLocationList, Location* start, Location* en
 			Location* location2 = getOtherEnd(path, location1);
 			int costLocation1 = getCost(location1);
 			int costLocation2 = getCost(location2);
-
+			appendStringAndDec(outputStream, "costLocation1=", costLocation1);
+			println(outputStream);
+			appendStringAndDec(outputStream, "costLocation2=", costLocation2);
+			println(outputStream);
 			int cost = costLocation1 + path->cost;
+			appendStringAndDec(outputStream, "cost=", cost);
+			println(outputStream);
 			if (cost < costLocation2) {
 				// Affectation de la distance absolue du noeud
 				setCost(location2, cost);

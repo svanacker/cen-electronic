@@ -7,6 +7,8 @@
  * Encapsulates a path between 2 points.
  */
 typedef struct Path {
+	/** name. */
+	char* name;
 	/** first point (with name). */
 	Location* location1;
 	/** second point (with name). */

@@ -42,6 +42,14 @@ void addLocation(LocationList* locationList, Location* location, char* name, int
 void addFilledLocation(LocationList* locationList, Location* location) {
     unsigned char size = locationList->size;
 	if (size < MAX_LOCATION) {
+		// It it's a set, we control if there is no doublon
+		if (locationList->set) {
+			// if the location already exists 
+			if (containsLocation(locationList, location)) {
+				// do nothing
+				return;
+			}
+		}
 	    locationList->locations[size] = location;
 	    locationList->size++;
 		locationList->count++;
@@ -84,6 +92,9 @@ Location* findLocationByName(LocationList* locationList, char* locationName) {
 }
 
 BOOL containsLocation(LocationList* locationList, Location* locationToFind) {
+	if (locationToFind == NULL) {
+		return FALSE;
+	}	
 	int i;
 	int size = locationList->size;
 	for (i = 0; i < size; i++) {
