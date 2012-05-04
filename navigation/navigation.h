@@ -15,7 +15,6 @@ void addNavigationLocation(Location* location, char* name, int x, int y);
  * Add the path to the navigation graph.
  */
 void addNavigationPath(  Path* path, 
-						 char* pathName,
 						 Location* location1,
 						 Location* location2, 
 						 int cost,

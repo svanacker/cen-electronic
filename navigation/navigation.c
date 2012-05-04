@@ -17,6 +17,8 @@ static LocationList locations;
 /** All paths. */
 static PathList paths;
 
+// static Path path1;
+
 // private members (avoid using Stack to avoid runtime problems)
 static LocationList unhandledLocationList;
 static LocationList handledLocationList;
@@ -29,7 +31,6 @@ void addNavigationLocation(Location* location, char* name, int x, int y) {
 }
 
 void addNavigationPath(  Path* path, 
-						 char* pathName,
 						 Location* location1,
 						 Location* location2, 
 						 int cost,
@@ -38,7 +39,7 @@ void addNavigationPath(  Path* path,
 						 int angle1,
 						 int angle2,
 						 int speedFactor) {
-	addPath(&paths, path, pathName, location1, location2, cost, controlPointDistance1, controlPointDistance2, angle1, angle2, speedFactor); 
+	addPath(&paths, path, location1, location2, cost, controlPointDistance1, controlPointDistance2, angle1, angle2, speedFactor); 
 }
 
 void updateOutgoingPaths(Location* location) {

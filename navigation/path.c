@@ -21,7 +21,10 @@ Location* getOtherEnd(Path* path, Location* location) {
 }
 
 void printPath(OutputStream* outputStream, Path* path) {
-	appendKeyAndName(outputStream, ", pathName=", path->name);
+	appendString(outputStream, ", pathName=");
+	appendString(outputStream, path->location1->name);
+	appendString(outputStream, "->");
+	appendString(outputStream, path->location2->name);
 	/*
 	Location* location1 = path->location1;
 	appendStringAndDec(outputStream, "L1(", location1->x);
