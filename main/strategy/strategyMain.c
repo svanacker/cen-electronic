@@ -133,11 +133,9 @@ int main(void) {
 
 	// addElements2012();
 	
-	int cost = addNavigationLocationsTest2();
-
-	printNavigationContext(&debugOutputStream);
-
-	appendStringAndDec(&debugOutputStream, "cost=", cost);
+	//int cost = addNavigationLocationsTest2();
+	// printNavigationContext(&debugOutputStream);
+	// appendStringAndDec(&debugOutputStream, "cost=", cost);
 
 	// printGameboard(&debugOutputStream);
 

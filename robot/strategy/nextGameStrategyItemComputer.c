@@ -3,14 +3,18 @@
 #include "nextGameStrategyItemComputer.h"
 
 #include "gameStrategy.h"
+#include "gameStrategyItem.h"
 #include "gameTarget.h"
 #include "gameTargetAction.h"
-// #include "gameStrategyItemList.h"
+#include "gameStrategyItem.h"
 
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
 
+#include "../../navigation/navigation.h"
 #include "../../navigation/locationList.h"
+
+static LocationList* locationList;
 
 GameTargetAction* getBestNextTarget(GameStrategy* gameStrategy,
 								float elapsedMatchTime,
@@ -23,29 +27,35 @@ GameTargetAction* getBestNextTarget(GameStrategy* gameStrategy,
 	// Loop on potential target
 	// GameStrategyItemList* items = gameStrategy->items;
 	// int size = getStrategyItemCount(items);
-	/*
+	int gameStrategyItemCount = 10;
 	int i;
-	for (i = 0; i < IGameStrategyItem item : items) {
+	for (i = 0; i < gameStrategyItemCount; i++) {
+		GameStrategyItem* strategyItem = NULL; // TODO
 		GameTarget* target = strategyItem->target;
 		if (!target->available) {
 			continue;
 		}
-		ITargetGain targetGain = item.getTargetGain();
-		for (ITargetAction action : target) {
-			List<Location> actionPath = getNavigationPath(currentLocation, action.getStartLocation(), cost);
-			double distance = cost.getValue();
-			double gain = targetGain.getGain(target, action, distance, elapsedMatchTime, opponent);
-			log(gainData, target, gain);
+		// getGainFunction* targetGain = item->gainFunction();
+		int j;
+		int targetActionCount = 10; // TODO
+		for (j = 0; j < targetActionCount; j++) {
+			GameTargetAction* targetAction = NULL;
+			Location* startLocation = targetAction->startLocation;
+			int distanceCost = computeBestPath(outLocationList, currentLocation, startLocation);
+			float gain = 0.0f; //targetGain(target, action, distance, elapsedMatchTime, 0.0, 0.0);
+			// log(gainData, target, gain);
 			if (gain > maxGain) {
 				maxGain = gain;
-				bestTarget = action;
-				path.setValue(actionPath);
+				result = targetAction;
+				// TODO path.setValue(actionPath);
 			}
 		}
 	}
-	if (bestTarget != null) {
+	if (result != NULL) {
+		/*
+		appendStringAndDec(getOutputStreamLogger(INFO), "cost=", cost);
 		gainData.append("<br>Best target: " + bestTarget.getTarget().toString());
+		*/
 	}
-	*/
 	return result;
 }

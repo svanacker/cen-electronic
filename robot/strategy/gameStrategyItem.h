@@ -13,7 +13,7 @@
  */
 typedef struct GameStrategyItem {
 	/** The target to reach. */
-	GameTarget* gameTarget;
+	GameTarget* target;
 	/** The gain associated to the function. */
 	// getGainFunction* gainFunction;
 } GameStrategyItem;
