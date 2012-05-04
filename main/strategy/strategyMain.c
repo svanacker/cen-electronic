@@ -35,7 +35,7 @@
 #include "../../robot/2012/gameboardElement2012.h"
 
 #include "../../navigation/navigation.h"
-#include "../../navigation/navigationTest.h"
+#include "../../navigation/navigationTest2.h"
 
 // -> Devices
 
@@ -133,7 +133,7 @@ int main(void) {
 
 	// addElements2012();
 	
-	int cost = addNavigationLocations();
+	int cost = addNavigationLocationsTest2();
 
 	printNavigationContext(&debugOutputStream);
 

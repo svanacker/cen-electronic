@@ -1,6 +1,6 @@
-#ifndef NAVIGATION_TEST
-#define NAVIGATION_TEST
+#ifndef NAVIGATION_TEST_2
+#define NAVIGATION_TEST_2
 
-int addNavigationLocations();
+int addNavigationLocationsTest2();
 
 #endif

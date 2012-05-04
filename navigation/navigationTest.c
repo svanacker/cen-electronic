@@ -46,9 +46,6 @@ static LocationList locationList;
 static LocationList resultLocationList;
 
 int addNavigationLocations() {
-
-
-
 	// locations
 	addNavigationLocation(&locationA, "A", 0, 0);
 	addNavigationLocation(&locationB, "B", 0, 0);
