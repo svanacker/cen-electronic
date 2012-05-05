@@ -8,7 +8,7 @@
  */
 static GameTargetList targets;
 
-void addTarget(GameTarget* target, char* targetName) {
+void addGameTarget(GameTarget* target, char* targetName) {
     unsigned char size = targets.size;
 	if (size < MAX_TARGET) {
 		target->name = targetName;
