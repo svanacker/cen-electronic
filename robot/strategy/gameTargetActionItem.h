@@ -7,16 +7,22 @@
 #include "../../common/io/outputStream.h"
 
 /**
+ * Define the function which must be called.
+ */
+typedef void GameTargetActionFunction(OutputStream* outputStream);
+
+/**
  * Encapsulates the target action item.
  */
 typedef struct GameTargetActionItem {
-
+	/** Function which will be called. */
+	GameTargetActionFunction* actionItem;
 } GameTargetActionItem;
 
 /**
  * Print the detail of the target action item.
  */
-void printGameTargetAction(OutputStream* outputStream, GameTargetActionItem* targetActionItem);
+// void printGameTargetActionItem(OutputStream* outputStream, GameTargetActionItem* targetActionItem);
 
 
 #endif

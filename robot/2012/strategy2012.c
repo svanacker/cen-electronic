@@ -11,18 +11,11 @@
 #include "../../robot/strategy/gameStrategy.h"
 #include "../../robot/strategy/gameStrategyList.h"
 
-#include "../../robot/strategy/gameTarget.h"
 #include "../../robot/strategy/gameTargetList.h"
-
-// Targets List
-static GameTarget bullion1Target;
-static GameTarget bottle1Target;
-static GameTarget bottle2Target;
-static GameTarget cd4Target;
-static GameTarget bullionRight1Target;
-static GameTarget bullionRight2Target;
-static GameTarget bullionLeft1Target;
-static GameTarget bullionLeft2Target;
+#include "../../robot/strategy/gameTarget.h"
+#include "../../robot/strategy/gameTargetAction.h"
+#include "../../robot/strategy/gameTargetActionItem.h"
+#include "../../robot/strategy/gameTargetActionList.h"
 
 // Locations
 static Location startAreaLocation; 
@@ -48,8 +41,29 @@ static Path leftBullion1ToStartAreaFrontOf;
 static Path startAreaFrontOfTostartAreaDropZone1;
 
 
+// Targets List
+static GameTarget bullion1Target;
+static GameTarget bottle1Target;
+static GameTarget bottle2Target;
+static GameTarget cd4Target;
+static GameTarget bullionRight1Target;
+static GameTarget bullionRight2Target;
+static GameTarget bullionLeft1Target;
+static GameTarget bullionLeft2Target;
+
 // Target actionList
 static GameTargetAction bullion1TargetAction;
+static GameTargetAction bottle1TargetAction;
+static GameTargetAction bottle2TargetAction;
+static GameTargetAction cdTakeTargetAction;
+static GameTargetActionItem cdTakeStep1TargetAction;
+static GameTargetActionItem cdTakeStep2TargetAction;
+/*
+static GameTargetActionItem bullionRightStep1BackTargetActionItem;
+static GameTargetActionItem bullionRightStep2OpenPlierTargetActionItem;
+static GameTargetActionItem bullionRightStep2GoTargetActionItem;
+static GameTargetActionItem bullionRightStep2ClosePlierTargetActionItem;
+*/
 
 // strategies
 static GameStrategy strategy1;
@@ -90,7 +104,10 @@ void initTargets2012() {
 }
 
 void initTargetActions2012() {
-	addTargetAction(&(bullion1Target.actionList), &bullion1TargetAction, &startAreaLocation, &bullion1Location, 2);
+	addTargetAction(&(bullion1Target.actionList), &bullion1TargetAction, &bullion1Location, &bullion1Location, 2);
+	addTargetAction(&(bottle1Target.actionList), &bottle1TargetAction, &bottle1Location, &bottle1Location, 2);
+	addTargetAction(&(bottle2Target.actionList), &bottle2TargetAction, &bottle2Location, &bottle2Location, 3);
+	addTargetAction(&(cd4Target.actionList), &cdTakeTargetAction, &bottle2Location, &dropZone1Location, 4);
 }
 
 void initStrategies2012() {

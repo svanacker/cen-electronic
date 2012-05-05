@@ -22,6 +22,25 @@ typedef struct GameTargetActionItemList {
 } GameTargetActionItemList;
 
 /**
+ * Add an action item to the target.
+ * @param targetActionItem the target item to add to the list
+ */
+void addTargetActionItem(GameTargetActionItemList* targetActionItemList,
+					 GameTargetActionItem* targetActionItem,
+					 GameTargetActionFunction* function
+);
+
+/**
+ * Get the target action item at index.
+ */
+GameTargetActionItem* getGameTargetItemAction(GameTargetActionItemList* list, int index);
+
+/**
+ * Get the count of target action item.
+ */
+int getGameTargetActionItemCount(GameTargetActionItemList* list);
+
+/**
  * Print the detail of the all target action items.
  */
 void printGameTargetActionItemList(OutputStream* outputStream, GameTargetActionItemList* targetActionItemList);

@@ -72,5 +72,6 @@ void writeError(int errorCode);
 #define TOO_MUCH_PATHS					0x5004
 #define TOO_MUCH_ACTION					0x5005
 #define TOO_MUCH_TARGET_ACTION			0x5006
+#define TOO_MUCH_TARGET_ACTION_ITEM		0x5007
 
 #endif
