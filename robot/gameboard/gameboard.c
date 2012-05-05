@@ -8,7 +8,7 @@
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
 
-char gameboardPrint(GameboardElement* element, int column, int line) {
+char gameboardPrint(int* element, int column, int line) {
 	if (column == 0 || column == GAMEBOARD_COLUMN_COUNT - 1) {
 		return '|';
 	}
@@ -30,7 +30,7 @@ void printGameboard(OutputStream* outputStream) {
 				GameboardElement* gameboardElement = getGameboardElement(element);
 				gameboardElementPrintFunction* function = gameboardElement->print;
 				if (function != NULL) {
-					char elementPrintChar = function(gameboardElement, column, line);
+					char elementPrintChar = function(gameboardElement->object, column, line);
 					if (elementPrintChar != CHAR_NO_DRAW) {
 						c = elementPrintChar;
 					}

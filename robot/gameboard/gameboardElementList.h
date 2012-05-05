@@ -3,15 +3,18 @@
 
 #include "gameboardElement.h"
 
+#include "../../navigation/location.h"
+#include "../../navigation/locationList.h"
+
 /** The max limit of game board element. */
-#define MAX_GAME_BOARD_ELEMENT 		20
+#define MAX_GAME_BOARD_ELEMENT 		30
 
 /**
  * Tre struct defining a list of gameBoard Element.
  */
 typedef struct {
     /** An array of pointer on gameBoard Element. */
-    GameboardElement* elements[MAX_GAME_BOARD_ELEMENT];
+    GameboardElement elements[MAX_GAME_BOARD_ELEMENT];
     /** the size of the list. */
     unsigned char size;
 } GameboardElementList;
@@ -21,7 +24,14 @@ typedef struct {
  * Add a game board element to the list.
  * @param element the game board element to add
  */
-void addGameboardElement(GameboardElement* element, gameboardElementPrintFunction* printFunction);
+GameboardElement* addGameboardElement(gameboardElementPrintFunction* printFunction, int* object);
+
+/**
+ * Add a location as a gameBoard Element.
+ */
+void addLocationAsGameboardElement(Location* location);
+
+void addLocationListAsGameboardElements(LocationList* locationList);
 
 /**
  * Get the game board element at index

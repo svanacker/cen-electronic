@@ -25,24 +25,27 @@ static GameTarget bullionLeft1Target;
 static GameTarget bullionLeft2Target;
 
 // Locations
-static LocationList gameLocationList;
 static Location startAreaLocation; 
 static Location bullion1Location;
 static Location bottle1Location;
 static Location bottle2Location;
+static Location cdTakeLocation;
+static Location dropZone1Location;
+static Location bullionMiddleLocation;
+static Location rightBullionLocation;
 
 // Paths
 static Path startAreaToBullion1;
-static Path Bullion1ToBottle1;
-static Path Bottle1ToBottle2;
-static Path Bottle2ToCD;
-static Path CDToDropZone1;
-static Path DropZone1ToBullionMiddle1;
-static Path BullionMiddle1ToRightBullion1;
-static Path RightBullion1ToDropZone1;
-static Path BullionMiddle1ToLeftBullion1;
-static Path LeftBullion1ToStartAreaFrontOf;
-static Path StartAreaFrontOfTostartAreaDropZone1;
+static Path bullion1ToBottle1;
+static Path bottle1ToBottle2;
+static Path bottle2ToCD;
+static Path cdToDropZone1;
+static Path dropZone1ToBullionMiddle1;
+static Path bullionMiddle1ToRightBullion1;
+static Path rightBullion1ToDropZone1;
+static Path bullionMiddle1ToLeftBullion1;
+static Path leftBullion1ToStartAreaFrontOf;
+static Path startAreaFrontOfTostartAreaDropZone1;
 
 
 // Target actionList
@@ -55,26 +58,31 @@ static GameStrategy strategy1;
 static GameStrategyItem takeBullionFirst;
 
 void initTargets2012() {
-	addGameTarget(&bullion1Target, BULLION_1);
-	addGameTarget(&bottle1Target, BOTTLE_1);
-	addGameTarget(&bottle2Target, BOTTLE_2);
-	addGameTarget(&cd4Target, CD_4);
-	addGameTarget(&bullionRight1Target, BULLION_RIGHT_1);
-	addGameTarget(&bullionRight2Target, BULLION_RIGHT_2);
-	addGameTarget(&bullionLeft1Target, BULLION_LEFT_1);
-	addGameTarget(&bullionLeft2Target, BULLION_LEFT_2);
+	addGameTarget(&bullion1Target, BULLION_1, BULLION_GAIN);
+	addGameTarget(&bottle1Target, BOTTLE_1, BOTTLE_GAIN);
+	addGameTarget(&bottle2Target, BOTTLE_2, BOTTLE_GAIN);
+	addGameTarget(&cd4Target, CD_TAKE, CD_4_GAIN);
+	addGameTarget(&bullionRight1Target, BULLION_RIGHT_1, BULLION_GAIN);
+	addGameTarget(&bullionRight2Target, BULLION_RIGHT_2, BULLION_GAIN);
+	addGameTarget(&bullionLeft1Target, BULLION_LEFT_1, BULLION_GAIN);
+	addGameTarget(&bullionLeft2Target, BULLION_LEFT_2, BULLION_GAIN);
 }
 
 void initLocations2012() {
-	addLocation(&gameLocationList, &startAreaLocation, START_AREA, START_AREA_X, START_AREA_Y);
-	addLocation(&gameLocationList, &bullion1Location, BULLION_1, BULLION_1_X, BULLION_1_Y);
-	addLocation(&gameLocationList, &bottle1Location, BOTTLE_1, BOTTLE_1_X, BOTTLE_1_Y);
-	addLocation(&gameLocationList, &bottle2Location, BOTTLE_2, BOTTLE_2_X, BOTTLE_2_Y);
-	addLocation(&gameLocationList, &bottle2Location, BOTTLE_2, BOTTLE_2_X, BOTTLE_2_Y);
+	addNavigationLocation(&startAreaLocation, START_AREA, START_AREA_X, START_AREA_Y);
+	addNavigationLocation(&bullion1Location, BULLION_1, BULLION_1_X, BULLION_1_Y);
+	addNavigationLocation(&bottle1Location, BOTTLE_1, BOTTLE_1_X, BOTTLE_1_Y);
+	addNavigationLocation(&bottle2Location, BOTTLE_2, BOTTLE_2_X, BOTTLE_2_Y);
+	addNavigationLocation(&bottle2Location, BOTTLE_2, BOTTLE_2_X, BOTTLE_2_Y);
+	addNavigationLocation(&cdTakeLocation, CD_TAKE, CD_TAKE_X, CD_TAKE_Y);
 }
 
 void initPaths2012() {
 	addNavigationPath(&startAreaToBullion1, &startAreaLocation, &bullion1Location, START_AREA_TO_BULLION_1_COST,  0x40, 0x40, 0x02A3, ANGLE_NEG_90, START_AREA_TO_BULLION_1_SPEED_FACTOR); 
+	addNavigationPath(&bullion1ToBottle1, &bullion1Location, &bottle1Location, BULLION_1_TO_BOTTLE_1_COST, 0xEC, 0xC0, ANGLE_NEG_90, ANGLE_180, BULLION_1_TO_BOTTLE_1_SPEED_FACTOR);
+	addNavigationPath(&bottle1ToBottle2, &bottle1Location, &bottle2Location, BOTTLE_1_TO_BOTTLE_2_COST, 0x57, 0x0A, ANGLE_180, 0, BOTTLE_1_TO_BOTTLE_2_SPEED_FACTOR);
+	addNavigationPath(&bottle2ToCD, &bottle2Location, &cdTakeLocation, BOTTLE_2_TO_CD_COST, 0x1B, 0x30, 0, 0xFAF6, BOTTLE_2_TO_CD_SPEED_FACTOR);
+	addNavigationPath(&cdToDropZone1, &cdTakeLocation, &dropZone1Location, CD_TO_DROP_ZONE_1_COST, 0x11, 0x26, 0xFAF6, ANGLE_NEG_90, CD_TO_DROP_ZONE_1_SPEED_FACTOR);
 
 }
 
@@ -93,6 +101,7 @@ void initStrategiesItems2012() {
 void initStrategy2012() {
 	initTargets2012();
 	initLocations2012();
+	initPaths2012();
 	initTargetActions2012();
 	initStrategies2012();
 }

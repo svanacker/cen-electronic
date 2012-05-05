@@ -23,7 +23,7 @@ typedef struct {
  * Add a target to the list.
  * @param target the target to add to the list
  */
-void addGameTarget(GameTarget* target, char* name);
+void addGameTarget(GameTarget* target, char* name, int gain);
 
 /**
  * Get the target at index.

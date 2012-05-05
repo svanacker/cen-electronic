@@ -17,14 +17,14 @@ static LocationList locations;
 /** All paths. */
 static PathList paths;
 
-// static Path path1;
-
 // private members (avoid using Stack to avoid runtime problems)
 static LocationList unhandledLocationList;
 static LocationList handledLocationList;
-// TODO : Map<Location, Location> previous
 static PathList outgoingPaths;
-// static Location nearestLocation;
+
+LocationList* getNavigationLocationList() {
+	return &locations;
+}
 
 void addNavigationLocation(Location* location, char* name, int x, int y) {
 	addLocation(&locations, location, name, x, y);
@@ -117,8 +117,6 @@ Location* extractMinCostLocation() {
 }
 
 int computeBestPath(LocationList* outLocationList, Location* start, Location* end) {
-	OutputStream* outputStream = getOutputStreamLogger(DEBUG);
-
 	int result = 0;
 	clearLocationList(outLocationList);
 	clearLocationList(&unhandledLocationList);
@@ -177,6 +175,4 @@ int computeBestPath(LocationList* outLocationList, Location* start, Location* en
 void printNavigationContext(OutputStream* outputStream) {
 	printLocationList(outputStream, "locations:", &locations);
 	printPathList(outputStream, "paths:", &paths);
-
-	printLocationList(outputStream, "handledLocationList:", &handledLocationList);
 }

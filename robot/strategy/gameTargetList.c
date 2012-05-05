@@ -9,10 +9,12 @@
  */
 static GameTargetList targets;
 
-void addGameTarget(GameTarget* target, char* targetName) {
+void addGameTarget(GameTarget* target, char* targetName, int gain) {
     unsigned char size = targets.size;
 	if (size < MAX_TARGET) {
 		target->name = targetName;
+		target->available = TRUE;
+		target->gain = gain;
 	    targets.targets[size] = target;
 	    targets.size++;
 	}

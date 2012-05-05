@@ -16,7 +16,7 @@
 #define BULLION_1				"bullion1"
 #define BOTTLE_1				"bottle1"
 #define BOTTLE_2				"bottle2"
-#define CD_4					"cd4"
+#define CD_TAKE					"cdTake"
 #define BULLION_RIGHT_1			"bullionRight1"
 #define BULLION_RIGHT_2			"bullionRight2"
 #define BULLION_LEFT_1			"bullionLeft1"
@@ -40,6 +40,25 @@
 #define BOTTLE_2_X				0x0730 
 #define BOTTLE_2_Y				0x076C
 
+#define CD_TAKE_X				0x05A8
+#define CD_TAKE_Y				0x02C8
+
+#define DROP_ZONE_1_X			0x02F5
+#define DROP_ZONE_1_Y			0x00D5
+
+#define CLEAN_MIDDLE_1_X		0x0482
+#define CLEAN_MIDDLE_1_Y		0x0320
+
+#define BULLION_1_RIGHT_X		0x0482
+#define BULLION_1_RIGHT_Y		0x0320
+
+// GAINS
+
+#define BULLION_GAIN			3
+#define BOTTLE_GAIN				3
+#define CD_4_GAIN				4
+#define BULLION_GAIN			3
+
 // COST : between 0 and 255
 
 #define START_AREA_TO_BULLION_1_COST							100
@@ -47,7 +66,7 @@
 #define BOTTLE_1_TO_BOTTLE_2_COST								120
 #define BOTTLE_2_TO_CD_COST										50
 #define CD_TO_DROP_ZONE_1_COST									100
-#define DROP_ZONE_1_TO_BULLION_MIDDLE_1							50
+#define DROP_ZONE_1_TO_BULLION_MIDDLE_1_COST					50
 #define AFTER_BULLION_LEFT_1_TO_START_AREA_CENTER_COST			50
 #define START_AREA_CENTER_TO_START_AREA_DROP_ZONE_COST			80
 

@@ -26,11 +26,11 @@ void addTargetAction(GameTargetActionList* targetActionList,
     }
 }
 
-GameTargetAction* getTargetAction(GameTargetActionList* targetActionList, int index) {
+GameTargetAction* getGameTargetAction(GameTargetActionList* targetActionList, int index) {
     return targetActionList->actions[index];
 }
 
-int getTargetActionCount(GameTargetActionList* targetActionList) {
+int getGameTargetActionCount(GameTargetActionList* targetActionList) {
     return targetActionList->size;
 }
 

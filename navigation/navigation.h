@@ -7,6 +7,11 @@
 #include "path.h"
 
 /**
+ * Returns the navigation (singleton) location List.
+ */
+LocationList* getNavigationLocationList();
+
+/**
  * Add the location to the navigation graph.
  */
 void addNavigationLocation(Location* location, char* name, int x, int y);

@@ -33,6 +33,9 @@
 
 // gameboard
 #include "../../robot/gameboard/gameboard.h"
+#include "../../robot/gameboard/gameboardElement.h"
+#include "../../robot/gameboard/gameboardElementList.h"
+
 
 // navigation
 #include "../../navigation/navigation.h"
@@ -41,11 +44,11 @@
 // strategy
 #include "../../robot/strategy/gameTargetList.h"
 #include "../../robot/strategy/gameStrategyList.h"
+#include "../../robot/strategy/nextGameStrategyItemComputer.h"
 
 // specific 2012
 #include "../../robot/2012/gameboardElement2012.h"
 #include "../../robot/2012/strategy2012.h"
-
 
 // -> Devices
 
@@ -145,13 +148,16 @@ int main(void) {
 	printGameTargetList(&debugOutputStream);
 	printGameStrategyList(&debugOutputStream);
 
-	// addElements2012();
+	addElements2012();
+	addLocationListAsGameboardElements(getNavigationLocationList());
 	
 	//int cost = addNavigationLocationsTest2();
-	// printNavigationContext(&debugOutputStream);
+	printNavigationContext(&debugOutputStream);
 	// appendStringAndDec(&debugOutputStream, "cost=", cost);
 
-	// printGameboard(&debugOutputStream);
+	printGameboard(&debugOutputStream);
+
+	// getBestNextTarget(getGameStrategy(1), 0.0f, );
 
 	while(1) {
 
