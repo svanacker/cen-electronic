@@ -3,6 +3,10 @@
 #include "strategy2012.h"
 
 #include "../../navigation/locationList.h"
+#include "../../navigation/path.h"
+#include "../../navigation/pathList.h"
+#include "../../navigation/navigation.h"
+
 
 #include "../../robot/strategy/gameStrategy.h"
 #include "../../robot/strategy/gameStrategyList.h"
@@ -27,12 +31,28 @@ static Location bullion1Location;
 static Location bottle1Location;
 static Location bottle2Location;
 
+// Paths
+static Path startAreaToBullion1;
+static Path Bullion1ToBottle1;
+static Path Bottle1ToBottle2;
+static Path Bottle2ToCD;
+static Path CDToDropZone1;
+static Path DropZone1ToBullionMiddle1;
+static Path BullionMiddle1ToRightBullion1;
+static Path RightBullion1ToDropZone1;
+static Path BullionMiddle1ToLeftBullion1;
+static Path LeftBullion1ToStartAreaFrontOf;
+static Path StartAreaFrontOfTostartAreaDropZone1;
+
 
 // Target actionList
 static GameTargetAction bullion1TargetAction;
 
 // strategies
 static GameStrategy strategy1;
+
+// strategies Items
+static GameStrategyItem takeBullionFirst;
 
 void initTargets2012() {
 	addGameTarget(&bullion1Target, BULLION_1);
@@ -50,6 +70,12 @@ void initLocations2012() {
 	addLocation(&gameLocationList, &bullion1Location, BULLION_1, BULLION_1_X, BULLION_1_Y);
 	addLocation(&gameLocationList, &bottle1Location, BOTTLE_1, BOTTLE_1_X, BOTTLE_1_Y);
 	addLocation(&gameLocationList, &bottle2Location, BOTTLE_2, BOTTLE_2_X, BOTTLE_2_Y);
+	addLocation(&gameLocationList, &bottle2Location, BOTTLE_2, BOTTLE_2_X, BOTTLE_2_Y);
+}
+
+void initPaths2012() {
+	addNavigationPath(&startAreaToBullion1, &startAreaLocation, &bullion1Location, START_AREA_TO_BULLION_1_COST,  0x40, 0x40, 0x02A3, ANGLE_NEG_90, START_AREA_TO_BULLION_1_SPEED_FACTOR); 
+
 }
 
 void initTargetActions2012() {
@@ -58,6 +84,10 @@ void initTargetActions2012() {
 
 void initStrategies2012() {
 	addGameStrategy(&strategy1, "S1");
+}
+
+void initStrategiesItems2012() {
+	addGameStrategyItem(&strategy1, &takeBullionFirst);
 }
 
 void initStrategy2012() {

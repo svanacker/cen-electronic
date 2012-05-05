@@ -3,6 +3,14 @@
 
 #include "../../robot/strategy/GameTarget.h"
 
+
+#define 	ANGLE_90			0x0384
+#define		ANGLE_135			0x0546
+#define		ANGLE_150			0x05DC
+#define		ANGLE_180			0x0708
+#define		ANGLE_NEG_90		0xFC7C
+#define		ANGLE_NEG_110		0xFBB4
+
 // TARGETS
 
 #define BULLION_1				"bullion1"
@@ -31,6 +39,25 @@
 
 #define BOTTLE_2_X				0x0730 
 #define BOTTLE_2_Y				0x076C
+
+// COST : between 0 and 255
+
+#define START_AREA_TO_BULLION_1_COST							100
+#define BULLION_1_TO_BOTTLE_1_COST								80
+#define BOTTLE_1_TO_BOTTLE_2_COST								120
+#define BOTTLE_2_TO_CD_COST										50
+#define CD_TO_DROP_ZONE_1_COST									100
+#define DROP_ZONE_1_TO_BULLION_MIDDLE_1							50
+#define AFTER_BULLION_LEFT_1_TO_START_AREA_CENTER_COST			50
+#define START_AREA_CENTER_TO_START_AREA_DROP_ZONE_COST			80
+
+
+// SPEED FACTOR : between 0 and 255
+#define START_AREA_TO_BULLION_1_SPEED_FACTOR					200
+#define BULLION_1_TO_BOTTLE_1_SPEED_FACTOR						200
+#define BOTTLE_1_TO_BOTTLE_2_SPEED_FACTOR						100		
+#define BOTTLE_2_TO_CD_SPEED_FACTOR								50
+#define CD_TO_DROP_ZONE_1_SPEED_FACTOR							50
 
 /**
  * Get the way to have bullion1.

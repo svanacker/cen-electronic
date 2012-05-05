@@ -15,12 +15,6 @@
 #include "../../robot/2012/armDriver2012.h"
 #include "../../robot/robotSonarDetectorDevice.h"
 
-#define 	ANGLE_90			0x0384
-#define		ANGLE_135			0x0546
-#define		ANGLE_150			0x05DC
-#define		ANGLE_180			0x0708
-#define		ANGLE_NEG_90		0xFC7C
-#define		ANGLE_NEG_110		0xFBB4
 
 #define 	X_BOTTLE 			0x0730
 
