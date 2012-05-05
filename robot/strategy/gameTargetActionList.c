@@ -1,5 +1,6 @@
 #include "gameTargetActionList.h"
 #include "gameTargetAction.h"
+#include "gameTargetActionItemList.h"
 
 #include "../../common/error/error.h"
 
@@ -11,13 +12,15 @@ void addTargetAction(GameTargetActionList* targetActionList,
 					 GameTargetAction* targetAction,
 					 Location* startLocation,
 					 Location* endLocation,
-					 int timeToAchieve
+					 int timeToAchieve,
+					 GameTargetActionItemList* actionItemList
 ) {
     unsigned char size = targetActionList->size;
 	if (size < MAX_TARGET_ACTION) {
 		targetAction->startLocation = startLocation;
 		targetAction->endLocation = endLocation;
 		targetAction->timeToAchieve = timeToAchieve;
+		targetAction->actionItemList = actionItemList;
 	    targetActionList->actions[size] = targetAction;
 	    targetActionList->size++;
 	}

@@ -2,6 +2,7 @@
 #define GAME_TARGET_ACTION_H
 
 // #include "gameTarget.h"
+#include "gameTargetActionItemList.h"
 
 #include "../../common/commons.h"
 
@@ -22,6 +23,8 @@ typedef struct GameTargetAction {
 	// GameTarget* target;	
 	// Time to achieve (in millisecond)
 	int timeToAchieve;
+	// Reference to GameTargetActionListItem, can be NULL
+	GameTargetActionItemList* actionItemList;
 } GameTargetAction;
 
 /**

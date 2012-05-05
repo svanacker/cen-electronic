@@ -2,6 +2,9 @@
 
 #include "strategy2012.h"
 
+#include "../../common/io/outputStream.h"
+#include "../../common/io/printWriter.h"
+
 #include "../../navigation/locationList.h"
 #include "../../navigation/path.h"
 #include "../../navigation/pathList.h"
@@ -16,6 +19,8 @@
 #include "../../robot/strategy/gameTargetAction.h"
 #include "../../robot/strategy/gameTargetActionItem.h"
 #include "../../robot/strategy/gameTargetActionList.h"
+
+#include "armDeviceInterface2012.h"
 
 // Locations
 static Location startAreaLocation; 
@@ -103,11 +108,36 @@ void initTargets2012() {
 	*/
 }
 
+void armLeftUp(OutputStream* outputStream) {
+    append(outputStream, COMMAND_ARM_2012_UP);
+    appendHex2(outputStream, ARM_LEFT);
+}
+
+void armLeftDown(OutputStream* outputStream) {
+    append(outputStream, COMMAND_ARM_2012_DOWN);
+    appendHex2(outputStream, ARM_LEFT);
+}
+
+void armRightUp(OutputStream* outputStream) {
+    append(outputStream, COMMAND_ARM_2012_UP);
+    appendHex2(outputStream, ARM_RIGHT);
+}
+
+void armRightDown(OutputStream* outputStream) {
+    append(outputStream, COMMAND_ARM_2012_DOWN);
+    appendHex2(outputStream, ARM_RIGHT);
+}
+
+
 void initTargetActions2012() {
-	addTargetAction(&(bullion1Target.actionList), &bullion1TargetAction, &bullion1Location, &bullion1Location, 2);
-	addTargetAction(&(bottle1Target.actionList), &bottle1TargetAction, &bottle1Location, &bottle1Location, 2);
-	addTargetAction(&(bottle2Target.actionList), &bottle2TargetAction, &bottle2Location, &bottle2Location, 3);
-	addTargetAction(&(cd4Target.actionList), &cdTakeTargetAction, &bottle2Location, &dropZone1Location, 4);
+	addTargetAction(&(bullion1Target.actionList), &bullion1TargetAction, &bullion1Location, &bullion1Location, 2, NULL);
+	addTargetAction(&(bottle1Target.actionList), &bottle1TargetAction, &bottle1Location, &bottle1Location, 2, NULL);
+	addTargetAction(&(bottle2Target.actionList), &bottle2TargetAction, &bottle2Location, &bottle2Location, 3, NULL);
+	addTargetAction(&(cd4Target.actionList), &cdTakeTargetAction, &bottle2Location, &dropZone1Location, 4, NULL);
+}
+
+void initTargetActionsItems2012() {
+
 }
 
 void initStrategies2012() {

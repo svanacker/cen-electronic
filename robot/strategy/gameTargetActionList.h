@@ -2,6 +2,7 @@
 #define GAME_TARGET_ACTION_LIST_H
 
 #include "gameTargetAction.h"
+#include "gameTargetActionItemList.h"
 
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
@@ -30,7 +31,8 @@ void addTargetAction(GameTargetActionList* targetActionList,
 					 GameTargetAction* targetAction,
 					 Location* startLocation,
 					 Location* endLocation,
-					 int timeToAchieve
+					 int timeToAchieve,
+					 GameTargetActionItemList* actionListItem
 );
 
 /**
