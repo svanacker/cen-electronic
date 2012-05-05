@@ -8,8 +8,6 @@
 #include "../../robot/strategy/gameTarget.h"
 #include "../../robot/strategy/gameTargetList.h"
 
-#define COLOR_COUNT		 2
-
 // Targets List
 static GameTarget bullion1Target;
 static GameTarget bottle1Target;
@@ -20,15 +18,16 @@ static GameTarget bullionRight2Target;
 static GameTarget bullionLeft1Target;
 static GameTarget bullionLeft2Target;
 
-
-// start Area
-static Location startArea; 
+// Locations
+static LocationList gameLocationList;
+static Location startAreaLocation; 
 static Location bullion1Location;
 static Location bottle1Location;
 static Location bottle2Location;
 
 
-static LocationList gameLocationList;
+// Target actionList
+static GameTargetAction bullion1TargetAction;
 
 // static GameTargetAction[COLOR_COUNT] bullion1TargetAction
 
@@ -44,12 +43,22 @@ void initTargets2012() {
 }
 
 void initLocations2012() {
-	addLocation(&gameLocationList, &startArea, START_AREA, START_AREA_X, START_AREA_Y);
-	addLocation(&gameLocationList, &startArea, BULLION_1, BULLION_1_X, BULLION_1_Y);
-	addLocation(&gameLocationList, &startArea, BOTTLE_1, BOTTLE_1_X, BOTTLE_1_Y);
-	addLocation(&gameLocationList, &startArea, BOTTLE_2, BOTTLE_2_X, BOTTLE_2_Y);
-
+	addLocation(&gameLocationList, &startAreaLocation, START_AREA, START_AREA_X, START_AREA_Y);
+	addLocation(&gameLocationList, &bullion1Location, BULLION_1, BULLION_1_X, BULLION_1_Y);
+	addLocation(&gameLocationList, &bottle1Location, BOTTLE_1, BOTTLE_1_X, BOTTLE_1_Y);
+	addLocation(&gameLocationList, &bottle2Location, BOTTLE_2, BOTTLE_2_X, BOTTLE_2_Y);
 }
+
+void initTargetActions2012() {
+	addTargetAction(&(bullion1Target.actionList), &bullion1TargetAction, &startAreaLocation, &bullion1Location, 2);
+}
+
+void initStrategy2012() {
+	initTargets2012();
+	initLocations2012();
+	initTargetActions2012();
+}
+
 
 
 /**

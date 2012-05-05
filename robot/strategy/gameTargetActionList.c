@@ -34,10 +34,9 @@ int getTargetActionCount(GameTargetActionList* targetActionList) {
     return targetActionList->size;
 }
 
-void printTargetActionList(OutputStream* outputStream, GameTargetActionList* targets) {
+void printGameTargetActionList(OutputStream* outputStream, GameTargetActionList* targets) {
 	int i;
 	int size = targets->size;
-	println(outputStream);	
 	for (i = 0; i < size; i++) {
 		GameTargetAction* targetAction = targets->actions[i];
 		printGameTargetAction(outputStream, targetAction);

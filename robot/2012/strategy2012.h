@@ -37,4 +37,9 @@
  */
 GameTarget* getBullion1Target();
 
+/**
+ * Init all elements for 2012.
+ */
+void initStrategy2012();
+
 #endif

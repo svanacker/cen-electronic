@@ -5,6 +5,7 @@
 
 /**
  * Target list.
+ * Singleton
  */
 static GameTargetList targets;
 

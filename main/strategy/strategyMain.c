@@ -31,11 +31,20 @@
 #include "../../device/device.h"
 #include "../../device/dispatcher/deviceDataDispatcher.h"
 
+// gameboard
 #include "../../robot/gameboard/gameboard.h"
-#include "../../robot/2012/gameboardElement2012.h"
 
+// navigation
 #include "../../navigation/navigation.h"
 #include "../../navigation/navigationTest2.h"
+
+// strategy
+#include "../../robot/strategy/gameTargetList.h"
+
+// specific 2012
+#include "../../robot/2012/gameboardElement2012.h"
+#include "../../robot/2012/strategy2012.h"
+
 
 // -> Devices
 
@@ -130,6 +139,9 @@ int main(void) {
 
 	// init the devices
 	initDevicesDescriptor();
+
+	initStrategy2012();
+	printGameTargetList(&debugOutputStream);
 
 	// addElements2012();
 	

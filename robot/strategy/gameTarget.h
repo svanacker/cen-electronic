@@ -21,7 +21,7 @@ typedef struct GameTarget {
 	// Returns the position of the target on the gameboard
 	Point point;
 	/** The actionList for this target. */
-	// GameTargetActionList actionList;
+	GameTargetActionList actionList;
 } GameTarget;
 
 /**
