@@ -29,12 +29,12 @@ void addGameStrategy(GameStrategy* strategy, char* name);
 /**
  * Get the strategy at index.
  */
-GameStrategy* getStrategy(int index);
+GameStrategy* getGameStrategy(int index);
 
 /**
  * Get the count of strategies.
  */
-int getStrategyCount();
+int getGameStrategyCount();
 
 /**
  * Print the game strategy list, and for each the detail of strategy game

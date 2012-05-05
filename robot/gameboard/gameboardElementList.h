@@ -3,8 +3,8 @@
 
 #include "gameboardElement.h"
 
-#include "../../navigation/location.h"
-#include "../../navigation/locationList.h"
+#include "../../robot/strategy/gameTarget.h"
+#include "../../robot/strategy/gameTargetList.h"
 
 /** The max limit of game board element. */
 #define MAX_GAME_BOARD_ELEMENT 		30
@@ -29,9 +29,9 @@ GameboardElement* addGameboardElement(gameboardElementPrintFunction* printFuncti
 /**
  * Add a location as a gameBoard Element.
  */
-void addLocationAsGameboardElement(Location* location);
+void addGameTargetAsGameboardElement(GameTarget* gameTarget);
 
-void addLocationListAsGameboardElements(LocationList* locationList);
+void addGameTargetListAsGameboardElements(GameTargetList* gameTargetList);
 
 /**
  * Get the game board element at index

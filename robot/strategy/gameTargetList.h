@@ -5,6 +5,8 @@
 
 #include "../../common/io/outputStream.h"
 
+#include "../../navigation/location.h"
+
 /** The max limit of target count. */
 #define MAX_TARGET 		10
 
@@ -18,12 +20,16 @@ typedef struct {
     unsigned char size;
 } GameTargetList;
 
+/**
+ * Returns the global target list (singleton).
+ */
+GameTargetList* getGameTargetList();
 
 /**
  * Add a target to the list.
  * @param target the target to add to the list
  */
-void addGameTarget(GameTarget* target, char* name, int gain);
+void addGameTarget(GameTarget* target, char* name, int gain, Location* location);
 
 /**
  * Get the target at index.

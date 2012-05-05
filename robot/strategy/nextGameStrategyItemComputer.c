@@ -3,6 +3,7 @@
 #include "nextGameStrategyItemComputer.h"
 
 #include "gameStrategy.h"
+#include "gameStrategyContext.h"
 #include "gameStrategyItem.h"
 #include "gameTarget.h"
 #include "gameTargetAction.h"
@@ -17,16 +18,18 @@
 
 #include "../../navigation/navigation.h"
 #include "../../navigation/locationList.h"
+#include "../../navigation/location.h"
 
-static LocationList* locationList;
+static LocationList outLocationList;
 
 static GameTarget* currentTarget;
 
+GameTargetAction* getBestNextTarget(GameStrategyContext* strategyContext) {
 
-GameTargetAction* getBestNextTarget(GameStrategy* gameStrategy,
-								float elapsedMatchTime,
-								Location* currentLocation,
-								LocationList* outLocationList) {
+	GameStrategy* gameStrategy = strategyContext->gameStrategy;
+	float elapsedMatchTime = strategyContext->elapsedMatchTime;
+	Location* currentLocation = &(strategyContext->currentLocation);
+
 	// Opponent opponent = RobotUtils.getRobotAttribute(Opponent.class, servicesProvider);
 	GameTarget* bestTarget = NULL;
 	float maxGain = 0.0f;
@@ -47,7 +50,7 @@ GameTargetAction* getBestNextTarget(GameStrategy* gameStrategy,
 		for (actionIndex = 0; actionIndex < targetActionCount; actionIndex++) {
 			GameTargetAction* targetAction = getGameTargetAction(actionList, actionIndex);
 			Location* startLocation = targetAction->startLocation;
-			int distanceCost = computeBestPath(outLocationList, currentLocation, startLocation);
+			int distanceCost = computeBestPath(&outLocationList, currentLocation, startLocation);
 			// float gain = 0.0f; //targetGain(target, action, distance, elapsedMatchTime, 0.0, 0.0);
 			// log(gainData, target, gain);
 			int gain = distanceCost;
@@ -60,6 +63,7 @@ GameTargetAction* getBestNextTarget(GameStrategy* gameStrategy,
 	if (result != NULL) {
 		// appendStringAndDec(getOutputStreamLogger(INFO), "cost=", cost);
 		printGameTarget(getOutputStreamLogger(INFO), bestTarget);
+		printLocationList(getOutputStreamLogger(INFO), "outLocationList:", &outLocationList);
 	}
 	return result;
 }

@@ -44,6 +44,9 @@
 // strategy
 #include "../../robot/strategy/gameTargetList.h"
 #include "../../robot/strategy/gameStrategyList.h"
+#include "../../robot/strategy/gameStrategy.h"
+#include "../../robot/strategy/gameStrategyContext.h"
+
 #include "../../robot/strategy/nextGameStrategyItemComputer.h"
 
 // specific 2012
@@ -99,6 +102,9 @@ static StreamLink i2cSerialStreamLink;
 static Device testDevice;
 static Device systemDevice;
 
+// Strategy Context
+static GameStrategyContext strategyContext;
+
 void initDevicesDescriptor() {
 	addLocalDevice(&testDevice, getTestDeviceInterface(), getTestDeviceDescriptor());
 	addLocalDevice(&systemDevice, getSystemDeviceInterface(), getSystemDeviceDescriptor());
@@ -149,7 +155,8 @@ int main(void) {
 	printGameStrategyList(&debugOutputStream);
 
 	addElements2012();
-	addLocationListAsGameboardElements(getNavigationLocationList());
+	GameTargetList* targetList = getGameTargetList();
+	addGameTargetListAsGameboardElements(targetList);
 	
 	//int cost = addNavigationLocationsTest2();
 	printNavigationContext(&debugOutputStream);
@@ -157,7 +164,16 @@ int main(void) {
 
 	printGameboard(&debugOutputStream);
 
-	// getBestNextTarget(getGameStrategy(1), 0.0f, );
+	LocationList* navigationLocationList = getNavigationLocationList();
+	Location* location = findLocationByName(navigationLocationList, START_AREA);
+
+	strategyContext.gameStrategy = getGameStrategy(1);
+	strategyContext.elapsedMatchTime = 0.0f;
+	strategyContext.currentLocation.x = location->x;
+	strategyContext.currentLocation.y = location->y;	
+	strategyContext.currentLocation.name = location->name;
+
+	getBestNextTarget(&strategyContext);
 
 	while(1) {
 

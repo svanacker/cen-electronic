@@ -3,18 +3,26 @@
 
 #include "../../common/error/error.h"
 
+#include "../../navigation/navigation.h"
+
+
 /**
  * Target list.
  * Singleton
  */
 static GameTargetList targets;
 
-void addGameTarget(GameTarget* target, char* targetName, int gain) {
+GameTargetList* getGameTargetList() {
+	return &targets;
+}
+
+void addGameTarget(GameTarget* target, char* targetName, int gain, Location* location) {
     unsigned char size = targets.size;
 	if (size < MAX_TARGET) {
 		target->name = targetName;
 		target->available = TRUE;
 		target->gain = gain;
+		target->location = location;
 	    targets.targets[size] = target;
 	    targets.size++;
 	}

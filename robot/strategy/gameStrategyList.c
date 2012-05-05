@@ -23,7 +23,7 @@ void addGameStrategy(GameStrategy* strategy, char* strategyName) {
     }
 }
 
-GameStrategy* getStrategy(int index) {
+GameStrategy* getGameStrategy(int index) {
     return strategies.strategies[index];
 }
 

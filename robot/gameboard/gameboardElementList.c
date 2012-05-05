@@ -44,21 +44,29 @@ int getGameboardElementCount() {
 
 // LOCATION
 
-char locationPrint(int* element, int column, int line) {
-	Location* location = (Location*) element;
-	return pointPrint(column, line, location->x, location->y, 'L');
+char gameTargetPrint(int* element, int column, int line) {
+	GameTarget* target = (GameTarget*) element;
+	Location* location = target->location;
+	char c;
+	if (target->available) {
+		c = 'X';
+	}
+	else {
+		c = 'O';
+	}
+	return pointPrint(column, line, location->x, location->y, c);
 }
 
-void addLocationAsGameboardElement(Location* location) {
-	addGameboardElement(&locationPrint, (int*) location);
+void addGameTargetAsGameboardElement(GameTarget* target) {
+	addGameboardElement(&gameTargetPrint, (int*) target);
 }
 
-void addLocationListAsGameboardElements(LocationList* locationList) {
+void addGameTargetListAsGameboardElements(GameTargetList* gameTargetList) {
 	int i;
-	unsigned char size = locationList->size;
+	unsigned char size = gameTargetList->size;
 	for (i = 0; i < size; i++) {
-		Location* location = locationList->locations[i];
+		GameTarget* gameTarget = gameTargetList->targets[i];
 
-		addLocationAsGameboardElement(location);
+		addGameTargetAsGameboardElement(gameTarget);
 	}	
 }
