@@ -4,6 +4,8 @@
 #include "gameStrategy.h"
 #include "gameStrategyItem.h"
 
+#include "gameTarget.h"
+
 #include "../../common/io/outputStream.h"
 
 #define MAX_STRATEGY_ITEM 		7
@@ -24,7 +26,9 @@ typedef struct GameStrategy {
  * Add a strategy item to the list.
  * @param strategyItem the strategy item to add to the list
  */
-void addGameStrategyItem(GameStrategy* gameStrategy, GameStrategyItem* strategyItem);
+void addGameStrategyItem(GameStrategy* gameStrategy,
+						 GameStrategyItem* strategyItem,
+						GameTarget* target);
 
 /**
  * Get the strategy at index.

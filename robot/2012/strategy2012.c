@@ -61,8 +61,10 @@ static GameTargetAction bullion1TargetAction;
 static GameTargetAction bottle1TargetAction;
 static GameTargetAction bottle2TargetAction;
 static GameTargetAction cdTakeTargetAction;
-static GameTargetActionItem cdTakeStep1TargetAction;
-static GameTargetActionItem cdTakeStep2TargetAction;
+
+static GameTargetActionItemList cdTakeTargetActionItemList;  
+static GameTargetActionItem cdTakeStep1TargetActionItem;
+static GameTargetActionItem cdTakeStep2TargetActionItem;
 /*
 static GameTargetActionItem bullionRightStep1BackTargetActionItem;
 static GameTargetActionItem bullionRightStep2OpenPlierTargetActionItem;
@@ -74,9 +76,10 @@ static GameTargetActionItem bullionRightStep2ClosePlierTargetActionItem;
 static GameStrategy strategy1;
 
 // strategies Items
-static GameStrategyItem takeBullionFirst;
-
-
+static GameStrategyItem takeBullionFirstStrategyItem;
+static GameStrategyItem bottle1StrategyItem;
+static GameStrategyItem bottle2StrategyItem;
+static GameStrategyItem cdTakeStrategyItem;
 
 void initLocations2012() {
 	addNavigationLocation(&startAreaLocation, START_AREA, START_AREA_X, START_AREA_Y);
@@ -108,6 +111,8 @@ void initTargets2012() {
 	*/
 }
 
+// ARM
+
 void armLeftUp(OutputStream* outputStream) {
     append(outputStream, COMMAND_ARM_2012_UP);
     appendHex2(outputStream, ARM_LEFT);
@@ -128,16 +133,26 @@ void armRightDown(OutputStream* outputStream) {
     appendHex2(outputStream, ARM_RIGHT);
 }
 
+// CD ActionItem
+
+void cdTakeStep1(OutputStream* outputStream) {
+	// TODO
+}
+
+void cdTakeStep2(OutputStream* outputStream) {
+	// TODO
+}
 
 void initTargetActions2012() {
 	addTargetAction(&(bullion1Target.actionList), &bullion1TargetAction, &bullion1Location, &bullion1Location, 2, NULL);
 	addTargetAction(&(bottle1Target.actionList), &bottle1TargetAction, &bottle1Location, &bottle1Location, 2, NULL);
 	addTargetAction(&(bottle2Target.actionList), &bottle2TargetAction, &bottle2Location, &bottle2Location, 3, NULL);
-	addTargetAction(&(cd4Target.actionList), &cdTakeTargetAction, &bottle2Location, &dropZone1Location, 4, NULL);
+	addTargetAction(&(cd4Target.actionList), &cdTakeTargetAction, &bottle2Location, &dropZone1Location, 4, &cdTakeTargetActionItemList);
 }
 
 void initTargetActionsItems2012() {
-
+	addTargetActionItem(&cdTakeTargetActionItemList, &cdTakeStep1TargetActionItem, &cdTakeStep1, "cdTakeStep1");
+	addTargetActionItem(&cdTakeTargetActionItemList, &cdTakeStep2TargetActionItem, &cdTakeStep2, "cdTakeStep2");
 }
 
 void initStrategies2012() {
@@ -145,7 +160,11 @@ void initStrategies2012() {
 }
 
 void initStrategiesItems2012() {
-	addGameStrategyItem(&strategy1, &takeBullionFirst);
+	addGameStrategyItem(&strategy1, &takeBullionFirstStrategyItem, &bullion1Target);
+	addGameStrategyItem(&strategy1, &bottle1StrategyItem, &bottle1Target);
+	addGameStrategyItem(&strategy1, &bottle2StrategyItem, &bottle2Target);
+	addGameStrategyItem(&strategy1, &cdTakeStrategyItem, &cd4Target);
+
 }
 
 void initStrategy2012() {
@@ -154,7 +173,10 @@ void initStrategy2012() {
 
 	initTargets2012();
 	initTargetActions2012();
+	initTargetActionsItems2012();
+
 	initStrategies2012();
+	initStrategiesItems2012();
 }
 
 

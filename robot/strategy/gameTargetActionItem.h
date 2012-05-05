@@ -15,6 +15,7 @@ typedef void GameTargetActionFunction(OutputStream* outputStream);
  * Encapsulates the target action item.
  */
 typedef struct GameTargetActionItem {
+	char* name;
 	/** Function which will be called. */
 	GameTargetActionFunction* actionItem;
 } GameTargetActionItem;
@@ -22,7 +23,7 @@ typedef struct GameTargetActionItem {
 /**
  * Print the detail of the target action item.
  */
-// void printGameTargetActionItem(OutputStream* outputStream, GameTargetActionItem* targetActionItem);
+void printGameTargetActionItem(OutputStream* outputStream, GameTargetActionItem* targetActionItem);
 
 
 #endif

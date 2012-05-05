@@ -1,4 +1,7 @@
+#include <stdlib.h>
+
 #include "gameTargetAction.h"
+#include "gameTargetActionItemList.h"
 
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
@@ -9,4 +12,8 @@ void printGameTargetAction(OutputStream* outputStream, GameTargetAction* targetA
 	appendKeyAndName(outputStream, ", end=", targetAction->endLocation->name);
 	appendStringAndDec(outputStream, ", timeToAchieve=", targetAction->timeToAchieve);
 	println(outputStream);
+	GameTargetActionItemList* actionItemList = targetAction->actionItemList;
+	if (actionItemList != NULL) {
+		printGameTargetActionItemList(outputStream, actionItemList);
+	}
 }

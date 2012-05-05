@@ -4,6 +4,6 @@
 #include "../../common/io/printWriter.h"
 
 void printGameStrategyItem(OutputStream* outputStream, GameStrategyItem* strategyItem) {
-	// appendKeyAndName(outputStream, "strategyItem.name=", strategy->name);
+	appendKeyAndName(outputStream, "\tstrategyItem->target->name=", strategyItem->target->name);
 	println(outputStream);
 }

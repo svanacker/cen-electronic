@@ -27,7 +27,8 @@ typedef struct GameTargetActionItemList {
  */
 void addTargetActionItem(GameTargetActionItemList* targetActionItemList,
 					 GameTargetActionItem* targetActionItem,
-					 GameTargetActionFunction* function
+					 GameTargetActionFunction* function,
+					 char* name
 );
 
 /**

@@ -167,7 +167,7 @@ int main(void) {
 	LocationList* navigationLocationList = getNavigationLocationList();
 	Location* location = findLocationByName(navigationLocationList, START_AREA);
 
-	strategyContext.gameStrategy = getGameStrategy(1);
+	strategyContext.gameStrategy = getGameStrategy(0);
 	strategyContext.elapsedMatchTime = 0.0f;
 	strategyContext.currentLocation.x = location->x;
 	strategyContext.currentLocation.y = location->y;	

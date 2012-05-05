@@ -8,11 +8,13 @@
 
 void addTargetActionItem(GameTargetActionItemList* targetActionItemList,
 					 GameTargetActionItem* targetActionItem,
-					 GameTargetActionFunction* actionItem
+					 GameTargetActionFunction* actionItem,
+					 char* name
 ) {
     unsigned char size = targetActionItemList->size;
 	if (size < MAX_TARGET_ACTION_ITEM) {
 		targetActionItem->actionItem = actionItem;
+		targetActionItem->name = name;
 	    targetActionItemList->items[size] = targetActionItem;
 	    targetActionItemList->size++;
 	}
@@ -29,13 +31,11 @@ int getGameTargetActionItemCount(GameTargetActionItemList* targetActionItemList)
     return targetActionItemList->size;
 }
 
-/*
 void printGameTargetActionItemList(OutputStream* outputStream, GameTargetActionItemList* targetItems) {
 	int i;
 	int size = targetItems->size;
 	for (i = 0; i < size; i++) {
-		GameTargetItemAction* targetItemAction = targetItems->items[i];
-		printGameTargetItemAction(outputStream, targetItemAction);
+		GameTargetActionItem* targetActionItem = targetItems->items[i];
+		printGameTargetActionItem(outputStream, targetActionItem);
 	}
 }
-*/

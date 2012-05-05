@@ -1,14 +1,19 @@
 #include "gameStrategy.h"
 #include "gameStrategyItem.h"
+#include "gameTarget.h"
 
 #include "../../common/error/error.h"
 
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
 
-void addGameStrategyItem(GameStrategy* gameStrategy, GameStrategyItem* strategyItem) {
+void addGameStrategyItem(GameStrategy* gameStrategy,
+						 GameStrategyItem* strategyItem,
+						 GameTarget* target
+) {
     unsigned char size = gameStrategy->size;
 	if (size < MAX_STRATEGY_ITEM) {
+		strategyItem->target = target;
 	    gameStrategy->items[size] = strategyItem;
 	    gameStrategy->size++;
 	}

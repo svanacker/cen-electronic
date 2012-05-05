@@ -27,7 +27,7 @@ static GameTarget* currentTarget;
 GameTargetAction* getBestNextTarget(GameStrategyContext* strategyContext) {
 
 	GameStrategy* gameStrategy = strategyContext->gameStrategy;
-	float elapsedMatchTime = strategyContext->elapsedMatchTime;
+	// float elapsedMatchTime = strategyContext->elapsedMatchTime;
 	Location* currentLocation = &(strategyContext->currentLocation);
 
 	// Opponent opponent = RobotUtils.getRobotAttribute(Opponent.class, servicesProvider);
@@ -39,7 +39,9 @@ GameTargetAction* getBestNextTarget(GameStrategyContext* strategyContext) {
 	int gameStrategyItemCount = getStrategyItemCount(gameStrategy);
 	for (strategyItemIndex = 0; strategyItemIndex < gameStrategyItemCount; strategyItemIndex++) {
 		GameStrategyItem* strategyItem = getStrategyItem(gameStrategy, strategyItemIndex);
+		
 		GameTarget* target = strategyItem->target;
+	
 		if (!target->available) {
 			continue;
 		}
@@ -53,15 +55,24 @@ GameTargetAction* getBestNextTarget(GameStrategyContext* strategyContext) {
 			int distanceCost = computeBestPath(&outLocationList, currentLocation, startLocation);
 			// float gain = 0.0f; //targetGain(target, action, distance, elapsedMatchTime, 0.0, 0.0);
 			// log(gainData, target, gain);
-			int gain = distanceCost;
+
+			appendKeyAndName(getOutputStreamLogger(INFO), "target:", target->name);
+			appendStringAndDec(getOutputStreamLogger(INFO), ", distanceCost=", distanceCost);
+			println(getOutputStreamLogger(INFO));
+
+			if (distanceCost == MAX_COST) {
+				continue;
+			}
+			float gain = 1000.0f / (float) distanceCost;
 			if (gain > maxGain) {
 				maxGain = gain;
 				result = targetAction;
+				bestTarget = target;
 			}
 		}
 	}
 	if (result != NULL) {
-		// appendStringAndDec(getOutputStreamLogger(INFO), "cost=", cost);
+		appendStringAndDecf(getOutputStreamLogger(INFO), "cost=", maxGain);
 		printGameTarget(getOutputStreamLogger(INFO), bestTarget);
 		printLocationList(getOutputStreamLogger(INFO), "outLocationList:", &outLocationList);
 	}
