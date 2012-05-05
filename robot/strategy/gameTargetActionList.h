@@ -6,6 +6,8 @@
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
 
+#include "../../navigation/LocationList.h"
+
 /** The max limit of target action count. */
 #define MAX_TARGET_ACTION 		3
 
@@ -24,7 +26,12 @@ typedef struct GameTargetActionList {
  * Add an action to the target.
  * @param targetAction the target to add to the list
  */
-void addGameTargetAction(GameTargetActionList* list, GameTargetAction* targetAction);
+void addTargetAction(GameTargetActionList* targetActionList,
+					 GameTargetAction* targetAction,
+					 Location* startLocation,
+					 Location* endLocation,
+					 int timeToAchieve
+);
 
 /**
  * Get the target action at index.

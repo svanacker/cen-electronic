@@ -7,9 +7,17 @@
 #include "../../common/io/printWriter.h"
 
 
-void addTargetAction(GameTargetActionList* targetActionList, GameTargetAction* targetAction) {
+void addTargetAction(GameTargetActionList* targetActionList,
+					 GameTargetAction* targetAction,
+					 Location* startLocation,
+					 Location* endLocation,
+					 int timeToAchieve
+) {
     unsigned char size = targetActionList->size;
 	if (size < MAX_TARGET_ACTION) {
+		targetAction->startLocation = startLocation;
+		targetAction->endLocation = endLocation;
+		targetAction->timeToAchieve = timeToAchieve;
 	    targetActionList->actions[size] = targetAction;
 	    targetActionList->size++;
 	}
