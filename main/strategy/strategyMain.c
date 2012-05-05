@@ -40,6 +40,7 @@
 
 // strategy
 #include "../../robot/strategy/gameTargetList.h"
+#include "../../robot/strategy/gameStrategyList.h"
 
 // specific 2012
 #include "../../robot/2012/gameboardElement2012.h"
@@ -142,6 +143,7 @@ int main(void) {
 
 	initStrategy2012();
 	printGameTargetList(&debugOutputStream);
+	printGameStrategyList(&debugOutputStream);
 
 	// addElements2012();
 	

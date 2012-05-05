@@ -1,7 +1,6 @@
 #ifndef GAME_STRATEGY_ITEM_H
 #define GAME_STRATEGY_ITEM_H
 
-#include "gameStrategy.h"
 #include "gameTarget.h"
 
 #include "factor/gainFactor.h"

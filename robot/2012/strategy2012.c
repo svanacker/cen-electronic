@@ -4,6 +4,8 @@
 
 #include "../../navigation/locationList.h"
 
+#include "../../robot/strategy/gameStrategy.h"
+#include "../../robot/strategy/gameStrategyList.h"
 
 #include "../../robot/strategy/gameTarget.h"
 #include "../../robot/strategy/gameTargetList.h"
@@ -29,7 +31,8 @@ static Location bottle2Location;
 // Target actionList
 static GameTargetAction bullion1TargetAction;
 
-// static GameTargetAction[COLOR_COUNT] bullion1TargetAction
+// strategies
+static GameStrategy strategy1;
 
 void initTargets2012() {
 	addGameTarget(&bullion1Target, BULLION_1);
@@ -53,10 +56,15 @@ void initTargetActions2012() {
 	addTargetAction(&(bullion1Target.actionList), &bullion1TargetAction, &startAreaLocation, &bullion1Location, 2);
 }
 
+void initStrategies2012() {
+	addGameStrategy(&strategy1, "S1");
+}
+
 void initStrategy2012() {
 	initTargets2012();
 	initLocations2012();
 	initTargetActions2012();
+	initStrategies2012();
 }
 
 

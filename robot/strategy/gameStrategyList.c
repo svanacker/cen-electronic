@@ -11,7 +11,7 @@
  */
 static GameStrategyList strategies;
 
-void addStrategy(GameStrategy* strategy, char* strategyName) {
+void addGameStrategy(GameStrategy* strategy, char* strategyName) {
     unsigned char size = strategies.size;
 	if (size < MAX_STRATEGY) {
 		strategy->name = strategyName;
