@@ -41,5 +41,8 @@ void notifyFailed(OutputStream* outputStream);
  */
 void notifyMoving(OutputStream* outputStream);
 
+// TODO
+void notifyObstacle(OutputStream* outputStream);
+
 #endif
 

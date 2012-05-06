@@ -35,6 +35,23 @@ typedef struct {
  */
 #define MOTION_TYPE_MAINTAIN_POSITION	0x03
 
+
+// SPEED FACTOR
+
+#define	MOTION_SPEED_FACTOR_MAX				16
+#define	MOTION_SPEED_FACTOR_HIGH			12
+#define	MOTION_SPEED_FACTOR_MIDDLE			8
+#define	MOTION_SPEED_FACTOR_LOW				4
+#define	MOTION_SPEED_FACTOR_MIN				1
+
+// ACCELERATION FACTOR
+
+#define	MOTION_ACCELERATION_FACTOR_MAX		16
+#define	MOTION_ACCELERATION_FACTOR_HIGH		12
+#define	MOTION_ACCELERATION_FACTOR_MIDDLE	8
+#define	MOTION_ACCELERATION_FACTOR_LOW		4
+#define	MOTION_ACCELERATION_FACTOR_MIN		1
+
 // PARAMETERS
 
 /**
@@ -77,7 +94,11 @@ void maintainPosition(void);
  */
 void gotoPosition(float left, float right, float a, float speed);
 
-void updateSimpleSplineWithDistance(float destX, float destY, float destAngle, float distance1, float distance2, BOOL relative);
+void updateSimpleSplineWithDistance(float destX, float destY,
+									float destAngle,
+									float distance1, float distance2,
+									unsigned char accelerationFactor, unsigned char speedFactor,
+									BOOL relative);
 
 /**
  * Go from the relative destination to the initial Position of the robot
@@ -95,6 +116,8 @@ void gotoSimpleSpline(float relativeDestX,
 					  float relativeDestAngle,
 					  float controlPointDistance1,
 					  float controlPointDistance2,
+					  unsigned int accelerationFactor,
+					  unsigned int speedFactor,
 					  BOOL relative
 					);
 

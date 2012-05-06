@@ -22,6 +22,9 @@ void fillSplineParameters() {
 	setArgumentSignedHex2(6, "distP0-P1(cm)");
 	setArgumentSeparator(7);
 	setArgumentSignedHex2(8, "distP2-P3(cm)");
+	setArgumentSeparator(9);
+	setArgumentUnsignedChar1(10, "speedFactor");
+	setArgumentUnsignedChar1(11, "accFactor");
 }
 
 int deviceMotionGetInterface(char header, int mode, BOOL fillDeviceArgumentList) {
@@ -131,10 +134,10 @@ int deviceMotionGetInterface(char header, int mode, BOOL fillDeviceArgumentList)
     else if (header == COMMAND_MOTION_SPLINE_RELATIVE) {
         if (mode == DEVICE_MODE_INPUT) {
             if (fillDeviceArgumentList) {
-				setFunction("bSplineRel", 9);
+				setFunction("bSplineRel", 12);
 				fillSplineParameters();
             }
-            return 20;
+            return 23;
         } else if (mode == DEVICE_MODE_OUTPUT) {
             if (fillDeviceArgumentList) {
 				setFunctionNoArgument("bSplineRel");
@@ -145,10 +148,10 @@ int deviceMotionGetInterface(char header, int mode, BOOL fillDeviceArgumentList)
     else if (header == COMMAND_MOTION_SPLINE_ABSOLUTE) {
         if (mode == DEVICE_MODE_INPUT) {
             if (fillDeviceArgumentList) {
-				setFunction("bSplineAbs", 9);
+				setFunction("bSplineAbs", 12);
 				fillSplineParameters();
             }
-            return 20;
+            return 23;
         } else if (mode == DEVICE_MODE_OUTPUT) {
             if (fillDeviceArgumentList) {
 				setFunctionNoArgument("bSplineRel");

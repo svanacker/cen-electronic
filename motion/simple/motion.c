@@ -183,23 +183,31 @@ void gotoPosition(float left, float right, float a, float speed) {
 /**
 * @private
 */
-void updateSimpleSplineWithDistance(float destX, float destY, float destAngle, float distance1, float distance2, BOOL relative) {
+void updateSimpleSplineWithDistance(float destX, float destY, 
+									float destAngle, 
+									float distance1, float distance2, 
+									unsigned char accelerationFactor, unsigned char speedFactor,
+									BOOL relative) {
 
+	/*
 	OutputStream* outputStream = getDebugOutputStreamLogger();
-
 	appendStringAndDecf(outputStream, "destX=", destX);
 	appendStringAndDecf(outputStream, ",destY=", destY);
 	appendStringAndDecf(outputStream, ",destAngle=", destAngle);
 	appendStringAndDecf(outputStream, ",dist1=", distance1);
 	appendStringAndDecf(outputStream, ",dist2=", distance2);
-	
+	*/	
+
 	// If the distance of the control point is negative, we considerer that we go
 	// back
 	BOOL backward = distance1 < 0.0f;
+	
+	/*
 	appendString(outputStream, ",rel=");
 	appendBOOL(outputStream, relative);
 	appendString(outputStream, ",backward=");
 	appendBOOL(outputStream, backward);
+	*/	
 
 	Position* position = getPosition();
 	// scale coordinates
@@ -228,6 +236,8 @@ void updateSimpleSplineWithDistance(float destX, float destY, float destAngle, f
     // Update the bspline curve
 	// P0
     resetBSplineCurve(curve, xScaled, yScaled, backward);
+	curve->accelerationFactor = accelerationFactor;
+	curve->speedFactor = speedFactor;
 
 	// P1
 	Point* point = curve->p1;
@@ -282,9 +292,13 @@ void updateSimpleSplineWithDistance(float destX, float destY, float destAngle, f
 /**
  * Goto a position from the current position, with a certain distance to do the angle
  */
-void gotoSimpleSpline(float destX, float destY, float destAngle, float controlPointDistance1, float controlPointDistance2, BOOL relative) {
+void gotoSimpleSpline(float destX, float destY,
+					  float destAngle, 
+					  float controlPointDistance1, float controlPointDistance2,
+					  unsigned int accelerationFactor, unsigned int speedFactor,
+					  BOOL relative) {
 	float bestDerivative;
-	float bestDistance;
+	// float bestDistance;
 	// We do not provide control Point Distance
 	// TODO : A REVOIR
 	/*
@@ -310,7 +324,11 @@ void gotoSimpleSpline(float destX, float destY, float destAngle, float controlPo
 
 		// bestDistance = controlPointDistance;
 		// Compute bestDerivative
-		updateSimpleSplineWithDistance(destX, destY, destAngle, controlPointDistance1, controlPointDistance2, relative);
+		updateSimpleSplineWithDistance(destX, destY,
+										destAngle,
+										controlPointDistance1, controlPointDistance2,
+										accelerationFactor, speedFactor,
+										relative);
 		bestDerivative = computeBSplineMaxDerivative(getSingleBSplineCurve());
 	/*
 	}
@@ -327,24 +345,18 @@ void gotoSimpleSpline(float destX, float destY, float destAngle, float controlPo
 /**
 * Computes the best speed for the bspline, and take into consideration the derivative value (to avoid a too big speed)
 */
-float computeBestSpeedForBSpline(float speed, float derivative) {
-	float factor =  1.0f / (1.0f + derivative * 10.0f);
-	// return speed * factor;
-
-	// return 150.0f;
-	return 20.0f;
+float computeBestSpeedForBSpline(BSplineCurve* curve, float speed, float derivative) {
+	float result = (speed * curve->speedFactor) / MOTION_SPEED_FACTOR_MAX;
+	
+	return result;
 }
 
 /**
 * Computes the best acceleration for the bspline, and take into consideration the derivative value (to avoid a too big acceleration)
 */
-float computeBestAccelerationForBSpline(float a, float derivative) {
-	float factor =  1.0f / (1.0f + derivative * 20.0f);
-
-	// return a * factor;
-
-	// return 20.0f;
-	return 10.0f;
+float computeBestAccelerationForBSpline(BSplineCurve* curve, float a, float derivative) {
+	float result = (a * curve->accelerationFactor) / MOTION_ACCELERATION_FACTOR_MAX;
+	return result;
 }
 
 /**
@@ -376,13 +388,12 @@ void gotoSpline(float maxDerivative) {
 
     // do as if we follow a straight line
     MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_TYPE_FORWARD_OR_BACKWARD);
-	float bestA = computeBestAccelerationForBSpline(motionParameter->a, maxDerivative);
-	float bestSpeed = computeBestSpeedForBSpline(motionParameter->speed, maxDerivative);
-	// float bestA = motionParameter->a / 3.0f;
-	// float bestSpeed = motionParameter->speed;
+	float bestA = computeBestAccelerationForBSpline(curve, motionParameter->a, maxDerivative);
+	float bestSpeed = computeBestSpeedForBSpline(curve, motionParameter->speed, maxDerivative);
+	/*
 	appendStringAndDecf(outputStream, ",a=", bestA);
 	appendStringAndDecf(outputStream, ",speed=", bestSpeed);
-
+	*/
     setNextPosition(INSTRUCTION_THETA_INDEX, motionType, pidType, curveLength, bestA, bestSpeed);
     setNextPosition(INSTRUCTION_ALPHA_INDEX, motionType, pidType, 0.0f, motionParameter->a, motionParameter->speed);
 

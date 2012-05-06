@@ -197,48 +197,6 @@ int runMotorBoard() {
     // Init the timers management
     startTimerList();
 
-	/*
-	BSplineCurve* curve = getSingleBSplineCurve();
-
-	Position* position = getPosition();
-	position->pos.x = 400.0f;
-	position->pos.y = 100.0f;
-	//position->orientation = - PI / 2.0f;
-	position->orientation = -PI / 3.0f;
-	updateSimpleSplineWithDistance(700.0f, 500.0f, 0.75f * PI, 200.0f, 300.0f, FALSE);
-	float maxDerivative = computeBSplineMaxDerivative(curve);
-	appendStringAndDecf(&debugOutputStream, "mDerv=", maxDerivative);
-	*/
-	 /*
-	// Test en marche arriere
-	Position* position = getPosition();
-	position->pos.x = 0.0f;
-	position->pos.y = 0.0f;
-	//position->orientation = - PI / 2.0f;
-	position->orientation = 0.0f;
-	updateSimpleSplineWithDistance(-200.0f, 200.0f, - PI / 4, -100.0f, -100.0f, FALSE);
-
-	appendStringAndDecf(&debugOutputStream, "p0x=", curve->p0->x * WHEEL_AVERAGE_LENGTH);
-	appendStringAndDecf(&debugOutputStream, ",p0y=", curve->p0->y * WHEEL_AVERAGE_LENGTH);
-	appendStringAndDecf(&debugOutputStream, ",p1x=", curve->p1->x * WHEEL_AVERAGE_LENGTH);
-	appendStringAndDecf(&debugOutputStream, ",p1y=", curve->p1->y * WHEEL_AVERAGE_LENGTH);
-	appendStringAndDecf(&debugOutputStream, ",p2x=", curve->p2->x * WHEEL_AVERAGE_LENGTH);
-	appendStringAndDecf(&debugOutputStream, ",p2y=", curve->p2->y * WHEEL_AVERAGE_LENGTH);
-	appendStringAndDecf(&debugOutputStream, ",p3x=", curve->p3->x * WHEEL_AVERAGE_LENGTH);
-	appendStringAndDecf(&debugOutputStream, ",p3y=", curve->p3->y * WHEEL_AVERAGE_LENGTH);
-	println(&debugOutputStream);
-	*/
-
-	/*
-	MotionInstruction instruction;
-	instruction.a = 0.5f;
-	instruction.initialSpeed = 3;
-	instruction.speed = 7;
-	instruction.endSpeed = 4;
-	computeMotionInstruction(&instruction);
-	printInst(getDebugOutputStreamLogger(), &instruction);
-	printTrajectory(getDebugOutputStreamLogger(),  &instruction, 20.0f);
-	*/
     while (1) {
         waitForInstruction();
     }

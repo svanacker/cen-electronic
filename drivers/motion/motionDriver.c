@@ -43,9 +43,9 @@ unsigned int getMotionInstructionIndex() {
 // GO / ROTATE MOTION
 
 BOOL motionDriverGotoPositionPulse(float left,
-        float right,
-        float a,
-        float s) {
+							        float right,
+							        float a,
+							        float s) {
     OutputStream* outputStream = getDriverRequestOutputStream();
     append(outputStream, COMMAND_MOTION_GOTO_IN_PULSE);
     appendHex4(outputStream, left);
@@ -128,7 +128,7 @@ BOOL motionDriverRightOneWheel(float rightDeciDegree) {
 
 // B-SPLINE MOTION
 
-BOOL motionDriverBSplineRelative(float x, float y, float angle, float dist0, float dist1) {
+BOOL motionDriverBSplineRelative(float x, float y, float angle, float dist0, float dist1, int accelerationFactor, int speedFactor) {
 	OutputStream* outputStream = getDriverRequestOutputStream();
     append(outputStream, COMMAND_MOTION_SPLINE_RELATIVE);
     appendHex4(outputStream, x);
@@ -140,13 +140,16 @@ BOOL motionDriverBSplineRelative(float x, float y, float angle, float dist0, flo
     appendHex2(outputStream, dist0);
 	appendSeparator(outputStream);
     appendHex2(outputStream, dist1);
+	appendSeparator(outputStream);
+    appendHex(outputStream, accelerationFactor);
+    appendHex(outputStream, speedFactor);
 
     BOOL result = transmitFromDriverRequestBuffer();
 
     return result;
 }
 
-BOOL motionDriverBSplineAbsolute(float x, float y, float angle, float dist0, float dist1) {
+BOOL motionDriverBSplineAbsolute(float x, float y, float angle, float dist0, float dist1, int accelerationFactor, int speedFactor) {
 	OutputStream* outputStream = getDriverRequestOutputStream();
     append(outputStream, COMMAND_MOTION_SPLINE_ABSOLUTE);
     appendHex4(outputStream, x);
@@ -158,6 +161,9 @@ BOOL motionDriverBSplineAbsolute(float x, float y, float angle, float dist0, flo
     appendHex2(outputStream, dist0);
 	appendSeparator(outputStream);
     appendHex2(outputStream, dist1);
+	appendSeparator(outputStream);
+    appendHex(outputStream, accelerationFactor);
+    appendHex(outputStream, speedFactor);
 
     BOOL result = transmitFromDriverRequestBuffer();
 

@@ -11,6 +11,8 @@
 
 #include "../../drivers/motion/motionDriver.h"
 
+#include "../../motion/simple/motion.h"
+
 #include "../../robot/2012/armDeviceInterface2012.h"
 #include "../../robot/2012/armDriver2012.h"
 #include "../../robot/robotSonarDetectorDevice.h"
@@ -43,12 +45,12 @@ void setInitialPosition(unsigned int color) {
 
 // ----------------------------------------------------------- Moving Primitives ------------------------------------------------------
 
-BOOL spline(int color, float x, float y, float angle, float dist0, float dist1) {
+BOOL spline(int color, float x, float y, float angle, float dist0, float dist1, int accelerationFactor, int speedFactor) {
 	// Violet = Bit set
 	if (color) {
-		return motionDriverBSplineAbsolute(x, y, angle, dist0, dist1);
+		return motionDriverBSplineAbsolute(x, y, angle, dist0, dist1, accelerationFactor, speedFactor);
 	} else {
-		return motionDriverBSplineAbsolute(x, GAME_BOARD_HEIGHT - y, 1800.0f - angle, dist0, dist1);
+		return motionDriverBSplineAbsolute(x, GAME_BOARD_HEIGHT - y, 1800.0f - angle, dist0, dist1, accelerationFactor, speedFactor);
 	}	
 }
 
@@ -98,44 +100,44 @@ BOOL armUp(int color, int index) {
 
 // ----------------------------------------------------------- Common Move -----------------------------------------------------------
 
-void takeLintel1(int color) {
-	spline(color, 0x0370, 0x0156, ANGLE_NEG_90, 0x40, 0x40);
+void takeBullion1(int color) {
+	spline(color, 0x0370, 0x0156, ANGLE_NEG_90, 0x40, 0x40, MOTION_SPEED_FACTOR_HIGH, MOTION_SPEED_FACTOR_HIGH);
 }
 
-void lintelToBottle1(int color) {
-	spline(color, X_BOTTLE, 0x0280, ANGLE_180, 0xEC, 0xC0);
+void bullion1ToBottle1(int color) {
+	spline(color, X_BOTTLE, 0x0280, ANGLE_180, 0xEC, 0xC0, MOTION_SPEED_FACTOR_HIGH, MOTION_SPEED_FACTOR_HIGH);
 }
 
 void bottle1ToFrontBottle2(int color) {
-	spline(color, 0x05DC, 0x0800, 0x0450, 0x57, 0x0A);
+	spline(color, 0x05DC, 0x0800, 0x0450, 0x57, 0x0A, MOTION_SPEED_FACTOR_HIGH, MOTION_SPEED_FACTOR_HIGH);
 }
 
 void frontBottle2ToBottle2(int color) {
-	spline(color, X_BOTTLE + 10, 0x076C, 0xF8F8, 0xE0, 0xF0);
+	spline(color, X_BOTTLE + 10, 0x076C, 0xF8F8, 0xE0, 0xF0, MOTION_SPEED_FACTOR_LOW, MOTION_SPEED_FACTOR_LOW);
 }
 
 void bottle2TakeCD(int color) {
-	spline(color, 0x05A8, 0x02C8, 0xFAF6, 0x1B, 0x30);
+	spline(color, 0x05A8, 0x02C8, 0xFAF6, 0x1B, 0x30, MOTION_SPEED_FACTOR_MIDDLE, MOTION_SPEED_FACTOR_MIDDLE);
 }
 
 void takeCDToDropZone1(int color) {
-	spline(color, 0x02F5, 0x00D5, ANGLE_NEG_90, 0x11, 0x26);
+	spline(color, 0x02F5, 0x00D5, ANGLE_NEG_90, 0x11, 0x26, MOTION_SPEED_FACTOR_HIGH, MOTION_SPEED_FACTOR_HIGH);
 }
 
 void cleanLintel1First(int color) {
-	spline(color, 0x0482, 0x0320, 0xF8F8, 0xE3, 0xDF);
+	spline(color, 0x0482, 0x0320, 0xF8F8, 0xE3, 0xDF, MOTION_SPEED_FACTOR_MIDDLE, MOTION_SPEED_FACTOR_MIDDLE);
 }
 
 void cleanLintel1Second(int color) {
-	spline(color, X_LINTEL_LEFT, 0x0448, ANGLE_90, 0x24, 0x21);
+	spline(color, X_LINTEL_LEFT, 0x0448, ANGLE_90, 0x24, 0x21, MOTION_SPEED_FACTOR_MIDDLE, MOTION_SPEED_FACTOR_MIDDLE);
 }
 
 void backToReadyForLintel1(int color) {
-	spline(color, X_LINTEL_LEFT, 0x02A0, ANGLE_90, 0xF0, 0xF0);
+	spline(color, X_LINTEL_LEFT, 0x02A0, ANGLE_90, 0xF0, 0xF0, MOTION_SPEED_FACTOR_MIDDLE, MOTION_SPEED_FACTOR_MIDDLE);
 }	
 
 void takeLintelLeft(int color) {
-	spline(color, X_LINTEL_LEFT, 0x055C, ANGLE_90, 0x0D, 0x46);
+	spline(color, X_LINTEL_LEFT, 0x055C, ANGLE_90, 0x0D, 0x46, MOTION_SPEED_FACTOR_MIDDLE, MOTION_SPEED_FACTOR_MIDDLE);
 }
 
 // ----------------------------------------------------------- Homologation 1 ---------------------------------------------------------
@@ -145,7 +147,7 @@ void homologation1(int color) {
 
     switch (index) {
         case 1:
-            takeLintel1(color);
+            takeBullion1(color);
             break;
     }
 }
@@ -157,10 +159,10 @@ void homologation2(int color) {
 
     switch (index) {
         case 1:
-            takeLintel1(color);
+            takeBullion1(color);
             break;
         case 2:
-			lintelToBottle1(color);
+			bullion1ToBottle1(color);
             break;
     }
 }
@@ -172,10 +174,10 @@ void homologation3(int color) {
 
     switch (index) {
         case 1:
-            takeLintel1(color);
+            takeBullion1(color);
             break;
         case 2:
-			lintelToBottle1(color);
+			bullion1ToBottle1(color);
             break;
 		case 3:
 			setSonarStatus(1);
@@ -195,11 +197,11 @@ void homologation4(int color) {
 
     switch (index) {
         case 1:
-            takeLintel1(color);
+            takeBullion1(color);
             break;
         case 2:
 			// first bottle
-			spline(color, X_BOTTLE, 0x0280, ANGLE_180, 0xEC, 0xC0);
+			bullion1ToBottle1(color);
             break;
 		case 3: // Goto near 2 bottle
 			setSonarStatus(0); // TODO
@@ -210,36 +212,36 @@ void homologation4(int color) {
 			frontBottle2ToBottle2(color);
             break;
 		case 5: // near right Lintel 1
-			spline(color, X_LINTEL_RIGHT, 0x0580, ANGLE_NEG_90, 0x1E, 0x1E);
+			spline(color, X_LINTEL_RIGHT, 0x0580, ANGLE_NEG_90, 0x1E, 0x1E, MOTION_SPEED_FACTOR_MIDDLE, MOTION_SPEED_FACTOR_MIDDLE);
             break;
 		case 6: // Open arm
 			armDown(color, ARM_RIGHT);
 			break;
 		case 7: // Go to Drop Zone 1
-			spline(color, 0x0402, 0x0115, ANGLE_NEG_90, 0x64, 0x32);
+			spline(color, 0x0402, 0x0115, ANGLE_NEG_90, 0x64, 0x32, MOTION_SPEED_FACTOR_MIDDLE, MOTION_SPEED_FACTOR_MIDDLE);
 			break;
 		case 8: // Close Arm
 			armUp(color, ARM_RIGHT);
 			break;
 		case 9: // Out from Drom Zone 1
 			// spline(color, 0x0315, 0x01A2, 0x04BA, 0xD9, 0xEC);
-			spline(color, 0x0480, 0x0230, ANGLE_NEG_110, 0xE0, 0xE0);
+			spline(color, 0x0480, 0x0230, ANGLE_NEG_110, 0xE0, 0xE0, MOTION_SPEED_FACTOR_MIDDLE, MOTION_SPEED_FACTOR_MIDDLE);
 			break;
 		case 10:
 			// 100° rotation
 			right(color, 1000.0f);
 			break;
 		case 11: // Clean the CD to be able to take Lintel
-			spline(color, X_LINTEL_LEFT - 50, 0x0440, ANGLE_90, 0x1A, 0x20);
+			spline(color, X_LINTEL_LEFT - 50, 0x0440, ANGLE_90, 0x1A, 0x20, MOTION_SPEED_FACTOR_MIDDLE, MOTION_SPEED_FACTOR_MIDDLE);
 			break;
 		case 12: // Go back to open ARM
-			spline(color, X_LINTEL_LEFT, 0x02A0, ANGLE_90, 0xF0, 0xF0);
+			spline(color, X_LINTEL_LEFT, 0x02A0, ANGLE_90, 0xF0, 0xF0, MOTION_SPEED_FACTOR_MIDDLE, MOTION_SPEED_FACTOR_MIDDLE);
 			break;
 		case 13: // Open ARM
 			armDown(color, ARM_RIGHT);
 			break;
 		case 14: // take the left Lintel 1
-			spline(color, X_LINTEL_LEFT, 0x055C, ANGLE_90, 0x0D, 0x46);
+			spline(color, X_LINTEL_LEFT, 0x055C, ANGLE_90, 0x0D, 0x46, MOTION_SPEED_FACTOR_MIDDLE, MOTION_SPEED_FACTOR_MIDDLE);
 			break;
 		case 15: // Rotation
 			left(color, 1700.0f);
@@ -249,29 +251,29 @@ void homologation4(int color) {
 			break;
 		case 17:
 			// go back home
-			spline(color, 0x0118, 0x016F, 0xFC7C, 0x33, 0x27);
+			spline(color, 0x0118, 0x016F, 0xFC7C, 0x33, 0x27, MOTION_SPEED_FACTOR_MIDDLE, MOTION_SPEED_FACTOR_MIDDLE);
 			break;
 		case 18:
 			// go front home 1
-			spline(color, 0x0208, 0x02C2, 0xFC7C, 0xB6, 0x35);
+			spline(color, 0x0208, 0x02C2, 0xFC7C, 0xB6, 0x35, MOTION_SPEED_FACTOR_MIDDLE, MOTION_SPEED_FACTOR_MIDDLE);
 			break;
 		case 19: // Open ARM
 			armDown(color, ARM_RIGHT);
 			break;
 		case 20:
 			// take lintel left 2
-			spline(color, X_LINTEL_LEFT, 0x083C, ANGLE_90, 0x1E, 0x78);
+			spline(color, X_LINTEL_LEFT, 0x083C, ANGLE_90, 0x1E, 0x78, MOTION_SPEED_FACTOR_MIDDLE, MOTION_SPEED_FACTOR_MIDDLE);
 			break;
 		case 21: // Close ARM
 			armUp(color, ARM_RIGHT);
 			break;
 		case 22:
 			// take the 4 CD
-			spline(color, 0x06A8, 0x05D5, 0x0FC7C, 0x3E, 0x53);
+			spline(color, 0x06A8, 0x05D5, 0x0FC7C, 0x3E, 0x53, MOTION_SPEED_FACTOR_MIDDLE, MOTION_SPEED_FACTOR_MIDDLE);
 			break;
 		case 23:
 			// go back to drop Zone 2
-			spline(color, 0x038F, 0x00F0, 0x0FC7C, 0x3C, 0x1E);
+			spline(color, 0x038F, 0x00F0, 0x0FC7C, 0x3C, 0x1E, MOTION_SPEED_FACTOR_MIDDLE, MOTION_SPEED_FACTOR_MIDDLE);
 			break;
 	}
 }
@@ -305,11 +307,11 @@ void homologation6(int color) {
 
     switch (index) {
         case 1:
-            takeLintel1(color);
+            takeBullion1(color);
             break;
         case 2:
 			// first bottle
-			spline(color, X_BOTTLE, 0x0280, ANGLE_180, 0xEC, 0xC0);
+			spline(color, X_BOTTLE, 0x0280, ANGLE_180, 0xEC, 0xC0, MOTION_SPEED_FACTOR_MIDDLE, MOTION_SPEED_FACTOR_MIDDLE);
             break;
 		case 3: // Goto near 2 bottle
 			setSonarStatus(0); // TODO
@@ -339,7 +341,7 @@ void homologation7(int color) {
 
     switch (index) {
         case 1:
-            takeLintel1(color);
+            takeBullion1(color);
             break;
 		case 2:
 			cleanLintel1First( color);
@@ -364,7 +366,7 @@ void homologation7(int color) {
 			break;
 		case 9:
 			// go back home
-			spline(color, 0x0118, 0x016F, 0xFC7C, 0x33, 0x27);
+			spline(color, 0x0118, 0x016F, 0xFC7C, 0x33, 0x27, MOTION_SPEED_FACTOR_MIDDLE, MOTION_SPEED_FACTOR_MIDDLE);
 			break;
 
 	}

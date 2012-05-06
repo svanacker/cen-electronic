@@ -3,6 +3,8 @@
 #include "bspline.h"
 #include "bsplineDebug.h"
 
+#include "../../motion/simple/motion.h"
+
 // For debug
 #include "../../common/2d/2d.h"
 #include "../../common/io/outputStream.h"
@@ -37,6 +39,9 @@ void resetBSplineCurve(BSplineCurve* bSplineCurve,
 	initBSplineCurveData(bSplineCurve->tempPointData, p0x, p0y);
 
 	bSplineCurve->curveLength = 0.0f;
+	
+	bSplineCurve->speedFactor = MOTION_SPEED_FACTOR_MIDDLE;
+	bSplineCurve->accelerationFactor = MOTION_ACCELERATION_FACTOR_MIDDLE;
 
 	bSplineCurve->backward = backward;
 }

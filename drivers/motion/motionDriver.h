@@ -90,12 +90,12 @@ BOOL motionDriverOneWheelRight(float rightDeciDegree);
 /**
  * Do a bspline curve using relative coordinates (x, y, angle)
  */
-BOOL motionDriverBSplineRelative(float x, float y, float angle, float dist0, float dist1);
+BOOL motionDriverBSplineRelative(float x, float y, float angle, float dist0, float dist1, int accelerationFactor, int speedFactor);
 
 /**
  * Do a bspline curve using absolute coordinates (x, y, angle)
  */
-BOOL motionDriverBSplineAbsolute(float x, float y, float angle, float dist0, float dist1);
+BOOL motionDriverBSplineAbsolute(float x, float y, float angle, float dist0, float dist1, int accelerationFactor, int speedFactor);
 
 // STOP
 

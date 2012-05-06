@@ -66,8 +66,7 @@ void writeBSplineDefinition(OutputStream* outputStream, BSplineCurve* bSplineCur
 	writeBSplineControlPoints(outputStream, bSplineCurve, 1.0f);
 
 	float curveLength = bSplineCurve->curveLength;
-	appendString(outputStream, "\ncurve.length=");
-	appendDecf(outputStream, curveLength);
+	appendStringAndDecf(outputStream, "\ncurve.length=", curveLength);
 	appendString(outputStream, " mm\n");
 
 	appendString(outputStream, "lastPointData:\n");
@@ -75,6 +74,12 @@ void writeBSplineDefinition(OutputStream* outputStream, BSplineCurve* bSplineCur
 
 	appendString(outputStream, "tempPointData:\n");
 	writeBSplinePointData(outputStream, bSplineCurve->tempPointData);
+
+	appendStringAndDec(outputStream, "acc Factor:", bSplineCurve->accelerationFactor);
+	println(outputStream);
+
+	appendStringAndDec(outputStream, "Speed Factor:", bSplineCurve->speedFactor);
+	println(outputStream);
 }
 
 void writeBSpline(OutputStream* outputStream, BSplineCurve* bSplineCurve) {

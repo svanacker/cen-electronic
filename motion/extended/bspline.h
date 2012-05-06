@@ -63,6 +63,10 @@ typedef struct BSplineCurve {
     BSplinePointData* tempPointData;
 	// Method computation
 	unsigned char method;
+	// accelerationFactor
+	unsigned char accelerationFactor;
+	// speedFactor
+	unsigned char speedFactor;
 } BSplineCurve;
 
 /**

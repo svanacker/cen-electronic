@@ -191,21 +191,38 @@ void deviceMotionHandleRawData(char header,
 		float distance2 = readSignedHex2(inputStream);
 		distance2 *= 10.0f;
 
+		checkIsChar(inputStream, '-');
+		int accelerationFactor = readHex(inputStream);
+		int speedFactor = readHex(inputStream);
+
 		// if distance = 0, the system computes the optimum distance
 		// we use relative
-        gotoSimpleSpline(x, y, angle, distance1, distance2, header == COMMAND_MOTION_SPLINE_RELATIVE);
+        gotoSimpleSpline(x, y,
+						angle, 
+						distance1, distance2, 
+						accelerationFactor, speedFactor,
+						header == COMMAND_MOTION_SPLINE_RELATIVE
+						);
 
         append(outputStream, header);
     }
     else if (header == COMMAND_MOTION_SPLINE_TEST_LEFT) {
         appendAck(outputStream);
 		
-		gotoSimpleSpline(400.0f, 400.0f, 0.75f * PI, 200.0f, 200.0f, TRUE);
+		gotoSimpleSpline(400.0f, 400.0f,
+						 0.75f * PI,
+						MOTION_ACCELERATION_FACTOR_MIDDLE, MOTION_SPEED_FACTOR_MIDDLE,
+						 200.0f, 200.0f,
+						 TRUE);
         append(outputStream, COMMAND_MOTION_SPLINE_TEST_LEFT);
     }
     else if (header == COMMAND_MOTION_SPLINE_TEST_RIGHT) {
         appendAck(outputStream);
-		gotoSimpleSpline(400.0f, -400.0f, -0.75f * PI, 200.0f, 200.0f, TRUE);
+		gotoSimpleSpline(400.0f, -400.0f,
+						 -0.75f * PI,
+						 200.0f, 200.0f, 
+						MOTION_ACCELERATION_FACTOR_MIDDLE, MOTION_SPEED_FACTOR_MIDDLE,
+						TRUE);
         append(outputStream, COMMAND_MOTION_SPLINE_TEST_RIGHT);
     }
 	// STOP
