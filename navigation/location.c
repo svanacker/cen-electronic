@@ -15,6 +15,9 @@ BOOL locationEquals(Location* location1, Location* location2) {
 
 void printLocation(OutputStream* outputStream, Location* location) {
 	appendKeyAndName(outputStream, "location.name=", location->name);
+	// Print pointer value
+	appendStringAndDec(outputStream, ", ref=", (int) location);
+
 	appendStringAndDec(outputStream, ", x=", location->x);
 	appendStringAndDec(outputStream, ", y=", location->y);
 	appendStringAndDec(outputStream, ", tmpCost=", location->tmpCost);

@@ -14,9 +14,14 @@ typedef struct GameStrategyContext {
 	/** The elapsedMatchTime in seconds .*/
 	float elapsedMatchTime;
 	/** The currentLocation of the robot. */
-	Location currentLocation;
+	Location* currentLocation;
 	// TODO : Opponent Robot.
 } GameStrategyContext;
+
+/**
+ * Print the context of the game Strategy.
+ */
+void printGameStrategyContext(OutputStream* outputStream, GameStrategyContext* context);
 
 #endif
 

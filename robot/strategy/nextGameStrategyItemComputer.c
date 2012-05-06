@@ -55,8 +55,9 @@ GameTargetAction* getBestNextTarget(GameStrategyContext* strategyContext) {
 			int distanceCost = computeBestPath(&outLocationList, currentLocation, startLocation);
 			// float gain = 0.0f; //targetGain(target, action, distance, elapsedMatchTime, 0.0, 0.0);
 			// log(gainData, target, gain);
-
-			appendKeyAndName(getOutputStreamLogger(INFO), "target:", target->name);
+			appendKeyAndName(getOutputStreamLogger(INFO), "start->location:", currentLocation->name);
+			appendKeyAndName(getOutputStreamLogger(INFO), ", end->location:", startLocation->name);
+			appendKeyAndName(getOutputStreamLogger(INFO), ", target:", target->name);
 			appendStringAndDec(getOutputStreamLogger(INFO), ", distanceCost=", distanceCost);
 			println(getOutputStreamLogger(INFO));
 

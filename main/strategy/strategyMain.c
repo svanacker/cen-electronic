@@ -168,10 +168,16 @@ int main(void) {
 	Location* location = findLocationByName(navigationLocationList, START_AREA);
 
 	strategyContext.gameStrategy = getGameStrategy(0);
+	strategyContext.currentLocation = location;
+
+	printGameStrategyContext(&debugOutputStream, &strategyContext);
+
+	/*
 	strategyContext.elapsedMatchTime = 0.0f;
 	strategyContext.currentLocation.x = location->x;
 	strategyContext.currentLocation.y = location->y;	
 	strategyContext.currentLocation.name = location->name;
+	*/
 
 	getBestNextTarget(&strategyContext);
 

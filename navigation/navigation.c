@@ -103,9 +103,13 @@ Location* extractMinCostLocation() {
 		if (location == NULL) {
 			continue;
 		}
+		appendString(getOutputStreamLogger(INFO), "\t");
+		printLocation(getOutputStreamLogger(INFO), location);
 
-		// get the cost (
+		// get the cost
 		int cost = getCost(location);
+		appendStringAndDec(getOutputStreamLogger(INFO), "\tcost:", cost);
+		println(getOutputStreamLogger(INFO));
 		if (cost <= minCost) {
 			minCost = cost;
 			result = location;
@@ -136,9 +140,13 @@ int computeBestPath(LocationList* outLocationList, Location* start, Location* en
 	Location* location1;
 
 	start->tmpCost = 0;
+	printLocation(getOutputStreamLogger(INFO), start);
 	while (!isEmptyLocationList(&unhandledLocationList)) {
 		// search the nearest node of the nodeList
+		appendString(getOutputStreamLogger(INFO), "extractMinCostLocation\n");
 		location1 = extractMinCostLocation();
+		appendString(getOutputStreamLogger(INFO), "bestLocation=");
+		printLocation(getOutputStreamLogger(INFO), location1);
 
 		// List of path going to the node (location)
 		updateOutgoingPaths(location1);
@@ -151,6 +159,10 @@ int computeBestPath(LocationList* outLocationList, Location* start, Location* en
 			Location* location2 = getOtherEnd(path, location1);
 			int costLocation1 = getCost(location1);
 			int costLocation2 = getCost(location2);
+			appendStringAndDec(getOutputStreamLogger(INFO), "costLocation1:", costLocation1);
+			appendStringAndDec(getOutputStreamLogger(INFO), ", costLocation2:", costLocation2);
+			println(getOutputStreamLogger(INFO));
+
 			int cost = costLocation1 + path->cost;
 			if (cost < costLocation2) {
 				// Affectation de la distance absolue du noeud
