@@ -43,13 +43,16 @@ void findNextTarget() {
 	#ifdef DEBUG_STRATEGY_HANDLER
 		appendString(getOutputStreamLogger(DEBUG), "\tNearest Location:");	
 		printLocation(getOutputStreamLogger(DEBUG), strategyContext.nearestLocation);
-		appendString(getOutputStreamLogger(DEBUG), "\tgetBestNextTarget:");	
+		appendString(getOutputStreamLogger(DEBUG), "\tcomputeBestNextTargetAction:");	
 	#endif
 
 	// Find best Target, store LocationList in the context in currentTrajectory
-	strategyContext.currentTargetAction = getBestNextTarget(&strategyContext);
+	computeBestNextTarget(&strategyContext);
 
 	#ifdef DEBUG_STRATEGY_HANDLER
+		appendString(getOutputStreamLogger(DEBUG), "\t\tbestTarget:");
+		printGameTarget(getOutputStreamLogger(DEBUG), strategyContext.currentTarget, FALSE);
+		appendString(getOutputStreamLogger(DEBUG), "\t\tbestTargetAction:");
 		printGameTargetAction(getOutputStreamLogger(DEBUG), strategyContext.currentTargetAction);
 	#endif
 }
@@ -58,7 +61,9 @@ void findNextTarget() {
  * @private
  */
 void executeTargetActions() {
-	appendString(getOutputStreamLogger(DEBUG), "executeTargetActions\n");
+	#ifdef DEBUG_STRATEGY_HANDLER
+		appendString(getOutputStreamLogger(DEBUG), "executeTargetActions\n");
+	#endif
 
 	GameTargetAction* targetAction = strategyContext.currentTargetAction;
 	GameTargetActionItemList* actionItemList = targetAction->actionItemList;
@@ -66,6 +71,11 @@ void executeTargetActions() {
 		#ifdef DEBUG_STRATEGY_HANDLER
 			appendString(getOutputStreamLogger(DEBUG), "-> no actions for this target\n");
 		#endif
+		// mark the target as unavailable
+		strategyContext.currentTarget->available = FALSE;
+		// reset current Target
+		strategyContext.currentTarget = NULL;
+		strategyContext.currentTargetAction = NULL;
 		return;
 	}
 
@@ -84,9 +94,8 @@ void executeTargetActions() {
 		actionItem->actionItem();
 	}
 	else {
-		// strategyContext->actionItem = NULL;
 		strategyContext.currentTargetAction = NULL;
-		strategyContext.currentTarget->available = FALSE;
+		strategyContext.currentTarget = NULL;
 		clearLocationList(&(strategyContext.currentTrajectory));
 		nextStep();
 	}
@@ -126,11 +135,10 @@ void handleCurrentTrajectory() {
 	LocationList* currentTrajectory = &(strategyContext.currentTrajectory);
 
 	#ifdef DEBUG_STRATEGY_HANDLER
-		printLocationList(getOutputStreamLogger(DEBUG), "currentTrajectory:", currentTrajectory);	
+		// printLocationList(getOutputStreamLogger(DEBUG), "currentTrajectory:", currentTrajectory);	
 	#endif
 
 	if (currentTrajectory->count < 2) {
-
 		#ifdef DEBUG_STRATEGY_HANDLER
 			appendString(getOutputStreamLogger(DEBUG), "no more locations to reach\n");	
 		#endif
@@ -156,13 +164,13 @@ void nextStep() {
 
 	GameTargetAction* targetAction = strategyContext.currentTargetAction;
 
-	if (targetAction != NULL) {
-		executeTargetActions();
-	}
-	else if (getLocationCount(&(strategyContext.currentTrajectory)) != 0) {
+	if (getLocationCount(&(strategyContext.currentTrajectory)) != 0) {
 		handleCurrentTrajectory();
 	}
-	if (targetAction == NULL) {
+	else if (targetAction != NULL) {
+		executeTargetActions();
+	}
+	else if (targetAction == NULL) {
 		// no target, search a new one
 		findNextTarget();
 		// Next target created a new current trajectory

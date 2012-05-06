@@ -22,16 +22,14 @@
 #include "../../navigation/locationList.h"
 #include "../../navigation/location.h"
 
-GameTargetAction* getBestNextTarget(GameStrategyContext* strategyContext) {
+void computeBestNextTarget(GameStrategyContext* strategyContext) {
 
 	GameStrategy* gameStrategy = strategyContext->gameStrategy;
 	// float elapsedMatchTime = strategyContext->elapsedMatchTime;
 	Location* currentLocation = strategyContext->nearestLocation;
 
 	// Opponent opponent = RobotUtils.getRobotAttribute(Opponent.class, servicesProvider);
-	GameTarget* bestTarget = NULL;
 	float maxGain = 0.0f;
-	GameTargetAction* result = NULL;
 	// Loop on potential target
 	int strategyItemIndex;
 	int gameStrategyItemCount = getStrategyItemCount(gameStrategy);
@@ -69,20 +67,18 @@ GameTargetAction* getBestNextTarget(GameStrategyContext* strategyContext) {
 			float gain = 1000.0f / (float) distanceCost;
 			if (gain > maxGain) {
 				maxGain = gain;
-				result = targetAction;
-				bestTarget = target;
+				strategyContext->currentTargetAction = targetAction;
+				strategyContext->currentTarget = target;
 			}
 		}
 	}
 
 	#ifdef NEXT_GAME_STRATEGY_ITEM_COMPUTER_DEBUG
-		if (result != NULL) {
+		if (strategyContext->targetAction != NULL) {
 			OutputStream outputStream = getOutputStreamLogger(INFO);
 			appendStringAndDecf(outputStream, "cost=", maxGain);
 			printGameTarget(outputStream, bestTarget, FALSE);
 			printLocationList(outputStream, ", currentTrajectory:", &(strategyContext->currentTrajectory));
 		}
 	#endif
-
-	return result;
 }

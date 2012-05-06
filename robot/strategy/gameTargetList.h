@@ -42,6 +42,13 @@ GameTarget* getGameTarget(int index);
 int getGameTargetCount();
 
 /**
+ * Returns if there is available targets.
+ */
+BOOL containsAvailableTarget();
+
+// DEBUG
+
+/**
  * Print the game target list, and for each the detail of target.
  */
 void printGameTargetList(OutputStream* outputStream);

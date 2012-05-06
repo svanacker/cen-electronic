@@ -122,10 +122,11 @@ void initDevicesDescriptor() {
 }
 
 BOOL redirectDriverToI2CSlave() {
-    InputStream* inputStream = getDriverResponseInputStream();
+    InputStream* inputStream = getInputStream(getDriverRequestBuffer());
 
 	// Redirect to OutputStream
 	copyInputToOutputStream(inputStream, getOutputStreamLogger(INFO), NULL, COPY_ALL); 
+	println(getOutputStreamLogger(INFO));
 
 	return TRUE;
 }
@@ -200,11 +201,9 @@ int main(void) {
 	printGameboard(&debugOutputStream);
 	printGameStrategyContext(&debugOutputStream, getStrategyContext());
 
-	int i;
-	for (i = 0; i < 5; i++) {
+	while(containsAvailableTarget()) {
 		nextStep();
 	}
-
 
 	while(1) {
 
