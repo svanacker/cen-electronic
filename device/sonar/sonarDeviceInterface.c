@@ -40,7 +40,7 @@ int deviceSonarGetInterface(char header, int mode, BOOL fillDeviceArgumentList) 
 
 static DeviceInterface deviceInterface = {
     .deviceGetName = &deviceSonarGetName,
-    .deviceGetSoftwareRevision = &deviceSonarGetSoftwareRevision,
+//    .deviceGetSoftwareRevision = &deviceSonarGetSoftwareRevision,
     .deviceGetInterface = &deviceSonarGetInterface
 };
 

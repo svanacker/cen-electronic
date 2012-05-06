@@ -41,11 +41,11 @@ BOOL motorDriverSendRawData(const char *data) {
 }
 
 static DriverDescriptor descriptor = {
-    .driverEnabled = TRUE,
+//    .driverEnabled = TRUE,
     .driverInit = &motorDriverInit,
     .driverShutDown = &motorDriverShutDown,
-    .driverIsOk = &motorDriverIsOk,
-    .driverGetSoftwareRevision = &motorDriverGetSoftwareRevision,
+  //  .driverIsOk = &motorDriverIsOk,
+  //  .driverGetSoftwareRevision = &motorDriverGetSoftwareRevision,
     .driverGetName = &motorDriverGetName
 };
 

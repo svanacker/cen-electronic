@@ -3,12 +3,12 @@
 #include "../../../device/device.h"
 #include "../../../device/deviceInterface.h"
 
-static char* GET_ABS_POS_STRING = "getAbsPos";
-static char* GET_DEBUG_ABS_POS_STRING = "getDbgAbsPos";
-static char* SET_ABS_POS_STRING = "setAbsPos";
-static char* ANGLE_1_10_DEG = "angle(1/10)deg";
-static char* X_MM = "x(mm)";
-static char* Y_MM = "y(mm)";
+#define GET_ABS_POS_STRING 			"getAbsPos"
+#define GET_DEBUG_ABS_POS_STRING 	"getDbgAbsPos"
+#define SET_ABS_POS_STRING 			"setAbsPos"
+#define ANGLE_1_10_DEG 				"angle(1/10)deg"
+#define X_MM 						"x(mm)"
+#define Y_MM 						"y(mm)"
 
 const char* getTrajectoryDeviceName(void) {
     return "Trajectory";
@@ -65,7 +65,7 @@ int trajectoryGetInterface(char header, int mode, BOOL fillDeviceArgumentList) {
 
 static DeviceInterface deviceInterface = {
     .deviceGetName = &getTrajectoryDeviceName,
-    .deviceGetSoftwareRevision = &getTrajectorySoftwareRevision,
+//    .deviceGetSoftwareRevision = &getTrajectorySoftwareRevision,
     .deviceGetInterface = &trajectoryGetInterface
 };
 

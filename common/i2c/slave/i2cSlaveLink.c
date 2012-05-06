@@ -12,7 +12,7 @@
 
 // STREAM LINK INTERFACE
 
-static char* BUFFER_NAME_I2C_SLAVE = "I2C Slave";
+#define BUFFER_NAME_I2C_SLAVE     "I2C Slave"
 
 void openSlaveI2cStreamLink(StreamLink* i2cStreamLink,
         Buffer* inputBuffer,

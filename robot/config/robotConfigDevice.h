@@ -52,7 +52,7 @@ void refreshConfig( void );
 */
 // char isConfigPresent( void );
 
-char* getStringConfig();
+void appendStringConfig(OutputStream* outputStream);
 
 /**
 * Reads the raw config Value.

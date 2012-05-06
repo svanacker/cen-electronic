@@ -53,7 +53,7 @@ int commonBeaconDeviceGetInterface(char header, int mode, BOOL fillDeviceArgumen
 
 static DeviceInterface deviceInterface = {
     .deviceGetName = &commonBeaconDeviceGetName,
-    .deviceGetSoftwareRevision = &commonBeaconDeviceGetSoftwareRevision,
+//    .deviceGetSoftwareRevision = &commonBeaconDeviceGetSoftwareRevision,
     .deviceGetInterface = &commonBeaconDeviceGetInterface
 };
 

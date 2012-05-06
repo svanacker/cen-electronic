@@ -50,7 +50,7 @@ char isStarted() {
 void showWaitingStart(OutputStream* pcOutputStream) {
     appendString(pcOutputStream, MESSAGE_TO_PC_RESET);
     appendString(getOutputStreamLogger(ALWAYS), "CFG:");
-    appendStringCRLF(getOutputStreamLogger(ALWAYS), getStringConfig());
+    appendStringConfig(getOutputStreamLogger(ALWAYS));
     appendString(getOutputStreamLogger(ALWAYS), "Waiting start:");
 }
 

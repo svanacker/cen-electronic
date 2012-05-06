@@ -110,7 +110,7 @@ int deviceBeaconGetInterface(char header, int mode, BOOL fillDeviceArgumentList)
 
 static DeviceInterface deviceInterface = {
     .deviceGetName = &deviceBeaconGetName,
-    .deviceGetSoftwareRevision = &deviceBeaconGetSoftwareRevision,
+//    .deviceGetSoftwareRevision = &deviceBeaconGetSoftwareRevision,
     .deviceGetInterface = &deviceBeaconGetInterface
 };
 

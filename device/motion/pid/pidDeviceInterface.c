@@ -134,7 +134,7 @@ int devicePIDGetInterface(char header, int mode, BOOL fillDeviceArgumentList) {
 }
 
 static DeviceInterface deviceInterface = {
-    .deviceGetSoftwareRevision = &getPIDSoftwareRevision,
+//    .deviceGetSoftwareRevision = &getPIDSoftwareRevision,
     .deviceGetName = &getPIDDeviceName,
     .deviceGetInterface = &devicePIDGetInterface
 };

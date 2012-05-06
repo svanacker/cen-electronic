@@ -43,7 +43,7 @@ int deviceArm2012GetInterface(char header, int mode, BOOL fillDeviceArgumentList
 
 static DeviceInterface deviceInterface = {
     .deviceGetName = &deviceArm2012GetName,
-    .deviceGetSoftwareRevision = &deviceArm2012GetSoftwareRevision,
+//    .deviceGetSoftwareRevision = &deviceArm2012GetSoftwareRevision,
     .deviceGetInterface = &deviceArm2012GetInterface
 };
 

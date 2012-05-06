@@ -190,7 +190,7 @@ typedef struct DeviceInterface{
 	/** Function returning the name of the device. */
 	deviceGetNameFunction *deviceGetName;
 	/** Function returning the software revision of the device. */
-	deviceGetSoftwareRevisionFunction *deviceGetSoftwareRevision;
+	// deviceGetSoftwareRevisionFunction *deviceGetSoftwareRevision;
 	/** Function returning information about interface. */
 	deviceGetInterfaceFunction* deviceGetInterface;
 } DeviceInterface;

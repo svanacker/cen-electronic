@@ -16,9 +16,6 @@
 /** Config is a 16 bit value */
 static unsigned int config = 0;
 
-// static variable to avoid to return a local pointer (is not correct for the compiler)
-static char stringConfig[CONFIG_BIT_COUNT + 1];
-
 /**
  * @private
  */
@@ -82,17 +79,19 @@ char* getConfigBitString(unsigned char configIndex) {
  * Returns a String corresponding to the configuration
  * '1' when the bit is set, '0' when not set
  */
-char* getStringConfig() {
+void appendStringConfig(OutputStream* outputStream) {
     refreshConfig();
     unsigned int i;
-    for (i = 0; i < CONFIG_BIT_COUNT; i++) {
-        if ((config & (1 << i)) > 0 )
-            stringConfig[CONFIG_BIT_COUNT - 1 - i] = '1';
-        else
-            stringConfig[CONFIG_BIT_COUNT - 1 - i] = '0';
+    for (i = CONFIG_BIT_COUNT - 1; i >= 0; i--) {
+        char c;
+		if ((config & (1 << i)) > 0) {
+			c = '1';
+		}
+        else {
+            c = '0';
+		}
+	    append(outputStream, c);
     }
-    stringConfig[CONFIG_BIT_COUNT] = 0;
-    return stringConfig;
 }
 
 unsigned char isConfigDebug() {

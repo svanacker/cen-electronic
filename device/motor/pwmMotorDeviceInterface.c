@@ -38,7 +38,7 @@ int deviceMotorGetInterface(char header, int mode,
 
 static DeviceInterface deviceInterface = {
     .deviceGetName = &getPwmMotorDeviceName,
-    .deviceGetSoftwareRevision = &getPwmMotorVersion,
+//    .deviceGetSoftwareRevision = &getPwmMotorVersion,
     .deviceGetInterface = &deviceMotorGetInterface
 };
 

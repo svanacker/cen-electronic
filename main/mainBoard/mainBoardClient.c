@@ -293,7 +293,6 @@ void initDevicesDescriptor() {
  	addI2CRemoteDevice(&armDevice, getArm2012DeviceInterface(), MECHANICAL_BOARD_2_I2C_ADDRESS);
     // addI2CRemoteDevice(&adcDevice, getADCDeviceInterface(), MECHANICAL_BOARD_2_I2C_ADDRESS);
 
-
     // Beacon Receiver Board->I2C
     addI2CRemoteDevice(&beaconReceiverDevice, getBeaconReceiverDeviceInterface(), BEACON_RECEIVER_I2C_ADDRESS);
 

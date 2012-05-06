@@ -51,7 +51,7 @@ int deviceTestGetInterface(char header, int mode,
 
 static DeviceInterface deviceInterface = {
     .deviceGetName = &deviceTestGetName,
-    .deviceGetSoftwareRevision = &deviceTestGetSoftwareRevision,
+//    .deviceGetSoftwareRevision = &deviceTestGetSoftwareRevision,
     .deviceGetInterface = &deviceTestGetInterface
 };
 

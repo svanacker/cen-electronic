@@ -33,7 +33,7 @@ int deviceADCGetInterface(char header, int mode,
 
 static DeviceInterface deviceInterface = {
     .deviceGetName = &getADCDeviceName,
-    .deviceGetSoftwareRevision = &getADCVersion,
+//    .deviceGetSoftwareRevision = &getADCVersion,
     .deviceGetInterface = &deviceADCGetInterface
 };
 

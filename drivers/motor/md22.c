@@ -133,11 +133,11 @@ const char* getMD22DeviceName(void) {
 }
 
 static DriverDescriptor descriptor = {
-    .driverEnabled = TRUE,
+//    .driverEnabled = TRUE,
     .driverInit = &initMD22,
     .driverShutDown = &stopMD22,
-    .driverIsOk = &isMD22DeviceOk,
-    .driverGetSoftwareRevision = &getMD22Version,
+    // .driverIsOk = &isMD22DeviceOk,
+    // .driverGetSoftwareRevision = &getMD22Version,
     .driverGetName = &getMD22DeviceName
 };
 

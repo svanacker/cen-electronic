@@ -75,7 +75,7 @@ int beaconReceiverDeviceGetInterface(char header, int mode,
 
 static DeviceInterface deviceInterface = {
     .deviceGetName = &beaconReceiverDeviceGetName,
-    .deviceGetSoftwareRevision = &beaconReceiverDeviceGetSoftwareRevision,
+//    .deviceGetSoftwareRevision = &beaconReceiverDeviceGetSoftwareRevision,
     .deviceGetInterface = &beaconReceiverDeviceGetInterface
 };
 

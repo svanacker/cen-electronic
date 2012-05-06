@@ -35,7 +35,7 @@ int deviceLCDGetInterface(char header, int mode, BOOL fillDeviceArgumentList) {
 
 static DeviceInterface deviceInterface = {
     .deviceGetName = &deviceLCDGetName,
-    .deviceGetSoftwareRevision = &deviceLCDGetSoftwareRevision,
+//    .deviceGetSoftwareRevision = &deviceLCDGetSoftwareRevision,
     .deviceGetInterface = &deviceLCDGetInterface
 };
 

@@ -86,7 +86,7 @@ int deviceSystemGetInterface(char header, int mode, BOOL fillDeviceArgumentList)
 
 static DeviceInterface deviceInterface = {
     .deviceGetName = &deviceSystemGetName,
-    .deviceGetSoftwareRevision = &deviceSystemGetSoftwareRevision,
+//    .deviceGetSoftwareRevision = &deviceSystemGetSoftwareRevision,
     .deviceGetInterface = &deviceSystemGetInterface
 };
 

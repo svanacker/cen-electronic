@@ -34,7 +34,7 @@ int deviceServoGetInterface(char header, int mode, BOOL fillDeviceArgumentList )
 
 static DeviceInterface deviceInterface = {
     .deviceGetName = &deviceServoGetName,
-    .deviceGetSoftwareRevision = &deviceServoGetSoftwareRevision,
+//    .deviceGetSoftwareRevision = &deviceServoGetSoftwareRevision,
     .deviceGetInterface = &deviceServoGetInterface
 };
 

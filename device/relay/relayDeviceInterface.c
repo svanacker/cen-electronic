@@ -34,7 +34,7 @@ int deviceRelayGetInterface(char header, int mode, BOOL fillDeviceArgumentList) 
 
 static DeviceInterface deviceInterface = {
 	.deviceGetName = &deviceRelayGetName,
-	.deviceGetSoftwareRevision = &deviceRelayGetSotwareRevision,
+//	.deviceGetSoftwareRevision = &deviceRelayGetSotwareRevision,
 	.deviceGetInterface = &deviceRelayGetInterface
 };
 

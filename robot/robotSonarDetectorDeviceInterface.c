@@ -30,7 +30,7 @@ int deviceRobotSonarDetectorGetInterface(char header, int mode, BOOL fillDeviceA
 
 static DeviceInterface deviceInterface = {
     .deviceGetName = &deviceRobotSonarDetectorGetName,
-    .deviceGetSoftwareRevision = &deviceRobotSonarDetectorGetSoftwareRevision,
+//    .deviceGetSoftwareRevision = &deviceRobotSonarDetectorGetSoftwareRevision,
     .deviceGetInterface = &deviceRobotSonarDetectorGetInterface
 };
 

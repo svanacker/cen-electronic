@@ -31,7 +31,7 @@ int deviceStartMatchDetectorGetInterface(char header, int mode,
 
 static DeviceInterface deviceInterface = {
     .deviceGetName = &getStartMatchDetectorDeviceName,
-    .deviceGetSoftwareRevision = &getStartMatchDetectorSoftwareRevision,
+//    .deviceGetSoftwareRevision = &getStartMatchDetectorSoftwareRevision,
     .deviceGetInterface = &deviceStartMatchDetectorGetInterface
 };
 

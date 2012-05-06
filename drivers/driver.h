@@ -42,11 +42,11 @@ typedef int driverGetTransmitModeFunction(int defaultTransmitMode);
  * Descriptor of a driver.
  */
 typedef struct {
-    BOOL driverEnabled;
+    // BOOL driverEnabled;
     driverInitFunction *driverInit;
     driverShutDownFunction *driverShutDown;
-    driverIsOkFunction *driverIsOk;
-    driverGetSoftwareRevisionFunction *driverGetSoftwareRevision;
+    // driverIsOkFunction *driverIsOk;
+    // driverGetSoftwareRevisionFunction *driverGetSoftwareRevision;
     driverGetNameFunction *driverGetName;
     int transmitMode;
 
