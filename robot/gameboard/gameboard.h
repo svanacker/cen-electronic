@@ -14,6 +14,9 @@
 #define GAMEBOARD_MIDDLE_WIDTH		(GAMEBOARD_WIDTH / 2)	
 #define GAMEBOARD_MIDDLE_HEIGHT		(GAMEBOARD_HEIGHT / 2)
 
+/**
+ * Print function of the gameboard.
+ */
 char gameboardPrint(int* element, int column, int line);
 
 /**

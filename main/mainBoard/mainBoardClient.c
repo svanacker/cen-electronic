@@ -115,6 +115,7 @@
 #include "../../main/meca1/mechanicalBoard1.h"
 #include "../../main/meca2/mechanicalBoard2.h"
 #include "../../main/beaconReceiver/beaconReceiverBoard.h"
+#include "../../main/strategy/strategyMain.h"
 
 #include "../../motion/simple/motion.h"
 
@@ -187,6 +188,13 @@ static char beaconReceiverBoardInputBufferArray[MAIN_BOARD_LINK_TO_BEACON_BOARD_
 static Buffer beaconReceiverBoardInputBuffer;
 static InputStream beaconReceiverBoardInputStream;
 static OutputStream beaconReceiverBoardOutputStream;
+
+// i2c->BeaconReceiver
+static DriverDataDispatcher strategyI2cDispatcher;
+static char strategyBoardInputBufferArray[MAIN_BOARD_LINK_TO_STRATEGY_BOARD_BUFFER_LENGTH];
+static Buffer strategyBoardInputBuffer;
+static InputStream strategyBoardInputStream;
+static OutputStream strategyBoardOutputStream;
 
 // lcd DEBUG 
 static OutputStream lcdOutputStream;
@@ -288,6 +296,10 @@ void initDevicesDescriptor() {
 
     // Beacon Receiver Board->I2C
     addI2CRemoteDevice(&beaconReceiverDevice, getBeaconReceiverDeviceInterface(), BEACON_RECEIVER_I2C_ADDRESS);
+
+    // Strategy Board->I2C
+    // addI2CRemoteDevice(&strategyDevice, getStrategyBoardDeviceInterface(), STRATEGY_I2C_ADDRESS);
+
 
     // Init the devices
     initDevices();  
@@ -418,6 +430,16 @@ int main(void) {
                                                             &beaconReceiverBoardOutputStream,
                                                             BEACON_RECEIVER_I2C_ADDRESS);
 
+    // Stream for Strategy Board
+    addI2CDriverDataDispatcher( &strategyI2cDispatcher,
+                                                            "STRATEGY_DISPATCHER",
+                                                            &strategyBoardInputBuffer,
+															&strategyBoardInputBufferArray,
+															MAIN_BOARD_LINK_TO_STRATEGY_BOARD_BUFFER_LENGTH,
+                                                            &strategyBoardInputStream,
+                                                            &strategyBoardOutputStream,
+                                                            STRATEGY_BOARD_I2C_ADDRESS);
+
     // printDriverDataDispatcherList(getOutputStreamLogger(DEBUG), getDispatcherList());
 
     // pingDriverDataDispatcherList(getOutputStreamLogger(DEBUG));
@@ -425,14 +447,10 @@ int main(void) {
     // Inform PC waiting
     showWaitingStart(&pcOutputStream);
 
+	// wait other board initialization
     delaymSec(1000);
 
-    // Pliers Closed
-    // OutputStream* outputStream = getDriverRequestOutputStream();
-    // append(outputStream, COMMAND_PLIERS_2011_CLOSE);
-    // transmitFromDriverRequestBuffer();
-
-	// 2011 VALUE
+	// 2012 VALUE
     int configValue = getConfigValue();
     unsigned int homologationIndex = configValue & CONFIG_STRATEGY_MASK;
     unsigned int color = configValue & CONFIG_COLOR_BLUE_MASK;

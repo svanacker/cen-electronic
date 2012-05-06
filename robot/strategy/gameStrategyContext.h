@@ -7,6 +7,7 @@
 #include "gameTarget.h"
 #include "gameTargetAction.h"
 
+#include "../../robot/match/teamColor.h"
 
 #include "../../navigation/location.h"
 #include "../../navigation/locationList.h"
@@ -32,6 +33,8 @@ typedef struct GameStrategyContext {
 	// GameTargetActionItem* currentTargetActionItem;
 	/** current trajectory of the robot. */
 	LocationList currentTrajectory;
+	/** Color. */
+	TEAM_COLOR color;
 } GameStrategyContext;
 
 /**

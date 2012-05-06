@@ -211,6 +211,7 @@ file_183=common.serial
 file_184=drivers.dispatcher
 file_185=robot.2012
 file_186=common.delay
+file_187=main
 [GENERATED_FILES]
 file_000=no
 file_001=no
@@ -399,6 +400,7 @@ file_183=no
 file_184=no
 file_185=no
 file_186=no
+file_187=no
 [OTHER_FILES]
 file_000=no
 file_001=no
@@ -587,6 +589,7 @@ file_183=no
 file_184=no
 file_185=no
 file_186=no
+file_187=no
 [FILE_INFO]
 file_000=common\pwm\pwmPic.c
 file_001=common\serial\serial.c
@@ -775,6 +778,7 @@ file_183=common\serial\serialOutputStream.h
 file_184=drivers\dispatcher\remoteDriverDataDispatcher.h
 file_185=robot\2012\armDriver2012.h
 file_186=common\delay\delay30F.h
+file_187=main\strategy\strategyMain.h
 [SUITE_INFO]
 suite_guid={479DDE59-4D56-455E-855E-FFF59A3DB57E}
 suite_state=

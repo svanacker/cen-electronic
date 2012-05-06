@@ -281,7 +281,6 @@ void hd44780_writeChar(char c) {
     }
 	else if (c == CLS) {
 		hd44780_setCursorAtHome();
-		int i;
 		hd44780_clearScreen();
 	}
 	 else {

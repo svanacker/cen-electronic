@@ -7,6 +7,7 @@
 #include "../../main/meca1/mechanicalBoard1.h"
 #include "../../main/meca2/mechanicalBoard2.h"
 #include "../../main/beaconReceiver/beaconReceiverBoard.h"
+#include "../../main/strategy/strategyMain.h"
 
 // DEBUG UART
 
@@ -25,6 +26,7 @@
 #define MAIN_BOARD_LINK_TO_MECA_BOARD_1_BUFFER_LENGTH			MECA_BOARD_1_OUTPUT_BUFFER_LENGTH
 #define MAIN_BOARD_LINK_TO_MECA_BOARD_2_BUFFER_LENGTH			MECA_BOARD_2_OUTPUT_BUFFER_LENGTH
 #define MAIN_BOARD_LINK_TO_BEACON_BOARD_BUFFER_LENGTH			BEACON_RECEIVER_BOARD_OUTPUT_BUFFER_LENGTH
+#define MAIN_BOARD_LINK_TO_STRATEGY_BOARD_BUFFER_LENGTH			STRATEGY_BOARD_OUTPUT_BUFFER_LENGTH
 
 // DRIVER
 

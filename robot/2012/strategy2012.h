@@ -1,7 +1,8 @@
 #ifndef STRATEGY_2012_H
 #define STRATEGY_2012_H
 
-#include "../../robot/strategy/GameTarget.h"
+#include "../../robot/strategy/gameTarget.h"
+#include "../../robot/match/teamColor.h"
 
 
 #define 	ANGLE_90			0x0384
@@ -86,5 +87,10 @@ GameTarget* getBullion1Target();
  * Init all elements for 2012.
  */
 void initStrategy2012();
+
+/**
+ * Define the color and update strategy.
+ */
+void setColor(TEAM_COLOR color);
 
 #endif

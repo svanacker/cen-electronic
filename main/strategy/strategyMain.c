@@ -1,3 +1,5 @@
+#include <time.h>
+
 #include <i2c.h>
 #include <p30fxxxx.h>
 #include <stdlib.h>
@@ -200,6 +202,16 @@ int main(void) {
 
 	printGameboard(&debugOutputStream);
 	printGameStrategyContext(&debugOutputStream, getStrategyContext());
+
+	/*
+	srand ( time(NULL) );
+	int i;
+	for (i = 0; i < 20; i++) {
+		int value = rand();
+		appendStringAndDec(&debugOutputStream, "Rand:", value);
+		println(&debugOutputStream);
+	}
+	*/
 
 	while(containsAvailableTarget()) {
 		nextStep();
