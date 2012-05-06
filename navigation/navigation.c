@@ -97,7 +97,6 @@ void setCost(Location* location, int cost) {
  * Search the nearest node in terms of cost
  */
 Location* extractMinCostLocation() {
-
 	// Search the nearest node in terms of cost
 	Location* result = NULL;
 	int minCost = MAX_COST;
@@ -199,6 +198,8 @@ int computeBestPath(LocationList* outLocationList, Location* start, Location* en
 		location1 = location1->tmpPreviousLocation;
 	}
 	addFilledLocation(outLocationList, start);
+
+	reverseLocationList(outLocationList);
 
 	return result;
 }

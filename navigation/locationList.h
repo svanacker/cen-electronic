@@ -43,6 +43,11 @@ void clearPrevious(LocationList* locationList);
  */
 void addLocationList(LocationList* targetLocationList, LocationList* sourceLocationList);
 
+/** 
+ * Reverse the location list. 
+ */
+void reverseLocationList(LocationList* locationList);
+
 /**
  * Returns if the list is empty.
  */

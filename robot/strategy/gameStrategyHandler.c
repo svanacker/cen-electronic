@@ -41,16 +41,15 @@ void findNextTarget() {
 	strategyContext.nearestLocation = getNearestLocation(navigationLocationList, robotPosition->x, robotPosition->y);
 
 	#ifdef DEBUG_STRATEGY_HANDLER
-		appendString(getOutputStreamLogger(DEBUG), "-> Nearest Location:");	
+		appendString(getOutputStreamLogger(DEBUG), "\tNearest Location:");	
 		printLocation(getOutputStreamLogger(DEBUG), strategyContext.nearestLocation);
-		appendString(getOutputStreamLogger(DEBUG), "-> getBestNextTarget:");	
+		appendString(getOutputStreamLogger(DEBUG), "\tgetBestNextTarget:");	
 	#endif
 
 	// Find best Target, store LocationList in the context in currentTrajectory
 	strategyContext.currentTargetAction = getBestNextTarget(&strategyContext);
 
 	#ifdef DEBUG_STRATEGY_HANDLER
-		appendString(getOutputStreamLogger(DEBUG), "-> getBestNextTarget:");	
 		printGameTargetAction(getOutputStreamLogger(DEBUG), strategyContext.currentTargetAction);
 	#endif
 }
@@ -125,6 +124,11 @@ void handleCurrentTrajectory() {
 	#endif
 
 	LocationList* currentTrajectory = &(strategyContext.currentTrajectory);
+
+	#ifdef DEBUG_STRATEGY_HANDLER
+		printLocationList(getOutputStreamLogger(DEBUG), "currentTrajectory:", currentTrajectory);	
+	#endif
+
 	if (currentTrajectory->count < 2) {
 
 		#ifdef DEBUG_STRATEGY_HANDLER
@@ -163,7 +167,7 @@ void nextStep() {
 		findNextTarget();
 		// Next target created a new current trajectory
 		if (getLocationCount(&(strategyContext.currentTrajectory)) != 0) {
-			nextStep();			
+			handleCurrentTrajectory();			
 		}
 	} else {
 		executeTargetActions();

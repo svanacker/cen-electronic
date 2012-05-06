@@ -34,6 +34,19 @@ void addLocationList(LocationList* targetLocationList, LocationList* sourceLocat
 	}	
 }
 
+void reverseLocationList(LocationList* locationList) {
+	int i;
+	unsigned char size = locationList->size;
+	for (i = 0; i < size / 2; i++) {
+		int index1 = i;
+		int index2 = size - i - 1;
+		Location* locationTmp = locationList->locations[index1];
+		
+		locationList->locations[index1] = locationList->locations[index2];
+		locationList->locations[index2] = locationTmp;
+	}
+}
+
 void addLocation(LocationList* locationList, Location* location, char* name, int x, int y) {
 	location->name = name;
 	location->x = x;
