@@ -2,10 +2,12 @@
 
 #include "gameTargetActionList.h"
 
+#include "../../common/commons.h"
+
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
 
-void printGameTarget(OutputStream* outputStream, GameTarget* target) {
+void printGameTarget(OutputStream* outputStream, GameTarget* target, BOOL includeItems) {
 	appendString(outputStream, "target:");
 	appendKeyAndName(outputStream, "name=", target->name);
 	appendStringAndDecf(outputStream, ", gain=", target->gain);

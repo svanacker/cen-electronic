@@ -28,7 +28,7 @@ typedef struct GameTarget {
 /**
  * Print the detail of each target.
  */
-void printGameTarget(OutputStream* outputStream, GameTarget* target);
+void printGameTarget(OutputStream* outputStream, GameTarget* target, BOOL includeItems);
 
 
 #endif

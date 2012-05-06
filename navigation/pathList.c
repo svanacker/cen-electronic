@@ -58,11 +58,11 @@ Path* getPathOfLocations(PathList* pathList, Location* location1, Location* loca
 		Location* pathLocation2 = path->location2;
 		// same order
 		if (locationEquals(pathLocation1, location1) && locationEquals(pathLocation2, location2)) {
-			return TRUE;
+			return path;
 		}
 		// inverse order
 		if (locationEquals(pathLocation1, location2) && locationEquals(pathLocation2, location1)) {
-			return TRUE;
+			return path;
 		}
 	}
 	return NULL;

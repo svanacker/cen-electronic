@@ -17,9 +17,28 @@
 typedef struct GameTargetActionItemList {
     /** An array of pointer on target action items. */
     GameTargetActionItem* items[MAX_TARGET_ACTION_ITEM];
+	/** Next index for iterator. */
+	int iteratorIndex;
     /** the size of the list. */
     unsigned char size;
 } GameTargetActionItemList;
+
+// ITERATOR
+
+/**
+ * Returns if the iterator has next value.
+ */
+BOOL targetActionItemListHasNext(GameTargetActionItemList* targetActionItemList);
+
+/**
+ * Returns the next value of iterator, NULL if no more.
+ */
+GameTargetActionItem* targetActionItemListNext(GameTargetActionItemList* targetActionItemList);
+
+/**
+ * Restart the new iterator.
+ */
+void targetActionItemListResetIterator(GameTargetActionItemList* targetActionItemList);
 
 /**
  * Add an action item to the target.

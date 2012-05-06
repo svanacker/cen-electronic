@@ -156,6 +156,21 @@ Location* getLocation(LocationList* locationList, int index) {
 			count++;
 		}
 	}
+	return NULL;
+}
+
+void removeFirstLocation(LocationList* locationList) {
+	int i;
+	int size = locationList->size;
+	for (i = 0; i < size; i++) {
+		Location* location = locationList->locations[i];
+		// We can have hole because of "remove"
+		if (location == NULL) {
+			continue;
+		}
+		locationList->locations[i] = NULL;
+		locationList->count--;
+	}
 }
 
 int getLocationCount(LocationList* locationList) {

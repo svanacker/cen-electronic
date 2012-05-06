@@ -48,6 +48,7 @@ void addLocationList(LocationList* targetLocationList, LocationList* sourceLocat
  */
 BOOL isEmptyLocationList(LocationList* locationList);
 
+
 /**
  * Add a location to the list.
  * @param location the location to add to the list
@@ -65,6 +66,11 @@ void addFilledLocation(LocationList* locationList, Location* location);
  * @param locationToRemove the location to remove
  */
 void removeLocation(LocationList* locationList, Location* locationToRemove);
+
+/**
+ * Remove first location of the list.
+ */
+void removeFirstLocation(LocationList* locationList);
 
 /**
  * Get the location at index.

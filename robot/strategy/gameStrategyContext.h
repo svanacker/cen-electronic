@@ -4,6 +4,7 @@
 #include "../../common/2d/2d.h"
 
 #include "gameStrategy.h"
+#include "gameTarget.h"
 #include "gameTargetAction.h"
 
 
@@ -23,8 +24,12 @@ typedef struct GameStrategyContext {
 	/** The nearestLocation of the robot. */
 	Location* nearestLocation;
 	// TODO : Opponent Robot.
+	/** current Target. */
+	GameTarget* currentTarget;
 	/** current Target Action. */
 	GameTargetAction* currentTargetAction;
+	/** Current Target Action Item. */
+	// GameTargetActionItem* currentTargetActionItem;
 	/** current trajectory of the robot. */
 	LocationList currentTrajectory;
 } GameStrategyContext;

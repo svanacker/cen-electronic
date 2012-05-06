@@ -47,7 +47,7 @@ void printPoint(OutputStream* outputStream, Point* point, const char* unit) {
 	appendString(outputStream, unit);
 	appendStringAndDecf(outputStream, ",y=", point->y);
 	appendString(outputStream, unit);
-	appendCRLF(outputStream);
+	println(outputStream);
 }
 
 void appendStringAndAngleInDeg(OutputStream* outputStream, const char* valueName, float angleInRadians) {

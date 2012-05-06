@@ -1,3 +1,5 @@
+#include <stdlib.h>
+
 #include "gameTargetActionItemList.h"
 #include "gameTargetActionItem.h"
 
@@ -30,6 +32,28 @@ GameTargetActionItem* getGameTargetActionItem(GameTargetActionItemList* targetAc
 int getGameTargetActionItemCount(GameTargetActionItemList* targetActionItemList) {
     return targetActionItemList->size;
 }
+
+// ITERATOR
+
+BOOL targetActionItemListHasNext(GameTargetActionItemList* targetActionItemList) {
+	return (targetActionItemList->iteratorIndex < targetActionItemList->size);
+}
+
+GameTargetActionItem* targetActionItemListNext(GameTargetActionItemList* targetActionItemList) {
+	if (targetActionItemList->iteratorIndex < targetActionItemList->size) {
+		GameTargetActionItem* result = targetActionItemList->items[targetActionItemList->iteratorIndex];
+		targetActionItemList->iteratorIndex++;
+		return result;
+	}
+	return NULL;
+}
+
+void targetActionItemListResetIterator(GameTargetActionItemList* targetActionItemList) {
+	targetActionItemList->iteratorIndex = 0;
+}
+
+
+// DEBUG
 
 void printGameTargetActionItemList(OutputStream* outputStream, GameTargetActionItemList* targetItems) {
 	int i;

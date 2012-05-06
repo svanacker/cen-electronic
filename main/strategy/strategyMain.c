@@ -200,6 +200,12 @@ int main(void) {
 	printGameboard(&debugOutputStream);
 	printGameStrategyContext(&debugOutputStream, getStrategyContext());
 
+	int i;
+	for (i = 0; i < 5; i++) {
+		nextStep();
+	}
+
+
 	while(1) {
 
 	}

@@ -31,96 +31,106 @@ GameStrategyContext* getStrategyContext() {
  * @private
  */
 void findNextTarget() {
+	appendString(getOutputStreamLogger(DEBUG), "findNextTarget\n");
+
 	// global points
 	LocationList* navigationLocationList = getNavigationLocationList();
 
 	Point* robotPosition = &(strategyContext.robotPosition);
 	// Find nearest location
 	strategyContext.nearestLocation = getNearestLocation(navigationLocationList, robotPosition->x, robotPosition->y);
-	
+
+	#ifdef DEBUG_STRATEGY_HANDLER
+		appendString(getOutputStreamLogger(DEBUG), "-> Nearest Location:");	
+		printLocation(getOutputStreamLogger(DEBUG), strategyContext.nearestLocation);
+		appendString(getOutputStreamLogger(DEBUG), "-> getBestNextTarget:");	
+	#endif
+
 	// Find best Target, store LocationList in the context in currentTrajectory
 	strategyContext.currentTargetAction = getBestNextTarget(&strategyContext);
+
+	#ifdef DEBUG_STRATEGY_HANDLER
+		appendString(getOutputStreamLogger(DEBUG), "-> getBestNextTarget:");	
+		printGameTargetAction(getOutputStreamLogger(DEBUG), strategyContext.currentTargetAction);
+	#endif
 }
 
 /**
  * @private
  */
 void executeTargetActions() {
-	/*
-	if (currentActions == null) {
-		ITargetActionItemList actions = currentTargetAction.getItems();
-		currentActions = actions.iterator();
+	appendString(getOutputStreamLogger(DEBUG), "executeTargetActions\n");
+
+	GameTargetAction* targetAction = strategyContext.currentTargetAction;
+	GameTargetActionItemList* actionItemList = targetAction->actionItemList;
+	if (actionItemList == NULL) {
+		#ifdef DEBUG_STRATEGY_HANDLER
+			appendString(getOutputStreamLogger(DEBUG), "-> no actions for this target\n");
+		#endif
+		return;
 	}
-	if (currentActions != null && currentActions.hasNext()) {
-		ITargetActionItem action = currentActions.next();
-		RobotDeviceRequest request = action.getRequest();
-		sendRequest(request);
-		displayRequest(request);
-		if (!(request instanceof NavigationRequest) && !(request instanceof SleepRequest)) {
-			nextStep();
-		}
-	} else {
-		// the target is no more available
-		appendString(getOutputStreamLogger(DEBUG), "no more actions");
-		currentTargetAction.getTarget().setAvailable(false);
-		currentActions = null;
-		currentTargetAction = null;
-		currentTrajectory = null;
-		displayRequest(null);
+
+	if (actionItemList != NULL) {
+		// strategyContext.actionItemList = actionItemList;
+	}
+	if (actionItemList != NULL && targetActionItemListHasNext(actionItemList)) {
+		GameTargetActionItem* actionItem = targetActionItemListNext(actionItemList);
+
+		#ifdef DEBUG_STRATEGY_HANDLER
+			appendStringAndDec(getOutputStreamLogger(DEBUG), "-> nextActionItem:", (int) actionItem);
+			println(getOutputStreamLogger(DEBUG));
+		#endif
+
+		// Do the action item
+		actionItem->actionItem();
+	}
+	else {
+		// strategyContext->actionItem = NULL;
+		strategyContext.currentTargetAction = NULL;
+		strategyContext.currentTarget->available = FALSE;
+		clearLocationList(&(strategyContext.currentTrajectory));
 		nextStep();
 	}
-	*/
 }
 
-void nextStep(GameStrategyContext* strategyContext) {
-	GameTargetAction* targetAction = strategyContext->currentTargetAction;
 
-	if (targetAction == NULL) {
-		appendString(getOutputStreamLogger(DEBUG), "findNextTarget\n");
-		// no target, search a new one
-		findNextTarget();
-		// TODO
-		/*
-		if (getLocationCount(strategyContext->currentTrajectory) != 0) {
-			
-		}
-		*/
-	}
-	/*
-	if (currentActions != null) {
-			LOGGER.fine("executeTargetActions 1");
-			// actions pending
-			executeTargetActions();
-		} else if (currentTrajectory != null) {
-			LOGGER.fine("handleCurrentTrajectory");
-			// trajectory if any
-			handleCurrentTrajectory();
-		} else if (currentTargetAction == null) {
-			LOGGER.fine("findNextTarget");
-			// no target, search a new one
-			findNextTarget();
-			if (currentTrajectory != null) {
-				// next location
-				nextStep();
-			}
-		} else {
-			LOGGER.fine("executeTargetActions 2");
-			// executes the actions of the active target
-			executeTargetActions();
-		}
-	*/
-}
-
+/**
+ * @private
+ */
 void motionFollowPath(Path* path) {
 	Location* location = path->location2;
+
+	#ifdef DEBUG_STRATEGY_HANDLER
+		appendString(getOutputStreamLogger(DEBUG), "motionFollowPath:goto:");	
+		printLocation(getOutputStreamLogger(DEBUG), location);
+	#endif
+
 	motionDriverBSplineAbsolute(location->x, location->y,
 								path->angle2, 
 								path->controlPointDistance1, path->controlPointDistance2);
+
+	// Simulate as if the robot goes to the position with a small error
+	#ifdef SIMULATE_ROBOT
+		strategyContext.robotPosition.x = location->x + 1;
+		strategyContext.robotPosition.y = location->y + 1;
+	#endif
 }
 
+/**
+* @private
+*/
 void handleCurrentTrajectory() {
+	#ifdef DEBUG_STRATEGY_HANDLER
+		appendString(getOutputStreamLogger(DEBUG), "handleCurrentTrajectory\n");	
+	#endif
+
 	LocationList* currentTrajectory = &(strategyContext.currentTrajectory);
 	if (currentTrajectory->count < 2) {
+
+		#ifdef DEBUG_STRATEGY_HANDLER
+			appendString(getOutputStreamLogger(DEBUG), "no more locations to reach\n");	
+		#endif
+
 		// no more locations to reach
 		clearLocationList(currentTrajectory);
 		// nextStep();
@@ -131,11 +141,33 @@ void handleCurrentTrajectory() {
 	Location* end = getLocation(currentTrajectory, 1);
 	Path* path = getPathOfLocations(getNavigationPathList(), start, end);
 	motionFollowPath(path);
-	/*
-	RobotDeviceRequest request = getRequest(start, path);
-	sendRequest(request);
-	if (!(request instanceof RotationRequest)) {
-		currentTrajectory.remove(0);
-	}
-	*/
+	removeFirstLocation(currentTrajectory);
 }
+
+
+void nextStep() {
+	#ifdef DEBUG_STRATEGY_HANDLER
+		appendString(getOutputStreamLogger(DEBUG), "nextStep\n");	
+	#endif
+
+	GameTargetAction* targetAction = strategyContext.currentTargetAction;
+
+	if (targetAction != NULL) {
+		executeTargetActions();
+	}
+	else if (getLocationCount(&(strategyContext.currentTrajectory)) != 0) {
+		handleCurrentTrajectory();
+	}
+	if (targetAction == NULL) {
+		// no target, search a new one
+		findNextTarget();
+		// Next target created a new current trajectory
+		if (getLocationCount(&(strategyContext.currentTrajectory)) != 0) {
+			nextStep();			
+		}
+	} else {
+		executeTargetActions();
+	}
+}
+
+

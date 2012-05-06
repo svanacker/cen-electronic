@@ -9,7 +9,7 @@
 /**
  * Define the function which must be called.
  */
-typedef void GameTargetActionFunction(OutputStream* outputStream);
+typedef void GameTargetActionFunction();
 
 /**
  * Encapsulates the target action item.

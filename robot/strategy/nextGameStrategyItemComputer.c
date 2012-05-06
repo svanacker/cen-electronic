@@ -10,6 +10,8 @@
 #include "gameTargetActionList.h"
 #include "gameStrategyItem.h"
 
+#include "../../common/commons.h"
+
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
 
@@ -51,11 +53,15 @@ GameTargetAction* getBestNextTarget(GameStrategyContext* strategyContext) {
 			int distanceCost = computeBestPath(&(strategyContext->currentTrajectory), currentLocation, startLocation);
 			// float gain = 0.0f; //targetGain(target, action, distance, elapsedMatchTime, 0.0, 0.0);
 			// log(gainData, target, gain);
-			appendKeyAndName(getOutputStreamLogger(INFO), "start->location:", currentLocation->name);
-			appendKeyAndName(getOutputStreamLogger(INFO), ", end->location:", startLocation->name);
-			appendKeyAndName(getOutputStreamLogger(INFO), ", target:", target->name);
-			appendStringAndDec(getOutputStreamLogger(INFO), ", distanceCost=", distanceCost);
-			println(getOutputStreamLogger(INFO));
+
+			#ifdef NEXT_GAME_STRATEGY_ITEM_COMPUTER_DEBUG
+				OutputStream outputStream = getOutputStreamLogger(INFO);
+				appendKeyAndName(outputStream, "start->location:", currentLocation->name);
+				appendKeyAndName(outputStream, ", end->location:", startLocation->name);
+				appendKeyAndName(outputStream, ", target:", target->name);
+				appendStringAndDec(outputStream, ", distanceCost=", distanceCost);
+				println(outputStream);
+			#endif
 
 			if (distanceCost == MAX_COST) {
 				continue;
@@ -68,10 +74,15 @@ GameTargetAction* getBestNextTarget(GameStrategyContext* strategyContext) {
 			}
 		}
 	}
-	if (result != NULL) {
-		appendStringAndDecf(getOutputStreamLogger(INFO), "cost=", maxGain);
-		printGameTarget(getOutputStreamLogger(INFO), bestTarget);
-		printLocationList(getOutputStreamLogger(INFO), ", currentTrajectory:", &(strategyContext->currentTrajectory));
-	}
+
+	#ifdef NEXT_GAME_STRATEGY_ITEM_COMPUTER_DEBUG
+		if (result != NULL) {
+			OutputStream outputStream = getOutputStreamLogger(INFO);
+			appendStringAndDecf(outputStream, "cost=", maxGain);
+			printGameTarget(outputStream, bestTarget, FALSE);
+			printLocationList(outputStream, ", currentTrajectory:", &(strategyContext->currentTrajectory));
+		}
+	#endif
+
 	return result;
 }

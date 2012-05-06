@@ -46,6 +46,6 @@ void printGameTargetList(OutputStream* outputStream) {
 	println(outputStream);	
 	for (i = 0; i < size; i++) {
 		GameTarget* target = targets.targets[i];
-		printGameTarget(outputStream, target);
+		printGameTarget(outputStream, target, TRUE);
 	}
 }
