@@ -56,9 +56,10 @@ static GameTarget bottle1Target;
 static GameTarget bottle2Target;
 static GameTarget cd4Target;
 static GameTarget bullionRight1Target;
+static GameTarget bullionLeft1Target;
+
 /*
 static GameTarget bullionRight2Target;
-static GameTarget bullionLeft1Target;
 static GameTarget bullionLeft2Target;
 */
 
@@ -68,6 +69,7 @@ static GameTargetAction bottle1TargetAction;
 static GameTargetAction bottle2TargetAction;
 static GameTargetAction cdTakeTargetAction;
 static GameTargetAction bullionRight1TargetAction;
+static GameTargetAction bullionLeft1TargetAction;
 
 // -> CD
 static GameTargetActionItemList cdTakeTargetActionItemList;  
@@ -81,6 +83,13 @@ static GameTargetActionItem bullionRight1Step2OpenPlierTargetActionItem;
 static GameTargetActionItem bullionRight1Step3GoTargetActionItem;
 static GameTargetActionItem bullionRight1Step4ClosePlierTargetActionItem;
 
+// -> BULLION LEFT 2
+static GameTargetActionItemList bullionLeft1ActionItemList; 
+static GameTargetActionItem bullionLeft1Step1BackTargetActionItem;
+static GameTargetActionItem bullionLeft1Step2OpenPlierTargetActionItem;
+static GameTargetActionItem bullionLeft1Step3GoTargetActionItem;
+static GameTargetActionItem bullionLeft1Step4ClosePlierTargetActionItem;
+
 // strategies
 static GameStrategy strategy1;
 
@@ -90,6 +99,7 @@ static GameStrategyItem bottle1StrategyItem;
 static GameStrategyItem bottle2StrategyItem;
 static GameStrategyItem cdTakeStrategyItem;
 static GameStrategyItem bullionRight1StrategyItem;
+static GameStrategyItem bullionLeft1StrategyItem;
 
 void initLocations2012() {
 	addNavigationLocation(&startAreaLocation, START_AREA, START_AREA_X, START_AREA_Y);
@@ -117,9 +127,9 @@ void initTargets2012() {
 	addGameTarget(&bottle2Target, BOTTLE_2, BOTTLE_GAIN, &bottle2Location);
 	addGameTarget(&cd4Target, CD_TAKE, CD_4_GAIN, &cdTakeLocation);
 	addGameTarget(&bullionRight1Target, BULLION_RIGHT_1, BULLION_GAIN, &cleanMiddle1Location);
+	addGameTarget(&bullionLeft1Target, BULLION_LEFT_1, BULLION_GAIN, &cleanMiddle1Location);
 	/*
 	addGameTarget(&bullionRight2Target, BULLION_RIGHT_2, BULLION_GAIN);
-	addGameTarget(&bullionLeft1Target, BULLION_LEFT_1, BULLION_GAIN);
 	addGameTarget(&bullionLeft2Target, BULLION_LEFT_2, BULLION_GAIN);
 	*/
 }
@@ -152,13 +162,23 @@ void cdTakeStep2() {
 	motionFollowPath(&cdToDropZone1);
 }
 
-// MIDDLE Bullion ActionItem
+// Bullion Right 1 ActionItem
 
 void bullionRight1Step1Back() {
 	// TODO
 }
 
 void bullionRight1Step3GoToDropZone() {
+	// TODO
+}
+
+// Bullion Left 1 ActionItem
+
+void bullionLeft1Step1Back() {
+	// TODO
+}
+
+void bullionLeft1Step3GoToDropZone() {
 	// TODO
 }
 
@@ -169,6 +189,8 @@ void initTargetActions2012() {
 	addTargetAction(&(bottle2Target.actionList), &bottle2TargetAction, &bottle2Location, &bottle2Location, 3, NULL);
 	addTargetAction(&(cd4Target.actionList), &cdTakeTargetAction, &bottle2Location, &dropZone1Location, 4, &cdTakeTargetActionItemList);
 	addTargetAction(&(bullionRight1Target.actionList), &bullionRight1TargetAction, &cleanMiddle1Location, &dropZone1Location, 5, &bullionRight1ActionItemList);
+	addTargetAction(&(bullionLeft1Target.actionList), &bullionLeft1TargetAction, &cleanMiddle1Location, &dropZone1Location, 6, &bullionLeft1ActionItemList);
+
 }
 
 void initTargetActionsItems2012() {
@@ -181,6 +203,12 @@ void initTargetActionsItems2012() {
 	addTargetActionItem(&bullionRight1ActionItemList, &bullionRight1Step2OpenPlierTargetActionItem, &armLeftDown, "armLeftDown");
 	addTargetActionItem(&bullionRight1ActionItemList, &bullionRight1Step3GoTargetActionItem, &bullionRight1Step3GoToDropZone, "bullionRight1GoToDropZone1");
 	addTargetActionItem(&bullionRight1ActionItemList, &bullionRight1Step4ClosePlierTargetActionItem, &armLeftUp, "armLeftUp");
+
+	// LEFT BULLION 1
+	addTargetActionItem(&bullionLeft1ActionItemList, &bullionLeft1Step1BackTargetActionItem, &bullionLeft1Step1Back, "bullionLeft1Step1Back");
+	addTargetActionItem(&bullionLeft1ActionItemList, &bullionLeft1Step2OpenPlierTargetActionItem, &armRightDown, "armRightDown");
+	addTargetActionItem(&bullionLeft1ActionItemList, &bullionLeft1Step3GoTargetActionItem, &bullionLeft1Step3GoToDropZone, "bullionLeft1GoToDropZone1");
+	addTargetActionItem(&bullionLeft1ActionItemList, &bullionLeft1Step4ClosePlierTargetActionItem, &armRightUp, "armRightUp");
 }
 
 void initStrategies2012() {
@@ -193,6 +221,7 @@ void initStrategiesItems2012() {
 	addGameStrategyItem(&strategy1, &bottle2StrategyItem, &bottle2Target);
 	addGameStrategyItem(&strategy1, &cdTakeStrategyItem, &cd4Target);
 	addGameStrategyItem(&strategy1, &bullionRight1StrategyItem, &bullionRight1Target);
+	addGameStrategyItem(&strategy1, &bullionLeft1StrategyItem, &bullionLeft1Target);
 }
 
 void initStrategy2012() {
