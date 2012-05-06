@@ -41,8 +41,7 @@ int getGameboardElementCount() {
     return elements.size;
 }
 
-
-// LOCATION
+// TARGET
 
 char gameTargetPrint(int* element, int column, int line) {
 	GameTarget* target = (GameTarget*) element;
@@ -59,6 +58,19 @@ char gameTargetPrint(int* element, int column, int line) {
 
 void addGameTargetAsGameboardElement(GameTarget* target) {
 	addGameboardElement(&gameTargetPrint, (int*) target);
+}
+
+// POINT
+
+char robotPositionPrint(int* element, int column, int line) {
+	Point* point = (Point*) element;
+	return pointPrint(column, line, point->x, point->y, 'X');
+}
+
+// ROBOT
+
+void addRobotPositionAsGameboardElement(Point* point) {
+	addGameboardElement(&robotPositionPrint, (int*) point);
 }
 
 void addGameTargetListAsGameboardElements(GameTargetList* gameTargetList) {

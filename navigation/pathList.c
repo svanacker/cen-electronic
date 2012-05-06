@@ -49,6 +49,25 @@ Path* getPath(PathList* pathList, int index) {
     return pathList->paths[index];
 }
 
+Path* getPathOfLocations(PathList* pathList, Location* location1, Location* location2) {
+	int i;
+	int size = pathList->size;
+	for (i = 0; i < size; i++) {
+		Path* path = pathList->paths[i];
+		Location* pathLocation1 = path->location1;
+		Location* pathLocation2 = path->location2;
+		// same order
+		if (locationEquals(pathLocation1, location1) && locationEquals(pathLocation2, location2)) {
+			return TRUE;
+		}
+		// inverse order
+		if (locationEquals(pathLocation1, location2) && locationEquals(pathLocation2, location1)) {
+			return TRUE;
+		}
+	}
+	return NULL;
+}
+
 int getPathCount(PathList* pathList) {
     return pathList->size;
 }

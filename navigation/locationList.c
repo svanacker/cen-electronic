@@ -3,10 +3,13 @@
 #include "locationList.h"
 #include "location.h"
 
+#include "../common/2d/2d.h"
+
+#include "../common/error/error.h"
+
 #include "../common/io/outputStream.h"
 #include "../common/io/printWriter.h"
 
-#include "../common/error/error.h"
 #include "../common/string/cenString.h"
 
 void clearLocationList(LocationList* locationList) {
@@ -111,8 +114,48 @@ BOOL containsLocation(LocationList* locationList, Location* locationToFind) {
 	return FALSE;
 }
 
+Location* getNearestLocation(LocationList* locationList, int x, int y) {
+	Location* result = NULL;
+	int i;
+	int size = locationList->size;
+	int min = MAX_COST;
+
+	for (i = 0; i < size; i++) {
+		Location* location = locationList->locations[i];
+		// We can have hole because of "remove"
+		if (location == NULL) {
+			continue;
+		}
+		int distance = distanceBetweenPoints2((float) location->x, (float) location->y, (float) x, (float) y);
+		if (distance < min) {
+			min = distance;
+			result = location;
+		}
+	}
+	return result;
+}
+
 Location* getLocation(LocationList* locationList, int index) {
-    return locationList->locations[index];
+	// optimisation when there is no removed object => index is the same
+	if (locationList->count == locationList->size) {
+    	return locationList->locations[index];
+	}
+	else {
+		int count;
+		int i;
+		int size = locationList->size;
+		for (i = 0; i < size; i++) {
+			Location* location = locationList->locations[i];
+			// We can have hole because of "remove"
+			if (location == NULL) {
+				continue;
+			}
+			if (count == index) {
+				return location;
+			}
+			count++;
+		}
+	}
 }
 
 int getLocationCount(LocationList* locationList) {

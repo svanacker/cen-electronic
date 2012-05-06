@@ -63,6 +63,9 @@
 #include "../../device/system/systemDevice.h"
 #include "../../device/system/systemDeviceInterface.h"
 
+#include "../../drivers/driver.h"
+#include "../../drivers/driverTransmitter.h"
+#include "../../drivers/driverList.h"
 #include "../../drivers/driverStreamListener.h"
 
 // The port for which we debug (we can send instruction too)
@@ -102,6 +105,13 @@ static StreamLink i2cSerialStreamLink;
 static Device testDevice;
 static Device systemDevice;
 
+
+// DRIVERS
+static Buffer driverRequestBuffer;
+static char driverRequestBufferArray[STRATEGY_BOARD_REQUEST_DRIVER_BUFFER_LENGTH];
+static Buffer driverResponseBuffer;
+static char driverResponseBufferArray[STRATEGY_BOARD_RESPONSE_DRIVER_BUFFER_LENGTH];
+
 // Strategy Context
 static GameStrategyContext strategyContext;
 
@@ -110,6 +120,27 @@ void initDevicesDescriptor() {
 	addLocalDevice(&systemDevice, getSystemDeviceInterface(), getSystemDeviceDescriptor());
 
 	initDevices(&devices);
+}
+
+BOOL redirectDriverToI2CSlave() {
+    InputStream* inputStream = getDriverResponseInputStream();
+
+	// Redirect to OutputStream
+	copyInputToOutputStream(inputStream, getOutputStreamLogger(INFO), NULL, COPY_ALL); 
+
+	return TRUE;
+}
+
+/**
+ * @private
+ */
+void initDriversDescriptor() {
+    // Init the drivers
+    initDrivers(&driverRequestBuffer, &driverRequestBufferArray, STRATEGY_BOARD_REQUEST_DRIVER_BUFFER_LENGTH,
+				&driverResponseBuffer, &driverResponseBufferArray, STRATEGY_BOARD_RESPONSE_DRIVER_BUFFER_LENGTH);
+
+	// Redirect driver to I2C Slave (not default behaviour)
+	setRedirectionTransmitFromDriverRequestBuffer(&redirectDriverToI2CSlave);
 }
 
 void initStrategyBoardIO() {
@@ -150,6 +181,8 @@ int main(void) {
 	// init the devices
 	initDevicesDescriptor();
 
+	initDriversDescriptor();
+
 	initStrategy2012();
 	printGameTargetList(&debugOutputStream);
 	printGameStrategyList(&debugOutputStream);
@@ -157,6 +190,8 @@ int main(void) {
 	addElements2012();
 	GameTargetList* targetList = getGameTargetList();
 	addGameTargetListAsGameboardElements(targetList);
+	addRobotPositionAsGameboardElement(&(strategyContext.robotPosition));
+
 	
 	//int cost = addNavigationLocationsTest2();
 	printNavigationContext(&debugOutputStream);
@@ -165,10 +200,11 @@ int main(void) {
 	printGameboard(&debugOutputStream);
 
 	LocationList* navigationLocationList = getNavigationLocationList();
-	Location* location = findLocationByName(navigationLocationList, START_AREA);
+	// Location* location = findLocationByName(navigationLocationList, START_AREA);
 
 	strategyContext.gameStrategy = getGameStrategy(0);
-	strategyContext.currentLocation = location;
+	Point* robotPosition = &(strategyContext.robotPosition);
+	strategyContext.nearestLocation = getNearestLocation(navigationLocationList, robotPosition->x, robotPosition->y);
 
 	printGameStrategyContext(&debugOutputStream, &strategyContext);
 

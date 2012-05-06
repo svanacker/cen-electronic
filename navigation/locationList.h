@@ -88,6 +88,10 @@ BOOL containsLocation(LocationList* locationList, Location* location);
  */
 int getLocationCount(LocationList* locationList);
 
+Location* getNearestLocation(LocationList* locationList, int x, int y);
+
+// DEBUG
+
 /**
  * Print on the outputStream the location.
  */

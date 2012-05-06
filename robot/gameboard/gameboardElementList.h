@@ -26,12 +26,24 @@ typedef struct {
  */
 GameboardElement* addGameboardElement(gameboardElementPrintFunction* printFunction, int* object);
 
+// TARGETS
+
 /**
- * Add a location as a gameBoard Element.
+ * Add a target as a gameBoard Element.
  */
 void addGameTargetAsGameboardElement(GameTarget* gameTarget);
 
+/**
+ * Add all Target as gameboard elements
+ */
 void addGameTargetListAsGameboardElements(GameTargetList* gameTargetList);
+
+// POINTS
+
+/**
+ * Add the robot Position as a gameboard element
+ */
+void addRobotPositionAsGameboardElement(Point* point);
 
 /**
  * Get the game board element at index

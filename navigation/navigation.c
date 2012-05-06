@@ -11,6 +11,8 @@
 #include "../common/log/logger.h"
 #include "../common/log/logLevel.h"
 
+//#define NAVIGATION_DEBUG
+
 /** All locations. */
 static LocationList locations;
 
@@ -24,6 +26,10 @@ static PathList outgoingPaths;
 
 LocationList* getNavigationLocationList() {
 	return &locations;
+}
+
+PathList* getNavigationPathList() {
+	return &paths;
 }
 
 void addNavigationLocation(Location* location, char* name, int x, int y) {
@@ -103,13 +109,17 @@ Location* extractMinCostLocation() {
 		if (location == NULL) {
 			continue;
 		}
-		appendString(getOutputStreamLogger(INFO), "\t");
-		printLocation(getOutputStreamLogger(INFO), location);
+		#ifdef NAVIGATION_DEBUG
+			appendString(getOutputStreamLogger(INFO), "\t");
+			printLocation(getOutputStreamLogger(INFO), location);
+		#endif
 
 		// get the cost
 		int cost = getCost(location);
-		appendStringAndDec(getOutputStreamLogger(INFO), "\tcost:", cost);
-		println(getOutputStreamLogger(INFO));
+		#ifdef NAVIGATION_DEBUG
+			appendStringAndDec(getOutputStreamLogger(INFO), "\tcost:", cost);
+			println(getOutputStreamLogger(INFO));
+		#endif
 		if (cost <= minCost) {
 			minCost = cost;
 			result = location;
@@ -140,13 +150,20 @@ int computeBestPath(LocationList* outLocationList, Location* start, Location* en
 	Location* location1;
 
 	start->tmpCost = 0;
-	printLocation(getOutputStreamLogger(INFO), start);
+	#ifdef NAVIGATION_DEBUG
+		printLocation(getOutputStreamLogger(INFO), start);
+	#endif
 	while (!isEmptyLocationList(&unhandledLocationList)) {
 		// search the nearest node of the nodeList
-		appendString(getOutputStreamLogger(INFO), "extractMinCostLocation\n");
+		#ifdef NAVIGATION_DEBUG
+			appendString(getOutputStreamLogger(INFO), "extractMinCostLocation\n");
+		#endif
 		location1 = extractMinCostLocation();
-		appendString(getOutputStreamLogger(INFO), "bestLocation=");
-		printLocation(getOutputStreamLogger(INFO), location1);
+
+		#ifdef NAVIGATION_DEBUG
+			appendString(getOutputStreamLogger(INFO), "bestLocation=");
+			printLocation(getOutputStreamLogger(INFO), location1);
+		#endif
 
 		// List of path going to the node (location)
 		updateOutgoingPaths(location1);
@@ -159,10 +176,12 @@ int computeBestPath(LocationList* outLocationList, Location* start, Location* en
 			Location* location2 = getOtherEnd(path, location1);
 			int costLocation1 = getCost(location1);
 			int costLocation2 = getCost(location2);
-			appendStringAndDec(getOutputStreamLogger(INFO), "costLocation1:", costLocation1);
-			appendStringAndDec(getOutputStreamLogger(INFO), ", costLocation2:", costLocation2);
-			println(getOutputStreamLogger(INFO));
-
+			
+			#ifdef NAVIGATION_DEBUG
+				appendStringAndDec(getOutputStreamLogger(INFO), "costLocation1:", costLocation1);
+				appendStringAndDec(getOutputStreamLogger(INFO), ", costLocation2:", costLocation2);
+				println(getOutputStreamLogger(INFO));
+			#endif
 			int cost = costLocation1 + path->cost;
 			if (cost < costLocation2) {
 				// Affectation de la distance absolue du noeud

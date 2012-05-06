@@ -20,15 +20,11 @@
 #include "../../navigation/locationList.h"
 #include "../../navigation/location.h"
 
-static LocationList outLocationList;
-
-static GameTarget* currentTarget;
-
 GameTargetAction* getBestNextTarget(GameStrategyContext* strategyContext) {
 
 	GameStrategy* gameStrategy = strategyContext->gameStrategy;
 	// float elapsedMatchTime = strategyContext->elapsedMatchTime;
-	Location* currentLocation = &(strategyContext->currentLocation);
+	Location* currentLocation = strategyContext->nearestLocation;
 
 	// Opponent opponent = RobotUtils.getRobotAttribute(Opponent.class, servicesProvider);
 	GameTarget* bestTarget = NULL;
@@ -52,7 +48,7 @@ GameTargetAction* getBestNextTarget(GameStrategyContext* strategyContext) {
 		for (actionIndex = 0; actionIndex < targetActionCount; actionIndex++) {
 			GameTargetAction* targetAction = getGameTargetAction(actionList, actionIndex);
 			Location* startLocation = targetAction->startLocation;
-			int distanceCost = computeBestPath(&outLocationList, currentLocation, startLocation);
+			int distanceCost = computeBestPath(&(strategyContext->currentTrajectory), currentLocation, startLocation);
 			// float gain = 0.0f; //targetGain(target, action, distance, elapsedMatchTime, 0.0, 0.0);
 			// log(gainData, target, gain);
 			appendKeyAndName(getOutputStreamLogger(INFO), "start->location:", currentLocation->name);
@@ -75,7 +71,7 @@ GameTargetAction* getBestNextTarget(GameStrategyContext* strategyContext) {
 	if (result != NULL) {
 		appendStringAndDecf(getOutputStreamLogger(INFO), "cost=", maxGain);
 		printGameTarget(getOutputStreamLogger(INFO), bestTarget);
-		printLocationList(getOutputStreamLogger(INFO), "outLocationList:", &outLocationList);
+		printLocationList(getOutputStreamLogger(INFO), ", currentTrajectory:", &(strategyContext->currentTrajectory));
 	}
 	return result;
 }

@@ -50,6 +50,11 @@ void addFilledPath(PathList* pathList, Path* path);
 Path* getPath(PathList* pathList, int index);
 
 /**
+ * Returns the path corresponding to the both location.
+ */
+Path* getPathOfLocations(PathList* pathList, Location* location1, Location* location2);
+
+/**
  * Get the count of paths.
  */
 int getPathCount(PathList* pathList);

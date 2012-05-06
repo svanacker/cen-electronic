@@ -21,7 +21,18 @@
 #include "../drivers/driverList.h"
 #include "../drivers/driverStreamListener.h"
 
+/** RedirectFunction : OFTEN NULL. */
+static transmitFromDriverRequestBufferFunction* redirectFunction;
+
+void setRedirectionTransmitFromDriverRequestBuffer(transmitFromDriverRequestBufferFunction* function) {
+	redirectFunction = function;
+}
+
 BOOL transmitFromDriverRequestBuffer() {
+	// Handle redirection
+	if (redirectFunction != NULL) {
+		return redirectFunction();
+	}
     // We do exactly as if the data was written by a end-user
     // requestBuffer must be filled before calling this method
     Buffer* requestBuffer = getDriverRequestBuffer();

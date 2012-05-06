@@ -12,6 +12,12 @@
 LocationList* getNavigationLocationList();
 
 /**
+ * Returns the navigation (singleton) path list.
+ */
+PathList* getNavigationPathList();
+
+
+/**
  * Add the location to the navigation graph.
  */
 void addNavigationLocation(Location* location, char* name, int x, int y);

@@ -1,6 +1,8 @@
 #ifndef MOTION_DRIVER_H
 #define MOTION_DRIVER_H
 
+#include "../../common/commons.h"
+
 #include "../../drivers/dispatcher/DriverDataDispatcher.h"
 
 /**

@@ -16,9 +16,12 @@ void printGameStrategyContext(OutputStream* outputStream, GameStrategyContext* c
 		appendString(outputStream, "NULL");
 	}
 	appendStringAndDecf(outputStream, "\n\telapsedMatchTime=", context->elapsedMatchTime);
+	
+	printPoint(outputStream, &(context->robotPosition), "");
+
 	appendString(outputStream, "\n\tcurrentLocation=");
-	if (context->currentLocation != NULL) {
-		printLocation(outputStream, context->currentLocation);
+	if (context->nearestLocation != NULL) {
+		printLocation(outputStream, context->nearestLocation);
 	}
 	else {
 		appendString(outputStream, "NULL");

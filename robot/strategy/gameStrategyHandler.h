@@ -1,0 +1,7 @@
+#ifndef GAME_STRATEGY_HANDLER
+#define GAME_STRATEGY_HANDLER
+
+
+
+#endif
+
