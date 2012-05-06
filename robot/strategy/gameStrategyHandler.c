@@ -1,6 +1,16 @@
+#include <stdlib.h>
+
 #include "gameStrategyHandler.h"
 
 #include "gameStrategyContext.h"
+
+#include "nextGameStrategyItemComputer.h"
+
+#include "../../common/io/outputStream.h"
+#include "../../common/io/printWriter.h"
+
+#include "../../common/log/logger.h"
+#include "../../common/log/logLevel.h"
 
 #include "../../navigation/location.h"
 #include "../../navigation/locationList.h"
@@ -10,7 +20,72 @@
 
 #include "../../drivers/motion/motionDriver.h"
 
+// Strategy Context
+static GameStrategyContext strategyContext;
+
+GameStrategyContext* getStrategyContext() {
+	return &strategyContext;
+}
+
+/**
+ * @private
+ */
+void findNextTarget() {
+	// global points
+	LocationList* navigationLocationList = getNavigationLocationList();
+
+	Point* robotPosition = &(strategyContext.robotPosition);
+	// Find nearest location
+	strategyContext.nearestLocation = getNearestLocation(navigationLocationList, robotPosition->x, robotPosition->y);
+	
+	// Find best Target, store LocationList in the context in currentTrajectory
+	strategyContext.currentTargetAction = getBestNextTarget(&strategyContext);
+}
+
+/**
+ * @private
+ */
+void executeTargetActions() {
+	/*
+	if (currentActions == null) {
+		ITargetActionItemList actions = currentTargetAction.getItems();
+		currentActions = actions.iterator();
+	}
+	if (currentActions != null && currentActions.hasNext()) {
+		ITargetActionItem action = currentActions.next();
+		RobotDeviceRequest request = action.getRequest();
+		sendRequest(request);
+		displayRequest(request);
+		if (!(request instanceof NavigationRequest) && !(request instanceof SleepRequest)) {
+			nextStep();
+		}
+	} else {
+		// the target is no more available
+		appendString(getOutputStreamLogger(DEBUG), "no more actions");
+		currentTargetAction.getTarget().setAvailable(false);
+		currentActions = null;
+		currentTargetAction = null;
+		currentTrajectory = null;
+		displayRequest(null);
+		nextStep();
+	}
+	*/
+}
+
 void nextStep(GameStrategyContext* strategyContext) {
+	GameTargetAction* targetAction = strategyContext->currentTargetAction;
+
+	if (targetAction == NULL) {
+		appendString(getOutputStreamLogger(DEBUG), "findNextTarget\n");
+		// no target, search a new one
+		findNextTarget();
+		// TODO
+		/*
+		if (getLocationCount(strategyContext->currentTrajectory) != 0) {
+			
+		}
+		*/
+	}
 	/*
 	if (currentActions != null) {
 			LOGGER.fine("executeTargetActions 1");
@@ -43,11 +118,11 @@ void motionFollowPath(Path* path) {
 								path->controlPointDistance1, path->controlPointDistance2);
 }
 
-void handleCurrentTrajectory(GameStrategyContext* strategyContext) {
-	LocationList* currentTrajectory = &(strategyContext->currentTrajectory);
+void handleCurrentTrajectory() {
+	LocationList* currentTrajectory = &(strategyContext.currentTrajectory);
 	if (currentTrajectory->count < 2) {
 		// no more locations to reach
-		// currentTrajectory = null;
+		clearLocationList(currentTrajectory);
 		// nextStep();
 		return;
 	}

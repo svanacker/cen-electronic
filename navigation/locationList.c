@@ -159,7 +159,7 @@ Location* getLocation(LocationList* locationList, int index) {
 }
 
 int getLocationCount(LocationList* locationList) {
-    return locationList->size;
+    return locationList->count;
 }
 
 // CLEAR

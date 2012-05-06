@@ -46,6 +46,7 @@
 #include "../../robot/strategy/gameStrategyList.h"
 #include "../../robot/strategy/gameStrategy.h"
 #include "../../robot/strategy/gameStrategyContext.h"
+#include "../../robot/strategy/gameStrategyHandler.h"
 
 #include "../../robot/strategy/nextGameStrategyItemComputer.h"
 
@@ -112,8 +113,6 @@ static char driverRequestBufferArray[STRATEGY_BOARD_REQUEST_DRIVER_BUFFER_LENGTH
 static Buffer driverResponseBuffer;
 static char driverResponseBufferArray[STRATEGY_BOARD_RESPONSE_DRIVER_BUFFER_LENGTH];
 
-// Strategy Context
-static GameStrategyContext strategyContext;
 
 void initDevicesDescriptor() {
 	addLocalDevice(&testDevice, getTestDeviceInterface(), getTestDeviceDescriptor());
@@ -190,32 +189,16 @@ int main(void) {
 	addElements2012();
 	GameTargetList* targetList = getGameTargetList();
 	addGameTargetListAsGameboardElements(targetList);
-	addRobotPositionAsGameboardElement(&(strategyContext.robotPosition));
+	addRobotPositionAsGameboardElement(&(getStrategyContext()->robotPosition));
 
-	
 	//int cost = addNavigationLocationsTest2();
 	printNavigationContext(&debugOutputStream);
 	// appendStringAndDec(&debugOutputStream, "cost=", cost);
 
+	getStrategyContext()->gameStrategy = getGameStrategy(0);
+
 	printGameboard(&debugOutputStream);
-
-	LocationList* navigationLocationList = getNavigationLocationList();
-	// Location* location = findLocationByName(navigationLocationList, START_AREA);
-
-	strategyContext.gameStrategy = getGameStrategy(0);
-	Point* robotPosition = &(strategyContext.robotPosition);
-	strategyContext.nearestLocation = getNearestLocation(navigationLocationList, robotPosition->x, robotPosition->y);
-
-	printGameStrategyContext(&debugOutputStream, &strategyContext);
-
-	/*
-	strategyContext.elapsedMatchTime = 0.0f;
-	strategyContext.currentLocation.x = location->x;
-	strategyContext.currentLocation.y = location->y;	
-	strategyContext.currentLocation.name = location->name;
-	*/
-
-	getBestNextTarget(&strategyContext);
+	printGameStrategyContext(&debugOutputStream, getStrategyContext());
 
 	while(1) {
 
