@@ -43,7 +43,7 @@ void findNextTarget() {
 	#ifdef DEBUG_STRATEGY_HANDLER
 		appendString(getOutputStreamLogger(DEBUG), "\tNearest Location:");	
 		printLocation(getOutputStreamLogger(DEBUG), strategyContext.nearestLocation);
-		appendString(getOutputStreamLogger(DEBUG), "\tcomputeBestNextTargetAction:");	
+		appendString(getOutputStreamLogger(DEBUG), "\tcomputeBestNextTargetAction:\n");	
 	#endif
 
 	// Find best Target, store LocationList in the context in currentTrajectory
@@ -51,10 +51,28 @@ void findNextTarget() {
 
 	#ifdef DEBUG_STRATEGY_HANDLER
 		appendString(getOutputStreamLogger(DEBUG), "\t\tbestTarget:");
-		printGameTarget(getOutputStreamLogger(DEBUG), strategyContext.currentTarget, FALSE);
+		if (strategyContext.currentTarget != NULL) {
+			printGameTarget(getOutputStreamLogger(DEBUG), strategyContext.currentTarget, FALSE);
+		}
+		else {
+			appendString(getOutputStreamLogger(DEBUG), "NULL\n");
+		}
 		appendString(getOutputStreamLogger(DEBUG), "\t\tbestTargetAction:");
-		printGameTargetAction(getOutputStreamLogger(DEBUG), strategyContext.currentTargetAction);
+		if (strategyContext.currentTargetAction != NULL) {
+			printGameTargetAction(getOutputStreamLogger(DEBUG), strategyContext.currentTargetAction, FALSE);
+		}
+		else {
+			appendString(getOutputStreamLogger(DEBUG), "NULL\n");
+		}
 	#endif
+}
+
+void markTargetAsHandled() {
+	// mark the target as unavailable
+	strategyContext.currentTarget->available = FALSE;
+	// reset current Target
+	strategyContext.currentTarget = NULL;
+	strategyContext.currentTargetAction = NULL;
 }
 
 /**
@@ -71,40 +89,29 @@ void executeTargetActions() {
 		#ifdef DEBUG_STRATEGY_HANDLER
 			appendString(getOutputStreamLogger(DEBUG), "-> no actions for this target\n");
 		#endif
-		// mark the target as unavailable
-		strategyContext.currentTarget->available = FALSE;
-		// reset current Target
-		strategyContext.currentTarget = NULL;
-		strategyContext.currentTargetAction = NULL;
+		markTargetAsHandled();
+		nextStep();
 		return;
 	}
 
-	if (actionItemList != NULL) {
-		// strategyContext.actionItemList = actionItemList;
-	}
+	// There is actionItem in progress
 	if (actionItemList != NULL && targetActionItemListHasNext(actionItemList)) {
 		GameTargetActionItem* actionItem = targetActionItemListNext(actionItemList);
 
 		#ifdef DEBUG_STRATEGY_HANDLER
-			appendStringAndDec(getOutputStreamLogger(DEBUG), "-> nextActionItem:", (int) actionItem);
-			println(getOutputStreamLogger(DEBUG));
+			printGameTargetActionItem(getOutputStreamLogger(DEBUG), actionItem);
 		#endif
 
 		// Do the action item
 		actionItem->actionItem();
 	}
 	else {
-		strategyContext.currentTargetAction = NULL;
-		strategyContext.currentTarget = NULL;
-		clearLocationList(&(strategyContext.currentTrajectory));
+		markTargetAsHandled();
 		nextStep();
 	}
 }
 
 
-/**
- * @private
- */
 void motionFollowPath(Path* path) {
 	Location* location = path->location2;
 

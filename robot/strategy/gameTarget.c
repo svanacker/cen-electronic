@@ -15,5 +15,7 @@ void printGameTarget(OutputStream* outputStream, GameTarget* target, BOOL includ
 	// TODO : Point
 	println(outputStream);
 	
-	printGameTargetActionList(outputStream, &(target->actionList));
+	if (includeItems) {
+		printGameTargetActionList(outputStream, &(target->actionList));
+	}
 }

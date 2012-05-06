@@ -42,6 +42,6 @@ void printGameTargetActionList(OutputStream* outputStream, GameTargetActionList*
 	int size = targets->size;
 	for (i = 0; i < size; i++) {
 		GameTargetAction* targetAction = targets->actions[i];
-		printGameTargetAction(outputStream, targetAction);
+		printGameTargetAction(outputStream, targetAction, TRUE);
 	}
 }

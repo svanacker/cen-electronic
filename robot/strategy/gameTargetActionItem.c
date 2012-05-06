@@ -4,7 +4,7 @@
 #include "../../common/io/printWriter.h"
 
 void printGameTargetActionItem(OutputStream* outputStream, GameTargetActionItem* targetActionItem) {
-	appendString(outputStream, "\t\tactionItem:");
+	appendString(outputStream, "\t\t\tactionItem:");
 	appendKeyAndName(outputStream, "name=", targetActionItem->name);
 	println(outputStream);
 }

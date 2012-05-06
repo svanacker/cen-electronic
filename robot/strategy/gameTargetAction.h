@@ -30,7 +30,7 @@ typedef struct GameTargetAction {
 /**
  * Print the detail of the target action.
  */
-void printGameTargetAction(OutputStream* outputStream, GameTargetAction* targetAction);
+void printGameTargetAction(OutputStream* outputStream, GameTargetAction* targetAction, BOOL includeItems);
 
 
 #endif

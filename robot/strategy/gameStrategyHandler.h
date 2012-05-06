@@ -1,6 +1,8 @@
 #ifndef GAME_STRATEGY_HANDLER
 #define GAME_STRATEGY_HANDLER
 
+#include "../../navigation/path.h"
+
 #include "gameStrategyContext.h"
 
 /** If set, simulates the move of the robot. */
@@ -14,7 +16,15 @@
  */
 GameStrategyContext* getStrategyContext();
 
+/**
+ * Do the next step in the strategy
+ */
 void nextStep();
+
+/**
+ * Ask to follow a path.
+ */
+void motionFollowPath(Path* path);
 
 
 #endif
