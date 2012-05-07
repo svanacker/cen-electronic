@@ -2,6 +2,8 @@
 
 #include "gameStrategyContext.h"
 
+#include "../../navigation/locationList.h"
+
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
 
@@ -21,12 +23,12 @@ void printGameStrategyContext(OutputStream* outputStream, GameStrategyContext* c
 	appendStringAndDecf(outputStream, "\n\telapsedMatchTime=", context->elapsedMatchTime);
 	println(outputStream);
 	
-	// Point
-	appendString(outputStream, "\t");
+	// Robot Position
+	appendString(outputStream, "\trobotPosition=");
 	printPoint(outputStream, &(context->robotPosition), "");
 
-	// current location
-	appendString(outputStream, "\tcurrentLocation=");
+	// nearestLocation
+	appendString(outputStream, "\nearestLocation=");
 	if (context->nearestLocation != NULL) {
 		printLocation(outputStream, context->nearestLocation);
 	}
@@ -34,6 +36,11 @@ void printGameStrategyContext(OutputStream* outputStream, GameStrategyContext* c
 		appendString(outputStream, "NULL");
 	}
 
+	// Robot Position
+	appendString(outputStream, "\topponentRobotPosition=");
+	printPoint(outputStream, &(context->opponentRobotPosition), "");
+
+	// current Target
 	appendString(outputStream, "\n\tcurrentTarget=");
 	if (context->currentTarget != NULL) {
 		printGameTarget(outputStream, context->currentTarget, FALSE);
@@ -42,6 +49,12 @@ void printGameStrategyContext(OutputStream* outputStream, GameStrategyContext* c
 		appendString(outputStream, "NULL");
 	}
 
-
+	// currentTrajectory
+	if (&(context->currentTrajectory) != NULL) {
+		printLocationList(outputStream, "currentTrajectory:", &(context->currentTrajectory));
+	}
+	else {
+		appendString(outputStream, "\n\tcurrentTrajectory=NULL");
+	}
 	println(outputStream);
 }

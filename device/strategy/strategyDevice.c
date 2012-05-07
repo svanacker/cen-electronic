@@ -68,6 +68,7 @@ void deviceStrategyHandleRawData(char header, InputStream* inputStream, OutputSt
 	// Print Gameboard
 	else if (header == COMMAND_PRINT_GAME_BOARD) {
 		OutputStream* debugOutputStream = getOutputStreamLogger(ALWAYS);
+		printStrategyAllDatas(debugOutputStream);
 		printGameboard(debugOutputStream);
         appendAck(outputStream);
         append(outputStream, COMMAND_PRINT_GAME_BOARD);

@@ -7,7 +7,7 @@
 #include "../../robot/strategy/gameTargetList.h"
 
 /** The max limit of game board element. */
-#define MAX_GAME_BOARD_ELEMENT 		30
+#define MAX_GAME_BOARD_ELEMENT 		10
 
 /**
  * Tre struct defining a list of gameBoard Element.
