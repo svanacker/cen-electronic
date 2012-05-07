@@ -10,6 +10,7 @@
 #include "../../drivers/driverTransmitter.h"
 
 #include "../../drivers/motion/motionDriver.h"
+#include "../../drivers/strategy/strategyDriver.h"
 
 #include "../../motion/simple/motion.h"
 
@@ -170,8 +171,9 @@ void homologation2(int color) {
 // ----------------------------------------------------------- Homologation 3 ---------------------------------------------------------
 
 void homologation3(int color) {
+	sendStrategyNextStep();
+	return;
     unsigned int index = getMotionInstructionIndex();
-
     switch (index) {
         case 1:
             takeBullion1(color);

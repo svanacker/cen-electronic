@@ -287,8 +287,8 @@ void initStrategies2012() {
 
 void initStrategiesItems2012() {
 	addGameStrategyItem(&strategy1, &takeBullionFirstStrategyItem, &bullion1Target);
-	/*
 	addGameStrategyItem(&strategy1, &bottle1StrategyItem, &bottle1Target);
+	/*
 	addGameStrategyItem(&strategy1, &bottle2StrategyItem, &bottle2Target);
 	addGameStrategyItem(&strategy1, &cdTakeStrategyItem, &cd4Target);
 	addGameStrategyItem(&strategy1, &bullionRight1StrategyItem, &bullionRight1Target);

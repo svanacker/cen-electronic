@@ -97,6 +97,7 @@
 #include "../../drivers/motion/motionDriver.h"
 #include "../../drivers/motor/md22.h"
 #include "../../drivers/driverTransmitter.h"
+#include "../../drivers/strategy/strategyDriver.h"
 
 // Robot
 #include "../../robot/config/robotConfig.h"
@@ -476,6 +477,10 @@ int main(void) {
 
     // wait for start
 	setInitialPosition(color);
+
+	// notify game strategy
+	sendStrategyConfiguration(configValue);
+
     loopUntilStart(&waitForInstruction);
 
 	// Enable the sonar Status only after start
