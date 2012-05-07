@@ -67,9 +67,23 @@ BOOL handleNotificationFromDispatcher(DriverDataDispatcher* dispatcher) {
         char header = bufferGetFirstChar(inputBuffer);
         int bufferSize = getBufferElementsCount(inputBuffer);
 
+		/*
+		OutputStream* errorOutputStream = getErrorOutputStreamLogger();
+        appendStringAndDec(errorOutputStream, "bufferSize=", bufferSize);
+        appendStringAndDec(errorOutputStream, ", header=", header);
+        println(errorOutputStream);
+		*/
+	
         // find the device corresponding to this header
         const Device* device = deviceDataDispatcherFindDevice(header, bufferSize, DEVICE_MODE_OUTPUT);
-
+		if (device == NULL) {
+			// For strategy device which send informations.
+			device = deviceDataDispatcherFindDevice(header, bufferSize, DEVICE_MODE_INPUT);
+		}
+		if (device == NULL) {
+			return FALSE;
+		}
+		/* TODO : Distinguish the case when there is not enough bufferSize.
         // if the device was not found, we continue
         if (device == NULL) {
             writeError(DEVICE_NOT_FOUND);
@@ -82,6 +96,7 @@ BOOL handleNotificationFromDispatcher(DriverDataDispatcher* dispatcher) {
 
             return FALSE;
         }
+		*/
 
         deviceHandleCallbackRawDataFunction* callbackFunction = device->deviceHandleCallbackRawData;
 

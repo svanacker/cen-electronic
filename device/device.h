@@ -35,7 +35,8 @@ typedef void deviceHandleCallbackRawDataFunction(const Device* device,
 void forwardCallbackRawDataTo(InputStream* inputStream,
 							  OutputStream* outputStream,
 							  const Device* device,
-							  int header);
+							  int header,
+							  int mode);
 
 /**
 * Defines the structure used to describe a device.

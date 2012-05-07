@@ -14,6 +14,7 @@
 #include "../../common/i2c/slave/i2cSlaveSetup.h"
 #include "../../common/i2c/slave/i2cSlaveLink.h"
 
+#include "../../common/io/compositeOutputStream.h"
 #include "../../common/io/filter.h"
 #include "../../common/io/inputStream.h"
 #include "../../common/io/outputStream.h"
@@ -120,6 +121,8 @@ static char driverRequestBufferArray[STRATEGY_BOARD_REQUEST_DRIVER_BUFFER_LENGTH
 static Buffer driverResponseBuffer;
 static char driverResponseBufferArray[STRATEGY_BOARD_RESPONSE_DRIVER_BUFFER_LENGTH];
 
+// compositeOutputStream
+static CompositeOutputStream driverToI2CSlaveAndDebugCompositeOutputStream;
 
 void initDevicesDescriptor() {
 	addLocalDevice(&testDevice, getTestDeviceInterface(), getTestDeviceDescriptor());
@@ -130,31 +133,30 @@ void initDevicesDescriptor() {
 	initDevices(&devices);
 }
 
-/**
- * Redirect to debug output Stream for SIMULATION_MODE
- */
-BOOL redirectDriverToDebug() {
-    InputStream* inputStream = getInputStream(getDriverRequestBuffer());
+void initDriverToI2CSlaveAndDebugCompositeOutputStream(BOOL includeI2C) {
+	initCompositeOutputStream(&driverToI2CSlaveAndDebugCompositeOutputStream);
 
-	// Redirect to debug OutputStream
-	copyInputToOutputStream(inputStream, getOutputStreamLogger(INFO), NULL, COPY_ALL); 
-	println(getOutputStreamLogger(INFO));
+	// UART / DEBUG
+	addOutputStream(&driverToI2CSlaveAndDebugCompositeOutputStream, getOutputStreamLogger(INFO));
 
-	return TRUE;
+	// I2C
+	if (includeI2C) {
+		StreamLink* i2cStreamLink = getI2cStreamLink();
+		Buffer* i2cOutputBuffer = i2cStreamLink->outputBuffer;
+		OutputStream* i2cOutputStream = getOutputStream(i2cOutputBuffer);
+	
+		addOutputStream(&driverToI2CSlaveAndDebugCompositeOutputStream, i2cOutputStream);
+	} 
 }
 
 /**
- * Redirect to I2C output Stream for real case mode
+ * Redirect to debug output Stream for SIMULATION_MODE
  */
-BOOL redirectDriverToI2CSlave() {
-	StreamLink* i2cStreamLink = getI2cStreamLink();
-	Buffer* i2cOutputBuffer = i2cStreamLink->outputBuffer;
-	OutputStream* outputStream = getOutputStream(i2cOutputBuffer);
-	
+BOOL redirectDriverToCompositeOutputStream() {
     InputStream* inputStream = getInputStream(getDriverRequestBuffer());
 
-	// Redirect to I2C outputStream
-	copyInputToOutputStream(inputStream, outputStream, NULL, COPY_ALL); 
+	// Redirect to debug OutputStream
+	copyInputToOutputStream(inputStream, &(driverToI2CSlaveAndDebugCompositeOutputStream.outputStream), NULL, COPY_ALL); 
 
 	return TRUE;
 }
@@ -167,10 +169,10 @@ void initDriversDescriptor() {
     initDrivers(&driverRequestBuffer, &driverRequestBufferArray, STRATEGY_BOARD_REQUEST_DRIVER_BUFFER_LENGTH,
 				&driverResponseBuffer, &driverResponseBufferArray, STRATEGY_BOARD_RESPONSE_DRIVER_BUFFER_LENGTH);
 
+	// Include I2C => TRUE, FALSE, else
+	initDriverToI2CSlaveAndDebugCompositeOutputStream(TRUE);
 	// Redirect driver to I2C Slave (not default behaviour)
-	//setRedirectionTransmitFromDriverRequestBuffer(&redirectDriverToI2CSlave);
-	setRedirectionTransmitFromDriverRequestBuffer(&redirectDriverToDebug);
-
+	setRedirectionTransmitFromDriverRequestBuffer(&redirectDriverToCompositeOutputStream);
 }
 
 void initStrategyBoardIO() {
@@ -239,6 +241,11 @@ int main(void) {
 								&debugOutputStream,
 								&filterRemoveCRLF,
 								NULL);
+
+		if (getStrategyContext()->nextStep) {
+			nextStep();
+			getStrategyContext()->nextStep = FALSE;
+		}	
 	}
 	return (0);
 }

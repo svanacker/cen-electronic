@@ -74,7 +74,8 @@ void deviceStrategyHandleRawData(char header, InputStream* inputStream, OutputSt
 	}
 	// next step
 	else if (header == COMMAND_NEXT_STEP) {
-		nextStep();
+		GameStrategyContext* context = getStrategyContext();
+		context->nextStep = TRUE;
         appendAck(outputStream);
         append(outputStream, COMMAND_NEXT_STEP);
 	}

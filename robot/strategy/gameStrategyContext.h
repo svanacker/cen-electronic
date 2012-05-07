@@ -34,6 +34,8 @@ typedef struct GameStrategyContext {
 	LocationList currentTrajectory;
 	/** Color. */
 	TEAM_COLOR color;
+	/** Go to next Step. */
+	BOOL nextStep;
 } GameStrategyContext;
 
 /**

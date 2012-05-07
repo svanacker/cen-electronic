@@ -63,10 +63,11 @@ void stopDevice(const Device* device) {
 void forwardCallbackRawDataTo(InputStream* inputStream,
         OutputStream* outputStream,
         const Device* device,
-        int header) {
+        int header,
+		int mode) {
     DeviceInterface* deviceInterface = device->interface;
     // Length = data of output from the message and add the length of message (1)
-    int dataLength = deviceInterface->deviceGetInterface(header, DEVICE_MODE_OUTPUT, FALSE) + 1;
+    int dataLength = deviceInterface->deviceGetInterface(header, mode, FALSE) + 1;
 
     copyInputToOutputStream(inputStream, outputStream, NULL, dataLength);
 }

@@ -152,8 +152,8 @@ static OutputStream pcOutputStream;
 static StreamLink pcSerialStreamLink;
 
 // both OutputStream as composite
-static CompositeOutputStream pcAndDebugOutputStream;
-
+static CompositeOutputStream compositePcAndDebugOutputStream;
+static CompositeOutputStream compositeDriverAndDebugOutputStream;
 
 // DRIVERS
 static Buffer driverRequestBuffer;
@@ -232,15 +232,22 @@ OutputStream* getPcOutputStream() {
 void mainBoardCallbackRawData(const Device* device,
         char header,
         InputStream* inputStream) {
+
 //    if (header == NOTIFY_MOTION_STATUS || header == COMMAND_NOTIFY_TEST || header == COMMAND_PLIERS_2011_OPEN) {
     if (header == NOTIFY_MOTION_STATUS || header == COMMAND_NOTIFY_TEST) {
-        forwardCallbackRawDataTo(inputStream, &(pcAndDebugOutputStream.outputStream), device, header);
+        forwardCallbackRawDataTo(inputStream, &(compositePcAndDebugOutputStream.outputStream), device, header, DEVICE_MODE_OUTPUT);
         // ready for next motion instruction Index
         setReadyForNextMotion(TRUE);
-        return;
     }
-    appendString(getOutputStreamLogger(ERROR), "Notification lost:");
-    append(getOutputStreamLogger(ERROR), header);
+	else if (header == COMMAND_MOTION_SPLINE_ABSOLUTE || header == COMMAND_MOTION_SPLINE_RELATIVE) {
+		forwardCallbackRawDataTo(inputStream, &(compositeDriverAndDebugOutputStream.outputStream), device, header, DEVICE_MODE_INPUT);
+		transmitFromDriverRequestBuffer();
+	} 
+	else {
+	    appendString(getOutputStreamLogger(ERROR), "Notification lost:");
+    	copyInputToOutputStream(inputStream, getOutputStreamLogger(ERROR), NULL, COPY_ALL);
+		println(getOutputStreamLogger(ERROR));
+	}
 }
 
 /**
@@ -357,11 +364,6 @@ int main(void) {
             &pcOutputStream,
             SERIAL_PORT_PC);
 
-    // Creates a composite to notify both PC and Debug
-    initCompositeOutputStream(&pcAndDebugOutputStream);
-    addOutputStream(&pcAndDebugOutputStream, &debugOutputStream);
-    addOutputStream(&pcAndDebugOutputStream, &pcOutputStream);
-
     // LCD
     initLCDOutputStream(&lcdOutputStream);
 
@@ -375,6 +377,16 @@ int main(void) {
 
     initDevicesDescriptor();
     initDriversDescriptor();
+
+    // Creates a composite to notify both PC and Debug
+    initCompositeOutputStream(&compositePcAndDebugOutputStream);
+    addOutputStream(&compositePcAndDebugOutputStream, &debugOutputStream);
+    addOutputStream(&compositePcAndDebugOutputStream, &pcOutputStream);
+
+    // Creates a composite to redirect to driverRequest and Debug
+    initCompositeOutputStream(&compositeDriverAndDebugOutputStream);
+    addOutputStream(&compositeDriverAndDebugOutputStream, &debugOutputStream);
+    addOutputStream(&compositeDriverAndDebugOutputStream, getDriverRequestOutputStream());
 
     // Start interruptions
     startTimerList();

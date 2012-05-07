@@ -3,7 +3,7 @@
 
 #include "outputStream.h"
 
-#define MAX_STREAM 3
+#define MAX_STREAM 2
 
 /**
 * Structure defining a composite of streams.

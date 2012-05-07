@@ -10,7 +10,7 @@
 #define COMMAND_PRINT_GAME_BOARD				'G'
 
 /** ask the robot to go to the next step. */	
-#define COMMAND_NEXT_STEP						'n'
+#define COMMAND_NEXT_STEP						'Q'
 
 /**
 * Interface for Device
