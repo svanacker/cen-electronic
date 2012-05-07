@@ -85,7 +85,7 @@ char* getConfigBitString(unsigned char configIndex) {
  */
 void appendStringConfig(OutputStream* outputStream) {
     refreshConfig();
-    unsigned int i;
+    signed int i;
     for (i = CONFIG_BIT_COUNT - 1; i >= 0; i--) {
         char c;
 		if ((config & (1 << i)) > 0) {

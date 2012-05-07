@@ -51,6 +51,7 @@ void showWaitingStart(OutputStream* pcOutputStream) {
     appendString(pcOutputStream, MESSAGE_TO_PC_RESET);
     appendString(getOutputStreamLogger(ALWAYS), "CFG:");
     appendStringConfig(getOutputStreamLogger(ALWAYS));
+	println(getOutputStreamLogger(ALWAYS));
     appendString(getOutputStreamLogger(ALWAYS), "Waiting start:");
 }
 

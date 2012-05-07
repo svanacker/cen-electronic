@@ -154,14 +154,6 @@ static StreamLink pcSerialStreamLink;
 // both OutputStream as composite
 static CompositeOutputStream pcAndDebugOutputStream;
 
-// i2c->Motor
-static DriverDataDispatcher motorI2cDispatcher;
-static char motorBoardInputBufferArray[MAIN_BOARD_LINK_TO_MOTOR_BOARD_BUFFER_LENGTH];
-static Buffer motorBoardInputBuffer;
-static InputStream motorBoardInputStream;
-static OutputStream motorBoardOutputStream;
-
-// DRIVER
 
 // DRIVERS
 static Buffer driverRequestBuffer;
@@ -169,15 +161,14 @@ static char driverRequestBufferArray[MAIN_BOARD_REQUEST_DRIVER_BUFFER_LENGTH];
 static Buffer driverResponseBuffer;
 static char driverResponseBufferArray[MAIN_BOARD_RESPONSE_DRIVER_BUFFER_LENGTH];
 
-// DISPATCHER
+// DISPATCHER I2C
 
-// i2c->Mechanical 1
-/*
-static DriverDataDispatcher mechanical1I2cDispatcher;
-static Buffer mechanical1BoardInputBuffer;
-static InputStream mechanical1BoardInputStream;
-static OutputStream mechanical1BoardOutputStream;
-*/
+// i2c->Motor
+static DriverDataDispatcher motorI2cDispatcher;
+static char motorBoardInputBufferArray[MAIN_BOARD_LINK_TO_MOTOR_BOARD_BUFFER_LENGTH];
+static Buffer motorBoardInputBuffer;
+static InputStream motorBoardInputStream;
+static OutputStream motorBoardOutputStream;
 
 // i2c->Mechanical 2
 static DriverDataDispatcher mechanical2I2cDispatcher;
@@ -186,7 +177,6 @@ static Buffer mechanical2BoardInputBuffer;
 static InputStream mechanical2BoardInputStream;
 static OutputStream mechanical2BoardOutputStream;
 
-
 // i2c->BeaconReceiver
 static DriverDataDispatcher beaconReceiverI2cDispatcher;
 static char beaconReceiverBoardInputBufferArray[MAIN_BOARD_LINK_TO_BEACON_BOARD_BUFFER_LENGTH];
@@ -194,7 +184,7 @@ static Buffer beaconReceiverBoardInputBuffer;
 static InputStream beaconReceiverBoardInputStream;
 static OutputStream beaconReceiverBoardOutputStream;
 
-// i2c->BeaconReceiver
+// i2c->Strategy
 static DriverDataDispatcher strategyI2cDispatcher;
 static char strategyBoardInputBufferArray[MAIN_BOARD_LINK_TO_STRATEGY_BOARD_BUFFER_LENGTH];
 static Buffer strategyBoardInputBuffer;
@@ -293,12 +283,8 @@ void initDevicesDescriptor() {
     addI2CRemoteDevice(&trajectoryDevice, getTrajectoryDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
     addI2CRemoteDevice(&motionDevice, getMotionDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
 
-    // Mechanical Board 1->I2C
-    // addI2CRemoteDevice(&pliersDevice, getPliers2011DeviceInterface(), MECHANICAL_BOARD_1_I2C_ADDRESS);
-
     // Mechanical Board 2->I2C
  	addI2CRemoteDevice(&armDevice, getArm2012DeviceInterface(), MECHANICAL_BOARD_2_I2C_ADDRESS);
-    // addI2CRemoteDevice(&adcDevice, getADCDeviceInterface(), MECHANICAL_BOARD_2_I2C_ADDRESS);
 
     // Beacon Receiver Board->I2C
     addI2CRemoteDevice(&beaconReceiverDevice, getBeaconReceiverDeviceInterface(), BEACON_RECEIVER_I2C_ADDRESS);
@@ -405,17 +391,7 @@ int main(void) {
             &motorBoardInputStream,
             &motorBoardOutputStream,
             MOTOR_BOARD_I2C_ADDRESS);
-
-    // Stream for Mechanical Board 1
-	/*
-    addI2CDriverDataDispatcher(&mechanical1I2cDispatcher,
-            "MECHANICAL_BOARD_1_DISPATCHER",
-            &mechanical1BoardInputBuffer,
-            &mechanical1BoardInputStream,
-            &mechanical1BoardOutputStream,
-            MECHANICAL_BOARD_1_I2C_ADDRESS);
-	*/
-
+	
     // Stream for Mechanical Board 2
     addI2CDriverDataDispatcher(&mechanical2I2cDispatcher,
             "MECHANICAL_BOARD_2_DISPATCHER",

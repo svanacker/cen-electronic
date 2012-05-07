@@ -149,7 +149,7 @@ void initDriversDescriptor() {
 				&driverResponseBuffer, &driverResponseBufferArray, STRATEGY_BOARD_RESPONSE_DRIVER_BUFFER_LENGTH);
 
 	// Redirect driver to I2C Slave (not default behaviour)
-	setRedirectionTransmitFromDriverRequestBuffer(&redirectDriverToI2CSlave);
+	//setRedirectionTransmitFromDriverRequestBuffer(&redirectDriverToI2CSlave);
 }
 
 void initStrategyBoardIO() {
@@ -192,9 +192,7 @@ int main(void) {
 
 	initDriversDescriptor();
 
-	initStrategy2012();
-	initStrategy2012();
-	initStrategy2012();
+	/*
 	printGameTargetList(&debugOutputStream);
 	printGameStrategyList(&debugOutputStream);
 
@@ -211,6 +209,7 @@ int main(void) {
 
 	printGameboard(&debugOutputStream);
 	printGameStrategyContext(&debugOutputStream, getStrategyContext());
+	*/
 
 	/*
 	srand ( time(NULL) );
@@ -220,15 +219,11 @@ int main(void) {
 		appendStringAndDec(&debugOutputStream, "Rand:", value);
 		println(&debugOutputStream);
 	}
-	*/
 
 	while(containsAvailableTarget()) {
 		nextStep();
 	}
-
-	while(1) {
-
-	}
+	*/
 
 	// Init the timers management
 	startTimerList();
