@@ -34,6 +34,7 @@ void printPath(OutputStream* outputStream, Path* path) {
 	appendStringAndDec(outputStream, ", angle1=", path->angle1);
 	appendStringAndDec(outputStream, ", angle2=", path->angle2);
 
+	appendStringAndDec(outputStream, ", accFactor=", path->accelerationFactor);
 	appendStringAndDec(outputStream, ", speedFactor=", path->speedFactor);
 
 	println(outputStream);

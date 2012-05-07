@@ -11,6 +11,16 @@
  */
 static GameStrategyList strategies;
 
+void clearGameStrategies() {
+	int size = strategies.size;
+	int i;
+	for (i = 0; i < size; i++) {
+		GameStrategy* strategy = strategies.strategies[i];
+		clearGameStrategy(strategy);
+	}
+	strategies.size = 0;
+}
+
 void addGameStrategy(GameStrategy* strategy, char* strategyName) {
     unsigned char size = strategies.size;
 	if (size < MAX_STRATEGY) {

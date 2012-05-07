@@ -21,6 +21,11 @@ typedef struct GameTargetActionItem {
 } GameTargetActionItem;
 
 /**
+ * Clear the game target action item.
+ */
+void clearGameTargetActionItem(GameTargetActionItem* targetActionItem);
+
+/**
  * Print the detail of the target action item.
  */
 void printGameTargetActionItem(OutputStream* outputStream, GameTargetActionItem* targetActionItem);

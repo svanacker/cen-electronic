@@ -7,6 +7,10 @@
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
 
+void clearGameStrategy(GameStrategy* gameStrategy) {
+    gameStrategy->size = 0;
+}
+
 void addGameStrategyItem(GameStrategy* gameStrategy,
 						 GameStrategyItem* strategyItem,
 						 GameTarget* target
@@ -18,7 +22,7 @@ void addGameStrategyItem(GameStrategy* gameStrategy,
 	    gameStrategy->size++;
 	}
 	else {
-		writeError(TOO_MUCH_STRATEGIES);
+		writeError(TOO_MUCH_STRATEGY_ITEMS);
     }
 }
 

@@ -44,8 +44,9 @@ void addNavigationPath(  Path* path,
 						 int controlPointDistance2,
 						 int angle1,
 						 int angle2,
-						 int speedFactor) {
-	addPath(&paths, path, location1, location2, cost, controlPointDistance1, controlPointDistance2, angle1, angle2, speedFactor); 
+						 unsigned char accelerationFactor,
+						 unsigned char speedFactor) {
+	addPath(&paths, path, location1, location2, cost, controlPointDistance1, controlPointDistance2, angle1, angle2, accelerationFactor, speedFactor); 
 }
 
 void updateOutgoingPaths(Location* location) {

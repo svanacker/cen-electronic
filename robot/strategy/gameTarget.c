@@ -1,3 +1,5 @@
+#include <stdlib.h>
+
 #include "gameTarget.h"
 
 #include "gameTargetActionList.h"
@@ -6,6 +8,16 @@
 
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
+
+void clearGameTarget(GameTarget* target) {
+	target->name = "?";
+	target->gain = 0;
+	target->available = FALSE;
+	
+	if (&(target->actionList) != NULL) {
+		clearTargetActionList(&(target->actionList));
+	}
+}
 
 void printGameTarget(OutputStream* outputStream, GameTarget* target, BOOL includeItems) {
 	appendString(outputStream, "target:");

@@ -186,6 +186,8 @@ int main(void) {
 	initDriversDescriptor();
 
 	initStrategy2012();
+	initStrategy2012();
+	initStrategy2012();
 	printGameTargetList(&debugOutputStream);
 	printGameStrategyList(&debugOutputStream);
 

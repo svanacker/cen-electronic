@@ -8,6 +8,17 @@
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
 
+void clearTargetActionItemList(GameTargetActionItemList* targetActionItemList) {
+	int i;
+	int size = targetActionItemList->size;
+	for (i = 0; i < size; i++) {
+		GameTargetActionItem* targetActionItem = targetActionItemList->items[i];
+		clearGameTargetActionItem(targetActionItem);
+	}	
+	targetActionItemList->size = 0;
+}
+
+
 void addTargetActionItem(GameTargetActionItemList* targetActionItemList,
 					 GameTargetActionItem* targetActionItem,
 					 GameTargetActionFunction* actionItem,

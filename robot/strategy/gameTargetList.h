@@ -26,6 +26,11 @@ typedef struct {
 GameTargetList* getGameTargetList();
 
 /**
+ * Clear the targets.
+ */
+void clearGameTargets();
+
+/**
  * Add a target to the list.
  * @param target the target to add to the list
  */

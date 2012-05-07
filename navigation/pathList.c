@@ -21,7 +21,8 @@ void addPath(PathList* pathList,
 			 int controlPointDistance2,
 			 int angle1,
 			 int angle2,
-			 int speedFactor) {
+			 unsigned char accelerationFactor,
+			 unsigned char speedFactor) {
 	path->location1 = location1;
 	path->location2 = location2;
 	path->controlPointDistance1 = controlPointDistance1;
@@ -29,6 +30,7 @@ void addPath(PathList* pathList,
 	path->angle1 = angle1;
 	path->angle2 = angle2;
 	path->cost = cost;
+	path->accelerationFactor = accelerationFactor;
 	path->speedFactor = speedFactor;
 	addFilledPath(pathList, path);
 }

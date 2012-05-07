@@ -19,7 +19,7 @@ filter_lib=*.a
 filter_lkr=*.gld
 [CAT_SUBFOLDERS]
 subfolder_src=common.2d;common.cmd;common.delay;common.eeprom;common.error;common.i2c;common.i2c.slave;common.io;common.log;common.math;common.serial;common.string;common.timer;device;device.dispatcher;device.strategy;device.system;device.test;drivers;drivers.dispatcher;drivers.motion;lib;lib.i2c;main;navigation;robot.2012;robot.gameboard;robot.match;robot.strategy;robot.strategy.factor
-subfolder_inc=common;common.2d;common.cmd;common.delay;common.eeprom;common.error;common.i2c;common.i2c.slave;common.io;common.log;common.math;common.serial;common.setup;common.string;common.timer;device;device.dispatcher;device.strategy;device.system;device.test;drivers;drivers.dispatcher;drivers.motion;main;navigation;robot;robot.2012;robot.gameboard;robot.match;robot.strategy;robot.strategy.factor
+subfolder_inc=common;common.2d;common.cmd;common.delay;common.eeprom;common.error;common.i2c;common.i2c.slave;common.io;common.log;common.math;common.serial;common.setup;common.string;common.timer;device;device.dispatcher;device.strategy;device.system;device.test;drivers;drivers.dispatcher;drivers.motion;main;motion.simple;navigation;robot;robot.2012;robot.config;robot.gameboard;robot.match;robot.strategy;robot.strategy.factor
 subfolder_obj=
 subfolder_lib=
 subfolder_lkr=
@@ -191,6 +191,8 @@ file_163=robot.2012
 file_164=robot.match
 file_165=device.strategy
 file_166=device.strategy
+file_167=motion.simple
+file_168=robot.config
 [GENERATED_FILES]
 file_000=no
 file_001=no
@@ -359,6 +361,8 @@ file_163=no
 file_164=no
 file_165=no
 file_166=no
+file_167=no
+file_168=no
 [OTHER_FILES]
 file_000=no
 file_001=no
@@ -527,6 +531,8 @@ file_163=no
 file_164=no
 file_165=no
 file_166=no
+file_167=no
+file_168=no
 [FILE_INFO]
 file_000=common\delay\delay30F.c
 file_001=common\serial\serial.c
@@ -695,6 +701,8 @@ file_163=robot\2012\armDriver2012.h
 file_164=robot\match\teamColor.h
 file_165=device\strategy\strategyDevice.h
 file_166=device\strategy\strategyDeviceInterface.h
+file_167=motion\simple\motion.h
+file_168=robot\config\robotConfig.h
 [SUITE_INFO]
 suite_guid={479DDE59-4D56-455E-855E-FFF59A3DB57E}
 suite_state=

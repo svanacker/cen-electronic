@@ -21,7 +21,9 @@ typedef struct Path {
 	int angle2;
 	/** Cost of the path. */
 	unsigned char cost;
-	/** Speed factor (max = FF, min = 1). */
+	/** AccelerationFactor factor (min = 1, max = 16). */
+	unsigned char accelerationFactor;
+	/** Speed factor (min = 1, max = 16). */
 	unsigned char speedFactor;
 } Path;
 

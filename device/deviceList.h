@@ -15,7 +15,7 @@
 // #define DEVICE_ENABLE_CHANGE_LEVEL
 
 /** The max limit of device list. */
-#define MAX_DEVICE 16
+#define MAX_DEVICE 17
 
 /**
 * Tre struct defining a list

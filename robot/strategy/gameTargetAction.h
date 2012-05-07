@@ -28,6 +28,11 @@ typedef struct GameTargetAction {
 } GameTargetAction;
 
 /**
+ * Clear the targetAction and the items if any.
+ */
+void clearTargetAction(GameTargetAction* targetAction);
+
+/**
  * Print the detail of the target action.
  */
 void printGameTargetAction(OutputStream* outputStream, GameTargetAction* targetAction, BOOL includeItems);

@@ -23,9 +23,14 @@ typedef struct GameStrategy {
 } GameStrategy;
 
 /**
+ * Clear the game Strategy and all items.
+ */
+void clearGameStrategy(GameStrategy* gameStrategy);
+
+/**
  * Add a strategy item to the list.
  * @param strategyItem the strategy item to add to the list
- */
+ */ 
 void addGameStrategyItem(GameStrategy* gameStrategy,
 						 GameStrategyItem* strategyItem,
 						GameTarget* target);

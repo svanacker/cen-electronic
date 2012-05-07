@@ -24,13 +24,12 @@ typedef struct GameStrategyContext {
 	Point robotPosition;
 	/** The nearestLocation of the robot. */
 	Location* nearestLocation;
-	// TODO : Opponent Robot.
+	// Opponent Robot.
+	Point opponentRobotPosition;
 	/** current Target. */
 	GameTarget* currentTarget;
 	/** current Target Action. */
 	GameTargetAction* currentTargetAction;
-	/** Current Target Action Item. */
-	// GameTargetActionItem* currentTargetActionItem;
 	/** current trajectory of the robot. */
 	LocationList currentTrajectory;
 	/** Color. */

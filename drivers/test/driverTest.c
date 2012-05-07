@@ -54,11 +54,11 @@ const char* driverTestGetName() {
 }
 
 static DriverDescriptor descriptor = {
-    TRUE,
+//    TRUE,
     &driverTestInit,
     &driverTestShutDown,
-    &driverTestIsOk,
-    &driverTestGetSoftwareRevision,
+//    &driverTestIsOk,
+//    &driverTestGetSoftwareRevision,
     &driverTestGetName,
 };
 

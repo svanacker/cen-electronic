@@ -16,6 +16,16 @@ GameTargetList* getGameTargetList() {
 	return &targets;
 }
 
+void clearGameTargets() {
+	int i;
+	int size = targets.size;
+	for (i = 0; i < size; i++) {
+		GameTarget* target = targets.targets[i];
+		clearGameTarget(target);
+	}	
+	targets.size = 0;
+}
+
 void addGameTarget(GameTarget* target, char* targetName, int gain, Location* location) {
     unsigned char size = targets.size;
 	if (size < MAX_TARGET) {

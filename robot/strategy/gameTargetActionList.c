@@ -7,6 +7,15 @@
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
 
+void clearTargetActionList(GameTargetActionList* targetActionList) {
+	int i;
+	int size = targetActionList->size;
+	for (i = 0; i < size; i++) {
+		GameTargetAction* targetAction = targetActionList->actions[i];
+		clearTargetAction(targetAction);
+	}
+	targetActionList->size = 0;
+}
 
 void addTargetAction(GameTargetActionList* targetActionList,
 					 GameTargetAction* targetAction,
@@ -37,11 +46,11 @@ int getGameTargetActionCount(GameTargetActionList* targetActionList) {
     return targetActionList->size;
 }
 
-void printGameTargetActionList(OutputStream* outputStream, GameTargetActionList* targets) {
+void printGameTargetActionList(OutputStream* outputStream, GameTargetActionList* targetActionList) {
 	int i;
-	int size = targets->size;
+	int size = targetActionList->size;
 	for (i = 0; i < size; i++) {
-		GameTargetAction* targetAction = targets->actions[i];
+		GameTargetAction* targetAction = targetActionList->actions[i];
 		printGameTargetAction(outputStream, targetAction, TRUE);
 	}
 }

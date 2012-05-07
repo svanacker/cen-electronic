@@ -22,6 +22,10 @@ typedef struct GameTargetActionList {
     unsigned char size;
 } GameTargetActionList;
 
+/**
+ * Clear the target Action and the corresponding items.
+ */
+void clearTargetActionList(GameTargetActionList* targetActionList);
 
 /**
  * Add an action to the target.

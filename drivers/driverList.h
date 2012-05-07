@@ -7,7 +7,7 @@
 #include "../common/io/outputStream.h"
 
 /** The max limit of driver list. */
-#define MAX_DRIVER 5
+#define MAX_DRIVER 3
 
 /**
  * Tre struct defining a list of drivers.

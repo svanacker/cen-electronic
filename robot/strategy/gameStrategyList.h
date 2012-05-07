@@ -19,6 +19,7 @@ typedef struct {
     unsigned char size;
 } GameStrategyList;
 
+void clearGameStrategies();
 
 /**
  * Add a strategy to the list.

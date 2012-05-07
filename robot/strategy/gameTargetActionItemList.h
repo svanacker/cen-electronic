@@ -23,6 +23,11 @@ typedef struct GameTargetActionItemList {
     unsigned char size;
 } GameTargetActionItemList;
 
+/**
+ * Clear the target action item list, and all items.
+ */
+void clearTargetActionItemList(GameTargetActionItemList* targetActionItemList);
+
 // ITERATOR
 
 /**

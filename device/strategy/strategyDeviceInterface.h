@@ -3,6 +3,10 @@
 
 #include "../../device/deviceInterface.h"
 
+#define COMMAND_SET_OPPONENT_ROBOT_POSITION		'y'
+
+#define COMMAND_SET_CONFIG		'Y'
+
 /**
 * Interface for Device
 */

@@ -36,7 +36,8 @@ void addPath(PathList* pathList,
 			 int controlPointDistance2,
 			 int angle1,
 			 int angle2,
-			 int speedFactor);
+			 unsigned char accelerationFactor,
+			 unsigned char speedFactor);
 
 /**
  * Add a path to the list which was already initialized.

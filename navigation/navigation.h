@@ -33,7 +33,8 @@ void addNavigationPath(  Path* path,
 						 int controlPointDistance2,
 						 int angle1,
 						 int angle2,
-						 int speedFactor);
+						 unsigned char accelerationFactor,
+						 unsigned char speedFactor);
 
 /**
  * Computes the path.
