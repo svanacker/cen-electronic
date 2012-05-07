@@ -130,12 +130,31 @@ void initDevicesDescriptor() {
 	initDevices(&devices);
 }
 
-BOOL redirectDriverToI2CSlave() {
+/**
+ * Redirect to debug output Stream for SIMULATION_MODE
+ */
+BOOL redirectDriverToDebug() {
     InputStream* inputStream = getInputStream(getDriverRequestBuffer());
 
-	// Redirect to OutputStream
+	// Redirect to debug OutputStream
 	copyInputToOutputStream(inputStream, getOutputStreamLogger(INFO), NULL, COPY_ALL); 
 	println(getOutputStreamLogger(INFO));
+
+	return TRUE;
+}
+
+/**
+ * Redirect to I2C output Stream for real case mode
+ */
+BOOL redirectDriverToI2CSlave() {
+	StreamLink* i2cStreamLink = getI2cStreamLink();
+	Buffer* i2cOutputBuffer = i2cStreamLink->outputBuffer;
+	OutputStream* outputStream = getOutputStream(i2cOutputBuffer);
+	
+    InputStream* inputStream = getInputStream(getDriverRequestBuffer());
+
+	// Redirect to I2C outputStream
+	copyInputToOutputStream(inputStream, outputStream, NULL, COPY_ALL); 
 
 	return TRUE;
 }
@@ -150,6 +169,8 @@ void initDriversDescriptor() {
 
 	// Redirect driver to I2C Slave (not default behaviour)
 	//setRedirectionTransmitFromDriverRequestBuffer(&redirectDriverToI2CSlave);
+	setRedirectionTransmitFromDriverRequestBuffer(&redirectDriverToDebug);
+
 }
 
 void initStrategyBoardIO() {
@@ -192,37 +213,13 @@ int main(void) {
 
 	initDriversDescriptor();
 
+	// Gameboard initialization : empty at begin
+	gameboardInit();
+	// Defining 2012 specific
+	setGameboardElementsSpecificYearFunction(&addElements2012);
 	/*
 	printGameTargetList(&debugOutputStream);
 	printGameStrategyList(&debugOutputStream);
-
-	addElements2012();
-	GameTargetList* targetList = getGameTargetList();
-	addGameTargetListAsGameboardElements(targetList);
-	addRobotPositionAsGameboardElement(&(getStrategyContext()->robotPosition));
-
-	//int cost = addNavigationLocationsTest2();
-	printNavigationContext(&debugOutputStream);
-	// appendStringAndDec(&debugOutputStream, "cost=", cost);
-
-	getStrategyContext()->gameStrategy = getGameStrategy(0);
-
-	printGameboard(&debugOutputStream);
-	printGameStrategyContext(&debugOutputStream, getStrategyContext());
-	*/
-
-	/*
-	srand ( time(NULL) );
-	int i;
-	for (i = 0; i < 20; i++) {
-		int value = rand();
-		appendStringAndDec(&debugOutputStream, "Rand:", value);
-		println(&debugOutputStream);
-	}
-
-	while(containsAvailableTarget()) {
-		nextStep();
-	}
 	*/
 
 	// Init the timers management

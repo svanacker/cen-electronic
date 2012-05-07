@@ -10,6 +10,10 @@ SV
 
 * Virer les trucs inutiles au niveau informatique genre Cable Ethernet
 * Refaire le support de balise merdique au profit de quelque chose de + dur
+* Gérer les temps de pause au niveau de la stratégie
+
+* Gérer la position du robot lui-même
+* Simuler les actions
 
 Problème au niveau de l'envoie de "'" pour arrêter les servos. Provoque un reboot de la carte alors que | marche correctement.
 

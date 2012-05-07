@@ -6,7 +6,7 @@
 #include "../../device/deviceInterface.h"
 
 const char* getStrategyDeviceName(void) {
-    return "STRATEGY";
+    return "Strategy";
 }
 
 unsigned int getStrategyVersion(void) {
@@ -14,6 +14,7 @@ unsigned int getStrategyVersion(void) {
 }
 
 int deviceStrategyGetInterface(char header, int mode, BOOL fillDeviceArgumentList) {
+	// Robot opponent position
     if (header == COMMAND_SET_OPPONENT_ROBOT_POSITION) {
 		if (mode == DEVICE_MODE_INPUT) {
             if (fillDeviceArgumentList) {
@@ -30,6 +31,7 @@ int deviceStrategyGetInterface(char header, int mode, BOOL fillDeviceArgumentLis
             return 0;
         }
 	}
+	// Config
 	else if (header == COMMAND_SET_CONFIG) {
 		if (mode == DEVICE_MODE_INPUT) {
             if (fillDeviceArgumentList) {
@@ -43,6 +45,22 @@ int deviceStrategyGetInterface(char header, int mode, BOOL fillDeviceArgumentLis
             }
             return 0;
         }
+	}
+	// Print Gameboard
+	else if (header == COMMAND_PRINT_GAME_BOARD) {
+		// same input/output
+		if (fillDeviceArgumentList) {
+			setFunctionNoArgument("printGameBoard");
+		}
+		return 0;
+	}
+	// Next step
+	else if (header == COMMAND_NEXT_STEP) {
+		// same input/output
+		if (fillDeviceArgumentList) {
+			setFunctionNoArgument("nextStep");
+		}
+		return 0;
 	}
 	return DEVICE_HEADER_NOT_HANDLED;
 }

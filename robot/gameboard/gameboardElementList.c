@@ -18,6 +18,10 @@
  */
 static GameboardElementList elements;
 
+void clearGameboardElements() {
+	elements.size = 0;
+}
+
 GameboardElement* addGameboardElement(gameboardElementPrintFunction* printFunction, int* object) {
     unsigned char size = elements.size;
 	if (size < MAX_GAME_BOARD_ELEMENT) {

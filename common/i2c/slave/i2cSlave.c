@@ -26,6 +26,10 @@ void setI2cStreamLink(StreamLink* streamLink) {
     i2cStreamLink = streamLink;
 }
 
+StreamLink* getI2cStreamLink() {
+	return i2cStreamLink;
+}
+
 /**
  * Function Name: SI2C1Interrupt
  * Description : This is the ISR for I2C1 Slave interrupt.

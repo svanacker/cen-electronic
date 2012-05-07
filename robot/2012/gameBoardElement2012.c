@@ -99,8 +99,6 @@ char bullionViolet1Print(int* element, int column, int line) {
 
 
 void addElements2012() {
-	// Static Elements
-	addGameboardElement(&gameboardPrint, NULL);
 	addGameboardElement(&startAreaVioletPrint, NULL);
 	addGameboardElement(&startAreaRedPrint, NULL);
 

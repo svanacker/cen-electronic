@@ -19,6 +19,10 @@ typedef struct {
     unsigned char size;
 } GameboardElementList;
 
+/**
+ * Clear all gameboard elements.
+ */
+void clearGameboardElements();
 
 /**
  * Add a game board element to the list.

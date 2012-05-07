@@ -12,6 +12,11 @@
 #define DEBUG_STRATEGY_HANDLER
 
 /**
+ * Choose the rigth strategy.
+ */
+void setStrategy(int strategyIndex);
+
+/**
  * Returns the strategy context used by the handler.
  */
 GameStrategyContext* getStrategyContext();

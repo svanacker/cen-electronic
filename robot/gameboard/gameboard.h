@@ -15,6 +15,21 @@
 #define GAMEBOARD_MIDDLE_HEIGHT		(GAMEBOARD_HEIGHT / 2)
 
 /**
+ * Define the callback function used for this year to initialized gameboard elements.
+ */
+typedef void gameboardElementsSpecificYearFunction();
+
+/**
+ * Define the callback function used for this year to initialized gameboard elements.
+ */
+void setGameboardElementsSpecificYearFunction(gameboardElementsSpecificYearFunction* function);
+
+/**
+ * Initialization function.
+ */
+void gameboardInit();
+
+/**
  * Print function of the gameboard.
  */
 char gameboardPrint(int* element, int column, int line);

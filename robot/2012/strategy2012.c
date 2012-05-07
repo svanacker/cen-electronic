@@ -277,6 +277,9 @@ void initTargetActionsItems2012() {
 	addTargetActionItem(&bullionLeft1ActionItemList, &bullionLeft1Step4ClosePlierTargetActionItem, &armRightUp, "armRightUp");
 }
 
+/**
+ * @private.
+ */
 void initStrategies2012() {
 	clearGameStrategies();
 	addGameStrategy(&strategy1, "S1");
@@ -284,14 +287,16 @@ void initStrategies2012() {
 
 void initStrategiesItems2012() {
 	addGameStrategyItem(&strategy1, &takeBullionFirstStrategyItem, &bullion1Target);
+	/*
 	addGameStrategyItem(&strategy1, &bottle1StrategyItem, &bottle1Target);
 	addGameStrategyItem(&strategy1, &bottle2StrategyItem, &bottle2Target);
 	addGameStrategyItem(&strategy1, &cdTakeStrategyItem, &cd4Target);
 	addGameStrategyItem(&strategy1, &bullionRight1StrategyItem, &bullionRight1Target);
 	addGameStrategyItem(&strategy1, &bullionLeft1StrategyItem, &bullionLeft1Target);
+	*/
 }
 
-void initStrategy2012() {
+void initStrategy2012(int strategyIndex) {
 	initLocations2012();
 	initPaths2012();
 
@@ -301,4 +306,10 @@ void initStrategy2012() {
 
 	initStrategies2012();
 	initStrategiesItems2012();
+
+	GameStrategy* strategy = getGameStrategy(strategyIndex);
+	getStrategyContext()->gameStrategy = strategy;
+
+	// reinitialize the game board to change elements / targets ...
+	gameboardInit();
 }

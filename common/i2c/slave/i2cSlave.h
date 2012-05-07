@@ -11,15 +11,10 @@ void enabledI2CInterrupt();
 void setI2cStreamLink(StreamLink* astreamLink);
 
 /**
- * Init the debug buffers for I2C.
+ * Returns the stream link.
  */
-void initI2CDebugBuffers(Buffer* aDebugI2cInputBuffer,
-        Buffer* aDebugI2cOutputBuffer);
+StreamLink* getI2cStreamLink();
 
-/*
- * Print the content of the I2C debug buffers.
- */
-void printI2cDebugBuffers();
 
 #endif
 

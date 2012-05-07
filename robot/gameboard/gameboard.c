@@ -5,8 +5,33 @@
 #include "gameboardElement.h"
 #include "gameboardElementList.h"
 
+#include "../../robot/strategy/gameTarget.h"
+#include "../../robot/strategy/gameStrategyContext.h"
+#include "../../robot/strategy/gameStrategyHandler.h"
+
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
+
+static gameboardElementsSpecificYearFunction* initElementsFunction;
+
+void setGameboardElementsSpecificYearFunction(gameboardElementsSpecificYearFunction* function) {
+	initElementsFunction = function;
+}
+
+void gameboardInit() {
+	// reinitialize the game board
+	clearGameboardElements();
+
+	// Static Elements
+	addGameboardElement(&gameboardPrint, NULL);
+
+	if (initElementsFunction != NULL) {
+		initElementsFunction();
+	}
+	GameTargetList* targetList = getGameTargetList();
+	addGameTargetListAsGameboardElements(targetList);
+	addRobotPositionAsGameboardElement(&(getStrategyContext()->robotPosition));
+}
 
 char gameboardPrint(int* element, int column, int line) {
 	if (column == 0 || column == GAMEBOARD_COLUMN_COUNT - 1) {
@@ -19,6 +44,7 @@ char gameboardPrint(int* element, int column, int line) {
 }
 
 void printGameboard(OutputStream* outputStream) {
+	println(outputStream);
 	int line;
 	int column;
 	int element;
