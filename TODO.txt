@@ -10,12 +10,6 @@ SV
 * Mettre un 2ème sonar pour les mouvements en arrières
 * Faire la gestion de la manoeuvre de recalibrage 
 
-
-=> TODO : Implémenter un périphérique GameBoard, qui peut être mis à jour
-==> Position du robot, position de l'adversaire en ASCII
-
-
-
 Problème au niveau de l'envoie de "'" pour arrêter les servos. Provoque un reboot de la carte alors que | marche correctement.
 
 - Installer GIT sur la carte mère embarquée du PC

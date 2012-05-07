@@ -15,6 +15,7 @@
 
 #include "../../device/device.h"
 
+#include "../../robot/config/robotConfig.h"
 #include "../../robot/config/robotConfigDevice.h"
 
 static int matchStarted = FALSE;

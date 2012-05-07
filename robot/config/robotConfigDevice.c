@@ -1,3 +1,4 @@
+#include "robotConfig.h"
 #include "robotConfigDevice.h"
 #include "robotConfigDeviceInterface.h"
 
@@ -11,6 +12,9 @@
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
 
+#include "../../device/device.h"
+
+#include "../../drivers/driver.h"
 #include "../../drivers/io/pcf8574.h"
 
 /** Config is a 16 bit value */

@@ -66,6 +66,10 @@
 #include "../../device/system/systemDevice.h"
 #include "../../device/system/systemDeviceInterface.h"
 
+// System
+#include "../../device/strategy/strategyDevice.h"
+#include "../../device/strategy/strategyDeviceInterface.h"
+
 #include "../../drivers/driver.h"
 #include "../../drivers/driverTransmitter.h"
 #include "../../drivers/driverList.h"
@@ -107,6 +111,7 @@ static StreamLink i2cSerialStreamLink;
 // devices
 static Device testDevice;
 static Device systemDevice;
+static Device strategyDevice;
 
 
 // DRIVERS
@@ -119,6 +124,8 @@ static char driverResponseBufferArray[STRATEGY_BOARD_RESPONSE_DRIVER_BUFFER_LENG
 void initDevicesDescriptor() {
 	addLocalDevice(&testDevice, getTestDeviceInterface(), getTestDeviceDescriptor());
 	addLocalDevice(&systemDevice, getSystemDeviceInterface(), getSystemDeviceDescriptor());
+
+	addLocalDevice(&strategyDevice, getStrategyDeviceInterface(), getStrategyDeviceDescriptor());
 
 	initDevices(&devices);
 }

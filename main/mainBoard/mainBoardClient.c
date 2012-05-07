@@ -79,6 +79,10 @@
 #include "../../device/sonar/sonarDevice.h"
 #include "../../device/sonar/sonarDeviceInterface.h"
 
+// Strategy
+#include "../../device/strategy/strategyDevice.h"
+#include "../../device/strategy/strategyDeviceInterface.h"
+
 // Specific 2011
 #include "../../device/adc/adcDeviceInterface.h"
 
@@ -95,6 +99,7 @@
 #include "../../drivers/driverTransmitter.h"
 
 // Robot
+#include "../../robot/config/robotConfig.h"
 #include "../../robot/config/robotConfigDevice.h"
 #include "../../robot/config/robotConfigDeviceInterface.h"
 #include "../../robot/match/startMatchDetectorDevice.h"
@@ -204,10 +209,10 @@ static LogHandler debugSerialLogHandler;
 static LogHandler lcdLogHandler;
 
 // Devices
-static Device testDevice;
+// static Device testDevice;
 static Device systemDevice;
 static Device lcdDevice;
-static Device servoDevice;
+// static Device servoDevice;
 static Device robotConfigDevice;
 static Device startMatchDetectorDevice;
 static Device endMatchDetectorDevice;
@@ -220,6 +225,8 @@ static Device codersDevice;
 static Device trajectoryDevice;
 static Device motionDevice;
 static Device beaconReceiverDevice;
+static Device strategyDevice;
+
 
 // Specific 2012
 static Device armDevice;
@@ -266,13 +273,13 @@ void initDriversDescriptor() {
  */
 void initDevicesDescriptor() {
     // Test & System
-    addI2CRemoteDevice(&testDevice, getTestDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
+    // addI2CRemoteDevice(&testDevice, getTestDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
     addLocalDevice(&systemDevice, getSystemDeviceInterface(), getSystemDeviceDescriptor());
     setPicName("MAIN BOARD");
 
     // Local
     addLocalDevice(&lcdDevice, getLCDDeviceInterface(), getLCDDeviceDescriptor());
-    addLocalDevice(&servoDevice, getServoDeviceInterface(), getServoDeviceDescriptor());
+    // addLocalDevice(&servoDevice, getServoDeviceInterface(), getServoDeviceDescriptor());
     addLocalDevice(&robotConfigDevice, getRobotConfigDeviceInterface(), getRobotConfigDeviceDescriptor());
     addLocalDevice(&startMatchDetectorDevice, getStartMatchDetectorDeviceInterface(), getStartMatchDetectorDeviceDescriptor());
     addLocalDevice(&endMatchDetectorDevice, getEndMatchDetectorDeviceInterface(), getEndMatchDetectorDeviceDescriptor());
@@ -297,7 +304,7 @@ void initDevicesDescriptor() {
     addI2CRemoteDevice(&beaconReceiverDevice, getBeaconReceiverDeviceInterface(), BEACON_RECEIVER_I2C_ADDRESS);
 
     // Strategy Board->I2C
-    // addI2CRemoteDevice(&strategyDevice, getStrategyBoardDeviceInterface(), STRATEGY_I2C_ADDRESS);
+    addI2CRemoteDevice(&strategyDevice, getStrategyDeviceInterface(), STRATEGY_BOARD_I2C_ADDRESS);
 
 
     // Init the devices
@@ -305,7 +312,7 @@ void initDevicesDescriptor() {
 
     // Manage the callback notification
     trajectoryDevice.deviceHandleCallbackRawData = &mainBoardCallbackRawData;
-    testDevice.deviceHandleCallbackRawData = &mainBoardCallbackRawData;
+    // testDevice.deviceHandleCallbackRawData = &mainBoardCallbackRawData;
     motionDevice.deviceHandleCallbackRawData = &mainBoardCallbackRawData;
 
     // printDeviceListUsage(getOutputStreamLogger(INFO));
