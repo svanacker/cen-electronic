@@ -1,6 +1,7 @@
 #ifndef GAME_STRATEGY_HANDLER
 #define GAME_STRATEGY_HANDLER
 
+#include "../../navigation/location.h"
 #include "../../navigation/path.h"
 
 #include "gameStrategyContext.h"
@@ -26,10 +27,17 @@ GameStrategyContext* getStrategyContext();
  */
 void nextStep();
 
+// MOTION
+
 /**
  * Ask to follow a path.
  */
 void motionFollowPath(Path* path);
+
+void motionGoLocation(Location* location, 
+					int angle,
+					int controlPointDistance1, int controlPointDistance2,
+					int accelerationFactor, int speedFactor );
 
 
 #endif

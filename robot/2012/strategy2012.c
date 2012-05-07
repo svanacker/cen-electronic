@@ -5,6 +5,9 @@
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
 
+#include "../../common/log/logger.h"
+#include "../../common/log/logLevel.h"
+
 #include "../../navigation/locationList.h"
 #include "../../navigation/path.h"
 #include "../../navigation/pathList.h"
@@ -32,16 +35,18 @@ static Location bottle1Location;
 static Location bottle2Location;
 static Location cdTakeLocation;
 static Location dropZone1Location;
-static Location cleanMiddle1Location;
-// static Location rightBullionLocation;
+// static Location cleanMiddle1Location;
+static Location bullionRight1Location;
 
 // Paths
-static Path startAreaToBullion1;
-static Path bullion1ToBottle1;
-static Path bottle1ToBottle2;
-static Path bottle2ToCD;
-static Path cdToDropZone1;
-static Path dropZone1ToBullionMiddle1;
+static Path startAreaToBullion1Path;
+static Path bullion1ToBottle1Path;
+static Path bottle1ToBottle2Path;
+static Path bottle2ToCDPath;
+static Path cdToDropZone1Path;
+static Path dropZone1ToBullionMiddle1Path;
+static Path bullion1ToBullionRight1Path;
+//static Path bullion1ToBullionMiddle1;
 /*
 static Path bullionMiddle1ToRightBullion1;
 static Path rightBullion1ToDropZone1;
@@ -144,24 +149,31 @@ void setColor(TEAM_COLOR color) {
 
 void initLocations2012() {
 	clearLocationList(getNavigationLocationList());
+
 	addNavigationLocation(&startAreaLocation, START_AREA, START_AREA_X, START_AREA_Y);
 	addNavigationLocation(&bullion1Location, BULLION_1, BULLION_1_X, BULLION_1_Y);
 	addNavigationLocation(&bottle1Location, BOTTLE_1, BOTTLE_1_X, BOTTLE_1_Y);
 	addNavigationLocation(&bottle2Location, BOTTLE_2, BOTTLE_2_X, BOTTLE_2_Y);
 	addNavigationLocation(&cdTakeLocation, CD_TAKE, CD_TAKE_X, CD_TAKE_Y);
 	addNavigationLocation(&dropZone1Location, DROP_ZONE_1, DROP_ZONE_1_X, DROP_ZONE_1_Y);
-	addNavigationLocation(&cleanMiddle1Location, CLEAN_MIDDLE_BULLION_1, CLEAN_MIDDLE_BULLION_1_X, CLEAN_MIDDLE_BULLION_1_Y); 
+	// addNavigationLocation(&cleanMiddle1Location, CLEAN_MIDDLE_BULLION_1, CLEAN_MIDDLE_BULLION_1_X, CLEAN_MIDDLE_BULLION_1_Y); 
+	addNavigationLocation(&bullionRight1Location, BULLION_RIGHT_1, BULLION_RIGHT_1_X, BULLION_RIGHT_1_Y); 
+
 }
 
 void initPaths2012() {
 	clearPathList(getNavigationPathList());
-	addNavigationPath(&startAreaToBullion1, &startAreaLocation, &bullion1Location, START_AREA_TO_BULLION_1_COST,  0x40, 0x40, 0x02A3, ANGLE_NEG_90, START_AREA_TO_BULLION_1_SPEED_FACTOR, START_AREA_TO_BULLION_1_ACCELERATION_FACTOR); 
-	addNavigationPath(&bullion1ToBottle1, &bullion1Location, &bottle1Location, BULLION_1_TO_BOTTLE_1_COST, 0xEC, 0xC0, ANGLE_NEG_90, ANGLE_180, BULLION_1_TO_BOTTLE_1_SPEED_FACTOR, BULLION_1_TO_BOTTLE_1_ACCELERATION_FACTOR);
-	addNavigationPath(&bottle1ToBottle2, &bottle1Location, &bottle2Location, BOTTLE_1_TO_BOTTLE_2_COST, 0x57, 0x0A, ANGLE_180, 0, BOTTLE_1_TO_BOTTLE_2_SPEED_FACTOR, BOTTLE_1_TO_BOTTLE_2_ACCELERATION_FACTOR);
-	addNavigationPath(&bottle2ToCD, &bottle2Location, &cdTakeLocation, BOTTLE_2_TO_CD_COST, 0x1B, 0x30, 0, 0xFAF6, BOTTLE_2_TO_CD_SPEED_FACTOR, BOTTLE_2_TO_CD_ACCELERATION_FACTOR);
-	addNavigationPath(&cdToDropZone1, &cdTakeLocation, &dropZone1Location, CD_TO_DROP_ZONE_1_COST, 0x11, 0x26, 0xFAF6, ANGLE_NEG_90, CD_TO_DROP_ZONE_1_SPEED_FACTOR, CD_TO_DROP_ZONE_1_ACCELERATION_FACTOR);
+
+	addNavigationPath(&startAreaToBullion1Path, &startAreaLocation, &bullion1Location, START_AREA_TO_BULLION_1_COST,  0x40, 0x40, 0x02A3, ANGLE_NEG_90, START_AREA_TO_BULLION_1_SPEED_FACTOR, START_AREA_TO_BULLION_1_ACCELERATION_FACTOR); 
+	addNavigationPath(&bullion1ToBottle1Path, &bullion1Location, &bottle1Location, BULLION_1_TO_BOTTLE_1_COST, 0xEC, 0xC0, ANGLE_NEG_90, ANGLE_180, BULLION_1_TO_BOTTLE_1_SPEED_FACTOR, BULLION_1_TO_BOTTLE_1_ACCELERATION_FACTOR);
+	addNavigationPath(&bottle1ToBottle2Path, &bottle1Location, &bottle2Location, BOTTLE_1_TO_BOTTLE_2_COST, 0x57, 0x0A, ANGLE_180, 0, BOTTLE_1_TO_BOTTLE_2_SPEED_FACTOR, BOTTLE_1_TO_BOTTLE_2_ACCELERATION_FACTOR);
+	addNavigationPath(&bottle2ToCDPath, &bottle2Location, &cdTakeLocation, BOTTLE_2_TO_CD_COST, 0x1B, 0x30, 0, 0xFAF6, BOTTLE_2_TO_CD_SPEED_FACTOR, BOTTLE_2_TO_CD_ACCELERATION_FACTOR);
+	addNavigationPath(&cdToDropZone1Path, &cdTakeLocation, &dropZone1Location, CD_TO_DROP_ZONE_1_COST, 0x11, 0x26, 0xFAF6, ANGLE_NEG_90, CD_TO_DROP_ZONE_1_SPEED_FACTOR, CD_TO_DROP_ZONE_1_ACCELERATION_FACTOR);
 	// TODO : Check value
-	addNavigationPath(&dropZone1ToBullionMiddle1, &dropZone1Location, &cleanMiddle1Location, DROP_ZONE_1_TO_MIDDLE_BULLION_1_COST, 0x01, 0x01, ANGLE_NEG_90, ANGLE_NEG_90, DROP_ZONE_1_TO_MIDDLE_BULLION_1_SPEED_FACTOR, DROP_ZONE_1_TO_MIDDLE_BULLION_1_ACCELERATION_FACTOR); 
+	// addNavigationPath(&dropZone1ToBullionMiddle1Path, &dropZone1Location, &cleanMiddle1Location, DROP_ZONE_1_TO_MIDDLE_BULLION_1_COST, 0xF0, 0xF0, ANGLE_NEG_90, ANGLE_NEG_90, DROP_ZONE_1_TO_MIDDLE_BULLION_1_SPEED_FACTOR, DROP_ZONE_1_TO_MIDDLE_BULLION_1_ACCELERATION_FACTOR); 
+	//addNavigationPath(&bullion1ToBullionMiddle1, &bullion1Location, &cleanMiddle1Location, BULLION_1_TO_MIDDLE_BULLION_1_COST, 0xF0, 0xF0, ANGLE_NEG_90, ANGLE_NEG_90, BULLION_1_TO_MIDDLE_BULLION_1_SPEED_FACTOR, BULLION_1_TO_MIDDLE_BULLION_1_ACCELERATION_FACTOR); 
+	addNavigationPath(&bullion1ToBullionRight1Path, &bullion1Location, &bullionRight1Location, BULLION_1_TO_MIDDLE_BULLION_1_COST, 0xB0, 0x80, ANGLE_NEG_90, ANGLE_NEG_90, BULLION_1_TO_BULLION_RIGHT_1_SPEED_FACTOR, BULLION_1_TO_BULLION_RIGHT_1_ACCELERATION_FACTOR); 
+
 }
 
 void initTargets2012() {
@@ -171,8 +183,9 @@ void initTargets2012() {
 	addGameTarget(&bottle1Target, BOTTLE_1, BOTTLE_GAIN, &bottle1Location);
 	addGameTarget(&bottle2Target, BOTTLE_2, BOTTLE_GAIN, &bottle2Location);
 	addGameTarget(&cd4Target, CD_TAKE, CD_4_GAIN, &cdTakeLocation);
-	addGameTarget(&bullionRight1Target, BULLION_RIGHT_1, BULLION_GAIN, &cleanMiddle1Location);
-	addGameTarget(&bullionLeft1Target, BULLION_LEFT_1, BULLION_GAIN, &cleanMiddle1Location);
+	//addGameTarget(&bullionRight1Target, BULLION_RIGHT_1, BULLION_GAIN, &cleanMiddle1Location);
+	addGameTarget(&bullionRight1Target, BULLION_RIGHT_1, BULLION_GAIN, &bullionRight1Location);
+	// addGameTarget(&bullionLeft1Target, BULLION_LEFT_1, BULLION_GAIN, &cleanMiddle1Location);
 	/*
 	addGameTarget(&bullionRight2Target, BULLION_RIGHT_2, BULLION_GAIN);
 	addGameTarget(&bullionLeft2Target, BULLION_LEFT_2, BULLION_GAIN);
@@ -221,28 +234,29 @@ void armRightDown() {
 // CD ActionItem
 
 void cdTakeStep1() {
-	motionFollowPath(&bottle2ToCD);
+	motionFollowPath(&bottle2ToCDPath);
 }
 
 void cdTakeStep2() {
-	motionFollowPath(&cdToDropZone1);
+	motionFollowPath(&cdToDropZone1Path);
 }
 
 // Bullion Right 1 ActionItem
 
-void bullionRight1Step1Back() {
-	// TODO
-}
-
 void bullionRight1Step3GoToDropZone() {
-	// TODO
+	motionGoLocation(&bullion1Location,
+					 ANGLE_NEG_90, 
+					0x78, 0x40,
+					MOTION_ACCELERATION_FACTOR_LOW, MOTION_SPEED_FACTOR_LOW);
 }
 
 // Bullion Left 1 ActionItem
 
+/*
 void bullionLeft1Step1Back() {
 	// TODO
 }
+*/
 
 void bullionLeft1Step3GoToDropZone() {
 	// TODO
@@ -254,9 +268,13 @@ void initTargetActions2012() {
 	addTargetAction(&(bottle1Target.actionList), &bottle1TargetAction, &bottle1Location, &bottle1Location, 2, NULL);
 	addTargetAction(&(bottle2Target.actionList), &bottle2TargetAction, &bottle2Location, &bottle2Location, 3, NULL);
 	addTargetAction(&(cd4Target.actionList), &cdTakeTargetAction, &bottle2Location, &dropZone1Location, 4, &cdTakeTargetActionItemList);
-	addTargetAction(&(bullionRight1Target.actionList), &bullionRight1TargetAction, &cleanMiddle1Location, &dropZone1Location, 5, &bullionRight1ActionItemList);
-	addTargetAction(&(bullionLeft1Target.actionList), &bullionLeft1TargetAction, &cleanMiddle1Location, &dropZone1Location, 6, &bullionLeft1ActionItemList);
 
+	// MIDDLE 
+	// addTargetAction(&(bullionRight1Target.actionList), &bullionRight1TargetAction, &cleanMiddle1Location, &dropZone1Location, 5, &bullionRight1ActionItemList);
+	// addTargetAction(&(bullionLeft1Target.actionList), &bullionLeft1TargetAction, &cleanMiddle1Location, &dropZone1Location, 6, &bullionLeft1ActionItemList);
+
+	// BULLION RIGHT 1
+	addTargetAction(&(bullionRight1Target.actionList), &bullionRight1TargetAction, &bullionRight1Location, &bullion1Location, 5, &bullionRight1ActionItemList);
 }
 
 void initTargetActionsItems2012() {
@@ -265,16 +283,16 @@ void initTargetActionsItems2012() {
 	addTargetActionItem(&cdTakeTargetActionItemList, &cdTakeStep2TargetActionItem, &cdTakeStep2, "cdTakeStep2");
 
 	// RIGHT BULLION 1
-	addTargetActionItem(&bullionRight1ActionItemList, &bullionRight1Step1BackTargetActionItem, &bullionRight1Step1Back, "bullionRight1Step1Back");
-	addTargetActionItem(&bullionRight1ActionItemList, &bullionRight1Step2OpenPlierTargetActionItem, &armLeftDown, "armLeftDown");
+	// addTargetActionItem(&bullionRight1ActionItemList, &bullionRight1Step1BackTargetActionItem, &bullionRight1Step1Back, "bullionRight1Step1Back");
+	addTargetActionItem(&bullionRight1ActionItemList, &bullionRight1Step2OpenPlierTargetActionItem, &armRightDown, "armRightDown");
 	addTargetActionItem(&bullionRight1ActionItemList, &bullionRight1Step3GoTargetActionItem, &bullionRight1Step3GoToDropZone, "bullionRight1GoToDropZone1");
-	addTargetActionItem(&bullionRight1ActionItemList, &bullionRight1Step4ClosePlierTargetActionItem, &armLeftUp, "armLeftUp");
+	addTargetActionItem(&bullionRight1ActionItemList, &bullionRight1Step4ClosePlierTargetActionItem, &armRightUp, "armRightUp");
 
 	// LEFT BULLION 1
-	addTargetActionItem(&bullionLeft1ActionItemList, &bullionLeft1Step1BackTargetActionItem, &bullionLeft1Step1Back, "bullionLeft1Step1Back");
-	addTargetActionItem(&bullionLeft1ActionItemList, &bullionLeft1Step2OpenPlierTargetActionItem, &armRightDown, "armRightDown");
-	addTargetActionItem(&bullionLeft1ActionItemList, &bullionLeft1Step3GoTargetActionItem, &bullionLeft1Step3GoToDropZone, "bullionLeft1GoToDropZone1");
-	addTargetActionItem(&bullionLeft1ActionItemList, &bullionLeft1Step4ClosePlierTargetActionItem, &armRightUp, "armRightUp");
+	// addTargetActionItem(&bullionLeft1ActionItemList, &bullionLeft1Step1BackTargetActionItem, &bullionLeft1Step1Back, "bullionLeft1Step1Back");
+	// addTargetActionItem(&bullionLeft1ActionItemList, &bullionLeft1Step2OpenPlierTargetActionItem, &armLeftDown, "armLeftDown");
+	// addTargetActionItem(&bullionLeft1ActionItemList, &bullionLeft1Step3GoTargetActionItem, &bullionLeft1Step3GoToDropZone, "bullionLeft1GoToDropZone1");
+	// addTargetActionItem(&bullionLeft1ActionItemList, &bullionLeft1Step4ClosePlierTargetActionItem, &armLeftUp, "armLeftUp");
 }
 
 /**
@@ -287,13 +305,11 @@ void initStrategies2012() {
 
 void initStrategiesItems2012() {
 	addGameStrategyItem(&strategy1, &takeBullionFirstStrategyItem, &bullion1Target);
-	addGameStrategyItem(&strategy1, &bottle1StrategyItem, &bottle1Target);
-	/*
-	addGameStrategyItem(&strategy1, &bottle2StrategyItem, &bottle2Target);
-	addGameStrategyItem(&strategy1, &cdTakeStrategyItem, &cd4Target);
+	// addGameStrategyItem(&strategy1, &bottle1StrategyItem, &bottle1Target);
+	// addGameStrategyItem(&strategy1, &bottle2StrategyItem, &bottle2Target);
+	// addGameStrategyItem(&strategy1, &cdTakeStrategyItem, &cd4Target);
 	addGameStrategyItem(&strategy1, &bullionRight1StrategyItem, &bullionRight1Target);
-	addGameStrategyItem(&strategy1, &bullionLeft1StrategyItem, &bullionLeft1Target);
-	*/
+	// addGameStrategyItem(&strategy1, &bullionLeft1StrategyItem, &bullionLeft1Target);
 }
 
 void initStrategy2012(int strategyIndex) {
@@ -309,6 +325,13 @@ void initStrategy2012(int strategyIndex) {
 
 	GameStrategy* strategy = getGameStrategy(strategyIndex);
 	getStrategyContext()->gameStrategy = strategy;
+
+	OutputStream* debugOutputStream = getOutputStreamLogger(INFO);
+
+	printLocationList(debugOutputStream, "navigationLocationList:", getNavigationLocationList());
+	printPathList(debugOutputStream, "navigationPathList:", getNavigationPathList());
+	printGameTargetList(debugOutputStream);
+	printGameStrategyList(debugOutputStream);
 
 	// reinitialize the game board to change elements / targets ...
 	gameboardInit();

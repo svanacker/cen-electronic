@@ -219,10 +219,6 @@ int main(void) {
 	gameboardInit();
 	// Defining 2012 specific
 	setGameboardElementsSpecificYearFunction(&addElements2012);
-	/*
-	printGameTargetList(&debugOutputStream);
-	printGameStrategyList(&debugOutputStream);
-	*/
 
 	// Init the timers management
 	startTimerList();

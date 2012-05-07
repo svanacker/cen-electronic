@@ -240,9 +240,17 @@ void mainBoardCallbackRawData(const Device* device,
         // ready for next motion instruction Index
         setReadyForNextMotion(TRUE);
     }
+	// When Strategy ask by notification message to go somewhere
 	else if (header == COMMAND_MOTION_SPLINE_ABSOLUTE || header == COMMAND_MOTION_SPLINE_RELATIVE) {
 		forwardCallbackRawDataTo(inputStream, &(compositeDriverAndDebugOutputStream.outputStream), device, header, DEVICE_MODE_INPUT);
 		transmitFromDriverRequestBuffer();
+	} 
+	// When Strategy ask by notification message to arm up or Down
+	else if (header == COMMAND_ARM_2012_UP || header == COMMAND_ARM_2012_DOWN) {
+		forwardCallbackRawDataTo(inputStream, &(compositeDriverAndDebugOutputStream.outputStream), device, header, DEVICE_MODE_INPUT);
+		transmitFromDriverRequestBuffer();
+		// we are ready for next motion
+        setReadyForNextMotion(TRUE);
 	} 
 	else {
 	    appendString(getOutputStreamLogger(ERROR), "Notification lost:");
@@ -308,7 +316,7 @@ void initDevicesDescriptor() {
     trajectoryDevice.deviceHandleCallbackRawData = &mainBoardCallbackRawData;
     // testDevice.deviceHandleCallbackRawData = &mainBoardCallbackRawData;
     motionDevice.deviceHandleCallbackRawData = &mainBoardCallbackRawData;
-
+	armDevice.deviceHandleCallbackRawData = &mainBoardCallbackRawData;
     // printDeviceListUsage(getOutputStreamLogger(INFO));
 }
 

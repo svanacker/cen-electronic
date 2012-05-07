@@ -111,6 +111,27 @@ void executeTargetActions() {
 	}
 }
 
+void motionGoLocation(Location* location, 
+					int angle,
+					int controlPointDistance1, int controlPointDistance2,
+					int accelerationFactor, int speedFactor ) {
+
+	#ifdef DEBUG_STRATEGY_HANDLER
+		appendString(getOutputStreamLogger(DEBUG), "motionGoLocation:goto:");	
+		printLocation(getOutputStreamLogger(DEBUG), location);
+	#endif
+
+	motionDriverBSplineAbsolute(location->x, location->y,
+								angle, 
+								controlPointDistance1, controlPointDistance2,
+								accelerationFactor, speedFactor);
+
+	// Simulate as if the robot goes to the position with a small error
+	#ifdef SIMULATE_ROBOT
+		strategyContext.robotPosition.x = location->x + 1;
+		strategyContext.robotPosition.y = location->y + 1;
+	#endif
+}
 
 void motionFollowPath(Path* path) {
 	Location* location = path->location2;
