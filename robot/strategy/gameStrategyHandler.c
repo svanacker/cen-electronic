@@ -167,7 +167,7 @@ void handleCurrentTrajectory() {
 		// printLocationList(getOutputStreamLogger(DEBUG), "currentTrajectory:", currentTrajectory);	
 	#endif
 
-	if (currentTrajectory->count < 2) {
+	if (currentTrajectory->size < 2) {
 		#ifdef DEBUG_STRATEGY_HANDLER
 			appendString(getOutputStreamLogger(DEBUG), "no more locations to reach\n");	
 		#endif

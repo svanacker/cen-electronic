@@ -26,11 +26,12 @@ struct Location {
 	int tmpCost;
 	/** Temporary information needed by path finding algorithm. */
 	Location* tmpPreviousLocation;
+	/** Temporary information needed by path finding algorithm. */
+	BOOL tmpHandled;
 };
 
 /**
- * Equals function on Location. The equals is based on the
- * name of the location !
+ * Equals function on Location. The equals is based on the name of the location !
  */
 BOOL locationEquals(Location* location1, Location* location2);
 

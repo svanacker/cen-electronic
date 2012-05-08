@@ -37,7 +37,6 @@
 // gameboard
 #include "../../robot/gameboard/gameboard.h"
 #include "../../robot/gameboard/gameboardElement.h"
-#include "../../robot/gameboard/gameboardElementList.h"
 
 
 // navigation
@@ -58,10 +57,6 @@
 #include "../../robot/2012/strategy2012.h"
 
 // -> Devices
-
-// Test
-#include "../../device/test/deviceTest.h"
-#include "../../device/test/deviceTestInterface.h"
 
 // System
 #include "../../device/system/systemDevice.h"
@@ -110,7 +105,6 @@ static Buffer i2cSlaveOutputBuffer;
 static StreamLink i2cSerialStreamLink;
 
 // devices
-static Device testDevice;
 static Device systemDevice;
 static Device strategyDevice;
 
@@ -125,7 +119,6 @@ static char driverResponseBufferArray[STRATEGY_BOARD_RESPONSE_DRIVER_BUFFER_LENG
 static CompositeOutputStream driverToI2CSlaveAndDebugCompositeOutputStream;
 
 void initDevicesDescriptor() {
-	addLocalDevice(&testDevice, getTestDeviceInterface(), getTestDeviceDescriptor());
 	addLocalDevice(&systemDevice, getSystemDeviceInterface(), getSystemDeviceDescriptor());
 
 	addLocalDevice(&strategyDevice, getStrategyDeviceInterface(), getStrategyDeviceDescriptor());
@@ -214,11 +207,6 @@ int main(void) {
 	initDevicesDescriptor();
 
 	initDriversDescriptor();
-
-	// Gameboard initialization : empty at begin
-	gameboardInit();
-	// Defining 2012 specific
-	setGameboardElementsSpecificYearFunction(&addElements2012);
 
 	// Init the timers management
 	startTimerList();

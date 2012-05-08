@@ -14,24 +14,10 @@
 
 void clearLocationList(LocationList* locationList) {
 	locationList->size = 0;
-	locationList->count = 0;
 }
 
 BOOL isEmptyLocationList(LocationList* locationList) {
-	return locationList->count == 0;
-}
-
-void addLocationList(LocationList* targetLocationList, LocationList* sourceLocationList) {
-	int i;
-	unsigned char size = sourceLocationList->size;
-	for (i = 0; i < size; i++) {
-		Location* location = sourceLocationList->locations[i];
-		// We can have hole because of "remove"
-		if (location == NULL) {
-			continue;
-		}
-		addFilledLocation(targetLocationList, location);
-	}	
+	return locationList->size == 0;
 }
 
 void reverseLocationList(LocationList* locationList) {
@@ -52,44 +38,19 @@ void addLocation(LocationList* locationList, Location* location, char* name, int
 	location->x = x;
 	location->y = y;
 	location->tmpCost = NO_COMPUTED_COST;
+	location->tmpHandled = FALSE;
 	addFilledLocation(locationList, location);
 }
 
 void addFilledLocation(LocationList* locationList, Location* location) {
     unsigned char size = locationList->size;
 	if (size < MAX_LOCATION) {
-		// It it's a set, we control if there is no doublon
-		if (locationList->set) {
-			// if the location already exists 
-			if (containsLocation(locationList, location)) {
-				// do nothing
-				return;
-			}
-		}
 	    locationList->locations[size] = location;
 	    locationList->size++;
-		locationList->count++;
 	}
 	else {
 		writeError(TOO_MUCH_LOCATIONS);
     }
-}
-
-void removeLocation(LocationList* locationList, Location* locationToRemove) {
-	int i;
-    unsigned char size = locationList->size;
-	for (i = 0; i < size; i++) {
-		Location* location = locationList->locations[i];
-		// We can have hole because of "remove"
-		if (location == NULL) {
-			continue;
-		}
-		if (locationEquals(location, locationToRemove)) {
-			locationList->locations[i] = NULL;
-			locationList->count--;
-			return;
-		}
-	}
 }
 
 Location* findLocationByName(LocationList* locationList, char* locationName) {
@@ -97,10 +58,6 @@ Location* findLocationByName(LocationList* locationList, char* locationName) {
 	int size = locationList->size;
 	for (i = 0; i < size; i++) {
 		Location* location = locationList->locations[i];
-		// We can have hole because of "remove"
-		if (location == NULL) {
-			continue;
-		}
 		if (stringEquals(locationName, location->name)) {
 			return location;
 		}
@@ -108,7 +65,7 @@ Location* findLocationByName(LocationList* locationList, char* locationName) {
 	return NULL;
 }
 
-BOOL containsLocation(LocationList* locationList, Location* locationToFind) {
+BOOL containsLocation(LocationList* locationList, Location* locationToFind, BOOL handled) {
 	if (locationToFind == NULL) {
 		return FALSE;
 	}	
@@ -116,8 +73,7 @@ BOOL containsLocation(LocationList* locationList, Location* locationToFind) {
 	int size = locationList->size;
 	for (i = 0; i < size; i++) {
 		Location* location = locationList->locations[i];
-		// We can have hole because of "remove"
-		if (location == NULL) {
+		if (location->tmpHandled != handled) {
 			continue;
 		}
 		if (locationEquals(location, locationToFind)) {
@@ -149,61 +105,36 @@ Location* getNearestLocation(LocationList* locationList, int x, int y) {
 }
 
 Location* getLocation(LocationList* locationList, int index) {
-	// optimisation when there is no removed object => index is the same
-	if (locationList->count == locationList->size) {
-    	return locationList->locations[index];
-	}
-	else {
-		int count;
-		int i;
-		int size = locationList->size;
-		for (i = 0; i < size; i++) {
-			Location* location = locationList->locations[i];
-			// We can have hole because of "remove"
-			if (location == NULL) {
-				continue;
-			}
-			if (count == index) {
-				return location;
-			}
-			count++;
-		}
-	}
-	return NULL;
+   	return locationList->locations[index];
 }
 
 void removeFirstLocation(LocationList* locationList) {
-	int i;
 	int size = locationList->size;
-	for (i = 0; i < size; i++) {
-		Location* location = locationList->locations[i];
-		// We can have hole because of "remove"
-		if (location == NULL) {
-			continue;
-		}
-		locationList->locations[i] = NULL;
-		locationList->count--;
+	if (size == 0) {
+		return;
 	}
+	int i;
+	for (i = 1; i < size; i++) {
+		locationList->locations[i - 1] = locationList->locations[i];
+	}
+	size--;
 }
 
 int getLocationCount(LocationList* locationList) {
-    return locationList->count;
+    return locationList->size;
 }
 
 // CLEAR
 
 
-void clearLocationTmpCostsAndPrevious(LocationList* locationList) {
+void clearLocationTmpInfo(LocationList* locationList) {
 	int i;
 	unsigned char size = locationList->size;
 	for (i = 0; i < size; i++) {
 		Location* location = locationList->locations[i];
-		// We can have hole because of "remove"
-		if (location == NULL) {
-			continue;
-		}
 		location->tmpCost = NO_COMPUTED_COST;
 		location->tmpPreviousLocation = NULL;
+		location->tmpHandled = FALSE;
 	}
 }
 
@@ -218,10 +149,6 @@ void printLocationList(OutputStream* outputStream, char* locationListName, Locat
 	println(outputStream);	
 	for (i = 0; i < size; i++) {
 		Location* location = locationList->locations[i];
-		// We can have hole because of "remove"
-		if (location == NULL) {
-			continue;
-		}
 		printLocation(outputStream, location);
 	}
 }

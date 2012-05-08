@@ -5,6 +5,8 @@
 
 #include "../../common/io/outputStream.h"
 
+#define CHAR_NO_DRAW				' '
+
 #define GAMEBOARD_COLUMN_COUNT		40
 #define GAMEBOARD_LINE_COUNT		30
 
@@ -13,21 +15,6 @@
 
 #define GAMEBOARD_MIDDLE_WIDTH		(GAMEBOARD_WIDTH / 2)	
 #define GAMEBOARD_MIDDLE_HEIGHT		(GAMEBOARD_HEIGHT / 2)
-
-/**
- * Define the callback function used for this year to initialized gameboard elements.
- */
-typedef void gameboardElementsSpecificYearFunction();
-
-/**
- * Define the callback function used for this year to initialized gameboard elements.
- */
-void setGameboardElementsSpecificYearFunction(gameboardElementsSpecificYearFunction* function);
-
-/**
- * Initialization function.
- */
-void gameboardInit();
 
 /**
  * Print function of the gameboard.

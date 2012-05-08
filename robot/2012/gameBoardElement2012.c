@@ -7,7 +7,6 @@
 
 #include "../../robot/gameboard/gameboard.h"
 #include "../../robot/gameboard/gameboardElement.h"
-#include "../../robot/gameboard/gameboardElementList.h"
 
 
 
@@ -95,24 +94,4 @@ char totemVioletPrint(int* element, int column, int line) {
 
 char bullionViolet1Print(int* element, int column, int line) {
 	return rectanglePrint(column, line, GAMEBOARD_MIDDLE_WIDTH, 1100.0f, 2, 1, '*');
-}
-
-
-void addElements2012() {
-	addGameboardElement(&startAreaVioletPrint, NULL);
-	addGameboardElement(&startAreaRedPrint, NULL);
-
-	addGameboardElement(&boatVioletPrint, NULL);
-	addGameboardElement(&boatRedPrint, NULL);
-
-	addGameboardElement(&palmTreePrint, NULL);
-
-	addGameboardElement(&totemVioletPrint, NULL);
-	addGameboardElement(&totemRedPrint, NULL);
-
-	addGameboardElement(&bottle1VioletPrint, NULL);
-	addGameboardElement(&bottle2VioletPrint, NULL);
-	addGameboardElement(&bottle1RedPrint, NULL);
-	addGameboardElement(&bottle2RedPrint, NULL);
-
 }

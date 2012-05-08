@@ -1,37 +1,19 @@
 #include <stdlib.h>
 
 #include "gameboard.h"
-
 #include "gameboardElement.h"
-#include "gameboardElementList.h"
+#include "../../robot/2012/gameboardElement2012.h"
+
 
 #include "../../robot/strategy/gameTarget.h"
+#include "../../robot/strategy/gameTargetList.h"
 #include "../../robot/strategy/gameStrategyContext.h"
 #include "../../robot/strategy/gameStrategyHandler.h"
 
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
 
-static gameboardElementsSpecificYearFunction* initElementsFunction;
-
-void setGameboardElementsSpecificYearFunction(gameboardElementsSpecificYearFunction* function) {
-	initElementsFunction = function;
-}
-
-void gameboardInit() {
-	// reinitialize the game board
-	clearGameboardElements();
-
-	// Static Elements
-	addGameboardElement(&gameboardPrint, NULL);
-
-	if (initElementsFunction != NULL) {
-		initElementsFunction();
-	}
-	GameTargetList* targetList = getGameTargetList();
-	addGameTargetListAsGameboardElements(targetList);
-	addRobotPositionAsGameboardElement(&(getStrategyContext()->robotPosition));
-}
+// GAMEBOARD
 
 char gameboardPrint(int* element, int column, int line) {
 	if (column == 0 || column == GAMEBOARD_COLUMN_COUNT - 1) {
@@ -43,27 +25,106 @@ char gameboardPrint(int* element, int column, int line) {
 	return CHAR_NO_DRAW;
 }
 
+// TARGET
+
+char gameTargetPrint(int* element, int column, int line) {
+	GameTarget* target = (GameTarget*) element;
+	Location* location = target->location;
+	char c;
+	if (target->available) {
+		c = 'X';
+	}
+	else {
+		c = 'O';
+	}
+	return pointPrint(column, line, location->x, location->y, c);
+}
+
+char printAllElements(int* element, int column, int line) {
+	// Gameboard
+	char result = gameboardPrint(element, column, line);
+	if (result != CHAR_NO_DRAW) {
+		return result;
+	}
+
+	// Gameboard 2012
+	result = startAreaVioletPrint(element, column, line);
+	if (result != CHAR_NO_DRAW) {
+		return result;
+	}
+	result = startAreaRedPrint(element, column, line);
+	if (result != CHAR_NO_DRAW) {
+		return result;
+	}
+	result = boatVioletPrint(element, column, line);
+	if (result != CHAR_NO_DRAW) {
+		return result;
+	}
+	result = boatRedPrint(element, column, line);
+	if (result != CHAR_NO_DRAW) {
+		return result;
+	}
+	result = bottle1VioletPrint(element, column, line);
+	if (result != CHAR_NO_DRAW) {
+		return result;
+	}
+	result = bottle2VioletPrint(element, column, line);
+	if (result != CHAR_NO_DRAW) {
+		return result;
+	}
+	result = bottle1RedPrint(element, column, line);
+	if (result != CHAR_NO_DRAW) {
+		return result;
+	}
+	result = bottle2RedPrint(element, column, line);
+	if (result != CHAR_NO_DRAW) {
+		return result;
+	}
+	result = palmTreePrint(element, column, line);
+	if (result != CHAR_NO_DRAW) {
+		return result;
+	}
+	result = totemRedPrint(element, column, line);
+	if (result != CHAR_NO_DRAW) {
+		return result;
+	}
+	result = totemVioletPrint(element, column, line);
+	if (result != CHAR_NO_DRAW) {
+		return result;
+	}
+
+	// Targets
+	int i;
+	GameTargetList* gameTargetList = getGameTargetList();
+	unsigned char size = gameTargetList->size;
+	for (i = 0; i < size; i++) {
+		GameTarget* gameTarget = gameTargetList->targets[i];
+
+		result = gameTargetPrint((int*) gameTarget, column, line);
+		if (result != CHAR_NO_DRAW) {
+			return result;
+		}	
+	}	
+
+	return result; 
+}
+
 void printGameboard(OutputStream* outputStream) {
 	println(outputStream);
 	int line;
 	int column;
-	int element;
-	int elementCount = getGameboardElementCount();
 	for (line = 0; line < GAMEBOARD_LINE_COUNT; line++) {
 		for (column = 0; column < GAMEBOARD_COLUMN_COUNT; column++) {
-			char c = CHAR_NO_DRAW;
-			for (element = 0; element < elementCount; element++) {
-				GameboardElement* gameboardElement = getGameboardElement(element);
-				gameboardElementPrintFunction* function = gameboardElement->print;
-				if (function != NULL) {
-					char elementPrintChar = function(gameboardElement->object, column, line);
-					if (elementPrintChar != CHAR_NO_DRAW) {
-						c = elementPrintChar;
-					}
-				}
-			}
+			char c = printAllElements(NULL, column, line);
 			append(outputStream, c);
 		}
 		append(outputStream, '\n');
 	}
+}
+
+// POINT
+
+char robotPositionPrint(int* element, int column, int line) {
+	Point* point = (Point*) element;
+	return pointPrint(column, line, point->x, point->y, 'X');
 }

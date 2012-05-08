@@ -299,7 +299,6 @@ void initStrategy2012(int strategyIndex) {
 	printStrategyAllDatas(debugOutputStream);
 
 	// reinitialize the game board to change elements / targets ...
-	gameboardInit();
 }
 
 void printStrategyAllDatas(OutputStream* outputStream) {

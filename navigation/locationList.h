@@ -17,10 +17,6 @@ typedef struct {
     Location* locations[MAX_LOCATION];
     /** the size of the list. */
     unsigned char size;
-	/** the count of element (which is different from size because of remove). */
-	unsigned char count;
-	/** Indicates that it is a set so we search after doublon. */
-	BOOL set;
 } LocationList;
 
 /**
@@ -31,7 +27,7 @@ void clearLocationList(LocationList* locationList);
 /**
  * Clear the costs and previous of each location of the list.
  */
-void clearLocationTmpCostsAndPrevious(LocationList* locationList);
+void clearLocationTmpInfo(LocationList* locationList);
 
 /**
  * Clear the previous information of each location of the list.
@@ -92,7 +88,7 @@ Location* findLocationByName(LocationList* locationList, char* locationName);
 /**
  * Returns TRUE if the locationList contains the specified location.
  */
-BOOL containsLocation(LocationList* locationList, Location* location);
+BOOL containsLocation(LocationList* locationList, Location* location, BOOL handled);
 
 /**
  * Get the count of locations.

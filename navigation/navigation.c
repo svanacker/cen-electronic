@@ -20,8 +20,6 @@ static LocationList locations;
 static PathList paths;
 
 // private members (avoid using Stack to avoid runtime problems)
-static LocationList unhandledLocationList;
-static LocationList handledLocationList;
 static PathList outgoingPaths;
 
 LocationList* getNavigationLocationList() {
@@ -68,8 +66,7 @@ void updateOutgoingPaths(Location* location) {
 		Location* otherEnd = getOtherEnd(path, location);
 
 		// Ex : handledLocationList = {EF, GH} and other End = B
-		// => handledLocationListContainsLocation = FALSE
-		BOOL handledLocationListContainsLocation = containsLocation(&handledLocationList, otherEnd);
+		BOOL handledLocationListContainsLocation = containsLocation(&locations, otherEnd, TRUE);
 		if (!handledLocationListContainsLocation) {
 			addFilledPath(&outgoingPaths, path);
 		}
@@ -101,15 +98,15 @@ Location* extractMinCostLocation() {
 	// Search the nearest node in terms of cost
 	Location* result = NULL;
 	int minCost = MAX_COST;
-	int size = unhandledLocationList.size;
+	int size = locations.size;
 	int i;
 	for (i = 0; i < size; i++) {
-		Location* location = unhandledLocationList.locations[i];
-		// We can have hole because of remove operation
-		if (location == NULL) {
+		Location* location = locations.locations[i];
+		// we only manage only unhandled location point
+		if (location->tmpHandled) {
 			continue;
 		}
-		#ifdef NAVIGATION_DEBUG
+		#ifdef NAVIGATION_DEBUG 
 			appendString(getOutputStreamLogger(INFO), "\t");
 			printLocation(getOutputStreamLogger(INFO), location);
 		#endif
@@ -125,35 +122,31 @@ Location* extractMinCostLocation() {
 			result = location;
 		}
 	}
-	removeLocation(&unhandledLocationList, result);
-	addFilledLocation(&handledLocationList, result);
+	// mark location as handled
+	result->tmpHandled = TRUE;
 	return result;
 }
 
 int computeBestPath(LocationList* outLocationList, Location* start, Location* end) {
 	int result = 0;
 	clearLocationList(outLocationList);
-	clearLocationList(&unhandledLocationList);
-	clearLocationList(&handledLocationList);
 
 	// not necessary because handledLocationList elements are removed from unhandled to handled.
 	// we can not have doublon.
 	// unhandledLocationList.set = TRUE;	
 	// handledLocationList.set = TRUE;
 
-	clearLocationTmpCostsAndPrevious(&locations);
-
-	addLocationList(&unhandledLocationList, &locations);
-
-	// TODO : clear previous
-
+	clearLocationTmpInfo(&locations);
 	Location* location1;
 
 	start->tmpCost = 0;
 	#ifdef NAVIGATION_DEBUG
 		printLocation(getOutputStreamLogger(INFO), start);
 	#endif
-	while (!isEmptyLocationList(&unhandledLocationList)) {
+
+	int size = locations.size;
+	int i = 0;
+	for (i = 0; i < size; i++) {
 		// search the nearest node of the nodeList
 		#ifdef NAVIGATION_DEBUG
 			appendString(getOutputStreamLogger(INFO), "extractMinCostLocation\n");
