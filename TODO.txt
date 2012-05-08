@@ -1,18 +1,11 @@
 SV
 
 - Tester intensivement la gestion de collision / blocage de roues
-- Faire fonctionner la stratégie au niveau du projet Eclipse
 - Gestion des lasers et de la collision (Zigbee Jennic et le système de balise)
-* => Mettre un interrupteur pour éviter de devoir débrancher au niveau du coordinateur
-* Se poser la question des deviceHandleCallbackRawData et du test != NULL correspondant
 * Mettre un 2ème sonar pour les mouvements en arrières
 * Faire la gestion de la manoeuvre de recalibrage 
-
-* Virer les trucs inutiles au niveau informatique genre Cable Ethernet
-* Refaire le support de balise merdique au profit de quelque chose de + dur
 * Gérer les temps de pause au niveau de la stratégie
-
-* Gérer la position du robot lui-même
+* Gérer la position du robot lui-même (rediriger vers la carte de stratégie)
 * Simuler les actions
 
 Problème au niveau de l'envoie de "'" pour arrêter les servos. Provoque un reboot de la carte alors que | marche correctement.
@@ -20,6 +13,9 @@ Problème au niveau de l'envoie de "'" pour arrêter les servos. Provoque un reboo
 
 NEXT YEAR
 
+* Virer les trucs inutiles au niveau informatique genre Cable Ethernet
+
+- Faire fonctionner la stratégie au niveau du projet Eclipse
 - Implémenter et tester la gestion de l'enchainement des trajectoires
 - Faire un nouveau DriverDataDispatcher spécial UART si c'est possible pour pouvoir relier des cartes en UART en maitre esclave :)
 - Installer GIT sur la carte mère embarquée du PC

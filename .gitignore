@@ -27,3 +27,5 @@ Makefile
 *.X
 *.zip
 *.mcw
+
+build

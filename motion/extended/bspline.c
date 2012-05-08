@@ -40,8 +40,8 @@ void resetBSplineCurve(BSplineCurve* bSplineCurve,
 
 	bSplineCurve->curveLength = 0.0f;
 	
-	bSplineCurve->speedFactor = MOTION_SPEED_FACTOR_MIDDLE;
-	bSplineCurve->accelerationFactor = MOTION_ACCELERATION_FACTOR_MIDDLE;
+	bSplineCurve->speedFactor = MOTION_SPEED_FACTOR_NORMAL;
+	bSplineCurve->accelerationFactor = MOTION_ACCELERATION_FACTOR_NORMAL;
 
 	bSplineCurve->backward = backward;
 }

@@ -211,7 +211,7 @@ void deviceMotionHandleRawData(char header,
 		
 		gotoSimpleSpline(400.0f, 400.0f,
 						 0.75f * PI,
-						MOTION_ACCELERATION_FACTOR_MIDDLE, MOTION_SPEED_FACTOR_MIDDLE,
+						MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL,
 						 200.0f, 200.0f,
 						 TRUE);
         append(outputStream, COMMAND_MOTION_SPLINE_TEST_LEFT);
@@ -221,7 +221,7 @@ void deviceMotionHandleRawData(char header,
 		gotoSimpleSpline(400.0f, -400.0f,
 						 -0.75f * PI,
 						 200.0f, 200.0f, 
-						MOTION_ACCELERATION_FACTOR_MIDDLE, MOTION_SPEED_FACTOR_MIDDLE,
+						MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL,
 						TRUE);
         append(outputStream, COMMAND_MOTION_SPLINE_TEST_RIGHT);
     }
