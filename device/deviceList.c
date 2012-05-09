@@ -23,17 +23,24 @@ DeviceList* getDeviceList() {
     return &deviceList;
 }
 
+void initDeviceList(Device (*deviceListArray)[], unsigned char deviceListSize) {
+	deviceList.devices = deviceListArray;
+	deviceList.maxSize = deviceListSize;
+}
+
 /**
  * @private
  */
-void addDevice(Device* device, DeviceInterface* interface,
+Device* addDevice(DeviceInterface* interface,
         DeviceDescriptor* descriptor,
         int transmitMode,
         int address,
 		char* addressString) {
     unsigned char size = deviceList.size;
-    if (size < MAX_DEVICE) {
-        deviceList.devices[size] = device;
+    if (size < deviceList.maxSize) {
+		Device* device = (Device*) deviceList.devices;
+		device += size * sizeof (int);
+        //deviceList.devices[size] = device;
         // get a device already allocated
         device->interface = interface;
         device->descriptor = descriptor;
@@ -41,8 +48,10 @@ void addDevice(Device* device, DeviceInterface* interface,
         device->address = address;
 		device->addressString = addressString;
         deviceList.size++;
+		return device;
     } else {
         writeError(TOO_MUCH_DEVICES);
+		return NULL;
     }
 }
 
@@ -59,21 +68,23 @@ int getDeviceResponseSize(int commandHeader) {
     return DEVICE_HEADER_NOT_HANDLED;
 }
 
-void addI2CRemoteDevice(Device* device, DeviceInterface* interface, int i2cAddress) {
-    addDevice(device, interface, NULL, TRANSMIT_I2C, i2cAddress, NULL);
+Device* addI2CRemoteDevice(DeviceInterface* interface, int i2cAddress) {
+    return addDevice(interface, NULL, TRANSMIT_I2C, i2cAddress, NULL);
 }
 
-void addZigbeeRemoteDevice(Device* device, DeviceInterface* interface, char* addressString) {
+Device* addZigbeeRemoteDevice(DeviceInterface* interface, char* addressString) {
 	int address = stringChecksum(addressString);
-    addDevice(device, interface, NULL, TRANSMIT_ZIGBEE, address, addressString);
+    return addDevice(interface, NULL, TRANSMIT_ZIGBEE, address, addressString);
 }
 
-void addLocalDevice(Device* device, DeviceInterface* interface, DeviceDescriptor* descriptor) {
-    addDevice(device, interface, descriptor, TRANSMIT_LOCAL, 0, NULL);
+Device* addLocalDevice(DeviceInterface* interface, DeviceDescriptor* descriptor) {
+    return addDevice(interface, descriptor, TRANSMIT_LOCAL, 0, NULL);
 }
 
 Device* getDevice(int index) {
-    return deviceList.devices[index];
+	Device* result = (Device*) deviceList.devices;
+	result += index * sizeof (int);
+	return result;
 }
 
 int getDeviceCount() {

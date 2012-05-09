@@ -74,7 +74,7 @@
 // The port for which we debug (we can send instruction too)
 #include "../../robot/robot.h"
 
-#ifndef MPBLAB_SIMULATION
+#ifndef MPLAB_SIMULATION
 	#define SERIAL_PORT_DEBUG 		SERIAL_PORT_2
 #else
 	// We use the same port for both
@@ -105,9 +105,7 @@ static Buffer i2cSlaveOutputBuffer;
 static StreamLink i2cSerialStreamLink;
 
 // devices
-static Device systemDevice;
-static Device strategyDevice;
-
+static Device deviceListArray[STRATEGY_BOARD_DEVICE_LENGTH];
 
 // DRIVERS
 static Buffer driverRequestBuffer;
@@ -119,9 +117,10 @@ static char driverResponseBufferArray[STRATEGY_BOARD_RESPONSE_DRIVER_BUFFER_LENG
 static CompositeOutputStream driverToI2CSlaveAndDebugCompositeOutputStream;
 
 void initDevicesDescriptor() {
-	addLocalDevice(&systemDevice, getSystemDeviceInterface(), getSystemDeviceDescriptor());
+	initDeviceList(&deviceListArray, STRATEGY_BOARD_DEVICE_LENGTH);
+	addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
 
-	addLocalDevice(&strategyDevice, getStrategyDeviceInterface(), getStrategyDeviceDescriptor());
+	addLocalDevice(getStrategyDeviceInterface(), getStrategyDeviceDescriptor());
 
 	initDevices(&devices);
 }
@@ -207,6 +206,12 @@ int main(void) {
 	initDevicesDescriptor();
 
 	initDriversDescriptor();
+
+	#ifdef MPLAB_SIMULATION
+		while (1) {
+	
+		}
+	#endif
 
 	// Init the timers management
 	startTimerList();

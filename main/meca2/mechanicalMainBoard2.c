@@ -90,22 +90,18 @@ static char i2cSlaveOutputBufferArray[MECA_BOARD_2_I2C_OUTPUT_BUFFER_LENGTH];
 static Buffer i2cSlaveOutputBuffer;
 static StreamLink i2cSerialStreamLink;
 
-// devices
-static Device testDevice;
-static Device systemDevice;
-static Device servoDevice;
-static Device adcDevice;
-
-// Specific 2012
-static Device armDevice;
+// Devices
+static Device deviceListArray[MECHANICAL_BOARD_2_DEVICE_LENGTH];
 
 void initDevicesDescriptor() {
-	addLocalDevice(&testDevice, getTestDeviceInterface(), getTestDeviceDescriptor());
-	addLocalDevice(&systemDevice, getSystemDeviceInterface(), getSystemDeviceDescriptor());
-	addLocalDevice(&servoDevice, getServoDeviceInterface(), getServoDeviceDescriptor());
-	addLocalDevice(&adcDevice, getADCDeviceInterface(), getADCDeviceDescriptor());
+    initDeviceList(&deviceListArray, MECHANICAL_BOARD_2_DEVICE_LENGTH);
 
-	addLocalDevice(&armDevice, getArm2012DeviceInterface(), getArm2012DeviceDescriptor());
+	addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
+	addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
+	addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor());
+	addLocalDevice(getADCDeviceInterface(), getADCDeviceDescriptor());
+
+	addLocalDevice(getArm2012DeviceInterface(), getArm2012DeviceDescriptor());
 
 	initDevices(&devices);
 }

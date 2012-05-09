@@ -86,16 +86,11 @@
 #include "../../test/motion/bspline/bsplinetest.h"
 
 // The port for which we debug (we can send instruction too)
-#ifndef MPBLAB_SIMULATION
+#ifndef MPLAB_SIMULATION
 #define SERIAL_PORT_DEBUG 	SERIAL_PORT_2
 #else
 #define SERIAL_PORT_DEBUG 	SERIAL_PORT_1
 #endif
-
-/**
- * Device list.
- */
-static DeviceList devices;
 
 // serial DEBUG 
 static char debugInputBufferArray[MOTOR_BOARD_IN_BUFFER_LENGTH];
@@ -128,24 +123,20 @@ static Buffer debugI2cOutputBuffer;
  */
 
 // Devices
-static Device motorDevice;
-static Device codersDevice;
-static Device pidDevice;
-static Device motionDevice;
-static Device trajectoryDevice;
-// static Device testDevice;
-static Device systemDevice;
+static Device deviceListArray[MOTOR_BOARD_DEVICE_LENGTH];
 
 void initDevicesDescriptor() {
-    addLocalDevice(&motorDevice, getMotorDeviceInterface(), getMotorDeviceDescriptor());
-    addLocalDevice(&codersDevice, getCodersDeviceInterface(), getCodersDeviceDescriptor());
-    addLocalDevice(&pidDevice, getPIDDeviceInterface(), getPIDDeviceDescriptor());
-    addLocalDevice(&motionDevice, getMotionDeviceInterface(), getMotionDeviceDescriptor());
-    addLocalDevice(&trajectoryDevice, getTrajectoryDeviceInterface(), getTrajectoryDeviceDescriptor());
-    // addLocalDevice(&testDevice, getTestDeviceInterface(), getTestDeviceDescriptor());
-    addLocalDevice(&systemDevice, getSystemDeviceInterface(), getSystemDeviceDescriptor());
+	initDeviceList(&deviceListArray, MOTOR_BOARD_DEVICE_LENGTH);
 
-    initDevices(&devices);
+    addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());
+    addLocalDevice(getCodersDeviceInterface(), getCodersDeviceDescriptor());
+    addLocalDevice(getPIDDeviceInterface(), getPIDDeviceDescriptor());
+    addLocalDevice(getMotionDeviceInterface(), getMotionDeviceDescriptor());
+    addLocalDevice(getTrajectoryDeviceInterface(), getTrajectoryDeviceDescriptor());
+    // addLocalDevice(&testDevice, getTestDeviceInterface(), getTestDeviceDescriptor());
+    addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
+
+    initDevices();
 }
 
 void waitForInstruction() {

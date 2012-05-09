@@ -17,5 +17,7 @@ Buffer* getI2CSlaveOutputBuffer();
 /** Maximal length for Out Buffer length. */
 #define MOTOR_BOARD_OUT_BUFFER_LENGTH	30
 
+// DEVICES
+#define MOTOR_BOARD_DEVICE_LENGTH		7
 
 #endif

@@ -117,7 +117,7 @@ static DriverDataDispatcher beaconReceiverDispatcher;
 static InputStream beaconReceiverInputStream;
 static OutputStream beaconReceiverOutputStream;
 
-#ifndef MPBLAB_SIMULATION
+#ifndef MPLAB_SIMULATION
 	// The port for which we debug (we can send instruction too)
 	#define SERIAL_PORT_DEBUG 	SERIAL_PORT_2
 	
@@ -129,19 +129,11 @@ static OutputStream beaconReceiverOutputStream;
 	#define SERIAL_PORT_ZIGBEE	 	SERIAL_PORT_1
 #endif
 
-
-
 // logs
 static LogHandler serialLogHandler;
 
 // Devices
-static Device testDevice;
-static Device systemDevice;
-static Device pinDevice;
-static Device beaconDevice;
-static Device servoDevice;
-static Device commonBeaconDevice;
-static Device beaconReceiverDevice;
+static Device deviceListArray[BEACON_BOARD_DEVICE_LENGTH];
 
 // events
 static JennicEvent dataEvent;
@@ -203,18 +195,20 @@ void initLaserDetectorSettings() {
  * @private
  */
 void initDevicesDescriptor() {
-    // Get test device for debug purpose
-    addLocalDevice(&testDevice, getTestDeviceInterface(), getTestDeviceDescriptor());
-    addLocalDevice(&systemDevice, getSystemDeviceInterface(), getSystemDeviceDescriptor());
-    addLocalDevice(&pinDevice, getPinDeviceInterface(), getPinDeviceDescriptor());
-    addLocalDevice(&servoDevice, getServoDeviceInterface(), getServoDeviceDescriptor());
+    initDeviceList(&deviceListArray, BEACON_BOARD_DEVICE_LENGTH);
+
+	// Get test device for debug purpose
+    addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
+    addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
+    addLocalDevice(getPinDeviceInterface(), getPinDeviceDescriptor());
+    addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor());
 
 	// Main Device
-	addLocalDevice(&commonBeaconDevice, getCommonBeaconDeviceInterface(), getCommonBeaconDeviceDescriptor());
-    addLocalDevice(&beaconDevice, getLaserBeaconDeviceInterface(), getBeaconDeviceDescriptor());
+	addLocalDevice(getCommonBeaconDeviceInterface(), getCommonBeaconDeviceDescriptor());
+    addLocalDevice(getLaserBeaconDeviceInterface(), getBeaconDeviceDescriptor());
 
 	// Remote
-	addZigbeeRemoteDevice(&beaconReceiverDevice, getBeaconReceiverDeviceInterface(), JENNIC_ROUTER_MAC_ADDRESS);
+	addZigbeeRemoteDevice(getBeaconReceiverDeviceInterface(), JENNIC_ROUTER_MAC_ADDRESS);
 
     initDevices();
 }
@@ -370,7 +364,7 @@ restart:
 	initDriversDescriptor();
 
     // Start interruptions
-	#ifndef MPBLAB_SIMULATION
+	#ifndef MPLAB_SIMULATION
     startTimerList();
 	#endif
 
@@ -389,7 +383,7 @@ restart:
 	// Initialisation is done by serial command	
     initJennic5139Coordinater();
 
-	#ifndef MPBLAB_SIMULATION
+	#ifndef MPLAB_SIMULATION
 	initBeaconIO();
 	#endif
 

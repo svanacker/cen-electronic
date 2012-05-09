@@ -64,7 +64,7 @@ char getc(unsigned char serialPortIndex) {
     return 0;
 }
 
-#ifdef MPBLAB_SIMULATION
+#ifdef MPLAB_SIMULATION
 
 void simulateDelay() {
     int i = 1000;
@@ -79,7 +79,7 @@ void simulateDelay() {
 void putc(unsigned char serialPortIndex, char c) {
     if (serialPortIndex == SERIAL_PORT_1) {
         // waits for transmit buffer to be ready
-#ifndef MPBLAB_SIMULATION
+#ifndef MPLAB_SIMULATION
         while (U1STAbits.UTXBF);
 #else
         simulateDelay();
@@ -87,7 +87,7 @@ void putc(unsigned char serialPortIndex, char c) {
         // transmits char
         WriteUART1(c);
     } else if (serialPortIndex == SERIAL_PORT_2) {
-#ifndef MPBLAB_SIMULATION
+#ifndef MPLAB_SIMULATION
         while (U2STAbits.UTXBF);
 #else
         simulateDelay();

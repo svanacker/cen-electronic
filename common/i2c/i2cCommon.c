@@ -5,7 +5,7 @@
 #include "../../common/commons.h"
 
 void WaitI2C() {
-#ifndef MPBLAB_SIMULATION
+#ifndef MPLAB_SIMULATION
     IdleI2C();
 #endif
 }

@@ -17,7 +17,7 @@ void delayUs(void) {
 }
 
 void delay100us(char uSecond) {
-#ifndef MPBLAB_SIMULATION
+#ifndef MPLAB_SIMULATION
 
     unsigned int i;
 
@@ -35,7 +35,7 @@ void delay100us(char uSecond) {
 
 void delaymSec(unsigned int mSecond) {
     // Simulation mode
-#ifndef MPBLAB_SIMULATION
+#ifndef MPLAB_SIMULATION
     unsigned int i;
 
     while (mSecond != 0) {

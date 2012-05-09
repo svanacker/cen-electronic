@@ -45,7 +45,7 @@ unsigned char readPCFByte(int pcfConfigAddress) {
 
 void refreshConfig(void) {
     // load the value
-#ifdef MPBLAB_SIMULATION
+#ifdef MPLAB_SIMULATION
     config = 0;
     return;
 #endif

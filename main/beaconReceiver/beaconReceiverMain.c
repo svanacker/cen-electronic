@@ -63,7 +63,7 @@
 #include "../../drivers/jennic/jennic5139EventParser.h"
 #include "../../drivers/jennic/jennic5139OutputStream.h"
 
-#ifndef MPBLAB_SIMULATION
+#ifndef MPLAB_SIMULATION
 	// The port for which we debug (we can send instruction too)
 	#define SERIAL_PORT_DEBUG 	SERIAL_PORT_2
 	
@@ -76,12 +76,7 @@
 #endif
 
 // DEVICES
-
-static Device testDevice;
-static Device systemDevice;
-static Device commonBeaconDevice;
-static Device beaconReceiverDevice;
-static Device beaconBoardDevice;
+static Device deviceListArray[BEACON_RECEIVER_DEVICE_LENGTH];
 
 // BUFFER
 
@@ -135,14 +130,15 @@ static JennicEvent connectionResetEvent;
 // static Buffer debugI2cOutputBuffer;
 
 void initDevicesDescriptor() {
+	initDeviceList(&deviceListArray, BEACON_RECEIVER_DEVICE_LENGTH);
 	//addLocalDevice(&testDevice, getTestDeviceInterface(), getTestDeviceDescriptor());
-	addLocalDevice(&systemDevice, getSystemDeviceInterface(), getSystemDeviceDescriptor());
-	addLocalDevice(&commonBeaconDevice, getCommonBeaconDeviceInterface(), getCommonBeaconDeviceDescriptor());
-	addLocalDevice(&beaconReceiverDevice, getBeaconReceiverDeviceInterface(), getBeaconReceiverDeviceDescriptor());
+	addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
+	addLocalDevice(getCommonBeaconDeviceInterface(), getCommonBeaconDeviceDescriptor());
+	addLocalDevice(getBeaconReceiverDeviceInterface(), getBeaconReceiverDeviceDescriptor());
 
 	// Remote
-	addZigbeeRemoteDevice(&beaconBoardDevice, getLaserBeaconDeviceInterface(), JENNIC_COORDINATER_MAC_ADDRESS);
-	addZigbeeRemoteDevice(&testDevice, getTestDeviceInterface(), JENNIC_COORDINATER_MAC_ADDRESS);
+	addZigbeeRemoteDevice(getLaserBeaconDeviceInterface(), JENNIC_COORDINATER_MAC_ADDRESS);
+	addZigbeeRemoteDevice(getTestDeviceInterface(), JENNIC_COORDINATER_MAC_ADDRESS);
 
 	initDevices();
 }
@@ -282,7 +278,7 @@ int runZigBeeReceiver() {
 						            JENNIC_COORDINATER_MAC_ADDRESS);
 
 	// Init the timers management
-	#ifndef MPBLAB_SIMULATION
+	#ifndef MPLAB_SIMULATION
     startTimerList();
 	#endif
 
