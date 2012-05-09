@@ -39,7 +39,7 @@ Device* addDevice(DeviceInterface* interface,
     unsigned char size = deviceList.size;
     if (size < deviceList.maxSize) {
 		Device* device = (Device*) deviceList.devices;
-		device += size * sizeof (int);
+		device += size * sizeof (Device*);
         //deviceList.devices[size] = device;
         // get a device already allocated
         device->interface = interface;
@@ -83,7 +83,7 @@ Device* addLocalDevice(DeviceInterface* interface, DeviceDescriptor* descriptor)
 
 Device* getDevice(int index) {
 	Device* result = (Device*) deviceList.devices;
-	result += index * sizeof (int);
+	result += index * sizeof (Device*);
 	return result;
 }
 

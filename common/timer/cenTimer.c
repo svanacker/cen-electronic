@@ -40,15 +40,3 @@ void unlockTimer(Timer* timer) {
     timer->lock = FALSE;
 }
 
-void initTimer(Timer* timer,
-        int timerCode,
-        unsigned long timeDiviser,
-        interruptTimerCallbackFunc* callback) {
-    timer->timerCode = timerCode;
-    timer->timeDiviser = timeDiviser;
-    timer->callback = callback;
-    timer->enabled = FALSE;
-    timer->lock = FALSE;
-    timer->working = FALSE;
-}
-

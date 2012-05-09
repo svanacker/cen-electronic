@@ -30,9 +30,6 @@
 
 #include "../main/motorBoard/motorBoard.h"
 
-/** The timer struct to check the state of the sonar */
-static Timer robotSonarDetectorDeviceTimer;
-
 /** Use or not the sonar. */
 // static BOOL useSonar;
 
@@ -145,8 +142,7 @@ BOOL notifyObstacle() {
 
 void deviceRobotSonarDetectorInit() {
     // Timer for detector
-    initTimer(&robotSonarDetectorDeviceTimer,
-            ROBOT_SONAR_DETECTOR_TIMER_INDEX,
+    addTimer(ROBOT_SONAR_DETECTOR_TIMER_INDEX,
             TIME_DIVISER_16_HERTZ,
             deviceRobotSonarDetectorCallbackFunc);
     // useSonar = isConfigSet(CONFIG_USE_LASER_MASK);
@@ -154,7 +150,6 @@ void deviceRobotSonarDetectorInit() {
     startSRF02Ranging();
     delaymSec(65);
     getSRF02DistanceEndRanging();
-    addTimer(&robotSonarDetectorDeviceTimer);
     obstacle = FALSE;
     readNextDistanceFlag = FALSE;
 }

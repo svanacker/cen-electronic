@@ -27,7 +27,7 @@ static int currentTimeInSecond = 0;
 static int doNotEnd = 0;
 
 /** The timer struct to detect the end of the match. */
-static Timer endMatchDetectorDeviceTimer;
+static Timer* endMatchDetectorDeviceTimer;
 
 // SPECIFIC PART
 
@@ -72,13 +72,10 @@ BOOL isEnd() {
 // COMMON PART
 
 void initEndMatchDetector() {
-    initTimer(&endMatchDetectorDeviceTimer,
-            END_MATCH_DETECTOR_TIMER_CODE,
-            TIME_DIVISER_1_HERTZ,
-            endMatchDetectorCallbackFunc);
-    addTimer(&endMatchDetectorDeviceTimer);
+    endMatchDetectorDeviceTimer = addTimer(END_MATCH_DETECTOR_TIMER_CODE,
+								            TIME_DIVISER_1_HERTZ,
+								            endMatchDetectorCallbackFunc);
 }
-
 
 void stopEndMatchDetector() {
 

@@ -110,6 +110,9 @@ static char i2cSlaveOutputBufferArray[MOTOR_BOARD_OUT_BUFFER_LENGTH];
 static Buffer i2cSlaveOutputBuffer;
 static StreamLink i2cSlaveStreamLink;
 
+// Timers
+static Timer timerListArray[MOTOR_BOARD_TIMER_LENGTH];
+
 #define MOTOR_BOARD_PIC_NAME "MOTOR BOARD"
 
 Buffer* getI2CSlaveOutputBuffer() {
@@ -152,6 +155,8 @@ void waitForInstruction() {
 
 int runMotorBoard() {
     setPicName(MOTOR_BOARD_PIC_NAME);
+
+	initTimerList(&timerListArray, MOTOR_BOARD_TIMER_LENGTH);
 
     openSerialLink(&debugSerialStreamLink,
             &debugInputBuffer,

@@ -202,6 +202,9 @@ static LogHandler lcdLogHandler;
 // Devices
 static Device deviceListArray[MAIN_BOARD_DEVICE_LENGTH];
 
+// Timers
+static Timer timerListArray[MAIN_BOARD_TIMER_LENGTH];
+
 OutputStream* getPcOutputStream() {
     return &pcOutputStream;
 }
@@ -356,6 +359,8 @@ int main(void) {
 
     // LCD
     initLCDOutputStream(&lcdOutputStream);
+
+	initTimerList(&timerListArray, MAIN_BOARD_TIMER_LENGTH);
 
     // Init the logs
     initLog(DEBUG);

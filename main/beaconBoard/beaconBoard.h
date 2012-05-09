@@ -79,4 +79,10 @@ Buffer* getZigbeeInputBuffer();
 // DEVICE
 #define	BEACON_BOARD_DEVICE_LENGTH			7
 
+// TIMERS
+#define BEACON_BOARD_TIMER_LENGTH			2
+
+// TIMERS
+#define BEACON_RECEIVER_BOARD_TIMER_LENGTH  2
+
 #endif

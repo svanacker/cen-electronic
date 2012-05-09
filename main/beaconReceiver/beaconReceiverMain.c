@@ -78,6 +78,9 @@
 // DEVICES
 static Device deviceListArray[BEACON_RECEIVER_DEVICE_LENGTH];
 
+// Timers
+static Timer timerListArray[BEACON_RECEIVER_BOARD_TIMER_LENGTH];
+
 // BUFFER
 
 // serial DEBUG 
@@ -243,6 +246,8 @@ int runZigBeeReceiver() {
 					BEACON_RECEIVER_BOARD_DEBUG_OUTPUT_BUFFER_LENGTH,
 					&debugOutputStream,
 					SERIAL_PORT_DEBUG);
+
+	initTimerList(&timerListArray, BEACON_RECEIVER_BOARD_TIMER_LENGTH);
 
 	// To response data
     initBuffer(&responseDataOutputBuffer, &responseDataOutputBufferArray, RESPONSE_DATA_OUTPUT_BUFFER_LENGTH, "responseDataOutputBuffer", "RESPONSE");

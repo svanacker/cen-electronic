@@ -11,16 +11,28 @@
  */
 typedef struct {
     /** An array of pointer on device Descriptor. */
-    Timer * timers[MAX_TIMER];
+    Timer (*timers)[];
     /** the size of the list. */
     unsigned char size;
+	/** the max size of the list.*/
+	unsigned char maxSize;
 } TimerList;
 
 /**
- * Add a timer to the list.
- * @param timer the timer struct to add
+ * Initialize the timer list.
  */
-void addTimer(Timer* timer);
+void initTimerList(Timer (*timerListArray)[], unsigned char timerListSize);
+
+/**
+ * Creates a timer and add it to list with a frequency gived by timeDiviser.
+ * @param timer a pointer on the timer Struct
+ * @param timerCode a unique code used to identify timer
+ * @param timerDiviser Ex : if timeDiviser = 100, time2 frequency is 100 times slower than the main interruption
+ * @param callback the function which must be used by the interruption
+ */
+Timer* addTimer(int timerCode,
+        		unsigned long timeDiviser,
+        		interruptTimerCallbackFunc* callback);
 
 /**
  * Get the device descriptor of index + 1;

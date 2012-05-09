@@ -24,7 +24,8 @@ void writeError(int errorCode);
 
 #define IO_READER_READ_FILTERED_CHAR	0x0120
 
-
+// TIMER
+#define TOO_MUCH_TIMERS					0x0200
 
 // I2C 
 
@@ -36,6 +37,7 @@ void writeError(int errorCode);
 #define TOO_MUCH_DEVICES				0x2000
 #define NO_DEVICE_DESC_FOUND_FOR		0x2001
 
+// -> Dispatcher
 #define NO_DISPATCHER_FOUND				0x2100
 #define NO_DISPATCHER_INPUT_STREAM		0x2101
 #define NO_DISPATCHER_INPUT_BUFFER		0x2102
@@ -43,6 +45,8 @@ void writeError(int errorCode);
 
 #define DISPATCHER_NO_CALLBACK_FOR		0x2110
 #define TOO_MUCH_DRIVER_DATA_DISPATCHER	0x2111
+
+
 
 // DRIVER
 

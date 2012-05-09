@@ -1,31 +1,62 @@
+#include <stdlib.h>
 #include <timer.h>
 #include <delay.h>
 
 #include "../../common/commons.h"
 
+#include "../../common/error/error.h"
+
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
+
+#include "../../common/log/logger.h"
+#include "../../common/log/logLevel.h"
 
 #include "timerList.h"
 #include "cenTimer.h"
 
 // We use singleton pattern
-static TimerList instance;
+static TimerList timerList;
 
-void addTimer(Timer* timer) {
-    unsigned char size = instance.size;
-    instance.timers[size] = timer;
-    instance.size++;
+void initTimerList(Timer (*timerListArray)[], unsigned char timerListSize) {
+	timerList.timers = timerListArray;
+	timerList.maxSize = timerListSize;
+}
+
+Timer* addTimer(int timerCode,
+        		unsigned long timeDiviser,
+        		interruptTimerCallbackFunc* callback) {
+    unsigned char size = timerList.size;
+	if (size < timerList.maxSize) {
+		Timer* result = (Timer*) timerList.timers;
+	 	result += size * sizeof (Timer*);
+
+	    result->timerCode = timerCode;
+	    result->timeDiviser = timeDiviser;
+	    result->callback = callback;
+	    result->enabled = FALSE;
+	    result->lock = FALSE;
+	    result->working = FALSE;
+
+    	timerList.size++;
+		return result;
+	}
+	else {
+		writeError(TOO_MUCH_TIMERS);
+		return NULL;
+	}
 }
 
 Timer* getTimerByIndex(int index) {
-    return instance.timers[index];
+	Timer* result = (Timer*) timerList.timers;
+	result += index * sizeof (Timer*);
+	return result;
 }
 
 Timer* getTimerByCode(int timerCode) {
     int i;
-    for (i = 0; i < instance.size; i++) {
-        Timer* timer = instance.timers[i];
+    for (i = 0; i < timerList.size; i++) {
+        Timer* timer = getTimerByIndex(i);
         if (timer->timerCode == timerCode) {
             return timer;
         }
@@ -34,7 +65,7 @@ Timer* getTimerByCode(int timerCode) {
 }
 
 int getTimerCount() {
-    return instance.size;
+    return timerList.size;
 }
 
 /**
@@ -67,7 +98,7 @@ void initTimers() {
      */
     period = 3; // => we must multiply by (period + 1)
 
-    // met � 0 le TIMER1 , Configure le TIMER1 et definie le nombre d'incrementation
+    // met a 0 le TIMER1 , Configure le TIMER1 et definie le nombre d'incrementation
     // avnt interruption
     OpenTimer1(config1, period);
 
@@ -78,16 +109,16 @@ void initTimers() {
 void startTimerList() {
     initTimers();
     int i;
-    for (i = 0; i < instance.size; i++) {
-        Timer* timer = instance.timers[i];
+    for (i = 0; i < timerList.size; i++) {
+        Timer* timer = getTimerByIndex(i);
         startTimer(timer);
     }
 }
 
 void stopTimerList() {
     int i;
-    for (i = 0; i < instance.size; i++) {
-        Timer* timer = instance.timers[i];
+    for (i = 0; i < timerList.size; i++) {
+        Timer* timer = getTimerByIndex(i);
         stopTimer(timer);
     }
 }
@@ -101,10 +132,10 @@ void __attribute__((__interrupt__)) __attribute__((no_auto_psv)) _T1Interrupt(vo
     // Clear the interrupt flag
     _T1IF = 0;
 
-    if (instance.size) {
+    if (timerList.size) {
         int i = 0;
-        for (i = 0; i < instance.size; i++) {
-            Timer * currentTimer = instance.timers[i];
+        for (i = 0; i < timerList.size; i++) {
+            Timer * currentTimer = getTimerByIndex(i);
             BOOL enabled = currentTimer->enabled;
             if (!enabled) {
                 continue;

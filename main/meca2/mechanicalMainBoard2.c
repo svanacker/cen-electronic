@@ -93,6 +93,10 @@ static StreamLink i2cSerialStreamLink;
 // Devices
 static Device deviceListArray[MECHANICAL_BOARD_2_DEVICE_LENGTH];
 
+// Timers
+static Timer timerListArray[MECHANICAL_BOARD_2_TIMER_LENGTH];
+
+
 void initDevicesDescriptor() {
     initDeviceList(&deviceListArray, MECHANICAL_BOARD_2_DEVICE_LENGTH);
 
@@ -146,6 +150,9 @@ int main(void) {
 	initLog(DEBUG);
 	addLogHandler(&serialLogHandler, "UART", &debugOutputStream, DEBUG);
 	appendString(getOutputStreamLogger(INFO), "MECHANICAL 2 OK");
+	
+	initTimerList(&timerListArray, MECHANICAL_BOARD_2_TIMER_LENGTH);
+
 
 	delaymSec(500);
 

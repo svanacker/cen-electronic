@@ -135,6 +135,9 @@ static LogHandler serialLogHandler;
 // Devices
 static Device deviceListArray[BEACON_BOARD_DEVICE_LENGTH];
 
+// Timers
+static Timer timerListArray[BEACON_BOARD_TIMER_LENGTH];
+
 // events
 static JennicEvent dataEvent;
 static JennicEvent errorEvent;
@@ -336,6 +339,8 @@ restart:
 			JENNIC_DEBUG_OUTPUT_BUFFER_LENGTH,
             &debugOutputStream,
             SERIAL_PORT_DEBUG);
+
+	initTimerList(&timerListArray, BEACON_BOARD_TIMER_LENGTH);
 
 	// To response data
     initBuffer(&responseDataOutputBuffer, &responseDataOutputBufferArray, RESPONSE_DATA_OUTPUT_BUFFER_LENGTH, "responseDataOutputBuffer", "RESPONSE");

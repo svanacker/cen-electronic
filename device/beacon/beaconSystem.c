@@ -32,12 +32,8 @@
 /** Defines the code for the timer dedicated to the beacon. */
 #define BEACON_TIMER_CODE 100
 
-/** The timer to schedule beacon detection. */
-static Timer beaconTimer;
-
 /** The beacon system. */
 static BeaconSystem beaconSystem;
-
 
 // TIMER
 
@@ -126,8 +122,7 @@ BOOL notifyRobotPositionIfNecessary() {
 // INIT / STOP
 
 void initLaserBeacon() {
-    initTimer(&beaconTimer, BEACON_TIMER_CODE, TIME_DIVISER_2000_HERTZ, beaconTimerCallback);
-    addTimer(&beaconTimer);
+    addTimer(BEACON_TIMER_CODE, TIME_DIVISER_2000_HERTZ, beaconTimerCallback);
 }
 
 void stopLaserBeacon() {

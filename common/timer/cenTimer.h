@@ -109,19 +109,6 @@ void lockAndWaitForTimer(Timer* timer);
  */
 void unlockTimer(Timer* timer);
 
-/**
- * Creates a timer with a frequency gived by timeDiviser.
- * @param timer a pointer on the timer Struct
- * @param timerCode a unique code used to identify timer
- * @param timerDiviser Ex : if timeDiviser = 100, time2 frequency is 100 times slower than the main interruption
- * @param callback the function which must be used by the interruption
- */
-void initTimer(Timer* timer,
-        int timerCode,
-        unsigned long timeDiviser,
-        interruptTimerCallbackFunc* callback);
-
-
 #endif
 
 

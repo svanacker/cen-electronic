@@ -32,17 +32,14 @@
  */
 static ServoList servoList;
 
-/** The timer for the servo. */
-static Timer servoTimer;
-
 // IMPLEMENTATION
 
 /**
  * @private.
  * duty convPwm ( int ms )
- * Objet : convertit une dur�e en ms en integer pour traitement
- * @param ms valeur en ms � convertir
- * @return r�sultat en Integer
+ * Objet : convertit une duree en ms en integer pour traitement
+ * @param ms valeur en ms a convertir
+ * @return resultat en Integer
  */
 int convPwmServo(int ms) {
     long duty;
@@ -162,14 +159,11 @@ void initPwmForServo(int posInit) {
     }
 
     // Init the timer for servo
-    initTimer(&servoTimer,
-            SERVO_TIMER_INDEX,
-            TIME_DIVISER_50_HERTZ,
-            &interruptServoTimerCallbackFunc);
-
-    // add the timer to the list, so that the interrupt function will
+    // and add the timer to the list, so that the interrupt function will
     // update at a certain frequency the position of the servo
-    addTimer(&servoTimer);
+    addTimer(SERVO_TIMER_INDEX,
+            				TIME_DIVISER_50_HERTZ,
+            				&interruptServoTimerCallbackFunc);
 }
 
 /**

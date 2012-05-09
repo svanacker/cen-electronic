@@ -16,9 +16,6 @@
 // TIMER
 
 static long lastPidTime;
-
-static Timer pidTimer;
-
 static int counter;
 
 void debugTimerCallbackFunc(void) {
@@ -31,8 +28,7 @@ void debugTimerCallbackFunc(void) {
 }
 
 void initPidTimer(void) {
-    initTimer(&pidTimer, TIMER_PID_CODE, PID_UPDATE_MOTORS_FREQUENCY, (interruptTimerCallbackFunc*) NULL);
-    addTimer(&pidTimer);
+    addTimer(TIMER_PID_CODE, PID_UPDATE_MOTORS_FREQUENCY, (interruptTimerCallbackFunc*) NULL);
     clearPidTime();
 }
 
