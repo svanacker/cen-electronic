@@ -19,9 +19,6 @@ static LocationList locations;
 /** All paths. */
 static PathList paths;
 
-// private members (avoid using Stack to avoid runtime problems)
-static PathList outgoingPaths;
-
 LocationList* getNavigationLocationList() {
 	return &locations;
 }
@@ -35,20 +32,12 @@ void addNavigationLocation(Location* location, char* name, int x, int y) {
 }
 
 void addNavigationPath(  Path* path, 
-						 Location* location1,
-						 Location* location2, 
-						 int cost,
-						 int controlPointDistance1,
-						 int controlPointDistance2,
-						 int angle1,
-						 int angle2,
-						 unsigned char accelerationFactor,
-						 unsigned char speedFactor) {
-	addPath(&paths, path, location1, location2, cost, controlPointDistance1, controlPointDistance2, angle1, angle2, accelerationFactor, speedFactor); 
+						 PathDataFunction* pathDataFunction) {
+	addPath(&paths, path, pathDataFunction); 
 }
 
 void updateOutgoingPaths(Location* location) {
-	clearPathList(&outgoingPaths);
+	resetOutgoingPathInfo(&paths);
 	int i;
 	int pathSize = getPathCount(&paths);
 	for (i = 0; i < pathSize; i++) {
@@ -68,7 +57,7 @@ void updateOutgoingPaths(Location* location) {
 		// Ex : handledLocationList = {EF, GH} and other End = B
 		BOOL handledLocationListContainsLocation = containsLocation(&locations, otherEnd, TRUE);
 		if (!handledLocationListContainsLocation) {
-			addFilledPath(&outgoingPaths, path);
+			path->tmpOutgoing = TRUE;
 		}
 	}
 }
@@ -162,10 +151,13 @@ int computeBestPath(LocationList* outLocationList, Location* start, Location* en
 		updateOutgoingPaths(location1);
 
 		int i;
-		int size = outgoingPaths.size;
+		int size = paths.size;
 		// loop on all outgoingPath
 		for (i = 0; i < size; i++) {
-			Path* path = getPath(&outgoingPaths, i);
+			Path* path = getPath(&paths, i);
+			if (!path->tmpOutgoing) {
+				continue;
+			}
 			Location* location2 = getOtherEnd(path, location1);
 			int costLocation1 = getCost(location1);
 			int costLocation2 = getCost(location2);
@@ -175,7 +167,9 @@ int computeBestPath(LocationList* outLocationList, Location* start, Location* en
 				appendStringAndDec(getOutputStreamLogger(INFO), ", costLocation2:", costLocation2);
 				println(getOutputStreamLogger(INFO));
 			#endif
-			int cost = costLocation1 + path->cost;
+			// getOtherEnd called the current fonction to fill path information
+			// so we can use pathData without problem.
+			int cost = costLocation1 + getTmpPathData()->cost;
 			if (cost < costLocation2) {
 				// Affectation de la distance absolue du noeud
 				setCost(location2, cost);

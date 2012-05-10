@@ -51,22 +51,27 @@ void changeLocationsForColor() {
 	}
 }
 
-void changePathsForColor() {
+int getAngle1Path(Path* path) {
+	path->pathDataFunction();
+	int result = getTmpPathData()->angle1;
 	if (isViolet()) {
-		return;
+		return result;
 	}
-	PathList* pathList = getNavigationPathList();
-	int i;
-	unsigned char size = pathList->size;
-	for (i = 0; i < size; i++) {
-		Path* path = pathList->paths[i];
-		path->angle1 = ANGLE_180 - path->angle1;
-		path->angle2 = ANGLE_180 - path->angle2;
-	}
+	else {
+		return ANGLE_180 - result;
+	}	
 }
 
-
-
+int getAngle2Path(Path* path) {
+	path->pathDataFunction();
+	int result = getTmpPathData()->angle1;
+	if (isViolet()) {
+		return result;
+	}
+	else {
+		return ANGLE_180 - result;
+	}	
+}
 
 // ARM
 

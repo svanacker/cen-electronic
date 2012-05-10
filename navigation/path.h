@@ -4,13 +4,27 @@
 #include "location.h"
 
 /**
- * Encapsulates a path between 2 points.
+ * Function which gives fill all informations in a intermediate structure.
+ * All call must be done by getXXX(Path* path) which fill the data and then read it in common.
+ * This trick enabled us to save memory and to use instead of program memory.
+ * This trick is only possible on read data. So tmpOutgoing is a standard struc path member.
  */
-typedef struct Path {
+// forward declaration
+struct Path;
+typedef struct Path Path;
+
+/** Define the function which will be called to fill PathData. */
+typedef void PathDataFunction();
+
+typedef struct PathData {
 	/** first point (with name). */
 	Location* location1;
 	/** second point (with name). */
 	Location* location2;
+	/** Cost of the path. */
+	unsigned char cost;
+	/** For path finding algorithm. */
+	BOOL tmpOutgoing;
 	/** Distance of the control point P0-P1. */ 	
 	unsigned char controlPointDistance1;
 	/** Distance of the control point P1->P3. */ 	
@@ -19,13 +33,43 @@ typedef struct Path {
 	int angle1;
 	/** angle2 (when at P3) in decidegree. */
 	int angle2;
-	/** Cost of the path. */
-	unsigned char cost;
 	/** AccelerationFactor factor (min = 1, max = 16). */
 	unsigned char accelerationFactor;
 	/** Speed factor (min = 1, max = 16). */
 	unsigned char speedFactor;
-} Path;
+} PathData;
+
+/**
+ * Encapsulates a path between 2 points.
+ */
+struct Path {
+	/** Function which will fill pathData. */
+	PathDataFunction* pathDataFunction;
+	/** Useful information for path planning algorithm. */
+	BOOL tmpOutgoing;
+};
+
+inline void fillPathData(Location* location1,
+						 Location* location2, 
+						 int cost,
+						 int controlPointDistance1,
+						 int controlPointDistance2,
+						 int angle1,
+						 int angle2,
+						 unsigned char accelerationFactor,
+						 unsigned char speedFactor);
+
+int getAngle1Path(Path* path);
+
+int getAngle2Path(Path* path);
+
+/**
+ * Return the unique structure which must be filled before.
+ * Be careful to call path->pathDataFunction before any call ! If you don't, data will be random
+ * (the last call) and does not corresponds to your current Path.
+ */
+PathData* getTmpPathData();
+
 
 /**
  * Return if the path contains the location passed in parameter

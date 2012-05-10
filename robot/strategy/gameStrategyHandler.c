@@ -134,7 +134,9 @@ void motionGoLocation(Location* location,
 }
 
 void motionFollowPath(Path* path) {
-	Location* location = path->location2;
+	path->pathDataFunction();
+	PathData* pathData = getTmpPathData();
+	Location* location = pathData->location2;
 
 	#ifdef DEBUG_STRATEGY_HANDLER
 		appendString(getOutputStreamLogger(DEBUG), "motionFollowPath:goto:");	
@@ -142,9 +144,9 @@ void motionFollowPath(Path* path) {
 	#endif
 
 	motionDriverBSplineAbsolute(location->x, location->y,
-								path->angle2, 
-								path->controlPointDistance1, path->controlPointDistance2,
-								path->accelerationFactor, path->speedFactor);
+								pathData->angle2, 
+								pathData->controlPointDistance1, pathData->controlPointDistance2,
+								pathData->accelerationFactor, pathData->speedFactor);
 
 	// Simulate as if the robot goes to the position with a small error
 	#ifdef SIMULATE_ROBOT

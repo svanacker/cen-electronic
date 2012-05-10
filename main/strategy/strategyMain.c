@@ -41,7 +41,7 @@
 
 // navigation
 #include "../../navigation/navigation.h"
-#include "../../navigation/navigationTest2.h"
+#include "../../navigation/navigationTest.h"
 
 // strategy
 #include "../../robot/strategy/gameTargetList.h"
@@ -206,6 +206,8 @@ int main(void) {
 	initDevicesDescriptor();
 
 	initDriversDescriptor();
+
+	addNavigationLocations();
 
 	#ifdef MPLAB_SIMULATION
 		while (1) {

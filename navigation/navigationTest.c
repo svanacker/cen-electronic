@@ -41,8 +41,8 @@ static Path pathHD;
 static Path pathHJ;
 static Path pathAE;
 static Path pathEJ;
+static Path pathEJ1;
 
-static LocationList locationList;
 static LocationList resultLocationList;
 
 int addNavigationLocations() {
@@ -59,20 +59,31 @@ int addNavigationLocations() {
 	addNavigationLocation(&locationJ, "J", 0, 0);
 
 	// paths
-	addNavigationPath(&pathAB, &locationA, &locationB, 85, 0, 0, 0, 0, 0);
-	addNavigationPath(&pathBF, &locationB, &locationF, 80, 0, 0, 0, 0, 0);
-	addNavigationPath(&pathFI, &locationF, &locationI, 250, 0, 0, 0, 0, 0);
-	addNavigationPath(&pathIJ, &locationI, &locationJ, 84, 0, 0, 0, 0, 0);
+	void pathABFunction() { fillPathData(&locationA, &locationB, 85, 0, 0, 0, 0, 0, 0); }
+	addNavigationPath(&pathAB, &pathABFunction);
+	void pathBFFunction() { fillPathData(&locationB, &locationF, 80, 0, 0, 0, 0, 0, 0); }
+	addNavigationPath(&pathBF, &pathBFFunction);
+	void pathFIFunction() { fillPathData(&locationF, &locationI, 250, 0, 0, 0, 0, 0, 0); }
+	addNavigationPath(&pathFI, &pathFIFunction);
+	void pathIJFunction() { fillPathData(&locationI, &locationJ, 84, 0, 0, 0, 0, 0, 0); }
+	addNavigationPath(&pathIJ, &pathIJFunction);
 
-	addNavigationPath(&pathAC, &locationA, &locationC, 217, 0, 0, 0, 0, 0);
-	addNavigationPath(&pathCG, &locationC, &locationG, 186, 0, 0, 0, 0, 0);
+	void pathACFunction() { fillPathData(&locationA, &locationC, 217, 0, 0, 0, 0, 0, 0); }
+	addNavigationPath(&pathAC, &pathACFunction);
+	void pathCGFunction() { fillPathData(&locationG, &locationG, 186, 0, 0, 0, 0, 0, 0); }
+	addNavigationPath(&pathCG, &pathCGFunction);
 
-	addNavigationPath(&pathCH, &locationC, &locationH, 103, 0, 0, 0, 0, 0);
-	addNavigationPath(&pathHD, &locationH, &locationD, 183, 0, 0, 0, 0, 0);	
-	addNavigationPath(&pathHJ, &locationH, &locationJ, 167, 0, 0, 0, 0, 0);
+	void pathCHFunction() { fillPathData(&locationC, &locationH, 103, 0, 0, 0, 0, 0, 0); }
+	addNavigationPath(&pathCH, &pathCHFunction);
+	void pathHDFunction() { fillPathData(&locationH, &locationD, 183, 0, 0, 0, 0, 0, 0); }
+	addNavigationPath(&pathHD, &pathHDFunction);
+	void pathHJFunction() { fillPathData(&locationH, &locationJ, 167, 0, 0, 0, 0, 0, 0); }
+	addNavigationPath(&pathHJ, &pathHJFunction);
 
-	addNavigationPath(&pathAE, &locationA, &locationE, 173, 0, 0, 0, 0, 0);
-	addNavigationPath(&pathEJ, &locationE, &locationJ, 502, 0, 0, 0, 0, 0);
+	void pathAEFunction() { fillPathData(&locationA, &locationE, 173, 0, 0, 0, 0, 0, 0); }
+	addNavigationPath(&pathAE, &pathAEFunction);
+	void pathEJFunction() { fillPathData(&locationE, &locationJ, 502, 0, 0, 0, 0, 0, 0); }
+	addNavigationPath(&pathEJ, &pathEJFunction);
 
 	int cost = computeBestPath(&resultLocationList, &locationA, &locationJ);
 

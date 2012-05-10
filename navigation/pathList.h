@@ -5,7 +5,7 @@
 #include "location.h"
 
 /** The max limit of path count. */
-#define MAX_PATH 	 	20
+#define MAX_PATH 	 	15
 
 /**
  * Tre struct defining a list of locations.
@@ -29,15 +29,7 @@ void clearPathList(PathList* pathList);
  */
 void addPath(PathList* pathList,
 			 Path* path, 
-			 Location* location1,
-			 Location* location2, 
-			 int cost,
-			 int controlPointDistance1,
-			 int controlPointDistance2,
-			 int angle1,
-			 int angle2,
-			 unsigned char accelerationFactor,
-			 unsigned char speedFactor);
+			 PathDataFunction* pathDataFunction);
 
 /**
  * Add a path to the list which was already initialized.
@@ -59,6 +51,11 @@ Path* getPathOfLocations(PathList* pathList, Location* location1, Location* loca
  * Get the count of paths.
  */
 int getPathCount(PathList* pathList);
+
+/**
+ * Clear the outgoing paths.
+ */
+void resetOutgoingPathInfo(PathList* pathList);
 
 /**
  * Print the list of path.
