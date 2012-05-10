@@ -41,7 +41,6 @@ static Path pathHD;
 static Path pathHJ;
 static Path pathAE;
 static Path pathEJ;
-static Path pathEJ1;
 
 static LocationList resultLocationList;
 
@@ -70,7 +69,7 @@ int addNavigationLocations() {
 
 	void pathACFunction() { fillPathData(&locationA, &locationC, 217, 0, 0, 0, 0, 0, 0); }
 	addNavigationPath(&pathAC, &pathACFunction);
-	void pathCGFunction() { fillPathData(&locationG, &locationG, 186, 0, 0, 0, 0, 0, 0); }
+	void pathCGFunction() { fillPathData(&locationC, &locationG, 186, 0, 0, 0, 0, 0, 0); }
 	addNavigationPath(&pathCG, &pathCGFunction);
 
 	void pathCHFunction() { fillPathData(&locationC, &locationH, 103, 0, 0, 0, 0, 0, 0); }

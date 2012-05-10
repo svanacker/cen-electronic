@@ -11,7 +11,7 @@
 #include "../common/log/logger.h"
 #include "../common/log/logLevel.h"
 
-//#define NAVIGATION_DEBUG
+#define NAVIGATION_DEBUG
 
 /** All locations. */
 static LocationList locations;
@@ -158,6 +158,7 @@ int computeBestPath(LocationList* outLocationList, Location* start, Location* en
 			if (!path->tmpOutgoing) {
 				continue;
 			}
+			path->pathDataFunction();
 			Location* location2 = getOtherEnd(path, location1);
 			int costLocation1 = getCost(location1);
 			int costLocation2 = getCost(location2);
