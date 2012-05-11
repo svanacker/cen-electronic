@@ -18,8 +18,9 @@ void testBitList() {
 
 	printBitList(outputStream, &bitList);
 
-	setBit(&bitList, 75, TRUE);
+	setBit(&bitList, 35, TRUE);
 	printBitList(outputStream, &bitList);
+	appendStringAndDec(outputStream, "\nbit75:", getBit(&bitList, 75));
 
 	setBit(&bitList, 73, FALSE);
 	printBitList(outputStream, &bitList);
