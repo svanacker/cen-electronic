@@ -44,7 +44,7 @@ void printArgumentList(OutputStream* outputStream, DeviceInterface* deviceInterf
                 append(outputStream, 'u');
             }
         }
-        appendCRLF(outputStream);
+        println(outputStream);
     }
 }
 
@@ -70,7 +70,7 @@ void printDeviceUsage(OutputStream* outputStream, Device* device) {
 }
 
 void printDeviceListUsage(OutputStream* outputStream) {
-    appendCRLF(outputStream);
+    println(outputStream);
     int deviceCount = getDeviceCount();
     int deviceIndex;
     for (deviceIndex = 0; deviceIndex < deviceCount; deviceIndex++) {

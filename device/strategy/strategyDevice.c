@@ -31,7 +31,7 @@ void stopStrategy(void) {
 
 }
 
-unsigned int isStrategyDeviceOk(void) {
+BOOL isStrategyDeviceOk(void) {
     return TRUE;
 }
 

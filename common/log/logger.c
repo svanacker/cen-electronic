@@ -77,7 +77,7 @@ Logger* getLoggerInstance() {
 void printLogger(OutputStream* outputStream) {
     appendKeyAndName(outputStream, "GlbLogLvl=", getLevelAsString(logger.globalLogLevel));
     appendKeyAndName(outputStream, ",writeLogLvl=", getLevelAsString(logger.writeLogLevel));
-    appendCRLF(outputStream);
+    println(outputStream);
 
     // For Each LogHandler
     int count = getLogHandlerCount(&logHandlerList);

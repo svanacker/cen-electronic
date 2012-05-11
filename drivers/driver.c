@@ -17,7 +17,7 @@ BOOL driverInit(const DriverDescriptor* driverDescriptor) {
     append(outputStream, '(');
     appendDec(outputStream, driverRevision);
     append(outputStream, ')');
-    appendCRLF(outputStream);
+    println(outputStream);
 	*/
 
     return result;

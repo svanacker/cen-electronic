@@ -38,14 +38,14 @@ void initI2CDebugBuffers(Buffer* aDebugI2cInputBuffer,
 void printI2cDebugBuffers() {
 	OutputStream* outputStreamLogger = getOutputStreamLogger(INFO);
     if (debugI2cInputBuffer != NULL) {
-        appendCRLF(outputStreamLogger);
+        println(outputStreamLogger);
         appendString(outputStreamLogger, "I2C:In:");
         copyInputToOutputStream(getInputStream(debugI2cInputBuffer), getDebugOutputStreamLogger(), NULL, COPY_ALL);
     }
     if (debugI2cOutputBuffer != NULL) {
-        appendCRLF(outputStreamLogger);
+        println(outputStreamLogger);
         appendString(outputStreamLogger, "I2C:Out:");
         copyInputToOutputStream(getInputStream(debugI2cOutputBuffer), getDebugOutputStreamLogger(), NULL, COPY_ALL);
-        appendCRLF(outputStreamLogger);
+        println(outputStreamLogger);
     }
 }

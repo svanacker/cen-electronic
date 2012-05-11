@@ -56,6 +56,10 @@ int getTimerCount();
  */
 void startTimerList();
 
+/**
+ * Print the timer list into the outputStream.
+ */
+void printTimerList(OutputStream* outputStream);
 
 #endif
 

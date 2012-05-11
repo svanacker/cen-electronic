@@ -57,6 +57,7 @@
 #include "../../robot/2012/strategy2012.h"
 
 // -> Devices
+#include "../../device/deviceUsage.h"
 
 // System
 #include "../../device/system/systemDevice.h"
@@ -70,6 +71,9 @@
 #include "../../drivers/driverTransmitter.h"
 #include "../../drivers/driverList.h"
 #include "../../drivers/driverStreamListener.h"
+
+// Test
+#include "../../test/common/math/bitListTest.h"
 
 // The port for which we debug (we can send instruction too)
 #include "../../robot/robot.h"
@@ -207,7 +211,12 @@ int main(void) {
 
 	initDriversDescriptor();
 
-	addNavigationLocations();
+	printDeviceList(getOutputStreamLogger(INFO));
+
+	// addNavigationLocations();
+	printDeviceListUsage(getOutputStreamLogger(INFO));
+
+	testBitList();
 
 	#ifdef MPLAB_SIMULATION
 		while (1) {

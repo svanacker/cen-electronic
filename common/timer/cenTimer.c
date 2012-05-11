@@ -40,3 +40,13 @@ void unlockTimer(Timer* timer) {
     timer->lock = FALSE;
 }
 
+void printTimer(OutputStream* outputStream, Timer* timer) {
+	appendStringAndDec(outputStream, "timerCode=", timer->timerCode);
+	appendStringAndDec(outputStream, ", timerDiviser=", timer->timeDiviser);
+	appendStringAndDec(outputStream, ", timerCode=", timer->timerCode);
+	appendStringAndDec(outputStream, ", timerInternalCounter=", timer->timeInternalCounter);
+	appendStringAndDec(outputStream, ", time=", timer->time);
+	appendStringAndDec(outputStream, ", enabled=", timer->enabled);
+	appendStringAndDec(outputStream, ", lock=", timer->lock);
+	appendStringAndDec(outputStream, ", working=", timer->working);
+}

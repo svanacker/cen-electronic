@@ -79,5 +79,9 @@ void initDevices();
 */
 int getDeviceResponseSize(int commandHeader);
 
+// DEBUG
+
+void printDeviceList(OutputStream* outputStream);
+
 #endif
 

@@ -71,3 +71,16 @@ void forwardCallbackRawDataTo(InputStream* inputStream,
 
     copyInputToOutputStream(inputStream, outputStream, NULL, dataLength);
 }
+
+// DEBUG
+
+
+/**
+ * Print the device information.
+ */
+void printDevice(OutputStream* outputStream, const Device* device) {
+	appendStringAndDec(outputStream, ", transmitMode=", device->transmitMode);
+	appendKeyAndName(outputStream, ", addressString=", device->addressString);
+	appendStringAndDec(outputStream, ", address=", device->address);
+	println(outputStream);
+}

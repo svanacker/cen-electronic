@@ -109,6 +109,11 @@ void lockAndWaitForTimer(Timer* timer);
  */
 void unlockTimer(Timer* timer);
 
+/**
+ * Print the content of the timer.
+ */
+void printTimer(OutputStream* outputStream, Timer* timer);
+
 #endif
 
 

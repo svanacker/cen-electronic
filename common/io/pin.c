@@ -132,7 +132,7 @@ void printAllPinValues(OutputStream* outputStream) {
         appendHex2(outputStream, i);
         append(outputStream, '=');
         appendBOOL(outputStream, value);
-        appendCRLF(outputStream);
+        println(outputStream);
     }
 }
 

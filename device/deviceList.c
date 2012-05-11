@@ -10,6 +10,7 @@
 #include "../common/error/error.h"
 
 #include "../common/io/stream.h"
+#include "../common/io/outputStream.h"
 
 #include "../common/log/logger.h"
 #include "../common/log/logLevel.h"
@@ -38,9 +39,7 @@ Device* addDevice(DeviceInterface* interface,
 		char* addressString) {
     unsigned char size = deviceList.size;
     if (size < deviceList.maxSize) {
-		Device* device = (Device*) deviceList.devices;
-		device += size * sizeof (Device*);
-        //deviceList.devices[size] = device;
+		Device* device = getDevice(size);
         // get a device already allocated
         device->interface = interface;
         device->descriptor = descriptor;
@@ -83,7 +82,10 @@ Device* addLocalDevice(DeviceInterface* interface, DeviceDescriptor* descriptor)
 
 Device* getDevice(int index) {
 	Device* result = (Device*) deviceList.devices;
-	result += index * sizeof (Device*);
+	// we don't need use sizeof because our pointer are Device* pointer, so the length
+	// is already of 2
+	result += index;
+
 	return result;
 }
 
@@ -97,6 +99,20 @@ void initDevices() {
     for (i = 0; i < size; i++) {
         Device* device = getDevice(i);
         initDevice(device);
+    }
+}
+
+// DEBUG
+void printDeviceList(OutputStream* outputStream) {
+    int size = deviceList.size;
+    int i;
+	println(outputStream);
+	Device* devicePointer = (Device*) deviceList.devices;
+    for (i = 0; i < size; i++) {
+        Device* device = getDevice(i);
+		appendStringAndDec(outputStream, "*device=", (int) (devicePointer++));
+		appendString(outputStream, ", ");
+        printDevice(outputStream, device);
     }
 }
 

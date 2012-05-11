@@ -27,6 +27,9 @@ void writeError(int errorCode);
 // TIMER
 #define TOO_MUCH_TIMERS					0x0200
 
+// BIT LIST
+#define BIT_LIST_ARRAY_OUT_OF_BOUNDS	0x0300
+
 // I2C 
 
 #define I2C_MASTER_ALREADY_INITIALIZED 	0x1000

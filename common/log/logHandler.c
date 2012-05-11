@@ -16,5 +16,5 @@ void printLogHandler(OutputStream* outputStream,
     appendKeyAndName(outputStream, "HdlName=", logHandler->handlerName);
     char* logLevelAsString = getLevelAsString(logHandler->logLevel);
     appendKeyAndName(outputStream, ",lvl=", logLevelAsString);
-    appendCRLF(outputStream);
+    println(outputStream);
 }

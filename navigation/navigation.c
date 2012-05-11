@@ -11,7 +11,7 @@
 #include "../common/log/logger.h"
 #include "../common/log/logLevel.h"
 
-#define NAVIGATION_DEBUG
+// #define NAVIGATION_DEBUG
 
 /** All locations. */
 static LocationList locations;

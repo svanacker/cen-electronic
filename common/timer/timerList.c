@@ -29,7 +29,7 @@ Timer* addTimer(int timerCode,
     unsigned char size = timerList.size;
 	if (size < timerList.maxSize) {
 		Timer* result = (Timer*) timerList.timers;
-	 	result += size * sizeof (Timer*);
+	 	result += size;
 
 	    result->timerCode = timerCode;
 	    result->timeDiviser = timeDiviser;
@@ -49,7 +49,7 @@ Timer* addTimer(int timerCode,
 
 Timer* getTimerByIndex(int index) {
 	Timer* result = (Timer*) timerList.timers;
-	result += index * sizeof (Timer*);
+	result += index;
 	return result;
 }
 
@@ -165,4 +165,14 @@ void __attribute__((__interrupt__)) __attribute__((no_auto_psv)) _T1Interrupt(vo
     }
     // Enable the interrupt
     _T1IE = 1;
+}
+
+// DEBUG
+
+void printTimerList(OutputStream* outputStream) {
+    int i;
+    for (i = 0; i < timerList.size; i++) {
+        Timer* timer = getTimerByIndex(i);
+        printTimer(outputStream, timer);
+    }
 }
