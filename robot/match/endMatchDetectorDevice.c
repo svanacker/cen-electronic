@@ -81,7 +81,7 @@ void stopEndMatchDetector() {
 
 }
 
-unsigned int isEndMatchDetectorDeviceOk() {
+BOOL isEndMatchDetectorDeviceOk() {
     return TRUE;
 }
 

@@ -22,7 +22,7 @@ void stopADC( void ) {
 
 }
 
-unsigned int isADCDeviceOk ( void ) {
+BOOL isADCDeviceOk ( void ) {
 	return TRUE;
 }
 

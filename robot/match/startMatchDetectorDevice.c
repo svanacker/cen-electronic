@@ -30,7 +30,7 @@ void stopStartMatchDetector() {
 
 }
 
-unsigned int isStartMatchDetectorDeviceOk() {
+BOOL isStartMatchDetectorDeviceOk() {
     return TRUE;
 }
 
@@ -70,7 +70,7 @@ void deviceStartMatchDetectorHandleRawData(char header,
 DeviceDescriptor startMatchDetectorDevice = {
     .deviceInit = &initStartMatchDetector,
     .deviceShutDown = &stopStartMatchDetector,
-    .deviceIsOk = &isStartMatchDetectorDeviceOk,
+	.deviceIsOk = &isStartMatchDetectorDeviceOk,
     .deviceHandleRawData = &deviceStartMatchDetectorHandleRawData,
 };
 

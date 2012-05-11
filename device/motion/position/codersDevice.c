@@ -18,7 +18,7 @@ void stopCoders(void) {
 
 }
 
-unsigned int isCodersDeviceOk(void) {
+BOOL isCodersDeviceOk(void) {
     return 1;
 }
 

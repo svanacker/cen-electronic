@@ -82,7 +82,7 @@ void handleAndWaitMSec(unsigned long delayMs);
 /**
  * Stop the robot.
  */
-void stopPosition();
+void stopPosition(BOOL maintainPositionValue);
 
 /**
  * Ask the robot to maintain the position.

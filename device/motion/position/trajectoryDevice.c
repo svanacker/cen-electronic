@@ -27,7 +27,7 @@ void stopTrajectoryDevice() {
 
 }
 
-unsigned int isTrajectoryDeviceOk(void) {
+BOOL isTrajectoryDeviceOk(void) {
     return 1;
 }
 

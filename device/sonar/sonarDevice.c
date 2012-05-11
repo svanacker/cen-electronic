@@ -21,7 +21,7 @@ void deviceSonarShutDown(void) {
 
 }
 
-unsigned int isSonarDeviceOk(void) {
+BOOL isSonarDeviceOk(void) {
     return getSRF02SoftwareRevision(SRF02_DEFAULT_ADDRESS) < 255;
     //	return getSRF02SoftwareRevisionDeprecated() < 255;
     // TODO :

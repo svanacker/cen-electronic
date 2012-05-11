@@ -21,7 +21,7 @@
 #include "../../../motion/pid/motionEndDetection.h"
 #include "../../../motion/pid/pidPersistence.h"
 
-unsigned int isPIDDeviceOk(void) {
+BOOL isPIDDeviceOk(void) {
     return 1;
 }
 
