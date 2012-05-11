@@ -213,10 +213,10 @@ int main(void) {
 
 	printDeviceList(getOutputStreamLogger(INFO));
 
-	// addNavigationLocations();
-	printDeviceListUsage(getOutputStreamLogger(INFO));
+	addNavigationLocations();
+	// printDeviceListUsage(getOutputStreamLogger(INFO));
 
-	testBitList();
+	// testBitList();
 
 	#ifdef MPLAB_SIMULATION
 		while (1) {

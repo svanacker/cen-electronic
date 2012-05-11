@@ -8,6 +8,8 @@
 #include "../common/io/outputStream.h"
 #include "../common/io/printWriter.h"
 
+#include "../common/math/bitList.h"
+
 #include "../common/log/logger.h"
 #include "../common/log/logLevel.h"
 
@@ -18,6 +20,15 @@ static LocationList locations;
 
 /** All paths. */
 static PathList paths;
+
+static unsigned int bitListValues[BIT_LIST_NAVIGATION_ARRAY_LENGTH];
+static BitList outgoingPaths;
+
+void initNavigation() {
+	clearLocationList(&locations);
+	clearPathList(&paths);
+	initBitList(&outgoingPaths, &bitListValues, BIT_LIST_NAVIGATION_ARRAY_LENGTH);
+}
 
 LocationList* getNavigationLocationList() {
 	return &locations;
@@ -37,7 +48,7 @@ void addNavigationPath(  Path* path,
 }
 
 void updateOutgoingPaths(Location* location) {
-	resetOutgoingPathInfo(&paths);
+	clearBitList(&outgoingPaths);
 	int i;
 	int pathSize = getPathCount(&paths);
 	for (i = 0; i < pathSize; i++) {
@@ -57,7 +68,7 @@ void updateOutgoingPaths(Location* location) {
 		// Ex : handledLocationList = {EF, GH} and other End = B
 		BOOL handledLocationListContainsLocation = containsLocation(&locations, otherEnd, TRUE);
 		if (!handledLocationListContainsLocation) {
-			path->tmpOutgoing = TRUE;
+			setBit(&outgoingPaths, i, TRUE);
 		}
 	}
 }
@@ -160,10 +171,12 @@ int computeBestPath(LocationList* outLocationList, Location* start, Location* en
 
 		// loop on all outgoingPath
 		for (i = 0; i < size; i++) {
-			Path* path = getPath(&paths, i);
-			if (!path->tmpOutgoing) {
+			BOOL outgoing = getBit(&outgoingPaths, i);			
+			if (!outgoing) {
 				continue;
 			}
+
+			Path* path = getPath(&paths, i);
 			path->pathDataFunction();
 			Location* location2 = getOtherEnd(path, location1);
 			int costLocation1 = getCost(location1);

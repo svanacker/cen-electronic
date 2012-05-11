@@ -23,8 +23,6 @@ typedef struct PathData {
 	Location* location2;
 	/** Cost of the path. */
 	unsigned int cost;
-	/** For path finding algorithm. */
-	BOOL tmpOutgoing;
 	/** Distance of the control point P0-P1. */ 	
 	unsigned char controlPointDistance1;
 	/** Distance of the control point P1->P3. */ 	
@@ -45,8 +43,6 @@ typedef struct PathData {
 struct Path {
 	/** Function which will fill pathData. */
 	PathDataFunction* pathDataFunction;
-	/** Useful information for path planning algorithm. */
-	BOOL tmpOutgoing;
 };
 
 inline void fillPathData(Location* location1,

@@ -16,17 +16,7 @@ void addPath(PathList* pathList,
 			 Path* path, 
 			 PathDataFunction* pathDataFunction) {
 	path->pathDataFunction = pathDataFunction;
-	path->tmpOutgoing = FALSE;
 	addFilledPath(pathList, path);
-}
-
-void resetOutgoingPathInfo(PathList* pathList) {
-	int i;
-	int size = pathList->size;
-	for (i = 0; i < size; i++) {
-		Path* path = pathList->paths[i];
-		path->tmpOutgoing = FALSE;
-	}
 }
 
 void addFilledPath(PathList* pathList, Path* path) {

@@ -32,7 +32,6 @@ inline void fillPathData(Location* location1,
 	tmpPathData.cost = cost;
 	tmpPathData.accelerationFactor = accelerationFactor;
 	tmpPathData.speedFactor = speedFactor;
-	tmpPathData.tmpOutgoing = FALSE;
 }
 
 
@@ -65,7 +64,6 @@ void printPath(OutputStream* outputStream, Path* path) {
 	appendString(outputStream, tmpPathData.location2->name);
 
 	appendStringAndDec(outputStream, ", cost=", tmpPathData.cost);
-	appendStringAndDec(outputStream, ", outgoing=", path->tmpOutgoing);
 
 	appendStringAndDec(outputStream, ", cp1=", tmpPathData.controlPointDistance1);
 	appendStringAndDec(outputStream, ", cp2=", tmpPathData.controlPointDistance2);

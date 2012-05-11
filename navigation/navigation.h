@@ -6,6 +6,13 @@
 #include "pathList.h"
 #include "path.h"
 
+#define	BIT_LIST_NAVIGATION_ARRAY_LENGTH	10
+
+/**
+ * Initialize the navigation system.
+ */
+void initNavigation();
+
 /**
  * Returns the navigation (singleton) location List.
  */

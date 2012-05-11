@@ -45,6 +45,8 @@ static Path pathEJ;
 static LocationList resultLocationList;
 
 int addNavigationLocations() {
+	initNavigation();
+
 	// locations
 	addNavigationLocation(&locationA, "A", 0, 0);
 	addNavigationLocation(&locationB, "B", 0, 0);
