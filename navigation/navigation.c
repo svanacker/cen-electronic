@@ -42,9 +42,8 @@ void addNavigationLocation(Location* location, char* name, int x, int y) {
 	addLocation(&locations, location, name, x, y);
 }
 
-void addNavigationPath(  Path* path, 
-						 PathDataFunction* pathDataFunction) {
-	addPath(&paths, path, pathDataFunction); 
+void addNavigationPath(PathDataFunction* pathDataFunction) {
+	addPath(&paths, pathDataFunction); 
 }
 
 void updateOutgoingPaths(Location* location) {
@@ -52,10 +51,10 @@ void updateOutgoingPaths(Location* location) {
 	int i;
 	int pathSize = getPathCount(&paths);
 	for (i = 0; i < pathSize; i++) {
-		Path* path = getPath(&paths, i);
+		PathDataFunction* pathDataFunction = getPath(&paths, i);
 
 		// For example : location = "A", check if path contains("A") : "AB" contains "A", but "DE" not
-		BOOL pathContainsLocationBool = pathContainsLocation(path, location);
+		BOOL pathContainsLocationBool = pathContainsLocation(pathDataFunction, location);
 
 		if (!pathContainsLocationBool) {
 			continue;
@@ -63,7 +62,7 @@ void updateOutgoingPaths(Location* location) {
 
 		// Check if the locationList that we handle contains the other end
 		// Ex : path = "AB", location="A" => otherEnd = "B"
-		Location* otherEnd = getOtherEnd(path, location);
+		Location* otherEnd = getOtherEnd(pathDataFunction, location);
 
 		// Ex : handledLocationList = {EF, GH} and other End = B
 		BOOL handledLocationListContainsLocation = containsLocation(&locations, otherEnd, TRUE);
@@ -176,9 +175,9 @@ int computeBestPath(LocationList* outLocationList, Location* start, Location* en
 				continue;
 			}
 
-			Path* path = getPath(&paths, i);
-			path->pathDataFunction();
-			Location* location2 = getOtherEnd(path, location1);
+			PathDataFunction* pathDataFunction = getPath(&paths, i);
+			pathDataFunction();
+			Location* location2 = getOtherEnd(pathDataFunction, location1);
 			int costLocation1 = getCost(location1);
 			int costLocation2 = getCost(location2);
 			

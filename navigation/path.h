@@ -9,9 +9,6 @@
  * This trick enabled us to save memory and to use instead of program memory.
  * This trick is only possible on read data. So tmpOutgoing is a standard struc path member.
  */
-// forward declaration
-struct Path;
-typedef struct Path Path;
 
 /** Define the function which will be called to fill PathData. */
 typedef void PathDataFunction();
@@ -37,14 +34,6 @@ typedef struct PathData {
 	unsigned char speedFactor;
 } PathData;
 
-/**
- * Encapsulates a path between 2 points.
- */
-struct Path {
-	/** Function which will fill pathData. */
-	PathDataFunction* pathDataFunction;
-};
-
 inline void fillPathData(Location* location1,
 						 Location* location2, 
 						 int cost,
@@ -55,9 +44,9 @@ inline void fillPathData(Location* location1,
 						 unsigned char accelerationFactor,
 						 unsigned char speedFactor);
 
-int getAngle1Path(Path* path);
+int getAngle1Path(PathDataFunction* pathDataFunction);
 
-int getAngle2Path(Path* path);
+int getAngle2Path(PathDataFunction* pathDataFunction);
 
 /**
  * Return the unique structure which must be filled before.
@@ -70,18 +59,18 @@ PathData* getTmpPathData();
 /**
  * Return if the path contains the location passed in parameter
  */
-BOOL pathContainsLocation(Path* path, Location* location);
+BOOL pathContainsLocation(PathDataFunction* path, Location* location);
 
 /**
  * Returns the opposite location on the path.
  * @param path (this) the path for which we want to find the opposite location
  * @param location the location for which we want to search the opposite
  */
-Location* getOtherEnd(Path* path, Location* location);
+Location* getOtherEnd(PathDataFunction* pathDataFunction, Location* location);
 
 /**
  * Print debugguable path.
  */
-void printPath(OutputStream* outputStream, Path* path);
+void printPath(OutputStream* outputStream, PathDataFunction* path);
 
 #endif

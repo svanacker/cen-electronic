@@ -6,7 +6,7 @@
 #include "pathList.h"
 #include "path.h"
 
-#define	BIT_LIST_NAVIGATION_ARRAY_LENGTH	10
+#define	BIT_LIST_NAVIGATION_ARRAY_LENGTH	(MAX_PATH / BITS_COUNT_IN_UNSIGNED_INT) + 1
 
 /**
  * Initialize the navigation system.
@@ -32,8 +32,7 @@ void addNavigationLocation(Location* location, char* name, int x, int y);
 /**
  * Add the path to the navigation graph.
  */
-void addNavigationPath(  Path* path, 
-						 PathDataFunction* pathDataFunction);
+void addNavigationPath(PathDataFunction* pathDataFunction);
 
 /**
  * Computes the path.

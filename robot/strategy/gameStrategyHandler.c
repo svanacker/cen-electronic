@@ -133,8 +133,8 @@ void motionGoLocation(Location* location,
 	#endif
 }
 
-void motionFollowPath(Path* path) {
-	path->pathDataFunction();
+void motionFollowPath(PathDataFunction* pathDataFunction) {
+	pathDataFunction();
 	PathData* pathData = getTmpPathData();
 	Location* location = pathData->location2;
 
@@ -182,8 +182,8 @@ void handleCurrentTrajectory() {
 
 	Location* start = getLocation(currentTrajectory, 0);
 	Location* end = getLocation(currentTrajectory, 1);
-	Path* path = getPathOfLocations(getNavigationPathList(), start, end);
-	motionFollowPath(path);
+	PathDataFunction* pathDataFunction = getPathOfLocations(getNavigationPathList(), start, end);
+	motionFollowPath(pathDataFunction);
 	removeFirstLocation(currentTrajectory);
 }
 

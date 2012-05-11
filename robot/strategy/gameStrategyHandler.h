@@ -32,7 +32,7 @@ void nextStep();
 /**
  * Ask to follow a path.
  */
-void motionFollowPath(Path* path);
+void motionFollowPath(PathDataFunction* pathDataFunction);
 
 void motionGoLocation(Location* location, 
 					int angle,

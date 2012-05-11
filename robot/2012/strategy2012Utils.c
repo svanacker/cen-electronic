@@ -51,8 +51,8 @@ void changeLocationsForColor() {
 	}
 }
 
-int getAngle1Path(Path* path) {
-	path->pathDataFunction();
+int getAngle1Path(PathDataFunction* pathDataFunction) {
+	pathDataFunction();
 	int result = getTmpPathData()->angle1;
 	if (isViolet()) {
 		return result;
@@ -62,8 +62,8 @@ int getAngle1Path(Path* path) {
 	}	
 }
 
-int getAngle2Path(Path* path) {
-	path->pathDataFunction();
+int getAngle2Path(PathDataFunction* pathDataFunction) {
+	pathDataFunction();
 	int result = getTmpPathData()->angle1;
 	if (isViolet()) {
 		return result;

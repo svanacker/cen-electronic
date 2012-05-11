@@ -30,18 +30,6 @@ static Location locationH;
 static Location locationI;
 static Location locationJ;
 
-static Path pathAB;
-static Path pathBF;
-static Path pathFI;
-static Path pathIJ;
-static Path pathAC;
-static Path pathCG;
-static Path pathCH;
-static Path pathHD;
-static Path pathHJ;
-static Path pathAE;
-static Path pathEJ;
-
 static LocationList resultLocationList;
 
 int addNavigationLocations() {
@@ -61,30 +49,30 @@ int addNavigationLocations() {
 
 	// paths
 	void pathABFunction() { fillPathData(&locationA, &locationB, 85, 0, 0, 0, 0, 0, 0); }
-	addNavigationPath(&pathAB, &pathABFunction);
+	addNavigationPath(&pathABFunction);
 	void pathBFFunction() { fillPathData(&locationB, &locationF, 80, 0, 0, 0, 0, 0, 0); }
-	addNavigationPath(&pathBF, &pathBFFunction);
+	addNavigationPath(&pathBFFunction);
 	void pathFIFunction() { fillPathData(&locationF, &locationI, 250, 0, 0, 0, 0, 0, 0); }
-	addNavigationPath(&pathFI, &pathFIFunction);
+	addNavigationPath(&pathFIFunction);
 	void pathIJFunction() { fillPathData(&locationI, &locationJ, 84, 0, 0, 0, 0, 0, 0); }
-	addNavigationPath(&pathIJ, &pathIJFunction);
+	addNavigationPath(&pathIJFunction);
 
 	void pathACFunction() { fillPathData(&locationA, &locationC, 217, 0, 0, 0, 0, 0, 0); }
-	addNavigationPath(&pathAC, &pathACFunction);
+	addNavigationPath(&pathACFunction);
 	void pathCGFunction() { fillPathData(&locationC, &locationG, 186, 0, 0, 0, 0, 0, 0); }
-	addNavigationPath(&pathCG, &pathCGFunction);
+	addNavigationPath(&pathCGFunction);
 
 	void pathCHFunction() { fillPathData(&locationC, &locationH, 103, 0, 0, 0, 0, 0, 0); }
-	addNavigationPath(&pathCH, &pathCHFunction);
+	addNavigationPath(&pathCHFunction);
 	void pathHDFunction() { fillPathData(&locationH, &locationD, 183, 0, 0, 0, 0, 0, 0); }
-	addNavigationPath(&pathHD, &pathHDFunction);
+	addNavigationPath(&pathHDFunction);
 	void pathHJFunction() { fillPathData(&locationH, &locationJ, 167, 0, 0, 0, 0, 0, 0); }
-	addNavigationPath(&pathHJ, &pathHJFunction);
+	addNavigationPath(&pathHJFunction);
 
 	void pathEJFunction() { fillPathData(&locationE, &locationJ, 502, 0, 0, 0, 0, 0, 0); }
-	addNavigationPath(&pathEJ, &pathEJFunction);
+	addNavigationPath(&pathEJFunction);
 	void pathAEFunction() { fillPathData(&locationA, &locationE, 173, 0, 0, 0, 0, 0, 0); }
-	addNavigationPath(&pathAE, &pathAEFunction);
+	addNavigationPath(&pathAEFunction);
 
 	printPathList(getOutputStreamLogger(INFO), "Paths definition", getNavigationPathList());
 

@@ -35,16 +35,16 @@ inline void fillPathData(Location* location1,
 }
 
 
-BOOL pathContainsLocation(Path* path, Location* location) {
+BOOL pathContainsLocation(PathDataFunction* pathDataFunction, Location* location) {
 	// fill temporary values
-	path->pathDataFunction();
+	pathDataFunction();
 
 	return tmpPathData.location1 == location || tmpPathData.location2 == location;
 }
 
-Location* getOtherEnd(Path* path, Location* location) {
+Location* getOtherEnd(PathDataFunction* pathDataFunction, Location* location) {
 	// fill temporary values
-	path->pathDataFunction();
+	pathDataFunction();
 	if (tmpPathData.location1 == location) {
 		return tmpPathData.location2;
 	}
@@ -54,9 +54,9 @@ Location* getOtherEnd(Path* path, Location* location) {
 	return NULL;
 }
 
-void printPath(OutputStream* outputStream, Path* path) {
+void printPath(OutputStream* outputStream, PathDataFunction* pathDataFunction) {
 	// fill temporary values
-	path->pathDataFunction();
+	pathDataFunction();
 
 	appendString(outputStream, "pathName=");
 	appendString(outputStream, tmpPathData.location1->name);
@@ -68,8 +68,8 @@ void printPath(OutputStream* outputStream, Path* path) {
 	appendStringAndDec(outputStream, ", cp1=", tmpPathData.controlPointDistance1);
 	appendStringAndDec(outputStream, ", cp2=", tmpPathData.controlPointDistance2);
 
-	appendStringAndDec(outputStream, ", angle1=", getAngle1Path(path));
-	appendStringAndDec(outputStream, ", angle2=", getAngle2Path(path));
+	appendStringAndDec(outputStream, ", angle1=", getAngle1Path(pathDataFunction));
+	appendStringAndDec(outputStream, ", angle2=", getAngle2Path(pathDataFunction));
 
 	appendStringAndDec(outputStream, ", accFactor=", tmpPathData.accelerationFactor);
 	appendStringAndDec(outputStream, ", speedFactor=", tmpPathData.speedFactor);

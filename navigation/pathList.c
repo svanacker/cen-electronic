@@ -13,17 +13,11 @@ void clearPathList(PathList* pathList) {
 }
 
 void addPath(PathList* pathList,
-			 Path* path, 
 			 PathDataFunction* pathDataFunction) {
-	path->pathDataFunction = pathDataFunction;
-	addFilledPath(pathList, path);
-}
-
-void addFilledPath(PathList* pathList, Path* path) {
     unsigned char size = pathList->size;
 
 	if (size < MAX_PATH) {
-	    pathList->paths[size] = path;
+	    pathList->paths[size] = pathDataFunction;
 	    pathList->size++;
 	}
 	else {
@@ -31,25 +25,25 @@ void addFilledPath(PathList* pathList, Path* path) {
     }
 }
 
-Path* getPath(PathList* pathList, int index) {
+PathDataFunction* getPath(PathList* pathList, int index) {
     return pathList->paths[index];
 }
 
-Path* getPathOfLocations(PathList* pathList, Location* location1, Location* location2) {
+PathDataFunction* getPathOfLocations(PathList* pathList, Location* location1, Location* location2) {
 	int i;
 	int size = pathList->size;
 	for (i = 0; i < size; i++) {
-		Path* path = pathList->paths[i];
-		path->pathDataFunction();
+		PathDataFunction* pathDataFunction = pathList->paths[i];
+		pathDataFunction();
 		Location* pathLocation1 = getTmpPathData()->location1;
 		Location* pathLocation2 = getTmpPathData()->location2;
 		// same order
 		if (locationEquals(pathLocation1, location1) && locationEquals(pathLocation2, location2)) {
-			return path;
+			return pathDataFunction;
 		}
 		// inverse order
 		if (locationEquals(pathLocation1, location2) && locationEquals(pathLocation2, location1)) {
-			return path;
+			return pathDataFunction;
 		}
 	}
 	return NULL;
@@ -67,7 +61,7 @@ void printPathList(OutputStream* outputStream, char* pathListName, PathList* pat
 
 	println(outputStream);
 	for (i = 0; i < size; i++) {
-		Path* path = pathList->paths[i];
-		printPath(outputStream, path);
+		PathDataFunction* pathDataFunction = pathList->paths[i];
+		printPath(outputStream, pathDataFunction);
 	}
 }
