@@ -152,6 +152,12 @@ int computeBestPath(LocationList* outLocationList, Location* start, Location* en
 
 		int i;
 		int size = paths.size;
+
+		#ifdef NAVIGATION_DEBUG
+			printLocationList(getOutputStreamLogger(INFO), "locations=", &locations);
+			printPathList(getOutputStreamLogger(INFO), "allPaths=", &paths);
+		#endif
+
 		// loop on all outgoingPath
 		for (i = 0; i < size; i++) {
 			Path* path = getPath(&paths, i);

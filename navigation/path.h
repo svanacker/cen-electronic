@@ -22,7 +22,7 @@ typedef struct PathData {
 	/** second point (with name). */
 	Location* location2;
 	/** Cost of the path. */
-	unsigned char cost;
+	unsigned int cost;
 	/** For path finding algorithm. */
 	BOOL tmpOutgoing;
 	/** Distance of the control point P0-P1. */ 	

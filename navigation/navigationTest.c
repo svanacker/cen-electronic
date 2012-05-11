@@ -79,10 +79,12 @@ int addNavigationLocations() {
 	void pathHJFunction() { fillPathData(&locationH, &locationJ, 167, 0, 0, 0, 0, 0, 0); }
 	addNavigationPath(&pathHJ, &pathHJFunction);
 
-	void pathAEFunction() { fillPathData(&locationA, &locationE, 173, 0, 0, 0, 0, 0, 0); }
-	addNavigationPath(&pathAE, &pathAEFunction);
 	void pathEJFunction() { fillPathData(&locationE, &locationJ, 502, 0, 0, 0, 0, 0, 0); }
 	addNavigationPath(&pathEJ, &pathEJFunction);
+	void pathAEFunction() { fillPathData(&locationA, &locationE, 173, 0, 0, 0, 0, 0, 0); }
+	addNavigationPath(&pathAE, &pathAEFunction);
+
+	printPathList(getOutputStreamLogger(INFO), "Paths definition", getNavigationPathList());
 
 	int cost = computeBestPath(&resultLocationList, &locationA, &locationJ);
 
