@@ -134,38 +134,38 @@ void deviceMotionHandleRawData(char header,
         backwardSimpleMM(distanceMM);
     }        // ROTATION
         // -> left
-    else if (header == COMMAND_MOTION_LEFT_IN_DEGREE) {
+    else if (header == COMMAND_MOTION_LEFT_IN_DECI_DEGREE) {
         appendAck(outputStream);
 
         long leftDegree = readHex4(inputStream);
         leftSimpleDegree(leftDegree);
 
-        append(outputStream, COMMAND_MOTION_LEFT_IN_DEGREE);
+        append(outputStream, COMMAND_MOTION_LEFT_IN_DECI_DEGREE);
     }        // -> right
-    else if (header == COMMAND_MOTION_RIGHT_IN_DEGREE) {
+    else if (header == COMMAND_MOTION_RIGHT_IN_DECI_DEGREE) {
         appendAck(outputStream);
 
         long rightDegree = readHex4(inputStream);
         rightSimpleDegree(rightDegree);
 
-        append(outputStream, COMMAND_MOTION_RIGHT_IN_DEGREE);
+        append(outputStream, COMMAND_MOTION_RIGHT_IN_DECI_DEGREE);
     }        // ONE WHEEL
         // -> left
-    else if (header == COMMAND_MOTION_LEFT_ONE_WHEEL_IN_DEGREE) {
+    else if (header == COMMAND_MOTION_LEFT_ONE_WHEEL_IN_DECI_DEGREE) {
         appendAck(outputStream);
 
         long leftDegree = readHex4(inputStream);
         leftOneWheelSimpleDegree(leftDegree);
 
-        append(outputStream, COMMAND_MOTION_LEFT_ONE_WHEEL_IN_DEGREE);
+        append(outputStream, COMMAND_MOTION_LEFT_ONE_WHEEL_IN_DECI_DEGREE);
     }        // -> right
-    else if (header == COMMAND_MOTION_RIGHT_ONE_WHEEL_IN_DEGREE) {
+    else if (header == COMMAND_MOTION_RIGHT_ONE_WHEEL_IN_DECI_DEGREE) {
         appendAck(outputStream);
 
         long rightDegree = readHex4(inputStream);
         rightOneWheelSimpleDegree(rightDegree);
 
-        append(outputStream, COMMAND_MOTION_RIGHT_ONE_WHEEL_IN_DEGREE);
+        append(outputStream, COMMAND_MOTION_RIGHT_ONE_WHEEL_IN_DECI_DEGREE);
     }        // -> bspline
     else if (header == COMMAND_MOTION_SPLINE_RELATIVE || header == COMMAND_MOTION_SPLINE_ABSOLUTE) {
         appendAck(outputStream);

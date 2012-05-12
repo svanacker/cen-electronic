@@ -74,7 +74,7 @@ int deviceMotionGetInterface(char header, int mode, BOOL fillDeviceArgumentList)
             return 0;
         }
     }// turn left in degree
-    else if (header == COMMAND_MOTION_LEFT_IN_DEGREE) {
+    else if (header == COMMAND_MOTION_LEFT_IN_DECI_DEGREE) {
         if (mode == DEVICE_MODE_INPUT) {
             if (fillDeviceArgumentList) {
 				setFunction("rotLeftDecDeg", 1);
@@ -88,7 +88,7 @@ int deviceMotionGetInterface(char header, int mode, BOOL fillDeviceArgumentList)
             return 0;
         }
     }// turn right in degree
-    else if (header == COMMAND_MOTION_RIGHT_IN_DEGREE) {
+    else if (header == COMMAND_MOTION_RIGHT_IN_DECI_DEGREE) {
         if (mode == DEVICE_MODE_INPUT) {
             if (fillDeviceArgumentList) {
 				setFunction("rotRightDecDeg", 1);
@@ -103,7 +103,7 @@ int deviceMotionGetInterface(char header, int mode, BOOL fillDeviceArgumentList)
         }
     }// ONLY ONE WHEEL
         // turn left (only right in degree
-    else if (header == COMMAND_MOTION_LEFT_ONE_WHEEL_IN_DEGREE) {
+    else if (header == COMMAND_MOTION_LEFT_ONE_WHEEL_IN_DECI_DEGREE) {
         if (mode == DEVICE_MODE_INPUT) {
             if (fillDeviceArgumentList) {
 				setFunction("rotLeft1WheelDecDeg", 1);
@@ -117,7 +117,7 @@ int deviceMotionGetInterface(char header, int mode, BOOL fillDeviceArgumentList)
             return 0;
         }
     }// turn right (only right wheel) in degree
-    else if (header == COMMAND_MOTION_RIGHT_ONE_WHEEL_IN_DEGREE) {
+    else if (header == COMMAND_MOTION_RIGHT_ONE_WHEEL_IN_DECI_DEGREE) {
         if (mode == DEVICE_MODE_INPUT) {
             if (fillDeviceArgumentList) {
 				setFunction("rotRight1WheelDecDeg", 1);

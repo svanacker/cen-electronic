@@ -13,22 +13,16 @@
 #define COMMAND_MOTION_BACKWARD_IN_MM 'b'
 
 /** Turn to the left in degree. */
-#define COMMAND_MOTION_LEFT_IN_DEGREE 'l'
+#define COMMAND_MOTION_LEFT_IN_DECI_DEGREE 'l'
 
 /** Turn to the right in degree. */
-#define COMMAND_MOTION_RIGHT_IN_DEGREE 'r'
+#define COMMAND_MOTION_RIGHT_IN_DECI_DEGREE 'r'
 
 /** Turn to the left in degree, but without turning right wheel. */
-#define COMMAND_MOTION_RIGHT_ONE_WHEEL_IN_DEGREE '('
+#define COMMAND_MOTION_RIGHT_ONE_WHEEL_IN_DECI_DEGREE '('
 
 /** Turn to the left in degree, but without turning right wheel. */
-#define COMMAND_MOTION_LEFT_ONE_WHEEL_IN_DEGREE ')'
-
-/** Left rotation with a radius */
-#define COMMAND_MOTION_LEFT_CIRCLE '}'
-
-/** Left rotation with a radius */
-#define COMMAND_MOTION_RIGHT_CIRCLE '{'
+#define COMMAND_MOTION_LEFT_ONE_WHEEL_IN_DECI_DEGREE ')'
 
 /** Define the header used to follow a spline with relative coordinates. */
 #define COMMAND_MOTION_SPLINE_RELATIVE 		'%'
