@@ -166,13 +166,3 @@ void __attribute__((__interrupt__)) __attribute__((no_auto_psv)) _T1Interrupt(vo
     // Enable the interrupt
     _T1IE = 1;
 }
-
-// DEBUG
-
-void printTimerList(OutputStream* outputStream) {
-    int i;
-    for (i = 0; i < timerList.size; i++) {
-        Timer* timer = getTimerByIndex(i);
-        printTimer(outputStream, timer);
-    }
-}

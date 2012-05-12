@@ -75,12 +75,5 @@ BOOL initDevice(const Device *device);
 */
 void stopDevice(const Device *device);
 
-// DEBUG
-
-/**
- * Print the device information.
- */
-void printDevice(OutputStream* outputStream, const Device* device);
-
 #endif
 

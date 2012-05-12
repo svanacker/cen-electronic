@@ -102,17 +102,3 @@ void initDevices() {
     }
 }
 
-// DEBUG
-void printDeviceList(OutputStream* outputStream) {
-    int size = deviceList.size;
-    int i;
-	println(outputStream);
-	Device* devicePointer = (Device*) deviceList.devices;
-    for (i = 0; i < size; i++) {
-        Device* device = getDevice(i);
-		appendStringAndDec(outputStream, "*device=", (int) (devicePointer++));
-		appendString(outputStream, ", ");
-        printDevice(outputStream, device);
-    }
-}
-
