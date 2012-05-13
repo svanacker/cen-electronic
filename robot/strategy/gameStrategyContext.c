@@ -28,7 +28,7 @@ void printGameStrategyContext(OutputStream* outputStream, GameStrategyContext* c
 	printPoint(outputStream, &(context->robotPosition), "");
 
 	// nearestLocation
-	appendString(outputStream, "\nearestLocation=");
+	appendString(outputStream, "\tnearestLocation=");
 	if (context->nearestLocation != NULL) {
 		printLocation(outputStream, context->nearestLocation);
 	}
@@ -37,7 +37,7 @@ void printGameStrategyContext(OutputStream* outputStream, GameStrategyContext* c
 	}
 
 	// Robot Position
-	appendString(outputStream, "\topponentRobotPosition=");
+	appendString(outputStream, "\n\topponentRobotPosition=");
 	printPoint(outputStream, &(context->opponentRobotPosition), "");
 
 	// current Target
@@ -51,7 +51,7 @@ void printGameStrategyContext(OutputStream* outputStream, GameStrategyContext* c
 
 	// currentTrajectory
 	if (&(context->currentTrajectory) != NULL) {
-		printLocationList(outputStream, "currentTrajectory:", &(context->currentTrajectory));
+		printLocationList(outputStream, "\n\tcurrentTrajectory:", &(context->currentTrajectory));
 	}
 	else {
 		appendString(outputStream, "\n\tcurrentTrajectory=NULL");

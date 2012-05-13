@@ -73,6 +73,13 @@ void computeBestNextTarget(GameStrategyContext* strategyContext) {
 		}
 	}
 
+	// updates the trajectory to fit to the best target
+	GameTargetAction* targetAction = strategyContext->currentTargetAction;
+	if (targetAction != NULL) {
+		Location* startLocation = targetAction->startLocation;
+		computeBestPath(&(strategyContext->currentTrajectory), currentLocation, startLocation);
+	}
+
 	#ifdef NEXT_GAME_STRATEGY_ITEM_COMPUTER_DEBUG
 		if (strategyContext->targetAction != NULL) {
 			OutputStream outputStream = getOutputStreamLogger(INFO);

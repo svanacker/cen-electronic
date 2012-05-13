@@ -90,7 +90,7 @@ void executeTargetActions() {
 			appendString(getOutputStreamLogger(DEBUG), "-> no actions for this target\n");
 		#endif
 		markTargetAsHandled();
-		nextStep();
+//		nextStep();
 		return;
 	}
 
@@ -107,7 +107,7 @@ void executeTargetActions() {
 	}
 	else {
 		markTargetAsHandled();
-		nextStep();
+//		nextStep();
 	}
 }
 
@@ -187,8 +187,7 @@ void handleCurrentTrajectory() {
 	removeFirstLocation(currentTrajectory);
 }
 
-
-void nextStep() {
+BOOL nextStep() {
 	#ifdef DEBUG_STRATEGY_HANDLER
 		appendString(getOutputStreamLogger(DEBUG), "nextStep\n");	
 	#endif
@@ -204,6 +203,12 @@ void nextStep() {
 	else if (targetAction == NULL) {
 		// no target, search a new one
 		findNextTarget();
+		if (strategyContext.currentTarget == NULL) {
+			#ifdef DEBUG_STRATEGY_HANDLER
+				appendString(getOutputStreamLogger(DEBUG), "no more targets -> stopping");
+			#endif
+			return FALSE;
+		}
 		// Next target created a new current trajectory
 		if (getLocationCount(&(strategyContext.currentTrajectory)) != 0) {
 			handleCurrentTrajectory();			
@@ -211,6 +216,8 @@ void nextStep() {
 	} else {
 		executeTargetActions();
 	}
+
+	return TRUE;
 }
 
 

@@ -125,12 +125,12 @@ static GameTargetActionItem bullionLeft1Step4ClosePlierTargetActionItem;
 static GameStrategy strategy1;
 
 // strategies Items
-// static GameStrategyItem takeBullionFirstStrategyItem;
-// static GameStrategyItem bottle1StrategyItem;
-// static GameStrategyItem bottle2StrategyItem;
-// static GameStrategyItem cdTakeStrategyItem;
-// static GameStrategyItem bullionRight1StrategyItem;
-// static GameStrategyItem bullionLeft1StrategyItem;
+static GameStrategyItem takeBullionFirstStrategyItem;
+static GameStrategyItem bottle1StrategyItem;
+static GameStrategyItem bottle2StrategyItem;
+static GameStrategyItem cdTakeStrategyItem;
+static GameStrategyItem bullionRight1StrategyItem;
+static GameStrategyItem bullionLeft1StrategyItem;
 static GameStrategyItem opponentCDStrategyItem;
 
 // ------------------------------------------------------- INITIALIZATION ------------------------------------------------------------
@@ -158,6 +158,9 @@ void initLocations2012() {
 	addNavigationLocation(&bullionMiddle2Location, BULLION_MIDDLE_2, BULLION_MIDDLE_2_X, BULLION_MIDDLE_2_Y);
 }
 
+void bottle2ToCDPathFunction() { fillPathData(&bottle2Location, &cdTakeLocation, BOTTLE_2_TO_CD_COST, 0x1B, 0x30, 0, 0xFAF6, BOTTLE_2_TO_CD_SPEED_FACTOR, BOTTLE_2_TO_CD_ACCELERATION_FACTOR);}
+void cdToDropZone1PathFunction() { fillPathData(&cdTakeLocation, &dropZone1Location, CD_TO_DROP_ZONE_1_COST, 0x11, 0x26, 0xFAF6, ANGLE_NEG_90, CD_TO_DROP_ZONE_1_SPEED_FACTOR, CD_TO_DROP_ZONE_1_ACCELERATION_FACTOR);}
+
 void initPaths2012() {
 	clearPathList(getNavigationPathList());
 
@@ -176,10 +179,8 @@ void initPaths2012() {
 	void bottle2FrontToBottle2PathFunction() { fillPathData(&bottle2FrontLocation, &bottle2Location, BOTTLE_2_FRONT_TO_BOTTLE_2_COST, 0x57, 0x0A, ANGLE_180, 0, BOTTLE_1_TO_BOTTLE_2_SPEED_FACTOR, BOTTLE_1_TO_BOTTLE_2_ACCELERATION_FACTOR);}
 	addNavigationPath(&bottle2FrontToBottle2PathFunction);
 
-	void bottle2ToCDPathFunction() { fillPathData(&bottle2Location, &cdTakeLocation, BOTTLE_2_TO_CD_COST, 0x1B, 0x30, 0, 0xFAF6, BOTTLE_2_TO_CD_SPEED_FACTOR, BOTTLE_2_TO_CD_ACCELERATION_FACTOR);}
 	addNavigationPath(&bottle2ToCDPathFunction);
 
-	void cdToDropZone1PathFunction() { fillPathData(&cdTakeLocation, &dropZone1Location, CD_TO_DROP_ZONE_1_COST, 0x11, 0x26, 0xFAF6, ANGLE_NEG_90, CD_TO_DROP_ZONE_1_SPEED_FACTOR, CD_TO_DROP_ZONE_1_ACCELERATION_FACTOR);}
 	addNavigationPath(&cdToDropZone1PathFunction);
 
 	// TO BULLION RIGHT 1
@@ -230,11 +231,11 @@ void initTargets2012() {
 // CD ActionItem
 
 void cdTakeStep1() {
-	// TODO : motionFollowPath(&bottle2ToCDPath);
+	motionFollowPath(&bottle2ToCDPathFunction);
 }
 
 void cdTakeStep2() {
-	// TODO : 	motionFollowPath(&cdToDropZone1Path);
+	motionFollowPath(&cdToDropZone1PathFunction);
 }
 
 // Bullion Right 1 ActionItem
@@ -295,16 +296,17 @@ void initStrategies2012() {
 }
 
 void initStrategiesItems2012() {
-//	addGameStrategyItem(&strategy1, &takeBullionFirstStrategyItem, &bullion1Target);
-	// addGameStrategyItem(&strategy1, &bottle1StrategyItem, &bottle1Target);
-	// addGameStrategyItem(&strategy1, &bottle2StrategyItem, &bottle2Target);
-	// addGameStrategyItem(&strategy1, &cdTakeStrategyItem, &cd4Target);
-//	addGameStrategyItem(&strategy1, &bullionRight1StrategyItem, &bullionRight1Target);
-//	addGameStrategyItem(&strategy1, &bullionLeft1StrategyItem, &bullionLeft1Target);
+	addGameStrategyItem(&strategy1, &takeBullionFirstStrategyItem, &bullion1Target);
+	addGameStrategyItem(&strategy1, &bottle1StrategyItem, &bottle1Target);
+	addGameStrategyItem(&strategy1, &bottle2StrategyItem, &bottle2Target);
+	addGameStrategyItem(&strategy1, &cdTakeStrategyItem, &cd4Target);
+	addGameStrategyItem(&strategy1, &bullionRight1StrategyItem, &bullionRight1Target);
+	addGameStrategyItem(&strategy1, &bullionLeft1StrategyItem, &bullionLeft1Target);
 	addGameStrategyItem(&strategy1, &opponentCDStrategyItem, &opponentCDTarget);
 }
 
 void initStrategy2012(int strategyIndex) {
+	initNavigation();
 	initLocations2012();
 	initPaths2012();
 

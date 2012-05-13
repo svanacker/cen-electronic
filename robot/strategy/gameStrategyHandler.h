@@ -23,9 +23,9 @@ void setStrategy(int strategyIndex);
 GameStrategyContext* getStrategyContext();
 
 /**
- * Do the next step in the strategy
+ * Do the next step in the strategy. Returns FALSE if nothing was done.
  */
-void nextStep();
+BOOL nextStep();
 
 // MOTION
 
