@@ -6,17 +6,14 @@
 /** Redirect commands to Jennic. */
 #define COMMAND_REDIRECT_TO_JENNIC 			'@'
 
-/** Light on the local Jennic. */
-#define COMMAND_LOCAL_LIGHT_ON				'w'
-
-/** Light off the local Jennic. */
-#define COMMAND_LOCAL_LIGHT_OFF				'q'
+/** Light on/off the local Jennic. */
+#define COMMAND_LOCAL_LIGHT					'{'
 
 /** Send a RST to Jennic. */
-#define COMMAND_RESET_JENNIC				'r'
+#define COMMAND_RESET_JENNIC				'#'
 
 /** Show In Data (real Data, not ack or command response from Jennic). */
-#define COMMAND_SHOW_DATA_FROM_JENNIC 		':'
+#define COMMAND_SHOW_DATA_FROM_JENNIC 		'.'
 
 
 // Common definition, but the implementation of device is specific

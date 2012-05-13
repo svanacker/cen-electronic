@@ -1,5 +1,4 @@
 #include <stdlib.h>
-#include <p30fxxxx.h>
 
 #include "laserBeacon.h"
 #include "beaconSystem.h"
@@ -91,17 +90,12 @@ void deviceBeaconHandleRawData(char header,
         appendAck(outputStream);
 		doBeaconCalibration();
 		append(outputStream, COMMAND_BEACON_CALIBRATION);
-	// Jennic Remote (router) Light on
-	} else if (header == COMMAND_ROUTER_LIGHT_ON) {
+	// Jennic Remote (router) Light on / off
+	} else if (header == COMMAND_ROUTER_LIGHT) {
         appendAck(outputStream);
-		jennic5139RemoteLight(JENNIC_ROUTER_MAC_ADDRESS, JENNIC_LED_ALL, TRUE);
-        append(outputStream, COMMAND_ROUTER_LIGHT_ON);
-	}
-	// Jennic Remote (router) Light off
-	 else if (header == COMMAND_ROUTER_LIGHT_OFF) {
-        appendAck(outputStream);
-		jennic5139RemoteLight(JENNIC_ROUTER_MAC_ADDRESS, JENNIC_LED_ALL, FALSE);
-        append(outputStream, COMMAND_ROUTER_LIGHT_OFF);
+		unsigned char status = readHex2(inputStream);
+		jennic5139RemoteLight(JENNIC_ROUTER_MAC_ADDRESS, JENNIC_LED_ALL, status != 0);
+        append(outputStream, COMMAND_ROUTER_LIGHT);
 	}
 	// Run the servo of the beacon system
 	else if (header == COMMAND_BEACON_SERVO_RUN) {

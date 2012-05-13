@@ -5,7 +5,6 @@
   @version 17/04/2010
  */
 #include <p30fxxxx.h>
-#include <libpic30.h>
 
 #include "startMatchDetectorDevice.h"
 #include "startMatchDetectorDeviceInterface.h"

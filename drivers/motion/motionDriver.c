@@ -86,7 +86,7 @@ BOOL motionDriverBackward(float distanceInMM) {
 
 BOOL motionDriverLeft(float leftDeciDegree) {
     OutputStream* outputStream = getDriverRequestOutputStream();
-    append(outputStream, COMMAND_MOTION_LEFT_IN_DEGREE);
+    append(outputStream, COMMAND_MOTION_LEFT_IN_DECI_DEGREE);
     appendHex4(outputStream, leftDeciDegree);
 
     BOOL result = transmitFromDriverRequestBuffer();
@@ -96,7 +96,7 @@ BOOL motionDriverLeft(float leftDeciDegree) {
 
 BOOL motionDriverRight(float rightDeciDegree) {
     OutputStream* outputStream = getDriverRequestOutputStream();
-    append(outputStream, COMMAND_MOTION_RIGHT_IN_DEGREE);
+    append(outputStream, COMMAND_MOTION_RIGHT_IN_DECI_DEGREE);
     appendHex4(outputStream, rightDeciDegree);
 
     BOOL result = transmitFromDriverRequestBuffer();
@@ -108,7 +108,7 @@ BOOL motionDriverRight(float rightDeciDegree) {
 
 BOOL motionDriverLeftOneWheel(float leftDeciDegree) {
     OutputStream* outputStream = getDriverRequestOutputStream();
-    append(outputStream, COMMAND_MOTION_LEFT_ONE_WHEEL_IN_DEGREE);
+    append(outputStream, COMMAND_MOTION_LEFT_ONE_WHEEL_IN_DECI_DEGREE);
     appendHex4(outputStream, leftDeciDegree);
 
     BOOL result = transmitFromDriverRequestBuffer();
@@ -118,7 +118,7 @@ BOOL motionDriverLeftOneWheel(float leftDeciDegree) {
 
 BOOL motionDriverRightOneWheel(float rightDeciDegree) {
     OutputStream* outputStream = getDriverRequestOutputStream();
-    append(outputStream, COMMAND_MOTION_RIGHT_ONE_WHEEL_IN_DEGREE);
+    append(outputStream, COMMAND_MOTION_RIGHT_ONE_WHEEL_IN_DECI_DEGREE);
     appendHex4(outputStream, rightDeciDegree);
 
     BOOL result = transmitFromDriverRequestBuffer();

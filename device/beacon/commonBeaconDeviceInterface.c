@@ -19,19 +19,19 @@ int commonBeaconDeviceGetInterface(char header, int mode, BOOL fillDeviceArgumen
 		}
 		return 0;
     }
-	else if (header == COMMAND_LOCAL_LIGHT_ON) {
-		// both input/output
-		if (fillDeviceArgumentList) {
-			setFunctionNoArgument("LocalLightOn");
-		}
-		return 0;
-	}
-	else if (header == COMMAND_LOCAL_LIGHT_OFF) {
-		// both input/output
-		if (fillDeviceArgumentList) {
-			setFunctionNoArgument("LocalLightOff");
-		}
-		return 0;
+	else if (header == COMMAND_LOCAL_LIGHT) {
+        if (mode == DEVICE_MODE_INPUT) {
+            if (fillDeviceArgumentList) {
+				setFunctionNoArgument("localLight");
+				setArgumentUnsignedHex4(2, "on/off");
+            }
+            return 2;
+        } else if (mode == DEVICE_MODE_OUTPUT) {
+            if (fillDeviceArgumentList) {
+				setFunction("localLight", 0);
+            }
+            return 0;
+        }
 	}
 	else if (header == COMMAND_SHOW_DATA_FROM_JENNIC) {
 		// both input/output

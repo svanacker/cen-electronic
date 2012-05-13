@@ -15,22 +15,19 @@
 #define COMMAND_BEACON_SET_CONFIGURATION 'd'
 
 /** Get information about beacon configuration . */
-#define COMMAND_BEACON_CONFIGURATION 'i'
+#define COMMAND_BEACON_CONFIGURATION '}'
 
 /** Init the Jennic as coordinater. */
 #define COMMAND_INIT_JENNIC_AS_COORDINATER		'j'
 
 /** Send hello from the coordinater to router. */
-#define COMMAND_SEND_ROBOT_POSITION_FROM_COORDINATER_TO_ROUTER 'h'
+#define COMMAND_SEND_ROBOT_POSITION_FROM_COORDINATER_TO_ROUTER 'U'
 
 /** Redirect command to Jennic. */
-#define COMMAND_REDIRECT_TO_JENNIC '@'
+#define COMMAND_REDIRECT_TO_JENNIC 				'@'
 
-/** Light of the jennic on. */
-#define COMMAND_ROUTER_LIGHT_ON		    'n'
-
-/** Light of the jennic off. */
-#define COMMAND_ROUTER_LIGHT_OFF		'o'
+/** Light of the jennic on/off. */
+#define COMMAND_ROUTER_LIGHT					'o'
 
 DeviceInterface* getLaserBeaconDeviceInterface();
 

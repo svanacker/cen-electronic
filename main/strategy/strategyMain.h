@@ -1,8 +1,6 @@
 #ifndef STRATEGY_BOARD_H
 #define STRATEGY_BOARD_H
 
-#include <p30fxxxx.h>
-
 /** Define the I2C address used by strategy Board. */
 #define STRATEGY_BOARD_I2C_ADDRESS 	0x5A
 

@@ -1,4 +1,3 @@
-#include <p30fxxxx.h>
 #include <math.h>
 
 #include "laserBeacon.h"

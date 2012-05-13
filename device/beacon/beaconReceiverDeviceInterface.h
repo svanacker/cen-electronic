@@ -11,7 +11,7 @@
 /**
  * Command header to set the position of the opponent robot via automatic notification (pull).
  */
-#define COMMAND_SET_OPPONENT_ROBOT_POSITION_FROM_LASER_TO_RECEIVER '&'
+#define COMMAND_SET_OPPONENT_ROBOT_POSITION_FROM_LASER_TO_RECEIVER '!'
 
 
 #define COMMAND_GET_OPPONENT_ROBOT_MSG_SIZE 9

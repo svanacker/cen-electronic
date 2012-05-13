@@ -1,6 +1,3 @@
-#include <time.h>
-
-#include <i2c.h>
 #include <p30fxxxx.h>
 #include <stdlib.h>
 
@@ -73,7 +70,7 @@
 #include "../../drivers/driverStreamListener.h"
 
 // Test
-#include "../../test/common/math/bitListTest.h"
+// #include "../../test/common/math/bitListTest.h"
 
 // The port for which we debug (we can send instruction too)
 #include "../../robot/robot.h"
@@ -211,14 +208,10 @@ int main(void) {
 
 	initDriversDescriptor();
 
-	printDeviceList(getOutputStreamLogger(INFO));
-
-	addNavigationLocations();
-	// printDeviceListUsage(getOutputStreamLogger(INFO));
-
-	// testBitList();
-
 	#ifdef MPLAB_SIMULATION
+		addNavigationLocations();
+		printDeviceListUsage(getOutputStreamLogger(INFO));
+
 		while (1) {
 	
 		}

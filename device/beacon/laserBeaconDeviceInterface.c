@@ -77,18 +77,19 @@ int deviceBeaconGetInterface(char header, int mode, BOOL fillDeviceArgumentList)
 		}
         return 0;
     }
-	else if (header == COMMAND_ROUTER_LIGHT_ON) {
-		// both input/output
-		if (fillDeviceArgumentList) {
-			setFunctionNoArgument("RouterLightOn");
-		}
-		return 0;
-	}
-	else if (header == COMMAND_ROUTER_LIGHT_OFF) {
-		// both input/output
-		if (fillDeviceArgumentList) {
-			setFunctionNoArgument("RouterLightOff");
-		}
+	else if (header == COMMAND_ROUTER_LIGHT) {
+       if (mode == DEVICE_MODE_INPUT) {
+            if (fillDeviceArgumentList) {
+				setFunction("routerLight", 1);
+				setArgumentUnsignedHex2(0, "on/off");
+            }
+            return 2;
+        } else if (mode == DEVICE_MODE_OUTPUT) {
+            if (fillDeviceArgumentList) {
+				setFunctionNoArgument("routerLight");
+            }
+            return 0;
+        }
 		return 0;
 	}
 	else if (header == COMMAND_BEACON_SERVO_RUN) {

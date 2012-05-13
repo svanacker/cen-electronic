@@ -10,7 +10,7 @@
 #define COMMAND_USAGE 'u'
 
 /** Command to wait a certain amount of time (in milliseconds). */
-#define COMMAND_WAIT 'W'
+#define COMMAND_WAIT 'M'
 
 /** Command to show the name of the PIC. */
 #define COMMAND_PIC_NAME 'N'

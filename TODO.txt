@@ -1,5 +1,8 @@
 SV
 
+- Notification Beacon Receiver Board => Main Board
+- Mettre les Builds dans des répertoires différents
+
 - Tester intensivement la gestion de collision / blocage de roues
 - Gestion des lasers et de la collision (Zigbee Jennic et le système de balise)
 * Mettre un 2ème sonar pour les mouvements en arrières
@@ -14,12 +17,13 @@ Problème au niveau de l'envoie de "'" pour arrêter les servos. Provoque un reboo
 NEXT YEAR
 
 * Virer les trucs inutiles au niveau informatique genre Cable Ethernet
-
+* Faire le ménage au niveau des fichiers c : robotDetector.c
 - Faire fonctionner la stratégie au niveau du projet Eclipse
 - Implémenter et tester la gestion de l'enchainement des trajectoires
 - Faire un nouveau DriverDataDispatcher spécial UART si c'est possible pour pouvoir relier des cartes en UART en maitre esclave :)
 - Installer GIT sur la carte mère embarquée du PC
 - Tester de pouvoir récupérer directement un programme en mettant un remote GIT différent
+- Faire des en têtes à la manière des Jennic : MOV, LEF, RIG ...
 
 
 AUTRES :

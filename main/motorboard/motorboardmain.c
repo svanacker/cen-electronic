@@ -1,5 +1,4 @@
 #include <i2c.h>
-#include <p30fxxxx.h>
 #include <stdlib.h>
 
 // List of available functionnality

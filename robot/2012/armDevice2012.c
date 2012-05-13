@@ -1,5 +1,3 @@
-#include <p30fxxxx.h>
-
 #include "armDevice2012.h"
 
 #include "armDeviceInterface2012.h"

@@ -1,8 +1,6 @@
 #ifndef MECHANICAL_BOARD_1_H
 #define MECHANICAL_BOARD_1_H
 
-#include <p30fxxxx.h>
-
 /** Define the I2C address used by motorBoard. */
 #define MECHANICAL_BOARD_1_I2C_ADDRESS 	0x52
 
