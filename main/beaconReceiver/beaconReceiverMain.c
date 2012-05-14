@@ -134,14 +134,15 @@ static JennicEvent connectionResetEvent;
 
 void initDevicesDescriptor() {
 	initDeviceList(&deviceListArray, BEACON_RECEIVER_DEVICE_LENGTH);
-	//addLocalDevice(&testDevice, getTestDeviceInterface(), getTestDeviceDescriptor());
-	addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
-	addLocalDevice(getCommonBeaconDeviceInterface(), getCommonBeaconDeviceDescriptor());
-	addLocalDevice(getBeaconReceiverDeviceInterface(), getBeaconReceiverDeviceDescriptor());
 
 	// Remote
 	addZigbeeRemoteDevice(getLaserBeaconDeviceInterface(), JENNIC_COORDINATER_MAC_ADDRESS);
 	addZigbeeRemoteDevice(getTestDeviceInterface(), JENNIC_COORDINATER_MAC_ADDRESS);
+
+	//addLocalDevice(&testDevice, getTestDeviceInterface(), getTestDeviceDescriptor());
+	addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
+	addLocalDevice(getCommonBeaconDeviceInterface(), getCommonBeaconDeviceDescriptor());
+	addLocalDevice(getBeaconReceiverDeviceInterface(), getBeaconReceiverDeviceDescriptor());
 
 	initDevices();
 }
@@ -271,9 +272,6 @@ int runZigBeeReceiver() {
 							BEACON_RECEIVER_I2C_ADDRESS
 						);
 
-	// init the devices
-	initDevicesDescriptor();
-
 	// Zigbee OutputStream
 	
     addZigbeeDriverDataDispatcher(&beaconBoardDispatcher,
@@ -281,6 +279,10 @@ int runZigBeeReceiver() {
 						            &beaconBoardInputStream,
 						            &beaconBoardOutputStream,
 						            JENNIC_COORDINATER_MAC_ADDRESS);
+
+
+	// init the devices
+	initDevicesDescriptor();
 
 	// Init the timers management
 	#ifndef MPLAB_SIMULATION
@@ -295,6 +297,9 @@ int runZigBeeReceiver() {
 	registerJennicEvents();
 
 	updatePinNetworkStatus();
+
+	// Init jennic as router
+	initJennic5139Router();
 
 	// Get interesting data 
     while (1) {
