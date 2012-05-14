@@ -5,6 +5,7 @@
 #include "../../common/io/buffer.h"
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
+#include "../../common/io/reader.h"
 
 #include "../../common/log/logger.h"
 #include "../../common/log/logHandler.h"
@@ -28,12 +29,16 @@ BOOL sendStrategyConfiguration(int configuration) {
 
 BOOL sendStrategyNextStep() {
     OutputStream* outputStream = getDriverRequestOutputStream();
+    InputStream* inputStream = getDriverResponseInputStream();
 
     append(outputStream, COMMAND_NEXT_STEP);
 
     BOOL result = transmitFromDriverRequestBuffer();
-
-    return result;
+    if (result) {
+        int result = readHex2(inputStream);
+		return result;
+    }
+    return FALSE;
 }
 
 BOOL sendStrategyOpponentRobotPosition(int x, int y) {

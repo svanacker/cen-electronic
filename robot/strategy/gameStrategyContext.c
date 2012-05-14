@@ -56,5 +56,9 @@ void printGameStrategyContext(OutputStream* outputStream, GameStrategyContext* c
 	else {
 		appendString(outputStream, "\n\tcurrentTrajectory=NULL");
 	}
+	appendStringAndDec(outputStream, "\n\tteamColor=", context->color);
+	appendStringAndDec(outputStream, "\n\tmustDoNextStep=", context->mustDoNextStep);
+	appendStringAndDec(outputStream, "\n\thasMoreNextSteps=", context->hasMoreNextSteps);
+
 	println(outputStream);
 }

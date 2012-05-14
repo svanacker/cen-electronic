@@ -56,11 +56,20 @@ int deviceStrategyGetInterface(char header, int mode, BOOL fillDeviceArgumentLis
 	}
 	// Next step
 	else if (header == COMMAND_NEXT_STEP) {
-		// same input/output
-		if (fillDeviceArgumentList) {
-			setFunctionNoArgument("nextStep");
-		}
-		return 0;
+		if (mode == DEVICE_MODE_INPUT) {
+			// same input/output
+			if (fillDeviceArgumentList) {
+				setFunctionNoArgument("nextStep");
+			}
+			return 0;
+		} else if (mode == DEVICE_MODE_OUTPUT) {
+            if (fillDeviceArgumentList) {
+				setFunction("nextStep", 1);
+				setArgumentUnsignedHex2(0, "status");
+            }
+            return 2;
+        }
+		
 	}
 	return DEVICE_HEADER_NOT_HANDLED;
 }

@@ -163,7 +163,7 @@ void initDriversDescriptor() {
 				&driverResponseBuffer, &driverResponseBufferArray, STRATEGY_BOARD_RESPONSE_DRIVER_BUFFER_LENGTH);
 
 	// Include I2C => TRUE, FALSE, else
-	initDriverToI2CSlaveAndDebugCompositeOutputStream(FALSE);
+	initDriverToI2CSlaveAndDebugCompositeOutputStream(TRUE);
 	// Redirect driver to I2C Slave (not default behaviour)
 	setRedirectionTransmitFromDriverRequestBuffer(&redirectDriverToCompositeOutputStream);
 }
@@ -239,9 +239,10 @@ int main(void) {
 								&filterRemoveCRLF,
 								NULL);
 
-		if (getStrategyContext()->nextStep) {
-			nextStep();
-			getStrategyContext()->nextStep = FALSE;
+		GameStrategyContext* context = getStrategyContext();
+		if (context->mustDoNextStep) {
+			context->hasMoreNextSteps = nextStep();
+			context->mustDoNextStep = FALSE;
 		}	
 	}
 	return (0);

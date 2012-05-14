@@ -82,9 +82,10 @@ void markTargetAsHandled() {
 }
 
 /**
+ * Execute the target actions, and return TRUE if there is a an action called, FALSE else
  * @private
  */
-void executeTargetActions() {
+BOOL executeTargetActions() {
 	#ifdef DEBUG_STRATEGY_HANDLER
 		appendString(getOutputStreamLogger(DEBUG), "executeTargetActions\n");
 	#endif
@@ -96,8 +97,7 @@ void executeTargetActions() {
 			appendString(getOutputStreamLogger(DEBUG), "-> no actions for this target\n");
 		#endif
 		markTargetAsHandled();
-//		nextStep();
-		return;
+		return FALSE;
 	}
 
 	// There is actionItem in progress
@@ -110,11 +110,14 @@ void executeTargetActions() {
 
 		// Do the action item
 		actionItem->actionItem();
+		return TRUE;
 	}
 	else {
 		markTargetAsHandled();
-//		nextStep();
+		// we do nothing
+		return FALSE;
 	}
+	return TRUE;
 }
 
 void motionGoLocation(Location* location, 
@@ -200,9 +203,10 @@ void motionFollowPath(PathDataFunction* pathDataFunction) {
 }
 
 /**
+* Handle the trajectory and return TRUE if we go to a location, FALSE else.
 * @private
 */
-void handleCurrentTrajectory() {
+BOOL handleCurrentTrajectory() {
 	#ifdef DEBUG_STRATEGY_HANDLER
 		appendString(getOutputStreamLogger(DEBUG), "handleCurrentTrajectory\n");	
 	#endif
@@ -220,8 +224,7 @@ void handleCurrentTrajectory() {
 
 		// no more locations to reach
 		clearLocationList(currentTrajectory);
-		// nextStep();
-		return;
+		return FALSE;
 	}
 
 	Location* start = getLocation(currentTrajectory, 0);
@@ -231,6 +234,7 @@ void handleCurrentTrajectory() {
 		motionFollowPath(pathDataFunction);
 		removeFirstLocation(currentTrajectory);
 	}
+	return TRUE;
 }
 
 inline float deciDegreesToRad(int ddegrees) {
@@ -305,36 +309,55 @@ void updatePathsAvailability() {
 }
 
 BOOL nextStep() {
+	unsigned int counter = 0;
 	#ifdef DEBUG_STRATEGY_HANDLER
 		appendString(getOutputStreamLogger(DEBUG), "nextStep\n");	
 	#endif
-
-	GameTargetAction* targetAction = strategyContext.currentTargetAction;
-
-	if (getLocationCount(&(strategyContext.currentTrajectory)) != 0) {
-		handleCurrentTrajectory();
-	}
-	else if (targetAction != NULL) {
-		executeTargetActions();
-	}
-	else if (targetAction == NULL) {
-		// no target, search a new one
-		updatePathsAvailability();
-		findNextTarget();
-		if (strategyContext.currentTarget == NULL) {
-			#ifdef DEBUG_STRATEGY_HANDLER
-				appendString(getOutputStreamLogger(DEBUG), "no more targets -> stopping");
-			#endif
-			return FALSE;
-		}
-		// Next target created a new current trajectory
+	while (1) {
+		counter++;
+		#ifdef DEBUG_STRATEGY_HANDLER
+			appendStringAndDec(getOutputStreamLogger(DEBUG), "nextStep=>", counter);	
+		#endif
+		GameTargetAction* targetAction = strategyContext.currentTargetAction;
+	
 		if (getLocationCount(&(strategyContext.currentTrajectory)) != 0) {
-			handleCurrentTrajectory();			
+			if (!handleCurrentTrajectory()) {
+				continue;
+			}
+			return TRUE;
 		}
-	} else {
-		executeTargetActions();
+		else if (targetAction != NULL) {
+			if (!executeTargetActions()) {
+				// we will return on a different condition.
+				continue;
+			}
+			return TRUE;
+		}
+		else if (targetAction == NULL) {
+			// no target, search a new one
+			updatePathsAvailability();
+			findNextTarget();
+			if (strategyContext.currentTarget == NULL) {
+				#ifdef DEBUG_STRATEGY_HANDLER
+					appendString(getOutputStreamLogger(DEBUG), "no more targets -> stopping");
+				#endif
+				return FALSE;
+			}
+			// Next target created a new current trajectory
+			if (getLocationCount(&(strategyContext.currentTrajectory)) != 0) {
+				if (!handleCurrentTrajectory()) {
+					continue;
+				}
+				return TRUE;
+			}
+		} else {
+			if (!executeTargetActions()) {
+				// we will return on a different condition.
+				continue;
+			}
+			return TRUE;
+		}
 	}
-
 	return TRUE;
 }
 

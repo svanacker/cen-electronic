@@ -57,7 +57,7 @@ void deviceStrategyHandleRawData(char header, InputStream* inputStream, OutputSt
 //		GameStrategyContext* context = getStrategyContext();
 		// TODO : Provide non specific function
 		initStrategy2012(0);
-		if (c & CONFIG_DEBUG_MASK) {
+		if (c & CONFIG_COLOR_BLUE_MASK) {
 			setColor(COLOR_VIOLET);
 		}
 		else {
@@ -78,7 +78,13 @@ void deviceStrategyHandleRawData(char header, InputStream* inputStream, OutputSt
 	// next step
 	else if (header == COMMAND_NEXT_STEP) {
 		GameStrategyContext* context = getStrategyContext();
-		context->nextStep = TRUE;
+		if (context->hasMoreNextSteps) {
+			context->mustDoNextStep = TRUE;
+			appendHex2(outputStream, 1);
+		}
+		else {
+			appendHex2(outputStream, 0);
+		}
         appendAck(outputStream);
         append(outputStream, COMMAND_NEXT_STEP);
 	}

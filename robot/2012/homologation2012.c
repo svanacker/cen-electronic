@@ -173,6 +173,8 @@ void homologation2(int color) {
 void homologation3(int color) {
 	sendStrategyNextStep();
 	return;
+
+	/*
     unsigned int index = getMotionInstructionIndex();
     switch (index) {
         case 1:
@@ -190,6 +192,7 @@ void homologation3(int color) {
 			frontBottle2ToBottle2(color);
             break;
     }
+	*/
 }
 
 // ----------------------------------------------------------- Homologation 4 ---------------------------------------------------------

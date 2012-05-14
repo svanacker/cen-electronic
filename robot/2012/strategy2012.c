@@ -142,6 +142,9 @@ void setColor(TEAM_COLOR color) {
 	if (!isViolet()) {
 		angle = -angle;
 	}
+	appendStringAndDec(getOutputStreamLogger(INFO), "setColor:", color);
+	println(getOutputStreamLogger(INFO));
+
 	getStrategyContext()->robotAngle = angle;
 }
 
@@ -323,7 +326,8 @@ void initStrategy2012(int strategyIndex) {
 	initStrategiesItems2012();
 
 	GameStrategy* strategy = getGameStrategy(strategyIndex);
-	getStrategyContext()->gameStrategy = strategy;
+	GameStrategyContext* strategyContext = getStrategyContext();
+	strategyContext->gameStrategy = strategy;
 
 	//OutputStream* debugOutputStream = getOutputStreamLogger(INFO);
 	//printStrategyAllDatas(debugOutputStream);
@@ -332,7 +336,9 @@ void initStrategy2012(int strategyIndex) {
 	Point* p = &(getStrategyContext()->opponentRobotPosition);
 	p->x = 1500;
 	p->y = 1500;
-	//getStrategyContext()->opponentRobotMoved = TRUE;
+	
+	//strategyContext->opponentRobotMoved = TRUE;
+	strategyContext->hasMoreNextSteps = TRUE;
 
 	// reinitialize the game board to change elements / targets ...
 }
