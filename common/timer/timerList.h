@@ -56,5 +56,7 @@ int getTimerCount();
  */
 void startTimerList();
 
+TimerList* getTimerList();
+
 #endif
 

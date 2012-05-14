@@ -4,7 +4,6 @@
 #include "../../device/device.h"
 
 /** Default address of the SRF02. */
-//#define SRF02_DEFAULT_ADDRESS 0xE0
 #define SRF02_DEFAULT_ADDRESS 0xE2
 
 // Use Inch as distance unit in simple mode
@@ -31,7 +30,7 @@ unsigned char readSRF02(char addr, char reg);
 * Get the software revision of the SRF02
 * TODO : rendre possible la lecture de plusieurs sonar
 */
-unsigned int getSRF02SoftwareRevision (unsigned char sonar);
+unsigned int getSRF02SoftwareRevision (unsigned char sonarIndex);
 
 /**
 * Get the distance in centimeters
@@ -40,18 +39,19 @@ unsigned int getSRF02SoftwareRevision (unsigned char sonar);
 * @return distance in cm
 * TODO : rendre possible la lecture de plusieurs sonar
 */
-unsigned int getSRF02Distance (void);
+unsigned int getSRF02Distance (unsigned char sonarIndex);
 
 /**
 * Start ranging.
+* @param sonarIndex between 0 and 15 (to address E0 -> FE)
 */
-void startSRF02Ranging(void);
+void startSRF02Ranging(unsigned char sonarIndex);
 
 /**
 * You need to call startSRF02 before !!
 * End the ranging, and return the distance.
 */
-unsigned int getSRF02DistanceEndRanging();
+unsigned int getSRF02DistanceEndRanging(unsigned char sonarIndex);
 
 /**
 * Write the command at the register of the selected SRF02.
@@ -60,6 +60,8 @@ unsigned int getSRF02DistanceEndRanging();
 * @param cmd command to do
 */
 void writeSRF02Command(char addr, char reg, char cmd);
+
+void SRF02ChangeAddress(unsigned char oldAddress, unsigned char newAddress);
 
 /**
 * Returns if the SRF02 device with the specified address

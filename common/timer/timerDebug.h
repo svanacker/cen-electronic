@@ -15,7 +15,7 @@ void printTimer(OutputStream* outputStream, Timer* timer);
 /**
 * Print the timer List loaded in the system.
 */
-void printTimerList(TimerList* timerList, OutputStream* outputStream);
+void printTimerList(OutputStream* outputStream, TimerList* timerList);
 
 #endif
 

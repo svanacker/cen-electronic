@@ -5,8 +5,8 @@ device=dsPIC30F4013
 [PATH_INFO]
 BuildDirPolicy=BuildDirIsProjectDir
 dir_src=
-dir_bin=build
-dir_tmp=build
+dir_bin=build/mainBoard
+dir_tmp=build/mainBoard
 dir_sin=
 dir_inc=
 dir_lib=

@@ -30,6 +30,8 @@
 
 #include "../main/motorBoard/motorBoard.h"
 
+#define SONAR_INDEX	0
+
 /** Use or not the sonar. */
 // static BOOL useSonar;
 
@@ -101,9 +103,9 @@ void readNextDistance() {
     }
     readNextDistanceFlag = FALSE;
 
-    unsigned int distance = getSRF02DistanceEndRanging();
+    unsigned int distance = getSRF02DistanceEndRanging(SONAR_INDEX);
     delaymSec(1);
-    startSRF02Ranging();
+    startSRF02Ranging(SONAR_INDEX);
     distances[distanceIndex] = distance;
 
     /*
@@ -147,9 +149,9 @@ void deviceRobotSonarDetectorInit() {
             deviceRobotSonarDetectorCallbackFunc);
     // useSonar = isConfigSet(CONFIG_USE_LASER_MASK);
     clearHistory();
-    startSRF02Ranging();
+    startSRF02Ranging(SONAR_INDEX);
     delaymSec(65);
-    getSRF02DistanceEndRanging();
+    getSRF02DistanceEndRanging(SONAR_INDEX);
     obstacle = FALSE;
     readNextDistanceFlag = FALSE;
 }

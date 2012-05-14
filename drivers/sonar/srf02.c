@@ -4,6 +4,23 @@
 
 #include "../../common/delay/delay30F.h"
 
+// First sequence command used to change I2C addres
+#define CHANGE_ADDRESS_FIRST_COMMAND 0xA0
+
+// Second sequence command used to change I2C addres
+#define CHANGE_ADDRESS_SECOND_COMMAND 0xAA
+
+// Third sequence command used to change I2C addres
+#define CHANGE_ADDRESS_THIRD_COMMAND 0xA5
+
+/**
+ * Address are range of E0 -> E2 -> ... -> F2
+ * @param sonarIndex between 0 and 15
+ */
+unsigned int getSRF02Address(unsigned char sonarIndex) {
+	return SRF02_DEFAULT_ADDRESS + sonarIndex * 2;
+}
+
 unsigned char readSRF02(char addr, char reg) {
     StartI2C();
     while (I2CCONbits.SEN);
@@ -40,28 +57,51 @@ void writeSRF02Command(char addr, char reg, char cmd) {
     StopI2C();
 }
 
-unsigned int getSRF02SoftwareRevision(unsigned char sonar) { //TODO permettre de choisir parmis plusieurs sonar
-    return readSRF02(SRF02_DEFAULT_ADDRESS, REGISTER_0);
+void internalChangeAddressLine(unsigned char oldAddress, unsigned char value) {
+  IdleI2C();
+  StartI2C();
+  MasterWriteI2C(oldAddress);
+  IdleI2C();
+  MasterWriteI2C(0);
+  IdleI2C();
+  MasterWriteI2C(value);
+  IdleI2C();
+  StopI2C();
+  IdleI2C();
 }
 
-unsigned int getSRF02SoftwareRevisionDeprecated() { //TODO permettre de choisir parmis plusieurs sonar
-    return readSRF02(SRF02_DEFAULT_ADDRESS, REGISTER_0);
+void SRF02ChangeAddress(unsigned char oldAddress, unsigned char newAddress) {
+  // StartI2C();
+  // MasterWriteI2C(addr);
+  // command register
+  internalChangeAddressLine(oldAddress, CHANGE_ADDRESS_FIRST_COMMAND);
+  internalChangeAddressLine(oldAddress, CHANGE_ADDRESS_SECOND_COMMAND);
+  internalChangeAddressLine(oldAddress, CHANGE_ADDRESS_THIRD_COMMAND);
+  internalChangeAddressLine(oldAddress, newAddress);
+  // StopI2C();
 }
 
-void startSRF02Ranging() {
-    writeSRF02Command(SRF02_DEFAULT_ADDRESS, REGISTER_0, CM_RANGE_MODE);
+unsigned int getSRF02SoftwareRevision(unsigned char sonarIndex) {
+	unsigned char srf02Address = getSRF02Address(sonarIndex);
+    return readSRF02(srf02Address, REGISTER_0);
 }
 
-unsigned int getSRF02Distance(void) {
-    startSRF02Ranging();
+void startSRF02Ranging(unsigned char sonarIndex) {
+	unsigned char srf02Address = getSRF02Address(sonarIndex);
+    writeSRF02Command(srf02Address, REGISTER_0, CM_RANGE_MODE);
+}
+
+unsigned int getSRF02Distance(unsigned char sonarIndex) {
+    startSRF02Ranging(sonarIndex);
     delaymSec(100);
-    unsigned int result = getSRF02DistanceEndRanging();
+    unsigned int result = getSRF02DistanceEndRanging(sonarIndex);
     return result;
 }
 
-unsigned int getSRF02DistanceEndRanging() {
-    unsigned char datah = readSRF02(SRF02_DEFAULT_ADDRESS, 2);
-    unsigned char datal = readSRF02(SRF02_DEFAULT_ADDRESS, 3);
+unsigned int getSRF02DistanceEndRanging(unsigned char sonarIndex) {
+	unsigned char srf02Address = getSRF02Address(sonarIndex);
+    unsigned char datah = readSRF02(srf02Address, 2);
+    unsigned char datal = readSRF02(srf02Address, 3);
     unsigned int data = (datah << 8) + datal;
     return (data);
 }

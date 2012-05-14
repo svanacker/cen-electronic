@@ -15,10 +15,12 @@ void printTimer(OutputStream* outputStream, Timer* timer) {
 	appendDec(outputStream, timer->working);
 }
 
-void printTimerList(TimerList* timerList, OutputStream* outputStream) {
+void printTimerList(OutputStream* outputStream, TimerList* timerList) {
 	int i;
 	for (i = 0; i < timerList->size; i++) {
-		Timer* timer = timerList->timers[i];
+		Timer* timer = (Timer*) timerList->timers;
+	 	timer += i;
+
 		printTimer(outputStream, timer);
 		appendCRLF(outputStream);
 	}

@@ -27,7 +27,7 @@ typedef struct DeviceArgument {
 	char* name;
 } DeviceArgument;
 
-#define MAX_ARGUMENTS 11
+#define MAX_ARGUMENTS 13
 
 /**
 * Define the result of deviceGetRawDataHeaderFunction if the

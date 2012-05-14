@@ -35,7 +35,7 @@
 
 // DEVICE
 
-#define MAIN_BOARD_DEVICE_LENGTH			17
+#define MAIN_BOARD_DEVICE_LENGTH			20
 #define MAIN_BOARD_TIMER_LENGTH				3
 
 #endif

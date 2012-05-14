@@ -31,6 +31,7 @@
 
 #include "../../common/timer/timerList.h"
 #include "../../common/timer/cenTimer.h"
+#include "../../common/timer/timerDebug.h"
 
 #include "../../common/2d/2d.h"
 
@@ -353,8 +354,6 @@ restart:
     appendCRLF(getOutputStreamLogger(INFO));
     setPicName("BEACON BOARD MAIN");
 
-    initPwmForServo(PWM_SERVO_MIDDLE_POSITION);
-
     // Init Devices
     initLaserDetectorSettings();
     initDevicesDescriptor();
@@ -370,6 +369,7 @@ restart:
 
     // Start interruptions
 	#ifndef MPLAB_SIMULATION
+	printTimerList(&debugOutputStream, getTimerList());
     startTimerList();
 	#endif
 

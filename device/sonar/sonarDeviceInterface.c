@@ -11,16 +11,14 @@ unsigned int deviceSonarGetSoftwareRevision() {
 }
 
 int deviceSonarGetInterface(char header, int mode, BOOL fillDeviceArgumentList) {
-    if (mode == DEVICE_MODE_INPUT) {
-        if (header == COMMAND_GET_SONAR) {
+	if (header == COMMAND_GET_SONAR) {
+	    if (mode == DEVICE_MODE_INPUT) {
             if (fillDeviceArgumentList) {
 				setFunction("getSonar", 1);
 				setArgumentUnsignedHex2(0, "sonarIdx");
             }
             return 2;
-        }
-    } else if (mode == DEVICE_MODE_OUTPUT) {
-        if (header == COMMAND_GET_SONAR) {
+    	} else if (mode == DEVICE_MODE_OUTPUT) {
             if (fillDeviceArgumentList) {
 				setFunction("getSonar", 5);
 
@@ -35,6 +33,21 @@ int deviceSonarGetInterface(char header, int mode, BOOL fillDeviceArgumentList) 
             return 14;
         }
     }
+	else if (header == COMMAND_SONAR_CHANGE_ADDRESS) {
+	    if (mode == DEVICE_MODE_INPUT) {
+            if (fillDeviceArgumentList) {
+				setFunction("sonarChangeAddress", 2);
+				setArgumentUnsignedHex2(0, "oldSonarAddress");
+				setArgumentUnsignedHex2(1, "newSonarAddress");
+            }
+            return 4;
+    	} else if (mode == DEVICE_MODE_OUTPUT) {
+            if (fillDeviceArgumentList) {
+				setFunctionNoArgument("sonarChangeAddress");
+			}
+            return 0;
+        }
+	}
     return DEVICE_HEADER_NOT_HANDLED;
 }
 

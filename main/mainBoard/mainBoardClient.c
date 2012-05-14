@@ -127,6 +127,8 @@
 
 #include "../../robot/robot.h"
 
+#include "../../drivers/sonar/srf02.h"
+
 #ifndef MPLAB_SIMULATION
 #define SERIAL_PORT_DEBUG 		SERIAL_PORT_1
 #define SERIAL_PORT_PC	 		SERIAL_PORT_2
@@ -323,13 +325,15 @@ void waitForInstruction() {
 
     // Listen instructions from Devices (I2C Slave) -> Main Board (I2C Master)
     handleNotificationFromDispatcherList(TRANSMIT_I2C);
-
+	
+	/*
     delaymSec(10);
 
     if (notifyObstacle()) {
         appendString(getOutputStreamLogger(ALWAYS), "Obstacle !\n");
         setRobotMustStop(TRUE);
     }
+	*/
 }
 
 int main(void) {

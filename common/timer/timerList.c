@@ -18,6 +18,10 @@
 // We use singleton pattern
 static TimerList timerList;
 
+TimerList* getTimerList() {
+	return &timerList;
+}
+
 void initTimerList(Timer (*timerListArray)[], unsigned char timerListSize) {
 	timerList.timers = timerListArray;
 	timerList.maxSize = timerListSize;
