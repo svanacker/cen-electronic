@@ -459,15 +459,15 @@ int main(void) {
 	}
 	
     if (configValue & CONFIG_SPEED_LOW_MASK) {
-        motionSetParameters(MOTION_TYPE_FORWARD_OR_BACKWARD, 0x10, 0x20);
-        motionSetParameters(MOTION_TYPE_ROTATION, 0x10, 0x20);
+        motionSetParameters(MOTION_TYPE_FORWARD_OR_BACKWARD, 0x12, 0x24);
+        motionSetParameters(MOTION_TYPE_ROTATION, 0x12, 0x24);
         motionSetParameters(MOTION_TYPE_ROTATION_ONE_WHEEL, 0x08, 0x08);
     } else if (configValue & CONFIG_SPEED_VERY_LOW_MASK) {
         motionSetParameters(MOTION_TYPE_FORWARD_OR_BACKWARD, 0x08, 0x10);
         motionSetParameters(MOTION_TYPE_ROTATION, 0x08, 0x10);
         motionSetParameters(MOTION_TYPE_ROTATION_ONE_WHEEL, 0x08, 0x08);
     } else {
-        motionSetParameters(MOTION_TYPE_FORWARD_OR_BACKWARD, 0x24, 0x40);
+        motionSetParameters(MOTION_TYPE_FORWARD_OR_BACKWARD, 0x18, 0x36);
         motionSetParameters(MOTION_TYPE_ROTATION, 0x28, 0x18);
         motionSetParameters(MOTION_TYPE_ROTATION_ONE_WHEEL, 0x12, 0x10);
     }

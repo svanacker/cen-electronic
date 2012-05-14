@@ -54,7 +54,7 @@
 #define BULLION_1_Y						0x0156
 
 #define BOTTLE_1_X						0x0720 
-#define BOTTLE_1_Y						0x0280
+#define BOTTLE_1_Y						0x0290
 
 #define BOTTLE_2_FRONT_X				0x05DC  
 #define BOTTLE_2_FRONT_Y				0x0800

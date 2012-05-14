@@ -26,9 +26,10 @@ void printGameStrategyContext(OutputStream* outputStream, GameStrategyContext* c
 	// Robot Position
 	appendString(outputStream, "\trobotPosition=");
 	printPoint(outputStream, &(context->robotPosition), "");
+	appendStringAndDec(outputStream, "\n\trobotAngle (ddeg)=", context->robotAngle);
 
 	// nearestLocation
-	appendString(outputStream, "\tnearestLocation=");
+	appendString(outputStream, "\n\tnearestLocation=");
 	if (context->nearestLocation != NULL) {
 		printLocation(outputStream, context->nearestLocation);
 	}
@@ -39,6 +40,7 @@ void printGameStrategyContext(OutputStream* outputStream, GameStrategyContext* c
 	// Robot Position
 	appendString(outputStream, "\n\topponentRobotPosition=");
 	printPoint(outputStream, &(context->opponentRobotPosition), "");
+
 
 	// current Target
 	appendString(outputStream, "\n\tcurrentTarget=");

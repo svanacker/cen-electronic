@@ -155,7 +155,7 @@ BOOL motionRotateToFollowPath(PathDataFunction* pathDataFunction) {
 	pathDataFunction();
 	PathData* pathData = getTmpPathData();
 
-	int diff = mod3600(pathData->angle1 - strategyContext.robotAngle);
+	int diff = mod3600(getAngle1Path(pathDataFunction) - strategyContext.robotAngle);
 	if (abs(diff) < ANGLE_ROTATION_MIN) {
 		return FALSE;
 	}
@@ -190,7 +190,7 @@ void motionFollowPath(PathDataFunction* pathDataFunction) {
 	#endif
 
 	motionDriverBSplineAbsolute(location->x, location->y,
-								pathData->angle2, 
+								getAngle2Path(pathDataFunction), 
 								pathData->controlPointDistance1, pathData->controlPointDistance2,
 								pathData->accelerationFactor, pathData->speedFactor);
 
@@ -198,7 +198,7 @@ void motionFollowPath(PathDataFunction* pathDataFunction) {
 	#ifdef SIMULATE_ROBOT
 		strategyContext.robotPosition.x = location->x + 1;
 		strategyContext.robotPosition.y = location->y + 1;
-		strategyContext.robotAngle = pathData->angle2;
+		strategyContext.robotAngle = getAngle2Path(pathDataFunction);
 	#endif
 }
 

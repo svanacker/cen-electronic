@@ -136,16 +136,24 @@ static GameStrategyItem opponentCDStrategyItem;
 // ------------------------------------------------------- INITIALIZATION ------------------------------------------------------------
 
 void setColor(TEAM_COLOR color) {
-	getStrategyContext()->color = color;
+	GameStrategyContext* context = getStrategyContext();
+
+	appendStringAndDec(getOutputStreamLogger(INFO), "setColor:", color);
+	println(getOutputStreamLogger(INFO));
+
+	context->color = color;
 	changeLocationsForColor();
 	int angle = 675;
 	if (!isViolet()) {
 		angle = -angle;
+		context->robotPosition.y = 2840;
 	}
-	appendStringAndDec(getOutputStreamLogger(INFO), "setColor:", color);
-	println(getOutputStreamLogger(INFO));
+	else {
+		context->robotPosition.y = 160;
+	}
+	context->robotPosition.x = 160;
 
-	getStrategyContext()->robotAngle = angle;
+	context->robotAngle = angle;
 }
 
 void initLocations2012() {
