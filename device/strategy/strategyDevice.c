@@ -46,6 +46,7 @@ void deviceStrategyHandleRawData(char header, InputStream* inputStream, OutputSt
 		GameStrategyContext* context = getStrategyContext();
 		context->opponentRobotPosition.x = x;
 		context->opponentRobotPosition.y = y;
+		context->opponentRobotMoved = TRUE;
 
         appendAck(outputStream);
         append(outputStream, COMMAND_SET_OPPONENT_ROBOT_POSITION);
@@ -53,15 +54,16 @@ void deviceStrategyHandleRawData(char header, InputStream* inputStream, OutputSt
 	else if (header == COMMAND_SET_CONFIG) {
 		// data
 		int c = readHex4(inputStream);
-		GameStrategyContext* context = getStrategyContext();
-		if (c & CONFIG_DEBUG_MASK) {
-			context->color = COLOR_VIOLET;
-		}
-		else {
-			context->color = COLOR_RED;
-		}
+//		GameStrategyContext* context = getStrategyContext();
 		// TODO : Provide non specific function
 		initStrategy2012(0);
+		if (c & CONFIG_DEBUG_MASK) {
+			setColor(COLOR_VIOLET);
+		}
+		else {
+			setColor(COLOR_RED);
+		}
+
         appendAck(outputStream);
         append(outputStream, COMMAND_SET_CONFIG);
 	}

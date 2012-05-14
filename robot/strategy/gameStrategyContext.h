@@ -22,10 +22,14 @@ typedef struct GameStrategyContext {
 	float elapsedMatchTime;
 	/** Position of robot. */
 	Point robotPosition;
+    /** Angle of the robot. */
+	int robotAngle;
 	/** The nearestLocation of the robot. */
 	Location* nearestLocation;
 	// Opponent Robot.
 	Point opponentRobotPosition;
+	/** Flag indicateing that the opponent's position has changed. */
+	BOOL opponentRobotMoved;
 	/** current Target. */
 	GameTarget* currentTarget;
 	/** current Target Action. */

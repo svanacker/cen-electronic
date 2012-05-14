@@ -24,10 +24,14 @@ static PathList paths;
 static unsigned int bitListValues[BIT_LIST_NAVIGATION_ARRAY_LENGTH];
 static BitList outgoingPaths;
 
+static unsigned int availablePathsBitListValues[BIT_LIST_NAVIGATION_ARRAY_LENGTH];
+static BitList availablePaths;
+
 void initNavigation() {
 	clearLocationList(&locations);
 	clearPathList(&paths);
 	initBitList(&outgoingPaths, &bitListValues, BIT_LIST_NAVIGATION_ARRAY_LENGTH);
+	initBitList(&availablePaths, &availablePathsBitListValues, BIT_LIST_NAVIGATION_ARRAY_LENGTH);
 }
 
 LocationList* getNavigationLocationList() {
@@ -186,9 +190,16 @@ int computeBestPath(LocationList* outLocationList, Location* start, Location* en
 				appendStringAndDec(getOutputStreamLogger(INFO), ", costLocation2:", costLocation2);
 				println(getOutputStreamLogger(INFO));
 			#endif
+
 			// getOtherEnd called the current fonction to fill path information
 			// so we can use pathData without problem.
 			int cost = costLocation1 + getTmpPathData()->cost;
+
+			BOOL available = getPathAvailability(i);
+			if (!available) {
+				cost += COST_UNAVAILABLE_PATH;
+			}
+
 			if (cost < costLocation2) {
 				// Affectation de la distance absolue du noeud
 				setCost(location2, cost);
@@ -214,4 +225,12 @@ int computeBestPath(LocationList* outLocationList, Location* start, Location* en
 void printNavigationContext(OutputStream* outputStream) {
 	printLocationList(outputStream, "locations:", &locations);
 	printPathList(outputStream, "paths:", &paths);
+}
+
+void setPathAvailability(int index, BOOL value) {
+	setBit(&availablePaths, index, value);
+}
+
+BOOL getPathAvailability(int index) {
+	return getBit(&availablePaths, index);
 }

@@ -12,6 +12,12 @@
 /** Use flag to know if we trace Handler strategy. */
 #define DEBUG_STRATEGY_HANDLER
 
+/** Minimum angle to add a rotation. */
+#define ANGLE_ROTATION_MIN 50
+
+/** Distance of the opponent to a path to made it unavailable. */
+#define DISTANCE_OPPONENT_TO_PATH 300
+
 /**
  * Choose the rigth strategy.
  */
@@ -23,9 +29,9 @@ void setStrategy(int strategyIndex);
 GameStrategyContext* getStrategyContext();
 
 /**
- * Do the next step in the strategy
+ * Do the next step in the strategy. Returns FALSE if nothing was done.
  */
-void nextStep();
+BOOL nextStep();
 
 // MOTION
 

@@ -1,3 +1,4 @@
+#include <math.h>
 #include <stdlib.h>
 
 #include "gameStrategyHandler.h"
@@ -6,11 +7,16 @@
 
 #include "nextGameStrategyItemComputer.h"
 
+#include "../../common/math/cenMath.h"
+
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
 
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
+
+#include "../../motion/extended/bspline.h"
+#include "../../motion/extended/singleBSpline.h"
 
 #include "../../navigation/location.h"
 #include "../../navigation/locationList.h"
@@ -90,7 +96,7 @@ void executeTargetActions() {
 			appendString(getOutputStreamLogger(DEBUG), "-> no actions for this target\n");
 		#endif
 		markTargetAsHandled();
-		nextStep();
+//		nextStep();
 		return;
 	}
 
@@ -107,7 +113,7 @@ void executeTargetActions() {
 	}
 	else {
 		markTargetAsHandled();
-		nextStep();
+//		nextStep();
 	}
 }
 
@@ -133,6 +139,43 @@ void motionGoLocation(Location* location,
 	#endif
 }
 
+int mod3600(int value) {
+	if (value < - 1800) {
+		return (value + 3600);
+	} else if (value > 1800) {
+		return (value - 3600);
+	}
+	return value;
+}
+
+BOOL motionRotateToFollowPath(PathDataFunction* pathDataFunction) {
+	pathDataFunction();
+	PathData* pathData = getTmpPathData();
+
+	int diff = mod3600(pathData->angle1 - strategyContext.robotAngle);
+	if (abs(diff) < ANGLE_ROTATION_MIN) {
+		return FALSE;
+	}
+
+	#ifdef DEBUG_STRATEGY_HANDLER
+		appendStringAndDec(getOutputStreamLogger(DEBUG), "motionRotateToFollowPath:angle:", diff);	
+		appendString(getOutputStreamLogger(DEBUG), " ddeg\n");
+	#endif
+
+	if (diff > 0) {
+		motionDriverLeft(diff);
+	} else {
+		motionDriverRight(-diff);
+	}
+
+	// Simulate as if the robot goes to the position with a small error
+	#ifdef SIMULATE_ROBOT
+		strategyContext.robotAngle += diff;
+	#endif
+
+	return TRUE;
+}
+
 void motionFollowPath(PathDataFunction* pathDataFunction) {
 	pathDataFunction();
 	PathData* pathData = getTmpPathData();
@@ -152,6 +195,7 @@ void motionFollowPath(PathDataFunction* pathDataFunction) {
 	#ifdef SIMULATE_ROBOT
 		strategyContext.robotPosition.x = location->x + 1;
 		strategyContext.robotPosition.y = location->y + 1;
+		strategyContext.robotAngle = pathData->angle2;
 	#endif
 }
 
@@ -183,12 +227,84 @@ void handleCurrentTrajectory() {
 	Location* start = getLocation(currentTrajectory, 0);
 	Location* end = getLocation(currentTrajectory, 1);
 	PathDataFunction* pathDataFunction = getPathOfLocations(getNavigationPathList(), start, end);
-	motionFollowPath(pathDataFunction);
-	removeFirstLocation(currentTrajectory);
+	if (!motionRotateToFollowPath(pathDataFunction)) {
+		motionFollowPath(pathDataFunction);
+		removeFirstLocation(currentTrajectory);
+	}
 }
 
+inline float deciDegreesToRad(int ddegrees) {
+	return ddegrees * (PI / 1800.0);
+}
 
-void nextStep() {
+void computePoint(Point* ref, Point* cp, unsigned char distance, int angle) {
+	float a = deciDegreesToRad(angle);
+	float dca = distance * cosf(a);
+	float dsa = distance * sinf(a);
+	cp->x = ref->x + dca;
+	cp->y = ref->y + dsa;
+}
+
+BOOL isPathAvailable(PathDataFunction* pathDataFunction) {
+	pathDataFunction();
+	PathData* pathData = getTmpPathData();
+	BSplineCurve* curve = getSingleBSplineCurve();
+	Point* p0 = curve->p0;
+	p0->x = pathData->location1->x;
+	p0->y = pathData->location1->y;
+	Point* p3 = curve->p3;
+	p3->x = pathData->location2->x;
+	p3->y = pathData->location2->y;
+	int angle1 = getAngle1Path(pathDataFunction);
+	int angle2 = getAngle2Path(pathDataFunction);
+	computePoint(p0, curve->p1, pathData->controlPointDistance1, angle1);
+	computePoint(p3, curve->p2, -pathData->controlPointDistance2, angle2);
+
+	int i;
+	Point p;
+	for (i = 0; i < 10; i++) {
+		computeBSplinePoint(curve, 0.1 * i, &p);
+		float d = distanceBetweenPoints(&p, &(strategyContext.opponentRobotPosition));
+		if (d < DISTANCE_OPPONENT_TO_PATH) {
+			return FALSE;
+		}
+	}
+	return TRUE;
+}
+
+void updatePathsAvailability() {
+	if (!strategyContext.opponentRobotMoved) {
+		return;
+	}
+
+	OutputStream* logStream = getOutputStreamLogger(INFO);
+	appendString(logStream, "\nUpdating available paths");
+//	printGameStrategyContext(logStream, getStrategyContext());
+
+	PathList* paths = getNavigationPathList();
+	int i;
+	for (i = 0; i < paths->size; i++) {
+		PathDataFunction* pathDataFunction = paths->paths[i];
+		BOOL available = isPathAvailable(pathDataFunction);
+		setPathAvailability(i, available);
+	}
+
+	// LOG
+	for (i = 0; i < paths->size; i++) {
+		PathDataFunction* pathDataFunction = paths->paths[i];
+		pathDataFunction();
+		PathData* data = getTmpPathData();
+		appendString(logStream, "\n");
+		appendString(logStream, data->location1->name);
+		appendString(logStream, "->");
+		appendString(logStream, data->location2->name);
+		appendString(logStream, ":");
+		appendString(logStream, getPathAvailability(i) ? "YES" : "NO");
+	}
+	appendString(logStream, "\n");
+}
+
+BOOL nextStep() {
 	#ifdef DEBUG_STRATEGY_HANDLER
 		appendString(getOutputStreamLogger(DEBUG), "nextStep\n");	
 	#endif
@@ -203,7 +319,14 @@ void nextStep() {
 	}
 	else if (targetAction == NULL) {
 		// no target, search a new one
+		updatePathsAvailability();
 		findNextTarget();
+		if (strategyContext.currentTarget == NULL) {
+			#ifdef DEBUG_STRATEGY_HANDLER
+				appendString(getOutputStreamLogger(DEBUG), "no more targets -> stopping");
+			#endif
+			return FALSE;
+		}
 		// Next target created a new current trajectory
 		if (getLocationCount(&(strategyContext.currentTrajectory)) != 0) {
 			handleCurrentTrajectory();			
@@ -211,6 +334,8 @@ void nextStep() {
 	} else {
 		executeTargetActions();
 	}
+
+	return TRUE;
 }
 
 

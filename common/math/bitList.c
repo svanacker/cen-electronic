@@ -35,6 +35,8 @@ void setBit(BitList* bitList, unsigned char index, BOOL value) {
 		appendStringAndDec(getOutputStreamLogger(INFO), ", value=", value);
 	#endif
 	if (index > bitList->size) {
+		appendStringAndDec(getOutputStreamLogger(ALWAYS), ", index=", index);
+		appendStringAndDec(getOutputStreamLogger(ALWAYS), ", size=", bitList->size);
 		writeError(BIT_LIST_ARRAY_OUT_OF_BOUNDS);
 		return;
 	}
@@ -65,10 +67,10 @@ void setBit(BitList* bitList, unsigned char index, BOOL value) {
 
 	unsigned int mask = (1 << relativeIntIndex);
 	if (value) {
-		*arrayPointer |= *arrayPointer | mask;
+		*arrayPointer |= mask;
 	}
 	else {
-		*arrayPointer &= (!mask);
+		*arrayPointer &= (~mask);
 	}
 	#ifdef BIT_LIST_DEBUG
 		appendStringAndDec(getOutputStreamLogger(INFO), ", newPointerValue=", *arrayPointer);

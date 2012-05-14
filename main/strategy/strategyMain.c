@@ -163,7 +163,7 @@ void initDriversDescriptor() {
 				&driverResponseBuffer, &driverResponseBufferArray, STRATEGY_BOARD_RESPONSE_DRIVER_BUFFER_LENGTH);
 
 	// Include I2C => TRUE, FALSE, else
-	initDriverToI2CSlaveAndDebugCompositeOutputStream(TRUE);
+	initDriverToI2CSlaveAndDebugCompositeOutputStream(FALSE);
 	// Redirect driver to I2C Slave (not default behaviour)
 	setRedirectionTransmitFromDriverRequestBuffer(&redirectDriverToCompositeOutputStream);
 }
@@ -208,13 +208,17 @@ int main(void) {
 
 	initDriversDescriptor();
 
-	#ifdef MPLAB_SIMULATION
-		addNavigationLocations();
-		printDeviceListUsage(getOutputStreamLogger(INFO));
+	initStrategy2012(0);
+	//setColor(COLOR_VIOLET);
 
-		while (1) {
-	
-		}
+	//printGameboard(getOutputStreamLogger(INFO));
+	printStrategyAllDatas(getOutputStreamLogger(INFO));
+
+	#ifdef MPLAB_SIMULATION
+		//addNavigationLocations();
+		//printDeviceListUsage(getOutputStreamLogger(INFO));
+		while (nextStep());
+		while (1);
 	#endif
 
 	// Init the timers management

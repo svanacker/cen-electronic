@@ -118,6 +118,7 @@ void removeFirstLocation(LocationList* locationList) {
 		locationList->locations[i - 1] = locationList->locations[i];
 	}
 	size--;
+	locationList->size = size;
 }
 
 int getLocationCount(LocationList* locationList) {
@@ -144,7 +145,7 @@ void clearLocationTmpInfo(LocationList* locationList) {
 void printLocationList(OutputStream* outputStream, char* locationListName, LocationList* locationList) {
 	int i;
 	int size = locationList->size;
-	appendKeyAndName(outputStream, "LocationList:", locationListName);
+	appendString(outputStream, locationListName);
 	appendStringAndDec(outputStream, ", size=", locationList->size);
 	println(outputStream);	
 	for (i = 0; i < size; i++) {
