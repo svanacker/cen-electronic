@@ -138,6 +138,11 @@ static GameStrategyItem opponentCDStrategyItem;
 void setColor(TEAM_COLOR color) {
 	getStrategyContext()->color = color;
 	changeLocationsForColor();
+	int angle = 675;
+	if (!isViolet()) {
+		angle = -angle;
+	}
+	getStrategyContext()->robotAngle = angle;
 }
 
 void initLocations2012() {
@@ -158,7 +163,7 @@ void initLocations2012() {
 	addNavigationLocation(&bullionMiddle2Location, BULLION_MIDDLE_2, BULLION_MIDDLE_2_X, BULLION_MIDDLE_2_Y);
 }
 
-void bottle2ToCDPathFunction() { fillPathData(&bottle2Location, &cdTakeLocation, BOTTLE_2_TO_CD_COST, 0x1B, 0x30, 0, 0xFAF6, BOTTLE_2_TO_CD_SPEED_FACTOR, BOTTLE_2_TO_CD_ACCELERATION_FACTOR);}
+void bottle2ToCDPathFunction() { fillPathData(&bottle2Location, &cdTakeLocation, BOTTLE_2_TO_CD_COST, 0x1B, 0x30, 0xF8F8, 0xFAF6, BOTTLE_2_TO_CD_SPEED_FACTOR, BOTTLE_2_TO_CD_ACCELERATION_FACTOR);}
 void cdToDropZone1PathFunction() { fillPathData(&cdTakeLocation, &dropZone1Location, CD_TO_DROP_ZONE_1_COST, 0x11, 0x26, 0xFAF6, ANGLE_NEG_90, CD_TO_DROP_ZONE_1_SPEED_FACTOR, CD_TO_DROP_ZONE_1_ACCELERATION_FACTOR);}
 
 void initPaths2012() {
@@ -173,10 +178,10 @@ void initPaths2012() {
 
 	// TODO
 
-	void bottle1ToBottle2FrontPathFunction() { fillPathData(&bottle1Location, &bottle2FrontLocation, BOTTLE_1_TO_BOTTLE_2_FRONT_COST, 0x57, 0x0A, ANGLE_180, 0, BOTTLE_1_TO_BOTTLE_2_SPEED_FACTOR, BOTTLE_1_TO_BOTTLE_2_ACCELERATION_FACTOR);}
+	void bottle1ToBottle2FrontPathFunction() { fillPathData(&bottle1Location, &bottle2FrontLocation, BOTTLE_1_TO_BOTTLE_2_FRONT_COST, 0x57, 0x0A, ANGLE_180, 0x0450, BOTTLE_1_TO_BOTTLE_2_SPEED_FACTOR, BOTTLE_1_TO_BOTTLE_2_ACCELERATION_FACTOR);}
 	addNavigationPath(&bottle1ToBottle2FrontPathFunction);
 
-	void bottle2FrontToBottle2PathFunction() { fillPathData(&bottle2FrontLocation, &bottle2Location, BOTTLE_2_FRONT_TO_BOTTLE_2_COST, 0x57, 0x0A, ANGLE_180, 0, BOTTLE_1_TO_BOTTLE_2_SPEED_FACTOR, BOTTLE_1_TO_BOTTLE_2_ACCELERATION_FACTOR);}
+	void bottle2FrontToBottle2PathFunction() { fillPathData(&bottle2FrontLocation, &bottle2Location, BOTTLE_2_FRONT_TO_BOTTLE_2_COST, 0xE0, 0xF0, 0x0450, 0xF8F8, BOTTLE_1_TO_BOTTLE_2_SPEED_FACTOR, BOTTLE_1_TO_BOTTLE_2_ACCELERATION_FACTOR);}
 	addNavigationPath(&bottle2FrontToBottle2PathFunction);
 
 	addNavigationPath(&bottle2ToCDPathFunction);
@@ -221,7 +226,7 @@ void initTargets2012() {
 	addGameTarget(&bullionLeft1Target, BULLION_LEFT_1, BULLION_GAIN, &bullionLeft1Location);
 
 	// OpponentCD
-	addGameTarget(&opponentCDTarget, OPPONENT_CD, OPPONENT_CD_GAIN, &dropZone1Location);
+	//addGameTarget(&opponentCDTarget, OPPONENT_CD, OPPONENT_CD_GAIN, &dropZone1Location);
 	/*
 	addGameTarget(&bullionRight2Target, BULLION_RIGHT_2, BULLION_GAIN);
 	addGameTarget(&bullionLeft2Target, BULLION_LEFT_2, BULLION_GAIN);
@@ -320,9 +325,14 @@ void initStrategy2012(int strategyIndex) {
 	GameStrategy* strategy = getGameStrategy(strategyIndex);
 	getStrategyContext()->gameStrategy = strategy;
 
-	OutputStream* debugOutputStream = getOutputStreamLogger(INFO);
+	//OutputStream* debugOutputStream = getOutputStreamLogger(INFO);
+	//printStrategyAllDatas(debugOutputStream);
 
-	printStrategyAllDatas(debugOutputStream);
+	// test opponent
+	Point* p = &(getStrategyContext()->opponentRobotPosition);
+	p->x = 1500;
+	p->y = 1500;
+	//getStrategyContext()->opponentRobotMoved = TRUE;
 
 	// reinitialize the game board to change elements / targets ...
 }

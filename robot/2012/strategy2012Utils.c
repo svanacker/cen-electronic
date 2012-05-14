@@ -58,18 +58,18 @@ int getAngle1Path(PathDataFunction* pathDataFunction) {
 		return result;
 	}
 	else {
-		return ANGLE_180 - result;
+		return -result;
 	}	
 }
 
 int getAngle2Path(PathDataFunction* pathDataFunction) {
 	pathDataFunction();
-	int result = getTmpPathData()->angle1;
+	int result = getTmpPathData()->angle2;
 	if (isViolet()) {
 		return result;
 	}
 	else {
-		return ANGLE_180 - result;
+		return -result;
 	}	
 }
 

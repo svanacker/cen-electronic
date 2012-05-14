@@ -8,6 +8,8 @@
 
 #define	BIT_LIST_NAVIGATION_ARRAY_LENGTH	(MAX_PATH / BITS_COUNT_IN_UNSIGNED_INT) + 1
 
+#define COST_UNAVAILABLE_PATH 2000
+
 /**
  * Initialize the navigation system.
  */
@@ -45,5 +47,14 @@ int computeBestPath(LocationList* outLocationList,
 					Location* end);
 
 void printNavigationContext();
+
+/** 
+ * Sets the availability of the path at the specified index.
+ * @param index the index of the path
+ * @param value the availability of the path
+ */
+void setPathAvailability(int index, BOOL value);
+
+BOOL getPathAvailability(int index);
 
 #endif

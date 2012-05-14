@@ -209,13 +209,14 @@ int main(void) {
 	initDriversDescriptor();
 
 	initStrategy2012(0);
+	//setColor(COLOR_VIOLET);
 
 	//printGameboard(getOutputStreamLogger(INFO));
+	printStrategyAllDatas(getOutputStreamLogger(INFO));
 
 	#ifdef MPLAB_SIMULATION
 		//addNavigationLocations();
 		//printDeviceListUsage(getOutputStreamLogger(INFO));
-
 		while (nextStep());
 		while (1);
 	#endif

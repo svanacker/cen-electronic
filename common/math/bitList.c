@@ -67,10 +67,10 @@ void setBit(BitList* bitList, unsigned char index, BOOL value) {
 
 	unsigned int mask = (1 << relativeIntIndex);
 	if (value) {
-		*arrayPointer |= *arrayPointer | mask;
+		*arrayPointer |= mask;
 	}
 	else {
-		*arrayPointer &= (!mask);
+		*arrayPointer &= (~mask);
 	}
 	#ifdef BIT_LIST_DEBUG
 		appendStringAndDec(getOutputStreamLogger(INFO), ", newPointerValue=", *arrayPointer);

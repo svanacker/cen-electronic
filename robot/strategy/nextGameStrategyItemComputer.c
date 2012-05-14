@@ -49,6 +49,10 @@ void computeBestNextTarget(GameStrategyContext* strategyContext) {
 			GameTargetAction* targetAction = getGameTargetAction(actionList, actionIndex);
 			Location* startLocation = targetAction->startLocation;
 			int distanceCost = computeBestPath(&(strategyContext->currentTrajectory), currentLocation, startLocation);
+			
+			// LOG costs
+			//printLocationList(getOutputStreamLogger(INFO), "Result=", &(strategyContext->currentTrajectory));
+
 			// float gain = 0.0f; //targetGain(target, action, distance, elapsedMatchTime, 0.0, 0.0);
 			// log(gainData, target, gain);
 
@@ -78,6 +82,7 @@ void computeBestNextTarget(GameStrategyContext* strategyContext) {
 	if (targetAction != NULL) {
 		Location* startLocation = targetAction->startLocation;
 		computeBestPath(&(strategyContext->currentTrajectory), currentLocation, startLocation);
+		printLocationList(getOutputStreamLogger(INFO), "Result=", &(strategyContext->currentTrajectory));
 	}
 
 	#ifdef NEXT_GAME_STRATEGY_ITEM_COMPUTER_DEBUG
