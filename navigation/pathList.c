@@ -29,7 +29,7 @@ PathDataFunction* getPath(PathList* pathList, int index) {
     return pathList->paths[index];
 }
 
-PathDataFunction* getPathOfLocations(PathList* pathList, Location* location1, Location* location2) {
+PathDataFunction* getPathOfLocations(PathList* pathList, Location* location1, Location* location2, BOOL* reversed) {
 	int i;
 	int size = pathList->size;
 	for (i = 0; i < size; i++) {
@@ -39,10 +39,12 @@ PathDataFunction* getPathOfLocations(PathList* pathList, Location* location1, Lo
 		Location* pathLocation2 = getTmpPathData()->location2;
 		// same order
 		if (locationEquals(pathLocation1, location1) && locationEquals(pathLocation2, location2)) {
+			*reversed = FALSE;
 			return pathDataFunction;
 		}
 		// inverse order
 		if (locationEquals(pathLocation1, location2) && locationEquals(pathLocation2, location1)) {
+			*reversed = TRUE;
 			return pathDataFunction;
 		}
 	}

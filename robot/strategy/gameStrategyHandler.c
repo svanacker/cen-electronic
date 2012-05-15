@@ -33,6 +33,9 @@ GameStrategyContext* getStrategyContext() {
 	return &strategyContext;
 }
 
+#define ANGLE_180 1800
+#define ANGLE_360 3600
+
 /**
  * @private
  */
@@ -143,18 +146,25 @@ void motionGoLocation(Location* location,
 }
 
 int mod3600(int value) {
-	if (value < - 1800) {
-		return (value + 3600);
-	} else if (value > 1800) {
-		return (value - 3600);
+	if (value < - ANGLE_180) {
+		return (value + ANGLE_360);
+	} else if (value > ANGLE_180) {
+		return (value - ANGLE_360);
 	}
 	return value;
 }
 
-BOOL motionRotateToFollowPath(PathDataFunction* pathDataFunction) {
+BOOL motionRotateToFollowPath(PathDataFunction* pathDataFunction, BOOL reversed) {
 	pathDataFunction();
 
-	int diff = mod3600(getAngle1Path(pathDataFunction) - strategyContext.robotAngle);
+	int angle;
+	if (reversed) {
+		angle = mod3600(ANGLE_180 + getAngle2Path(pathDataFunction));
+	} else {
+		angle = getAngle1Path(pathDataFunction);
+	}
+
+	int diff = mod3600(angle - strategyContext.robotAngle);
 	if (abs(diff) < ANGLE_ROTATION_MIN) {
 		return FALSE;
 	}
@@ -178,26 +188,39 @@ BOOL motionRotateToFollowPath(PathDataFunction* pathDataFunction) {
 	return TRUE;
 }
 
-void motionFollowPath(PathDataFunction* pathDataFunction) {
+void motionFollowPath(PathDataFunction* pathDataFunction, BOOL reversed) {
 	pathDataFunction();
 	PathData* pathData = getTmpPathData();
-	Location* location = pathData->location2;
+
+	Location* location;
+	int angle;
+	int cp1;
+	int cp2;
+	if (reversed) {
+		location = pathData->location1;
+		angle = mod3600(ANGLE_180 + getAngle1Path(pathDataFunction));
+		cp1 = pathData->controlPointDistance2;
+		cp2 = pathData->controlPointDistance1;
+	} else {
+		location = pathData->location2;
+		angle = getAngle2Path(pathDataFunction);
+		cp1 = pathData->controlPointDistance1;
+		cp2 = pathData->controlPointDistance2;
+	}
 
 	#ifdef DEBUG_STRATEGY_HANDLER
 		appendString(getOutputStreamLogger(DEBUG), "motionFollowPath:goto:");	
 		printLocation(getOutputStreamLogger(DEBUG), location);
 	#endif
 
-	motionDriverBSplineAbsolute(location->x, location->y,
-								getAngle2Path(pathDataFunction), 
-								pathData->controlPointDistance1, pathData->controlPointDistance2,
+	motionDriverBSplineAbsolute(location->x, location->y, angle, cp1, cp2,
 								pathData->accelerationFactor, pathData->speedFactor);
 
 	// Simulate as if the robot goes to the position with a small error
 	#ifdef SIMULATE_ROBOT
 		strategyContext.robotPosition.x = location->x + 1;
 		strategyContext.robotPosition.y = location->y + 1;
-		strategyContext.robotAngle = getAngle2Path(pathDataFunction);
+		strategyContext.robotAngle = angle;
 	#endif
 }
 
@@ -228,9 +251,10 @@ BOOL handleCurrentTrajectory() {
 
 	Location* start = getLocation(currentTrajectory, 0);
 	Location* end = getLocation(currentTrajectory, 1);
-	PathDataFunction* pathDataFunction = getPathOfLocations(getNavigationPathList(), start, end);
-	if (!motionRotateToFollowPath(pathDataFunction)) {
-		motionFollowPath(pathDataFunction);
+	BOOL reversed;
+	PathDataFunction* pathDataFunction = getPathOfLocations(getNavigationPathList(), start, end, &reversed);
+	if (!motionRotateToFollowPath(pathDataFunction, reversed)) {
+		motionFollowPath(pathDataFunction, reversed);
 		removeFirstLocation(currentTrajectory);
 	}
 	return TRUE;
