@@ -37,7 +37,7 @@ BOOL isStrategyDeviceOk(void) {
 }
 
 void deviceStrategyHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream) {
- 	if (header == COMMAND_SET_OPPONENT_ROBOT_POSITION) {
+ 	if (header == COMMAND_STRATEGY_SET_OPPONENT_ROBOT_POSITION) {
 
 		// data
 		int x = readHex4(inputStream);
@@ -56,9 +56,9 @@ void deviceStrategyHandleRawData(char header, InputStream* inputStream, OutputSt
 		updatePathsAvailability();
 
         appendAck(outputStream);
-        append(outputStream, COMMAND_SET_OPPONENT_ROBOT_POSITION);
+        append(outputStream, COMMAND_STRATEGY_SET_OPPONENT_ROBOT_POSITION);
 	}
-	else if (header == COMMAND_SET_CONFIG) {
+	else if (header == COMMAND_STRATEGY_SET_CONFIG) {
 		// data
 		int c = readHex4(inputStream);
 //		GameStrategyContext* context = getStrategyContext();
@@ -72,21 +72,22 @@ void deviceStrategyHandleRawData(char header, InputStream* inputStream, OutputSt
 		}
 
         appendAck(outputStream);
-        append(outputStream, COMMAND_SET_CONFIG);
+        append(outputStream, COMMAND_STRATEGY_SET_CONFIG);
 	}
 	// Print Gameboard
-	else if (header == COMMAND_PRINT_GAME_BOARD) {
+	else if (header == COMMAND_STRATEGY_PRINT_GAME_BOARD) {
 		OutputStream* debugOutputStream = getOutputStreamLogger(ALWAYS);
 		printStrategyAllDatas(debugOutputStream);
 		printGameboard(debugOutputStream);
         appendAck(outputStream);
-        append(outputStream, COMMAND_PRINT_GAME_BOARD);
+        append(outputStream, COMMAND_STRATEGY_PRINT_GAME_BOARD);
 	}
 	// next step
-	else if (header == COMMAND_NEXT_STEP) {
+	else if (header == COMMAND_STRATEGY_NEXT_STEP) {
 		GameStrategyContext* context = getStrategyContext();
         appendAck(outputStream);
-        append(outputStream, COMMAND_NEXT_STEP);
+        append(outputStream, COMMAND_STRATEGY_NEXT_STEP);
+		// arguments
 		if (context->hasMoreNextSteps) {
 			context->mustDoNextStep = TRUE;
 			appendHex2(outputStream, 1);
@@ -94,6 +95,28 @@ void deviceStrategyHandleRawData(char header, InputStream* inputStream, OutputSt
 		else {
 			appendHex2(outputStream, 0);
 		}
+	}
+	else if (header == COMMAND_STRATEGY_SET_ROBOT_POSITION) {
+		GameStrategyContext* context = getStrategyContext();
+		
+		// status
+		readHex2(inputStream);
+		// separator
+		checkIsChar(inputStream, '-');
+		// x
+		context->robotPosition.x = readHex4(inputStream);
+		// separator
+		checkIsChar(inputStream, '-');
+		// y
+		context->robotPosition.y = readHex4(inputStream);
+		// separator
+		checkIsChar(inputStream, '-');
+		// angle in ddeg
+		context->robotAngle = readHex4(inputStream);
+
+		// output
+        appendAck(outputStream);
+        append(outputStream, COMMAND_STRATEGY_SET_ROBOT_POSITION);
 	}
 }
 

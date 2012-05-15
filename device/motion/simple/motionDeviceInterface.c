@@ -189,11 +189,20 @@ int deviceMotionGetInterface(char header, int mode, BOOL fillDeviceArgumentList)
         return 0;
     }// Calibration
     else if (header == COMMAND_SQUARE_CALIBRATION) {
-        // Same INPUT/OUTPUT
-        if (fillDeviceArgumentList) {
-			setFunctionNoArgument("squareCalib");
-        }
-        return 0;
+        if (mode == DEVICE_MODE_INPUT) {
+	        if (fillDeviceArgumentList) {
+				setFunction("squareCalib", 2);
+				setArgumentUnsignedHex2(0, "l/r");
+				setArgumentUnsignedHex4(1, "length");
+            }
+			return 6;
+		 }
+		 else if (mode == DEVICE_MODE_OUTPUT) {
+			if (fillDeviceArgumentList) {
+				setFunctionNoArgument("squareCalib");
+			}
+			return 0;
+		}
     }// Parameters
     else if (header == COMMAND_GET_MOTION_PARAMETERS) {
         if (mode == DEVICE_MODE_INPUT) {

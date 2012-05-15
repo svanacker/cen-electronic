@@ -1,6 +1,10 @@
 #ifndef ROBOT_H
 #define ROBOT_H
 
+
+// Time in seconds
+#define TIME_FOR_OBSTACLE_NEW_NOTIFICATION 			4
+
 // MAIN FUNCTIONS
 
 /**

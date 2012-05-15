@@ -1,6 +1,6 @@
 #include "robotSonarDetectorDeviceInterface.h"
 
-#include "../device/deviceInterface.h"
+#include "../../device/deviceInterface.h"
 
 const char* deviceRobotSonarDetectorGetName(void) {
     return "robotSonarDetector";

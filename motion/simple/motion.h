@@ -219,7 +219,7 @@ float rightSimpleMilliDegreeAndWait(float milliAngleDegree);
 
 // CALIBRATION
 
-void squareCalibration(float lengthInMM);
+void squareCalibration(unsigned char type, float lengthInMM);
 
 // UTILITY FUNCTIONS
 

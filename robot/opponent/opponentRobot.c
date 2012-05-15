@@ -20,6 +20,10 @@ void opponentRobotCallbackFunc(void) {
 	mustAskLastOpponentRobotPosition = TRUE;
 }
 
+Point* getLastOpponentRobotPosition() {
+	return &lastOpponentRobotPosition;
+}
+
 void initOpponentRobot() {
     // Timer for detector
     addTimer(OPPONENT_ROBOT_TIMER_INDEX,
@@ -35,12 +39,7 @@ void updateOpponentRobotIfNecessary() {
 	// reset Flag
 	mustAskLastOpponentRobotPosition = FALSE;
 
-	// Update the opponent Robot Position
+	// Update the opponent Robot Position by asking beaconReceiver
 	updateOpponentRobotPosition(&lastOpponentRobotPosition);
-
-	// Send the opponentRobot position if it has the information.			
-	// if (lastOpponentRobotPosition.x != 0 && lastOpponentRobotPosition.y != 0) {
-	//	sendStrategyOpponentRobotPosition(&lastOpponentRobotPosition);
-	// }
 }
 

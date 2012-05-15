@@ -18,6 +18,7 @@
 #include "../../robot/2012/armDeviceInterface2012.h"
 #include "../../robot/2012/armDriver2012.h"
 #include "../../robot/opponent/robotSonarDetectorDevice.h"
+#include "../../robot/opponent/opponentRobot.h"
 
 #define 	ANGLE_90			0x0384
 #define		ANGLE_135			0x0546
@@ -172,6 +173,13 @@ void homologation2(int color) {
 // ----------------------------------------------------------- Homologation 3 ---------------------------------------------------------
 
 void homologation3(int color) {
+	// Send the opponentRobot position if it has the information.			
+	Point* opponentRobotPosition = getLastOpponentRobotPosition();
+	if (opponentRobotPosition ->x != 0 && opponentRobotPosition ->y != 0) {
+		sendStrategyOpponentRobotPosition(opponentRobotPosition );
+	}
+	
+	// Send next Step
 	sendStrategyNextStep();
 	return;
 

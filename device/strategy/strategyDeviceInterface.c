@@ -15,7 +15,7 @@ unsigned int getStrategyVersion(void) {
 
 int deviceStrategyGetInterface(char header, int mode, BOOL fillDeviceArgumentList) {
 	// Robot opponent position
-    if (header == COMMAND_SET_OPPONENT_ROBOT_POSITION) {
+    if (header == COMMAND_STRATEGY_SET_OPPONENT_ROBOT_POSITION) {
 		if (mode == DEVICE_MODE_INPUT) {
             if (fillDeviceArgumentList) {
 				setFunction("setOpponentRobotPos", 3);
@@ -32,7 +32,7 @@ int deviceStrategyGetInterface(char header, int mode, BOOL fillDeviceArgumentLis
         }
 	}
 	// Config
-	else if (header == COMMAND_SET_CONFIG) {
+	else if (header == COMMAND_STRATEGY_SET_CONFIG) {
 		if (mode == DEVICE_MODE_INPUT) {
             if (fillDeviceArgumentList) {
 				setFunction("setConfig", 1);
@@ -47,7 +47,7 @@ int deviceStrategyGetInterface(char header, int mode, BOOL fillDeviceArgumentLis
         }
 	}
 	// Print Gameboard
-	else if (header == COMMAND_PRINT_GAME_BOARD) {
+	else if (header == COMMAND_STRATEGY_PRINT_GAME_BOARD) {
 		// same input/output
 		if (fillDeviceArgumentList) {
 			setFunctionNoArgument("printGameBoard");
@@ -55,7 +55,7 @@ int deviceStrategyGetInterface(char header, int mode, BOOL fillDeviceArgumentLis
 		return 0;
 	}
 	// Next step
-	else if (header == COMMAND_NEXT_STEP) {
+	else if (header == COMMAND_STRATEGY_NEXT_STEP) {
 		if (mode == DEVICE_MODE_INPUT) {
 			// same input/output
 			if (fillDeviceArgumentList) {
@@ -71,6 +71,28 @@ int deviceStrategyGetInterface(char header, int mode, BOOL fillDeviceArgumentLis
         }
 		
 	}
+	// Notify position
+    else if (header == COMMAND_STRATEGY_SET_ROBOT_POSITION) {
+        if (mode == DEVICE_MODE_INPUT) {
+            if (fillDeviceArgumentList) {
+				setFunction("strategySetRobotPosition", 7);
+				setArgumentUnsignedHex2(0, "status");
+				setArgumentSeparator(1);
+				setArgumentUnsignedHex4(2, "x(mm)");
+				setArgumentSeparator(3);
+				setArgumentUnsignedHex4(4, "y(mm)");
+				setArgumentSeparator(5);
+				setArgumentUnsignedHex4(6, "ang(1/10)deg");
+            }
+            return 17;
+        }
+		else if (mode == DEVICE_MODE_OUTPUT) {
+            if (fillDeviceArgumentList) {
+				setFunctionNoArgument("strategySetRobotPosition");
+            }
+            return 0;
+		}
+	}	
 	return DEVICE_HEADER_NOT_HANDLED;
 }
 

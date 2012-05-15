@@ -21,6 +21,8 @@
 #include "../../common/io/streamLink.h"
 #include "../../common/io/stream.h"
 #include "../../common/io/pin.h"
+#include "../../common/io/printWriter.h"
+#include "../../common/io/reader.h"
 
 #include "../../common/log/logHandler.h"
 #include "../../common/log/logger.h"
@@ -222,8 +224,35 @@ void mainBoardCallbackRawData(const Device* device,
 	// MOTOR BOARD notification
     if (header == NOTIFY_MOTION_STATUS || header == COMMAND_NOTIFY_TEST) {
 	    appendString(getOutputStreamLogger(INFO), "\nNotification : From MOTOR BOARD \n");
+		// NOTIFY_MOTION_STATUS / COMMAND_NOTIFY_TEST
+		checkIsChar(inputStream, header);
+		// status
+		unsigned char status = readHex2(inputStream);
+		// separator
+		checkIsChar(inputStream, '-');
+		// x
+		unsigned int x = readHex4(inputStream);
+		// separator
+		checkIsChar(inputStream, '-');
+		// y
+		unsigned int y = readHex4(inputStream);
+		// separator
+		checkIsChar(inputStream, '-');
+		// angle in ddeg
+		unsigned int angle = readHex4(inputStream);
 
-        forwardCallbackRawDataTo(inputStream, &(compositePcAndDebugOutputStream.outputStream), device, header, DEVICE_MODE_OUTPUT);
+		sentStrategyRobotPosition(status, x, y, angle); 
+		
+		// FOR DEBUG AND MOTHER BOARD
+		OutputStream* outputStream = &(compositePcAndDebugOutputStream.outputStream);
+		appendHex2(outputStream, status);
+		appendSeparator(outputStream);
+		appendHex4(outputStream, x);
+		appendSeparator(outputStream);
+		appendHex4(outputStream, y);
+		appendSeparator(outputStream);
+		appendHex4(outputStream, angle);
+
         // ready for next motion instruction Index
         setReadyForNextMotion(TRUE);
     }

@@ -245,7 +245,9 @@ void deviceMotionHandleRawData(char header,
     }        // CALIBRATION
     else if (header == COMMAND_SQUARE_CALIBRATION) {
         appendAck(outputStream);
-        squareCalibration(1000.0f);
+		unsigned char type = readHex2(inputStream);
+		unsigned int length = readHex4(inputStream);
+        squareCalibration(type, length);
         append(outputStream, COMMAND_SQUARE_CALIBRATION);
     }        // PARAMETERS
     else if (header == COMMAND_GET_MOTION_PARAMETERS) {

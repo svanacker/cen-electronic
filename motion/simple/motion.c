@@ -605,25 +605,56 @@ float rightSimpleMilliDegreeAndWait(float angleMilliDegree) {
 
 // CALIBRATION
 
-void squareCalibration(float lengthInMM) {
+
+void squareCalibration(unsigned char type, float lengthInMM) {
     // to the bottom middle
     forwardSimpleMMAndWait(lengthInMM / 4.0f);
-    rightSimpleDegreeAndWait(DEG_90);
-    // to the bottom right
+	if (type == 0) {
+    	rightSimpleDegreeAndWait(DEG_90);
+ 	} else {
+    	leftSimpleDegreeAndWait(DEG_90);
+	}
+
+	// to the bottom right
     forwardSimpleMMAndWait(lengthInMM / 2.0f);
-    leftSimpleDegreeAndWait(DEG_90);
+	if (type == 0) {
+	    leftSimpleDegreeAndWait(DEG_90);
+	} else {
+    	rightSimpleDegreeAndWait(DEG_90);
+	}
+
     // to the top right
     forwardSimpleMMAndWait(lengthInMM);
-    leftSimpleDegreeAndWait(DEG_90);
+	if (type == 0) {
+	    leftSimpleDegreeAndWait(DEG_90);
+	} else {
+    	rightSimpleDegreeAndWait(DEG_90);
+	}
+
     // to the top left
     forwardSimpleMMAndWait(lengthInMM);
-    leftSimpleDegreeAndWait(DEG_90);
+	if (type == 0) {
+	    leftSimpleDegreeAndWait(DEG_90);
+	} else {
+    	rightSimpleDegreeAndWait(DEG_90);
+	}
+
     // to the bottom left
     forwardSimpleMMAndWait(lengthInMM);
-    leftSimpleDegreeAndWait(DEG_90);
+	if (type == 0) {
+	    leftSimpleDegreeAndWait(DEG_90);
+	} else {
+    	rightSimpleDegreeAndWait(DEG_90);
+	}
+
     // to the bottom middle
     forwardSimpleMMAndWait(lengthInMM / 2.0f);
-    leftSimpleDegreeAndWait(DEG_90);
+	if (type == 0) {
+	    leftSimpleDegreeAndWait(DEG_90);
+	} else {
+    	rightSimpleDegreeAndWait(DEG_90);
+	}
+
     // go to the first position
     backwardSimpleMMAndWait(lengthInMM / 4.0f);
 }
