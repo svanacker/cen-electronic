@@ -38,11 +38,9 @@ void updateOpponentRobotIfNecessary() {
 	// Update the opponent Robot Position
 	updateOpponentRobotPosition(&lastOpponentRobotPosition);
 
-	/*
 	// Send the opponentRobot position if it has the information.			
-	if (lastOpponentRobotPosition.x != 0 && lastOpponentRobotPosition.y != 0) {
-		sendStrategyOpponentRobotPosition(&lastOpponentRobotPosition);
-	}
-	*/
+	// if (lastOpponentRobotPosition.x != 0 && lastOpponentRobotPosition.y != 0) {
+	//	sendStrategyOpponentRobotPosition(&lastOpponentRobotPosition);
+	// }
 }
 

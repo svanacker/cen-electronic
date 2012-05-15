@@ -104,8 +104,9 @@ BOOL checkIsAck(InputStream* inputStream) {
     char ack = inputStream->readChar(inputStream);
     if (ack != COMMAND_ACK) {
         OutputStream* outputStream = getErrorOutputStreamLogger();
-        appendString(outputStream, " CHK:ACK:EXP:a:find:");
+        appendString(outputStream, "\nCHK:ACK EXP:a \t but \t find:");
         append(outputStream, ack);
+		println(outputStream);
     }
     return TRUE;
 }
@@ -114,10 +115,11 @@ BOOL checkIsChar(InputStream* inputStream, char expectedChar) {
     char readChar = inputStream->readChar(inputStream);
     if (expectedChar != readChar) {
         OutputStream* outputStream = getErrorOutputStreamLogger();
-        appendString(outputStream, " CHK:CHAR:EXP:");
+        appendString(outputStream, "\nCHK:CHAR:EXP:");
         append(outputStream, expectedChar);
-        appendString(outputStream, ":find:");
+        appendString(outputStream, " \t but \t find:");
         append(outputStream, readChar);
+		println(outputStream);
     }
     return TRUE;
 }

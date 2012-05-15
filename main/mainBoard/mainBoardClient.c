@@ -219,26 +219,33 @@ void mainBoardCallbackRawData(const Device* device,
         InputStream* inputStream) {
 
 //    if (header == NOTIFY_MOTION_STATUS || header == COMMAND_NOTIFY_TEST || header == COMMAND_PLIERS_2011_OPEN) {
+	// MOTOR BOARD notification
     if (header == NOTIFY_MOTION_STATUS || header == COMMAND_NOTIFY_TEST) {
+	    appendString(getOutputStreamLogger(INFO), "\nNotification : From MOTOR BOARD \n");
+
         forwardCallbackRawDataTo(inputStream, &(compositePcAndDebugOutputStream.outputStream), device, header, DEVICE_MODE_OUTPUT);
         // ready for next motion instruction Index
         setReadyForNextMotion(TRUE);
     }
-	// When Strategy ask by notification message to go somewhere
+	// STRATEGY BOARD notification message of MOTOR => Must be relayed TO MOTOR
 	else if (header == COMMAND_MOTION_SPLINE_ABSOLUTE || header == COMMAND_MOTION_SPLINE_RELATIVE 
 			 || header == COMMAND_MOTION_LEFT_IN_DECI_DEGREE || header == COMMAND_MOTION_RIGHT_IN_DECI_DEGREE) {
+	    appendString(getOutputStreamLogger(INFO), "Notification : From STRATEGY BOARD : relayed to MOTOR_BOARD \n");
+
 		forwardCallbackRawDataTo(inputStream, &(compositeDriverAndDebugOutputStream.outputStream), device, header, DEVICE_MODE_INPUT);
 		transmitFromDriverRequestBuffer();
 	} 
 	// When Strategy ask by notification message to arm up or Down
 	else if (header == COMMAND_ARM_2012_UP || header == COMMAND_ARM_2012_DOWN) {
+	    appendString(getOutputStreamLogger(INFO), "\nNotification : From STRATEGY BOARD : relayed to MECHANICAL BOARD :\n");
+
 		forwardCallbackRawDataTo(inputStream, &(compositeDriverAndDebugOutputStream.outputStream), device, header, DEVICE_MODE_INPUT);
 		transmitFromDriverRequestBuffer();
 		// we are ready for next motion
         setReadyForNextMotion(TRUE);
 	} 
 	else {
-	    appendString(getOutputStreamLogger(ERROR), "Notification lost:");
+	    appendString(getOutputStreamLogger(ERROR), "\nNotification lost:\n");
     	copyInputToOutputStream(inputStream, getOutputStreamLogger(ERROR), NULL, COPY_ALL);
 		println(getOutputStreamLogger(ERROR));
 	}

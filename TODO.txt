@@ -1,6 +1,10 @@
 SV
 
+* Faire un recu pour JLB
+
 P1 
+* Calibrage des roues
+* Reboot de la strategy si on reboot la MAIN STRATEGY BOARD
 * Imprimer le Poster
 * Mettre un 2ème sonar pour les mouvements en arrières
 * Optimiser la gestion des chemins contre le robot adverse.
