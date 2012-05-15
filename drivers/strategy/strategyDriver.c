@@ -1,6 +1,7 @@
 #include "strategyDriver.h"
 
 #include "../../common/commons.h"
+#include "../../common/2d/2d.h"
 
 #include "../../common/io/buffer.h"
 #include "../../common/io/outputStream.h"
@@ -41,13 +42,13 @@ BOOL sendStrategyNextStep() {
     return FALSE;
 }
 
-BOOL sendStrategyOpponentRobotPosition(int x, int y) {
+BOOL sendStrategyOpponentRobotPosition(Point* opponentRobotPosition) {
     OutputStream* outputStream = getDriverRequestOutputStream();
 
     append(outputStream, COMMAND_SET_OPPONENT_ROBOT_POSITION);
-    appendHex4(outputStream, x);
+    appendHex4(outputStream, opponentRobotPosition->x);
     appendSeparator(outputStream);
-    appendHex4(outputStream, x);
+    appendHex4(outputStream, opponentRobotPosition->y);
 
     BOOL result = transmitFromDriverRequestBuffer();
 

@@ -29,7 +29,7 @@ void initBitList(BitList* bitList, unsigned int (*array)[], unsigned char arrayL
 /**
  * Clear the bit list to FALSE for every values.
  */
-void clearBitList(BitList* bitList);
+void clearBitList(BitList* bitList, BOOL initValue);
 
 /**
  * Set the bit at the right index to the list.

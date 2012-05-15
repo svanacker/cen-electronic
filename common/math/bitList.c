@@ -16,14 +16,13 @@ void initBitList(BitList* bitList, unsigned (*array)[], unsigned char arrayLengt
 	bitList->array = array;
 	bitList->arrayLength = arrayLength;
 	bitList->size = arrayLength * BITS_COUNT_IN_UNSIGNED_INT;
-    // clearBitList(bitList);
 }
 
-void clearBitList(BitList* bitList) {
+void clearBitList(BitList* bitList, BOOL initValue) {
 	int i;
 	int size = bitList->size;
 	for (i = 0; i < size; i++) {
-		setBit(bitList, i, FALSE);
+		setBit(bitList, i, initValue);
 	}
 }
 

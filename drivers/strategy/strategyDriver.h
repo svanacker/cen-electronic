@@ -2,6 +2,7 @@
 #define STRATEGY_DRIVER_H
 
 #include "../../common/commons.h"
+#include "../../common/2d/2d.h"
 
 #include "../driver.h"
 
@@ -18,6 +19,6 @@ BOOL sendStrategyNextStep();
 /**
  * Send the opponent robot position.
  */
-BOOL sendStrategyOpponentRobotPosition(int x, int y);
+BOOL sendStrategyOpponentRobotPosition(Point* opponentRobotPosition);
 
 #endif

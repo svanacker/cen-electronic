@@ -32,6 +32,7 @@ void initNavigation() {
 	clearPathList(&paths);
 	initBitList(&outgoingPaths, &bitListValues, BIT_LIST_NAVIGATION_ARRAY_LENGTH);
 	initBitList(&availablePaths, &availablePathsBitListValues, BIT_LIST_NAVIGATION_ARRAY_LENGTH);
+	clearBitList(&availablePaths, TRUE);
 }
 
 LocationList* getNavigationLocationList() {
@@ -51,7 +52,7 @@ void addNavigationPath(PathDataFunction* pathDataFunction) {
 }
 
 void updateOutgoingPaths(Location* location) {
-	clearBitList(&outgoingPaths);
+	clearBitList(&outgoingPaths, FALSE);
 	int i;
 	int pathSize = getPathCount(&paths);
 	for (i = 0; i < pathSize; i++) {
