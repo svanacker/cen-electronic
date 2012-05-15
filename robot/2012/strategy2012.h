@@ -59,7 +59,7 @@
 
 #define 	X_BOTTLE 			0x0730
 
-#define 	X_LINTEL_LEFT		0x284
+#define 	X_LINTEL_LEFT		0x290
 
 // Symetric
 #define 	X_LINTEL_RIGHT 		2000 - X_LINTEL_LEFT
@@ -77,8 +77,8 @@
 #define BOTTLE_2_FRONT_X				0x05DC  
 #define BOTTLE_2_FRONT_Y				0x0800
 
-#define BOTTLE_2_X						0x0730 
-#define BOTTLE_2_Y						0x076C
+#define BOTTLE_2_X						0x0740 
+#define BOTTLE_2_Y						0x0750
 
 #define CD_TAKE_X						0x05A8
 #define CD_TAKE_Y						0x02C8
@@ -88,10 +88,11 @@
 
 #define BULLION_LEFT_AND_RIGHT_Y		0x05A0
 
-#define BULLION_RIGHT_1_X				X_LINTEL_RIGHT
+#define MAGIC_CONSTANT					30
+#define BULLION_RIGHT_1_X				(X_LINTEL_RIGHT + MAGIC_CONSTANT)
 #define BULLION_RIGHT_1_Y				BULLION_LEFT_AND_RIGHT_Y
 
-#define BULLION_LEFT_1_X				X_LINTEL_LEFT
+#define BULLION_LEFT_1_X				(X_LINTEL_LEFT + MAGIC_CONSTANT)
 #define BULLION_LEFT_1_Y				BULLION_LEFT_AND_RIGHT_Y
 
 #define FRONT_OF_MAP_LOCATION_X			0x01C2

@@ -211,7 +211,7 @@ void initPaths2012() {
 
 	// TODO
 
-	void bottle1ToBottle2FrontPathFunction() { fillPathData(&bottle1Location, &bottle2FrontLocation, BOTTLE_1_TO_BOTTLE_2_FRONT_COST, 0x57, 0x0A, ANGLE_180, 0x0450, BOTTLE_1_TO_BOTTLE_2_SPEED_FACTOR, BOTTLE_1_TO_BOTTLE_2_ACCELERATION_FACTOR);}
+	void bottle1ToBottle2FrontPathFunction() { fillPathData(&bottle1Location, &bottle2FrontLocation, BOTTLE_1_TO_BOTTLE_2_FRONT_COST, 0x40, 0x0A, ANGLE_180, 0x0450, BOTTLE_1_TO_BOTTLE_2_SPEED_FACTOR, BOTTLE_1_TO_BOTTLE_2_ACCELERATION_FACTOR);}
 	addNavigationPath(&bottle1ToBottle2FrontPathFunction);
 
 	void bottle2FrontToBottle2PathFunction() { fillPathData(&bottle2FrontLocation, &bottle2Location, BOTTLE_2_FRONT_TO_BOTTLE_2_COST, 0xE0, 0xF0, 0x0450, 0xF8F8, BOTTLE_1_TO_BOTTLE_2_SPEED_FACTOR, BOTTLE_1_TO_BOTTLE_2_ACCELERATION_FACTOR);}
