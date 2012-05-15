@@ -49,7 +49,7 @@ void updatePathsAvailability();
 /**
  * Ask to follow a path.
  */
-void motionFollowPath(PathDataFunction* pathDataFunction);
+void motionFollowPath(PathDataFunction* pathDataFunction, BOOL reversed);
 
 /**
  * Ask the robot to go to a location but without path (useful for actionItem).
