@@ -108,9 +108,9 @@
 #include "../../robot/match/endMatchDetectorDevice.h"
 #include "../../robot/match/endMatchDetectorDeviceInterface.h"
 
-#include "../../robot/robotSonarDetectorDevice.h"
-#include "../../robot/robotSonarDetectorDeviceInterface.h"
-
+#include "../../robot/opponent/robotSonarDetectorDevice.h"
+#include "../../robot/opponent/robotSonarDetectorDeviceInterface.h"
+#include "../../robot/opponent/opponentRobot.h"
 
 // Robot 2012
 #include "../../robot/2012/homologation2012.h"
@@ -268,7 +268,6 @@ void initDevicesDescriptor() {
     // Test & System
     // addI2CRemoteDevice(&testDevice, getTestDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
     addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
-    setPicName("MAIN BOARD");
 
     // Local
     addLocalDevice(getLCDDeviceInterface(), getLCDDeviceDescriptor());
@@ -304,7 +303,6 @@ void initDevicesDescriptor() {
     // testDevice.deviceHandleCallbackRawData = &mainBoardCallbackRawData;
     motionDevice->deviceHandleCallbackRawData = &mainBoardCallbackRawData;
 	armDevice->deviceHandleCallbackRawData = &mainBoardCallbackRawData;
-    // printDeviceListUsage(getOutputStreamLogger(INFO));
 }
 
 void waitForInstruction() {
@@ -324,6 +322,9 @@ void waitForInstruction() {
             &filterRemoveCRLF,
             NULL);
 
+	// Notify strategy board of opponent Robot Position
+	updateOpponentRobotIfNecessary();
+
     // Listen instructions from Devices (I2C Slave) -> Main Board (I2C Master)
     handleNotificationFromDispatcherList(TRANSMIT_I2C);
 	
@@ -338,6 +339,7 @@ void waitForInstruction() {
 }
 
 int main(void) {
+    setPicName("MAIN BOARD");
 
     setRobotMustStop(FALSE);
     // Open the serial Link for debug
@@ -372,11 +374,14 @@ int main(void) {
     addLogHandler(&debugSerialLogHandler, "UART", &debugOutputStream, DEBUG);
     addLogHandler(&lcdLogHandler, "LCD", &lcdOutputStream, ERROR);
 
-    appendString(getOutputStreamLogger(ALWAYS), "MAIN BOARD CLIENT");
+    appendString(getOutputStreamLogger(ALWAYS), getPicName());
     println(getOutputStreamLogger(ALWAYS));
 
     initDevicesDescriptor();
     initDriversDescriptor();
+
+	// Initializes the opponent robot
+	initOpponentRobot();
 
     // Creates a composite to notify both PC and Debug
     initCompositeOutputStream(&compositePcAndDebugOutputStream);

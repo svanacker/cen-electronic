@@ -23,12 +23,12 @@ BOOL updateOpponentRobotPosition(Point* opponentRobotPosition) {
 
     append(outputStream, COMMAND_GET_OPPONENT_ROBOT_POSITION);
 
+    BOOL result = transmitFromDriverRequestBuffer();
+
 	opponentRobotPosition->x = readHex4(inputStream);
 	// separator	
 	readHex(inputStream);
 	opponentRobotPosition->y = readHex4(inputStream);
-
-    BOOL result = transmitFromDriverRequestBuffer();
 
     return result;
 }

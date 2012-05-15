@@ -5,8 +5,8 @@ device=dsPIC30F4013
 [PATH_INFO]
 BuildDirPolicy=BuildDirIsProjectDir
 dir_src=
-dir_bin=build
-dir_tmp=build
+dir_bin=build/mechanicalBoard2
+dir_tmp=build/mechanicalBoard2
 dir_sin=
 dir_inc=C:\Program Files (x86)\Microchip\MPLAB C30\include
 dir_lib=C:\Program Files (x86)\Microchip\MPLAB C30\src\peripheral_30F_24H_33F\libs

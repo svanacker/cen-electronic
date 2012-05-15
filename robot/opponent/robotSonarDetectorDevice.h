@@ -1,7 +1,7 @@
 #ifndef ROBOT_SONAR_DETECTOR_DEVICE_H
 #define ROBOT_SONAR_DETECTOR_DEVICE_H
 
-#include "../device/device.h"
+#include "../../device/device.h"
 
 #define ROBOT_SONAR_DETECTOR_TIMER_INDEX 123
 

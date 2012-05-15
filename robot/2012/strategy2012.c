@@ -342,10 +342,9 @@ void initStrategy2012(int strategyIndex) {
 
 	// test opponent
 	Point* p = &(getStrategyContext()->opponentRobotPosition);
-	p->x = 1500;
-	p->y = 1500;
+	p->x = 0;
+	p->y = 0;
 	
-	//strategyContext->opponentRobotMoved = TRUE;
 	strategyContext->hasMoreNextSteps = TRUE;
 
 	// reinitialize the game board to change elements / targets ...

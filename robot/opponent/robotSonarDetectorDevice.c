@@ -1,34 +1,33 @@
 #include "robotSonarDetectorDevice.h"
 #include "robotSonarDetectorDeviceInterface.h"
 
-#include "../common/commons.h"
+#include "../../common/commons.h"
 
-#include "../common/cmd/commonCommand.h"
+#include "../../common/cmd/commonCommand.h"
 
-#include "../common/delay/delay30F.h"
+#include "../../common/delay/delay30F.h"
 
-#include "../common/io/inputStream.h"
-#include "../common/io/outputStream.h"
-#include "../common/io/printWriter.h"
-#include "../common/io/reader.h"
-#include "../common/io/stream.h"
+#include "../../common/io/inputStream.h"
+#include "../../common/io/outputStream.h"
+#include "../../common/io/printWriter.h"
+#include "../../common/io/reader.h"
 
-#include "../common/timer/cenTimer.h"
-#include "../common/timer/timerList.h"
+#include "../../common/timer/cenTimer.h"
+#include "../../common/timer/timerList.h"
 
-#include "../common/log/logger.h"
-#include "../common/log/logLevel.h"
+#include "../../common/log/logger.h"
+#include "../../common/log/logLevel.h"
 
-#include "../device/device.h"
+#include "../../device/device.h"
 
-#include "../drivers/sonar/srf02.h"
+#include "../../drivers/sonar/srf02.h"
 
-#include "../device/motion/simple/motionDeviceInterface.h"
+#include "../../device/motion/simple/motionDeviceInterface.h"
 
-#include "../robot/config/robotConfigDevice.h"
-#include "../robot/robot.h"
+#include "../../robot/config/robotConfigDevice.h"
+#include "../../robot/robot.h"
 
-#include "../main/motorBoard/motorBoard.h"
+#include "../../main/motorBoard/motorBoard.h"
 
 #define SONAR_INDEX	0
 

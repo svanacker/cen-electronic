@@ -12,6 +12,9 @@
 /** Use flag to know if we trace Handler strategy. */
 #define DEBUG_STRATEGY_HANDLER
 
+/** Use flag to know if we trace Opponent Robot management. */
+#define DEBUG_OPPONENT_ROBOT
+
 /** Minimum angle to add a rotation. */
 #define ANGLE_ROTATION_MIN 50
 
@@ -33,6 +36,14 @@ GameStrategyContext* getStrategyContext();
  */
 BOOL nextStep();
 
+// OBSTACLE
+
+/**
+ * Update all paths / opponent Robot Position to mark them as unavailable if the robot is on
+ * this path !
+ */
+void updatePathsAvailability();
+
 // MOTION
 
 /**
@@ -40,6 +51,9 @@ BOOL nextStep();
  */
 void motionFollowPath(PathDataFunction* pathDataFunction);
 
+/**
+ * Ask the robot to go to a location but without path (useful for actionItem).
+ */
 void motionGoLocation(Location* location, 
 					int angle,
 					int controlPointDistance1, int controlPointDistance2,

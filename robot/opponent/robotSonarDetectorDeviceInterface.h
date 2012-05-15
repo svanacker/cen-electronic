@@ -1,7 +1,7 @@
 #ifndef ROBOT_SONAR_DETECTOR_DEVICE_INTERFACE_H
 #define ROBOT_SONAR_DETECTOR_DEVICE_INTERFACE_H
 
-#include "../device/deviceInterface.h"
+#include "../../device/deviceInterface.h"
 
 #define COMMAND_SET_SONAR_STATUS	'<'
 

@@ -11,7 +11,7 @@ int convertXToColumn(int x) {
 
 int convertYToLine(int y) {
 	float scale = (float) GAMEBOARD_LINE_COUNT / GAMEBOARD_HEIGHT;
-	return (int)( (float) (3000.0f - y) * scale);
+	return (int)( (float) (GAMEBOARD_HEIGHT - y) * scale);
 }
 
 

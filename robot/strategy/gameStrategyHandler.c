@@ -153,7 +153,6 @@ int mod3600(int value) {
 
 BOOL motionRotateToFollowPath(PathDataFunction* pathDataFunction) {
 	pathDataFunction();
-	PathData* pathData = getTmpPathData();
 
 	int diff = mod3600(getAngle1Path(pathDataFunction) - strategyContext.robotAngle);
 	if (abs(diff) < ANGLE_ROTATION_MIN) {
@@ -249,6 +248,10 @@ void computePoint(Point* ref, Point* cp, unsigned char distance, int angle) {
 	cp->y = ref->y + dsa;
 }
 
+/**
+ * Loop on a pathDataFunction, to know if the path has an intersection with the opponentRobotPosition.
+ * @private
+ */
 BOOL isPathAvailable(PathDataFunction* pathDataFunction) {
 	pathDataFunction();
 	PathData* pathData = getTmpPathData();
@@ -276,36 +279,62 @@ BOOL isPathAvailable(PathDataFunction* pathDataFunction) {
 	return TRUE;
 }
 
+BOOL mustComputePaths() {
+	int x = strategyContext.opponentRobotPosition.x;
+	// DON'T detect the opponent robot position
+	if (x == 0) {
+		return FALSE;
+	}
+	// Case when the robot position is detected himself as the opponent robot !!!
+	// All paths will be marked as unavailable, but the robot will try the path even (cost is only more huge)
+
+	return TRUE;
+}
+
 void updatePathsAvailability() {
-	if (!strategyContext.opponentRobotMoved) {
-		return;
-	}
+	#ifdef DEBUG_OPPONENT_ROBOT
+		OutputStream* logStream = getOutputStreamLogger(INFO);
+		appendString(logStream, "\nUpdating available paths");
+	//	printGameStrategyContext(logStream, getStrategyContext());
+	#endif
 
-	OutputStream* logStream = getOutputStreamLogger(INFO);
-	appendString(logStream, "\nUpdating available paths");
-//	printGameStrategyContext(logStream, getStrategyContext());
-
+	BOOL computePath = mustComputePaths();
+	if (!computePath) {
+		appendString(logStream, "\nDon't compute Path !");
+	}	
 	PathList* paths = getNavigationPathList();
-	int i;
-	for (i = 0; i < paths->size; i++) {
-		PathDataFunction* pathDataFunction = paths->paths[i];
-		BOOL available = isPathAvailable(pathDataFunction);
-		setPathAvailability(i, available);
-	}
+	// int j;
+	// for (j = 0; j < 100; j++) {
+		int i;
+		for (i = 0; i < paths->size; i++) {
+			PathDataFunction* pathDataFunction = paths->paths[i];
+			// by default, path is available
+			BOOL available = TRUE;
+			// Don't do the compute if it's not necessary
+			if (computePath) {	
+				available = isPathAvailable(pathDataFunction);
+			}
+			setPathAvailability(i, available);
+		}
+	// }
 
-	// LOG
-	for (i = 0; i < paths->size; i++) {
-		PathDataFunction* pathDataFunction = paths->paths[i];
-		pathDataFunction();
-		PathData* data = getTmpPathData();
+	#ifdef DEBUG_OPPONENT_ROBOT
+		// LOG
+		int k;
+		for (k = 0; k < paths->size; k++) {
+			PathDataFunction* pathDataFunction = paths->paths[k];
+			pathDataFunction();
+			PathData* data = getTmpPathData();
+			if (!getPathAvailability(k)) {
+				appendString(logStream, "\n");
+				appendString(logStream, data->location1->name);
+				appendString(logStream, "->");
+				appendString(logStream, data->location2->name);
+				appendString(logStream, ": UNAVAILABLE");		
+			}
+		}
 		appendString(logStream, "\n");
-		appendString(logStream, data->location1->name);
-		appendString(logStream, "->");
-		appendString(logStream, data->location2->name);
-		appendString(logStream, ":");
-		appendString(logStream, getPathAvailability(i) ? "YES" : "NO");
-	}
-	appendString(logStream, "\n");
+	#endif
 }
 
 BOOL nextStep() {
@@ -335,7 +364,6 @@ BOOL nextStep() {
 		}
 		else if (targetAction == NULL) {
 			// no target, search a new one
-			updatePathsAvailability();
 			findNextTarget();
 			if (strategyContext.currentTarget == NULL) {
 				#ifdef DEBUG_STRATEGY_HANDLER

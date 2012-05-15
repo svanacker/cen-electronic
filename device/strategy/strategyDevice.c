@@ -19,6 +19,7 @@
 #include "../../robot/gameboard/gameboard.h"
 
 #include "../../robot/2012/strategy2012.h"
+#include "../../robot/2012/strategy2012Utils.h"
 #include "../../robot/config/robotConfig.h"
 
 // DEVICE INTERFACE
@@ -45,8 +46,14 @@ void deviceStrategyHandleRawData(char header, InputStream* inputStream, OutputSt
 
 		GameStrategyContext* context = getStrategyContext();
 		context->opponentRobotPosition.x = x;
-		context->opponentRobotPosition.y = y;
-		context->opponentRobotMoved = TRUE;
+		if (isViolet()) {
+			context->opponentRobotPosition.y = y;
+		}
+		else {
+			// Opponent Robot position is relative to violet !
+			context->opponentRobotPosition.y = GAMEBOARD_HEIGHT - y;
+		}
+		updatePathsAvailability();
 
         appendAck(outputStream);
         append(outputStream, COMMAND_SET_OPPONENT_ROBOT_POSITION);
