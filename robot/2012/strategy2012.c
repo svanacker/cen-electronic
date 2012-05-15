@@ -273,6 +273,14 @@ void bullionLeft1Step3GoToDropZone() {
 }
 
 void initTargetActions2012() {
+	clearTargetActionList(&(bullion1Target.actionList));
+	clearTargetActionList(&(bottle1Target.actionList));
+	clearTargetActionList(&(bottle2Target.actionList));
+	clearTargetActionList(&(cd4Target.actionList));
+	clearTargetActionList(&(bullionRight1Target.actionList));
+	clearTargetActionList(&(bullionLeft1Target.actionList));
+	clearTargetActionList(&(opponentCDTarget.actionList));
+
 	addTargetAction(&(bullion1Target.actionList), &bullion1TargetAction, &bullion1Location, &bullion1Location, 2, NULL);
 	addTargetAction(&(bottle1Target.actionList), &bottle1TargetAction, &bottle1Location, &bottle1Location, 2, NULL);
 	addTargetAction(&(bottle2Target.actionList), &bottle2TargetAction, &bottle2Location, &bottle2Location, 3, NULL);
