@@ -605,10 +605,17 @@ float rightSimpleMilliDegreeAndWait(float angleMilliDegree) {
 
 // CALIBRATION
 
-
 void squareCalibration(unsigned char type, float lengthInMM) {
     // to the bottom middle
-    forwardSimpleMMAndWait(lengthInMM / 4.0f);
+	signed char cp = 100.0f;
+	signed char _cp = -100.0f;
+	// signed int lengthInMM4 = lengthInMM / 4.0f;
+	signed int lengthInMM2 = lengthInMM / 2.0f;
+
+	// gotoSimpleSpline(lengthInMM4, 0.0f, 0.0f, cp, cp, MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL, FALSE);
+    // handleAndWaitFreeMotion();
+    
+	// forwardSimpleMMAndWait(lengthInMM / 4.0f);
 	if (type == 0) {
     	rightSimpleDegreeAndWait(DEG_90);
  	} else {
@@ -616,45 +623,67 @@ void squareCalibration(unsigned char type, float lengthInMM) {
 	}
 
 	// to the bottom right
-    forwardSimpleMMAndWait(lengthInMM / 2.0f);
+    // forwardSimpleMMAndWait(lengthInMM / 2.0f);
 	if (type == 0) {
+		gotoSimpleSpline(0, -lengthInMM2, -900.0f, cp, cp, MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL, FALSE);
+	    handleAndWaitFreeMotion();
 	    leftSimpleDegreeAndWait(DEG_90);
 	} else {
+		gotoSimpleSpline(0, lengthInMM2, 900.0f, cp, cp, MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL, FALSE);
+	    handleAndWaitFreeMotion();
     	rightSimpleDegreeAndWait(DEG_90);
 	}
 
     // to the top right
-    forwardSimpleMMAndWait(lengthInMM);
+    // forwardSimpleMMAndWait(lengthInMM);
 	if (type == 0) {
+		gotoSimpleSpline(lengthInMM, -lengthInMM2, 0.0f, cp, cp, MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL, FALSE);
+	    handleAndWaitFreeMotion();
 	    leftSimpleDegreeAndWait(DEG_90);
 	} else {
+		gotoSimpleSpline(lengthInMM, lengthInMM2, 0.0f, cp, cp, MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL, FALSE);
+	    handleAndWaitFreeMotion();
     	rightSimpleDegreeAndWait(DEG_90);
 	}
 
     // to the top left
-    forwardSimpleMMAndWait(lengthInMM);
+    // forwardSimpleMMAndWait(lengthInMM);
 	if (type == 0) {
+		gotoSimpleSpline(lengthInMM, lengthInMM2, 900.0f, cp, cp, MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL, FALSE);
+	    handleAndWaitFreeMotion();
 	    leftSimpleDegreeAndWait(DEG_90);
 	} else {
+		gotoSimpleSpline(lengthInMM, -lengthInMM2, -900.0f, cp, cp, MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL, FALSE);
+	    handleAndWaitFreeMotion();
     	rightSimpleDegreeAndWait(DEG_90);
 	}
 
     // to the bottom left
-    forwardSimpleMMAndWait(lengthInMM);
+    // forwardSimpleMMAndWait(lengthInMM);
 	if (type == 0) {
+		gotoSimpleSpline(0, lengthInMM2, 1800.0f, cp, cp, MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL, FALSE);
+	    handleAndWaitFreeMotion();
 	    leftSimpleDegreeAndWait(DEG_90);
 	} else {
+		gotoSimpleSpline(0, -lengthInMM2, 1800.0f, cp, cp, MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL, FALSE);
+	    handleAndWaitFreeMotion();
     	rightSimpleDegreeAndWait(DEG_90);
 	}
 
     // to the bottom middle
-    forwardSimpleMMAndWait(lengthInMM / 2.0f);
+    // forwardSimpleMMAndWait(lengthInMM / 2.0f);
 	if (type == 0) {
+		gotoSimpleSpline(0, 0.0f, -900.0f, cp, cp, MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL, FALSE);
+	    handleAndWaitFreeMotion();
 	    leftSimpleDegreeAndWait(DEG_90);
 	} else {
+		gotoSimpleSpline(0, 0.0f, 900.0f, cp, cp, MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL, FALSE);
+	    handleAndWaitFreeMotion();
     	rightSimpleDegreeAndWait(DEG_90);
 	}
 
     // go to the first position
-    backwardSimpleMMAndWait(lengthInMM / 4.0f);
+    // backwardSimpleMMAndWait(lengthInMM / 4.0f);
+	// gotoSimpleSpline(0.0f, 0.0f, 0.0f, _cp, _cp, MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL, FALSE);
+	// handleAndWaitFreeMotion();
 }
