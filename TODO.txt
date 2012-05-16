@@ -1,20 +1,10 @@
-SV
-
-S1 : 15 cm = 1357
-S1 : 30 cm = 662
-S1 : 50 cm = 450
-S1 : 80 cm = 277
-
-
-Valeur pour S1  : > 500 mV seuil
-Valeur pour S2 (devant): > 500 mV seuil
-Valeur pour S0 : > 500 mV seuil
+EZ : Rajouter les chemins au plus court
+EZ : Désactiver les TargetActions quand il y a un obstacle
                       
 * Faire un recu pour JLB
 * Imprimer le Poster
 
 P1 
-* Cabler dans un device le fait qu'il y a un obstacle !
 * Mettre en place le 1er sonar
 * Mettre un 2ème sonar pour les mouvements en arrières
 * Optimiser la gestion des chemins contre le robot adverse.
@@ -27,22 +17,10 @@ etre marquée comme DONE !
 * Vérifier le temps d'exécution de dijkstra sur les chemins importants
 * Mettre des points de sortie pour les chemins
 * Tester intensivement la gestion de collision / blocage de roues
-* Mettre le Robot adversaire sur la GameBoard (ainsi que l'angle)
-
-P3 
-
-* Faire la gestion de la manoeuvre de recalibrage 
-* Gérer les temps de pause au niveau de la stratégie
-* Gérer la position du robot lui-même (rediriger vers la carte de stratégie)
-* Gérer la position du robot ennemi au niveau des balises afin d'éviter que le système des balises ne se 
-cherche lui meme
-
-* Simuler les actions
-
-SI ON A LE TEMPS :
 
 NEXT YEAR
 
+* Faire la gestion de la manoeuvre de recalibrage 
 * Optimiser le calcul de changement de stratégie si le robot en face n'a pas changer
 * Problème au niveau de l'envoie de "'" pour arrêter les servos. Provoque un reboot de la carte alors que | marche correctement.
 * Séparer le RobotSonarDetectorDevice de la partie non Device

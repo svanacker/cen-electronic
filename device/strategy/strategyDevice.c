@@ -13,6 +13,8 @@
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
 
+#include "../../device/motion/simple/motionDeviceInterface.h"
+
 #include "../../robot/strategy/gameStrategyHandler.h"
 #include "../../robot/strategy/gameStrategyContext.h"
 
@@ -107,7 +109,7 @@ void deviceStrategyHandleRawData(char header, InputStream* inputStream, OutputSt
 		GameStrategyContext* context = getStrategyContext();
 		
 		// status
-		readHex2(inputStream);
+		unsigned int status = readHex2(inputStream);
 		// separator
 		checkIsChar(inputStream, '-');
 		// x
@@ -121,6 +123,11 @@ void deviceStrategyHandleRawData(char header, InputStream* inputStream, OutputSt
 		// angle in ddeg
 		context->robotAngle = readHex4(inputStream);
 
+		// After Robot position update, if the status corresponds to collision, handle collision
+		if (status == NOTIFY_MOTION_ARG_OBSTACLE) {
+			handleCollision();
+		}
+		
 		// output
         appendAck(outputStream);
         append(outputStream, COMMAND_STRATEGY_SET_ROBOT_POSITION);

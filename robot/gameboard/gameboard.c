@@ -36,6 +36,12 @@ char drawOpponent(int column, int line) {
 	return drawPoint(column, line, opponent, 'H');
 }
 
+char drawLastObstacle(int column, int line) {
+	GameStrategyContext* context = getStrategyContext();
+	Point* opponent = &(context->lastObstaclePosition);
+	return drawPoint(column, line, opponent, 'L');
+}
+
 // ROBOT
 
 char drawRobot(int column, int line) {
@@ -74,6 +80,12 @@ char gameTargetPrint(int* element, int column, int line) {
 char printAllElements(int* element, int column, int line) {
 	// Robot
 	char result = drawRobot(column, line);
+	if (result != CHAR_NO_DRAW) {
+		return result;
+	}
+
+	// Last Obstacle
+	result = drawLastObstacle(column, line);
 	if (result != CHAR_NO_DRAW) {
 		return result;
 	}
