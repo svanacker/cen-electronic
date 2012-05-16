@@ -1,5 +1,14 @@
 SV
 
+S1 : 30 cm = 662
+S1 : 50 cm = 450
+S1 : 80 cm = 277
+
+
+Valeur pour S1  : > 500 mV seuil
+Valeur pour S2 (devant): > 500 mV seuil
+Valeur pour S0 : > 500 mV seuil
+                      
 * Faire un recu pour JLB
 * Imprimer le Poster
 

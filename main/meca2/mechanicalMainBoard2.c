@@ -64,6 +64,8 @@
 
 #include "../../drivers/driverStreamListener.h"
 
+#include "../../robot/opponent/robotInfraredDetector.h"
+
 // The port for which we debug (we can send instruction too)
 #define SERIAL_PORT_DEBUG 	SERIAL_PORT_2
 
@@ -149,7 +151,7 @@ int main(void) {
 	// Init the logs
 	initLog(DEBUG);
 	addLogHandler(&serialLogHandler, "UART", &debugOutputStream, DEBUG);
-	appendString(getOutputStreamLogger(INFO), "MECHANICAL 2 OK");
+	appendString(getOutputStreamLogger(ALWAYS), getPicName());
 	
 	initTimerList(&timerListArray, MECHANICAL_BOARD_2_TIMER_LENGTH);
 
@@ -170,18 +172,24 @@ int main(void) {
 	// init the devices
 	initDevicesDescriptor();
 
+	initRobotInfraredDetector();
+
 	// Init the timers management
 	startTimerList();
 
 	initMechanicalBoard2Pins();
 
 	// 2011 : TODO : A regarder
-	ADPCFG = 0xFFFF;
+	// ADPCFG = 0xFFFF;
 
 	upArm(ARM_LEFT);
 	upArm(ARM_RIGHT);
 
 	while (1) {
+		if (getRobotInfraredObstacle()) {
+			appendString(getOutputStreamLogger(ALWAYS), "Obstacle !");
+			println(getOutputStreamLogger(ALWAYS));
+		}
 
 		// I2C Stream
 		handleStreamInstruction(&i2cSlaveInputBuffer,
