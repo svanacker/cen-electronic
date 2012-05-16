@@ -500,8 +500,8 @@ void initStrategy2012(int strategyIndex) {
 
 	// opponent
 	Point* p = &(getStrategyContext()->opponentRobotPosition);
-	p->x = 0;
-	p->y = 0;
+	p->x = 1500;
+	p->y = 1500;
 	
 	// obstacle
 	p = &(getStrategyContext()->lastObstaclePosition);
