@@ -13,6 +13,37 @@
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
 
+char drawPoint(int column, int line, Point* p, char value) {
+	if (p->x == 0 && p->y == 0) {
+		return CHAR_NO_DRAW;
+	}
+	
+	int xColumn = convertXToColumn(p->x);
+	int yLine = convertYToLine(p->y);
+
+	if (line == yLine && column == xColumn) {
+		return value;
+	}
+
+	return CHAR_NO_DRAW;
+}
+
+// OPPONENT
+
+char drawOpponent(int column, int line) {
+	GameStrategyContext* context = getStrategyContext();
+	Point* opponent = &(context->opponentRobotPosition);
+	return drawPoint(column, line, opponent, 'H');
+}
+
+// ROBOT
+
+char drawRobot(int column, int line) {
+	GameStrategyContext* context = getStrategyContext();
+	Point* opponent = &(context->robotPosition);
+	return drawPoint(column, line, opponent, 'R');
+}
+
 // GAMEBOARD
 
 char gameboardPrint(int* element, int column, int line) {
@@ -31,7 +62,7 @@ char gameTargetPrint(int* element, int column, int line) {
 	GameTarget* target = (GameTarget*) element;
 	Location* location = target->location;
 	char c;
-	if (target->available) {
+	if (target->status == TARGET_AVAILABLE) {
 		c = 'X';
 	}
 	else {
@@ -41,8 +72,20 @@ char gameTargetPrint(int* element, int column, int line) {
 }
 
 char printAllElements(int* element, int column, int line) {
+	// Robot
+	char result = drawRobot(column, line);
+	if (result != CHAR_NO_DRAW) {
+		return result;
+	}
+
+	// Opponent
+	result = drawOpponent(column, line);
+	if (result != CHAR_NO_DRAW) {
+		return result;
+	}
+
 	// Gameboard
-	char result = gameboardPrint(element, column, line);
+	result = gameboardPrint(element, column, line);
 	if (result != CHAR_NO_DRAW) {
 		return result;
 	}
@@ -104,7 +147,7 @@ char printAllElements(int* element, int column, int line) {
 		if (result != CHAR_NO_DRAW) {
 			return result;
 		}	
-	}	
+	}
 
 	return result; 
 }

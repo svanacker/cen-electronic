@@ -180,6 +180,12 @@ int computeBestPath(LocationList* outLocationList, Location* start, Location* en
 				continue;
 			}
 
+			// Do not use paths that are not available
+			BOOL available = getPathAvailability(i);
+			if (!available) {
+				continue;
+			}
+
 			PathDataFunction* pathDataFunction = getPath(&paths, i);
 			pathDataFunction();
 			Location* location2 = getOtherEnd(pathDataFunction, location1);
@@ -196,7 +202,6 @@ int computeBestPath(LocationList* outLocationList, Location* start, Location* en
 			// so we can use pathData without problem.
 			int cost = costLocation1 + getTmpPathData()->cost;
 
-			BOOL available = getPathAvailability(i);
 			if (!available) {
 				cost += COST_UNAVAILABLE_PATH;
 			}

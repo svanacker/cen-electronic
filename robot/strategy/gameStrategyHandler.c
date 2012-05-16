@@ -26,6 +26,8 @@
 
 #include "../../drivers/motion/motionDriver.h"
 
+#include "../../robot/2012/strategy2012Utils.h"
+
 // Strategy Context
 static GameStrategyContext strategyContext;
 
@@ -78,10 +80,15 @@ void findNextTarget() {
 
 void markTargetAsHandled() {
 	// mark the target as unavailable
-	strategyContext.currentTarget->available = FALSE;
+	strategyContext.currentTarget->status = TARGET_HANDLED;
 	// reset current Target
 	strategyContext.currentTarget = NULL;
 	strategyContext.currentTargetAction = NULL;
+}
+
+void markTargetInUse() {
+	// mark the target as being used
+	strategyContext.currentTarget->status = TARGET_INUSE;
 }
 
 /**
@@ -92,6 +99,8 @@ BOOL executeTargetActions() {
 	#ifdef DEBUG_STRATEGY_HANDLER
 		appendString(getOutputStreamLogger(DEBUG), "executeTargetActions\n");
 	#endif
+
+	markTargetInUse();
 
 	GameTargetAction* targetAction = strategyContext.currentTargetAction;
 	GameTargetActionItemList* actionItemList = targetAction->actionItemList;
@@ -133,6 +142,7 @@ void motionGoLocation(Location* location,
 		printLocation(getOutputStreamLogger(DEBUG), location);
 	#endif
 
+	angle = changeAngleForColor(angle);
 	motionDriverBSplineAbsolute(location->x, location->y,
 								angle, 
 								controlPointDistance1, controlPointDistance2,
@@ -148,7 +158,7 @@ void motionGoLocation(Location* location,
 int mod3600(int value) {
 	if (value < - ANGLE_180) {
 		return (value + ANGLE_360);
-	} else if (value > ANGLE_180) {
+	} else if (value >= ANGLE_180) {
 		return (value - ANGLE_360);
 	}
 	return value;
@@ -194,8 +204,8 @@ void motionFollowPath(PathDataFunction* pathDataFunction, BOOL reversed) {
 
 	Location* location;
 	int angle;
-	int cp1;
-	int cp2;
+	signed char cp1;
+	signed char cp2;
 	if (reversed) {
 		location = pathData->location1;
 		angle = mod3600(ANGLE_180 + getAngle1Path(pathDataFunction));
@@ -213,7 +223,8 @@ void motionFollowPath(PathDataFunction* pathDataFunction, BOOL reversed) {
 		printLocation(getOutputStreamLogger(DEBUG), location);
 	#endif
 
-	motionDriverBSplineAbsolute(location->x, location->y, angle, cp1, cp2,
+	// cast to unsigned, negative signed char send 00
+	motionDriverBSplineAbsolute(location->x, location->y, angle, (unsigned char) cp1, (unsigned char) cp2,
 								pathData->accelerationFactor, pathData->speedFactor);
 
 	// Simulate as if the robot goes to the position with a small error
@@ -264,12 +275,29 @@ inline float deciDegreesToRad(int ddegrees) {
 	return ddegrees * (PI / 1800.0);
 }
 
-void computePoint(Point* ref, Point* cp, unsigned char distance, int angle) {
+void computePoint(Point* ref, Point* cp, int distance, int angle) {
 	float a = deciDegreesToRad(angle);
-	float dca = distance * cosf(a);
-	float dsa = distance * sinf(a);
+	float dca = cosf(a) * distance;
+	float dsa = sinf(a) * distance;
 	cp->x = ref->x + dca;
 	cp->y = ref->y + dsa;
+}
+
+BOOL isColliding(Point* path, Point* obstacle) {
+	float d = distanceBetweenPoints(path, obstacle);
+	BOOL result = (d < DISTANCE_OPPONENT_TO_PATH);
+	return result;
+}
+
+BOOL isValidLocation(Point* p) {
+	return (p->x !=0) && (p->y != 0);
+}
+
+/**
+ * Control point distance to mm.
+ */
+inline int cpToDistance(signed char d) {
+	return (d * 10);
 }
 
 /**
@@ -288,15 +316,25 @@ BOOL isPathAvailable(PathDataFunction* pathDataFunction) {
 	p3->y = pathData->location2->y;
 	int angle1 = getAngle1Path(pathDataFunction);
 	int angle2 = getAngle2Path(pathDataFunction);
-	computePoint(p0, curve->p1, pathData->controlPointDistance1, angle1);
-	computePoint(p3, curve->p2, -pathData->controlPointDistance2, angle2);
+	int d1 = cpToDistance(pathData->controlPointDistance1);
+	int d2 = cpToDistance(-pathData->controlPointDistance2);
+	computePoint(p0, curve->p1, d1, angle1);
+	computePoint(p3, curve->p2, d2, angle2);
 
 	int i;
 	Point p;
+	Point* opponentRobotPosition = &(strategyContext.opponentRobotPosition);
+	Point* lastObstaclePosition = &(strategyContext.lastObstaclePosition);
+	BOOL opponentPresent = isValidLocation(opponentRobotPosition);
+	BOOL obstaclePresent = isValidLocation(lastObstaclePosition);
 	for (i = 0; i < 10; i++) {
 		computeBSplinePoint(curve, 0.1 * i, &p);
-		float d = distanceBetweenPoints(&p, &(strategyContext.opponentRobotPosition));
-		if (d < DISTANCE_OPPONENT_TO_PATH) {
+		// checking opponent
+		if (opponentPresent && isColliding(&p, opponentRobotPosition)) {
+			return FALSE;
+		}
+		// checking last obstacle
+		if (obstaclePresent && isColliding(&p, lastObstaclePosition)) {
 			return FALSE;
 		}
 	}
@@ -304,15 +342,16 @@ BOOL isPathAvailable(PathDataFunction* pathDataFunction) {
 }
 
 BOOL mustComputePaths() {
-	int x = strategyContext.opponentRobotPosition.x;
-	// DON'T detect the opponent robot position
-	if (x == 0) {
-		return FALSE;
-	}
+	Point* opponentRobotPosition = &(strategyContext.opponentRobotPosition);
+	Point* lastObstaclePosition = &(strategyContext.lastObstaclePosition);
+	BOOL opponentPresent = isValidLocation(opponentRobotPosition);
+	BOOL obstaclePresent = isValidLocation(lastObstaclePosition);
+
+	return opponentPresent || obstaclePresent;
+
+	// TODO
 	// Case when the robot position is detected himself as the opponent robot !!!
 	// All paths will be marked as unavailable, but the robot will try the path even (cost is only more huge)
-
-	return TRUE;
 }
 
 void updatePathsAvailability() {
@@ -359,6 +398,26 @@ void updatePathsAvailability() {
 		}
 		appendString(logStream, "\n");
 	#endif
+}
+
+void setLastObstaclePosition() {
+	Point* robotPosition = &(strategyContext.robotPosition);
+	Point* lastObstaclePosition = &(strategyContext.lastObstaclePosition);
+	int angle = strategyContext.robotAngle;
+	computePoint(robotPosition, lastObstaclePosition, DISTANCE_OBSTACLE, angle);
+}
+
+void handleCollision() {
+	#ifdef DEBUG_STRATEGY_HANDLER
+		appendString(getOutputStreamLogger(DEBUG), "\nhandleCollision");	
+	#endif
+	
+	// Clears the current path and actions
+	clearLocationList(&(strategyContext.currentTrajectory));
+	strategyContext.currentTargetAction = NULL;
+
+	setLastObstaclePosition();
+	updatePathsAvailability();
 }
 
 BOOL nextStep() {

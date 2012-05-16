@@ -38,7 +38,7 @@ void computeBestNextTarget(GameStrategyContext* strategyContext) {
 		
 		GameTarget* target = strategyItem->target;
 	
-		if (!target->available) {
+		if (target->status != TARGET_AVAILABLE) {
 			continue;
 		}
 		// getGainFunction* targetGain = item->gainFunction();

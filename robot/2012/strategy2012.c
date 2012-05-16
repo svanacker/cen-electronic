@@ -199,12 +199,14 @@ void initLocations2012() {
 void bottle2ToCDPathFunction() { fillPathData(&bottle2Location, &cdTakeLocation, BOTTLE_2_TO_CD_COST, 0x1B, 0x30, 0xF8F8, 0xFAF6, BOTTLE_2_TO_CD_SPEED_FACTOR, BOTTLE_2_TO_CD_ACCELERATION_FACTOR);}
 void cdToDropZone1PathFunction() { fillPathData(&cdTakeLocation, &dropZone1Location, CD_TO_DROP_ZONE_1_COST, 0x11, 0x26, 0xFAF6, ANGLE_NEG_90, CD_TO_DROP_ZONE_1_SPEED_FACTOR, CD_TO_DROP_ZONE_1_ACCELERATION_FACTOR);}
 
-void initPaths2012() {
+void initPaths2012(int index) {
 	clearPathList(getNavigationPathList());
 
 	// DIRECT PATH TO TARGETS
-	void startAreaToBullion1PathFunction() { fillPathData(&startAreaLocation, &bullion1Location, START_AREA_TO_BULLION_1_COST,  0x40, 0x40, 0x02A3, ANGLE_NEG_90, START_AREA_TO_BULLION_1_SPEED_FACTOR, START_AREA_TO_BULLION_1_ACCELERATION_FACTOR); }
-	addNavigationPath(&startAreaToBullion1PathFunction); 
+	if (index != STRATEGY_HOMOLOGATION) {
+		void startAreaToBullion1PathFunction() { fillPathData(&startAreaLocation, &bullion1Location, START_AREA_TO_BULLION_1_COST,  0x40, 0x40, 0x02A3, ANGLE_NEG_90, START_AREA_TO_BULLION_1_SPEED_FACTOR, START_AREA_TO_BULLION_1_ACCELERATION_FACTOR); }
+		addNavigationPath(&startAreaToBullion1PathFunction);
+	}
 
 	void bullion1ToBottle1PathFunction() { fillPathData(&bullion1Location, &bottle1Location, BULLION_1_TO_BOTTLE_1_COST, 0xEC, 0xC0, ANGLE_NEG_90, ANGLE_180, BULLION_1_TO_BOTTLE_1_SPEED_FACTOR, BULLION_1_TO_BOTTLE_1_ACCELERATION_FACTOR); }
 	addNavigationPath(&bullion1ToBottle1PathFunction);
@@ -262,7 +264,6 @@ void initPaths2012() {
 	// frontBottle2->CD
 	// frontBottle2->OR4
 
-	// TODO: b-spline
 	void obstacleL1ToObstacleL2PathFunction() { fillPathData(&obstacleL1Location, &obstacleL2Location, OBSTACLE_L1_TO_L2_COST, 0x0A, 0x0A, ANGLE_90, ANGLE_90, OBSTACLE_L1_TO_L2_SPEED_FACTOR, OBSTACLE_L1_TO_L2_ACCELERATION_FACTOR);}
 	addNavigationPath(&obstacleL1ToObstacleL2PathFunction);
 
@@ -272,7 +273,7 @@ void initPaths2012() {
 	void obstacleL3ToObstacleL4PathFunction() { fillPathData(&obstacleL3Location, &obstacleL4Location, OBSTACLE_L3_TO_L4_COST, 0x0A, 0x0A, ANGLE_90, ANGLE_90, OBSTACLE_L3_TO_L4_SPEED_FACTOR, OBSTACLE_L3_TO_L4_ACCELERATION_FACTOR);}
 	addNavigationPath(&obstacleL3ToObstacleL4PathFunction);
 
-	void obstacleL4ToObstacleM2PathFunction() { fillPathData(&obstacleL2Location, &obstacleM2Location, OBSTACLE_L4_TO_M2_COST, 0x0A, 0x0A, 0, 0, OBSTACLE_L4_TO_M2_SPEED_FACTOR, OBSTACLE_L4_TO_M2_ACCELERATION_FACTOR);}
+	void obstacleL4ToObstacleM2PathFunction() { fillPathData(&obstacleL4Location, &obstacleM2Location, OBSTACLE_L4_TO_M2_COST, 0x0A, 0x0A, 0, 0, OBSTACLE_L4_TO_M2_SPEED_FACTOR, OBSTACLE_L4_TO_M2_ACCELERATION_FACTOR);}
 	addNavigationPath(&obstacleL4ToObstacleM2PathFunction);
 
 	void obstacleM2ToObstacleR4PathFunction() { fillPathData(&obstacleM2Location, &obstacleR4Location, OBSTACLE_M2_TO_R4_COST, 0x0A, 0x0A, 0, 0, OBSTACLE_M2_TO_R4_SPEED_FACTOR, OBSTACLE_M2_TO_R4_ACCELERATION_FACTOR);}
@@ -290,8 +291,14 @@ void initPaths2012() {
 	void obstacleR1ToObstacleM1PathFunction() { fillPathData(&obstacleR1Location, &obstacleM1Location, OBSTACLE_R1_TO_M1_COST, 0x0A, 0x0A, ANGLE_180, ANGLE_180, OBSTACLE_R1_TO_M1_SPEED_FACTOR, OBSTACLE_R1_TO_M1_ACCELERATION_FACTOR);}
 	addNavigationPath(&obstacleR1ToObstacleM1PathFunction);
 
-	void obstacleM1ToObstacleL1PathFunction() { fillPathData(&obstacleM1Location, &obstacleL1Location, OBSTACLE_M1_TO_L1_COST, 0x0A, 0x0A, ANGLE_180, ANGLE_180, OBSTACLE_M1_TO_L1_SPEED_FACTOR, OBSTACLE_M1_TO_L1_ACCELERATION_FACTOR);}
-	addNavigationPath(&obstacleM1ToObstacleL1PathFunction);
+	// OM1->OL1
+	if (index == STRATEGY_HOMOLOGATION) {
+		void obstacleM1ToObstacleL1PathFunction() { fillPathData(&obstacleM1Location, &obstacleL1Location, 10, 0x0A, 0x0A, ANGLE_180, ANGLE_180, OBSTACLE_M1_TO_L1_SPEED_FACTOR, OBSTACLE_M1_TO_L1_ACCELERATION_FACTOR);}
+		addNavigationPath(&obstacleM1ToObstacleL1PathFunction);
+	} else {
+		void obstacleM1ToObstacleL1PathFunction() { fillPathData(&obstacleM1Location, &obstacleL1Location, OBSTACLE_M1_TO_L1_COST, 0x0A, 0x0A, ANGLE_180, ANGLE_180, OBSTACLE_M1_TO_L1_SPEED_FACTOR, OBSTACLE_M1_TO_L1_ACCELERATION_FACTOR);}
+		addNavigationPath(&obstacleM1ToObstacleL1PathFunction);
+	}
 
 	// bottle1->OR1
 	void bottle1ToObstacleR1PathFunction() { fillPathData(&bottle1Location, &obstacleR1Location, BOTTLE1_TO_OR1_COST, 0x0A, 0x0A, ANGLE_180, ANGLE_180, BOTTLE1_TO_OR1_SPEED_FACTOR, BOTTLE1_TO_OR1_ACCELERATION_FACTOR);}
@@ -314,8 +321,10 @@ void initPaths2012() {
 	addNavigationPath(&dropZone1ToObstacleR1PathFunction);
 
 	// bullion1->OL1
-	void bullion1ToObstacleL1PathFunction() { fillPathData(&bullion1Location, &obstacleL1Location, BULLION1_TO_OL1_COST, 0x19, 0x19, ANGLE_90, ANGLE_180, BULLION1_TO_OL1_SPEED_FACTOR, BULLION1_TO_OL1_ACCELERATION_FACTOR);}
-	addNavigationPath(&bullion1ToObstacleL1PathFunction);
+	if (index != STRATEGY_HOMOLOGATION) {
+		void bullion1ToObstacleL1PathFunction() { fillPathData(&bullion1Location, &obstacleL1Location, BULLION1_TO_OL1_COST, 0x19, 0x19, ANGLE_90, ANGLE_180, BULLION1_TO_OL1_SPEED_FACTOR, BULLION1_TO_OL1_ACCELERATION_FACTOR);}
+		addNavigationPath(&bullion1ToObstacleL1PathFunction);
+	}
 
 	// bullion1->OM1
 	void bullion1ToObstacleM1PathFunction() { fillPathData(&bullion1Location, &obstacleM1Location, BULLION1_TO_OM1_COST, 0x0A, 0x0A, ANGLE_90, ANGLE_90, BULLION1_TO_OM1_SPEED_FACTOR, BULLION1_TO_OM1_ACCELERATION_FACTOR);}
@@ -348,10 +357,19 @@ void initPaths2012() {
 	// bottle2Front->OR4
 	void bottle2FrontToObstacleR4PathFunction() { fillPathData(&bottle2FrontLocation, &obstacleR4Location, BOTTLE2FRONT_TO_CD_COST, 0x0A, 0x0A, ANGLE_90, ANGLE_90, BOTTLE2FRONT_TO_CD_SPEED_FACTOR, BOTTLE2FRONT_TO_CD_ACCELERATION_FACTOR);}
 	addNavigationPath(&bottle2FrontToObstacleR4PathFunction);
+
+	// startArea->L1
+	if (index == STRATEGY_HOMOLOGATION) {
+		void startAreaToObstacleL1PathFunction() { fillPathData(&startAreaLocation, &obstacleL1Location, STARTAREA_TO_L1_COST, 0x0A, 0x0A, 0x02A3, 0x02A3, STARTAREA_TO_L1_SPEED_FACTOR, STARTAREA_TO_L1_ACCELERATION_FACTOR);}
+		addNavigationPath(&startAreaToObstacleL1PathFunction);
+	}
 }
 
 void initTargets2012() {
 	clearGameTargets();
+
+	addGameTarget(&bullion1Target, BULLION_1, BULLION_GAIN, &bullion1Location);
+	addGameTarget(&bullionRight1Target, BULLION_RIGHT_1, BULLION_GAIN, &bullionRight1Location);
 
 	addGameTarget(&bullion1Target, BULLION_1, BULLION_GAIN, &bullion1Location);
 	addGameTarget(&bottle1Target, BOTTLE_1, BOTTLE_GAIN, &bottle1Location);
@@ -445,7 +463,13 @@ void initStrategies2012() {
 	addGameStrategy(&strategy1, "S1");
 }
 
-void initStrategiesItems2012() {
+void initStrategiesItems2012(int strategyIndex) {
+	if (strategyIndex == STRATEGY_HOMOLOGATION) {
+		addGameStrategyItem(&strategy1, &takeBullionFirstStrategyItem, &bullion1Target);
+		addGameStrategyItem(&strategy1, &bullionRight1StrategyItem, &bullionRight1Target);
+		return;
+	}
+
 	addGameStrategyItem(&strategy1, &takeBullionFirstStrategyItem, &bullion1Target);
 	addGameStrategyItem(&strategy1, &bottle1StrategyItem, &bottle1Target);
 	addGameStrategyItem(&strategy1, &bottle2StrategyItem, &bottle2Target);
@@ -458,14 +482,14 @@ void initStrategiesItems2012() {
 void initStrategy2012(int strategyIndex) {
 	initNavigation();
 	initLocations2012();
-	initPaths2012();
+	initPaths2012(strategyIndex);
 
 	initTargets2012();
 	initTargetActions2012();
-	initTargetActionsItems2012();
+	initTargetActionsItems2012(strategyIndex);
 
 	initStrategies2012();
-	initStrategiesItems2012();
+	initStrategiesItems2012(strategyIndex);
 
 	GameStrategy* strategy = getGameStrategy(strategyIndex);
 	GameStrategyContext* strategyContext = getStrategyContext();
@@ -474,10 +498,15 @@ void initStrategy2012(int strategyIndex) {
 	//OutputStream* debugOutputStream = getOutputStreamLogger(INFO);
 	//printStrategyAllDatas(debugOutputStream);
 
-	// test opponent
+	// opponent
 	Point* p = &(getStrategyContext()->opponentRobotPosition);
 	p->x = 1500;
 	p->y = 1500;
+	
+	// obstacle
+	p = &(getStrategyContext()->lastObstaclePosition);
+	p->x = 0;
+	p->y = 0;
 	
 	strategyContext->hasMoreNextSteps = TRUE;
 

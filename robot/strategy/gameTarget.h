@@ -9,6 +9,10 @@
 
 #include "../../navigation/location.h"
 
+#define TARGET_AVAILABLE 0
+#define TARGET_HANDLED   1
+#define TARGET_INUSE     2
+
 /**
  * Encapsulates the target.
  */
@@ -17,8 +21,8 @@ typedef struct GameTarget {
 	char* name;
 	// Returns the gain when reaching a such target.
 	float gain;
-	// Checks whether the target is still available
-	BOOL available;	
+	// availability status of the target
+	char status;	
 	// Returns the position of the target on the gameboard
 	Location* location;
 	/** The actionList for this target. */
