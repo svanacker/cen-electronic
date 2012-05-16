@@ -486,31 +486,44 @@ int main(void) {
     delaymSec(1000);
 
 	// 2012 VALUE
-    int configValue = getConfigValue();
+    unsigned int configValue = getConfigValue();
     unsigned int homologationIndex = configValue & CONFIG_STRATEGY_MASK;
     unsigned int color = configValue & CONFIG_COLOR_BLUE_MASK;
+
 	appendString(getOutputStreamLogger(ALWAYS), "Homologation:");
-	appendDec(getOutputStreamLogger(ALWAYS), homologationIndex);
 	appendCRLF(getOutputStreamLogger(ALWAYS));
+	appendDec(getOutputStreamLogger(ALWAYS), homologationIndex);
+	
+	appendString(getOutputStreamLogger(ALWAYS), "Config:");
+	appendHex4(getOutputStreamLogger(ALWAYS), configValue);
+	appendCRLF(getOutputStreamLogger(ALWAYS));
+
 	if (color != 0) {
 		appendString(getOutputStreamLogger(ALWAYS), "COLOR:VIOLET\n");
 	}
 	else {
 		appendString(getOutputStreamLogger(ALWAYS), "COLOR:RED\n");
-	}
-	
+	}	
     if (configValue & CONFIG_SPEED_LOW_MASK) {
         motionSetParameters(MOTION_TYPE_FORWARD_OR_BACKWARD, 0x12, 0x24);
         motionSetParameters(MOTION_TYPE_ROTATION, 0x12, 0x24);
         motionSetParameters(MOTION_TYPE_ROTATION_ONE_WHEEL, 0x08, 0x08);
+		appendString(getOutputStreamLogger(ALWAYS), "SPEED LOW\n");
     } else if (configValue & CONFIG_SPEED_VERY_LOW_MASK) {
         motionSetParameters(MOTION_TYPE_FORWARD_OR_BACKWARD, 0x08, 0x10);
         motionSetParameters(MOTION_TYPE_ROTATION, 0x08, 0x10);
         motionSetParameters(MOTION_TYPE_ROTATION_ONE_WHEEL, 0x08, 0x08);
+		appendString(getOutputStreamLogger(ALWAYS), "SPEED VERY LOW\n");
+    } else if (configValue & CONFIG_SPEED_ULTRA_LOW_MASK) {
+        motionSetParameters(MOTION_TYPE_FORWARD_OR_BACKWARD, 0x02, 0x04);
+        motionSetParameters(MOTION_TYPE_ROTATION, 0x02, 0x04);
+        motionSetParameters(MOTION_TYPE_ROTATION_ONE_WHEEL, 0x02, 0x02);
+		appendString(getOutputStreamLogger(ALWAYS), "SPEED ULTRA LOW\n");
     } else {
         motionSetParameters(MOTION_TYPE_FORWARD_OR_BACKWARD, 0x18, 0x36);
         motionSetParameters(MOTION_TYPE_ROTATION, 0x28, 0x18);
         motionSetParameters(MOTION_TYPE_ROTATION_ONE_WHEEL, 0x12, 0x10);
+		appendString(getOutputStreamLogger(ALWAYS), "SPEED NORMAL \n");
     }
 
     // TODO 2012 SV motionDriverMaintainPosition();

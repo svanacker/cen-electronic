@@ -1,16 +1,15 @@
 SV
 
 * Faire un recu pour JLB
+* Imprimer le Poster
 
 P1 
-* Calibrage des roues
-* Reboot de la strategy si on reboot la MAIN STRATEGY BOARD
-* Imprimer le Poster
+* Mettre en place une vitesse encore + lente
+* Mettre en place les GP2D12
+* Cabler dans un device le fait qu'il y a un obstacle !
+* Mettre en place le 1er sonar
 * Mettre un 2ème sonar pour les mouvements en arrières
 * Optimiser la gestion des chemins contre le robot adverse.
-* Gérer l'arrêt du robot si celui-ci est très proche de l'autre robot !!!
-* Envoi de la position réelle du robot + angle !!!! => relayer l'information depuis la MainBoard
-* Gérer le fait que le robot ne se détecte pas lui même !!!!
 
 P2 
 
@@ -20,11 +19,11 @@ etre marquée comme DONE !
 * Vérifier le temps d'exécution de dijkstra sur les chemins importants
 * Mettre des points de sortie pour les chemins
 * Tester intensivement la gestion de collision / blocage de roues
-* Faire la gestion de la manoeuvre de recalibrage 
 * Mettre le Robot adversaire sur la GameBoard (ainsi que l'angle)
 
 P3 
 
+* Faire la gestion de la manoeuvre de recalibrage 
 * Gérer les temps de pause au niveau de la stratégie
 * Gérer la position du robot lui-même (rediriger vers la carte de stratégie)
 * Gérer la position du robot ennemi au niveau des balises afin d'éviter que le système des balises ne se 
