@@ -18,11 +18,11 @@
 /** Minimum angle to add a rotation in deci degrees. */
 #define ANGLE_ROTATION_MIN 50
 
-/** Distance of the opponent to a path to made it unavailable in mm. */
-#define DISTANCE_OPPONENT_TO_PATH 400
+/** Distance of the opponent to a path to make it unavailable in mm. */
+#define DISTANCE_OPPONENT_TO_PATH 300
 
-/** Distance of a detected obstacle in cm. */
-#define DISTANCE_OBSTACLE 40
+/** Distance of a detected obstacle in mm. */
+#define DISTANCE_OBSTACLE 400
 
 /**
  * Choose the rigth strategy.
@@ -46,6 +46,11 @@ BOOL nextStep();
  * this path !
  */
 void updatePathsAvailability();
+
+/**
+ * Handle a collision detection.
+ */
+void handleCollision();
 
 // MOTION
 

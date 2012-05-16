@@ -197,8 +197,8 @@ void motionFollowPath(PathDataFunction* pathDataFunction, BOOL reversed) {
 
 	Location* location;
 	int angle;
-	int cp1;
-	int cp2;
+	signed char cp1;
+	signed char cp2;
 	if (reversed) {
 		location = pathData->location1;
 		angle = mod3600(ANGLE_180 + getAngle1Path(pathDataFunction));
@@ -216,7 +216,8 @@ void motionFollowPath(PathDataFunction* pathDataFunction, BOOL reversed) {
 		printLocation(getOutputStreamLogger(DEBUG), location);
 	#endif
 
-	motionDriverBSplineAbsolute(location->x, location->y, angle, cp1, cp2,
+	// cast to unsigned, negative signed char send 00
+	motionDriverBSplineAbsolute(location->x, location->y, angle, (unsigned char) cp1, (unsigned char) cp2,
 								pathData->accelerationFactor, pathData->speedFactor);
 
 	// Simulate as if the robot goes to the position with a small error
@@ -334,15 +335,16 @@ BOOL isPathAvailable(PathDataFunction* pathDataFunction) {
 }
 
 BOOL mustComputePaths() {
-	int x = strategyContext.opponentRobotPosition.x;
-	// DON'T detect the opponent robot position
-	if (x == 0) {
-		return FALSE;
-	}
+	Point* opponentRobotPosition = &(strategyContext.opponentRobotPosition);
+	Point* lastObstaclePosition = &(strategyContext.lastObstaclePosition);
+	BOOL opponentPresent = isValidLocation(opponentRobotPosition);
+	BOOL obstaclePresent = isValidLocation(lastObstaclePosition);
+
+	return opponentPresent || obstaclePresent;
+
+	// TODO
 	// Case when the robot position is detected himself as the opponent robot !!!
 	// All paths will be marked as unavailable, but the robot will try the path even (cost is only more huge)
-
-	return TRUE;
 }
 
 void updatePathsAvailability() {
@@ -400,7 +402,7 @@ void setLastObstaclePosition() {
 
 void handleCollision() {
 	#ifdef DEBUG_STRATEGY_HANDLER
-		appendString(getOutputStreamLogger(DEBUG), "handleCollision");	
+		appendString(getOutputStreamLogger(DEBUG), "\nhandleCollision");	
 	#endif
 	
 	// Clears the current path and actions
@@ -408,6 +410,7 @@ void handleCollision() {
 	strategyContext.currentTargetAction = NULL;
 
 	setLastObstaclePosition();
+	updatePathsAvailability();
 }
 
 BOOL nextStep() {

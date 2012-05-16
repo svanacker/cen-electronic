@@ -474,10 +474,15 @@ void initStrategy2012(int strategyIndex) {
 	//OutputStream* debugOutputStream = getOutputStreamLogger(INFO);
 	//printStrategyAllDatas(debugOutputStream);
 
-	// test opponent
+	// opponent
 	Point* p = &(getStrategyContext()->opponentRobotPosition);
-	p->x = 1500;
-	p->y = 1500;
+	p->x = 0;
+	p->y = 0;
+	
+	// obstacle
+	p = &(getStrategyContext()->lastObstaclePosition);
+	p->x = 0;
+	p->y = 0;
 	
 	strategyContext->hasMoreNextSteps = TRUE;
 
