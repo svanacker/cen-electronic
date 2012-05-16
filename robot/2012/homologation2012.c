@@ -144,12 +144,26 @@ void takeLintelLeft(int color) {
 	spline(color, X_LINTEL_LEFT, 0x055C, ANGLE_90, 0x0D, 0x46, MOTION_SPEED_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL);
 }
 
+void strategyBoard() {
+	Point* opponentRobotPosition = getLastOpponentRobotPosition();
+	if (opponentRobotPosition ->x != 0 && opponentRobotPosition ->y != 0) {
+		sendStrategyOpponentRobotPosition(opponentRobotPosition );
+	}
+	
+	// Send next Step
+	sendStrategyNextStep();
+}
+
 // ----------------------------------------------------------- Homologation 1 ---------------------------------------------------------
 
 void homologation1(int color) {
+	strategyBoard();
+	return;
+
     unsigned int index = getMotionInstructionIndex();
 
     switch (index) {
+
         case 1:
             takeBullion1(color);
             break;
@@ -174,14 +188,8 @@ void homologation2(int color) {
 // ----------------------------------------------------------- Homologation 3 ---------------------------------------------------------
 
 void homologation3(int color) {
-	// Send the opponentRobot position if it has the information.			
-	Point* opponentRobotPosition = getLastOpponentRobotPosition();
-	if (opponentRobotPosition ->x != 0 && opponentRobotPosition ->y != 0) {
-		sendStrategyOpponentRobotPosition(opponentRobotPosition );
-	}
-	
-	// Send next Step
-	sendStrategyNextStep();
+	// Send the opponentRobot position if it has the information.		
+	strategyBoard();	
 	return;
 
 	/*
