@@ -7,6 +7,12 @@
 /** Type of trajectory in which we do not reach the max speed (=> acceleration phase, deceleration phase). */
 #define PROFILE_TYPE_TRIANGLE 1
 
+/**
+ * Clear initial speeds to avoid that the trajectory finished
+ * when we stop the robot.
+ */
+void clearInitialSpeeds();
+
 void computeMotionInstruction(MotionInstruction* inst);
 
 /**

@@ -111,6 +111,7 @@
 #include "../../robot/match/endMatchDetectorDeviceInterface.h"
 
 #include "../../robot/opponent/robotInfraredDetectorDeviceInterface.h"
+#include "../../robot/opponent/robotInfraredDetectorDriver.h"
 #include "../../robot/opponent/robotSonarDetectorDevice.h"
 #include "../../robot/opponent/robotSonarDetectorDeviceInterface.h"
 #include "../../robot/opponent/opponentRobot.h"
@@ -368,6 +369,13 @@ void waitForInstruction() {
     handleNotificationFromDispatcherList(TRANSMIT_I2C);
 	
 	/*
+	BOOL obstacle = robotInfraredDetectorHasObstacle();
+	if (obstacle) {
+        appendString(getOutputStreamLogger(ALWAYS), "Obstacle !\n");
+        setRobotMustStop(TRUE);
+	}
+	*/	
+	/*
     delaymSec(10);
 
     if (notifyObstacle()) {
@@ -486,7 +494,7 @@ int main(void) {
     showWaitingStart(&pcOutputStream);
 
 	// wait other board initialization
-    delaymSec(1000);
+    delaymSec(1500);
 
 	// 2012 VALUE
     unsigned int configValue = getConfigValue();

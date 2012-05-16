@@ -54,6 +54,8 @@ void stopPosition(BOOL maintainPositionValue) {
         // Avoid that robot reachs his position, and stops the motors
         setMustReachPosition(FALSE);
     }
+	// Avoid that the robot considered he will remain the initial speed for next move (it is stopped).
+	clearInitialSpeeds();
 
     stopMotors();
 }

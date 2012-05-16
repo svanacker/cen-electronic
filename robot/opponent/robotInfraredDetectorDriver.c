@@ -30,7 +30,7 @@ BOOL robotInfraredDetectorHasObstacle() {
     BOOL result = transmitFromDriverRequestBuffer();
 	if (result) {
         int result = readHex2(inputStream);
-		return result;
+		return result != 0;
     }
     return FALSE;
 }

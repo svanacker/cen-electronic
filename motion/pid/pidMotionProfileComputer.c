@@ -19,6 +19,7 @@
 #include "../../motion/simple/motion.h"
 
 /**
+ * @private
  * Init all variables.
  * @param index corresponds to INSTRUCTION_THETA_INDEX or INSTRUCTION_ALPHA_INDEX
  */
@@ -55,6 +56,13 @@ void initNextPositionVars(int index) {
     // Initialization of motionEnd & motionBlocked
     MotionEndInfo* localEnd = getMotionEnd(index);
 	resetMotionEndData(localEnd);
+}
+
+void clearInitialSpeeds() {
+    Motion* localMotion = getMotion(INSTRUCTION_ALPHA_INDEX);
+	localMotion->currentSpeed = 0.0f;
+    localMotion = getMotion(INSTRUCTION_THETA_INDEX);
+	localMotion->currentSpeed = 0.0f;
 }
 
 void computeMotionInstruction(MotionInstruction* inst) {
