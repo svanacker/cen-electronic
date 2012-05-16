@@ -244,7 +244,6 @@ void mainBoardCallbackRawData(const Device* device,
 		unsigned int angle = readHex4(inputStream);
 
 		updateRobotPosition(x, y, angle);
-		sentStrategyRobotPosition(status, x, y, angle); 
 		
 		// FOR DEBUG AND MOTHER BOARD
 		OutputStream* outputStream = &(compositePcAndDebugOutputStream.outputStream);
@@ -368,13 +367,21 @@ void waitForInstruction() {
 
     // Listen instructions from Devices (I2C Slave) -> Main Board (I2C Master)
     handleNotificationFromDispatcherList(TRANSMIT_I2C);
+
+	if (isRobotPositionChanged()) {
+		int status = NOTIFY_MOTION_ARG_OBSTACLE;
+		sentStrategyRobotPosition(0, getRobotPositionX(), getRobotPositionY(), getRobotAngle());
+		resetRobotPositionChanged();
+	}
 	
+	/*
 	BOOL obstacle = robotInfraredDetectorHasObstacle();
 	if (obstacle) {
         appendString(getOutputStreamLogger(ALWAYS), "Obstacle !\n");
 		//        setRobotMustStop(TRUE);
 		stopRobotObstacle();
 	}
+	*/
 
 	/*
     delaymSec(10);

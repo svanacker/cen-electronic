@@ -19,6 +19,9 @@
 #include "../../drivers/driverList.h"
 #include "../../drivers/driverTransmitter.h"
 
+#include "../../robot/robot.h"
+
+
 // SET TRAJECTORY
 
 BOOL trajectoryDriverSetAbsolutePosition(float x, float y, float deciDegree) {
@@ -33,4 +36,26 @@ BOOL trajectoryDriverSetAbsolutePosition(float x, float y, float deciDegree) {
     BOOL result = transmitFromDriverRequestBuffer();
 
     return result;
+}
+
+// UPDATE TRAJECTORY DEVICE -> ROBOT POSITION
+BOOL trajectoryDriverUpdateRobotPosition() {
+    OutputStream* outputStream = getDriverRequestOutputStream();
+    InputStream* inputStream = getDriverResponseInputStream();
+
+    append(outputStream, COMMAND_GET_ABSOLUTE_POSITION);
+
+    BOOL result = transmitFromDriverRequestBuffer();
+    if (result) {
+        int x = readHex4(inputStream);
+		readHex(inputStream);
+        int y = readHex4(inputStream);
+		readHex(inputStream);
+        int angle = readHex4(inputStream);
+
+		updateRobotPosition(x, y, angle);
+		return result;
+
+    }
+    return FALSE;
 }

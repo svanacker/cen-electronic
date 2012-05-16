@@ -8,4 +8,6 @@
 
 BOOL trajectoryDriverSetAbsolutePosition(float x, float y, float deciDegree);
 
+BOOL trajectoryDriverUpdateRobotPosition();
+
 #endif

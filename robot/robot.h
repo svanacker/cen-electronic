@@ -1,6 +1,8 @@
 #ifndef ROBOT_H
 #define ROBOT_H
 
+#include "../common/commons.h"
+#include "../common/io/outputStream.h"
 
 // Time in seconds
 #define TIME_FOR_OBSTACLE_NEW_NOTIFICATION 			4
@@ -24,10 +26,20 @@ void stopRobot(void);
 
 void stopRobotObstacle(void);
 
+// POSITION
+
 int getRobotPositionX();
 
 int getRobotPositionY();
 
 int getRobotAngle();
+
+void updateRobotPosition(int x, int y, int angle);
+
+void printRobotPosition(OutputStream* outputStream);
+
+BOOL isRobotPositionChanged();
+
+void resetRobotPositionChanged();
 
 #endif

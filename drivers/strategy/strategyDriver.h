@@ -23,4 +23,6 @@ BOOL sendStrategyOpponentRobotPosition(Point* opponentRobotPosition);
 
 BOOL sentStrategyRobotPosition(unsigned char status, unsigned int x, unsigned int y, int angleInDeciDegree);
 
+
+
 #endif

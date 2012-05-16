@@ -18,6 +18,8 @@
 #include "../drivers/driverList.h"
 
 #include "../drivers/motion/motionDriver.h"
+#include "../drivers/motion/trajectoryDriver.h"
+#include "../drivers/strategy/strategyDriver.h"
 
 #include "../drivers/dispatcher/driverDataDispatcher.h"
 #include "../drivers/dispatcher/driverDataDispatcherList.h"
@@ -40,6 +42,16 @@ static unsigned int robotMustStop = FALSE;
 
 static unsigned int timeAtLastCollision = 0;
 
+static BOOL robotPositionChanged;
+
+BOOL isRobotPositionChanged() {
+	return robotPositionChanged;
+}
+
+void resetRobotPositionChanged() {
+	robotPositionChanged = FALSE;
+}
+
 unsigned int isRobotMustStop() {
     return robotMustStop;
 }
@@ -60,6 +72,13 @@ void updateRobotPosition(int x, int y, int angle) {
 	robotPositionX = x;
 	robotPositionY = y;
 	robotAngle = angle;
+	robotPositionChanged = TRUE;
+}
+
+void printRobotPosition(OutputStream* outputStream) {
+	appendStringAndDec(outputStream, "\nRobotPositionX=", robotPositionX);
+	appendStringAndDec(outputStream, "\nRobotPositionY=", robotPositionY);
+	appendStringAndDec(outputStream, "\nRobotAngle=", robotAngle);
 }
 
 void setRobotMustStop(unsigned int value) {
@@ -84,9 +103,14 @@ void stopRobotObstacle(void) {
         timeAtLastCollision = currentTime;
         // TODO : PROBLEM OF STABILITYmotionDriverObstacle();
 		motionDriverStop();
+		// Ask the robot position to MOTOR BOARD
+		trajectoryDriverUpdateRobotPosition();
+		// Notify to the Strategy Board the new position
+		int status = NOTIFY_MOTION_ARG_OBSTACLE;
+		sentStrategyRobotPosition(status, getRobotPositionX(), getRobotPositionY(), getRobotAngle());
 
-        // notifyEnd();
         appendString(getOutputStreamLogger(WARNING), "Robot stopped(Obstacle)\n");
+		printRobotPosition(getOutputStreamLogger(WARNING));
     } else {
         appendString(getOutputStreamLogger(WARNING), "Wait for new notification \n");
     }
