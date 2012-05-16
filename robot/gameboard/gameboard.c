@@ -31,7 +31,7 @@ char gameTargetPrint(int* element, int column, int line) {
 	GameTarget* target = (GameTarget*) element;
 	Location* location = target->location;
 	char c;
-	if (target->available) {
+	if (target->status == TARGET_AVAILABLE) {
 		c = 'X';
 	}
 	else {

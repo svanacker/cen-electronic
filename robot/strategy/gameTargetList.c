@@ -30,7 +30,7 @@ void addGameTarget(GameTarget* target, char* targetName, int gain, Location* loc
     unsigned char size = targets.size;
 	if (size < MAX_TARGET) {
 		target->name = targetName;
-		target->available = TRUE;
+		target->status = TARGET_AVAILABLE;
 		target->gain = gain;
 		target->location = location;
 	    targets.targets[size] = target;
@@ -54,7 +54,7 @@ BOOL containsAvailableTarget() {
 	int size = targets.size;
 	for (i = 0; i < size; i++) {
 		GameTarget* target = targets.targets[i];
-		if (target->available) {
+		if (target->status == TARGET_AVAILABLE) {
 			return TRUE;
 		}	
 	}

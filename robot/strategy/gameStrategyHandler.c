@@ -80,10 +80,15 @@ void findNextTarget() {
 
 void markTargetAsHandled() {
 	// mark the target as unavailable
-	strategyContext.currentTarget->available = FALSE;
+	strategyContext.currentTarget->status = TARGET_HANDLED;
 	// reset current Target
 	strategyContext.currentTarget = NULL;
 	strategyContext.currentTargetAction = NULL;
+}
+
+void markTargetInUse() {
+	// mark the target as being used
+	strategyContext.currentTarget->status = TARGET_INUSE;
 }
 
 /**
@@ -94,6 +99,8 @@ BOOL executeTargetActions() {
 	#ifdef DEBUG_STRATEGY_HANDLER
 		appendString(getOutputStreamLogger(DEBUG), "executeTargetActions\n");
 	#endif
+
+	markTargetInUse();
 
 	GameTargetAction* targetAction = strategyContext.currentTargetAction;
 	GameTargetActionItemList* actionItemList = targetAction->actionItemList;
