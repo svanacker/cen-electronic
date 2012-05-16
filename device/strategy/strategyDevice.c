@@ -45,6 +45,7 @@ void deviceStrategyHandleRawData(char header, InputStream* inputStream, OutputSt
 		int y = readHex4(inputStream);
 
 		GameStrategyContext* context = getStrategyContext();
+
 		context->opponentRobotPosition.x = x;
 		if (isViolet()) {
 			context->opponentRobotPosition.y = y;
@@ -62,9 +63,13 @@ void deviceStrategyHandleRawData(char header, InputStream* inputStream, OutputSt
 		// data
 		int c = readHex4(inputStream);
 		GameStrategyContext* context = getStrategyContext();
+		
 		// TODO : Provide non specific function
 		int strategyIndex = (c & CONFIG_STRATEGY_MASK);
 		context->strategyIndex = strategyIndex;
+		appendStringAndDec(getOutputStreamLogger(INFO), "setStrategy:", strategyIndex);
+		println(getOutputStreamLogger(INFO));
+
 		initStrategy2012(strategyIndex);
 		if (c & CONFIG_COLOR_BLUE_MASK) {
 			setColor(COLOR_VIOLET);

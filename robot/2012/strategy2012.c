@@ -476,7 +476,7 @@ void initStrategiesItems2012(int strategyIndex) {
 	addGameStrategyItem(&strategy1, &cdTakeStrategyItem, &cd4Target);
 	addGameStrategyItem(&strategy1, &bullionRight1StrategyItem, &bullionRight1Target);
 	addGameStrategyItem(&strategy1, &bullionLeft1StrategyItem, &bullionLeft1Target);
-	addGameStrategyItem(&strategy1, &opponentCDStrategyItem, &opponentCDTarget);
+//	addGameStrategyItem(&strategy1, &opponentCDStrategyItem, &opponentCDTarget);
 }
 
 void initStrategy2012(int strategyIndex) {
