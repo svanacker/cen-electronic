@@ -15,11 +15,14 @@
 /** Use flag to know if we trace Opponent Robot management. */
 #define DEBUG_OPPONENT_ROBOT
 
-/** Minimum angle to add a rotation. */
+/** Minimum angle to add a rotation in deci degrees. */
 #define ANGLE_ROTATION_MIN 50
 
-/** Distance of the opponent to a path to made it unavailable. */
+/** Distance of the opponent to a path to made it unavailable in mm. */
 #define DISTANCE_OPPONENT_TO_PATH 300
+
+/** Distance of a detected obstacle in cm. */
+#define DISTANCE_OBSTACLE 30
 
 /**
  * Choose the rigth strategy.

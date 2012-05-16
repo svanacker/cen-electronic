@@ -41,6 +41,9 @@ void printGameStrategyContext(OutputStream* outputStream, GameStrategyContext* c
 	appendString(outputStream, "\n\topponentRobotPosition=");
 	printPoint(outputStream, &(context->opponentRobotPosition), "");
 
+	// Obstacle Position
+	appendString(outputStream, "\n\tlastObstaclePosition=");
+	printPoint(outputStream, &(context->lastObstaclePosition), "");
 
 	// current Target
 	appendString(outputStream, "\n\tcurrentTarget=");

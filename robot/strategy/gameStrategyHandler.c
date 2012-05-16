@@ -275,6 +275,16 @@ void computePoint(Point* ref, Point* cp, unsigned char distance, int angle) {
 	cp->y = ref->y + dsa;
 }
 
+BOOL isColliding(Point* path, Point* obstacle) {
+	float d = distanceBetweenPoints(path, obstacle);
+	BOOL result = (d < DISTANCE_OPPONENT_TO_PATH);
+	return result;
+}
+
+BOOL isValidLocation(Point* p) {
+	return (p->x !=0) && (p->y != 0);
+}
+
 /**
  * Loop on a pathDataFunction, to know if the path has an intersection with the opponentRobotPosition.
  * @private
@@ -296,10 +306,18 @@ BOOL isPathAvailable(PathDataFunction* pathDataFunction) {
 
 	int i;
 	Point p;
+	Point* opponentRobotPosition = &(strategyContext.opponentRobotPosition);
+	Point* lastObstaclePosition = &(strategyContext.lastObstaclePosition);
+	BOOL opponentPresent = isValidLocation(opponentRobotPosition);
+	BOOL obstaclePresent = isValidLocation(lastObstaclePosition);
 	for (i = 0; i < 10; i++) {
 		computeBSplinePoint(curve, 0.1 * i, &p);
-		float d = distanceBetweenPoints(&p, &(strategyContext.opponentRobotPosition));
-		if (d < DISTANCE_OPPONENT_TO_PATH) {
+		// checking opponent
+		if (opponentPresent && isColliding(&p, opponentRobotPosition)) {
+			return FALSE;
+		}
+		// checking last obstacle
+		if (obstaclePresent && isColliding(&p, lastObstaclePosition)) {
 			return FALSE;
 		}
 	}
@@ -364,14 +382,23 @@ void updatePathsAvailability() {
 	#endif
 }
 
+void setLastObstaclePosition() {
+	Point* robotPosition = &(strategyContext.robotPosition);
+	Point* lastObstaclePosition = &(strategyContext.lastObstaclePosition);
+	int angle = strategyContext.robotAngle;
+	computePoint(robotPosition, lastObstaclePosition, DISTANCE_OBSTACLE, angle);
+}
+
 void handleCollision() {
-	// Clears the current path and actions
 	#ifdef DEBUG_STRATEGY_HANDLER
 		appendString(getOutputStreamLogger(DEBUG), "handleCollision");	
 	#endif
 	
+	// Clears the current path and actions
 	clearLocationList(&(strategyContext.currentTrajectory));
 	strategyContext.currentTargetAction = NULL;
+
+	setLastObstaclePosition();
 }
 
 BOOL nextStep() {
