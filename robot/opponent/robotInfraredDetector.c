@@ -19,13 +19,35 @@
 /** Distance for detection. */
 #define ROBOT_INFRARED_DETECTOR_DISTANCE_THRESHOLD_CM		50
 
+/** Avoid to notify always. */
+#define NOTIFY_INFRARED_DETECTOR_TIMER_CYCLE				40
+
 static BOOL wasDetected;
+static BOOL doNotCheckBeforeCounter;
+static unsigned int interruptCounter;
 
 BOOL getRobotInfraredObstacle() {
-	return wasDetected;
+	// no detection
+	if (!wasDetected) {
+		return FALSE;
+	};
+	// To avoid that notification continue
+	wasDetected = FALSE;
+	// we must notify one time !
+	return TRUE;
 }
 
 void robotInfraredDetectorCallback() {
+	interruptCounter++;
+    // return if we placed a delay to notify, but continue
+	// in the normal case
+    if (interruptCounter <= doNotCheckBeforeCounter) {
+        return;
+    }
+    doNotCheckBeforeCounter = 0;
+    // rearm flags
+    interruptCounter = 0;
+
 	float leftMilliVolt = getANX(GP2D12_LEFT_ANX_INDEX);
 	float rightMilliVolt = getANX(GP2D12_RIGHT_ANX_INDEX);
 	float centerMilliVolt = getANX(GP2DY0A02YK_CENTER_ANX_INDEX);
@@ -35,9 +57,13 @@ void robotInfraredDetectorCallback() {
 	float centerDistance = gp2y0a02ykGetCentimerDistanceForTension(rightMilliVolt);
 	float rightDistance = gp2d12GetCentimerDistanceForTension(centerMilliVolt);
 
-	wasDetected = (leftDistance < ROBOT_INFRARED_DETECTOR_DISTANCE_THRESHOLD_CM 
+	BOOL currentDetection = (leftDistance < ROBOT_INFRARED_DETECTOR_DISTANCE_THRESHOLD_CM 
 				|| rightDistance < ROBOT_INFRARED_DETECTOR_DISTANCE_THRESHOLD_CM 
 				|| centerDistance < ROBOT_INFRARED_DETECTOR_DISTANCE_THRESHOLD_CM);
+	if (currentDetection) {
+		doNotCheckBeforeCounter = NOTIFY_INFRARED_DETECTOR_TIMER_CYCLE;
+		wasDetected = TRUE;
+	}
 }
 
 

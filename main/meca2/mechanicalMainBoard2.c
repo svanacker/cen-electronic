@@ -51,6 +51,7 @@
 #include "../../device/servo/servoDeviceInterface.h"
 
 // Infrared detector
+#include "../../robot/opponent/robotInfraredDetector.h"
 #include "../../robot/opponent/robotInfraredDetectorDevice.h"
 #include "../../robot/opponent/robotInfraredDetectorDeviceInterface.h"
 
@@ -99,6 +100,10 @@ static Device deviceListArray[MECHANICAL_BOARD_2_DEVICE_LENGTH];
 
 // Timers
 static Timer timerListArray[MECHANICAL_BOARD_2_TIMER_LENGTH];
+
+Buffer* getMechanicalBoard2I2CSlaveOutputBuffer() {
+    return &i2cSlaveOutputBuffer;
+}
 
 
 void initDevicesDescriptor() {
@@ -188,12 +193,10 @@ int main(void) {
 	upArm(ARM_RIGHT);
 
 	while (1) {
-		/*
 		if (getRobotInfraredObstacle()) {
-			appendString(getOutputStreamLogger(ALWAYS), "Obstacle !");
-			println(getOutputStreamLogger(ALWAYS));
+			notifyInfraredDetectorDetection();
+			appendString(getOutputStreamLogger(ALWAYS), "\nObstacle, wait few seconds For New Notification !\n");
 		}
-		*/
 
 		// I2C Stream
 		handleStreamInstruction(&i2cSlaveInputBuffer,

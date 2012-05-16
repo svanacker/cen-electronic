@@ -1,6 +1,8 @@
 #ifndef MECHANICAL_BOARD_2_H
 #define MECHANICAL_BOARD_2_H
 
+#include "../../common/io/buffer.h"
+
 /** Define the I2C address used by motorBoard. */
 #define MECHANICAL_BOARD_2_I2C_ADDRESS 	0x54
 
@@ -22,5 +24,10 @@
 // TIMERS
 
 #define MECHANICAL_BOARD_2_TIMER_LENGTH			2
+
+/**
+ * Get the I2C Slave Output Buffer.
+ */
+Buffer* getMechanicalBoard2I2CSlaveOutputBuffer();
 
 #endif

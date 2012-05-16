@@ -5,6 +5,8 @@
 
 #define COMMAND_INFRARED_DETECTOR_DETECTION		 'X'
 
+#define NOTIFY_INFRARED_DETECTOR_DETECTION		 'O'
+
 /**
 * Interface for Robot Infrared Detector Device
 */

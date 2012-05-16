@@ -11,6 +11,7 @@ unsigned int deviceRobotInfraredDetectorGetSoftwareRevision() {
 }
 
 int deviceRobotInfraredDetectorGetInterface(char header, int mode, BOOL fillDeviceArgumentList ) {
+	// command to ask
 	if (header == COMMAND_INFRARED_DETECTOR_DETECTION) {
 	    if (mode == DEVICE_MODE_INPUT) {
             if (fillDeviceArgumentList) {
@@ -23,6 +24,21 @@ int deviceRobotInfraredDetectorGetInterface(char header, int mode, BOOL fillDevi
 				setArgumentUnsignedHex2(0, "True/False");
             }
             return 2;
+	    }
+	}
+	// Notification !
+	else if (header == NOTIFY_INFRARED_DETECTOR_DETECTION) {
+	    if (mode == DEVICE_MODE_OUTPUT) {
+            if (fillDeviceArgumentList) {
+				setFunctionNoArgument("notifyInfraredDetector");
+            }
+            return 0;
+		// Input Mode is not used (notification)
+	    } else if (mode == DEVICE_MODE_INPUT) {
+            if (fillDeviceArgumentList) {
+				setFunctionNoArgument("notifyInfraredDetector");
+            }
+            return 0;
 	    }
 	}
     return DEVICE_HEADER_NOT_HANDLED;

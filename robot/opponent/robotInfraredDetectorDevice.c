@@ -16,6 +16,8 @@
 
 #include "../../device/device.h"
 
+#include "../../main/meca2/mechanicalBoard2.h"
+
 void deviceRobotInfraredDetectorInit() {
     initRobotInfraredDetector();
 }
@@ -27,9 +29,18 @@ BOOL deviceRobotInfraredDetectorIsOk() {
     return TRUE;
 }
 
+void notifyInfraredDetectorDetection() {
+    Buffer* buffer = getMechanicalBoard2I2CSlaveOutputBuffer();
+    OutputStream* outputStream = getOutputStream(buffer);
+	OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+    append(outputStream, NOTIFY_INFRARED_DETECTOR_DETECTION);
+	append(debugOutputStream, NOTIFY_INFRARED_DETECTOR_DETECTION);
+}
+
 void deviceRobotInfraredDetectorHandleRawData(char header,
         InputStream* inputStream,
         OutputStream* outputStream) {
+	// Command to ask
     if (header == COMMAND_INFRARED_DETECTOR_DETECTION) {
         appendAck(outputStream);
         append(outputStream, COMMAND_INFRARED_DETECTOR_DETECTION);

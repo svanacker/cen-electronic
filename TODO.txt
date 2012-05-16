@@ -1,26 +1,24 @@
-EZ : Rajouter les chemins au plus court
+SV : Rajouter les chemins au plus court
 EZ : Désactiver les TargetActions quand il y a un obstacle
-EZ : Angle de correction
+SV: Gestion de la collision avec les pinces ouvertes=> a fermer
+SV : Gérer les obstacles en dehors de la piste => ne pas notifier
+SV/EZ : Clearer le LastObstacle avec un Timer ou un certain nombre de NextStep
                       
 * Faire un recu pour JLB
 * Imprimer le Poster
 
 P1 
-* Mettre en place le 1er sonar
 * Mettre un 2ème sonar pour les mouvements en arrières
-* Optimiser la gestion des chemins contre le robot adverse.
 
 P2 
 
-* Gérer le fait que si on est bloqué avant d'arriver à la target, celle-ci ne doit pas
-etre marquée comme DONE !
 * Gérer la stratégie du robot en fonction de l'adversaire !!!
-* Vérifier le temps d'exécution de dijkstra sur les chemins importants
-* Mettre des points de sortie pour les chemins
 * Tester intensivement la gestion de collision / blocage de roues
 
 NEXT YEAR
 
+* Harmoniser la gestion des Sonars / GP2D12 notamment la gestion du filtrage / distance (tableaux, seuils)
+* Améliorer la vitesse d'écriture sur le LCD / centraliser les delay(5)
 * Faire la gestion de la manoeuvre de recalibrage 
 * Optimiser le calcul de changement de stratégie si le robot en face n'a pas changer
 * Problème au niveau de l'envoie de "'" pour arrêter les servos. Provoque un reboot de la carte alors que | marche correctement.

@@ -19,7 +19,7 @@ filter_lib=*.a
 filter_lkr=*.gld
 [CAT_SUBFOLDERS]
 subfolder_src=common.2d;common.cmd;common.delay;common.error;common.i2c;common.i2c.slave;common.io;common.log;common.math;common.serial;common.string;common.timer;device;device.dispatcher;device.strategy;device.system;drivers;drivers.dispatcher;drivers.motion;lib;lib.i2c;main;motion.extended;navigation;robot.2012;robot.gameboard;robot.match;robot.strategy;robot.strategy.factor
-subfolder_inc=common;common.2d;common.cmd;common.delay;common.error;common.i2c;common.i2c.slave;common.io;common.log;common.math;common.serial;common.setup;common.string;common.timer;device;device.dispatcher;device.strategy;device.system;drivers;drivers.dispatcher;drivers.motion;main;motion.extended;motion.simple;navigation;robot;robot.2012;robot.config;robot.gameboard;robot.match;robot.strategy;robot.strategy.factor
+subfolder_inc=common;common.2d;common.cmd;common.delay;common.error;common.i2c;common.i2c.slave;common.io;common.log;common.math;common.serial;common.setup;common.string;common.timer;device;device.dispatcher;device.motion;device.strategy;device.system;drivers;drivers.dispatcher;drivers.motion;main;motion.extended;motion.simple;navigation;robot;robot.2012;robot.config;robot.gameboard;robot.match;robot.strategy;robot.strategy.factor
 subfolder_obj=
 subfolder_lib=
 subfolder_lkr=
@@ -198,6 +198,7 @@ file_170=common.math
 file_171=common.math
 file_172=motion.extended
 file_173=motion.extended
+file_174=device.motion
 [GENERATED_FILES]
 file_000=no
 file_001=no
@@ -373,6 +374,7 @@ file_170=no
 file_171=no
 file_172=no
 file_173=no
+file_174=no
 [OTHER_FILES]
 file_000=no
 file_001=no
@@ -548,6 +550,7 @@ file_170=no
 file_171=no
 file_172=no
 file_173=no
+file_174=no
 [FILE_INFO]
 file_000=common\delay\delay30F.c
 file_001=common\serial\serial.c
@@ -723,6 +726,7 @@ file_170=common\math\bitList.h
 file_171=test\common\math\bitListTest.h
 file_172=motion\extended\bspline.h
 file_173=motion\extended\singleBSpline.h
+file_174=device\motion\simple\motionDeviceInterface.h
 [SUITE_INFO]
 suite_guid={479DDE59-4D56-455E-855E-FFF59A3DB57E}
 suite_state=

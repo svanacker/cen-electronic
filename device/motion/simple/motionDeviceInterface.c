@@ -235,7 +235,6 @@ int deviceMotionGetInterface(char header, int mode, BOOL fillDeviceArgumentList)
             return 0;
         }
     } else if (header == NOTIFY_MOTION_STATUS) {
-        // Mode is only output because it's only notification
         if (mode == DEVICE_MODE_OUTPUT) {
             if (fillDeviceArgumentList) {
 				setFunction("motionStatus", 7);
@@ -248,6 +247,14 @@ int deviceMotionGetInterface(char header, int mode, BOOL fillDeviceArgumentList)
 				setArgumentUnsignedHex4(6, "ang(1/10)deg");
             }
             return 17;
+        }
+        // Mode is only output because it's only notification
+		// but used to reset if needed
+		else if (mode == DEVICE_MODE_OUTPUT) {
+            if (fillDeviceArgumentList) {
+				setFunctionNoArgument("motionStatus");
+            }
+            return 0;
         }
     }
     return DEVICE_HEADER_NOT_HANDLED;
