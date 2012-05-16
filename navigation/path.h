@@ -21,9 +21,9 @@ typedef struct PathData {
 	/** Cost of the path. */
 	unsigned int cost;
 	/** Distance of the control point P0-P1 in cm. */ 	
-	unsigned char controlPointDistance1;
+	signed char controlPointDistance1;
 	/** Distance of the control point P1->P3 in cm. */ 	
-	unsigned char controlPointDistance2;
+	signed char controlPointDistance2;
 	/** angle1 (when at P0) in decidegree. */
 	int angle1;
 	/** angle2 (when at P3) in decidegree. */

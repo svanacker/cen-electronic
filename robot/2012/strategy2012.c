@@ -272,7 +272,7 @@ void initPaths2012() {
 	void obstacleL3ToObstacleL4PathFunction() { fillPathData(&obstacleL3Location, &obstacleL4Location, OBSTACLE_L3_TO_L4_COST, 0x0A, 0x0A, ANGLE_90, ANGLE_90, OBSTACLE_L3_TO_L4_SPEED_FACTOR, OBSTACLE_L3_TO_L4_ACCELERATION_FACTOR);}
 	addNavigationPath(&obstacleL3ToObstacleL4PathFunction);
 
-	void obstacleL4ToObstacleM2PathFunction() { fillPathData(&obstacleL2Location, &obstacleM2Location, OBSTACLE_L4_TO_M2_COST, 0x0A, 0x0A, 0, 0, OBSTACLE_L4_TO_M2_SPEED_FACTOR, OBSTACLE_L4_TO_M2_ACCELERATION_FACTOR);}
+	void obstacleL4ToObstacleM2PathFunction() { fillPathData(&obstacleL4Location, &obstacleM2Location, OBSTACLE_L4_TO_M2_COST, 0x0A, 0x0A, 0, 0, OBSTACLE_L4_TO_M2_SPEED_FACTOR, OBSTACLE_L4_TO_M2_ACCELERATION_FACTOR);}
 	addNavigationPath(&obstacleL4ToObstacleM2PathFunction);
 
 	void obstacleM2ToObstacleR4PathFunction() { fillPathData(&obstacleM2Location, &obstacleR4Location, OBSTACLE_M2_TO_R4_COST, 0x0A, 0x0A, 0, 0, OBSTACLE_M2_TO_R4_SPEED_FACTOR, OBSTACLE_M2_TO_R4_ACCELERATION_FACTOR);}

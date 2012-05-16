@@ -267,10 +267,10 @@ inline float deciDegreesToRad(int ddegrees) {
 	return ddegrees * (PI / 1800.0);
 }
 
-void computePoint(Point* ref, Point* cp, unsigned char distance, int angle) {
+void computePoint(Point* ref, Point* cp, int distance, int angle) {
 	float a = deciDegreesToRad(angle);
-	float dca = distance * cosf(a);
-	float dsa = distance * sinf(a);
+	float dca = cosf(a) * distance;
+	float dsa = sinf(a) * distance;
 	cp->x = ref->x + dca;
 	cp->y = ref->y + dsa;
 }
@@ -283,6 +283,13 @@ BOOL isColliding(Point* path, Point* obstacle) {
 
 BOOL isValidLocation(Point* p) {
 	return (p->x !=0) && (p->y != 0);
+}
+
+/**
+ * Control point distance to mm.
+ */
+inline int cpToDistance(signed char d) {
+	return (d * 10);
 }
 
 /**
@@ -301,8 +308,10 @@ BOOL isPathAvailable(PathDataFunction* pathDataFunction) {
 	p3->y = pathData->location2->y;
 	int angle1 = getAngle1Path(pathDataFunction);
 	int angle2 = getAngle2Path(pathDataFunction);
-	computePoint(p0, curve->p1, pathData->controlPointDistance1, angle1);
-	computePoint(p3, curve->p2, -pathData->controlPointDistance2, angle2);
+	int d1 = cpToDistance(pathData->controlPointDistance1);
+	int d2 = cpToDistance(-pathData->controlPointDistance2);
+	computePoint(p0, curve->p1, d1, angle1);
+	computePoint(p3, curve->p2, d2, angle2);
 
 	int i;
 	Point p;
