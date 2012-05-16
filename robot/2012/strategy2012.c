@@ -32,6 +32,7 @@
 // ------------------------------------------------------ LOCATIONS --------------------------------------------------------------------
 // -> General Points
 static Location startAreaLocation; 
+static Location startAreaFrontLocation; 
 static Location bullion1Location;
 static Location bottle1Location;
 static Location bottle2FrontLocation;
@@ -165,12 +166,15 @@ void setColor(TEAM_COLOR color) {
 	context->robotPosition.x = 160;
 
 	context->robotAngle = angle;
+
+	printStrategyAllDatas(getOutputStreamLogger(INFO));
 }
 
 void initLocations2012() {
 	clearLocationList(getNavigationLocationList());
 	// -> General locations
 	addNavigationLocation(&startAreaLocation, START_AREA, START_AREA_X, START_AREA_Y);
+	addNavigationLocation(&startAreaFrontLocation, START_AREA_FRONT, START_AREA_FRONT_X, START_AREA_FRONT_Y);
 	addNavigationLocation(&bullion1Location, BULLION_1, BULLION_1_X, BULLION_1_Y);
 	addNavigationLocation(&bottle1Location, BOTTLE_1, BOTTLE_1_X, BOTTLE_1_Y);
 	addNavigationLocation(&bottle2FrontLocation, BOTTLE_2_FRONT, BOTTLE_2_FRONT_X, BOTTLE_2_FRONT_Y);
@@ -203,8 +207,14 @@ void initPaths2012(int index) {
 	clearPathList(getNavigationPathList());
 
 	// DIRECT PATH TO TARGETS
-	if (index != STRATEGY_HOMOLOGATION) {
-		void startAreaToBullion1PathFunction() { fillPathData(&startAreaLocation, &bullion1Location, START_AREA_TO_BULLION_1_COST,  0x40, 0x40, 0x02A3, ANGLE_NEG_90, START_AREA_TO_BULLION_1_SPEED_FACTOR, START_AREA_TO_BULLION_1_ACCELERATION_FACTOR); }
+	if (index == STRATEGY_HOMOLOGATION) {
+		void startAreaToStartAreaFrontPathFunction() { fillPathData(&startAreaLocation, &startAreaFrontLocation, STARTAREA_TO_STARTAREA_FRONT_COST,  0x0A, 0x0A, START_ANGLE, ANGLE_90, STARTAREA_TO_STARTAREA_FRONT_SPEED_FACTOR, STARTAREA_TO_STARTAREA_FRONT_ACCELERATION_FACTOR); }
+		addNavigationPath(&startAreaToStartAreaFrontPathFunction);
+		void startAreaFrontToOM1PathFunction() { fillPathData(&startAreaFrontLocation, &obstacleM1Location, STARTAREA_FRONT_TO_OM1_COST,  0x0A, 0x0A, ANGLE_0, ANGLE_0, STARTAREA_FRONT_TO_OM1_SPEED_FACTOR, STARTAREA_FRONT_TO_OM1_ACCELERATION_FACTOR); }
+		addNavigationPath(&startAreaFrontToOM1PathFunction);
+	}
+	else {
+		void startAreaToBullion1PathFunction() { fillPathData(&startAreaLocation, &bullion1Location, START_AREA_TO_BULLION_1_COST,  0x40, 0x40, START_ANGLE, ANGLE_NEG_90, START_AREA_TO_BULLION_1_SPEED_FACTOR, START_AREA_TO_BULLION_1_ACCELERATION_FACTOR); }
 		addNavigationPath(&startAreaToBullion1PathFunction);
 	}
 
@@ -292,13 +302,8 @@ void initPaths2012(int index) {
 	addNavigationPath(&obstacleR1ToObstacleM1PathFunction);
 
 	// OM1->OL1
-	if (index == STRATEGY_HOMOLOGATION) {
-		void obstacleM1ToObstacleL1PathFunction() { fillPathData(&obstacleM1Location, &obstacleL1Location, 10, 0x0A, 0x0A, ANGLE_180, ANGLE_180, OBSTACLE_M1_TO_L1_SPEED_FACTOR, OBSTACLE_M1_TO_L1_ACCELERATION_FACTOR);}
-		addNavigationPath(&obstacleM1ToObstacleL1PathFunction);
-	} else {
-		void obstacleM1ToObstacleL1PathFunction() { fillPathData(&obstacleM1Location, &obstacleL1Location, OBSTACLE_M1_TO_L1_COST, 0x0A, 0x0A, ANGLE_180, ANGLE_180, OBSTACLE_M1_TO_L1_SPEED_FACTOR, OBSTACLE_M1_TO_L1_ACCELERATION_FACTOR);}
-		addNavigationPath(&obstacleM1ToObstacleL1PathFunction);
-	}
+	void obstacleM1ToObstacleL1PathFunction() { fillPathData(&obstacleM1Location, &obstacleL1Location, OBSTACLE_M1_TO_L1_COST, 0x0A, 0x0A, ANGLE_180, ANGLE_180, OBSTACLE_M1_TO_L1_SPEED_FACTOR, OBSTACLE_M1_TO_L1_ACCELERATION_FACTOR);}
+	addNavigationPath(&obstacleM1ToObstacleL1PathFunction);
 
 	// bottle1->OR1
 	void bottle1ToObstacleR1PathFunction() { fillPathData(&bottle1Location, &obstacleR1Location, BOTTLE1_TO_OR1_COST, 0x0A, 0x0A, ANGLE_180, ANGLE_180, BOTTLE1_TO_OR1_SPEED_FACTOR, BOTTLE1_TO_OR1_ACCELERATION_FACTOR);}
@@ -357,12 +362,6 @@ void initPaths2012(int index) {
 	// bottle2Front->OR4
 	void bottle2FrontToObstacleR4PathFunction() { fillPathData(&bottle2FrontLocation, &obstacleR4Location, BOTTLE2FRONT_TO_CD_COST, 0x0A, 0x0A, ANGLE_90, ANGLE_90, BOTTLE2FRONT_TO_CD_SPEED_FACTOR, BOTTLE2FRONT_TO_CD_ACCELERATION_FACTOR);}
 	addNavigationPath(&bottle2FrontToObstacleR4PathFunction);
-
-	// startArea->L1
-	if (index == STRATEGY_HOMOLOGATION) {
-		void startAreaToObstacleL1PathFunction() { fillPathData(&startAreaLocation, &obstacleL1Location, STARTAREA_TO_L1_COST, 0x0A, 0x0A, 0x02A3, 0x02A3, STARTAREA_TO_L1_SPEED_FACTOR, STARTAREA_TO_L1_ACCELERATION_FACTOR);}
-		addNavigationPath(&startAreaToObstacleL1PathFunction);
-	}
 }
 
 void initTargets2012() {
