@@ -12,6 +12,9 @@
  */
 void initRobotInfraredDetector();
 
+/**
+ * Returns if there is an obstacle or not.
+ */
 BOOL getRobotInfraredObstacle();
 
 #endif

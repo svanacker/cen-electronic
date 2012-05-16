@@ -40,6 +40,7 @@ void robotInfraredDetectorCallback() {
 				|| centerDistance < ROBOT_INFRARED_DETECTOR_DISTANCE_THRESHOLD_CM);
 }
 
+
 void initRobotInfraredDetector() {
 	addTimer(ROBOT_INFRARED_DETECTOR_TIMER_INDEX, TIME_DIVISER_16_HERTZ, &robotInfraredDetectorCallback);
 }

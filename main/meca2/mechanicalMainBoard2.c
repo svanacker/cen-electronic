@@ -50,6 +50,10 @@
 #include "../../device/servo/servoDevice.h"
 #include "../../device/servo/servoDeviceInterface.h"
 
+// Infrared detector
+#include "../../robot/opponent/robotInfraredDetectorDevice.h"
+#include "../../robot/opponent/robotInfraredDetectorDeviceInterface.h"
+
 // Relay
 #include "../../device/relay/relayDevice.h"
 #include "../../device/relay/relayDeviceInterface.h"
@@ -63,8 +67,6 @@
 #include "../../robot/2012/armDeviceInterface2012.h"
 
 #include "../../drivers/driverStreamListener.h"
-
-#include "../../robot/opponent/robotInfraredDetector.h"
 
 // The port for which we debug (we can send instruction too)
 #define SERIAL_PORT_DEBUG 	SERIAL_PORT_2
@@ -108,6 +110,8 @@ void initDevicesDescriptor() {
 	addLocalDevice(getADCDeviceInterface(), getADCDeviceDescriptor());
 
 	addLocalDevice(getArm2012DeviceInterface(), getArm2012DeviceDescriptor());
+
+	addLocalDevice(getRobotInfraredDetectorDeviceInterface(), getRobotInfraredDetectorDeviceDescriptor());
 
 	initDevices(&devices);
 }
@@ -172,8 +176,6 @@ int main(void) {
 	// init the devices
 	initDevicesDescriptor();
 
-	initRobotInfraredDetector();
-
 	// Init the timers management
 	startTimerList();
 
@@ -186,10 +188,12 @@ int main(void) {
 	upArm(ARM_RIGHT);
 
 	while (1) {
+		/*
 		if (getRobotInfraredObstacle()) {
 			appendString(getOutputStreamLogger(ALWAYS), "Obstacle !");
 			println(getOutputStreamLogger(ALWAYS));
 		}
+		*/
 
 		// I2C Stream
 		handleStreamInstruction(&i2cSlaveInputBuffer,
