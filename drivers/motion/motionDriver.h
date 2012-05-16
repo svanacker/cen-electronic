@@ -117,8 +117,5 @@ BOOL motionDriverRightOneWheel(float rightDeciDegree);
 
 BOOL motionSetParameters(int motionType, int a, int speed);
 
-// TRAJECTORY
-
-BOOL trajectoryDriverSetAbsolutePosition(float x, float y, float deciDegree);
 
 #endif

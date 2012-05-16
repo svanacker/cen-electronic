@@ -44,6 +44,18 @@ unsigned int isRobotMustStop() {
     return robotMustStop;
 }
 
+int getRobotPositionX() {
+	return robotPositionX;
+}	
+
+int getRobotPositionY() {
+	return robotPositionY;
+}	
+
+int getRobotAngle() {
+	return robotAngle;
+}	
+
 void updateRobotPosition(int x, int y, int angle) {
 	robotPositionX = x;
 	robotPositionY = y;
@@ -70,7 +82,8 @@ void stopRobotObstacle(void) {
 
     if (currentTime > timeAtLastCollision + TIME_FOR_OBSTACLE_NEW_NOTIFICATION) {
         timeAtLastCollision = currentTime;
-        motionDriverObstacle();
+        // TODO : PROBLEM OF STABILITYmotionDriverObstacle();
+		motionDriverStop();
 
         // notifyEnd();
         appendString(getOutputStreamLogger(WARNING), "Robot stopped(Obstacle)\n");

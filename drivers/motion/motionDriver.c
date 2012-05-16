@@ -14,7 +14,6 @@
 #include "../../common/log/logHandler.h"
 
 #include "../../device/motion/simple/motionDeviceInterface.h"
-#include "../../device/motion/position/trajectoryDeviceInterface.h"
 
 #include "../../drivers/driver.h"
 #include "../../drivers/driverList.h"
@@ -206,18 +205,3 @@ BOOL motionSetParameters(int motionType, int a, int speed) {
     return result;
 }
 
-// SET TRAJECTORY
-
-BOOL trajectoryDriverSetAbsolutePosition(float x, float y, float deciDegree) {
-    OutputStream* outputStream = getDriverRequestOutputStream();
-    append(outputStream, COMMAND_SET_ABSOLUTE_POSITION);
-    appendHex4(outputStream, x);
-	appendSeparator(outputStream);
-    appendHex4(outputStream, y);
-	appendSeparator(outputStream);
-    appendHex4(outputStream, deciDegree);
-
-    BOOL result = transmitFromDriverRequestBuffer();
-
-    return result;
-}

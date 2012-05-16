@@ -10,6 +10,7 @@
 #include "../../drivers/driverTransmitter.h"
 
 #include "../../drivers/motion/motionDriver.h"
+#include "../../drivers/motion/trajectoryDriver.h"
 #include "../../drivers/strategy/strategyDriver.h"
 #include "../../drivers/beacon/beaconReceiverDriver.h"
 

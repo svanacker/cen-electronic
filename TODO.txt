@@ -1,5 +1,6 @@
 SV
 
+S1 : 15 cm = 1357
 S1 : 30 cm = 662
 S1 : 50 cm = 450
 S1 : 80 cm = 277
@@ -13,8 +14,6 @@ Valeur pour S0 : > 500 mV seuil
 * Imprimer le Poster
 
 P1 
-* Mettre en place une vitesse encore + lente
-* Mettre en place les GP2D12
 * Cabler dans un device le fait qu'il y a un obstacle !
 * Mettre en place le 1er sonar
 * Mettre un 2ème sonar pour les mouvements en arrières

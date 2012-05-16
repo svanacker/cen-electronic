@@ -24,4 +24,10 @@ void stopRobot(void);
 
 void stopRobotObstacle(void);
 
+int getRobotPositionX();
+
+int getRobotPositionY();
+
+int getRobotAngle();
+
 #endif
