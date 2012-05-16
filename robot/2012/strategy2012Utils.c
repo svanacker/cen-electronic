@@ -51,26 +51,24 @@ void changeLocationsForColor() {
 	}
 }
 
+int changeAngleForColor(int angle) {
+	if (isViolet()) {
+		return angle;
+	} else {
+		return -angle;
+	}
+}
+
 int getAngle1Path(PathDataFunction* pathDataFunction) {
 	pathDataFunction();
 	int result = getTmpPathData()->angle1;
-	if (isViolet()) {
-		return result;
-	}
-	else {
-		return -result;
-	}	
+	return changeAngleForColor(result);
 }
 
 int getAngle2Path(PathDataFunction* pathDataFunction) {
 	pathDataFunction();
 	int result = getTmpPathData()->angle2;
-	if (isViolet()) {
-		return result;
-	}
-	else {
-		return -result;
-	}	
+	return changeAngleForColor(result);
 }
 
 // ARM

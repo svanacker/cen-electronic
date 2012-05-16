@@ -133,6 +133,7 @@ void motionGoLocation(Location* location,
 		printLocation(getOutputStreamLogger(DEBUG), location);
 	#endif
 
+	angle = changeAngleForColor(angle);
 	motionDriverBSplineAbsolute(location->x, location->y,
 								angle, 
 								controlPointDistance1, controlPointDistance2,
@@ -148,7 +149,7 @@ void motionGoLocation(Location* location,
 int mod3600(int value) {
 	if (value < - ANGLE_180) {
 		return (value + ANGLE_360);
-	} else if (value > ANGLE_180) {
+	} else if (value >= ANGLE_180) {
 		return (value - ANGLE_360);
 	}
 	return value;
@@ -359,6 +360,16 @@ void updatePathsAvailability() {
 		}
 		appendString(logStream, "\n");
 	#endif
+}
+
+void handleCollision() {
+	// Clears the current path and actions
+	#ifdef DEBUG_STRATEGY_HANDLER
+		appendString(getOutputStreamLogger(DEBUG), "handleCollision");	
+	#endif
+	
+	clearLocationList(&(strategyContext.currentTrajectory));
+	strategyContext.currentTargetAction = NULL;
 }
 
 BOOL nextStep() {
