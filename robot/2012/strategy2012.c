@@ -92,7 +92,7 @@ static GameTarget bottle2Target;
 static GameTarget cd4Target;
 static GameTarget bullionRight1Target;
 static GameTarget bullionLeft1Target;
-//static GameTarget opponentCDTarget;
+static GameTarget opponentCDTarget;
 
 // ------------------------------------------------------- TARGETS ACTIONS ---------------------------------------------------------------
 
@@ -106,7 +106,7 @@ static GameTargetAction cdTakeTargetAction;
 static GameTargetAction bullionRight1TargetAction;
 static GameTargetAction bullionLeft1TargetAction;
 
-static GameTargetAction opponentCDTargetAction;
+//static GameTargetAction opponentCDTargetAction;
 
 // ------------------------------------------------------- TARGETS ACTIONS ITEMS --------------------------------------------------------
 
