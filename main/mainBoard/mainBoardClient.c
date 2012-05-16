@@ -215,6 +215,9 @@ OutputStream* getPcOutputStream() {
     return &pcOutputStream;
 }
 
+// Obstacle management
+BOOL mustNotifyObstacle;
+
 /**
  * Call-back when Data send some notification message (like Position Reached, Position failed ...)
  */
@@ -275,6 +278,12 @@ void mainBoardCallbackRawData(const Device* device,
 		// we are ready for next motion
         setReadyForNextMotion(TRUE);
 	} 
+	else if (header == NOTIFY_INFRARED_DETECTOR_DETECTION) {
+	    appendString(getOutputStreamLogger(INFO), "\nNotification : From MECHANICAL BOARD :\n");
+		forwardCallbackRawDataTo(inputStream, getOutputStreamLogger(INFO), device, header, DEVICE_MODE_INPUT);
+		mustNotifyObstacle = TRUE;
+	}
+	// Cannot not handle the notification !
 	else {
 	    appendString(getOutputStreamLogger(ERROR), "\nNotification lost:\n");
     	copyInputToOutputStream(inputStream, getOutputStreamLogger(ERROR), NULL, COPY_ALL);
@@ -325,7 +334,7 @@ void initDevicesDescriptor() {
 
     // Mechanical Board 2->I2C
     Device* armDevice = addI2CRemoteDevice(getArm2012DeviceInterface(), MECHANICAL_BOARD_2_I2C_ADDRESS);
-    addI2CRemoteDevice(getRobotInfraredDetectorDeviceInterface(), MECHANICAL_BOARD_2_I2C_ADDRESS);
+    Device* infraredDetectorDevice = addI2CRemoteDevice(getRobotInfraredDetectorDeviceInterface(), MECHANICAL_BOARD_2_I2C_ADDRESS);
 
 
     // Beacon Receiver Board->I2C
@@ -343,6 +352,7 @@ void initDevicesDescriptor() {
     // testDevice.deviceHandleCallbackRawData = &mainBoardCallbackRawData;
     motionDevice->deviceHandleCallbackRawData = &mainBoardCallbackRawData;
 	armDevice->deviceHandleCallbackRawData = &mainBoardCallbackRawData;
+	infraredDetectorDevice->deviceHandleCallbackRawData = &mainBoardCallbackRawData;
 }
 
 void waitForInstruction() {
@@ -368,20 +378,20 @@ void waitForInstruction() {
     // Listen instructions from Devices (I2C Slave) -> Main Board (I2C Master)
     handleNotificationFromDispatcherList(TRANSMIT_I2C);
 
+	// Notify to the strategy board the position of the robot
 	if (isRobotPositionChanged()) {
-		int status = NOTIFY_MOTION_ARG_OBSTACLE;
 		sentStrategyRobotPosition(0, getRobotPositionX(), getRobotPositionY(), getRobotAngle());
 		resetRobotPositionChanged();
 	}
 	
-	/*
-	BOOL obstacle = robotInfraredDetectorHasObstacle();
-	if (obstacle) {
-        appendString(getOutputStreamLogger(ALWAYS), "Obstacle !\n");
-		//        setRobotMustStop(TRUE);
+	if (mustNotifyObstacle) {
+        appendString(getOutputStreamLogger(INFO), "\nObstacle !\n");
+		mustNotifyObstacle = FALSE;
+		// Send information to Strategy Board
 		stopRobotObstacle();
+		// we are ready for next motion (next loop)
+        setReadyForNextMotion(TRUE);
 	}
-	*/
 
 	/*
     delaymSec(10);

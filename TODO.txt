@@ -1,8 +1,14 @@
 SV : Rajouter les chemins au plus court
-EZ : Désactiver les TargetActions quand il y a un obstacle
+SV : Gestion de la notification des obstacles : 1->2h
+
+// 2h->2h30
 SV: Gestion de la collision avec les pinces ouvertes=> a fermer
+// 2h30 -> 3h30
 SV : Gérer les obstacles en dehors de la piste => ne pas notifier
-SV/EZ : Clearer le LastObstacle avec un Timer ou un certain nombre de NextStep
+
+
+
+SV/EZ : Strategy Board : Clearer le LastObstacle avec un Timer ou un certain nombre de NextStep
                       
 * Faire un recu pour JLB
 * Imprimer le Poster
@@ -11,7 +17,7 @@ P1
 * Mettre un 2ème sonar pour les mouvements en arrières
 
 P2 
-
+* EZ : Désactiver les TargetActions quand il y a un obstacle
 * Gérer la stratégie du robot en fonction de l'adversaire !!!
 * Tester intensivement la gestion de collision / blocage de roues
 

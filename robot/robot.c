@@ -101,9 +101,9 @@ void stopRobotObstacle(void) {
 
     if (currentTime > timeAtLastCollision + TIME_FOR_OBSTACLE_NEW_NOTIFICATION) {
         timeAtLastCollision = currentTime;
-        // TODO : PROBLEM OF STABILITYmotionDriverObstacle();
+        // TODO : PROBLEM OF STABILITY : motionDriverObstacle();
 		motionDriverStop();
-		// Ask the robot position to MOTOR BOARD
+		// Ask the robot position from the MOTOR BOARD
 		trajectoryDriverUpdateRobotPosition();
 		// Notify to the Strategy Board the new position
 		int status = NOTIFY_MOTION_ARG_OBSTACLE;
