@@ -92,7 +92,7 @@ static GameTarget bottle2Target;
 static GameTarget cd4Target;
 static GameTarget bullionRight1Target;
 static GameTarget bullionLeft1Target;
-static GameTarget opponentCDTarget;
+//static GameTarget opponentCDTarget;
 
 // ------------------------------------------------------- TARGETS ACTIONS ---------------------------------------------------------------
 
@@ -435,7 +435,7 @@ void initTargetActions2012() {
 	addTargetAction(&(bullionLeft1Target.actionList), &bullionLeft1TargetAction, &bullionLeft1Location, &dropZone1Location, 5, &bullionLeft1ActionItemList);
 
 	// OPPONENT CD
-	addTargetAction(&(opponentCDTarget.actionList), &opponentCDTargetAction, &dropZone1Location, &dropZone1Location, 5, NULL);
+	//addTargetAction(&(opponentCDTarget.actionList), &opponentCDTargetAction, &dropZone1Location, &dropZone1Location, 5, NULL);
 }
 
 void initTargetActionsItems2012() {
@@ -486,12 +486,12 @@ void initStrategy2012(int strategyIndex) {
 
 	initTargets2012();
 	initTargetActions2012();
-	initTargetActionsItems2012(strategyIndex);
+	initTargetActionsItems2012();
 
 	initStrategies2012();
 	initStrategiesItems2012(strategyIndex);
 
-	GameStrategy* strategy = getGameStrategy(strategyIndex);
+	GameStrategy* strategy = getGameStrategy(0);
 	GameStrategyContext* strategyContext = getStrategyContext();
 	strategyContext->gameStrategy = strategy;
 
@@ -500,8 +500,8 @@ void initStrategy2012(int strategyIndex) {
 
 	// opponent
 	Point* p = &(getStrategyContext()->opponentRobotPosition);
-	p->x = 1500;
-	p->y = 1500;
+	p->x = 0;
+	p->y = 0;
 	
 	// obstacle
 	p = &(getStrategyContext()->lastObstaclePosition);
