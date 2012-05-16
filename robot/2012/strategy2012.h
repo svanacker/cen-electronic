@@ -7,7 +7,7 @@
 #include "../../motion/simple/motion.h"
 
 // Strategies
-#define STRATEGY_HOMOLOGATION	0
+#define STRATEGY_HOMOLOGATION	1
 #define STRATEGY_TEST			3
 
 

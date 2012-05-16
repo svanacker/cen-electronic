@@ -61,9 +61,10 @@ void deviceStrategyHandleRawData(char header, InputStream* inputStream, OutputSt
 	else if (header == COMMAND_STRATEGY_SET_CONFIG) {
 		// data
 		int c = readHex4(inputStream);
-//		GameStrategyContext* context = getStrategyContext();
+		GameStrategyContext* context = getStrategyContext();
 		// TODO : Provide non specific function
 		int strategyIndex = (c & CONFIG_STRATEGY_MASK);
+		context->strategyIndex = strategyIndex;
 		initStrategy2012(strategyIndex);
 		if (c & CONFIG_COLOR_BLUE_MASK) {
 			setColor(COLOR_VIOLET);

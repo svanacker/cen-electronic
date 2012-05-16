@@ -44,6 +44,8 @@ typedef struct GameStrategyContext {
 	BOOL mustDoNextStep;
 	/** Step status. */
 	BOOL hasMoreNextSteps;
+	/** Strategy index. */
+	unsigned char strategyIndex;
 } GameStrategyContext;
 
 /**
