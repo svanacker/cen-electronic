@@ -26,6 +26,8 @@
 
 #include "../../drivers/motion/motionDriver.h"
 
+#include "../../robot/2012/strategy2012Utils.h"
+
 // Strategy Context
 static GameStrategyContext strategyContext;
 
