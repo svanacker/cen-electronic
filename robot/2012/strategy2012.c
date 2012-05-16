@@ -352,7 +352,7 @@ void initPaths2012(int index) {
 	addNavigationPath(&bullionRight1ToObstacleR2PathFunction);
 
 	// bullionRight1->OR4
-	void bullionRight1ToObstacleR4PathFunction() { fillPathData(&bullionRight1Location, &obstacleR4Location, BULLIONRIGHT1_TO_OR4_COST, 0x0A, 0x0A, ANGLE_80, ANGLE_80, BULLIONRIGHT1_TO_OR4_SPEED_FACTOR, BULLIONRIGHT1_TO_OR4_ACCELERATION_FACTOR);}
+	void bullionRight1ToObstacleR4PathFunction() { fillPathData(&bullionRight1Location, &obstacleR4Location, BULLIONRIGHT1_TO_OR4_COST, 0x0A, 0x0A, ANGLE_90, ANGLE_80, BULLIONRIGHT1_TO_OR4_SPEED_FACTOR, BULLIONRIGHT1_TO_OR4_ACCELERATION_FACTOR);}
 	addNavigationPath(&bullionRight1ToObstacleR4PathFunction);
 
 	// bottle2Front->CD
@@ -424,14 +424,14 @@ void initTargetActions2012() {
 	clearTargetActionList(&(bullionLeft1Target.actionList));
 	clearTargetActionList(&(opponentCDTarget.actionList));
 
-	addTargetAction(&(bullion1Target.actionList), &bullion1TargetAction, &bullion1Location, &bullion1Location, 2, NULL);
-	addTargetAction(&(bottle1Target.actionList), &bottle1TargetAction, &bottle1Location, &bottle1Location, 2, NULL);
-	addTargetAction(&(bottle2Target.actionList), &bottle2TargetAction, &bottle2Location, &bottle2Location, 3, NULL);
-	addTargetAction(&(cd4Target.actionList), &cdTakeTargetAction, &bottle2Location, &dropZone1Location, 4, &cdTakeTargetActionItemList);
+	addTargetAction(&(bullion1Target.actionList), &bullion1TargetAction, &bullion1Location, &bullion1Location, 2, NULL, NULL);
+	addTargetAction(&(bottle1Target.actionList), &bottle1TargetAction, &bottle1Location, &bottle1Location, 2, NULL, NULL);
+	addTargetAction(&(bottle2Target.actionList), &bottle2TargetAction, &bottle2Location, &bottle2Location, 3, NULL, NULL);
+	addTargetAction(&(cd4Target.actionList), &cdTakeTargetAction, &bottle2Location, &dropZone1Location, 4, NULL /** TODO*/,&cdTakeTargetActionItemList);
 
 	// BULLION 1
-	addTargetAction(&(bullionRight1Target.actionList), &bullionRight1TargetAction, &bullionRight1Location, &dropZone1Location, 5, &bullionRight1ActionItemList);
-	addTargetAction(&(bullionLeft1Target.actionList), &bullionLeft1TargetAction, &bullionLeft1Location, &dropZone1Location, 5, &bullionLeft1ActionItemList);
+	addTargetAction(&(bullionRight1Target.actionList), &bullionRight1TargetAction, &bullionRight1Location, &dropZone1Location, 5, NULL /** TODO*/, &bullionRight1ActionItemList);
+	addTargetAction(&(bullionLeft1Target.actionList), &bullionLeft1TargetAction, &bullionLeft1Location, &dropZone1Location, 5, NULL /** TODO*/, &bullionLeft1ActionItemList);
 
 	// OPPONENT CD
 	//addTargetAction(&(opponentCDTarget.actionList), &opponentCDTargetAction, &dropZone1Location, &dropZone1Location, 5, NULL);

@@ -7,7 +7,7 @@
 
 void clearGameTargetActionItem(GameTargetActionItem* targetActionItem) {
 	targetActionItem->name = NULL;
-	targetActionItem->actionItem = NULL;
+	targetActionItem->actionItemFunction = NULL;
 }
 
 void printGameTargetActionItem(OutputStream* outputStream, GameTargetActionItem* targetActionItem) {

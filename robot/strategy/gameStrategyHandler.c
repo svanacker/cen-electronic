@@ -141,7 +141,7 @@ BOOL executeTargetActions() {
 		#endif
 
 		// Do the action item
-		actionItem->actionItem();
+		actionItem->actionItemFunction();
 		return TRUE;
 	}
 	else {
@@ -386,20 +386,17 @@ void updatePathsAvailability() {
 		appendString(logStream, "\nDon't compute Path !");
 	}	
 	PathList* paths = getNavigationPathList();
-	// int j;
-	// for (j = 0; j < 100; j++) {
-		int i;
-		for (i = 0; i < paths->size; i++) {
-			PathDataFunction* pathDataFunction = paths->paths[i];
-			// by default, path is available
-			BOOL available = TRUE;
-			// Don't do the compute if it's not necessary
-			if (computePath) {	
-				available = isPathAvailable(pathDataFunction);
-			}
-			setPathAvailability(i, available);
+	int i;
+	for (i = 0; i < paths->size; i++) {
+		PathDataFunction* pathDataFunction = paths->paths[i];
+		// by default, path is available
+		BOOL available = TRUE;
+		// Don't do the compute if it's not necessary
+		if (computePath) {	
+			available = isPathAvailable(pathDataFunction);
 		}
-	// }
+		setPathAvailability(i, available);
+	}
 
 	#ifdef DEBUG_OPPONENT_ROBOT
 		// LOG

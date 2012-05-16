@@ -21,12 +21,12 @@ void clearTargetActionItemList(GameTargetActionItemList* targetActionItemList) {
 
 void addTargetActionItem(GameTargetActionItemList* targetActionItemList,
 					 GameTargetActionItem* targetActionItem,
-					 GameTargetActionFunction* actionItem,
+					 GameTargetActionFunction* actionItemFunction,
 					 char* name
 ) {
     unsigned char size = targetActionItemList->size;
 	if (size < MAX_TARGET_ACTION_ITEM) {
-		targetActionItem->actionItem = actionItem;
+		targetActionItem->actionItemFunction = actionItemFunction;
 		targetActionItem->name = name;
 	    targetActionItemList->items[size] = targetActionItem;
 	    targetActionItemList->size++;

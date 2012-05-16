@@ -7,6 +7,8 @@
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
 
+#include "../../navigation/path.h"
+
 void clearTargetActionList(GameTargetActionList* targetActionList) {
 	int i;
 	int size = targetActionList->size;
@@ -22,6 +24,7 @@ void addTargetAction(GameTargetActionList* targetActionList,
 					 Location* startLocation,
 					 Location* endLocation,
 					 int timeToAchieve,
+					 PathDataFunction* pathDataFunction,
 					 GameTargetActionItemList* actionItemList
 ) {
     unsigned char size = targetActionList->size;
@@ -29,6 +32,7 @@ void addTargetAction(GameTargetActionList* targetActionList,
 		targetAction->startLocation = startLocation;
 		targetAction->endLocation = endLocation;
 		targetAction->timeToAchieve = timeToAchieve;
+		targetAction->pathDataFunction = pathDataFunction;
 		targetAction->actionItemList = actionItemList;
 	    targetActionList->actions[size] = targetAction;
 	    targetActionList->size++;

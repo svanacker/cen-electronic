@@ -8,6 +8,7 @@
 #include "../../common/io/printWriter.h"
 
 #include "../../navigation/LocationList.h"
+#include "../../navigation/path.h"
 
 /** The max limit of target action count. */
 #define MAX_TARGET_ACTION 		3
@@ -36,6 +37,7 @@ void addTargetAction(GameTargetActionList* targetActionList,
 					 Location* startLocation,
 					 Location* endLocation,
 					 int timeToAchieve,
+					 PathDataFunction* pathDataFunction,
 					 GameTargetActionItemList* actionListItem
 );
 

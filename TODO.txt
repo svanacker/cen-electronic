@@ -1,5 +1,6 @@
 EZ : Rajouter les chemins au plus court
 EZ : Désactiver les TargetActions quand il y a un obstacle
+EZ : Angle de correction
                       
 * Faire un recu pour JLB
 * Imprimer le Poster

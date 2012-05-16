@@ -6,6 +6,9 @@
 #include "../../common/2d/2d.h"
 #include "../../common/io/outputStream.h"
 
+#include "../../navigation/path.h"
+
+
 /**
  * Define the function which must be called.
  */
@@ -17,7 +20,7 @@ typedef void GameTargetActionFunction();
 typedef struct GameTargetActionItem {
 	char* name;
 	/** Function which will be called. */
-	GameTargetActionFunction* actionItem;
+	GameTargetActionFunction* actionItemFunction;
 } GameTargetActionItem;
 
 /**

@@ -8,6 +8,8 @@
 #include "../../common/2d/2d.h"
 #include "../../common/io/outputStream.h"
 
+#include "../../navigation/path.h"
+
 /** The max limit of action item count. */
 #define MAX_TARGET_ACTION_ITEM 		5
 
