@@ -110,6 +110,7 @@
 #include "../../robot/match/endMatchDetectorDevice.h"
 #include "../../robot/match/endMatchDetectorDeviceInterface.h"
 
+#include "../../robot/opponent/robotInfraredDetectorDeviceInterface.h"
 #include "../../robot/opponent/robotSonarDetectorDevice.h"
 #include "../../robot/opponent/robotSonarDetectorDeviceInterface.h"
 #include "../../robot/opponent/opponentRobot.h"
@@ -323,6 +324,8 @@ void initDevicesDescriptor() {
 
     // Mechanical Board 2->I2C
     Device* armDevice = addI2CRemoteDevice(getArm2012DeviceInterface(), MECHANICAL_BOARD_2_I2C_ADDRESS);
+    addI2CRemoteDevice(getRobotInfraredDetectorDeviceInterface(), MECHANICAL_BOARD_2_I2C_ADDRESS);
+
 
     // Beacon Receiver Board->I2C
     addI2CRemoteDevice(getBeaconReceiverDeviceInterface(), BEACON_RECEIVER_I2C_ADDRESS);
