@@ -16,6 +16,8 @@
 typedef struct {
     /** An array of pointer on target. */
     GameTarget* targets[MAX_TARGET];
+	/** Number of target handled count. */
+	unsigned char targetHandledCount;
     /** the size of the list. */
     unsigned char size;
 } GameTargetList;
@@ -29,6 +31,16 @@ GameTargetList* getGameTargetList();
  * Clear the targets.
  */
 void clearGameTargets();
+
+/**
+ * Register that we handle a target.
+ */
+void incTargetHandledCount();
+
+/**
+ * Returns the count of handled targets.
+ */
+unsigned char getTargetHandledCount();
 
 /**
  * Add a target to the list.

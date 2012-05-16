@@ -26,6 +26,7 @@
 
 #include "../../drivers/motion/motionDriver.h"
 
+#include "../../robot/strategy/gameTargetList.h"
 #include "../../robot/2012/strategy2012Utils.h"
 
 // Strategy Context
@@ -39,10 +40,28 @@ GameStrategyContext* getStrategyContext() {
 #define ANGLE_360 3600
 
 /**
+ * Clears the current path and actions.
+ * Useful when we want to cancel a target or go out from a target.
+ */
+void clearCurrentTarget() {
+	clearLocationList(&(strategyContext.currentTrajectory));
+	strategyContext.currentTarget = NULL;
+	strategyContext.currentTargetAction = NULL;
+}
+
+/**
  * @private
  */
 void findNextTarget() {
 	appendString(getOutputStreamLogger(DEBUG), "findNextTarget\n");
+
+	unsigned int targetHandledCount = getTargetHandledCount();
+	if (targetHandledCount >= strategyContext.maxTargetToHandle) {
+		clearCurrentTarget();
+		appendStringAndDec(getOutputStreamLogger(DEBUG), "Reach Max Target To Handle:", targetHandledCount);
+		println(getOutputStreamLogger(DEBUG));
+		return;
+	}
 
 	// global points
 	LocationList* navigationLocationList = getNavigationLocationList();
@@ -84,6 +103,7 @@ void markTargetAsHandled() {
 	// reset current Target
 	strategyContext.currentTarget = NULL;
 	strategyContext.currentTargetAction = NULL;
+	incTargetHandledCount();
 }
 
 void markTargetInUse() {
@@ -413,8 +433,7 @@ void handleCollision() {
 	#endif
 	
 	// Clears the current path and actions
-	clearLocationList(&(strategyContext.currentTrajectory));
-	strategyContext.currentTargetAction = NULL;
+	clearCurrentTarget();
 
 	setLastObstaclePosition();
 	updatePathsAvailability();

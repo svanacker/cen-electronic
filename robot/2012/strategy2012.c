@@ -494,7 +494,12 @@ void initStrategy2012(int strategyIndex) {
 	GameStrategy* strategy = getGameStrategy(0);
 	GameStrategyContext* strategyContext = getStrategyContext();
 	strategyContext->gameStrategy = strategy;
-
+	if (strategyIndex == STRATEGY_HOMOLOGATION) {
+		strategyContext->maxTargetToHandle = 1;
+	}
+	else {
+		strategyContext->maxTargetToHandle = getGameTargetList()->size;
+	}
 	//OutputStream* debugOutputStream = getOutputStreamLogger(INFO);
 	//printStrategyAllDatas(debugOutputStream);
 

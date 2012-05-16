@@ -46,6 +46,8 @@ typedef struct GameStrategyContext {
 	BOOL hasMoreNextSteps;
 	/** Strategy index. */
 	unsigned char strategyIndex;
+	/** Max target to handle. */
+	unsigned char maxTargetToHandle;
 } GameStrategyContext;
 
 /**

@@ -24,6 +24,15 @@ void clearGameTargets() {
 		clearGameTarget(target);
 	}	
 	targets.size = 0;
+	targets.targetHandledCount = 0;
+}
+
+void incTargetHandledCount() {
+	targets.targetHandledCount++;
+}
+
+unsigned char getTargetHandledCount() {
+	return targets.targetHandledCount;
 }
 
 void addGameTarget(GameTarget* target, char* targetName, int gain, Location* location) {
@@ -67,6 +76,8 @@ void printGameTargetList(OutputStream* outputStream) {
 	int i;
 	int size = targets.size;
 	println(outputStream);	
+	appendStringAndDec(outputStream, "targetHandledCount:", targets.targetHandledCount);
+	println(outputStream);
 	for (i = 0; i < size; i++) {
 		GameTarget* target = targets.targets[i];
 		printGameTarget(outputStream, target, TRUE);
