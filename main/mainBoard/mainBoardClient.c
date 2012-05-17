@@ -1,5 +1,6 @@
 #include <i2c.h>
 #include <stdlib.h>
+#include <math.h>
 
 #include "mainBoardClient.h"
 
@@ -27,6 +28,8 @@
 #include "../../common/log/logHandler.h"
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
+
+#include "../../common/math/cenMath.h"
 
 #include "../../common/pwm/pwmPic.h"
 
@@ -97,6 +100,7 @@
 #include "../../drivers/test/driverTest.h"
 #include "../../drivers/system/systemDriver.h"
 #include "../../drivers/motion/motionDriver.h"
+#include "../../drivers/motion/trajectoryDriver.h"
 #include "../../drivers/motor/md22.h"
 #include "../../drivers/driverTransmitter.h"
 #include "../../drivers/strategy/strategyDriver.h"
@@ -247,6 +251,7 @@ void mainBoardCallbackRawData(const Device* device,
 		unsigned int angle = readHex4(inputStream);
 
 		updateRobotPosition(x, y, angle);
+		setRobotPositionChanged();
 		
 		// FOR DEBUG AND MOTHER BOARD
 		OutputStream* outputStream = &(compositePcAndDebugOutputStream.outputStream);
@@ -355,6 +360,24 @@ void initDevicesDescriptor() {
 	infraredDetectorDevice->deviceHandleCallbackRawData = &mainBoardCallbackRawData;
 }
 
+BOOL isObstacleOutsideTheTable(int distance) {
+	float a = getRobotAngle() * (PI / 1800.0);
+	float dca = cosf(a) * distance;
+	float dsa = sinf(a) * distance;
+	int obstacleX = getRobotPositionX() + dca;
+	int obstacleY = getRobotPositionY() + dsa;
+
+	int BORDER_THRESHOLD = 150;
+
+	if (obstacleX < BORDER_THRESHOLD || obstacleX > GAME_BOARD_WIDTH - BORDER_THRESHOLD) {
+		return TRUE;
+	}
+	if (obstacleY < BORDER_THRESHOLD || obstacleY > GAME_BOARD_HEIGHT - BORDER_THRESHOLD) {
+		return TRUE;
+	}
+	return FALSE;
+}
+
 void waitForInstruction() {
     // Listen instruction from pcStream->Devices
     handleStreamInstruction(
@@ -375,13 +398,9 @@ void waitForInstruction() {
     // Listen instructions from Devices (I2C Slave) -> Main Board (I2C Master)
 	while (handleNotificationFromDispatcherList(TRANSMIT_I2C)) {
 		// loop for all notification
-		// time that a notification
+		// notification handler must avoid to directly information in notification callback
+		// and never to the call back device
 	}
-	/*
-    if (handleNotificationFromDispatcherList(TRANSMIT_I2C)) {
-        appendString(getOutputStreamLogger(INFO), "\nHandle Notification !\n");
-	}
-	*/
 
 	// Notify to the strategy board the position of the robot
 	if (isRobotPositionChanged()) {
@@ -390,23 +409,23 @@ void waitForInstruction() {
 	}
 
 	if (mustNotifyObstacle) {
-        appendString(getOutputStreamLogger(INFO), "\nObstacle !\n");
 		mustNotifyObstacle = FALSE;
-		// Send information to Strategy Board
-		stopRobotObstacle();
-		// we are ready for next motion (next loop)
-        // setReadyForNextMotion(TRUE);
+		// Obtain robot position
+		// Ask the robot position from the MOTOR BOARD
+		trajectoryDriverUpdateRobotPosition();
+
+		// compute the obstacle position. If it's outside the table, does nothing
+		if (isObstacleOutsideTheTable(300.0f)) {
+	        appendString(getOutputStreamLogger(INFO), "\nObstacle OUT side the Table!\n");
+		}
+		else {
+	        appendString(getOutputStreamLogger(INFO), "\nObstacle !\n");
+			// Send information to Strategy Board
+			stopRobotObstacle();
+			// we are ready for next motion (next loop)
+	        setReadyForNextMotion(TRUE);
+		}
 	}
-
-	/*
-    delaymSec(10);
-
-    if (notifyObstacle()) {
-        appendString(getOutputStreamLogger(ALWAYS), "Obstacle !\n");
-        // setRobotMustStop(TRUE);
-		stopRobotObstacle();
-    }
-	*/
 
 	// Notify strategy board of opponent Robot Position
 	updateOpponentRobotIfNecessary();
