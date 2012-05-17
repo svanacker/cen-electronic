@@ -12,6 +12,8 @@
 /** Define the message sent to the PC to PIC reset. */
 #define MESSAGE_TO_PC_START "s"
 
+/** Define the message used to work in step by step mode. */
+#define COMMAND_STEP_BY_STEP 	'o'
 
 /**
  * The interface for the device StartMatchDetectorDevice.

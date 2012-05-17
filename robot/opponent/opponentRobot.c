@@ -16,7 +16,7 @@ static BOOL mustAskLastOpponentRobotPosition;
 /** To distinguish every Timer. */
 #define OPPONENT_ROBOT_TIMER_INDEX			5
 
-void opponentRobotCallbackFunc(void) {
+void opponentRobotCallbackFunc() {
 	mustAskLastOpponentRobotPosition = TRUE;
 }
 
@@ -28,7 +28,7 @@ void initOpponentRobot() {
     // Timer for detector
     addTimer(OPPONENT_ROBOT_TIMER_INDEX,
             TIME_DIVISER_2_HERTZ,
-            opponentRobotCallbackFunc);
+            &opponentRobotCallbackFunc);
 }
 
 void updateOpponentRobotIfNecessary() {

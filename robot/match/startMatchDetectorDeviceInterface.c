@@ -13,6 +13,13 @@ unsigned int getStartMatchDetectorSoftwareRevision() {
 
 int deviceStartMatchDetectorGetInterface(char header, int mode,
         BOOL fillDeviceArgumentList) {
+	if (header == COMMAND_STEP_BY_STEP) {
+		// same input / output
+		if (fillDeviceArgumentList) {
+			setFunctionNoArgument("stepByStep");
+		}
+		return 0;
+    }
     /*
     if (mode == DEVICE_MODE_OUTPUT) {
             if (header == COMMAND_NOTIFY_MATCH_STARTED) {

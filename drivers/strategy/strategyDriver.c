@@ -17,6 +17,18 @@
 #include "../../drivers/driverList.h"
 #include "../../drivers/driverTransmitter.h"
 
+#include "../../robot/opponent/opponentRobot.h"
+
+void robotNextStep() {
+	Point* opponentRobotPosition = getLastOpponentRobotPosition();
+
+	// Send strategy opponent Robot position
+	sendStrategyOpponentRobotPosition(opponentRobotPosition );
+
+ 	// Send next Step
+ 	sendStrategyNextStep();
+}
+
 BOOL sendStrategyConfiguration(int configuration) {
 	appendString(getOutputStreamLogger(INFO), "sendStrategyConfiguration\n");
 

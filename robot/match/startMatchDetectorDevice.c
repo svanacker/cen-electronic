@@ -19,6 +19,10 @@
 #include "../../common/log/logger.h"
 
 #include "../../device/device.h"
+
+#include "../../drivers/strategy/strategyDriver.h"
+
+
 #include "../../robot/config/robotConfigDevice.h"
 
 void initStartMatchDetector() {
@@ -63,6 +67,11 @@ void showStarted(OutputStream* pcOutputStream) {
 void deviceStartMatchDetectorHandleRawData(char header,
         InputStream* inputStream,
         OutputStream* outputStream) {
+    if (header == COMMAND_STEP_BY_STEP) {
+        appendAck(outputStream);
+		robotNextStep();
+        append(outputStream, COMMAND_STEP_BY_STEP);
+    }
 }
 
 // Allocate memory

@@ -145,13 +145,8 @@ void takeLintelLeft(int color) {
 }
 
 void strategyBoard() {
-	Point* opponentRobotPosition = getLastOpponentRobotPosition();
-	if (opponentRobotPosition ->x != 0 && opponentRobotPosition ->y != 0) {
-		sendStrategyOpponentRobotPosition(opponentRobotPosition );
-	}
-	
 	// Send next Step
-	sendStrategyNextStep();
+	robotNextStep();
 }
 
 // ----------------------------------------------------------- Homologation 1 ---------------------------------------------------------

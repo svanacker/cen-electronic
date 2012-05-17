@@ -7,6 +7,11 @@
 #include "../driver.h"
 
 /**
+ * Do all call to do the next step.
+ */
+void robotNextStep();
+
+/**
 * Send to the strategy board the configuration.
 */
 BOOL sendStrategyConfiguration(int configuration);
