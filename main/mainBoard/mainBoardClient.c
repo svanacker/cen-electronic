@@ -123,6 +123,7 @@
 // Robot 2012
 #include "../../robot/2012/homologation2012.h"
 #include "../../robot/2012/armDeviceInterface2012.h"
+#include "../../robot/2012/armDriver2012.h"
 
 // Other boards interface
 #include "../../main/motorBoard/motorBoard.h"
@@ -220,7 +221,10 @@ OutputStream* getPcOutputStream() {
 }
 
 // Obstacle management
-BOOL mustNotifyObstacle;
+static BOOL mustNotifyObstacle;
+
+// Specific 2012
+static BOOL armOpen;
 
 /**
  * Call-back when Data send some notification message (like Position Reached, Position failed ...)
@@ -276,7 +280,8 @@ void mainBoardCallbackRawData(const Device* device,
 	} 
 	// When Strategy ask by notification message to arm up or Down
 	else if (header == COMMAND_ARM_2012_UP || header == COMMAND_ARM_2012_DOWN) {
-	    appendString(getOutputStreamLogger(INFO), "\nNotification : From STRATEGY BOARD : relayed to MECHANICAL BOARD :\n");
+	    armOpen = (header == COMMAND_ARM_2012_DOWN);
+		appendString(getOutputStreamLogger(INFO), "\nNotification : From STRATEGY BOARD : relayed to MECHANICAL BOARD :\n");
 
 		forwardCallbackRawDataTo(inputStream, &(compositeDriverAndDebugOutputStream.outputStream), device, header, DEVICE_MODE_INPUT);
 		transmitFromDriverRequestBuffer();
@@ -422,6 +427,8 @@ void waitForInstruction() {
 	        appendString(getOutputStreamLogger(INFO), "\nObstacle !\n");
 			// Send information to Strategy Board
 			stopRobotObstacle();
+			armDriver2012Up(ARM_LEFT);
+            armDriver2012Up(ARM_RIGHT);
 			// we are ready for next motion (next loop)
 	        setReadyForNextMotion(TRUE);
 		}
