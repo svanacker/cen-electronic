@@ -87,6 +87,8 @@ void printPath(OutputStream* outputStream, PathDataFunction* pathDataFunction) {
 
 	appendStringAndDec(outputStream, ", accFactor=", tmpPathData.accelerationFactor);
 	appendStringAndDec(outputStream, ", speedFactor=", tmpPathData.speedFactor);
+	appendString(outputStream, ", mustGoBackward=");
+	appendString(outputStream, (tmpPathData.mustGoBackward) ? "TRUE" : "FALSE");
 
 	println(outputStream);
 }
