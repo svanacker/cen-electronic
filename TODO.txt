@@ -1,7 +1,8 @@
 SV : Configuration correcte des constantes => à regrouper dans un seul fichier => Le robot essaie en reculant d'aller de Left -> Bullion
 SV/EZ : Strategy Board : Clearer le LastObstacle avec un Timer ou un certain nombre de NextStep
 SV : Remettre le NextStep en cas de collision
-SV : Gestion activation / désactivation du sonar
+SV : Gestion activation / désactivation du sonar 
+Reboot sur HandleTrajectory
 
                     
 * Faire un recu pour JLB
@@ -17,6 +18,7 @@ P2
 
 NEXT YEAR
 
+* Faire des supports de balises à hauteur pour les tests d'évitements
 * Harmoniser la gestion des Sonars / GP2D12 notamment la gestion du filtrage / distance (tableaux, seuils)
 * Améliorer la vitesse d'écriture sur le LCD / centraliser les delay(5)
 * Faire la gestion de la manoeuvre de recalibrage 
