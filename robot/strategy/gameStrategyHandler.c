@@ -199,7 +199,10 @@ void rotateAbsolute(int angle) {
 		appendStringAndDec(getOutputStreamLogger(DEBUG), "rotateAbsolute:angle:", diff);	
 		appendString(getOutputStreamLogger(DEBUG), " ddeg\n");
 	#endif
-
+	if (diff == 0) {
+		// instruction with 0 does not notify position.
+		diff = 1;
+	}
 	if (diff > 0) {
 		motionDriverLeft(diff);
 	} else {
