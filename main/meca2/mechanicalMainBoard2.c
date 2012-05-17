@@ -193,9 +193,16 @@ int main(void) {
 	upArm(ARM_RIGHT);
 
 	while (1) {
-		if (getRobotInfraredObstacle()) {
-			notifyInfraredDetectorDetection();
-			appendString(getOutputStreamLogger(ALWAYS), "\nObstacle, wait few seconds For New Notification !\n");
+		// Forward Obstacle
+		if (getRobotInfraredObstacleForward()) {
+			notifyInfraredDetectorDetection(DETECTOR_FORWARD_INDEX);
+			appendString(getOutputStreamLogger(ALWAYS), "\nForward Obstacle, wait few seconds For New Notification !\n");
+		}
+
+		// Backward Obstacle
+		if (getRobotInfraredObstacleBackward()) {
+			notifyInfraredDetectorDetection(DETECTOR_BACKWARD_INDEX);
+			appendString(getOutputStreamLogger(ALWAYS), "\nBackward Obstacle, wait few seconds For New Notification !\n");
 		}
 
 		// I2C Stream

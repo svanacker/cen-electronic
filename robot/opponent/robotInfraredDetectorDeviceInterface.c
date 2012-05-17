@@ -15,9 +15,10 @@ int deviceRobotInfraredDetectorGetInterface(char header, int mode, BOOL fillDevi
 	if (header == COMMAND_INFRARED_DETECTOR_DETECTION) {
 	    if (mode == DEVICE_MODE_INPUT) {
             if (fillDeviceArgumentList) {
-				setFunctionNoArgument("infraredDetector");
+				setFunction("infraredDetector", 1);
+				setArgumentUnsignedHex2(0, "backward/forward");
             }
-            return 0;
+            return 2;
 	    } else if (mode == DEVICE_MODE_OUTPUT) {
             if (fillDeviceArgumentList) {
 				setFunction("infraredDetector", 1);
@@ -30,9 +31,10 @@ int deviceRobotInfraredDetectorGetInterface(char header, int mode, BOOL fillDevi
 	else if (header == NOTIFY_INFRARED_DETECTOR_DETECTION) {
 	    if (mode == DEVICE_MODE_OUTPUT) {
             if (fillDeviceArgumentList) {
-				setFunctionNoArgument("notifyInfraredDetector");
+				setFunction("notifyInfraredDetector", 1);
+				setArgumentUnsignedHex2(0, "backward/forward");
             }
-            return 0;
+            return 2;
 		// Input Mode is not used (notification)
 	    } else if (mode == DEVICE_MODE_INPUT) {
             if (fillDeviceArgumentList) {

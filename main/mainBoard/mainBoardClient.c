@@ -222,6 +222,13 @@ OutputStream* getPcOutputStream() {
 
 // Obstacle management
 static BOOL mustNotifyObstacle;
+static unsigned int instructionType;
+
+#define INSTRUCTION_TYPE_NO_MOVE		0
+#define INSTRUCTION_TYPE_FORWARD		1
+#define INSTRUCTION_TYPE_BACKWARD		2
+#define INSTRUCTION_TYPE_ROTATION		3
+
 
 // Specific 2012
 static BOOL armOpen;
@@ -235,7 +242,7 @@ void mainBoardCallbackRawData(const Device* device,
 
 //    if (header == NOTIFY_MOTION_STATUS || header == COMMAND_NOTIFY_TEST || header == COMMAND_PLIERS_2011_OPEN) {
 	// MOTOR BOARD notification
-    if (header == NOTIFY_MOTION_STATUS || header == COMMAND_NOTIFY_TEST) {
+    if (header == NOTIFY_MOTION_STATUS) {
 	    appendString(getOutputStreamLogger(INFO), "\nNotification : From MOTOR BOARD \n");
 		// NOTIFY_MOTION_STATUS / COMMAND_NOTIFY_TEST
 		checkIsChar(inputStream, header);
@@ -259,6 +266,7 @@ void mainBoardCallbackRawData(const Device* device,
 		
 		// FOR DEBUG AND MOTHER BOARD
 		OutputStream* outputStream = &(compositePcAndDebugOutputStream.outputStream);
+		append(outputStream, header);
 		appendHex2(outputStream, status);
 		appendSeparator(outputStream);
 		appendHex4(outputStream, x);
@@ -269,12 +277,77 @@ void mainBoardCallbackRawData(const Device* device,
 
         // ready for next motion instruction Index
         setReadyForNextMotion(TRUE);
+		// Robot finished the trajectory
+		instructionType = INSTRUCTION_TYPE_NO_MOVE;
     }
 	// STRATEGY BOARD notification message of MOTOR => Must be relayed TO MOTOR
-	else if (header == COMMAND_MOTION_SPLINE_ABSOLUTE || header == COMMAND_MOTION_SPLINE_RELATIVE 
-			 || header == COMMAND_MOTION_LEFT_IN_DECI_DEGREE || header == COMMAND_MOTION_RIGHT_IN_DECI_DEGREE) {
-	    appendString(getOutputStreamLogger(INFO), "Notification : From STRATEGY BOARD : relayed to MOTOR_BOARD \n");
+	else if (header == COMMAND_MOTION_SPLINE_ABSOLUTE || header == COMMAND_MOTION_SPLINE_RELATIVE) {
+	    appendString(getOutputStreamLogger(INFO), "Notification : Spline : From STRATEGY BOARD : relayed to MOTOR_BOARD \n");
+		appendStringAndDec(getOutputStreamLogger(INFO), "getDriverResponseBuffer:", getBufferElementsCount(getDriverResponseBuffer()));
+		// forwardCallbackRawDataTo(inputStream, &debugOutputStream, device, header, DEVICE_MODE_INPUT);
+		OutputStream* outputStream = &(compositeDriverAndDebugOutputStream.outputStream);
+		// OutputStream* outputStream = &debugOutputStream;
 
+		readHex(inputStream);
+		// appendString(outputStream, ",header=");
+		append(outputStream, header);
+
+		float x = readHex4(inputStream);
+		// appendString(outputStream, ",x=");
+		appendHex4(outputStream, x);
+
+		checkIsChar(inputStream, '-');
+		appendSeparator(outputStream);
+
+		float y = readHex4(inputStream);
+		// appendString(outputStream, ",y=");
+		appendHex4(outputStream, y);
+
+		checkIsChar(inputStream, '-');
+		appendSeparator(outputStream);
+
+		float angle = readHex4(inputStream);
+		// appendString(outputStream, ",angle=");
+		appendHex4(outputStream, angle);
+
+		checkIsChar(inputStream, '-');
+		appendSeparator(outputStream);
+
+		signed char dist0 = readHex2(inputStream);
+		// appendString(outputStream, ",dist0=");
+		appendHex2(outputStream, dist0);
+
+		checkIsChar(inputStream, '-');
+		appendSeparator(outputStream);
+
+		signed char dist1 = readHex2(inputStream);
+		// appendString(outputStream, ",dist1=");
+		appendHex2(outputStream, dist1);
+
+		checkIsChar(inputStream, '-');
+		appendSeparator(outputStream);
+
+		signed char a = readHex(inputStream);
+		// appendString(outputStream, ",a=");
+		appendHex(outputStream, a);
+
+		signed char s = readHex(inputStream);
+		// appendString(outputStream, ",s=");
+		appendHex(outputStream, s);
+	
+		if (dist0 < 0) {
+		    appendString(getOutputStreamLogger(INFO), "\nMotion Backward !");
+			instructionType = INSTRUCTION_TYPE_BACKWARD;
+		}
+		else {
+		    appendString(getOutputStreamLogger(INFO), "\nMotion Forward !");
+			instructionType = INSTRUCTION_TYPE_FORWARD;
+		}		
+		// forwardCallbackRawDataTo(inputStream, &(compositeDriverAndDebugOutputStream.outputStream), device, header, DEVICE_MODE_INPUT);
+		transmitFromDriverRequestBuffer();
+	} else if (header == COMMAND_MOTION_LEFT_IN_DECI_DEGREE || header == COMMAND_MOTION_RIGHT_IN_DECI_DEGREE) {
+	    appendString(getOutputStreamLogger(INFO), "Notification : Rotation : From STRATEGY BOARD : relayed to MOTOR_BOARD \n");
+		instructionType = INSTRUCTION_TYPE_ROTATION;
 		forwardCallbackRawDataTo(inputStream, &(compositeDriverAndDebugOutputStream.outputStream), device, header, DEVICE_MODE_INPUT);
 		transmitFromDriverRequestBuffer();
 	} 
@@ -282,16 +355,29 @@ void mainBoardCallbackRawData(const Device* device,
 	else if (header == COMMAND_ARM_2012_UP || header == COMMAND_ARM_2012_DOWN) {
 	    armOpen = (header == COMMAND_ARM_2012_DOWN);
 		appendString(getOutputStreamLogger(INFO), "\nNotification : From STRATEGY BOARD : relayed to MECHANICAL BOARD :\n");
+		instructionType = INSTRUCTION_TYPE_NO_MOVE;
 
 		forwardCallbackRawDataTo(inputStream, &(compositeDriverAndDebugOutputStream.outputStream), device, header, DEVICE_MODE_INPUT);
 		transmitFromDriverRequestBuffer();
 		// we are ready for next motion
         setReadyForNextMotion(TRUE);
 	} 
+	// Mechanical Board notification
 	else if (header == NOTIFY_INFRARED_DETECTOR_DETECTION) {
 	    appendString(getOutputStreamLogger(INFO), "\nNotification : From MECHANICAL BOARD :\n");
-		forwardCallbackRawDataTo(inputStream, getOutputStreamLogger(INFO), device, header, DEVICE_MODE_INPUT);
-		mustNotifyObstacle = TRUE;
+		checkIsChar(inputStream, NOTIFY_INFRARED_DETECTOR_DETECTION);
+		// type
+		unsigned char type = readHex2(inputStream);
+		OutputStream* outputStream = &(compositePcAndDebugOutputStream.outputStream);
+		append(outputStream, NOTIFY_INFRARED_DETECTOR_DETECTION);
+		appendHex2(outputStream, type);
+		// Notify only if we are in a compatible move !
+		if ((instructionType == INSTRUCTION_TYPE_BACKWARD) && (type == DETECTOR_BACKWARD_INDEX)) {
+			mustNotifyObstacle = TRUE;
+		}
+		else if ((instructionType == INSTRUCTION_TYPE_FORWARD) && (type == DETECTOR_FORWARD_INDEX)) {
+			mustNotifyObstacle = TRUE;
+		}
 	}
 	// Cannot not handle the notification !
 	else {
@@ -431,7 +517,13 @@ void waitForInstruction() {
 		trajectoryDriverUpdateRobotPosition();
 
 		// compute the obstacle position. If it's outside the table, does nothing
-		if (isObstacleOutsideTheTable(300.0f)) {
+		int obstacleDistance = 300.0f;
+        appendStringAndDec(getOutputStreamLogger(INFO), "\nInstruction Type:", instructionType);
+
+		if (instructionType == INSTRUCTION_TYPE_BACKWARD) {
+			obstacleDistance = -obstacleDistance;
+		}
+		if (isObstacleOutsideTheTable(obstacleDistance)) {
 	        appendString(getOutputStreamLogger(INFO), "\nObstacle OUT side the Table!\n");
 		}
 		else {

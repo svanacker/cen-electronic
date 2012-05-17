@@ -66,7 +66,7 @@ void forwardCallbackRawDataTo(InputStream* inputStream,
         int header,
 		int mode) {
     DeviceInterface* deviceInterface = device->interface;
-    // Length = data of output from the message and add the length of message (1)
+    // Length = data of output from the message and add the length of header message (1)
     int dataLength = deviceInterface->deviceGetInterface(header, mode, FALSE) + 1;
 
     copyInputToOutputStream(inputStream, outputStream, NULL, dataLength);

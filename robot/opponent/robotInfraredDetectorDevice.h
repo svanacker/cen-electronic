@@ -5,8 +5,9 @@
 
 /**
  * Notify to I2C and UART a detection via Infrared Detector.
+ * @param type FORWARD / BACKWARD
  */
-void notifyInfraredDetectorDetection();
+void notifyInfraredDetectorDetection(int type);
 
 /**
  * The descriptor for the robot Infrared Detector device.

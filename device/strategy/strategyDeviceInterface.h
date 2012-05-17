@@ -13,7 +13,7 @@
 #define COMMAND_STRATEGY_NEXT_STEP						'Q'
 
 /** Set the strategy the current position of the robot. */
-#define COMMAND_STRATEGY_SET_ROBOT_POSITION		']'
+#define COMMAND_STRATEGY_SET_ROBOT_POSITION				']'
 
 /**
 * Interface for Device

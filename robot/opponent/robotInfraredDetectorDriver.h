@@ -5,7 +5,11 @@
 
 #include "robotInfraredDetectorDeviceInterface.h"
 
-BOOL robotInfraredDetectorHasObstacle();
+/**
+ * Return TRUE, if there is an obstacle
+ * @param type BACKWARD / FORWARD
+ */
+BOOL robotInfraredDetectorHasObstacle(unsigned char type);
 
 #endif
 
