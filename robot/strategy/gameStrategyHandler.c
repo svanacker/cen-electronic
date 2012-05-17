@@ -184,6 +184,32 @@ int mod3600(int value) {
 	return value;
 }
 
+void rotateAbsolute(int angle) {
+	angle = changeAngleForColor(angle);
+	GameStrategyContext* strategyContext = getStrategyContext();
+	int robotAngle = strategyContext->robotAngle;
+	int diff = mod3600(angle - robotAngle);
+	if (abs(diff) < ANGLE_ROTATION_MIN) {
+		return;
+	}
+
+	#ifdef DEBUG_STRATEGY_HANDLER
+		appendStringAndDec(getOutputStreamLogger(DEBUG), "rotateAbsolute:angle:", diff);	
+		appendString(getOutputStreamLogger(DEBUG), " ddeg\n");
+	#endif
+
+	if (diff > 0) {
+		motionDriverLeft(diff);
+	} else {
+		motionDriverRight(-diff);
+	}
+
+	// Simulate as if the robot goes to the position with a small error
+	#ifdef SIMULATE_ROBOT
+		strategyContext->robotAngle += diff;
+	#endif
+}
+
 BOOL motionRotateToFollowPath(PathDataFunction* pathDataFunction, BOOL reversed) {
 	pathDataFunction();
 
@@ -284,6 +310,8 @@ BOOL handleCurrentTrajectory() {
 	Location* end = getLocation(currentTrajectory, 1);
 	BOOL reversed;
 	PathDataFunction* pathDataFunction = getPathOfLocations(getNavigationPathList(), start, end, &reversed);
+
+	// Follows the path
 	if (!motionRotateToFollowPath(pathDataFunction, reversed)) {
 		motionFollowPath(pathDataFunction, reversed);
 		removeFirstLocation(currentTrajectory);

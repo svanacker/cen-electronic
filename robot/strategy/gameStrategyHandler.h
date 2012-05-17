@@ -54,6 +54,8 @@ void handleCollision();
 
 // MOTION
 
+void rotateAbsolute(int angle);
+
 /**
  * Ask to follow a path.
  */

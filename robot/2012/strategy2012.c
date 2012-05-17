@@ -93,7 +93,7 @@ static GameTarget bottle2Target;
 static GameTarget cd4Target;
 static GameTarget bullionRight1Target;
 static GameTarget bullionLeft1Target;
-static GameTarget opponentCDTarget;
+//static GameTarget opponentCDTarget;
 
 // ------------------------------------------------------- TARGETS ACTIONS ---------------------------------------------------------------
 
@@ -118,12 +118,14 @@ static GameTargetActionItem cdTakeStep2TargetActionItem;
 
 // -> BULLION RIGHT 1
 static GameTargetActionItemList bullionRight1ActionItemList; 
+static GameTargetActionItem bullionRight1Step1RotateTargetActionItem;
 static GameTargetActionItem bullionRight1Step2OpenPlierTargetActionItem;
 static GameTargetActionItem bullionRight1Step3GoTargetActionItem;
 static GameTargetActionItem bullionRight1Step4ClosePlierTargetActionItem;
 
 // -> BULLION LEFT 1
 static GameTargetActionItemList bullionLeft1ActionItemList; 
+static GameTargetActionItem bullionLeft1Step1RotateTargetActionItem;
 static GameTargetActionItem bullionLeft1Step2OpenPlierTargetActionItem;
 static GameTargetActionItem bullionLeft1Step3GoTargetActionItem;
 static GameTargetActionItem bullionLeft1Step4ClosePlierTargetActionItem;
@@ -143,7 +145,7 @@ static GameStrategyItem bottle2StrategyItem;
 static GameStrategyItem cdTakeStrategyItem;
 static GameStrategyItem bullionRight1StrategyItem;
 static GameStrategyItem bullionLeft1StrategyItem;
-static GameStrategyItem opponentCDStrategyItem;
+//static GameStrategyItem opponentCDStrategyItem;
 
 // ------------------------------------------------------- INITIALIZATION ------------------------------------------------------------
 
@@ -274,8 +276,13 @@ void initPaths2012(int index) {
 	// frontBottle2->CD
 	// frontBottle2->OR4
 
+	// OL1->OL2
 	void obstacleL1ToObstacleL2PathFunction() { fillPathData(&obstacleL1Location, &obstacleL2Location, OBSTACLE_L1_TO_L2_COST, 0x0A, 0x0A, ANGLE_90, ANGLE_90, OBSTACLE_L1_TO_L2_SPEED_FACTOR, OBSTACLE_L1_TO_L2_ACCELERATION_FACTOR);}
 	addNavigationPath(&obstacleL1ToObstacleL2PathFunction);
+
+	// OL1->OL4
+	void obstacleL1ToObstacleL4PathFunction() { fillPathData(&obstacleL1Location, &obstacleL4Location, OBSTACLE_L1_TO_L4_COST, 0x0A, 0x0A, ANGLE_90, ANGLE_90, OBSTACLE_L1_TO_L4_SPEED_FACTOR, OBSTACLE_L1_TO_L4_ACCELERATION_FACTOR);}
+	addNavigationPath(&obstacleL1ToObstacleL4PathFunction);
 
 	void obstacleL2ToObstacleL3PathFunction() { fillPathData(&obstacleL2Location, &obstacleL3Location, OBSTACLE_L2_TO_L3_COST, 0x0A, 0x0A, ANGLE_90, ANGLE_90, OBSTACLE_L2_TO_L3_SPEED_FACTOR, OBSTACLE_L2_TO_L3_ACCELERATION_FACTOR);}
 	addNavigationPath(&obstacleL2ToObstacleL3PathFunction);
@@ -283,14 +290,24 @@ void initPaths2012(int index) {
 	void obstacleL3ToObstacleL4PathFunction() { fillPathData(&obstacleL3Location, &obstacleL4Location, OBSTACLE_L3_TO_L4_COST, 0x0A, 0x0A, ANGLE_90, ANGLE_90, OBSTACLE_L3_TO_L4_SPEED_FACTOR, OBSTACLE_L3_TO_L4_ACCELERATION_FACTOR);}
 	addNavigationPath(&obstacleL3ToObstacleL4PathFunction);
 
+	// OL4->OM2
 	void obstacleL4ToObstacleM2PathFunction() { fillPathData(&obstacleL4Location, &obstacleM2Location, OBSTACLE_L4_TO_M2_COST, 0x0A, 0x0A, 0, 0, OBSTACLE_L4_TO_M2_SPEED_FACTOR, OBSTACLE_L4_TO_M2_ACCELERATION_FACTOR);}
 	addNavigationPath(&obstacleL4ToObstacleM2PathFunction);
+
+	// OL4->OR4
+	void obstacleL4ToObstacleR4PathFunction() { fillPathData(&obstacleL4Location, &obstacleR4Location, OBSTACLE_L4_TO_R4_COST, 0x0A, 0x0A, 0, 0, OBSTACLE_L4_TO_R4_SPEED_FACTOR, OBSTACLE_L4_TO_R4_ACCELERATION_FACTOR);}
+	addNavigationPath(&obstacleL4ToObstacleR4PathFunction);
 
 	void obstacleM2ToObstacleR4PathFunction() { fillPathData(&obstacleM2Location, &obstacleR4Location, OBSTACLE_M2_TO_R4_COST, 0x0A, 0x0A, 0, 0, OBSTACLE_M2_TO_R4_SPEED_FACTOR, OBSTACLE_M2_TO_R4_ACCELERATION_FACTOR);}
 	addNavigationPath(&obstacleM2ToObstacleR4PathFunction);
 
+	// OR4->OR3
 	void obstacleR4ToObstacleR3PathFunction() { fillPathData(&obstacleR4Location, &obstacleR3Location, OBSTACLE_R4_TO_R3_COST, 0x0A, 0x0A, ANGLE_NEG_90, ANGLE_NEG_90, OBSTACLE_R4_TO_R3_SPEED_FACTOR, OBSTACLE_R4_TO_R3_ACCELERATION_FACTOR);}
 	addNavigationPath(&obstacleR4ToObstacleR3PathFunction);
+
+	// OR4->OR1
+	void obstacleR4ToObstacleR1PathFunction() { fillPathData(&obstacleR4Location, &obstacleR1Location, OBSTACLE_R4_TO_R1_COST, 0x0A, 0x0A, ANGLE_NEG_90, ANGLE_NEG_90, OBSTACLE_R4_TO_R1_SPEED_FACTOR, OBSTACLE_R4_TO_R1_ACCELERATION_FACTOR);}
+	addNavigationPath(&obstacleR4ToObstacleR1PathFunction);
 
 	void obstacleR3ToObstacleR2PathFunction() { fillPathData(&obstacleR3Location, &obstacleR2Location, OBSTACLE_R3_TO_R2_COST, 0x0A, 0x0A, ANGLE_NEG_90, ANGLE_NEG_90, OBSTACLE_R3_TO_R2_SPEED_FACTOR, OBSTACLE_R3_TO_R2_ACCELERATION_FACTOR);}
 	addNavigationPath(&obstacleR3ToObstacleR2PathFunction);
@@ -298,8 +315,13 @@ void initPaths2012(int index) {
 	void obstacleR2ToObstacleR1PathFunction() { fillPathData(&obstacleR2Location, &obstacleR1Location, OBSTACLE_R2_TO_R1_COST, 0x0A, 0x0A, ANGLE_NEG_90, ANGLE_NEG_90, OBSTACLE_R2_TO_R1_SPEED_FACTOR, OBSTACLE_R2_TO_R1_ACCELERATION_FACTOR);}
 	addNavigationPath(&obstacleR2ToObstacleR1PathFunction);
 
+	// OR1->OM1
 	void obstacleR1ToObstacleM1PathFunction() { fillPathData(&obstacleR1Location, &obstacleM1Location, OBSTACLE_R1_TO_M1_COST, 0x0A, 0x0A, ANGLE_180, ANGLE_180, OBSTACLE_R1_TO_M1_SPEED_FACTOR, OBSTACLE_R1_TO_M1_ACCELERATION_FACTOR);}
 	addNavigationPath(&obstacleR1ToObstacleM1PathFunction);
+
+	// OR1->OL1
+	void obstacleR1ToObstacleL1PathFunction() { fillPathData(&obstacleR1Location, &obstacleL1Location, OBSTACLE_R1_TO_L1_COST, 0x0A, 0x0A, ANGLE_180, ANGLE_180, OBSTACLE_R1_TO_L1_SPEED_FACTOR, OBSTACLE_R1_TO_L1_ACCELERATION_FACTOR);}
+	addNavigationPath(&obstacleR1ToObstacleL1PathFunction);
 
 	// OM1->OL1
 	void obstacleM1ToObstacleL1PathFunction() { fillPathData(&obstacleM1Location, &obstacleL1Location, OBSTACLE_M1_TO_L1_COST, 0x0A, 0x0A, ANGLE_180, ANGLE_180, OBSTACLE_M1_TO_L1_SPEED_FACTOR, OBSTACLE_M1_TO_L1_ACCELERATION_FACTOR);}
@@ -399,6 +421,10 @@ void cdTakeStep2() {
 
 // Bullion Right 1 ActionItem
 
+void bullionRight1Rotate() {
+	rotateAbsolute(ANGLE_NEG_90);
+}
+
 void bullionRight1Step3GoToDropZone() {
 	motionGoLocation(&dropZone1Location,
 					 ANGLE_NEG_90, 
@@ -407,6 +433,10 @@ void bullionRight1Step3GoToDropZone() {
 }
 
 // Bullion Left 1 ActionItem
+
+void bullionLeft1Rotate() {
+	rotateAbsolute(ANGLE_NEG_90);
+}
 
 void bullionLeft1Step3GoToDropZone() {
 	motionGoLocation(&dropZone1Location,
@@ -422,7 +452,7 @@ void initTargetActions2012() {
 	clearTargetActionList(&(cd4Target.actionList));
 	clearTargetActionList(&(bullionRight1Target.actionList));
 	clearTargetActionList(&(bullionLeft1Target.actionList));
-	clearTargetActionList(&(opponentCDTarget.actionList));
+	//clearTargetActionList(&(opponentCDTarget.actionList));
 
 	addTargetAction(&(bullion1Target.actionList), &bullion1TargetAction, &bullion1Location, &bullion1Location, 2, NULL, NULL);
 	addTargetAction(&(bottle1Target.actionList), &bottle1TargetAction, &bottle1Location, &bottle1Location, 2, NULL, NULL);
@@ -444,11 +474,13 @@ void initTargetActionsItems2012() {
 
 	// RIGHT BULLION 1
 	// addTargetActionItem(&bullionRight1ActionItemList, &bullionRight1Step1BackTargetActionItem, &bullionRight1Step1Back, "bullionRight1Step1Back");
+	addTargetActionItem(&bullionRight1ActionItemList, &bullionRight1Step1RotateTargetActionItem, &bullionRight1Rotate, "rotate");
 	addTargetActionItem(&bullionRight1ActionItemList, &bullionRight1Step2OpenPlierTargetActionItem, &armRightDown, "armRightDown");
 	addTargetActionItem(&bullionRight1ActionItemList, &bullionRight1Step3GoTargetActionItem, &bullionRight1Step3GoToDropZone, "bullionRight1GoToDropZone1");
 	addTargetActionItem(&bullionRight1ActionItemList, &bullionRight1Step4ClosePlierTargetActionItem, &armRightUp, "armRightUp");
 
 	// LEFT BULLION 1
+	addTargetActionItem(&bullionLeft1ActionItemList, &bullionLeft1Step1RotateTargetActionItem, &bullionLeft1Rotate, "rotate");
 	addTargetActionItem(&bullionLeft1ActionItemList, &bullionLeft1Step2OpenPlierTargetActionItem, &armLeftDown, "armLeftDown");
 	addTargetActionItem(&bullionLeft1ActionItemList, &bullionLeft1Step3GoTargetActionItem, &bullionLeft1Step3GoToDropZone, "bullionLeft1GoToDropZone1");
 	addTargetActionItem(&bullionLeft1ActionItemList, &bullionLeft1Step4ClosePlierTargetActionItem, &armLeftUp, "armLeftUp");
