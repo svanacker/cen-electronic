@@ -32,6 +32,20 @@ inline void fillPathData(Location* location1,
 	tmpPathData.cost = cost;
 	tmpPathData.accelerationFactor = accelerationFactor;
 	tmpPathData.speedFactor = speedFactor;
+	tmpPathData.mustGoBackward = FALSE;
+}
+
+inline void fillAsymmetricPathData(Location* location1,
+					 Location* location2, 
+					 int cost,
+					 int controlPointDistance1,
+					 int controlPointDistance2,
+					 int angle1,
+					 int angle2,
+					 unsigned char accelerationFactor,
+					 unsigned char speedFactor) {
+	fillPathData(location1, location2, cost, controlPointDistance1, controlPointDistance2, angle1, angle2, accelerationFactor, speedFactor);
+	tmpPathData.mustGoBackward = TRUE;
 }
 
 

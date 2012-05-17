@@ -32,9 +32,25 @@ typedef struct PathData {
 	unsigned char accelerationFactor;
 	/** Speed factor (min = 1, max = 16). */
 	unsigned char speedFactor;
+	/** When reversed, the path must be done backward. */
+	BOOL mustGoBackward;
 } PathData;
 
 inline void fillPathData(Location* location1,
+						 Location* location2, 
+						 int cost,
+						 int controlPointDistance1,
+						 int controlPointDistance2,
+						 int angle1,
+						 int angle2,
+						 unsigned char accelerationFactor,
+						 unsigned char speedFactor);
+
+/** 
+ * Fills the data of an asymmetric path, a path on which 
+ * the robot must move backward when reversed.
+ */
+inline void fillAsymmetricPathData(Location* location1,
 						 Location* location2, 
 						 int cost,
 						 int controlPointDistance1,
