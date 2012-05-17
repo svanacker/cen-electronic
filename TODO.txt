@@ -1,13 +1,6 @@
-SV : Rajouter les chemins au plus court
 SV : Configuration correcte des constantes => à regrouper dans un seul fichier => Le robot essaie en reculant d'aller de Left -> Bullion
 SV : Mettre un GP2D12 vers l'arrière
-
-SV : Refaire fonctionner les balises de Beacon Receiver + gérer sous forme de notification et non 
-pas d'appel explicite avec un Timer !!!
-
 SV/EZ : Strategy Board : Clearer le LastObstacle avec un Timer ou un certain nombre de NextStep
-SV/EZ : Ajout tempo au niveau des servos sur abaissement des pinces
-SV : Augmenter bordure Outof board
                       
 * Faire un recu pour JLB
 * Imprimer le Poster
