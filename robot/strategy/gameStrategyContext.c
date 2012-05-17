@@ -65,7 +65,7 @@ void printGameStrategyContext(OutputStream* outputStream, GameStrategyContext* c
 	appendStringAndDec(outputStream, "\n\tstrategyIndex=", context->strategyIndex);
 	appendStringAndDec(outputStream, "\n\tmaxTargetToHandle=", context->maxTargetToHandle);
 
-	appendStringAndDec(outputStream, "\n\tmustDoNextStep=", context->mustDoNextStep);
+//	appendStringAndDec(outputStream, "\n\tmustDoNextStep=", context->mustDoNextStep);
 	appendStringAndDec(outputStream, "\n\thasMoreNextSteps=", context->hasMoreNextSteps);
 
 	println(outputStream);

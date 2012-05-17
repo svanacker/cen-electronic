@@ -445,6 +445,7 @@ BOOL nextStep() {
 		counter++;
 		#ifdef DEBUG_STRATEGY_HANDLER
 			appendStringAndDec(getOutputStreamLogger(DEBUG), "nextStep=>", counter);	
+			println(getOutputStreamLogger(DEBUG));
 		#endif
 		GameTargetAction* targetAction = strategyContext.currentTargetAction;
 	

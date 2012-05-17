@@ -240,10 +240,12 @@ int main(void) {
 								NULL);
 
 		GameStrategyContext* context = getStrategyContext();
+		/*
 		if (context->mustDoNextStep) {
 			context->hasMoreNextSteps = nextStep();
 			context->mustDoNextStep = FALSE;
-		}	
+		}
+		*/	
 	}
 	return (0);
 }

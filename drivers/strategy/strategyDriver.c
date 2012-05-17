@@ -18,6 +18,8 @@
 #include "../../drivers/driverTransmitter.h"
 
 BOOL sendStrategyConfiguration(int configuration) {
+	appendString(getOutputStreamLogger(INFO), "sendStrategyConfiguration\n");
+
     OutputStream* outputStream = getDriverRequestOutputStream();
 
     append(outputStream, COMMAND_STRATEGY_SET_CONFIG);
@@ -29,6 +31,8 @@ BOOL sendStrategyConfiguration(int configuration) {
 }
 
 BOOL sendStrategyNextStep() {
+	appendString(getOutputStreamLogger(INFO), "sendStrategyNextStep\n");
+
     OutputStream* outputStream = getDriverRequestOutputStream();
     InputStream* inputStream = getDriverResponseInputStream();
 
@@ -43,6 +47,8 @@ BOOL sendStrategyNextStep() {
 }
 
 BOOL sendStrategyOpponentRobotPosition(Point* opponentRobotPosition) {
+	appendString(getOutputStreamLogger(INFO), "sendStrategyOpponentRobotPosition\n");
+
     OutputStream* outputStream = getDriverRequestOutputStream();
 
     append(outputStream, COMMAND_STRATEGY_SET_OPPONENT_ROBOT_POSITION);
@@ -56,6 +62,8 @@ BOOL sendStrategyOpponentRobotPosition(Point* opponentRobotPosition) {
 }
 
 BOOL sentStrategyRobotPosition(unsigned char status, unsigned int x, unsigned int y, int angleInDeciDegree) {
+	appendString(getOutputStreamLogger(INFO), "sentStrategyRobotPosition\n");
+
     OutputStream* outputStream = getDriverRequestOutputStream();
 
     append(outputStream, COMMAND_STRATEGY_SET_ROBOT_POSITION);

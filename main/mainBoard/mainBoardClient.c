@@ -325,16 +325,16 @@ void initDevicesDescriptor() {
     addLocalDevice(getSonarDeviceInterface(), getSonarDeviceDescriptor());
     addLocalDevice(getRobotSonarDetectorDeviceInterface(), getRobotSonarDetectorDeviceDescriptor());
 
+    // Mechanical Board 2->I2C
+    Device* armDevice = addI2CRemoteDevice(getArm2012DeviceInterface(), MECHANICAL_BOARD_2_I2C_ADDRESS);
+    Device* infraredDetectorDevice = addI2CRemoteDevice(getRobotInfraredDetectorDeviceInterface(), MECHANICAL_BOARD_2_I2C_ADDRESS);
+
     // Motor Board->I2C
     addI2CRemoteDevice(getPIDDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
     addI2CRemoteDevice(getMotorDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
     addI2CRemoteDevice(getCodersDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
     Device* trajectoryDevice = addI2CRemoteDevice(getTrajectoryDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
     Device* motionDevice = addI2CRemoteDevice(getMotionDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
-
-    // Mechanical Board 2->I2C
-    Device* armDevice = addI2CRemoteDevice(getArm2012DeviceInterface(), MECHANICAL_BOARD_2_I2C_ADDRESS);
-    Device* infraredDetectorDevice = addI2CRemoteDevice(getRobotInfraredDetectorDeviceInterface(), MECHANICAL_BOARD_2_I2C_ADDRESS);
 
 
     // Beacon Receiver Board->I2C
@@ -372,25 +372,30 @@ void waitForInstruction() {
             &filterRemoveCRLF,
             NULL);
 
-	// Notify strategy board of opponent Robot Position
-	updateOpponentRobotIfNecessary();
-
     // Listen instructions from Devices (I2C Slave) -> Main Board (I2C Master)
-    handleNotificationFromDispatcherList(TRANSMIT_I2C);
+	while (handleNotificationFromDispatcherList(TRANSMIT_I2C)) {
+		// loop for all notification
+		// time that a notification
+	}
+	/*
+    if (handleNotificationFromDispatcherList(TRANSMIT_I2C)) {
+        appendString(getOutputStreamLogger(INFO), "\nHandle Notification !\n");
+	}
+	*/
 
 	// Notify to the strategy board the position of the robot
 	if (isRobotPositionChanged()) {
 		sentStrategyRobotPosition(0, getRobotPositionX(), getRobotPositionY(), getRobotAngle());
 		resetRobotPositionChanged();
 	}
-	
+
 	if (mustNotifyObstacle) {
         appendString(getOutputStreamLogger(INFO), "\nObstacle !\n");
 		mustNotifyObstacle = FALSE;
 		// Send information to Strategy Board
 		stopRobotObstacle();
 		// we are ready for next motion (next loop)
-        setReadyForNextMotion(TRUE);
+        // setReadyForNextMotion(TRUE);
 	}
 
 	/*
@@ -402,6 +407,9 @@ void waitForInstruction() {
 		stopRobotObstacle();
     }
 	*/
+
+	// Notify strategy board of opponent Robot Position
+	updateOpponentRobotIfNecessary();
 }
 
 int main(void) {

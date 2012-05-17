@@ -40,8 +40,9 @@ const Device* deviceDataDispatcherFindDevice(const char header, int dataLength, 
             return result;
         }
 		else {
-			// dataLength is not enough : we can return IMMEDIATELY
 			/*
+			// dataLength is not enough : we can return IMMEDIATELY
+			appendStringAndDec(getOutputStreamLogger(WARNING), "header=", header);
 			appendStringAndDec(getOutputStreamLogger(WARNING), "dataLength=", dataLength);
 			appendStringAndDec(getOutputStreamLogger(WARNING), ", deviceDataLength=", deviceDataLength);
 			println(getOutputStreamLogger(WARNING));

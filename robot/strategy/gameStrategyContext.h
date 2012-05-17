@@ -41,7 +41,7 @@ typedef struct GameStrategyContext {
 	/** Color. */
 	TEAM_COLOR color;
 	/** Go to next Step. */
-	BOOL mustDoNextStep;
+//	BOOL mustDoNextStep;
 	/** Step status. */
 	BOOL hasMoreNextSteps;
 	/** Strategy index. */

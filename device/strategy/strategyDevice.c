@@ -64,6 +64,9 @@ void deviceStrategyHandleRawData(char header, InputStream* inputStream, OutputSt
 	else if (header == COMMAND_STRATEGY_SET_CONFIG) {
 		// data
 		int c = readHex4(inputStream);
+        appendAck(outputStream);
+        append(outputStream, COMMAND_STRATEGY_SET_CONFIG);
+
 		GameStrategyContext* context = getStrategyContext();
 		
 		// TODO : Provide non specific function
@@ -80,33 +83,33 @@ void deviceStrategyHandleRawData(char header, InputStream* inputStream, OutputSt
 			setColor(COLOR_RED);
 		}
 
-        appendAck(outputStream);
-        append(outputStream, COMMAND_STRATEGY_SET_CONFIG);
 	}
 	// Print Gameboard
 	else if (header == COMMAND_STRATEGY_PRINT_GAME_BOARD) {
 		OutputStream* debugOutputStream = getOutputStreamLogger(ALWAYS);
-		printStrategyAllDatas(debugOutputStream);
-		printGameboard(debugOutputStream);
         appendAck(outputStream);
         append(outputStream, COMMAND_STRATEGY_PRINT_GAME_BOARD);
+
+		printStrategyAllDatas(debugOutputStream);
+		printGameboard(debugOutputStream);
 	}
 	// next step
 	else if (header == COMMAND_STRATEGY_NEXT_STEP) {
 		GameStrategyContext* context = getStrategyContext();
+		// response
         appendAck(outputStream);
         append(outputStream, COMMAND_STRATEGY_NEXT_STEP);
-		// arguments
-		if (context->hasMoreNextSteps) {
-			context->mustDoNextStep = TRUE;
-			appendHex2(outputStream, 1);
-		}
-		else {
-			appendHex2(outputStream, 0);
-		}
+		// output arguments : we have only last information !
+		appendHex2(outputStream, context->hasMoreNextSteps);
+
+		// do the job synchronously to avoid problems of notification
+		context->hasMoreNextSteps = nextStep();
 	}
 	else if (header == COMMAND_STRATEGY_SET_ROBOT_POSITION) {
 		GameStrategyContext* context = getStrategyContext();
+		// output before any notification !!
+        appendAck(outputStream);
+        append(outputStream, COMMAND_STRATEGY_SET_ROBOT_POSITION);
 		
 		// status
 		unsigned int status = readHex2(inputStream);
@@ -134,10 +137,6 @@ void deviceStrategyHandleRawData(char header, InputStream* inputStream, OutputSt
 		if (status == NOTIFY_MOTION_ARG_OBSTACLE) {
 			handleCollision();
 		}
-		
-		// output
-        appendAck(outputStream);
-        append(outputStream, COMMAND_STRATEGY_SET_ROBOT_POSITION);
 	}
 }
 

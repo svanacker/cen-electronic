@@ -79,6 +79,7 @@ void printRobotPosition(OutputStream* outputStream) {
 	appendStringAndDec(outputStream, "\nRobotPositionX=", robotPositionX);
 	appendStringAndDec(outputStream, "\nRobotPositionY=", robotPositionY);
 	appendStringAndDec(outputStream, "\nRobotAngle=", robotAngle);
+	println(outputStream);
 }
 
 void setRobotMustStop(unsigned int value) {

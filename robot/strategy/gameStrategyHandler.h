@@ -19,10 +19,10 @@
 #define ANGLE_ROTATION_MIN 50
 
 /** Distance of the opponent to a path to make it unavailable in mm. */
-#define DISTANCE_OPPONENT_TO_PATH 300
+#define DISTANCE_OPPONENT_TO_PATH 200
 
 /** Distance of a detected obstacle in mm. */
-#define DISTANCE_OBSTACLE 400
+#define DISTANCE_OBSTACLE 250
 
 /**
  * Choose the rigth strategy.
