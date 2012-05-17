@@ -6,6 +6,11 @@
 #include "../../common/commons.h"
 #include "../../common/adc/adcutils.h"
 
+#include "../../common/io/printWriter.h"
+
+#include "../../common/log/logger.h"
+#include "../../common/log/logLevel.h"
+
 #include "../../common/timer/timerList.h"
 #include "../../common/timer/cenTimer.h"
 
@@ -23,19 +28,23 @@
 
 
 /** Avoid to notify always. */
-#define NOTIFY_INFRARED_DETECTOR_TIMER_CYCLE				40
+#define NOTIFY_INFRARED_DETECTOR_TIMER_CYCLE				200
 
-static BOOL wasDetected;
+#define DETECTED_THRESHOLD									10
+#define NEG_VALUE											3
+
+static int wasDetectedCount;
 static BOOL doNotCheckBeforeCounter;
 static unsigned int interruptCounter;
 
 BOOL getRobotInfraredObstacle() {
 	// no detection
-	if (!wasDetected) {
+	if (wasDetectedCount < DETECTED_THRESHOLD) {
 		return FALSE;
 	};
 	// To avoid that notification continue
-	wasDetected = FALSE;
+	wasDetectedCount = 0;
+	doNotCheckBeforeCounter = NOTIFY_INFRARED_DETECTOR_TIMER_CYCLE;
 	// we must notify one time !
 	return TRUE;
 }
@@ -60,16 +69,25 @@ void robotInfraredDetectorCallback() {
 	float centerDistance = gp2y0a02ykGetCentimerDistanceForTension(rightMilliVolt);
 	float rightDistance = gp2d12GetCentimerDistanceForTension(centerMilliVolt);
 
+	unsigned currentDetectionCount;
+	
 	BOOL currentDetection = (leftDistance < ROBOT_INFRARED_DETECTOR_DISTANCE_THRESHOLD_LEFT_CM 
 				|| rightDistance < ROBOT_INFRARED_DETECTOR_DISTANCE_THRESHOLD_RIGHT_CM 
 				|| centerDistance < ROBOT_INFRARED_DETECTOR_DISTANCE_THRESHOLD_CENTER_CM);
 	if (currentDetection) {
-		doNotCheckBeforeCounter = NOTIFY_INFRARED_DETECTOR_TIMER_CYCLE;
-		wasDetected = TRUE;
+		wasDetectedCount++;
+
 	}
+	else {
+		if (wasDetectedCount > NEG_VALUE) {
+			wasDetectedCount -= NEG_VALUE;
+		}
+	}
+	appendStringAndDec(getOutputStreamLogger(ALWAYS), "\n", wasDetectedCount);
+
 }
 
 
 void initRobotInfraredDetector() {
-	addTimer(ROBOT_INFRARED_DETECTOR_TIMER_INDEX, TIME_DIVISER_16_HERTZ, &robotInfraredDetectorCallback);
+	addTimer(ROBOT_INFRARED_DETECTOR_TIMER_INDEX, TIME_DIVISER_50_HERTZ, &robotInfraredDetectorCallback);
 }

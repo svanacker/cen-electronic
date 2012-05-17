@@ -70,6 +70,7 @@ void deviceArm2012HandleRawData(char header,
     } else if (header == COMMAND_ARM_2012_DOWN) {
         int armIndex = readHex2(inputStream);
 		downArm(armIndex);
+		delaymSec(500);
 
         appendAck(outputStream);
         append(outputStream, COMMAND_ARM_2012_DOWN);

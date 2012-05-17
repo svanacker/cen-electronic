@@ -372,12 +372,23 @@ BOOL isObstacleOutsideTheTable(int distance) {
 	int obstacleX = getRobotPositionX() + dca;
 	int obstacleY = getRobotPositionY() + dsa;
 
-	int BORDER_THRESHOLD = 150;
+	int BORDER_THRESHOLD = 250;
+	int TOTEM_THRESHOLD_X = 250;
+	int TOTEM_THRESHOLD_Y = 550;
+
 
 	if (obstacleX < BORDER_THRESHOLD || obstacleX > GAME_BOARD_WIDTH - BORDER_THRESHOLD) {
 		return TRUE;
 	}
 	if (obstacleY < BORDER_THRESHOLD || obstacleY > GAME_BOARD_HEIGHT - BORDER_THRESHOLD) {
+		return TRUE;
+	}
+	
+	// Totem Zone
+	if (    (obstacleX > GAME_BOARD_MIDDLE_WIDTH - TOTEM_THRESHOLD_X) 
+		 && (obstacleX < GAME_BOARD_MIDDLE_WIDTH + TOTEM_THRESHOLD_X)
+		 && (obstacleY > GAME_BOARD_MIDDLE_HEIGHT - TOTEM_THRESHOLD_Y) 
+		 && (obstacleY < GAME_BOARD_MIDDLE_HEIGHT - TOTEM_THRESHOLD_Y)) {
 		return TRUE;
 	}
 	return FALSE;
@@ -569,7 +580,7 @@ int main(void) {
 		appendString(getOutputStreamLogger(ALWAYS), "COLOR:RED\n");
 	}	
     if (configValue & CONFIG_SPEED_LOW_MASK) {
-        motionSetParameters(MOTION_TYPE_FORWARD_OR_BACKWARD, 0x12, 0x24);
+        motionSetParameters(MOTION_TYPE_FORWARD_OR_BACKWARD, 0x0C, 0x24);
         motionSetParameters(MOTION_TYPE_ROTATION, 0x12, 0x24);
         motionSetParameters(MOTION_TYPE_ROTATION_ONE_WHEEL, 0x08, 0x08);
 		appendString(getOutputStreamLogger(ALWAYS), "SPEED LOW\n");
@@ -579,13 +590,13 @@ int main(void) {
         motionSetParameters(MOTION_TYPE_ROTATION_ONE_WHEEL, 0x08, 0x08);
 		appendString(getOutputStreamLogger(ALWAYS), "SPEED VERY LOW\n");
     } else if (configValue & CONFIG_SPEED_ULTRA_LOW_MASK) {
-        motionSetParameters(MOTION_TYPE_FORWARD_OR_BACKWARD, 0x02, 0x04);
-        motionSetParameters(MOTION_TYPE_ROTATION, 0x02, 0x04);
-        motionSetParameters(MOTION_TYPE_ROTATION_ONE_WHEEL, 0x02, 0x02);
+        motionSetParameters(MOTION_TYPE_FORWARD_OR_BACKWARD, 0x06, 0x06);
+        motionSetParameters(MOTION_TYPE_ROTATION, 0x04, 0x04);
+        motionSetParameters(MOTION_TYPE_ROTATION_ONE_WHEEL, 0x04, 0x04);
 		appendString(getOutputStreamLogger(ALWAYS), "SPEED ULTRA LOW\n");
     } else {
-        motionSetParameters(MOTION_TYPE_FORWARD_OR_BACKWARD, 0x18, 0x36);
-        motionSetParameters(MOTION_TYPE_ROTATION, 0x28, 0x18);
+        motionSetParameters(MOTION_TYPE_FORWARD_OR_BACKWARD, 0x10, 0x30);
+        motionSetParameters(MOTION_TYPE_ROTATION, 0x20, 0x16);
         motionSetParameters(MOTION_TYPE_ROTATION_ONE_WHEEL, 0x12, 0x10);
 		appendString(getOutputStreamLogger(ALWAYS), "SPEED NORMAL \n");
     }
