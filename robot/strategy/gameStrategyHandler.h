@@ -7,7 +7,9 @@
 #include "gameStrategyContext.h"
 
 /** If set, simulates the move of the robot. */
-// #define  SIMULATE_ROBOT
+#ifdef MPLAB_SIMULATION
+	#define SIMULATE_ROBOT
+#endif
 
 /** Use flag to know if we trace Handler strategy. */
 #define DEBUG_STRATEGY_HANDLER

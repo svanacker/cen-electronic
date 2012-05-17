@@ -37,7 +37,7 @@ static Location bullion1Location;
 static Location bottle1Location;
 static Location bottle2FrontLocation;
 static Location bottle2Location;
-static Location cdTakeLocation;
+//static Location cdTakeLocation;
 static Location dropZone1Location;
 static Location frontOfMapLocation;
 
@@ -181,7 +181,7 @@ void initLocations2012() {
 	addNavigationLocation(&bottle1Location, BOTTLE_1, BOTTLE_1_X, BOTTLE_1_Y);
 	addNavigationLocation(&bottle2FrontLocation, BOTTLE_2_FRONT, BOTTLE_2_FRONT_X, BOTTLE_2_FRONT_Y);
 	addNavigationLocation(&bottle2Location, BOTTLE_2, BOTTLE_2_X, BOTTLE_2_Y);
-	addNavigationLocation(&cdTakeLocation, CD_TAKE, CD_TAKE_X, CD_TAKE_Y);
+	//addNavigationLocation(&cdTakeLocation, CD_TAKE, CD_TAKE_X, CD_TAKE_Y);
 	addNavigationLocation(&dropZone1Location, DROP_ZONE_1, DROP_ZONE_1_X, DROP_ZONE_1_Y);
 	addNavigationLocation(&frontOfMapLocation, FRONT_OF_MAP_LOCATION, FRONT_OF_MAP_LOCATION_X, FRONT_OF_MAP_LOCATION_Y);
 	// -> Bullion 1
@@ -202,8 +202,8 @@ void initLocations2012() {
 	addNavigationLocation(&obstacleR4Location, OBSTACLE_R4, OBSTACLE_R_X, OBSTACLE_4_Y);
 }
 
-void bottle2ToCDPathFunction() { fillPathData(&bottle2Location, &cdTakeLocation, BOTTLE_2_TO_CD_COST, 0x1B, 0x30, 0xF8F8, 0xFAF6, BOTTLE_2_TO_CD_SPEED_FACTOR, BOTTLE_2_TO_CD_ACCELERATION_FACTOR);}
-void cdToDropZone1PathFunction() { fillPathData(&cdTakeLocation, &dropZone1Location, CD_TO_DROP_ZONE_1_COST, 0x11, 0x26, 0xFAF6, ANGLE_NEG_90, CD_TO_DROP_ZONE_1_SPEED_FACTOR, CD_TO_DROP_ZONE_1_ACCELERATION_FACTOR);}
+void bottle2ToCDPathFunction() { fillPathData(&bottle2Location, &obstacleR1Location, BOTTLE_2_TO_CD_COST, 0x1B, 0x30, 0xF8F8, 0xFAF6, BOTTLE_2_TO_CD_SPEED_FACTOR, BOTTLE_2_TO_CD_ACCELERATION_FACTOR);}
+void cdToDropZone1PathFunction() { fillPathData(&obstacleR1Location, &dropZone1Location, CD_TO_DROP_ZONE_1_COST, 0x11, 0x26, 0xFAF6, ANGLE_NEG_90, CD_TO_DROP_ZONE_1_SPEED_FACTOR, CD_TO_DROP_ZONE_1_ACCELERATION_FACTOR);}
 
 void initPaths2012(int index) {
 	clearPathList(getNavigationPathList());
@@ -220,7 +220,7 @@ void initPaths2012(int index) {
 		addNavigationPath(&startAreaToBullion1PathFunction);
 	}
 
-	void bullion1ToBottle1PathFunction() { fillPathData(&bullion1Location, &bottle1Location, BULLION_1_TO_BOTTLE_1_COST, 0xEC, 0xC0, ANGLE_NEG_90, ANGLE_180, BULLION_1_TO_BOTTLE_1_SPEED_FACTOR, BULLION_1_TO_BOTTLE_1_ACCELERATION_FACTOR); }
+	void bullion1ToBottle1PathFunction() { fillAsymmetricPathData(&bullion1Location, &bottle1Location, BULLION_1_TO_BOTTLE_1_COST, 0xEC, 0xC0, ANGLE_NEG_90, ANGLE_180, BULLION_1_TO_BOTTLE_1_SPEED_FACTOR, BULLION_1_TO_BOTTLE_1_ACCELERATION_FACTOR); }
 	addNavigationPath(&bullion1ToBottle1PathFunction);
 
 	// TODO
@@ -228,12 +228,12 @@ void initPaths2012(int index) {
 	void bottle1ToBottle2FrontPathFunction() { fillPathData(&bottle1Location, &bottle2FrontLocation, BOTTLE_1_TO_BOTTLE_2_FRONT_COST, 0x40, 0x0A, ANGLE_180, 0x0450, BOTTLE_1_TO_BOTTLE_2_SPEED_FACTOR, BOTTLE_1_TO_BOTTLE_2_ACCELERATION_FACTOR);}
 	addNavigationPath(&bottle1ToBottle2FrontPathFunction);
 
-	void bottle2FrontToBottle2PathFunction() { fillPathData(&bottle2FrontLocation, &bottle2Location, BOTTLE_2_FRONT_TO_BOTTLE_2_COST, 0xE0, 0xF0, 0x0450, 0xF8F8, BOTTLE_1_TO_BOTTLE_2_SPEED_FACTOR, BOTTLE_1_TO_BOTTLE_2_ACCELERATION_FACTOR);}
+	void bottle2FrontToBottle2PathFunction() { fillAsymmetricPathData(&bottle2FrontLocation, &bottle2Location, BOTTLE_2_FRONT_TO_BOTTLE_2_COST, 0xE0, 0xF0, 0x0450, 0xF8F8, BOTTLE_1_TO_BOTTLE_2_SPEED_FACTOR, BOTTLE_1_TO_BOTTLE_2_ACCELERATION_FACTOR);}
 	addNavigationPath(&bottle2FrontToBottle2PathFunction);
 
-	addNavigationPath(&bottle2ToCDPathFunction);
+	//addNavigationPath(&bottle2ToCDPathFunction);
 
-	addNavigationPath(&cdToDropZone1PathFunction);
+	//addNavigationPath(&cdToDropZone1PathFunction);
 
 	// TO BULLION RIGHT 1
 	void bullion1ToBullionRight1PathFunction() { fillPathData(&bullion1Location, &bullionRight1Location, BULLION_1_TO_BULLION_RIGHT_1_COST, 0xB0, 0x80, ANGLE_NEG_90, ANGLE_NEG_90, BULLION_1_TO_BULLION_RIGHT_1_SPEED_FACTOR, BULLION_1_TO_BULLION_RIGHT_1_ACCELERATION_FACTOR);}
@@ -378,8 +378,8 @@ void initPaths2012(int index) {
 	addNavigationPath(&bullionRight1ToObstacleR4PathFunction);
 
 	// bottle2Front->CD
-	void bottle2FrontToCDPathFunction() { fillPathData(&bottle2FrontLocation, &cdTakeLocation, BOTTLE2FRONT_TO_CD_COST, 0x0A, 0x0A, ANGLE_NEG_90, ANGLE_NEG_90, BOTTLE2FRONT_TO_CD_SPEED_FACTOR, BOTTLE2FRONT_TO_CD_ACCELERATION_FACTOR);}
-	addNavigationPath(&bottle2FrontToCDPathFunction);
+	//void bottle2FrontToCDPathFunction() { fillPathData(&bottle2FrontLocation, &cdTakeLocation, BOTTLE2FRONT_TO_CD_COST, 0x0A, 0x0A, ANGLE_NEG_90, ANGLE_NEG_90, BOTTLE2FRONT_TO_CD_SPEED_FACTOR, BOTTLE2FRONT_TO_CD_ACCELERATION_FACTOR);}
+	//addNavigationPath(&bottle2FrontToCDPathFunction);
 
 	// bottle2Front->OR4
 	void bottle2FrontToObstacleR4PathFunction() { fillPathData(&bottle2FrontLocation, &obstacleR4Location, BOTTLE2FRONT_TO_CD_COST, 0x0A, 0x0A, ANGLE_90, ANGLE_90, BOTTLE2FRONT_TO_CD_SPEED_FACTOR, BOTTLE2FRONT_TO_CD_ACCELERATION_FACTOR);}
@@ -395,7 +395,7 @@ void initTargets2012() {
 	addGameTarget(&bullion1Target, BULLION_1, BULLION_GAIN, &bullion1Location);
 	addGameTarget(&bottle1Target, BOTTLE_1, BOTTLE_GAIN, &bottle1Location);
 	addGameTarget(&bottle2Target, BOTTLE_2, BOTTLE_GAIN, &bottle2Location);
-	addGameTarget(&cd4Target, CD_TAKE, CD_4_GAIN, &cdTakeLocation);
+	addGameTarget(&cd4Target, CD_TAKE, CD_4_GAIN, &obstacleR1Location);
 
 	// Bullion Left / Right
 	addGameTarget(&bullionRight1Target, BULLION_RIGHT_1, BULLION_GAIN, &bullionRight1Location);

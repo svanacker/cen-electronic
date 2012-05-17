@@ -217,7 +217,12 @@ BOOL motionRotateToFollowPath(PathDataFunction* pathDataFunction, BOOL reversed)
 
 	int angle;
 	if (reversed) {
-		angle = mod3600(ANGLE_180 + getAngle2Path(pathDataFunction));
+		PathData* pathData = getTmpPathData();
+		if (pathData->mustGoBackward) {
+			angle = getAngle2Path(pathDataFunction);
+		} else {
+			angle = mod3600(ANGLE_180 + getAngle2Path(pathDataFunction));
+		}
 	} else {
 		angle = getAngle1Path(pathDataFunction);
 	}
@@ -256,9 +261,17 @@ void motionFollowPath(PathDataFunction* pathDataFunction, BOOL reversed) {
 	signed char cp2;
 	if (reversed) {
 		location = pathData->location1;
-		angle = mod3600(ANGLE_180 + getAngle1Path(pathDataFunction));
-		cp1 = pathData->controlPointDistance2;
-		cp2 = pathData->controlPointDistance1;
+		if (pathData->mustGoBackward) {
+			// reverse the trajectory by going backward
+			angle = getAngle1Path(pathDataFunction);
+			cp1 = -pathData->controlPointDistance2;
+			cp2 = -pathData->controlPointDistance1;
+		} else {
+			// reverse the trajectory symmetrically
+			angle = mod3600(ANGLE_180 + getAngle1Path(pathDataFunction));
+			cp1 = pathData->controlPointDistance2;
+			cp2 = pathData->controlPointDistance1;
+		}
 	} else {
 		location = pathData->location2;
 		angle = getAngle2Path(pathDataFunction);

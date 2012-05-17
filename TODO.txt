@@ -1,7 +1,7 @@
 SV : Configuration correcte des constantes => à regrouper dans un seul fichier => Le robot essaie en reculant d'aller de Left -> Bullion
 SV/EZ : Strategy Board : Clearer le LastObstacle avec un Timer ou un certain nombre de NextStep
 SV : Remettre le NextStep en cas de collision
-
+SV : Gestion activation / désactivation du sonar
 
                     
 * Faire un recu pour JLB
