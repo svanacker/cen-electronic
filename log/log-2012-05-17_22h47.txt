@@ -1,0 +1,1512 @@
+
+Updating available paths
+Don't compute Path !
+nextStep
+nextStep=>1
+findNextTarget
+	Nearest Location:location.name=startArea, ref=2048, x=170, y=170, tmpCost=-1, tmpPrevious.name=NULL
+	computeBestNextTargetAction:
+Result=, size=2
+location.name=startArea, ref=2048, x=170, y=170, tmpCost=0, tmpPrevious.name=NULL
+location.name=bullion1, ref=2072, x=880, y=342, tmpCost=100, tmpPrevious.name=startArea
+		bestTarget:target:name=bullion1, gain=3.0000, status=0
+		bestTargetAction:	action:startLocation=bullion1, end=bullion1, timeToAchieve=2
+handleCurrentTrajectory
+motionFollowPath:goto:location.name=bullion1, ref=2072, x=880, y=342, tmpCost=100, tmpPrevious.name=startArea
+&0370-0156-FC7C-40-40-FF
+StrategySetRobotPosition:status=0, x=846, y=346, angle=-901
+
+Updating available paths
+Don't compute Path !
+nextStep
+nextStep=>1
+handleCurrentTrajectory
+no more locations to reach
+nextStep=>2
+executeTargetActions
+-> no actions for this target
+nextStep=>3
+findNextTarget
+	Nearest Location:location.name=bullion1, ref=2072, x=880, y=342, tmpCost=100, tmpPrevious.name=startArea
+	computeBestNextTargetAction:
+Result=, size=2
+location.name=bullion1, ref=2072, x=880, y=342, tmpCost=0, tmpPrevious.name=NULL
+location.name=bottle1, ref=2084, x=1824, y=656, tmpCost=80, tmpPrevious.name=bullion1
+		bestTarget:target:name=bottle1, gain=5.0000, status=0
+		bestTargetAction:	action:startLocation=bottle1, end=bottle1, timeToAchieve=2
+handleCurrentTrajectory
+motionFollowPath:goto:location.name=bottle1, ref=2084, x=1824, y=656, tmpCost=80, tmpPrevious.name=bullion1
+&0720-0290-0708-EC-C0-FF
+StrategySetRobotPosition:status=0, x=1818, y=590, angle=-1800
+
+Updating available paths
+Don't compute Path !
+nextStep
+nextStep=>1
+handleCurrentTrajectory
+no more locations to reach
+nextStep=>2
+executeTargetActions
+-> no actions for this target
+nextStep=>3
+findNextTarget
+	Nearest Location:location.name=bottle1, ref=2084, x=1824, y=656, tmpCost=80, tmpPrevious.name=bullion1
+	computeBestNextTargetAction:
+Result=, size=3
+location.name=bottle1, ref=2084, x=1824, y=656, tmpCost=0, tmpPrevious.name=NULL
+location.name=bottle2Front, ref=2096, x=1500, y=2048, tmpCost=80, tmpPrevious.name=bottle1
+location.name=bottle2, ref=2108, x=1856, y=1872, tmpCost=120, tmpPrevious.name=bottle2Front
+		bestTarget:target:name=bottle2, gain=5.0000, status=0
+		bestTargetAction:	action:startLocation=bottle2, end=bottle2, timeToAchieve=3
+handleCurrentTrajectory
+motionFollowPath:goto:location.name=bottle2Front, ref=2096, x=1500, y=2048, tmpCost=80, tmpPrevious.name=bottle1
+&05DC-0800-0450-40-0A-AA
+StrategySetRobotPosition:status=0, x=1518, y=2052, angle=-2499
+
+Updating available paths
+Don't compute Path !
+nextStep
+nextStep=>1
+handleCurrentTrajectory
+motionFollowPath:goto:location.name=bottle2, ref=2108, x=1856, y=1872, tmpCost=120, tmpPrevious.name=bottle2Front
+&0740-0750-F8F8-E0-F0-AA
+StrategySetRobotPosition:status=0, x=1848, y=1891, angle=-1797
+
+Updating available paths
+Don't compute Path !
+nextStep
+nextStep=>1
+handleCurrentTrajectory
+no more locations to reach
+nextStep=>2
+executeTargetActions
+-> no actions for this target
+nextStep=>3
+findNextTarget
+	Nearest Location:location.name=bottle2, ref=2108, x=1856, y=1872, tmpCost=120, tmpPrevious.name=bottle2Front
+	computeBestNextTargetAction:
+Result=, size=1
+location.name=bottle2, ref=2108, x=1856, y=1872, tmpCost=0, tmpPrevious.name=NULL
+		bestTarget:target:name=cdTake, gain=4.0000, status=0
+		bestTargetAction:	action:startLocation=bottle2, end=dropZone1, timeToAchieve=4
+handleCurrentTrajectory
+no more locations to reach
+nextStep=>4
+executeTargetActions
+			actionItem:name=cdTakeStep1
+motionFollowPath:goto:location.name=OR1, ref=2228, x=1500, y=700, tmpCost=520, tmpPrevious.name=bottle1
+&05DC-02BC-FAF6-1B-30-44
+StrategySetRobotPosition:status=0, x=1506, y=706, angle=-1287
+
+Updating available paths
+Don't compute Path !
+nextStep
+nextStep=>1
+executeTargetActions
+			actionItem:name=cdTakeStep2
+motionFollowPath:goto:location.name=dropZone1, ref=2120, x=1000, y=213, tmpCost=400, tmpPrevious.name=bullionRight1
+&03E8-00D5-FC7C-11-26-AA
+StrategySetRobotPosition:status=0, x=1009, y=217, angle=-899
+
+Updating available paths
+Don't compute Path !
+nextStep
+nextStep=>1
+executeTargetActions
+nextStep=>2
+findNextTarget
+	Nearest Location:location.name=dropZone1, ref=2120, x=1000, y=213, tmpCost=400, tmpPrevious.name=bullionRight1
+	computeBestNextTargetAction:
+Result=, size=2
+location.name=dropZone1, ref=2120, x=1000, y=213, tmpCost=0, tmpPrevious.name=NULL
+location.name=bullionRight1, ref=2144, x=1359, y=1440, tmpCost=100, tmpPrevious.name=dropZone1
+		bestTarget:target:name=bullionRight1, gain=3.0000, status=0
+		bestTargetAction:	action:startLocation=bullionRight1, end=dropZone1, timeToAchieve=5
+handleCurrentTrajectory
+motionFollowPath:goto:location.name=bullionRight1, ref=2144, x=1359, y=1440, tmpCost=100, tmpPrevious.name=dropZone1
+&054F-05A0-FC7C-B0-80-7A
+StrategySetRobotPosition:status=0, x=1348, y=1435, angle=-900
+
+Updating available paths
+Don't compute Path !
+nextStep
+nextStep=>1
+handleCurrentTrajectory
+no more locations to reach
+nextStep=>2
+executeTargetActions
+			actionItem:name=rotate
+rotateAbsolute:angle:0 ddeg
+r0000nextStep
+nextStep=>1
+executeTargetActions
+			actionItem:name=armRightDown
+J02
+Updating available paths
+Don't compute Path !
+nextStep
+nextStep=>1
+executeTargetActions
+			actionItem:name=bullionRight1GoToDropZone1
+motionGoLocation:goto:location.name=dropZone1, ref=2120, x=1000, y=213, tmpCost=0, tmpPrevious.name=NULL
+&03E8-00D5-FC7C-78-40-44
+StrategySetRobotPosition:status=0, x=945, y=221, angle=-900
+
+Updating available paths
+Don't compute Path !
+nextStep
+nextStep=>1
+executeTargetActions
+			actionItem:name=armRightUp
+I02
+Updating available paths
+Don't compute Path !
+nextStep
+nextStep=>1
+executeTargetActions
+nextStep=>2
+findNextTarget
+	Nearest Location:location.name=dropZone1, ref=2120, x=1000, y=213, tmpCost=0, tmpPrevious.name=NULL
+	computeBestNextTargetAction:
+Result=, size=2
+location.name=dropZone1, ref=2120, x=1000, y=213, tmpCost=0, tmpPrevious.name=NULL
+location.name=bullionLeft1, ref=2156, x=671, y=1440, tmpCost=100, tmpPrevious.name=dropZone1
+		bestTarget:target:name=bullionLeft1, gain=3.0000, status=0
+		bestTargetAction:	action:startLocation=bullionLeft1, end=dropZone1, timeToAchieve=5
+handleCurrentTrajectory
+motionFollowPath:goto:location.name=bullionLeft1, ref=2156, x=671, y=1440, tmpCost=100, tmpPrevious.name=dropZone1
+&029F-05A0-FC7C-B0-80-7A
+StrategySetRobotPosition:status=2, x=860, y=600, angle=-338
+
+handleCollision
+Updating available paths
+bullion1->bottle1: UNAVAILABLE
+dropZone1->bullionRight1: UNAVAILABLE
+dropZone1->bullionLeft1: UNAVAILABLE
+dropZone1->OL1: UNAVAILABLE
+dropZone1->OM1: UNAVAILABLE
+dropZone1->OR1: UNAVAILABLE
+bullion1->OL1: UNAVAILABLE
+bullion1->OM1: UNAVAILABLE
+bullion1->OR1: UNAVAILABLE
+
+Updating available paths
+bullion1->bottle1: UNAVAILABLE
+dropZone1->bullionRight1: UNAVAILABLE
+dropZone1->bullionLeft1: UNAVAILABLE
+dropZone1->OL1: UNAVAILABLE
+dropZone1->OM1: UNAVAILABLE
+dropZone1->OR1: UNAVAILABLE
+bullion1->OL1: UNAVAILABLE
+bullion1->OM1: UNAVAILABLE
+bullion1->OR1: UNAVAILABLE
+nextStep
+nextStep=>1
+findNextTarget
+	Nearest Location:location.name=OM1, ref=2276, x=1000, y=700, tmpCost=400, tmpPrevious.name=dropZone1
+	computeBestNextTargetAction:
+Result=, size=4
+location.name=OM1, ref=2276, x=1000, y=700, tmpCost=0, tmpPrevious.name=NULL
+location.name=OL1, ref=2180, x=500, y=700, tmpCost=400, tmpPrevious.name=OM1
+location.name=OL4, ref=2216, x=500, y=2300, tmpCost=800, tmpPrevious.name=OL1
+location.name=bullionLeft1, ref=2156, x=671, y=1440, tmpCost=1200, tmpPrevious.name=OL4
+		bestTarget:target:name=bullionLeft1, gain=3.0000, status=0
+		bestTargetAction:	action:startLocation=bullionLeft1, end=dropZone1, timeToAchieve=5
+handleCurrentTrajectory
+motionRotateToFollowPath:angle:-1462 ddeg
+r05B6
+StrategySetRobotPosition:status=0, x=838, y=608, angle=-1736
+
+Updating available paths
+bullion1->bottle1: UNAVAILABLE
+dropZone1->bullionRight1: UNAVAILABLE
+dropZone1->bullionLeft1: UNAVAILABLE
+dropZone1->OL1: UNAVAILABLE
+dropZone1->OM1: UNAVAILABLE
+dropZone1->OR1: UNAVAILABLE
+bullion1->OL1: UNAVAILABLE
+bullion1->OM1: UNAVAILABLE
+bullion1->OR1: UNAVAILABLE
+nextStep
+nextStep=>1
+handleCurrentTrajectory
+motionRotateToFollowPath:angle:-64 ddeg
+r0040
+StrategySetRobotPosition:status=0, x=838, y=608, angle=-1789
+
+Updating available paths
+bullion1->bottle1: UNAVAILABLE
+dropZone1->bullionRight1: UNAVAILABLE
+dropZone1->bullionLeft1: UNAVAILABLE
+dropZone1->OL1: UNAVAILABLE
+dropZone1->OM1: UNAVAILABLE
+dropZone1->OR1: UNAVAILABLE
+bullion1->OL1: UNAVAILABLE
+bullion1->OM1: UNAVAILABLE
+bullion1->OR1: UNAVAILABLE
+nextStep
+nextStep=>1
+handleCurrentTrajectory
+motionFollowPath:goto:location.name=OL1, ref=2180, x=500, y=700, tmpCost=400, tmpPrevious.name=OM1
+&01F4-02BC-0708-0A-0A-77
+StrategySetRobotPosition:status=0, x=506, y=701, angle=-1802
+
+Updating available paths
+bullion1->bottle1: UNAVAILABLE
+dropZone1->bullionRight1: UNAVAILABLE
+dropZone1->bullionLeft1: UNAVAILABLE
+dropZone1->OL1: UNAVAILABLE
+dropZone1->OM1: UNAVAILABLE
+dropZone1->OR1: UNAVAILABLE
+bullion1->OL1: UNAVAILABLE
+bullion1->OM1: UNAVAILABLE
+bullion1->OR1: UNAVAILABLE
+nextStep
+nextStep=>1
+handleCurrentTrajectory
+motionRotateToFollowPath:angle:-898 ddeg
+r0382
+StrategySetRobotPosition:status=0, x=513, y=707, angle=-2697
+
+Updating available paths
+bullion1->bottle1: UNAVAILABLE
+dropZone1->bullionRight1: UNAVAILABLE
+dropZone1->bullionLeft1: UNAVAILABLE
+dropZone1->OL1: UNAVAILABLE
+dropZone1->OM1: UNAVAILABLE
+dropZone1->OR1: UNAVAILABLE
+bullion1->OL1: UNAVAILABLE
+bullion1->OM1: UNAVAILABLE
+bullion1->OR1: UNAVAILABLE
+nextStep
+nextStep=>1
+handleCurrentTrajectory
+motionFollowPath:goto:location.name=OL4, ref=2216, x=500, y=2300, tmpCost=800, tmpPrevious.name=OL1
+&01F4-08FC-0384-0A-0A-77
+StrategySetRobotPosition:status=0, x=501, y=2290, angle=-2699
+
+Updating available paths
+bullion1->bottle1: UNAVAILABLE
+dropZone1->bullionRight1: UNAVAILABLE
+dropZone1->bullionLeft1: UNAVAILABLE
+dropZone1->OL1: UNAVAILABLE
+dropZone1->OM1: UNAVAILABLE
+dropZone1->OR1: UNAVAILABLE
+bullion1->OL1: UNAVAILABLE
+bullion1->OM1: UNAVAILABLE
+bullion1->OR1: UNAVAILABLE
+nextStep
+nextStep=>1
+handleCurrentTrajectory
+motionRotateToFollowPath:angle:-1701 ddeg
+r06A5
+StrategySetRobotPosition:status=0, x=496, y=2290, angle=-4410
+
+Updating available paths
+bullion1->bottle1: UNAVAILABLE
+dropZone1->bullionRight1: UNAVAILABLE
+dropZone1->bullionLeft1: UNAVAILABLE
+dropZone1->OL1: UNAVAILABLE
+dropZone1->OM1: UNAVAILABLE
+dropZone1->OR1: UNAVAILABLE
+bullion1->OL1: UNAVAILABLE
+bullion1->OM1: UNAVAILABLE
+bullion1->OR1: UNAVAILABLE
+nextStep
+nextStep=>1
+handleCurrentTrajectory
+motionFollowPath:goto:location.name=bullionLeft1, ref=2156, x=671, y=1440, tmpCost=1200, tmpPrevious.name=OL4
+&029F-05A0-FCE0-0A-0A-77
+StrategySetRobotPosition:status=0, x=669, y=1448, angle=-4398
+
+Updating available paths
+bullion1->bottle1: UNAVAILABLE
+dropZone1->bullionRight1: UNAVAILABLE
+dropZone1->bullionLeft1: UNAVAILABLE
+dropZone1->OL1: UNAVAILABLE
+dropZone1->OM1: UNAVAILABLE
+dropZone1->OR1: UNAVAILABLE
+bullion1->OL1: UNAVAILABLE
+bullion1->OM1: UNAVAILABLE
+bullion1->OR1: UNAVAILABLE
+nextStep
+nextStep=>1
+handleCurrentTrajectory
+no more locations to reach
+nextStep=>2
+executeTargetActions
+			actionItem:name=rotate
+rotateAbsolute:angle:-102 ddeg
+r0066
+StrategySetRobotPosition:status=0, x=669, y=1448, angle=-4515
+
+Updating available paths
+bullion1->bottle1: UNAVAILABLE
+dropZone1->bullionRight1: UNAVAILABLE
+dropZone1->bullionLeft1: UNAVAILABLE
+dropZone1->OL1: UNAVAILABLE
+dropZone1->OM1: UNAVAILABLE
+dropZone1->OR1: UNAVAILABLE
+bullion1->OL1: UNAVAILABLE
+bullion1->OM1: UNAVAILABLE
+bullion1->OR1: UNAVAILABLE
+nextStep
+nextStep=>1
+executeTargetActions
+			actionItem:name=armLeftDown
+J01
+Updating available paths
+bullion1->bottle1: UNAVAILABLE
+dropZone1->bullionRight1: UNAVAILABLE
+dropZone1->bullionLeft1: UNAVAILABLE
+dropZone1->OL1: UNAVAILABLE
+dropZone1->OM1: UNAVAILABLE
+dropZone1->OR1: UNAVAILABLE
+bullion1->OL1: UNAVAILABLE
+bullion1->OM1: UNAVAILABLE
+bullion1->OR1: UNAVAILABLE
+nextStep
+nextStep=>1
+executeTargetActions
+			actionItem:name=bullionLeft1GoToDropZone1
+motionGoLocation:goto:location.name=dropZone1, ref=2120, x=1000, y=213, tmpCost=-1, tmpPrevious.name=NULL
+&03E8-00D5-FC7C-78-40-44
+StrategySetRobotPosition:status=0, x=998, y=221, angle=-4500
+
+Updating available paths
+bullion1->bottle1: UNAVAILABLE
+dropZone1->bullionRight1: UNAVAILABLE
+dropZone1->bullionLeft1: UNAVAILABLE
+dropZone1->OL1: UNAVAILABLE
+dropZone1->OM1: UNAVAILABLE
+dropZone1->OR1: UNAVAILABLE
+bullion1->OL1: UNAVAILABLE
+bullion1->OM1: UNAVAILABLE
+bullion1->OR1: UNAVAILABLE
+nextStep
+nextStep=>1
+executeTargetActions
+			actionItem:name=armLeftUp
+I01
+Updating available paths
+bullion1->bottle1: UNAVAILABLE
+dropZone1->bullionRight1: UNAVAILABLE
+dropZone1->bullionLeft1: UNAVAILABLE
+dropZone1->OL1: UNAVAILABLE
+dropZone1->OM1: UNAVAILABLE
+dropZone1->OR1: UNAVAILABLE
+bullion1->OL1: UNAVAILABLE
+bullion1->OM1: UNAVAILABLE
+bullion1->OR1: UNAVAILABLE
+nextStep
+nextStep=>1
+executeTargetActions
+nextStep=>2
+findNextTarget
+	Nearest Location:location.name=dropZone1, ref=2120, x=1000, y=213, tmpCost=-1, tmpPrevious.name=NULL
+	computeBestNextTargetAction:
+		bestTarget:NULL
+		bestTargetAction:NULL
+no more targets -> stoppingˇSTRATEGY_BOARD
+system:OK
+Strategy:OK
+ıSTRATEGY_BOARD
+system:OK
+Strategy:OK
+setStrategy:3
+setColor:1
+navigationLocationList:, size=21
+location.name=startArea, ref=2048, x=170, y=170, tmpCost=-1, tmpPrevious.name=NULL
+location.name=startAreaFront, ref=2060, x=250, y=700, tmpCost=-1, tmpPrevious.name=NULL
+location.name=bullion1, ref=2072, x=880, y=342, tmpCost=-1, tmpPrevious.name=NULL
+location.name=bottle1, ref=2084, x=1824, y=656, tmpCost=-1, tmpPrevious.name=NULL
+location.name=bottle2Front, ref=2096, x=1500, y=2048, tmpCost=-1, tmpPrevious.name=NULL
+location.name=bottle2, ref=2108, x=1856, y=1872, tmpCost=-1, tmpPrevious.name=NULL
+location.name=dropZone1, ref=2120, x=1000, y=213, tmpCost=-1, tmpPrevious.name=NULL
+location.name=frontOfMapLocation, ref=2132, x=450, y=1500, tmpCost=-1, tmpPrevious.name=NULL
+location.name=bullionRight1, ref=2144, x=1359, y=1440, tmpCost=-1, tmpPrevious.name=NULL
+location.name=bullionLeft1, ref=2156, x=671, y=1440, tmpCost=-1, tmpPrevious.name=NULL
+location.name=bullionMiddle2, ref=2168, x=1000, y=2280, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OL1, ref=2180, x=500, y=700, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OL2, ref=2192, x=500, y=1100, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OL3, ref=2204, x=500, y=1900, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OL4, ref=2216, x=500, y=2300, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OM1, ref=2276, x=1000, y=700, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OM2, ref=2288, x=1000, y=2300, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OR1, ref=2228, x=1500, y=700, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OR2, ref=2240, x=1500, y=1100, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OR3, ref=2252, x=1500, y=1900, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OR4, ref=2264, x=1500, y=2300, tmpCost=-1, tmpPrevious.name=NULL
+PathList:navigationPathList:, size=34
+pathName=startArea->bullion1, cost=100, cp1=64, cp2=64, angle1=675, angle2=-900, accFactor=15, speedFactor=15
+pathName=bullion1->bottle1, cost=80, cp1=-20, cp2=-64, angle1=-900, angle2=1800, accFactor=15, speedFactor=15
+pathName=bottle1->bottle2Front, cost=80, cp1=64, cp2=10, angle1=1800, angle2=1104, accFactor=10, speedFactor=10
+pathName=bottle2Front->bottle2, cost=40, cp1=-32, cp2=-16, angle1=1104, angle2=-1800, accFactor=10, speedFactor=10
+pathName=bullion1->bullionRight1, cost=100, cp1=-80, cp2=-128, angle1=-900, angle2=-900, accFactor=7, speedFactor=10
+pathName=dropZone1->bullionRight1, cost=100, cp1=-80, cp2=-128, angle1=-900, angle2=-900, accFactor=7, speedFactor=10
+pathName=dropZone1->bullionLeft1, cost=100, cp1=-80, cp2=-128, angle1=-900, angle2=-900, accFactor=7, speedFactor=10
+pathName=OL1->OL2, cost=400, cp1=10, cp2=10, angle1=900, angle2=900, accFactor=7, speedFactor=7
+pathName=OL1->OL4, cost=400, cp1=10, cp2=10, angle1=900, angle2=900, accFactor=7, speedFactor=7
+pathName=OL2->OL3, cost=400, cp1=10, cp2=10, angle1=900, angle2=900, accFactor=7, speedFactor=7
+pathName=OL3->OL4, cost=400, cp1=10, cp2=10, angle1=900, angle2=900, accFactor=7, speedFactor=7
+pathName=OL4->OM2, cost=400, cp1=10, cp2=10, angle1=0, angle2=0, accFactor=7, speedFactor=7
+pathName=OL4->OR4, cost=400, cp1=10, cp2=10, angle1=0, angle2=0, accFactor=7, speedFactor=7
+pathName=OM2->OR4, cost=400, cp1=10, cp2=10, angle1=0, angle2=0, accFactor=7, speedFactor=7
+pathName=OR4->OR3, cost=400, cp1=10, cp2=10, angle1=-900, angle2=-900, accFactor=7, speedFactor=7
+pathName=OR4->OR1, cost=400, cp1=10, cp2=10, angle1=-900, angle2=-900, accFactor=7, speedFactor=7
+pathName=OR3->OR2, cost=400, cp1=10, cp2=10, angle1=-900, angle2=-900, accFactor=7, speedFactor=7
+pathName=OR2->OR1, cost=400, cp1=10, cp2=10, angle1=-900, angle2=-900, accFactor=7, speedFactor=7
+pathName=OR1->OM1, cost=400, cp1=10, cp2=10, angle1=1800, angle2=1800, accFactor=7, speedFactor=7
+pathName=OR1->OL1, cost=400, cp1=10, cp2=10, angle1=1800, angle2=1800, accFactor=7, speedFactor=7
+pathName=OM1->OL1, cost=400, cp1=10, cp2=10, angle1=1800, angle2=1800, accFactor=7, speedFactor=7
+pathName=bottle1->OR1, cost=400, cp1=10, cp2=10, angle1=1800, angle2=1800, accFactor=7, speedFactor=7
+pathName=bottle2->OR3, cost=400, cp1=10, cp2=10, angle1=1800, angle2=1800, accFactor=7, speedFactor=7
+pathName=dropZone1->OL1, cost=400, cp1=25, cp2=25, angle1=900, angle2=1800, accFactor=7, speedFactor=7
+pathName=dropZone1->OM1, cost=400, cp1=10, cp2=10, angle1=900, angle2=900, accFactor=7, speedFactor=7
+pathName=dropZone1->OR1, cost=400, cp1=25, cp2=25, angle1=900, angle2=0, accFactor=7, speedFactor=7
+pathName=bullion1->OL1, cost=400, cp1=25, cp2=25, angle1=900, angle2=1800, accFactor=7, speedFactor=7
+pathName=bullion1->OM1, cost=400, cp1=10, cp2=10, angle1=900, angle2=900, accFactor=7, speedFactor=7
+pathName=bullion1->OR1, cost=400, cp1=25, cp2=25, angle1=900, angle2=0, accFactor=7, speedFactor=7
+pathName=bullionLeft1->OL2, cost=400, cp1=10, cp2=10, angle1=-1150, angle2=-1150, accFactor=7, speedFactor=7
+pathName=bullionLeft1->OL4, cost=400, cp1=10, cp2=10, angle1=1000, angle2=1000, accFactor=7, speedFactor=7
+pathName=bullionRight1->OR2, cost=400, cp1=10, cp2=10, angle1=-650, angle2=-650, accFactor=7, speedFactor=7
+pathName=bullionRight1->OR4, cost=400, cp1=10, cp2=10, angle1=900, angle2=800, accFactor=7, speedFactor=7
+pathName=bottle2Front->OR4, cost=400, cp1=10, cp2=10, angle1=900, angle2=900, accFactor=7, speedFactor=7
+
+targetHandledCount:0
+target:name=bullion1, gain=3.0000, status=0
+	action:startLocation=bullion1, end=bullion1, timeToAchieve=2
+target:name=bullionRight1, gain=3.0000, status=0
+	action:startLocation=bullionRight1, end=dropZone1, timeToAchieve=5
+			actionItem:name=rotate
+			actionItem:name=armRightDown
+			actionItem:name=bullionRight1GoToDropZone1
+			actionItem:name=armRightUp
+target:name=bullion1, gain=3.0000, status=0
+	action:startLocation=bullion1, end=bullion1, timeToAchieve=2
+target:name=bottle1, gain=5.0000, status=0
+	action:startLocation=bottle1, end=bottle1, timeToAchieve=2
+target:name=bottle2, gain=5.0000, status=0
+	action:startLocation=bottle2, end=bottle2, timeToAchieve=3
+target:name=cdTake, gain=4.0000, status=0
+	action:startLocation=bottle2, end=dropZone1, timeToAchieve=4
+			actionItem:name=cdTakeStep1
+			actionItem:name=cdTakeStep2
+target:name=bullionRight1, gain=3.0000, status=0
+	action:startLocation=bullionRight1, end=dropZone1, timeToAchieve=5
+			actionItem:name=rotate
+			actionItem:name=armRightDown
+			actionItem:name=bullionRight1GoToDropZone1
+			actionItem:name=armRightUp
+target:name=bullionLeft1, gain=3.0000, status=0
+	action:startLocation=bullionLeft1, end=dropZone1, timeToAchieve=5
+			actionItem:name=rotate
+			actionItem:name=armLeftDown
+			actionItem:name=bullionLeft1GoToDropZone1
+			actionItem:name=armLeftUp
+
+strategy.name=S1
+	strategyItem->target->name=bullion1
+	strategyItem->target->name=bottle1
+	strategyItem->target->name=bottle2
+	strategyItem->target->name=cdTake
+	strategyItem->target->name=bullionRight1
+	strategyItem->target->name=bullionLeft1
+GameStrategyContext
+	strategy.name=S1
+	elapsedMatchTime=0.0000
+	robotPosition=x=160.0000,y=160.0000
+
+	robotAngle (ddeg)=675
+	nearestLocation=NULL
+	opponentRobotPosition=x=0.0000,y=0.0000
+
+	lastObstaclePosition=x=0.0000,y=0.0000
+
+	currentTarget=NULL
+	currentTrajectory:, size=0
+
+	teamColor=1
+	strategyIndex=3
+	maxTargetToHandle=8
+	hasMoreNextSteps=1
+
+Updating available paths
+Don't compute Path !
+nextStep
+nextStep=>1
+findNextTarget
+	Nearest Location:location.name=startArea, ref=2048, x=170, y=170, tmpCost=-1, tmpPrevious.name=NULL
+	computeBestNextTargetAction:
+Result=, size=2
+location.name=startArea, ref=2048, x=170, y=170, tmpCost=0, tmpPrevious.name=NULL
+location.name=bullion1, ref=2072, x=880, y=342, tmpCost=100, tmpPrevious.name=startArea
+		bestTarget:target:name=bullion1, gain=3.0000, status=0
+		bestTargetAction:	action:startLocation=bullion1, end=bullion1, timeToAchieve=2
+handleCurrentTrajectory
+motionFollowPath:goto:location.name=bullion1, ref=2072, x=880, y=342, tmpCost=100, tmpPrevious.name=startArea
+&0370-0156-FC7C-40-40-FF˛Äˇ[00][00][08]B[02]	[18][00][01][02]Ñ[10]Ä[10][02][08][00]B[00]Ñ[00][02]@[00][00][10][02]H[02][08][00][02][00][02][02][04][04]B[08][02][00][00][02]@[00] [04][00][00][00][00]@[00][10][00][00][10][00]@[02][00][00][00][00][00][08][02][10][00][00][08][00][00][00][00][00][00][00][00][00][00][01][00][00][00][00][00][00]$[00][04][00][08][10][04][00][10]$@[02][00][12]Ä[08][02][04][00]Ä@ [00][08]B"[0C]¯ˇˇøCˇ[00]@Ñ[00]Ñ[00]D[02][02][04][10][00][00][00]Ñ[00]Ñ[00]D[10]  [10]Ñ[00][08][10][00]Ä[10][00][04][10]Ä[10][00][00][00]Ä [00] [00][10][00][00][00][00][00][00][08][00][00][02][04][08][00][10][00][02][00][00][00][00][00][02][00][00][02][00][00]ˇSTRATEGY_BOARD
+system:OK
+Strategy:OK
+STRATEGY_BOARD
+system:OK
+Strategy:OK
+setStrategy:3
+setColor:1
+navigationLocationList:, size=21
+location.name=startArea, ref=2048, x=170, y=170, tmpCost=-1, tmpPrevious.name=NULL
+location.name=startAreaFront, ref=2060, x=250, y=700, tmpCost=-1, tmpPrevious.name=NULL
+location.name=bullion1, ref=2072, x=880, y=342, tmpCost=-1, tmpPrevious.name=NULL
+location.name=bottle1, ref=2084, x=1824, y=656, tmpCost=-1, tmpPrevious.name=NULL
+location.name=bottle2Front, ref=2096, x=1500, y=2048, tmpCost=-1, tmpPrevious.name=NULL
+location.name=bottle2, ref=2108, x=1856, y=1872, tmpCost=-1, tmpPrevious.name=NULL
+location.name=dropZone1, ref=2120, x=1000, y=213, tmpCost=-1, tmpPrevious.name=NULL
+location.name=frontOfMapLocation, ref=2132, x=450, y=1500, tmpCost=-1, tmpPrevious.name=NULL
+location.name=bullionRight1, ref=2144, x=1359, y=1440, tmpCost=-1, tmpPrevious.name=NULL
+location.name=bullionLeft1, ref=2156, x=671, y=1440, tmpCost=-1, tmpPrevious.name=NULL
+location.name=bullionMiddle2, ref=2168, x=1000, y=2280, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OL1, ref=2180, x=500, y=700, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OL2, ref=2192, x=500, y=1100, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OL3, ref=2204, x=500, y=1900, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OL4, ref=2216, x=500, y=2300, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OM1, ref=2276, x=1000, y=700, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OM2, ref=2288, x=1000, y=2300, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OR1, ref=2228, x=1500, y=700, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OR2, ref=2240, x=1500, y=1100, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OR3, ref=2252, x=1500, y=1900, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OR4, ref=2264, x=1500, y=2300, tmpCost=-1, tmpPrevious.name=NULL
+PathList:navigationPathList:, size=34
+pathName=startArea->bullion1, cost=100, cp1=64, cp2=64, angle1=675, angle2=-900, accFactor=15, speedFactor=15
+pathName=bullion1->bottle1, cost=80, cp1=-20, cp2=-64, angle1=-900, angle2=1800, accFactor=15, speedFactor=15
+pathName=bottle1->bottle2Front, cost=80, cp1=64, cp2=10, angle1=1800, angle2=1104, accFactor=10, speedFactor=10
+pathName=bottle2Front->bottle2, cost=40, cp1=-32, cp2=-16, angle1=1104, angle2=-1800, accFactor=10, speedFactor=10
+pathName=bullion1->bullionRight1, cost=100, cp1=-80, cp2=-128, angle1=-900, angle2=-900, accFactor=7, speedFactor=10
+pathName=dropZone1->bullionRight1, cost=100, cp1=-80, cp2=-128, angle1=-900, angle2=-900, accFactor=7, speedFactor=10
+pathName=dropZone1->bullionLeft1, cost=100, cp1=-80, cp2=-128, angle1=-900, angle2=-900, accFactor=7, speedFactor=10
+pathName=OL1->OL2, cost=400, cp1=10, cp2=10, angle1=900, angle2=900, accFactor=7, speedFactor=7
+pathName=OL1->OL4, cost=400, cp1=10, cp2=10, angle1=900, angle2=900, accFactor=7, speedFactor=7
+pathName=OL2->OL3, cost=400, cp1=10, cp2=10, angle1=900, angle2=900, accFactor=7, speedFactor=7
+pathName=OL3->OL4, cost=400, cp1=10, cp2=10, angle1=900, angle2=900, accFactor=7, speedFactor=7
+pathName=OL4->OM2, cost=400, cp1=10, cp2=10, angle1=0, angle2=0, accFactor=7, speedFactor=7
+pathName=OL4->OR4, cost=400, cp1=10, cp2=10, angle1=0, angle2=0, accFactor=7, speedFactor=7
+pathName=OM2->OR4, cost=400, cp1=10, cp2=10, angle1=0, angle2=0, accFactor=7, speedFactor=7
+pathName=OR4->OR3, cost=400, cp1=10, cp2=10, angle1=-900, angle2=-900, accFactor=7, speedFactor=7
+pathName=OR4->OR1, cost=400, cp1=10, cp2=10, angle1=-900, angle2=-900, accFactor=7, speedFactor=7
+pathName=OR3->OR2, cost=400, cp1=10, cp2=10, angle1=-900, angle2=-900, accFactor=7, speedFactor=7
+pathName=OR2->OR1, cost=400, cp1=10, cp2=10, angle1=-900, angle2=-900, accFactor=7, speedFactor=7
+pathName=OR1->OM1, cost=400, cp1=10, cp2=10, angle1=1800, angle2=1800, accFactor=7, speedFactor=7
+pathName=OR1->OL1, cost=400, cp1=10, cp2=10, angle1=1800, angle2=1800, accFactor=7, speedFactor=7
+pathName=OM1->OL1, cost=400, cp1=10, cp2=10, angle1=1800, angle2=1800, accFactor=7, speedFactor=7
+pathName=bottle1->OR1, cost=400, cp1=10, cp2=10, angle1=1800, angle2=1800, accFactor=7, speedFactor=7
+pathName=bottle2->OR3, cost=400, cp1=10, cp2=10, angle1=1800, angle2=1800, accFactor=7, speedFactor=7
+pathName=dropZone1->OL1, cost=400, cp1=25, cp2=25, angle1=900, angle2=1800, accFactor=7, speedFactor=7
+pathName=dropZone1->OM1, cost=400, cp1=10, cp2=10, angle1=900, angle2=900, accFactor=7, speedFactor=7
+pathName=dropZone1->OR1, cost=400, cp1=25, cp2=25, angle1=900, angle2=0, accFactor=7, speedFactor=7
+pathName=bullion1->OL1, cost=400, cp1=25, cp2=25, angle1=900, angle2=1800, accFactor=7, speedFactor=7
+pathName=bullion1->OM1, cost=400, cp1=10, cp2=10, angle1=900, angle2=900, accFactor=7, speedFactor=7
+pathName=bullion1->OR1, cost=400, cp1=25, cp2=25, angle1=900, angle2=0, accFactor=7, speedFactor=7
+pathName=bullionLeft1->OL2, cost=400, cp1=10, cp2=10, angle1=-1150, angle2=-1150, accFactor=7, speedFactor=7
+pathName=bullionLeft1->OL4, cost=400, cp1=10, cp2=10, angle1=1000, angle2=1000, accFactor=7, speedFactor=7
+pathName=bullionRight1->OR2, cost=400, cp1=10, cp2=10, angle1=-650, angle2=-650, accFactor=7, speedFactor=7
+pathName=bullionRight1->OR4, cost=400, cp1=10, cp2=10, angle1=900, angle2=800, accFactor=7, speedFactor=7
+pathName=bottle2Front->OR4, cost=400, cp1=10, cp2=10, angle1=900, angle2=900, accFactor=7, speedFactor=7
+
+targetHandledCount:0
+target:name=bullion1, gain=3.0000, status=0
+	action:startLocation=bullion1, end=bullion1, timeToAchieve=2
+target:name=bullionRight1, gain=3.0000, status=0
+	action:startLocation=bullionRight1, end=dropZone1, timeToAchieve=5
+			actionItem:name=rotate
+			actionItem:name=armRightDown
+			actionItem:name=bullionRight1GoToDropZone1
+			actionItem:name=armRightUp
+target:name=bullion1, gain=3.0000, status=0
+	action:startLocation=bullion1, end=bullion1, timeToAchieve=2
+target:name=bottle1, gain=5.0000, status=0
+	action:startLocation=bottle1, end=bottle1, timeToAchieve=2
+target:name=bottle2, gain=5.0000, status=0
+	action:startLocation=bottle2, end=bottle2, timeToAchieve=3
+target:name=cdTake, gain=4.0000, status=0
+	action:startLocation=bottle2, end=dropZone1, timeToAchieve=4
+			actionItem:name=cdTakeStep1
+			actionItem:name=cdTakeStep2
+target:name=bullionRight1, gain=3.0000, status=0
+	action:startLocation=bullionRight1, end=dropZone1, timeToAchieve=5
+			actionItem:name=rotate
+			actionItem:name=armRightDown
+			actionItem:name=bullionRight1GoToDropZone1
+			actionItem:name=armRightUp
+target:name=bullionLeft1, gain=3.0000, status=0
+	action:startLocation=bullionLeft1, end=dropZone1, timeToAchieve=5
+			actionItem:name=rotate
+			actionItem:name=armLeftDown
+			actionItem:name=bullionLeft1GoToDropZone1
+			actionItem:name=armLeftUp
+
+strategy.name=S1
+	strategyItem->target->name=bullion1
+	strategyItem->target->name=bottle1
+	strategyItem->target->name=bottle2
+	strategyItem->target->name=cdTake
+	strategyItem->target->name=bullionRight1
+	strategyItem->target->name=bullionLeft1
+GameStrategyContext
+	strategy.name=S1
+	elapsedMatchTime=0.0000
+	robotPosition=x=160.0000,y=160.0000
+
+	robotAngle (ddeg)=675
+	nearestLocation=NULL
+	opponentRobotPosition=x=0.0000,y=0.0000
+
+	lastObstaclePosition=x=0.0000,y=0.0000
+
+	currentTarget=NULL
+	currentTrajectory:, size=0
+
+	teamColor=1
+	strategyIndex=3
+	maxTargetToHandle=8
+	hasMoreNextSteps=1
+ˇ†˛[00]$à[10]  [00][00]D[08][02][02][00][10][00][00][10][04][11]Ä[00][02][00][00][00][02][00]Ñ[00][02][00][00]@[00]@[00][04][00][10][00]Ä[10] [00][00][00]D[00][10]D[00][00][00]Ä[00][00][00][02]@[00][00][1E][00][00][00][01][00][00][00][00][00][00][02][00][00]STRATEGY_BOARD
+system:OK
+Strategy:OK
+STRATEGY_BOARD
+system:OK
+Strategy:OK
+setStrategy:3
+setColor:1
+navigationLocationList:, size=21
+location.name=startArea, ref=2048, x=170, y=170, tmpCost=-1, tmpPrevious.name=NULL
+location.name=startAreaFront, ref=2060, x=250, y=700, tmpCost=-1, tmpPrevious.name=NULL
+location.name=bullion1, ref=2072, x=880, y=342, tmpCost=-1, tmpPrevious.name=NULL
+location.name=bottle1, ref=2084, x=1824, y=656, tmpCost=-1, tmpPrevious.name=NULL
+location.name=bottle2Front, ref=2096, x=1500, y=2048, tmpCost=-1, tmpPrevious.name=NULL
+location.name=bottle2, ref=2108, x=1856, y=1872, tmpCost=-1, tmpPrevious.name=NULL
+location.name=dropZone1, ref=2120, x=1000, y=213, tmpCost=-1, tmpPrevious.name=NULL
+location.name=frontOfMapLocation, ref=2132, x=450, y=1500, tmpCost=-1, tmpPrevious.name=NULL
+location.name=bullionRight1, ref=2144, x=1359, y=1440, tmpCost=-1, tmpPrevious.name=NULL
+location.name=bullionLeft1, ref=2156, x=671, y=1440, tmpCost=-1, tmpPrevious.name=NULL
+location.name=bullionMiddle2, ref=2168, x=1000, y=2280, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OL1, ref=2180, x=500, y=700, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OL2, ref=2192, x=500, y=1100, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OL3, ref=2204, x=500, y=1900, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OL4, ref=2216, x=500, y=2300, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OM1, ref=2276, x=1000, y=700, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OM2, ref=2288, x=1000, y=2300, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OR1, ref=2228, x=1500, y=700, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OR2, ref=2240, x=1500, y=1100, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OR3, ref=2252, x=1500, y=1900, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OR4, ref=2264, x=1500, y=2300, tmpCost=-1, tmpPrevious.name=NULL
+PathList:navigationPathList:, size=34
+pathName=startArea->bullion1, cost=100, cp1=64, cp2=64, angle1=675, angle2=-900, accFactor=15, speedFactor=15
+pathName=bullion1->bottle1, cost=80, cp1=-20, cp2=-64, angle1=-900, angle2=1800, accFactor=15, speedFactor=15
+pathName=bottle1->bottle2Front, cost=80, cp1=64, cp2=10, angle1=1800, angle2=1104, accFactor=10, speedFactor=10
+pathName=bottle2Front->bottle2, cost=40, cp1=-32, cp2=-16, angle1=1104, angle2=-1800, accFactor=10, speedFactor=10
+pathName=bullion1->bullionRight1, cost=100, cp1=-80, cp2=-128, angle1=-900, angle2=-900, accFactor=7, speedFactor=10
+pathName=dropZone1->bullionRight1, cost=100, cp1=-80, cp2=-128, angle1=-900, angle2=-900, accFactor=7, speedFactor=10
+pathName=dropZone1->bullionLeft1, cost=100, cp1=-80, cp2=-128, angle1=-900, angle2=-900, accFactor=7, speedFactor=10
+pathName=OL1->OL2, cost=400, cp1=10, cp2=10, angle1=900, angle2=900, accFactor=7, speedFactor=7
+pathName=OL1->OL4, cost=400, cp1=10, cp2=10, angle1=900, angle2=900, accFactor=7, speedFactor=7
+pathName=OL2->OL3, cost=400, cp1=10, cp2=10, angle1=900, angle2=900, accFactor=7, speedFactor=7
+pathName=OL3->OL4, cost=400, cp1=10, cp2=10, angle1=900, angle2=900, accFactor=7, speedFactor=7
+pathName=OL4->OM2, cost=400, cp1=10, cp2=10, angle1=0, angle2=0, accFactor=7, speedFactor=7
+pathName=OL4->OR4, cost=400, cp1=10, cp2=10, angle1=0, angle2=0, accFactor=7, speedFactor=7
+pathName=OM2->OR4, cost=400, cp1=10, cp2=10, angle1=0, angle2=0, accFactor=7, speedFactor=7
+pathName=OR4->OR3, cost=400, cp1=10, cp2=10, angle1=-900, angle2=-900, accFactor=7, speedFactor=7
+pathName=OR4->OR1, cost=400, cp1=10, cp2=10, angle1=-900, angle2=-900, accFactor=7, speedFactor=7
+pathName=OR3->OR2, cost=400, cp1=10, cp2=10, angle1=-900, angle2=-900, accFactor=7, speedFactor=7
+pathName=OR2->OR1, cost=400, cp1=10, cp2=10, angle1=-900, angle2=-900, accFactor=7, speedFactor=7
+pathName=OR1->OM1, cost=400, cp1=10, cp2=10, angle1=1800, angle2=1800, accFactor=7, speedFactor=7
+pathName=OR1->OL1, cost=400, cp1=10, cp2=10, angle1=1800, angle2=1800, accFactor=7, speedFactor=7
+pathName=OM1->OL1, cost=400, cp1=10, cp2=10, angle1=1800, angle2=1800, accFactor=7, speedFactor=7
+pathName=bottle1->OR1, cost=400, cp1=10, cp2=10, angle1=1800, angle2=1800, accFactor=7, speedFactor=7
+pathName=bottle2->OR3, cost=400, cp1=10, cp2=10, angle1=1800, angle2=1800, accFactor=7, speedFactor=7
+pathName=dropZone1->OL1, cost=400, cp1=25, cp2=25, angle1=900, angle2=1800, accFactor=7, speedFactor=7
+pathName=dropZone1->OM1, cost=400, cp1=10, cp2=10, angle1=900, angle2=900, accFactor=7, speedFactor=7
+pathName=dropZone1->OR1, cost=400, cp1=25, cp2=25, angle1=900, angle2=0, accFactor=7, speedFactor=7
+pathName=bullion1->OL1, cost=400, cp1=25, cp2=25, angle1=900, angle2=1800, accFactor=7, speedFactor=7
+pathName=bullion1->OM1, cost=400, cp1=10, cp2=10, angle1=900, angle2=900, accFactor=7, speedFactor=7
+pathName=bullion1->OR1, cost=400, cp1=25, cp2=25, angle1=900, angle2=0, accFactor=7, speedFactor=7
+pathName=bullionLeft1->OL2, cost=400, cp1=10, cp2=10, angle1=-1150, angle2=-1150, accFactor=7, speedFactor=7
+pathName=bullionLeft1->OL4, cost=400, cp1=10, cp2=10, angle1=1000, angle2=1000, accFactor=7, speedFactor=7
+pathName=bullionRight1->OR2, cost=400, cp1=10, cp2=10, angle1=-650, angle2=-650, accFactor=7, speedFactor=7
+pathName=bullionRight1->OR4, cost=400, cp1=10, cp2=10, angle1=900, angle2=800, accFactor=7, speedFactor=7
+pathName=bottle2Front->OR4, cost=400, cp1=10, cp2=10, angle1=900, angle2=900, accFactor=7, speedFactor=7
+
+targetHandledCount:0
+target:name=bullion1, gain=3.0000, status=0
+	action:startLocation=bullion1, end=bullion1, timeToAchieve=2
+target:name=bullionRight1, gain=3.0000, status=0
+	action:startLocation=bullionRight1, end=dropZone1, timeToAchieve=5
+			actionItem:name=rotate
+			actionItem:name=armRightDown
+			actionItem:name=bullionRight1GoToDropZone1
+			actionItem:name=armRightUp
+target:name=bullion1, gain=3.0000, status=0
+	action:startLocation=bullion1, end=bullion1, timeToAchieve=2
+target:name=bottle1, gain=5.0000, status=0
+	action:startLocation=bottle1, end=bottle1, timeToAchieve=2
+target:name=bottle2, gain=5.0000, status=0
+	action:startLocation=bottle2, end=bottle2, timeToAchieve=3
+target:name=cdTake, gain=4.0000, status=0
+	action:startLocation=bottle2, end=dropZone1, timeToAchieve=4
+			actionItem:name=cdTakeStep1
+			actionItem:name=cdTakeStep2
+target:name=bullionRight1, gain=3.0000, status=0
+	action:startLocation=bullionRight1, end=dropZone1, timeToAchieve=5
+			actionItem:name=rotate
+			actionItem:name=armRightDown
+			actionItem:name=bullionRight1GoToDropZone1
+			actionItem:name=armRightUp
+target:name=bullionLeft1, gain=3.0000, status=0
+	action:startLocation=bullionLeft1, end=dropZone1, timeToAchieve=5
+			actionItem:name=rotate
+			actionItem:name=armLeftDown
+			actionItem:name=bullionLeft1GoToDropZone1
+			actionItem:name=armLeftUp
+
+strategy.name=S1
+	strategyItem->target->name=bullion1
+	strategyItem->target->name=bottle1
+	strategyItem->target->name=bottle2
+	strategyItem->target->name=cdTake
+	strategyItem->target->name=bullionRight1
+	strategyItem->target->name=bullionLeft1
+GameStrategyContext
+	strategy.name=S1
+	elapsedMatchTime=0.0000
+	robotPosition=x=160.0000,y=160.0000
+
+	robotAngle (ddeg)=675
+	nearestLocation=NULL
+	opponentRobotPosition=x=0.0000,y=0.0000
+
+	lastObstaclePosition=x=0.0000,y=0.0000
+
+	currentTarget=NULL
+	currentTrajectory:, size=0
+
+	teamColor=1
+	strategyIndex=3
+	maxTargetToHandle=8
+	hasMoreNextSteps=1
+
+Updating available paths
+Don't compute Path !
+nextStep
+nextStep=>1
+findNextTarget
+	Nearest Location:location.name=startArea, ref=2048, x=170, y=170, tmpCost=-1, tmpPrevious.name=NULL
+	computeBestNextTargetAction:
+Result=, size=2
+location.name=startArea, ref=2048, x=170, y=170, tmpCost=0, tmpPrevious.name=NULL
+location.name=bullion1, ref=2072, x=880, y=342, tmpCost=100, tmpPrevious.name=startArea
+		bestTarget:target:name=bullion1, gain=3.0000, status=0
+		bestTargetAction:	action:startLocation=bullion1, end=bullion1, timeToAchieve=2
+handleCurrentTrajectory
+motionFollowPath:goto:location.name=bullion1, ref=2072, x=880, y=342, tmpCost=100, tmpPrevious.name=startArea
+&0370-0156-FC7C-40-40-FF
+StrategySetRobotPosition:status=0, x=842, y=346, angle=-900
+
+Updating available paths
+Don't compute Path !
+nextStep
+nextStep=>1
+handleCurrentTrajectory
+no more locations to reach
+nextStep=>2
+executeTargetActions
+-> no actions for this target
+nextStep=>3
+findNextTarget
+	Nearest Location:location.name=bullion1, ref=2072, x=880, y=342, tmpCost=100, tmpPrevious.name=startArea
+	computeBestNextTargetAction:
+Result=, size=2
+location.name=bullion1, ref=2072, x=880, y=342, tmpCost=0, tmpPrevious.name=NULL
+location.name=bottle1, ref=2084, x=1824, y=656, tmpCost=80, tmpPrevious.name=bullion1
+		bestTarget:target:name=bottle1, gain=5.0000, status=0
+		bestTargetAction:	action:startLocation=bottle1, end=bottle1, timeToAchieve=2
+handleCurrentTrajectory
+motionFollowPath:goto:location.name=bottle1, ref=2084, x=1824, y=656, tmpCost=80, tmpPrevious.name=bullion1
+&0720-0290-0708-EC-C0-FF
+StrategySetRobotPosition:status=2, x=1049, y=527, angle=-1640
+
+handleCollision
+Updating available paths
+startArea->bullion1: UNAVAILABLE
+bullion1->bottle1: UNAVAILABLE
+bullion1->bullionRight1: UNAVAILABLE
+dropZone1->bullionLeft1: UNAVAILABLE
+dropZone1->OL1: UNAVAILABLE
+dropZone1->OM1: UNAVAILABLE
+bullion1->OL1: UNAVAILABLE
+bullion1->OM1: UNAVAILABLE
+bullion1->OR1: UNAVAILABLE
+
+Updating available paths
+startArea->bullion1: UNAVAILABLE
+bullion1->bottle1: UNAVAILABLE
+bullion1->bullionRight1: UNAVAILABLE
+dropZone1->bullionLeft1: UNAVAILABLE
+dropZone1->OL1: UNAVAILABLE
+dropZone1->OM1: UNAVAILABLE
+bullion1->OL1: UNAVAILABLE
+bullion1->OM1: UNAVAILABLE
+bullion1->OR1: UNAVAILABLE
+nextStep
+nextStep=>1
+findNextTarget
+	Nearest Location:location.name=OM1, ref=2276, x=1000, y=700, tmpCost=400, tmpPrevious.name=bullion1
+	computeBestNextTargetAction:
+Result=, size=3
+location.name=OM1, ref=2276, x=1000, y=700, tmpCost=0, tmpPrevious.name=NULL
+location.name=OR1, ref=2228, x=1500, y=700, tmpCost=400, tmpPrevious.name=OM1
+location.name=bottle1, ref=2084, x=1824, y=656, tmpCost=800, tmpPrevious.name=OR1
+		bestTarget:target:name=bottle1, gain=5.0000, status=0
+		bestTargetAction:	action:startLocation=bottle1, end=bottle1, timeToAchieve=2
+handleCurrentTrajectory
+motionRotateToFollowPath:angle:1640 ddeg
+l0668
+StrategySetRobotPosition:status=0, x=1163, y=549, angle=-84
+
+Updating available paths
+startArea->bullion1: UNAVAILABLE
+bullion1->bottle1: UNAVAILABLE
+bullion1->bullionRight1: UNAVAILABLE
+dropZone1->bullionLeft1: UNAVAILABLE
+dropZone1->OL1: UNAVAILABLE
+dropZone1->OM1: UNAVAILABLE
+bullion1->OL1: UNAVAILABLE
+bullion1->OM1: UNAVAILABLE
+bullion1->OR1: UNAVAILABLE
+nextStep
+nextStep=>1
+handleCurrentTrajectory
+motionRotateToFollowPath:angle:84 ddeg
+l0054
+StrategySetRobotPosition:status=0, x=1163, y=549, angle=1
+
+Updating available paths
+startArea->bullion1: UNAVAILABLE
+bullion1->bottle1: UNAVAILABLE
+bullion1->bullionRight1: UNAVAILABLE
+dropZone1->bullionLeft1: UNAVAILABLE
+dropZone1->OL1: UNAVAILABLE
+dropZone1->OM1: UNAVAILABLE
+bullion1->OL1: UNAVAILABLE
+bullion1->OM1: UNAVAILABLE
+bullion1->OR1: UNAVAILABLE
+nextStep
+nextStep=>1
+handleCurrentTrajectory
+motionFollowPath:goto:location.name=OR1, ref=2228, x=1500, y=700, tmpCost=400, tmpPrevious.name=OM1
+&05DC-02BC-0000-0A-0A-77
+StrategySetRobotPosition:status=0, x=1494, y=702, angle=1
+
+Updating available paths
+startArea->bullion1: UNAVAILABLE
+bullion1->bottle1: UNAVAILABLE
+bullion1->bullionRight1: UNAVAILABLE
+dropZone1->bullionLeft1: UNAVAILABLE
+dropZone1->OL1: UNAVAILABLE
+dropZone1->OM1: UNAVAILABLE
+bullion1->OL1: UNAVAILABLE
+bullion1->OM1: UNAVAILABLE
+bullion1->OR1: UNAVAILABLE
+nextStep
+nextStep=>1
+handleCurrentTrajectory
+motionFollowPath:goto:location.name=bottle1, ref=2084, x=1824, y=656, tmpCost=800, tmpPrevious.name=OR1
+&0720-0290-0000-0A-0A-77
+StrategySetRobotPosition:status=0, x=1812, y=654, angle=-3
+
+Updating available paths
+startArea->bullion1: UNAVAILABLE
+bullion1->bottle1: UNAVAILABLE
+bullion1->bullionRight1: UNAVAILABLE
+dropZone1->bullionLeft1: UNAVAILABLE
+dropZone1->OL1: UNAVAILABLE
+dropZone1->OM1: UNAVAILABLE
+bullion1->OL1: UNAVAILABLE
+bullion1->OM1: UNAVAILABLE
+bullion1->OR1: UNAVAILABLE
+nextStep
+nextStep=>1
+handleCurrentTrajectory
+no more locations to reach
+nextStep=>2
+executeTargetActions
+-> no actions for this target
+nextStep=>3
+findNextTarget
+	Nearest Location:location.name=bottle1, ref=2084, x=1824, y=656, tmpCost=800, tmpPrevious.name=OR1
+	computeBestNextTargetAction:
+Result=, size=3
+location.name=bottle1, ref=2084, x=1824, y=656, tmpCost=0, tmpPrevious.name=NULL
+location.name=bottle2Front, ref=2096, x=1500, y=2048, tmpCost=80, tmpPrevious.name=bottle1
+location.name=bottle2, ref=2108, x=1856, y=1872, tmpCost=120, tmpPrevious.name=bottle2Front
+		bestTarget:target:name=bottle2, gain=5.0000, status=0
+		bestTargetAction:	action:startLocation=bottle2, end=bottle2, timeToAchieve=3
+handleCurrentTrajectory
+motionRotateToFollowPath:angle:-1797 ddeg
+r0705
+StrategySetRobotPosition:status=0, x=1795, y=649, angle=-1773
+
+Updating available paths
+startArea->bullion1: UNAVAILABLE
+bullion1->bottle1: UNAVAILABLE
+bullion1->bullionRight1: UNAVAILABLE
+dropZone1->bullionLeft1: UNAVAILABLE
+dropZone1->OL1: UNAVAILABLE
+dropZone1->OM1: UNAVAILABLE
+bullion1->OL1: UNAVAILABLE
+bullion1->OM1: UNAVAILABLE
+bullion1->OR1: UNAVAILABLE
+nextStep
+nextStep=>1
+handleCurrentTrajectory
+motionFollowPath:goto:location.name=bottle2Front, ref=2096, x=1500, y=2048, tmpCost=80, tmpPrevious.name=bottle1
+&05DC-0800-0450-40-0A-AA
+StrategySetRobotPosition:status=2, x=1468, y=1603, angle=-2767
+
+handleCollision
+Updating available paths
+bottle1->bottle2Front: UNAVAILABLE
+bottle2Front->bottle2: UNAVAILABLE
+bullion1->bullionRight1: UNAVAILABLE
+dropZone1->bullionRight1: UNAVAILABLE
+OR4->OR3: UNAVAILABLE
+OR4->OR1: UNAVAILABLE
+OR3->OR2: UNAVAILABLE
+bottle2->OR3: UNAVAILABLE
+bullionRight1->OR4: UNAVAILABLE
+bottle2Front->OR4: UNAVAILABLE
+
+Updating available paths
+bottle1->bottle2Front: UNAVAILABLE
+bottle2Front->bottle2: UNAVAILABLE
+bullion1->bullionRight1: UNAVAILABLE
+dropZone1->bullionRight1: UNAVAILABLE
+OR4->OR3: UNAVAILABLE
+OR4->OR1: UNAVAILABLE
+OR3->OR2: UNAVAILABLE
+bottle2->OR3: UNAVAILABLE
+bullionRight1->OR4: UNAVAILABLE
+bottle2Front->OR4: UNAVAILABLE
+nextStep
+nextStep=>1
+findNextTarget
+	Nearest Location:location.name=bullionRight1, ref=2144, x=1359, y=1440, tmpCost=880, tmpPrevious.name=OR4
+	computeBestNextTargetAction:
+Result=, size=1
+location.name=bullionRight1, ref=2144, x=1359, y=1440, tmpCost=0, tmpPrevious.name=NULL
+		bestTarget:target:name=bullionRight1, gain=3.0000, status=0
+		bestTargetAction:	action:startLocation=bullionRight1, end=dropZone1, timeToAchieve=5
+handleCurrentTrajectory
+no more locations to reach
+nextStep=>2
+executeTargetActions
+			actionItem:name=rotate
+rotateAbsolute:angle:-1733 ddeg
+r06C5
+StrategySetRobotPosition:status=0, x=1473, y=1731, angle=-4459
+
+Updating available paths
+bottle1->bottle2Front: UNAVAILABLE
+bottle2Front->bottle2: UNAVAILABLE
+bullion1->bullionRight1: UNAVAILABLE
+dropZone1->bullionRight1: UNAVAILABLE
+OR4->OR3: UNAVAILABLE
+OR4->OR1: UNAVAILABLE
+OR3->OR2: UNAVAILABLE
+bottle2->OR3: UNAVAILABLE
+bullionRight1->OR4: UNAVAILABLE
+bottle2Front->OR4: UNAVAILABLE
+nextStep
+nextStep=>1
+executeTargetActions
+			actionItem:name=armRightDown
+J02
+Updating available paths
+bottle1->bottle2Front: UNAVAILABLE
+bottle2Front->bottle2: UNAVAILABLE
+bullion1->bullionRight1: UNAVAILABLE
+dropZone1->bullionRight1: UNAVAILABLE
+OR4->OR3: UNAVAILABLE
+OR4->OR1: UNAVAILABLE
+OR3->OR2: UNAVAILABLE
+bottle2->OR3: UNAVAILABLE
+bullionRight1->OR4: UNAVAILABLE
+bottle2Front->OR4: UNAVAILABLE
+nextStep
+nextStep=>1
+executeTargetActions
+			actionItem:name=bullionRight1GoToDropZone1
+motionGoLocation:goto:location.name=dropZone1, ref=2120, x=1000, y=213, tmpCost=1200, tmpPrevious.name=OR1
+&03E8-00D5-FC7C-78-40-44
+StrategySetRobotPosition:status=0, x=998, y=225, angle=-4500
+
+Updating available paths
+bottle1->bottle2Front: UNAVAILABLE
+bottle2Front->bottle2: UNAVAILABLE
+bullion1->bullionRight1: UNAVAILABLE
+dropZone1->bullionRight1: UNAVAILABLE
+OR4->OR3: UNAVAILABLE
+OR4->OR1: UNAVAILABLE
+OR3->OR2: UNAVAILABLE
+bottle2->OR3: UNAVAILABLE
+bullionRight1->OR4: UNAVAILABLE
+bottle2Front->OR4: UNAVAILABLE
+nextStep
+nextStep=>1
+executeTargetActions
+			actionItem:name=armRightUp
+I02˛OB[02][00]@"Ç[00][02][00][10][00]@[00][00]HD[02]Äê[10][08][00][10]@[00]@Ä[00]@[00][00][00][08][10][00][00][00][10]@[00]B[01][00]@@[02][00] [00][02][00][00][02][00][00][00][00][00][00][00] [00][04][00][01][10][04][00][10][00]Ñ[00][00][00][00][00][00]à[00][00][10][00][00][00][00][00][00][00][10][01][00][00][10][00][00][00][08][04][00][00]ˇ˚[17][18][00][01]D [02][10]à[10][04]à[10][04][00][10][10]Ä[10][10][08][10][04][08][00]@[00]Ä[10]Ä[00][00]Å[00][00]@[04][10][02][00][10][10][00][10][10][00][00][10][00][00][00][00]Ä[10][00]@[08][08][00][00][02][00][10][08][00][00][12][04][00]
+[00][08][02][00][00][00][00][01][00][00]STRATEGY_BOARD
+system:OK
+Strategy:OK
+STRATEGY_BOARD
+system:OK
+Strategy:OK
+setStrategy:3
+setColor:1
+navigationLocationList:, size=21
+location.name=startArea, ref=2048, x=170, y=170, tmpCost=-1, tmpPrevious.name=NULL
+location.name=startAreaFront, ref=2060, x=250, y=700, tmpCost=-1, tmpPrevious.name=NULL
+location.name=bullion1, ref=2072, x=880, y=342, tmpCost=-1, tmpPrevious.name=NULL
+location.name=bottle1, ref=2084, x=1824, y=656, tmpCost=-1, tmpPrevious.name=NULL
+location.name=bottle2Front, ref=2096, x=1500, y=2048, tmpCost=-1, tmpPrevious.name=NULL
+location.name=bottle2, ref=2108, x=1856, y=1872, tmpCost=-1, tmpPrevious.name=NULL
+location.name=dropZone1, ref=2120, x=1000, y=213, tmpCost=-1, tmpPrevious.name=NULL
+location.name=frontOfMapLocation, ref=2132, x=450, y=1500, tmpCost=-1, tmpPrevious.name=NULL
+location.name=bullionRight1, ref=2144, x=1359, y=1440, tmpCost=-1, tmpPrevious.name=NULL
+location.name=bullionLeft1, ref=2156, x=671, y=1440, tmpCost=-1, tmpPrevious.name=NULL
+location.name=bullionMiddle2, ref=2168, x=1000, y=2280, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OL1, ref=2180, x=500, y=700, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OL2, ref=2192, x=500, y=1100, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OL3, ref=2204, x=500, y=1900, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OL4, ref=2216, x=500, y=2300, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OM1, ref=2276, x=1000, y=700, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OM2, ref=2288, x=1000, y=2300, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OR1, ref=2228, x=1500, y=700, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OR2, ref=2240, x=1500, y=1100, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OR3, ref=2252, x=1500, y=1900, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OR4, ref=2264, x=1500, y=2300, tmpCost=-1, tmpPrevious.name=NULL
+PathList:navigationPathList:, size=34
+pathName=startArea->bullion1, cost=100, cp1=64, cp2=64, angle1=675, angle2=-900, accFactor=15, speedFactor=15
+pathName=bullion1->bottle1, cost=80, cp1=-20, cp2=-64, angle1=-900, angle2=1800, accFactor=15, speedFactor=15
+pathName=bottle1->bottle2Front, cost=80, cp1=64, cp2=10, angle1=1800, angle2=1104, accFactor=10, speedFactor=10
+pathName=bottle2Front->bottle2, cost=40, cp1=-32, cp2=-16, angle1=1104, angle2=-1800, accFactor=10, speedFactor=10
+pathName=bullion1->bullionRight1, cost=100, cp1=-80, cp2=-128, angle1=-900, angle2=-900, accFactor=7, speedFactor=10
+pathName=dropZone1->bullionRight1, cost=100, cp1=-80, cp2=-128, angle1=-900, angle2=-900, accFactor=7, speedFactor=10
+pathName=dropZone1->bullionLeft1, cost=100, cp1=-80, cp2=-128, angle1=-900, angle2=-900, accFactor=7, speedFactor=10
+pathName=OL1->OL2, cost=400, cp1=10, cp2=10, angle1=900, angle2=900, accFactor=7, speedFactor=7
+pathName=OL1->OL4, cost=400, cp1=10, cp2=10, angle1=900, angle2=900, accFactor=7, speedFactor=7
+pathName=OL2->OL3, cost=400, cp1=10, cp2=10, angle1=900, angle2=900, accFactor=7, speedFactor=7
+pathName=OL3->OL4, cost=400, cp1=10, cp2=10, angle1=900, angle2=900, accFactor=7, speedFactor=7
+pathName=OL4->OM2, cost=400, cp1=10, cp2=10, angle1=0, angle2=0, accFactor=7, speedFactor=7
+pathName=OL4->OR4, cost=400, cp1=10, cp2=10, angle1=0, angle2=0, accFactor=7, speedFactor=7
+pathName=OM2->OR4, cost=400, cp1=10, cp2=10, angle1=0, angle2=0, accFactor=7, speedFactor=7
+pathName=OR4->OR3, cost=400, cp1=10, cp2=10, angle1=-900, angle2=-900, accFactor=7, speedFactor=7
+pathName=OR4->OR1, cost=400, cp1=10, cp2=10, angle1=-900, angle2=-900, accFactor=7, speedFactor=7
+pathName=OR3->OR2, cost=400, cp1=10, cp2=10, angle1=-900, angle2=-900, accFactor=7, speedFactor=7
+pathName=OR2->OR1, cost=400, cp1=10, cp2=10, angle1=-900, angle2=-900, accFactor=7, speedFactor=7
+pathName=OR1->OM1, cost=400, cp1=10, cp2=10, angle1=1800, angle2=1800, accFactor=7, speedFactor=7
+pathName=OR1->OL1, cost=400, cp1=10, cp2=10, angle1=1800, angle2=1800, accFactor=7, speedFactor=7
+pathName=OM1->OL1, cost=400, cp1=10, cp2=10, angle1=1800, angle2=1800, accFactor=7, speedFactor=7
+pathName=bottle1->OR1, cost=400, cp1=10, cp2=10, angle1=1800, angle2=1800, accFactor=7, speedFactor=7
+pathName=bottle2->OR3, cost=400, cp1=10, cp2=10, angle1=1800, angle2=1800, accFactor=7, speedFactor=7
+pathName=dropZone1->OL1, cost=400, cp1=25, cp2=25, angle1=900, angle2=1800, accFactor=7, speedFactor=7
+pathName=dropZone1->OM1, cost=400, cp1=10, cp2=10, angle1=900, angle2=900, accFactor=7, speedFactor=7
+pathName=dropZone1->OR1, cost=400, cp1=25, cp2=25, angle1=900, angle2=0, accFactor=7, speedFactor=7
+pathName=bullion1->OL1, cost=400, cp1=25, cp2=25, angle1=900, angle2=1800, accFactor=7, speedFactor=7
+pathName=bullion1->OM1, cost=400, cp1=10, cp2=10, angle1=900, angle2=900, accFactor=7, speedFactor=7
+pathName=bullion1->OR1, cost=400, cp1=25, cp2=25, angle1=900, angle2=0, accFactor=7, speedFactor=7
+pathName=bullionLeft1->OL2, cost=400, cp1=10, cp2=10, angle1=-1150, angle2=-1150, accFactor=7, speedFactor=7
+pathName=bullionLeft1->OL4, cost=400, cp1=10, cp2=10, angle1=1000, angle2=1000, accFactor=7, speedFactor=7
+pathName=bullionRight1->OR2, cost=400, cp1=10, cp2=10, angle1=-650, angle2=-650, accFactor=7, speedFactor=7
+pathName=bullionRight1->OR4, cost=400, cp1=10, cp2=10, angle1=900, angle2=800, accFactor=7, speedFactor=7
+pathName=bottle2Front->OR4, cost=400, cp1=10, cp2=10, angle1=900, angle2=900, accFactor=7, speedFactor=7
+
+targetHandledCount:0
+target:name=bullion1, gain=3.0000, status=0
+	action:startLocation=bullion1, end=bullion1, timeToAchieve=2
+target:name=bullionRight1, gain=3.0000, status=0
+	action:startLocation=bullionRight1, end=dropZone1, timeToAchieve=5
+			actionItem:name=rotate
+			actionItem:name=armRightDown
+			actionItem:name=bullionRight1GoToDropZone1
+			actionItem:name=armRightUp
+target:name=bullion1, gain=3.0000, status=0
+	action:startLocation=bullion1, end=bullion1, timeToAchieve=2
+target:name=bottle1, gain=5.0000, status=0
+	action:startLocation=bottle1, end=bottle1, timeToAchieve=2
+target:name=bottle2, gain=5.0000, status=0
+	action:startLocation=bottle2, end=bottle2, timeToAchieve=3
+target:name=cdTake, gain=4.0000, status=0
+	action:startLocation=bottle2, end=dropZone1, timeToAchieve=4
+			actionItem:name=cdTakeStep1
+			actionItem:name=cdTakeStep2
+target:name=bullionRight1, gain=3.0000, status=0
+	action:startLocation=bullionRight1, end=dropZone1, timeToAchieve=5
+			actionItem:name=rotate
+			actionItem:name=armRightDown
+			actionItem:name=bullionRight1GoToDropZone1
+			actionItem:name=armRightUp
+target:name=bullionLeft1, gain=3.0000, status=0
+	action:startLocation=bullionLeft1, end=dropZone1, timeToAchieve=5
+			actionItem:name=rotate
+			actionItem:name=armLeftDown
+			actionItem:name=bullionLeft1GoToDropZone1
+			actionItem:name=armLeftUp
+
+strategy.name=S1
+	strategyItem->target->name=bullion1
+	strategyItem->target->name=bottle1
+	strategyItem->target->name=bottle2
+	strategyItem->target->name=cdTake
+	strategyItem->target->name=bullionRight1
+	strategyItem->target->name=bullionLeft1
+GameStrategyContext
+	strategy.name=S1
+	elapsedMatchTime=0.0000
+	robotPosition=x=160.0000,y=160.0000
+
+	robotAngle (ddeg)=675
+	nearestLocation=NULL
+	opponentRobotPosition=x=0.0000,y=0.0000
+
+	lastObstaclePosition=x=0.0000,y=0.0000
+
+	currentTarget=NULL
+	currentTrajectory:, size=0
+
+	teamColor=1
+	strategyIndex=3
+	maxTargetToHandle=8
+	hasMoreNextSteps=1
+˛[08]@@[10][00][00][02][00]B! [08][10][04]Ñ[10][04][00][11][00]BÄ[02][04][10][00]Ñ[10][04][01][10] Ñ[00][08]@@[02]B[10][10][00][01][00][00][00]"Ä[08][10][00]Ñ[10][00][02][00][02][00][12][00][08][12][1F]@[00][00][01]@[00][00][10][00][00][00]@[04][00][00][00][02][00][00][00]STRATEGY_BOARD
+system:OK
+Strategy:OK
+STRATEGY_BOARD
+system:OK
+Strategy:OK
+setStrategy:3
+setColor:1
+navigationLocationList:, size=21
+location.name=startArea, ref=2048, x=170, y=170, tmpCost=-1, tmpPrevious.name=NULL
+location.name=startAreaFront, ref=2060, x=250, y=700, tmpCost=-1, tmpPrevious.name=NULL
+location.name=bullion1, ref=2072, x=880, y=342, tmpCost=-1, tmpPrevious.name=NULL
+location.name=bottle1, ref=2084, x=1824, y=656, tmpCost=-1, tmpPrevious.name=NULL
+location.name=bottle2Front, ref=2096, x=1500, y=2048, tmpCost=-1, tmpPrevious.name=NULL
+location.name=bottle2, ref=2108, x=1856, y=1872, tmpCost=-1, tmpPrevious.name=NULL
+location.name=dropZone1, ref=2120, x=1000, y=213, tmpCost=-1, tmpPrevious.name=NULL
+location.name=frontOfMapLocation, ref=2132, x=450, y=1500, tmpCost=-1, tmpPrevious.name=NULL
+location.name=bullionRight1, ref=2144, x=1359, y=1440, tmpCost=-1, tmpPrevious.name=NULL
+location.name=bullionLeft1, ref=2156, x=671, y=1440, tmpCost=-1, tmpPrevious.name=NULL
+location.name=bullionMiddle2, ref=2168, x=1000, y=2280, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OL1, ref=2180, x=500, y=700, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OL2, ref=2192, x=500, y=1100, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OL3, ref=2204, x=500, y=1900, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OL4, ref=2216, x=500, y=2300, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OM1, ref=2276, x=1000, y=700, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OM2, ref=2288, x=1000, y=2300, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OR1, ref=2228, x=1500, y=700, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OR2, ref=2240, x=1500, y=1100, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OR3, ref=2252, x=1500, y=1900, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OR4, ref=2264, x=1500, y=2300, tmpCost=-1, tmpPrevious.name=NULL
+PathList:navigationPathList:, size=34
+pathName=startArea->bullion1, cost=100, cp1=64, cp2=64, angle1=675, angle2=-900, accFactor=15, speedFactor=15
+pathName=bullion1->bottle1, cost=80, cp1=-20, cp2=-64, angle1=-900, angle2=1800, accFactor=15, speedFactor=15
+pathName=bottle1->bottle2Front, cost=80, cp1=64, cp2=10, angle1=1800, angle2=1104, accFactor=10, speedFactor=10
+pathName=bottle2Front->bottle2, cost=40, cp1=-32, cp2=-16, angle1=1104, angle2=-1800, accFactor=10, speedFactor=10
+pathName=bullion1->bullionRight1, cost=100, cp1=-80, cp2=-128, angle1=-900, angle2=-900, accFactor=7, speedFactor=10
+pathName=dropZone1->bullionRight1, cost=100, cp1=-80, cp2=-128, angle1=-900, angle2=-900, accFactor=7, speedFactor=10
+pathName=dropZone1->bullionLeft1, cost=100, cp1=-80, cp2=-128, angle1=-900, angle2=-900, accFactor=7, speedFactor=10
+pathName=OL1->OL2, cost=400, cp1=10, cp2=10, angle1=900, angle2=900, accFactor=7, speedFactor=7
+pathName=OL1->OL4, cost=400, cp1=10, cp2=10, angle1=900, angle2=900, accFactor=7, speedFactor=7
+pathName=OL2->OL3, cost=400, cp1=10, cp2=10, angle1=900, angle2=900, accFactor=7, speedFactor=7
+pathName=OL3->OL4, cost=400, cp1=10, cp2=10, angle1=900, angle2=900, accFactor=7, speedFactor=7
+pathName=OL4->OM2, cost=400, cp1=10, cp2=10, angle1=0, angle2=0, accFactor=7, speedFactor=7
+pathName=OL4->OR4, cost=400, cp1=10, cp2=10, angle1=0, angle2=0, accFactor=7, speedFactor=7
+pathName=OM2->OR4, cost=400, cp1=10, cp2=10, angle1=0, angle2=0, accFactor=7, speedFactor=7
+pathName=OR4->OR3, cost=400, cp1=10, cp2=10, angle1=-900, angle2=-900, accFactor=7, speedFactor=7
+pathName=OR4->OR1, cost=400, cp1=10, cp2=10, angle1=-900, angle2=-900, accFactor=7, speedFactor=7
+pathName=OR3->OR2, cost=400, cp1=10, cp2=10, angle1=-900, angle2=-900, accFactor=7, speedFactor=7
+pathName=OR2->OR1, cost=400, cp1=10, cp2=10, angle1=-900, angle2=-900, accFactor=7, speedFactor=7
+pathName=OR1->OM1, cost=400, cp1=10, cp2=10, angle1=1800, angle2=1800, accFactor=7, speedFactor=7
+pathName=OR1->OL1, cost=400, cp1=10, cp2=10, angle1=1800, angle2=1800, accFactor=7, speedFactor=7
+pathName=OM1->OL1, cost=400, cp1=10, cp2=10, angle1=1800, angle2=1800, accFactor=7, speedFactor=7
+pathName=bottle1->OR1, cost=400, cp1=10, cp2=10, angle1=1800, angle2=1800, accFactor=7, speedFactor=7
+pathName=bottle2->OR3, cost=400, cp1=10, cp2=10, angle1=1800, angle2=1800, accFactor=7, speedFactor=7
+pathName=dropZone1->OL1, cost=400, cp1=25, cp2=25, angle1=900, angle2=1800, accFactor=7, speedFactor=7
+pathName=dropZone1->OM1, cost=400, cp1=10, cp2=10, angle1=900, angle2=900, accFactor=7, speedFactor=7
+pathName=dropZone1->OR1, cost=400, cp1=25, cp2=25, angle1=900, angle2=0, accFactor=7, speedFactor=7
+pathName=bullion1->OL1, cost=400, cp1=25, cp2=25, angle1=900, angle2=1800, accFactor=7, speedFactor=7
+pathName=bullion1->OM1, cost=400, cp1=10, cp2=10, angle1=900, angle2=900, accFactor=7, speedFactor=7
+pathName=bullion1->OR1, cost=400, cp1=25, cp2=25, angle1=900, angle2=0, accFactor=7, speedFactor=7
+pathName=bullionLeft1->OL2, cost=400, cp1=10, cp2=10, angle1=-1150, angle2=-1150, accFactor=7, speedFactor=7
+pathName=bullionLeft1->OL4, cost=400, cp1=10, cp2=10, angle1=1000, angle2=1000, accFactor=7, speedFactor=7
+pathName=bullionRight1->OR2, cost=400, cp1=10, cp2=10, angle1=-650, angle2=-650, accFactor=7, speedFactor=7
+pathName=bullionRight1->OR4, cost=400, cp1=10, cp2=10, angle1=900, angle2=800, accFactor=7, speedFactor=7
+pathName=bottle2Front->OR4, cost=400, cp1=10, cp2=10, angle1=900, angle2=900, accFactor=7, speedFactor=7
+
+targetHandledCount:0
+target:name=bullion1, gain=3.0000, status=0
+	action:startLocation=bullion1, end=bullion1, timeToAchieve=2
+target:name=bullionRight1, gain=3.0000, status=0
+	action:startLocation=bullionRight1, end=dropZone1, timeToAchieve=5
+			actionItem:name=rotate
+			actionItem:name=armRightDown
+			actionItem:name=bullionRight1GoToDropZone1
+			actionItem:name=armRightUp
+target:name=bullion1, gain=3.0000, status=0
+	action:startLocation=bullion1, end=bullion1, timeToAchieve=2
+target:name=bottle1, gain=5.0000, status=0
+	action:startLocation=bottle1, end=bottle1, timeToAchieve=2
+target:name=bottle2, gain=5.0000, status=0
+	action:startLocation=bottle2, end=bottle2, timeToAchieve=3
+target:name=cdTake, gain=4.0000, status=0
+	action:startLocation=bottle2, end=dropZone1, timeToAchieve=4
+			actionItem:name=cdTakeStep1
+			actionItem:name=cdTakeStep2
+target:name=bullionRight1, gain=3.0000, status=0
+	action:startLocation=bullionRight1, end=dropZone1, timeToAchieve=5
+			actionItem:name=rotate
+			actionItem:name=armRightDown
+			actionItem:name=bullionRight1GoToDropZone1
+			actionItem:name=armRightUp
+target:name=bullionLeft1, gain=3.0000, status=0
+	action:startLocation=bullionLeft1, end=dropZone1, timeToAchieve=5
+			actionItem:name=rotate
+			actionItem:name=armLeftDown
+			actionItem:name=bullionLeft1GoToDropZone1
+			actionItem:name=armLeftUp
+
+strategy.name=S1
+	strategyItem->target->name=bullion1
+	strategyItem->target->name=bottle1
+	strategyItem->target->name=bottle2
+	strategyItem->target->name=cdTake
+	strategyItem->target->name=bullionRight1
+	strategyItem->target->name=bullionLeft1
+GameStrategyContext
+	strategy.name=S1
+	elapsedMatchTime=0.0000
+	robotPosition=x=160.0000,y=160.0000
+
+	robotAngle (ddeg)=675
+	nearestLocation=NULL
+	opponentRobotPosition=x=0.0000,y=0.0000
+
+	lastObstaclePosition=x=0.0000,y=0.0000
+
+	currentTarget=NULL
+	currentTrajectory:, size=0
+
+	teamColor=1
+	strategyIndex=3
+	maxTargetToHandle=8
+	hasMoreNextSteps=1
+
+Updating available paths
+Don't compute Path !
+nextStep
+nextStep=>1
+findNextTarget
+	Nearest Location:location.name=startArea, ref=2048, x=170, y=170, tmpCost=-1, tmpPrevious.name=NULL
+	computeBestNextTargetAction:
+Result=, size=2
+location.name=startArea, ref=2048, x=170, y=170, tmpCost=0, tmpPrevious.name=NULL
+location.name=bullion1, ref=2072, x=880, y=342, tmpCost=100, tmpPrevious.name=startArea
+		bestTarget:target:name=bullion1, gain=3.0000, status=0
+		bestTargetAction:	action:startLocation=bullion1, end=bullion1, timeToAchieve=2
+handleCurrentTrajectory
+motionFollowPath:goto:location.name=bullion1, ref=2072, x=880, y=342, tmpCost=100, tmpPrevious.name=startArea
+&0370-0156-FC7C-40-40-FF
+StrategySetRobotPosition:status=0, x=839, y=346, angle=-899
+
+Updating available paths
+nextStep
+nextStep=>1
+handleCurrentTrajectory
+no more locations to reach
+nextStep=>2
+executeTargetActions
+-> no actions for this target
+nextStep=>3
+findNextTarget
+	Nearest Location:location.name=bullion1, ref=2072, x=880, y=342, tmpCost=100, tmpPrevious.name=startArea
+	computeBestNextTargetAction:
+Result=, size=2
+location.name=bullion1, ref=2072, x=880, y=342, tmpCost=0, tmpPrevious.name=NULL
+location.name=bottle1, ref=2084, x=1824, y=656, tmpCost=80, tmpPrevious.name=bullion1
+		bestTarget:target:name=bottle1, gain=5.0000, status=0
+		bestTargetAction:	action:startLocation=bottle1, end=bottle1, timeToAchieve=2
+handleCurrentTrajectory
+motionFollowPath:goto:location.name=bottle1, ref=2084, x=1824, y=656, tmpCost=80, tmpPrevious.name=bullion1
+&0720-0290-0708-EC-C0-FF
+StrategySetRobotPosition:status=2, x=853, y=397, angle=-1154
+
+handleCollision
+Updating available paths
+
+Updating available paths
+nextStep
+nextStep=>1
+findNextTarget
+	Nearest Location:location.name=bullion1, ref=2072, x=880, y=342, tmpCost=0, tmpPrevious.name=NULL
+	computeBestNextTargetAction:
+Result=, size=2
+location.name=bullion1, ref=2072, x=880, y=342, tmpCost=0, tmpPrevious.name=NULL
+location.name=bottle1, ref=2084, x=1824, y=656, tmpCost=80, tmpPrevious.name=bullion1
+		bestTarget:target:name=bottle1, gain=5.0000, status=0
+		bestTargetAction:	action:startLocation=bottle1, end=bottle1, timeToAchieve=2
+handleCurrentTrajectory
+motionRotateToFollowPath:angle:254 ddeg
+l00FE
+StrategySetRobotPosition:status=0, x=865, y=416, angle=-969
+
+Updating available paths
+nextStep
+nextStep=>1
+handleCurrentTrajectory
+motionRotateToFollowPath:angle:69 ddeg
+l0045
+StrategySetRobotPosition:status=0, x=865, y=418, angle=-905
+
+Updating available paths
+nextStep
+nextStep=>1
+handleCurrentTrajectory
+motionFollowPath:goto:location.name=bottle1, ref=2084, x=1824, y=656, tmpCost=80, tmpPrevious.name=bullion1
+&0720-0290-0708-EC-C0-FF
+StrategySetRobotPosition:status=0, x=1816, y=614, angle=-1799
+
+Updating available paths
+bullion1->bullionRight1: UNAVAILABLE
+dropZone1->bullionRight1: UNAVAILABLE
+bullionRight1->OR4: UNAVAILABLE
+nextStep
+nextStep=>1
+handleCurrentTrajectory
+no more locations to reach
+nextStep=>2
+executeTargetActions
+-> no actions for this target
+nextStep=>3
+findNextTarget
+	Nearest Location:location.name=bottle1, ref=2084, x=1824, y=656, tmpCost=80, tmpPrevious.name=bullion1
+	computeBestNextTargetAction:
+Result=, size=3
+location.name=bottle1, ref=2084, x=1824, y=656, tmpCost=0, tmpPrevious.name=NULL
+location.name=bottle2Front, ref=2096, x=1500, y=2048, tmpCost=80, tmpPrevious.name=bottle1
+location.name=bottle2, ref=2108, x=1856, y=1872, tmpCost=120, tmpPrevious.name=bottle2Front
+		bestTarget:target:name=bottle2, gain=5.0000, status=0
+		bestTargetAction:	action:startLocation=bottle2, end=bottle2, timeToAchieve=3
+handleCurrentTrajectory
+motionFollowPath:goto:location.name=bottle2Front, ref=2096, x=1500, y=2048, tmpCost=80, tmpPrevious.name=bottle1
+&05DC-0800-0450-40-0A-AA
+StrategySetRobotPosition:status=2, x=1525, y=809, angle=-2453
+
+handleCollision
+Updating available paths
+bottle1->bottle2Front: UNAVAILABLE
+bullion1->bullionRight1: UNAVAILABLE
+dropZone1->bullionRight1: UNAVAILABLE
+OR4->OR1: UNAVAILABLE
+OR3->OR2: UNAVAILABLE
+OR2->OR1: UNAVAILABLE
+bullionRight1->OR2: UNAVAILABLE
+bullionRight1->OR4: UNAVAILABLE
+
+Updating available paths
+bottle1->bottle2Front: UNAVAILABLE
+OL4->OM2: UNAVAILABLE
+OL4->OR4: UNAVAILABLE
+OM2->OR4: UNAVAILABLE
+OR4->OR1: UNAVAILABLE
+OR3->OR2: UNAVAILABLE
+OR2->OR1: UNAVAILABLE
+bullionRight1->OR2: UNAVAILABLE
+nextStep
+nextStep=>1
+findNextTarget
+	Nearest Location:location.name=OR1, ref=2228, x=1500, y=700, tmpCost=400, tmpPrevious.name=bottle1
+	computeBestNextTargetAction:
+Result=, size=3
+location.name=OR1, ref=2228, x=1500, y=700, tmpCost=0, tmpPrevious.name=NULL
+location.name=dropZone1, ref=2120, x=1000, y=213, tmpCost=400, tmpPrevious.name=OR1
+location.name=bullionRight1, ref=2144, x=1359, y=1440, tmpCost=500, tmpPrevious.name=dropZone1
+		bestTarget:target:name=bullionRight1, gain=3.0000, status=0
+		bestTargetAction:	action:startLocation=bullionRight1, end=dropZone1, timeToAchieve=5
+handleCurrentTrajectory
+motionRotateToFollowPath:angle:653 ddeg
+l028D
+StrategySetRobotPosition:status=0, x=1491, y=881, angle=-1876
+
+Updating available paths
+bottle1->bottle2Front: UNAVAILABLE
+OL4->OM2: UNAVAILABLE
+OL4->OR4: UNAVAILABLE
+OM2->OR4: UNAVAILABLE
+OR4->OR1: UNAVAILABLE
+OR3->OR2: UNAVAILABLE
+OR2->OR1: UNAVAILABLE
+bullionRight1->OR2: UNAVAILABLE
+nextStep
+nextStep=>1
+handleCurrentTrajectory
+motionRotateToFollowPath:angle:76 ddeg
+l004C
+StrategySetRobotPosition:status=0, x=1492, y=881, angle=-1794
+
+Updating available paths
+bottle1->bottle2Front: UNAVAILABLE
+bullion1->bullionRight1: UNAVAILABLE
+OR4->OR1: UNAVAILABLE
+OR3->OR2: UNAVAILABLE
+OR2->OR1: UNAVAILABLE
+bullionRight1->OR2: UNAVAILABLE
+nextStep
+nextStep=>1
+handleCurrentTrajectory
+motionFollowPath:goto:location.name=dropZone1, ref=2120, x=1000, y=213, tmpCost=400, tmpPrevious.name=OR1
+&03E8-00D5-FC7C-19-19-77
+StrategySetRobotPosition:status=0, x=1016, y=221, angle=-902
+
+Updating available paths
+bottle1->bottle2Front: UNAVAILABLE
+OL4->OR4: UNAVAILABLE
+OM2->OR4: UNAVAILABLE
+OR4->OR1: UNAVAILABLE
+OR3->OR2: UNAVAILABLE
+OR2->OR1: UNAVAILABLE
+bullionRight1->OR2: UNAVAILABLE
+nextStep
+nextStep=>1
+handleCurrentTrajectory
+motionFollowPath:goto:location.name=bullionRight1, ref=2144, x=1359, y=1440, tmpCost=500, tmpPrevious.name=dropZone1
+&054F-05A0-FC7C-B0-80-7A
+StrategySetRobotPosition:status=0, x=1363, y=1432, angle=-900
+
+Updating available paths
+bottle1->bottle2Front: UNAVAILABLE
+OL4->OM2: UNAVAILABLE
+OL4->OR4: UNAVAILABLE
+OM2->OR4: UNAVAILABLE
+OR4->OR1: UNAVAILABLE
+OR3->OR2: UNAVAILABLE
+OR2->OR1: UNAVAILABLE
+bullionRight1->OR2: UNAVAILABLE
+nextStep
+nextStep=>1
+handleCurrentTrajectory
+no more locations to reach
+nextStep=>2
+executeTargetActions
+			actionItem:name=rotate
+rotateAbsolute:angle:0 ddeg
+r0000`x[00]
+[00][06][02][02][02]b[06][04] 8[00][00]@Å[00][02][00]@DA[11][00][00][00][00]Ä[00][00][04][00][00]
