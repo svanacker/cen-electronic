@@ -6,6 +6,8 @@ SV: Gestion de la collision avec les pinces ouvertes=> a fermer
 // 2h30 -> 3h30
 SV : Gérer les obstacles en dehors de la piste => ne pas notifier
 
+SV : Refaire fonctionner les balises de Beacon Receiver + gérer sous forme de notification et non 
+pas d'appel explicite avec un Timer !!!
 
 
 SV/EZ : Strategy Board : Clearer le LastObstacle avec un Timer ou un certain nombre de NextStep

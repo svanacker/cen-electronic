@@ -16,8 +16,11 @@
 #define GP2D12_RIGHT_ANX_INDEX			0
 #define GP2DY0A02YK_CENTER_ANX_INDEX	2
 
-/** Distance for detection. */
-#define ROBOT_INFRARED_DETECTOR_DISTANCE_THRESHOLD_CM		50
+/** Distance for detection for the center. */
+#define ROBOT_INFRARED_DETECTOR_DISTANCE_THRESHOLD_CENTER_CM		40
+#define ROBOT_INFRARED_DETECTOR_DISTANCE_THRESHOLD_LEFT_CM			25
+#define ROBOT_INFRARED_DETECTOR_DISTANCE_THRESHOLD_RIGHT_CM			25
+
 
 /** Avoid to notify always. */
 #define NOTIFY_INFRARED_DETECTOR_TIMER_CYCLE				40
@@ -57,9 +60,9 @@ void robotInfraredDetectorCallback() {
 	float centerDistance = gp2y0a02ykGetCentimerDistanceForTension(rightMilliVolt);
 	float rightDistance = gp2d12GetCentimerDistanceForTension(centerMilliVolt);
 
-	BOOL currentDetection = (leftDistance < ROBOT_INFRARED_DETECTOR_DISTANCE_THRESHOLD_CM 
-				|| rightDistance < ROBOT_INFRARED_DETECTOR_DISTANCE_THRESHOLD_CM 
-				|| centerDistance < ROBOT_INFRARED_DETECTOR_DISTANCE_THRESHOLD_CM);
+	BOOL currentDetection = (leftDistance < ROBOT_INFRARED_DETECTOR_DISTANCE_THRESHOLD_LEFT_CM 
+				|| rightDistance < ROBOT_INFRARED_DETECTOR_DISTANCE_THRESHOLD_RIGHT_CM 
+				|| centerDistance < ROBOT_INFRARED_DETECTOR_DISTANCE_THRESHOLD_CENTER_CM);
 	if (currentDetection) {
 		doNotCheckBeforeCounter = NOTIFY_INFRARED_DETECTOR_TIMER_CYCLE;
 		wasDetected = TRUE;

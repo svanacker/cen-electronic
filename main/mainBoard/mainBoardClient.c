@@ -593,9 +593,6 @@ int main(void) {
             waitForInstruction();
             homologation(homologationIndex, color);
 
-            // Listen instructions from Devices (I2C Slave) -> Main Board (I2C Master)
-            handleNotificationFromDispatcherList(TRANSMIT_I2C);
-
             // We stop if we are in homologation mode
             if (isRobotMustStop()) {
 				motionDriverStop();
