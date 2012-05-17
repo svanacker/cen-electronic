@@ -52,6 +52,10 @@ void resetRobotPositionChanged() {
 	robotPositionChanged = FALSE;
 }
 
+void setRobotPositionChanged() {
+	robotPositionChanged = TRUE;
+}
+
 unsigned int isRobotMustStop() {
     return robotMustStop;
 }
@@ -72,7 +76,6 @@ void updateRobotPosition(int x, int y, int angle) {
 	robotPositionX = x;
 	robotPositionY = y;
 	robotAngle = angle;
-	robotPositionChanged = TRUE;
 }
 
 void printRobotPosition(OutputStream* outputStream) {
@@ -94,6 +97,8 @@ void stopRobot(void) {
     appendString(getOutputStreamLogger(WARNING), "Robot stopped");
 }
 
+// OBSTACLE
+
 void stopRobotObstacle(void) {
     int currentTime = getCurrentTimeInSecond();
     appendString(getOutputStreamLogger(WARNING), "Current Time=");
@@ -104,11 +109,8 @@ void stopRobotObstacle(void) {
         timeAtLastCollision = currentTime;
         // TODO : PROBLEM OF STABILITY : motionDriverObstacle();
 		motionDriverStop();
-		// Ask the robot position from the MOTOR BOARD
-		trajectoryDriverUpdateRobotPosition();
 		// Notify to the Strategy Board the new position
-		int status = NOTIFY_MOTION_ARG_OBSTACLE;
-		sentStrategyRobotPosition(status, getRobotPositionX(), getRobotPositionY(), getRobotAngle());
+		sentStrategyRobotPosition(NOTIFY_MOTION_ARG_OBSTACLE, getRobotPositionX(), getRobotPositionY(), getRobotAngle());
 
         appendString(getOutputStreamLogger(WARNING), "Robot stopped(Obstacle)\n");
 		printRobotPosition(getOutputStreamLogger(WARNING));

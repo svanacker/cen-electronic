@@ -1,10 +1,11 @@
 SV : Rajouter les chemins au plus court
-SV : Gestion de la notification des obstacles : 1->2h
+SV : Gestion de la reprise de la trajectoire après obstacle
+SV : Configuration correcte des constantes => à regrouper dans un seul fichier => Le robot essaie en reculant d'aller de Left -> Bullion
+SV : Mettre un GP2D12 vers l'arrière
 
 // 2h->2h30
 SV: Gestion de la collision avec les pinces ouvertes=> a fermer
-// 2h30 -> 3h30
-SV : Gérer les obstacles en dehors de la piste => ne pas notifier
+
 
 SV : Refaire fonctionner les balises de Beacon Receiver + gérer sous forme de notification et non 
 pas d'appel explicite avec un Timer !!!

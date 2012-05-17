@@ -62,7 +62,8 @@ BOOL sendStrategyOpponentRobotPosition(Point* opponentRobotPosition) {
 }
 
 BOOL sentStrategyRobotPosition(unsigned char status, unsigned int x, unsigned int y, int angleInDeciDegree) {
-	appendString(getOutputStreamLogger(INFO), "sentStrategyRobotPosition\n");
+	OutputStream* debugOutputStream = getOutputStreamLogger(INFO);
+	appendString(debugOutputStream, "sentStrategyRobotPosition:");
 
     OutputStream* outputStream = getDriverRequestOutputStream();
 
@@ -77,6 +78,12 @@ BOOL sentStrategyRobotPosition(unsigned char status, unsigned int x, unsigned in
     appendSeparator(outputStream);
 
     appendHex4(outputStream, angleInDeciDegree);
+
+	appendStringAndDec(debugOutputStream, "status=", status);
+	appendStringAndDec(debugOutputStream, ", x=", x);
+	appendStringAndDec(debugOutputStream, ", y=", y);
+	appendStringAndDec(debugOutputStream, ", angle=", angleInDeciDegree);
+	println(debugOutputStream);
 
     BOOL result = transmitFromDriverRequestBuffer();
 

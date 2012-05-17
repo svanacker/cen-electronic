@@ -42,4 +42,6 @@ BOOL isRobotPositionChanged();
 
 void resetRobotPositionChanged();
 
+void setRobotPositionChanged();
+
 #endif
