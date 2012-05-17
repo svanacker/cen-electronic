@@ -47,7 +47,8 @@ BOOL sendStrategyNextStep() {
 }
 
 BOOL sendStrategyOpponentRobotPosition(Point* opponentRobotPosition) {
-	appendString(getOutputStreamLogger(INFO), "sendStrategyOpponentRobotPosition\n");
+	OutputStream* debugOutputStream = getOutputStreamLogger(INFO);
+	appendString(debugOutputStream, "sendStrategyOpponentRobotPosition: ");
 
     OutputStream* outputStream = getDriverRequestOutputStream();
 
@@ -55,6 +56,10 @@ BOOL sendStrategyOpponentRobotPosition(Point* opponentRobotPosition) {
     appendHex4(outputStream, opponentRobotPosition->x);
     appendSeparator(outputStream);
     appendHex4(outputStream, opponentRobotPosition->y);
+
+	appendStringAndDec(debugOutputStream, " x=", opponentRobotPosition->x);
+	appendStringAndDec(debugOutputStream, ", y=", opponentRobotPosition->y);
+	println(debugOutputStream);
 
     BOOL result = transmitFromDriverRequestBuffer();
 

@@ -434,7 +434,7 @@ void waitForInstruction() {
 		}
 	}
 
-	// Notify strategy board of opponent Robot Position
+	// Update the current Opponent Robot position
 	updateOpponentRobotIfNecessary();
 }
 
