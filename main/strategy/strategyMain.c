@@ -177,6 +177,7 @@ int main(void) {
 	setPicName("STRATEGY_BOARD");
 
 	initStrategyBoardIO();
+
 	openSerialLink(	&debugSerialStreamLink,
 					&debugInputBuffer,
 					&debugInputBufferArray,
@@ -238,14 +239,6 @@ int main(void) {
 								&debugOutputStream,
 								&filterRemoveCRLF,
 								NULL);
-
-		GameStrategyContext* context = getStrategyContext();
-		/*
-		if (context->mustDoNextStep) {
-			context->hasMoreNextSteps = nextStep();
-			context->mustDoNextStep = FALSE;
-		}
-		*/	
 	}
 	return (0);
 }
