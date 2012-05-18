@@ -27,6 +27,16 @@
 #define DISTANCE_OBSTACLE 250
 
 /**
+ * Define the time in second for which, if there is no collision, we can reset All path to available. 
+ * This time must be > to the notification Collision time, to avoid that it reset it.
+*/
+#define RESET_OBSTACLE_COLLISION_TIME_SECOND		5
+
+// Init
+
+void initStrategyHandler();
+
+/**
  * Choose the rigth strategy.
  */
 void setStrategy(int strategyIndex);

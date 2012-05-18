@@ -108,6 +108,9 @@ static StreamLink i2cSerialStreamLink;
 // devices
 static Device deviceListArray[STRATEGY_BOARD_DEVICE_LENGTH];
 
+// Timers
+static Timer timerListArray[STRATEGY_BOARD_TIMER_LENGTH];
+
 // DRIVERS
 static Buffer driverRequestBuffer;
 static char driverRequestBufferArray[STRATEGY_BOARD_REQUEST_DRIVER_BUFFER_LENGTH];
@@ -187,6 +190,9 @@ int main(void) {
 					&debugOutputStream,
 					SERIAL_PORT_DEBUG);
 
+
+	// initTimerList(&timerListArray, STRATEGY_BOARD_TIMER_LENGTH);
+
 	// Init the logs
 	initLog(DEBUG);
 	addLogHandler(&serialLogHandler, "UART", &debugOutputStream, DEBUG);
@@ -214,6 +220,8 @@ int main(void) {
 	// printGameboard(getOutputStreamLogger(INFO));
 	// printStrategyAllDatas(getOutputStreamLogger(INFO));
 
+	initStrategyHandler();
+
 	#ifdef MPLAB_SIMULATION
 		//addNavigationLocations();
 		//printDeviceListUsage(getOutputStreamLogger(INFO));
@@ -222,7 +230,7 @@ int main(void) {
 	#endif
 
 	// Init the timers management
-	startTimerList();
+	// startTimerList();
 	while (1) {
 
 		// I2C Stream

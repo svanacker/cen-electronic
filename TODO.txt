@@ -2,6 +2,8 @@ SV : Configuration correcte des constantes => à regrouper dans un seul fichier =
 SV/EZ : Strategy Board : Clearer le LastObstacle avec un Timer ou un certain nombre de NextStep
 SV : Remettre le NextStep en cas de collision
 SV : Gestion activation / désactivation du sonar 
+SV : Remettre les Temps pour les dispatchers
+SV : Augmenter la vitesse sur les récupérations de CDs
 Reboot sur HandleTrajectory
 
                     
@@ -18,6 +20,8 @@ P2
 
 NEXT YEAR
 
+* Supporter un truc du genre Timer.mark() pour implémenter facilement des gestions de reprises
+* Dans les Callbacks de Timers, et en général, fournir un pointeur sur structure en paramètres
 * Faire des supports de balises à hauteur pour les tests d'évitements
 * Harmoniser la gestion des Sonars / GP2D12 notamment la gestion du filtrage / distance (tableaux, seuils)
 * Améliorer la vitesse d'écriture sur le LCD / centraliser les delay(5)

@@ -35,7 +35,7 @@
 /** Avoid to notify always. */
 #define NOTIFY_INFRARED_DETECTOR_TIMER_CYCLE				400
 
-#define DETECTED_THRESHOLD									10
+#define DETECTED_THRESHOLD									15
 #define NEG_VALUE											3
 
 static InfraredDetectorGroup forwardDetector;
