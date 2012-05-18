@@ -4,6 +4,7 @@
 #include "../../common/commons.h"
 #include "../../common/io/outputStream.h"
 
+
 /**
  * Define the timer diviser to have a timer at 1 Hertz (every second).
  */

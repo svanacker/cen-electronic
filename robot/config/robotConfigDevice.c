@@ -23,8 +23,8 @@ static unsigned int config = 0;
 /**
  * @private
  */
-unsigned char readPCFByte(int pcfConfigAddress) {
-    unsigned char read = readPCF8574(PCF8574_BASE_ADDRESS, pcfConfigAddress, 0xFF);
+unsigned char readPCFByte(int pcfAddress, int pcfConfigAddress) {
+    unsigned char read = readPCF8574(pcfAddress, pcfConfigAddress, 0xFF);
 
     // The high 4 bits of each byte is inversed => 1100 0001 is in reality : 0011 0001
     unsigned char result = read & 0x0F;
@@ -50,8 +50,8 @@ void refreshConfig(void) {
     return;
 #endif
 
-    unsigned char lowByte = readPCFByte(PCF8574_LOW_BYTE_CONFIG_ADDRESS);
-    unsigned char highByte = readPCFByte(PCF8574_HIGH_BYTE_CONFIG_ADDRESS);
+    unsigned char lowByte = readPCFByte(PCF8574AP_BASE_ADDRESS, PCF8574_LOW_BYTE_CONFIG_ADDRESS);
+    unsigned char highByte = readPCFByte(PCF8574_BASE_ADDRESS, PCF8574_HIGH_BYTE_CONFIG_ADDRESS);
 
 
     // The both highest bit is not available => be careful to the inversion made by readPCFByte
