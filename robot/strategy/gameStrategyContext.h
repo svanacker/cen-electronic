@@ -16,6 +16,8 @@
  * Encapsulates the context of the strategy.
  */
 typedef struct GameStrategyContext {
+	/** Time in seconds since last collision. */
+	unsigned int timeSinceLastCollision;
 	/** The choosen gameStrategy. */
 	GameStrategy* gameStrategy;
 	/** The elapsedMatchTime in seconds .*/

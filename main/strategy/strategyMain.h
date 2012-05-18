@@ -19,4 +19,7 @@
 // Devices
 #define STRATEGY_BOARD_DEVICE_LENGTH					2
 
+// Timer
+#define STRATEGY_BOARD_TIMER_LENGTH						1
+
 #endif

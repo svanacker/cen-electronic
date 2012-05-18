@@ -15,6 +15,9 @@
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
 
+#include "../../common/timer/cenTimer.h"
+#include "../../common/timer/timerList.h"
+
 #include "../../motion/extended/bspline.h"
 #include "../../motion/extended/singleBSpline.h"
 
@@ -32,12 +35,35 @@
 // Strategy Context
 static GameStrategyContext strategyContext;
 
+// Strategy timer
+static Timer* strategyTimer;
+
+/** The index of the timer (used to manage path availability). */
+#define STRATEGY_TIMER_INDEX 18
+
 GameStrategyContext* getStrategyContext() {
 	return &strategyContext;
 }
 
 #define ANGLE_180 1800
 #define ANGLE_360 3600
+
+void strategyTimerCallback() {
+	if (strategyTimer->time > strategyContext.timeSinceLastCollision + RESET_OBSTACLE_COLLISION_TIME_SECOND) {
+		#ifdef DEBUG_OPPONENT_ROBOT
+			OutputStream* logStream = getOutputStreamLogger(INFO);
+			appendString(logStream, "resetAllPathsAsAvailable\n");
+		#endif
+		resetAllPathsAsAvailable();
+		// remove the last Obstacle position
+		strategyContext.lastObstaclePosition.x = 0;
+		strategyContext.lastObstaclePosition.y = 0;
+	}
+}
+
+void initStrategyHandler() {
+	strategyTimer = addTimer(STRATEGY_TIMER_INDEX, TIME_DIVISER_1_HERTZ, &strategyTimerCallback);
+}
 
 /**
  * Clears the current path and actions.
@@ -471,7 +497,12 @@ void setLastObstaclePosition() {
 }
 
 void handleCollision() {
+	// Mark the timer.
+	if (strategyTimer != NULL) {
+		strategyContext.timeSinceLastCollision = strategyTimer->time;
+	}
 	#ifdef DEBUG_STRATEGY_HANDLER
+		appendStringAndDec(getOutputStreamLogger(DEBUG), "\nCollision at time:", strategyContext.timeSinceLastCollision);	
 		appendString(getOutputStreamLogger(DEBUG), "\nhandleCollision");	
 	#endif
 	

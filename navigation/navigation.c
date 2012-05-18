@@ -237,6 +237,10 @@ void setPathAvailability(int index, BOOL value) {
 	setBit(&availablePaths, index, value);
 }
 
+void resetAllPathsAsAvailable() {
+	clearBitList(&availablePaths, TRUE);
+}
+
 BOOL getPathAvailability(int index) {
 	return getBit(&availablePaths, index);
 }

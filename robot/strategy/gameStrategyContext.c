@@ -37,6 +37,7 @@ void printGameStrategyContext(OutputStream* outputStream, GameStrategyContext* c
 		appendString(outputStream, "NULL");
 	}
 
+	appendStringAndDec(outputStream, "\ntimeSinceLastCollision=", context->timeSinceLastCollision);
 	// Robot Position
 	appendString(outputStream, "\n\topponentRobotPosition=");
 	printPoint(outputStream, &(context->opponentRobotPosition), "");

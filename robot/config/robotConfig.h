@@ -13,8 +13,7 @@
 /** Use Sonar during the match. */
 #define CONFIG_USE_SONAR_MASK   	   0b00100000
 
-/** Definition if we are in debug mode of the mode to loop after each devices and sending information to the lcd. */
-#define CONFIG_DEBUG_MASK       	   0b01000000
+#define CONFIG_USE_BALISE_MASK         0b01000000
 
 /** Indicates we have the color blue if set. */
 #define CONFIG_COLOR_BLUE_MASK  	   0b10000000

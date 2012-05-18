@@ -223,6 +223,8 @@ OutputStream* getPcOutputStream() {
 // Obstacle management
 static BOOL mustNotifyObstacle;
 static unsigned int instructionType;
+static BOOL useInfrared;
+static BOOL useBalise;
 
 #define INSTRUCTION_TYPE_NO_MOVE		0
 #define INSTRUCTION_TYPE_FORWARD		1
@@ -359,6 +361,7 @@ void mainBoardCallbackRawData(const Device* device,
 
 		forwardCallbackRawDataTo(inputStream, &(compositeDriverAndDebugOutputStream.outputStream), device, header, DEVICE_MODE_INPUT);
 		transmitFromDriverRequestBuffer();
+		delaymSec(500);
 		// we are ready for next motion
         setReadyForNextMotion(TRUE);
 	} 
@@ -371,12 +374,14 @@ void mainBoardCallbackRawData(const Device* device,
 		OutputStream* outputStream = &(compositePcAndDebugOutputStream.outputStream);
 		append(outputStream, NOTIFY_INFRARED_DETECTOR_DETECTION);
 		appendHex2(outputStream, type);
-		// Notify only if we are in a compatible move !
-		if ((instructionType == INSTRUCTION_TYPE_BACKWARD) && (type == DETECTOR_BACKWARD_INDEX)) {
-			mustNotifyObstacle = TRUE;
-		}
-		else if ((instructionType == INSTRUCTION_TYPE_FORWARD) && (type == DETECTOR_FORWARD_INDEX)) {
-			mustNotifyObstacle = TRUE;
+		if (useInfrared) {
+			// Notify only if we are in a compatible move !
+			if ((instructionType == INSTRUCTION_TYPE_BACKWARD) && (type == DETECTOR_BACKWARD_INDEX)) {
+				mustNotifyObstacle = TRUE;
+			}
+			else if ((instructionType == INSTRUCTION_TYPE_FORWARD) && (type == DETECTOR_FORWARD_INDEX)) {
+				mustNotifyObstacle = TRUE;
+			}
 		}
 	}
 	// Cannot not handle the notification !
@@ -544,7 +549,9 @@ void waitForInstruction() {
 	}
 
 	// Update the current Opponent Robot position
-	updateOpponentRobotIfNecessary();
+	if (useBalise) {
+		updateOpponentRobotIfNecessary();
+	}
 }
 
 int main(void) {
@@ -670,6 +677,8 @@ int main(void) {
 	appendString(getOutputStreamLogger(ALWAYS), "Config:");
 	appendHex4(getOutputStreamLogger(ALWAYS), configValue);
 	appendCRLF(getOutputStreamLogger(ALWAYS));
+	useBalise = configValue & CONFIG_USE_BALISE_MASK;
+	useInfrared = configValue & CONFIG_USE_SONAR_MASK;
 
 	if (color != 0) {
 		appendString(getOutputStreamLogger(ALWAYS), "COLOR:VIOLET\n");

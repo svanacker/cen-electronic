@@ -48,6 +48,8 @@ int computeBestPath(LocationList* outLocationList,
 
 void printNavigationContext();
 
+// PATH AVAILABILITY
+
 /** 
  * Sets the availability of the path at the specified index.
  * @param index the index of the path
@@ -56,5 +58,10 @@ void printNavigationContext();
 void setPathAvailability(int index, BOOL value);
 
 BOOL getPathAvailability(int index);
+
+/**
+ * Reset the status of availability of all paths to Available.
+ */
+void resetAllPathsAsAvailable();
 
 #endif

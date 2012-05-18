@@ -39,9 +39,8 @@ int isConfigSet(unsigned int configMask);
 char* getConfigBitString(unsigned char configIndex);
 
 /**
-* Returns if we are in debug mode or not.
 */
-unsigned char isConfigDebug();
+unsigned char isConfigBalise();
 
 /**
 * Returns the strategy which must be used by the robot.
