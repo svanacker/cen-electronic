@@ -702,8 +702,8 @@ int main(void) {
         motionSetParameters(MOTION_TYPE_ROTATION_ONE_WHEEL, 0x04, 0x04);
 		appendString(getOutputStreamLogger(ALWAYS), "SPEED ULTRA LOW\n");
     } else {
-        motionSetParameters(MOTION_TYPE_FORWARD_OR_BACKWARD, 0x10, 0x30);
-        motionSetParameters(MOTION_TYPE_ROTATION, 0x20, 0x16);
+        motionSetParameters(MOTION_TYPE_FORWARD_OR_BACKWARD, 0x12, 0x36);
+        motionSetParameters(MOTION_TYPE_ROTATION, 0x16, 0x16);
         motionSetParameters(MOTION_TYPE_ROTATION_ONE_WHEEL, 0x12, 0x10);
 		appendString(getOutputStreamLogger(ALWAYS), "SPEED NORMAL \n");
     }

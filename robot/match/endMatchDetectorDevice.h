@@ -8,7 +8,7 @@
  * @author svanacker
  * @version 17/04/2010
 */
-#define MATCH_DURATION 90
+#define MATCH_DURATION 85
 
 /**
 * Defines the index for the timer which detects end of the match.

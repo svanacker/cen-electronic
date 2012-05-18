@@ -18,6 +18,8 @@
 #include "../../robot/config/robotConfig.h"
 #include "../../robot/config/robotConfigDevice.h"
 
+#include "../../robot/2012/armDriver2012.h"
+
 static int matchStarted = FALSE;
 
 /** Current Time In Second. */
@@ -66,7 +68,13 @@ BOOL isEnd() {
     if (!matchStarted) {
         appendString(getOutputStreamLogger(ERROR), "You must call startMatch before");
     }
-    return currentTimeInSecond >= MATCH_DURATION;
+    BOOL result = currentTimeInSecond >= MATCH_DURATION;
+	
+	if (result) {	
+		// If END
+		armDriver2012Up(0);
+	}
+	return result;
 }
 
 // COMMON PART

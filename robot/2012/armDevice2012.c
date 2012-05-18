@@ -30,6 +30,10 @@ void upArm(int armIndex) {
 	else if (armIndex == ARM_RIGHT) {
 		pwmServo(ARM_RIGHT_PWM_INDEX, pwmSpeed, ARM_RIGHT_UP);
 	}
+	else if (armIndex == 0) {
+		pwmServo(ARM_LEFT_PWM_INDEX, pwmSpeed, ARM_LEFT_UP);
+		pwmServo(ARM_RIGHT_PWM_INDEX, pwmSpeed, ARM_RIGHT_UP);
+	}
 }
 
 void downArm(int armIndex) {
@@ -38,6 +42,10 @@ void downArm(int armIndex) {
 		pwmServo(ARM_LEFT_PWM_INDEX, pwmSpeed, ARM_LEFT_DOWN);
 	}
 	else if (armIndex == ARM_RIGHT) {
+		pwmServo(ARM_RIGHT_PWM_INDEX, pwmSpeed, ARM_RIGHT_DOWN);
+	}
+	else if (armIndex == 0) {
+		pwmServo(ARM_LEFT_PWM_INDEX, pwmSpeed, ARM_LEFT_DOWN);
 		pwmServo(ARM_RIGHT_PWM_INDEX, pwmSpeed, ARM_RIGHT_DOWN);
 	}
 }
