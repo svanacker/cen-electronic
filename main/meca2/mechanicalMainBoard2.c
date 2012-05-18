@@ -192,6 +192,8 @@ int main(void) {
 	upArm(ARM_LEFT);
 	upArm(ARM_RIGHT);
 
+	delaymSec(2000);
+
 	while (1) {
 		// Forward Obstacle
 		if (getRobotInfraredObstacleForward()) {

@@ -29,14 +29,14 @@
 #define ROBOT_INFRARED_DETECTOR_DISTANCE_THRESHOLD_RIGHT_CM			25
 
 /** Distance of detection for backward. */
-#define ROBOT_INFRARED_DETECTOR_DISTANCE_THRESHOLD_BACK_CM			25
+#define ROBOT_INFRARED_DETECTOR_DISTANCE_THRESHOLD_BACK_CM			5
 
 
 /** Avoid to notify always. */
-#define NOTIFY_INFRARED_DETECTOR_TIMER_CYCLE				400
+#define NOTIFY_INFRARED_DETECTOR_TIMER_CYCLE				120
 
-#define DETECTED_THRESHOLD									15
-#define NEG_VALUE											3
+#define DETECTED_THRESHOLD									6
+#define NEG_VALUE											6
 
 static InfraredDetectorGroup forwardDetector;
 static InfraredDetectorGroup backwardDetector;
@@ -117,7 +117,7 @@ void robotInfraredDetectorCallback() {
 
 
 void initRobotInfraredDetector() {
-	addTimer(ROBOT_INFRARED_DETECTOR_TIMER_INDEX, TIME_DIVISER_100_HERTZ, &robotInfraredDetectorCallback);
+	addTimer(ROBOT_INFRARED_DETECTOR_TIMER_INDEX, TIME_DIVISER_30_HERTZ, &robotInfraredDetectorCallback);
 	forwardDetector.function = &forwardDetection;
 	backwardDetector.function = &backwardDetection;
 }
