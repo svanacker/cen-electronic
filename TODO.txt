@@ -20,6 +20,9 @@ P2
 
 NEXT YEAR
 
+* Demander à Jérome de mettre absolument de la soudure sur toutes les pattes où il y a potentiellement un cavalier
+* pour éviter les problèmes
+* 
 * Supporter un truc du genre Timer.mark() pour implémenter facilement des gestions de reprises
 * Dans les Callbacks de Timers, et en général, fournir un pointeur sur structure en paramètres
 * Faire des supports de balises à hauteur pour les tests d'évitements

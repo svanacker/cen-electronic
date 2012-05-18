@@ -239,7 +239,7 @@ void initJennic5139Streams(InputStream* aZigbeeInputStream,
  * See header documentation
  * looks like : SND,0006066005650518898,0102AA,3,0
  */
-void sendJennic5138DataBuffer(InputStream* inputStream, char* macAddress, int flags) {
+void sendJennic5139DataBuffer(InputStream* inputStream, char* macAddress, int flags) {
 	appendCmdString("SND,");
 	appendCmdString(macAddress);
 	appendComma();
@@ -261,6 +261,24 @@ void sendJennic5138DataBuffer(InputStream* inputStream, char* macAddress, int fl
 
 	appendCmdEnd();
 	
+	sendJennic5139CommandFromBuffer();
+}
+
+// POWER
+
+/**
+ * RDP,-12,0 <LF>
+ */
+void changeJennic5139Power(signed int powerDB, unsigned int moduleType) {
+	appendCmdString(JENNIC_CHANGE_POWER_DECIBEL);
+	appendComma();
+
+	appendCmdDec(powerDB);
+	appendComma();
+
+	appendCmdDec(moduleType);
+	appendCmdEnd();
+
 	sendJennic5139CommandFromBuffer();
 }
 
@@ -454,6 +472,9 @@ void initJennic5139Coordinater() {
 
  	initJennic5139Start(NODE_TYPE_COORDINATER);
 
+	// Change power to max
+	changeJennic5139Power(JENNIC_CHANGE_POWER_DECIBEL_MAX, JENNIC_CHANGE_POWER_HIGH_POWER_MODULE);
+
 	jennic5139CommonStartupEnd();
 }
 
@@ -476,6 +497,9 @@ void initJennic5139Router() {
 					   ROUTING_ON);
 
 	initJennic5139Start(NODE_TYPE_ROUTER);
+
+	// Change power to Max
+	changeJennic5139Power(JENNIC_CHANGE_POWER_DECIBEL_MAX, JENNIC_CHANGE_POWER_HIGH_POWER_MODULE);
 
 	jennic5139CommonStartupEnd();
 }

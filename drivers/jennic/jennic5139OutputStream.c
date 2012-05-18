@@ -51,7 +51,7 @@ void _writeCharJennic5139(OutputStream* outputStream, char c) {
 void _flushJennic5139(OutputStream* outputStream) {
     Buffer* buffer = _jennic5139GetOutputBuffer(outputStream);
     char* macAddress = buffer->name;
-	sendJennic5138DataBuffer(&(buffer->inputStream), macAddress, DATA_TRANSMISSION_FLAG_MASK_ACK);
+	sendJennic5139DataBuffer(&(buffer->inputStream), macAddress, DATA_TRANSMISSION_FLAG_MASK_ACK);
 }
 
 void initZigbeeOutputStream(OutputStream* outputStream,

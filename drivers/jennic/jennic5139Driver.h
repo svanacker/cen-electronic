@@ -224,6 +224,13 @@ void setJennicNetworkStatus(unsigned char aNetworkStatus);
 /** Sends message to the specified target node. */
 #define JENNIC_CMD_SEND_DATA					"SND"
 
+/** Set the power in Decibel of the jennic. */
+#define JENNIC_CHANGE_POWER_DECIBEL				"RDP"
+
+// -> RDP Parameters
+#define JENNIC_CHANGE_POWER_DECIBEL_MAX			 18
+#define JENNIC_CHANGE_POWER_HIGH_POWER_MODULE	 1
+#define JENNIC_CHANGE_POWER_STANDARD_MODULE 	 0
 
 // -> Event
 
@@ -354,7 +361,35 @@ void sendJennic5139CommandFromBuffer();
 using flag, or to send to Co-ordinator)
 * @param flags 
 */
-void sendJennic5138DataBuffer(InputStream* inputStream, char* macAddress, int flags);
+void sendJennic5139DataBuffer(InputStream* inputStream, char* macAddress, int flags);
+
+// POWER
+
+/**
+ * According to Jennic documentation
+ * Ex : RDP,-12,0
+ * Extract from Documentation : Sets the power level of the radio transmitter
+ * and enables a high-power module (if one is to be used). Issue this command after STR.
+Note that:
+ * You must specify your module type (standard or high-power)
+ * You must always issue this command when using a high-power module
+ * For standard modules, the permissible range is -30 to 0 dBm
+ * For high-power modules, the permissible range is -12 to +18 dBm
+ * The values are applied in steps of 6 dBm
+ * You can also use this command to switch the transmitter on or off
+ * Also note that ‘boost mode’ of the JN513x device is not supported by AT-Jenie.
+ * @param powerDB : Radio power level : Value in range -30 to +18 dBm
+ * Value < -30: Switch transmitter off
+ * Value > +18: Switch transmitter on
+ * (Do not include the ‘+’ symbol in your setting, as this will cause an error)
+ * Module Type
+ * 0: Standard module
+ * 1: High-power module *
+ * Note that in AT-Jenie networks, highpower
+ * modules cannot be used on End
+ * Devices that sleep.
+ */
+void changeJennic5139Power(signed int powerDB, unsigned int moduleType);
 
 // RESET
 

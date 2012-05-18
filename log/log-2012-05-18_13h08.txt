@@ -1,0 +1,600 @@
+[00]Ç[00][00][00][00][00][00][00][00][01][00][00]STRATEGY_BOARD
+system:OK
+Strategy:OK
+setStrategy:3
+setColor:1
+navigationLocationList:, size=21
+location.name=startArea, ref=2048, x=170, y=170, tmpCost=-1, tmpPrevious.name=NULL
+location.name=startAreaFront, ref=2060, x=250, y=700, tmpCost=-1, tmpPrevious.name=NULL
+location.name=bullion1, ref=2072, x=880, y=342, tmpCost=-1, tmpPrevious.name=NULL
+location.name=bottle1, ref=2084, x=1824, y=656, tmpCost=-1, tmpPrevious.name=NULL
+location.name=bottle2Front, ref=2096, x=1500, y=2048, tmpCost=-1, tmpPrevious.name=NULL
+location.name=bottle2, ref=2108, x=1856, y=1872, tmpCost=-1, tmpPrevious.name=NULL
+location.name=dropZone1, ref=2120, x=1000, y=213, tmpCost=-1, tmpPrevious.name=NULL
+location.name=frontOfMapLocation, ref=2132, x=450, y=1500, tmpCost=-1, tmpPrevious.name=NULL
+location.name=bullionRight1, ref=2144, x=1359, y=1440, tmpCost=-1, tmpPrevious.name=NULL
+location.name=bullionLeft1, ref=2156, x=671, y=1440, tmpCost=-1, tmpPrevious.name=NULL
+location.name=bullionMiddle2, ref=2168, x=1000, y=2280, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OL1, ref=2180, x=500, y=700, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OL2, ref=2192, x=500, y=1100, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OL3, ref=2204, x=500, y=1900, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OL4, ref=2216, x=500, y=2300, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OM1, ref=2276, x=1000, y=700, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OM2, ref=2288, x=1000, y=2300, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OR1, ref=2228, x=1500, y=700, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OR2, ref=2240, x=1500, y=1100, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OR3, ref=2252, x=1500, y=1900, tmpCost=-1, tmpPrevious.name=NULL
+location.name=OR4, ref=2264, x=1500, y=2300, tmpCost=-1, tmpPrevious.name=NULL
+PathList:navigationPathList:, size=34
+pathName=startArea->bullion1, cost=100, cp1=64, cp2=64, angle1=675, angle2=-900, accFactor=15, speedFactor=15, mustGoBackward=FALSE
+pathName=bullion1->bottle1, cost=80, cp1=-20, cp2=-64, angle1=-900, angle2=1800, accFactor=15, speedFactor=15, mustGoBackward=TRUE
+pathName=bottle1->bottle2Front, cost=80, cp1=64, cp2=10, angle1=1800, angle2=1104, accFactor=10, speedFactor=10, mustGoBackward=FALSE
+pathName=bottle2Front->bottle2, cost=40, cp1=-32, cp2=-16, angle1=1104, angle2=-1800, accFactor=10, speedFactor=10, mustGoBackward=TRUE
+pathName=bullion1->bullionRight1, cost=100, cp1=-80, cp2=-128, angle1=-900, angle2=-900, accFactor=7, speedFactor=10, mustGoBackward=FALSE
+pathName=dropZone1->bullionRight1, cost=100, cp1=-80, cp2=-128, angle1=-900, angle2=-900, accFactor=7, speedFactor=10, mustGoBackward=FALSE
+pathName=dropZone1->bullionLeft1, cost=100, cp1=-80, cp2=-128, angle1=-900, angle2=-900, accFactor=7, speedFactor=10, mustGoBackward=FALSE
+pathName=OL1->OL2, cost=400, cp1=10, cp2=10, angle1=900, angle2=900, accFactor=7, speedFactor=7, mustGoBackward=FALSE
+pathName=OL1->OL4, cost=400, cp1=10, cp2=10, angle1=900, angle2=900, accFactor=7, speedFactor=7, mustGoBackward=FALSE
+pathName=OL2->OL3, cost=400, cp1=10, cp2=10, angle1=900, angle2=900, accFactor=7, speedFactor=7, mustGoBackward=FALSE
+pathName=OL3->OL4, cost=400, cp1=10, cp2=10, angle1=900, angle2=900, accFactor=7, speedFactor=7, mustGoBackward=FALSE
+pathName=OL4->OM2, cost=400, cp1=10, cp2=10, angle1=0, angle2=0, accFactor=7, speedFactor=7, mustGoBackward=FALSE
+pathName=OL4->OR4, cost=400, cp1=10, cp2=10, angle1=0, angle2=0, accFactor=7, speedFactor=7, mustGoBackward=FALSE
+pathName=OM2->OR4, cost=400, cp1=10, cp2=10, angle1=0, angle2=0, accFactor=7, speedFactor=7, mustGoBackward=FALSE
+pathName=OR4->OR3, cost=400, cp1=10, cp2=10, angle1=-900, angle2=-900, accFactor=7, speedFactor=7, mustGoBackward=FALSE
+pathName=OR4->OR1, cost=400, cp1=10, cp2=10, angle1=-900, angle2=-900, accFactor=7, speedFactor=7, mustGoBackward=FALSE
+pathName=OR3->OR2, cost=400, cp1=10, cp2=10, angle1=-900, angle2=-900, accFactor=7, speedFactor=7, mustGoBackward=FALSE
+pathName=OR2->OR1, cost=400, cp1=10, cp2=10, angle1=-900, angle2=-900, accFactor=7, speedFactor=7, mustGoBackward=FALSE
+pathName=OR1->OM1, cost=400, cp1=10, cp2=10, angle1=1800, angle2=1800, accFactor=7, speedFactor=7, mustGoBackward=FALSE
+pathName=OR1->OL1, cost=400, cp1=10, cp2=10, angle1=1800, angle2=1800, accFactor=7, speedFactor=7, mustGoBackward=FALSE
+pathName=OM1->OL1, cost=400, cp1=10, cp2=10, angle1=1800, angle2=1800, accFactor=7, speedFactor=7, mustGoBackward=FALSE
+pathName=bottle1->OR1, cost=400, cp1=10, cp2=10, angle1=1800, angle2=1800, accFactor=7, speedFactor=7, mustGoBackward=TRUE
+pathName=bottle2->OR3, cost=400, cp1=10, cp2=10, angle1=1800, angle2=1800, accFactor=7, speedFactor=7, mustGoBackward=TRUE
+pathName=dropZone1->OL1, cost=400, cp1=25, cp2=25, angle1=900, angle2=1800, accFactor=7, speedFactor=7, mustGoBackward=FALSE
+pathName=dropZone1->OM1, cost=400, cp1=10, cp2=10, angle1=900, angle2=900, accFactor=7, speedFactor=7, mustGoBackward=FALSE
+pathName=dropZone1->OR1, cost=400, cp1=25, cp2=25, angle1=900, angle2=0, accFactor=7, speedFactor=7, mustGoBackward=FALSE
+pathName=bullion1->OL1, cost=400, cp1=25, cp2=25, angle1=900, angle2=1800, accFactor=7, speedFactor=7, mustGoBackward=FALSE
+pathName=bullion1->OM1, cost=400, cp1=10, cp2=10, angle1=900, angle2=900, accFactor=7, speedFactor=7, mustGoBackward=FALSE
+pathName=bullion1->OR1, cost=400, cp1=25, cp2=25, angle1=900, angle2=0, accFactor=7, speedFactor=7, mustGoBackward=FALSE
+pathName=bullionLeft1->OL2, cost=400, cp1=10, cp2=10, angle1=-1150, angle2=-1150, accFactor=7, speedFactor=7, mustGoBackward=FALSE
+pathName=bullionLeft1->OL4, cost=400, cp1=10, cp2=10, angle1=1000, angle2=1000, accFactor=7, speedFactor=7, mustGoBackward=FALSE
+pathName=bullionRight1->OR2, cost=400, cp1=10, cp2=10, angle1=-650, angle2=-650, accFactor=7, speedFactor=7, mustGoBackward=FALSE
+pathName=bullionRight1->OR4, cost=400, cp1=10, cp2=10, angle1=900, angle2=800, accFactor=7, speedFactor=7, mustGoBackward=FALSE
+pathName=bottle2Front->OR4, cost=400, cp1=10, cp2=10, angle1=900, angle2=900, accFactor=7, speedFactor=7, mustGoBackward=FALSE
+
+targetHandledCount:0
+target:name=bullion1, gain=3.0000, status=0
+	action:startLocation=bullion1, end=bullion1, timeToAchieve=2
+target:name=bullionRight1, gain=3.0000, status=0
+	action:startLocation=bullionRight1, end=dropZone1, timeToAchieve=5
+			actionItem:name=rotate
+			actionItem:name=armRightDown
+			actionItem:name=bullionRight1GoToDropZone1
+			actionItem:name=armRightUp
+target:name=bullion1, gain=3.0000, status=0
+	action:startLocation=bullion1, end=bullion1, timeToAchieve=2
+target:name=bottle1, gain=5.0000, status=0
+	action:startLocation=bottle1, end=bottle1, timeToAchieve=2
+target:name=bottle2, gain=5.0000, status=0
+	action:startLocation=bottle2, end=bottle2, timeToAchieve=3
+target:name=cdTake, gain=4.0000, status=0
+	action:startLocation=bottle2, end=dropZone1, timeToAchieve=4
+			actionItem:name=cdTakeStep1
+			actionItem:name=cdTakeStep2
+target:name=bullionRight1, gain=3.0000, status=0
+	action:startLocation=bullionRight1, end=dropZone1, timeToAchieve=5
+			actionItem:name=rotate
+			actionItem:name=armRightDown
+			actionItem:name=bullionRight1GoToDropZone1
+			actionItem:name=armRightUp
+target:name=bullionLeft1, gain=3.0000, status=0
+	action:startLocation=bullionLeft1, end=dropZone1, timeToAchieve=5
+			actionItem:name=rotate
+			actionItem:name=armLeftDown
+			actionItem:name=bullionLeft1GoToDropZone1
+			actionItem:name=armLeftUp
+
+strategy.name=S1
+	strategyItem->target->name=bullion1
+	strategyItem->target->name=bottle1
+	strategyItem->target->name=bottle2
+	strategyItem->target->name=cdTake
+	strategyItem->target->name=bullionRight1
+	strategyItem->target->name=bullionLeft1
+GameStrategyContext
+	strategy.name=S1
+	elapsedMatchTime=0.0000
+	robotPosition=x=160.0000,y=160.0000
+
+	robotAngle (ddeg)=675
+	nearestLocation=NULL
+timeSinceLastCollision=0
+	opponentRobotPosition=x=0.0000,y=0.0000
+
+	lastObstaclePosition=x=0.0000,y=0.0000
+
+	currentTarget=NULL
+	currentTrajectory:, size=0
+
+	teamColor=1
+	strategyIndex=3
+	maxTargetToHandle=8
+	hasMoreNextSteps=1
+
+Updating available paths
+Don't compute Path !
+nextStep
+nextStep=>1
+findNextTarget
+	Nearest Location:location.name=startArea, ref=2048, x=170, y=170, tmpCost=-1, tmpPrevious.name=NULL
+	computeBestNextTargetAction:
+Result=, size=2
+location.name=startArea, ref=2048, x=170, y=170, tmpCost=0, tmpPrevious.name=NULL
+location.name=bullion1, ref=2072, x=880, y=342, tmpCost=100, tmpPrevious.name=startArea
+		bestTarget:target:name=bullion1, gain=3.0000, status=0
+		bestTargetA, x=880, y=342, tmpCost=100, tmpPrevious.name=startArea
+&0370-0156-FC7C-40-40-FFresetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+
+StrategySetRobotPosition:status=0, x=854, y=349, angle=-900
+
+Updating available paths
+Don't compute Path !
+nextStep
+nextStep=>1
+handleCurrentTrajectory
+no more locations to reach
+nextStep=>2
+executeTargetActions
+-> no actions for this target
+nextStep=>3
+findNextTarget
+	Nearest Location:location.name=bullion1, ref=2072, x=880, y=342, tmpCost=100, tmpPrevious.name=startArea
+	computeBestNextTargetAction:
+Result=, size=2
+location.name=bullion1, ref=2072, x=880, y=342, tmpCost=0, tmpPrevious.name=NULL
+location.name=bottle1, ref=2084, x=1824, y=656, tmpCost=80, tmpPrevious.name=bullion1
+		bestTarget:target:name=bottle1, gain=5.0000, status=0
+		bestTargetAction:	action:startLocation=bottle1, end=bottle1, timeToAchieve=2
+handleCurrentTrajectory
+motionFollowPath:goto:location.name=bottle1, ref=2084, x=1824, y=656, tmpCost=80, tmpPrevious.name=bullion1
+&0720-0290-0708-EC-C0-FFresetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+
+StrategySetRobotPosition:status=2, x=1121, y=563, angle=-1649
+
+Collision at time:13
+handleCollision
+Updating available paths
+startArea->bullion1: UNAVAILABLE
+bullion1->bottle1: UNAVAILABLE
+bullion1->bullionRight1: UNAVAILABLE
+dropZone1->bullionRight1: UNAVAILABLE
+dropZone1->bullionLeft1: UNAVAILABLE
+dropZone1->OL1: UNAVAILABLE
+dropZone1->OM1: UNAVAILABLE
+dropZone1->OR1: UNAVAILABLE
+bullion1->OL1: UNAVAILABLE
+bullion1->OM1: UNAVAILABLE
+bullion1->OR1: UNAVAILABLE
+
+Updating available paths
+startArea->bullion1: UNAVAILABLE
+bullion1->bottle1: UNAVAILABLE
+bullion1->bullionRight1: UNAVAILABLE
+dropZone1->bullionRight1: UNAVAILABLE
+dropZone1->bullionLeft1: UNAVAILABLE
+dropZone1->OL1: UNAVAILABLE
+dropZone1->OM1: UNAVAILABLE
+dropZone1->OR1: UNAVAILABLE
+bullion1->OL1: UNAVAILABLE
+bullion1->OM1: UNAVAILABLE
+bullion1->OR1: UNAVAILABLE
+nextStep
+nextStep=>1
+findNextTarget
+	Nearest Location:location.name=OM1, ref=2276, x=1000, y=700, tmpCost=400, tmpPrevious.name=bullion1
+	computeBestNextTargetAction:
+Result=, size=3
+location.name=OM1, ref=2276, x=1000, y=700, tmpCost=0, tmpPrevious.name=NULL
+location.name=OR1, ref=2228, x=1500, y=700, tmpCost=400, tmpPrevious.name=OM1
+location.name=bottle1, ref=2084, x=1824, y=656, tmpCost=800, tmpPrevious.name=OR1
+		bestTarget:target:name=bottle1, gain=5.0000, status=0
+		bestTargetAction:	action:startLocation=bottle1, end=bottle1, timeToAchieve=2
+handleCurrentTrajectory
+motionRotateToFollowPath:angle:1649 ddeg
+l0671
+StrategySetRobotPosition:status=0, x=1156, y=571, angle=-43
+
+Updating available paths
+startArea->bullion1: UNAVAILABLE
+bullion1->bottle1: UNAVAILABLE
+bullion1->bullionRight1: UNAVAILABLE
+dropZone1->bullionRight1: UNAVAILABLE
+dropZone1->bullionLeft1: UNAVAILABLE
+dropZone1->OL1: UNAVAILABLE
+dropZone1->OM1: UNAVAILABLE
+dropZone1->OR1: UNAVAILABLE
+bullion1->OL1: UNAVAILABLE
+bullion1->OM1: UNAVAILABLE
+bullion1->OR1: UNAVAILABLE
+nextStep
+nextStep=>1
+handleCurrentTrajectory
+motionFollowPath:goto:location.name=OR1, ref=2228, x=1500, y=700, tmpCost=400, tmpPrevious.name=OM1
+&05DC-02BC-0000-0A-0A-77resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+
+StrategySetRobotPosition:status=0, x=1494, y=700, angle=3
+
+Updating available paths
+Don't compute Path !
+nextStep
+nextStep=>1
+handleCurrentTrajectory
+motionRotateToFollowPath:angle:1797 ddeg
+l0705resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+
+StrategySetRobotPosition:status=0, x=1492, y=701, angle=1782
+
+Updating available paths
+Don't compute Path !
+nextStep
+nextStep=>1
+handleCurrentTrajectory
+motionFollowPath:goto:location.name=bottle1, ref=2084, x=1824, y=656, tmpCost=800, tmpPrevious.name=OR1
+&0720-0290-0708-F6-F6-77resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+
+StrategySetRobotPosition:status=0, x=1816, y=655, angle=1797
+
+Updating available paths
+Don't compute Path !
+nextStep
+nextStep=>1
+handleCurrentTrajectory
+no more locations to reach
+nextStep=>2
+executeTargetActions
+-> no actions for this target
+nextStep=>3
+findNextTarget
+	Nearest Location:location.name=bottle1, ref=2084, x=1824, y=656, tmpCost=800, tmpPrresetAllPathsAsAvailable
+evious.name=OR1
+	computeBestNextTargetAction:
+Result=, size=3
+location.name=bottle1, ref=2084, x=1824, y=656, tmpCost=0, tmpPrevious.name=NULL
+location.name=bottle2Front, ref=2096, x=1500, y=2048, tmpCost=80, tmpPrevious.name=bottle1
+location.name=bottle2, ref=2108, x=1856, y=1872, tmpCost=120, tmpPrevious.name=bottle2Front
+		bestTarget:target:name=bottle2, gain=5.0000, status=0
+		bestTargetAction:	action:startLocation=bottle2, end=bottle2, timeToAchieve=3
+handleCurrentTrajectory
+motionFollowPath:goto:location.name=bottle2Front, ref=2096, x=1500, y=2048, tmpCost=80, tmpPrevious.name=bottle1
+&05DC-0800-0450-40-0A-AAresetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+
+StrategySetRobotPosition:status=2, x=1501, y=1858, angle=820
+
+Collision at time:37
+handleCollision
+Updating available paths
+bottle1->bottle2Front: UNAVAILABLE
+bottle2Front->bottle2: UNAVAILABLE
+OR4->OR3: UNAVAILABLE
+OR4->OR1: UNAVAILABLE
+bullionRight1->OR4: UNAVAILABLE
+bottle2Front->OR4: UNAVAILABLE
+
+Updating available paths
+bottle1->bottle2Front: UNAVAILABLE
+bottle2Front->bottle2: UNAVAILABLE
+OR4->OR3: UNAVAILABLE
+OR4->OR1: UNAVAILABLE
+bullionRight1->OR4: UNAVAILABLE
+bottle2Front->OR4: UNAVAILABLE
+nextStep
+nextStep=>1
+findNextTarget
+	Nearest Location:location.name=OR3, ref=2252, x=1500, y=1900, tmpCost=520, tmpPrevious.name=bottle2
+	computeBestNextTargetAction:
+Result=, size=2
+location.name=OR3, ref=2252, x=1500, y=1900, tmpCost=0, tmpPrevious.name=NULL
+location.name=bottle2, ref=2108, x=1856, y=1872, tmpCost=400, tmpPrevious.name=OR3
+		bestTarget:target:name=bottle2, gain=5.0000, status=0
+		bestTargetAction:	action:startLocation=bottle2, end=bottle2, timeToAchieve=3
+handleCurrentTrajectory
+motionRotateToFollowPath:angle:980 ddeg
+l03D4
+StrategySetRobotPosition:status=0, x=1504, y=1880, angle=1783
+
+Updating available paths
+bottle1->bottle2Front: UNAVAILABLE
+bottle2Front->bottle2: UNAVAILABLE
+OR4->OR3: UNAVAILABLE
+OR4->OR1: UNAVAILABLE
+bullionRight1->OR4: UNAVAILABLE
+bottle2Front->OR4: UNAVAILABLE
+nextStep
+nextStep=>1
+handleCurrentTrajectory
+motionFollowPath:goto:location.name=bottle2, ref=2108, x=1856, y=1872, tmpCost=400, tmpPrevious.name=OR3
+&0740-0750-0708-F6-F6-77resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+
+StrategySetRobotPosition:status=0, x=1845, y=1871, angle=1800
+
+Updating available paths
+Don't compute Path !
+nextStep
+nextStep=>1
+handleCurrentTrajectory
+no more locations to reach
+nextStep=>2
+executeTargetActions
+-> no actions for this target
+nextStep=>3
+findNextTarget
+	Nearest Location:location.name=bottle2, ref=2108, x=1856, y=1872, tmpCost=400, tmpPrevious.name=OR3
+	computeBestNextTargetAction:
+Result=, size=1
+location.name=bottle2, ref=2108, x=1856, y=1872, tmpCost=0, tmpPrevious.name=NULL
+		bestTarget:target:name=cdTake, gain=4.0000, status=0
+		bestTargetAction:	action:startLocation=bottle2, end=dropZone1, timeToAchieve=4
+handleCurrentTrajectory
+no more locations to reach
+nextStep=>4
+executeTargetActions
+			actionItem:name=cdTakeStep1
+motionFollowPath:goto:location.name=OR1, ref=2228, x=1500, y=700, tmpCost=520, tmpPrevious.name=bottle1
+&05DC-02BC-FAF6-1B-30-74resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+
+StrategySetRobotPosition:status=0, x=1506, y=706, angle=2311
+resetAllPathsAsAvailable
+
+Updating available paths
+Don't compute Path !
+nextStep
+nextStep=>1
+executeTargetActions
+			actionItem:name=cdTakeStep2
+motionFollowPath:goto:location.name=dropZone1, ref=2120, x=1000, y=213, tmpCost=400, tmpPrevious.name=bullionRight1
+&03E8-00D5-FC7C-11-26-AAresetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+
+StrategySetRobotPosition:status=0, x=1008, y=221, angle=2699
+
+Updating available paths
+Don't compute Path !
+nextStep
+nextStep=>1
+executeTargetActions
+nextStep=>2
+findNextTarget
+	Nearest Location:location.name=dropZone1, ref=2120, x=1000, y=213, tmpCost=400, tmpPrevious.name=bullionRight1
+	computeBestNextTargetAction:
+Result=, size=2
+location.name=dropZone1, ref=2120, x=1000, y=213, tmpCost=0, tmpPrevious.name=NULL
+location.name=bullionRight1, ref=2144, x=1359, y=1440, tmpCost=100, tmpPrevious.name=dropZone1
+		bestTarget:target:name=bullionRight1, gain=3.0000, status=0
+		bestTargetAction:	action:startLocation=bullionRight1, end=dropZone1, timeToAchieve=5
+handleCurrentTrajectory
+motionFollowPath:goto:location.name=bullionRight1, ref=2144, x=1359, y=1440, tmpCost=100, tmpPrevious.name=dropZone1
+&054F-05A0-FC7C-B0-80-7AresetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+
+StrategySetRobotPosition:status=0, x=1361, y=1432, angle=2699
+
+Updating available paths
+Don't compute Path !
+nextStep
+nextStep=>1
+handleCurrentTrajectory
+no more locations to reach
+nextStep=>2
+executeTargetActions
+			actionItem:name=rotate
+rotateAbsolute:angle:1 ddeg
+l0001resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+
+StrategySetRobotPosition:status=0, x=1361, y=1433, angle=2698
+
+Updating available paths
+Don't compute Path !
+nextStep
+nextStep=>1
+executeTargetActions
+			actionItem:name=armRightDown
+J02
+Updating available paths
+Don't compute Path !
+nextStep
+nextStep=>1
+executeTargetActions
+			actionItem:name=bullionRight1GoToDropZone1
+motionGoLocation:goto:location.name=dropZone1, ref=2120, x=1000, y=213, tmpCost=0, tmpPrevious.name=NULL
+&03E8-00D5-FC7C-78-40-44resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+
+StrategySetRobotPosition:status=0, x=1001, y=222, angle=2698
+
+Updating available paths
+Don't compute Path !
+nextStep
+nextStep=>1
+executeTargetActions
+			actionItem:name=armRightUp
+I02resetAllPathsAsAvailable
+
+Updating available paths
+Don't compute Path !
+nextStep
+nextStep=>1
+executeTargetActions
+nextStep=>2
+findNextTarget
+	Nearest Location:location.name=dropZone1, ref=2120, x=1000, y=213, tmpCost=0, tmpPrevious.name=NULL
+	computeBestNextTargetAction:
+Result=, size=2
+location.name=dropZone1, ref=2120, x=1000, y=213, tmpCost=0, tmpPrevious.name=NULL
+location.name=bullionLeft1, ref=2156, x=671, y=1440, tmpCost=100, tmpPrevious.name=dropZone1
+		bestTarget:target:name=bullionLeft1, gain=3.0000, status=0
+		bestTargetAction:	action:startLocation=bullionLeft1, end=dropZone1, timeToAchieve=5
+handleCurrentTrajectory
+motionFollowPath:goto:location.name=bullionLeft1, ref=2156, x=671, y=1440, tmpCost=100, tmpPrevious.name=dropZone1
+&029F-05A0-FC7C-B0-80-7AresetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+
+StrategySetRobotPosition:status=0, x=675, y=1431, angle=2700
+
+Updating available paths
+Don't compute Path !
+nextStep
+nextStep=>1
+handleCurrentTrajectory
+no more locations to reach
+nextStep=>2
+executeTargetActions
+			actionItem:name=rotate
+rotateAbsolute:angle:0 ddeg
+l0001resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+
+StrategySetRobotPosition:status=0, x=675, y=1431, angle=2700
+
+Updating available paths
+Don't compute Path !
+nextStep
+nextStep=>1
+executeTargetActions
+			actionItem:name=armLeftDown
+J01
+Updating available paths
+Don't compute Path !
+nextStep
+nextStep=>1
+executeTargetActions
+			actionItem:name=bullionLeft1GoToDropZone1
+motionGoLocation:goto:location.name=dropZone1, ref=2120, x=1000, y=213, tmpCost=0, tmpPrevious.name=NULL
+&03E8-00D5-FC7C-78-40-44resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+
+StrategySetRobotPosition:status=0, x=999, y=222, angle=2700
+
+Updating available paths
+Don't compute Path !
+nextStep
+nextStep=>1
+executeTargetActions
+			actionItem:name=armLeftUp
+I01
+Updating available paths
+Don't compute Path !
+nextStep
+nextStep=>1
+executeTargetActions
+nextStep=>2
+findNextTarget
+	Nearest Location:location.name=dropZone1, ref=2120, x=1000, y=213, tmpCost=0, tmpPrevious.name=NULL
+	computeBestNextTargetAction:
+		bestTarget:NULL
+		bestTargetAction:NULL
+no more targets -> stoppingresetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+resetAllPathsAsAvailable
+ˇˇˇ>¢[06][0F]ˇ‚¢[01]0[02][02]Ü[1A][02]Çc[02]Ç[10][00]√[05]Ç¡[19][02]ÇÉ[03]ÇÅ[00]á[06][02][06]
+[06]Ü0ÇÇ[01]¿Ç[00][02]0@[01]0[00][02][0C]xÄ` [02]Ç[08]?Ç[04]FÜÒ¿¿[00][00]‡é[00]<[00][00]x[1E][00]<[02]@ÇÇB[02][00][02]Ç[01]0¿[00][00]`[00][00]`[12]B[02][00][0C][02]Ç[04][02]Ç`BÇ[10][02][00]0[02]Ç[04][02]ÇaB@A[00][00][04]ÜÇAÇb[02]ÇÇ[02][00]êÇ@[02]A[08][06]Ç [02][06][10][00]‡¡ÅCÜB[02]Ç[10][02][0E][00][06]Ç[04][02]Ç[10]ÇÇ@¬[00][00][05]Ç[04][02]Ç@[02]ÜÇÇ[1F][00][02][10][00][02][04][00][06][10]ÄÇ[00][00]HÇ[04][02]Ç@BAA[02][00][08][02]Ç[04][12]ÇÜB[02]A[02][00][00][02][02]¡[01][06]ABAÜ[02][00][0C]Ç¡@[01][06][10][02][02][08][1A][00][00]?[00][00][00][00][00][00][00]Ä[00][00][00][00] [00][00][00][00][00][00][00][00][00][00][00][00][00][00]@[00][00][00][00][00] 
+[06]A[01][00][04][02]Ç [06][02][10][02][02]Ä [00][00]
+[02]Å[11][02]ÜB[02]Ap[00][02][10][02][02][08]B[06]@BÇ[00][00]Ç0[02]Ç[08]BA[10]BA[04]Ä¡[00][04]Ç[10][02][10][06][00][02][00][10][02]Ç[04][12][02]ADAÇ[02][00][04][12][04]Ç
+[02]AB[02][02][00][00][1C] [02]Ç[08][02][04][02]BAƒ[00][02] [02][10]@[02]Ç [02]Ç[00][00][00][04][04][02][08]"[04][02]B[1F][00][00][03]¿ [00][00][10][00][00][00][00]`[00]∆¡[00][00][00][00]Ç DA<ÄÅÄ[01][00][00][02]@[00][02][04][00]Ä`Ç[02][02][00]B[04]@[01]Ç8[00][04][04][04][02][00]DA[11]B@[04]¿[00][04][02]Ç[08]B@@[01][00][00][00][02][00][02][04][00][04][04]Ä[01][02]`[00]Ä	[02][00][10]B[00]@DA8[00]@Ç@A[11][02][00][02]B[00][04][00][00][00]ÇÄ	[00][02][02]BA[00][00]A[1F][02] [10][04][08] [00][04][00][00]\[03][02][02][10]BA[11]B@[00][00]ÇÇ[02]Ç
+[02][00]@[01][02][00][00]Ä[08][04][02][10]B[00]@[01][00][00]Ä[10][00][02][00][00][02]A [02][10][00][00][00][04][04][01][02]B[00][10]ÇÇ[02][00][00] [02][00][00]DA[10]@@[00][00][06][00] [00][08][02][02]A"[04][00][00]A@ÇÇ[10][02][00]@[01][02]p`[08][02][02][02][00][00][04][00][18]Ç[00][00]Ä[00][00][00]p[07][0C][00][00]Ä[00][08][00]‡ [00][00][07][00][02][12][00][00][00][00]Ä[01][02][00]Ñ[01][10][02][02][00][00][00][04]ÇÇ[00]B[02][01]@A[00]h[00][02][02][00][02]B@ÇB[00][00][00]@[00][02][02][04]@A[00][12][02][00][00][02][10]@[00]Ç[02][02]Ä[01][02][00][00]†Ç[00][02][02]B[02]@[00][02][00][00]ÅÇ[00][02][00]@[00][02]@[00][00]ƒÑ[01][01][02][00]@[00][00]@[00][00]DA Ç[02][00][02][00] Ä[00][00]Ä[00][00][00][00]0Ñ[00]¿[00][00][00][00][00]¿ [00][00][00][06]A	[04]8[00] Ç[01]Ç[00][10][00][00][00][04][00][00][04][04]@@[00][01][00][00][00][00][00]ÄÄÄA@[00][02]ÇÇ[02][00][00][18]A[00][00][00][00][00][00]¿[00][00][10]d[00][0C][00][00][0C][00][02]@[10][00][00][04][00][03][13]0[00]ä@[08][00][00][00][00]ÄÇ[00][02][00]B@[00]B[00][02][00][00][00][00][00]Ä[18][00][00][00][00][00][0C]Ä[00][00][02][00][00][00][00][02][02][00][02][00][00][00][01][00]Ä[00][10]ÄÄ[00]¿`[00][04][00][00]@[00][00]@[00][00][00]@AÄ[01][00]@[00][02][00][00][00][00]PAÄ[00][04]@[00][00]@[00][08] [00][10]@[0F][00][00][00][00][00][02][02][18][00][00][10][00][00][00][00][00][00][00][04][10][02][02][04][04][00][00][00][02]@[00][00][00][00][00][04][02][02]@[00][02]@Ä[00]Ç[00][00][00][00]¿¿@[00][00][00][00][18][00]¿[00][00][00][00][00][00]@[00][00] [00][00]Ä[00][00]@[00][00][02]¬[00][00][00][04][00][00]Ä[00] [00][00][00][00][00][00][00]Ä[00][00]@[01][10]@[01][03][00][00][00][04][00][00][00][04]A[00][04][00]Ä[00][00]Ä[00][00]@[00][00][10][00][00][00]Ä[04][10][00][04]A[01][00][02][02][00][00][00][00][00][04][00][00][00][00][00][00][00][00]Ä[00][00][00][00][00][00][00]`[00][00]Ä[00][00][00]¿[00][10][00][07][00][00][00]@[00][00][00] [00][00][00][00][01][00][00][00][00]0[00][06]Ä[00][00]É[00]@[00][00][00][01][00][00] [00] [00][00][00][00][00][06][00][00][00][00]`[00][00][00]¿[00][00][00][00][00][08]Ç[00]  [00],[00][00][00][00][02][06][00]`[00]Ä[00][10][00][00][00][00][00] [00][00][00][00][00][00][00][0C][08][00][00][00][08][00][01][00][00][00][00][0C][04]¿[00][10][10][00][00][00][00]@[00][00][00][00][00][00][00]@Ä[00][00][00][00][00][00][00][00][00]  Ä[00][00] [00]ÄÄ[00] [00][02][00][00]Ä[00][04]@[00][00][00][00]@[00] [00][00] [04][00][00][00] [10][10][00][06]Ç[00][00][00][00][00][00][00][00]Ä[00][00][00][04][04][00][00][00][00][00][00][00]à[00][00][10][00][00][00][00][00][00] [00][00][00][00][00][00][00][00][00][00][00][00]à[00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][01][00][00][00][02][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][02][00][00][00][02][00][00][00][04][00][00][10][00][01][00][00][00][00]  [00][04][00][00][00][00][00][00][00][00][08][0C]@[00][00][00][00][00][00][00][00][00][00][00]@[00][00][00][00][00][00][00][00][00][00][0C][00][00][00][00][00][00][00][00][00][00] [00][00]A[00][00][00][00][00][00]"[00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00]Ä[10][00][00][00][10][00][00]Ç [00][00][00][00][00]H[00][00][00][00][00][00][01]@[00] [00][00][00][00][00][08][00][00][00][02][00][00][18][10][00][00][00][00][08][00][00][00][02][00]Ä[00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][10][00][00][00][00][00][00][00][00][00]¿[00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][03][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00]B[00][00][04][00][00][00][00][00][00][10][00][00][00][00][00][18][00][00][00]Ä[00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00] [00][00][00][00][00][00][00][00][00][00][00][00][00][02][00][00][00][00][00][00][00][00][00][00][01][00][00][01][00][00][00][00][00][00][00][00][00][02][00][00][00][03][00][00][00][00][00][00][04][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00]![00][00][00]Ç[00][00][00][03][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00]Ç[00][00][1C][00][00] [00][00][00][00][00][00][00][00][00][00][00][03][00][00][00][00][00][00] [00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00] [00][00][06][00][00][00][00][00][00][00][00][00][00][00]B[00][00][00][00][00][00][00][01][00][00][00][00][00][00][00][00][00][00][00][00][00][00] [00][00][00][00]A[01][04][00][02][00][00][00][02]@[01][02]@@¿[04][00][04][00][00][00][00]Ä[00][00][04][00] [00][00][00][00][00][02][02][00][00]AA[00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][03][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][01][00][00][00][00][00][00][00][00][00][00][00][00][00][02][00][00][00][00][00][00][00][00][01][00][00][00][00][00][00][00][00][00][00][02][00][00]@[00][00][00][00][00][00][11][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][04][00][00][00][00][00][00]`[00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][02][00][00][02][00][00][02][00][00][00] [00][00][00][00][00] [00][00][02][00][00][00][00][00][00][00]@[00][00][00][00][00][00][06][00][00][00][00][04][00][00][00][00][00][08][00][00][00][00][00]Ä[00][00][00][00][00][00][03][00][00][02][00][00][00][00][00][00][00][00][01][00][00][0C][00][00][02][00][00][00][00][00][02][00][00][03][00][00][00][00][00][00][00][00][00][00][00][03][00][00][00][00][00][00][00][00][00][00][00][00][00][02][00][00][00][08][01][00][00][04][00][00][00][00][00][00]Ä[00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][02][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00]A[00][00][00][00][00][00][00][00][00][00][00][00][00][00][00]Ä[00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][02][00][00][02][00][00][00][00][00][00][00][00][00][02][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00]D[00][00][01][00][00][00][00][00][00][02][00][00][02][00][00][00][00][00][00][04][00][00][00][10][00][00][00][00][00]@[00][00][04][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00] [00][00][00][00][00]Ä[00][00][00][00][06] [00][00][00]@[00][00][00][00][00][00][00][00][00][00][00][00][02][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00][00]
