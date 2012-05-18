@@ -122,6 +122,7 @@ static GameTargetActionItem cdTakeStep2TargetActionItem;
 // -> BULLION RIGHT 1
 static GameTargetActionItemList bullionRight1FromDropZone1ActionItemList; 
 static GameTargetActionItemList bullionRight1FromR3ActionItemList; 
+static GameTargetActionItem bullionRight1RotateTargetActionItem;
 static GameTargetActionItem bullionRight1Step1FromDropZone1TargetActionItem;
 static GameTargetActionItem bullionRight1Step1FromR3TargetActionItem;
 static GameTargetActionItem bullionRight1Step2OpenPlierTargetActionItem;
@@ -131,6 +132,7 @@ static GameTargetActionItem bullionRight1Step4ClosePlierTargetActionItem;
 // -> BULLION LEFT 1
 static GameTargetActionItemList bullionLeft1FromDropZone1ActionItemList; 
 static GameTargetActionItemList bullionLeft1FromL3ActionItemList; 
+static GameTargetActionItem bullionLeft1RotateTargetActionItem;
 static GameTargetActionItem bullionLeft1Step1FromDropZone1TargetActionItem;
 static GameTargetActionItem bullionLeft1Step1FromL3TargetActionItem;
 static GameTargetActionItem bullionLeft1Step2OpenPlierTargetActionItem;
@@ -438,21 +440,25 @@ void bullionRight1Step3GoToDropZone() {
 					MOTION_ACCELERATION_FACTOR_LOW, MOTION_SPEED_FACTOR_LOW);
 }
 
-// Bullion Left 1 ActionItem
-
-void bullionLeft1Step3GoToDropZone() {
-	motionGoLocation(&dropZone1Location,
-					 ANGLE_NEG_90, 
-					0x78, 0x40,
-					MOTION_ACCELERATION_FACTOR_LOW, MOTION_SPEED_FACTOR_LOW);
+void R3ToBullionRight1() {
+	motionFollowPath(&obstacleR3ToBullionRight1PathFunction, FALSE);
 }
 
 void dropZone1ToBullionRight1() {
 	motionFollowPath(&dropZone1ToBullionRight1PathFunction, FALSE);
 }
 
-void R3ToBullionRight1() {
-	motionFollowPath(&obstacleR3ToBullionRight1PathFunction, FALSE);
+// Bullion Left 1 ActionItem
+
+void bullionLeft1Rotate() {
+	rotateAbsolute(ANGLE_NEG_90);
+}
+
+void bullionLeft1Step3GoToDropZone() {
+	motionGoLocation(&dropZone1Location,
+					 ANGLE_NEG_90, 
+					0x78, 0x40,
+					MOTION_ACCELERATION_FACTOR_LOW, MOTION_SPEED_FACTOR_LOW);
 }
 
 void dropZone1ToBullionLeft1() {
@@ -500,6 +506,7 @@ void initTargetActionsItems2012() {
 	addTargetActionItem(&bullionRight1FromDropZone1ActionItemList, &bullionRight1Step3GoTargetActionItem, &bullionRight1Step3GoToDropZone, "bullionRight1GoToDropZone1");
 	addTargetActionItem(&bullionRight1FromDropZone1ActionItemList, &bullionRight1Step4ClosePlierTargetActionItem, &armRightUp, "armRightUp");
 
+	addTargetActionItem(&bullionRight1FromR3ActionItemList, &bullionRight1RotateTargetActionItem, &bullionRight1Rotate, "rotate");
 	addTargetActionItem(&bullionRight1FromR3ActionItemList, &bullionRight1Step1FromR3TargetActionItem, &R3ToBullionRight1, "R3->bullionRight1");
 	addTargetActionItem(&bullionRight1FromR3ActionItemList, &bullionRight1Step2OpenPlierTargetActionItem, &armRightDown, "armRightDown");
 	addTargetActionItem(&bullionRight1FromR3ActionItemList, &bullionRight1Step3GoTargetActionItem, &bullionRight1Step3GoToDropZone, "bullionRight1GoToDropZone1");
@@ -511,6 +518,7 @@ void initTargetActionsItems2012() {
 	addTargetActionItem(&bullionLeft1FromDropZone1ActionItemList, &bullionLeft1Step3GoTargetActionItem, &bullionLeft1Step3GoToDropZone, "bullionLeft1GoToDropZone1");
 	addTargetActionItem(&bullionLeft1FromDropZone1ActionItemList, &bullionLeft1Step4ClosePlierTargetActionItem, &armLeftUp, "armLeftUp");
 
+	addTargetActionItem(&bullionLeft1FromL3ActionItemList, &bullionLeft1RotateTargetActionItem, &bullionLeft1Rotate, "rotate");
 	addTargetActionItem(&bullionLeft1FromL3ActionItemList, &bullionLeft1Step1FromL3TargetActionItem, &L3ToBullionLeft1, "L3->bullionLeft1");
 	addTargetActionItem(&bullionLeft1FromL3ActionItemList, &bullionLeft1Step2OpenPlierTargetActionItem, &armLeftDown, "armLeftDown");
 	addTargetActionItem(&bullionLeft1FromL3ActionItemList, &bullionLeft1Step3GoTargetActionItem, &bullionLeft1Step3GoToDropZone, "bullionLeft1GoToDropZone1");
