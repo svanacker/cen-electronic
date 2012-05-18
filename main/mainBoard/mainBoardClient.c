@@ -457,15 +457,21 @@ BOOL isObstacleOutsideTheTable(int distance) {
 	float dsa = sinf(a) * distance;
 	int obstacleX = getRobotPositionX() + dca;
 	int obstacleY = getRobotPositionY() + dsa;
+	
+	appendStringAndDec(getOutputStreamLogger(INFO), "\nObstacle Position:x=", obstacleX);
+	appendStringAndDec(getOutputStreamLogger(INFO), ",y=", obstacleY);
+	println(getOutputStreamLogger(INFO));
 
+	
 	int BORDER_THRESHOLD = 250;
 	int TOTEM_THRESHOLD_X = 250;
-	int TOTEM_THRESHOLD_Y = 550;
+	int TOTEM_THRESHOLD_Y = 600;
 
-
+	// Table border X
 	if (obstacleX < BORDER_THRESHOLD || obstacleX > GAME_BOARD_WIDTH - BORDER_THRESHOLD) {
 		return TRUE;
 	}
+	// Table border Y
 	if (obstacleY < BORDER_THRESHOLD || obstacleY > GAME_BOARD_HEIGHT - BORDER_THRESHOLD) {
 		return TRUE;
 	}
@@ -517,7 +523,7 @@ void waitForInstruction() {
 		trajectoryDriverUpdateRobotPosition();
 
 		// compute the obstacle position. If it's outside the table, does nothing
-		int obstacleDistance = 300.0f;
+		int obstacleDistance = 350.0f;
         appendStringAndDec(getOutputStreamLogger(INFO), "\nInstruction Type:", instructionType);
 
 		if (instructionType == INSTRUCTION_TYPE_BACKWARD) {

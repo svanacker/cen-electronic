@@ -328,11 +328,11 @@ void initPaths2012(int index) {
 	addNavigationPath(&obstacleM1ToObstacleL1PathFunction);
 
 	// bottle1->OR1
-	void bottle1ToObstacleR1PathFunction() { fillPathData(&bottle1Location, &obstacleR1Location, BOTTLE1_TO_OR1_COST, 0x0A, 0x0A, ANGLE_180, ANGLE_180, BOTTLE1_TO_OR1_SPEED_FACTOR, BOTTLE1_TO_OR1_ACCELERATION_FACTOR);}
+	void bottle1ToObstacleR1PathFunction() { fillAsymmetricPathData(&bottle1Location, &obstacleR1Location, BOTTLE1_TO_OR1_COST, 0x0A, 0x0A, ANGLE_180, ANGLE_180, BOTTLE1_TO_OR1_SPEED_FACTOR, BOTTLE1_TO_OR1_ACCELERATION_FACTOR);}
 	addNavigationPath(&bottle1ToObstacleR1PathFunction);
 
 	// bottle2->OR3
-	void bottle2ToObstacleR3PathFunction() { fillPathData(&bottle2Location, &obstacleR3Location, BOTTLE2_TO_OR3_COST, 0x0A, 0x0A, ANGLE_180, ANGLE_180, BOTTLE2_TO_OR3_SPEED_FACTOR, BOTTLE2_TO_OR3_ACCELERATION_FACTOR);}
+	void bottle2ToObstacleR3PathFunction() { fillAsymmetricPathData(&bottle2Location, &obstacleR3Location, BOTTLE2_TO_OR3_COST, 0x0A, 0x0A, ANGLE_180, ANGLE_180, BOTTLE2_TO_OR3_SPEED_FACTOR, BOTTLE2_TO_OR3_ACCELERATION_FACTOR);}
 	addNavigationPath(&bottle2ToObstacleR3PathFunction);
 
 	// dropZone1->OL1

@@ -314,7 +314,7 @@ BOOL handleCurrentTrajectory() {
 		// printLocationList(getOutputStreamLogger(DEBUG), "currentTrajectory:", currentTrajectory);	
 	#endif
 
-	if (currentTrajectory->size < 2) {
+	if (currentTrajectory == NULL || currentTrajectory->size < 2) {
 		#ifdef DEBUG_STRATEGY_HANDLER
 			appendString(getOutputStreamLogger(DEBUG), "no more locations to reach\n");	
 		#endif
@@ -515,6 +515,7 @@ BOOL nextStep() {
 				#ifdef DEBUG_STRATEGY_HANDLER
 					appendString(getOutputStreamLogger(DEBUG), "no more targets -> stopping");
 				#endif
+				clearCurrentTarget();
 				return FALSE;
 			}
 			// Next target created a new current trajectory
