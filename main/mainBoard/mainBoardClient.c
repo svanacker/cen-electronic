@@ -688,7 +688,6 @@ int main(void) {
 	else {
 		appendString(getOutputStreamLogger(ALWAYS), "COLOR:RED\n");
 	}	
-	/* PCF Problem.
     if (configValue & CONFIG_SPEED_LOW_MASK) {
         motionSetParameters(MOTION_TYPE_FORWARD_OR_BACKWARD, 0x0C, 0x24);
         motionSetParameters(MOTION_TYPE_ROTATION, 0x12, 0x24);
@@ -704,18 +703,6 @@ int main(void) {
         motionSetParameters(MOTION_TYPE_ROTATION, 0x04, 0x04);
         motionSetParameters(MOTION_TYPE_ROTATION_ONE_WHEEL, 0x04, 0x04);
 		appendString(getOutputStreamLogger(ALWAYS), "SPEED ULTRA LOW\n");
-    } else {
-        motionSetParameters(MOTION_TYPE_FORWARD_OR_BACKWARD, 0x12, 0x36);
-        motionSetParameters(MOTION_TYPE_ROTATION, 0x16, 0x16);
-        motionSetParameters(MOTION_TYPE_ROTATION_ONE_WHEEL, 0x12, 0x10);
-		appendString(getOutputStreamLogger(ALWAYS), "SPEED NORMAL \n");
-    } */
-	// PCF Problem.
-    if (configValue & CONFIG_ROLLING_TEST_MASK) {
-        motionSetParameters(MOTION_TYPE_FORWARD_OR_BACKWARD, 0x0C, 0x24);
-        motionSetParameters(MOTION_TYPE_ROTATION, 0x12, 0x24);
-        motionSetParameters(MOTION_TYPE_ROTATION_ONE_WHEEL, 0x08, 0x08);
-		appendString(getOutputStreamLogger(ALWAYS), "SPEED LOW\n");
     } else {
         motionSetParameters(MOTION_TYPE_FORWARD_OR_BACKWARD, 0x12, 0x36);
         motionSetParameters(MOTION_TYPE_ROTATION, 0x16, 0x16);

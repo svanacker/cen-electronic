@@ -50,9 +50,8 @@ void refreshConfig(void) {
     return;
 #endif
 
-    unsigned char lowByte = readPCFByte(PCF8574AP_BASE_ADDRESS, PCF8574_LOW_BYTE_CONFIG_ADDRESS);
-    unsigned char highByte = readPCFByte(PCF8574_BASE_ADDRESS, PCF8574_HIGH_BYTE_CONFIG_ADDRESS);
-
+    unsigned char lowByte = readPCFByte(PCF8574_BASE_ADDRESS, PCF8574_LOW_BYTE_CONFIG_ADDRESS);
+	unsigned char highByte = readPCFByte(PCF8574_BASE_ADDRESS, PCF8574_HIGH_BYTE_CONFIG_ADDRESS);
 
     // The both highest bit is not available => be careful to the inversion made by readPCFByte
     config = ((highByte & 0x3F) << 8) | lowByte;
