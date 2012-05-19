@@ -161,6 +161,8 @@ int main(void) {
 	initLog(DEBUG);
 	addLogHandler(&serialLogHandler, "UART", &debugOutputStream, DEBUG);
 	appendString(getOutputStreamLogger(ALWAYS), getPicName());
+	println(getOutputStreamLogger(ALWAYS));
+
 	
 	initTimerList(&timerListArray, MECHANICAL_BOARD_2_TIMER_LENGTH);
 
