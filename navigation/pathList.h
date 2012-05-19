@@ -5,7 +5,7 @@
 #include "location.h"
 
 /** The max limit of path count. */
-#define MAX_PATH 	 	40
+#define MAX_PATH 	 	33
 
 /**
  * Tre struct defining a list of locations.

@@ -7,7 +7,7 @@
 #include "location.h"
 
 /** The max limit of location count. */
-#define MAX_LOCATION 	 	30
+#define MAX_LOCATION 	 	23
 
 /**
  * Tre struct defining a list of locations.
