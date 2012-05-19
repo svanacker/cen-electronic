@@ -62,7 +62,7 @@ void strategyTimerCallback() {
 }
 
 void initStrategyHandler() {
-	strategyTimer = addTimer(STRATEGY_TIMER_INDEX, TIME_DIVISER_1_HERTZ, &strategyTimerCallback);
+	// strategyTimer = addTimer(STRATEGY_TIMER_INDEX, TIME_DIVISER_1_HERTZ, &strategyTimerCallback);
 }
 
 /**
