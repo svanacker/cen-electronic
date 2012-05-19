@@ -10,7 +10,7 @@
  */
 typedef struct {
     /** An array of pointer on driver Descriptor. */
-    DriverDataDispatcher * dispatchers[MAX_DRIVER_DATA_DISPATCHER];
+    DriverDataDispatcher* dispatchers[MAX_DRIVER_DATA_DISPATCHER];
     /** the size of the list. */
     unsigned char size;
 } DriverDataDispatcherList;
