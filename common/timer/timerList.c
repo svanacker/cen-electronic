@@ -34,7 +34,8 @@ Timer* addTimer(int timerCode,
 	if (size < timerList.maxSize) {
 		Timer* result = (Timer*) timerList.timers;
 	 	result += size;
-
+		result->time = 0;
+		result->markTime = 0;
 	    result->timerCode = timerCode;
 	    result->timeDiviser = timeDiviser;
 	    result->callback = callback;

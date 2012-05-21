@@ -5,14 +5,14 @@
 #include "../../common/io/printWriter.h"
 
 void printTimer(OutputStream* outputStream, Timer* timer) {
-	appendString(outputStream, "Timer:code=");
-	appendDec(outputStream, timer->timerCode);
-	appendString(outputStream, ",div=");
-	appendDec(outputStream, timer->timeDiviser);
-	appendString(outputStream, ",enabled=");
-	appendDec(outputStream, timer->enabled);
-	appendString(outputStream, ",working=");
-	appendDec(outputStream, timer->working);
+	appendStringAndDec(outputStream, "Timer:code=", timer->timerCode);
+	appendStringAndDec(outputStream, ",div=", timer->timeDiviser);
+	appendStringAndDec(outputStream, ",time=", timer->time);
+	appendStringAndDec(outputStream, ",timeInternalCounter=", timer->timeInternalCounter);
+	appendStringAndDec(outputStream, ",markTime=", timer->markTime);
+
+	appendStringAndDec(outputStream, ",enabled=", timer->enabled);
+	appendStringAndDec(outputStream, ",working=", timer->working);
 }
 
 void printTimerList(OutputStream* outputStream, TimerList* timerList) {

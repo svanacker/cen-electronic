@@ -23,6 +23,16 @@ void stopTimer(Timer* timer) {
     timer->enabled = FALSE;
 }
 
+// MARK
+
+void mark(Timer* timer) {
+	timer->markTime = timer->time;
+}
+
+BOOL timeout(Timer* timer, unsigned long time) {
+	return timer->markTime + time > timer->time;
+}
+
 // LOCK / UNLOCK
 
 void lockAndWaitForTimer(Timer* timer) {

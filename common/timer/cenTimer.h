@@ -70,6 +70,8 @@ typedef struct {
     unsigned long timeInternalCounter;
     /** The value of the timer. */
     unsigned long time;
+	/** The value of the mark. */
+	unsigned long markTime;
     /** The function which must be used. */
     interruptTimerCallbackFunc* callback;
     /** if the timer is enabled or not. */
@@ -91,6 +93,8 @@ unsigned long getTime(Timer* Timer);
  */
 void setTime(Timer* Timer, unsigned long time);
 
+// START - STOP
+
 /**
  * Starts the timer given in argument.
  */
@@ -100,6 +104,21 @@ void startTimer(Timer* timer);
  * Stops the timer given in arguments.
  */
 void stopTimer(Timer* timer);
+
+// MARK
+
+/**
+ * Mark the timer. Remembers the current timer value.
+ */
+void mark(Timer* timer);
+
+/**
+ * Check if the last mark was done after markTime + time.
+ * return TRUE if (markTime + time > timer->time)
+ */
+BOOL timeout(Timer* timer, unsigned long time);
+
+// LOCK
 
 /**
  * Lock the timer to avoid that the timer fires.
