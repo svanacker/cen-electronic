@@ -5,6 +5,14 @@ static Logger logger;
 static LogHandlerList logHandlerList;
 static OutputStream logOutputStream;
 
+Logger* getLoggerSingleton() {
+	return &logger;
+}
+
+LogHandlerList* getLoggerHandlerList() {
+	return &logHandlerList;
+}
+
 /**
  * @private
  */
@@ -72,20 +80,4 @@ OutputStream* getErrorOutputStreamLogger() {
 
 Logger* getLoggerInstance() {
     return &logger;
-}
-
-void printLogger(OutputStream* outputStream) {
-    appendKeyAndName(outputStream, "GlbLogLvl=", getLevelAsString(logger.globalLogLevel));
-    appendKeyAndName(outputStream, ",writeLogLvl=", getLevelAsString(logger.writeLogLevel));
-    println(outputStream);
-
-    // For Each LogHandler
-    int count = getLogHandlerCount(&logHandlerList);
-    int i;
-    for (i = 0; i < count; i++) {
-        LogHandler* logHandler = logHandlerList.logHandlers[i];
-        appendStringAndDec(outputStream, "log(", i);
-        appendString(outputStream, ")=");
-        printLogHandler(outputStream, logHandler);
-    }
 }

@@ -19,6 +19,18 @@ typedef struct Logger {
 } Logger;
 
 /**
+ * Returns the singleton logger object.
+ * Used only it for debug
+ */
+Logger* getLoggerSingleton();
+
+/**
+ * Returns the singleton logger handler list object.
+ * Used only it for debug
+ */
+LogHandlerList* getLoggerHandlerList();
+
+/**
  * Init the log system.
  * @param globalLevel the global level of log (independant of each handler level)
  */
@@ -56,12 +68,5 @@ OutputStream* getErrorOutputStreamLogger();
  * Returns the singleton for logger.
  */
 Logger* getLoggerInstance();
-
-/**
- * Write the configuration of the logger.
- * @param outputStream the stream in which we write
- */
-void printLogger(OutputStream* outputStream);
-
 
 #endif

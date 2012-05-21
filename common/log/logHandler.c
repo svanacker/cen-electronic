@@ -11,10 +11,3 @@ void initHandler(
     logHandler->logLevel = logLevel;
 }
 
-void printLogHandler(OutputStream* outputStream,
-        LogHandler* logHandler) {
-    appendKeyAndName(outputStream, "HdlName=", logHandler->handlerName);
-    char* logLevelAsString = getLevelAsString(logHandler->logLevel);
-    appendKeyAndName(outputStream, ",lvl=", logLevelAsString);
-    println(outputStream);
-}

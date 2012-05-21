@@ -27,10 +27,11 @@ char readFilteredChar(InputStream* inputStream) {
         return result;
     } else {
         writeError(IO_READER_READ_FILTERED_CHAR);
-		appendString(getErrorOutputStreamLogger(), "Char:");
-        append(getErrorOutputStreamLogger(), b0);
-		appendString(getErrorOutputStreamLogger(), "Hex:");
-        appendHex2(getErrorOutputStreamLogger(), b0);
+		OutputStream* debugOutputStream = getErrorOutputStreamLogger();
+		appendString(debugOutputStream, "Char:");
+        append(debugOutputStream, b0);
+		appendString(debugOutputStream, "Hex:");
+        appendHex2(debugOutputStream, b0);
 
         return -1;
     }
