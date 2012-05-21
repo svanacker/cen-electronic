@@ -93,21 +93,21 @@ void initTimers() {
 
 
     /* TCY = TEMPS DE CYCLE : 1/((7372800*16)/4) = 33.9084 nanosec
-       period doit etre inferieur � 65535
-       tempo en seconde
-       TCY en seconde
-       T1_PS diviseur : 1 ou 4 ou 16 ou 256
+       period must be < 65535
+       tempo in seconds
+       TCY in seconds
+       T1_PS diviseur : 1 or 4 or 16 or 256
 	  
        period = Tempo ( TCY * T1_PS)
        57444  = 0.5   ( 0.000000034 * 256 )
      */
     period = 3; // => we must multiply by (period + 1)
 
-    // met a 0 le TIMER1 , Configure le TIMER1 et definie le nombre d'incrementation
+    // met a 0 le TIMER1 , set the TIMER1 and define incrementation count
     // avnt interruption
     OpenTimer1(config1, period);
 
-    // Definit la priorit�e de l'interruption, Active l'interruption
+    // Define the interruption priority and activate interruption
     ConfigIntTimer1(config2);
 }
 
