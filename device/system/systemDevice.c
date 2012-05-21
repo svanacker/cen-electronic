@@ -3,8 +3,6 @@
 
 #include "../../common/delay/delay30F.h"
 
-#include "../../common/i2c/i2cDebug.h"
-
 #include "../../common/io/inputStream.h"
 #include "../../common/io/outputStream.h"
 #include "../../common/io/reader.h"
@@ -22,29 +20,13 @@ void deviceSystemInit() {
 }
 
 void deviceSystemShutDown() {
-}
+} 
 
 BOOL deviceSystemIsOk() {
     return TRUE;
 }
 
 void deviceSystemHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream) {
-
-#ifdef DEVICE_ENABLE_CHANGE_LOG
-    if (header == COMMAND_LOG) {
-        int logHandlerIndex = readHex2(inputStream);
-        int logLevel = readHex2(inputStream);
-
-        LogHandler* logHandler = getLogHandler(getLoggerInstance()->logHandlerList, logHandlerIndex);
-        logHandler->logLevel = logLevel;
-
-        // data
-        appendAck(outputStream);
-        append(outputStream, COMMAND_LOG);
-        // we don't use driver stream (buffered->too small), instead of log (not buffered)
-        printLogger(getOutputStreamLogger(ALWAYS));
-    }
-#endif
 	if (header == COMMAND_PING) {
         // data
         appendAck(outputStream);
@@ -64,14 +46,6 @@ void deviceSystemHandleRawData(char header, InputStream* inputStream, OutputStre
         appendString(getOutputStreamLogger(ALWAYS), getPicName());
         append(outputStream, COMMAND_PIC_NAME);
 	}
-	// I2C Management
-	else if (header == COMMAND_DEBUG_I2C) {
-        appendAck(outputStream);
-        printI2cDebugBuffers();
-
-        // Response
-        append(outputStream, COMMAND_DEBUG_I2C);
-    }
 }
 
 static DeviceDescriptor descriptor = {

@@ -610,13 +610,9 @@ float rightSimpleMilliDegreeAndWait(float angleMilliDegree) {
 void squareCalibration(unsigned char type, float lengthInMM) {
     // to the bottom middle
 	signed char cp = 100.0f;
-	signed char _cp = -100.0f;
 	// signed int lengthInMM4 = lengthInMM / 4.0f;
 	signed int lengthInMM2 = lengthInMM / 2.0f;
 
-	// gotoSimpleSpline(lengthInMM4, 0.0f, 0.0f, cp, cp, MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL, FALSE);
-    // handleAndWaitFreeMotion();
-    
 	// forwardSimpleMMAndWait(lengthInMM / 4.0f);
 	if (type == 0) {
     	rightSimpleDegreeAndWait(DEG_90);
@@ -637,7 +633,6 @@ void squareCalibration(unsigned char type, float lengthInMM) {
 	}
 
     // to the top right
-    // forwardSimpleMMAndWait(lengthInMM);
 	if (type == 0) {
 		gotoSimpleSpline(lengthInMM, -lengthInMM2, 0.0f, cp, cp, MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL, FALSE);
 	    handleAndWaitFreeMotion();
@@ -649,7 +644,6 @@ void squareCalibration(unsigned char type, float lengthInMM) {
 	}
 
     // to the top left
-    // forwardSimpleMMAndWait(lengthInMM);
 	if (type == 0) {
 		gotoSimpleSpline(lengthInMM, lengthInMM2, 900.0f, cp, cp, MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL, FALSE);
 	    handleAndWaitFreeMotion();
@@ -661,7 +655,6 @@ void squareCalibration(unsigned char type, float lengthInMM) {
 	}
 
     // to the bottom left
-    // forwardSimpleMMAndWait(lengthInMM);
 	if (type == 0) {
 		gotoSimpleSpline(0, lengthInMM2, 1800.0f, cp, cp, MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL, FALSE);
 	    handleAndWaitFreeMotion();
@@ -673,7 +666,6 @@ void squareCalibration(unsigned char type, float lengthInMM) {
 	}
 
     // to the bottom middle
-    // forwardSimpleMMAndWait(lengthInMM / 2.0f);
 	if (type == 0) {
 		gotoSimpleSpline(0, 0.0f, -900.0f, cp, cp, MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL, FALSE);
 	    handleAndWaitFreeMotion();
@@ -683,9 +675,4 @@ void squareCalibration(unsigned char type, float lengthInMM) {
 	    handleAndWaitFreeMotion();
     	rightSimpleDegreeAndWait(DEG_90);
 	}
-
-    // go to the first position
-    // backwardSimpleMMAndWait(lengthInMM / 4.0f);
-	// gotoSimpleSpline(0.0f, 0.0f, 0.0f, _cp, _cp, MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL, FALSE);
-	// handleAndWaitFreeMotion();
 }

@@ -11,8 +11,6 @@
 // #define DEVICE_ENABLE_PIN
 // Activate or not the possibility of controlling servo
 // #define DEVICE_ENABLE_SERVO
-// Activate or not the possibility of changing log Level
-// #define DEVICE_ENABLE_CHANGE_LEVEL
 
 /**
 * Tre struct defining a list

@@ -35,12 +35,6 @@ StreamLink* getI2cStreamLink() {
  * Description : This is the ISR for I2C1 Slave interrupt.
  */
 void __attribute__((__interrupt__)) __attribute__((no_auto_psv)) _SI2CInterrupt(void) {
-    /*
-    if (!i2cInterruptEnabled) {
-            IFS0bits.SI2CIF = 0;
-            return;
-    }
-     */
     // last byte received is address and not data
     char isData = I2CSTATbits.D_A;
     char read = I2CSTATbits.R_W;

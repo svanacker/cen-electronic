@@ -51,6 +51,6 @@ void printPoint(OutputStream* outputStream, Point* point, const char* unit) {
 }
 
 void appendStringAndAngleInDeg(OutputStream* outputStream, const char* valueName, float angleInRadians) {
-	appendStringAndDecf(outputStream, valueName, angleInRadians * (180.0f / PI));
+	appendStringAndDecf(outputStream, valueName, angleInRadians / PI_DIVIDE_180);
 	appendString(outputStream, " deg");
 }
