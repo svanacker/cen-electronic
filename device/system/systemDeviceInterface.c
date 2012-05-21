@@ -44,24 +44,7 @@ int deviceSystemGetInterface(char header, int mode, BOOL fillDeviceArgumentList)
             }
             return 0;
         }
-    }// log
-	#ifdef DEVICE_ENABLE_CHANGE_LEVEL
-    else if (header == COMMAND_LOG) {
-        if (mode == DEVICE_MODE_INPUT) {
-            if (fillDeviceArgumentList) {
-				setFunction("setLog", 2);
-				setArgumentUnsignedHex2(0, "handlerIdx");
-				setArgumentUnsignedHex2(1, "logLevel");
-            }
-            return 4;
-        } else if (mode == DEVICE_MODE_OUTPUT) {
-            if (fillDeviceArgumentList) {
-				setFunctionNoArgument("setLog");
-            }
-            return 0;
-        }
     }// usage
-	#endif
     else if (header == COMMAND_USAGE) {
 		// Same INPUT/OUTPUT
         if (fillDeviceArgumentList) {
@@ -69,14 +52,6 @@ int deviceSystemGetInterface(char header, int mode, BOOL fillDeviceArgumentList)
         }
         return 0;
     }
-	 else if (header == COMMAND_DEBUG_I2C) {
-        // NO difference between INPUT and OUTPUT : No Argument
-        if (fillDeviceArgumentList) {
-			setFunction("i2cDebug", 0);
-        }
-        return 0;
-    }
-
     return DEVICE_HEADER_NOT_HANDLED;
 }
 
