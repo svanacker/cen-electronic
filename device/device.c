@@ -41,13 +41,6 @@ BOOL initDevice(const Device* device) {
         }
     }
 
-	/*
-    unsigned int version = deviceInterface->deviceGetSoftwareRevision();
-    append(logStream, '(');
-    appendDec(logStream, version);
-    append(logStream, ')');
-	*/
-
     println(logStream);
 
     return result;

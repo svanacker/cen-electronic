@@ -22,11 +22,6 @@ typedef void driverShutDownFunction(void);
 typedef BOOL driverIsOkFunction(void);
 
 /**
- * Software revision of the driver retrieval function.
- */
-typedef unsigned int driverGetSoftwareRevisionFunction(void);
-
-/**
  * Function for querying the name of the driver.
  */
 typedef const char* driverGetNameFunction(void);
@@ -45,8 +40,6 @@ typedef struct {
     // BOOL driverEnabled;
     driverInitFunction *driverInit;
     driverShutDownFunction *driverShutDown;
-    // driverIsOkFunction *driverIsOk;
-    // driverGetSoftwareRevisionFunction *driverGetSoftwareRevision;
     driverGetNameFunction *driverGetName;
     int transmitMode;
 

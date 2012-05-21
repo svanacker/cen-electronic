@@ -7,10 +7,6 @@ const char* getPIDDeviceName(void) {
     return "PID";
 }
 
-unsigned int getPIDSoftwareRevision(void) {
-    return 1;
-}
-
 void fillArgumentForPlainPid() {
 	setArgumentUnsignedHex2(0, "pidIdx");
 	setArgumentUnsignedHex2(1, "p");
@@ -134,7 +130,6 @@ int devicePIDGetInterface(char header, int mode, BOOL fillDeviceArgumentList) {
 }
 
 static DeviceInterface deviceInterface = {
-//    .deviceGetSoftwareRevision = &getPIDSoftwareRevision,
     .deviceGetName = &getPIDDeviceName,
     .deviceGetInterface = &devicePIDGetInterface
 };

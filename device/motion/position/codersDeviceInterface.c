@@ -3,10 +3,6 @@
 #include "../../../device/device.h"
 #include "../../../device/deviceInterface.h"
 
-unsigned int getCodersSoftwareRevision(void) {
-    return 1;
-}
-
 const char* getCodersDeviceName(void) {
     return "Hctl Coders";
 }
@@ -45,7 +41,6 @@ int deviceCodersGetInterface(char header, int mode, BOOL fillDeviceArgumentList)
 
 static DeviceInterface deviceInterface = {
     .deviceGetName = &getCodersDeviceName,
-//    .deviceGetSoftwareRevision = &getCodersSoftwareRevision,
     .deviceGetInterface = &deviceCodersGetInterface
 };
 

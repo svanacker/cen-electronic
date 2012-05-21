@@ -167,11 +167,6 @@ void setArgumentSeparator(int index);
 typedef const char* deviceGetNameFunction(void);
 
 /**
-* Defines the function to know the software revision of a device.
-*/
-typedef unsigned int deviceGetSoftwareRevisionFunction(void);
-
-/**
 * @param header the character which is the header
 * @param mode either MODE_INPUT to know the length of the inputBuffer to handle the command of the header
 * @param fillDeviceArgumentList if TRUE, the function will update the argumentList
@@ -189,8 +184,6 @@ typedef int deviceGetInterfaceFunction(char header,
 typedef struct DeviceInterface{
 	/** Function returning the name of the device. */
 	deviceGetNameFunction *deviceGetName;
-	/** Function returning the software revision of the device. */
-	// deviceGetSoftwareRevisionFunction *deviceGetSoftwareRevision;
 	/** Function returning information about interface. */
 	deviceGetInterfaceFunction* deviceGetInterface;
 } DeviceInterface;

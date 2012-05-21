@@ -3,10 +3,6 @@
 #include "../../../device/device.h"
 #include "../../../device/deviceInterface.h"
 
-unsigned int deviceMotionGetSoftwareRevision() {
-    return 1;
-}
-
 const char* deviceMotionGetName() {
     return "motion";
 }
@@ -262,7 +258,6 @@ int deviceMotionGetInterface(char header, int mode, BOOL fillDeviceArgumentList)
 
 static DeviceInterface deviceInterface = {
     .deviceGetName = &deviceMotionGetName,
-//    .deviceGetSoftwareRevision = &deviceMotionGetSoftwareRevision,
     .deviceGetInterface = &deviceMotionGetInterface
 };
 

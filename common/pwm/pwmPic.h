@@ -1,7 +1,7 @@
 /**
  * COMMANDE PWM DU PIC SUR OC1 ET OC2
  * @author jerome
- * @version 27-03-2010 Cr�ation des commandes de base
+ * @version 27-03-2010
  */
 #ifndef PWMPIC_H
 #define PWMPIC_H

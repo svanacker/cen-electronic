@@ -16,10 +16,6 @@ const char* deviceSystemGetName() {
     return "system";
 }
 
-unsigned int deviceSystemGetSoftwareRevision() {
-    return 1;
-}
-
 int deviceSystemGetInterface(char header, int mode, BOOL fillDeviceArgumentList) {
     // getPicName()
     if (header == COMMAND_PIC_NAME) {
@@ -86,7 +82,6 @@ int deviceSystemGetInterface(char header, int mode, BOOL fillDeviceArgumentList)
 
 static DeviceInterface deviceInterface = {
     .deviceGetName = &deviceSystemGetName,
-//    .deviceGetSoftwareRevision = &deviceSystemGetSoftwareRevision,
     .deviceGetInterface = &deviceSystemGetInterface
 };
 

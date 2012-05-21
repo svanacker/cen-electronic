@@ -7,10 +7,6 @@ const char* getPwmMotorDeviceName(void) {
     return "PWM_MOTOR";
 }
 
-unsigned int getPwmMotorVersion(void) {
-    return 1;
-}
-
 int deviceMotorGetInterface(char header, int mode,
         BOOL fillDeviceArgumentList) {
     if (header == COMMAND_MOVE_MOTOR) {
@@ -38,7 +34,6 @@ int deviceMotorGetInterface(char header, int mode,
 
 static DeviceInterface deviceInterface = {
     .deviceGetName = &getPwmMotorDeviceName,
-//    .deviceGetSoftwareRevision = &getPwmMotorVersion,
     .deviceGetInterface = &deviceMotorGetInterface
 };
 

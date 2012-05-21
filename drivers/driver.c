@@ -6,19 +6,11 @@
 BOOL driverInit(const DriverDescriptor* driverDescriptor) {
     BOOL result = driverDescriptor->driverInit();
     const char* driverName = driverDescriptor->driverGetName();
-//    unsigned int driverRevision = driverDescriptor->driverGetSoftwareRevision();
 
     OutputStream* outputStream = getDebugOutputStreamLogger();
     appendString(outputStream, "DRIVER :");
   
 	appendString(outputStream, driverName);
-
-	/*
-    append(outputStream, '(');
-    appendDec(outputStream, driverRevision);
-    append(outputStream, ')');
-    println(outputStream);
-	*/
 
     return result;
 }

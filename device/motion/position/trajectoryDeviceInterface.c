@@ -14,10 +14,6 @@ const char* getTrajectoryDeviceName(void) {
     return "Trajectory";
 }
 
-unsigned int getTrajectorySoftwareRevision(void) {
-    return 1;
-}
-
 void fillAbsolutePosition() {
 	setArgumentUnsignedHex4(0, X_MM);
 	setArgumentSeparator(1);
@@ -65,7 +61,6 @@ int trajectoryGetInterface(char header, int mode, BOOL fillDeviceArgumentList) {
 
 static DeviceInterface deviceInterface = {
     .deviceGetName = &getTrajectoryDeviceName,
-//    .deviceGetSoftwareRevision = &getTrajectorySoftwareRevision,
     .deviceGetInterface = &trajectoryGetInterface
 };
 
