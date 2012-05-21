@@ -206,24 +206,18 @@ void deviceMotionHandleRawData(char header,
 
         append(outputStream, header);
     }
-    else if (header == COMMAND_MOTION_SPLINE_TEST_LEFT) {
+    else if (header == COMMAND_MOTION_SPLINE_TEST_LEFT || header == COMMAND_MOTION_SPLINE_TEST_RIGHT) {
         appendAck(outputStream);
-		
-		gotoSimpleSpline(400.0f, 400.0f,
-						 0.75f * PI,
+		float sign = 1.0f;
+		if (header == COMMAND_MOTION_SPLINE_TEST_RIGHT) {
+			sign = -sign;
+		}
+		gotoSimpleSpline(400.0f, sign * 400.0f,
+						 sign * 0.75f * PI,
 						 200.0f, 200.0f,
 						MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL,
 						 TRUE);
-        append(outputStream, COMMAND_MOTION_SPLINE_TEST_LEFT);
-    }
-    else if (header == COMMAND_MOTION_SPLINE_TEST_RIGHT) {
-        appendAck(outputStream);
-		gotoSimpleSpline(400.0f, -400.0f,
-						 -0.75f * PI,
-						 200.0f, 200.0f, 
-						MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL,
-						TRUE);
-        append(outputStream, COMMAND_MOTION_SPLINE_TEST_RIGHT);
+        append(outputStream, header);
     }
 	// STOP
         // cancel motion

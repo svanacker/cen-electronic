@@ -19,7 +19,7 @@ void stopCoders(void) {
 }
 
 BOOL isCodersDeviceOk(void) {
-    return 1;
+    return TRUE;
 }
 
 void printCoderDebug(OutputStream* outputStream, char* name, signed long value, float wheelFactor) {
