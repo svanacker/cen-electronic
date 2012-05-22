@@ -18,7 +18,7 @@
 static long lastPidTime;
 static int counter;
 
-void debugTimerCallbackFunc(void) {
+void debugTimerCallbackFunc(Timer* timer) {
     counter++;
     if (counter > 144) {
         appendSeparator(getOutputStreamLogger(INFO));

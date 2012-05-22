@@ -400,18 +400,18 @@ BOOL isPathAvailable(PathDataFunction* pathDataFunction) {
 	pathDataFunction();
 	PathData* pathData = getTmpPathData();
 	BSplineCurve* curve = getSingleBSplineCurve();
-	Point* p0 = curve->p0;
+	Point* p0 = &(curve->p0);
 	p0->x = pathData->location1->x;
 	p0->y = pathData->location1->y;
-	Point* p3 = curve->p3;
+	Point* p3 = &(curve->p3);
 	p3->x = pathData->location2->x;
 	p3->y = pathData->location2->y;
 	int angle1 = getAngle1Path(pathDataFunction);
 	int angle2 = getAngle2Path(pathDataFunction);
 	int d1 = cpToDistance(pathData->controlPointDistance1);
 	int d2 = cpToDistance(-pathData->controlPointDistance2);
-	computePoint(p0, curve->p1, d1, angle1);
-	computePoint(p3, curve->p2, d2, angle2);
+	computePoint(p0, &(curve->p1), d1, angle1);
+	computePoint(p3, &(curve->p2), d2, angle2);
 
 	int i;
 	Point p;
