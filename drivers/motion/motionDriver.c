@@ -21,7 +21,7 @@
 
 static BOOL readyForNextMotion = FALSE;
 
-static unsigned int motionIndex = 0;
+static unsigned char motionIndex = 0;
 
 void setReadyForNextMotion(BOOL value) {
     readyForNextMotion = value;

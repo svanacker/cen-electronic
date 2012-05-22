@@ -65,7 +65,7 @@ de la stratégie. => Faire un éditeur graphique de stratégie
  => SV : Faire des supports de balises à hauteur pour les tests d'évitements
  => SV : Prévoir air comprimé pour nettoyer les contacts
 
- 
+ Mise en place du RESET GLOBAL
 
 AUTRES :
 

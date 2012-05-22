@@ -8,8 +8,8 @@
 #define LCD_ROW_COUNT	 4
 #define LCD_COLUMN_COUNT 20
 
-static int currentRow;
-static int currentColumn;
+static char currentRow;
+static char currentColumn;
 
 /**
  * Verifie et attend si l'afficheur a fini d'effectuer ses op�rations interne.

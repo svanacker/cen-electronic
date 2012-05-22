@@ -8,6 +8,7 @@
 #include "../../../common/log/logger.h"
 #include "../../../common/log/logLevel.h"
 #include "../../../common/io/printWriter.h"
+#include "../../../common/io/binaryPrintWriter.h"
 
 static BOOL initialized = FALSE;
 

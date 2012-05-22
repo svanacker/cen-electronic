@@ -20,13 +20,13 @@
 
 #include "../../robot/2012/armDriver2012.h"
 
-static int matchStarted = FALSE;
+static BOOL matchStarted = FALSE;
 
 /** Current Time In Second. */
 static int currentTimeInSecond = 0;
 
 /** Flag to know if the robot must stop at the end of the match. */
-static int doNotEnd = 0;
+static BOOL doNotEnd = FALSE;
 
 /** The timer struct to detect the end of the match. */
 static Timer* endMatchDetectorDeviceTimer;

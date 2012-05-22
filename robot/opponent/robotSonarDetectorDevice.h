@@ -17,6 +17,6 @@ DeviceDescriptor* getRobotSonarDetectorDeviceDescriptor();
 
 BOOL notifyObstacle();
 
-void setSonarStatus(int aSonarStatus);
+void setSonarStatus(unsigned char aSonarStatus);
 
 #endif

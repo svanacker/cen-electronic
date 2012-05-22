@@ -29,7 +29,7 @@
 
 #include "../../main/motorBoard/motorBoard.h"
 
-#define SONAR_INDEX	0
+#define SONAR_INDEX			0
 
 /** Use or not the sonar. */
 // static BOOL useSonar;
@@ -38,10 +38,10 @@
 static unsigned int distances[ROBOT_SONAR_DETECTOR_DEVICE_HISTORY_SIZE];
 
 /** The index for history. */
-static int distanceIndex;
+static char distanceIndex;
 
 /** The interrupt Counter. */
-static int interruptCounter;
+static char interruptCounter;
 
 /** Value of the counter for which we do not check. */
 static int doNotCheckBeforeCounter;
@@ -50,9 +50,9 @@ static BOOL obstacle;
 
 static BOOL readNextDistanceFlag;
 
-static int sonarStatus;
+static char sonarStatus;
 
-void setSonarStatus(int aSonarStatus) {
+void setSonarStatus(unsigned char aSonarStatus) {
 	sonarStatus = aSonarStatus;
 }
 
@@ -105,7 +105,7 @@ void readNextDistance() {
     unsigned int distance = getSRF02DistanceEndRanging(SONAR_INDEX);
     delaymSec(1);
     startSRF02Ranging(SONAR_INDEX);
-    distances[distanceIndex] = distance;
+    distances[(unsigned int) distanceIndex] = distance;
 
     /*
     appendDec(getOutputStreamLogger(DEBUG), distance);
