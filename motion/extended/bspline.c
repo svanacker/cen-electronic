@@ -23,20 +23,20 @@ void initBSplineCurveData(BSplinePointData* pointData, float x, float y) {
 
 void resetBSplineCurve(BSplineCurve* bSplineCurve, 
 					  float p0x, float p0y, BOOL backward) {
-	bSplineCurve->p0->x = p0x;
-	bSplineCurve->p0->y = p0y;
+	bSplineCurve->p0.x = p0x;
+	bSplineCurve->p0.y = p0y;
 
-	bSplineCurve->p1->x = 0.0f;
-	bSplineCurve->p1->y = 0.0f;
+	bSplineCurve->p1.x = 0.0f;
+	bSplineCurve->p1.y = 0.0f;
 
-	bSplineCurve->p2->x = 0.0f;
-	bSplineCurve->p2->y = 0.0f;
+	bSplineCurve->p2.x = 0.0f;
+	bSplineCurve->p2.y = 0.0f;
 
-	bSplineCurve->p3->x = 0.0f;
-	bSplineCurve->p3->y = 0.0f;
+	bSplineCurve->p3.x = 0.0f;
+	bSplineCurve->p3.y = 0.0f;
 
-	initBSplineCurveData(bSplineCurve->lastPointData, p0x, p0y);
-	initBSplineCurveData(bSplineCurve->tempPointData, p0x, p0y);
+	initBSplineCurveData(&(bSplineCurve->lastPointData), p0x, p0y);
+	initBSplineCurveData(&(bSplineCurve->tempPointData), p0x, p0y);
 
 	bSplineCurve->curveLength = 0.0f;
 	
@@ -46,21 +46,7 @@ void resetBSplineCurve(BSplineCurve* bSplineCurve,
 	bSplineCurve->backward = backward;
 }
 
-void initFirstTimeBSplineCurve(BSplineCurve* bSplineCurve, 
-					  Point* p0, Point* p1, Point* p2, Point* p3,
-						BSplinePointData* lastPointData, Point* lastPoint,
-						BSplinePointData* tempPointData, Point* tempPoint) {
-	bSplineCurve->p0 = p0;
-	bSplineCurve->p1 = p1;
-	bSplineCurve->p2 = p2;
-	bSplineCurve->p3 = p3;
-
-	lastPointData->point = lastPoint;
-	bSplineCurve->lastPointData = lastPointData;
-
-	tempPointData->point = tempPoint;
-	bSplineCurve->tempPointData = tempPointData;
-
+void initFirstTimeBSplineCurve(BSplineCurve* bSplineCurve) {
 	resetBSplineCurve(bSplineCurve, 0.0f, 0.0f, FALSE);
 
 	// bSplineCurve->method = BSPLINE_COMPUTE_METHOD_DISTANCE;
@@ -76,10 +62,10 @@ void computeBSplinePoint(BSplineCurve* bSplineCurve, float t, Point* resultPoint
 	float _3_t_l_t2 = 3.0f * t * l_t2;
 	float _3_t2_l_t = 3.0f * t2 * l_t;
 
-	Point* p0 = bSplineCurve->p0;
-	Point* p1 = bSplineCurve->p1;
-	Point* p2 = bSplineCurve->p2;
-	Point* p3 = bSplineCurve->p3;
+	Point* p0 = &(bSplineCurve->p0);
+	Point* p1 = &(bSplineCurve->p1);
+	Point* p2 = &(bSplineCurve->p2);
+	Point* p3 = &(bSplineCurve->p3);
 
 	// http://en.wikipedia.org/wiki/B%C3%A9zier_curve
 	// P(t) = P0 (1 - t)^3 + 3*P1*t(1-t)^2 + 3*P2*t^2(1-t) + P3*t^3
@@ -101,10 +87,10 @@ float computeBSplineOrientationWithDerivative(BSplineCurve* bSplineCurve, float 
 	// d'ou
 	// - 3 * (P0 * (t-1)^2  -    P1 * (1 - t) * (3*t - 1)        - P2 * t (3 * t - 2)    +   P3 * t * t)
 
-	Point* p0 = bSplineCurve->p0;
-	Point* p1 = bSplineCurve->p1;
-	Point* p2 = bSplineCurve->p2;
-	Point* p3 = bSplineCurve->p3;
+	Point* p0 = &(bSplineCurve->p0);
+	Point* p1 = &(bSplineCurve->p1);
+	Point* p2 = &(bSplineCurve->p2);
+	Point* p3 = &(bSplineCurve->p3);
 
 	// Warning about orientation
 	float diffX = 3.0f * ( (- p0->x * l_t2) - (p1->x * l_t * _3t_1) - (p2->x * t * _3t_2) + (p3->x * t2) );
@@ -135,7 +121,7 @@ float computeBSplineMaxDerivative(BSplineCurve* bSplineCurve) {
 }
 
 void computeBSplinePointData(BSplineCurve* bSplineCurve, float time, BSplinePointData* splinePointData) {
-	BSplinePointData* lastPointData = bSplineCurve->lastPointData;
+	BSplinePointData* lastPointData = &(bSplineCurve->lastPointData);
 	
 	Point* lastPoint = lastPointData->point;
 	
@@ -162,8 +148,8 @@ float computeBSplineArcLength(BSplineCurve* bSplineCurve, float timeIncrement) {
 	float t;
 	Point point;
 	Point previousPoint;
-	previousPoint.x = bSplineCurve->p0->x;
-	previousPoint.y = bSplineCurve->p0->y;
+	previousPoint.x = bSplineCurve->p0.x;
+	previousPoint.y = bSplineCurve->p0.y;
 	for (t = timeIncrement; t <= 1.0f; t += timeIncrement) {
 		computeBSplinePoint(bSplineCurve, t, &point);
 		float distance = distanceBetweenPoints(&previousPoint, &point);
@@ -199,11 +185,11 @@ float computeTimeWithInterpolation(BSplinePointData* beforePointData,
 
 float computeBSplineTimeAtDistance(BSplineCurve* bSplineCurve, float distance) {
 	if (bSplineCurve->method == BSPLINE_COMPUTE_METHOD_DISTANCE) {
-		BSplinePointData* lastSplinePointData = bSplineCurve->lastPointData;
+		BSplinePointData* lastSplinePointData = &(bSplineCurve->lastPointData);
 		
 		// As this variable is a local struct Variable, it must not be exported
 		// at the end of the routine
-		BSplinePointData* nextSplinePointData = bSplineCurve->tempPointData;
+		BSplinePointData* nextSplinePointData = &(bSplineCurve->tempPointData);
 	
 		// try to reach the distance passed in argument by recomputing the curve
 		float t;

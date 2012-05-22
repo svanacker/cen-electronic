@@ -49,18 +49,18 @@ typedef struct BSplinePointData {
  * Define a bezierCurve, with 4 points.
  */
 typedef struct BSplineCurve {
-    Point* p0;
-    Point* p1;
-    Point* p2;
-    Point* p3;
+    Point p0;
+    Point p1;
+    Point p2;
+    Point p3;
 	BOOL backward;
     // The length of the curve.
     float curveLength;
     // Store the last computed information for a point of the curve
     // (the nearest previous point of the curve for the robot.
-    BSplinePointData* lastPointData;
+    BSplinePointData lastPointData;
     // Useful structure for compute
-    BSplinePointData* tempPointData;
+    BSplinePointData tempPointData;
 	// Method computation
 	unsigned char method;
 	// accelerationFactor
@@ -72,10 +72,7 @@ typedef struct BSplineCurve {
 /**
  * Init a bSpline Curve with values, and all structures necessary to allocate memory.
  */
-void initFirstTimeBSplineCurve(BSplineCurve* bSplineCurve,
-        Point* p0, Point* p1, Point* p2, Point* p3,
-        BSplinePointData* lastPointData, Point* lastPoint,
-        BSplinePointData* tempPointData, Point* tempPoint);
+void initFirstTimeBSplineCurve(BSplineCurve* bSplineCurve);
 
 /**
  * Init a bSpline Curve with values, when the structures is already initialized.

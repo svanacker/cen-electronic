@@ -56,10 +56,10 @@ void writeBSplineDefinitionPoint(OutputStream* outputStream, Point* point, char*
 }
 
 void writeBSplineControlPoints(OutputStream* outputStream, BSplineCurve* bSplineCurve, float factor) {
-	writeBSplineDefinitionPoint(outputStream, bSplineCurve->p0, "p0", factor);
-	writeBSplineDefinitionPoint(outputStream, bSplineCurve->p1, "p1", factor);
-	writeBSplineDefinitionPoint(outputStream, bSplineCurve->p2, "p2", factor);
-	writeBSplineDefinitionPoint(outputStream, bSplineCurve->p3, "p3", factor);
+	writeBSplineDefinitionPoint(outputStream, &(bSplineCurve->p0), "p0", factor);
+	writeBSplineDefinitionPoint(outputStream, &(bSplineCurve->p1), "p1", factor);
+	writeBSplineDefinitionPoint(outputStream, &(bSplineCurve->p2), "p2", factor);
+	writeBSplineDefinitionPoint(outputStream, &(bSplineCurve->p3), "p3", factor);
 }
 
 void writeBSplineDefinition(OutputStream* outputStream, BSplineCurve* bSplineCurve) {
@@ -70,10 +70,10 @@ void writeBSplineDefinition(OutputStream* outputStream, BSplineCurve* bSplineCur
 	appendString(outputStream, " mm\n");
 
 	appendString(outputStream, "lastPointData:\n");
-	writeBSplinePointData(outputStream, bSplineCurve->lastPointData);
+	writeBSplinePointData(outputStream, &(bSplineCurve->lastPointData));
 
 	appendString(outputStream, "tempPointData:\n");
-	writeBSplinePointData(outputStream, bSplineCurve->tempPointData);
+	writeBSplinePointData(outputStream, &(bSplineCurve->tempPointData));
 
 	appendStringAndDec(outputStream, "acc Factor:", bSplineCurve->accelerationFactor);
 	println(outputStream);
@@ -86,7 +86,7 @@ void writeBSpline(OutputStream* outputStream, BSplineCurve* bSplineCurve) {
 	writeBSplineDefinition(outputStream, bSplineCurve);
 
 	
-	BSplinePointData* splinePointData = bSplineCurve->lastPointData;
+	BSplinePointData* splinePointData = &(bSplineCurve->lastPointData);
 
 	float curveLength = bSplineCurve->curveLength;
 

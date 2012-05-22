@@ -242,7 +242,7 @@ void updateSimpleSplineWithDistance(float destX, float destY,
 	curve->speedFactor = speedFactor;
 
 	// P1
-	Point* point = curve->p1;
+	Point* point = &(curve->p1);
 	// P1 along x axis
 	point->x = (x + dca1);
 	point->y = (y + dsa1);
@@ -251,14 +251,14 @@ void updateSimpleSplineWithDistance(float destX, float destY,
 	if (relative) {	
 
 		// P2
-		point = curve->p2;
+		point = &(curve->p2);
 		//rotate(point, a, (destX - x - dca2), (destY - y - dsa2));
 		rotate(point, a, (destX - dca2), (destY - dsa2));
 		point->x += x;
 		point->y += y;
 
 		// P3
-		point = curve->p3;
+		point = &(curve->p3);
 		//rotate(point, a, (destX - x), (destY - y));
 		rotate(point, a, (destX), (destY));
 		point->x += x;
@@ -266,18 +266,18 @@ void updateSimpleSplineWithDistance(float destX, float destY,
 	}
 	else {
 		// P2
-		point = curve->p2;
+		point = &(curve->p2);
 		point->x = (destX - dca2);
 		point->y = (destY - dsa2);
 
 		// P3
-		point = curve->p3;
+		point = &(curve->p3);
 		point->x = destX;
 		point->y = destY;
 	}
 	// Scale points
-	scale(curve->p2, WHEEL_AVERAGE_LENGTH);
-	scale(curve->p3, WHEEL_AVERAGE_LENGTH);
+	scale(&(curve->p2), WHEEL_AVERAGE_LENGTH);
+	scale(&(curve->p3), WHEEL_AVERAGE_LENGTH);
 
 	/*
 	curve->p1->x = (x  +  distance1		* c) / WHEEL_AVERAGE_LENGTH;

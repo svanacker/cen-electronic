@@ -1,17 +1,5 @@
-SV : Configuration correcte des constantes => à regrouper dans un seul fichier => Le robot essaie en reculant d'aller de Left -> Bullion
-SV/EZ : Strategy Board : Clearer le LastObstacle avec un Timer ou un certain nombre de NextStep
-SV : Remettre le NextStep en cas de collision
-SV : Gestion activation / désactivation du sonar 
-SV : Remettre les Temps pour les dispatchers
-SV : Augmenter la vitesse sur les récupérations de CDs
-Reboot sur HandleTrajectory
-
                     
 * Faire un recu pour JLB
-* Imprimer le Poster
-
-P1 
-* Mettre un 2ème sonar pour les mouvements en arrières
 
 P2 
 * EZ : Désactiver les TargetActions quand il y a un obstacle
@@ -20,34 +8,68 @@ P2
 
 NEXT YEAR
 
-* Demander à Jérome de mettre absolument de la soudure sur toutes les pattes où il y a potentiellement un cavalier
-* pour éviter les problèmes
-* 
-* Supporter un truc du genre Timer.mark() pour implémenter facilement des gestions de reprises
-* Dans les Callbacks de Timers, et en général, fournir un pointeur sur structure en paramètres
-* Faire des supports de balises à hauteur pour les tests d'évitements
-* Harmoniser la gestion des Sonars / GP2D12 notamment la gestion du filtrage / distance (tableaux, seuils)
-* Améliorer la vitesse d'écriture sur le LCD / centraliser les delay(5)
-* Faire la gestion de la manoeuvre de recalibrage 
-* Optimiser le calcul de changement de stratégie si le robot en face n'a pas changer
-* Problème au niveau de l'envoie de "'" pour arrêter les servos. Provoque un reboot de la carte alors que | marche correctement.
-* Séparer le RobotSonarDetectorDevice de la partie non Device
-* Virer les trucs inutiles au niveau informatique genre Cable Ethernet
-* Faire le ménage au niveau des fichiers c : robotDetector.c
-- Faire fonctionner la stratégie au niveau du projet Eclipse
-- Implémenter et tester la gestion de l'enchainement des trajectoires
-- Faire un nouveau DriverDataDispatcher spécial UART si c'est possible pour pouvoir relier des cartes en UART en maitre esclave :)
-- Installer GIT sur la carte mère embarquée du PC
-- Tester de pouvoir récupérer directement un programme en mettant un remote GIT différent
-- Faire des en têtes à la manière des Jennic : MOV, LEF, RIG ...
+* Informatique
+** Documentation
+ => SV : Fournir une documentation de la partie PROG-30F
+ => SV : Fournir une documentation de la partie Eclipse
+** Général
+ => SV : Supporter un truc du genre Timer.mark() pour implémenter facilement des gestions de reprises
+ => SV : Faire un nouveau DriverDataDispatcher spécial UART si c'est possible pour pouvoir relier des cartes en UART en maitre esclave :)
+ => SV : Dans les Callbacks de Timers, et en général, fournir un pointeur sur structure en paramètres
 
+
+** Beacon Board
+  => SV : Problème au niveau de l'envoie de "'" pour arrêter les servos. Provoque un reboot de la carte alors que | marche correctement.
+  => SV : Faire des en têtes à la manière des Jennic pour les instructions non essentielles : MOV, LEF, RIG ...
+
+** MainBoard 
+  => SV : Améliorer la vitesse d'écriture sur le LCD / centraliser les delay(5)
+  => SV : Faire le ménage au niveau des fichiers c : robotDetector.c
+  => SV : Harmoniser la gestion des Sonars / GP2D12 notamment la gestion du filtrage / distance (tableaux, seuils)
+  => SV : Séparer le RobotSonarDetectorDevice de la partie non Device
+
+** MotorBoard
+ => SV : Carte moteur : Gestion de l'arrêt des moteurs pour éviter d'usiner la table
+ => SV : Evitement à améliorer et à mettre sur la MainBoard
+ => SV : Faire la gestion de la manoeuvre de recalibrage 
+ => SV : Implémenter et tester la gestion de l'enchainement des trajectoires, primitive de gestion d'obstacle
+ => SV : Mettre en place une patte en dur sur la motor Board à change d'état lors de la gestion des obstacle
+ 
+** Strategy Board
+ => SV : En cas d'obstacle, la 1ère des choses est de reculer un peu
+ => SV : Optimiser le calcul de changement de stratégie si le robot en face n'a pas changer
+ => SV : Info de placement dans les TargetAction
+ => SV : Améliorer le mode pas à pas
+
+** Eclipse
+ => SV : Faire fonctionner la stratégie au niveau du projet Eclipse
+ => SV : Installer GIT sur la carte mère embarquée du PC
+ => SV : Mode PAS à PAS à faire au niveau de l'informatique
+ => SV : Faire un générateur de code Java => C++ pour résoudre le problème de partage
+de la stratégie. => Faire un éditeur graphique de stratégie
+
+* Electronique
+** PIC32
+ => JJ : Faire une carte de prototype remplaçant à terme la LCD
+** Soudure
+ => JJ : Mettre absolument de la soudure sur toutes les pattes où il y a potentiellement un cavalier
+** Carte LCD
+ => JJ : Trouver une carte LCD Graphique
+** Cartes en double :
+ => JJ : Finir de refaire les cartes en Double (Balises !)
+
+* Mecanique
+ => Structure du carter arrière : Mettre les cartes sur du Velcro
+ => SV : Mettre des roues de modélisme plus large, pour avoir davantage d'adhérence
+ => SV : Voir fixation : http://wiki.droids-corp.org/index.php/Microb_Technology/2009/Mechanics/bloc_moteur
+ => SV : Faire des supports de balises à hauteur pour les tests d'évitements
+ => SV : Prévoir air comprimé pour nettoyer les contacts
+
+ 
 
 AUTRES :
 
 - Idées pour l'année prochaine :
-- Mode PAS à PAS à faire au niveau de l'informatique
-
-autre modif de test
 
 ACHATS à FAIRE
 
