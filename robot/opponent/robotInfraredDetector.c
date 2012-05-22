@@ -110,7 +110,7 @@ void updateInfraredDetector(InfraredDetectorGroup* group) {
 	}
 }
 
-void robotInfraredDetectorCallback() {
+void robotInfraredDetectorCallback(Timer* timer) {
 	updateInfraredDetector(&forwardDetector);
 	updateInfraredDetector(&backwardDetector);
 }

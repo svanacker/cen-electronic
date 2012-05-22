@@ -48,7 +48,7 @@ GameStrategyContext* getStrategyContext() {
 #define ANGLE_180 1800
 #define ANGLE_360 3600
 
-void strategyTimerCallback() {
+void strategyTimerCallback(Timer* timer) {
 	if (strategyTimer->time > strategyContext.timeSinceLastCollision + RESET_OBSTACLE_COLLISION_TIME_SECOND) {
 		#ifdef DEBUG_OPPONENT_ROBOT
 			OutputStream* logStream = getOutputStreamLogger(INFO);

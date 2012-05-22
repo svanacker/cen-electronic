@@ -13,10 +13,8 @@ NEXT YEAR
  => SV : Fournir une documentation de la partie PROG-30F
  => SV : Fournir une documentation de la partie Eclipse
 ** Général
- => SV : Supporter un truc du genre Timer.mark() pour implémenter facilement des gestions de reprises
  => SV : Faire un nouveau DriverDataDispatcher spécial UART si c'est possible pour pouvoir relier des cartes en UART en maitre esclave :)
- => SV : Dans les Callbacks de Timers, et en général, fournir un pointeur sur structure en paramètres
-
+ 
 
 ** Beacon Board
   => SV : Problème au niveau de l'envoie de "'" pour arrêter les servos. Provoque un reboot de la carte alors que | marche correctement.
@@ -57,6 +55,8 @@ de la stratégie. => Faire un éditeur graphique de stratégie
  => JJ : Trouver une carte LCD Graphique
 ** Cartes en double :
  => JJ : Finir de refaire les cartes en Double (Balises !)
+** Zigbee
+ => SV/JJ : Mettre en place un Jennic avec une antenne externe. Déterminer quoi acheter 
 
 * Mecanique
  => Structure du carter arrière : Mettre les cartes sur du Velcro

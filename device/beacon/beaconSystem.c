@@ -39,7 +39,7 @@ static BeaconSystem beaconSystem;
 /**
  * Internal timer callback.
  */
-void beaconTimerCallback(void) {
+void beaconTimerCallback(Timer* timer) {
 	if (!beaconSystem.enabled) {
 		return;
 	}

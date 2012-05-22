@@ -161,7 +161,7 @@ void __attribute__((__interrupt__)) __attribute__((no_auto_psv)) _T1Interrupt(vo
                 // lock the timer to avoid concurrence problem
                 currentTimer->working = TRUE;
                 if (currentTimer->callback) {
-                    currentTimer->callback();
+                    currentTimer->callback(currentTimer);
                 }
                 // indicates the timer is not working
                 currentTimer->working = FALSE;

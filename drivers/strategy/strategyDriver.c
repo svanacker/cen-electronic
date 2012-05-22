@@ -36,7 +36,7 @@
 
 static unsigned int strategyDriverInterruptCounter;
 
-void strategyDriverTimerCallback() {
+void strategyDriverTimerCallback(Timer* timer) {
 	// enabled only if robot started
 	if (!isStarted()) {
 		return;

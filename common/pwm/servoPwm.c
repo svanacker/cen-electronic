@@ -111,7 +111,7 @@ void _internalPwmServo(int pwmIndex, int dutyms) {
 /**
  * The interrupt timer.
  */
-void interruptServoTimerCallbackFunc(void) {
+void interruptServoTimerCallbackFunc(Timer* timer) {
     int i;
     for (i = 0; i < PWM_COUNT; i++) {
         Servo* servo = getServo(i);

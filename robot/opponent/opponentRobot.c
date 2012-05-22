@@ -16,7 +16,7 @@ static BOOL mustAskLastOpponentRobotPosition;
 /** To distinguish every Timer. */
 #define OPPONENT_ROBOT_TIMER_INDEX			5
 
-void opponentRobotCallbackFunc() {
+void opponentRobotCallbackFunc(Timer* timer) {
 	mustAskLastOpponentRobotPosition = TRUE;
 }
 

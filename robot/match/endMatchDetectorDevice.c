@@ -33,7 +33,7 @@ static Timer* endMatchDetectorDeviceTimer;
 
 // SPECIFIC PART
 
-void endMatchDetectorCallbackFunc(void) {
+void endMatchDetectorCallbackFunc(Timer* timer) {
     if (matchStarted) {
         currentTimeInSecond++;
     }

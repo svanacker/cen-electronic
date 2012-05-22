@@ -53,15 +53,19 @@
  */
 #define TIME_DIVISER_10000_HERTZ 3
 
+// forward declaration
+struct Timer;
+typedef struct Timer Timer;
+
 /**
  * Definition of a function for callBack of timer.
  */
-typedef void interruptTimerCallbackFunc(void);
+typedef void interruptTimerCallbackFunc(Timer* timer);
 
 /**
  * The structure used to manage several Timers.
  */
-typedef struct {
+struct Timer {
     /** The code of the timer (unique in all applications), not necessary equal to index in a timer List . */
     unsigned char timerCode;
     /** The diviser timer. */
@@ -80,7 +84,7 @@ typedef struct {
     volatile BOOL lock;
     /** if the timer is in the callback function and is working. */
     volatile BOOL working;
-} Timer;
+};
 
 /**
  * Returns the time value.

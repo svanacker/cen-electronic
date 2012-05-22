@@ -83,7 +83,7 @@ BOOL checkObstacle() {
     return FALSE;
 }
 
-void deviceRobotSonarDetectorCallbackFunc(void) {
+void deviceRobotSonarDetectorCallbackFunc(Timer* timer) {
     interruptCounter++;
     // return if we do not want
     if (interruptCounter <= doNotCheckBeforeCounter) {
