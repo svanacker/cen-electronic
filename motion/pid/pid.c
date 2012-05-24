@@ -30,7 +30,6 @@
 #include "../../device/motor/pwmMotor.h"
 
 #include "../extended/bspline.h"
-#include "../extended/singleBSpline.h"
 
 #include "../position/coders.h"
 #include "../position/coderErrorComputer.h"
@@ -118,9 +117,7 @@ void initPidMotion() {
 	pidMotion.motionEndDetectionParameter = &motionEndDetectionParameter;
 	initMotionEndParameter(&motionEndDetectionParameter);
 
-
-    // for bSpline implementation
-    BSplineCurve* curve = getSingleBSplineCurve(&curve);
+	initFirstTimeBSplineCurve(&(pidMotion.curve));
 }
 
 void initPID(void) {

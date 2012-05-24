@@ -124,7 +124,7 @@ void gotoSimpleSpline(float relativeDestX,
 /**
 * Go to a spline with indication of maxDerivative which indicates how the curve is huge
 */
-void gotoSpline(float maxDerivative);
+void gotoSpline();
 
 // Function with pulse
 

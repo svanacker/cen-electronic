@@ -13,7 +13,6 @@
 #include "../../common/math/cenMath.h"
 
 #include "../../motion/extended/bspline.h"
-#include "../../motion/extended/singleBSpline.h"
 
 #include "../../motion/pid/pidComputer.h"
 #include "../../motion/position/trajectory.h"

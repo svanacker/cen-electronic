@@ -14,7 +14,6 @@
 #include "../../common/math/cenMath.h"
 
 #include "../extended/bsplineDebug.h"
-#include "../extended/singleBSpline.h"
 
 #include "../pid/pid.h"
 #include "../pid/pidDebug.h"
@@ -233,7 +232,7 @@ void updateSimpleSplineWithDistance(float destX, float destY,
 	float dca2 = (distance2 * c2);
 	float dsa2 = (distance2 * s2);
 
-	BSplineCurve* curve = getSingleBSplineCurve();
+	BSplineCurve* curve = &(getPidMotion()->curve);
 
     // Update the bspline curve
 	// P0
@@ -299,55 +298,21 @@ void gotoSimpleSpline(float destX, float destY,
 					  float controlPointDistance1, float controlPointDistance2,
 					  unsigned int accelerationFactor, unsigned int speedFactor,
 					  BOOL relative) {
-	float bestDerivative;
-	// float bestDistance;
-	// We do not provide control Point Distance
-	// TODO : A REVOIR
-	/*
-	if (controlPointDistance1 <= 0.001f) {
-		// We must compute it
-		bestDistance = 0.0f;
-		bestDerivative = 1000.0f;
-		Position* position = getPosition();
-		float maxDistance = distanceBetweenPoints2(position->pos.x, position->pos.y, destX, destY);
-
-		float distance;
-		for (distance = maxDistance * 0.1f; distance < maxDistance ; distance += maxDistance * 0.1f) {
-			updateSimpleSplineWithDistance(destX, destY, destAngle, distance);
-			float maxDerivative = computeBSplineMaxDerivative(getSingleBSplineCurve());
-			if (maxDerivative < bestDerivative) {
-				bestDistance = distance;
-				bestDerivative = maxDerivative;
-			}
-		}
-	}
-	else {
-		*/
-
-		// bestDistance = controlPointDistance;
-		// Compute bestDerivative
-		updateSimpleSplineWithDistance(destX, destY,
-										destAngle,
-										controlPointDistance1, controlPointDistance2,
-										accelerationFactor, speedFactor,
-										relative);
-		bestDerivative = computeBSplineMaxDerivative(getSingleBSplineCurve());
-	/*
-	}
-	*/
+	updateSimpleSplineWithDistance(destX, destY,
+									destAngle,
+									controlPointDistance1, controlPointDistance2,
+									accelerationFactor, speedFactor,
+									relative);
 	OutputStream* outputStream = getDebugOutputStreamLogger();
-	// appendStringAndDecf(outputStream, "dist1=", controlPointDistance1);
-	// appendStringAndDecf(outputStream, ", dist2=", controlPointDistance2);
-	// appendStringAndDecf(outputStream, "mDeriv=", bestDerivative);
 	println(outputStream);
 
-	gotoSpline(bestDerivative);
+	gotoSpline();
 }
 
 /**
 * Computes the best speed for the bspline, and take into consideration the derivative value (to avoid a too big speed)
 */
-float computeBestSpeedForBSpline(BSplineCurve* curve, float speed, float derivative) {
+float computeBestSpeedForBSpline(BSplineCurve* curve, float speed) {
 	float result = (speed * curve->speedFactor) / MOTION_SPEED_FACTOR_MAX;
 	
 	return result;
@@ -356,7 +321,7 @@ float computeBestSpeedForBSpline(BSplineCurve* curve, float speed, float derivat
 /**
 * Computes the best acceleration for the bspline, and take into consideration the derivative value (to avoid a too big acceleration)
 */
-float computeBestAccelerationForBSpline(BSplineCurve* curve, float a, float derivative) {
+float computeBestAccelerationForBSpline(BSplineCurve* curve, float a) {
 	float result = (a * curve->accelerationFactor) / MOTION_ACCELERATION_FACTOR_MAX;
 	return result;
 }
@@ -364,10 +329,10 @@ float computeBestAccelerationForBSpline(BSplineCurve* curve, float a, float deri
 /**
  * Goto a position using a spline.
  */
-void gotoSpline(float maxDerivative) {
+void gotoSpline() {
 	OutputStream* outputStream = getDebugOutputStreamLogger();
 
-	BSplineCurve* curve = getSingleBSplineCurve();
+	BSplineCurve* curve = &getPidMotion()->curve;
 	writeBSplineControlPoints(outputStream, curve, WHEEL_AVERAGE_LENGTH);
 
     // Update trajectory before clearing coders
@@ -390,12 +355,9 @@ void gotoSpline(float maxDerivative) {
 
     // do as if we follow a straight line
     MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_TYPE_FORWARD_OR_BACKWARD);
-	float bestA = computeBestAccelerationForBSpline(curve, motionParameter->a, maxDerivative);
-	float bestSpeed = computeBestSpeedForBSpline(curve, motionParameter->speed, maxDerivative);
-	/*
-	appendStringAndDecf(outputStream, ",a=", bestA);
-	appendStringAndDecf(outputStream, ",speed=", bestSpeed);
-	*/
+	float bestA = computeBestAccelerationForBSpline(curve, motionParameter->a);
+	float bestSpeed = computeBestSpeedForBSpline(curve, motionParameter->speed);
+
     setNextPosition(INSTRUCTION_THETA_INDEX, motionType, pidType, curveLength, bestA, bestSpeed);
     setNextPosition(INSTRUCTION_ALPHA_INDEX, motionType, pidType, 0.0f, motionParameter->a, motionParameter->speed);
 
