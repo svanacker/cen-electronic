@@ -21,8 +21,8 @@ void writeBSplinePointData(OutputStream* outputStream, BSplinePointData* splineP
 	appendDecf(outputStream, t);
 	appendString(outputStream, CSV_SEPARATOR);
 
-	Point* point = splinePointData->point;
-	writePoint(outputStream, point);
+	Point point = splinePointData->point;
+	writePoint(outputStream, &point);
 
 	float distance = splinePointData->length;
 	appendDecf(outputStream, distance);
@@ -69,11 +69,13 @@ void writeBSplineDefinition(OutputStream* outputStream, BSplineCurve* bSplineCur
 	appendStringAndDecf(outputStream, "\ncurve.length=", curveLength);
 	appendString(outputStream, " mm\n");
 
+	/*
 	appendString(outputStream, "lastPointData:\n");
 	writeBSplinePointData(outputStream, &(bSplineCurve->lastPointData));
 
 	appendString(outputStream, "tempPointData:\n");
 	writeBSplinePointData(outputStream, &(bSplineCurve->tempPointData));
+	*/
 
 	appendStringAndDec(outputStream, "acc Factor:", bSplineCurve->accelerationFactor);
 	println(outputStream);
@@ -85,9 +87,9 @@ void writeBSplineDefinition(OutputStream* outputStream, BSplineCurve* bSplineCur
 void writeBSpline(OutputStream* outputStream, BSplineCurve* bSplineCurve) {
 	writeBSplineDefinition(outputStream, bSplineCurve);
 
-	
-	BSplinePointData* splinePointData = &(bSplineCurve->lastPointData);
+	// BSplinePointData* splinePointData = &(bSplineCurve->lastPointData);
 
+	/*
 	float curveLength = bSplineCurve->curveLength;
 
 	// Using constant length segment
@@ -99,18 +101,19 @@ void writeBSpline(OutputStream* outputStream, BSplineCurve* bSplineCurve) {
 
 		writeBSplinePointData(outputStream, splinePointData);
 	}
+	*/
 
 	// Using constant time
 	appendString(outputStream, "\nConst time:\n");
 	writeBSplineHeader(outputStream);
 	float t;
-	Point* point = splinePointData->point;
+	BSplinePointData splinePointData;
 	for (t = 0.0f; t <= 1.0f; t += 0.025f) {
-		computeBSplinePoint(bSplineCurve, t, point);
+		computeBSplinePoint(bSplineCurve, t, &(splinePointData.point));
 		float angle = computeBSplineOrientationWithDerivative(bSplineCurve, t);
-		splinePointData->orientation = angle;
-		splinePointData->time = t;
-		writeBSplinePointData(outputStream, splinePointData);
+		splinePointData.orientation = angle;
+		splinePointData.time = t;
+		writeBSplinePointData(outputStream, &(splinePointData));
 	}
 
 	

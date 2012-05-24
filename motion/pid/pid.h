@@ -63,6 +63,10 @@
 /** The total number of PID values (INSTRUCTION_COUNT * PID_TYPE_COUNT). */
 #define PID_COUNT (INSTRUCTION_COUNT * PID_TYPE_COUNT)
 
+// NUMBER OF NEXT_MOTION_DEFINITION_COUNT
+
+#define NEXT_MOTION_DEFINITION_COUNT 2
+
 /**
  * Limit value to next PID value.
  */
@@ -75,13 +79,13 @@
 
 /** 
  The factor which defines by which factor we divide the expected acceleration.
- The real acceleration has for unit : coder count / time_sample�
- If we want to convert to m / s-�, we use the following formula :
+ The real acceleration has for unit : coder count / time_sample^2
+ If we want to convert to m / s-2, we use the following formula :
 
- a = (a_coder_count / count_by_meter) / (time_sample�)
+ a = (a_coder_count / count_by_meter) / (time_sample^2)
  Ex : 
   a_coder_count = 10, count_by_meter = 10000, time_sample = 0.005 (200 Hz)
-  (10 / 10000) / 0.005� = 40 m s-� which is too much
+  (10 / 10000) / 0.005Hz = 40 m s-2 which is too much
  If we increase this factor, we must enhanced the acceleration value to have the same acceleration
  */
 #define A_FACTOR 0.1f
@@ -261,6 +265,8 @@ typedef struct PidMotion {
 	PidGlobalParameters globalParameters;
 	// The current motion definition => CHANGE FOR EACH MOTION.
 	PidMotionDefinition currentMotionDefinition;
+	// Contains the next Motion Definition;
+	PidMotionDefinition nextMotionDefinition[NEXT_MOTION_DEFINITION_COUNT];
 	// All current values (must be resetted after each new move) => CHANGE EVERY TIME COMPUTATION
 	PidComputationValues computationValues;
 } PidMotion;
@@ -270,6 +276,9 @@ typedef struct PidMotion {
  */
 PidMotion* getPidMotion();
 
+/**
+ * Returns the parameters of the end motion.
+ */
 MotionEndDetectionParameter* getMotionEndDetectionParameter();
 
 /**

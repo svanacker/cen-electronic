@@ -4,7 +4,7 @@
 #include "eeprom.h"
 
 // Pointer to EEPROM data. The declaration causes the first WORD of EEPROM to be initialized when programming the device.
-static signed int _EEDATA(32) * eeData;
+static signed int _EEDATA(32)* eeData;
 
 void my_eeprom_write_int(unsigned int index, signed int value) {
     _prog_addressT EE_addr;

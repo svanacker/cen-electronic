@@ -17,8 +17,8 @@ void initBSplineCurveData(BSplinePointData* pointData, float x, float y) {
 	pointData->time = 0.0f;
 	pointData->length = 0.0f;
 	pointData->orientation = 0.0f;
-	pointData->point->x = x;
-	pointData->point->y = y;
+	pointData->point.x = x;
+	pointData->point.y = y;
 }
 
 void resetBSplineCurve(BSplineCurve* bSplineCurve, 
@@ -35,8 +35,8 @@ void resetBSplineCurve(BSplineCurve* bSplineCurve,
 	bSplineCurve->p3.x = 0.0f;
 	bSplineCurve->p3.y = 0.0f;
 
-	initBSplineCurveData(&(bSplineCurve->lastPointData), p0x, p0y);
-	initBSplineCurveData(&(bSplineCurve->tempPointData), p0x, p0y);
+//	initBSplineCurveData(&(bSplineCurve->lastPointData), p0x, p0y);
+//	initBSplineCurveData(&(bSplineCurve->tempPointData), p0x, p0y);
 
 	bSplineCurve->curveLength = 0.0f;
 	
@@ -48,9 +48,6 @@ void resetBSplineCurve(BSplineCurve* bSplineCurve,
 
 void initFirstTimeBSplineCurve(BSplineCurve* bSplineCurve) {
 	resetBSplineCurve(bSplineCurve, 0.0f, 0.0f, FALSE);
-
-	// bSplineCurve->method = BSPLINE_COMPUTE_METHOD_DISTANCE;
-	bSplineCurve->method = BSPLINE_COMPUTE_METHOD_TIME;
 }
 
 void computeBSplinePoint(BSplineCurve* bSplineCurve, float t, Point* resultPoint) {
@@ -105,41 +102,12 @@ float computeBSplineOrientationWithDerivative(BSplineCurve* bSplineCurve, float 
 	return result;
 }
 
-float computeBSplineMaxDerivative(BSplineCurve* bSplineCurve) {
-	float t;
-	float oldDerivative = computeBSplineOrientationWithDerivative(bSplineCurve, 0.0f);
-	float derivative;
-	float result= 0.0f;
-	for (t = 0.0f; t < 1.0f; t += 0.02f) {
-		derivative = computeBSplineOrientationWithDerivative(bSplineCurve, t);
-		if (fabsf(derivative - oldDerivative) > result) {
-			result = fabsf(derivative - oldDerivative);
-		}
-		oldDerivative = derivative;
-	}
-	return result;
-}
-
-void computeBSplinePointData(BSplineCurve* bSplineCurve, float time, BSplinePointData* splinePointData) {
-	BSplinePointData* lastPointData = &(bSplineCurve->lastPointData);
-	
-	Point* lastPoint = lastPointData->point;
-	
-	splinePointData->time = time;
-	Point* newPoint = splinePointData->point;
-	computeBSplinePoint(bSplineCurve, time, newPoint);
-	
-	float segmentLength = distanceBetweenPoints(lastPoint, newPoint);
-	float curveLength = lastPointData->length + segmentLength;
-	splinePointData->length = curveLength;
-}
-
 void copyBSplineData(BSplinePointData* source, BSplinePointData* target) {
 	target->time = source->time;
 	target->length = source->length;
 	target->orientation = source->orientation;
-	target->point->x = source->point->x;
-	target->point->y = source->point->y;
+	target->point.x = source->point.x;
+	target->point.y = source->point.y;
 }
 
 float computeBSplineArcLength(BSplineCurve* bSplineCurve, float timeIncrement) {
@@ -184,39 +152,9 @@ float computeTimeWithInterpolation(BSplinePointData* beforePointData,
 }
 
 float computeBSplineTimeAtDistance(BSplineCurve* bSplineCurve, float distance) {
-	if (bSplineCurve->method == BSPLINE_COMPUTE_METHOD_DISTANCE) {
-		BSplinePointData* lastSplinePointData = &(bSplineCurve->lastPointData);
-		
-		// As this variable is a local struct Variable, it must not be exported
-		// at the end of the routine
-		BSplinePointData* nextSplinePointData = &(bSplineCurve->tempPointData);
-	
-		// try to reach the distance passed in argument by recomputing the curve
-		float t;
-		for (t = lastSplinePointData->time + BSPLINE_TIME_INCREMENT; t <= 1.0f; t += BSPLINE_TIME_INCREMENT) {
-			computeBSplinePointData(bSplineCurve, t, nextSplinePointData);
-			if (nextSplinePointData->length > distance) {
-				// the search point is in the segment [lastSplinePointData and nextSplinePointData]
-				float result = computeTimeWithInterpolation(lastSplinePointData, nextSplinePointData, distance);
-				return result;
-			}
-			else {
-				// lastSplinePointData get the new computed values
-				// nextSplinePointData will be available for the next loop
-				copyBSplineData(nextSplinePointData, lastSplinePointData);
-			}
-		}
-	
-		// If we reach the data, we must return 1.0f
-		// Complete Data computation will be available in bSplineCurve
-		return 1.0f;
-	}
-	else {
-		float length = bSplineCurve->curveLength;
-		if (length != 0.0f) {
-			return distance / length;
-		}
-		return 1.0f;
+	float length = bSplineCurve->curveLength;
+	if (length != 0.0f) {
+		return distance / length;
 	}
 	return 1.0f;
 }

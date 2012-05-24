@@ -17,8 +17,6 @@
 
 #include "../../../common/log/logger.h"
 
-static unsigned int stat;
-
 /** The I2C link used by the interrupt routine. */
 static StreamLink* i2cStreamLink;
 
@@ -39,7 +37,6 @@ void __attribute__((__interrupt__)) __attribute__((no_auto_psv)) _SI2CInterrupt(
     char isData = I2CSTATbits.D_A;
     char read = I2CSTATbits.R_W;
 
-    stat = I2CSTAT;
     // We must read first and not only if we read or write
 
     // Master want to READ

@@ -16,16 +16,6 @@
 // TIMER
 
 static long lastPidTime;
-static int counter;
-
-void debugTimerCallbackFunc(Timer* timer) {
-    counter++;
-    if (counter > 144) {
-        appendSeparator(getOutputStreamLogger(INFO));
-        appendCRLF(getOutputStreamLogger(INFO));
-        counter = 0;
-    }
-}
 
 void initPidTimer(void) {
     addTimer(TIMER_PID_CODE, PID_UPDATE_MOTORS_FREQUENCY, (interruptTimerCallbackFunc*) NULL);

@@ -34,16 +34,10 @@ typedef struct BSplinePointData {
     // since the origin of the curve
     float length;
     // the stored Point
-    Point* point;
+    Point point;
     // the orientation
     float orientation;
 } BSplinePointData;
-
-/** Use distance decomposition to reach method. */
-#define BSPLINE_COMPUTE_METHOD_DISTANCE		0
-
-/** Use time decomposition to reach method. */
-#define BSPLINE_COMPUTE_METHOD_TIME			1
 
 /**
  * Define a bezierCurve, with 4 points.
@@ -56,13 +50,6 @@ typedef struct BSplineCurve {
 	BOOL backward;
     // The length of the curve.
     float curveLength;
-    // Store the last computed information for a point of the curve
-    // (the nearest previous point of the curve for the robot.
-    BSplinePointData lastPointData;
-    // Useful structure for compute
-    BSplinePointData tempPointData;
-	// Method computation
-	unsigned char method;
 	// accelerationFactor
 	unsigned char accelerationFactor;
 	// speedFactor
@@ -95,19 +82,7 @@ void computeBSplinePoint(BSplineCurve* bSplineCurve, float time, Point* resultPo
  */
 float computeBSplineOrientationWithDerivative(BSplineCurve* bSplineCurve, float t);
 
-/**
-* Compute the max derivative from the bSplineCurve. It's necessary to determine
-* best acceleration value to avoid 
-*/
-float computeBSplineMaxDerivative(BSplineCurve* bSplineCurve);
-
 // BSPlinePointData
-
-/**
- * Fill a splinePointData and compute his curveLength and the point by using previous computed point curve
- * stored in the BSplineCurve.
- */
-void computeBSplinePointData(BSplineCurve* bSplineCurve, float time, BSplinePointData* splinePointData);
 
 /**
  * Copy the content of B-SplineData.

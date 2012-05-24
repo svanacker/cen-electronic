@@ -64,9 +64,6 @@ void writeError(int errorCode);
 
 #define PID_INDEX_INCORRECT				0x3000
 
-#define PID_ERROR_METHOD				0x3100
-
-
 // Zigbee
 #define TOO_MUCH_JENNIC_EVENT			0x4000
 
