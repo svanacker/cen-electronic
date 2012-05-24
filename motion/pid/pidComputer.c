@@ -130,11 +130,15 @@ float computeNextPID(int instructionIndex,
 /**
  * Compute the PID when the instruction is very simple (not b spline)
  */
-void simpleMotionUCompute(MotionInstruction* thetaInst,
-                                    MotionInstruction* alphaInst,
-                                    Motion* thetaMotion,
-                                    Motion* alphaMotion, 
-									float pidTime) {
-        thetaMotion->u = computeNextPID(INSTRUCTION_THETA_INDEX, thetaInst->pidType, thetaMotion->position, pidTime);
-        alphaMotion->u = computeNextPID(INSTRUCTION_ALPHA_INDEX, alphaInst->pidType, alphaMotion->position, pidTime);
+void simpleMotionUCompute(PidMotion* pidMotion) {
+	Motion* thetaMotion = pidMotion->motion[INSTRUCTION_THETA_INDEX];
+	Motion* alphaMotion = pidMotion->motion[INSTRUCTION_ALPHA_INDEX];
+
+	MotionInstruction* thetaInst = pidMotion->inst[INSTRUCTION_THETA_INDEX];
+	MotionInstruction* alphaInst = pidMotion->inst[INSTRUCTION_ALPHA_INDEX];
+
+	float pidTime = pidMotion->pidTime;
+
+	thetaMotion->u = computeNextPID(INSTRUCTION_THETA_INDEX, thetaInst->pidType, thetaMotion->position, pidTime);
+	alphaMotion->u = computeNextPID(INSTRUCTION_ALPHA_INDEX, alphaInst->pidType, alphaMotion->position, pidTime);
 }

@@ -20,13 +20,11 @@
 
 #include "../../robot/robotConstants.h"
 
-void bSplineMotionUCompute(MotionInstruction* thetaInst,
-                           MotionInstruction* alphaInst,
-                           Motion* thetaMotion,
-                           Motion* alphaMotion, 
-						   float pidTime) {
+void bSplineMotionUCompute(PidMotion* pidMotion) {
 
-	BSplineCurve* curve = getSingleBSplineCurve();
+	BSplineCurve* curve = &(pidMotion->curve);
+	float pidTime = pidMotion->pidTime;
+	MotionInstruction* thetaInst = pidMotion->inst[INSTRUCTION_THETA_INDEX];
 	float normalPosition = computeNormalPosition(thetaInst, pidTime);
 
 	// Computes the time of the bSpline in [0.00, 1.00]
@@ -86,9 +84,8 @@ void bSplineMotionUCompute(MotionInstruction* thetaInst,
 	float normalSpeed = computeNormalSpeed(thetaInst, pidTime);
 	float thetaU = computePidCorrection(thetaMotionError, pid, normalSpeed, thetaErrorWithCos);
 
+	Motion* thetaMotion = pidMotion->motion[INSTRUCTION_THETA_INDEX];
 	thetaMotion->u = thetaU;
-
-
 
 	// ALPHA CORRECTION
 	alphaPulseError *= 5.0f;
@@ -97,6 +94,7 @@ void bSplineMotionUCompute(MotionInstruction* thetaInst,
 	alphaPulseError += alphaCorrection;
 	float alphaU = computePidCorrection(alphaMotionError, pid, 0, alphaPulseError);
 
+	Motion* alphaMotion = pidMotion->motion[INSTRUCTION_ALPHA_INDEX];
 	alphaMotion->u = alphaU;
 	
 	// LOG

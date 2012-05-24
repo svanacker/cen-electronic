@@ -7,10 +7,6 @@
 /**
 * Define the function used to compute U for both alpha / theta motion in case of bspline.
 */
-void bSplineMotionUCompute(MotionInstruction* thetaInst,
-                                    MotionInstruction* alphaInst,
-                                    Motion* thetaMotion,
-                                    Motion* alphaMotion, 
-									float pidTime);
+void bSplineMotionUCompute(PidMotion* pidMotion);
 
 #endif

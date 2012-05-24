@@ -48,6 +48,7 @@ static Motion motion[INSTRUCTION_COUNT];
 static MotionEndInfo motionEnd[INSTRUCTION_COUNT];
 static MotionEndDetectionParameter motionEndDetectionParameter;
 
+// Contains all information about current motion
 static PidMotion pidMotion;
 
 static char mustReachPosition;
@@ -57,6 +58,10 @@ static unsigned char rollingTestMode = ROLLING_BOARD_TEST_MODE_OFF;
 
 unsigned char getIndexOfPid(unsigned char instructionIndex, unsigned char pidType) {
     return pidType * INSTRUCTION_COUNT + instructionIndex;
+}
+
+PidMotion* getPidMotion() {
+	return &pidMotion;
 }
 
 MotionError* getMotionError(int index) {
@@ -112,6 +117,7 @@ void initPidMotion() {
     }
 	pidMotion.motionEndDetectionParameter = &motionEndDetectionParameter;
 	initMotionEndParameter(&motionEndDetectionParameter);
+
 
     // for bSpline implementation
     BSplineCurve* curve = getSingleBSplineCurve(&curve);
@@ -190,8 +196,7 @@ unsigned int updateMotors(void) {
         }
 
         // Computes the PID
-		// thetaInst or alphaInst contains the same pointer to the computeU function
-		thetaInst->computeU(thetaInst, alphaInst, thetaMotion, alphaMotion, pidTime);
+		pidMotion.computeU(&pidMotion);
 
         // 2 dependant Wheels (direction + angle)
         float leftMotorSpeed = (thetaMotion->u + alphaMotion->u) / 2.0f;

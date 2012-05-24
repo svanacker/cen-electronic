@@ -171,17 +171,6 @@ struct MotionInstruction;
 typedef struct MotionInstruction MotionInstruction;
 
 /**
- * Define the function used to compute Errors.
- * @param thetaError output param : the error (distance) which will be computed
- * @param alphaError output param : the error (angle) which will be computed
- */
-typedef void ComputeUFunction(	MotionInstruction* thetaInst,
-                                    MotionInstruction* alphaInst,
-                                    Motion* thetaMotion,
-                                    Motion* alphaMotion,
-									float pidTime);
-
-/**
  * Defines the structs which stores the instruction.
  */
 struct MotionInstruction {
@@ -213,14 +202,22 @@ struct MotionInstruction {
     char motionType;
     /** The type of pid which must be used. */
     char pidType;
-    /** The method which will compute the errors (by using coders or absolute positions) .*/
-    ComputeUFunction* computeU;
 };
+
+// forward declaration;
+struct PidMotion;
+typedef struct PidMotion PidMotion;
+
+/**
+ * Define the function used to compute Errors.
+ */
+typedef void ComputeUFunction(PidMotion* pidMotion);
+
 
 /**
  * Global struct to make links between all structures and variables.
  */
-typedef struct PidMotion {
+struct PidMotion {
     // theta error (distance for normal trajectory, and along Y axis for Spline Curve)
     float thetaError;
     // angle error
@@ -233,20 +230,29 @@ typedef struct PidMotion {
     // store the time of the pid timer
     float pidTime;
 
-    Pid * pid[PID_COUNT];
-    MotionError * err[INSTRUCTION_COUNT];
-    MotionInstruction * inst[INSTRUCTION_COUNT];
-    Motion * motion[INSTRUCTION_COUNT];
+    Pid* pid[PID_COUNT];
+    MotionError* err[INSTRUCTION_COUNT];
+    MotionInstruction* inst[INSTRUCTION_COUNT];
+    Motion* motion[INSTRUCTION_COUNT];
 
     // Detection of end of trajectory
     MotionEndDetectionParameter* motionEndDetectionParameter;
 	MotionEndInfo* motionEnd[INSTRUCTION_COUNT];
-} PidMotion;
+	// When using BSPline
+	BSplineCurve curve;
+    /** The method which will compute the errors (by using coders or absolute positions) .*/
+    ComputeUFunction* computeU;
+};
 
 /**
  * Returns the motion curve.
  */
 BSplineCurve* getMotionCurve();
+
+/**
+ * Returns the current pidMotion.
+ */
+PidMotion* getPidMotion();
 
 /**
  * Returns the Index of Pid which must be choosen in function of pidType.

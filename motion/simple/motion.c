@@ -399,10 +399,7 @@ void gotoSpline(float maxDerivative) {
     setNextPosition(INSTRUCTION_THETA_INDEX, motionType, pidType, curveLength, bestA, bestSpeed);
     setNextPosition(INSTRUCTION_ALPHA_INDEX, motionType, pidType, 0.0f, motionParameter->a, motionParameter->speed);
 
-	MotionInstruction* thetaInst = getMotionInstruction(INSTRUCTION_THETA_INDEX);
-	MotionInstruction* alphaInst = getMotionInstruction(INSTRUCTION_ALPHA_INDEX);
-	thetaInst->computeU = &bSplineMotionUCompute;
-	alphaInst->computeU = &bSplineMotionUCompute;
+	getPidMotion()->computeU = &bSplineMotionUCompute;
 
     // Indicates that the robot must reach the position
     setMustReachPosition(TRUE);

@@ -159,6 +159,7 @@ void setNextPosition(int instructionIndex,
 	computeMotionInstruction(localInst);
 
     
-	localInst->computeU = &simpleMotionUCompute;
+	PidMotion* pidMotion = getPidMotion();
+	pidMotion->computeU = &simpleMotionUCompute;
 }
 
