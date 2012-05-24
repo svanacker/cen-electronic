@@ -21,25 +21,25 @@ void initCoders(void) {
 }
 
 void checkCoders() {
-    // TODO : Impl�mentation
+    // TODO : Implementation
 }
 
 int getCodersErrorCount(int index) {
-    // TODO : Impl�mentation
+    // TODO : Implementation
     return 0;
 }
 
 int getCodersErrorValue(int index) {
-    // TODO : Impl�mentation
+    // TODO : Implementation
     return 0;
 }
 
 signed long getCodersInitialPosition(int index) {
-    // TODO : Impl�mentation
+    // TODO : Implementation
     return 0;
 }
 
 int getCodersZCount(int index) {
-    // TODO : Impl�mentation
+    // TODO : Implementation
     return 0;
 }

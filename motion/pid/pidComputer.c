@@ -100,14 +100,10 @@ float computeNormalPosition(MotionInstruction* inst, float time) {
  * @param currentPosition the current position of the wheels (either alphaPosition, either thetaPosition)
  * @param time the time in pid sampling
  */
-float computeNextPID(int instructionIndex,
-        unsigned char pidType,
-        float currentPosition,
-        float time) {
-    MotionInstruction* motionInstruction = getMotionInstruction(instructionIndex);
-    MotionError* motionError = getMotionError(instructionIndex);
-
+float computeNextPID(int instructionIndex, MotionInstruction* motionInstruction, Motion* motion, MotionError* motionError, float time) {
     unsigned char rollingTestMode = getRollingTestMode();
+	unsigned char pidType = motionInstruction->pidType;
+	float currentPosition = motion->position;
 
     // instructionIndex = Alpha / Theta
     // pidType = Forward / Rotation / Final Approach ...
@@ -130,15 +126,22 @@ float computeNextPID(int instructionIndex,
 /**
  * Compute the PID when the instruction is very simple (not b spline)
  */
-void simpleMotionUCompute(PidMotion* pidMotion) {
-	Motion* thetaMotion = pidMotion->motion[INSTRUCTION_THETA_INDEX];
-	Motion* alphaMotion = pidMotion->motion[INSTRUCTION_ALPHA_INDEX];
+void simpleMotionUCompute() {
+	PidMotion* pidMotion = getPidMotion();
+	PidMotionDefinition* motionDefinition = &(pidMotion->currentMotionDefinition);
+	MotionInstruction* thetaInst = &(motionDefinition->inst[INSTRUCTION_THETA_INDEX]);
+	MotionInstruction* alphaInst = &(motionDefinition->inst[INSTRUCTION_ALPHA_INDEX]);
 
-	MotionInstruction* thetaInst = pidMotion->inst[INSTRUCTION_THETA_INDEX];
-	MotionInstruction* alphaInst = pidMotion->inst[INSTRUCTION_ALPHA_INDEX];
+	PidComputationValues* computationValues = &(pidMotion->computationValues);
+	Motion* thetaMotion = &(computationValues->motion[INSTRUCTION_THETA_INDEX]);
+	Motion* alphaMotion = &(computationValues->motion[INSTRUCTION_ALPHA_INDEX]);
 
-	float pidTime = pidMotion->pidTime;
+	MotionError* thetaErr = &(computationValues->err[INSTRUCTION_THETA_INDEX]);
+	MotionError* alphaErr = &(computationValues->err[INSTRUCTION_ALPHA_INDEX]);
 
-	thetaMotion->u = computeNextPID(INSTRUCTION_THETA_INDEX, thetaInst->pidType, thetaMotion->position, pidTime);
-	alphaMotion->u = computeNextPID(INSTRUCTION_ALPHA_INDEX, alphaInst->pidType, alphaMotion->position, pidTime);
+
+	float pidTime = computationValues->pidTime;
+
+	thetaMotion->u = computeNextPID(INSTRUCTION_THETA_INDEX, thetaInst, thetaMotion, thetaErr, pidTime);
+	alphaMotion->u = computeNextPID(INSTRUCTION_ALPHA_INDEX, alphaInst, alphaMotion, alphaErr, pidTime);
 }

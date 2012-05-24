@@ -1,4 +1,5 @@
 #include <math.h>
+#include <stdlib.h>
 #include "motionEndDetection.h"
 
 #include "pid.h"
@@ -50,7 +51,9 @@ void updateAggregateValues(MotionEndInfo* endMotion) {
 }
 
 void updateEndMotionData(int instructionIndex, MotionEndInfo* endMotion, MotionEndDetectionParameter* parameter, int time) {
- 	Motion* motion = getMotion(instructionIndex);
+	PidMotion* pidMotion = getPidMotion();
+	PidComputationValues* computationValues = &(pidMotion->computationValues);
+	Motion* motion = &(computationValues->motion[instructionIndex]);
 
 	// Do not analyze it during startup time
 	if (time < parameter->noAnalysisAtStartupTime) {
@@ -97,7 +100,8 @@ BOOL isRobotBlocked(int instructionIndex, MotionEndInfo* endMotion, MotionEndDet
 	if (endMotion->integralTime < parameter->timeRangeAnalysis) {
 		return FALSE;
 	}
-	MotionInstruction* localInst = getMotionInstruction(instructionIndex);
+	PidMotionDefinition* motionDefinition = &(getPidMotion()->currentMotionDefinition);
+	MotionInstruction* localInst = &(motionDefinition->inst[instructionIndex]);
 	float normalU = getNormalU(localInst->speed);
 	float maxUIntegral = fabsf(
                limit(

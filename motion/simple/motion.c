@@ -232,7 +232,7 @@ void updateSimpleSplineWithDistance(float destX, float destY,
 	float dca2 = (distance2 * c2);
 	float dsa2 = (distance2 * s2);
 
-	BSplineCurve* curve = &(getPidMotion()->curve);
+	BSplineCurve* curve = &(getPidMotion()->currentMotionDefinition.curve);
 
     // Update the bspline curve
 	// P0
@@ -332,7 +332,7 @@ float computeBestAccelerationForBSpline(BSplineCurve* curve, float a) {
 void gotoSpline() {
 	OutputStream* outputStream = getDebugOutputStreamLogger();
 
-	BSplineCurve* curve = &getPidMotion()->curve;
+	BSplineCurve* curve = &getPidMotion()->currentMotionDefinition.curve;
 	writeBSplineControlPoints(outputStream, curve, WHEEL_AVERAGE_LENGTH);
 
     // Update trajectory before clearing coders
@@ -361,7 +361,7 @@ void gotoSpline() {
     setNextPosition(INSTRUCTION_THETA_INDEX, motionType, pidType, curveLength, bestA, bestSpeed);
     setNextPosition(INSTRUCTION_ALPHA_INDEX, motionType, pidType, 0.0f, motionParameter->a, motionParameter->speed);
 
-	getPidMotion()->computeU = &bSplineMotionUCompute;
+	getPidMotion()->currentMotionDefinition.computeU = &bSplineMotionUCompute;
 
     // Indicates that the robot must reach the position
     setMustReachPosition(TRUE);

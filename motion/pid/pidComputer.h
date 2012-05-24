@@ -30,7 +30,7 @@ float computeNormalSpeed(MotionInstruction* motionInstruction, float time);
 /**
  * Simple implementation of motion (go, back, rotation)
  */
-void simpleMotionUCompute(PidMotion* pidMotion);
+void simpleMotionUCompute();
 
 #endif
 

@@ -8,11 +8,14 @@
 #include "../../motion/position/coders.h"
 
 void computeErrorsUsingCoders(PidMotion* pidMotion) {
-    MotionInstruction* thetaInst = pidMotion->inst[INSTRUCTION_THETA_INDEX];
-    MotionInstruction* alphaInst = pidMotion->inst[INSTRUCTION_ALPHA_INDEX];
+	PidMotionDefinition* currentMotionDefinition = &(pidMotion->currentMotionDefinition);
 
-    Motion* thetaMotion = pidMotion->motion[INSTRUCTION_THETA_INDEX];
-    Motion* alphaMotion = pidMotion->motion[INSTRUCTION_ALPHA_INDEX];
+    MotionInstruction* thetaInst = &(currentMotionDefinition->inst[INSTRUCTION_THETA_INDEX]);
+    MotionInstruction* alphaInst = &(currentMotionDefinition->inst[INSTRUCTION_ALPHA_INDEX]);
+
+	PidComputationValues* computationValues = &(pidMotion->computationValues);
+    Motion* thetaMotion = &(computationValues->motion[INSTRUCTION_THETA_INDEX]);
+    Motion* alphaMotion = &(computationValues->motion[INSTRUCTION_ALPHA_INDEX]);
 
     // 2 dependant Wheels (direction + angle)
     float value0 = (float) getCoderValue(CODER_LEFT);
@@ -23,6 +26,6 @@ void computeErrorsUsingCoders(PidMotion* pidMotion) {
     alphaMotion->position = computeAlpha(value0, value1);
 
     // Compute the difference between next position and real position
-    pidMotion->thetaError = fabsf(thetaInst->nextPosition - thetaMotion->position);
-    pidMotion->alphaError = fabsf(alphaInst->nextPosition - alphaMotion->position);
+    computationValues->thetaError = fabsf(thetaInst->nextPosition - thetaMotion->position);
+    computationValues->alphaError = fabsf(alphaInst->nextPosition - alphaMotion->position);
 }

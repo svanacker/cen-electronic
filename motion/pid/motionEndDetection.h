@@ -16,7 +16,7 @@
 /**
  * Define a structure which is able to detect either blocking or either end of trajectory.
  */
-typedef struct {
+typedef struct MotionEndDetectionParameter {
     /**
 	* Defines the delta position integral for which we consider that below this value the robot don't move
 	*/
@@ -57,15 +57,17 @@ typedef struct {
  * To avoid Range analysis by block, we consider the compute of value like a Stack. When we add a value, we substracted
  * the first value to always have a sliping range
  */
-typedef struct {
+typedef struct MotionEndInfo{
 	unsigned int integralTime;
 	/** Current index in the array. */
 	unsigned int index;
     /** The integral of the absolute value of delta position. */
     float absDeltaPositionIntegralHistory[MAX_HISTORY_COUNT];
+	// the compute of related array
 	float absDeltaPositionIntegral;
     /** The integral of the consign determined by the pid computer */
     float absUIntegralHistory[MAX_HISTORY_COUNT];
+	// the compute of related array
 	float absUIntegral;
 } MotionEndInfo;
 

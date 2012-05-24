@@ -124,7 +124,7 @@
 /**
  * Defines the structure which is used to store PID values
  */
-typedef struct {
+typedef struct Pid {
     /** The proportionnal term */
     float p;
     /** The integral term */
@@ -140,7 +140,7 @@ typedef struct {
 /**
  * Defines the structs which stores the errors.
  */
-typedef struct {
+typedef struct MotionError{
     /** Stores the previous error */
     float previousError;
     /** The error between normal speed and real speed */
@@ -155,7 +155,7 @@ typedef struct {
 /**
  * Defines a struct which stores current and old Values of position, and voltage supplied to the motor.
  */
-typedef struct {
+typedef struct Motion {
     /** current position values. */
     float position;
     /** Old Position values. */
@@ -166,14 +166,10 @@ typedef struct {
     float u;
 } Motion;
 
-// forward declaration;
-struct MotionInstruction;
-typedef struct MotionInstruction MotionInstruction;
-
 /**
  * Defines the structs which stores the instruction.
  */
-struct MotionInstruction {
+typedef struct MotionInstruction {
     /** the position which must be reached when using classic implementation */
     float nextPosition;
     /** The acceleration which is asked : > 0 */
@@ -202,22 +198,18 @@ struct MotionInstruction {
     char motionType;
     /** The type of pid which must be used. */
     char pidType;
-};
-
-// forward declaration;
-struct PidMotion;
-typedef struct PidMotion PidMotion;
+} MotionInstruction;
 
 /**
  * Define the function used to compute Errors.
  */
-typedef void ComputeUFunction(PidMotion* pidMotion);
-
+typedef void ComputeUFunction();
 
 /**
- * Global struct to make links between all structures and variables.
+ * All current values about the current motion in progress.
  */
-struct PidMotion {
+typedef struct PidComputationValues {
+	// ONLY ONE VALUE AT A TIME
     // theta error (distance for normal trajectory, and along Y axis for Spline Curve)
     float thetaError;
     // angle error
@@ -226,33 +218,59 @@ struct PidMotion {
     // determine the distance between normal trajectory tangent line
     // and real trajectory tangent line (=> X Axis)
     float thetaXAxisError;
-
     // store the time of the pid timer
     float pidTime;
+	// Store error of each motion
+    MotionError err[INSTRUCTION_COUNT];
+	// store tension / position / current speed
+    Motion motion[INSTRUCTION_COUNT];
+    // Store Detection of end of trajectory
+	MotionEndInfo motionEnd[INSTRUCTION_COUNT];
+} PidComputationValues;
 
-    Pid* pid[PID_COUNT];
-    MotionError* err[INSTRUCTION_COUNT];
-    MotionInstruction* inst[INSTRUCTION_COUNT];
-    Motion* motion[INSTRUCTION_COUNT];
-
-    // Detection of end of trajectory
-    MotionEndDetectionParameter* motionEndDetectionParameter;
-	MotionEndInfo* motionEnd[INSTRUCTION_COUNT];
+/**
+ * Definition of motion. There can be more than one PidMotion, but only one active
+ * at a time.
+ */
+typedef struct PidMotionDefinition {
+	// Alpha / Theta
+    MotionInstruction inst[INSTRUCTION_COUNT];
 	// When using BSPline
 	BSplineCurve curve;
     /** The method which will compute the errors (by using coders or absolute positions) .*/
     ComputeUFunction* computeU;
-};
+} PidMotionDefinition;
 
 /**
- * Returns the motion curve.
+ * All parameters about pid motion. Don't change by PidMotion. Are normally constants
+ * or set only for a match.
  */
-BSplineCurve* getMotionCurve();
+typedef struct PidGlobalParameters {
+	// Parameters about PID
+    Pid pid[PID_COUNT];
+	// Parameters about end motion detection (avoid rotation of wheels in case of no move => Avoid BURN OUT)
+    MotionEndDetectionParameter motionEndDetectionParameter;
+} PidGlobalParameters;
+
+/**
+ * Global struct to make links between all structures and variables to achieve
+ * motion with PID.
+ */
+typedef struct PidMotion {
+	// Parameters for all motions => INVARIANT.
+	PidGlobalParameters globalParameters;
+	// The current motion definition => CHANGE FOR EACH MOTION.
+	PidMotionDefinition currentMotionDefinition;
+	// All current values (must be resetted after each new move) => CHANGE EVERY TIME COMPUTATION
+	PidComputationValues computationValues;
+} PidMotion;
 
 /**
  * Returns the current pidMotion.
  */
 PidMotion* getPidMotion();
+
+MotionEndDetectionParameter* getMotionEndDetectionParameter();
 
 /**
  * Returns the Index of Pid which must be choosen in function of pidType.
@@ -286,19 +304,6 @@ void setPID(int pidIndex, float p, float i, float d, float maxIntegral);
  */
 Pid* getPID(int index, unsigned int pidMode);
 
-MotionError* getMotionError(int index);
-
-MotionInstruction* getMotionInstruction(int index);
-
-Motion* getMotion(int index);
-
-MotionEndInfo* getMotionEnd(int index);
-
-/**
-* Returns the parameter which are used to do the detection in the motion.
-*/
-MotionEndDetectionParameter* getMotionEndDetectionParameter();
-
 unsigned char getRollingTestMode();
 
 Pid* getRollingTestModePid();
@@ -314,13 +319,6 @@ long getPidTime(void);
  * Clear to 0 the time of the PID
  */
 void clearPidTime(void);
-
-/**
- * Returns the instruction structure at the given index.
- * @param index the index of the instruction
- * @return the instruction structure at the given index
- */
-MotionInstruction* getInst(int instructionIndex);
 
 /**
  * Returns the value of the flag which determines if the

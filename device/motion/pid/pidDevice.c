@@ -101,7 +101,10 @@ void devicePIDHandleRawData(char header, InputStream* inputStream, OutputStream*
 	else if (header ==  COMMAND_SEND_DEBUG_DATA_PID) {
 		int instructionIndex = readHex(inputStream);
 
-		MotionError* localError = getMotionError(instructionIndex);
+		PidMotion* pidMotion = getPidMotion();
+		PidComputationValues* computationValues = &(pidMotion->computationValues);
+
+		MotionError* localError = &(computationValues->err[instructionIndex]);
 
 		// send acknowledgement
         appendAck(outputStream);
@@ -114,7 +117,7 @@ void devicePIDHandleRawData(char header, InputStream* inputStream, OutputStream*
 
 		appendSeparator(outputStream);
 
-		Motion* localMotion = getMotion(instructionIndex);
+		Motion* localMotion = &(computationValues->motion[instructionIndex]);
 		appendHex5(outputStream, localMotion->position);
 
 		appendSeparator(outputStream);
@@ -127,7 +130,7 @@ void devicePIDHandleRawData(char header, InputStream* inputStream, OutputStream*
 
 		appendSeparator(outputStream);
 
-		MotionEndInfo* motionEnd = getMotionEnd(instructionIndex);
+		MotionEndInfo* motionEnd = &(computationValues->motionEnd[instructionIndex]);
 		appendHex4(outputStream, motionEnd->integralTime);
 		appendHex4(outputStream, motionEnd->absDeltaPositionIntegral);
 		appendHex4(outputStream, motionEnd->absUIntegral);
@@ -139,7 +142,9 @@ void devicePIDHandleRawData(char header, InputStream* inputStream, OutputStream*
         appendAck(outputStream);
         append(outputStream, COMMAND_SEND_MOTION_PARAMETER);
 
-		MotionInstruction* localInst = getMotionInstruction(instructionIndex);
+		PidMotion* pidMotion = getPidMotion();
+		PidMotionDefinition* motionDefinition = &(pidMotion->currentMotionDefinition);
+		MotionInstruction* localInst = &(motionDefinition->inst[instructionIndex]);
 		appendHex(outputStream, instructionIndex);
 		appendHex2(outputStream, localInst->a);
 		appendHex2(outputStream, localInst->speed);

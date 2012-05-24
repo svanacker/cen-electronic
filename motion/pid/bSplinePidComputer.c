@@ -19,11 +19,14 @@
 
 #include "../../robot/robotConstants.h"
 
-void bSplineMotionUCompute(PidMotion* pidMotion) {
+void bSplineMotionUCompute() {
+	PidMotion* pidMotion = getPidMotion();
+	PidComputationValues* computationValues = &(pidMotion->computationValues);
+	PidMotionDefinition* motionDefinition = &(pidMotion->currentMotionDefinition);
 
-	BSplineCurve* curve = &(pidMotion->curve);
-	float pidTime = pidMotion->pidTime;
-	MotionInstruction* thetaInst = pidMotion->inst[INSTRUCTION_THETA_INDEX];
+	BSplineCurve* curve = &(motionDefinition->curve);
+	float pidTime = computationValues->pidTime;
+	MotionInstruction* thetaInst = &(motionDefinition->inst[INSTRUCTION_THETA_INDEX]);
 	float normalPosition = computeNormalPosition(thetaInst, pidTime);
 
 	// Computes the time of the bSpline in [0.00, 1.00]
@@ -46,7 +49,7 @@ void bSplineMotionUCompute(PidMotion* pidMotion) {
     Pid* pid = getPID(pidIndex, rollingTestMode);
 
 	// ALPHA
-	MotionError* alphaMotionError = getMotionError(INSTRUCTION_ALPHA_INDEX);	
+	MotionError* alphaMotionError = &(computationValues->err[INSTRUCTION_ALPHA_INDEX]);	
 
 	float normalAlpha = computeBSplineOrientationWithDerivative(curve, bSplineTime);
 	float realAlpha = robotPosition->orientation;
@@ -64,7 +67,7 @@ void bSplineMotionUCompute(PidMotion* pidMotion) {
 	float alphaPulseError = (- WHEELS_DISTANCE_FROM_CENTER * alphaError) / WHEEL_AVERAGE_LENGTH;
 
 	// THETA
-	MotionError* thetaMotionError = getMotionError(INSTRUCTION_THETA_INDEX);
+	MotionError* thetaMotionError = &(computationValues->err[INSTRUCTION_THETA_INDEX]);
 
 	// thetaError must be in Pulse and not in MM
 	float thetaError = distanceBetweenPoints(&robotPoint, &normalPoint) /  WHEEL_AVERAGE_LENGTH;
@@ -83,7 +86,7 @@ void bSplineMotionUCompute(PidMotion* pidMotion) {
 	float normalSpeed = computeNormalSpeed(thetaInst, pidTime);
 	float thetaU = computePidCorrection(thetaMotionError, pid, normalSpeed, thetaErrorWithCos);
 
-	Motion* thetaMotion = pidMotion->motion[INSTRUCTION_THETA_INDEX];
+	Motion* thetaMotion = &(computationValues->motion[INSTRUCTION_THETA_INDEX]);
 	thetaMotion->u = thetaU;
 
 	// ALPHA CORRECTION
@@ -93,7 +96,7 @@ void bSplineMotionUCompute(PidMotion* pidMotion) {
 	alphaPulseError += alphaCorrection;
 	float alphaU = computePidCorrection(alphaMotionError, pid, 0, alphaPulseError);
 
-	Motion* alphaMotion = pidMotion->motion[INSTRUCTION_ALPHA_INDEX];
+	Motion* alphaMotion = &(computationValues->motion[INSTRUCTION_ALPHA_INDEX]);
 	alphaMotion->u = alphaU;
 	
 	// LOG

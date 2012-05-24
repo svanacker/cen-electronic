@@ -24,16 +24,11 @@
  * @param index corresponds to INSTRUCTION_THETA_INDEX or INSTRUCTION_ALPHA_INDEX
  */
 void initNextPositionVars(int index) {
-    // Initialization of MotionError
-    MotionError* localErr = getMotionError(index);
+	PidMotion* pidMotion = getPidMotion();
+	PidMotionDefinition* motionDefinition = &(pidMotion->currentMotionDefinition);
 
-    localErr->previousError = 0;
-    localErr->error = 0;
-    localErr->derivativeError = 0;
-    localErr->integralError = 0;
-
-    // Initialization of MotionInstruction
-    MotionInstruction* localInst = getMotionInstruction(index);
+    // Initialization of MotionInstruction : TODO : do not reset it !
+    MotionInstruction* localInst = &(motionDefinition->inst[index]);
     localInst->nextPosition = 0;
     localInst->a = 0;
     localInst->speed = 0;
@@ -41,8 +36,18 @@ void initNextPositionVars(int index) {
 	localInst->endSpeed = 0;
 
 
+	PidComputationValues* computationValues = &(pidMotion->computationValues);
+
+    // Initialization of MotionError
+    MotionError* localErr = &(computationValues->err[index]);
+
+    localErr->previousError = 0;
+    localErr->error = 0;
+    localErr->derivativeError = 0;
+    localErr->integralError = 0;
+
     // Initialization of Motion
-    Motion* localMotion = getMotion(index);
+    Motion* localMotion = &(computationValues->motion[index]);
 	localInst->initialSpeed = localMotion->currentSpeed;
 
     localMotion->position = 0;
@@ -54,15 +59,19 @@ void initNextPositionVars(int index) {
 	localInst->motionType = 0;
 
     // Initialization of motionEnd & motionBlocked
-    MotionEndInfo* localEnd = getMotionEnd(index);
+    MotionEndInfo* localEnd = &(computationValues->motionEnd[index]);
 	resetMotionEndData(localEnd);
 }
 
 void clearInitialSpeeds() {
-    Motion* localMotion = getMotion(INSTRUCTION_ALPHA_INDEX);
-	localMotion->currentSpeed = 0.0f;
-    localMotion = getMotion(INSTRUCTION_THETA_INDEX);
-	localMotion->currentSpeed = 0.0f;
+	PidMotion* pidMotion = getPidMotion();
+	PidComputationValues* computationValues = &(pidMotion->computationValues);
+
+	// TODO : For continous trajectory : to change
+    Motion* alphaMotion = &(computationValues->motion[INSTRUCTION_ALPHA_INDEX]);
+	alphaMotion->currentSpeed = 0.0f;
+    Motion* thetaMotion = &(computationValues->motion[INSTRUCTION_THETA_INDEX]);
+	thetaMotion->currentSpeed = 0.0f;
 }
 
 void computeMotionInstruction(MotionInstruction* inst) {
@@ -132,7 +141,9 @@ void setNextPosition(int instructionIndex,
         float pSpeed) {
     initNextPositionVars(instructionIndex);
 
-    MotionInstruction* localInst = getMotionInstruction(instructionIndex);
+	PidMotion* pidMotion = getPidMotion();
+	PidMotionDefinition* motionDefinition = &(pidMotion->currentMotionDefinition);
+    MotionInstruction* localInst = &(motionDefinition->inst[instructionIndex]);
 
     localInst->nextPosition = pNextPosition;
     localInst->motionType = motionType;
@@ -159,7 +170,6 @@ void setNextPosition(int instructionIndex,
 	computeMotionInstruction(localInst);
 
     
-	PidMotion* pidMotion = getPidMotion();
-	pidMotion->computeU = &simpleMotionUCompute;
+	pidMotion->currentMotionDefinition.computeU = &simpleMotionUCompute;
 }
 

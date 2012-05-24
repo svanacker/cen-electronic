@@ -37,16 +37,6 @@
 
 #include "../../robot/robotConstants.h"
 
-// Definition of the curve when using bspline
-static Pid pid[PID_COUNT];
-static MotionError err[INSTRUCTION_COUNT];
-static MotionInstruction inst[INSTRUCTION_COUNT];
-static Motion motion[INSTRUCTION_COUNT];
-
-// Detection of end or blocking of trajectory
-static MotionEndInfo motionEnd[INSTRUCTION_COUNT];
-static MotionEndDetectionParameter motionEndDetectionParameter;
-
 // Contains all information about current motion
 static PidMotion pidMotion;
 
@@ -57,30 +47,6 @@ static unsigned char rollingTestMode = ROLLING_BOARD_TEST_MODE_OFF;
 
 unsigned char getIndexOfPid(unsigned char instructionIndex, unsigned char pidType) {
     return pidType * INSTRUCTION_COUNT + instructionIndex;
-}
-
-PidMotion* getPidMotion() {
-	return &pidMotion;
-}
-
-MotionError* getMotionError(int index) {
-    return &err[index];
-}
-
-MotionInstruction* getMotionInstruction(int index) {
-    return &inst[index];
-}
-
-Motion* getMotion(int index) {
-    return &motion[index];
-}
-
-MotionEndInfo* getMotionEnd(int index) {
-    return &motionEnd[index];
-}
-
-MotionEndDetectionParameter* getMotionEndDetectionParameter() {
-	return &motionEndDetectionParameter;
 }
 
 unsigned char getRollingTestMode() {
@@ -100,24 +66,20 @@ void setEnabledPid(int pidIndex, unsigned char enabled) {
     localPid->enabled = enabled;
 }
 
+PidMotion* getPidMotion() {
+	return &pidMotion;
+}
+
+MotionEndDetectionParameter* getMotionEndDetectionParameter() {
+	return &(pidMotion.globalParameters.motionEndDetectionParameter);
+}
+
 /**
  * Init global variable storing information about motion.
  */
 void initPidMotion() {
-    int i;
-    for (i = 0; i < PID_COUNT; i++) {
-        pidMotion.pid[i] = &(pid[i]);
-    }
-    for (i = 0; i < INSTRUCTION_COUNT; i++) {
-        pidMotion.err[i] = &(err[i]);
-        pidMotion.inst[i] = &(inst[i]);
-        pidMotion.motion[i] = &(motion[i]);
-        pidMotion.motionEnd[i] = &(motionEnd[i]);
-    }
-	pidMotion.motionEndDetectionParameter = &motionEndDetectionParameter;
-	initMotionEndParameter(&motionEndDetectionParameter);
-
-	initFirstTimeBSplineCurve(&(pidMotion.curve));
+	initMotionEndParameter(getMotionEndDetectionParameter());
+	initFirstTimeBSplineCurve(&(pidMotion.currentMotionDefinition.curve));
 }
 
 void initPID(void) {
@@ -142,14 +104,6 @@ float getNormalU(float pulseAtSpeed) {
 	
 	// NormalU = (pulseAtSpeed / pulseAtFullSpeed) * MAX_U
     float result = pulseAtSpeed * U_FACTOR_AT_FULL_SPEED;
-	
-	/*
-	appendDecf(getDebugOutputStreamLogger(), pulseAtSpeed);
-	appendString(getDebugOutputStreamLogger(), "=>");
-	appendDecf(getDebugOutputStreamLogger(), result);
-	appendCRLF(getDebugOutputStreamLogger());
-	*/
-
 	// float result = 0.0f;
     return result;
 }
@@ -163,7 +117,7 @@ void setPID(int pidIndex, float p, float i, float d, float maxIntegral) {
 }
 
 Pid* getPID(int index, unsigned int pidMode) {
-    Pid* result = &pid[index];
+    Pid* result = &(pidMotion.globalParameters.pid[index]);
     return result;
 }
 
@@ -173,17 +127,19 @@ unsigned int updateMotors(void) {
     }
 	if (mustPidBeRecomputed()) {
         float pidTime = (float) getPidTime();
-        pidMotion.pidTime = pidTime;
+        pidMotion.computationValues.pidTime = pidTime;
 
-        MotionInstruction* thetaInst = &inst[INSTRUCTION_THETA_INDEX];
-        MotionInstruction* alphaInst = &inst[INSTRUCTION_ALPHA_INDEX];
+		PidMotionDefinition* motionDefinition = &(pidMotion.currentMotionDefinition);
+        MotionInstruction* thetaInst = &(motionDefinition->inst[INSTRUCTION_THETA_INDEX]);
+        MotionInstruction* alphaInst = &(motionDefinition->inst[INSTRUCTION_ALPHA_INDEX]);
 
-        Motion* thetaMotion = &motion[INSTRUCTION_THETA_INDEX];
-        Motion* alphaMotion = &motion[INSTRUCTION_ALPHA_INDEX];
+		PidComputationValues* computationValues = &(pidMotion.computationValues);
+        Motion* thetaMotion = &(computationValues->motion[INSTRUCTION_THETA_INDEX]);
+        Motion* alphaMotion = &(computationValues->motion[INSTRUCTION_ALPHA_INDEX]);
 
         computeErrorsUsingCoders(&pidMotion);
-        float thetaError = pidMotion.thetaError;
-        float alphaError = pidMotion.alphaError;
+        float thetaError = computationValues->thetaError;
+        float alphaError = computationValues->alphaError;
 
 		// Change PID type for final Approach
         if ((thetaError < ERROR_FOR_STRONG_PID) && (pidTime > thetaInst->t3 + TIME_PERIOD_AFTER_END_FOR_STRONG_PID)
@@ -193,7 +149,7 @@ unsigned int updateMotors(void) {
         }
 
         // Computes the PID
-		pidMotion.computeU(&pidMotion);
+		motionDefinition->computeU(&pidMotion);
 
         // 2 dependant Wheels (direction + angle)
         float leftMotorSpeed = (thetaMotion->u + alphaMotion->u) / 2.0f;
@@ -206,8 +162,8 @@ unsigned int updateMotors(void) {
         }
 
 		MotionEndDetectionParameter* endDetectionParameter = getMotionEndDetectionParameter();
-		MotionEndInfo* thetaEndMotion = &motionEnd[INSTRUCTION_THETA_INDEX];
-		MotionEndInfo* alphaEndMotion = &motionEnd[INSTRUCTION_ALPHA_INDEX];
+		MotionEndInfo* thetaEndMotion = &(computationValues->motionEnd[INSTRUCTION_THETA_INDEX]);
+		MotionEndInfo* alphaEndMotion = &(computationValues->motionEnd[INSTRUCTION_ALPHA_INDEX]);
 	
 		thetaMotion->currentSpeed = thetaMotion->position - thetaMotion->oldPosition;
 		alphaMotion->currentSpeed = alphaMotion->position - alphaMotion->oldPosition;
