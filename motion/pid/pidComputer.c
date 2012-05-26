@@ -128,7 +128,7 @@ float computeNextPID(int instructionIndex, MotionInstruction* motionInstruction,
  */
 void simpleMotionUCompute() {
 	PidMotion* pidMotion = getPidMotion();
-	PidMotionDefinition* motionDefinition = &(pidMotion->currentMotionDefinition);
+	PidMotionDefinition* motionDefinition = pidMotion->currentMotionDefinition;
 	MotionInstruction* thetaInst = &(motionDefinition->inst[INSTRUCTION_THETA_INDEX]);
 	MotionInstruction* alphaInst = &(motionDefinition->inst[INSTRUCTION_ALPHA_INDEX]);
 

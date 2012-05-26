@@ -7,6 +7,7 @@
 #include "pidDebug.h"
 #include "motionEndDetection.h"
 #include "pidTimer.h"
+#include "pidMotionProfileComputer.h"
 
 // Commons
 
@@ -29,18 +30,18 @@
 
 #include "../../device/motor/pwmMotor.h"
 
-#include "../extended/bspline.h"
+#include "../../motion/extended/bspline.h"
 
-#include "../position/coders.h"
-#include "../position/coderErrorComputer.h"
-#include "../simple/motion.h"
+#include "../../motion/position/coders.h"
+#include "../../motion/position/coderErrorComputer.h"
+#include "../../motion/position/trajectory.h"
+
+#include "../../motion/simple/motion.h"
 
 #include "../../robot/robotConstants.h"
 
 // Contains all information about current motion
 static PidMotion pidMotion;
-
-static char mustReachPosition;
 
 /** Indicates if we use the testing Board (we take lower values for PID). */
 static unsigned char rollingTestMode = ROLLING_BOARD_TEST_MODE_OFF;
@@ -53,12 +54,8 @@ unsigned char getRollingTestMode() {
     return rollingTestMode;
 }
 
-int getMustReachPosition(void) {
-    return mustReachPosition;
-}
-
-void setMustReachPosition(int value) {
-    mustReachPosition = value;
+BOOL getMustReachPosition(void) {
+    return pidMotion.currentMotionDefinition == NULL;
 }
 
 void setEnabledPid(int pidIndex, unsigned char enabled) {
@@ -74,12 +71,115 @@ MotionEndDetectionParameter* getMotionEndDetectionParameter() {
 	return &(pidMotion.globalParameters.motionEndDetectionParameter);
 }
 
+BOOL isMotionDefinitionListEmpty() {
+	return pidMotion.readMotionInstructionIndex == pidMotion.writeMotionInstructionIndex;
+}
+
+BOOL isMotionDefinitionListFull() {
+    return ((pidMotion.writeMotionInstructionIndex + 1) % NEXT_MOTION_DEFINITION_COUNT) == pidMotion.readMotionInstructionIndex;
+}
+
+void clearMotionDefinitionList() {
+	pidMotion.currentMotionDefinition = NULL;
+	pidMotion.readMotionInstructionIndex = 0;
+	pidMotion.writeMotionInstructionIndex = 0;
+}
+
+void gotoNextMotionDefinition() {
+	initNextPositionVars(INSTRUCTION_ALPHA_INDEX);
+	initNextPositionVars(INSTRUCTION_THETA_INDEX);
+
+	pidMotion.currentMotionDefinition = NULL;
+	if (getMotionDefinitionElementsCount() >= 2) {
+		pidMotion.currentMotionDefinition = getPidMotionDefinitionToRead();	
+	}
+
+	updateTrajectory();
+	updateTrajectoryAndClearCoders();
+	clearPidTime();
+}
+
+int getMotionDefinitionElementsCount() {
+    int result = pidMotion.writeMotionInstructionIndex - pidMotion.readMotionInstructionIndex;
+    if (result < 0) {
+        result += NEXT_MOTION_DEFINITION_COUNT;
+    }
+    return result;
+}
+
+PidMotionDefinition* getCurrentPidMotionDefinition() {
+	return pidMotion.currentMotionDefinition;
+}
+
+PidMotionDefinition* getPidMotionDefinitionToRead() {
+	BOOL isEmpty = isMotionDefinitionListEmpty();
+	if (!isEmpty) {
+		PidMotionDefinition* result = &(pidMotion.motionDefinitions[pidMotion.readMotionInstructionIndex]);
+
+        pidMotion.readMotionInstructionIndex++;
+        pidMotion.readMotionInstructionIndex %= NEXT_MOTION_DEFINITION_COUNT;
+
+		return result;
+	}
+	else {
+		writeError(MOTION_DEFINITION_EMPTY);		
+	}
+	return NULL;
+}
+
+void clearMotionInstruction(MotionInstruction* motionInstruction) {
+    motionInstruction->nextPosition = 0;
+    motionInstruction->a = 0;
+    motionInstruction->initialSpeed = 0;
+    motionInstruction->speed = 0;
+	motionInstruction->speedMax = 0;
+	motionInstruction->endSpeed = 0;
+    motionInstruction->t1 = 0;
+    motionInstruction->t2 = 0;
+	motionInstruction->t3 = 0;
+    motionInstruction->p1 = 0;
+    motionInstruction->p2 = 0;
+    motionInstruction->profileType = 0;
+    motionInstruction->motionType = 0;
+    motionInstruction->pidType = 0;	
+}
+
+void clearMotionDefinition(PidMotionDefinition* motionDefinition) {
+    MotionInstruction* alphaInst = &(motionDefinition->inst[INSTRUCTION_ALPHA_INDEX]);
+    MotionInstruction* thetaInst = &(motionDefinition->inst[INSTRUCTION_THETA_INDEX]);
+	clearMotionInstruction(alphaInst);
+	clearMotionInstruction(thetaInst);
+	initFirstTimeBSplineCurve(&(motionDefinition->curve));
+	motionDefinition->computeU = NULL;
+}
+
+PidMotionDefinition* getPidMotionDefinitionToWrite() {
+	BOOL isFull = isMotionDefinitionListFull();
+    if (!isFull) {
+		PidMotionDefinition* result = &(pidMotion.motionDefinitions[pidMotion.writeMotionInstructionIndex]);
+		clearMotionDefinition(result);
+
+        pidMotion.writeMotionInstructionIndex++;
+        pidMotion.writeMotionInstructionIndex %= NEXT_MOTION_DEFINITION_COUNT;
+
+		return result;
+    } else {
+        // We must log the problem
+        writeError(MOTION_DEFINITION_FULL);
+    }
+	return NULL;
+}
+
 /**
  * Init global variable storing information about motion.
  */
 void initPidMotion() {
 	initMotionEndParameter(getMotionEndDetectionParameter());
-	initFirstTimeBSplineCurve(&(pidMotion.currentMotionDefinition.curve));
+	int i;
+	for (i = 0; i < NEXT_MOTION_DEFINITION_COUNT; i++) {
+		clearMotionDefinition(&(pidMotion.motionDefinitions[i]));
+	}
+	clearMotionDefinitionList();
 }
 
 void initPID(void) {
@@ -92,7 +192,7 @@ void initPID(void) {
 }
 
 void stopPID(void) {
-    mustReachPosition = FALSE;
+    clearMotionDefinitionList();
 }
 
 /**
@@ -122,14 +222,14 @@ Pid* getPID(int index, unsigned int pidMode) {
 }
 
 unsigned int updateMotors(void) {
-    if (!mustReachPosition) {
+    if (!isMotionDefinitionListEmpty()) {
         return NO_POSITION_TO_REACH;
     }
 	if (mustPidBeRecomputed()) {
         float pidTime = (float) getPidTime();
         pidMotion.computationValues.pidTime = pidTime;
 
-		PidMotionDefinition* motionDefinition = &(pidMotion.currentMotionDefinition);
+		PidMotionDefinition* motionDefinition = getCurrentPidMotionDefinition();
         MotionInstruction* thetaInst = &(motionDefinition->inst[INSTRUCTION_THETA_INDEX]);
         MotionInstruction* alphaInst = &(motionDefinition->inst[INSTRUCTION_ALPHA_INDEX]);
 
@@ -179,8 +279,12 @@ unsigned int updateMotors(void) {
 
 		if (isThetaEnd && isAlphaEnd) {
 			if (isThetaBlocked || isAlphaBlocked) {
+				// Clear navigation List
+				clearMotionDefinitionList();
 				return POSITION_BLOCKED_WHEELS;
             } else {
+				// GOTO Next motion
+				gotoNextMotionDefinition();
                 return POSITION_REACHED;
             }
 		}

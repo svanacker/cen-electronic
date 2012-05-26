@@ -100,7 +100,7 @@ BOOL isRobotBlocked(int instructionIndex, MotionEndInfo* endMotion, MotionEndDet
 	if (endMotion->integralTime < parameter->timeRangeAnalysis) {
 		return FALSE;
 	}
-	PidMotionDefinition* motionDefinition = &(getPidMotion()->currentMotionDefinition);
+	PidMotionDefinition* motionDefinition = getPidMotion()->currentMotionDefinition;
 	MotionInstruction* localInst = &(motionDefinition->inst[instructionIndex]);
 	float normalU = getNormalU(localInst->speed);
 	float maxUIntegral = fabsf(

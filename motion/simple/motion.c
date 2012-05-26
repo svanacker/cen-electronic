@@ -48,10 +48,11 @@ void stopPosition(BOOL maintainPositionValue) {
     updateTrajectoryAndClearCoders();
 
     if (maintainPositionValue) {
+		// TODO : will not work with new system
         maintainPosition();
     } else {
         // Avoid that robot reachs his position, and stops the motors
-        setMustReachPosition(FALSE);
+        clearMotionDefinitionList();
     }
 	// Avoid that the robot considered he will remain the initial speed for next move (it is stopped).
 	clearInitialSpeeds();
@@ -88,6 +89,10 @@ unsigned char handleInstructionAndMotion(void) {
     } else if (value == POSITION_REACHED) {
         notifyReached(outputStream);
 		notifyReached(debugOutputStream);
+
+		
+
+
         stopPosition(TRUE);
     } else if (value == POSITION_BLOCKED_WHEELS) {
         notifyFailed(outputStream);
@@ -148,18 +153,13 @@ unsigned char getPidType(unsigned char motionType) {
     return PID_TYPE_GO_INDEX;
 }
 
+// ---------------------------------------------------- STANDARD MOTION ---------------------------------------------
+
 /**
  * Go to a position;
  */
 void gotoPosition(float left, float right, float a, float speed) {
-
-    // Update trajectory before clearing coders
-    updateTrajectory();
-
-    updateTrajectoryAndClearCoders();
-
-    // resets the time
-    clearPidTime();
+	PidMotionDefinition* nextMotionDefinition = getPidMotionDefinitionToWrite(); 
 
     // determine the type of motion
     unsigned char motionType = getMotionType(left, right);
@@ -170,45 +170,77 @@ void gotoPosition(float left, float right, float a, float speed) {
     // Alpha / Theta
     float theta = computeTheta(left, right);
     float alpha = computeAlpha(left, right);
-    setNextPosition(INSTRUCTION_THETA_INDEX, motionType, pidType, theta, (float) a, (float) speed);
-    setNextPosition(INSTRUCTION_ALPHA_INDEX, motionType, pidType, alpha, (float) a, (float) speed);
+    setNextPosition(nextMotionDefinition, INSTRUCTION_THETA_INDEX, motionType, pidType, theta, (float) a, (float) speed);
+    setNextPosition(nextMotionDefinition, INSTRUCTION_ALPHA_INDEX, motionType, pidType, alpha, (float) a, (float) speed);
 
     //OutputStream* outputStream = getDebugOutputStreamLogger();
     //printInst(outputStream, getMotionInstruction(INSTRUCTION_THETA_INDEX));
     //printInst(outputStream, getMotionInstruction(INSTRUCTION_ALPHA_INDEX));
+}
 
-    // Indicates that the robot must reach the position
-    setMustReachPosition(TRUE);
+// ---------------------------------------------------- SPLINE MOTION ---------------------------------------------
+
+/**
+* @private
+* Computes the best speed for the bspline, and take into consideration the derivative value (to avoid a too big speed)
+*/
+float computeBestSpeedForBSpline(BSplineCurve* curve, float speed) {
+	float result = (speed * curve->speedFactor) / MOTION_SPEED_FACTOR_MAX;
+	
+	return result;
+}
+
+/**
+* @private
+* Computes the best acceleration for the bspline, and take into consideration the derivative value (to avoid a too big acceleration)
+*/
+float computeBestAccelerationForBSpline(BSplineCurve* curve, float a) {
+	float result = (a * curve->accelerationFactor) / MOTION_ACCELERATION_FACTOR_MAX;
+	return result;
+}
+
+/**
+ * @private
+ * Goto a position using a spline.
+ */
+void gotoSpline(PidMotionDefinition* motionDefinition) {
+	OutputStream* outputStream = getDebugOutputStreamLogger();
+
+	BSplineCurve* curve = &(motionDefinition->curve);
+	writeBSplineControlPoints(outputStream, curve, WHEEL_AVERAGE_LENGTH);
+
+    float curveLength = computeBSplineArcLength(curve, BSPLINE_TIME_INCREMENT);
+	
+	// debug
+	// writeBSpline(getDebugOutputStreamLogger(), curve);
+
+    // determine the type of motion
+    unsigned char motionType = getMotionType(curveLength, curveLength);
+    // determine the pidType to execute motionType
+    unsigned char pidType = getPidType(motionType);
+
+    // do as if we follow a straight line
+    MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_TYPE_FORWARD_OR_BACKWARD);
+	float bestA = computeBestAccelerationForBSpline(curve, motionParameter->a);
+	float bestSpeed = computeBestSpeedForBSpline(curve, motionParameter->speed);
+
+    setNextPosition(motionDefinition, INSTRUCTION_THETA_INDEX, motionType, pidType, curveLength, bestA, bestSpeed);
+    setNextPosition(motionDefinition, INSTRUCTION_ALPHA_INDEX, motionType, pidType, 0.0f, motionParameter->a, motionParameter->speed);
+
+	motionDefinition->computeU = &bSplineMotionUCompute;
 }
 
 /**
 * @private
 */
-void updateSimpleSplineWithDistance(float destX, float destY, 
+void updateSimpleSplineWithDistance(BSplineCurve* curve,
+									float destX, float destY, 
 									float destAngle, 
 									float distance1, float distance2, 
 									unsigned char accelerationFactor, unsigned char speedFactor,
 									BOOL relative) {
-
-	/*
-	OutputStream* outputStream = getDebugOutputStreamLogger();
-	appendStringAndDecf(outputStream, "destX=", destX);
-	appendStringAndDecf(outputStream, ",destY=", destY);
-	appendStringAndDecf(outputStream, ",destAngle=", destAngle);
-	appendStringAndDecf(outputStream, ",dist1=", distance1);
-	appendStringAndDecf(outputStream, ",dist2=", distance2);
-	*/	
-
-	// If the distance of the control point is negative, we considerer that we go
-	// back
+	// If the distance of the control point is negative, we considerer that we go back
 	BOOL backward = distance1 < 0.0f;
-	
-	/*
-	appendString(outputStream, ",rel=");
-	appendBOOL(outputStream, relative);
-	appendString(outputStream, ",backward=");
-	appendBOOL(outputStream, backward);
-	*/	
 
 	Position* position = getPosition();
 	// scale coordinates
@@ -231,8 +263,6 @@ void updateSimpleSplineWithDistance(float destX, float destY,
 
 	float dca2 = (distance2 * c2);
 	float dsa2 = (distance2 * s2);
-
-	BSplineCurve* curve = &(getPidMotion()->currentMotionDefinition.curve);
 
     // Update the bspline curve
 	// P0
@@ -277,18 +307,8 @@ void updateSimpleSplineWithDistance(float destX, float destY,
 	// Scale points
 	scale(&(curve->p2), WHEEL_AVERAGE_LENGTH);
 	scale(&(curve->p3), WHEEL_AVERAGE_LENGTH);
-
-	/*
-	curve->p1->x = (x  +  distance1		* c) / WHEEL_AVERAGE_LENGTH;
-	curve->p1->y = (y  +  distance1     * s) / WHEEL_AVERAGE_LENGTH,
-	
-	curve->p2->x = (x + (destX - dca2)  * c - (destY - dsa2)  * s) / WHEEL_AVERAGE_LENGTH;
-	curve->p2->y = (y + (destX - dca2)  * s + (destY - dsa2)  * c) / WHEEL_AVERAGE_LENGTH;
-	
-	curve->p3->x = (x +    destX        * c -      destY      * s) / WHEEL_AVERAGE_LENGTH;
-	curve->p3->y = (y +    destX 	    * s +      destY 	  * c) / WHEEL_AVERAGE_LENGTH;
-	*/
 }
+
 
 /**
  * Goto a position from the current position, with a certain distance to do the angle
@@ -298,74 +318,23 @@ void gotoSimpleSpline(float destX, float destY,
 					  float controlPointDistance1, float controlPointDistance2,
 					  unsigned int accelerationFactor, unsigned int speedFactor,
 					  BOOL relative) {
-	updateSimpleSplineWithDistance(destX, destY,
+	// Append to the next motion definition list
+	PidMotionDefinition* nextMotionDefinition = getPidMotionDefinitionToWrite(); 
+
+	BSplineCurve* curve = &(nextMotionDefinition->curve);
+
+	updateSimpleSplineWithDistance(curve,
+									destX, destY,
 									destAngle,
 									controlPointDistance1, controlPointDistance2,
 									accelerationFactor, speedFactor,
 									relative);
-	OutputStream* outputStream = getDebugOutputStreamLogger();
-	println(outputStream);
+//	OutputStream* outputStream = getDebugOutputStreamLogger();
+//	println(outputStream);
 
-	gotoSpline();
+	gotoSpline(nextMotionDefinition);
 }
 
-/**
-* Computes the best speed for the bspline, and take into consideration the derivative value (to avoid a too big speed)
-*/
-float computeBestSpeedForBSpline(BSplineCurve* curve, float speed) {
-	float result = (speed * curve->speedFactor) / MOTION_SPEED_FACTOR_MAX;
-	
-	return result;
-}
-
-/**
-* Computes the best acceleration for the bspline, and take into consideration the derivative value (to avoid a too big acceleration)
-*/
-float computeBestAccelerationForBSpline(BSplineCurve* curve, float a) {
-	float result = (a * curve->accelerationFactor) / MOTION_ACCELERATION_FACTOR_MAX;
-	return result;
-}
-
-/**
- * Goto a position using a spline.
- */
-void gotoSpline() {
-	OutputStream* outputStream = getDebugOutputStreamLogger();
-
-	BSplineCurve* curve = &getPidMotion()->currentMotionDefinition.curve;
-	writeBSplineControlPoints(outputStream, curve, WHEEL_AVERAGE_LENGTH);
-
-    // Update trajectory before clearing coders
-    updateTrajectory();
-
-    updateTrajectoryAndClearCoders();
-
-    float curveLength = computeBSplineArcLength(curve, BSPLINE_TIME_INCREMENT);
-	
-	// debug
-	// writeBSpline(getDebugOutputStreamLogger(), curve);
-
-    // resets the time
-    clearPidTime();
-
-    // determine the type of motion
-    unsigned char motionType = getMotionType(curveLength, curveLength);
-    // determine the pidType to execute motionType
-    unsigned char pidType = getPidType(motionType);
-
-    // do as if we follow a straight line
-    MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_TYPE_FORWARD_OR_BACKWARD);
-	float bestA = computeBestAccelerationForBSpline(curve, motionParameter->a);
-	float bestSpeed = computeBestSpeedForBSpline(curve, motionParameter->speed);
-
-    setNextPosition(INSTRUCTION_THETA_INDEX, motionType, pidType, curveLength, bestA, bestSpeed);
-    setNextPosition(INSTRUCTION_ALPHA_INDEX, motionType, pidType, 0.0f, motionParameter->a, motionParameter->speed);
-
-	getPidMotion()->currentMotionDefinition.computeU = &bSplineMotionUCompute;
-
-    // Indicates that the robot must reach the position
-    setMustReachPosition(TRUE);
-}
 
 // PULSE FUNCTIONS
 

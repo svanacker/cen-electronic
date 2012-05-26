@@ -79,4 +79,8 @@ void writeError(int errorCode);
 #define TOO_MUCH_TARGET_ACTION			0x5070
 #define TOO_MUCH_TARGET_ACTION_ITEM		0x5080
 
+// Motor
+#define MOTION_DEFINITION_FULL			0x6000
+#define MOTION_DEFINITION_EMPTY			0x6001
+
 #endif

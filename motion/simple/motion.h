@@ -80,6 +80,12 @@ void handleAndWaitMSec(unsigned long delayMs);
 // MAIN FUNCTIONS
 
 /**
+ * Clear initial speeds to avoid that the trajectory finished
+ * when we stop the robot.
+ */
+void clearInitialSpeeds();
+
+/**
  * Stop the robot.
  */
 void stopPosition(BOOL maintainPositionValue);
@@ -93,12 +99,6 @@ void maintainPosition(void);
  * Go to a position;
  */
 void gotoPosition(float left, float right, float a, float speed);
-
-void updateSimpleSplineWithDistance(float destX, float destY,
-									float destAngle,
-									float distance1, float distance2,
-									unsigned char accelerationFactor, unsigned char speedFactor,
-									BOOL relative);
 
 /**
  * Go from the relative destination to the initial Position of the robot
@@ -121,12 +121,7 @@ void gotoSimpleSpline(float relativeDestX,
 					  BOOL relative
 					);
 
-/**
-* Go to a spline with indication of maxDerivative which indicates how the curve is huge
-*/
-void gotoSpline();
-
-// Function with pulse
+// FUNCTION WITH PULSE
 
 /**
  * Go simply forward with a distance in pulse and returns the pulse.
@@ -143,7 +138,7 @@ float leftOneWheelSimple(float pulse);
 
 float rightOneWheelSimple(float pulse);
 
-// Function with distance or degree
+// FUNCTION WITH DISTANCE / DEGREE
 
 /**
  * Go Forward with a distance in mm.
@@ -182,7 +177,7 @@ void leftOneWheelDegree(float angleDegree, float a, float speed);
 
 void rightOneWheelDegree(float angleDegree, float a, float speed);
 
-// Simplest function
+// SIMPLEST FUNCTION
 
 /**
  * Go Forward with a distance in mm.

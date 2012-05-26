@@ -25,16 +25,6 @@
  */
 void initNextPositionVars(int index) {
 	PidMotion* pidMotion = getPidMotion();
-	PidMotionDefinition* motionDefinition = &(pidMotion->currentMotionDefinition);
-
-    // Initialization of MotionInstruction : TODO : do not reset it !
-    MotionInstruction* localInst = &(motionDefinition->inst[index]);
-    localInst->nextPosition = 0;
-    localInst->a = 0;
-    localInst->speed = 0;
-    localInst->speedMax = 0;
-	localInst->endSpeed = 0;
-
 
 	PidComputationValues* computationValues = &(pidMotion->computationValues);
 
@@ -48,15 +38,10 @@ void initNextPositionVars(int index) {
 
     // Initialization of Motion
     Motion* localMotion = &(computationValues->motion[index]);
-	localInst->initialSpeed = localMotion->currentSpeed;
 
     localMotion->position = 0;
     localMotion->oldPosition = 0;
     localMotion->u = 0;
-
-	localInst->profileType = 0;
-	localInst->pidType = 0;
-	localInst->motionType = 0;
 
     // Initialization of motionEnd & motionBlocked
     MotionEndInfo* localEnd = &(computationValues->motionEnd[index]);
@@ -133,16 +118,15 @@ void computeMotionInstruction(MotionInstruction* inst) {
     }
 }
 
-void setNextPosition(int instructionIndex,
-        unsigned char motionType,
-        unsigned char pidType,
-        float pNextPosition,
-        float pa,
-        float pSpeed) {
+void setNextPosition(PidMotionDefinition* motionDefinition,
+					 int instructionIndex,
+			        unsigned char motionType,
+			        unsigned char pidType,
+			        float pNextPosition,
+			        float pa,
+			        float pSpeed) {
     initNextPositionVars(instructionIndex);
 
-	PidMotion* pidMotion = getPidMotion();
-	PidMotionDefinition* motionDefinition = &(pidMotion->currentMotionDefinition);
     MotionInstruction* localInst = &(motionDefinition->inst[instructionIndex]);
 
     localInst->nextPosition = pNextPosition;
@@ -170,6 +154,6 @@ void setNextPosition(int instructionIndex,
 	computeMotionInstruction(localInst);
 
     
-	pidMotion->currentMotionDefinition.computeU = &simpleMotionUCompute;
+	motionDefinition->computeU = &simpleMotionUCompute;
 }
 

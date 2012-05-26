@@ -1,3 +1,5 @@
+#include <stdlib.h>
+
 #include "pidDevice.h"
 #include "pidDeviceInterface.h"
 
@@ -142,30 +144,58 @@ void devicePIDHandleRawData(char header, InputStream* inputStream, OutputStream*
         appendAck(outputStream);
         append(outputStream, COMMAND_SEND_MOTION_PARAMETER);
 
+		signed char a = 0;
+		signed char speed = 0;
+		signed char speedMax = 0;
+		int t1 = 0;
+		int t2 = 0;
+		int t3 = 0;
+		float p1 = 0;
+		float p2 = 0;
+		signed char profileType = 0;
+		signed char motionType = 0;
+		signed char pidType = 0;
+
 		PidMotion* pidMotion = getPidMotion();
-		PidMotionDefinition* motionDefinition = &(pidMotion->currentMotionDefinition);
-		MotionInstruction* localInst = &(motionDefinition->inst[instructionIndex]);
+		PidMotionDefinition* motionDefinition = pidMotion->currentMotionDefinition;
+
+		if (motionDefinition != NULL) {	
+	
+			MotionInstruction* localInst = &(motionDefinition->inst[instructionIndex]);
+			a = localInst->a;
+			speed = localInst->speed;
+			speedMax = localInst->speedMax;
+			t1 = localInst->t1;
+			t2 = localInst->t2;
+			t3 = localInst->t3;
+			p1 = localInst->p1;
+			p2 = localInst->p2;
+			profileType = localInst->profileType;
+			motionType = localInst->motionType;
+			pidType = localInst->pidType;
+		}
+
 		appendHex(outputStream, instructionIndex);
-		appendHex2(outputStream, localInst->a);
-		appendHex2(outputStream, localInst->speed);
-		appendHex2(outputStream, localInst->speedMax);
+		appendHex2(outputStream, a);
+		appendHex2(outputStream, speed);
+		appendHex2(outputStream, speedMax);
 		
 		appendSeparator(outputStream);
 
-		appendHex3(outputStream, localInst->t1);
-		appendHex3(outputStream, localInst->t2);		
-		appendHex3(outputStream, localInst->t3);
+		appendHex3(outputStream, t1);
+		appendHex3(outputStream, t2);		
+		appendHex3(outputStream, t3);
 		
 		appendSeparator(outputStream);
 
-		appendHex5(outputStream, localInst->p1);
-		appendHex5(outputStream, localInst->p2);		
+		appendHex5(outputStream, p1);
+		appendHex5(outputStream, p2);		
 
 		appendSeparator(outputStream);
 
-		appendHex(outputStream, localInst->profileType);
-		appendHex(outputStream, localInst->motionType);
-		appendHex(outputStream, localInst->pidType);
+		appendHex(outputStream, profileType);
+		appendHex(outputStream, motionType);
+		appendHex(outputStream, pidType);
 	}	
 }
 

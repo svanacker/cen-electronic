@@ -8,12 +8,9 @@
 #define PROFILE_TYPE_TRIANGLE 1
 
 /**
- * Clear initial speeds to avoid that the trajectory finished
- * when we stop the robot.
+ * Init the next position vars.
  */
-void clearInitialSpeeds();
-
-void computeMotionInstruction(MotionInstruction* inst);
+void initNextPositionVars(int index);
 
 /**
  * Set the next Position that the robot must reach.
@@ -24,12 +21,12 @@ void computeMotionInstruction(MotionInstruction* inst);
  * @param pa is the maximal absolute value of acceleration
  * @param pSpeedMax is the maximal absolute value of speed
  */
-void setNextPosition(int instructionIndex,
-        unsigned char motionType,
-        unsigned char pidType,
-        float pNextPosition,
-        float pa,
-        float pSpeedMax);
-
+void setNextPosition(	PidMotionDefinition* motionDefinition,
+						int instructionIndex,
+				        unsigned char motionType,
+				        unsigned char pidType,
+				        float pNextPosition,
+				        float pa,
+				        float pSpeedMax);
 
 #endif

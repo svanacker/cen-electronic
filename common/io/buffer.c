@@ -133,7 +133,6 @@ void initBuffer(Buffer* buffer, char (*array)[], unsigned char length, char* nam
 
 BOOL isBufferFull(const Buffer* buffer) {
     return ((buffer->writeIndex + 1) % buffer->length) == buffer->readIndex;
-
 }
 
 BOOL isBufferEmpty(const Buffer* buffer) {
@@ -149,7 +148,7 @@ int getBufferElementsCount(const Buffer* buffer) {
 }
 
 void bufferWriteChar(Buffer* buffer, char c) {
-    int isFull = isBufferFull(buffer);
+    BOOL isFull = isBufferFull(buffer);
     if (!isFull) {
 		char* sPointer = (char*) buffer->s;
 		// Shift to the right cell index
@@ -166,7 +165,7 @@ void bufferWriteChar(Buffer* buffer, char c) {
 }
 
 char bufferReadChar(Buffer* buffer) {
-    int isEmpty = isBufferEmpty(buffer);
+    BOOL isEmpty = isBufferEmpty(buffer);
     if (!isEmpty) {
         // char result = buffer->s[buffer->readIndex];
 		char* sPointer = (char*) buffer->s;

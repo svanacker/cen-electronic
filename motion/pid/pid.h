@@ -65,7 +65,7 @@
 
 // NUMBER OF NEXT_MOTION_DEFINITION_COUNT
 
-#define NEXT_MOTION_DEFINITION_COUNT 2
+#define NEXT_MOTION_DEFINITION_COUNT 3
 
 /**
  * Limit value to next PID value.
@@ -108,22 +108,22 @@
 // MOTION
 
 /** No position to reach. */
-#define NO_POSITION_TO_REACH 0
+#define NO_POSITION_TO_REACH 					0
 
 /** No position to reach, but a position to maintain. */
-#define POSITION_TO_MAINTAIN 1
+#define POSITION_TO_MAINTAIN 					1
 
 /** The trajectory is in progress. */
-#define POSITION_IN_PROGRESS 2
+#define POSITION_IN_PROGRESS 					2
 
 /** The robot reach the position. */
-#define POSITION_REACHED 3
+#define POSITION_REACHED 						3
 
 /** The robot is directly blocked to move. */
-#define POSITION_BLOCKED_WHEELS 4
+#define POSITION_BLOCKED_WHEELS 				4
 
 /** The robot will hurt something (detection by RobotDetector). */
-#define POSITION_OBSTACLE 5
+#define POSITION_OBSTACLE 						5
 
 /**
  * Defines the structure which is used to store PID values
@@ -264,11 +264,16 @@ typedef struct PidMotion {
 	// Parameters for all motions => INVARIANT.
 	PidGlobalParameters globalParameters;
 	// The current motion definition => CHANGE FOR EACH MOTION.
-	PidMotionDefinition currentMotionDefinition;
+	PidMotionDefinition* currentMotionDefinition;
 	// Contains the next Motion Definition;
-	PidMotionDefinition nextMotionDefinition[NEXT_MOTION_DEFINITION_COUNT];
+	PidMotionDefinition motionDefinitions[NEXT_MOTION_DEFINITION_COUNT];
+	/** Current read motion Index. */
+	unsigned int readMotionInstructionIndex;
+	/** Current write motion Index. */
+	unsigned int writeMotionInstructionIndex;
 	// All current values (must be resetted after each new move) => CHANGE EVERY TIME COMPUTATION
 	PidComputationValues computationValues;
+
 } PidMotion;
 
 /**
@@ -280,6 +285,55 @@ PidMotion* getPidMotion();
  * Returns the parameters of the end motion.
  */
 MotionEndDetectionParameter* getMotionEndDetectionParameter();
+
+// MOTION DEFINITION LIST
+
+/**
+ * Return if the motion Definition list is empty => no motion to execute.
+ */
+BOOL isMotionDefinitionListEmpty();
+
+/**
+ * Returns if the motion definition list is too huge => we can not accept new motions.
+ */
+BOOL isMotionDefinitionListFull();
+
+/**
+ * Returns the count of motion definition list.
+ */
+int getMotionDefinitionElementsCount();
+
+
+/**
+ * Clear all current definition list.
+ */
+void clearMotionDefinitionList();
+
+/**
+ * Returns the current Pid Motion Definition to execute.
+ */
+PidMotionDefinition* getCurrentPidMotionDefinition();
+
+/**
+ * Returns the next pid motion definition to read.
+ */
+PidMotionDefinition* getPidMotionDefinitionToRead();
+
+/**
+ * Returns the next pid motion definition that we want to write.
+ */
+PidMotionDefinition* getPidMotionDefinitionToWrite();
+
+/**
+ * Go to the next motion defition by erasing current Motion Definition.
+ * It takes the next motion pid motion definition by read it and write the pointer
+ * on the current motion definition.
+ * If it has no enough next motion definition, 
+ */
+void gotoNextMotionDefinition();
+
+// PID
+
 
 /**
  * Returns the Index of Pid which must be choosen in function of pidType.
@@ -328,20 +382,6 @@ long getPidTime(void);
  * Clear to 0 the time of the PID
  */
 void clearPidTime(void);
-
-/**
- * Returns the value of the flag which determines if the
- * position must be reached.
- * @return TRUE or FALSE
- */
-int getMustReachPosition(void);
-
-/**
- * Sets the flag which determines if the
- * position must be reached.
- * @value the value of the flag, TRUE or FALSE
- */
-void setMustReachPosition(int value);
 
 /**
  * Updates the motors values and returns the type of control which is applied to the motors.

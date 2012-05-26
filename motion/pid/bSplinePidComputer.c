@@ -22,7 +22,7 @@
 void bSplineMotionUCompute() {
 	PidMotion* pidMotion = getPidMotion();
 	PidComputationValues* computationValues = &(pidMotion->computationValues);
-	PidMotionDefinition* motionDefinition = &(pidMotion->currentMotionDefinition);
+	PidMotionDefinition* motionDefinition = pidMotion->currentMotionDefinition;
 
 	BSplineCurve* curve = &(motionDefinition->curve);
 	float pidTime = computationValues->pidTime;

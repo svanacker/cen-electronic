@@ -8,7 +8,7 @@
 #include "../../motion/position/coders.h"
 
 void computeErrorsUsingCoders(PidMotion* pidMotion) {
-	PidMotionDefinition* currentMotionDefinition = &(pidMotion->currentMotionDefinition);
+	PidMotionDefinition* currentMotionDefinition = getCurrentPidMotionDefinition();
 
     MotionInstruction* thetaInst = &(currentMotionDefinition->inst[INSTRUCTION_THETA_INDEX]);
     MotionInstruction* alphaInst = &(currentMotionDefinition->inst[INSTRUCTION_ALPHA_INDEX]);
