@@ -80,6 +80,8 @@ BOOL isMotionDefinitionListFull() {
 }
 
 void clearMotionDefinitionList() {
+    appendString(getDebugOutputStreamLogger(), "\nclearMotionDefinitionList\n");
+
 	pidMotion.currentMotionDefinition = NULL;
 	pidMotion.readMotionInstructionIndex = 0;
 	pidMotion.writeMotionInstructionIndex = 0;
@@ -95,9 +97,11 @@ void initForNextMotionDefinition() {
 }
 
 void gotoNextMotionDefinition() {
+    appendString(getDebugOutputStreamLogger(), "\ngotoNextMotionDefinition\n");
 	initForNextMotionDefinition();
 
 	pidMotion.currentMotionDefinition = NULL;
+	
 	if (getMotionDefinitionElementsCount() >= 2) {
 		pidMotion.currentMotionDefinition = getPidMotionDefinitionToRead();	
 	}
@@ -116,6 +120,8 @@ PidMotionDefinition* getCurrentPidMotionDefinition() {
 }
 
 PidMotionDefinition* getPidMotionDefinitionToRead() {
+    appendString(getDebugOutputStreamLogger(), "\ngetPidMotionDefinitionToRead\n");
+
 	BOOL isEmpty = isMotionDefinitionListEmpty();
 	if (!isEmpty) {
 		PidMotionDefinition* result = &(pidMotion.motionDefinitions[pidMotion.readMotionInstructionIndex]);
@@ -158,6 +164,8 @@ void clearMotionDefinition(PidMotionDefinition* motionDefinition) {
 }
 
 PidMotionDefinition* getPidMotionDefinitionToWrite() {
+    appendString(getDebugOutputStreamLogger(), "\ngetPidMotionDefinitionToWrite\n");
+
 	BOOL isFull = isMotionDefinitionListFull();
 
     if (!isFull) {
@@ -165,6 +173,7 @@ PidMotionDefinition* getPidMotionDefinitionToWrite() {
 		clearMotionDefinition(result);
         pidMotion.writeMotionInstructionIndex++;
 		pidMotion.writeMotionInstructionIndex %= NEXT_MOTION_DEFINITION_COUNT;
+		printPidMotion(getDebugOutputStreamLogger());
 
 	   return result;
     } else {
@@ -289,7 +298,9 @@ unsigned int updateMotors(void) {
 		if (isThetaEnd && isAlphaEnd) {
 			if (isThetaBlocked || isAlphaBlocked) {
 				// Clear navigation List
-				clearMotionDefinitionList();
+//				clearMotionDefinitionList();
+				gotoNextMotionDefinition();
+
 				return POSITION_BLOCKED_WHEELS;
             } else {
 				// GOTO Next motion

@@ -22,6 +22,7 @@
 // #include "../../../motion/extended/bsplineDebug.h"
 #include "../../../motion/simple/motion.h"
 #include "../../../motion/simple/motionPersistence.h"
+#include "../../../motion/pid/pid.h"
 #include "../../../motion/pid/pidTimer.h"
 #include "../../../motion/position/trajectory.h"
 
@@ -225,6 +226,7 @@ void deviceMotionHandleRawData(char header,
         appendAck(outputStream);
 
         stopPosition(FALSE);
+		clearMotionDefinitionList();
 
         append(outputStream, COMMAND_MOTION_CANCEL);
     }        // OBSTACLE

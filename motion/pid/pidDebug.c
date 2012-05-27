@@ -19,6 +19,7 @@ void printPidMotion(OutputStream* outputStream) {
 	appendStringAndDec(outputStream, "ref=", (int) pidMotion);	
 	appendStringAndDec(outputStream, ", readMotionIdx=", pidMotion->readMotionInstructionIndex);	
 	appendStringAndDec(outputStream, ", writeMotionIdx=", pidMotion->writeMotionInstructionIndex);	
+	println(outputStream);
 }
 
 void printErrorStruct(OutputStream* outputStream, MotionError* motionError ) {

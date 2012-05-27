@@ -53,7 +53,7 @@ void stopPosition(BOOL maintainPositionValue) {
         maintainPosition();
     } else {
         // Avoid that robot reachs his position, and stops the motors
-        clearMotionDefinitionList();
+        // clearMotionDefinitionList();
     }
 	// Avoid that the robot considered he will remain the initial speed for next move (it is stopped).
 	clearInitialSpeeds();
@@ -62,6 +62,8 @@ void stopPosition(BOOL maintainPositionValue) {
 }
 
 void maintainPosition(void) {
+    appendString(getDebugOutputStreamLogger(), "\nmaintainPosition\n");
+
     gotoPosition(0.0f, 0.0f, 0.0f, 0.0f);
 }
 
@@ -91,14 +93,14 @@ unsigned char handleInstructionAndMotion(void) {
         notifyReached(outputStream);
 		notifyReached(debugOutputStream);
 
-        stopPosition(TRUE);
+        stopPosition(FALSE);
     } else if (value == POSITION_BLOCKED_WHEELS) {
         notifyFailed(outputStream);
 		notifyFailed(debugOutputStream);
-        stopPosition(TRUE);
+        stopPosition(FALSE);
     } else if (value == POSITION_OBSTACLE) {
         notifyObstacle(outputStream);
-        stopPosition(TRUE);
+        stopPosition(FALSE);
     }
     return value;
 }
@@ -157,6 +159,8 @@ unsigned char getPidType(unsigned char motionType) {
  * Go to a position;
  */
 void gotoPosition(float left, float right, float a, float speed) {
+    appendString(getDebugOutputStreamLogger(), "\ngotoPosition\n");
+
 	PidMotionDefinition* nextMotionDefinition = getPidMotionDefinitionToWrite(); 
 
 	if (getPidMotion()->currentMotionDefinition == NULL) {
@@ -321,6 +325,8 @@ void gotoSimpleSpline(float destX, float destY,
 					  float controlPointDistance1, float controlPointDistance2,
 					  unsigned int accelerationFactor, unsigned int speedFactor,
 					  BOOL relative) {
+    appendString(getDebugOutputStreamLogger(), "\ngotoSimpleSpline\n");
+
 	// Append to the next motion definition list
 	PidMotionDefinition* nextMotionDefinition = getPidMotionDefinitionToWrite(); 
 	
