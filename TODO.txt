@@ -1,3 +1,6 @@
+Difficulté pour le portage : int => passe de 16 bit à 32 bits
+Utiliser des short ?
+
 * Faire un recu pour JLB
 
 P2 
