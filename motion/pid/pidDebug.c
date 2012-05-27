@@ -14,13 +14,18 @@
 
 #include "../../motion/simple/motion.h"
 
-void printErrorStruct (OutputStream* outputStream, int index ) {
-	MotionError * localErr = getMotionError(index);
+void printPidMotion(OutputStream* outputStream) {
+	PidMotion* pidMotion = getPidMotion();
+	appendStringAndDec(outputStream, "ref=", (int) pidMotion);	
+	appendStringAndDec(outputStream, ", readMotionIdx=", pidMotion->readMotionInstructionIndex);	
+	appendStringAndDec(outputStream, ", writeMotionIdx=", pidMotion->writeMotionInstructionIndex);	
+}
 
-	appendStringAndDecf(outputStream, "pe=", localErr->previousError);
-	appendStringAndDecf(outputStream, ",e=", localErr->error);
-	appendStringAndDecf(outputStream, ",de=", localErr->derivativeError);
-	appendStringAndDecf(outputStream, "ie=", localErr->integralError);
+void printErrorStruct(OutputStream* outputStream, MotionError* motionError ) {
+	appendStringAndDecf(outputStream, "pe=", motionError->previousError);
+	appendStringAndDecf(outputStream, ",e=", motionError->error);
+	appendStringAndDecf(outputStream, ",de=", motionError->derivativeError);
+	appendStringAndDecf(outputStream, "ie=", motionError->integralError);
 	println(outputStream);
 }
 
@@ -51,7 +56,7 @@ void printAllPids(OutputStream* outputStream) {
 	}
 }
 
-void printInst (OutputStream* outputStream, MotionInstruction * inst ) {
+void printInst (OutputStream* outputStream, MotionInstruction* inst ) {
 	appendStringAndDecf(outputStream, "nextPos=", inst->nextPosition);
 	appendStringAndDecf(outputStream, ",a=", inst->a);
 	appendStringAndDecf(outputStream, ",s=", inst->speed);

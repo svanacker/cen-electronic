@@ -85,18 +85,22 @@ void clearMotionDefinitionList() {
 	pidMotion.writeMotionInstructionIndex = 0;
 }
 
-void gotoNextMotionDefinition() {
+void initForNextMotionDefinition() {
 	initNextPositionVars(INSTRUCTION_ALPHA_INDEX);
 	initNextPositionVars(INSTRUCTION_THETA_INDEX);
+
+	updateTrajectory();
+	updateTrajectoryAndClearCoders();
+	clearPidTime();
+}
+
+void gotoNextMotionDefinition() {
+	initForNextMotionDefinition();
 
 	pidMotion.currentMotionDefinition = NULL;
 	if (getMotionDefinitionElementsCount() >= 2) {
 		pidMotion.currentMotionDefinition = getPidMotionDefinitionToRead();	
 	}
-
-	updateTrajectory();
-	updateTrajectoryAndClearCoders();
-	clearPidTime();
 }
 
 int getMotionDefinitionElementsCount() {
@@ -155,14 +159,14 @@ void clearMotionDefinition(PidMotionDefinition* motionDefinition) {
 
 PidMotionDefinition* getPidMotionDefinitionToWrite() {
 	BOOL isFull = isMotionDefinitionListFull();
+
     if (!isFull) {
 		PidMotionDefinition* result = &(pidMotion.motionDefinitions[pidMotion.writeMotionInstructionIndex]);
 		clearMotionDefinition(result);
-
         pidMotion.writeMotionInstructionIndex++;
-        pidMotion.writeMotionInstructionIndex %= NEXT_MOTION_DEFINITION_COUNT;
+		pidMotion.writeMotionInstructionIndex %= NEXT_MOTION_DEFINITION_COUNT;
 
-		return result;
+	   return result;
     } else {
         // We must log the problem
         writeError(MOTION_DEFINITION_FULL);
@@ -222,14 +226,18 @@ Pid* getPID(int index, unsigned int pidMode) {
 }
 
 unsigned int updateMotors(void) {
-    if (!isMotionDefinitionListEmpty()) {
+    if (isMotionDefinitionListEmpty()) {
         return NO_POSITION_TO_REACH;
     }
 	if (mustPidBeRecomputed()) {
+		PidMotionDefinition* motionDefinition = getCurrentPidMotionDefinition();
+		if (motionDefinition == NULL) {
+	        return NO_POSITION_TO_REACH;
+		}
+
         float pidTime = (float) getPidTime();
         pidMotion.computationValues.pidTime = pidTime;
 
-		PidMotionDefinition* motionDefinition = getCurrentPidMotionDefinition();
         MotionInstruction* thetaInst = &(motionDefinition->inst[INSTRUCTION_THETA_INDEX]);
         MotionInstruction* alphaInst = &(motionDefinition->inst[INSTRUCTION_ALPHA_INDEX]);
 
@@ -238,6 +246,7 @@ unsigned int updateMotors(void) {
         Motion* alphaMotion = &(computationValues->motion[INSTRUCTION_ALPHA_INDEX]);
 
         computeErrorsUsingCoders(&pidMotion);
+
         float thetaError = computationValues->thetaError;
         float alphaError = computationValues->alphaError;
 
@@ -249,7 +258,7 @@ unsigned int updateMotors(void) {
         }
 
         // Computes the PID
-		motionDefinition->computeU(&pidMotion);
+		motionDefinition->computeU();
 
         // 2 dependant Wheels (direction + angle)
         float leftMotorSpeed = (thetaMotion->u + alphaMotion->u) / 2.0f;

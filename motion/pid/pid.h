@@ -325,6 +325,11 @@ PidMotionDefinition* getPidMotionDefinitionToRead();
 PidMotionDefinition* getPidMotionDefinitionToWrite();
 
 /**
+ * Initializes all data for next motion.
+ */
+void initForNextMotionDefinition();
+
+/**
  * Go to the next motion defition by erasing current Motion Definition.
  * It takes the next motion pid motion definition by read it and write the pointer
  * on the current motion definition.

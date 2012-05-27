@@ -1,4 +1,5 @@
 #include <math.h>
+#include <stdlib.h>
 #include "motion.h"
 
 #include "../../common/commons.h"
@@ -90,9 +91,6 @@ unsigned char handleInstructionAndMotion(void) {
         notifyReached(outputStream);
 		notifyReached(debugOutputStream);
 
-		
-
-
         stopPosition(TRUE);
     } else if (value == POSITION_BLOCKED_WHEELS) {
         notifyFailed(outputStream);
@@ -160,6 +158,11 @@ unsigned char getPidType(unsigned char motionType) {
  */
 void gotoPosition(float left, float right, float a, float speed) {
 	PidMotionDefinition* nextMotionDefinition = getPidMotionDefinitionToWrite(); 
+
+	if (getPidMotion()->currentMotionDefinition == NULL) {
+		initForNextMotionDefinition();
+		getPidMotion()->currentMotionDefinition = nextMotionDefinition;
+	}
 
     // determine the type of motion
     unsigned char motionType = getMotionType(left, right);
@@ -320,6 +323,12 @@ void gotoSimpleSpline(float destX, float destY,
 					  BOOL relative) {
 	// Append to the next motion definition list
 	PidMotionDefinition* nextMotionDefinition = getPidMotionDefinitionToWrite(); 
+	
+	// goto the current motion definition if no one is in progress
+	if (getPidMotion()->currentMotionDefinition == NULL) {
+		initForNextMotionDefinition();
+		getPidMotion()->currentMotionDefinition = nextMotionDefinition;
+	}
 
 	BSplineCurve* curve = &(nextMotionDefinition->curve);
 

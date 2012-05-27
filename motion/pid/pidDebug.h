@@ -10,7 +10,12 @@
 * Print the error struct of the index.
 * @param errorIndex INSTRUCTION_THETA_INDEX / INSTRUCTION_ALPHA_INDEX
 */
-void printErrorStruct (OutputStream* outputStream,  int errorIndex );
+void printErrorStruct (OutputStream* outputStream, MotionError* motionError);
+
+/**
+ * Print the content of pid motion.
+ */
+void printPidMotion(OutputStream* outputStream);
 
 /**
 * Print the motion struct of the index.
