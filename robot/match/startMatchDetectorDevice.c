@@ -4,12 +4,16 @@
   @author svanacker
   @version 17/04/2010
  */
-#include <p30fxxxx.h>
+#include "../../common/commons.h"
+
+#ifdef PROG_32
+	#include <p32xxxx.h>
+#else
+	#include <p30fxxxx.h>
+#endif
 
 #include "startMatchDetectorDevice.h"
 #include "startMatchDetectorDeviceInterface.h"
-
-#include "../../common/commons.h"
 
 #include "../../common/io/inputStream.h"
 #include "../../common/io/outputStream.h"
@@ -38,16 +42,20 @@ BOOL isStartMatchDetectorDeviceOk() {
 }
 
 void loopUntilStart(handleFunctionType* handleFunction) {
+	#ifndef PROG_32
     while (START_DETECTOR_PIN) {
         // Call back to be able to manage the robot while waiting for start.
         handleFunction();
     }
+	#endif
 }
 
 char isStarted() {
+	#ifndef PROG_32
     char readPin;
     readPin = START_DETECTOR_PIN;
     return readPin != 0;
+	#endif
 }
 
 void showWaitingStart(OutputStream* pcOutputStream) {

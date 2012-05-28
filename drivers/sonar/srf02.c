@@ -1,4 +1,10 @@
-#include <i2c.h>
+#include "../../common/commons.h"
+
+#ifdef PROG_32
+	#include <p32xxxx.h>
+#else
+	#include <i2c.h>
+#endif
 
 #include "srf02.h"
 
@@ -23,7 +29,9 @@ unsigned int getSRF02Address(unsigned char sonarIndex) {
 
 unsigned char readSRF02(char addr, char reg) {
     StartI2C();
-    while (I2CCONbits.SEN);
+	#ifndef PROG_32
+    	while (I2CCONbits.SEN);
+	#endif
     // send the address
     MasterWriteI2C(addr);
     IdleI2C();
@@ -33,7 +41,9 @@ unsigned char readSRF02(char addr, char reg) {
     StopI2C();
     IdleI2C();
     StartI2C();
-    while (I2CCONbits.SEN);
+	#ifndef PROG_32
+    	while (I2CCONbits.SEN);
+	#endif
     // send the address again with read bit
     MasterWriteI2C(addr + 1);
     IdleI2C();

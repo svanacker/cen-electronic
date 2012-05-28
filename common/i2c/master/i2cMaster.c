@@ -1,4 +1,10 @@
-#include <i2c.h>
+#include "../../../common/commons.h"
+
+#ifdef PROG_32
+	#include <p32xxxx.h>
+#else
+	#include <i2c.h>
+#endif
 
 #include "i2cMaster.h"
 
@@ -12,7 +18,9 @@
 
 void i2cMasterWriteBuffer(char address, Buffer* buffer) {
     StartI2C();
+	#ifndef PROG_32
     while (I2CCONbits.SEN);
+	#endif
     // Wait till Start sequence is completed
     WaitI2C();
 
@@ -32,6 +40,7 @@ void i2cMasterWriteBuffer(char address, Buffer* buffer) {
 }
 
 void i2cMasterWriteChar(char address, char c) {
+	#ifndef PROG_32
     // We append to a buffer
     StartI2C();
     // Wait till Start sequence is completed
@@ -46,6 +55,7 @@ void i2cMasterWriteChar(char address, char c) {
     WaitI2C();
 
     StopI2C();
+	#endif
 }
 
 unsigned char i2cMasterReadChar(char address) {
@@ -80,7 +90,9 @@ unsigned char i2cMasterReadRegisterValue(char address, char commandRegister) {
     // Set the register command
     WaitI2C();
     StartI2C();
+	#ifndef PROG_32
     while (I2CCONbits.SEN);
+	#endif
     // send the address
     MasterWriteI2C(address);
     WaitI2C();
@@ -92,7 +104,9 @@ unsigned char i2cMasterReadRegisterValue(char address, char commandRegister) {
 
     // Read the register command
     StartI2C();
+	#ifndef PROG_32
     while (I2CCONbits.SEN);
+	#endif
     // send the address again with read bit
     MasterWriteI2C(address | 0x01);
     WaitI2C();

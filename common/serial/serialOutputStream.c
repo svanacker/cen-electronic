@@ -1,9 +1,14 @@
 #include <stdlib.h>
-#include <p30fxxxx.h>
-
-#include "serialOutputStream.h"
 
 #include "../../common/commons.h"
+
+#ifdef PROG_32
+	#include <p32xxxx.h>
+#else
+	#include <p30fxxxx.h>
+#endif
+
+#include "serialOutputStream.h"
 
 #include "../../common/io/buffer.h"
 #include "../../common/io/inputStream.h"
@@ -32,7 +37,7 @@ void closeOutputStreamSerial1(OutputStream* outputStream) {
 }
 
 void writeChar1(OutputStream* outputStream, char c) {
-    putc(SERIAL_PORT_1, c);
+    serialPutc(SERIAL_PORT_1, c);
 }
 
 void initSerialOutputStream1(OutputStream* outputStream) {
@@ -53,7 +58,7 @@ void closeOutputStreamSerial2(OutputStream* outputStream) {
 }
 
 void writeChar2(OutputStream* outputStream, char c) {
-    putc(SERIAL_PORT_2, c);
+    serialPutc(SERIAL_PORT_2, c);
 }
 
 void initSerialOutputStream2(OutputStream* outputStream) {

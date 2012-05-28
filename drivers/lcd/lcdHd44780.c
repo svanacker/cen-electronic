@@ -1,8 +1,14 @@
-#include <p30fxxxx.h>
+#include "../../common/commons.h"
+
+#ifdef PROG_32
+	#include <p32xxxx.h>
+#else
+	#include <p30fxxxx.h>
+#endif
+
 #include <string.h>
 
 #include "lcdHd44780.h"
-#include "../../common/commons.h"
 #include "../../common/delay/delay30F.h"
 
 #define LCD_ROW_COUNT	 4

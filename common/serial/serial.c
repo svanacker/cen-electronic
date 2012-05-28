@@ -1,11 +1,18 @@
-#include <uart.h>
+#include "../../common/commons.h"
+
+#ifdef PROG_32
+	#include <p32xxxx.h>
+#else
+	#include <uart.h>
+#endif
 
 #include "serial.h"
 
-#include "../../common/commons.h"
+
 #include "../../common/setup/clockConstants.h"
 
 void openSerial(unsigned char serialPortIndex, unsigned long baudRate) {
+	#ifndef PROG_32
     unsigned int config1 = UART_EN & UART_IDLE_CON & UART_DIS_ABAUD & UART_DIS_LOOPBACK & UART_NO_PAR_8BIT & UART_1STOPBIT;
     unsigned int config2 = UART_INT_TX_BUF_EMPTY & UART_TX_PIN_NORMAL & UART_TX_ENABLE & UART_INT_RX_CHAR & UART_ADR_DETECT_DIS & UART_RX_OVERRUN_CLEAR;
 
@@ -32,6 +39,7 @@ void openSerial(unsigned char serialPortIndex, unsigned long baudRate) {
         IEC1bits.U2RXIE = 1;
         U2STAbits.URXISEL = 1;
     }
+	#endif
 }
 
 void openSerialAtDefaultSpeed(unsigned char serialPortIndex) {
@@ -55,7 +63,7 @@ int kbhit(unsigned char serialPortIndex) {
     return 0;
 }
 
-char getc(unsigned char serialPortIndex) {
+char serialGetc(unsigned char serialPortIndex) {
     if (serialPortIndex == SERIAL_PORT_1) {
         return ReadUART1();
     } else if (serialPortIndex == SERIAL_PORT_2) {
@@ -76,7 +84,7 @@ void simulateDelay() {
 }
 #endif
 
-void putc(unsigned char serialPortIndex, char c) {
+void serialPutc(unsigned char serialPortIndex, char c) {
     if (serialPortIndex == SERIAL_PORT_1) {
         // waits for transmit buffer to be ready
 #ifndef MPLAB_SIMULATION

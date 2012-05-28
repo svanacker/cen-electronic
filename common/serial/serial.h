@@ -38,7 +38,7 @@ void closeSerial(unsigned char serialPortIndex);
  * @param serialPortIndex the serialPortIndex we want to use
  * @param c the character to send
  */
-void putc(unsigned char serialPortIndex, char c);
+void serialPutc(unsigned char serialPortIndex, char c);
 
 /**
  * Reads a char from the serial input. This function
@@ -47,7 +47,7 @@ void putc(unsigned char serialPortIndex, char c);
  * @param serialPortIndex the serialPortIndex we want to use
  * @return the character read
  */
-char getc(unsigned char serialPortIndex);
+char serialGetc(unsigned char serialPortIndex);
 
 /**
  * Checks whether a character is available from the serial input.

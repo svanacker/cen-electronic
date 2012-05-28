@@ -1,8 +1,14 @@
-#include <timer.h>
-
-#include "delay30F.h"
 
 #include "../commons.h"
+
+#ifdef PROG_32
+	#include <p32xxxx.h>
+#else	
+	#include <timer.h>
+#endif
+
+
+#include "delay30F.h"
 
 void delayUs(void) {
     char i;

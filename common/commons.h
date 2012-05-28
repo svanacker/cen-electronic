@@ -33,6 +33,7 @@
  * Defines that we want to run with MPLAB SIMULATION
  */
 // #define MPLAB_SIMULATION
+#define PROG_32
 
 /**
  * Defines a function to do the same as "equals(Object obj)" in Java.

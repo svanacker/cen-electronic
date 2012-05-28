@@ -1,10 +1,18 @@
-#include <i2c.h>
+#include "../../common/commons.h"
+
+#ifdef PROG_32
+	#include <p32xxxx.h>
+	#include "../../common/setup/pic32FSetup.h"
+#else
+	#include <i2c.h>
+	#include "../../common/setup/pic30FSetup.h"
+#endif
+
 #include <stdlib.h>
 #include <math.h>
 
 #include "mainBoardClient.h"
 
-#include "../../common/setup/pic30FSetup.h"
 
 #include "../../common/delay/delay30F.h"
 

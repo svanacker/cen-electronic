@@ -1,8 +1,13 @@
 #include <stdlib.h>
-#include <timer.h>
-#include <delay.h>
 
 #include "../../common/commons.h"
+
+#ifdef PROG_32
+	#include <p32xxxx.h>
+#else
+	#include <timer.h>
+	#include <delay.h>
+#endif
 
 #include "../../common/error/error.h"
 
@@ -81,6 +86,7 @@ void initTimers() {
     unsigned int config2;
     unsigned int period;
 
+	#ifndef PROG_32
     config1 = (T1_ON //T1ON = 1 Active le TIMER1
             & T1_IDLE_CON //operate during sleep
             & T1_GATE_OFF //Timer Gate time accumulation disabled
@@ -109,6 +115,8 @@ void initTimers() {
 
     // Define the interruption priority and activate interruption
     ConfigIntTimer1(config2);
+
+	#endif
 }
 
 void startTimerList() {
@@ -134,6 +142,7 @@ void stopTimerList() {
  * Function called by the timer.
  */
 void __attribute__((__interrupt__)) __attribute__((no_auto_psv)) _T1Interrupt(void) {
+	#ifndef PROG_32
     // Clear the interrupt flag
     _T1IF = 0;
 
@@ -170,4 +179,5 @@ void __attribute__((__interrupt__)) __attribute__((no_auto_psv)) _T1Interrupt(vo
     }
     // Enable the interrupt
     _T1IE = 1;
+	#endif
 }

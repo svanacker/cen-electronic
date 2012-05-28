@@ -1,8 +1,14 @@
-#include <i2c.h>
+#include "../../../common/commons.h"
+
+#ifdef PROG_32
+	#include <p32xxxx.h>
+#else
+	#include <i2c.h>
+#endif
 
 #include "i2cMasterSetup.h"
 
-#include "../../../common/commons.h"
+
 #include "../../../common/i2c/i2cCommon.h"
 
 #include "../../../common/log/logger.h"
@@ -18,6 +24,7 @@ void i2cMasterInitialize(void) {
         appendString(getOutputStreamLogger(DEBUG), "I2C Master already initialized\n");
         return;
     }
+	#ifndef PROG_32
     unsigned int i2cBrg, i2cCon;
 
     // Speed 100 Khz
@@ -49,6 +56,7 @@ void i2cMasterInitialize(void) {
     appendCRLF(getOutputStreamLogger(DEBUG));
 
     initialized = TRUE;
+	#endif
 }
 
 void i2cMasterFinalize(void) {

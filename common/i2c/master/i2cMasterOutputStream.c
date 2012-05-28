@@ -1,5 +1,4 @@
 #include <stdlib.h>
-#include <i2c.h>
 
 #include "i2cMaster.h"
 #include "i2cMasterSetup.h"
@@ -66,5 +65,5 @@ void initMasterI2cOutputStream(OutputStream* outputStream,
     outputStream->writeChar = _writeCharI2C;
     outputStream->flush = _flushI2C;
     outputStream->object = (int*) i2cBuffer;
-    _i2cMasterOpenOutputStream(outputStream, NULL);
+    _i2cMasterOpenOutputStream(outputStream, 0);
 }

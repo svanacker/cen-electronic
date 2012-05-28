@@ -1,5 +1,4 @@
 #include <stdlib.h>
-#include <i2c.h>
 
 #include "i2cMaster.h"
 #include "i2cMasterSetup.h"
