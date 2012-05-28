@@ -25,7 +25,6 @@ void i2cMasterInitialize(void) {
         appendString(getOutputStreamLogger(DEBUG), "I2C Master already initialized\n");
         return;
     }
-	#ifndef PROG_32
     unsigned int i2cBrg, i2cCon;
 
     // Speed 100 Khz
@@ -34,12 +33,29 @@ void i2cMasterInitialize(void) {
     i2cCon = (
             I2C_ON
             & I2C_IDLE_CON
+
+#ifdef PROG_32
+            & I2C_CLK_HOLD
+#else
             & I2C_CLK_HLD
+#endif
+
+#ifdef PROG_32
+			// IPMI Management not found on PIC32 => Probably disabled by default
+#else
             & I2C_IPMI_DIS
+#endif
+
             & I2C_7BIT_ADD
             & I2C_SLW_DIS
             & I2C_SM_DIS
+
+#ifdef PROG_32
+            & I2C_GC_DIS
+#else
             & I2C_GCALL_DIS
+#endif
+
             & I2C_STR_DIS
             & I2C_NACK
             & I2C_ACK_EN
@@ -49,15 +65,19 @@ void i2cMasterInitialize(void) {
             & I2C_START_DIS
             );
 
-    OpenI2C(i2cCon, i2cBrg);
-    WaitI2C();
+	#ifdef PROG_32
+    	OpenI2C1(i2cCon, i2cBrg);
+    #else
+    	OpenI2C(i2cCon, i2cBrg);
+	#endif
+
+	WaitI2C();
 
     appendString(getOutputStreamLogger(DEBUG), "I2C Master CONF=");
-    appendBinary16(getOutputStreamLogger(DEBUG), I2CCON, 4);
+    appendBinary16(getOutputStreamLogger(DEBUG), i2cCon, 4);
     appendCRLF(getOutputStreamLogger(DEBUG));
 
     initialized = TRUE;
-	#endif
 }
 
 void i2cMasterFinalize(void) {
