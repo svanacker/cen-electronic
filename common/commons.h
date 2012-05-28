@@ -6,10 +6,22 @@
 #define MIN_SIGNEDINT 0x8000
 #define MIN_UNSIGNEDINT 0x0000
 
+
+/**
+ * Defines that we want to run with MPLAB SIMULATION
+ */
+// #define MPLAB_SIMULATION
+
+#define PROG_32
+
+#ifndef PROG_32
 /**
  * Defining Boolean type
  */
 #define BOOL unsigned int
+#else
+#include <GenericTypeDefs.h>
+#endif
 
 #define FALSE 0
 #define TRUE (!FALSE)
@@ -29,11 +41,6 @@
 #define IN_AS_STRING "IN"
 #define OUT_AS_STRING "OUT"
 
-/**
- * Defines that we want to run with MPLAB SIMULATION
- */
-// #define MPLAB_SIMULATION
-#define PROG_32
 
 /**
  * Defines a function to do the same as "equals(Object obj)" in Java.

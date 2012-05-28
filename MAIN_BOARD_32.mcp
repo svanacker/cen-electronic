@@ -8,8 +8,8 @@ dir_src=
 dir_bin=build/mainBoard32
 dir_tmp=build/mainBoard32
 dir_sin=
-dir_inc=
-dir_lib=C:\Program Files (x86)\Microchip\MPLAB C32 Suite\lib;C:\Program Files (x86)\Microchip\MPLAB C32 Suite\pic32mx\lib;
+dir_inc=D:\DEV\C\MPLAB_C32\pic32-libs\include\peripheral
+dir_lib=C:\Program Files (x86)\Microchip\MPLAB C32 Suite\lib;C:\Program Files (x86)\Microchip\MPLAB C32 Suite\pic32mx\lib
 dir_lkr=
 [CAT_FILTERS]
 filter_src=*.s;*.c

@@ -1,13 +1,8 @@
 #include "../../common/commons.h"
 
-#ifdef PROG_32
-	#include <p32xxxx.h>
-#else
-	#include <uart.h>
-#endif
+#include <uart.h>
 
 #include "serial.h"
-
 
 #include "../../common/setup/clockConstants.h"
 

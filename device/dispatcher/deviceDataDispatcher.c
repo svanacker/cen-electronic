@@ -18,7 +18,7 @@ unsigned int getWaitedDataLength(const char header) {
     for (i = 0; i < size; i++) {
         Device* result = getDevice(i);
         DeviceInterface* interface = result->interface;
-        int deviceDataLength = interface->deviceGetInterface(header, DEVICE_MODE_INPUT, NULL);
+        int deviceDataLength = interface->deviceGetInterface(header, DEVICE_MODE_INPUT, FALSE);
         return deviceDataLength;
     }
     return -1;

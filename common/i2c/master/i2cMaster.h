@@ -5,6 +5,25 @@
 
 #include "../../../common/io/buffer.h"
 
+// PORTABLE FUNCTIONS
+
+/**
+ * Indirection for I2C used to manage 30F/32 compatibility.
+ */
+inline unsigned int portableMasterWriteI2C(unsigned char data);
+
+/**
+ * Indirection for I2C used to manage 30F/32 compatibility.
+ */
+inline unsigned char portableMasterReadI2C( void );
+
+/**
+ * Indirection for I2C used to manage 30F/32 compatibility.
+ */
+inline void portableCloseI2C( void );
+
+// USEFUL FUNCTION
+
 /**
 * Sends the buffer to the I2C.
 * @param address the address of I2C that we send

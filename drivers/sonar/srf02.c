@@ -28,56 +28,56 @@ unsigned int getSRF02Address(unsigned char sonarIndex) {
 }
 
 unsigned char readSRF02(char addr, char reg) {
-    StartI2C();
+    portableStartI2C();
 	#ifndef PROG_32
     	while (I2CCONbits.SEN);
 	#endif
     // send the address
-    MasterWriteI2C(addr);
-    IdleI2C();
+    portableMasterWriteI2C(addr);
+    WaitI2C();
     // send the register
-    MasterWriteI2C(reg);
-    IdleI2C();
-    StopI2C();
-    IdleI2C();
-    StartI2C();
+    portableMasterWriteI2C(reg);
+    WaitI2C();
+    portableStopI2C();
+    WaitI2C();
+    portableStartI2C();
 	#ifndef PROG_32
     	while (I2CCONbits.SEN);
 	#endif
     // send the address again with read bit
-    MasterWriteI2C(addr + 1);
-    IdleI2C();
+    portableMasterWriteI2C(addr + 1);
+    WaitI2C();
     // read the data
-    unsigned char data = MasterReadI2C();
-    StopI2C();
+    unsigned char data = portableMasterReadI2C();
+    portableStopI2C();
     return data;
 }
 
 void writeSRF02Command(char addr, char reg, char cmd) {
-    StartI2C();
+    portableStartI2C();
     // Wait till Start sequence is completed
-    IdleI2C();
-    MasterWriteI2C(addr);
-    IdleI2C();
-    MasterWriteI2C(reg);
-    IdleI2C();
+    WaitI2C();
+    portableMasterWriteI2C(addr);
+    WaitI2C();
+    portableMasterWriteI2C(reg);
+    WaitI2C();
     // command
-    MasterWriteI2C(cmd);
-    IdleI2C();
-    StopI2C();
+    portableMasterWriteI2C(cmd);
+    WaitI2C();
+    portableStopI2C();
 }
 
 void internalChangeAddressLine(unsigned char oldAddress, unsigned char value) {
-  IdleI2C();
-  StartI2C();
-  MasterWriteI2C(oldAddress);
-  IdleI2C();
-  MasterWriteI2C(0);
-  IdleI2C();
-  MasterWriteI2C(value);
-  IdleI2C();
-  StopI2C();
-  IdleI2C();
+  WaitI2C();
+  portableStartI2C();
+  portableMasterWriteI2C(oldAddress);
+  WaitI2C();
+  portableMasterWriteI2C(0);
+  WaitI2C();
+  portableMasterWriteI2C(value);
+  WaitI2C();
+  portableStopI2C();
+  WaitI2C();
 }
 
 void SRF02ChangeAddress(unsigned char oldAddress, unsigned char newAddress) {

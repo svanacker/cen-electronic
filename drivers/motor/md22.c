@@ -1,10 +1,11 @@
 #include "../../common/commons.h"
 
+/*
 #ifdef PROG_32
 	#include <p32xxxx.h>
-#else
+#else*/
 	#include <i2c.h>
-#endif
+//#endif
 
 #include "md22.h"
 
@@ -29,30 +30,30 @@
  * @return the value read from the register
  */
 unsigned char readMD22(char addr, char reg) {
-    IdleI2C();
-    StartI2C();
+    WaitI2C();
+    portableStartI2C();
 	#ifndef PROG_32
     	while (I2CCONbits.SEN);
 	#endif
     // send the address
-    MasterWriteI2C(MD22_ADDR_W);
-    IdleI2C();
+    portableMasterWriteI2C(MD22_ADDR_W);
+    WaitI2C();
     // send the register
-    MasterWriteI2C(reg);
-    IdleI2C();
-    StopI2C();
-    IdleI2C();
-    StartI2C();
+    portableMasterWriteI2C(reg);
+    WaitI2C();
+    portableStopI2C();
+    WaitI2C();
+    portableStartI2C();
 	#ifndef PROG_32
     	while (I2CCONbits.SEN);
 	#endif
     // send the address again with read bit
 
-    MasterWriteI2C(MD22_ADDR_R);
-    IdleI2C();
+    portableMasterWriteI2C(MD22_ADDR_R);
+    WaitI2C();
     // read the data
-    unsigned char data = MasterReadI2C();
-    StopI2C();
+    unsigned char data = portableMasterReadI2C();
+    portableStopI2C();
     return data;
 }
 
@@ -63,17 +64,17 @@ unsigned char readMD22(char addr, char reg) {
  * @param cmd command which is sent to the register
  */
 void writeMD22Command(char addr, char reg, char cmd) {
-    StartI2C();
+    portableStartI2C();
 
     // Wait till Start sequence is completed
-    IdleI2C();
+    WaitI2C();
 
-    MasterWriteI2C(addr);
-    MasterWriteI2C(reg);
+    portableMasterWriteI2C(addr);
+    portableMasterWriteI2C(reg);
     // command
-    MasterWriteI2C(cmd);
+    portableMasterWriteI2C(cmd);
 
-    StopI2C();
+    portableStopI2C();
 }
 
 unsigned int getMD22Version(void) {
@@ -81,27 +82,27 @@ unsigned int getMD22Version(void) {
 }
 
 void setMD22MotorSpeeds(signed char leftSpeed, signed char rightSpeed) {
-    StartI2C();
+    portableStartI2C();
 
     // Wait till Start sequence is completed
-    IdleI2C();
+    WaitI2C();
     /* Wait till Start sequence is completed */
 	#ifndef PROG_32
     	while (I2CCONbits.SEN);
 	#endif
 
-    MasterWriteI2C(MD22_ADDR_W);
-    IdleI2C();
-    MasterWriteI2C(MD22_SPEED);
-    IdleI2C();
+    portableMasterWriteI2C(MD22_ADDR_W);
+    WaitI2C();
+    portableMasterWriteI2C(MD22_SPEED);
+    WaitI2C();
     // left motor speed
-    MasterWriteI2C(leftSpeed);
-    IdleI2C();
+    portableMasterWriteI2C(leftSpeed);
+    WaitI2C();
     // the next value is written to the right motor speed register
-    MasterWriteI2C(rightSpeed);
-    IdleI2C();
+    portableMasterWriteI2C(rightSpeed);
+    WaitI2C();
 
-    StopI2C();
+    portableStopI2C();
 
 }
 

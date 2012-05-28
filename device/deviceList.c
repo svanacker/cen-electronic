@@ -59,7 +59,7 @@ int getDeviceResponseSize(int commandHeader) {
     for (i = 0; i < deviceList.size; i++) {
         Device* device = getDevice(i);
         DeviceInterface* deviceInterface = device->interface;
-        int valueCount = deviceInterface->deviceGetInterface(commandHeader, DEVICE_MODE_OUTPUT, NULL);
+        int valueCount = deviceInterface->deviceGetInterface(commandHeader, DEVICE_MODE_OUTPUT, FALSE);
         if (valueCount != DEVICE_HEADER_NOT_HANDLED) {
             return valueCount;
         }

@@ -62,6 +62,6 @@ void i2cMasterInitialize(void) {
 void i2cMasterFinalize(void) {
     if (initialized) {
         initialized = FALSE;
-        CloseI2C();
+        portableCloseI2C();
     }
 }
