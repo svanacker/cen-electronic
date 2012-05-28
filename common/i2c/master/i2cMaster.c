@@ -41,11 +41,17 @@ inline void portableCloseI2C() {
 	#endif
 }
 
+inline void portableMasterWaitSendI2C( void ) {
+	#ifdef PROG_32
+		// TODO !!!
+	#else
+		while (I2CCONbits.SEN);
+	#endif
+}
+
 void i2cMasterWriteBuffer(char address, Buffer* buffer) {
     portableStartI2C();
-	#ifndef PROG_32
-    while (I2CCONbits.SEN);
-	#endif
+	portableMasterWaitSendI2C();
     // Wait till Start sequence is completed
     WaitI2C();
 
@@ -115,9 +121,7 @@ unsigned char i2cMasterReadRegisterValue(char address, char commandRegister) {
     // Set the register command
     WaitI2C();
     portableStartI2C();
-	#ifndef PROG_32
-    while (I2CCONbits.SEN);
-	#endif
+	portableMasterWaitSendI2C();
     // send the address
     portableMasterWriteI2C(address);
     WaitI2C();
@@ -129,9 +133,7 @@ unsigned char i2cMasterReadRegisterValue(char address, char commandRegister) {
 
     // Read the register command
     portableStartI2C();
-	#ifndef PROG_32
-    while (I2CCONbits.SEN);
-	#endif
+	portableMasterWaitSendI2C();
     // send the address again with read bit
     portableMasterWriteI2C(address | 0x01);
     WaitI2C();

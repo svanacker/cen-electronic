@@ -2,10 +2,9 @@
 
 #include "../../common/commons.h"
 
-#ifdef PROG_32
-	#include <p32xxxx.h>
-#else
-	#include <timer.h>
+#include <timer.h>
+
+#ifndef PROG_32
 	#include <delay.h>
 #endif
 

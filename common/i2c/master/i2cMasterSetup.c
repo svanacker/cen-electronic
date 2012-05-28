@@ -1,15 +1,16 @@
 #include "../../../common/commons.h"
 
 #ifdef PROG_32
-	#include <p32xxxx.h>
+	#include <legacy/i2c_legacy.h>
 #else
 	#include <i2c.h>
 #endif
 
 #include "i2cMasterSetup.h"
 
-
 #include "../../../common/i2c/i2cCommon.h"
+#include "../../../common/i2c/master/i2cMaster.h"
+
 
 #include "../../../common/log/logger.h"
 #include "../../../common/log/logLevel.h"

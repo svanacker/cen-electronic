@@ -13,15 +13,9 @@
 // #define MPLAB_SIMULATION
 
 #define PROG_32
-
-#ifndef PROG_32
-/**
- * Defining Boolean type
- */
-#define BOOL unsigned int
-#else
 #include <GenericTypeDefs.h>
-#endif
+
+// #define BOOL unsigned char
 
 #define FALSE 0
 #define TRUE (!FALSE)

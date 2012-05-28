@@ -1,6 +1,7 @@
 #include "../../common/commons32.h"
 
 #include "../../common/i2c/i2cCommon.h"
+#include "../../common/i2c/master/i2cMaster.h"
 
 #include "pcf8574.h"
 
@@ -22,9 +23,7 @@ char isPCF8574Present(unsigned char addr, unsigned char devAddr) {
     WaitI2C();
     portableStartI2C();
     WaitI2C();
-	#ifndef PROG_32
-    while (I2CCONbits.SEN);
-	#endif
+	portableMasterWaitSendI2C();
     result = portableMasterWriteI2C(realAddress);
     WaitI2C();
     portableStopI2C();
@@ -37,9 +36,7 @@ void writePCF8574(unsigned char addr, unsigned char devAddr, unsigned char outDa
     WaitI2C();
     portableStartI2C();
     WaitI2C();
-	#ifndef PROG_32
-    while (I2CCONbits.SEN);
-	#endif
+	portableMasterWaitSendI2C();
     portableMasterWriteI2C(realAddress); // send write addres
     WaitI2C();
     portableMasterWriteI2C(outData | dirs); // write new outputs to buffer
@@ -54,9 +51,7 @@ unsigned char readPCF8574(unsigned char addr, unsigned char devAddr, unsigned ch
     unsigned char realAddress = internalGetAddress(addr, devAddr);
     WaitI2C();
     portableStartI2C();
-	#ifndef PROG_32
-    while (I2CCONbits.SEN);
-	#endif
+	portableMasterWaitSendI2C();
     // send read address (bit zero is set)
     portableMasterWriteI2C(realAddress | 1);
     WaitI2C();

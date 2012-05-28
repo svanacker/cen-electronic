@@ -1,11 +1,8 @@
 #include "../../common/commons.h"
 
-/*
-#ifdef PROG_32
-	#include <p32xxxx.h>
-#else*/
-	#include <i2c.h>
-//#endif
+#include "../../common/i2c/i2cCommon.h"
+#include "../../common/i2c/master/i2cMaster.h"
+
 
 #include "md22.h"
 
@@ -32,9 +29,7 @@
 unsigned char readMD22(char addr, char reg) {
     WaitI2C();
     portableStartI2C();
-	#ifndef PROG_32
-    	while (I2CCONbits.SEN);
-	#endif
+	portableMasterWaitSendI2C();
     // send the address
     portableMasterWriteI2C(MD22_ADDR_W);
     WaitI2C();
@@ -44,9 +39,7 @@ unsigned char readMD22(char addr, char reg) {
     portableStopI2C();
     WaitI2C();
     portableStartI2C();
-	#ifndef PROG_32
-    	while (I2CCONbits.SEN);
-	#endif
+	portableMasterWaitSendI2C();
     // send the address again with read bit
 
     portableMasterWriteI2C(MD22_ADDR_R);
@@ -84,13 +77,8 @@ unsigned int getMD22Version(void) {
 void setMD22MotorSpeeds(signed char leftSpeed, signed char rightSpeed) {
     portableStartI2C();
 
-    // Wait till Start sequence is completed
     WaitI2C();
-    /* Wait till Start sequence is completed */
-	#ifndef PROG_32
-    	while (I2CCONbits.SEN);
-	#endif
-
+	portableMasterWaitSendI2C();
     portableMasterWriteI2C(MD22_ADDR_W);
     WaitI2C();
     portableMasterWriteI2C(MD22_SPEED);
