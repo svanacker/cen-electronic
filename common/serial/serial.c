@@ -20,10 +20,8 @@ void openSerial(unsigned char serialPortIndex, unsigned long baudRate) {
         OpenUART1(config1, config2, ubrg);
         // 0 => UART on U1TX and U1RX
         // 1 => UART1 on U1ATX U1ARX
-#ifndef PROG_32
 		// no alternate mode because UARTxx are on separate PINs
         U1MODEbits.ALTIO = 1;
-#endif
         // Interrupt whenever a character is received
         // Used for receiving a single character
         IEC0bits.U1RXIE = 1;
@@ -48,13 +46,6 @@ void closeSerial(unsigned char serialPortIndex) {
     } else if (serialPortIndex == SERIAL_PORT_2) {
         CloseUART2();
     }
-	/*
-	 else if (serialPortIndex == SERIAL_PORT_3) {
-        CloseUART3();
-    } else if (serialPortIndex == SERIAL_PORT_4) {
-        CloseUART4();
-    }
-	*/
 }
 
 int kbhit(unsigned char serialPortIndex) {
@@ -62,13 +53,7 @@ int kbhit(unsigned char serialPortIndex) {
         return DataRdyUART1();
     } else if (serialPortIndex == SERIAL_PORT_2) {
         return DataRdyUART2();
-    } /*
-	 else if (serialPortIndex == SERIAL_PORT_3) {
-        return DataRdyUART3();
-    } else if (serialPortIndex == SERIAL_PORT_4) {
-        return DataRdyUART4();
     }
-	*/
     return 0;
 }
 
@@ -77,13 +62,7 @@ char serialGetc(unsigned char serialPortIndex) {
         return ReadUART1();
     } else if (serialPortIndex == SERIAL_PORT_2) {
         return ReadUART2();
-    } /*
-	 else if (serialPortIndex == SERIAL_PORT_3) {
-        return ReadUART3();
-    } else if (serialPortIndex == SERIAL_PORT_4) {
-        return ReadUART4();
     }
-	*/
     return 0;
 }
 
@@ -120,27 +99,4 @@ void serialPutc(unsigned char serialPortIndex, char c) {
         // transmits char
         WriteUART2(c);
 	}
-	/*
-	// SERIAL 3 
-	#ifdef PROG_32
-	    else if (serialPortIndex == SERIAL_PORT_3) {
-			#ifndef MPLAB_SIMULATION
-			        while (U3STAbits.UTXBF);
-			#else
-			        simulateDelay();
-			#endif
-	        // transmits char
-	        WriteUART3(c);
-		// SERIAL 4 
-	    } else if (serialPortIndex == SERIAL_PORT_4) {
-			#ifndef MPLAB_SIMULATION
-			        while (U4STAbits.UTXBF);
-			#else
-			        simulateDelay();
-			#endif
-	        // transmits char
-	        WriteUART4(c);
-	    }
-	#endif
-	*/
 }

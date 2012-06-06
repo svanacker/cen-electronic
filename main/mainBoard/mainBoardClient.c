@@ -147,8 +147,13 @@
 #include "../../drivers/sonar/srf02.h"
 
 #ifndef MPLAB_SIMULATION
-#define SERIAL_PORT_DEBUG 		SERIAL_PORT_1
-#define SERIAL_PORT_PC	 		SERIAL_PORT_2
+#ifdef PROG_32
+	#define SERIAL_PORT_DEBUG 		SERIAL_PORT_2
+	#define SERIAL_PORT_PC	 		SERIAL_PORT_1
+#else
+	#define SERIAL_PORT_DEBUG 		SERIAL_PORT_1
+	#define SERIAL_PORT_PC	 		SERIAL_PORT_2
+#endif
 #else
 // We use the same port for both
 #define SERIAL_PORT_PC	 		SERIAL_PORT_1
@@ -600,6 +605,12 @@ int main(void) {
 
     appendString(getOutputStreamLogger(ALWAYS), getPicName());
     println(getOutputStreamLogger(ALWAYS));
+
+    appendString(&pcOutputStream, getPicName());
+    println(&pcOutputStream);
+
+    appendString(&debugOutputStream, getPicName());
+    println(&debugOutputStream);
 
     initDevicesDescriptor();
     initDriversDescriptor();

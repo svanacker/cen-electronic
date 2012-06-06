@@ -3,15 +3,11 @@
 
 #include <p32xxxx.h>
 
-// TODO PIC32
-
-/*
-_FOSC(CSW_FSCM_OFF & XT_PLL16);  //7Mhz3728 * 16  = 117,9648 MHz /4 = 29,4912 MIPS maxi pour ce pic
-_FWDT(WDT_OFF);					//Watchdog OFF
-_FBORPOR(PBOR_ON & PWRT_64 & MCLR_EN);
-
-_FGS(CODE_PROT_OFF);			//Codeprotect OFF
-
-*/
+// definition des bits de configuration.
+// external Quartz, PLL x 10 (20 / 2)
+// Watchdog OFF
+#pragma config FNOSC = PRIPLL, POSCMOD = HS, FPLLMUL = MUL_20, FPLLIDIV = DIV_2, FPBDIV = DIV_2, FPLLODIV = DIV_1
+#pragma config FWDTEN = OFF
+#define SYS_FREQ 				(80000000L)
 
 #endif

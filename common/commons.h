@@ -1,12 +1,6 @@
 #ifndef COMMONS_H
 #define COMMONS_H
 
-#define MAX_SIGNEDINT 0x7FFF
-#define MAX_UNSIGNEDINT 0xFFFF
-#define MIN_SIGNEDINT 0x8000
-#define MIN_UNSIGNEDINT 0x0000
-
-
 /**
  * Defines that we want to run with MPLAB SIMULATION
  */
@@ -14,6 +8,15 @@
 
 #define PROG_32
 #include <GenericTypeDefs.h>
+
+// TODO ; Change for 32 !!
+#define MAX_SIGNEDINT 0x7FFF
+#define MAX_UNSIGNEDINT 0xFFFF
+#define MIN_SIGNEDINT 0x8000
+#define MIN_UNSIGNEDINT 0x0000
+
+
+
 
 // #define BOOL unsigned char
 

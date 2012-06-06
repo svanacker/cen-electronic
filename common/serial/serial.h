@@ -1,17 +1,23 @@
 #ifndef SERIAL_H
 #define SERIAL_H
 
-/** Define the index of serial port 1 */
+/** Define the index of serial port 1. */
 #define SERIAL_PORT_1 		1
 
-/** Define the index of serial port 2 */
+/** Define the index of serial port 2. */
 #define SERIAL_PORT_2 		2
 
-/** Define the index of serial port 3 */
+/** Define the index of serial port 3. */
 #define SERIAL_PORT_3 		3
 
-/** Define the index of serial port 4 */
+/** Define the index of serial port 4. */
 #define SERIAL_PORT_4 		4
+
+/** Define the index of serial port 5. */
+#define SERIAL_PORT_5 		5
+
+/** Define the index of serial port 6. */
+#define SERIAL_PORT_6 		6
 
 /** The default speed of the serial tranmission is fixed to 115200. */
 #define DEFAULT_SERIAL_SPEED 115200
