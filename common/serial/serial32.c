@@ -59,6 +59,10 @@ void serialPutc(unsigned char serialPortIndex, char c) {
 	        simulateDelay();
 	#endif
 	UART_MODULE uart = getUartModule(serialPortIndex);
+
+	while (!UARTTransmitterIsReady(uart));
 	UARTSendDataByte(uart, c);
+	while (!UARTTransmissionHasCompleted(uart));
+
 }
 
