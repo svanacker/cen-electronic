@@ -20,6 +20,17 @@ void openSerial(unsigned char serialPortIndex, unsigned long baudRate) {
     UARTSetLineControl(uart, UART_DATA_SIZE_8_BITS | UART_PARITY_NONE | UART_STOP_BITS_1);
     UARTSetDataRate(uart, GetPeripheralClock(), baudRate);
     UARTEnable(uart, UART_ENABLE_FLAGS(UART_PERIPHERAL | UART_RX | UART_TX));
+
+	INTEnable(INT_SOURCE_UART_RX(uart), INT_ENABLED);
+	INTSetVectorPriority(INT_VECTOR_UART(uart), INT_PRIORITY_LEVEL_2);
+	INTSetVectorSubPriority(INT_VECTOR_UART(uart), INT_SUB_PRIORITY_LEVEL_0);
+
+	// configure for multi-vectored mode
+	INTConfigureSystem(INT_SYSTEM_CONFIG_MULT_VECTOR);
+
+	// enable interrupts
+	INTEnableInterrupts();
+
 }
 
 void openSerialAtDefaultSpeed(unsigned char serialPortIndex) {

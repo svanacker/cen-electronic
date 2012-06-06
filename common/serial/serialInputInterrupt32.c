@@ -17,17 +17,24 @@ static Buffer* buffer4;
 static Buffer* buffer5;
 static Buffer* buffer6;
 
-inline void handleUartInterrupt(UART_MODULE uartModule, Buffer* buffer) {
+void putCharacter(UART_MODULE uartModule, const char c) {
+  while (!UARTTransmitterIsReady(uartModule));
+  UARTSendDataByte(uartModule, c);
+  while (!UARTTransmissionHasCompleted(uartModule));
+}
+
+inline void handleUartInterrupt(UART_MODULE uart, Buffer* buffer) {
 	// Is this an RX interrupt?
-	if (INTGetFlag(INT_SOURCE_UART_RX(UART2))) {
-		char c = UARTGetDataByte(UART2);
-		bufferWriteChar(buffer2, c);
+	if (INTGetFlag(INT_SOURCE_UART_RX(uart))) {
+		char c = UARTGetDataByte(uart);
+		bufferWriteChar(buffer, c);
+		putCharacter(uart, c);
 		// Clear the RX interrupt Flag
-		INTClearFlag(INT_SOURCE_UART_RX(UART2));
+		INTClearFlag(INT_SOURCE_UART_RX(uart));
 	}
 	// We don't care about TX interrupt
-	if ( INTGetFlag(INT_SOURCE_UART_TX(UART2)) ) {
-		INTClearFlag(INT_SOURCE_UART_TX(UART2));
+	if ( INTGetFlag(INT_SOURCE_UART_TX(uart)) ) {
+		INTClearFlag(INT_SOURCE_UART_TX(uart));
 	}
 }
 

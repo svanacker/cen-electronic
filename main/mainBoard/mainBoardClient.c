@@ -521,6 +521,7 @@ void waitForInstruction() {
             &filterRemoveCRLF,
             NULL);
 
+	/*
     // Listen instructions from Devices (I2C Slave) -> Main Board (I2C Master)
 	while (handleNotificationFromDispatcherList(TRANSMIT_I2C)) {
 		// loop for all notification
@@ -565,6 +566,7 @@ void waitForInstruction() {
 	if (useBalise) {
 		updateOpponentRobotIfNecessary();
 	}
+	*/	
 }
 
 int main(void) {
@@ -654,6 +656,8 @@ int main(void) {
             &mechanical2BoardOutputStream,
             MECHANICAL_BOARD_2_I2C_ADDRESS);
 
+	/* PROG 32
+
     // Stream for Beacon Receiver Board
     addI2CDriverDataDispatcher( &beaconReceiverI2cDispatcher,
                                                             "BEACON_RECEIVER_DISPATCHER",
@@ -673,6 +677,9 @@ int main(void) {
                                                             &strategyBoardInputStream,
                                                             &strategyBoardOutputStream,
                                                             STRATEGY_BOARD_I2C_ADDRESS);
+
+	*/
+
 
     // printDriverDataDispatcherList(getOutputStreamLogger(DEBUG), getDispatcherList());
 
@@ -707,6 +714,8 @@ int main(void) {
 	else {
 		appendString(getOutputStreamLogger(ALWAYS), "COLOR:RED\n");
 	}	
+
+	/*
     if (configValue & CONFIG_SPEED_LOW_MASK) {
         motionSetParameters(MOTION_TYPE_FORWARD_OR_BACKWARD, 0x0C, 0x24);
         motionSetParameters(MOTION_TYPE_ROTATION, 0x12, 0x24);
@@ -728,6 +737,7 @@ int main(void) {
         motionSetParameters(MOTION_TYPE_ROTATION_ONE_WHEEL, 0x12, 0x10);
 		appendString(getOutputStreamLogger(ALWAYS), "SPEED NORMAL \n");
     }
+	*/
 
     // TODO 2012 SV motionDriverMaintainPosition();
 
