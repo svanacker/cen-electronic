@@ -1,10 +1,8 @@
-#ifndef SERIAL_STREAM_H
-#define SERIAL_STREAM_H
+#ifndef SERIAL_INPUT_INTERRUPT_H
+#define SERIAL_INPUT_INTERRUPT_H
 
 #include "../commons.h"
 #include "../../common/io/buffer.h"
-
-#include "../../common/serial/serialLink.h"
 
 /**
  * Init an inputStream arround serial with index "serialPortIndex".

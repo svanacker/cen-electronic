@@ -2,6 +2,7 @@
 
 #include "serial.h"
 #include "serialOutputStream.h"
+#include "serialInputInterrupt.h"
 #include "serialLink.h"
 
 #include "../../common/commons.h"
