@@ -1,0 +1,98 @@
+#include <stdlib.h>
+
+#include "../../common/commons.h"
+
+#include <p32xxxx.h>
+
+#include "serialInputInterrupt.h"
+#include "serial.h"
+#include "serial32.h"
+
+#include "../../common/io/buffer.h"
+
+static Buffer* buffer1;
+static Buffer* buffer2;
+static Buffer* buffer3;
+static Buffer* buffer4;
+static Buffer* buffer5;
+static Buffer* buffer6;
+
+inline void handleUartInterrupt(UART_MODULE uartModule, Buffer* buffer) {
+	// Is this an RX interrupt?
+	if (INTGetFlag(INT_SOURCE_UART_RX(UART2))) {
+		char c = UARTGetDataByte(UART2);
+		bufferWriteChar(buffer2, c);
+		// Clear the RX interrupt Flag
+		INTClearFlag(INT_SOURCE_UART_RX(UART2));
+	}
+	// We don't care about TX interrupt
+	if ( INTGetFlag(INT_SOURCE_UART_TX(UART2)) ) {
+		INTClearFlag(INT_SOURCE_UART_TX(UART2));
+	}
+}
+
+/**
+ * Interrupt on Serial 1
+ */
+void __ISR(_UART1_VECTOR, IPL2SOFT) IntUart1Handler(void) {
+	handleUartInterrupt(UART1, buffer1);
+}
+
+/**
+ * Interrupt on Serial 2
+ */
+void __ISR(_UART2_VECTOR, IPL2SOFT) IntUart2Handler(void) {
+	handleUartInterrupt(UART2, buffer2);
+}
+
+/**
+ * Interrupt on Serial 3
+ */
+/* TODO
+void __ISR(_UART3_VECTOR, IPL2SOFT) IntUart3Handler(void) {
+	handleUartInterrupt(UART3, buffer3);
+}
+*/
+
+/**
+ * Interrupt on Serial 4
+ */
+/* TODO
+void __ISR(_UART4_VECTOR, IPL2SOFT) IntUart4Handler(void) {
+	handleUartInterrupt(UART4, buffer4);
+}
+*/
+
+/**
+ * Interrupt on Serial 5
+ */
+/* TODO
+void __ISR(_UART5_VECTOR, IPL2SOFT) IntUart5Handler(void) {
+	handleUartInterrupt(UART5, buffer5);
+}
+*/
+
+/**
+ * Interrupt on Serial 6
+ */
+/* TODO
+void __ISR(_UART6_VECTOR, IPL2SOFT) IntUart6Handler(void) {
+	handleUartInterrupt(UART6, buffer6);
+}
+*/
+
+void initSerialInputBuffer(Buffer* buffer, int serialPortIndex) {
+    if (serialPortIndex == SERIAL_PORT_1) {
+        buffer1 = buffer;
+    } else if (serialPortIndex == SERIAL_PORT_2) {
+        buffer2 = buffer;
+    } else if (serialPortIndex == SERIAL_PORT_3) {
+        buffer3 = buffer;
+    } else if (serialPortIndex == SERIAL_PORT_4) {
+        buffer4 = buffer;
+    } else if (serialPortIndex == SERIAL_PORT_5) {
+        buffer5 = buffer;
+    } else if (serialPortIndex == SERIAL_PORT_6) {
+        buffer6 = buffer;
+    }
+}

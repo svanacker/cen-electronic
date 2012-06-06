@@ -2,11 +2,7 @@
 
 #include "../../common/commons.h"
 
-#ifdef PROG_32
-	#include <p32xxxx.h>
-#else
-	#include <p30fxxxx.h>
-#endif
+#include <p30fxxxx.h>
 
 #include "serialInputInterrupt.h"
 #include "serial.h"
