@@ -1,0 +1,110 @@
+/**
+ * Encapsulation of PICASA SGC Command
+ */
+
+#include "../../common/io/outputStream.h"
+
+// ALL COMMANDS
+
+#define		LCD4D_ACK								0x06
+#define		LCD4D_NACK								0x15
+
+
+// GENERAL COMMANDS
+
+#define 	LCD4D_AUTOBAUD_COMMAND					'U'
+
+
+#define 	LCD4D_NEW_BAUD_COMMAND					'Q'
+#define 	LCD4D_NEW_BAUD_9600						0x06
+#define		LCD4D_NEW_BAUD_115200					0x0D
+
+#define		LCD4D_VERSION_COMMAND					'V'
+#define		LCD4D_VERSION_OUTPUT_SERIAL_ONLY		0x00
+#define		LCD4D_VERSION_OUTPUT_SERIAL_LCD			0x01
+// TODO : Response of V
+
+#define		LCD4D_SET_DISPLAY_RESOLUTION_COMMAND	'd'
+
+#define		LCD4D_CLEAR_SCREEN_COMMAND				'E'
+
+// Control
+#define		LCD4D_CONTROL_COMMAND					'Y'
+
+#define		LCD4D_BACKLIGHT_CONTROL					0x00
+#define		LCD4D_BACKLIGHT_OFF						0x00
+#define		LCD4D_BACKLIGHT_ON						0x01
+
+#define		LCD4D_DISPLAY_CONTROL					0x01
+#define		LCD4D_DISPLAY_OFF						0x00
+#define		LCD4D_DISPLAY_ON						0x01
+
+#define		LCD4D_CONTRAST_ADJUST					0x02
+
+#define		LCD4D_POWER_UP_SHUTDOWN					0x03
+#define		LCD4D_DISPLAY_SHUTDOWN					0x00
+#define		LCD4D_DISPLAY_POWER_UP					0x01
+
+#define		LCD4D_DISPLAY_ORIENTATION				0x04
+#define		LCD4D_ORIENTATION_90					0x01
+#define		LCD4D_ORIENTATION_270					0x02
+#define		LCD4D_NATIVE_ORIENTATION				0x03
+#define		LCD4D_ORIENTATION_180					0x04
+
+#define		LCD4D_TOUCH_CONTROL						0x05
+#define		LCD4D_TOUCH_ENABLE						0x00
+#define		LCD4D_TOUCH_DISABLE						0x01
+#define		LCD4D_TOUCH_RESET_ACTIVE_REGION			0x02
+
+#define		LCD4D_IMAGE_FORMAT						0x06
+// TODO
+
+#define		LCD4D_PROTECT_FAT						0x08
+#define		LCD4D_PROTECT_ON						0x00
+#define		LCD4D_PROTECT_OFF						0x01
+
+#define		LCD4D_DISPLAY_PAGE_SELECT				0x09
+
+#define		LCD4D_READ_PAGE_SELECT					0x0A
+
+#define		LCD4D_WRITE_PAGE_SELECT					0x0B
+
+#define		LCD4D_SCREEN_RESOLUTION					0x0C
+#define		LCD4D_RESOLUTION_320_240				0x00
+#define		LCD4D_RESOLUTION_640_480				0x01
+//#define		LCD4D_RESOLUTION_CUSTOM					0x02
+
+#define		LCD4D_SCREEN_SAVER_STARTUP_DELAY		0x0D
+
+#define		LCD4D_SCREEN_SAVER_NEXT_LINE_DELAY		0x0E
+
+
+#define		LCD4D_SET_VOLUME_COMMAND				0x76
+#define		LCD4D_VOLUME_MUTE						0x00
+#define		LCD4D_VOLUME_DOWN_8						0x01
+#define		LCD4D_VOLUME_DOWN						0x03
+
+
+#define		LCD4D_VOLUME_MINIMUM					0x08
+#define		LCD4D_VOLUME_MAXIMUM					0x7F
+#define		LCD4D_VOLUME_UP							0xFD
+#define		LCD4D_VOLUME_UP_8						0xFE
+#define		LCD4D_VOLUME_MUTE_OFF					0xFF
+
+// GRAPHICS COMMAND
+
+#define		LCD_DRAW_CIRCLE_COMMAND					0x43
+#define		LCD_DRAW_TRIANGLE_COMMAND				0x47
+#define		LCD_DRAW_LINE_COMMAND					0x4C
+#define		LCD_DRAW_POLYGON_COMMAND				0x67
+#define		LCD_DRAW_RECTANGLE_COMMAND				0x72
+#define		LCD_DRAW_PIXEL_COMMAND					0x50
+
+
+
+/**
+ * Set the auto baud.
+ */
+void setAutoBaud(OutputStream* outputStream);
+
+/
