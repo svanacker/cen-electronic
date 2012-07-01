@@ -2,7 +2,32 @@
  * Encapsulation of PICASA SGC Command
  */
 
+#include "../../common/2d/2d.h"
+#include "../../common/commons.h"
+
+#include "../../common/io/inputStream.h"
 #include "../../common/io/outputStream.h"
+
+/**
+ * Define all datas relating to a Lcd 4d SGC Object.
+ */
+typedef struct {
+	// OutputStream (serial) used to send command
+	OutputStream* outputStream;
+	// InputStream (serial) used to read data
+	InputStream* inputStream;
+} Lcd4d;
+
+/**
+ * Define the structure of LCD version
+ */
+typedef struct Lcd4dVersion {
+	int deviceType;
+	int hardwareRevision;
+	int firmwareRevision;
+	int horizontalResolution;
+	int verticalResolution;
+} Lcd4dVersion;
 
 // ALL COMMANDS
 
@@ -79,7 +104,7 @@
 #define		LCD4D_SCREEN_SAVER_NEXT_LINE_DELAY		0x0E
 
 
-#define		LCD4D_SET_VOLUME_COMMAND				0x76
+#define		LCD4D_SET_VOLUME_COMMAND				'v'
 #define		LCD4D_VOLUME_MUTE						0x00
 #define		LCD4D_VOLUME_DOWN_8						0x01
 #define		LCD4D_VOLUME_DOWN						0x03
@@ -93,12 +118,18 @@
 
 // GRAPHICS COMMAND
 
-#define		LCD4D_DRAW_CIRCLE_COMMAND				0x43
-#define		LCD4D_DRAW_TRIANGLE_COMMAND				0x47
-#define		LCD4D_DRAW_LINE_COMMAND					0x4C
-#define		LCD4D_DRAW_POLYGON_COMMAND				0x67
-#define		LCD4D_DRAW_RECTANGLE_COMMAND			0x72
-#define		LCD4D_DRAW_PIXEL_COMMAND				0x50
+#define		LCD4D_DRAW_CIRCLE_COMMAND				'C'
+#define		LCD4D_DRAW_TRIANGLE_COMMAND				'G'
+#define		LCD4D_DRAW_LINE_COMMAND					'L'
+#define		LCD4D_DRAW_POLYGON_COMMAND				'g'
+#define		LCD4D_DRAW_RECTANGLE_COMMAND			'r'
+#define		LCD4D_DRAW_ELLIPSE_COMMAND				'e'
+
+#define		LCD4D_DRAW_PIXEL_COMMAND				'P'
+
+#define		LCD4D_PEN_SIZE_COMMAND					'p'
+#define		LCD4D_PEN_SIZE_DRAW_SOLID				0x00
+#define		LCD4D_PEN_SIZE_DRAW_WIRE_FRAME			0x01
 
 // TEXT COMMAND
 
@@ -151,12 +182,124 @@
 
 // SD FAT COMMAND
 #define		LCD4D_READ_FILE_COMMAND					'a'
-
-
+ 
+/**
+ * Set the autobaud to the lcd.
+ */
+BOOL setAutoBaud(Lcd4d* lcd);
 
 /**
- * Set the auto baud.
+ * Change the rate of the uart.
  */
-void setAutoBaud(OutputStream* outputStream);
+BOOL setLcd4dBaudRate(Lcd4d* lcd, int baudRateType);
 
-/
+/**
+ * Get the version of the Lcd into the version structure.
+ */
+void getLcd4dVersionCommand(Lcd4d* lcd, Lcd4dVersion* version);
+
+/**
+ * Get the display resolution and set it to the point parameter.
+ */
+void getLcd4dDisplayResolution(Lcd4d* lcd, Point* point);
+
+/** 
+ * Clear Screen.
+ */
+BOOL lcd4dClearScreen(Lcd4d* lcd);
+
+/**
+ * Enable or disable the backlight.
+ */
+BOOL lcd4dBacklight(Lcd4d* lcd, BOOL backlight);
+
+/**
+ * Enable or not the display.
+ */
+BOOL lcd4dDisplay(Lcd4d* lcd, BOOL display);
+
+/**
+ * Enable or not the touch control.
+ */
+BOOL lcd4dTouchControl(Lcd4d* lcd, BOOL touchControl);
+
+/** 
+ * Set the volume of the lcd.
+ */
+BOOL lcd4dVolume(Lcd4d* lcd, int volume);
+
+// DRAW Functions
+
+/**
+ * Draw a circle.
+ */
+BOOL lcd4dDrawCircle(Lcd4d* lcd, int x, int y, int radius, int color);
+
+/**
+ * Draw a triangle.
+ */
+BOOL lcd4dDrawTriangle(Lcd4d* lcd, int x1, int y1, int x2, int y2, int x3, int y3);
+
+/**
+ * Draw a line.
+ */
+BOOL lcd4dDrawLine(Lcd4d* lcd, int x1, int y1, int x2, int y2, int color);
+
+/**
+ * Draw a rectangle.
+ */
+BOOL lcd4dDrawRectangle(Lcd4d* lcd, int x1, int y1, int x2, int y2, int color);
+
+/**
+ * Draw an ellipse.
+ */
+BOOL lcd4dDrawEllipse(Lcd4d* lcd, int x, int y, int rx, int ry, int color);
+
+/**
+ * Draw a pixel.
+ */
+BOOL lcd4dDrawPixel(Lcd4d* lcd, int x, int y, int color);
+
+/**
+ * set the pen to be solid or line style.
+ */
+BOOL lcd4dSetPenType(Lcd4d* lcd, int penType);
+
+// TEXT COMMANDS
+
+/**
+ * Change the font size.
+ * @param fontSize LCD4D_FONT_SMALL, LCD4D_FONT_NORMAL ...
+ */
+BOOL lcd4dSetFont(Lcd4d* lcd, int fontSize);
+
+/**
+ * Draw a char at the char grid
+ */
+BOOL lcd4dDrawChar(Lcd4d* lcd, char c, int column, int row, int color);
+
+/**
+ * Draw a char but using graphic mode.
+ */
+BOOL lcd4dDrawGraphicChar(Lcd4d* lcd, char c, int x, int y, int color, int width, int height);
+
+/**
+ * Draw a string in text mode.
+ */
+BOOL lcd4dDrawString(Lcd4d* lcd, int column, int row, int fontSize, int color, char* text);
+
+/**
+ * Draw a string in graphic mode.
+ */
+BOOL lcd4dDrawGraphicString(Lcd4d* lcd, int x, int y, int fontSize, int color, int width, int height, char* text);
+
+// TODO : Draw Buttons
+
+// TOUCH SCREEN COMMANDS
+
+void lcd4dWaitTouchAndGetTouchCoordinates(Lcd4d* lcd, int touchMode, Point* point);
+
+/**
+ * Set the region for touch.
+ */
+BOOL lcd4dSetTouchRegion(Lcd4d* lcd, int x1, int y1, int x2, int y2);
