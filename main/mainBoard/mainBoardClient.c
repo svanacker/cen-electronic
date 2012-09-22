@@ -2,6 +2,7 @@
 
 #ifdef PROG_32
 	#include <p32xxxx.h>
+	#include <plib.h>
 	#include "../../common/setup/pic32FSetup.h"
 #else
 	#include <i2c.h>
@@ -148,17 +149,18 @@
 #include "../../drivers/sonar/srf02.h"
 
 #ifndef MPLAB_SIMULATION
-#ifdef PROG_32
-	#define SERIAL_PORT_DEBUG 		SERIAL_PORT_2
+	#ifdef PROG_32
+		#define SERIAL_PORT_DEBUG 		SERIAL_PORT_2
+		#define SERIAL_PORT_PC	 		SERIAL_PORT_1
+		#define SERIAL_PORT_LCD			SERIAL_PORT_5
+	#else
+		#define SERIAL_PORT_DEBUG 		SERIAL_PORT_1
+		#define SERIAL_PORT_PC	 		SERIAL_PORT_2
+	#endif
+	#else
+	// We use the same port for both
 	#define SERIAL_PORT_PC	 		SERIAL_PORT_1
-#else
 	#define SERIAL_PORT_DEBUG 		SERIAL_PORT_1
-	#define SERIAL_PORT_PC	 		SERIAL_PORT_2
-#endif
-#else
-// We use the same port for both
-#define SERIAL_PORT_PC	 		SERIAL_PORT_1
-#define SERIAL_PORT_DEBUG 		SERIAL_PORT_1
 #endif
 
 // serial link DEBUG 
@@ -176,6 +178,14 @@ static char pcOutputBufferArray[MAIN_BOARD_PC_OUTPUT_BUFFER_LENGTH];
 static Buffer pcOutputBuffer;
 static OutputStream pcOutputStream;
 static StreamLink pcSerialStreamLink;
+
+// serial link LCD
+static char lcdInputBufferArray[MAIN_BOARD_LCD_INPUT_BUFFER_LENGTH];
+static Buffer lcdInputBuffer;
+static char lcdOutputBufferArray[MAIN_BOARD_LCD_OUTPUT_BUFFER_LENGTH];
+static Buffer lcdOutputBuffer;
+static OutputStream lcdOutputStream;
+static StreamLink lcdSerialStreamLink;
 
 // both OutputStream as composite
 static CompositeOutputStream compositePcAndDebugOutputStream;
@@ -570,7 +580,78 @@ void waitForInstruction() {
 	*/	
 }
 
+#define RW BIT_3
+#define RS BIT_1
+#define E  BIT_0
+#define D0 BIT_0
+#define D1 BIT_1
+#define D2 BIT_2
+#define D3 BIT_3
+#define D4 BIT_4
+#define D5 BIT_5
+#define D6 BIT_6
+#define D7 BIT_7
+
+
+void w_com (char com){
+	PORTClearBits(IOPORT_F,RS|RW); 
+	PORTSetBits(IOPORT_F,E); 
+	PORTE = com;
+	delay100us(1);
+	PORTClearBits(IOPORT_F,E); 
+	PORTSetBits(IOPORT_F,E);
+}
+
+void w_data (char data){
+	PORTClearBits(IOPORT_F,RW); 
+	PORTSetBits(IOPORT_F,RS); 
+	PORTE = data;
+	delay100us(1);
+	PORTClearBits(IOPORT_F,E); 
+	PORTSetBits(IOPORT_F,E);
+}
+
+void w_text(const char *buffer)
+{
+    while(*buffer != '\n')
+    {
+        w_data( *buffer);
+        buffer++; 
+    }
+}
+
+static const char* myHelloStr1="   PIC32...on LCD   Cybernetique en Nord        With              By Jerome    \n";
+
 int main(void) {
+ 	
+	PORTSetPinsDigitalOut(IOPORT_F,E|RS|RW);
+	PORTSetPinsDigitalOut(IOPORT_E,D0|D1|D2|D3|D4|D5|D6|D7);
+
+
+	PORTClearBits(IOPORT_F, E|RS|RW);
+
+	delaymSec(1000);
+
+	w_com(0b00111000);
+	delaymSec(10);
+	w_com(0b00111000);
+	delaymSec(10);
+	w_com(0b00111000);
+	delaymSec(10);
+
+	w_com(0b00001110);
+	delaymSec(10);
+	w_com(0b00000110);
+	delaymSec(10);
+
+
+	w_com(0b00000110);
+	w_text(myHelloStr1);
+
+	while (1) {
+
+	}
+
     setPicName("MAIN BOARD");
 
     setRobotMustStop(FALSE);
@@ -598,7 +679,19 @@ int main(void) {
             SERIAL_PORT_PC,
 			0);
 
-    // LCD
+	// Opens the serial link for the lcd
+    openSerialLink(&lcdSerialStreamLink,
+		            &lcdInputBuffer,
+					&lcdInputBufferArray,
+					MAIN_BOARD_LCD_INPUT_BUFFER_LENGTH,
+		            &lcdOutputBuffer,
+					&lcdOutputBufferArray,
+					MAIN_BOARD_LCD_OUTPUT_BUFFER_LENGTH,
+		            &lcdOutputStream,
+		            SERIAL_PORT_LCD,
+					MAIN_BOARD_LCD_SERIAL_SPEED);
+
+    // LCD (LCD03 via Serial interface)
     initLCDOutputStream(&lcdOutputStream);
 
 	initTimerList(&timerListArray, MAIN_BOARD_TIMER_LENGTH);
@@ -685,12 +778,6 @@ int main(void) {
 	// printDeviceList(getOutputStreamLogger(DEBUG));
     // printDriverDataDispatcherList(getOutputStreamLogger(DEBUG), getDispatcherList());
 
-
-	while (1) {
-		waitForInstruction();
-	}
-
-
 	/* PROG 32
 
     // Stream for Beacon Receiver Board
@@ -715,6 +802,9 @@ int main(void) {
 
 	*/
 
+	while (1) {
+		waitForInstruction();
+	}
 
     // pingDriverDataDispatcherList(getOutputStreamLogger(DEBUG));
 
@@ -724,7 +814,7 @@ int main(void) {
 	// wait other board initialization
     delaymSec(1500);
 
-	initStrategyDriver();
+	//initStrategyDriver();
 
 	// 2012 VALUE
     unsigned int configValue = getConfigValue();
@@ -771,6 +861,12 @@ int main(void) {
 		appendString(getOutputStreamLogger(ALWAYS), "SPEED NORMAL \n");
     }
 	*/
+
+	while (1) {
+		waitForInstruction();
+	}
+
+
 
     // TODO 2012 SV motionDriverMaintainPosition();
 
