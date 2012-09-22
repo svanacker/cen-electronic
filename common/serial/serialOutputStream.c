@@ -29,7 +29,12 @@ void flushSerial(OutputStream* outputStream) {
 // -> SERIAL PORT 1
 
 void openOutputStreamSerial1(OutputStream* outputStream, int param1) {
-    openSerialAtDefaultSpeed(SERIAL_PORT_1);
+    if (param1 == 0) {
+		openSerialAtDefaultSpeed(SERIAL_PORT_1);
+	}
+	else {
+		openSerial(SERIAL_PORT_1, param1);
+	}
 }
 
 void closeOutputStreamSerial1(OutputStream* outputStream) {
@@ -50,7 +55,12 @@ void initSerialOutputStream1(OutputStream* outputStream) {
 // -> SERIAL PORT 2
 
 void openOutputStreamSerial2(OutputStream* outputStream, int param1) {
-    openSerialAtDefaultSpeed(SERIAL_PORT_2);
+    if (param1 == 0) {
+		openSerialAtDefaultSpeed(SERIAL_PORT_2);
+	}
+	else {
+		openSerial(SERIAL_PORT_2, param1);
+	}
 }
 
 void closeOutputStreamSerial2(OutputStream* outputStream) {

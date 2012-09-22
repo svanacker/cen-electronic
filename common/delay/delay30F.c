@@ -19,11 +19,14 @@ void delayUs(void) {
 
 void delay100us(char uSecond) {
 #ifndef MPLAB_SIMULATION
-
     unsigned int i;
 
     while (uSecond != 0) {
-        i = 488;
+	#ifdef PROG_32
+        i = 164;
+	#else
+		i = 488;
+	#endif
         while (i > 0) {
             Nop();
             Nop();
@@ -40,7 +43,11 @@ void delaymSec(unsigned int mSecond) {
     unsigned int i;
 
     while (mSecond != 0) {
-        i = 4920;
+		#ifdef PROG_32
+			i = 1664;
+		#else
+			i = 4920;
+		#endif
         while (i > 0) {
             Nop();
             Nop();

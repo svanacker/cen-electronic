@@ -25,56 +25,65 @@ void i2cMasterInitialize(void) {
         appendString(getOutputStreamLogger(DEBUG), "I2C Master already initialized\n");
         return;
     }
-    unsigned int i2cBrg, i2cCon;
 
     // Speed 100 Khz
-    i2cBrg = 0x10B;
-    // Configure I2C for 7 bit address mode
-    i2cCon = (
-            I2C_ON
-            & I2C_IDLE_CON
+	#ifdef PROG_32
+		#define I2C_BRG 	0xC6	// 100khz for PIC32
+	    // Configure I2C for 7 bit address mode
+	    #define I2C_CON 	I2C_ON
+				/*
+	             (
+					I2C_ON
+		            & I2C_IDLE_CON
+		            & I2C_CLK_HOLD
+		            & I2C_7BIT_ADD
+		            & I2C_SLW_DIS
+		            & I2C_SM_DIS
+		            & I2C_GC_DIS
+		            & I2C_STR_DIS
+		            & I2C_NACK
+		            & I2C_ACK_EN
+		            & I2C_RCV_EN
+		            & I2C_STOP_DIS
+		            & I2C_RESTART_DIS
+		            & I2C_START_DIS
+	            );
+				*/
+				
+	#else
+    	#define I2C_BRG 	0x10B;	// 100kHz for PIC30
+	    // Configure I2C for 7 bit address mode
+	    #define I2C_CON (
+		            I2C_ON
+		            & I2C_IDLE_CON
+		            & I2C_CLK_HLD
+		            & I2C_IPMI_DIS
+		            & I2C_7BIT_ADD
+		            & I2C_SLW_DIS
+		            & I2C_SM_DIS
+		            & I2C_GCALL_DIS
+		            & I2C_STR_DIS
+		            & I2C_NACK
+		            & I2C_ACK_EN
+		            & I2C_RCV_EN
+		            & I2C_STOP_DIS
+		            & I2C_RESTART_DIS
+		            & I2C_START_DIS
+	            );
 
-#ifdef PROG_32
-            & I2C_CLK_HOLD
-#else
-            & I2C_CLK_HLD
-#endif
+	#endif
 
-#ifdef PROG_32
-			// IPMI Management not found on PIC32 => Probably disabled by default
-#else
-            & I2C_IPMI_DIS
-#endif
-
-            & I2C_7BIT_ADD
-            & I2C_SLW_DIS
-            & I2C_SM_DIS
-
-#ifdef PROG_32
-            & I2C_GC_DIS
-#else
-            & I2C_GCALL_DIS
-#endif
-
-            & I2C_STR_DIS
-            & I2C_NACK
-            & I2C_ACK_EN
-            & I2C_RCV_EN
-            & I2C_STOP_DIS
-            & I2C_RESTART_DIS
-            & I2C_START_DIS
-            );
 
 	#ifdef PROG_32
-    	OpenI2C1(i2cCon, i2cBrg);
+		OpenI2C1(I2C_CON, I2C_BRG);
     #else
-    	OpenI2C(i2cCon, i2cBrg);
+    	OpenI2C(I2C_CON, I2C_BRG);
 	#endif
 
 	WaitI2C();
 
     appendString(getOutputStreamLogger(DEBUG), "I2C Master CONF=");
-    appendBinary16(getOutputStreamLogger(DEBUG), i2cCon, 4);
+    appendBinary16(getOutputStreamLogger(DEBUG), I2C_ON, 4);
     appendCRLF(getOutputStreamLogger(DEBUG));
 
     initialized = TRUE;

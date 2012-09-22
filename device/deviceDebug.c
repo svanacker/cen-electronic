@@ -13,6 +13,7 @@
 // DEBUG
 void printDeviceList(OutputStream* outputStream) {
     int size = getDeviceCount();
+	appendStringAndDec(outputStream, ", deviceCount=", size);
     int i;
 	println(outputStream);
     for (i = 0; i < size; i++) {
@@ -25,8 +26,10 @@ void printDeviceList(OutputStream* outputStream) {
  * Print the device information.
  */
 void printDevice(OutputStream* outputStream, const Device* device) {
-	appendStringAndDec(outputStream, ", transmitMode=", device->transmitMode);
-	appendKeyAndName(outputStream, ", addressString=", device->addressString);
-	appendStringAndDec(outputStream, ", address=", device->address);
-	println(outputStream);
+	if (device != NULL) {
+		appendStringAndDec(outputStream, ", transmitMode=", device->transmitMode);
+		appendKeyAndName(outputStream, ", addressString=", device->addressString);
+		appendStringAndDec(outputStream, ", address=", device->address);
+		println(outputStream);
+	}
 }

@@ -32,6 +32,9 @@ void appendSeparator(OutputStream* outputStream) {
 }
 
 void appendString(OutputStream* outputStream, const char* s) {
+	if (s == NULL) {
+		return;
+	}
     while (*s != '\0') {
         append(outputStream, *s++);
     }

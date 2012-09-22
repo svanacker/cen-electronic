@@ -29,3 +29,7 @@ Makefile
 *.mcw
 
 build
+objects
+bin/debug
+cscope.out
+

@@ -12,7 +12,8 @@ void initStreamLink(StreamLink* streamLink,
         Buffer* outputBuffer,
 		char (*outputBufferArrayPointer)[],
 		unsigned char outputBufferLength,
-        OutputStream* outputStream) {
+        OutputStream* outputStream,
+		int param) {
     streamLink->inputBuffer = inputBuffer;
     streamLink->outputBuffer = outputBuffer;
     streamLink->outputStream = outputStream;
@@ -23,6 +24,6 @@ void initStreamLink(StreamLink* streamLink,
         initBuffer(outputBuffer, outputBufferArrayPointer, outputBufferLength, streamName, OUT_AS_STRING);
     }
     if (outputStream != NULL) {
-        outputStream->openOutputStream(outputStream, 0);
+        outputStream->openOutputStream(outputStream, param);
     }
 }

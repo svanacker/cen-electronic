@@ -48,6 +48,7 @@
 #include "../../common/timer/timerList.h"
 
 #include "../../device/device.h"
+#include "../../device/deviceDebug.h"
 #include "../../device/deviceUsage.h"
 #include "../../device/deviceList.h"
 #include "../../device/dispatcher/deviceDataDispatcher.h"
@@ -582,7 +583,8 @@ int main(void) {
 			&debugOutputBufferArray,
 			MAIN_BOARD_DEBUG_OUTPUT_BUFFER_LENGTH,
             &debugOutputStream,
-            SERIAL_PORT_DEBUG);
+            SERIAL_PORT_DEBUG,
+			0);
 
     // Open the serial Link for the PC
     openSerialLink(&pcSerialStreamLink,
@@ -593,7 +595,8 @@ int main(void) {
 			&pcOutputBufferArray,
 			MAIN_BOARD_PC_OUTPUT_BUFFER_LENGTH,
             &pcOutputStream,
-            SERIAL_PORT_PC);
+            SERIAL_PORT_PC,
+			0);
 
     // LCD
     initLCDOutputStream(&lcdOutputStream);
@@ -608,8 +611,8 @@ int main(void) {
     appendString(getOutputStreamLogger(ALWAYS), getPicName());
     println(getOutputStreamLogger(ALWAYS));
 
-    appendString(&pcOutputStream, getPicName());
-    println(&pcOutputStream);
+    // appendString(&pcOutputStream, getPicName());
+    // println(&pcOutputStream);
 
     appendString(&debugOutputStream, getPicName());
     println(&debugOutputStream);
@@ -629,6 +632,29 @@ int main(void) {
     initCompositeOutputStream(&compositeDriverAndDebugOutputStream);
     addOutputStream(&compositeDriverAndDebugOutputStream, &debugOutputStream);
     addOutputStream(&compositeDriverAndDebugOutputStream, getDriverRequestOutputStream());
+
+    appendString(&debugOutputStream, "DEBUG");
+    appendString(&pcOutputStream, "PC");
+
+	/*
+	delaymSec(1500);
+    appendString(&debugOutputStream, "Printing U");
+    appendString(&pcOutputStream, "U");
+
+	delaymSec(2000);
+    appendString(&debugOutputStream, "Printing E");
+    appendString(&pcOutputStream, "E");
+	delaymSec(500);
+    appendString(&debugOutputStream, "Printing E");
+    appendString(&pcOutputStream, "E");
+	delaymSec(500);
+    appendString(&debugOutputStream, "Printing VV");
+    appendString(&pcOutputStream, "VV");
+	
+	while (1) {
+
+	}
+	*/
 
     // Start interruptions
     startTimerList();
@@ -656,6 +682,15 @@ int main(void) {
             &mechanical2BoardOutputStream,
             MECHANICAL_BOARD_2_I2C_ADDRESS);
 
+	// printDeviceList(getOutputStreamLogger(DEBUG));
+    // printDriverDataDispatcherList(getOutputStreamLogger(DEBUG), getDispatcherList());
+
+
+	while (1) {
+		waitForInstruction();
+	}
+
+
 	/* PROG 32
 
     // Stream for Beacon Receiver Board
@@ -680,8 +715,6 @@ int main(void) {
 
 	*/
 
-
-    // printDriverDataDispatcherList(getOutputStreamLogger(DEBUG), getDispatcherList());
 
     // pingDriverDataDispatcherList(getOutputStreamLogger(DEBUG));
 

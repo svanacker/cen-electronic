@@ -19,7 +19,8 @@ void openSerialLink(StreamLink* streamLink,
 		char (*outputBufferArrayPointer)[],
 		unsigned char outputBufferLength,
         OutputStream* outputStream,
-        int serialPortIndex) {
+        int serialPortIndex,
+		int speed) {
     initSerialInputBuffer(inputBuffer, serialPortIndex);
     initSerialOutputStream(outputStream, serialPortIndex);
     initStreamLink(streamLink, "Serial",
@@ -29,7 +30,8 @@ void openSerialLink(StreamLink* streamLink,
 					outputBuffer,
 					outputBufferArrayPointer,
 					outputBufferLength,
-					outputStream);
+					outputStream,
+					speed);
 }
 
 void closeSerialLink(StreamLink* streamLink) {

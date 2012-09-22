@@ -23,7 +23,8 @@ void openSerialLink(StreamLink* streamLink,
 		char (*outputBufferArrayPointer)[],
 		unsigned char outputBufferLength,
         OutputStream* outputStream,
-        int serialPortIndex);
+        int serialPortIndex,
+		int speed);
 
 /**
  * Closes the stream link.
