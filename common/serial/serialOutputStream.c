@@ -146,11 +146,7 @@ void initSerialOutputStream(OutputStream* outputStream, int serialPortIndex) {
     } else if (serialPortIndex == SERIAL_PORT_5) {
 		initSerialOutputStream5(outputStream);
     } else if (serialPortIndex == SERIAL_PORT_6) {
-		appendString(getOutputStreamLogger(ALWAYS), "\nBegin initSerialOutputStream6 : ");
-		appendDec(getOutputStreamLogger(ALWAYS), (int) outputStream);
 		initSerialOutputStream6(outputStream);
-		appendString(getOutputStreamLogger(ALWAYS), "\nEnd initSerialOutputStream6 : ");
-
 	}
 }
 

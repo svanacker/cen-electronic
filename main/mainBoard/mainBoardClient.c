@@ -152,8 +152,8 @@
 #ifndef MPLAB_SIMULATION
 	#ifdef PROG_32
 		#define SERIAL_PORT_DEBUG 		SERIAL_PORT_2
-		// #define SERIAL_PORT_PC	 		SERIAL_PORT_1
-		#define SERIAL_PORT_LCD			SERIAL_PORT_6
+		#define SERIAL_PORT_PC	 		SERIAL_PORT_1
+		#define SERIAL_PORT_LCD			SERIAL_PORT_5
 	#else
 		#define SERIAL_PORT_DEBUG 		SERIAL_PORT_1
 		#define SERIAL_PORT_PC	 		SERIAL_PORT_2
@@ -173,14 +173,12 @@ static OutputStream debugOutputStream;
 static StreamLink debugSerialStreamLink;
 
 // serial link PC
-/*
 static char pcInputBufferArray[MAIN_BOARD_PC_INPUT_BUFFER_LENGTH];
 static Buffer pcInputBuffer;
 static char pcOutputBufferArray[MAIN_BOARD_PC_OUTPUT_BUFFER_LENGTH];
 static Buffer pcOutputBuffer;
 static OutputStream pcOutputStream;
 static StreamLink pcSerialStreamLink;
-*/
 
 // serial link LCD
 static Lcd4d lcd4d;
@@ -192,7 +190,7 @@ static OutputStream lcd4dOutputStream;
 static StreamLink lcd4dSerialStreamLink;
 
 // both OutputStream as composite
-// static CompositeOutputStream compositePcAndDebugOutputStream;
+static CompositeOutputStream compositePcAndDebugOutputStream;
 static CompositeOutputStream compositeDriverAndDebugOutputStream;
 
 // DRIVERS
@@ -291,7 +289,6 @@ void mainBoardCallbackRawData(const Device* device,
 		setRobotPositionChanged();
 		
 		// FOR DEBUG AND MOTHER BOARD
-		/* LCD4D : Problem utilisation UART6
 		OutputStream* outputStream = &(compositePcAndDebugOutputStream.outputStream);
 		append(outputStream, header);
 		appendHex2(outputStream, status);
@@ -301,7 +298,6 @@ void mainBoardCallbackRawData(const Device* device,
 		appendHex4(outputStream, y);
 		appendSeparator(outputStream);
 		appendHex4(outputStream, angle);
-		*/
 
         // ready for next motion instruction Index
         setReadyForNextMotion(TRUE);
@@ -397,7 +393,6 @@ void mainBoardCallbackRawData(const Device* device,
 		checkIsChar(inputStream, NOTIFY_INFRARED_DETECTOR_DETECTION);
 		// type
 		unsigned char type = readHex2(inputStream);
-		/* LCD4D : Problem utilisation UART6
 		OutputStream* outputStream = &(compositePcAndDebugOutputStream.outputStream);
 		append(outputStream, NOTIFY_INFRARED_DETECTOR_DETECTION);
 		appendHex2(outputStream, type);
@@ -410,7 +405,6 @@ void mainBoardCallbackRawData(const Device* device,
 				mustNotifyObstacle = TRUE;
 			}
 		}
-		*/
 	}
 	// Cannot not handle the notification !
 	else {
@@ -521,14 +515,13 @@ BOOL isObstacleOutsideTheTable(int distance) {
 
 void waitForInstruction() {
     // Listen instruction from pcStream->Devices
-	/* LCD4D : Problem utilisation UART6
     handleStreamInstruction(
             &pcInputBuffer,
             &pcOutputBuffer,
             &pcOutputStream,
             &filterRemoveCRLF,
             NULL);
-	*/
+
     // Listen instruction from debugStream->Devices
     handleStreamInstruction(
             &debugInputBuffer,
@@ -627,21 +620,6 @@ void w_text(const char *buffer)
 
 static const char* myHelloStr1="   PIC32...on LCD   Cybernetique en Nord        With              By Jerome    \n";
 
-#define	GetSystemClock() 			(80000000ul)
-#define	GetPeripheralClock()		(GetSystemClock()/(1 << OSCCONbits.PBDIV))
-#define	GetInstructionClock()		(GetSystemClock())
-
-/*
-void OpenUartJJ ( const UARTx,long BaudRate)
-{
-	UARTConfigure(UARTx, UART_ENABLE_PINS_TX_RX_ONLY);
-    UARTSetFifoMode(UARTx, UART_INTERRUPT_ON_TX_NOT_FULL | UART_INTERRUPT_ON_RX_NOT_EMPTY);
-    UARTSetLineControl(UARTx, UART_DATA_SIZE_8_BITS | UART_PARITY_NONE | UART_STOP_BITS_1);
-    UARTSetDataRate(UARTx, GetPeripheralClock(), BaudRate);
-    UARTEnable(UARTx, UART_ENABLE_FLAGS(UART_PERIPHERAL | UART_RX | UART_TX));
-}
-*/
-
 int main(void) {
  	/*
 	PORTSetPinsDigitalOut(IOPORT_F,E|RS|RW);
@@ -688,7 +666,6 @@ int main(void) {
             SERIAL_PORT_DEBUG,
 			0);
 
-	/* LCD4D : Problem utilisation UART6
     // Open the serial Link for the PC
     openSerialLink(&pcSerialStreamLink,
             &pcInputBuffer,
@@ -700,7 +677,19 @@ int main(void) {
             &pcOutputStream,
             SERIAL_PORT_PC,
 			0);
-	*/
+
+	// Opens the serial link for the lcd
+    openSerialLink(&lcd4dSerialStreamLink,
+		            &lcd4dInputBuffer,
+					&lcd4dInputBufferArray,
+					MAIN_BOARD_LCD_INPUT_BUFFER_LENGTH,
+		            &lcd4dOutputBuffer,
+					&lcd4dOutputBufferArray,
+					MAIN_BOARD_LCD_OUTPUT_BUFFER_LENGTH,
+		            &lcd4dOutputStream,
+		            SERIAL_PORT_LCD,
+					9600);
+
     // LCD (LCD03 via Serial interface)
     initLCDOutputStream(&lcdOutputStream);
 
@@ -727,11 +716,9 @@ int main(void) {
 	initOpponentRobot();
 
     // Creates a composite to notify both PC and Debug
-	/* LCD4D : Problem utilisation UART6
     initCompositeOutputStream(&compositePcAndDebugOutputStream);
     addOutputStream(&compositePcAndDebugOutputStream, &debugOutputStream);
     addOutputStream(&compositePcAndDebugOutputStream, &pcOutputStream);
-	*/
 
     // Creates a composite to redirect to driverRequest and Debug
     initCompositeOutputStream(&compositeDriverAndDebugOutputStream);
@@ -818,17 +805,6 @@ int main(void) {
 	appendString(getOutputStreamLogger(ALWAYS), "Init LCD:");
 
 
-	// Opens the serial link for the lcd
-    openSerialLink(&lcd4dSerialStreamLink,
-		            &lcd4dInputBuffer,
-					&lcd4dInputBufferArray,
-					MAIN_BOARD_LCD_INPUT_BUFFER_LENGTH,
-		            &lcd4dOutputBuffer,
-					&lcd4dOutputBufferArray,
-					MAIN_BOARD_LCD_OUTPUT_BUFFER_LENGTH,
-		            &lcd4dOutputStream,
-		            SERIAL_PORT_LCD,
-					9600);
 
 	// appendString(&lcd4dOutputStream, "PORT LCD");
 	
@@ -966,9 +942,7 @@ int main(void) {
     // pingDriverDataDispatcherList(getOutputStreamLogger(DEBUG));
 
     // Inform PC waiting
-    /* LCD4D : Problem utilisation UART6
 	showWaitingStart(&pcOutputStream);
-	*/
 
 	// wait other board initialization
     delaymSec(1500);
@@ -1044,9 +1018,7 @@ int main(void) {
     markStartMatch();
 
     // write begin of match
-	/* LCD4D : Problem utilisation UART6
     showStarted(&pcOutputStream);
-	*/
 
     if (homologationIndex == 0) {
         // MATCH
