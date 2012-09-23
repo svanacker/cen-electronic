@@ -153,7 +153,7 @@
 	#ifdef PROG_32
 		#define SERIAL_PORT_DEBUG 		SERIAL_PORT_2
 		// #define SERIAL_PORT_PC	 		SERIAL_PORT_1
-		#define SERIAL_PORT_LCD			SERIAL_PORT_1
+		#define SERIAL_PORT_LCD			SERIAL_PORT_6
 	#else
 		#define SERIAL_PORT_DEBUG 		SERIAL_PORT_1
 		#define SERIAL_PORT_PC	 		SERIAL_PORT_2
@@ -879,8 +879,8 @@ int main(void) {
 	while (1) {
 		delaymSec(500);
 
-		// lcd4dClearScreen(&lcd4d);
-		// delaymSec(500);
+		lcd4dClearScreen(&lcd4d);
+		delaymSec(500);
 	
 		/*
 		getLcd4dVersionCommand(&lcd4d, &version);
@@ -910,12 +910,10 @@ int main(void) {
 		delaymSec(500);
 		lcd4dDrawGraphicChar(&lcd4d, '7', 50, 200, 2, 2);
 		*/
-		/*
 		delaymSec(500);
 		lcd4dDrawString(&lcd4d, 10, 10, LCD4D_FONT_LARGEST, "Hello");
 		delaymSec(500);
 		lcd4dDrawGraphicString(&lcd4d, 50, 200, LCD4D_FONT_LARGEST, 2, 2, " World");
-		*/
 /*
 #define		LCD4D_GET_TOUCH_COORDINATES_COMMAND		'o'
 #define		LCD4D_TOUCH_WAIT_UNTIL_ANY_TOUCH		0x00
@@ -925,13 +923,14 @@ int main(void) {
 #define		LCD4D_TOUCH_GET_STATUS					0x04
 #define		LCD4D_TOUCH_GET_COORDINATES				0x05
 */
+		/*
 		lcd4dWaitTouchAndGetTouchCoordinates(&lcd4d, LCD4D_TOUCH_WAIT_PRESS, &point);
 	
 		appendDec(getOutputStreamLogger(ERROR), point.x);
 		println(getOutputStreamLogger(ERROR));
 		appendDec(getOutputStreamLogger(ERROR), point.y);
 		println(getOutputStreamLogger(ERROR));
-
+		*/
 		// appendString(&lcd4dOutputStream, "\x43\x00\x3F\x00\x3F\x00\x22\x00\x1F");
 		/*
 		append(&lcd4dOutputStream, 'C');

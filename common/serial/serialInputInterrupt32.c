@@ -2,7 +2,7 @@
 
 #include "../../common/commons.h"
 
-#include <p32xxxx.h>
+#include <plib.h>
 
 #include "serialInputInterrupt.h"
 #include "serial.h"
@@ -41,52 +41,44 @@ inline void handleUartInterrupt(UART_MODULE uart, Buffer* buffer) {
 /**
  * Interrupt on Serial 1
  */
-void __ISR(_UART1_VECTOR, IPL2SOFT) IntUart1Handler(void) {
+void __ISR(_UART_1_VECTOR, IPL2SOFT) IntUart1Handler(void) {
 	handleUartInterrupt(UART1, buffer1);
 }
 
 /**
  * Interrupt on Serial 2
  */
-void __ISR(_UART2_VECTOR, IPL2SOFT) IntUart2Handler(void) {
+void __ISR(_UART_2_VECTOR, IPL2SOFT) IntUart2Handler(void) {
 	handleUartInterrupt(UART2, buffer2);
 }
 
 /**
  * Interrupt on Serial 3
  */
-/* TODO
-void __ISR(_UART3_VECTOR, IPL2SOFT) IntUart3Handler(void) {
+void __ISR(_UART_3_VECTOR, IPL2SOFT) IntUart3Handler(void) {
 	handleUartInterrupt(UART3, buffer3);
 }
-*/
 
 /**
  * Interrupt on Serial 4
  */
-/* TODO
-void __ISR(_UART4_VECTOR, IPL2SOFT) IntUart4Handler(void) {
+void __ISR(_UART_4_VECTOR, IPL2SOFT) IntUart4Handler(void) {
 	handleUartInterrupt(UART4, buffer4);
 }
-*/
 
 /**
  * Interrupt on Serial 5
  */
-/* TODO
-void __ISR(_UART5_VECTOR, IPL2SOFT) IntUart5Handler(void) {
+void __ISR(_UART_5_VECTOR, IPL2SOFT) IntUart5Handler(void) {
 	handleUartInterrupt(UART5, buffer5);
 }
-*/
 
 /**
  * Interrupt on Serial 6
  */
-/* TODO
-void __ISR(_UART6_VECTOR, IPL2SOFT) IntUart6Handler(void) {
+void __ISR(_UART_6_VECTOR, IPL2SOFT) IntUart6Handler(void) {
 	handleUartInterrupt(UART6, buffer6);
 }
-*/
 
 void initSerialInputBuffer(Buffer* buffer, int serialPortIndex) {
     if (serialPortIndex == SERIAL_PORT_1) {

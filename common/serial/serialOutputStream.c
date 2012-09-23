@@ -125,7 +125,6 @@ void closeOutputStreamSerial6(OutputStream* outputStream) {
 }
 
 void writeChar6(OutputStream* outputStream, char c) {
-	appendString(getOutputStreamLogger(ALWAYS), "writeChar6");
     serialPutc(SERIAL_PORT_6, c);
 }
 
