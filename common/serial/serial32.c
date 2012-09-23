@@ -1,8 +1,11 @@
+#include <plib.h>
+
 #include "../../common/commons.h"
 
-#include <uart.h>
-
 #include "serial.h"
+
+#include "../../common/log/logger.h"
+#include "../../common/log/logLevel.h"
 
 #include "../../common/setup/clockConstants32.h"
 
@@ -14,6 +17,10 @@ UART_MODULE getUartModule(unsigned char serialPortIndex) {
 }
 
 void openSerial(unsigned char serialPortIndex, unsigned long baudRate) {
+	// important to activate the RX for UART5. Information found on the net
+	if (serialPortIndex == SERIAL_PORT_5) {
+		PORTSetPinsDigitalIn(IOPORT_B, BIT_8);
+	}
 	UART_MODULE uart = getUartModule(serialPortIndex);
 	UARTConfigure(uart, UART_ENABLE_PINS_TX_RX_ONLY);
     UARTSetFifoMode(uart, UART_INTERRUPT_ON_TX_NOT_FULL | UART_INTERRUPT_ON_RX_NOT_EMPTY);
@@ -21,16 +28,19 @@ void openSerial(unsigned char serialPortIndex, unsigned long baudRate) {
     UARTSetDataRate(uart, GetPeripheralClock(), baudRate);
     UARTEnable(uart, UART_ENABLE_FLAGS(UART_PERIPHERAL | UART_RX | UART_TX));
 
-	INTEnable(INT_SOURCE_UART_RX(uart), INT_ENABLED);
-	INTSetVectorPriority(INT_VECTOR_UART(uart), INT_PRIORITY_LEVEL_2);
-	INTSetVectorSubPriority(INT_VECTOR_UART(uart), INT_SUB_PRIORITY_LEVEL_0);
-
-	// configure for multi-vectored mode
-	INTConfigureSystem(INT_SYSTEM_CONFIG_MULT_VECTOR);
-
-	// enable interrupts
-	INTEnableInterrupts();
-
+	/*
+	if (serialPortIndex == SERIAL_PORT_1 || serialPortIndex == SERIAL_PORT_2) {
+		INTEnable(INT_SOURCE_UART_RX(uart), INT_ENABLED);
+		INTSetVectorPriority(INT_VECTOR_UART(uart), INT_PRIORITY_LEVEL_2);
+		INTSetVectorSubPriority(INT_VECTOR_UART(uart), INT_SUB_PRIORITY_LEVEL_0);
+	
+		// configure for multi-vectored mode
+		INTConfigureSystem(INT_SYSTEM_CONFIG_MULT_VECTOR);
+	
+		// enable interrupts
+		INTEnableInterrupts();
+	}
+	*/
 }
 
 void openSerialAtDefaultSpeed(unsigned char serialPortIndex) {
@@ -38,7 +48,6 @@ void openSerialAtDefaultSpeed(unsigned char serialPortIndex) {
 }
 
 void closeSerial(unsigned char serialPortIndex) {
-	// TODO : Test it ! 
 	UART_MODULE uart = getUartModule(serialPortIndex);
 	UARTEnable(uart, UART_DISABLE_FLAGS(UART_PERIPHERAL | UART_RX | UART_TX));
 }
@@ -69,6 +78,11 @@ void serialPutc(unsigned char serialPortIndex, char c) {
 	#ifdef MPLAB_SIMULATION
 	        simulateDelay();
 	#endif
+	/*
+	if (serialPortIndex != 1 && serialPortIndex != 2) {
+		appendString(getOutputStreamLogger(ALWAYS), "_\n");
+	}
+	*/
 	UART_MODULE uart = getUartModule(serialPortIndex);
 
 	while (!UARTTransmitterIsReady(uart));

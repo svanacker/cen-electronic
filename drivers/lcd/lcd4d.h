@@ -19,7 +19,7 @@ typedef struct {
 } Lcd4d;
 
 /**
- * Define the structure of LCD version
+ * Define the structure of LCD version.
  */
 typedef struct Lcd4dVersion {
 	int deviceType;
@@ -182,6 +182,11 @@ typedef struct Lcd4dVersion {
 
 // SD FAT COMMAND
 #define		LCD4D_READ_FILE_COMMAND					'a'
+
+/**
+ * Init the Lcd4d structure with his properties.
+ */
+void initLcd4d(Lcd4d* lcd, OutputStream* outputStream, InputStream* inputStream);
  
 /**
  * Set the autobaud to the lcd.

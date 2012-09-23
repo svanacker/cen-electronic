@@ -10,6 +10,10 @@
 #include "../../common/io/buffer.h"
 #include "../../common/io/inputStream.h"
 #include "../../common/io/outputStream.h"
+#include "../../common/io/printWriter.h"
+
+#include "../../common/log/logger.h"
+#include "../../common/log/logLevel.h"
 
 void openSerialLink(StreamLink* streamLink,
         Buffer* inputBuffer,
@@ -21,8 +25,17 @@ void openSerialLink(StreamLink* streamLink,
         OutputStream* outputStream,
         int serialPortIndex,
 		int speed) {
+	if (serialPortIndex != 1) {
+		appendStringAndDec(getOutputStreamLogger(ALWAYS), "\ninitSerialInputBuffer:", serialPortIndex);
+	}
     initSerialInputBuffer(inputBuffer, serialPortIndex);
+	if (serialPortIndex != 1) {
+		appendStringAndDec(getOutputStreamLogger(ALWAYS), "\ninitSerialOutputStream:", serialPortIndex);
+	}
     initSerialOutputStream(outputStream, serialPortIndex);
+	if (serialPortIndex != 1) {
+		appendStringAndDec(getOutputStreamLogger(ALWAYS), "\ninitStreamLink", serialPortIndex);
+	}
     initStreamLink(streamLink, "Serial",
 					inputBuffer,
 					inputBufferArrayPointer,

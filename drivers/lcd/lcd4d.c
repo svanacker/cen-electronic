@@ -3,8 +3,14 @@
 #include "../../common/2d/2d.h"
 
 #include "../../common/io/inputStream.h"
+#include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
 #include "../../common/io/reader.h"
+
+void initLcd4d(Lcd4d* lcd, OutputStream* outputStream, InputStream* inputStream) {
+	lcd->outputStream = outputStream;
+	lcd->inputStream = inputStream;
+}
 
 /**
  * @private
@@ -16,20 +22,26 @@ void waitLcdResponse() {
 BOOL setAutoBaud(Lcd4d* lcd) {
 	append(lcd->outputStream, LCD4D_AUTOBAUD_COMMAND);
 	
+	/*
 	waitLcdResponse();
 
 	int result = readHex2(lcd->inputStream);
 	return (result == LCD4D_ACK);
+	*/
+	return TRUE;
 }
 
 BOOL setLcd4dBaudRate(Lcd4d* lcd, int baudRateType) {
 	append(lcd->outputStream, LCD4D_NEW_BAUD_COMMAND);
 	appendHex2(lcd->outputStream, baudRateType);
 	
+	/*
 	waitLcdResponse();
 
 	int result = readHex2(lcd->inputStream);
 	return (result == LCD4D_ACK);
+	*/
+	return TRUE;
 }
 
 void getLcd4dVersionCommand(Lcd4d* lcd, Lcd4dVersion* version) {
@@ -48,19 +60,22 @@ void getLcd4dVersionCommand(Lcd4d* lcd, Lcd4dVersion* version) {
 void getLcd4dDisplayResolution(Lcd4d* lcd, Point* point) {
 	append(lcd->outputStream, LCD4D_SET_DISPLAY_RESOLUTION_COMMAND);
 	
+	/*
 	waitLcdResponse();
 	
 	point->x = readHex4(lcd->inputStream);	
 	point->y = readHex4(lcd->inputStream);
+	*/
 }
 
 BOOL lcd4dClearScreen(Lcd4d* lcd) {
 	append(lcd->outputStream, LCD4D_CLEAR_SCREEN_COMMAND);
 	
-	waitLcdResponse();
+	// waitLcdResponse();
 
-	int result = readHex2(lcd->inputStream);
-	return (result == LCD4D_ACK);
+	// int result = readHex2(lcd->inputStream);
+	// return (result == LCD4D_ACK);
+	return TRUE;
 }
 
 BOOL lcd4dBacklight(Lcd4d* lcd, BOOL backlight) {
@@ -170,9 +185,12 @@ BOOL lcd4dDrawRectangle(Lcd4d* lcd, int x1, int y1, int x2, int y2, int color) {
 	appendHex4(lcd->outputStream, y2);
 	appendHex4(lcd->outputStream, color);
 
+	/*
 	waitLcdResponse();
 	int result = readHex2(lcd->inputStream);
 	return (result == LCD4D_ACK);
+	*/
+	return TRUE;
 }
 
 BOOL lcd4dDrawEllipse(Lcd4d* lcd, int x, int y, int rx, int ry, int color) {

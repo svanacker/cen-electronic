@@ -28,7 +28,7 @@ inline void handleUartInterrupt(UART_MODULE uart, Buffer* buffer) {
 	if (INTGetFlag(INT_SOURCE_UART_RX(uart))) {
 		char c = UARTGetDataByte(uart);
 		bufferWriteChar(buffer, c);
-		putCharacter(uart, c);
+		// putCharacter(uart, c);
 		// Clear the RX interrupt Flag
 		INTClearFlag(INT_SOURCE_UART_RX(uart));
 	}

@@ -6,8 +6,25 @@
 // definition des bits de configuration.
 // external Quartz, PLL x 10 (20 / 2)
 // Watchdog OFF
-#pragma config FNOSC = PRIPLL, POSCMOD = HS, FPLLMUL = MUL_20, FPLLIDIV = DIV_2, FPBDIV = DIV_2, FPLLODIV = DIV_1
+
+// Oscillator Selection Bit
+#pragma config FNOSC = PRIPLL
+// Primary Oscillator Configuration
+#pragma config POSCMOD = HS
+
+// Frequency
+// -> Multiplication factor
+#pragma config FPLLMUL = MUL_20
+// -> PLL Input Divider
+#pragma config FPLLIDIV = DIV_2
+// ->Peripheral Clock Dividor
+#pragma config FPBDIV = DIV_2
+// -> System PLL Output Clock Divier
+#pragma config FPLLODIV = DIV_1
+
+// Watchdog Timer
 #pragma config FWDTEN = OFF
+
 #define SYS_FREQ 				(80000000L)
 
 #endif
