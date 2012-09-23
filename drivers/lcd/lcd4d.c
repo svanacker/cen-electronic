@@ -102,6 +102,7 @@ void getLcd4dDisplayResolution(Lcd4d* lcd, Point* point) {
 	point->y = readBinaryWord(lcd->inputStream);
 }
 
+
 BOOL lcd4dClearScreen(Lcd4d* lcd) {
 	append(lcd->outputStream, LCD4D_CLEAR_SCREEN_COMMAND);
 	
@@ -132,6 +133,16 @@ BOOL lcd4dDisplay(Lcd4d* lcd, BOOL display) {
 	else {
 		append(lcd->outputStream, LCD4D_DISPLAY_OFF);
 	}
+
+	waitLcdResponse(1);
+	return lcd4dIsAck(lcd);
+}
+
+BOOL lcd4dSetDisplayResolution(Lcd4d* lcd, unsigned int displayOrientation) {
+	append(lcd->outputStream, LCD4D_CONTROL_COMMAND);
+	append(lcd->outputStream, LCD4D_DISPLAY_ORIENTATION);
+
+	append(lcd->outputStream, displayOrientation);
 
 	waitLcdResponse(1);
 	return lcd4dIsAck(lcd);

@@ -851,6 +851,8 @@ int main(void) {
 	Lcd4dVersion version;
 	Point point;
 	lcd4dTouchControl(&lcd4d, TRUE);
+	delaymSec(100);
+	lcd4dSetDisplayResolution(&lcd4d, LCD4D_ORIENTATION_270);
 
 	while (1) {
 		delaymSec(500);

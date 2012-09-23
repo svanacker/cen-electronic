@@ -236,6 +236,12 @@ BOOL lcd4dBacklight(Lcd4d* lcd, BOOL backlight);
 BOOL lcd4dDisplay(Lcd4d* lcd, BOOL display);
 
 /**
+ * Change the display orientation.
+ * @param displayOrientation LCD4D_ORIENTATION_90, LCD4D_ORIENTATION_270, LCD4D_NATIVE_ORIENTATION,	LCD4D_ORIENTATION_180
+ */
+BOOL lcd4dSetDisplayResolution(Lcd4d* lcd, unsigned int displayOrientation);
+
+/**
  * Enable or not the touch control.
  */
 BOOL lcd4dTouchControl(Lcd4d* lcd, BOOL touchControl);
