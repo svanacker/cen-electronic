@@ -12,6 +12,16 @@
 char readFilteredChar(InputStream* inputStream);
 
 /**
+ * Read a binary value as char of the inputStream without any filtering
+ */
+unsigned char readBinaryChar(InputStream* inputStream);
+
+/**
+ * Read 2 octets and convert it to int without any filtering.
+ */
+unsigned char readBinaryWord(InputStream* inputStream);
+
+/**
 * Read an hexadecimal value between 0 and 15.
 * Read only one character.
 * Same as readHex2, but considered the first char to be '0'

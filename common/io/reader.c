@@ -37,6 +37,18 @@ char readFilteredChar(InputStream* inputStream) {
     }
 }
 
+unsigned char readBinaryChar(InputStream* inputStream) {
+	unsigned char result = inputStream->readChar(inputStream);
+	return result;
+}
+
+unsigned char readBinaryWord(InputStream* inputStream) {
+	unsigned char b0 = inputStream->readChar(inputStream);
+	unsigned char b1 = inputStream->readChar(inputStream);
+	return (b0 << 8) | b1;
+}
+
+
 int readHex(InputStream* inputStream) {
     char b1 = readFilteredChar(inputStream);
     int result = hex2CharToInt(0, b1);

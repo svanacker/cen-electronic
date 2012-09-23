@@ -7,6 +7,8 @@
 #include "../../common/io/printWriter.h"
 #include "../../common/io/reader.h"
 
+#include "../../common/delay/delay30F.h"
+
 void initLcd4d(Lcd4d* lcd, OutputStream* outputStream, InputStream* inputStream) {
 	lcd->outputStream = outputStream;
 	lcd->inputStream = inputStream;	
@@ -33,70 +35,78 @@ void lcd4dAppendColor(Lcd4d* lcd) {
 	appendWord(lcd->outputStream, lcd->color);
 }
 
+#define LCD4D_STATIC_RESPONSE_DELAY				10
+#define LCD4D_STATIC_DELAY_BY_RESPONSE_CHAR		50
+
+
 /**
  * @private
  */
-void waitLcdResponse() {
+void waitLcdResponse(int charToReceive) {
+	// We wait DELAY * charToReceive
+	delaymSec(LCD4D_STATIC_RESPONSE_DELAY + LCD4D_STATIC_DELAY_BY_RESPONSE_CHAR * charToReceive);
+}
 
+BOOL lcd4dIsAck(Lcd4d* lcd) {
+	int result = readBinaryChar(lcd->inputStream);
+	return (result == LCD4D_ACK);
 }
 
 BOOL setAutoBaud(Lcd4d* lcd) {
 	append(lcd->outputStream, LCD4D_AUTOBAUD_COMMAND);
 	
-	/*
-	waitLcdResponse();
-
-	int result = readHex2(lcd->inputStream);
-	return (result == LCD4D_ACK);
-	*/
-	return TRUE;
+	waitLcdResponse(1);
+	// Set AutoBaud don't return anything the first time
+	return lcd4dIsAck(lcd);
+	// return TRUE;
 }
 
 BOOL setLcd4dBaudRate(Lcd4d* lcd, int baudRateType) {
 	append(lcd->outputStream, LCD4D_NEW_BAUD_COMMAND);
 	appendByte(lcd->outputStream, baudRateType);
 	
-	/*
-	waitLcdResponse();
-
-	int result = readHex2(lcd->inputStream);
-	return (result == LCD4D_ACK);
-	*/
-	return TRUE;
+	waitLcdResponse(1);
+	return lcd4dIsAck(lcd);
 }
 
 void getLcd4dVersionCommand(Lcd4d* lcd, Lcd4dVersion* version) {
 	append(lcd->outputStream, LCD4D_VERSION_COMMAND);
 	appendByte(lcd->outputStream, LCD4D_VERSION_OUTPUT_SERIAL_LCD);
 	
-	waitLcdResponse();
+	waitLcdResponse(5);
 	
-	version->deviceType = readHex2(lcd->inputStream);
-	version->hardwareRevision = readHex2(lcd->inputStream);
-	version->firmwareRevision = readHex2(lcd->inputStream);
-	version->horizontalResolution = readHex2(lcd->inputStream);
-	version->verticalResolution = readHex2(lcd->inputStream);
+	version->deviceType = readBinaryChar(lcd->inputStream);
+	version->hardwareRevision = readBinaryChar(lcd->inputStream);
+	version->firmwareRevision = readBinaryChar(lcd->inputStream);
+	version->horizontalResolution = readBinaryChar(lcd->inputStream);
+	version->verticalResolution = readBinaryChar(lcd->inputStream);
 }
 
+void lcd4dPrintVersion(OutputStream* outputStream, Lcd4dVersion* version) {
+	appendStringAndDec(outputStream, "\ndeviceType=", version->deviceType);
+	appendStringAndDec(outputStream, "\nhardwareRevision=", version->hardwareRevision);
+	appendStringAndDec(outputStream, "\nfirmwareRevision=", version->firmwareRevision);
+	appendStringAndDec(outputStream, "\nhorizontalResolution=", version->horizontalResolution);
+	appendStringAndDec(outputStream, "\nverticalResolution=", version->verticalResolution);
+	int verticalResolution;
+	println(outputStream);
+}
+
+// TODO : Doesn't work !!!!
 void getLcd4dDisplayResolution(Lcd4d* lcd, Point* point) {
 	append(lcd->outputStream, LCD4D_SET_DISPLAY_RESOLUTION_COMMAND);
 	
-	/*
-	waitLcdResponse();
+	waitLcdResponse(4);
 	
-	point->x = readHex4(lcd->inputStream);	
-	point->y = readHex4(lcd->inputStream);
-	*/
+	point->x = readBinaryWord(lcd->inputStream);	
+	point->y = readBinaryWord(lcd->inputStream);
 }
 
 BOOL lcd4dClearScreen(Lcd4d* lcd) {
 	append(lcd->outputStream, LCD4D_CLEAR_SCREEN_COMMAND);
 	
-	// waitLcdResponse();
-
-	// int result = readHex2(lcd->inputStream);
-	// return (result == LCD4D_ACK);
-	return TRUE;
+	waitLcdResponse(1);
+	return lcd4dIsAck(lcd);
 }
 
 BOOL lcd4dBacklight(Lcd4d* lcd, BOOL backlight) {
@@ -109,9 +119,8 @@ BOOL lcd4dBacklight(Lcd4d* lcd, BOOL backlight) {
 		append(lcd->outputStream, LCD4D_BACKLIGHT_OFF);
 	}
 
-	waitLcdResponse();
-	int result = readHex2(lcd->inputStream);
-	return (result == LCD4D_ACK);
+	waitLcdResponse(1);
+	return lcd4dIsAck(lcd);
 }
 
 BOOL lcd4dDisplay(Lcd4d* lcd, BOOL display) {
@@ -124,9 +133,8 @@ BOOL lcd4dDisplay(Lcd4d* lcd, BOOL display) {
 		append(lcd->outputStream, LCD4D_DISPLAY_OFF);
 	}
 
-	waitLcdResponse();
-	int result = readHex2(lcd->inputStream);
-	return (result == LCD4D_ACK);
+	waitLcdResponse(1);
+	return lcd4dIsAck(lcd);
 }
 
 BOOL lcd4dTouchControl(Lcd4d* lcd, BOOL touchControl) {
@@ -139,18 +147,16 @@ BOOL lcd4dTouchControl(Lcd4d* lcd, BOOL touchControl) {
 		append(lcd->outputStream, LCD4D_TOUCH_DISABLE);
 	}
 
-	waitLcdResponse();
-	int result = readHex2(lcd->inputStream);
-	return (result == LCD4D_ACK);
+	waitLcdResponse(1);
+	return lcd4dIsAck(lcd);
 }
 
 BOOL lcd4dVolume(Lcd4d* lcd, int volume) {
 	append(lcd->outputStream, LCD4D_SET_VOLUME_COMMAND);
 	append(lcd->outputStream, volume);
 
-	waitLcdResponse();
-	int result = readHex2(lcd->inputStream);
-	return (result == LCD4D_ACK);
+	waitLcdResponse(1);
+	return lcd4dIsAck(lcd);
 }
 
 // DRAW Functions
@@ -163,12 +169,8 @@ BOOL lcd4dDrawCircle(Lcd4d* lcd, int x, int y, int radius) {
 	appendWord(lcd->outputStream, radius);
 	lcd4dAppendColor(lcd);
 
-	/*
-	waitLcdResponse();
-	int result = readHex2(lcd->inputStream);
-	return (result == LCD4D_ACK);
-	*/
-	return TRUE;
+	waitLcdResponse(1);
+	return lcd4dIsAck(lcd);
 }
 
 BOOL lcd4dDrawTriangle(Lcd4d* lcd, int x1, int y1, int x2, int y2, int x3, int y3) {
@@ -181,9 +183,10 @@ BOOL lcd4dDrawTriangle(Lcd4d* lcd, int x1, int y1, int x2, int y2, int x3, int y
 	appendWord(lcd->outputStream, x3);
 	appendWord(lcd->outputStream, y3);
 
-	waitLcdResponse();
-	int result = readHex2(lcd->inputStream);
-	return (result == LCD4D_ACK);
+	lcd4dAppendColor(lcd);
+
+	waitLcdResponse(1);
+	return lcd4dIsAck(lcd);
 }
 
 BOOL lcd4dDrawLine(Lcd4d* lcd, int x1, int y1, int x2, int y2) {
@@ -193,11 +196,11 @@ BOOL lcd4dDrawLine(Lcd4d* lcd, int x1, int y1, int x2, int y2) {
 	appendWord(lcd->outputStream, y1);
 	appendWord(lcd->outputStream, x2);
 	appendWord(lcd->outputStream, y2);
+
 	lcd4dAppendColor(lcd);
 
-	waitLcdResponse();
-	int result = readHex2(lcd->inputStream);
-	return (result == LCD4D_ACK);
+	waitLcdResponse(1);
+	return lcd4dIsAck(lcd);
 }
 
 BOOL lcd4dDrawRectangle(Lcd4d* lcd, int x1, int y1, int x2, int y2) {
@@ -207,14 +210,11 @@ BOOL lcd4dDrawRectangle(Lcd4d* lcd, int x1, int y1, int x2, int y2) {
 	appendWord(lcd->outputStream, y1);
 	appendWord(lcd->outputStream, x2);
 	appendWord(lcd->outputStream, y2);
+
 	lcd4dAppendColor(lcd);
 
-	/*
-	waitLcdResponse();
-	int result = readHex2(lcd->inputStream);
-	return (result == LCD4D_ACK);
-	*/
-	return TRUE;
+	waitLcdResponse(1);
+	return lcd4dIsAck(lcd);
 }
 
 BOOL lcd4dDrawEllipse(Lcd4d* lcd, int x, int y, int rx, int ry) {
@@ -224,11 +224,11 @@ BOOL lcd4dDrawEllipse(Lcd4d* lcd, int x, int y, int rx, int ry) {
 	appendWord(lcd->outputStream, y);
 	appendWord(lcd->outputStream, rx);
 	appendWord(lcd->outputStream, ry);
+
 	lcd4dAppendColor(lcd);
 
-	waitLcdResponse();
-	int result = readHex2(lcd->inputStream);
-	return (result == LCD4D_ACK);
+	waitLcdResponse(1);
+	return lcd4dIsAck(lcd);
 }
 
 BOOL lcd4dDrawPixel(Lcd4d* lcd, int x, int y) {
@@ -238,9 +238,8 @@ BOOL lcd4dDrawPixel(Lcd4d* lcd, int x, int y) {
 	appendWord(lcd->outputStream, y);
 	lcd4dAppendColor(lcd);
 
-	waitLcdResponse();
-	int result = readHex2(lcd->inputStream);
-	return (result == LCD4D_ACK);
+	waitLcdResponse(1);
+	return lcd4dIsAck(lcd);
 }
 
 BOOL lcd4dSetPenType(Lcd4d* lcd, int penType) {
@@ -248,9 +247,8 @@ BOOL lcd4dSetPenType(Lcd4d* lcd, int penType) {
 
 	appendByte(lcd->outputStream, penType);
 
-	waitLcdResponse();
-	int result = readHex2(lcd->inputStream);
-	return (result == LCD4D_ACK);
+	waitLcdResponse(1);
+	return lcd4dIsAck(lcd);
 }
 
 // TEXT COMMANDS
@@ -260,9 +258,8 @@ BOOL lcd4dSetFont(Lcd4d* lcd, int fontSize) {
 
 	appendByte(lcd->outputStream, fontSize);
 
-	waitLcdResponse();
-	int result = readHex2(lcd->inputStream);
-	return (result == LCD4D_ACK);
+	waitLcdResponse(1);
+	return lcd4dIsAck(lcd);
 }
 
 BOOL lcd4dDrawChar(Lcd4d* lcd, char c, int column, int row) {
@@ -274,9 +271,8 @@ BOOL lcd4dDrawChar(Lcd4d* lcd, char c, int column, int row) {
 
 	lcd4dAppendColor(lcd);
 
-	waitLcdResponse();
-	int result = readHex2(lcd->inputStream);
-	return (result == LCD4D_ACK);
+	waitLcdResponse(1);
+	return lcd4dIsAck(lcd);
 }
 
 BOOL lcd4dDrawGraphicChar(Lcd4d* lcd, char c, int x, int y, int width, int height) {
@@ -291,9 +287,8 @@ BOOL lcd4dDrawGraphicChar(Lcd4d* lcd, char c, int x, int y, int width, int heigh
 	appendByte(lcd->outputStream, width);
 	appendByte(lcd->outputStream, height);
 
-	waitLcdResponse();
-	int result = readHex2(lcd->inputStream);
-	return (result == LCD4D_ACK);
+	waitLcdResponse(1);
+	return lcd4dIsAck(lcd);
 }
 
 BOOL lcd4dDrawString(Lcd4d* lcd, int column, int row, int fontSize, char* text) {
@@ -310,9 +305,8 @@ BOOL lcd4dDrawString(Lcd4d* lcd, int column, int row, int fontSize, char* text) 
     }
 	append(lcd->outputStream, '\0');
 
-	waitLcdResponse();
-	int result = readHex2(lcd->inputStream);
-	return (result == LCD4D_ACK);
+	waitLcdResponse(1);
+	return lcd4dIsAck(lcd);
 }
 
 BOOL lcd4dDrawGraphicString(Lcd4d* lcd, int x, int y, int fontSize, int width, int height, char* text) {
@@ -332,9 +326,8 @@ BOOL lcd4dDrawGraphicString(Lcd4d* lcd, int x, int y, int fontSize, int width, i
     }
 	append(lcd->outputStream, '\0');
 
-	waitLcdResponse();
-	int result = readHex2(lcd->inputStream);
-	return (result == LCD4D_ACK);
+	waitLcdResponse(1);
+	return lcd4dIsAck(lcd);
 }
 
 // TODO : Draw Buttons
@@ -343,26 +336,25 @@ BOOL lcd4dDrawGraphicString(Lcd4d* lcd, int x, int y, int fontSize, int width, i
 
 void lcd4dWaitTouchAndGetTouchCoordinates(Lcd4d* lcd, int touchMode, Point* point) {
 	append(lcd->outputStream, LCD4D_GET_TOUCH_COORDINATES_COMMAND);
+	appendByte(lcd->outputStream, touchMode);
 
-	// TODO : Wait	
-	waitLcdResponse();
+	waitLcdResponse(4);
 
-	point->x = readHex4(lcd->inputStream);
-	point->y = readHex4(lcd->inputStream);
+	point->x = readBinaryWord(lcd->inputStream);
+	point->y = readBinaryWord(lcd->inputStream);
 }
 
 BOOL lcd4dSetTouchRegion(Lcd4d* lcd, int x1, int y1, int x2, int y2) {
 	append(lcd->outputStream, LCD4D_DETECT_TOUCH_REGION_COMMAND);
 
-	appendByte(lcd->outputStream, x1);
-	appendByte(lcd->outputStream, y1);
-	appendByte(lcd->outputStream, x2);
-	appendByte(lcd->outputStream, y2);
+	appendWord(lcd->outputStream, x1);
+	appendWord(lcd->outputStream, y1);
+	appendWord(lcd->outputStream, x2);
+	appendWord(lcd->outputStream, y2);
 	
 	// TODO : Wait	
-	waitLcdResponse();
-	int result = readHex2(lcd->inputStream);
-	return (result == LCD4D_ACK);
+	waitLcdResponse(1);
+	return lcd4dIsAck(lcd);
 }
 
 // MEMORY CARD COMMAND

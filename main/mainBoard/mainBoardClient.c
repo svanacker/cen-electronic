@@ -837,7 +837,7 @@ int main(void) {
 	// initLcd4d(&lcd4d, &(lcdInputBuffer.outputStream), NULL);
 
 
-	initLcd4d(&lcd4d, &(lcd4dOutputStream), NULL);
+	initLcd4d(&lcd4d, &(lcd4dOutputStream), &(lcd4dInputBuffer.inputStream));
 	
 	/*
 	delaymSec(5000);
@@ -861,8 +861,8 @@ int main(void) {
 	delaymSec(1000);
 
 	appendString(getOutputStreamLogger(ERROR), "CLS\n");
-	lcd4dClearScreen(&lcd4d);
-	delaymSec(100);
+	// lcd4dClearScreen(&lcd4d);
+	// delaymSec(100);
 	/*
 	lcd4dClearScreen(&lcd4d);
 
@@ -872,8 +872,66 @@ int main(void) {
 	delaymSec(100);
 	lcd4dClearScreen(&lcd4d);
 	*/
+	Lcd4dVersion version;
+	Point point;
+	lcd4dTouchControl(&lcd4d, TRUE);
+
 	while (1) {
-		delaymSec(1000);
+		delaymSec(500);
+
+		// lcd4dClearScreen(&lcd4d);
+		// delaymSec(500);
+	
+		/*
+		getLcd4dVersionCommand(&lcd4d, &version);
+		delaymSec(500);
+		lcd4dPrintVersion(getOutputStreamLogger(ERROR), &version);
+		*/
+
+		/*
+		delaymSec(500);
+		lcd4dDisplay(&lcd4d, TRUE);
+		delaymSec(500);
+		lcd4dDisplay(&lcd4d, FALSE);
+		*/
+		/*
+		lcd4dSetPenType(&lcd4d, LCD4D_PEN_SIZE_DRAW_SOLID);
+		lcd4dDrawEllipse(&lcd4d, 100, 100, 50, 100);
+		delaymSec(500);
+
+		lcd4dSetPenType(&lcd4d, LCD4D_PEN_SIZE_DRAW_WIRE_FRAME);
+		lcd4dDrawEllipse(&lcd4d, 200, 200, 30, 30);
+		delaymSec(500);
+		*/
+		/*
+		lcd4dSetFont(&lcd4d, LCD4D_FONT_LARGEST);
+		delaymSec(500);
+		lcd4dDrawChar(&lcd4d, '8', 10, 10);
+		delaymSec(500);
+		lcd4dDrawGraphicChar(&lcd4d, '7', 50, 200, 2, 2);
+		*/
+		/*
+		delaymSec(500);
+		lcd4dDrawString(&lcd4d, 10, 10, LCD4D_FONT_LARGEST, "Hello");
+		delaymSec(500);
+		lcd4dDrawGraphicString(&lcd4d, 50, 200, LCD4D_FONT_LARGEST, 2, 2, " World");
+		*/
+/*
+#define		LCD4D_GET_TOUCH_COORDINATES_COMMAND		'o'
+#define		LCD4D_TOUCH_WAIT_UNTIL_ANY_TOUCH		0x00
+#define		LCD4D_TOUCH_WAIT_PRESS					0x01
+#define		LCD4D_TOUCH_WAIT_RELEASE				0x02
+#define		LCD4D_TOUCH_WAIT_MOVING					0x03
+#define		LCD4D_TOUCH_GET_STATUS					0x04
+#define		LCD4D_TOUCH_GET_COORDINATES				0x05
+*/
+		lcd4dWaitTouchAndGetTouchCoordinates(&lcd4d, LCD4D_TOUCH_WAIT_PRESS, &point);
+	
+		appendDec(getOutputStreamLogger(ERROR), point.x);
+		println(getOutputStreamLogger(ERROR));
+		appendDec(getOutputStreamLogger(ERROR), point.y);
+		println(getOutputStreamLogger(ERROR));
+
 		// appendString(&lcd4dOutputStream, "\x43\x00\x3F\x00\x3F\x00\x22\x00\x1F");
 		/*
 		append(&lcd4dOutputStream, 'C');
@@ -886,7 +944,7 @@ int main(void) {
 		append(&lcd4dOutputStream, '\x00');
 		append(&lcd4dOutputStream, '\x1F');
 		*/
-		lcd4dDrawCircle(&lcd4d, 63, 63, 30);
+		// lcd4dDrawCircle(&lcd4d, 63, 63, 30);
 	}
 
 	/*

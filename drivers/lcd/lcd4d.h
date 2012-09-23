@@ -210,6 +210,12 @@ BOOL setLcd4dBaudRate(Lcd4d* lcd, int baudRateType);
 void getLcd4dVersionCommand(Lcd4d* lcd, Lcd4dVersion* version);
 
 /**
+ * Print the content of the Lcd4dVersion.
+ * @param version
+ */
+void lcd4dPrintVersion(OutputStream* outputStream, Lcd4dVersion* version);
+
+/**
  * Get the display resolution and set it to the point parameter.
  */
 void getLcd4dDisplayResolution(Lcd4d* lcd, Point* point);
