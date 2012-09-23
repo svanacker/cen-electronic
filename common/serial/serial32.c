@@ -28,19 +28,15 @@ void openSerial(unsigned char serialPortIndex, unsigned long baudRate) {
     UARTSetDataRate(uart, GetPeripheralClock(), baudRate);
     UARTEnable(uart, UART_ENABLE_FLAGS(UART_PERIPHERAL | UART_RX | UART_TX));
 
-	/*
-	if (serialPortIndex == SERIAL_PORT_1 || serialPortIndex == SERIAL_PORT_2) {
-		INTEnable(INT_SOURCE_UART_RX(uart), INT_ENABLED);
-		INTSetVectorPriority(INT_VECTOR_UART(uart), INT_PRIORITY_LEVEL_2);
-		INTSetVectorSubPriority(INT_VECTOR_UART(uart), INT_SUB_PRIORITY_LEVEL_0);
-	
-		// configure for multi-vectored mode
-		INTConfigureSystem(INT_SYSTEM_CONFIG_MULT_VECTOR);
-	
-		// enable interrupts
-		INTEnableInterrupts();
-	}
-	*/
+	INTEnable(INT_SOURCE_UART_RX(uart), INT_ENABLED);
+	INTSetVectorPriority(INT_VECTOR_UART(uart), INT_PRIORITY_LEVEL_2);
+	INTSetVectorSubPriority(INT_VECTOR_UART(uart), INT_SUB_PRIORITY_LEVEL_0);
+
+	// configure for multi-vectored mode
+	INTConfigureSystem(INT_SYSTEM_CONFIG_MULT_VECTOR);
+
+	// enable interrupts
+	INTEnableInterrupts();
 }
 
 void openSerialAtDefaultSpeed(unsigned char serialPortIndex) {

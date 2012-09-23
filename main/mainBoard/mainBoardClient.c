@@ -861,9 +861,9 @@ int main(void) {
 	delaymSec(1000);
 
 	appendString(getOutputStreamLogger(ERROR), "CLS\n");
-	/*
 	lcd4dClearScreen(&lcd4d);
 	delaymSec(100);
+	/*
 	lcd4dClearScreen(&lcd4d);
 
 	delaymSec(100);
@@ -875,6 +875,7 @@ int main(void) {
 	while (1) {
 		delaymSec(1000);
 		// appendString(&lcd4dOutputStream, "\x43\x00\x3F\x00\x3F\x00\x22\x00\x1F");
+		/*
 		append(&lcd4dOutputStream, 'C');
 		append(&lcd4dOutputStream, '\x00');
 		append(&lcd4dOutputStream, '\x3F');
@@ -884,6 +885,8 @@ int main(void) {
 		append(&lcd4dOutputStream, '\x22');
 		append(&lcd4dOutputStream, '\x00');
 		append(&lcd4dOutputStream, '\x1F');
+		*/
+		lcd4dDrawCircle(&lcd4d, 63, 63, 30);
 	}
 
 	/*

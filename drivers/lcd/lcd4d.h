@@ -16,6 +16,8 @@ typedef struct {
 	OutputStream* outputStream;
 	// InputStream (serial) used to read data
 	InputStream* inputStream;
+	// Color with 2 bytes
+	int color;
 } Lcd4d;
 
 /**
@@ -188,6 +190,10 @@ typedef struct Lcd4dVersion {
  */
 void initLcd4d(Lcd4d* lcd, OutputStream* outputStream, InputStream* inputStream);
  
+// COLOR MANAGEMENT
+
+void setLcd4dColor(Lcd4d* lcd, unsigned char r, unsigned char g, unsigned char b);
+
 /**
  * Set the autobaud to the lcd.
  */
@@ -238,7 +244,7 @@ BOOL lcd4dVolume(Lcd4d* lcd, int volume);
 /**
  * Draw a circle.
  */
-BOOL lcd4dDrawCircle(Lcd4d* lcd, int x, int y, int radius, int color);
+BOOL lcd4dDrawCircle(Lcd4d* lcd, int x, int y, int radius);
 
 /**
  * Draw a triangle.
@@ -248,22 +254,22 @@ BOOL lcd4dDrawTriangle(Lcd4d* lcd, int x1, int y1, int x2, int y2, int x3, int y
 /**
  * Draw a line.
  */
-BOOL lcd4dDrawLine(Lcd4d* lcd, int x1, int y1, int x2, int y2, int color);
+BOOL lcd4dDrawLine(Lcd4d* lcd, int x1, int y1, int x2, int y2);
 
 /**
  * Draw a rectangle.
  */
-BOOL lcd4dDrawRectangle(Lcd4d* lcd, int x1, int y1, int x2, int y2, int color);
+BOOL lcd4dDrawRectangle(Lcd4d* lcd, int x1, int y1, int x2, int y2);
 
 /**
  * Draw an ellipse.
  */
-BOOL lcd4dDrawEllipse(Lcd4d* lcd, int x, int y, int rx, int ry, int color);
+BOOL lcd4dDrawEllipse(Lcd4d* lcd, int x, int y, int rx, int ry);
 
 /**
  * Draw a pixel.
  */
-BOOL lcd4dDrawPixel(Lcd4d* lcd, int x, int y, int color);
+BOOL lcd4dDrawPixel(Lcd4d* lcd, int x, int y);
 
 /**
  * set the pen to be solid or line style.
@@ -281,22 +287,22 @@ BOOL lcd4dSetFont(Lcd4d* lcd, int fontSize);
 /**
  * Draw a char at the char grid
  */
-BOOL lcd4dDrawChar(Lcd4d* lcd, char c, int column, int row, int color);
+BOOL lcd4dDrawChar(Lcd4d* lcd, char c, int column, int row);
 
 /**
  * Draw a char but using graphic mode.
  */
-BOOL lcd4dDrawGraphicChar(Lcd4d* lcd, char c, int x, int y, int color, int width, int height);
+BOOL lcd4dDrawGraphicChar(Lcd4d* lcd, char c, int x, int y, int width, int height);
 
 /**
  * Draw a string in text mode.
  */
-BOOL lcd4dDrawString(Lcd4d* lcd, int column, int row, int fontSize, int color, char* text);
+BOOL lcd4dDrawString(Lcd4d* lcd, int column, int row, int fontSize, char* text);
 
 /**
  * Draw a string in graphic mode.
  */
-BOOL lcd4dDrawGraphicString(Lcd4d* lcd, int x, int y, int fontSize, int color, int width, int height, char* text);
+BOOL lcd4dDrawGraphicString(Lcd4d* lcd, int x, int y, int fontSize, int width, int height, char* text);
 
 // TODO : Draw Buttons
 
