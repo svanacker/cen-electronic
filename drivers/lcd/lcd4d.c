@@ -7,6 +7,9 @@
 #include "../../common/io/printWriter.h"
 #include "../../common/io/reader.h"
 
+#include "../../common/log/logger.h"
+#include "../../common/log/logLevel.h"
+
 #include "../../common/delay/delay30F.h"
 
 void initLcd4d(Lcd4d* lcd, OutputStream* outputStream, InputStream* inputStream) {
@@ -42,20 +45,32 @@ void lcd4dAppendColor(Lcd4d* lcd) {
 /**
  * @private
  */
-void waitLcdResponse(int charToReceive) {
-	// We wait DELAY * charToReceive
-	delaymSec(LCD4D_STATIC_RESPONSE_DELAY + LCD4D_STATIC_DELAY_BY_RESPONSE_CHAR * charToReceive);
+void waitLcdResponse(Lcd4d* lcd, int charToReceive) {
+	int counter = LCD4D_STATIC_RESPONSE_DELAY + LCD4D_STATIC_DELAY_BY_RESPONSE_CHAR * charToReceive;
+	while (!lcd->inputStream->availableData(lcd->inputStream)) {
+		delaymSec(1);
+		counter--;
+		if (counter == 0) {	
+			appendString(getOutputStreamLogger(ERROR), "\nLCD TIME OUT:\n");
+			break;
+		}
+	}
 }
 
 BOOL lcd4dIsAck(Lcd4d* lcd) {
 	int result = readBinaryChar(lcd->inputStream);
-	return (result == LCD4D_ACK);
+	if (result == LCD4D_ACK) {
+		return TRUE;
+	}
+	appendString(getOutputStreamLogger(ERROR), "\nBAD ACK:");
+	append(getOutputStreamLogger(ERROR), result);
+	return FALSE;
 }
 
 BOOL setAutoBaud(Lcd4d* lcd) {
 	append(lcd->outputStream, LCD4D_AUTOBAUD_COMMAND);
 	
-	waitLcdResponse(1);
+	waitLcdResponse(lcd, 1);
 	// Set AutoBaud don't return anything the first time
 	return lcd4dIsAck(lcd);
 	// return TRUE;
@@ -65,7 +80,7 @@ BOOL setLcd4dBaudRate(Lcd4d* lcd, int baudRateType) {
 	append(lcd->outputStream, LCD4D_NEW_BAUD_COMMAND);
 	appendByte(lcd->outputStream, baudRateType);
 	
-	waitLcdResponse(1);
+	waitLcdResponse(lcd, 1);
 	return lcd4dIsAck(lcd);
 }
 
@@ -73,7 +88,7 @@ void getLcd4dVersionCommand(Lcd4d* lcd, Lcd4dVersion* version) {
 	append(lcd->outputStream, LCD4D_VERSION_COMMAND);
 	appendByte(lcd->outputStream, LCD4D_VERSION_OUTPUT_SERIAL_LCD);
 	
-	waitLcdResponse(5);
+	waitLcdResponse(lcd, 5);
 	
 	version->deviceType = readBinaryChar(lcd->inputStream);
 	version->hardwareRevision = readBinaryChar(lcd->inputStream);
@@ -96,7 +111,7 @@ void lcd4dPrintVersion(OutputStream* outputStream, Lcd4dVersion* version) {
 void getLcd4dDisplayResolution(Lcd4d* lcd, Point* point) {
 	append(lcd->outputStream, LCD4D_SET_DISPLAY_RESOLUTION_COMMAND);
 	
-	waitLcdResponse(4);
+	waitLcdResponse(lcd, 4);
 	
 	point->x = readBinaryWord(lcd->inputStream);	
 	point->y = readBinaryWord(lcd->inputStream);
@@ -106,7 +121,7 @@ void getLcd4dDisplayResolution(Lcd4d* lcd, Point* point) {
 BOOL lcd4dClearScreen(Lcd4d* lcd) {
 	append(lcd->outputStream, LCD4D_CLEAR_SCREEN_COMMAND);
 	
-	waitLcdResponse(1);
+	waitLcdResponse(lcd, 1);
 	return lcd4dIsAck(lcd);
 }
 
@@ -120,7 +135,7 @@ BOOL lcd4dBacklight(Lcd4d* lcd, BOOL backlight) {
 		append(lcd->outputStream, LCD4D_BACKLIGHT_OFF);
 	}
 
-	waitLcdResponse(1);
+	waitLcdResponse(lcd, 1);
 	return lcd4dIsAck(lcd);
 }
 
@@ -134,7 +149,7 @@ BOOL lcd4dDisplay(Lcd4d* lcd, BOOL display) {
 		append(lcd->outputStream, LCD4D_DISPLAY_OFF);
 	}
 
-	waitLcdResponse(1);
+	waitLcdResponse(lcd, 1);
 	return lcd4dIsAck(lcd);
 }
 
@@ -144,7 +159,7 @@ BOOL lcd4dSetDisplayResolution(Lcd4d* lcd, unsigned int displayOrientation) {
 
 	append(lcd->outputStream, displayOrientation);
 
-	waitLcdResponse(1);
+	waitLcdResponse(lcd, 1);
 	return lcd4dIsAck(lcd);
 }
 
@@ -158,7 +173,7 @@ BOOL lcd4dTouchControl(Lcd4d* lcd, BOOL touchControl) {
 		append(lcd->outputStream, LCD4D_TOUCH_DISABLE);
 	}
 
-	waitLcdResponse(1);
+	waitLcdResponse(lcd, 1);
 	return lcd4dIsAck(lcd);
 }
 
@@ -166,7 +181,7 @@ BOOL lcd4dVolume(Lcd4d* lcd, int volume) {
 	append(lcd->outputStream, LCD4D_SET_VOLUME_COMMAND);
 	append(lcd->outputStream, volume);
 
-	waitLcdResponse(1);
+	waitLcdResponse(lcd, 1);
 	return lcd4dIsAck(lcd);
 }
 
@@ -180,7 +195,7 @@ BOOL lcd4dDrawCircle(Lcd4d* lcd, int x, int y, int radius) {
 	appendWord(lcd->outputStream, radius);
 	lcd4dAppendColor(lcd);
 
-	waitLcdResponse(1);
+	waitLcdResponse(lcd, 1);
 	return lcd4dIsAck(lcd);
 }
 
@@ -196,7 +211,7 @@ BOOL lcd4dDrawTriangle(Lcd4d* lcd, int x1, int y1, int x2, int y2, int x3, int y
 
 	lcd4dAppendColor(lcd);
 
-	waitLcdResponse(1);
+	waitLcdResponse(lcd, 1);
 	return lcd4dIsAck(lcd);
 }
 
@@ -210,7 +225,7 @@ BOOL lcd4dDrawLine(Lcd4d* lcd, int x1, int y1, int x2, int y2) {
 
 	lcd4dAppendColor(lcd);
 
-	waitLcdResponse(1);
+	waitLcdResponse(lcd, 1);
 	return lcd4dIsAck(lcd);
 }
 
@@ -224,7 +239,7 @@ BOOL lcd4dDrawRectangle(Lcd4d* lcd, int x1, int y1, int x2, int y2) {
 
 	lcd4dAppendColor(lcd);
 
-	waitLcdResponse(1);
+	waitLcdResponse(lcd, 1);
 	return lcd4dIsAck(lcd);
 }
 
@@ -238,7 +253,7 @@ BOOL lcd4dDrawEllipse(Lcd4d* lcd, int x, int y, int rx, int ry) {
 
 	lcd4dAppendColor(lcd);
 
-	waitLcdResponse(1);
+	waitLcdResponse(lcd, 1);
 	return lcd4dIsAck(lcd);
 }
 
@@ -249,7 +264,7 @@ BOOL lcd4dDrawPixel(Lcd4d* lcd, int x, int y) {
 	appendWord(lcd->outputStream, y);
 	lcd4dAppendColor(lcd);
 
-	waitLcdResponse(1);
+	waitLcdResponse(lcd, 1);
 	return lcd4dIsAck(lcd);
 }
 
@@ -258,7 +273,7 @@ BOOL lcd4dSetPenType(Lcd4d* lcd, int penType) {
 
 	appendByte(lcd->outputStream, penType);
 
-	waitLcdResponse(1);
+	waitLcdResponse(lcd, 1);
 	return lcd4dIsAck(lcd);
 }
 
@@ -269,7 +284,7 @@ BOOL lcd4dSetFont(Lcd4d* lcd, int fontSize) {
 
 	appendByte(lcd->outputStream, fontSize);
 
-	waitLcdResponse(1);
+	waitLcdResponse(lcd, 1);
 	return lcd4dIsAck(lcd);
 }
 
@@ -282,7 +297,7 @@ BOOL lcd4dDrawChar(Lcd4d* lcd, char c, int column, int row) {
 
 	lcd4dAppendColor(lcd);
 
-	waitLcdResponse(1);
+	waitLcdResponse(lcd, 1);
 	return lcd4dIsAck(lcd);
 }
 
@@ -298,7 +313,7 @@ BOOL lcd4dDrawGraphicChar(Lcd4d* lcd, char c, int x, int y, int width, int heigh
 	appendByte(lcd->outputStream, width);
 	appendByte(lcd->outputStream, height);
 
-	waitLcdResponse(1);
+	waitLcdResponse(lcd, 1);
 	return lcd4dIsAck(lcd);
 }
 
@@ -316,7 +331,7 @@ BOOL lcd4dDrawString(Lcd4d* lcd, int column, int row, int fontSize, char* text) 
     }
 	append(lcd->outputStream, '\0');
 
-	waitLcdResponse(1);
+	waitLcdResponse(lcd, 1);
 	return lcd4dIsAck(lcd);
 }
 
@@ -337,7 +352,7 @@ BOOL lcd4dDrawGraphicString(Lcd4d* lcd, int x, int y, int fontSize, int width, i
     }
 	append(lcd->outputStream, '\0');
 
-	waitLcdResponse(1);
+	waitLcdResponse(lcd, 1);
 	return lcd4dIsAck(lcd);
 }
 
@@ -349,7 +364,7 @@ void lcd4dWaitTouchAndGetTouchCoordinates(Lcd4d* lcd, int touchMode, Point* poin
 	append(lcd->outputStream, LCD4D_GET_TOUCH_COORDINATES_COMMAND);
 	appendByte(lcd->outputStream, touchMode);
 
-	waitLcdResponse(4);
+	waitLcdResponse(lcd, 4);
 
 	point->x = readBinaryWord(lcd->inputStream);
 	point->y = readBinaryWord(lcd->inputStream);
@@ -364,9 +379,82 @@ BOOL lcd4dSetTouchRegion(Lcd4d* lcd, int x1, int y1, int x2, int y2) {
 	appendWord(lcd->outputStream, y2);
 	
 	// TODO : Wait	
-	waitLcdResponse(1);
+	waitLcdResponse(lcd, 1);
 	return lcd4dIsAck(lcd);
 }
 
 // MEMORY CARD COMMAND
+
+// -> Raw Mode
+
+
+// -> Fat Mode
+
+BOOL lcd4dInitializeMemoryCardFAT(Lcd4d* lcd) {
+	append(lcd->outputStream, LCD4D_MEMORY_EXTENDED_COMMAND);
+	// cmd
+	append(lcd->outputStream, LCD4D_INITIALIZE_MEMORY_CARD_FAT_COMMAND);
+
+	waitLcdResponse(lcd, 20);
+	return lcd4dIsAck(lcd);
+}
+
+BOOL lcd4dListDirectoryOfCardFAT(Lcd4d* lcd, char* fileNameToMatch, OutputStream* outputStream) {
+	append(lcd->outputStream, LCD4D_MEMORY_EXTENDED_COMMAND);
+	// cmd
+	append(lcd->outputStream, LCD4D_LIST_DIRECTORY_OF_CARD);
+	
+	// fileName
+	appendString(lcd->outputStream, fileNameToMatch);
+	// Terminator
+	append(lcd->outputStream, 0);
+	
+	while (1) {
+		if (!lcd->inputStream->availableData(lcd->inputStream)) {
+			continue;
+		}
+		
+		int result = readBinaryChar(lcd->inputStream);
+		if (result == LCD4D_ACK) {
+			return TRUE;
+		}
+		if (result == LCD4D_NACK) {
+			return FALSE;
+		}
+		append(outputStream, result);
+	}		
+	return TRUE;
+}
+
+BOOL lcd4dScreenCopySaveToCardFAT(Lcd4d* lcd, int x, int y, int width, int height, char* fileName) {
+	append(lcd->outputStream, LCD4D_MEMORY_EXTENDED_COMMAND);
+	// cmd
+	append(lcd->outputStream, LCD4D_SCREEN_COPY_FAT_COMMAND);
+	appendWord(lcd->outputStream, x);
+	appendWord(lcd->outputStream, y);
+	appendWord(lcd->outputStream, width);
+	appendWord(lcd->outputStream, height);
+	// fileName
+	appendString(lcd->outputStream, fileName);
+	// Terminator
+	append(lcd->outputStream, 0);
+
+	waitLcdResponse(lcd, 100);
+	return lcd4dIsAck(lcd);
+}
+
+BOOL lcd4dPlayAudioWAVFileFromCardFAT(Lcd4d* lcd, unsigned int option, char* fileName) {
+	append(lcd->outputStream, LCD4D_MEMORY_EXTENDED_COMMAND);
+	// cmd
+	append(lcd->outputStream, LCD4D_PLAY_AUDIO_WAV_FROM_CARD_COMMAND);
+	// option
+	append(lcd->outputStream, option);
+	// fileName
+	appendString(lcd->outputStream, fileName);
+	// Terminator
+	append(lcd->outputStream, 0);
+
+	waitLcdResponse(lcd, 1);
+	return lcd4dIsAck(lcd);
+}
 
