@@ -426,6 +426,51 @@ BOOL lcd4dListDirectoryOfCardFAT(Lcd4d* lcd, char* fileNameToMatch, OutputStream
 	return TRUE;
 }
 
+BOOL lcd4dEraseFileFromCardFAT(Lcd4d* lcd, char* fileName) {
+	append(lcd->outputStream, LCD4D_MEMORY_EXTENDED_COMMAND);
+	// cmd
+	append(lcd->outputStream, LCD4D_ERASE_FILE_FAT_COMMAND);
+	// fileName
+	appendString(lcd->outputStream, fileName);
+	// Terminator
+	append(lcd->outputStream, 0);
+
+	waitLcdResponse(lcd, 1);
+	return lcd4dIsAck(lcd);
+}
+
+BOOL lcd4dWriteFileToCardFAT(Lcd4d* lcd, int handshakingMode, int appendMode, int performanceMode, char* fileName, unsigned long fileSize, Buffer* buffer) {
+	append(lcd->outputStream, LCD4D_MEMORY_EXTENDED_COMMAND);
+	// cmd
+	append(lcd->outputStream, LCD4D_WRITE_FILE_TO_CARD_FAT_COMMAND);
+	
+	append(lcd->outputStream, handshakingMode | appendMode | performanceMode);
+
+	// fileName
+	appendString(lcd->outputStream, fileName);
+	// Terminator
+	append(lcd->outputStream, 0);
+	
+	// Send size file : after sending size file, there is an ACK to manage
+	appendDoubleWord(lcd->outputStream, fileSize);
+	waitLcdResponse(lcd, 1);
+	BOOL result = lcd4dIsAck(lcd);
+	if (!result) {
+		// if no ack, we do not send buffer content
+		return FALSE;
+	}
+
+	// Send data
+	// TODO : Manage HandShaking Mode !!!
+	unsigned long count = fileSize;
+	while (count > 0) {
+		char c = bufferReadChar(buffer);
+		append(lcd->outputStream, c);
+		count--;
+	}
+
+}
+
 BOOL lcd4dScreenCopySaveToCardFAT(Lcd4d* lcd, int x, int y, int width, int height, char* fileName) {
 	append(lcd->outputStream, LCD4D_MEMORY_EXTENDED_COMMAND);
 	// cmd

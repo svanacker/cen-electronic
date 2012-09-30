@@ -187,8 +187,26 @@ typedef struct Lcd4dVersion {
 #define		LCD4D_READ_FILE_COMMAND						'a'
 #define		LCD4D_SCREEN_COPY_FAT_COMMAND				'c'
 #define		LCD4D_LIST_DIRECTORY_OF_CARD				'd'
+#define		LCD4D_ERASE_FILE_FAT_COMMAND				'e'
+#define		LCD4D_WRITE_FILE_TO_CARD_FAT_COMMAND		't'
+#define		LCD4D_HANDSHAKING_NO						0
+#define		LCD4D_HANDSHAKING_EACH_BYTE					1
+#define		LCD4D_HANDSHAKING_EACH_50_BYTE				50
+// No Append, file will be created (or overwritten if it exists).
+#define		LCD4D_APPEND_MODE_NO						0
+// Append mode, file will be appended to (or created if it doesn’t exist).
+#define		LCD4D_APPEND_MODE_YES						80
+// High performance. Two ACKS will be sent after the filesize. This
+// keeps transmission running at a high speed, as no time is spent waiting for
+// the return ACK. The same total number of ACKs doesn’t change (i.e the
+// last ACK is missing). For simple un-buffered serial ports this may lead to
+// loss of the second ACK.
+#define		LCD4D_PERFORMANCE_MODE_HIGH_PERFORMANCE		0
+// Low performance. Only a single ACK is sent at a time. This is for
+// un-buffered serial port controllers.
+#define		LCD4D_PERFORMANCE_MODE_LOW_PERFORMANCE		40
 
-#define		LCD4D_PLAY_AUDIO_WAV_FROM_CARD_COMMAND		'I'
+#define		LCD4D_PLAY_AUDIO_WAV_FROM_CARD_COMMAND		'l'
 #define 	LCD4D_PLAY_WAV_OPTION_RETURN_WHEN_PLAYING_COMPLETE	0x00
 #define 	LCD4D_PLAY_WAV_OPTION_RETURN_IMMEDIATELY				0x01
 #define 	LCD4D_PLAY_WAV_OPTION_STOP_CURRENTLY_PLAYING			0x02
@@ -462,8 +480,12 @@ BOOL lcd4dReadFileFromCardFAT(Lcd4d* lcd, int handshakingMode, char* fileName);
  * the device, after the filesize parameter is transmitted by the host, or this could also be a
  * NAK in which case one of the parameters is invalid or a file system error occurred.
  * Note: Do not set handshaking to zero if the file size is larger than 100 bytes.
+ * @param handshakingMode Controls handshaking (how often the device sends an ACK to request more
+ * data from the host) and whether an existing file is appended to.
+ * @param appendMode append or not (overwrite) the file
+ * @param performanceMode high or low performance
  */
-BOOL lcd4dWriteFileToCardFAT(Lcd4d* lcd, int handshakingMode, int appendMode, int performanceMode, char* fileName, unsigned long fileSize);
+BOOL lcd4dWriteFileToCardFAT(Lcd4d* lcd, int handshakingMode, int appendMode, int performanceMode, char* fileName, unsigned long fileSize, Buffer* buffer);
 
 /**
  * Erases the file specified in the “file_name”.

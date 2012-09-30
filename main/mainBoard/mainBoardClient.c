@@ -861,14 +861,14 @@ int main(void) {
 	appendString(getOutputStreamLogger(ERROR), "INIT MEMORY\n");
 	lcd4dInitializeMemoryCardFAT(&lcd4d);
 	delaymSec(500);
-	/*
+	
 	appendString(getOutputStreamLogger(ERROR), "READ WAV\n");
-	lcd4dPlayAudioWAVFileFromCard(&lcd4d, LCD4D_PLAY_WAV_OPTION_RETURN_IMMEDIATELY, "testtest.wav");
-	*/
-	appendString(getOutputStreamLogger(ERROR), "READ FILE LIST\n");
-	lcd4dListDirectoryOfCardFAT(&lcd4d, "testtest.wav", getOutputStreamLogger(ERROR));
-	appendString(getOutputStreamLogger(ERROR), "SCREEN COPY SAVE\n");
-	lcd4dScreenCopySaveToCardFAT(&lcd4d, 0, 0, 320, 240, "screenDat.bmp");
+	lcd4dPlayAudioWAVFileFromCardFAT(&lcd4d, LCD4D_PLAY_WAV_OPTION_RETURN_IMMEDIATELY, "testtest.wav");
+	
+	// appendString(getOutputStreamLogger(ERROR), "READ FILE LIST\n");
+	// lcddListDirectoryOfCardFAT(&lcd4d, "testtest.wav", getOutputStreamLogger(ERROR));
+	// appendString(getOutputStreamLogger(ERROR), "SCREEN COPY SAVE\n");
+	// lcd4dScreenCopySaveToCardFAT(&lcd4d, 0, 0, 320, 240, "screenDat.bmp");
 
 	while (1) {
 		delaymSec(500);
