@@ -803,56 +803,16 @@ int main(void) {
 	*/
 
 	appendString(getOutputStreamLogger(ALWAYS), "Init LCD:");
-
-
-
-	// appendString(&lcd4dOutputStream, "PORT LCD");
-	
-
-	// initLcd4d(&lcd4d, &(lcdOutputBuffer.outputStream), &(lcdInputBuffer.inputStream));
-	// initLcd4d(&lcd4d, &(lcdInputBuffer.outputStream), NULL);
-
-
-	initLcd4d(&lcd4d, &(lcd4dOutputStream), &(lcd4dInputBuffer.inputStream));
-	
-	/*
-	delaymSec(5000);
-	appendString(getOutputStreamLogger(ALWAYS), "Send U:");
-	serialPutc(SERIAL_PORT_1, 'U');
-	delaymSec(100);
-	appendString(getOutputStreamLogger(ALWAYS), "Send E:");
-	serialPutc(SERIAL_PORT_1, 'E');
-	delaymSec(100);
-	appendString(getOutputStreamLogger(ALWAYS), "Send E:");
-	serialPutc(SERIAL_PORT_1, 'E');
-	delaymSec(100);
-	appendString(getOutputStreamLogger(ALWAYS), "Send E:");
-	serialPutc(SERIAL_PORT_1, 'E');
-	delaymSec(100);
-	*/
-
+	initLcd4d(&lcd4d, &(lcd4dOutputStream), &(lcd4dInputBuffer.inputStream), &lcd4dInputBuffer);
 	delaymSec(5000);
 
 	setAutoBaud(&lcd4d);
 	delaymSec(1000);
 
 	appendString(getOutputStreamLogger(ERROR), "CLS\n");
-	// lcd4dClearScreen(&lcd4d);
-	// delaymSec(100);
-	/*
-	lcd4dClearScreen(&lcd4d);
-
-	delaymSec(100);
-	lcd4dClearScreen(&lcd4d);
-
-	delaymSec(100);
-	lcd4dClearScreen(&lcd4d);
-	*/
 	Lcd4dVersion version;
 	Point point;
 	lcd4dTouchControl(&lcd4d, TRUE);
-	delaymSec(100);
-	lcd4dSetDisplayResolution(&lcd4d, LCD4D_ORIENTATION_270);
 
 	delaymSec(500);
 
@@ -863,10 +823,18 @@ int main(void) {
 	delaymSec(500);
 	
 	appendString(getOutputStreamLogger(ERROR), "READ WAV\n");
-	lcd4dPlayAudioWAVFileFromCardFAT(&lcd4d, LCD4D_PLAY_WAV_OPTION_RETURN_IMMEDIATELY, "testtest.wav");
+	lcd4dPlayAudioWAVFileFromCardFAT(&lcd4d, LCD4D_PLAY_WAV_OPTION_RETURN_IMMEDIATELY, "test.wav");
+	delaymSec(4000);
+
+	appendString(getOutputStreamLogger(ERROR), "DISPLAY IMAGE\n");
+	lcd4dDisplayImageIconFromCardFAT(&lcd4d, 0, 0, "CybeLogo.Gci", 0L);
+	delaymSec(4000);
+
+	lcd4dSetDisplayResolution(&lcd4d, LCD4D_ORIENTATION_270);
+
 	
 	// appendString(getOutputStreamLogger(ERROR), "READ FILE LIST\n");
-	// lcddListDirectoryOfCardFAT(&lcd4d, "testtest.wav", getOutputStreamLogger(ERROR));
+	// lcddListDirectoryOfCardFAT(&lcd4d, "test.wav", getOutputStreamLogger(ERROR));
 	// appendString(getOutputStreamLogger(ERROR), "SCREEN COPY SAVE\n");
 	// lcd4dScreenCopySaveToCardFAT(&lcd4d, 0, 0, 320, 240, "screenDat.bmp");
 
@@ -917,41 +885,15 @@ int main(void) {
 #define		LCD4D_TOUCH_GET_STATUS					0x04
 #define		LCD4D_TOUCH_GET_COORDINATES				0x05
 */
-		/*
-		lcd4dWaitTouchAndGetTouchCoordinates(&lcd4d, LCD4D_TOUCH_WAIT_PRESS, &point);
-	
-		appendDec(getOutputStreamLogger(ERROR), point.x);
-		println(getOutputStreamLogger(ERROR));
-		appendDec(getOutputStreamLogger(ERROR), point.y);
-		println(getOutputStreamLogger(ERROR));
-		*/
-		// appendString(&lcd4dOutputStream, "\x43\x00\x3F\x00\x3F\x00\x22\x00\x1F");
-		/*
-		append(&lcd4dOutputStream, 'C');
-		append(&lcd4dOutputStream, '\x00');
-		append(&lcd4dOutputStream, '\x3F');
-		append(&lcd4dOutputStream, '\x00');
-		append(&lcd4dOutputStream, '\x3F');
-		append(&lcd4dOutputStream, '\x00');
-		append(&lcd4dOutputStream, '\x22');
-		append(&lcd4dOutputStream, '\x00');
-		append(&lcd4dOutputStream, '\x1F');
-		*/
-		// lcd4dDrawCircle(&lcd4d, 63, 63, 30);
+		BOOL result = lcd4dWaitUntilTouch(&lcd4d, 5000);
+		if (result) {
+			lcd4dWaitTouchAndGetTouchCoordinates(&lcd4d, LCD4D_TOUCH_GET_COORDINATES, &point);
+			appendStringAndDec(getOutputStreamLogger(ERROR), "x=", point.x);
+			println(getOutputStreamLogger(ERROR));
+			appendStringAndDec(getOutputStreamLogger(ERROR), "y=", point.y);
+			println(getOutputStreamLogger(ERROR));
+		}
 	}
-
-	/*
-
-	while (1) {
-		appendString(getOutputStreamLogger(ERROR), "CLS\n");
-		lcd4dClearScreen(&lcd4d);
-
-		delaymSec(100);
-		//lcd4dDrawRectangle(&lcd4d, 0, 0, 100, 100, 100);	
-		getLcd4dDisplayResolution(&lcd4d, NULL);
-		delaymSec(2000);
-	}
-	*/
 
 	while (1) {
 		waitForInstruction();

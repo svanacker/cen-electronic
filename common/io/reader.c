@@ -42,7 +42,7 @@ unsigned char readBinaryChar(InputStream* inputStream) {
 	return result;
 }
 
-unsigned char readBinaryWord(InputStream* inputStream) {
+unsigned int readBinaryWord(InputStream* inputStream) {
 	unsigned char b0 = inputStream->readChar(inputStream);
 	unsigned char b1 = inputStream->readChar(inputStream);
 	return (b0 << 8) | b1;

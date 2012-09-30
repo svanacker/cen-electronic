@@ -16,6 +16,8 @@ typedef struct {
 	OutputStream* outputStream;
 	// InputStream (serial) used to read data
 	InputStream* inputStream;
+	// Buffer (for input)
+	Buffer* inputBuffer;
 	// Color with 2 bytes
 	int color;
 } Lcd4d;
@@ -186,6 +188,7 @@ typedef struct Lcd4dVersion {
 #define		LCD4D_INITIALIZE_MEMORY_CARD_FAT_COMMAND	'i'
 #define		LCD4D_READ_FILE_COMMAND						'a'
 #define		LCD4D_SCREEN_COPY_FAT_COMMAND				'c'
+#define 	LCD4D_DISPLAY_IMAGE_FAT_COMMAND				'm'
 #define		LCD4D_LIST_DIRECTORY_OF_CARD				'd'
 #define		LCD4D_ERASE_FILE_FAT_COMMAND				'e'
 #define		LCD4D_WRITE_FILE_TO_CARD_FAT_COMMAND		't'
@@ -217,7 +220,7 @@ typedef struct Lcd4dVersion {
 /**
  * Init the Lcd4d structure with his properties.
  */
-void initLcd4d(Lcd4d* lcd, OutputStream* outputStream, InputStream* inputStream);
+void initLcd4d(Lcd4d* lcd, OutputStream* outputStream, InputStream* inputStream, Buffer* inputBuffer);
  
 // COLOR MANAGEMENT
 
@@ -355,6 +358,15 @@ void lcd4dWaitTouchAndGetTouchCoordinates(Lcd4d* lcd, int touchMode, Point* poin
  * Set the region for touch.
  */
 BOOL lcd4dSetTouchRegion(Lcd4d* lcd, int x1, int y1, int x2, int y2);
+
+/**
+ * When objects from the memory card such as images are displayed sequentially, a delay can
+ * be inserted between subsequent objects. A delay basically has the same effect as a NOP
+ * (No Operation) which can be used to determine how long the object stays on the screen
+ * before the next object is displayed. If the user touches the display during the delay period,
+ * the delay will end immediately. The touch region, if used, is taken into account.
+ */
+BOOL lcd4dWaitUntilTouch(Lcd4d* lcd, unsigned int delayMilliSeconds);
 
 // MEMORY CARDS
 
@@ -533,8 +545,12 @@ BOOL lcd4dScreenCopySaveToCardFAT(Lcd4d* lcd, int x, int y, int width, int heigh
  * don’t need to be specified by the host controller. All you need is GCI filename which is
  * loaded to the SD card, and the pointer to the multimedia object which can be found from
  * the .DAT file created by the Graphics Composer along with the GCI file.
+ * @param imagePos 4 bytes (big endian) sector address of a previously stored Image-Icon that is
+ * about to be displayed. All you need is GCI filename which is
+ * loaded to the SD card, and the pointer to the multimedia object which can be found from
+ * the .DAT file created by the Graphics Composer along with the GCI file.
  */
-BOOL lcd4dDisplayImageIconFromCardFAT(Lcd4d* lcd, int x, int y, char* fileName);
+BOOL lcd4dDisplayImageIconFromCardFAT(Lcd4d* lcd, int x, int y, char* fileName, unsigned long imagePos);
 
 /**
  * This command plays a WAV file from the memory card. Wave files should be mono to keep
