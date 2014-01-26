@@ -655,7 +655,111 @@ int main(void) {
                                                             &strategyBoardOutputStream,
                                                             STRATEGY_BOARD_I2C_ADDRESS);
 
+<<<<<<< Updated upstream
     // printDriverDataDispatcherList(getOutputStreamLogger(DEBUG), getDispatcherList());
+=======
+	*/
+
+	appendString(getOutputStreamLogger(ALWAYS), "Init LCD:");
+	initLcd4d(&lcd4d, &(lcd4dOutputStream), &(lcd4dInputBuffer.inputStream), &lcd4dInputBuffer);
+	delaymSec(5000);
+
+	setAutoBaud(&lcd4d);
+	delaymSec(1000);
+
+	appendString(getOutputStreamLogger(ERROR), "CLS\n");
+	Lcd4dVersion version;
+	Point point;
+	lcd4dTouchControl(&lcd4d, TRUE);
+
+	delaymSec(500);
+
+	lcd4dClearScreen(&lcd4d);
+	delaymSec(500);
+	appendString(getOutputStreamLogger(ERROR), "INIT MEMORY\n");
+	lcd4dInitializeMemoryCardFAT(&lcd4d);
+	delaymSec(500);
+	
+	appendString(getOutputStreamLogger(ERROR), "READ WAV\n");
+	lcd4dPlayAudioWAVFileFromCardFAT(&lcd4d, LCD4D_PLAY_WAV_OPTION_RETURN_IMMEDIATELY, "test.wav");
+	delaymSec(4000);
+
+	appendString(getOutputStreamLogger(ERROR), "DISPLAY IMAGE\n");
+	lcd4dDisplayImageIconFromCardFAT(&lcd4d, 0, 0, "CybeLogo.Gci", 0L);
+	delaymSec(4000);
+
+	lcd4dSetDisplayResolution(&lcd4d, LCD4D_ORIENTATION_270);
+
+	
+	// appendString(getOutputStreamLogger(ERROR), "READ FILE LIST\n");
+	// lcddListDirectoryOfCardFAT(&lcd4d, "test.wav", getOutputStreamLogger(ERROR));
+	// appendString(getOutputStreamLogger(ERROR), "SCREEN COPY SAVE\n");
+	// lcd4dScreenCopySaveToCardFAT(&lcd4d, 0, 0, 320, 240, "screenDat.bmp");
+
+	while (1) {
+		delaymSec(500);
+
+		lcd4dClearScreen(&lcd4d);
+		delaymSec(500);
+	
+		/*
+		getLcd4dVersionCommand(&lcd4d, &version);
+		delaymSec(500);
+		lcd4dPrintVersion(getOutputStreamLogger(ERROR), &version);
+		*/
+
+		/*
+		delaymSec(500);
+		lcd4dDisplay(&lcd4d, TRUE);
+		delaymSec(500);
+		lcd4dDisplay(&lcd4d, FALSE);
+		*/
+		/*
+		lcd4dSetPenType(&lcd4d, LCD4D_PEN_SIZE_DRAW_SOLID);
+		lcd4dDrawEllipse(&lcd4d, 100, 100, 50, 100);
+		delaymSec(500);
+
+		lcd4dSetPenType(&lcd4d, LCD4D_PEN_SIZE_DRAW_WIRE_FRAME);
+		lcd4dDrawEllipse(&lcd4d, 200, 200, 30, 30);
+		delaymSec(500);
+		*/
+		/*
+		lcd4dSetFont(&lcd4d, LCD4D_FONT_LARGEST);
+		delaymSec(500);
+		lcd4dDrawChar(&lcd4d, '8', 10, 10);
+		delaymSec(500);
+		lcd4dDrawGraphicChar(&lcd4d, '7', 50, 200, 2, 2);
+		*/
+		delaymSec(200);
+		lcd4dDrawString(&lcd4d, 10, 10, LCD4D_FONT_LARGEST, "Hello");
+		delaymSec(200);
+		lcd4dDrawGraphicString(&lcd4d, 50, 200, LCD4D_FONT_LARGEST, 2, 2, " World");
+/*
+#define		LCD4D_GET_TOUCH_COORDINATES_COMMAND		'o'
+#define		LCD4D_TOUCH_WAIT_UNTIL_ANY_TOUCH		0x00
+#define		LCD4D_TOUCH_WAIT_PRESS					0x01
+#define		LCD4D_TOUCH_WAIT_RELEASE				0x02
+#define		LCD4D_TOUCH_WAIT_MOVING					0x03
+#define		LCD4D_TOUCH_GET_STATUS					0x04
+#define		LCD4D_TOUCH_GET_COORDINATES				0x05
+*/
+		BOOL result = lcd4dWaitUntilTouch(&lcd4d, 5000);
+		if (result) {
+			lcd4dWaitTouchAndGetTouchCoordinates(&lcd4d, LCD4D_TOUCH_GET_COORDINATES, &point);
+			appendStringAndDec(getOutputStreamLogger(ERROR), "x=", point.x);
+			println(getOutputStreamLogger(ERROR));
+			appendStringAndDec(getOutputStreamLogger(ERROR), "y=", point.y);
+			println(getOutputStreamLogger(ERROR));
+			lcd4dDrawEllipse(&lcd4d, point.x, point.y, 10, 10);
+			delaymSec(1000);
+
+		}
+	}
+
+	while (1) {
+		waitForInstruction();
+	}
+>>>>>>> Stashed changes
 
     // pingDriverDataDispatcherList(getOutputStreamLogger(DEBUG));
 

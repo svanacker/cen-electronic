@@ -29,3 +29,6 @@ Makefile
 *.mcw
 
 build
+objects
+bin
+*.elf
