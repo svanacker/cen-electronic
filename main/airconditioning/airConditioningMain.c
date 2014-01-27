@@ -16,6 +16,8 @@
 #include "../../common/io/printWriter.h"
 #include "../../common/io/stream.h"
 
+#include "../../common/pwm/servoPwm.h"
+
 #include "../../common/serial/serial.h"
 #include "../../common/serial/serialLink.h"
 
@@ -49,6 +51,11 @@
 	// We use the same port for both
 	#define SERIAL_PORT_DEBUG 		SERIAL_PORT_1
 #endif
+
+#define		SERVO_INDEX				1
+#define		SERVO_VALUE_TOUCH		1620
+#define		SERVO_VALUE_STAND_BY	1400
+#define		SERVO_SPEED				0xFF
 
 /**
 * Device list.
@@ -100,6 +107,12 @@ void initStrategyBoardIO() {
 	ADPCFG = 0xFFFF;
 }
 
+void clickOnButton() {
+	pwmServo(SERVO_INDEX, SERVO_SPEED, SERVO_VALUE_TOUCH);
+	delaymSec(1000);
+	pwmServo(SERVO_INDEX, SERVO_SPEED, SERVO_VALUE_STAND_BY);
+}
+
 int main(void) {
 	setPicName("AIR_COND_BOARD");
 
@@ -131,7 +144,21 @@ int main(void) {
 
 	// Init the timers management
 	startTimerList();
+
+	clickOnButton();
+	unsigned long timerIndex = 0L;
+
 	while (1) {
+		timerIndex++;
+
+		// 1000000 ==> 20 seconds
+		// 5000000 ==> 10000 seconds => 15 minutes
+
+//		if ((timerIndex % 1000000L) == 0) {
+		if ((timerIndex % 50000000L) == 0) {
+
+			clickOnButton();
+		}
 
 		// UART Stream
 		handleStreamInstruction(&debugInputBuffer,
