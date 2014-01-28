@@ -57,6 +57,13 @@
 #define		SERVO_VALUE_STAND_BY	1400
 #define		SERVO_SPEED				0xFF
 
+
+// 1000000 ==> 20 seconds
+// 5000000 ==> 10000 seconds => 15 minutes
+
+#define		ITERATION_OFF			20000000L
+#define		ITERATION_ON			30000000L
+
 /**
 * Device list.
 */
@@ -109,7 +116,7 @@ void initStrategyBoardIO() {
 
 void clickOnButton() {
 	pwmServo(SERVO_INDEX, SERVO_SPEED, SERVO_VALUE_TOUCH);
-	delaymSec(1000);
+	delaymSec(500);
 	pwmServo(SERVO_INDEX, SERVO_SPEED, SERVO_VALUE_STAND_BY);
 }
 
@@ -147,16 +154,21 @@ int main(void) {
 
 	clickOnButton();
 	unsigned long timerIndex = 0L;
+	BOOL timerOn = TRUE;
+	unsigned long timerMax = ITERATION_ON;
 
 	while (1) {
 		timerIndex++;
 
-		// 1000000 ==> 20 seconds
-		// 5000000 ==> 10000 seconds => 15 minutes
-
-//		if ((timerIndex % 1000000L) == 0) {
-		if ((timerIndex % 50000000L) == 0) {
-
+		if (timerIndex > timerMax) {
+			timerIndex = 0;
+			timerOn = !timerOn;
+			if (timerOn) {
+				timerMax = ITERATION_ON;
+			}
+			else {
+				timerMax = ITERATION_OFF;
+			}
 			clickOnButton();
 		}
 
