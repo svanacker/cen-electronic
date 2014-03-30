@@ -35,7 +35,7 @@ void clearTargetAction(GameTargetAction* targetAction);
 /**
  * Print the detail of the target action.
  */
-void printGameTargetAction(OutputStream* outputStream, GameTargetAction* targetAction, BOOL includeItems);
+void printGameTargetAction(OutputStream* outputStream, GameTargetAction* targetAction, bool includeItems);
 
 
 #endif

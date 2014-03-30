@@ -25,7 +25,7 @@ void deviceServoInit() {
 void deviceServoShutDown() {
 }
 
-BOOL deviceServoIsOk() {
+bool deviceServoIsOk() {
     return TRUE;
 }
 

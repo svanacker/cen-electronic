@@ -16,7 +16,7 @@ void devicePinInit() {
 void devicePinShutDown() {
 }
 
-BOOL devicePinIsOk() {
+bool devicePinIsOk() {
     return TRUE;
 }	
 

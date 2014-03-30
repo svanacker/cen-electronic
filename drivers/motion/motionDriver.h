@@ -9,13 +9,13 @@
 * State to know if it's ready for Next Motion.
 * @param value the new status
 */
-void setReadyForNextMotion(BOOL value);
+void setReadyForNextMotion(bool value);
 
 /**
 * Returns if the state is ready.
 * @return if the state is ready.
 */
-BOOL isReadyForNextMotion();
+bool isReadyForNextMotion();
 
 /**
 * Set the motion instruction index.
@@ -32,7 +32,7 @@ unsigned int getMotionInstructionIndex();
 * Ask the motor to go to a position (pulse argument).
 * @return TRUE if the driver answer
 */
-BOOL motionDriverGotoPositionPulse(
+bool motionDriverGotoPositionPulse(
 					    			float left,
 									float right,
 									float a,
@@ -42,32 +42,32 @@ BOOL motionDriverGotoPositionPulse(
 * Ask the motor to go forward for a distance in mm.
 * @return TRUE if the driver answer
 */
-BOOL motionDriverForward(float distanceInMM);
+bool motionDriverForward(float distanceInMM);
 
 /**
 * Ask to stay in place and use slavery to do it.
 */
-BOOL motionDriverMaintainPosition();
+bool motionDriverMaintainPosition();
 
 /**
 * Ask the motor to go backward for a distance in mm.
 * @return TRUE if the driver answer
 */
-BOOL motionDriverBackward(float distanceInMM);
+bool motionDriverBackward(float distanceInMM);
 
 /**
 * Ask the motor to turn left for an angle in degree.
 * @param leftDegree the angle to turn left
 * @return TRUE if the driver answer
 */
-BOOL motionDriverLeft(float leftDeciDegree);
+bool motionDriverLeft(float leftDeciDegree);
 
 /**
 * Ask the motor to turn right for an angle in degree.
 * @param rightDegree the angle to turn right
 * @return TRUE if the driver answer
 */
-BOOL motionDriverRight(float rightDeciDegree);
+bool motionDriverRight(float rightDeciDegree);
 
 // ONE WHEEL
 
@@ -76,26 +76,26 @@ BOOL motionDriverRight(float rightDeciDegree);
 * @param leftDegree the angle to turn left
 * @return TRUE if the driver answer
 */
-BOOL motionDriverOneWheelLeft(float leftDeciDegree);
+bool motionDriverOneWheelLeft(float leftDeciDegree);
 
 /**
 * Ask the motor to turn right for an angle in degree (Left Wheel don't move).
 * @param rightDegree the angle to turn right
 * @return TRUE if the driver answer
 */
-BOOL motionDriverOneWheelRight(float rightDeciDegree);
+bool motionDriverOneWheelRight(float rightDeciDegree);
 
 // BSPLINE 
 
 /**
  * Do a bspline curve using relative coordinates (x, y, angle)
  */
-BOOL motionDriverBSplineRelative(float x, float y, float angle, float dist0, float dist1, int accelerationFactor, int speedFactor);
+bool motionDriverBSplineRelative(float x, float y, float angle, float dist0, float dist1, int accelerationFactor, int speedFactor);
 
 /**
  * Do a bspline curve using absolute coordinates (x, y, angle)
  */
-BOOL motionDriverBSplineAbsolute(float x, float y, float angle, float dist0, float dist1, int accelerationFactor, int speedFactor);
+bool motionDriverBSplineAbsolute(float x, float y, float angle, float dist0, float dist1, int accelerationFactor, int speedFactor);
 
 // STOP
 
@@ -103,19 +103,19 @@ BOOL motionDriverBSplineAbsolute(float x, float y, float angle, float dist0, flo
 * Ask to stop the motors (no position maintain)
 * @return TRUE if the driver answer
 */
-BOOL motionDriverStop();
+bool motionDriverStop();
 
 /**
 * Ask to stop the motors (with position maintain)
 * @return TRUE if the driver answer
 */
-BOOL motionDriverObstacle();
+bool motionDriverObstacle();
 
-BOOL motionDriverLeftOneWheel(float leftDeciDegree);
+bool motionDriverLeftOneWheel(float leftDeciDegree);
 
-BOOL motionDriverRightOneWheel(float rightDeciDegree);
+bool motionDriverRightOneWheel(float rightDeciDegree);
 
-BOOL motionSetParameters(int motionType, int a, int speed);
+bool motionSetParameters(int motionType, int a, int speed);
 
 
 #endif

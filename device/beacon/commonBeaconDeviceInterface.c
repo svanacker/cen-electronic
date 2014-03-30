@@ -10,7 +10,7 @@ unsigned int commonBeaconDeviceGetSoftwareRevision() {
     return 1;
 }
 
-int commonBeaconDeviceGetInterface(char header, int mode, BOOL fillDeviceArgumentList) {
+int commonBeaconDeviceGetInterface(char header, int mode, bool fillDeviceArgumentList) {
 	// Redirection
     if (header == COMMAND_REDIRECT_TO_JENNIC) {
 		// same output / input

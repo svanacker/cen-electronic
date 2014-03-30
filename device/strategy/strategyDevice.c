@@ -34,7 +34,7 @@ void stopStrategy(void) {
 
 }
 
-BOOL isStrategyDeviceOk(void) {
+bool isStrategyDeviceOk(void) {
     return TRUE;
 }
 

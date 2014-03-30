@@ -37,7 +37,7 @@ void stopStartMatchDetector() {
 
 }
 
-BOOL isStartMatchDetectorDeviceOk() {
+bool isStartMatchDetectorDeviceOk() {
     return TRUE;
 }
 

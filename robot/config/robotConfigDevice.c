@@ -117,7 +117,7 @@ void stopConfig(void) {
 
 }
 
-BOOL isConfigDeviceOk(void) {
+bool isConfigDeviceOk(void) {
     refreshConfig();
     return getConfigValue() < MAX_UNSIGNEDINT;
 }

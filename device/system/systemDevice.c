@@ -22,7 +22,7 @@ void deviceSystemInit() {
 void deviceSystemShutDown() {
 } 
 
-BOOL deviceSystemIsOk() {
+bool deviceSystemIsOk() {
     return TRUE;
 }
 

@@ -1,13 +1,15 @@
 #ifndef COMMONS_H
 #define COMMONS_H
 
+#include <stdbool.h>
+
 /**
  * Defines that we want to run with MPLAB SIMULATION
  */
 // #define MPLAB_SIMULATION
 
-#define PROG_32
-#include <GenericTypeDefs.h>
+// #define PROG_32
+// #include <GenericTypeDefs.h>
 // #define PROG_32
 // #include <GenericTypeDefs.h>
 
@@ -20,7 +22,7 @@
 
 
 
-// #define BOOL unsigned char
+// #define bool unsigned char
 
 #define FALSE 0
 #define TRUE (!FALSE)
@@ -46,6 +48,6 @@
  * @param object pointer on a structure for object1
  * @param object pointer on a structure for object2
  */
-// typedef BOOL EqualsFunction(int* object1, int* object2);
+// typedef bool EqualsFunction(int* object1, int* object2);
 
 #endif

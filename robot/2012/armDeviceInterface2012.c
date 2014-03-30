@@ -10,7 +10,7 @@ unsigned int deviceArm2012GetSoftwareRevision() {
     return 1;
 }
 
-int deviceArm2012GetInterface(char header, int mode, BOOL fillDeviceArgumentList) {
+int deviceArm2012GetInterface(char header, int mode, bool fillDeviceArgumentList) {
     if (header == COMMAND_ARM_2012_UP) {
         if (mode == DEVICE_MODE_INPUT) {
             if (fillDeviceArgumentList) {

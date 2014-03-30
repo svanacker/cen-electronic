@@ -49,7 +49,7 @@ void transmitDriverData(int transmitMode,
     }
 }
 
-BOOL handleNotificationFromDispatcher(DriverDataDispatcher* dispatcher) {
+bool handleNotificationFromDispatcher(DriverDataDispatcher* dispatcher) {
     InputStream* inputStream = dispatcher->inputStream;
 
     if (inputStream == NULL) {

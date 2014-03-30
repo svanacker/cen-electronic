@@ -18,7 +18,7 @@ static TestSuite mathTestSuite;
 /**
 * Test if there is no overflow using 16 bits with absLong function.
 */
-BOOL absLongTest(void) {
+bool absLongTest(void) {
 	signed long value = 40000;
 	signed long absValue = absLong(value);
 
@@ -38,7 +38,7 @@ BOOL absLongTest(void) {
 
 }
 
-BOOL absLimitTest(void) {
+bool absLimitTest(void) {
 	signed long value1 = 50000;
 	signed long limitValue = 40000;
 
@@ -57,7 +57,7 @@ BOOL absLimitTest(void) {
 	return FALSE;
 }
 
-BOOL absFloatTest(void) {
+bool absFloatTest(void) {
 	signed long value = 40000.0;
 	signed long absValue = fabsf(value);
 	
@@ -74,7 +74,7 @@ BOOL absFloatTest(void) {
 	return FALSE;
 }
 
-BOOL convertFloatTest1(void) {
+bool convertFloatTest1(void) {
 	signed long value = 40000;
 	float result = (float) value;
 	
@@ -90,7 +90,7 @@ BOOL convertFloatTest1(void) {
 	return FALSE;
 }
 
-BOOL convertFloatTest2(void) {
+bool convertFloatTest2(void) {
 	signed long value = -40000;
 	float result = (float) value;
 	
@@ -106,7 +106,7 @@ BOOL convertFloatTest2(void) {
 	return FALSE;
 }
 
-BOOL convertFloatTest3(void) {
+bool convertFloatTest3(void) {
 	signed long value = -123456789;
 	float result = (float) value;
 	

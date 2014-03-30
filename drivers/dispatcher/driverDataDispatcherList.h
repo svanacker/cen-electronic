@@ -49,7 +49,7 @@ void initDriverDataDispatcherList();
  * Handle data from all dispatcher list with a particular transmit Mode.
  * @return TRUE if data notification was handled
  */
-BOOL handleNotificationFromDispatcherList(int transmitMode);
+bool handleNotificationFromDispatcherList(int transmitMode);
 
 
 #endif

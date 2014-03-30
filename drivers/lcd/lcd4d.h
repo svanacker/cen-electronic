@@ -229,12 +229,12 @@ void setLcd4dColor(Lcd4d* lcd, unsigned char r, unsigned char g, unsigned char b
 /**
  * Set the autobaud to the lcd.
  */
-BOOL setAutoBaud(Lcd4d* lcd);
+bool setAutoBaud(Lcd4d* lcd);
 
 /**
  * Change the rate of the uart.
  */
-BOOL setLcd4dBaudRate(Lcd4d* lcd, int baudRateType);
+bool setLcd4dBaudRate(Lcd4d* lcd, int baudRateType);
 
 /**
  * Get the version of the Lcd into the version structure.
@@ -255,70 +255,70 @@ void getLcd4dDisplayResolution(Lcd4d* lcd, Point* point);
 /** 
  * Clear Screen.
  */
-BOOL lcd4dClearScreen(Lcd4d* lcd);
+bool lcd4dClearScreen(Lcd4d* lcd);
 
 /**
  * Enable or disable the backlight.
  */
-BOOL lcd4dBacklight(Lcd4d* lcd, BOOL backlight);
+bool lcd4dBacklight(Lcd4d* lcd, bool backlight);
 
 /**
  * Enable or not the display.
  */
-BOOL lcd4dDisplay(Lcd4d* lcd, BOOL display);
+bool lcd4dDisplay(Lcd4d* lcd, bool display);
 
 /**
  * Change the display orientation.
  * @param displayOrientation LCD4D_ORIENTATION_90, LCD4D_ORIENTATION_270, LCD4D_NATIVE_ORIENTATION,	LCD4D_ORIENTATION_180
  */
-BOOL lcd4dSetDisplayResolution(Lcd4d* lcd, unsigned int displayOrientation);
+bool lcd4dSetDisplayResolution(Lcd4d* lcd, unsigned int displayOrientation);
 
 /**
  * Enable or not the touch control.
  */
-BOOL lcd4dTouchControl(Lcd4d* lcd, BOOL touchControl);
+bool lcd4dTouchControl(Lcd4d* lcd, bool touchControl);
 
 /** 
  * Set the volume of the lcd.
  */
-BOOL lcd4dVolume(Lcd4d* lcd, int volume);
+bool lcd4dVolume(Lcd4d* lcd, int volume);
 
 // DRAW Functions
 
 /**
  * Draw a circle.
  */
-BOOL lcd4dDrawCircle(Lcd4d* lcd, int x, int y, int radius);
+bool lcd4dDrawCircle(Lcd4d* lcd, int x, int y, int radius);
 
 /**
  * Draw a triangle.
  */
-BOOL lcd4dDrawTriangle(Lcd4d* lcd, int x1, int y1, int x2, int y2, int x3, int y3);
+bool lcd4dDrawTriangle(Lcd4d* lcd, int x1, int y1, int x2, int y2, int x3, int y3);
 
 /**
  * Draw a line.
  */
-BOOL lcd4dDrawLine(Lcd4d* lcd, int x1, int y1, int x2, int y2);
+bool lcd4dDrawLine(Lcd4d* lcd, int x1, int y1, int x2, int y2);
 
 /**
  * Draw a rectangle.
  */
-BOOL lcd4dDrawRectangle(Lcd4d* lcd, int x1, int y1, int x2, int y2);
+bool lcd4dDrawRectangle(Lcd4d* lcd, int x1, int y1, int x2, int y2);
 
 /**
  * Draw an ellipse.
  */
-BOOL lcd4dDrawEllipse(Lcd4d* lcd, int x, int y, int rx, int ry);
+bool lcd4dDrawEllipse(Lcd4d* lcd, int x, int y, int rx, int ry);
 
 /**
  * Draw a pixel.
  */
-BOOL lcd4dDrawPixel(Lcd4d* lcd, int x, int y);
+bool lcd4dDrawPixel(Lcd4d* lcd, int x, int y);
 
 /**
  * set the pen to be solid or line style.
  */
-BOOL lcd4dSetPenType(Lcd4d* lcd, int penType);
+bool lcd4dSetPenType(Lcd4d* lcd, int penType);
 
 // TEXT COMMANDS
 
@@ -326,27 +326,27 @@ BOOL lcd4dSetPenType(Lcd4d* lcd, int penType);
  * Change the font size.
  * @param fontSize LCD4D_FONT_SMALL, LCD4D_FONT_NORMAL ...
  */
-BOOL lcd4dSetFont(Lcd4d* lcd, int fontSize);
+bool lcd4dSetFont(Lcd4d* lcd, int fontSize);
 
 /**
  * Draw a char at the char grid
  */
-BOOL lcd4dDrawChar(Lcd4d* lcd, char c, int column, int row);
+bool lcd4dDrawChar(Lcd4d* lcd, char c, int column, int row);
 
 /**
  * Draw a char but using graphic mode.
  */
-BOOL lcd4dDrawGraphicChar(Lcd4d* lcd, char c, int x, int y, int width, int height);
+bool lcd4dDrawGraphicChar(Lcd4d* lcd, char c, int x, int y, int width, int height);
 
 /**
  * Draw a string in text mode.
  */
-BOOL lcd4dDrawString(Lcd4d* lcd, int column, int row, int fontSize, char* text);
+bool lcd4dDrawString(Lcd4d* lcd, int column, int row, int fontSize, char* text);
 
 /**
  * Draw a string in graphic mode.
  */
-BOOL lcd4dDrawGraphicString(Lcd4d* lcd, int x, int y, int fontSize, int width, int height, char* text);
+bool lcd4dDrawGraphicString(Lcd4d* lcd, int x, int y, int fontSize, int width, int height, char* text);
 
 // TODO : Draw Buttons
 
@@ -357,7 +357,7 @@ void lcd4dWaitTouchAndGetTouchCoordinates(Lcd4d* lcd, int touchMode, Point* poin
 /**
  * Set the region for touch.
  */
-BOOL lcd4dSetTouchRegion(Lcd4d* lcd, int x1, int y1, int x2, int y2);
+bool lcd4dSetTouchRegion(Lcd4d* lcd, int x1, int y1, int x2, int y2);
 
 /**
  * When objects from the memory card such as images are displayed sequentially, a delay can
@@ -366,7 +366,7 @@ BOOL lcd4dSetTouchRegion(Lcd4d* lcd, int x1, int y1, int x2, int y2);
  * before the next object is displayed. If the user touches the display during the delay period,
  * the delay will end immediately. The touch region, if used, is taken into account.
  */
-BOOL lcd4dWaitUntilTouch(Lcd4d* lcd, unsigned int delayMilliSeconds);
+bool lcd4dWaitUntilTouch(Lcd4d* lcd, unsigned int delayMilliSeconds);
 
 // MEMORY CARDS
 
@@ -375,12 +375,12 @@ BOOL lcd4dWaitUntilTouch(Lcd4d* lcd, unsigned int delayMilliSeconds);
 /**
  * Initialize the memory Card of a LCD 4D.
  */
-BOOL lcd4dInitializeMemoryCardRaw(Lcd4d* lcd);
+bool lcd4dInitializeMemoryCardRaw(Lcd4d* lcd);
 
 /**
  * Set the pointer address of the memory card.
  */
-BOOL lcd4dSetAddressPointerOfCardRaw(Lcd4d* lcd, unsigned long address);
+bool lcd4dSetAddressPointerOfCardRaw(Lcd4d* lcd, unsigned long address);
 
 /**
  * Read byte data from the card (RAW).
@@ -390,7 +390,7 @@ unsigned char lcd4dReadByteDataFromCardRaw(Lcd4d* lcd, unsigned long address);
 /**
  * Writes data byte to the card (RAW).
  */
-BOOL lcd4dWriteByteDataToCardRaw(Lcd4d* lcd, unsigned char data);
+bool lcd4dWriteByteDataToCardRaw(Lcd4d* lcd, unsigned char data);
 
 /**
  * Read Sector Block Data from Card (RAW).
@@ -412,7 +412,7 @@ char* lcd4dReadSectorBlockDataFromCardRaw(Lcd4d* lcd, unsigned long sectorIndex)
  * Only data(1..512) are written to the sector. Other bytes in the command message do not
  * get written.
  */
-BOOL lcd4dWriteSectorBlockDataToCardRaw(Lcd4d* lcd, unsigned long sectorIndex, char data[]);
+bool lcd4dWriteSectorBlockDataToCardRaw(Lcd4d* lcd, unsigned long sectorIndex, char data[]);
 
 /**
  * This command copies an area of the screen of specified size. The start location of the block
@@ -425,7 +425,7 @@ BOOL lcd4dWriteSectorBlockDataToCardRaw(Lcd4d* lcd, unsigned long sectorIndex, c
  * This is a very powerful feature for animating objects, smooth scrolling, or implementing a
  * windowing system.
  */
-BOOL lcd4dScreenCopySaveToCardRaw(Lcd4d* lcd, int x, int y, int width, int height, unsigned long sectorIndex);
+bool lcd4dScreenCopySaveToCardRaw(Lcd4d* lcd, int x, int y, int width, int height, unsigned long sectorIndex);
 
 /**
  * This command displays an image on the screen that has been previously stored at a
@@ -438,7 +438,7 @@ BOOL lcd4dScreenCopySaveToCardRaw(Lcd4d* lcd, int x, int y, int width, int heigh
  * Note: The image parameters such as width, height and colour-mode are built into the image
  * header file and do not need to be specified by the host.
  */
-BOOL lcd4dDisplayImageIconFromCardRaw(Lcd4d* lcd, int x, int y, unsigned long sectorIndex);
+bool lcd4dDisplayImageIconFromCardRaw(Lcd4d* lcd, int x, int y, unsigned long sectorIndex);
 
 /**
  * This command displays a video/Animation on the screen that has been previously stored at
@@ -452,7 +452,7 @@ BOOL lcd4dDisplayImageIconFromCardRaw(Lcd4d* lcd, int x, int y, unsigned long se
  * Note: The Video/Animation parameters such as width, height and colour-mode are built
  * into the image header file and do not need to be specified by the host.
  */
-BOOL lcd4dDisplayVideoFromCardRaw(Lcd4d* lcd, int x, int y, int delay, unsigned long sectorIndex);
+bool lcd4dDisplayVideoFromCardRaw(Lcd4d* lcd, int x, int y, int delay, unsigned long sectorIndex);
 
 // -> FAT Level
 
@@ -462,7 +462,7 @@ BOOL lcd4dDisplayVideoFromCardRaw(Lcd4d* lcd, int x, int y, int delay, unsigned 
  * a reset then this command must be used to initialise the card.
  * Note! There is no card insert/remove auto detect facility.
  */
-BOOL lcd4dInitializeMemoryCardFAT(Lcd4d* lcd);
+bool lcd4dInitializeMemoryCardFAT(Lcd4d* lcd);
 
 /**
  * Using this command, the host can read a DOS compatible (FAT) file from the memory card.
@@ -475,7 +475,7 @@ BOOL lcd4dInitializeMemoryCardFAT(Lcd4d* lcd);
  * the better, as long as the host system can buffer the incoming block size. Setting this value
  * too low will slow the transfer.
  */
-BOOL lcd4dReadFileFromCardFAT(Lcd4d* lcd, int handshakingMode, char* fileName);
+bool lcd4dReadFileFromCardFAT(Lcd4d* lcd, int handshakingMode, char* fileName);
 
 /**
  * This command allows the host to write a DOS compatible (FAT) file to the memory card. The
@@ -497,12 +497,12 @@ BOOL lcd4dReadFileFromCardFAT(Lcd4d* lcd, int handshakingMode, char* fileName);
  * @param appendMode append or not (overwrite) the file
  * @param performanceMode high or low performance
  */
-BOOL lcd4dWriteFileToCardFAT(Lcd4d* lcd, int handshakingMode, int appendMode, int performanceMode, char* fileName, unsigned long fileSize, Buffer* buffer);
+bool lcd4dWriteFileToCardFAT(Lcd4d* lcd, int handshakingMode, int appendMode, int performanceMode, char* fileName, unsigned long fileSize, Buffer* buffer);
 
 /**
  * Erases the file specified in the “file_name”.
  */
-BOOL lcd4dEraseFileFromCardFAT(Lcd4d* lcd, char* fileName);
+bool lcd4dEraseFileFromCardFAT(Lcd4d* lcd, char* fileName);
 
 /**
  * Returns a directory listing (stream of characters) consisting of the files names matching the
@@ -515,7 +515,7 @@ BOOL lcd4dEraseFileFromCardFAT(Lcd4d* lcd, char* fileName);
  * allowed.
  * @param outputStream the stream in which we write the data
  */
-BOOL lcd4dListDirectoryOfCardFAT(Lcd4d* lcd, char* fileNameToMatch, OutputStream* outputStream);
+bool lcd4dListDirectoryOfCardFAT(Lcd4d* lcd, char* fileNameToMatch, OutputStream* outputStream);
 
 /**
  * This command copies an area of the screen of specified size. The start location of the block
@@ -531,7 +531,7 @@ BOOL lcd4dListDirectoryOfCardFAT(Lcd4d* lcd, char* fileNameToMatch, OutputStream
  * Note: This command always stores that part of the screen as a 16 bit image, i.e. 2 bytes per
  * pixel.
  */
-BOOL lcd4dScreenCopySaveToCardFAT(Lcd4d* lcd, int x, int y, int width, int height, char* fileName);
+bool lcd4dScreenCopySaveToCardFAT(Lcd4d* lcd, int x, int y, int width, int height, char* fileName);
 
 /**
  * This command displays a bitmap image or an icon on to the screen that has been
@@ -550,7 +550,7 @@ BOOL lcd4dScreenCopySaveToCardFAT(Lcd4d* lcd, int x, int y, int width, int heigh
  * loaded to the SD card, and the pointer to the multimedia object which can be found from
  * the .DAT file created by the Graphics Composer along with the GCI file.
  */
-BOOL lcd4dDisplayImageIconFromCardFAT(Lcd4d* lcd, int x, int y, char* fileName, unsigned long imagePos);
+bool lcd4dDisplayImageIconFromCardFAT(Lcd4d* lcd, int x, int y, char* fileName, unsigned long imagePos);
 
 /**
  * This command plays a WAV file from the memory card. Wave files should be mono to keep
@@ -565,4 +565,4 @@ BOOL lcd4dDisplayImageIconFromCardFAT(Lcd4d* lcd, int x, int y, char* fileName, 
  * most simple sounds.
  * @param option see PLAY_WAV_OPTION_XXX options
  */
-BOOL lcd4dPlayAudioWAVFileFromCardFAT(Lcd4d* lcd, unsigned int option, char* fileName);
+bool lcd4dPlayAudioWAVFileFromCardFAT(Lcd4d* lcd, unsigned int option, char* fileName);

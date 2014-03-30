@@ -10,7 +10,7 @@ unsigned int deviceRelayGetSotwareRevision() {
 	return 1;
 }
 
-int deviceRelayGetInterface(char header, int mode, BOOL fillDeviceArgumentList) {
+int deviceRelayGetInterface(char header, int mode, bool fillDeviceArgumentList) {
 	if (mode == DEVICE_MODE_INPUT) {
 		if (header == COMMAND_RELAY) {
 			if (fillDeviceArgumentList) {

@@ -19,7 +19,7 @@ void clearGameTarget(GameTarget* target) {
 	}
 }
 
-void printGameTarget(OutputStream* outputStream, GameTarget* target, BOOL includeItems) {
+void printGameTarget(OutputStream* outputStream, GameTarget* target, bool includeItems) {
 	appendString(outputStream, "target:");
 	appendKeyAndName(outputStream, "name=", target->name);
 	appendStringAndDecf(outputStream, ", gain=", target->gain);

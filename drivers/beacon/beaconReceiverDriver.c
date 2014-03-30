@@ -17,13 +17,13 @@
 #include "../../drivers/driverList.h"
 #include "../../drivers/driverTransmitter.h"
 
-BOOL updateOpponentRobotPosition(Point* opponentRobotPosition) {
+bool updateOpponentRobotPosition(Point* opponentRobotPosition) {
     OutputStream* outputStream = getDriverRequestOutputStream();
     InputStream* inputStream = getDriverResponseInputStream();
 
     append(outputStream, COMMAND_GET_OPPONENT_ROBOT_POSITION);
 
-    BOOL result = transmitFromDriverRequestBuffer();
+    bool result = transmitFromDriverRequestBuffer();
 
 	opponentRobotPosition->x = readHex4(inputStream);
 	// separator	

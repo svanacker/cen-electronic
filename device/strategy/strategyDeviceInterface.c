@@ -13,7 +13,7 @@ unsigned int getStrategyVersion(void) {
     return 1;
 }
 
-int deviceStrategyGetInterface(char header, int mode, BOOL fillDeviceArgumentList) {
+int deviceStrategyGetInterface(char header, int mode, bool fillDeviceArgumentList) {
 	// Robot opponent position
     if (header == COMMAND_STRATEGY_SET_OPPONENT_ROBOT_POSITION) {
 		if (mode == DEVICE_MODE_INPUT) {

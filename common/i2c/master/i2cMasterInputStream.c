@@ -65,7 +65,7 @@ void _i2cMasterCloseInputStream(InputStream* inputStream) {
 
 }
 
-BOOL _i2cAvailableData(InputStream* inputStream) {
+bool _i2cAvailableData(InputStream* inputStream) {
     fillI2CInputInternalBuffer(inputStream);
     Buffer* buffer = getI2CMasterInputBuffer(inputStream);
     return !isBufferEmpty(buffer);

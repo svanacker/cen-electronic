@@ -24,7 +24,7 @@ void deviceRelayInit() {
 void deviceRelayShutDown() {
 }
 
-BOOL deviceRelayIsOk() {
+bool deviceRelayIsOk() {
 	return TRUE;
 }
 

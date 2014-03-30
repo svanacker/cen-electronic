@@ -46,7 +46,7 @@ int getGameTargetActionItemCount(GameTargetActionItemList* targetActionItemList)
 
 // ITERATOR
 
-BOOL targetActionItemListHasNext(GameTargetActionItemList* targetActionItemList) {
+bool targetActionItemListHasNext(GameTargetActionItemList* targetActionItemList) {
 	return (targetActionItemList->iteratorIndex < targetActionItemList->size);
 }
 

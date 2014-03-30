@@ -21,7 +21,7 @@
  */
 typedef struct {
 	/** enabled or not the rotation. */
-	BOOL enabled;	
+	bool enabled;	
 
 	/** The lasers instances. */
 	Laser lasers[LASER_COUNT];
@@ -75,7 +75,7 @@ void stopLaserBeacon();
 /**
 * Enabled or not the detection by the lasers and the rotation via servo.
 */
-void setBeaconSystemEnabled(BOOL enabled);
+void setBeaconSystemEnabled(bool enabled);
 
 /**
  * Get the laser struct with index "laserIndex"
@@ -113,7 +113,7 @@ float getNotifyTimeDelay();
 * Notify the robot position.
 * @return TRUE if the method add data to be sent by the zigbee
 */
-BOOL notifyRobotPositionIfNecessary();
+bool notifyRobotPositionIfNecessary();
 
 /**
  * Set the position of the calibration point.

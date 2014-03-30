@@ -124,11 +124,11 @@ void updateEndMotionData(int instructionIndex, MotionEndInfo* endMotion, MotionE
 /**
  * Detects if the robot has end his motion and if it can continue to next instruction.
  */
-BOOL isEndOfMotion(int instructionIndex, MotionEndInfo* endMotion, MotionEndDetectionParameter* parameter);
+bool isEndOfMotion(int instructionIndex, MotionEndInfo* endMotion, MotionEndDetectionParameter* parameter);
 
 /**
  * Detects if the robot is blocked, and if it must be stopped to avoid problems with motors.
  */
-BOOL isRobotBlocked(int instructionIndex, MotionEndInfo* endMotion, MotionEndDetectionParameter* parameter);
+bool isRobotBlocked(int instructionIndex, MotionEndInfo* endMotion, MotionEndDetectionParameter* parameter);
 
 #endif

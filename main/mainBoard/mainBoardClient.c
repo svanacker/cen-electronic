@@ -181,6 +181,7 @@ static OutputStream pcOutputStream;
 static StreamLink pcSerialStreamLink;
 
 // serial link LCD
+/*
 static Lcd4d lcd4d;
 static char lcd4dInputBufferArray[MAIN_BOARD_LCD_INPUT_BUFFER_LENGTH];
 static Buffer lcd4dInputBuffer;
@@ -188,6 +189,7 @@ static char lcd4dOutputBufferArray[MAIN_BOARD_LCD_OUTPUT_BUFFER_LENGTH];
 static Buffer lcd4dOutputBuffer;
 static OutputStream lcd4dOutputStream;
 static StreamLink lcd4dSerialStreamLink;
+*/
 
 // both OutputStream as composite
 static CompositeOutputStream compositePcAndDebugOutputStream;
@@ -243,10 +245,10 @@ static Device deviceListArray[MAIN_BOARD_DEVICE_LENGTH];
 static Timer timerListArray[MAIN_BOARD_TIMER_LENGTH];
 
 // Obstacle management
-static BOOL mustNotifyObstacle;
+static bool mustNotifyObstacle;
 static unsigned int instructionType;
-static BOOL useInfrared;
-static BOOL useBalise;
+static bool useInfrared;
+static bool useBalise;
 
 #define INSTRUCTION_TYPE_NO_MOVE		0
 #define INSTRUCTION_TYPE_FORWARD		1
@@ -255,7 +257,7 @@ static BOOL useBalise;
 
 
 // Specific 2012
-static BOOL armOpen;
+static bool armOpen;
 
 /**
  * Call-back when Data send some notification message (like Position Reached, Position failed ...)
@@ -478,7 +480,7 @@ void initDevicesDescriptor() {
 	infraredDetectorDevice->deviceHandleCallbackRawData = &mainBoardCallbackRawData;
 }
 
-BOOL isObstacleOutsideTheTable(int distance) {
+bool isObstacleOutsideTheTable(int distance) {
 	float a = getRobotAngle() * (PI / 1800.0);
 	float dca = cosf(a) * distance;
 	float dsa = sinf(a) * distance;
@@ -578,79 +580,7 @@ void waitForInstruction() {
 	*/	
 }
 
-#define RW BIT_3
-#define RS BIT_1
-#define E  BIT_0
-#define D0 BIT_0
-#define D1 BIT_1
-#define D2 BIT_2
-#define D3 BIT_3
-#define D4 BIT_4
-#define D5 BIT_5
-#define D6 BIT_6
-#define D7 BIT_7
-
-
-void w_com (char com){
-	PORTClearBits(IOPORT_F,RS|RW); 
-	PORTSetBits(IOPORT_F,E); 
-	PORTE = com;
-	delay100us(1);
-	PORTClearBits(IOPORT_F,E); 
-	PORTSetBits(IOPORT_F,E);
-}
-
-void w_data (char data){
-	PORTClearBits(IOPORT_F,RW); 
-	PORTSetBits(IOPORT_F,RS); 
-	PORTE = data;
-	delay100us(1);
-	PORTClearBits(IOPORT_F,E); 
-	PORTSetBits(IOPORT_F,E);
-}
-
-void w_text(const char *buffer)
-{
-    while(*buffer != '\n')
-    {
-        w_data( *buffer);
-        buffer++; 
-    }
-}
-
-static const char* myHelloStr1="   PIC32...on LCD   Cybernetique en Nord        With              By Jerome    \n";
-
 int main(void) {
- 	/*
-	PORTSetPinsDigitalOut(IOPORT_F,E|RS|RW);
-	PORTSetPinsDigitalOut(IOPORT_E,D0|D1|D2|D3|D4|D5|D6|D7);
-
-
-	PORTClearBits(IOPORT_F, E|RS|RW);
-
-	delaymSec(1000);
-
-	w_com(0b00111000);
-	delaymSec(10);
-	w_com(0b00111000);
-	delaymSec(10);
-	w_com(0b00111000);
-	delaymSec(10);
-
-	w_com(0b00001110);
-	delaymSec(10);
-	w_com(0b00000110);
-	delaymSec(10);
-
-
-	w_com(0b00000110);
-	w_text(myHelloStr1);
-
-	while (1) {
-
-	}
-	*/
-
     setPicName("MAIN BOARD");
 
     setRobotMustStop(FALSE);
@@ -678,6 +608,7 @@ int main(void) {
             SERIAL_PORT_PC,
 			0);
 
+    /*
 	// Opens the serial link for the lcd
     openSerialLink(&lcd4dSerialStreamLink,
 		            &lcd4dInputBuffer,
@@ -690,6 +621,8 @@ int main(void) {
 		            SERIAL_PORT_LCD,
 					9600);
 
+     */
+    
     // LCD (LCD03 via Serial interface)
     initLCDOutputStream(&lcdOutputStream);
 
@@ -803,6 +736,7 @@ int main(void) {
     // printDriverDataDispatcherList(getOutputStreamLogger(DEBUG), getDispatcherList());
 	*/
 
+        /*
 	appendString(getOutputStreamLogger(ALWAYS), "Init LCD:");
 	initLcd4d(&lcd4d, &(lcd4dOutputStream), &(lcd4dInputBuffer.inputStream), &lcd4dInputBuffer);
 	delaymSec(5000);
@@ -844,7 +778,7 @@ int main(void) {
 
 		lcd4dClearScreen(&lcd4d);
 		delaymSec(500);
-	
+	*/
 		/*
 		getLcd4dVersionCommand(&lcd4d, &version);
 		delaymSec(500);
@@ -872,12 +806,11 @@ int main(void) {
 		lcd4dDrawChar(&lcd4d, '8', 10, 10);
 		delaymSec(500);
 		lcd4dDrawGraphicChar(&lcd4d, '7', 50, 200, 2, 2);
-		*/
 		delaymSec(200);
 		lcd4dDrawString(&lcd4d, 10, 10, LCD4D_FONT_LARGEST, "Hello");
 		delaymSec(200);
 		lcd4dDrawGraphicString(&lcd4d, 50, 200, LCD4D_FONT_LARGEST, 2, 2, " World");
-/*
+
 #define		LCD4D_GET_TOUCH_COORDINATES_COMMAND		'o'
 #define		LCD4D_TOUCH_WAIT_UNTIL_ANY_TOUCH		0x00
 #define		LCD4D_TOUCH_WAIT_PRESS					0x01
@@ -885,8 +818,8 @@ int main(void) {
 #define		LCD4D_TOUCH_WAIT_MOVING					0x03
 #define		LCD4D_TOUCH_GET_STATUS					0x04
 #define		LCD4D_TOUCH_GET_COORDINATES				0x05
-*/
-		BOOL result = lcd4dWaitUntilTouch(&lcd4d, 5000);
+
+                 * 		bool result = lcd4dWaitUntilTouch(&lcd4d, 5000);
 		if (result) {
 			lcd4dWaitTouchAndGetTouchCoordinates(&lcd4d, LCD4D_TOUCH_GET_COORDINATES, &point);
 			appendStringAndDec(getOutputStreamLogger(ERROR), "x=", point.x);
@@ -897,6 +830,7 @@ int main(void) {
 			delaymSec(1000);
 		}
 	}
+        */
 
 	while (1) {
 		waitForInstruction();

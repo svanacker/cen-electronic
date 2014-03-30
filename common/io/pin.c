@@ -16,7 +16,7 @@
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
 
-void setPinValue(int pinIndex, BOOL pinValue) {
+void setPinValue(int pinIndex, bool pinValue) {
     switch (pinIndex) {
             // PORT B
         case PIN_INDEX_RB0: LATBbits.LATB0 = pinValue;
@@ -90,7 +90,7 @@ void setPinValue(int pinIndex, BOOL pinValue) {
 
 }
 
-BOOL getPinValue(int pinIndex) {
+bool getPinValue(int pinIndex) {
     switch (pinIndex) {
             // PORT B
         case PIN_INDEX_RB0: return PORTBbits.RB0;
@@ -140,11 +140,11 @@ BOOL getPinValue(int pinIndex) {
 void printAllPinValues(OutputStream* outputStream) {
     int i = 0;
     for (i = PIN_MIN_INDEX; i <= PIN_MAX_INDEX; i++) {
-        BOOL value = getPinValue(i);
+        bool value = getPinValue(i);
         appendString(outputStream, "Pin ");
         appendHex2(outputStream, i);
         append(outputStream, '=');
-        appendBOOL(outputStream, value);
+        appendBool(outputStream, value);
         println(outputStream);
     }
 }

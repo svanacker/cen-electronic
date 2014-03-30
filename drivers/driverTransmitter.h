@@ -6,7 +6,7 @@
 /**
  * Define a function which can be use to redirect driver transmission.
  */
-typedef BOOL transmitFromDriverRequestBufferFunction();
+typedef bool transmitFromDriverRequestBufferFunction();
 
 /**
  * Intercepts and do a redirection on redirection transmission.
@@ -19,6 +19,6 @@ void setRedirectionTransmitFromDriverRequestBuffer(transmitFromDriverRequestBuff
 * It gets the first char on the dispatcher, and use it to determine the lenght of input, and the length of output
 * @return the resultBuffer
 */
-BOOL transmitFromDriverRequestBuffer();
+bool transmitFromDriverRequestBuffer();
 
 #endif

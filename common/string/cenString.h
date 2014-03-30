@@ -3,6 +3,6 @@
 
 #include "../../common/commons.h"
 
-BOOL stringEquals(char* s1, char* s2);
+bool stringEquals(char* s1, char* s2);
 
 #endif

@@ -49,7 +49,7 @@ inline void fillAsymmetricPathData(Location* location1,
 }
 
 
-BOOL pathContainsLocation(PathDataFunction* pathDataFunction, Location* location) {
+bool pathContainsLocation(PathDataFunction* pathDataFunction, Location* location) {
 	// fill temporary values
 	pathDataFunction();
 

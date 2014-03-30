@@ -45,7 +45,7 @@ struct Device {
 	/** The interface of the device for a remote caller (without implementation). */
 	DeviceInterface* interface;
 	/** If the device is enabled or not. */
-	// BOOL enabled;
+	// bool enabled;
 	/** Which bus the device use. */
 	int transmitMode;
 	/** The address as char (useful for zigbee for example). */
@@ -65,7 +65,7 @@ struct Device {
 * connected to send debug information.
 * @param deviceDescriptor the descriptor for the device.
 */
-BOOL initDevice(const Device *device);
+bool initDevice(const Device *device);
 
 /**
 * Stop the device with the information given by deviceDescriptor.

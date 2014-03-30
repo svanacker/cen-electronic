@@ -8,7 +8,7 @@ const char* getPwmMotorDeviceName(void) {
 }
 
 int deviceMotorGetInterface(char header, int mode,
-        BOOL fillDeviceArgumentList) {
+        bool fillDeviceArgumentList) {
     if (header == COMMAND_MOVE_MOTOR) {
         if (mode == DEVICE_MODE_INPUT) {
             if (fillDeviceArgumentList) {

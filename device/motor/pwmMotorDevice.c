@@ -19,7 +19,7 @@ void initPwmMotor(void) {
     initPwmForMotor();
 }
 
-BOOL isPwmMotorDeviceOk(void) {
+bool isPwmMotorDeviceOk(void) {
     return TRUE;
 }
 

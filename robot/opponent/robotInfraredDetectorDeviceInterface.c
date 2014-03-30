@@ -10,7 +10,7 @@ unsigned int deviceRobotInfraredDetectorGetSoftwareRevision() {
     return 1;
 }
 
-int deviceRobotInfraredDetectorGetInterface(char header, int mode, BOOL fillDeviceArgumentList ) {
+int deviceRobotInfraredDetectorGetInterface(char header, int mode, bool fillDeviceArgumentList ) {
 	// command to ask
 	if (header == COMMAND_INFRARED_DETECTOR_DETECTION) {
 	    if (mode == DEVICE_MODE_INPUT) {

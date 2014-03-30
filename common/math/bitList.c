@@ -18,7 +18,7 @@ void initBitList(BitList* bitList, unsigned (*array)[], unsigned char arrayLengt
 	bitList->size = arrayLength * BITS_COUNT_IN_UNSIGNED_INT;
 }
 
-void clearBitList(BitList* bitList, BOOL initValue) {
+void clearBitList(BitList* bitList, bool initValue) {
 	int i;
 	int size = bitList->size;
 	for (i = 0; i < size; i++) {
@@ -27,7 +27,7 @@ void clearBitList(BitList* bitList, BOOL initValue) {
 }
 
 
-void setBit(BitList* bitList, unsigned char index, BOOL value) {
+void setBit(BitList* bitList, unsigned char index, bool value) {
 	#ifdef BIT_LIST_DEBUG
 		println(getOutputStreamLogger(INFO));
 		appendStringAndDec(getOutputStreamLogger(INFO), ", index=", index);
@@ -76,7 +76,7 @@ void setBit(BitList* bitList, unsigned char index, BOOL value) {
 	#endif
 }
 
-BOOL getBit(BitList* bitList, unsigned char index) {
+bool getBit(BitList* bitList, unsigned char index) {
 	#ifdef BIT_LIST_DEBUG
 		println(getOutputStreamLogger(INFO));
 		appendStringAndDec(getOutputStreamLogger(INFO), ", index=", index);
@@ -123,7 +123,7 @@ void printBitList(OutputStream* outputStream, BitList* bitList) {
 		if ((i != 0) && (i % BITS_COUNT_IN_UNSIGNED_INT == 0)) {
 			append(outputStream, ' ');
 		}
-		BOOL value = getBit(bitList, i);
+		bool value = getBit(bitList, i);
 		appendDec(outputStream, value);
 	}
 }

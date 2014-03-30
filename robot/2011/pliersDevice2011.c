@@ -33,7 +33,7 @@ void devicePliers2011ShutDown() {
     stopPlier(2);
 }
 
-BOOL devicePliers2011IsOk() {
+bool devicePliers2011IsOk() {
     return TRUE;
 }
 
@@ -76,8 +76,8 @@ void movePliers(int delayCounter, int speed) {
 }
 
 void openPliers(int delayCounter, int speed) {
-    BOOL rightOpened = FALSE;
-    BOOL leftOpened = FALSE;
+    bool rightOpened = FALSE;
+    bool leftOpened = FALSE;
     int counter = 0;
     while (1) {
         counter++;
@@ -118,8 +118,8 @@ void closePliers(int delayCounter, int speed) {
  */
 
 void closePliers(int delayCounter, int speed) {
-    BOOL rightClosed = FALSE;
-    BOOL leftClosed = FALSE;
+    bool rightClosed = FALSE;
+    bool leftClosed = FALSE;
     int counter = 0;
     while (1) {
         counter++;

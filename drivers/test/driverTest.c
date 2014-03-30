@@ -24,7 +24,7 @@ unsigned int driverTestGetValue(int argument) {
     append(outputStream, COMMAND_TEST);
     appendHex2(outputStream, argument);
 
-    BOOL ok = transmitFromDriverRequestBuffer();
+    bool ok = transmitFromDriverRequestBuffer();
     if (ok) {
         int result = readHex2(resultStream);
         return result;
@@ -34,14 +34,14 @@ unsigned int driverTestGetValue(int argument) {
 
 // DRIVER INTERFACE
 
-BOOL driverTestInit() {
+bool driverTestInit() {
     return TRUE;
 }
 
 void driverTestShutDown() {
 }
 
-BOOL driverTestIsOk() {
+bool driverTestIsOk() {
     return TRUE;
 }
 

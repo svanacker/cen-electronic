@@ -9,7 +9,7 @@
  * Return TRUE, if there is an obstacle
  * @param type BACKWARD / FORWARD
  */
-BOOL robotInfraredDetectorHasObstacle(unsigned char type);
+bool robotInfraredDetectorHasObstacle(unsigned char type);
 
 #endif
 

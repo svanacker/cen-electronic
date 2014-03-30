@@ -35,12 +35,12 @@ InputStream* _jennicGetUnderlyingInputStream() {
 	return result;
 }
 
-BOOL _jennic5139AvailableData(InputStream* inputStream) {
+bool _jennic5139AvailableData(InputStream* inputStream) {
 	// fetch data to fill the data buffer
 	copyFromZigbeeToDebugRetainingData();
 	InputStream* underlyingInputStream = _jennicGetUnderlyingInputStream();
 
-	BOOL result = underlyingInputStream->availableData(underlyingInputStream);
+	bool result = underlyingInputStream->availableData(underlyingInputStream);
 
 	return result;
 }

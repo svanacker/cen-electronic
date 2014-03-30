@@ -4,12 +4,12 @@
 
 #include "../../common/commons.h"
 
-BOOL floatEquals(float value1, float value2) {
+bool floatEquals(float value1, float value2) {
     // FIXME : Take care about precision
     return value1 == value2;
 }
 
-BOOL floatEqualsZero(float value1) {
+bool floatEqualsZero(float value1) {
     return (value1 >= -0.00001f && value1 <= 0.00001f);
 }
 

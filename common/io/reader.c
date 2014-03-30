@@ -103,17 +103,17 @@ float readHex6(InputStream* inputStream) {
 
 // CHECK METHODS
 
-BOOL isAck(InputStream* inputStream) {
+bool isAck(InputStream* inputStream) {
     char ack = inputStream->readChar(inputStream);
     return ack == COMMAND_ACK;
 }
 
-BOOL isChar(InputStream* inputStream, char expectedChar) {
+bool isChar(InputStream* inputStream, char expectedChar) {
     char readChar = inputStream->readChar(inputStream);
     return readChar == expectedChar;
 }
 
-BOOL checkIsAck(InputStream* inputStream) {
+bool checkIsAck(InputStream* inputStream) {
     char ack = inputStream->readChar(inputStream);
     if (ack != COMMAND_ACK) {
         OutputStream* outputStream = getErrorOutputStreamLogger();
@@ -124,7 +124,7 @@ BOOL checkIsAck(InputStream* inputStream) {
     return TRUE;
 }
 
-BOOL checkIsChar(InputStream* inputStream, char expectedChar) {
+bool checkIsChar(InputStream* inputStream, char expectedChar) {
     char readChar = inputStream->readChar(inputStream);
     if (expectedChar != readChar) {
         OutputStream* outputStream = getErrorOutputStreamLogger();

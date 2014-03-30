@@ -29,7 +29,7 @@ void deviceLift2011Init() {
 void deviceLift2011ShutDown() {
 }
 
-BOOL deviceLift2011IsOk() {
+bool deviceLift2011IsOk() {
 	return TRUE;
 }
 

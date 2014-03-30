@@ -32,7 +32,7 @@
 #define SONAR_INDEX			0
 
 /** Use or not the sonar. */
-// static BOOL useSonar;
+// static bool useSonar;
 
 /** History of distances. */
 static unsigned int distances[ROBOT_SONAR_DETECTOR_DEVICE_HISTORY_SIZE];
@@ -46,9 +46,9 @@ static char interruptCounter;
 /** Value of the counter for which we do not check. */
 static int doNotCheckBeforeCounter;
 
-static BOOL obstacle;
+static bool obstacle;
 
-static BOOL readNextDistanceFlag;
+static bool readNextDistanceFlag;
 
 static char sonarStatus;
 
@@ -66,7 +66,7 @@ void clearHistory() {
     doNotCheckBeforeCounter = 0;
 }
 
-BOOL checkObstacle() {
+bool checkObstacle() {
     unsigned int i;
     unsigned int matchCount = 0;
     for (i = 0; i < ROBOT_SONAR_DETECTOR_DEVICE_HISTORY_SIZE; i++) {
@@ -124,7 +124,7 @@ void readNextDistance() {
     }
 }
 
-BOOL notifyObstacle() {
+bool notifyObstacle() {
     readNextDistance();
     if (!obstacle) {
         return FALSE;
@@ -159,7 +159,7 @@ void deviceRobotSonarDetectorShutDown() {
 
 }
 
-BOOL deviceRobotSonarDetectorIsOk() {
+bool deviceRobotSonarDetectorIsOk() {
     return TRUE;
 }
 

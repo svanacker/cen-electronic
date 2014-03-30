@@ -141,7 +141,7 @@ void markTargetInUse() {
  * Execute the target actions, and return TRUE if there is a an action called, FALSE else
  * @private
  */
-BOOL executeTargetActions() {
+bool executeTargetActions() {
 	#ifdef DEBUG_STRATEGY_HANDLER
 		appendString(getOutputStreamLogger(DEBUG), "executeTargetActions\n");
 	#endif
@@ -241,7 +241,7 @@ void rotateAbsolute(int angle) {
 	#endif
 }
 
-BOOL motionRotateToFollowPath(PathDataFunction* pathDataFunction, BOOL reversed) {
+bool motionRotateToFollowPath(PathDataFunction* pathDataFunction, bool reversed) {
 	pathDataFunction();
 
 	int angle;
@@ -280,7 +280,7 @@ BOOL motionRotateToFollowPath(PathDataFunction* pathDataFunction, BOOL reversed)
 	return TRUE;
 }
 
-void motionFollowPath(PathDataFunction* pathDataFunction, BOOL reversed) {
+void motionFollowPath(PathDataFunction* pathDataFunction, bool reversed) {
 	pathDataFunction();
 	PathData* pathData = getTmpPathData();
 
@@ -329,7 +329,7 @@ void motionFollowPath(PathDataFunction* pathDataFunction, BOOL reversed) {
 * Handle the trajectory and return TRUE if we go to a location, FALSE else.
 * @private
 */
-BOOL handleCurrentTrajectory() {
+bool handleCurrentTrajectory() {
 	#ifdef DEBUG_STRATEGY_HANDLER
 		appendString(getOutputStreamLogger(DEBUG), "handleCurrentTrajectory\n");	
 	#endif
@@ -352,7 +352,7 @@ BOOL handleCurrentTrajectory() {
 
 	Location* start = getLocation(currentTrajectory, 0);
 	Location* end = getLocation(currentTrajectory, 1);
-	BOOL reversed;
+	bool reversed;
 	PathDataFunction* pathDataFunction = getPathOfLocations(getNavigationPathList(), start, end, &reversed);
 
 	// Follows the path
@@ -375,13 +375,13 @@ void computePoint(Point* ref, Point* cp, int distance, int angle) {
 	cp->y = ref->y + dsa;
 }
 
-BOOL isColliding(Point* path, Point* obstacle) {
+bool isColliding(Point* path, Point* obstacle) {
 	float d = distanceBetweenPoints(path, obstacle);
-	BOOL result = (d < DISTANCE_OPPONENT_TO_PATH);
+	bool result = (d < DISTANCE_OPPONENT_TO_PATH);
 	return result;
 }
 
-BOOL isValidLocation(Point* p) {
+bool isValidLocation(Point* p) {
 	return (p->x !=0) && (p->y != 0);
 }
 
@@ -396,7 +396,7 @@ inline int cpToDistance(signed char d) {
  * Loop on a pathDataFunction, to know if the path has an intersection with the opponentRobotPosition.
  * @private
  */
-BOOL isPathAvailable(PathDataFunction* pathDataFunction) {
+bool isPathAvailable(PathDataFunction* pathDataFunction) {
 	pathDataFunction();
 	PathData* pathData = getTmpPathData();
 	BSplineCurve* curve = getSingleBSplineCurve();
@@ -417,8 +417,8 @@ BOOL isPathAvailable(PathDataFunction* pathDataFunction) {
 	Point p;
 	Point* opponentRobotPosition = &(strategyContext.opponentRobotPosition);
 	Point* lastObstaclePosition = &(strategyContext.lastObstaclePosition);
-	BOOL opponentPresent = isValidLocation(opponentRobotPosition);
-	BOOL obstaclePresent = isValidLocation(lastObstaclePosition);
+	bool opponentPresent = isValidLocation(opponentRobotPosition);
+	bool obstaclePresent = isValidLocation(lastObstaclePosition);
 	for (i = 0; i < 10; i++) {
 		computeBSplinePoint(curve, 0.1 * i, &p);
 		// checking opponent
@@ -433,11 +433,11 @@ BOOL isPathAvailable(PathDataFunction* pathDataFunction) {
 	return TRUE;
 }
 
-BOOL mustComputePaths() {
+bool mustComputePaths() {
 	Point* opponentRobotPosition = &(strategyContext.opponentRobotPosition);
 	Point* lastObstaclePosition = &(strategyContext.lastObstaclePosition);
-	BOOL opponentPresent = isValidLocation(opponentRobotPosition);
-	BOOL obstaclePresent = isValidLocation(lastObstaclePosition);
+	bool opponentPresent = isValidLocation(opponentRobotPosition);
+	bool obstaclePresent = isValidLocation(lastObstaclePosition);
 
 	return opponentPresent || obstaclePresent;
 
@@ -453,7 +453,7 @@ void updatePathsAvailability() {
 	//	printGameStrategyContext(logStream, getStrategyContext());
 	#endif
 
-	BOOL computePath = mustComputePaths();
+	bool computePath = mustComputePaths();
 	if (!computePath) {
 		appendString(logStream, "\nDon't compute Path !");
 	}	
@@ -462,7 +462,7 @@ void updatePathsAvailability() {
 	for (i = 0; i < paths->size; i++) {
 		PathDataFunction* pathDataFunction = paths->paths[i];
 		// by default, path is available
-		BOOL available = TRUE;
+		bool available = TRUE;
 		// Don't do the compute if it's not necessary
 		if (computePath) {	
 			available = isPathAvailable(pathDataFunction);
@@ -513,7 +513,7 @@ void handleCollision() {
 	updatePathsAvailability();
 }
 
-BOOL nextStep() {
+bool nextStep() {
 	unsigned int counter = 0;
 	#ifdef DEBUG_STRATEGY_HANDLER
 		appendString(getOutputStreamLogger(DEBUG), "nextStep\n");	

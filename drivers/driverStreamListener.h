@@ -17,7 +17,7 @@
  * @param outputFilterChar the function for filtering the output (can be NULL)
  * @return TRUE if there is an instruction which was handled
  */
-BOOL handleStreamInstruction(Buffer* inputBuffer,
+bool handleStreamInstruction(Buffer* inputBuffer,
         Buffer* outputBuffer,
         OutputStream* outputStream,
         filterCharFunction* inputFilterChar,

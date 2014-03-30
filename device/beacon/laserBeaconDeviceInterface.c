@@ -11,7 +11,7 @@ const char* deviceBeaconGetName() {
     return "Laser Beacon";
 }
 
-int deviceBeaconGetInterface(char header, int mode, BOOL fillDeviceArgumentList) {
+int deviceBeaconGetInterface(char header, int mode, bool fillDeviceArgumentList) {
 	if (header == COMMAND_INIT_JENNIC_AS_COORDINATER) {
 		// both input/output
 		if (fillDeviceArgumentList) {

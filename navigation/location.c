@@ -9,7 +9,7 @@
 
 #include "location.h"
 
-BOOL locationEquals(Location* location1, Location* location2) {
+bool locationEquals(Location* location1, Location* location2) {
 	return stringEquals(location1->name, location2->name);
 }
 

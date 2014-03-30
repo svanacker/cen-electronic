@@ -55,9 +55,9 @@ void printNavigationContext();
  * @param index the index of the path
  * @param value the availability of the path
  */
-void setPathAvailability(int index, BOOL value);
+void setPathAvailability(int index, bool value);
 
-BOOL getPathAvailability(int index);
+bool getPathAvailability(int index);
 
 /**
  * Reset the status of availability of all paths to Available.

@@ -16,7 +16,7 @@ void initPidTimer(void);
 
 void clearPidTime(void);
 
-BOOL mustPidBeRecomputed(void);
+bool mustPidBeRecomputed(void);
 
 long getPidTime(void);
 

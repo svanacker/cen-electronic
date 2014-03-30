@@ -61,7 +61,7 @@ int getGameTargetCount();
 /**
  * Returns if there is available targets.
  */
-BOOL containsAvailableTarget();
+bool containsAvailableTarget();
 
 // DEBUG
 

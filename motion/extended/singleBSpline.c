@@ -9,7 +9,7 @@
 // Definition of the curve when using bspline
 static BSplineCurve curve;
 
-static BOOL initialized = FALSE;
+static bool initialized = FALSE;
 
 BSplineCurve* getSingleBSplineCurve() {
 	if (!initialized) {

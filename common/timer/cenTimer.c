@@ -29,7 +29,7 @@ void mark(Timer* timer) {
 	timer->markTime = timer->time;
 }
 
-BOOL timeout(Timer* timer, unsigned long time) {
+bool timeout(Timer* timer, unsigned long time) {
 	return timer->markTime + time > timer->time;
 }
 

@@ -24,7 +24,7 @@ void deviceSystemDebugInit() {
 void deviceSystemDebugShutDown() {
 }
 
-BOOL deviceSystemDebugIsOk() {
+bool deviceSystemDebugIsOk() {
     return TRUE;
 }
 

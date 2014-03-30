@@ -12,7 +12,7 @@ unsigned int beaconReceiverDeviceGetSoftwareRevision() {
 }
 
 int beaconReceiverDeviceGetInterface(char header, int mode,
-        BOOL fillDeviceArgumentList) {
+        bool fillDeviceArgumentList) {
 	// getOpponentRobotPos
     if (header == COMMAND_GET_OPPONENT_ROBOT_POSITION) {
         if (mode == DEVICE_MODE_INPUT) {

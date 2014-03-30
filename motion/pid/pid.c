@@ -171,11 +171,11 @@ unsigned int updateMotors(void) {
 		updateEndMotionData(INSTRUCTION_THETA_INDEX, thetaEndMotion, endDetectionParameter, pidTime);
 		updateEndMotionData(INSTRUCTION_ALPHA_INDEX, alphaEndMotion, endDetectionParameter, pidTime);
 
-		BOOL isThetaEnd = isEndOfMotion(INSTRUCTION_THETA_INDEX, thetaEndMotion, endDetectionParameter);
-		BOOL isAlphaEnd = isEndOfMotion(INSTRUCTION_ALPHA_INDEX, alphaEndMotion, endDetectionParameter);
+		bool isThetaEnd = isEndOfMotion(INSTRUCTION_THETA_INDEX, thetaEndMotion, endDetectionParameter);
+		bool isAlphaEnd = isEndOfMotion(INSTRUCTION_ALPHA_INDEX, alphaEndMotion, endDetectionParameter);
 
-		BOOL isThetaBlocked = isRobotBlocked(INSTRUCTION_THETA_INDEX, thetaEndMotion, endDetectionParameter);
-		BOOL isAlphaBlocked = isRobotBlocked(INSTRUCTION_ALPHA_INDEX, alphaEndMotion, endDetectionParameter);
+		bool isThetaBlocked = isRobotBlocked(INSTRUCTION_THETA_INDEX, thetaEndMotion, endDetectionParameter);
+		bool isAlphaBlocked = isRobotBlocked(INSTRUCTION_ALPHA_INDEX, alphaEndMotion, endDetectionParameter);
 
 		if (isThetaEnd && isAlphaEnd) {
 			if (isThetaBlocked || isAlphaBlocked) {

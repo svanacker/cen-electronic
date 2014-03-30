@@ -29,7 +29,7 @@ PathDataFunction* getPath(PathList* pathList, int index) {
     return pathList->paths[index];
 }
 
-PathDataFunction* getPathOfLocations(PathList* pathList, Location* location1, Location* location2, BOOL* reversed) {
+PathDataFunction* getPathOfLocations(PathList* pathList, Location* location1, Location* location2, bool* reversed) {
 	int i;
 	int size = pathList->size;
 	for (i = 0; i < size; i++) {

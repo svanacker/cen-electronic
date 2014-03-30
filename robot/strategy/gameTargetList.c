@@ -58,7 +58,7 @@ int getGameTargetCount() {
     return targets.size;
 }
 
-BOOL containsAvailableTarget() {
+bool containsAvailableTarget() {
 	int i;
 	int size = targets.size;
 	for (i = 0; i < size; i++) {

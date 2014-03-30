@@ -20,7 +20,7 @@ void deviceTestInit() {
 void deviceTestShutDown() {
 }
 
-BOOL deviceTestIsOk() {
+bool deviceTestIsOk() {
     return TRUE;
 }
 

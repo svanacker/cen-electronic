@@ -17,34 +17,36 @@
 
 void openSerialLink(StreamLink* streamLink,
         Buffer* inputBuffer,
-		char (*inputBufferArrayPointer)[],
-		unsigned char inputBufferLength,
+        char (*inputBufferArrayPointer)[],
+        unsigned char inputBufferLength,
         Buffer* outputBuffer,
-		char (*outputBufferArrayPointer)[],
-		unsigned char outputBufferLength,
+        char (*outputBufferArrayPointer)[],
+        unsigned char outputBufferLength,
         OutputStream* outputStream,
         int serialPortIndex,
-		int speed) {
-	if (serialPortIndex != 1) {
-		appendStringAndDec(getOutputStreamLogger(ALWAYS), "\ninitSerialInputBuffer:", serialPortIndex);
-	}
+        int speed) {
+    if (serialPortIndex != 1) {
+        appendStringAndDec(getOutputStreamLogger(ALWAYS), "\ninitSerialInputBuffer:", serialPortIndex);
+    }
     initSerialInputBuffer(inputBuffer, serialPortIndex);
-	if (serialPortIndex != 1) {
-		appendStringAndDec(getOutputStreamLogger(ALWAYS), "\ninitSerialOutputStream:", serialPortIndex);
-	}
+
+    if (serialPortIndex != 1) {
+        appendStringAndDec(getOutputStreamLogger(ALWAYS), "\ninitSerialOutputStream:", serialPortIndex);
+    }
     initSerialOutputStream(outputStream, serialPortIndex);
-	if (serialPortIndex != 1) {
-		appendStringAndDec(getOutputStreamLogger(ALWAYS), "\ninitStreamLink", serialPortIndex);
-	}
+    
+    if (serialPortIndex != 1) {
+        appendStringAndDec(getOutputStreamLogger(ALWAYS), "\ninitStreamLink", serialPortIndex);
+    }
     initStreamLink(streamLink, "Serial",
-					inputBuffer,
-					inputBufferArrayPointer,
-					inputBufferLength,
-					outputBuffer,
-					outputBufferArrayPointer,
-					outputBufferLength,
-					outputStream,
-					speed);
+            inputBuffer,
+            inputBufferArrayPointer,
+            inputBufferLength,
+            outputBuffer,
+            outputBufferArrayPointer,
+            outputBufferLength,
+            outputStream,
+            speed);
 }
 
 void closeSerialLink(StreamLink* streamLink) {

@@ -23,7 +23,7 @@ void fillForPlainEndDetectionParameter() {
 	setArgumentUnsignedHex2(4, "noAnaAtStart");
 }
 
-int devicePIDGetInterface(char header, int mode, BOOL fillDeviceArgumentList) {
+int devicePIDGetInterface(char header, int mode, bool fillDeviceArgumentList) {
     if (header == COMMAND_WRITE_PID) {
         if (mode == DEVICE_MODE_INPUT) {
             if (fillDeviceArgumentList) {

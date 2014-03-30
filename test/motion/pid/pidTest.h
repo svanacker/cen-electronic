@@ -10,26 +10,26 @@
 /**
 * Returns TRUE if the two "Pid" structures have the same value for each field, FALSE else.
 */
-BOOL pidEquals(Pid* pid1, Pid* pid2);
+bool pidEquals(Pid* pid1, Pid* pid2);
 
 /**
 * Returns TRUE if the two "MotionError" structures have the same value for each field, FALSE else.
 */
-BOOL motionErrorEquals(MotionError* motionError1, MotionError* motionError2);
+bool motionErrorEquals(MotionError* motionError1, MotionError* motionError2);
 
 /**
 * Returns TRUE if the two "MotionEndInfo" structures have the same value for each field.
 */
-BOOL motionEndInfoEquals(MotionEndInfo* motionEndInfo1, MotionEndInfo* motionEndInfo2);
+bool motionEndInfoEquals(MotionEndInfo* motionEndInfo1, MotionEndInfo* motionEndInfo2);
 
 /**
 * Returns TRUE if the two "Motion" structures have the same value for each field.
 */
-BOOL motionEquals(Motion* motion1, Motion* motion2);
+bool motionEquals(Motion* motion1, Motion* motion2);
 
 /**
 * Returns TRUE if the two "MotionInstruction" structures have the same value for each field.
 */
-BOOL motionInstructionEquals(MotionInstruction* motionInstruction1, MotionInstruction* motionInstruction2);
+bool motionInstructionEquals(MotionInstruction* motionInstruction1, MotionInstruction* motionInstruction2);
 
 #endif

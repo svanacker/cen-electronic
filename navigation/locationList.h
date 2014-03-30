@@ -47,7 +47,7 @@ void reverseLocationList(LocationList* locationList);
 /**
  * Returns if the list is empty.
  */
-BOOL isEmptyLocationList(LocationList* locationList);
+bool isEmptyLocationList(LocationList* locationList);
 
 
 /**
@@ -88,7 +88,7 @@ Location* findLocationByName(LocationList* locationList, char* locationName);
 /**
  * Returns TRUE if the locationList contains the specified location.
  */
-BOOL containsLocation(LocationList* locationList, Location* location, BOOL handled);
+bool containsLocation(LocationList* locationList, Location* location, bool handled);
 
 /**
  * Get the count of locations.

@@ -87,7 +87,7 @@ void debugTrajectoryVariables(char* valueName1, float value1, char* valueName2, 
  * @param right the value of the right coder
  * @return 1 if the position has been updated, 0 otherwise
  */
-int absoluteUpdateFromCoders(signed long left, signed long right, BOOL useThreshold, BOOL debug) {
+int absoluteUpdateFromCoders(signed long left, signed long right, bool useThreshold, bool debug) {
     if (debug) {
         debugTrajectoryVariables("left=", left, ", right=", right);
     }

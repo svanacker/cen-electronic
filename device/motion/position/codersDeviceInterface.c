@@ -7,7 +7,7 @@ const char* getCodersDeviceName(void) {
     return "Hctl Coders";
 }
 
-int deviceCodersGetInterface(char header, int mode, BOOL fillDeviceArgumentList) {
+int deviceCodersGetInterface(char header, int mode, bool fillDeviceArgumentList) {
     if (header == COMMAND_CLEAR_CODERS) {
 		// Same INPUT / OUTPUT
 		if (fillDeviceArgumentList) {

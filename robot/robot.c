@@ -42,9 +42,9 @@ static unsigned int robotMustStop = FALSE;
 
 static unsigned int timeAtLastCollision = 0;
 
-static BOOL robotPositionChanged;
+static bool robotPositionChanged;
 
-BOOL isRobotPositionChanged() {
+bool isRobotPositionChanged() {
 	return robotPositionChanged;
 }
 

@@ -33,7 +33,7 @@ void deviceMotionInit() {
 void deviceMotionShutDown() {
 }
 
-BOOL deviceMotionIsOk() {
+bool deviceMotionIsOk() {
     return TRUE;
 }
 

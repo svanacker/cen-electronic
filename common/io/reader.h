@@ -64,21 +64,21 @@ float readHex6(InputStream* inputStream);
  * Get next char and check if the stream contains ack.
  * @return TRUE if the next char is a ack, FALSE else
  */
-BOOL isAck(InputStream* inputStream);
+bool isAck(InputStream* inputStream);
 
 /**
  * Get next char and check if the stream contains the asked char.
  * @param expectedChar the character that we want to check
  * @return TRUE if the char is the right char, FALSE else
  */
-BOOL isChar(InputStream* inputStream, char expectedChar);
+bool isChar(InputStream* inputStream, char expectedChar);
 
 /**
  * Check that the next char is a ack, and if not, write a DEBUG information
  * @param inputStream the inputStream in which we read char
  * @return TRUE if the data is a ack, FALSE else
  */
-BOOL checkIsAck(InputStream* inputStream);
+bool checkIsAck(InputStream* inputStream);
 
 /**
  * Check that the next char is the char passed in argument, and if not, write a DEBUG information
@@ -86,6 +86,6 @@ BOOL checkIsAck(InputStream* inputStream);
  * @param char expectedChar the character that we want to check
  * @return TRUE if the data is the wanted char, FALSE else
  */
-BOOL checkIsChar(InputStream* inputStream, char expectedChar);
+bool checkIsChar(InputStream* inputStream, char expectedChar);
 
 #endif

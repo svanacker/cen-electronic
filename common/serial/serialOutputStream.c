@@ -3,9 +3,9 @@
 #include "../../common/commons.h"
 
 #ifdef PROG_32
-	#include <p32xxxx.h>
+#include <p32xxxx.h>
 #else
-	#include <p30fxxxx.h>
+#include <p30fxxxx.h>
 #endif
 
 #include "serialOutputStream.h"
@@ -21,10 +21,6 @@
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
 
-
-static Buffer* buffer1;
-static Buffer* buffer2;
-
 // ----------------------------------- OUTPUT STREAM INTERFACE ------------------------------------
 
 void flushSerial(OutputStream* outputStream) {
@@ -35,11 +31,10 @@ void flushSerial(OutputStream* outputStream) {
 
 void openOutputStreamSerial1(OutputStream* outputStream, int param1) {
     if (param1 == 0) {
-		openSerialAtDefaultSpeed(SERIAL_PORT_1);
-	}
-	else {
-		openSerial(SERIAL_PORT_1, param1);
-	}
+        openSerialAtDefaultSpeed(SERIAL_PORT_1);
+    } else {
+        openSerial(SERIAL_PORT_1, param1);
+    }
 }
 
 void closeOutputStreamSerial1(OutputStream* outputStream) {
@@ -61,11 +56,10 @@ void initSerialOutputStream1(OutputStream* outputStream) {
 
 void openOutputStreamSerial2(OutputStream* outputStream, int param1) {
     if (param1 == 0) {
-		openSerialAtDefaultSpeed(SERIAL_PORT_2);
-	}
-	else {
-		openSerial(SERIAL_PORT_2, param1);
-	}
+        openSerialAtDefaultSpeed(SERIAL_PORT_2);
+    } else {
+        openSerial(SERIAL_PORT_2, param1);
+    }
 }
 
 void closeOutputStreamSerial2(OutputStream* outputStream) {
@@ -87,11 +81,10 @@ void initSerialOutputStream2(OutputStream* outputStream) {
 
 void openOutputStreamSerial5(OutputStream* outputStream, int param1) {
     if (param1 == 0) {
-		openSerialAtDefaultSpeed(SERIAL_PORT_5);
-	}
-	else {
-		openSerial(SERIAL_PORT_5, param1);
-	}
+        openSerialAtDefaultSpeed(SERIAL_PORT_5);
+    } else {
+        openSerial(SERIAL_PORT_5, param1);
+    }
 }
 
 void closeOutputStreamSerial5(OutputStream* outputStream) {
@@ -113,11 +106,10 @@ void initSerialOutputStream5(OutputStream* outputStream) {
 
 void openOutputStreamSerial6(OutputStream* outputStream, int param1) {
     if (param1 == 0) {
-		openSerialAtDefaultSpeed(SERIAL_PORT_6);
-	}
-	else {
-		openSerial(SERIAL_PORT_6, param1);
-	}
+        openSerialAtDefaultSpeed(SERIAL_PORT_6);
+    } else {
+        openSerial(SERIAL_PORT_6, param1);
+    }
 }
 
 void closeOutputStreamSerial6(OutputStream* outputStream) {
@@ -144,9 +136,9 @@ void initSerialOutputStream(OutputStream* outputStream, int serialPortIndex) {
     } else if (serialPortIndex == SERIAL_PORT_2) {
         initSerialOutputStream2(outputStream);
     } else if (serialPortIndex == SERIAL_PORT_5) {
-		initSerialOutputStream5(outputStream);
+        initSerialOutputStream5(outputStream);
     } else if (serialPortIndex == SERIAL_PORT_6) {
-		initSerialOutputStream6(outputStream);
-	}
+        initSerialOutputStream6(outputStream);
+    }
 }
 

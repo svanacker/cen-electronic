@@ -10,7 +10,7 @@ unsigned int getConfigSoftwareRevision(void) {
     return 1;
 }
 
-int deviceRobotConfigGetInterface(char header, int mode, BOOL fillDeviceArgumentList) {
+int deviceRobotConfigGetInterface(char header, int mode, bool fillDeviceArgumentList) {
     if (mode == DEVICE_MODE_INPUT) {
         if (header == COMMAND_CONFIG) {
             if (fillDeviceArgumentList) {

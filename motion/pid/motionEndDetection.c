@@ -86,7 +86,7 @@ void updateEndMotionData(int instructionIndex, MotionEndInfo* endMotion, MotionE
 }
 
 
-BOOL isEndOfMotion(int instructionIndex, MotionEndInfo* endMotion, MotionEndDetectionParameter* parameter) {
+bool isEndOfMotion(int instructionIndex, MotionEndInfo* endMotion, MotionEndDetectionParameter* parameter) {
 	if (endMotion->integralTime < parameter->timeRangeAnalysis) {
 		return FALSE;
 	}
@@ -96,7 +96,7 @@ BOOL isEndOfMotion(int instructionIndex, MotionEndInfo* endMotion, MotionEndDete
 	return FALSE;
 }
 
-BOOL isRobotBlocked(int instructionIndex, MotionEndInfo* endMotion, MotionEndDetectionParameter* parameter) {
+bool isRobotBlocked(int instructionIndex, MotionEndInfo* endMotion, MotionEndDetectionParameter* parameter) {
 	if (endMotion->integralTime < parameter->timeRangeAnalysis) {
 		return FALSE;
 	}

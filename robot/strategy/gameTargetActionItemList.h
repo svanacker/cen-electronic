@@ -35,7 +35,7 @@ void clearTargetActionItemList(GameTargetActionItemList* targetActionItemList);
 /**
  * Returns if the iterator has next value.
  */
-BOOL targetActionItemListHasNext(GameTargetActionItemList* targetActionItemList);
+bool targetActionItemListHasNext(GameTargetActionItemList* targetActionItemList);
 
 /**
  * Returns the next value of iterator, NULL if no more.

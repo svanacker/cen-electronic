@@ -6,7 +6,7 @@ const char* deviceSystemDebugGetName() {
     return "systemDebug";
 }
 
-int deviceSystemDebugGetInterface(char header, int mode, BOOL fillDeviceArgumentList) {
+int deviceSystemDebugGetInterface(char header, int mode, bool fillDeviceArgumentList) {
     if (header == COMMAND_LOG) {
         if (mode == DEVICE_MODE_INPUT) {
             if (fillDeviceArgumentList) {

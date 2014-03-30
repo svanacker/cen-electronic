@@ -16,6 +16,8 @@
 #include "../../common/io/printWriter.h"
 #include "../../common/io/stream.h"
 
+#include "../../common/i2c/master/i2cMasterSetup.h"
+
 #include "../../common/pwm/servoPwm.h"
 
 #include "../../common/serial/serial.h"
@@ -49,10 +51,10 @@
 #include "../../drivers/temperature/MCP9804.h"
 
 #ifndef MPLAB_SIMULATION
-	#define SERIAL_PORT_DEBUG 		SERIAL_PORT_2
+#define SERIAL_PORT_DEBUG 		SERIAL_PORT_2
 #else
-	// We use the same port for both
-	#define SERIAL_PORT_DEBUG 		SERIAL_PORT_1
+// We use the same port for both
+#define SERIAL_PORT_DEBUG 		SERIAL_PORT_1
 #endif
 
 #define		SERVO_INDEX				1
@@ -68,8 +70,8 @@
 #define		ITERATION_ON			40000000L
 
 /**
-* Device list.
-*/
+ * Device list.
+ */
 static DeviceList devices;
 
 // serial DEBUG 
@@ -96,11 +98,11 @@ static Buffer driverResponseBuffer;
 static char driverResponseBufferArray[AIR_CONDITIONING_BOARD_RESPONSE_DRIVER_BUFFER_LENGTH];
 
 void initDevicesDescriptor() {
-	initDeviceList(&deviceListArray, AIR_CONDITIONING_BOARD_DEVICE_LENGTH);
-	addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
-	addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor());
+    initDeviceList(&deviceListArray, AIR_CONDITIONING_BOARD_DEVICE_LENGTH);
+    addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
+    addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor());
 
-	initDevices(&devices);
+    initDevices(&devices);
 }
 
 /**
@@ -109,84 +111,83 @@ void initDevicesDescriptor() {
 void initDriversDescriptor() {
     // Init the drivers
     initDrivers(&driverRequestBuffer, &driverRequestBufferArray, AIR_CONDITIONING_BOARD_REQUEST_DRIVER_BUFFER_LENGTH,
-				&driverResponseBuffer, &driverResponseBufferArray, AIR_CONDITIONING_BOARD_RESPONSE_DRIVER_BUFFER_LENGTH);
+            &driverResponseBuffer, &driverResponseBufferArray, AIR_CONDITIONING_BOARD_RESPONSE_DRIVER_BUFFER_LENGTH);
 }
 
 void initStrategyBoardIO() {
-	// 2011 : TODO : A regarder
-	ADPCFG = 0xFFFF;
+    // 2011 : TODO : A regarder
+    ADPCFG = 0xFFFF;
 }
 
 void clickOnButton() {
-	pwmServo(SERVO_INDEX, SERVO_SPEED, SERVO_VALUE_TOUCH);
-	delaymSec(500);
-	pwmServo(SERVO_INDEX, SERVO_SPEED, SERVO_VALUE_STAND_BY);
+    pwmServo(SERVO_INDEX, SERVO_SPEED, SERVO_VALUE_TOUCH);
+    delaymSec(500);
+    pwmServo(SERVO_INDEX, SERVO_SPEED, SERVO_VALUE_STAND_BY);
 }
 
 int main(void) {
-	setPicName("AIR_COND_BOARD");
+    setPicName("AIR_COND_BOARD");
 
-	initStrategyBoardIO();
+    initStrategyBoardIO();
 
-	openSerialLink(	&debugSerialStreamLink,
-					&debugInputBuffer,
-					&debugInputBufferArray,
-					AIR_CONDITIONING_BOARD_DEBUG_INPUT_BUFFER_LENGTH,
-					&debugOutputBuffer,
-					&debugOutputBufferArray,
-					AIR_CONDITIONING_BOARD_DEBUG_OUTPUT_BUFFER_LENGTH,
-					&debugOutputStream,
-					SERIAL_PORT_DEBUG);
+    openSerialLink(&debugSerialStreamLink,
+            &debugInputBuffer,
+            &debugInputBufferArray,
+            AIR_CONDITIONING_BOARD_DEBUG_INPUT_BUFFER_LENGTH,
+            &debugOutputBuffer,
+            &debugOutputBufferArray,
+            AIR_CONDITIONING_BOARD_DEBUG_OUTPUT_BUFFER_LENGTH,
+            &debugOutputStream,
+            SERIAL_PORT_DEBUG, 0);
 
 
-	initTimerList(&timerListArray, AIR_CONDITIONING_BOARD_TIMER_LENGTH);
+    initTimerList(&timerListArray, AIR_CONDITIONING_BOARD_TIMER_LENGTH);
 
-	// Init the logs
-	initLog(DEBUG);
-	addLogHandler(&serialLogHandler, "UART", &debugOutputStream, DEBUG);
-	appendString(getOutputStreamLogger(INFO), getPicName());
-	println(getOutputStreamLogger(INFO));
+    // Init the logs
+    initLog(DEBUG);
+    addLogHandler(&serialLogHandler, "UART", &debugOutputStream, DEBUG);
+    appendString(getOutputStreamLogger(INFO), getPicName());
+    println(getOutputStreamLogger(INFO));
 
-	// Initializes the I2C
-	i2cMasterInitialize();
+    // Initializes the I2C
+    i2cMasterInitialize();
 
-	// init the devices
-	initDevicesDescriptor();
+    // init the devices
+    initDevicesDescriptor();
 
-	initDriversDescriptor();
+    initDriversDescriptor();
 
-	// Init the timers management
-	startTimerList();
+    // Init the timers management
+    startTimerList();
 
-	// Initialize the driver : TODO : Encapsulates into a driver.
-	initRegMCP9804 (0x00,0x18,0x01,0xE0,0x01,0x40,0x02,0x40); // 30C, 20C, 34C
+    // Initialize the driver : TODO : Encapsulates into a driver.
+    initRegMCP9804(0x00, 0x18, 0x01, 0xE0, 0x01, 0x40, 0x02, 0x40); // 30C, 20C, 34C
 
-	clickOnButton();
-	unsigned long timerIndex = 0L;
-	BOOL timerOn = TRUE;
-	unsigned long timerMax = ITERATION_ON;
+    clickOnButton();
+    unsigned long timerIndex = 0L;
+    bool timerOn = TRUE;
+    unsigned long timerMax = ITERATION_ON;
 
-	while (1) {
-		timerIndex++;
+    while (1) {
+        timerIndex++;
 
-		if (timerIndex > timerMax) {
-			timerIndex = 0;
-			timerOn = !timerOn;
-			if (timerOn) {
-				timerMax = ITERATION_ON;
-			}
-			else {
-				timerMax = ITERATION_OFF;
-			}
-			clickOnButton();
-		}
+        if (timerIndex > timerMax) {
+            timerIndex = 0;
+            timerOn = !timerOn;
+            if (timerOn) {
+                timerMax = ITERATION_ON;
+            } else {
+                timerMax = ITERATION_OFF;
+            }
+            clickOnButton();
+        }
 
-		// UART Stream
-		handleStreamInstruction(&debugInputBuffer,
-								&debugOutputBuffer,
-								&debugOutputStream,
-								&filterRemoveCRLF,
-								NULL);
-	}
-	return (0);
+        // UART Stream
+        handleStreamInstruction(&debugInputBuffer,
+                &debugOutputBuffer,
+                &debugOutputStream,
+                &filterRemoveCRLF,
+                NULL);
+    }
+    return (0);
 }

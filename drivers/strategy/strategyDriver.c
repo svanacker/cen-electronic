@@ -75,7 +75,7 @@ void robotNextStep() {
  	sendStrategyNextStep();
 }
 
-BOOL sendStrategyConfiguration(int configuration) {
+bool sendStrategyConfiguration(int configuration) {
 	appendString(getOutputStreamLogger(INFO), "sendStrategyConfiguration\n");
 
     OutputStream* outputStream = getDriverRequestOutputStream();
@@ -83,12 +83,12 @@ BOOL sendStrategyConfiguration(int configuration) {
     append(outputStream, COMMAND_STRATEGY_SET_CONFIG);
     appendHex4(outputStream, configuration);
 
-    BOOL result = transmitFromDriverRequestBuffer();
+    bool result = transmitFromDriverRequestBuffer();
 
     return result;
 }
 
-BOOL sendStrategyNextStep() {
+bool sendStrategyNextStep() {
 	appendString(getOutputStreamLogger(INFO), "sendStrategyNextStep\n");
 
     OutputStream* outputStream = getDriverRequestOutputStream();
@@ -96,7 +96,7 @@ BOOL sendStrategyNextStep() {
 
     append(outputStream, COMMAND_STRATEGY_NEXT_STEP);
 
-    BOOL result = transmitFromDriverRequestBuffer();
+    bool result = transmitFromDriverRequestBuffer();
     if (result) {
         int result = readHex2(inputStream);
 		return result;
@@ -104,7 +104,7 @@ BOOL sendStrategyNextStep() {
     return FALSE;
 }
 
-BOOL sendStrategyOpponentRobotPosition(Point* opponentRobotPosition) {
+bool sendStrategyOpponentRobotPosition(Point* opponentRobotPosition) {
 	OutputStream* debugOutputStream = getOutputStreamLogger(INFO);
 	appendString(debugOutputStream, "sendStrategyOpponentRobotPosition: ");
 
@@ -119,12 +119,12 @@ BOOL sendStrategyOpponentRobotPosition(Point* opponentRobotPosition) {
 	appendStringAndDec(debugOutputStream, ", y=", opponentRobotPosition->y);
 	println(debugOutputStream);
 
-    BOOL result = transmitFromDriverRequestBuffer();
+    bool result = transmitFromDriverRequestBuffer();
 
     return result;
 }
 
-BOOL sentStrategyRobotPosition(unsigned char status, unsigned int x, unsigned int y, int angleInDeciDegree) {
+bool sentStrategyRobotPosition(unsigned char status, unsigned int x, unsigned int y, int angleInDeciDegree) {
 	OutputStream* debugOutputStream = getOutputStreamLogger(INFO);
 	appendString(debugOutputStream, "sentStrategyRobotPosition:");
 
@@ -148,7 +148,7 @@ BOOL sentStrategyRobotPosition(unsigned char status, unsigned int x, unsigned in
 	appendStringAndDec(debugOutputStream, ", angle=", angleInDeciDegree);
 	println(debugOutputStream);
 
-    BOOL result = transmitFromDriverRequestBuffer();
+    bool result = transmitFromDriverRequestBuffer();
 
     return result;
 }

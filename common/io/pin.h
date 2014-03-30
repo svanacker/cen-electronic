@@ -47,12 +47,12 @@
 /**
  * Get the pin value for the index
  */
-BOOL getPinValue(int pinIndex);
+bool getPinValue(int pinIndex);
 
 /**
  * Set the value for the pin Index (see pin.h)
  */
-void setPinValue(int pinIndex, BOOL pinValue);
+void setPinValue(int pinIndex, bool pinValue);
 
 /**
  * Print All Pin Values.

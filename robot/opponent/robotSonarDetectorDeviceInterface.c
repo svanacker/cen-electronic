@@ -10,7 +10,7 @@ unsigned int deviceRobotSonarDetectorGetSoftwareRevision(void) {
     return 1;
 }
 
-int deviceRobotSonarDetectorGetInterface(char header, int mode, BOOL fillDeviceArgumentList) {
+int deviceRobotSonarDetectorGetInterface(char header, int mode, bool fillDeviceArgumentList) {
     if (header == COMMAND_SET_SONAR_STATUS) {
         if (mode == DEVICE_MODE_INPUT) {
             if (fillDeviceArgumentList) {

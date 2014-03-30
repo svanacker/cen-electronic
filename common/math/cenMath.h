@@ -1,6 +1,7 @@
 #ifndef CEN_MATH_H
 #define CEN_MATH_H
 
+#include <stdbool.h>
 #include "../../common/commons.h"
 
 #define PI 					3.1415926535f
@@ -58,9 +59,9 @@ int minInt(int value1, int value2);
 */
 int maxInt(int value1, int value2);
 
-BOOL floatEquals(float value1, float value2);
+bool floatEquals(float value1, float value2);
 
-BOOL floatEqualsZero(float value1);
+bool floatEqualsZero(float value1);
 
 /**
  * Do the modulo of a value between -PI and PI.

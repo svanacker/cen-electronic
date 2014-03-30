@@ -5,14 +5,14 @@
 #include "streamLink.h"
 
 void initStreamLink(StreamLink* streamLink,
-        char* streamName,
-        Buffer* inputBuffer,
+                char* streamName,
+                Buffer* inputBuffer,
 		char (*inputBufferArrayPointer)[],
 		unsigned char inputBufferLength,
-        Buffer* outputBuffer,
+                Buffer* outputBuffer,
 		char (*outputBufferArrayPointer)[],
 		unsigned char outputBufferLength,
-        OutputStream* outputStream,
+                OutputStream* outputStream,
 		int param) {
     streamLink->inputBuffer = inputBuffer;
     streamLink->outputBuffer = outputBuffer;

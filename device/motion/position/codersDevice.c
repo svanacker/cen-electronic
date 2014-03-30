@@ -18,7 +18,7 @@ void stopCoders(void) {
 
 }
 
-BOOL isCodersDeviceOk(void) {
+bool isCodersDeviceOk(void) {
     return TRUE;
 }
 

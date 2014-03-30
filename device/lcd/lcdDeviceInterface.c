@@ -11,7 +11,7 @@ unsigned int deviceLCDGetSoftwareRevision() {
     return 1;
 }
 
-int deviceLCDGetInterface(char header, int mode, BOOL fillDeviceArgumentList) {
+int deviceLCDGetInterface(char header, int mode, bool fillDeviceArgumentList) {
     if (header == COMMAND_LCD) {
         if (mode == DEVICE_MODE_INPUT) {
             if (fillDeviceArgumentList) {

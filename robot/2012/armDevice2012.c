@@ -60,7 +60,7 @@ void deviceArm2012ShutDown() {
     downArm(ARM_RIGHT);
 }
 
-BOOL deviceArm2012IsOk() {
+bool deviceArm2012IsOk() {
     return TRUE;
 }
 

@@ -37,7 +37,7 @@ void clearGameTarget(GameTarget* target);
 /**
  * Print the detail of each target.
  */
-void printGameTarget(OutputStream* outputStream, GameTarget* target, BOOL includeItems);
+void printGameTarget(OutputStream* outputStream, GameTarget* target, bool includeItems);
 
 
 #endif

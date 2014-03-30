@@ -49,7 +49,7 @@ GameStrategyContext* getStrategyContext();
 /**
  * Do the next step in the strategy. Returns FALSE if nothing was done.
  */
-BOOL nextStep();
+bool nextStep();
 
 // OBSTACLE
 
@@ -71,7 +71,7 @@ void rotateAbsolute(int angle);
 /**
  * Ask to follow a path.
  */
-void motionFollowPath(PathDataFunction* pathDataFunction, BOOL reversed);
+void motionFollowPath(PathDataFunction* pathDataFunction, bool reversed);
 
 /**
  * Ask the robot to go to a location but without path (useful for actionItem).

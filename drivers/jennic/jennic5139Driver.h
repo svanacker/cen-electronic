@@ -329,14 +329,14 @@ void initJennic5139Router();
 
 // WAIT FOR DATA 
 
-void waitAndCopyFromZigbeeToDebug(int loopCount, int mSecDelay, BOOL handleZigbeeStream);
+void waitAndCopyFromZigbeeToDebug(int loopCount, int mSecDelay, bool handleZigbeeStream);
 
 /**
 * Search after the beginning of DAT,0006066005651610211,0,3,
 * Data will be for example 0102AA (size of 3)
 * followed by \n
 */
-BOOL copyFromZigbeeToDebugRetainingData();
+bool copyFromZigbeeToDebugRetainingData();
 
 /**
 * Contains the outputStream used to build data which will be included in the commandBuffer.
@@ -404,13 +404,13 @@ void jennic5139Reset();
 * off or on the light of the local zigbee.
 * @param pinMask : see JENNIC_LED_BLUE, JENNIC_LED_GREEN ... 
 */
-void jennic5139LocalLight(char* pinMask, BOOL on) ;
+void jennic5139LocalLight(char* pinMask, bool on) ;
 
 /**
 * off or on the light of the remote node.
 * @param pinMask : see JENNIC_LED_BLUE, JENNIC_LED_GREEN ... 
 */
-void jennic5139RemoteLight(char* jennicAddress, char* pinMask, BOOL light);
+void jennic5139RemoteLight(char* jennicAddress, char* pinMask, bool light);
 
 void onJennicError();
 

@@ -19,7 +19,7 @@ void deviceLCDInit() {
 void deviceLCDShutDown() {
 }
 
-BOOL deviceLCDIsOk() {
+bool deviceLCDIsOk() {
     return TRUE;
 }
 

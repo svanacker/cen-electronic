@@ -38,7 +38,7 @@ PathDataFunction* getPath(PathList* pathList, int index);
 /**
  * Returns the path corresponding to the both location.
  */
-PathDataFunction* getPathOfLocations(PathList* pathList, Location* location1, Location* location2, BOOL* reversed);
+PathDataFunction* getPathOfLocations(PathList* pathList, Location* location1, Location* location2, bool* reversed);
 
 /**
  * Get the count of paths.

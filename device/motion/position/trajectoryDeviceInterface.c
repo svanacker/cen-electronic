@@ -22,7 +22,7 @@ void fillAbsolutePosition() {
 	setArgumentUnsignedHex4(4, ANGLE_1_10_DEG);
 }
 
-int trajectoryGetInterface(char header, int mode, BOOL fillDeviceArgumentList) {
+int trajectoryGetInterface(char header, int mode, bool fillDeviceArgumentList) {
     if (header == COMMAND_GET_ABSOLUTE_POSITION) {
         if (mode == DEVICE_MODE_INPUT) {
             if (fillDeviceArgumentList) {

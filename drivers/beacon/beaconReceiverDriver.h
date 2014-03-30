@@ -10,6 +10,6 @@
 /**
  * Update the opponent Robot position by calling the beacon Receiver through I2C.
  */
-BOOL updateOpponentRobotPosition(Point* opponentRobotPosition);
+bool updateOpponentRobotPosition(Point* opponentRobotPosition);
 
 #endif

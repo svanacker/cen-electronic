@@ -1,6 +1,7 @@
 #ifndef BUFFER_H
 #define BUFFER_H
 
+#include <stdbool.h>
 #include "../../common/commons.h"
 
 #include "inputStream.h"
@@ -55,12 +56,12 @@ void deepClearBuffer(Buffer* buffer);
 /**
  * Returns TRUE if the buffer is full, false else.
  */
-BOOL isBufferFull(const Buffer* buffer);
+bool isBufferFull(const Buffer* buffer);
 
 /**
  * Returns TRUE if the buffer is empty, false else.
  */
-BOOL isBufferEmpty(const Buffer* buffer);
+bool isBufferEmpty(const Buffer* buffer);
 
 /**
  * Returns the number of elements

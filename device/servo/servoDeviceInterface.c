@@ -10,7 +10,7 @@ unsigned int deviceServoGetSoftwareRevision() {
     return 1;
 }
 
-int deviceServoGetInterface(char header, int mode, BOOL fillDeviceArgumentList ) {
+int deviceServoGetInterface(char header, int mode, bool fillDeviceArgumentList ) {
     if (mode == DEVICE_MODE_INPUT) {
         if (header == COMMAND_SERVO) {
             if (fillDeviceArgumentList) {

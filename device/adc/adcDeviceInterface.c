@@ -12,7 +12,7 @@ unsigned int getADCVersion(void) {
 }
 
 int deviceADCGetInterface(char header, int mode,
-        BOOL fillDeviceArgumentList) {
+        bool fillDeviceArgumentList) {
     if (header == COMMAND_GET_ADC_VALUE) {
         if (mode == DEVICE_MODE_INPUT) {
             if (fillDeviceArgumentList) {

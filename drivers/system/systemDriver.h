@@ -8,7 +8,7 @@
 * PING a data dispatcher.
 * @param dispacher the dispatcher that we want to PING
 */ 
-BOOL pingDriverDataDispatcher(DriverDataDispatcher* dispatcher);
+bool pingDriverDataDispatcher(DriverDataDispatcher* dispatcher);
 
 /**
 * Ping all dispatcher.

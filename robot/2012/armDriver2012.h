@@ -6,11 +6,11 @@
 /**
  * Ask the remote servo which handle the arm 2012 to go down.
  */
-BOOL armDriver2012Down(int index);
+bool armDriver2012Down(int index);
 
 /**
  * Ask the remote servo which handle the arm 2012 to go up.
  */
-BOOL armDriver2012Up(int index);
+bool armDriver2012Up(int index);
 
 #endif

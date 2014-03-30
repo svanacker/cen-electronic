@@ -13,7 +13,7 @@ unsigned int deviceTestGetSoftwareRevision() {
 }
 
 int deviceTestGetInterface(char header, int mode,
-        BOOL fillDeviceArgumentList) {
+        bool fillDeviceArgumentList) {
     if (header == COMMAND_TEST) {
         if (mode == DEVICE_MODE_INPUT) {
             if (fillDeviceArgumentList) {

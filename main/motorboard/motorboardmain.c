@@ -127,7 +127,7 @@ static Buffer debugI2cOutputBuffer;
 static Device deviceListArray[MOTOR_BOARD_DEVICE_LENGTH];
 
 void initDevicesDescriptor() {
-	initDeviceList(&deviceListArray, MOTOR_BOARD_DEVICE_LENGTH);
+    initDeviceList(&deviceListArray, MOTOR_BOARD_DEVICE_LENGTH);
 
     addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());
     addLocalDevice(getCodersDeviceInterface(), getCodersDeviceDescriptor());
@@ -154,17 +154,18 @@ void waitForInstruction() {
 int runMotorBoard() {
     setPicName(MOTOR_BOARD_PIC_NAME);
 
-	initTimerList(&timerListArray, MOTOR_BOARD_TIMER_LENGTH);
+    initTimerList(&timerListArray, MOTOR_BOARD_TIMER_LENGTH);
 
     openSerialLink(&debugSerialStreamLink,
             &debugInputBuffer,
             &debugInputBufferArray,
-			MOTOR_BOARD_IN_BUFFER_LENGTH,
+            MOTOR_BOARD_IN_BUFFER_LENGTH,
             &debugOutputBuffer,
             &debugOutputBufferArray,
-			MOTOR_BOARD_OUT_BUFFER_LENGTH,
+            MOTOR_BOARD_OUT_BUFFER_LENGTH,
             &debugOutputStream,
-            SERIAL_PORT_DEBUG);
+            SERIAL_PORT_DEBUG,
+            0);
 
     // Init the logs
     initLog(DEBUG);
@@ -178,10 +179,10 @@ int runMotorBoard() {
     openSlaveI2cStreamLink(&i2cSlaveStreamLink,
             &i2cSlaveInputBuffer,
             &i2cSlaveInputBufferArray,
-			MOTOR_BOARD_IN_BUFFER_LENGTH,
+            MOTOR_BOARD_IN_BUFFER_LENGTH,
             &i2cSlaveOutputBuffer,
             &i2cSlaveOutputBufferArray,
-			MOTOR_BOARD_OUT_BUFFER_LENGTH,
+            MOTOR_BOARD_OUT_BUFFER_LENGTH,
             MOTOR_BOARD_I2C_ADDRESS
             );
 

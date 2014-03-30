@@ -38,7 +38,7 @@ void updateRobotPosition(int x, int y, int angle);
 
 void printRobotPosition(OutputStream* outputStream);
 
-BOOL isRobotPositionChanged();
+bool isRobotPositionChanged();
 
 void resetRobotPositionChanged();
 

@@ -49,7 +49,7 @@ void setInitialPosition(unsigned int color) {
 
 // ----------------------------------------------------------- Moving Primitives ------------------------------------------------------
 
-BOOL spline(int color, float x, float y, float angle, float dist0, float dist1, int accelerationFactor, int speedFactor) {
+bool spline(int color, float x, float y, float angle, float dist0, float dist1, int accelerationFactor, int speedFactor) {
 	// Violet = Bit set
 	if (color) {
 		return motionDriverBSplineAbsolute(x, y, angle, dist0, dist1, accelerationFactor, speedFactor);
@@ -58,7 +58,7 @@ BOOL spline(int color, float x, float y, float angle, float dist0, float dist1, 
 	}	
 }
 
-BOOL left(int color, float angle) {
+bool left(int color, float angle) {
 	if (color) {
 		return motionDriverLeft(angle);
 	}
@@ -67,7 +67,7 @@ BOOL left(int color, float angle) {
 	}
 }
 
-BOOL right(int color, float angle) {
+bool right(int color, float angle) {
 	if (color) {
 		return motionDriverRight(angle);
 	}
@@ -76,8 +76,8 @@ BOOL right(int color, float angle) {
 	}
 }
 
-BOOL armDown(int color, int index) {
-	BOOL result;
+bool armDown(int color, int index) {
+	bool result;
 	if (color) {
 		result = armDriver2012Down(index);
 	}
@@ -89,8 +89,8 @@ BOOL armDown(int color, int index) {
 	return result;
 }
 
-BOOL armUp(int color, int index) {
-	BOOL result;
+bool armUp(int color, int index) {
+	bool result;
 	if (color) {
 		result = armDriver2012Up(index);
 	}

@@ -79,11 +79,11 @@ struct Timer {
     /** The function which must be used. */
     interruptTimerCallbackFunc* callback;
     /** if the timer is enabled or not. */
-    BOOL enabled;
+    bool enabled;
     /** if the timer is locked or not. */
-    volatile BOOL lock;
+    volatile bool lock;
     /** if the timer is in the callback function and is working. */
-    volatile BOOL working;
+    volatile bool working;
 };
 
 /**
@@ -120,7 +120,7 @@ void mark(Timer* timer);
  * Check if the last mark was done after markTime + time.
  * return TRUE if (markTime + time > timer->time)
  */
-BOOL timeout(Timer* timer, unsigned long time);
+bool timeout(Timer* timer, unsigned long time);
 
 // LOCK
 

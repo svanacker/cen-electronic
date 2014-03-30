@@ -16,12 +16,12 @@
 #include "../../drivers/dispatcher/driverDataDispatcher.h"
 #include "../../drivers/dispatcher/driverDataDispatcherList.h"
 
-BOOL pingDriverDataDispatcher(DriverDataDispatcher* dispatcher) {
+bool pingDriverDataDispatcher(DriverDataDispatcher* dispatcher) {
     OutputStream* outputStream = getDriverRequestOutputStream();
     append(outputStream, COMMAND_PING);
 
     // TODO : PING does only with one BOARD !
-    BOOL result = transmitFromDriverRequestBuffer(/*dispatcher*/);
+    bool result = transmitFromDriverRequestBuffer(/*dispatcher*/);
     return result;
 }
 
@@ -36,7 +36,7 @@ void pingDriverDataDispatcherList(OutputStream* debugOutputStream) {
         appendString(debugOutputStream, "PING ");
         appendString(debugOutputStream, dispatcher->name);
 
-        BOOL result = pingDriverDataDispatcher(dispatcher);
+        bool result = pingDriverDataDispatcher(dispatcher);
         if (result) {
             appendString(debugOutputStream, ":OK");
         } else {

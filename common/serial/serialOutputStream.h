@@ -9,6 +9,6 @@
 /**
  * Init an inputStream arround serial with index "serialPortIndex".
  */
-void initSerialInputBuffer(Buffer* buffer, int serialPortIndex);
+void initSerialOutputStream(OutputStream* outputStream, int serialPortIndex);
 
 #endif

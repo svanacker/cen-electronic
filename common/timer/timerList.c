@@ -149,14 +149,14 @@ void __attribute__((__interrupt__)) __attribute__((no_auto_psv)) _T1Interrupt(vo
         int i = 0;
         for (i = 0; i < timerList.size; i++) {
             Timer * currentTimer = getTimerByIndex(i);
-            BOOL enabled = currentTimer->enabled;
+            bool enabled = currentTimer->enabled;
             if (!enabled) {
                 continue;
             }
             // increments the counter and test if it is > to the timeDiviser
             if (++(currentTimer->timeInternalCounter) > currentTimer->timeDiviser) {
                 // block the timer if we wait for
-                BOOL lock = currentTimer->lock;
+                bool lock = currentTimer->lock;
                 if (lock) {
                     continue;
                 }

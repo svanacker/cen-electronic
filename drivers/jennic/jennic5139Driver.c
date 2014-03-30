@@ -25,23 +25,23 @@
 static unsigned char jennicNetworkStatus;
 
 /** Indicates if we are in startup Phase. */
-static BOOL jennicStartup;
+static bool jennicStartup;
 
 /** Indicates if there is an error during startup. */
-static BOOL hasErrorDuringStartup;
+static bool hasErrorDuringStartup;
 
 /** There is an error during last command. */
-static BOOL jennicError;
+static bool jennicError;
 
 /** There is a data during last command. */
-static BOOL jennicData;
+static bool jennicData;
 
 /** Indicates if we are in ledCommand => if there is an error during this command, does nothing, else it will go to recursive error. */
-static BOOL ledCommand;
+static bool ledCommand;
 
 /** Led status. */
-static BOOL ledYellowOn;
-static BOOL ledBlueOn;
+static bool ledYellowOn;
+static bool ledBlueOn;
 
 void toggleLedYellow() {
 	jennic5139LocalLight(JENNIC_LED_YELLOW, ledYellowOn);
@@ -121,8 +121,8 @@ static Buffer commandBuffer;
 
 
 
-BOOL internalCopyFromZigbeeToDebugRetainingData(BOOL handleZigbeeStream) {
-	BOOL result = FALSE;
+bool internalCopyFromZigbeeToDebugRetainingData(bool handleZigbeeStream) {
+	bool result = FALSE;
     // while data are available on inputStream
     while (zigbeeInputStream->availableData(zigbeeInputStream)) {
 		unsigned char c = zigbeeInputStream->readChar(zigbeeInputStream);
@@ -139,11 +139,11 @@ BOOL internalCopyFromZigbeeToDebugRetainingData(BOOL handleZigbeeStream) {
 	return result;
 }
 
-BOOL copyFromZigbeeToDebugRetainingData() {
+bool copyFromZigbeeToDebugRetainingData() {
 	return internalCopyFromZigbeeToDebugRetainingData(TRUE);
 }
 
-void waitAndCopyFromZigbeeToDebug(int loopCount, int mSecDelay, BOOL handleZigbeeStream) {
+void waitAndCopyFromZigbeeToDebug(int loopCount, int mSecDelay, bool handleZigbeeStream) {
     // use delay to be sure that the connection is OK
     long i;
     for (i = 0; i < loopCount; i++) {
@@ -510,7 +510,7 @@ void jennic5139Reset() {
 	sendJennic5139CommandFromBuffer();
 }
 
-void jennic5139LocalLight(char* pinMask, BOOL on) {
+void jennic5139LocalLight(char* pinMask, bool on) {
 	ledCommand = TRUE;
     appendCmdString(JENNIC_PIN_WRITE_PIN);
 	if (on) {
@@ -527,7 +527,7 @@ void jennic5139LocalLight(char* pinMask, BOOL on) {
 	ledCommand = FALSE;
 }
 
-void jennic5139RemoteLight(char* jennicAddress, char* pinMask, BOOL on) {
+void jennic5139RemoteLight(char* jennicAddress, char* pinMask, bool on) {
 	// Establish a tunnel for transmit remote command
     appendCmdString(JENNIC_TUNNEL_CONNECTION);
 	appendCmdString(",3,");

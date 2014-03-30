@@ -7,7 +7,7 @@
  * Define the underlying function type attached to a group to evaluate if 
  * the infrared detect something.
  */
-typedef BOOL InfraredDetectorFunction();
+typedef bool InfraredDetectorFunction();
 
 /**
  * Detection is based on 2 GPD12 on left / right, and a gp2y0a02yk on the center
@@ -16,7 +16,7 @@ typedef struct InfraredDetectorGroup {
 	/** The number of count which was detected. */
 	int wasDetectedCount;
 	/** A counter to avoid to notify. */
-	BOOL doNotCheckBeforeCounter;
+	bool doNotCheckBeforeCounter;
 	/** A counter of interruption. */
 	unsigned int interruptCounter;
 	/** The function to evaluate it. */
@@ -32,11 +32,11 @@ void initRobotInfraredDetector();
 /**
  * Returns if there is an obstacle forward.
  */
-BOOL getRobotInfraredObstacleForward();
+bool getRobotInfraredObstacleForward();
 
 /**
  * Returns if there is an obstacle backward.
  */
-BOOL getRobotInfraredObstacleBackward();
+bool getRobotInfraredObstacleBackward();
 
 #endif

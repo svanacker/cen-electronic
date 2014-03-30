@@ -22,7 +22,7 @@ void initBSplineCurveData(BSplinePointData* pointData, float x, float y) {
 }
 
 void resetBSplineCurve(BSplineCurve* bSplineCurve, 
-					  float p0x, float p0y, BOOL backward) {
+					  float p0x, float p0y, bool backward) {
 	bSplineCurve->p0.x = p0x;
 	bSplineCurve->p0.y = p0y;
 

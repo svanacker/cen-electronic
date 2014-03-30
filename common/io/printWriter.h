@@ -13,9 +13,9 @@
 void append(OutputStream* stream, char c);
 
 /**
- * Append a BOOL value (1 for TRUE, 0 for false)
+ * Append a bool value (1 for TRUE, 0 for false)
  */
-void appendBOOL(OutputStream* outputStream, BOOL b);
+void appendBool(OutputStream* outputStream, bool b);
 
 /**
  * Append a separator to the outputStream.

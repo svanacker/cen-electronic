@@ -15,7 +15,7 @@
 
 // BUFFER
 
-BOOL checkBufferNotNull(Buffer* buffer) {
+bool checkBufferNotNull(Buffer* buffer) {
 	if (buffer == NULL) {
 		writeError(IO_BUFFER_NULL);
 		return FALSE;
@@ -91,9 +91,9 @@ char _bufferReadChar(InputStream* inputStream) {
 /**
  * Definition of a function which is able to return if there is character to read.
  */
-BOOL _bufferAvailableData(InputStream* inputStream) {
+bool _bufferAvailableData(InputStream* inputStream) {
     Buffer* buffer = (Buffer*) inputStream->object;
-    BOOL result = !isBufferEmpty(buffer);
+    bool result = !isBufferEmpty(buffer);
 
     return result;
 }
@@ -113,8 +113,7 @@ void initBuffer(Buffer* buffer, char (*array)[], unsigned char length, char* nam
             &_closeBufferInputStream,
             &_bufferReadChar,
             &_bufferAvailableData,
-            (int*) buffer
-            );
+            (int*) buffer);
 
     // outputStream
     initOutputStream(
@@ -131,12 +130,12 @@ void initBuffer(Buffer* buffer, char (*array)[], unsigned char length, char* nam
 
 
 
-BOOL isBufferFull(const Buffer* buffer) {
+bool isBufferFull(const Buffer* buffer) {
     return ((buffer->writeIndex + 1) % buffer->length) == buffer->readIndex;
 
 }
 
-BOOL isBufferEmpty(const Buffer* buffer) {
+bool isBufferEmpty(const Buffer* buffer) {
     return buffer->readIndex == buffer->writeIndex;
 }
 

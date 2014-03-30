@@ -10,7 +10,7 @@ unsigned int devicePinGetSoftwareRevision() {
     return 1;
 }
 
-int devicePinGetInterface(char header, int mode, BOOL fillDeviceArgumentList) {
+int devicePinGetInterface(char header, int mode, bool fillDeviceArgumentList) {
 	// setPin
     if (header == COMMAND_SET_PIN_VALUE) {
         if (mode == DEVICE_MODE_INPUT) {

@@ -27,7 +27,7 @@ void printAssertDecfValue(float value) {
 	appendDecf(getTestOutputStream(), value);
 }
 
-void printAssertBooleanValue(BOOL value) {
+void printAssertBooleanValue(bool value) {
 	if (value) {
 		printAssertMessage("TRUE");
 	}
@@ -77,7 +77,7 @@ void runTest(TestSuite* testSuite, int testIndex) {
 
 	TestFunction* testFunction = testSuite->testFunctions[testIndex];
 	char* testName = testSuite->testNames[testIndex];
-	BOOL testResult = testFunction();
+	bool testResult = testFunction();
 	if (testResult) {
 		printTestOk(testName);
 		testSuite->okCount++;
@@ -131,7 +131,7 @@ void printActualDecfValue(long actual) {
 	printAssertMessage("\n");
 }
 
-BOOL assertNumericEquals(long expected, long actual, char* messageIfFailed) {
+bool assertNumericEquals(long expected, long actual, char* messageIfFailed) {
 	if (expected != actual) {
 		printExpectedDecValue(expected);
 		printActualDecValue(expected);
@@ -143,19 +143,19 @@ BOOL assertNumericEquals(long expected, long actual, char* messageIfFailed) {
 
 // Implementation
 
-BOOL assertCharEquals(char expected, char actual, char* messageIfFailed) {
+bool assertCharEquals(char expected, char actual, char* messageIfFailed) {
 	return assertNumericEquals(expected, actual, messageIfFailed);
 }
 
-BOOL assertIntEquals(int expected, int actual, char* messageIfFailed) {
+bool assertIntEquals(int expected, int actual, char* messageIfFailed) {
 	return assertNumericEquals(expected, actual, messageIfFailed);
 }
 
-BOOL assertLongEquals(long expected, long actual, char* messageIfFailed) {
+bool assertLongEquals(long expected, long actual, char* messageIfFailed) {
 	return assertNumericEquals(expected, actual, messageIfFailed);
 }
 
-BOOL assertTrue(BOOL actual, char* messageIfFailed) {
+bool assertTrue(bool actual, char* messageIfFailed) {
 	if (!actual) {
 		printAssertExpected();
 		printAssertBooleanValue(TRUE);
@@ -167,7 +167,7 @@ BOOL assertTrue(BOOL actual, char* messageIfFailed) {
 	return TRUE;
 }
 
-BOOL assertFalse(BOOL actual, char* messageIfFailed) {
+bool assertFalse(bool actual, char* messageIfFailed) {
 	if (actual) {
 		printAssertExpected();
 		printAssertBooleanValue(FALSE);
@@ -181,7 +181,7 @@ BOOL assertFalse(BOOL actual, char* messageIfFailed) {
 
 // Pointer tests
 
-BOOL assertPointerNotNull(int* actual, char* messageIfFailed) {
+bool assertPointerNotNull(int* actual, char* messageIfFailed) {
 	if (actual == NULL) {
 		printAssertExpected();
 		printAssertMessage("NOT NULL");
@@ -195,12 +195,12 @@ BOOL assertPointerNotNull(int* actual, char* messageIfFailed) {
 
 // Object tests
 
-BOOL assertEquals(EqualsFunction* equalsFunction, int* actualObject, int* expectedObject, char* messageIfFailed) {
-	BOOL equals = equalsFunction(actualObject, expectedObject);
+bool assertEquals(EqualsFunction* equalsFunction, int* actualObject, int* expectedObject, char* messageIfFailed) {
+	bool equals = equalsFunction(actualObject, expectedObject);
 	return assertTrue(equals, messageIfFailed);
 }
 
-BOOL assertBufferEquals(Buffer* expectedBuffer, Buffer* actualBuffer, char* messageIfFailed) {
+bool assertBufferEquals(Buffer* expectedBuffer, Buffer* actualBuffer, char* messageIfFailed) {
 	// TODO : A Implémenter
 	return FALSE;
 }

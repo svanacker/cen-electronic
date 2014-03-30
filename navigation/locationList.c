@@ -16,7 +16,7 @@ void clearLocationList(LocationList* locationList) {
 	locationList->size = 0;
 }
 
-BOOL isEmptyLocationList(LocationList* locationList) {
+bool isEmptyLocationList(LocationList* locationList) {
 	return locationList->size == 0;
 }
 
@@ -65,7 +65,7 @@ Location* findLocationByName(LocationList* locationList, char* locationName) {
 	return NULL;
 }
 
-BOOL containsLocation(LocationList* locationList, Location* locationToFind, BOOL handled) {
+bool containsLocation(LocationList* locationList, Location* locationToFind, bool handled) {
 	if (locationToFind == NULL) {
 		return FALSE;
 	}	

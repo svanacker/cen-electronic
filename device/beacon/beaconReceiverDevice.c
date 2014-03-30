@@ -39,7 +39,7 @@ void beaconReceiverDeviceShutDown() {
 
 }
 
-BOOL beaconReceiverDeviceIsOk() {
+bool beaconReceiverDeviceIsOk() {
 	return TRUE;
 }
 

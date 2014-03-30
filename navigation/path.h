@@ -33,7 +33,7 @@ typedef struct PathData {
 	/** Speed factor (min = 1, max = 16). */
 	unsigned char speedFactor;
 	/** When reversed, the path must be done backward. */
-	BOOL mustGoBackward;
+	bool mustGoBackward;
 } PathData;
 
 inline void fillPathData(Location* location1,
@@ -75,7 +75,7 @@ PathData* getTmpPathData();
 /**
  * Return if the path contains the location passed in parameter
  */
-BOOL pathContainsLocation(PathDataFunction* path, Location* location);
+bool pathContainsLocation(PathDataFunction* path, Location* location);
 
 /**
  * Returns the opposite location on the path.

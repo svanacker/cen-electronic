@@ -9,12 +9,12 @@
 /**
  * Start remotely the beacon laser (with servo).
  */
-BOOL beaconLaserDriverServoStart();
+bool beaconLaserDriverServoStart();
 
 /**
  * Stop remotely the beacon laser (with servo).
  */
-BOOL beaconLaserDriverServoStop();
+bool beaconLaserDriverServoStop();
 
 /**
  * Notify the robot position to an outputStream.
@@ -24,6 +24,6 @@ void appendRobotPosition(OutputStream* outputStream, char header, Point* point);
 /**
  * Notify the beacon receiver
  */
-BOOL notifyRobotPosition(Point* point);
+bool notifyRobotPosition(Point* point);
 
 #endif

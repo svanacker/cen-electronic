@@ -25,7 +25,7 @@ void deviceRobotInfraredDetectorInit() {
 void deviceRobotInfraredDetectorShutDown() {
 }
 
-BOOL deviceRobotInfraredDetectorIsOk() {
+bool deviceRobotInfraredDetectorIsOk() {
     return TRUE;
 }
 
@@ -50,7 +50,7 @@ void deviceRobotInfraredDetectorHandleRawData(char header,
         append(outputStream, COMMAND_INFRARED_DETECTOR_DETECTION);
 
 		int type = readHex2(inputStream);
-		BOOL hasDetected;
+		bool hasDetected;
 		if (type == DETECTOR_FORWARD_INDEX) {
 			hasDetected = getRobotInfraredObstacleForward();
 		}

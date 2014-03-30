@@ -27,13 +27,13 @@ struct Location {
 	/** Temporary information needed by path finding algorithm. */
 	Location* tmpPreviousLocation;
 	/** Temporary information needed by path finding algorithm. */
-	BOOL tmpHandled;
+	bool tmpHandled;
 };
 
 /**
  * Equals function on Location. The equals is based on the name of the location !
  */
-BOOL locationEquals(Location* location1, Location* location2);
+bool locationEquals(Location* location1, Location* location2);
 
 /**
  * Print the location on the outputStream.

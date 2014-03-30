@@ -71,6 +71,6 @@ void transmitDriverData(int transmitMode,
  * Handle data which are notification (and not direct response) from dispatcher.
  * @param dispatcher the dispatcher from which we try to handle notification.
  */
-BOOL handleNotificationFromDispatcher(DriverDataDispatcher* dispatcher);
+bool handleNotificationFromDispatcher(DriverDataDispatcher* dispatcher);
 
 #endif

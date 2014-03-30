@@ -59,7 +59,7 @@ void updateOutgoingPaths(Location* location) {
 		PathDataFunction* pathDataFunction = getPath(&paths, i);
 
 		// For example : location = "A", check if path contains("A") : "AB" contains "A", but "DE" not
-		BOOL pathContainsLocationBool = pathContainsLocation(pathDataFunction, location);
+		bool pathContainsLocationBool = pathContainsLocation(pathDataFunction, location);
 
 		if (!pathContainsLocationBool) {
 			continue;
@@ -70,7 +70,7 @@ void updateOutgoingPaths(Location* location) {
 		Location* otherEnd = getOtherEnd(pathDataFunction, location);
 
 		// Ex : handledLocationList = {EF, GH} and other End = B
-		BOOL handledLocationListContainsLocation = containsLocation(&locations, otherEnd, TRUE);
+		bool handledLocationListContainsLocation = containsLocation(&locations, otherEnd, TRUE);
 		if (!handledLocationListContainsLocation) {
 			setBit(&outgoingPaths, i, TRUE);
 		}
@@ -175,13 +175,13 @@ int computeBestPath(LocationList* outLocationList, Location* start, Location* en
 
 		// loop on all outgoingPath
 		for (i = 0; i < size; i++) {
-			BOOL outgoing = getBit(&outgoingPaths, i);			
+			bool outgoing = getBit(&outgoingPaths, i);			
 			if (!outgoing) {
 				continue;
 			}
 
 			// Do not use paths that are not available
-			BOOL available = getPathAvailability(i);
+			bool available = getPathAvailability(i);
 			if (!available) {
 				continue;
 			}
@@ -233,7 +233,7 @@ void printNavigationContext(OutputStream* outputStream) {
 	printPathList(outputStream, "paths:", &paths);
 }
 
-void setPathAvailability(int index, BOOL value) {
+void setPathAvailability(int index, bool value) {
 	setBit(&availablePaths, index, value);
 }
 
@@ -241,6 +241,6 @@ void resetAllPathsAsAvailable() {
 	clearBitList(&availablePaths, TRUE);
 }
 
-BOOL getPathAvailability(int index) {
+bool getPathAvailability(int index) {
 	return getBit(&availablePaths, index);
 }

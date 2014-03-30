@@ -17,14 +17,14 @@
 #include "../../drivers/driverList.h"
 #include "../../drivers/dispatcher/driverDataDispatcher.h"
 
-BOOL motorDriverInit() {
+bool motorDriverInit() {
     return TRUE;
 }
 
 void motorDriverShutDown() {
 }
 
-BOOL motorDriverIsOk() {
+bool motorDriverIsOk() {
     return TRUE;
 }
 
@@ -36,7 +36,7 @@ const char* motorDriverGetName() {
     return "motorDriver";
 }
 
-BOOL motorDriverSendRawData(const char *data) {
+bool motorDriverSendRawData(const char *data) {
     return FALSE;
 }
 

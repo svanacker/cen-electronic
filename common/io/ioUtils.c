@@ -40,7 +40,7 @@ unsigned int copyInputToOutputStream(InputStream* inputStream,
         if (filterChar != NULL) {
             unsigned char filteredValue = c;
             // function returns if we include or not char
-            BOOL include = filterChar(c, &filteredValue);
+            bool include = filterChar(c, &filteredValue);
             if (include) {
                 // write the filtered char into the output stream
                 outputStream->writeChar(outputStream, filteredValue);

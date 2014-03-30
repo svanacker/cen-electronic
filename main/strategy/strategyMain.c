@@ -129,7 +129,7 @@ void initDevicesDescriptor() {
 	initDevices(&devices);
 }
 
-void initDriverToI2CSlaveAndDebugCompositeOutputStream(BOOL includeI2C) {
+void initDriverToI2CSlaveAndDebugCompositeOutputStream(bool includeI2C) {
 	initCompositeOutputStream(&driverToI2CSlaveAndDebugCompositeOutputStream);
 
 	// UART / DEBUG
@@ -148,7 +148,7 @@ void initDriverToI2CSlaveAndDebugCompositeOutputStream(BOOL includeI2C) {
 /**
  * Redirect to debug output Stream for SIMULATION_MODE
  */
-BOOL redirectDriverToCompositeOutputStream() {
+bool redirectDriverToCompositeOutputStream() {
     InputStream* inputStream = getInputStream(getDriverRequestBuffer());
 
 	// Redirect to debug OutputStream

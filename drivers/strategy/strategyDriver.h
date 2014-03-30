@@ -24,19 +24,19 @@ void robotNextStep();
 /**
 * Send to the strategy board the configuration.
 */
-BOOL sendStrategyConfiguration(int configuration);
+bool sendStrategyConfiguration(int configuration);
 
 /**
 * Allow the strategy board to send new notification
 */
-BOOL sendStrategyNextStep();
+bool sendStrategyNextStep();
 
 /**
  * Send the opponent robot position.
  */
-BOOL sendStrategyOpponentRobotPosition(Point* opponentRobotPosition);
+bool sendStrategyOpponentRobotPosition(Point* opponentRobotPosition);
 
-BOOL sentStrategyRobotPosition(unsigned char status, unsigned int x, unsigned int y, int angleInDeciDegree);
+bool sentStrategyRobotPosition(unsigned char status, unsigned int x, unsigned int y, int angleInDeciDegree);
 
 
 

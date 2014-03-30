@@ -33,7 +33,7 @@ typedef struct GameStrategyContext {
 	// Obstacle position.
 	Point lastObstaclePosition;
 	/** Flag indicateing that the opponent's position has changed. */
-	BOOL opponentRobotMoved;
+	bool opponentRobotMoved;
 	/** current Target. */
 	GameTarget* currentTarget;
 	/** current Target Action. */
@@ -43,9 +43,9 @@ typedef struct GameStrategyContext {
 	/** Color. */
 	TEAM_COLOR color;
 	/** Go to next Step. */
-//	BOOL mustDoNextStep;
+//	bool mustDoNextStep;
 	/** Step status. */
-	BOOL hasMoreNextSteps;
+	bool hasMoreNextSteps;
 	/** Strategy index. */
 	unsigned char strategyIndex;
 	/** Max target to handle. */

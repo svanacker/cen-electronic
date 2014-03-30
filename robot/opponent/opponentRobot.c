@@ -11,7 +11,7 @@
 
 /** The last OpponentRobotPosition. */
 static Point lastOpponentRobotPosition;
-static BOOL mustAskLastOpponentRobotPosition;
+static bool mustAskLastOpponentRobotPosition;
 
 /** To distinguish every Timer. */
 #define OPPONENT_ROBOT_TIMER_INDEX			5

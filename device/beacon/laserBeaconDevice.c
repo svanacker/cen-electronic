@@ -37,7 +37,7 @@ void deviceBeaconShutDown() {
 	stopLaserBeacon();
 }
 
-BOOL deviceBeaconIsOk() {
+bool deviceBeaconIsOk() {
     return TRUE;
 }
 

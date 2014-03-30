@@ -38,7 +38,7 @@ typedef struct {
     /** The old value of the last hit. */
     unsigned int oldServoPositionHit[2];
     /** If there is a hit during the last move. */
-    BOOL hitDuringLast[2];
+    bool hitDuringLast[2];
     /** The counter. */
     int laserHitCounter;
     /** turn of the rotation for the robot. */
@@ -95,7 +95,7 @@ void detectsLaser(Laser* laser);
  * Return if the laser has track something
  * We consider that a laser track something if it detects something during LEFT and RIGHT scanning
  */
-BOOL hasTrackSomething(Laser* laser);
+bool hasTrackSomething(Laser* laser);
 
 // CALIBRATION
 

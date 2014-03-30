@@ -28,7 +28,7 @@ void setRedirectionTransmitFromDriverRequestBuffer(transmitFromDriverRequestBuff
 	redirectFunction = function;
 }
 
-BOOL transmitFromDriverRequestBuffer() {
+bool transmitFromDriverRequestBuffer() {
 	// Handle redirection
 	if (redirectFunction != NULL) {
 		return redirectFunction();
@@ -47,7 +47,7 @@ BOOL transmitFromDriverRequestBuffer() {
     // The first char is the header
     char header = bufferGetFirstChar(requestBuffer);
 
-    BOOL result = handleStreamInstruction(
+    bool result = handleStreamInstruction(
             requestBuffer,
             responseBuffer,
             // Don't copy to an outputStream, because, we

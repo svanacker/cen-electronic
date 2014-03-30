@@ -174,7 +174,7 @@ typedef const char* deviceGetNameFunction(void);
 */
 typedef int deviceGetInterfaceFunction(char header,
 								int mode,
-								BOOL fillDeviceArgumentList);
+								bool fillDeviceArgumentList);
 
 
 

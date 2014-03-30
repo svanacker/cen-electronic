@@ -82,7 +82,7 @@ void handleAndWaitMSec(unsigned long delayMs);
 /**
  * Stop the robot.
  */
-void stopPosition(BOOL maintainPositionValue);
+void stopPosition(bool maintainPositionValue);
 
 /**
  * Ask the robot to maintain the position.
@@ -98,7 +98,7 @@ void updateSimpleSplineWithDistance(float destX, float destY,
 									float destAngle,
 									float distance1, float distance2,
 									unsigned char accelerationFactor, unsigned char speedFactor,
-									BOOL relative);
+									bool relative);
 
 /**
  * Go from the relative destination to the initial Position of the robot
@@ -118,7 +118,7 @@ void gotoSimpleSpline(float relativeDestX,
 					  float controlPointDistance2,
 					  unsigned int accelerationFactor,
 					  unsigned int speedFactor,
-					  BOOL relative
+					  bool relative
 					);
 
 /**

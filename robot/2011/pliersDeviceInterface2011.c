@@ -10,7 +10,7 @@ unsigned int devicePliers2011GetSotwareRevision() {
     return 1;
 }
 
-int devicePliers2011GetInterface(char header, int mode, BOOL fillDeviceArgumentList) {
+int devicePliers2011GetInterface(char header, int mode, bool fillDeviceArgumentList) {
     if (header == COMMAND_PLIERS_2011_CLOSE) {
 		// SAME INPUT / OUTPUT
 		if (fillDeviceArgumentList) {

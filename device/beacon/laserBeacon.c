@@ -162,7 +162,7 @@ void detectsLaser(Laser* laserDetector) {
     }
 }
 
-BOOL hasTrackSomething(Laser* laser) {
+bool hasTrackSomething(Laser* laser) {
 	return (laser->lastServoPositionHit[LEFT_DIRECTION] != 0 && laser->lastServoPositionHit[RIGHT_DIRECTION] != 0);
 }
 

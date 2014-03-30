@@ -16,7 +16,7 @@ void clearTargetAction(GameTargetAction* targetAction) {
 	}
 }
 
-void printGameTargetAction(OutputStream* outputStream, GameTargetAction* targetAction, BOOL includeItems) {
+void printGameTargetAction(OutputStream* outputStream, GameTargetAction* targetAction, bool includeItems) {
 	appendString(outputStream, "\taction:");
 	appendKeyAndName(outputStream, "startLocation=", targetAction->startLocation->name);
 	appendKeyAndName(outputStream, ", end=", targetAction->endLocation->name);

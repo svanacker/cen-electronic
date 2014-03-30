@@ -22,9 +22,9 @@
 #include "../../drivers/jennic/jennic5139EventParser.h"
 
 // Handle Input to Command Jennic or to ask the devices
-static BOOL redirectToDevices = TRUE;
+static bool redirectToDevices = TRUE;
 
-BOOL isCommandRedirectToDevices() {
+bool isCommandRedirectToDevices() {
 	return redirectToDevices;
 }
 
@@ -42,7 +42,7 @@ void commonBeaconDeviceShutDown() {
 
 }
 
-BOOL commonBeaconDeviceIsOk() {
+bool commonBeaconDeviceIsOk() {
 	return TRUE;
 }
 

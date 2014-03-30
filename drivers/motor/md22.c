@@ -100,7 +100,7 @@ void stopMD22Motors(void) {
 
 // DEVICE INTERFACE
 
-BOOL initMD22(void) {
+bool initMD22(void) {
     getMD22Version();
     delaymSec(10);
 

@@ -12,7 +12,7 @@ unsigned int getStartMatchDetectorSoftwareRevision() {
 }
 
 int deviceStartMatchDetectorGetInterface(char header, int mode,
-        BOOL fillDeviceArgumentList) {
+        bool fillDeviceArgumentList) {
 	if (header == COMMAND_STEP_BY_STEP) {
 		// same input / output
 		if (fillDeviceArgumentList) {

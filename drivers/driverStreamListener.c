@@ -20,7 +20,7 @@
 #include "../device/dispatcher/deviceDataDispatcher.h"
 #include "../drivers/dispatcher/driverDataDispatcher.h"
 
-BOOL handleStreamInstruction(Buffer* inputBuffer,
+bool handleStreamInstruction(Buffer* inputBuffer,
 					        Buffer* outputBuffer,
 					        OutputStream* outputStream,
 					        filterCharFunction* inputFilterChar,

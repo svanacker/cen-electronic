@@ -101,7 +101,7 @@ float getNotifyTimeDelay() {
 	return beaconSystem.notifyTimeDelay;
 }
 
-BOOL notifyRobotPositionIfNecessary() {
+bool notifyRobotPositionIfNecessary() {
 	// Don't notify if the servo does not move
 	if (!beaconSystem.enabled) {
 		return FALSE;
@@ -131,7 +131,7 @@ void stopLaserBeacon() {
 }
 
 
-void setBeaconSystemEnabled(BOOL enabled) {
+void setBeaconSystemEnabled(bool enabled) {
 	beaconSystem.enabled = enabled;
 }
 

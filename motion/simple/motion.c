@@ -44,7 +44,7 @@ MotionParameter* getDefaultMotionParameters(unsigned char motionType) {
 /**
  * Stop the robot.
  */
-void stopPosition(BOOL maintainPositionValue) {
+void stopPosition(bool maintainPositionValue) {
     updateTrajectoryAndClearCoders();
 
     if (maintainPositionValue) {
@@ -188,7 +188,7 @@ void updateSimpleSplineWithDistance(float destX, float destY,
 									float destAngle, 
 									float distance1, float distance2, 
 									unsigned char accelerationFactor, unsigned char speedFactor,
-									BOOL relative) {
+									bool relative) {
 
 	/*
 	OutputStream* outputStream = getDebugOutputStreamLogger();
@@ -201,13 +201,13 @@ void updateSimpleSplineWithDistance(float destX, float destY,
 
 	// If the distance of the control point is negative, we considerer that we go
 	// back
-	BOOL backward = distance1 < 0.0f;
+	bool backward = distance1 < 0.0f;
 	
 	/*
 	appendString(outputStream, ",rel=");
-	appendBOOL(outputStream, relative);
+	appendbool(outputStream, relative);
 	appendString(outputStream, ",backward=");
-	appendBOOL(outputStream, backward);
+	appendbool(outputStream, backward);
 	*/	
 
 	Position* position = getPosition();
@@ -297,7 +297,7 @@ void gotoSimpleSpline(float destX, float destY,
 					  float destAngle, 
 					  float controlPointDistance1, float controlPointDistance2,
 					  unsigned int accelerationFactor, unsigned int speedFactor,
-					  BOOL relative) {
+					  bool relative) {
 	updateSimpleSplineWithDistance(destX, destY,
 									destAngle,
 									controlPointDistance1, controlPointDistance2,
@@ -566,7 +566,7 @@ float rightSimpleMilliDegreeAndWait(float angleMilliDegree) {
 
 // CALIBRATION
 
-void squareCalibrationRotationLeft(BOOL inverse) {
+void squareCalibrationRotationLeft(bool inverse) {
 	if (inverse) {
 		rightSimpleDegreeAndWait(DEG_90);
 	}
@@ -575,7 +575,7 @@ void squareCalibrationRotationLeft(BOOL inverse) {
 	}
 }
 
-void squareCalibrationRotationRight(BOOL inverse) {
+void squareCalibrationRotationRight(bool inverse) {
 	if (inverse) {
 		leftSimpleDegreeAndWait(DEG_90);
 	}
@@ -583,7 +583,7 @@ void squareCalibrationRotationRight(BOOL inverse) {
 		rightSimpleDegreeAndWait(DEG_90);
 	}
 }
-void squareCalibrationLine(signed int x, signed int y, signed int angle, BOOL inverse) {
+void squareCalibrationLine(signed int x, signed int y, signed int angle, bool inverse) {
 	signed char cp = 100.0f;
 	if (inverse) {
 		gotoSimpleSpline(x, -y, -angle, cp, cp, MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL, FALSE);
@@ -598,7 +598,7 @@ void squareCalibration(unsigned char type, float lengthInMM) {
     // to the bottom middle
 	signed int lengthInMM2 = lengthInMM / 2.0f;
 
-	BOOL inverse = (type == 0);
+	bool inverse = (type == 0);
 
 	// turn on right
 	squareCalibrationRotationRight(inverse);

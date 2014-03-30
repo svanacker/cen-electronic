@@ -154,13 +154,13 @@ void handleJennicNextChar(char c) {
 		// store the char into the current command
 		jennicEventList.currentCommand[jennicEventList.dataBlockBeginMatchIndex] = c;
 		jennicEventList.dataBlockBeginMatchIndex++;
-		BOOL foundPossibleCandidate = FALSE;
+		bool foundPossibleCandidate = FALSE;
 
 		int eventIndex = 0;
 		for (eventIndex = 0; eventIndex < jennicEventList.size; eventIndex++) {
 			JennicEvent* event = jennicEventList.events[eventIndex];
 			int charIndex;
-			BOOL matchCompletely = TRUE;
+			bool matchCompletely = TRUE;
 			// we must check complete command
 			// Ex : DAT and RST have "T" at the end, we must not control only
 			// the last character
@@ -252,7 +252,7 @@ void printJennicEvent(JennicEvent* event, OutputStream* outputStream) {
 	appendString(outputStream, event->argument2);
 
 	appendString(outputStream, ",payLoadArgumentIndex=");
-	appendBOOL(outputStream, event->payLoadArgumentIndex);
+	appendbool(outputStream, event->payLoadArgumentIndex);
 	appendCRLF(outputStream);
 }
 

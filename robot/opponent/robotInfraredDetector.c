@@ -41,7 +41,7 @@
 static InfraredDetectorGroup forwardDetector;
 static InfraredDetectorGroup backwardDetector;
 
-BOOL getRobotInfraredObstacleGroup(InfraredDetectorGroup* group) {
+bool getRobotInfraredObstacleGroup(InfraredDetectorGroup* group) {
 	// no detection
 	if (group->wasDetectedCount < DETECTED_THRESHOLD) {
 		return FALSE;
@@ -53,15 +53,15 @@ BOOL getRobotInfraredObstacleGroup(InfraredDetectorGroup* group) {
 	return TRUE;
 }
 
-BOOL getRobotInfraredObstacleForward() {
+bool getRobotInfraredObstacleForward() {
 	return getRobotInfraredObstacleGroup(&forwardDetector);
 }
 
-BOOL getRobotInfraredObstacleBackward() {
+bool getRobotInfraredObstacleBackward() {
 	return getRobotInfraredObstacleGroup(&backwardDetector);
 }
 
-BOOL forwardDetection() {
+bool forwardDetection() {
 
 	float leftMilliVolt = getANX(GP2D12_LEFT_ANX_INDEX);
 	float rightMilliVolt = getANX(GP2D12_RIGHT_ANX_INDEX);
@@ -72,18 +72,18 @@ BOOL forwardDetection() {
 	float centerDistance = gp2y0a02ykGetCentimerDistanceForTension(rightMilliVolt);
 	float rightDistance = gp2d12GetCentimerDistanceForTension(centerMilliVolt);
 
-	BOOL result = (leftDistance < ROBOT_INFRARED_DETECTOR_DISTANCE_THRESHOLD_LEFT_CM 
+	bool result = (leftDistance < ROBOT_INFRARED_DETECTOR_DISTANCE_THRESHOLD_LEFT_CM 
 				|| rightDistance < ROBOT_INFRARED_DETECTOR_DISTANCE_THRESHOLD_RIGHT_CM 
 				|| centerDistance < ROBOT_INFRARED_DETECTOR_DISTANCE_THRESHOLD_CENTER_CM);
 
 	return result;
 }
 
-BOOL backwardDetection() {
+bool backwardDetection() {
 	float backMilliVolt = getANX(GP2DY0A02YK_BACK_ANX_INDEX);
 	float backDistance = gp2y0a02ykGetCentimerDistanceForTension(backMilliVolt);
 
-	BOOL result = (backDistance < ROBOT_INFRARED_DETECTOR_DISTANCE_THRESHOLD_BACK_CM);
+	bool result = (backDistance < ROBOT_INFRARED_DETECTOR_DISTANCE_THRESHOLD_BACK_CM);
 
 	return result;
 }
@@ -99,7 +99,7 @@ void updateInfraredDetector(InfraredDetectorGroup* group) {
     // rearm flags
     group->interruptCounter = 0;
 
-	BOOL currentDetection = group->function();
+	bool currentDetection = group->function();
 	if (currentDetection) {
 		group->wasDetectedCount++;
 	}

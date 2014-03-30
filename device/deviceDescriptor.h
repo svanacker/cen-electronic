@@ -20,7 +20,7 @@ typedef void deviceShutDownFunction(void);
 /**
 * Defines the function to know if a device is ok or not.
 */
-typedef BOOL deviceIsOkFunction(void);
+typedef bool deviceIsOkFunction(void);
 
 /**
 * Function for handling raw data sent to the device.

@@ -34,7 +34,7 @@ int getCurrentTimeInSecond ( void );
 * Ask to know if the match is ending.
 * @return true if the match is ending
 */
-BOOL isEnd( void );
+bool isEnd( void );
 
 void showEnd(OutputStream* outputStream);
 

@@ -19,7 +19,7 @@ void append(OutputStream* outputStream, char c) {
     outputStream->writeChar(outputStream, c);
 }
 
-void appendBOOL(OutputStream* outputStream, BOOL b) {
+void appendBool(OutputStream* outputStream, bool b) {
     if (b) {
         append(outputStream, '1');
     } else {
