@@ -40,10 +40,13 @@
 #include "../../device/servo/servoDevice.h"
 #include "../../device/servo/servoDeviceInterface.h"
 
+// Drivers
 #include "../../drivers/driver.h"
 #include "../../drivers/driverTransmitter.h"
 #include "../../drivers/driverList.h"
 #include "../../drivers/driverStreamListener.h"
+
+#include "../../drivers/temperature/MCP9804.h"
 
 #ifndef MPLAB_SIMULATION
 	#define SERIAL_PORT_DEBUG 		SERIAL_PORT_2
@@ -56,6 +59,13 @@
 #define		SERVO_VALUE_TOUCH		1620
 #define		SERVO_VALUE_STAND_BY	1400
 #define		SERVO_SPEED				0xFF
+
+
+// 1000000 ==> 20 seconds
+// 5000000 ==> 10000 seconds => 15 minutes
+
+#define		ITERATION_OFF			20000000L
+#define		ITERATION_ON			40000000L
 
 /**
 * Device list.
@@ -109,7 +119,7 @@ void initStrategyBoardIO() {
 
 void clickOnButton() {
 	pwmServo(SERVO_INDEX, SERVO_SPEED, SERVO_VALUE_TOUCH);
-	delaymSec(1000);
+	delaymSec(500);
 	pwmServo(SERVO_INDEX, SERVO_SPEED, SERVO_VALUE_STAND_BY);
 }
 
@@ -137,6 +147,9 @@ int main(void) {
 	appendString(getOutputStreamLogger(INFO), getPicName());
 	println(getOutputStreamLogger(INFO));
 
+	// Initializes the I2C
+	i2cMasterInitialize();
+
 	// init the devices
 	initDevicesDescriptor();
 
@@ -145,18 +158,26 @@ int main(void) {
 	// Init the timers management
 	startTimerList();
 
+	// Initialize the driver : TODO : Encapsulates into a driver.
+	initRegMCP9804 (0x00,0x18,0x01,0xE0,0x01,0x40,0x02,0x40); // 30C, 20C, 34C
+
 	clickOnButton();
 	unsigned long timerIndex = 0L;
+	BOOL timerOn = TRUE;
+	unsigned long timerMax = ITERATION_ON;
 
 	while (1) {
 		timerIndex++;
 
-		// 1000000 ==> 20 seconds
-		// 5000000 ==> 10000 seconds => 15 minutes
-
-//		if ((timerIndex % 1000000L) == 0) {
-		if ((timerIndex % 50000000L) == 0) {
-
+		if (timerIndex > timerMax) {
+			timerIndex = 0;
+			timerOn = !timerOn;
+			if (timerOn) {
+				timerMax = ITERATION_ON;
+			}
+			else {
+				timerMax = ITERATION_OFF;
+			}
 			clickOnButton();
 		}
 
