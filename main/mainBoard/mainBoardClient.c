@@ -800,6 +800,7 @@ int main(void) {
                                                             &strategyBoardOutputStream,
                                                             STRATEGY_BOARD_I2C_ADDRESS);
 
+    // printDriverDataDispatcherList(getOutputStreamLogger(DEBUG), getDispatcherList());
 	*/
 
 	appendString(getOutputStreamLogger(ALWAYS), "Init LCD:");
@@ -872,9 +873,9 @@ int main(void) {
 		delaymSec(500);
 		lcd4dDrawGraphicChar(&lcd4d, '7', 50, 200, 2, 2);
 		*/
-		delaymSec(500);
+		delaymSec(200);
 		lcd4dDrawString(&lcd4d, 10, 10, LCD4D_FONT_LARGEST, "Hello");
-		delaymSec(500);
+		delaymSec(200);
 		lcd4dDrawGraphicString(&lcd4d, 50, 200, LCD4D_FONT_LARGEST, 2, 2, " World");
 /*
 #define		LCD4D_GET_TOUCH_COORDINATES_COMMAND		'o'
@@ -892,6 +893,8 @@ int main(void) {
 			println(getOutputStreamLogger(ERROR));
 			appendStringAndDec(getOutputStreamLogger(ERROR), "y=", point.y);
 			println(getOutputStreamLogger(ERROR));
+			lcd4dDrawEllipse(&lcd4d, point.x, point.y, 10, 10);
+			delaymSec(1000);
 		}
 	}
 

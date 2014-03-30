@@ -8,6 +8,8 @@
 
 #define PROG_32
 #include <GenericTypeDefs.h>
+// #define PROG_32
+// #include <GenericTypeDefs.h>
 
 // TODO ; Change for 32 !!
 #define MAX_SIGNEDINT 0x7FFF
@@ -44,6 +46,6 @@
  * @param object pointer on a structure for object1
  * @param object pointer on a structure for object2
  */
-typedef BOOL EqualsFunction(int* object1, int* object2);
+// typedef BOOL EqualsFunction(int* object1, int* object2);
 
 #endif
