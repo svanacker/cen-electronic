@@ -1,6 +1,15 @@
 #ifndef COMMONS_H
 #define COMMONS_H
 
+/**
+ * Defines that we want to run with MPLAB SIMULATION
+ */
+// #define MPLAB_SIMULATION
+
+// #define PROG_32
+// #include <GenericTypeDefs.h>
+
+// TODO ; Change for 32 !!
 #define MAX_SIGNEDINT 0x7FFF
 #define MAX_UNSIGNEDINT 0xFFFF
 #define MIN_SIGNEDINT 0x8000
@@ -39,6 +48,6 @@
  * @param object pointer on a structure for object1
  * @param object pointer on a structure for object2
  */
-typedef BOOL EqualsFunction(int* object1, int* object2);
+// typedef BOOL EqualsFunction(int* object1, int* object2);
 
 #endif

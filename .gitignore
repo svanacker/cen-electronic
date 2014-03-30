@@ -26,6 +26,9 @@ NMakefile
 Makefile
 *.X
 *.zip
-*.mcw
+#*.mcw
 
 build
+objects
+bin
+*.elf
