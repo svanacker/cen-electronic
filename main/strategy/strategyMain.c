@@ -189,7 +189,8 @@ int main(void) {
 					&debugOutputBufferArray,
 					STRATEGY_BOARD_DEBUG_OUTPUT_BUFFER_LENGTH,
 					&debugOutputStream,
-					SERIAL_PORT_DEBUG);
+					SERIAL_PORT_DEBUG,
+                                        0);
 
 
 	initTimerList(&timerListArray, STRATEGY_BOARD_TIMER_LENGTH);
