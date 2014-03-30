@@ -20,7 +20,7 @@ void initPwmMotor(void) {
 }
 
 bool isPwmMotorDeviceOk(void) {
-    return TRUE;
+    return true;
 }
 
 void devicePwmMotorHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream) {

@@ -32,7 +32,7 @@ inline void fillPathData(Location* location1,
 	tmpPathData.cost = cost;
 	tmpPathData.accelerationFactor = accelerationFactor;
 	tmpPathData.speedFactor = speedFactor;
-	tmpPathData.mustGoBackward = FALSE;
+	tmpPathData.mustGoBackward = false;
 }
 
 inline void fillAsymmetricPathData(Location* location1,
@@ -45,7 +45,7 @@ inline void fillAsymmetricPathData(Location* location1,
 					 unsigned char accelerationFactor,
 					 unsigned char speedFactor) {
 	fillPathData(location1, location2, cost, controlPointDistance1, controlPointDistance2, angle1, angle2, accelerationFactor, speedFactor);
-	tmpPathData.mustGoBackward = TRUE;
+	tmpPathData.mustGoBackward = true;
 }
 
 
@@ -88,7 +88,7 @@ void printPath(OutputStream* outputStream, PathDataFunction* pathDataFunction) {
 	appendStringAndDec(outputStream, ", accFactor=", tmpPathData.accelerationFactor);
 	appendStringAndDec(outputStream, ", speedFactor=", tmpPathData.speedFactor);
 	appendString(outputStream, ", mustGoBackward=");
-	appendString(outputStream, (tmpPathData.mustGoBackward) ? "TRUE" : "FALSE");
+	appendString(outputStream, (tmpPathData.mustGoBackward) ? "true" : "false");
 
 	println(outputStream);
 }

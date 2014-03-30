@@ -40,7 +40,7 @@ void beaconReceiverDeviceShutDown() {
 }
 
 bool beaconReceiverDeviceIsOk() {
-	return TRUE;
+	return true;
 }
 
 void beaconReceiverDeviceHandleRawData(char header,

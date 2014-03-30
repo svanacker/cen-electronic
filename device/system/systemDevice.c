@@ -23,7 +23,7 @@ void deviceSystemShutDown() {
 } 
 
 bool deviceSystemIsOk() {
-    return TRUE;
+    return true;
 }
 
 void deviceSystemHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream) {

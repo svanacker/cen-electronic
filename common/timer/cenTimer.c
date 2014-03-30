@@ -16,11 +16,11 @@ void setTime(Timer* timer, unsigned long value) {
 // STARTS / STOP
 
 void startTimer(Timer* timer) {
-    timer->enabled = TRUE;
+    timer->enabled = true;
 }
 
 void stopTimer(Timer* timer) {
-    timer->enabled = FALSE;
+    timer->enabled = false;
 }
 
 // MARK
@@ -37,7 +37,7 @@ bool timeout(Timer* timer, unsigned long time) {
 
 void lockAndWaitForTimer(Timer* timer) {
     // we lock the timer to be sure that he will not be fired
-    timer->lock = TRUE;
+    timer->lock = true;
 
     // we wait after the end of the timer callback
     // do be sure that variables are ok
@@ -47,5 +47,5 @@ void lockAndWaitForTimer(Timer* timer) {
 }
 
 void unlockTimer(Timer* timer) {
-    timer->lock = FALSE;
+    timer->lock = false;
 }

@@ -1,5 +1,7 @@
 #include "lcd4d.h"
 
+#include <stdlib.h>
+
 #include "../../common/2d/2d.h"
 
 #include "../../common/io/inputStream.h"
@@ -45,7 +47,7 @@ void lcd4dAppendColor(Lcd4d* lcd) {
 
 
 /**
- * Returns TRUE if the response comes before the timeoutMilliSeconds, FALSE else
+ * Returns true if the response comes before the timeoutMilliSeconds, false else
  * @private
  */
 bool waitLcdResponse(Lcd4d* lcd, int timeoutMilliSeconds, int charToReceive) {
@@ -56,10 +58,10 @@ bool waitLcdResponse(Lcd4d* lcd, int timeoutMilliSeconds, int charToReceive) {
 		counter--;
 		if (counter <= 0) {	
 			appendString(getOutputStreamLogger(ERROR), "\nLCD TIME OUT:\n");
-			return FALSE;
+			return false;
 		}
 	}
-	return TRUE;
+	return true;
 	/*
 	appendStringAndDec(getOutputStreamLogger(ERROR), "\nELEMENT COUNT:", getBufferElementsCount(lcd->inputBuffer));
 	appendStringAndDec(getOutputStreamLogger(ERROR), ", counter=", counter);	
@@ -71,13 +73,13 @@ bool lcd4dIsAck(Lcd4d* lcd) {
 	int result = readBinaryChar(lcd->inputStream);
 	if (result == LCD4D_ACK) {
 		copyInputToOutputStream(lcd->inputStream, getOutputStreamLogger(ERROR), NULL, COPY_ALL);
-		return TRUE;
+		return true;
 	}
 	appendString(getOutputStreamLogger(ERROR), "\nBAD ACK:");
 	append(getOutputStreamLogger(ERROR), result);
 	copyInputToOutputStream(lcd->inputStream, getOutputStreamLogger(ERROR), NULL, COPY_ALL);
 
-	return FALSE;
+	return false;
 }
 
 bool setAutoBaud(Lcd4d* lcd) {
@@ -438,14 +440,14 @@ bool lcd4dListDirectoryOfCardFAT(Lcd4d* lcd, char* fileNameToMatch, OutputStream
 		
 		int result = readBinaryChar(lcd->inputStream);
 		if (result == LCD4D_ACK) {
-			return TRUE;
+			return true;
 		}
 		if (result == LCD4D_NACK) {
-			return FALSE;
+			return false;
 		}
 		append(outputStream, result);
 	}		
-	return TRUE;
+	return true;
 }
 
 bool lcd4dEraseFileFromCardFAT(Lcd4d* lcd, char* fileName) {
@@ -479,7 +481,7 @@ bool lcd4dWriteFileToCardFAT(Lcd4d* lcd, int handshakingMode, int appendMode, in
 	bool result = lcd4dIsAck(lcd);
 	if (!result) {
 		// if no ack, we do not send buffer content
-		return FALSE;
+		return false;
 	}
 
 	// Send data

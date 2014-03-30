@@ -20,13 +20,13 @@
 
 #include "../../robot/2012/armDriver2012.h"
 
-static bool matchStarted = FALSE;
+static bool matchStarted = false;
 
 /** Current Time In Second. */
 static int currentTimeInSecond = 0;
 
 /** Flag to know if the robot must stop at the end of the match. */
-static bool doNotEnd = FALSE;
+static bool doNotEnd = false;
 
 /** The timer struct to detect the end of the match. */
 static Timer* endMatchDetectorDeviceTimer;
@@ -49,7 +49,7 @@ void initEndMatchConfig() {
 
 void markStartMatch() {
 	initEndMatchConfig();
-    matchStarted = TRUE;
+    matchStarted = true;
     currentTimeInSecond = 0;
 }
 
@@ -63,7 +63,7 @@ int getCurrentTimeInSecond(void) {
 
 bool isEnd() {
     if (doNotEnd) {
-        return FALSE;
+        return false;
     }
     if (!matchStarted) {
         appendString(getOutputStreamLogger(ERROR), "You must call startMatch before");
@@ -90,7 +90,7 @@ void stopEndMatchDetector() {
 }
 
 bool isEndMatchDetectorDeviceOk() {
-    return TRUE;
+    return true;
 }
 
 void deviceEndMatchDetectorHandleRawData(char header,

@@ -85,7 +85,7 @@ bool armDown(int color, int index) {
 		result = armDriver2012Down(index);
 	}
 	delaymSec(500);
-	setReadyForNextMotion(TRUE);
+	setReadyForNextMotion(true);
 	return result;
 }
 
@@ -98,7 +98,7 @@ bool armUp(int color, int index) {
 		result = armDriver2012Up(index);
 	}
 	delaymSec(500);
-	setReadyForNextMotion(TRUE);
+	setReadyForNextMotion(true);
 	return result;
 }
 
@@ -307,7 +307,7 @@ void homologation5_Totem(int color) {
             armDriver2012Down(ARM_LEFT);
             armDriver2012Down(ARM_RIGHT);
 			delaymSec(1000);
-			setReadyForNextMotion(TRUE);
+			setReadyForNextMotion(true);
             break;
 		case 2:
 			motionDriverForward(500.0f);
@@ -397,7 +397,7 @@ void homologation(unsigned int homologationIndex, unsigned int color) {
             return;
         }
         // avoid two movement at the same time
-        setReadyForNextMotion(FALSE);
+        setReadyForNextMotion(false);
 
         // for next instruction
         incMotionInstructionIndex();

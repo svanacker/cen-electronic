@@ -23,7 +23,7 @@ void stopADC( void ) {
 }
 
 bool isADCDeviceOk ( void ) {
-	return TRUE;
+	return true;
 }
 
 void deviceADCHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream) {

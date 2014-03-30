@@ -335,11 +335,11 @@ void initTargets2012() {
 // CD ActionItem
 
 void cdTakeStep1() {
-	motionFollowPath(&bottle2ToCDPathFunction, FALSE);
+	motionFollowPath(&bottle2ToCDPathFunction, false);
 }
 
 void cdTakeStep2() {
-	motionFollowPath(&cdToDropZone1PathFunction, FALSE);
+	motionFollowPath(&cdToDropZone1PathFunction, false);
 }
 
 // Bullion Right 1 ActionItem
@@ -356,11 +356,11 @@ void bullionRight1Step3GoToDropZone() {
 }
 
 void R3ToBullionRight1() {
-	motionFollowPath(&obstacleR3ToBullionRight1PathFunction, FALSE);
+	motionFollowPath(&obstacleR3ToBullionRight1PathFunction, false);
 }
 
 void dropZone1ToBullionRight1() {
-	motionFollowPath(&dropZone1ToBullionRight1PathFunction, FALSE);
+	motionFollowPath(&dropZone1ToBullionRight1PathFunction, false);
 }
 
 // Bullion Left 1 ActionItem
@@ -377,11 +377,11 @@ void bullionLeft1Step3GoToDropZone() {
 }
 
 void dropZone1ToBullionLeft1() {
-	motionFollowPath(&dropZone1ToBullionLeft1PathFunction, FALSE);
+	motionFollowPath(&dropZone1ToBullionLeft1PathFunction, false);
 }
 
 void L3ToBullionLeft1() {
-	motionFollowPath(&obstacleL3ToBullionLeft1PathFunction, FALSE);
+	motionFollowPath(&obstacleL3ToBullionLeft1PathFunction, false);
 }
 
 void initTargetActions2012() {
@@ -498,7 +498,7 @@ void initStrategy2012(int strategyIndex) {
 	p->x = 0;
 	p->y = 0;
 	
-	strategyContext->hasMoreNextSteps = TRUE;
+	strategyContext->hasMoreNextSteps = true;
 
 	// reinitialize the game board to change elements / targets ...
 }

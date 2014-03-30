@@ -61,7 +61,7 @@ void deviceArm2012ShutDown() {
 }
 
 bool deviceArm2012IsOk() {
-    return TRUE;
+    return true;
 }
 
 void deviceArm2012HandleRawData(char header,

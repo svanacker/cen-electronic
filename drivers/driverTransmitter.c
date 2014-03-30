@@ -41,7 +41,7 @@ bool transmitFromDriverRequestBuffer() {
     InputStream* inputStream = getDriverResponseInputStream();
 	if (inputStream == NULL) {
 		writeError(DRIVER_INPUT_STREAM_NULL);
-		return FALSE;
+		return false;
 	}
 
     // The first char is the header

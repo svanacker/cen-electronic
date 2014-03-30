@@ -101,7 +101,7 @@ bool sendStrategyNextStep() {
         int result = readHex2(inputStream);
 		return result;
     }
-    return FALSE;
+    return false;
 }
 
 bool sendStrategyOpponentRobotPosition(Point* opponentRobotPosition) {

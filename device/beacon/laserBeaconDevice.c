@@ -38,7 +38,7 @@ void deviceBeaconShutDown() {
 }
 
 bool deviceBeaconIsOk() {
-    return TRUE;
+    return true;
 }
 
 void deviceBeaconHandleRawData(char header,
@@ -100,13 +100,13 @@ void deviceBeaconHandleRawData(char header,
 	// Run the servo of the beacon system
 	else if (header == COMMAND_BEACON_SERVO_RUN) {
         appendAck(outputStream);
-		setBeaconSystemEnabled(TRUE);
+		setBeaconSystemEnabled(true);
         append(outputStream, COMMAND_BEACON_SERVO_RUN);
 	}
 	// Stop the servo of the beacon system
 	else if (header == COMMAND_BEACON_SERVO_STOP) {
         appendAck(outputStream);
-		setBeaconSystemEnabled(FALSE);
+		setBeaconSystemEnabled(false);
         append(outputStream, COMMAND_BEACON_SERVO_STOP);
 	}
 }

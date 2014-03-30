@@ -104,7 +104,7 @@ float getNotifyTimeDelay() {
 bool notifyRobotPositionIfNecessary() {
 	// Don't notify if the servo does not move
 	if (!beaconSystem.enabled) {
-		return FALSE;
+		return false;
 	}
 	Timer* beaconTimer = getTimerByCode(BEACON_TIMER_CODE);
 	// delay is exceed => must notify
@@ -113,9 +113,9 @@ bool notifyRobotPositionIfNecessary() {
 		beaconSystem.lastNotifyTime = beaconTimer->time; 
 		Point* point = getOpponentRobotPosition();
 		notifyRobotPosition(point);
-		return TRUE;
+		return true;
 	}
-	return FALSE;
+	return false;
 }
 
 // INIT / STOP

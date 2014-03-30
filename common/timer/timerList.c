@@ -43,9 +43,9 @@ Timer* addTimer(int timerCode,
 	    result->timerCode = timerCode;
 	    result->timeDiviser = timeDiviser;
 	    result->callback = callback;
-	    result->enabled = FALSE;
-	    result->lock = FALSE;
-	    result->working = FALSE;
+	    result->enabled = false;
+	    result->lock = false;
+	    result->working = false;
 
     	timerList.size++;
 		return result;
@@ -167,12 +167,12 @@ void __attribute__((__interrupt__)) __attribute__((no_auto_psv)) _T1Interrupt(vo
                 currentTimer->time++;
 
                 // lock the timer to avoid concurrence problem
-                currentTimer->working = TRUE;
+                currentTimer->working = true;
                 if (currentTimer->callback) {
                     currentTimer->callback(currentTimer);
                 }
                 // indicates the timer is not working
-                currentTimer->working = FALSE;
+                currentTimer->working = false;
             }
         }
     }

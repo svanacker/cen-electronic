@@ -30,7 +30,7 @@ void deviceLift2011ShutDown() {
 }
 
 bool deviceLift2011IsOk() {
-	return TRUE;
+	return true;
 }
 
 #define LIFT_PWM_UP 		1800

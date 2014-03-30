@@ -54,12 +54,12 @@ void clearBuffer(Buffer* buffer);
 void deepClearBuffer(Buffer* buffer);
 
 /**
- * Returns TRUE if the buffer is full, false else.
+ * Returns true if the buffer is full, false else.
  */
 bool isBufferFull(const Buffer* buffer);
 
 /**
- * Returns TRUE if the buffer is empty, false else.
+ * Returns true if the buffer is empty, false else.
  */
 bool isBufferEmpty(const Buffer* buffer);
 

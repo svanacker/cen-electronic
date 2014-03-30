@@ -34,7 +34,7 @@ void devicePliers2011ShutDown() {
 }
 
 bool devicePliers2011IsOk() {
-    return TRUE;
+    return true;
 }
 
 void movePlier(int index, int value) {
@@ -76,8 +76,8 @@ void movePliers(int delayCounter, int speed) {
 }
 
 void openPliers(int delayCounter, int speed) {
-    bool rightOpened = FALSE;
-    bool leftOpened = FALSE;
+    bool rightOpened = false;
+    bool leftOpened = false;
     int counter = 0;
     while (1) {
         counter++;
@@ -88,7 +88,7 @@ void openPliers(int delayCounter, int speed) {
 
         if (!rightOpened && PIN_SWITCH_PLIER_OPEN_RIGHT) {
             appendString(getOutputStreamLogger(INFO), "Pliers Right Opened\n");
-            rightOpened = TRUE;
+            rightOpened = true;
             stopPlier(1);
         } else if (!rightOpened) {
             movePlier(1, speed);
@@ -96,7 +96,7 @@ void openPliers(int delayCounter, int speed) {
 
         if (!leftOpened && PIN_SWITCH_PLIER_OPEN_LEFT) {
             appendString(getOutputStreamLogger(INFO), "Pliers Left Opened\n");
-            leftOpened = TRUE;
+            leftOpened = true;
             stopPlier(2);
         } else if (!leftOpened) {
             movePlier(2, speed);
@@ -118,8 +118,8 @@ void closePliers(int delayCounter, int speed) {
  */
 
 void closePliers(int delayCounter, int speed) {
-    bool rightClosed = FALSE;
-    bool leftClosed = FALSE;
+    bool rightClosed = false;
+    bool leftClosed = false;
     int counter = 0;
     while (1) {
         counter++;
@@ -130,7 +130,7 @@ void closePliers(int delayCounter, int speed) {
 
         if (!rightClosed && PIN_SWITCH_PLIER_CLOSE_RIGHT) {
             appendString(getOutputStreamLogger(INFO), "Pliers Right Closed\n");
-            rightClosed = TRUE;
+            rightClosed = true;
             stopPlier(1);
         } else if (!rightClosed) {
             movePlier(1, speed);
@@ -138,7 +138,7 @@ void closePliers(int delayCounter, int speed) {
 
         if (!leftClosed && PIN_SWITCH_PLIER_CLOSE_LEFT) {
             appendString(getOutputStreamLogger(INFO), "Pliers Left Closed\n");
-            leftClosed = TRUE;
+            leftClosed = true;
             stopPlier(2);
         } else if (!leftClosed) {
             movePlier(2, speed);

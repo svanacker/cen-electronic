@@ -35,7 +35,7 @@ void stopStrategy(void) {
 }
 
 bool isStrategyDeviceOk(void) {
-    return TRUE;
+    return true;
 }
 
 void deviceStrategyHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream) {

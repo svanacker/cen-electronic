@@ -38,7 +38,7 @@ static int robotPositionY;
 static int robotAngle;
 
 /** Global variable to know if the robot must stop.*/
-static unsigned int robotMustStop = FALSE;
+static unsigned int robotMustStop = false;
 
 static unsigned int timeAtLastCollision = 0;
 
@@ -49,11 +49,11 @@ bool isRobotPositionChanged() {
 }
 
 void resetRobotPositionChanged() {
-	robotPositionChanged = FALSE;
+	robotPositionChanged = false;
 }
 
 void setRobotPositionChanged() {
-	robotPositionChanged = TRUE;
+	robotPositionChanged = true;
 }
 
 unsigned int isRobotMustStop() {

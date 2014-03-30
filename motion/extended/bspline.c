@@ -47,7 +47,7 @@ void resetBSplineCurve(BSplineCurve* bSplineCurve,
 }
 
 void initFirstTimeBSplineCurve(BSplineCurve* bSplineCurve) {
-	resetBSplineCurve(bSplineCurve, 0.0f, 0.0f, FALSE);
+	resetBSplineCurve(bSplineCurve, 0.0f, 0.0f, false);
 }
 
 void computeBSplinePoint(BSplineCurve* bSplineCurve, float t, Point* resultPoint) {

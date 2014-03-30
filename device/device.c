@@ -19,7 +19,7 @@
  * @param device the device.
  */
 bool initDevice(const Device* device) {
-    int result = TRUE;
+    int result = true;
     DeviceDescriptor* deviceDescriptor = device->descriptor;
     DeviceInterface* deviceInterface = device->interface;
 
@@ -60,7 +60,7 @@ void forwardCallbackRawDataTo(InputStream* inputStream,
 		int mode) {
     DeviceInterface* deviceInterface = device->interface;
     // Length = data of output from the message and add the length of header message (1)
-    int dataLength = deviceInterface->deviceGetInterface(header, mode, FALSE) + 1;
+    int dataLength = deviceInterface->deviceGetInterface(header, mode, false) + 1;
 
     copyInputToOutputStream(inputStream, outputStream, NULL, dataLength);
 }

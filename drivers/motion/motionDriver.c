@@ -19,7 +19,7 @@
 #include "../../drivers/driverList.h"
 #include "../../drivers/driverTransmitter.h"
 
-static bool readyForNextMotion = FALSE;
+static bool readyForNextMotion = false;
 
 static unsigned char motionIndex = 0;
 

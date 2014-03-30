@@ -115,7 +115,7 @@ int receiverZigbeeTest(void) {
 		}
 		delay100us(5);
 
-		char c = handleChar(&debugBuffer, FALSE);
+		char c = handleChar(&debugBuffer, false);
 		if (c != 0) {
 			putString("---------\n");
 			Laser* laser1 = getLaser(LASER_INDEX_1);

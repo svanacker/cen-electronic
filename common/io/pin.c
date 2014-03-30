@@ -134,7 +134,7 @@ bool getPinValue(int pinIndex) {
     writeError(IO_PIN_INDEX_ERROR);
 
     // log the error
-    return FALSE;
+    return false;
 }
 
 void printAllPinValues(OutputStream* outputStream) {

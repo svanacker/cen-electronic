@@ -6,7 +6,7 @@
 
 /**
 * Defines a function which do a test
-* @return TRUE if the test is ok, FALSE else
+* @return true if the test is ok, false else
 */
 typedef bool TestFunction();
 
@@ -60,12 +60,12 @@ bool assertIntEquals(int expected, int actual, char* messageIfFailed);
 bool assertLongEquals(long expected, long actual, char* messageIfFailed);
 
 /**
-* Test if a value is TRUE, and produces a message if it's not the case.
+* Test if a value is true, and produces a message if it's not the case.
 */
 bool assertTrue(bool actual, char* messageIfFailed);
 
 /**
-* Test if a value is FALSE, and produces a message if it's not the case.
+* Test if a value is false, and produces a message if it's not the case.
 */
 bool assertFalse(bool actual, char* messageIfFailed);
 

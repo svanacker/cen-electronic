@@ -38,7 +38,8 @@ void writeError(int errorCode);
 // DEVICE
 
 #define TOO_MUCH_DEVICES				0x2000
-#define NO_DEVICE_DESC_FOUND_FOR		0x2001
+#define NO_DEVICE_DESC_FOUND_FOR                        0x2001
+#define DEVICES_LIST_NOT_INITIALIZED                    0x2002
 
 // -> Dispatcher
 #define NO_DISPATCHER_FOUND				0x2100

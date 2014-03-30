@@ -18,14 +18,14 @@
 #include "../../drivers/dispatcher/driverDataDispatcher.h"
 
 bool motorDriverInit() {
-    return TRUE;
+    return true;
 }
 
 void motorDriverShutDown() {
 }
 
 bool motorDriverIsOk() {
-    return TRUE;
+    return true;
 }
 
 unsigned int motorDriverGetSoftwareRevision() {
@@ -37,11 +37,11 @@ const char* motorDriverGetName() {
 }
 
 bool motorDriverSendRawData(const char *data) {
-    return FALSE;
+    return false;
 }
 
 static DriverDescriptor descriptor = {
-//    .driverEnabled = TRUE,
+//    .driverEnabled = true,
     .driverInit = &motorDriverInit,
     .driverShutDown = &motorDriverShutDown,
   //  .driverIsOk = &motorDriverIsOk,

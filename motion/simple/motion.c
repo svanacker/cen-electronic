@@ -51,7 +51,7 @@ void stopPosition(bool maintainPositionValue) {
         maintainPosition();
     } else {
         // Avoid that robot reachs his position, and stops the motors
-        setMustReachPosition(FALSE);
+        setMustReachPosition(false);
     }
 	// Avoid that the robot considered he will remain the initial speed for next move (it is stopped).
 	clearInitialSpeeds();
@@ -88,21 +88,21 @@ unsigned char handleInstructionAndMotion(void) {
     } else if (value == POSITION_REACHED) {
         notifyReached(outputStream);
 		notifyReached(debugOutputStream);
-        stopPosition(TRUE);
+        stopPosition(true);
     } else if (value == POSITION_BLOCKED_WHEELS) {
         notifyFailed(outputStream);
 		notifyFailed(debugOutputStream);
-        stopPosition(TRUE);
+        stopPosition(true);
     } else if (value == POSITION_OBSTACLE) {
         notifyObstacle(outputStream);
-        stopPosition(TRUE);
+        stopPosition(true);
     }
     return value;
 }
 
 unsigned char handleAndWaitFreeMotion(void) {
     unsigned char value = -1;
-    while (TRUE) {
+    while (true) {
         value = handleInstructionAndMotion();
         // POSITION_BLOCKED_WHEELS is not necesseray because we block the position after
         if (value == NO_POSITION_TO_REACH || value == POSITION_TO_MAINTAIN || value == POSITION_OBSTACLE) {
@@ -178,7 +178,7 @@ void gotoPosition(float left, float right, float a, float speed) {
     //printInst(outputStream, getMotionInstruction(INSTRUCTION_ALPHA_INDEX));
 
     // Indicates that the robot must reach the position
-    setMustReachPosition(TRUE);
+    setMustReachPosition(true);
 }
 
 /**
@@ -364,7 +364,7 @@ void gotoSpline() {
 	getPidMotion()->currentMotionDefinition.computeU = &bSplineMotionUCompute;
 
     // Indicates that the robot must reach the position
-    setMustReachPosition(TRUE);
+    setMustReachPosition(true);
 }
 
 // PULSE FUNCTIONS
@@ -586,10 +586,10 @@ void squareCalibrationRotationRight(bool inverse) {
 void squareCalibrationLine(signed int x, signed int y, signed int angle, bool inverse) {
 	signed char cp = 100.0f;
 	if (inverse) {
-		gotoSimpleSpline(x, -y, -angle, cp, cp, MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL, FALSE);
+		gotoSimpleSpline(x, -y, -angle, cp, cp, MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL, false);
 	}
 	else {
-		gotoSimpleSpline(x, y, angle, cp, cp, MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL, FALSE);
+		gotoSimpleSpline(x, y, angle, cp, cp, MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL, false);
 	}
 	handleAndWaitFreeMotion();
 }

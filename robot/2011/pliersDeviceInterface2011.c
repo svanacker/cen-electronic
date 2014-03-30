@@ -6,10 +6,6 @@ const char* devicePliers2011GetName() {
     return "pliers2011";
 }
 
-unsigned int devicePliers2011GetSotwareRevision() {
-    return 1;
-}
-
 int devicePliers2011GetInterface(char header, int mode, bool fillDeviceArgumentList) {
     if (header == COMMAND_PLIERS_2011_CLOSE) {
 		// SAME INPUT / OUTPUT
@@ -35,7 +31,6 @@ int devicePliers2011GetInterface(char header, int mode, bool fillDeviceArgumentL
 
 static DeviceInterface deviceInterface = {
     .deviceGetName = &devicePliers2011GetName,
-    .deviceGetSoftwareRevision = &devicePliers2011GetSotwareRevision,
     .deviceGetInterface = &devicePliers2011GetInterface
 };
 

@@ -8,7 +8,7 @@
 
 #include "i2cSlaveSetup.h"
 
-bool initialized = FALSE;
+bool initialized = false;
 
 void i2cSlaveInitialize(char writeAddress) {
     // Avoid more than one initialization

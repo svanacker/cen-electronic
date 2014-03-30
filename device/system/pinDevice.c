@@ -17,7 +17,7 @@ void devicePinShutDown() {
 }
 
 bool devicePinIsOk() {
-    return TRUE;
+    return true;
 }	
 
 void devicePinHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream) {

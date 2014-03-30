@@ -62,7 +62,7 @@ char serialGetc(unsigned char serialPortIndex);
 
 /**
  * Checks whether a character is available from the serial input.
- * return TRUE or FALSE
+ * return true or false
  * @param serialPortIndex the serialPortIndex we want to use
  * @return returns zero if no char is pending, else non-zero
  */

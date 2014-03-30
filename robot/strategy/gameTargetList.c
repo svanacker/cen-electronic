@@ -64,10 +64,10 @@ bool containsAvailableTarget() {
 	for (i = 0; i < size; i++) {
 		GameTarget* target = targets.targets[i];
 		if (target->status == TARGET_AVAILABLE) {
-			return TRUE;
+			return true;
 		}	
 	}
-	return FALSE;
+	return false;
 }
 
 // DEBUG
@@ -80,6 +80,6 @@ void printGameTargetList(OutputStream* outputStream) {
 	println(outputStream);
 	for (i = 0; i < size; i++) {
 		GameTarget* target = targets.targets[i];
-		printGameTarget(outputStream, target, TRUE);
+		printGameTarget(outputStream, target, true);
 	}
 }

@@ -34,7 +34,7 @@ void deviceMotionShutDown() {
 }
 
 bool deviceMotionIsOk() {
-    return TRUE;
+    return true;
 }
 
 void notifyPosition() {
@@ -216,7 +216,7 @@ void deviceMotionHandleRawData(char header,
 						 sign * 0.75f * PI,
 						 200.0f, 200.0f,
 						MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL,
-						 TRUE);
+						 true);
         append(outputStream, header);
     }
 	// STOP
@@ -224,7 +224,7 @@ void deviceMotionHandleRawData(char header,
     else if (header == COMMAND_MOTION_CANCEL) {
         appendAck(outputStream);
 
-        stopPosition(FALSE);
+        stopPosition(false);
 
         append(outputStream, COMMAND_MOTION_CANCEL);
     }        // OBSTACLE
@@ -232,7 +232,7 @@ void deviceMotionHandleRawData(char header,
     else if (header == COMMAND_MOTION_OBSTACLE) {
         // TODO : A REVOIR
         appendAck(outputStream);
-        stopPosition(TRUE);
+        stopPosition(true);
 
         append(outputStream, COMMAND_MOTION_OBSTACLE);
         notifyObstacle(outputStream);

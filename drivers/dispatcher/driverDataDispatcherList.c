@@ -53,7 +53,7 @@ int getDriverDataDispatcherCount() {
 }
 
 bool handleNotificationFromDispatcherList(int transmitMode) {
-	bool result = FALSE;
+	bool result = false;
     int size = dispatcherList.size;
     int i;
     for (i = 0; i < size; i++) {
@@ -62,7 +62,7 @@ bool handleNotificationFromDispatcherList(int transmitMode) {
             continue;
         }
         if (handleNotificationFromDispatcher(dispatcher)) {
-			result = TRUE;
+			result = true;
 		}
     }
 	return result;

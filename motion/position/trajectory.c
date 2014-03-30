@@ -152,14 +152,14 @@ void updateTrajectory() {
     signed long left = getCoderValue(CODER_LEFT);
     signed long right = getCoderValue(CODER_RIGHT);
     //	curveUpdateFromCoders(left, right);
-    absoluteUpdateFromCoders(left, right, TRUE, FALSE);
+    absoluteUpdateFromCoders(left, right, true, false);
 }
 
 void updateTrajectoryWithNoThreshold() {
     signed long left = getCoderValue(CODER_LEFT);
     signed long right = getCoderValue(CODER_RIGHT);
     // do not use threshold
-    absoluteUpdateFromCoders(left, right, FALSE, FALSE);
+    absoluteUpdateFromCoders(left, right, false, false);
 }
 
 void updateTrajectoryAndClearCoders() {

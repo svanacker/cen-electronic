@@ -302,7 +302,7 @@ void mainBoardCallbackRawData(const Device* device,
 		appendHex4(outputStream, angle);
 
         // ready for next motion instruction Index
-        setReadyForNextMotion(TRUE);
+        setReadyForNextMotion(true);
 		// Robot finished the trajectory
 		instructionType = INSTRUCTION_TYPE_NO_MOVE;
     }
@@ -387,7 +387,7 @@ void mainBoardCallbackRawData(const Device* device,
 		transmitFromDriverRequestBuffer();
 		delaymSec(500);
 		// we are ready for next motion
-        setReadyForNextMotion(TRUE);
+        setReadyForNextMotion(true);
 	} 
 	// Mechanical Board notification
 	else if (header == NOTIFY_INFRARED_DETECTOR_DETECTION) {
@@ -401,10 +401,10 @@ void mainBoardCallbackRawData(const Device* device,
 		if (useInfrared) {
 			// Notify only if we are in a compatible move !
 			if ((instructionType == INSTRUCTION_TYPE_BACKWARD) && (type == DETECTOR_BACKWARD_INDEX)) {
-				mustNotifyObstacle = TRUE;
+				mustNotifyObstacle = true;
 			}
 			else if ((instructionType == INSTRUCTION_TYPE_FORWARD) && (type == DETECTOR_FORWARD_INDEX)) {
-				mustNotifyObstacle = TRUE;
+				mustNotifyObstacle = true;
 			}
 		}
 	}
@@ -498,11 +498,11 @@ bool isObstacleOutsideTheTable(int distance) {
 
 	// Table border X
 	if (obstacleX < BORDER_THRESHOLD || obstacleX > GAME_BOARD_WIDTH - BORDER_THRESHOLD) {
-		return TRUE;
+		return true;
 	}
 	// Table border Y
 	if (obstacleY < BORDER_THRESHOLD || obstacleY > GAME_BOARD_HEIGHT - BORDER_THRESHOLD) {
-		return TRUE;
+		return true;
 	}
 	
 	// Totem Zone
@@ -510,9 +510,9 @@ bool isObstacleOutsideTheTable(int distance) {
 		 && (obstacleX < GAME_BOARD_MIDDLE_WIDTH + TOTEM_THRESHOLD_X)
 		 && (obstacleY > GAME_BOARD_MIDDLE_HEIGHT - TOTEM_THRESHOLD_Y) 
 		 && (obstacleY < GAME_BOARD_MIDDLE_HEIGHT - TOTEM_THRESHOLD_Y)) {
-		return TRUE;
+		return true;
 	}
-	return FALSE;
+	return false;
 }
 
 void waitForInstruction() {
@@ -547,7 +547,7 @@ void waitForInstruction() {
 	}
 
 	if (mustNotifyObstacle) {
-		mustNotifyObstacle = FALSE;
+		mustNotifyObstacle = false;
 		// Obtain robot position
 		// Ask the robot position from the MOTOR BOARD
 		trajectoryDriverUpdateRobotPosition();
@@ -569,7 +569,7 @@ void waitForInstruction() {
 			armDriver2012Up(ARM_LEFT);
             armDriver2012Up(ARM_RIGHT);
 			// we are ready for next motion (next loop)
-	        setReadyForNextMotion(TRUE);
+	        setReadyForNextMotion(true);
 		}
 	}
 
@@ -583,7 +583,7 @@ void waitForInstruction() {
 int main(void) {
     setPicName("MAIN BOARD");
 
-    setRobotMustStop(FALSE);
+    setRobotMustStop(false);
     // Open the serial Link for debug
     openSerialLink(&debugSerialStreamLink,
             &debugInputBuffer,
@@ -747,7 +747,7 @@ int main(void) {
 	appendString(getOutputStreamLogger(ERROR), "CLS\n");
 	Lcd4dVersion version;
 	Point point;
-	lcd4dTouchControl(&lcd4d, TRUE);
+	lcd4dTouchControl(&lcd4d, true);
 
 	delaymSec(500);
 
@@ -787,9 +787,9 @@ int main(void) {
 
 		/*
 		delaymSec(500);
-		lcd4dDisplay(&lcd4d, TRUE);
+		lcd4dDisplay(&lcd4d, true);
 		delaymSec(500);
-		lcd4dDisplay(&lcd4d, FALSE);
+		lcd4dDisplay(&lcd4d, false);
 		*/
 		/*
 		lcd4dSetPenType(&lcd4d, LCD4D_PEN_SIZE_DRAW_SOLID);
@@ -928,7 +928,7 @@ int main(void) {
             }
         }
     } else {
-        setReadyForNextMotion(TRUE);
+        setReadyForNextMotion(true);
 
         while (1) {
             waitForInstruction();

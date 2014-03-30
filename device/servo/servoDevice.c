@@ -26,7 +26,7 @@ void deviceServoShutDown() {
 }
 
 bool deviceServoIsOk() {
-    return TRUE;
+    return true;
 }
 
 void deviceServoHandleRawData(char header,

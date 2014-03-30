@@ -17,7 +17,7 @@
 #include "../../../common/io/printWriter.h"
 #include "../../../common/io/binaryPrintWriter.h"
 
-static bool initialized = FALSE;
+static bool initialized = false;
 
 void i2cMasterInitialize(void) {
     // Avoid more than one initialization
@@ -83,12 +83,12 @@ void i2cMasterInitialize(void) {
     appendBinary16(getOutputStreamLogger(DEBUG), I2C_ON, 4);
     appendCRLF(getOutputStreamLogger(DEBUG));
 
-    initialized = TRUE;
+    initialized = true;
 }
 
 void i2cMasterFinalize(void) {
     if (initialized) {
-        initialized = FALSE;
+        initialized = false;
         portableCloseI2C();
     }
 }

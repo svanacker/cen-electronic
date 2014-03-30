@@ -44,13 +44,13 @@ static InfraredDetectorGroup backwardDetector;
 bool getRobotInfraredObstacleGroup(InfraredDetectorGroup* group) {
 	// no detection
 	if (group->wasDetectedCount < DETECTED_THRESHOLD) {
-		return FALSE;
+		return false;
 	};
 	// To avoid that notification continue
 	group->wasDetectedCount = 0;
 	group->doNotCheckBeforeCounter = NOTIFY_INFRARED_DETECTOR_TIMER_CYCLE;
 	// we must notify one time !
-	return TRUE;
+	return true;
 }
 
 bool getRobotInfraredObstacleForward() {

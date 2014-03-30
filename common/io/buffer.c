@@ -18,9 +18,9 @@
 bool checkBufferNotNull(Buffer* buffer) {
 	if (buffer == NULL) {
 		writeError(IO_BUFFER_NULL);
-		return FALSE;
+		return false;
 	}
-	return TRUE;
+	return true;
 }
 
 // -> OUTPUT STREAM INTERFACE

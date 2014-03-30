@@ -7,7 +7,7 @@
  * Filter fonction
  * @param input the char as input
  * @param output a pointer on a char
- * @return TRUE if the output must be added, false else
+ * @return true if the output must be added, false else
  */
 typedef bool filterCharFunction(unsigned char input, unsigned char* output);
 

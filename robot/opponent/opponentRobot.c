@@ -17,7 +17,7 @@ static bool mustAskLastOpponentRobotPosition;
 #define OPPONENT_ROBOT_TIMER_INDEX			5
 
 void opponentRobotCallbackFunc(Timer* timer) {
-	mustAskLastOpponentRobotPosition = TRUE;
+	mustAskLastOpponentRobotPosition = true;
 }
 
 Point* getLastOpponentRobotPosition() {
@@ -37,7 +37,7 @@ void updateOpponentRobotIfNecessary() {
 		return;
 	}
 	// reset Flag
-	mustAskLastOpponentRobotPosition = FALSE;
+	mustAskLastOpponentRobotPosition = false;
 
 	// Update the opponent Robot Position by asking beaconReceiver
 	updateOpponentRobotPosition(&lastOpponentRobotPosition);

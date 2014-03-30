@@ -27,7 +27,7 @@ typedef struct {
 void initBitList(BitList* bitList, unsigned int (*array)[], unsigned char arrayLength);
 
 /**
- * Clear the bit list to FALSE for every values.
+ * Clear the bit list to false for every values.
  */
 void clearBitList(BitList* bitList, bool initValue);
 

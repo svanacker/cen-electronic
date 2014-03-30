@@ -88,17 +88,17 @@ void updateEndMotionData(int instructionIndex, MotionEndInfo* endMotion, MotionE
 
 bool isEndOfMotion(int instructionIndex, MotionEndInfo* endMotion, MotionEndDetectionParameter* parameter) {
 	if (endMotion->integralTime < parameter->timeRangeAnalysis) {
-		return FALSE;
+		return false;
 	}
 	if (endMotion->absDeltaPositionIntegral < (parameter->absDeltaPositionIntegralFactorThreshold * parameter->timeRangeAnalysis * MAX_HISTORY_COUNT)) {
-        return TRUE;
+        return true;
     }
-	return FALSE;
+	return false;
 }
 
 bool isRobotBlocked(int instructionIndex, MotionEndInfo* endMotion, MotionEndDetectionParameter* parameter) {
 	if (endMotion->integralTime < parameter->timeRangeAnalysis) {
-		return FALSE;
+		return false;
 	}
 	PidMotionDefinition* motionDefinition = &(getPidMotion()->currentMotionDefinition);
 	MotionInstruction* localInst = &(motionDefinition->inst[instructionIndex]);
@@ -110,7 +110,7 @@ bool isRobotBlocked(int instructionIndex, MotionEndInfo* endMotion, MotionEndDet
                )
                * parameter->timeRangeAnalysis);
     if (endMotion->absUIntegral > maxUIntegral) {
-        return TRUE;
+        return true;
     }
-	return FALSE;
+	return false;
 }

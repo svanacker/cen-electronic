@@ -118,7 +118,7 @@ bool initMD22(void) {
     setMD22MotorSpeeds(0, 0);
     delaymSec(10);
 
-    return TRUE;
+    return true;
 }
 
 void stopMD22(void) {
@@ -134,7 +134,7 @@ const char* getMD22DeviceName(void) {
 }
 
 static DriverDescriptor descriptor = {
-//    .driverEnabled = TRUE,
+//    .driverEnabled = true,
     .driverInit = &initMD22,
     .driverShutDown = &stopMD22,
     // .driverIsOk = &isMD22DeviceOk,

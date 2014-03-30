@@ -111,7 +111,7 @@ float getNotifyTimeDelay();
 
 /**
 * Notify the robot position.
-* @return TRUE if the method add data to be sent by the zigbee
+* @return true if the method add data to be sent by the zigbee
 */
 bool notifyRobotPositionIfNecessary();
 

@@ -291,7 +291,7 @@ unsigned char getIndexOfPid(unsigned char instructionIndex, unsigned char pidTyp
 /**
  * Enable or disable a PID.
  * @param pidIndex the index of which pid we must change (between 0 and PID_INDEX_COUNT)
- * @param enabled FALSE or TRUE if we want to enabled or not the specified pid
+ * @param enabled false or true if we want to enabled or not the specified pid
  */
 void setEnabledPid(int pidIndex, unsigned char enabled);
 
@@ -332,14 +332,14 @@ void clearPidTime(void);
 /**
  * Returns the value of the flag which determines if the
  * position must be reached.
- * @return TRUE or FALSE
+ * @return true or false
  */
 int getMustReachPosition(void);
 
 /**
  * Sets the flag which determines if the
  * position must be reached.
- * @value the value of the flag, TRUE or FALSE
+ * @value the value of the flag, true or false
  */
 void setMustReachPosition(int value);
 

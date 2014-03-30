@@ -57,5 +57,5 @@ bool trajectoryDriverUpdateRobotPosition() {
 		return result;
 
     }
-    return FALSE;
+    return false;
 }

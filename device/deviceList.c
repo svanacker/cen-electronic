@@ -37,6 +37,11 @@ Device* addDevice(DeviceInterface* interface,
         int transmitMode,
         int address,
 		char* addressString) {
+    if (&deviceList.maxSize == 0) {
+        writeError(DEVICES_LIST_NOT_INITIALIZED);
+        return NULL;
+    }
+
     unsigned char size = deviceList.size;
     if (size < deviceList.maxSize) {
 		Device* device = getDevice(size);
@@ -59,7 +64,7 @@ int getDeviceResponseSize(int commandHeader) {
     for (i = 0; i < deviceList.size; i++) {
         Device* device = getDevice(i);
         DeviceInterface* deviceInterface = device->interface;
-        int valueCount = deviceInterface->deviceGetInterface(commandHeader, DEVICE_MODE_OUTPUT, FALSE);
+        int valueCount = deviceInterface->deviceGetInterface(commandHeader, DEVICE_MODE_OUTPUT, false);
         if (valueCount != DEVICE_HEADER_NOT_HANDLED) {
             return valueCount;
         }

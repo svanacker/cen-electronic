@@ -154,7 +154,7 @@ bool redirectDriverToCompositeOutputStream() {
 	// Redirect to debug OutputStream
 	copyInputToOutputStream(inputStream, &(driverToI2CSlaveAndDebugCompositeOutputStream.outputStream), NULL, COPY_ALL); 
 
-	return TRUE;
+	return true;
 }
 
 /**
@@ -165,8 +165,8 @@ void initDriversDescriptor() {
     initDrivers(&driverRequestBuffer, &driverRequestBufferArray, STRATEGY_BOARD_REQUEST_DRIVER_BUFFER_LENGTH,
 				&driverResponseBuffer, &driverResponseBufferArray, STRATEGY_BOARD_RESPONSE_DRIVER_BUFFER_LENGTH);
 
-	// Include I2C => TRUE, FALSE, else
-	initDriverToI2CSlaveAndDebugCompositeOutputStream(TRUE);
+	// Include I2C => true, false, else
+	initDriverToI2CSlaveAndDebugCompositeOutputStream(true);
 	// Redirect driver to I2C Slave (not default behaviour)
 	setRedirectionTransmitFromDriverRequestBuffer(&redirectDriverToCompositeOutputStream);
 }

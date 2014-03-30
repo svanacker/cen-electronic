@@ -118,7 +118,7 @@ void mark(Timer* timer);
 
 /**
  * Check if the last mark was done after markTime + time.
- * return TRUE if (markTime + time > timer->time)
+ * return true if (markTime + time > timer->time)
  */
 bool timeout(Timer* timer, unsigned long time);
 

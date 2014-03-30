@@ -21,10 +21,10 @@
  // GLOBAL
 
 /** If we debug or not. */
-char debug = FALSE;
+char debug = false;
 
 /** If the robot detector is enabled or not. */
-int robotDetectorEnabled = FALSE;
+int robotDetectorEnabled = false;
 
 /** Last time we notify an obstacle. */
 unsigned int lastNotifyObstacleTime;
@@ -129,7 +129,7 @@ void clearObstacle( void ) {
 }
 
 unsigned char hasRobotObstacle(void) {
-	unsigned useSonar = FALSE;
+	unsigned useSonar = false;
 	if (useSonar) {
 		if (rangingIndex == 0) {
 			// start ranging at the first index, because it takes 65 ms to have value
@@ -382,7 +382,7 @@ void initRobotDetector( void ) {
 }
 
 void stopRobotDetector( void ) {
-	robotDetectorEnabled = FALSE;
+	robotDetectorEnabled = false;
 }
 
 unsigned int isRobotDetectorDeviceOk() {

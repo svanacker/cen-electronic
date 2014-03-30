@@ -54,10 +54,10 @@ void printArgumentList(OutputStream* outputStream, DeviceInterface* deviceInterf
 void printDeviceUsageLine(OutputStream* outputStream, char header, Device* device) {
     DeviceInterface* deviceInterface = device->interface;
     // input Argument
-    int headerLength = deviceInterface->deviceGetInterface(header, DEVICE_MODE_INPUT, TRUE);
+    int headerLength = deviceInterface->deviceGetInterface(header, DEVICE_MODE_INPUT, true);
     printArgumentList(outputStream, deviceInterface, header, headerLength, 'i');
     // output Argument
-    headerLength = deviceInterface->deviceGetInterface(header, DEVICE_MODE_OUTPUT, TRUE);
+    headerLength = deviceInterface->deviceGetInterface(header, DEVICE_MODE_OUTPUT, true);
     printArgumentList(outputStream, deviceInterface, header, headerLength, 'o');
 }
 

@@ -95,7 +95,7 @@ void updateCoders(void) {
 			}
 			lastZPositions[i]=codersPositions[i];
 			codersZCounts[i]++;
-			checkCodersFlags[i]=TRUE;
+			checkCodersFlags[i]=true;
 		}
 	}
 }
@@ -113,7 +113,7 @@ void clearCoders() {
 		initialPositions[i]=0;
 		lastZPositions[i]=0;
 		codersZCounts[i]=0;
-		checkCodersFlags[i]=FALSE;
+		checkCodersFlags[i]=false;
 	}
 }
 
@@ -142,7 +142,7 @@ void checkCoders() {
 			continue;
 		}
 	
-		checkCodersFlags[i]=FALSE;
+		checkCodersFlags[i]=false;
 
 		long position;
 		long initial;

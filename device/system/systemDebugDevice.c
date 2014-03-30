@@ -25,7 +25,7 @@ void deviceSystemDebugShutDown() {
 }
 
 bool deviceSystemDebugIsOk() {
-    return TRUE;
+    return true;
 }
 
 void deviceSystemDebugHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream) {

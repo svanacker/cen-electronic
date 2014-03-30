@@ -25,7 +25,7 @@ void deviceRelayShutDown() {
 }
 
 bool deviceRelayIsOk() {
-	return TRUE;
+	return true;
 }
 
 void deviceRelayHandleRawData(char header,

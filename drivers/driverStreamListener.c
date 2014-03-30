@@ -28,11 +28,11 @@ bool handleStreamInstruction(Buffer* inputBuffer,
 
 	if (inputBuffer == NULL) {
 		writeError(DRIVER_STREAM_LISTENER_INPUT_BUFFER_NULL);
-		return FALSE;
+		return false;
 	}
 	if (outputBuffer == NULL) {
 		writeError(DRIVER_STREAM_LISTENER_OUTPUT_BUFFER_NULL);
-		return FALSE;
+		return false;
 	}
 
     // We received data
@@ -44,14 +44,14 @@ bool handleStreamInstruction(Buffer* inputBuffer,
 
         if (header == HEADER_CLEAR_INPUT_STREAM || header == INCORRECT_DATA) {
             clearBuffer(inputBuffer);
-            return FALSE;
+            return false;
         }
 
         if (inputFilterChar != NULL) {
             if (!inputFilterChar(header, &header)) {
                 // remove the char from the buffer
                 bufferReadChar(inputBuffer);
-                return FALSE;
+                return false;
             }
         }
 
@@ -62,16 +62,16 @@ bool handleStreamInstruction(Buffer* inputBuffer,
 
         // if the device was not found
         if (device == NULL) {
-            return FALSE;
+            return false;
         }
 
         DeviceInterface* deviceInterface = device->interface;
 
         // We must send header + data => + 1
-        int dataToTransferCount = deviceInterface->deviceGetInterface(header, DEVICE_MODE_INPUT, FALSE) + 1;
+        int dataToTransferCount = deviceInterface->deviceGetInterface(header, DEVICE_MODE_INPUT, false) + 1;
 
         // We must receive ack + header + data => + 2
-        int dataToReceiveCount = deviceInterface->deviceGetInterface(header, DEVICE_MODE_OUTPUT, FALSE) + 2;
+        int dataToReceiveCount = deviceInterface->deviceGetInterface(header, DEVICE_MODE_OUTPUT, false) + 2;
 
         InputStream* bufferedInputStream = getInputStream(inputBuffer);
         OutputStream* bufferedOutputStream = getOutputStream(outputBuffer);
@@ -84,7 +84,7 @@ bool handleStreamInstruction(Buffer* inputBuffer,
             if (deviceDescriptor == NULL) {
                 writeError(NO_DEVICE_DESC_FOUND_FOR);
                 append(getErrorOutputStreamLogger(), header);
-                return FALSE;
+                return false;
             }
 
             // remove the first char corresponding to the header
@@ -122,8 +122,8 @@ bool handleStreamInstruction(Buffer* inputBuffer,
         if (outputStream != NULL) {
             copyInputToOutputStream(&(outputBuffer->inputStream), outputStream, outputFilterChar, dataToReceiveCount);
         }
-        return TRUE;
+        return true;
     }
-    return FALSE;
+    return false;
 }
 

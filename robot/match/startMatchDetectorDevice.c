@@ -38,7 +38,7 @@ void stopStartMatchDetector() {
 }
 
 bool isStartMatchDetectorDeviceOk() {
-    return TRUE;
+    return true;
 }
 
 void loopUntilStart(handleFunctionType* handleFunction) {

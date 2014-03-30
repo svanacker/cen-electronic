@@ -56,20 +56,20 @@ void toggleLedBlue() {
 
 void clearLedStatus() {
 	jennic5139SetAllPinOutput();
-	ledYellowOn = FALSE;
-	ledBlueOn = FALSE;
-	jennic5139LocalLight(JENNIC_LED_ALL, TRUE);
+	ledYellowOn = false;
+	ledBlueOn = false;
+	jennic5139LocalLight(JENNIC_LED_ALL, true);
 	delaymSec(300);
-	jennic5139LocalLight(JENNIC_LED_ALL, FALSE);
+	jennic5139LocalLight(JENNIC_LED_ALL, false);
 
 }
 
 void onJennicError() {
-	jennicError = TRUE;
+	jennicError = true;
 }
 
 void onJennicData() {
-	jennicData = TRUE;
+	jennicData = true;
 }
 
 void showJennicError() {
@@ -77,12 +77,12 @@ void showJennicError() {
 		return;
 	}
 	// for next instruction
-	jennicError = FALSE;
+	jennicError = false;
 
 	// blind if several errors
 	toggleLedYellow();
 	if (jennicStartup) {
-		hasErrorDuringStartup = TRUE;
+		hasErrorDuringStartup = true;
 	}
 }
 
@@ -91,7 +91,7 @@ void showJennicData() {
 		return;
 	}
 	// for next instruction
-	jennicData = FALSE;
+	jennicData = false;
 
 	// blind if several datas
 	toggleLedBlue();
@@ -101,11 +101,11 @@ void showStartupStatus() {
 	// if error
 	if (hasErrorDuringStartup) {
 		// startup error
-		jennic5139LocalLight(JENNIC_LED_RED, TRUE);
+		jennic5139LocalLight(JENNIC_LED_RED, true);
 	}
 	else {
 		// green led
-		jennic5139LocalLight(JENNIC_LED_GREEN, TRUE);
+		jennic5139LocalLight(JENNIC_LED_GREEN, true);
 	}
 }
 
@@ -122,7 +122,7 @@ static Buffer commandBuffer;
 
 
 bool internalCopyFromZigbeeToDebugRetainingData(bool handleZigbeeStream) {
-	bool result = FALSE;
+	bool result = false;
     // while data are available on inputStream
     while (zigbeeInputStream->availableData(zigbeeInputStream)) {
 		unsigned char c = zigbeeInputStream->readChar(zigbeeInputStream);
@@ -134,13 +134,13 @@ bool internalCopyFromZigbeeToDebugRetainingData(bool handleZigbeeStream) {
 		if (handleZigbeeStream) {
 			handleJennicNextChar(c);
 		}
-		result = TRUE;
+		result = true;
     }
 	return result;
 }
 
 bool copyFromZigbeeToDebugRetainingData() {
-	return internalCopyFromZigbeeToDebugRetainingData(TRUE);
+	return internalCopyFromZigbeeToDebugRetainingData(true);
 }
 
 void waitAndCopyFromZigbeeToDebug(int loopCount, int mSecDelay, bool handleZigbeeStream) {
@@ -177,10 +177,10 @@ void sendJennic5139CommandFromBuffer() {
 	printBufferToDebugAndZigbee();
 	appendString(debugOutputStream, "WAIT ... : ");
 	if (ledCommand) {
-		waitAndCopyFromZigbeeToDebug(1, 10, FALSE);
+		waitAndCopyFromZigbeeToDebug(1, 10, false);
 	}
 	else {
-    	waitAndCopyFromZigbeeToDebug(NUMBER_OF_READ_BETWEEN_INSTRUCTION, 10, TRUE);
+    	waitAndCopyFromZigbeeToDebug(NUMBER_OF_READ_BETWEEN_INSTRUCTION, 10, true);
 	}
 	showJennicError();
 	showJennicData();
@@ -441,13 +441,13 @@ void initJennic5139Start(int nodeType) {
 }
 
 void jennic5139CommonStartupBegin() {
-	hasErrorDuringStartup = FALSE;
-	jennicStartup = TRUE;
+	hasErrorDuringStartup = false;
+	jennicStartup = true;
 	clearLedStatus();	
 }
 
 void jennic5139CommonStartupEnd() {
-	jennicStartup = FALSE;
+	jennicStartup = false;
 	showStartupStatus();
 }
 
@@ -511,7 +511,7 @@ void jennic5139Reset() {
 }
 
 void jennic5139LocalLight(char* pinMask, bool on) {
-	ledCommand = TRUE;
+	ledCommand = true;
     appendCmdString(JENNIC_PIN_WRITE_PIN);
 	if (on) {
 		appendCmdString(",0,x");
@@ -524,7 +524,7 @@ void jennic5139LocalLight(char* pinMask, bool on) {
 		appendCmdEnd();
     }
 	sendJennic5139CommandFromBuffer();
-	ledCommand = FALSE;
+	ledCommand = false;
 }
 
 void jennic5139RemoteLight(char* jennicAddress, char* pinMask, bool on) {

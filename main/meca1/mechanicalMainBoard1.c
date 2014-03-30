@@ -84,22 +84,16 @@ static char i2cSlaveOutputBufferArray[MECA_BOARD_1_I2C_OUTPUT_BUFFER_LENGTH];
 static Buffer i2cSlaveOutputBuffer;
 static StreamLink i2cSerialStreamLink;
 
-// devices
-static Device testDevice;
-static Device systemDevice;
-static Device servoDevice;
-static Device relayDevice;
-
-// Specific 2011
-static Device pliersDevice;
+static Device deviceListArray[MECHANICAL_BOARD_1_DEVICE_LENGTH];
 
 void initDevicesDescriptor() {
-	addLocalDevice(&testDevice, getTestDeviceInterface(), getTestDeviceDescriptor());
-	addLocalDevice(&systemDevice, getSystemDeviceInterface(), getSystemDeviceDescriptor());
-	addLocalDevice(&servoDevice, getServoDeviceInterface(), getServoDeviceDescriptor());
-	addLocalDevice(&relayDevice, getRelayDeviceInterface(), getRelayDeviceDescriptor());
+        initDeviceList(&deviceListArray, MECHANICAL_BOARD_1_DEVICE_LENGTH);
+	addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
+	addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
+	addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor());
+	addLocalDevice(getRelayDeviceInterface(), getRelayDeviceDescriptor());
 
-	addLocalDevice(&pliersDevice, getPliers2011DeviceInterface(), getPliers2011DeviceDescriptor());
+	addLocalDevice(getPliers2011DeviceInterface(), getPliers2011DeviceDescriptor());
 
 	initDevices(&devices);
 }
@@ -137,7 +131,8 @@ int main(void) {
 					&debugOutputBufferArray,
 					MECA_BOARD_1_DEBUG_OUTPUT_BUFFER_LENGTH,
 					&debugOutputStream,
-					SERIAL_PORT_DEBUG);
+					SERIAL_PORT_DEBUG,
+                                        0);
 
 	// Init the logs
 	initLog(DEBUG);

@@ -32,5 +32,5 @@ bool robotInfraredDetectorHasObstacle(unsigned char type) {
         int result = readHex2(inputStream);
 		return result != 0;
     }
-    return FALSE;
+    return false;
 }

@@ -169,7 +169,7 @@ typedef const char* deviceGetNameFunction(void);
 /**
 * @param header the character which is the header
 * @param mode either MODE_INPUT to know the length of the inputBuffer to handle the command of the header
-* @param fillDeviceArgumentList if TRUE, the function will update the argumentList
+* @param fillDeviceArgumentList if true, the function will update the argumentList
 * Returns a value >= 0 if the device handle this char, and -1, if it's not handled
 */
 typedef int deviceGetInterfaceFunction(char header,

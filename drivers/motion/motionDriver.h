@@ -30,7 +30,7 @@ unsigned int getMotionInstructionIndex();
 
 /**
 * Ask the motor to go to a position (pulse argument).
-* @return TRUE if the driver answer
+* @return true if the driver answer
 */
 bool motionDriverGotoPositionPulse(
 					    			float left,
@@ -40,7 +40,7 @@ bool motionDriverGotoPositionPulse(
 
 /**
 * Ask the motor to go forward for a distance in mm.
-* @return TRUE if the driver answer
+* @return true if the driver answer
 */
 bool motionDriverForward(float distanceInMM);
 
@@ -51,21 +51,21 @@ bool motionDriverMaintainPosition();
 
 /**
 * Ask the motor to go backward for a distance in mm.
-* @return TRUE if the driver answer
+* @return true if the driver answer
 */
 bool motionDriverBackward(float distanceInMM);
 
 /**
 * Ask the motor to turn left for an angle in degree.
 * @param leftDegree the angle to turn left
-* @return TRUE if the driver answer
+* @return true if the driver answer
 */
 bool motionDriverLeft(float leftDeciDegree);
 
 /**
 * Ask the motor to turn right for an angle in degree.
 * @param rightDegree the angle to turn right
-* @return TRUE if the driver answer
+* @return true if the driver answer
 */
 bool motionDriverRight(float rightDeciDegree);
 
@@ -74,14 +74,14 @@ bool motionDriverRight(float rightDeciDegree);
 /**
 * Ask the motor to turn left for an angle in degree (Right Wheel don't move).
 * @param leftDegree the angle to turn left
-* @return TRUE if the driver answer
+* @return true if the driver answer
 */
 bool motionDriverOneWheelLeft(float leftDeciDegree);
 
 /**
 * Ask the motor to turn right for an angle in degree (Left Wheel don't move).
 * @param rightDegree the angle to turn right
-* @return TRUE if the driver answer
+* @return true if the driver answer
 */
 bool motionDriverOneWheelRight(float rightDeciDegree);
 
@@ -101,13 +101,13 @@ bool motionDriverBSplineAbsolute(float x, float y, float angle, float dist0, flo
 
 /**
 * Ask to stop the motors (no position maintain)
-* @return TRUE if the driver answer
+* @return true if the driver answer
 */
 bool motionDriverStop();
 
 /**
 * Ask to stop the motors (with position maintain)
-* @return TRUE if the driver answer
+* @return true if the driver answer
 */
 bool motionDriverObstacle();
 

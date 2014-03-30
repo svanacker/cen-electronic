@@ -165,7 +165,7 @@ int main(void) {
 
     clickOnButton();
     unsigned long timerIndex = 0L;
-    bool timerOn = TRUE;
+    bool timerOn = true;
     unsigned long timerMax = ITERATION_ON;
 
     while (1) {

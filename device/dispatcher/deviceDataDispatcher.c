@@ -18,7 +18,7 @@ unsigned int getWaitedDataLength(const char header) {
     for (i = 0; i < size; i++) {
         Device* result = getDevice(i);
         DeviceInterface* interface = result->interface;
-        int deviceDataLength = interface->deviceGetInterface(header, DEVICE_MODE_INPUT, FALSE);
+        int deviceDataLength = interface->deviceGetInterface(header, DEVICE_MODE_INPUT, false);
         return deviceDataLength;
     }
     return -1;
@@ -30,7 +30,7 @@ const Device* deviceDataDispatcherFindDevice(const char header, int dataLength, 
     for (i = 0; i < size; i++) {
         Device* result = getDevice(i);
         DeviceInterface* interface = result->interface;
-        int deviceDataLength = interface->deviceGetInterface(header, mode, FALSE);
+        int deviceDataLength = interface->deviceGetInterface(header, mode, false);
         if (deviceDataLength == DEVICE_HEADER_NOT_HANDLED) {
 			continue;
 		}

@@ -86,7 +86,7 @@ Location* getLocation(LocationList* locationList, int index);
 Location* findLocationByName(LocationList* locationList, char* locationName);
 
 /**
- * Returns TRUE if the locationList contains the specified location.
+ * Returns true if the locationList contains the specified location.
  */
 bool containsLocation(LocationList* locationList, Location* location, bool handled);
 

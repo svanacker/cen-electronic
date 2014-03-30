@@ -92,7 +92,7 @@ void initPID(void) {
 }
 
 void stopPID(void) {
-    mustReachPosition = FALSE;
+    mustReachPosition = false;
 }
 
 /**

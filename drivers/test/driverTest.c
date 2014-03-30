@@ -35,14 +35,14 @@ unsigned int driverTestGetValue(int argument) {
 // DRIVER INTERFACE
 
 bool driverTestInit() {
-    return TRUE;
+    return true;
 }
 
 void driverTestShutDown() {
 }
 
 bool driverTestIsOk() {
-    return TRUE;
+    return true;
 }
 
 unsigned int driverTestGetSoftwareRevision() {
@@ -54,7 +54,7 @@ const char* driverTestGetName() {
 }
 
 static DriverDescriptor descriptor = {
-//    TRUE,
+//    true,
     &driverTestInit,
     &driverTestShutDown,
 //    &driverTestIsOk,

@@ -26,7 +26,7 @@ void deviceRobotInfraredDetectorShutDown() {
 }
 
 bool deviceRobotInfraredDetectorIsOk() {
-    return TRUE;
+    return true;
 }
 
 void notifyInfraredDetectorDetection(int type) {

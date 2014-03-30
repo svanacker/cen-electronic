@@ -54,7 +54,7 @@ bool absLimitTest(void) {
 	appendDec(getOutputStreamLogger(DEBUG), result);
 	appendCRLF(getOutputStreamLogger(DEBUG));
 
-	return FALSE;
+	return false;
 }
 
 bool absFloatTest(void) {
@@ -71,7 +71,7 @@ bool absFloatTest(void) {
 	appendDecf(getOutputStreamLogger(DEBUG), absValue);
 	appendCRLF(getOutputStreamLogger(DEBUG));
 
-	return FALSE;
+	return false;
 }
 
 bool convertFloatTest1(void) {
@@ -87,7 +87,7 @@ bool convertFloatTest1(void) {
 	appendDecf(getOutputStreamLogger(DEBUG), result);
 	appendCRLF(getOutputStreamLogger(DEBUG));
 
-	return FALSE;
+	return false;
 }
 
 bool convertFloatTest2(void) {
@@ -103,7 +103,7 @@ bool convertFloatTest2(void) {
 	appendDecf(getOutputStreamLogger(DEBUG), result);
 	appendCRLF(getOutputStreamLogger(DEBUG));
 
-	return FALSE;
+	return false;
 }
 
 bool convertFloatTest3(void) {
@@ -119,7 +119,7 @@ bool convertFloatTest3(void) {
 	appendDecf(getOutputStreamLogger(DEBUG), result);
 	appendCRLF(getOutputStreamLogger(DEBUG));
 
-	return FALSE;
+	return false;
 }
 
 TestSuite* getMathTestSuite() {

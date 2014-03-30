@@ -32,7 +32,7 @@ void initNavigation() {
 	clearPathList(&paths);
 	initBitList(&outgoingPaths, &bitListValues, BIT_LIST_NAVIGATION_ARRAY_LENGTH);
 	initBitList(&availablePaths, &availablePathsBitListValues, BIT_LIST_NAVIGATION_ARRAY_LENGTH);
-	clearBitList(&availablePaths, TRUE);
+	clearBitList(&availablePaths, true);
 }
 
 LocationList* getNavigationLocationList() {
@@ -52,7 +52,7 @@ void addNavigationPath(PathDataFunction* pathDataFunction) {
 }
 
 void updateOutgoingPaths(Location* location) {
-	clearBitList(&outgoingPaths, FALSE);
+	clearBitList(&outgoingPaths, false);
 	int i;
 	int pathSize = getPathCount(&paths);
 	for (i = 0; i < pathSize; i++) {
@@ -70,9 +70,9 @@ void updateOutgoingPaths(Location* location) {
 		Location* otherEnd = getOtherEnd(pathDataFunction, location);
 
 		// Ex : handledLocationList = {EF, GH} and other End = B
-		bool handledLocationListContainsLocation = containsLocation(&locations, otherEnd, TRUE);
+		bool handledLocationListContainsLocation = containsLocation(&locations, otherEnd, true);
 		if (!handledLocationListContainsLocation) {
-			setBit(&outgoingPaths, i, TRUE);
+			setBit(&outgoingPaths, i, true);
 		}
 	}
 }
@@ -127,7 +127,7 @@ Location* extractMinCostLocation() {
 		}
 	}
 	// mark location as handled
-	result->tmpHandled = TRUE;
+	result->tmpHandled = true;
 	return result;
 }
 
@@ -137,8 +137,8 @@ int computeBestPath(LocationList* outLocationList, Location* start, Location* en
 
 	// not necessary because handledLocationList elements are removed from unhandled to handled.
 	// we can not have doublon.
-	// unhandledLocationList.set = TRUE;	
-	// handledLocationList.set = TRUE;
+	// unhandledLocationList.set = true;	
+	// handledLocationList.set = true;
 
 	clearLocationTmpInfo(&locations);
 	Location* location1;
@@ -238,7 +238,7 @@ void setPathAvailability(int index, bool value) {
 }
 
 void resetAllPathsAsAvailable() {
-	clearBitList(&availablePaths, TRUE);
+	clearBitList(&availablePaths, true);
 }
 
 bool getPathAvailability(int index) {

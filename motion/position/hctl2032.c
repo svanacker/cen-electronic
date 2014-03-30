@@ -309,7 +309,7 @@ void hctl_printCodersValue(OutputStream* outputStream) {
 }
 
 /**
- * Returns TRUE if the previousValue and value has change.
+ * Returns true if the previousValue and value has change.
  */
 int hctl_hasCoderValueChange(int coderIndex) {
     Coder* localCoder = &coders[coderIndex];
@@ -317,7 +317,7 @@ int hctl_hasCoderValueChange(int coderIndex) {
 }
 
 /**
- * Returns TRUE if any change appears on X_CODER or Y_CODER.
+ * Returns true if any change appears on X_CODER or Y_CODER.
  */
 int hctl_hasAnyCoderValueChange() {
     int result = hctl_hasCoderValueChange(X_INDEX) || hctl_hasCoderValueChange(Y_INDEX);

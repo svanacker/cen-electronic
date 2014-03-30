@@ -115,7 +115,7 @@ void loadPID(void) {
         localPid->i = internalLoadPidParameter(pidIndex, EEPROM_KI);
         localPid->d = internalLoadPidParameter(pidIndex, EEPROM_KD);
         localPid->maxIntegral = internalLoadPidParameter(pidIndex, EEPROM_MI);
-        localPid->enabled = TRUE;
+        localPid->enabled = true;
     }
 
     // Load rolling Test parameters
@@ -126,7 +126,7 @@ void loadPID(void) {
     rollingTestModePid->d = ROLLING_TEST_D;
     rollingTestModePid->maxIntegral = ROLLING_TEST_MAX_INTEGRAL;
     rollingTestModePid->derivativePeriod = DEFAULT_DERIVATIVE_PERIOD;
-    rollingTestModePid->enabled = TRUE;
+    rollingTestModePid->enabled = true;
      */
 
     // Parameter for End of trajectory
@@ -139,7 +139,7 @@ void loadPID(void) {
         endApproachPid->i = END_APPROACH_I;
         endApproachPid->d = END_APPROACH_D;
         endApproachPid->maxIntegral = END_APPROACH_MAX_INTEGRAL;
-        endApproachPid->enabled = TRUE;
+        endApproachPid->enabled = true;
     }
 }
 

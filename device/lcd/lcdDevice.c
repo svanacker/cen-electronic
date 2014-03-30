@@ -20,7 +20,7 @@ void deviceLCDShutDown() {
 }
 
 bool deviceLCDIsOk() {
-    return TRUE;
+    return true;
 }
 
 void deviceLCDHandleRawData(char header,

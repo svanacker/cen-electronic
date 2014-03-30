@@ -21,7 +21,7 @@ void deviceTestShutDown() {
 }
 
 bool deviceTestIsOk() {
-    return TRUE;
+    return true;
 }
 
 void deviceTestHandleRawData(char header,

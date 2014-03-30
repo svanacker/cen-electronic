@@ -263,7 +263,7 @@ void onChildJoined(JennicEvent* jennicEvent) {
 	pwmServo(LASER_SERVO_INDEX_1, 0xFF, 1500.0f);
 	pwmServo(LASER_SERVO_INDEX_2, 0xFF, 1500.0f);
 	delaymSec(500.0f);
-	setBeaconSystemEnabled(TRUE);
+	setBeaconSystemEnabled(true);
 }
 
 /**
@@ -272,7 +272,7 @@ void onChildJoined(JennicEvent* jennicEvent) {
 void onChildLeave(JennicEvent* jennicEvent) {
 	appendString(getOutputStreamLogger(INFO), "CHILD LEAVE ! \n");
 	setJennicNetworkStatus(JENNIC_WAITING_FOR_NODE);
-	setBeaconSystemEnabled(FALSE);
+	setBeaconSystemEnabled(false);
 	pwmServo(LASER_SERVO_INDEX_1, 0xFF, 2200.0f);
 	pwmServo(LASER_SERVO_INDEX_2, 0xFF, 2200.0f);
 	delaymSec(300.0f);
@@ -375,7 +375,7 @@ restart:
 
 	// To Avoid Rotation at startup Time. The beacon will be activated as soon the network will be connected
 	// to receiver
-	setBeaconSystemEnabled(FALSE);
+	setBeaconSystemEnabled(false);
 
     InputStream* zigbeeInputStream = getInputStream(&zigbeeInputBuffer);
     InputStream* debugInputStream = getInputStream(&debugInputBuffer);

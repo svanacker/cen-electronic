@@ -49,7 +49,7 @@ void printGameStrategyContext(OutputStream* outputStream, GameStrategyContext* c
 	// current Target
 	appendString(outputStream, "\n\tcurrentTarget=");
 	if (context->currentTarget != NULL) {
-		printGameTarget(outputStream, context->currentTarget, FALSE);
+		printGameTarget(outputStream, context->currentTarget, false);
 	}
 	else {
 		appendString(outputStream, "NULL");

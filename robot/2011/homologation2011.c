@@ -121,7 +121,7 @@ void homologation(unsigned int homologationIndex, unsigned int color) {
             return;
         }
         // avoid two movement at the same time
-        setReadyForNextMotion(FALSE);
+        setReadyForNextMotion(false);
 
         // for next instruction
         incMotionInstructionIndex();

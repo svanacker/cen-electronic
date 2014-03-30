@@ -16,7 +16,7 @@ _FGS(CODE_PROT_OFF);			//Codeprotect OFF
 int main (void) {
 	// Initialisation du périphérique
 	const DeviceDescriptor *deviceTestDescriptor = getTestDeviceDescriptor();
-	initDevice(deviceTestDescriptor, FALSE);
+	initDevice(deviceTestDescriptor, false);
 
 	// Initialisation du répartiteur de données
 	const DeviceDescriptor *devices[] = {deviceTestDescriptor};
@@ -24,7 +24,7 @@ int main (void) {
 
 	// Initialisation du pilote
 	const DriverDescriptor *driverTestDescriptor = driverTestGetDescriptor();
-	driverInit(driverTestDescriptor, FALSE);
+	driverInit(driverTestDescriptor, false);
 
 	int value = 0;
 	int key = 0;

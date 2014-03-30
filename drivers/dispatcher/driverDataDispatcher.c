@@ -54,7 +54,7 @@ bool handleNotificationFromDispatcher(DriverDataDispatcher* dispatcher) {
 
     if (inputStream == NULL) {
         writeError(NO_DISPATCHER_INPUT_STREAM);
-        return FALSE;
+        return false;
     }
 
     if (inputStream->availableData(inputStream)) {
@@ -81,7 +81,7 @@ bool handleNotificationFromDispatcher(DriverDataDispatcher* dispatcher) {
 			device = deviceDataDispatcherFindDevice(header, bufferSize, DEVICE_MODE_INPUT);
 		}
 		if (device == NULL) {
-			return FALSE;
+			return false;
 		}
 		/* TODO : Distinguish the case when there is not enough bufferSize.
         // if the device was not found, we continue
@@ -94,7 +94,7 @@ bool handleNotificationFromDispatcher(DriverDataDispatcher* dispatcher) {
             appendString(errorOutputStream, ",content=");
             copyInputToOutputStream(inputStream, errorOutputStream, NULL, COPY_ALL);
 
-            return FALSE;
+            return false;
         }
 		*/
 
@@ -103,12 +103,12 @@ bool handleNotificationFromDispatcher(DriverDataDispatcher* dispatcher) {
         if (callbackFunction != NULL) {
             // do the callback
             callbackFunction(device, header, inputStream);
-            return TRUE;
+            return true;
         } else {
             writeError(DISPATCHER_NO_CALLBACK_FOR);
             append(getErrorOutputStreamLogger(), header);
         }
     }
 
-    return FALSE;
+    return false;
 }

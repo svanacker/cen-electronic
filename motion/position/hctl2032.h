@@ -51,7 +51,7 @@ void hctl_resetCoderValue(int coderIndex);
 void hctl_updateCoders();
 
 /**
- * Returns TRUE if any change appears on X_CODER or Y_CODER.
+ * Returns true if any change appears on X_CODER or Y_CODER.
  */
 int hctl_hasAnyCoderValueChange();
 

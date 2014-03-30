@@ -13,7 +13,7 @@
 void append(OutputStream* stream, char c);
 
 /**
- * Append a bool value (1 for TRUE, 0 for false)
+ * Append a bool value (1 for true, 0 for false)
  */
 void appendBool(OutputStream* outputStream, bool b);
 

@@ -29,10 +29,10 @@ void printAssertDecfValue(float value) {
 
 void printAssertBooleanValue(bool value) {
 	if (value) {
-		printAssertMessage("TRUE");
+		printAssertMessage("true");
 	}
 	else {
-		printAssertMessage("FALSE");
+		printAssertMessage("false");
 	}
 }
 
@@ -136,9 +136,9 @@ bool assertNumericEquals(long expected, long actual, char* messageIfFailed) {
 		printExpectedDecValue(expected);
 		printActualDecValue(expected);
 		printAssertMessage(messageIfFailed);
-		return FALSE;
+		return false;
 	}
-	return TRUE;
+	return true;
 }
 
 // Implementation
@@ -158,25 +158,25 @@ bool assertLongEquals(long expected, long actual, char* messageIfFailed) {
 bool assertTrue(bool actual, char* messageIfFailed) {
 	if (!actual) {
 		printAssertExpected();
-		printAssertBooleanValue(TRUE);
+		printAssertBooleanValue(true);
 		printAssertActual();
-		printAssertBooleanValue(FALSE);
+		printAssertBooleanValue(false);
 		printAssertMessage(messageIfFailed);
-		return FALSE;
+		return false;
 	}
-	return TRUE;
+	return true;
 }
 
 bool assertFalse(bool actual, char* messageIfFailed) {
 	if (actual) {
 		printAssertExpected();
-		printAssertBooleanValue(FALSE);
+		printAssertBooleanValue(false);
 		printAssertActual();
-		printAssertBooleanValue(TRUE);
+		printAssertBooleanValue(true);
 		printAssertMessage(messageIfFailed);
-		return FALSE;
+		return false;
 	}
-	return TRUE;
+	return true;
 }
 
 // Pointer tests
@@ -188,9 +188,9 @@ bool assertPointerNotNull(int* actual, char* messageIfFailed) {
 		printAssertActual();
 		printAssertMessage("NULL");
 		printAssertMessage(messageIfFailed);
-		return FALSE;
+		return false;
 	}
-	return TRUE;
+	return true;
 }
 
 // Object tests
@@ -202,5 +202,5 @@ bool assertEquals(EqualsFunction* equalsFunction, int* actualObject, int* expect
 
 bool assertBufferEquals(Buffer* expectedBuffer, Buffer* actualBuffer, char* messageIfFailed) {
 	// TODO : A Implémenter
-	return FALSE;
+	return false;
 }

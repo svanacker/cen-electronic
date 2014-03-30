@@ -84,7 +84,7 @@ bool getBit(BitList* bitList, unsigned char index) {
 
 	if (index > bitList->size) {
 		writeError(BIT_LIST_ARRAY_OUT_OF_BOUNDS);
-		return FALSE;
+		return false;
 	}
 
 	unsigned int* arrayPointer = (unsigned int*) bitList->array;

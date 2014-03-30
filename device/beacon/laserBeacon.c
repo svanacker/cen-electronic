@@ -37,7 +37,7 @@ void initLaserDetectorStruct(Laser* laser, int servoIndex, pinValueFunction *pin
     for (direction = 0; direction < DIRECTION_COUNT; direction++) {
         laser->lastServoPositionHit[direction] = 0;
         laser->oldServoPositionHit[direction] = 0;
-        laser->hitDuringLast[direction] = FALSE;
+        laser->hitDuringLast[direction] = false;
     }
     laser->laserHitCounter = 0;
     laser->direction = RIGHT_DIRECTION;
@@ -74,7 +74,7 @@ void updateLaserPosition(Laser* laserDetector) {
                     // we change the turn
                     laserDetector->direction = LEFT_DIRECTION;
                     // reset the hit for the new direction
-                    laserDetector->hitDuringLast[LEFT_DIRECTION] = FALSE;
+                    laserDetector->hitDuringLast[LEFT_DIRECTION] = false;
                     laserDetector->laserHitCounter = 0;
                     laserDetector->currentMaxRight = laserDetector->maxRight;
                 }                    // -> we are under the maximum
@@ -86,7 +86,7 @@ void updateLaserPosition(Laser* laserDetector) {
                 // we change the turn
                 laserDetector->direction = LEFT_DIRECTION;
                 // reset the hit for the new direction
-                laserDetector->hitDuringLast[LEFT_DIRECTION] = FALSE;
+                laserDetector->hitDuringLast[LEFT_DIRECTION] = false;
                 laserDetector->laserHitCounter = 0;
             }
         }
@@ -102,7 +102,7 @@ void updateLaserPosition(Laser* laserDetector) {
                     // we change the turn
                     laserDetector->direction = RIGHT_DIRECTION;
                     // reset the hit for the new direction
-                    laserDetector->hitDuringLast[RIGHT_DIRECTION] = FALSE;
+                    laserDetector->hitDuringLast[RIGHT_DIRECTION] = false;
                     laserDetector->laserHitCounter = 0;
                     laserDetector->currentMaxLeft = laserDetector->maxLeft;
                 }                    // -> we try to decrease the limit
@@ -114,7 +114,7 @@ void updateLaserPosition(Laser* laserDetector) {
                 // we change the turn
                 laserDetector->direction = RIGHT_DIRECTION;
                 // reset the hit for the new direction
-                laserDetector->hitDuringLast[RIGHT_DIRECTION] = FALSE;
+                laserDetector->hitDuringLast[RIGHT_DIRECTION] = false;
                 laserDetector->laserHitCounter = 0;
             }
         }
@@ -139,7 +139,7 @@ void detectsLaser(Laser* laserDetector) {
             // saves the position for the direction
             laserDetector->lastServoPositionHit[direction] = laserDetector->servoPosition;
             // saves that we touch the target
-            laserDetector->hitDuringLast[direction] = TRUE;
+            laserDetector->hitDuringLast[direction] = true;
             if (laserDetector->lastServoPositionHit[direction] != laserDetector->oldServoPositionHit[direction]) {
                 laserDetector->oldServoPositionHit[direction] = laserDetector->lastServoPositionHit[direction];
                 if (direction == RIGHT_DIRECTION) {

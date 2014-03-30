@@ -47,7 +47,7 @@ void setStrategy(int strategyIndex);
 GameStrategyContext* getStrategyContext();
 
 /**
- * Do the next step in the strategy. Returns FALSE if nothing was done.
+ * Do the next step in the strategy. Returns false if nothing was done.
  */
 bool nextStep();
 

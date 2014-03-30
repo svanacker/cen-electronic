@@ -40,7 +40,7 @@ bool mustPidBeRecomputed(void) {
     long pidTime = getPidTime();
     if (pidTime != lastPidTime) {
         lastPidTime = pidTime;
-        return TRUE;
+        return true;
     }
-    return FALSE;
+    return false;
 }

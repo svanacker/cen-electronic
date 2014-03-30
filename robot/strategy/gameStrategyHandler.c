@@ -108,14 +108,14 @@ void findNextTarget() {
 	#ifdef DEBUG_STRATEGY_HANDLER
 		appendString(getOutputStreamLogger(DEBUG), "\t\tbestTarget:");
 		if (strategyContext.currentTarget != NULL) {
-			printGameTarget(getOutputStreamLogger(DEBUG), strategyContext.currentTarget, FALSE);
+			printGameTarget(getOutputStreamLogger(DEBUG), strategyContext.currentTarget, false);
 		}
 		else {
 			appendString(getOutputStreamLogger(DEBUG), "NULL\n");
 		}
 		appendString(getOutputStreamLogger(DEBUG), "\t\tbestTargetAction:");
 		if (strategyContext.currentTargetAction != NULL) {
-			printGameTargetAction(getOutputStreamLogger(DEBUG), strategyContext.currentTargetAction, FALSE);
+			printGameTargetAction(getOutputStreamLogger(DEBUG), strategyContext.currentTargetAction, false);
 		}
 		else {
 			appendString(getOutputStreamLogger(DEBUG), "NULL\n");
@@ -138,7 +138,7 @@ void markTargetInUse() {
 }
 
 /**
- * Execute the target actions, and return TRUE if there is a an action called, FALSE else
+ * Execute the target actions, and return true if there is a an action called, false else
  * @private
  */
 bool executeTargetActions() {
@@ -155,7 +155,7 @@ bool executeTargetActions() {
 			appendString(getOutputStreamLogger(DEBUG), "-> no actions for this target\n");
 		#endif
 		markTargetAsHandled();
-		return FALSE;
+		return false;
 	}
 
 	// There is actionItem in progress
@@ -168,14 +168,14 @@ bool executeTargetActions() {
 
 		// Do the action item
 		actionItem->actionItemFunction();
-		return TRUE;
+		return true;
 	}
 	else {
 		markTargetAsHandled();
 		// we do nothing
-		return FALSE;
+		return false;
 	}
-	return TRUE;
+	return true;
 }
 
 void motionGoLocation(Location* location, 
@@ -258,7 +258,7 @@ bool motionRotateToFollowPath(PathDataFunction* pathDataFunction, bool reversed)
 
 	int diff = mod3600(angle - strategyContext.robotAngle);
 	if (abs(diff) < ANGLE_ROTATION_MIN) {
-		return FALSE;
+		return false;
 	}
 
 	#ifdef DEBUG_STRATEGY_HANDLER
@@ -277,7 +277,7 @@ bool motionRotateToFollowPath(PathDataFunction* pathDataFunction, bool reversed)
 		strategyContext.robotAngle += diff;
 	#endif
 
-	return TRUE;
+	return true;
 }
 
 void motionFollowPath(PathDataFunction* pathDataFunction, bool reversed) {
@@ -326,7 +326,7 @@ void motionFollowPath(PathDataFunction* pathDataFunction, bool reversed) {
 }
 
 /**
-* Handle the trajectory and return TRUE if we go to a location, FALSE else.
+* Handle the trajectory and return true if we go to a location, false else.
 * @private
 */
 bool handleCurrentTrajectory() {
@@ -347,7 +347,7 @@ bool handleCurrentTrajectory() {
 
 		// no more locations to reach
 		clearLocationList(currentTrajectory);
-		return FALSE;
+		return false;
 	}
 
 	Location* start = getLocation(currentTrajectory, 0);
@@ -360,7 +360,7 @@ bool handleCurrentTrajectory() {
 		motionFollowPath(pathDataFunction, reversed);
 		removeFirstLocation(currentTrajectory);
 	}
-	return TRUE;
+	return true;
 }
 
 inline float deciDegreesToRad(int ddegrees) {
@@ -423,14 +423,14 @@ bool isPathAvailable(PathDataFunction* pathDataFunction) {
 		computeBSplinePoint(curve, 0.1 * i, &p);
 		// checking opponent
 		if (opponentPresent && isColliding(&p, opponentRobotPosition)) {
-			return FALSE;
+			return false;
 		}
 		// checking last obstacle
 		if (obstaclePresent && isColliding(&p, lastObstaclePosition)) {
-			return FALSE;
+			return false;
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 bool mustComputePaths() {
@@ -462,7 +462,7 @@ void updatePathsAvailability() {
 	for (i = 0; i < paths->size; i++) {
 		PathDataFunction* pathDataFunction = paths->paths[i];
 		// by default, path is available
-		bool available = TRUE;
+		bool available = true;
 		// Don't do the compute if it's not necessary
 		if (computePath) {	
 			available = isPathAvailable(pathDataFunction);
@@ -530,14 +530,14 @@ bool nextStep() {
 			if (!handleCurrentTrajectory()) {
 				continue;
 			}
-			return TRUE;
+			return true;
 		}
 		else if (targetAction != NULL) {
 			if (!executeTargetActions()) {
 				// we will return on a different condition.
 				continue;
 			}
-			return TRUE;
+			return true;
 		}
 		else if (targetAction == NULL) {
 			// no target, search a new one
@@ -547,24 +547,24 @@ bool nextStep() {
 					appendString(getOutputStreamLogger(DEBUG), "no more targets -> stopping");
 				#endif
 				clearCurrentTarget();
-				return FALSE;
+				return false;
 			}
 			// Next target created a new current trajectory
 			if (getLocationCount(&(strategyContext.currentTrajectory)) != 0) {
 				if (!handleCurrentTrajectory()) {
 					continue;
 				}
-				return TRUE;
+				return true;
 			}
 		} else {
 			if (!executeTargetActions()) {
 				// we will return on a different condition.
 				continue;
 			}
-			return TRUE;
+			return true;
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 

@@ -39,12 +39,12 @@ PathDataFunction* getPathOfLocations(PathList* pathList, Location* location1, Lo
 		Location* pathLocation2 = getTmpPathData()->location2;
 		// same order
 		if (locationEquals(pathLocation1, location1) && locationEquals(pathLocation2, location2)) {
-			*reversed = FALSE;
+			*reversed = false;
 			return pathDataFunction;
 		}
 		// inverse order
 		if (locationEquals(pathLocation1, location2) && locationEquals(pathLocation2, location1)) {
-			*reversed = TRUE;
+			*reversed = true;
 			return pathDataFunction;
 		}
 	}

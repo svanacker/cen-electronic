@@ -38,7 +38,7 @@ void addLocation(LocationList* locationList, Location* location, char* name, int
 	location->x = x;
 	location->y = y;
 	location->tmpCost = NO_COMPUTED_COST;
-	location->tmpHandled = FALSE;
+	location->tmpHandled = false;
 	addFilledLocation(locationList, location);
 }
 
@@ -67,7 +67,7 @@ Location* findLocationByName(LocationList* locationList, char* locationName) {
 
 bool containsLocation(LocationList* locationList, Location* locationToFind, bool handled) {
 	if (locationToFind == NULL) {
-		return FALSE;
+		return false;
 	}	
 	int i;
 	int size = locationList->size;
@@ -77,10 +77,10 @@ bool containsLocation(LocationList* locationList, Location* locationToFind, bool
 			continue;
 		}
 		if (locationEquals(location, locationToFind)) {
-			return TRUE;
+			return true;
 		}
 	}
-	return FALSE;
+	return false;
 }
 
 Location* getNearestLocation(LocationList* locationList, int x, int y) {
@@ -135,7 +135,7 @@ void clearLocationTmpInfo(LocationList* locationList) {
 		Location* location = locationList->locations[i];
 		location->tmpCost = NO_COMPUTED_COST;
 		location->tmpPreviousLocation = NULL;
-		location->tmpHandled = FALSE;
+		location->tmpHandled = false;
 	}
 }
 

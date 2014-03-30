@@ -8,7 +8,7 @@
  */
 // #define MPLAB_SIMULATION
 
-// #define PROG_32
+#define PROG_32
 // #include <GenericTypeDefs.h>
 // #define PROG_32
 // #include <GenericTypeDefs.h>
@@ -24,8 +24,8 @@
 
 // #define bool unsigned char
 
-#define FALSE 0
-#define TRUE (!FALSE)
+// #define false 0
+// #define true (!false)
 
 /** Carriage return : \r". */
 #define CR 13

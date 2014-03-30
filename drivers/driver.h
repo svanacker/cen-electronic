@@ -17,7 +17,7 @@ typedef void driverShutDownFunction(void);
 
 /**
  * Function for querying the error state of the driver
- * @retrue TRUE is the driver is ok, FALSE otherwise
+ * @retrue true is the driver is ok, false otherwise
  */
 typedef bool driverIsOkFunction(void);
 

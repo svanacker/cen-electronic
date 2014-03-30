@@ -121,7 +121,7 @@ bool checkIsAck(InputStream* inputStream) {
         append(outputStream, ack);
 		println(outputStream);
     }
-    return TRUE;
+    return true;
 }
 
 bool checkIsChar(InputStream* inputStream, char expectedChar) {
@@ -134,5 +134,5 @@ bool checkIsChar(InputStream* inputStream, char expectedChar) {
         append(outputStream, readChar);
 		println(outputStream);
     }
-    return TRUE;
+    return true;
 }

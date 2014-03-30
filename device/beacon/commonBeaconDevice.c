@@ -22,14 +22,14 @@
 #include "../../drivers/jennic/jennic5139EventParser.h"
 
 // Handle Input to Command Jennic or to ask the devices
-static bool redirectToDevices = TRUE;
+static bool redirectToDevices = true;
 
 bool isCommandRedirectToDevices() {
 	return redirectToDevices;
 }
 
 void setCommandRedirectToDevices() {
-	redirectToDevices = TRUE;
+	redirectToDevices = true;
 }
 
 // Device
@@ -43,7 +43,7 @@ void commonBeaconDeviceShutDown() {
 }
 
 bool commonBeaconDeviceIsOk() {
-	return TRUE;
+	return true;
 }
 
 void commonBeaconDeviceHandleRawData(char header,
@@ -52,7 +52,7 @@ void commonBeaconDeviceHandleRawData(char header,
 	// Redirect command to Jennic
 	if (header == COMMAND_REDIRECT_TO_JENNIC) {
         appendAck(outputStream);
-		redirectToDevices = FALSE;
+		redirectToDevices = false;
 		appendString(getOutputStreamLogger(INFO), "REDIRECT COMMAND TO JENNIC \n");
         append(outputStream, COMMAND_REDIRECT_TO_JENNIC);
 	// Reset

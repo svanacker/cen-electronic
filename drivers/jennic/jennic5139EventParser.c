@@ -154,26 +154,26 @@ void handleJennicNextChar(char c) {
 		// store the char into the current command
 		jennicEventList.currentCommand[jennicEventList.dataBlockBeginMatchIndex] = c;
 		jennicEventList.dataBlockBeginMatchIndex++;
-		bool foundPossibleCandidate = FALSE;
+		bool foundPossibleCandidate = false;
 
 		int eventIndex = 0;
 		for (eventIndex = 0; eventIndex < jennicEventList.size; eventIndex++) {
 			JennicEvent* event = jennicEventList.events[eventIndex];
 			int charIndex;
-			bool matchCompletely = TRUE;
+			bool matchCompletely = true;
 			// we must check complete command
 			// Ex : DAT and RST have "T" at the end, we must not control only
 			// the last character
 			for (charIndex = 0; charIndex < jennicEventList.dataBlockBeginMatchIndex; charIndex++) {
 				// if we found a difference
 				if (event->eventCommand[charIndex] != jennicEventList.currentCommand[charIndex]) {
-					matchCompletely = FALSE;
+					matchCompletely = false;
 					break; 
 				}
 			}
 			if (matchCompletely) {
 				// maybe this one
-				foundPossibleCandidate = TRUE;
+				foundPossibleCandidate = true;
 				// init search string only if we have 3 characters
 				if (jennicEventList.dataBlockBeginMatchIndex == LENGTH_OF_JENNIC_AT_COMMAND) {
 					// definitive candidate
