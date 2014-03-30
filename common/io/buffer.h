@@ -24,8 +24,8 @@ typedef struct {
     char* type;
     /** A pointer on an array of char. */
     char (*s)[];
-	/** The max length of the buffer. */
-	unsigned char length;
+    /** The max length of the buffer. */
+    unsigned char length;
     /** The pointer used to write Data (we write at the end). */
     unsigned int writeIndex;
     /** The pointer used to read (we read at the begin). */

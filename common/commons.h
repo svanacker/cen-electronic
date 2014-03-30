@@ -6,9 +6,9 @@
 /**
  * Defines that we want to run with MPLAB SIMULATION
  */
-// #define MPLAB_SIMULATION
+#define MPLAB_SIMULATION
 
-#define PROG_32
+// #define PROG_32
 // #include <GenericTypeDefs.h>
 // #define PROG_32
 // #include <GenericTypeDefs.h>
