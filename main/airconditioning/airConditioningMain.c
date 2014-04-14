@@ -7,6 +7,8 @@
 
 #include "../../common/delay/delay30F.h"
 
+#include "../../common/i2c/master/i2cMasterSetup.h"
+
 #include "../../common/io/compositeOutputStream.h"
 #include "../../common/io/filter.h"
 #include "../../common/io/inputStream.h"
