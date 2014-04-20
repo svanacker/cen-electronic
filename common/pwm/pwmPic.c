@@ -1,7 +1,6 @@
 #include <p30fxxxx.h>
 
 #include "pwmPic.h"
-#include "../../common/delay/delay30F.h"
 
 void pwmInit() {
     // simple pwm mode without protection

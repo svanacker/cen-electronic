@@ -7,7 +7,7 @@
 #include "../i2cConstants.h"
 #include "../i2cDebug.h"
 
-#include "../../../common/delay/delay30F.h"
+#include "../../../common/delay/cenDelay.h"
 
 #include "../../../common/io/inputStream.h"
 #include "../../../common/io/outputStream.h"

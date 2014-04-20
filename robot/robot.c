@@ -3,7 +3,7 @@
 
 #include "../common/commons.h"
 #include "../common/2d/2d.h"
-#include "../common/delay/delay30F.h"
+#include "../common/delay/cenDelay.h"
 
 #include "../common/io/inputStream.h"
 #include "../common/io/outputStream.h"

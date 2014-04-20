@@ -5,7 +5,7 @@
 
 #include "srf02.h"
 
-#include "../../common/delay/delay30F.h"
+#include "../../common/delay/cenDelay.h"
 
 // First sequence command used to change I2C addres
 #define CHANGE_ADDRESS_FIRST_COMMAND 0xA0

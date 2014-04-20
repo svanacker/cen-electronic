@@ -8,8 +8,6 @@
 // Device
 #include "../../drivers/driver.h"
 
-#include "../../common/delay/delay30F.h"
-
 // I2C management
 #include "../../common/i2c/master/i2cMaster.h"
 #include "../../common/i2c/master/i2cMasterInputStream.h"

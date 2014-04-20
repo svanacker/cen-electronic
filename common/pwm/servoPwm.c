@@ -5,7 +5,7 @@
 
 #include "../../common/commons.h"
 
-#include "../../common/delay/delay30F.h"
+#include "../../common/delay/cenDelay.h"
 
 #include "../../common/error/error.h"
 

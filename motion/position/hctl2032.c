@@ -2,7 +2,7 @@
 
 #include "../../motion/position/hctl2032.h"
 
-#include "../../common/delay/delay30F.h"
+#include "../../common/delay/cenDelay.h"
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
 

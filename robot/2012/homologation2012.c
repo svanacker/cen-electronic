@@ -1,6 +1,6 @@
 #include "homologation2012.h"
 
-#include "../../common/delay/delay30F.h"
+#include "../../common/delay/cenDelay.h"
 #include "../../common/io/outputStream.h"
 
 #include "../../common/log/logger.h"

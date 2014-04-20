@@ -6,7 +6,7 @@
 
 #include "md22.h"
 
-#include "../../common/delay/delay30F.h"
+#include "../../common/delay/cenDelay.h"
 
 //addresses of modules on I2C bus
 #define MD22_BASE			0xB0

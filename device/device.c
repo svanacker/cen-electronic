@@ -4,7 +4,6 @@
 #include "deviceInterface.h"
 
 #include "../common/commons.h"
-#include "../common/delay/delay30F.h"
 
 #include "../common/io/ioUtils.h"
 #include "../common/io/inputStream.h"

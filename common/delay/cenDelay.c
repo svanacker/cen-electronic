@@ -3,7 +3,7 @@
 
 #include <timer.h>
 
-#include "delay30F.h"
+#include "cenDelay.h"
 
 void delayUs(void) {
     char i;

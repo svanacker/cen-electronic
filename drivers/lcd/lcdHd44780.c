@@ -9,7 +9,7 @@
 #include <string.h>
 
 #include "lcdHd44780.h"
-#include "../../common/delay/delay30F.h"
+#include "../../common/delay/cenDelay.h"
 
 #define LCD_ROW_COUNT	 4
 #define LCD_COLUMN_COUNT 20

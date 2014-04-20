@@ -1,6 +1,3 @@
-                    
-* Faire un recu pour JLB
-
 P2 
 * EZ : Désactiver les TargetActions quand il y a un obstacle
 * Gérer la stratégie du robot en fonction de l'adversaire !!!
@@ -13,8 +10,7 @@ NEXT YEAR
  => SV : Fournir une documentation de la partie PROG-30F
  => SV : Fournir une documentation de la partie Eclipse
 ** Général
- => SV : Faire un nouveau DriverDataDispatcher spécial UART si c'est possible pour pouvoir relier des cartes en UART en maitre esclave :)
- 
+ => SV : Faire un nouveau DriverDataDispatcher spécial UART si c'est possible pour pouvoir relier des cartes en UART en maitre esclave :) 
 
 ** Beacon Board
   => SV : Problème au niveau de l'envoie de "'" pour arrêter les servos. Provoque un reboot de la carte alors que | marche correctement.
@@ -60,7 +56,6 @@ de la stratégie. => Faire un éditeur graphique de stratégie
 
 * Mecanique
  => Structure du carter arrière : Mettre les cartes sur du Velcro
- => SV : Mettre des roues de modélisme plus large, pour avoir davantage d'adhérence
  => SV : Voir fixation : http://wiki.droids-corp.org/index.php/Microb_Technology/2009/Mechanics/bloc_moteur
  => SV : Faire des supports de balises à hauteur pour les tests d'évitements
  => SV : Prévoir air comprimé pour nettoyer les contacts

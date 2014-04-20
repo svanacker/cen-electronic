@@ -2,7 +2,6 @@
 
 #include "pwmPic.h"
 #include "motorPwm.h"
-#include "../../common/delay/delay30F.h"
 
 /** For 20 000 Hz operation. */
 #define PWM_TIMER_FOR_MOTOR 255

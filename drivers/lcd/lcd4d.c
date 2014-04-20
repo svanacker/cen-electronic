@@ -13,7 +13,7 @@
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
 
-#include "../../common/delay/delay30F.h"
+#include "../../common/delay/cenDelay.h"
 
 void initLcd4d(Lcd4d* lcd, OutputStream* outputStream, InputStream* inputStream, Buffer* inputBuffer) {
 	lcd->outputStream = outputStream;
