@@ -85,9 +85,9 @@
 
 // The port for which we debug (we can send instruction too)
 #ifndef MPLAB_SIMULATION
-#define SERIAL_PORT_DEBUG 	SERIAL_PORT_2
+	#define SERIAL_PORT_DEBUG 	SERIAL_PORT_2
 #else
-#define SERIAL_PORT_DEBUG 	SERIAL_PORT_1
+	#define SERIAL_PORT_DEBUG 	SERIAL_PORT_1
 #endif
 
 // serial DEBUG 
@@ -154,8 +154,6 @@ void waitForInstruction() {
 int runMotorBoard() {
     setPicName(MOTOR_BOARD_PIC_NAME);
 
-    initTimerList(&timerListArray, MOTOR_BOARD_TIMER_LENGTH);
-
     openSerialLink(&debugSerialStreamLink,
             &debugInputBuffer,
             &debugInputBufferArray,
@@ -172,6 +170,8 @@ int runMotorBoard() {
     addLogHandler(&serialLogHandler, "UART", &debugOutputStream, DEBUG);
     appendString(getDebugOutputStreamLogger(), getPicName());
     appendCRLF(getDebugOutputStreamLogger());
+
+    initTimerList(&timerListArray, MOTOR_BOARD_TIMER_LENGTH);
 
     // Debug of I2C : Only if there is problems
     // initI2CDebugBuffers(&debugI2cInputBuffer, &debugI2cOutputBuffer);

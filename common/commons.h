@@ -9,23 +9,12 @@
 //#define MPLAB_SIMULATION
 
 // #define PROG_32
-// #include <GenericTypeDefs.h>
-// #define PROG_32
-// #include <GenericTypeDefs.h>
 
 // TODO ; Change for 32 !!
 #define MAX_SIGNEDINT 0x7FFF
 #define MAX_UNSIGNEDINT 0xFFFF
 #define MIN_SIGNEDINT 0x8000
 #define MIN_UNSIGNEDINT 0x0000
-
-
-
-
-// #define bool unsigned char
-
-// #define false 0
-// #define true (!false)
 
 /** Carriage return : \r". */
 #define CR 13

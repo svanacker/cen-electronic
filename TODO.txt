@@ -1,3 +1,17 @@
+Le 20/04/2014 :
+
+- Fusionner la partie GameStrategieBoard
+- Gérer les messages d'une longueur + importante
+- Gérer le fait qu'une commande ne soit pas comprise (timeout très faible)
+- Gérer un numéro de message, et un ack correspondant
+- Gérer un checksum au niveau
+- Tester massivement les entrées sorties via un onglet spécifique au niveau du programme de contrôle
+- Faire une documentation de la partie Logger en UML, ainsi qu'en diagramme de séquence
+- Gérer dans un fichier séparé la partie obstacle dans ou hors de la table
+- Regarder les IOIO board pour Android
+- Faire le schéma d'architecture global, en incluant les IOIO Board
+
+
 P2 
 * EZ : Désactiver les TargetActions quand il y a un obstacle
 * Gérer la stratégie du robot en fonction de l'adversaire !!!
