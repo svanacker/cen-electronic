@@ -183,18 +183,18 @@ char bufferReadChar(Buffer* buffer) {
     return 0;
 }
 
-char bufferGetFirstChar(Buffer* buffer) {
-    int isEmpty = isBufferEmpty(buffer);
-    if (!isEmpty) {
+char bufferGetCharAtIndex(Buffer* buffer, int charIndex) {
+    int size = getBufferElementsCount(buffer);
+    if (charIndex < size) {
 		char* sPointer = (char*) buffer->s;
 		// Shift to the right cell index
-		sPointer += buffer->readIndex;
+		sPointer += ((buffer->readIndex + charIndex) % buffer->length);
 		char result = *sPointer;		
 
         return result;
     } else {
         // We must log the problem
-        writeError(IO_BUFFER_EMPTY);
+        writeError(IO_BUFFER_NOT_ENOUGH_DATA);
     }
     return 0;
 }

@@ -28,10 +28,6 @@ bool motorDriverIsOk() {
     return true;
 }
 
-unsigned int motorDriverGetSoftwareRevision() {
-    return 1;
-}
-
 const char* motorDriverGetName() {
     return "motorDriver";
 }
@@ -41,11 +37,8 @@ bool motorDriverSendRawData(const char *data) {
 }
 
 static DriverDescriptor descriptor = {
-//    .driverEnabled = true,
     .driverInit = &motorDriverInit,
     .driverShutDown = &motorDriverShutDown,
-  //  .driverIsOk = &motorDriverIsOk,
-  //  .driverGetSoftwareRevision = &motorDriverGetSoftwareRevision,
     .driverGetName = &motorDriverGetName
 };
 

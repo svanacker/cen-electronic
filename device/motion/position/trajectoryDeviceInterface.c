@@ -60,6 +60,7 @@ int trajectoryGetInterface(char header, int mode, bool fillDeviceArgumentList) {
 }
 
 static DeviceInterface deviceInterface = {
+	.deviceHeader = TRAJECTORY_DEVICE_HEADER,
     .deviceGetName = &getTrajectoryDeviceName,
     .deviceGetInterface = &trajectoryGetInterface
 };

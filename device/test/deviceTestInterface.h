@@ -3,6 +3,8 @@
 
 #include "../../device/deviceInterface.h"
 
+#define DEVICE_TEST_HEADER 'T'
+
 /**
 * Command header for test.
 */

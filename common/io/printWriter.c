@@ -70,14 +70,14 @@ void appendAck(OutputStream* outputStream) {
 
 void printBuffer(OutputStream* outputStream, Buffer* buffer) {
 	while(!isBufferEmpty(buffer)) {
-        unsigned char c = bufferReadChar(buffer);
+        char c = bufferReadChar(buffer);
         append(outputStream, c);
     }
 }
 
 // HEXADECIMAL
 
-void appendHex(OutputStream* outputStream, unsigned char c) {
+void appendHex(OutputStream* outputStream, char c) {
     // Value between 0 and 9
     if (c < 10) {
         c += 48;
@@ -96,7 +96,7 @@ void internalAppendHex(OutputStream* outputStream, signed long value, int shiftM
     }
 }
 
-void appendHex2(OutputStream* outputStream, unsigned char value) {
+void appendHex2(OutputStream* outputStream, char value) {
     internalAppendHex(outputStream, value, 4);
 }
 

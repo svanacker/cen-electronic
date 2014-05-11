@@ -35,7 +35,7 @@ Timer* addTimer(int timerCode,
         		interruptTimerCallbackFunc* callback);
 
 /**
- * Get the device descriptor of index + 1;
+ * Get the device descriptor of index;
  */
 Timer* getTimerByIndex(int index);
 

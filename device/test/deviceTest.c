@@ -11,8 +11,7 @@
 #include "../../common/io/reader.h"
 #include "../../common/io/stream.h"
 
-// TO DELETE
-#include "../../main/motorboard/motorboard.h"
+#include "../../device/device.h"
 
 void deviceTestInit() {
 }
@@ -31,9 +30,9 @@ void deviceTestHandleRawData(char header,
         int arg1 = readHex2(inputStream);
 		int arg2 = readHex2(inputStream);
         int result = arg1 + arg2;
+
+		ackCommand(outputStream, DEVICE_TEST_HEADER, COMMAND_TEST);
         // data
-        appendAck(outputStream);
-        append(outputStream, COMMAND_TEST);
         appendHex2(outputStream, result);
     }
     /* TODO

@@ -29,22 +29,20 @@ bool deviceSystemIsOk() {
 void deviceSystemHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream) {
 	if (header == COMMAND_PING) {
         // data
-        appendAck(outputStream);
-        append(outputStream, COMMAND_PING);
+		ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_PING);
     } else if (header == COMMAND_USAGE) {
-        appendAck(outputStream);
-        append(outputStream, COMMAND_USAGE);
+		ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_USAGE);
         // we don't use driver stream (buffered->too small), instead of log (not buffered)
         printDeviceListUsage(getOutputStreamLogger(INFO));
     } else if (header == COMMAND_WAIT) {
         appendAck(outputStream);
         int mSec = readHex4(inputStream);
         delaymSec(mSec);
+        append(outputStream, SYSTEM_DEVICE_HEADER);
         append(outputStream, COMMAND_WAIT);
     } else if (header == COMMAND_PIC_NAME) {
-        appendAck(outputStream);
         appendString(getOutputStreamLogger(ALWAYS), getPicName());
-        append(outputStream, COMMAND_PIC_NAME);
+		ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_PIC_NAME);
 	}
 }
 

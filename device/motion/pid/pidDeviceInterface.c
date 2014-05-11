@@ -23,8 +23,8 @@ void fillForPlainEndDetectionParameter() {
 	setArgumentUnsignedHex2(4, "noAnaAtStart");
 }
 
-int devicePIDGetInterface(char header, int mode, bool fillDeviceArgumentList) {
-    if (header == COMMAND_WRITE_PID) {
+int devicePIDGetInterface(char commandHeader, int mode, bool fillDeviceArgumentList) {
+    if (commandHeader == COMMAND_WRITE_PID) {
         if (mode == DEVICE_MODE_INPUT) {
             if (fillDeviceArgumentList) {
 				setFunction("setPID", 5);
@@ -37,7 +37,7 @@ int devicePIDGetInterface(char header, int mode, bool fillDeviceArgumentList) {
             }
             return 0;
         }
-    } else if (header == COMMAND_READ_PID) {
+    } else if (commandHeader == COMMAND_READ_PID) {
         if (mode == DEVICE_MODE_INPUT) {
             if (fillDeviceArgumentList) {
 				setFunction("getPID", 1);
@@ -51,7 +51,7 @@ int devicePIDGetInterface(char header, int mode, bool fillDeviceArgumentList) {
             }
             return 10;
         }
-    } else if (header == COMMAND_SET_END_DETECTION_PARAMETER) {
+    } else if (commandHeader == COMMAND_SET_END_DETECTION_PARAMETER) {
         if (mode == DEVICE_MODE_INPUT) {
             if (fillDeviceArgumentList) {
 				setFunction("setEndDetectParam", 5);
@@ -64,7 +64,7 @@ int devicePIDGetInterface(char header, int mode, bool fillDeviceArgumentList) {
             }
             return 0;
         }
-    } else if (header == COMMAND_GET_END_DETECTION_PARAMETER) {
+    } else if (commandHeader == COMMAND_GET_END_DETECTION_PARAMETER) {
         if (mode == DEVICE_MODE_INPUT) {
             if (fillDeviceArgumentList) {
 				setFunctionNoArgument("getEndDetectParam");
@@ -77,7 +77,7 @@ int devicePIDGetInterface(char header, int mode, bool fillDeviceArgumentList) {
             }
             return 10;
         }
-    } else if (header == COMMAND_SEND_DEBUG_DATA_PID) {
+    } else if (commandHeader == COMMAND_SEND_DEBUG_DATA_PID) {
         if (mode == DEVICE_MODE_INPUT) {
             if (fillDeviceArgumentList) {
 				setFunction("sendDbgDataPid", 1);
@@ -102,7 +102,7 @@ int devicePIDGetInterface(char header, int mode, bool fillDeviceArgumentList) {
             }
             return 32;
         }
-    } else if (header == COMMAND_SEND_MOTION_PARAMETER) {
+    } else if (commandHeader == COMMAND_SEND_MOTION_PARAMETER) {
         if (mode == DEVICE_MODE_INPUT) {
             if (fillDeviceArgumentList) {
 				setFunction("sendMotParam", 1);
@@ -130,6 +130,7 @@ int devicePIDGetInterface(char header, int mode, bool fillDeviceArgumentList) {
 }
 
 static DeviceInterface deviceInterface = {
+	.deviceHeader = PID_DEVICE_HEADER,
     .deviceGetName = &getPIDDeviceName,
     .deviceGetInterface = &devicePIDGetInterface
 };

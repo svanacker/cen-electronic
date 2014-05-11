@@ -11,22 +11,22 @@ const char* deviceBeaconGetName() {
     return "Laser Beacon";
 }
 
-int deviceBeaconGetInterface(char header, int mode, bool fillDeviceArgumentList) {
-	if (header == COMMAND_INIT_JENNIC_AS_COORDINATER) {
+int deviceBeaconGetInterface(char commandHeader, int mode, bool fillDeviceArgumentList) {
+	if (commandHeader == COMMAND_INIT_JENNIC_AS_COORDINATER) {
 		// both input/output
 		if (fillDeviceArgumentList) {
 			setFunctionNoArgument("InitJennicAsCoordinater");
 		}
 		return 0;
 	}
-	else if (header == COMMAND_SEND_ROBOT_POSITION_FROM_COORDINATER_TO_ROUTER) {
+	else if (commandHeader == COMMAND_SEND_ROBOT_POSITION_FROM_COORDINATER_TO_ROUTER) {
 		// both input/output
 		if (fillDeviceArgumentList) {
 			setFunctionNoArgument("sendRobotPositionFromCoordinaterToRouter");
 		}
 		return 0;
 	}
-    else if (header == COMMAND_BEACON_POSITION) {
+    else if (commandHeader == COMMAND_BEACON_POSITION) {
         if (mode == DEVICE_MODE_INPUT) {
             if (fillDeviceArgumentList) {
 				setFunctionNoArgument("robotPosition");
@@ -43,7 +43,7 @@ int deviceBeaconGetInterface(char header, int mode, bool fillDeviceArgumentList)
         }
     }
 	// Show the configuration of the both laser and general configuration
-    else if (header == COMMAND_BEACON_CONFIGURATION) {
+    else if (commandHeader == COMMAND_BEACON_CONFIGURATION) {
 		// both input/output
 		if (fillDeviceArgumentList) {
 			setFunctionNoArgument("beaconConfiguration");
@@ -52,7 +52,7 @@ int deviceBeaconGetInterface(char header, int mode, bool fillDeviceArgumentList)
     }
 	// Set the configuration to define distance between beacon, and position
 	// of point calibration
-	else if (header == COMMAND_BEACON_SET_CONFIGURATION) {
+	else if (commandHeader == COMMAND_BEACON_SET_CONFIGURATION) {
         if (mode == DEVICE_MODE_INPUT) {
             if (fillDeviceArgumentList) {
 				setFunction("setBeaconConfiguration", 5);
@@ -70,14 +70,14 @@ int deviceBeaconGetInterface(char header, int mode, bool fillDeviceArgumentList)
             return 0;
         }
 	}
-    else if (header == COMMAND_BEACON_CALIBRATION) {
+    else if (commandHeader == COMMAND_BEACON_CALIBRATION) {
 		// both input/output
 		if (fillDeviceArgumentList) {
 			setFunctionNoArgument("beaconCalibration");
 		}
         return 0;
     }
-	else if (header == COMMAND_ROUTER_LIGHT) {
+	else if (commandHeader == COMMAND_ROUTER_LIGHT) {
        if (mode == DEVICE_MODE_INPUT) {
             if (fillDeviceArgumentList) {
 				setFunction("routerLight", 1);
@@ -92,14 +92,14 @@ int deviceBeaconGetInterface(char header, int mode, bool fillDeviceArgumentList)
         }
 		return 0;
 	}
-	else if (header == COMMAND_BEACON_SERVO_RUN) {
+	else if (commandHeader == COMMAND_BEACON_SERVO_RUN) {
 		// both input/output
 		if (fillDeviceArgumentList) {
 			setFunctionNoArgument("beaconServoRun");
 		}
 		return 0;
 	}
-	else if (header == COMMAND_BEACON_SERVO_STOP) {
+	else if (commandHeader == COMMAND_BEACON_SERVO_STOP) {
 		// both input/output
 		if (fillDeviceArgumentList) {
 			setFunctionNoArgument("beaconServoStop");
@@ -110,8 +110,8 @@ int deviceBeaconGetInterface(char header, int mode, bool fillDeviceArgumentList)
 }
 
 static DeviceInterface deviceInterface = {
+	.deviceHeader = LASER_BEACON_HEADER,
     .deviceGetName = &deviceBeaconGetName,
-//    .deviceGetSoftwareRevision = &deviceBeaconGetSoftwareRevision,
     .deviceGetInterface = &deviceBeaconGetInterface
 };
 

@@ -46,6 +46,8 @@ bool motionDriverGotoPositionPulse(float left,
 							        float a,
 							        float s) {
     OutputStream* outputStream = getDriverRequestOutputStream();
+
+    append(outputStream, MOTION_DEVICE_HEADER);
     append(outputStream, COMMAND_MOTION_GOTO_IN_PULSE);
     appendHex4(outputStream, left);
     appendHex4(outputStream, right);
@@ -59,6 +61,8 @@ bool motionDriverGotoPositionPulse(float left,
 
 bool motionDriverForward(float distanceInMM) {
     OutputStream* outputStream = getDriverRequestOutputStream();
+
+    append(outputStream, MOTION_DEVICE_HEADER);
     append(outputStream, COMMAND_MOTION_FORWARD_IN_MM);
     appendHex4(outputStream, distanceInMM);
 
@@ -75,6 +79,8 @@ bool motionDriverMaintainPosition() {
 
 bool motionDriverBackward(float distanceInMM) {
     OutputStream* outputStream = getDriverRequestOutputStream();
+
+    append(outputStream, MOTION_DEVICE_HEADER);
     append(outputStream, COMMAND_MOTION_BACKWARD_IN_MM);
     appendHex4(outputStream, distanceInMM);
 
@@ -85,6 +91,8 @@ bool motionDriverBackward(float distanceInMM) {
 
 bool motionDriverLeft(float leftDeciDegree) {
     OutputStream* outputStream = getDriverRequestOutputStream();
+
+    append(outputStream, MOTION_DEVICE_HEADER);
     append(outputStream, COMMAND_MOTION_LEFT_IN_DECI_DEGREE);
     appendHex4(outputStream, leftDeciDegree);
 
@@ -95,6 +103,8 @@ bool motionDriverLeft(float leftDeciDegree) {
 
 bool motionDriverRight(float rightDeciDegree) {
     OutputStream* outputStream = getDriverRequestOutputStream();
+
+    append(outputStream, MOTION_DEVICE_HEADER);
     append(outputStream, COMMAND_MOTION_RIGHT_IN_DECI_DEGREE);
     appendHex4(outputStream, rightDeciDegree);
 
@@ -107,6 +117,8 @@ bool motionDriverRight(float rightDeciDegree) {
 
 bool motionDriverLeftOneWheel(float leftDeciDegree) {
     OutputStream* outputStream = getDriverRequestOutputStream();
+
+    append(outputStream, MOTION_DEVICE_HEADER);
     append(outputStream, COMMAND_MOTION_LEFT_ONE_WHEEL_IN_DECI_DEGREE);
     appendHex4(outputStream, leftDeciDegree);
 
@@ -117,6 +129,8 @@ bool motionDriverLeftOneWheel(float leftDeciDegree) {
 
 bool motionDriverRightOneWheel(float rightDeciDegree) {
     OutputStream* outputStream = getDriverRequestOutputStream();
+
+    append(outputStream, MOTION_DEVICE_HEADER);
     append(outputStream, COMMAND_MOTION_RIGHT_ONE_WHEEL_IN_DECI_DEGREE);
     appendHex4(outputStream, rightDeciDegree);
 
@@ -129,6 +143,7 @@ bool motionDriverRightOneWheel(float rightDeciDegree) {
 
 bool motionDriverBSplineRelative(float x, float y, float angle, float dist0, float dist1, int accelerationFactor, int speedFactor) {
 	OutputStream* outputStream = getDriverRequestOutputStream();
+    append(outputStream, MOTION_DEVICE_HEADER);
     append(outputStream, COMMAND_MOTION_SPLINE_RELATIVE);
     appendHex4(outputStream, x);
 	appendSeparator(outputStream);
@@ -150,6 +165,7 @@ bool motionDriverBSplineRelative(float x, float y, float angle, float dist0, flo
 
 bool motionDriverBSplineAbsolute(float x, float y, float angle, float dist0, float dist1, int accelerationFactor, int speedFactor) {
 	OutputStream* outputStream = getDriverRequestOutputStream();
+    append(outputStream, MOTION_DEVICE_HEADER);
     append(outputStream, COMMAND_MOTION_SPLINE_ABSOLUTE);
     appendHex4(outputStream, x);
 	appendSeparator(outputStream);
@@ -173,6 +189,7 @@ bool motionDriverBSplineAbsolute(float x, float y, float angle, float dist0, flo
 
 bool motionDriverStop() {
     OutputStream* outputStream = getDriverRequestOutputStream();
+    append(outputStream, MOTION_DEVICE_HEADER);
     append(outputStream, COMMAND_MOTION_CANCEL);
 
     bool result = transmitFromDriverRequestBuffer();
@@ -184,6 +201,7 @@ bool motionDriverStop() {
 
 bool motionDriverObstacle() {
     OutputStream* outputStream = getDriverRequestOutputStream();
+    append(outputStream, MOTION_DEVICE_HEADER);
     append(outputStream, COMMAND_MOTION_OBSTACLE);
 
     bool result = transmitFromDriverRequestBuffer();
@@ -195,6 +213,7 @@ bool motionDriverObstacle() {
 
 bool motionSetParameters(int motionType, int a, int speed) {
     OutputStream* outputStream = getDriverRequestOutputStream();
+    append(outputStream, MOTION_DEVICE_HEADER);
     append(outputStream, COMMAND_SET_MOTION_PARAMETERS);
     appendHex2(outputStream, motionType);
     appendHex2(outputStream, a);

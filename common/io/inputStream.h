@@ -17,7 +17,8 @@
  * Defines the constant indicating that data is not corrected (connection is not established).
  * Only for I2C
  */
-#define INCORRECT_DATA 0xFF
+//#define INCORRECT_DATA 0xFF
+#define INCORRECT_DATA -1
 
 // forward declaration
 struct InputStream;

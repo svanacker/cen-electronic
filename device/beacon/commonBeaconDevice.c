@@ -46,33 +46,29 @@ bool commonBeaconDeviceIsOk() {
 	return true;
 }
 
-void commonBeaconDeviceHandleRawData(char header,
-							 InputStream* inputStream,
-							 OutputStream* outputStream) {
+void commonBeaconDeviceHandleRawData(char commandHeader,
+							 		InputStream* inputStream,
+							 		OutputStream* outputStream) {
 	// Redirect command to Jennic
-	if (header == COMMAND_REDIRECT_TO_JENNIC) {
-        appendAck(outputStream);
+	if (commandHeader == COMMAND_REDIRECT_TO_JENNIC) {
+        ackCommand(outputStream, COMMON_BEACON_HEADER, COMMAND_REDIRECT_TO_JENNIC);
 		redirectToDevices = false;
 		appendString(getOutputStreamLogger(INFO), "REDIRECT COMMAND TO JENNIC \n");
-        append(outputStream, COMMAND_REDIRECT_TO_JENNIC);
 	// Reset
-	} else if (header == COMMAND_RESET_JENNIC) {
-		appendAck(outputStream);
+	} else if (commandHeader == COMMAND_RESET_JENNIC) {
+        ackCommand(outputStream, COMMON_BEACON_HEADER, COMMAND_RESET_JENNIC);
 		jennic5139Reset();
-        append(outputStream, COMMAND_RESET_JENNIC);
 	// Local Jennic Light on/off
-	} else if (header == COMMAND_LOCAL_LIGHT) {
+	} else if (commandHeader == COMMAND_LOCAL_LIGHT) {
 		unsigned char status = readHex(inputStream);
-        appendAck(outputStream);
+        ackCommand(outputStream, COMMON_BEACON_HEADER, COMMAND_LOCAL_LIGHT);
 		jennic5139LocalLight(JENNIC_LED_ALL, status != 0);
-        append(outputStream, COMMAND_LOCAL_LIGHT);
 	}
 	// Print the data buffer
-	else if (header == COMMAND_SHOW_DATA_FROM_JENNIC) {
-        appendAck(outputStream);
+	else if (commandHeader == COMMAND_SHOW_DATA_FROM_JENNIC) {
+        ackCommand(outputStream, COMMON_BEACON_HEADER, COMMAND_SHOW_DATA_FROM_JENNIC);
 		Buffer* inDataBuffer = getJennicInDataBuffer();
 		copyInputToOutputStream(&(inDataBuffer->inputStream), getOutputStreamLogger(DEBUG), NULL, COPY_ALL);
-        append(outputStream, COMMAND_SHOW_DATA_FROM_JENNIC);
 	}
 }
 

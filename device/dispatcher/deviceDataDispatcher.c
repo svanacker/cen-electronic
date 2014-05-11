@@ -12,31 +12,37 @@
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
 
-unsigned int getWaitedDataLength(const char header) {
+unsigned int getWaitedDataLength(const char deviceHeader) {
     int size = getDeviceCount();
     int i;
     for (i = 0; i < size; i++) {
         Device* result = getDevice(i);
         DeviceInterface* interface = result->interface;
-        int deviceDataLength = interface->deviceGetInterface(header, DEVICE_MODE_INPUT, false);
+        int deviceDataLength = interface->deviceGetInterface(deviceHeader, DEVICE_MODE_INPUT, false);
         return deviceDataLength;
     }
     return -1;
 }
 
-const Device* deviceDataDispatcherFindDevice(const char header, int dataLength, int mode) {
+const Device* deviceDataDispatcherFindDevice(const char deviceHeader, const char commandHeader, int dataLength, int mode) {
     int i;
     int size = getDeviceCount();
     for (i = 0; i < size; i++) {
         Device* result = getDevice(i);
         DeviceInterface* interface = result->interface;
-        int deviceDataLength = interface->deviceGetInterface(header, mode, false);
+		char deviceInterfaceHeader = interface->deviceHeader;
+		// check if this is the right device
+		if (deviceHeader != deviceInterfaceHeader) {
+			continue;
+		}
+
+        int deviceDataLength = interface->deviceGetInterface(commandHeader, mode, false);
         if (deviceDataLength == DEVICE_HEADER_NOT_HANDLED) {
 			continue;
 		}
         // if dataLength in the buffer has more data than
-        // deviceDataLength = data - 1 (1 = size of header)
-		if (dataLength > deviceDataLength) {
+        // deviceDataLength = data - 2 (2 = size of device header + size of command header)
+		if (dataLength >= deviceDataLength - DEVICE_AND_COMMAND_HEADER_LENGTH) {
             return result;
         }
 		else {

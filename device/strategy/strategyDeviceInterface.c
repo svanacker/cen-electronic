@@ -9,13 +9,9 @@ const char* getStrategyDeviceName(void) {
     return "Strategy";
 }
 
-unsigned int getStrategyVersion(void) {
-    return 1;
-}
-
-int deviceStrategyGetInterface(char header, int mode, bool fillDeviceArgumentList) {
+int deviceStrategyGetInterface(char commandHeader, int mode, bool fillDeviceArgumentList) {
 	// Robot opponent position
-    if (header == COMMAND_STRATEGY_SET_OPPONENT_ROBOT_POSITION) {
+    if (commandHeader == COMMAND_STRATEGY_SET_OPPONENT_ROBOT_POSITION) {
 		if (mode == DEVICE_MODE_INPUT) {
             if (fillDeviceArgumentList) {
 				setFunction("setOpponentRobotPos", 3);
@@ -32,7 +28,7 @@ int deviceStrategyGetInterface(char header, int mode, bool fillDeviceArgumentLis
         }
 	}
 	// Config
-	else if (header == COMMAND_STRATEGY_SET_CONFIG) {
+	else if (commandHeader == COMMAND_STRATEGY_SET_CONFIG) {
 		if (mode == DEVICE_MODE_INPUT) {
             if (fillDeviceArgumentList) {
 				setFunction("setConfig", 1);
@@ -47,7 +43,7 @@ int deviceStrategyGetInterface(char header, int mode, bool fillDeviceArgumentLis
         }
 	}
 	// Print Gameboard
-	else if (header == COMMAND_STRATEGY_PRINT_GAME_BOARD) {
+	else if (commandHeader == COMMAND_STRATEGY_PRINT_GAME_BOARD) {
 		// same input/output
 		if (fillDeviceArgumentList) {
 			setFunctionNoArgument("printGameBoard");
@@ -55,7 +51,7 @@ int deviceStrategyGetInterface(char header, int mode, bool fillDeviceArgumentLis
 		return 0;
 	}
 	// Next step
-	else if (header == COMMAND_STRATEGY_NEXT_STEP) {
+	else if (commandHeader == COMMAND_STRATEGY_NEXT_STEP) {
 		if (mode == DEVICE_MODE_INPUT) {
 			// same input/output
 			if (fillDeviceArgumentList) {
@@ -72,7 +68,7 @@ int deviceStrategyGetInterface(char header, int mode, bool fillDeviceArgumentLis
 		
 	}
 	// Notify position
-    else if (header == COMMAND_STRATEGY_SET_ROBOT_POSITION) {
+    else if (commandHeader == COMMAND_STRATEGY_SET_ROBOT_POSITION) {
         if (mode == DEVICE_MODE_INPUT) {
             if (fillDeviceArgumentList) {
 				setFunction("strategySetRobotPosition", 7);
@@ -97,8 +93,8 @@ int deviceStrategyGetInterface(char header, int mode, bool fillDeviceArgumentLis
 }
 
 static DeviceInterface deviceInterface = {
+	.deviceHeader = STRATEGY_DEVICE_HEADER,
     .deviceGetName = &getStrategyDeviceName,
-//    .deviceGetSoftwareRevision = &getStrategyVersion,
     .deviceGetInterface = &deviceStrategyGetInterface
 };
 

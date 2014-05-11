@@ -4,7 +4,7 @@
 
 // TRANFORMATION BINARY -> ASCII
 
-bool filterBinaryToValueChar(unsigned char c, unsigned char* output) {
+bool filterBinaryToValueChar(char c, char* output) {
     // c in ['0'..'9']
     if ((c >= 48) && (c <= 57)) {
         // translate value in [0..9]
@@ -39,7 +39,7 @@ bool filterBinaryToValueChar(unsigned char c, unsigned char* output) {
     return false;
 }
 
-bool filterRemoveCRLF(unsigned char c, unsigned char* output) {
+bool filterRemoveCRLF(char c, char* output) {
     if (c == CR || c == LF) {
         return false;
     }

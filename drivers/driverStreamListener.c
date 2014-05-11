@@ -40,38 +40,51 @@ bool handleStreamInstruction(Buffer* inputBuffer,
 
     if (inputBufferCount > 0) {
         // read the first char (but do not pop from the FIFO)
-        unsigned char header = bufferGetFirstChar(inputBuffer);
+        char deviceHeader = bufferGetCharAtIndex(inputBuffer, DEVICE_HEADER_INDEX);
 
-        if (header == HEADER_CLEAR_INPUT_STREAM || header == INCORRECT_DATA) {
+        if (deviceHeader == HEADER_CLEAR_INPUT_STREAM || deviceHeader == INCORRECT_DATA) {
             clearBuffer(inputBuffer);
             return false;
         }
 
         if (inputFilterChar != NULL) {
-            if (!inputFilterChar(header, &header)) {
+            if (!inputFilterChar(deviceHeader, &deviceHeader)) {
                 // remove the char from the buffer
                 bufferReadChar(inputBuffer);
                 return false;
             }
         }
 
+		// As there is clear of char filtering, we must reload the size of the buffer
         int bufferSize = getBufferElementsCount(inputBuffer);
 
+		if (bufferSize < DEVICE_AND_COMMAND_HEADER_LENGTH) {
+			return false;
+		}
+
+		deviceHeader = bufferGetCharAtIndex(inputBuffer, DEVICE_HEADER_INDEX);
+		char commandHeader = bufferGetCharAtIndex(inputBuffer, COMMAND_HEADER_INDEX);
+
         // find the device corresponding to this header
-        const Device* device = deviceDataDispatcherFindDevice(header, bufferSize, DEVICE_MODE_INPUT);
+        const Device* device = deviceDataDispatcherFindDevice(deviceHeader, commandHeader, bufferSize, DEVICE_MODE_INPUT);
 
         // if the device was not found
         if (device == NULL) {
             return false;
         }
 
+		// At this moment, device Interface is found
         DeviceInterface* deviceInterface = device->interface;
 
-        // We must send header + data => + 1
-        int dataToTransferCount = deviceInterface->deviceGetInterface(header, DEVICE_MODE_INPUT, false) + 1;
+        // We must send device Header + commandHeader + data => + 2
+        int dataToTransferCount = deviceInterface->deviceGetInterface(commandHeader, DEVICE_MODE_INPUT, false) + DEVICE_AND_COMMAND_HEADER_LENGTH;
 
-        // We must receive ack + header + data => + 2
-        int dataToReceiveCount = deviceInterface->deviceGetInterface(header, DEVICE_MODE_OUTPUT, false) + 2;
+		if (bufferSize < dataToTransferCount) {
+			return false;
+		}
+
+        // We must receive ack + device header + command header + data => + 3
+        int dataToReceiveCount = deviceInterface->deviceGetInterface(commandHeader, DEVICE_MODE_OUTPUT, false) + ACK_LENGTH + DEVICE_AND_COMMAND_HEADER_LENGTH;
 
         InputStream* bufferedInputStream = getInputStream(inputBuffer);
         OutputStream* bufferedOutputStream = getOutputStream(outputBuffer);
@@ -83,15 +96,19 @@ bool handleStreamInstruction(Buffer* inputBuffer,
             DeviceDescriptor* deviceDescriptor = device->descriptor;
             if (deviceDescriptor == NULL) {
                 writeError(NO_DEVICE_DESC_FOUND_FOR);
-                append(getErrorOutputStreamLogger(), header);
+                append(getErrorOutputStreamLogger(), deviceHeader);
+                append(getErrorOutputStreamLogger(), commandHeader);
                 return false;
             }
 
-            // remove the first char corresponding to the header
+            // remove the first char corresponding to the device header
+            bufferReadChar(inputBuffer);
+
+            // remove the second char corresponding to the command header
             bufferReadChar(inputBuffer);
 
             // Call to the device
-            deviceDescriptor->deviceHandleRawData(header, bufferedInputStream, bufferedOutputStream);
+            deviceDescriptor->deviceHandleRawData(commandHeader, bufferedInputStream, bufferedOutputStream);
 
         }// we forward the request through I2C
         else if (device->transmitMode == TRANSMIT_I2C) {

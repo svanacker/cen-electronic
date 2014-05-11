@@ -10,12 +10,12 @@
 /**
  * Indirection for I2C used to manage 30F/32 compatibility.
  */
-inline unsigned int portableMasterWriteI2C(unsigned char data);
+inline int portableMasterWriteI2C(char data);
 
 /**
  * Indirection for I2C used to manage 30F/32 compatibility.
  */
-inline unsigned char portableMasterReadI2C( void );
+inline char portableMasterReadI2C( void );
 
 /**
  * Indirection for I2C used to manage 30F/32 compatibility.
@@ -49,7 +49,7 @@ void i2cMasterWriteChar(char address, char c);
  * Useful for many I2C Device, but not for stream
  * @see i2cMasterReadChar
  */
-unsigned char i2cMasterReadRegisterValue(char address,
+char i2cMasterReadRegisterValue(char address,
 								char commandRegister);
 
 /**
@@ -58,7 +58,7 @@ unsigned char i2cMasterReadRegisterValue(char address,
  * If not data available, Slave will return 
  * I2C_SLAVE_NO_DATA_IN_READ_BUFFER
  */
-unsigned char i2cMasterReadChar(char address);
+char i2cMasterReadChar(char address);
 
 
 #endif

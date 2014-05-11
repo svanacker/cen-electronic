@@ -38,8 +38,8 @@ bool isStrategyDeviceOk(void) {
     return true;
 }
 
-void deviceStrategyHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream) {
- 	if (header == COMMAND_STRATEGY_SET_OPPONENT_ROBOT_POSITION) {
+void deviceStrategyHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream) {
+ 	if (commandHeader == COMMAND_STRATEGY_SET_OPPONENT_ROBOT_POSITION) {
 
 		// data
 		int x = readHex4(inputStream);
@@ -58,14 +58,12 @@ void deviceStrategyHandleRawData(char header, InputStream* inputStream, OutputSt
 		}
 		updatePathsAvailability();
 
-        appendAck(outputStream);
-        append(outputStream, COMMAND_STRATEGY_SET_OPPONENT_ROBOT_POSITION);
+        ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_STRATEGY_SET_OPPONENT_ROBOT_POSITION);
 	}
-	else if (header == COMMAND_STRATEGY_SET_CONFIG) {
+	else if (commandHeader == COMMAND_STRATEGY_SET_CONFIG) {
 		// data
 		int c = readHex4(inputStream);
-        appendAck(outputStream);
-        append(outputStream, COMMAND_STRATEGY_SET_CONFIG);
+        ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_STRATEGY_SET_CONFIG);
 
 		GameStrategyContext* context = getStrategyContext();
 		
@@ -85,31 +83,28 @@ void deviceStrategyHandleRawData(char header, InputStream* inputStream, OutputSt
 
 	}
 	// Print Gameboard
-	else if (header == COMMAND_STRATEGY_PRINT_GAME_BOARD) {
+	else if (commandHeader == COMMAND_STRATEGY_PRINT_GAME_BOARD) {
 		OutputStream* debugOutputStream = getOutputStreamLogger(ALWAYS);
-        appendAck(outputStream);
-        append(outputStream, COMMAND_STRATEGY_PRINT_GAME_BOARD);
+        ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_STRATEGY_PRINT_GAME_BOARD);
 
 		printStrategyAllDatas(debugOutputStream);
 		printGameboard(debugOutputStream);
 	}
 	// next step
-	else if (header == COMMAND_STRATEGY_NEXT_STEP) {
+	else if (commandHeader == COMMAND_STRATEGY_NEXT_STEP) {
 		GameStrategyContext* context = getStrategyContext();
 		// response
-        appendAck(outputStream);
-        append(outputStream, COMMAND_STRATEGY_NEXT_STEP);
+        ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_STRATEGY_NEXT_STEP);
 		// output arguments : we have only last information !
 		appendHex2(outputStream, context->hasMoreNextSteps);
 
 		// do the job synchronously to avoid problems of notification
 		context->hasMoreNextSteps = nextStep();
 	}
-	else if (header == COMMAND_STRATEGY_SET_ROBOT_POSITION) {
+	else if (commandHeader == COMMAND_STRATEGY_SET_ROBOT_POSITION) {
 		GameStrategyContext* context = getStrategyContext();
 		// output before any notification !!
-        appendAck(outputStream);
-        append(outputStream, COMMAND_STRATEGY_SET_ROBOT_POSITION);
+        ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_STRATEGY_SET_ROBOT_POSITION);
 		
 		// status
 		unsigned int status = readHex2(inputStream);

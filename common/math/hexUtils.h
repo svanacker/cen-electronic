@@ -15,12 +15,12 @@
  * @param b5 value between 0 and 15
  * @return value value between 0 and 2^32
  */
-float hex6CharToFloat(unsigned char b0,
-        unsigned char b1,
-        unsigned char b2,
-        unsigned char b3,
-        unsigned char b4,
-        unsigned char b5);
+float hex6CharToFloat(char b0,
+        char b1,
+        char b2,
+        char b3,
+        char b4,
+        char b5);
 
 /**
  * Transform the hexadecimal value (4 bytes length) and return it.
@@ -32,7 +32,7 @@ float hex6CharToFloat(unsigned char b0,
  * @param b3 value between 0 and 15
  * @return value value between 0 and 65536
  */
-long hex4CharToLong(unsigned char b0, unsigned char b1, unsigned char b2, unsigned char b3);
+long hex4CharToLong(char b0, char b1, char b2, char b3);
 
 /**
  * Transforms the hexadecimal value (2 bytes length) into a int value.
@@ -41,6 +41,6 @@ long hex4CharToLong(unsigned char b0, unsigned char b1, unsigned char b2, unsign
  * @param b0 value between 0 and 15
  * @param b1 value between 0 and 15
  */
-int hex2CharToInt(unsigned char b0, unsigned char b1);
+int hex2CharToInt(char b0, char b1);
 
 #endif

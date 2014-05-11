@@ -80,6 +80,7 @@ bool sendStrategyConfiguration(int configuration) {
 
     OutputStream* outputStream = getDriverRequestOutputStream();
 
+    append(outputStream, STRATEGY_DEVICE_HEADER);
     append(outputStream, COMMAND_STRATEGY_SET_CONFIG);
     appendHex4(outputStream, configuration);
 
@@ -94,6 +95,7 @@ bool sendStrategyNextStep() {
     OutputStream* outputStream = getDriverRequestOutputStream();
     InputStream* inputStream = getDriverResponseInputStream();
 
+    append(outputStream, STRATEGY_DEVICE_HEADER);
     append(outputStream, COMMAND_STRATEGY_NEXT_STEP);
 
     bool result = transmitFromDriverRequestBuffer();
@@ -110,6 +112,7 @@ bool sendStrategyOpponentRobotPosition(Point* opponentRobotPosition) {
 
     OutputStream* outputStream = getDriverRequestOutputStream();
 
+    append(outputStream, STRATEGY_DEVICE_HEADER);
     append(outputStream, COMMAND_STRATEGY_SET_OPPONENT_ROBOT_POSITION);
     appendHex4(outputStream, opponentRobotPosition->x);
     appendSeparator(outputStream);
@@ -130,6 +133,7 @@ bool sentStrategyRobotPosition(unsigned char status, unsigned int x, unsigned in
 
     OutputStream* outputStream = getDriverRequestOutputStream();
 
+    append(outputStream, STRATEGY_DEVICE_HEADER);
     append(outputStream, COMMAND_STRATEGY_SET_ROBOT_POSITION);
     appendHex2(outputStream, status);
     appendSeparator(outputStream);

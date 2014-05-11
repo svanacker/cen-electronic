@@ -17,6 +17,10 @@
 #include "../../common/pwm/pwmPic.h"
 #include "../../common/pwm/servoPwm.h"
 
+#include "../../device/device.h"
+
+#define MAX_SERVO_SPEED 		20000
+
 void deviceServoInit() {
     initPwmForServo(PWM_SERVO_MIDDLE_POSITION);
 }
@@ -31,7 +35,7 @@ bool deviceServoIsOk() {
 void deviceServoHandleRawData(char header,
         InputStream* inputStream,
         OutputStream* outputStream) {
-    if (header == COMMAND_SERVO) {
+    if (header == INDEX_COMMAND_SERVO) {
         int servoIndex = readHex2(inputStream);
         int servoSpeed = readHex2(inputStream);
 
@@ -42,7 +46,7 @@ void deviceServoHandleRawData(char header,
 		}
 		else {
 	        //if (servoSpeed == 0xFF) {
-	        servoSpeed = 20000;
+	        servoSpeed = MAX_SERVO_SPEED;
 	        //}
 	
 	        int servoValue = readHex4(inputStream);
@@ -52,9 +56,13 @@ void deviceServoHandleRawData(char header,
 	            pwmServoAll(servoSpeed, servoValue);
 	        }
 		}
-        appendAck(outputStream);
-        append(outputStream, COMMAND_SERVO);
+		ackCommand(outputStream, SERVO_DEVICE_HEADER, INDEX_COMMAND_SERVO);
     }
+	else if (header == COMPACT_COMMAND_SERVO) {
+		int servoValue = readHex4(inputStream);
+		pwmServoAll(MAX_SERVO_SPEED, servoValue);
+		ackCommand(outputStream, SERVO_DEVICE_HEADER, COMPACT_COMMAND_SERVO);
+	}
 }
 
 

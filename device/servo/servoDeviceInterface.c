@@ -6,25 +6,28 @@ const char* deviceServoGetName() {
     return "servo";
 }
 
-unsigned int deviceServoGetSoftwareRevision() {
-    return 1;
-}
-
-int deviceServoGetInterface(char header, int mode, bool fillDeviceArgumentList ) {
+int deviceServoGetInterface(char commandHeader, int mode, bool fillDeviceArgumentList ) {
     if (mode == DEVICE_MODE_INPUT) {
-        if (header == COMMAND_SERVO) {
+        if (commandHeader == INDEX_COMMAND_SERVO) {
             if (fillDeviceArgumentList) {
-				setFunction("updateServo", 3);
+				setFunction("updateServoAllParams", 3);
 				setArgumentUnsignedHex2(0, "ServoIdx");
 				setArgumentUnsignedHex2(1, "speed");
 				setArgumentUnsignedHex4(2, "value");
             }
             return 8;
         }
-    } else if (mode == DEVICE_MODE_OUTPUT) {
-        if (header == COMMAND_SERVO) {
+		else if (commandHeader == COMPACT_COMMAND_SERVO) {
             if (fillDeviceArgumentList) {
-				setFunctionNoArgument("updateServo");
+				setFunction("updateServoCompact", 3);
+				setArgumentUnsignedHex4(0, "value");
+            }
+            return 4;
+		}
+    } else if (mode == DEVICE_MODE_OUTPUT) {
+        if (commandHeader == INDEX_COMMAND_SERVO || commandHeader == COMPACT_COMMAND_SERVO) {
+            if (fillDeviceArgumentList) {
+				setFunctionNoArgument("updateServoAllParams");
             }
             return 0;
         }
@@ -33,8 +36,8 @@ int deviceServoGetInterface(char header, int mode, bool fillDeviceArgumentList )
 }
 
 static DeviceInterface deviceInterface = {
+	.deviceHeader = SERVO_DEVICE_HEADER,
     .deviceGetName = &deviceServoGetName,
-//    .deviceGetSoftwareRevision = &deviceServoGetSoftwareRevision,
     .deviceGetInterface = &deviceServoGetInterface
 };
 

@@ -21,6 +21,7 @@ bool updateOpponentRobotPosition(Point* opponentRobotPosition) {
     OutputStream* outputStream = getDriverRequestOutputStream();
     InputStream* inputStream = getDriverResponseInputStream();
 
+	append(outputStream, BEACON_RECEIVER_DEVICE_HEADER);
     append(outputStream, COMMAND_GET_OPPONENT_ROBOT_POSITION);
 
     bool result = transmitFromDriverRequestBuffer();

@@ -7,14 +7,10 @@ const char* beaconReceiverDeviceGetName() {
     return "beaconReceiver";
 }
 
-unsigned int beaconReceiverDeviceGetSoftwareRevision() {
-    return 1;
-}
-
-int beaconReceiverDeviceGetInterface(char header, int mode,
+int beaconReceiverDeviceGetInterface(char commandHeader, int mode,
         bool fillDeviceArgumentList) {
 	// getOpponentRobotPos
-    if (header == COMMAND_GET_OPPONENT_ROBOT_POSITION) {
+    if (commandHeader == COMMAND_GET_OPPONENT_ROBOT_POSITION) {
         if (mode == DEVICE_MODE_INPUT) {
             if (fillDeviceArgumentList) {
 				setFunctionNoArgument("getOpponentRobotPos");
@@ -31,7 +27,7 @@ int beaconReceiverDeviceGetInterface(char header, int mode,
         }
     }
 	// setOpponentRobotPos
-    if (header == COMMAND_SET_OPPONENT_ROBOT_POSITION_FROM_LASER_TO_RECEIVER) {
+    if (commandHeader == COMMAND_SET_OPPONENT_ROBOT_POSITION_FROM_LASER_TO_RECEIVER) {
         if (mode == DEVICE_MODE_INPUT) {
             if (fillDeviceArgumentList) {
 				setFunction("setOpponentRobotPos", 3);
@@ -48,7 +44,7 @@ int beaconReceiverDeviceGetInterface(char header, int mode,
         }
     }
 	// init Router
-    else if (header == COMMAND_INIT_JENNIC_AS_ROUTER) {
+    else if (commandHeader == COMMAND_INIT_JENNIC_AS_ROUTER) {
 		// same output / input
 		if (fillDeviceArgumentList) {
 			setFunctionNoArgument("initJennicAsRouter");
@@ -56,7 +52,7 @@ int beaconReceiverDeviceGetInterface(char header, int mode,
 		return 0;
     }
 	// Network status
-	else if (header == COMMANG_GET_RECEIVER_NETWORK_STATUS) {
+	else if (commandHeader == COMMANG_GET_RECEIVER_NETWORK_STATUS) {
         if (mode == DEVICE_MODE_INPUT) {
             if (fillDeviceArgumentList) {
 				setFunctionNoArgument("getReceiverNetworkStatus");
@@ -74,8 +70,8 @@ int beaconReceiverDeviceGetInterface(char header, int mode,
 }
 
 static DeviceInterface deviceInterface = {
+	.deviceHeader = BEACON_RECEIVER_DEVICE_HEADER,
     .deviceGetName = &beaconReceiverDeviceGetName,
-//    .deviceGetSoftwareRevision = &beaconReceiverDeviceGetSoftwareRevision,
     .deviceGetInterface = &beaconReceiverDeviceGetInterface
 };
 

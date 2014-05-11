@@ -18,6 +18,8 @@
 #include "../common/log/logger.h"
 #include "../common/log/logLevel.h"
 
+#include "../device/deviceInterface.h"
+
 #include "../drivers/driverList.h"
 #include "../drivers/driverStreamListener.h"
 
@@ -44,8 +46,10 @@ bool transmitFromDriverRequestBuffer() {
 		return false;
 	}
 
-    // The first char is the header
-    char header = bufferGetFirstChar(requestBuffer);
+    // The first char is the device header
+    char deviceHeader = bufferGetCharAtIndex(requestBuffer, DEVICE_HEADER_INDEX);
+	// The second char is the command header
+    char commandHeader = bufferGetCharAtIndex(requestBuffer, COMMAND_HEADER_INDEX);
 
     bool result = handleStreamInstruction(
             requestBuffer,
@@ -60,8 +64,10 @@ bool transmitFromDriverRequestBuffer() {
 
     // We need ack
     checkIsAck(inputStream);
-    // Device answer with the same header as the request
-    checkIsChar(inputStream, header);
+    // Command header answer with the same header as the request
+    checkIsChar(inputStream, deviceHeader);
+    // Command header answer with the same header as the request
+    checkIsChar(inputStream, commandHeader);
 
     return result;
 }

@@ -7,14 +7,14 @@ const char* getCodersDeviceName(void) {
     return "Hctl Coders";
 }
 
-int deviceCodersGetInterface(char header, int mode, bool fillDeviceArgumentList) {
-    if (header == COMMAND_CLEAR_CODERS) {
+int deviceCodersGetInterface(char commandHeader, int mode, bool fillDeviceArgumentList) {
+    if (commandHeader == COMMAND_CLEAR_CODERS) {
 		// Same INPUT / OUTPUT
 		if (fillDeviceArgumentList) {
 			setFunctionNoArgument("clrCoders");
 		}
         return 0;
-    } else if (header == COMMAND_GET_WHEEL_POSITION) {
+    } else if (commandHeader == COMMAND_GET_WHEEL_POSITION) {
         if (mode == DEVICE_MODE_INPUT) {
             if (fillDeviceArgumentList) {
 				setFunctionNoArgument("codersVal");
@@ -29,7 +29,7 @@ int deviceCodersGetInterface(char header, int mode, bool fillDeviceArgumentList)
             }
             return 17;
         }
-    } else if (header == COMMAND_DEBUG_GET_WHEEL_POSITION) {
+    } else if (commandHeader == COMMAND_DEBUG_GET_WHEEL_POSITION) {
 		// Same INPUT / OUTPUT
 		if (fillDeviceArgumentList) {
 			setFunctionNoArgument("dbgCodersVal");
@@ -40,6 +40,7 @@ int deviceCodersGetInterface(char header, int mode, bool fillDeviceArgumentList)
 }
 
 static DeviceInterface deviceInterface = {
+	.deviceHeader = CODERS_DEVICE_HEADER,
     .deviceGetName = &getCodersDeviceName,
     .deviceGetInterface = &deviceCodersGetInterface
 };

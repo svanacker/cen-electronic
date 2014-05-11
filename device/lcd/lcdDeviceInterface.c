@@ -7,12 +7,8 @@ const char* deviceLCDGetName() {
     return "LCD";
 }
 
-unsigned int deviceLCDGetSoftwareRevision() {
-    return 1;
-}
-
-int deviceLCDGetInterface(char header, int mode, bool fillDeviceArgumentList) {
-    if (header == COMMAND_LCD) {
+int deviceLCDGetInterface(char commandHeader, int mode, bool fillDeviceArgumentList) {
+    if (commandHeader == COMMAND_LCD) {
         if (mode == DEVICE_MODE_INPUT) {
             if (fillDeviceArgumentList) {
 				setFunction("writeLCD", LCD_CHAR_COUNT_BY_MESSAGE + 2);
@@ -34,8 +30,8 @@ int deviceLCDGetInterface(char header, int mode, bool fillDeviceArgumentList) {
 }
 
 static DeviceInterface deviceInterface = {
+	.deviceHeader = LCD_DEVICE_HEADER,
     .deviceGetName = &deviceLCDGetName,
-//    .deviceGetSoftwareRevision = &deviceLCDGetSoftwareRevision,
     .deviceGetInterface = &deviceLCDGetInterface
 };
 

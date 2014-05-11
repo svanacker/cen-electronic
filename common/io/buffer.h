@@ -75,9 +75,11 @@ int getBufferElementsCount(const Buffer* buffer);
 char bufferReadChar(Buffer* buffer);
 
 /**
- * Get the first char, but DO NOT shift to the next char.
+ * Get the char at the specified index, but DO NOT shift to this index (=> DO NOT REMOVE the char).
+ * @param charIndex the index of the char (0 = first char)
+ * @return the char at the specified index
  */
-char bufferGetFirstChar(Buffer* buffer);
+char bufferGetCharAtIndex(Buffer* buffer, int charIndex);
 
 /**
  * Append a character to the buffer (FIFO buffer).

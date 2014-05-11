@@ -21,8 +21,8 @@
 // READ METHODS
 
 char readFilteredChar(InputStream* inputStream) {
-    unsigned char b0 = inputStream->readChar(inputStream);
-    unsigned char result;
+    char b0 = inputStream->readChar(inputStream);
+    char result;
     if (filterBinaryToValueChar(b0, &result)) {
         return result;
     } else {
@@ -37,14 +37,14 @@ char readFilteredChar(InputStream* inputStream) {
     }
 }
 
-unsigned char readBinaryChar(InputStream* inputStream) {
-	unsigned char result = inputStream->readChar(inputStream);
+char readBinaryChar(InputStream* inputStream) {
+	char result = inputStream->readChar(inputStream);
 	return result;
 }
 
-unsigned int readBinaryWord(InputStream* inputStream) {
-	unsigned char b0 = inputStream->readChar(inputStream);
-	unsigned char b1 = inputStream->readChar(inputStream);
+int readBinaryWord(InputStream* inputStream) {
+	char b0 = inputStream->readChar(inputStream);
+	char b1 = inputStream->readChar(inputStream);
 	return (b0 << 8) | b1;
 }
 

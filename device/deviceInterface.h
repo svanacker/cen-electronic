@@ -18,6 +18,26 @@
 #define DEVICE_MODE_OUTPUT 1
 
 /**
+ * The index in the buffer to get the device Header.
+ */
+#define DEVICE_HEADER_INDEX						0
+
+/**
+ * The index in the buffer to get the command Header for a specified Device Header (command header char is just after device command header).
+ */
+#define COMMAND_HEADER_INDEX					1
+
+/**
+ * Define the length of the ack (char).
+ */
+#define ACK_LENGTH								1
+
+/**
+ * Define the length used by the header length, and the command header.
+ */
+#define DEVICE_AND_COMMAND_HEADER_LENGTH 		2
+
+/**
 * Define an argument.
 */
 typedef struct DeviceArgument {
@@ -182,6 +202,7 @@ typedef int deviceGetInterfaceFunction(char header,
 * Defines the structure used to describe the remote commands accepted by the device.
 */
 typedef struct DeviceInterface{
+	char deviceHeader;
 	/** Function returning the name of the device. */
 	deviceGetNameFunction *deviceGetName;
 	/** Function returning information about interface. */

@@ -7,10 +7,6 @@ const char* getADCDeviceName(void) {
     return "ADC";
 }
 
-unsigned int getADCVersion(void) {
-    return 1;
-}
-
 int deviceADCGetInterface(char header, int mode,
         bool fillDeviceArgumentList) {
     if (header == COMMAND_GET_ADC_VALUE) {
@@ -32,8 +28,8 @@ int deviceADCGetInterface(char header, int mode,
 }
 
 static DeviceInterface deviceInterface = {
+	.deviceHeader = ADC_DEVICE_HEADER,
     .deviceGetName = &getADCDeviceName,
-//    .deviceGetSoftwareRevision = &getADCVersion,
     .deviceGetInterface = &deviceADCGetInterface
 };
 

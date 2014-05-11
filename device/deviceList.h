@@ -56,7 +56,7 @@ Device* addI2CRemoteDevice(DeviceInterface* interface, int i2cAddress);
 Device* addZigbeeRemoteDevice(DeviceInterface* interface, char* addressString);
 
 /**
-* Get the device of index + 1;
+* Get the device of index;
 */
 Device* getDevice(int index);
 

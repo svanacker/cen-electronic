@@ -9,18 +9,18 @@
  * @param output a pointer on a char
  * @return true if the output must be added, false else
  */
-typedef bool filterCharFunction(unsigned char input, unsigned char* output);
+typedef bool filterCharFunction(char input, char* output);
 
 /**
  * A filter which transforms ascii value to decimal value.
  */
-bool filterBinaryToValueChar(unsigned char c, unsigned char* output);
+bool filterBinaryToValueChar(char c, char* output);
 
 /**
  * A filter which removes LF and CR.
  * TO TEST
  */
-bool filterRemoveCRLF(unsigned char c, unsigned char* output);
+bool filterRemoveCRLF(char c, char* output);
 
 #endif
 

@@ -54,11 +54,11 @@ void devicePIDHandleRawData(char header, InputStream* inputStream, OutputStream*
                 writeError(PID_INDEX_INCORRECT);
             }
         }
+        append(outputStream, PID_DEVICE_HEADER);
         append(outputStream, COMMAND_WRITE_PID);
     } else if (header == COMMAND_READ_PID) {
         // send acknowledgement
-        appendAck(outputStream);
-        append(outputStream, COMMAND_READ_PID);
+		ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_READ_PID);
 
         // PID Index => 0..n char index
         char pidIndex = readHex2(inputStream);
@@ -74,8 +74,7 @@ void devicePIDHandleRawData(char header, InputStream* inputStream, OutputStream*
 	// End Detection Parameter
 	else if (header ==  COMMAND_GET_END_DETECTION_PARAMETER) {
 		// send acknowledgement
-        appendAck(outputStream);
-        append(outputStream, COMMAND_GET_END_DETECTION_PARAMETER);
+		ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_GET_END_DETECTION_PARAMETER);
 
 		MotionEndDetectionParameter* motionEndDetectionParameter = getMotionEndDetectionParameter();
 		appendHex2(outputStream, motionEndDetectionParameter->absDeltaPositionIntegralFactorThreshold);
@@ -86,8 +85,7 @@ void devicePIDHandleRawData(char header, InputStream* inputStream, OutputStream*
 	}
 	else if (header ==  COMMAND_SET_END_DETECTION_PARAMETER) {
 		// send acknowledgement
-        appendAck(outputStream);
-        append(outputStream, COMMAND_GET_END_DETECTION_PARAMETER);
+		ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_GET_END_DETECTION_PARAMETER);
 
 		MotionEndDetectionParameter* motionEndDetectionParameter = getMotionEndDetectionParameter();
 
@@ -107,8 +105,7 @@ void devicePIDHandleRawData(char header, InputStream* inputStream, OutputStream*
 		MotionError* localError = &(computationValues->err[instructionIndex]);
 
 		// send acknowledgement
-        appendAck(outputStream);
-        append(outputStream, COMMAND_SEND_DEBUG_DATA_PID);
+		ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_SEND_DEBUG_DATA_PID);
 
 		appendHex(outputStream, instructionIndex);
 		appendHex3(outputStream, getPidTime());
@@ -139,8 +136,7 @@ void devicePIDHandleRawData(char header, InputStream* inputStream, OutputStream*
 		int instructionIndex = readHex(inputStream);
 
 		// send acknowledgement
-        appendAck(outputStream);
-        append(outputStream, COMMAND_SEND_MOTION_PARAMETER);
+		ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_SEND_MOTION_PARAMETER);
 
 		PidMotion* pidMotion = getPidMotion();
 		PidMotionDefinition* motionDefinition = &(pidMotion->currentMotionDefinition);

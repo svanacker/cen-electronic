@@ -64,8 +64,14 @@ bool handleNotificationFromDispatcher(DriverDataDispatcher* dispatcher) {
         if (inputBuffer == NULL) {
             writeError(NO_DISPATCHER_INPUT_BUFFER);
         }
-        char header = bufferGetFirstChar(inputBuffer);
         int bufferSize = getBufferElementsCount(inputBuffer);
+
+		if (bufferSize < DEVICE_AND_COMMAND_HEADER_LENGTH) {
+			return false;
+		}
+
+        char deviceHeader = bufferGetCharAtIndex(inputBuffer, DEVICE_HEADER_INDEX);
+        char commandHeader = bufferGetCharAtIndex(inputBuffer, DEVICE_HEADER_INDEX);
 
 		/*
 		OutputStream* errorOutputStream = getErrorOutputStreamLogger();
@@ -75,10 +81,10 @@ bool handleNotificationFromDispatcher(DriverDataDispatcher* dispatcher) {
 		*/
 	
         // find the device corresponding to this header
-        const Device* device = deviceDataDispatcherFindDevice(header, bufferSize, DEVICE_MODE_OUTPUT);
+        const Device* device = deviceDataDispatcherFindDevice(deviceHeader, commandHeader, bufferSize, DEVICE_MODE_OUTPUT);
 		if (device == NULL) {
 			// For strategy device which send informations.
-			device = deviceDataDispatcherFindDevice(header, bufferSize, DEVICE_MODE_INPUT);
+			device = deviceDataDispatcherFindDevice(deviceHeader, commandHeader, bufferSize, DEVICE_MODE_INPUT);
 		}
 		if (device == NULL) {
 			return false;
@@ -102,11 +108,11 @@ bool handleNotificationFromDispatcher(DriverDataDispatcher* dispatcher) {
 
         if (callbackFunction != NULL) {
             // do the callback
-            callbackFunction(device, header, inputStream);
+            callbackFunction(device, commandHeader, inputStream);
             return true;
         } else {
             writeError(DISPATCHER_NO_CALLBACK_FOR);
-            append(getErrorOutputStreamLogger(), header);
+            append(getErrorOutputStreamLogger(), commandHeader);
         }
     }
 

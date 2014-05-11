@@ -8,10 +8,6 @@ const char* deviceTestGetName() {
     return "test";
 }
 
-unsigned int deviceTestGetSoftwareRevision() {
-    return 1;
-}
-
 int deviceTestGetInterface(char header, int mode,
         bool fillDeviceArgumentList) {
     if (header == COMMAND_TEST) {
@@ -50,8 +46,8 @@ int deviceTestGetInterface(char header, int mode,
 }
 
 static DeviceInterface deviceInterface = {
+	.deviceHeader = DEVICE_TEST_HEADER,
     .deviceGetName = &deviceTestGetName,
-//    .deviceGetSoftwareRevision = &deviceTestGetSoftwareRevision,
     .deviceGetInterface = &deviceTestGetInterface
 };
 

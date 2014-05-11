@@ -4,9 +4,14 @@
 #include "../../device/deviceInterface.h"
 
 /**
+ * Command header for LCD Device.
+ */
+#define LCD_DEVICE_HEADER	'L'
+
+/**
 * Command to write on the LCD
 */
-#define COMMAND_LCD 'L'
+#define COMMAND_LCD 		'w'
 
 /**
 * Define the number of fixed count of char used

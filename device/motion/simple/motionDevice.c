@@ -51,6 +51,7 @@ void internalDebugNotify(char* notifyString) {
 }
 
 void notifyReached(OutputStream* outputStream) {
+    append(outputStream, MOTION_DEVICE_HEADER);
     append(outputStream, NOTIFY_MOTION_STATUS);
     appendHex2(outputStream, NOTIFY_MOTION_ARG_REACHED);
 
@@ -62,6 +63,7 @@ void notifyReached(OutputStream* outputStream) {
 }
 
 void notifyFailed(OutputStream* outputStream) {
+    append(outputStream, MOTION_DEVICE_HEADER);
     append(outputStream, NOTIFY_MOTION_STATUS);
     appendHex2(outputStream, NOTIFY_MOTION_ARG_FAILED);
 
@@ -73,6 +75,7 @@ void notifyFailed(OutputStream* outputStream) {
 }
 
 void notifyMoving(OutputStream* outputStream) {
+    append(outputStream, MOTION_DEVICE_HEADER);
     append(outputStream, NOTIFY_MOTION_STATUS);
     appendHex2(outputStream, NOTIFY_MOTION_ARG_MOVING);
 
@@ -84,6 +87,7 @@ void notifyMoving(OutputStream* outputStream) {
 }
 
 void notifyObstacle(OutputStream* outputStream) {
+    append(outputStream, MOTION_DEVICE_HEADER);
     append(outputStream, NOTIFY_MOTION_STATUS);
     appendHex2(outputStream, NOTIFY_MOTION_ARG_OBSTACLE);
 
@@ -94,13 +98,13 @@ void notifyObstacle(OutputStream* outputStream) {
     internalDebugNotify("obstacle");
 }
 
-void deviceMotionHandleRawData(char header,
+void deviceMotionHandleRawData(char commandHeader,
         InputStream* inputStream,
         OutputStream* outputStream) {
     // GOTO in impulsion
-    if (header == COMMAND_MOTION_GOTO_IN_PULSE) {
+    if (commandHeader == COMMAND_MOTION_GOTO_IN_PULSE) {
         // send acquittement
-        appendAck(outputStream);
+		ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_GOTO_IN_PULSE);
 
         // Ex: 000100 000100 01 10
         // Left position
@@ -114,61 +118,47 @@ void deviceMotionHandleRawData(char header,
 
         // Execute Motion
         gotoPosition(left, right, (float) a, (float) s);
-
-        append(outputStream, COMMAND_MOTION_GOTO_IN_PULSE);
     }        // "forward" in millimeter
-    else if (header == COMMAND_MOTION_FORWARD_IN_MM) {
-        appendAck(outputStream);
-		append(outputStream, COMMAND_MOTION_FORWARD_IN_MM);
+    else if (commandHeader == COMMAND_MOTION_FORWARD_IN_MM) {
+        ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_FORWARD_IN_MM);
 
         long distanceMM = readHex4(inputStream);
         forwardSimpleMM(distanceMM);
-
-        
     }        // "backward" in millimeter
-    else if (header == COMMAND_MOTION_BACKWARD_IN_MM) {
-        appendAck(outputStream);
-		append(outputStream, COMMAND_MOTION_BACKWARD_IN_MM);
+    else if (commandHeader == COMMAND_MOTION_BACKWARD_IN_MM) {
+        ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_BACKWARD_IN_MM);
 
         long distanceMM = readHex4(inputStream);
         backwardSimpleMM(distanceMM);
     }        // ROTATION
         // -> left
-    else if (header == COMMAND_MOTION_LEFT_IN_DECI_DEGREE) {
-        appendAck(outputStream);
+    else if (commandHeader == COMMAND_MOTION_LEFT_IN_DECI_DEGREE) {
+        ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_LEFT_IN_DECI_DEGREE);
 
         long leftDegree = readHex4(inputStream);
         leftSimpleDegree(leftDegree);
-
-        append(outputStream, COMMAND_MOTION_LEFT_IN_DECI_DEGREE);
     }        // -> right
-    else if (header == COMMAND_MOTION_RIGHT_IN_DECI_DEGREE) {
-        appendAck(outputStream);
+    else if (commandHeader == COMMAND_MOTION_RIGHT_IN_DECI_DEGREE) {
+        ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_RIGHT_IN_DECI_DEGREE);
 
         long rightDegree = readHex4(inputStream);
         rightSimpleDegree(rightDegree);
-
-        append(outputStream, COMMAND_MOTION_RIGHT_IN_DECI_DEGREE);
     }        // ONE WHEEL
         // -> left
-    else if (header == COMMAND_MOTION_LEFT_ONE_WHEEL_IN_DECI_DEGREE) {
-        appendAck(outputStream);
+    else if (commandHeader == COMMAND_MOTION_LEFT_ONE_WHEEL_IN_DECI_DEGREE) {
+        ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_LEFT_ONE_WHEEL_IN_DECI_DEGREE);
 
         long leftDegree = readHex4(inputStream);
         leftOneWheelSimpleDegree(leftDegree);
-
-        append(outputStream, COMMAND_MOTION_LEFT_ONE_WHEEL_IN_DECI_DEGREE);
     }        // -> right
-    else if (header == COMMAND_MOTION_RIGHT_ONE_WHEEL_IN_DECI_DEGREE) {
-        appendAck(outputStream);
+    else if (commandHeader == COMMAND_MOTION_RIGHT_ONE_WHEEL_IN_DECI_DEGREE) {
+        ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_RIGHT_ONE_WHEEL_IN_DECI_DEGREE);
 
         long rightDegree = readHex4(inputStream);
         rightOneWheelSimpleDegree(rightDegree);
-
-        append(outputStream, COMMAND_MOTION_RIGHT_ONE_WHEEL_IN_DECI_DEGREE);
     }        // -> bspline
-    else if (header == COMMAND_MOTION_SPLINE_RELATIVE || header == COMMAND_MOTION_SPLINE_ABSOLUTE) {
-        appendAck(outputStream);
+    else if (commandHeader == COMMAND_MOTION_SPLINE_RELATIVE || commandHeader == COMMAND_MOTION_SPLINE_ABSOLUTE) {
+        ackCommand(outputStream, MOTION_DEVICE_HEADER, commandHeader);
 
         float x = (float) readHex4(inputStream);
         checkIsChar(inputStream, '-');
@@ -201,15 +191,13 @@ void deviceMotionHandleRawData(char header,
 						angle, 
 						distance1, distance2, 
 						accelerationFactor, speedFactor,
-						header == COMMAND_MOTION_SPLINE_RELATIVE
+						commandHeader == COMMAND_MOTION_SPLINE_RELATIVE
 						);
-
-        append(outputStream, header);
     }
-    else if (header == COMMAND_MOTION_SPLINE_TEST_LEFT || header == COMMAND_MOTION_SPLINE_TEST_RIGHT) {
-        appendAck(outputStream);
+    else if (commandHeader == COMMAND_MOTION_SPLINE_TEST_LEFT || commandHeader == COMMAND_MOTION_SPLINE_TEST_RIGHT) {
+        ackCommand(outputStream, MOTION_DEVICE_HEADER, commandHeader);
 		float sign = 1.0f;
-		if (header == COMMAND_MOTION_SPLINE_TEST_RIGHT) {
+		if (commandHeader == COMMAND_MOTION_SPLINE_TEST_RIGHT) {
 			sign = -sign;
 		}
 		gotoSimpleSpline(400.0f, sign * 400.0f,
@@ -217,44 +205,39 @@ void deviceMotionHandleRawData(char header,
 						 200.0f, 200.0f,
 						MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL,
 						 true);
-        append(outputStream, header);
+        append(outputStream, commandHeader);
     }
 	// STOP
         // cancel motion
-    else if (header == COMMAND_MOTION_CANCEL) {
-        appendAck(outputStream);
+    else if (commandHeader == COMMAND_MOTION_CANCEL) {
+        ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_CANCEL);
 
         stopPosition(false);
-
-        append(outputStream, COMMAND_MOTION_CANCEL);
     }        // OBSTACLE
         // cancel motion
-    else if (header == COMMAND_MOTION_OBSTACLE) {
+    else if (commandHeader == COMMAND_MOTION_OBSTACLE) {
+        ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_OBSTACLE);
         // TODO : A REVOIR
-        appendAck(outputStream);
         stopPosition(true);
 
-        append(outputStream, COMMAND_MOTION_OBSTACLE);
         notifyObstacle(outputStream);
     }        // CALIBRATION
-    else if (header == COMMAND_SQUARE_CALIBRATION) {
-        appendAck(outputStream);
+    else if (commandHeader == COMMAND_SQUARE_CALIBRATION) {
+        ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_SQUARE_CALIBRATION);
 		unsigned char type = readHex2(inputStream);
 		unsigned int length = readHex4(inputStream);
         squareCalibration(type, length);
-        append(outputStream, COMMAND_SQUARE_CALIBRATION);
     }        // PARAMETERS
-    else if (header == COMMAND_GET_MOTION_PARAMETERS) {
-        appendAck(outputStream);
+    else if (commandHeader == COMMAND_GET_MOTION_PARAMETERS) {
+        ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_GET_MOTION_PARAMETERS);
         int motionType = readHex2(inputStream);
 
-        append(outputStream, COMMAND_GET_MOTION_PARAMETERS);
         MotionParameter* motionParameter = getDefaultMotionParameters(motionType);
         appendHex2(outputStream, motionParameter->a);
         appendHex2(outputStream, motionParameter->speed);
 
-    } else if (header == COMMAND_SET_MOTION_PARAMETERS) {
-        appendAck(outputStream);
+    } else if (commandHeader == COMMAND_SET_MOTION_PARAMETERS) {
+        ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_SET_MOTION_PARAMETERS);
         int motionType = readHex2(inputStream);
         int a = readHex2(inputStream);
         int speed = readHex2(inputStream);
@@ -264,8 +247,6 @@ void deviceMotionHandleRawData(char header,
         motionParameter->speed = speed;
 
         saveMotionParameters();
-
-        append(outputStream, COMMAND_SET_MOTION_PARAMETERS);
     }
 }
 

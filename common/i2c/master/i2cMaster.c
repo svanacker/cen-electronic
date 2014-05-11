@@ -17,7 +17,7 @@
 #include "../../../common/io/buffer.h"
 
 
-inline unsigned int portableMasterWriteI2C(unsigned char data) {
+inline int portableMasterWriteI2C(char data) {
 	#ifdef PROG_32
 		return MasterWriteI2C1(data);
 	#else
@@ -25,7 +25,7 @@ inline unsigned int portableMasterWriteI2C(unsigned char data) {
 	#endif
 }
 
-inline unsigned char portableMasterReadI2C() {
+inline char portableMasterReadI2C() {
 	#ifdef PROG_32
 		return MasterReadI2C1();
 	#else
@@ -89,7 +89,7 @@ void i2cMasterWriteChar(char address, char c) {
 	#endif
 }
 
-unsigned char i2cMasterReadChar(char address) {
+char i2cMasterReadChar(char address) {
     //	i2cMasterWriteChar(address, I2C_SLAVE_FAKE_WRITE);
     //	delaymSec(50);
     WaitI2C();
@@ -117,7 +117,7 @@ MasterWriteI2C(address);
     return data;
 }
 
-unsigned char i2cMasterReadRegisterValue(char address, char commandRegister) {
+char i2cMasterReadRegisterValue(char address, char commandRegister) {
     // Set the register command
     WaitI2C();
     portableStartI2C();
@@ -138,7 +138,7 @@ unsigned char i2cMasterReadRegisterValue(char address, char commandRegister) {
     portableMasterWriteI2C(address | 0x01);
     WaitI2C();
     // read the data
-    unsigned char data = portableMasterReadI2C();
+    char data = portableMasterReadI2C();
     portableStopI2C();
     return data;
 }

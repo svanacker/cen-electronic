@@ -31,14 +31,14 @@ unsigned int copyInputToOutputStream(InputStream* inputStream,
         }
 
         // get the next char
-        unsigned char c = inputStream->readChar(inputStream);
+        char c = inputStream->readChar(inputStream);
         if (c == 0x00 || c == INCORRECT_DATA) {
             break;
         }
 
         // if we defined a filterChar function
         if (filterChar != NULL) {
-            unsigned char filteredValue = c;
+            char filteredValue = c;
             // function returns if we include or not char
             bool include = filterChar(c, &filteredValue);
             if (include) {

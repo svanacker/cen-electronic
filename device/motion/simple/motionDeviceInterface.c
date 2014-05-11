@@ -257,6 +257,7 @@ int deviceMotionGetInterface(char header, int mode, bool fillDeviceArgumentList)
 }
 
 static DeviceInterface deviceInterface = {
+	.deviceHeader = MOTION_DEVICE_HEADER,
     .deviceGetName = &deviceMotionGetName,
     .deviceGetInterface = &deviceMotionGetInterface
 };

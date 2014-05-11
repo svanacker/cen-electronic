@@ -6,20 +6,16 @@ const char* commonBeaconDeviceGetName() {
     return "commonBeacon";
 }
 
-unsigned int commonBeaconDeviceGetSoftwareRevision() {
-    return 1;
-}
-
-int commonBeaconDeviceGetInterface(char header, int mode, bool fillDeviceArgumentList) {
+int commonBeaconDeviceGetInterface(char commandHeader, int mode, bool fillDeviceArgumentList) {
 	// Redirection
-    if (header == COMMAND_REDIRECT_TO_JENNIC) {
+    if (commandHeader == COMMAND_REDIRECT_TO_JENNIC) {
 		// same output / input
 		if (fillDeviceArgumentList) {
 			setFunctionNoArgument("redirectToJennic");
 		}
 		return 0;
     }
-	else if (header == COMMAND_LOCAL_LIGHT) {
+	else if (commandHeader == COMMAND_LOCAL_LIGHT) {
         if (mode == DEVICE_MODE_INPUT) {
             if (fillDeviceArgumentList) {
 				setFunctionNoArgument("localLight");
@@ -33,14 +29,14 @@ int commonBeaconDeviceGetInterface(char header, int mode, bool fillDeviceArgumen
             return 0;
         }
 	}
-	else if (header == COMMAND_SHOW_DATA_FROM_JENNIC) {
+	else if (commandHeader == COMMAND_SHOW_DATA_FROM_JENNIC) {
 		// both input/output
 		if (fillDeviceArgumentList) {
 			setFunctionNoArgument("showDataFromJennic");
 		}
 		return 0;
 	}
-	else if (header == COMMAND_RESET_JENNIC) {
+	else if (commandHeader == COMMAND_RESET_JENNIC) {
 		// both input/output
 		if (fillDeviceArgumentList) {
 			setFunctionNoArgument("resetJennic");
@@ -52,8 +48,8 @@ int commonBeaconDeviceGetInterface(char header, int mode, bool fillDeviceArgumen
 }
 
 static DeviceInterface deviceInterface = {
+	.deviceHeader = COMMON_BEACON_DEVICE_HEADER,
     .deviceGetName = &commonBeaconDeviceGetName,
-//    .deviceGetSoftwareRevision = &commonBeaconDeviceGetSoftwareRevision,
     .deviceGetInterface = &commonBeaconDeviceGetInterface
 };
 
