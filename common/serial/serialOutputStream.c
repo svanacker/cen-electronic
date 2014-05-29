@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include <p30fxxxx.h>
+#include <p30Fxxxx.h>
 
 #include "serialOutputStream.h"
 

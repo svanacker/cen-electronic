@@ -1,6 +1,6 @@
 #include <i2c.h>
 #include <stdlib.h>
-#include <p30fxxxx.h>
+#include <p30Fxxxx.h>
 
 #include "i2cSlave.h"
 #include "i2cSlaveSetup.h"
