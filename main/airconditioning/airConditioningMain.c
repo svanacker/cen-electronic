@@ -40,6 +40,10 @@
 #include "../../device/servo/servoDevice.h"
 #include "../../device/servo/servoDeviceInterface.h"
 
+// Air Conditioning Device
+#include "../../device/airConditionningBoard/airConditionningBoardDevice.h"
+#include "../../device/airConditionningBoard/airConditionningBoardDeviceInterface.h"
+
 #include "../../drivers/driver.h"
 #include "../../drivers/driverTransmitter.h"
 #include "../../drivers/driverList.h"
@@ -88,7 +92,7 @@ static char driverResponseBufferArray[AIR_CONDITIONING_BOARD_RESPONSE_DRIVER_BUF
 void initDevicesDescriptor() {
 	initDeviceList(&deviceListArray, AIR_CONDITIONING_BOARD_DEVICE_LENGTH);
 	addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
-	addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor());
+	addLocalDevice(getAirConditioningDeviceInterface(), getAirConditionningBoardDeviceDescriptor());
 
 	initDevices(&devices);
 }
