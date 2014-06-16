@@ -19,7 +19,7 @@ int deviceServoGetInterface(char commandHeader, int mode, bool fillDeviceArgumen
         }
 		else if (commandHeader == COMPACT_COMMAND_SERVO) {
             if (fillDeviceArgumentList) {
-				setFunction("updateServoCompact", 3);
+				setFunction("updateServoCompact", 1);
 				setArgumentUnsignedHex4(0, "value");
             }
             return 4;
