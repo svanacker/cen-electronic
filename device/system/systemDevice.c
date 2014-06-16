@@ -42,6 +42,7 @@ void deviceSystemHandleRawData(char header, InputStream* inputStream, OutputStre
         append(outputStream, COMMAND_WAIT);
     } else if (header == COMMAND_PIC_NAME) {
         appendString(getOutputStreamLogger(ALWAYS), getPicName());
+		println(getOutputStreamLogger(ALWAYS));
 		ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_PIC_NAME);
 	}
 }

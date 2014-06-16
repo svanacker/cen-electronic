@@ -7,24 +7,35 @@
 #include "../common/io/outputStream.h"
 #include "../common/io/printWriter.h"
 
-#define ARGUMENTS_SEPARATOR 				" | "
+// Main
 
-#define ARGUMENTS_NAME_AND_TYPE_SEPARATOR	';'
+#define ARGUMENTS_SEPARATOR 				", "
+
+#define DEVICE_INPUT_MODE_SEPARATOR_NAME 	':'
 
 #define DEVICE_NAME_AND_HEADER_SEPARATOR 	':'
 
 #define DEVICE_HEADER_AND_TYPE_SEPARATOR	':'
 
+// Arguments
+
 #define ARGUMENTS_START_CHAR  				'('
+
+#define ARGUMENTS_NAME_AND_TYPE_SEPARATOR	' '
 
 #define ARGUMENTS_STOP_CHAR 		 		')'
 
 /**
  * @private
  */
-void printArgumentList(OutputStream* outputStream, DeviceInterface* deviceInterface, char header, char headerLength, char inputMode) {
+bool printArgumentList(OutputStream* outputStream, DeviceInterface* deviceInterface, char commandHeader, char headerLength, char inputMode) {
 	if (headerLength != DEVICE_HEADER_NOT_HANDLED) {
 		DeviceArgumentList* deviceArgumentList = getDeviceArgumentList();
+		char deviceHeader = deviceInterface->deviceHeader;
+
+		// Input/Output Mode
+        append(outputStream, inputMode);
+		append(outputStream, DEVICE_INPUT_MODE_SEPARATOR_NAME);
 
 		// DeviceName
         const char* deviceName = deviceInterface->deviceGetName();
@@ -32,14 +43,12 @@ void printArgumentList(OutputStream* outputStream, DeviceInterface* deviceInterf
         append(outputStream, DEVICE_NAME_AND_HEADER_SEPARATOR);
 
 		// Header
-        append(outputStream, header);
+		append(outputStream, deviceHeader);
+        append(outputStream, commandHeader);
         append(outputStream, DEVICE_HEADER_AND_TYPE_SEPARATOR);
 
-		// type
+		// functionName
         appendString(outputStream, deviceArgumentList->functionName);
-
-        append(outputStream, inputMode);
-
         append(outputStream,  ARGUMENTS_START_CHAR);
 
 		// arguments
@@ -52,10 +61,6 @@ void printArgumentList(OutputStream* outputStream, DeviceInterface* deviceInterf
 
             DeviceArgument deviceArgument = deviceArgumentList->args[argumentIndex];
             char* argumentName = deviceArgument.name;
-            
-			// Argument name
-			appendString(outputStream, argumentName);
-            append(outputStream, ARGUMENTS_NAME_AND_TYPE_SEPARATOR);
 
 			// type and length
             char type = deviceArgument.type;
@@ -67,11 +72,18 @@ void printArgumentList(OutputStream* outputStream, DeviceInterface* deviceInterf
             }
             char argumentLength = (type >> 1) & 0xFE;
             appendDec(outputStream, argumentLength);
+
+			// Argument name
+            append(outputStream, ARGUMENTS_NAME_AND_TYPE_SEPARATOR);
+			appendString(outputStream, argumentName);
         }
         append(outputStream,  ARGUMENTS_STOP_CHAR);
 
         println(outputStream);
+
+		return true;
     }
+	return false;
 }
 
 /**
@@ -79,12 +91,17 @@ void printArgumentList(OutputStream* outputStream, DeviceInterface* deviceInterf
  */
 void printDeviceUsageLine(OutputStream* outputStream, char header, Device* device) {
     DeviceInterface* deviceInterface = device->interface;
+
     // input Argument
     int headerLength = deviceInterface->deviceGetInterface(header, DEVICE_MODE_INPUT, true);
     printArgumentList(outputStream, deviceInterface, header, headerLength, 'i');
+
     // output Argument
     headerLength = deviceInterface->deviceGetInterface(header, DEVICE_MODE_OUTPUT, true);
-    printArgumentList(outputStream, deviceInterface, header, headerLength, 'o');
+    bool result = printArgumentList(outputStream, deviceInterface, header, headerLength, 'o');
+	if (result) {
+		println(outputStream);
+	}
 }
 
 void printDeviceUsage(OutputStream* outputStream, Device* device) {
