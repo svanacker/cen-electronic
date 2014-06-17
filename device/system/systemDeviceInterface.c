@@ -21,34 +21,27 @@ int deviceSystemGetInterface(char commandHeader, int mode, bool fillDeviceArgume
     if (commandHeader == COMMAND_PIC_NAME) {
 		// Same INPUT/OUTPUT
         if (fillDeviceArgumentList) {
-			setFunctionNoArgument("getPicName");
+			setFunctionNoArgumentAndNoResult("getPicName");
         }
         return 0;
     } else if (commandHeader == COMMAND_PING) {
 		// Same INPUT/OUTPUT
         if (fillDeviceArgumentList) {
-			setFunctionNoArgument("ping");
+			setFunctionNoArgumentAndNoResult("ping");
         }
         return 0;
     }// wait
     else if (commandHeader == COMMAND_WAIT) {
-        if (mode == DEVICE_MODE_INPUT) {
-            if (fillDeviceArgumentList) {
-				setFunction("wait", 1);
-				setArgumentUnsignedHex4(0, "ms");
-            }
-            return 4;
-        } else if (mode == DEVICE_MODE_OUTPUT) {
-            if (fillDeviceArgumentList) {
-				setFunctionNoArgument("wait");
-            }
-            return 0;
-        }
+		if (fillDeviceArgumentList) {
+			setFunction("wait", 1, 0);
+			setArgumentUnsignedHex4(0, "ms");				
+		}
+		return commandLengthValueForMode(mode, 4, 0);
     }// usage
     else if (commandHeader == COMMAND_USAGE) {
 		// Same INPUT/OUTPUT
         if (fillDeviceArgumentList) {
-			setFunctionNoArgument("usage");
+			setFunctionNoArgumentAndNoResult("usage");
         }
         return 0;
     }

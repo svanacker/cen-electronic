@@ -48,6 +48,7 @@ typedef struct DeviceArgument {
 } DeviceArgument;
 
 #define MAX_ARGUMENTS 13
+#define MAX_RETURNS	  13
 
 /**
 * Define the result of deviceGetRawDataHeaderFunction if the
@@ -56,17 +57,20 @@ typedef struct DeviceArgument {
 #define DEVICE_HEADER_NOT_HANDLED -1
 
 /**
-* Define the argument list for a device.
+* Define the argument list and returns list for a device.
 */
-typedef struct DeviceArgumentList {
-	/** An array of arguments */
-	DeviceArgument args[MAX_ARGUMENTS];
+typedef struct DeviceMethodMetaData {
 	/** The name of the function. */
 	char* functionName;
-	/** The size of list. */
-	char size;
-} DeviceArgumentList;
-
+	/** An array of arguments */
+	DeviceArgument arguments[MAX_ARGUMENTS];
+	/** The size of argument Size. */
+	char argumentsSize;
+	/** An array of return arguments */
+	DeviceArgument results[MAX_RETURNS];
+	/** The size of returns Size. */
+	char resultsSize;
+} DeviceMethodMetaData;
 
 // LENGTH = 1
 
@@ -137,19 +141,23 @@ typedef struct DeviceArgumentList {
 // ARGUMENT LIST
 
 /**
-* Singleton of DeviceArgumentList
+* Singleton of DeviceInterfaceMetaData
 */
-DeviceArgumentList* getDeviceArgumentList();
+DeviceMethodMetaData* getDeviceMethodMetaData();
 
 /**
 * Set the function Name and the size of all argument list for that function.
 */
-void setFunction(char* functionName, int size);
+void setFunction(char* functionName, int argumentsSize, int resultsSize);
 
 /**
 * Set the function Name and the size of all argument to 0.
 */
-void setFunctionNoArgument(char* functionName);
+void setFunctionNoArgumentAndNoResult(char* functionName);
+
+int commandLengthValueForMode(int mode, int input, int output);
+
+// ARGUMENTS MANAGEMENT
 
 /**
 * Set the argument of the deviceArgumentList with index for type/name
@@ -180,6 +188,38 @@ void setArgumentUnsignedHex4(int index, char* name);
 * Set argument with index to a separator ("-")
 */
 void setArgumentSeparator(int index);
+
+// RESULTS MANAGEMENT
+
+/**
+* Set the result of the deviceMethodMetaData with index for type/name
+*/
+void setResult(int index, int type, char* name);
+
+/**
+* Set the argument of the deviceMethodMetaData with index for name
+*/
+void setResultUnsignedChar1(int index, char* name);
+
+/**
+* Set the result of the deviceMethodMetaData with index for name
+*/
+void setResultUnsignedHex2(int index, char* name);
+
+/**
+* Set the result of the deviceMethodMetaData with index for name
+*/
+void setResultSignedHex2(int index, char* name);
+
+/**
+* Set the result of the deviceMethodMetaData with index for name
+*/
+void setResultUnsignedHex4(int index, char* name);
+
+/**
+* Set result with index to a separator ("-")
+*/
+void setResultSeparator(int index);
 
 /**
 * Defines the function to know the name of the device.

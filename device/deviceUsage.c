@@ -25,12 +25,41 @@
 
 #define ARGUMENTS_STOP_CHAR 		 		')'
 
+#define ARGUMENTS_AND_RESULTS_SEPARATOR		" => "
+
+/**
+ * 
+ */
+void printArgument(OutputStream* outputStream, DeviceMethodMetaData* deviceMethodMetaData, int argumentIndex) {
+	if (argumentIndex > 0) {
+		appendString(outputStream, ARGUMENTS_SEPARATOR);
+	}
+	
+	DeviceArgument deviceArgument = deviceMethodMetaData->arguments[argumentIndex];
+	char* argumentName = deviceArgument.name;
+	
+	// type and length
+	char type = deviceArgument.type;
+	// last bit used for signed / unsigned
+	if ((type & 1) != 0) {
+		append(outputStream, 's');
+	} else {
+		append(outputStream, 'u');
+	}
+	char argumentLength = (type >> 1) & 0xFE;
+	appendDec(outputStream, argumentLength);
+	
+	// Argument name
+	append(outputStream, ARGUMENTS_NAME_AND_TYPE_SEPARATOR);
+	appendString(outputStream, argumentName);
+}
+
 /**
  * @private
  */
-bool printArgumentList(OutputStream* outputStream, DeviceInterface* deviceInterface, char commandHeader, char headerLength, char inputMode) {
+bool printMethodMetaData(OutputStream* outputStream, DeviceInterface* deviceInterface, char commandHeader, char headerLength, char inputMode) {
 	if (headerLength != DEVICE_HEADER_NOT_HANDLED) {
-		DeviceArgumentList* deviceArgumentList = getDeviceArgumentList();
+		DeviceMethodMetaData* deviceMethodMetaData = getDeviceMethodMetaData();
 		char deviceHeader = deviceInterface->deviceHeader;
 
 		// Input/Output Mode
@@ -48,35 +77,29 @@ bool printArgumentList(OutputStream* outputStream, DeviceInterface* deviceInterf
         append(outputStream, DEVICE_HEADER_AND_TYPE_SEPARATOR);
 
 		// functionName
-        appendString(outputStream, deviceArgumentList->functionName);
+        appendString(outputStream, deviceMethodMetaData->functionName);
         append(outputStream,  ARGUMENTS_START_CHAR);
 
 		// arguments
-        int argumentCount = deviceArgumentList->size;
+        int argumentCount = deviceMethodMetaData->argumentsSize;
         int argumentIndex;
         for (argumentIndex = 0; argumentIndex < argumentCount; argumentIndex++) {
-			if (argumentIndex > 0) {
-				appendString(outputStream, ARGUMENTS_SEPARATOR);
-			}
-
-            DeviceArgument deviceArgument = deviceArgumentList->args[argumentIndex];
-            char* argumentName = deviceArgument.name;
-
-			// type and length
-            char type = deviceArgument.type;
-            // last bit used for signed / unsigned
-            if ((type & 1) != 0) {
-                append(outputStream, 's');
-            } else {
-                append(outputStream, 'u');
-            }
-            char argumentLength = (type >> 1) & 0xFE;
-            appendDec(outputStream, argumentLength);
-
-			// Argument name
-            append(outputStream, ARGUMENTS_NAME_AND_TYPE_SEPARATOR);
-			appendString(outputStream, argumentName);
+			printArgument(outputStream, deviceMethodMetaData, argumentIndex);
         }
+        append(outputStream,  ARGUMENTS_STOP_CHAR);
+
+		appendString(outputStream, ARGUMENTS_AND_RESULTS_SEPARATOR);
+
+		// results
+        append(outputStream,  ARGUMENTS_START_CHAR);
+        int resultCount = deviceMethodMetaData->resultsSize;
+        int resultIndex;
+        for (resultIndex = 0; resultIndex < resultCount; resultIndex++) {
+			printArgument(outputStream, deviceMethodMetaData, resultIndex);
+        }
+		if (resultCount == 0) {
+			appendString(outputStream, "void");
+		}
         append(outputStream,  ARGUMENTS_STOP_CHAR);
 
         println(outputStream);
@@ -94,14 +117,7 @@ void printDeviceUsageLine(OutputStream* outputStream, char header, Device* devic
 
     // input Argument
     int headerLength = deviceInterface->deviceGetInterface(header, DEVICE_MODE_INPUT, true);
-    printArgumentList(outputStream, deviceInterface, header, headerLength, 'i');
-
-    // output Argument
-    headerLength = deviceInterface->deviceGetInterface(header, DEVICE_MODE_OUTPUT, true);
-    bool result = printArgumentList(outputStream, deviceInterface, header, headerLength, 'o');
-	if (result) {
-		println(outputStream);
-	}
+    printMethodMetaData(outputStream, deviceInterface, header, headerLength, 'i');
 }
 
 void printDeviceUsage(OutputStream* outputStream, Device* device) {

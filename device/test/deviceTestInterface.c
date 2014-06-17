@@ -11,36 +11,21 @@ const char* deviceTestGetName() {
 int deviceTestGetInterface(char header, int mode,
         bool fillDeviceArgumentList) {
     if (header == COMMAND_TEST) {
-        if (mode == DEVICE_MODE_INPUT) {
-            if (fillDeviceArgumentList) {
-				setFunction("test", 2);
-				setArgumentUnsignedHex2(0, "arg1");
-				setArgumentUnsignedHex2(1, "arg2");
-            }
-            return 4;
-        } else if (mode == DEVICE_MODE_OUTPUT) {
-            if (fillDeviceArgumentList) {
-				setFunction("test", 1);
-				setArgumentUnsignedHex2(0, "result");
-            }
-            return 2;
-        }
+		if (fillDeviceArgumentList) {
+			setFunction("test", 2, 1);
+			setArgumentUnsignedHex2(0, "a");
+			setArgumentUnsignedHex2(1, "b");
+			setResultUnsignedHex2(0, "result");
+		}
+        return commandLengthValueForMode(mode, 4, 2);
     }// Describe a notification test
     else if (header == COMMAND_NOTIFY_TEST) {
-        if (mode == DEVICE_MODE_INPUT) {
-            if (fillDeviceArgumentList) {
-				setFunction("notifyTest", 1);
-				setArgumentUnsignedHex2(0, "arg");
-            }
-            return 2;
-        } else if (mode == DEVICE_MODE_OUTPUT) {
-            if (fillDeviceArgumentList) {
-				setFunction("notifyTest", 1);
-				setArgumentUnsignedHex2(0, "arg");
-            }
-            return 2;
-        }
-
+		if (fillDeviceArgumentList) {
+			setFunction("notifyTest", 1, 1);
+			setArgumentUnsignedHex2(0, "arg");
+			setResultUnsignedHex2(0, "arg");
+		}
+		return commandLengthValueForMode(mode, 2, 2);
     }
     return DEVICE_HEADER_NOT_HANDLED;
 }

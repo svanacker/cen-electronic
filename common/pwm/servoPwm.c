@@ -168,6 +168,7 @@ void initPwmForServo(int posInit) {
 
 /**
  * @private
+ * Log the value of the servo.
  */
 void logServo(Servo* servo, OutputStream* outputStream) {
     appendString(outputStream, ",speed=");
@@ -179,11 +180,26 @@ void logServo(Servo* servo, OutputStream* outputStream) {
     appendCRLF(outputStream);
 }
 
-void pwmServo(int servoIndex, unsigned int speed, int dutyms) {
-    if (servoIndex == 0) {
+/**
+ * Check if the servoIndex is ok, if it's not, raise an error.
+ * @param servoIndex between 1 and n, if <= 0 or > n, raise an error
+ * @param errorString the error string if there is a problem
+ * @return true if servoIndex is ok, false else
+ */
+bool checkServoIndex(int servoIndex, char* errorString) {
+	if (servoIndex == 0 || servoIndex >= PWM_COUNT) {
         writeError(ILLEGAL_ARGUMENT_EXCEPTION);
-        appendString(getOutputStreamLogger(ERROR), "=>pwmServo");
-        return;
+        appendString(getOutputStreamLogger(ERROR), errorString);
+        return false;
+    }
+	return true;
+}
+
+// PUBLIC WRITE FUNCTIONS
+
+void pwmServo(int servoIndex, unsigned int speed, int dutyms) {
+    if (checkServoIndex(servoIndex, "=> pwmServo")) {
+		return;
     }
     Servo* servo = getServo(servoIndex - 1);
     servo->speed = speed;
@@ -197,6 +213,34 @@ void pwmServoAll(unsigned int speed, int dutyms) {
         pwmServo(i, speed, dutyms);
     }
 }
+
+// READ FUNCTIONS
+
+unsigned int pwmServoReadSpeed(int servoIndex) {
+    if (checkServoIndex(servoIndex, "=> pwmServoReadSpeed")) {
+		return -1;
+    }
+	Servo* servo = getServo(servoIndex - 1);
+	return servo->speed;
+}
+
+unsigned int pwmServoReadCurrentPosition(int servoIndex) {
+    if (checkServoIndex(servoIndex, "=> pwmServoReadCurrentPosition")) {
+		return -1;
+    }
+	Servo* servo = getServo(servoIndex - 1);
+	return servo->currentPosition;
+}
+
+unsigned int pwmServoReadTargetPosition(int servoIndex) {
+    if (checkServoIndex(servoIndex, "=> pwmServoReadTargetPosition")) {
+		return -1;
+    }
+	Servo* servo = getServo(servoIndex - 1);
+	return servo->targetPosition;
+}
+
+// TEST FUNCTIONS
 
 void testAllPwmServos() {
 	OutputStream* debugOutputStream = getOutputStreamLogger(DEBUG);
@@ -214,4 +258,3 @@ void testAllPwmServos() {
 		delaymSec(2000);
 	}
 }
-

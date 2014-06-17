@@ -67,6 +67,27 @@ void pwmServo(int pwmIndex, unsigned int speed, int dutyms);
 void pwmServoAll(unsigned int speed, int dutyms);
 
 /**
+ * Returns the speed used to reach the position.
+ * @param servoIndex the servo index that we want to get
+ * @param -1 if servoIndex is not correct, speed value if ok
+ */
+unsigned int pwmServoReadSpeed(int servoIndex);
+
+/**
+ * Returns the current position used to reach the current position.
+ * @param servoIndex the servo index that we want to get the current position
+ * @param -1 if servoIndex is not correct, current position if ok
+ */
+unsigned int pwmServoReadCurrentPosition(int servoIndex);
+
+/**
+ * Returns the current position used to reach the target position.
+ * @param servoIndex the servo index that we want to get the target position
+ * @param -1 if servoIndex is not correct, current position if ok
+ */
+unsigned int pwmServoReadTargetPosition(int servoIndex);
+
+/**
 * Test all PWM.
 */
 void testAllPwmServos();
