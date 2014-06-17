@@ -1,5 +1,6 @@
 Le 20/04/2014 :
 
+- Séparer la notion de BSpline pour pouvoir faire une MOTOR_BOARD + compacte (éventuellement uniquement 30F)
 - Fusionner la partie GameStrategieBoard
 - Gérer les messages d'une longueur + importante
 - Gérer le fait qu'une commande ne soit pas comprise (timeout très faible)

@@ -8,7 +8,7 @@
 
 #include "../../common/adc/adcutils.h"
 
-#include "../../common/delay/delay30F.h"
+#include "../../common/delay/cenDelay.h"
 
 #include "../../common/i2c/slave/i2cSlave.h"
 #include "../../common/i2c/slave/i2cSlaveSetup.h"
@@ -155,7 +155,8 @@ int main(void) {
 					&debugOutputBufferArray,
 					MECA_BOARD_2_DEBUG_OUTPUT_BUFFER_LENGTH,
 					&debugOutputStream,
-					SERIAL_PORT_DEBUG);
+					SERIAL_PORT_DEBUG,
+					115200);
 
 	// Init the logs
 	initLog(DEBUG);

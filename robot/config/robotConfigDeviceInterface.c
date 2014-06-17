@@ -11,22 +11,12 @@ unsigned int getConfigSoftwareRevision(void) {
 }
 
 int deviceRobotConfigGetInterface(char header, int mode, bool fillDeviceArgumentList) {
-    if (mode == DEVICE_MODE_INPUT) {
-        if (header == COMMAND_CONFIG) {
-            if (fillDeviceArgumentList) {
-				setFunctionNoArgument("robotConfig");
-            }
-            return 0;
+    if (header == COMMAND_CONFIG) {
+        if (fillDeviceArgumentList) {
+			setFunction("robotConfig", 0, 1);
+			setResultUnsignedHex4(0, "value");
         }
-    } else if (mode == DEVICE_MODE_OUTPUT) {
-        if (header == COMMAND_CONFIG) {
-            if (fillDeviceArgumentList) {
-				setFunction("robotConfig", 1);
-				setArgumentUnsignedHex4(0, "value");
-            }
-            return 4;
-        }
-
+        return commandLengthValueForMode(mode, 0, 4);
     }
     return DEVICE_HEADER_NOT_HANDLED;
 }

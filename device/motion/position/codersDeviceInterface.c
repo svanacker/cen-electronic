@@ -11,28 +11,21 @@ int deviceCodersGetInterface(char commandHeader, int mode, bool fillDeviceArgume
     if (commandHeader == COMMAND_CLEAR_CODERS) {
 		// Same INPUT / OUTPUT
 		if (fillDeviceArgumentList) {
-			setFunctionNoArgument("clrCoders");
+			setFunctionNoArgumentAndNoResult("clrCoders");
 		}
         return 0;
     } else if (commandHeader == COMMAND_GET_WHEEL_POSITION) {
-        if (mode == DEVICE_MODE_INPUT) {
-            if (fillDeviceArgumentList) {
-				setFunctionNoArgument("codersVal");
-            }
-            return 0;
-        } else if (mode == DEVICE_MODE_OUTPUT) {
-            if (fillDeviceArgumentList) {
-				setFunction("codersVal", 3);
-				setArgument(0, DEVICE_ARG_UNSIGNED_HEX_8, "left");
-                setArgumentSeparator(1);
-				setArgument(2, DEVICE_ARG_UNSIGNED_HEX_8, "right");
-            }
-            return 17;
-        }
+		if (fillDeviceArgumentList) {
+			setFunction("codersVal", 0, 3);
+			setArgument(0, DEVICE_ARG_UNSIGNED_HEX_8, "left");
+			setArgumentSeparator(1);
+			setArgument(2, DEVICE_ARG_UNSIGNED_HEX_8, "right");
+		}
+        return commandLengthValueForMode(mode, 0, 17);
     } else if (commandHeader == COMMAND_DEBUG_GET_WHEEL_POSITION) {
 		// Same INPUT / OUTPUT
 		if (fillDeviceArgumentList) {
-			setFunctionNoArgument("dbgCodersVal");
+			setFunctionNoArgumentAndNoResult("dbgCodersVal");
 		}
 		return 0;
     }

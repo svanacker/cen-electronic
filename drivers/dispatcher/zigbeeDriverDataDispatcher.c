@@ -12,7 +12,7 @@
 #include "../../drivers/jennic/jennic5139OutputStream.h"
 #include "../../drivers/jennic/jennic5139InputStream.h"
 
-#include "../../common/delay/delay30F.h"
+#include "../../common/delay/cenDelay.h"
 
 #include "../../common/io/buffer.h"
 #include "../../common/io/inputStream.h"

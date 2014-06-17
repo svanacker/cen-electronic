@@ -10,19 +10,12 @@ const char* getADCDeviceName(void) {
 int deviceADCGetInterface(char header, int mode,
         bool fillDeviceArgumentList) {
     if (header == COMMAND_GET_ADC_VALUE) {
-        if (mode == DEVICE_MODE_INPUT) {
-            if (fillDeviceArgumentList) {
-				setFunction("getADC", 1);
-				setArgumentUnsignedHex2(0, "ADC_idx");
-            }
-            return 2;
-        } else if (mode == DEVICE_MODE_OUTPUT) {
-            if (fillDeviceArgumentList) {
-				setFunction("getADC", 1);
-				setArgumentUnsignedHex4(0, "Value(mV)");
-            }
-            return 4;
-        }
+		if (fillDeviceArgumentList) {
+			setFunction("getADC", 1, 1);
+			setArgumentUnsignedHex2(0, "ADC_idx");
+			setResultUnsignedHex4(0, "Value(mV)");
+		}
+		return commandLengthValueForMode(mode, 2, 4);
     }
     return DEVICE_HEADER_NOT_HANDLED;
 }

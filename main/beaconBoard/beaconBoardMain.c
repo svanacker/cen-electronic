@@ -8,7 +8,7 @@
 
 #include "../../common/commons.h"
 
-#include "../../common/delay/delay30F.h"
+#include "../../common/delay/cenDelay.h"
 
 #include "../../common/io/buffer.h"
 #include "../../common/io/filter.h"
@@ -328,7 +328,8 @@ restart:
 			&zigbeeOutputBufferArray,
 			JENNIC_ZIGBEE_OUTPUT_BUFFER_LENGTH,
             &zigbeeOutputStream,
-            SERIAL_PORT_ZIGBEE);
+            SERIAL_PORT_ZIGBEE,
+			115200);
 
     // Debug link
     openSerialLink(&debugSerialStreamLink,
@@ -339,7 +340,9 @@ restart:
 			&debugOutputBufferArray,
 			JENNIC_DEBUG_OUTPUT_BUFFER_LENGTH,
             &debugOutputStream,
-            SERIAL_PORT_DEBUG);
+            SERIAL_PORT_DEBUG,
+			115200
+		);
 
 	initTimerList(&timerListArray, BEACON_BOARD_TIMER_LENGTH);
 

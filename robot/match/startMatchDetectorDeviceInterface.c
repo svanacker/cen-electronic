@@ -16,7 +16,7 @@ int deviceStartMatchDetectorGetInterface(char header, int mode,
 	if (header == COMMAND_STEP_BY_STEP) {
 		// same input / output
 		if (fillDeviceArgumentList) {
-			setFunctionNoArgument("stepByStep");
+			setFunctionNoArgumentAndNoResult("stepByStep");
 		}
 		return 0;
     }

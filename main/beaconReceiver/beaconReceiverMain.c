@@ -11,7 +11,7 @@
 
 #include "../../common/commons.h"
 
-#include "../../common/delay/delay30F.h"
+#include "../../common/delay/cenDelay.h"
 
 #include "../../common/i2c/slave/i2cSlave.h"
 #include "../../common/i2c/slave/i2cSlaveSetup.h"
@@ -235,7 +235,8 @@ int runZigBeeReceiver() {
 					&zigbeeOutputBufferArray,
 					BEACON_RECEIVER_BOARD_ZIGBEE_OUTPUT_BUFFER_LENGTH,
 					&zigbeeOutputStream,
-					SERIAL_PORT_ZIGBEE);
+					SERIAL_PORT_ZIGBEE,
+					115200);
 
 	// Debug link through Free UART
 	openSerialLink(	&debugSerialStreamLink,
@@ -246,7 +247,8 @@ int runZigBeeReceiver() {
 					&debugOutputBufferArray,
 					BEACON_RECEIVER_BOARD_DEBUG_OUTPUT_BUFFER_LENGTH,
 					&debugOutputStream,
-					SERIAL_PORT_DEBUG);
+					SERIAL_PORT_DEBUG,
+					115200);
 
 	initTimerList(&timerListArray, BEACON_RECEIVER_BOARD_TIMER_LENGTH);
 

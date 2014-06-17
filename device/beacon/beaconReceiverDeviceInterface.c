@@ -11,61 +11,40 @@ int beaconReceiverDeviceGetInterface(char commandHeader, int mode,
         bool fillDeviceArgumentList) {
 	// getOpponentRobotPos
     if (commandHeader == COMMAND_GET_OPPONENT_ROBOT_POSITION) {
-        if (mode == DEVICE_MODE_INPUT) {
-            if (fillDeviceArgumentList) {
-				setFunctionNoArgument("getOpponentRobotPos");
-            }
-            return 0;
-        } else if (mode == DEVICE_MODE_OUTPUT) {
-            if (fillDeviceArgumentList) {
-				setFunction("getOpponentRobotPos", 3);
-				setArgumentUnsignedHex4(0, "x(mm)");
-				setArgumentSeparator(1);
-				setArgumentUnsignedHex4(2, "y(mm)");
-            }
-            return 9;
-        }
+		if (fillDeviceArgumentList) {
+			setFunction("getOpponentRobotPos", 0, 3);
+			setResultUnsignedHex4(0, "x(mm)");
+			setResultSeparator(1);
+			setResultUnsignedHex4(2, "y(mm)");
+		}
+		return commandLengthValueForMode(mode, 0, 9);
     }
 	// setOpponentRobotPos
     if (commandHeader == COMMAND_SET_OPPONENT_ROBOT_POSITION_FROM_LASER_TO_RECEIVER) {
-        if (mode == DEVICE_MODE_INPUT) {
-            if (fillDeviceArgumentList) {
-				setFunction("setOpponentRobotPos", 3);
-				setArgumentUnsignedHex4(0, "x(mm)");
-				setArgumentSeparator(1);
-				setArgumentUnsignedHex4(2, "y(mm)");
-            }
-            return 9;
-        } else if (mode == DEVICE_MODE_OUTPUT) {
-            if (fillDeviceArgumentList) {
-				setFunctionNoArgument("setOpponentRobotPos");
-            }
-            return 0;
-        }
+		if (fillDeviceArgumentList) {
+			setFunction("setOpponentRobotPos", 3, 0);
+			setArgumentUnsignedHex4(0, "x(mm)");
+			setArgumentSeparator(1);
+			setArgumentUnsignedHex4(2, "y(mm)");
+		}
+		return commandLengthValueForMode(mode, 9, 0);
     }
 	// init Router
     else if (commandHeader == COMMAND_INIT_JENNIC_AS_ROUTER) {
 		// same output / input
 		if (fillDeviceArgumentList) {
-			setFunctionNoArgument("initJennicAsRouter");
+			setFunctionNoArgumentAndNoResult("initJennicAsRouter");
 		}
 		return 0;
     }
 	// Network status
 	else if (commandHeader == COMMANG_GET_RECEIVER_NETWORK_STATUS) {
-        if (mode == DEVICE_MODE_INPUT) {
-            if (fillDeviceArgumentList) {
-				setFunctionNoArgument("getReceiverNetworkStatus");
-            }
-            return 0;
-        } else if (mode == DEVICE_MODE_OUTPUT) {
-            if (fillDeviceArgumentList) {
-				setFunction("getReceiverNetworkStatus", 1);
-				setArgumentUnsignedHex4(0, "status");
-            }
-            return 2;
-        }
-	}
+		if (fillDeviceArgumentList) {
+			setFunction("getReceiverNetworkStatus", 0, 1);
+			setResultUnsignedHex4(0, "status");
+		}
+		return commandLengthValueForMode(mode, 0, 2);
+ 	}   
     return DEVICE_HEADER_NOT_HANDLED;
 }
 

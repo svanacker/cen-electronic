@@ -22,8 +22,7 @@ void setFunctionNoArgumentAndNoResult(char* functionName) {
 	deviceMethodMetaData.resultsSize = 0;
 }
 
-
-int commandLengthValueForMode(int mode, int input, int output) {
+inline int commandLengthValueForMode(int mode, int input, int output) {
 	if (mode == DEVICE_MODE_INPUT) {
 		return input;
 	}

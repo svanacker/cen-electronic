@@ -1,5 +1,5 @@
-#ifndef DELAY30F_H
-#define DELAY30F_H
+#ifndef CEN_DELAY_H
+#define CEN_DELAY_H
 
 /**
  * Sleeps during 1 micro second.

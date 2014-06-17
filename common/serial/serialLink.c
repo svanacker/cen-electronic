@@ -24,7 +24,7 @@ void openSerialLink(StreamLink* streamLink,
         unsigned char outputBufferLength,
         OutputStream* outputStream,
         int serialPortIndex,
-        int speed) {
+        long speed) {
     if (serialPortIndex != 1) {
         appendStringAndDec(getOutputStreamLogger(ALWAYS), "\ninitSerialInputBuffer:", serialPortIndex);
     }

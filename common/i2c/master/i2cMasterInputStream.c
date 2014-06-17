@@ -3,6 +3,8 @@
 #include "i2cMaster.h"
 #include "i2cMasterSetup.h"
 
+#include "../../../common/delay/cenDelay.h"
+
 #include "../../../common/io/buffer.h"
 #include "../../../common/io/stream.h"
 #include "../../../common/io/inputStream.h"

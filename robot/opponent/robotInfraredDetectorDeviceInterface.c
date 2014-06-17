@@ -13,35 +13,20 @@ unsigned int deviceRobotInfraredDetectorGetSoftwareRevision() {
 int deviceRobotInfraredDetectorGetInterface(char header, int mode, bool fillDeviceArgumentList ) {
 	// command to ask
 	if (header == COMMAND_INFRARED_DETECTOR_DETECTION) {
-	    if (mode == DEVICE_MODE_INPUT) {
-            if (fillDeviceArgumentList) {
-				setFunction("infraredDetector", 1);
-				setArgumentUnsignedHex2(0, "backward/forward");
-            }
-            return 2;
-	    } else if (mode == DEVICE_MODE_OUTPUT) {
-            if (fillDeviceArgumentList) {
-				setFunction("infraredDetector", 1);
-				setArgumentUnsignedHex2(0, "True/False");
-            }
-            return 2;
-	    }
+		if (fillDeviceArgumentList) {
+			setFunction("infraredDetector", 1, 1);
+			setArgumentUnsignedHex2(0, "backward/forward");
+			setResultUnsignedHex2(0, "True/False");
+		}
+		return commandLengthValueForMode(mode, 2, 2);
 	}
 	// Notification !
 	else if (header == NOTIFY_INFRARED_DETECTOR_DETECTION) {
-	    if (mode == DEVICE_MODE_OUTPUT) {
-            if (fillDeviceArgumentList) {
-				setFunction("notifyInfraredDetector", 1);
-				setArgumentUnsignedHex2(0, "backward/forward");
-            }
-            return 2;
-		// Input Mode is not used (notification)
-	    } else if (mode == DEVICE_MODE_INPUT) {
-            if (fillDeviceArgumentList) {
-				setFunctionNoArgument("notifyInfraredDetector");
-            }
-            return 0;
-	    }
+		if (fillDeviceArgumentList) {
+			setFunction("notifyInfraredDetector", 0, 1);
+			setResultUnsignedHex2(0, "backward/forward");
+		}
+		return commandLengthValueForMode(mode, 0, 2);
 	}
     return DEVICE_HEADER_NOT_HANDLED;
 }

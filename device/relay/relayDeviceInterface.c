@@ -11,23 +11,13 @@ unsigned int deviceRelayGetSotwareRevision() {
 }
 
 int deviceRelayGetInterface(char header, int mode, bool fillDeviceArgumentList) {
-	if (mode == DEVICE_MODE_INPUT) {
-		if (header == COMMAND_RELAY) {
-			if (fillDeviceArgumentList) {
-				setFunction("setRelay", 2);
-				setArgumentUnsignedHex2(0, "RelayIdx");
-				setArgumentUnsignedChar1(1, "Value");
-			}
-			return 3;
+	if (header == COMMAND_RELAY) {
+		if (fillDeviceArgumentList) {
+			setFunction("setRelay", 2, 0);
+			setArgumentUnsignedHex2(0, "RelayIdx");
+			setArgumentUnsignedChar1(1, "Value");
 		}
-	}
-	else if (mode == DEVICE_MODE_OUTPUT){
-		if (header == COMMAND_RELAY) {
-			if (fillDeviceArgumentList) {
-				setFunctionNoArgument("setRelay");
-			}
-			return 0;
-		}
+		return commandLengthValueForMode(mode, 3, 0);
 	}
 	return DEVICE_HEADER_NOT_HANDLED;
 }

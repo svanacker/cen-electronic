@@ -12,31 +12,17 @@ unsigned int deviceArm2012GetSoftwareRevision() {
 
 int deviceArm2012GetInterface(char header, int mode, bool fillDeviceArgumentList) {
     if (header == COMMAND_ARM_2012_UP) {
-        if (mode == DEVICE_MODE_INPUT) {
-            if (fillDeviceArgumentList) {
-				setFunction("armUp", 1);
-				setArgumentUnsignedHex2(0, "armIdx");
-            }
-            return 2;
-        } else if (mode == DEVICE_MODE_OUTPUT) {
-            if (fillDeviceArgumentList) {
-				setFunctionNoArgument("armUp");
-            }
-            return 0;
-        }
+		if (fillDeviceArgumentList) {
+			setFunction("armUp", 1, 0);
+			setArgumentUnsignedHex2(0, "armIdx");
+		}
+		return commandLengthValueForMode(mode, 2, 0);
     } else if (header == COMMAND_ARM_2012_DOWN) {
-        if (mode == DEVICE_MODE_INPUT) {
-            if (fillDeviceArgumentList) {
-				setFunction("armDown", 1);
-				setArgumentUnsignedHex2(0, "armIdx");
-           }
-            return 2;
-        } else if (mode == DEVICE_MODE_OUTPUT) {
-            if (fillDeviceArgumentList) {
-				setFunctionNoArgument("armDown");
-            }
-            return 0;
-        }
+		if (fillDeviceArgumentList) {
+			setFunction("armDown", 1, 0);
+			setArgumentUnsignedHex2(0, "armIdx");
+		}
+        return commandLengthValueForMode(mode, 2, 0);
 	}
     return DEVICE_HEADER_NOT_HANDLED;
 }

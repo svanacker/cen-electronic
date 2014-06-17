@@ -10,19 +10,19 @@ int devicePliers2011GetInterface(char header, int mode, bool fillDeviceArgumentL
     if (header == COMMAND_PLIERS_2011_CLOSE) {
 		// SAME INPUT / OUTPUT
 		if (fillDeviceArgumentList) {
-			setFunctionNoArgument("pliersClose");
+			setFunctionNoArgumentAndNoResult("pliersClose");
             return 0;
         }
     } else if (header == COMMAND_PLIERS_2011_INIT_CLOSE) {
 		// SAME INPUT / OUTPUT
 		if (fillDeviceArgumentList) {
-			setFunctionNoArgument("initPliersClose");
+			setFunctionNoArgumentAndNoResult("initPliersClose");
             return 0;
 		}
     } else if (header == COMMAND_PLIERS_2011_OPEN) {
 		// SAME INPUT / OUTPUT
 		if (fillDeviceArgumentList) {
-			setFunctionNoArgument("pliersOpen");
+			setFunctionNoArgumentAndNoResult("pliersOpen");
             return 0;
 		}
     }

@@ -14,6 +14,7 @@
  * @param outputStream pointer on non-initialized structure
  * @param outputBuffer the buffer for outputStream
  * @param serialPortIndex the index of the port (SERIAL_PORT_INDEX_1 / SERIAL_PORT_INDEX_2)
+ * @param speed the speed of RS232 in Bauds (Ex : 115200)
  */
 void openSerialLink(StreamLink* streamLink,
         Buffer* inputBuffer,
@@ -24,7 +25,7 @@ void openSerialLink(StreamLink* streamLink,
         unsigned char outputBufferLength,
         OutputStream* outputStream,
         int serialPortIndex,
-        int speed);
+        long speed);
 
 /**
  * Closes the stream link.

@@ -7,7 +7,7 @@
 
 #include "../../common/commons.h"
 #include "../../common/math/cenMath.h"
-#include "../../common/delay/delay30F.h"
+#include "../../common/delay/cenDelay.h"
 
 #include "../../common/pwm/servoPwm.h"
 

@@ -4,7 +4,7 @@
 
 #include "adcutils.h"
 
-#include "../../common/delay/delay30F.h"
+#include "../../common/delay/cenDelay.h"
 
 int getANX ( char channel) {
    	ADCON1bits.ADON = 0; //Stop ADC
