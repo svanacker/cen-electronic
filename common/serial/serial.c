@@ -12,15 +12,15 @@ void openSerial(unsigned char serialPortIndex, unsigned long baudRate) {
 
     // Fcy de (117964800/4) = 29491200 hz
     // UxBRG = FCY / (Vitesse * 16) - 1
-    // ubrg = 191;		// 9600 bps
-    // ubrg = 95;		// 19200 bps
+    // ubrg = 191;        // 9600 bps
+    // ubrg = 95;        // 19200 bps
 
     unsigned int ubrg = FCY / (baudRate * 16) - 1;
     if (serialPortIndex == SERIAL_PORT_1) {
         OpenUART1(config1, config2, ubrg);
         // 0 => UART on U1TX and U1RX
         // 1 => UART1 on U1ATX U1ARX
-		// no alternate mode because UARTxx are on separate PINs
+        // no alternate mode because UARTxx are on separate PINs
         U1MODEbits.ALTIO = 1;
         // Interrupt whenever a character is received
         // Used for receiving a single character
@@ -79,24 +79,24 @@ void simulateDelay() {
 #endif
 
 void serialPutc(unsigned char serialPortIndex, char c) {
-	// SERIAL 1
+    // SERIAL 1
     if (serialPortIndex == SERIAL_PORT_1) {
         // waits for transmit buffer to be ready
-		#ifndef MPLAB_SIMULATION
-		        while (U1STAbits.UTXBF);
-		#else
-		        simulateDelay();
-		#endif
+        #ifndef MPLAB_SIMULATION
+                while (U1STAbits.UTXBF);
+        #else
+                simulateDelay();
+        #endif
         // transmits char
         WriteUART1(c);
-	// SERIAL 2
+    // SERIAL 2
     } else if (serialPortIndex == SERIAL_PORT_2) {
-		#ifndef MPLAB_SIMULATION
-		        while (U2STAbits.UTXBF);
-		#else
-		        simulateDelay();
-		#endif
+        #ifndef MPLAB_SIMULATION
+                while (U2STAbits.UTXBF);
+        #else
+                simulateDelay();
+        #endif
         // transmits char
         WriteUART2(c);
-	}
+    }
 }

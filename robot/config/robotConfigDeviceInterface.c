@@ -13,8 +13,8 @@ unsigned int getConfigSoftwareRevision(void) {
 int deviceRobotConfigGetInterface(char header, int mode, bool fillDeviceArgumentList) {
     if (header == COMMAND_CONFIG) {
         if (fillDeviceArgumentList) {
-			setFunction("robotConfig", 0, 1);
-			setResultUnsignedHex4(0, "value");
+            setFunction("robotConfig", 0, 1);
+            setResultUnsignedHex4(0, "value");
         }
         return commandLengthValueForMode(mode, 0, 4);
     }

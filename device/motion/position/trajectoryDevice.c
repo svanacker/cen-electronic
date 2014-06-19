@@ -44,14 +44,14 @@ void deviceTrajectoryHandleRawData(char header,
         InputStream* inputStream,
         OutputStream* outputStream) {
     if (header == COMMAND_GET_ABSOLUTE_POSITION) {
-		ackCommand(outputStream, TRAJECTORY_DEVICE_HEADER, COMMAND_GET_ABSOLUTE_POSITION);
+        ackCommand(outputStream, TRAJECTORY_DEVICE_HEADER, COMMAND_GET_ABSOLUTE_POSITION);
 
         updateTrajectoryWithNoThreshold();
         notifyAbsolutePositionWithoutHeader(outputStream);
 
     }
     else if (header == COMMAND_DEBUG_GET_ABSOLUTE_POSITION) {
-		ackCommand(outputStream, TRAJECTORY_DEVICE_HEADER, COMMAND_DEBUG_GET_ABSOLUTE_POSITION);
+        ackCommand(outputStream, TRAJECTORY_DEVICE_HEADER, COMMAND_DEBUG_GET_ABSOLUTE_POSITION);
 
         updateTrajectoryWithNoThreshold();
 
@@ -66,7 +66,7 @@ void deviceTrajectoryHandleRawData(char header,
         inputStream->readChar(inputStream);
         long newAngle = readHex4(inputStream);
 
-		ackCommand(outputStream, TRAJECTORY_DEVICE_HEADER, COMMAND_SET_ABSOLUTE_POSITION);
+        ackCommand(outputStream, TRAJECTORY_DEVICE_HEADER, COMMAND_SET_ABSOLUTE_POSITION);
 
         OutputStream* debugOutputStream = getDebugOutputStreamLogger();
 

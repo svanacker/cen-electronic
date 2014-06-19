@@ -25,24 +25,24 @@ static DriverDataDispatcher localDispatcher;
 * Transmit the buffer locally, call the device which write data out to the stream
 */
 void _driverDataDispatcherTransmitLocal(DriverDataDispatcher* dispatcher,
-									 Buffer* inputBuffer,
-									 Buffer* outputBuffer,
-									 int dataToTransferCount,
-									 int dataToReceiveCount
-	) {
-	handleStreamInstruction(inputBuffer, outputBuffer, NULL, NULL, NULL);
+                                     Buffer* inputBuffer,
+                                     Buffer* outputBuffer,
+                                     int dataToTransferCount,
+                                     int dataToReceiveCount
+    ) {
+    handleStreamInstruction(inputBuffer, outputBuffer, NULL, NULL, NULL);
 }
 
 /**
 * Add the local driver data dispatcher to the list.
 */
 DriverDataDispatcher* addLocalDriverDataDispatcher() {
-	// localStreamLink = aLocalStreamLink;
-	localDispatcher.transmitMode = TRANSMIT_LOCAL;
-	localDispatcher.name = "LOCAL_DISPATCHER";
-	localDispatcher.address = 0;
-	localDispatcher.driverDataDispatcherTransmitData = _driverDataDispatcherTransmitLocal;
-	addDriverDataDispatcher(&localDispatcher);
-	return &localDispatcher;
+    // localStreamLink = aLocalStreamLink;
+    localDispatcher.transmitMode = TRANSMIT_LOCAL;
+    localDispatcher.name = "LOCAL_DISPATCHER";
+    localDispatcher.address = 0;
+    localDispatcher.driverDataDispatcherTransmitData = _driverDataDispatcherTransmitLocal;
+    addDriverDataDispatcher(&localDispatcher);
+    return &localDispatcher;
 }
 

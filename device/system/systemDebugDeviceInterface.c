@@ -10,22 +10,22 @@ int deviceSystemDebugGetInterface(char header, int mode, bool fillDeviceArgument
     if (header == COMMAND_LOG) {
         if (mode == DEVICE_MODE_INPUT) {
             if (fillDeviceArgumentList) {
-				setFunction("setLog", 2);
-				setArgumentUnsignedHex2(0, "handlerIdx");
-				setArgumentUnsignedHex2(1, "logLevel");
+                setFunction("setLog", 2);
+                setArgumentUnsignedHex2(0, "handlerIdx");
+                setArgumentUnsignedHex2(1, "logLevel");
             }
             return 4;
         } else if (mode == DEVICE_MODE_OUTPUT) {
             if (fillDeviceArgumentList) {
-				setFunctionNoArgument("setLog");
+                setFunctionNoArgument("setLog");
             }
             return 0;
         }
     }
-	else if (header == COMMAND_DEBUG_I2C) {
+    else if (header == COMMAND_DEBUG_I2C) {
         // NO difference between INPUT and OUTPUT : No Argument
         if (fillDeviceArgumentList) {
-			setFunction("i2cDebug", 0);
+            setFunction("i2cDebug", 0);
         }
         return 0;
     }

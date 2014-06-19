@@ -19,29 +19,29 @@ const char* deviceSystemGetName() {
 int deviceSystemGetInterface(char commandHeader, int mode, bool fillDeviceArgumentList) {
     // getPicName()
     if (commandHeader == COMMAND_PIC_NAME) {
-		// Same INPUT/OUTPUT
+        // Same INPUT/OUTPUT
         if (fillDeviceArgumentList) {
-			setFunctionNoArgumentAndNoResult("getPicName");
+            setFunctionNoArgumentAndNoResult("getPicName");
         }
         return 0;
     } else if (commandHeader == COMMAND_PING) {
-		// Same INPUT/OUTPUT
+        // Same INPUT/OUTPUT
         if (fillDeviceArgumentList) {
-			setFunctionNoArgumentAndNoResult("ping");
+            setFunctionNoArgumentAndNoResult("ping");
         }
         return 0;
     }// wait
     else if (commandHeader == COMMAND_WAIT) {
-		if (fillDeviceArgumentList) {
-			setFunction("wait", 1, 0);
-			setArgumentUnsignedHex4(0, "ms");				
-		}
-		return commandLengthValueForMode(mode, 4, 0);
+        if (fillDeviceArgumentList) {
+            setFunction("wait", 1, 0);
+            setArgumentUnsignedHex4(0, "ms");                
+        }
+        return commandLengthValueForMode(mode, 4, 0);
     }// usage
     else if (commandHeader == COMMAND_USAGE) {
-		// Same INPUT/OUTPUT
+        // Same INPUT/OUTPUT
         if (fillDeviceArgumentList) {
-			setFunctionNoArgumentAndNoResult("usage");
+            setFunctionNoArgumentAndNoResult("usage");
         }
         return 0;
     }
@@ -49,7 +49,7 @@ int deviceSystemGetInterface(char commandHeader, int mode, bool fillDeviceArgume
 }
 
 static DeviceInterface deviceInterface = {
-	.deviceHeader = SYSTEM_DEVICE_HEADER,
+    .deviceHeader = SYSTEM_DEVICE_HEADER,
     .deviceGetName = &deviceSystemGetName,
     .deviceGetInterface = &deviceSystemGetInterface
 };

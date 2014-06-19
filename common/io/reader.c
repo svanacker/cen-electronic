@@ -27,10 +27,10 @@ char readFilteredChar(InputStream* inputStream) {
         return result;
     } else {
         writeError(IO_READER_READ_FILTERED_CHAR);
-		OutputStream* debugOutputStream = getErrorOutputStreamLogger();
-		appendString(debugOutputStream, "Char:");
+        OutputStream* debugOutputStream = getErrorOutputStreamLogger();
+        appendString(debugOutputStream, "Char:");
         append(debugOutputStream, b0);
-		appendString(debugOutputStream, "Hex:");
+        appendString(debugOutputStream, "Hex:");
         appendHex2(debugOutputStream, b0);
 
         return -1;
@@ -38,14 +38,14 @@ char readFilteredChar(InputStream* inputStream) {
 }
 
 char readBinaryChar(InputStream* inputStream) {
-	char result = inputStream->readChar(inputStream);
-	return result;
+    char result = inputStream->readChar(inputStream);
+    return result;
 }
 
 int readBinaryWord(InputStream* inputStream) {
-	char b0 = inputStream->readChar(inputStream);
-	char b1 = inputStream->readChar(inputStream);
-	return (b0 << 8) | b1;
+    char b0 = inputStream->readChar(inputStream);
+    char b1 = inputStream->readChar(inputStream);
+    return (b0 << 8) | b1;
 }
 
 
@@ -82,11 +82,11 @@ long readHex4(InputStream* inputStream) {
 }
 
 signed long readSignedHex4(InputStream* inputStream) {
-	signed long result = readHex4(inputStream);
-	if (result > 0x7FFF) {
-		result -= 0x10000;
-	}	
-	return result;
+    signed long result = readHex4(inputStream);
+    if (result > 0x7FFF) {
+        result -= 0x10000;
+    }    
+    return result;
 }
 
 float readHex6(InputStream* inputStream) {
@@ -119,7 +119,7 @@ bool checkIsAck(InputStream* inputStream) {
         OutputStream* outputStream = getErrorOutputStreamLogger();
         appendString(outputStream, "\nCHK:ACK EXP:a \t but \t find:");
         append(outputStream, ack);
-		println(outputStream);
+        println(outputStream);
     }
     return true;
 }
@@ -132,7 +132,7 @@ bool checkIsChar(InputStream* inputStream, char expectedChar) {
         append(outputStream, expectedChar);
         appendString(outputStream, " \t but \t find:");
         append(outputStream, readChar);
-		println(outputStream);
+        println(outputStream);
     }
     return true;
 }

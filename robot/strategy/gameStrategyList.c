@@ -12,24 +12,24 @@
 static GameStrategyList strategies;
 
 void clearGameStrategies() {
-	int size = strategies.size;
-	int i;
-	for (i = 0; i < size; i++) {
-		GameStrategy* strategy = strategies.strategies[i];
-		clearGameStrategy(strategy);
-	}
-	strategies.size = 0;
+    int size = strategies.size;
+    int i;
+    for (i = 0; i < size; i++) {
+        GameStrategy* strategy = strategies.strategies[i];
+        clearGameStrategy(strategy);
+    }
+    strategies.size = 0;
 }
 
 void addGameStrategy(GameStrategy* strategy, char* strategyName) {
     unsigned char size = strategies.size;
-	if (size < MAX_STRATEGY) {
-		strategy->name = strategyName;
-	    strategies.strategies[size] = strategy;
-	    strategies.size++;
-	}
-	else {
-		writeError(TOO_MUCH_STRATEGIES);
+    if (size < MAX_STRATEGY) {
+        strategy->name = strategyName;
+        strategies.strategies[size] = strategy;
+        strategies.size++;
+    }
+    else {
+        writeError(TOO_MUCH_STRATEGIES);
     }
 }
 
@@ -42,11 +42,11 @@ int getStrategyCount() {
 }
 
 void printGameStrategyList(OutputStream* outputStream) {
-	int i;
-	int size = strategies.size;
-	println(outputStream);	
-	for (i = 0; i < size; i++) {
-		GameStrategy* strategy = strategies.strategies[i];
-		printGameStrategy(outputStream, strategy);
-	}
+    int i;
+    int size = strategies.size;
+    println(outputStream);    
+    for (i = 0; i < size; i++) {
+        GameStrategy* strategy = strategies.strategies[i];
+        printGameStrategy(outputStream, strategy);
+    }
 }

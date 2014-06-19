@@ -24,73 +24,73 @@
 
 void computeBestNextTarget(GameStrategyContext* strategyContext) {
 
-	GameStrategy* gameStrategy = strategyContext->gameStrategy;
-	// float elapsedMatchTime = strategyContext->elapsedMatchTime;
-	Location* currentLocation = strategyContext->nearestLocation;
+    GameStrategy* gameStrategy = strategyContext->gameStrategy;
+    // float elapsedMatchTime = strategyContext->elapsedMatchTime;
+    Location* currentLocation = strategyContext->nearestLocation;
 
-	// Opponent opponent = RobotUtils.getRobotAttribute(Opponent.class, servicesProvider);
-	float maxGain = 0.0f;
-	// Loop on potential target
-	int strategyItemIndex;
-	int gameStrategyItemCount = getStrategyItemCount(gameStrategy);
-	for (strategyItemIndex = 0; strategyItemIndex < gameStrategyItemCount; strategyItemIndex++) {
-		GameStrategyItem* strategyItem = getStrategyItem(gameStrategy, strategyItemIndex);
-		
-		GameTarget* target = strategyItem->target;
-	
-		if (target->status != TARGET_AVAILABLE) {
-			continue;
-		}
-		// getGainFunction* targetGain = item->gainFunction();
-		int actionIndex;
-		GameTargetActionList* actionList = &(target->actionList);
-		int targetActionCount = getGameTargetActionCount(actionList);
-		for (actionIndex = 0; actionIndex < targetActionCount; actionIndex++) {
-			GameTargetAction* targetAction = getGameTargetAction(actionList, actionIndex);
-			Location* startLocation = targetAction->startLocation;
-			int distanceCost = computeBestPath(&(strategyContext->currentTrajectory), currentLocation, startLocation);
-			
-			// LOG costs
-			//printLocationList(getOutputStreamLogger(INFO), "Result=", &(strategyContext->currentTrajectory));
+    // Opponent opponent = RobotUtils.getRobotAttribute(Opponent.class, servicesProvider);
+    float maxGain = 0.0f;
+    // Loop on potential target
+    int strategyItemIndex;
+    int gameStrategyItemCount = getStrategyItemCount(gameStrategy);
+    for (strategyItemIndex = 0; strategyItemIndex < gameStrategyItemCount; strategyItemIndex++) {
+        GameStrategyItem* strategyItem = getStrategyItem(gameStrategy, strategyItemIndex);
+        
+        GameTarget* target = strategyItem->target;
+    
+        if (target->status != TARGET_AVAILABLE) {
+            continue;
+        }
+        // getGainFunction* targetGain = item->gainFunction();
+        int actionIndex;
+        GameTargetActionList* actionList = &(target->actionList);
+        int targetActionCount = getGameTargetActionCount(actionList);
+        for (actionIndex = 0; actionIndex < targetActionCount; actionIndex++) {
+            GameTargetAction* targetAction = getGameTargetAction(actionList, actionIndex);
+            Location* startLocation = targetAction->startLocation;
+            int distanceCost = computeBestPath(&(strategyContext->currentTrajectory), currentLocation, startLocation);
+            
+            // LOG costs
+            //printLocationList(getOutputStreamLogger(INFO), "Result=", &(strategyContext->currentTrajectory));
 
-			// float gain = 0.0f; //targetGain(target, action, distance, elapsedMatchTime, 0.0, 0.0);
-			// log(gainData, target, gain);
+            // float gain = 0.0f; //targetGain(target, action, distance, elapsedMatchTime, 0.0, 0.0);
+            // log(gainData, target, gain);
 
-			#ifdef NEXT_GAME_STRATEGY_ITEM_COMPUTER_DEBUG
-				OutputStream outputStream = getOutputStreamLogger(INFO);
-				appendKeyAndName(outputStream, "start->location:", currentLocation->name);
-				appendKeyAndName(outputStream, ", end->location:", startLocation->name);
-				appendKeyAndName(outputStream, ", target:", target->name);
-				appendStringAndDec(outputStream, ", distanceCost=", distanceCost);
-				println(outputStream);
-			#endif
+            #ifdef NEXT_GAME_STRATEGY_ITEM_COMPUTER_DEBUG
+                OutputStream outputStream = getOutputStreamLogger(INFO);
+                appendKeyAndName(outputStream, "start->location:", currentLocation->name);
+                appendKeyAndName(outputStream, ", end->location:", startLocation->name);
+                appendKeyAndName(outputStream, ", target:", target->name);
+                appendStringAndDec(outputStream, ", distanceCost=", distanceCost);
+                println(outputStream);
+            #endif
 
-			if (distanceCost == MAX_COST) {
-				continue;
-			}
-			float gain = 1000.0f / (float) distanceCost;
-			if (gain > maxGain) {
-				maxGain = gain;
-				strategyContext->currentTargetAction = targetAction;
-				strategyContext->currentTarget = target;
-			}
-		}
-	}
+            if (distanceCost == MAX_COST) {
+                continue;
+            }
+            float gain = 1000.0f / (float) distanceCost;
+            if (gain > maxGain) {
+                maxGain = gain;
+                strategyContext->currentTargetAction = targetAction;
+                strategyContext->currentTarget = target;
+            }
+        }
+    }
 
-	// updates the trajectory to fit to the best target
-	GameTargetAction* targetAction = strategyContext->currentTargetAction;
-	if (targetAction != NULL) {
-		Location* startLocation = targetAction->startLocation;
-		computeBestPath(&(strategyContext->currentTrajectory), currentLocation, startLocation);
-		printLocationList(getOutputStreamLogger(INFO), "Result=", &(strategyContext->currentTrajectory));
-	}
+    // updates the trajectory to fit to the best target
+    GameTargetAction* targetAction = strategyContext->currentTargetAction;
+    if (targetAction != NULL) {
+        Location* startLocation = targetAction->startLocation;
+        computeBestPath(&(strategyContext->currentTrajectory), currentLocation, startLocation);
+        printLocationList(getOutputStreamLogger(INFO), "Result=", &(strategyContext->currentTrajectory));
+    }
 
-	#ifdef NEXT_GAME_STRATEGY_ITEM_COMPUTER_DEBUG
-		if (strategyContext->targetAction != NULL) {
-			OutputStream outputStream = getOutputStreamLogger(INFO);
-			appendStringAndDecf(outputStream, "cost=", maxGain);
-			printGameTarget(outputStream, bestTarget, false);
-			printLocationList(outputStream, ", currentTrajectory:", &(strategyContext->currentTrajectory));
-		}
-	#endif
+    #ifdef NEXT_GAME_STRATEGY_ITEM_COMPUTER_DEBUG
+        if (strategyContext->targetAction != NULL) {
+            OutputStream outputStream = getOutputStreamLogger(INFO);
+            appendStringAndDecf(outputStream, "cost=", maxGain);
+            printGameTarget(outputStream, bestTarget, false);
+            printLocationList(outputStream, ", currentTrajectory:", &(strategyContext->currentTrajectory));
+        }
+    #endif
 }

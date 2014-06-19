@@ -66,30 +66,30 @@ bool handleNotificationFromDispatcher(DriverDataDispatcher* dispatcher) {
         }
         int bufferSize = getBufferElementsCount(inputBuffer);
 
-		if (bufferSize < DEVICE_AND_COMMAND_HEADER_LENGTH) {
-			return false;
-		}
+        if (bufferSize < DEVICE_AND_COMMAND_HEADER_LENGTH) {
+            return false;
+        }
 
         char deviceHeader = bufferGetCharAtIndex(inputBuffer, DEVICE_HEADER_INDEX);
         char commandHeader = bufferGetCharAtIndex(inputBuffer, DEVICE_HEADER_INDEX);
 
-		/*
-		OutputStream* errorOutputStream = getErrorOutputStreamLogger();
+        /*
+        OutputStream* errorOutputStream = getErrorOutputStreamLogger();
         appendStringAndDec(errorOutputStream, "bufferSize=", bufferSize);
         appendStringAndDec(errorOutputStream, ", header=", header);
         println(errorOutputStream);
-		*/
-	
+        */
+    
         // find the device corresponding to this header
         const Device* device = deviceDataDispatcherFindDevice(deviceHeader, commandHeader, bufferSize, DEVICE_MODE_OUTPUT);
-		if (device == NULL) {
-			// For strategy device which send informations.
-			device = deviceDataDispatcherFindDevice(deviceHeader, commandHeader, bufferSize, DEVICE_MODE_INPUT);
-		}
-		if (device == NULL) {
-			return false;
-		}
-		/* TODO : Distinguish the case when there is not enough bufferSize.
+        if (device == NULL) {
+            // For strategy device which send informations.
+            device = deviceDataDispatcherFindDevice(deviceHeader, commandHeader, bufferSize, DEVICE_MODE_INPUT);
+        }
+        if (device == NULL) {
+            return false;
+        }
+        /* TODO : Distinguish the case when there is not enough bufferSize.
         // if the device was not found, we continue
         if (device == NULL) {
             writeError(DEVICE_NOT_FOUND);
@@ -102,7 +102,7 @@ bool handleNotificationFromDispatcher(DriverDataDispatcher* dispatcher) {
 
             return false;
         }
-		*/
+        */
 
         deviceHandleCallbackRawDataFunction* callbackFunction = device->deviceHandleCallbackRawData;
 

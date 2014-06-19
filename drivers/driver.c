@@ -10,7 +10,7 @@ bool driverInit(const DriverDescriptor* driverDescriptor) {
     OutputStream* outputStream = getDebugOutputStreamLogger();
     appendString(outputStream, "DRIVER :");
   
-	appendString(outputStream, driverName);
+    appendString(outputStream, driverName);
 
     return result;
 }

@@ -25,8 +25,8 @@ DeviceList* getDeviceList() {
 }
 
 void initDeviceList(Device (*deviceListArray)[], unsigned char deviceListSize) {
-	deviceList.devices = deviceListArray;
-	deviceList.maxSize = deviceListSize;
+    deviceList.devices = deviceListArray;
+    deviceList.maxSize = deviceListSize;
 }
 
 /**
@@ -36,7 +36,7 @@ Device* addDevice(DeviceInterface* interface,
         DeviceDescriptor* descriptor,
         int transmitMode,
         int address,
-		char* addressString) {
+        char* addressString) {
     if (&deviceList.maxSize == 0) {
         writeError(DEVICES_LIST_NOT_INITIALIZED);
         return NULL;
@@ -44,18 +44,18 @@ Device* addDevice(DeviceInterface* interface,
 
     unsigned char size = deviceList.size;
     if (size < deviceList.maxSize) {
-		Device* device = getDevice(size);
+        Device* device = getDevice(size);
         // get a device already allocated
         device->interface = interface;
         device->descriptor = descriptor;
         device->transmitMode = transmitMode;
         device->address = address;
-		device->addressString = addressString;
+        device->addressString = addressString;
         deviceList.size++;
-		return device;
+        return device;
     } else {
         writeError(TOO_MUCH_DEVICES);
-		return NULL;
+        return NULL;
     }
 }
 
@@ -77,7 +77,7 @@ Device* addI2CRemoteDevice(DeviceInterface* interface, int i2cAddress) {
 }
 
 Device* addZigbeeRemoteDevice(DeviceInterface* interface, char* addressString) {
-	int address = stringChecksum(addressString);
+    int address = stringChecksum(addressString);
     return addDevice(interface, NULL, TRANSMIT_ZIGBEE, address, addressString);
 }
 
@@ -86,12 +86,12 @@ Device* addLocalDevice(DeviceInterface* interface, DeviceDescriptor* descriptor)
 }
 
 Device* getDevice(int index) {
-	Device* result = (Device*) deviceList.devices;
-	// we don't need use sizeof because our pointer are Device* pointer, so the length
-	// is already of 2
-	result += index;
+    Device* result = (Device*) deviceList.devices;
+    // we don't need use sizeof because our pointer are Device* pointer, so the length
+    // is already of 2
+    result += index;
 
-	return result;
+    return result;
 }
 
 int getDeviceCount() {

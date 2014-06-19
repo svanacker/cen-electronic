@@ -24,8 +24,8 @@ bool deviceLCDIsOk() {
 }
 
 void deviceLCDHandleRawData(char commandHeader,
-					        InputStream* inputStream,
-					        OutputStream* outputStream) {
+                            InputStream* inputStream,
+                            OutputStream* outputStream) {
     if (commandHeader == COMMAND_LCD) {
         int lcdTextLength = readHex2(inputStream);
         ackCommand(outputStream, LCD_DEVICE_HEADER, COMMAND_LCD);

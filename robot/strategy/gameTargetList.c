@@ -13,40 +13,40 @@
 static GameTargetList targets;
 
 GameTargetList* getGameTargetList() {
-	return &targets;
+    return &targets;
 }
 
 void clearGameTargets() {
-	int i;
-	int size = targets.size;
-	for (i = 0; i < size; i++) {
-		GameTarget* target = targets.targets[i];
-		clearGameTarget(target);
-	}	
-	targets.size = 0;
-	targets.targetHandledCount = 0;
+    int i;
+    int size = targets.size;
+    for (i = 0; i < size; i++) {
+        GameTarget* target = targets.targets[i];
+        clearGameTarget(target);
+    }    
+    targets.size = 0;
+    targets.targetHandledCount = 0;
 }
 
 void incTargetHandledCount() {
-	targets.targetHandledCount++;
+    targets.targetHandledCount++;
 }
 
 unsigned char getTargetHandledCount() {
-	return targets.targetHandledCount;
+    return targets.targetHandledCount;
 }
 
 void addGameTarget(GameTarget* target, char* targetName, int gain, Location* location) {
     unsigned char size = targets.size;
-	if (size < MAX_TARGET) {
-		target->name = targetName;
-		target->status = TARGET_AVAILABLE;
-		target->gain = gain;
-		target->location = location;
-	    targets.targets[size] = target;
-	    targets.size++;
-	}
-	else {
-		writeError(TOO_MUCH_TARGETS);
+    if (size < MAX_TARGET) {
+        target->name = targetName;
+        target->status = TARGET_AVAILABLE;
+        target->gain = gain;
+        target->location = location;
+        targets.targets[size] = target;
+        targets.size++;
+    }
+    else {
+        writeError(TOO_MUCH_TARGETS);
     }
 }
 
@@ -59,27 +59,27 @@ int getGameTargetCount() {
 }
 
 bool containsAvailableTarget() {
-	int i;
-	int size = targets.size;
-	for (i = 0; i < size; i++) {
-		GameTarget* target = targets.targets[i];
-		if (target->status == TARGET_AVAILABLE) {
-			return true;
-		}	
-	}
-	return false;
+    int i;
+    int size = targets.size;
+    for (i = 0; i < size; i++) {
+        GameTarget* target = targets.targets[i];
+        if (target->status == TARGET_AVAILABLE) {
+            return true;
+        }    
+    }
+    return false;
 }
 
 // DEBUG
 
 void printGameTargetList(OutputStream* outputStream) {
-	int i;
-	int size = targets.size;
-	println(outputStream);	
-	appendStringAndDec(outputStream, "targetHandledCount:", targets.targetHandledCount);
-	println(outputStream);
-	for (i = 0; i < size; i++) {
-		GameTarget* target = targets.targets[i];
-		printGameTarget(outputStream, target, true);
-	}
+    int i;
+    int size = targets.size;
+    println(outputStream);    
+    appendStringAndDec(outputStream, "targetHandledCount:", targets.targetHandledCount);
+    println(outputStream);
+    for (i = 0; i < size; i++) {
+        GameTarget* target = targets.targets[i];
+        printGameTarget(outputStream, target, true);
+    }
 }

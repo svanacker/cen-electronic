@@ -16,7 +16,7 @@ int deviceEndMatchDetectorGetInterface(char header, int mode,
     if (mode == DEVICE_MODE_OUTPUT) {
         if (header == COMMAND_NOTIFY_MATCH_ENDED) {
             if (fillDeviceArgumentList) {
-				setFunctionNoArgumentAndNoResult("notifyMatchEnd");
+                setFunctionNoArgumentAndNoResult("notifyMatchEnd");
             }
             return 0;
         }

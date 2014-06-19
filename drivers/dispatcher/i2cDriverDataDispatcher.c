@@ -37,8 +37,8 @@ static Buffer i2cTempBuffer;
 void addI2CDriverDataDispatcher(DriverDataDispatcher* i2cDispatcher,
         char* dispatcherName,
         Buffer* i2cMasterInputBuffer,
-		char (*i2cMasterInputBufferArray)[],
-		unsigned char i2cMasterInputBufferLength,
+        char (*i2cMasterInputBufferArray)[],
+        unsigned char i2cMasterInputBufferLength,
         InputStream* i2cMasterInputStream,
         OutputStream* i2cMasterOutputStream,
         int i2cAddress) {

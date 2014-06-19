@@ -5,7 +5,7 @@
 #include <timer.h>
 
 #ifndef PROG_32
-	#include <delay.h>
+    #include <delay.h>
 #endif
 
 #include "../../common/error/error.h"
@@ -23,43 +23,43 @@
 static TimerList timerList;
 
 TimerList* getTimerList() {
-	return &timerList;
+    return &timerList;
 }
 
 void initTimerList(Timer (*timerListArray)[], unsigned char timerListSize) {
-	timerList.timers = timerListArray;
-	timerList.maxSize = timerListSize;
+    timerList.timers = timerListArray;
+    timerList.maxSize = timerListSize;
 }
 
 Timer* addTimer(int timerCode,
-        		unsigned long timeDiviser,
-        		interruptTimerCallbackFunc* callback) {
+                unsigned long timeDiviser,
+                interruptTimerCallbackFunc* callback) {
     unsigned char size = timerList.size;
-	if (size < timerList.maxSize) {
-		Timer* result = (Timer*) timerList.timers;
-	 	result += size;
-		result->time = 0;
-		result->markTime = 0;
-	    result->timerCode = timerCode;
-	    result->timeDiviser = timeDiviser;
-	    result->callback = callback;
-	    result->enabled = false;
-	    result->lock = false;
-	    result->working = false;
+    if (size < timerList.maxSize) {
+        Timer* result = (Timer*) timerList.timers;
+         result += size;
+        result->time = 0;
+        result->markTime = 0;
+        result->timerCode = timerCode;
+        result->timeDiviser = timeDiviser;
+        result->callback = callback;
+        result->enabled = false;
+        result->lock = false;
+        result->working = false;
 
-    	timerList.size++;
-		return result;
-	}
-	else {
-		writeError(TOO_MUCH_TIMERS);
-		return NULL;
-	}
+        timerList.size++;
+        return result;
+    }
+    else {
+        writeError(TOO_MUCH_TIMERS);
+        return NULL;
+    }
 }
 
 Timer* getTimerByIndex(int index) {
-	Timer* result = (Timer*) timerList.timers;
-	result += index;
-	return result;
+    Timer* result = (Timer*) timerList.timers;
+    result += index;
+    return result;
 }
 
 Timer* getTimerByCode(int timerCode) {
@@ -85,7 +85,7 @@ void initTimers() {
     unsigned int config2;
     unsigned int period;
 
-	#ifndef PROG_32
+    #ifndef PROG_32
     config1 = (T1_ON //T1ON = 1 Active le TIMER1
             & T1_IDLE_CON //operate during sleep
             & T1_GATE_OFF //Timer Gate time accumulation disabled
@@ -102,7 +102,7 @@ void initTimers() {
        tempo in seconds
        TCY in seconds
        T1_PS diviseur : 1 or 4 or 16 or 256
-	  
+      
        period = Tempo ( TCY * T1_PS)
        57444  = 0.5   ( 0.000000034 * 256 )
      */
@@ -115,7 +115,7 @@ void initTimers() {
     // Define the interruption priority and activate interruption
     ConfigIntTimer1(config2);
 
-	#endif
+    #endif
 }
 
 void startTimerList() {
@@ -141,7 +141,7 @@ void stopTimerList() {
  * Function called by the timer.
  */
 void __attribute__((__interrupt__)) __attribute__((no_auto_psv)) _T1Interrupt(void) {
-	#ifndef PROG_32
+    #ifndef PROG_32
     // Clear the interrupt flag
     _T1IF = 0;
 
@@ -178,5 +178,5 @@ void __attribute__((__interrupt__)) __attribute__((no_auto_psv)) _T1Interrupt(vo
     }
     // Enable the interrupt
     _T1IE = 1;
-	#endif
+    #endif
 }

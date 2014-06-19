@@ -6,11 +6,11 @@ static LogHandlerList logHandlerList;
 static OutputStream logOutputStream;
 
 Logger* getLoggerSingleton() {
-	return &logger;
+    return &logger;
 }
 
 LogHandlerList* getLoggerHandlerList() {
-	return &logHandlerList;
+    return &logHandlerList;
 }
 
 /**

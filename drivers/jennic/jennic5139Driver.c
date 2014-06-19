@@ -44,69 +44,69 @@ static bool ledYellowOn;
 static bool ledBlueOn;
 
 void toggleLedYellow() {
-	jennic5139LocalLight(JENNIC_LED_YELLOW, ledYellowOn);
-	ledYellowOn = !ledYellowOn;
+    jennic5139LocalLight(JENNIC_LED_YELLOW, ledYellowOn);
+    ledYellowOn = !ledYellowOn;
 }
 
 void toggleLedBlue() {
-	jennic5139LocalLight(JENNIC_LED_BLUE, ledBlueOn);
-	ledBlueOn = !ledBlueOn;	
+    jennic5139LocalLight(JENNIC_LED_BLUE, ledBlueOn);
+    ledBlueOn = !ledBlueOn;    
 }
 
 
 void clearLedStatus() {
-	jennic5139SetAllPinOutput();
-	ledYellowOn = false;
-	ledBlueOn = false;
-	jennic5139LocalLight(JENNIC_LED_ALL, true);
-	delaymSec(300);
-	jennic5139LocalLight(JENNIC_LED_ALL, false);
+    jennic5139SetAllPinOutput();
+    ledYellowOn = false;
+    ledBlueOn = false;
+    jennic5139LocalLight(JENNIC_LED_ALL, true);
+    delaymSec(300);
+    jennic5139LocalLight(JENNIC_LED_ALL, false);
 
 }
 
 void onJennicError() {
-	jennicError = true;
+    jennicError = true;
 }
 
 void onJennicData() {
-	jennicData = true;
+    jennicData = true;
 }
 
 void showJennicError() {
-	if (!jennicError) {
-		return;
-	}
-	// for next instruction
-	jennicError = false;
+    if (!jennicError) {
+        return;
+    }
+    // for next instruction
+    jennicError = false;
 
-	// blind if several errors
-	toggleLedYellow();
-	if (jennicStartup) {
-		hasErrorDuringStartup = true;
-	}
+    // blind if several errors
+    toggleLedYellow();
+    if (jennicStartup) {
+        hasErrorDuringStartup = true;
+    }
 }
 
 void showJennicData() {
-	if (!jennicData) {
-		return;
-	}
-	// for next instruction
-	jennicData = false;
+    if (!jennicData) {
+        return;
+    }
+    // for next instruction
+    jennicData = false;
 
-	// blind if several datas
-	toggleLedBlue();
+    // blind if several datas
+    toggleLedBlue();
 }
 
 void showStartupStatus() {
-	// if error
-	if (hasErrorDuringStartup) {
-		// startup error
-		jennic5139LocalLight(JENNIC_LED_RED, true);
-	}
-	else {
-		// green led
-		jennic5139LocalLight(JENNIC_LED_GREEN, true);
-	}
+    // if error
+    if (hasErrorDuringStartup) {
+        // startup error
+        jennic5139LocalLight(JENNIC_LED_RED, true);
+    }
+    else {
+        // green led
+        jennic5139LocalLight(JENNIC_LED_GREEN, true);
+    }
 }
 
 #define NUMBER_OF_READ_BETWEEN_INSTRUCTION 10
@@ -122,25 +122,25 @@ static Buffer commandBuffer;
 
 
 bool internalCopyFromZigbeeToDebugRetainingData(bool handleZigbeeStream) {
-	bool result = false;
+    bool result = false;
     // while data are available on inputStream
     while (zigbeeInputStream->availableData(zigbeeInputStream)) {
-		unsigned char c = zigbeeInputStream->readChar(zigbeeInputStream);
-		debugOutputStream->writeChar(debugOutputStream, c);
+        unsigned char c = zigbeeInputStream->readChar(zigbeeInputStream);
+        debugOutputStream->writeChar(debugOutputStream, c);
 
-	    // Flush of debug Data
-    	debugOutputStream->flush(debugOutputStream);
+        // Flush of debug Data
+        debugOutputStream->flush(debugOutputStream);
 
-		if (handleZigbeeStream) {
-			handleJennicNextChar(c);
-		}
-		result = true;
+        if (handleZigbeeStream) {
+            handleJennicNextChar(c);
+        }
+        result = true;
     }
-	return result;
+    return result;
 }
 
 bool copyFromZigbeeToDebugRetainingData() {
-	return internalCopyFromZigbeeToDebugRetainingData(true);
+    return internalCopyFromZigbeeToDebugRetainingData(true);
 }
 
 void waitAndCopyFromZigbeeToDebug(int loopCount, int mSecDelay, bool handleZigbeeStream) {
@@ -148,7 +148,7 @@ void waitAndCopyFromZigbeeToDebug(int loopCount, int mSecDelay, bool handleZigbe
     long i;
     for (i = 0; i < loopCount; i++) {
         internalCopyFromZigbeeToDebugRetainingData(handleZigbeeStream);
-		delaymSec(mSecDelay);
+        delaymSec(mSecDelay);
     }
 }
 
@@ -158,10 +158,10 @@ void waitAndCopyFromZigbeeToDebug(int loopCount, int mSecDelay, bool handleZigbe
  * zigbeeCommand buffer.
  */
 void printBufferToDebugAndZigbee() {
-	while(!isBufferEmpty(&commandBuffer)) {
+    while(!isBufferEmpty(&commandBuffer)) {
         unsigned char c = bufferReadChar(&commandBuffer);
         append(debugOutputStream, c);
-		append(zigbeeOutputStream, c);
+        append(zigbeeOutputStream, c);
     }
 }
 
@@ -171,26 +171,26 @@ void printBufferToDebugAndZigbee() {
  * 3. wait a delay to ensure the command was handled by the system
  */
 void sendJennic5139CommandFromBuffer() {
-	// to ensure that the jennic is ready
-	delaymSec(20);
-	appendString(debugOutputStream, "\nSENDING CMD : "); 
-	printBufferToDebugAndZigbee();
-	appendString(debugOutputStream, "WAIT ... : ");
-	if (ledCommand) {
-		waitAndCopyFromZigbeeToDebug(1, 10, false);
-	}
-	else {
-    	waitAndCopyFromZigbeeToDebug(NUMBER_OF_READ_BETWEEN_INSTRUCTION, 10, true);
-	}
-	showJennicError();
-	showJennicData();
+    // to ensure that the jennic is ready
+    delaymSec(20);
+    appendString(debugOutputStream, "\nSENDING CMD : "); 
+    printBufferToDebugAndZigbee();
+    appendString(debugOutputStream, "WAIT ... : ");
+    if (ledCommand) {
+        waitAndCopyFromZigbeeToDebug(1, 10, false);
+    }
+    else {
+        waitAndCopyFromZigbeeToDebug(NUMBER_OF_READ_BETWEEN_INSTRUCTION, 10, true);
+    }
+    showJennicError();
+    showJennicData();
 }
 
 /**
  * @private
  */
 OutputStream* getCommandOutputStream() {
-	return &(commandBuffer.outputStream);
+    return &(commandBuffer.outputStream);
 }
 
 /**
@@ -198,31 +198,31 @@ OutputStream* getCommandOutputStream() {
 * Append a command string to the command buffer
 */
 void appendCmdString(char* text) {
-	appendString(&(commandBuffer.outputStream), text);
+    appendString(&(commandBuffer.outputStream), text);
 }
 
 void appendCmdDec(long value) {
-	appendDec(&(commandBuffer.outputStream), value);
+    appendDec(&(commandBuffer.outputStream), value);
 }
 
 void appendCmdHex2(int value) {
-	appendHex2(&(commandBuffer.outputStream), value);
+    appendHex2(&(commandBuffer.outputStream), value);
 }
 
 void appendComma() {
-	appendString(&(commandBuffer.outputStream), ",");
+    appendString(&(commandBuffer.outputStream), ",");
 }
 
 void appendCmdEnd() {
-	appendString(&(commandBuffer.outputStream), "\n");
+    appendString(&(commandBuffer.outputStream), "\n");
 }
 
 void jennic5139SetAllPinOutput() {
-	// All digital pins to output
-	appendCmdString(JENNIC_PIN_CONFIGURE_IO);
-	appendCmdString(",0,xFFFF");
-	appendCmdEnd();
-	sendJennic5139CommandFromBuffer();
+    // All digital pins to output
+    appendCmdString(JENNIC_PIN_CONFIGURE_IO);
+    appendCmdString(",0,xFFFF");
+    appendCmdEnd();
+    sendJennic5139CommandFromBuffer();
 }
 
 void initJennic5139Streams(InputStream* aZigbeeInputStream,
@@ -232,7 +232,7 @@ void initJennic5139Streams(InputStream* aZigbeeInputStream,
     zigbeeOutputStream = aZigbeeOutputStream;
     debugOutputStream = aDebugOutputStream;
 
-	initBuffer(&commandBuffer, &commandBufferArray, JENNIC_DRIVER_COMMAND_BUFFER_LENGTH, "jennicCmdBuffer", "CMD");
+    initBuffer(&commandBuffer, &commandBufferArray, JENNIC_DRIVER_COMMAND_BUFFER_LENGTH, "jennicCmdBuffer", "CMD");
 }
 
 /**
@@ -240,28 +240,28 @@ void initJennic5139Streams(InputStream* aZigbeeInputStream,
  * looks like : SND,0006066005650518898,0102AA,3,0
  */
 void sendJennic5139DataBuffer(InputStream* inputStream, char* macAddress, int flags) {
-	appendCmdString("SND,");
-	appendCmdString(macAddress);
-	appendComma();
+    appendCmdString("SND,");
+    appendCmdString(macAddress);
+    appendComma();
 
-	// ASCII : documentation say that we can send ASCII data too by preceding
-	// data with ", and suffixing by "
-	appendCmdString("\"");
+    // ASCII : documentation say that we can send ASCII data too by preceding
+    // data with ", and suffixing by "
+    appendCmdString("\"");
 
-	// Copy the content of data buffer into command Buffer
-	int size = copyInputToOutputStream(inputStream, &(commandBuffer.outputStream), NULL, COPY_ALL);
+    // Copy the content of data buffer into command Buffer
+    int size = copyInputToOutputStream(inputStream, &(commandBuffer.outputStream), NULL, COPY_ALL);
 
-	appendCmdString("\"");
+    appendCmdString("\"");
 
-	appendComma();
+    appendComma();
     appendCmdDec(size);
 
-	appendComma();
+    appendComma();
     appendCmdDec(flags);
 
-	appendCmdEnd();
-	
-	sendJennic5139CommandFromBuffer();
+    appendCmdEnd();
+    
+    sendJennic5139CommandFromBuffer();
 }
 
 // POWER
@@ -270,16 +270,16 @@ void sendJennic5139DataBuffer(InputStream* inputStream, char* macAddress, int fl
  * RDP,-12,0 <LF>
  */
 void changeJennic5139Power(signed int powerDB, unsigned int moduleType) {
-	appendCmdString(JENNIC_CHANGE_POWER_DECIBEL);
-	appendComma();
+    appendCmdString(JENNIC_CHANGE_POWER_DECIBEL);
+    appendComma();
 
-	appendCmdDec(powerDB);
-	appendComma();
+    appendCmdDec(powerDB);
+    appendComma();
 
-	appendCmdDec(moduleType);
-	appendCmdEnd();
+    appendCmdDec(moduleType);
+    appendCmdEnd();
 
-	sendJennic5139CommandFromBuffer();
+    sendJennic5139CommandFromBuffer();
 }
 
 /**
@@ -287,29 +287,29 @@ void changeJennic5139Power(signed int powerDB, unsigned int moduleType) {
  * CFG,x07FFF800,10,8,2,0\n
  */
 void initJennic5139Configuration(char* channelMask,
-								 int childrenCount,
-								 int maxEndDeviceChildrenCount,
-								 int maxFailureBeforeOrphaning,
-								 int timeOutPeriod) {
-	appendCmdString(JENNIC_CMD_CFG);
-	appendComma();
+                                 int childrenCount,
+                                 int maxEndDeviceChildrenCount,
+                                 int maxFailureBeforeOrphaning,
+                                 int timeOutPeriod) {
+    appendCmdString(JENNIC_CMD_CFG);
+    appendComma();
 
-	appendCmdString(channelMask);
-	appendComma();
+    appendCmdString(channelMask);
+    appendComma();
 
-	appendCmdDec(childrenCount);
-	appendComma();
+    appendCmdDec(childrenCount);
+    appendComma();
 
-	appendCmdDec(maxEndDeviceChildrenCount);
-	appendComma();
+    appendCmdDec(maxEndDeviceChildrenCount);
+    appendComma();
 
-	appendCmdDec(maxFailureBeforeOrphaning);
-	appendComma();
+    appendCmdDec(maxFailureBeforeOrphaning);
+    appendComma();
 
-	appendCmdDec(timeOutPeriod);
-	appendCmdEnd();
+    appendCmdDec(timeOutPeriod);
+    appendCmdEnd();
 
-	sendJennic5139CommandFromBuffer();
+    sendJennic5139CommandFromBuffer();
 }
 
 /**
@@ -334,41 +334,41 @@ void initJennic5139Configuration(char* channelMask,
  * 0-255
  */
 void configureNetworkParameters(unsigned int pingPeriod,
-								unsigned char sleepCycleBetweenPings,
-								unsigned long scanSleep,
-								unsigned long pollPeriod,
-								unsigned char maxNumberOfHopsForBroadcast
+                                unsigned char sleepCycleBetweenPings,
+                                unsigned long scanSleep,
+                                unsigned long pollPeriod,
+                                unsigned char maxNumberOfHopsForBroadcast
 ) {
-	appendCmdString(JENNIC_CMD_CONFIGURE_NETWORK_PARAMETERS);
-	appendComma();
+    appendCmdString(JENNIC_CMD_CONFIGURE_NETWORK_PARAMETERS);
+    appendComma();
 
-	appendCmdDec(pingPeriod);
-	appendComma();
+    appendCmdDec(pingPeriod);
+    appendComma();
 
-	appendCmdDec(sleepCycleBetweenPings);
-	appendComma();
+    appendCmdDec(sleepCycleBetweenPings);
+    appendComma();
 
-	appendCmdDec(scanSleep);
-	appendComma();
+    appendCmdDec(scanSleep);
+    appendComma();
 
-	appendCmdDec(pollPeriod);
-	appendComma();
+    appendCmdDec(pollPeriod);
+    appendComma();
 
-	appendCmdDec(maxNumberOfHopsForBroadcast);
-	appendCmdEnd();
+    appendCmdDec(maxNumberOfHopsForBroadcast);
+    appendCmdEnd();
 
-	sendJennic5139CommandFromBuffer();
+    sendJennic5139CommandFromBuffer();
 }
 
 /**
  * Configure Network parameters with default parameters.
  */
 void configureDefaultNetworkParameters() {
-	configureNetworkParameters(PING_PERIOD_SECONDS,
-								SLEEP_CYCLES_BETWEEN_PINGS,
-								SCAN_SLEEP,
-								POLL_PERIOD,
-								MAX_NUMBER_HOPS_FOR_BROADCAST);
+    configureNetworkParameters(PING_PERIOD_SECONDS,
+                                SLEEP_CYCLES_BETWEEN_PINGS,
+                                SCAN_SLEEP,
+                                POLL_PERIOD,
+                                MAX_NUMBER_HOPS_FOR_BROADCAST);
 }
 
 
@@ -379,25 +379,25 @@ void configureDefaultNetworkParameters() {
  * "INI,xABCD,0,x12345678,0,1\n"
  */
 void initJennic5139Init(char* panId, int channelId, char* applicationId, int restoreContext, int routing) {
-	appendCmdString(JENNIC_CMD_INI);
-	appendComma();
-	
-	appendCmdString(panId);
-	appendComma();
+    appendCmdString(JENNIC_CMD_INI);
+    appendComma();
+    
+    appendCmdString(panId);
+    appendComma();
 
-	appendCmdDec(channelId);
-	appendComma();
+    appendCmdDec(channelId);
+    appendComma();
 
-	appendCmdString(applicationId);
-	appendComma();
+    appendCmdString(applicationId);
+    appendComma();
 
-	appendCmdDec(restoreContext);
-	appendComma();
+    appendCmdDec(restoreContext);
+    appendComma();
 
-	appendCmdDec(routing);
-	appendCmdEnd();
+    appendCmdDec(routing);
+    appendCmdEnd();
 
-	sendJennic5139CommandFromBuffer();
+    sendJennic5139CommandFromBuffer();
 }
 
 /**
@@ -419,10 +419,10 @@ void initJennic5139Init(char* panId, int channelId, char* applicationId, int res
  * @param maxNumberOfHopsForBroadcast : Max. number of hops for broadcast 0-255
  */ 
 void jennic5139ConfigureNetworkParameters(unsigned int pingPeriod, 
-											unsigned char sleepCyclesBetweenPings,
-											unsigned long scanSleep,
-											unsigned long pollPeriod,
-											unsigned char maxNumberOfHopsForBroadcast);
+                                            unsigned char sleepCyclesBetweenPings,
+                                            unsigned long scanSleep,
+                                            unsigned long pollPeriod,
+                                            unsigned char maxNumberOfHopsForBroadcast);
 
 /**
  * @private
@@ -431,171 +431,171 @@ void jennic5139ConfigureNetworkParameters(unsigned int pingPeriod,
  * @param nodeType NOTE_TYPE_COORDINATER / NOTE_TYPE_ROUTER
  */
 void initJennic5139Start(int nodeType) {
-	setJennicNetworkStatus(JENNIC_NOT_INITIALIZED);
-	appendCmdString(JENNIC_CMD_START);
-	appendComma();
-	appendCmdDec(nodeType);
-	appendCmdEnd();
+    setJennicNetworkStatus(JENNIC_NOT_INITIALIZED);
+    appendCmdString(JENNIC_CMD_START);
+    appendComma();
+    appendCmdDec(nodeType);
+    appendCmdEnd();
 
-	sendJennic5139CommandFromBuffer();
+    sendJennic5139CommandFromBuffer();
 }
 
 void jennic5139CommonStartupBegin() {
-	hasErrorDuringStartup = false;
-	jennicStartup = true;
-	clearLedStatus();	
+    hasErrorDuringStartup = false;
+    jennicStartup = true;
+    clearLedStatus();    
 }
 
 void jennic5139CommonStartupEnd() {
-	jennicStartup = false;
-	showStartupStatus();
+    jennicStartup = false;
+    showStartupStatus();
 }
 
 void initJennic5139Coordinater() {
-	jennic5139CommonStartupBegin();
+    jennic5139CommonStartupBegin();
 
-	initJennic5139Configuration(
-			CHANNEL_MASK_AUTO_SELECTION,
-			NUMBER_OF_CHILDREN,
-			MAX_END_DEVICE_CHILDREN,
-			MAX_FAILURE_BEFORE_ORPHANING,
-			TIME_OUT_PERIOD);
-	
-	configureDefaultNetworkParameters();
+    initJennic5139Configuration(
+            CHANNEL_MASK_AUTO_SELECTION,
+            NUMBER_OF_CHILDREN,
+            MAX_END_DEVICE_CHILDREN,
+            MAX_FAILURE_BEFORE_ORPHANING,
+            TIME_OUT_PERIOD);
+    
+    configureDefaultNetworkParameters();
 
-	initJennic5139Init(DEFAULT_PAN_ID,
-					   CHANNEL_ID_AUTO,
-					   DEFAULT_APPLICATION_ID,
-					   RESTORE_CONTEXT_DISABLED, 
-					   ROUTING_ON);
+    initJennic5139Init(DEFAULT_PAN_ID,
+                       CHANNEL_ID_AUTO,
+                       DEFAULT_APPLICATION_ID,
+                       RESTORE_CONTEXT_DISABLED, 
+                       ROUTING_ON);
 
 
- 	initJennic5139Start(NODE_TYPE_COORDINATER);
+     initJennic5139Start(NODE_TYPE_COORDINATER);
 
-	// Change power to max
-	changeJennic5139Power(JENNIC_CHANGE_POWER_DECIBEL_MAX, JENNIC_CHANGE_POWER_HIGH_POWER_MODULE);
+    // Change power to max
+    changeJennic5139Power(JENNIC_CHANGE_POWER_DECIBEL_MAX, JENNIC_CHANGE_POWER_HIGH_POWER_MODULE);
 
-	jennic5139CommonStartupEnd();
+    jennic5139CommonStartupEnd();
 }
 
 void initJennic5139Router() {
-	jennic5139CommonStartupBegin();
+    jennic5139CommonStartupBegin();
 
-	initJennic5139Configuration(
-			CHANNEL_MASK_AUTO_SELECTION,
-			NUMBER_OF_CHILDREN,
-			MAX_END_DEVICE_CHILDREN,
-			MAX_FAILURE_BEFORE_ORPHANING,
-			TIME_OUT_PERIOD);
+    initJennic5139Configuration(
+            CHANNEL_MASK_AUTO_SELECTION,
+            NUMBER_OF_CHILDREN,
+            MAX_END_DEVICE_CHILDREN,
+            MAX_FAILURE_BEFORE_ORPHANING,
+            TIME_OUT_PERIOD);
 
-	configureDefaultNetworkParameters();
+    configureDefaultNetworkParameters();
 
-	initJennic5139Init(NO_PAN_ID_TO_DEFINED, // because coordinater defined it !
-					   CHANNEL_ID_AUTO,
-					   DEFAULT_APPLICATION_ID,
-					   RESTORE_CONTEXT_DISABLED, 
-					   ROUTING_ON);
+    initJennic5139Init(NO_PAN_ID_TO_DEFINED, // because coordinater defined it !
+                       CHANNEL_ID_AUTO,
+                       DEFAULT_APPLICATION_ID,
+                       RESTORE_CONTEXT_DISABLED, 
+                       ROUTING_ON);
 
-	initJennic5139Start(NODE_TYPE_ROUTER);
+    initJennic5139Start(NODE_TYPE_ROUTER);
 
-	// Change power to Max
-	changeJennic5139Power(JENNIC_CHANGE_POWER_DECIBEL_MAX, JENNIC_CHANGE_POWER_HIGH_POWER_MODULE);
+    // Change power to Max
+    changeJennic5139Power(JENNIC_CHANGE_POWER_DECIBEL_MAX, JENNIC_CHANGE_POWER_HIGH_POWER_MODULE);
 
-	jennic5139CommonStartupEnd();
+    jennic5139CommonStartupEnd();
 }
 
 void jennic5139Reset() {
-	appendCmdString(JENNIC_CMD_RESET);
-	appendCmdEnd();
-	sendJennic5139CommandFromBuffer();
+    appendCmdString(JENNIC_CMD_RESET);
+    appendCmdEnd();
+    sendJennic5139CommandFromBuffer();
 }
 
 void jennic5139LocalLight(char* pinMask, bool on) {
-	ledCommand = true;
+    ledCommand = true;
     appendCmdString(JENNIC_PIN_WRITE_PIN);
-	if (on) {
-		appendCmdString(",0,x");
-		appendString(getCommandOutputStream(), pinMask);
-		appendCmdEnd();
+    if (on) {
+        appendCmdString(",0,x");
+        appendString(getCommandOutputStream(), pinMask);
+        appendCmdEnd();
     } else {
-		appendCmdString(",x");	
-		appendString(getCommandOutputStream(), pinMask);
-		appendCmdString(",0");
-		appendCmdEnd();
+        appendCmdString(",x");    
+        appendString(getCommandOutputStream(), pinMask);
+        appendCmdString(",0");
+        appendCmdEnd();
     }
-	sendJennic5139CommandFromBuffer();
-	ledCommand = false;
+    sendJennic5139CommandFromBuffer();
+    ledCommand = false;
 }
 
 void jennic5139RemoteLight(char* jennicAddress, char* pinMask, bool on) {
-	// Establish a tunnel for transmit remote command
+    // Establish a tunnel for transmit remote command
     appendCmdString(JENNIC_TUNNEL_CONNECTION);
-	appendCmdString(",3,");
-	appendCmdString(jennicAddress);
-	appendComma();
-	appendCmdString("32");
-	appendCmdEnd();
-	sendJennic5139CommandFromBuffer();
-	
-	// Opens a communication channel in a tunnel set up using TCN. The TOP command must
-	// be executed on the remote node, and sent to the node as a tunnelled command using TCM
+    appendCmdString(",3,");
+    appendCmdString(jennicAddress);
+    appendComma();
+    appendCmdString("32");
+    appendCmdEnd();
+    sendJennic5139CommandFromBuffer();
+    
+    // Opens a communication channel in a tunnel set up using TCN. The TOP command must
+    // be executed on the remote node, and sent to the node as a tunnelled command using TCM
     appendCmdString(JENNIC_TUNNEL_SEND_COMMAND);
-	appendCmdString(",\"");
-	appendCmdString(JENNIC_TUNNEL_OPEN);
-	appendCmdString("\"\n");
-	sendJennic5139CommandFromBuffer();
+    appendCmdString(",\"");
+    appendCmdString(JENNIC_TUNNEL_OPEN);
+    appendCmdString("\"\n");
+    sendJennic5139CommandFromBuffer();
 
-	// Defines which DIO pins (DIO0-DIO20) are inputs and which are outputs. Note that the command has
-	// no effect for a pin being used by an enabled on-chip peripheral.
-	// The input and output pins are specified in separate 32-bit bitmaps, where each of bits 0 to 20 represents
-	// the corresponding DIO pin (bits 21 to 31 are unused). The bit settings for the same DIO pin must
-	// not conflict in the two bitmaps (for a conflict, the default is input).
+    // Defines which DIO pins (DIO0-DIO20) are inputs and which are outputs. Note that the command has
+    // no effect for a pin being used by an enabled on-chip peripheral.
+    // The input and output pins are specified in separate 32-bit bitmaps, where each of bits 0 to 20 represents
+    // the corresponding DIO pin (bits 21 to 31 are unused). The bit settings for the same DIO pin must
+    // not conflict in the two bitmaps (for a conflict, the default is input).
     appendCmdString(JENNIC_TUNNEL_SEND_COMMAND);
-	appendCmdString(",\"");
-	appendCmdString(JENNIC_PIN_CONFIGURE_IO);
-	appendCmdString(",0,xFFFF\"\n");
-	sendJennic5139CommandFromBuffer();
+    appendCmdString(",\"");
+    appendCmdString(JENNIC_PIN_CONFIGURE_IO);
+    appendCmdString(",0,xFFFF\"\n");
+    sendJennic5139CommandFromBuffer();
 
-	// On or off the outputs
-	// Sets the output status (on or off) of the DIO pins (DIO0-DIO20). Note that the command has no
-	// effect for a pin not configured as an output or being used by an enabled on-chip peripheral.
-	// The pins that are on and off are specified in separate 32-bit bitmaps, where each of bits 0 to 20 represents
-	// the corresponding DIO pin (bits 21 to 31 are unused). The bit settings for the same DIO pin must
-	// not conflict in the two bitmaps (for a conflict, the default is off).
-	// On : 
-	// 32-bit bitmap: bit 0 set means DIO0 on, bit 1 set means DIO1 on, etc.
-	// Off
-	// 32-bit bitmap: bit 0 set means DIO0 off, bit 1 set means DIO1 off, etc.
-	appendCmdString(JENNIC_TUNNEL_SEND_COMMAND);
-	appendCmdString(",\"");
-	appendCmdString(JENNIC_PIN_WRITE_PIN);
+    // On or off the outputs
+    // Sets the output status (on or off) of the DIO pins (DIO0-DIO20). Note that the command has no
+    // effect for a pin not configured as an output or being used by an enabled on-chip peripheral.
+    // The pins that are on and off are specified in separate 32-bit bitmaps, where each of bits 0 to 20 represents
+    // the corresponding DIO pin (bits 21 to 31 are unused). The bit settings for the same DIO pin must
+    // not conflict in the two bitmaps (for a conflict, the default is off).
+    // On : 
+    // 32-bit bitmap: bit 0 set means DIO0 on, bit 1 set means DIO1 on, etc.
+    // Off
+    // 32-bit bitmap: bit 0 set means DIO0 off, bit 1 set means DIO1 off, etc.
+    appendCmdString(JENNIC_TUNNEL_SEND_COMMAND);
+    appendCmdString(",\"");
+    appendCmdString(JENNIC_PIN_WRITE_PIN);
 
     if (on) {
         appendCmdString(",0,x");
-		appendString(getCommandOutputStream(), pinMask);
-		appendCmdString("\"\n");
+        appendString(getCommandOutputStream(), pinMask);
+        appendCmdString("\"\n");
     } else {
-		appendCmdString(",x");
-		appendString(getCommandOutputStream(), pinMask);
-		appendCmdString(",0\"\n");
+        appendCmdString(",x");
+        appendString(getCommandOutputStream(), pinMask);
+        appendCmdString(",0\"\n");
     }
-	sendJennic5139CommandFromBuffer();
+    sendJennic5139CommandFromBuffer();
 
-	// Close the tunnel
-	appendCmdString(JENNIC_TUNNEL_SEND_COMMAND);
-	appendCmdString(",\"");
-	appendCmdString(JENNIC_TUNEL_CLOSE);
-	appendCmdString("\"\n");
-	sendJennic5139CommandFromBuffer();
+    // Close the tunnel
+    appendCmdString(JENNIC_TUNNEL_SEND_COMMAND);
+    appendCmdString(",\"");
+    appendCmdString(JENNIC_TUNEL_CLOSE);
+    appendCmdString("\"\n");
+    sendJennic5139CommandFromBuffer();
 }
 
 // NETWORK STATUS
 
 unsigned char getJennicNetworkStatus() {
-	return jennicNetworkStatus;
+    return jennicNetworkStatus;
 }
 
 void setJennicNetworkStatus(unsigned char aJennicNetworkStatus) {
-	jennicNetworkStatus = aJennicNetworkStatus;
+    jennicNetworkStatus = aJennicNetworkStatus;
 }
 

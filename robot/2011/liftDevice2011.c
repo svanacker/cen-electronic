@@ -23,73 +23,73 @@
 
 
 void deviceLift2011Init() {
-	
+    
 }
 
 void deviceLift2011ShutDown() {
 }
 
 bool deviceLift2011IsOk() {
-	return true;
+    return true;
 }
 
-#define LIFT_PWM_UP 		1800
+#define LIFT_PWM_UP         1800
 
-#define LIFT_PWM_MIDDLE		1500
+#define LIFT_PWM_MIDDLE        1500
 
-#define LIFT_PWM_BOTTOM 	1200
+#define LIFT_PWM_BOTTOM     1200
 
 void deviceLift2011HandleRawData(char header,
-							 InputStream* inputStream,
-							 OutputStream* outputStream) {
-	if (header == COMMAND_LIFT_2011_BOTTOM) {
-		appendAck(outputStream);
-		append(outputStream, COMMAND_LIFT_2011_BOTTOM);
+                             InputStream* inputStream,
+                             OutputStream* outputStream) {
+    if (header == COMMAND_LIFT_2011_BOTTOM) {
+        appendAck(outputStream);
+        append(outputStream, COMMAND_LIFT_2011_BOTTOM);
 
-		int counter = 0;
-		while (!PIN_SWITCH_LIFT_BOTTOM) {
-			counter++;
-			pwmServoAll(20000, LIFT_PWM_BOTTOM);
-			delaymSec(50);
-			if (counter > 20) {
-				break;
-			}
-		}
-		pwmServoAll(20000, LIFT_PWM_MIDDLE);
-		delaymSec(50);
-		pwmServoAll(20000, LIFT_PWM_MIDDLE);
-	}
-	else if (header == COMMAND_LIFT_2011_UP) {
-		appendAck(outputStream);
-		append(outputStream, COMMAND_LIFT_2011_UP);
-		
-		pwmServoAll(20000, LIFT_PWM_MIDDLE);
-		delaymSec(80);
+        int counter = 0;
+        while (!PIN_SWITCH_LIFT_BOTTOM) {
+            counter++;
+            pwmServoAll(20000, LIFT_PWM_BOTTOM);
+            delaymSec(50);
+            if (counter > 20) {
+                break;
+            }
+        }
+        pwmServoAll(20000, LIFT_PWM_MIDDLE);
+        delaymSec(50);
+        pwmServoAll(20000, LIFT_PWM_MIDDLE);
+    }
+    else if (header == COMMAND_LIFT_2011_UP) {
+        appendAck(outputStream);
+        append(outputStream, COMMAND_LIFT_2011_UP);
+        
+        pwmServoAll(20000, LIFT_PWM_MIDDLE);
+        delaymSec(80);
 
-		int counter;
-		for (counter = 0; counter < 2; counter++) { 
-			pwmServoAll(20000, LIFT_PWM_UP);		
-			delaymSec(100);
-		}
-		pwmServoAll(20000, LIFT_PWM_MIDDLE);
-		delaymSec(100);
-		pwmServoAll(20000, LIFT_PWM_MIDDLE);
-	}
-	else if (header == COMMAND_LIFT_2011_DOWN) {
-		appendAck(outputStream);
-		append(outputStream, COMMAND_LIFT_2011_DOWN);
+        int counter;
+        for (counter = 0; counter < 2; counter++) { 
+            pwmServoAll(20000, LIFT_PWM_UP);        
+            delaymSec(100);
+        }
+        pwmServoAll(20000, LIFT_PWM_MIDDLE);
+        delaymSec(100);
+        pwmServoAll(20000, LIFT_PWM_MIDDLE);
+    }
+    else if (header == COMMAND_LIFT_2011_DOWN) {
+        appendAck(outputStream);
+        append(outputStream, COMMAND_LIFT_2011_DOWN);
 
-	}
+    }
 }
 
 
 static DeviceDescriptor descriptor = {
-	.deviceInit = &deviceLift2011Init,
-	.deviceShutDown = &deviceLift2011ShutDown,
-	.deviceIsOk = &deviceLift2011IsOk,
-	.deviceHandleRawData = &deviceLift2011HandleRawData,
+    .deviceInit = &deviceLift2011Init,
+    .deviceShutDown = &deviceLift2011ShutDown,
+    .deviceIsOk = &deviceLift2011IsOk,
+    .deviceHandleRawData = &deviceLift2011HandleRawData,
 };
 
 DeviceDescriptor* getLift2011DeviceDescriptor() {
-	return &descriptor;
+    return &descriptor;
 }

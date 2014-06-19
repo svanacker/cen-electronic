@@ -19,8 +19,8 @@ int convPwmMotor(int pwm) {
 
 void initPwmForMotor() {
     // PR2 = [  period / ( Tosc * 4 * prediv) ] -1
-    //	period = 20ms
-    //	Tosc = 1 / frequency
+    //    period = 20ms
+    //    Tosc = 1 / frequency
     pwmInit();
     PR2 = PWM_TIMER_FOR_MOTOR; //periode TIMER2
     OC1RS = convPwmMotor(0); //duty cycle OC1

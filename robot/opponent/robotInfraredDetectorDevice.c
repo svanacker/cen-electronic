@@ -33,38 +33,38 @@ void notifyInfraredDetectorDetection(int type) {
     Buffer* buffer = getMechanicalBoard2I2CSlaveOutputBuffer();
     OutputStream* outputStream = getOutputStream(buffer);
     append(outputStream, NOTIFY_INFRARED_DETECTOR_DETECTION);
-	appendHex2(outputStream, type);
+    appendHex2(outputStream, type);
 
-	// Debug
-	OutputStream* debugOutputStream = getDebugOutputStreamLogger();
-	append(debugOutputStream, NOTIFY_INFRARED_DETECTOR_DETECTION);
-	appendHex2(debugOutputStream, type);
+    // Debug
+    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+    append(debugOutputStream, NOTIFY_INFRARED_DETECTOR_DETECTION);
+    appendHex2(debugOutputStream, type);
 }
 
 void deviceRobotInfraredDetectorHandleRawData(char header,
         InputStream* inputStream,
         OutputStream* outputStream) {
-	// Command to ask
+    // Command to ask
     if (header == COMMAND_INFRARED_DETECTOR_DETECTION) {
         appendAck(outputStream);
         append(outputStream, COMMAND_INFRARED_DETECTOR_DETECTION);
 
-		int type = readHex2(inputStream);
-		bool hasDetected;
-		if (type == DETECTOR_FORWARD_INDEX) {
-			hasDetected = getRobotInfraredObstacleForward();
-		}
-		else {
-			hasDetected = getRobotInfraredObstacleBackward();
-		}
-		
-		// Send argument
-		if (hasDetected) {
-			appendHex2(outputStream, 1);
-		}
-		else {
-			appendHex2(outputStream, 0);
-		}
+        int type = readHex2(inputStream);
+        bool hasDetected;
+        if (type == DETECTOR_FORWARD_INDEX) {
+            hasDetected = getRobotInfraredObstacleForward();
+        }
+        else {
+            hasDetected = getRobotInfraredObstacleBackward();
+        }
+        
+        // Send argument
+        if (hasDetected) {
+            appendHex2(outputStream, 1);
+        }
+        else {
+            appendHex2(outputStream, 0);
+        }
     }
 }
 

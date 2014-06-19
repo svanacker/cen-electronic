@@ -56,7 +56,7 @@ void forwardCallbackRawDataTo(InputStream* inputStream,
         OutputStream* outputStream,
         const Device* device,
         const char header,
-		int mode) {
+        int mode) {
     DeviceInterface* deviceInterface = device->interface;
     // Length = data of output from the message and add the length of header message (deviceHeader + commandHeader)
     int dataLength = deviceInterface->deviceGetInterface(header, mode, false) + DEVICE_AND_COMMAND_HEADER_LENGTH;
@@ -65,7 +65,7 @@ void forwardCallbackRawDataTo(InputStream* inputStream,
 }
 
 void ackCommand(OutputStream* outputStream, const char deviceHeader, const char commandHeader) {
-	appendAck(outputStream);
-	append(outputStream, deviceHeader);
-	append(outputStream, commandHeader);
+    appendAck(outputStream);
+    append(outputStream, deviceHeader);
+    append(outputStream, commandHeader);
 }

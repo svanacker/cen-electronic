@@ -11,14 +11,14 @@ int deviceMotorGetInterface(char header, int mode,
         bool fillDeviceArgumentList) {
     if (header == COMMAND_MOVE_MOTOR) {
         if (fillDeviceArgumentList) {
-			setFunction("runMotor", 2, 0);
-			setArgumentSignedHex2(0, "left");
-			setArgumentSignedHex2(1, "right");
+            setFunction("runMotor", 2, 0);
+            setArgumentSignedHex2(0, "left");
+            setArgumentSignedHex2(1, "right");
         }
         return commandLengthValueForMode(mode, 4, 0);
     } else if (header == COMMAND_STOP_MOTOR) {
         if (fillDeviceArgumentList) {
-			setFunctionNoArgumentAndNoResult("stopMotor");
+            setFunctionNoArgumentAndNoResult("stopMotor");
         }
         return 0;
     }
@@ -26,7 +26,7 @@ int deviceMotorGetInterface(char header, int mode,
 }
 
 static DeviceInterface deviceInterface = {
-	.deviceHeader = MOTOR_DEVICE_HEADER,
+    .deviceHeader = MOTOR_DEVICE_HEADER,
     .deviceGetName = &getPwmMotorDeviceName,
     .deviceGetInterface = &deviceMotorGetInterface
 };

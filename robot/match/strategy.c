@@ -17,18 +17,18 @@ char* getMatchSideAsString() {
 }
 
 void loadMatchSide() {
-	matchSide = getConfigValue() & CONFIG_COLOR_BLUE_MASK;
-	if (matchSide != 0) {
-		matchSide = SIDE_BLUE;
-	}
-	else {
-		matchSide = SIDE_YELLOW;
-	}
-	writeStringCR(getMatchSideAsString());
+    matchSide = getConfigValue() & CONFIG_COLOR_BLUE_MASK;
+    if (matchSide != 0) {
+        matchSide = SIDE_BLUE;
+    }
+    else {
+        matchSide = SIDE_YELLOW;
+    }
+    writeStringCR(getMatchSideAsString());
 }
 
 signed int getMatchSide() {
-	return matchSide;
+    return matchSide;
 }
 
 

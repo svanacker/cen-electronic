@@ -42,17 +42,17 @@ bool beaconLaserDriverServoStop() {
 }
 
 void appendRobotPosition(OutputStream* outputStream, char header, Point* point) {
-	// out Data will be ?XXXX-YYYY, where ? will be replaced by the header
-	append(outputStream, header);
-	appendHex4(outputStream, point->x);
-	append(outputStream, '-');
-	appendHex4(outputStream, point->y);
+    // out Data will be ?XXXX-YYYY, where ? will be replaced by the header
+    append(outputStream, header);
+    appendHex4(outputStream, point->x);
+    append(outputStream, '-');
+    appendHex4(outputStream, point->y);
 }
 
 bool notifyRobotPosition(Point* point) {
     OutputStream* outputStream = getDriverRequestOutputStream();
 
-	appendRobotPosition(outputStream, COMMAND_SET_OPPONENT_ROBOT_POSITION_FROM_LASER_TO_RECEIVER, point);
+    appendRobotPosition(outputStream, COMMAND_SET_OPPONENT_ROBOT_POSITION_FROM_LASER_TO_RECEIVER, point);
 
     bool result = transmitFromDriverRequestBuffer();
 

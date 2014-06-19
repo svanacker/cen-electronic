@@ -45,15 +45,15 @@ static unsigned int timeAtLastCollision = 0;
 static bool robotPositionChanged;
 
 bool isRobotPositionChanged() {
-	return robotPositionChanged;
+    return robotPositionChanged;
 }
 
 void resetRobotPositionChanged() {
-	robotPositionChanged = false;
+    robotPositionChanged = false;
 }
 
 void setRobotPositionChanged() {
-	robotPositionChanged = true;
+    robotPositionChanged = true;
 }
 
 unsigned int isRobotMustStop() {
@@ -61,28 +61,28 @@ unsigned int isRobotMustStop() {
 }
 
 int getRobotPositionX() {
-	return robotPositionX;
-}	
+    return robotPositionX;
+}    
 
 int getRobotPositionY() {
-	return robotPositionY;
-}	
+    return robotPositionY;
+}    
 
 int getRobotAngle() {
-	return robotAngle;
-}	
+    return robotAngle;
+}    
 
 void updateRobotPosition(int x, int y, int angle) {
-	robotPositionX = x;
-	robotPositionY = y;
-	robotAngle = angle;
+    robotPositionX = x;
+    robotPositionY = y;
+    robotAngle = angle;
 }
 
 void printRobotPosition(OutputStream* outputStream) {
-	appendStringAndDec(outputStream, "\nRobotPositionX=", robotPositionX);
-	appendStringAndDec(outputStream, "\nRobotPositionY=", robotPositionY);
-	appendStringAndDec(outputStream, "\nRobotAngle=", robotAngle);
-	println(outputStream);
+    appendStringAndDec(outputStream, "\nRobotPositionX=", robotPositionX);
+    appendStringAndDec(outputStream, "\nRobotPositionY=", robotPositionY);
+    appendStringAndDec(outputStream, "\nRobotAngle=", robotAngle);
+    println(outputStream);
 }
 
 void setRobotMustStop(unsigned int value) {
@@ -108,12 +108,12 @@ void stopRobotObstacle(void) {
     if (currentTime > timeAtLastCollision + TIME_FOR_OBSTACLE_NEW_NOTIFICATION) {
         timeAtLastCollision = currentTime;
         // TODO : PROBLEM OF STABILITY : motionDriverObstacle();
-		motionDriverStop();
-		// Notify to the Strategy Board the new position
-		sentStrategyRobotPosition(NOTIFY_MOTION_ARG_OBSTACLE, getRobotPositionX(), getRobotPositionY(), getRobotAngle());
+        motionDriverStop();
+        // Notify to the Strategy Board the new position
+        sentStrategyRobotPosition(NOTIFY_MOTION_ARG_OBSTACLE, getRobotPositionX(), getRobotPositionY(), getRobotAngle());
 
         appendString(getOutputStreamLogger(WARNING), "Robot stopped(Obstacle)\n");
-		printRobotPosition(getOutputStreamLogger(WARNING));
+        printRobotPosition(getOutputStreamLogger(WARNING));
     } else {
         appendString(getOutputStreamLogger(WARNING), "Wait for new notification \n");
     }

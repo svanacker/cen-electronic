@@ -7,13 +7,13 @@
 #include "../device/drivers/pcf8574.h"
 
 void pcf8574Test (void){
-	char data;
-	putString("PCFADD0 : ");
-	data = readPCF8574 (0x40,0,0xFF);
-	sendHex2(data);
-	delaymSec(150);
-	putString("PCFADD1 : ");
-	data = readPCF8574 (0x40,1,0xFF);
-	sendHex2(data);
-	delaymSec(500);
+    char data;
+    putString("PCFADD0 : ");
+    data = readPCF8574 (0x40,0,0xFF);
+    sendHex2(data);
+    delaymSec(150);
+    putString("PCFADD1 : ");
+    data = readPCF8574 (0x40,1,0xFF);
+    sendHex2(data);
+    delaymSec(500);
 }

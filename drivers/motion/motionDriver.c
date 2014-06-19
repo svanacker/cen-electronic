@@ -42,9 +42,9 @@ unsigned int getMotionInstructionIndex() {
 // GO / ROTATE MOTION
 
 bool motionDriverGotoPositionPulse(float left,
-							        float right,
-							        float a,
-							        float s) {
+                                    float right,
+                                    float a,
+                                    float s) {
     OutputStream* outputStream = getDriverRequestOutputStream();
 
     append(outputStream, MOTION_DEVICE_HEADER);
@@ -142,19 +142,19 @@ bool motionDriverRightOneWheel(float rightDeciDegree) {
 // B-SPLINE MOTION
 
 bool motionDriverBSplineRelative(float x, float y, float angle, float dist0, float dist1, int accelerationFactor, int speedFactor) {
-	OutputStream* outputStream = getDriverRequestOutputStream();
+    OutputStream* outputStream = getDriverRequestOutputStream();
     append(outputStream, MOTION_DEVICE_HEADER);
     append(outputStream, COMMAND_MOTION_SPLINE_RELATIVE);
     appendHex4(outputStream, x);
-	appendSeparator(outputStream);
+    appendSeparator(outputStream);
     appendHex4(outputStream, y);
-	appendSeparator(outputStream);
+    appendSeparator(outputStream);
     appendHex4(outputStream, angle);
-	appendSeparator(outputStream);
+    appendSeparator(outputStream);
     appendHex2(outputStream, dist0);
-	appendSeparator(outputStream);
+    appendSeparator(outputStream);
     appendHex2(outputStream, dist1);
-	appendSeparator(outputStream);
+    appendSeparator(outputStream);
     appendHex(outputStream, accelerationFactor);
     appendHex(outputStream, speedFactor);
 
@@ -164,19 +164,19 @@ bool motionDriverBSplineRelative(float x, float y, float angle, float dist0, flo
 }
 
 bool motionDriverBSplineAbsolute(float x, float y, float angle, float dist0, float dist1, int accelerationFactor, int speedFactor) {
-	OutputStream* outputStream = getDriverRequestOutputStream();
+    OutputStream* outputStream = getDriverRequestOutputStream();
     append(outputStream, MOTION_DEVICE_HEADER);
     append(outputStream, COMMAND_MOTION_SPLINE_ABSOLUTE);
     appendHex4(outputStream, x);
-	appendSeparator(outputStream);
+    appendSeparator(outputStream);
     appendHex4(outputStream, y);
-	appendSeparator(outputStream);
+    appendSeparator(outputStream);
     appendHex4(outputStream, angle);
-	appendSeparator(outputStream);
+    appendSeparator(outputStream);
     appendHex2(outputStream, dist0);
-	appendSeparator(outputStream);
+    appendSeparator(outputStream);
     appendHex2(outputStream, dist1);
-	appendSeparator(outputStream);
+    appendSeparator(outputStream);
     appendHex(outputStream, accelerationFactor);
     appendHex(outputStream, speedFactor);
 

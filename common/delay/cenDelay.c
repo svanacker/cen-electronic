@@ -22,11 +22,11 @@ void delay100us(char uSecond) {
     unsigned int i;
 
     while (uSecond != 0) {
-	#ifdef PROG_32
+    #ifdef PROG_32
         i = 164;
-	#else
-		i = 488;
-	#endif
+    #else
+        i = 488;
+    #endif
         while (i > 0) {
             Nop();
             Nop();
@@ -43,11 +43,11 @@ void delaymSec(unsigned int mSecond) {
     unsigned int i;
 
     while (mSecond != 0) {
-		#ifdef PROG_32
-			i = 1664;
-		#else
-			i = 4920;
-		#endif
+        #ifdef PROG_32
+            i = 1664;
+        #else
+            i = 4920;
+        #endif
         while (i > 0) {
             Nop();
             Nop();

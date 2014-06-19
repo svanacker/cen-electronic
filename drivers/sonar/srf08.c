@@ -122,7 +122,7 @@ unsigned char readDistance(unsigned char addr) {
     // TODO : manage the timer and the 255 value if SRF08 not ready
     // high part of int value
     highByte = MasterReadI2C();
-	IdleI2C();
+    IdleI2C();
 
     // low part of int value
     if (i == 15)
@@ -130,7 +130,7 @@ unsigned char readDistance(unsigned char addr) {
     else
       lowByte = MasterReadI2C();
 
-	IdleI2C();
+    IdleI2C();
     // System.out.println("h=" + highByte + ";l=" + lowByte);
     // compute the distance
     distances[0] = highByte * 256 + lowByte;

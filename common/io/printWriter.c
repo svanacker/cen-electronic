@@ -13,9 +13,9 @@
 // STRINGS
 
 void append(OutputStream* outputStream, char c) {
-	if (outputStream == NULL) {
-		return;
-	}
+    if (outputStream == NULL) {
+        return;
+    }
     outputStream->writeChar(outputStream, c);
 }
 
@@ -32,9 +32,9 @@ void appendSeparator(OutputStream* outputStream) {
 }
 
 void appendString(OutputStream* outputStream, const char* s) {
-	if (s == NULL) {
-		return;
-	}
+    if (s == NULL) {
+        return;
+    }
     while (*s != '\0') {
         append(outputStream, *s++);
     }
@@ -69,7 +69,7 @@ void appendAck(OutputStream* outputStream) {
 // BUFFER
 
 void printBuffer(OutputStream* outputStream, Buffer* buffer) {
-	while(!isBufferEmpty(buffer)) {
+    while(!isBufferEmpty(buffer)) {
         char c = bufferReadChar(buffer);
         append(outputStream, c);
     }
@@ -101,7 +101,7 @@ void appendHex2(OutputStream* outputStream, char value) {
 }
 
 void appendHex3(OutputStream* outputStream, signed int value) {
-	internalAppendHex(outputStream, value, 8);
+    internalAppendHex(outputStream, value, 8);
 }
 
 void appendHex4(OutputStream* outputStream, signed int value) {
@@ -113,7 +113,7 @@ void appendHex5(OutputStream* outputStream, signed int value) {
 }
 
 void appendHex6(OutputStream* outputStream, signed long value) {
-	internalAppendHex(outputStream, value, 20);
+    internalAppendHex(outputStream, value, 20);
 }
 
 void appendHex8(OutputStream* outputStream, signed long value) {
@@ -199,7 +199,7 @@ int appendDecf(OutputStream* stream, float value) {
 
 
 void appendStringAndDecf(OutputStream* stream, const char* s, float value) {
-	appendString(stream, s);
+    appendString(stream, s);
     appendDecf(stream, value);
 }
 

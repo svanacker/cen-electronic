@@ -42,8 +42,8 @@ void deviceSystemDebugHandleRawData(char header, InputStream* inputStream, Outpu
         // we don't use driver stream (buffered->too small), instead of log (not buffered)
         printLogger(getOutputStreamLogger(ALWAYS));
     }
-	// I2C Management
-	else if (header == COMMAND_DEBUG_I2C) {
+    // I2C Management
+    else if (header == COMMAND_DEBUG_I2C) {
         appendAck(outputStream);
         printI2cDebugBuffers();
 

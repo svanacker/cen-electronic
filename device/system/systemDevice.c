@@ -27,11 +27,11 @@ bool deviceSystemIsOk() {
 }
 
 void deviceSystemHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream) {
-	if (header == COMMAND_PING) {
+    if (header == COMMAND_PING) {
         // data
-		ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_PING);
+        ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_PING);
     } else if (header == COMMAND_USAGE) {
-		ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_USAGE);
+        ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_USAGE);
         // we don't use driver stream (buffered->too small), instead of log (not buffered)
         printDeviceListUsage(getOutputStreamLogger(INFO));
     } else if (header == COMMAND_WAIT) {
@@ -42,9 +42,9 @@ void deviceSystemHandleRawData(char header, InputStream* inputStream, OutputStre
         append(outputStream, COMMAND_WAIT);
     } else if (header == COMMAND_PIC_NAME) {
         appendString(getOutputStreamLogger(ALWAYS), getPicName());
-		println(getOutputStreamLogger(ALWAYS));
-		ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_PIC_NAME);
-	}
+        println(getOutputStreamLogger(ALWAYS));
+        ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_PIC_NAME);
+    }
 }
 
 static DeviceDescriptor descriptor = {

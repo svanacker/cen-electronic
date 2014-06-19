@@ -163,7 +163,7 @@ void detectsLaser(Laser* laserDetector) {
 }
 
 bool hasTrackSomething(Laser* laser) {
-	return (laser->lastServoPositionHit[LEFT_DIRECTION] != 0 && laser->lastServoPositionHit[RIGHT_DIRECTION] != 0);
+    return (laser->lastServoPositionHit[LEFT_DIRECTION] != 0 && laser->lastServoPositionHit[RIGHT_DIRECTION] != 0);
 }
 
 /**
@@ -199,35 +199,35 @@ float getAngleInRadian(Laser* laser) {
 // CALIBRATION
 
 void recalibrateServoInitValue(OutputStream* outputStream, Laser* laser, float relativeCalibrationX, float relativeCalibrationY) {
-	float normalRadianAngle = atan(relativeCalibrationX / relativeCalibrationY);
-	float normalRadianDegree = 90.0f - (normalRadianAngle / PI_DIVIDE_180);
+    float normalRadianAngle = atan(relativeCalibrationX / relativeCalibrationY);
+    float normalRadianDegree = 90.0f - (normalRadianAngle / PI_DIVIDE_180);
 
-	appendStringAndDec(outputStream, "laserIdx=", laser->servoIndex);
-	appendCRLF(outputStream);
-	appendStringAndDecf(outputStream, "normalRadianAngle=", normalRadianAngle);
-	appendCRLF(outputStream);
-	appendStringAndDecf(outputStream, "normalRadianDegree=", normalRadianDegree);
-	appendCRLF(outputStream);
+    appendStringAndDec(outputStream, "laserIdx=", laser->servoIndex);
+    appendCRLF(outputStream);
+    appendStringAndDecf(outputStream, "normalRadianAngle=", normalRadianAngle);
+    appendCRLF(outputStream);
+    appendStringAndDecf(outputStream, "normalRadianDegree=", normalRadianDegree);
+    appendCRLF(outputStream);
 
-	appendStringAndDecf(outputStream, "prev:servoInitValueCompute=", laser->servoInitValueCompute);
-	appendCRLF(outputStream);
+    appendStringAndDecf(outputStream, "prev:servoInitValueCompute=", laser->servoInitValueCompute);
+    appendCRLF(outputStream);
 
-	laser->servoInitValueCompute = normalRadianDegree * laser->angleFactorCompute + laser->detectedPosition;
-	appendStringAndDecf(outputStream, "new:servoInitValueCompute=", laser->servoInitValueCompute);
-	appendCRLF(outputStream);
-	appendCRLF(outputStream);
+    laser->servoInitValueCompute = normalRadianDegree * laser->angleFactorCompute + laser->detectedPosition;
+    appendStringAndDecf(outputStream, "new:servoInitValueCompute=", laser->servoInitValueCompute);
+    appendCRLF(outputStream);
+    appendCRLF(outputStream);
 }
 
 // DEBUG
 
 
 void printLaserStruct(OutputStream* outputStream, Laser* laser) {
-	appendStringAndDec(outputStream, "servoIdx=", laser->servoIndex);
-	appendCRLF(outputStream);
+    appendStringAndDec(outputStream, "servoIdx=", laser->servoIndex);
+    appendCRLF(outputStream);
 
-	int pinValue = laser->pinValue();
-	appendStringAndDec(outputStream, "pinValue=", pinValue);
-	appendCRLF(outputStream);
+    int pinValue = laser->pinValue();
+    appendStringAndDec(outputStream, "pinValue=", pinValue);
+    appendCRLF(outputStream);
 
     appendStringAndDec(outputStream, "servoPos=", laser->servoPosition);
     appendCRLF(outputStream);

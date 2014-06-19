@@ -151,7 +151,7 @@ int absoluteUpdateFromCoders(signed long left, signed long right, bool useThresh
 void updateTrajectory() {
     signed long left = getCoderValue(CODER_LEFT);
     signed long right = getCoderValue(CODER_RIGHT);
-    //	curveUpdateFromCoders(left, right);
+    //    curveUpdateFromCoders(left, right);
     absoluteUpdateFromCoders(left, right, true, false);
 }
 
@@ -177,7 +177,7 @@ void printPosition(OutputStream* outputStream) {
     appendStringAndDec(outputStream, "left=", getCoderValue(CODER_LEFT));
     appendStringAndDec(outputStream, " | right=", getCoderValue(CODER_RIGHT));
 
-	printPoint(outputStream, &(p->pos), " mm");
+    printPoint(outputStream, &(p->pos), " mm");
 
     appendStringAndAngleInDeg(outputStream, "\rang:", p->orientation);
     appendStringAndAngleInDeg(outputStream, "\rang ini:", p->initialOrientation);

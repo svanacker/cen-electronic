@@ -29,7 +29,7 @@
 
 #include "../../main/motorBoard/motorBoard.h"
 
-#define SONAR_INDEX			0
+#define SONAR_INDEX            0
 
 /** Use or not the sonar. */
 // static bool useSonar;
@@ -53,7 +53,7 @@ static bool readNextDistanceFlag;
 static char sonarStatus;
 
 void setSonarStatus(unsigned char aSonarStatus) {
-	sonarStatus = aSonarStatus;
+    sonarStatus = aSonarStatus;
 }
 
 void clearHistory() {

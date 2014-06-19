@@ -51,23 +51,23 @@
 #include "../../drivers/temperature/MCP9804.h"
 
 #ifndef MPLAB_SIMULATION
-#define SERIAL_PORT_DEBUG 		SERIAL_PORT_2
+#define SERIAL_PORT_DEBUG         SERIAL_PORT_2
 #else
 // We use the same port for both
-#define SERIAL_PORT_DEBUG 		SERIAL_PORT_1
+#define SERIAL_PORT_DEBUG         SERIAL_PORT_1
 #endif
 
-#define		SERVO_INDEX				1
-#define		SERVO_VALUE_TOUCH		1620
-#define		SERVO_VALUE_STAND_BY	1400
-#define		SERVO_SPEED				0xFF
+#define        SERVO_INDEX                1
+#define        SERVO_VALUE_TOUCH        1620
+#define        SERVO_VALUE_STAND_BY    1400
+#define        SERVO_SPEED                0xFF
 
 
 // 1000000 ==> 20 seconds
 // 5000000 ==> 10000 seconds => 15 minutes
 
-#define		ITERATION_OFF			20000000L
-#define		ITERATION_ON			40000000L
+#define        ITERATION_OFF            20000000L
+#define        ITERATION_ON            40000000L
 
 /**
  * Device list.

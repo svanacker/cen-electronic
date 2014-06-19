@@ -7,13 +7,13 @@
 void initStreamLink(StreamLink* streamLink,
                 char* streamName,
                 Buffer* inputBuffer,
-		char (*inputBufferArrayPointer)[],
-		unsigned char inputBufferLength,
+        char (*inputBufferArrayPointer)[],
+        unsigned char inputBufferLength,
                 Buffer* outputBuffer,
-		char (*outputBufferArrayPointer)[],
-		unsigned char outputBufferLength,
+        char (*outputBufferArrayPointer)[],
+        unsigned char outputBufferLength,
                 OutputStream* outputStream,
-		int param) {
+        int param) {
     streamLink->inputBuffer = inputBuffer;
     streamLink->outputBuffer = outputBuffer;
     streamLink->outputStream = outputStream;

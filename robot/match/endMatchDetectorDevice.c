@@ -44,11 +44,11 @@ void endMatchDetectorCallbackFunc(Timer* timer) {
 * We send it after
 */
 void initEndMatchConfig() {
-	doNotEnd = isConfigSet(CONFIG_DO_NOT_END);
+    doNotEnd = isConfigSet(CONFIG_DO_NOT_END);
 }
 
 void markStartMatch() {
-	initEndMatchConfig();
+    initEndMatchConfig();
     matchStarted = true;
     currentTimeInSecond = 0;
 }
@@ -69,20 +69,20 @@ bool isEnd() {
         appendString(getOutputStreamLogger(ERROR), "You must call startMatch before");
     }
     bool result = currentTimeInSecond >= MATCH_DURATION;
-	
-	if (result) {	
-		// If END
-		armDriver2012Up(0);
-	}
-	return result;
+    
+    if (result) {    
+        // If END
+        armDriver2012Up(0);
+    }
+    return result;
 }
 
 // COMMON PART
 
 void initEndMatchDetector() {
     endMatchDetectorDeviceTimer = addTimer(END_MATCH_DETECTOR_TIMER_CODE,
-								            TIME_DIVISER_1_HERTZ,
-								            endMatchDetectorCallbackFunc);
+                                            TIME_DIVISER_1_HERTZ,
+                                            endMatchDetectorCallbackFunc);
 }
 
 void stopEndMatchDetector() {

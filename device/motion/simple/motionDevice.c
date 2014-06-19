@@ -104,7 +104,7 @@ void deviceMotionHandleRawData(char commandHeader,
     // GOTO in impulsion
     if (commandHeader == COMMAND_MOTION_GOTO_IN_PULSE) {
         // send acquittement
-		ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_GOTO_IN_PULSE);
+        ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_GOTO_IN_PULSE);
 
         // Ex: 000100 000100 01 10
         // Left position
@@ -166,48 +166,48 @@ void deviceMotionHandleRawData(char commandHeader,
         float y = (float) readHex4(inputStream);
         checkIsChar(inputStream, '-');
 
-		float angle = readHex4(inputStream);
-		angle = angle * PI_DIVIDE_1800;
-		checkIsChar(inputStream, '-');
+        float angle = readHex4(inputStream);
+        angle = angle * PI_DIVIDE_1800;
+        checkIsChar(inputStream, '-');
 
-		// the distance can be negative, so the robot go back instead of go forward
-		// Distance1 in cm
-		float distance1 = readSignedHex2(inputStream);
-		checkIsChar(inputStream, '-');
-		distance1 *= 10.0f;
-	
-		// the distance can be negative, so the robot go back instead of go forward
-		// Distance2 in cm
-		float distance2 = readSignedHex2(inputStream);
-		distance2 *= 10.0f;
+        // the distance can be negative, so the robot go back instead of go forward
+        // Distance1 in cm
+        float distance1 = readSignedHex2(inputStream);
+        checkIsChar(inputStream, '-');
+        distance1 *= 10.0f;
+    
+        // the distance can be negative, so the robot go back instead of go forward
+        // Distance2 in cm
+        float distance2 = readSignedHex2(inputStream);
+        distance2 *= 10.0f;
 
-		checkIsChar(inputStream, '-');
-		int accelerationFactor = readHex(inputStream);
-		int speedFactor = readHex(inputStream);
+        checkIsChar(inputStream, '-');
+        int accelerationFactor = readHex(inputStream);
+        int speedFactor = readHex(inputStream);
 
-		// if distance = 0, the system computes the optimum distance
-		// we use relative
+        // if distance = 0, the system computes the optimum distance
+        // we use relative
         gotoSimpleSpline(x, y,
-						angle, 
-						distance1, distance2, 
-						accelerationFactor, speedFactor,
-						commandHeader == COMMAND_MOTION_SPLINE_RELATIVE
-						);
+                        angle, 
+                        distance1, distance2, 
+                        accelerationFactor, speedFactor,
+                        commandHeader == COMMAND_MOTION_SPLINE_RELATIVE
+                        );
     }
     else if (commandHeader == COMMAND_MOTION_SPLINE_TEST_LEFT || commandHeader == COMMAND_MOTION_SPLINE_TEST_RIGHT) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, commandHeader);
-		float sign = 1.0f;
-		if (commandHeader == COMMAND_MOTION_SPLINE_TEST_RIGHT) {
-			sign = -sign;
-		}
-		gotoSimpleSpline(400.0f, sign * 400.0f,
-						 sign * 0.75f * PI,
-						 200.0f, 200.0f,
-						MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL,
-						 true);
+        float sign = 1.0f;
+        if (commandHeader == COMMAND_MOTION_SPLINE_TEST_RIGHT) {
+            sign = -sign;
+        }
+        gotoSimpleSpline(400.0f, sign * 400.0f,
+                         sign * 0.75f * PI,
+                         200.0f, 200.0f,
+                        MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL,
+                         true);
         append(outputStream, commandHeader);
     }
-	// STOP
+    // STOP
         // cancel motion
     else if (commandHeader == COMMAND_MOTION_CANCEL) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_CANCEL);
@@ -224,8 +224,8 @@ void deviceMotionHandleRawData(char commandHeader,
     }        // CALIBRATION
     else if (commandHeader == COMMAND_SQUARE_CALIBRATION) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_SQUARE_CALIBRATION);
-		unsigned char type = readHex2(inputStream);
-		unsigned int length = readHex4(inputStream);
+        unsigned char type = readHex2(inputStream);
+        unsigned int length = readHex4(inputStream);
         squareCalibration(type, length);
     }        // PARAMETERS
     else if (commandHeader == COMMAND_GET_MOTION_PARAMETERS) {

@@ -12,7 +12,7 @@
 
 /*
 // PID at 10/05/2010 :
-// -> GO 	   : 40006000-80006000
+// -> GO        : 40006000-80006000
 // -> ROTATION : 80006000-40006000
 // First Octet = EEPROM_RESERVED, Last_Octet = EEPROM_DEBUG
 signed int DEFAULT_EEPROM_VALUES[EEPROM_PID_START_INDEX + (EEPROM_PID_BLOCK_SIZE * PID_COUNT)] = 
@@ -35,7 +35,7 @@ signed int DEFAULT_EEPROM_VALUES[EEPROM_PID_START_INDEX + (EEPROM_PID_BLOCK_SIZE
  };
  */
 // For 5000 impulsions coders
-#define PID_STORED_COUNT		8
+#define PID_STORED_COUNT        8
 static signed int DEFAULT_EEPROM_VALUES[EEPROM_PID_START_INDEX + (EEPROM_PID_BLOCK_SIZE * PID_STORED_COUNT)] ={
     // RESERVED area for EEPROM
     0x00,
@@ -55,15 +55,15 @@ static signed int DEFAULT_EEPROM_VALUES[EEPROM_PID_START_INDEX + (EEPROM_PID_BLO
 };
 
 // Values not stored into the EEPROM
-#define ROLLING_TEST_P				0x10
-#define ROLLING_TEST_I				0x00
-#define ROLLING_TEST_D				0x10
-#define ROLLING_TEST_MAX_INTEGRAL	0x10
+#define ROLLING_TEST_P                0x10
+#define ROLLING_TEST_I                0x00
+#define ROLLING_TEST_D                0x10
+#define ROLLING_TEST_MAX_INTEGRAL    0x10
 
-#define END_APPROACH_P				0x7D
-#define END_APPROACH_I				0x00
-#define END_APPROACH_D				0x7D
-#define END_APPROACH_MAX_INTEGRAL	0x00
+#define END_APPROACH_P                0x7D
+#define END_APPROACH_I                0x00
+#define END_APPROACH_D                0x7D
+#define END_APPROACH_MAX_INTEGRAL    0x00
 
 // Not used
 #define DEFAULT_MAX_INTEGRAL 0

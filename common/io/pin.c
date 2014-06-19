@@ -1,9 +1,9 @@
 #include "../../common/commons.h"
 
 #ifdef PROG_32
-	#include <p32xxxx.h>
+    #include <p32xxxx.h>
 #else
-	#include <p30fxxxx.h>
+    #include <p30fxxxx.h>
 #endif
 
 #include "pin.h"
@@ -69,19 +69,19 @@ void setPinValue(int pinIndex, bool pinValue) {
             break;
 
             // PORT A
-		#ifndef PROG_32
+        #ifndef PROG_32
         case PIN_INDEX_RA11: LATAbits.LATA11 = pinValue;
             break;
-		#endif
+        #endif
 
             // PORT F
         case PIN_INDEX_RF0: LATFbits.LATF0 = pinValue;
             break;
 
-		#ifndef PROG_32
-	        case PIN_INDEX_RF6: LATFbits.LATF6 = pinValue;
-	            break;
-		#endif
+        #ifndef PROG_32
+            case PIN_INDEX_RF6: LATFbits.LATF6 = pinValue;
+                break;
+        #endif
         default:
         {
             writeError(IO_PIN_INDEX_ERROR);
@@ -121,15 +121,15 @@ bool getPinValue(int pinIndex) {
         case PIN_INDEX_RD9: return PORTDbits.RD9;
 
             // PORT A
-		#ifndef PROG_32
-	        case PIN_INDEX_RA11: return PORTAbits.RA11;
-		#endif
-	
+        #ifndef PROG_32
+            case PIN_INDEX_RA11: return PORTAbits.RA11;
+        #endif
+    
             // PORTF
         case PIN_INDEX_RF0: return PORTFbits.RF0;
-		#ifndef PROG_32
-	        case PIN_INDEX_RF6: return PORTFbits.RF6;
-		#endif
+        #ifndef PROG_32
+            case PIN_INDEX_RF6: return PORTFbits.RF6;
+        #endif
     }
     writeError(IO_PIN_INDEX_ERROR);
 

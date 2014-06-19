@@ -85,9 +85,9 @@
 
 // The port for which we debug (we can send instruction too)
 #ifndef MPLAB_SIMULATION
-	#define SERIAL_PORT_DEBUG 	SERIAL_PORT_2
+    #define SERIAL_PORT_DEBUG     SERIAL_PORT_2
 #else
-	#define SERIAL_PORT_DEBUG 	SERIAL_PORT_1
+    #define SERIAL_PORT_DEBUG     SERIAL_PORT_1
 #endif
 
 // serial DEBUG 

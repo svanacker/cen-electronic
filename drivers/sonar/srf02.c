@@ -21,12 +21,12 @@
  * @param sonarIndex between 0 and 15
  */
 unsigned int getSRF02Address(unsigned char sonarIndex) {
-	return SRF02_DEFAULT_ADDRESS + sonarIndex * 2;
+    return SRF02_DEFAULT_ADDRESS + sonarIndex * 2;
 }
 
 unsigned char readSRF02(char addr, char reg) {
     portableStartI2C();
-	portableMasterWaitSendI2C();
+    portableMasterWaitSendI2C();
     // send the address
     portableMasterWriteI2C(addr);
     WaitI2C();
@@ -36,7 +36,7 @@ unsigned char readSRF02(char addr, char reg) {
     portableStopI2C();
     WaitI2C();
     portableStartI2C();
-	portableMasterWaitSendI2C();
+    portableMasterWaitSendI2C();
     // send the address again with read bit
     portableMasterWriteI2C(addr + 1);
     WaitI2C();
@@ -85,12 +85,12 @@ void SRF02ChangeAddress(unsigned char oldAddress, unsigned char newAddress) {
 }
 
 unsigned int getSRF02SoftwareRevision(unsigned char sonarIndex) {
-	unsigned char srf02Address = getSRF02Address(sonarIndex);
+    unsigned char srf02Address = getSRF02Address(sonarIndex);
     return readSRF02(srf02Address, REGISTER_0);
 }
 
 void startSRF02Ranging(unsigned char sonarIndex) {
-	unsigned char srf02Address = getSRF02Address(sonarIndex);
+    unsigned char srf02Address = getSRF02Address(sonarIndex);
     writeSRF02Command(srf02Address, REGISTER_0, CM_RANGE_MODE);
 }
 
@@ -102,7 +102,7 @@ unsigned int getSRF02Distance(unsigned char sonarIndex) {
 }
 
 unsigned int getSRF02DistanceEndRanging(unsigned char sonarIndex) {
-	unsigned char srf02Address = getSRF02Address(sonarIndex);
+    unsigned char srf02Address = getSRF02Address(sonarIndex);
     unsigned char datah = readSRF02(srf02Address, 2);
     unsigned char datal = readSRF02(srf02Address, 3);
     unsigned int data = (datah << 8) + datal;

@@ -25,7 +25,7 @@ void setI2cStreamLink(StreamLink* streamLink) {
 }
 
 StreamLink* getI2cStreamLink() {
-	return i2cStreamLink;
+    return i2cStreamLink;
 }
 
 /**

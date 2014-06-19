@@ -31,7 +31,7 @@ void _jennic5139OpenOutputStream(OutputStream* outputStream, int param1) {
  * @private
  */
 void _jennic5139CloseOutputStream(OutputStream* outputStream) {
-	// DO NOT END
+    // DO NOT END
 }
 
 /**
@@ -51,18 +51,18 @@ void _writeCharJennic5139(OutputStream* outputStream, char c) {
 void _flushJennic5139(OutputStream* outputStream) {
     Buffer* buffer = _jennic5139GetOutputBuffer(outputStream);
     char* macAddress = buffer->name;
-	sendJennic5139DataBuffer(&(buffer->inputStream), macAddress, DATA_TRANSMISSION_FLAG_MASK_ACK);
+    sendJennic5139DataBuffer(&(buffer->inputStream), macAddress, DATA_TRANSMISSION_FLAG_MASK_ACK);
 }
 
 void initZigbeeOutputStream(OutputStream* outputStream,
-        						Buffer* jennic5139Buffer,
-        						char* jennicAddress) {
+                                Buffer* jennic5139Buffer,
+                                char* jennicAddress) {
     outputStream->openOutputStream = _jennic5139OpenOutputStream;
     outputStream->closeOutputStream = _jennic5139CloseOutputStream;
     outputStream->writeChar = _writeCharJennic5139;
     outputStream->flush = _flushJennic5139;
     outputStream->object = (int*) jennic5139Buffer;
-	// Tips: store the address into the name
-	jennic5139Buffer->name = jennicAddress;
+    // Tips: store the address into the name
+    jennic5139Buffer->name = jennicAddress;
     _jennic5139OpenOutputStream(outputStream, NULL);
 }

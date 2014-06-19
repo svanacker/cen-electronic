@@ -70,7 +70,7 @@
 #include "../../drivers/driverStreamListener.h"
 
 // The port for which we debug (we can send instruction too)
-#define SERIAL_PORT_DEBUG 	SERIAL_PORT_2
+#define SERIAL_PORT_DEBUG     SERIAL_PORT_2
 
 /**
 * Device list.
@@ -109,120 +109,120 @@ Buffer* getMechanicalBoard2I2CSlaveOutputBuffer() {
 void initDevicesDescriptor() {
     initDeviceList(&deviceListArray, MECHANICAL_BOARD_2_DEVICE_LENGTH);
 
-	addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
-	addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
-	addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor());
-	addLocalDevice(getADCDeviceInterface(), getADCDeviceDescriptor());
+    addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
+    addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
+    addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor());
+    addLocalDevice(getADCDeviceInterface(), getADCDeviceDescriptor());
 
-	addLocalDevice(getArm2012DeviceInterface(), getArm2012DeviceDescriptor());
+    addLocalDevice(getArm2012DeviceInterface(), getArm2012DeviceDescriptor());
 
-	addLocalDevice(getRobotInfraredDetectorDeviceInterface(), getRobotInfraredDetectorDeviceDescriptor());
+    addLocalDevice(getRobotInfraredDetectorDeviceInterface(), getRobotInfraredDetectorDeviceDescriptor());
 
-	initDevices(&devices);
+    initDevices(&devices);
 }
 
 void initMechanicalBoard2Pins() {
-	// by default, PORTB is as input, do not set it !
-	PORTBbits.RB8 = 0;
-	PORTBbits.RB9 = 0;
-	PORTBbits.RB10 = 0;
-	PORTBbits.RB11 = 0;
-	PORTBbits.RB12 = 0;
+    // by default, PORTB is as input, do not set it !
+    PORTBbits.RB8 = 0;
+    PORTBbits.RB9 = 0;
+    PORTBbits.RB10 = 0;
+    PORTBbits.RB11 = 0;
+    PORTBbits.RB12 = 0;
 
-	// PORTB as input
-	// TRISB = 0x00FF;
-	// TRISB = 0xFFFF;
+    // PORTB as input
+    // TRISB = 0x00FF;
+    // TRISB = 0xFFFF;
 
-	// PORT C as output (relay)
-	TRISC = 0;
-	PORTC = 0;
-	TRISC = 0;
+    // PORT C as output (relay)
+    TRISC = 0;
+    PORTC = 0;
+    TRISC = 0;
 
-	// PORT D as output (relay)
-	TRISD = 0;
-	PORTD = 0;
-	TRISD = 0;
+    // PORT D as output (relay)
+    TRISD = 0;
+    PORTD = 0;
+    TRISD = 0;
 }
 
 int main(void) {
-	setPicName("MECHANICAL 2");
+    setPicName("MECHANICAL 2");
 
-	openSerialLink(	&debugSerialStreamLink,
-					&debugInputBuffer,
-					&debugInputBufferArray,
-					MECA_BOARD_2_DEBUG_INPUT_BUFFER_LENGTH,
-					&debugOutputBuffer,
-					&debugOutputBufferArray,
-					MECA_BOARD_2_DEBUG_OUTPUT_BUFFER_LENGTH,
-					&debugOutputStream,
-					SERIAL_PORT_DEBUG,
-					115200);
+    openSerialLink(    &debugSerialStreamLink,
+                    &debugInputBuffer,
+                    &debugInputBufferArray,
+                    MECA_BOARD_2_DEBUG_INPUT_BUFFER_LENGTH,
+                    &debugOutputBuffer,
+                    &debugOutputBufferArray,
+                    MECA_BOARD_2_DEBUG_OUTPUT_BUFFER_LENGTH,
+                    &debugOutputStream,
+                    SERIAL_PORT_DEBUG,
+                    115200);
 
-	// Init the logs
-	initLog(DEBUG);
-	addLogHandler(&serialLogHandler, "UART", &debugOutputStream, DEBUG);
-	appendString(getOutputStreamLogger(ALWAYS), getPicName());
-	println(getOutputStreamLogger(ALWAYS));
+    // Init the logs
+    initLog(DEBUG);
+    addLogHandler(&serialLogHandler, "UART", &debugOutputStream, DEBUG);
+    appendString(getOutputStreamLogger(ALWAYS), getPicName());
+    println(getOutputStreamLogger(ALWAYS));
 
-	
-	initTimerList(&timerListArray, MECHANICAL_BOARD_2_TIMER_LENGTH);
-
-
-	delaymSec(500);
-
-	openSlaveI2cStreamLink(&i2cSerialStreamLink,
-							&i2cSlaveInputBuffer,
-							&i2cSlaveInputBufferArray,
-							MECA_BOARD_2_I2C_INPUT_BUFFER_LENGTH,
-							&i2cSlaveOutputBuffer,
-							&i2cSlaveOutputBufferArray,
-							MECA_BOARD_2_I2C_OUTPUT_BUFFER_LENGTH,
-							MECHANICAL_BOARD_2_I2C_ADDRESS
-						);
+    
+    initTimerList(&timerListArray, MECHANICAL_BOARD_2_TIMER_LENGTH);
 
 
-	// init the devices
-	initDevicesDescriptor();
+    delaymSec(500);
 
-	// Init the timers management
-	startTimerList();
+    openSlaveI2cStreamLink(&i2cSerialStreamLink,
+                            &i2cSlaveInputBuffer,
+                            &i2cSlaveInputBufferArray,
+                            MECA_BOARD_2_I2C_INPUT_BUFFER_LENGTH,
+                            &i2cSlaveOutputBuffer,
+                            &i2cSlaveOutputBufferArray,
+                            MECA_BOARD_2_I2C_OUTPUT_BUFFER_LENGTH,
+                            MECHANICAL_BOARD_2_I2C_ADDRESS
+                        );
 
-	initMechanicalBoard2Pins();
 
-	// 2011 : TODO : A regarder
-	// ADPCFG = 0xFFFF;
+    // init the devices
+    initDevicesDescriptor();
 
-	upArm(ARM_LEFT);
-	upArm(ARM_RIGHT);
+    // Init the timers management
+    startTimerList();
 
-	delaymSec(2000);
+    initMechanicalBoard2Pins();
 
-	while (1) {
-		// Forward Obstacle
-		if (getRobotInfraredObstacleForward()) {
-			notifyInfraredDetectorDetection(DETECTOR_FORWARD_INDEX);
-			appendString(getOutputStreamLogger(ALWAYS), "\nForward Obstacle, wait few seconds For New Notification !\n");
-		}
+    // 2011 : TODO : A regarder
+    // ADPCFG = 0xFFFF;
 
-		// Backward Obstacle
-		if (getRobotInfraredObstacleBackward()) {
-			notifyInfraredDetectorDetection(DETECTOR_BACKWARD_INDEX);
-			appendString(getOutputStreamLogger(ALWAYS), "\nBackward Obstacle, wait few seconds For New Notification !\n");
-		}
+    upArm(ARM_LEFT);
+    upArm(ARM_RIGHT);
 
-		// I2C Stream
-		handleStreamInstruction(&i2cSlaveInputBuffer,
-								&i2cSlaveOutputBuffer,
-								NULL,
-								&filterRemoveCRLF,
-								NULL);
+    delaymSec(2000);
 
-		// UART Stream
-		handleStreamInstruction(&debugInputBuffer,
-								&debugOutputBuffer,
-								&debugOutputStream,
-								&filterRemoveCRLF,
-								NULL);
-	}
-	return (0);
+    while (1) {
+        // Forward Obstacle
+        if (getRobotInfraredObstacleForward()) {
+            notifyInfraredDetectorDetection(DETECTOR_FORWARD_INDEX);
+            appendString(getOutputStreamLogger(ALWAYS), "\nForward Obstacle, wait few seconds For New Notification !\n");
+        }
+
+        // Backward Obstacle
+        if (getRobotInfraredObstacleBackward()) {
+            notifyInfraredDetectorDetection(DETECTOR_BACKWARD_INDEX);
+            appendString(getOutputStreamLogger(ALWAYS), "\nBackward Obstacle, wait few seconds For New Notification !\n");
+        }
+
+        // I2C Stream
+        handleStreamInstruction(&i2cSlaveInputBuffer,
+                                &i2cSlaveOutputBuffer,
+                                NULL,
+                                &filterRemoveCRLF,
+                                NULL);
+
+        // UART Stream
+        handleStreamInstruction(&debugInputBuffer,
+                                &debugOutputBuffer,
+                                &debugOutputStream,
+                                &filterRemoveCRLF,
+                                NULL);
+    }
+    return (0);
 }

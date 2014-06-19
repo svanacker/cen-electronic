@@ -8,23 +8,23 @@ const char* devicePliers2011GetName() {
 
 int devicePliers2011GetInterface(char header, int mode, bool fillDeviceArgumentList) {
     if (header == COMMAND_PLIERS_2011_CLOSE) {
-		// SAME INPUT / OUTPUT
-		if (fillDeviceArgumentList) {
-			setFunctionNoArgumentAndNoResult("pliersClose");
+        // SAME INPUT / OUTPUT
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("pliersClose");
             return 0;
         }
     } else if (header == COMMAND_PLIERS_2011_INIT_CLOSE) {
-		// SAME INPUT / OUTPUT
-		if (fillDeviceArgumentList) {
-			setFunctionNoArgumentAndNoResult("initPliersClose");
+        // SAME INPUT / OUTPUT
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("initPliersClose");
             return 0;
-		}
+        }
     } else if (header == COMMAND_PLIERS_2011_OPEN) {
-		// SAME INPUT / OUTPUT
-		if (fillDeviceArgumentList) {
-			setFunctionNoArgumentAndNoResult("pliersOpen");
+        // SAME INPUT / OUTPUT
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("pliersOpen");
             return 0;
-		}
+        }
     }
     return DEVICE_HEADER_NOT_HANDLED;
 }

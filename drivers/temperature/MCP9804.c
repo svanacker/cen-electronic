@@ -19,11 +19,11 @@ int Temperature;
 
 /********************************************************
  * setRegMCP9804                                        *
- * Envoie la valeur "MSB" et "LSB" au registre "reg"   	*
- * @param : reg : adresse du registre   		*
+ * Envoie la valeur "MSB" et "LSB" au registre "reg"       *
+ * @param : reg : adresse du registre           *
  *          MSB : Poid fort transfere dans le registre  *
  *          LSB : Poid faible transfere dans le registre*
- * @return : none 					*
+ * @return : none                     *
  ********************************************************/
 void setRegMCP9804 (unsigned char reg, unsigned char MSB , unsigned char LSB){
     StartI2C();
@@ -55,13 +55,13 @@ void setTempCriticRegMCP9804 ( unsigned char MSB , unsigned char LSB){
 }
 
 void initRegMCP9804 (unsigned char CONFMSB,
-					 unsigned char CONFLSB,
-					 unsigned char TUPMSB,
-					 unsigned char TUPLSB,
-					 unsigned char TLOWMSB,
-					 unsigned char TLOWLSB,
+                     unsigned char CONFLSB,
+                     unsigned char TUPMSB,
+                     unsigned char TUPLSB,
+                     unsigned char TLOWMSB,
+                     unsigned char TLOWLSB,
                      unsigned char TCRITMSB,
-					 unsigned char TCRITLSB){
+                     unsigned char TCRITLSB){
     setConfRegMCP9804(CONFMSB,CONFLSB);
     setTempUpperRegMCP9804 ( TUPMSB , TUPLSB );
     setTempLowerRegMCP9804 ( TLOWMSB , TLOWLSB );
@@ -80,36 +80,36 @@ int ReadTempAmbMCP9804 (void){
     MasterWriteI2C(0x31);//AckI2C1();
 
     TempAmbMSB = MasterReadI2C();
-	AckI2C();
-	IdleI2C();//AckI2C1();
+    AckI2C();
+    IdleI2C();//AckI2C1();
 
     TempAmbLSB = MasterReadI2C();
-	NotAckI2C();
-	IdleI2C();
+    NotAckI2C();
+    IdleI2C();
     
-	CloseI2C();
+    CloseI2C();
 
     //Convert the temperature data
     //First Check flag bits
     if ((TempAmbMSB & 0x80) == 0x80){
-    	//TA ？ TCRIT
+        //TA ？ TCRIT
     }
     if ((TempAmbMSB & 0x40) == 0x40){
-    	//TA > TUPPER
+        //TA > TUPPER
     }
     if ((TempAmbMSB & 0x20) == 0x20){
-    	//TA < TLOWER
+        //TA < TLOWER
     }
     TempAmbMSB = TempAmbMSB & 0x1F; //Clear flag bits
     if ((TempAmbMSB & 0x10) == 0x10){ //TA < 0°C
-    	TempAmbMSB = TempAmbMSB & 0x0F;
-    	//Clear SIGN
-    	Temperature = 256 - (TempAmbMSB * 16 + TempAmbLSB / 16);
+        TempAmbMSB = TempAmbMSB & 0x0F;
+        //Clear SIGN
+        Temperature = 256 - (TempAmbMSB * 16 + TempAmbLSB / 16);
     }
-	else {
-	    //TA  ？ 0°C
-	    Temperature = (TempAmbMSB * 16 + TempAmbLSB / 16);
-	}
+    else {
+        //TA  ？ 0°C
+        Temperature = (TempAmbMSB * 16 + TempAmbLSB / 16);
+    }
     //Temperature = Ambient Temperature (°C)
     return(Temperature);
 }

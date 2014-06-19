@@ -67,19 +67,19 @@ void setEnabledPid(int pidIndex, unsigned char enabled) {
 }
 
 PidMotion* getPidMotion() {
-	return &pidMotion;
+    return &pidMotion;
 }
 
 MotionEndDetectionParameter* getMotionEndDetectionParameter() {
-	return &(pidMotion.globalParameters.motionEndDetectionParameter);
+    return &(pidMotion.globalParameters.motionEndDetectionParameter);
 }
 
 /**
  * Init global variable storing information about motion.
  */
 void initPidMotion() {
-	initMotionEndParameter(getMotionEndDetectionParameter());
-	initFirstTimeBSplineCurve(&(pidMotion.currentMotionDefinition.curve));
+    initMotionEndParameter(getMotionEndDetectionParameter());
+    initFirstTimeBSplineCurve(&(pidMotion.currentMotionDefinition.curve));
 }
 
 void initPID(void) {
@@ -100,11 +100,11 @@ void stopPID(void) {
  */
 float getNormalU(float pulseAtSpeed) {
     // at full Speed (value = 127), 7 rotations / seconds * 20000 impulsions
-	// at Frequency of 200 Hz => 730 pulses by pidTime at full Speed
-	
-	// NormalU = (pulseAtSpeed / pulseAtFullSpeed) * MAX_U
+    // at Frequency of 200 Hz => 730 pulses by pidTime at full Speed
+    
+    // NormalU = (pulseAtSpeed / pulseAtFullSpeed) * MAX_U
     float result = pulseAtSpeed * U_FACTOR_AT_FULL_SPEED;
-	// float result = 0.0f;
+    // float result = 0.0f;
     return result;
 }
 
@@ -125,15 +125,15 @@ unsigned int updateMotors(void) {
     if (!mustReachPosition) {
         return NO_POSITION_TO_REACH;
     }
-	if (mustPidBeRecomputed()) {
+    if (mustPidBeRecomputed()) {
         float pidTime = (float) getPidTime();
         pidMotion.computationValues.pidTime = pidTime;
 
-		PidMotionDefinition* motionDefinition = &(pidMotion.currentMotionDefinition);
+        PidMotionDefinition* motionDefinition = &(pidMotion.currentMotionDefinition);
         MotionInstruction* thetaInst = &(motionDefinition->inst[INSTRUCTION_THETA_INDEX]);
         MotionInstruction* alphaInst = &(motionDefinition->inst[INSTRUCTION_ALPHA_INDEX]);
 
-		PidComputationValues* computationValues = &(pidMotion.computationValues);
+        PidComputationValues* computationValues = &(pidMotion.computationValues);
         Motion* thetaMotion = &(computationValues->motion[INSTRUCTION_THETA_INDEX]);
         Motion* alphaMotion = &(computationValues->motion[INSTRUCTION_ALPHA_INDEX]);
 
@@ -141,7 +141,7 @@ unsigned int updateMotors(void) {
         float thetaError = computationValues->thetaError;
         float alphaError = computationValues->alphaError;
 
-		// Change PID type for final Approach
+        // Change PID type for final Approach
         if ((thetaError < ERROR_FOR_STRONG_PID) && (pidTime > thetaInst->t3 + TIME_PERIOD_AFTER_END_FOR_STRONG_PID)
                 && (alphaError < ERROR_FOR_STRONG_PID) && (pidTime > alphaInst->t3 + TIME_PERIOD_AFTER_END_FOR_STRONG_PID)) {
             thetaInst->pidType = PID_TYPE_FINAL_APPROACH_INDEX;
@@ -149,7 +149,7 @@ unsigned int updateMotors(void) {
         }
 
         // Computes the PID
-		motionDefinition->computeU(&pidMotion);
+        motionDefinition->computeU(&pidMotion);
 
         // 2 dependant Wheels (direction + angle)
         float leftMotorSpeed = (thetaMotion->u + alphaMotion->u) / 2.0f;
@@ -161,29 +161,29 @@ unsigned int updateMotors(void) {
             return POSITION_TO_MAINTAIN;
         }
 
-		MotionEndDetectionParameter* endDetectionParameter = getMotionEndDetectionParameter();
-		MotionEndInfo* thetaEndMotion = &(computationValues->motionEnd[INSTRUCTION_THETA_INDEX]);
-		MotionEndInfo* alphaEndMotion = &(computationValues->motionEnd[INSTRUCTION_ALPHA_INDEX]);
-	
-		thetaMotion->currentSpeed = thetaMotion->position - thetaMotion->oldPosition;
-		alphaMotion->currentSpeed = alphaMotion->position - alphaMotion->oldPosition;
+        MotionEndDetectionParameter* endDetectionParameter = getMotionEndDetectionParameter();
+        MotionEndInfo* thetaEndMotion = &(computationValues->motionEnd[INSTRUCTION_THETA_INDEX]);
+        MotionEndInfo* alphaEndMotion = &(computationValues->motionEnd[INSTRUCTION_ALPHA_INDEX]);
+    
+        thetaMotion->currentSpeed = thetaMotion->position - thetaMotion->oldPosition;
+        alphaMotion->currentSpeed = alphaMotion->position - alphaMotion->oldPosition;
 
-		updateEndMotionData(INSTRUCTION_THETA_INDEX, thetaEndMotion, endDetectionParameter, pidTime);
-		updateEndMotionData(INSTRUCTION_ALPHA_INDEX, alphaEndMotion, endDetectionParameter, pidTime);
+        updateEndMotionData(INSTRUCTION_THETA_INDEX, thetaEndMotion, endDetectionParameter, pidTime);
+        updateEndMotionData(INSTRUCTION_ALPHA_INDEX, alphaEndMotion, endDetectionParameter, pidTime);
 
-		bool isThetaEnd = isEndOfMotion(INSTRUCTION_THETA_INDEX, thetaEndMotion, endDetectionParameter);
-		bool isAlphaEnd = isEndOfMotion(INSTRUCTION_ALPHA_INDEX, alphaEndMotion, endDetectionParameter);
+        bool isThetaEnd = isEndOfMotion(INSTRUCTION_THETA_INDEX, thetaEndMotion, endDetectionParameter);
+        bool isAlphaEnd = isEndOfMotion(INSTRUCTION_ALPHA_INDEX, alphaEndMotion, endDetectionParameter);
 
-		bool isThetaBlocked = isRobotBlocked(INSTRUCTION_THETA_INDEX, thetaEndMotion, endDetectionParameter);
-		bool isAlphaBlocked = isRobotBlocked(INSTRUCTION_ALPHA_INDEX, alphaEndMotion, endDetectionParameter);
+        bool isThetaBlocked = isRobotBlocked(INSTRUCTION_THETA_INDEX, thetaEndMotion, endDetectionParameter);
+        bool isAlphaBlocked = isRobotBlocked(INSTRUCTION_ALPHA_INDEX, alphaEndMotion, endDetectionParameter);
 
-		if (isThetaEnd && isAlphaEnd) {
-			if (isThetaBlocked || isAlphaBlocked) {
-				return POSITION_BLOCKED_WHEELS;
+        if (isThetaEnd && isAlphaEnd) {
+            if (isThetaBlocked || isAlphaBlocked) {
+                return POSITION_BLOCKED_WHEELS;
             } else {
                 return POSITION_REACHED;
             }
-		}
+        }
     }
     return POSITION_IN_PROGRESS;
 }

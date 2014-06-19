@@ -50,18 +50,18 @@ void deviceSonarHandleRawData(char header,
             appendHex4(outputStream, distance);
         }
     }
-	else if (header == COMMAND_SONAR_CHANGE_ADDRESS) {
+    else if (header == COMMAND_SONAR_CHANGE_ADDRESS) {
         int oldAddress = readHex2(inputStream);
         int newAddress = readHex2(inputStream);
 
-		appendStringAndDec(getOutputStreamLogger(ALWAYS), "\noldAddress=", oldAddress);
-		appendStringAndDec(getOutputStreamLogger(ALWAYS), "\newAddress=", newAddress);
+        appendStringAndDec(getOutputStreamLogger(ALWAYS), "\noldAddress=", oldAddress);
+        appendStringAndDec(getOutputStreamLogger(ALWAYS), "\newAddress=", newAddress);
 
         SRF02ChangeAddress(oldAddress, newAddress); 
-		
+        
         appendAck(outputStream);
         append(outputStream, COMMAND_SONAR_CHANGE_ADDRESS);
-	}
+    }
 }
 
 static DeviceDescriptor descriptor = {

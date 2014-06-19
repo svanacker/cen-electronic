@@ -26,11 +26,11 @@ void stopTimer(Timer* timer) {
 // MARK
 
 void mark(Timer* timer) {
-	timer->markTime = timer->time;
+    timer->markTime = timer->time;
 }
 
 bool timeout(Timer* timer, unsigned long time) {
-	return timer->markTime + time > timer->time;
+    return timer->markTime + time > timer->time;
 }
 
 // LOCK / UNLOCK

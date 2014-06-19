@@ -9,16 +9,16 @@
 #include "../../common/delay/cenDelay.h"
 
 //addresses of modules on I2C bus
-#define MD22_BASE			0xB0
-#define MD22_ADDR_W			MD22_BASE + 0
-#define MD22_ADDR_R			MD22_BASE + 1
+#define MD22_BASE            0xB0
+#define MD22_ADDR_W            MD22_BASE + 0
+#define MD22_ADDR_R            MD22_BASE + 1
 //md22 register locations
-#define MD22_MODE			0
-#define MD22_SPEED_LEFT		1
-#define MD22_SPEED_RIGHT	2
-#define MD22_SPEED			MD22_SPEED_LEFT
-#define MD22_ACCEL			3
-#define MD22_SWVER			7
+#define MD22_MODE            0
+#define MD22_SPEED_LEFT        1
+#define MD22_SPEED_RIGHT    2
+#define MD22_SPEED            MD22_SPEED_LEFT
+#define MD22_ACCEL            3
+#define MD22_SWVER            7
 
 /**
  * Reads a register from the MD22.
@@ -29,7 +29,7 @@
 unsigned char readMD22(char addr, char reg) {
     WaitI2C();
     portableStartI2C();
-	portableMasterWaitSendI2C();
+    portableMasterWaitSendI2C();
     // send the address
     portableMasterWriteI2C(MD22_ADDR_W);
     WaitI2C();
@@ -39,7 +39,7 @@ unsigned char readMD22(char addr, char reg) {
     portableStopI2C();
     WaitI2C();
     portableStartI2C();
-	portableMasterWaitSendI2C();
+    portableMasterWaitSendI2C();
     // send the address again with read bit
 
     portableMasterWriteI2C(MD22_ADDR_R);
@@ -78,7 +78,7 @@ void setMD22MotorSpeeds(signed char leftSpeed, signed char rightSpeed) {
     portableStartI2C();
 
     WaitI2C();
-	portableMasterWaitSendI2C();
+    portableMasterWaitSendI2C();
     portableMasterWriteI2C(MD22_ADDR_W);
     WaitI2C();
     portableMasterWriteI2C(MD22_SPEED);

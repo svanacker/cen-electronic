@@ -50,15 +50,15 @@ void stopPlier(int index) {
     movePlier(index, PWM_SERVO_MIDDLE_POSITION);
 }
 
-#define PLIERS_CLOSE_PWM 		1150
-#define PLIERS_CLOSE_END_PWM 		1300
+#define PLIERS_CLOSE_PWM         1150
+#define PLIERS_CLOSE_END_PWM         1300
 
-#define PLIERS_INIT_CLOSE_PWM 		1400
+#define PLIERS_INIT_CLOSE_PWM         1400
 
-#define PLIERS_OPEN_PWM 		2000
+#define PLIERS_OPEN_PWM         2000
 
 // Valeur plus faible pour arriver en douceur
-#define PLIERS_END_OPEN_PWM 		1650
+#define PLIERS_END_OPEN_PWM         1650
 
 void movePliers(int delayCounter, int speed) {
     int counter = 0;

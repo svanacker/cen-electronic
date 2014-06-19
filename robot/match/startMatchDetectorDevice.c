@@ -7,9 +7,9 @@
 #include "../../common/commons.h"
 
 #ifdef PROG_32
-	#include <p32xxxx.h>
+    #include <p32xxxx.h>
 #else
-	#include <p30fxxxx.h>
+    #include <p30fxxxx.h>
 #endif
 
 #include "startMatchDetectorDevice.h"
@@ -42,27 +42,27 @@ bool isStartMatchDetectorDeviceOk() {
 }
 
 void loopUntilStart(handleFunctionType* handleFunction) {
-	#ifndef PROG_32
+    #ifndef PROG_32
     while (START_DETECTOR_PIN) {
         // Call back to be able to manage the robot while waiting for start.
         handleFunction();
     }
-	#endif
+    #endif
 }
 
 char isStarted() {
-	#ifndef PROG_32
+    #ifndef PROG_32
     char readPin;
     readPin = START_DETECTOR_PIN;
     return readPin != 0;
-	#endif
+    #endif
 }
 
 void showWaitingStart(OutputStream* pcOutputStream) {
     appendString(pcOutputStream, MESSAGE_TO_PC_RESET);
     appendString(getOutputStreamLogger(ALWAYS), "CFG:");
     appendStringConfig(getOutputStreamLogger(ALWAYS));
-	println(getOutputStreamLogger(ALWAYS));
+    println(getOutputStreamLogger(ALWAYS));
     appendString(getOutputStreamLogger(ALWAYS), "Waiting start:");
 }
 
@@ -77,7 +77,7 @@ void deviceStartMatchDetectorHandleRawData(char header,
         OutputStream* outputStream) {
     if (header == COMMAND_STEP_BY_STEP) {
         appendAck(outputStream);
-		robotNextStep();
+        robotNextStep();
         append(outputStream, COMMAND_STEP_BY_STEP);
     }
 }
@@ -86,7 +86,7 @@ void deviceStartMatchDetectorHandleRawData(char header,
 DeviceDescriptor startMatchDetectorDevice = {
     .deviceInit = &initStartMatchDetector,
     .deviceShutDown = &stopStartMatchDetector,
-	.deviceIsOk = &isStartMatchDetectorDeviceOk,
+    .deviceIsOk = &isStartMatchDetectorDeviceOk,
     .deviceHandleRawData = &deviceStartMatchDetectorHandleRawData,
 };
 

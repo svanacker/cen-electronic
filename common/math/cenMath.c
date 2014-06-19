@@ -66,18 +66,18 @@ int maxInt(int value1, int value2) {
 }
 
 float mod2PI(float value) {
-	if (value < - PI) {
-		return (value + _2_PI);
-	} else if (value > PI) {
-		return (value - _2_PI);
-	}
-	return value;
+    if (value < - PI) {
+        return (value + _2_PI);
+    } else if (value > PI) {
+        return (value - _2_PI);
+    }
+    return value;
 }
 
 int stringChecksum(char* string) {
-	int result = 0;
-	while( *string ) {
-		result += *string++;
-	}
-	return result;
+    int result = 0;
+    while( *string ) {
+        result += *string++;
+    }
+    return result;
 }

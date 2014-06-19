@@ -18,10 +18,10 @@ void devicePinShutDown() {
 
 bool devicePinIsOk() {
     return true;
-}	
+}    
 
 void devicePinHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream) {
-	if (header == COMMAND_SET_PIN_VALUE) {
+    if (header == COMMAND_SET_PIN_VALUE) {
         int pinIndex = readHex2(inputStream);
         int pinValue = readHex2(inputStream);
         appendAck(outputStream);

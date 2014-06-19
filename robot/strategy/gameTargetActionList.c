@@ -10,35 +10,35 @@
 #include "../../navigation/path.h"
 
 void clearTargetActionList(GameTargetActionList* targetActionList) {
-	int i;
-	int size = targetActionList->size;
-	for (i = 0; i < size; i++) {
-		GameTargetAction* targetAction = targetActionList->actions[i];
-		clearTargetAction(targetAction);
-	}
-	targetActionList->size = 0;
+    int i;
+    int size = targetActionList->size;
+    for (i = 0; i < size; i++) {
+        GameTargetAction* targetAction = targetActionList->actions[i];
+        clearTargetAction(targetAction);
+    }
+    targetActionList->size = 0;
 }
 
 void addTargetAction(GameTargetActionList* targetActionList,
-					 GameTargetAction* targetAction,
-					 Location* startLocation,
-					 Location* endLocation,
-					 int timeToAchieve,
-					 PathDataFunction* pathDataFunction,
-					 GameTargetActionItemList* actionItemList
+                     GameTargetAction* targetAction,
+                     Location* startLocation,
+                     Location* endLocation,
+                     int timeToAchieve,
+                     PathDataFunction* pathDataFunction,
+                     GameTargetActionItemList* actionItemList
 ) {
     unsigned char size = targetActionList->size;
-	if (size < MAX_TARGET_ACTION) {
-		targetAction->startLocation = startLocation;
-		targetAction->endLocation = endLocation;
-		targetAction->timeToAchieve = timeToAchieve;
-		targetAction->pathDataFunction = pathDataFunction;
-		targetAction->actionItemList = actionItemList;
-	    targetActionList->actions[size] = targetAction;
-	    targetActionList->size++;
-	}
-	else {
-		writeError(TOO_MUCH_TARGET_ACTION);
+    if (size < MAX_TARGET_ACTION) {
+        targetAction->startLocation = startLocation;
+        targetAction->endLocation = endLocation;
+        targetAction->timeToAchieve = timeToAchieve;
+        targetAction->pathDataFunction = pathDataFunction;
+        targetAction->actionItemList = actionItemList;
+        targetActionList->actions[size] = targetAction;
+        targetActionList->size++;
+    }
+    else {
+        writeError(TOO_MUCH_TARGET_ACTION);
     }
 }
 
@@ -51,10 +51,10 @@ int getGameTargetActionCount(GameTargetActionList* targetActionList) {
 }
 
 void printGameTargetActionList(OutputStream* outputStream, GameTargetActionList* targetActionList) {
-	int i;
-	int size = targetActionList->size;
-	for (i = 0; i < size; i++) {
-		GameTargetAction* targetAction = targetActionList->actions[i];
-		printGameTargetAction(outputStream, targetAction, true);
-	}
+    int i;
+    int size = targetActionList->size;
+    for (i = 0; i < size; i++) {
+        GameTargetAction* targetAction = targetActionList->actions[i];
+        printGameTargetAction(outputStream, targetAction, true);
+    }
 }

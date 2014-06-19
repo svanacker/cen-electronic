@@ -16,11 +16,11 @@
 // BUFFER
 
 bool checkBufferNotNull(Buffer* buffer) {
-	if (buffer == NULL) {
-		writeError(IO_BUFFER_NULL);
-		return false;
-	}
-	return true;
+    if (buffer == NULL) {
+        writeError(IO_BUFFER_NULL);
+        return false;
+    }
+    return true;
 }
 
 // -> OUTPUT STREAM INTERFACE
@@ -102,8 +102,8 @@ bool _bufferAvailableData(InputStream* inputStream) {
 // BUFFER INTERFACE
 
 void initBuffer(Buffer* buffer, char (*array)[], unsigned char length, char* name, char* type) {
-	buffer->s = array;
-	buffer->length = length;
+    buffer->s = array;
+    buffer->length = length;
     deepClearBuffer(buffer);
 
     // inputStream
@@ -150,10 +150,10 @@ int getBufferElementsCount(const Buffer* buffer) {
 void bufferWriteChar(Buffer* buffer, char c) {
     int isFull = isBufferFull(buffer);
     if (!isFull) {
-		char* sPointer = (char*) buffer->s;
-		// Shift to the right cell index
-		sPointer += buffer->writeIndex;
-		*sPointer = c;
+        char* sPointer = (char*) buffer->s;
+        // Shift to the right cell index
+        sPointer += buffer->writeIndex;
+        *sPointer = c;
         buffer->writeIndex++;
         buffer->writeIndex %= buffer->length;
     } else {
@@ -168,10 +168,10 @@ char bufferReadChar(Buffer* buffer) {
     int isEmpty = isBufferEmpty(buffer);
     if (!isEmpty) {
         // char result = buffer->s[buffer->readIndex];
-		char* sPointer = (char*) buffer->s;
-		// Shift to the right cell index
-		sPointer += buffer->readIndex;
-		char result = *sPointer;		
+        char* sPointer = (char*) buffer->s;
+        // Shift to the right cell index
+        sPointer += buffer->readIndex;
+        char result = *sPointer;        
 
         buffer->readIndex++;
         buffer->readIndex %= buffer->length;
@@ -186,10 +186,10 @@ char bufferReadChar(Buffer* buffer) {
 char bufferGetCharAtIndex(Buffer* buffer, int charIndex) {
     int size = getBufferElementsCount(buffer);
     if (charIndex < size) {
-		char* sPointer = (char*) buffer->s;
-		// Shift to the right cell index
-		sPointer += ((buffer->readIndex + charIndex) % buffer->length);
-		char result = *sPointer;		
+        char* sPointer = (char*) buffer->s;
+        // Shift to the right cell index
+        sPointer += ((buffer->readIndex + charIndex) % buffer->length);
+        char result = *sPointer;        
 
         return result;
     } else {
@@ -207,26 +207,26 @@ void clearBuffer(Buffer* buffer) {
 void deepClearBuffer(Buffer* buffer) {
     int i;
     for (i = 0; i < buffer->length; i++) {
-		char* sPointer = (char*) buffer->s;
-		// Shift to the right cell index
-		*sPointer = 0;
-		sPointer++;
+        char* sPointer = (char*) buffer->s;
+        // Shift to the right cell index
+        *sPointer = 0;
+        sPointer++;
     }
     clearBuffer(buffer);
 }
 
 InputStream* getInputStream(Buffer* buffer) {
-	if (checkBufferNotNull(buffer)) {
-    	return &(buffer->inputStream);
-	}
-	return NULL;
+    if (checkBufferNotNull(buffer)) {
+        return &(buffer->inputStream);
+    }
+    return NULL;
 }
 
 OutputStream* getOutputStream(Buffer* buffer) {
-	if (checkBufferNotNull(buffer)) {
-    	return &(buffer->outputStream);
-	}
-	return NULL;
+    if (checkBufferNotNull(buffer)) {
+        return &(buffer->outputStream);
+    }
+    return NULL;
 }
 
 void printDebugBuffer(OutputStream* outputStream, Buffer* buffer) {
@@ -240,17 +240,17 @@ void printDebugBuffer(OutputStream* outputStream, Buffer* buffer) {
         appendKeyAndName(outputStream, ",type=", buffer->type);
     }
 
-	appendStringAndDec(outputStream, ",length=", buffer->length);
+    appendStringAndDec(outputStream, ",length=", buffer->length);
     appendStringAndDec(outputStream, ",writeIdx=", buffer->writeIndex);
     appendStringAndDec(outputStream, ",readIdx=", buffer->readIndex);
 
     appendString(outputStream, ",START=");
     int i;
-	char* sPointer = (char*) buffer->s;
+    char* sPointer = (char*) buffer->s;
     for (i = 0; i < buffer->length; i++) {
-		// Shift to the right cell index
+        // Shift to the right cell index
         append(outputStream, *sPointer);
-		sPointer++;
+        sPointer++;
     }
     appendString(outputStream, "END");
 }

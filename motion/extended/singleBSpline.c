@@ -12,9 +12,9 @@ static BSplineCurve curve;
 static bool initialized = false;
 
 BSplineCurve* getSingleBSplineCurve() {
-	if (!initialized) {
-		initFirstTimeBSplineCurve(&curve);
-		initialized = true;
-	}
-	return &curve;
+    if (!initialized) {
+        initFirstTimeBSplineCurve(&curve);
+        initialized = true;
+    }
+    return &curve;
 }

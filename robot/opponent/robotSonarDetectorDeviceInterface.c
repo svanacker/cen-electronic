@@ -12,11 +12,11 @@ unsigned int deviceRobotSonarDetectorGetSoftwareRevision(void) {
 
 int deviceRobotSonarDetectorGetInterface(char header, int mode, bool fillDeviceArgumentList) {
     if (header == COMMAND_SET_SONAR_STATUS) {
-		if (fillDeviceArgumentList) {
-			setFunction("setSonarStatus", 1, 0);
-			setArgumentUnsignedHex2(0, "false(00)/true(01)");
-		}
-		return commandLengthValueForMode(mode, 2, 0);
+        if (fillDeviceArgumentList) {
+            setFunction("setSonarStatus", 1, 0);
+            setArgumentUnsignedHex2(0, "false(00)/true(01)");
+        }
+        return commandLengthValueForMode(mode, 2, 0);
     }
     return DEVICE_HEADER_NOT_HANDLED;
 }

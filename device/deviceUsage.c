@@ -9,104 +9,104 @@
 
 // Main
 
-#define ARGUMENTS_SEPARATOR 				", "
+#define ARGUMENTS_SEPARATOR                 ", "
 
-#define DEVICE_INPUT_MODE_SEPARATOR_NAME 	':'
+#define DEVICE_INPUT_MODE_SEPARATOR_NAME     ':'
 
-#define DEVICE_NAME_AND_HEADER_SEPARATOR 	':'
+#define DEVICE_NAME_AND_HEADER_SEPARATOR     ':'
 
-#define DEVICE_HEADER_AND_TYPE_SEPARATOR	':'
+#define DEVICE_HEADER_AND_TYPE_SEPARATOR    ':'
 
 // Arguments
 
-#define ARGUMENTS_START_CHAR  				'('
+#define ARGUMENTS_START_CHAR                  '('
 
-#define ARGUMENTS_NAME_AND_TYPE_SEPARATOR	' '
+#define ARGUMENTS_NAME_AND_TYPE_SEPARATOR    ' '
 
-#define ARGUMENTS_STOP_CHAR 		 		')'
+#define ARGUMENTS_STOP_CHAR                  ')'
 
-#define ARGUMENTS_AND_RESULTS_SEPARATOR		" => "
+#define ARGUMENTS_AND_RESULTS_SEPARATOR        " => "
 
 /**
  * 
  */
 void printArgument(OutputStream* outputStream, DeviceMethodMetaData* deviceMethodMetaData, int argumentIndex) {
-	if (argumentIndex > 0) {
-		appendString(outputStream, ARGUMENTS_SEPARATOR);
-	}
-	
-	DeviceArgument deviceArgument = deviceMethodMetaData->arguments[argumentIndex];
-	char* argumentName = deviceArgument.name;
-	
-	// type and length
-	char type = deviceArgument.type;
-	// last bit used for signed / unsigned
-	if ((type & 1) != 0) {
-		append(outputStream, 's');
-	} else {
-		append(outputStream, 'u');
-	}
-	char argumentLength = (type >> 1) & 0xFE;
-	appendDec(outputStream, argumentLength);
-	
-	// Argument name
-	append(outputStream, ARGUMENTS_NAME_AND_TYPE_SEPARATOR);
-	appendString(outputStream, argumentName);
+    if (argumentIndex > 0) {
+        appendString(outputStream, ARGUMENTS_SEPARATOR);
+    }
+    
+    DeviceArgument deviceArgument = deviceMethodMetaData->arguments[argumentIndex];
+    char* argumentName = deviceArgument.name;
+    
+    // type and length
+    char type = deviceArgument.type;
+    // last bit used for signed / unsigned
+    if ((type & 1) != 0) {
+        append(outputStream, 's');
+    } else {
+        append(outputStream, 'u');
+    }
+    char argumentLength = (type >> 1) & 0xFE;
+    appendDec(outputStream, argumentLength);
+    
+    // Argument name
+    append(outputStream, ARGUMENTS_NAME_AND_TYPE_SEPARATOR);
+    appendString(outputStream, argumentName);
 }
 
 /**
  * @private
  */
 bool printMethodMetaData(OutputStream* outputStream, DeviceInterface* deviceInterface, char commandHeader, char headerLength, char inputMode) {
-	if (headerLength != DEVICE_HEADER_NOT_HANDLED) {
-		DeviceMethodMetaData* deviceMethodMetaData = getDeviceMethodMetaData();
-		char deviceHeader = deviceInterface->deviceHeader;
+    if (headerLength != DEVICE_HEADER_NOT_HANDLED) {
+        DeviceMethodMetaData* deviceMethodMetaData = getDeviceMethodMetaData();
+        char deviceHeader = deviceInterface->deviceHeader;
 
-		// Input/Output Mode
+        // Input/Output Mode
         append(outputStream, inputMode);
-		append(outputStream, DEVICE_INPUT_MODE_SEPARATOR_NAME);
+        append(outputStream, DEVICE_INPUT_MODE_SEPARATOR_NAME);
 
-		// DeviceName
+        // DeviceName
         const char* deviceName = deviceInterface->deviceGetName();
         appendString(outputStream, deviceName);
         append(outputStream, DEVICE_NAME_AND_HEADER_SEPARATOR);
 
-		// Header
-		append(outputStream, deviceHeader);
+        // Header
+        append(outputStream, deviceHeader);
         append(outputStream, commandHeader);
         append(outputStream, DEVICE_HEADER_AND_TYPE_SEPARATOR);
 
-		// functionName
+        // functionName
         appendString(outputStream, deviceMethodMetaData->functionName);
         append(outputStream,  ARGUMENTS_START_CHAR);
 
-		// arguments
+        // arguments
         int argumentCount = deviceMethodMetaData->argumentsSize;
         int argumentIndex;
         for (argumentIndex = 0; argumentIndex < argumentCount; argumentIndex++) {
-			printArgument(outputStream, deviceMethodMetaData, argumentIndex);
+            printArgument(outputStream, deviceMethodMetaData, argumentIndex);
         }
         append(outputStream,  ARGUMENTS_STOP_CHAR);
 
-		appendString(outputStream, ARGUMENTS_AND_RESULTS_SEPARATOR);
+        appendString(outputStream, ARGUMENTS_AND_RESULTS_SEPARATOR);
 
-		// results
+        // results
         append(outputStream,  ARGUMENTS_START_CHAR);
         int resultCount = deviceMethodMetaData->resultsSize;
         int resultIndex;
         for (resultIndex = 0; resultIndex < resultCount; resultIndex++) {
-			printArgument(outputStream, deviceMethodMetaData, resultIndex);
+            printArgument(outputStream, deviceMethodMetaData, resultIndex);
         }
-		if (resultCount == 0) {
-			appendString(outputStream, "void");
-		}
+        if (resultCount == 0) {
+            appendString(outputStream, "void");
+        }
         append(outputStream,  ARGUMENTS_STOP_CHAR);
 
         println(outputStream);
 
-		return true;
+        return true;
     }
-	return false;
+    return false;
 }
 
 /**

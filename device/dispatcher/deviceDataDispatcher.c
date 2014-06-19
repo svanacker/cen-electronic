@@ -30,31 +30,31 @@ const Device* deviceDataDispatcherFindDevice(const char deviceHeader, const char
     for (i = 0; i < size; i++) {
         Device* result = getDevice(i);
         DeviceInterface* interface = result->interface;
-		char deviceInterfaceHeader = interface->deviceHeader;
-		// check if this is the right device
-		if (deviceHeader != deviceInterfaceHeader) {
-			continue;
-		}
+        char deviceInterfaceHeader = interface->deviceHeader;
+        // check if this is the right device
+        if (deviceHeader != deviceInterfaceHeader) {
+            continue;
+        }
 
         int deviceDataLength = interface->deviceGetInterface(commandHeader, mode, false);
         if (deviceDataLength == DEVICE_HEADER_NOT_HANDLED) {
-			continue;
-		}
+            continue;
+        }
         // if dataLength in the buffer has more data than
         // deviceDataLength = data - 2 (2 = size of device header + size of command header)
-		if (dataLength >= deviceDataLength - DEVICE_AND_COMMAND_HEADER_LENGTH) {
+        if (dataLength >= deviceDataLength - DEVICE_AND_COMMAND_HEADER_LENGTH) {
             return result;
         }
-		else {
-			/*
-			// dataLength is not enough : we can return IMMEDIATELY
-			appendStringAndDec(getOutputStreamLogger(WARNING), "header=", header);
-			appendStringAndDec(getOutputStreamLogger(WARNING), "dataLength=", dataLength);
-			appendStringAndDec(getOutputStreamLogger(WARNING), ", deviceDataLength=", deviceDataLength);
-			println(getOutputStreamLogger(WARNING));
-			*/
-			return NULL;
-		}
+        else {
+            /*
+            // dataLength is not enough : we can return IMMEDIATELY
+            appendStringAndDec(getOutputStreamLogger(WARNING), "header=", header);
+            appendStringAndDec(getOutputStreamLogger(WARNING), "dataLength=", dataLength);
+            appendStringAndDec(getOutputStreamLogger(WARNING), ", deviceDataLength=", deviceDataLength);
+            println(getOutputStreamLogger(WARNING));
+            */
+            return NULL;
+        }
     }
     return NULL;
 }

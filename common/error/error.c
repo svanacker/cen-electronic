@@ -11,7 +11,7 @@
 void writeError(int errorCode) {
     OutputStream* outputStream = getErrorOutputStreamLogger();
     appendString(outputStream, "ERR CODE:");
-	appendHex4(outputStream, errorCode);
+    appendHex4(outputStream, errorCode);
     println(outputStream);
 }
 

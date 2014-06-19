@@ -19,8 +19,8 @@
   */
   void setRelayStates(int relayStates) {
     StartI2C();
-	IdleI2C();
-	while(I2CCONbits.SEN);
+    IdleI2C();
+    while(I2CCONbits.SEN);
     MasterWriteI2C(writeAddr);
     IdleI2C();
     // send the register
@@ -97,7 +97,7 @@
   void changeRLY08Address(int newAddress) {
     StartI2C();
     IdleI2C();
-	while(I2CCONbits.SEN);
+    while(I2CCONbits.SEN);
     MasterWriteI2C(writeAddr);
     IdleI2C();
     // command register
@@ -105,7 +105,7 @@
     IdleI2C();
 
     StartI2C();
-	while(I2CCONbits.SEN);
+    while(I2CCONbits.SEN);
     MasterWriteI2C(RLY08_CHANGE_ADDRESS_FIRST_COMMAND);
     IdleI2C();
     MasterWriteI2C(RLY08_CHANGE_ADDRESS_SECOND_COMMAND);
@@ -122,7 +122,7 @@
     IdleI2C();
     StartI2C();
     IdleI2C();
-	while(I2CCONbits.SEN);
+    while(I2CCONbits.SEN);
     // send the address
     MasterWriteI2C(writeAddr);
     IdleI2C();
@@ -148,12 +148,12 @@
 
   void initRLY08() {
     // We need to send command to initialize the relay, but it does not taken
-	getRLY08SoftwareRevision();
-	sendRLY08Command(ALL_RELAY_ON);
+    getRLY08SoftwareRevision();
+    sendRLY08Command(ALL_RELAY_ON);
   }
 
   void stopRLY08() {
-	sendRLY08Command(ALL_RELAY_OFF);
+    sendRLY08Command(ALL_RELAY_OFF);
   }
 
   unsigned int isRLY08DeviceOk() {
@@ -165,13 +165,13 @@
   }
 
   DeviceDescriptor getRLY08DeviceDescriptor() {
-	DeviceDescriptor result;
-	result.deviceInit = &initRLY08;
-	result.deviceShutDown = &stopRLY08;
-	result.deviceIsOk = &isRLY08DeviceOk;
-	result.deviceGetSoftwareRevision = &getRLY08SoftwareRevision;
-	result.deviceGetName = &getRLY08DeviceName;
-	result.enabled = 1;
+    DeviceDescriptor result;
+    result.deviceInit = &initRLY08;
+    result.deviceShutDown = &stopRLY08;
+    result.deviceIsOk = &isRLY08DeviceOk;
+    result.deviceGetSoftwareRevision = &getRLY08SoftwareRevision;
+    result.deviceGetName = &getRLY08DeviceName;
+    result.enabled = 1;
 
-	return result;
+    return result;
   }

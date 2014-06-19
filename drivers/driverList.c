@@ -23,14 +23,14 @@ static Buffer* driverResponseBuffer;
 
 void addDriver(DriverDescriptor* driverDescriptor, int transmitMode) {
     unsigned char size = drivers.size;
-	if (size < MAX_DRIVER) {
-	    drivers.drivers[size] = driverDescriptor;
-	    driverDescriptor->transmitMode = transmitMode;
-	    drivers.size++;
-	}
-	else {
-		writeError(TOO_MUCH_DRIVERS);
-	}
+    if (size < MAX_DRIVER) {
+        drivers.drivers[size] = driverDescriptor;
+        driverDescriptor->transmitMode = transmitMode;
+        drivers.size++;
+    }
+    else {
+        writeError(TOO_MUCH_DRIVERS);
+    }
 }
 
 DriverDescriptor* getDriver(int index) {
@@ -42,9 +42,9 @@ int getDriverCount() {
 }
 
 void initDrivers(Buffer *aDriverRequestBuffer, char (*driverRequestBufferArray)[] , unsigned char requestLength,
-				 Buffer *aDriverResponseBuffer, char (*driverResponseBufferArray)[] , unsigned char responseLength) {
-	driverRequestBuffer = aDriverRequestBuffer;
-	driverResponseBuffer = aDriverResponseBuffer;
+                 Buffer *aDriverResponseBuffer, char (*driverResponseBufferArray)[] , unsigned char responseLength) {
+    driverRequestBuffer = aDriverRequestBuffer;
+    driverResponseBuffer = aDriverResponseBuffer;
 
     initBuffer(driverRequestBuffer, driverRequestBufferArray, requestLength, "DRV_REQ_BUF", "");
     initBuffer(driverResponseBuffer, driverResponseBufferArray, responseLength, "DRV_RES_BUF", "");

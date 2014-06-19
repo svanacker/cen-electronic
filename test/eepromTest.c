@@ -6,20 +6,20 @@
 #include "delay.h"
 
 int main(void) {
-	char s[80];
-	
-	delaymSec(1000);
+    char s[80];
+    
+    delaymSec(1000);
 
-	initializeI2C();
-	clrScreen();
+    initializeI2C();
+    clrScreen();
 
-	int i=my_eeprom_read_int(4) + 1;
-	my_eeprom_write_int(4, i);
+    int i=my_eeprom_read_int(4) + 1;
+    my_eeprom_write_int(4, i);
 
-	sprintf(s, "%d", i);
-	affTexte(s);
-	
-	while (1);
+    sprintf(s, "%d", i);
+    affTexte(s);
+    
+    while (1);
 
-	return 0;
+    return 0;
 }

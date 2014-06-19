@@ -4,7 +4,7 @@
 #include "../../common/eeprom/eeprom.h"
 
 // Store speed and acceleration
-#define MOTION_PARAMETERS_VALUES_COUNT 			MOTION_PARAMETERS_COUNT * 2
+#define MOTION_PARAMETERS_VALUES_COUNT             MOTION_PARAMETERS_COUNT * 2
 
 // EEPROM values
 signed int DEFAULT_EEPROM_VALUES[MOTION_PARAMETERS_VALUES_COUNT] = {
@@ -14,7 +14,7 @@ signed int DEFAULT_EEPROM_VALUES[MOTION_PARAMETERS_VALUES_COUNT] = {
     DEFAULT_ROTATION_MAINTAIN_POSITION_ACCELERATION, DEFAULT_ROTATION_MAINTAIN_POSITION_SPEED
 };
 
-#define EEPROM_MOTION_TYPE_BLOCK_SIZE							 MOTION_PARAMETERS_COUNT
+#define EEPROM_MOTION_TYPE_BLOCK_SIZE                             MOTION_PARAMETERS_COUNT
 
 signed int internalLoadMotionParameterItem(unsigned int dataIndex) {
     signed int result = my_eeprom_read_int(dataIndex);

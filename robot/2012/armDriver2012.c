@@ -9,7 +9,7 @@
 
 
 bool armDriver2012Up(int index) {
-	OutputStream* outputStream = getDriverRequestOutputStream();
+    OutputStream* outputStream = getDriverRequestOutputStream();
     append(outputStream, COMMAND_ARM_2012_UP);
     appendHex2(outputStream, index);
 
@@ -19,7 +19,7 @@ bool armDriver2012Up(int index) {
 }
 
 bool armDriver2012Down(int index) {
-	OutputStream* outputStream = getDriverRequestOutputStream();
+    OutputStream* outputStream = getDriverRequestOutputStream();
     append(outputStream, COMMAND_ARM_2012_DOWN);
     appendHex2(outputStream, index);
 

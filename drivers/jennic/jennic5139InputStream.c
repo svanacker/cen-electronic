@@ -29,20 +29,20 @@ void _jennic5139CloseInputStream(InputStream* inputStream) {
 }
 
 InputStream* _jennicGetUnderlyingInputStream() {
-	Buffer* inDataBuffer = getJennicInDataBuffer();
-	InputStream* result = getInputStream(inDataBuffer);
+    Buffer* inDataBuffer = getJennicInDataBuffer();
+    InputStream* result = getInputStream(inDataBuffer);
 
-	return result;
+    return result;
 }
 
 bool _jennic5139AvailableData(InputStream* inputStream) {
-	// fetch data to fill the data buffer
-	copyFromZigbeeToDebugRetainingData();
-	InputStream* underlyingInputStream = _jennicGetUnderlyingInputStream();
+    // fetch data to fill the data buffer
+    copyFromZigbeeToDebugRetainingData();
+    InputStream* underlyingInputStream = _jennicGetUnderlyingInputStream();
 
-	bool result = underlyingInputStream->availableData(underlyingInputStream);
+    bool result = underlyingInputStream->availableData(underlyingInputStream);
 
-	return result;
+    return result;
 }
 
 /**
@@ -50,22 +50,22 @@ bool _jennic5139AvailableData(InputStream* inputStream) {
  * @private
  */
 char _jennic5139ReadChar(InputStream* inputStream) {
-	InputStream* underlyingInputStream = _jennicGetUnderlyingInputStream();
+    InputStream* underlyingInputStream = _jennicGetUnderlyingInputStream();
 
-	char result = underlyingInputStream->readChar(underlyingInputStream);
+    char result = underlyingInputStream->readChar(underlyingInputStream);
 
-	return result;
+    return result;
 }
 
 void initZigbeeInputStream(InputStream* inputStream,
-						        char* jennicAddress) {
-	int address = stringChecksum(jennicAddress);
+                                char* jennicAddress) {
+    int address = stringChecksum(jennicAddress);
     inputStream->address = address;
     inputStream->openInputStream = _jennic5139OpenInputStream;
     inputStream->closeInputStream = _jennic5139CloseInputStream;
     inputStream->readChar = _jennic5139ReadChar;
     inputStream->availableData = _jennic5139AvailableData;
-	// TODO : Have the address
+    // TODO : Have the address
     inputStream->object = NULL;
     _jennic5139OpenInputStream(inputStream, address);
 }

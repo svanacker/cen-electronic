@@ -12,13 +12,13 @@ void printLogHandler(OutputStream* outputStream, LogHandler* logHandler) {
 }
 
 void printLogger(OutputStream* outputStream) {
-	Logger* logger = getLoggerSingleton();
+    Logger* logger = getLoggerSingleton();
     appendKeyAndName(outputStream, "GlbLogLvl=", getLevelAsString(logger->globalLogLevel));
     appendKeyAndName(outputStream, ",writeLogLvl=", getLevelAsString(logger->writeLogLevel));
     println(outputStream);
 
     // For Each LogHandler
-	LogHandlerList* logHandlerList = getLoggerHandlerList();
+    LogHandlerList* logHandlerList = getLoggerHandlerList();
     int count = getLogHandlerCount(logHandlerList);
     int i;
     for (i = 0; i < count; i++) {

@@ -64,7 +64,7 @@ void homologationRed() {
 }
 
 void homologationBlue() {
-    // 	OutputStream* outputStream;
+    //     OutputStream* outputStream;
     unsigned int index = getMotionInstructionIndex();
 
     switch (index) {
@@ -73,9 +73,9 @@ void homologationBlue() {
             break;
         case 2:
             // Opens pliers
-            //			outputStream = getDriverRequestOutputStream();
-            //			append(outputStream, COMMAND_PLIERS_2011_OPEN);
-            //			transmitFromDriverRequestBuffer();
+            //            outputStream = getDriverRequestOutputStream();
+            //            append(outputStream, COMMAND_PLIERS_2011_OPEN);
+            //            transmitFromDriverRequestBuffer();
             motionDriverForward(1.0f);
             break;
         case 3:
