@@ -1,4 +1,4 @@
-#include <p30fxxxx.h>
+#include <plib.h>
 
 #include "../../motion/position/hctl2032.h"
 
@@ -58,8 +58,14 @@
 // ---------
 // X_Y
 // ---------
-#define X_Y         LATAbits.LATA11
-#define TRIS_X_Y     TRISAbits.TRISA11
+#ifdef PROG_32
+	// TODO : To FIND !
+	#define X_Y         LATBbits.LATB0
+	#define TRIS_X_Y    TRISBbits.TRISB0
+#else
+	#define X_Y         LATAbits.LATA11
+	#define TRIS_X_Y     TRISAbits.TRISA11
+#endif
 
 // ---------
 // OE (Output Enabled, when OE = 0, the position is latch, when 1, new position is updated
@@ -70,10 +76,19 @@
 // ---------
 // RSTX, RSTY
 // ---------
-#define RSTX         LATFbits.LATF6
-#define RSTY         LATFbits.LATF6
-#define TRIS_RSTX    TRISFbits.TRISF6
-#define TRIS_RSTY     TRISFbits.TRISF6
+#ifdef PROG_32
+	// TODO : TO FIND THE NEW VALUE !!!
+	#define RSTX         LATFbits.LATF0
+	#define RSTY         LATFbits.LATF0
+	#define TRIS_RSTX    TRISFbits.TRISF0
+	#define TRIS_RSTY     TRISFbits.TRISF0	
+#else
+	#define RSTX         LATFbits.LATF6
+	#define RSTY         LATFbits.LATF6
+	#define TRIS_RSTX    TRISFbits.TRISF6
+	#define TRIS_RSTY     TRISFbits.TRISF6
+#endif
+
 
 // variables
 static Coder coders[CODER_COUNT];
@@ -111,7 +126,9 @@ void initHCTL2032() {
     TRISD = 0;
 
     // PORTB as digital
-    ADPCFG = 0xFFFF;
+	#ifndef PROG_32
+    	ADPCFG = 0xFFFF;
+	#endif
 
     // PORTB as input for data (8 bits in parallel)
     TRISB = TRIS_DX;
