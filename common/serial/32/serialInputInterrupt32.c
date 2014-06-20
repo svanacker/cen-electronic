@@ -1,14 +1,14 @@
 #include <stdlib.h>
 
-#include "../../common/commons.h"
+#include "../../../common/commons.h"
 
 #include <plib.h>
 
-#include "serialInputInterrupt.h"
-#include "serial.h"
+#include "../serialInputInterrupt.h"
+#include "../serial.h"
 #include "serial32.h"
 
-#include "../../common/io/buffer.h"
+#include "../../../common/io/buffer.h"
 
 static Buffer* buffer1;
 static Buffer* buffer2;

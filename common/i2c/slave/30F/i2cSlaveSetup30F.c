@@ -1,18 +1,14 @@
-#include "../../../common/commons.h"
+#include "../../../../common/commons.h"
 
 #include <i2c.h>
-#ifdef PROG_32
-	#include <p32xxxx.h>
-#else
-	#include <p30fxxxx.h>
-#endif
+#include <p30fxxxx.h>
 
-#include "../../../common/error/error.h"
+#include "../../../../common/error/error.h"
 
-#include "../../../common/log/logger.h"
-#include "../../../common/log/logLevel.h"
+#include "../../../../common/log/logger.h"
+#include "../../../../common/log/logLevel.h"
 
-#include "i2cSlaveSetup.h"
+#include "../i2cSlaveSetup.h"
 
 bool initialized = false;
 
@@ -22,7 +18,6 @@ void i2cSlaveInitialize(char writeAddress) {
         writeError(I2C_MASTER_ALREADY_INITIALIZED);
         return;
     }
-#ifndef PROG_32
 
     I2CCONbits.STREN = 1;
     // I2CCONbits.GCEN = 1;
@@ -44,5 +39,4 @@ void i2cSlaveInitialize(char writeAddress) {
 
     // Enable I2C
     I2CCONbits.I2CEN = 1;
-#endif
 }

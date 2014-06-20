@@ -1,27 +1,23 @@
-#include "../../../common/commons.h"
+#include "../../../../common/commons.h"
 
 #include <i2c.h>
 #include <stdlib.h>
-#ifdef PROG_32
-	#include <p32xxxx.h>
-#else
-	#include <p30fxxxx.h>
-#endif
+#include <p30fxxxx.h>
 
-#include "i2cSlave.h"
-#include "i2cSlaveSetup.h"
-#include "../i2cConstants.h"
-#include "../i2cDebug.h"
+#include "../i2cSlave.h"
+#include "../i2cSlaveSetup.h"
+#include "../../i2cConstants.h"
+#include "../../i2cDebug.h"
 
-#include "../../../common/delay/cenDelay.h"
+#include "../../../../common/delay/cenDelay.h"
 
-#include "../../../common/io/inputStream.h"
-#include "../../../common/io/outputStream.h"
-#include "../../../common/io/buffer.h"
-#include "../../../common/io/printWriter.h"
-#include "../../../common/io/ioUtils.h"
+#include "../../../../common/io/inputStream.h"
+#include "../../../../common/io/outputStream.h"
+#include "../../../../common/io/buffer.h"
+#include "../../../../common/io/printWriter.h"
+#include "../../../../common/io/ioUtils.h"
 
-#include "../../../common/log/logger.h"
+#include "../../../../common/log/logger.h"
 
 /** The I2C link used by the interrupt routine. */
 static StreamLink* i2cStreamLink;

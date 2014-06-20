@@ -1,10 +1,10 @@
-#include "../../common/commons.h"
+#include "../../../common/commons.h"
 
 #include <uart.h>
 
-#include "serial.h"
+#include "../serial.h"
 
-#include "../../common/setup/clockConstants.h"
+#include "../../../common/setup/clockConstants.h"
 
 void openSerial(unsigned char serialPortIndex, unsigned long baudRate) {
     unsigned int config1 = UART_EN & UART_IDLE_CON & UART_DIS_ABAUD & UART_DIS_LOOPBACK & UART_NO_PAR_8BIT & UART_1STOPBIT;

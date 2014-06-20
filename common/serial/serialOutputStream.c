@@ -2,12 +2,6 @@
 
 #include "../../common/commons.h"
 
-#ifdef PROG_32
-#include <p32xxxx.h>
-#else
-#include <p30fxxxx.h>
-#endif
-
 #include "serialOutputStream.h"
 
 #include "../../common/io/buffer.h"
