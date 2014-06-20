@@ -1,6 +1,12 @@
+#include "../../../common/commons.h"
+
 #include <i2c.h>
 #include <stdlib.h>
-#include <p30fxxxx.h>
+#ifdef PROG_32
+	#include <p32xxxx.h>
+#else
+	#include <p30fxxxx.h>
+#endif
 
 #include "i2cSlave.h"
 #include "i2cSlaveSetup.h"
@@ -32,6 +38,7 @@ StreamLink* getI2cStreamLink() {
  * Function Name: SI2C1Interrupt
  * Description : This is the ISR for I2C1 Slave interrupt.
  */
+#ifndef PROG_32
 void __attribute__((__interrupt__)) __attribute__((no_auto_psv)) _SI2CInterrupt(void) {
     // last byte received is address and not data
     char isData = I2CSTATbits.D_A;
@@ -92,3 +99,4 @@ void __attribute__((__interrupt__)) __attribute__((no_auto_psv)) _SI2CInterrupt(
     //clear I2C1 Slave interrupt flag
     IFS0bits.SI2CIF = 0;
 }
+#endif

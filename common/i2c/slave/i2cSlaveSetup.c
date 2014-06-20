@@ -1,5 +1,11 @@
+#include "../../../common/commons.h"
+
 #include <i2c.h>
-#include <p30fxxxx.h>
+#ifdef PROG_32
+	#include <p32xxxx.h>
+#else
+	#include <p30fxxxx.h>
+#endif
 
 #include "../../../common/error/error.h"
 
@@ -16,6 +22,8 @@ void i2cSlaveInitialize(char writeAddress) {
         writeError(I2C_MASTER_ALREADY_INITIALIZED);
         return;
     }
+#ifndef PROG_32
+
     I2CCONbits.STREN = 1;
     // I2CCONbits.GCEN = 1;
     I2CCONbits.DISSLW = 1;
@@ -36,4 +44,5 @@ void i2cSlaveInitialize(char writeAddress) {
 
     // Enable I2C
     I2CCONbits.I2CEN = 1;
+#endif
 }

@@ -8,8 +8,8 @@ dir_src=
 dir_bin=build/motorboard32
 dir_tmp=build/motorboard32
 dir_sin=
-dir_inc=C:\Program Files (x86)\Microchip\MPLAB C32 Suite\pic32-libs\include
-dir_lib=C:\Program Files (x86)\Microchip\MPLAB C30\src\peripheral_30F_24H_33F\libs
+dir_inc=C:\devtools\Microchip\MPLAB C32 Suite\pic32-libs\include\peripheral
+dir_lib=C:\devtools\Microchip\MPLAB C32 Suite\lib
 dir_lkr=
 [CAT_FILTERS]
 filter_src=*.s;*.c
@@ -95,8 +95,8 @@ file_067=common.i2c
 file_068=device
 file_069=common.delay
 file_070=common.serial
-file_071=common.serial
-file_072=main
+file_071=main
+file_072=common.serial
 file_073=common.pwm
 file_074=common.serial
 file_075=motion.position
@@ -556,9 +556,9 @@ file_066=common\serial\serialOutputStream.c
 file_067=common\i2c\i2cDebug.c
 file_068=device\device.c
 file_069=common\delay\cenDelay.c
-file_070=common\serial\serialInputInterrupt.c
-file_071=common\serial\serial32.c
-file_072=main\motorboard\motorboard32main.c
+file_070=common\serial\serial32.c
+file_071=main\motorboard\motorboard32main.c
+file_072=common\serial\serialInputInterrupt32.c
 file_073=common\pwm\pwmPic.h
 file_074=common\serial\serial.h
 file_075=motion\position\hctl2032.h
@@ -643,9 +643,9 @@ file_152=common\setup\pic32FSetup.h
 suite_guid={14495C23-81F8-43F3-8A44-859C583D7760}
 suite_state=
 [TOOL_SETTINGS]
-TS{CB0AF4B8-4022-429D-8F99-8A56782B2C6D}=-gdwarf-2
+TS{CB0AF4B8-4022-429D-8F99-8A56782B2C6D}=
 TS{9C698E0A-CBC9-4EFF-AE7D-B569F93E7322}=-g
-TS{77F59DA1-3C53-4677-AC5F-A03EB0125170}=-o"$(BINDIR_)$(TARGETBASE).$(TARGETSUFFIX)" -Map="$(BINDIR_)$(TARGETBASE).map"
+TS{77F59DA1-3C53-4677-AC5F-A03EB0125170}=--defsym=_min_heap_size=1000 --defsym=_min_stack_size=1000 -Map="$(BINDIR_)$(TARGETBASE).map" -o"$(BINDIR_)$(TARGETBASE).$(TARGETSUFFIX)"
 TS{0396C0A1-9052-4E4F-8B84-EF0162B1B4E9}=
 [INSTRUMENTED_TRACE]
 enable=0

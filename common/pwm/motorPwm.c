@@ -1,4 +1,10 @@
-#include <p30fxxxx.h>
+#include "../../common/commons.h"
+
+#ifdef PROG_32
+	#include <p32xxxx.h>
+#else
+	#include <p30fxxxx.h>
+#endif
 
 #include "pwmPic.h"
 #include "motorPwm.h"
