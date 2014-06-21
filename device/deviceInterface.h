@@ -75,7 +75,7 @@ typedef struct DeviceMethodMetaData {
 // LENGTH = 1
 
 /** separator ('-'). */
-#define DEVICE_ARG_SEPARATOR	2
+#define DEVICE_ARG_SEPARATOR	1
 
 /** unsigned char * 1 => */
 #define DEVICE_ARG_UNSIGNED_CHAR_1 2
@@ -83,7 +83,7 @@ typedef struct DeviceMethodMetaData {
 // LENGTH = 2
 
 /** unsigned char * 2 => */
-#define DEVICE_ARG_UNSIGNED_CHAR_2 4 
+#define DEVICE_ARG_UNSIGNED_CHAR_2 3 
 
 /** unsigned int => hex2 */
 #define DEVICE_ARG_UNSIGNED_HEX_2 4
@@ -99,29 +99,29 @@ typedef struct DeviceMethodMetaData {
 // LENGTH = 4
 
 /** unsigned int => hex4 */
-#define DEVICE_ARG_UNSIGNED_HEX_4 8
+#define DEVICE_ARG_UNSIGNED_HEX_4 7
 /** signed int => hex4 */
-#define DEVICE_ARG_SIGNED_HEX_4 9
+#define DEVICE_ARG_SIGNED_HEX_4 8
 
 // LENGTH = 5
 
 /** unsigned int => hex5 */
-#define DEVICE_ARG_UNSIGNED_HEX_5 10
+#define DEVICE_ARG_UNSIGNED_HEX_5 9
 /** signed int => hex4 */
-#define DEVICE_ARG_SIGNED_HEX_5 11
+#define DEVICE_ARG_SIGNED_HEX_5 10
 
 // LENGTH = 6
 
 /** unsigned int => hex6 */
-#define DEVICE_ARG_UNSIGNED_HEX_6 	12
+#define DEVICE_ARG_UNSIGNED_HEX_6 	11
 /** signed int => hex6 */
-#define DEVICE_ARG_SIGNED_HEX_6 	13
+#define DEVICE_ARG_SIGNED_HEX_6 	12
 
 // LENGTH = 8
 /** unsigned long => hex8 */
-#define DEVICE_ARG_UNSIGNED_HEX_8 16
+#define DEVICE_ARG_UNSIGNED_HEX_8 13
 /** signed long => hex8 */
-#define DEVICE_ARG_SIGNED_HEX_8 17
+#define DEVICE_ARG_SIGNED_HEX_8 14
 
 // LENGTH = 9 
 
@@ -146,6 +146,12 @@ typedef struct DeviceMethodMetaData {
 DeviceMethodMetaData* getDeviceMethodMetaData();
 
 /**
+ * Returns the length of the type when we mashall it as string.
+ * Ex : unsigned int (16 bits) will be converted as hexadecimal value, so it will use 4 chars as hexadecimal.
+ */
+int getLengthOfType(int parameterType);
+
+/**
 * Set the function Name and the size of all argument list for that function.
 */
 void setFunction(char* functionName, int argumentsSize, int resultsSize);
@@ -155,7 +161,11 @@ void setFunction(char* functionName, int argumentsSize, int resultsSize);
 */
 void setFunctionNoArgumentAndNoResult(char* functionName);
 
-int commandLengthValueForMode(int mode, int input, int output);
+/**
+ * Returns depending on the input mode, the input length or the outputLength.
+ * It avoids to returns a structure, because we cares often only about input or ouput result.
+ */
+int commandLengthValueForMode(int mode, int inputResult, int outputResult);
 
 // ARGUMENTS MANAGEMENT
 

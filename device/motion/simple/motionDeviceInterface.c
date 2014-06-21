@@ -28,8 +28,8 @@ int deviceMotionGetInterface(char header, int mode, bool fillDeviceArgumentList)
     if (header == COMMAND_MOTION_GOTO_IN_PULSE) {
         if (fillDeviceArgumentList) {
             setFunction("gotoPulse", 4, 0);
-            setArgumentUnsignedHex4(0, "left");
-            setArgumentUnsignedHex4(1, "right");
+            setArgument(0, DEVICE_ARG_SIGNED_HEX_6, "left");
+            setArgument(1, DEVICE_ARG_SIGNED_HEX_6, "right");
             setArgumentUnsignedHex2(2, "a");
             setArgumentUnsignedHex2(3, "s");
         }
@@ -158,7 +158,7 @@ int deviceMotionGetInterface(char header, int mode, bool fillDeviceArgumentList)
         }
         // Mode is only output because it's only notification
         // but used to reset if needed
-        return commandLengthValueForMode(mode, 17, 0);
+        return commandLengthValueForMode(mode, 0, 17);
     }
     return DEVICE_HEADER_NOT_HANDLED;
 }

@@ -31,7 +31,7 @@ int devicePIDGetInterface(char commandHeader, int mode, bool fillDeviceArgumentL
             return commandLengthValueForMode(mode, 2, 10);
     } else if (commandHeader == COMMAND_SET_END_DETECTION_PARAMETER) {
         if (fillDeviceArgumentList) {
-            setFunction("setEndDetectParam", 0, 5);
+            setFunction("setEndDetectParam", 5, 0);
             setArgumentUnsignedHex2(0, "absDPosIntFacThres");
             setArgumentUnsignedHex2(1, "maxUIntFacThres");
             setArgumentUnsignedHex2(2, "maxUIntConThres");
@@ -48,7 +48,7 @@ int devicePIDGetInterface(char commandHeader, int mode, bool fillDeviceArgumentL
             setResultUnsignedHex2(3, "timeRangeAna");
             setResultUnsignedHex2(4, "noAnaAtStart");
         }
-        return commandLengthValueForMode(mode, 10, 0);
+        return commandLengthValueForMode(mode, 0, 10);
     } else if (commandHeader == COMMAND_SEND_DEBUG_DATA_PID) {
         if (fillDeviceArgumentList) {
             setFunction("sendDbgDataPid", 1, 11);
@@ -86,7 +86,7 @@ int devicePIDGetInterface(char commandHeader, int mode, bool fillDeviceArgumentL
             setResultUnsignedChar1(8, "motionType");
             setResultUnsignedChar1(9, "pidType");
         }
-        return commandLengthValueForMode(mode, 1, 32);
+        return commandLengthValueForMode(mode, 1, 31);
     }
     return DEVICE_HEADER_NOT_HANDLED;
 }

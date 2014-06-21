@@ -8,7 +8,7 @@ dir_src=
 dir_bin=build/motorboard32
 dir_tmp=build/motorboard32
 dir_sin=
-dir_inc=C:\devtools\Microchip\MPLAB C32 Suite\pic32-libs\include\peripheral
+dir_inc=D:\DEV\C\MPLAB_C32\pic32-libs\include\peripheral;C:\devtools\Microchip\MPLAB C32 Suite\pic32-libs\include\peripheral
 dir_lib=C:\devtools\Microchip\MPLAB C32 Suite\lib
 dir_lkr=
 [CAT_FILTERS]

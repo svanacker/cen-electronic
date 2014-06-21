@@ -83,12 +83,24 @@
 // #include "../../test/mathTest.h"
 #include "../../test/motion/bspline/bsplinetest.h"
 
+// The port used to send instruction if we connect MainBoard and MotorBoard via RS232
+#define SERIAL_PORT_STANDARD  SERIAL_PORT_1
+
 // The port for which we debug (we can send instruction too)
 #ifndef MPLAB_SIMULATION
     #define SERIAL_PORT_DEBUG     SERIAL_PORT_2
 #else
+    #define SERIAL_PORT_STANDARD  SERIAL_PORT_1
     #define SERIAL_PORT_DEBUG     SERIAL_PORT_1
 #endif
+
+// serial INSTRUCTION
+static char standardInputBufferArray[MOTOR_BOARD_IN_BUFFER_LENGTH];
+static Buffer standardInputBuffer;
+static char standardOutputBufferArray[MOTOR_BOARD_OUT_BUFFER_LENGTH];
+static Buffer standardOutputBuffer;
+static OutputStream standardOutputStream;
+static StreamLink standardSerialStreamLink;
 
 // serial DEBUG 
 static char debugInputBufferArray[MOTOR_BOARD_IN_BUFFER_LENGTH];
@@ -144,7 +156,10 @@ void waitForInstruction() {
     // I2C Stream
     handleStreamInstruction(&i2cSlaveInputBuffer, &i2cSlaveOutputBuffer, NULL, &filterRemoveCRLF, NULL);
 
-    // UART Stream
+    // STANDARD UART Stream
+    handleStreamInstruction(&standardInputBuffer, &standardOutputBuffer, &standardOutputStream, &filterRemoveCRLF, NULL);
+
+    // DEBUG UART Stream
     handleStreamInstruction(&debugInputBuffer, &debugOutputBuffer, &debugOutputStream, &filterRemoveCRLF, NULL);
 
     // Manage Motion
@@ -153,6 +168,19 @@ void waitForInstruction() {
 
 int runMotorBoard() {
     setPicName(MOTOR_BOARD_PIC_NAME);
+
+    openSerialLink(&standardSerialStreamLink,
+            &standardInputBuffer,
+            &standardInputBufferArray,
+            MOTOR_BOARD_IN_BUFFER_LENGTH,
+            &standardOutputBuffer,
+            &standardOutputBufferArray,
+            MOTOR_BOARD_OUT_BUFFER_LENGTH,
+            &standardOutputStream,
+            SERIAL_PORT_STANDARD,
+            DEFAULT_SERIAL_SPEED);
+
+	appendString(&standardOutputStream, "HELLO !");
 
     openSerialLink(&debugSerialStreamLink,
             &debugInputBuffer,
@@ -163,7 +191,7 @@ int runMotorBoard() {
             MOTOR_BOARD_OUT_BUFFER_LENGTH,
             &debugOutputStream,
             SERIAL_PORT_DEBUG,
-            0);
+            DEFAULT_SERIAL_SPEED);
 
     // Init the logs
     initLog(DEBUG);
