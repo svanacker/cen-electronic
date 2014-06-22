@@ -1,5 +1,5 @@
-#ifndef CLOCK_CONSTANTS_H
-#define CLOCK_CONSTANTS_H
+#ifndef CLOCK_CONSTANTS_30F_H
+#define CLOCK_CONSTANTS_30F_H
 
 /** oscillator frequency in Hz. */
 #define FOSC 7372800

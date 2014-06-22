@@ -1,5 +1,5 @@
-#ifndef PIC_30F_SETUP_H
-#define PIC_30F_SETUP_H
+#ifndef PIC_SETUP_30F_H
+#define PIC_SETUP_30F_H
 
 #include <p30fxxxx.h>
 

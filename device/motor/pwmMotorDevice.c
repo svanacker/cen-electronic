@@ -6,7 +6,7 @@
 
 #include "../../common/cmd/commonCommand.h"
 
-#include "../../common/pwm/motorPwm.h"
+#include "../../common/pwm/motor/motorPwm.h"
 
 #include "../../common/io/printWriter.h"
 #include "../../common/io/reader.h"
@@ -15,8 +15,8 @@
 
 // DEVICE INTERFACE
 
-void initPwmMotor(void) {
-    initPwmForMotor();
+void devicePwmMotorInit(void) {
+    initPwmForDualHBridge();
 }
 
 bool isPwmMotorDeviceOk(void) {
@@ -38,7 +38,7 @@ void devicePwmMotorHandleRawData(char header, InputStream* inputStream, OutputSt
 }
 
 static DeviceDescriptor descriptor = {
-    .deviceInit = &initPwmMotor,
+    .deviceInit = &devicePwmMotorInit,
     .deviceShutDown = &stopMotors,
     .deviceIsOk = &isPwmMotorDeviceOk,
     .deviceHandleRawData = &devicePwmMotorHandleRawData,

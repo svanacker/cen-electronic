@@ -1,9 +1,14 @@
-#include "../../common/commons.h"
+#include "../../../common/commons.h"
+#include "../../../common/error/error.h"
 
-#include "pwmPic.h"
+#include "../pwmPic.h"
+
 #include "motorPwm.h"
 
 void pwmMotor(int pwmIndex, int pwmValue) {
+	if (pwmValue < 0) {
+		writeError(PWM_VALUE_MUST_BE_POSITIVE);
+	}
     switch (pwmIndex) {
         case 1: {
             pwmMotor1(pwmValue);
@@ -22,21 +27,4 @@ void pwmMotor(int pwmIndex, int pwmValue) {
             break;
         }
     }
-}
-
-
-void pwmMotor1(int dutyms) {
-// TODO    OC1RS = convPwmMotor(dutyms); //duty cycle OC2
-}
-
-void pwmMotor2(int dutyms) {
-// TODO    OC2RS = convPwmMotor(dutyms); //duty cycle OC2
-}
-
-void pwmMotor3(int dutyms) {
-// TODO    OC3RS = convPwmMotor(dutyms); //duty cycle OC3
-}
-
-void pwmMotor4(int dutyms) {
-// TODO    OC4RS = convPwmMotor(dutyms); //duty cycle OC4
 }

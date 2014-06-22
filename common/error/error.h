@@ -31,6 +31,10 @@ void writeError(int errorCode);
 // BIT LIST
 #define BIT_LIST_ARRAY_OUT_OF_BOUNDS	0x0300
 
+// PWM
+#define PWM_NOT_AVAILABLE				0x0400
+#define PWM_VALUE_MUST_BE_POSITIVE		0x0401
+
 // I2C 
 
 #define I2C_MASTER_ALREADY_INITIALIZED 	0x1000
