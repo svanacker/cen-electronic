@@ -5,7 +5,7 @@
 #include "i2cDriverDataDispatcher.h"
 #include "remoteDriverDataDispatcher.h"
 
-// Device
+// Drivers
 #include "../../drivers/driver.h"
 
 // I2C management
@@ -30,17 +30,13 @@
 static char i2cTempBufferArray[I2C_DRIVER_DATA_DISPATCHER_BUFFER_LENGTH];
 static Buffer i2cTempBuffer;
 
-/**
- * Add the i2c driver data dispatcher to the list.
- * @param i2cAddress
- */
 void addI2CDriverDataDispatcher(DriverDataDispatcher* i2cDispatcher,
         char* dispatcherName,
         Buffer* i2cMasterInputBuffer,
         char (*i2cMasterInputBufferArray)[],
         unsigned char i2cMasterInputBufferLength,
-        InputStream* i2cMasterInputStream,
         OutputStream* i2cMasterOutputStream,
+        InputStream* i2cMasterInputStream,
         int i2cAddress) {
     // Configure i2c Dispatcher
     i2cDispatcher->transmitMode = TRANSMIT_I2C;

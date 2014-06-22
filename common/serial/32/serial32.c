@@ -74,11 +74,7 @@ void serialPutc(unsigned char serialPortIndex, char c) {
     #ifdef MPLAB_SIMULATION
             simulateDelay();
     #endif
-    /*
-    if (serialPortIndex != 1 && serialPortIndex != 2) {
-        appendString(getOutputStreamLogger(ALWAYS), "_\n");
-    }
-    */
+
     UART_MODULE uart = getUartModule(serialPortIndex);
 
     while (!UARTTransmitterIsReady(uart));

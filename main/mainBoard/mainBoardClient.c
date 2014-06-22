@@ -694,8 +694,8 @@ int main(void) {
             &motorBoardInputBuffer,
             &motorBoardInputBufferArray,
             MAIN_BOARD_LINK_TO_MOTOR_BOARD_BUFFER_LENGTH,
-            &motorBoardInputStream,
             &motorBoardOutputStream,
+            &motorBoardInputStream,
             MOTOR_BOARD_I2C_ADDRESS);
     
     // Stream for Mechanical Board 2
@@ -704,8 +704,8 @@ int main(void) {
             &mechanical2BoardInputBuffer,
             &mechanical2BoardInputBufferArray,
             MAIN_BOARD_LINK_TO_MECA_BOARD_2_BUFFER_LENGTH,
-            &mechanical2BoardInputStream,
             &mechanical2BoardOutputStream,
+            &mechanical2BoardInputStream,
             MECHANICAL_BOARD_2_I2C_ADDRESS);
 
     // printDeviceList(getOutputStreamLogger(DEBUG));
@@ -719,8 +719,8 @@ int main(void) {
                                                             &beaconReceiverBoardInputBuffer,
                                                             &beaconReceiverBoardInputBufferArray,
                                                             MAIN_BOARD_LINK_TO_BEACON_BOARD_BUFFER_LENGTH,
-                                                            &beaconReceiverBoardInputStream,
                                                             &beaconReceiverBoardOutputStream,
+                                                            &beaconReceiverBoardInputStream,
                                                             BEACON_RECEIVER_I2C_ADDRESS);
 
     // Stream for Strategy Board
@@ -729,8 +729,8 @@ int main(void) {
                                                             &strategyBoardInputBuffer,
                                                             &strategyBoardInputBufferArray,
                                                             MAIN_BOARD_LINK_TO_STRATEGY_BOARD_BUFFER_LENGTH,
-                                                            &strategyBoardInputStream,
                                                             &strategyBoardOutputStream,
+                                                            &strategyBoardInputStream,
                                                             STRATEGY_BOARD_I2C_ADDRESS);
 
     // printDriverDataDispatcherList(getOutputStreamLogger(DEBUG), getDispatcherList());
