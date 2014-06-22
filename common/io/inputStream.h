@@ -13,6 +13,9 @@
 /** Define the command to clear the inputStream. */
 #define HEADER_CLEAR_INPUT_STREAM 'z'
 
+/** Define the command to dump the content of the buffer and clear the content. */
+#define HEADER_WRITE_CONTENT_AND_DEEP_CLEAR_BUFFER 	  '!'
+
 /**
  * Defines the constant indicating that data is not corrected (connection is not established).
  * Only for I2C

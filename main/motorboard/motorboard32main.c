@@ -72,6 +72,10 @@
 #include "../../device/motion/simple/motionDevice.h"
 #include "../../device/motion/simple/motionDeviceInterface.h"
 
+// Test
+#include "../../device/test/deviceTest.h"
+#include "../../device/test/deviceTestInterface.h"
+
 // Drivers
 #include "../../drivers/motor/motorDriver.h"
 
@@ -146,7 +150,7 @@ void initDevicesDescriptor() {
     addLocalDevice(getPIDDeviceInterface(), getPIDDeviceDescriptor());
     addLocalDevice(getMotionDeviceInterface(), getMotionDeviceDescriptor());
     addLocalDevice(getTrajectoryDeviceInterface(), getTrajectoryDeviceDescriptor());
-    // addLocalDevice(&testDevice, getTestDeviceInterface(), getTestDeviceDescriptor());
+    addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
     addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
 
     initDevices();

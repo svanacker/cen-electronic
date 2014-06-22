@@ -8,6 +8,7 @@
 
 #include "../common/error/error.h"
 
+#include "../common/io/buffer.h"
 #include "../common/io/filter.h"
 #include "../common/io/inputStream.h"
 #include "../common/io/outputStream.h"
@@ -38,14 +39,25 @@ bool handleStreamInstruction(Buffer* inputBuffer,
     // We received data
     int inputBufferCount = getBufferElementsCount(inputBuffer);
 
+	// Try to clear the buffer if needed
+	int i;
+	for (i = 0; i < inputBufferCount; i++) {
+		char bufferElement = bufferGetCharAtIndex(inputBuffer, i);
+		if (bufferElement == HEADER_CLEAR_INPUT_STREAM) {
+			deepClearBuffer(inputBuffer);
+			return false;
+		}
+		// remove all informations to the latest char
+		if (bufferElement == HEADER_WRITE_CONTENT_AND_DEEP_CLEAR_BUFFER) {
+			printDebugBuffer(getOutputStreamLogger(ALWAYS), inputBuffer);
+			deepClearBuffer(inputBuffer);
+			return false;
+		}
+	}
+
     if (inputBufferCount > 0) {
         // read the first char (but do not pop from the FIFO)
         char deviceHeader = bufferGetCharAtIndex(inputBuffer, DEVICE_HEADER_INDEX);
-
-        if (deviceHeader == HEADER_CLEAR_INPUT_STREAM || deviceHeader == INCORRECT_DATA) {
-            clearBuffer(inputBuffer);
-            return false;
-        }
 
         if (inputFilterChar != NULL) {
             if (!inputFilterChar(deviceHeader, &deviceHeader)) {

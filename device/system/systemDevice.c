@@ -3,6 +3,7 @@
 
 #include "../../common/delay/cenDelay.h"
 
+#include "../../common/io/buffer.h"
 #include "../../common/io/inputStream.h"
 #include "../../common/io/outputStream.h"
 #include "../../common/io/reader.h"
@@ -10,6 +11,7 @@
 #include "../../common/io/stream.h"
 
 #include "../../common/log/logger.h"
+#include "../../common/log/loggerDebug.h"
 #include "../../common/log/logLevel.h"
 #include "../../common/log/logHandler.h"
 
@@ -44,7 +46,10 @@ void deviceSystemHandleRawData(char header, InputStream* inputStream, OutputStre
         appendString(getOutputStreamLogger(ALWAYS), getPicName());
         println(getOutputStreamLogger(ALWAYS));
         ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_PIC_NAME);
-    }
+    } else if (header == COMMAND_LOG) {
+		printLogger(getOutputStreamLogger(ALWAYS));
+        ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_LOG);
+	}	
 }
 
 static DeviceDescriptor descriptor = {

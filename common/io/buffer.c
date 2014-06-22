@@ -206,8 +206,8 @@ void clearBuffer(Buffer* buffer) {
 
 void deepClearBuffer(Buffer* buffer) {
     int i;
+    char* sPointer = (char*) buffer->s;
     for (i = 0; i < buffer->length; i++) {
-        char* sPointer = (char*) buffer->s;
         // Shift to the right cell index
         *sPointer = 0;
         sPointer++;
@@ -230,7 +230,7 @@ OutputStream* getOutputStream(Buffer* buffer) {
 }
 
 void printDebugBuffer(OutputStream* outputStream, Buffer* buffer) {
-    appendString(outputStream, "Buf:");
+    appendString(outputStream, "\nBuf:");
 
     if (buffer->name) {
         appendKeyAndName(outputStream, "name=", buffer->name);
@@ -252,5 +252,5 @@ void printDebugBuffer(OutputStream* outputStream, Buffer* buffer) {
         append(outputStream, *sPointer);
         sPointer++;
     }
-    appendString(outputStream, "END");
+    appendString(outputStream, "END\n");
 }
