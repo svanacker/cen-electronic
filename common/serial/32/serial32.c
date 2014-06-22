@@ -7,7 +7,7 @@
 #include "../../../common/log/logger.h"
 #include "../../../common/log/logLevel.h"
 
-#include "../../../common/setup/clockConstants32.h"
+#include "../../../common/setup/32/clockConstants32.h"
 
 // Map between SERIAL_PORT_X and UARTX
 static UART_MODULE     UART_MODULES[] = { UART1, UART2, UART3, UART4, UART5, UART6 };

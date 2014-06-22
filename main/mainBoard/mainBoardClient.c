@@ -3,10 +3,10 @@
 #ifdef PROG_32
     #include <p32xxxx.h>
     #include <plib.h>
-    #include "../../common/setup/pic32FSetup.h"
+    #include "../../common/setup/32/picSetup32.h"
 #else
     #include <i2c.h>
-    #include "../../common/setup/pic30FSetup.h"
+    #include "../../common/setup/30F/picSetup30F.h"
 #endif
 
 #include <stdlib.h>

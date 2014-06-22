@@ -6,7 +6,7 @@
 // Oscillator Selection Bit
 #pragma config FNOSC = PRIPLL
 // Primary Oscillator Configuration
-#pragma config POSCMOD = HS
+#pragma config POSCMOD = XT
 
 //// Frequency ////
 
@@ -32,8 +32,6 @@
 #pragma config FCKSM    = CSDCMD        
 // CLKO Enable
 #pragma config OSCIOFNC = OFF           
-// Primary Oscillator
-#pragma config POSCMOD  = XT            
 // Internal/External Switch-over
 #pragma config IESO     = OFF           
 // Secondary Oscillator Enable

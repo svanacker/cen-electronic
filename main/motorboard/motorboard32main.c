@@ -9,7 +9,7 @@
 #include "../../common/2d/2d.h"
 #include "../../common/math/cenMath.h"
 
-#include "../../common/setup/pic32FSetup.h"
+#include "../../common/setup/32/picSetup32.h"
 
 #include "../../common/delay/cenDelay.h"
 
