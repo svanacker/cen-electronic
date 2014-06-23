@@ -187,7 +187,7 @@ void logServo(Servo* servo, OutputStream* outputStream) {
  * @return true if servoIndex is ok, false else
  */
 bool checkServoIndex(int servoIndex, char* errorString) {
-    if (servoIndex == 0 || servoIndex >= PWM_COUNT) {
+    if (servoIndex == 0 || servoIndex > PWM_COUNT) {
         writeError(ILLEGAL_ARGUMENT_EXCEPTION);
         appendString(getOutputStreamLogger(ERROR), errorString);
         return false;

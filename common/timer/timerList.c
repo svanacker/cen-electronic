@@ -148,7 +148,7 @@ void __attribute__((__interrupt__)) __attribute__((no_auto_psv)) _T1Interrupt(vo
     if (timerList.size) {
         int i = 0;
         for (i = 0; i < timerList.size; i++) {
-            Timer * currentTimer = getTimerByIndex(i);
+            Timer* currentTimer = getTimerByIndex(i);
             bool enabled = currentTimer->enabled;
             if (!enabled) {
                 continue;
