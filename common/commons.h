@@ -8,7 +8,7 @@
  */
 //#define MPLAB_SIMULATION
 
-#define PROG_32
+// #define PROG_32
 
 // TODO ; Change for 32 !!
 #define MAX_SIGNEDINT 0x7FFF

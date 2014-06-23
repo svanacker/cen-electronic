@@ -2,7 +2,7 @@
 
 #include "../../../common/commons.h"
 
-#include <p30fxxxx.h>
+#include <p30Fxxxx.h>
 
 #include "../serialInputInterrupt.h"
 #include "../serial.h"

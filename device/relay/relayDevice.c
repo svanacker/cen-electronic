@@ -1,4 +1,4 @@
-#include <p30fxxxx.h>
+#include <p30Fxxxx.h>
 
 #include "relayDevice.h"
 #include "relayDeviceInterface.h"

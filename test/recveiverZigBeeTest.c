@@ -1,4 +1,4 @@
-#include <p30fxxxx.h>
+#include <p30Fxxxx.h>
 #include <UART.h>
 #include <libpic30.h>
 #include <math.h>

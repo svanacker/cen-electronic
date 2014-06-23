@@ -1,6 +1,6 @@
 #include "../../../common/commons.h"
 
-#include <p30fxxxx.h>
+#include <p30Fxxxx.h>
 #include <libpic30.h>
 
 #include "../eeprom.h"

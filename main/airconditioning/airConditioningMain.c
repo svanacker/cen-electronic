@@ -1,4 +1,4 @@
-#include <p30fxxxx.h>
+#include <p30Fxxxx.h>
 #include <stdlib.h>
 
 #include "airConditioningMain.h"
@@ -43,6 +43,10 @@
 // Servo
 #include "../../device/servo/servoDevice.h"
 #include "../../device/servo/servoDeviceInterface.h"
+
+// Air Conditioning
+#include "../../device/airconditioning/airConditioningDevice.h"
+#include "../../device/airconditioning/airConditioningDeviceInterface.h"
 
 // Drivers
 #include "../../drivers/driver.h"
@@ -103,6 +107,7 @@ void initDevicesDescriptor() {
     initDeviceList(&deviceListArray, AIR_CONDITIONING_BOARD_DEVICE_LENGTH);
     addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
     addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor());
+	addLocalDevice(getAirConditioningDeviceInterface(), getAirConditioningDeviceDescriptor());
 
     initDevices(&devices);
 }

@@ -1,5 +1,5 @@
 #include <i2c.h>
-#include <p30fxxxx.h>
+#include <p30Fxxxx.h>
 #include <stdlib.h>
 
 #define CUSTOM_BUFFER_SIZE 40

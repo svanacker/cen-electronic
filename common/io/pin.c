@@ -3,7 +3,7 @@
 #ifdef PROG_32
     #include <p32xxxx.h>
 #else
-    #include <p30fxxxx.h>
+    #include <p30Fxxxx.h>
 #endif
 
 #include "pin.h"
