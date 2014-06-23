@@ -1,22 +1,22 @@
 #include <p30fxxxx.h>
 
-#include "pwmPic.h"
 #include "servoPwm.h"
+#include "../pwmPic.h"
 
-#include "../../common/commons.h"
+#include "../../../common/commons.h"
 
-#include "../../common/delay/cenDelay.h"
+#include "../../../common/delay/cenDelay.h"
 
-#include "../../common/error/error.h"
+#include "../../../common/error/error.h"
 
-#include "../../common/io/outputStream.h"
-#include "../../common/io/printWriter.h"
+#include "../../../common/io/outputStream.h"
+#include "../../../common/io/printWriter.h"
 
-#include "../../common/log/logger.h"
-#include "../../common/log/logLevel.h"
+#include "../../../common/log/logger.h"
+#include "../../../common/log/logLevel.h"
 
-#include "../../common/timer/cenTimer.h"
-#include "../../common/timer/timerList.h"
+#include "../../../common/timer/cenTimer.h"
+#include "../../../common/timer/timerList.h"
 
 /** The index of the timer (used to update value of servo). */
 #define SERVO_TIMER_INDEX 10

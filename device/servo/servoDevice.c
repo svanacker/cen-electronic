@@ -15,7 +15,7 @@
 #include "../../common/log/logLevel.h"
 
 #include "../../common/pwm/pwmPic.h"
-#include "../../common/pwm/servoPwm.h"
+#include "../../common/pwm/servo/servoPwm.h"
 
 #include "../../device/device.h"
 

@@ -1,7 +1,7 @@
 #ifndef SERVO_PWM_H
 #define SERVO_PWM_H
 
-#include "pwmPic.h"
+#include "../pwmPic.h"
 
 /**
 * Defines the structure to manages Servos.
