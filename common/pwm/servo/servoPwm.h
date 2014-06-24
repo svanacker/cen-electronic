@@ -44,6 +44,22 @@ typedef struct ServoList {
 
 // --- SERVO MODE ---
 
+// ABSTRACT METHOD
+
+/**
+ * Abstract method which must be defined by a hardware implementation
+ * (Ex : 30F / 32)
+ * @param posInit the initial position of all servos.
+ */
+void __internalPwmForServoHardware(int posInit);
+
+/**
+ * "Protected" method which must not be used directly by users.
+ */
+void __internalPwmServo(int pwmIndex, int dutyms);
+
+// INIT
+
 /**
 * initPwm for a 50 Hz operation with a position
 * Objet : Initialise le cycle de OC1 et OC2 à 20ms
@@ -51,6 +67,8 @@ typedef struct ServoList {
 * @param posInt : Duty cycle de départ de 0 à 20000
 */
 void initPwmForServo (int dutyms);
+
+// INTERFACE
 
 /**
 * do a pwm on a pwmIndex between 1 and 4
@@ -88,7 +106,7 @@ unsigned int pwmServoReadCurrentPosition(int servoIndex);
 unsigned int pwmServoReadTargetPosition(int servoIndex);
 
 /**
-* Test all PWM.
+* Test all pwm servos.
 */
 void testAllPwmServos();
 
