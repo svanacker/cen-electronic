@@ -9,7 +9,7 @@
 #define BACK_VALUE_FOR_PWM 255
 
 void initPwmForDualHBridge() {
-	initPwmForMotor();
+    initPwmForMotor();
 }
 
 void pwmDualHBridgeMotor(signed int hBridgeSpeed1, signed int hBridgeSpeed2);

@@ -2,8 +2,6 @@
 #define CEN_TIMER_H
 
 #include "../../common/commons.h"
-#include "../../common/io/outputStream.h"
-
 
 /**
  * Define the timer diviser to have a timer at 1 Hertz (every second).
@@ -11,23 +9,29 @@
 #define TIME_DIVISER_1_HERTZ 				28800
 
 /**
- * Define the timer diviser to have a timer at 2 Hertz
+ * Define the timer diviser to have a timer at 2 Hertz.
  */
 #define TIME_DIVISER_2_HERTZ 				TIME_DIVISER_1_HERTZ / 2
 
 /**
- * Define the timer diviser to have a timer at 10 Hertz
+ * Define the timer diviser to have a timer at 10 Hertz.
  */
 #define TIME_DIVISER_10_HERTZ 				TIME_DIVISER_1_HERTZ / 10
 
 /**
- * Define the timer diviser to have a timer at 16 Hertz
+ * Define the timer diviser to have a timer at 16 Hertz.
  */
 #define TIME_DIVISER_16_HERTZ 				TIME_DIVISER_1_HERTZ / 16
 
-
+/**
+ * Define the timer diviser to have a timer at 30 Hertz.
+ */
 #define TIME_DIVISER_30_HERTZ 				TIME_DIVISER_1_HERTZ / 30
 
+
+/**
+ * Define the timer diviser to have a timer at 50 Hertz.
+ */
 #define TIME_DIVISER_50_HERTZ 				TIME_DIVISER_1_HERTZ / 50
 
 /**
@@ -88,11 +92,13 @@ struct Timer {
 
 /**
  * Returns the time value.
+ * @param timer a pointer on the timer object for which we want the time value.
  */
 unsigned long getTime(Timer* Timer);
 
 /**
  * Sets the time value.
+ * @param timer a pointer on the timer object for which we want the set timer.
  * @param time the new time value
  */
 void setTime(Timer* Timer, unsigned long time);
@@ -101,11 +107,13 @@ void setTime(Timer* Timer, unsigned long time);
 
 /**
  * Starts the timer given in argument.
+ * @param timer a pointer on the timer object that we want to start.
  */
 void startTimer(Timer* timer);
 
 /**
  * Stops the timer given in arguments.
+ * @param timer a pointer on the timer object that we want to stop.
  */
 void stopTimer(Timer* timer);
 
@@ -126,17 +134,20 @@ bool timeout(Timer* timer, unsigned long time);
 
 /**
  * Lock the timer to avoid that the timer fires.
+ * @param timer a pointer on the timer object that we want to lock.
  */
 void lockTimer(Timer* timer);
 
 /**
  * wait for the timer to be sure that interrupt is not in progress, and lock
  * to be sure that until unlockTimer, timer will not be enabled.
+ * @param timer a pointer on timer object to lock and wait
  */
 void lockAndWaitForTimer(Timer* timer);
 
 /**
  * unlock the timer. If the timer is enabled, the timer will be fired next time.
+ * @param timer a pointer on timer object to unlock
  */
 void unlockTimer(Timer* timer);
 

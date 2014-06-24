@@ -6,9 +6,9 @@
 #include "motorPwm.h"
 
 void pwmMotor(int pwmIndex, int pwmValue) {
-	if (pwmValue < 0) {
-		writeError(PWM_VALUE_MUST_BE_POSITIVE);
-	}
+    if (pwmValue < 0) {
+        writeError(PWM_VALUE_MUST_BE_POSITIVE);
+    }
     switch (pwmIndex) {
         case 1: {
             pwmMotor1(pwmValue);

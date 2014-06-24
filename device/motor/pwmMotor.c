@@ -1,7 +1,7 @@
 #include "../../common/pwm/motor/motorPwm.h"
 
 void setMotorSpeeds(signed int leftSpeed, signed int rightSpeed) {
-	pwmDualHBridgeMotor(leftSpeed, rightSpeed);
+    pwmDualHBridgeMotor(leftSpeed, rightSpeed);
 }
 
 void stopMotors(void) {

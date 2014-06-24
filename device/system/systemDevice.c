@@ -47,9 +47,9 @@ void deviceSystemHandleRawData(char header, InputStream* inputStream, OutputStre
         println(getOutputStreamLogger(ALWAYS));
         ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_PIC_NAME);
     } else if (header == COMMAND_LOG) {
-		printLogger(getOutputStreamLogger(ALWAYS));
+        printLogger(getOutputStreamLogger(ALWAYS));
         ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_LOG);
-	}	
+    }    
 }
 
 static DeviceDescriptor descriptor = {

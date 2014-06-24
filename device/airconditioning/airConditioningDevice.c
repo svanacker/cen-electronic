@@ -15,10 +15,10 @@
 
 #include "../../common/delay/cenDelay.h"
 
-#define		SERVO_INDEX				1
-#define		SERVO_VALUE_TOUCH		1620
-#define		SERVO_VALUE_STAND_BY	1400
-#define		SERVO_SPEED				0xFF
+#define        SERVO_INDEX                1
+#define        SERVO_VALUE_TOUCH        1620
+#define        SERVO_VALUE_STAND_BY    1400
+#define        SERVO_SPEED                0xFF
 
 void deviceAirConditioningInit() {
 }
@@ -31,15 +31,15 @@ bool deviceAirConditioningIsOk() {
 }
 
 void airConditioningToggleOn() {
-	pwmServoAll(SERVO_SPEED, SERVO_VALUE_TOUCH);
-	delaymSec(1000);
-	pwmServoAll(SERVO_SPEED, SERVO_VALUE_STAND_BY);
+    pwmServoAll(SERVO_SPEED, SERVO_VALUE_TOUCH);
+    delaymSec(1000);
+    pwmServoAll(SERVO_SPEED, SERVO_VALUE_STAND_BY);
 }
 
 void airConditioningToggleOff() {
-	pwmServoAll(SERVO_SPEED, SERVO_VALUE_TOUCH);
-	delaymSec(1000);
-	pwmServoAll(SERVO_SPEED, SERVO_VALUE_STAND_BY);
+    pwmServoAll(SERVO_SPEED, SERVO_VALUE_TOUCH);
+    delaymSec(1000);
+    pwmServoAll(SERVO_SPEED, SERVO_VALUE_STAND_BY);
 }
 
 void deviceAirConditioningHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream) {
@@ -47,20 +47,20 @@ void deviceAirConditioningHandleRawData(char commandHeader, InputStream* inputSt
         int powerState = readHex2(inputStream);
 
         if (powerState != 0x00) {
-			airConditioningToggleOn();
+            airConditioningToggleOn();
         } else {
-			airConditioningToggleOff();
+            airConditioningToggleOff();
         }
-		ackCommand(outputStream, AIR_CONDITIONING_DEVICE_HEADER, AIR_CONDITIONING_COMMAND_WRITE);
+        ackCommand(outputStream, AIR_CONDITIONING_DEVICE_HEADER, AIR_CONDITIONING_COMMAND_WRITE);
     }
-	else if (commandHeader == AIR_CONDITIONING_COMMAND_ON) {
-		airConditioningToggleOn();
-		ackCommand(outputStream, AIR_CONDITIONING_DEVICE_HEADER, AIR_CONDITIONING_COMMAND_ON);
-	}
-	else if (commandHeader == AIR_CONDITIONING_COMMAND_OFF) {
-		airConditioningToggleOff();
-		ackCommand(outputStream, AIR_CONDITIONING_DEVICE_HEADER, AIR_CONDITIONING_COMMAND_OFF);
-	}
+    else if (commandHeader == AIR_CONDITIONING_COMMAND_ON) {
+        airConditioningToggleOn();
+        ackCommand(outputStream, AIR_CONDITIONING_DEVICE_HEADER, AIR_CONDITIONING_COMMAND_ON);
+    }
+    else if (commandHeader == AIR_CONDITIONING_COMMAND_OFF) {
+        airConditioningToggleOff();
+        ackCommand(outputStream, AIR_CONDITIONING_DEVICE_HEADER, AIR_CONDITIONING_COMMAND_OFF);
+    }
 }
 
 static DeviceDescriptor descriptor = {

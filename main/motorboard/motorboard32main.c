@@ -184,7 +184,7 @@ int runMotorBoard() {
             SERIAL_PORT_STANDARD,
             DEFAULT_SERIAL_SPEED);
 
-	appendString(&standardOutputStream, "HELLO !");
+    appendString(&standardOutputStream, "HELLO !");
 
     openSerialLink(&debugSerialStreamLink,
             &debugInputBuffer,

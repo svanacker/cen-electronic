@@ -60,7 +60,7 @@ void interruptServoTimerCallbackFunc(Timer* timer) {
 // PUBLIC INTERFACCE
 
 void initPwmForServo(int posInit) {
-	__internalPwmForServoHardware(posInit);
+    __internalPwmForServoHardware(posInit);
     // Init servo structure
     int i;
     for (i = 0; i < PWM_COUNT; i++) {

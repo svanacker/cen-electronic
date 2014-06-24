@@ -8,10 +8,10 @@
 #include "../../pwmPic.h"
 
 /** For 20 000 Hz operation. */
-#define PWM_TIMER_FOR_MOTOR 		0x0FBF
+#define PWM_TIMER_FOR_MOTOR         0x0FBF
 
 /** For 20 000 Hz operation. */
-#define PWM_DUTY_CYCLE_FOR_MOTOR 	255L
+#define PWM_DUTY_CYCLE_FOR_MOTOR     255L
 
 int convPwmMotor(int pwm) {
     long duty;
@@ -33,20 +33,20 @@ void initPwmForMotor() {
 }
 
 void pwmMotor1(int dutyms) {
-	OC1RS = convPwmMotor(dutyms); //duty cycle OC2
+    OC1RS = convPwmMotor(dutyms); //duty cycle OC2
 }
 
 void pwmMotor2(int dutyms) {
-	OC2RS = convPwmMotor(dutyms); //duty cycle OC2
+    OC2RS = convPwmMotor(dutyms); //duty cycle OC2
 }
 
 void pwmMotor3(int dutyms) {
-	// Take by UART 1
-	writeError(PWM_NOT_AVAILABLE);
+    // Take by UART 1
+    writeError(PWM_NOT_AVAILABLE);
 }
 
 void pwmMotor4(int dutyms) {
-	// Take by UART 1 => We use direction with D6 and D7 !
-	writeError(PWM_NOT_AVAILABLE);
+    // Take by UART 1 => We use direction with D6 and D7 !
+    writeError(PWM_NOT_AVAILABLE);
 }
 

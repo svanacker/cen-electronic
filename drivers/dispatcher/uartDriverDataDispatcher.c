@@ -26,12 +26,12 @@ void addUartDriverDataDispatcher(DriverDataDispatcher* uartDispatcher,
         char* dispatcherName,
 
         Buffer* uartInputBuffer,
-		char (*uartInputBufferArray)[],
-		unsigned char uartInputBufferLength,
+        char (*uartInputBufferArray)[],
+        unsigned char uartInputBufferLength,
 
         OutputStream* uartOutputStream,
         InputStream* uartInputStream,
-		unsigned int targetUartIndex) {
+        unsigned int targetUartIndex) {
     // Configure i2c Dispatcher
     uartDispatcher->transmitMode = TRANSMIT_UART;
     uartDispatcher->name = dispatcherName;

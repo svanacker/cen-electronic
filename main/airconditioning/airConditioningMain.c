@@ -107,7 +107,7 @@ void initDevicesDescriptor() {
     initDeviceList(&deviceListArray, AIR_CONDITIONING_BOARD_DEVICE_LENGTH);
     addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
     addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor());
-	addLocalDevice(getAirConditioningDeviceInterface(), getAirConditioningDeviceDescriptor());
+    addLocalDevice(getAirConditioningDeviceInterface(), getAirConditioningDeviceDescriptor());
 
     initDevices(&devices);
 }

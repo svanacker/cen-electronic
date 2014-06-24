@@ -29,26 +29,26 @@
 
 
 void printTypeAsString(OutputStream* outputStream, int parameterType) {
-	switch (parameterType) {
-		case DEVICE_ARG_SEPARATOR : return;
-		case DEVICE_ARG_UNSIGNED_CHAR_1 : appendString(outputStream, "u1"); return;
-		case DEVICE_ARG_UNSIGNED_CHAR_2 : appendString(outputStream, "u_2"); return;
-		case DEVICE_ARG_UNSIGNED_HEX_2 : appendString(outputStream, "hex_u_2"); return;
-		case DEVICE_ARG_SIGNED_HEX_2 : appendString(outputStream, "hex_s_2"); return;
-		case DEVICE_ARG_UNSIGNED_HEX_3 : appendString(outputStream, "hex_u_3"); return;
-		case DEVICE_ARG_UNSIGNED_HEX_4 : appendString(outputStream, "hex_u_4"); return;
-		case DEVICE_ARG_SIGNED_HEX_4 : appendString(outputStream, "hex_s_4"); return;
-		case DEVICE_ARG_UNSIGNED_HEX_5 : appendString(outputStream, "hex_u_5"); return;
-		case DEVICE_ARG_SIGNED_HEX_5 : appendString(outputStream, "hex_s_5"); return;
-		case DEVICE_ARG_UNSIGNED_HEX_6 : appendString(outputStream, "hex_u_6"); return;
-		case DEVICE_ARG_SIGNED_HEX_6 : appendString(outputStream, "hex_s_6"); return;
-		case DEVICE_ARG_UNSIGNED_HEX_8 : appendString(outputStream, "hex_u_8"); return;
-		case DEVICE_ARG_SIGNED_HEX_8 : appendString(outputStream, "hex_s_8"); return;
-		case DEVICE_ARG_UNSIGNED_HEX_9 : appendString(outputStream, "hex_u_9"); return;
-		case DEVICE_ARG_UNSIGNED_HEX_10 : appendString(outputStream, "hex_u_10"); return;
-		case DEVICE_ARG_UNSIGNED_HEX_12 : appendString(outputStream, "hex_u_12"); return;
-	}
-	appendString(outputStream, "??????"); return;
+    switch (parameterType) {
+        case DEVICE_ARG_SEPARATOR : return;
+        case DEVICE_ARG_UNSIGNED_CHAR_1 : appendString(outputStream, "u1"); return;
+        case DEVICE_ARG_UNSIGNED_CHAR_2 : appendString(outputStream, "u_2"); return;
+        case DEVICE_ARG_UNSIGNED_HEX_2 : appendString(outputStream, "hex_u_2"); return;
+        case DEVICE_ARG_SIGNED_HEX_2 : appendString(outputStream, "hex_s_2"); return;
+        case DEVICE_ARG_UNSIGNED_HEX_3 : appendString(outputStream, "hex_u_3"); return;
+        case DEVICE_ARG_UNSIGNED_HEX_4 : appendString(outputStream, "hex_u_4"); return;
+        case DEVICE_ARG_SIGNED_HEX_4 : appendString(outputStream, "hex_s_4"); return;
+        case DEVICE_ARG_UNSIGNED_HEX_5 : appendString(outputStream, "hex_u_5"); return;
+        case DEVICE_ARG_SIGNED_HEX_5 : appendString(outputStream, "hex_s_5"); return;
+        case DEVICE_ARG_UNSIGNED_HEX_6 : appendString(outputStream, "hex_u_6"); return;
+        case DEVICE_ARG_SIGNED_HEX_6 : appendString(outputStream, "hex_s_6"); return;
+        case DEVICE_ARG_UNSIGNED_HEX_8 : appendString(outputStream, "hex_u_8"); return;
+        case DEVICE_ARG_SIGNED_HEX_8 : appendString(outputStream, "hex_s_8"); return;
+        case DEVICE_ARG_UNSIGNED_HEX_9 : appendString(outputStream, "hex_u_9"); return;
+        case DEVICE_ARG_UNSIGNED_HEX_10 : appendString(outputStream, "hex_u_10"); return;
+        case DEVICE_ARG_UNSIGNED_HEX_12 : appendString(outputStream, "hex_u_12"); return;
+    }
+    appendString(outputStream, "??????"); return;
 }
 
 /**
@@ -57,23 +57,23 @@ void printTypeAsString(OutputStream* outputStream, int parameterType) {
  * @return the size of the argument
  */
 unsigned int printArgument(OutputStream* outputStream, DeviceArgument* deviceArgument, int argumentIndex) {
-	if (argumentIndex > 0) {
+    if (argumentIndex > 0) {
         appendString(outputStream, ARGUMENTS_SEPARATOR);
     }    
     char* argumentName = deviceArgument->name;
     char type = deviceArgument->type;
-	unsigned int result = getLengthOfType(type);
-	if (result == -1) {
-		appendStringAndDec(outputStream, "type length Problem !!! : ", type);
-	}
+    unsigned int result = getLengthOfType(type);
+    if (result == -1) {
+        appendStringAndDec(outputStream, "type length Problem !!! : ", type);
+    }
 
-	printTypeAsString(outputStream, type);
+    printTypeAsString(outputStream, type);
    
     // Argument name
     append(outputStream, ARGUMENTS_NAME_AND_TYPE_SEPARATOR);
     appendString(outputStream, argumentName);
-	
-	return result;
+    
+    return result;
 }
 
 /**
@@ -101,45 +101,45 @@ bool printMethodMetaData(OutputStream* outputStream, DeviceInterface* deviceInte
         // arguments
         int argumentCount = deviceMethodMetaData->argumentsSize;
         int argumentIndex;
-		int realArgumentLength = 0;
+        int realArgumentLength = 0;
         for (argumentIndex = 0; argumentIndex < argumentCount; argumentIndex++) {
-			DeviceArgument deviceArgument = deviceMethodMetaData->arguments[argumentIndex];
+            DeviceArgument deviceArgument = deviceMethodMetaData->arguments[argumentIndex];
             realArgumentLength += printArgument(outputStream, &deviceArgument, argumentIndex);
         }
         append(outputStream,  ARGUMENTS_STOP_CHAR);
         appendString(outputStream, ARGUMENTS_AND_RESULTS_SEPARATOR);
 
-		if (argumentLength != realArgumentLength) {
-			appendString(outputStream, "Arguments Definition ERROR !!!!!!\n");
-			appendCRLF(outputStream);
-			appendStringAndDec(outputStream, "argumentCount=", argumentCount);
-			appendCRLF(outputStream);
-			appendStringAndDec(outputStream, "argumentLength=", argumentLength);
-			appendCRLF(outputStream);
-			appendStringAndDec(outputStream, "realArgumentLength=", realArgumentLength);
-			appendCRLF(outputStream);
-		}
+        if (argumentLength != realArgumentLength) {
+            appendString(outputStream, "Arguments Definition ERROR !!!!!!\n");
+            appendCRLF(outputStream);
+            appendStringAndDec(outputStream, "argumentCount=", argumentCount);
+            appendCRLF(outputStream);
+            appendStringAndDec(outputStream, "argumentLength=", argumentLength);
+            appendCRLF(outputStream);
+            appendStringAndDec(outputStream, "realArgumentLength=", realArgumentLength);
+            appendCRLF(outputStream);
+        }
 
         // results
         append(outputStream,  ARGUMENTS_START_CHAR);
         int resultCount = deviceMethodMetaData->resultsSize;
-		int realResultLength = 0;
+        int realResultLength = 0;
         int resultIndex;
         for (resultIndex = 0; resultIndex < resultCount; resultIndex++) {
-			DeviceArgument resultArgument = deviceMethodMetaData->results[resultIndex];
+            DeviceArgument resultArgument = deviceMethodMetaData->results[resultIndex];
             realResultLength += printArgument(outputStream, &resultArgument, resultIndex);
         }
 
-		if (resultLength != realResultLength) {
-			appendString(outputStream, "Result Parameters Definition ERROR !!!!!!");
-			appendCRLF(outputStream);
-			appendStringAndDec(outputStream, "resultCount=", resultCount);
-			appendCRLF(outputStream);
-			appendStringAndDec(outputStream, "resultLength=", resultLength);
-			appendCRLF(outputStream);
-			appendStringAndDec(outputStream, "realResultLength=", realResultLength);
-			appendCRLF(outputStream);
-		}
+        if (resultLength != realResultLength) {
+            appendString(outputStream, "Result Parameters Definition ERROR !!!!!!");
+            appendCRLF(outputStream);
+            appendStringAndDec(outputStream, "resultCount=", resultCount);
+            appendCRLF(outputStream);
+            appendStringAndDec(outputStream, "resultLength=", resultLength);
+            appendCRLF(outputStream);
+            appendStringAndDec(outputStream, "realResultLength=", realResultLength);
+            appendCRLF(outputStream);
+        }
 
         if (resultCount == 0) {
             appendString(outputStream, "void");

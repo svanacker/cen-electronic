@@ -18,6 +18,12 @@ typedef struct {
 	unsigned char maxSize;
 } TimerList;
 
+// PRIVATES
+
+void _internalUpdateTimerListValues();
+
+// INTERFACES
+
 /**
  * Initialize the timer list.
  */
