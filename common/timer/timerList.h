@@ -3,11 +3,8 @@
 
 #include "cenTimer.h"
 
-/** The max limit of timer list. */
-#define MAX_TIMER 5
-
 /**
- * Tre struct defining a list of timer
+ * Tre struct defining a list of timer.
  */
 typedef struct {
     /** An array of pointer on device Descriptor. */
@@ -26,6 +23,8 @@ void _internalUpdateTimerListValues();
 
 /**
  * Initialize the timer list.
+ * @param timerListArray on pointer on a array of timer
+ * @param timerListSize the size of the timerListArray param.
  */
 void initTimerList(Timer (*timerListArray)[], unsigned char timerListSize);
 
@@ -41,18 +40,22 @@ Timer* addTimer(int timerCode,
         		interruptTimerCallbackFunc* callback);
 
 /**
- * Get the device descriptor of index;
+ * Get the device descriptor of index.
+ * @param index the index of the timer (0..n)
+ * @return a pointer on the found timer;
  */
 Timer* getTimerByIndex(int index);
 
 /**
  * Get a timer by his code.
  * @param timerCode the code of the timer that we search.
+ * @return a pointer on the found timer;
  */
 Timer* getTimerByCode(int timerCode);
 
 /**
  * Get the count of timer.
+ * @return timer count.
  */
 int getTimerCount();
 
@@ -62,6 +65,10 @@ int getTimerCount();
  */
 void startTimerList();
 
+/**
+ * Returns the unique Timer List (singleton).
+ * @param a pointer on TimerList struct.
+ */
 TimerList* getTimerList();
 
 #endif

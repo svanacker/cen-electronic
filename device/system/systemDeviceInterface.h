@@ -24,6 +24,9 @@
 /** Command to debug the I2C. */
 #define COMMAND_DEBUG_I2C 'I'
 
+/** Command to see the list of Timer List. */
+#define COMMAND_TIMER_LIST 'T'
+
 /**
 * Get the system device interface.
 */

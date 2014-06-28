@@ -49,7 +49,10 @@ void deviceSystemHandleRawData(char header, InputStream* inputStream, OutputStre
     } else if (header == COMMAND_LOG) {
         printLogger(getOutputStreamLogger(ALWAYS));
         ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_LOG);
-    }    
+    } else if (header == COMMAND_TIMER_LIST) {
+		printTimerList(getOutputStreamLogger(ALWAYS));
+        ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_TIMER_LIST);
+	}	
 }
 
 static DeviceDescriptor descriptor = {

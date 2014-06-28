@@ -64,8 +64,8 @@
 #endif
 
 #define        SERVO_INDEX                1
-#define        SERVO_VALUE_TOUCH        1620
-#define        SERVO_VALUE_STAND_BY    1400
+#define        SERVO_VALUE_TOUCH          1620
+#define        SERVO_VALUE_STAND_BY       1400
 #define        SERVO_SPEED                0xFF
 
 
@@ -73,7 +73,7 @@
 // 5000000 ==> 10000 seconds => 15 minutes
 
 #define        ITERATION_OFF            20000000L
-#define        ITERATION_ON            40000000L
+#define        ITERATION_ON             40000000L
 
 /**
  * Device list.
