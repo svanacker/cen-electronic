@@ -23,10 +23,18 @@
 #define SERVO_COMMAND_READ_CURRENT_POSITION		'p'
 
 // Command header to read the target Position of a servo with the specified index
-#define SERVO_COMMAND_READ_TARGET_POSITION		't'
+#define SERVO_COMMAND_READ_TARGET_POSITION		'r'
+
+// DEBUG FUNCTIONS
+
+// Command header to debug the servo list
+#define SERVO_COMMAND_DEBUG						'd'
+
+// Command header to do the test program
+#define SERVO_COMMAND_TEST						't'
 
 /**
-* Interface for Servo Device
+* Interface for Servo Device.
 */
 DeviceInterface* getServoDeviceInterface();
 

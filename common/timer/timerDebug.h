@@ -2,6 +2,7 @@
 #define TIMER_DEBUG_H
 
 #include "cenTimer.h"
+#include "timerList.h"
 
 #include "../../common/io/outputStream.h"
 

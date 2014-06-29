@@ -19,17 +19,27 @@
 /** The index of the timer (used to update value of servo). */
 #define SERVO_TIMER_INDEX 10
 
+#define SERVO_SPEED_TIMER_FACTOR 3
+
 /**
  * The servos.
  */
 static ServoList servoList;
 
 /**
- * Private
+ * Private.
  */
 Servo* getServo(int index) {
     return &(servoList.servos[index]);
 }
+
+/**
+ * Only for debug.
+ */
+ServoList* _getServoList() {
+	return &servoList;
+}
+
 
 /**
  * The interrupt timer.
@@ -42,12 +52,12 @@ void interruptServoTimerCallbackFunc(Timer* timer) {
             continue;
         }
         if (servo->currentPosition < servo->targetPosition) {
-            servo->currentPosition += servo->speed;
+            servo->currentPosition += servo->speed * SERVO_SPEED_TIMER_FACTOR;
             if (servo->currentPosition > servo->targetPosition) {
                 servo->currentPosition = servo->targetPosition;
             }
         } else if (servo->currentPosition > servo->targetPosition) {
-            servo->currentPosition -= servo->speed;
+            servo->currentPosition -= servo->speed * SERVO_SPEED_TIMER_FACTOR;
             // Limit
             if (servo->currentPosition < servo->targetPosition) {
                 servo->currentPosition = servo->targetPosition;
@@ -60,7 +70,11 @@ void interruptServoTimerCallbackFunc(Timer* timer) {
 // PUBLIC INTERFACCE
 
 void initPwmForServo(int posInit) {
-    __internalPwmForServoHardware(posInit);
+	if (servoList.initialized) {
+	    return;
+	}
+	__internalPwmForServoHardware(posInit);
+
     // Init servo structure
     int i;
     for (i = 0; i < PWM_COUNT; i++) {
@@ -76,20 +90,7 @@ void initPwmForServo(int posInit) {
     addTimer(SERVO_TIMER_INDEX,
                             TIME_DIVISER_50_HERTZ,
                             &interruptServoTimerCallbackFunc);
-}
-
-/**
- * @private
- * Log the value of the servo.
- */
-void logServo(Servo* servo, OutputStream* outputStream) {
-    appendString(outputStream, ",speed=");
-    appendDec(outputStream, servo->speed);
-    appendString(outputStream, ",currentPos=");
-    appendDec(outputStream, servo->currentPosition);
-    appendString(outputStream, ",targePos=");
-    appendDec(outputStream, servo->targetPosition);
-    appendCRLF(outputStream);
+	servoList.initialized = true;
 }
 
 /**
@@ -110,7 +111,7 @@ bool checkServoIndex(int servoIndex, char* errorString) {
 // PUBLIC WRITE FUNCTIONS
 
 void pwmServo(int servoIndex, unsigned int speed, int dutyms) {
-    if (checkServoIndex(servoIndex, "=> pwmServo")) {
+    if (!checkServoIndex(servoIndex, "=> pwmServo")) {
         return;
     }
     Servo* servo = getServo(servoIndex - 1);
@@ -128,7 +129,7 @@ void pwmServoAll(unsigned int speed, int dutyms) {
 // READ FUNCTIONS
 
 unsigned int pwmServoReadSpeed(int servoIndex) {
-    if (checkServoIndex(servoIndex, "=> pwmServoReadSpeed")) {
+    if (!checkServoIndex(servoIndex, "=> pwmServoReadSpeed")) {
         return -1;
     }
     Servo* servo = getServo(servoIndex - 1);
@@ -136,7 +137,7 @@ unsigned int pwmServoReadSpeed(int servoIndex) {
 }
 
 unsigned int pwmServoReadCurrentPosition(int servoIndex) {
-    if (checkServoIndex(servoIndex, "=> pwmServoReadCurrentPosition")) {
+    if (!checkServoIndex(servoIndex, "=> pwmServoReadCurrentPosition")) {
         return -1;
     }
     Servo* servo = getServo(servoIndex - 1);
@@ -144,28 +145,9 @@ unsigned int pwmServoReadCurrentPosition(int servoIndex) {
 }
 
 unsigned int pwmServoReadTargetPosition(int servoIndex) {
-    if (checkServoIndex(servoIndex, "=> pwmServoReadTargetPosition")) {
+    if (!checkServoIndex(servoIndex, "=> pwmServoReadTargetPosition")) {
         return -1;
     }
     Servo* servo = getServo(servoIndex - 1);
     return servo->targetPosition;
-}
-
-// TEST FUNCTIONS
-
-void testAllPwmServos() {
-    OutputStream* debugOutputStream = getOutputStreamLogger(DEBUG);
-    int servoIndex;
-    initPwmForServo(PWM_SERVO_MIDDLE_POSITION);
-
-    for (servoIndex = 1; servoIndex <= PWM_COUNT; servoIndex++) {
-        appendString(debugOutputStream, "Servo : ");
-        appendDec(debugOutputStream, servoIndex);
-        appendCRLF(debugOutputStream);
-        delaymSec(500);
-        pwmServo(servoIndex, PWM_SERVO_SPEED_MAX, PWM_SERVO_LEFT_POSITION);
-        delaymSec(500);
-        pwmServo(servoIndex, PWM_SERVO_SPEED_MAX, PWM_SERVO_RIGHT_POSITION);
-        delaymSec(2000);
-    }
 }

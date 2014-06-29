@@ -2,6 +2,8 @@
 #include "systemDeviceInterface.h"
 
 #include "../../common/delay/cenDelay.h"
+#include "../../common/timer/timerDebug.h"
+#include "../../common/timer/timerList.h"
 
 #include "../../common/io/buffer.h"
 #include "../../common/io/inputStream.h"
@@ -50,7 +52,7 @@ void deviceSystemHandleRawData(char header, InputStream* inputStream, OutputStre
         printLogger(getOutputStreamLogger(ALWAYS));
         ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_LOG);
     } else if (header == COMMAND_TIMER_LIST) {
-		printTimerList(getOutputStreamLogger(ALWAYS));
+		printTimerList(getOutputStreamLogger(ALWAYS), getTimerList());
         ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_TIMER_LIST);
 	}	
 }

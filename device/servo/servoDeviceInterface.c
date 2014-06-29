@@ -49,6 +49,20 @@ int deviceServoGetInterface(char commandHeader, int mode, bool fillDeviceArgumen
         }
         return commandLengthValueForMode(mode, 2, 4);
     }
+	// DEBUG FUNCTIONS
+    else if (commandHeader == SERVO_COMMAND_TEST) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("servoTestAlls");
+        }
+        return 0;
+    }
+	// DEBUG
+    else if (commandHeader == SERVO_COMMAND_DEBUG) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("servoDebugAlls");
+        }
+        return 0;
+    }
     return DEVICE_HEADER_NOT_HANDLED;
 }
 

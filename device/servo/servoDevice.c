@@ -16,10 +16,9 @@
 
 #include "../../common/pwm/pwmPic.h"
 #include "../../common/pwm/servo/servoPwm.h"
+#include "../../common/pwm/servo/servoPwmDebug.h"
 
 #include "../../device/device.h"
-
-#define MAX_SERVO_SPEED         20000
 
 void deviceServoInit() {
     initPwmForServo(PWM_SERVO_MIDDLE_POSITION);
@@ -40,29 +39,18 @@ void deviceServoHandleRawData(char header,
     if (header == SERVO_COMMAND_WRITE) {
         int servoIndex = readHex2(inputStream);
         int servoSpeed = readHex2(inputStream);
-
-        // 0xFF is for test to determine the index of each 
-        // servo (test)
-        if (servoIndex == 0xFF) {
-            testAllPwmServos();
-        }
-        else {
-            //if (servoSpeed == 0xFF) {
-            servoSpeed = MAX_SERVO_SPEED;
-            //}
-    
-            int servoValue = readHex4(inputStream);
-            if (servoIndex > 0 && servoIndex <= PWM_COUNT) {
-                pwmServo(servoIndex, servoSpeed, servoValue);
-            } else {
-                pwmServoAll(servoSpeed, servoValue);
-            }
-        }
+   
+		int servoValue = readHex4(inputStream);
+		if (servoIndex > 0 && servoIndex <= PWM_COUNT) {
+			pwmServo(servoIndex, servoSpeed, servoValue);
+		} else {
+			pwmServoAll(servoSpeed, servoValue);
+		}
         ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_WRITE);
     }
     else if (header == SERVO_COMMAND_WRITE_COMPACT) {
         int servoValue = readHex4(inputStream);
-        pwmServoAll(MAX_SERVO_SPEED, servoValue);
+        pwmServoAll(PWM_SERVO_SPEED_MAX, servoValue);
         ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_WRITE_COMPACT);
     }
     // READ COMMANDS
@@ -86,6 +74,15 @@ void deviceServoHandleRawData(char header,
 
         ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_READ_TARGET_POSITION);
         appendHex4(outputStream, targetPosition);
+    }
+	// DEBUG COMMANDS
+    else if (header == SERVO_COMMAND_TEST) {
+        testAllPwmServos();
+        ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_TEST);
+    }
+    else if (header == SERVO_COMMAND_DEBUG) {
+        printServoList(getOutputStreamLogger(ALWAYS));
+        ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_DEBUG);
     }
 }
 

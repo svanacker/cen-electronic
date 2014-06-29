@@ -1,6 +1,8 @@
 #ifndef SERVO_PWM_H
 #define SERVO_PWM_H
 
+#include <stdbool.h>
+
 #include "../pwmPic.h"
 
 /**
@@ -19,6 +21,9 @@ typedef struct Servo {
 * Tre struct defining a list of servo.
 */
 typedef struct ServoList {
+	/** To know if the servo List is already initialized. */
+	bool initialized;
+	/** The array of servos. */
 	Servo servos[PWM_COUNT];
 } ServoList;
 
@@ -43,6 +48,11 @@ typedef struct ServoList {
 #define PWM_SERVO_SPEED_MAX 255
 
 // --- SERVO MODE ---
+
+/**
+ * @private.
+ */
+ServoList* _getServoList();
 
 // ABSTRACT METHOD
 
@@ -104,10 +114,5 @@ unsigned int pwmServoReadCurrentPosition(int servoIndex);
  * @param -1 if servoIndex is not correct, current position if ok
  */
 unsigned int pwmServoReadTargetPosition(int servoIndex);
-
-/**
-* Test all pwm servos.
-*/
-void testAllPwmServos();
 
 #endif
