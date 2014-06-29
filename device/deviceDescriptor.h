@@ -28,17 +28,17 @@ typedef bool deviceIsOkFunction(void);
 * @param data the data to be handled
 */
 typedef void deviceHandleRawDataFunction(char header,
-										 InputStream* inputStream,
-										 OutputStream* outputStream);
+                                         InputStream* inputStream,
+                                         OutputStream* outputStream);
 
 /**
 * Defines the structure used to describe a device.
 */
 typedef struct DeviceDescriptor {
-	deviceInitFunction *deviceInit;
-	deviceShutDownFunction *deviceShutDown;
-	deviceIsOkFunction *deviceIsOk;
-	deviceHandleRawDataFunction *deviceHandleRawData;
+    deviceInitFunction *deviceInit;
+    deviceShutDownFunction *deviceShutDown;
+    deviceIsOkFunction *deviceIsOk;
+    deviceHandleRawDataFunction *deviceHandleRawData;
 } DeviceDescriptor;
 
 

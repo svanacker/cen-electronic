@@ -3,7 +3,7 @@
 
 #include "../../../device/deviceInterface.h"
 
-#define MOTION_DEVICE_HEADER		'M'
+#define MOTION_DEVICE_HEADER        'M'
 
 /** Goto with value in coder pulse. */
 #define COMMAND_MOTION_GOTO_IN_PULSE 'g'
@@ -27,46 +27,46 @@
 #define COMMAND_MOTION_LEFT_ONE_WHEEL_IN_DECI_DEGREE ')'
 
 /** Define the header used to follow a spline with relative coordinates. */
-#define COMMAND_MOTION_SPLINE_RELATIVE 		's'
+#define COMMAND_MOTION_SPLINE_RELATIVE         's'
 
 /** Define the header used to follow a spline with relative coordinates. */
-#define COMMAND_MOTION_SPLINE_ABSOLUTE 		'S'
+#define COMMAND_MOTION_SPLINE_ABSOLUTE         'S'
 
 /** Define the header used to follow a spline test. */
-#define COMMAND_MOTION_SPLINE_TEST_LEFT	'{'
+#define COMMAND_MOTION_SPLINE_TEST_LEFT    '{'
 
 /** Define the header used to follow a spline test. */
-#define COMMAND_MOTION_SPLINE_TEST_RIGHT	'}'
+#define COMMAND_MOTION_SPLINE_TEST_RIGHT    '}'
 
 /** Defines the COMMAND used to get speed / acceleration parameters for different motion type. */
-#define COMMAND_GET_MOTION_PARAMETERS 		'r'
+#define COMMAND_GET_MOTION_PARAMETERS         'r'
 
 /** Defines the COMMAND used to set speed / acceleration parameters for different motion type. */
-#define COMMAND_SET_MOTION_PARAMETERS 		'w'
+#define COMMAND_SET_MOTION_PARAMETERS         'w'
 
 /** Define the command used to do a square useful for calibration. */
-#define COMMAND_SQUARE_CALIBRATION 			'@'
+#define COMMAND_SQUARE_CALIBRATION             '@'
 
 /** Cancel all current motion. */
-#define COMMAND_MOTION_CANCEL 				'Z'
+#define COMMAND_MOTION_CANCEL                 'Z'
 
 /** Obstacle : stop the current Motion and maintain Position. */
-#define COMMAND_MOTION_OBSTACLE 			'o'
+#define COMMAND_MOTION_OBSTACLE             'o'
 
 /** Notify the status of the robot. */
-#define NOTIFY_MOTION_STATUS 				'k'
+#define NOTIFY_MOTION_STATUS                 'k'
 
 /** Argument for the status of the robot when position reached. */
-#define NOTIFY_MOTION_ARG_REACHED 	0
+#define NOTIFY_MOTION_ARG_REACHED     0
 
 /** Argument for the status of the robot when robot failed to reach. */
-#define NOTIFY_MOTION_ARG_FAILED 	1
+#define NOTIFY_MOTION_ARG_FAILED     1
 
 /** Argument for the status of the robot when there is an obstacle. */
-#define NOTIFY_MOTION_ARG_OBSTACLE 	2
+#define NOTIFY_MOTION_ARG_OBSTACLE     2
 
 /** Argument for the status of the robot when position is in progress. */
-#define NOTIFY_MOTION_ARG_MOVING 	3
+#define NOTIFY_MOTION_ARG_MOVING     3
 
 
 /**

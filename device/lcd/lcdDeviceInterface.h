@@ -6,18 +6,18 @@
 /**
  * Command header for LCD Device.
  */
-#define LCD_DEVICE_HEADER	'L'
+#define LCD_DEVICE_HEADER    'L'
 
 /**
 * Command to write on the LCD
 */
-#define COMMAND_LCD 		'w'
+#define COMMAND_LCD         'w'
 
 /**
 * Define the number of fixed count of char used
 * for each message.
 */
-#define LCD_CHAR_COUNT_BY_MESSAGE 	4
+#define LCD_CHAR_COUNT_BY_MESSAGE     4
 
 /**
 * Interface for Device.

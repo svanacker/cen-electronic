@@ -12,210 +12,210 @@
  * Define all datas relating to a Lcd 4d SGC Object.
  */
 typedef struct {
-	// OutputStream (serial) used to send command
-	OutputStream* outputStream;
-	// InputStream (serial) used to read data
-	InputStream* inputStream;
-	// Buffer (for input)
-	Buffer* inputBuffer;
-	// Color with 2 bytes
-	int color;
+    // OutputStream (serial) used to send command
+    OutputStream* outputStream;
+    // InputStream (serial) used to read data
+    InputStream* inputStream;
+    // Buffer (for input)
+    Buffer* inputBuffer;
+    // Color with 2 bytes
+    int color;
 } Lcd4d;
 
 /**
  * Define the structure of LCD version.
  */
 typedef struct Lcd4dVersion {
-	int deviceType;
-	int hardwareRevision;
-	int firmwareRevision;
-	int horizontalResolution;
-	int verticalResolution;
+    int deviceType;
+    int hardwareRevision;
+    int firmwareRevision;
+    int horizontalResolution;
+    int verticalResolution;
 } Lcd4dVersion;
 
 // ALL COMMANDS
 
-#define		LCD4D_ACK								0x06
-#define		LCD4D_NACK								0x15
+#define        LCD4D_ACK                                0x06
+#define        LCD4D_NACK                                0x15
 
 
 // GENERAL COMMANDS
 
-#define 	LCD4D_AUTOBAUD_COMMAND					'U'
+#define     LCD4D_AUTOBAUD_COMMAND                    'U'
 
 
-#define 	LCD4D_NEW_BAUD_COMMAND					'Q'
-#define 	LCD4D_NEW_BAUD_9600						0x06
-#define		LCD4D_NEW_BAUD_115200					0x0D
+#define     LCD4D_NEW_BAUD_COMMAND                    'Q'
+#define     LCD4D_NEW_BAUD_9600                        0x06
+#define        LCD4D_NEW_BAUD_115200                    0x0D
 
-#define		LCD4D_VERSION_COMMAND					'V'
-#define		LCD4D_VERSION_OUTPUT_SERIAL_ONLY		0x00
-#define		LCD4D_VERSION_OUTPUT_SERIAL_LCD			0x01
+#define        LCD4D_VERSION_COMMAND                    'V'
+#define        LCD4D_VERSION_OUTPUT_SERIAL_ONLY        0x00
+#define        LCD4D_VERSION_OUTPUT_SERIAL_LCD            0x01
 // TODO : Response of V
 
-#define		LCD4D_SET_DISPLAY_RESOLUTION_COMMAND	'd'
+#define        LCD4D_SET_DISPLAY_RESOLUTION_COMMAND    'd'
 
-#define		LCD4D_CLEAR_SCREEN_COMMAND				'E'
+#define        LCD4D_CLEAR_SCREEN_COMMAND                'E'
 
 // Control
-#define		LCD4D_CONTROL_COMMAND					'Y'
+#define        LCD4D_CONTROL_COMMAND                    'Y'
 
-#define		LCD4D_BACKLIGHT_CONTROL					0x00
-#define		LCD4D_BACKLIGHT_OFF						0x00
-#define		LCD4D_BACKLIGHT_ON						0x01
+#define        LCD4D_BACKLIGHT_CONTROL                    0x00
+#define        LCD4D_BACKLIGHT_OFF                        0x00
+#define        LCD4D_BACKLIGHT_ON                        0x01
 
-#define		LCD4D_DISPLAY_CONTROL					0x01
-#define		LCD4D_DISPLAY_OFF						0x00
-#define		LCD4D_DISPLAY_ON						0x01
+#define        LCD4D_DISPLAY_CONTROL                    0x01
+#define        LCD4D_DISPLAY_OFF                        0x00
+#define        LCD4D_DISPLAY_ON                        0x01
 
-#define		LCD4D_CONTRAST_ADJUST					0x02
+#define        LCD4D_CONTRAST_ADJUST                    0x02
 
-#define		LCD4D_POWER_UP_SHUTDOWN					0x03
-#define		LCD4D_DISPLAY_SHUTDOWN					0x00
-#define		LCD4D_DISPLAY_POWER_UP					0x01
+#define        LCD4D_POWER_UP_SHUTDOWN                    0x03
+#define        LCD4D_DISPLAY_SHUTDOWN                    0x00
+#define        LCD4D_DISPLAY_POWER_UP                    0x01
 
-#define		LCD4D_DISPLAY_ORIENTATION				0x04
-#define		LCD4D_ORIENTATION_90					0x01
-#define		LCD4D_ORIENTATION_270					0x02
-#define		LCD4D_NATIVE_ORIENTATION				0x03
-#define		LCD4D_ORIENTATION_180					0x04
+#define        LCD4D_DISPLAY_ORIENTATION                0x04
+#define        LCD4D_ORIENTATION_90                    0x01
+#define        LCD4D_ORIENTATION_270                    0x02
+#define        LCD4D_NATIVE_ORIENTATION                0x03
+#define        LCD4D_ORIENTATION_180                    0x04
 
-#define		LCD4D_TOUCH_CONTROL						0x05
-#define		LCD4D_TOUCH_ENABLE						0x00
-#define		LCD4D_TOUCH_DISABLE						0x01
-#define		LCD4D_TOUCH_RESET_ACTIVE_REGION			0x02
+#define        LCD4D_TOUCH_CONTROL                        0x05
+#define        LCD4D_TOUCH_ENABLE                        0x00
+#define        LCD4D_TOUCH_DISABLE                        0x01
+#define        LCD4D_TOUCH_RESET_ACTIVE_REGION            0x02
 
-#define		LCD4D_IMAGE_FORMAT						0x06
+#define        LCD4D_IMAGE_FORMAT                        0x06
 // TODO
 
-#define		LCD4D_PROTECT_FAT						0x08
-#define		LCD4D_PROTECT_ON						0x00
-#define		LCD4D_PROTECT_OFF						0x01
+#define        LCD4D_PROTECT_FAT                        0x08
+#define        LCD4D_PROTECT_ON                        0x00
+#define        LCD4D_PROTECT_OFF                        0x01
 
-#define		LCD4D_DISPLAY_PAGE_SELECT				0x09
+#define        LCD4D_DISPLAY_PAGE_SELECT                0x09
 
-#define		LCD4D_READ_PAGE_SELECT					0x0A
+#define        LCD4D_READ_PAGE_SELECT                    0x0A
 
-#define		LCD4D_WRITE_PAGE_SELECT					0x0B
+#define        LCD4D_WRITE_PAGE_SELECT                    0x0B
 
-#define		LCD4D_SCREEN_RESOLUTION					0x0C
-#define		LCD4D_RESOLUTION_320_240				0x00
-#define		LCD4D_RESOLUTION_640_480				0x01
-//#define		LCD4D_RESOLUTION_CUSTOM					0x02
+#define        LCD4D_SCREEN_RESOLUTION                    0x0C
+#define        LCD4D_RESOLUTION_320_240                0x00
+#define        LCD4D_RESOLUTION_640_480                0x01
+//#define        LCD4D_RESOLUTION_CUSTOM                    0x02
 
-#define		LCD4D_SCREEN_SAVER_STARTUP_DELAY		0x0D
+#define        LCD4D_SCREEN_SAVER_STARTUP_DELAY        0x0D
 
-#define		LCD4D_SCREEN_SAVER_NEXT_LINE_DELAY		0x0E
-
-
-#define		LCD4D_SET_VOLUME_COMMAND				'v'
-#define		LCD4D_VOLUME_MUTE						0x00
-#define		LCD4D_VOLUME_DOWN_8						0x01
-#define		LCD4D_VOLUME_DOWN						0x03
+#define        LCD4D_SCREEN_SAVER_NEXT_LINE_DELAY        0x0E
 
 
-#define		LCD4D_VOLUME_MINIMUM					0x08
-#define		LCD4D_VOLUME_MAXIMUM					0x7F
-#define		LCD4D_VOLUME_UP							0xFD
-#define		LCD4D_VOLUME_UP_8						0xFE
-#define		LCD4D_VOLUME_MUTE_OFF					0xFF
+#define        LCD4D_SET_VOLUME_COMMAND                'v'
+#define        LCD4D_VOLUME_MUTE                        0x00
+#define        LCD4D_VOLUME_DOWN_8                        0x01
+#define        LCD4D_VOLUME_DOWN                        0x03
+
+
+#define        LCD4D_VOLUME_MINIMUM                    0x08
+#define        LCD4D_VOLUME_MAXIMUM                    0x7F
+#define        LCD4D_VOLUME_UP                            0xFD
+#define        LCD4D_VOLUME_UP_8                        0xFE
+#define        LCD4D_VOLUME_MUTE_OFF                    0xFF
 
 // GRAPHICS COMMAND
 
-#define		LCD4D_DRAW_CIRCLE_COMMAND				'C'
-#define		LCD4D_DRAW_TRIANGLE_COMMAND				'G'
-#define		LCD4D_DRAW_LINE_COMMAND					'L'
-#define		LCD4D_DRAW_POLYGON_COMMAND				'g'
-#define		LCD4D_DRAW_RECTANGLE_COMMAND			'r'
-#define		LCD4D_DRAW_ELLIPSE_COMMAND				'e'
+#define        LCD4D_DRAW_CIRCLE_COMMAND                'C'
+#define        LCD4D_DRAW_TRIANGLE_COMMAND                'G'
+#define        LCD4D_DRAW_LINE_COMMAND                    'L'
+#define        LCD4D_DRAW_POLYGON_COMMAND                'g'
+#define        LCD4D_DRAW_RECTANGLE_COMMAND            'r'
+#define        LCD4D_DRAW_ELLIPSE_COMMAND                'e'
 
-#define		LCD4D_DRAW_PIXEL_COMMAND				'P'
+#define        LCD4D_DRAW_PIXEL_COMMAND                'P'
 
-#define		LCD4D_PEN_SIZE_COMMAND					'p'
-#define		LCD4D_PEN_SIZE_DRAW_SOLID				0x00
-#define		LCD4D_PEN_SIZE_DRAW_WIRE_FRAME			0x01
+#define        LCD4D_PEN_SIZE_COMMAND                    'p'
+#define        LCD4D_PEN_SIZE_DRAW_SOLID                0x00
+#define        LCD4D_PEN_SIZE_DRAW_WIRE_FRAME            0x01
 
 // TEXT COMMAND
 
-#define 	LCD4D_SET_FONT_COMMAND					'F'
-#define		LCD4D_FONT_SMALL						0x00
-#define		LCD4D_FONT_MEDIUM						0x01
-#define		LCD4D_FONT_LARGE						0x02
-#define		LCD4D_FONT_LARGEST						0x03
+#define     LCD4D_SET_FONT_COMMAND                    'F'
+#define        LCD4D_FONT_SMALL                        0x00
+#define        LCD4D_FONT_MEDIUM                        0x01
+#define        LCD4D_FONT_LARGE                        0x02
+#define        LCD4D_FONT_LARGEST                        0x03
 
-#define 	LCD4D_SET_TRANSPARENT_OPAQUE_COMMAND	'O'
-#define		LCD4D_TEXT_TRANSPARENT					0x00
-#define		LCD4D_TEXT_OPAQUE						0x01
+#define     LCD4D_SET_TRANSPARENT_OPAQUE_COMMAND    'O'
+#define        LCD4D_TEXT_TRANSPARENT                    0x00
+#define        LCD4D_TEXT_OPAQUE                        0x01
 
-#define		LCD4D_DRAW_TEXT_COMMAND					'T'
+#define        LCD4D_DRAW_TEXT_COMMAND                    'T'
 
-#define		LCD4D_DRAW_TEXT_GRAPHIC_COMMAND			't'
+#define        LCD4D_DRAW_TEXT_GRAPHIC_COMMAND            't'
 
-#define		LCD4D_DRAW_STRING_COMMAND				's'
-#define		LCD4D_DRAW_STRING_GRAPHIC_COMMAND		'S'
+#define        LCD4D_DRAW_STRING_COMMAND                's'
+#define        LCD4D_DRAW_STRING_GRAPHIC_COMMAND        'S'
 
-#define		LCD4D_DRAW_TEXT_BUTTON_COMMAND			'b'
-#define		LCD4D_BUTTON_DOWN						0x00
-#define		LCD4D_BUTTON_UP							0x01
+#define        LCD4D_DRAW_TEXT_BUTTON_COMMAND            'b'
+#define        LCD4D_BUTTON_DOWN                        0x00
+#define        LCD4D_BUTTON_UP                            0x01
 
 // TOUCH SCREEN COMMAND
-#define		LCD4D_GET_TOUCH_COORDINATES_COMMAND		'o'
-#define		LCD4D_TOUCH_WAIT_UNTIL_ANY_TOUCH		0x00
-#define		LCD4D_TOUCH_WAIT_PRESS					0x01
-#define		LCD4D_TOUCH_WAIT_RELEASE				0x02
-#define		LCD4D_TOUCH_WAIT_MOVING					0x03
-#define		LCD4D_TOUCH_GET_STATUS					0x04
-#define		LCD4D_TOUCH_GET_COORDINATES				0x05
+#define        LCD4D_GET_TOUCH_COORDINATES_COMMAND        'o'
+#define        LCD4D_TOUCH_WAIT_UNTIL_ANY_TOUCH        0x00
+#define        LCD4D_TOUCH_WAIT_PRESS                    0x01
+#define        LCD4D_TOUCH_WAIT_RELEASE                0x02
+#define        LCD4D_TOUCH_WAIT_MOVING                    0x03
+#define        LCD4D_TOUCH_GET_STATUS                    0x04
+#define        LCD4D_TOUCH_GET_COORDINATES                0x05
 
-#define		LCD4D_TOUCH_RESPONSE_NO_TOUCH			0x00
-#define		LCD4D_TOUCH_RESPONSE_TOUCH_PRESS		0x01
-#define		LCD4D_TOUCH_RESPONSE_TOUCH_RELEASE		0x02
-#define		LCD4D_TOUCH_RESPONSE_TOUCH_MOVING		0x03
+#define        LCD4D_TOUCH_RESPONSE_NO_TOUCH            0x00
+#define        LCD4D_TOUCH_RESPONSE_TOUCH_PRESS        0x01
+#define        LCD4D_TOUCH_RESPONSE_TOUCH_RELEASE        0x02
+#define        LCD4D_TOUCH_RESPONSE_TOUCH_MOVING        0x03
 
-#define		LCD4D_WAIT_UNTIL_TOUCH_COMMAND			'w'
+#define        LCD4D_WAIT_UNTIL_TOUCH_COMMAND            'w'
 
-#define		LCD4D_DETECT_TOUCH_REGION_COMMAND		'u'
+#define        LCD4D_DETECT_TOUCH_REGION_COMMAND        'u'
 
 // SD MEMORY CARD COMMANDS
 // RAW COMMANDS
 
-#define		LCD4D_MEMORY_EXTENDED_COMMAND			'@'
-#define		LCD4D_MEMORY_INIT_CARD					'i'
-#define		LCD4D_MEMORY_SCREEN_COPY				'C'
+#define        LCD4D_MEMORY_EXTENDED_COMMAND            '@'
+#define        LCD4D_MEMORY_INIT_CARD                    'i'
+#define        LCD4D_MEMORY_SCREEN_COPY                'C'
 //TODO
 
 // SD FAT COMMAND
-#define		LCD4D_INITIALIZE_MEMORY_CARD_FAT_COMMAND	'i'
-#define		LCD4D_READ_FILE_COMMAND						'a'
-#define		LCD4D_SCREEN_COPY_FAT_COMMAND				'c'
-#define 	LCD4D_DISPLAY_IMAGE_FAT_COMMAND				'm'
-#define		LCD4D_LIST_DIRECTORY_OF_CARD				'd'
-#define		LCD4D_ERASE_FILE_FAT_COMMAND				'e'
-#define		LCD4D_WRITE_FILE_TO_CARD_FAT_COMMAND		't'
-#define		LCD4D_HANDSHAKING_NO						0
-#define		LCD4D_HANDSHAKING_EACH_BYTE					1
-#define		LCD4D_HANDSHAKING_EACH_50_BYTE				50
+#define        LCD4D_INITIALIZE_MEMORY_CARD_FAT_COMMAND    'i'
+#define        LCD4D_READ_FILE_COMMAND                        'a'
+#define        LCD4D_SCREEN_COPY_FAT_COMMAND                'c'
+#define     LCD4D_DISPLAY_IMAGE_FAT_COMMAND                'm'
+#define        LCD4D_LIST_DIRECTORY_OF_CARD                'd'
+#define        LCD4D_ERASE_FILE_FAT_COMMAND                'e'
+#define        LCD4D_WRITE_FILE_TO_CARD_FAT_COMMAND        't'
+#define        LCD4D_HANDSHAKING_NO                        0
+#define        LCD4D_HANDSHAKING_EACH_BYTE                    1
+#define        LCD4D_HANDSHAKING_EACH_50_BYTE                50
 // No Append, file will be created (or overwritten if it exists).
-#define		LCD4D_APPEND_MODE_NO						0
+#define        LCD4D_APPEND_MODE_NO                        0
 // Append mode, file will be appended to (or created if it doesn’t exist).
-#define		LCD4D_APPEND_MODE_YES						80
+#define        LCD4D_APPEND_MODE_YES                        80
 // High performance. Two ACKS will be sent after the filesize. This
 // keeps transmission running at a high speed, as no time is spent waiting for
 // the return ACK. The same total number of ACKs doesn’t change (i.e the
 // last ACK is missing). For simple un-buffered serial ports this may lead to
 // loss of the second ACK.
-#define		LCD4D_PERFORMANCE_MODE_HIGH_PERFORMANCE		0
+#define        LCD4D_PERFORMANCE_MODE_HIGH_PERFORMANCE        0
 // Low performance. Only a single ACK is sent at a time. This is for
 // un-buffered serial port controllers.
-#define		LCD4D_PERFORMANCE_MODE_LOW_PERFORMANCE		40
+#define        LCD4D_PERFORMANCE_MODE_LOW_PERFORMANCE        40
 
-#define		LCD4D_PLAY_AUDIO_WAV_FROM_CARD_COMMAND		'l'
-#define 	LCD4D_PLAY_WAV_OPTION_RETURN_WHEN_PLAYING_COMPLETE	0x00
-#define 	LCD4D_PLAY_WAV_OPTION_RETURN_IMMEDIATELY				0x01
-#define 	LCD4D_PLAY_WAV_OPTION_STOP_CURRENTLY_PLAYING			0x02
-#define 	LCD4D_PLAY_WAV_OPTION_PAUSE_CURRENTLY_PLAYING			0x04
-#define 	LCD4D_PLAY_WAV_OPTION_RESUME_CURRENTLY_PLAYING		0x05
-#define 	LCD4D_PLAY_WAV_OPTION_LOOP_CURRENTLY_PLAYING			0x06
+#define        LCD4D_PLAY_AUDIO_WAV_FROM_CARD_COMMAND        'l'
+#define     LCD4D_PLAY_WAV_OPTION_RETURN_WHEN_PLAYING_COMPLETE    0x00
+#define     LCD4D_PLAY_WAV_OPTION_RETURN_IMMEDIATELY                0x01
+#define     LCD4D_PLAY_WAV_OPTION_STOP_CURRENTLY_PLAYING            0x02
+#define     LCD4D_PLAY_WAV_OPTION_PAUSE_CURRENTLY_PLAYING            0x04
+#define     LCD4D_PLAY_WAV_OPTION_RESUME_CURRENTLY_PLAYING        0x05
+#define     LCD4D_PLAY_WAV_OPTION_LOOP_CURRENTLY_PLAYING            0x06
 
 /**
  * Init the Lcd4d structure with his properties.
@@ -269,7 +269,7 @@ bool lcd4dDisplay(Lcd4d* lcd, bool display);
 
 /**
  * Change the display orientation.
- * @param displayOrientation LCD4D_ORIENTATION_90, LCD4D_ORIENTATION_270, LCD4D_NATIVE_ORIENTATION,	LCD4D_ORIENTATION_180
+ * @param displayOrientation LCD4D_ORIENTATION_90, LCD4D_ORIENTATION_270, LCD4D_NATIVE_ORIENTATION,    LCD4D_ORIENTATION_180
  */
 bool lcd4dSetDisplayResolution(Lcd4d* lcd, unsigned int displayOrientation);
 

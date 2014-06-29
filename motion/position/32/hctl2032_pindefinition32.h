@@ -53,12 +53,12 @@
 // X_Y
 // ---------
 #ifdef PROG_32
-	// TODO : To FIND !
-	#define X_Y         LATBbits.LATB0
-	#define TRIS_X_Y    TRISBbits.TRISB0
+    // TODO : To FIND !
+    #define X_Y         LATBbits.LATB0
+    #define TRIS_X_Y    TRISBbits.TRISB0
 #else
-	#define X_Y         LATAbits.LATA11
-	#define TRIS_X_Y     TRISAbits.TRISA11
+    #define X_Y         LATAbits.LATA11
+    #define TRIS_X_Y     TRISAbits.TRISA11
 #endif
 
 // ---------
@@ -71,15 +71,15 @@
 // RSTX, RSTY
 // ---------
 #ifdef PROG_32
-	// TODO : TO FIND THE NEW VALUE !!!
-	#define RSTX         LATFbits.LATF0
-	#define RSTY         LATFbits.LATF0
-	#define TRIS_RSTX    TRISFbits.TRISF0
-	#define TRIS_RSTY     TRISFbits.TRISF0	
+    // TODO : TO FIND THE NEW VALUE !!!
+    #define RSTX         LATFbits.LATF0
+    #define RSTY         LATFbits.LATF0
+    #define TRIS_RSTX    TRISFbits.TRISF0
+    #define TRIS_RSTY     TRISFbits.TRISF0    
 #else
-	#define RSTX         LATFbits.LATF6
-	#define RSTY         LATFbits.LATF6
-	#define TRIS_RSTX    TRISFbits.TRISF6
-	#define TRIS_RSTY     TRISFbits.TRISF6
+    #define RSTX         LATFbits.LATF6
+    #define RSTY         LATFbits.LATF6
+    #define TRIS_RSTX    TRISFbits.TRISF6
+    #define TRIS_RSTY     TRISFbits.TRISF6
 #endif
 

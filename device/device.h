@@ -22,8 +22,8 @@ typedef struct Device Device;
 * @param inputStream the inputStream to get data from the client
 */
 typedef void deviceHandleCallbackRawDataFunction(const Device* device, 
-												 char commandHeader,
-										 		 InputStream* inputStream);
+                                                 char commandHeader,
+                                                  InputStream* inputStream);
 
 /**
 * Helper method to forward data to an outputStream (Ex : PC).
@@ -34,10 +34,10 @@ typedef void deviceHandleCallbackRawDataFunction(const Device* device,
 * @param mode ???
 */
 void forwardCallbackRawDataTo(InputStream* inputStream,
-							  OutputStream* outputStream,
-							  const Device* device,
-							  const char commandHeader,
-							  int mode);
+                              OutputStream* outputStream,
+                              const Device* device,
+                              const char commandHeader,
+                              int mode);
 
 /**
  * Send a ack, and add the deviceHeader, and the commandHeader.
@@ -51,20 +51,20 @@ void ackCommand(OutputStream* deviceOutputStream, const char deviceHeader, const
 * Defines the structure used to describe a device.
 */
 struct Device {
-	/** The interface of the device for a remote caller (without implementation). */
-	DeviceInterface* interface;
-	/** If the device is enabled or not. */
-	// bool enabled;
-	/** Which bus the device use. */
-	int transmitMode;
-	/** The address as char (useful for zigbee for example). */
-	char* addressString;
-	/** The address (only for remote transmitMode). In case of addressString, address contains a checksum of addressString. */
-	int address;
-	/** The real implementation of the device. */
-	DeviceDescriptor* descriptor;
-	/** The device callback function when Slave want to transmit something asynchronously to the master. */
-	deviceHandleCallbackRawDataFunction *deviceHandleCallbackRawData;
+    /** The interface of the device for a remote caller (without implementation). */
+    DeviceInterface* interface;
+    /** If the device is enabled or not. */
+    // bool enabled;
+    /** Which bus the device use. */
+    int transmitMode;
+    /** The address as char (useful for zigbee for example). */
+    char* addressString;
+    /** The address (only for remote transmitMode). In case of addressString, address contains a checksum of addressString. */
+    int address;
+    /** The real implementation of the device. */
+    DeviceDescriptor* descriptor;
+    /** The device callback function when Slave want to transmit something asynchronously to the master. */
+    deviceHandleCallbackRawDataFunction *deviceHandleCallbackRawData;
 };
 
 

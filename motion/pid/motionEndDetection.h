@@ -18,31 +18,31 @@
  */
 typedef struct MotionEndDetectionParameter {
     /**
-	* Defines the delta position integral for which we consider that below this value the robot don't move
-	*/
+    * Defines the delta position integral for which we consider that below this value the robot don't move
+    */
     unsigned char absDeltaPositionIntegralFactorThreshold;
     /**
-	* Defines the u integral factor integral for which we consider that there is a blocking.
- 	* For example, if the value is equal to 4, it indicates that if the average integral of U is more than 4x
- 	* the normal value of u (with no load), we must consider it as a blocking
-	*/
+    * Defines the u integral factor integral for which we consider that there is a blocking.
+     * For example, if the value is equal to 4, it indicates that if the average integral of U is more than 4x
+     * the normal value of u (with no load), we must consider it as a blocking
+    */
     unsigned char maxUIntegralFactorThreshold;
     /** 
-	* When the robot is very low, the answer of the motor is not linear, and we can thing that the robot is blocked, because,
- 	* the consign is very high compared to the normal value. So this value is 
-	*/
+    * When the robot is very low, the answer of the motor is not linear, and we can thing that the robot is blocked, because,
+     * the consign is very high compared to the normal value. So this value is 
+    */
     unsigned char maxUIntegralConstantThreshold;
     /**
-	* TimeRangeAnalysis. It's important to detect on a small range to determine if the robot is blocked or not (to avoid problems with motors). But too short 
-	* range time analysis give sometimes bad analysis. It's also important to detect on a small range to have a decision of end detection (to continue on next instruction). But too short 
-	* range time analysis give sometimes bad analysis.
-	*/
+    * TimeRangeAnalysis. It's important to detect on a small range to determine if the robot is blocked or not (to avoid problems with motors). But too short 
+    * range time analysis give sometimes bad analysis. It's also important to detect on a small range to have a decision of end detection (to continue on next instruction). But too short 
+    * range time analysis give sometimes bad analysis.
+    */
     unsigned char timeRangeAnalysis;
     /** 
-	 * The delay for which we do not try to check the end detection parameter.
-	 * It avoids that the robot stop immediately the begin of motion, because it consideres 
-	 * that the robot is blocked or has ended his trajectory
-	*/
+     * The delay for which we do not try to check the end detection parameter.
+     * It avoids that the robot stop immediately the begin of motion, because it consideres 
+     * that the robot is blocked or has ended his trajectory
+    */
     unsigned char noAnalysisAtStartupTime;
 } MotionEndDetectionParameter;
 
@@ -58,17 +58,17 @@ typedef struct MotionEndDetectionParameter {
  * the first value to always have a sliping range
  */
 typedef struct MotionEndInfo{
-	unsigned int integralTime;
-	/** Current index in the array. */
-	unsigned int index;
+    unsigned int integralTime;
+    /** Current index in the array. */
+    unsigned int index;
     /** The integral of the absolute value of delta position. */
     float absDeltaPositionIntegralHistory[MAX_HISTORY_COUNT];
-	// the compute of related array
-	float absDeltaPositionIntegral;
+    // the compute of related array
+    float absDeltaPositionIntegral;
     /** The integral of the consign determined by the pid computer */
     float absUIntegralHistory[MAX_HISTORY_COUNT];
-	// the compute of related array
-	float absUIntegral;
+    // the compute of related array
+    float absUIntegral;
 } MotionEndInfo;
 
 // BLOCKING DETECTION

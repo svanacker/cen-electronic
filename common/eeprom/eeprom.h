@@ -2,7 +2,7 @@
 #define EEPROM_H
 
 /** Define a value which has been erased by programmation. */
-#define ERASED_VALUE_EEPROM 		0xFFFF
+#define ERASED_VALUE_EEPROM         0xFFFF
 
 /**
  * Writes a value at the specified index into EEPROM.

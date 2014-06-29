@@ -11,8 +11,8 @@ typedef struct {
     Timer (*timers)[];
     /** the size of the list. */
     unsigned char size;
-	/** the max size of the list.*/
-	unsigned char maxSize;
+    /** the max size of the list.*/
+    unsigned char maxSize;
 } TimerList;
 
 // PRIVATES
@@ -36,8 +36,8 @@ void initTimerList(Timer (*timerListArray)[], unsigned char timerListSize);
  * @param callback the function which must be used by the interruption
  */
 Timer* addTimer(int timerCode,
-        		unsigned long timeDiviser,
-        		interruptTimerCallbackFunc* callback);
+                unsigned long timeDiviser,
+                interruptTimerCallbackFunc* callback);
 
 /**
  * Get the device descriptor of index.

@@ -33,10 +33,10 @@ unsigned int getMotionInstructionIndex();
 * @return true if the driver answer
 */
 bool motionDriverGotoPositionPulse(
-					    			float left,
-									float right,
-									float a,
-									float s );
+                                    float left,
+                                    float right,
+                                    float a,
+                                    float s );
 
 /**
 * Ask the motor to go forward for a distance in mm.

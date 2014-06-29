@@ -1,8 +1,8 @@
 #ifndef MOTOR_PWM_H
 #define MOTOR_PWM_H
 
-#define HBRIDGE_1		1
-#define HBRIDGE_2		2
+#define HBRIDGE_1        1
+#define HBRIDGE_2        2
 
 /**
  * Init the pwm for 20 000 Hz operation

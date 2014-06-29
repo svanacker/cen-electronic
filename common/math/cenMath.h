@@ -4,11 +4,11 @@
 #include <stdbool.h>
 #include "../../common/commons.h"
 
-#define PI 					3.1415926535f
+#define PI                     3.1415926535f
 
-#define _2_PI 				PI * 2.0f
+#define _2_PI                 PI * 2.0f
 
-#define PI_DIVIDE_BY_2 		PI / 2.0f
+#define PI_DIVIDE_BY_2         PI / 2.0f
 
 #define PI_DIVIDE_180 0.0174532925f
 #define PI_DIVIDE_1800 0.00174532925f

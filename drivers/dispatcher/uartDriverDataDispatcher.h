@@ -8,7 +8,7 @@
 #include "driverDataDispatcher.h"
 #include "driverDataDispatcherList.h"
 
-#define UART_DRIVER_DATA_DISPATCHER_BUFFER_LENGTH		40
+#define UART_DRIVER_DATA_DISPATCHER_BUFFER_LENGTH        40
 
 /**
 * Add the uart driver data dispatcher to the list
@@ -25,12 +25,12 @@ void addUartDriverDataDispatcher(DriverDataDispatcher* uartDispatcher,
         char* dispatcherName,
 
         Buffer* uartInputBuffer,
-		char (*uartInputBufferArray)[],
-		unsigned char uartInputBufferLength,
+        char (*uartInputBufferArray)[],
+        unsigned char uartInputBufferLength,
 
         OutputStream* uartOutputStream,
         InputStream* uartInputStream,
-		unsigned int targetUartIndex);
+        unsigned int targetUartIndex);
 
 #endif
 

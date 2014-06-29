@@ -6,13 +6,13 @@
 #include "../../../robot/strategy/gameTarget.h"
 #include "../../../robot/strategy/gameTargetAction.h"
 
-#define DEFAULT_GAIN 		1.0f
+#define DEFAULT_GAIN         1.0f
 
-float getGainFunction(	  GameTarget* target,
-						  GameTargetAction* targetAction,
-						  float distanceToTargetAction,
-						  float currentMatchingTime,
-						  float opponentRobotX,
-						  float opponentRobotY);
+float getGainFunction(      GameTarget* target,
+                          GameTargetAction* targetAction,
+                          float distanceToTargetAction,
+                          float currentMatchingTime,
+                          float opponentRobotX,
+                          float opponentRobotY);
 
 #endif

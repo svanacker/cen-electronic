@@ -11,7 +11,7 @@
 * @param the write address for I2C
 */
 void initMasterI2cInputStream(Buffer* i2cInputBuffer,
-							  InputStream* inputStream,
-						 		unsigned char i2cWriteAddress);
+                              InputStream* inputStream,
+                                 unsigned char i2cWriteAddress);
 
 #endif

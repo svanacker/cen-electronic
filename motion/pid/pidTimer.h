@@ -10,7 +10,7 @@
  */
 #define PID_UPDATE_MOTORS_FREQUENCY 192
 
-#define TIMER_PID_CODE 		  107
+#define TIMER_PID_CODE           107
 
 void initPidTimer(void);
 

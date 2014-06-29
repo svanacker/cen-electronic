@@ -4,13 +4,13 @@
 #include "../../device/deviceInterface.h"
 
 /** Ask the status of the infrared detection. */
-#define COMMAND_INFRARED_DETECTOR_DETECTION		 'X'
+#define COMMAND_INFRARED_DETECTOR_DETECTION         'X'
 
-#define DETECTOR_FORWARD_INDEX			0
-#define DETECTOR_BACKWARD_INDEX			1
+#define DETECTOR_FORWARD_INDEX            0
+#define DETECTOR_BACKWARD_INDEX            1
 
 /** When detector detection is notified. */
-#define NOTIFY_INFRARED_DETECTOR_DETECTION		 'O'
+#define NOTIFY_INFRARED_DETECTOR_DETECTION         'O'
 
 
 /**

@@ -1,9 +1,9 @@
 #ifndef JENNIC_5139_EVENT_PARSER_H
 #define JENNIC_5139_EVENT_PARSER_H
 
-#define JENNIC_SEARCH_DATA_RAW_INPUT_BUFFER_LENGTH		54
-#define JENNIC_SEARCH_DATA_BUFFER_LENGTH				54
-#define JENNIC_DATA_INPUT_BUFFER_LENGTH					30
+#define JENNIC_SEARCH_DATA_RAW_INPUT_BUFFER_LENGTH        54
+#define JENNIC_SEARCH_DATA_BUFFER_LENGTH                54
+#define JENNIC_DATA_INPUT_BUFFER_LENGTH                    30
 
 // forward declaration
 struct JennicEvent;
@@ -19,21 +19,21 @@ typedef void JennicEventFunction(JennicEvent* jennicEvent);
  * Define the structure of an event which must be parse.
  */
 struct JennicEvent {
-	/** The event (3 characters) to find. */
-	char eventCommand[LENGTH_OF_JENNIC_AT_COMMAND];
-	/** String for argument0. */
-	char* argument0;
-	/** The address of the event (if needed). */
-	char* argument1;
-	/** argument2. */
-	char* argument2;
+    /** The event (3 characters) to find. */
+    char eventCommand[LENGTH_OF_JENNIC_AT_COMMAND];
+    /** String for argument0. */
+    char* argument0;
+    /** The address of the event (if needed). */
+    char* argument1;
+    /** argument2. */
+    char* argument2;
     /** The function which must be called when a such event is found. */
     JennicEventFunction* onEvent;
-	/** Indicates that we are in payload data if value >= 0. If value = -1, payload search is disabled. */
-	unsigned char payLoadArgumentIndex;
+    /** Indicates that we are in payload data if value >= 0. If value = -1, payload search is disabled. */
+    unsigned char payLoadArgumentIndex;
 };
 
-#define NO_PAY_LOAD 	-1
+#define NO_PAY_LOAD     -1
 
 /** The maximal number of event which can be parsed. */
 #define MAX_JENNIC_EVENT 6
@@ -44,22 +44,22 @@ struct JennicEvent {
 typedef struct {
     /** An array of pointer on device Descriptor. */
     JennicEvent* events[MAX_JENNIC_EVENT];
-	/** Current jennicEvent which currently match with the event. */
-	JennicEvent* matchEvent;
-	/** Contains the buffer used to search data sent by the other jennic. */
-	Buffer searchDataBuffer;
-	/** Contains the raw data sent by the jennic. */
-	Buffer dataRawInputBuffer;
-	/** Contains the "interesting data" sent by the jennic as raw. */
-	Buffer dataInputBuffer;
-	/** Retains the index of block which is correct. */
-	unsigned int dataBlockBeginMatchIndex;
+    /** Current jennicEvent which currently match with the event. */
+    JennicEvent* matchEvent;
+    /** Contains the buffer used to search data sent by the other jennic. */
+    Buffer searchDataBuffer;
+    /** Contains the raw data sent by the jennic. */
+    Buffer dataRawInputBuffer;
+    /** Contains the "interesting data" sent by the jennic as raw. */
+    Buffer dataInputBuffer;
+    /** Retains the index of block which is correct. */
+    unsigned int dataBlockBeginMatchIndex;
     /** the size of the list. */
     unsigned char size;
-	/** Current Argument Index : argument are separated by comma. */
-	char currentArgumentIndex;
-	/** Current command. */
-	char currentCommand[LENGTH_OF_JENNIC_AT_COMMAND];
+    /** Current Argument Index : argument are separated by comma. */
+    char currentArgumentIndex;
+    /** Current command. */
+    char currentCommand[LENGTH_OF_JENNIC_AT_COMMAND];
 
 } JennicEventList;
 
@@ -73,12 +73,12 @@ void initJennicEventList();
  * @param jennicEvent the event to add.
  */
 void addJennicEvent(JennicEvent* jennicEvent,
-					 char* eventCommand,
-					 char* argument0,
-					 char* argument1,
-					 char* argument2,
-					 char payLoadArgumentIndex,
-					JennicEventFunction* onEvent);
+                     char* eventCommand,
+                     char* argument0,
+                     char* argument1,
+                     char* argument2,
+                     char payLoadArgumentIndex,
+                    JennicEventFunction* onEvent);
 /**
  * Handle the next Jennic char and try to detect some input (EVENT, DATA ...)
  */

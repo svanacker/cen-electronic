@@ -15,16 +15,16 @@
  * Encapsulates the target action.
  */
 typedef struct GameTargetAction {
-	// Returns the first point which is needed to do the target Action
-	Location* startLocation;
-	// Returns the location of the target Action.
-	Location* endLocation;
-	// Time to achieve (in millisecond)
-	int timeToAchieve;
-	// Reference to GameTargetActionListItem, can be NULL
-	GameTargetActionItemList* actionItemList;
-	/** Path (can be NULL) used to check if the target Action Item is available. */
-	PathDataFunction* pathDataFunction;
+    // Returns the first point which is needed to do the target Action
+    Location* startLocation;
+    // Returns the location of the target Action.
+    Location* endLocation;
+    // Time to achieve (in millisecond)
+    int timeToAchieve;
+    // Reference to GameTargetActionListItem, can be NULL
+    GameTargetActionItemList* actionItemList;
+    /** Path (can be NULL) used to check if the target Action Item is available. */
+    PathDataFunction* pathDataFunction;
 } GameTargetAction;
 
 /**

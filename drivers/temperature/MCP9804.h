@@ -9,7 +9,7 @@
  * configuration                                        *
  * @param : MSB : Poid fort transfere dans le registre  *
  *          LSB : Poid faible transfere dans le registre*
- * @return : none 					*
+ * @return : none                     *
  ********************************************************/
 void setConfRegMCP9804 ( unsigned char MSB , unsigned char LSB );
 
@@ -19,7 +19,7 @@ void setConfRegMCP9804 ( unsigned char MSB , unsigned char LSB );
  * Temperature haute                                    *
  * @param : MSB : Poid fort transfere dans le registre  *
  *          LSB : Poid faible transfere dans le registre*
- * @return : none 					*
+ * @return : none                     *
  ********************************************************/
 void setTempUpperRegMCP9804 ( unsigned char MSB , unsigned char LSB );
 
@@ -29,7 +29,7 @@ void setTempUpperRegMCP9804 ( unsigned char MSB , unsigned char LSB );
  * Temperature basse                                    *
  * @param : MSB : Poid fort transfere dans le registre  *
  *          LSB : Poid faible transfere dans le registre*
- * @return : none 					*
+ * @return : none                     *
  ********************************************************/
 void setTempLowerRegMCP9804 ( unsigned char MSB, unsigned char LSB);
 
@@ -39,7 +39,7 @@ void setTempLowerRegMCP9804 ( unsigned char MSB, unsigned char LSB);
  * Temperature critique                                 *
  * @param : MSB : Poid fort transfere dans le registre  *
  *          LSB : Poid faible transfere dans le registre*
- * @return : none 					*
+ * @return : none                     *
  ********************************************************/
 void setTempCriticRegMCP9804 ( unsigned char MSB , unsigned char LSB);
 
@@ -54,13 +54,13 @@ void setTempCriticRegMCP9804 ( unsigned char MSB , unsigned char LSB);
  * @return : none                                               *
  ***************************************************************/
 void initRegMCP9804 ( unsigned char CONFMSB,
-					  unsigned char CONFLSB,
-					  unsigned char TUPMSB,
-					  unsigned char TUPLSB,
-					  unsigned char TLOWMSB,
-					  unsigned char TLOWLSB,
+                      unsigned char CONFLSB,
+                      unsigned char TUPMSB,
+                      unsigned char TUPLSB,
+                      unsigned char TLOWMSB,
+                      unsigned char TLOWLSB,
                       unsigned char TCRITMSB,
-					  unsigned char TCRITLSB);
+                      unsigned char TCRITLSB);
 
 /****************************************************************
  * ReadTempAmbMCP9804                                           *

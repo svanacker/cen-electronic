@@ -20,35 +20,35 @@
 /**
  * The index in the buffer to get the device Header.
  */
-#define DEVICE_HEADER_INDEX						0
+#define DEVICE_HEADER_INDEX                        0
 
 /**
  * The index in the buffer to get the command Header for a specified Device Header (command header char is just after device command header).
  */
-#define COMMAND_HEADER_INDEX					1
+#define COMMAND_HEADER_INDEX                    1
 
 /**
  * Define the length of the ack (char).
  */
-#define ACK_LENGTH								1
+#define ACK_LENGTH                                1
 
 /**
  * Define the length used by the header length, and the command header.
  */
-#define DEVICE_AND_COMMAND_HEADER_LENGTH 		2
+#define DEVICE_AND_COMMAND_HEADER_LENGTH         2
 
 /**
 * Define an argument.
 */
 typedef struct DeviceArgument {
-	/** The type of argument (see below). */
-	char type;
-	/** The name of argument. */
-	char* name;
+    /** The type of argument (see below). */
+    char type;
+    /** The name of argument. */
+    char* name;
 } DeviceArgument;
 
 #define MAX_ARGUMENTS 13
-#define MAX_RETURNS	  13
+#define MAX_RETURNS      13
 
 /**
 * Define the result of deviceGetRawDataHeaderFunction if the
@@ -60,22 +60,22 @@ typedef struct DeviceArgument {
 * Define the argument list and returns list for a device.
 */
 typedef struct DeviceMethodMetaData {
-	/** The name of the function. */
-	char* functionName;
-	/** An array of arguments */
-	DeviceArgument arguments[MAX_ARGUMENTS];
-	/** The size of argument Size. */
-	char argumentsSize;
-	/** An array of return arguments */
-	DeviceArgument results[MAX_RETURNS];
-	/** The size of returns Size. */
-	char resultsSize;
+    /** The name of the function. */
+    char* functionName;
+    /** An array of arguments */
+    DeviceArgument arguments[MAX_ARGUMENTS];
+    /** The size of argument Size. */
+    char argumentsSize;
+    /** An array of return arguments */
+    DeviceArgument results[MAX_RETURNS];
+    /** The size of returns Size. */
+    char resultsSize;
 } DeviceMethodMetaData;
 
 // LENGTH = 1
 
 /** separator ('-'). */
-#define DEVICE_ARG_SEPARATOR	1
+#define DEVICE_ARG_SEPARATOR    1
 
 /** unsigned char * 1 => */
 #define DEVICE_ARG_UNSIGNED_CHAR_1 2
@@ -113,9 +113,9 @@ typedef struct DeviceMethodMetaData {
 // LENGTH = 6
 
 /** unsigned int => hex6 */
-#define DEVICE_ARG_UNSIGNED_HEX_6 	11
+#define DEVICE_ARG_UNSIGNED_HEX_6     11
 /** signed int => hex6 */
-#define DEVICE_ARG_SIGNED_HEX_6 	12
+#define DEVICE_ARG_SIGNED_HEX_6     12
 
 // LENGTH = 8
 /** unsigned long => hex8 */
@@ -126,17 +126,17 @@ typedef struct DeviceMethodMetaData {
 // LENGTH = 9 
 
 /** (used only for string aggregates values) */
-#define DEVICE_ARG_UNSIGNED_HEX_9 	18
+#define DEVICE_ARG_UNSIGNED_HEX_9     18
 
 // LENGTH = 10 
 
 /** (used only for string aggregates values) */
-#define DEVICE_ARG_UNSIGNED_HEX_10 	20
+#define DEVICE_ARG_UNSIGNED_HEX_10     20
 
 // LENGTH = 12 
 
 /** (used only for string aggregates values) */
-#define DEVICE_ARG_UNSIGNED_HEX_12 	24
+#define DEVICE_ARG_UNSIGNED_HEX_12     24
 
 // ARGUMENT LIST
 
@@ -243,8 +243,8 @@ typedef const char* deviceGetNameFunction(void);
 * Returns a value >= 0 if the device handle this char, and -1, if it's not handled
 */
 typedef int deviceGetInterfaceFunction(char header,
-								int mode,
-								bool fillDeviceArgumentList);
+                                int mode,
+                                bool fillDeviceArgumentList);
 
 
 
@@ -252,11 +252,11 @@ typedef int deviceGetInterfaceFunction(char header,
 * Defines the structure used to describe the remote commands accepted by the device.
 */
 typedef struct DeviceInterface{
-	char deviceHeader;
-	/** Function returning the name of the device. */
-	deviceGetNameFunction *deviceGetName;
-	/** Function returning information about interface. */
-	deviceGetInterfaceFunction* deviceGetInterface;
+    char deviceHeader;
+    /** Function returning the name of the device. */
+    deviceGetNameFunction *deviceGetName;
+    /** Function returning information about interface. */
+    deviceGetInterfaceFunction* deviceGetInterface;
 } DeviceInterface;
 
 #endif

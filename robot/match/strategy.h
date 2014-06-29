@@ -2,7 +2,7 @@
 #define STRATEGY_H
 
 /** We are on the yellow side. */
-#define SIDE_YELLOW	1
+#define SIDE_YELLOW    1
 
 /** We are on the blue side. */
 #define SIDE_BLUE  -1

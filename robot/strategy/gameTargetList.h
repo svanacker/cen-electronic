@@ -8,7 +8,7 @@
 #include "../../navigation/location.h"
 
 /** The max limit of target count. */
-#define MAX_TARGET 		10
+#define MAX_TARGET         10
 
 /**
  * Tre struct defining a list of targets.
@@ -16,8 +16,8 @@
 typedef struct {
     /** An array of pointer on target. */
     GameTarget* targets[MAX_TARGET];
-	/** Number of target handled count. */
-	unsigned char targetHandledCount;
+    /** Number of target handled count. */
+    unsigned char targetHandledCount;
     /** the size of the list. */
     unsigned char size;
 } GameTargetList;

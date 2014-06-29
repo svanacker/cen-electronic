@@ -4,7 +4,7 @@
 /** Define the color defining the team. */
 #define TEAM_COLOR unsigned int
 
-#define COLOR_VIOLET		1
-#define COLOR_RED			0
+#define COLOR_VIOLET        1
+#define COLOR_RED            0
 
 #endif

@@ -47,13 +47,13 @@ typedef struct BSplineCurve {
     Point p1;
     Point p2;
     Point p3;
-	bool backward;
+    bool backward;
     // The length of the curve.
     float curveLength;
-	// accelerationFactor
-	unsigned char accelerationFactor;
-	// speedFactor
-	unsigned char speedFactor;
+    // accelerationFactor
+    unsigned char accelerationFactor;
+    // speedFactor
+    unsigned char speedFactor;
 } BSplineCurve;
 
 /**

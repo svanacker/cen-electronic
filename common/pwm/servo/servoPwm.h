@@ -9,22 +9,22 @@
 * Defines the structure to manages Servos.
 */
 typedef struct Servo {
-	/** The speed to reach the final position. */
-	unsigned int speed;
-	/** The current position. */
-	unsigned int currentPosition;
-	/** The target position. */
-	unsigned int targetPosition;
+    /** The speed to reach the final position. */
+    unsigned int speed;
+    /** The current position. */
+    unsigned int currentPosition;
+    /** The target position. */
+    unsigned int targetPosition;
 } Servo;
 
 /**
 * Tre struct defining a list of servo.
 */
 typedef struct ServoList {
-	/** To know if the servo List is already initialized. */
-	bool initialized;
-	/** The array of servos. */
-	Servo servos[PWM_COUNT];
+    /** To know if the servo List is already initialized. */
+    bool initialized;
+    /** The array of servos. */
+    Servo servos[PWM_COUNT];
 } ServoList;
 
 /**

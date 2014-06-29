@@ -20,39 +20,39 @@
  * Structures which stores each element related to beacon detection system.
  */
 typedef struct {
-	/** enabled or not the rotation. */
-	bool enabled;	
+    /** enabled or not the rotation. */
+    bool enabled;    
 
-	/** The lasers instances. */
-	Laser lasers[LASER_COUNT];
-	
-	/** Distance between beacons. */
-	float distanceBetweenBeacon;
-	
-	/** Position of opponent robot. */
-	Point opponentRobotPosition;
+    /** The lasers instances. */
+    Laser lasers[LASER_COUNT];
+    
+    /** Distance between beacons. */
+    float distanceBetweenBeacon;
+    
+    /** Position of opponent robot. */
+    Point opponentRobotPosition;
 
-	/** Point used for calibration. */
-	Point calibrationPoint;
+    /** Point used for calibration. */
+    Point calibrationPoint;
 
-	/** Time in milliseconds the signal is lost. */
-	float lastDetectionTime;
+    /** Time in milliseconds the signal is lost. */
+    float lastDetectionTime;
 
-	/** 
-	* Time in milliseconds we consider that we do not send the position (because the last
-	* detection is too old (it's a risk to send obsolete Information).
-	*/
-	float obsoleteDetectionTimeThreshold;
+    /** 
+    * Time in milliseconds we consider that we do not send the position (because the last
+    * detection is too old (it's a risk to send obsolete Information).
+    */
+    float obsoleteDetectionTimeThreshold;
 
-	/**
-	* Time in milliseconds period to notify the robot position via the zigbee.
- 	*/
-	float notifyTimeDelay;
+    /**
+    * Time in milliseconds period to notify the robot position via the zigbee.
+     */
+    float notifyTimeDelay;
 
-	/**
-	* last Notification time.
-	*/
-	float lastNotifyTime;
+    /**
+    * last Notification time.
+    */
+    float lastNotifyTime;
 } BeaconSystem;
 
 /**

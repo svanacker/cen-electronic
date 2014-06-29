@@ -6,12 +6,12 @@
 /**
  * Header char of Trajectory device : 'n' for 'navigation.
  */
-#define TRAJECTORY_DEVICE_HEADER		'n'
+#define TRAJECTORY_DEVICE_HEADER        'n'
 
 /**
 * Defines the header used to ask absolute position.
 */
-#define COMMAND_GET_ABSOLUTE_POSITION 	'r'
+#define COMMAND_GET_ABSOLUTE_POSITION     'r'
 
 /**
 * Send the absolute position with debug to output.
@@ -21,13 +21,13 @@
 /**
 * Defines the header used to set the absolute position.
 */
-#define COMMAND_SET_ABSOLUTE_POSITION 		'w'
+#define COMMAND_SET_ABSOLUTE_POSITION         'w'
 
 /**
 * Factor of transformation to change float to long
 * with the less of lost.
 */
-#define FLOAT_TO_LONG_FACTOR 		1000.0f
+#define FLOAT_TO_LONG_FACTOR         1000.0f
 
 /**
 * Interface for Device

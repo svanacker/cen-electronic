@@ -3,7 +3,7 @@
 
 #include "../../device/deviceInterface.h"
 
-#define COMMAND_SET_SONAR_STATUS	'<'
+#define COMMAND_SET_SONAR_STATUS    '<'
 
 /**
 * Get the robotSonarDetector interface.

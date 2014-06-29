@@ -3,10 +3,10 @@
 
 #include "../../device/deviceInterface.h"
 
-#define ADC_DEVICE_HEADER			'd'
+#define ADC_DEVICE_HEADER            'd'
 
 /** Get the value of an ADC. */
-#define COMMAND_GET_ADC_VALUE 		'r'
+#define COMMAND_GET_ADC_VALUE         'r'
 
 /**
 * Interface for the Device

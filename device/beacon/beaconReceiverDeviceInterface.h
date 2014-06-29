@@ -3,12 +3,12 @@
 
 #include "../../device/deviceInterface.h"
 
-#define BEACON_RECEIVER_DEVICE_HEADER			'r'
+#define BEACON_RECEIVER_DEVICE_HEADER            'r'
 
 /**
 * Command header for getting the position of the opponent robot.
 */
-#define COMMAND_GET_OPPONENT_ROBOT_POSITION 	'o'
+#define COMMAND_GET_OPPONENT_ROBOT_POSITION     'o'
 
 /**
  * Command header to set the position of the opponent robot via automatic notification (pull).
@@ -24,10 +24,10 @@
  * JENNIC_WAITING_FOR_NODE
  * JENNIC_LINK_CONNECTED
  */
-#define COMMANG_GET_RECEIVER_NETWORK_STATUS							'n'
+#define COMMANG_GET_RECEIVER_NETWORK_STATUS                            'n'
 
 /** Initialize the jennic as router. */
-#define COMMAND_INIT_JENNIC_AS_ROUTER								'i'
+#define COMMAND_INIT_JENNIC_AS_ROUTER                                'i'
 
 /**
 * Interface for Device

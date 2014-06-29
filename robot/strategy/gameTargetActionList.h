@@ -11,14 +11,14 @@
 #include "../../navigation/path.h"
 
 /** The max limit of target action count. */
-#define MAX_TARGET_ACTION 		3
+#define MAX_TARGET_ACTION         3
 
 /**
  * Tre struct defining a list of strategies.
  */
 typedef struct GameTargetActionList {
     /** An array of pointer on actions. */
-	GameTargetAction* actions[MAX_TARGET_ACTION];
+    GameTargetAction* actions[MAX_TARGET_ACTION];
     /** the size of the list. */
     unsigned char size;
 } GameTargetActionList;
@@ -33,12 +33,12 @@ void clearTargetActionList(GameTargetActionList* targetActionList);
  * @param targetAction the target to add to the list
  */
 void addTargetAction(GameTargetActionList* targetActionList,
-					 GameTargetAction* targetAction,
-					 Location* startLocation,
-					 Location* endLocation,
-					 int timeToAchieve,
-					 PathDataFunction* pathDataFunction,
-					 GameTargetActionItemList* actionListItem
+                     GameTargetAction* targetAction,
+                     Location* startLocation,
+                     Location* endLocation,
+                     int timeToAchieve,
+                     PathDataFunction* pathDataFunction,
+                     GameTargetActionItemList* actionListItem
 );
 
 /**

@@ -9,8 +9,8 @@
  * The zigbee needs a command which wraps Data in their argument.
  */
 void initZigbeeOutputStream(OutputStream* outputStream,
-        						Buffer* jennic5139Buffer,
-        						char* jennicAddress);
+                                Buffer* jennic5139Buffer,
+                                char* jennicAddress);
 
 
 #endif

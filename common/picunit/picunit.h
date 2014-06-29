@@ -17,18 +17,18 @@ typedef bool TestFunction();
 * The struct defining a list of test.
 */
 typedef struct TestSuite {
-	/** The name of the test Suite. */
-	char* testSuiteName;
-	/** An array of test function pointer. */
-	TestFunction* testFunctions[MAX_TEST_COUNT];
-	/** An array of test name. */
-	char* testNames[MAX_TEST_COUNT];
-	/** The number of test ok. */
-	unsigned char okCount;
-	/** The number of test failed. */
-	unsigned char failedCount;
-	/** the size of the list. */
-	unsigned char size;
+    /** The name of the test Suite. */
+    char* testSuiteName;
+    /** An array of test function pointer. */
+    TestFunction* testFunctions[MAX_TEST_COUNT];
+    /** An array of test name. */
+    char* testNames[MAX_TEST_COUNT];
+    /** The number of test ok. */
+    unsigned char okCount;
+    /** The number of test failed. */
+    unsigned char failedCount;
+    /** the size of the list. */
+    unsigned char size;
 } TestSuite;
 
 /**

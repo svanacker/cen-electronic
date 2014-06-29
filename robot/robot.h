@@ -5,7 +5,7 @@
 #include "../common/io/outputStream.h"
 
 // Time in seconds
-#define TIME_FOR_OBSTACLE_NEW_NOTIFICATION 			4
+#define TIME_FOR_OBSTACLE_NEW_NOTIFICATION             4
 
 // MAIN FUNCTIONS
 

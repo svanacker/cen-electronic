@@ -6,38 +6,38 @@
 /**
  * Define the timer diviser to have a timer at 1 Hertz (every second).
  */
-#define TIME_DIVISER_1_HERTZ 				28800
+#define TIME_DIVISER_1_HERTZ                 28800
 
 /**
  * Define the timer diviser to have a timer at 2 Hertz.
  */
-#define TIME_DIVISER_2_HERTZ 				TIME_DIVISER_1_HERTZ / 2
+#define TIME_DIVISER_2_HERTZ                 TIME_DIVISER_1_HERTZ / 2
 
 /**
  * Define the timer diviser to have a timer at 10 Hertz.
  */
-#define TIME_DIVISER_10_HERTZ 				TIME_DIVISER_1_HERTZ / 10
+#define TIME_DIVISER_10_HERTZ                 TIME_DIVISER_1_HERTZ / 10
 
 /**
  * Define the timer diviser to have a timer at 16 Hertz.
  */
-#define TIME_DIVISER_16_HERTZ 				TIME_DIVISER_1_HERTZ / 16
+#define TIME_DIVISER_16_HERTZ                 TIME_DIVISER_1_HERTZ / 16
 
 /**
  * Define the timer diviser to have a timer at 30 Hertz.
  */
-#define TIME_DIVISER_30_HERTZ 				TIME_DIVISER_1_HERTZ / 30
+#define TIME_DIVISER_30_HERTZ                 TIME_DIVISER_1_HERTZ / 30
 
 
 /**
  * Define the timer diviser to have a timer at 50 Hertz.
  */
-#define TIME_DIVISER_50_HERTZ 				TIME_DIVISER_1_HERTZ / 50
+#define TIME_DIVISER_50_HERTZ                 TIME_DIVISER_1_HERTZ / 50
 
 /**
  * Define the timer diviser to have a timer at 100 Hertz.
  */
-#define TIME_DIVISER_100_HERTZ 				TIME_DIVISER_1_HERTZ / 100
+#define TIME_DIVISER_100_HERTZ                 TIME_DIVISER_1_HERTZ / 100
 
 /**
  * Define the timer diviser to have a timer at 1000 Hertz (every millisecond).
@@ -78,8 +78,8 @@ struct Timer {
     unsigned long timeInternalCounter;
     /** The value of the timer. */
     unsigned long time;
-	/** The value of the mark. */
-	unsigned long markTime;
+    /** The value of the mark. */
+    unsigned long markTime;
     /** The function which must be used. */
     interruptTimerCallbackFunc* callback;
     /** if the timer is enabled or not. */

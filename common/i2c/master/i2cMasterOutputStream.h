@@ -10,7 +10,7 @@
 * @param i2cBuffer an internal i2cBuffer to avoid
 */
 void initMasterI2cOutputStream(OutputStream* outputStream,
-						 Buffer* i2cBuffer,
-						 unsigned char i2cWriteAddress);
+                         Buffer* i2cBuffer,
+                         unsigned char i2cWriteAddress);
 
 #endif

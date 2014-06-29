@@ -16,12 +16,12 @@
 * Tre struct defining a list
 */
 typedef struct DeviceList {
-	/** An array of pointer on device. */
-	Device (*devices)[];
-	/** the size of the list. */
-	unsigned char size;
-	/** the max size of the list. */
-	unsigned char maxSize;
+    /** An array of pointer on device. */
+    Device (*devices)[];
+    /** the size of the list. */
+    unsigned char size;
+    /** the max size of the list. */
+    unsigned char maxSize;
 } DeviceList;
 
 /**

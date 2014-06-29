@@ -9,22 +9,22 @@
  * Data will not be transfered, because the driver does not correspond to our communication standard
  * (Ex : For All Devantech Devices)
  */
-#define TRANSMIT_NONE 	-1
+#define TRANSMIT_NONE     -1
 
 /**
  * Data will be transmitted in local.
  */
-#define TRANSMIT_LOCAL 	0
+#define TRANSMIT_LOCAL     0
 
 /**
  * Data will be transmitted via I2C.
  */
-#define TRANSMIT_I2C 	1
+#define TRANSMIT_I2C     1
 
 /**
  * Data will be transmitted via UART.
  */
-#define TRANSMIT_UART 	2
+#define TRANSMIT_UART     2
 
 /**
  * Data will be transmitted via ZIGBEE.

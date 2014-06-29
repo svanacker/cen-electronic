@@ -5,7 +5,7 @@
 
 #include "../../common/io/outputStream.h"
 
-#define BITS_COUNT_IN_UNSIGNED_INT			16
+#define BITS_COUNT_IN_UNSIGNED_INT            16
 
 /**
  * Define a structure which stores bool value as bit of 16 bits values.
@@ -14,10 +14,10 @@
 typedef struct {
     /** A pointer on an array of unsigned int. */
     unsigned int (*array)[];
-	/** The size of the list (number of bits). */
-	unsigned int size;
-	/** The max length of the array = RoundUp(number of bits / BITS_COUNT_IN_UNSIGNED_INT). */
-	unsigned char arrayLength;
+    /** The size of the list (number of bits). */
+    unsigned int size;
+    /** The max length of the array = RoundUp(number of bits / BITS_COUNT_IN_UNSIGNED_INT). */
+    unsigned char arrayLength;
 } BitList;
 
 /**

@@ -50,7 +50,7 @@ void i2cMasterWriteChar(char address, char c);
  * @see i2cMasterReadChar
  */
 char i2cMasterReadRegisterValue(char address,
-								char commandRegister);
+                                char commandRegister);
 
 /**
  * Read the current value for the I2C device.

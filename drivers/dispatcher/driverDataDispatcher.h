@@ -23,11 +23,11 @@ struct DriverDataDispatcher;
  * @return the response data containing the result of the invocation of the targetted device
  */
 typedef void driverDataDispatcherTransmitDataFunction(struct DriverDataDispatcher* dispatcher,
-												        Buffer* requestBuffer,
-												        Buffer* responseBuffer,
-												        int dataToTransferCount,
-												        int dataToReceiveCount
-												        );
+                                                        Buffer* requestBuffer,
+                                                        Buffer* responseBuffer,
+                                                        int dataToTransferCount,
+                                                        int dataToReceiveCount
+                                                        );
 
 /**
  * Structure defining a driverDataDispatcher with his associated transmitMode.
@@ -37,8 +37,8 @@ typedef struct DriverDataDispatcher {
     int transmitMode;
     /** A name for debug. */
     char* name;
-	/** The address as char (for zigbee for example). */
-	char* addressString;
+    /** The address as char (for zigbee for example). */
+    char* addressString;
     /** The address (only for remote transmitMode). In case of addressString, address contains a checksum of addressString. */
     int address;
     /** inputStream (can be null). */
@@ -60,12 +60,12 @@ typedef struct DriverDataDispatcher {
  * @return the response data containing the result of the invocation of the targetted device
  */
 void transmitDriverData(int transmitMode,
-				        int address,
-				        Buffer* requestBuffer,
-				        Buffer* responseBuffer,
-				        int dataToTransferCount,
-				        int dataToReceiveCount
-				        );
+                        int address,
+                        Buffer* requestBuffer,
+                        Buffer* responseBuffer,
+                        int dataToTransferCount,
+                        int dataToReceiveCount
+                        );
 
 /**
  * Handle data which are notification (and not direct response) from dispatcher.

@@ -13,14 +13,14 @@ typedef bool InfraredDetectorFunction();
  * Detection is based on 2 GPD12 on left / right, and a gp2y0a02yk on the center
  */
 typedef struct InfraredDetectorGroup {
-	/** The number of count which was detected. */
-	int wasDetectedCount;
-	/** A counter to avoid to notify. */
-	bool doNotCheckBeforeCounter;
-	/** A counter of interruption. */
-	unsigned int interruptCounter;
-	/** The function to evaluate it. */
-	InfraredDetectorFunction* function;
+    /** The number of count which was detected. */
+    int wasDetectedCount;
+    /** A counter to avoid to notify. */
+    bool doNotCheckBeforeCounter;
+    /** A counter of interruption. */
+    unsigned int interruptCounter;
+    /** The function to evaluate it. */
+    InfraredDetectorFunction* function;
 }InfraredDetectorGroup;
 
 

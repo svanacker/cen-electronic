@@ -4,7 +4,7 @@
 #include "../../device/deviceInterface.h"
 
 /** Header for Device. */
-#define SYSTEM_DEVICE_HEADER	'S'
+#define SYSTEM_DEVICE_HEADER    'S'
 
 /** Command to show log configuration. */
 #define COMMAND_LOG 'L'
