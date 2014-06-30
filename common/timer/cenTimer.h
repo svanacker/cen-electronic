@@ -61,8 +61,6 @@
 struct Timer;
 typedef struct Timer Timer;
 
-unsigned int timerCount;
-
 /**
  * Definition of a function for callBack of timer.
  */
