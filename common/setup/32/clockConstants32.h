@@ -2,9 +2,9 @@
 #define CLOCK_CONSTANTS_32_H
 
 /** oscillator frequency in Hz. */
-#define FOSC 80000000
+#define FOSC 80000000L
 
-/** PLL multiplier, x1  x4  x8  x16. */
+/** PLL multiplier, x1  x4  x8  x16, x20. */
 #define FPLLMUL 20
 
 /** PLL diviser */

@@ -182,7 +182,7 @@ void waitForInstruction() {
     }
 
     delaymSec(1000);
-    appendStringAndDec(getDebugOutputStreamLogger(), "\nCount=", timerCount);
+    // appendStringAndDec(getDebugOutputStreamLogger(), "\nCount=", timerCount);
 }
 
 

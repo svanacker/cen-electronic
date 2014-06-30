@@ -1,7 +1,7 @@
 #include "../timerSetup.h"
 #include "../cenTimer.h"
 
-#include <p32xxxx.h>
+#include <plib.h>
 #include <timer.h>
 
 

@@ -1,7 +1,6 @@
 #include "../../common/commons.h"
 
 #ifdef PROG_32
-    #include <p32xxxx.h>
     #include <plib.h>
     #include "../../common/setup/32/picSetup32.h"
 #else

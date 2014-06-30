@@ -62,7 +62,7 @@ char serialGetc(unsigned char serialPortIndex) {
 
 #ifdef MPLAB_SIMULATION
 
-void simulateDelay() {
+void simulateSerialDelay() {
     int i = 1000;
     while (i > 0) {
         Nop();
@@ -74,7 +74,7 @@ void simulateDelay() {
 
 void serialPutc(unsigned char serialPortIndex, char c) {
     #ifdef MPLAB_SIMULATION
-            simulateDelay();
+        simulateSerialDelay();
     #endif
 
     UART_MODULE uart = getUartModule(serialPortIndex);
@@ -82,6 +82,5 @@ void serialPutc(unsigned char serialPortIndex, char c) {
     while (!UARTTransmitterIsReady(uart));
     UARTSendDataByte(uart, c);
     while (!UARTTransmissionHasCompleted(uart));
-
 }
 

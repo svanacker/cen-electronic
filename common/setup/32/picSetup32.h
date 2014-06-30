@@ -19,7 +19,7 @@
 // -> System PLL Output Clock Divier
 #pragma config FPLLODIV = DIV_1
 
-#define SYS_FREQ                 (80000000L)
+#define SYS_FREQ        (80000000L)
 
 //// Watchdog Timer ////
 
@@ -43,6 +43,6 @@
 // Program Flash Write Protect
 #pragma config PWP      = OFF           
 // ICE/ICD Comm Channel Select
-#pragma config ICESEL   = ICS_PGx1      
+#pragma config ICESEL   = ICS_PGx1
 
 #endif

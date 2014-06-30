@@ -1,7 +1,7 @@
 #include "../../../../common/commons.h"
 
-#include <i2c.h>
 #include <p32xxxx.h>
+#include <i2c.h>
 
 #include "../../../../common/error/error.h"
 
@@ -10,36 +10,34 @@
 
 #include "../i2cSlaveSetup.h"
 
+#define PIC32_CLOCK	     80000000L
+#define I2C_FREQUENCY	   100000
+
+#define BRG_VAL 	((PIC32_CLOCK / 2 / I2C_FREQUENCY)-2)
+
 bool initialized = false;
 
 void i2cSlaveInitialize(char writeAddress) {
     // Avoid more than one initialization
     if (initialized) {
-        writeError(I2C_MASTER_ALREADY_INITIALIZED);
+        writeError(I2C_SLAVE_ALREADY_INITIALIZED);
         return;
     }
-#ifndef PROG_32
-    // TODO !!!!!
-
-    I2CCONbits.STREN = 1;
-    // I2CCONbits.GCEN = 1;
-    I2CCONbits.DISSLW = 1;
-    I2CCONbits.SCLREL = 1;
+    // Enable the I2C module with clock stretching enabled
+	OpenI2C1(I2C_ON | I2C_7BIT_ADD | I2C_STR_EN, BRG_VAL);
 
     // 7-bit I2C slave address must be initialised here.
     // we shift because i2c address is shift to the right
     // to manage read and write address
-    I2CADD = writeAddress >> 1;
+    I2C1ADD = writeAddress >> 1;
+    I2C1MSK = 0;
 
     // Interruption on I2C Slave
     // -> Priority of I2C Slave interruption
-    IPC3bits.SI2CIP = 1;
-    // -> Enable I2C Slave interruption
-    IEC0bits.SI2CIE = 1;
+    mI2C1SetIntPriority(I2C_INT_PRI_3 | I2C_INT_SLAVE);
     // -> Enable Interruption Flag => See the same code in interruption
-    IFS0bits.SI2CIF = 0;
+    mI2C1SClearIntFlag();
 
     // Enable I2C
-    I2CCONbits.I2CEN = 1;
-#endif
+    EnableIntSI2C1;
 }

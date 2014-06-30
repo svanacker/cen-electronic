@@ -2,7 +2,7 @@
 
 #include "../pwmPic.h"
 
-#include <p32xxxx.h>
+#include <plib.h>
 
 void pwmInit() {
     // TODO !!!

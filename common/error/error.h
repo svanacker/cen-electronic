@@ -37,7 +37,8 @@ void writeError(int errorCode);
 
 // I2C 
 
-#define I2C_MASTER_ALREADY_INITIALIZED     0x1000
+#define I2C_MASTER_ALREADY_INITIALIZED    0x1000
+#define I2C_SLAVE_ALREADY_INITIALIZED     0x1001
 
 
 // DEVICE
