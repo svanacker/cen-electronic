@@ -1,3 +1,5 @@
+#include <stdbool.h>
+
 #include "cenTimer.h"
 
 #include "../../common/commons.h"

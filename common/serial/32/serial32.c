@@ -32,6 +32,8 @@ void openSerial(unsigned char serialPortIndex, unsigned long baudRate) {
     INTSetVectorPriority(INT_VECTOR_UART(uart), INT_PRIORITY_LEVEL_2);
     INTSetVectorSubPriority(INT_VECTOR_UART(uart), INT_SUB_PRIORITY_LEVEL_0);
 
+    // TODO : Move this code to Global Setup !
+
     // configure for multi-vectored mode
     INTConfigureSystem(INT_SYSTEM_CONFIG_MULT_VECTOR);
 

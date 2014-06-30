@@ -1,14 +1,12 @@
-#include <stdlib.h>
-
 #include "../../../common/commons.h"
 
+#include <stdlib.h>
 #include <plib.h>
 
+#include "../../../common/io/buffer.h"
 #include "../serialInputInterrupt.h"
 #include "../serial.h"
 #include "serial32.h"
-
-#include "../../../common/io/buffer.h"
 
 static Buffer* buffer1;
 static Buffer* buffer2;
@@ -17,18 +15,11 @@ static Buffer* buffer4;
 static Buffer* buffer5;
 static Buffer* buffer6;
 
-void putCharacter(UART_MODULE uartModule, const char c) {
-  while (!UARTTransmitterIsReady(uartModule));
-  UARTSendDataByte(uartModule, c);
-  while (!UARTTransmissionHasCompleted(uartModule));
-}
-
 inline void handleUartInterrupt(UART_MODULE uart, Buffer* buffer) {
     // Is this an RX interrupt?
     if (INTGetFlag(INT_SOURCE_UART_RX(uart))) {
         char c = UARTGetDataByte(uart);
         bufferWriteChar(buffer, c);
-        // putCharacter(uart, c);
         // Clear the RX interrupt Flag
         INTClearFlag(INT_SOURCE_UART_RX(uart));
     }

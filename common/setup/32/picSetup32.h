@@ -11,11 +11,11 @@
 //// Frequency ////
 
 // -> Multiplication factor
-#pragma config FPLLMUL = MUL_20
+#pragma config FPLLMUL  = MUL_20
 // -> PLL Input Divider
 #pragma config FPLLIDIV = DIV_2
 // ->Peripheral Clock Dividor
-#pragma config FPBDIV = DIV_2
+#pragma config FPBDIV   = DIV_2
 // -> System PLL Output Clock Divier
 #pragma config FPLLODIV = DIV_1
 
@@ -23,7 +23,7 @@
 
 //// Watchdog Timer ////
 
-#pragma config FWDTEN = OFF
+#pragma config FWDTEN   = OFF
 #pragma config WDTPS    = PS1           // Watchdog Timer Postscale
 
 //// MISC ////

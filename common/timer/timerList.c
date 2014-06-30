@@ -32,7 +32,7 @@ Timer* addTimer(int timerCode,
     unsigned char size = timerList.size;
     if (size < timerList.maxSize) {
         Timer* result = (Timer*) timerList.timers;
-         result += size;
+        result += size;
         result->time = 0;
         result->markTime = 0;
         result->timerCode = timerCode;
