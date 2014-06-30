@@ -1,15 +1,14 @@
 #include "../../../../common/commons.h"
 
-#include <p32xxxx.h>
+#include <plib.h>
 #include <i2c.h>
 
+#include "../../../../common/commons.h"
 #include "../../../../common/error/error.h"
-
-#include "../../../../common/log/logger.h"
-#include "../../../../common/log/logLevel.h"
-
 #include "../i2cSlaveSetup.h"
 
+// TODO : Find a way to include picSetup or clockConstants without creating error
+>>>>>>> Separate 30F and 32 I2C Slave Implementation (NOT TESTED !)
 #define PIC32_CLOCK	     80000000L
 #define I2C_FREQUENCY	   100000
 

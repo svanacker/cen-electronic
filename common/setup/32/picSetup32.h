@@ -1,7 +1,7 @@
 #ifndef PIC_32F_SETUP_H
 #define PIC_32F_SETUP_H
 
-#include <p32xxxx.h>
+#include <plib.h>
 
 // Oscillator Selection Bit
 #pragma config FNOSC = PRIPLL

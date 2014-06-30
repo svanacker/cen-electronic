@@ -1,4 +1,4 @@
-#include <p32xxxx.h>
+#include <plib.h>
 
 // ---------
 // Input Bits 

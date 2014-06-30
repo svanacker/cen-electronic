@@ -2,7 +2,7 @@
 
 #include <i2c.h>
 #include <stdlib.h>
-#include <p32xxxx.h>
+#include <plib.h>
 
 #include "../../i2cConstants.h"
 #include "../../i2cDebug.h"
