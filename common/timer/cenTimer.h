@@ -28,7 +28,6 @@
  */
 #define TIME_DIVISER_30_HERTZ                 TIME_DIVISER_1_HERTZ / 30
 
-
 /**
  * Define the timer diviser to have a timer at 50 Hertz.
  */

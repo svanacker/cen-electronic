@@ -67,10 +67,7 @@ interrupt sub priority for 1.*/
  ConfigIntTimer1((T1_INT_ON | T1_INT_PRIOR_3 | T1_INT_SUB_PRIOR_1)); 
  
  /* code to for additional interrupt initializations */ 
- 
-INTEnableSystemMultiVectoredInt(); // Required to enable all interrupts 
-    timerCount++;
-}
+ INTEnableSystemMultiVectoredInt(); // Required to enable all interrupts }
 
 
 /**
@@ -80,8 +77,7 @@ INTEnableSystemMultiVectoredInt(); // Required to enable all interrupts
  * Example Code inspired from : http://learn.digilentinc.com/Documents/216
  */
 void __ISR(_TIMER_1_VECTOR, IPL3SOFT) Timer1Handler(void) {
-    // _internalUpdateTimerListValues();
-    timerCount++;
+    _internalUpdateTimerListValues();
     
     // clear the interrupt flag
     mT1ClearIntFlag();

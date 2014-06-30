@@ -1,11 +1,5 @@
 #include "../../../common/commons.h"
 
-#ifdef PROG_32
-    #include <legacy/i2c_legacy.h>
-#else
-    #include <i2c.h>
-#endif
-
 #include "i2cMaster.h"
 
 #include "../../../common/delay/cenDelay.h"
@@ -15,39 +9,6 @@
 
 #include "../../../common/i2c/i2cCommon.h"
 #include "../../../common/io/buffer.h"
-
-
-inline int portableMasterWriteI2C(char data) {
-    #ifdef PROG_32
-        return MasterWriteI2C1(data);
-    #else
-        return MasterWriteI2C(data);
-    #endif
-}
-
-inline char portableMasterReadI2C() {
-    #ifdef PROG_32
-        return MasterReadI2C1();
-    #else
-        return MasterReadI2C();
-    #endif
-}
-
-inline void portableCloseI2C() {
-    #ifdef PROG_32
-        CloseI2C1();
-    #else
-        CloseI2C();
-    #endif
-}
-
-inline void portableMasterWaitSendI2C( void ) {
-    #ifdef PROG_32
-        // TODO !!!
-    #else
-        while (I2CCONbits.SEN);
-    #endif
-}
 
 void i2cMasterWriteBuffer(char address, Buffer* buffer) {
     portableStartI2C();
@@ -71,7 +32,6 @@ void i2cMasterWriteBuffer(char address, Buffer* buffer) {
 }
 
 void i2cMasterWriteChar(char address, char c) {
-    #ifndef PROG_32
     // We append to a buffer
     portableStartI2C();
     // Wait till Start sequence is completed
@@ -85,8 +45,7 @@ void i2cMasterWriteChar(char address, char c) {
     portableMasterWriteI2C(c);
     WaitI2C();
 
-    StopI2C();
-    #endif
+    portableStopI2C();
 }
 
 char i2cMasterReadChar(char address) {
