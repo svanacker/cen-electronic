@@ -8,7 +8,6 @@
 #include "../i2cSlaveSetup.h"
 
 // TODO : Find a way to include picSetup or clockConstants without creating error
->>>>>>> Separate 30F and 32 I2C Slave Implementation (NOT TESTED !)
 #define PIC32_CLOCK	     80000000L
 #define I2C_FREQUENCY	   100000
 
