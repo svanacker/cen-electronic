@@ -46,7 +46,6 @@ void deviceCodersHandleRawData(char header, InputStream* inputStream, OutputStre
         appendSeparator(outputStream);
         appendHex8(outputStream, coderValue1);
     } else if (header == COMMAND_DEBUG_GET_WHEEL_POSITION) {
-        appendAck(outputStream);
         ackCommand(outputStream, CODERS_DEVICE_HEADER, COMMAND_DEBUG_GET_WHEEL_POSITION);
 
         OutputStream* debugOutputStream = getDebugOutputStreamLogger();
@@ -62,7 +61,6 @@ void deviceCodersHandleRawData(char header, InputStream* inputStream, OutputStre
         ackCommand(outputStream, CODERS_DEVICE_HEADER, COMMAND_CLEAR_CODERS);
 
         updateTrajectoryAndClearCoders();
-        append(outputStream, COMMAND_CLEAR_CODERS);
     }
 }
 
