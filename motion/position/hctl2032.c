@@ -57,7 +57,7 @@ void initHCTL2032() {
     RSTX = 1;
     RSTY = 1;
 
-    // Il faut l'initialiser 3 fois pour que �a marche !
+    // We add to initialize it 3 times so that it works
     RSTY = 1;
     RSTX = 1;
 

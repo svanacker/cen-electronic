@@ -13,6 +13,22 @@ typedef struct {
     signed long previousValue;
 } Coder;
 
+#define MASTER_BYTE_INDEX 3
+#define BYTE_3_INDEX 2
+#define BYTE_2_INDEX 1
+#define LOW_BYTE_INDEX 0
+
+// ---------
+// EN1 - EN2 (HARDLY CONNECTED)
+// ---------
+
+// Enable1/Enable2 to select the 1x, 2x, 4x factor
+// EN1 - EN2
+// -> 0/0 => Illegal Mode
+// -> 1/0 => Factor x4
+// -> 0/1 => Factor x2
+// -> 1/1 => Factor x1
+
 /**
  * The index to read the PORT X (compatible with X_Y PORT behaviour)
  */
