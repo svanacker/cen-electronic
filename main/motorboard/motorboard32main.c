@@ -144,11 +144,6 @@ static Buffer debugI2cOutputBuffer;
 // Devices
 static Device deviceListArray[MOTOR_BOARD_DEVICE_LENGTH];
 
-void testTimerCallBackFunc(Timer* timer) {
-    currentTimeInSecond++; 
-    currentTimeChanged = true;
-}
-
 void initDevicesDescriptor() {
     initDeviceList(&deviceListArray, MOTOR_BOARD_DEVICE_LENGTH);
 
@@ -175,14 +170,6 @@ void waitForInstruction() {
 
     // Manage Motion
     handleInstructionAndMotion();
-
-    if (currentTimeChanged) {
-        currentTimeChanged = false;
-        appendStringAndDec(getDebugOutputStreamLogger(), "\nValue=", currentTimeInSecond);
-    }
-
-    delaymSec(1000);
-    // appendStringAndDec(getDebugOutputStreamLogger(), "\nCount=", timerCount);
 }
 
 
@@ -225,8 +212,6 @@ int runMotorBoard() {
     appendCRLF(getDebugOutputStreamLogger());
 
     initTimerList(&timerListArray, MOTOR_BOARD_TIMER_LENGTH);
-
-    addTimer(53, TIME_DIVISER_1_HERTZ, testTimerCallBackFunc);
 
     // Debug of I2C : Only if there is problems
     // initI2CDebugBuffers(&debugI2cInputBuffer, &debugI2cOutputBuffer);

@@ -7,11 +7,9 @@
 #include "../../../../common/error/error.h"
 #include "../i2cSlaveSetup.h"
 
-// TODO : Find a way to include picSetup or clockConstants without creating error
-#define PIC32_CLOCK	     80000000L
-#define I2C_FREQUENCY	   100000
+#define I2C_FREQUENCY	   100000L
 
-#define BRG_VAL 	((PIC32_CLOCK / 2 / I2C_FREQUENCY)-2)
+#define BRG_VAL 	((FOSC / 2 / I2C_FREQUENCY)-2)
 
 bool initialized = false;
 

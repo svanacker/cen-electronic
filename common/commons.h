@@ -10,6 +10,18 @@
 
 #define PROG_32
 
+#ifdef PROG_32
+    #define QUARTZ_FREQUENCY    8000000L
+    #define CLOCK_PLL           20
+    #define FOSC                (QUARTZ_FREQUENCY * CLOCK_PLL / 2)
+#else
+    #define QUARTZ_FREQUENCY    7372800L
+    #define CLOCK_PLL           16
+#endif
+
+#define CYCLE_FREQUENCY     (QUARTZ_FREQUENCY * CLOCK_PLL / 4)
+
+
 // TODO ; Change for 32 !!
 #define MAX_SIGNEDINT 0x7FFF
 #define MAX_UNSIGNEDINT 0xFFFF
@@ -30,13 +42,5 @@
 
 #define IN_AS_STRING "IN"
 #define OUT_AS_STRING "OUT"
-
-
-/**
- * Defines a function to do the same as "equals(Object obj)" in Java.
- * @param object pointer on a structure for object1
- * @param object pointer on a structure for object2
- */
-// typedef bool EqualsFunction(int* object1, int* object2);
 
 #endif
