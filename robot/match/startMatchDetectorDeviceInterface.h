@@ -3,8 +3,10 @@
 
 #include "../../device/deviceInterface.h"
 
+#define START_MATCH_DETECTOR_DEVICE_HEADER        'd'
+
 /** Defines the pin which must be used to detect the start. */
-#define START_DETECTOR_PIN PORTFbits.RF6
+#define START_DETECTOR_PIN      PORTFbits.RF6
 
 /** Define the message sent to the PC to indicates start. */
 #define MESSAGE_TO_PC_RESET "xXyY"

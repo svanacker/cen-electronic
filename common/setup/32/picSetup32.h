@@ -20,7 +20,6 @@
 #pragma config FPLLODIV = DIV_1
 
 #define SYS_FREQ        (QUARTZ_FREQUENCY * CLOCK_PLL / 2)
-// #define SYS_FREQ        (80000000L)
 
 //// Watchdog Timer ////
 

@@ -26,6 +26,7 @@ int deviceEndMatchDetectorGetInterface(char header, int mode,
 
 static DeviceInterface deviceInterface = {
     .deviceGetName = &getEndMatchDetectorDeviceName,
+    .deviceHeader = END_MATCH_DETECTOR_DEVICE_HEADER,
 //    .deviceGetSoftwareRevision = &getEndMatchDetectorSoftwareRevision,
     .deviceGetInterface = &deviceEndMatchDetectorGetInterface
 };

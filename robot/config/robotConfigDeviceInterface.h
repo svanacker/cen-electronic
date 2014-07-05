@@ -3,8 +3,12 @@
 
 #include "../../device/deviceInterface.h"
 
+/** Device header .*/
+#define ROBOT_CONFIG_DEVICE_HEADER      'c'
+
+
 /** Command header to get the config. */
-#define COMMAND_CONFIG 'c'
+#define COMMAND_CONFIG                  'r'
 
 /**
 * Interface for Device "RobotConfig"

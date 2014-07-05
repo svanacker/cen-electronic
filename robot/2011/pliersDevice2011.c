@@ -16,7 +16,7 @@
 #include "../../common/io/reader.h"
 #include "../../common/io/stream.h"
 
-#include "../../common/pwm/servoPwm.h"
+#include "../../common/pwm/servo/servoPwm.h"
 
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"

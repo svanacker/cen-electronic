@@ -18,7 +18,7 @@
 #include "../../common/io/printWriter.h"
 #include "../../common/io/stream.h"
 
-#include "../../common/i2c/master/i2cMasterSetup.h"
+#include "../../common/i2c/slave/i2cSlaveLink.h"
 
 #include "../../common/pwm/servo/servoPwm.h"
 
@@ -87,6 +87,13 @@ static char debugOutputBufferArray[AIR_CONDITIONING_BOARD_DEBUG_OUTPUT_BUFFER_LE
 static Buffer debugOutputBuffer;
 static OutputStream debugOutputStream;
 static StreamLink debugSerialStreamLink;
+
+// I2C
+static char i2cSlaveInputBufferArray[AIR_CONDITIONING_BOARD_I2C_INPUT_BUFFER_LENGTH];
+static Buffer i2cSlaveInputBuffer;
+static char i2cSlaveOutputBufferArray[AIR_CONDITIONING_BOARD_I2C_OUTPUT_BUFFER_LENGTH];
+static Buffer i2cSlaveOutputBuffer;
+static StreamLink i2cSerialStreamLink;
 
 // logs
 static LogHandler serialLogHandler;
@@ -157,7 +164,17 @@ int main(void) {
     println(getOutputStreamLogger(INFO));
 
     // Initializes the I2C
-    i2cMasterInitialize();
+    // i2cMasterInitialize();
+
+    openSlaveI2cStreamLink(&i2cSerialStreamLink,
+                            &i2cSlaveInputBuffer,
+                            &i2cSlaveInputBufferArray,
+                            AIR_CONDITIONING_BOARD_I2C_INPUT_BUFFER_LENGTH,
+                            &i2cSlaveOutputBuffer,
+                            &i2cSlaveOutputBufferArray,
+                            AIR_CONDITIONING_BOARD_I2C_OUTPUT_BUFFER_LENGTH,
+                            AIR_CONDITIONING_BOARD_I2C_ADDRESS
+                        );
 
     // init the devices
     initDevicesDescriptor();
@@ -195,6 +212,13 @@ int main(void) {
                 &debugOutputStream,
                 &filterRemoveCRLF,
                 NULL);
+
+        // I2C Stream
+        handleStreamInstruction(&i2cSlaveInputBuffer,
+                                &i2cSlaveOutputBuffer,
+                                NULL,
+                                &filterRemoveCRLF,
+                                NULL);
     }
     return (0);
 }

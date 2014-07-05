@@ -11,7 +11,7 @@ void WaitI2C() {
 }
 
 inline void portableStartI2C() {
-    StartI2C1();
+    StartI2C();
 }
 
 inline void portableStopI2C() {

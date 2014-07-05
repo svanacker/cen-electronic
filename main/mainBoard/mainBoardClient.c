@@ -101,6 +101,9 @@
 // Specific 2011
 #include "../../device/adc/adcDeviceInterface.h"
 
+// Air conditioning
+#include "../../device/airconditioning/airConditioningDeviceInterface.h"
+
 // Beacon Receiver
 #include "../../device/beacon/beaconReceiverDeviceInterface.h"
 
@@ -130,17 +133,11 @@
 #include "../../robot/opponent/robotSonarDetectorDeviceInterface.h"
 #include "../../robot/opponent/opponentRobot.h"
 
-// Robot 2012
-#include "../../robot/2012/homologation2012.h"
-#include "../../robot/2012/armDeviceInterface2012.h"
-#include "../../robot/2012/armDriver2012.h"
-
 // Other boards interface
 #include "../../main/motorBoard/motorBoard.h"
 #include "../../main/meca1/mechanicalBoard1.h"
 #include "../../main/meca2/mechanicalBoard2.h"
-#include "../../main/beaconReceiver/beaconReceiverBoard.h"
-#include "../../main/strategy/strategyMain.h"
+#include "../../main/airconditioning/airConditioningMain.h"
 
 #include "../../motion/simple/motion.h"
 
@@ -179,17 +176,6 @@ static Buffer pcOutputBuffer;
 static OutputStream pcOutputStream;
 static StreamLink pcSerialStreamLink;
 
-// serial link LCD
-/*
-static Lcd4d lcd4d;
-static char lcd4dInputBufferArray[MAIN_BOARD_LCD_INPUT_BUFFER_LENGTH];
-static Buffer lcd4dInputBuffer;
-static char lcd4dOutputBufferArray[MAIN_BOARD_LCD_OUTPUT_BUFFER_LENGTH];
-static Buffer lcd4dOutputBuffer;
-static OutputStream lcd4dOutputStream;
-static StreamLink lcd4dSerialStreamLink;
-*/
-
 // both OutputStream as composite
 static CompositeOutputStream compositePcAndDebugOutputStream;
 static CompositeOutputStream compositeDriverAndDebugOutputStream;
@@ -209,26 +195,19 @@ static Buffer motorBoardInputBuffer;
 static InputStream motorBoardInputStream;
 static OutputStream motorBoardOutputStream;
 
+// i2c->Air Conditioning
+static DriverDataDispatcher airConditioningI2cDispatcher;
+static char airConditioningBoardInputBufferArray[MAIN_BOARD_LINK_TO_MECA_BOARD_2_BUFFER_LENGTH];
+static Buffer airConditioningBoardInputBuffer;
+static InputStream airConditioningBoardInputStream;
+static OutputStream airConditioningBoardOutputStream;
+
 // i2c->Mechanical 2
 static DriverDataDispatcher mechanical2I2cDispatcher;
 static char mechanical2BoardInputBufferArray[MAIN_BOARD_LINK_TO_MECA_BOARD_2_BUFFER_LENGTH];
 static Buffer mechanical2BoardInputBuffer;
 static InputStream mechanical2BoardInputStream;
 static OutputStream mechanical2BoardOutputStream;
-
-// i2c->BeaconReceiver
-static DriverDataDispatcher beaconReceiverI2cDispatcher;
-static char beaconReceiverBoardInputBufferArray[MAIN_BOARD_LINK_TO_BEACON_BOARD_BUFFER_LENGTH];
-static Buffer beaconReceiverBoardInputBuffer;
-static InputStream beaconReceiverBoardInputStream;
-static OutputStream beaconReceiverBoardOutputStream;
-
-// i2c->Strategy
-static DriverDataDispatcher strategyI2cDispatcher;
-static char strategyBoardInputBufferArray[MAIN_BOARD_LINK_TO_STRATEGY_BOARD_BUFFER_LENGTH];
-static Buffer strategyBoardInputBuffer;
-static InputStream strategyBoardInputStream;
-static OutputStream strategyBoardOutputStream;
 
 // lcd DEBUG 
 static OutputStream lcdOutputStream;
@@ -253,10 +232,6 @@ static bool useBalise;
 #define INSTRUCTION_TYPE_FORWARD        1
 #define INSTRUCTION_TYPE_BACKWARD        2
 #define INSTRUCTION_TYPE_ROTATION        3
-
-
-// Specific 2012
-static bool armOpen;
 
 /**
  * Call-back when Data send some notification message (like Position Reached, Position failed ...)
@@ -376,18 +351,6 @@ void mainBoardCallbackRawData(const Device* device,
         forwardCallbackRawDataTo(inputStream, &(compositeDriverAndDebugOutputStream.outputStream), device, header, DEVICE_MODE_INPUT);
         transmitFromDriverRequestBuffer();
     } 
-    // When Strategy ask by notification message to arm up or Down
-    else if (header == COMMAND_ARM_2012_UP || header == COMMAND_ARM_2012_DOWN) {
-        armOpen = (header == COMMAND_ARM_2012_DOWN);
-        appendString(getOutputStreamLogger(INFO), "\nNotification : From STRATEGY BOARD : relayed to MECHANICAL BOARD :\n");
-        instructionType = INSTRUCTION_TYPE_NO_MOVE;
-
-        forwardCallbackRawDataTo(inputStream, &(compositeDriverAndDebugOutputStream.outputStream), device, header, DEVICE_MODE_INPUT);
-        transmitFromDriverRequestBuffer();
-        delaymSec(500);
-        // we are ready for next motion
-        setReadyForNextMotion(true);
-    } 
     // Mechanical Board notification
     else if (header == NOTIFY_INFRARED_DETECTOR_DETECTION) {
         appendString(getOutputStreamLogger(INFO), "\nNotification : From MECHANICAL BOARD :\n");
@@ -450,8 +413,8 @@ void initDevicesDescriptor() {
     addLocalDevice(getRobotSonarDetectorDeviceInterface(), getRobotSonarDetectorDeviceDescriptor());
 
     // Mechanical Board 2->I2C
-    Device* armDevice = addI2CRemoteDevice(getArm2012DeviceInterface(), MECHANICAL_BOARD_2_I2C_ADDRESS);
-    Device* infraredDetectorDevice = addI2CRemoteDevice(getRobotInfraredDetectorDeviceInterface(), MECHANICAL_BOARD_2_I2C_ADDRESS);
+    // Device* armDevice = addI2CRemoteDevice(getArm2012DeviceInterface(), MECHANICAL_BOARD_2_I2C_ADDRESS);
+    // Device* infraredDetectorDevice = addI2CRemoteDevice(getRobotInfraredDetectorDeviceInterface(), MECHANICAL_BOARD_2_I2C_ADDRESS);
 
     // Motor Board->I2C
     addI2CRemoteDevice(getPIDDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
@@ -460,13 +423,14 @@ void initDevicesDescriptor() {
     Device* trajectoryDevice = addI2CRemoteDevice(getTrajectoryDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
     Device* motionDevice = addI2CRemoteDevice(getMotionDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
 
-
     // Beacon Receiver Board->I2C
-    addI2CRemoteDevice(getBeaconReceiverDeviceInterface(), BEACON_RECEIVER_I2C_ADDRESS);
+    // addI2CRemoteDevice(getBeaconReceiverDeviceInterface(), BEACON_RECEIVER_I2C_ADDRESS);
 
     // Strategy Board->I2C
-    addI2CRemoteDevice(getStrategyDeviceInterface(), STRATEGY_BOARD_I2C_ADDRESS);
+    // addI2CRemoteDevice(getStrategyDeviceInterface(), STRATEGY_BOARD_I2C_ADDRESS);
 
+    // Air Conditioning Board
+    addI2CRemoteDevice(getAirConditioningDeviceInterface(), AIR_CONDITIONING_BOARD_I2C_ADDRESS);
 
     // Init the devices
     initDevices();  
@@ -475,10 +439,10 @@ void initDevicesDescriptor() {
     trajectoryDevice->deviceHandleCallbackRawData = &mainBoardCallbackRawData;
     // testDevice.deviceHandleCallbackRawData = &mainBoardCallbackRawData;
     motionDevice->deviceHandleCallbackRawData = &mainBoardCallbackRawData;
-    armDevice->deviceHandleCallbackRawData = &mainBoardCallbackRawData;
-    infraredDetectorDevice->deviceHandleCallbackRawData = &mainBoardCallbackRawData;
+    // infraredDetectorDevice->deviceHandleCallbackRawData = &mainBoardCallbackRawData;
 }
 
+/*
 bool isObstacleOutsideTheTable(int distance) {
     float a = getRobotAngle() * (PI / 1800.0);
     float dca = cosf(a) * distance;
@@ -513,6 +477,7 @@ bool isObstacleOutsideTheTable(int distance) {
     }
     return false;
 }
+*/
 
 void waitForInstruction() {
     // Listen instruction from pcStream->Devices
@@ -593,7 +558,7 @@ int main(void) {
             MAIN_BOARD_DEBUG_OUTPUT_BUFFER_LENGTH,
             &debugOutputStream,
             SERIAL_PORT_DEBUG,
-            0);
+            DEFAULT_SERIAL_SPEED);
 
     // Open the serial Link for the PC
     openSerialLink(&pcSerialStreamLink,
@@ -605,23 +570,8 @@ int main(void) {
             MAIN_BOARD_PC_OUTPUT_BUFFER_LENGTH,
             &pcOutputStream,
             SERIAL_PORT_PC,
-            0);
+            DEFAULT_SERIAL_SPEED);
 
-    /*
-    // Opens the serial link for the lcd
-    openSerialLink(&lcd4dSerialStreamLink,
-                    &lcd4dInputBuffer,
-                    &lcd4dInputBufferArray,
-                    MAIN_BOARD_LCD_INPUT_BUFFER_LENGTH,
-                    &lcd4dOutputBuffer,
-                    &lcd4dOutputBufferArray,
-                    MAIN_BOARD_LCD_OUTPUT_BUFFER_LENGTH,
-                    &lcd4dOutputStream,
-                    SERIAL_PORT_LCD,
-                    9600);
-
-     */
-    
     // LCD (LCD03 via Serial interface)
     initLCDOutputStream(&lcdOutputStream);
 
@@ -635,18 +585,13 @@ int main(void) {
     appendString(getOutputStreamLogger(ALWAYS), getPicName());
     println(getOutputStreamLogger(ALWAYS));
 
-    // appendString(&pcOutputStream, getPicName());
-    // println(&pcOutputStream);
-
-    appendString(&debugOutputStream, getPicName());
-    println(&debugOutputStream);
-
     initDevicesDescriptor();
     initDriversDescriptor();
 
     // Initializes the opponent robot
-    initOpponentRobot();
+    // initOpponentRobot();
 
+    /*
     // Creates a composite to notify both PC and Debug
     initCompositeOutputStream(&compositePcAndDebugOutputStream);
     addOutputStream(&compositePcAndDebugOutputStream, &debugOutputStream);
@@ -656,30 +601,9 @@ int main(void) {
     initCompositeOutputStream(&compositeDriverAndDebugOutputStream);
     addOutputStream(&compositeDriverAndDebugOutputStream, &debugOutputStream);
     addOutputStream(&compositeDriverAndDebugOutputStream, getDriverRequestOutputStream());
-
-    appendString(&debugOutputStream, "DEBUG");
-//     appendString(&pcOutputStream, "PC");
-
-
-    /*
-    delaymSec(1500);
-    appendString(&debugOutputStream, "Printing U");
-    appendString(&pcOutputStream, "U");
-
-    delaymSec(2000);
-    appendString(&debugOutputStream, "Printing E");
-    appendString(&pcOutputStream, "E");
-    delaymSec(500);
-    appendString(&debugOutputStream, "Printing E");
-    appendString(&pcOutputStream, "E");
-    delaymSec(500);
-    appendString(&debugOutputStream, "Printing VV");
-    appendString(&pcOutputStream, "VV");
-    
-    while (1) {
-
-    }
     */
+
+    appendString(&debugOutputStream, "DEBUG\n");
 
     // Start interruptions
     startTimerList();
@@ -687,6 +611,7 @@ int main(void) {
     // Configure data dispatcher
     addLocalDriverDataDispatcher();
 
+    /*
     // Stream for motorBoard
     addI2CDriverDataDispatcher(&motorI2cDispatcher,
             "MOTOR_BOARD_DISPATCHER",
@@ -707,129 +632,16 @@ int main(void) {
             &mechanical2BoardInputStream,
             MECHANICAL_BOARD_2_I2C_ADDRESS);
 
-    // printDeviceList(getOutputStreamLogger(DEBUG));
-    // printDriverDataDispatcherList(getOutputStreamLogger(DEBUG), getDispatcherList());
-
-    /* PROG 32
-
-    // Stream for Beacon Receiver Board
-    addI2CDriverDataDispatcher( &beaconReceiverI2cDispatcher,
-                                                            "BEACON_RECEIVER_DISPATCHER",
-                                                            &beaconReceiverBoardInputBuffer,
-                                                            &beaconReceiverBoardInputBufferArray,
-                                                            MAIN_BOARD_LINK_TO_BEACON_BOARD_BUFFER_LENGTH,
-                                                            &beaconReceiverBoardOutputStream,
-                                                            &beaconReceiverBoardInputStream,
-                                                            BEACON_RECEIVER_I2C_ADDRESS);
-
-    // Stream for Strategy Board
-    addI2CDriverDataDispatcher( &strategyI2cDispatcher,
-                                                            "STRATEGY_DISPATCHER",
-                                                            &strategyBoardInputBuffer,
-                                                            &strategyBoardInputBufferArray,
-                                                            MAIN_BOARD_LINK_TO_STRATEGY_BOARD_BUFFER_LENGTH,
-                                                            &strategyBoardOutputStream,
-                                                            &strategyBoardInputStream,
-                                                            STRATEGY_BOARD_I2C_ADDRESS);
-
-    // printDriverDataDispatcherList(getOutputStreamLogger(DEBUG), getDispatcherList());
+    // Stream for Air Conditioning
+    addI2CDriverDataDispatcher(&airConditioningI2cDispatcher,
+            "AIR_CONDITIONING_DISPATCHER",
+            &airConditioningBoardInputBuffer,
+            &airConditioningBoardInputBufferArray,
+            MAIN_BOARD_LINK_TO_AIR_CONDITIONING_BOARD_BUFFER_LENGTH,
+            &airConditioningBoardOutputStream,
+            &airConditioningBoardInputStream,
+            AIR_CONDITIONING_BOARD_I2C_ADDRESS);
     */
-
-        /*
-    appendString(getOutputStreamLogger(ALWAYS), "Init LCD:");
-    initLcd4d(&lcd4d, &(lcd4dOutputStream), &(lcd4dInputBuffer.inputStream), &lcd4dInputBuffer);
-    delaymSec(5000);
-
-    setAutoBaud(&lcd4d);
-    delaymSec(1000);
-
-    appendString(getOutputStreamLogger(ERROR), "CLS\n");
-    Lcd4dVersion version;
-    Point point;
-    lcd4dTouchControl(&lcd4d, true);
-
-    delaymSec(500);
-
-    lcd4dClearScreen(&lcd4d);
-    delaymSec(500);
-    appendString(getOutputStreamLogger(ERROR), "INIT MEMORY\n");
-    lcd4dInitializeMemoryCardFAT(&lcd4d);
-    delaymSec(500);
-    
-    appendString(getOutputStreamLogger(ERROR), "READ WAV\n");
-    lcd4dPlayAudioWAVFileFromCardFAT(&lcd4d, LCD4D_PLAY_WAV_OPTION_RETURN_IMMEDIATELY, "test.wav");
-    delaymSec(4000);
-
-    appendString(getOutputStreamLogger(ERROR), "DISPLAY IMAGE\n");
-    lcd4dDisplayImageIconFromCardFAT(&lcd4d, 0, 0, "CybeLogo.Gci", 0L);
-    delaymSec(4000);
-
-    lcd4dSetDisplayResolution(&lcd4d, LCD4D_ORIENTATION_270);
-
-    
-    // appendString(getOutputStreamLogger(ERROR), "READ FILE LIST\n");
-    // lcddListDirectoryOfCardFAT(&lcd4d, "test.wav", getOutputStreamLogger(ERROR));
-    // appendString(getOutputStreamLogger(ERROR), "SCREEN COPY SAVE\n");
-    // lcd4dScreenCopySaveToCardFAT(&lcd4d, 0, 0, 320, 240, "screenDat.bmp");
-
-    while (1) {
-        delaymSec(500);
-
-        lcd4dClearScreen(&lcd4d);
-        delaymSec(500);
-    */
-        /*
-        getLcd4dVersionCommand(&lcd4d, &version);
-        delaymSec(500);
-        lcd4dPrintVersion(getOutputStreamLogger(ERROR), &version);
-        */
-
-        /*
-        delaymSec(500);
-        lcd4dDisplay(&lcd4d, true);
-        delaymSec(500);
-        lcd4dDisplay(&lcd4d, false);
-        */
-        /*
-        lcd4dSetPenType(&lcd4d, LCD4D_PEN_SIZE_DRAW_SOLID);
-        lcd4dDrawEllipse(&lcd4d, 100, 100, 50, 100);
-        delaymSec(500);
-
-        lcd4dSetPenType(&lcd4d, LCD4D_PEN_SIZE_DRAW_WIRE_FRAME);
-        lcd4dDrawEllipse(&lcd4d, 200, 200, 30, 30);
-        delaymSec(500);
-        */
-        /*
-        lcd4dSetFont(&lcd4d, LCD4D_FONT_LARGEST);
-        delaymSec(500);
-        lcd4dDrawChar(&lcd4d, '8', 10, 10);
-        delaymSec(500);
-        lcd4dDrawGraphicChar(&lcd4d, '7', 50, 200, 2, 2);
-        delaymSec(200);
-        lcd4dDrawString(&lcd4d, 10, 10, LCD4D_FONT_LARGEST, "Hello");
-        delaymSec(200);
-        lcd4dDrawGraphicString(&lcd4d, 50, 200, LCD4D_FONT_LARGEST, 2, 2, " World");
-
-#define        LCD4D_GET_TOUCH_COORDINATES_COMMAND        'o'
-#define        LCD4D_TOUCH_WAIT_UNTIL_ANY_TOUCH        0x00
-#define        LCD4D_TOUCH_WAIT_PRESS                    0x01
-#define        LCD4D_TOUCH_WAIT_RELEASE                0x02
-#define        LCD4D_TOUCH_WAIT_MOVING                    0x03
-#define        LCD4D_TOUCH_GET_STATUS                    0x04
-#define        LCD4D_TOUCH_GET_COORDINATES                0x05
-
-                 *         bool result = lcd4dWaitUntilTouch(&lcd4d, 5000);
-        if (result) {
-            lcd4dWaitTouchAndGetTouchCoordinates(&lcd4d, LCD4D_TOUCH_GET_COORDINATES, &point);
-            appendStringAndDec(getOutputStreamLogger(ERROR), "x=", point.x);
-            println(getOutputStreamLogger(ERROR));
-            appendStringAndDec(getOutputStreamLogger(ERROR), "y=", point.y);
-            println(getOutputStreamLogger(ERROR));
-            lcd4dDrawEllipse(&lcd4d, point.x, point.y, 10, 10);
-            delaymSec(1000);
-        }
-    }
-        */
 
     while (1) {
         waitForInstruction();
@@ -842,8 +654,6 @@ int main(void) {
 
     // wait other board initialization
     delaymSec(1500);
-
-    //initStrategyDriver();
 
     // 2012 VALUE
     unsigned int configValue = getConfigValue();
@@ -866,36 +676,9 @@ int main(void) {
     else {
         appendString(getOutputStreamLogger(ALWAYS), "COLOR:RED\n");
     }    
-
-    /*
-    if (configValue & CONFIG_SPEED_LOW_MASK) {
-        motionSetParameters(MOTION_TYPE_FORWARD_OR_BACKWARD, 0x0C, 0x24);
-        motionSetParameters(MOTION_TYPE_ROTATION, 0x12, 0x24);
-        motionSetParameters(MOTION_TYPE_ROTATION_ONE_WHEEL, 0x08, 0x08);
-        appendString(getOutputStreamLogger(ALWAYS), "SPEED LOW\n");
-    } else if (configValue & CONFIG_SPEED_VERY_LOW_MASK) {
-        motionSetParameters(MOTION_TYPE_FORWARD_OR_BACKWARD, 0x08, 0x10);
-        motionSetParameters(MOTION_TYPE_ROTATION, 0x08, 0x10);
-        motionSetParameters(MOTION_TYPE_ROTATION_ONE_WHEEL, 0x08, 0x08);
-        appendString(getOutputStreamLogger(ALWAYS), "SPEED VERY LOW\n");
-    } else if (configValue & CONFIG_SPEED_ULTRA_LOW_MASK) {
-        motionSetParameters(MOTION_TYPE_FORWARD_OR_BACKWARD, 0x06, 0x06);
-        motionSetParameters(MOTION_TYPE_ROTATION, 0x04, 0x04);
-        motionSetParameters(MOTION_TYPE_ROTATION_ONE_WHEEL, 0x04, 0x04);
-        appendString(getOutputStreamLogger(ALWAYS), "SPEED ULTRA LOW\n");
-    } else {
-        motionSetParameters(MOTION_TYPE_FORWARD_OR_BACKWARD, 0x12, 0x36);
-        motionSetParameters(MOTION_TYPE_ROTATION, 0x16, 0x16);
-        motionSetParameters(MOTION_TYPE_ROTATION_ONE_WHEEL, 0x12, 0x10);
-        appendString(getOutputStreamLogger(ALWAYS), "SPEED NORMAL \n");
-    }
-    */
-
     while (1) {
         waitForInstruction();
     }
-
-
 
     // TODO 2012 SV motionDriverMaintainPosition();
 

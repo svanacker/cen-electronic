@@ -1,6 +1,12 @@
 #include "../../common/commons.h"
 
-#include <plib.h>
+#ifdef PROG_30
+    #include <p30Fxxxx.h>
+#endif
+
+#ifdef PROG_32
+    #include <plib.h>
+#endif
 
 #include "pin.h"
 

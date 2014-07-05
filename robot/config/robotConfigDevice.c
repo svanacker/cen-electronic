@@ -125,13 +125,10 @@ bool isConfigDeviceOk(void) {
 void deviceConfigHandleRawData(char header,
         InputStream* inputStream,
         OutputStream* outputStream) {
-    if (header == COMMAND_CONFIG) {
-        // Send ack first
-        appendAck(outputStream);
-
+    if (header == ROBOT_CONFIG_DEVICE_HEADER) {
         // can take a little time
         refreshConfig();
-        append(outputStream, COMMAND_CONFIG);
+        ackCommand(outputStream, ROBOT_CONFIG_DEVICE_HEADER, COMMAND_CONFIG);
         appendHex4(outputStream, config);
     }
 }

@@ -4,7 +4,7 @@
 #include "../../pwmPic.h"
 
 #include "../dualHBridgeMotorPwm.h"
-#include "../motorPwm30F.h"
+#include "../motorPwm.h"
 
 #define BACK_VALUE_FOR_PWM 255
 
@@ -12,7 +12,7 @@ void initPwmForDualHBridge() {
     initPwmForMotor();
 }
 
-void pwmDualHBridgeMotor(signed int hBridgeSpeed1, signed int hBridgeSpeed2);
+void pwmDualHBridgeMotor(signed int hBridgeSpeed1, signed int hBridgeSpeed2) {
     if (hBridgeSpeed1 < 0) {
         // pwm2 => sense of left motor
         pwmMotor2(BACK_VALUE_FOR_PWM);

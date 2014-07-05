@@ -7,6 +7,7 @@
 #include "../../common/cmd/commonCommand.h"
 
 #include "../../common/pwm/motor/motorPwm.h"
+#include "../../common/pwm/motor/dualHBridgeMotorPwm.h"
 
 #include "../../common/io/printWriter.h"
 #include "../../common/io/reader.h"
