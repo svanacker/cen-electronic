@@ -17,11 +17,10 @@
 #define HEADER_WRITE_CONTENT_AND_DEEP_CLEAR_BUFFER       '!'
 
 /**
- * Defines the constant indicating that data is not corrected (connection is not established).
+ * Defines the constant indicating that data is not correct (connection is not established).
  * Only for I2C
  */
-//#define INCORRECT_DATA 0xFF
-#define INCORRECT_DATA -1
+#define INCORRECT_DATA 0xFF
 
 // forward declaration
 struct InputStream;

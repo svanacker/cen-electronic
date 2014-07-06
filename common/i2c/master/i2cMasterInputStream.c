@@ -38,24 +38,25 @@ void _i2cMasterOpenInputStream(InputStream* inputStream, int param1) {
  * @private
  */
 void fillI2CInputInternalBuffer(InputStream* inputStream) {
+    int i;
     while (1) {
         // TODO : REMOVE the delay if it's OK
         // delay100us(5);
         unsigned char c = i2cMasterReadChar(inputStream->address);
 
-        if (c == I2C_SLAVE_NO_DATA_IN_READ_BUFFER || c == INCORRECT_DATA || c == 'ÿ') {
+        if (c == I2C_SLAVE_NO_DATA_IN_READ_BUFFER || c == INCORRECT_DATA) {
             break;
         }
-
+        
         /*
         append(getOutputStreamLogger(DEBUG), '(');
-        append(getOutputStreamLogger(DEBUG), c);
+        appendHex2(getOutputStreamLogger(DEBUG), c);
         append(getOutputStreamLogger(DEBUG), ')');
-         */
+        */
 
         Buffer* buffer = getI2CMasterInputBuffer(inputStream);
 
-        // bufferWriteChar(buffer, c);
+        bufferWriteChar(buffer, c);
     }
 }
 

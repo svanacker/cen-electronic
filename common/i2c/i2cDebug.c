@@ -31,8 +31,8 @@ void initI2CDebugBuffers(Buffer* aDebugI2cInputBuffer,
     debugI2cInputBuffer = aDebugI2cInputBuffer;
     debugI2cOutputBuffer = aDebugI2cOutputBuffer;
     // Init Buffers
-    initBuffer(debugI2cInputBuffer, debugI2cInputBufferArray, debugI2cInputBufferLength, "I2C DBG", IN_AS_STRING);
-    initBuffer(debugI2cOutputBuffer, debugI2cOutputBufferArray, debugI2cOutputBufferLength, "I2C DBG", OUT_AS_STRING);
+    initBuffer(debugI2cInputBuffer, debugI2cInputBufferArray, debugI2cInputBufferLength, "I2C IN DBG", IN_AS_STRING);
+    initBuffer(debugI2cOutputBuffer, debugI2cOutputBufferArray, debugI2cOutputBufferLength, "I2C OUT DBG", OUT_AS_STRING);
 }
 
 void printI2cDebugBuffers() {

@@ -10,7 +10,7 @@ const char* deviceLCDGetName() {
 int deviceLCDGetInterface(char commandHeader, int mode, bool fillDeviceArgumentList) {
     if (commandHeader == COMMAND_LCD) {
         if (fillDeviceArgumentList) {
-            setFunction("writeLCD", LCD_CHAR_COUNT_BY_MESSAGE + 2, 0);
+            setFunction("writeLCD", LCD_CHAR_COUNT_BY_MESSAGE + 1, 0);
             setArgumentUnsignedHex2(0, "length");
             int i;
             for (i = 1; i <= LCD_CHAR_COUNT_BY_MESSAGE; i++) {

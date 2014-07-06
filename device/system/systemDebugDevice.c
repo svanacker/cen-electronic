@@ -1,8 +1,6 @@
 #include "systemDebugDevice.h"
 #include "systemDebugDeviceInterface.h"
 
-#include "../../common/delay/delay30F.h"
-
 #include "../../common/i2c/i2cDebug.h"
 
 #include "../../common/io/inputStream.h"
@@ -14,6 +12,9 @@
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
 #include "../../common/log/logHandler.h"
+
+#include "../../drivers/dispatcher/driverDataDispatcherList.h"
+#include "../../drivers/dispatcher/driverDataDispatcherDebug.h"
 
 #include "../../device/device.h"
 #include "../../device/deviceUsage.h"
@@ -29,7 +30,7 @@ bool deviceSystemDebugIsOk() {
 }
 
 void deviceSystemDebugHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream) {
-    if (header == COMMAND_LOG) {
+    if (header == COMMAND_WRITE_LOG_LEVEL) {
         int logHandlerIndex = readHex2(inputStream);
         int logLevel = readHex2(inputStream);
 
@@ -37,18 +38,20 @@ void deviceSystemDebugHandleRawData(char header, InputStream* inputStream, Outpu
         logHandler->logLevel = logLevel;
 
         // data
-        appendAck(outputStream);
-        append(outputStream, COMMAND_LOG);
+        ackCommand(outputStream, SYSTEM_DEBUG_DEVICE_HEADER, COMMAND_WRITE_LOG_LEVEL);
         // we don't use driver stream (buffered->too small), instead of log (not buffered)
         printLogger(getOutputStreamLogger(ALWAYS));
     }
     // I2C Management
     else if (header == COMMAND_DEBUG_I2C) {
-        appendAck(outputStream);
+        ackCommand(outputStream, SYSTEM_DEBUG_DEVICE_HEADER, COMMAND_DEBUG_I2C);
         printI2cDebugBuffers();
-
-        // Response
-        append(outputStream, COMMAND_DEBUG_I2C);
+    }
+    // Dispatcher List
+    else if (header == COMMAND_DISPATCHER_LIST) {
+        ackCommand(outputStream, SYSTEM_DEBUG_DEVICE_HEADER, COMMAND_DISPATCHER_LIST);
+        DriverDataDispatcherList* dispatcherList = getDispatcherList();
+        printDriverDataDispatcherList(getOutputStreamLogger(ALWAYS), dispatcherList);         
     }
 }
 

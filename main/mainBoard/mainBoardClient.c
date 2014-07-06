@@ -67,6 +67,10 @@
 #include "../../device/system/systemDevice.h"
 #include "../../device/system/systemDeviceInterface.h"
 
+// SYSTEM DEBUG
+#include "../../device/system/systemDebugDevice.h"
+#include "../../device/system/systemDebugDeviceInterface.h"
+
 // TEST
 #include "../../device/test/deviceTest.h"
 #include "../../device/test/deviceTestInterface.h"
@@ -402,6 +406,7 @@ void initDevicesDescriptor() {
     // Test & System
     // addI2CRemoteDevice(&testDevice, getTestDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
     addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
+    addLocalDevice(getSystemDebugDeviceInterface(), getSystemDebugDeviceDescriptor());
 
     // Local
     addLocalDevice(getLCDDeviceInterface(), getLCDDeviceDescriptor());
@@ -631,6 +636,7 @@ int main(void) {
             &mechanical2BoardOutputStream,
             &mechanical2BoardInputStream,
             MECHANICAL_BOARD_2_I2C_ADDRESS);
+    */
 
     // Stream for Air Conditioning
     addI2CDriverDataDispatcher(&airConditioningI2cDispatcher,
@@ -641,7 +647,6 @@ int main(void) {
             &airConditioningBoardOutputStream,
             &airConditioningBoardInputStream,
             AIR_CONDITIONING_BOARD_I2C_ADDRESS);
-    */
 
     while (1) {
         waitForInstruction();
