@@ -72,9 +72,8 @@ void deviceStartMatchDetectorHandleRawData(char header,
         InputStream* inputStream,
         OutputStream* outputStream) {
     if (header == COMMAND_STEP_BY_STEP) {
-        appendAck(outputStream);
         robotNextStep();
-        append(outputStream, COMMAND_STEP_BY_STEP);
+        ackCommand(outputStream, START_MATCH_DETECTOR_DEVICE_HEADER, COMMAND_STEP_BY_STEP);
     }
 }
 

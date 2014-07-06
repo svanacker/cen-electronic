@@ -33,6 +33,7 @@ int deviceRobotInfraredDetectorGetInterface(char header, int mode, bool fillDevi
 
 static DeviceInterface deviceInterface = {
     .deviceGetName = &deviceRobotInfraredDetectorGetName,
+    .deviceHeader = ROBOT_INFRARED_DETECTOR_DEVICE_HEADER,
     .deviceGetInterface = &deviceRobotInfraredDetectorGetInterface
 };
 

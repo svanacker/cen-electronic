@@ -169,8 +169,7 @@ void deviceRobotSonarDetectorHandleRawData(char header,
 
     if (header == COMMAND_SET_SONAR_STATUS) {
         sonarStatus = readHex2(inputStream);
-        appendAck(outputStream);
-        append(outputStream, COMMAND_SET_SONAR_STATUS);
+        ackCommand(outputStream, ROBOT_SONAR_DETECTOR_DEVICE_HEADER, COMMAND_SET_SONAR_STATUS);
     }
 }
 

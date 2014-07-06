@@ -39,8 +39,7 @@ void deviceSonarHandleRawData(char header,
         OutputStream* outputStream) {
     if (header == COMMAND_GET_SONAR) {
         int sonarIndex = readHex2(inputStream);
-        appendAck(outputStream);
-        append(outputStream, COMMAND_GET_SONAR);
+        ackCommand(outputStream, SONAR_DEVICE_HEADER, COMMAND_GET_SONAR);
         int i;
         for (i = 0; i < 3; i++) {
             if (i > 0) {
@@ -59,7 +58,7 @@ void deviceSonarHandleRawData(char header,
 
         SRF02ChangeAddress(oldAddress, newAddress); 
         
-        appendAck(outputStream);
+        ackCommand(outputStream, SONAR_DEVICE_HEADER, COMMAND_SONAR_CHANGE_ADDRESS);
         append(outputStream, COMMAND_SONAR_CHANGE_ADDRESS);
     }
 }

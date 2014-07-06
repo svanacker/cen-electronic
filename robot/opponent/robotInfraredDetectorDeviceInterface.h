@@ -3,6 +3,8 @@
 
 #include "../../device/deviceInterface.h"
 
+#define ROBOT_INFRARED_DETECTOR_DEVICE_HEADER       'I'
+
 /** Ask the status of the infrared detection. */
 #define COMMAND_INFRARED_DETECTOR_DETECTION         'X'
 
@@ -11,7 +13,6 @@
 
 /** When detector detection is notified. */
 #define NOTIFY_INFRARED_DETECTOR_DETECTION         'O'
-
 
 /**
 * Interface for Robot Infrared Detector Device
