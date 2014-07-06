@@ -23,7 +23,13 @@ int deviceSystemDebugGetInterface(char header, int mode, bool fillDeviceArgument
     }
     else if (header == COMMAND_DISPATCHER_LIST) {
         if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("dispatcherList");
+            setFunctionNoArgumentAndNoResult("showDispatcherList");
+        }
+        return 0;
+    }
+    else if (header == COMMAND_SERIAL_INPUT_BUFFERS) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("showSerialInputBuffers");
         }
         return 0;
     }

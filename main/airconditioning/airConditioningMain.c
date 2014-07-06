@@ -18,6 +18,8 @@
 #include "../../common/io/printWriter.h"
 #include "../../common/io/stream.h"
 
+
+#include "../../common/i2c/i2cDebug.h"
 #include "../../common/i2c/slave/i2cSlaveLink.h"
 
 #include "../../common/pwm/servo/servoPwm.h"
@@ -39,6 +41,10 @@
 // System
 #include "../../device/system/systemDevice.h"
 #include "../../device/system/systemDeviceInterface.h"
+
+// System
+#include "../../device/system/systemDebugDevice.h"
+#include "../../device/system/systemDebugDeviceInterface.h"
 
 // Servo
 #include "../../device/servo/servoDevice.h"
@@ -95,6 +101,12 @@ static char i2cSlaveOutputBufferArray[AIR_CONDITIONING_BOARD_I2C_OUTPUT_BUFFER_L
 static Buffer i2cSlaveOutputBuffer;
 static StreamLink i2cSerialStreamLink;
 
+// I2C Debug
+static char i2cDebugSlaveInputBufferArray[AIR_CONDITIONING_BOARD_I2C_INPUT_BUFFER_LENGTH];
+static Buffer i2cDebugSlaveInputBuffer;
+static char i2cDebugSlaveOutputBufferArray[AIR_CONDITIONING_BOARD_I2C_OUTPUT_BUFFER_LENGTH];
+static Buffer i2cDebugSlaveOutputBuffer;
+
 // logs
 static LogHandler serialLogHandler;
 
@@ -113,6 +125,8 @@ static char driverResponseBufferArray[AIR_CONDITIONING_BOARD_RESPONSE_DRIVER_BUF
 void initDevicesDescriptor() {
     initDeviceList(&deviceListArray, AIR_CONDITIONING_BOARD_DEVICE_LENGTH);
     addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
+    addLocalDevice(getSystemDebugDeviceInterface(), getSystemDebugDeviceDescriptor());
+
     addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor());
     addLocalDevice(getAirConditioningDeviceInterface(), getAirConditioningDeviceDescriptor());
 
@@ -163,9 +177,7 @@ int main(void) {
     appendString(getOutputStreamLogger(INFO), getPicName());
     println(getOutputStreamLogger(INFO));
 
-    // Initializes the I2C
-    // i2cMasterInitialize();
-
+    // I2C
     openSlaveI2cStreamLink(&i2cSerialStreamLink,
                             &i2cSlaveInputBuffer,
                             &i2cSlaveInputBufferArray,
@@ -175,6 +187,14 @@ int main(void) {
                             AIR_CONDITIONING_BOARD_I2C_OUTPUT_BUFFER_LENGTH,
                             AIR_CONDITIONING_BOARD_I2C_ADDRESS
                         );
+
+    // I2C Debug
+    initI2CDebugBuffers(&i2cDebugSlaveInputBuffer,
+                        &i2cDebugSlaveInputBufferArray,
+                        AIR_CONDITIONING_BOARD_I2C_INPUT_BUFFER_LENGTH,
+                        &i2cDebugSlaveOutputBuffer,
+                        &i2cDebugSlaveOutputBufferArray,
+                        AIR_CONDITIONING_BOARD_I2C_OUTPUT_BUFFER_LENGTH);
 
     // init the devices
     initDevicesDescriptor();

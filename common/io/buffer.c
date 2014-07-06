@@ -230,9 +230,13 @@ OutputStream* getOutputStream(Buffer* buffer) {
 }
 
 void printDebugBuffer(OutputStream* outputStream, Buffer* buffer) {
+    if (buffer == NULL) {
+        appendString(outputStream, "\nBuffer is NULL !\n");
+        return;
+    }
     appendString(outputStream, "\nBuf:");
 
-    if (buffer->name) {
+    if (buffer->name != NULL) {
         appendKeyAndName(outputStream, "name=", buffer->name);
     }
 

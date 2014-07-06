@@ -44,7 +44,7 @@ void addUartDriverDataDispatcher(DriverDataDispatcher* uartDispatcher,
 
     // Init the input Stream : Slave/Target UARTxx -> Uart Buffer
     initBuffer(uartInputBuffer, uartInputBufferArray, uartInputBufferLength, "UART Input", dispatcherName);
-    initSerialInputBuffer(uartInputBuffer, targetUartIndex);
+    initSerialInputBuffer(uartInputBuffer, targetUartIndex); // TODO : TO Verify !!!
     uartDispatcher->inputStream = &(uartInputBuffer->inputStream);
 
     // add to the list

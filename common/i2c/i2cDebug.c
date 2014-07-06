@@ -12,6 +12,7 @@
 
 static Buffer* debugI2cInputBuffer;
 static Buffer* debugI2cOutputBuffer;
+static bool debugI2cEnabled;
 
 Buffer* getDebugI2cInputBuffer() {
     return debugI2cInputBuffer;
@@ -20,6 +21,15 @@ Buffer* getDebugI2cInputBuffer() {
 Buffer* getDebugI2cOutputBuffer() {
     return debugI2cOutputBuffer;
 }
+
+bool getDebugI2cEnabled() {
+    return debugI2cEnabled;
+}
+
+void setDebugI2cEnabled(bool enabled) {
+    debugI2cEnabled = enabled;
+}
+
 
 void initI2CDebugBuffers(Buffer* aDebugI2cInputBuffer,
                          char (*debugI2cInputBufferArray)[],
@@ -33,19 +43,25 @@ void initI2CDebugBuffers(Buffer* aDebugI2cInputBuffer,
     // Init Buffers
     initBuffer(debugI2cInputBuffer, debugI2cInputBufferArray, debugI2cInputBufferLength, "I2C IN DBG", IN_AS_STRING);
     initBuffer(debugI2cOutputBuffer, debugI2cOutputBufferArray, debugI2cOutputBufferLength, "I2C OUT DBG", OUT_AS_STRING);
+    debugI2cEnabled = true;
 }
 
 void printI2cDebugBuffers() {
-    OutputStream* outputStreamLogger = getOutputStreamLogger(INFO);
+    OutputStream* outputStreamLogger = getOutputStreamLogger(ALWAYS);
+
+    println(outputStreamLogger);
+    appendString(outputStreamLogger, "I2C:Is Enabled:");
+    appendBool(outputStreamLogger, debugI2cEnabled);
+    println(outputStreamLogger);
+   
     if (debugI2cInputBuffer != NULL) {
-        println(outputStreamLogger);
         appendString(outputStreamLogger, "I2C:In:");
-        copyInputToOutputStream(getInputStream(debugI2cInputBuffer), getDebugOutputStreamLogger(), NULL, COPY_ALL);
+        copyInputToOutputStream(getInputStream(debugI2cInputBuffer), outputStreamLogger, NULL, COPY_ALL);
+        println(outputStreamLogger);
     }
     if (debugI2cOutputBuffer != NULL) {
-        println(outputStreamLogger);
         appendString(outputStreamLogger, "I2C:Out:");
-        copyInputToOutputStream(getInputStream(debugI2cOutputBuffer), getDebugOutputStreamLogger(), NULL, COPY_ALL);
+        copyInputToOutputStream(getInputStream(debugI2cOutputBuffer), outputStreamLogger, NULL, COPY_ALL);
         println(outputStreamLogger);
     }
 }

@@ -9,4 +9,9 @@
  */
 void initSerialInputBuffer(Buffer* buffer, int serialPortIndex);
 
+/**
+ * Debug Function which writes the content of each input Buffer.
+ */
+void printSerialInputBuffers(OutputStream* outputStream);
+
 #endif

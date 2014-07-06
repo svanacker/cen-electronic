@@ -12,6 +12,9 @@
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
 #include "../../common/log/logHandler.h"
+#include "../../common/log/loggerDebug.h"
+
+#include "../../common/serial/serialInputInterrupt.h"
 
 #include "../../drivers/dispatcher/driverDataDispatcherList.h"
 #include "../../drivers/dispatcher/driverDataDispatcherDebug.h"
@@ -52,6 +55,11 @@ void deviceSystemDebugHandleRawData(char header, InputStream* inputStream, Outpu
         ackCommand(outputStream, SYSTEM_DEBUG_DEVICE_HEADER, COMMAND_DISPATCHER_LIST);
         DriverDataDispatcherList* dispatcherList = getDispatcherList();
         printDriverDataDispatcherList(getOutputStreamLogger(ALWAYS), dispatcherList);         
+    }
+    // Serial Input Buffers
+    else if (header == COMMAND_SERIAL_INPUT_BUFFERS) {
+        ackCommand(outputStream, SYSTEM_DEBUG_DEVICE_HEADER, COMMAND_SERIAL_INPUT_BUFFERS);
+        printSerialInputBuffers(getOutputStreamLogger(ALWAYS));         
     }
 }
 

@@ -20,7 +20,7 @@
 #define SERIAL_PORT_6         6
 
 /** The default speed of the serial tranmission is fixed to 115200. */
-#define DEFAULT_SERIAL_SPEED 115200
+#define DEFAULT_SERIAL_SPEED 115200L
 
 /**
  * Open the serial port with the specified transmission rate.
@@ -38,7 +38,7 @@ void openSerialAtDefaultSpeed(unsigned char serialPortIndex);
 
 /**
  * Closes the serial port.
- * @param serialPortIndex the serialPortIndex we want to cmpse
+ * @param serialPortIndex the serialPortIndex we want to close
  */
 void closeSerial(unsigned char serialPortIndex);
 

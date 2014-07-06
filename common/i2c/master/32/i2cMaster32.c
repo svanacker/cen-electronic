@@ -26,5 +26,5 @@ inline void portableCloseI2C() {
 }
 
 inline void portableMasterWaitSendI2C( void ) {
-	// TODO !!!
+	while (I2C1CONbits.SEN);
 }

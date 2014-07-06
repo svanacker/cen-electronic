@@ -5,6 +5,8 @@
 
 #include "../../../../common/error/error.h"
 
+#include "../../../../common/io/printWriter.h"
+#include "../../../../common/io/binaryPrintWriter.h"
 #include "../../../../common/log/logger.h"
 #include "../../../../common/log/logLevel.h"
 
@@ -39,4 +41,12 @@ void i2cSlaveInitialize(char writeAddress) {
 
     // Enable I2C
     I2CCONbits.I2CEN = 1;
+
+    appendString(getOutputStreamLogger(DEBUG), "I2C Slave CONF=");
+    appendBinary16(getOutputStreamLogger(DEBUG), I2CCON, 4);
+    appendCRLF(getOutputStreamLogger(DEBUG));
+
+    appendString(getOutputStreamLogger(DEBUG), "I2C Slave Write Address=");
+    appendHex2(getOutputStreamLogger(DEBUG), writeAddress);
+    appendCRLF(getOutputStreamLogger(DEBUG));
 }

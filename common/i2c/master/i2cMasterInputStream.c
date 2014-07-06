@@ -2,6 +2,7 @@
 
 #include "i2cMaster.h"
 #include "i2cMasterSetup.h"
+#include "../i2cDebug.h"
 
 #include "../../../common/delay/cenDelay.h"
 
@@ -46,6 +47,11 @@ void fillI2CInputInternalBuffer(InputStream* inputStream) {
 
         if (c == I2C_SLAVE_NO_DATA_IN_READ_BUFFER || c == INCORRECT_DATA) {
             break;
+        }
+
+        if (getDebugI2cEnabled()) {
+            Buffer* debugBuffer = getDebugI2cInputBuffer();
+            bufferWriteChar(debugBuffer, c);
         }
         
         /*

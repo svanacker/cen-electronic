@@ -57,7 +57,6 @@ typedef struct DriverDataDispatcher {
  * I2C / UART ...)
  * @param dataToTransferCount number of bytes which must be sent
  * @param dataToReceiveCount number of bytes which must be received
- * @return the response data containing the result of the invocation of the targetted device
  */
 void transmitDriverData(int transmitMode,
                         int address,
@@ -70,6 +69,7 @@ void transmitDriverData(int transmitMode,
 /**
  * Handle data which are notification (and not direct response) from dispatcher.
  * @param dispatcher the dispatcher from which we try to handle notification.
+ * @return true if there is a notification, false else
  */
 bool handleNotificationFromDispatcher(DriverDataDispatcher* dispatcher);
 

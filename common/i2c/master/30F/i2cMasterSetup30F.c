@@ -44,7 +44,7 @@ void i2cMasterInitialize(void) {
     WaitI2C();
 
     appendString(getOutputStreamLogger(DEBUG), "I2C Master CONF=");
-    appendBinary16(getOutputStreamLogger(DEBUG), I2C_ON, 4);
+    appendBinary16(getOutputStreamLogger(DEBUG), I2C_CON, 4);
     appendCRLF(getOutputStreamLogger(DEBUG));
 
     initialized = true;

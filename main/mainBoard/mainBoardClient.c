@@ -16,6 +16,8 @@
 
 #include "../../common/delay/cenDelay.h"
 
+#include "../../common/i2c/i2cDebug.h"
+
 #include "../../common/i2c/master/i2cMaster.h"
 #include "../../common/i2c/master/i2cMasterSetup.h"
 
@@ -151,8 +153,8 @@
 
 #ifndef MPLAB_SIMULATION
     #ifdef PROG_32
-        #define SERIAL_PORT_DEBUG         SERIAL_PORT_2
-        #define SERIAL_PORT_PC             SERIAL_PORT_1
+        #define SERIAL_PORT_DEBUG         SERIAL_PORT_2 
+        #define SERIAL_PORT_PC             SERIAL_PORT_6
         #define SERIAL_PORT_LCD            SERIAL_PORT_5
     #else
         #define SERIAL_PORT_DEBUG         SERIAL_PORT_1
@@ -181,14 +183,20 @@ static OutputStream pcOutputStream;
 static StreamLink pcSerialStreamLink;
 
 // both OutputStream as composite
-static CompositeOutputStream compositePcAndDebugOutputStream;
-static CompositeOutputStream compositeDriverAndDebugOutputStream;
+// static CompositeOutputStream compositePcAndDebugOutputStream;
+// static CompositeOutputStream compositeDriverAndDebugOutputStream;
 
 // DRIVERS
 static Buffer driverRequestBuffer;
 static char driverRequestBufferArray[MAIN_BOARD_REQUEST_DRIVER_BUFFER_LENGTH];
 static Buffer driverResponseBuffer;
 static char driverResponseBufferArray[MAIN_BOARD_RESPONSE_DRIVER_BUFFER_LENGTH];
+
+// DEBUG I2C
+static char i2cMasterDebugOutputBufferArray[MAIN_BOARD_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH];
+static Buffer i2cMasterDebugOutputBuffer;
+static char i2cMasterDebugInputBufferArray[MAIN_BOARD_I2C_DEBUG_MASTER_IN_BUFFER_LENGTH];
+static Buffer i2cMasterDebugInputBuffer;
 
 // DISPATCHER I2C
 
@@ -247,6 +255,7 @@ void mainBoardCallbackRawData(const Device* device,
 //    if (header == NOTIFY_MOTION_STATUS || header == COMMAND_NOTIFY_TEST || header == COMMAND_PLIERS_2011_OPEN) {
     // MOTOR BOARD notification
     if (header == NOTIFY_MOTION_STATUS) {
+        /*
         appendString(getOutputStreamLogger(INFO), "\nNotification : From MOTOR BOARD \n");
         // NOTIFY_MOTION_STATUS / COMMAND_NOTIFY_TEST
         checkIsChar(inputStream, header);
@@ -283,9 +292,11 @@ void mainBoardCallbackRawData(const Device* device,
         setReadyForNextMotion(true);
         // Robot finished the trajectory
         instructionType = INSTRUCTION_TYPE_NO_MOVE;
+        */
     }
     // STRATEGY BOARD notification message of MOTOR => Must be relayed TO MOTOR
     else if (header == COMMAND_MOTION_SPLINE_ABSOLUTE || header == COMMAND_MOTION_SPLINE_RELATIVE) {
+        /*
         appendString(getOutputStreamLogger(INFO), "Notification : Spline : From STRATEGY BOARD : relayed to MOTOR_BOARD \n");
         appendStringAndDec(getOutputStreamLogger(INFO), "getDriverResponseBuffer:", getBufferElementsCount(getDriverResponseBuffer()));
         // forwardCallbackRawDataTo(inputStream, &debugOutputStream, device, header, DEVICE_MODE_INPUT);
@@ -349,14 +360,18 @@ void mainBoardCallbackRawData(const Device* device,
         }        
         // forwardCallbackRawDataTo(inputStream, &(compositeDriverAndDebugOutputStream.outputStream), device, header, DEVICE_MODE_INPUT);
         transmitFromDriverRequestBuffer();
+        */
     } else if (header == COMMAND_MOTION_LEFT_IN_DECI_DEGREE || header == COMMAND_MOTION_RIGHT_IN_DECI_DEGREE) {
+        /*
         appendString(getOutputStreamLogger(INFO), "Notification : Rotation : From STRATEGY BOARD : relayed to MOTOR_BOARD \n");
         instructionType = INSTRUCTION_TYPE_ROTATION;
         forwardCallbackRawDataTo(inputStream, &(compositeDriverAndDebugOutputStream.outputStream), device, header, DEVICE_MODE_INPUT);
         transmitFromDriverRequestBuffer();
+        */
     } 
     // Mechanical Board notification
     else if (header == NOTIFY_INFRARED_DETECTOR_DETECTION) {
+        /*
         appendString(getOutputStreamLogger(INFO), "\nNotification : From MECHANICAL BOARD :\n");
         checkIsChar(inputStream, NOTIFY_INFRARED_DETECTOR_DETECTION);
         // type
@@ -373,6 +388,7 @@ void mainBoardCallbackRawData(const Device* device,
                 mustNotifyObstacle = true;
             }
         }
+        */
     }
     // Cannot not handle the notification !
     else {
@@ -485,6 +501,7 @@ bool isObstacleOutsideTheTable(int distance) {
 */
 
 void waitForInstruction() {
+    /*
     // Listen instruction from pcStream->Devices
     handleStreamInstruction(
             &pcInputBuffer,
@@ -492,7 +509,7 @@ void waitForInstruction() {
             &pcOutputStream,
             &filterRemoveCRLF,
             NULL);
-
+    */
     // Listen instruction from debugStream->Devices
     handleStreamInstruction(
             &debugInputBuffer,
@@ -501,14 +518,16 @@ void waitForInstruction() {
             &filterRemoveCRLF,
             NULL);
 
-    /*
     // Listen instructions from Devices (I2C Slave) -> Main Board (I2C Master)
+    /*
     while (handleNotificationFromDispatcherList(TRANSMIT_I2C)) {
         // loop for all notification
         // notification handler must avoid to directly information in notification callback
         // and never to the call back device
     }
+    */
 
+    /*
     // Notify to the strategy board the position of the robot
     if (isRobotPositionChanged()) {
         sentStrategyRobotPosition(0, getRobotPositionX(), getRobotPositionY(), getRobotAngle());
@@ -611,7 +630,7 @@ int main(void) {
     appendString(&debugOutputStream, "DEBUG\n");
 
     // Start interruptions
-    startTimerList();
+    // sstartTimerList();
 
     // Configure data dispatcher
     addLocalDriverDataDispatcher();
@@ -638,6 +657,7 @@ int main(void) {
             MECHANICAL_BOARD_2_I2C_ADDRESS);
     */
 
+    /*
     // Stream for Air Conditioning
     addI2CDriverDataDispatcher(&airConditioningI2cDispatcher,
             "AIR_CONDITIONING_DISPATCHER",
@@ -648,6 +668,14 @@ int main(void) {
             &airConditioningBoardInputStream,
             AIR_CONDITIONING_BOARD_I2C_ADDRESS);
 
+    // I2C Debug
+    initI2CDebugBuffers(&i2cMasterDebugInputBuffer,
+                        &i2cMasterDebugInputBufferArray,
+                        MAIN_BOARD_I2C_DEBUG_MASTER_IN_BUFFER_LENGTH,
+                        &i2cMasterDebugOutputBuffer,
+                        &i2cMasterDebugOutputBufferArray,
+                        MAIN_BOARD_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH);
+    */
     while (1) {
         waitForInstruction();
     }
