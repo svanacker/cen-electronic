@@ -1,5 +1,5 @@
-#ifndef I2C_DEBUG_DEVICE_INTERFACE_H
-#define I2C_DEBUG_DEVICE_INTERFACE_H
+#ifndef I2C_MASTER_DEBUG_DEVICE_INTERFACE_H
+#define I2C_MASTER_DEBUG_DEVICE_INTERFACE_H
 
 #include "../../../device/deviceInterface.h"
 

@@ -49,6 +49,10 @@
 #include "../../device/system/systemDevice.h"
 #include "../../device/system/systemDeviceInterface.h"
 
+// I2C Slave Device/
+#include "../../device/i2c/slave/i2cSlaveDebugDevice.h"
+#include "../../device/i2c/slave/i2cSlaveDebugDeviceInterface.h"
+
 // Motors
 #include "../../device/motor/pwmMotorDevice.h"
 #include "../../device/motor/pwmMotorDeviceInterface.h"
@@ -154,6 +158,7 @@ void initDevicesDescriptor() {
     addLocalDevice(getTrajectoryDeviceInterface(), getTrajectoryDeviceDescriptor());
     addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
     addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
+    addLocalDevice(getI2cSlaveDebugDeviceInterface(), getI2cSlaveDebugDeviceDescriptor());
 
     initDevices();
 }
