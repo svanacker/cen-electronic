@@ -15,12 +15,6 @@ int deviceSystemDebugGetInterface(char header, int mode, bool fillDeviceArgument
         }
         commandLengthValueForMode(mode, 4, 0);
     }
-    else if (header == COMMAND_DEBUG_I2C) {
-        if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("i2cDebug");
-        }
-        return 0;
-    }
     else if (header == COMMAND_DISPATCHER_LIST) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("showDispatcherList");

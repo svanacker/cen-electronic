@@ -49,7 +49,7 @@ void i2cMasterWriteChar(char address, char c) {
 }
 
 char i2cMasterReadChar(char address) {
-    //    i2cMasterWriteChar(address, I2C_SLAVE_FAKE_WRITE);
+    //    portableMasterWriteI2C(address, I2C_SLAVE_FAKE_WRITE);
     //    delaymSec(50);
     WaitI2C();
 

@@ -8,19 +8,25 @@
 #include "../serial.h"
 
 #include "../../../common/io/buffer.h"
+#include "../../../common/io/outputStream.h"
+#include "../../../common/io/printWriter.h"
 
-static Buffer* buffer1;
-static Buffer* buffer2;
+static Buffer* serialInputBuffer1;
+static Buffer* serialInputBuffer2;
+
+static int serialInterruptCounter1;
+static int serialInterruptCounter2;
 
 /**
  * Interrupt on Serial 1
  */
 void __attribute__((__interrupt__, auto_psv)) _U1RXInterrupt(void) {
     char c;
-    if (buffer1 != NULL) {
+    serialInterruptCounter1++;
+    if (serialInputBuffer1 != NULL) {
         while (U1STAbits.URXDA) {
             c = U1RXREG;
-            bufferWriteChar(buffer1, c);
+            bufferWriteChar(serialInputBuffer1, c);
         }
     }
 
@@ -33,11 +39,11 @@ void __attribute__((__interrupt__, auto_psv)) _U1RXInterrupt(void) {
  */
 void __attribute__((__interrupt__, auto_psv)) _U2RXInterrupt(void) {
     char c;
-
-    if (buffer2 != NULL) {
+    serialInterruptCounter2++;
+    if (serialInputBuffer2 != NULL) {
         while (U2STAbits.URXDA) {
             c = U2RXREG;
-            bufferWriteChar(buffer2, c);
+            bufferWriteChar(serialInputBuffer2, c);
         }
     }
 
@@ -47,8 +53,18 @@ void __attribute__((__interrupt__, auto_psv)) _U2RXInterrupt(void) {
 
 void initSerialInputBuffer(Buffer* buffer, int serialPortIndex) {
     if (serialPortIndex == SERIAL_PORT_1) {
-        buffer1 = buffer;
+        serialInputBuffer1 = buffer;
     } else if (serialPortIndex == SERIAL_PORT_2) {
-        buffer2 = buffer;
+        serialInputBuffer2 = buffer;
     }
+}
+
+void printSerialInputBuffers(OutputStream* outputStream) {
+    appendString(outputStream, "SERIAL INPUT BUFFER 1:");
+    appendStringAndDec(outputStream, "\nCounter1=", serialInterruptCounter1);
+    printDebugBuffer(outputStream, serialInputBuffer1);
+
+    appendString(outputStream, "SERIAL INPUT BUFFER 2:");
+    appendStringAndDec(outputStream, "\nCounter2=", serialInterruptCounter2);
+    printDebugBuffer(outputStream, serialInputBuffer2);
 }

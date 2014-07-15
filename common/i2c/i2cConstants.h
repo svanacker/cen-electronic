@@ -101,6 +101,9 @@
 #define MD22_ADDRESS_6             0xBC
 #define MD22_ADDRESS_7             0xBE
 
+// PCF8573 Address
+#define PCF8573P_WRITE_ADDRESS     0xD0
+
 // SRF02
 
 #define SRF02_ADDRESS_0         0xE0

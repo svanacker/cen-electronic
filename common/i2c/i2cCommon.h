@@ -3,6 +3,8 @@
 
 #include "../../common/io/buffer.h"
 
+#define NACK    0
+
 /**
  * Indirection for IdleI2C() used to manage Simulation
  */

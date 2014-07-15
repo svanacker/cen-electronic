@@ -21,9 +21,6 @@
 /** Command to know if the remote board is present. */
 #define COMMAND_PING 'P'
 
-/** Command to debug the I2C. */
-#define COMMAND_DEBUG_I2C 'I'
-
 /** Command to see the list of Timer List. */
 #define COMMAND_TIMER_LIST 'T'
 

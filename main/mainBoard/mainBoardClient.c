@@ -73,6 +73,10 @@
 #include "../../device/system/systemDebugDevice.h"
 #include "../../device/system/systemDebugDeviceInterface.h"
 
+// I2C MASTER DEBUG
+#include "../../device/i2c/master/i2cMasterDebugDevice.h"
+#include "../../device/i2c/master/i2cMasterDebugDeviceInterface.h"
+
 // TEST
 #include "../../device/test/deviceTest.h"
 #include "../../device/test/deviceTestInterface.h"
@@ -114,7 +118,7 @@
 #include "../../device/beacon/beaconReceiverDeviceInterface.h"
 
 // Drivers
-
+#include "../../drivers/clock/pcf8573p.h"
 #include "../../drivers/io/pcf8574.h"
 #include "../../drivers/test/driverTest.h"
 #include "../../drivers/system/systemDriver.h"
@@ -423,6 +427,7 @@ void initDevicesDescriptor() {
     // addI2CRemoteDevice(&testDevice, getTestDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
     addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
     addLocalDevice(getSystemDebugDeviceInterface(), getSystemDebugDeviceDescriptor());
+    addLocalDevice(getI2cMasterDebugDeviceInterface(), getI2cMasterDebugDeviceDescriptor());
 
     // Local
     addLocalDevice(getLCDDeviceInterface(), getLCDDeviceDescriptor());
@@ -630,13 +635,13 @@ int main(void) {
     appendString(&debugOutputStream, "DEBUG\n");
 
     // Start interruptions
-    // sstartTimerList();
+    // startTimerList();
 
     // Configure data dispatcher
     addLocalDriverDataDispatcher();
 
-    /*
     // Stream for motorBoard
+    /*
     addI2CDriverDataDispatcher(&motorI2cDispatcher,
             "MOTOR_BOARD_DISPATCHER",
             &motorBoardInputBuffer,
@@ -645,7 +650,8 @@ int main(void) {
             &motorBoardOutputStream,
             &motorBoardInputStream,
             MOTOR_BOARD_I2C_ADDRESS);
-    
+    */
+    /*
     // Stream for Mechanical Board 2
     addI2CDriverDataDispatcher(&mechanical2I2cDispatcher,
             "MECHANICAL_BOARD_2_DISPATCHER",
@@ -657,7 +663,6 @@ int main(void) {
             MECHANICAL_BOARD_2_I2C_ADDRESS);
     */
 
-    /*
     // Stream for Air Conditioning
     addI2CDriverDataDispatcher(&airConditioningI2cDispatcher,
             "AIR_CONDITIONING_DISPATCHER",
@@ -675,6 +680,14 @@ int main(void) {
                         &i2cMasterDebugOutputBuffer,
                         &i2cMasterDebugOutputBufferArray,
                         MAIN_BOARD_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH);
+    /*
+    Pcf8573Clock clock;
+    getPcf8573Clock(&clock);
+    writePcf8573ClockToOutputStream(getOutputStreamLogger(ALWAYS), &clock);
+
+    while (1) {
+
+    }
     */
     while (1) {
         waitForInstruction();
