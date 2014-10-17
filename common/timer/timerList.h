@@ -32,7 +32,7 @@ void initTimerList(Timer (*timerListArray)[], unsigned char timerListSize);
  * Creates a timer and add it to list with a frequency gived by timeDiviser.
  * @param timer a pointer on the timer Struct
  * @param timerCode a unique code used to identify timer
- * @param timerDiviser Ex : if timeDiviser = 100, time2 frequency is 100 times slower than the main interruption
+ * @param timerDiviser Ex : if timeDiviser = 100, time frequency is 100 times slower than the main interruption
  * @param callback the function which must be used by the interruption
  */
 Timer* addTimer(int timerCode,

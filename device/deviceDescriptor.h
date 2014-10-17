@@ -35,9 +35,13 @@ typedef void deviceHandleRawDataFunction(char header,
 * Defines the structure used to describe a device.
 */
 typedef struct DeviceDescriptor {
+    /** A callback on the Function which must be used to initialized the device. */
     deviceInitFunction *deviceInit;
+	/** A callback on the Function which must be used to shutdown the device. */
     deviceShutDownFunction *deviceShutDown;
+	/** A callback on the Function which must be used to know if the device is ok (when it's used), can be called at every time, but at least after starting the device. */
     deviceIsOkFunction *deviceIsOk;
+	/** A callback on the Function to handle the string data which are given (Ex : Mw2010 to Move the both motors). */
     deviceHandleRawDataFunction *deviceHandleRawData;
 } DeviceDescriptor;
 
