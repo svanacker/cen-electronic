@@ -19,7 +19,7 @@ int deviceI2cMasterDebugGetInterface(char header, int mode, bool fillDeviceArgum
             setArgumentUnsignedHex2(0, "adress");
             setArgumentUnsignedHex2(1, "char");
         }
-        return commandLengthValueForMode(mode, 0, 4);
+        return commandLengthValueForMode(mode, 4, 0);
     }
     else if (header == COMMAND_READ_CHAR_I2C_SLAVE) {
         if (fillDeviceArgumentList) {        

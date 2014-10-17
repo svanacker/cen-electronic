@@ -7,7 +7,7 @@
 #include "../../main/beaconReceiver/beaconReceiverBoard.h"
 #include "../../main/beaconBoard/beaconBoard.h"
 
-#include "../../common/setup/pic30FSetup.h"
+#include "../../common/setup/30F/picSetup30F.h"
 
 #include "../../common/commons.h"
 
@@ -324,6 +324,7 @@ int runZigBeeReceiver() {
             if (isBufferEmpty(&debugInputBuffer)) {
                 continue;
             }
+            /*
             // Detects if we want to redirect to devices
             if (bufferGetFirstChar(&debugInputBuffer) == '@') {
                 appendString(getOutputStreamLogger(INFO), "REDIRECT COMMAND TO DEVICES \n");
@@ -335,6 +336,7 @@ int runZigBeeReceiver() {
             }
             // Copy char entered on debug -> JENNIC
             copyInputToOutputStream(debugInputStream, &zigbeeOutputStream, NULL, COPY_ALL);
+            */
         }
     }
 }

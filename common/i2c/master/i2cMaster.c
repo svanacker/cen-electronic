@@ -1,5 +1,7 @@
 #include "../../../common/commons.h"
 
+#include "../../../drivers/clock/PCF8563.h"
+
 #include "i2cMaster.h"
 
 #include "../../../common/delay/cenDelay.h"
@@ -11,11 +13,11 @@
 #include "../../../common/io/buffer.h"
 
 void i2cMasterWriteBuffer(char address, Buffer* buffer) {
-    portableStartI2C();
     portableMasterWaitSendI2C();
     // Wait till Start sequence is completed
     WaitI2C();
 
+    portableStartI2C();
     // Adress
     portableMasterWriteI2C(address);
     WaitI2C();
@@ -35,10 +37,10 @@ void i2cMasterWriteChar(char address, char c) {
     // We append to a buffer
     portableStartI2C();
     // Wait till Start sequence is completed
-    WaitI2C();
+    //WaitI2C();
 
     // Adress
-    portableMasterWriteI2C(c);
+    portableMasterWriteI2C(address);
     WaitI2C();
 
     // Data
@@ -49,28 +51,16 @@ void i2cMasterWriteChar(char address, char c) {
 }
 
 char i2cMasterReadChar(char address) {
-    //    portableMasterWriteI2C(address, I2C_SLAVE_FAKE_WRITE);
-    //    delaymSec(50);
     WaitI2C();
-
     portableStartI2C();
     WaitI2C();
-
-    // TEST
-    /*
-MasterWriteI2C(address);
-    WaitI2C();
-    StopI2C();
-    WaitI2C();
-    StartI2C();
-    WaitI2C();
-     */
 
     // send the address again with read bit
     portableMasterWriteI2C(address | 0x01);
     WaitI2C();
 
     unsigned char data = portableMasterReadI2C();
+    WaitI2C();
 
     portableStopI2C();
     return data;
@@ -80,18 +70,26 @@ char i2cMasterReadRegisterValue(char address, char commandRegister) {
     // Set the register command
     WaitI2C();
     portableStartI2C();
+
+    WaitI2C();
     portableMasterWaitSendI2C();
+
+    WaitI2C();
     // send the address
     portableMasterWriteI2C(address);
+
     WaitI2C();
     // send the register
     portableMasterWriteI2C(commandRegister);
+
     WaitI2C();
     portableStopI2C();
-    WaitI2C();
 
+    WaitI2C();
     // Read the register command
     portableStartI2C();
+
+    WaitI2C();
     portableMasterWaitSendI2C();
     // send the address again with read bit
     portableMasterWriteI2C(address | 0x01);
@@ -101,3 +99,42 @@ char i2cMasterReadRegisterValue(char address, char commandRegister) {
     portableStopI2C();
     return data;
 }
+
+void i2cMasterRegisterReadBuffer(char address,char reg, char length, Buffer* buffer){
+
+    // Set the register command
+    i2cMasterWriteChar(address,reg);
+
+    // read the data
+    portableStartI2C();
+    portableMasterWriteI2C(address | 0x01);
+
+    int i;
+    for (i = 0; i <length ; i++) {
+        char c = portableMasterReadI2C();
+        portableAckI2C();
+        WaitI2C();
+        bufferWriteChar(buffer, c);
+    }        
+    portableStopI2C();
+}
+
+void i2cMasterReadBuffer(char address, char length, Buffer* buffer){
+
+    portableStartI2C();
+    portableMasterWriteI2C(address );
+
+    // read the data
+    portableStartI2C();
+    portableMasterWriteI2C(address | 0x01);
+
+    int i;
+    for (i = 0; i <length ; i++) {
+        char c = portableMasterReadI2C();
+        portableAckI2C();
+        WaitI2C();
+        bufferWriteChar(buffer, c);
+    }
+    portableStopI2C();
+}
+

@@ -43,6 +43,13 @@ typedef struct {
 void initBuffer(Buffer* buffer, char (*s)[], unsigned char length, char* name, char* type);
 
 /**
+ * Retuns if a buffer is initialized or not.
+ * @param buffer the pointer on buffer
+ * @return true if the buffer is initialized, false else
+ */
+bool isBufferInitialized(Buffer* buffer);
+
+/**
  * Clears the buffer.
  * @param buffer the buffer to clear
  */

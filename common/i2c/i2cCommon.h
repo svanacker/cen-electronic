@@ -20,5 +20,10 @@ inline void portableStartI2C();
  */
 inline void portableStopI2C();
 
+/**
+ * Indirection for I2C used to manage 30F/32 compatibility.
+ */
+inline void portableAckI2C();
+
 #endif
 

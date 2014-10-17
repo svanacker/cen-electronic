@@ -2,7 +2,7 @@
 #include <p30Fxxxx.h>
 
 // FIRST INCLUDE !
-#include "../../common/setup/pic30FSetup.h"
+#include "../../common/setup/30F/picSetup30F.h"
 
 #include "beaconBoard.h"
 
@@ -24,7 +24,7 @@
 #include "../../common/math/cenMath.h"
 
 #include "../../common/pwm/pwmPic.h"
-#include "../../common/pwm/servoPwm.h"
+#include "../../common/pwm/servo/servoPwm.h"
 
 #include "../../common/serial/serial.h"
 #include "../../common/serial/serialLink.h"
@@ -410,6 +410,7 @@ restart:
                 continue;
             }
             // Detects if we want to redirect to devices
+            /*
             if (bufferGetFirstChar(&debugInputBuffer) == '@') {
                 appendString(getOutputStreamLogger(INFO), "REDIRECT COMMAND TO DEVICES \n");
                 // delete the '@' char from the buffer
@@ -420,6 +421,7 @@ restart:
             }
             // Copy char entered on debug -> JENNIC
             copyInputToOutputStream(debugInputStream, &zigbeeOutputStream, NULL, COPY_ALL);
+            */
         }
         // Try to notify each Time the robot position through the zigbee
         notifyRobotPositionIfNecessary();

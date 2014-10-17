@@ -74,6 +74,12 @@
 #define    RLY08_ADDRESS_6            0x7C
 #define    RLY08_ADDRESS_7            0x7E
 
+// LM75A
+#define LM75A_ADDRESS                0x90
+
+//CLOCK PCF8563 Adress
+#define PCF8563_ADDRESS               0xA2
+
 // CMPS03
 
 #define CMPS03_ADDRESS            0XC0
@@ -123,7 +129,6 @@
 #define SRF02_ADDRESS_13         0xFA
 #define SRF02_ADDRESS_14         0xFC
 #define SRF02_ADDRESS_15         0xFE
-
 
 #endif
 

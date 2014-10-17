@@ -1,5 +1,6 @@
 #include "binaryWriter.h"
 
+#include "printWriter.h"
 #include "outputStream.h"
 
 void appendWord(OutputStream* outputStream, unsigned int value) {

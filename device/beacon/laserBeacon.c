@@ -7,7 +7,7 @@
 #include "../../common/math/cenMath.h"
 #include "../../common/delay/cenDelay.h"
 
-#include "../../common/pwm/servoPwm.h"
+#include "../../common/pwm/servo/servoPwm.h"
 
 #include "../../common/io/inputStream.h"
 #include "../../common/io/outputStream.h"

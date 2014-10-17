@@ -128,7 +128,10 @@ void initBuffer(Buffer* buffer, char (*array)[], unsigned char length, char* nam
     buffer->type = type;
 }
 
-
+bool isBufferInitialized(Buffer* buffer)
+{
+    return buffer->length > 0;
+}
 
 bool isBufferFull(const Buffer* buffer) {
     return ((buffer->writeIndex + 1) % buffer->length) == buffer->readIndex;

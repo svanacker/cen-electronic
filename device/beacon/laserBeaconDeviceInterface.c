@@ -88,7 +88,7 @@ int deviceBeaconGetInterface(char commandHeader, int mode, bool fillDeviceArgume
 }
 
 static DeviceInterface deviceInterface = {
-    .deviceHeader = LASER_BEACON_HEADER,
+    .deviceHeader = LASER_BEACON_DEVICE_HEADER,
     .deviceGetName = &deviceBeaconGetName,
     .deviceGetInterface = &deviceBeaconGetInterface
 };

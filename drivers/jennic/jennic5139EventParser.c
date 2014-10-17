@@ -252,7 +252,7 @@ void printJennicEvent(JennicEvent* event, OutputStream* outputStream) {
     appendString(outputStream, event->argument2);
 
     appendString(outputStream, ",payLoadArgumentIndex=");
-    appendbool(outputStream, event->payLoadArgumentIndex);
+    appendBool(outputStream, event->payLoadArgumentIndex);
     appendCRLF(outputStream);
 }
 

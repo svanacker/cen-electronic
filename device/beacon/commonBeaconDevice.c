@@ -15,6 +15,8 @@
 #include "../../common/io/reader.h"
 #include "../../common/io/stream.h"
 
+#include "../../device/device.h"
+
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
 
@@ -51,22 +53,22 @@ void commonBeaconDeviceHandleRawData(char commandHeader,
                                      OutputStream* outputStream) {
     // Redirect command to Jennic
     if (commandHeader == COMMAND_REDIRECT_TO_JENNIC) {
-        ackCommand(outputStream, COMMON_BEACON_HEADER, COMMAND_REDIRECT_TO_JENNIC);
+        ackCommand(outputStream, COMMON_BEACON_DEVICE_HEADER, COMMAND_REDIRECT_TO_JENNIC);
         redirectToDevices = false;
         appendString(getOutputStreamLogger(INFO), "REDIRECT COMMAND TO JENNIC \n");
     // Reset
     } else if (commandHeader == COMMAND_RESET_JENNIC) {
-        ackCommand(outputStream, COMMON_BEACON_HEADER, COMMAND_RESET_JENNIC);
+        ackCommand(outputStream, COMMON_BEACON_DEVICE_HEADER, COMMAND_RESET_JENNIC);
         jennic5139Reset();
     // Local Jennic Light on/off
     } else if (commandHeader == COMMAND_LOCAL_LIGHT) {
         unsigned char status = readHex(inputStream);
-        ackCommand(outputStream, COMMON_BEACON_HEADER, COMMAND_LOCAL_LIGHT);
+        ackCommand(outputStream, COMMON_BEACON_DEVICE_HEADER, COMMAND_LOCAL_LIGHT);
         jennic5139LocalLight(JENNIC_LED_ALL, status != 0);
     }
     // Print the data buffer
     else if (commandHeader == COMMAND_SHOW_DATA_FROM_JENNIC) {
-        ackCommand(outputStream, COMMON_BEACON_HEADER, COMMAND_SHOW_DATA_FROM_JENNIC);
+        ackCommand(outputStream, COMMON_BEACON_DEVICE_HEADER, COMMAND_SHOW_DATA_FROM_JENNIC);
         Buffer* inDataBuffer = getJennicInDataBuffer();
         copyInputToOutputStream(&(inDataBuffer->inputStream), getOutputStreamLogger(DEBUG), NULL, COPY_ALL);
     }

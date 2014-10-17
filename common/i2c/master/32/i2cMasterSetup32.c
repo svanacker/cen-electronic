@@ -1,6 +1,6 @@
 #include "../../../../common/commons.h"
 
-#include <legacy/i2c_legacy.h>
+#include <peripheral/legacy/i2c_legacy.h>
 
 #include "../i2cMasterSetup.h"
 

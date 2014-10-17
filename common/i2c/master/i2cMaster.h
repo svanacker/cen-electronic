@@ -33,6 +33,7 @@ inline void portableMasterWaitSendI2C( void );
 * Sends the buffer to the I2C.
 * @param address the address of I2C that we send
 * @param buffer the buffer of data
+ *@param reg    the register to select
 */
 void i2cMasterWriteBuffer( char address, Buffer* buffer );
 
@@ -60,5 +61,23 @@ char i2cMasterReadRegisterValue(char address,
  */
 char i2cMasterReadChar(char address);
 
+/** BY JEROME
+ * Read the all values from the I2C device.
+ * Slave will return all values and store them in the buffer
+ * @param address        the adress of i2c slave
+ * @param reg            the register selected
+ * @param length         the number of data to read
+ * @param Buffer* buffer the buffer
+ */
+void i2cMasterRegisterReadBuffer(char address,char reg, char length, Buffer* buffer);
+
+/** BY JEROME
+ * Read the all values from the I2C device.
+ * Slave will return all values and store them in the buffer
+ * @param address        the adress of i2c slave
+ * @param length         the number of data to read
+ * @param Buffer* buffer the buffer
+ */
+void i2cMasterReadBuffer(char address, char length, Buffer* buffer);
 
 #endif

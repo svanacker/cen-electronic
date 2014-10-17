@@ -1,8 +1,6 @@
 
 #include "../commons.h"
 
-#include <timer.h>
-
 #include "cenDelay.h"
 
 #ifdef PROG_32
