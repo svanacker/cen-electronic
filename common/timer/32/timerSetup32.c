@@ -2,7 +2,8 @@
 #include "../cenTimer.h"
 
 #include <plib.h>
-#include <timer.h>
+//#include <timer.h>
+#include <peripheral/timer.h>
 
 /**
  * @private
@@ -17,7 +18,8 @@ void _initTimers() {
     ConfigIntTimer1((T1_INT_ON | T1_INT_PRIOR_3 | T1_INT_SUB_PRIOR_1)); 
  
     // code to for additional interrupt initializations
-    INTEnableSystemMultiVectoredInt(); // Required to enable all interrupts }
+    INTEnableSystemMultiVectoredInt(); // Required to enable all interrupts 
+}
 
 
 /**

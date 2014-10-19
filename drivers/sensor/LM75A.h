@@ -1,3 +1,5 @@
+// SENSOR TEMPERATURE
+
 #ifndef LM75A_H
 #define	LM75A_H
 

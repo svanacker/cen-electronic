@@ -21,5 +21,10 @@
 
 #define COMMAND_SET_TEMPERATURE_SENSOR_ALERT         'a'
 
+/**
+* Interface for Device.
+*/
+DeviceInterface* getTemperatureSensorDeviceInterface();
+
 #endif	
 

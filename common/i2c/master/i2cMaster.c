@@ -18,6 +18,7 @@ void i2cMasterWriteBuffer(char address, Buffer* buffer) {
     WaitI2C();
 
     portableStartI2C();
+    WaitI2C();
     // Adress
     portableMasterWriteI2C(address);
     WaitI2C();
@@ -37,7 +38,7 @@ void i2cMasterWriteChar(char address, char c) {
     // We append to a buffer
     portableStartI2C();
     // Wait till Start sequence is completed
-    //WaitI2C();
+    WaitI2C();
 
     // Adress
     portableMasterWriteI2C(address);
@@ -48,10 +49,10 @@ void i2cMasterWriteChar(char address, char c) {
     WaitI2C();
 
     portableStopI2C();
+    WaitI2C();
 }
 
 char i2cMasterReadChar(char address) {
-    WaitI2C();
     portableStartI2C();
     WaitI2C();
 
@@ -63,6 +64,7 @@ char i2cMasterReadChar(char address) {
     WaitI2C();
 
     portableStopI2C();
+    WaitI2C();
     return data;
 }
 
@@ -107,6 +109,8 @@ void i2cMasterRegisterReadBuffer(char address,char reg, char length, Buffer* buf
 
     // read the data
     portableStartI2C();
+    WaitI2C();
+
     portableMasterWriteI2C(address | 0x01);
 
     int i;
@@ -117,15 +121,18 @@ void i2cMasterRegisterReadBuffer(char address,char reg, char length, Buffer* buf
         bufferWriteChar(buffer, c);
     }        
     portableStopI2C();
+    WaitI2C();
 }
 
 void i2cMasterReadBuffer(char address, char length, Buffer* buffer){
 
     portableStartI2C();
+    WaitI2C();
     portableMasterWriteI2C(address );
 
     // read the data
     portableStartI2C();
+    WaitI2C();
     portableMasterWriteI2C(address | 0x01);
 
     int i;
@@ -136,5 +143,6 @@ void i2cMasterReadBuffer(char address, char length, Buffer* buffer){
         bufferWriteChar(buffer, c);
     }
     portableStopI2C();
+    WaitI2C();
 }
 

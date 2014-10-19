@@ -111,12 +111,15 @@ int ReadTempAmbMCP9804 (void){
     int Temperature;
 
     portableStartI2C();
+    WaitI2C();
     i2cMasterWriteChar(MCP9804,5);
     portableStartI2C();
+    WaitI2C();
     MasterWriteI2C1(MCP9804 | 0x01 );//lecture
     TempAmbMSB = MasterReadI2C1();AckI2C1();IdleI2C1();
     TempAmbLSB = MasterReadI2C1();NotAckI2C1();IdleI2C1();
-    portableStopI2C();    
+    portableStopI2C();
+    WaitI2C();
 
     //Convert the temperature data
     //First Check flag bits

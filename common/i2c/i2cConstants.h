@@ -74,10 +74,11 @@
 #define    RLY08_ADDRESS_6            0x7C
 #define    RLY08_ADDRESS_7            0x7E
 
-// LM75A
+// LM75A TEMPERATURE SENSOR
 #define LM75A_ADDRESS                0x90
 
-//CLOCK PCF8563 Adress
+//CLOCK PCF8563
+// Warning : Conflict with EEPROM ST24C16
 #define PCF8563_ADDRESS               0xA2
 
 // CMPS03

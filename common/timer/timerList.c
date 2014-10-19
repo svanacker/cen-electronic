@@ -1,5 +1,6 @@
 #include <stdlib.h>
-#include <timer.h>
+//#include <timer.h>
+#include <peripheral/timer.h>
 
 #include "../../common/commons.h"
 #include "../../common/error/error.h"

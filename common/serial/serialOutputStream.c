@@ -71,6 +71,56 @@ void initSerialOutputStream2(OutputStream* outputStream) {
     outputStream->flush = flushSerial;
 }
 
+// -> SERIAL PORT 3
+
+void openOutputStreamSerial3(OutputStream* outputStream, int param1) {
+    if (param1 == 0) {
+        openSerialAtDefaultSpeed(SERIAL_PORT_3);
+    } else {
+        openSerial(SERIAL_PORT_3, param1);
+    }
+}
+
+void closeOutputStreamSerial3(OutputStream* outputStream) {
+    closeSerial(SERIAL_PORT_3);
+}
+
+void writeChar3(OutputStream* outputStream, char c) {
+    serialPutc(SERIAL_PORT_3, c);
+}
+
+void initSerialOutputStream3(OutputStream* outputStream) {
+    outputStream->openOutputStream = openOutputStreamSerial3;
+    outputStream->closeOutputStream = closeOutputStreamSerial3;
+    outputStream->writeChar = writeChar3;
+    outputStream->flush = flushSerial;
+}
+
+// -> SERIAL PORT 4
+
+void openOutputStreamSerial4(OutputStream* outputStream, int param1) {
+    if (param1 == 0) {
+        openSerialAtDefaultSpeed(SERIAL_PORT_4);
+    } else {
+        openSerial(SERIAL_PORT_4, param1);
+    }
+}
+
+void closeOutputStreamSerial4(OutputStream* outputStream) {
+    closeSerial(SERIAL_PORT_4);
+}
+
+void writeChar4(OutputStream* outputStream, char c) {
+    serialPutc(SERIAL_PORT_4, c);
+}
+
+void initSerialOutputStream4(OutputStream* outputStream) {
+    outputStream->openOutputStream = openOutputStreamSerial4;
+    outputStream->closeOutputStream = closeOutputStreamSerial4;
+    outputStream->writeChar = writeChar4;
+    outputStream->flush = flushSerial;
+}
+
 // -> SERIAL PORT 5
 
 void openOutputStreamSerial5(OutputStream* outputStream, int param1) {
@@ -129,10 +179,13 @@ void initSerialOutputStream(OutputStream* outputStream, int serialPortIndex) {
         initSerialOutputStream1(outputStream);
     } else if (serialPortIndex == SERIAL_PORT_2) {
         initSerialOutputStream2(outputStream);
+    } else if (serialPortIndex == SERIAL_PORT_3) {
+        initSerialOutputStream3(outputStream);
+    } else if (serialPortIndex == SERIAL_PORT_4) {
+        initSerialOutputStream4(outputStream);
     } else if (serialPortIndex == SERIAL_PORT_5) {
         initSerialOutputStream5(outputStream);
     } else if (serialPortIndex == SERIAL_PORT_6) {
         initSerialOutputStream6(outputStream);
     }
 }
-

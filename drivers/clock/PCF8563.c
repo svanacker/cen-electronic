@@ -38,6 +38,7 @@ void updateClockToHardware (Clock* clock){
     portableMasterWaitSendI2C();
 
     portableStartI2C();
+    WaitI2C();
     portableMasterWriteI2C(PCF8563_ADDRESS);
     WaitI2C();
     portableMasterWriteI2C(PCF8563_CLOCK_REGISTER);
