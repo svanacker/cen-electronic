@@ -1,8 +1,6 @@
 #ifndef HEX_UTILS_H
 #define HEX_UTILS_H
 
-#include "hexUtils.h"
-
 /**
  * Transform the hexadecimal value (4 bytes length) and return it.
  * the hexadecimal value must be in Up case.
