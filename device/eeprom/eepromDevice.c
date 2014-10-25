@@ -1,5 +1,3 @@
-#include <peripheral/legacy/i2c_legacy.h>
-
 #include "eeprom.h"
 #include "eepromDevice.h"
 #include "eepromDeviceInterface.h"
@@ -22,15 +20,19 @@ bool isEepromDeviceOk(void) {
 }
 
 void deviceEepromHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream){
-    char data = 0;
+    int data = 0;
+    long address = 0;
     if (header == COMMAND_READ_DATA_EEPROM) {
+        address = readHex4(inputStream);
         ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_READ_DATA_EEPROM);
-        appendHex2(outputStream, data);
+        appendHex2(outputStream, my_eeprom_read_int(address));
     } else if (header == COMMAND_WRITE_DATA_EEPROM) {
+        address = readHex4(inputStream);
         data = readHex2(inputStream);
         ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_WRITE_DATA_EEPROM);
+        my_eeprom_write_int(address,data);
     } else if (header == COMMAND_READ_BUFFER_EEPROM) {
-        data = readHex2(inputStream);
+        appendHex2(outputStream, data);
         ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_READ_BUFFER_EEPROM);
     }
     else if (header == COMMAND_WRITE_BUFFER_EEPROM) {

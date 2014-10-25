@@ -6,7 +6,7 @@
 
 // The EEPROM DEVICE HEADER
 
-#define EEPROM_DEVICE_HEADER     'C'
+#define EEPROM_DEVICE_HEADER     'E'
 
 
 // List of EEPROM COMMAND HEADER

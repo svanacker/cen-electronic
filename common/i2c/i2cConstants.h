@@ -77,6 +77,17 @@
 // LM75A TEMPERATURE SENSOR
 #define LM75A_ADDRESS                0x90
 
+// EEPROM 24C16
+#define ST24C16_ADDRESS_0             0xA0
+#define ST24C16_ADDRESS_1             0XA1
+#define ST24C16_ADDRESS_2             0XA2
+#define ST24C16_ADDRESS_3             0xA3
+#define ST24C16_ADDRESS_4             0XA4
+#define ST24C16_ADDRESS_5             0XA5
+#define ST24C16_ADDRESS_6             0xA6
+#define ST24C16_ADDRESS_7             0XA7
+
+
 //CLOCK PCF8563
 // Warning : Conflict with EEPROM ST24C16
 #define PCF8563_ADDRESS               0xA2

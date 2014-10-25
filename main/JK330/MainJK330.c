@@ -103,23 +103,13 @@
 
 //#include "../device/led/led.h"
 
-//#include "../drivers/io/EEPROM_I2C.h"
+#include "../../common/eeprom/eeprom.h"
 #include "../../menu/menu.h"
 
-//#ifndef MPLAB_SIMULATION
-//    #ifdef PROG_32
         #define SERIAL_PORT_DEBUG         SERIAL_PORT_3
         #define SERIAL_PORT_PC             SERIAL_PORT_2
         #define SERIAL_PORT_LCD            SERIAL_PORT_5
-//    #else
-//        #define SERIAL_PORT_DEBUG         SERIAL_PORT_1
-//        #define SERIAL_PORT_PC             SERIAL_PORT_2
-//    #endif
-//#else
-    // We use the same port for both
- //   #define SERIAL_PORT_PC             SERIAL_PORT_1
- //   #define SERIAL_PORT_DEBUG         SERIAL_PORT_1
-//#endif
+
 
 // serial link DEBUG
 static char debugInputBufferArray[MAIN_BOARD_DEBUG_INPUT_BUFFER_LENGTH];
@@ -230,6 +220,7 @@ void initDevicesDescriptor() {
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor());
     addLocalDevice(getLCDDeviceInterface(), getLCDDeviceDescriptor());
     addLocalDevice(getTemperatureSensorDeviceInterface(), getTemperatureSensorDeviceDescriptor());
+    addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor());
 
     // Init the devices
     initDevices();  
@@ -254,7 +245,17 @@ void waitForInstruction(void) {
             NULL);
 }
 
-int main(void) {  
+int main(void) {
+
+    //Configure les PIN de control de l'afficheur MGSLS24064
+    SetupLCD_24064();
+
+        //creer le flux lcd
+   //Initialise l'afficheur LCD et affiche l'image d'accueil
+
+    initLCDOutputStream(&lcdOutputStream);
+    drawPicture();
+
    
     setPicName("MAIN BOARD JK330");
 
@@ -284,22 +285,11 @@ int main(void) {
 
 
 
-   appendString(&pcOutputStream, "JK330 with PIC32...on UART PC\r");
-   appendString(&debugOutputStream, "JK330 with PIC32...on UART DEBUG\r");
-
-    //Configure les PIN de control de l'afficheur MGSLS24064
-    SetupLCD_24064();
-
-        //creer le flux lcd
-   //Initialise l'afficheur LCD et affiche l'image d'accueil
-
-    initLCDOutputStream(&lcdOutputStream);
+    appendString(&pcOutputStream, "JK330 with PIC32...on UART PC\r");
+    appendString(&debugOutputStream, "JK330 with PIC32...on UART DEBUG\r");
 
 
-    
-    
     i2cMasterInitialize();
-    initRegMCP9804 (0x00,0x18,0x01,0xE0,0x01,0x40,0x02,0x40); // 30C,20C,34C
 
 
     initTimerList(&timerListArray, MAIN_BOARD_TIMER_LENGTH);
@@ -313,10 +303,11 @@ int main(void) {
 
     appendString(getOutputStreamLogger(DEBUG), getPicName());
     println(getOutputStreamLogger(DEBUG));
-   
+
 
     clearScreen();
-    drawPicture();
+
+
 
     initDevicesDescriptor();
     initDriversDescriptor();
@@ -324,22 +315,28 @@ int main(void) {
     //Affiche la liste des loggger sur DEBUG
     printLogger(getOutputStreamLogger(DEBUG));
 
-   appendString(getOutputStreamLogger(DEBUG), "Lecture Horloge : \r");
+    appendString(getOutputStreamLogger(DEBUG), "Lecture Horloge : \r");
 
-   //CLOCK Read
-   Clock* globalClock = getGlobalClock();
-   updateClockFromHardware(globalClock);
+    //CLOCK Read
+    Clock* globalClock = getGlobalClock();
+    updateClockFromHardware(globalClock);
 
-   // Print on the OutputStream
-   printClock(getOutputStreamLogger(DEBUG), globalClock);
-   appendCR(getOutputStreamLogger(DEBUG));
+    // Print on the OutputStream
+    printClock(getOutputStreamLogger(DEBUG), globalClock);
+    appendCR(getOutputStreamLogger(DEBUG));
 
-   setTemperatureAlertLimit(0x35);//35°C
+    setTemperatureAlertLimit(0x35);//35°C
 
-   clearScreen();
-   setCursorAtHome();
-   menu_P(&lcdOutputStream);
-   while (1){
+    clearScreen();
+    setCursorAtHome();
+    menu_P(&lcdOutputStream);
+
+
+    //my_eeprom_write_int (0x02,0x65);
+    
+    appendHex2(&debugOutputStream,my_eeprom_read_int(0x02));
+
+    while (1){
         setCursorPosition_24064(0,23);  //raw,col
 
         //CLOCK Read
@@ -349,13 +346,13 @@ int main(void) {
         printClock(&lcdOutputStream, globalClock);
         waitForInstruction();
 
-        printTemperatureSensor(&lcdOutputStream);
+
 
         unsigned int c = readKey();
         appendHex2(&lcdOutputStream, c);
 
         setCursorPosition_24064(0,19);
+        printTemperatureSensor(&lcdOutputStream);
 
-        appendDec(&lcdOutputStream, ReadTempAmbMCP9804());
-   }
+    }
 }
