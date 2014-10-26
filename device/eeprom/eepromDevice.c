@@ -32,8 +32,9 @@ void deviceEepromHandleRawData(char header, InputStream* inputStream, OutputStre
         ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_WRITE_DATA_EEPROM);
         my_eeprom_write_int(address,data);
     } else if (header == COMMAND_READ_BUFFER_EEPROM) {
-        appendHex2(outputStream, data);
+        appendHex4(outputStream, address);
         ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_READ_BUFFER_EEPROM);
+        appendHex2(outputStream, my_eeprom_read_bloc(address));
     }
     else if (header == COMMAND_WRITE_BUFFER_EEPROM) {
         data = readHex2(inputStream);

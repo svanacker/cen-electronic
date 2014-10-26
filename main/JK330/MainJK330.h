@@ -47,4 +47,7 @@
 #define MAIN_BOARD_DEVICE_LENGTH            20
 #define MAIN_BOARD_TIMER_LENGTH             5
 
+//EEPROM
+#define EEPROM_BUFFER_LENGTH                17
+
 #endif
