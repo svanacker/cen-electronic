@@ -104,7 +104,9 @@
 //#include "../device/led/led.h"
 
 #include "../../common/eeprom/eeprom.h"
-#include "../../menu/menu.h"
+//#include "../../menu/menu.h"
+#include "MenuJK330.h"
+
 
         #define SERIAL_PORT_DEBUG         SERIAL_PORT_3
         #define SERIAL_PORT_PC             SERIAL_PORT_2

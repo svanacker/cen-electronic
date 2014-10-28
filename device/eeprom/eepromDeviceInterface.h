@@ -1,5 +1,5 @@
-#ifndef EEPROM_DEVICE_NTERFACE_D
-#define	EEPROM_DEVICE_INTERFACE_D
+#ifndef EEPROM_DEVICE_INTERFACE_H
+#define	EEPROM_DEVICE_INTERFACE_H
 
 #include "../../device/deviceInterface.h"
 

@@ -1,12 +1,5 @@
-/* 
- * File:   74c922.h
- * Author: f4deb
- *
- * Created on 28 septembre 2014, 21:10
- */
-
-#ifndef C922_H
-#define	C922_H
+#ifndef _74C922_H
+#define	_74C922_H
 
 #define KDF PORTGbits.RG2
 #define KDE PORTGbits.RG3

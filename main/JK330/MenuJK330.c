@@ -1,8 +1,8 @@
 #include <plib.h>
 
 //#include "../drivers/lcd/lcdOutputStream.h"
-#include "../common/io/outputStream.h"
-#include "menu.h"
+#include "../../common/io/outputStream.h"
+#include "MenuJK330.h"
 
 /*************************************************************
  * menu_P						     *								*
