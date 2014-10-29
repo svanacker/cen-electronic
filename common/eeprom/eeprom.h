@@ -40,14 +40,14 @@ void my_eeprom_read_bloc(unsigned int index, char length, Buffer* buffer);
 
 void printEepromBloc (OutputStream* outputStream,long index, unsigned int length, Buffer* buffer);
 
-/** BY JEROME
- * Write  the values of the inputStream on the the EEPROM device.
- * @param InputStream* inputStream      the inputStream
- * @param index                         the random address to read
- * @param length                        the number of data to read
- * @param Buffer* buffer                the buffer
- */
+/**
+* write the buffer into the Eeprom
+* @param index          the index to write the buffer
+* @param length         the number of data to write
+* @param Buffer* buffer the buffer
+*/
 
-void writeEepromBloc (InputStream* inputStream,long index, unsigned int length, Buffer* buffer);
+void my_eeprom_write_bloc(unsigned int index, char length, Buffer* buffer);
+
 
 #endif

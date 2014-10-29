@@ -4,7 +4,6 @@
 
 #include "../../common/i2c/i2cConstants.h"
 #include "../../common/i2c/i2cCommon.h"
-#include "../../common/io/buffer.h"
 
 #define ST24C16_EEPROM_BUFFER_LENGTH     16
 static Buffer st24C16Buffer;
@@ -61,7 +60,11 @@ unsigned int setAddress (unsigned int index){
     return address;
 }
 
-void my_eeprom_write_int(unsigned int index, signed int value){
+
+
+
+
+void writeEepromInt(unsigned int index, signed int value){
     portableMasterWaitSendI2C();
     portableStartI2C();
     WaitI2C();
@@ -73,10 +76,9 @@ void my_eeprom_write_int(unsigned int index, signed int value){
     WaitI2C();
     portableStopI2C();
     WaitI2C();
-    delay100us(6);
 }
 
-signed int my_eeprom_read_int(unsigned int index){
+unsigned int readEepromInt (unsigned int index){
     portableMasterWaitSendI2C();
      // Set the register command
     i2cMasterWriteChar(setBlocAddress(index),setAddress(index));
@@ -97,8 +99,7 @@ signed int my_eeprom_read_int(unsigned int index){
     return (data);
 }
 
-void my_eeprom_read_bloc(unsigned int index, char length, Buffer* buffer){
-
+void readEepromBloc(unsigned int index, char length, Buffer* buffer){
     // Set the register command
     i2cMasterWriteChar(setBlocAddress(index),setAddress(index));
 
@@ -119,6 +120,24 @@ void my_eeprom_read_bloc(unsigned int index, char length, Buffer* buffer){
     portableNackI2C();
     WaitI2C();
     bufferWriteChar(buffer, c);
+    portableStopI2C();
+    WaitI2C();
+}
+
+void writeEepromBloc (unsigned int index, unsigned int length, Buffer* buffer){
+    portableMasterWaitSendI2C();
+    portableStartI2C();
+    WaitI2C();
+    portableMasterWriteI2C(setBlocAddress(index));
+    WaitI2C();
+    portableMasterWriteI2C(setAddress(index));
+    WaitI2C();
+    int i;
+    for (i = 0; i <(length) ; i++) {
+        char c = bufferReadChar(buffer);
+        portableMasterWriteI2C(c);
+        WaitI2C();
+    }
     portableStopI2C();
     WaitI2C();
 }

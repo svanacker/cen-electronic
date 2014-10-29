@@ -11,7 +11,7 @@ int deviceEepromGetInterface(char header, int mode, bool fillDeviceArgumentList)
     if (header == COMMAND_READ_DATA_EEPROM ) {
         if (fillDeviceArgumentList) {
             setFunction("Data Read", 1, 1);
-            setArgumentUnsignedHex4(0, "ADDRESS");
+            setArgumentUnsignedHex4(0, "SET ADDRESS");
             setResultUnsignedHex2(0, "DATA");
         }
         return commandLengthValueForMode(mode, 4, 2);
