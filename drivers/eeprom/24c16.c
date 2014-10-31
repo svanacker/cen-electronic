@@ -5,7 +5,7 @@
 #include "../../common/i2c/i2cConstants.h"
 #include "../../common/i2c/i2cCommon.h"
 
-#define ST24C16_EEPROM_BUFFER_LENGTH     16
+#define ST24C16_EEPROM_BUFFER_LENGTH     17
 static Buffer st24C16Buffer;
 static char st24C16BufferArray[ST24C16_EEPROM_BUFFER_LENGTH];
 static Buffer st24C16Buffer;
@@ -59,10 +59,6 @@ unsigned int setAddress (unsigned int index){
     }
     return address;
 }
-
-
-
-
 
 void writeEepromInt(unsigned int index, signed int value){
     portableMasterWaitSendI2C();

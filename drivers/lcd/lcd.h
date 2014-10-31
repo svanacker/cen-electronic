@@ -7,7 +7,7 @@
 // STREAM INTERFACE
 
 /**
-* init the outputStream for the LCD
+* init the outputStream for the LCD.
 * @param outputStream the pointer to the outputStream which must be initialized
 */
 void initLCDOutputStream(OutputStream* outputStream);
@@ -108,7 +108,7 @@ void sendCommand (char command);
 // DEVICE INTERFACE
 
 /**
-* Init the Lcd
+* Init the Lcd.
 */
 void initLCD ( void );
 

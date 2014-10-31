@@ -11,14 +11,14 @@
  * @param index the index of the WORD in the EEPROM table. Index 0 should not be used because this value is erased when reprogramming the device.
  * @param value the value to store
  */
-void my_eeprom_write_int(unsigned int index, signed int value);
+void eepromWriteint(unsigned int index, signed int value);
 
 /**
  * Reads the value from the EEPROM at the given index.
  * @param index the index of the WORD value to read
  * @return the WORD value as a signed int
  */
-signed int my_eeprom_read_int(unsigned int index);
+signed int eepromReadInt(unsigned int index);
 
 /** BY JEROME
  * Read values from the EEPROM device.
@@ -27,7 +27,7 @@ signed int my_eeprom_read_int(unsigned int index);
  * @param length         the number of data to read
  * @param Buffer* buffer the buffer
  */
-void my_eeprom_read_bloc(unsigned int index, char length, Buffer* buffer);
+void eepromReadBloc(unsigned int index, char length, Buffer* buffer);
 
 /** BY JEROME
  * Print  the values of the buffer on the outputStream from the EEPROM device.
@@ -41,13 +41,13 @@ void my_eeprom_read_bloc(unsigned int index, char length, Buffer* buffer);
 void printEepromBloc (OutputStream* outputStream,long index, unsigned int length, Buffer* buffer);
 
 /**
-* write the buffer into the Eeprom
+* write the buffer into the Eeprom.
 * @param index          the index to write the buffer
 * @param length         the number of data to write
 * @param Buffer* buffer the buffer
 */
 
-void my_eeprom_write_bloc(unsigned int index, char length, Buffer* buffer);
+void eepromWriteBloc(unsigned int index, char length, Buffer* buffer);
 
 
 #endif

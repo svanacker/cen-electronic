@@ -10,15 +10,12 @@
 */
 void writeEepromInt(unsigned int index, signed int value);
 
-
 /**
 * read the value in the Eeprom at the index address
 * @param index          The index for select the address
 * @return data          the data read from the eeprom
 */
 unsigned int readEepromInt (unsigned int index);
-
-
 
 /**
 * calculate the chip address to select
@@ -49,7 +46,6 @@ void readEepromBloc(unsigned int index, char length, Buffer* buffer);
  * @param length                        the number of data to write
  * @param Buffer* buffer                the buffer
  */
-
 void writeEepromBloc (unsigned int index, unsigned int length, Buffer* buffer);
 
 #endif

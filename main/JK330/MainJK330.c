@@ -135,15 +135,17 @@ static char driverRequestBufferArray[MAIN_BOARD_REQUEST_DRIVER_BUFFER_LENGTH];
 static Buffer driverResponseBuffer;
 static char driverResponseBufferArray[MAIN_BOARD_RESPONSE_DRIVER_BUFFER_LENGTH];
 
-//EEPROM
-static Buffer eepromBuffer;
-static char eepromBufferArray[EEPROM_BUFFER_LENGTH];
+
 
 // DEBUG I2C
 static char i2cMasterDebugOutputBufferArray[MAIN_BOARD_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH];
 static Buffer i2cMasterDebugOutputBuffer;
 static char i2cMasterDebugInputBufferArray[MAIN_BOARD_I2C_DEBUG_MASTER_IN_BUFFER_LENGTH];
 static Buffer i2cMasterDebugInputBuffer;
+
+//EEPROM
+static Buffer eepromBuffer;
+static char eepromBufferArray[EEPROM_BUFFER_LENGTH];
 
 // DISPATCHER I2C
 
@@ -338,32 +340,13 @@ int main(void) {
     menu_P(&lcdOutputStream);
 
 
-    //my_eeprom_write_int (0x02,0x65);
+    //eepromWriteint (0x02,0x65);
     
-    //appendHex2(&debugOutputStream,my_eeprom_read_int(0x02));
+    //appendHex2(&debugOutputStream,eepromReadInt(0x02));
     //appendCR(&debugOutputStream);
     
     initBuffer(&eepromBuffer,&eepromBufferArray,EEPROM_BUFFER_LENGTH,"EEPROM BUFFER","");
 
-/*    my_eeprom_read_bloc(0x0000,0x10,&eepromBuffer);
-
-    appendHex2(&debugOutputStream,bufferReadChar(&eepromBuffer));
-    appendHex2(&debugOutputStream,bufferReadChar(&eepromBuffer));
-    appendHex2(&debugOutputStream,bufferReadChar(&eepromBuffer));
-    appendHex2(&debugOutputStream,bufferReadChar(&eepromBuffer));
-    appendHex2(&debugOutputStream,bufferReadChar(&eepromBuffer));
-    appendHex2(&debugOutputStream,bufferReadChar(&eepromBuffer));
-    appendHex2(&debugOutputStream,bufferReadChar(&eepromBuffer));
-    appendHex2(&debugOutputStream,bufferReadChar(&eepromBuffer));
-    appendHex2(&debugOutputStream,bufferReadChar(&eepromBuffer));
-    appendHex2(&debugOutputStream,bufferReadChar(&eepromBuffer));
-    appendHex2(&debugOutputStream,bufferReadChar(&eepromBuffer));
-    appendHex2(&debugOutputStream,bufferReadChar(&eepromBuffer));
-    appendHex2(&debugOutputStream,bufferReadChar(&eepromBuffer));
-    appendHex2(&debugOutputStream,bufferReadChar(&eepromBuffer));
-    appendHex2(&debugOutputStream,bufferReadChar(&eepromBuffer));
-    appendHex2(&debugOutputStream,bufferReadChar(&eepromBuffer));
-*/
     printEepromBloc(&debugOutputStream, 0x0000,0x10,&eepromBuffer);
     while (1){
         setCursorPosition_24064(0,23);  //raw,col
