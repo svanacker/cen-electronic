@@ -4,7 +4,7 @@
 
 #include "mechanicalBoard2.h"
 
-#include "../../common/setup/pic30FSetup.h"
+#include "../../common/setup/30F/picSetup30F.h"
 
 #include "../../common/adc/adcutils.h"
 
@@ -23,7 +23,7 @@
 #include "../../common/io/stream.h"
 
 #include "../../common/pwm/pwmPic.h"
-#include "../../common/pwm/servoPwm.h"
+#include "../../common/pwm/servo/servoPwm.h"
 
 #include "../../common/serial/serial.h"
 #include "../../common/serial/serialLink.h"

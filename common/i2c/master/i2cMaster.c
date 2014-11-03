@@ -114,12 +114,16 @@ void i2cMasterRegisterReadBuffer(char address,char reg, char length, Buffer* buf
     portableMasterWriteI2C(address | 0x01);
 
     int i;
-    for (i = 0; i <length ; i++) {
+    for (i = 0; i <(length-1) ; i++) {
         char c = portableMasterReadI2C();
         portableAckI2C();
         WaitI2C();
         bufferWriteChar(buffer, c);
-    }        
+    }
+    char c = portableMasterReadI2C();
+    portableNackI2C();
+    WaitI2C();
+    bufferWriteChar(buffer, c);
     portableStopI2C();
     WaitI2C();
 }

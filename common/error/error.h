@@ -35,6 +35,9 @@ void writeError(int errorCode);
 #define PWM_NOT_AVAILABLE                0x0400
 #define PWM_VALUE_MUST_BE_POSITIVE        0x0401
 
+// OTHERS COMMON ERRORS
+#define UNIMPLETEMENTED_EXCEPTION        0x500
+
 // I2C 
 
 #define I2C_MASTER_ALREADY_INITIALIZED    0x1000

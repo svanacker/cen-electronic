@@ -86,7 +86,7 @@ unsigned char getRealDataIndex(unsigned pidIndex, unsigned int dataIndex) {
  */
 void internalSavePidParameter(unsigned pidIndex, unsigned int dataIndex, signed int value) {
     unsigned realIndex = getRealDataIndex(pidIndex, dataIndex);
-    my_eeprom_write_int(realIndex, value);
+    eepromWriteInt(realIndex, value);
 }
 
 /**
@@ -97,7 +97,7 @@ void internalSavePidParameter(unsigned pidIndex, unsigned int dataIndex, signed 
 signed int internalLoadPidParameter(unsigned pidIndex, unsigned int dataIndex) {
     unsigned realIndex = getRealDataIndex(pidIndex, dataIndex);
 
-    signed int result = my_eeprom_read_int(realIndex);
+    signed int result = eepromReadInt(realIndex);
     if (result == ERASED_VALUE_EEPROM) {
         result = DEFAULT_EEPROM_VALUES[realIndex];
     }

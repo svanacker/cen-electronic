@@ -17,7 +17,7 @@ signed int DEFAULT_EEPROM_VALUES[MOTION_PARAMETERS_VALUES_COUNT] = {
 #define EEPROM_MOTION_TYPE_BLOCK_SIZE                             MOTION_PARAMETERS_COUNT
 
 signed int internalLoadMotionParameterItem(unsigned int dataIndex) {
-    signed int result = my_eeprom_read_int(dataIndex);
+    signed int result = eepromReadInt(dataIndex);
     if (result == 0xFFFF) {
         result = DEFAULT_EEPROM_VALUES[dataIndex - EEPROM_MOTION_START_INDEX];
     }
@@ -37,8 +37,8 @@ void internalLoadMotionParameter(unsigned char motionType) {
 void internalSaveMotionParameter(unsigned char motionType) {
     MotionParameter* motionParameter = getDefaultMotionParameters(motionType);
     unsigned motionBlockIndexShift = motionType * EEPROM_MOTION_TYPE_BLOCK_SIZE;
-    my_eeprom_write_int(EEPROM_MOTION_START_INDEX + motionBlockIndexShift, motionParameter->a);
-    my_eeprom_write_int(EEPROM_MOTION_START_INDEX + motionBlockIndexShift + 1, motionParameter->speed);
+    eepromWriteInt(EEPROM_MOTION_START_INDEX + motionBlockIndexShift, motionParameter->a);
+    eepromWriteInt(EEPROM_MOTION_START_INDEX + motionBlockIndexShift + 1, motionParameter->speed);
 }
 
 // Interface Implementation
