@@ -38,40 +38,55 @@ typedef struct {
 
 /**
  * Init the buffer and give it the port.
- * @param buffer the pointer on the buffer
+ * @param buffer the pointer on the buffer (simulates object programming)
+ * @param an array of char to store value into the buffer
+ * @param length the length of the array
+ * @param name the name of the buffer (for debugging purpose)
+ * @param type the type (as string) of the buffer (for debugging purpose). Often to distinguish IN or OUT buffer
+ * @throws IO_BUFFER_NULL if the pointer is NULL
  */
 void initBuffer(Buffer* buffer, char (*s)[], unsigned char length, char* name, char* type);
 
 /**
  * Retuns if a buffer is initialized or not.
- * @param buffer the pointer on buffer
+ * @param buffer the pointer on buffer (simulates object programming)
  * @return true if the buffer is initialized, false else
+ * @throws IO_BUFFER_NULL if the pointer is NULL
  */
 bool isBufferInitialized(Buffer* buffer);
 
 /**
  * Clears the buffer.
- * @param buffer the buffer to clear
+ * @param buffer the buffer to clear (simulates object programming)
+ * @throws IO_BUFFER_NULL if the pointer is NULL
  */
 void clearBuffer(Buffer* buffer);
 
 /**
  * Do a deep clear of buffer (write 0 on all cells of array);
+ * @param buffer the buffer to clear very deeply (simulates object programming)
+ * @throws IO_BUFFER_NULL if the pointer is NULL
  */
 void deepClearBuffer(Buffer* buffer);
 
 /**
  * Returns true if the buffer is full, false else.
+ * @param buffer the buffer (simulates object programming)
+ * @return true if the buffer is full, false else
+ * @throws IO_BUFFER_NULL if the pointer is NULL
  */
 bool isBufferFull(const Buffer* buffer);
 
 /**
  * Returns true if the buffer is empty, false else.
+ * @param buffer the buffer (simulates object programming)
+ * @return true if the buffer is empty, false else
  */
 bool isBufferEmpty(const Buffer* buffer);
 
 /**
- * Returns the number of elements
+ * Returns the number of elements.
+ * @param buffer the buffer (simulates object programming)
  */
 int getBufferElementsCount(const Buffer* buffer);
 

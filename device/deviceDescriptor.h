@@ -19,6 +19,7 @@ typedef void deviceShutDownFunction(void);
 
 /**
 * Defines the function to know if a device is ok or not.
+* @return true if the device is ok, false else
 */
 typedef bool deviceIsOkFunction(void);
 

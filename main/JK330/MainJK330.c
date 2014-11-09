@@ -12,6 +12,8 @@
 
 //include "../../common/delay/cenDelay.h"
 
+#include "../../common/eeprom/eeprom.h"
+
 #include "../../common/i2c/i2cDebug.h"
 
 #include "../../common/i2c/master/i2cMaster.h"
@@ -73,20 +75,19 @@
 #include "../../device/i2c/master/i2cMasterDebugDevice.h"
 #include "../../device/i2c/master/i2cMasterDebugDeviceInterface.h"
 
-//CLOCK
+// CLOCK
 #include "../../drivers/clock/PCF8563.h"
 
-#include "../../device/clock/clock.h"
+#include "../../common/clock/clock.h"
 #include "../../device/clock/clockDevice.h"
 #include "../../device/clock/clockDeviceInterface.h"
 
-//TEMPERATURE SENSOR
+// TEMPERATURE SENSOR
 #include "../../device/temperatureSensor/temperatureSensor.h"
 #include "../../device/temperatureSensor/temperatureSensorDevice.h"
 #include "../../device/temperatureSensor/temperatureSensorDeviceInterface.h"
 
-
-//KEYBOARD
+// KEYBOARD
 #include "../../drivers/keyboard/74c922.h"
 
 // LCD
@@ -94,17 +95,14 @@
 #include "../../drivers/lcd/lcd24064.h"
 #include "../../drivers/lcd/lcdProvider_24064.h"
 
-//SENSOR
+// SENSOR
 #include "../../drivers/sensor/MCP9804.h"
 #include "../../drivers/sensor/LM75A.h"
 
 #include "../../device/lcd/lcdDevice.h"
 #include "../../device/lcd/lcdDeviceInterface.h"
 
-//#include "../device/led/led.h"
-
 #include "../../common/eeprom/eeprom.h"
-//#include "../../menu/menu.h"
 #include "MenuJK330.h"
 
 
@@ -184,6 +182,15 @@ static Device deviceListArray[MAIN_BOARD_DEVICE_LENGTH];
 // Timers
 static Timer timerListArray[MAIN_BOARD_TIMER_LENGTH];
 
+// Eeprom
+#define ST24C16_EEPROM_BUFFER_LENGTH     17
+static Buffer st24C16Buffer;
+static char st24C16BufferArray[ST24C16_EEPROM_BUFFER_LENGTH];
+static Buffer st24C16Buffer;
+static Eeprom eeprom;
+
+// Clock
+static Clock globalClock;
 
 // *****************************************************************************
 // *****************************************************************************
@@ -225,10 +232,10 @@ void initDevicesDescriptor() {
     addLocalDevice(getI2cMasterDebugDeviceInterface(), getI2cMasterDebugDeviceDescriptor());
 
     // Local
-    addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor());
+    addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&globalClock));
     addLocalDevice(getLCDDeviceInterface(), getLCDDeviceDescriptor());
     addLocalDevice(getTemperatureSensorDeviceInterface(), getTemperatureSensorDeviceDescriptor());
-    addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor());
+//     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor());
 
     // Init the devices
     initDevices();  
@@ -308,14 +315,13 @@ int main(void) {
     addLogHandler(&lcdLogHandler, "LCD", &lcdOutputStream, ERROR);
 
     init74c922();
+    init24C16Eeprom(&eeprom);
+    initClockPCF8573(&globalClock);
 
     appendString(getOutputStreamLogger(DEBUG), getPicName());
     println(getOutputStreamLogger(DEBUG));
 
-
     clearScreen();
-
-
 
     initDevicesDescriptor();
     initDriversDescriptor();
@@ -326,8 +332,7 @@ int main(void) {
     appendString(getOutputStreamLogger(DEBUG), "Lecture Horloge : \r");
 
     //CLOCK Read
-    Clock* globalClock = getGlobalClock();
-    updateClockFromHardware(globalClock);
+    globalClock.readClock(&globalClock);
 
     // Print on the OutputStream
     printClock(getOutputStreamLogger(DEBUG), globalClock);
@@ -339,23 +344,21 @@ int main(void) {
     setCursorAtHome();
     menu_P(&lcdOutputStream);
 
-
     //eepromWriteint (0x02,0x65);
     
     //appendHex2(&debugOutputStream,eepromReadInt(0x02));
     //appendCR(&debugOutputStream);
     
-    initBuffer(&eepromBuffer,&eepromBufferArray,EEPROM_BUFFER_LENGTH,"EEPROM BUFFER","");
+    initBuffer(&eepromBuffer,&eepromBufferArray, EEPROM_BUFFER_LENGTH,"EEPROM BUFFER","");
 
-    printEepromBloc(&debugOutputStream, 0x0000,0x10,&eepromBuffer);
+    printEepromBlock(&eeprom, &debugOutputStream, 0x0000,0x10, &eepromBuffer);
     while (1){
         setCursorPosition_24064(0,23);  //raw,col
 
         //CLOCK Read
-        Clock* globalClock = getGlobalClock();
-        updateClockFromHardware(globalClock);
+        globalClock.readClock(&globalClock);
         // Print on the OutputStream
-        printClock(&lcdOutputStream, globalClock);
+        printClock(&lcdOutputStream, &globalClock);
         waitForInstruction();
 
 

@@ -1,4 +1,7 @@
 #include "pidPersistence.h"
+
+#include <stdlib.h>
+
 #include "pid.h"
 
 #include "../../common/commons.h"
@@ -68,6 +71,9 @@ static signed int DEFAULT_EEPROM_VALUES[EEPROM_PID_START_INDEX + (EEPROM_PID_BLO
 // Not used
 #define DEFAULT_MAX_INTEGRAL 0
 
+// TODO : To Init !
+static Eeprom* pidPersistenceEeprom;
+
 /**
  * Returns the real data Index in storage area for a specific pid and a specific value
  * @param pidIndex the index of PID (between 0 and PID_COUNT)
@@ -85,8 +91,12 @@ unsigned char getRealDataIndex(unsigned pidIndex, unsigned int dataIndex) {
  * @param value the value to store
  */
 void internalSavePidParameter(unsigned pidIndex, unsigned int dataIndex, signed int value) {
+    if (pidPersistenceEeprom == NULL) {
+        // TODO : throw an error
+        return;
+    }
     unsigned realIndex = getRealDataIndex(pidIndex, dataIndex);
-    eepromWriteInt(realIndex, value);
+    pidPersistenceEeprom->eepromWriteInt(pidPersistenceEeprom, realIndex, value);
 }
 
 /**
@@ -95,9 +105,13 @@ void internalSavePidParameter(unsigned pidIndex, unsigned int dataIndex, signed 
  * @return value the value to load
  */
 signed int internalLoadPidParameter(unsigned pidIndex, unsigned int dataIndex) {
+    if (pidPersistenceEeprom == NULL) {
+        // TODO : throw an error
+        return 0;
+    }
     unsigned realIndex = getRealDataIndex(pidIndex, dataIndex);
 
-    signed int result = eepromReadInt(realIndex);
+    signed int result = pidPersistenceEeprom->eepromReadInt(pidPersistenceEeprom, realIndex);
     if (result == ERASED_VALUE_EEPROM) {
         result = DEFAULT_EEPROM_VALUES[realIndex];
     }

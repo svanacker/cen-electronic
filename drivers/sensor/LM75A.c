@@ -44,9 +44,10 @@ void setTemperatureAlertLimit(int TemperatureSensorAlert){
     WaitI2C();
     portableMasterWriteI2C(LM75A_ADDRESS);
     WaitI2C();
-    portableMasterWriteI2C(LM75A_OVERTEMPERATURE_SENSOR_REGISTER);
+    portableMasterWriteI2C(LM75A_OVER_TEMPERATURE_SENSOR_REGISTER);
     WaitI2C();
-    portableMasterWriteI2C(bcd2CharToDec(TemperatureSensorAlert));
+    unsigned char value = bcd2CharToDec(TemperatureSensorAlert);
+    portableMasterWriteI2C(value);
     WaitI2C();
     portableMasterWriteI2C(0x00);
     WaitI2C();
@@ -60,6 +61,7 @@ void setTemperatureAlertLimit(int TemperatureSensorAlert){
     WaitI2C();
     portableMasterWriteI2C(LM75A_CONFIGURATION_SENSOR_REGISTER);
     WaitI2C();
+    // TODO JJ : Magic Number
     portableMasterWriteI2C(4);
 
     WaitI2C();

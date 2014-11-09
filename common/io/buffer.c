@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stddef.h>
+#include <stdbool.h>
 
 #include "buffer.h"
 
@@ -15,7 +16,7 @@
 
 // BUFFER
 
-bool checkBufferNotNull(Buffer* buffer) {
+inline bool checkBufferNotNull(Buffer* buffer) {
     if (buffer == NULL) {
         writeError(IO_BUFFER_NULL);
         return false;
@@ -102,6 +103,9 @@ bool _bufferAvailableData(InputStream* inputStream) {
 // BUFFER INTERFACE
 
 void initBuffer(Buffer* buffer, char (*array)[], unsigned char length, char* name, char* type) {
+    if (checkBufferNotNull(buffer)) {
+        return;    
+    }
     buffer->s = array;
     buffer->length = length;
     deepClearBuffer(buffer);
@@ -128,8 +132,10 @@ void initBuffer(Buffer* buffer, char (*array)[], unsigned char length, char* nam
     buffer->type = type;
 }
 
-bool isBufferInitialized(Buffer* buffer)
-{
+bool isBufferInitialized(Buffer* buffer) {
+    if (checkBufferNotNull(buffer)) {
+        return false;
+    }
     return buffer->length > 0;
 }
 
@@ -233,6 +239,9 @@ OutputStream* getOutputStream(Buffer* buffer) {
 }
 
 void printDebugBuffer(OutputStream* outputStream, Buffer* buffer) {
+    if (checkBufferNotNull(buffer)) {
+        return;    
+    }
     if (buffer == NULL) {
         appendString(outputStream, "\nBuffer is NULL !\n");
         return;

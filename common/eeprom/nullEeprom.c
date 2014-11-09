@@ -1,23 +1,24 @@
+#include "nullEeprom.h"
 #include "eeprom.h"
 
 #include "../../common/error/error.h"
 
-void eepromWriteInt(unsigned int index, signed int value) {
+void nullEepromWriteInt(Eeprom* eeprom, unsigned long index, signed int value) {
     // DO NOTHING
 }
 
-signed int eepromReadInt(unsigned int index) {
+signed int nullEepromReadInt(Eeprom* eeprom, unsigned long index) {
     return 0;
 }
 
-void eepromReadBloc(unsigned int index, char length, Buffer* buffer) {
+void nullEepromReadBlock(Eeprom* eeprom, unsigned long index, unsigned int length, Buffer* buffer) {
     writeError(UNIMPLETEMENTED_EXCEPTION);
 }
 
-void printEepromBloc (OutputStream* outputStream,long index, unsigned int length, Buffer* buffer) {
+void nullEepromWriteBlock(Eeprom* eeprom, unsigned long index, unsigned int length, Buffer* buffer) {
     writeError(UNIMPLETEMENTED_EXCEPTION);
 }
 
-void eepromWriteBloc(unsigned int index, char length, Buffer* buffer) {
-    writeError(UNIMPLETEMENTED_EXCEPTION);
+void initNullEeprom(Eeprom* nullEeprom) {
+    initEeprom(nullEeprom, nullEepromWriteInt, nullEepromReadInt, nullEepromWriteBlock, nullEepromReadBlock);
 }

@@ -59,19 +59,6 @@ Device* addDevice(DeviceInterface* interface,
     }
 }
 
-int getDeviceResponseSize(int commandHeader) {
-    int i;
-    for (i = 0; i < deviceList.size; i++) {
-        Device* device = getDevice(i);
-        DeviceInterface* deviceInterface = device->interface;
-        int valueCount = deviceInterface->deviceGetInterface(commandHeader, DEVICE_MODE_OUTPUT, false);
-        if (valueCount != DEVICE_HEADER_NOT_HANDLED) {
-            return valueCount;
-        }
-    }
-    return DEVICE_HEADER_NOT_HANDLED;
-}
-
 Device* addI2CRemoteDevice(DeviceInterface* interface, int i2cAddress) {
     return addDevice(interface, NULL, TRANSMIT_I2C, i2cAddress, NULL);
 }
