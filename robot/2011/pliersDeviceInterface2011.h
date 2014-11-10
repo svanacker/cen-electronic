@@ -2,6 +2,7 @@
 #define PLIERS_DEVICE_INTERFACE_2011_H
 
 #include "../../device/device.h"
+#include "../../device/deviceConstants.h"
 
 /**
  * Close the pliers to take the pawns.

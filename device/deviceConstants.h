@@ -4,7 +4,13 @@
 // TODO : Change !!!
 #define CLOCK_DEVICE_HEADER     				'C'
 
+
+/** Device header .*/
+#define ROBOT_CONFIG_DEVICE_HEADER      		'c'
+
 #define ADC_DEVICE_HEADER            			'd'
+
+#define END_MATCH_DETECTOR_DEVICE_HEADER        'e'
 
 // The EEPROM DEVICE HEADER
 
@@ -14,6 +20,8 @@
 
 /** Command to debug the I2C Master. */
 #define I2C_MASTER_DEBUG_DEVICE_HEADER        	'I'
+
+#define ROBOT_INFRARED_DETECTOR_DEVICE_HEADER    'I'
 
 /** Command to debug the I2C Slave. */
 #define I2C_SLAVE_DEBUG_DEVICE_HEADER       	'i'
@@ -71,8 +79,16 @@
 
 #define STRATEGY_DEVICE_HEADER                  'Y'
 
+#define START_MATCH_DETECTOR_DEVICE_HEADER      '!'
+
 #define SONAR_DEVICE_HEADER                		'<'
 
 #define SYSTEM_DEBUG_DEVICE_HEADER        		'*'
+
+#define ROBOT_SONAR_DETECTOR_DEVICE_HEADER  	'#'
+
+#define	PLIERS_DEVICE_2011_HEADER				'_'
+
+#define ARM_DEVICE_2012_HEADER					'|'
 
 #endif

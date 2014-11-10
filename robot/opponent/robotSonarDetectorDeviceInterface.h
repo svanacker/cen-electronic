@@ -2,8 +2,7 @@
 #define ROBOT_SONAR_DETECTOR_DEVICE_INTERFACE_H
 
 #include "../../device/deviceInterface.h"
-
-#define ROBOT_SONAR_DETECTOR_DEVICE_HEADER  '#'
+#include "../../device/deviceConstants.h"
 
 #define COMMAND_SET_SONAR_STATUS            '<'
 

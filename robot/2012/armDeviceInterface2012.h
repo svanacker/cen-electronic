@@ -2,6 +2,7 @@
 #define ARM_DEVICE_INTERFACE_2012_H
 
 #include "../../device/device.h"
+#include "../../device/deviceConstants.h"
 
 /**
  * Up the arm 2012.

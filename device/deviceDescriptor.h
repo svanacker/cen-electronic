@@ -26,14 +26,15 @@ typedef bool deviceIsOkFunction(void);
 /**
 * Function for handling raw data sent to the device.
 * @param header the header char
-* @param data the data to be handled
+* @param inputStream the input Stream where we can get commandHeader, and input parameters
+* @param outputStream the output Stream where we can write some results, ack (with commandHeader)
 */
 typedef void deviceHandleRawDataFunction(char header,
                                          InputStream* inputStream,
                                          OutputStream* outputStream);
 
 /**
-* Defines the structure used to describe a device.
+* Defines the structure used to describe a device descriptor.
 */
 typedef struct DeviceDescriptor {
     /** A callback on the Function which must be used to initialized the device. */

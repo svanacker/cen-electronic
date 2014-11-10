@@ -12,11 +12,6 @@
 
 #include "../common/log/logger.h"
 
-/**
- * Init the device with the information given by deviceDescriptor.
- * We write the debug information to the serial interface, and if possible to an LCD drivers
- * @param device the device.
- */
 bool initDevice(const Device* device) {
     int result = true;
     DeviceDescriptor* deviceDescriptor = device->descriptor;

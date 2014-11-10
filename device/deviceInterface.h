@@ -141,7 +141,7 @@ typedef struct DeviceMethodMetaData {
 // ARGUMENT LIST
 
 /**
-* Singleton of DeviceInterfaceMetaData
+* Singleton of DeviceInterfaceMetaData.
 */
 DeviceMethodMetaData* getDeviceMethodMetaData();
 

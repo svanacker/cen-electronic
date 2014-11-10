@@ -1,6 +1,7 @@
 #include "pliersDeviceInterface2011.h"
 
 #include "../../device/deviceInterface.h"
+#include "../../device/deviceConstants.h"
 
 const char* devicePliers2011GetName() {
     return "pliers2011";
@@ -30,6 +31,7 @@ int devicePliers2011GetInterface(char header, int mode, bool fillDeviceArgumentL
 }
 
 static DeviceInterface deviceInterface = {
+	.deviceHeader = PLIERS_DEVICE_2011_HEADER,
     .deviceGetName = &devicePliers2011GetName,
     .deviceGetInterface = &devicePliers2011GetInterface
 };

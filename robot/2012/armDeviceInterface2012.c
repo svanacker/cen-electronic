@@ -1,6 +1,7 @@
 #include "armDeviceInterface2012.h"
 
 #include "../../device/deviceInterface.h"
+#include "../../device/deviceConstants.h"
 
 const char* deviceArm2012GetName() {
     return "arm2012";
@@ -29,7 +30,7 @@ int deviceArm2012GetInterface(char header, int mode, bool fillDeviceArgumentList
 
 static DeviceInterface deviceInterface = {
     .deviceGetName = &deviceArm2012GetName,
-//    .deviceGetSoftwareRevision = &deviceArm2012GetSoftwareRevision,
+	.deviceHeader = ARM_DEVICE_2012_HEADER,
     .deviceGetInterface = &deviceArm2012GetInterface
 };
 
