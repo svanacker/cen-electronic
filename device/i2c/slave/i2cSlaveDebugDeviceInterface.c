@@ -1,6 +1,7 @@
 #include "i2cSlaveDebugDeviceInterface.h"
 
 #include "../../../device/deviceInterface.h"
+#include "../../../device/deviceConstants.h"
 
 const char* deviceI2cSlaveDebugGetName() {
     return "i2cSlaveDebug";

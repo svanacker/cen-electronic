@@ -45,6 +45,7 @@ void _closeBufferOutputStream(OutputStream* outputStream) {
 }
 
 /**
+ * @private
  * Definition of a function which is able to write a character.
  */
 void _bufferWriteChar(OutputStream* outputStream, char c) {
@@ -54,6 +55,7 @@ void _bufferWriteChar(OutputStream* outputStream, char c) {
 }
 
 /**
+ * @private
  * Flush the stream.
  */
 void _bufferFlush(OutputStream* outputStream) {
@@ -90,6 +92,7 @@ char _bufferReadChar(InputStream* inputStream) {
 }
 
 /**
+ * @private
  * Definition of a function which is able to return if there is character to read.
  */
 bool _bufferAvailableData(InputStream* inputStream) {
@@ -141,7 +144,6 @@ bool isBufferInitialized(Buffer* buffer) {
 
 bool isBufferFull(const Buffer* buffer) {
     return ((buffer->writeIndex + 1) % buffer->length) == buffer->readIndex;
-
 }
 
 bool isBufferEmpty(const Buffer* buffer) {

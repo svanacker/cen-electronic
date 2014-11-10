@@ -2,8 +2,7 @@
 #define AIR_CONDITIONING_DEVICE_INTERFACE_H
 
 #include "../../device/deviceInterface.h"
-
-#define AIR_CONDITIONING_DEVICE_HEADER         'g'
+#include "../../device/deviceConstants.h"
 
 #define AIR_CONDITIONING_COMMAND_WRITE      'w'
 

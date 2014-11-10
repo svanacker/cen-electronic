@@ -5,9 +5,9 @@
 
 // --- Management of bin conversion
 
-
 /**
  * Appends a binary value, group by xx bits separated by space (for more visibility)
+ * @param outputStream the outputStream in which we write the binary value
  * @param value a 32 bit value
  * @param groupBy the number of bits grouped and separated by space
  */
@@ -17,6 +17,7 @@ void appendBinary32(OutputStream* outputStream,
 
 /**
  * Appends a binary value, group by xx bits separated by space (for more visibility)
+ * @param outputStream the outputStream in which we write the binary value
  * @param value a 16 bit value
  * @param groupBy the number of bits grouped and separated by space
  */
@@ -26,14 +27,13 @@ void appendBinary16(OutputStream* outputStream,
 
 /**
  * Appends a binary value, group by xx bits separated by space (for more visibility)
+ * @param outputStream the outputStream in which we write the binary value 
  * @param value a 8 bit value
  * @param groupBy the number of bits grouped and separated by space
  */
 void appendBinary8(OutputStream* outputStream,
         unsigned char value,
         unsigned groupBy);
-
-
 
 #endif
 

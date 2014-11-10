@@ -20,7 +20,9 @@
 // INPUT STREAM INTERFACE
 
 /**
+ * @private.
  * Get the buffer attached to the inputStream
+ * @param inputStream returns the inputStream attached to the I2C Input Buffer.
  */
 Buffer* getI2CMasterInputBuffer(InputStream* inputStream) {
     Buffer* result = (Buffer*) inputStream->object;
@@ -40,7 +42,7 @@ void _i2cMasterOpenInputStream(InputStream* inputStream, int param1) {
  */
 void fillI2CInputInternalBuffer(InputStream* inputStream) {
     int i;
-    while (1) {
+    while (true) {
         // TODO : REMOVE the delay if it's OK
         // delay100us(5);
         unsigned char c = i2cMasterReadChar(inputStream->address);

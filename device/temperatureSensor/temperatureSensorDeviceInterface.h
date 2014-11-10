@@ -2,10 +2,8 @@
 #define	TEMPERATURE_SENSOR_DEVICE_INTERFACE_H
 
 #include "../../device/deviceInterface.h"
+#include "../../device/deviceConstants.h"
 
-// The TEMPERATURE SENSOR DEVICE HEADER
-
-#define TEMPERATURE_SENSOR_DEVICE_HEADER     'T'
 
 // List of TEMPERATURE SENSOR COMMAND HEADER
 

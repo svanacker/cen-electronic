@@ -83,7 +83,9 @@ void serialPutc(unsigned char serialPortIndex, char c) {
     if (serialPortIndex == SERIAL_PORT_1) {
         // waits for transmit buffer to be ready
         #ifndef MPLAB_SIMULATION
-                while (U1STAbits.UTXBF);
+                while (U1STAbits.UTXBF) {
+				
+				}
         #else
                 simulateDelay();
         #endif
@@ -92,7 +94,9 @@ void serialPutc(unsigned char serialPortIndex, char c) {
     // SERIAL 2
     } else if (serialPortIndex == SERIAL_PORT_2) {
         #ifndef MPLAB_SIMULATION
-                while (U2STAbits.UTXBF);
+                while (U2STAbits.UTXBF) {
+				
+				}
         #else
                 simulateDelay();
         #endif

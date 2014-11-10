@@ -1,3 +1,9 @@
+Le 09/11/2014
+
+- Introduce 30F / 32 for cenIO.h
+- CompositeOutputStream => Initialize the size of the array from external call and not inside !!
+- Logger => Initialize the size of the array from external call and not inside !!
+
 Le 30/06/23014 :
 
 - Eviter que le PIC n'envoie des instructions au Pont en H à l'initialisation

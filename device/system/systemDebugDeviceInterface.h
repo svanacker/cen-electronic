@@ -2,8 +2,7 @@
 #define SYSTEM_DEBUG_DEVICE_INTERFACE_H
 
 #include "../../device/deviceInterface.h"
-
-#define SYSTEM_DEBUG_DEVICE_HEADER        '*'
+#include "../../device/deviceConstants.h"
 
 /** Command to change the log configuration. */
 #define COMMAND_WRITE_LOG_LEVEL           'L'

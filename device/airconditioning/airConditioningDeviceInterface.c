@@ -3,6 +3,7 @@
 #include <stdlib.h>
 
 #include "../../device/deviceInterface.h"
+#include "../../device/deviceConstants.h"
 
 const char* deviceAirConditioningGetName(void) {
     return "AirConditioningDevice";

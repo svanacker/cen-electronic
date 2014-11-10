@@ -5,10 +5,6 @@ static Logger logger;
 static LogHandlerList logHandlerList;
 static OutputStream logOutputStream;
 
-Logger* getLoggerSingleton() {
-    return &logger;
-}
-
 LogHandlerList* getLoggerHandlerList() {
     return &logHandlerList;
 }

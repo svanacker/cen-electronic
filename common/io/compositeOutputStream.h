@@ -27,6 +27,7 @@ void addOutputStream(CompositeOutputStream* compositeOutputStream, OutputStream*
 /**
 * Returns the children.
 * @param compositeOutputStream the stream containing child.
+* @return the number of outputStream children
 */
 int getCompositeOutputStreamChildrenCount(CompositeOutputStream* compositeOutputStream);
 

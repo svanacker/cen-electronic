@@ -2,11 +2,7 @@
 #define PWM_MOTOR_DEVICE_INTERFACE_H
 
 #include "../../device/deviceInterface.h"
-
-/**
- * Defines the header char used to identify the motor Device.
- */
-#define MOTOR_DEVICE_HEADER     'm'
+#include "../../device/deviceConstants.h"
 
 /**
 * Defines the header to move the motor.

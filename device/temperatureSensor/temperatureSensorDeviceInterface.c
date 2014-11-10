@@ -2,6 +2,7 @@
 
 #include "../../device/device.h"
 #include "../../device/deviceInterface.h"
+#include "../../device/deviceConstants.h"
 
 const char* getTemperatureSensorDeviceName (){
     return "Temperature Sensor";

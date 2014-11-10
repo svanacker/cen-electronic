@@ -5,13 +5,12 @@
 
 #include "../../../device/device.h"
 #include "../../../device/deviceInterface.h"
+#include "../../../device/deviceConstants.h"
 
 // COMMAND
 
-#define PID_DEVICE_HEADER 'p'
-
 /**
-* Set the value of PID
+* Set the value of PID.
 */
 #define COMMAND_WRITE_PID 'w'
 

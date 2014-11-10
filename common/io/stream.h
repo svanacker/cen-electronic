@@ -35,6 +35,7 @@
  * Init an outputStream which redirect all to NULL (like dev/null in UNIX)
  * It allows compatibility with copy Function, as we can give it an outputStream
  * (because data is read but trashed to NULL)
+ * @param outputStream outputStream object (POO simulation)
  */
 void initNullOutputStream(OutputStream* outputStream);
 

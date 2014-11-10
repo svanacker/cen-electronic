@@ -2,8 +2,7 @@
 #define SONAR_DEVICE_INTERFACE_H
 
 #include "../../device/deviceInterface.h"
-
-#define SONAR_DEVICE_HEADER                '<'
+#include "../../device/deviceConstants.h"
 
 /** Command header to get the sonar value. */
 #define COMMAND_GET_SONAR                 'r'

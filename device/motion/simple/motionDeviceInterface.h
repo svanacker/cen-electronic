@@ -2,8 +2,7 @@
 #define MOTION_DEVICE_INTERFACE_H
 
 #include "../../../device/deviceInterface.h"
-
-#define MOTION_DEVICE_HEADER        'M'
+#include "../../../device/deviceConstants.h"
 
 /** Goto with value in coder pulse. */
 #define COMMAND_MOTION_GOTO_IN_PULSE 'g'

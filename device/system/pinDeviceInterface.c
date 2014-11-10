@@ -1,6 +1,7 @@
 #include "pinDeviceInterface.h"
 
 #include "../../device/deviceInterface.h"
+#include "../../device/deviceConstants.h"
 
 const char* devicePinGetName() {
     return "pin";
@@ -34,7 +35,7 @@ int devicePinGetInterface(char header, int mode, bool fillDeviceArgumentList) {
 
 static DeviceInterface deviceInterface = {
     .deviceGetName = &devicePinGetName,
-//    .deviceGetSoftwareRevision = &devicePinGetSoftwareRevision,
+	.deviceHeader = PIN_DEVICE_HEADER,
     .deviceGetInterface = &devicePinGetInterface
 };
 

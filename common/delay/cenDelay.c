@@ -1,4 +1,3 @@
-
 #include "../commons.h"
 
 #include "cenDelay.h"
@@ -22,6 +21,7 @@ void delayUs(void) {
 }
 
 void delay100us(char uSecond) {
+// Simulation mode
 #ifndef MPLAB_SIMULATION
     unsigned int i;
 
@@ -38,7 +38,7 @@ void delay100us(char uSecond) {
 }
 
 void delaymSec(unsigned int mSecond) {
-    // Simulation mode
+// Simulation mode
 #ifndef MPLAB_SIMULATION
     unsigned int i;
 

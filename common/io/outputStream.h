@@ -14,12 +14,14 @@ typedef struct OutputStream OutputStream;
 
 /**
  * The function which opens the output stream.
- * @param param1 a param passed to configure the stream
+ * @param outputStream the pointer on object (POO simulation)
+ * @param param1 a param passed to configure the stream*
  */
 typedef void OpenOutputStreamFunction(OutputStream* outputStream, int param1);
 
 /**
  * The function which closes the output stream.
+ * @param outputStream the pointer on object (POO simulation)
  */
 typedef void CloseOutputStreamFunction(OutputStream* outputStream);
 
@@ -27,11 +29,14 @@ typedef void CloseOutputStreamFunction(OutputStream* outputStream);
  * Function which is able to write a character.
  * Be careful that this operation can be bufferized.
  * Use flush to ensure that data are sent
+ * @param outputStream the pointer on object (POO simulation)
+ * @param c the char to write
  */
 typedef void WriteCharFunction(OutputStream* outputStream, char c);
 
 /**
  * Flush the stream because char written via WriteCharFunction can be bufferized.
+ * @param outputStream the pointer on object (POO simulation)
  */
 typedef void FlushFunction(OutputStream* outputStream);
 
@@ -55,6 +60,12 @@ struct OutputStream {
 
 /**
  * Initialize an outputStream.
+ * @param outputStream the pointer on object (POO simulation)
+ * @param openOutputStream function to open the stream
+ * @param closeOutputStream function to close the stream
+ * @param writeChar function to write the char
+ * @param flush function to flush
+ * @param object a null type reference linked to the outputStream
  */
 void initOutputStream(OutputStream* outputStream,
         OpenOutputStreamFunction* openOutputStream,
@@ -62,7 +73,6 @@ void initOutputStream(OutputStream* outputStream,
         WriteCharFunction* writeChar,
         FlushFunction* flush,
         int* object);
-
 
 #endif
 

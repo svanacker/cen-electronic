@@ -8,9 +8,6 @@
 #include "outputStream.h"
 #include "printWriter.h"
 
-#include "../../common/log/logger.h"
-#include "../../common/log/logLevel.h"
-
 #include "filter.h"
 
 unsigned int copyInputToOutputStream(InputStream* inputStream,

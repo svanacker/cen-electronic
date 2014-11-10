@@ -1,6 +1,8 @@
 #ifndef PIN_H
 #define PIN_H
 
+#include <stdbool.h>
+
 #include "../../common/commons.h"
 
 #include "outputStream.h"
@@ -45,17 +47,22 @@
 #define PIN_MAX_INDEX        PIN_INDEX_RF6
 
 /**
- * Get the pin value for the index
+ * Get the pin value for the index.
+ * @param the index of the pin
+ * true if the pin is on, false if the pin is off
  */
 bool getPinValue(int pinIndex);
 
 /**
  * Set the value for the pin Index (see pin.h)
+ * @param the index of the pin
+ * @param pinValue the new value of the pin
  */
 void setPinValue(int pinIndex, bool pinValue);
 
 /**
  * Print All Pin Values.
+ * @param outputStream the stream in which we write all values
  */
 void printAllPinValues(OutputStream* outputStream);
 

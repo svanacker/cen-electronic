@@ -7,47 +7,64 @@
 
 /**
  * Read a char with filtering.
+ * TODO : To Review
  * Do NOT use it if the char is hexadecimal (with 2 chars)
+ * @param inputStream the pointer on inputStream (POO simulation)
+ * @return the char value of the inputStream
  */
 char readFilteredChar(InputStream* inputStream);
 
 /**
  * Read a binary value as char of the inputStream without any filtering
+ * @param inputStream the pointer on inputStream (POO simulation)
+ * @return the value as char of the inputStream without any filtering
  */
 char readBinaryChar(InputStream* inputStream);
 
 /**
  * Read 2 octets and convert it to int without any filtering.
+ * @param inputStream the pointer on inputStream (POO simulation)
+ * @return the int value
  */
 int readBinaryWord(InputStream* inputStream);
 
 /**
-* Read an hexadecimal value between 0 and 15.
-* Read only one character.
-* Same as readHex2, but considered the first char to be '0'
-*/
+ * Read an hexadecimal value between 0 and 15.
+ * Read only one character.
+ * Same as readHex2, but considered the first char to be '0'
+ * @param inputStream the pointer on inputStream (POO simulation)
+ * @return the hexadecimal value between 0 and 15.
+ */
 int readHex(InputStream* inputStream);
 
 /**
  * Read an hexadecimal value from an inputStream (2 hex char as "B5").
- * All value are positive
+ * All value are positive.
+ * @param inputStream the pointer on inputStream (POO simulation)
+ * @return the unsigned value converted from hexadecimal
  */
 int readHex2(InputStream* inputStream);
 
 /**
  * Read an hexadecimal value from an inputStream (2 hex char as "B5").
  * Value is positive if < 128, and negative if >= 128
+ * @param inputStream the pointer on inputStream (POO simulation)
+ * @return the signed value converted from hexadecimal
  */
 signed int readSignedHex2(InputStream* inputStream);
 
 /**
  * Read an hexadecimal value from an inputStream (4 hex char as "B51D").
+ * @param inputStream the pointer on inputStream (POO simulation)
+ * @return the unsigned long value  converted from hexadecimal
  */
 long readHex4(InputStream* inputStream);
 
 /**
-* Read a Hex4 and returns signed value.
-*/
+ * Read a Hex4 and returns signed value.
+ * @param inputStream the pointer on inputStream (POO simulation)
+ * @return the long value  converted from hexadecimal
+ */
 signed long readSignedHex4(InputStream* inputStream);
 
 /**

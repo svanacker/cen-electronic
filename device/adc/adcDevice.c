@@ -1,3 +1,5 @@
+#include <stdbool.h>
+
 #include "adcDevice.h"
 #include "adcDeviceInterface.h"
 

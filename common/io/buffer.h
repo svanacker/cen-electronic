@@ -87,17 +87,21 @@ bool isBufferEmpty(const Buffer* buffer);
 /**
  * Returns the number of elements.
  * @param buffer the buffer (simulates object programming)
+ * @return the number of elements.
  */
 int getBufferElementsCount(const Buffer* buffer);
 
 /**
- * Get and result the first char inserted (FIFO Stack).
+ * Get and result the first char inserted (FIFO Stack)..
  * Shift the read buffer to the next char.
+ * @param buffer the buffer (simulates object programming)
+ * @return the the first char inserted (FIFO Stack).
  */
 char bufferReadChar(Buffer* buffer);
 
 /**
  * Get the char at the specified index, but DO NOT shift to this index (=> DO NOT REMOVE the char).
+ * @param buffer the buffer (simulates object programming)
  * @param charIndex the index of the char (0 = first char)
  * @return the char at the specified index
  */
@@ -105,22 +109,28 @@ char bufferGetCharAtIndex(Buffer* buffer, int charIndex);
 
 /**
  * Append a character to the buffer (FIFO buffer).
+ * @param buffer the buffer (simulates object programming)
  * @param c the char which will be appended
  */
 void bufferWriteChar(Buffer* buffer, char c);
 
 /**
- * Get a compatible InputStream with the buffer.
+ * Get a compatible InputStream associated to the buffer.
+ * @param buffer the buffer (simulates object programming)
+ * @return the inputStream associated to the buffer.
  */
 InputStream* getInputStream(Buffer* buffer);
 
 /**
  * Get a compatible OutputStream with the buffer.
+ * @param buffer the buffer (simulates object programming)
+ * @return the outputStream associated to the buffer.
  */
 OutputStream* getOutputStream(Buffer* buffer);
 
 /**
  * Print the buffer in a debug mode, with all variables.
+ * @param buffer the buffer (simulates object programming)
  */
 void printDebugBuffer(OutputStream* outputStream, Buffer* buffer);
 

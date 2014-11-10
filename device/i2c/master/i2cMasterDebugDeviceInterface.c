@@ -1,6 +1,7 @@
 #include "i2cMasterDebugDeviceInterface.h"
 
 #include "../../../device/deviceInterface.h"
+#include "../../../device/deviceConstants.h"
 
 const char* deviceI2cMasterDebugGetName() {
     return "i2cMasterDebug";

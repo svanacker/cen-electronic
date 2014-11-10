@@ -7,7 +7,6 @@
 
 /**
  * Contains all string manipulations which writes data to an outputStream
- * @author svanacker
  */
 
 // STRINGS

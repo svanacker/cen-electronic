@@ -3,6 +3,7 @@
 #include "commonBeaconDevice.h"
 #include "commonBeaconDeviceInterface.h"
 
+
 #include "../../common/commons.h"
 
 #include "../../common/cmd/commonCommand.h"

@@ -2,8 +2,7 @@
 #define STRATEGY_DEVICE_INTERFACE_H
 
 #include "../../device/deviceInterface.h"
-
-#define STRATEGY_DEVICE_HEADER                            'Y'
+#include "../../device/deviceConstants.h"
 
 #define COMMAND_STRATEGY_SET_OPPONENT_ROBOT_POSITION    'o'
 

@@ -12,7 +12,7 @@ void printLogHandler(OutputStream* outputStream, LogHandler* logHandler) {
 }
 
 void printLogger(OutputStream* outputStream) {
-    Logger* logger = getLoggerSingleton();
+    Logger* logger = getLoggerInstance();
     appendKeyAndName(outputStream, "GlbLogLvl=", getLevelAsString(logger->globalLogLevel));
     appendKeyAndName(outputStream, ",writeLogLvl=", getLevelAsString(logger->writeLogLevel));
     println(outputStream);

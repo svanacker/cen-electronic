@@ -62,6 +62,7 @@ typedef struct Timer Timer;
 
 /**
  * Definition of a function for callBack of timer.
+ * @param timer the pointer on timer object (POO simulation)
  */
 typedef void interruptTimerCallbackFunc(Timer* timer);
 
@@ -91,13 +92,13 @@ struct Timer {
 
 /**
  * Returns the time value.
- * @param timer a pointer on the timer object for which we want the time value.
+ * @param timer a pointer on the timer object for which we want the time value (POO simulation).
  */
 unsigned long getTime(Timer* Timer);
 
 /**
  * Sets the time value.
- * @param timer a pointer on the timer object for which we want the set timer.
+ * @param timer a pointer on the timer object for which we want the set timer  (POO simulation).
  * @param time the new time value
  */
 void setTime(Timer* Timer, unsigned long time);
@@ -106,25 +107,27 @@ void setTime(Timer* Timer, unsigned long time);
 
 /**
  * Starts the timer given in argument.
- * @param timer a pointer on the timer object that we want to start.
+ * @param timer a pointer on the timer object that we want to start  (POO simulation).
  */
 void startTimer(Timer* timer);
 
 /**
  * Stops the timer given in arguments.
- * @param timer a pointer on the timer object that we want to stop.
+ * @param timer a pointer on the timer object that we want to stop  (POO simulation).
  */
 void stopTimer(Timer* timer);
 
 // MARK
 
 /**
- * Mark the timer. Remembers the current timer value.
+ * Mark the timer. Remembers the current timer value  (POO simulation).
  */
 void mark(Timer* timer);
 
 /**
  * Check if the last mark was done after markTime + time.
+ * @param timer the pointer on timer object ( (POO simulation)
+ * @param time the time to compare if we are in timeout or not 
  * return true if (markTime + time > timer->time)
  */
 bool timeout(Timer* timer, unsigned long time);
@@ -133,20 +136,20 @@ bool timeout(Timer* timer, unsigned long time);
 
 /**
  * Lock the timer to avoid that the timer fires.
- * @param timer a pointer on the timer object that we want to lock.
+ * @param timer a pointer on the timer object that we want to lock (POO simulation).
  */
 void lockTimer(Timer* timer);
 
 /**
  * wait for the timer to be sure that interrupt is not in progress, and lock
  * to be sure that until unlockTimer, timer will not be enabled.
- * @param timer a pointer on timer object to lock and wait
+ * @param timer a pointer on timer object to lock and wait (POO simulation).
  */
 void lockAndWaitForTimer(Timer* timer);
 
 /**
  * unlock the timer. If the timer is enabled, the timer will be fired next time.
- * @param timer a pointer on timer object to unlock
+ * @param timer a pointer on timer object to unlock (POO simulation).
  */
 void unlockTimer(Timer* timer);
 

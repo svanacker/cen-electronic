@@ -1,6 +1,7 @@
 #include "systemDebugDeviceInterface.h"
 
 #include "../../device/deviceInterface.h"
+#include "../../device/deviceConstants.h"
 
 const char* deviceSystemDebugGetName() {
     return "systemDebug";

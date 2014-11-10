@@ -103,7 +103,6 @@ char i2cMasterReadRegisterValue(char address, char commandRegister) {
 }
 
 void i2cMasterRegisterReadBuffer(char address,char reg, char length, Buffer* buffer){
-
     // Set the register command
     i2cMasterWriteChar(address,reg);
 
@@ -129,7 +128,6 @@ void i2cMasterRegisterReadBuffer(char address,char reg, char length, Buffer* buf
 }
 
 void i2cMasterReadBuffer(char address, char length, Buffer* buffer){
-
     portableStartI2C();
     WaitI2C();
     portableMasterWriteI2C(address );

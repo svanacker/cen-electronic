@@ -92,7 +92,7 @@ void __ISR(_I2C_1_VECTOR, ipl3) _SlaveI2CHandler(void)
         I2C1CONbits.SCLREL = 1;
     }
 
-    //clear I2C1 Slave interrupt flag
+    // clear I2C1 Slave interrupt flag
     IFS0bits.I2C1MIF = 0;
 }
 

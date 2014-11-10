@@ -2,9 +2,8 @@
 #define SYSTEM_DEVICE_INTERFACE_H
 
 #include "../../device/deviceInterface.h"
+#include "../../device/deviceConstants.h"
 
-/** Header for Device. */
-#define SYSTEM_DEVICE_HEADER    'S'
 
 /** Command to show log configuration. */
 #define COMMAND_LOG 'L'

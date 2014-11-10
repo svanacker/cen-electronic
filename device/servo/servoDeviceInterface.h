@@ -2,9 +2,7 @@
 #define SERVO_DEVICE_INTERFACE_H
 
 #include "../../device/deviceInterface.h"
-
-// Header for the device
-#define SERVO_DEVICE_HEADER                     's'
+#include "../../device/deviceConstants.h"
 
 // WRITE FUNCTIONS
 

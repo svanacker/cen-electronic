@@ -2,9 +2,7 @@
 #define COMMON_BEACON_DEVICE_INTERFACE_H
 
 #include "../../device/deviceInterface.h"
-
-/** Common Beacon device header. */
-#define COMMON_BEACON_DEVICE_HEADER            'U'
+#include "../../device/deviceConstants.h"
 
 /** Redirect commands to Jennic. */
 #define COMMAND_REDIRECT_TO_JENNIC             '@'

@@ -2,8 +2,7 @@
 #define I2C_SLAVE_DEBUG_DEVICE_INTERFACE_H
 
 #include "../../../device/deviceInterface.h"
-
-#define I2C_SLAVE_DEBUG_DEVICE_HEADER        'i'
+#include "../../../device/deviceConstants.h"
 
 /** Command to debug the I2C. */
 #define COMMAND_DEBUG_I2C                     'd'

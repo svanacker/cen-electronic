@@ -11,7 +11,7 @@
  * @param b3 value between 0 and 15
  * @param b4 value between 0 and 15
  * @param b5 value between 0 and 15
- * @return value value between 0 and 2^32
+ * @return value value between 0 and 2^32 - 1
  */
 float hex6CharToFloat(char b0,
         char b1,
@@ -28,7 +28,7 @@ float hex6CharToFloat(char b0,
  * @param b1 value between 0 and 15
  * @param b2 value between 0 and 15
  * @param b3 value between 0 and 15
- * @return value value between 0 and 65536
+ * @return value value between 0 and 65535
  */
 long hex4CharToLong(char b0, char b1, char b2, char b3);
 
@@ -38,6 +38,7 @@ long hex4CharToLong(char b0, char b1, char b2, char b3);
  * Ex : 0A
  * @param b0 value between 0 and 15
  * @param b1 value between 0 and 15
+ * @return the hexadecimal value (value between 0 and 255)
  */
 int hex2CharToInt(char b0, char b1);
 

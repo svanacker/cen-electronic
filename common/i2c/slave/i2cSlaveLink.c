@@ -22,7 +22,6 @@ void openSlaveI2cStreamLink(StreamLink* i2cStreamLink,
         char (*outputBufferArray)[],
         unsigned char outputBufferLength,
         int i2cAddress) {
-    // Init Buffers : TODO : IS IT NECESSARY ?
     initBuffer(inputBuffer, inputBufferArray, inputBufferLength, BUFFER_NAME_I2C_SLAVE, "IN");
     initBuffer(outputBuffer, outputBufferArray, outputBufferLength, BUFFER_NAME_I2C_SLAVE, "OUT");
 

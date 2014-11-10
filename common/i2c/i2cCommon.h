@@ -6,7 +6,7 @@
 #define NACK    0
 
 /**
- * Indirection for IdleI2C() used to manage Simulation
+ * Indirection for IdleI2C() used to manage Simulation.
  */
 void WaitI2C();
 

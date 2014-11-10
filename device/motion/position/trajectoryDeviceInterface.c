@@ -2,6 +2,7 @@
 
 #include "../../../device/device.h"
 #include "../../../device/deviceInterface.h"
+#include "../../../device/deviceConstants.h"
 
 #define GET_ABS_POS_STRING             "getAbsPos"
 #define GET_DEBUG_ABS_POS_STRING     "getDbgAbsPos"

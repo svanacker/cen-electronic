@@ -79,8 +79,12 @@ void serialPutc(unsigned char serialPortIndex, char c) {
 
     UART_MODULE uart = getUartModule(serialPortIndex);
 
-    while (!UARTTransmitterIsReady(uart));
+    while (!UARTTransmitterIsReady(uart)) {
+	
+	}
     UARTSendDataByte(uart, c);
-    while (!UARTTransmissionHasCompleted(uart));
+    while (!UARTTransmissionHasCompleted(uart)) {
+	
+	}
 }
 

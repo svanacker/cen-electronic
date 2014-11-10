@@ -6,7 +6,6 @@
 
 #include "../../common/io/outputStream.h"
 
-
 /**
  * Write the content of the log.
  * @param outputStream the outputStream in which we write the content of the log
@@ -17,7 +16,7 @@ void printLogHandler(OutputStream* outputStream,
 
 /**
  * Write the configuration of the logger.
- * @param outputStream the stream in which we write
+ * @param outputStream the stream in which we write (POO simulation)
  */
 void printLogger(OutputStream* outputStream);
 

@@ -2,6 +2,7 @@
 
 #include "../../common/commons.h"
 #include "../../device/deviceInterface.h"
+#include "../../device/deviceConstants.h"
 
 const char* deviceLCDGetName() {
     return "LCD";

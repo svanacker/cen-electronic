@@ -4,9 +4,6 @@
 
 #include "../../common/commons.h"
 
-#include "../../common/io/outputStream.h"
-#include "../../common/io/printWriter.h"
-
 unsigned long getTime(Timer* timer) {
     return timer->time;
 }

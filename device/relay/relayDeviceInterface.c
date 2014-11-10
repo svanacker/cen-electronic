@@ -1,6 +1,7 @@
 #include "relayDeviceInterface.h"
 
 #include "../../device/deviceInterface.h"
+#include "../../device/deviceConstants.h"
 
 const char* deviceRelayGetName() {
     return "relay";
@@ -23,8 +24,8 @@ int deviceRelayGetInterface(char header, int mode, bool fillDeviceArgumentList) 
 }
 
 static DeviceInterface deviceInterface = {
+	.deviceHeader = RELAY_DEVICE_HEADER,
     .deviceGetName = &deviceRelayGetName,
-//    .deviceGetSoftwareRevision = &deviceRelayGetSotwareRevision,
     .deviceGetInterface = &deviceRelayGetInterface
 };
 

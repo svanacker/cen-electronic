@@ -2,11 +2,9 @@
 #define LASER_BEACON_DEVICE_INTERFACE_H
 
 #include "../../device/deviceInterface.h"
+#include "../../device/deviceConstants.h"
 
 // COMMAND INTERFACE
-
-/** Laser Beacon Device Header. */
-#define LASER_BEACON_DEVICE_HEADER            'l'
 
 /** Get the position of the detected object. */
 #define COMMAND_BEACON_POSITION             'b'

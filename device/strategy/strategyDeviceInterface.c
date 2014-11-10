@@ -4,6 +4,7 @@
 
 #include "../../device/device.h"
 #include "../../device/deviceInterface.h"
+#include "../../device/deviceConstants.h"
 
 const char* getStrategyDeviceName(void) {
     return "Strategy";

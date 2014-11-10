@@ -1,6 +1,7 @@
 #include "systemDeviceInterface.h"
 
 #include "../../device/deviceInterface.h"
+#include "../../device/deviceConstants.h"
 
 static char* picName;
 

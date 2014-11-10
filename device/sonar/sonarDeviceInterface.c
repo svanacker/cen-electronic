@@ -1,6 +1,7 @@
 #include "sonarDeviceInterface.h"
 
 #include "../../device/deviceInterface.h"
+#include "../../device/deviceConstants.h"
 
 const char* deviceSonarGetName() {
     return "sonar";

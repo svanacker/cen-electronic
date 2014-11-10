@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdbool.h>
 
 #include <timer.h>
 // #include <peripheral/timer.h>
@@ -95,7 +96,7 @@ void stopTimerList() {
 * @private 
 */
 void _internalUpdateTimerListValues() {
-    if (timerList.size) {
+    if (timerList.size > 0) {
         int i = 0;
         for (i = 0; i < timerList.size; i++) {
             Timer* currentTimer = getTimerByIndex(i);

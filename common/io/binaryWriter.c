@@ -15,7 +15,6 @@ void appendDoubleWord(OutputStream* outputStream, unsigned long value) {
     append(outputStream, value & 0xFF);
 }
 
-
 void appendByte(OutputStream* outputStream, char value) {
     append(outputStream, value);
 }

@@ -6,7 +6,6 @@
 #include "../../../common/io/buffer.h"
 #include "../../../common/io/streamLink.h"
 
-
 /**
  * SCHEMA OF I2C SLAVE STREAM ARCHITECTURE
  *        _________________

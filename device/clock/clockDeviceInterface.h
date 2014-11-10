@@ -2,12 +2,7 @@
 #define	CLOCK_DEVICE_INTERFACE_H
 
 #include "../../device/deviceInterface.h"
-
-
-// The CLOCK DEVICE HEADER
-
-#define CLOCK_DEVICE_HEADER     'C'
-
+#include "../../device/deviceConstants.h"
 
 // List of CLOCK COMMAND HEADER
 

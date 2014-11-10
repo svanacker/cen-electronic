@@ -12,11 +12,6 @@
  */
 #define I2C_SLAVE_FAKE_WRITE     0x00
 
-
-/**
- * Define a FREE Address (not used by classic device / Devantech Device)
- */
-
 // GPIO14 : Conflict with PCF8574
 
 #define GPIO14_ADDRESS_0        0x40

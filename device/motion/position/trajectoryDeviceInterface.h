@@ -2,11 +2,7 @@
 #define TRAJECTORY_DEVICE_REMOTE_INTERFACE_H
 
 #include "../../../device/deviceInterface.h"
-
-/**
- * Header char of Trajectory device : 'n' for 'navigation.
- */
-#define TRAJECTORY_DEVICE_HEADER        'n'
+#include "../../../device/deviceConstants.h"
 
 /**
 * Defines the header used to ask absolute position.

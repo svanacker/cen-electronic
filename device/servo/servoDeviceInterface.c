@@ -1,6 +1,7 @@
 #include "servoDeviceInterface.h"
 
 #include "../../device/deviceInterface.h"
+#include "../../device/deviceConstants.h"
 
 const char* deviceServoGetName() {
     return "servo";

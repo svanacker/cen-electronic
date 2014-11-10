@@ -2,11 +2,7 @@
 #define LCD_DEVICE_INTERFACE_H
 
 #include "../../device/deviceInterface.h"
-
-/**
- * Command header for LCD Device.
- */
-#define LCD_DEVICE_HEADER    'L'
+#include "../../device/deviceConstants.h"
 
 /**
 * Command to write on the LCD

@@ -29,6 +29,4 @@ void initHandler(
         OutputStream* outputStream,
         unsigned int logLevel);
 
-
 #endif
-

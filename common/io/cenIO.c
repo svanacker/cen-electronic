@@ -10,7 +10,6 @@ void initIO() {
     // D3 as Input for match detector
     TRISDbits.TRISD3 = 1;
 
-
     // PORTDbits.RD2 = 0;
 
     // F0 as ouput

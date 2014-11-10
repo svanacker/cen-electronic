@@ -2,12 +2,15 @@
 #include <libpic30.h>
 #include <adc12.h>
 
-#include "adcutils.h"
+#include "../adcutils.h"
 
-#include "../../common/delay/cenDelay.h"
+#include "../../../common/delay/cenDelay.h"
 
-int getANX ( char channel) {
-       ADCON1bits.ADON = 0; //Stop ADC
+/**
+ * 30F Implementation of ANX conversion.
+ */
+int getANX (char channel) {
+    ADCON1bits.ADON = 0; //Stop ADC
     //ADCON1 Register
     ADCON1bits.SSRC = 0; //manual convert option
     ADCON1bits.ASAM = 0; //manual sample
@@ -45,14 +48,17 @@ int getANX ( char channel) {
     //stop acquisition
     ADCON1bits.SAMP =  0; 
     // wait end of conversion
-      while(!ADCON1bits.DONE){} 
+    while(!ADCON1bits.DONE){
+	
+	} 
           
     unsigned int result;
-      result = ADCBUF0;
+    result = ADCBUF0;
 
     //stop ADC
-      ADCON1bits.ADON = 0;    
-      return result;
+    ADCON1bits.ADON = 0;    
+    
+	return result;
 }
 
 

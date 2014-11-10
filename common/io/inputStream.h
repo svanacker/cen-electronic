@@ -27,23 +27,27 @@ struct InputStream;
 typedef struct InputStream InputStream;
 
 /**
- * the function which opens the input stream.
+ * Function which opens the input stream.
+ * @param inputStream the pointer on object (POO simulation)
  * @param param1 a param passed to configure the stream
  */
 typedef void OpenInputStreamFunction(InputStream* inputStream, int param1);
 
 /**
  * The function which closes the input stream.
+ * @param inputStream the pointer on object (POO simulation)
  */
 typedef void CloseInputStreamFunction(InputStream* inputStream);
 
 /**
  * Function which is able to get a character from the stream.
+ * @param inputStream the pointer on object (POO simulation)
  */
 typedef char ReadCharFunction(InputStream* inputStream);
 
 /**
  * Function which is able to return if there is character to read.
+ * @param inputStream the pointer on object (POO simulation)
  */
 typedef bool AvailableDataFunction(InputStream* inputStream);
 
@@ -67,12 +71,13 @@ struct InputStream {
 
 /**
  * Initialize the input stream
+ * @param inputStream the pointer on object (POO simulation)
  * @param openStream The function which must be called to open the stream.
  * @param closeStream The function which must be called to close the stream.
  * @param readChar The function which must be called to read a char from the input Stream.
  * @param The function which must be called to detects if there is a character to read.
  */
-void initInputStream(InputStream* stream,
+void initInputStream(InputStream* inputStream,
         OpenInputStreamFunction* openInputStream,
         CloseInputStreamFunction* closeInputStream,
         ReadCharFunction* readChar,
@@ -85,7 +90,6 @@ void initInputStream(InputStream* stream,
  * @param inputStream the stream for which we want to clear (by pulling data)
  */
 void clearInputStream(InputStream* inputStream);
-
 
 #endif
 

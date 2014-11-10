@@ -2,8 +2,7 @@
 #define BEACON_RECEIVER_INTERFACE_H
 
 #include "../../device/deviceInterface.h"
-
-#define BEACON_RECEIVER_DEVICE_HEADER            'r'
+#include "../../device/deviceConstants.h"
 
 /**
 * Command header for getting the position of the opponent robot.

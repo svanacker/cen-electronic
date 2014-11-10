@@ -5,7 +5,7 @@
 #include "inputStream.h"
 #include "outputStream.h"
 
-#define COPY_ALL -1
+#define COPY_ALL 		-1
 
 /**
  * Copy the data from inputStream to outputStream with a buffer

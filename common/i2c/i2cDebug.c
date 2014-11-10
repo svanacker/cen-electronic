@@ -1,4 +1,4 @@
-#include <stdlib.h>
+#include <stdbool.h>
 
 #include "../../common/commons.h"
 
@@ -29,7 +29,6 @@ bool getDebugI2cEnabled() {
 void setDebugI2cEnabled(bool enabled) {
     debugI2cEnabled = enabled;
 }
-
 
 void initI2CDebugBuffers(Buffer* aDebugI2cInputBuffer,
                          char (*debugI2cInputBufferArray)[],

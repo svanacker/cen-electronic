@@ -2,12 +2,7 @@
 #define	EEPROM_DEVICE_INTERFACE_H
 
 #include "../../device/deviceInterface.h"
-
-
-// The EEPROM DEVICE HEADER
-
-#define EEPROM_DEVICE_HEADER     'E'
-
+#include "../../device/deviceConstants.h"
 
 // List of EEPROM COMMAND HEADER
 
