@@ -20,13 +20,13 @@
 
 #include "../../robot/2012/armDriver2012.h"
 
-static BOOL matchStarted = FALSE;
+static bool matchStarted = false;
 
 /** Current Time In Second. */
 static int currentTimeInSecond = 0;
 
 /** Flag to know if the robot must stop at the end of the match. */
-static BOOL doNotEnd = FALSE;
+static bool doNotEnd = false;
 
 /** The timer struct to detect the end of the match. */
 static Timer* endMatchDetectorDeviceTimer;
@@ -44,12 +44,12 @@ void endMatchDetectorCallbackFunc(Timer* timer) {
 * We send it after
 */
 void initEndMatchConfig() {
-	doNotEnd = isConfigSet(CONFIG_DO_NOT_END);
+    doNotEnd = isConfigSet(CONFIG_DO_NOT_END);
 }
 
 void markStartMatch() {
-	initEndMatchConfig();
-    matchStarted = TRUE;
+    initEndMatchConfig();
+    matchStarted = true;
     currentTimeInSecond = 0;
 }
 
@@ -61,36 +61,36 @@ int getCurrentTimeInSecond(void) {
     return currentTimeInSecond;
 }
 
-BOOL isEnd() {
+bool isEnd() {
     if (doNotEnd) {
-        return FALSE;
+        return false;
     }
     if (!matchStarted) {
         appendString(getOutputStreamLogger(ERROR), "You must call startMatch before");
     }
-    BOOL result = currentTimeInSecond >= MATCH_DURATION;
-	
-	if (result) {	
-		// If END
-		armDriver2012Up(0);
-	}
-	return result;
+    bool result = currentTimeInSecond >= MATCH_DURATION;
+    
+    if (result) {    
+        // If END
+        armDriver2012Up(0);
+    }
+    return result;
 }
 
 // COMMON PART
 
 void initEndMatchDetector() {
     endMatchDetectorDeviceTimer = addTimer(END_MATCH_DETECTOR_TIMER_CODE,
-								            TIME_DIVISER_1_HERTZ,
-								            endMatchDetectorCallbackFunc);
+                                            TIME_DIVISER_1_HERTZ,
+                                            endMatchDetectorCallbackFunc);
 }
 
 void stopEndMatchDetector() {
 
 }
 
-BOOL isEndMatchDetectorDeviceOk() {
-    return TRUE;
+bool isEndMatchDetectorDeviceOk() {
+    return true;
 }
 
 void deviceEndMatchDetectorHandleRawData(char header,

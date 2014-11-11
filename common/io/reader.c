@@ -21,21 +21,33 @@
 // READ METHODS
 
 char readFilteredChar(InputStream* inputStream) {
-    unsigned char b0 = inputStream->readChar(inputStream);
-    unsigned char result;
+    char b0 = inputStream->readChar(inputStream);
+    char result;
     if (filterBinaryToValueChar(b0, &result)) {
         return result;
     } else {
         writeError(IO_READER_READ_FILTERED_CHAR);
-		OutputStream* debugOutputStream = getErrorOutputStreamLogger();
-		appendString(debugOutputStream, "Char:");
+        OutputStream* debugOutputStream = getErrorOutputStreamLogger();
+        appendString(debugOutputStream, "Char:");
         append(debugOutputStream, b0);
-		appendString(debugOutputStream, "Hex:");
+        appendString(debugOutputStream, "Hex:");
         appendHex2(debugOutputStream, b0);
 
         return -1;
     }
 }
+
+char readBinaryChar(InputStream* inputStream) {
+    char result = inputStream->readChar(inputStream);
+    return result;
+}
+
+int readBinaryWord(InputStream* inputStream) {
+    char b0 = inputStream->readChar(inputStream);
+    char b1 = inputStream->readChar(inputStream);
+    return (b0 << 8) | b1;
+}
+
 
 int readHex(InputStream* inputStream) {
     char b1 = readFilteredChar(inputStream);
@@ -70,11 +82,11 @@ long readHex4(InputStream* inputStream) {
 }
 
 signed long readSignedHex4(InputStream* inputStream) {
-	signed long result = readHex4(inputStream);
-	if (result > 0x7FFF) {
-		result -= 0x10000;
-	}	
-	return result;
+    signed long result = readHex4(inputStream);
+    if (result > 0x7FFF) {
+        result -= 0x10000;
+    }    
+    return result;
 }
 
 float readHex6(InputStream* inputStream) {
@@ -91,28 +103,28 @@ float readHex6(InputStream* inputStream) {
 
 // CHECK METHODS
 
-BOOL isAck(InputStream* inputStream) {
+bool isAck(InputStream* inputStream) {
     char ack = inputStream->readChar(inputStream);
     return ack == COMMAND_ACK;
 }
 
-BOOL isChar(InputStream* inputStream, char expectedChar) {
+bool isChar(InputStream* inputStream, char expectedChar) {
     char readChar = inputStream->readChar(inputStream);
     return readChar == expectedChar;
 }
 
-BOOL checkIsAck(InputStream* inputStream) {
+bool checkIsAck(InputStream* inputStream) {
     char ack = inputStream->readChar(inputStream);
     if (ack != COMMAND_ACK) {
         OutputStream* outputStream = getErrorOutputStreamLogger();
         appendString(outputStream, "\nCHK:ACK EXP:a \t but \t find:");
         append(outputStream, ack);
-		println(outputStream);
+        println(outputStream);
     }
-    return TRUE;
+    return true;
 }
 
-BOOL checkIsChar(InputStream* inputStream, char expectedChar) {
+bool checkIsChar(InputStream* inputStream, char expectedChar) {
     char readChar = inputStream->readChar(inputStream);
     if (expectedChar != readChar) {
         OutputStream* outputStream = getErrorOutputStreamLogger();
@@ -120,7 +132,7 @@ BOOL checkIsChar(InputStream* inputStream, char expectedChar) {
         append(outputStream, expectedChar);
         appendString(outputStream, " \t but \t find:");
         append(outputStream, readChar);
-		println(outputStream);
+        println(outputStream);
     }
-    return TRUE;
+    return true;
 }

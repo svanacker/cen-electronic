@@ -7,19 +7,18 @@
 
 /**
  * Contains all string manipulations which writes data to an outputStream
- * @author svanacker
  */
 
 // STRINGS
 
 void append(OutputStream* outputStream, char c) {
-	if (outputStream == NULL) {
-		return;
-	}
+    if (outputStream == NULL) {
+        return;
+    }
     outputStream->writeChar(outputStream, c);
 }
 
-void appendBOOL(OutputStream* outputStream, BOOL b) {
+void appendBool(OutputStream* outputStream, bool b) {
     if (b) {
         append(outputStream, '1');
     } else {
@@ -32,6 +31,9 @@ void appendSeparator(OutputStream* outputStream) {
 }
 
 void appendString(OutputStream* outputStream, const char* s) {
+    if (s == NULL) {
+        return;
+    }
     while (*s != '\0') {
         append(outputStream, *s++);
     }
@@ -66,15 +68,15 @@ void appendAck(OutputStream* outputStream) {
 // BUFFER
 
 void printBuffer(OutputStream* outputStream, Buffer* buffer) {
-	while(!isBufferEmpty(buffer)) {
-        unsigned char c = bufferReadChar(buffer);
+    while(!isBufferEmpty(buffer)) {
+        char c = bufferReadChar(buffer);
         append(outputStream, c);
     }
 }
 
 // HEXADECIMAL
 
-void appendHex(OutputStream* outputStream, unsigned char c) {
+void appendHex(OutputStream* outputStream, char c) {
     // Value between 0 and 9
     if (c < 10) {
         c += 48;
@@ -93,12 +95,12 @@ void internalAppendHex(OutputStream* outputStream, signed long value, int shiftM
     }
 }
 
-void appendHex2(OutputStream* outputStream, unsigned char value) {
+void appendHex2(OutputStream* outputStream, char value) {
     internalAppendHex(outputStream, value, 4);
 }
 
 void appendHex3(OutputStream* outputStream, signed int value) {
-	internalAppendHex(outputStream, value, 8);
+    internalAppendHex(outputStream, value, 8);
 }
 
 void appendHex4(OutputStream* outputStream, signed int value) {
@@ -110,7 +112,7 @@ void appendHex5(OutputStream* outputStream, signed int value) {
 }
 
 void appendHex6(OutputStream* outputStream, signed long value) {
-	internalAppendHex(outputStream, value, 20);
+    internalAppendHex(outputStream, value, 20);
 }
 
 void appendHex8(OutputStream* outputStream, signed long value) {
@@ -196,7 +198,7 @@ int appendDecf(OutputStream* stream, float value) {
 
 
 void appendStringAndDecf(OutputStream* stream, const char* s, float value) {
-	appendString(stream, s);
+    appendString(stream, s);
     appendDecf(stream, value);
 }
 

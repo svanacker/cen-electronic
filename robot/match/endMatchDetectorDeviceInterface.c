@@ -12,11 +12,11 @@ unsigned int getEndMatchDetectorSoftwareRevision() {
 }
 
 int deviceEndMatchDetectorGetInterface(char header, int mode,
-        BOOL fillDeviceArgumentList) {
+        bool fillDeviceArgumentList) {
     if (mode == DEVICE_MODE_OUTPUT) {
         if (header == COMMAND_NOTIFY_MATCH_ENDED) {
             if (fillDeviceArgumentList) {
-				setFunctionNoArgument("notifyMatchEnd");
+                setFunctionNoArgumentAndNoResult("notifyMatchEnd");
             }
             return 0;
         }
@@ -26,6 +26,7 @@ int deviceEndMatchDetectorGetInterface(char header, int mode,
 
 static DeviceInterface deviceInterface = {
     .deviceGetName = &getEndMatchDetectorDeviceName,
+    .deviceHeader = END_MATCH_DETECTOR_DEVICE_HEADER,
 //    .deviceGetSoftwareRevision = &getEndMatchDetectorSoftwareRevision,
     .deviceGetInterface = &deviceEndMatchDetectorGetInterface
 };

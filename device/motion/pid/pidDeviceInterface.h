@@ -5,39 +5,40 @@
 
 #include "../../../device/device.h"
 #include "../../../device/deviceInterface.h"
+#include "../../../device/deviceConstants.h"
 
 // COMMAND
 
 /**
-* Set the value of PID
+* Set the value of PID.
 */
-#define COMMAND_WRITE_PID 'p'
+#define COMMAND_WRITE_PID 'w'
 
 /**
 * Read the value of PID.
 */
-#define COMMAND_READ_PID 'q'
+#define COMMAND_READ_PID 'r'
 
 /**
 * Send values to have information about profile at the begin of
 * trajectory compute.
 */
-#define COMMAND_SEND_MOTION_PARAMETER '_'
+#define COMMAND_SEND_MOTION_PARAMETER 'm'
 
 /**
 * Send values to have statistical debug informations.
 */
-#define COMMAND_SEND_DEBUG_DATA_PID '*'
+#define COMMAND_SEND_DEBUG_DATA_PID 'd'
 
 /**
 * Change end Detection Motion Parameter.
 */
-#define COMMAND_SET_END_DETECTION_PARAMETER '='
+#define COMMAND_SET_END_DETECTION_PARAMETER 'e'
 
 /**
 * Get the Detection Motion Parameter.
 */
-#define COMMAND_GET_END_DETECTION_PARAMETER '~'
+#define COMMAND_GET_END_DETECTION_PARAMETER 'd'
 
 /**
 * Get the PID device interface.

@@ -49,12 +49,12 @@ void transmitDriverData(int transmitMode,
     }
 }
 
-BOOL handleNotificationFromDispatcher(DriverDataDispatcher* dispatcher) {
+bool handleNotificationFromDispatcher(DriverDataDispatcher* dispatcher) {
     InputStream* inputStream = dispatcher->inputStream;
 
     if (inputStream == NULL) {
         writeError(NO_DISPATCHER_INPUT_STREAM);
-        return FALSE;
+        return false;
     }
 
     if (inputStream->availableData(inputStream)) {
@@ -64,26 +64,32 @@ BOOL handleNotificationFromDispatcher(DriverDataDispatcher* dispatcher) {
         if (inputBuffer == NULL) {
             writeError(NO_DISPATCHER_INPUT_BUFFER);
         }
-        char header = bufferGetFirstChar(inputBuffer);
         int bufferSize = getBufferElementsCount(inputBuffer);
 
-		/*
-		OutputStream* errorOutputStream = getErrorOutputStreamLogger();
+        if (bufferSize < DEVICE_AND_COMMAND_HEADER_LENGTH) {
+            return false;
+        }
+
+        char deviceHeader = bufferGetCharAtIndex(inputBuffer, DEVICE_HEADER_INDEX);
+        char commandHeader = bufferGetCharAtIndex(inputBuffer, DEVICE_HEADER_INDEX);
+
+        /*
+        OutputStream* errorOutputStream = getErrorOutputStreamLogger();
         appendStringAndDec(errorOutputStream, "bufferSize=", bufferSize);
         appendStringAndDec(errorOutputStream, ", header=", header);
         println(errorOutputStream);
-		*/
-	
+        */
+    
         // find the device corresponding to this header
-        const Device* device = deviceDataDispatcherFindDevice(header, bufferSize, DEVICE_MODE_OUTPUT);
-		if (device == NULL) {
-			// For strategy device which send informations.
-			device = deviceDataDispatcherFindDevice(header, bufferSize, DEVICE_MODE_INPUT);
-		}
-		if (device == NULL) {
-			return FALSE;
-		}
-		/* TODO : Distinguish the case when there is not enough bufferSize.
+        const Device* device = deviceDataDispatcherFindDevice(deviceHeader, commandHeader, bufferSize, DEVICE_MODE_OUTPUT);
+        if (device == NULL) {
+            // For strategy device which send informations.
+            device = deviceDataDispatcherFindDevice(deviceHeader, commandHeader, bufferSize, DEVICE_MODE_INPUT);
+        }
+        if (device == NULL) {
+            return false;
+        }
+        /* TODO : Distinguish the case when there is not enough bufferSize.
         // if the device was not found, we continue
         if (device == NULL) {
             writeError(DEVICE_NOT_FOUND);
@@ -94,21 +100,21 @@ BOOL handleNotificationFromDispatcher(DriverDataDispatcher* dispatcher) {
             appendString(errorOutputStream, ",content=");
             copyInputToOutputStream(inputStream, errorOutputStream, NULL, COPY_ALL);
 
-            return FALSE;
+            return false;
         }
-		*/
+        */
 
         deviceHandleCallbackRawDataFunction* callbackFunction = device->deviceHandleCallbackRawData;
 
         if (callbackFunction != NULL) {
             // do the callback
-            callbackFunction(device, header, inputStream);
-            return TRUE;
+            callbackFunction(device, commandHeader, inputStream);
+            return true;
         } else {
             writeError(DISPATCHER_NO_CALLBACK_FOR);
-            append(getErrorOutputStreamLogger(), header);
+            append(getErrorOutputStreamLogger(), commandHeader);
         }
     }
 
-    return FALSE;
+    return false;
 }

@@ -2,25 +2,26 @@
 #define SYSTEM_DEVICE_INTERFACE_H
 
 #include "../../device/deviceInterface.h"
+#include "../../device/deviceConstants.h"
+
 
 /** Command to show log configuration. */
-#define COMMAND_LOG '$'
+#define COMMAND_LOG 'L'
 
 /** Command to show usage for all devices. */
 #define COMMAND_USAGE 'u'
 
 /** Command to wait a certain amount of time (in milliseconds). */
-#define COMMAND_WAIT 'M'
+#define COMMAND_WAIT 'W'
 
 /** Command to show the name of the PIC. */
 #define COMMAND_PIC_NAME 'N'
 
-
 /** Command to know if the remote board is present. */
 #define COMMAND_PING 'P'
 
-/** Command to debug the I2C. */
-#define COMMAND_DEBUG_I2C '"'
+/** Command to see the list of Timer List. */
+#define COMMAND_TIMER_LIST 'T'
 
 /**
 * Get the system device interface.

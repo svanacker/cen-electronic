@@ -9,12 +9,12 @@
 * Structure defining a composite of streams.
 */
 typedef struct CompositeOutputStream {
-	/** The array of sub-streams. */
-	OutputStream* children[MAX_STREAM];
-	/** The real size of the outputStream. */
-	unsigned char size;
-	// The outputStream exposed as an interface
-	OutputStream outputStream;
+    /** The array of sub-streams. */
+    OutputStream* children[MAX_STREAM];
+    /** The real size of the outputStream. */
+    unsigned char size;
+    // The outputStream exposed as an interface
+    OutputStream outputStream;
 } CompositeOutputStream;
 
 /**
@@ -27,6 +27,7 @@ void addOutputStream(CompositeOutputStream* compositeOutputStream, OutputStream*
 /**
 * Returns the children.
 * @param compositeOutputStream the stream containing child.
+* @return the number of outputStream children
 */
 int getCompositeOutputStreamChildrenCount(CompositeOutputStream* compositeOutputStream);
 

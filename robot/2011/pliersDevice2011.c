@@ -1,4 +1,4 @@
-#include <p30fxxxx.h>
+#include <p30Fxxxx.h>
 
 #include "pliersDevice2011.h"
 
@@ -8,7 +8,7 @@
 
 #include "../../common/cmd/commonCommand.h"
 
-#include "../../common/delay/delay30F.h"
+#include "../../common/delay/cenDelay.h"
 
 #include "../../common/io/inputStream.h"
 #include "../../common/io/outputStream.h"
@@ -16,7 +16,7 @@
 #include "../../common/io/reader.h"
 #include "../../common/io/stream.h"
 
-#include "../../common/pwm/servoPwm.h"
+#include "../../common/pwm/servo/servoPwm.h"
 
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
@@ -33,8 +33,8 @@ void devicePliers2011ShutDown() {
     stopPlier(2);
 }
 
-BOOL devicePliers2011IsOk() {
-    return TRUE;
+bool devicePliers2011IsOk() {
+    return true;
 }
 
 void movePlier(int index, int value) {
@@ -50,15 +50,15 @@ void stopPlier(int index) {
     movePlier(index, PWM_SERVO_MIDDLE_POSITION);
 }
 
-#define PLIERS_CLOSE_PWM 		1150
-#define PLIERS_CLOSE_END_PWM 		1300
+#define PLIERS_CLOSE_PWM         1150
+#define PLIERS_CLOSE_END_PWM         1300
 
-#define PLIERS_INIT_CLOSE_PWM 		1400
+#define PLIERS_INIT_CLOSE_PWM         1400
 
-#define PLIERS_OPEN_PWM 		2000
+#define PLIERS_OPEN_PWM         2000
 
 // Valeur plus faible pour arriver en douceur
-#define PLIERS_END_OPEN_PWM 		1650
+#define PLIERS_END_OPEN_PWM         1650
 
 void movePliers(int delayCounter, int speed) {
     int counter = 0;
@@ -76,8 +76,8 @@ void movePliers(int delayCounter, int speed) {
 }
 
 void openPliers(int delayCounter, int speed) {
-    BOOL rightOpened = FALSE;
-    BOOL leftOpened = FALSE;
+    bool rightOpened = false;
+    bool leftOpened = false;
     int counter = 0;
     while (1) {
         counter++;
@@ -88,7 +88,7 @@ void openPliers(int delayCounter, int speed) {
 
         if (!rightOpened && PIN_SWITCH_PLIER_OPEN_RIGHT) {
             appendString(getOutputStreamLogger(INFO), "Pliers Right Opened\n");
-            rightOpened = TRUE;
+            rightOpened = true;
             stopPlier(1);
         } else if (!rightOpened) {
             movePlier(1, speed);
@@ -96,7 +96,7 @@ void openPliers(int delayCounter, int speed) {
 
         if (!leftOpened && PIN_SWITCH_PLIER_OPEN_LEFT) {
             appendString(getOutputStreamLogger(INFO), "Pliers Left Opened\n");
-            leftOpened = TRUE;
+            leftOpened = true;
             stopPlier(2);
         } else if (!leftOpened) {
             movePlier(2, speed);
@@ -118,8 +118,8 @@ void closePliers(int delayCounter, int speed) {
  */
 
 void closePliers(int delayCounter, int speed) {
-    BOOL rightClosed = FALSE;
-    BOOL leftClosed = FALSE;
+    bool rightClosed = false;
+    bool leftClosed = false;
     int counter = 0;
     while (1) {
         counter++;
@@ -130,7 +130,7 @@ void closePliers(int delayCounter, int speed) {
 
         if (!rightClosed && PIN_SWITCH_PLIER_CLOSE_RIGHT) {
             appendString(getOutputStreamLogger(INFO), "Pliers Right Closed\n");
-            rightClosed = TRUE;
+            rightClosed = true;
             stopPlier(1);
         } else if (!rightClosed) {
             movePlier(1, speed);
@@ -138,7 +138,7 @@ void closePliers(int delayCounter, int speed) {
 
         if (!leftClosed && PIN_SWITCH_PLIER_CLOSE_LEFT) {
             appendString(getOutputStreamLogger(INFO), "Pliers Left Closed\n");
-            leftClosed = TRUE;
+            leftClosed = true;
             stopPlier(2);
         } else if (!leftClosed) {
             movePlier(2, speed);

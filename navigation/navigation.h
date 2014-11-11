@@ -6,7 +6,7 @@
 #include "pathList.h"
 #include "path.h"
 
-#define	BIT_LIST_NAVIGATION_ARRAY_LENGTH	(MAX_PATH / BITS_COUNT_IN_UNSIGNED_INT) + 1
+#define    BIT_LIST_NAVIGATION_ARRAY_LENGTH    (MAX_PATH / BITS_COUNT_IN_UNSIGNED_INT) + 1
 
 #define COST_UNAVAILABLE_PATH 2000
 
@@ -43,8 +43,8 @@ void addNavigationPath(PathDataFunction* pathDataFunction);
  * @param end endPoint
  */
 int computeBestPath(LocationList* outLocationList, 
-					Location* start,
-					Location* end);
+                    Location* start,
+                    Location* end);
 
 void printNavigationContext();
 
@@ -55,9 +55,9 @@ void printNavigationContext();
  * @param index the index of the path
  * @param value the availability of the path
  */
-void setPathAvailability(int index, BOOL value);
+void setPathAvailability(int index, bool value);
 
-BOOL getPathAvailability(int index);
+bool getPathAvailability(int index);
 
 /**
  * Reset the status of availability of all paths to Available.

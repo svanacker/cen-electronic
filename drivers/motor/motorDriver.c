@@ -17,35 +17,28 @@
 #include "../../drivers/driverList.h"
 #include "../../drivers/dispatcher/driverDataDispatcher.h"
 
-BOOL motorDriverInit() {
-    return TRUE;
+bool motorDriverInit() {
+    return true;
 }
 
 void motorDriverShutDown() {
 }
 
-BOOL motorDriverIsOk() {
-    return TRUE;
-}
-
-unsigned int motorDriverGetSoftwareRevision() {
-    return 1;
+bool motorDriverIsOk() {
+    return true;
 }
 
 const char* motorDriverGetName() {
     return "motorDriver";
 }
 
-BOOL motorDriverSendRawData(const char *data) {
-    return FALSE;
+bool motorDriverSendRawData(const char *data) {
+    return false;
 }
 
 static DriverDescriptor descriptor = {
-//    .driverEnabled = TRUE,
     .driverInit = &motorDriverInit,
     .driverShutDown = &motorDriverShutDown,
-  //  .driverIsOk = &motorDriverIsOk,
-  //  .driverGetSoftwareRevision = &motorDriverGetSoftwareRevision,
     .driverGetName = &motorDriverGetName
 };
 

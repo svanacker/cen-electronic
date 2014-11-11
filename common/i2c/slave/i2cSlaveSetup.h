@@ -1,8 +1,6 @@
 #ifndef I2C_SLAVE_SETUP_H
 #define I2C_SLAVE_SETUP_H
 
-#include "../../../common/io/buffer.h"
-
 /**
  * Init the i2c in the slave mode.
  * @param writeAddress (write address that the master sends)

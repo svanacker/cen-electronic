@@ -1,11 +1,13 @@
-#include <p30fxxxx.h>
+#include "../../common/commons.h"
+
+#include <plib.h>
+
 #include <string.h>
 
 #include "lcdHd44780.h"
-#include "../../common/commons.h"
-#include "../../common/delay/delay30F.h"
+#include "../../common/delay/cenDelay.h"
 
-#define LCD_ROW_COUNT	 4
+#define LCD_ROW_COUNT     4
 #define LCD_COLUMN_COUNT 20
 
 static char currentRow;
@@ -279,11 +281,11 @@ void hd44780_writeChar(char c) {
         }
         hd44780_setCursorRowAndColumn(currentRow, currentColumn);
     }
-	else if (c == CLS) {
-		hd44780_setCursorAtHome();
-		hd44780_clearScreen();
-	}
-	 else {
+    else if (c == CLS) {
+        hd44780_setCursorAtHome();
+        hd44780_clearScreen();
+    }
+     else {
         hd44780_sendDataLcd(c);
         incLcdColumn();
     }

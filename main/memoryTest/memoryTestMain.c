@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <p30fxxxx.h>
+#include <p30Fxxxx.h>
 #include <libpic30.h>
 
 #include <uart.h>
@@ -10,18 +10,18 @@
 #include <math.h>
 
 typedef struct {
-	int field;
+    int field;
 } TestStruct;
 
 TestStruct* testStruct;
 
 int main() {
-	float value = sin(0);
+    float value = sin(0);
 
-	printf("test");
-	if (testStruct == NULL) {
-		value = cos(0);
-	}
-	
-	return value;
+    printf("test");
+    if (testStruct == NULL) {
+        value = cos(0);
+    }
+    
+    return value;
 }

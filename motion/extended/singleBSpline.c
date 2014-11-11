@@ -9,12 +9,12 @@
 // Definition of the curve when using bspline
 static BSplineCurve curve;
 
-static BOOL initialized = FALSE;
+static bool initialized = false;
 
 BSplineCurve* getSingleBSplineCurve() {
-	if (!initialized) {
-		initFirstTimeBSplineCurve(&curve);
-		initialized = TRUE;
-	}
-	return &curve;
+    if (!initialized) {
+        initFirstTimeBSplineCurve(&curve);
+        initialized = true;
+    }
+    return &curve;
 }

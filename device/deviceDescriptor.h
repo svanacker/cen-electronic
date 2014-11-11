@@ -19,8 +19,9 @@ typedef void deviceShutDownFunction(void);
 
 /**
 * Defines the function to know if a device is ok or not.
+* @return true if the device is ok, false else
 */
-typedef BOOL deviceIsOkFunction(void);
+typedef bool deviceIsOkFunction(void);
 
 /**
 * Function for handling raw data sent to the device.
@@ -28,17 +29,21 @@ typedef BOOL deviceIsOkFunction(void);
 * @param data the data to be handled
 */
 typedef void deviceHandleRawDataFunction(char header,
-										 InputStream* inputStream,
-										 OutputStream* outputStream);
+                                         InputStream* inputStream,
+                                         OutputStream* outputStream);
 
 /**
 * Defines the structure used to describe a device.
 */
 typedef struct DeviceDescriptor {
-	deviceInitFunction *deviceInit;
-	deviceShutDownFunction *deviceShutDown;
-	deviceIsOkFunction *deviceIsOk;
-	deviceHandleRawDataFunction *deviceHandleRawData;
+    /** A callback on the Function which must be used to initialized the device. */
+    deviceInitFunction *deviceInit;
+	/** A callback on the Function which must be used to shutdown the device. */
+    deviceShutDownFunction *deviceShutDown;
+	/** A callback on the Function which must be used to know if the device is ok (when it's used), can be called at every time, but at least after starting the device. */
+    deviceIsOkFunction *deviceIsOk;
+	/** A callback on the Function to handle the string data which are given (Ex : Mw2010 to Move the both motors). */
+    deviceHandleRawDataFunction *deviceHandleRawData;
 } DeviceDescriptor;
 
 

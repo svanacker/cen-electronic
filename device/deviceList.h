@@ -16,12 +16,12 @@
 * Tre struct defining a list
 */
 typedef struct DeviceList {
-	/** An array of pointer on device. */
-	Device (*devices)[];
-	/** the size of the list. */
-	unsigned char size;
-	/** the max size of the list. */
-	unsigned char maxSize;
+    /** An array of pointer on device. */
+    Device (*devices)[];
+    /** the size of the list. */
+    unsigned char size;
+    /** the max size of the list. */
+    unsigned char maxSize;
 } DeviceList;
 
 /**
@@ -38,30 +38,36 @@ DeviceList* getDeviceList();
 /**
  * Add a local device : this device will respond to local calls.
  * @param interface the interface to describe the remote interface for device
- * @param device the implementation of the device
+ * @param deviceDescriptor the implementation of the device
+ * @return a pointer on the Device
  */
 Device* addLocalDevice(DeviceInterface* interface, DeviceDescriptor* deviceDescriptor);
 
 /**
 * Add a remote Device accessible via the i2c bus.
-* @param interface the interface to describe the remote interface for device
+* @param deviceInterface the interface to describe the remote interface for device
 * @param i2cAddress the address for the device
+* @return a pointer on the Device
 */
-Device* addI2CRemoteDevice(DeviceInterface* interface, int i2cAddress);
+Device* addI2CRemoteDevice(DeviceInterface* deviceInterface, int i2cAddress);
 
 /**
  * Add a remote Device accessible via the zigbee bus.
  * @param interface the interface to describe the remote interface for device
+ * @return a pointer on the Device
  */
 Device* addZigbeeRemoteDevice(DeviceInterface* interface, char* addressString);
 
 /**
-* Get the device of index + 1;
+* Get the device of index;
+* @param index the index of the device
+* @return a pointer on the Device
 */
 Device* getDevice(int index);
 
 /**
 * Get the count of device.
+* @result the count of device
 */
 int getDeviceCount();
 
@@ -69,17 +75,6 @@ int getDeviceCount();
 * Init the device descriptor list.
 */
 void initDevices();
-
-/**
-* Get the size which must be sent by the device (local or distant)
-* with the given commandHeader
-* @param commandHeader the header of the command
-*/
-int getDeviceResponseSize(int commandHeader);
-
-// DEBUG
-
-void printDeviceList(OutputStream* outputStream);
 
 #endif
 

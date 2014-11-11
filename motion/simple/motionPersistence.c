@@ -1,23 +1,32 @@
+#include <stdlib.h>
+
 #include "motionPersistence.h"
 #include "motion.h"
 
 #include "../../common/eeprom/eeprom.h"
 
 // Store speed and acceleration
-#define MOTION_PARAMETERS_VALUES_COUNT 			MOTION_PARAMETERS_COUNT * 2
+#define MOTION_PARAMETERS_VALUES_COUNT             MOTION_PARAMETERS_COUNT * 2
 
 // EEPROM values
-signed int DEFAULT_EEPROM_VALUES[MOTION_PARAMETERS_VALUES_COUNT] = {
+static signed int DEFAULT_EEPROM_VALUES[MOTION_PARAMETERS_VALUES_COUNT] = {
     DEFAULT_FORWARD_ACCELERATION, DEFAULT_FORWARD_SPEED,
     DEFAULT_ROTATION_ACCELERATION, DEFAULT_ROTATION_SPEED,
     DEFAULT_ROTATION_ONE_WHEEL_ACCELERATION, DEFAULT_ROTATION_ONE_WHEEL_SPEED,
     DEFAULT_ROTATION_MAINTAIN_POSITION_ACCELERATION, DEFAULT_ROTATION_MAINTAIN_POSITION_SPEED
 };
 
-#define EEPROM_MOTION_TYPE_BLOCK_SIZE							 MOTION_PARAMETERS_COUNT
+// TODO : To Init !
+static Eeprom* motionPersistenceEeprom;
 
-signed int internalLoadMotionParameterItem(unsigned int dataIndex) {
-    signed int result = my_eeprom_read_int(dataIndex);
+#define EEPROM_MOTION_TYPE_BLOCK_SIZE                             MOTION_PARAMETERS_COUNT
+
+signed int internalLoadMotionParameterItem(unsigned long dataIndex) {
+    if (motionPersistenceEeprom == NULL) {
+        // TODO : WriteError
+        return 0;
+    }
+    signed int result = motionPersistenceEeprom->eepromReadInt(motionPersistenceEeprom, dataIndex);
     if (result == 0xFFFF) {
         result = DEFAULT_EEPROM_VALUES[dataIndex - EEPROM_MOTION_START_INDEX];
     }
@@ -25,6 +34,10 @@ signed int internalLoadMotionParameterItem(unsigned int dataIndex) {
 }
 
 void internalLoadMotionParameter(unsigned char motionType) {
+    if (motionPersistenceEeprom == NULL) {
+        // TODO : WriteError
+        return;
+    }
     unsigned motionBlockIndexShift = motionType * EEPROM_MOTION_TYPE_BLOCK_SIZE;
     unsigned int a = internalLoadMotionParameterItem(EEPROM_MOTION_START_INDEX + motionBlockIndexShift);
     unsigned int speed = internalLoadMotionParameterItem(EEPROM_MOTION_START_INDEX + motionBlockIndexShift + 1);
@@ -37,8 +50,8 @@ void internalLoadMotionParameter(unsigned char motionType) {
 void internalSaveMotionParameter(unsigned char motionType) {
     MotionParameter* motionParameter = getDefaultMotionParameters(motionType);
     unsigned motionBlockIndexShift = motionType * EEPROM_MOTION_TYPE_BLOCK_SIZE;
-    my_eeprom_write_int(EEPROM_MOTION_START_INDEX + motionBlockIndexShift, motionParameter->a);
-    my_eeprom_write_int(EEPROM_MOTION_START_INDEX + motionBlockIndexShift + 1, motionParameter->speed);
+    motionPersistenceEeprom->eepromWriteInt(motionPersistenceEeprom, EEPROM_MOTION_START_INDEX + motionBlockIndexShift, motionParameter->a);
+    motionPersistenceEeprom->eepromWriteInt(motionPersistenceEeprom, EEPROM_MOTION_START_INDEX + motionBlockIndexShift + 1, motionParameter->speed);
 }
 
 // Interface Implementation

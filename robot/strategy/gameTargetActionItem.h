@@ -18,9 +18,9 @@ typedef void GameTargetActionFunction();
  * Encapsulates the target action item.
  */
 typedef struct GameTargetActionItem {
-	char* name;
-	/** Function which will be called. */
-	GameTargetActionFunction* actionItemFunction;
+    char* name;
+    /** Function which will be called. */
+    GameTargetActionFunction* actionItemFunction;
 } GameTargetActionItem;
 
 /**

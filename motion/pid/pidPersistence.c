@@ -1,4 +1,7 @@
 #include "pidPersistence.h"
+
+#include <stdlib.h>
+
 #include "pid.h"
 
 #include "../../common/commons.h"
@@ -12,7 +15,7 @@
 
 /*
 // PID at 10/05/2010 :
-// -> GO 	   : 40006000-80006000
+// -> GO        : 40006000-80006000
 // -> ROTATION : 80006000-40006000
 // First Octet = EEPROM_RESERVED, Last_Octet = EEPROM_DEBUG
 signed int DEFAULT_EEPROM_VALUES[EEPROM_PID_START_INDEX + (EEPROM_PID_BLOCK_SIZE * PID_COUNT)] = 
@@ -35,7 +38,7 @@ signed int DEFAULT_EEPROM_VALUES[EEPROM_PID_START_INDEX + (EEPROM_PID_BLOCK_SIZE
  };
  */
 // For 5000 impulsions coders
-#define PID_STORED_COUNT		8
+#define PID_STORED_COUNT        8
 static signed int DEFAULT_EEPROM_VALUES[EEPROM_PID_START_INDEX + (EEPROM_PID_BLOCK_SIZE * PID_STORED_COUNT)] ={
     // RESERVED area for EEPROM
     0x00,
@@ -55,18 +58,21 @@ static signed int DEFAULT_EEPROM_VALUES[EEPROM_PID_START_INDEX + (EEPROM_PID_BLO
 };
 
 // Values not stored into the EEPROM
-#define ROLLING_TEST_P				0x10
-#define ROLLING_TEST_I				0x00
-#define ROLLING_TEST_D				0x10
-#define ROLLING_TEST_MAX_INTEGRAL	0x10
+#define ROLLING_TEST_P                0x10
+#define ROLLING_TEST_I                0x00
+#define ROLLING_TEST_D                0x10
+#define ROLLING_TEST_MAX_INTEGRAL    0x10
 
-#define END_APPROACH_P				0x7D
-#define END_APPROACH_I				0x00
-#define END_APPROACH_D				0x7D
-#define END_APPROACH_MAX_INTEGRAL	0x00
+#define END_APPROACH_P                0x7D
+#define END_APPROACH_I                0x00
+#define END_APPROACH_D                0x7D
+#define END_APPROACH_MAX_INTEGRAL    0x00
 
 // Not used
 #define DEFAULT_MAX_INTEGRAL 0
+
+// TODO : To Init !
+static Eeprom* pidPersistenceEeprom;
 
 /**
  * Returns the real data Index in storage area for a specific pid and a specific value
@@ -85,8 +91,12 @@ unsigned char getRealDataIndex(unsigned pidIndex, unsigned int dataIndex) {
  * @param value the value to store
  */
 void internalSavePidParameter(unsigned pidIndex, unsigned int dataIndex, signed int value) {
+    if (pidPersistenceEeprom == NULL) {
+        // TODO : throw an error
+        return;
+    }
     unsigned realIndex = getRealDataIndex(pidIndex, dataIndex);
-    my_eeprom_write_int(realIndex, value);
+    pidPersistenceEeprom->eepromWriteInt(pidPersistenceEeprom, realIndex, value);
 }
 
 /**
@@ -95,9 +105,13 @@ void internalSavePidParameter(unsigned pidIndex, unsigned int dataIndex, signed 
  * @return value the value to load
  */
 signed int internalLoadPidParameter(unsigned pidIndex, unsigned int dataIndex) {
+    if (pidPersistenceEeprom == NULL) {
+        // TODO : throw an error
+        return 0;
+    }
     unsigned realIndex = getRealDataIndex(pidIndex, dataIndex);
 
-    signed int result = my_eeprom_read_int(realIndex);
+    signed int result = pidPersistenceEeprom->eepromReadInt(pidPersistenceEeprom, realIndex);
     if (result == ERASED_VALUE_EEPROM) {
         result = DEFAULT_EEPROM_VALUES[realIndex];
     }
@@ -115,7 +129,7 @@ void loadPID(void) {
         localPid->i = internalLoadPidParameter(pidIndex, EEPROM_KI);
         localPid->d = internalLoadPidParameter(pidIndex, EEPROM_KD);
         localPid->maxIntegral = internalLoadPidParameter(pidIndex, EEPROM_MI);
-        localPid->enabled = TRUE;
+        localPid->enabled = true;
     }
 
     // Load rolling Test parameters
@@ -126,7 +140,7 @@ void loadPID(void) {
     rollingTestModePid->d = ROLLING_TEST_D;
     rollingTestModePid->maxIntegral = ROLLING_TEST_MAX_INTEGRAL;
     rollingTestModePid->derivativePeriod = DEFAULT_DERIVATIVE_PERIOD;
-    rollingTestModePid->enabled = TRUE;
+    rollingTestModePid->enabled = true;
      */
 
     // Parameter for End of trajectory
@@ -139,7 +153,7 @@ void loadPID(void) {
         endApproachPid->i = END_APPROACH_I;
         endApproachPid->d = END_APPROACH_D;
         endApproachPid->maxIntegral = END_APPROACH_MAX_INTEGRAL;
-        endApproachPid->enabled = TRUE;
+        endApproachPid->enabled = true;
     }
 }
 

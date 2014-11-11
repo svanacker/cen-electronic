@@ -1,4 +1,4 @@
-#include <p30fxxxx.h>
+#include <p30Fxxxx.h>
 
 #include "relayDevice.h"
 #include "relayDeviceInterface.h"
@@ -18,42 +18,42 @@
 #include "../../common/log/logLevel.h"
 
 void deviceRelayInit() {
-	
+    
 }
 
 void deviceRelayShutDown() {
 }
 
-BOOL deviceRelayIsOk() {
-	return TRUE;
+bool deviceRelayIsOk() {
+    return true;
 }
 
 void deviceRelayHandleRawData(char header,
-							 InputStream* inputStream,
-							 OutputStream* outputStream) {
-	if (header == COMMAND_RELAY) {
-		int relayIndex = readHex2(inputStream);
-		unsigned char value = inputStream->readChar(inputStream);
-		
-		if (relayIndex == 0) {
-			LATDbits.LATD8 = value;
-		}
-		else if (relayIndex == 1) {
-			LATDbits.LATD9 = value;
-		}
-		appendAck(outputStream);
-		append(outputStream, COMMAND_RELAY);
-	}
+                             InputStream* inputStream,
+                             OutputStream* outputStream) {
+    if (header == COMMAND_RELAY) {
+        int relayIndex = readHex2(inputStream);
+        unsigned char value = inputStream->readChar(inputStream);
+        
+        if (relayIndex == 0) {
+            LATDbits.LATD8 = value;
+        }
+        else if (relayIndex == 1) {
+            LATDbits.LATD9 = value;
+        }
+        appendAck(outputStream);
+        append(outputStream, COMMAND_RELAY);
+    }
 }
 
 
 static DeviceDescriptor descriptor = {
-	.deviceInit = &deviceRelayInit,
-	.deviceShutDown = &deviceRelayShutDown,
-	.deviceIsOk = &deviceRelayIsOk,
-	.deviceHandleRawData = &deviceRelayHandleRawData,
+    .deviceInit = &deviceRelayInit,
+    .deviceShutDown = &deviceRelayShutDown,
+    .deviceIsOk = &deviceRelayIsOk,
+    .deviceHandleRawData = &deviceRelayHandleRawData,
 };
 
 DeviceDescriptor* getRelayDeviceDescriptor() {
-	return &descriptor;
+    return &descriptor;
 }

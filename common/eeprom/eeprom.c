@@ -1,34 +1,21 @@
-#include <p30fxxxx.h>
-#include <libpic30.h>
-
 #include "eeprom.h"
 
-// Pointer to EEPROM data. The declaration causes the first WORD of EEPROM to be initialized when programming the device.
-static signed int _EEDATA(32)* eeData;
-
-void my_eeprom_write_int(unsigned int index, signed int value) {
-    _prog_addressT EE_addr;
-
-    // initialize a variable to represent the EEPROM address
-    _init_prog_address(EE_addr, eeData);
-
-    _erase_eedata(EE_addr + (index * _EE_WORD), _EE_WORD);
-    _wait_eedata();
-
-    // write value
-    _write_eedata_word(EE_addr + (index * _EE_WORD), value);
-    _wait_eedata();
+void initEeprom(Eeprom* eeprom, 
+                EepromWriteIntFunction* eepromWriteInt,
+                EepromReadIntFunction* eepromReadInt,
+                EepromWriteBlockFunction* eepromWriteBlock,
+                EepromReadBlockFunction* eepromReadBlock) {
+    eeprom->eepromWriteInt = eepromWriteInt;
+    eeprom->eepromReadInt = eepromReadInt;
+    eeprom->eepromWriteBlock = eepromWriteBlock;
+    eeprom->eepromReadBlock = eepromReadBlock;
 }
 
-signed int my_eeprom_read_int(unsigned int index) {
-    signed int value;
-    _prog_addressT EE_addr;
-
-    // initialize a variable to represent the EEPROM address
-    _init_prog_address(EE_addr, eeData);
-
-    // read value
-    _memcpy_p2d16(&value, EE_addr + (index * _EE_WORD), _EE_WORD);
-
-    return value;
+void printEepromBlock(Eeprom* eeprom, OutputStream* outputStream, long index, unsigned int length, Buffer* buffer) {
+    eeprom->eepromReadBlock(eeprom, index, length, buffer);
+    int i;
+    for (i = 0; i < length; i++){
+        char c = bufferReadChar(buffer);
+        appendHex2(outputStream, c);
+    }
 }

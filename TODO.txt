@@ -1,24 +1,39 @@
-                    
-* Faire un recu pour JLB
+Le 09/11/2014
+
+- Introduce 30F / 32 for cenIO.h
+- CompositeOutputStream => Initialize the size of the array from external call and not inside !!
+- Logger => Initialize the size of the array from external call and not inside !!
+
+Le 30/06/23014 :
+
+- Eviter que le PIC n'envoie des instructions au Pont en H à l'initialisation
+- Remplacer tous les câbles de datas par des connexions blindées !
+
+Le 20/04/2014 :
+
+- Séparer la notion de BSpline pour pouvoir faire une MOTOR_BOARD + compacte (éventuellement uniquement 30F)
+- Fusionner la partie GameStrategieBoard
+- Gérer le fait qu'une commande ne soit pas comprise (timeout très faible)
+- Gérer un numéro de message, et un ack correspondant
+- Gérer un checksum au niveau des communications
+- Tester massivement les entrées sorties via un onglet spécifique au niveau du programme de contrôle
+- Faire une documentation de la partie Logger en UML, ainsi qu'en diagramme de séquence
+- Gérer dans un fichier séparé la partie obstacle dans ou hors de la table
+- Faire le schéma d'architecture global, en incluant les IOIO Board
 
 P2 
 * EZ : Désactiver les TargetActions quand il y a un obstacle
 * Gérer la stratégie du robot en fonction de l'adversaire !!!
 * Tester intensivement la gestion de collision / blocage de roues
 
-NEXT YEAR
+2014
 
 * Informatique
 ** Documentation
  => SV : Fournir une documentation de la partie PROG-30F
  => SV : Fournir une documentation de la partie Eclipse
 ** Général
- => SV : Faire un nouveau DriverDataDispatcher spécial UART si c'est possible pour pouvoir relier des cartes en UART en maitre esclave :)
- 
-
-** Beacon Board
-  => SV : Problème au niveau de l'envoie de "'" pour arrêter les servos. Provoque un reboot de la carte alors que | marche correctement.
-  => SV : Faire des en têtes à la manière des Jennic pour les instructions non essentielles : MOV, LEF, RIG ...
+ => SV : Faire un nouveau DriverDataDispatcher spécial UART si c'est possible pour pouvoir relier des cartes en UART en maitre esclave :) 
 
 ** MainBoard 
   => SV : Améliorer la vitesse d'écriture sur le LCD / centraliser les delay(5)
@@ -51,16 +66,9 @@ de la stratégie. => Faire un éditeur graphique de stratégie
  => JJ : Faire une carte de prototype remplaçant à terme la LCD
 ** Soudure
  => JJ : Mettre absolument de la soudure sur toutes les pattes où il y a potentiellement un cavalier
-** Carte LCD
- => JJ : Trouver une carte LCD Graphique
-** Cartes en double :
- => JJ : Finir de refaire les cartes en Double (Balises !)
-** Zigbee
- => SV/JJ : Mettre en place un Jennic avec une antenne externe. Déterminer quoi acheter 
 
 * Mecanique
  => Structure du carter arrière : Mettre les cartes sur du Velcro
- => SV : Mettre des roues de modélisme plus large, pour avoir davantage d'adhérence
  => SV : Voir fixation : http://wiki.droids-corp.org/index.php/Microb_Technology/2009/Mechanics/bloc_moteur
  => SV : Faire des supports de balises à hauteur pour les tests d'évitements
  => SV : Prévoir air comprimé pour nettoyer les contacts

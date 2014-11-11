@@ -7,7 +7,7 @@
 #include "location.h"
 
 /** The max limit of location count. */
-#define MAX_LOCATION 	 	21
+#define MAX_LOCATION          21
 
 /**
  * Tre struct defining a list of locations.
@@ -47,7 +47,7 @@ void reverseLocationList(LocationList* locationList);
 /**
  * Returns if the list is empty.
  */
-BOOL isEmptyLocationList(LocationList* locationList);
+bool isEmptyLocationList(LocationList* locationList);
 
 
 /**
@@ -86,9 +86,9 @@ Location* getLocation(LocationList* locationList, int index);
 Location* findLocationByName(LocationList* locationList, char* locationName);
 
 /**
- * Returns TRUE if the locationList contains the specified location.
+ * Returns true if the locationList contains the specified location.
  */
-BOOL containsLocation(LocationList* locationList, Location* location, BOOL handled);
+bool containsLocation(LocationList* locationList, Location* location, bool handled);
 
 /**
  * Get the count of locations.

@@ -11,7 +11,7 @@
 
 #include "../../common/setup/pic30FSetup.h"
 
-#include "../../common/delay/delay30F.h"
+#include "../../common/delay/cenDelay.h"
 
 #include "../../common/i2c/slave/i2cSlave.h"
 #include "../../common/i2c/slave/i2cSlaveSetup.h"
@@ -85,9 +85,9 @@
 
 // The port for which we debug (we can send instruction too)
 #ifndef MPLAB_SIMULATION
-#define SERIAL_PORT_DEBUG 	SERIAL_PORT_2
+    #define SERIAL_PORT_DEBUG     SERIAL_PORT_2
 #else
-#define SERIAL_PORT_DEBUG 	SERIAL_PORT_1
+    #define SERIAL_PORT_DEBUG     SERIAL_PORT_1
 #endif
 
 // serial DEBUG 
@@ -127,7 +127,7 @@ static Buffer debugI2cOutputBuffer;
 static Device deviceListArray[MOTOR_BOARD_DEVICE_LENGTH];
 
 void initDevicesDescriptor() {
-	initDeviceList(&deviceListArray, MOTOR_BOARD_DEVICE_LENGTH);
+    initDeviceList(&deviceListArray, MOTOR_BOARD_DEVICE_LENGTH);
 
     addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());
     addLocalDevice(getCodersDeviceInterface(), getCodersDeviceDescriptor());
@@ -154,17 +154,16 @@ void waitForInstruction() {
 int runMotorBoard() {
     setPicName(MOTOR_BOARD_PIC_NAME);
 
-	initTimerList(&timerListArray, MOTOR_BOARD_TIMER_LENGTH);
-
     openSerialLink(&debugSerialStreamLink,
             &debugInputBuffer,
             &debugInputBufferArray,
-			MOTOR_BOARD_IN_BUFFER_LENGTH,
+            MOTOR_BOARD_IN_BUFFER_LENGTH,
             &debugOutputBuffer,
             &debugOutputBufferArray,
-			MOTOR_BOARD_OUT_BUFFER_LENGTH,
+            MOTOR_BOARD_OUT_BUFFER_LENGTH,
             &debugOutputStream,
-            SERIAL_PORT_DEBUG);
+            SERIAL_PORT_DEBUG,
+            0);
 
     // Init the logs
     initLog(DEBUG);
@@ -172,16 +171,18 @@ int runMotorBoard() {
     appendString(getDebugOutputStreamLogger(), getPicName());
     appendCRLF(getDebugOutputStreamLogger());
 
+    initTimerList(&timerListArray, MOTOR_BOARD_TIMER_LENGTH);
+
     // Debug of I2C : Only if there is problems
     // initI2CDebugBuffers(&debugI2cInputBuffer, &debugI2cOutputBuffer);
 
     openSlaveI2cStreamLink(&i2cSlaveStreamLink,
             &i2cSlaveInputBuffer,
             &i2cSlaveInputBufferArray,
-			MOTOR_BOARD_IN_BUFFER_LENGTH,
+            MOTOR_BOARD_IN_BUFFER_LENGTH,
             &i2cSlaveOutputBuffer,
             &i2cSlaveOutputBufferArray,
-			MOTOR_BOARD_OUT_BUFFER_LENGTH,
+            MOTOR_BOARD_OUT_BUFFER_LENGTH,
             MOTOR_BOARD_I2C_ADDRESS
             );
 

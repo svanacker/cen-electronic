@@ -2,30 +2,24 @@
 
 #include "../../device/device.h"
 #include "../../device/deviceInterface.h"
+#include "../../device/deviceConstants.h"
 
 const char* getPwmMotorDeviceName(void) {
     return "PWM_MOTOR";
 }
 
 int deviceMotorGetInterface(char header, int mode,
-        BOOL fillDeviceArgumentList) {
+        bool fillDeviceArgumentList) {
     if (header == COMMAND_MOVE_MOTOR) {
-        if (mode == DEVICE_MODE_INPUT) {
-            if (fillDeviceArgumentList) {
-				setFunction("runMotor", 2);
-				setArgumentSignedHex2(0, "left");
-				setArgumentSignedHex2(1, "right");
-            }
-            return 4;
-        } else if (mode == DEVICE_MODE_OUTPUT) {
-            if (fillDeviceArgumentList) {
-				setFunctionNoArgument("motor");
-            }
-            return 0;
+        if (fillDeviceArgumentList) {
+            setFunction("runMotor", 2, 0);
+            setArgumentSignedHex2(0, "left");
+            setArgumentSignedHex2(1, "right");
         }
+        return commandLengthValueForMode(mode, 4, 0);
     } else if (header == COMMAND_STOP_MOTOR) {
         if (fillDeviceArgumentList) {
-			setFunctionNoArgument("stopMotor");
+            setFunctionNoArgumentAndNoResult("stopMotor");
         }
         return 0;
     }
@@ -33,6 +27,7 @@ int deviceMotorGetInterface(char header, int mode,
 }
 
 static DeviceInterface deviceInterface = {
+    .deviceHeader = MOTOR_DEVICE_HEADER,
     .deviceGetName = &getPwmMotorDeviceName,
     .deviceGetInterface = &deviceMotorGetInterface
 };

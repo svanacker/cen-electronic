@@ -12,17 +12,17 @@ void clearGameStrategy(GameStrategy* gameStrategy) {
 }
 
 void addGameStrategyItem(GameStrategy* gameStrategy,
-						 GameStrategyItem* strategyItem,
-						 GameTarget* target
+                         GameStrategyItem* strategyItem,
+                         GameTarget* target
 ) {
     unsigned char size = gameStrategy->size;
-	if (size < MAX_STRATEGY_ITEM) {
-		strategyItem->target = target;
-	    gameStrategy->items[size] = strategyItem;
-	    gameStrategy->size++;
-	}
-	else {
-		writeError(TOO_MUCH_STRATEGY_ITEMS);
+    if (size < MAX_STRATEGY_ITEM) {
+        strategyItem->target = target;
+        gameStrategy->items[size] = strategyItem;
+        gameStrategy->size++;
+    }
+    else {
+        writeError(TOO_MUCH_STRATEGY_ITEMS);
     }
 }
 
@@ -35,13 +35,13 @@ int getStrategyItemCount(GameStrategy* gameStrategy) {
 }
 
 void printGameStrategy(OutputStream* outputStream, GameStrategy* gameStrategy) {
-	appendKeyAndName(outputStream, "strategy.name=", gameStrategy->name);
-	println(outputStream);
-	int size = gameStrategy->size;
-	int i;
-	for (i = 0; i < size; i++) {
-		GameStrategyItem* strategyItem = gameStrategy->items[i];
-		printGameStrategyItem(outputStream, strategyItem);
-	}
+    appendKeyAndName(outputStream, "strategy.name=", gameStrategy->name);
+    println(outputStream);
+    int size = gameStrategy->size;
+    int i;
+    for (i = 0; i < size; i++) {
+        GameStrategyItem* strategyItem = gameStrategy->items[i];
+        printGameStrategyItem(outputStream, strategyItem);
+    }
 
 }

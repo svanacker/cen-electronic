@@ -12,9 +12,9 @@
 * Defines the structure which will be stored
 */
 typedef struct {
-	signed int pidTime;
-	signed int positionLeft;
-	signed int positionRight;
+    signed int pidTime;
+    signed int positionLeft;
+    signed int positionRight;
 } Sample;
 
 /**

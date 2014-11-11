@@ -30,5 +30,7 @@ Makefile
 
 build
 objects
+bin/debug
+cscope.out
 bin
 *.elf

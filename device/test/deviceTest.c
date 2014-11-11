@@ -11,8 +11,7 @@
 #include "../../common/io/reader.h"
 #include "../../common/io/stream.h"
 
-// TO DELETE
-#include "../../main/motorboard/motorboard.h"
+#include "../../device/device.h"
 
 void deviceTestInit() {
 }
@@ -20,8 +19,8 @@ void deviceTestInit() {
 void deviceTestShutDown() {
 }
 
-BOOL deviceTestIsOk() {
-    return TRUE;
+bool deviceTestIsOk() {
+    return true;
 }
 
 void deviceTestHandleRawData(char header,
@@ -29,11 +28,11 @@ void deviceTestHandleRawData(char header,
         OutputStream* outputStream) {
     if (header == COMMAND_TEST) {
         int arg1 = readHex2(inputStream);
-		int arg2 = readHex2(inputStream);
+        int arg2 = readHex2(inputStream);
         int result = arg1 + arg2;
+
+        ackCommand(outputStream, DEVICE_TEST_HEADER, COMMAND_TEST);
         // data
-        appendAck(outputStream);
-        append(outputStream, COMMAND_TEST);
         appendHex2(outputStream, result);
     }
     /* TODO
@@ -47,7 +46,7 @@ void deviceTestHandleRawData(char header,
             // Add the value to I2C
             append(i2cOutputStream, COMMAND_NOTIFY_TEST);
             appendHex2(i2cOutputStream, argument);
-		
+        
             // Response to the call
             appendAck(outputStream);
             append(outputStream, COMMAND_NOTIFY_TEST);

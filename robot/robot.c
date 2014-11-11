@@ -3,7 +3,7 @@
 
 #include "../common/commons.h"
 #include "../common/2d/2d.h"
-#include "../common/delay/delay30F.h"
+#include "../common/delay/cenDelay.h"
 
 #include "../common/io/inputStream.h"
 #include "../common/io/outputStream.h"
@@ -38,22 +38,22 @@ static int robotPositionY;
 static int robotAngle;
 
 /** Global variable to know if the robot must stop.*/
-static unsigned int robotMustStop = FALSE;
+static unsigned int robotMustStop = false;
 
 static unsigned int timeAtLastCollision = 0;
 
-static BOOL robotPositionChanged;
+static bool robotPositionChanged;
 
-BOOL isRobotPositionChanged() {
-	return robotPositionChanged;
+bool isRobotPositionChanged() {
+    return robotPositionChanged;
 }
 
 void resetRobotPositionChanged() {
-	robotPositionChanged = FALSE;
+    robotPositionChanged = false;
 }
 
 void setRobotPositionChanged() {
-	robotPositionChanged = TRUE;
+    robotPositionChanged = true;
 }
 
 unsigned int isRobotMustStop() {
@@ -61,28 +61,28 @@ unsigned int isRobotMustStop() {
 }
 
 int getRobotPositionX() {
-	return robotPositionX;
-}	
+    return robotPositionX;
+}    
 
 int getRobotPositionY() {
-	return robotPositionY;
-}	
+    return robotPositionY;
+}    
 
 int getRobotAngle() {
-	return robotAngle;
-}	
+    return robotAngle;
+}    
 
 void updateRobotPosition(int x, int y, int angle) {
-	robotPositionX = x;
-	robotPositionY = y;
-	robotAngle = angle;
+    robotPositionX = x;
+    robotPositionY = y;
+    robotAngle = angle;
 }
 
 void printRobotPosition(OutputStream* outputStream) {
-	appendStringAndDec(outputStream, "\nRobotPositionX=", robotPositionX);
-	appendStringAndDec(outputStream, "\nRobotPositionY=", robotPositionY);
-	appendStringAndDec(outputStream, "\nRobotAngle=", robotAngle);
-	println(outputStream);
+    appendStringAndDec(outputStream, "\nRobotPositionX=", robotPositionX);
+    appendStringAndDec(outputStream, "\nRobotPositionY=", robotPositionY);
+    appendStringAndDec(outputStream, "\nRobotAngle=", robotAngle);
+    println(outputStream);
 }
 
 void setRobotMustStop(unsigned int value) {
@@ -108,12 +108,12 @@ void stopRobotObstacle(void) {
     if (currentTime > timeAtLastCollision + TIME_FOR_OBSTACLE_NEW_NOTIFICATION) {
         timeAtLastCollision = currentTime;
         // TODO : PROBLEM OF STABILITY : motionDriverObstacle();
-		motionDriverStop();
-		// Notify to the Strategy Board the new position
-		sentStrategyRobotPosition(NOTIFY_MOTION_ARG_OBSTACLE, getRobotPositionX(), getRobotPositionY(), getRobotAngle());
+        motionDriverStop();
+        // Notify to the Strategy Board the new position
+        sentStrategyRobotPosition(NOTIFY_MOTION_ARG_OBSTACLE, getRobotPositionX(), getRobotPositionY(), getRobotAngle());
 
         appendString(getOutputStreamLogger(WARNING), "Robot stopped(Obstacle)\n");
-		printRobotPosition(getOutputStreamLogger(WARNING));
+        printRobotPosition(getOutputStreamLogger(WARNING));
     } else {
         appendString(getOutputStreamLogger(WARNING), "Wait for new notification \n");
     }

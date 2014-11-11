@@ -12,13 +12,13 @@ unsigned int getStartMatchDetectorSoftwareRevision() {
 }
 
 int deviceStartMatchDetectorGetInterface(char header, int mode,
-        BOOL fillDeviceArgumentList) {
-	if (header == COMMAND_STEP_BY_STEP) {
-		// same input / output
-		if (fillDeviceArgumentList) {
-			setFunctionNoArgument("stepByStep");
-		}
-		return 0;
+        bool fillDeviceArgumentList) {
+    if (header == COMMAND_STEP_BY_STEP) {
+        // same input / output
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("stepByStep");
+        }
+        return 0;
     }
     /*
     if (mode == DEVICE_MODE_OUTPUT) {
@@ -38,6 +38,7 @@ int deviceStartMatchDetectorGetInterface(char header, int mode,
 
 static DeviceInterface deviceInterface = {
     .deviceGetName = &getStartMatchDetectorDeviceName,
+    .deviceHeader = START_MATCH_DETECTOR_DEVICE_HEADER,
 //    .deviceGetSoftwareRevision = &getStartMatchDetectorSoftwareRevision,
     .deviceGetInterface = &deviceStartMatchDetectorGetInterface
 };

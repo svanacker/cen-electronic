@@ -1,8 +1,15 @@
-#include <p30fxxxx.h>
+#include "../../common/commons.h"
+
+#ifdef PROG_30
+    #include <p30Fxxxx.h>
+#endif
+
+#ifdef PROG_32
+    #include <plib.h>
+#endif
 
 #include "pin.h"
 
-#include "../../common/commons.h"
 #include "../../common/error/error.h"
 
 #include "../../common/io/printWriter.h"
@@ -11,7 +18,7 @@
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
 
-void setPinValue(int pinIndex, BOOL pinValue) {
+void setPinValue(int pinIndex, bool pinValue) {
     switch (pinIndex) {
             // PORT B
         case PIN_INDEX_RB0: LATBbits.LATB0 = pinValue;
@@ -64,15 +71,19 @@ void setPinValue(int pinIndex, BOOL pinValue) {
             break;
 
             // PORT A
+        #ifndef PROG_32
         case PIN_INDEX_RA11: LATAbits.LATA11 = pinValue;
             break;
+        #endif
 
             // PORT F
         case PIN_INDEX_RF0: LATFbits.LATF0 = pinValue;
             break;
-        case PIN_INDEX_RF6: LATFbits.LATF6 = pinValue;
-            break;
 
+        #ifndef PROG_32
+            case PIN_INDEX_RF6: LATFbits.LATF6 = pinValue;
+                break;
+        #endif
         default:
         {
             writeError(IO_PIN_INDEX_ERROR);
@@ -81,7 +92,7 @@ void setPinValue(int pinIndex, BOOL pinValue) {
 
 }
 
-BOOL getPinValue(int pinIndex) {
+bool getPinValue(int pinIndex) {
     switch (pinIndex) {
             // PORT B
         case PIN_INDEX_RB0: return PORTBbits.RB0;
@@ -112,26 +123,30 @@ BOOL getPinValue(int pinIndex) {
         case PIN_INDEX_RD9: return PORTDbits.RD9;
 
             // PORT A
-        case PIN_INDEX_RA11: return PORTAbits.RA11;
-
+        #ifndef PROG_32
+            case PIN_INDEX_RA11: return PORTAbits.RA11;
+        #endif
+    
             // PORTF
         case PIN_INDEX_RF0: return PORTFbits.RF0;
-        case PIN_INDEX_RF6: return PORTFbits.RF6;
+        #ifndef PROG_32
+            case PIN_INDEX_RF6: return PORTFbits.RF6;
+        #endif
     }
     writeError(IO_PIN_INDEX_ERROR);
 
     // log the error
-    return FALSE;
+    return false;
 }
 
 void printAllPinValues(OutputStream* outputStream) {
     int i = 0;
     for (i = PIN_MIN_INDEX; i <= PIN_MAX_INDEX; i++) {
-        BOOL value = getPinValue(i);
+        bool value = getPinValue(i);
         appendString(outputStream, "Pin ");
         appendHex2(outputStream, i);
         append(outputStream, '=');
-        appendBOOL(outputStream, value);
+        appendBool(outputStream, value);
         println(outputStream);
     }
 }

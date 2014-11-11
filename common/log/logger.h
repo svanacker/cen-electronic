@@ -19,14 +19,9 @@ typedef struct Logger {
 } Logger;
 
 /**
- * Returns the singleton logger object.
- * Used only it for debug
- */
-Logger* getLoggerSingleton();
-
-/**
  * Returns the singleton logger handler list object.
  * Used only it for debug
+ * @return the singleton logger handler list object
  */
 LogHandlerList* getLoggerHandlerList();
 
@@ -51,16 +46,19 @@ void addLogHandler(LogHandler* logHandler,
 /**
  * Get a compatible outputStream (to be used with printWriter) in which we write.
  * @param writeLogLevel The log level which will be used to write the underlying log.
+ * @return the compatible outputStream (to be used with printWriter) in which we write
  */
 OutputStream* getOutputStreamLogger(int writeLogLevel);
 
 /**
 * Get an outputStream for log with DEBUG level.
+* @return an outputStream for log with DEBUG level
 */
 OutputStream* getDebugOutputStreamLogger();
 
 /**
 * Get an outputStream for log with ERROR level.
+* @return an outputStream for log with ERROR level
 */
 OutputStream* getErrorOutputStreamLogger();
 

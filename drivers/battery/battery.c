@@ -3,7 +3,7 @@
 * @author svanacker
 * @version 24/04/2010
 */
-#include <p30fxxxx.h>
+#include <p30Fxxxx.h>
 #include <libpic30.h>
 
 #include "battery.h"
@@ -23,7 +23,7 @@ void initBattery() {
  * Returns the revision of the Software.
  */
 unsigned int getBatterySoftwareRevision() {
-	return 1;
+    return 1;
 }
 
 const char* getBatteryDeviceName() {
@@ -89,13 +89,13 @@ void stopBattery() {
 }
 
 DeviceDescriptor getBatteryDeviceDescriptor() {
-	DeviceDescriptor result;
-	result.deviceInit = &initBattery;
-	result.deviceShutDown = &stopBattery;
-	result.deviceIsOk = &isBatteryDeviceOk;
-	result.deviceGetSoftwareRevision = &getBatterySoftwareRevision;
-	result.deviceGetName = &getBatteryDeviceName;
-	result.enabled = 1;
+    DeviceDescriptor result;
+    result.deviceInit = &initBattery;
+    result.deviceShutDown = &stopBattery;
+    result.deviceIsOk = &isBatteryDeviceOk;
+    result.deviceGetSoftwareRevision = &getBatterySoftwareRevision;
+    result.deviceGetName = &getBatteryDeviceName;
+    result.enabled = 1;
 
-	return result;
+    return result;
 }

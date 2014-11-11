@@ -10,23 +10,13 @@ unsigned int getConfigSoftwareRevision(void) {
     return 1;
 }
 
-int deviceRobotConfigGetInterface(char header, int mode, BOOL fillDeviceArgumentList) {
-    if (mode == DEVICE_MODE_INPUT) {
-        if (header == COMMAND_CONFIG) {
-            if (fillDeviceArgumentList) {
-				setFunctionNoArgument("robotConfig");
-            }
-            return 0;
+int deviceRobotConfigGetInterface(char header, int mode, bool fillDeviceArgumentList) {
+    if (header == COMMAND_CONFIG) {
+        if (fillDeviceArgumentList) {
+            setFunction("robotConfig", 0, 1);
+            setResultUnsignedHex4(0, "value");
         }
-    } else if (mode == DEVICE_MODE_OUTPUT) {
-        if (header == COMMAND_CONFIG) {
-            if (fillDeviceArgumentList) {
-				setFunction("robotConfig", 1);
-				setArgumentUnsignedHex4(0, "value");
-            }
-            return 4;
-        }
-
+        return commandLengthValueForMode(mode, 0, 4);
     }
     return DEVICE_HEADER_NOT_HANDLED;
 }
@@ -34,6 +24,7 @@ int deviceRobotConfigGetInterface(char header, int mode, BOOL fillDeviceArgument
 
 static DeviceInterface deviceInterface = {
     .deviceGetName = &getConfigDeviceName,
+    .deviceHeader = ROBOT_CONFIG_DEVICE_HEADER,
 //    .deviceGetSoftwareRevision = &getConfigSoftwareRevision,
     .deviceGetInterface = &deviceRobotConfigGetInterface
 };

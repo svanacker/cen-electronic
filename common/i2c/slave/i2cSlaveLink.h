@@ -6,7 +6,6 @@
 #include "../../../common/io/buffer.h"
 #include "../../../common/io/streamLink.h"
 
-
 /**
  * SCHEMA OF I2C SLAVE STREAM ARCHITECTURE
  *        _________________
@@ -58,11 +57,11 @@
  */
 void openSlaveI2cStreamLink(StreamLink* i2cStreamLink,
         Buffer* inputBuffer,
-		char (*inputBufferArray)[],
-		unsigned char inputBufferLength,
+        char (*inputBufferArray)[],
+        unsigned char inputBufferLength,
         Buffer* outputBuffer,
-		char (*outputBufferArray)[],
-		unsigned char outputBufferLength,
+        char (*outputBufferArray)[],
+        unsigned char outputBufferLength,
         int i2cAddress);
 
 #endif

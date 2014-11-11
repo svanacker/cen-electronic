@@ -18,6 +18,8 @@
 #include "../common/log/logger.h"
 #include "../common/log/logLevel.h"
 
+#include "../device/deviceInterface.h"
+
 #include "../drivers/driverList.h"
 #include "../drivers/driverStreamListener.h"
 
@@ -25,29 +27,31 @@
 static transmitFromDriverRequestBufferFunction* redirectFunction;
 
 void setRedirectionTransmitFromDriverRequestBuffer(transmitFromDriverRequestBufferFunction* function) {
-	redirectFunction = function;
+    redirectFunction = function;
 }
 
-BOOL transmitFromDriverRequestBuffer() {
-	// Handle redirection
-	if (redirectFunction != NULL) {
-		return redirectFunction();
-	}
+bool transmitFromDriverRequestBuffer() {
+    // Handle redirection
+    if (redirectFunction != NULL) {
+        return redirectFunction();
+    }
     // We do exactly as if the data was written by a end-user
     // requestBuffer must be filled before calling this method
     Buffer* requestBuffer = getDriverRequestBuffer();
     Buffer* responseBuffer = getDriverResponseBuffer();
 
     InputStream* inputStream = getDriverResponseInputStream();
-	if (inputStream == NULL) {
-		writeError(DRIVER_INPUT_STREAM_NULL);
-		return FALSE;
-	}
+    if (inputStream == NULL) {
+        writeError(DRIVER_INPUT_STREAM_NULL);
+        return false;
+    }
 
-    // The first char is the header
-    char header = bufferGetFirstChar(requestBuffer);
+    // The first char is the device header
+    char deviceHeader = bufferGetCharAtIndex(requestBuffer, DEVICE_HEADER_INDEX);
+    // The second char is the command header
+    char commandHeader = bufferGetCharAtIndex(requestBuffer, COMMAND_HEADER_INDEX);
 
-    BOOL result = handleStreamInstruction(
+    bool result = handleStreamInstruction(
             requestBuffer,
             responseBuffer,
             // Don't copy to an outputStream, because, we
@@ -60,8 +64,10 @@ BOOL transmitFromDriverRequestBuffer() {
 
     // We need ack
     checkIsAck(inputStream);
-    // Device answer with the same header as the request
-    checkIsChar(inputStream, header);
+    // Command header answer with the same header as the request
+    checkIsChar(inputStream, deviceHeader);
+    // Command header answer with the same header as the request
+    checkIsChar(inputStream, commandHeader);
 
     return result;
 }

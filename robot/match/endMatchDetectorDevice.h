@@ -3,11 +3,6 @@
 
 #include "../../device/device.h"
 
-/**
- * Unit which is responsable of detecting the end of the match.
- * @author svanacker
- * @version 17/04/2010
-*/
 #define MATCH_DURATION 85
 
 /**
@@ -34,8 +29,11 @@ int getCurrentTimeInSecond ( void );
 * Ask to know if the match is ending.
 * @return true if the match is ending
 */
-BOOL isEnd( void );
+bool isEnd( void );
 
+/**
+* Write into the stream that the match is finihed.
+*/
 void showEnd(OutputStream* outputStream);
 
 #endif

@@ -5,24 +5,40 @@
 * Definition des ports utilisés pour utiliser l'afficheur LCD
 ********************/
 
-#define RS_LCD LATBbits.LATB4
-#define RW_LCD LATBbits.LATB5
-#define E_LCD  LATBbits.LATB8
-
-#define D4_LCD LATBbits.LATB9
-#define D5_LCD LATBbits.LATB10
-#define D6_LCD LATBbits.LATB11
-#define D7_LCD LATBbits.LATB12
-
-#define TRIS_RS_LCD TRISBbits.TRISB4
-#define TRIS_RW_LCD TRISBbits.TRISB5
-#define TRIS_E_LCD TRISBbits.TRISB8
-
-#define TRIS_D4_LCD TRISBbits.TRISB9
-#define TRIS_D5_LCD TRISBbits.TRISB10
-#define TRIS_D6_LCD TRISBbits.TRISB11
-#define TRIS_D7_LCD TRISBbits.TRISB12
-
+/*
+#ifdef PROG_32
+    #define RW_LCD             BIT_3
+    #define RS_LCD             BIT_1
+    #define E_LCD              BIT_0
+    #define D0_LCD             BIT_0
+    #define D1_LCD             BIT_1
+    #define D2_LCD             BIT_2
+    #define D3_LCD             BIT_3
+    #define D4_LCD             BIT_4
+    #define D5_LCD             BIT_5
+    #define D6_LCD             BIT_6
+    #define D7_LCD             BIT_7
+#else
+*/
+    #define RS_LCD             LATBbits.LATB4
+    #define RW_LCD             LATBbits.LATB5
+    #define E_LCD              LATBbits.LATB8
+    
+    #define D4_LCD             LATBbits.LATB9
+    #define D5_LCD             LATBbits.LATB10
+    #define D6_LCD             LATBbits.LATB11
+    #define D7_LCD             LATBbits.LATB12
+    
+    #define TRIS_RS_LCD         TRISBbits.TRISB4
+    #define TRIS_RW_LCD     TRISBbits.TRISB5
+    #define TRIS_E_LCD         TRISBbits.TRISB8
+    
+    #define TRIS_D4_LCD     TRISBbits.TRISB9
+    #define TRIS_D5_LCD     TRISBbits.TRISB10
+    #define TRIS_D6_LCD     TRISBbits.TRISB11
+    #define TRIS_D7_LCD        TRISBbits.TRISB12
+// #endif
+    
 /**
 * Initialise l'afficheur LCD
 * 
@@ -58,7 +74,6 @@ void hd44780_writeString ( char *texte );
 * @param ligne
 */
 void hd44780_affTexteLcdXY( char *texte, char colonneLcd,char ligneLcd );
-
 
 /**
 * Set the cursor at the specified row and column.

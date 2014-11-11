@@ -18,44 +18,53 @@ typedef struct Device Device;
 * and master without control. So it is mainly intended to update state, or forward to other card (for example PC)
 
 * @param device the device from which data comes
-* @param header the header which is called
+* @param command header the command header which is called
 * @param inputStream the inputStream to get data from the client
 */
 typedef void deviceHandleCallbackRawDataFunction(const Device* device, 
-												 char header,
-										 		 InputStream* inputStream);
+                                                 char commandHeader,
+                                                  InputStream* inputStream);
 
 /**
 * Helper method to forward data to an outputStream (Ex : PC).
 * @param inputStream the inputStream containing data from Slave
 * @param outputStream the outputStream in which we forward (Ex : PC, debug ...)
 * @param device the device which causes the callback
-* @param header the header of the message
+* @param commandHeader the header of the message
+* @param mode ???
 */
 void forwardCallbackRawDataTo(InputStream* inputStream,
-							  OutputStream* outputStream,
-							  const Device* device,
-							  int header,
-							  int mode);
+                              OutputStream* outputStream,
+                              const Device* device,
+                              const char commandHeader,
+                              int mode);
+
+/**
+ * Send a ack, and add the deviceHeader, and the commandHeader.
+ * @param deviceOutputStream outputStream for the deviceResponse
+ * @param deviceHeader the char header for the Device (Ex : 'S' for System Device)
+ * @param commandHeader the char header for the command specific to a Device (Ex : 'P' for Ping Command)
+ */
+void ackCommand(OutputStream* deviceOutputStream, const char deviceHeader, const char commandHeader);
 
 /**
 * Defines the structure used to describe a device.
 */
 struct Device {
-	/** The interface of the device for a remote caller (without implementation). */
-	DeviceInterface* interface;
-	/** If the device is enabled or not. */
-	// BOOL enabled;
-	/** Which bus the device use. */
-	int transmitMode;
-	/** The address as char (useful for zigbee for example). */
-	char* addressString;
-	/** The address (only for remote transmitMode). In case of addressString, address contains a checksum of addressString. */
-	int address;
-	/** The real implementation of the device. */
-	DeviceDescriptor* descriptor;
-	/** The device callback function when Slave want to transmit something asynchronously to the master. */
-	deviceHandleCallbackRawDataFunction *deviceHandleCallbackRawData;
+    /** The interface of the device for a remote caller (without implementation). */
+    DeviceInterface* interface;
+    /** If the device is enabled or not. */
+    // bool enabled;
+    /** Which bus the device use. */
+    int transmitMode;
+    /** The address as char (useful for zigbee for example). */
+    char* addressString;
+    /** The address (only for remote transmitMode). In case of addressString, address contains a checksum of addressString. */
+    int address;
+    /** The real implementation of the device. */
+    DeviceDescriptor* descriptor;
+    /** The device callback function when Slave want to transmit something asynchronously to the master. */
+    deviceHandleCallbackRawDataFunction *deviceHandleCallbackRawData;
 };
 
 
@@ -65,7 +74,7 @@ struct Device {
 * connected to send debug information.
 * @param deviceDescriptor the descriptor for the device.
 */
-BOOL initDevice(const Device *device);
+bool initDevice(const Device *device);
 
 /**
 * Stop the device with the information given by deviceDescriptor.

@@ -1,10 +1,9 @@
-#include <i2c.h>
-
 #include "../../common/i2c/i2cCommon.h"
+#include "../../common/i2c/master/i2cMaster.h"
 
 #include "pcf8574.h"
 
-#include "../../common/delay/delay30F.h"
+#include "../../common/delay/cenDelay.h"
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
 
@@ -20,12 +19,12 @@ char isPCF8574Present(unsigned char addr, unsigned char devAddr) {
     char result;
     unsigned char realAddress = internalGetAddress(addr, devAddr);
     WaitI2C();
-    StartI2C();
+    portableStartI2C();
     WaitI2C();
-    while (I2CCONbits.SEN);
-    result = MasterWriteI2C(realAddress);
+    portableMasterWaitSendI2C();
+    result = portableMasterWriteI2C(realAddress);
     WaitI2C();
-    StopI2C();
+    portableStopI2C();
 
     return result;
 }
@@ -33,31 +32,30 @@ char isPCF8574Present(unsigned char addr, unsigned char devAddr) {
 void writePCF8574(unsigned char addr, unsigned char devAddr, unsigned char outData, unsigned char dirs) {
     unsigned char realAddress = internalGetAddress(addr, devAddr);
     WaitI2C();
-    StartI2C();
+    portableStartI2C();
     WaitI2C();
-    while (I2CCONbits.SEN);
-    MasterWriteI2C(realAddress); // send write addres
+    portableMasterWaitSendI2C();
+    portableMasterWriteI2C(realAddress); // send write addres
     WaitI2C();
-    MasterWriteI2C(outData | dirs); // write new outputs to buffer
+    portableMasterWriteI2C(outData | dirs); // write new outputs to buffer
     WaitI2C();
-    ;
-    MasterWriteI2C(outData | dirs); // force data to output pins
+    portableMasterWriteI2C(outData | dirs); // force data to output pins
     WaitI2C();
-    StopI2C();
+    portableStopI2C();
 }
 
 unsigned char readPCF8574(unsigned char addr, unsigned char devAddr, unsigned char dirs) {
     unsigned char result;
     unsigned char realAddress = internalGetAddress(addr, devAddr);
-    IdleI2C();
-    StartI2C();
-    while (I2CCONbits.SEN);
+    WaitI2C();
+    portableStartI2C();
+    portableMasterWaitSendI2C();
     // send read address (bit zero is set)
-    MasterWriteI2C(realAddress | 1);
-    IdleI2C();
-    result = MasterReadI2C();
+    portableMasterWriteI2C(realAddress | 1);
+    WaitI2C();
+    result = portableMasterReadI2C();
     //AckI2C();
-    StopI2C();
+    portableStopI2C();
 
     return (result & dirs);
 }

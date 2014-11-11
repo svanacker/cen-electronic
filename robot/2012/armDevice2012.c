@@ -6,7 +6,7 @@
 
 #include "../../common/cmd/commonCommand.h"
 
-#include "../../common/delay/delay30F.h"
+#include "../../common/delay/cenDelay.h"
 
 #include "../../common/io/inputStream.h"
 #include "../../common/io/outputStream.h"
@@ -14,7 +14,7 @@
 #include "../../common/io/reader.h"
 #include "../../common/io/stream.h"
 
-#include "../../common/pwm/servoPwm.h"
+#include "../../common/pwm/servo/servoPwm.h"
 
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
@@ -23,36 +23,36 @@
 
 
 void upArm(int armIndex) {
-	int pwmSpeed = 20;
-	if (armIndex == ARM_LEFT) {
-		pwmServo(ARM_LEFT_PWM_INDEX, pwmSpeed, ARM_LEFT_UP);
-	}
-	else if (armIndex == ARM_RIGHT) {
-		pwmServo(ARM_RIGHT_PWM_INDEX, pwmSpeed, ARM_RIGHT_UP);
-	}
-	else if (armIndex == 0) {
-		pwmServo(ARM_LEFT_PWM_INDEX, pwmSpeed, ARM_LEFT_UP);
-		pwmServo(ARM_RIGHT_PWM_INDEX, pwmSpeed, ARM_RIGHT_UP);
-	}
+    int pwmSpeed = 20;
+    if (armIndex == ARM_LEFT) {
+        pwmServo(ARM_LEFT_PWM_INDEX, pwmSpeed, ARM_LEFT_UP);
+    }
+    else if (armIndex == ARM_RIGHT) {
+        pwmServo(ARM_RIGHT_PWM_INDEX, pwmSpeed, ARM_RIGHT_UP);
+    }
+    else if (armIndex == 0) {
+        pwmServo(ARM_LEFT_PWM_INDEX, pwmSpeed, ARM_LEFT_UP);
+        pwmServo(ARM_RIGHT_PWM_INDEX, pwmSpeed, ARM_RIGHT_UP);
+    }
 }
 
 void downArm(int armIndex) {
-	int pwmSpeed = 20;
-	if (armIndex == ARM_LEFT) {
-		pwmServo(ARM_LEFT_PWM_INDEX, pwmSpeed, ARM_LEFT_DOWN);
-	}
-	else if (armIndex == ARM_RIGHT) {
-		pwmServo(ARM_RIGHT_PWM_INDEX, pwmSpeed, ARM_RIGHT_DOWN);
-	}
-	else if (armIndex == 0) {
-		pwmServo(ARM_LEFT_PWM_INDEX, pwmSpeed, ARM_LEFT_DOWN);
-		pwmServo(ARM_RIGHT_PWM_INDEX, pwmSpeed, ARM_RIGHT_DOWN);
-	}
+    int pwmSpeed = 20;
+    if (armIndex == ARM_LEFT) {
+        pwmServo(ARM_LEFT_PWM_INDEX, pwmSpeed, ARM_LEFT_DOWN);
+    }
+    else if (armIndex == ARM_RIGHT) {
+        pwmServo(ARM_RIGHT_PWM_INDEX, pwmSpeed, ARM_RIGHT_DOWN);
+    }
+    else if (armIndex == 0) {
+        pwmServo(ARM_LEFT_PWM_INDEX, pwmSpeed, ARM_LEFT_DOWN);
+        pwmServo(ARM_RIGHT_PWM_INDEX, pwmSpeed, ARM_RIGHT_DOWN);
+    }
 }
 
 void deviceArm2012Init() {
-	upArm(ARM_LEFT);
-	upArm(ARM_RIGHT);
+    upArm(ARM_LEFT);
+    upArm(ARM_RIGHT);
 }
 
 void deviceArm2012ShutDown() {
@@ -60,8 +60,8 @@ void deviceArm2012ShutDown() {
     downArm(ARM_RIGHT);
 }
 
-BOOL deviceArm2012IsOk() {
-    return TRUE;
+bool deviceArm2012IsOk() {
+    return true;
 }
 
 void deviceArm2012HandleRawData(char header,
@@ -69,15 +69,15 @@ void deviceArm2012HandleRawData(char header,
         OutputStream* outputStream) {
     if (header == COMMAND_ARM_2012_UP) {
         int armIndex = readHex2(inputStream);
-		upArm(armIndex);
+        upArm(armIndex);
 
         appendAck(outputStream);
         append(outputStream, COMMAND_ARM_2012_UP);
 
-	
+    
     } else if (header == COMMAND_ARM_2012_DOWN) {
         int armIndex = readHex2(inputStream);
-		downArm(armIndex);
+        downArm(armIndex);
 
         appendAck(outputStream);
         append(outputStream, COMMAND_ARM_2012_DOWN);

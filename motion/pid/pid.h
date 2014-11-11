@@ -14,8 +14,8 @@
 
 #include "../../robot/robotConstants.h"
 
-#define WHEEL_PULSE_BY_PID_TIME_AT_FULL_SPEED		(WHEEL_PULSE_BY_SECONDS_AT_FULL_SPEED / PID_UPDATE_MOTORS_FREQUENCY)
-#define U_FACTOR_AT_FULL_SPEED								128.0f	/ WHEEL_PULSE_BY_PID_TIME_AT_FULL_SPEED
+#define WHEEL_PULSE_BY_PID_TIME_AT_FULL_SPEED        (WHEEL_PULSE_BY_SECONDS_AT_FULL_SPEED / PID_UPDATE_MOTORS_FREQUENCY)
+#define U_FACTOR_AT_FULL_SPEED                                128.0f    / WHEEL_PULSE_BY_PID_TIME_AT_FULL_SPEED
 
 // PID CONSTANT
 
@@ -98,12 +98,12 @@
 /**
  * Defines the error for which we apply strong PID and not normal PID.
  */
-#define ERROR_FOR_STRONG_PID 					20
+#define ERROR_FOR_STRONG_PID                     20
 
 /**
  * Defines the number of pid interrupt after the end (t3) to apply strong PID.
  */
-#define TIME_PERIOD_AFTER_END_FOR_STRONG_PID	 40
+#define TIME_PERIOD_AFTER_END_FOR_STRONG_PID     40
 
 // MOTION
 
@@ -164,8 +164,8 @@ typedef struct Motion {
     float position;
     /** Old Position values. */
     float oldPosition;
-	/** Speed. */
-	float currentSpeed;
+    /** Speed. */
+    float currentSpeed;
     /** U (voltage) values. */
     float u;
 } Motion;
@@ -178,14 +178,14 @@ typedef struct MotionInstruction {
     float nextPosition;
     /** The acceleration which is asked : > 0 */
     float a;
-	/** The initial speed. */
-	float initialSpeed;
+    /** The initial speed. */
+    float initialSpeed;
     /** The maximal speed which is asked : > 0 */
     float speed;
     /** The maximal speed which can be reached : negative or positive */
     float speedMax;
-	/** The target end Speed (decelerationTime). */
-	float endSpeed;
+    /** The target end Speed (decelerationTime). */
+    float endSpeed;
     /** The acceleration time > 0 */
     float t1;
     /** The time before deceleration > 0 */
@@ -213,7 +213,7 @@ typedef void ComputeUFunction();
  * All current values about the current motion in progress.
  */
 typedef struct PidComputationValues {
-	// ONLY ONE VALUE AT A TIME
+    // ONLY ONE VALUE AT A TIME
     // theta error (distance for normal trajectory, and along Y axis for Spline Curve)
     float thetaError;
     // angle error
@@ -224,12 +224,12 @@ typedef struct PidComputationValues {
     float thetaXAxisError;
     // store the time of the pid timer
     float pidTime;
-	// Store error of each motion
+    // Store error of each motion
     MotionError err[INSTRUCTION_COUNT];
-	// store tension / position / current speed
+    // store tension / position / current speed
     Motion motion[INSTRUCTION_COUNT];
     // Store Detection of end of trajectory
-	MotionEndInfo motionEnd[INSTRUCTION_COUNT];
+    MotionEndInfo motionEnd[INSTRUCTION_COUNT];
 } PidComputationValues;
 
 /**
@@ -237,10 +237,10 @@ typedef struct PidComputationValues {
  * at a time.
  */
 typedef struct PidMotionDefinition {
-	// Alpha / Theta
+    // Alpha / Theta
     MotionInstruction inst[INSTRUCTION_COUNT];
-	// When using BSPline
-	BSplineCurve curve;
+    // When using BSPline
+    BSplineCurve curve;
     /** The method which will compute the errors (by using coders or absolute positions) .*/
     ComputeUFunction* computeU;
 } PidMotionDefinition;
@@ -250,9 +250,9 @@ typedef struct PidMotionDefinition {
  * or set only for a match.
  */
 typedef struct PidGlobalParameters {
-	// Parameters about PID
+    // Parameters about PID
     Pid pid[PID_COUNT];
-	// Parameters about end motion detection (avoid rotation of wheels in case of no move => Avoid BURN OUT)
+    // Parameters about end motion detection (avoid rotation of wheels in case of no move => Avoid BURN OUT)
     MotionEndDetectionParameter motionEndDetectionParameter;
 } PidGlobalParameters;
 
@@ -261,14 +261,14 @@ typedef struct PidGlobalParameters {
  * motion with PID.
  */
 typedef struct PidMotion {
-	// Parameters for all motions => INVARIANT.
-	PidGlobalParameters globalParameters;
-	// The current motion definition => CHANGE FOR EACH MOTION.
-	PidMotionDefinition currentMotionDefinition;
-	// Contains the next Motion Definition;
-	PidMotionDefinition nextMotionDefinition[NEXT_MOTION_DEFINITION_COUNT];
-	// All current values (must be resetted after each new move) => CHANGE EVERY TIME COMPUTATION
-	PidComputationValues computationValues;
+    // Parameters for all motions => INVARIANT.
+    PidGlobalParameters globalParameters;
+    // The current motion definition => CHANGE FOR EACH MOTION.
+    PidMotionDefinition currentMotionDefinition;
+    // Contains the next Motion Definition;
+    PidMotionDefinition nextMotionDefinition[NEXT_MOTION_DEFINITION_COUNT];
+    // All current values (must be resetted after each new move) => CHANGE EVERY TIME COMPUTATION
+    PidComputationValues computationValues;
 } PidMotion;
 
 /**
@@ -291,7 +291,7 @@ unsigned char getIndexOfPid(unsigned char instructionIndex, unsigned char pidTyp
 /**
  * Enable or disable a PID.
  * @param pidIndex the index of which pid we must change (between 0 and PID_INDEX_COUNT)
- * @param enabled FALSE or TRUE if we want to enabled or not the specified pid
+ * @param enabled false or true if we want to enabled or not the specified pid
  */
 void setEnabledPid(int pidIndex, unsigned char enabled);
 
@@ -332,14 +332,14 @@ void clearPidTime(void);
 /**
  * Returns the value of the flag which determines if the
  * position must be reached.
- * @return TRUE or FALSE
+ * @return true or false
  */
 int getMustReachPosition(void);
 
 /**
  * Sets the flag which determines if the
  * position must be reached.
- * @value the value of the flag, TRUE or FALSE
+ * @value the value of the flag, true or false
  */
 void setMustReachPosition(int value);
 

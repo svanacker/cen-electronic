@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stddef.h>
+#include <stdbool.h>
 
 #include "buffer.h"
 
@@ -15,12 +16,12 @@
 
 // BUFFER
 
-BOOL checkBufferNotNull(Buffer* buffer) {
-	if (buffer == NULL) {
-		writeError(IO_BUFFER_NULL);
-		return FALSE;
-	}
-	return TRUE;
+inline bool checkBufferNotNull(Buffer* buffer) {
+    if (buffer == NULL) {
+        writeError(IO_BUFFER_NULL);
+        return false;
+    }
+    return true;
 }
 
 // -> OUTPUT STREAM INTERFACE
@@ -44,6 +45,7 @@ void _closeBufferOutputStream(OutputStream* outputStream) {
 }
 
 /**
+ * @private
  * Definition of a function which is able to write a character.
  */
 void _bufferWriteChar(OutputStream* outputStream, char c) {
@@ -53,6 +55,7 @@ void _bufferWriteChar(OutputStream* outputStream, char c) {
 }
 
 /**
+ * @private
  * Flush the stream.
  */
 void _bufferFlush(OutputStream* outputStream) {
@@ -89,11 +92,12 @@ char _bufferReadChar(InputStream* inputStream) {
 }
 
 /**
+ * @private
  * Definition of a function which is able to return if there is character to read.
  */
-BOOL _bufferAvailableData(InputStream* inputStream) {
+bool _bufferAvailableData(InputStream* inputStream) {
     Buffer* buffer = (Buffer*) inputStream->object;
-    BOOL result = !isBufferEmpty(buffer);
+    bool result = !isBufferEmpty(buffer);
 
     return result;
 }
@@ -102,8 +106,11 @@ BOOL _bufferAvailableData(InputStream* inputStream) {
 // BUFFER INTERFACE
 
 void initBuffer(Buffer* buffer, char (*array)[], unsigned char length, char* name, char* type) {
-	buffer->s = array;
-	buffer->length = length;
+    if (checkBufferNotNull(buffer)) {
+        return;    
+    }
+    buffer->s = array;
+    buffer->length = length;
     deepClearBuffer(buffer);
 
     // inputStream
@@ -113,8 +120,7 @@ void initBuffer(Buffer* buffer, char (*array)[], unsigned char length, char* nam
             &_closeBufferInputStream,
             &_bufferReadChar,
             &_bufferAvailableData,
-            (int*) buffer
-            );
+            (int*) buffer);
 
     // outputStream
     initOutputStream(
@@ -129,14 +135,18 @@ void initBuffer(Buffer* buffer, char (*array)[], unsigned char length, char* nam
     buffer->type = type;
 }
 
-
-
-BOOL isBufferFull(const Buffer* buffer) {
-    return ((buffer->writeIndex + 1) % buffer->length) == buffer->readIndex;
-
+bool isBufferInitialized(Buffer* buffer) {
+    if (checkBufferNotNull(buffer)) {
+        return false;
+    }
+    return buffer->length > 0;
 }
 
-BOOL isBufferEmpty(const Buffer* buffer) {
+bool isBufferFull(const Buffer* buffer) {
+    return ((buffer->writeIndex + 1) % buffer->length) == buffer->readIndex;
+}
+
+bool isBufferEmpty(const Buffer* buffer) {
     return buffer->readIndex == buffer->writeIndex;
 }
 
@@ -151,10 +161,10 @@ int getBufferElementsCount(const Buffer* buffer) {
 void bufferWriteChar(Buffer* buffer, char c) {
     int isFull = isBufferFull(buffer);
     if (!isFull) {
-		char* sPointer = (char*) buffer->s;
-		// Shift to the right cell index
-		sPointer += buffer->writeIndex;
-		*sPointer = c;
+        char* sPointer = (char*) buffer->s;
+        // Shift to the right cell index
+        sPointer += buffer->writeIndex;
+        *sPointer = c;
         buffer->writeIndex++;
         buffer->writeIndex %= buffer->length;
     } else {
@@ -169,10 +179,10 @@ char bufferReadChar(Buffer* buffer) {
     int isEmpty = isBufferEmpty(buffer);
     if (!isEmpty) {
         // char result = buffer->s[buffer->readIndex];
-		char* sPointer = (char*) buffer->s;
-		// Shift to the right cell index
-		sPointer += buffer->readIndex;
-		char result = *sPointer;		
+        char* sPointer = (char*) buffer->s;
+        // Shift to the right cell index
+        sPointer += buffer->readIndex;
+        char result = *sPointer;        
 
         buffer->readIndex++;
         buffer->readIndex %= buffer->length;
@@ -184,18 +194,18 @@ char bufferReadChar(Buffer* buffer) {
     return 0;
 }
 
-char bufferGetFirstChar(Buffer* buffer) {
-    int isEmpty = isBufferEmpty(buffer);
-    if (!isEmpty) {
-		char* sPointer = (char*) buffer->s;
-		// Shift to the right cell index
-		sPointer += buffer->readIndex;
-		char result = *sPointer;		
+char bufferGetCharAtIndex(Buffer* buffer, int charIndex) {
+    int size = getBufferElementsCount(buffer);
+    if (charIndex < size) {
+        char* sPointer = (char*) buffer->s;
+        // Shift to the right cell index
+        sPointer += ((buffer->readIndex + charIndex) % buffer->length);
+        char result = *sPointer;        
 
         return result;
     } else {
         // We must log the problem
-        writeError(IO_BUFFER_EMPTY);
+        writeError(IO_BUFFER_NOT_ENOUGH_DATA);
     }
     return 0;
 }
@@ -207,33 +217,40 @@ void clearBuffer(Buffer* buffer) {
 
 void deepClearBuffer(Buffer* buffer) {
     int i;
+    char* sPointer = (char*) buffer->s;
     for (i = 0; i < buffer->length; i++) {
-		char* sPointer = (char*) buffer->s;
-		// Shift to the right cell index
-		*sPointer = 0;
-		sPointer++;
+        // Shift to the right cell index
+        *sPointer = 0;
+        sPointer++;
     }
     clearBuffer(buffer);
 }
 
 InputStream* getInputStream(Buffer* buffer) {
-	if (checkBufferNotNull(buffer)) {
-    	return &(buffer->inputStream);
-	}
-	return NULL;
+    if (checkBufferNotNull(buffer)) {
+        return &(buffer->inputStream);
+    }
+    return NULL;
 }
 
 OutputStream* getOutputStream(Buffer* buffer) {
-	if (checkBufferNotNull(buffer)) {
-    	return &(buffer->outputStream);
-	}
-	return NULL;
+    if (checkBufferNotNull(buffer)) {
+        return &(buffer->outputStream);
+    }
+    return NULL;
 }
 
 void printDebugBuffer(OutputStream* outputStream, Buffer* buffer) {
-    appendString(outputStream, "Buf:");
+    if (checkBufferNotNull(buffer)) {
+        return;    
+    }
+    if (buffer == NULL) {
+        appendString(outputStream, "\nBuffer is NULL !\n");
+        return;
+    }
+    appendString(outputStream, "\nBuf:");
 
-    if (buffer->name) {
+    if (buffer->name != NULL) {
         appendKeyAndName(outputStream, "name=", buffer->name);
     }
 
@@ -241,17 +258,17 @@ void printDebugBuffer(OutputStream* outputStream, Buffer* buffer) {
         appendKeyAndName(outputStream, ",type=", buffer->type);
     }
 
-	appendStringAndDec(outputStream, ",length=", buffer->length);
+    appendStringAndDec(outputStream, ",length=", buffer->length);
     appendStringAndDec(outputStream, ",writeIdx=", buffer->writeIndex);
     appendStringAndDec(outputStream, ",readIdx=", buffer->readIndex);
 
     appendString(outputStream, ",START=");
     int i;
-	char* sPointer = (char*) buffer->s;
+    char* sPointer = (char*) buffer->s;
     for (i = 0; i < buffer->length; i++) {
-		// Shift to the right cell index
+        // Shift to the right cell index
         append(outputStream, *sPointer);
-		sPointer++;
+        sPointer++;
     }
-    appendString(outputStream, "END");
+    appendString(outputStream, "END\n");
 }

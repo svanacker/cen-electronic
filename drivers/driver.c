@@ -3,14 +3,14 @@
 #include "../common/log/logger.h"
 #include "../common/log/logLevel.h"
 
-BOOL driverInit(const DriverDescriptor* driverDescriptor) {
-    BOOL result = driverDescriptor->driverInit();
+bool driverInit(const DriverDescriptor* driverDescriptor) {
+    bool result = driverDescriptor->driverInit();
     const char* driverName = driverDescriptor->driverGetName();
 
     OutputStream* outputStream = getDebugOutputStreamLogger();
     appendString(outputStream, "DRIVER :");
   
-	appendString(outputStream, driverName);
+    appendString(outputStream, driverName);
 
     return result;
 }

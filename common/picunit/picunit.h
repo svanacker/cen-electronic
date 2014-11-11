@@ -6,9 +6,9 @@
 
 /**
 * Defines a function which do a test
-* @return TRUE if the test is ok, FALSE else
+* @return true if the test is ok, false else
 */
-typedef BOOL TestFunction();
+typedef bool TestFunction();
 
 /** The max limit of test suite. */
 #define MAX_TEST_COUNT 20
@@ -17,18 +17,18 @@ typedef BOOL TestFunction();
 * The struct defining a list of test.
 */
 typedef struct TestSuite {
-	/** The name of the test Suite. */
-	char* testSuiteName;
-	/** An array of test function pointer. */
-	TestFunction* testFunctions[MAX_TEST_COUNT];
-	/** An array of test name. */
-	char* testNames[MAX_TEST_COUNT];
-	/** The number of test ok. */
-	unsigned char okCount;
-	/** The number of test failed. */
-	unsigned char failedCount;
-	/** the size of the list. */
-	unsigned char size;
+    /** The name of the test Suite. */
+    char* testSuiteName;
+    /** An array of test function pointer. */
+    TestFunction* testFunctions[MAX_TEST_COUNT];
+    /** An array of test name. */
+    char* testNames[MAX_TEST_COUNT];
+    /** The number of test ok. */
+    unsigned char okCount;
+    /** The number of test failed. */
+    unsigned char failedCount;
+    /** the size of the list. */
+    unsigned char size;
 } TestSuite;
 
 /**
@@ -47,46 +47,46 @@ void runTestSuite(TestSuite* testSuite);
 /**
 * Test if 2 chars are equals or not, and produces a message if it's not the case.
 */
-BOOL assertCharEquals(char expected, char actual, char* messageIfFailed);
+bool assertCharEquals(char expected, char actual, char* messageIfFailed);
 
 /**
 * Test if 2 int are equals or not, and produces a message if it's not the case.
 */
-BOOL assertIntEquals(int expected, int actual, char* messageIfFailed);
+bool assertIntEquals(int expected, int actual, char* messageIfFailed);
 
 /**
 * Test if 2 longs are equals or not, and produces a message if it's not the case.
 */
-BOOL assertLongEquals(long expected, long actual, char* messageIfFailed);
+bool assertLongEquals(long expected, long actual, char* messageIfFailed);
 
 /**
-* Test if a value is TRUE, and produces a message if it's not the case.
+* Test if a value is true, and produces a message if it's not the case.
 */
-BOOL assertTrue(BOOL actual, char* messageIfFailed);
+bool assertTrue(bool actual, char* messageIfFailed);
 
 /**
-* Test if a value is FALSE, and produces a message if it's not the case.
+* Test if a value is false, and produces a message if it's not the case.
 */
-BOOL assertFalse(BOOL actual, char* messageIfFailed);
+bool assertFalse(bool actual, char* messageIfFailed);
 
 // Pointer tests
 
 /**
 * Assert a pointer (generally on a structure) is not empty.
 */
-BOOL assertPointerNotNull(int* actual, char* messageIfFailed);
+bool assertPointerNotNull(int* actual, char* messageIfFailed);
 
 // Object tests
 
 /**
 * Assert that 2 objects are equals using a equalsFunction.
 */
-BOOL assertEquals(EqualsFunction* equalsFunction, int* actual, int* expected, char* messageIfFailed);
+bool assertEquals(EqualsFunction* equalsFunction, int* actual, int* expected, char* messageIfFailed);
 
 /**
 * Classic implementation
 */
-BOOL assertBufferEquals(Buffer* expectedBuffer, Buffer* actualBuffer, char* messageIfFailed);
+bool assertBufferEquals(Buffer* expectedBuffer, Buffer* actualBuffer, char* messageIfFailed);
 
 // Print Functions
 

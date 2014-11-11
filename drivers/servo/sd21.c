@@ -80,11 +80,11 @@ void commandSD21(char servo, char speed, int position) {
   IdleI2C();
   MasterWriteI2C((servo-1) * 3);
   IdleI2C();
-  MasterWriteI2C(speed);		
+  MasterWriteI2C(speed);        
   IdleI2C();
-  MasterWriteI2C(dataLow);		
+  MasterWriteI2C(dataLow);        
   IdleI2C();
-  MasterWriteI2C(dataHigh);		
+  MasterWriteI2C(dataHigh);        
   IdleI2C();
 
   StopI2C();
@@ -93,30 +93,30 @@ void commandSD21(char servo, char speed, int position) {
 // Device Interface
 
 void initSD21(void) {
-	getSD21SoftwareRevision();
-	getSD21BatteryLevel();
+    getSD21SoftwareRevision();
+    getSD21BatteryLevel();
 }
 
 void stopSD21(void) {
-	// We can not know the value of stop for every servo, so we don't do anything.
+    // We can not know the value of stop for every servo, so we don't do anything.
 }
 
 const char* getSD21DeviceName( void ) {
-	return "SD21";
+    return "SD21";
 }
 
 unsigned int isSD21DeviceOk() {
-	return getSD21SoftwareRevision() < 255;
+    return getSD21SoftwareRevision() < 255;
 }
 
 DeviceDescriptor getSD21DeviceDescriptor() {
-	DeviceDescriptor result;
-	result.deviceInit = &initSD21;
-	result.deviceShutDown = &stopSD21;
-	result.deviceIsOk = &isSD21DeviceOk;
-	result.deviceGetSoftwareRevision = &getSD21SoftwareRevision;
-	result.deviceGetName = &getSD21DeviceName;
-	result.enabled = 1;
+    DeviceDescriptor result;
+    result.deviceInit = &initSD21;
+    result.deviceShutDown = &stopSD21;
+    result.deviceIsOk = &isSD21DeviceOk;
+    result.deviceGetSoftwareRevision = &getSD21SoftwareRevision;
+    result.deviceGetName = &getSD21DeviceName;
+    result.enabled = 1;
 
-	return result;
+    return result;
 }

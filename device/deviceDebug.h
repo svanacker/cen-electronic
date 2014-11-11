@@ -15,4 +15,9 @@
  */
 void printDevice(OutputStream* outputStream, const Device* device);
 
+/**
+ * Print the list of device
+ */
+void printDeviceList(OutputStream* outputStream);
+
 #endif

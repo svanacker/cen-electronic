@@ -6,8 +6,8 @@
 #include "../../drivers/dispatcher/DriverDataDispatcher.h"
 
 
-BOOL trajectoryDriverSetAbsolutePosition(float x, float y, float deciDegree);
+bool trajectoryDriverSetAbsolutePosition(float x, float y, float deciDegree);
 
-BOOL trajectoryDriverUpdateRobotPosition();
+bool trajectoryDriverUpdateRobotPosition();
 
 #endif

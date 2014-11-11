@@ -11,10 +11,10 @@
  * Encapsulates the strategy item.
  */
 typedef struct GameStrategyItem {
-	/** The target to reach. */
-	GameTarget* target;
-	/** The gain associated to the function. */
-	// getGainFunction* gainFunction;
+    /** The target to reach. */
+    GameTarget* target;
+    /** The gain associated to the function. */
+    // getGainFunction* gainFunction;
 } GameStrategyItem;
 
 /**

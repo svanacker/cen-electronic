@@ -1,13 +1,14 @@
 #ifndef CEN_MATH_H
 #define CEN_MATH_H
 
+#include <stdbool.h>
 #include "../../common/commons.h"
 
-#define PI 					3.1415926535f
+#define PI                     3.1415926535f
 
-#define _2_PI 				PI * 2.0f
+#define _2_PI                 PI * 2.0f
 
-#define PI_DIVIDE_BY_2 		PI / 2.0f
+#define PI_DIVIDE_BY_2         PI / 2.0f
 
 #define PI_DIVIDE_180 0.0174532925f
 #define PI_DIVIDE_1800 0.00174532925f
@@ -58,17 +59,32 @@ int minInt(int value1, int value2);
 */
 int maxInt(int value1, int value2);
 
-BOOL floatEquals(float value1, float value2);
+/**
+ * Returns if two float value are equal or not.
+ * @param value1 the first value
+ * @param value2 the second value
+ * true if the two float are equal (difference < min float resolution), false else
+ */
+bool floatEquals(float value1, float value2);
 
-BOOL floatEqualsZero(float value1);
+/**
+ * Returns if a float value is equals to 0 (taking the min float resolution consideration).
+ * @param value the value that we want to check
+ * @return true if the float is equal to 0 (taking the min float resolution consideration), false else.
+ */
+bool floatEqualsZero(float value);
 
 /**
  * Do the modulo of a value between -PI and PI.
+ * @param value the value to convert
+ * @return the modulo of a value between -PI and PI
  */
 float mod2PI(float value);
 
 /**
  * Simple check sum.
+ * @param string the value to have the check sum
+ * @return the check sum
  */
 int stringChecksum(char* string);
 

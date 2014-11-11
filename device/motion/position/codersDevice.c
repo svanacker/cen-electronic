@@ -18,8 +18,8 @@ void stopCoders(void) {
 
 }
 
-BOOL isCodersDeviceOk(void) {
-    return TRUE;
+bool isCodersDeviceOk(void) {
+    return true;
 }
 
 void printCoderDebug(OutputStream* outputStream, char* name, signed long value, float wheelFactor) {
@@ -37,19 +37,16 @@ void printCoderDebug(OutputStream* outputStream, char* name, signed long value, 
 
 void deviceCodersHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream) {
     if (header == COMMAND_GET_WHEEL_POSITION) {
-        appendAck(outputStream);
+        ackCommand(outputStream, CODERS_DEVICE_HEADER, COMMAND_GET_WHEEL_POSITION);
+        
         signed long coderValue0 = getCoderValue(CODER_LEFT);
         signed long coderValue1 = getCoderValue(CODER_RIGHT);
-
-        // Send the two position
-        append(outputStream, COMMAND_GET_WHEEL_POSITION);
 
         appendHex8(outputStream, coderValue0);
         appendSeparator(outputStream);
         appendHex8(outputStream, coderValue1);
     } else if (header == COMMAND_DEBUG_GET_WHEEL_POSITION) {
-        appendAck(outputStream);
-        append(outputStream, COMMAND_DEBUG_GET_WHEEL_POSITION);
+        ackCommand(outputStream, CODERS_DEVICE_HEADER, COMMAND_DEBUG_GET_WHEEL_POSITION);
 
         OutputStream* debugOutputStream = getDebugOutputStreamLogger();
 
@@ -61,10 +58,9 @@ void deviceCodersHandleRawData(char header, InputStream* inputStream, OutputStre
         appendCRLF(debugOutputStream);
         printCoderDebug(debugOutputStream, "right", coderValue1, WHEEL_LENGTH_RIGHT);
     } else if (header == COMMAND_CLEAR_CODERS) {
-        appendAck(outputStream);
+        ackCommand(outputStream, CODERS_DEVICE_HEADER, COMMAND_CLEAR_CODERS);
 
         updateTrajectoryAndClearCoders();
-        append(outputStream, COMMAND_CLEAR_CODERS);
     }
 }
 

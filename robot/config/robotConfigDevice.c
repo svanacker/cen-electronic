@@ -51,7 +51,7 @@ void refreshConfig(void) {
 #endif
 
     unsigned char lowByte = readPCFByte(PCF8574_BASE_ADDRESS, PCF8574_LOW_BYTE_CONFIG_ADDRESS);
-	unsigned char highByte = readPCFByte(PCF8574_BASE_ADDRESS, PCF8574_HIGH_BYTE_CONFIG_ADDRESS);
+    unsigned char highByte = readPCFByte(PCF8574_BASE_ADDRESS, PCF8574_HIGH_BYTE_CONFIG_ADDRESS);
 
     // The both highest bit is not available => be careful to the inversion made by readPCFByte
     config = ((highByte & 0x3F) << 8) | lowByte;
@@ -63,8 +63,8 @@ unsigned int getConfigValue(void) {
 }
 
 int isConfigSet(unsigned int configMask) {
-	refreshConfig();
-	int intersection = (config & configMask);
+    refreshConfig();
+    int intersection = (config & configMask);
     return intersection != 0;
 }
 
@@ -87,13 +87,13 @@ void appendStringConfig(OutputStream* outputStream) {
     signed int i;
     for (i = CONFIG_BIT_COUNT - 1; i >= 0; i--) {
         char c;
-		if ((config & (1 << i)) > 0) {
-			c = '1';
-		}
+        if ((config & (1 << i)) > 0) {
+            c = '1';
+        }
         else {
             c = '0';
-		}
-	    append(outputStream, c);
+        }
+        append(outputStream, c);
     }
 }
 
@@ -117,7 +117,7 @@ void stopConfig(void) {
 
 }
 
-BOOL isConfigDeviceOk(void) {
+bool isConfigDeviceOk(void) {
     refreshConfig();
     return getConfigValue() < MAX_UNSIGNEDINT;
 }
@@ -125,13 +125,10 @@ BOOL isConfigDeviceOk(void) {
 void deviceConfigHandleRawData(char header,
         InputStream* inputStream,
         OutputStream* outputStream) {
-    if (header == COMMAND_CONFIG) {
-        // Send ack first
-        appendAck(outputStream);
-
+    if (header == ROBOT_CONFIG_DEVICE_HEADER) {
         // can take a little time
         refreshConfig();
-        append(outputStream, COMMAND_CONFIG);
+        ackCommand(outputStream, ROBOT_CONFIG_DEVICE_HEADER, COMMAND_CONFIG);
         appendHex4(outputStream, config);
     }
 }

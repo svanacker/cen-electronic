@@ -4,15 +4,15 @@
 /**
  * the minimal log level, reserved for fine log.
  */
-#define TRACE 	0
+#define TRACE     0
 /**
  * debug level.
  */
-#define DEBUG 	1
+#define DEBUG     1
 /**
  * default level.
  */
-#define INFO 	2
+#define INFO     2
 /**
  * warning level.
  */
@@ -20,12 +20,12 @@
 /**
  * Reserved for blocking error.
  */
-#define ERROR 	4
+#define ERROR     4
 
 /**
  * To ensure that it's always logged
  */
-#define ALWAYS 	5
+#define ALWAYS     5
 
 /**
  * Transforms a level into his string representation.

@@ -6,6 +6,6 @@
 /**
 * Compute errors using trajectory ( => absolute position)).
 */
-void computeErrorsUsingTrajectory(	PidMotion* pidMotion);
+void computeErrorsUsingTrajectory(    PidMotion* pidMotion);
 
 #endif

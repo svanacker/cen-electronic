@@ -13,44 +13,44 @@ typedef struct {
     float speed;
 } MotionParameter;
 
-#define MOTION_PARAMETERS_COUNT			4
+#define MOTION_PARAMETERS_COUNT            4
 
 /**
  * The robot goes forward or backward.
  */
-#define MOTION_TYPE_FORWARD_OR_BACKWARD	0x00
+#define MOTION_TYPE_FORWARD_OR_BACKWARD    0x00
 
 /**
  * The robot do a rotation.
  */
-#define MOTION_TYPE_ROTATION			0x01
+#define MOTION_TYPE_ROTATION            0x01
 
 /**
  * The robot do a rotation with One Wheel
  */
-#define MOTION_TYPE_ROTATION_ONE_WHEEL	0x02
+#define MOTION_TYPE_ROTATION_ONE_WHEEL    0x02
 
 /**
  * The robot must maintain a position.
  */
-#define MOTION_TYPE_MAINTAIN_POSITION	0x03
+#define MOTION_TYPE_MAINTAIN_POSITION    0x03
 
 
 // SPEED FACTOR
 
-#define	MOTION_SPEED_FACTOR_MAX				15
-#define	MOTION_SPEED_FACTOR_HIGH			10
-#define	MOTION_SPEED_FACTOR_NORMAL			7
-#define	MOTION_SPEED_FACTOR_LOW				4
-#define	MOTION_SPEED_FACTOR_MIN				1
+#define    MOTION_SPEED_FACTOR_MAX                15
+#define    MOTION_SPEED_FACTOR_HIGH            10
+#define    MOTION_SPEED_FACTOR_NORMAL            7
+#define    MOTION_SPEED_FACTOR_LOW                4
+#define    MOTION_SPEED_FACTOR_MIN                1
 
 // ACCELERATION FACTOR
 
-#define	MOTION_ACCELERATION_FACTOR_MAX		15
-#define	MOTION_ACCELERATION_FACTOR_HIGH		10
-#define	MOTION_ACCELERATION_FACTOR_NORMAL	7
-#define	MOTION_ACCELERATION_FACTOR_LOW		4
-#define	MOTION_ACCELERATION_FACTOR_MIN		1
+#define    MOTION_ACCELERATION_FACTOR_MAX        15
+#define    MOTION_ACCELERATION_FACTOR_HIGH        10
+#define    MOTION_ACCELERATION_FACTOR_NORMAL    7
+#define    MOTION_ACCELERATION_FACTOR_LOW        4
+#define    MOTION_ACCELERATION_FACTOR_MIN        1
 
 // PARAMETERS
 
@@ -82,7 +82,7 @@ void handleAndWaitMSec(unsigned long delayMs);
 /**
  * Stop the robot.
  */
-void stopPosition(BOOL maintainPositionValue);
+void stopPosition(bool maintainPositionValue);
 
 /**
  * Ask the robot to maintain the position.
@@ -95,10 +95,10 @@ void maintainPosition(void);
 void gotoPosition(float left, float right, float a, float speed);
 
 void updateSimpleSplineWithDistance(float destX, float destY,
-									float destAngle,
-									float distance1, float distance2,
-									unsigned char accelerationFactor, unsigned char speedFactor,
-									BOOL relative);
+                                    float destAngle,
+                                    float distance1, float distance2,
+                                    unsigned char accelerationFactor, unsigned char speedFactor,
+                                    bool relative);
 
 /**
  * Go from the relative destination to the initial Position of the robot
@@ -112,14 +112,14 @@ void updateSimpleSplineWithDistance(float destX, float destY,
  * system determines the best distance to avoid too huge curve
  */
 void gotoSimpleSpline(float relativeDestX,
-					  float relativeDestY,
-					  float relativeDestAngle,
-					  float controlPointDistance1,
-					  float controlPointDistance2,
-					  unsigned int accelerationFactor,
-					  unsigned int speedFactor,
-					  BOOL relative
-					);
+                      float relativeDestY,
+                      float relativeDestAngle,
+                      float controlPointDistance1,
+                      float controlPointDistance2,
+                      unsigned int accelerationFactor,
+                      unsigned int speedFactor,
+                      bool relative
+                    );
 
 /**
 * Go to a spline with indication of maxDerivative which indicates how the curve is huge

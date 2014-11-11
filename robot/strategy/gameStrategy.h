@@ -8,16 +8,16 @@
 
 #include "../../common/io/outputStream.h"
 
-#define MAX_STRATEGY_ITEM 		7
+#define MAX_STRATEGY_ITEM         7
 
 /**
  * Encapsulates the strategy.
  */
 typedef struct GameStrategy {
-	/** Name of the strategy. */
-	char* name;
-	/** Elements of strategy. */
-	GameStrategyItem* items[MAX_STRATEGY_ITEM];
+    /** Name of the strategy. */
+    char* name;
+    /** Elements of strategy. */
+    GameStrategyItem* items[MAX_STRATEGY_ITEM];
     /** the size of the list. */
     unsigned char size;
 } GameStrategy;
@@ -32,8 +32,8 @@ void clearGameStrategy(GameStrategy* gameStrategy);
  * @param strategyItem the strategy item to add to the list
  */ 
 void addGameStrategyItem(GameStrategy* gameStrategy,
-						 GameStrategyItem* strategyItem,
-						GameTarget* target);
+                         GameStrategyItem* strategyItem,
+                        GameTarget* target);
 
 /**
  * Get the strategy at index.

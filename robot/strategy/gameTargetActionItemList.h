@@ -11,7 +11,7 @@
 #include "../../navigation/path.h"
 
 /** The max limit of action item count. */
-#define MAX_TARGET_ACTION_ITEM 		5
+#define MAX_TARGET_ACTION_ITEM         5
 
 /**
  * Encapsulates the target action.
@@ -19,8 +19,8 @@
 typedef struct GameTargetActionItemList {
     /** An array of pointer on target action items. */
     GameTargetActionItem* items[MAX_TARGET_ACTION_ITEM];
-	/** Next index for iterator. */
-	int iteratorIndex;
+    /** Next index for iterator. */
+    int iteratorIndex;
     /** the size of the list. */
     unsigned char size;
 } GameTargetActionItemList;
@@ -35,7 +35,7 @@ void clearTargetActionItemList(GameTargetActionItemList* targetActionItemList);
 /**
  * Returns if the iterator has next value.
  */
-BOOL targetActionItemListHasNext(GameTargetActionItemList* targetActionItemList);
+bool targetActionItemListHasNext(GameTargetActionItemList* targetActionItemList);
 
 /**
  * Returns the next value of iterator, NULL if no more.
@@ -52,9 +52,9 @@ void targetActionItemListResetIterator(GameTargetActionItemList* targetActionIte
  * @param targetActionItem the target item to add to the list
  */
 void addTargetActionItem(GameTargetActionItemList* targetActionItemList,
-					 GameTargetActionItem* targetActionItem,
-					 GameTargetActionFunction* function,
-					 char* name
+                     GameTargetActionItem* targetActionItem,
+                     GameTargetActionFunction* function,
+                     char* name
 );
 
 /**

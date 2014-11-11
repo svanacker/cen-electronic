@@ -4,7 +4,6 @@
 #include "deviceInterface.h"
 
 #include "../common/commons.h"
-#include "../common/delay/delay30F.h"
 
 #include "../common/io/ioUtils.h"
 #include "../common/io/inputStream.h"
@@ -18,8 +17,8 @@
  * We write the debug information to the serial interface, and if possible to an LCD drivers
  * @param device the device.
  */
-BOOL initDevice(const Device* device) {
-    int result = TRUE;
+bool initDevice(const Device* device) {
+    int result = true;
     DeviceDescriptor* deviceDescriptor = device->descriptor;
     DeviceInterface* deviceInterface = device->interface;
 
@@ -56,11 +55,17 @@ void stopDevice(const Device* device) {
 void forwardCallbackRawDataTo(InputStream* inputStream,
         OutputStream* outputStream,
         const Device* device,
-        int header,
-		int mode) {
+        const char header,
+        int mode) {
     DeviceInterface* deviceInterface = device->interface;
-    // Length = data of output from the message and add the length of header message (1)
-    int dataLength = deviceInterface->deviceGetInterface(header, mode, FALSE) + 1;
+    // Length = data of output from the message and add the length of header message (deviceHeader + commandHeader)
+    int dataLength = deviceInterface->deviceGetInterface(header, mode, false) + DEVICE_AND_COMMAND_HEADER_LENGTH;
 
     copyInputToOutputStream(inputStream, outputStream, NULL, dataLength);
+}
+
+void ackCommand(OutputStream* outputStream, const char deviceHeader, const char commandHeader) {
+    appendAck(outputStream);
+    append(outputStream, deviceHeader);
+    append(outputStream, commandHeader);
 }

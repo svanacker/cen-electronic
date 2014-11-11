@@ -24,8 +24,8 @@
  * @param index corresponds to INSTRUCTION_THETA_INDEX or INSTRUCTION_ALPHA_INDEX
  */
 void initNextPositionVars(int index) {
-	PidMotion* pidMotion = getPidMotion();
-	PidMotionDefinition* motionDefinition = &(pidMotion->currentMotionDefinition);
+    PidMotion* pidMotion = getPidMotion();
+    PidMotionDefinition* motionDefinition = &(pidMotion->currentMotionDefinition);
 
     // Initialization of MotionInstruction : TODO : do not reset it !
     MotionInstruction* localInst = &(motionDefinition->inst[index]);
@@ -33,10 +33,10 @@ void initNextPositionVars(int index) {
     localInst->a = 0;
     localInst->speed = 0;
     localInst->speedMax = 0;
-	localInst->endSpeed = 0;
+    localInst->endSpeed = 0;
 
 
-	PidComputationValues* computationValues = &(pidMotion->computationValues);
+    PidComputationValues* computationValues = &(pidMotion->computationValues);
 
     // Initialization of MotionError
     MotionError* localErr = &(computationValues->err[index]);
@@ -48,78 +48,78 @@ void initNextPositionVars(int index) {
 
     // Initialization of Motion
     Motion* localMotion = &(computationValues->motion[index]);
-	localInst->initialSpeed = localMotion->currentSpeed;
+    localInst->initialSpeed = localMotion->currentSpeed;
 
     localMotion->position = 0;
     localMotion->oldPosition = 0;
     localMotion->u = 0;
 
-	localInst->profileType = 0;
-	localInst->pidType = 0;
-	localInst->motionType = 0;
+    localInst->profileType = 0;
+    localInst->pidType = 0;
+    localInst->motionType = 0;
 
     // Initialization of motionEnd & motionBlocked
     MotionEndInfo* localEnd = &(computationValues->motionEnd[index]);
-	resetMotionEndData(localEnd);
+    resetMotionEndData(localEnd);
 }
 
 void clearInitialSpeeds() {
-	PidMotion* pidMotion = getPidMotion();
-	PidComputationValues* computationValues = &(pidMotion->computationValues);
+    PidMotion* pidMotion = getPidMotion();
+    PidComputationValues* computationValues = &(pidMotion->computationValues);
 
-	// TODO : For continous trajectory : to change
+    // TODO : For continous trajectory : to change
     Motion* alphaMotion = &(computationValues->motion[INSTRUCTION_ALPHA_INDEX]);
-	alphaMotion->currentSpeed = 0.0f;
+    alphaMotion->currentSpeed = 0.0f;
     Motion* thetaMotion = &(computationValues->motion[INSTRUCTION_THETA_INDEX]);
-	thetaMotion->currentSpeed = 0.0f;
+    thetaMotion->currentSpeed = 0.0f;
 }
 
 void computeMotionInstruction(MotionInstruction* inst) {
-	if (inst->a != 0.0f) {
+    if (inst->a != 0.0f) {
 
         // Time must be > 0
-		// We compute the diff between initialSpeed and speed and apply the "a" factor
+        // We compute the diff between initialSpeed and speed and apply the "a" factor
         inst->t1 = fabsf((inst->speed - inst->initialSpeed) / inst->a);
         // P1 = (t1 * (is + s) * 1/2
         inst->p1 = inst->t1 * (inst->initialSpeed + inst->speed) / 2.0f;
 
-		// decelerationTime (time to go from speed to endSpeed)
-		float decelerationTime = fabsf((inst->speed - inst->endSpeed ) / inst->a);
-		float decelerationDistance = decelerationTime * (inst->speed + inst->endSpeed) / 2.0f;
+        // decelerationTime (time to go from speed to endSpeed)
+        float decelerationTime = fabsf((inst->speed - inst->endSpeed ) / inst->a);
+        float decelerationDistance = decelerationTime * (inst->speed + inst->endSpeed) / 2.0f;
 
-		// Distance during constant speed (P1 -> P2) = totalDistance - accelerationDistance - decelerationDistance
-		float distanceAtConstantSpeed = inst->nextPosition - inst->p1 - decelerationDistance;
+        // Distance during constant speed (P1 -> P2) = totalDistance - accelerationDistance - decelerationDistance
+        float distanceAtConstantSpeed = inst->nextPosition - inst->p1 - decelerationDistance;
 
-		// We detects if we have time to reach maxSpeed
-		// we detect if the sign of speed is inverse to distanceAtConstantSpeed
-		if (inst->speed * distanceAtConstantSpeed > 0) {
-			inst->profileType = PROFILE_TYPE_TRAPEZE;
-			inst->speedMax = inst->speed;
-			// T = D / V
+        // We detects if we have time to reach maxSpeed
+        // we detect if the sign of speed is inverse to distanceAtConstantSpeed
+        if (inst->speed * distanceAtConstantSpeed > 0) {
+            inst->profileType = PROFILE_TYPE_TRAPEZE;
+            inst->speedMax = inst->speed;
+            // T = D / V
             inst->t2 = inst->t1 + fabsf(distanceAtConstantSpeed / inst->speed);
             inst->p2 = inst->p1 + distanceAtConstantSpeed;
-		}        
-		else {
-        	// the p1 position is greater than the final Position / 2 => TRIANGLE : we do not reach the max speed
-        	inst->profileType = PROFILE_TYPE_TRIANGLE;
-			float numerator = fabsf(distanceAtConstantSpeed)*(inst->initialSpeed + inst->endSpeed)
-							 + inst->speed * (2 * inst->nextPosition - inst->t1 * inst->initialSpeed - decelerationTime * inst->endSpeed);
-			inst->speedMax = sqrt(fabsf(numerator) / (inst->t1 + decelerationTime));
-			// speedmax must be of the same sign of speed, and sqrt always returns a value > 0	
-			if (inst->speedMax * inst->speed < 0) {
-				inst->speedMax = -inst->speedMax;
-			}
-			// recompute t1/p1 with speedMax
+        }        
+        else {
+            // the p1 position is greater than the final Position / 2 => TRIANGLE : we do not reach the max speed
+            inst->profileType = PROFILE_TYPE_TRIANGLE;
+            float numerator = fabsf(distanceAtConstantSpeed)*(inst->initialSpeed + inst->endSpeed)
+                             + inst->speed * (2 * inst->nextPosition - inst->t1 * inst->initialSpeed - decelerationTime * inst->endSpeed);
+            inst->speedMax = sqrt(fabsf(numerator) / (inst->t1 + decelerationTime));
+            // speedmax must be of the same sign of speed, and sqrt always returns a value > 0    
+            if (inst->speedMax * inst->speed < 0) {
+                inst->speedMax = -inst->speedMax;
+            }
+            // recompute t1/p1 with speedMax
             inst->t1 = fabsf((inst->initialSpeed - inst->speedMax) / inst->a);
-			inst->p1 = (inst->initialSpeed * inst->t1) + (inst->a * inst->t1 * inst->t1) / 2.0f;
+            inst->p1 = (inst->initialSpeed * inst->t1) + (inst->a * inst->t1 * inst->t1) / 2.0f;
 
             inst->t2 = inst->t1;
             inst->p2 = inst->p1;
 
-			decelerationTime = fabsf((inst->speedMax - inst->endSpeed ) / inst->a);
+            decelerationTime = fabsf((inst->speedMax - inst->endSpeed ) / inst->a);
         }
-		// In every case
-		// inst->nextPosition = p3
+        // In every case
+        // inst->nextPosition = p3
         inst->t3 = inst->t2 + decelerationTime;
 
     } else {
@@ -141,8 +141,8 @@ void setNextPosition(int instructionIndex,
         float pSpeed) {
     initNextPositionVars(instructionIndex);
 
-	PidMotion* pidMotion = getPidMotion();
-	PidMotionDefinition* motionDefinition = &(pidMotion->currentMotionDefinition);
+    PidMotion* pidMotion = getPidMotion();
+    PidMotionDefinition* motionDefinition = &(pidMotion->currentMotionDefinition);
     MotionInstruction* localInst = &(motionDefinition->inst[instructionIndex]);
 
     localInst->nextPosition = pNextPosition;
@@ -167,9 +167,9 @@ void setNextPosition(int instructionIndex,
             localInst->speed = 0.0f;
         }
     }
-	computeMotionInstruction(localInst);
+    computeMotionInstruction(localInst);
 
     
-	pidMotion->currentMotionDefinition.computeU = &simpleMotionUCompute;
+    pidMotion->currentMotionDefinition.computeU = &simpleMotionUCompute;
 }
 

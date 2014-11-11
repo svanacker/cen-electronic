@@ -28,11 +28,11 @@
 * Time in milliseconds we consider that we do not send the position (because the last
 * detection is too old (it's a risk to send obsolete Information).
 */
-#define OBSOLETE_DETECTION_TIME_THRESHOLD	3000.0f
+#define OBSOLETE_DETECTION_TIME_THRESHOLD    3000.0f
 
 // Calibration Point
-#define BEACON_CALIBRATION_POINT_X 		DISTANCE_BETWEEN_BEACON / 2.0f
-#define BEACON_CALIBRATION_POINT_Y 		3100.0f
+#define BEACON_CALIBRATION_POINT_X         DISTANCE_BETWEEN_BEACON / 2.0f
+#define BEACON_CALIBRATION_POINT_Y         3100.0f
 
 /** Defines the interval (in pulse for servo) to search, when we are in tracking mode. */
 #define SHORT_TRACKING_INTERVAL 50
@@ -43,19 +43,19 @@
 /** 
 * Time in milliseconds for each notification for the robot opponent position.
 */
-#define NOTIFY_DELAY					1000.0f
+#define NOTIFY_DELAY                    1000.0f
 
 /**
 * Define the MAC_ADRESS_ROUTER (64 bits) used by the coordinateur (Beacon Main).
 * This constant is DEPENDANT of you MATERIAL. Adapt it to your HARDWARE.
 */
 #define JENNIC_COORDINATER_MAC_ADDRESS  "0006066005651610050"
-	
+    
 /**
 * Define the MAC_ADRESS_ROUTER (64 bits) used by the router (Beacon Receiver).
 * This constant is DEPENDANT of you MATERIAL. Adapt it to your HARDWARE.
 */
-#define JENNIC_ROUTER_MAC_ADDRESS		"0006066005651610057"
+#define JENNIC_ROUTER_MAC_ADDRESS        "0006066005651610057"
 
 Buffer* getZigbeeInputBuffer();
 
@@ -63,24 +63,24 @@ Buffer* getZigbeeInputBuffer();
 
 // DEBUG UART
 
-#define	JENNIC_DEBUG_INPUT_BUFFER_LENGTH	12
-#define	JENNIC_DEBUG_OUTPUT_BUFFER_LENGTH	12
+#define    JENNIC_DEBUG_INPUT_BUFFER_LENGTH    12
+#define    JENNIC_DEBUG_OUTPUT_BUFFER_LENGTH    12
 
 // ZIGBEE UART
 
-#define	JENNIC_ZIGBEE_INPUT_BUFFER_LENGTH	50
-#define	JENNIC_ZIGBEE_OUTPUT_BUFFER_LENGTH	50
+#define    JENNIC_ZIGBEE_INPUT_BUFFER_LENGTH    50
+#define    JENNIC_ZIGBEE_OUTPUT_BUFFER_LENGTH    50
 
 // DRIVER
 
-#define	JENNIC_ZIGBEE_REQUEST_DRIVER_BUFFER_LENGTH		14
-#define	JENNIC_ZIGBEE_RESPONSE_DRIVER_BUFFER_LENGTH		14
+#define    JENNIC_ZIGBEE_REQUEST_DRIVER_BUFFER_LENGTH        14
+#define    JENNIC_ZIGBEE_RESPONSE_DRIVER_BUFFER_LENGTH        14
 
 // DEVICE
-#define	BEACON_BOARD_DEVICE_LENGTH			7
+#define    BEACON_BOARD_DEVICE_LENGTH            7
 
 // TIMERS
-#define BEACON_BOARD_TIMER_LENGTH			2
+#define BEACON_BOARD_TIMER_LENGTH            2
 
 // TIMERS
 #define BEACON_RECEIVER_BOARD_TIMER_LENGTH  2

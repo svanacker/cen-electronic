@@ -4,15 +4,15 @@
 #include "../../device/device.h"
 
 
-#define ARM_LEFT_PWM_INDEX 		0x01
-#define ARM_RIGHT_PWM_INDEX 	0x02
+#define ARM_LEFT_PWM_INDEX         0x01
+#define ARM_RIGHT_PWM_INDEX     0x02
 
 
-#define ARM_LEFT_DOWN 		0x0260
-#define ARM_LEFT_UP			0x0598
+#define ARM_LEFT_DOWN         0x0260
+#define ARM_LEFT_UP            0x0598
 
-#define ARM_RIGHT_DOWN		0x0940
-#define ARM_RIGHT_UP		0x0640
+#define ARM_RIGHT_DOWN        0x0940
+#define ARM_RIGHT_UP        0x0640
 
 void upArm(int armIndex);
 

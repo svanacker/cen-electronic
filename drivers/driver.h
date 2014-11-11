@@ -8,7 +8,7 @@
 /**
  * Initialization function of the driver.
  */
-typedef BOOL driverInitFunction(void);
+typedef bool driverInitFunction(void);
 
 /**
  * Driver shutting down function.
@@ -17,9 +17,9 @@ typedef void driverShutDownFunction(void);
 
 /**
  * Function for querying the error state of the driver
- * @retrue TRUE is the driver is ok, FALSE otherwise
+ * @retrue true is the driver is ok, false otherwise
  */
-typedef BOOL driverIsOkFunction(void);
+typedef bool driverIsOkFunction(void);
 
 /**
  * Function for querying the name of the driver.
@@ -37,7 +37,7 @@ typedef int driverGetTransmitModeFunction(int defaultTransmitMode);
  * Descriptor of a driver.
  */
 typedef struct {
-    // BOOL driverEnabled;
+    // bool driverEnabled;
     driverInitFunction *driverInit;
     driverShutDownFunction *driverShutDown;
     driverGetNameFunction *driverGetName;
@@ -50,7 +50,7 @@ typedef struct {
  * @param driverDescriptor the descriptor of the driver.
  * @param debug flag for enabling debugging
  */
-BOOL driverInit(const DriverDescriptor *driverDescriptor);
+bool driverInit(const DriverDescriptor *driverDescriptor);
 
 /**
  * Shuts down the driver represented by the given descriptor.

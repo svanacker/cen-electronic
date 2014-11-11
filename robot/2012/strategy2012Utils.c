@@ -32,79 +32,79 @@
 // COLOR MANAGEMENT
 
 int isViolet() {
-	return getStrategyContext()->color == COLOR_VIOLET;
+    return getStrategyContext()->color == COLOR_VIOLET;
 }
 
 /**
  * Change the location for color.
  */
 void changeLocationsForColor() {
-	if (isViolet()) {
-		return;
-	}
-	LocationList* locationList = getNavigationLocationList();
-	int i;
-	unsigned char size = locationList->size;
-	for (i = 0; i < size; i++) {
-		Location* location = locationList->locations[i];
-		location->y = GAMEBOARD_HEIGHT - location->y;
-	}
+    if (isViolet()) {
+        return;
+    }
+    LocationList* locationList = getNavigationLocationList();
+    int i;
+    unsigned char size = locationList->size;
+    for (i = 0; i < size; i++) {
+        Location* location = locationList->locations[i];
+        location->y = GAMEBOARD_HEIGHT - location->y;
+    }
 }
 
 int changeAngleForColor(int angle) {
-	if (isViolet()) {
-		return angle;
-	} else {
-		return -angle;
-	}
+    if (isViolet()) {
+        return angle;
+    } else {
+        return -angle;
+    }
 }
 
 int getAngle1Path(PathDataFunction* pathDataFunction) {
-	pathDataFunction();
-	int result = getTmpPathData()->angle1;
-	return changeAngleForColor(result);
+    pathDataFunction();
+    int result = getTmpPathData()->angle1;
+    return changeAngleForColor(result);
 }
 
 int getAngle2Path(PathDataFunction* pathDataFunction) {
-	pathDataFunction();
-	int result = getTmpPathData()->angle2;
-	return changeAngleForColor(result);
+    pathDataFunction();
+    int result = getTmpPathData()->angle2;
+    return changeAngleForColor(result);
 }
 
 // ARM
 
 void armLeftUp() {
-	if (isViolet()) {
-		armDriver2012Up(ARM_LEFT);
-	}
-	else {
-		armDriver2012Up(ARM_RIGHT);
-	}
+    if (isViolet()) {
+        armDriver2012Up(ARM_LEFT);
+    }
+    else {
+        armDriver2012Up(ARM_RIGHT);
+    }
 }
 
 void armLeftDown() {
-	if (isViolet()) {
-		armDriver2012Down(ARM_LEFT);
-	}
-	else {
-		armDriver2012Down(ARM_RIGHT);
-	}
+    if (isViolet()) {
+        armDriver2012Down(ARM_LEFT);
+    }
+    else {
+        armDriver2012Down(ARM_RIGHT);
+    }
 }
 
 void armRightUp() {
-	if (isViolet()) {
-		armDriver2012Up(ARM_RIGHT);
-	}
-	else {
-		armDriver2012Up(ARM_LEFT);
-	}
+    if (isViolet()) {
+        armDriver2012Up(ARM_RIGHT);
+    }
+    else {
+        armDriver2012Up(ARM_LEFT);
+    }
 }
 
 void armRightDown() {
-	if (isViolet()) {
-		armDriver2012Down(ARM_RIGHT);
-	}
-	else {
-		armDriver2012Down(ARM_LEFT);
-	}
+    if (isViolet()) {
+        armDriver2012Down(ARM_RIGHT);
+    }
+    else {
+        armDriver2012Down(ARM_LEFT);
+    }
 }

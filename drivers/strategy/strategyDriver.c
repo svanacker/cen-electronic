@@ -25,111 +25,115 @@
 
 #include "../../robot/opponent/opponentRobot.h"
 
-#define STRATEGY_DRIVER_TIMER_INDEX			25
+#define STRATEGY_DRIVER_TIMER_INDEX            25
 
 /**
  * Define the timer diviser to have a timer at approximatively 1,5 Hertz.
  * Use primer number to avoid synchronization problem
  */
-#define TIME_DIVISER_1_5_HERTZ 				18181
-#define FORCE_ROBOT_NEXT_STEP_COUNTER		5		
+#define TIME_DIVISER_1_5_HERTZ                 18181
+#define FORCE_ROBOT_NEXT_STEP_COUNTER        5        
 
 static unsigned int strategyDriverInterruptCounter;
 
 void strategyDriverTimerCallback(Timer* timer) {
-	// enabled only if robot started
-	if (!isStarted()) {
-		return;
-	}
-	// disabled after end
-	if (isEnd()) {
-		return;
-	}
-	strategyDriverInterruptCounter++;
+    // enabled only if robot started
+    if (!isStarted()) {
+        return;
+    }
+    // disabled after end
+    if (isEnd()) {
+        return;
+    }
+    strategyDriverInterruptCounter++;
 }
 
 void forceRobotNextStepIfNecessary() {
-	if (strategyDriverInterruptCounter >= FORCE_ROBOT_NEXT_STEP_COUNTER) {
-		appendString(getOutputStreamLogger(ERROR), "forceRobotNextStepIfNecessary\n");
-		strategyDriverInterruptCounter = 0;
-		robotNextStep();
-	}
+    if (strategyDriverInterruptCounter >= FORCE_ROBOT_NEXT_STEP_COUNTER) {
+        appendString(getOutputStreamLogger(ERROR), "forceRobotNextStepIfNecessary\n");
+        strategyDriverInterruptCounter = 0;
+        robotNextStep();
+    }
 }
 
 /**
  * Initialize the strategy Driver and a timer used to send next Step in case of problem.
  */
 void initStrategyDriver() {
-	addTimer(STRATEGY_DRIVER_TIMER_INDEX, TIME_DIVISER_1_5_HERTZ, &strategyDriverTimerCallback);
+    addTimer(STRATEGY_DRIVER_TIMER_INDEX, TIME_DIVISER_1_5_HERTZ, &strategyDriverTimerCallback);
 }
 
 void robotNextStep() {
-	// Clear interrupt counter
-	strategyDriverInterruptCounter = 0;
-	Point* opponentRobotPosition = getLastOpponentRobotPosition();
+    // Clear interrupt counter
+    strategyDriverInterruptCounter = 0;
+    Point* opponentRobotPosition = getLastOpponentRobotPosition();
 
-	// Send strategy opponent Robot position
-	sendStrategyOpponentRobotPosition(opponentRobotPosition );
+    // Send strategy opponent Robot position
+    sendStrategyOpponentRobotPosition(opponentRobotPosition );
 
- 	// Send next Step
- 	sendStrategyNextStep();
+     // Send next Step
+     sendStrategyNextStep();
 }
 
-BOOL sendStrategyConfiguration(int configuration) {
-	appendString(getOutputStreamLogger(INFO), "sendStrategyConfiguration\n");
+bool sendStrategyConfiguration(int configuration) {
+    appendString(getOutputStreamLogger(INFO), "sendStrategyConfiguration\n");
 
     OutputStream* outputStream = getDriverRequestOutputStream();
 
+    append(outputStream, STRATEGY_DEVICE_HEADER);
     append(outputStream, COMMAND_STRATEGY_SET_CONFIG);
     appendHex4(outputStream, configuration);
 
-    BOOL result = transmitFromDriverRequestBuffer();
+    bool result = transmitFromDriverRequestBuffer();
 
     return result;
 }
 
-BOOL sendStrategyNextStep() {
-	appendString(getOutputStreamLogger(INFO), "sendStrategyNextStep\n");
+bool sendStrategyNextStep() {
+    appendString(getOutputStreamLogger(INFO), "sendStrategyNextStep\n");
 
     OutputStream* outputStream = getDriverRequestOutputStream();
     InputStream* inputStream = getDriverResponseInputStream();
 
+    append(outputStream, STRATEGY_DEVICE_HEADER);
     append(outputStream, COMMAND_STRATEGY_NEXT_STEP);
 
-    BOOL result = transmitFromDriverRequestBuffer();
+    bool result = transmitFromDriverRequestBuffer();
     if (result) {
         int result = readHex2(inputStream);
-		return result;
+        return result;
     }
-    return FALSE;
+    return false;
 }
 
-BOOL sendStrategyOpponentRobotPosition(Point* opponentRobotPosition) {
-	OutputStream* debugOutputStream = getOutputStreamLogger(INFO);
-	appendString(debugOutputStream, "sendStrategyOpponentRobotPosition: ");
+bool sendStrategyOpponentRobotPosition(Point* opponentRobotPosition) {
+    OutputStream* debugOutputStream = getOutputStreamLogger(INFO);
+    appendString(debugOutputStream, "sendStrategyOpponentRobotPosition: ");
 
     OutputStream* outputStream = getDriverRequestOutputStream();
 
+    append(outputStream, STRATEGY_DEVICE_HEADER);
     append(outputStream, COMMAND_STRATEGY_SET_OPPONENT_ROBOT_POSITION);
     appendHex4(outputStream, opponentRobotPosition->x);
     appendSeparator(outputStream);
     appendHex4(outputStream, opponentRobotPosition->y);
 
-	appendStringAndDec(debugOutputStream, " x=", opponentRobotPosition->x);
-	appendStringAndDec(debugOutputStream, ", y=", opponentRobotPosition->y);
-	println(debugOutputStream);
+    appendStringAndDec(debugOutputStream, " x=", opponentRobotPosition->x);
+    appendStringAndDec(debugOutputStream, ", y=", opponentRobotPosition->y);
+    println(debugOutputStream);
 
-    BOOL result = transmitFromDriverRequestBuffer();
+    bool result = transmitFromDriverRequestBuffer();
 
     return result;
 }
 
-BOOL sentStrategyRobotPosition(unsigned char status, unsigned int x, unsigned int y, int angleInDeciDegree) {
-	OutputStream* debugOutputStream = getOutputStreamLogger(INFO);
-	appendString(debugOutputStream, "sentStrategyRobotPosition:");
+bool sentStrategyRobotPosition(unsigned char status, unsigned int x, unsigned int y, int angleInDeciDegree) {
+    OutputStream* debugOutputStream = getOutputStreamLogger(INFO);
+    appendString(debugOutputStream, "sentStrategyRobotPosition:");
 
     OutputStream* outputStream = getDriverRequestOutputStream();
 
+    append(outputStream, STRATEGY_DEVICE_HEADER);
     append(outputStream, COMMAND_STRATEGY_SET_ROBOT_POSITION);
     appendHex2(outputStream, status);
     appendSeparator(outputStream);
@@ -142,13 +146,13 @@ BOOL sentStrategyRobotPosition(unsigned char status, unsigned int x, unsigned in
 
     appendHex4(outputStream, angleInDeciDegree);
 
-	appendStringAndDec(debugOutputStream, "status=", status);
-	appendStringAndDec(debugOutputStream, ", x=", x);
-	appendStringAndDec(debugOutputStream, ", y=", y);
-	appendStringAndDec(debugOutputStream, ", angle=", angleInDeciDegree);
-	println(debugOutputStream);
+    appendStringAndDec(debugOutputStream, "status=", status);
+    appendStringAndDec(debugOutputStream, ", x=", x);
+    appendStringAndDec(debugOutputStream, ", y=", y);
+    appendStringAndDec(debugOutputStream, ", angle=", angleInDeciDegree);
+    println(debugOutputStream);
 
-    BOOL result = transmitFromDriverRequestBuffer();
+    bool result = transmitFromDriverRequestBuffer();
 
     return result;
 }

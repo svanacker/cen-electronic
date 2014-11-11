@@ -5,7 +5,7 @@
 
 #include "../../common/cmd/commonCommand.h"
 
-#include "../../common/delay/delay30F.h"
+#include "../../common/delay/cenDelay.h"
 
 #include "../../common/io/inputStream.h"
 #include "../../common/io/outputStream.h"
@@ -29,10 +29,10 @@
 
 #include "../../main/motorBoard/motorBoard.h"
 
-#define SONAR_INDEX			0
+#define SONAR_INDEX            0
 
 /** Use or not the sonar. */
-// static BOOL useSonar;
+// static bool useSonar;
 
 /** History of distances. */
 static unsigned int distances[ROBOT_SONAR_DETECTOR_DEVICE_HISTORY_SIZE];
@@ -46,14 +46,14 @@ static char interruptCounter;
 /** Value of the counter for which we do not check. */
 static int doNotCheckBeforeCounter;
 
-static BOOL obstacle;
+static bool obstacle;
 
-static BOOL readNextDistanceFlag;
+static bool readNextDistanceFlag;
 
 static char sonarStatus;
 
 void setSonarStatus(unsigned char aSonarStatus) {
-	sonarStatus = aSonarStatus;
+    sonarStatus = aSonarStatus;
 }
 
 void clearHistory() {
@@ -66,7 +66,7 @@ void clearHistory() {
     doNotCheckBeforeCounter = 0;
 }
 
-BOOL checkObstacle() {
+bool checkObstacle() {
     unsigned int i;
     unsigned int matchCount = 0;
     for (i = 0; i < ROBOT_SONAR_DETECTOR_DEVICE_HISTORY_SIZE; i++) {
@@ -78,9 +78,9 @@ BOOL checkObstacle() {
         clearHistory();
         // Wait 30 interrupt before rearming test
         doNotCheckBeforeCounter = ROBOT_SONAR_DETECTOR_TIMER_SKIP_FOR_NEW_DETECTION;
-        return TRUE;
+        return true;
     }
-    return FALSE;
+    return false;
 }
 
 void deviceRobotSonarDetectorCallbackFunc(Timer* timer) {
@@ -93,14 +93,14 @@ void deviceRobotSonarDetectorCallbackFunc(Timer* timer) {
     // rearm flags
     interruptCounter = 0;
 
-    readNextDistanceFlag = TRUE;
+    readNextDistanceFlag = true;
 }
 
 void readNextDistance() {
     if (!readNextDistanceFlag) {
         return;
     }
-    readNextDistanceFlag = FALSE;
+    readNextDistanceFlag = false;
 
     unsigned int distance = getSRF02DistanceEndRanging(SONAR_INDEX);
     delaymSec(1);
@@ -120,25 +120,25 @@ void readNextDistance() {
 
     if (checkObstacle()) {
         // for the main LOOP
-        obstacle = TRUE;
+        obstacle = true;
     }
 }
 
-BOOL notifyObstacle() {
+bool notifyObstacle() {
     readNextDistance();
     if (!obstacle) {
-        return FALSE;
+        return false;
     }
     // we notify only one time
-    obstacle = FALSE;
+    obstacle = false;
 
     // We notify only if it's active
     if (sonarStatus) {
         stopRobotObstacle();
-        return TRUE;
+        return true;
     }
 
-    return FALSE;
+    return false;
 }
 
 void deviceRobotSonarDetectorInit() {
@@ -151,16 +151,16 @@ void deviceRobotSonarDetectorInit() {
     startSRF02Ranging(SONAR_INDEX);
     delaymSec(65);
     getSRF02DistanceEndRanging(SONAR_INDEX);
-    obstacle = FALSE;
-    readNextDistanceFlag = FALSE;
+    obstacle = false;
+    readNextDistanceFlag = false;
 }
 
 void deviceRobotSonarDetectorShutDown() {
 
 }
 
-BOOL deviceRobotSonarDetectorIsOk() {
-    return TRUE;
+bool deviceRobotSonarDetectorIsOk() {
+    return true;
 }
 
 void deviceRobotSonarDetectorHandleRawData(char header,
@@ -169,8 +169,7 @@ void deviceRobotSonarDetectorHandleRawData(char header,
 
     if (header == COMMAND_SET_SONAR_STATUS) {
         sonarStatus = readHex2(inputStream);
-        appendAck(outputStream);
-        append(outputStream, COMMAND_SET_SONAR_STATUS);
+        ackCommand(outputStream, ROBOT_SONAR_DETECTOR_DEVICE_HEADER, COMMAND_SET_SONAR_STATUS);
     }
 }
 

@@ -23,11 +23,11 @@ struct DriverDataDispatcher;
  * @return the response data containing the result of the invocation of the targetted device
  */
 typedef void driverDataDispatcherTransmitDataFunction(struct DriverDataDispatcher* dispatcher,
-												        Buffer* requestBuffer,
-												        Buffer* responseBuffer,
-												        int dataToTransferCount,
-												        int dataToReceiveCount
-												        );
+                                                        Buffer* requestBuffer,
+                                                        Buffer* responseBuffer,
+                                                        int dataToTransferCount,
+                                                        int dataToReceiveCount
+                                                        );
 
 /**
  * Structure defining a driverDataDispatcher with his associated transmitMode.
@@ -37,8 +37,8 @@ typedef struct DriverDataDispatcher {
     int transmitMode;
     /** A name for debug. */
     char* name;
-	/** The address as char (for zigbee for example). */
-	char* addressString;
+    /** The address as char (for zigbee for example). */
+    char* addressString;
     /** The address (only for remote transmitMode). In case of addressString, address contains a checksum of addressString. */
     int address;
     /** inputStream (can be null). */
@@ -57,20 +57,20 @@ typedef struct DriverDataDispatcher {
  * I2C / UART ...)
  * @param dataToTransferCount number of bytes which must be sent
  * @param dataToReceiveCount number of bytes which must be received
- * @return the response data containing the result of the invocation of the targetted device
  */
 void transmitDriverData(int transmitMode,
-				        int address,
-				        Buffer* requestBuffer,
-				        Buffer* responseBuffer,
-				        int dataToTransferCount,
-				        int dataToReceiveCount
-				        );
+                        int address,
+                        Buffer* requestBuffer,
+                        Buffer* responseBuffer,
+                        int dataToTransferCount,
+                        int dataToReceiveCount
+                        );
 
 /**
  * Handle data which are notification (and not direct response) from dispatcher.
  * @param dispatcher the dispatcher from which we try to handle notification.
+ * @return true if there is a notification, false else
  */
-BOOL handleNotificationFromDispatcher(DriverDataDispatcher* dispatcher);
+bool handleNotificationFromDispatcher(DriverDataDispatcher* dispatcher);
 
 #endif

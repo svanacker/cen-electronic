@@ -7,9 +7,9 @@
 
 #include "../../common/commons.h"
 #include "../../common/math/cenMath.h"
-#include "../../common/delay/delay30F.h"
+#include "../../common/delay/cenDelay.h"
 
-#include "../../common/pwm/servoPwm.h"
+#include "../../common/pwm/servo/servoPwm.h"
 
 #include "../../common/io/inputStream.h"
 #include "../../common/io/outputStream.h"
@@ -40,28 +40,28 @@ static BeaconSystem beaconSystem;
  * Internal timer callback.
  */
 void beaconTimerCallback(Timer* timer) {
-	if (!beaconSystem.enabled) {
-		return;
-	}
-	// Count the number of laser which track something
-	int trackCounter = 0; 
+    if (!beaconSystem.enabled) {
+        return;
+    }
+    // Count the number of laser which track something
+    int trackCounter = 0; 
 
     int laserIndex;
     for (laserIndex = 0; laserIndex < LASER_COUNT; laserIndex++) {
-		Laser* laser = getLaser(laserIndex);
+        Laser* laser = getLaser(laserIndex);
         detectsLaser(laser);
-		if (hasTrackSomething(laser)) {
-			trackCounter++;
-		}
+        if (hasTrackSomething(laser)) {
+            trackCounter++;
+        }
     }
-	// all laser detects something !
-	if (trackCounter == LASER_COUNT) {
-		beaconSystem.lastDetectionTime = 0.0f;
-	}
-	else {
-		// The code is execute at 2000 Hz, so if we want milliSeconds, we increment by 0.5f
-		beaconSystem.lastDetectionTime += 0.5f;
-	}
+    // all laser detects something !
+    if (trackCounter == LASER_COUNT) {
+        beaconSystem.lastDetectionTime = 0.0f;
+    }
+    else {
+        // The code is execute at 2000 Hz, so if we want milliSeconds, we increment by 0.5f
+        beaconSystem.lastDetectionTime += 0.5f;
+    }
 }
 
 // CONFIGURATION
@@ -79,43 +79,43 @@ void setObsoleteDetectionTimeThreshold(float obsoleteDetectionTimeThreshold) {
 }
 
 float getObsoleteDetectionTimeThreshold() {
-	return beaconSystem.obsoleteDetectionTimeThreshold;
+    return beaconSystem.obsoleteDetectionTimeThreshold;
 }
 
 int getLastDetectionTimeInMillis() {
-	return beaconSystem.lastDetectionTime;
+    return beaconSystem.lastDetectionTime;
 }
 
 void setCalibrationPoint(float x, float y) {
-	beaconSystem.calibrationPoint.x = x;
-	beaconSystem.calibrationPoint.y = y;
+    beaconSystem.calibrationPoint.x = x;
+    beaconSystem.calibrationPoint.y = y;
 }
 
 // Notification
 
 void setNotifyTimeDelay(float notifyTimeDelay) {
-	beaconSystem.notifyTimeDelay = notifyTimeDelay;
+    beaconSystem.notifyTimeDelay = notifyTimeDelay;
 }
 
 float getNotifyTimeDelay() {
-	return beaconSystem.notifyTimeDelay;
+    return beaconSystem.notifyTimeDelay;
 }
 
-BOOL notifyRobotPositionIfNecessary() {
-	// Don't notify if the servo does not move
-	if (!beaconSystem.enabled) {
-		return FALSE;
-	}
-	Timer* beaconTimer = getTimerByCode(BEACON_TIMER_CODE);
-	// delay is exceed => must notify
-	if (beaconTimer->time > beaconSystem.lastNotifyTime + beaconSystem.notifyTimeDelay) {
-		// for the next time, mark it
-		beaconSystem.lastNotifyTime = beaconTimer->time; 
-		Point* point = getOpponentRobotPosition();
-		notifyRobotPosition(point);
-		return TRUE;
-	}
-	return FALSE;
+bool notifyRobotPositionIfNecessary() {
+    // Don't notify if the servo does not move
+    if (!beaconSystem.enabled) {
+        return false;
+    }
+    Timer* beaconTimer = getTimerByCode(BEACON_TIMER_CODE);
+    // delay is exceed => must notify
+    if (beaconTimer->time > beaconSystem.lastNotifyTime + beaconSystem.notifyTimeDelay) {
+        // for the next time, mark it
+        beaconSystem.lastNotifyTime = beaconTimer->time; 
+        Point* point = getOpponentRobotPosition();
+        notifyRobotPosition(point);
+        return true;
+    }
+    return false;
 }
 
 // INIT / STOP
@@ -131,8 +131,8 @@ void stopLaserBeacon() {
 }
 
 
-void setBeaconSystemEnabled(BOOL enabled) {
-	beaconSystem.enabled = enabled;
+void setBeaconSystemEnabled(bool enabled) {
+    beaconSystem.enabled = enabled;
 }
 
 Laser* getLaser(int laserIndex) {
@@ -158,7 +158,7 @@ int updateDetectedPosition(Laser* laser) {
 
 /**
  * @private
- * Get the position by calculing	the following formula :
+ * Get the position by calculing    the following formula :
  * x = d - a2 * d / (a1 + a2)
  */
 void fillPositionWithValues(Point* point, float d, float a1, float a2) {
@@ -185,28 +185,28 @@ Point* getOpponentRobotPosition() {
     int detectedPosition1 = updateDetectedPosition(laser1);
     int detectedPosition2 = updateDetectedPosition(laser2);
 
-	Point* opponentRobotPosition = &(beaconSystem.opponentRobotPosition);
+    Point* opponentRobotPosition = &(beaconSystem.opponentRobotPosition);
 
     // if there is a detected object (by both laser)
     if (detectedPosition1 != 0 && detectedPosition2 != 0) {
-		// Too obsolete Information
-		if (getLastDetectionTimeInMillis() > getObsoleteDetectionTimeThreshold()) {
-	        opponentRobotPosition->x = 0;
-	        opponentRobotPosition->y = 0;
-			OutputStream* outputStream = getOutputStreamLogger(INFO);
-			appendStringAndDec(outputStream, "LOST OBJECT SINCE=", getLastDetectionTimeInMillis());
-			println(outputStream);
-		}
-		else {
-	        float angleInRadian1 = getAngleInRadian(laser1);
-	        float angleInRadian2 = getAngleInRadian(laser2);
-	        float a1 = tan(angleInRadian1);
-	        float a2 = tan(angleInRadian2);
-			// Compute the position
-	        fillPositionWithValues(opponentRobotPosition, beaconSystem.distanceBetweenBeacon, a1, a2);
-		}
+        // Too obsolete Information
+        if (getLastDetectionTimeInMillis() > getObsoleteDetectionTimeThreshold()) {
+            opponentRobotPosition->x = 0;
+            opponentRobotPosition->y = 0;
+            OutputStream* outputStream = getOutputStreamLogger(INFO);
+            appendStringAndDec(outputStream, "LOST OBJECT SINCE=", getLastDetectionTimeInMillis());
+            println(outputStream);
+        }
+        else {
+            float angleInRadian1 = getAngleInRadian(laser1);
+            float angleInRadian2 = getAngleInRadian(laser2);
+            float a1 = tan(angleInRadian1);
+            float a2 = tan(angleInRadian2);
+            // Compute the position
+            fillPositionWithValues(opponentRobotPosition, beaconSystem.distanceBetweenBeacon, a1, a2);
+        }
     } else {
-		// Reset Robot Position
+        // Reset Robot Position
         opponentRobotPosition->x = 0;
         opponentRobotPosition->y = 0;
     }
@@ -216,57 +216,57 @@ Point* getOpponentRobotPosition() {
 }
 
 void doBeaconCalibration() {
-	// Update the robot Position (which must normally coincides with calibration Point)
-	getOpponentRobotPosition();
-	Point* calibrationPoint = &(beaconSystem.calibrationPoint);
+    // Update the robot Position (which must normally coincides with calibration Point)
+    getOpponentRobotPosition();
+    Point* calibrationPoint = &(beaconSystem.calibrationPoint);
 
-	OutputStream* outputStream = getOutputStreamLogger(INFO);
+    OutputStream* outputStream = getOutputStreamLogger(INFO);
 
-	recalibrateServoInitValue(outputStream, getLaser(LASER_INDEX_1), calibrationPoint->x, calibrationPoint->y);
-	recalibrateServoInitValue(outputStream, getLaser(LASER_INDEX_2), getDistanceBetweenBeacon() - calibrationPoint->x, calibrationPoint->y);
+    recalibrateServoInitValue(outputStream, getLaser(LASER_INDEX_1), calibrationPoint->x, calibrationPoint->y);
+    recalibrateServoInitValue(outputStream, getLaser(LASER_INDEX_2), getDistanceBetweenBeacon() - calibrationPoint->x, calibrationPoint->y);
 }
 
 // DEBUG
 
 void printBeaconSystemConfiguration(OutputStream* outputStream) {
-	Point* opponentPoint = getOpponentRobotPosition();
-	
-	Laser* laser1 = getLaser(LASER_INDEX_1);
-	Laser* laser2 = getLaser(LASER_INDEX_2);
-	
-	printLaserStruct(outputStream, laser1);
-	println(outputStream);
-	printLaserStruct(outputStream, laser2);
-	
-	appendCRLF(outputStream);
-	
-	// Last Detection Time
-	appendStringAndDecf(outputStream, "lastDetectionTime=", getLastDetectionTimeInMillis());
-	println(outputStream);
-	
-	// Obsolete Detection Time Threshold
-	appendStringAndDecf(outputStream, "obsoleteDetectionTimeThreshold=", getObsoleteDetectionTimeThreshold());
-	println(outputStream);
-	
-	// Notify Time Delay
-	appendStringAndDecf(outputStream, "notifyTimeDelay=", getNotifyTimeDelay());
-	println(outputStream);
-	
-	// Opponent Position
-	appendString(outputStream, "opponentPosition:");
-	printPoint(outputStream, opponentPoint, " mm");
-	
-	// Distance between beacon
-	appendStringAndDecf(outputStream, "distanceBetweenBeacon=", getDistanceBetweenBeacon());
-	appendString(outputStream, " mm");
-	println(outputStream);
-	
-	// Calibration Point
-	appendString(outputStream, "calibrationPoint:");
-	printPoint(outputStream, &(beaconSystem.calibrationPoint), " mm");
-	
-	// Opponent Position
-	appendString(outputStream, "opponentPosition:");
-	printPoint(outputStream, opponentPoint, " mm");
+    Point* opponentPoint = getOpponentRobotPosition();
+    
+    Laser* laser1 = getLaser(LASER_INDEX_1);
+    Laser* laser2 = getLaser(LASER_INDEX_2);
+    
+    printLaserStruct(outputStream, laser1);
+    println(outputStream);
+    printLaserStruct(outputStream, laser2);
+    
+    appendCRLF(outputStream);
+    
+    // Last Detection Time
+    appendStringAndDecf(outputStream, "lastDetectionTime=", getLastDetectionTimeInMillis());
+    println(outputStream);
+    
+    // Obsolete Detection Time Threshold
+    appendStringAndDecf(outputStream, "obsoleteDetectionTimeThreshold=", getObsoleteDetectionTimeThreshold());
+    println(outputStream);
+    
+    // Notify Time Delay
+    appendStringAndDecf(outputStream, "notifyTimeDelay=", getNotifyTimeDelay());
+    println(outputStream);
+    
+    // Opponent Position
+    appendString(outputStream, "opponentPosition:");
+    printPoint(outputStream, opponentPoint, " mm");
+    
+    // Distance between beacon
+    appendStringAndDecf(outputStream, "distanceBetweenBeacon=", getDistanceBetweenBeacon());
+    appendString(outputStream, " mm");
+    println(outputStream);
+    
+    // Calibration Point
+    appendString(outputStream, "calibrationPoint:");
+    printPoint(outputStream, &(beaconSystem.calibrationPoint), " mm");
+    
+    // Opponent Position
+    appendString(outputStream, "opponentPosition:");
+    printPoint(outputStream, opponentPoint, " mm");
 }
 

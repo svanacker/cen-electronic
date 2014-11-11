@@ -21,16 +21,16 @@
 #include "../../drivers/driverList.h"
 #include "../../drivers/driverTransmitter.h"
 
-BOOL robotInfraredDetectorHasObstacle(unsigned char type) {
-	OutputStream* outputStream = getDriverRequestOutputStream();
+bool robotInfraredDetectorHasObstacle(unsigned char type) {
+    OutputStream* outputStream = getDriverRequestOutputStream();
     InputStream* inputStream = getDriverResponseInputStream();
 
     append(outputStream, COMMAND_INFRARED_DETECTOR_DETECTION);
-	appendHex2(outputStream, type);
-    BOOL result = transmitFromDriverRequestBuffer();
-	if (result) {
+    appendHex2(outputStream, type);
+    bool result = transmitFromDriverRequestBuffer();
+    if (result) {
         int result = readHex2(inputStream);
-		return result != 0;
+        return result != 0;
     }
-    return FALSE;
+    return false;
 }

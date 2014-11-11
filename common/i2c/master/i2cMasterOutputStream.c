@@ -1,8 +1,8 @@
 #include <stdlib.h>
-#include <i2c.h>
 
 #include "i2cMaster.h"
 #include "i2cMasterSetup.h"
+#include "../i2cDebug.h"
 
 #include "../../../common/io/buffer.h"
 #include "../../../common/io/stream.h"
@@ -44,6 +44,10 @@ void _i2cMasterCloseOutputStream(OutputStream* outputStream) {
  */
 void _writeCharI2C(OutputStream* outputStream, char c) {
     Buffer* buffer = _i2cMasterGetOutputBuffer(outputStream);
+    if (getDebugI2cEnabled()) {
+        Buffer* debugBuffer = getDebugI2cOutputBuffer();
+        bufferWriteChar(debugBuffer, c);
+    }
     bufferWriteChar(buffer, c);
 }
 
@@ -66,5 +70,5 @@ void initMasterI2cOutputStream(OutputStream* outputStream,
     outputStream->writeChar = _writeCharI2C;
     outputStream->flush = _flushI2C;
     outputStream->object = (int*) i2cBuffer;
-    _i2cMasterOpenOutputStream(outputStream, NULL);
+    _i2cMasterOpenOutputStream(outputStream, 0);
 }

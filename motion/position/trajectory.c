@@ -87,7 +87,7 @@ void debugTrajectoryVariables(char* valueName1, float value1, char* valueName2, 
  * @param right the value of the right coder
  * @return 1 if the position has been updated, 0 otherwise
  */
-int absoluteUpdateFromCoders(signed long left, signed long right, BOOL useThreshold, BOOL debug) {
+int absoluteUpdateFromCoders(signed long left, signed long right, bool useThreshold, bool debug) {
     if (debug) {
         debugTrajectoryVariables("left=", left, ", right=", right);
     }
@@ -151,15 +151,15 @@ int absoluteUpdateFromCoders(signed long left, signed long right, BOOL useThresh
 void updateTrajectory() {
     signed long left = getCoderValue(CODER_LEFT);
     signed long right = getCoderValue(CODER_RIGHT);
-    //	curveUpdateFromCoders(left, right);
-    absoluteUpdateFromCoders(left, right, TRUE, FALSE);
+    //    curveUpdateFromCoders(left, right);
+    absoluteUpdateFromCoders(left, right, true, false);
 }
 
 void updateTrajectoryWithNoThreshold() {
     signed long left = getCoderValue(CODER_LEFT);
     signed long right = getCoderValue(CODER_RIGHT);
     // do not use threshold
-    absoluteUpdateFromCoders(left, right, FALSE, FALSE);
+    absoluteUpdateFromCoders(left, right, false, false);
 }
 
 void updateTrajectoryAndClearCoders() {
@@ -177,7 +177,7 @@ void printPosition(OutputStream* outputStream) {
     appendStringAndDec(outputStream, "left=", getCoderValue(CODER_LEFT));
     appendStringAndDec(outputStream, " | right=", getCoderValue(CODER_RIGHT));
 
-	printPoint(outputStream, &(p->pos), " mm");
+    printPoint(outputStream, &(p->pos), " mm");
 
     appendStringAndAngleInDeg(outputStream, "\rang:", p->orientation);
     appendStringAndAngleInDeg(outputStream, "\rang ini:", p->initialOrientation);

@@ -47,13 +47,13 @@ typedef struct BSplineCurve {
     Point p1;
     Point p2;
     Point p3;
-	BOOL backward;
+    bool backward;
     // The length of the curve.
     float curveLength;
-	// accelerationFactor
-	unsigned char accelerationFactor;
-	// speedFactor
-	unsigned char speedFactor;
+    // accelerationFactor
+    unsigned char accelerationFactor;
+    // speedFactor
+    unsigned char speedFactor;
 } BSplineCurve;
 
 /**
@@ -64,7 +64,7 @@ void initFirstTimeBSplineCurve(BSplineCurve* bSplineCurve);
 /**
  * Init a bSpline Curve with values, when the structures is already initialized.
  */
-void resetBSplineCurve(BSplineCurve* bSplineCurve, float p0x, float p0y, BOOL backward);
+void resetBSplineCurve(BSplineCurve* bSplineCurve, float p0x, float p0y, bool backward);
 
 // Low Level Point Computation
 

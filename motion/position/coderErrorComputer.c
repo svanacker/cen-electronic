@@ -8,12 +8,12 @@
 #include "../../motion/position/coders.h"
 
 void computeErrorsUsingCoders(PidMotion* pidMotion) {
-	PidMotionDefinition* currentMotionDefinition = &(pidMotion->currentMotionDefinition);
+    PidMotionDefinition* currentMotionDefinition = &(pidMotion->currentMotionDefinition);
 
     MotionInstruction* thetaInst = &(currentMotionDefinition->inst[INSTRUCTION_THETA_INDEX]);
     MotionInstruction* alphaInst = &(currentMotionDefinition->inst[INSTRUCTION_ALPHA_INDEX]);
 
-	PidComputationValues* computationValues = &(pidMotion->computationValues);
+    PidComputationValues* computationValues = &(pidMotion->computationValues);
     Motion* thetaMotion = &(computationValues->motion[INSTRUCTION_THETA_INDEX]);
     Motion* alphaMotion = &(computationValues->motion[INSTRUCTION_ALPHA_INDEX]);
 

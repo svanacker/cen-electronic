@@ -18,16 +18,37 @@
 #define DEVICE_MODE_OUTPUT 1
 
 /**
+ * The index in the buffer to get the device Header.
+ */
+#define DEVICE_HEADER_INDEX                        0
+
+/**
+ * The index in the buffer to get the command Header for a specified Device Header (command header char is just after device command header).
+ */
+#define COMMAND_HEADER_INDEX                    1
+
+/**
+ * Define the length of the ack (char).
+ */
+#define ACK_LENGTH                                1
+
+/**
+ * Define the length used by the header length, and the command header.
+ */
+#define DEVICE_AND_COMMAND_HEADER_LENGTH         2
+
+/**
 * Define an argument.
 */
 typedef struct DeviceArgument {
-	/** The type of argument (see below). */
-	char type;
-	/** The name of argument. */
-	char* name;
+    /** The type of argument (see below). */
+    char type;
+    /** The name of argument. */
+    char* name;
 } DeviceArgument;
 
 #define MAX_ARGUMENTS 13
+#define MAX_RETURNS      13
 
 /**
 * Define the result of deviceGetRawDataHeaderFunction if the
@@ -36,22 +57,25 @@ typedef struct DeviceArgument {
 #define DEVICE_HEADER_NOT_HANDLED -1
 
 /**
-* Define the argument list for a device.
+* Define the argument list and returns list for a device.
 */
-typedef struct DeviceArgumentList {
-	/** An array of arguments */
-	DeviceArgument args[MAX_ARGUMENTS];
-	/** The name of the function. */
-	char* functionName;
-	/** The size of list. */
-	char size;
-} DeviceArgumentList;
-
+typedef struct DeviceMethodMetaData {
+    /** The name of the function. */
+    char* functionName;
+    /** An array of arguments */
+    DeviceArgument arguments[MAX_ARGUMENTS];
+    /** The size of argument Size. */
+    char argumentsSize;
+    /** An array of return arguments */
+    DeviceArgument results[MAX_RETURNS];
+    /** The size of returns Size. */
+    char resultsSize;
+} DeviceMethodMetaData;
 
 // LENGTH = 1
 
 /** separator ('-'). */
-#define DEVICE_ARG_SEPARATOR	2
+#define DEVICE_ARG_SEPARATOR    1
 
 /** unsigned char * 1 => */
 #define DEVICE_ARG_UNSIGNED_CHAR_1 2
@@ -59,7 +83,7 @@ typedef struct DeviceArgumentList {
 // LENGTH = 2
 
 /** unsigned char * 2 => */
-#define DEVICE_ARG_UNSIGNED_CHAR_2 4 
+#define DEVICE_ARG_UNSIGNED_CHAR_2 3 
 
 /** unsigned int => hex2 */
 #define DEVICE_ARG_UNSIGNED_HEX_2 4
@@ -75,61 +99,75 @@ typedef struct DeviceArgumentList {
 // LENGTH = 4
 
 /** unsigned int => hex4 */
-#define DEVICE_ARG_UNSIGNED_HEX_4 8
+#define DEVICE_ARG_UNSIGNED_HEX_4 7
 /** signed int => hex4 */
-#define DEVICE_ARG_SIGNED_HEX_4 9
+#define DEVICE_ARG_SIGNED_HEX_4 8
 
 // LENGTH = 5
 
 /** unsigned int => hex5 */
-#define DEVICE_ARG_UNSIGNED_HEX_5 10
+#define DEVICE_ARG_UNSIGNED_HEX_5 9
 /** signed int => hex4 */
-#define DEVICE_ARG_SIGNED_HEX_5 11
+#define DEVICE_ARG_SIGNED_HEX_5 10
 
 // LENGTH = 6
 
 /** unsigned int => hex6 */
-#define DEVICE_ARG_UNSIGNED_HEX_6 	12
+#define DEVICE_ARG_UNSIGNED_HEX_6     11
 /** signed int => hex6 */
-#define DEVICE_ARG_SIGNED_HEX_6 	13
+#define DEVICE_ARG_SIGNED_HEX_6     12
 
 // LENGTH = 8
 /** unsigned long => hex8 */
-#define DEVICE_ARG_UNSIGNED_HEX_8 16
+#define DEVICE_ARG_UNSIGNED_HEX_8 13
 /** signed long => hex8 */
-#define DEVICE_ARG_SIGNED_HEX_8 17
+#define DEVICE_ARG_SIGNED_HEX_8 14
 
 // LENGTH = 9 
 
 /** (used only for string aggregates values) */
-#define DEVICE_ARG_UNSIGNED_HEX_9 	18
+#define DEVICE_ARG_UNSIGNED_HEX_9     18
 
 // LENGTH = 10 
 
 /** (used only for string aggregates values) */
-#define DEVICE_ARG_UNSIGNED_HEX_10 	20
+#define DEVICE_ARG_UNSIGNED_HEX_10     20
 
 // LENGTH = 12 
 
 /** (used only for string aggregates values) */
-#define DEVICE_ARG_UNSIGNED_HEX_12 	24
+#define DEVICE_ARG_UNSIGNED_HEX_12     24
 
 // ARGUMENT LIST
 
 /**
-* Singleton of DeviceArgumentList
+* Singleton of DeviceInterfaceMetaData
 */
-DeviceArgumentList* getDeviceArgumentList();
+DeviceMethodMetaData* getDeviceMethodMetaData();
+
+/**
+ * Returns the length of the type when we mashall it as string.
+ * Ex : unsigned int (16 bits) will be converted as hexadecimal value, so it will use 4 chars as hexadecimal.
+ */
+int getLengthOfType(int parameterType);
 
 /**
 * Set the function Name and the size of all argument list for that function.
 */
-void setFunction(char* functionName, int size);
+void setFunction(char* functionName, int argumentsSize, int resultsSize);
 
 /**
 * Set the function Name and the size of all argument to 0.
 */
-void setFunctionNoArgument(char* functionName);
+void setFunctionNoArgumentAndNoResult(char* functionName);
+
+/**
+ * Returns depending on the input mode, the input length or the outputLength.
+ * It avoids to returns a structure, because we cares often only about input or ouput result.
+ */
+int commandLengthValueForMode(int mode, int inputResult, int outputResult);
+
+// ARGUMENTS MANAGEMENT
 
 /**
 * Set the argument of the deviceArgumentList with index for type/name
@@ -161,6 +199,38 @@ void setArgumentUnsignedHex4(int index, char* name);
 */
 void setArgumentSeparator(int index);
 
+// RESULTS MANAGEMENT
+
+/**
+* Set the result of the deviceMethodMetaData with index for type/name
+*/
+void setResult(int index, int type, char* name);
+
+/**
+* Set the argument of the deviceMethodMetaData with index for name
+*/
+void setResultUnsignedChar1(int index, char* name);
+
+/**
+* Set the result of the deviceMethodMetaData with index for name
+*/
+void setResultUnsignedHex2(int index, char* name);
+
+/**
+* Set the result of the deviceMethodMetaData with index for name
+*/
+void setResultSignedHex2(int index, char* name);
+
+/**
+* Set the result of the deviceMethodMetaData with index for name
+*/
+void setResultUnsignedHex4(int index, char* name);
+
+/**
+* Set result with index to a separator ("-")
+*/
+void setResultSeparator(int index);
+
 /**
 * Defines the function to know the name of the device.
 */
@@ -169,12 +239,12 @@ typedef const char* deviceGetNameFunction(void);
 /**
 * @param header the character which is the header
 * @param mode either MODE_INPUT to know the length of the inputBuffer to handle the command of the header
-* @param fillDeviceArgumentList if TRUE, the function will update the argumentList
+* @param fillDeviceArgumentList if true, the function will update the argumentList
 * Returns a value >= 0 if the device handle this char, and -1, if it's not handled
 */
 typedef int deviceGetInterfaceFunction(char header,
-								int mode,
-								BOOL fillDeviceArgumentList);
+                                int mode,
+                                bool fillDeviceArgumentList);
 
 
 
@@ -182,10 +252,11 @@ typedef int deviceGetInterfaceFunction(char header,
 * Defines the structure used to describe the remote commands accepted by the device.
 */
 typedef struct DeviceInterface{
-	/** Function returning the name of the device. */
-	deviceGetNameFunction *deviceGetName;
-	/** Function returning information about interface. */
-	deviceGetInterfaceFunction* deviceGetInterface;
+    char deviceHeader;
+    /** Function returning the name of the device. */
+    deviceGetNameFunction *deviceGetName;
+    /** Function returning information about interface. */
+    deviceGetInterfaceFunction* deviceGetInterface;
 } DeviceInterface;
 
 #endif

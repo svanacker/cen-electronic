@@ -15,7 +15,7 @@
 static DriverDataDispatcherList dispatcherList;
 
 DriverDataDispatcherList* getDispatcherList() {
-	return &dispatcherList;
+    return &dispatcherList;
 }
 
 void initDriverDataDispatcherList() {
@@ -52,8 +52,8 @@ int getDriverDataDispatcherCount() {
     return dispatcherList.size;
 }
 
-BOOL handleNotificationFromDispatcherList(int transmitMode) {
-	BOOL result = FALSE;
+bool handleNotificationFromDispatcherList(int transmitMode) {
+    bool result = false;
     int size = dispatcherList.size;
     int i;
     for (i = 0; i < size; i++) {
@@ -62,8 +62,8 @@ BOOL handleNotificationFromDispatcherList(int transmitMode) {
             continue;
         }
         if (handleNotificationFromDispatcher(dispatcher)) {
-			result = TRUE;
-		}
+            result = true;
+        }
     }
-	return result;
+    return result;
 }

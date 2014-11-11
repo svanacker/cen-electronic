@@ -10,16 +10,16 @@ void lcd02_setCursorAtHome (void) {
 
 void lcd02_sendCommand (char command) {
   
-  IdleI2C();					//attend que le bus soit libre
+  IdleI2C();                    //attend que le bus soit libre
   StartI2C();
 
 /* Wait till Start sequence is completed */
   while(I2CCONbits.SEN);
 
-  MasterWriteI2C(LCD02_ADDRESS_WRITE);			// adresse I2C
+  MasterWriteI2C(LCD02_ADDRESS_WRITE);            // adresse I2C
   IdleI2C();
 
-  MasterWriteI2C(LCD02_COMMAND_REGISTER);			// registre de commande
+  MasterWriteI2C(LCD02_COMMAND_REGISTER);            // registre de commande
   IdleI2C();
 
   // commande
@@ -31,18 +31,18 @@ void lcd02_sendCommand (char command) {
 
 void internalSendCommand1(unsigned command, unsigned char value1) {
   //attend que le bus soit libre
-  IdleI2C();					
+  IdleI2C();                    
   StartI2C();
 
   /* Wait till Start sequence is completed */
   while(I2CCONbits.SEN);
 
   // adresse I2C
-  MasterWriteI2C(LCD02_ADDRESS_WRITE);			
+  MasterWriteI2C(LCD02_ADDRESS_WRITE);            
   IdleI2C();
 
   // registre de commande
-  MasterWriteI2C(LCD02_COMMAND_REGISTER);			
+  MasterWriteI2C(LCD02_COMMAND_REGISTER);            
   IdleI2C();
 
   // commande
@@ -50,43 +50,43 @@ void internalSendCommand1(unsigned command, unsigned char value1) {
   IdleI2C();
 
   // data
-  MasterWriteI2C(value1);			
+  MasterWriteI2C(value1);            
   IdleI2C();
 
   StopI2C();
 }
 
 void internalSendCommand2(unsigned command, unsigned char value1, unsigned char value2) {
-  IdleI2C();					//attend que le bus soit libre
+  IdleI2C();                    //attend que le bus soit libre
   StartI2C();
 
   /* Wait till Start sequence is completed */
   while(I2CCONbits.SEN);
 
-  MasterWriteI2C(LCD02_ADDRESS_WRITE);			// adresse I2C
+  MasterWriteI2C(LCD02_ADDRESS_WRITE);            // adresse I2C
   IdleI2C();
 
-  MasterWriteI2C(LCD02_COMMAND_REGISTER);			// registre de commande
+  MasterWriteI2C(LCD02_COMMAND_REGISTER);            // registre de commande
   IdleI2C();
 
-  MasterWriteI2C(command);			// commande
+  MasterWriteI2C(command);            // commande
   IdleI2C();
 
-  MasterWriteI2C(value1);			// commande
+  MasterWriteI2C(value1);            // commande
   IdleI2C();
 
-  MasterWriteI2C(value2);			// commande
+  MasterWriteI2C(value2);            // commande
   IdleI2C();
 
   StopI2C();
 }
 
 void lcd02_setCursorPosition (char position) {
-	internalSendCommand1(2, position);
+    internalSendCommand1(2, position);
 }
 
 void lcd02_setCursorRowAndColumn(char row, char column) {
-	internalSendCommand2(3, row, column);
+    internalSendCommand2(3, row, column);
 }
 
 void lcd02_hideCursor (void){
@@ -106,12 +106,12 @@ void lcd02_backSpaceCursor (void){
 }
 
 void lcd02_setBacklight(unsigned char enabled) {
-	if (enabled) {
-		lcd02_sendCommand(BACKLIGHT_ON);
-	}
-	else {
-		lcd02_sendCommand(BACKLIGHT_OFF);
-	}
+    if (enabled) {
+        lcd02_sendCommand(BACKLIGHT_ON);
+    }
+    else {
+        lcd02_sendCommand(BACKLIGHT_OFF);
+    }
 }
 
 void lcd02_tabCursor (void){
@@ -156,10 +156,10 @@ unsigned int getLCD02SoftwareRevision (void){
   /* Wait till Start sequence is completed */
   while(I2CCONbits.SEN);
 
-  MasterWriteI2C(LCD02_ADDRESS_WRITE);		//adddresse I2C de la carte
+  MasterWriteI2C(LCD02_ADDRESS_WRITE);        //adddresse I2C de la carte
   IdleI2C();
 
-  MasterWriteI2C(3);		//registre de version
+  MasterWriteI2C(3);        //registre de version
   IdleI2C();
   
   StopI2C();
@@ -168,41 +168,41 @@ unsigned int getLCD02SoftwareRevision (void){
   /* Wait till Start sequence is completed */
   while(I2CCONbits.SEN)
   //adddresse I2C de la carte
-  MasterWriteI2C(LCD02_ADDRESS_READ);		
+  MasterWriteI2C(LCD02_ADDRESS_READ);        
   IdleI2C();
   //registre de version
-  version = MasterReadI2C();		
+  version = MasterReadI2C();        
   IdleI2C();
 
   return (version);
 }
 
 unsigned int isLCD02DeviceOk ( void ) {
-	return getLCD02SoftwareRevision() < 255;
+    return getLCD02SoftwareRevision() < 255;
 }
 
 void initLCD02 ( void ) {
-	lcd02_clearScreen();
-	lcd02_setBacklight(1);
+    lcd02_clearScreen();
+    lcd02_setBacklight(1);
 }
 
 void stopLCD02 ( void ) {
-	// Disable backlight when it will be managed
-	lcd02_setBacklight(0);
+    // Disable backlight when it will be managed
+    lcd02_setBacklight(0);
 }
 
 const char* getLCD02DeviceName( void ) {
-	return "LCD02";
+    return "LCD02";
 }
 
 DeviceDescriptor getLCD02DeviceDescriptor() {
-	DeviceDescriptor result;
-	result.deviceInit = &initLCD02;
-	result.deviceShutDown = &stopLCD02;
-	result.deviceIsOk = &isLCD02DeviceOk;
-	result.deviceGetSoftwareRevision = &getLCD02SoftwareRevision;
-	result.deviceGetName = &getLCD02DeviceName;
-	result.enabled = 1;
+    DeviceDescriptor result;
+    result.deviceInit = &initLCD02;
+    result.deviceShutDown = &stopLCD02;
+    result.deviceIsOk = &isLCD02DeviceOk;
+    result.deviceGetSoftwareRevision = &getLCD02SoftwareRevision;
+    result.deviceGetName = &getLCD02DeviceName;
+    result.enabled = 1;
 
-	return result;
+    return result;
 }

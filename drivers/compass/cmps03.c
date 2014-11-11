@@ -17,10 +17,10 @@ char getRevCMPS03(void) {
 /* Wait till Start sequence is completed */
   while(I2CCONbits.SEN);
 
-  MasterWriteI2C(CMPS03_ADDRESS_WRITE);		//adddresse I2C de la carte
+  MasterWriteI2C(CMPS03_ADDRESS_WRITE);        //adddresse I2C de la carte
   IdleI2C();
 
-  MasterWriteI2C(0);		//registre de version
+  MasterWriteI2C(0);        //registre de version
   IdleI2C();
   
   StopI2C();
@@ -29,10 +29,10 @@ char getRevCMPS03(void) {
 /* Wait till Start sequence is completed */
   while(I2CCONbits.SEN)
 
-  MasterWriteI2C(CMPS_ADDRESS_READ);		//adddresse I2C de la carte
+  MasterWriteI2C(CMPS_ADDRESS_READ);        //adddresse I2C de la carte
   IdleI2C();
 
-  version = MasterReadI2C();		//registre de version
+  version = MasterReadI2C();        //registre de version
   IdleI2C();
 
   return (version);
@@ -47,10 +47,10 @@ char getByteCMPS03(void) {
 /* Wait till Start sequence is completed */
   while(I2CCONbits.SEN);
 
-  MasterWriteI2C(CMPS03_ADDRESS_WRITE);		//adddresse I2C de la carte
+  MasterWriteI2C(CMPS03_ADDRESS_WRITE);        //adddresse I2C de la carte
   IdleI2C();
 
-  MasterWriteI2C(1);		//registre de version
+  MasterWriteI2C(1);        //registre de version
   IdleI2C();
   
   StopI2C();
@@ -59,10 +59,10 @@ char getByteCMPS03(void) {
 /* Wait till Start sequence is completed */
   while(I2CCONbits.SEN)
 
-  MasterWriteI2C(CMPS_ADDRESS_READ);		//adddresse I2C de la carte
+  MasterWriteI2C(CMPS_ADDRESS_READ);        //adddresse I2C de la carte
   IdleI2C();
 
-  version = MasterReadI2C();		//registre de version
+  version = MasterReadI2C();        //registre de version
   IdleI2C();
 
   return (version);
@@ -78,10 +78,10 @@ unsigned int getDegCMPS03(void) {
 /* Wait till Start sequence is completed */
   while(I2CCONbits.SEN);
 
-  MasterWriteI2C(CMPS03_ADDRESS_WRITE);		//adddresse I2C de la carte
+  MasterWriteI2C(CMPS03_ADDRESS_WRITE);        //adddresse I2C de la carte
   IdleI2C();
 
-  MasterWriteI2C(2);		//registre 
+  MasterWriteI2C(2);        //registre 
   IdleI2C();
   
   StopI2C();
@@ -90,10 +90,10 @@ unsigned int getDegCMPS03(void) {
 /* Wait till Start sequence is completed */
   while(I2CCONbits.SEN)
 
-  MasterWriteI2C(CMPS_ADDRESS_READ);		//adddresse I2C de la carte
+  MasterWriteI2C(CMPS_ADDRESS_READ);        //adddresse I2C de la carte
   IdleI2C();
 
-  high = MasterReadI2C();		//registre de version
+  high = MasterReadI2C();        //registre de version
   IdleI2C();
 
 
@@ -107,7 +107,7 @@ unsigned int getDegCMPS03(void) {
 /* Wait till Start sequence is completed */
   while(I2CCONbits.SEN)
 
-  MasterWriteI2C(CMPS_ADDRESS_READ);		//adddresse I2C de la carte
+  MasterWriteI2C(CMPS_ADDRESS_READ);        //adddresse I2C de la carte
   IdleI2C();
 
 
@@ -117,7 +117,7 @@ unsigned int getDegCMPS03(void) {
 
 
 
-  low = MasterReadI2C();		//registre de version
+  low = MasterReadI2C();        //registre de version
   IdleI2C();
 
   direction = 0;

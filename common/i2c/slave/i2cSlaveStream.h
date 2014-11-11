@@ -10,14 +10,14 @@
 * I2C Slave Interruption Data
 */
 typedef struct I2cSlaveLink{
-	/** The address to read. */
-	char readAddress;
-	/** The address to write. */
-	char writeAddress;
-	/** The inputStream. */
-	InputStream* i2cInputStream;
-	/** The inputBuffer to handle Input Stream. */
-	Buffer* i2cInputBuffer;
+    /** The address to read. */
+    char readAddress;
+    /** The address to write. */
+    char writeAddress;
+    /** The inputStream. */
+    InputStream* i2cInputStream;
+    /** The inputBuffer to handle Input Stream. */
+    Buffer* i2cInputBuffer;
 } I2cSlaveLink;
 
 // --- INPUT STREAM ---
@@ -29,8 +29,8 @@ typedef struct I2cSlaveLink{
 * @param i2cAddress the address to respond to i2c request
 */
 void openSlaveI2cInputStream(InputStream* inputStream,
-						 Buffer* i2cInputBuffer,
-						 unsigned char i2cAddress);
+                         Buffer* i2cInputBuffer,
+                         unsigned char i2cAddress);
 
 // --- OUTPUT STREAM ---
 
@@ -41,7 +41,7 @@ void openSlaveI2cInputStream(InputStream* inputStream,
 * @param i2cAddress the address to respond to i2c request
 */
 void openSlaveI2cOutputStream(OutputStream* outputStream,
-						 Buffer* i2cBuffer,
-						 unsigned char i2cWriteAddress);
+                         Buffer* i2cBuffer,
+                         unsigned char i2cWriteAddress);
 
 #endif

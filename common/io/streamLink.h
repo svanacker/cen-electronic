@@ -10,7 +10,7 @@
  *        ____________________
  *       |                   |
  *       | (I2C/UART/LOCAL)  |
- *		| By interruption   |
+ *        | By interruption   |
  *       |___________________|
  *              |
  *  ____________|______________
@@ -54,15 +54,25 @@ StreamLink;
 
 /**
  * Init a stream link structure.
+ * @param streamLink the structure which stores attributes of stream link
+ * @param inputBuffer the buffer which use the input
+ * @param inputBufferArrayPointer the array used by the input buffer
+ * @param inputBufferLenght the length of the intput buffer
+ * @param outputBuffer the buffer which use the output
+ * @param outputBufferArrayPointer the array used by the output buffer
+ * @param outputBufferLenght the length of the output buffer
+ * @param outputStream ???
+ * @param param a parameter to be used to open the right material (for example : speed)
  */
 void initStreamLink(StreamLink* streamLink,
         char* streamName,
         Buffer* inputBuffer,
-		char (*inputBufferArrayPointer)[],
-		unsigned char inputBufferLength,
+        char (*inputBufferArrayPointer)[],
+        unsigned char inputBufferLength,
         Buffer* outputBuffer,
-		char (*outputBufferArrayPointer)[],
-		unsigned char outputBufferLength,
-        OutputStream* outputStream);
+        char (*outputBufferArrayPointer)[],
+        unsigned char outputBufferLength,
+        OutputStream* outputStream,
+        int param);
 
 #endif

@@ -1,6 +1,7 @@
 #ifndef BUFFER_H
 #define BUFFER_H
 
+#include <stdbool.h>
 #include "../../common/commons.h"
 
 #include "inputStream.h"
@@ -23,8 +24,8 @@ typedef struct {
     char* type;
     /** A pointer on an array of char. */
     char (*s)[];
-	/** The max length of the buffer. */
-	unsigned char length;
+    /** The max length of the buffer. */
+    unsigned char length;
     /** The pointer used to write Data (we write at the end). */
     unsigned int writeIndex;
     /** The pointer used to read (we read at the begin). */
@@ -37,65 +38,99 @@ typedef struct {
 
 /**
  * Init the buffer and give it the port.
- * @param buffer the pointer on the buffer
+ * @param buffer the pointer on the buffer (simulates object programming)
+ * @param an array of char to store value into the buffer
+ * @param length the length of the array
+ * @param name the name of the buffer (for debugging purpose)
+ * @param type the type (as string) of the buffer (for debugging purpose). Often to distinguish IN or OUT buffer
+ * @throws IO_BUFFER_NULL if the pointer is NULL
  */
 void initBuffer(Buffer* buffer, char (*s)[], unsigned char length, char* name, char* type);
 
 /**
+ * Retuns if a buffer is initialized or not.
+ * @param buffer the pointer on buffer (simulates object programming)
+ * @return true if the buffer is initialized, false else
+ * @throws IO_BUFFER_NULL if the pointer is NULL
+ */
+bool isBufferInitialized(Buffer* buffer);
+
+/**
  * Clears the buffer.
- * @param buffer the buffer to clear
+ * @param buffer the buffer to clear (simulates object programming)
+ * @throws IO_BUFFER_NULL if the pointer is NULL
  */
 void clearBuffer(Buffer* buffer);
 
 /**
  * Do a deep clear of buffer (write 0 on all cells of array);
+ * @param buffer the buffer to clear very deeply (simulates object programming)
+ * @throws IO_BUFFER_NULL if the pointer is NULL
  */
 void deepClearBuffer(Buffer* buffer);
 
 /**
- * Returns TRUE if the buffer is full, false else.
+ * Returns true if the buffer is full, false else.
+ * @param buffer the buffer (simulates object programming)
+ * @return true if the buffer is full, false else
+ * @throws IO_BUFFER_NULL if the pointer is NULL
  */
-BOOL isBufferFull(const Buffer* buffer);
+bool isBufferFull(const Buffer* buffer);
 
 /**
- * Returns TRUE if the buffer is empty, false else.
+ * Returns true if the buffer is empty, false else.
+ * @param buffer the buffer (simulates object programming)
+ * @return true if the buffer is empty, false else
  */
-BOOL isBufferEmpty(const Buffer* buffer);
+bool isBufferEmpty(const Buffer* buffer);
 
 /**
- * Returns the number of elements
+ * Returns the number of elements.
+ * @param buffer the buffer (simulates object programming)
+ * @return the number of elements.
  */
 int getBufferElementsCount(const Buffer* buffer);
 
 /**
- * Get and result the first char inserted (FIFO Stack).
+ * Get and result the first char inserted (FIFO Stack)..
  * Shift the read buffer to the next char.
+ * @param buffer the buffer (simulates object programming)
+ * @return the the first char inserted (FIFO Stack).
  */
 char bufferReadChar(Buffer* buffer);
 
 /**
- * Get the first char, but DO NOT shift to the next char.
+ * Get the char at the specified index, but DO NOT shift to this index (=> DO NOT REMOVE the char).
+ * @param buffer the buffer (simulates object programming)
+ * @param charIndex the index of the char (0 = first char)
+ * @return the char at the specified index
  */
-char bufferGetFirstChar(Buffer* buffer);
+char bufferGetCharAtIndex(Buffer* buffer, int charIndex);
 
 /**
  * Append a character to the buffer (FIFO buffer).
+ * @param buffer the buffer (simulates object programming)
  * @param c the char which will be appended
  */
 void bufferWriteChar(Buffer* buffer, char c);
 
 /**
- * Get a compatible InputStream with the buffer.
+ * Get a compatible InputStream associated to the buffer.
+ * @param buffer the buffer (simulates object programming)
+ * @return the inputStream associated to the buffer.
  */
 InputStream* getInputStream(Buffer* buffer);
 
 /**
  * Get a compatible OutputStream with the buffer.
+ * @param buffer the buffer (simulates object programming)
+ * @return the outputStream associated to the buffer.
  */
 OutputStream* getOutputStream(Buffer* buffer);
 
 /**
  * Print the buffer in a debug mode, with all variables.
+ * @param buffer the buffer (simulates object programming)
  */
 void printDebugBuffer(OutputStream* outputStream, Buffer* buffer);
 

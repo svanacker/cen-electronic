@@ -8,9 +8,6 @@
 #include "outputStream.h"
 #include "printWriter.h"
 
-#include "../../common/log/logger.h"
-#include "../../common/log/logLevel.h"
-
 #include "filter.h"
 
 unsigned int copyInputToOutputStream(InputStream* inputStream,
@@ -31,16 +28,16 @@ unsigned int copyInputToOutputStream(InputStream* inputStream,
         }
 
         // get the next char
-        unsigned char c = inputStream->readChar(inputStream);
+        char c = inputStream->readChar(inputStream);
         if (c == 0x00 || c == INCORRECT_DATA) {
             break;
         }
 
         // if we defined a filterChar function
         if (filterChar != NULL) {
-            unsigned char filteredValue = c;
+            char filteredValue = c;
             // function returns if we include or not char
-            BOOL include = filterChar(c, &filteredValue);
+            bool include = filterChar(c, &filteredValue);
             if (include) {
                 // write the filtered char into the output stream
                 outputStream->writeChar(outputStream, filteredValue);

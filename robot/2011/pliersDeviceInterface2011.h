@@ -6,17 +6,17 @@
 /**
  * Close the pliers to take the pawns.
  */
-#define COMMAND_PLIERS_2011_CLOSE		'J'
+#define COMMAND_PLIERS_2011_CLOSE        'J'
 
 /**
  * Close the pliers to close the pliers at the beginning.
  */
-#define COMMAND_PLIERS_2011_INIT_CLOSE	'#'
+#define COMMAND_PLIERS_2011_INIT_CLOSE    '#'
 
 /**
  * Open the pliers.
  */
-#define COMMAND_PLIERS_2011_OPEN		'I'
+#define COMMAND_PLIERS_2011_OPEN        'I'
 
 /**
  * Get the device interface for pliers 2011.

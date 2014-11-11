@@ -2,44 +2,39 @@
 
 #include "../../../device/device.h"
 #include "../../../device/deviceInterface.h"
+#include "../../../device/deviceConstants.h"
 
 const char* getCodersDeviceName(void) {
     return "Hctl Coders";
 }
 
-int deviceCodersGetInterface(char header, int mode, BOOL fillDeviceArgumentList) {
-    if (header == COMMAND_CLEAR_CODERS) {
-		// Same INPUT / OUTPUT
-		if (fillDeviceArgumentList) {
-			setFunctionNoArgument("clrCoders");
-		}
-        return 0;
-    } else if (header == COMMAND_GET_WHEEL_POSITION) {
-        if (mode == DEVICE_MODE_INPUT) {
-            if (fillDeviceArgumentList) {
-				setFunctionNoArgument("codersVal");
-            }
-            return 0;
-        } else if (mode == DEVICE_MODE_OUTPUT) {
-            if (fillDeviceArgumentList) {
-				setFunction("codersVal", 3);
-				setArgument(0, DEVICE_ARG_UNSIGNED_HEX_8, "left");
-                setArgumentSeparator(1);
-				setArgument(2, DEVICE_ARG_UNSIGNED_HEX_8, "right");
-            }
-            return 17;
+int deviceCodersGetInterface(char commandHeader, int mode, bool fillDeviceArgumentList) {
+    if (commandHeader == COMMAND_CLEAR_CODERS) {
+        // Same INPUT / OUTPUT
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("clrCoders");
         }
-    } else if (header == COMMAND_DEBUG_GET_WHEEL_POSITION) {
-		// Same INPUT / OUTPUT
-		if (fillDeviceArgumentList) {
-			setFunctionNoArgument("dbgCodersVal");
-		}
-		return 0;
+        return 0;
+    } else if (commandHeader == COMMAND_GET_WHEEL_POSITION) {
+        if (fillDeviceArgumentList) {
+            setFunction("codersVal", 0, 3);
+            setResult(0, DEVICE_ARG_UNSIGNED_HEX_8, "left");
+            setResultSeparator(1);
+            setResult(2, DEVICE_ARG_UNSIGNED_HEX_8, "right");
+        }
+        return commandLengthValueForMode(mode, 0, 17);
+    } else if (commandHeader == COMMAND_DEBUG_GET_WHEEL_POSITION) {
+        // Same INPUT / OUTPUT
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("dbgCodersVal");
+        }
+        return 0;
     }
     return DEVICE_HEADER_NOT_HANDLED;
 }
 
 static DeviceInterface deviceInterface = {
+    .deviceHeader = CODERS_DEVICE_HEADER,
     .deviceGetName = &getCodersDeviceName,
     .deviceGetInterface = &deviceCodersGetInterface
 };

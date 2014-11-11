@@ -8,7 +8,7 @@
 
 /** If set, simulates the move of the robot. */
 #ifdef MPLAB_SIMULATION
-	#define SIMULATE_ROBOT
+    #define SIMULATE_ROBOT
 #endif
 
 /** Use flag to know if we trace Handler strategy. */
@@ -30,7 +30,7 @@
  * Define the time in second for which, if there is no collision, we can reset All path to available. 
  * This time must be > to the notification Collision time, to avoid that it reset it.
 */
-#define RESET_OBSTACLE_COLLISION_TIME_SECOND		5
+#define RESET_OBSTACLE_COLLISION_TIME_SECOND        5
 
 // Init
 
@@ -47,9 +47,9 @@ void setStrategy(int strategyIndex);
 GameStrategyContext* getStrategyContext();
 
 /**
- * Do the next step in the strategy. Returns FALSE if nothing was done.
+ * Do the next step in the strategy. Returns false if nothing was done.
  */
-BOOL nextStep();
+bool nextStep();
 
 // OBSTACLE
 
@@ -71,15 +71,15 @@ void rotateAbsolute(int angle);
 /**
  * Ask to follow a path.
  */
-void motionFollowPath(PathDataFunction* pathDataFunction, BOOL reversed);
+void motionFollowPath(PathDataFunction* pathDataFunction, bool reversed);
 
 /**
  * Ask the robot to go to a location but without path (useful for actionItem).
  */
 void motionGoLocation(Location* location, 
-					int angle,
-					int controlPointDistance1, int controlPointDistance2,
-					int accelerationFactor, int speedFactor );
+                    int angle,
+                    int controlPointDistance1, int controlPointDistance2,
+                    int accelerationFactor, int speedFactor );
 
 
 #endif

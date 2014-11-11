@@ -1,7 +1,7 @@
 #include "sonarDevice.h"
 #include "sonarDeviceInterface.h"
 
-#include "../../common/delay/delay30F.h"
+#include "../../common/delay/cenDelay.h"
 
 #include "../../common/io/inputStream.h"
 #include "../../common/io/outputStream.h"
@@ -26,7 +26,7 @@ void deviceSonarShutDown(void) {
 
 }
 
-BOOL isSonarDeviceOk(void) {
+bool isSonarDeviceOk(void) {
     return getSRF02SoftwareRevision(SRF02_DEFAULT_ADDRESS) < 255;
 }
 
@@ -39,8 +39,7 @@ void deviceSonarHandleRawData(char header,
         OutputStream* outputStream) {
     if (header == COMMAND_GET_SONAR) {
         int sonarIndex = readHex2(inputStream);
-        appendAck(outputStream);
-        append(outputStream, COMMAND_GET_SONAR);
+        ackCommand(outputStream, SONAR_DEVICE_HEADER, COMMAND_GET_SONAR);
         int i;
         for (i = 0; i < 3; i++) {
             if (i > 0) {
@@ -50,18 +49,18 @@ void deviceSonarHandleRawData(char header,
             appendHex4(outputStream, distance);
         }
     }
-	else if (header == COMMAND_SONAR_CHANGE_ADDRESS) {
+    else if (header == COMMAND_SONAR_CHANGE_ADDRESS) {
         int oldAddress = readHex2(inputStream);
         int newAddress = readHex2(inputStream);
 
-		appendStringAndDec(getOutputStreamLogger(ALWAYS), "\noldAddress=", oldAddress);
-		appendStringAndDec(getOutputStreamLogger(ALWAYS), "\newAddress=", newAddress);
+        appendStringAndDec(getOutputStreamLogger(ALWAYS), "\noldAddress=", oldAddress);
+        appendStringAndDec(getOutputStreamLogger(ALWAYS), "\newAddress=", newAddress);
 
         SRF02ChangeAddress(oldAddress, newAddress); 
-		
-        appendAck(outputStream);
+        
+        ackCommand(outputStream, SONAR_DEVICE_HEADER, COMMAND_SONAR_CHANGE_ADDRESS);
         append(outputStream, COMMAND_SONAR_CHANGE_ADDRESS);
-	}
+    }
 }
 
 static DeviceDescriptor descriptor = {

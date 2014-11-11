@@ -5,7 +5,6 @@
 
 #include "../../common/cmd/commonCommand.h"
 
-#include "../../common/delay/delay30F.h"
 #include "../../common/io/inputStream.h"
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
@@ -16,7 +15,10 @@
 #include "../../common/log/logLevel.h"
 
 #include "../../common/pwm/pwmPic.h"
-#include "../../common/pwm/servoPwm.h"
+#include "../../common/pwm/servo/servoPwm.h"
+#include "../../common/pwm/servo/servoPwmDebug.h"
+
+#include "../../device/device.h"
 
 void deviceServoInit() {
     initPwmForServo(PWM_SERVO_MIDDLE_POSITION);
@@ -25,39 +27,64 @@ void deviceServoInit() {
 void deviceServoShutDown() {
 }
 
-BOOL deviceServoIsOk() {
-    return TRUE;
+bool deviceServoIsOk() {
+    return true;
 }
 
 void deviceServoHandleRawData(char header,
         InputStream* inputStream,
         OutputStream* outputStream) {
-    if (header == COMMAND_SERVO) {
+
+    // WRITE COMMANDS
+    if (header == SERVO_COMMAND_WRITE) {
         int servoIndex = readHex2(inputStream);
         int servoSpeed = readHex2(inputStream);
+   
+		int servoValue = readHex4(inputStream);
+		if (servoIndex > 0 && servoIndex <= PWM_COUNT) {
+			pwmServo(servoIndex, servoSpeed, servoValue);
+		} else {
+			pwmServoAll(servoSpeed, servoValue);
+		}
+        ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_WRITE);
+    }
+    else if (header == SERVO_COMMAND_WRITE_COMPACT) {
+        int servoValue = readHex4(inputStream);
+        pwmServoAll(PWM_SERVO_SPEED_MAX, servoValue);
+        ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_WRITE_COMPACT);
+    }
+    // READ COMMANDS
+    else if (header == SERVO_COMMAND_READ_SPEED) {
+        int servoIndex = readHex2(inputStream);
+        int speed = pwmServoReadSpeed(servoIndex);
 
-		// 0xFF is for test to determine the index of each 
-		// servo (test)
-		if (servoIndex == 0xFF) {
-			testAllPwmServos();
-		}
-		else {
-	        //if (servoSpeed == 0xFF) {
-	        servoSpeed = 20000;
-	        //}
-	
-	        int servoValue = readHex4(inputStream);
-	        if (servoIndex > 0 && servoIndex <= PWM_COUNT) {
-	            pwmServo(servoIndex, servoSpeed, servoValue);
-	        } else {
-	            pwmServoAll(servoSpeed, servoValue);
-	        }
-		}
-        appendAck(outputStream);
-        append(outputStream, COMMAND_SERVO);
+        ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_READ_SPEED);
+        appendHex2(outputStream, speed);
+    }
+    else if (header == SERVO_COMMAND_READ_SPEED) {
+        int servoIndex = readHex2(inputStream);
+        int currentPosition = pwmServoReadCurrentPosition(servoIndex);
+
+        ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_READ_CURRENT_POSITION);
+        appendHex4(outputStream, currentPosition);
+    }
+    else if (header == SERVO_COMMAND_READ_TARGET_POSITION) {
+        int servoIndex = readHex2(inputStream);
+        int targetPosition = pwmServoReadTargetPosition(servoIndex);
+
+        ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_READ_TARGET_POSITION);
+        appendHex4(outputStream, targetPosition);
+    }
+	// DEBUG COMMANDS
+    else if (header == SERVO_COMMAND_TEST) {
+        testAllPwmServos();
+        ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_TEST);
+    }
+    else if (header == SERVO_COMMAND_DEBUG) {
+        printServoList(getOutputStreamLogger(ALWAYS));
+        ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_DEBUG);
     }
 }
-
 
 static DeviceDescriptor descriptor = {
     .deviceInit = &deviceServoInit,

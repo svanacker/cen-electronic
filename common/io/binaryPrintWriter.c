@@ -13,7 +13,7 @@ void appendBinaryXX(OutputStream* outputStream, unsigned long value, unsigned le
         if ((i + 1) % groupBy == 0) {
             append(outputStream, ' ');
         }
-		appendBOOL(outputStream, value & (1 << i));
+        appendBool(outputStream, value & (1 << i));
     }
 }
 

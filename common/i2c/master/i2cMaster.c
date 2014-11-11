@@ -1,8 +1,10 @@
-#include <i2c.h>
+#include "../../../common/commons.h"
+
+#include "../../../drivers/clock/PCF8563.h"
 
 #include "i2cMaster.h"
 
-#include "../../../common/delay/delay30F.h"
+#include "../../../common/delay/cenDelay.h"
 
 #include "../../../common/log/logger.h"
 #include "../../../common/log/logLevel.h"
@@ -11,93 +13,138 @@
 #include "../../../common/io/buffer.h"
 
 void i2cMasterWriteBuffer(char address, Buffer* buffer) {
-    StartI2C();
-    while (I2CCONbits.SEN);
+    portableMasterWaitSendI2C();
     // Wait till Start sequence is completed
     WaitI2C();
 
+    portableStartI2C();
+    WaitI2C();
     // Adress
-    MasterWriteI2C(address);
+    portableMasterWriteI2C(address);
     WaitI2C();
 
     int count = getBufferElementsCount(buffer);
     int i;
     for (i = 0; i < count; i++) {
         char c = bufferReadChar(buffer);
-        MasterWriteI2C(c);
+        portableMasterWriteI2C(c);
         WaitI2C();
     }
 
-    StopI2C();
+    portableStopI2C();
 }
 
 void i2cMasterWriteChar(char address, char c) {
     // We append to a buffer
-    StartI2C();
+    portableStartI2C();
     // Wait till Start sequence is completed
     WaitI2C();
 
     // Adress
-    MasterWriteI2C(c);
+    portableMasterWriteI2C(address);
     WaitI2C();
 
     // Data
-    MasterWriteI2C(c);
+    portableMasterWriteI2C(c);
     WaitI2C();
 
-    StopI2C();
+    portableStopI2C();
+    WaitI2C();
 }
 
-unsigned char i2cMasterReadChar(char address) {
-    //	i2cMasterWriteChar(address, I2C_SLAVE_FAKE_WRITE);
-    //	delaymSec(50);
+char i2cMasterReadChar(char address) {
+    portableStartI2C();
     WaitI2C();
-
-    StartI2C();
-    WaitI2C();
-
-    // TEST
-    /*
-MasterWriteI2C(address);
-    WaitI2C();
-    StopI2C();
-    WaitI2C();
-    StartI2C();
-    WaitI2C();
-     */
 
     // send the address again with read bit
-    MasterWriteI2C(address | 0x01);
+    portableMasterWriteI2C(address | 0x01);
     WaitI2C();
 
-    unsigned char data = MasterReadI2C();
+    unsigned char data = portableMasterReadI2C();
+    WaitI2C();
 
-    StopI2C();
+    portableStopI2C();
+    WaitI2C();
     return data;
 }
 
-unsigned char i2cMasterReadRegisterValue(char address, char commandRegister) {
+char i2cMasterReadRegisterValue(char address, char commandRegister) {
     // Set the register command
     WaitI2C();
-    StartI2C();
-    while (I2CCONbits.SEN);
+    portableStartI2C();
+
+    WaitI2C();
+    portableMasterWaitSendI2C();
+
+    WaitI2C();
     // send the address
-    MasterWriteI2C(address);
+    portableMasterWriteI2C(address);
+
     WaitI2C();
     // send the register
-    MasterWriteI2C(commandRegister);
-    WaitI2C();
-    StopI2C();
-    WaitI2C();
+    portableMasterWriteI2C(commandRegister);
 
+    WaitI2C();
+    portableStopI2C();
+
+    WaitI2C();
     // Read the register command
-    StartI2C();
-    while (I2CCONbits.SEN);
+    portableStartI2C();
+
+    WaitI2C();
+    portableMasterWaitSendI2C();
     // send the address again with read bit
-    MasterWriteI2C(address | 0x01);
+    portableMasterWriteI2C(address | 0x01);
     WaitI2C();
     // read the data
-    unsigned char data = MasterReadI2C();
-    StopI2C();
+    char data = portableMasterReadI2C();
+    portableStopI2C();
     return data;
 }
+
+void i2cMasterRegisterReadBuffer(char address,char reg, char length, Buffer* buffer){
+    // Set the register command
+    i2cMasterWriteChar(address,reg);
+
+    // read the data
+    portableStartI2C();
+    WaitI2C();
+
+    portableMasterWriteI2C(address | 0x01);
+
+    int i;
+    for (i = 0; i <(length-1) ; i++) {
+        char c = portableMasterReadI2C();
+        portableAckI2C();
+        WaitI2C();
+        bufferWriteChar(buffer, c);
+    }
+    char c = portableMasterReadI2C();
+    portableNackI2C();
+    WaitI2C();
+    bufferWriteChar(buffer, c);
+    portableStopI2C();
+    WaitI2C();
+}
+
+void i2cMasterReadBuffer(char address, char length, Buffer* buffer){
+    portableStartI2C();
+    WaitI2C();
+    portableMasterWriteI2C(address );
+
+    // read the data
+    portableStartI2C();
+    WaitI2C();
+    portableMasterWriteI2C(address | 0x01);
+
+    int i;
+    for (i = 0; i <length ; i++) {
+        char c = portableMasterReadI2C();
+        portableAckI2C();
+        WaitI2C();
+        bufferWriteChar(buffer, c);
+    }
+    portableStopI2C();
+    WaitI2C();
+}
+

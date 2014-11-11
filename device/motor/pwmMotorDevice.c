@@ -6,7 +6,8 @@
 
 #include "../../common/cmd/commonCommand.h"
 
-#include "../../common/pwm/motorPwm.h"
+#include "../../common/pwm/motor/motorPwm.h"
+#include "../../common/pwm/motor/dualHBridgeMotorPwm.h"
 
 #include "../../common/io/printWriter.h"
 #include "../../common/io/reader.h"
@@ -15,32 +16,30 @@
 
 // DEVICE INTERFACE
 
-void initPwmMotor(void) {
-    initPwmForMotor();
+void devicePwmMotorInit(void) {
+    initPwmForDualHBridge();
 }
 
-BOOL isPwmMotorDeviceOk(void) {
-    return TRUE;
+bool isPwmMotorDeviceOk(void) {
+    return true;
 }
 
 void devicePwmMotorHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream) {
     if (header == COMMAND_MOVE_MOTOR) {
         signed int left = readSignedHex2(inputStream);
         signed int right = readSignedHex2(inputStream);
-        appendAck(outputStream);
+        ackCommand(outputStream, MOTOR_DEVICE_HEADER, COMMAND_MOVE_MOTOR);
 
         setMotorSpeeds(left * 2, right * 2);
-        append(outputStream, COMMAND_MOVE_MOTOR);
     } else if (header == COMMAND_STOP_MOTOR) {
-        appendAck(outputStream);
+        ackCommand(outputStream, MOTOR_DEVICE_HEADER, COMMAND_STOP_MOTOR);
 
         stopMotors();
-        append(outputStream, COMMAND_STOP_MOTOR);
     }
 }
 
 static DeviceDescriptor descriptor = {
-    .deviceInit = &initPwmMotor,
+    .deviceInit = &devicePwmMotorInit,
     .deviceShutDown = &stopMotors,
     .deviceIsOk = &isPwmMotorDeviceOk,
     .deviceHandleRawData = &devicePwmMotorHandleRawData,

@@ -1,0 +1,13 @@
+#ifndef BCD_UTILS_H
+#define	BCD_UTILS_H
+
+/**
+ * Transform the BCD value.
+ * Ex 0x28-> 28 decimal
+ * @param bcd the bcd numer to convert
+ * @result decimal the decimal numer result
+ */
+char bcd2CharToDec(char bcd);
+
+#endif	
+

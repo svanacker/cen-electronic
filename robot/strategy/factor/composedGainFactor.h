@@ -15,20 +15,20 @@
  * target gain factor strategy.
  */
 typedef struct ComposedGainFactor {
-	/** Reference to time gain factor function. */
-	getTimeGainFactorFunction* timeGainFactor;
-	/** Reference to distance gain factor function. */
-	getDistanceGainFactorFunction* distanceGainFactor;
-	/** Reference to opponent Robot gain factor function. */
-	getOpponentRobotGainFactorFunction* opponentRobotGainFactor;
+    /** Reference to time gain factor function. */
+    getTimeGainFactorFunction* timeGainFactor;
+    /** Reference to distance gain factor function. */
+    getDistanceGainFactorFunction* distanceGainFactor;
+    /** Reference to opponent Robot gain factor function. */
+    getOpponentRobotGainFactorFunction* opponentRobotGainFactor;
 } ComposedGainFactor;
 
 float getComposedGainFactor(ComposedGainFactor* composedGainFactor,
-							  GameTarget* target,
-							  GameTargetAction* targetAction,
-							  float distanceToTargetAction,
-							  float currentMatchingTime,
-							  float opponentRobotX,
-							  float opponentRobotY);
+                              GameTarget* target,
+                              GameTargetAction* targetAction,
+                              float distanceToTargetAction,
+                              float currentMatchingTime,
+                              float opponentRobotX,
+                              float opponentRobotY);
 
 #endif

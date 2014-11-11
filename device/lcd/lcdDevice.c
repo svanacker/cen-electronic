@@ -19,16 +19,16 @@ void deviceLCDInit() {
 void deviceLCDShutDown() {
 }
 
-BOOL deviceLCDIsOk() {
-    return TRUE;
+bool deviceLCDIsOk() {
+    return true;
 }
 
-void deviceLCDHandleRawData(char header,
-        InputStream* inputStream,
-        OutputStream* outputStream) {
-    if (header == COMMAND_LCD) {
+void deviceLCDHandleRawData(char commandHeader,
+                            InputStream* inputStream,
+                            OutputStream* outputStream) {
+    if (commandHeader == COMMAND_LCD) {
         int lcdTextLength = readHex2(inputStream);
-        appendAck(outputStream);
+        ackCommand(outputStream, LCD_DEVICE_HEADER, COMMAND_LCD);
         // print character
         int i;
         for (i = 0; i < LCD_CHAR_COUNT_BY_MESSAGE; i++) {

@@ -5,9 +5,9 @@
 
 #include "../../common/commons.h"
 #include "../../common/math/cenMath.h"
-#include "../../common/delay/delay30F.h"
+#include "../../common/delay/cenDelay.h"
 
-#include "../../common/pwm/servoPwm.h"
+#include "../../common/pwm/servo/servoPwm.h"
 
 #include "../../common/io/inputStream.h"
 #include "../../common/io/outputStream.h"
@@ -37,7 +37,7 @@ void initLaserDetectorStruct(Laser* laser, int servoIndex, pinValueFunction *pin
     for (direction = 0; direction < DIRECTION_COUNT; direction++) {
         laser->lastServoPositionHit[direction] = 0;
         laser->oldServoPositionHit[direction] = 0;
-        laser->hitDuringLast[direction] = FALSE;
+        laser->hitDuringLast[direction] = false;
     }
     laser->laserHitCounter = 0;
     laser->direction = RIGHT_DIRECTION;
@@ -74,7 +74,7 @@ void updateLaserPosition(Laser* laserDetector) {
                     // we change the turn
                     laserDetector->direction = LEFT_DIRECTION;
                     // reset the hit for the new direction
-                    laserDetector->hitDuringLast[LEFT_DIRECTION] = FALSE;
+                    laserDetector->hitDuringLast[LEFT_DIRECTION] = false;
                     laserDetector->laserHitCounter = 0;
                     laserDetector->currentMaxRight = laserDetector->maxRight;
                 }                    // -> we are under the maximum
@@ -86,7 +86,7 @@ void updateLaserPosition(Laser* laserDetector) {
                 // we change the turn
                 laserDetector->direction = LEFT_DIRECTION;
                 // reset the hit for the new direction
-                laserDetector->hitDuringLast[LEFT_DIRECTION] = FALSE;
+                laserDetector->hitDuringLast[LEFT_DIRECTION] = false;
                 laserDetector->laserHitCounter = 0;
             }
         }
@@ -102,7 +102,7 @@ void updateLaserPosition(Laser* laserDetector) {
                     // we change the turn
                     laserDetector->direction = RIGHT_DIRECTION;
                     // reset the hit for the new direction
-                    laserDetector->hitDuringLast[RIGHT_DIRECTION] = FALSE;
+                    laserDetector->hitDuringLast[RIGHT_DIRECTION] = false;
                     laserDetector->laserHitCounter = 0;
                     laserDetector->currentMaxLeft = laserDetector->maxLeft;
                 }                    // -> we try to decrease the limit
@@ -114,7 +114,7 @@ void updateLaserPosition(Laser* laserDetector) {
                 // we change the turn
                 laserDetector->direction = RIGHT_DIRECTION;
                 // reset the hit for the new direction
-                laserDetector->hitDuringLast[RIGHT_DIRECTION] = FALSE;
+                laserDetector->hitDuringLast[RIGHT_DIRECTION] = false;
                 laserDetector->laserHitCounter = 0;
             }
         }
@@ -139,7 +139,7 @@ void detectsLaser(Laser* laserDetector) {
             // saves the position for the direction
             laserDetector->lastServoPositionHit[direction] = laserDetector->servoPosition;
             // saves that we touch the target
-            laserDetector->hitDuringLast[direction] = TRUE;
+            laserDetector->hitDuringLast[direction] = true;
             if (laserDetector->lastServoPositionHit[direction] != laserDetector->oldServoPositionHit[direction]) {
                 laserDetector->oldServoPositionHit[direction] = laserDetector->lastServoPositionHit[direction];
                 if (direction == RIGHT_DIRECTION) {
@@ -162,8 +162,8 @@ void detectsLaser(Laser* laserDetector) {
     }
 }
 
-BOOL hasTrackSomething(Laser* laser) {
-	return (laser->lastServoPositionHit[LEFT_DIRECTION] != 0 && laser->lastServoPositionHit[RIGHT_DIRECTION] != 0);
+bool hasTrackSomething(Laser* laser) {
+    return (laser->lastServoPositionHit[LEFT_DIRECTION] != 0 && laser->lastServoPositionHit[RIGHT_DIRECTION] != 0);
 }
 
 /**
@@ -199,35 +199,35 @@ float getAngleInRadian(Laser* laser) {
 // CALIBRATION
 
 void recalibrateServoInitValue(OutputStream* outputStream, Laser* laser, float relativeCalibrationX, float relativeCalibrationY) {
-	float normalRadianAngle = atan(relativeCalibrationX / relativeCalibrationY);
-	float normalRadianDegree = 90.0f - (normalRadianAngle / PI_DIVIDE_180);
+    float normalRadianAngle = atan(relativeCalibrationX / relativeCalibrationY);
+    float normalRadianDegree = 90.0f - (normalRadianAngle / PI_DIVIDE_180);
 
-	appendStringAndDec(outputStream, "laserIdx=", laser->servoIndex);
-	appendCRLF(outputStream);
-	appendStringAndDecf(outputStream, "normalRadianAngle=", normalRadianAngle);
-	appendCRLF(outputStream);
-	appendStringAndDecf(outputStream, "normalRadianDegree=", normalRadianDegree);
-	appendCRLF(outputStream);
+    appendStringAndDec(outputStream, "laserIdx=", laser->servoIndex);
+    appendCRLF(outputStream);
+    appendStringAndDecf(outputStream, "normalRadianAngle=", normalRadianAngle);
+    appendCRLF(outputStream);
+    appendStringAndDecf(outputStream, "normalRadianDegree=", normalRadianDegree);
+    appendCRLF(outputStream);
 
-	appendStringAndDecf(outputStream, "prev:servoInitValueCompute=", laser->servoInitValueCompute);
-	appendCRLF(outputStream);
+    appendStringAndDecf(outputStream, "prev:servoInitValueCompute=", laser->servoInitValueCompute);
+    appendCRLF(outputStream);
 
-	laser->servoInitValueCompute = normalRadianDegree * laser->angleFactorCompute + laser->detectedPosition;
-	appendStringAndDecf(outputStream, "new:servoInitValueCompute=", laser->servoInitValueCompute);
-	appendCRLF(outputStream);
-	appendCRLF(outputStream);
+    laser->servoInitValueCompute = normalRadianDegree * laser->angleFactorCompute + laser->detectedPosition;
+    appendStringAndDecf(outputStream, "new:servoInitValueCompute=", laser->servoInitValueCompute);
+    appendCRLF(outputStream);
+    appendCRLF(outputStream);
 }
 
 // DEBUG
 
 
 void printLaserStruct(OutputStream* outputStream, Laser* laser) {
-	appendStringAndDec(outputStream, "servoIdx=", laser->servoIndex);
-	appendCRLF(outputStream);
+    appendStringAndDec(outputStream, "servoIdx=", laser->servoIndex);
+    appendCRLF(outputStream);
 
-	int pinValue = laser->pinValue();
-	appendStringAndDec(outputStream, "pinValue=", pinValue);
-	appendCRLF(outputStream);
+    int pinValue = laser->pinValue();
+    appendStringAndDec(outputStream, "pinValue=", pinValue);
+    appendCRLF(outputStream);
 
     appendStringAndDec(outputStream, "servoPos=", laser->servoPosition);
     appendCRLF(outputStream);

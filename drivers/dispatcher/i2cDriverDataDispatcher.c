@@ -5,10 +5,8 @@
 #include "i2cDriverDataDispatcher.h"
 #include "remoteDriverDataDispatcher.h"
 
-// Device
+// Drivers
 #include "../../drivers/driver.h"
-
-#include "../../common/delay/delay30F.h"
 
 // I2C management
 #include "../../common/i2c/master/i2cMaster.h"
@@ -32,17 +30,13 @@
 static char i2cTempBufferArray[I2C_DRIVER_DATA_DISPATCHER_BUFFER_LENGTH];
 static Buffer i2cTempBuffer;
 
-/**
- * Add the i2c driver data dispatcher to the list.
- * @param i2cAddress
- */
 void addI2CDriverDataDispatcher(DriverDataDispatcher* i2cDispatcher,
         char* dispatcherName,
         Buffer* i2cMasterInputBuffer,
-		char (*i2cMasterInputBufferArray)[],
-		unsigned char i2cMasterInputBufferLength,
-        InputStream* i2cMasterInputStream,
+        char (*i2cMasterInputBufferArray)[],
+        unsigned char i2cMasterInputBufferLength,
         OutputStream* i2cMasterOutputStream,
+        InputStream* i2cMasterInputStream,
         int i2cAddress) {
     // Configure i2c Dispatcher
     i2cDispatcher->transmitMode = TRANSMIT_I2C;
@@ -51,12 +45,12 @@ void addI2CDriverDataDispatcher(DriverDataDispatcher* i2cDispatcher,
     i2cDispatcher->driverDataDispatcherTransmitData = remoteDriverDataDispatcherTransmit;
 
     // Init the output Stream : I2C Master -> I2C Slave(address)
-    initBuffer(&i2cTempBuffer, &i2cTempBufferArray, I2C_DRIVER_DATA_DISPATCHER_BUFFER_LENGTH, "I2C Output", "global");
+    initBuffer(&i2cTempBuffer, &i2cTempBufferArray, I2C_DRIVER_DATA_DISPATCHER_BUFFER_LENGTH, "I2C Master Output", "global");
     initMasterI2cOutputStream(i2cMasterOutputStream, &i2cTempBuffer, i2cAddress);
     i2cDispatcher->outputStream = i2cMasterOutputStream;
 
     // Init the input Stream : I2C Slave (address) -> I2C Master
-    initBuffer(i2cMasterInputBuffer, i2cMasterInputBufferArray, i2cMasterInputBufferLength, "I2C Input", dispatcherName);
+    initBuffer(i2cMasterInputBuffer, i2cMasterInputBufferArray, i2cMasterInputBufferLength, "I2C Master Input", dispatcherName);
     initMasterI2cInputStream(i2cMasterInputBuffer, i2cMasterInputStream, i2cAddress);
     i2cDispatcher->inputStream = i2cMasterInputStream;
 

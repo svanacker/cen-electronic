@@ -27,7 +27,7 @@ void stopTrajectoryDevice() {
 
 }
 
-BOOL isTrajectoryDeviceOk(void) {
+bool isTrajectoryDeviceOk(void) {
     return 1;
 }
 
@@ -44,18 +44,16 @@ void deviceTrajectoryHandleRawData(char header,
         InputStream* inputStream,
         OutputStream* outputStream) {
     if (header == COMMAND_GET_ABSOLUTE_POSITION) {
-        appendAck(outputStream);
+        ackCommand(outputStream, TRAJECTORY_DEVICE_HEADER, COMMAND_GET_ABSOLUTE_POSITION);
 
         updateTrajectoryWithNoThreshold();
-        append(outputStream, COMMAND_GET_ABSOLUTE_POSITION);
         notifyAbsolutePositionWithoutHeader(outputStream);
 
     }
     else if (header == COMMAND_DEBUG_GET_ABSOLUTE_POSITION) {
-        appendAck(outputStream);
+        ackCommand(outputStream, TRAJECTORY_DEVICE_HEADER, COMMAND_DEBUG_GET_ABSOLUTE_POSITION);
 
         updateTrajectoryWithNoThreshold();
-        append(outputStream, COMMAND_DEBUG_GET_ABSOLUTE_POSITION);
 
         OutputStream* debugOutputStream = getOutputStreamLogger(ALWAYS);
         printPosition(debugOutputStream);
@@ -68,7 +66,7 @@ void deviceTrajectoryHandleRawData(char header,
         inputStream->readChar(inputStream);
         long newAngle = readHex4(inputStream);
 
-        appendAck(outputStream);
+        ackCommand(outputStream, TRAJECTORY_DEVICE_HEADER, COMMAND_SET_ABSOLUTE_POSITION);
 
         OutputStream* debugOutputStream = getDebugOutputStreamLogger();
 
@@ -85,8 +83,6 @@ void deviceTrajectoryHandleRawData(char header,
         appendStringAndDecf(debugOutputStream, ",fAngle=", fAngle);
 
         setPosition(fX, fY, fAngle);
-
-        append(outputStream, COMMAND_SET_ABSOLUTE_POSITION);
     }
 }
 

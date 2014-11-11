@@ -41,7 +41,7 @@ int getDriverCount();
  * Init the driver descriptor list.
  */
 void initDrivers(Buffer *driverRequestBuffer, char (*driverRequestBufferArray)[] , unsigned char requestLength,
-				 Buffer *driverResponseBuffer, char (*driverResponseBufferArray)[] , unsigned char responseLength);
+                 Buffer *driverResponseBuffer, char (*driverResponseBufferArray)[] , unsigned char responseLength);
 
 /**
  * Get an OutputStream to write argument and parameters

@@ -17,16 +17,16 @@
  * Encapsulates the target.
  */
 typedef struct GameTarget {
-	// Returns the name of the target.
-	char* name;
-	// Returns the gain when reaching a such target.
-	float gain;
-	// availability status of the target
-	char status;	
-	// Returns the position of the target on the gameboard
-	Location* location;
-	/** The actionList for this target. */
-	GameTargetActionList actionList;
+    // Returns the name of the target.
+    char* name;
+    // Returns the gain when reaching a such target.
+    float gain;
+    // availability status of the target
+    char status;    
+    // Returns the position of the target on the gameboard
+    Location* location;
+    /** The actionList for this target. */
+    GameTargetActionList actionList;
 } GameTarget;
 
 /**
@@ -37,7 +37,7 @@ void clearGameTarget(GameTarget* target);
 /**
  * Print the detail of each target.
  */
-void printGameTarget(OutputStream* outputStream, GameTarget* target, BOOL includeItems);
+void printGameTarget(OutputStream* outputStream, GameTarget* target, bool includeItems);
 
 
 #endif

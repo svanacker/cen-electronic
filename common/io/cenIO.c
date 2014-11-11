@@ -1,4 +1,4 @@
-#include <p30fxxxx.h>
+#include <p30Fxxxx.h>
 
 #include "cenIO.h"
 
@@ -9,7 +9,6 @@ void initIO() {
 
     // D3 as Input for match detector
     TRISDbits.TRISD3 = 1;
-
 
     // PORTDbits.RD2 = 0;
 

@@ -5,10 +5,10 @@
 #include "../../common/io/buffer.h"
 
 void remoteDriverDataDispatcherTransmit(DriverDataDispatcher* dispatcher,
-								        Buffer* requestBuffer,
-								        Buffer* responseBuffer,
-								        int dataToTransferCount,
-								        int dataToReceiveCount
-								        );
+                                        Buffer* requestBuffer,
+                                        Buffer* responseBuffer,
+                                        int dataToTransferCount,
+                                        int dataToReceiveCount
+                                        );
 
 #endif

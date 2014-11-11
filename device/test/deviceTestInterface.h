@@ -2,6 +2,8 @@
 #define DEVICE_TEST_INTERFACE_H
 
 #include "../../device/deviceInterface.h"
+#include "../../device/deviceConstants.h"
+
 
 /**
 * Command header for test.

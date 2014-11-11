@@ -36,11 +36,11 @@ void clearPidTime(void) {
     lastPidTime = 0;
 }
 
-BOOL mustPidBeRecomputed(void) {
+bool mustPidBeRecomputed(void) {
     long pidTime = getPidTime();
     if (pidTime != lastPidTime) {
         lastPidTime = pidTime;
-        return TRUE;
+        return true;
     }
-    return FALSE;
+    return false;
 }

@@ -2,12 +2,13 @@
 #define SONAR_DEVICE_INTERFACE_H
 
 #include "../../device/deviceInterface.h"
+#include "../../device/deviceConstants.h"
 
 /** Command header to get the sonar value. */
-#define COMMAND_GET_SONAR 				'S'
+#define COMMAND_GET_SONAR                 'r'
 
-/** Command header to change the . */
-#define COMMAND_SONAR_CHANGE_ADDRESS	'['
+/** Command header to change the address. */
+#define COMMAND_SONAR_CHANGE_ADDRESS    '@'
 
 /**
 * Interface for Device "Sonar".

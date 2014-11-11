@@ -1,14 +1,14 @@
 #include <stdlib.h>
-#include <p30fxxxx.h>
+#include <p30Fxxxx.h>
 
 // FIRST INCLUDE !
-#include "../../common/setup/pic30FSetup.h"
+#include "../../common/setup/30F/picSetup30F.h"
 
 #include "beaconBoard.h"
 
 #include "../../common/commons.h"
 
-#include "../../common/delay/delay30F.h"
+#include "../../common/delay/cenDelay.h"
 
 #include "../../common/io/buffer.h"
 #include "../../common/io/filter.h"
@@ -24,7 +24,7 @@
 #include "../../common/math/cenMath.h"
 
 #include "../../common/pwm/pwmPic.h"
-#include "../../common/pwm/servoPwm.h"
+#include "../../common/pwm/servo/servoPwm.h"
 
 #include "../../common/serial/serial.h"
 #include "../../common/serial/serialLink.h"
@@ -100,7 +100,7 @@ static OutputStream zigbeeOutputStream;
 static StreamLink zigbeeSerialStreamLink;
 
 // -> Zigbee Response
-#define	RESPONSE_DATA_OUTPUT_BUFFER_LENGTH		20
+#define    RESPONSE_DATA_OUTPUT_BUFFER_LENGTH        20
 static Buffer responseDataOutputBuffer;
 static char responseDataOutputBufferArray[RESPONSE_DATA_OUTPUT_BUFFER_LENGTH];
 static OutputStream responseDataOutputStream; 
@@ -119,15 +119,15 @@ static InputStream beaconReceiverInputStream;
 static OutputStream beaconReceiverOutputStream;
 
 #ifndef MPLAB_SIMULATION
-	// The port for which we debug (we can send instruction too)
-	#define SERIAL_PORT_DEBUG 	SERIAL_PORT_2
-	
-	// The port for which we dialog with ZIGBEE
-	#define SERIAL_PORT_ZIGBEE 	SERIAL_PORT_1
+    // The port for which we debug (we can send instruction too)
+    #define SERIAL_PORT_DEBUG     SERIAL_PORT_2
+    
+    // The port for which we dialog with ZIGBEE
+    #define SERIAL_PORT_ZIGBEE     SERIAL_PORT_1
 #else
-	// Same port when using Simulation
-	#define SERIAL_PORT_DEBUG 		SERIAL_PORT_1
-	#define SERIAL_PORT_ZIGBEE	 	SERIAL_PORT_1
+    // Same port when using Simulation
+    #define SERIAL_PORT_DEBUG         SERIAL_PORT_1
+    #define SERIAL_PORT_ZIGBEE         SERIAL_PORT_1
 #endif
 
 // logs
@@ -150,7 +150,7 @@ static JennicEvent childLeaveEvent;
  * @private
  */
 int getLaserPin1() {
-	// L1
+    // L1
     return PORTBbits.RB0;
 }
 
@@ -158,8 +158,8 @@ int getLaserPin1() {
  * @private
  */
 int getLaserPin2() {
-	// L3
-	return PORTBbits.RB2;
+    // L3
+    return PORTBbits.RB2;
 }
 
 /**
@@ -190,9 +190,9 @@ void initLaserDetectorSettings() {
             BEACON_SERVO_2_ANGLE_DEGREE
             );
     setDistanceBetweenBeacon(DISTANCE_BETWEEN_BEACON);
-	setCalibrationPoint(BEACON_CALIBRATION_POINT_X, BEACON_CALIBRATION_POINT_Y);
-	setObsoleteDetectionTimeThreshold(OBSOLETE_DETECTION_TIME_THRESHOLD);
-	setNotifyTimeDelay(NOTIFY_DELAY);
+    setCalibrationPoint(BEACON_CALIBRATION_POINT_X, BEACON_CALIBRATION_POINT_Y);
+    setObsoleteDetectionTimeThreshold(OBSOLETE_DETECTION_TIME_THRESHOLD);
+    setNotifyTimeDelay(NOTIFY_DELAY);
 }
 
 /**
@@ -201,18 +201,18 @@ void initLaserDetectorSettings() {
 void initDevicesDescriptor() {
     initDeviceList(&deviceListArray, BEACON_BOARD_DEVICE_LENGTH);
 
-	// Get test device for debug purpose
+    // Get test device for debug purpose
     addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
     addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
     addLocalDevice(getPinDeviceInterface(), getPinDeviceDescriptor());
     addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor());
 
-	// Main Device
-	addLocalDevice(getCommonBeaconDeviceInterface(), getCommonBeaconDeviceDescriptor());
+    // Main Device
+    addLocalDevice(getCommonBeaconDeviceInterface(), getCommonBeaconDeviceDescriptor());
     addLocalDevice(getLaserBeaconDeviceInterface(), getBeaconDeviceDescriptor());
 
-	// Remote
-	addZigbeeRemoteDevice(getBeaconReceiverDeviceInterface(), JENNIC_ROUTER_MAC_ADDRESS);
+    // Remote
+    addZigbeeRemoteDevice(getBeaconReceiverDeviceInterface(), JENNIC_ROUTER_MAC_ADDRESS);
 
     initDevices();
 }
@@ -220,132 +220,135 @@ void initDevicesDescriptor() {
 void initDriversDescriptor() {
     // Init the drivers
     initDrivers(&driverRequestBuffer, &driverRequestBufferArray, JENNIC_ZIGBEE_REQUEST_DRIVER_BUFFER_LENGTH,
-				&driverResponseBuffer, &driverResponseBufferArray, JENNIC_ZIGBEE_RESPONSE_DRIVER_BUFFER_LENGTH);
+                &driverResponseBuffer, &driverResponseBufferArray, JENNIC_ZIGBEE_RESPONSE_DRIVER_BUFFER_LENGTH);
 }
 
 void initBeaconIO() {
-	// Use All port as digital Port
-	ADPCFG = 0xFFFF;
-	// PORT B0->B3 as input (laser)
+    // Use All port as digital Port
+    ADPCFG = 0xFFFF;
+    // PORT B0->B3 as input (laser)
     TRISBbits.TRISB0 = 1;
-	TRISBbits.TRISB1 = 1;
-	TRISBbits.TRISB2 = 1;
-	TRISBbits.TRISB3 = 1;
+    TRISBbits.TRISB1 = 1;
+    TRISBbits.TRISB2 = 1;
+    TRISBbits.TRISB3 = 1;
 }
 
 void onError(JennicEvent* jennicEvent) {
-	appendString(getOutputStreamLogger(ERROR), "ERROR ! \n");
-	onJennicError();
+    appendString(getOutputStreamLogger(ERROR), "ERROR ! \n");
+    onJennicError();
 }
 
 /**
  * Called when the network started.
  */ 
 void onNetworkStart(JennicEvent* jennicEvent) {
-	appendString(getOutputStreamLogger(INFO), "NETWORK START ! \n");
-	setJennicNetworkStatus(JENNIC_WAITING_FOR_NODE);
-	pwmServo(LASER_SERVO_INDEX_1, 0xFF, 800.0f);
-	pwmServo(LASER_SERVO_INDEX_2, 0xFF, 800.0f);
-	delaymSec(300.0f);
-	pwmServo(LASER_SERVO_INDEX_1, 0xFF, 900.0f);
-	pwmServo(LASER_SERVO_INDEX_2, 0xFF, 900.0f);
-	delaymSec(300.0f);
-	pwmServo(LASER_SERVO_INDEX_1, 0xFF, 800.0f);
-	pwmServo(LASER_SERVO_INDEX_2, 0xFF, 800.0f);
+    appendString(getOutputStreamLogger(INFO), "NETWORK START ! \n");
+    setJennicNetworkStatus(JENNIC_WAITING_FOR_NODE);
+    pwmServo(LASER_SERVO_INDEX_1, 0xFF, 800.0f);
+    pwmServo(LASER_SERVO_INDEX_2, 0xFF, 800.0f);
+    delaymSec(300.0f);
+    pwmServo(LASER_SERVO_INDEX_1, 0xFF, 900.0f);
+    pwmServo(LASER_SERVO_INDEX_2, 0xFF, 900.0f);
+    delaymSec(300.0f);
+    pwmServo(LASER_SERVO_INDEX_1, 0xFF, 800.0f);
+    pwmServo(LASER_SERVO_INDEX_2, 0xFF, 800.0f);
 }
 
 /**
  * Called when the child joined.
  */ 
 void onChildJoined(JennicEvent* jennicEvent) {
-	appendString(getOutputStreamLogger(INFO), "CHILD JOINED ! \n");
-	setJennicNetworkStatus(JENNIC_LINK_CONNECTED);
-	pwmServo(LASER_SERVO_INDEX_1, 0xFF, 1500.0f);
-	pwmServo(LASER_SERVO_INDEX_2, 0xFF, 1500.0f);
-	delaymSec(500.0f);
-	setBeaconSystemEnabled(TRUE);
+    appendString(getOutputStreamLogger(INFO), "CHILD JOINED ! \n");
+    setJennicNetworkStatus(JENNIC_LINK_CONNECTED);
+    pwmServo(LASER_SERVO_INDEX_1, 0xFF, 1500.0f);
+    pwmServo(LASER_SERVO_INDEX_2, 0xFF, 1500.0f);
+    delaymSec(500.0f);
+    setBeaconSystemEnabled(true);
 }
 
 /**
  * Called when the child leave.
  */ 
 void onChildLeave(JennicEvent* jennicEvent) {
-	appendString(getOutputStreamLogger(INFO), "CHILD LEAVE ! \n");
-	setJennicNetworkStatus(JENNIC_WAITING_FOR_NODE);
-	setBeaconSystemEnabled(FALSE);
-	pwmServo(LASER_SERVO_INDEX_1, 0xFF, 2200.0f);
-	pwmServo(LASER_SERVO_INDEX_2, 0xFF, 2200.0f);
-	delaymSec(300.0f);
-	pwmServo(LASER_SERVO_INDEX_1, 0xFF, 2100.0f);
-	pwmServo(LASER_SERVO_INDEX_2, 0xFF, 2100.0f);
-	delaymSec(300.0f);
-	pwmServo(LASER_SERVO_INDEX_1, 0xFF, 2200.0f);
-	pwmServo(LASER_SERVO_INDEX_2, 0xFF, 2200.0f);
+    appendString(getOutputStreamLogger(INFO), "CHILD LEAVE ! \n");
+    setJennicNetworkStatus(JENNIC_WAITING_FOR_NODE);
+    setBeaconSystemEnabled(false);
+    pwmServo(LASER_SERVO_INDEX_1, 0xFF, 2200.0f);
+    pwmServo(LASER_SERVO_INDEX_2, 0xFF, 2200.0f);
+    delaymSec(300.0f);
+    pwmServo(LASER_SERVO_INDEX_1, 0xFF, 2100.0f);
+    pwmServo(LASER_SERVO_INDEX_2, 0xFF, 2100.0f);
+    delaymSec(300.0f);
+    pwmServo(LASER_SERVO_INDEX_1, 0xFF, 2200.0f);
+    pwmServo(LASER_SERVO_INDEX_2, 0xFF, 2200.0f);
 }
 
 void onData(JennicEvent* jennicEvent) {
-	// Manage real Data into the Jennic Buffer
-	Buffer* requestBuffer = getJennicInDataBuffer();
-	if (!isBufferEmpty(requestBuffer)) {
-		// appendString(&debugOutputStream, "\nDATA !");
-		// printBuffer(&debugOutputStream, requestBuffer);
-		// println(&debugOutputStream);
-		// handle it like other source (UART, I2C ...)
-		handleStreamInstruction(requestBuffer, &responseDataOutputBuffer, &responseDataOutputStream, &filterRemoveCRLF, NULL);
-		onJennicData();
-	}
+    // Manage real Data into the Jennic Buffer
+    Buffer* requestBuffer = getJennicInDataBuffer();
+    if (!isBufferEmpty(requestBuffer)) {
+        // appendString(&debugOutputStream, "\nDATA !");
+        // printBuffer(&debugOutputStream, requestBuffer);
+        // println(&debugOutputStream);
+        // handle it like other source (UART, I2C ...)
+        handleStreamInstruction(requestBuffer, &responseDataOutputBuffer, &responseDataOutputStream, &filterRemoveCRLF, NULL);
+        onJennicData();
+    }
 }
 
 void registerJennicEvents() {
-	initJennicEventList();
-	addJennicEvent(&networkStartEvent, JENNIC_NETWORK_STARTED, "?", JENNIC_COORDINATER_MAC_ADDRESS, NULL, NO_PAY_LOAD, onNetworkStart);
-	addJennicEvent(&childJoinedEvent, JENNIC_CHILD_JOINED, JENNIC_ROUTER_MAC_ADDRESS, NULL, NULL, NO_PAY_LOAD, onChildJoined);
-	addJennicEvent(&childLeaveEvent, JENNIC_CHILD_LEAVE, JENNIC_ROUTER_MAC_ADDRESS, NULL, NULL, NO_PAY_LOAD, onChildLeave);
-	addJennicEvent(&errorEvent, JENNIC_RESPONSE_ERROR, NULL, NULL, NULL, NO_PAY_LOAD, onError);
-	// WARN : Length of data must be > 9 in hexadecimal (because size is on 2 char)
-	addJennicEvent(&dataEvent, JENNIC_RECEIVE_DATA, JENNIC_ROUTER_MAC_ADDRESS, "0", "???", 4, onData);
+    initJennicEventList();
+    addJennicEvent(&networkStartEvent, JENNIC_NETWORK_STARTED, "?", JENNIC_COORDINATER_MAC_ADDRESS, NULL, NO_PAY_LOAD, onNetworkStart);
+    addJennicEvent(&childJoinedEvent, JENNIC_CHILD_JOINED, JENNIC_ROUTER_MAC_ADDRESS, NULL, NULL, NO_PAY_LOAD, onChildJoined);
+    addJennicEvent(&childLeaveEvent, JENNIC_CHILD_LEAVE, JENNIC_ROUTER_MAC_ADDRESS, NULL, NULL, NO_PAY_LOAD, onChildLeave);
+    addJennicEvent(&errorEvent, JENNIC_RESPONSE_ERROR, NULL, NULL, NULL, NO_PAY_LOAD, onError);
+    // WARN : Length of data must be > 9 in hexadecimal (because size is on 2 char)
+    addJennicEvent(&dataEvent, JENNIC_RECEIVE_DATA, JENNIC_ROUTER_MAC_ADDRESS, "0", "???", 4, onData);
 }
 
 void showJennicLinkState() {
-	// TODO
+    // TODO
 }
 
 Buffer* getZigbeeInputBuffer() {
-	return &zigbeeInputBuffer;
+    return &zigbeeInputBuffer;
 }
 
 int main(void) {
 restart:
 
-	initBeaconIO();
+    initBeaconIO();
 
     // zigBee link
     openSerialLink(&zigbeeSerialStreamLink,
             &zigbeeInputBuffer,
-			&zigbeeInputBufferArray,
-			JENNIC_ZIGBEE_INPUT_BUFFER_LENGTH,
+            &zigbeeInputBufferArray,
+            JENNIC_ZIGBEE_INPUT_BUFFER_LENGTH,
             &zigbeeOutputBuffer,
-			&zigbeeOutputBufferArray,
-			JENNIC_ZIGBEE_OUTPUT_BUFFER_LENGTH,
+            &zigbeeOutputBufferArray,
+            JENNIC_ZIGBEE_OUTPUT_BUFFER_LENGTH,
             &zigbeeOutputStream,
-            SERIAL_PORT_ZIGBEE);
+            SERIAL_PORT_ZIGBEE,
+            115200);
 
     // Debug link
     openSerialLink(&debugSerialStreamLink,
             &debugInputBuffer,
-			&debugInputBufferArray,
-			JENNIC_DEBUG_INPUT_BUFFER_LENGTH,
+            &debugInputBufferArray,
+            JENNIC_DEBUG_INPUT_BUFFER_LENGTH,
             &debugOutputBuffer,
-			&debugOutputBufferArray,
-			JENNIC_DEBUG_OUTPUT_BUFFER_LENGTH,
+            &debugOutputBufferArray,
+            JENNIC_DEBUG_OUTPUT_BUFFER_LENGTH,
             &debugOutputStream,
-            SERIAL_PORT_DEBUG);
+            SERIAL_PORT_DEBUG,
+            115200
+        );
 
-	initTimerList(&timerListArray, BEACON_BOARD_TIMER_LENGTH);
+    initTimerList(&timerListArray, BEACON_BOARD_TIMER_LENGTH);
 
-	// To response data
+    // To response data
     initBuffer(&responseDataOutputBuffer, &responseDataOutputBufferArray, RESPONSE_DATA_OUTPUT_BUFFER_LENGTH, "responseDataOutputBuffer", "RESPONSE");
-	initZigbeeOutputStream(&responseDataOutputStream, &responseDataOutputBuffer, JENNIC_ROUTER_MAC_ADDRESS);
+    initZigbeeOutputStream(&responseDataOutputStream, &responseDataOutputBuffer, JENNIC_ROUTER_MAC_ADDRESS);
 
     // Init the logs
     initLog(DEBUG);
@@ -358,68 +361,70 @@ restart:
     initLaserDetectorSettings();
     initDevicesDescriptor();
 
-	// Zigbee Dispatcher
+    // Zigbee Dispatcher
     addZigbeeDriverDataDispatcher(&beaconReceiverDispatcher,
-    						        "BEACON_RECEIVER_DISPATCHER",
-						            &beaconReceiverInputStream,
-						            &beaconReceiverOutputStream,
-						            JENNIC_ROUTER_MAC_ADDRESS);
+                                    "BEACON_RECEIVER_DISPATCHER",
+                                    &beaconReceiverInputStream,
+                                    &beaconReceiverOutputStream,
+                                    JENNIC_ROUTER_MAC_ADDRESS);
 
-	initDriversDescriptor();
+    initDriversDescriptor();
 
     // Start interruptions
-	#ifndef MPLAB_SIMULATION
-	printTimerList(&debugOutputStream, getTimerList());
+    #ifndef MPLAB_SIMULATION
+    printTimerList(&debugOutputStream, getTimerList());
     startTimerList();
-	#endif
+    #endif
 
-	// To Avoid Rotation at startup Time. The beacon will be activated as soon the network will be connected
-	// to receiver
-	setBeaconSystemEnabled(FALSE);
+    // To Avoid Rotation at startup Time. The beacon will be activated as soon the network will be connected
+    // to receiver
+    setBeaconSystemEnabled(false);
 
     InputStream* zigbeeInputStream = getInputStream(&zigbeeInputBuffer);
     InputStream* debugInputStream = getInputStream(&debugInputBuffer);
 
     // Init coordinater streams
     initJennic5139Streams(zigbeeInputStream, &zigbeeOutputStream, &debugOutputStream);
-	registerJennicEvents();
-	printJennicEventList(&debugOutputStream);
+    registerJennicEvents();
+    printJennicEventList(&debugOutputStream);
 
-	// Initialisation is done by serial command	
+    // Initialisation is done by serial command    
     initJennic5139Coordinater();
 
-	#ifndef MPLAB_SIMULATION
-	initBeaconIO();
-	#endif
+    #ifndef MPLAB_SIMULATION
+    initBeaconIO();
+    #endif
 
     while (1) {
-	
+    
         // Copy data from the Jennic to the debug outputStream
         copyFromZigbeeToDebugRetainingData();
 
-		// Redirect to Devices
-		if (isCommandRedirectToDevices()) {
-        	// Handle debug
-        	handleStreamInstruction(&debugInputBuffer, &debugOutputBuffer, &debugOutputStream, &filterRemoveCRLF, NULL);
-		}
-		else {
-			if (isBufferEmpty(&debugInputBuffer)) {
-				continue;
-			}
-			// Detects if we want to redirect to devices
-			if (bufferGetFirstChar(&debugInputBuffer) == '@') {
-				appendString(getOutputStreamLogger(INFO), "REDIRECT COMMAND TO DEVICES \n");
-				// delete the '@' char from the buffer
-				bufferReadChar(&debugInputBuffer);
-				setCommandRedirectToDevices();
-				// Redirect to Jennic and not to the devices
-				continue;
-			}
-	        // Copy char entered on debug -> JENNIC
-	        copyInputToOutputStream(debugInputStream, &zigbeeOutputStream, NULL, COPY_ALL);
-		}
-		// Try to notify each Time the robot position through the zigbee
-		notifyRobotPositionIfNecessary();
+        // Redirect to Devices
+        if (isCommandRedirectToDevices()) {
+            // Handle debug
+            handleStreamInstruction(&debugInputBuffer, &debugOutputBuffer, &debugOutputStream, &filterRemoveCRLF, NULL);
+        }
+        else {
+            if (isBufferEmpty(&debugInputBuffer)) {
+                continue;
+            }
+            // Detects if we want to redirect to devices
+            /*
+            if (bufferGetFirstChar(&debugInputBuffer) == '@') {
+                appendString(getOutputStreamLogger(INFO), "REDIRECT COMMAND TO DEVICES \n");
+                // delete the '@' char from the buffer
+                bufferReadChar(&debugInputBuffer);
+                setCommandRedirectToDevices();
+                // Redirect to Jennic and not to the devices
+                continue;
+            }
+            // Copy char entered on debug -> JENNIC
+            copyInputToOutputStream(debugInputStream, &zigbeeOutputStream, NULL, COPY_ALL);
+            */
+        }
+        // Try to notify each Time the robot position through the zigbee
+        notifyRobotPositionIfNecessary();
     }
     goto restart;
 }

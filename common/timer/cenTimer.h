@@ -2,38 +2,41 @@
 #define CEN_TIMER_H
 
 #include "../../common/commons.h"
-#include "../../common/io/outputStream.h"
-
 
 /**
  * Define the timer diviser to have a timer at 1 Hertz (every second).
  */
-#define TIME_DIVISER_1_HERTZ 				28800
+#define TIME_DIVISER_1_HERTZ                 28800
 
 /**
- * Define the timer diviser to have a timer at 2 Hertz
+ * Define the timer diviser to have a timer at 2 Hertz.
  */
-#define TIME_DIVISER_2_HERTZ 				TIME_DIVISER_1_HERTZ / 2
+#define TIME_DIVISER_2_HERTZ                 TIME_DIVISER_1_HERTZ / 2
 
 /**
- * Define the timer diviser to have a timer at 10 Hertz
+ * Define the timer diviser to have a timer at 10 Hertz.
  */
-#define TIME_DIVISER_10_HERTZ 				TIME_DIVISER_1_HERTZ / 10
+#define TIME_DIVISER_10_HERTZ                 TIME_DIVISER_1_HERTZ / 10
 
 /**
- * Define the timer diviser to have a timer at 16 Hertz
+ * Define the timer diviser to have a timer at 16 Hertz.
  */
-#define TIME_DIVISER_16_HERTZ 				TIME_DIVISER_1_HERTZ / 16
+#define TIME_DIVISER_16_HERTZ                 TIME_DIVISER_1_HERTZ / 16
 
+/**
+ * Define the timer diviser to have a timer at 30 Hertz.
+ */
+#define TIME_DIVISER_30_HERTZ                 TIME_DIVISER_1_HERTZ / 30
 
-#define TIME_DIVISER_30_HERTZ 				TIME_DIVISER_1_HERTZ / 30
-
-#define TIME_DIVISER_50_HERTZ 				TIME_DIVISER_1_HERTZ / 50
+/**
+ * Define the timer diviser to have a timer at 50 Hertz.
+ */
+#define TIME_DIVISER_50_HERTZ                 TIME_DIVISER_1_HERTZ / 50
 
 /**
  * Define the timer diviser to have a timer at 100 Hertz.
  */
-#define TIME_DIVISER_100_HERTZ 				TIME_DIVISER_1_HERTZ / 100
+#define TIME_DIVISER_100_HERTZ                 TIME_DIVISER_1_HERTZ / 100
 
 /**
  * Define the timer diviser to have a timer at 1000 Hertz (every millisecond).
@@ -59,6 +62,7 @@ typedef struct Timer Timer;
 
 /**
  * Definition of a function for callBack of timer.
+ * @param timer the pointer on timer object (POO simulation)
  */
 typedef void interruptTimerCallbackFunc(Timer* timer);
 
@@ -74,25 +78,27 @@ struct Timer {
     unsigned long timeInternalCounter;
     /** The value of the timer. */
     unsigned long time;
-	/** The value of the mark. */
-	unsigned long markTime;
+    /** The value of the mark. */
+    unsigned long markTime;
     /** The function which must be used. */
     interruptTimerCallbackFunc* callback;
     /** if the timer is enabled or not. */
-    BOOL enabled;
+    bool enabled;
     /** if the timer is locked or not. */
-    volatile BOOL lock;
+    volatile bool lock;
     /** if the timer is in the callback function and is working. */
-    volatile BOOL working;
+    volatile bool working;
 };
 
 /**
  * Returns the time value.
+ * @param timer a pointer on the timer object for which we want the time value (POO simulation).
  */
 unsigned long getTime(Timer* Timer);
 
 /**
  * Sets the time value.
+ * @param timer a pointer on the timer object for which we want the set timer  (POO simulation).
  * @param time the new time value
  */
 void setTime(Timer* Timer, unsigned long time);
@@ -101,42 +107,49 @@ void setTime(Timer* Timer, unsigned long time);
 
 /**
  * Starts the timer given in argument.
+ * @param timer a pointer on the timer object that we want to start  (POO simulation).
  */
 void startTimer(Timer* timer);
 
 /**
  * Stops the timer given in arguments.
+ * @param timer a pointer on the timer object that we want to stop  (POO simulation).
  */
 void stopTimer(Timer* timer);
 
 // MARK
 
 /**
- * Mark the timer. Remembers the current timer value.
+ * Mark the timer. Remembers the current timer value  (POO simulation).
  */
 void mark(Timer* timer);
 
 /**
  * Check if the last mark was done after markTime + time.
- * return TRUE if (markTime + time > timer->time)
+ * @param timer the pointer on timer object ( (POO simulation)
+ * @param time the time to compare if we are in timeout or not 
+ * return true if (markTime + time > timer->time)
  */
-BOOL timeout(Timer* timer, unsigned long time);
+bool timeout(Timer* timer, unsigned long time);
 
 // LOCK
 
 /**
  * Lock the timer to avoid that the timer fires.
+ * @param timer a pointer on the timer object that we want to lock (POO simulation).
  */
 void lockTimer(Timer* timer);
 
 /**
  * wait for the timer to be sure that interrupt is not in progress, and lock
  * to be sure that until unlockTimer, timer will not be enabled.
+ * @param timer a pointer on timer object to lock and wait (POO simulation).
  */
 void lockAndWaitForTimer(Timer* timer);
 
 /**
  * unlock the timer. If the timer is enabled, the timer will be fired next time.
+ * @param timer a pointer on timer object to unlock (POO simulation).
  */
 void unlockTimer(Timer* timer);
 

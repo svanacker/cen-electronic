@@ -13,7 +13,7 @@ DeviceDescriptor* getCommonBeaconDeviceDescriptor();
  * the internal devices (via the classical mechanism of one letter + hexadecimal argument)
  * or if we send directly command to the JENNIC
  */
-BOOL isCommandRedirectToDevices();
+bool isCommandRedirectToDevices();
 
 /**
  * Redirects command to the Devices.
