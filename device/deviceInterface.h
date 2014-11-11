@@ -142,22 +142,29 @@ typedef struct DeviceMethodMetaData {
 
 /**
 * Singleton of DeviceInterfaceMetaData.
+* @return the singleton of DeviceInterfaceMetaData
 */
 DeviceMethodMetaData* getDeviceMethodMetaData();
 
 /**
  * Returns the length of the type when we mashall it as string.
  * Ex : unsigned int (16 bits) will be converted as hexadecimal value, so it will use 4 chars as hexadecimal.
+ * @param parameterType parameter Type (see all constants DEVICE_ARGS ...)
+ * @return the length of the type when we mashall it as string.
  */
 int getLengthOfType(int parameterType);
 
 /**
 * Set the function Name and the size of all argument list for that function.
+* @param functionName the name of the function (as remote method name)
+* @param argumentsSize the number of arguments (NOT the length of the marshalled string !)
+* @param resultsSize the number of results (NOT the length of the marshalled string !)
 */
 void setFunction(char* functionName, int argumentsSize, int resultsSize);
 
 /**
 * Set the function Name and the size of all argument to 0.
+* @param functionName the name of the function (as remote method name)
 */
 void setFunctionNoArgumentAndNoResult(char* functionName);
 
@@ -237,14 +244,14 @@ void setResultSeparator(int index);
 typedef const char* deviceGetNameFunction(void);
 
 /**
-* @param header the character which is the header
-* @param mode either MODE_INPUT to know the length of the inputBuffer to handle the command of the header
+* @param commandHeader the character which is the header of the command
+* @param mode either MODE_INPUT to know the length of the inputBuffer to handle the command of the header, either MODE_OUTPUT to know the length of the outputBuffer to get results
 * @param fillDeviceArgumentList if true, the function will update the argumentList
 * Returns a value >= 0 if the device handle this char, and -1, if it's not handled
 */
-typedef int deviceGetInterfaceFunction(char header,
-                                int mode,
-                                bool fillDeviceArgumentList);
+typedef int deviceGetInterfaceFunction(char commandHeader,
+										int mode,
+										bool fillDeviceArgumentList);
 
 
 
@@ -252,6 +259,10 @@ typedef int deviceGetInterfaceFunction(char header,
 * Defines the structure used to describe the remote commands accepted by the device.
 */
 typedef struct DeviceInterface{
+	/**
+	 * The header of the Device. Each device must have its own name.
+     * @see https://github.com/svanacker/cen-electronic/wiki/Device-Header-List
+	 */
     char deviceHeader;
     /** Function returning the name of the device. */
     deviceGetNameFunction *deviceGetName;
