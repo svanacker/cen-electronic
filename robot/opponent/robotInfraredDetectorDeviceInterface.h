@@ -2,8 +2,7 @@
 #define ROBOT_INFRARED_DETECTOR_DEVICE_INTERFACE_H
 
 #include "../../device/deviceInterface.h"
-
-#define ROBOT_INFRARED_DETECTOR_DEVICE_HEADER       'I'
+#include "../../device/deviceConstants.h"
 
 /** Ask the status of the infrared detection. */
 #define COMMAND_INFRARED_DETECTOR_DETECTION         'X'

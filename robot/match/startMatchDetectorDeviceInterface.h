@@ -2,8 +2,7 @@
 #define START_MATCH_DETECTOR_DEVICE_INTERFACE_H
 
 #include "../../device/deviceInterface.h"
-
-#define START_MATCH_DETECTOR_DEVICE_HEADER        '!'
+#include "../../device/deviceConstants.h"
 
 /** Defines the pin which must be used to detect the start. */
 #define START_DETECTOR_PIN      PORTFbits.RF6

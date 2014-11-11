@@ -2,10 +2,7 @@
 #define ROBOT_CONFIG_REMOTE_INTERFACE_H
 
 #include "../../device/deviceInterface.h"
-
-/** Device header .*/
-#define ROBOT_CONFIG_DEVICE_HEADER      'c'
-
+#include "../../device/deviceConstants.h"
 
 /** Command header to get the config. */
 #define COMMAND_CONFIG                  'r'

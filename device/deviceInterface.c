@@ -3,9 +3,6 @@
 /** Singleton */
 static DeviceMethodMetaData deviceMethodMetaData;
 
-/**
-* Singleton of DeviceArgumentList
-*/
 DeviceMethodMetaData* getDeviceMethodMetaData() {
     return &deviceMethodMetaData;
 }

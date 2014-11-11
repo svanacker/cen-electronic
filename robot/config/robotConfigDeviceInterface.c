@@ -1,6 +1,7 @@
 #include "robotConfigDeviceInterface.h"
 
 #include "../../device/deviceInterface.h"
+#include "../../device/deviceConstants.h"
 
 const char* getConfigDeviceName(void) {
     return "config";

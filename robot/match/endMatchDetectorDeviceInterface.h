@@ -2,8 +2,7 @@
 #define END_MATCH_DETECTOR_DEVICE_INTERFACE_H
 
 #include "../../device/deviceInterface.h"
-
-#define END_MATCH_DETECTOR_DEVICE_HEADER        'e'
+#include "../../device/deviceConstants.h"
 
 /**
 * Defines the command send to notify the end of the match

@@ -31,7 +31,7 @@ typedef void deviceHandleCallbackRawDataFunction(const Device* device,
 * @param outputStream the outputStream in which we forward (Ex : PC, debug ...)
 * @param device the device which causes the callback
 * @param commandHeader the header of the message
-* @param mode ???
+* @param mode ??? (TODO Documentation)
 */
 void forwardCallbackRawDataTo(InputStream* inputStream,
                               OutputStream* outputStream,
@@ -53,8 +53,6 @@ void ackCommand(OutputStream* deviceOutputStream, const char deviceHeader, const
 struct Device {
     /** The interface of the device for a remote caller (without implementation). */
     DeviceInterface* interface;
-    /** If the device is enabled or not. */
-    // bool enabled;
     /** Which bus the device use. */
     int transmitMode;
     /** The address as char (useful for zigbee for example). */
@@ -72,7 +70,7 @@ struct Device {
 * Init the device with the information given by deviceDescriptor.
 * We consider that there is a LCD03 on the I2C bus and a serial bus
 * connected to send debug information.
-* @param deviceDescriptor the descriptor for the device.
+* @param device the descriptor for the device.
 */
 bool initDevice(const Device *device);
 
@@ -80,7 +78,7 @@ bool initDevice(const Device *device);
 * Stop the device with the information given by deviceDescriptor.
 * We consider that there is a LCD03 on the I2C bus and a serial bus
 * connected to send debug information.
-* @param deviceDescriptor the descriptor for the device.
+* @param device the descriptor for the device.
 */
 void stopDevice(const Device *device);
 
