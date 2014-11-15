@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{DCB1D86A-5AE0-4527-B347-96E0815B3D74}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>cenelectronicconsole</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="cen-electronic-console.c" />
+    <ClCompile Include="common\error\error.c" />
+    <ClCompile Include="common\io\binaryPrintWriter.c" />
+    <ClCompile Include="common\io\binaryWriter.c" />
+    <ClCompile Include="common\io\buffer.c" />
+    <ClCompile Include="common\io\compositeOutputStream.c" />
+    <ClCompile Include="common\io\filter.c" />
+    <ClCompile Include="common\io\inputStream.c" />
+    <ClCompile Include="common\io\ioUtils.c" />
+    <ClCompile Include="common\io\nullOutputStream.c" />
+    <ClCompile Include="common\io\outputStream.c" />
+    <ClCompile Include="common\io\printWriter.c" />
+    <ClCompile Include="common\io\reader.c" />
+    <ClCompile Include="common\io\streamLink.c" />
+    <ClCompile Include="common\log\logger.c" />
+    <ClCompile Include="common\log\loggerDebug.c" />
+    <ClCompile Include="common\log\logHandler.c" />
+    <ClCompile Include="common\log\logHandlerList.c" />
+    <ClCompile Include="common\log\logLevel.c" />
+    <ClCompile Include="common\math\hexUtils.c" />
+    <ClCompile Include="test\common\math\hexUtilsTest.c" />
+    <ClCompile Include="test\unity\unity.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="common\cmd\commonCommand.h" />
+    <ClInclude Include="common\commons.h" />
+    <ClInclude Include="common\error\error.h" />
+    <ClInclude Include="common\io\binaryPrintWriter.h" />
+    <ClInclude Include="common\io\binaryWriter.h" />
+    <ClInclude Include="common\io\buffer.h" />
+    <ClInclude Include="common\io\cenIO.h" />
+    <ClInclude Include="common\io\compositeOutputStream.h" />
+    <ClInclude Include="common\io\filter.h" />
+    <ClInclude Include="common\io\inputStream.h" />
+    <ClInclude Include="common\io\ioUtils.h" />
+    <ClInclude Include="common\io\nullOutputStream.h" />
+    <ClInclude Include="common\io\outputStream.h" />
+    <ClInclude Include="common\io\pin.h" />
+    <ClInclude Include="common\io\printWriter.h" />
+    <ClInclude Include="common\io\reader.h" />
+    <ClInclude Include="common\io\stream.h" />
+    <ClInclude Include="common\io\streamLink.h" />
+    <ClInclude Include="common\log\logger.h" />
+    <ClInclude Include="common\log\loggerDebug.h" />
+    <ClInclude Include="common\log\logHandler.h" />
+    <ClInclude Include="common\log\logHandlerList.h" />
+    <ClInclude Include="common\log\logLevel.h" />
+    <ClInclude Include="common\math\hexUtils.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="test\common\math\hexUtilsTest.h" />
+    <ClInclude Include="test\unity\unity.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="cen-electronic-console.rc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -16,7 +16,7 @@
 
 // BUFFER
 
-inline bool checkBufferNotNull(Buffer* buffer) {
+bool checkBufferNotNull(Buffer* buffer) {
     if (buffer == NULL) {
         writeError(IO_BUFFER_NULL);
         return false;

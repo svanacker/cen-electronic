@@ -6,6 +6,10 @@
  */
 // #define MPLAB_SIMULATION
 
+#ifdef _MSC_VER
+    #define PC_COMPILER
+#endif
+
 #ifdef __32MX795F512H__
     #define PROG_32
 #endif
@@ -14,9 +18,12 @@
     #define PROG_30
 #endif
 
+// Detects if there is a problem : not in 30F mode, neither 32, neither PC
 #ifndef PROG_30
     #ifndef PROG_32
-        MUST NOT COMPILE !!
+        #ifndef PC_COMPILER
+            // MUST NOT COMPILE !!
+        #endif
     #endif
 #endif
 

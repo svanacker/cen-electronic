@@ -37,4 +37,10 @@ bin
 
 *.d
 log
-
+Debug
+*.suo
+*.v12.suo
+*.sdf
+*.aps
+*.opensdf
+*.sdf

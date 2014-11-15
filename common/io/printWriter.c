@@ -168,12 +168,12 @@ int appendDecf(OutputStream* stream, float value) {
     unsigned long decimalValue;
 
     if (value < 0) {
-        decimalValue = (value - (long) value) * -1000;
+        decimalValue = (long) ((value - (long) value) * -1000);
         append(stream, '-');
         result++;
         result += appendDec(stream, -(long) value);
     } else {
-        decimalValue = (value - (long) value) * 1000;
+        decimalValue = (long) ((value - (long) value) * 1000);
         result += appendDec(stream, (long) value);
     }
 
