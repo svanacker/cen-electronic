@@ -1,12 +1,10 @@
 #ifndef COMMONS_H
 #define COMMONS_H
 
-#include <stdbool.h>
-
 /**
  * Defines that we want to run with MPLAB SIMULATION
  */
-//#define MPLAB_SIMULATION
+// #define MPLAB_SIMULATION
 
 #ifdef __32MX795F512H__
     #define PROG_32

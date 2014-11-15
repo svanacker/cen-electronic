@@ -8,6 +8,8 @@
  * @author svanacker
  */
 
+#include <stdbool.h>
+
 #include "../../common/commons.h"
 
 /** Define the command to clear the inputStream. */

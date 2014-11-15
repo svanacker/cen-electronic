@@ -6,33 +6,33 @@
 /**
 * @private
 */
-bufferStruct* getBuffer(int* stream) {
+Buffer* getBuffer(int* stream) {
     bufferedOutputStreamStruct* bufferedOutputStream = (bufferedOutputStreamStruct*) stream;
-    bufferStruct* result = bufferedOutputStream->buffer;
+    Buffer* result = bufferedOutputStream->buffer;
     return result;
 }
 
 /**
 * @private
 */
-outputStreamStruct* getEncapsulatedOutputStream(int* stream) {
-    bufferedOutputStreamStruct* bufferedOutputStream = (bufferedOutputStreamStruct*) stream;
-    outputStreamStruct* result = bufferedOutputStream->encapsulatedOutputStream;
+OutputStream* getEncapsulatedOutputStream(int* stream) {
+    bufferedOutputStream* bufferedOutputStream = (bufferedOutputStreamStruct*) stream;
+    OutputStream* result = bufferedOutputStream->encapsulatedOutputStream;
     return result;
 }
 
 /**
 * @private
 */
-outputStreamStruct* getStreamInterface(int* stream) {
+OutputStream* getStreamInterface(int* stream) {
     bufferedOutputStreamStruct* bufferedOutputStream = (bufferedOutputStreamStruct*) stream;
-    outputStreamStruct* result = bufferedOutputStream->streamInterface;
+    OutputStream* result = bufferedOutputStream->streamInterface;
     return result;
 }
 
 void bufferedFlush(int* stream) {
-    bufferStruct* buffer = getBuffer(stream);
-    outputStreamStruct* encapsulatedOutputStream = ;
+    Buffer* buffer = getBuffer(stream);
+    OutputStream* encapsulatedOutputStream = ;
 
     copyInputToOutputStream(buffer->inputStream, 
                              outputStreamStruct* outputStream,
@@ -40,14 +40,14 @@ void bufferedFlush(int* stream) {
 }
 
 void writeBufferedChar(int* stream, char c) {
-    bufferStruct* buffer = getBuffer(stream);
+    Buffer* buffer = getBuffer(stream);
     bufferWriteChar(buffer, c);
 }
 
-void initBufferedOutputStream(bufferedOutputStreamStruct* bufferedOutputStream,
-                             outputStreamStruct* encapsulatedOutputStream,
-                             outputStreamStruct* streamInterface,
-                             bufferStruct* buffer) {
+void initBufferedOutputStream(BufferedOutputStream* bufferedOutputStream,
+                             OutputStream* encapsulatedOutputStream,
+                             OutputStream* streamInterface,
+                             Buffer* buffer) {
     bufferedOutputStream->encapsulatedOutputStream = encapsulatedOutputStream;
     bufferedOutputStream->streamInterface = streamInterface;
     bufferedOutputStream->buffer = buffer;

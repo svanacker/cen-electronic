@@ -1,6 +1,8 @@
 #ifndef PRINT_WRITER_H
 #define PRINT_WRITER_H
 
+#include <stdbool.h>
+
 #include "../../common/commons.h"
 #include "../../common/io/outputStream.h"
 #include "../../common/io/buffer.h"
@@ -32,20 +34,20 @@ void appendSeparator(OutputStream* outputStream);
  * @param outputStream the pointer on outputStream (POO simulation)
  * @param s a standard C String (terminated by \0)
  */
-void appendString(OutputStream* stream, const char* s);
+void appendString(OutputStream* outputStream, const char* s);
 
 /**
  * Append a string with CRLF to the buffer.
  * @param outputStream the pointer on outputStream (POO simulation)
  * @param s a standard C String (terminated by \0)
  */
-void appendStringCRLF(OutputStream* stream, const char* s);
+void appendStringCRLF(OutputStream* outputStream, const char* s);
 
 /**
  * Add an acknowledgment to the outputStream.
  * @param outputStream the pointer on outputStream (POO simulation)
  */
-void appendAck(OutputStream* stream);
+void appendAck(OutputStream* outputStream);
 
 /**
  * Write a LF to the outputStream.
@@ -57,7 +59,7 @@ void println(OutputStream* outputStream);
  * Write a CRLF to the outputStream.
  * @param outputStream the pointer on outputStream (POO simulation)
  */
-void appendCRLF(OutputStream* stream);
+void appendCRLF(OutputStream* outputStream);
 
 // BUFFER
 
@@ -161,7 +163,7 @@ int appendDecf(OutputStream* outputStream, float value);
  * @param s the string to write
  * @param float the float value to write
  */
-void appendStringAndDecf(OutputStream* stream, const char* s, float value);
+void appendStringAndDecf(OutputStream* outputStream, const char* s, float value);
 
 /**
  * Append a string followed by a long value.
@@ -169,7 +171,7 @@ void appendStringAndDecf(OutputStream* stream, const char* s, float value);
  * @param s the string to write
  * @param value the value to write
  */
-void appendStringAndDec(OutputStream* stream, const char* s, long value);
+void appendStringAndDec(OutputStream* outputStream, const char* s, long value);
 
 /**
  * Append both string : key followed by a value.
@@ -177,6 +179,6 @@ void appendStringAndDec(OutputStream* stream, const char* s, long value);
  * @param key the key to write
  * @param name the name to write
  */
-void appendKeyAndName(OutputStream* stream, const char* key, const char* name);
+void appendKeyAndName(OutputStream* outputStream, const char* key, const char* name);
 
 #endif

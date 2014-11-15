@@ -79,12 +79,22 @@ void serialPutc(unsigned char serialPortIndex, char c) {
 
     UART_MODULE uart = getUartModule(serialPortIndex);
 
+#ifndef MPLAB_SIMULATION
     while (!UARTTransmitterIsReady(uart)) {
 	
 	}
+#else
+    simulateSerialDelay();
+#endif
+    
     UARTSendDataByte(uart, c);
+
+#ifndef MPLAB_SIMULATION
     while (!UARTTransmissionHasCompleted(uart)) {
 	
 	}
+#else
+    simulateSerialDelay();
+#endif
 }
 

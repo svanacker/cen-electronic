@@ -1,3 +1,5 @@
+#include <stdlib.h>
+
 #include "nullOutputStream.h"
 #include "outputStream.h"
 

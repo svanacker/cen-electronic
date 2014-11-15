@@ -34,3 +34,7 @@ bin/debug
 cscope.out
 bin
 *.elf
+
+*.d
+log
+

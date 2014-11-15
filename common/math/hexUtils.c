@@ -21,7 +21,7 @@ long hex4CharToLong(char b0, char b1, char b2, char b3) {
 }
 
 int hex2CharToInt(char b0, char b1) {
-    return (b0 << 4) +b1;
+    return (b0 << 4) + b1;
 }
 
 

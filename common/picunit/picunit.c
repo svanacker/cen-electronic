@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdbool.h>
 #include "picunit.h"
 
 #include "../../common/commons.h"
@@ -62,12 +63,12 @@ void printTestName(char* testName) {
 
 void printTestFailed(char* testName) {
     printTestName(testName);
-    printAssertMessage("OK\n");
+    printAssertMessage("KO !!!\n");
 }
 
 void printTestOk(char* testName) {
     printTestName(testName);
-    printAssertMessage("KO !!!\n");
+    printAssertMessage("OK\n");
 }
 
 void runTest(TestSuite* testSuite, int testIndex) {
@@ -195,10 +196,12 @@ bool assertPointerNotNull(int* actual, char* messageIfFailed) {
 
 // Object tests
 
+/*
 bool assertEquals(EqualsFunction* equalsFunction, int* actualObject, int* expectedObject, char* messageIfFailed) {
     bool equals = equalsFunction(actualObject, expectedObject);
     return assertTrue(equals, messageIfFailed);
 }
+*/
 
 bool assertBufferEquals(Buffer* expectedBuffer, Buffer* actualBuffer, char* messageIfFailed) {
     // TODO : A Implémenter

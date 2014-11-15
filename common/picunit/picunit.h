@@ -1,6 +1,7 @@
 #ifndef PIC_UNIT_H
 #define PIC_UNIT_H
 
+#include <stdbool.h>
 #include "../../common/commons.h"
 #include "../../common/io/buffer.h"
 
@@ -30,6 +31,8 @@ typedef struct TestSuite {
     /** the size of the list. */
     unsigned char size;
 } TestSuite;
+
+OutputStream* getTestOutputStream();
 
 /**
 * Add a test to a testSuite.
@@ -81,7 +84,7 @@ bool assertPointerNotNull(int* actual, char* messageIfFailed);
 /**
 * Assert that 2 objects are equals using a equalsFunction.
 */
-bool assertEquals(EqualsFunction* equalsFunction, int* actual, int* expected, char* messageIfFailed);
+// bool assertEquals(EqualsFunction* equalsFunction, int* actual, int* expected, char* messageIfFailed);
 
 /**
 * Classic implementation
