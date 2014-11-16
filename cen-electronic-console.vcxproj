@@ -96,6 +96,7 @@
     <ClCompile Include="common\log\logHandlerList.c" />
     <ClCompile Include="common\log\logLevel.c" />
     <ClCompile Include="common\math\hexUtils.c" />
+    <ClCompile Include="test\common\io\bufferTest.c" />
     <ClCompile Include="test\common\math\hexUtilsTest.c" />
     <ClCompile Include="test\unity\unity.c" />
   </ItemGroup>
@@ -125,6 +126,7 @@
     <ClInclude Include="common\log\logLevel.h" />
     <ClInclude Include="common\math\hexUtils.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="test\common\io\bufferTest.h" />
     <ClInclude Include="test\common\math\hexUtilsTest.h" />
     <ClInclude Include="test\unity\unity.h" />
   </ItemGroup>

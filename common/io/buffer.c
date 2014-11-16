@@ -16,6 +16,10 @@
 
 // BUFFER
 
+/**
+ * Private Functions.
+ * @returns true if there is a problem, false else
+ */
 bool checkBufferNotNull(Buffer* buffer) {
     if (buffer == NULL) {
         writeError(IO_BUFFER_NULL);
@@ -106,7 +110,7 @@ bool _bufferAvailableData(InputStream* inputStream) {
 // BUFFER INTERFACE
 
 void initBuffer(Buffer* buffer, char (*array)[], unsigned char length, char* name, char* type) {
-    if (checkBufferNotNull(buffer)) {
+    if (!checkBufferNotNull(buffer)) {
         return;    
     }
     buffer->s = array;
@@ -136,7 +140,7 @@ void initBuffer(Buffer* buffer, char (*array)[], unsigned char length, char* nam
 }
 
 bool isBufferInitialized(Buffer* buffer) {
-    if (checkBufferNotNull(buffer)) {
+    if (!checkBufferNotNull(buffer)) {
         return false;
     }
     return buffer->length > 0;
@@ -227,21 +231,21 @@ void deepClearBuffer(Buffer* buffer) {
 }
 
 InputStream* getInputStream(Buffer* buffer) {
-    if (checkBufferNotNull(buffer)) {
+    if (!checkBufferNotNull(buffer)) {
         return &(buffer->inputStream);
     }
     return NULL;
 }
 
 OutputStream* getOutputStream(Buffer* buffer) {
-    if (checkBufferNotNull(buffer)) {
+    if (!checkBufferNotNull(buffer)) {
         return &(buffer->outputStream);
     }
     return NULL;
 }
 
 void printDebugBuffer(OutputStream* outputStream, Buffer* buffer) {
-    if (checkBufferNotNull(buffer)) {
+    if (!checkBufferNotNull(buffer)) {
         return;    
     }
     if (buffer == NULL) {

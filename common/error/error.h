@@ -4,9 +4,22 @@
 /**
  * Main Method to write Error.
  * Avoid using long strings which takes program memory.
+ * @param errorCode the error Code
  */
 void writeError(int errorCode);
 
+/**
+ * Returns the last error.
+ * @returns the last error code, 0x0000 if there is no error
+ */
+int getLastError();
+
+/**
+ * Clears the last error, to avoid that we take into consideration an old error.
+ */
+void clearLastError();
+
+#define NO_ERROR							0x0000
 
 // List of error Code
 
