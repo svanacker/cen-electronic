@@ -1,6 +1,6 @@
 #ifndef CEN_TIMER_H
 #define CEN_TIMER_H
-
+#include <stdbool.h>
 #include "../../common/commons.h"
 
 /**
