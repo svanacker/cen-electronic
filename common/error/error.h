@@ -41,6 +41,8 @@ void clearLastError();
 #define IO_BUFFER_NULL                    0x0102
 #define IO_BUFFER_NOT_ENOUGH_DATA         0x0103
 
+#define PRINT_WRITER_NOT_HEX_VALUE		0x0104
+
 #define IO_PIN_INDEX_ERROR                0x0110
 
 

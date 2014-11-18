@@ -53,7 +53,47 @@ void test_initBuffer_should_throw_error_when_empty_and_reading_char(void) {
 	TEST_ASSERT_EQUAL(IO_BUFFER_NOT_ENOUGH_DATA, lastError);
 }
 
+// isBufferEqualsToString
+
+void test_isBufferEqualsToString(void) {
+	initBuffer(&bufferTest, &bufferArrayTest, TEST_BUFFER_SIZE, "nameTest", "typeTest");
+
+	// buffer is empty => Can not be equals to 0
+	bool actual = isBufferEqualsToString(&bufferTest, "HELLO");
+	TEST_ASSERT_FALSE(actual);
+
+	// Second test, just write a char
+	bufferWriteChar(&bufferTest, 'H');
+	actual = isBufferEqualsToString(&bufferTest, "H");
+	TEST_ASSERT_TRUE(actual);
+
+	actual = isBufferEqualsToString(&bufferTest, "HELLO");
+	TEST_ASSERT_FALSE(actual);
+
+	bufferWriteChar(&bufferTest, 'E');
+	bufferWriteChar(&bufferTest, 'L');
+	bufferWriteChar(&bufferTest, 'L');
+	bufferWriteChar(&bufferTest, 'O');
+
+	actual = isBufferEqualsToString(&bufferTest, "HELLO");
+	TEST_ASSERT_TRUE(actual);
+
+	bufferWriteChar(&bufferTest, ' ');
+	bufferWriteChar(&bufferTest, 'W');
+	bufferWriteChar(&bufferTest, 'O');
+	bufferWriteChar(&bufferTest, 'R');
+	bufferWriteChar(&bufferTest, 'L');
+	bufferWriteChar(&bufferTest, 'D');
+
+	actual = isBufferEqualsToString(&bufferTest, "HELLO");
+	// There is too much data in the buffer
+	TEST_ASSERT_FALSE(actual);
+
+	TEST_ASSERT_FALSE(isThereAnyError());
+}
+
 // writeChar
+
 void test_bufferWriteChar(void) {
 	initBuffer(&bufferTest, &bufferArrayTest, TEST_BUFFER_SIZE, "nameTest", "typeTest");
 

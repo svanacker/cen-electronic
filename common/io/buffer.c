@@ -157,6 +157,26 @@ bool isBufferEmpty(const Buffer* buffer) {
     return buffer->readIndex == buffer->writeIndex;
 }
 
+bool isBufferEqualsToString(const Buffer* buffer, char* s) {
+    int i = 0;
+    while (*s != '\0') {
+        if (getBufferElementsCount(buffer) <= i) {
+            return false;
+        }
+        char c = bufferGetCharAtIndex(buffer, i);
+        char sChar = *s;
+        if (c != sChar) {
+            return false;
+        }
+        *s++;
+        i++;
+    }
+    if (getBufferElementsCount(buffer) != i) {
+        return false;
+    }
+    return true;
+}
+
 int getBufferElementsCount(const Buffer* buffer) {
     int result = buffer->writeIndex - buffer->readIndex;
     if (result < 0) {
@@ -166,7 +186,7 @@ int getBufferElementsCount(const Buffer* buffer) {
 }
 
 int getBufferCapacity(const Buffer* buffer) {
-	return buffer->length - 1;
+    return buffer->length - 1;
 }
 
 void bufferWriteChar(Buffer* buffer, char c) {
@@ -205,7 +225,7 @@ char bufferReadChar(Buffer* buffer) {
     return 0;
 }
 
-char bufferGetCharAtIndex(Buffer* buffer, int charIndex) {
+char bufferGetCharAtIndex(const Buffer* buffer, int charIndex) {
     int size = getBufferElementsCount(buffer);
     if (charIndex < size) {
         char* sPointer = (char*) buffer->s;
@@ -237,18 +257,18 @@ void deepClearBuffer(Buffer* buffer) {
     clearBuffer(buffer);
 }
 
-InputStream* getInputStream(Buffer* buffer) {
+InputStream* getInputStream(const Buffer* buffer) {
     if (!checkBufferNotNull(buffer)) {
-		return NULL;
+        return NULL;
     }
-	return &(buffer->inputStream);
+    return &(buffer->inputStream);
 }
 
-OutputStream* getOutputStream(Buffer* buffer) {
+OutputStream* getOutputStream(const Buffer* buffer) {
     if (!checkBufferNotNull(buffer)) {
-		return NULL;
+        return NULL;
     }
-	return &(buffer->outputStream);
+    return &(buffer->outputStream);
 }
 
 void printDebugBuffer(OutputStream* outputStream, Buffer* buffer) {

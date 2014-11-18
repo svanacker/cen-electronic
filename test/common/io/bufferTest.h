@@ -17,6 +17,10 @@ void test_bufferWriteChar_too_much_writes(void);
 
 void test_bufferWriteChar_and_read_several_times(void);
 
+// isBufferEqualsToString
+
+void test_isBufferEqualsToString(void);
+
 // bufferGetCharAtIndex
 
 void test_bufferGetCharAtIndex(void);

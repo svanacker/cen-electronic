@@ -38,6 +38,8 @@ void bufferTests() {
 	RUN_TEST(test_bufferWriteChar_too_much_writes);
 	RUN_TEST(test_bufferWriteChar_and_read_several_times);
 
+	RUN_TEST(test_isBufferEqualsToString);
+
 	RUN_TEST(test_bufferGetCharAtIndex);
 
 	RUN_TEST(test_getBufferCapacity);
@@ -55,6 +57,32 @@ void bufferTests() {
 void printWriterTests() {
 	RUN_TEST(test_append_simple);
 	RUN_TEST(test_append_repeat);
+
+	RUN_TEST(test_appendBool);
+
+	RUN_TEST(test_appendSeparator);
+
+	RUN_TEST(test_appendString);
+
+	RUN_TEST(test_printBuffer);
+
+	RUN_TEST(test_appendHex);
+	RUN_TEST(test_appendHex2);
+	RUN_TEST(test_appendHex3);
+	RUN_TEST(test_appendHex4);
+	RUN_TEST(test_appendHex5);
+	RUN_TEST(test_appendHex6);
+	RUN_TEST(test_appendHex8);
+
+	RUN_TEST(test_appendDec_simple);
+	RUN_TEST(test_appendDec_negative_value);
+
+	/*
+	RUN_TEST(test_appendDecf_positive_value1);
+	RUN_TEST(test_appendDecf_positive_value2);
+	RUN_TEST(test_appendDecf_negative_value1);
+	RUN_TEST(test_appendDecf_negative_value2);
+	*/
 }
 
 int main(int argc, char *argv[])

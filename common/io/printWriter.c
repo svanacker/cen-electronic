@@ -4,6 +4,7 @@
 #include "outputStream.h"
 
 #include "../../common/commons.h"
+#include "../../common/error/error.h"
 
 /**
  * Contains all string manipulations which writes data to an outputStream
@@ -76,16 +77,19 @@ void printBuffer(OutputStream* outputStream, Buffer* buffer) {
 
 // HEXADECIMAL
 
-void appendHex(OutputStream* outputStream, char c) {
+bool appendHex(OutputStream* outputStream, char c) {
     // Value between 0 and 9
     if (c < 10) {
-        c += 48;
-    } else {
+        append(outputStream, c + 48);
+        return true;
+    } else if (c < 16) {
         // Value between A and F
         // (65 - 10 + c)
-        c += 55;
+        append(outputStream, c + 55);
+        return true;
     }
-    append(outputStream, c);
+    writeError(PRINT_WRITER_NOT_HEX_VALUE);
+    return false;
 }
 
 void internalAppendHex(OutputStream* outputStream, signed long value, int shiftMax) {
@@ -117,16 +121,6 @@ void appendHex6(OutputStream* outputStream, signed long value) {
 
 void appendHex8(OutputStream* outputStream, signed long value) {
     internalAppendHex(outputStream, value, 28);
-}
-
-void appendHexFloat4(OutputStream* stream, float value, float factorToTrunc) {
-    signed long longValue = (signed long) (value * factorToTrunc);
-    appendHex4(stream, longValue);
-}
-
-void appendHexFloat8(OutputStream* stream, float value, float factorToTrunc) {
-    signed long longValue = (signed long) (value * factorToTrunc);
-    appendHex4(stream, longValue);
 }
 
 // DECIMAL CONVERSION

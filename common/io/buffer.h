@@ -85,6 +85,14 @@ bool isBufferFull(const Buffer* buffer);
 bool isBufferEmpty(const Buffer* buffer);
 
 /**
+ * Returns true if the buffer is equals exactly to the string, and contains no more and no less characters than the passed string into parameters
+ * @param buffer the buffer (simulates object programming)
+ * @param s the string to compare with the buffer
+ * @returns true if the buffer is equals exactly to the string, and contains no more and no less characters than the passed string into parameters, false else
+ */
+bool isBufferEqualsToString(const Buffer* buffer, char* s);
+
+/**
  * Returns the number of elements.
  * @param buffer the buffer (simulates object programming)
  * @return the number of elements.
@@ -113,7 +121,7 @@ char bufferReadChar(Buffer* buffer);
  * @param charIndex the index of the char (0 = first char)
  * @return the char at the specified index
  */
-char bufferGetCharAtIndex(Buffer* buffer, int charIndex);
+char bufferGetCharAtIndex(const Buffer* buffer, int charIndex);
 
 /**
  * Append a character to the buffer (FIFO buffer).
@@ -127,17 +135,18 @@ void bufferWriteChar(Buffer* buffer, char c);
  * @param buffer the buffer (simulates object programming)
  * @return the inputStream associated to the buffer.
  */
-InputStream* getInputStream(Buffer* buffer);
+InputStream* getInputStream(const Buffer* buffer);
 
 /**
  * Get a compatible OutputStream with the buffer.
  * @param buffer the buffer (simulates object programming)
  * @return the outputStream associated to the buffer.
  */
-OutputStream* getOutputStream(Buffer* buffer);
+OutputStream* getOutputStream(const Buffer* buffer);
 
 /**
  * Print the buffer in a debug mode, with all variables.
+ * @param outputStream the output stream (often debug) where we writes some values
  * @param buffer the buffer (simulates object programming)
  */
 void printDebugBuffer(OutputStream* outputStream, Buffer* buffer);
