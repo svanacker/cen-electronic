@@ -3,7 +3,9 @@
 
 #include "common/error/error.h"
 #include "test/unity/unity.h"
+
 #include "test/common/io/bufferTest.h"
+#include "test/common/io/printWriterTest.h"
 #include "test/common/math/hexUtilsTest.h"
 
 void setUp(void)
@@ -15,11 +17,7 @@ void tearDown(void)
 {
 }
 
-int main(int argc, char *argv[])
-{
-	UnityBegin("cen-electronic-console");
-
-	// RUN_TEST calls runTest
+void bufferTests() {
 	RUN_TEST(test_hex2CharToInt_should_equal_to_0_if_0);
 	RUN_TEST(test_hex2CharToInt_should_equal_to_197_if_C5);
 	RUN_TEST(test_hex2CharToInt_should_equal_to_255_if_FF);
@@ -47,6 +45,26 @@ int main(int argc, char *argv[])
 	RUN_TEST(test_clearBuffer);
 
 	RUN_TEST(test_deepClearBuffer);
+
+	RUN_TEST(test_getOutputStream);
+	RUN_TEST(test_getOutputStream_if_buffer_null);
+	RUN_TEST(test_getInputStream);
+	RUN_TEST(test_getInputStream_if_buffer_null);
+}
+
+void printWriterTests() {
+	RUN_TEST(test_append_simple);
+	RUN_TEST(test_append_repeat);
+}
+
+int main(int argc, char *argv[])
+{
+	UnityBegin("cen-electronic-console");
+
+	// RUN_TEST calls runTest
+
+	bufferTests();
+	printWriterTests();
 
 	UnityEnd();
 

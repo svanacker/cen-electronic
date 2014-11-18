@@ -147,6 +147,9 @@
     <ClCompile Include="test\common\io\bufferTest.c">
       <Filter>Source Files\test\common\io</Filter>
     </ClCompile>
+    <ClCompile Include="test\common\io\printWriterTest.c">
+      <Filter>Source Files\test\common\io</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -231,6 +234,9 @@
       <Filter>Header Files\test\common\math</Filter>
     </ClInclude>
     <ClInclude Include="test\common\io\bufferTest.h">
+      <Filter>Header Files\test\common\io</Filter>
+    </ClInclude>
+    <ClInclude Include="test\common\io\printWriterTest.h">
       <Filter>Header Files\test\common\io</Filter>
     </ClInclude>
   </ItemGroup>

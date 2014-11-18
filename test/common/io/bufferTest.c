@@ -1,5 +1,7 @@
 #include <stdlib.h>
 
+#include "bufferTest.h"
+
 #include "../../../common/io/buffer.h"
 #include "../../../common/error/error.h"
 
@@ -179,4 +181,41 @@ void test_deepClearBuffer(void) {
 		char value = *sPointer;
 		TEST_ASSERT_EQUAL(0, value);
 	}
+}
+
+// getOutputStream
+
+void test_getOutputStream(void) {
+	initBuffer(&bufferTest, &bufferArrayTest, TEST_BUFFER_SIZE, "nameTest", "typeTest");
+	OutputStream* outputStream = getOutputStream(&bufferTest);
+
+	TEST_ASSERT_FALSE(isThereAnyError());
+	TEST_ASSERT_NOT_NULL(outputStream);
+}
+
+void test_getOutputStream_if_buffer_null(void) {
+	initBuffer(NULL, &bufferArrayTest, TEST_BUFFER_SIZE, "nameTest", "typeTest");
+	OutputStream* outputStream = getOutputStream(&bufferTest);
+
+	TEST_ASSERT_EQUAL(IO_BUFFER_NULL, getLastError());
+	TEST_ASSERT_NOT_NULL(outputStream);
+}
+
+// getInputStream
+
+void test_getInputStream(void) {
+	initBuffer(&bufferTest, &bufferArrayTest, TEST_BUFFER_SIZE, "nameTest", "typeTest");
+	InputStream* inputStream = getInputStream(&bufferTest);
+
+	TEST_ASSERT_FALSE(isThereAnyError());
+	TEST_ASSERT_NOT_NULL(inputStream);
+
+}
+
+void test_getInputStream_if_buffer_null(void) {
+	initBuffer(NULL, &bufferArrayTest, TEST_BUFFER_SIZE, "nameTest", "typeTest");
+	InputStream* inputStream = getInputStream(&bufferTest);
+
+	TEST_ASSERT_EQUAL(IO_BUFFER_NULL, getLastError());
+	TEST_ASSERT_NOT_NULL(inputStream);
 }

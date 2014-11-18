@@ -1,3 +1,5 @@
+#ifndef BUFFER_TEST_H
+#define BUFFER_TEST_H
 
 // initBuffer
 
@@ -30,3 +32,17 @@ void test_clearBuffer(void);
 // clearDeepBuffer
 
 void test_deepClearBuffer(void);
+
+// getOutputStream
+
+void test_getOutputStream(void);
+
+void test_getOutputStream_if_buffer_null(void);
+
+// getInputStream
+
+void test_getInputStream(void);
+
+void test_getInputStream_if_buffer_null(void);
+
+#endif

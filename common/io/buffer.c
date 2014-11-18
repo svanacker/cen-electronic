@@ -239,16 +239,16 @@ void deepClearBuffer(Buffer* buffer) {
 
 InputStream* getInputStream(Buffer* buffer) {
     if (!checkBufferNotNull(buffer)) {
-        return &(buffer->inputStream);
+		return NULL;
     }
-    return NULL;
+	return &(buffer->inputStream);
 }
 
 OutputStream* getOutputStream(Buffer* buffer) {
     if (!checkBufferNotNull(buffer)) {
-        return &(buffer->outputStream);
+		return NULL;
     }
-    return NULL;
+	return &(buffer->outputStream);
 }
 
 void printDebugBuffer(OutputStream* outputStream, Buffer* buffer) {
