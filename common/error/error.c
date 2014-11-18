@@ -22,6 +22,10 @@ int getLastError() {
     return lastErrorCode;
 }
 
+bool isThereAnyError() {
+    return lastErrorCode != 0;
+}
+
 void clearLastError() {
     lastErrorCode = 0;
 }

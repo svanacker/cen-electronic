@@ -1,6 +1,8 @@
 #ifndef ERROR_H
 #define ERROR_H
 
+#include <stdbool.h>
+
 /**
  * Main Method to write Error.
  * Avoid using long strings which takes program memory.
@@ -13,6 +15,12 @@ void writeError(int errorCode);
  * @returns the last error code, 0x0000 if there is no error
  */
 int getLastError();
+
+/**
+ * Returns if there is an error.
+ * @return true if there is an error (lastError > 0), false else.
+ */
+bool isThereAnyError();
 
 /**
  * Clears the last error, to avoid that we take into consideration an old error.

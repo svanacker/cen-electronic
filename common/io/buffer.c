@@ -20,7 +20,7 @@
  * Private Functions.
  * @returns true if there is a problem, false else
  */
-bool checkBufferNotNull(Buffer* buffer) {
+bool checkBufferNotNull(const Buffer* buffer) {
     if (buffer == NULL) {
         writeError(IO_BUFFER_NULL);
         return false;
@@ -147,6 +147,9 @@ bool isBufferInitialized(Buffer* buffer) {
 }
 
 bool isBufferFull(const Buffer* buffer) {
+    if (!checkBufferNotNull(buffer)) {
+        return false;
+    }
     return ((buffer->writeIndex + 1) % buffer->length) == buffer->readIndex;
 }
 
@@ -160,6 +163,10 @@ int getBufferElementsCount(const Buffer* buffer) {
         result += buffer->length;
     }
     return result;
+}
+
+int getBufferCapacity(const Buffer* buffer) {
+	return buffer->length - 1;
 }
 
 void bufferWriteChar(Buffer* buffer, char c) {

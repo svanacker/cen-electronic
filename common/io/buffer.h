@@ -92,6 +92,14 @@ bool isBufferEmpty(const Buffer* buffer);
 int getBufferElementsCount(const Buffer* buffer);
 
 /**
+ * Returns the total capacity to store Elements.
+ * As we use a circular buffer, we only store n - 1 elements (where n is the size of the array), and not n, because if we use n, we cannot distinguish when buffer is empty or full (if readIndex == writeIndex).
+ * @param buffer the buffer (simulates object programming)
+ * @return the total capacity to store Elements.
+ */
+int getBufferCapacity(const Buffer* buffer);
+
+/**
  * Get and result the first char inserted (FIFO Stack)..
  * Shift the read buffer to the next char.
  * @param buffer the buffer (simulates object programming)
