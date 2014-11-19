@@ -12,16 +12,20 @@
 
 static Buffer bufferTest;
 static char bufferArrayTest[TEST_BUFFER_SIZE];
+static OutputStream* outputStream;
 
 static Buffer bufferTest2;
 static char bufferArrayTest2[TEST_BUFFER_SIZE];
 
+void initBufferForPrintWriterTest(void) {
+	initBuffer(&bufferTest, (char(*)[]) &bufferArrayTest, TEST_BUFFER_SIZE, "printWriter", "printWriterTestType");
+	outputStream = getOutputStream(&bufferTest);
+}
 
 // append
 
 void test_append_simple(void) {
-	initBuffer(&bufferTest, &bufferArrayTest, TEST_BUFFER_SIZE, "nameTest", "typeTest");
-	OutputStream* outputStream = getOutputStream(&bufferTest);
+	initBufferForPrintWriterTest();
 	
 	append(outputStream, 'a');
 
@@ -30,8 +34,7 @@ void test_append_simple(void) {
 }
 
 void test_append_repeat(void) {
-	initBuffer(&bufferTest, &bufferArrayTest, TEST_BUFFER_SIZE, "nameTest", "typeTest");
-	OutputStream* outputStream = getOutputStream(&bufferTest);
+	initBufferForPrintWriterTest();
 
 	int i;
 	for (i = 0; i < 60; i++) {
@@ -43,9 +46,8 @@ void test_append_repeat(void) {
 }
 
 void test_appendBool(void) {
-	initBuffer(&bufferTest, &bufferArrayTest, TEST_BUFFER_SIZE, "nameTest", "typeTest");
-	OutputStream* outputStream = getOutputStream(&bufferTest);
-	
+	initBufferForPrintWriterTest();
+
 	appendBool(outputStream, true);
 	appendBool(outputStream, false);
 
@@ -57,8 +59,7 @@ void test_appendBool(void) {
 }
 
 void test_appendSeparator(void) {
-	initBuffer(&bufferTest, &bufferArrayTest, TEST_BUFFER_SIZE, "nameTest", "typeTest");
-	OutputStream* outputStream = getOutputStream(&bufferTest);
+	initBufferForPrintWriterTest();
 
 	appendSeparator(outputStream);
 
@@ -67,8 +68,7 @@ void test_appendSeparator(void) {
 }
 
 void test_appendString(void) {
-	initBuffer(&bufferTest, &bufferArrayTest, TEST_BUFFER_SIZE, "nameTest", "typeTest");
-	OutputStream* outputStream = getOutputStream(&bufferTest);
+	initBufferForPrintWriterTest();
 
 	appendString(outputStream, "HELLO");
 
@@ -80,12 +80,12 @@ void test_appendString(void) {
 
 void test_printBuffer(void) {
 	// Buffer 1
-	initBuffer(&bufferTest, &bufferArrayTest, TEST_BUFFER_SIZE, "nameTest", "typeTest");
+	initBuffer(&bufferTest, (char(*)[]) &bufferArrayTest, TEST_BUFFER_SIZE, "nameTest", "typeTest");
 	OutputStream* outputStream1 = getOutputStream(&bufferTest);
 	appendString(outputStream1, "HELLO");
 
 	// Buffer 2
-	initBuffer(&bufferTest2, &bufferArrayTest2, TEST_BUFFER_SIZE, "nameTest2", "typeTest2");
+	initBuffer(&bufferTest2, (char(*)[]) &bufferArrayTest2, TEST_BUFFER_SIZE, "nameTest2", "typeTest2");
 	OutputStream* outputStream2 = getOutputStream(&bufferTest2);
 
 	// Copy from Buffer 1 to Buffer 2
@@ -98,9 +98,8 @@ void test_printBuffer(void) {
 // appendHex
 
 void test_appendHex(void) {
-	initBuffer(&bufferTest, &bufferArrayTest, TEST_BUFFER_SIZE, "nameTest", "typeTest");
-	OutputStream* outputStream = getOutputStream(&bufferTest);
-	
+	initBufferForPrintWriterTest();
+
 	bool actual = appendHex(outputStream, 0);
 	TEST_ASSERT_TRUE(actual);
 	TEST_ASSERT_EQUAL('0', bufferReadChar(&bufferTest));
@@ -133,8 +132,7 @@ void test_appendHex(void) {
 // appendHex2
 
 void test_appendHex2(void) {
-	initBuffer(&bufferTest, &bufferArrayTest, TEST_BUFFER_SIZE, "nameTest", "typeTest");
-	OutputStream* outputStream = getOutputStream(&bufferTest);
+	initBufferForPrintWriterTest();
 
 	appendHex2(outputStream, 0);
 	bool actual = isBufferEqualsToString(&bufferTest, "00");
@@ -157,8 +155,7 @@ void test_appendHex2(void) {
 // appendHex3
 
 void test_appendHex3(void) {
-	initBuffer(&bufferTest, &bufferArrayTest, TEST_BUFFER_SIZE, "nameTest", "typeTest");
-	OutputStream* outputStream = getOutputStream(&bufferTest);
+	initBufferForPrintWriterTest();
 
 	appendHex3(outputStream, 0x01A3);
 	bool actual = isBufferEqualsToString(&bufferTest, "1A3");
@@ -170,8 +167,7 @@ void test_appendHex3(void) {
 // appendHex4
 
 void test_appendHex4(void) {
-	initBuffer(&bufferTest, &bufferArrayTest, TEST_BUFFER_SIZE, "nameTest", "typeTest");
-	OutputStream* outputStream = getOutputStream(&bufferTest);
+	initBufferForPrintWriterTest();
 
 	appendHex4(outputStream, 0x1A3B);
 	bool actual = isBufferEqualsToString(&bufferTest, "1A3B");
@@ -183,8 +179,7 @@ void test_appendHex4(void) {
 // appendHex5
 
 void test_appendHex5(void) {
-	initBuffer(&bufferTest, &bufferArrayTest, TEST_BUFFER_SIZE, "nameTest", "typeTest");
-	OutputStream* outputStream = getOutputStream(&bufferTest);
+	initBufferForPrintWriterTest();
 
 	appendHex5(outputStream, 0x000C23BF);
 	bool actual = isBufferEqualsToString(&bufferTest, "C23BF");
@@ -196,8 +191,7 @@ void test_appendHex5(void) {
 // appendHex6
 
 void test_appendHex6(void) {
-	initBuffer(&bufferTest, &bufferArrayTest, TEST_BUFFER_SIZE, "nameTest", "typeTest");
-	OutputStream* outputStream = getOutputStream(&bufferTest);
+	initBufferForPrintWriterTest();
 
 	appendHex6(outputStream, 0x00A1F3B8);
 	bool actual = isBufferEqualsToString(&bufferTest, "A1F3B8");
@@ -209,8 +203,7 @@ void test_appendHex6(void) {
 // appendHex8
 
 void test_appendHex8(void) {
-	initBuffer(&bufferTest, &bufferArrayTest, TEST_BUFFER_SIZE, "nameTest", "typeTest");
-	OutputStream* outputStream = getOutputStream(&bufferTest);
+	initBufferForPrintWriterTest();
 
 	appendHex8(outputStream, 0x00A1F3B807);
 	bool actual = isBufferEqualsToString(&bufferTest, "A1F3B807");
@@ -222,8 +215,7 @@ void test_appendHex8(void) {
 // appendDec
 
 void test_appendDec_simple(void) {
-	initBuffer(&bufferTest, &bufferArrayTest, TEST_BUFFER_SIZE, "nameTest", "typeTest");
-	OutputStream* outputStream = getOutputStream(&bufferTest);
+	initBufferForPrintWriterTest();
 
 	appendDec(outputStream, 1234);
 	bool actual = isBufferEqualsToString(&bufferTest, "1234");
@@ -233,8 +225,7 @@ void test_appendDec_simple(void) {
 }
 
 void test_appendDec_negative_value(void) {
-	initBuffer(&bufferTest, &bufferArrayTest, TEST_BUFFER_SIZE, "nameTest", "typeTest");
-	OutputStream* outputStream = getOutputStream(&bufferTest);
+	initBufferForPrintWriterTest();
 
 	appendDec(outputStream, -1234);
 	bool actual = isBufferEqualsToString(&bufferTest, "-1234");
@@ -244,8 +235,7 @@ void test_appendDec_negative_value(void) {
 }
 
 void test_appendDecf_positive_value1(void) {
-	initBuffer(&bufferTest, &bufferArrayTest, TEST_BUFFER_SIZE, "nameTest", "typeTest");
-	OutputStream* outputStream = getOutputStream(&bufferTest);
+	initBufferForPrintWriterTest();
 
 	int value = appendDecf(outputStream, 1234.56789F);
 
@@ -256,8 +246,7 @@ void test_appendDecf_positive_value1(void) {
 }
 
 void test_appendDecf_positive_value2(void) {
-	initBuffer(&bufferTest, &bufferArrayTest, TEST_BUFFER_SIZE, "nameTest", "typeTest");
-	OutputStream* outputStream = getOutputStream(&bufferTest);
+	initBufferForPrintWriterTest();
 
 	appendDecf(outputStream, 1234.000F);
 	bool actual = isBufferEqualsToString(&bufferTest, "1234.000");
@@ -267,8 +256,7 @@ void test_appendDecf_positive_value2(void) {
 }
 
 void test_appendDecf_positive_value3(void) {
-	initBuffer(&bufferTest, &bufferArrayTest, TEST_BUFFER_SIZE, "nameTest", "typeTest");
-	OutputStream* outputStream = getOutputStream(&bufferTest);
+	initBufferForPrintWriterTest();
 
 	appendDecf(outputStream, 1234.002F);
 
@@ -285,8 +273,7 @@ void test_appendDecf_positive_value3(void) {
 }
 
 void test_appendDecf_positive_value4(void) {
-	initBuffer(&bufferTest, &bufferArrayTest, TEST_BUFFER_SIZE, "nameTest", "typeTest");
-	OutputStream* outputStream = getOutputStream(&bufferTest);
+	initBufferForPrintWriterTest();
 
 	appendDecf(outputStream, 1234.020F);
 	bool actual = isBufferEqualsToString(&bufferTest, "1234.020");
@@ -296,8 +283,7 @@ void test_appendDecf_positive_value4(void) {
 }
 
 void test_appendDecf_positive_value5(void) {
-	initBuffer(&bufferTest, &bufferArrayTest, TEST_BUFFER_SIZE, "nameTest", "typeTest");
-	OutputStream* outputStream = getOutputStream(&bufferTest);
+	initBufferForPrintWriterTest();
 
 	appendDecf(outputStream, 1234.300F);
 	bool actual = isBufferEqualsToString(&bufferTest, "1234.300");
@@ -307,8 +293,7 @@ void test_appendDecf_positive_value5(void) {
 }
 
 void test_appendDecf_negative_value1(void) {
-	initBuffer(&bufferTest, &bufferArrayTest, TEST_BUFFER_SIZE, "nameTest", "typeTest");
-	OutputStream* outputStream = getOutputStream(&bufferTest);
+	initBufferForPrintWriterTest();
 
 	appendDecf(outputStream, -1234.56789F);
 	bool actual = isBufferEqualsToString(&bufferTest, "-1234.568");
@@ -318,8 +303,7 @@ void test_appendDecf_negative_value1(void) {
 }
 
 void test_appendDecf_negative_value2(void) {
-	initBuffer(&bufferTest, &bufferArrayTest, TEST_BUFFER_SIZE, "nameTest", "typeTest");
-	OutputStream* outputStream = getOutputStream(&bufferTest);
+	initBufferForPrintWriterTest();
 
 	appendDecf(outputStream, -1234.0F);
 	bool actual = isBufferEqualsToString(&bufferTest, "-1234.000");
