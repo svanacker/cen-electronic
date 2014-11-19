@@ -257,14 +257,14 @@ void deepClearBuffer(Buffer* buffer) {
     clearBuffer(buffer);
 }
 
-InputStream* getInputStream(const Buffer* buffer) {
+InputStream* getInputStream(Buffer* buffer) {
     if (!checkBufferNotNull(buffer)) {
         return NULL;
     }
     return &(buffer->inputStream);
 }
 
-OutputStream* getOutputStream(const Buffer* buffer) {
+OutputStream* getOutputStream(Buffer* buffer) {
     if (!checkBufferNotNull(buffer)) {
         return NULL;
     }

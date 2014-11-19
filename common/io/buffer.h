@@ -135,14 +135,14 @@ void bufferWriteChar(Buffer* buffer, char c);
  * @param buffer the buffer (simulates object programming)
  * @return the inputStream associated to the buffer.
  */
-InputStream* getInputStream(const Buffer* buffer);
+InputStream* getInputStream(Buffer* buffer);
 
 /**
  * Get a compatible OutputStream with the buffer.
  * @param buffer the buffer (simulates object programming)
  * @return the outputStream associated to the buffer.
  */
-OutputStream* getOutputStream(const Buffer* buffer);
+OutputStream* getOutputStream(Buffer* buffer);
 
 /**
  * Print the buffer in a debug mode, with all variables.
