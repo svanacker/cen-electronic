@@ -1,6 +1,7 @@
 #include "printWriterTest.h"
 
 #include "../../../common/io/buffer.h"
+#include "../../../common/io/consoleOutputStream.h"
 #include "../../../common/io/printWriter.h"
 #include "../../../common/io/outputStream.h"
 #include "../../../common/error/error.h"
@@ -246,10 +247,10 @@ void test_appendDecf_positive_value1(void) {
 	initBuffer(&bufferTest, &bufferArrayTest, TEST_BUFFER_SIZE, "nameTest", "typeTest");
 	OutputStream* outputStream = getOutputStream(&bufferTest);
 
-	appendDecf(outputStream, 1234.5678F);
-	bool actual = isBufferEqualsToString(&bufferTest, "1234.5678");
+	int value = appendDecf(outputStream, 1234.56789F);
+
+	bool actual = isBufferEqualsToString(&bufferTest, "1234.568");
 	TEST_ASSERT_TRUE(actual);
-	TEST_ASSERT_TRUE(isBufferEmpty(&bufferTest));
 
 	TEST_ASSERT_FALSE(isThereAnyError());
 }
@@ -258,10 +259,49 @@ void test_appendDecf_positive_value2(void) {
 	initBuffer(&bufferTest, &bufferArrayTest, TEST_BUFFER_SIZE, "nameTest", "typeTest");
 	OutputStream* outputStream = getOutputStream(&bufferTest);
 
-	appendDecf(outputStream, 1234.0F);
-	bool actual = isBufferEqualsToString(&bufferTest, "1234.0");
+	appendDecf(outputStream, 1234.000F);
+	bool actual = isBufferEqualsToString(&bufferTest, "1234.000");
 	TEST_ASSERT_TRUE(actual);
-	TEST_ASSERT_TRUE(isBufferEmpty(&bufferTest));
+
+	TEST_ASSERT_FALSE(isThereAnyError());
+}
+
+void test_appendDecf_positive_value3(void) {
+	initBuffer(&bufferTest, &bufferArrayTest, TEST_BUFFER_SIZE, "nameTest", "typeTest");
+	OutputStream* outputStream = getOutputStream(&bufferTest);
+
+	appendDecf(outputStream, 1234.002F);
+
+	/*
+	OutputStream consoleOutputStream;
+	initConsoleOutputStream(&consoleOutputStream);
+	printDebugBuffer(&consoleOutputStream, &bufferTest);
+	*/
+
+	bool actual = isBufferEqualsToString(&bufferTest, "1234.002");
+	TEST_ASSERT_TRUE(actual);
+
+	TEST_ASSERT_FALSE(isThereAnyError());
+}
+
+void test_appendDecf_positive_value4(void) {
+	initBuffer(&bufferTest, &bufferArrayTest, TEST_BUFFER_SIZE, "nameTest", "typeTest");
+	OutputStream* outputStream = getOutputStream(&bufferTest);
+
+	appendDecf(outputStream, 1234.020F);
+	bool actual = isBufferEqualsToString(&bufferTest, "1234.020");
+	TEST_ASSERT_TRUE(actual);
+
+	TEST_ASSERT_FALSE(isThereAnyError());
+}
+
+void test_appendDecf_positive_value5(void) {
+	initBuffer(&bufferTest, &bufferArrayTest, TEST_BUFFER_SIZE, "nameTest", "typeTest");
+	OutputStream* outputStream = getOutputStream(&bufferTest);
+
+	appendDecf(outputStream, 1234.300F);
+	bool actual = isBufferEqualsToString(&bufferTest, "1234.300");
+	TEST_ASSERT_TRUE(actual);
 
 	TEST_ASSERT_FALSE(isThereAnyError());
 }
@@ -270,10 +310,9 @@ void test_appendDecf_negative_value1(void) {
 	initBuffer(&bufferTest, &bufferArrayTest, TEST_BUFFER_SIZE, "nameTest", "typeTest");
 	OutputStream* outputStream = getOutputStream(&bufferTest);
 
-	appendDecf(outputStream, -1234.5678F);
-	bool actual = isBufferEqualsToString(&bufferTest, "-1234.5678");
+	appendDecf(outputStream, -1234.56789F);
+	bool actual = isBufferEqualsToString(&bufferTest, "-1234.568");
 	TEST_ASSERT_TRUE(actual);
-	TEST_ASSERT_TRUE(isBufferEmpty(&bufferTest));
 
 	TEST_ASSERT_FALSE(isThereAnyError());
 }
@@ -283,9 +322,13 @@ void test_appendDecf_negative_value2(void) {
 	OutputStream* outputStream = getOutputStream(&bufferTest);
 
 	appendDecf(outputStream, -1234.0F);
-	bool actual = isBufferEqualsToString(&bufferTest, "-1234");
+	bool actual = isBufferEqualsToString(&bufferTest, "-1234.000");
+
+	OutputStream consoleOutputStream;
+	initConsoleOutputStream(&consoleOutputStream);
+	printDebugBuffer(&consoleOutputStream, &bufferTest);
+
 	TEST_ASSERT_TRUE(actual);
-	TEST_ASSERT_TRUE(isBufferEmpty(&bufferTest));
 
 	TEST_ASSERT_FALSE(isThereAnyError());
 }

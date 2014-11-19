@@ -159,31 +159,37 @@ int appendDec(OutputStream* stream, signed long value) {
 
 int appendDecf(OutputStream* stream, float value) {
     int result = 0;
-    unsigned long decimalValue;
+    float decimalValue;
+    long decimalValueLong;
 
     if (value < 0) {
-        decimalValue = (long) ((value - (long) value) * -1000);
+        decimalValue = ((value - (long) value) * -1000);
         append(stream, '-');
         result++;
         result += appendDec(stream, -(long) value);
     } else {
-        decimalValue = (long) ((value - (long) value) * 1000);
+        decimalValue = ((value - (long) value) * 1000);
         result += appendDec(stream, (long) value);
+    }
+    decimalValueLong = (long) decimalValue;
+
+    if (decimalValue - decimalValueLong > 0.5f) {
+        decimalValueLong++;
     }
 
     append(stream, DECIMAL_SEPARATOR);
     result++;
 
-    if (decimalValue < 100) {
+    if (decimalValueLong < 100) {
         append(stream, '0');
-        if (decimalValue < 10) {
+        if (decimalValueLong < 10) {
             append(stream, '0');
         }
-        if (decimalValue < 1) {
+        if (decimalValueLong < 1 && decimalValueLong > 0) {
             append(stream, '0');
         }
     }
-    result += appendDec(stream, decimalValue);
+    result += appendDec(stream, decimalValueLong);
 
     return result;
 }

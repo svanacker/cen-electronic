@@ -129,13 +129,15 @@ void appendHex8(OutputStream* outputStream, signed long value);
  * @param outputStream the pointer on outputStream (POO simulation)
  * @param value the value to send
  * @return the number of characters sent
+ * @return the number of char which are written
  */
 int appendDec(OutputStream* outputStream, signed long value);
 
 /**
- * Sends the decimal value of a float.*
+ * Sends the decimal value of a float. We keep only 3 chars after the comma.
  * @param outputStream the pointer on outputStream (POO simulation)
  * @param value the value to send
+ * @return the number of char which are written including part before comma, the comma, and after the comma
  */
 int appendDecf(OutputStream* outputStream, float value);
 

@@ -23,5 +23,5 @@ void flushNullOutputStream(OutputStream* outputStream) {
 }
 
 void initNullOutputStream(OutputStream* outputStream) {
-	initOutputStream(outputStream, openNullOutputStream, closeNullOutputStream, writeCharNullOutputStream, flushNullOutputStream, NULL);
+    initOutputStream(outputStream, openNullOutputStream, closeNullOutputStream, writeCharNullOutputStream, flushNullOutputStream, NULL);
 }

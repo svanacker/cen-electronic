@@ -150,6 +150,9 @@
     <ClCompile Include="test\common\io\printWriterTest.c">
       <Filter>Source Files\test\common\io</Filter>
     </ClCompile>
+    <ClCompile Include="common\io\consoleOutputStream.c">
+      <Filter>Source Files\common\io</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -238,6 +241,9 @@
     </ClInclude>
     <ClInclude Include="test\common\io\printWriterTest.h">
       <Filter>Header Files\test\common\io</Filter>
+    </ClInclude>
+    <ClInclude Include="common\io\consoleOutputStream.h">
+      <Filter>Header Files\common\io</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

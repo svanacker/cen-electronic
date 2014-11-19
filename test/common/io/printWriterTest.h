@@ -63,6 +63,12 @@ void test_appendDecf_positive_value1(void);
 
 void test_appendDecf_positive_value2(void);
 
+void test_appendDecf_positive_value3(void);
+
+void test_appendDecf_positive_value4(void);
+
+void test_appendDecf_positive_value5(void);
+
 void test_appendDecf_negative_value1(void);
 
 void test_appendDecf_negative_value2(void);

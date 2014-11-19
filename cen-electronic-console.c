@@ -77,12 +77,13 @@ void printWriterTests() {
 	RUN_TEST(test_appendDec_simple);
 	RUN_TEST(test_appendDec_negative_value);
 
-	/*
 	RUN_TEST(test_appendDecf_positive_value1);
 	RUN_TEST(test_appendDecf_positive_value2);
+	RUN_TEST(test_appendDecf_positive_value3);
+	RUN_TEST(test_appendDecf_positive_value4);
+	RUN_TEST(test_appendDecf_positive_value5);
 	RUN_TEST(test_appendDecf_negative_value1);
 	RUN_TEST(test_appendDecf_negative_value2);
-	*/
 }
 
 int main(int argc, char *argv[])
