@@ -1,6 +1,8 @@
 #ifndef ROBOT_H
 #define ROBOT_H
 
+#include <stdbool.h>
+
 #include "../common/commons.h"
 #include "../common/io/outputStream.h"
 

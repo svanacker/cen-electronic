@@ -315,8 +315,8 @@ int main(void) {
     addLogHandler(&lcdLogHandler, "LCD", &lcdOutputStream, ERROR);
 
     init74c922();
-    init24C16Eeprom(&eeprom);
-    initClockPCF8573(&globalClock);
+    //init24C16Eeprom(&eeprom);
+    initClockPCF8563(&globalClock);
 
     appendString(getOutputStreamLogger(DEBUG), getPicName());
     println(getOutputStreamLogger(DEBUG));
@@ -335,7 +335,8 @@ int main(void) {
     globalClock.readClock(&globalClock);
 
     // Print on the OutputStream
-    printClock(getOutputStreamLogger(DEBUG), globalClock);
+
+    printClock(getOutputStreamLogger(DEBUG), &globalClock);
     appendCR(getOutputStreamLogger(DEBUG));
 
     setTemperatureAlertLimit(0x35);//35?C
@@ -351,7 +352,7 @@ int main(void) {
     
     initBuffer(&eepromBuffer,&eepromBufferArray, EEPROM_BUFFER_LENGTH,"EEPROM BUFFER","");
 
-    printEepromBlock(&eeprom, &debugOutputStream, 0x0000,0x10, &eepromBuffer);
+//    printEepromBlock(&eeprom, &debugOutputStream, 0x0000,0x10, &eepromBuffer);
     while (1){
         setCursorPosition_24064(0,23);  //raw,col
 
@@ -359,6 +360,7 @@ int main(void) {
         globalClock.readClock(&globalClock);
         // Print on the OutputStream
         printClock(&lcdOutputStream, &globalClock);
+
         waitForInstruction();
 
 

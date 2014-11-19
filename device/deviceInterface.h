@@ -1,6 +1,6 @@
 #ifndef DEVICE_INTERFACE_H
 #define DEVICE_INTERFACE_H
-
+#include <stdbool.h>
 #include "../common/commons.h"
 
 /**

@@ -1,6 +1,8 @@
 #ifndef DRIVER_TRANSMITTER_H
 #define DRIVER_TRANSMITTER_H
 
+#include <stdbool.h>
+
 #include "../common/commons.h"
 
 /**

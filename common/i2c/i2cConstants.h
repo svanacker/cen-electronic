@@ -84,8 +84,8 @@
 
 
 //CLOCK PCF8563
-// Warning : Conflict with EEPROM ST24C16
-#define PCF8563_ADDRESS               0xA2
+// Warning : Conflict with EEPROM "<ST24C16"
+#define PCF8563_WRITE_ADDRESS               0xA2
 
 // CMPS03
 

@@ -1,6 +1,8 @@
 #ifndef ARM_DRIVER_2012_H
 #define ARM_DRIVER_2012_H
 
+#include <stdbool.h>
+
 #include "../../common/commons.h"
 
 /**
