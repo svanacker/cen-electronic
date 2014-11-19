@@ -103,6 +103,10 @@
 #include "../../device/lcd/lcdDeviceInterface.h"
 
 #include "../../common/eeprom/eeprom.h"
+
+#include "../../device/eeprom/eepromDevice.h"
+#include "../../device/eeprom/eepromDeviceInterface.h"
+
 #include "MenuJK330.h"
 
 
@@ -235,7 +239,7 @@ void initDevicesDescriptor() {
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&globalClock));
     addLocalDevice(getLCDDeviceInterface(), getLCDDeviceDescriptor());
     addLocalDevice(getTemperatureSensorDeviceInterface(), getTemperatureSensorDeviceDescriptor());
-//     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor());
+    addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
 
     // Init the devices
     initDevices();  
