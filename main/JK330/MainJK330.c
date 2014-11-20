@@ -191,7 +191,7 @@ static Timer timerListArray[MAIN_BOARD_TIMER_LENGTH];
 static Buffer st24C16Buffer;
 static char st24C16BufferArray[ST24C16_EEPROM_BUFFER_LENGTH];
 static Buffer st24C16Buffer;
-static Eeprom eeprom;
+static Eeprom eeprom_;
 
 // Clock
 static Clock globalClock;
@@ -239,7 +239,7 @@ void initDevicesDescriptor() {
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&globalClock));
     addLocalDevice(getLCDDeviceInterface(), getLCDDeviceDescriptor());
     addLocalDevice(getTemperatureSensorDeviceInterface(), getTemperatureSensorDeviceDescriptor());
-    addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
+    addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom_));
 
     // Init the devices
     initDevices();  
@@ -319,7 +319,7 @@ int main(void) {
     addLogHandler(&lcdLogHandler, "LCD", &lcdOutputStream, ERROR);
 
     init74c922();
-    //init24C16Eeprom(&eeprom);
+    init24C16Eeprom(&eeprom_);
     initClockPCF8563(&globalClock);
 
     appendString(getOutputStreamLogger(DEBUG), getPicName());

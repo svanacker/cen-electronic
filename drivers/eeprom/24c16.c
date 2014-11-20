@@ -75,7 +75,7 @@ unsigned long get24C16Address(unsigned long index) {
  * @see eeprom.h
  * @private
  */
-void _writeEeprom24C16Int(Eeprom* eeprom, unsigned long index, signed int value){
+void _writeEeprom24C16Int(Eeprom* eeprom_, unsigned long index, signed int value){
     portableMasterWaitSendI2C();
     portableStartI2C();
     WaitI2C();
@@ -83,7 +83,7 @@ void _writeEeprom24C16Int(Eeprom* eeprom, unsigned long index, signed int value)
     portableMasterWriteI2C(blockAddress);
     WaitI2C();
 
-    unsigned int address = get24C16BlockAddress(index);
+    unsigned int address = get24C16Address(index);
     portableMasterWriteI2C(address);
     WaitI2C();
     portableMasterWriteI2C(value);
@@ -97,7 +97,7 @@ void _writeEeprom24C16Int(Eeprom* eeprom, unsigned long index, signed int value)
  * @see eeprom.h
  * @private
  */
-signed int _readEeprom24C16Int(Eeprom* eeprom, unsigned long index){
+signed int _readEeprom24C16Int(Eeprom* eeprom_, unsigned long index){
     portableMasterWaitSendI2C();
      // Set the register command
     int blockAddress = get24C16BlockAddress(index);
@@ -125,7 +125,7 @@ signed int _readEeprom24C16Int(Eeprom* eeprom, unsigned long index){
  * @see eeprom.h
  * @private
  */
-void _writeEeprom24C16Block (Eeprom* eeprom, unsigned long index, unsigned int length, Buffer* buffer) {
+void _writeEeprom24C16Block (Eeprom* eeprom_, unsigned long index, unsigned int length, Buffer* buffer) {
     int blockAddress = get24C16BlockAddress(index);
     int address = get24C16Address(index);
     portableMasterWaitSendI2C();
@@ -151,7 +151,7 @@ void _writeEeprom24C16Block (Eeprom* eeprom, unsigned long index, unsigned int l
  * @see eeprom.h
  * @private
  */
-void _readEeprom24C16Block(Eeprom* eeprom, unsigned long index, unsigned int length, Buffer* buffer){
+void _readEeprom24C16Block(Eeprom* eeprom_, unsigned long index, unsigned int length, Buffer* buffer){
     // Set the register command
     int blockAddress = get24C16BlockAddress(index);
     int address = get24C16Address(index);
@@ -178,6 +178,6 @@ void _readEeprom24C16Block(Eeprom* eeprom, unsigned long index, unsigned int len
     WaitI2C();
 }
 
-void init24C16Eeprom(Eeprom* eeprom) { 
-    initEeprom(eeprom, _writeEeprom24C16Int, _readEeprom24C16Int, _writeEeprom24C16Block, _readEeprom24C16Block);
+void init24C16Eeprom(Eeprom* eeprom_) {
+    initEeprom(eeprom_, _writeEeprom24C16Int, _readEeprom24C16Int, _writeEeprom24C16Block, _readEeprom24C16Block);
 }
