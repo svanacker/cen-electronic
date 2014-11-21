@@ -15,7 +15,6 @@
 
 /**
  * Contains all parse string manipulation which can be done on inputStream
- * @author svanacker
  */
 
 // READ METHODS

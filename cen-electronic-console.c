@@ -6,6 +6,8 @@
 
 #include "test/common/io/bufferTest.h"
 #include "test/common/io/printWriterTest.h"
+#include "test/common/io/readerTest.h"
+
 #include "test/common/math/hexUtilsTest.h"
 
 void setUp(void)
@@ -17,7 +19,7 @@ void tearDown(void)
 {
 }
 
-void bufferTests() {
+void hexUtilsTests() {
 	RUN_TEST(test_hex2CharToInt_should_equal_to_0_if_0);
 	RUN_TEST(test_hex2CharToInt_should_equal_to_197_if_C5);
 	RUN_TEST(test_hex2CharToInt_should_equal_to_255_if_FF);
@@ -29,6 +31,10 @@ void bufferTests() {
 	RUN_TEST(hex6CharToFloat_should_equal_to_0_if_0);
 	RUN_TEST(hex6CharToFloat_should_equal_to_1193046_if_123456);
 	RUN_TEST(hex6CharToFloat_should_equal_to_16777215_if_FFFFFF);
+}
+
+void bufferTests() {
+
 
 	RUN_TEST(test_initBuffer_with_null_buffer_should_throw_buffer_null_error);
 	RUN_TEST(test_initBuffer_should_be_right_initialized_and_empty_and_not_full);
@@ -86,14 +92,20 @@ void printWriterTests() {
 	RUN_TEST(test_appendDecf_negative_value2);
 }
 
+void readerTests(void) {
+	RUN_TEST(test_readFilteredChar);
+}
+
 int main(int argc, char *argv[])
 {
 	UnityBegin("cen-electronic-console");
 
 	// RUN_TEST calls runTest
 
+	hexUtilsTests();
 	bufferTests();
 	printWriterTests();
+	readerTests();
 
 	UnityEnd();
 

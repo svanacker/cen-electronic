@@ -12,6 +12,10 @@
 static Buffer bufferTest;
 static char bufferArrayTest[TEST_BUFFER_SIZE];
 
+void initNullBufferForTest(void) {
+	initBuffer(NULL, (char(*)[]) &bufferArrayTest, TEST_BUFFER_SIZE, "bufferTest", "bufferTestType");
+}
+
 void initBufferForTest(void) {
 	initBuffer(&bufferTest, (char(*)[]) &bufferArrayTest, TEST_BUFFER_SIZE, "bufferTest", "bufferTestType");
 }
@@ -19,7 +23,7 @@ void initBufferForTest(void) {
 // initBuffer
 
 void test_initBuffer_with_null_buffer_should_throw_buffer_null_error(void) {
-	initBuffer(NULL, (char(*)[]) &bufferArrayTest, TEST_BUFFER_SIZE, "nameTest", "typeTest");
+	initNullBufferForTest();
 
 	int actual = getLastError();
 	TEST_ASSERT_EQUAL(IO_BUFFER_NULL, actual);
@@ -238,7 +242,7 @@ void test_getOutputStream(void) {
 }
 
 void test_getOutputStream_if_buffer_null(void) {
-	initBufferForTest();
+	initNullBufferForTest();
 	OutputStream* outputStream = getOutputStream(&bufferTest);
 
 	TEST_ASSERT_EQUAL(IO_BUFFER_NULL, getLastError());
@@ -257,7 +261,7 @@ void test_getInputStream(void) {
 }
 
 void test_getInputStream_if_buffer_null(void) {
-	initBufferForTest();
+	initNullBufferForTest();
 	InputStream* inputStream = getInputStream(&bufferTest);
 
 	TEST_ASSERT_EQUAL(IO_BUFFER_NULL, getLastError());
