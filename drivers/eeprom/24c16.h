@@ -8,6 +8,6 @@
  * Initialize a type of eeprom : 24C16
  * @param eeprom a pointer of eeprom type.
  */
-void init24C16Eeprom(Eeprom* eeprom);
+void init24C16Eeprom(Eeprom* eeprom_);
 
 #endif

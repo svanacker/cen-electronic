@@ -15,14 +15,14 @@ typedef struct Eeprom Eeprom;
  * @param index the index of the WORD in the EEPROM table. Index 0 should not be used because this value is erased when reprogramming the device.
  * @param value the value to store
  */
-typedef void EepromWriteIntFunction(Eeprom* eeprom, unsigned long index, signed int value);
+typedef void EepromWriteIntFunction(Eeprom* eeprom_, unsigned long index, signed int value);
 
 /**
  * Reads the value from the EEPROM at the given index.
  * @param index the index of the WORD value to read
  * @return the WORD value as a signed int
  */
-typedef signed int EepromReadIntFunction(Eeprom* eeprom, unsigned long index);
+typedef signed int EepromReadIntFunction(Eeprom* eeprom_, unsigned long index);
 
 /**
 * Write the buffer into the Eeprom.
@@ -30,7 +30,7 @@ typedef signed int EepromReadIntFunction(Eeprom* eeprom, unsigned long index);
 * @param length the number of data to write
 * @param buffer the pointer on buffer
 */
-typedef void EepromWriteBlockFunction(Eeprom* eeprom, unsigned long index, unsigned int length, Buffer* buffer);
+typedef void EepromWriteBlockFunction(Eeprom* eeprom_, unsigned long index, unsigned int length, Buffer* buffer);
 
 /**
  * Read values from the EEPROM device.
@@ -39,7 +39,7 @@ typedef void EepromWriteBlockFunction(Eeprom* eeprom, unsigned long index, unsig
  * @param length the number of data to read
  * @param buffer the pointer on buffer
  */
-typedef void EepromReadBlockFunction(Eeprom* eeprom, unsigned long index, unsigned int length, Buffer* buffer);
+typedef void EepromReadBlockFunction(Eeprom* eeprom_, unsigned long index, unsigned int length, Buffer* buffer);
 
 /**
  * Defines the contract for an eeprom.
@@ -64,7 +64,7 @@ struct Eeprom {
  * @param eepromReadBlock the pointer on the real hardware function which writes a block of data.
  * @param eepromWriteBlock the pointer on the real hardware function which reads a block of data.
  */
-void initEeprom(Eeprom* eeprom, 
+void initEeprom(Eeprom* eeprom_,
                 EepromWriteIntFunction* eepromWriteInt,
                 EepromReadIntFunction* eepromReadInt,
                 EepromWriteBlockFunction* eepromWriteBlock,
@@ -73,12 +73,12 @@ void initEeprom(Eeprom* eeprom,
 /**
  * Print the values of the buffer on the outputStream from the EEPROM device.
  * Slave will return all values and print them on the outputStream
- * @param eeprom the pointer on the eeprom object
+ * @param eeprom_ the pointer on the eeprom object
  * @param outputStream the outputStream in which we write the content of the eeprom
  * @param index the random address to read
  * @param length the number of data to read
  * @param buffer the pointer on buffer
  */
-void printEepromBlock(Eeprom* eeprom, OutputStream* outputStream, long index, unsigned int length, Buffer* buffer);
+void printEepromBlock(Eeprom* eeprom_, OutputStream* outputStream, long index, unsigned int length, Buffer* buffer);
 
 #endif
