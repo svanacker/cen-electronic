@@ -3,7 +3,7 @@
 #include "pcf8573p.h"
 
 #include "../../common/clock/clock.h"
-#include "../../common/I2C/I2Ccommon.h"
+#include "../../common/i2c/i2cCommon.h"
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
 

@@ -27,7 +27,7 @@
 #include "../../robot/config/robotConfigDevice.h"
 #include "../../robot/robot.h"
 
-#include "../../main/motorBoard/motorBoard.h"
+#include "../../main/motorboard/motorBoard.h"
 
 #define SONAR_INDEX            0
 
