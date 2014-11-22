@@ -148,6 +148,7 @@ static Buffer i2cMasterDebugInputBuffer;
 //EEPROM
 static Buffer eepromBuffer;
 static char eepromBufferArray[EEPROM_BUFFER_LENGTH];
+static Eeprom eeprom_;
 
 // DISPATCHER I2C
 
@@ -186,13 +187,6 @@ static Device deviceListArray[MAIN_BOARD_DEVICE_LENGTH];
 // Timers
 static Timer timerListArray[MAIN_BOARD_TIMER_LENGTH];
 
-// Eeprom
-#define ST24C16_EEPROM_BUFFER_LENGTH     17
-static Buffer st24C16Buffer;
-static char st24C16BufferArray[ST24C16_EEPROM_BUFFER_LENGTH];
-static Buffer st24C16Buffer;
-static Eeprom eeprom_;
-
 // Clock
 static Clock globalClock;
 
@@ -205,10 +199,6 @@ static Clock globalClock;
 static const char* HELLO_UART_PC = "JK330 with PIC32...on UART PC\r\n";
 static const char* HELLO_UART_DEBUG = "JK330 with PIC32...on UART DEBUG\r\n";
 static const char* HELLO_UART_TEST = "JK330 with PIC32...on UART TEZST\r\n";
-
-// Variable Capteur de temperature MCP9804
-int BCD1, BCD2, BCD3, BCD4;
-int BCD10;
 
 //#define ACK 1
 //#define NACK 0
@@ -319,7 +309,7 @@ int main(void) {
     addLogHandler(&lcdLogHandler, "LCD", &lcdOutputStream, ERROR);
 
     init74c922();
-    init24C16Eeprom(&eeprom_);
+    init24C512Eeprom(&eeprom_);
     initClockPCF8563(&globalClock);
 
     appendString(getOutputStreamLogger(DEBUG), getPicName());
@@ -349,14 +339,9 @@ int main(void) {
     setCursorAtHome();
     menu_P(&lcdOutputStream);
 
-    //eepromWriteint (0x02,0x65);
-    
-    //appendHex2(&debugOutputStream,eepromReadInt(0x02));
-    //appendCR(&debugOutputStream);
-    
     initBuffer(&eepromBuffer,&eepromBufferArray, EEPROM_BUFFER_LENGTH,"EEPROM BUFFER","");
 
-//    printEepromBlock(&eeprom, &debugOutputStream, 0x0000,0x10, &eepromBuffer);
+    printEepromBlock(&eeprom_, &debugOutputStream, 0x0000,0x10, &eepromBuffer);
     while (1){
         setCursorPosition_24064(0,23);  //raw,col
 
