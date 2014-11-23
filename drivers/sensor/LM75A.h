@@ -7,6 +7,12 @@
 #define LM75A_HYSTERESIS_SENSOR_REGISTER        0x02
 #define LM75A_OVER_TEMPERATURE_SENSOR_REGISTER   0x03
 
+// Overtemp Shutdown output
+//  0  OS active LOW
+//  1  OS active HIGH
+#define OS_POLARITY_LOW 0x00
+#define OS_POLARITY_HIGH 0x04
+
 
 #endif
 

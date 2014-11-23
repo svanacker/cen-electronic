@@ -3,7 +3,7 @@
 
 #include "../../common/commons.h"
 
-#include "../../drivers/dispatcher/DriverDataDispatcher.h"
+#include "../../drivers/dispatcher/driverDataDispatcher.h"
 
 /**
 * State to know if it's ready for Next Motion.

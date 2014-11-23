@@ -61,8 +61,7 @@ void setTemperatureAlertLimit(int TemperatureSensorAlert){
     WaitI2C();
     portableMasterWriteI2C(LM75A_CONFIGURATION_SENSOR_REGISTER);
     WaitI2C();
-    // TODO JJ : Magic Number
-    portableMasterWriteI2C(4);
+    portableMasterWriteI2C(OS_POLARITY_HIGH);
 
     WaitI2C();
     portableStopI2C();

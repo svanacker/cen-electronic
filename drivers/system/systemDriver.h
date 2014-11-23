@@ -1,8 +1,8 @@
 #ifndef SYSTEM_DRIVER_H
 #define SYSTEM_DRIVER_H
 
-#include "../../common/io/OutputStream.h"
-#include "../../drivers/dispatcher/DriverDataDispatcher.h"
+#include "../../common/io/outputStream.h"
+#include "../../drivers/dispatcher/driverDataDispatcher.h"
 
 /**
 * PING a data dispatcher.

@@ -55,7 +55,7 @@ unsigned long get24C16Address(unsigned long index) {
     } else if (index < 0x1800) {
         address -= 0x1000;
     } else if (index < 0x2000) {
-        address -= 0x18000;
+        address -= 0x1800;
     } else if (index < 0x2800) {
         address -= 0x2000;
     } else if (index < 0x3000) {

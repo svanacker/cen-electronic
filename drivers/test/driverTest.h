@@ -2,7 +2,7 @@
 #define DRIVER_TEST_H
 
 #include "../../drivers/driver.h"
-#include "../../drivers/dispatcher/DriverDataDispatcher.h"
+#include "../../drivers/dispatcher/driverDataDispatcher.h"
 
 /**
 * Call to driverTest value.

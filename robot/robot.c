@@ -27,7 +27,7 @@
 #include "../device/motion/simple/motionDeviceInterface.h"
 #include "../robot/match/endMatchDetectorDevice.h"
 
-#include "../main/motorBoard/motorBoard.h"
+#include "../main/motorboard/motorBoard.h"
 
 // ROBOT POSITIONG
 // x / y
