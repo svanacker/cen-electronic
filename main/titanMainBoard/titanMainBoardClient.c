@@ -65,6 +65,16 @@
 #include "../../drivers/dispatcher/i2cDriverDataDispatcher.h"
 #include "../../drivers/dispatcher/localDriverDataDispatcher.h"
 
+// CLOCK
+#include "../../common/clock/clock.h"
+#include "../../device/clock/clockDevice.h"
+#include "../../device/clock/clockDeviceInterface.h"
+
+// TEMPERATURE SENSOR
+#include "../../device/temperatureSensor/temperatureSensor.h"
+#include "../../device/temperatureSensor/temperatureSensorDevice.h"
+#include "../../device/temperatureSensor/temperatureSensorDeviceInterface.h"
+
 // SYSTEM
 #include "../../device/system/systemDevice.h"
 #include "../../device/system/systemDeviceInterface.h"
@@ -118,7 +128,7 @@
 #include "../../device/beacon/beaconReceiverDeviceInterface.h"
 
 // Drivers
-#include "../../drivers/clock/pcf8573p.h"
+#include "../../drivers/clock/PCF8563.h"
 #include "../../drivers/io/pcf8574.h"
 #include "../../drivers/test/driverTest.h"
 #include "../../drivers/system/systemDriver.h"
@@ -127,6 +137,19 @@
 #include "../../drivers/motor/md22.h"
 #include "../../drivers/driverTransmitter.h"
 #include "../../drivers/strategy/strategyDriver.h"
+#include "../../drivers/sensor/LM75A.h"
+
+
+
+
+#include "../../common/eeprom/eeprom.h"
+
+#include "../../device/eeprom/eepromDevice.h"
+#include "../../device/eeprom/eepromDeviceInterface.h"
+
+
+
+
 
 // Robot
 #include "../../robot/config/robotConfig.h"
@@ -157,7 +180,7 @@
 
 #ifndef MPLAB_SIMULATION
     #ifdef PROG_32
-        #define SERIAL_PORT_DEBUG         SERIAL_PORT_2 
+        #define SERIAL_PORT_DEBUG          SERIAL_PORT_2
         #define SERIAL_PORT_PC             SERIAL_PORT_6
         #define SERIAL_PORT_LCD            SERIAL_PORT_5
     #else
@@ -224,6 +247,14 @@ static char mechanical2BoardInputBufferArray[MAIN_BOARD_LINK_TO_MECA_BOARD_2_BUF
 static Buffer mechanical2BoardInputBuffer;
 static InputStream mechanical2BoardInputStream;
 static OutputStream mechanical2BoardOutputStream;
+
+// i2c->Clock
+static Clock globalClock;
+
+// i2c->Eeprom
+static Buffer eepromBuffer;
+static char eepromBufferArray[EEPROM_BUFFER_LENGTH];
+static Eeprom eeprom_;
 
 // lcd DEBUG 
 static OutputStream lcdOutputStream;
@@ -430,7 +461,13 @@ void initDevicesDescriptor() {
     addLocalDevice(getI2cMasterDebugDeviceInterface(), getI2cMasterDebugDeviceDescriptor());
 
     // Local
+    addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&globalClock));
     addLocalDevice(getLCDDeviceInterface(), getLCDDeviceDescriptor());
+    addLocalDevice(getTemperatureSensorDeviceInterface(), getTemperatureSensorDeviceDescriptor());
+    addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom_));
+
+
+
     // addLocalDevice(&servoDevice, getServoDeviceInterface(), getServoDeviceDescriptor());
     addLocalDevice(getRobotConfigDeviceInterface(), getRobotConfigDeviceDescriptor());
     addLocalDevice(getStartMatchDetectorDeviceInterface(), getStartMatchDetectorDeviceDescriptor());
@@ -506,7 +543,7 @@ bool isObstacleOutsideTheTable(int distance) {
 */
 
 void waitForInstruction() {
-    /*
+    
     // Listen instruction from pcStream->Devices
     handleStreamInstruction(
             &pcInputBuffer,
@@ -514,7 +551,7 @@ void waitForInstruction() {
             &pcOutputStream,
             &filterRemoveCRLF,
             NULL);
-    */
+    
     // Listen instruction from debugStream->Devices
     handleStreamInstruction(
             &debugInputBuffer,
@@ -574,9 +611,9 @@ void waitForInstruction() {
 }
 
 int main(void) {
-    setPicName("MAIN BOARD");
+    setPicName("TITAN ELECTRONICAL MAIN BOARD 32");
 
-    setRobotMustStop(false);
+    //setRobotMustStop(false);
     // Open the serial Link for debug
     openSerialLink(&debugSerialStreamLink,
             &debugInputBuffer,
@@ -633,7 +670,7 @@ int main(void) {
     */
 
     appendString(&debugOutputStream, "DEBUG\n");
-
+    appendString(&lcdOutputStream, "TEST");
     // Start interruptions
     // startTimerList();
 

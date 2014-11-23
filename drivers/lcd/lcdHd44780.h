@@ -5,21 +5,37 @@
 * Definition des ports utilisés pour utiliser l'afficheur LCD
 ********************/
 
-/*
+
 #ifdef PROG_32
-    #define RW_LCD             BIT_3
-    #define RS_LCD             BIT_1
-    #define E_LCD              BIT_0
-    #define D0_LCD             BIT_0
-    #define D1_LCD             BIT_1
-    #define D2_LCD             BIT_2
-    #define D3_LCD             BIT_3
-    #define D4_LCD             BIT_4
-    #define D5_LCD             BIT_5
-    #define D6_LCD             BIT_6
-    #define D7_LCD             BIT_7
+    #define RW_LCD  PORTFbits.RF3
+    #define RS_LCD  PORTFbits.RF1
+    #define E_LCD   PORTFbits.RF0
+
+    #define D0_LCD  PORTEbits.RE0
+    #define D1_LCD  PORTEbits.RE1
+    #define D2_LCD  PORTEbits.RE2
+    #define D3_LCD  PORTEbits.RE3
+    #define D4_LCD  PORTEbits.RE4
+    #define D5_LCD  PORTEbits.RE5
+    #define D6_LCD  PORTEbits.RE6
+    #define D7_LCD  PORTEbits.RE7
+
+    #define TRIS_RS_LCD TRISFbits.TRISF1
+    #define TRIS_RW_LCD TRISFbits.TRISF3
+    #define TRIS_E_LCD  TRISFbits.TRISF0
+
+    #define TRIS_D0_LCD TRISEbits.TRISE0
+    #define TRIS_D1_LCD TRISEbits.TRISE1
+    #define TRIS_D2_LCD TRISEbits.TRISE2
+    #define TRIS_D3_LCD TRISEbits.TRISE3
+    #define TRIS_D4_LCD TRISEbits.TRISE4
+    #define TRIS_D5_LCD TRISEbits.TRISE5
+    #define TRIS_D6_LCD TRISEbits.TRISE6
+    #define TRIS_D7_LCD TRISEbits.TRISE7
+
+
 #else
-*/
+
     #define RS_LCD             LATBbits.LATB4
     #define RW_LCD             LATBbits.LATB5
     #define E_LCD              LATBbits.LATB8
@@ -37,7 +53,7 @@
     #define TRIS_D5_LCD     TRISBbits.TRISB10
     #define TRIS_D6_LCD     TRISBbits.TRISB11
     #define TRIS_D7_LCD        TRISBbits.TRISB12
-// #endif
+ #endif
     
 /**
 * Initialise l'afficheur LCD
