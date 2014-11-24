@@ -308,9 +308,9 @@ void test_appendDecf_negative_value2(void) {
 	appendDecf(outputStream, -1234.0F);
 	bool actual = isBufferEqualsToString(&bufferTest, "-1234.000");
 
-	OutputStream consoleOutputStream;
-	initConsoleOutputStream(&consoleOutputStream);
-	printDebugBuffer(&consoleOutputStream, &bufferTest);
+	// OutputStream consoleOutputStream;
+	// initConsoleOutputStream(&consoleOutputStream);
+	// printDebugBuffer(&consoleOutputStream, &bufferTest);
 
 	TEST_ASSERT_TRUE(actual);
 

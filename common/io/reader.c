@@ -32,7 +32,7 @@ char readFilteredChar(InputStream* inputStream) {
         appendString(debugOutputStream, "Hex:");
         appendHex2(debugOutputStream, b0);
 
-        return -1;
+        return FILTERED_RESULT;
     }
 }
 
@@ -47,10 +47,9 @@ int readBinaryWord(InputStream* inputStream) {
     return (b0 << 8) | b1;
 }
 
-
 int readHex(InputStream* inputStream) {
-    char b1 = readFilteredChar(inputStream);
-    int result = hex2CharToInt(0, b1);
+    char b0 = readFilteredChar(inputStream);
+    int result = hex2CharToInt(0, b0);
     return result;
 }
 

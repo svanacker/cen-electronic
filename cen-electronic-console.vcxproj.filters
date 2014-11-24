@@ -156,6 +156,9 @@
     <ClCompile Include="test\common\io\readerTest.c">
       <Filter>Source Files\test\common\io</Filter>
     </ClCompile>
+    <ClCompile Include="test\common\io\filterTest.c">
+      <Filter>Source Files\test\common\io</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -249,6 +252,9 @@
       <Filter>Header Files\common\io</Filter>
     </ClInclude>
     <ClInclude Include="test\common\io\readerTest.h">
+      <Filter>Header Files\test\common\io</Filter>
+    </ClInclude>
+    <ClInclude Include="test\common\io\filterTest.h">
       <Filter>Header Files\test\common\io</Filter>
     </ClInclude>
   </ItemGroup>

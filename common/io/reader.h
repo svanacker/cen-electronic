@@ -5,6 +5,8 @@
 
 // READ METHODS
 
+#define	FILTERED_RESULT -1
+
 /**
  * Read a char with filtering.
  * TODO : To Review

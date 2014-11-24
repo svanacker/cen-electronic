@@ -5,6 +5,7 @@
 #include "test/unity/unity.h"
 
 #include "test/common/io/bufferTest.h"
+#include "test/common/io/filterTest.h"
 #include "test/common/io/printWriterTest.h"
 #include "test/common/io/readerTest.h"
 
@@ -60,6 +61,11 @@ void bufferTests() {
 	RUN_TEST(test_getInputStream_if_buffer_null);
 }
 
+void filterTests() {
+	RUN_TEST(test_filterBinaryToValueChar);
+	RUN_TEST(test_filterRemoveCRLF);
+}
+
 void printWriterTests() {
 	RUN_TEST(test_append_simple);
 	RUN_TEST(test_append_repeat);
@@ -94,6 +100,10 @@ void printWriterTests() {
 
 void readerTests(void) {
 	RUN_TEST(test_readFilteredChar);
+	RUN_TEST(test_readBinaryChar);
+	RUN_TEST(test_readBinaryWord);
+	RUN_TEST(test_readHex);
+	RUN_TEST(test_readHex2);
 }
 
 int main(int argc, char *argv[])
@@ -104,6 +114,7 @@ int main(int argc, char *argv[])
 
 	hexUtilsTests();
 	bufferTests();
+	filterTests();
 	printWriterTests();
 	readerTests();
 
