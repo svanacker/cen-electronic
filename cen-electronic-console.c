@@ -109,6 +109,9 @@ void readerTests(void) {
 	RUN_TEST(test_readSignedHex4);
 	RUN_TEST(test_readHex6);
 	RUN_TEST(test_isAck);
+	RUN_TEST(test_isChar);
+	RUN_TEST(test_checkIsAck);
+	RUN_TEST(test_checkIsChar);
 }
 
 int main(int argc, char *argv[])

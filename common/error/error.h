@@ -47,6 +47,8 @@ void clearLastError();
 
 
 #define IO_READER_READ_FILTERED_CHAR    0x0120
+#define IO_READER_CHECK_CHAR_PROBLEM    0x0130
+
 
 // TIMER
 #define TOO_MUCH_TIMERS                    0x0200

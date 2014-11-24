@@ -41,4 +41,16 @@ void test_readHex6(void);
 
 void test_isAck(void);
 
+// isChar
+
+void test_isChar(void);
+
+// checkIsAck
+
+void test_checkIsAck(void);
+
+// checkIsChar
+
+void test_checkIsChar(void);
+
 #endif
