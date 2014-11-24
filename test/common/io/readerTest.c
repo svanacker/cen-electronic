@@ -104,7 +104,7 @@ void test_readHex2(void) {
 	TEST_ASSERT_EQUAL(181, value);
 	TEST_ASSERT_EQUAL(0, getLastError());
 
-	// FF
+	// FF, value > 127, but we are in unsigned mode
 	value = readHex2(inputStream);
 	TEST_ASSERT_EQUAL(255, value);
 	TEST_ASSERT_EQUAL(0, getLastError());
@@ -112,5 +112,87 @@ void test_readHex2(void) {
 	// 10
 	value = readHex2(inputStream);
 	TEST_ASSERT_EQUAL(16, value);
+	TEST_ASSERT_EQUAL(0, getLastError());
+}
+
+void test_readSignedHex2(void) {
+	initBufferForReaderTest();
+
+	appendString(outputStream, "B5FF10");
+
+	// B5
+	signed int value = readSignedHex2(inputStream);
+	TEST_ASSERT_EQUAL(-75, value);
+	TEST_ASSERT_EQUAL(0, getLastError());
+
+	// FF, value > 127, but we are in signed mode
+	value = readSignedHex2(inputStream);
+	TEST_ASSERT_EQUAL(-1, value);
+	TEST_ASSERT_EQUAL(0, getLastError());
+
+	// 10 : must be not signed value
+	value = readSignedHex2(inputStream);
+	TEST_ASSERT_EQUAL(16, value);
+	TEST_ASSERT_EQUAL(0, getLastError());
+}
+
+void test_readHex4(void) {
+	initBufferForReaderTest();
+
+	appendString(outputStream, "B5FF103F");
+
+	// B5FF, value > 35535, but we are in unsigned mode
+	long value = readHex4(inputStream);
+	TEST_ASSERT_EQUAL(46591, value);
+	TEST_ASSERT_EQUAL(0, getLastError());
+
+	// 103F
+	value = readHex4(inputStream);
+	TEST_ASSERT_EQUAL(4159, value);
+	TEST_ASSERT_EQUAL(0, getLastError());
+}
+
+
+void test_readSignedHex4(void) {
+	initBufferForReaderTest();
+
+	appendString(outputStream, "B5FF103F");
+
+	// B5FF, value > 35535, and we are in unsigned mode !
+	signed long value = readSignedHex4(inputStream);
+	TEST_ASSERT_EQUAL(-18945, value);
+	TEST_ASSERT_EQUAL(0, getLastError());
+
+	// 103F
+	value = readSignedHex4(inputStream);
+	TEST_ASSERT_EQUAL(4159, value);
+	TEST_ASSERT_EQUAL(0, getLastError());
+}
+
+void test_readHex6(void) {
+	initBufferForReaderTest();
+
+	appendString(outputStream, "B5FF10");
+
+	// Value is > 0 always
+	float value = readHex6(inputStream);
+	TEST_ASSERT_EQUAL(value, 11927312.0F);
+	TEST_ASSERT_EQUAL(0, getLastError());
+}
+
+void test_isAck(void) {
+	initBufferForReaderTest();
+
+	appendString(outputStream, "aA\1");
+
+	bool value = isAck(inputStream);
+	TEST_ASSERT_TRUE(value);
+
+	value = isAck(inputStream);
+	TEST_ASSERT_FALSE(value);
+
+	value = isAck(inputStream);
+	TEST_ASSERT_FALSE(value);
+
 	TEST_ASSERT_EQUAL(0, getLastError());
 }

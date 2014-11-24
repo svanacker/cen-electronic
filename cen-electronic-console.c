@@ -104,6 +104,11 @@ void readerTests(void) {
 	RUN_TEST(test_readBinaryWord);
 	RUN_TEST(test_readHex);
 	RUN_TEST(test_readHex2);
+	RUN_TEST(test_readSignedHex2);
+	RUN_TEST(test_readHex4);
+	RUN_TEST(test_readSignedHex4);
+	RUN_TEST(test_readHex6);
+	RUN_TEST(test_isAck);
 }
 
 int main(int argc, char *argv[])

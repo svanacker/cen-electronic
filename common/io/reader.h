@@ -71,6 +71,8 @@ signed long readSignedHex4(InputStream* inputStream);
 
 /**
  * Read an hexadecimal value from an inputStream (6 hex char as "04B51D").
+ * @param inputStream the pointer on inputStream (POO simulation)
+ * TODO : Check the usage to know, if we must have a signed version too ???
  */
 float readHex6(InputStream* inputStream);
 
@@ -81,12 +83,14 @@ float readHex6(InputStream* inputStream);
 
 /**
  * Get next char and check if the stream contains ack.
+ * @param inputStream the pointer on inputStream (POO simulation)
  * @return true if the next char is a ack, false else
  */
 bool isAck(InputStream* inputStream);
 
 /**
  * Get next char and check if the stream contains the asked char.
+ * @param inputStream the pointer on inputStream (POO simulation)
  * @param expectedChar the character that we want to check
  * @return true if the char is the right char, false else
  */
