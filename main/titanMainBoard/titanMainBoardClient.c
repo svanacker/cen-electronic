@@ -138,6 +138,7 @@
 #include "../../drivers/driverTransmitter.h"
 #include "../../drivers/strategy/strategyDriver.h"
 #include "../../drivers/sensor/LM75A.h"
+#include "../../drivers/robotConfig/robotConfigPic32.h"
 
 
 
@@ -256,6 +257,8 @@ static Buffer eepromBuffer;
 static char eepromBufferArray[EEPROM_BUFFER_LENGTH];
 static Eeprom eeprom_;
 
+// Robot Configuration
+static RobotConfig robotConfig;
 // lcd DEBUG 
 static OutputStream lcdOutputStream;
 
@@ -611,7 +614,7 @@ void waitForInstruction() {
 }
 
 int main(void) {
-    setPicName("TITAN ELECTRONICAL MAIN BOARD 32");
+    setPicName("TITAN ELECTRONICAL MAIN BOARD 32bits V-JJ_7");
 
     //setRobotMustStop(false);
     // Open the serial Link for debug
@@ -654,6 +657,12 @@ int main(void) {
     initDevicesDescriptor();
     initDriversDescriptor();
 
+    // Initialize EEPROM and RTC
+    init24C512Eeprom(&eeprom_);
+    initClockPCF8563(&globalClock);
+
+    initRobotConfigPic32(&robotConfig);
+
     // Initializes the opponent robot
     // initOpponentRobot();
 
@@ -670,12 +679,12 @@ int main(void) {
     */
 
     appendString(&debugOutputStream, "DEBUG\n");
-    appendString(&lcdOutputStream, "TEST");
+    
     // Start interruptions
     // startTimerList();
 
     // Configure data dispatcher
-    addLocalDriverDataDispatcher();
+    //addLocalDriverDataDispatcher();
 
     // Stream for motorBoard
     /*
