@@ -46,7 +46,7 @@ typedef struct RobotConfig RobotConfig;
  * Read a value from the switch configuration.
  * @return value the value to store
  */
-typedef void robotConfigReadIntFunction(RobotConfig* robotConfig );
+typedef signed int robotConfigReadIntFunction(RobotConfig* robotConfig );
 
 /**
  * Defines the contract for an eeprom.

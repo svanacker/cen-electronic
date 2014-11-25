@@ -10,8 +10,8 @@
  * @private
  */
 
-void _robotConfigReadInt (RobotConfig* robotConfig){
-
+signed int _robotConfigReadInt (RobotConfig* robotConfig){
+    return (0x43);
 }
 
 

@@ -2,20 +2,29 @@
 #include "robotConfigDevice.h"
 #include "robotConfigDeviceInterface.h"
 
-#include "../../common/commons.h"
 
-#include "../../common/io/inputStream.h"
-#include "../../common/io/outputStream.h"
+#include "../../common/cmd/commonCommand.h"
 #include "../../common/io/printWriter.h"
+#include "../../common/io/reader.h"
 #include "../../common/io/stream.h"
 
-#include "../../common/log/logger.h"
-#include "../../common/log/logLevel.h"
+/*
+#include "../../common/commons.h"
+
+#include "../../common/cmd/commonCommand.h"
+//#include "../../common/io/inputStream.h"
+//#include "../../common/io/outputStream.h"
+#include "../../common/io/printWriter.h"
+#include "../../common/io/reader.h"
+#include "../../common/io/stream.h"
+
+//#include "../../common/log/logger.h"
+//#include "../../common/log/logLevel.h"
 
 #include "../../device/device.h"
 
-#include "../../drivers/driver.h"
-#include "../../drivers/io/pcf8574.h"
+//#include "../../drivers/driver.h"
+*/
 
 /** Config is a 16 bit value */
 static unsigned int config = 0;
@@ -50,8 +59,8 @@ void refreshConfig(void) {
     return;
 #endif
 
-    unsigned char lowByte = readPCFByte(PCF8574_BASE_ADDRESS, PCF8574_LOW_BYTE_CONFIG_ADDRESS);
-    unsigned char highByte = readPCFByte(PCF8574_BASE_ADDRESS, PCF8574_HIGH_BYTE_CONFIG_ADDRESS);
+    unsigned char lowByte = 0x43;//readPCFByte(PCF8574_BASE_ADDRESS, PCF8574_LOW_BYTE_CONFIG_ADDRESS);
+    unsigned char highByte = 0x19;//readPCFByte(PCF8574_BASE_ADDRESS, PCF8574_HIGH_BYTE_CONFIG_ADDRESS);
 
     // The both highest bit is not available => be careful to the inversion made by readPCFByte
     config = ((highByte & 0x3F) << 8) | lowByte;
@@ -122,10 +131,8 @@ bool isConfigDeviceOk(void) {
     return getConfigValue() < MAX_UNSIGNEDINT;
 }
 
-void deviceConfigHandleRawData(char header,
-        InputStream* inputStream,
-        OutputStream* outputStream) {
-    if (header == ROBOT_CONFIG_DEVICE_HEADER) {
+void deviceConfigHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream) {
+    if (header == COMMAND_CONFIG) {
         // can take a little time
         refreshConfig();
         ackCommand(outputStream, ROBOT_CONFIG_DEVICE_HEADER, COMMAND_CONFIG);
