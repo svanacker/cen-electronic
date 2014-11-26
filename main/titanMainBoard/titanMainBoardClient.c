@@ -259,6 +259,7 @@ static Eeprom eeprom_;
 
 // Robot Configuration
 static RobotConfig robotConfig;
+
 // lcd DEBUG 
 static OutputStream lcdOutputStream;
 
@@ -472,7 +473,7 @@ void initDevicesDescriptor() {
 
 
     // addLocalDevice(&servoDevice, getServoDeviceInterface(), getServoDeviceDescriptor());
-    addLocalDevice(getRobotConfigDeviceInterface(), getRobotConfigDeviceDescriptor());
+    addLocalDevice(getRobotConfigDeviceInterface(), getRobotConfigDeviceDescriptor(&robotConfig));
     addLocalDevice(getStartMatchDetectorDeviceInterface(), getStartMatchDetectorDeviceDescriptor());
     addLocalDevice(getEndMatchDetectorDeviceInterface(), getEndMatchDetectorDeviceDescriptor());
     addLocalDevice(getSonarDeviceInterface(), getSonarDeviceDescriptor());
