@@ -6,6 +6,11 @@
 
 #include "../../../test/unity/unity.h"
 
+void filterTestSuite(void) {
+	RUN_TEST(test_filterBinaryToValueChar);
+	RUN_TEST(test_filterRemoveCRLF);
+}
+
 // test_filterBinaryToValueChar
 
 void test_filterBinaryToValueChar(void) {

@@ -1,5 +1,24 @@
 #include "../../../common/math/hexUtils.h"
+
+#include "hexUtilsTest.h"
+
 #include "../../../test/unity/unity.h"
+
+// ALL TESTS
+
+void hexUtilsTestSuite(void) {
+	RUN_TEST(test_hex2CharToInt_should_equal_to_0_if_0);
+	RUN_TEST(test_hex2CharToInt_should_equal_to_197_if_C5);
+	RUN_TEST(test_hex2CharToInt_should_equal_to_255_if_FF);
+
+	RUN_TEST(test_hex4CharToLong_should_equal_to_0_if_0);
+	RUN_TEST(test_hex2CharToLong_should_equal_to_0_if_D4B3);
+	RUN_TEST(test_hex2CharToLong_should_equal_to_0_if_FFFF);
+
+	RUN_TEST(hex6CharToFloat_should_equal_to_0_if_0);
+	RUN_TEST(hex6CharToFloat_should_equal_to_1193046_if_123456);
+	RUN_TEST(hex6CharToFloat_should_equal_to_16777215_if_FFFFFF);
+}
 
 // hex2CharToInt
 

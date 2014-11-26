@@ -12,6 +12,31 @@
 static Buffer bufferTest;
 static char bufferArrayTest[TEST_BUFFER_SIZE];
 
+void bufferTestSuite(void) {
+	RUN_TEST(test_initBuffer_with_null_buffer_should_throw_buffer_null_error);
+	RUN_TEST(test_initBuffer_should_be_right_initialized_and_empty_and_not_full);
+	RUN_TEST(test_initBuffer_should_throw_error_when_empty_and_reading_char);
+
+	RUN_TEST(test_bufferWriteChar);
+	RUN_TEST(test_bufferWriteChar_too_much_writes);
+	RUN_TEST(test_bufferWriteChar_and_read_several_times);
+
+	RUN_TEST(test_isBufferEqualsToString);
+
+	RUN_TEST(test_bufferGetCharAtIndex);
+
+	RUN_TEST(test_getBufferCapacity);
+
+	RUN_TEST(test_clearBuffer);
+
+	RUN_TEST(test_deepClearBuffer);
+
+	RUN_TEST(test_getOutputStream);
+	RUN_TEST(test_getOutputStream_if_buffer_null);
+	RUN_TEST(test_getInputStream);
+	RUN_TEST(test_getInputStream_if_buffer_null);
+}
+
 void initNullBufferForTest(void) {
 	initBuffer(NULL, (char(*)[]) &bufferArrayTest, TEST_BUFFER_SIZE, "bufferTest", "bufferTestType");
 }

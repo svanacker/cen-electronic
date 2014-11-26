@@ -1,6 +1,8 @@
 #ifndef READER_TEST_H
 #define READER_TEST_H
 
+void readerTestSuite(void);
+
 // readFilteredChar
 
 void test_readFilteredChar(void);

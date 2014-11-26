@@ -99,6 +99,7 @@
     <ClCompile Include="common\math\hexUtils.c" />
     <ClCompile Include="test\common\io\bufferTest.c" />
     <ClCompile Include="test\common\io\filterTest.c" />
+    <ClCompile Include="test\common\io\ioUtilsTest.c" />
     <ClCompile Include="test\common\io\printWriterTest.c" />
     <ClCompile Include="test\common\io\readerTest.c" />
     <ClCompile Include="test\common\math\hexUtilsTest.c" />
@@ -133,6 +134,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="test\common\io\bufferTest.h" />
     <ClInclude Include="test\common\io\filterTest.h" />
+    <ClInclude Include="test\common\io\ioUtilsTest.h" />
     <ClInclude Include="test\common\io\printWriterTest.h" />
     <ClInclude Include="test\common\io\readerTest.h" />
     <ClInclude Include="test\common\math\hexUtilsTest.h" />
