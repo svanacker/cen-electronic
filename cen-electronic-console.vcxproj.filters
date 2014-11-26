@@ -162,6 +162,15 @@
     <ClCompile Include="test\common\io\ioUtilsTest.c">
       <Filter>Source Files\test\common\io</Filter>
     </ClCompile>
+    <ClCompile Include="common\math\cenMath.c">
+      <Filter>Source Files\common\math</Filter>
+    </ClCompile>
+    <ClCompile Include="common\math\bcdUtils.c">
+      <Filter>Source Files\common\math</Filter>
+    </ClCompile>
+    <ClCompile Include="test\common\math\bcdUtilsTest.c">
+      <Filter>Source Files\test\common\math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -262,6 +271,15 @@
     </ClInclude>
     <ClInclude Include="test\common\io\ioUtilsTest.h">
       <Filter>Header Files\test\common\io</Filter>
+    </ClInclude>
+    <ClInclude Include="common\math\cenMath.h">
+      <Filter>Header Files\common\math</Filter>
+    </ClInclude>
+    <ClInclude Include="common\math\bcdUtils.h">
+      <Filter>Header Files\common\math</Filter>
+    </ClInclude>
+    <ClInclude Include="test\common\math\bcdUtilsTest.h">
+      <Filter>Header Files\test\common\math</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

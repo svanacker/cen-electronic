@@ -10,6 +10,7 @@
 #include "test/common/io/printWriterTest.h"
 #include "test/common/io/readerTest.h"
 
+#include "test/common/math/bcdUtilsTest.h"
 #include "test/common/math/hexUtilsTest.h"
 
 void setUp(void)
@@ -20,8 +21,6 @@ void setUp(void)
 void tearDown(void)
 {
 }
-
-
 
 int main(int argc, char *argv[])
 {
@@ -34,6 +33,7 @@ int main(int argc, char *argv[])
 	printWriterTestSuite();
 	readerTestSuite();
 	ioUtilsTestSuite();
+	bcdUtilsTestSuite();
 
 	UnityEnd();
 

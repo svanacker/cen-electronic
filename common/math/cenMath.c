@@ -66,7 +66,7 @@ int maxInt(int value1, int value2) {
 }
 
 float mod2PI(float value) {
-	// FIX ME : does not work on value > 4 PI or < - 4 PI
+    // FIX ME : does not work on value > 4 PI or < - 4 PI
     if (value < - PI) {
         return (value + _2_PI);
     } else if (value > PI) {

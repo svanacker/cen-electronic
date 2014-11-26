@@ -1,3 +1,6 @@
+#ifndef HEX_UTILS_TEST_H
+#define HEX_UTILS_TEST_H
+
 /**
  * All tests for HexUtils.h
  */
@@ -27,3 +30,5 @@ void hex6CharToFloat_should_equal_to_0_if_0(void);
 void hex6CharToFloat_should_equal_to_1193046_if_123456(void);
 
 void hex6CharToFloat_should_equal_to_16777215_if_FFFFFF(void);
+
+#endif
