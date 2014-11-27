@@ -28,8 +28,7 @@ signed int _robotConfigReadInt (RobotConfig* robotConfig){
 }
 
 void initRobotConfigPic32(RobotConfig* robotConfig) {
-    initRobotConfig(robotConfig, _robotConfigReadInt);
-        // Init the portb input selected as I/O
+    // Init the portb input selected as I/O
     AD1PCFG = 0xBEC0;//0b1011111011000000;
 
     //Init the port selected as Input
@@ -47,4 +46,7 @@ void initRobotConfigPic32(RobotConfig* robotConfig) {
     TRISBbits.TRISB15 = 1;
     TRISCbits.TRISC13 = 1;
     TRISGbits.TRISG2 = 1;
+
+    initRobotConfig(robotConfig, _robotConfigReadInt);
+
 }

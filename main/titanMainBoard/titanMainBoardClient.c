@@ -736,6 +736,10 @@ int main(void) {
 
     }
     */
+
+    char toto = isConfigBalise();
+    appendHex2(&lcdOutputStream,toto);
+    appendStringConfig(&lcdOutputStream);
     while (1) {
         waitForInstruction();
     }
@@ -749,8 +753,8 @@ int main(void) {
     delaymSec(1500);
 
     // 2012 VALUE
-    unsigned int configValue = getConfigValue();
-    unsigned int homologationIndex = configValue & CONFIG_STRATEGY_MASK;
+    //unsigned int configValue = getConfigValue();
+    /*unsigned int homologationIndex = configValue & CONFIG_STRATEGY_MASK;
     unsigned int color = configValue & CONFIG_COLOR_BLUE_MASK;
 
     appendString(getOutputStreamLogger(ALWAYS), "Homologation:");
@@ -819,7 +823,7 @@ int main(void) {
             forceRobotNextStepIfNecessary();
         }
     }
-
+*/
     showEnd(&lcdOutputStream);
 
     while (1) {

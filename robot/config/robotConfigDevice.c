@@ -31,33 +31,22 @@ static RobotConfig* robotConfig;
 /** Config is a 16 bit value */
 static unsigned int config = 0;
 
+void refreshConfig(void) {
 
-void refreshConfig() {
-    // load the value
-#ifdef MPLAB_SIMULATION
-    config = 0;
-    return;
-#endif
-
-    /*
-    unsigned char lowByte = readPCFByte(PCF8574_BASE_ADDRESS, PCF8574_LOW_BYTE_CONFIG_ADDRESS);
-    unsigned char highByte = readPCFByte(PCF8574_BASE_ADDRESS, PCF8574_HIGH_BYTE_CONFIG_ADDRESS);
-
-    // The both highest bit is not available => be careful to the inversion made by readPCFByte
-    config = ((highByte & 0x3F) << 8) | lowByte;
-    */
-    //config = robotConfig->robotConfigReadInt(robotConfig);
+    config = robotConfig->robotConfigReadInt(robotConfig);
 }
 
-unsigned int getConfigValue(void) {
-    refreshConfig();
-    return config;
-}
+
 
 int isConfigSet(unsigned int configMask) {
     refreshConfig();
     int intersection = (config & configMask);
     return intersection != 0;
+}
+
+unsigned int getConfigValue(void) {
+    refreshConfig();
+    return config;
 }
 
 char* getConfigBitString(unsigned char configIndex) {
@@ -102,7 +91,7 @@ unsigned char getStrategy() {
 // Device interface
 
 void deviceRobotConfigInit(void) {
-    refreshConfig();
+    //refreshConfig();
 
 }
 
@@ -111,15 +100,15 @@ void deviceRobotConfigShutDown(void) {
 }
 
 bool isRobotConfigDeviceOk(void) {
-    refreshConfig();
-    return getConfigValue() < MAX_UNSIGNEDINT;
+    //refreshConfig();
+    //return getConfigValue() < MAX_UNSIGNEDINT;
+    return true;
 }
 
 void deviceRobotConfigHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream) {
     if (header == COMMAND_CONFIG) {
         // can take a little time
-        //refreshConfig();
-        config = robotConfig->robotConfigReadInt(robotConfig);
+        refreshConfig();  
         ackCommand(outputStream, ROBOT_CONFIG_DEVICE_HEADER, COMMAND_CONFIG);
         appendHex4(outputStream, config);     
     }
