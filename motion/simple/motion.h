@@ -1,6 +1,8 @@
 #ifndef MOTION_H
 #define MOTION_H
 
+#include <stdbool.h>
+
 #include "../../common/commons.h"
 
 /**

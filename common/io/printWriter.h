@@ -124,6 +124,26 @@ void appendHex6(OutputStream* outputStream, signed long value);
  */
 void appendHex8(OutputStream* outputStream, signed long value);
 
+// Hex - Float
+
+/**
+ * Append a float value into hexadecimal value (4 chars).
+ * We use a factor to decide how to trunc value (we multiply by factorToTrunc)
+ * @param outputStream the pointer on outputStream (POO simulation)
+ * @param value the float value
+ * @param factorToTrunc ?????
+ */
+void appendHexFloat4(OutputStream* outputStream, float value, float factorToTrunc);
+
+/**
+ * Append a float value into hexadecimal value (8 chars).
+ * We use a factor to decide how to trunc value (we multiply by factorToTrunc)
+ * @param outputStream the pointer on outputStream (POO simulation)
+ * @param value the float value
+ * @param factorToTrunc ?????
+ */
+void appendHexFloat8(OutputStream* outputStream, float value, float factorToTrunc);
+
 /**
  * Sends the decimal value of a long.
  * @param outputStream the pointer on outputStream (POO simulation)

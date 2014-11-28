@@ -1,6 +1,8 @@
 #ifndef MOTION_END_DETECTION_H
 #define MOTION_END_DETECTION_H
 
+#include <stdbool.h>
+
 #include "../../common/commons.h"
 
 /**

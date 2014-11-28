@@ -1,6 +1,8 @@
 #ifndef PID_TIMER_H
 #define PID_TIMER_H
 
+#include <stdbool.h>
+
 #include "../../common/commons.h"
 
 /**

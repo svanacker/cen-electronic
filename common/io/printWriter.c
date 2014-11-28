@@ -123,6 +123,18 @@ void appendHex8(OutputStream* outputStream, signed long value) {
     internalAppendHex(outputStream, value, 28);
 }
 
+// FLOAT
+
+void appendHexFloat4(OutputStream* stream, float value, float factorToTrunc) {
+    signed long longValue = (signed long) (value * factorToTrunc);
+    appendHex4(stream, longValue);
+}
+
+void appendHexFloat8(OutputStream* stream, float value, float factorToTrunc) {
+    signed long longValue = (signed long) (value * factorToTrunc);
+    appendHex4(stream, longValue);
+}
+
 // DECIMAL CONVERSION
 
 int appendDec(OutputStream* stream, signed long value) {
