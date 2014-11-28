@@ -292,14 +292,10 @@ int main(void) {
             SERIAL_PORT_PC,
             DEFAULT_SERIAL_SPEED);
 
-
-
     appendString(&pcOutputStream, "JK330 with PIC32...on UART PC\r");
     appendString(&debugOutputStream, "JK330 with PIC32...on UART DEBUG\r");
 
-
     i2cMasterInitialize();
-
 
     initTimerList(&timerListArray, MAIN_BOARD_TIMER_LENGTH);
 
@@ -351,8 +347,6 @@ int main(void) {
         printClock(&lcdOutputStream, &globalClock);
 
         waitForInstruction();
-
-
 
         unsigned int c = readKey();
         appendHex2(&lcdOutputStream, c);

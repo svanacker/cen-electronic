@@ -6,6 +6,8 @@
 #include "../../common/io/reader.h"
 #include "../../common/io/stream.h"
 
+#include "../../drivers/eeprom/24c512.h"
+
 static Eeprom* eeprom_;
 
 void deviceEepromInit(void) {
