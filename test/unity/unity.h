@@ -8,6 +8,11 @@
 #define UNITY_FRAMEWORK_H
 #define UNITY
 
+// Include DOUBLE SUPPORT
+#define UNITY_INCLUDE_DOUBLE	1
+#define UNITY_DOUBLE_PRECISION	1e-12f	
+#define UNITY_FLOAT_PRECISION   1e-6f
+
 #include "unity_internals.h"
 
 //-------------------------------------------------------

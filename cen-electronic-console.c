@@ -4,6 +4,8 @@
 #include "common/error/error.h"
 #include "test/unity/unity.h"
 
+#include "test/common/2d/2dTest.h"
+
 #include "test/common/io/bufferTest.h"
 #include "test/common/io/filterTest.h"
 #include "test/common/io/ioUtilsTest.h"
@@ -34,6 +36,7 @@ int main(int argc, char *argv[])
 	readerTestSuite();
 	ioUtilsTestSuite();
 	bcdUtilsTestSuite();
+	_2dTestSuite();
 
 	UnityEnd();
 

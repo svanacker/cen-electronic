@@ -1,6 +1,9 @@
 #ifndef CEN_MATH_H
 #define CEN_MATH_H
 
+// Extensions methods to <math.h>
+// Please be conscient of C32 Performance matrix : http://www.microchip.com/stellent/idcplg?IdcService=SS_GET_PAGE&nodeId=2680&dDocName=en552826
+
 #include <stdbool.h>
 #include "../../common/commons.h"
 

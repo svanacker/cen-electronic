@@ -77,6 +77,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c" />
+    <ClCompile Include="common\2d\2d.c" />
     <ClCompile Include="common\error\error.c" />
     <ClCompile Include="common\io\binaryPrintWriter.c" />
     <ClCompile Include="common\io\binaryWriter.c" />
@@ -99,6 +100,7 @@
     <ClCompile Include="common\math\bcdUtils.c" />
     <ClCompile Include="common\math\cenMath.c" />
     <ClCompile Include="common\math\hexUtils.c" />
+    <ClCompile Include="test\common\2d\2dTest.c" />
     <ClCompile Include="test\common\io\bufferTest.c" />
     <ClCompile Include="test\common\io\filterTest.c" />
     <ClCompile Include="test\common\io\ioUtilsTest.c" />
@@ -109,6 +111,7 @@
     <ClCompile Include="test\unity\unity.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="common\2d\2d.h" />
     <ClInclude Include="common\cmd\commonCommand.h" />
     <ClInclude Include="common\commons.h" />
     <ClInclude Include="common\error\error.h" />
@@ -137,6 +140,7 @@
     <ClInclude Include="common\math\cenMath.h" />
     <ClInclude Include="common\math\hexUtils.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="test\common\2d\2dTest.h" />
     <ClInclude Include="test\common\io\bufferTest.h" />
     <ClInclude Include="test\common\io\filterTest.h" />
     <ClInclude Include="test\common\io\ioUtilsTest.h" />
@@ -145,6 +149,7 @@
     <ClInclude Include="test\common\math\bcdUtilsTest.h" />
     <ClInclude Include="test\common\math\hexUtilsTest.h" />
     <ClInclude Include="test\unity\unity.h" />
+    <ClInclude Include="test\unity\unity_internals.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="cen-electronic-console.rc" />
