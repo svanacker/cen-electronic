@@ -4,8 +4,6 @@
 
 #include "../../robot/config/robotConfig.h"
 
-
-
 /**
  * Implementation of the read Function of configuration switch.
  * @see robotConfig.h
@@ -14,8 +12,6 @@
 
 signed int _robotConfigReadInt (RobotConfig* robotConfig){
     int value = 0;
-
-
 
     value = ((PORTG & 0x0004) << 11) | // PORTG2
             ((PORTC & 0x2000) >> 1) | // PORTC13

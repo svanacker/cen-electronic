@@ -8,24 +8,6 @@
 #include "../../common/io/reader.h"
 #include "../../common/io/stream.h"
 
-/*
-#include "../../common/commons.h"
-
-#include "../../common/cmd/commonCommand.h"
-//#include "../../common/io/inputStream.h"
-//#include "../../common/io/outputStream.h"
-#include "../../common/io/printWriter.h"
-#include "../../common/io/reader.h"
-#include "../../common/io/stream.h"
-
-//#include "../../common/log/logger.h"
-//#include "../../common/log/logLevel.h"
-
-#include "../../device/device.h"
-
-//#include "../../drivers/driver.h"
-*/
-
 static RobotConfig* robotConfig;
 
 /** Config is a 16 bit value */
@@ -35,8 +17,6 @@ void refreshConfig(void) {
 
     config = robotConfig->robotConfigReadInt(robotConfig);
 }
-
-
 
 int isConfigSet(unsigned int configMask) {
     refreshConfig();

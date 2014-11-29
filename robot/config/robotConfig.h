@@ -49,7 +49,7 @@ typedef struct RobotConfig RobotConfig;
 typedef signed int robotConfigReadIntFunction(RobotConfig* robotConfig );
 
 /**
- * Defines the contract for an eeprom.
+ * Defines the contract for switch robot configuration.
  */
 struct RobotConfig {
     /** The function which must be used to read the robot configuration */

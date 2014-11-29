@@ -138,7 +138,7 @@
 #include "../../drivers/driverTransmitter.h"
 #include "../../drivers/strategy/strategyDriver.h"
 #include "../../drivers/sensor/LM75A.h"
-#include "../../drivers/robotConfig/robotConfigPic32.h"
+#include "../../drivers/robotConfig/PIC32/robotConfigPic32.h"
 
 
 
