@@ -37,6 +37,7 @@ long absLong(signed long value);
 signed long limit(long value, long maxValue);
 
 /**
+ * TODO : Not used => Not to be tested
  * Compares two float values and returns 1, 0 or -1 if a is
  * greater, equal or lower than b.
  * @param a a float value
@@ -46,6 +47,7 @@ signed long limit(long value, long maxValue);
 signed int compareFloat(float a, float b);
 
 /**
+ * TODO : Not used => Not to be tested
  * Returns the sign of a float value.
  * @param a a float value
  * @return -1 for a negative value, 1 for a positive value, 0 for a null value
@@ -53,16 +55,23 @@ signed int compareFloat(float a, float b);
 signed int getSign(float a);
 
 /**
-* Returns the min value
+* Returns the min value between 2 values.
+* @param value1 the first value
+* @param value2 the second value
+* @return the min value between value1 and value2
 */
 int minInt(int value1, int value2);
 
 /**
-* Returns the max value
+* Returns the max value between 2 values.
+* @param value1 the first value
+* @param value2 the second value
+* @return the max value between value1 and value2
 */
 int maxInt(int value1, int value2);
 
 /**
+ * @deprecated : must be replace by unity framework
  * Returns if two float value are equal or not.
  * @param value1 the first value
  * @param value2 the second value
@@ -71,6 +80,7 @@ int maxInt(int value1, int value2);
 bool floatEquals(float value1, float value2);
 
 /**
+ * @deprecated : must be replace by unity framework
  * Returns if a float value is equals to 0 (taking the min float resolution consideration).
  * @param value the value that we want to check
  * @return true if the float is equal to 0 (taking the min float resolution consideration), false else.
@@ -85,6 +95,7 @@ bool floatEqualsZero(float value);
 float mod2PI(float value);
 
 /**
+ * TODO : NOT TESTED
  * Simple check sum.
  * @param string the value to have the check sum
  * @return the check sum

@@ -11,4 +11,16 @@ void test_absLong(void);
 
 void test_limit(void);
 
+// minInt
+
+void test_minInt(void);
+
+// maxInt
+
+void test_maxInt(void);
+
+// mod2PI
+
+void test_mod2PI(void);
+
 #endif
