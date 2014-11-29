@@ -13,7 +13,9 @@
 #include "test/common/io/readerTest.h"
 
 #include "test/common/math/bcdUtilsTest.h"
+#include "test/common/math/cenMathTest.h"
 #include "test/common/math/hexUtilsTest.h"
+
 
 void setUp(void)
 {
@@ -26,7 +28,7 @@ void tearDown(void)
 
 int main(int argc, char *argv[])
 {
-	UnityBegin("cen-electronic-console");
+	UnityBegin("cen");
 
 	// RUN_TEST calls runTest
 	hexUtilsTestSuite();
@@ -37,6 +39,7 @@ int main(int argc, char *argv[])
 	ioUtilsTestSuite();
 	bcdUtilsTestSuite();
 	_2dTestSuite();
+	cenMathTestSuite();
 
 	UnityEnd();
 

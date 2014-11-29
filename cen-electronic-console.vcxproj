@@ -107,6 +107,7 @@
     <ClCompile Include="test\common\io\printWriterTest.c" />
     <ClCompile Include="test\common\io\readerTest.c" />
     <ClCompile Include="test\common\math\bcdUtilsTest.c" />
+    <ClCompile Include="test\common\math\cenMathTest.c" />
     <ClCompile Include="test\common\math\hexUtilsTest.c" />
     <ClCompile Include="test\unity\unity.c" />
   </ItemGroup>
@@ -147,6 +148,7 @@
     <ClInclude Include="test\common\io\printWriterTest.h" />
     <ClInclude Include="test\common\io\readerTest.h" />
     <ClInclude Include="test\common\math\bcdUtilsTest.h" />
+    <ClInclude Include="test\common\math\cenMathTest.h" />
     <ClInclude Include="test\common\math\hexUtilsTest.h" />
     <ClInclude Include="test\unity\unity.h" />
     <ClInclude Include="test\unity\unity_internals.h" />

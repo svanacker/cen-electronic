@@ -52,10 +52,12 @@ void test_initBuffer_with_null_buffer_should_throw_buffer_null_error(void) {
 
 	int actual = getLastError();
 	TEST_ASSERT_EQUAL(IO_BUFFER_NULL, actual);
+	clearLastError();
 
 	isBufferInitialized(NULL);
 	actual = getLastError();
 	TEST_ASSERT_EQUAL(IO_BUFFER_NULL, actual);
+	clearLastError();
 
 	isBufferFull(NULL);
 	actual = getLastError();

@@ -4,11 +4,13 @@
 
 #include "../../common/commons.h"
 
+// TODO => Replace by unity
 bool floatEquals(float value1, float value2) {
     // FIXME : Take care about precision
     return value1 == value2;
 }
 
+// TODO => Replace by unity
 bool floatEqualsZero(float value1) {
     return (value1 >= -0.00001f && value1 <= 0.00001f);
 }
