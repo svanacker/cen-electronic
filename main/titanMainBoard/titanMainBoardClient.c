@@ -472,7 +472,7 @@ void initDevicesDescriptor() {
 
 
 
-    // addLocalDevice(&servoDevice, getServoDeviceInterface(), getServoDeviceDescriptor());
+    addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor());  //&servoDevice, 
     addLocalDevice(getRobotConfigDeviceInterface(), getRobotConfigDeviceDescriptor(&robotConfig));
     addLocalDevice(getStartMatchDetectorDeviceInterface(), getStartMatchDetectorDeviceDescriptor());
     addLocalDevice(getEndMatchDetectorDeviceInterface(), getEndMatchDetectorDeviceDescriptor());
@@ -727,19 +727,10 @@ int main(void) {
                         &i2cMasterDebugOutputBuffer,
                         &i2cMasterDebugOutputBufferArray,
                         MAIN_BOARD_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH);
-    /*
-    Pcf8573Clock clock;
-    getPcf8573Clock(&clock);
-    writePcf8573ClockToOutputStream(getOutputStreamLogger(ALWAYS), &clock);
 
-    while (1) {
 
-    }
-    */
-
-    char toto = isConfigBalise();
-    appendHex2(&lcdOutputStream,toto);
     appendStringConfig(&lcdOutputStream);
+
     while (1) {
         waitForInstruction();
     }

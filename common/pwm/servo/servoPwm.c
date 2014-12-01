@@ -73,8 +73,7 @@ void initPwmForServo(int posInit) {
 	if (servoList.initialized) {
 	    return;
 	}
-	__internalPwmForServoHardware(posInit);
-
+    __internalPwmForServoHardware(posInit);
     // Init servo structure
     int i;
     for (i = 0; i < PWM_COUNT; i++) {
@@ -117,6 +116,7 @@ void pwmServo(int servoIndex, unsigned int speed, int dutyms) {
     Servo* servo = getServo(servoIndex - 1);
     servo->speed = speed;
     servo->targetPosition = dutyms;
+    __internalPwmServo(servoIndex, (dutyms));
 }
 
 void pwmServoAll(unsigned int speed, int dutyms) {
