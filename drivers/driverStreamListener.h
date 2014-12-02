@@ -1,10 +1,11 @@
 #ifndef DRIVER_STREAM_LISTENER_H
 #define DRIVER_STREAM_LISTENER_H
 
+#include <stdbool.h>
+
 #include "../common/commons.h"
 #include "../common/io/buffer.h"
 #include "../common/io/filter.h"
-#include "../common/io/inputStream.h"
 #include "../common/io/outputStream.h"
 
 /**

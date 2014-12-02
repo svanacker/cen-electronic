@@ -1,12 +1,11 @@
 #ifndef DRIVER_H
 #define DRIVER_H
 
-#include "../common/commons.h"
-#include "../common/io/inputStream.h"
-#include "../common/io/outputStream.h"
+#include <stdbool.h>
 
 /**
  * Initialization function of the driver.
+ * @return true if the function initialization is ok, false else.
  */
 typedef bool driverInitFunction(void);
 
@@ -23,32 +22,28 @@ typedef bool driverIsOkFunction(void);
 
 /**
  * Function for querying the name of the driver.
+ * @return the name of the driver
  */
 typedef const char* driverGetNameFunction(void);
-
-/**
- * Returns the transmit mode which must be used by the driver.
- * @param defaultTransmitMode the global transmit mode which will be used
- * by default
- */
-typedef int driverGetTransmitModeFunction(int defaultTransmitMode);
 
 /**
  * Descriptor of a driver.
  */
 typedef struct {
-    // bool driverEnabled;
+	/** Callback to an init Function. */
     driverInitFunction *driverInit;
+	/** Callback to a shutdown Function. */
     driverShutDownFunction *driverShutDown;
+	/** Function to get the name of the function. */
     driverGetNameFunction *driverGetName;
+	/** How we can communicate with the driver (Uart, I2C, local ...). */
     int transmitMode;
-
 } DriverDescriptor;
 
 /**
  * Initializes the driver represented by the given descriptor.
  * @param driverDescriptor the descriptor of the driver.
- * @param debug flag for enabling debugging
+ * @return true if the driver initialization is ok, false else
  */
 bool driverInit(const DriverDescriptor *driverDescriptor);
 

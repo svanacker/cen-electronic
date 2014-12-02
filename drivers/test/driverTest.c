@@ -1,28 +1,26 @@
 #include <stdlib.h>
+#include <stdbool.h>
+
 #include "driverTest.h"
 
 #include "../../common/io/buffer.h"
-#include "../../common/io/ioUtils.h"
 #include "../../common/io/inputStream.h"
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
 #include "../../common/io/reader.h"
 
-#include "../../common/log/logger.h"
-#include "../../common/log/logHandler.h"
-
-#include "../../device/deviceList.h"
 #include "../../device/test/deviceTestInterface.h"
 
 #include "../../drivers/driver.h"
 #include "../../drivers/driverList.h"
 #include "../../drivers/driverTransmitter.h"
 
-unsigned int driverTestGetValue(int argument) {
+signed int driverTestGetValue(signed int argument1, signed int argument2) {
     OutputStream* outputStream = getDriverRequestOutputStream();
     InputStream* resultStream = getDriverResponseInputStream();
     append(outputStream, COMMAND_TEST);
-    appendHex2(outputStream, argument);
+    appendHex2(outputStream, argument1);
+    appendHex2(outputStream, argument2);
 
     bool ok = transmitFromDriverRequestBuffer();
     if (ok) {
@@ -45,20 +43,13 @@ bool driverTestIsOk() {
     return true;
 }
 
-unsigned int driverTestGetSoftwareRevision() {
-    return 1;
-}
-
 const char* driverTestGetName() {
     return "driverTest";
 }
 
 static DriverDescriptor descriptor = {
-//    true,
     &driverTestInit,
     &driverTestShutDown,
-//    &driverTestIsOk,
-//    &driverTestGetSoftwareRevision,
     &driverTestGetName,
 };
 

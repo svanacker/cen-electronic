@@ -1,16 +1,12 @@
-#include "deviceDebug.h"
 #include <stdlib.h>
 
 #include "device.h"
+#include "deviceDebug.h"
 #include "deviceList.h"
-
-#include "../common/commons.h"
 
 #include "../common/io/outputStream.h"
 #include "../common/io/printWriter.h"
 
-
-// DEBUG
 void printDeviceList(OutputStream* outputStream) {
     int size = getDeviceCount();
     appendStringAndDec(outputStream, ", deviceCount=", size);
@@ -22,9 +18,6 @@ void printDeviceList(OutputStream* outputStream) {
     }
 }
 
-/**
- * Print the device information.
- */
 void printDevice(OutputStream* outputStream, const Device* device) {
     if (device != NULL) {
         appendStringAndDec(outputStream, ", transmitMode=", device->transmitMode);

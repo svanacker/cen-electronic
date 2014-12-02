@@ -2,8 +2,6 @@
 
 #include "driverStreamListener.h"
 
-#include "../common/commons.h"
-
 #include "../common/cmd/commonCommand.h"
 
 #include "../common/error/error.h"
@@ -11,9 +9,9 @@
 #include "../common/io/buffer.h"
 #include "../common/io/filter.h"
 #include "../common/io/inputStream.h"
-#include "../common/io/outputStream.h"
-#include "../common/io/printWriter.h"
 #include "../common/io/ioUtils.h"
+#include "../common/io/printWriter.h"
+#include "../common/io/outputStream.h"
 #include "../common/io/stream.h"
 
 #include "../common/log/logger.h"

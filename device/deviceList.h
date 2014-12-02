@@ -32,16 +32,17 @@ void initDeviceList(Device (*deviceListArray)[], unsigned char deviceListSize);
 
 /**
 * Get the list of devices.
+* @return the list of devices
 */
 DeviceList* getDeviceList();
 
 /**
  * Add a local device : this device will respond to local calls.
- * @param interface the interface to describe the remote interface for device
+ * @param deviceInterface the interface to describe the remote interface for device
  * @param deviceDescriptor the implementation of the device
  * @return a pointer on the Device
  */
-Device* addLocalDevice(DeviceInterface* interface, DeviceDescriptor* deviceDescriptor);
+Device* addLocalDevice(DeviceInterface* deviceInterface, DeviceDescriptor* deviceDescriptor);
 
 /**
 * Add a remote Device accessible via the i2c bus.

@@ -21,7 +21,7 @@ int convPwmMotor(int pwm) {
 }
 
 void initPwmForMotor() {
-    // T = 1 / motor powser hash frequency (microsec)
+    // T = 1 / motor power hash frequency (microsec)
     int PR20 = 50 * (FOSC / 2000000);  // pour 20khz => PR20 = 7D0
     OpenOC1( OC_ON | OC_TIMER2_SRC | OC_PWM_FAULT_PIN_DISABLE, 0, 0);
     OpenOC2( OC_ON | OC_TIMER2_SRC | OC_PWM_FAULT_PIN_DISABLE, 0, 0);

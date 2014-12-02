@@ -42,7 +42,7 @@ int getLengthOfType(int parameterType) {
     return -1;
 }
 
-inline int commandLengthValueForMode(int mode, int input, int output) {
+int commandLengthValueForMode(int mode, int input, int output) {
     if (mode == DEVICE_MODE_INPUT) {
         return input;
     }

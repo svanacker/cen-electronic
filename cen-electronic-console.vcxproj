@@ -100,6 +100,10 @@
     <ClCompile Include="common\math\bcdUtils.c" />
     <ClCompile Include="common\math\cenMath.c" />
     <ClCompile Include="common\math\hexUtils.c" />
+    <ClCompile Include="device\device.c" />
+    <ClCompile Include="device\deviceInterface.c" />
+    <ClCompile Include="device\deviceList.c" />
+    <ClCompile Include="device\deviceUsage.c" />
     <ClCompile Include="test\common\2d\2dTest.c" />
     <ClCompile Include="test\common\io\bufferTest.c" />
     <ClCompile Include="test\common\io\filterTest.c" />
@@ -140,6 +144,13 @@
     <ClInclude Include="common\math\bcdUtils.h" />
     <ClInclude Include="common\math\cenMath.h" />
     <ClInclude Include="common\math\hexUtils.h" />
+    <ClInclude Include="device\device.h" />
+    <ClInclude Include="device\deviceConstants.h" />
+    <ClInclude Include="device\deviceDebug.h" />
+    <ClInclude Include="device\deviceDescriptor.h" />
+    <ClInclude Include="device\deviceInterface.h" />
+    <ClInclude Include="device\deviceList.h" />
+    <ClInclude Include="device\deviceUsage.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="test\common\2d\2dTest.h" />
     <ClInclude Include="test\common\io\bufferTest.h" />

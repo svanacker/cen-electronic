@@ -3,10 +3,7 @@
 
 #include "device.h"
 
-#include "../common/commons.h"
-
 #include "../common/io/outputStream.h"
-#include "../common/io/printWriter.h"
 
 // DEBUG
 
