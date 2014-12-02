@@ -119,6 +119,7 @@
 #include "../../device/strategy/strategyDeviceInterface.h"
 
 // Specific 2011
+#include "../../device/adc/adcDevice.h"
 #include "../../device/adc/adcDeviceInterface.h"
 
 // Air conditioning
@@ -470,9 +471,8 @@ void initDevicesDescriptor() {
     addLocalDevice(getTemperatureSensorDeviceInterface(), getTemperatureSensorDeviceDescriptor());
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom_));
 
-
-
-    addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor());  //&servoDevice, 
+    addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor());
+    addLocalDevice(getADCDeviceInterface(),getADCDeviceDescriptor());
     addLocalDevice(getRobotConfigDeviceInterface(), getRobotConfigDeviceDescriptor(&robotConfig));
     addLocalDevice(getStartMatchDetectorDeviceInterface(), getStartMatchDetectorDeviceDescriptor());
     addLocalDevice(getEndMatchDetectorDeviceInterface(), getEndMatchDetectorDeviceDescriptor());
