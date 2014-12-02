@@ -78,8 +78,8 @@
 #include "../../device/i2c/master/i2cMasterDebugDeviceInterface.h"
 
 // TEST
-#include "../../device/test/deviceTest.h"
-#include "../../device/test/deviceTestInterface.h"
+#include "../../device/test/testDevice.h"
+#include "../../device/test/testDeviceInterface.h"
 
 // SERVO
 #include "../../device/servo/servoDevice.h"

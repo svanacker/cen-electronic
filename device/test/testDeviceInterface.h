@@ -1,12 +1,12 @@
-#ifndef DEVICE_TEST_INTERFACE_H
-#define DEVICE_TEST_INTERFACE_H
+#ifndef TEST_DEVICE_INTERFACE_H
+#define TEST_DEVICE_INTERFACE_H
 
 #include "../../device/deviceInterface.h"
 #include "../../device/deviceConstants.h"
 
-
 /**
 * Command header for test.
+* The test is an addition between 2 values.
 */
 #define COMMAND_TEST 't'
 
@@ -16,7 +16,8 @@
 #define COMMAND_NOTIFY_TEST 'T'
 
 /**
-* Interface for Device
+* Interface for Test Device.
+* @return the interface for Test Device
 */
 DeviceInterface* getTestDeviceInterface();
 

@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#include "driverTest.h"
+#include "testDriver.h"
 
 #include "../../common/io/buffer.h"
 #include "../../common/io/inputStream.h"
@@ -9,13 +9,13 @@
 #include "../../common/io/printWriter.h"
 #include "../../common/io/reader.h"
 
-#include "../../device/test/deviceTestInterface.h"
+#include "../../device/test/testDeviceInterface.h"
 
 #include "../../drivers/driver.h"
 #include "../../drivers/driverList.h"
 #include "../../drivers/driverTransmitter.h"
 
-signed int driverTestGetValue(signed int argument1, signed int argument2) {
+signed int testDriverGetValue(signed int argument1, signed int argument2) {
     OutputStream* outputStream = getDriverRequestOutputStream();
     InputStream* resultStream = getDriverResponseInputStream();
     append(outputStream, COMMAND_TEST);
@@ -32,27 +32,27 @@ signed int driverTestGetValue(signed int argument1, signed int argument2) {
 
 // DRIVER INTERFACE
 
-bool driverTestInit() {
+bool testDriverInit(void) {
     return true;
 }
 
-void driverTestShutDown() {
+void testDriverShutDown(void) {
 }
 
-bool driverTestIsOk() {
+bool testDriverIsOk(void) {
     return true;
 }
 
-const char* driverTestGetName() {
-    return "driverTest";
+const char* testDriverGetName(void) {
+    return "testDriver";
 }
 
 static DriverDescriptor descriptor = {
-    &driverTestInit,
-    &driverTestShutDown,
-    &driverTestGetName,
+    &testDriverInit,
+    &testDriverShutDown,
+    &testDriverGetName,
 };
 
-DriverDescriptor* driverTestGetDescriptor() {
+DriverDescriptor* testDriverGetDescriptor() {
     return &descriptor;
 }

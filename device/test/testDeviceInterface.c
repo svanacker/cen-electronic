@@ -1,17 +1,16 @@
-#include "deviceTestInterface.h"
+#include "testDeviceInterface.h"
 
-#include "../../common/commons.h"
+#include <stdbool.h>
 
 #include "../../device/deviceInterface.h"
 #include "../../device/deviceConstants.h"
 
-const char* deviceTestGetName() {
+const char* deviceTestGetName(void) {
     return "test";
 }
 
-int deviceTestGetInterface(char header, int mode,
-        bool fillDeviceArgumentList) {
-    if (header == COMMAND_TEST) {
+int deviceTestGetInterface(char commandHeader, int mode, bool fillDeviceArgumentList) {
+    if (commandHeader == COMMAND_TEST) {
         if (fillDeviceArgumentList) {
             setFunction("test", 2, 1);
             setArgumentUnsignedHex2(0, "a");
@@ -20,7 +19,7 @@ int deviceTestGetInterface(char header, int mode,
         }
         return commandLengthValueForMode(mode, 4, 2);
     }// Describe a notification test
-    else if (header == COMMAND_NOTIFY_TEST) {
+    else if (commandHeader == COMMAND_NOTIFY_TEST) {
         if (fillDeviceArgumentList) {
             setFunction("notifyTest", 1, 1);
             setArgumentUnsignedHex2(0, "arg");

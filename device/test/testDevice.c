@@ -1,7 +1,7 @@
-#include "deviceTest.h"
-#include "deviceTestInterface.h"
+#include "testDevice.h"
+#include "testDeviceInterface.h"
 
-#include "../../common/commons.h"
+#include <stdbool.h>
 
 #include "../../common/cmd/commonCommand.h"
 
@@ -13,19 +13,17 @@
 
 #include "../../device/device.h"
 
-void deviceTestInit() {
+void deviceTestInit(void) {
 }
 
-void deviceTestShutDown() {
+void deviceTestShutDown(void) {
 }
 
-bool deviceTestIsOk() {
+bool deviceTestIsOk(void) {
     return true;
 }
 
-void deviceTestHandleRawData(char header,
-        InputStream* inputStream,
-        OutputStream* outputStream) {
+void deviceTestHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream) {
     if (header == COMMAND_TEST) {
         int arg1 = readHex2(inputStream);
         int arg2 = readHex2(inputStream);

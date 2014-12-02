@@ -94,6 +94,36 @@
     <Filter Include="Header Files\device">
       <UniqueIdentifier>{d4bb399a-f0d7-43dc-9530-e3e0190486a2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\device\test">
+      <UniqueIdentifier>{5d4b5969-1f18-4a93-ad71-c7f8909f9bc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\drivers">
+      <UniqueIdentifier>{8fe07051-71d8-4353-a94c-b447cd0171e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\drivers\test">
+      <UniqueIdentifier>{6b864185-ecc1-4a3d-bbb8-7b575964ed28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\drivers">
+      <UniqueIdentifier>{11ef0a22-ca77-4e41-8023-e82a260d8f8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\drivers\test">
+      <UniqueIdentifier>{7936f7ee-f53e-4836-bdf6-1173230882f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\drivers\dispatchers">
+      <UniqueIdentifier>{99c4305a-44d5-4528-9b1b-5b15476856a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\drivers\dispatchers">
+      <UniqueIdentifier>{dd4cff11-04d5-4e17-9d07-7e4cb9fc8787}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\device\dispatcher">
+      <UniqueIdentifier>{14d78661-f954-4fad-a662-b9c2c6012cc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\device\test">
+      <UniqueIdentifier>{4ea93886-55c7-4de2-9227-b90271402d66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\device\dispatcher">
+      <UniqueIdentifier>{8f3f4824-1458-4aeb-a987-ee306c4f0b56}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -209,6 +239,36 @@
     </ClCompile>
     <ClCompile Include="device\deviceUsage.c">
       <Filter>Source Files\device</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\driver.c">
+      <Filter>Source Files\drivers</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\driverList.c">
+      <Filter>Source Files\drivers</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\driverStreamListener.c">
+      <Filter>Source Files\drivers</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\driverTransmitter.c">
+      <Filter>Source Files\drivers</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\dispatcher\driverDataDispatcher.c">
+      <Filter>Source Files\drivers\dispatchers</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\dispatcher\driverDataDispatcherList.c">
+      <Filter>Source Files\drivers\dispatchers</Filter>
+    </ClCompile>
+    <ClCompile Include="device\test\testDevice.c">
+      <Filter>Source Files\device\test</Filter>
+    </ClCompile>
+    <ClCompile Include="device\dispatcher\deviceDataDispatcher.c">
+      <Filter>Source Files\device\dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="device\test\testDeviceInterface.c">
+      <Filter>Source Files\device\test</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\test\testDriver.c">
+      <Filter>Source Files\drivers\test</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -352,6 +412,36 @@
     </ClInclude>
     <ClInclude Include="device\deviceUsage.h">
       <Filter>Header Files\device</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\driver.h">
+      <Filter>Header Files\drivers</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\driverList.h">
+      <Filter>Header Files\drivers</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\driverStreamListener.h">
+      <Filter>Header Files\drivers</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\driverTransmitter.h">
+      <Filter>Header Files\drivers</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\dispatcher\driverDataDispatcher.h">
+      <Filter>Header Files\drivers\dispatchers</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\dispatcher\driverDataDispatcherList.h">
+      <Filter>Header Files\drivers\dispatchers</Filter>
+    </ClInclude>
+    <ClInclude Include="device\test\testDevice.h">
+      <Filter>Header Files\device\test</Filter>
+    </ClInclude>
+    <ClInclude Include="device\test\testDeviceInterface.h">
+      <Filter>Header Files\device\test</Filter>
+    </ClInclude>
+    <ClInclude Include="device\dispatcher\deviceDataDispatcher.h">
+      <Filter>Header Files\device\dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\test\testDriver.h">
+      <Filter>Header Files\drivers\test</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
