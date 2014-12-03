@@ -18,6 +18,7 @@
 signed int testDriverGetValue(signed int argument1, signed int argument2) {
     OutputStream* outputStream = getDriverRequestOutputStream();
     InputStream* resultStream = getDriverResponseInputStream();
+    append(outputStream, TEST_DEVICE_HEADER);
     append(outputStream, COMMAND_TEST);
     appendHex2(outputStream, argument1);
     appendHex2(outputStream, argument2);

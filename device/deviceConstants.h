@@ -70,7 +70,7 @@
 #define TEMPERATURE_SENSOR_DEVICE_HEADER     	'T'
 
 /** Header for Test Device. */
-#define DEVICE_TEST_HEADER 						't'
+#define TEST_DEVICE_HEADER 						't'
 
 /** Common Beacon device header. */
 #define COMMON_BEACON_DEVICE_HEADER            	'U'

@@ -33,7 +33,8 @@ void setRedirectionTransmitFromDriverRequestBuffer(transmitFromDriverRequestBuff
 bool transmitFromDriverRequestBuffer() {
     // Handle redirection
     if (redirectFunction != NULL) {
-        return redirectFunction();
+        bool result = redirectFunction();
+        return result;
     }
     // We do exactly as if the data was written by a end-user
     // requestBuffer must be filled before calling this method

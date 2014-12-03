@@ -8,12 +8,12 @@
 * Command header for test.
 * The test is an addition between 2 values.
 */
-#define COMMAND_TEST 't'
+#define COMMAND_TEST 'w'
 
 /**
 * Command to notify information from the slave to the master and test it.
 */
-#define COMMAND_NOTIFY_TEST 'T'
+#define COMMAND_NOTIFY_TEST 'n'
 
 /**
 * Interface for Test Device.

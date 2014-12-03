@@ -25,6 +25,7 @@ DeviceList* getDeviceList() {
 }
 
 void initDeviceList(Device (*deviceListArray)[], unsigned char deviceListSize) {
+    // TODO : Check Illegal Arguments
     deviceList.devices = deviceListArray;
     deviceList.maxSize = deviceListSize;
 }
@@ -73,9 +74,10 @@ Device* addLocalDevice(DeviceInterface* interface, DeviceDescriptor* descriptor)
 }
 
 Device* getDevice(int index) {
+	// TODO : Check size
     Device* result = (Device*) deviceList.devices;
-	// we don't need use sizeof because our pointer is a Device* pointer, so the shift
-	// is already of the structure, we just have to shift of index.
+    // we don't need use sizeof because our pointer is a Device* pointer, so the shift
+    // is already of the structure, we just have to shift of index.
     result += index;
 
     return result;

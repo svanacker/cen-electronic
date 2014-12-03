@@ -29,7 +29,7 @@ void deviceTestHandleRawData(char header, InputStream* inputStream, OutputStream
         int arg2 = readHex2(inputStream);
         int result = arg1 + arg2;
 
-        ackCommand(outputStream, DEVICE_TEST_HEADER, COMMAND_TEST);
+		ackCommand(outputStream, TEST_DEVICE_HEADER, COMMAND_TEST);
         // data
         appendHex2(outputStream, result);
     }

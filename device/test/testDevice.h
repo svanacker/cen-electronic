@@ -5,6 +5,7 @@
 
 /**
  * The descriptor for the test device.
+ * @return The descriptor for the test device
  */
 DeviceDescriptor* getTestDeviceDescriptor();
 

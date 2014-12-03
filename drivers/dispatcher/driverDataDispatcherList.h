@@ -3,6 +3,8 @@
 
 #define MAX_DRIVER_DATA_DISPATCHER 5
 
+#include <stdbool.h>
+
 #include "driverDataDispatcher.h"
 
 /**
@@ -20,7 +22,8 @@ typedef struct {
 
 /**
  * Initializes a list of DriverDataDispatcher.
- * @param 
+ * @param driverDataDispatcherListArray the array presized with DriverDataDispatcher
+ * @param driverDataDispatcherListSize the size of the array driverDataDispatcherListArray
  */
 void initDriverDataDispatcherList(DriverDataDispatcher(*driverDataDispatcherListArray)[], unsigned char driverDataDispatcherListSize);
 
@@ -54,6 +57,7 @@ DriverDataDispatcher* addDriverDataDispatcher(
 /**
  * Get a driver data dispatcher by his index.
  * @param index the index of the driverDataDispatcher to get.
+ * @return a driver data dispatcher at the right index.
  */
 DriverDataDispatcher* getDriverDataDispatcherByIndex(int index);
 
@@ -61,6 +65,7 @@ DriverDataDispatcher* getDriverDataDispatcherByIndex(int index);
  * Find the first driver data dispatcher by transmit mode and address.
  * @param transmitMode the transmit mode to filter
  * @param address the address of the DriverDataDispatcher (For example for I2C)
+ * @return the first driver data dispatcher by transmit mode and address.
  */
 DriverDataDispatcher* getDriverDataDispatcherByTransmitMode(int transmitMode, int address);
 

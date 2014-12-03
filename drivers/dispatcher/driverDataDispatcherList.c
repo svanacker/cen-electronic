@@ -19,6 +19,9 @@ DriverDataDispatcherList* getDispatcherList() {
 }
 
 void initDriverDataDispatcherList(DriverDataDispatcher(*driverDataDispatcherListArray)[], unsigned char driverDataDispatcherListSize) {
+    if (driverDataDispatcherListArray == NULL) {
+        writeError(DISPATCHERS_LIST_NOT_INITIALIZED);
+    }
     dispatcherList.dispatchers = driverDataDispatcherListArray;
     dispatcherList.maxSize = driverDataDispatcherListSize;
     dispatcherList.size = 0;
@@ -32,6 +35,10 @@ DriverDataDispatcher* addDriverDataDispatcher(
                             InputStream* inputStream,
                             OutputStream* outputStream,
                             driverDataDispatcherTransmitDataFunction* driverDataDispatcherTransmitData) {
+    if (dispatcherList.dispatchers == NULL) {
+        writeError(DISPATCHERS_LIST_NOT_INITIALIZED);
+        return NULL;
+    }
     unsigned char size = dispatcherList.size;
     if (size < dispatcherList.maxSize) {
         DriverDataDispatcher* result = getDriverDataDispatcherByIndex(size);
@@ -51,6 +58,7 @@ DriverDataDispatcher* addDriverDataDispatcher(
 }
 
 DriverDataDispatcher* getDriverDataDispatcherByIndex(int index) {
+    // TODO : Check size
     DriverDataDispatcher* result = (DriverDataDispatcher*)dispatcherList.dispatchers;
     // we don't need use sizeof because our pointer is a DriverDataDispatcher* pointer, so the shift
     // is already of the structure, we just have to shift of index.

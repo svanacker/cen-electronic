@@ -30,13 +30,13 @@ typedef const char* driverGetNameFunction(void);
  * Descriptor of a driver.
  */
 typedef struct {
-	/** Callback to an init Function. */
+    /** Callback to an init Function. */
     driverInitFunction *driverInit;
-	/** Callback to a shutdown Function. */
+    /** Callback to a shutdown Function. */
     driverShutDownFunction *driverShutDown;
-	/** Function to get the name of the function. */
+    /** Function to get the name of the function. */
     driverGetNameFunction *driverGetName;
-	/** How we can communicate with the driver (Uart, I2C, local ...). */
+    /** How we can communicate with the driver (Uart, I2C, local ...). */
     int transmitMode;
 } DriverDescriptor;
 
