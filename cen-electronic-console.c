@@ -16,6 +16,8 @@
 #include "test/common/math/cenMathTest.h"
 #include "test/common/math/hexUtilsTest.h"
 
+#include "test/drivers/dispatchers/driverDataDispatcherListTest.h"
+
 
 void setUp(void)
 {
@@ -40,6 +42,7 @@ int main(int argc, char *argv[])
 	bcdUtilsTestSuite();
 	_2dTestSuite();
 	cenMathTestSuite();
+	driverDataDispatcherListTestSuite();
 
 	UnityEnd();
 

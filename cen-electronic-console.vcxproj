@@ -109,6 +109,7 @@
     <ClCompile Include="device\test\testDeviceInterface.c" />
     <ClCompile Include="drivers\dispatcher\driverDataDispatcher.c" />
     <ClCompile Include="drivers\dispatcher\driverDataDispatcherList.c" />
+    <ClCompile Include="drivers\dispatcher\localDriverDataDispatcher.c" />
     <ClCompile Include="drivers\driver.c" />
     <ClCompile Include="drivers\driverList.c" />
     <ClCompile Include="drivers\driverStreamListener.c" />
@@ -123,6 +124,8 @@
     <ClCompile Include="test\common\math\bcdUtilsTest.c" />
     <ClCompile Include="test\common\math\cenMathTest.c" />
     <ClCompile Include="test\common\math\hexUtilsTest.c" />
+    <ClCompile Include="test\drivers\dispatchers\driverDataDispatcherListTest.c" />
+    <ClCompile Include="test\drivers\test\testDriverTest.c" />
     <ClCompile Include="test\unity\unity.c" />
   </ItemGroup>
   <ItemGroup>
@@ -166,6 +169,7 @@
     <ClInclude Include="device\test\testDeviceInterface.h" />
     <ClInclude Include="drivers\dispatcher\driverDataDispatcher.h" />
     <ClInclude Include="drivers\dispatcher\driverDataDispatcherList.h" />
+    <ClInclude Include="drivers\dispatcher\localDriverDataDispatcher.h" />
     <ClInclude Include="drivers\driver.h" />
     <ClInclude Include="drivers\driverList.h" />
     <ClInclude Include="drivers\driverStreamListener.h" />
@@ -181,6 +185,8 @@
     <ClInclude Include="test\common\math\bcdUtilsTest.h" />
     <ClInclude Include="test\common\math\cenMathTest.h" />
     <ClInclude Include="test\common\math\hexUtilsTest.h" />
+    <ClInclude Include="test\drivers\dispatchers\driverDataDispatcherListTest.h" />
+    <ClInclude Include="test\drivers\test\testDriverTest.h" />
     <ClInclude Include="test\unity\unity.h" />
     <ClInclude Include="test\unity\unity_internals.h" />
   </ItemGroup>

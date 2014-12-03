@@ -124,6 +124,36 @@
     <Filter Include="Header Files\device\dispatcher">
       <UniqueIdentifier>{8f3f4824-1458-4aeb-a987-ee306c4f0b56}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\test\drivers">
+      <UniqueIdentifier>{4fcca6bf-e60d-43e6-b846-99077ae094be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\test\drivers\test">
+      <UniqueIdentifier>{e472ec4f-f855-42c7-a885-815d1f056de8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\test\device">
+      <UniqueIdentifier>{86eb500e-a2ca-420c-80aa-d7c47441db69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\test\device\test">
+      <UniqueIdentifier>{e767e7ed-bda7-4b05-9f14-22fae351f294}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\test\drivers">
+      <UniqueIdentifier>{fb14140b-a919-4e87-9d32-b6747583da2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\test\device">
+      <UniqueIdentifier>{78d4924c-9acd-4345-aae6-d80deb0ebc18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\test\device\test">
+      <UniqueIdentifier>{fd31e2f9-ecc5-4aae-8dfd-f87ff6da9900}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\test\drivers\test">
+      <UniqueIdentifier>{af45eef9-0c12-4254-9989-2d309d9de5bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\test\drivers\dispatchers">
+      <UniqueIdentifier>{b935aec9-3b23-4d43-90d1-5c19414f344e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\test\drivers\dispatchers">
+      <UniqueIdentifier>{6f2621e0-8a80-4564-955c-79c4dbea9a95}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -269,6 +299,15 @@
     </ClCompile>
     <ClCompile Include="drivers\test\testDriver.c">
       <Filter>Source Files\drivers\test</Filter>
+    </ClCompile>
+    <ClCompile Include="test\drivers\test\testDriverTest.c">
+      <Filter>Source Files\test\drivers\test</Filter>
+    </ClCompile>
+    <ClCompile Include="test\drivers\dispatchers\driverDataDispatcherListTest.c">
+      <Filter>Source Files\test\drivers\dispatchers</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\dispatcher\localDriverDataDispatcher.c">
+      <Filter>Source Files\drivers\dispatchers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -442,6 +481,15 @@
     </ClInclude>
     <ClInclude Include="drivers\test\testDriver.h">
       <Filter>Header Files\drivers\test</Filter>
+    </ClInclude>
+    <ClInclude Include="test\drivers\test\testDriverTest.h">
+      <Filter>Header Files\test\drivers\test</Filter>
+    </ClInclude>
+    <ClInclude Include="test\drivers\dispatchers\driverDataDispatcherListTest.h">
+      <Filter>Header Files\test\drivers\dispatchers</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\dispatcher\localDriverDataDispatcher.h">
+      <Filter>Header Files\drivers\dispatchers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

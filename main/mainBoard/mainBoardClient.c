@@ -120,7 +120,7 @@
 // Drivers
 #include "../../drivers/clock/pcf8573p.h"
 #include "../../drivers/io/pcf8574.h"
-#include "../../drivers/test/driverTest.h"
+#include "../../drivers/test/testDriver.h"
 #include "../../drivers/system/systemDriver.h"
 #include "../../drivers/motion/motionDriver.h"
 #include "../../drivers/motion/trajectoryDriver.h"
@@ -204,22 +204,22 @@ static Buffer i2cMasterDebugInputBuffer;
 
 // DISPATCHER I2C
 
+// TODO : Introduce Constants
+static DriverDataDispatcher driverDataDispatcherListArray[MAIN_BOARD_DRIVER_DATA_DISPATCHER_LENGTH];
+
 // i2c->Motor
-static DriverDataDispatcher motorI2cDispatcher;
 static char motorBoardInputBufferArray[MAIN_BOARD_LINK_TO_MOTOR_BOARD_BUFFER_LENGTH];
 static Buffer motorBoardInputBuffer;
 static InputStream motorBoardInputStream;
 static OutputStream motorBoardOutputStream;
 
 // i2c->Air Conditioning
-static DriverDataDispatcher airConditioningI2cDispatcher;
 static char airConditioningBoardInputBufferArray[MAIN_BOARD_LINK_TO_MECA_BOARD_2_BUFFER_LENGTH];
 static Buffer airConditioningBoardInputBuffer;
 static InputStream airConditioningBoardInputStream;
 static OutputStream airConditioningBoardOutputStream;
 
 // i2c->Mechanical 2
-static DriverDataDispatcher mechanical2I2cDispatcher;
 static char mechanical2BoardInputBufferArray[MAIN_BOARD_LINK_TO_MECA_BOARD_2_BUFFER_LENGTH];
 static Buffer mechanical2BoardInputBuffer;
 static InputStream mechanical2BoardInputStream;
@@ -411,7 +411,7 @@ void initDriversDescriptor() {
                 &driverResponseBuffer, &driverResponseBufferArray, MAIN_BOARD_RESPONSE_DRIVER_BUFFER_LENGTH);
 
     // Get test driver for debug purpose
-    addDriver(driverTestGetDescriptor(), TRANSMIT_LOCAL);
+    addDriver(testDriverGetDescriptor(), TRANSMIT_LOCAL);
 
     // Direct Devantech Driver
     addDriver(getMD22DriverDescriptor(), TRANSMIT_NONE);
@@ -637,6 +637,9 @@ int main(void) {
     // Start interruptions
     // startTimerList();
 
+    // Initializes the DriverDataDispatcherList
+    initDriverDataDispatcherList(&driverDataDispatcherListArray, MAIN_BOARD_DRIVER_DATA_DISPATCHER_LENGTH);
+
     // Configure data dispatcher
     addLocalDriverDataDispatcher();
 
@@ -664,7 +667,7 @@ int main(void) {
     */
 
     // Stream for Air Conditioning
-    addI2CDriverDataDispatcher(&airConditioningI2cDispatcher,
+    addI2CDriverDataDispatcher(
             "AIR_CONDITIONING_DISPATCHER",
             &airConditioningBoardInputBuffer,
             &airConditioningBoardInputBufferArray,

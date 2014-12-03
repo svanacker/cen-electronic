@@ -21,6 +21,8 @@
 
 // DISPATCHER DATA
 
+#define MAIN_BOARD_DRIVER_DATA_DISPATCHER_LENGTH				5
+
 /** The Input length must be equivalent to the output length of the linked board. */
 #define MAIN_BOARD_LINK_TO_MOTOR_BOARD_BUFFER_LENGTH            MOTOR_BOARD_OUT_BUFFER_LENGTH
 #define MAIN_BOARD_LINK_TO_MECA_BOARD_1_BUFFER_LENGTH            MECA_BOARD_1_OUTPUT_BUFFER_LENGTH

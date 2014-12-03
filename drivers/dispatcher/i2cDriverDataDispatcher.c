@@ -30,7 +30,7 @@
 static char i2cTempBufferArray[I2C_DRIVER_DATA_DISPATCHER_BUFFER_LENGTH];
 static Buffer i2cTempBuffer;
 
-void addI2CDriverDataDispatcher(DriverDataDispatcher* i2cDispatcher,
+DriverDataDispatcher* addI2CDriverDataDispatcher(
         char* dispatcherName,
         Buffer* i2cMasterInputBuffer,
         char (*i2cMasterInputBufferArray)[],
@@ -38,26 +38,29 @@ void addI2CDriverDataDispatcher(DriverDataDispatcher* i2cDispatcher,
         OutputStream* i2cMasterOutputStream,
         InputStream* i2cMasterInputStream,
         int i2cAddress) {
-    // Configure i2c Dispatcher
-    i2cDispatcher->transmitMode = TRANSMIT_I2C;
-    i2cDispatcher->name = dispatcherName;
-    i2cDispatcher->address = i2cAddress;
-    i2cDispatcher->driverDataDispatcherTransmitData = remoteDriverDataDispatcherTransmit;
+
 
     // Init the output Stream : I2C Master -> I2C Slave(address)
     initBuffer(&i2cTempBuffer, &i2cTempBufferArray, I2C_DRIVER_DATA_DISPATCHER_BUFFER_LENGTH, "I2C Master Output", "global");
     initMasterI2cOutputStream(i2cMasterOutputStream, &i2cTempBuffer, i2cAddress);
-    i2cDispatcher->outputStream = i2cMasterOutputStream;
 
     // Init the input Stream : I2C Slave (address) -> I2C Master
     initBuffer(i2cMasterInputBuffer, i2cMasterInputBufferArray, i2cMasterInputBufferLength, "I2C Master Input", dispatcherName);
     initMasterI2cInputStream(i2cMasterInputBuffer, i2cMasterInputStream, i2cAddress);
-    i2cDispatcher->inputStream = i2cMasterInputStream;
 
-    // add to the list
-    addDriverDataDispatcher(i2cDispatcher);
-
-    // Clear previous data to avoid buffer from the other board
+    // Clear previous data to avoid buffer from the other board provided by error at the initialization
+    // TODO : Clarify this, to avoid to read some bad data until we are ready !
     clearInputStream(i2cMasterInputStream);
+
+    DriverDataDispatcher* result = addDriverDataDispatcher(
+                                        TRANSMIT_I2C,
+                                        dispatcherName,
+                                        NULL,
+                                        i2cAddress,
+                                        i2cMasterInputStream,
+                                        i2cMasterOutputStream,
+                                        remoteDriverDataDispatcherTransmit
+                                    );
+    return result;
 }
 

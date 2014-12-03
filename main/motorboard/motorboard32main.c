@@ -42,8 +42,8 @@
 // -> Devices
 
 // Test
-#include "../../device/test/deviceTest.h"
-#include "../../device/test/deviceTestInterface.h"
+#include "../../device/test/testDevice.h"
+#include "../../device/test/testDeviceInterface.h"
 
 // System
 #include "../../device/system/systemDevice.h"
@@ -75,10 +75,6 @@
 // Motion
 #include "../../device/motion/simple/motionDevice.h"
 #include "../../device/motion/simple/motionDeviceInterface.h"
-
-// Test
-#include "../../device/test/deviceTest.h"
-#include "../../device/test/deviceTestInterface.h"
 
 // Drivers
 #include "../../drivers/motor/motorDriver.h"

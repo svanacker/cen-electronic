@@ -37,7 +37,7 @@ Device* addDevice(DeviceInterface* interface,
         int transmitMode,
         int address,
         char* addressString) {
-    if (&deviceList.maxSize == 0) {
+    if (&deviceList == NULL || &deviceList.maxSize == 0) {
         writeError(DEVICES_LIST_NOT_INITIALIZED);
         return NULL;
     }
@@ -45,7 +45,7 @@ Device* addDevice(DeviceInterface* interface,
     unsigned char size = deviceList.size;
     if (size < deviceList.maxSize) {
         Device* device = getDevice(size);
-        // get a device already allocated
+        // get a pointer on a device already allocated (because we provide at init a pointer on an array of device
         device->interface = interface;
         device->descriptor = descriptor;
         device->transmitMode = transmitMode;
@@ -74,8 +74,8 @@ Device* addLocalDevice(DeviceInterface* interface, DeviceDescriptor* descriptor)
 
 Device* getDevice(int index) {
     Device* result = (Device*) deviceList.devices;
-    // we don't need use sizeof because our pointer are Device* pointer, so the length
-    // is already of 2
+	// we don't need use sizeof because our pointer is a Device* pointer, so the shift
+	// is already of the structure, we just have to shift of index.
     result += index;
 
     return result;

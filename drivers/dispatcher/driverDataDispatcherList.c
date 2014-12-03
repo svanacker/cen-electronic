@@ -18,29 +18,52 @@ DriverDataDispatcherList* getDispatcherList() {
     return &dispatcherList;
 }
 
-void initDriverDataDispatcherList() {
+void initDriverDataDispatcherList(DriverDataDispatcher(*driverDataDispatcherListArray)[], unsigned char driverDataDispatcherListSize) {
+    dispatcherList.dispatchers = driverDataDispatcherListArray;
+    dispatcherList.maxSize = driverDataDispatcherListSize;
     dispatcherList.size = 0;
 }
 
-void addDriverDataDispatcher(DriverDataDispatcher* dispatcher) {
+DriverDataDispatcher* addDriverDataDispatcher(
+                            int transmitMode,
+                            char* name,
+                            char* addressString,
+                            int address,
+                            InputStream* inputStream,
+                            OutputStream* outputStream,
+                            driverDataDispatcherTransmitDataFunction* driverDataDispatcherTransmitData) {
     unsigned char size = dispatcherList.size;
-    if (size < MAX_DRIVER_DATA_DISPATCHER) {
-        dispatcherList.dispatchers[size] = dispatcher;
+    if (size < dispatcherList.maxSize) {
+        DriverDataDispatcher* result = getDriverDataDispatcherByIndex(size);
+        result->transmitMode = transmitMode;
+        result->name = name;
+        result->addressString = addressString;
+        result->address = address;
+        result->inputStream = inputStream;
+        result->outputStream = outputStream;
+        result->driverDataDispatcherTransmitData;
         dispatcherList.size++;
+        return result;
     } else {
         writeError(TOO_MUCH_DRIVER_DATA_DISPATCHER);
+        return NULL;
     }
 }
 
 DriverDataDispatcher* getDriverDataDispatcherByIndex(int index) {
-    return dispatcherList.dispatchers[index];
+    DriverDataDispatcher* result = (DriverDataDispatcher*)dispatcherList.dispatchers;
+    // we don't need use sizeof because our pointer is a DriverDataDispatcher* pointer, so the shift
+    // is already of the structure, we just have to shift of index.
+    result += index;
+
+    return result;
 }
 
 DriverDataDispatcher* getDriverDataDispatcherByTransmitMode(int transmitMode, int address) {
     int size = dispatcherList.size;
     int i;
     for (i = 0; i < size; i++) {
-        DriverDataDispatcher* dispatcher = dispatcherList.dispatchers[i];
+        DriverDataDispatcher* dispatcher = getDriverDataDispatcherByIndex(i);
         if (dispatcher->transmitMode == transmitMode && dispatcher->address == address) {
             return dispatcher;
         }
@@ -57,7 +80,7 @@ bool handleNotificationFromDispatcherList(int transmitMode) {
     int size = dispatcherList.size;
     int i;
     for (i = 0; i < size; i++) {
-        DriverDataDispatcher* dispatcher = dispatcherList.dispatchers[i];
+        DriverDataDispatcher* dispatcher = getDriverDataDispatcherByIndex(i);
         if (dispatcher->transmitMode != transmitMode) {
             continue;
         }

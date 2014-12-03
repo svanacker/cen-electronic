@@ -4,7 +4,8 @@
 #include "driverDataDispatcher.h"
 
 /**
-* Add the local driver data dispatcher to the list
+* Add the local driver data dispatcher to the list of dispacher.
+* @return a pointer on the DriverDataDispatcher.
 */
 DriverDataDispatcher* addLocalDriverDataDispatcher();
 

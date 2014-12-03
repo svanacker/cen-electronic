@@ -37,7 +37,7 @@ void printDriverDataDispatcher(OutputStream* outputStream, DriverDataDispatcher*
 void printDriverDataDispatcherList(OutputStream* outputStream, DriverDataDispatcherList* dispatcherList) {
     int i;
     for (i = 0; i < dispatcherList->size; i++) {
-        DriverDataDispatcher* dispatcher = dispatcherList->dispatchers[i];    
+        DriverDataDispatcher* dispatcher = getDriverDataDispatcherByIndex(i);    
         printDriverDataDispatcher(outputStream, dispatcher);
     }
 }

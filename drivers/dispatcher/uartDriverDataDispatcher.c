@@ -22,7 +22,7 @@
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
 
-void addUartDriverDataDispatcher(DriverDataDispatcher* uartDispatcher,
+DriverDataDispatcher* addUartDriverDataDispatcher(
         char* dispatcherName,
 
         Buffer* uartInputBuffer,
@@ -32,24 +32,27 @@ void addUartDriverDataDispatcher(DriverDataDispatcher* uartDispatcher,
         OutputStream* uartOutputStream,
         InputStream* uartInputStream,
         unsigned int targetUartIndex) {
-    // Configure i2c Dispatcher
-    uartDispatcher->transmitMode = TRANSMIT_UART;
-    uartDispatcher->name = dispatcherName;
-    uartDispatcher->address = targetUartIndex;
-    uartDispatcher->driverDataDispatcherTransmitData = remoteDriverDataDispatcherTransmit;
 
     // Init the output Stream : Uart Buffer -> Slave/Target UARTxx
     initSerialOutputStream(uartOutputStream, targetUartIndex);
-    uartDispatcher->outputStream = uartOutputStream;
 
     // Init the input Stream : Slave/Target UARTxx -> Uart Buffer
     initBuffer(uartInputBuffer, uartInputBufferArray, uartInputBufferLength, "UART Input", dispatcherName);
     initSerialInputBuffer(uartInputBuffer, targetUartIndex); // TODO : TO Verify !!!
-    uartDispatcher->inputStream = &(uartInputBuffer->inputStream);
 
-    // add to the list
-    addDriverDataDispatcher(uartDispatcher);
+
+    DriverDataDispatcher* result = addDriverDataDispatcher(
+                                        TRANSMIT_UART,
+                                        dispatcherName,
+                                        NULL,
+                                        targetUartIndex,
+                                        uartInputStream,
+                                        uartOutputStream,
+                                        remoteDriverDataDispatcherTransmit);
 
     // Clear previous data to avoid buffer from the other board
-    clearInputStream(uartDispatcher->inputStream);
+    // TODO : Check if we must to this at this time
+    clearInputStream(result->inputStream);
+
+    return result;
 }
