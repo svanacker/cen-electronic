@@ -1,6 +1,8 @@
 #ifndef PRINT_WRITER_TEST_H
 #define PRINT_WRITER_TEST_H
 
+void printWriterTestSuite(void);
+
 // append
 
 void test_append_simple(void);

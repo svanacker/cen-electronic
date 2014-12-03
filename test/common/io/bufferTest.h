@@ -1,6 +1,8 @@
 #ifndef BUFFER_TEST_H
 #define BUFFER_TEST_H
 
+void bufferTestSuite(void);
+
 // initBuffer
 
 void test_initBuffer_with_null_buffer_should_throw_buffer_null_error(void);

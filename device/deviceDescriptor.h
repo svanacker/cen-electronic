@@ -1,9 +1,10 @@
 #ifndef DEVICE_DESCRIPTOR_H
 #define DEVICE_DESCRIPTOR_H
 
+#include <stdbool.h>
+
 #include "deviceDescriptor.h"
 
-#include "../common/commons.h"
 #include "../common/io/inputStream.h"
 #include "../common/io/outputStream.h"
 

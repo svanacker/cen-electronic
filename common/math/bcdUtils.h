@@ -5,9 +5,9 @@
  * Transform the BCD value.
  * Ex 0x28-> 28 decimal
  * @param bcd the bcd numer to convert
- * @result decimal the decimal numer result
+ * @result decimal the decimal number result
  */
-char bcd2CharToDec(char bcd);
+unsigned char bcd2CharToDec(unsigned char bcd);
 
 #endif	
 

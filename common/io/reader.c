@@ -114,10 +114,12 @@ bool isChar(InputStream* inputStream, char expectedChar) {
 bool checkIsAck(InputStream* inputStream) {
     char ack = inputStream->readChar(inputStream);
     if (ack != COMMAND_ACK) {
+        writeError(IO_READER_CHECK_CHAR_PROBLEM);
         OutputStream* outputStream = getErrorOutputStreamLogger();
         appendString(outputStream, "\nCHK:ACK EXP:a \t but \t find:");
         append(outputStream, ack);
         println(outputStream);
+        return false;
     }
     return true;
 }
@@ -125,12 +127,14 @@ bool checkIsAck(InputStream* inputStream) {
 bool checkIsChar(InputStream* inputStream, char expectedChar) {
     char readChar = inputStream->readChar(inputStream);
     if (expectedChar != readChar) {
+        writeError(IO_READER_CHECK_CHAR_PROBLEM);
         OutputStream* outputStream = getErrorOutputStreamLogger();
         appendString(outputStream, "\nCHK:CHAR:EXP:");
         append(outputStream, expectedChar);
         appendString(outputStream, " \t but \t find:");
         append(outputStream, readChar);
         println(outputStream);
+        return false;
     }
     return true;
 }

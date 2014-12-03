@@ -1,22 +1,23 @@
-#ifndef DEVICE_TEST_INTERFACE_H
-#define DEVICE_TEST_INTERFACE_H
+#ifndef TEST_DEVICE_INTERFACE_H
+#define TEST_DEVICE_INTERFACE_H
 
 #include "../../device/deviceInterface.h"
 #include "../../device/deviceConstants.h"
 
-
 /**
 * Command header for test.
+* The test is an addition between 2 values.
 */
-#define COMMAND_TEST 't'
+#define COMMAND_TEST 'w'
 
 /**
 * Command to notify information from the slave to the master and test it.
 */
-#define COMMAND_NOTIFY_TEST 'T'
+#define COMMAND_NOTIFY_TEST 'n'
 
 /**
-* Interface for Device
+* Interface for Test Device.
+* @return the interface for Test Device
 */
 DeviceInterface* getTestDeviceInterface();
 

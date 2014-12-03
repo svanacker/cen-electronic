@@ -17,6 +17,38 @@ static OutputStream* outputStream;
 static Buffer bufferTest2;
 static char bufferArrayTest2[TEST_BUFFER_SIZE];
 
+void printWriterTestSuite(void) {
+	RUN_TEST(test_append_simple);
+	RUN_TEST(test_append_repeat);
+
+	RUN_TEST(test_appendBool);
+
+	RUN_TEST(test_appendSeparator);
+
+	RUN_TEST(test_appendString);
+
+	RUN_TEST(test_printBuffer);
+
+	RUN_TEST(test_appendHex);
+	RUN_TEST(test_appendHex2);
+	RUN_TEST(test_appendHex3);
+	RUN_TEST(test_appendHex4);
+	RUN_TEST(test_appendHex5);
+	RUN_TEST(test_appendHex6);
+	RUN_TEST(test_appendHex8);
+
+	RUN_TEST(test_appendDec_simple);
+	RUN_TEST(test_appendDec_negative_value);
+
+	RUN_TEST(test_appendDecf_positive_value1);
+	RUN_TEST(test_appendDecf_positive_value2);
+	RUN_TEST(test_appendDecf_positive_value3);
+	RUN_TEST(test_appendDecf_positive_value4);
+	RUN_TEST(test_appendDecf_positive_value5);
+	RUN_TEST(test_appendDecf_negative_value1);
+	RUN_TEST(test_appendDecf_negative_value2);
+}
+
 void initBufferForPrintWriterTest(void) {
 	initBuffer(&bufferTest, (char(*)[]) &bufferArrayTest, TEST_BUFFER_SIZE, "printWriter", "printWriterTestType");
 	outputStream = getOutputStream(&bufferTest);

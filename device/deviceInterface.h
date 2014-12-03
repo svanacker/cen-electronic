@@ -250,8 +250,8 @@ typedef const char* deviceGetNameFunction(void);
 * Returns a value >= 0 if the device handle this char, and -1, if it's not handled
 */
 typedef int deviceGetInterfaceFunction(char commandHeader,
-										int mode,
-										bool fillDeviceArgumentList);
+                                        int mode,
+                                        bool fillDeviceArgumentList);
 
 
 
@@ -259,10 +259,10 @@ typedef int deviceGetInterfaceFunction(char commandHeader,
 * Defines the structure used to describe the remote commands accepted by the device.
 */
 typedef struct DeviceInterface{
-	/**
-	 * The header of the Device. Each device must have its own name.
+    /**
+     * The header of the Device. Each device must have its own name.
      * @see https://github.com/svanacker/cen-electronic/wiki/Device-Header-List
-	 */
+     */
     char deviceHeader;
     /** Function returning the name of the device. */
     deviceGetNameFunction *deviceGetName;

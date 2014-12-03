@@ -1,6 +1,8 @@
 #ifndef READER_TEST_H
 #define READER_TEST_H
 
+void readerTestSuite(void);
+
 // readFilteredChar
 
 void test_readFilteredChar(void);
@@ -40,5 +42,17 @@ void test_readHex6(void);
 // isAck
 
 void test_isAck(void);
+
+// isChar
+
+void test_isChar(void);
+
+// checkIsAck
+
+void test_checkIsAck(void);
+
+// checkIsChar
+
+void test_checkIsChar(void);
 
 #endif

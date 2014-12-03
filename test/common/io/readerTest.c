@@ -16,8 +16,24 @@ static char bufferArrayTest[TEST_BUFFER_SIZE];
 static OutputStream* outputStream;
 static InputStream* inputStream;
 
+void readerTestSuite(void) {
+	RUN_TEST(test_readFilteredChar);
+	RUN_TEST(test_readBinaryChar);
+	RUN_TEST(test_readBinaryWord);
+	RUN_TEST(test_readHex);
+	RUN_TEST(test_readHex2);
+	RUN_TEST(test_readSignedHex2);
+	RUN_TEST(test_readHex4);
+	RUN_TEST(test_readSignedHex4);
+	RUN_TEST(test_readHex6);
+	RUN_TEST(test_isAck);
+	RUN_TEST(test_isChar);
+	RUN_TEST(test_checkIsAck);
+	RUN_TEST(test_checkIsChar);
+}
+
 void initBufferForReaderTest(void) {
-	initBuffer(&bufferTest, (char(*)[]) &bufferArrayTest, TEST_BUFFER_SIZE, "printWriter", "printWriterTestType");
+	initBuffer(&bufferTest, (char(*)[]) &bufferArrayTest, TEST_BUFFER_SIZE, "readerTest", "readerTestType");
 	outputStream = getOutputStream(&bufferTest);
 	inputStream = getInputStream(&bufferTest);
 }
@@ -194,5 +210,63 @@ void test_isAck(void) {
 	value = isAck(inputStream);
 	TEST_ASSERT_FALSE(value);
 
+	TEST_ASSERT_EQUAL(0, getLastError());
+}
+
+void test_isChar() {
+	initBufferForReaderTest();
+
+	appendString(outputStream, "bF\1");
+
+	bool value = isChar(inputStream, 'b');
+	TEST_ASSERT_TRUE(value);
+
+	value = isChar(inputStream, 'G');
+	TEST_ASSERT_FALSE(value);
+
+	value = isChar(inputStream, '\1');
+	TEST_ASSERT_TRUE(value);
+
+	TEST_ASSERT_EQUAL(0, getLastError());
+}
+
+void test_checkIsAck() {
+	initBufferForReaderTest();
+
+	appendString(outputStream, "aA\1");
+
+	bool value = checkIsAck(inputStream);
+	TEST_ASSERT_TRUE(value);
+	TEST_ASSERT_EQUAL(0, getLastError());
+
+	value = checkIsAck(inputStream);
+	TEST_ASSERT_FALSE(value);
+	TEST_ASSERT_EQUAL(IO_READER_CHECK_CHAR_PROBLEM, getLastError());
+	
+	clearLastError();
+	value = checkIsAck(inputStream);
+	TEST_ASSERT_FALSE(value);
+
+	TEST_ASSERT_EQUAL(IO_READER_CHECK_CHAR_PROBLEM, getLastError());
+}
+
+void test_checkIsChar() {
+	initBufferForReaderTest();
+
+	appendString(outputStream, "bF\1");
+
+	bool value = checkIsChar(inputStream, 'b');
+	TEST_ASSERT_TRUE(value);
+	TEST_ASSERT_EQUAL(0, getLastError());
+
+	clearLastError();
+	value = checkIsChar(inputStream, 'G');
+	TEST_ASSERT_FALSE(value);
+	TEST_ASSERT_EQUAL(IO_READER_CHECK_CHAR_PROBLEM, getLastError());
+
+	clearLastError();
+
+	value = checkIsChar(inputStream, '\1');
+	TEST_ASSERT_TRUE(value);
 	TEST_ASSERT_EQUAL(0, getLastError());
 }

@@ -16,11 +16,6 @@
 #include "../../common/io/stream.h"
 
 /**
-* The instance of the dispatcher dedicated to local dispatching.
-*/
-static DriverDataDispatcher localDispatcher;
-
-/**
 * @private
 * Transmit the buffer locally, call the device which write data out to the stream
 */
@@ -37,12 +32,14 @@ void _driverDataDispatcherTransmitLocal(DriverDataDispatcher* dispatcher,
 * Add the local driver data dispatcher to the list.
 */
 DriverDataDispatcher* addLocalDriverDataDispatcher() {
-    // localStreamLink = aLocalStreamLink;
-    localDispatcher.transmitMode = TRANSMIT_LOCAL;
-    localDispatcher.name = "LOCAL_DISPATCHER";
-    localDispatcher.address = 0;
-    localDispatcher.driverDataDispatcherTransmitData = _driverDataDispatcherTransmitLocal;
-    addDriverDataDispatcher(&localDispatcher);
-    return &localDispatcher;
+    DriverDataDispatcher* result = addDriverDataDispatcher(
+                                    TRANSMIT_LOCAL,
+                                    "LOCAL_DISPATCHER",
+                                    NULL,
+                                    0,
+                                    NULL,
+                                    NULL,
+                                    _driverDataDispatcherTransmitLocal);
+    return result;
 }
 

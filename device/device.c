@@ -2,6 +2,7 @@
 
 #include "device.h"
 #include "deviceInterface.h"
+#include "deviceDescriptor.h"
 
 #include "../common/commons.h"
 

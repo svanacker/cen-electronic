@@ -11,7 +11,7 @@ float distanceBetweenPoints2(float x0, float y0, float x1, float y1) {
     float diffX = (x1 - x0);
     float diffY = (y1 - y0);
 
-    float result = sqrt(diffX * diffX + diffY * diffY);
+    float result = sqrtf(diffX * diffX + diffY * diffY);
 
     return result;
 }
@@ -27,12 +27,12 @@ float angleOfVector(Point* p0, Point* p1) {
 
 // 2D TRANSFORMATIONS
 
-void rotate(Point* point, float angle, float x, float y) {
+void rotate(Point* resultPoint, float angle, float x, float y) {
     // Computes a rotation around point x / y
     float c = cosf(angle);
     float s = sinf(angle);
-    point->x = (x * c) - (y * s);
-    point->y = (x * s) + (y * c);
+    resultPoint->x = (x * c) - (y * s);
+    resultPoint->y = (x * s) + (y * c);
 }
 
 void scale(Point *point, float factor) {

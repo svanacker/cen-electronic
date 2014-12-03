@@ -1,8 +1,7 @@
-#ifndef DEVICEDATADISPATCHER_H
-#define DEVICEDATADISPATCHER_H
+#ifndef DEVICE_DATA_DISPATCHER_H
+#define DEVICE_DATA_DISPATCHER_H
 
 #include "../device.h"
-#include "../deviceList.h"
 
 /**
  * Returns the length of the data which corresponds to the header.

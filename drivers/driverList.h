@@ -24,16 +24,18 @@ typedef struct {
  * Add a driver Descriptor to the list.
  * @param driverDescriptor the driver descriptor to add
  */
-void addDriver(DriverDescriptor* driverDescriptor,
-        int transmitMode);
+void addDriver(DriverDescriptor* driverDescriptor, int transmitMode);
 
 /**
  * Get the driver descriptor of index.
+ * @param index the index in the array of descriptors
+ * @return the descriptor at the specified index
  */
 DriverDescriptor* getDriver(int index);
 
 /**
  * Get the count of driver.
+ * @return the count of driver
  */
 int getDriverCount();
 
@@ -64,7 +66,6 @@ Buffer* getDriverRequestBuffer();
  * Get the buffer correspondings to the output of the driver.
  */
 Buffer* getDriverResponseBuffer();
-
 
 #endif
 
