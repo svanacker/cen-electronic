@@ -38,12 +38,12 @@ bool isStartMatchDetectorDeviceOk() {
 }
 
 void loopUntilStart(handleFunctionType* handleFunction) {
-    #ifndef PROG_32
+    //#ifndef PROG_32
     while (START_DETECTOR_PIN) {
         // Call back to be able to manage the robot while waiting for start.
         handleFunction();
     }
-    #endif
+    //#endif
 }
 
 char isStarted() {

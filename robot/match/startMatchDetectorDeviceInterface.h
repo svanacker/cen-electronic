@@ -5,7 +5,13 @@
 #include "../../device/deviceConstants.h"
 
 /** Defines the pin which must be used to detect the start. */
+#ifdef PROG_32
+#define START_DETECTOR_PIN      PORTGbits.RG3
+#endif
+#ifdef PROG_30
 #define START_DETECTOR_PIN      PORTFbits.RF6
+#endif
+
 
 /** Define the message sent to the PC to indicates start. */
 #define MESSAGE_TO_PC_RESET "xXyY"

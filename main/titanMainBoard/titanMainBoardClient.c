@@ -88,8 +88,8 @@
 #include "../../device/i2c/master/i2cMasterDebugDeviceInterface.h"
 
 // TEST
-#include "../../device/test/deviceTest.h"
-#include "../../device/test/deviceTestInterface.h"
+//#include "../../device/test/deviceTest.h"
+//#include "../../device/test/deviceTestInterface.h"
 
 // SERVO
 #include "../../device/servo/servoDevice.h"
@@ -131,7 +131,7 @@
 // Drivers
 #include "../../drivers/clock/PCF8563.h"
 #include "../../drivers/io/pcf8574.h"
-#include "../../drivers/test/driverTest.h"
+//#include "../../drivers/test/driverTest.h"
 #include "../../drivers/system/systemDriver.h"
 #include "../../drivers/motion/motionDriver.h"
 #include "../../drivers/motion/trajectoryDriver.h"
@@ -447,7 +447,7 @@ void initDriversDescriptor() {
                 &driverResponseBuffer, &driverResponseBufferArray, MAIN_BOARD_RESPONSE_DRIVER_BUFFER_LENGTH);
 
     // Get test driver for debug purpose
-    addDriver(driverTestGetDescriptor(), TRANSMIT_LOCAL);
+//    addDriver(driverTestGetDescriptor(), TRANSMIT_LOCAL);
 
     // Direct Devantech Driver
     addDriver(getMD22DriverDescriptor(), TRANSMIT_NONE);
@@ -710,7 +710,7 @@ int main(void) {
             MECHANICAL_BOARD_2_I2C_ADDRESS);
     */
 
-    // Stream for Air Conditioning
+/*    // Stream for Air Conditioning
     addI2CDriverDataDispatcher(&airConditioningI2cDispatcher,
             "AIR_CONDITIONING_DISPATCHER",
             &airConditioningBoardInputBuffer,
@@ -719,7 +719,7 @@ int main(void) {
             &airConditioningBoardOutputStream,
             &airConditioningBoardInputStream,
             AIR_CONDITIONING_BOARD_I2C_ADDRESS);
-
+*/
     // I2C Debug
     initI2CDebugBuffers(&i2cMasterDebugInputBuffer,
                         &i2cMasterDebugInputBufferArray,
@@ -731,21 +731,21 @@ int main(void) {
 
     appendStringConfig(&lcdOutputStream);
 
-    while (1) {
-        waitForInstruction();
-    }
+
 
     // pingDriverDataDispatcherList(getOutputStreamLogger(DEBUG));
 
     // Inform PC waiting
-    showWaitingStart(&pcOutputStream);
+    showWaitingStart(&debugOutputStream);
+
+
 
     // wait other board initialization
     delaymSec(1500);
 
     // 2012 VALUE
-    //unsigned int configValue = getConfigValue();
-    /*unsigned int homologationIndex = configValue & CONFIG_STRATEGY_MASK;
+    unsigned int configValue = getConfigValue();
+    unsigned int homologationIndex = configValue & CONFIG_STRATEGY_MASK;
     unsigned int color = configValue & CONFIG_COLOR_BLUE_MASK;
 
     appendString(getOutputStreamLogger(ALWAYS), "Homologation:");
@@ -764,17 +764,15 @@ int main(void) {
     else {
         appendString(getOutputStreamLogger(ALWAYS), "COLOR:RED\n");
     }    
-    while (1) {
-        waitForInstruction();
-    }
+
 
     // TODO 2012 SV motionDriverMaintainPosition();
 
     // wait for start
-    setInitialPosition(color);
+ //   setInitialPosition(color);
 
     // notify game strategy
-    sendStrategyConfiguration(configValue);
+ //   sendStrategyConfiguration(configValue);
 
     loopUntilStart(&waitForInstruction);
 
@@ -814,7 +812,7 @@ int main(void) {
             forceRobotNextStepIfNecessary();
         }
     }
-*/
+
     showEnd(&lcdOutputStream);
 
     while (1) {
