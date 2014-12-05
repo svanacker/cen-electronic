@@ -78,6 +78,7 @@
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c" />
     <ClCompile Include="common\2d\2d.c" />
+    <ClCompile Include="common\clock\clock.c" />
     <ClCompile Include="common\error\error.c" />
     <ClCompile Include="common\io\binaryPrintWriter.c" />
     <ClCompile Include="common\io\binaryWriter.c" />
@@ -100,6 +101,8 @@
     <ClCompile Include="common\math\bcdUtils.c" />
     <ClCompile Include="common\math\cenMath.c" />
     <ClCompile Include="common\math\hexUtils.c" />
+    <ClCompile Include="device\clock\clockDevice.c" />
+    <ClCompile Include="device\clock\clockDeviceInterface.c" />
     <ClCompile Include="device\device.c" />
     <ClCompile Include="device\deviceInterface.c" />
     <ClCompile Include="device\deviceList.c" />
@@ -107,6 +110,7 @@
     <ClCompile Include="device\dispatcher\deviceDataDispatcher.c" />
     <ClCompile Include="device\test\testDevice.c" />
     <ClCompile Include="device\test\testDeviceInterface.c" />
+    <ClCompile Include="drivers\clock\mockClock.c" />
     <ClCompile Include="drivers\dispatcher\driverDataDispatcher.c" />
     <ClCompile Include="drivers\dispatcher\driverDataDispatcherList.c" />
     <ClCompile Include="drivers\dispatcher\localDriverDataDispatcher.c" />
@@ -115,6 +119,7 @@
     <ClCompile Include="drivers\driverStreamListener.c" />
     <ClCompile Include="drivers\driverTransmitter.c" />
     <ClCompile Include="drivers\test\testDriver.c" />
+    <ClCompile Include="remote\clock\remoteClock.c" />
     <ClCompile Include="test\common\2d\2dTest.c" />
     <ClCompile Include="test\common\io\bufferTest.c" />
     <ClCompile Include="test\common\io\filterTest.c" />
@@ -130,6 +135,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\2d\2d.h" />
+    <ClInclude Include="common\clock\clock.h" />
     <ClInclude Include="common\cmd\commonCommand.h" />
     <ClInclude Include="common\commons.h" />
     <ClInclude Include="common\error\error.h" />
@@ -157,6 +163,8 @@
     <ClInclude Include="common\math\bcdUtils.h" />
     <ClInclude Include="common\math\cenMath.h" />
     <ClInclude Include="common\math\hexUtils.h" />
+    <ClInclude Include="device\clock\clockDevice.h" />
+    <ClInclude Include="device\clock\clockDeviceInterface.h" />
     <ClInclude Include="device\device.h" />
     <ClInclude Include="device\deviceConstants.h" />
     <ClInclude Include="device\deviceDebug.h" />
@@ -167,6 +175,7 @@
     <ClInclude Include="device\dispatcher\deviceDataDispatcher.h" />
     <ClInclude Include="device\test\testDevice.h" />
     <ClInclude Include="device\test\testDeviceInterface.h" />
+    <ClInclude Include="drivers\clock\mockClock.h" />
     <ClInclude Include="drivers\dispatcher\driverDataDispatcher.h" />
     <ClInclude Include="drivers\dispatcher\driverDataDispatcherList.h" />
     <ClInclude Include="drivers\dispatcher\localDriverDataDispatcher.h" />
@@ -175,6 +184,7 @@
     <ClInclude Include="drivers\driverStreamListener.h" />
     <ClInclude Include="drivers\driverTransmitter.h" />
     <ClInclude Include="drivers\test\testDriver.h" />
+    <ClInclude Include="remote\clock\remoteClock.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="test\common\2d\2dTest.h" />
     <ClInclude Include="test\common\io\bufferTest.h" />

@@ -1,5 +1,3 @@
-#include <peripheral/legacy/i2c_legacy.h>
-
 #include "clockDevice.h"
 #include "clockDeviceInterface.h"
 
@@ -9,7 +7,7 @@
 #include "../../common/io/reader.h"
 #include "../../common/io/stream.h"
 
-#include "../../drivers/clock/PCF8563.h"
+#include "../../device/device.h"
 
 static Clock* clock;
 

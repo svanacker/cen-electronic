@@ -154,6 +154,36 @@
     <Filter Include="Header Files\test\drivers\dispatchers">
       <UniqueIdentifier>{6f2621e0-8a80-4564-955c-79c4dbea9a95}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\device\clock">
+      <UniqueIdentifier>{eda77262-34e8-4d97-a106-3fcaff1aa44b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\device\clock">
+      <UniqueIdentifier>{f9574e41-38bf-4578-81aa-c4f1fbc6c6d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\drivers\clock">
+      <UniqueIdentifier>{0257952a-3489-4610-beb7-1ca7473f8d37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\drivers\mock">
+      <UniqueIdentifier>{9ccbdbec-e551-4a92-a652-499b96bbe9dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\common\clock">
+      <UniqueIdentifier>{42c91ddf-65d9-4478-b0f3-42e00ac04673}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\common\clock">
+      <UniqueIdentifier>{3d2d2e40-ab11-4e88-b212-0a6c1272b261}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\remote">
+      <UniqueIdentifier>{1d82cdb1-9f26-4fb5-a197-d8e83e36de04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\remote\clock">
+      <UniqueIdentifier>{657fdcd1-95eb-419b-8f27-254cf948cdf8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\remote">
+      <UniqueIdentifier>{9e9e3253-8743-4aa0-9148-6bedc5e8715b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\remote\clock">
+      <UniqueIdentifier>{aee073aa-6f5c-4824-82b4-f85fa2de888f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -308,6 +338,21 @@
     </ClCompile>
     <ClCompile Include="drivers\dispatcher\localDriverDataDispatcher.c">
       <Filter>Source Files\drivers\dispatchers</Filter>
+    </ClCompile>
+    <ClCompile Include="device\clock\clockDevice.c">
+      <Filter>Source Files\device\clock</Filter>
+    </ClCompile>
+    <ClCompile Include="device\clock\clockDeviceInterface.c">
+      <Filter>Source Files\device\clock</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\clock\mockClock.c">
+      <Filter>Source Files\drivers\clock</Filter>
+    </ClCompile>
+    <ClCompile Include="common\clock\clock.c">
+      <Filter>Source Files\common\clock</Filter>
+    </ClCompile>
+    <ClCompile Include="remote\clock\remoteClock.c">
+      <Filter>Source Files\remote\clock</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -490,6 +535,21 @@
     </ClInclude>
     <ClInclude Include="drivers\dispatcher\localDriverDataDispatcher.h">
       <Filter>Header Files\drivers\dispatchers</Filter>
+    </ClInclude>
+    <ClInclude Include="device\clock\clockDevice.h">
+      <Filter>Header Files\device\clock</Filter>
+    </ClInclude>
+    <ClInclude Include="device\clock\clockDeviceInterface.h">
+      <Filter>Header Files\device\clock</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\clock\mockClock.h">
+      <Filter>Header Files\drivers\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="common\clock\clock.h">
+      <Filter>Header Files\common\clock</Filter>
+    </ClInclude>
+    <ClInclude Include="remote\clock\remoteClock.h">
+      <Filter>Header Files\remote\clock</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
