@@ -1,10 +1,11 @@
 #include "printWriterTest.h"
 
 #include "../../../common/io/buffer.h"
-#include "../../../common/io/consoleOutputStream.h"
 #include "../../../common/io/printWriter.h"
 #include "../../../common/io/outputStream.h"
+#include "../../../common/io/pc/consoleOutputStream.h"
 #include "../../../common/error/error.h"
+
 
 #include "../../../test/unity/unity.h"
 

@@ -22,7 +22,7 @@ void writeLogChar(OutputStream* outputStream, char c) {
     int writeLoggerLevel = logger.writeLogLevel;
     for (i = 0; i < count; i++) {
         LogHandler* logHandler = logHandlerList.logHandlers[i];
-        int logHandlerLevel = logHandler->logLevel;
+        LogLevel logHandlerLevel = logHandler->logLevel;
         // we only write data which are with higher level
         if (writeLoggerLevel < logHandlerLevel) {
             continue;
@@ -40,7 +40,7 @@ void flushLog(OutputStream* outputStream) {
     // don't do anything for the moment
 }
 
-void initLog(unsigned int globalLogLevel) {
+void initLog(LogLevel globalLogLevel) {
     // Init logger structure
     logger.globalLogLevel = globalLogLevel;
     logger.writeLogLevel = globalLogLevel;
@@ -54,12 +54,12 @@ void initLog(unsigned int globalLogLevel) {
 void addLogHandler(LogHandler* logHandler,
         char* handlerName,
         OutputStream* outputStream,
-        unsigned int logLevel) {
+        LogLevel logLevel) {
     initHandler(logHandler, handlerName, outputStream, logLevel);
     addLogHandlerToList(&logHandlerList, logHandler);
 }
 
-OutputStream* getOutputStreamLogger(int writeLogLevel) {
+OutputStream* getOutputStreamLogger(LogLevel writeLogLevel) {
     logger.writeLogLevel = writeLogLevel;
     return logger.outputStream;
 }

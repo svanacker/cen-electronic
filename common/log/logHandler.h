@@ -1,6 +1,7 @@
 #ifndef LOG_HANDLER_H
 #define LOG_HANDLER_H
 
+#include "../../common/log/logLevel.h"
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
 
@@ -9,7 +10,7 @@
  */
 typedef struct {
     /** A level corresponding to logLevel. */
-    unsigned int logLevel;
+    LogLevel logLevel;
     /** name of handler. */
     char* handlerName;
     /** The underlying outputStream. */
@@ -27,6 +28,6 @@ void initHandler(
         LogHandler* logHandler,
         char* handlerName,
         OutputStream* outputStream,
-        unsigned int logLevel);
+        LogLevel logLevel);
 
 #endif

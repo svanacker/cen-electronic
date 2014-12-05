@@ -6,7 +6,7 @@ void initHandler(
         LogHandler* logHandler,
         char* handlerName,
         OutputStream* outputStream,
-        unsigned int logLevel) {
+        LogLevel logLevel) {
     logHandler->handlerName = handlerName;
     logHandler->outputStream = outputStream;
     logHandler->logLevel = logLevel;

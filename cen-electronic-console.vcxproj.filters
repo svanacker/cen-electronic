@@ -184,6 +184,18 @@
     <Filter Include="Header Files\remote\clock">
       <UniqueIdentifier>{aee073aa-6f5c-4824-82b4-f85fa2de888f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\common\log\pc">
+      <UniqueIdentifier>{2495cb05-29f6-4741-89fb-ecff409437ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\common\log\pc">
+      <UniqueIdentifier>{c8ea8c40-a8f9-43fa-bec7-d1cd4cb9286d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\common\io\pc">
+      <UniqueIdentifier>{e4476458-98ce-443d-a23a-9f13b6580b83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\common\io\pc">
+      <UniqueIdentifier>{0f20341f-7a29-405e-9f21-6cd941dfd896}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -257,9 +269,6 @@
     </ClCompile>
     <ClCompile Include="test\common\io\printWriterTest.c">
       <Filter>Source Files\test\common\io</Filter>
-    </ClCompile>
-    <ClCompile Include="common\io\consoleOutputStream.c">
-      <Filter>Source Files\common\io</Filter>
     </ClCompile>
     <ClCompile Include="test\common\io\readerTest.c">
       <Filter>Source Files\test\common\io</Filter>
@@ -354,6 +363,12 @@
     <ClCompile Include="remote\clock\remoteClock.c">
       <Filter>Source Files\remote\clock</Filter>
     </ClCompile>
+    <ClCompile Include="common\log\pc\consoleLogHandler.c">
+      <Filter>Source Files\common\log\pc</Filter>
+    </ClCompile>
+    <ClCompile Include="common\io\pc\consoleOutputStream.c">
+      <Filter>Source Files\common\io\pc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -442,9 +457,6 @@
     </ClInclude>
     <ClInclude Include="test\common\io\printWriterTest.h">
       <Filter>Header Files\test\common\io</Filter>
-    </ClInclude>
-    <ClInclude Include="common\io\consoleOutputStream.h">
-      <Filter>Header Files\common\io</Filter>
     </ClInclude>
     <ClInclude Include="test\common\io\readerTest.h">
       <Filter>Header Files\test\common\io</Filter>
@@ -550,6 +562,12 @@
     </ClInclude>
     <ClInclude Include="remote\clock\remoteClock.h">
       <Filter>Header Files\remote\clock</Filter>
+    </ClInclude>
+    <ClInclude Include="common\log\pc\consoleLogHandler.h">
+      <Filter>Header Files\common\log\pc</Filter>
+    </ClInclude>
+    <ClInclude Include="common\io\pc\consoleOutputStream.h">
+      <Filter>Header Files\common\io\pc</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

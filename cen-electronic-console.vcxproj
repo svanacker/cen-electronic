@@ -84,12 +84,12 @@
     <ClCompile Include="common\io\binaryWriter.c" />
     <ClCompile Include="common\io\buffer.c" />
     <ClCompile Include="common\io\compositeOutputStream.c" />
-    <ClCompile Include="common\io\consoleOutputStream.c" />
     <ClCompile Include="common\io\filter.c" />
     <ClCompile Include="common\io\inputStream.c" />
     <ClCompile Include="common\io\ioUtils.c" />
     <ClCompile Include="common\io\nullOutputStream.c" />
     <ClCompile Include="common\io\outputStream.c" />
+    <ClCompile Include="common\io\pc\consoleOutputStream.c" />
     <ClCompile Include="common\io\printWriter.c" />
     <ClCompile Include="common\io\reader.c" />
     <ClCompile Include="common\io\streamLink.c" />
@@ -98,6 +98,7 @@
     <ClCompile Include="common\log\logHandler.c" />
     <ClCompile Include="common\log\logHandlerList.c" />
     <ClCompile Include="common\log\logLevel.c" />
+    <ClCompile Include="common\log\pc\consoleLogHandler.c" />
     <ClCompile Include="common\math\bcdUtils.c" />
     <ClCompile Include="common\math\cenMath.c" />
     <ClCompile Include="common\math\hexUtils.c" />
@@ -144,12 +145,12 @@
     <ClInclude Include="common\io\buffer.h" />
     <ClInclude Include="common\io\cenIO.h" />
     <ClInclude Include="common\io\compositeOutputStream.h" />
-    <ClInclude Include="common\io\consoleOutputStream.h" />
     <ClInclude Include="common\io\filter.h" />
     <ClInclude Include="common\io\inputStream.h" />
     <ClInclude Include="common\io\ioUtils.h" />
     <ClInclude Include="common\io\nullOutputStream.h" />
     <ClInclude Include="common\io\outputStream.h" />
+    <ClInclude Include="common\io\pc\consoleOutputStream.h" />
     <ClInclude Include="common\io\pin.h" />
     <ClInclude Include="common\io\printWriter.h" />
     <ClInclude Include="common\io\reader.h" />
@@ -160,6 +161,7 @@
     <ClInclude Include="common\log\logHandler.h" />
     <ClInclude Include="common\log\logHandlerList.h" />
     <ClInclude Include="common\log\logLevel.h" />
+    <ClInclude Include="common\log\pc\consoleLogHandler.h" />
     <ClInclude Include="common\math\bcdUtils.h" />
     <ClInclude Include="common\math\cenMath.h" />
     <ClInclude Include="common\math\hexUtils.h" />

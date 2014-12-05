@@ -6,6 +6,10 @@
 #include "../../../common/clock/clock.h"
 #include "../../../common/error/error.h"
 #include "../../../common/io/stream.h"
+#include "../../../common/io/pc/consoleOutputStream.h"
+#include "../../../common/log/logger.h"
+#include "../../../common/log/logLevel.h"
+#include "../../../common/log/pc/consoleLogHandler.h"
 
 #include "../../../device/device.h"
 #include "../../../device/deviceList.h"
@@ -60,6 +64,9 @@ void test_testDriverGetValue(void) {
 	// Devices
 	initDeviceList((Device(*)[]) &deviceListArray, TEST_DRIVER_TEST_DEVICE_LIST_LENGTH);
 	addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
+
+	initLog(DEBUG);
+	addConsoleLogHandler(DEBUG);
 
 	Clock clock;
 	initMockClock(&clock);

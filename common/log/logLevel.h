@@ -1,6 +1,9 @@
 #ifndef LOG_LEVEL_H
 #define LOG_LEVEL_H
 
+// Define the type of LOG_LEVEL (to avoid to manipulate int and avoid type error)
+typedef int LogLevel;
+
 /**
  * the minimal log level, reserved for fine log.
  */
@@ -32,6 +35,6 @@
  * @param level the level in int value
  * @return the string representation of the level
  */
-char* getLevelAsString(int level);
+char* getLevelAsString(LogLevel level);
 
 #endif
