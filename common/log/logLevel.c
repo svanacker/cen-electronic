@@ -1,6 +1,6 @@
 #include "logLevel.h"
 
-char* getLevelAsString(int level) {
+char* getLevelAsString(LogLevel level) {
     switch (level) {
         case TRACE: return "TRACE(0)";
         case DEBUG: return "DBG(1)";

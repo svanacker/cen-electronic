@@ -20,16 +20,16 @@ typedef struct Clock Clock;
 
 /**
  * Update the specific clock hardware with value from the struct.
- * @param clock the pointer on clock object
+ * @param clockParam the pointer on clock object
  */
-typedef void WriteClockFunction(Clock* clock);
+typedef void WriteClockFunction(Clock* clockParam);
 
 /**
  * Update the software clock structure from the hardware.
- * @param clock the pointer on clock object.
+ * @param clockParam the pointer on clock object.
  * @return the pointer on ClockData with refresh data (from hardware)
  */
-typedef ClockData* ReadClockFunction(Clock* clock);
+typedef ClockData* ReadClockFunction(Clock* clockParam);
 
 /**
  * Defines the contract for a clock object.
@@ -45,10 +45,10 @@ struct Clock {
 
 /**
  * Initializes (Constructor in POO).
- * @param clock a pointer on clock structure to initialize it.
+ * @param clockParam a pointer on clock structure to initialize it.
  * @param writeClockFunction a pointer on the writeClockFunction
  * @param readClockFunction a pointer on the readClockFunction
  */
-void initClock(Clock* clock, WriteClockFunction* writeClockFunction, ReadClockFunction* readClockFunction);
+void initClock(Clock* clockParam, WriteClockFunction* writeClockFunction, ReadClockFunction* readClockFunction);
 
 #endif

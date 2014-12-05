@@ -9,9 +9,9 @@
 
 typedef struct Logger {
     /** A level corresponding to the minimal logLevel which must be loggued. */
-    unsigned int globalLogLevel;
+    LogLevel globalLogLevel;
     /** the level that we used to write. */
-    unsigned writeLogLevel;
+    LogLevel writeLogLevel;
     /** the list of handler. */
     LogHandlerList* logHandlerList;
     /** The outputStream as an interface to the developper. */
@@ -29,7 +29,7 @@ LogHandlerList* getLoggerHandlerList();
  * Init the log system.
  * @param globalLevel the global level of log (independant of each handler level)
  */
-void initLog(unsigned int globalLevel);
+void initLog(LogLevel globalLevel);
 
 /**
  * Add a log Handler to the system.
@@ -41,14 +41,14 @@ void initLog(unsigned int globalLevel);
 void addLogHandler(LogHandler* logHandler,
         char* handlerName,
         OutputStream* outputStream,
-        unsigned int logLevel);
+        LogLevel logLevel);
 
 /**
  * Get a compatible outputStream (to be used with printWriter) in which we write.
  * @param writeLogLevel The log level which will be used to write the underlying log.
  * @return the compatible outputStream (to be used with printWriter) in which we write
  */
-OutputStream* getOutputStreamLogger(int writeLogLevel);
+OutputStream* getOutputStreamLogger(LogLevel writeLogLevel);
 
 /**
 * Get an outputStream for log with DEBUG level.

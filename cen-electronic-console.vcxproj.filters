@@ -154,6 +154,48 @@
     <Filter Include="Header Files\test\drivers\dispatchers">
       <UniqueIdentifier>{6f2621e0-8a80-4564-955c-79c4dbea9a95}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\device\clock">
+      <UniqueIdentifier>{eda77262-34e8-4d97-a106-3fcaff1aa44b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\device\clock">
+      <UniqueIdentifier>{f9574e41-38bf-4578-81aa-c4f1fbc6c6d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\drivers\clock">
+      <UniqueIdentifier>{0257952a-3489-4610-beb7-1ca7473f8d37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\drivers\mock">
+      <UniqueIdentifier>{9ccbdbec-e551-4a92-a652-499b96bbe9dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\common\clock">
+      <UniqueIdentifier>{42c91ddf-65d9-4478-b0f3-42e00ac04673}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\common\clock">
+      <UniqueIdentifier>{3d2d2e40-ab11-4e88-b212-0a6c1272b261}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\remote">
+      <UniqueIdentifier>{1d82cdb1-9f26-4fb5-a197-d8e83e36de04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\remote\clock">
+      <UniqueIdentifier>{657fdcd1-95eb-419b-8f27-254cf948cdf8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\remote">
+      <UniqueIdentifier>{9e9e3253-8743-4aa0-9148-6bedc5e8715b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\remote\clock">
+      <UniqueIdentifier>{aee073aa-6f5c-4824-82b4-f85fa2de888f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\common\log\pc">
+      <UniqueIdentifier>{2495cb05-29f6-4741-89fb-ecff409437ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\common\log\pc">
+      <UniqueIdentifier>{c8ea8c40-a8f9-43fa-bec7-d1cd4cb9286d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\common\io\pc">
+      <UniqueIdentifier>{e4476458-98ce-443d-a23a-9f13b6580b83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\common\io\pc">
+      <UniqueIdentifier>{0f20341f-7a29-405e-9f21-6cd941dfd896}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -227,9 +269,6 @@
     </ClCompile>
     <ClCompile Include="test\common\io\printWriterTest.c">
       <Filter>Source Files\test\common\io</Filter>
-    </ClCompile>
-    <ClCompile Include="common\io\consoleOutputStream.c">
-      <Filter>Source Files\common\io</Filter>
     </ClCompile>
     <ClCompile Include="test\common\io\readerTest.c">
       <Filter>Source Files\test\common\io</Filter>
@@ -308,6 +347,27 @@
     </ClCompile>
     <ClCompile Include="drivers\dispatcher\localDriverDataDispatcher.c">
       <Filter>Source Files\drivers\dispatchers</Filter>
+    </ClCompile>
+    <ClCompile Include="device\clock\clockDevice.c">
+      <Filter>Source Files\device\clock</Filter>
+    </ClCompile>
+    <ClCompile Include="device\clock\clockDeviceInterface.c">
+      <Filter>Source Files\device\clock</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\clock\mockClock.c">
+      <Filter>Source Files\drivers\clock</Filter>
+    </ClCompile>
+    <ClCompile Include="common\clock\clock.c">
+      <Filter>Source Files\common\clock</Filter>
+    </ClCompile>
+    <ClCompile Include="remote\clock\remoteClock.c">
+      <Filter>Source Files\remote\clock</Filter>
+    </ClCompile>
+    <ClCompile Include="common\log\pc\consoleLogHandler.c">
+      <Filter>Source Files\common\log\pc</Filter>
+    </ClCompile>
+    <ClCompile Include="common\io\pc\consoleOutputStream.c">
+      <Filter>Source Files\common\io\pc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -398,9 +458,6 @@
     <ClInclude Include="test\common\io\printWriterTest.h">
       <Filter>Header Files\test\common\io</Filter>
     </ClInclude>
-    <ClInclude Include="common\io\consoleOutputStream.h">
-      <Filter>Header Files\common\io</Filter>
-    </ClInclude>
     <ClInclude Include="test\common\io\readerTest.h">
       <Filter>Header Files\test\common\io</Filter>
     </ClInclude>
@@ -490,6 +547,27 @@
     </ClInclude>
     <ClInclude Include="drivers\dispatcher\localDriverDataDispatcher.h">
       <Filter>Header Files\drivers\dispatchers</Filter>
+    </ClInclude>
+    <ClInclude Include="device\clock\clockDevice.h">
+      <Filter>Header Files\device\clock</Filter>
+    </ClInclude>
+    <ClInclude Include="device\clock\clockDeviceInterface.h">
+      <Filter>Header Files\device\clock</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\clock\mockClock.h">
+      <Filter>Header Files\drivers\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="common\clock\clock.h">
+      <Filter>Header Files\common\clock</Filter>
+    </ClInclude>
+    <ClInclude Include="remote\clock\remoteClock.h">
+      <Filter>Header Files\remote\clock</Filter>
+    </ClInclude>
+    <ClInclude Include="common\log\pc\consoleLogHandler.h">
+      <Filter>Header Files\common\log\pc</Filter>
+    </ClInclude>
+    <ClInclude Include="common\io\pc\consoleOutputStream.h">
+      <Filter>Header Files\common\io\pc</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

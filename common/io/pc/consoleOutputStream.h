@@ -1,7 +1,7 @@
 #ifndef CONSOLE_OUTPUT_STREAM_H
 #define CONSOLE_OUTPUT_STREAM_H
 
-#include "outputStream.h"
+#include "../../../common/io/outputStream.h"
 
 /**
  * Init a console outputStream (to write on the console when we writes some unit test)

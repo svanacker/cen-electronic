@@ -21,6 +21,13 @@ void printClock(OutputStream* outputStream, Clock* clock) {
 }
 
 void initClock(Clock* clock, WriteClockFunction* writeClock, ReadClockFunction* readClock) {
+    clock->clockData.year = 0;
+    clock->clockData.month = 0;
+    clock->clockData.dayofweek = 0;
+    clock->clockData.day = 0;
+    clock->clockData.hour = 0;
+    clock->clockData.minute = 0;
+    clock->clockData.second = 0;
     clock->writeClock = writeClock;
     clock->readClock = readClock;
 }

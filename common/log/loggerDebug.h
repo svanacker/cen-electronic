@@ -11,8 +11,7 @@
  * @param outputStream the outputStream in which we write the content of the log
  * @param logHandler the logHandler that we want to write
  */
-void printLogHandler(OutputStream* outputStream,
-        LogHandler* logHandler);
+void printLogHandler(OutputStream* outputStream, LogHandler* logHandler);
 
 /**
  * Write the configuration of the logger.

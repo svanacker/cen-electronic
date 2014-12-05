@@ -4,7 +4,7 @@
 #include "../../device/deviceInterface.h"
 #include "../../device/deviceConstants.h"
 
-const char* getClockDeviceName (){
+const char* getClockDeviceName(void) {
     return "Clock";
 }
 
@@ -51,6 +51,6 @@ static DeviceInterface deviceInterface = {
     .deviceGetInterface = &deviceClockGetInterface
 };
 
-DeviceInterface* getClockDeviceInterface() {
+DeviceInterface* getClockDeviceInterface(void) {
     return &deviceInterface;
 }
