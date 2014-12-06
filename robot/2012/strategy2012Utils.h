@@ -1,6 +1,8 @@
 #ifndef STRATEGY_2012_UTILS_H
 #define STRATEGY_2012_UTILS_H
 
+#include "../../navigation/path.h"
+
 int isViolet();
 
 /**

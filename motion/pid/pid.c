@@ -154,7 +154,7 @@ unsigned int updateMotors(void) {
         // 2 dependant Wheels (direction + angle)
         float leftMotorSpeed = (thetaMotion->u + alphaMotion->u) / 2.0f;
         float rightMotorSpeed = (thetaMotion->u - alphaMotion->u) / 2.0f;
-        setMotorSpeeds(leftMotorSpeed, rightMotorSpeed);
+        setMotorSpeeds((int)leftMotorSpeed, (int) rightMotorSpeed);
 
         // If we maintain the position, we consider that we must maintain indefinitely the position
         if (thetaInst->motionType == MOTION_TYPE_MAINTAIN_POSITION) {
@@ -168,8 +168,8 @@ unsigned int updateMotors(void) {
         thetaMotion->currentSpeed = thetaMotion->position - thetaMotion->oldPosition;
         alphaMotion->currentSpeed = alphaMotion->position - alphaMotion->oldPosition;
 
-        updateEndMotionData(INSTRUCTION_THETA_INDEX, thetaEndMotion, endDetectionParameter, pidTime);
-        updateEndMotionData(INSTRUCTION_ALPHA_INDEX, alphaEndMotion, endDetectionParameter, pidTime);
+        updateEndMotionData(INSTRUCTION_THETA_INDEX, thetaEndMotion, endDetectionParameter, (int) pidTime);
+        updateEndMotionData(INSTRUCTION_ALPHA_INDEX, alphaEndMotion, endDetectionParameter, (int) pidTime);
 
         bool isThetaEnd = isEndOfMotion(INSTRUCTION_THETA_INDEX, thetaEndMotion, endDetectionParameter);
         bool isAlphaEnd = isEndOfMotion(INSTRUCTION_ALPHA_INDEX, alphaEndMotion, endDetectionParameter);

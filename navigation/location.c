@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string.h>
 
 #include "location.h"
 
@@ -10,7 +11,7 @@
 #include "location.h"
 
 bool locationEquals(Location* location1, Location* location2) {
-    return stringEquals(location1->name, location2->name);
+    return strcmp(location1->name, location2->name);
 }
 
 void printLocation(OutputStream* outputStream, Location* location) {

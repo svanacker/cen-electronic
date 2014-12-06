@@ -1,5 +1,3 @@
-#include <i2c.h>
-
 #include "pwmMotor.h"
 #include "pwmMotorDevice.h"
 #include "pwmMotorDeviceInterface.h"

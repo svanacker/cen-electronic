@@ -104,7 +104,7 @@ void computeMotionInstruction(MotionInstruction* inst) {
             inst->profileType = PROFILE_TYPE_TRIANGLE;
             float numerator = fabsf(distanceAtConstantSpeed)*(inst->initialSpeed + inst->endSpeed)
                              + inst->speed * (2 * inst->nextPosition - inst->t1 * inst->initialSpeed - decelerationTime * inst->endSpeed);
-            inst->speedMax = sqrt(fabsf(numerator) / (inst->t1 + decelerationTime));
+            inst->speedMax = (float) (sqrt(fabsf(numerator) / (inst->t1 + decelerationTime)));
             // speedmax must be of the same sign of speed, and sqrt always returns a value > 0    
             if (inst->speedMax * inst->speed < 0) {
                 inst->speedMax = -inst->speedMax;

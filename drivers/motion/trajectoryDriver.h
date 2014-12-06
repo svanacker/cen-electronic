@@ -1,7 +1,7 @@
 #ifndef TRAJECTORY_DRIVER_H
 #define TRAJECTORY_DRIVER_H
 
-#include "../../common/commons.h"
+#include <stdbool.h>
 
 #include "../../drivers/dispatcher/driverDataDispatcher.h"
 

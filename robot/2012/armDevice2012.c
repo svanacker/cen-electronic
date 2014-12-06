@@ -50,17 +50,17 @@ void downArm(int armIndex) {
     }
 }
 
-void deviceArm2012Init() {
+void deviceArm2012Init(void) {
     upArm(ARM_LEFT);
     upArm(ARM_RIGHT);
 }
 
-void deviceArm2012ShutDown() {
+void deviceArm2012ShutDown(void) {
     downArm(ARM_LEFT);
     downArm(ARM_RIGHT);
 }
 
-bool deviceArm2012IsOk() {
+bool deviceArm2012IsOk(void) {
     return true;
 }
 

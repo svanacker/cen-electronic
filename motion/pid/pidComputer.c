@@ -15,7 +15,7 @@ float computePidCorrection(MotionError* motionError,
 
     // Computes the integral error, and limit too high value
     motionError->integralError += motionError->error;
-    motionError->integralError = limit(motionError->integralError, pid->maxIntegral);
+	motionError->integralError = (float)limit((long)motionError->integralError, (long) pid->maxIntegral);
 
     // Saves the error
     // When error increases if speed > 0 : error - previousError > 0 (Ex : error (t) = 200, error (t-1) = 150 => 50 (=> increases u)
@@ -36,7 +36,7 @@ float computePidCorrection(MotionError* motionError,
     result += getNormalU(normalSpeed);
 
     // Limits the value of "u"
-    result = limit(result, PID_NEXT_VALUE_LIMIT);
+    result = (float) limit((long) result, (long) PID_NEXT_VALUE_LIMIT);
 
     return result;
 }

@@ -1,7 +1,8 @@
 #ifndef BIT_LIST_H
 #define BIT_LIST_H
 
-#include "../../common/commons.h"
+#include <stdbool.h>
+
 #include "../../common/io/outputStream.h"
 
 #define BITS_COUNT_IN_UNSIGNED_INT            16

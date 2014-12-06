@@ -4,7 +4,7 @@
 #include "../driver.h"
 
 /**
-* Stops the motors
+* Stops the motors.
 */
 void stopMotors(void);
 

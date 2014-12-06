@@ -89,7 +89,7 @@ void debugTrajectoryVariables(char* valueName1, float value1, char* valueName2, 
  */
 int absoluteUpdateFromCoders(signed long left, signed long right, bool useThreshold, bool debug) {
     if (debug) {
-        debugTrajectoryVariables("left=", left, ", right=", right);
+        debugTrajectoryVariables("left=", (float)left, ", right=", (float) right);
     }
     float l = (float) left * WHEEL_LENGTH_LEFT;
     float r = (float) right * WHEEL_LENGTH_RIGHT;
@@ -110,7 +110,7 @@ int absoluteUpdateFromCoders(signed long left, signed long right, bool useThresh
     // difference des distances parcourues par les roues en m
     float dw = r - l;
     // orientation finale = difference des distances / demi-distance des roues
-    float orientation = fmod(dw / width, 2.0f * PI) + lastAngle + position.initialOrientation;
+    float orientation = fmodf(dw / width, 2.0f * PI) + lastAngle + position.initialOrientation;
     // angle relatif au dernier mouvement
     // lastAngle is only used when we clear Coders !
     float relativePositionOrientation = position.orientation;
@@ -128,7 +128,7 @@ int absoluteUpdateFromCoders(signed long left, signed long right, bool useThresh
     float k = 1.0f;
     if (angle != 0.0f) {
         float t = angle / 2.0f;
-        k = sin(t) / t;
+        k = sinf(t) / t;
     }
 
     float dx = d * k * cosf(meanOrientation);
@@ -149,23 +149,29 @@ int absoluteUpdateFromCoders(signed long left, signed long right, bool useThresh
 }
 
 void updateTrajectory() {
+    /* TODO
     signed long left = getCoderValue(CODER_LEFT);
     signed long right = getCoderValue(CODER_RIGHT);
     //    curveUpdateFromCoders(left, right);
     absoluteUpdateFromCoders(left, right, true, false);
+    */
 }
 
 void updateTrajectoryWithNoThreshold() {
+    /* TODO
     signed long left = getCoderValue(CODER_LEFT);
     signed long right = getCoderValue(CODER_RIGHT);
     // do not use threshold
     absoluteUpdateFromCoders(left, right, false, false);
+    */
 }
 
 void updateTrajectoryAndClearCoders() {
     updateTrajectoryWithNoThreshold();
     lastAngle = position.orientation - position.initialOrientation;
+    /* TODO
     clearCoders();
+    */
     lastLeft = 0;
     lastRight = 0;
 }
@@ -174,18 +180,19 @@ void printPosition(OutputStream* outputStream) {
     // clearScreen();
     appendCRLF(outputStream);
     Position* p = getPosition();
+    /* TODO 
     appendStringAndDec(outputStream, "left=", getCoderValue(CODER_LEFT));
     appendStringAndDec(outputStream, " | right=", getCoderValue(CODER_RIGHT));
-
+    */
     printPoint(outputStream, &(p->pos), " mm");
 
     appendStringAndAngleInDeg(outputStream, "\rang:", p->orientation);
     appendStringAndAngleInDeg(outputStream, "\rang ini:", p->initialOrientation);
 
-    appendStringAndDec(outputStream, "\rlastLeft:", lastLeft);
+    appendStringAndDecf(outputStream, "\rlastLeft:", lastLeft);
     appendString(outputStream, " pulse");
 
-    appendStringAndDec(outputStream, "\rlastRight:", lastRight);
+    appendStringAndDecf(outputStream, "\rlastRight:", lastRight);
     appendString(outputStream, " pulse");
 
     appendStringAndAngleInDeg(outputStream, "\rlastAng:", lastAngle);

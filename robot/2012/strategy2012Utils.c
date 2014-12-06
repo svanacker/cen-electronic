@@ -47,7 +47,7 @@ void changeLocationsForColor() {
     unsigned char size = locationList->size;
     for (i = 0; i < size; i++) {
         Location* location = locationList->locations[i];
-        location->y = GAMEBOARD_HEIGHT - location->y;
+        location->y = (int) (GAMEBOARD_HEIGHT - location->y);
     }
 }
 
@@ -59,17 +59,6 @@ int changeAngleForColor(int angle) {
     }
 }
 
-int getAngle1Path(PathDataFunction* pathDataFunction) {
-    pathDataFunction();
-    int result = getTmpPathData()->angle1;
-    return changeAngleForColor(result);
-}
-
-int getAngle2Path(PathDataFunction* pathDataFunction) {
-    pathDataFunction();
-    int result = getTmpPathData()->angle2;
-    return changeAngleForColor(result);
-}
 
 // ARM
 

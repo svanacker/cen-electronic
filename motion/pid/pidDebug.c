@@ -15,13 +15,16 @@
 #include "../../motion/simple/motion.h"
 
 void printErrorStruct (OutputStream* outputStream, int index ) {
-    MotionError * localErr = getMotionError(index);
+	// TODO 
+	/*
+    MotionError* localErr = getMotionError(index);
 
     appendStringAndDecf(outputStream, "pe=", localErr->previousError);
     appendStringAndDecf(outputStream, ",e=", localErr->error);
     appendStringAndDecf(outputStream, ",de=", localErr->derivativeError);
     appendStringAndDecf(outputStream, "ie=", localErr->integralError);
     println(outputStream);
+	*/
 }
 
 void printMotionStruct (OutputStream* outputStream, int index) {

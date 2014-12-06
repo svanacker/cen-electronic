@@ -17,18 +17,18 @@
 #include "../../drivers/driverList.h"
 #include "../../drivers/dispatcher/driverDataDispatcher.h"
 
-bool motorDriverInit() {
+bool motorDriverInit(void) {
     return true;
 }
 
-void motorDriverShutDown() {
+void motorDriverShutDown(void) {
 }
 
-bool motorDriverIsOk() {
+bool motorDriverIsOk(void) {
     return true;
 }
 
-const char* motorDriverGetName() {
+const char* motorDriverGetName(void) {
     return "motorDriver";
 }
 
@@ -45,4 +45,3 @@ static DriverDescriptor descriptor = {
 const DriverDescriptor* driverMotorGetDescriptor() {
     return &descriptor;
 }
-

@@ -9,7 +9,7 @@ float getConstantTimeGainFactor(float currentMatchingTime, float remainingTime, 
         if (timeToAchieveTargetAction < 0.1f) {
             return DEFAULT_GAIN;
         }
-        return 1.0 / timeToAchieveTargetAction;
+        return 1.0f / timeToAchieveTargetAction;
     }
     // we can try it, but we discourage it
     // return Math.pow(remainingTime / timeToAchieveTargetAction, 3.0f);

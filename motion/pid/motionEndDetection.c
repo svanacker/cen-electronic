@@ -29,9 +29,9 @@ void resetMotionEndData(MotionEndInfo* endMotion) {
 }
 
 void initMotionEndParameter(MotionEndDetectionParameter* parameter) {
-    parameter->absDeltaPositionIntegralFactorThreshold = ABS_DELTA_POSITION_INTEGRAL_FACTOR_THRESHOLD;
-    parameter->maxUIntegralFactorThreshold = MAX_U_INTEGRAL_FACTOR_THRESHOLD;
-    parameter->maxUIntegralConstantThreshold = MAX_U_INTEGRAL_CONSTANT_THRESHOLD;
+    parameter->absDeltaPositionIntegralFactorThreshold = (unsigned char) ABS_DELTA_POSITION_INTEGRAL_FACTOR_THRESHOLD;
+	parameter->maxUIntegralFactorThreshold = (unsigned char) MAX_U_INTEGRAL_FACTOR_THRESHOLD;
+	parameter->maxUIntegralConstantThreshold = (unsigned char) MAX_U_INTEGRAL_CONSTANT_THRESHOLD;
     parameter->timeRangeAnalysis = BLOCKING_OR_REACH_DETECTION_DELAY;
     parameter->noAnalysisAtStartupTime = BLOCKING_OR_REACH_SKIP_DETECTION_DELAY;
 }
@@ -103,12 +103,9 @@ bool isRobotBlocked(int instructionIndex, MotionEndInfo* endMotion, MotionEndDet
     PidMotionDefinition* motionDefinition = &(getPidMotion()->currentMotionDefinition);
     MotionInstruction* localInst = &(motionDefinition->inst[instructionIndex]);
     float normalU = getNormalU(localInst->speed);
-    float maxUIntegral = fabsf(
-               limit(
-                   parameter->maxUIntegralConstantThreshold + normalU * parameter->maxUIntegralFactorThreshold
-                   , PID_NEXT_VALUE_LIMIT
-               )
-               * parameter->timeRangeAnalysis);
+    float value = parameter->maxUIntegralConstantThreshold + normalU * parameter->maxUIntegralFactorThreshold;
+    float limitValue = (float) limit((long) value, (long) PID_NEXT_VALUE_LIMIT);
+    float maxUIntegral = fabsf(limitValue * parameter->timeRangeAnalysis);
     if (endMotion->absUIntegral > maxUIntegral) {
         return true;
     }

@@ -43,7 +43,7 @@ void endMatchDetectorCallbackFunc(Timer* timer) {
 * As there is a problem during init to load the config.
 * We send it after
 */
-void initEndMatchConfig() {
+void initEndMatchConfig(void) {
     doNotEnd = isConfigSet(CONFIG_DO_NOT_END);
 }
 
@@ -79,17 +79,17 @@ bool isEnd() {
 
 // COMMON PART
 
-void initEndMatchDetector() {
+void initEndMatchDetector(void) {
     endMatchDetectorDeviceTimer = addTimer(END_MATCH_DETECTOR_TIMER_CODE,
                                             TIME_DIVISER_1_HERTZ,
                                             endMatchDetectorCallbackFunc);
 }
 
-void stopEndMatchDetector() {
+void stopEndMatchDetector(void) {
 
 }
 
-bool isEndMatchDetectorDeviceOk() {
+bool isEndMatchDetectorDeviceOk(void) {
     return true;
 }
 

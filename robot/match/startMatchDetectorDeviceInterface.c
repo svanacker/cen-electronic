@@ -4,11 +4,11 @@
 #include "../../device/deviceInterface.h"
 #include "../../device/deviceConstants.h"
 
-const char* getStartMatchDetectorDeviceName() {
+const char* getStartMatchDetectorDeviceName(void) {
     return "StartMatchDetector";
 }
 
-unsigned int getStartMatchDetectorSoftwareRevision() {
+unsigned int getStartMatchDetectorSoftwareRevision(void) {
     return 1;
 }
 
@@ -44,6 +44,6 @@ static DeviceInterface deviceInterface = {
     .deviceGetInterface = &deviceStartMatchDetectorGetInterface
 };
 
-DeviceInterface* getStartMatchDetectorDeviceInterface() {
+DeviceInterface* getStartMatchDetectorDeviceInterface(void) {
     return &deviceInterface;
 }

@@ -26,6 +26,7 @@
 long absLong(signed long value);
 
 /**
+ * TODO : Introduce Limit For float, to avoid conversion
  * Limit the value by the maxValue either in positive or negative.
  * Ex: limit(100, 75) => 75
  * Ex: limit(40, 60) => 40

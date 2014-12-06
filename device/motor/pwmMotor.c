@@ -1,4 +1,4 @@
-#include "../../common/pwm/motor/motorPwm.h"
+#include "../../common/pwm/motor/dualHBridgeMotorPwm.h"
 
 void setMotorSpeeds(signed int leftSpeed, signed int rightSpeed) {
     pwmDualHBridgeMotor(leftSpeed, rightSpeed);

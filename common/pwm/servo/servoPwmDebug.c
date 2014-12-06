@@ -22,7 +22,7 @@ void printServo(OutputStream* outputStream, Servo* servo) {
 
 void printServoList(OutputStream* outputStream) {
     ServoList* servoList = _getServoList();
-	int i;
+    int i;
     for (i = 0; i < PWM_COUNT; i++) {
         Servo* servo = &(servoList->servos[i]);
 

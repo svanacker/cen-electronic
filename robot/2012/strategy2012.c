@@ -167,24 +167,24 @@ void initLocations2012() {
     addNavigationLocation(&bottle2FrontLocation, BOTTLE_2_FRONT, BOTTLE_2_FRONT_X, BOTTLE_2_FRONT_Y);
     addNavigationLocation(&bottle2Location, BOTTLE_2, BOTTLE_2_X, BOTTLE_2_Y);
     //addNavigationLocation(&cdTakeLocation, CD_TAKE, CD_TAKE_X, CD_TAKE_Y);
-    addNavigationLocation(&dropZone1Location, DROP_ZONE_1, DROP_ZONE_1_X, DROP_ZONE_1_Y);
-    addNavigationLocation(&frontOfMapLocation, FRONT_OF_MAP_LOCATION, FRONT_OF_MAP_LOCATION_X, FRONT_OF_MAP_LOCATION_Y);
+    addNavigationLocation(&dropZone1Location, DROP_ZONE_1, (int)DROP_ZONE_1_X, (int) DROP_ZONE_1_Y);
+	addNavigationLocation(&frontOfMapLocation, FRONT_OF_MAP_LOCATION, (int) FRONT_OF_MAP_LOCATION_X, (int)FRONT_OF_MAP_LOCATION_Y);
     // -> Bullion 1
     addNavigationLocation(&bullionRight1Location, BULLION_RIGHT_1, BULLION_RIGHT_1_X, BULLION_RIGHT_1_Y); 
     addNavigationLocation(&bullionLeft1Location, BULLION_LEFT_1, BULLION_LEFT_1_X, BULLION_LEFT_1_Y); 
     // -> Bullion 2 / Opponent CD
-    addNavigationLocation(&bullionMiddle2Location, BULLION_MIDDLE_2, BULLION_MIDDLE_2_X, BULLION_MIDDLE_2_Y);
+	addNavigationLocation(&bullionMiddle2Location, BULLION_MIDDLE_2, (int)BULLION_MIDDLE_2_X, (int) BULLION_MIDDLE_2_Y);
 
     addNavigationLocation(&obstacleL1Location, OBSTACLE_L1, OBSTACLE_L_X, OBSTACLE_1_Y);
     addNavigationLocation(&obstacleL2Location, OBSTACLE_L2, OBSTACLE_L_X, OBSTACLE_2_Y);
-    addNavigationLocation(&obstacleL3Location, OBSTACLE_L3, OBSTACLE_L_X, OBSTACLE_3_Y);
-    addNavigationLocation(&obstacleL4Location, OBSTACLE_L4, OBSTACLE_L_X, OBSTACLE_4_Y);
-    addNavigationLocation(&obstacleM1Location, OBSTACLE_M1, OBSTACLE_M_X, OBSTACLE_1_Y);
-    addNavigationLocation(&obstacleM2Location, OBSTACLE_M2, OBSTACLE_M_X, OBSTACLE_4_Y);
-    addNavigationLocation(&obstacleR1Location, OBSTACLE_R1, OBSTACLE_R_X, OBSTACLE_1_Y);
-    addNavigationLocation(&obstacleR2Location, OBSTACLE_R2, OBSTACLE_R_X, OBSTACLE_2_Y);
-    addNavigationLocation(&obstacleR3Location, OBSTACLE_R3, OBSTACLE_R_X, OBSTACLE_3_Y);
-    addNavigationLocation(&obstacleR4Location, OBSTACLE_R4, OBSTACLE_R_X, OBSTACLE_4_Y);
+    addNavigationLocation(&obstacleL3Location, OBSTACLE_L3, OBSTACLE_L_X, (int) OBSTACLE_3_Y);
+	addNavigationLocation(&obstacleL4Location, OBSTACLE_L4, (int) OBSTACLE_L_X, (int)OBSTACLE_4_Y);
+	addNavigationLocation(&obstacleM1Location, OBSTACLE_M1, (int) OBSTACLE_M_X, (int)OBSTACLE_1_Y);
+	addNavigationLocation(&obstacleM2Location, OBSTACLE_M2, (int) OBSTACLE_M_X, (int)OBSTACLE_4_Y);
+	addNavigationLocation(&obstacleR1Location, OBSTACLE_R1, (int) OBSTACLE_R_X, (int) OBSTACLE_1_Y);
+	addNavigationLocation(&obstacleR2Location, OBSTACLE_R2, (int) OBSTACLE_R_X, (int) OBSTACLE_2_Y);
+	addNavigationLocation(&obstacleR3Location, OBSTACLE_R3, (int) OBSTACLE_R_X, (int) OBSTACLE_3_Y);
+    addNavigationLocation(&obstacleR4Location, OBSTACLE_R4, (int) OBSTACLE_R_X, (int) OBSTACLE_4_Y);
 }
 
 void bottle2ToCDPathFunction() { fillPathData(&bottle2Location, &obstacleR1Location, BOTTLE_2_TO_CD_COST, 0x1B, 0x30, 0xF8F8, 0xFAF6, BOTTLE_2_TO_CD_SPEED_FACTOR, BOTTLE_2_TO_CD_ACCELERATION_FACTOR);}
@@ -195,6 +195,7 @@ void obstacleR3ToBullionRight1PathFunction() { fillAsymmetricPathData(&obstacleR
 void obstacleL3ToBullionLeft1PathFunction() { fillAsymmetricPathData(&obstacleL3Location, &bullionLeft1Location, OL3_TO_BULLIONRIGHT1_COST, 0x0A, 0x0A, ANGLE_NEG_45, ANGLE_NEG_90, OL3_TO_BULLIONRIGHT1_SPEED_FACTOR, OL3_TO_BULLIONRIGHT1_ACCELERATION_FACTOR);}
 
 void initPaths2012(int index) {
+    /*
     clearPathList(getNavigationPathList());
 
     // DIRECT PATH TO TARGETS
@@ -314,6 +315,7 @@ void initPaths2012(int index) {
     // bottle2Front->OR4
     void bottle2FrontToObstacleR4PathFunction() { fillPathData(&bottle2FrontLocation, &obstacleR4Location, BOTTLE2FRONT_TO_CD_COST, 0x0A, 0x0A, ANGLE_90, ANGLE_90, BOTTLE2FRONT_TO_CD_SPEED_FACTOR, BOTTLE2FRONT_TO_CD_ACCELERATION_FACTOR);}
     addNavigationPath(&bottle2FrontToObstacleR4PathFunction);
+    */
 }
 
 void initTargets2012() {

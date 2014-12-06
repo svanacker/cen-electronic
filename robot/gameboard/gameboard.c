@@ -18,8 +18,8 @@ char drawPoint(int column, int line, Point* p, char value) {
         return CHAR_NO_DRAW;
     }
     
-    int xColumn = convertXToColumn(p->x);
-    int yLine = convertYToLine(p->y);
+    int xColumn = convertXToColumn((int) p->x);
+    int yLine = convertYToLine((int) p->y);
 
     if (line == yLine && column == xColumn) {
         return value;
@@ -181,5 +181,5 @@ void printGameboard(OutputStream* outputStream) {
 
 char robotPositionPrint(int* element, int column, int line) {
     Point* point = (Point*) element;
-    return pointPrint(column, line, point->x, point->y, 'X');
+    return pointPrint(column, line, (int)point->x, (int) point->y, 'X');
 }

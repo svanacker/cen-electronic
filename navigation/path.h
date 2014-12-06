@@ -1,6 +1,8 @@
 #ifndef PATH_H
 #define PATH_H
 
+#include <stdbool.h>
+
 #include "location.h"
 
 /**
@@ -36,7 +38,11 @@ typedef struct PathData {
     bool mustGoBackward;
 } PathData;
 
-inline void fillPathData(Location* location1,
+int getAngle1Path(PathDataFunction* pathDataFunction);
+
+int getAngle2Path(PathDataFunction* pathDataFunction);
+
+void fillPathData(Location* location1,
                          Location* location2, 
                          int cost,
                          int controlPointDistance1,
@@ -50,7 +56,7 @@ inline void fillPathData(Location* location1,
  * Fills the data of an asymmetric path, a path on which 
  * the robot must move backward when reversed.
  */
-inline void fillAsymmetricPathData(Location* location1,
+void fillAsymmetricPathData(Location* location1,
                          Location* location2, 
                          int cost,
                          int controlPointDistance1,
@@ -59,10 +65,6 @@ inline void fillAsymmetricPathData(Location* location1,
                          int angle2,
                          unsigned char accelerationFactor,
                          unsigned char speedFactor);
-
-int getAngle1Path(PathDataFunction* pathDataFunction);
-
-int getAngle2Path(PathDataFunction* pathDataFunction);
 
 /**
  * Return the unique structure which must be filled before.

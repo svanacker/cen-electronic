@@ -8,13 +8,28 @@
 #include "../common/io/outputStream.h"
 #include "../common/io/printWriter.h"
 
+// TODO : TO REMOVE
+#include "../robot/2012/strategy2012Utils.h"
+
 static PathData tmpPathData;
 
 PathData* getTmpPathData() {
     return &tmpPathData;
 }
 
-inline void fillPathData(Location* location1,
+int getAngle1Path(PathDataFunction* pathDataFunction) {
+    pathDataFunction();
+    int result = getTmpPathData()->angle1;
+    return changeAngleForColor(result);
+}
+
+int getAngle2Path(PathDataFunction* pathDataFunction) {
+    pathDataFunction();
+    int result = getTmpPathData()->angle2;
+    return changeAngleForColor(result);
+}
+
+void fillPathData(Location* location1,
                      Location* location2, 
                      int cost,
                      int controlPointDistance1,
@@ -35,7 +50,7 @@ inline void fillPathData(Location* location1,
     tmpPathData.mustGoBackward = false;
 }
 
-inline void fillAsymmetricPathData(Location* location1,
+void fillAsymmetricPathData(Location* location1,
                      Location* location2, 
                      int cost,
                      int controlPointDistance1,

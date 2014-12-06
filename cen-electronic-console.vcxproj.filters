@@ -163,9 +163,6 @@
     <Filter Include="Source Files\drivers\clock">
       <UniqueIdentifier>{0257952a-3489-4610-beb7-1ca7473f8d37}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\drivers\mock">
-      <UniqueIdentifier>{9ccbdbec-e551-4a92-a652-499b96bbe9dd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\common\clock">
       <UniqueIdentifier>{42c91ddf-65d9-4478-b0f3-42e00ac04673}</UniqueIdentifier>
     </Filter>
@@ -195,6 +192,162 @@
     </Filter>
     <Filter Include="Header Files\common\io\pc">
       <UniqueIdentifier>{0f20341f-7a29-405e-9f21-6cd941dfd896}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\device\motor">
+      <UniqueIdentifier>{226c30b6-0ccc-476e-92be-3673ca24419d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\device\motor">
+      <UniqueIdentifier>{aa093ea6-b497-492f-8c3a-e547c90830cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\common\pwm">
+      <UniqueIdentifier>{7244d703-8877-4e7b-9125-5cbfc0e6d76b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\common\pwm\motor">
+      <UniqueIdentifier>{fe295f6e-270e-4521-b4be-2546e3ea3b79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\common\pwm\motor\pc">
+      <UniqueIdentifier>{00e28c9d-b79c-490b-856f-2c4c1d6026fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\drivers\motor">
+      <UniqueIdentifier>{72ccd5f9-832e-48db-b751-24f399a3e32f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\drivers\motor">
+      <UniqueIdentifier>{ed8617a4-c9b8-44bb-8424-6792541f77a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\drivers\clock">
+      <UniqueIdentifier>{9ccbdbec-e551-4a92-a652-499b96bbe9dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\robot">
+      <UniqueIdentifier>{2048bcc5-98cf-40de-8d46-684f4fbcdbc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\robot\strategy">
+      <UniqueIdentifier>{9cd69e21-0ad8-4644-88ff-396fc6946aa6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\robot">
+      <UniqueIdentifier>{a1860cce-3406-4620-ab7c-dab533165e19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\robot\strategy">
+      <UniqueIdentifier>{7592f88f-097b-44e6-aa27-3f9bc76eada0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\robot\strategy\factor">
+      <UniqueIdentifier>{62dd9012-a359-43fa-8447-500eb7557604}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\robot\strategy\factor">
+      <UniqueIdentifier>{52c6e419-0578-4b2a-adde-71739aac413a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\navigation">
+      <UniqueIdentifier>{e37c997c-402c-4d40-8101-e369f5935cae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\navigation">
+      <UniqueIdentifier>{811ecb78-8ec5-49ef-a87e-7700afaad2e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\drivers\motion">
+      <UniqueIdentifier>{c0a0f766-89f4-4205-ab26-61fa990d2378}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\motion">
+      <UniqueIdentifier>{edfad24b-fe78-4d52-a8f0-791312880aab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\motion\extended">
+      <UniqueIdentifier>{319fca3e-716b-45e4-8a1f-83d8d0d3d4f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\motion">
+      <UniqueIdentifier>{9bb5ab6e-f872-4888-9c36-4a57f6503fc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\motion\extended">
+      <UniqueIdentifier>{8ec867ef-cd90-40b6-8fc1-e2cb446123c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\motion\pid">
+      <UniqueIdentifier>{792fda09-5e6e-40ba-97af-94e18e73cac0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\motion\pid">
+      <UniqueIdentifier>{76672226-c522-4246-8686-b970a503e673}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\robot\gameboard">
+      <UniqueIdentifier>{78532bb2-7a74-47d4-bd5d-c352c87a9689}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\robot\gameboard">
+      <UniqueIdentifier>{1a2b8f47-b702-439a-8e5b-328eef30668a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\robot\match">
+      <UniqueIdentifier>{5ef1efd9-15c9-494d-b34d-0651ae9bc3d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\robot\match">
+      <UniqueIdentifier>{75879dc0-d007-4057-8d01-7a5bf7be02dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\robot\opponent">
+      <UniqueIdentifier>{5a35e0f3-711c-43f6-a726-600424a615ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\robot\opponent">
+      <UniqueIdentifier>{90a83f0a-63dc-461b-83a1-e12a00c2e0b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\robot\config">
+      <UniqueIdentifier>{f0e265e0-4019-4d67-8a03-a95cb92013b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\robot\config">
+      <UniqueIdentifier>{7e270b38-8ffe-4b11-b51a-9559fb5c417c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\robot\2012">
+      <UniqueIdentifier>{a2eb171f-8977-4a6d-a41b-d21e9a365b07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\robot\2012">
+      <UniqueIdentifier>{48991814-0780-4909-bb06-b16c625b70bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\drivers\strategy">
+      <UniqueIdentifier>{6675e0f0-6bc0-4d22-bc0a-4141ae7af695}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\drivers\strategy">
+      <UniqueIdentifier>{a367ba48-bb5b-4c44-bf68-c837042e793b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\common\timer">
+      <UniqueIdentifier>{e4ff30c5-0411-4d10-b6ef-6d7abbbc5898}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\common\timer">
+      <UniqueIdentifier>{2a32b9d1-5371-4826-b47b-2e37369b34e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\common\timer\pc">
+      <UniqueIdentifier>{fcb27a30-5a85-4e15-8acd-bd70176eac26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\drivers\motion">
+      <UniqueIdentifier>{fd4d0176-9b98-4780-a692-94f128133fb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\common\pwm">
+      <UniqueIdentifier>{ae35acef-dd6e-48f0-b0e0-4f4b74957170}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\common\pwm\motor">
+      <UniqueIdentifier>{96387f76-f1ba-4005-8d7b-8e4b84408db8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\common\pwm\servo">
+      <UniqueIdentifier>{3ec2a725-972f-482c-a2ee-ec58bc9badc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\common\pwm\servo">
+      <UniqueIdentifier>{1a894db0-ecc2-45ac-9db7-840557449da9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\common\pwm\servo\pc">
+      <UniqueIdentifier>{9b683714-75ae-479c-8888-0f4c5f34c262}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\drivers\beacon">
+      <UniqueIdentifier>{e13302f8-164f-4986-a166-f3b4211125d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\device\beacon">
+      <UniqueIdentifier>{988067ee-d645-40e7-ae82-e0a1fafa6749}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\device\beacon">
+      <UniqueIdentifier>{fe78cb49-211c-46ca-893c-697157091c3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\drivers\beacon">
+      <UniqueIdentifier>{0398966c-b5ac-474a-b983-951fd365e538}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\common\delay">
+      <UniqueIdentifier>{6a641d8a-6be2-4c5d-8aa8-8d6d0d848d1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\common\delay\pc">
+      <UniqueIdentifier>{d64a527c-a979-4e7c-8e7f-023e2c9c1771}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\motion\position">
+      <UniqueIdentifier>{45d96eb1-5884-4e85-89a6-137b05d996a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\motion\position">
+      <UniqueIdentifier>{5c0969e6-428d-4f50-9c98-34f246e3255d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -368,6 +521,231 @@
     </ClCompile>
     <ClCompile Include="common\io\pc\consoleOutputStream.c">
       <Filter>Source Files\common\io\pc</Filter>
+    </ClCompile>
+    <ClCompile Include="device\motor\pwmMotor.c">
+      <Filter>Source Files\device\motor</Filter>
+    </ClCompile>
+    <ClCompile Include="device\motor\pwmMotorDevice.c">
+      <Filter>Source Files\device\motor</Filter>
+    </ClCompile>
+    <ClCompile Include="device\motor\pwmMotorDeviceInterface.c">
+      <Filter>Source Files\device\motor</Filter>
+    </ClCompile>
+    <ClCompile Include="common\pwm\motor\pc\dualHBridgeMotorPc.c">
+      <Filter>Source Files\common\pwm\motor\pc</Filter>
+    </ClCompile>
+    <ClCompile Include="common\pwm\motor\motorPwm.c">
+      <Filter>Source Files\common\pwm\motor</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\motor\motorDriver.c">
+      <Filter>Source Files\drivers\motor</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\strategy\gameStrategy.c">
+      <Filter>Source Files\robot\strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\strategy\gameStrategyContext.c">
+      <Filter>Source Files\robot\strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\strategy\gameStrategyHandler.c">
+      <Filter>Source Files\robot\strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\strategy\gameStrategyItem.c">
+      <Filter>Source Files\robot\strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\strategy\gameStrategyList.c">
+      <Filter>Source Files\robot\strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\strategy\gameTarget.c">
+      <Filter>Source Files\robot\strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\strategy\gameTargetAction.c">
+      <Filter>Source Files\robot\strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\strategy\gameTargetActionItem.c">
+      <Filter>Source Files\robot\strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\strategy\gameTargetActionItemList.c">
+      <Filter>Source Files\robot\strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\strategy\gameTargetActionList.c">
+      <Filter>Source Files\robot\strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\strategy\gameTargetList.c">
+      <Filter>Source Files\robot\strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\strategy\nextGameStrategyItemComputer.c">
+      <Filter>Source Files\robot\strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\strategy\factor\composedGainFactor.c">
+      <Filter>Source Files\robot\strategy\factor</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\strategy\factor\distanceGainFactor.c">
+      <Filter>Source Files\robot\strategy\factor</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\strategy\factor\opponentRobotGainFactor.c">
+      <Filter>Source Files\robot\strategy\factor</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\strategy\factor\timeGainFactor.c">
+      <Filter>Source Files\robot\strategy\factor</Filter>
+    </ClCompile>
+    <ClCompile Include="navigation\location.c">
+      <Filter>Source Files\navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="navigation\locationList.c">
+      <Filter>Source Files\navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="navigation\navigation.c">
+      <Filter>Source Files\navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="navigation\navigationTest.c">
+      <Filter>Source Files\navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="navigation\path.c">
+      <Filter>Source Files\navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="navigation\pathList.c">
+      <Filter>Source Files\navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\extended\bspline.c">
+      <Filter>Source Files\motion\extended</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\extended\bsplineDebug.c">
+      <Filter>Source Files\motion\extended</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\extended\singleBSpline.c">
+      <Filter>Source Files\motion\extended</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\pid\alphaTheta.c">
+      <Filter>Source Files\motion\pid</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\pid\bSplinePidComputer.c">
+      <Filter>Source Files\motion\pid</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\pid\motionEndDetection.c">
+      <Filter>Source Files\motion\pid</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\pid\pid.c">
+      <Filter>Source Files\motion\pid</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\pid\pidComputer.c">
+      <Filter>Source Files\motion\pid</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\pid\pidDebug.c">
+      <Filter>Source Files\motion\pid</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\pid\pidMotionProfileComputer.c">
+      <Filter>Source Files\motion\pid</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\pid\pidPersistence.c">
+      <Filter>Source Files\motion\pid</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\pid\pidTimer.c">
+      <Filter>Source Files\motion\pid</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\gameboard\gameboard.c">
+      <Filter>Source Files\robot\gameboard</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\gameboard\gameboardElement.c">
+      <Filter>Source Files\robot\gameboard</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\match\endMatchDetectorDevice.c">
+      <Filter>Source Files\robot\match</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\match\endMatchDetectorDeviceInterface.c">
+      <Filter>Source Files\robot\match</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\match\startMatchDetectorDevice.c">
+      <Filter>Source Files\robot\match</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\match\startMatchDetectorDeviceInterface.c">
+      <Filter>Source Files\robot\match</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\match\strategy.c">
+      <Filter>Source Files\robot\match</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\match\teamColor.c">
+      <Filter>Source Files\robot\match</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\robot.c">
+      <Filter>Source Files\robot</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\config\robotConfigDevice.c">
+      <Filter>Source Files\robot\config</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\config\robotConfigDeviceInterface.c">
+      <Filter>Source Files\robot\config</Filter>
+    </ClCompile>
+    <ClCompile Include="common\math\bitList.c">
+      <Filter>Source Files\common\math</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2012\armDevice2012.c">
+      <Filter>Source Files\robot\2012</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2012\armDeviceInterface2012.c">
+      <Filter>Source Files\robot\2012</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2012\armDriver2012.c">
+      <Filter>Source Files\robot\2012</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2012\gameBoardElement2012.c">
+      <Filter>Source Files\robot\2012</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2012\homologation2012.c">
+      <Filter>Source Files\robot\2012</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2012\strategy2012.c">
+      <Filter>Source Files\robot\2012</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2012\strategy2012Utils.c">
+      <Filter>Source Files\robot\2012</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\strategy\strategyDriver.c">
+      <Filter>Source Files\drivers\strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="common\timer\cenTimer.c">
+      <Filter>Source Files\common\timer</Filter>
+    </ClCompile>
+    <ClCompile Include="common\timer\timerDebug.c">
+      <Filter>Source Files\common\timer</Filter>
+    </ClCompile>
+    <ClCompile Include="common\timer\timerList.c">
+      <Filter>Source Files\common\timer</Filter>
+    </ClCompile>
+    <ClCompile Include="common\timer\pc\timerSetupPc.c">
+      <Filter>Source Files\common\timer\pc</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\motion\motionDriver.c">
+      <Filter>Source Files\drivers\motion</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\motion\trajectoryDriver.c">
+      <Filter>Source Files\drivers\motion</Filter>
+    </ClCompile>
+    <ClCompile Include="common\pwm\servo\servoPwm.c">
+      <Filter>Source Files\common\pwm\servo</Filter>
+    </ClCompile>
+    <ClCompile Include="common\pwm\servo\servoPwmDebug.c">
+      <Filter>Source Files\common\pwm\servo</Filter>
+    </ClCompile>
+    <ClCompile Include="common\pwm\servo\pc\servoPwmPc.c">
+      <Filter>Source Files\common\pwm\servo\pc</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\opponent\opponentRobot.c">
+      <Filter>Source Files\robot\opponent</Filter>
+    </ClCompile>
+    <ClCompile Include="device\beacon\beaconReceiverDeviceInterface.c">
+      <Filter>Source Files\device\beacon</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\beacon\beaconReceiverDriver.c">
+      <Filter>Source Files\drivers\beacon</Filter>
+    </ClCompile>
+    <ClCompile Include="common\delay\pc\cenDelayPc.c">
+      <Filter>Source Files\common\delay\pc</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\position\coderErrorComputer.c">
+      <Filter>Source Files\motion\position</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\position\trajectory.c">
+      <Filter>Source Files\motion\position</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -555,7 +933,7 @@
       <Filter>Header Files\device\clock</Filter>
     </ClInclude>
     <ClInclude Include="drivers\clock\mockClock.h">
-      <Filter>Header Files\drivers\mock</Filter>
+      <Filter>Header Files\drivers\clock</Filter>
     </ClInclude>
     <ClInclude Include="common\clock\clock.h">
       <Filter>Header Files\common\clock</Filter>
@@ -568,6 +946,237 @@
     </ClInclude>
     <ClInclude Include="common\io\pc\consoleOutputStream.h">
       <Filter>Header Files\common\io\pc</Filter>
+    </ClInclude>
+    <ClInclude Include="device\motor\pwmMotor.h">
+      <Filter>Header Files\device\motor</Filter>
+    </ClInclude>
+    <ClInclude Include="device\motor\pwmMotorDevice.h">
+      <Filter>Header Files\device\motor</Filter>
+    </ClInclude>
+    <ClInclude Include="device\motor\pwmMotorDeviceInterface.h">
+      <Filter>Header Files\device\motor</Filter>
+    </ClInclude>
+    <ClInclude Include="common\pwm\motor\dualHBridgeMotorPwm.h">
+      <Filter>Header Files\common\pwm\motor</Filter>
+    </ClInclude>
+    <ClInclude Include="common\pwm\motor\motorPwm.h">
+      <Filter>Header Files\common\pwm\motor</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\motor\motorDriver.h">
+      <Filter>Header Files\drivers\motor</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\strategy\gameStrategy.h">
+      <Filter>Header Files\robot\strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\strategy\gameStrategyContext.h">
+      <Filter>Header Files\robot\strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\strategy\gameStrategyHandler.h">
+      <Filter>Header Files\robot\strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\strategy\gameStrategyItem.h">
+      <Filter>Header Files\robot\strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\strategy\gameStrategyList.h">
+      <Filter>Header Files\robot\strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\strategy\gameTarget.h">
+      <Filter>Header Files\robot\strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\strategy\gameTargetAction.h">
+      <Filter>Header Files\robot\strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\strategy\gameTargetActionItem.h">
+      <Filter>Header Files\robot\strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\strategy\gameTargetActionItemList.h">
+      <Filter>Header Files\robot\strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\strategy\gameTargetActionList.h">
+      <Filter>Header Files\robot\strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\strategy\gameTargetList.h">
+      <Filter>Header Files\robot\strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\strategy\nextGameStrategyItemComputer.h">
+      <Filter>Header Files\robot\strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\strategy\factor\composedGainFactor.h">
+      <Filter>Header Files\robot\strategy\factor</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\strategy\factor\distanceGainFactor.h">
+      <Filter>Header Files\robot\strategy\factor</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\strategy\factor\gainFactor.h">
+      <Filter>Header Files\robot\strategy\factor</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\strategy\factor\opponentRobotGainFactor.h">
+      <Filter>Header Files\robot\strategy\factor</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\strategy\factor\timeGainFactor.h">
+      <Filter>Header Files\robot\strategy\factor</Filter>
+    </ClInclude>
+    <ClInclude Include="navigation\location.h">
+      <Filter>Header Files\navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="navigation\locationList.h">
+      <Filter>Header Files\navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="navigation\navigation.h">
+      <Filter>Header Files\navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="navigation\navigationTest.h">
+      <Filter>Header Files\navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="navigation\path.h">
+      <Filter>Header Files\navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="navigation\pathList.h">
+      <Filter>Header Files\navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\motion\motionDriver.h">
+      <Filter>Header Files\drivers\motion</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\motion\trajectoryDriver.h">
+      <Filter>Header Files\drivers\motion</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\extended\bspline.h">
+      <Filter>Header Files\motion\extended</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\extended\bsplineDebug.h">
+      <Filter>Header Files\motion\extended</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\extended\singleBSpline.h">
+      <Filter>Header Files\motion\extended</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\alphaTheta.h">
+      <Filter>Header Files\motion\pid</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\bSplinePidComputer.h">
+      <Filter>Header Files\motion\pid</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\motionEndDetection.h">
+      <Filter>Header Files\motion\pid</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\pid.h">
+      <Filter>Header Files\motion\pid</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\pidComputer.h">
+      <Filter>Header Files\motion\pid</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\pidDebug.h">
+      <Filter>Header Files\motion\pid</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\pidMotionProfileComputer.h">
+      <Filter>Header Files\motion\pid</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\pidPersistence.h">
+      <Filter>Header Files\motion\pid</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\pidTimer.h">
+      <Filter>Header Files\motion\pid</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\gameboard\gameboard.h">
+      <Filter>Header Files\robot\gameboard</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\gameboard\gameboardElement.h">
+      <Filter>Header Files\robot\gameboard</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\match\endMatchDetectorDevice.h">
+      <Filter>Header Files\robot\match</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\match\endMatchDetectorDeviceInterface.h">
+      <Filter>Header Files\robot\match</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\match\startMatchDetectorDevice.h">
+      <Filter>Header Files\robot\match</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\match\startMatchDetectorDeviceInterface.h">
+      <Filter>Header Files\robot\match</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\match\strategy.h">
+      <Filter>Header Files\robot\match</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\match\teamColor.h">
+      <Filter>Header Files\robot\match</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\robot.h">
+      <Filter>Header Files\robot</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\robotConstants.h">
+      <Filter>Header Files\robot</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\config\robotConfig.h">
+      <Filter>Header Files\robot\config</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\config\robotConfigDevice.h">
+      <Filter>Header Files\robot\config</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\config\robotConfigDeviceInterface.h">
+      <Filter>Header Files\robot\config</Filter>
+    </ClInclude>
+    <ClInclude Include="common\math\bitList.h">
+      <Filter>Header Files\common\math</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2012\armDevice2012.h">
+      <Filter>Header Files\robot\2012</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2012\armDeviceInterface2012.h">
+      <Filter>Header Files\robot\2012</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2012\armDriver2012.h">
+      <Filter>Header Files\robot\2012</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2012\gameBoardElement2012.h">
+      <Filter>Header Files\robot\2012</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2012\homologation2012.h">
+      <Filter>Header Files\robot\2012</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2012\strategy2012.h">
+      <Filter>Header Files\robot\2012</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2012\strategy2012Utils.h">
+      <Filter>Header Files\robot\2012</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\strategy\strategyDriver.h">
+      <Filter>Header Files\drivers\strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="common\timer\cenTimer.h">
+      <Filter>Source Files\common\timer</Filter>
+    </ClInclude>
+    <ClInclude Include="common\timer\timerDebug.h">
+      <Filter>Header Files\common\timer</Filter>
+    </ClInclude>
+    <ClInclude Include="common\timer\timerInterrupt.h">
+      <Filter>Header Files\common\timer</Filter>
+    </ClInclude>
+    <ClInclude Include="common\timer\timerList.h">
+      <Filter>Header Files\common\timer</Filter>
+    </ClInclude>
+    <ClInclude Include="common\timer\timerSetup.h">
+      <Filter>Header Files\common\timer</Filter>
+    </ClInclude>
+    <ClInclude Include="common\pwm\servo\servoPwm.h">
+      <Filter>Header Files\common\pwm\servo</Filter>
+    </ClInclude>
+    <ClInclude Include="common\pwm\servo\servoPwmDebug.h">
+      <Filter>Header Files\common\pwm\servo</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\opponent\opponentRobot.h">
+      <Filter>Header Files\robot\opponent</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\beacon\beaconReceiverDriver.h">
+      <Filter>Header Files\drivers\beacon</Filter>
+    </ClInclude>
+    <ClInclude Include="device\beacon\beaconReceiverDeviceInterface.h">
+      <Filter>Header Files\device\beacon</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\position\coderErrorComputer.h">
+      <Filter>Header Files\motion\position</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\position\trajectory.h">
+      <Filter>Header Files\motion\position</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

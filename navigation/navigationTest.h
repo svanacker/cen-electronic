@@ -3,4 +3,6 @@
 
 int addNavigationLocations();
 
+void addStrategyPaths(void);
+
 #endif

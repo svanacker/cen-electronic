@@ -125,10 +125,10 @@ void loadPID(void) {
     int pidIndex;
     for (pidIndex = 0; pidIndex < PID_STORED_COUNT; pidIndex++) {
         Pid* localPid = getPID(pidIndex, 0);
-        localPid->p = internalLoadPidParameter(pidIndex, EEPROM_KP);
-        localPid->i = internalLoadPidParameter(pidIndex, EEPROM_KI);
-        localPid->d = internalLoadPidParameter(pidIndex, EEPROM_KD);
-        localPid->maxIntegral = internalLoadPidParameter(pidIndex, EEPROM_MI);
+        localPid->p = (float) internalLoadPidParameter(pidIndex, EEPROM_KP);
+        localPid->i = (float) internalLoadPidParameter(pidIndex, EEPROM_KI);
+        localPid->d = (float) internalLoadPidParameter(pidIndex, EEPROM_KD);
+        localPid->maxIntegral = (float) internalLoadPidParameter(pidIndex, EEPROM_MI);
         localPid->enabled = true;
     }
 
@@ -165,10 +165,10 @@ void savePID(void) {
     // we save both NORMAL_MODE AND ROLLING_TEST_MODE
     for (pidIndex = 0; pidIndex < PID_STORED_COUNT; pidIndex++) {
         Pid* localPid = getPID(pidIndex, 0);
-        internalSavePidParameter(pidIndex, EEPROM_KP, localPid->p);
-        internalSavePidParameter(pidIndex, EEPROM_KI, localPid->i);
-        internalSavePidParameter(pidIndex, EEPROM_KD, localPid->d);
-        internalSavePidParameter(pidIndex, EEPROM_MI, localPid->maxIntegral);
+        internalSavePidParameter(pidIndex, EEPROM_KP, (int) localPid->p);
+        internalSavePidParameter(pidIndex, EEPROM_KI, (int) localPid->i);
+        internalSavePidParameter(pidIndex, EEPROM_KD, (int) localPid->d);
+        internalSavePidParameter(pidIndex, EEPROM_MI, (int) localPid->maxIntegral);
     }
 }
 

@@ -77,21 +77,21 @@ char bottle2RedPrint(int* element, int column, int line) {
 // PALM TREE
 
 char palmTreePrint(int* element, int column, int line) {
-    return pointPrint(column, line, GAMEBOARD_MIDDLE_WIDTH, GAMEBOARD_MIDDLE_HEIGHT, '*');
+    return pointPrint(column, line, (int) GAMEBOARD_MIDDLE_WIDTH, (int) GAMEBOARD_MIDDLE_HEIGHT, '*');
 }
 
 // TOTEMS
 
 char totemRedPrint(int* element, int column, int line) {
-    return rectanglePrint(column, line, GAMEBOARD_MIDDLE_WIDTH, GAMEBOARD_HEIGHT - 1100.0f, 2, 2, '*');
+    return rectanglePrint(column, line, (int) GAMEBOARD_MIDDLE_WIDTH, (int) (GAMEBOARD_HEIGHT - 1100.0f), 2, 2, '*');
 }
 
 char totemVioletPrint(int* element, int column, int line) {
-    return rectanglePrint(column, line, GAMEBOARD_MIDDLE_WIDTH, 1100.0f, 2, 2, '*');
+    return rectanglePrint(column, line, (int) GAMEBOARD_MIDDLE_WIDTH, (int) 1100.0f, 2, 2, '*');
 }
 
 // BULLION
 
 char bullionViolet1Print(int* element, int column, int line) {
-    return rectanglePrint(column, line, GAMEBOARD_MIDDLE_WIDTH, 1100.0f, 2, 1, '*');
+    return rectanglePrint(column, line, (int) GAMEBOARD_MIDDLE_WIDTH, (int) 1100.0f, 2, 1, '*');
 }

@@ -1,7 +1,8 @@
 #include "strategy.h"
 
-#include "../robotConfig.h"
-#include "../../device/drivers/lcd.h"
+#include "../../robot/config/robotConfig.h"
+#include "../../robot/config/robotConfigDevice.h"
+// #include "../../device/drivers/lcd.h"
 
 /**
 * The side for the match.
@@ -24,7 +25,8 @@ void loadMatchSide() {
     else {
         matchSide = SIDE_YELLOW;
     }
-    writeStringCR(getMatchSideAsString());
+    // TODO : Write on LCD
+    // writeStringCR(getMatchSideAsString());
 }
 
 signed int getMatchSide() {

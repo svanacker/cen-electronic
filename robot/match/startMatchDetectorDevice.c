@@ -4,9 +4,11 @@
   @author svanacker
   @version 17/04/2010
  */
+#include <stdbool.h>
+
 #include "../../common/commons.h"
 
-#include <plib.h>
+// #include <plib.h>
 
 #include "startMatchDetectorDevice.h"
 #include "startMatchDetectorDeviceInterface.h"
@@ -25,33 +27,40 @@
 
 #include "../../robot/config/robotConfigDevice.h"
 
-void initStartMatchDetector() {
+void initStartMatchDetector(void) {
 
 }
 
-void stopStartMatchDetector() {
+void stopStartMatchDetector(void) {
 
 }
 
-bool isStartMatchDetectorDeviceOk() {
+bool isStartMatchDetectorDeviceOk(void) {
     return true;
 }
 
 void loopUntilStart(handleFunctionType* handleFunction) {
     #ifndef PROG_32
+    // TODO 
+    /*
     while (START_DETECTOR_PIN) {
         // Call back to be able to manage the robot while waiting for start.
         handleFunction();
     }
+    */
     #endif
 }
 
-char isStarted() {
+bool isStarted(void) {
+    return true;
+    /*
     #ifndef PROG_32
     char readPin;
-    readPin = START_DETECTOR_PIN;
+    // TODO !!!!
+    //readPin = START_DETECTOR_PIN;
     return readPin != 0;
     #endif
+    */
 }
 
 void showWaitingStart(OutputStream* pcOutputStream) {
@@ -68,9 +77,7 @@ void showStarted(OutputStream* pcOutputStream) {
     appendStringCRLF(getOutputStreamLogger(ALWAYS), "Go !");
 }
 
-void deviceStartMatchDetectorHandleRawData(char header,
-        InputStream* inputStream,
-        OutputStream* outputStream) {
+void deviceStartMatchDetectorHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream) {
     if (header == COMMAND_STEP_BY_STEP) {
         robotNextStep();
         ackCommand(outputStream, START_MATCH_DETECTOR_DEVICE_HEADER, COMMAND_STEP_BY_STEP);

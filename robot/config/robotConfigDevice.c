@@ -15,7 +15,7 @@
 #include "../../device/device.h"
 
 #include "../../drivers/driver.h"
-#include "../../drivers/io/pcf8574.h"
+// #include "../../drivers/io/pcf8574.h"
 
 /** Config is a 16 bit value */
 static unsigned int config = 0;
@@ -24,7 +24,8 @@ static unsigned int config = 0;
  * @private
  */
 unsigned char readPCFByte(int pcfAddress, int pcfConfigAddress) {
-    unsigned char read = readPCF8574(pcfAddress, pcfConfigAddress, 0xFF);
+    // TODO : unsigned char read = readPCF8574(pcfAddress, pcfConfigAddress, 0xFF);
+    unsigned char read = 0;
 
     // The high 4 bits of each byte is inversed => 1100 0001 is in reality : 0011 0001
     unsigned char result = read & 0x0F;
@@ -49,12 +50,13 @@ void refreshConfig(void) {
     config = 0;
     return;
 #endif
-
+    /* TODO SV
     unsigned char lowByte = readPCFByte(PCF8574_BASE_ADDRESS, PCF8574_LOW_BYTE_CONFIG_ADDRESS);
     unsigned char highByte = readPCFByte(PCF8574_BASE_ADDRESS, PCF8574_HIGH_BYTE_CONFIG_ADDRESS);
 
     // The both highest bit is not available => be careful to the inversion made by readPCFByte
     config = ((highByte & 0x3F) << 8) | lowByte;
+    */
 }
 
 unsigned int getConfigValue(void) {

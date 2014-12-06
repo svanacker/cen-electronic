@@ -18,9 +18,12 @@ void computeErrorsUsingCoders(PidMotion* pidMotion) {
     Motion* alphaMotion = &(computationValues->motion[INSTRUCTION_ALPHA_INDEX]);
 
     // 2 dependant Wheels (direction + angle)
+    float value0 = 0.0f;
+    float value1 = 0.0f;
+    /* TODO 
     float value0 = (float) getCoderValue(CODER_LEFT);
     float value1 = (float) getCoderValue(CODER_RIGHT);
-
+    */
     // Compute real position of wheel
     thetaMotion->position = computeTheta(value0, value1);
     alphaMotion->position = computeAlpha(value0, value1);

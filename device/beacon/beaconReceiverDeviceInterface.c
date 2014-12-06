@@ -4,7 +4,7 @@
 #include "../../device/deviceInterface.h"
 #include "../../device/deviceConstants.h"
 
-const char* beaconReceiverDeviceGetName() {
+const char* beaconReceiverDeviceGetName(void) {
     return "beaconReceiver";
 }
 
@@ -55,6 +55,6 @@ static DeviceInterface deviceInterface = {
     .deviceGetInterface = &beaconReceiverDeviceGetInterface
 };
 
-DeviceInterface* getBeaconReceiverDeviceInterface() {
+DeviceInterface* getBeaconReceiverDeviceInterface(void) {
     return &deviceInterface;
 }

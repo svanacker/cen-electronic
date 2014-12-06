@@ -1,3 +1,5 @@
+#include <stdlib.h>
+
 #include "locationList.h"
 #include "location.h"
 #include "pathList.h"

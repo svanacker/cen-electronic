@@ -114,12 +114,12 @@ bool sendStrategyOpponentRobotPosition(Point* opponentRobotPosition) {
 
     append(outputStream, STRATEGY_DEVICE_HEADER);
     append(outputStream, COMMAND_STRATEGY_SET_OPPONENT_ROBOT_POSITION);
-    appendHex4(outputStream, opponentRobotPosition->x);
+    appendHex4(outputStream, (signed int) opponentRobotPosition->x);
     appendSeparator(outputStream);
-    appendHex4(outputStream, opponentRobotPosition->y);
+    appendHex4(outputStream, (signed int) opponentRobotPosition->y);
 
-    appendStringAndDec(debugOutputStream, " x=", opponentRobotPosition->x);
-    appendStringAndDec(debugOutputStream, ", y=", opponentRobotPosition->y);
+    appendStringAndDecf(debugOutputStream, " x=", opponentRobotPosition->x);
+    appendStringAndDecf(debugOutputStream, ", y=", opponentRobotPosition->y);
     println(debugOutputStream);
 
     bool result = transmitFromDriverRequestBuffer();

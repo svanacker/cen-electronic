@@ -222,11 +222,11 @@ void homologation4(int color) {
             bullion1ToBottle1(color);
             break;
         case 3: // Goto near 2 bottle
-            setSonarStatus(0); // TODO
+            // setSonarStatus(0); // TODO
             bottle1ToFrontBottle2(color);
             break;
         case 4: // hit bottle 2
-            setSonarStatus(0);
+            // setSonarStatus(0);
             frontBottle2ToBottle2(color);
             break;
         case 5: // near right Lintel 1
@@ -332,11 +332,11 @@ void homologation6(int color) {
             spline(color, X_BOTTLE, 0x0280, ANGLE_180, 0xEC, 0xC0, MOTION_SPEED_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL);
             break;
         case 3: // Goto near 2 bottle
-            setSonarStatus(0); // TODO
+            // setSonarStatus(0); // TODO
             bottle1ToFrontBottle2(color);
             break;
         case 4: // hit bottle 2
-            setSonarStatus(0);
+            // setSonarStatus(0);
             frontBottle2ToBottle2(color);
             break;
         case 5:

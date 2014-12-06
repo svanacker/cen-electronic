@@ -1,6 +1,5 @@
 #include "robot.h"
 
-
 #include "../common/commons.h"
 #include "../common/2d/2d.h"
 #include "../common/delay/cenDelay.h"
@@ -100,7 +99,7 @@ void stopRobot(void) {
 // OBSTACLE
 
 void stopRobotObstacle(void) {
-    int currentTime = getCurrentTimeInSecond();
+    unsigned int currentTime = getCurrentTimeInSecond();
     appendString(getOutputStreamLogger(WARNING), "Current Time=");
     appendDec(getOutputStreamLogger(WARNING), currentTime);
     appendString(getOutputStreamLogger(WARNING), " secs\n");

@@ -1,7 +1,7 @@
 #ifndef LOCATION_H
 #define LOCATION_H
 
-#include <stdlib.h>
+#include <stdbool.h>
 
 #include "../common/commons.h"
 #include "../common/io/outputStream.h"

@@ -80,7 +80,7 @@ void bSplineMotionUCompute() {
     // restriction to [-PI, PI]
     alphaAndThetaDiff = mod2PI(alphaAndThetaDiff);
 
-    float cosAlphaAndThetaDiff = cos(alphaAndThetaDiff);
+    float cosAlphaAndThetaDiff = cosf(alphaAndThetaDiff);
     float thetaErrorWithCos = thetaError * cosAlphaAndThetaDiff;
     
     float normalSpeed = computeNormalSpeed(thetaInst, pidTime);

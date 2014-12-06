@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string.h>
 
 #include "locationList.h"
 #include "location.h"
@@ -58,7 +59,7 @@ Location* findLocationByName(LocationList* locationList, char* locationName) {
     int size = locationList->size;
     for (i = 0; i < size; i++) {
         Location* location = locationList->locations[i];
-        if (stringEquals(locationName, location->name)) {
+        if (strcmp(locationName, location->name)) {
             return location;
         }
     }
@@ -95,7 +96,7 @@ Location* getNearestLocation(LocationList* locationList, int x, int y) {
         if (location == NULL) {
             continue;
         }
-        int distance = distanceBetweenPoints2((float) location->x, (float) location->y, (float) x, (float) y);
+        int distance = (int) distanceBetweenPoints2((float) location->x, (float) location->y, (float) x, (float) y);
         if (distance < min) {
             min = distance;
             result = location;

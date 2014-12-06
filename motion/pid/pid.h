@@ -144,7 +144,7 @@ typedef struct Pid {
 /**
  * Defines the structs which stores the errors.
  */
-typedef struct MotionError{
+typedef struct MotionError {
     /** Stores the previous error */
     float previousError;
     /** The error between normal speed and real speed */

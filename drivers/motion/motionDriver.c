@@ -49,10 +49,10 @@ bool motionDriverGotoPositionPulse(float left,
 
     append(outputStream, MOTION_DEVICE_HEADER);
     append(outputStream, COMMAND_MOTION_GOTO_IN_PULSE);
-    appendHex4(outputStream, left);
-    appendHex4(outputStream, right);
-    appendHex2(outputStream, a);
-    appendHex2(outputStream, s);
+    appendHex4(outputStream, (int) left);
+    appendHex4(outputStream, (int) right);
+    appendHex2(outputStream, (char) a);
+    appendHex2(outputStream, (char) s);
 
     bool result = transmitFromDriverRequestBuffer();
 
@@ -64,7 +64,7 @@ bool motionDriverForward(float distanceInMM) {
 
     append(outputStream, MOTION_DEVICE_HEADER);
     append(outputStream, COMMAND_MOTION_FORWARD_IN_MM);
-    appendHex4(outputStream, distanceInMM);
+    appendHex4(outputStream, (signed int)distanceInMM);
 
     bool result = transmitFromDriverRequestBuffer();
 
@@ -82,7 +82,7 @@ bool motionDriverBackward(float distanceInMM) {
 
     append(outputStream, MOTION_DEVICE_HEADER);
     append(outputStream, COMMAND_MOTION_BACKWARD_IN_MM);
-    appendHex4(outputStream, distanceInMM);
+    appendHex4(outputStream, (signed int) distanceInMM);
 
     bool result = transmitFromDriverRequestBuffer();
 
@@ -94,7 +94,7 @@ bool motionDriverLeft(float leftDeciDegree) {
 
     append(outputStream, MOTION_DEVICE_HEADER);
     append(outputStream, COMMAND_MOTION_LEFT_IN_DECI_DEGREE);
-    appendHex4(outputStream, leftDeciDegree);
+    appendHex4(outputStream, (signed int) leftDeciDegree);
 
     bool result = transmitFromDriverRequestBuffer();
 
@@ -106,7 +106,7 @@ bool motionDriverRight(float rightDeciDegree) {
 
     append(outputStream, MOTION_DEVICE_HEADER);
     append(outputStream, COMMAND_MOTION_RIGHT_IN_DECI_DEGREE);
-    appendHex4(outputStream, rightDeciDegree);
+    appendHex4(outputStream, (signed int) rightDeciDegree);
 
     bool result = transmitFromDriverRequestBuffer();
 
@@ -120,7 +120,7 @@ bool motionDriverLeftOneWheel(float leftDeciDegree) {
 
     append(outputStream, MOTION_DEVICE_HEADER);
     append(outputStream, COMMAND_MOTION_LEFT_ONE_WHEEL_IN_DECI_DEGREE);
-    appendHex4(outputStream, leftDeciDegree);
+    appendHex4(outputStream, (signed int) leftDeciDegree);
 
     bool result = transmitFromDriverRequestBuffer();
 
@@ -132,7 +132,7 @@ bool motionDriverRightOneWheel(float rightDeciDegree) {
 
     append(outputStream, MOTION_DEVICE_HEADER);
     append(outputStream, COMMAND_MOTION_RIGHT_ONE_WHEEL_IN_DECI_DEGREE);
-    appendHex4(outputStream, rightDeciDegree);
+    appendHex4(outputStream, (signed int) rightDeciDegree);
 
     bool result = transmitFromDriverRequestBuffer();
 
@@ -145,18 +145,18 @@ bool motionDriverBSplineRelative(float x, float y, float angle, float dist0, flo
     OutputStream* outputStream = getDriverRequestOutputStream();
     append(outputStream, MOTION_DEVICE_HEADER);
     append(outputStream, COMMAND_MOTION_SPLINE_RELATIVE);
-    appendHex4(outputStream, x);
+    appendHex4(outputStream, (signed int) x);
     appendSeparator(outputStream);
-    appendHex4(outputStream, y);
+    appendHex4(outputStream, (signed int) y);
     appendSeparator(outputStream);
-    appendHex4(outputStream, angle);
+    appendHex4(outputStream, (signed int) angle);
     appendSeparator(outputStream);
-    appendHex2(outputStream, dist0);
+    appendHex2(outputStream, (char) dist0);
     appendSeparator(outputStream);
-    appendHex2(outputStream, dist1);
+    appendHex2(outputStream, (char) dist1);
     appendSeparator(outputStream);
-    appendHex(outputStream, accelerationFactor);
-    appendHex(outputStream, speedFactor);
+    appendHex(outputStream, (char) accelerationFactor);
+    appendHex(outputStream, (char) speedFactor);
 
     bool result = transmitFromDriverRequestBuffer();
 
@@ -167,18 +167,18 @@ bool motionDriverBSplineAbsolute(float x, float y, float angle, float dist0, flo
     OutputStream* outputStream = getDriverRequestOutputStream();
     append(outputStream, MOTION_DEVICE_HEADER);
     append(outputStream, COMMAND_MOTION_SPLINE_ABSOLUTE);
-    appendHex4(outputStream, x);
+    appendHex4(outputStream, (signed int) x);
     appendSeparator(outputStream);
-    appendHex4(outputStream, y);
+    appendHex4(outputStream, (signed int) y);
     appendSeparator(outputStream);
-    appendHex4(outputStream, angle);
+    appendHex4(outputStream, (signed int) angle);
     appendSeparator(outputStream);
-    appendHex2(outputStream, dist0);
+    appendHex2(outputStream, (char) dist0);
     appendSeparator(outputStream);
-    appendHex2(outputStream, dist1);
+    appendHex2(outputStream, (char) dist1);
     appendSeparator(outputStream);
-    appendHex(outputStream, accelerationFactor);
-    appendHex(outputStream, speedFactor);
+    appendHex(outputStream, (char) accelerationFactor);
+    appendHex(outputStream, (char) speedFactor);
 
     bool result = transmitFromDriverRequestBuffer();
 

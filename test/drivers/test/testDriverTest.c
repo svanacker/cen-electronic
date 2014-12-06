@@ -13,10 +13,16 @@
 
 #include "../../../device/device.h"
 #include "../../../device/deviceList.h"
+
 #include "../../../device/clock/clockDevice.h"
 #include "../../../device/clock/clockDeviceInterface.h"
+
 #include "../../../device/test/testDevice.h"
 #include "../../../device/test/testDeviceInterface.h"
+
+#include "../../../device/motor/pwmMotorDevice.h"
+#include "../../../device/motor/pwmMotorDeviceInterface.h"
+
 
 #include "../../../drivers/clock/mockClock.h"
 #include "../../../drivers/driverList.h"
@@ -41,7 +47,7 @@ static char driverResponseBufferArray[TEST_DRIVER_TEST_RESPONSE_DRIVER_BUFFER_LE
 
 
 // Devices
-#define TEST_DRIVER_TEST_DEVICE_LIST_LENGTH		2
+#define TEST_DRIVER_TEST_DEVICE_LIST_LENGTH		10
 static Device deviceListArray[TEST_DRIVER_TEST_DEVICE_LIST_LENGTH];
 
 void testDriverTestTestSuite(void) {
@@ -49,6 +55,8 @@ void testDriverTestTestSuite(void) {
 }
 
 void test_testDriverGetValue(void) {
+	initLog(DEBUG);
+	addConsoleLogHandler(DEBUG);
 
 	// Dispatchers
 	initDriverDataDispatcherList((DriverDataDispatcher(*)[]) &driverDataDispatcherListArray, TEST_DRIVER_TEST_DATA_DISPATCHER_LIST_LENGTH);
@@ -65,17 +73,21 @@ void test_testDriverGetValue(void) {
 	initDeviceList((Device(*)[]) &deviceListArray, TEST_DRIVER_TEST_DEVICE_LIST_LENGTH);
 	addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
 
-	initLog(DEBUG);
-	addConsoleLogHandler(DEBUG);
+	// Test Driver Test
+
+	int actual = testDriverGetValue(10, 20);
+	TEST_ASSERT_EQUAL(30, actual);
+
+	// Clock Driver Test
 
 	Clock clock;
 	initMockClock(&clock);
 	addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
 
-	int actual = testDriverGetValue(10, 20);
-	TEST_ASSERT_EQUAL(30, actual);
-
 	ClockData clockData;
 	getRemoteClockData(&clockData);
 	TEST_ASSERT_EQUAL(14, clockData.year);
+
+	// Motor Driver Test
+
 }

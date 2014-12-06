@@ -18,6 +18,8 @@
 #include "../../common/timer/cenTimer.h"
 #include "../../common/timer/timerList.h"
 
+#include "../../drivers/motion/motionDriver.h"
+
 #include "../../motion/extended/bspline.h"
 #include "../../motion/extended/singleBSpline.h"
 
@@ -94,7 +96,7 @@ void findNextTarget() {
 
     Point* robotPosition = &(strategyContext.robotPosition);
     // Find nearest location
-    strategyContext.nearestLocation = getNearestLocation(navigationLocationList, robotPosition->x, robotPosition->y);
+    strategyContext.nearestLocation = getNearestLocation(navigationLocationList, (int)robotPosition->x, (int) robotPosition->y);
 
     #ifdef DEBUG_STRATEGY_HANDLER
         appendString(getOutputStreamLogger(DEBUG), "\tNearest Location:");    
@@ -189,9 +191,9 @@ void motionGoLocation(Location* location,
     #endif
 
     angle = changeAngleForColor(angle);
-    motionDriverBSplineAbsolute(location->x, location->y,
-                                angle, 
-                                controlPointDistance1, controlPointDistance2,
+	motionDriverBSplineAbsolute((float)location->x, (float) location->y,
+                                (float) angle,
+                                (float)controlPointDistance1, (float) controlPointDistance2,
                                 accelerationFactor, speedFactor);
 
     // Simulate as if the robot goes to the position with a small error
@@ -230,9 +232,9 @@ void rotateAbsolute(int angle) {
         diff = 1;
     }
     if (diff > 0) {
-        motionDriverLeft(diff);
+        motionDriverLeft((float) diff);
     } else {
-        motionDriverRight(-diff);
+		motionDriverRight((float)-diff);
     }
 
     // Simulate as if the robot goes to the position with a small error
@@ -267,9 +269,9 @@ bool motionRotateToFollowPath(PathDataFunction* pathDataFunction, bool reversed)
     #endif
 
     if (diff > 0) {
-        motionDriverLeft(diff);
+        motionDriverLeft((float) diff);
     } else {
-        motionDriverRight(-diff);
+		motionDriverRight((float)-diff);
     }
 
     // Simulate as if the robot goes to the position with a small error
@@ -314,8 +316,8 @@ void motionFollowPath(PathDataFunction* pathDataFunction, bool reversed) {
     #endif
 
     // cast to unsigned, negative signed char send 00
-    motionDriverBSplineAbsolute(location->x, location->y, angle, (unsigned char) cp1, (unsigned char) cp2,
-                                pathData->accelerationFactor, pathData->speedFactor);
+	motionDriverBSplineAbsolute((float) location->x, (float) location->y, (float) angle, (float) cp1, (float) cp2,
+		(int) pathData->accelerationFactor, (int) pathData->speedFactor);
 
     // Simulate as if the robot goes to the position with a small error
     #ifdef SIMULATE_ROBOT
@@ -363,8 +365,8 @@ bool handleCurrentTrajectory() {
     return true;
 }
 
-inline float deciDegreesToRad(int ddegrees) {
-    return ddegrees * (PI / 1800.0);
+float deciDegreesToRad(int ddegrees) {
+    return (float) ddegrees * (PI / 1800.0f);
 }
 
 void computePoint(Point* ref, Point* cp, int distance, int angle) {
@@ -388,7 +390,7 @@ bool isValidLocation(Point* p) {
 /**
  * Control point distance to mm.
  */
-inline int cpToDistance(signed char d) {
+int cpToDistance(signed char d) {
     return (d * 10);
 }
 
@@ -401,11 +403,11 @@ bool isPathAvailable(PathDataFunction* pathDataFunction) {
     PathData* pathData = getTmpPathData();
     BSplineCurve* curve = getSingleBSplineCurve();
     Point* p0 = &(curve->p0);
-    p0->x = pathData->location1->x;
-    p0->y = pathData->location1->y;
+    p0->x = (float) pathData->location1->x;
+    p0->y = (float) pathData->location1->y;
     Point* p3 = &(curve->p3);
-    p3->x = pathData->location2->x;
-    p3->y = pathData->location2->y;
+    p3->x = (float) pathData->location2->x;
+    p3->y = (float) pathData->location2->y;
     int angle1 = getAngle1Path(pathDataFunction);
     int angle2 = getAngle2Path(pathDataFunction);
     int d1 = cpToDistance(pathData->controlPointDistance1);
@@ -420,7 +422,7 @@ bool isPathAvailable(PathDataFunction* pathDataFunction) {
     bool opponentPresent = isValidLocation(opponentRobotPosition);
     bool obstaclePresent = isValidLocation(lastObstaclePosition);
     for (i = 0; i < 10; i++) {
-        computeBSplinePoint(curve, 0.1 * i, &p);
+        computeBSplinePoint(curve, 0.1f * i, &p);
         // checking opponent
         if (opponentPresent && isColliding(&p, opponentRobotPosition)) {
             return false;

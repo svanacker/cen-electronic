@@ -3,11 +3,11 @@
 #include "../../device/deviceInterface.h"
 #include "../../device/deviceConstants.h"
 
-const char* deviceArm2012GetName() {
+const char* deviceArm2012GetName(void) {
     return "arm2012";
 }
 
-unsigned int deviceArm2012GetSoftwareRevision() {
+unsigned int deviceArm2012GetSoftwareRevision(void) {
     return 1;
 }
 
@@ -30,10 +30,10 @@ int deviceArm2012GetInterface(char header, int mode, bool fillDeviceArgumentList
 
 static DeviceInterface deviceInterface = {
     .deviceGetName = &deviceArm2012GetName,
-	.deviceHeader = ARM_DEVICE_2012_HEADER,
+    .deviceHeader = ARM_DEVICE_2012_HEADER,
     .deviceGetInterface = &deviceArm2012GetInterface
 };
 
-DeviceInterface* getArm2012DeviceInterface() {
+DeviceInterface* getArm2012DeviceInterface(void) {
     return &deviceInterface;
 }
