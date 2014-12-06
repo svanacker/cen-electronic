@@ -174,6 +174,8 @@
     <ClCompile Include="robot\gameboard\gameboardElement.c" />
     <ClCompile Include="robot\match\endMatchDetectorDevice.c" />
     <ClCompile Include="robot\match\endMatchDetectorDeviceInterface.c" />
+    <ClCompile Include="robot\match\pc\startMatchDetectorPc.c" />
+    <ClCompile Include="robot\match\startMatchDetector.c" />
     <ClCompile Include="robot\match\startMatchDetectorDevice.c" />
     <ClCompile Include="robot\match\startMatchDetectorDeviceInterface.c" />
     <ClCompile Include="robot\match\strategy.c" />
@@ -316,6 +318,8 @@
     <ClInclude Include="robot\gameboard\gameboardElement.h" />
     <ClInclude Include="robot\match\endMatchDetectorDevice.h" />
     <ClInclude Include="robot\match\endMatchDetectorDeviceInterface.h" />
+    <ClInclude Include="robot\match\pc\startMatchDetectorPc.h" />
+    <ClInclude Include="robot\match\startMatchDetector.h" />
     <ClInclude Include="robot\match\startMatchDetectorDevice.h" />
     <ClInclude Include="robot\match\startMatchDetectorDeviceInterface.h" />
     <ClInclude Include="robot\match\strategy.h" />

@@ -1,6 +1,10 @@
 #ifndef START_MATCH_DETECTOR_DEVICE_H
 #define START_MATCH_DETECTOR_DEVICE_H
 
+#include <stdbool.h>
+
+#include "startMatchDetector.h"
+
 #include "../../device/device.h"
 #include "../../common/io/outputStream.h"
 
@@ -11,8 +15,10 @@ typedef unsigned char handleFunctionType(void);
 
 /**
 * Returns the deviceDescriptor of the end Match Detector.
+* @param startMatchDetector the startMatchDetector structure to be independant of the hardware.
+* @return a device descriptor on startMatchDetector Device
 */
-DeviceDescriptor* getStartMatchDetectorDeviceDescriptor();
+DeviceDescriptor* getStartMatchDetectorDeviceDescriptor(StartMatchDetector* startMatchDetector);
 
 /**
 * Init the device.
@@ -31,16 +37,19 @@ void loopUntilStart();
 
 /**
 * Test if the match is started or not.
+* @return true if the match is started, false else.
 */
-char isStarted();
+bool isStarted(void);
 
 /**
 * Show the message to indicate that we wait for the match.
+* @param pcOutputStream the stream to the pc motherboard
 */
 void showWaitingStart(OutputStream* pcOutputStream);
 
 /**
 * Inform user that the match is started.
+* @param the stream to the pc motherboard
 */
 void showStarted(OutputStream* pcOutputStream);
 

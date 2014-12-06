@@ -132,6 +132,8 @@
 #include "../../robot/config/robotConfig.h"
 #include "../../robot/config/robotConfigDevice.h"
 #include "../../robot/config/robotConfigDeviceInterface.h"
+#include "../../robot/match/startMatchDetector.h"
+#include "../../robot/match/32/startMatchDetector32.h"
 #include "../../robot/match/startMatchDetectorDevice.h"
 #include "../../robot/match/startMatchDetectorDeviceInterface.h"
 #include "../../robot/match/endMatchDetectorDevice.h"
@@ -177,6 +179,9 @@ static char debugOutputBufferArray[MAIN_BOARD_DEBUG_OUTPUT_BUFFER_LENGTH];
 static Buffer debugOutputBuffer;
 static OutputStream debugOutputStream;
 static StreamLink debugSerialStreamLink;
+
+// StartMatchDetector
+static StartMatchDetector startMatchDetector;
 
 // serial link PC
 static char pcInputBufferArray[MAIN_BOARD_PC_INPUT_BUFFER_LENGTH];
@@ -433,7 +438,9 @@ void initDevicesDescriptor() {
     addLocalDevice(getLCDDeviceInterface(), getLCDDeviceDescriptor());
     // addLocalDevice(&servoDevice, getServoDeviceInterface(), getServoDeviceDescriptor());
     addLocalDevice(getRobotConfigDeviceInterface(), getRobotConfigDeviceDescriptor());
-    addLocalDevice(getStartMatchDetectorDeviceInterface(), getStartMatchDetectorDeviceDescriptor());
+
+    initStartMatchDetector32(&startMatchDetector);
+    addLocalDevice(getStartMatchDetectorDeviceInterface(), getStartMatchDetectorDeviceDescriptor(&startMatchDetector));
     addLocalDevice(getEndMatchDetectorDeviceInterface(), getEndMatchDetectorDeviceDescriptor());
     addLocalDevice(getSonarDeviceInterface(), getSonarDeviceDescriptor());
     addLocalDevice(getRobotSonarDetectorDeviceInterface(), getRobotSonarDetectorDeviceDescriptor());

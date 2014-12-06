@@ -5,11 +5,13 @@
   @version 17/04/2010
  */
 #include <stdbool.h>
+#include <stdlib.h>
 
 #include "../../common/commons.h"
 
 // #include <plib.h>
 
+#include "startMatchDetector.h"
 #include "startMatchDetectorDevice.h"
 #include "startMatchDetectorDeviceInterface.h"
 
@@ -27,11 +29,13 @@
 
 #include "../../robot/config/robotConfigDevice.h"
 
-void initStartMatchDetector(void) {
+static StartMatchDetector* startMatchDetector;
+
+void initStartMatchDetectorDevice(void) {
 
 }
 
-void stopStartMatchDetector(void) {
+void stopStartMatchDetectorDevice(void) {
 
 }
 
@@ -40,27 +44,20 @@ bool isStartMatchDetectorDeviceOk(void) {
 }
 
 void loopUntilStart(handleFunctionType* handleFunction) {
-    #ifndef PROG_32
-    // TODO 
-    /*
-    while (START_DETECTOR_PIN) {
-        // Call back to be able to manage the robot while waiting for start.
-        handleFunction();
+    if (startMatchDetector == NULL) {
+        return;
     }
-    */
-    #endif
+    while (startMatchDetector->isMatchStartedFunction(startMatchDetector)) {
+		handleFunction();
+	}
 }
 
 bool isStarted(void) {
-    return true;
-    /*
-    #ifndef PROG_32
-    char readPin;
-    // TODO !!!!
-    //readPin = START_DETECTOR_PIN;
-    return readPin != 0;
-    #endif
-    */
+    if (startMatchDetector == NULL) {
+        return false;
+    }
+    bool result = startMatchDetector->isMatchStartedFunction(startMatchDetector);
+    return result;
 }
 
 void showWaitingStart(OutputStream* pcOutputStream) {
@@ -86,12 +83,13 @@ void deviceStartMatchDetectorHandleRawData(char header, InputStream* inputStream
 
 // Allocate memory
 DeviceDescriptor startMatchDetectorDevice = {
-    .deviceInit = &initStartMatchDetector,
-    .deviceShutDown = &stopStartMatchDetector,
+    .deviceInit = &initStartMatchDetectorDevice,
+    .deviceShutDown = &stopStartMatchDetectorDevice,
     .deviceIsOk = &isStartMatchDetectorDeviceOk,
     .deviceHandleRawData = &deviceStartMatchDetectorHandleRawData,
 };
 
-DeviceDescriptor* getStartMatchDetectorDeviceDescriptor() {
+DeviceDescriptor* getStartMatchDetectorDeviceDescriptor(StartMatchDetector* startMatchDetectorParam) {
+    startMatchDetector = startMatchDetectorParam;
     return &startMatchDetectorDevice;
 }
