@@ -88,8 +88,8 @@
 #include "../../device/i2c/master/i2cMasterDebugDeviceInterface.h"
 
 // TEST
-#include "../../device/test/deviceTest.h"
-#include "../../device/test/deviceTestInterface.h"
+//#include "../../device/test/deviceTest.h"
+//#include "../../device/test/deviceTestInterface.h"
 
 // SERVO
 #include "../../device/servo/servoDevice.h"
@@ -119,6 +119,7 @@
 #include "../../device/strategy/strategyDeviceInterface.h"
 
 // Specific 2011
+#include "../../device/adc/adcDevice.h"
 #include "../../device/adc/adcDeviceInterface.h"
 
 // Air conditioning
@@ -130,7 +131,7 @@
 // Drivers
 #include "../../drivers/clock/PCF8563.h"
 #include "../../drivers/io/pcf8574.h"
-#include "../../drivers/test/driverTest.h"
+//#include "../../drivers/test/driverTest.h"
 #include "../../drivers/system/systemDriver.h"
 #include "../../drivers/motion/motionDriver.h"
 #include "../../drivers/motion/trajectoryDriver.h"
@@ -138,6 +139,7 @@
 #include "../../drivers/driverTransmitter.h"
 #include "../../drivers/strategy/strategyDriver.h"
 #include "../../drivers/sensor/LM75A.h"
+#include "../../drivers/robotConfig/PIC32/robotConfigPic32.h"
 
 
 
@@ -255,6 +257,9 @@ static Clock globalClock;
 static Buffer eepromBuffer;
 static char eepromBufferArray[EEPROM_BUFFER_LENGTH];
 static Eeprom eeprom_;
+
+// Robot Configuration
+static RobotConfig robotConfig;
 
 // lcd DEBUG 
 static OutputStream lcdOutputStream;
@@ -442,7 +447,7 @@ void initDriversDescriptor() {
                 &driverResponseBuffer, &driverResponseBufferArray, MAIN_BOARD_RESPONSE_DRIVER_BUFFER_LENGTH);
 
     // Get test driver for debug purpose
-    addDriver(driverTestGetDescriptor(), TRANSMIT_LOCAL);
+//    addDriver(driverTestGetDescriptor(), TRANSMIT_LOCAL);
 
     // Direct Devantech Driver
     addDriver(getMD22DriverDescriptor(), TRANSMIT_NONE);
@@ -466,10 +471,9 @@ void initDevicesDescriptor() {
     addLocalDevice(getTemperatureSensorDeviceInterface(), getTemperatureSensorDeviceDescriptor());
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom_));
 
-
-
-    // addLocalDevice(&servoDevice, getServoDeviceInterface(), getServoDeviceDescriptor());
-    addLocalDevice(getRobotConfigDeviceInterface(), getRobotConfigDeviceDescriptor());
+    addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor());
+    addLocalDevice(getADCDeviceInterface(),getADCDeviceDescriptor());
+    addLocalDevice(getRobotConfigDeviceInterface(), getRobotConfigDeviceDescriptor(&robotConfig));
     addLocalDevice(getStartMatchDetectorDeviceInterface(), getStartMatchDetectorDeviceDescriptor());
     addLocalDevice(getEndMatchDetectorDeviceInterface(), getEndMatchDetectorDeviceDescriptor());
     addLocalDevice(getSonarDeviceInterface(), getSonarDeviceDescriptor());
@@ -611,7 +615,7 @@ void waitForInstruction() {
 }
 
 int main(void) {
-    setPicName("TITAN ELECTRONICAL MAIN BOARD 32");
+    setPicName("TITAN ELECTRONICAL MAIN BOARD 32bits V-JJ_7");
 
     //setRobotMustStop(false);
     // Open the serial Link for debug
@@ -654,6 +658,12 @@ int main(void) {
     initDevicesDescriptor();
     initDriversDescriptor();
 
+    // Initialize EEPROM and RTC
+    init24C512Eeprom(&eeprom_);
+    initClockPCF8563(&globalClock);
+
+    initRobotConfigPic32(&robotConfig);
+
     // Initializes the opponent robot
     // initOpponentRobot();
 
@@ -670,12 +680,12 @@ int main(void) {
     */
 
     appendString(&debugOutputStream, "DEBUG\n");
-    appendString(&lcdOutputStream, "TEST");
+    
     // Start interruptions
     // startTimerList();
 
     // Configure data dispatcher
-    addLocalDriverDataDispatcher();
+    //addLocalDriverDataDispatcher();
 
     // Stream for motorBoard
     /*
@@ -700,7 +710,7 @@ int main(void) {
             MECHANICAL_BOARD_2_I2C_ADDRESS);
     */
 
-    // Stream for Air Conditioning
+/*    // Stream for Air Conditioning
     addI2CDriverDataDispatcher(&airConditioningI2cDispatcher,
             "AIR_CONDITIONING_DISPATCHER",
             &airConditioningBoardInputBuffer,
@@ -709,7 +719,7 @@ int main(void) {
             &airConditioningBoardOutputStream,
             &airConditioningBoardInputStream,
             AIR_CONDITIONING_BOARD_I2C_ADDRESS);
-
+*/
     // I2C Debug
     initI2CDebugBuffers(&i2cMasterDebugInputBuffer,
                         &i2cMasterDebugInputBufferArray,
@@ -717,23 +727,18 @@ int main(void) {
                         &i2cMasterDebugOutputBuffer,
                         &i2cMasterDebugOutputBufferArray,
                         MAIN_BOARD_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH);
-    /*
-    Pcf8573Clock clock;
-    getPcf8573Clock(&clock);
-    writePcf8573ClockToOutputStream(getOutputStreamLogger(ALWAYS), &clock);
 
-    while (1) {
 
-    }
-    */
-    while (1) {
-        waitForInstruction();
-    }
+    appendStringConfig(&lcdOutputStream);
+
+
 
     // pingDriverDataDispatcherList(getOutputStreamLogger(DEBUG));
 
     // Inform PC waiting
-    showWaitingStart(&pcOutputStream);
+    showWaitingStart(&debugOutputStream);
+
+
 
     // wait other board initialization
     delaymSec(1500);
@@ -759,17 +764,15 @@ int main(void) {
     else {
         appendString(getOutputStreamLogger(ALWAYS), "COLOR:RED\n");
     }    
-    while (1) {
-        waitForInstruction();
-    }
+
 
     // TODO 2012 SV motionDriverMaintainPosition();
 
     // wait for start
-    setInitialPosition(color);
+ //   setInitialPosition(color);
 
     // notify game strategy
-    sendStrategyConfiguration(configValue);
+ //   sendStrategyConfiguration(configValue);
 
     loopUntilStart(&waitForInstruction);
 

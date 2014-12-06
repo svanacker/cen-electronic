@@ -1,6 +1,11 @@
 #ifndef START_MATCH_DETECTOR_DEVICE_H
 #define START_MATCH_DETECTOR_DEVICE_H
 
+/**
+ * Small unit of code which detects the start of the match, by looping the
+ * state of a pin
+ */
+
 #include <stdbool.h>
 
 #include "startMatchDetector.h"

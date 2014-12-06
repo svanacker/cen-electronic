@@ -6,7 +6,7 @@
 /**
  * The number of pwm.
  */
-#define PWM_COUNT 4
+#define PWM_COUNT 5
 
 /**
  * Init the PIC configuration to manage pwm.

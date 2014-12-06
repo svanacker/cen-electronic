@@ -1,9 +1,3 @@
-/**
-  Small unit of code which detects the start of the match, by looping the
-  state of a pin
-  @author svanacker
-  @version 17/04/2010
- */
 #include <stdbool.h>
 #include <stdlib.h>
 

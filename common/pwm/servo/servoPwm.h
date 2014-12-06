@@ -25,6 +25,8 @@ typedef struct ServoList {
     bool initialized;
     /** The array of servos. */
     Servo servos[PWM_COUNT];
+	/** Use Timer, if false, update immediately the value of the servo ! .*/
+	bool useTimer;
 } ServoList;
 
 /**

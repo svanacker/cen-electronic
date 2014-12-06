@@ -2,11 +2,10 @@
 #include "robotConfigDevice.h"
 #include "robotConfigDeviceInterface.h"
 
-#include "../../common/commons.h"
 
-#include "../../common/io/inputStream.h"
-#include "../../common/io/outputStream.h"
+#include "../../common/cmd/commonCommand.h"
 #include "../../common/io/printWriter.h"
+#include "../../common/io/reader.h"
 #include "../../common/io/stream.h"
 
 #include "../../common/log/logger.h"
@@ -15,59 +14,25 @@
 #include "../../device/device.h"
 
 #include "../../drivers/driver.h"
-// #include "../../drivers/io/pcf8574.h"
+
+static RobotConfig* robotConfig;
 
 /** Config is a 16 bit value */
 static unsigned int config = 0;
 
-/**
- * @private
- */
-unsigned char readPCFByte(int pcfAddress, int pcfConfigAddress) {
-    // TODO : unsigned char read = readPCF8574(pcfAddress, pcfConfigAddress, 0xFF);
-    unsigned char read = 0;
-
-    // The high 4 bits of each byte is inversed => 1100 0001 is in reality : 0011 0001
-    unsigned char result = read & 0x0F;
-    if (read & 0x10) {
-        result += 0x80;
-    }
-    if (read & 0x20) {
-        result += 0x40;
-    }
-    if (read & 0x40) {
-        result += 0x20;
-    }
-    if (read & 0x80) {
-        result += 0x10;
-    }
-    return result;
-}
-
 void refreshConfig(void) {
-    // load the value
-#ifdef MPLAB_SIMULATION
-    config = 0;
-    return;
-#endif
-    /* TODO SV
-    unsigned char lowByte = readPCFByte(PCF8574_BASE_ADDRESS, PCF8574_LOW_BYTE_CONFIG_ADDRESS);
-    unsigned char highByte = readPCFByte(PCF8574_BASE_ADDRESS, PCF8574_HIGH_BYTE_CONFIG_ADDRESS);
-
-    // The both highest bit is not available => be careful to the inversion made by readPCFByte
-    config = ((highByte & 0x3F) << 8) | lowByte;
-    */
-}
-
-unsigned int getConfigValue(void) {
-    refreshConfig();
-    return config;
+    config = robotConfig->robotConfigReadInt(robotConfig);
 }
 
 int isConfigSet(unsigned int configMask) {
     refreshConfig();
     int intersection = (config & configMask);
     return intersection != 0;
+}
+
+unsigned int getConfigValue(void) {
+    refreshConfig();
+    return config;
 }
 
 char* getConfigBitString(unsigned char configIndex) {
@@ -111,37 +76,37 @@ unsigned char getStrategy() {
 
 // Device interface
 
-void initConfig(void) {
-    refreshConfig();
+void deviceRobotConfigInit(void) {
+    //refreshConfig();
 }
 
-void stopConfig(void) {
+void deviceRobotConfigShutDown(void) {
 
 }
 
-bool isConfigDeviceOk(void) {
-    refreshConfig();
-    return getConfigValue() < MAX_UNSIGNEDINT;
+bool isRobotConfigDeviceOk(void) {
+    //refreshConfig();
+    //return getConfigValue() < MAX_UNSIGNEDINT;
+    return true;
 }
 
-void deviceConfigHandleRawData(char header,
-        InputStream* inputStream,
-        OutputStream* outputStream) {
-    if (header == ROBOT_CONFIG_DEVICE_HEADER) {
+void deviceRobotConfigHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream) {
+    if (header == COMMAND_CONFIG) {
         // can take a little time
-        refreshConfig();
+        refreshConfig();  
         ackCommand(outputStream, ROBOT_CONFIG_DEVICE_HEADER, COMMAND_CONFIG);
-        appendHex4(outputStream, config);
+        appendHex4(outputStream, config);     
     }
 }
 
 static DeviceDescriptor descriptor = {
-    .deviceInit = &initConfig,
-    .deviceShutDown = &stopConfig,
-    .deviceIsOk = &isConfigDeviceOk,
-    .deviceHandleRawData = &deviceConfigHandleRawData
+    .deviceInit = &deviceRobotConfigInit,
+    .deviceShutDown = &deviceRobotConfigShutDown,
+    .deviceIsOk = &isRobotConfigDeviceOk,
+    .deviceHandleRawData = &deviceRobotConfigHandleRawData
 };
 
-DeviceDescriptor* getRobotConfigDeviceDescriptor() {
+DeviceDescriptor* getRobotConfigDeviceDescriptor(RobotConfig* robotConfigParam) {
+    robotConfig = robotConfigParam;
     return &descriptor;
 }

@@ -24,8 +24,8 @@ int deviceRobotConfigGetInterface(char header, int mode, bool fillDeviceArgument
 
 
 static DeviceInterface deviceInterface = {
-    .deviceGetName = &getConfigDeviceName,
     .deviceHeader = ROBOT_CONFIG_DEVICE_HEADER,
+    .deviceGetName = &getConfigDeviceName,
     .deviceGetInterface = &deviceRobotConfigGetInterface
 };
 

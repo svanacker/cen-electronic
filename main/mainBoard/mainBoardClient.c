@@ -87,7 +87,6 @@
 
 // LCD
 #include "../../drivers/lcd/lcd.h"
-#include "../../drivers/lcd/lcd4d.h"
 #include "../../device/lcd/lcdDevice.h"
 #include "../../device/lcd/lcdDeviceInterface.h"
 
@@ -132,6 +131,8 @@
 #include "../../robot/config/robotConfig.h"
 #include "../../robot/config/robotConfigDevice.h"
 #include "../../robot/config/robotConfigDeviceInterface.h"
+#include "../../robot/config/32/robotConfigPic32.h"
+
 #include "../../robot/match/startMatchDetector.h"
 #include "../../robot/match/32/startMatchDetector32.h"
 #include "../../robot/match/startMatchDetectorDevice.h"
@@ -229,6 +230,9 @@ static char mechanical2BoardInputBufferArray[MAIN_BOARD_LINK_TO_MECA_BOARD_2_BUF
 static Buffer mechanical2BoardInputBuffer;
 static InputStream mechanical2BoardInputStream;
 static OutputStream mechanical2BoardOutputStream;
+
+// Robot Configuration
+static RobotConfig robotConfig;
 
 // lcd DEBUG 
 static OutputStream lcdOutputStream;
@@ -437,7 +441,7 @@ void initDevicesDescriptor() {
     // Local
     addLocalDevice(getLCDDeviceInterface(), getLCDDeviceDescriptor());
     // addLocalDevice(&servoDevice, getServoDeviceInterface(), getServoDeviceDescriptor());
-    addLocalDevice(getRobotConfigDeviceInterface(), getRobotConfigDeviceDescriptor());
+    addLocalDevice(getRobotConfigDeviceInterface(), getRobotConfigDeviceDescriptor(&robotConfig));
 
     initStartMatchDetector32(&startMatchDetector);
     addLocalDevice(getStartMatchDetectorDeviceInterface(), getStartMatchDetectorDeviceDescriptor(&startMatchDetector));
@@ -583,6 +587,8 @@ void waitForInstruction() {
 int main(void) {
     setPicName("MAIN BOARD");
 
+	initRobotConfigPic32(&robotConfig);
+	
     setRobotMustStop(false);
     // Open the serial Link for debug
     openSerialLink(&debugSerialStreamLink,

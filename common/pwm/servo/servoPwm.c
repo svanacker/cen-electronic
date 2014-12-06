@@ -37,7 +37,7 @@ Servo* getServo(int index) {
  * Only for debug.
  */
 ServoList* _getServoList() {
-	return &servoList;
+    return &servoList;
 }
 
 
@@ -70,11 +70,10 @@ void interruptServoTimerCallbackFunc(Timer* timer) {
 // PUBLIC INTERFACCE
 
 void initPwmForServo(int posInit) {
-	if (servoList.initialized) {
-	    return;
-	}
-	__internalPwmForServoHardware(posInit);
-
+    if (servoList.initialized) {
+        return;
+    }
+    __internalPwmForServoHardware(posInit);
     // Init servo structure
     int i;
     for (i = 0; i < PWM_COUNT; i++) {
@@ -90,7 +89,8 @@ void initPwmForServo(int posInit) {
     addTimer(SERVO_TIMER_INDEX,
                             TIME_DIVISER_50_HERTZ,
                             &interruptServoTimerCallbackFunc);
-	servoList.initialized = true;
+    servoList.initialized = true;
+	servoList.useTimer = true;
 }
 
 /**
@@ -117,6 +117,10 @@ void pwmServo(int servoIndex, unsigned int speed, int dutyms) {
     Servo* servo = getServo(servoIndex - 1);
     servo->speed = speed;
     servo->targetPosition = dutyms;
+	// By default, we update the value immediately, if we want some speed, we need a timer !
+	if (!servoList.useTimer) {
+		__internalPwmServo(servoIndex, (dutyms));
+	}
 }
 
 void pwmServoAll(unsigned int speed, int dutyms) {

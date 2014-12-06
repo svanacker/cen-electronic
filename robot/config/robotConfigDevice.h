@@ -12,7 +12,7 @@ DeviceDescriptor* getRobotConfigDeviceDescriptor();
 /**
 * Refresh the config in memory
 */
-void refreshConfig( void );
+void refreshConfig(void);
 
 /**
 * Returns if the config is present or not.

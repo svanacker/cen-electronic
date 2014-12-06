@@ -41,4 +41,34 @@
 /** The count of bits managed handled by the device. */
 #define CONFIG_BIT_COUNT 14
 
+
+
+// forward declaration
+struct RobotConfig;
+typedef struct RobotConfig RobotConfig;
+
+/**
+ * Read a value from the switch configuration.
+ * @return value the value to store
+ */
+typedef signed int robotConfigReadIntFunction(RobotConfig* robotConfig );
+
+/**
+ * Defines the contract for switch robot configuration.
+ */
+struct RobotConfig {
+    /** The function which must be used to read the robot configuration */
+    robotConfigReadIntFunction* robotConfigReadInt;
+};
+
+// GLOBAL FUNCTIONS - NON SPECIFIC
+
+/**
+ * Init an robotconfig object with all basic Functions.
+ * @param robotConfigReadIntFunction the pointer on the real function which read an int.
+ */
+void initRobotConfig(RobotConfig* robotConfig,
+                robotConfigReadIntFunction* robotConfigReadInt);
+
+
 #endif
