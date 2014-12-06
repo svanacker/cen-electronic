@@ -1,52 +1,33 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "common/error/error.h"
-#include "test/unity/unity.h"
+#include <windows.h>
+#include <process.h>
 
-#include "test/common/2d/2dTest.h"
+#include "test/main/mainBoard32/mainBoard32Pc.h"
+#include "test/allTests.h"
 
-#include "test/common/io/bufferTest.h"
-#include "test/common/io/filterTest.h"
-#include "test/common/io/ioUtilsTest.h"
-#include "test/common/io/printWriterTest.h"
-#include "test/common/io/readerTest.h"
+unsigned __stdcall test(void* pArguments) {
+	printf("test");
 
-#include "test/common/math/bcdUtilsTest.h"
-#include "test/common/math/cenMathTest.h"
-#include "test/common/math/hexUtilsTest.h"
+	_endthreadex(0);
 
-#include "test/drivers/dispatchers/driverDataDispatcherListTest.h"
-#include "test/drivers/test/testDriverTest.h"
-
-void setUp(void)
-{
-	clearLastError();
-}
-
-void tearDown(void)
-{
+	return 0;
 }
 
 int main(int argc, char *argv[])
 {
-	UnityBegin("cen");
+	// runAllTests();
+	
+	runMainBoard32PC();
 
-	// RUN_TEST calls runTest
-	hexUtilsTestSuite();
-	bufferTestSuite();
-	filterTestSuite();
-	printWriterTestSuite();
-	readerTestSuite();
-	ioUtilsTestSuite();
-	bcdUtilsTestSuite();
-	_2dTestSuite();
-	cenMathTestSuite();
-	driverDataDispatcherListTestSuite();
-	testDriverTestTestSuite();
-
-	UnityEnd();
-
+	/*
+	HANDLE hThread;
+	unsigned threadID;
+	hThread = (HANDLE)_beginthreadex(NULL, 0, &test, NULL, 0, &threadID);
+	printf("main");
+	*/
+	
 	getchar();
 	return EXIT_SUCCESS;
 }

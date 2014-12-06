@@ -20,13 +20,13 @@
 #include "../../device/device.h"
 #include "../../device/deviceUsage.h"
 
-void deviceSystemInit() {
+void deviceSystemInit(void) {
 }
 
-void deviceSystemShutDown() {
+void deviceSystemShutDown(void) {
 } 
 
-bool deviceSystemIsOk() {
+bool deviceSystemIsOk(void) {
     return true;
 }
 
@@ -52,9 +52,9 @@ void deviceSystemHandleRawData(char header, InputStream* inputStream, OutputStre
         printLogger(getOutputStreamLogger(ALWAYS));
         ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_LOG);
     } else if (header == COMMAND_TIMER_LIST) {
-		printTimerList(getOutputStreamLogger(ALWAYS), getTimerList());
+        printTimerList(getOutputStreamLogger(ALWAYS), getTimerList());
         ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_TIMER_LIST);
-	}	
+    }	
 }
 
 static DeviceDescriptor descriptor = {
@@ -64,6 +64,6 @@ static DeviceDescriptor descriptor = {
     .deviceHandleRawData = &deviceSystemHandleRawData,
 };
 
-DeviceDescriptor* getSystemDeviceDescriptor() {
+DeviceDescriptor* getSystemDeviceDescriptor(void) {
     return &descriptor;
 }

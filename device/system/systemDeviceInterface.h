@@ -26,7 +26,7 @@
 /**
 * Get the system device interface.
 */
-DeviceInterface* getSystemDeviceInterface();
+DeviceInterface* getSystemDeviceInterface(void);
 
 /**
 * Defines the name of the PIC.
@@ -36,6 +36,6 @@ void setPicName(char* apicName);
 /**
 * Returns the name of the PIC.
 */
-char* getPicName();
+char* getPicName(void);
 
 #endif

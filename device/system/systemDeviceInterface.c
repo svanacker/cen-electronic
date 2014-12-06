@@ -9,11 +9,11 @@ void setPicName(char* aPicName) {
     picName = aPicName;
 }
 
-char* getPicName() {
+char* getPicName(void) {
     return picName;
 }
 
-const char* deviceSystemGetName() {
+const char* deviceSystemGetName(void) {
     return "system";
 }
 
@@ -53,13 +53,13 @@ int deviceSystemGetInterface(char commandHeader, int mode, bool fillDeviceArgume
         }
         return 0;
     }
-	else if (commandHeader == COMMAND_TIMER_LIST) {
+    else if (commandHeader == COMMAND_TIMER_LIST) {
         // Same INPUT/OUTPUT
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("showTimerList");
         }
         return 0;
-	}
+    }
     return DEVICE_HEADER_NOT_HANDLED;
 }
 
@@ -69,6 +69,6 @@ static DeviceInterface deviceInterface = {
     .deviceGetInterface = &deviceSystemGetInterface
 };
 
-DeviceInterface* getSystemDeviceInterface() {
+DeviceInterface* getSystemDeviceInterface(void) {
     return &deviceInterface;
 }

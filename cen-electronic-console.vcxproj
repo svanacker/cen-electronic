@@ -90,6 +90,7 @@
     <ClCompile Include="common\io\ioUtils.c" />
     <ClCompile Include="common\io\nullOutputStream.c" />
     <ClCompile Include="common\io\outputStream.c" />
+    <ClCompile Include="common\io\pc\consoleInputStream.c" />
     <ClCompile Include="common\io\pc\consoleOutputStream.c" />
     <ClCompile Include="common\io\printWriter.c" />
     <ClCompile Include="common\io\reader.c" />
@@ -124,6 +125,8 @@
     <ClCompile Include="device\motor\pwmMotor.c" />
     <ClCompile Include="device\motor\pwmMotorDevice.c" />
     <ClCompile Include="device\motor\pwmMotorDeviceInterface.c" />
+    <ClCompile Include="device\system\systemDevice.c" />
+    <ClCompile Include="device\system\systemDeviceInterface.c" />
     <ClCompile Include="device\test\testDevice.c" />
     <ClCompile Include="device\test\testDeviceInterface.c" />
     <ClCompile Include="drivers\beacon\beaconReceiverDriver.c" />
@@ -199,6 +202,7 @@
     <ClCompile Include="robot\strategy\gameTargetActionList.c" />
     <ClCompile Include="robot\strategy\gameTargetList.c" />
     <ClCompile Include="robot\strategy\nextGameStrategyItemComputer.c" />
+    <ClCompile Include="test\allTests.c" />
     <ClCompile Include="test\common\2d\2dTest.c" />
     <ClCompile Include="test\common\io\bufferTest.c" />
     <ClCompile Include="test\common\io\filterTest.c" />
@@ -210,6 +214,7 @@
     <ClCompile Include="test\common\math\hexUtilsTest.c" />
     <ClCompile Include="test\drivers\dispatchers\driverDataDispatcherListTest.c" />
     <ClCompile Include="test\drivers\test\testDriverTest.c" />
+    <ClCompile Include="test\main\mainBoard32\mainBoard32Pc.c" />
     <ClCompile Include="test\unity\unity.c" />
   </ItemGroup>
   <ItemGroup>
@@ -228,6 +233,7 @@
     <ClInclude Include="common\io\ioUtils.h" />
     <ClInclude Include="common\io\nullOutputStream.h" />
     <ClInclude Include="common\io\outputStream.h" />
+    <ClInclude Include="common\io\pc\consoleInputStream.h" />
     <ClInclude Include="common\io\pc\consoleOutputStream.h" />
     <ClInclude Include="common\io\pin.h" />
     <ClInclude Include="common\io\printWriter.h" />
@@ -267,6 +273,8 @@
     <ClInclude Include="device\motor\pwmMotor.h" />
     <ClInclude Include="device\motor\pwmMotorDevice.h" />
     <ClInclude Include="device\motor\pwmMotorDeviceInterface.h" />
+    <ClInclude Include="device\system\systemDevice.h" />
+    <ClInclude Include="device\system\systemDeviceInterface.h" />
     <ClInclude Include="device\test\testDevice.h" />
     <ClInclude Include="device\test\testDeviceInterface.h" />
     <ClInclude Include="drivers\beacon\beaconReceiverDriver.h" />
@@ -346,6 +354,7 @@
     <ClInclude Include="robot\strategy\gameTargetActionList.h" />
     <ClInclude Include="robot\strategy\gameTargetList.h" />
     <ClInclude Include="robot\strategy\nextGameStrategyItemComputer.h" />
+    <ClInclude Include="test\allTests.h" />
     <ClInclude Include="test\common\2d\2dTest.h" />
     <ClInclude Include="test\common\io\bufferTest.h" />
     <ClInclude Include="test\common\io\filterTest.h" />
@@ -357,6 +366,7 @@
     <ClInclude Include="test\common\math\hexUtilsTest.h" />
     <ClInclude Include="test\drivers\dispatchers\driverDataDispatcherListTest.h" />
     <ClInclude Include="test\drivers\test\testDriverTest.h" />
+    <ClInclude Include="test\main\mainBoard32\mainBoard32Pc.h" />
     <ClInclude Include="test\unity\unity.h" />
     <ClInclude Include="test\unity\unity_internals.h" />
   </ItemGroup>

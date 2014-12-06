@@ -6,6 +6,6 @@
 /**
  * The descriptor for the system device (manage log ...)
  */
-DeviceDescriptor* getSystemDeviceDescriptor();
+DeviceDescriptor* getSystemDeviceDescriptor(void);
 
 #endif
