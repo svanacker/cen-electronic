@@ -97,7 +97,6 @@
 
 // LCD
 #include "../../drivers/lcd/lcd.h"
-#include "../../drivers/lcd/lcd4d.h"
 #include "../../device/lcd/lcdDevice.h"
 #include "../../device/lcd/lcdDeviceInterface.h"
 
@@ -139,21 +138,15 @@
 #include "../../drivers/driverTransmitter.h"
 #include "../../drivers/strategy/strategyDriver.h"
 #include "../../drivers/sensor/LM75A.h"
-#include "../../drivers/robotConfig/PIC32/robotConfigPic32.h"
-
-
-
+//#include "../../drivers/robotConfig/PIC32/robotConfigPic32.h"
 
 #include "../../common/eeprom/eeprom.h"
 
 #include "../../device/eeprom/eepromDevice.h"
 #include "../../device/eeprom/eepromDeviceInterface.h"
 
-
-
-
-
 // Robot
+#include "../../robot//config/32/robotConfigPic32.h"
 #include "../../robot/config/robotConfig.h"
 #include "../../robot/config/robotConfigDevice.h"
 #include "../../robot/config/robotConfigDeviceInterface.h"
@@ -257,6 +250,9 @@ static Clock globalClock;
 static Buffer eepromBuffer;
 static char eepromBufferArray[EEPROM_BUFFER_LENGTH];
 static Eeprom eeprom_;
+
+// StartMatchDetector
+static StartMatchDetector startMatchDetector;
 
 // Robot Configuration
 static RobotConfig robotConfig;
@@ -474,7 +470,7 @@ void initDevicesDescriptor() {
     addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor());
     addLocalDevice(getADCDeviceInterface(),getADCDeviceDescriptor());
     addLocalDevice(getRobotConfigDeviceInterface(), getRobotConfigDeviceDescriptor(&robotConfig));
-    addLocalDevice(getStartMatchDetectorDeviceInterface(), getStartMatchDetectorDeviceDescriptor());
+    addLocalDevice(getStartMatchDetectorDeviceInterface(), getStartMatchDetectorDeviceDescriptor(&startMatchDetector));
     addLocalDevice(getEndMatchDetectorDeviceInterface(), getEndMatchDetectorDeviceDescriptor());
     addLocalDevice(getSonarDeviceInterface(), getSonarDeviceDescriptor());
     addLocalDevice(getRobotSonarDetectorDeviceInterface(), getRobotSonarDetectorDeviceDescriptor());
@@ -664,6 +660,7 @@ int main(void) {
 
     initRobotConfigPic32(&robotConfig);
 
+
     // Initializes the opponent robot
     // initOpponentRobot();
 
@@ -774,7 +771,7 @@ int main(void) {
     // notify game strategy
  //   sendStrategyConfiguration(configValue);
 
-    loopUntilStart(&waitForInstruction);
+    //loopUntilStart(&waitForInstruction);
 
     // Enable the sonar Status only after start
     setSonarStatus(configValue & CONFIG_USE_SONAR_MASK);
