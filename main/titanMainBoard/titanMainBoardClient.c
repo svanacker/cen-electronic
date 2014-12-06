@@ -146,10 +146,11 @@
 #include "../../device/eeprom/eepromDeviceInterface.h"
 
 // Robot
-#include "../../robot//config/32/robotConfigPic32.h"
+#include "../../robot/config/32/robotConfigPic32.h"
 #include "../../robot/config/robotConfig.h"
 #include "../../robot/config/robotConfigDevice.h"
 #include "../../robot/config/robotConfigDeviceInterface.h"
+#include "../../robot/match/32/startMatchDetector32.h"
 #include "../../robot/match/startMatchDetectorDevice.h"
 #include "../../robot/match/startMatchDetectorDeviceInterface.h"
 #include "../../robot/match/endMatchDetectorDevice.h"
@@ -660,6 +661,8 @@ int main(void) {
 
     initRobotConfigPic32(&robotConfig);
 
+    initStartMatchDetector32(&startMatchDetector);
+
 
     // Initializes the opponent robot
     // initOpponentRobot();
@@ -771,10 +774,10 @@ int main(void) {
     // notify game strategy
  //   sendStrategyConfiguration(configValue);
 
-    //loopUntilStart(&waitForInstruction);
+    loopUntilStart(&waitForInstruction);
 
     // Enable the sonar Status only after start
-    setSonarStatus(configValue & CONFIG_USE_SONAR_MASK);
+    //setSonarStatus(configValue & CONFIG_USE_SONAR_MASK);
 
     // mark that match begins
     markStartMatch();
