@@ -1,12 +1,12 @@
 #include <p30Fxxxx.h>
 #include <libpic30.h>
 
-#include "coders.h"
+#include "../../../motion/position/coders.h"
 
-#include "../../common/commons.h"
-#include "../../common/delay/delay30F.h"
-#include "../../common/math/cenMath.h"
-#include "../../device/device.h"
+#include "../../../common/commons.h"
+#include "../../../common/delay/delay30F.h"
+#include "../../../common/math/cenMath.h"
+#include "../../../device/device.h"
 
 #define CODERS_MASKA_1 0b00000001
 #define CODERS_MASKB_1 0b00000010
@@ -204,19 +204,18 @@ unsigned int isCodersDeviceOk( void ) {
     return 1;
 }
 
-char* getCodersDeviceName(void) {
-    return "Coders";
+const char* getCodersDeviceName(void) {
+    return "Pic Coders";
 }
 
 DeviceDescriptor getCodersDeviceDescriptor() {
     DeviceDescriptor result;
-    result.initDeviceFunction = *initCoders;
-    result.stopDeviceFunction = *stopCoders;
-    result.isDeviceOkFunction =  *isCodersDeviceOk;
-    result.getSoftwareRevisionFunction = *getCodersSoftwareRevision;
-    result.getDeviceNameFunction = getCodersDeviceName;  
+    result.deviceInit = &initCoders;
+    result.deviceShutDown = &stopCoders;
+    result.deviceIsOk = &isCodersDeviceOk;
+    result.deviceGetSoftwareRevision = &getCodersSoftwareRevision;
+    result.deviceGetName = &getCodersDeviceName;  
     result.enabled = 1;
 
     return result;
 }
-

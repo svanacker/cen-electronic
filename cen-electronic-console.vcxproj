@@ -153,6 +153,7 @@
     <ClCompile Include="motion\pid\pidPersistence.c" />
     <ClCompile Include="motion\pid\pidTimer.c" />
     <ClCompile Include="motion\position\coderErrorComputer.c" />
+    <ClCompile Include="motion\position\mockCoder\mockCoders.c" />
     <ClCompile Include="motion\position\trajectory.c" />
     <ClCompile Include="navigation\location.c" />
     <ClCompile Include="navigation\locationList.c" />
@@ -295,6 +296,7 @@
     <ClInclude Include="motion\pid\pidPersistence.h" />
     <ClInclude Include="motion\pid\pidTimer.h" />
     <ClInclude Include="motion\position\coderErrorComputer.h" />
+    <ClInclude Include="motion\position\coders.h" />
     <ClInclude Include="motion\position\trajectory.h" />
     <ClInclude Include="navigation\location.h" />
     <ClInclude Include="navigation\locationList.h" />

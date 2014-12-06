@@ -1,8 +1,8 @@
-#include "../../motion/position/hctl2032.h"
+#include "hctl2032.h"
 
-#include "../../common/delay/cenDelay.h"
-#include "../../common/io/outputStream.h"
-#include "../../common/io/printWriter.h"
+#include "../../../common/delay/cenDelay.h"
+#include "../../../common/io/outputStream.h"
+#include "../../../common/io/printWriter.h"
 
 #ifdef PROG_32
     #include "32/hctl2032_pindefinition32.h"

@@ -14,7 +14,6 @@
 #include "../../common/log/logLevel.h"
 
 #include "../../motion/position/coderErrorComputer.h"
-#include "../../motion/position/trajectoryErrorComputer.h"
 
 #include "../../motion/simple/motion.h"
 

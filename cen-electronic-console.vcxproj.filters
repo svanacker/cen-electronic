@@ -355,6 +355,9 @@
     <Filter Include="Header Files\robot\match\pc">
       <UniqueIdentifier>{a3d4ba7a-7646-4568-80ea-5d7b43364f11}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\motion\position\mockCoder">
+      <UniqueIdentifier>{c234f2c7-a4a7-4f7c-8330-dec08ccd3c2d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -758,6 +761,9 @@
     </ClCompile>
     <ClCompile Include="robot\match\pc\startMatchDetectorPc.c">
       <Filter>Source Files\robot\match\pc</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\position\mockCoder\mockCoders.c">
+      <Filter>Header Files\motion\position\mockCoder</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1195,6 +1201,9 @@
     </ClInclude>
     <ClInclude Include="robot\match\pc\startMatchDetectorPc.h">
       <Filter>Header Files\robot\match\pc</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\position\coders.h">
+      <Filter>Header Files\motion</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

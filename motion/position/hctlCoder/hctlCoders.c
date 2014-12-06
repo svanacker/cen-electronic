@@ -1,5 +1,5 @@
-#include "../../motion/position/coders.h"
-#include "../../motion/position/hctl2032.h"
+#include "../../../motion/position/coders.h"
+#include "hctl2032.h"
 
 void updateCoders(void) {
     hctl_updateCoders();

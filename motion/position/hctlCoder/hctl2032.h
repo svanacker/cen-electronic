@@ -1,7 +1,7 @@
 #ifndef HCTL2032_H
 #define HCTL2032_H
 
-#include "../../common/io/outputStream.h"
+#include "../../../common/io/outputStream.h"
 
 /**
  * The structure to encapsulate each coders value.

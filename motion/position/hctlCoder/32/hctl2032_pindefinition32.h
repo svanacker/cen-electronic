@@ -47,7 +47,6 @@
 // RSTX, RSTY
 // ---------
 
-// TODO: TO FOUND FROM F4DEB DOCUMENTATION
 #define RSTX         LATFbits.LATF1
 #define RSTY         LATFbits.LATF1
 #define TRIS_RSTX    TRISFbits.TRISF1

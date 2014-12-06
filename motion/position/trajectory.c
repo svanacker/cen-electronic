@@ -149,29 +149,23 @@ int absoluteUpdateFromCoders(signed long left, signed long right, bool useThresh
 }
 
 void updateTrajectory() {
-    /* TODO
     signed long left = getCoderValue(CODER_LEFT);
     signed long right = getCoderValue(CODER_RIGHT);
     //    curveUpdateFromCoders(left, right);
     absoluteUpdateFromCoders(left, right, true, false);
-    */
 }
 
 void updateTrajectoryWithNoThreshold() {
-    /* TODO
     signed long left = getCoderValue(CODER_LEFT);
     signed long right = getCoderValue(CODER_RIGHT);
     // do not use threshold
     absoluteUpdateFromCoders(left, right, false, false);
-    */
 }
 
 void updateTrajectoryAndClearCoders() {
     updateTrajectoryWithNoThreshold();
     lastAngle = position.orientation - position.initialOrientation;
-    /* TODO
     clearCoders();
-    */
     lastLeft = 0;
     lastRight = 0;
 }
@@ -180,10 +174,8 @@ void printPosition(OutputStream* outputStream) {
     // clearScreen();
     appendCRLF(outputStream);
     Position* p = getPosition();
-    /* TODO 
     appendStringAndDec(outputStream, "left=", getCoderValue(CODER_LEFT));
     appendStringAndDec(outputStream, " | right=", getCoderValue(CODER_RIGHT));
-    */
     printPoint(outputStream, &(p->pos), " mm");
 
     appendStringAndAngleInDeg(outputStream, "\rang:", p->orientation);
