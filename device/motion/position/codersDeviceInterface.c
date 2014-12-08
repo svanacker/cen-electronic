@@ -39,6 +39,6 @@ static DeviceInterface deviceInterface = {
     .deviceGetInterface = &deviceCodersGetInterface
 };
 
-DeviceInterface* getCodersDeviceInterface() {
+DeviceInterface* getCodersDeviceInterface(void) {
     return &deviceInterface;
 }

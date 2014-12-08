@@ -13,12 +13,29 @@
 #include "../../../common/log/logLevel.h"
 #include "../../../common/log/pc/consoleLogHandler.h"
 
+#include "../../../common/timer/timerList.h"
+
+
 #include "../../../device/device.h"
 #include "../../../device/deviceList.h"
 
 // CLOCK
 #include "../../../device/clock/clockDevice.h"
 #include "../../../device/clock/clockDeviceInterface.h"
+
+// MOTION
+
+#include "../../../device/motion/pid/pidDevice.h"
+#include "../../../device/motion/pid/pidDeviceInterface.h"
+
+#include "../../../device/motion/position/codersDevice.h"
+#include "../../../device/motion/position/codersDeviceInterface.h"
+
+#include "../../../device/motion/position/trajectoryDevice.h"
+#include "../../../device/motion/position/trajectoryDeviceInterface.h"
+
+#include "../../../device/motion/simple/motionDevice.h"
+#include "../../../device/motion/simple/motionDeviceInterface.h"
 
 // SERVO
 #include "../../../device/servo/servoDevice.h"
@@ -69,6 +86,10 @@ static char driverRequestBufferArray[MAIN_BOARD_32_PC_REQUEST_DRIVER_BUFFER_LENG
 static Buffer driverResponseBuffer;
 static char driverResponseBufferArray[MAIN_BOARD_32_PC_RESPONSE_DRIVER_BUFFER_LENGTH];
 
+// Timers
+#define MAIN_BOARD_32_PC_TIMER_LENGTH	10
+static Device timerListArray[MAIN_BOARD_32_PC_TIMER_LENGTH];
+
 // ConsoleOutputStream
 static InputStream consoleInputStream;
 static OutputStream consoleOutputStream;
@@ -80,7 +101,7 @@ static char consoleOutputBufferArray[MAIN_BOARD_32_PC_CONSOLE_OUTPUT_BUFFER_LENG
 static Buffer consoleOutputBuffer;
 
 // Devices
-#define MAIN_BOARD_32_PC_DEVICE_LIST_LENGTH		10
+#define MAIN_BOARD_32_PC_DEVICE_LIST_LENGTH		20
 static Device deviceListArray[MAIN_BOARD_32_PC_DEVICE_LIST_LENGTH];
 
 // StartMatchDetector
@@ -108,14 +129,16 @@ void waitForInstruction(void) {
 
 void runMainBoard32PC(void) {
 	setPicName("MAIN BOARD 32 PC");
+	initLog(DEBUG);
 	initConsoleInputStream(&consoleInputStream);
 	initConsoleOutputStream(&consoleOutputStream);
+	addConsoleLogHandler(DEBUG);
+	appendStringCRLF(getDebugOutputStreamLogger(), getPicName());
+
+	initTimerList((Timer(*)[]) &timerListArray, MAIN_BOARD_32_PC_TIMER_LENGTH);
 
 	initBuffer(&consoleInputBuffer, (char(*)[]) &consoleInputBufferArray, MAIN_BOARD_32_PC_CONSOLE_INPUT_BUFFER_LENGTH, "inputConsoleBuffer", "IN");
 	initBuffer(&consoleOutputBuffer, (char(*)[]) &consoleOutputBufferArray, MAIN_BOARD_32_PC_CONSOLE_OUTPUT_BUFFER_LENGTH, "outputConsoleBuffer", "IN");
-
-	initLog(DEBUG);
-	addConsoleLogHandler(DEBUG);
 
 	// Dispatchers
 	initDriverDataDispatcherList((DriverDataDispatcher(*)[]) &driverDataDispatcherListArray, MAIN_BOARD_32_PC_DATA_DISPATCHER_LIST_LENGTH);
@@ -139,7 +162,13 @@ void runMainBoard32PC(void) {
 	addLocalDevice(getStartMatchDetectorDeviceInterface(), getStartMatchDetectorDeviceDescriptor(&startMatchDetector));
 	addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());
 
-	// printf("test");
+	addLocalDevice(getPIDDeviceInterface(), getPIDDeviceDescriptor());
+	addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());
+	addLocalDevice(getCodersDeviceInterface(), getCodersDeviceDescriptor());
+	addLocalDevice(getTrajectoryDeviceInterface(), getTrajectoryDeviceDescriptor());
+	addLocalDevice(getMotionDeviceInterface(), getMotionDeviceDescriptor());
+
+	initDevices();
 
 	while (1) {
 		waitForInstruction();

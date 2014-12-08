@@ -10,7 +10,7 @@
 /**
 * Returns a device descriptor on trajectory device.
 */
-DeviceDescriptor* getTrajectoryDeviceDescriptor();
+DeviceDescriptor* getTrajectoryDeviceDescriptor(void);
 
 /**
 * Notify the absolute position without the header.

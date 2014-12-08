@@ -51,7 +51,8 @@ void clearLastError();
 
 
 // TIMER
-#define TOO_MUCH_TIMERS                    0x0200
+#define TIMERS_LIST_NOT_INITIALIZED		0x0200
+#define TOO_MUCH_TIMERS                 0x0201
 
 // BIT LIST
 #define BIT_LIST_ARRAY_OUT_OF_BOUNDS    0x0300

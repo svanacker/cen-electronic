@@ -27,7 +27,7 @@ static BitList outgoingPaths;
 static unsigned int availablePathsBitListValues[BIT_LIST_NAVIGATION_ARRAY_LENGTH];
 static BitList availablePaths;
 
-void initNavigation() {
+void initNavigation(void) {
     clearLocationList(&locations);
     clearPathList(&paths);
     initBitList(&outgoingPaths, &bitListValues, BIT_LIST_NAVIGATION_ARRAY_LENGTH);
@@ -35,11 +35,11 @@ void initNavigation() {
     clearBitList(&availablePaths, true);
 }
 
-LocationList* getNavigationLocationList() {
+LocationList* getNavigationLocationList(void) {
     return &locations;
 }
 
-PathList* getNavigationPathList() {
+PathList* getNavigationPathList(void) {
     return &paths;
 }
 
@@ -98,7 +98,7 @@ void setCost(Location* location, int cost) {
  * @private
  * Search the nearest node in terms of cost
  */
-Location* extractMinCostLocation() {
+Location* extractMinCostLocation(void) {
     // Search the nearest node in terms of cost
     Location* result = NULL;
     int minCost = MAX_COST;
@@ -237,7 +237,7 @@ void setPathAvailability(int index, bool value) {
     setBit(&availablePaths, index, value);
 }
 
-void resetAllPathsAsAvailable() {
+void resetAllPathsAsAvailable(void) {
     clearBitList(&availablePaths, true);
 }
 

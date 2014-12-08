@@ -26,18 +26,18 @@
 #include "../../../motion/position/trajectory.h"
 
 
-void deviceMotionInit() {
+void deviceMotionInit(void) {
     loadMotionParameters();
 }
 
-void deviceMotionShutDown() {
+void deviceMotionShutDown(void) {
 }
 
-bool deviceMotionIsOk() {
+bool deviceMotionIsOk(void) {
     return true;
 }
 
-void notifyPosition() {
+void notifyPosition(void) {
 
 }
 
@@ -108,53 +108,53 @@ void deviceMotionHandleRawData(char commandHeader,
 
         // Ex: 000100 000100 01 10
         // Left position
-        long left = readHex6(inputStream);
+        float left = (float) readHex6(inputStream);
         // Right position
-        long right = readHex6(inputStream);
+        float right = (float) readHex6(inputStream);
         // Acceleration
-        char a = readHex2(inputStream);
+        float a = (float) readHex2(inputStream);
         // Speed
-        char s = readHex2(inputStream);
+        float s = (float) readHex2(inputStream);
 
         // Execute Motion
-        gotoPosition(left, right, (float) a, (float) s);
+        gotoPosition(left, right, a, s);
     }        // "forward" in millimeter
     else if (commandHeader == COMMAND_MOTION_FORWARD_IN_MM) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_FORWARD_IN_MM);
 
-        long distanceMM = readHex4(inputStream);
+        float distanceMM = (float) readHex4(inputStream);
         forwardSimpleMM(distanceMM);
     }        // "backward" in millimeter
     else if (commandHeader == COMMAND_MOTION_BACKWARD_IN_MM) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_BACKWARD_IN_MM);
 
-        long distanceMM = readHex4(inputStream);
+        float distanceMM = (float) readHex4(inputStream);
         backwardSimpleMM(distanceMM);
     }        // ROTATION
         // -> left
     else if (commandHeader == COMMAND_MOTION_LEFT_IN_DECI_DEGREE) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_LEFT_IN_DECI_DEGREE);
 
-        long leftDegree = readHex4(inputStream);
+        float leftDegree = (float) readHex4(inputStream);
         leftSimpleDegree(leftDegree);
     }        // -> right
     else if (commandHeader == COMMAND_MOTION_RIGHT_IN_DECI_DEGREE) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_RIGHT_IN_DECI_DEGREE);
 
-        long rightDegree = readHex4(inputStream);
+        float rightDegree = (float) readHex4(inputStream);
         rightSimpleDegree(rightDegree);
     }        // ONE WHEEL
         // -> left
     else if (commandHeader == COMMAND_MOTION_LEFT_ONE_WHEEL_IN_DECI_DEGREE) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_LEFT_ONE_WHEEL_IN_DECI_DEGREE);
 
-        long leftDegree = readHex4(inputStream);
+        float leftDegree = (float) readHex4(inputStream);
         leftOneWheelSimpleDegree(leftDegree);
     }        // -> right
     else if (commandHeader == COMMAND_MOTION_RIGHT_ONE_WHEEL_IN_DECI_DEGREE) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_RIGHT_ONE_WHEEL_IN_DECI_DEGREE);
 
-        long rightDegree = readHex4(inputStream);
+        float rightDegree = (float) readHex4(inputStream);
         rightOneWheelSimpleDegree(rightDegree);
     }        // -> bspline
     else if (commandHeader == COMMAND_MOTION_SPLINE_RELATIVE || commandHeader == COMMAND_MOTION_SPLINE_ABSOLUTE) {
@@ -166,19 +166,19 @@ void deviceMotionHandleRawData(char commandHeader,
         float y = (float) readHex4(inputStream);
         checkIsChar(inputStream, '-');
 
-        float angle = readHex4(inputStream);
+        float angle = (float) readHex4(inputStream);
         angle = angle * PI_DIVIDE_1800;
         checkIsChar(inputStream, '-');
 
         // the distance can be negative, so the robot go back instead of go forward
         // Distance1 in cm
-        float distance1 = readSignedHex2(inputStream);
+        float distance1 = (float) readSignedHex2(inputStream);
         checkIsChar(inputStream, '-');
         distance1 *= 10.0f;
     
         // the distance can be negative, so the robot go back instead of go forward
         // Distance2 in cm
-        float distance2 = readSignedHex2(inputStream);
+        float distance2 = (float) readSignedHex2(inputStream);
         distance2 *= 10.0f;
 
         checkIsChar(inputStream, '-');
@@ -225,7 +225,7 @@ void deviceMotionHandleRawData(char commandHeader,
     else if (commandHeader == COMMAND_SQUARE_CALIBRATION) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_SQUARE_CALIBRATION);
         unsigned char type = readHex2(inputStream);
-        unsigned int length = readHex4(inputStream);
+        float length = (float) readHex4(inputStream);
         squareCalibration(type, length);
     }        // PARAMETERS
     else if (commandHeader == COMMAND_GET_MOTION_PARAMETERS) {
@@ -233,14 +233,14 @@ void deviceMotionHandleRawData(char commandHeader,
         int motionType = readHex2(inputStream);
 
         MotionParameter* motionParameter = getDefaultMotionParameters(motionType);
-        appendHex2(outputStream, motionParameter->a);
-        appendHex2(outputStream, motionParameter->speed);
+        appendHex2(outputStream, (int) motionParameter->a);
+        appendHex2(outputStream, (int) motionParameter->speed);
 
     } else if (commandHeader == COMMAND_SET_MOTION_PARAMETERS) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_SET_MOTION_PARAMETERS);
         int motionType = readHex2(inputStream);
-        int a = readHex2(inputStream);
-        int speed = readHex2(inputStream);
+        float a = (float) readHex2(inputStream);
+        float speed = (float) readHex2(inputStream);
 
         MotionParameter* motionParameter = getDefaultMotionParameters(motionType);
         motionParameter->a = a;
@@ -257,6 +257,6 @@ static DeviceDescriptor descriptor = {
     .deviceHandleRawData = &deviceMotionHandleRawData,
 };
 
-DeviceDescriptor* getMotionDeviceDescriptor() {
+DeviceDescriptor* getMotionDeviceDescriptor(void) {
     return &descriptor;
 }

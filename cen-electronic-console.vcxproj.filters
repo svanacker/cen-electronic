@@ -340,20 +340,11 @@
     <Filter Include="Source Files\common\delay\pc">
       <UniqueIdentifier>{d64a527c-a979-4e7c-8e7f-023e2c9c1771}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\motion\position">
-      <UniqueIdentifier>{45d96eb1-5884-4e85-89a6-137b05d996a6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\motion\position">
-      <UniqueIdentifier>{5c0969e6-428d-4f50-9c98-34f246e3255d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\robot\match\pc">
       <UniqueIdentifier>{39481d07-6c62-4751-a678-2dc80e8b4a0a}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\robot\match\pc">
       <UniqueIdentifier>{a3d4ba7a-7646-4568-80ea-5d7b43364f11}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\motion\position\mockCoder">
-      <UniqueIdentifier>{c234f2c7-a4a7-4f7c-8330-dec08ccd3c2d}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\device\system">
       <UniqueIdentifier>{9ac641e3-7648-4b5c-82e7-bdbde7ed003a}</UniqueIdentifier>
@@ -396,6 +387,45 @@
     </Filter>
     <Filter Include="Header Files\device\strategy">
       <UniqueIdentifier>{8ac8bfa8-8b84-4ebd-b86b-82c1150e302a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\device\motion">
+      <UniqueIdentifier>{a6331b88-812e-4de6-ad5c-6e5601139365}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\device\motion\simple">
+      <UniqueIdentifier>{29ed698e-be70-4f10-858b-14b4022cda8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\device\motion\position">
+      <UniqueIdentifier>{d34a3f8a-e81e-4870-b285-fa668c98d5c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\device\motion\pid">
+      <UniqueIdentifier>{56a4d80d-beae-447d-ac16-206043287b88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\device\motion">
+      <UniqueIdentifier>{4ade4b4e-f086-464d-874d-9a5bb5c09f81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\device\motion\simple">
+      <UniqueIdentifier>{7c6446d1-95a3-4b3c-8a49-9b9b0c8cb222}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\device\motion\position">
+      <UniqueIdentifier>{3ec9a516-b4b8-4faa-94a2-9f3a5b006df3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\device\motion\pid">
+      <UniqueIdentifier>{5697d838-77e5-470c-b9a6-43327fcc70cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\motion\position">
+      <UniqueIdentifier>{5c0969e6-428d-4f50-9c98-34f246e3255d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\motion\position\mockCoder">
+      <UniqueIdentifier>{c234f2c7-a4a7-4f7c-8330-dec08ccd3c2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\motion\simple">
+      <UniqueIdentifier>{87b8f5b7-2457-4bbb-a3b0-215956360c27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\motion\simple">
+      <UniqueIdentifier>{31560614-57ee-42a2-ac6c-fc64adf2152e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\motion\position">
+      <UniqueIdentifier>{45d96eb1-5884-4e85-89a6-137b05d996a6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -851,6 +881,36 @@
     </ClCompile>
     <ClCompile Include="device\strategy\strategyDeviceInterface.c">
       <Filter>Source Files\device\strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="device\motion\simple\motionDevice.c">
+      <Filter>Source Files\device\motion\simple</Filter>
+    </ClCompile>
+    <ClCompile Include="device\motion\simple\motionDeviceInterface.c">
+      <Filter>Source Files\device\motion\simple</Filter>
+    </ClCompile>
+    <ClCompile Include="device\motion\position\codersDevice.c">
+      <Filter>Source Files\device\motion\position</Filter>
+    </ClCompile>
+    <ClCompile Include="device\motion\position\codersDeviceInterface.c">
+      <Filter>Source Files\device\motion\position</Filter>
+    </ClCompile>
+    <ClCompile Include="device\motion\position\trajectoryDevice.c">
+      <Filter>Source Files\device\motion\position</Filter>
+    </ClCompile>
+    <ClCompile Include="device\motion\position\trajectoryDeviceInterface.c">
+      <Filter>Source Files\device\motion\position</Filter>
+    </ClCompile>
+    <ClCompile Include="device\motion\pid\pidDevice.c">
+      <Filter>Source Files\device\motion\pid</Filter>
+    </ClCompile>
+    <ClCompile Include="device\motion\pid\pidDeviceInterface.c">
+      <Filter>Source Files\device\motion\pid</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\simple\motion.c">
+      <Filter>Source Files\motion\simple</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\simple\motionPersistence.c">
+      <Filter>Source Files\motion\simple</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1339,6 +1399,36 @@
     </ClInclude>
     <ClInclude Include="device\strategy\strategyDeviceInterface.h">
       <Filter>Header Files\device\strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="device\motion\simple\motionDevice.h">
+      <Filter>Header Files\device\motion\simple</Filter>
+    </ClInclude>
+    <ClInclude Include="device\motion\simple\motionDeviceInterface.h">
+      <Filter>Header Files\device\motion\simple</Filter>
+    </ClInclude>
+    <ClInclude Include="device\motion\pid\pidDevice.h">
+      <Filter>Header Files\device\motion\pid</Filter>
+    </ClInclude>
+    <ClInclude Include="device\motion\pid\pidDeviceInterface.h">
+      <Filter>Header Files\device\motion\pid</Filter>
+    </ClInclude>
+    <ClInclude Include="device\motion\position\codersDevice.h">
+      <Filter>Header Files\device\motion\position</Filter>
+    </ClInclude>
+    <ClInclude Include="device\motion\position\codersDeviceInterface.h">
+      <Filter>Header Files\device\motion\position</Filter>
+    </ClInclude>
+    <ClInclude Include="device\motion\position\trajectoryDevice.h">
+      <Filter>Header Files\device\motion\position</Filter>
+    </ClInclude>
+    <ClInclude Include="device\motion\position\trajectoryDeviceInterface.h">
+      <Filter>Header Files\device\motion\position</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\simple\motion.h">
+      <Filter>Header Files\motion\simple</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\simple\motionPersistence.h">
+      <Filter>Header Files\motion\simple</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

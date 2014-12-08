@@ -37,13 +37,13 @@ static float lastRight = 0.0f;
 // Last angle
 static float lastAngle = 0.0f;
 
-void initializeTrajectory() {
+void initializeTrajectory(void) {
     width = WHEELS_DISTANCE;
     clearTrajectory();
 }
 
 
-void clearTrajectory() {
+void clearTrajectory(void) {
     setPosition(0, 0, 0);
     lastLeft = 0.0f;
     lastRight = 0.0f;

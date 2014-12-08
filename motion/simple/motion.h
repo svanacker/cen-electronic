@@ -3,8 +3,6 @@
 
 #include <stdbool.h>
 
-#include "../../common/commons.h"
-
 /**
  * Structure defining default Motion Parameters.
  */

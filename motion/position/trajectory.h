@@ -12,13 +12,13 @@
  * Initializes the trajectory computer and sets the current
  * position to (0, 0) with an orientation angle of 0.
  */
-void initializeTrajectory();
+void initializeTrajectory(void);
 
 /**
  * Clears the current trajectory informations and sets the
  * current position to (0, 0) with the orientation 0.
  */
-void clearTrajectory();
+void clearTrajectory(void);
 
 /**
  * Returns the wheels distance.
@@ -53,19 +53,19 @@ void setPosition(float x, float y, float orientation);
  * Please note that the trajectory can differed from the reality
  * because of threshold
  */
-void updateTrajectory();
+void updateTrajectory(void);
 
 /**
  * Update the information for the trajectory, but does not
  * use Threshold.
  */
-void updateTrajectoryWithNoThreshold();
+void updateTrajectoryWithNoThreshold(void);
 
 /**
  * Update the information for the trajectory and store to avoid
  * lost of information, and clear Coders.
  */
-void updateTrajectoryAndClearCoders();
+void updateTrajectoryAndClearCoders(void);
 
 /**
  * Print the position of the robot.

@@ -52,6 +52,6 @@ static DeviceInterface deviceInterface = {
     .deviceGetInterface = &trajectoryGetInterface
 };
 
-DeviceInterface* getTrajectoryDeviceInterface() {
+DeviceInterface* getTrajectoryDeviceInterface(void) {
     return &deviceInterface;
 }

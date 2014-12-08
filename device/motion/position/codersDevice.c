@@ -72,6 +72,6 @@ static DeviceDescriptor descriptor = {
     .deviceHandleRawData = &deviceCodersHandleRawData,
 };
 
-DeviceDescriptor* getCodersDeviceDescriptor() {
+DeviceDescriptor* getCodersDeviceDescriptor(void) {
     return &descriptor;
 }

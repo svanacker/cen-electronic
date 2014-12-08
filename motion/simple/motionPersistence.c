@@ -39,8 +39,8 @@ void internalLoadMotionParameter(unsigned char motionType) {
         return;
     }
     unsigned motionBlockIndexShift = motionType * EEPROM_MOTION_TYPE_BLOCK_SIZE;
-    unsigned int a = internalLoadMotionParameterItem(EEPROM_MOTION_START_INDEX + motionBlockIndexShift);
-    unsigned int speed = internalLoadMotionParameterItem(EEPROM_MOTION_START_INDEX + motionBlockIndexShift + 1);
+    float a = (float) internalLoadMotionParameterItem(EEPROM_MOTION_START_INDEX + motionBlockIndexShift);
+    float speed = (float) internalLoadMotionParameterItem(EEPROM_MOTION_START_INDEX + motionBlockIndexShift + 1);
 
     MotionParameter* motionParameter = getDefaultMotionParameters(motionType);
     motionParameter->a = a;
@@ -50,8 +50,8 @@ void internalLoadMotionParameter(unsigned char motionType) {
 void internalSaveMotionParameter(unsigned char motionType) {
     MotionParameter* motionParameter = getDefaultMotionParameters(motionType);
     unsigned motionBlockIndexShift = motionType * EEPROM_MOTION_TYPE_BLOCK_SIZE;
-    motionPersistenceEeprom->eepromWriteInt(motionPersistenceEeprom, EEPROM_MOTION_START_INDEX + motionBlockIndexShift, motionParameter->a);
-    motionPersistenceEeprom->eepromWriteInt(motionPersistenceEeprom, EEPROM_MOTION_START_INDEX + motionBlockIndexShift + 1, motionParameter->speed);
+    motionPersistenceEeprom->eepromWriteInt(motionPersistenceEeprom, EEPROM_MOTION_START_INDEX + motionBlockIndexShift, (int) motionParameter->a);
+    motionPersistenceEeprom->eepromWriteInt(motionPersistenceEeprom, EEPROM_MOTION_START_INDEX + motionBlockIndexShift + 1, (int) motionParameter->speed);
 }
 
 // Interface Implementation

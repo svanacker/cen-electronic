@@ -32,6 +32,6 @@
 #define WHEELS_DISTANCE 226.70f
 
 /** Distance between the center of the robot and a wheel. */
-#define WHEELS_DISTANCE_FROM_CENTER WHEELS_DISTANCE / 2
+#define WHEELS_DISTANCE_FROM_CENTER WHEELS_DISTANCE / 2.0f
 
 #endif

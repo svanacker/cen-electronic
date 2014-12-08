@@ -38,7 +38,7 @@ Device* addDevice(DeviceInterface* interface,
         int transmitMode,
         int address,
         char* addressString) {
-    if (&deviceList == NULL || &deviceList.maxSize == 0) {
+    if (&deviceList == NULL || deviceList.maxSize == 0) {
         writeError(DEVICES_LIST_NOT_INITIALIZED);
         return NULL;
     }
@@ -74,7 +74,7 @@ Device* addLocalDevice(DeviceInterface* interface, DeviceDescriptor* descriptor)
 }
 
 Device* getDevice(int index) {
-	// TODO : Check size
+    // TODO : Check size
     Device* result = (Device*) deviceList.devices;
     // we don't need use sizeof because our pointer is a Device* pointer, so the shift
     // is already of the structure, we just have to shift of index.

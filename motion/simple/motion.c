@@ -74,6 +74,7 @@ unsigned char handleInstructionAndMotion(void) {
 
     unsigned char value = updateMotors();
 
+    /* TODO https://github.com/svanacker/cen-electronic/issues/28
     Buffer* buffer = getI2CSlaveOutputBuffer();
     OutputStream* outputStream = getOutputStream(buffer);
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
@@ -97,6 +98,7 @@ unsigned char handleInstructionAndMotion(void) {
         notifyObstacle(outputStream);
         stopPosition(true);
     }
+    */
     return value;
 }
 
@@ -107,7 +109,7 @@ unsigned char handleAndWaitFreeMotion(void) {
         // POSITION_BLOCKED_WHEELS is not necesseray because we block the position after
         if (value == NO_POSITION_TO_REACH || value == POSITION_TO_MAINTAIN || value == POSITION_OBSTACLE) {
             // if (value == NO_POSITION_TO_REACH || value == POSITION_OBSTACLE) {
-            appendString(getDebugOutputStreamLogger(), "hdlAndWaitFreeMotion->break=");
+            appendString(getDebugOutputStreamLogger(), "handleAndWaitFreeMotion->break=");
             appendDec(getDebugOutputStreamLogger(), value);
             break;
         }
@@ -467,14 +469,14 @@ float rightMilliDegree(float angleMilliDegree, float a, float speed) {
 void leftOneWheelDegree(float angleDegree, float a, float speed) {
     // We multiply by 2, because, only one wheel rotates
     float angleRadius = angleDegree * PI_DIVIDE_1800 * 2.0f;
-    long realDistanceRight = (WHEELS_DISTANCE_FROM_CENTER * angleRadius) / WHEEL_LENGTH_LEFT;
+    float realDistanceRight = (WHEELS_DISTANCE_FROM_CENTER * angleRadius) / WHEEL_LENGTH_LEFT;
     gotoPosition(0.0f, realDistanceRight, a, speed);
 }
 
 void rightOneWheelDegree(float angleDegree, float a, float speed) {
     // We multiply by 2, because, only one wheel rotates
     float angleRadius = angleDegree * PI_DIVIDE_1800 * 2.0f;
-    long realDistanceLeft = (WHEELS_DISTANCE_FROM_CENTER * angleRadius) / WHEEL_LENGTH_RIGHT;
+    float realDistanceLeft = (WHEELS_DISTANCE_FROM_CENTER * angleRadius) / WHEEL_LENGTH_RIGHT;
     gotoPosition(realDistanceLeft, 0.0f, a, speed);
 }
 
@@ -583,8 +585,8 @@ void squareCalibrationRotationRight(bool inverse) {
         rightSimpleDegreeAndWait(DEG_90);
     }
 }
-void squareCalibrationLine(signed int x, signed int y, signed int angle, bool inverse) {
-    signed char cp = 100.0f;
+void squareCalibrationLine(float x, float y, float angle, bool inverse) {
+    float cp = 100.0f;
     if (inverse) {
         gotoSimpleSpline(x, -y, -angle, cp, cp, MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL, false);
     }
@@ -596,7 +598,7 @@ void squareCalibrationLine(signed int x, signed int y, signed int angle, bool in
 
 void squareCalibration(unsigned char type, float lengthInMM) {
     // to the bottom middle
-    signed int lengthInMM2 = lengthInMM / 2.0f;
+    float lengthInMM2 = lengthInMM / 2.0f;
 
     bool inverse = (type == 0);
 

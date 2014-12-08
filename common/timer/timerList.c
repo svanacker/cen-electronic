@@ -33,6 +33,12 @@ Timer* addTimer(int timerCode,
                 unsigned long timeDiviser,
                 interruptTimerCallbackFunc* callback) {
     unsigned char size = timerList.size;
+
+    if (&timerList == NULL || timerList.maxSize == 0) {
+        writeError(TIMERS_LIST_NOT_INITIALIZED);
+        return NULL;
+    }
+
     if (size < timerList.maxSize) {
         Timer* result = (Timer*) timerList.timers;
         result += size;

@@ -19,11 +19,11 @@
 
 // Device Interface
 
-void initTrajectoryDevice() {
+void initTrajectoryDevice(void) {
     initializeTrajectory();
 }
 
-void stopTrajectoryDevice() {
+void stopTrajectoryDevice(void) {
 
 }
 
@@ -93,6 +93,6 @@ static DeviceDescriptor descriptor = {
     .deviceHandleRawData = &deviceTrajectoryHandleRawData
 };
 
-DeviceDescriptor* getTrajectoryDeviceDescriptor() {
+DeviceDescriptor* getTrajectoryDeviceDescriptor(void) {
     return &descriptor;
 }

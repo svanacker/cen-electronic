@@ -4,11 +4,11 @@
 #include "../../../device/deviceInterface.h"
 #include "../../../device/deviceConstants.h"
 
-const char* deviceMotionGetName() {
+const char* deviceMotionGetName(void) {
     return "motion";
 }
 
-void fillSplineParameters() {
+void fillSplineParameters(void) {
     // X3/Y3 as absolute position
     setArgumentUnsignedHex4(0, "x3(mm)");
     setArgumentSeparator(1);
@@ -170,6 +170,6 @@ static DeviceInterface deviceInterface = {
     .deviceGetInterface = &deviceMotionGetInterface
 };
 
-DeviceInterface* getMotionDeviceInterface() {
+DeviceInterface* getMotionDeviceInterface(void) {
     return &deviceInterface;
 }
