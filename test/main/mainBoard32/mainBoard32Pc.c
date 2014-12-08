@@ -3,6 +3,7 @@
 #include <stdlib.h>
 
 #include "../../../common/clock/clock.h"
+#include "../../../common/eeprom/pc/eepromPc.h"
 #include "../../../common/error/error.h"
 #include "../../../common/io/pc/consoleOutputStream.h"
 #include "../../../common/io/pc/consoleInputStream.h"
@@ -22,6 +23,10 @@
 // CLOCK
 #include "../../../device/clock/clockDevice.h"
 #include "../../../device/clock/clockDeviceInterface.h"
+
+// EEPROM
+#include "../../../device/eeprom/eepromDevice.h"
+#include "../../../device/eeprom/eepromDeviceInterface.h"
 
 // MOTION
 
@@ -100,6 +105,9 @@ static Buffer consoleInputBuffer;
 static char consoleOutputBufferArray[MAIN_BOARD_32_PC_CONSOLE_OUTPUT_BUFFER_LENGTH];
 static Buffer consoleOutputBuffer;
 
+// Eeprom
+static Eeprom eeprom;
+
 // Devices
 #define MAIN_BOARD_32_PC_DEVICE_LIST_LENGTH		20
 static Device deviceListArray[MAIN_BOARD_32_PC_DEVICE_LIST_LENGTH];
@@ -135,6 +143,8 @@ void runMainBoard32PC(void) {
 	addConsoleLogHandler(DEBUG);
 	appendStringCRLF(getDebugOutputStreamLogger(), getPicName());
 
+	initEepromPc(&eeprom);
+
 	initTimerList((Timer(*)[]) &timerListArray, MAIN_BOARD_32_PC_TIMER_LENGTH);
 
 	initBuffer(&consoleInputBuffer, (char(*)[]) &consoleInputBufferArray, MAIN_BOARD_32_PC_CONSOLE_INPUT_BUFFER_LENGTH, "inputConsoleBuffer", "IN");
@@ -161,6 +171,7 @@ void runMainBoard32PC(void) {
 	initStartMatchDetectorPc(&startMatchDetector);
 	addLocalDevice(getStartMatchDetectorDeviceInterface(), getStartMatchDetectorDeviceDescriptor(&startMatchDetector));
 	addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());
+	addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
 
 	addLocalDevice(getPIDDeviceInterface(), getPIDDeviceDescriptor());
 	addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());

@@ -2,11 +2,16 @@
 
 #include "24c16.h"
 
+#include "../../common/delay/cenDelay.h"
+
 #include "../../common/eeprom/eeprom.h"
+#include "../../common/error/error.h"
 #include "../../common/io/buffer.h"
 
 #include "../../common/i2c/i2cConstants.h"
 #include "../../common/i2c/i2cCommon.h"
+
+#define EEPROM_24C16_MAX_INDEX	    0x3FFF
 
 /**
 * @private
@@ -34,7 +39,7 @@ unsigned long get24C16BlockAddress (unsigned long index) {
     } else if (index < 0x4000) {
         blocAddress = ST24C16_ADDRESS_7;
     } else {
-        // ERROR  TO DO
+       writeError(EEPROM_OUT_OF_BOUNDS);
     }
     return blocAddress;
 }
@@ -65,7 +70,7 @@ unsigned long get24C16Address(unsigned long index) {
     } else if (index < 0x4000) {
         address -= 0x3800;
     } else {
-        // ERROR  TO DO
+        writeError(EEPROM_OUT_OF_BOUNDS);
     }
     return address;
 }
@@ -90,6 +95,8 @@ void _writeEeprom24C16Int(Eeprom* eeprom_, unsigned long index, signed int value
     WaitI2C();
     portableStopI2C();
     WaitI2C();
+	
+	delay100us(4);  // delay <=3 don't write correctly if we write several times
 }
 
 /**
@@ -179,5 +186,5 @@ void _readEeprom24C16Block(Eeprom* eeprom_, unsigned long index, unsigned int le
 }
 
 void init24C16Eeprom(Eeprom* eeprom_) {
-    initEeprom(eeprom_, _writeEeprom24C16Int, _readEeprom24C16Int, _writeEeprom24C16Block, _readEeprom24C16Block);
+    initEeprom(eeprom_, EEPROM_24C16_MAX_INDEX, _writeEeprom24C16Int, _readEeprom24C16Int, _writeEeprom24C16Block, _readEeprom24C16Block);
 }

@@ -33,7 +33,6 @@ void clearLastError();
 
 #define ILLEGAL_ARGUMENT_EXCEPTION         0x001
 
-
 // IO
 
 #define IO_BUFFER_EMPTY                  0x0100
@@ -53,6 +52,11 @@ void clearLastError();
 // TIMER
 #define TIMERS_LIST_NOT_INITIALIZED		0x0200
 #define TOO_MUCH_TIMERS                 0x0201
+
+// EEPROM
+#define EEPROM_NULL						0x280
+#define EEPROM_NOT_INITIALIZED			0x281
+#define EEPROM_OUT_OF_BOUNDS			0x282
 
 // BIT LIST
 #define BIT_LIST_ARRAY_OUT_OF_BOUNDS    0x0300

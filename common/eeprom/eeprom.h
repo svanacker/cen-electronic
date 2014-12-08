@@ -53,7 +53,16 @@ struct Eeprom {
     EepromWriteBlockFunction* eepromWriteBlock;
     /** The function which must be used to read the content of an eeprom into a buffer. */
     EepromReadBlockFunction* eepromReadBlock;
+	/** Max Index. */
+	long maxIndex;
 };
+
+/**
+ * Returns the max Index of an eeprom.
+ * @param eeprom_ the maximum index allowed by eeprom.
+ * @return the max Index of an eeprom.
+ */
+long getMaxIndex(Eeprom* eeprom_);
 
 // GLOBAL FUNCTIONS - NON SPECIFIC
 
@@ -65,6 +74,7 @@ struct Eeprom {
  * @param eepromWriteBlock the pointer on the real hardware function which reads a block of data.
  */
 void initEeprom(Eeprom* eeprom_,
+				long maxIndex,
                 EepromWriteIntFunction* eepromWriteInt,
                 EepromReadIntFunction* eepromReadInt,
                 EepromWriteBlockFunction* eepromWriteBlock,

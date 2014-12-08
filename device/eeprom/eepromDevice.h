@@ -6,7 +6,7 @@
 
 /**
 * Returns a descriptor on the EEPROM device.
-* @param eeprom the pointer on the eeprom device that we want to handle
+* @param eeprom_ the pointer on the eeprom device that we want to handle
 * @return a pointer on the deviceDescriptor (which does the job hardwarely)
 */
 DeviceDescriptor* getEepromDeviceDescriptor(Eeprom* eeprom_);

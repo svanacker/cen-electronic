@@ -427,6 +427,27 @@
     <Filter Include="Source Files\motion\position">
       <UniqueIdentifier>{45d96eb1-5884-4e85-89a6-137b05d996a6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\common\eeprom">
+      <UniqueIdentifier>{bdedd773-108d-4294-b1f9-968a6dfc73bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\common\eeprom\pc">
+      <UniqueIdentifier>{df8b893f-926f-43a1-8a42-3350d9e945a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\common\eeprom">
+      <UniqueIdentifier>{d933553d-d620-476e-92ee-a31c9bd44985}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\common\eeprom\pc">
+      <UniqueIdentifier>{169231ff-a80d-4bd2-ba9e-ab447a6edd3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\device\eeprom">
+      <UniqueIdentifier>{d63a85a1-6173-42fc-b5b4-f7e6c8121443}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\device\eeprom">
+      <UniqueIdentifier>{4602af9b-948c-40d5-9f84-70776d4b0694}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\device\eeprom\pc">
+      <UniqueIdentifier>{7b072009-1f79-41f6-8ac5-4f15273874e2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -911,6 +932,18 @@
     </ClCompile>
     <ClCompile Include="motion\simple\motionPersistence.c">
       <Filter>Source Files\motion\simple</Filter>
+    </ClCompile>
+    <ClCompile Include="common\eeprom\eeprom.c">
+      <Filter>Source Files\common\eeprom</Filter>
+    </ClCompile>
+    <ClCompile Include="common\eeprom\pc\eepromPc.c">
+      <Filter>Source Files\common\eeprom\pc</Filter>
+    </ClCompile>
+    <ClCompile Include="device\eeprom\eepromDevice.c">
+      <Filter>Source Files\device\eeprom</Filter>
+    </ClCompile>
+    <ClCompile Include="device\eeprom\eepromDeviceInterface.c">
+      <Filter>Source Files\device\eeprom</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1429,6 +1462,18 @@
     </ClInclude>
     <ClInclude Include="motion\simple\motionPersistence.h">
       <Filter>Header Files\motion\simple</Filter>
+    </ClInclude>
+    <ClInclude Include="common\eeprom\eeprom.h">
+      <Filter>Header Files\common\eeprom</Filter>
+    </ClInclude>
+    <ClInclude Include="common\eeprom\pc\eepromPc.h">
+      <Filter>Header Files\common\eeprom\pc</Filter>
+    </ClInclude>
+    <ClInclude Include="device\eeprom\eepromDevice.h">
+      <Filter>Header Files\device\eeprom</Filter>
+    </ClInclude>
+    <ClInclude Include="device\eeprom\eepromDeviceInterface.h">
+      <Filter>Header Files\device\eeprom</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

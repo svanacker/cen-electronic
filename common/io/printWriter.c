@@ -77,18 +77,26 @@ void printBuffer(OutputStream* outputStream, Buffer* buffer) {
 
 // HEXADECIMAL
 
-bool appendHex(OutputStream* outputStream, char c) {
+unsigned char convertToHex(char c) {
     // Value between 0 and 9
     if (c < 10) {
-        append(outputStream, c + 48);
-        return true;
-    } else if (c < 16) {
+        return c + 48;
+    }
+    else if (c < 16) {
         // Value between A and F
         // (65 - 10 + c)
-        append(outputStream, c + 55);
-        return true;
+        return c + 55;
     }
     writeError(PRINT_WRITER_NOT_HEX_VALUE);
+    return 0;
+}
+
+bool appendHex(OutputStream* outputStream, char c) {
+    unsigned char hexChar = convertToHex(c);
+    if (hexChar != 0) {
+        append(outputStream, hexChar);
+        return true;
+    }
     return false;
 }
 

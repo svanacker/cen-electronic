@@ -4,7 +4,7 @@
 #include "../../device/deviceInterface.h"
 #include "../../device/deviceConstants.h"
 
-const char* getEepromDeviceName (){
+const char* getEepromDeviceName(void) {
     return "EEPROM";
 }
 
@@ -62,6 +62,6 @@ static DeviceInterface deviceInterface = {
     .deviceGetInterface = &deviceEepromGetInterface
 };
 
-DeviceInterface* getEepromDeviceInterface() {
+DeviceInterface* getEepromDeviceInterface(void) {
     return &deviceInterface;
 }

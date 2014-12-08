@@ -3,10 +3,13 @@
 #include "24c512.h"
 
 #include "../../common/eeprom/eeprom.h"
+#include "../../common/error/error.h"
 #include "../../common/io/buffer.h"
 
 #include "../../common/i2c/i2cConstants.h"
 #include "../../common/i2c/i2cCommon.h"
+
+#define EEPROM_24C512_MAX_INDEX	    0x07FFFF
 
 /**
 * @private
@@ -34,7 +37,7 @@ unsigned long get24C512BlockAddress (unsigned long index) {
     } else if (index < 0x080000) {
         blocAddress = ST24C512_ADDRESS_7;
     } else {
-        // ERROR  TO DO
+		writeError(EEPROM_OUT_OF_BOUNDS);
     }
     return blocAddress;
 }
@@ -65,7 +68,7 @@ unsigned long get24C512Address(unsigned long index) {
     } else if (index < 0x080000) {
         address -= 0x070000;
     } else {
-        // ERROR  TO DO
+		writeError(EEPROM_OUT_OF_BOUNDS);
     }
     return address;
 }
@@ -95,6 +98,7 @@ void _writeEeprom24C512Int(Eeprom* eeprom_, unsigned long index, signed int valu
     WaitI2C();
     portableStopI2C();
     WaitI2C();
+	delay100us(4);  // delay <=3 don't write correctly if we write several times
 }
 
 /**
@@ -207,5 +211,5 @@ void _readEeprom24C512Block(Eeprom* eeprom_, unsigned long index, unsigned int l
 }
 
 void init24C512Eeprom(Eeprom* eeprom_) {
-    initEeprom(eeprom_, _writeEeprom24C512Int, _readEeprom24C512Int, _writeEeprom24C512Block, _readEeprom24C512Block);
+    initEeprom(eeprom_, EEPROM_24C512_MAX_INDEX, writeEeprom24C512Int, _readEeprom24C512Int, _writeEeprom24C512Block, _readEeprom24C512Block);
 }
