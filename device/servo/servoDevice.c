@@ -1,4 +1,5 @@
 #include "servoDevice.h"
+#include "../../device/deviceConstants.h"
 #include "servoDeviceInterface.h"
 
 #include "../../common/commons.h"
@@ -20,14 +21,14 @@
 
 #include "../../device/device.h"
 
-void deviceServoInit() {
+void deviceServoInit(void) {
     initPwmForServo(PWM_SERVO_MIDDLE_POSITION);
 }
 
-void deviceServoShutDown() {
+void deviceServoShutDown(void) {
 }
 
-bool deviceServoIsOk() {
+bool deviceServoIsOk(void) {
     return true;
 }
 
@@ -40,12 +41,12 @@ void deviceServoHandleRawData(char header,
         int servoIndex = readHex2(inputStream);
         int servoSpeed = readHex2(inputStream);
    
-		int servoValue = readHex4(inputStream);
-		if (servoIndex > 0 && servoIndex <= PWM_COUNT) {
-			pwmServo(servoIndex, servoSpeed, servoValue);
-		} else {
-			pwmServoAll(servoSpeed, servoValue);
-		}
+        int servoValue = readHex4(inputStream);
+        if (servoIndex > 0 && servoIndex <= PWM_COUNT) {
+            pwmServo(servoIndex, servoSpeed, servoValue);
+        } else {
+            pwmServoAll(servoSpeed, servoValue);
+        }
         ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_WRITE);
     }
     else if (header == SERVO_COMMAND_WRITE_COMPACT) {
@@ -61,7 +62,7 @@ void deviceServoHandleRawData(char header,
         ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_READ_SPEED);
         appendHex2(outputStream, speed);
     }
-    else if (header == SERVO_COMMAND_READ_SPEED) {
+    else if (header == SERVO_COMMAND_READ_CURRENT_POSITION) {
         int servoIndex = readHex2(inputStream);
         int currentPosition = pwmServoReadCurrentPosition(servoIndex);
 
@@ -75,7 +76,7 @@ void deviceServoHandleRawData(char header,
         ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_READ_TARGET_POSITION);
         appendHex4(outputStream, targetPosition);
     }
-	// DEBUG COMMANDS
+    // DEBUG COMMANDS
     else if (header == SERVO_COMMAND_TEST) {
         testAllPwmServos();
         ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_TEST);
@@ -93,6 +94,6 @@ static DeviceDescriptor descriptor = {
     .deviceHandleRawData = &deviceServoHandleRawData,
 };
 
-DeviceDescriptor* getServoDeviceDescriptor() {
+DeviceDescriptor* getServoDeviceDescriptor(void) {
     return &descriptor;
 }

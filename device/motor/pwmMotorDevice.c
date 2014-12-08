@@ -27,9 +27,16 @@ void devicePwmMotorHandleRawData(char header, InputStream* inputStream, OutputSt
         signed int left = readSignedHex2(inputStream);
         signed int right = readSignedHex2(inputStream);
         ackCommand(outputStream, MOTOR_DEVICE_HEADER, COMMAND_MOVE_MOTOR);
-
         setMotorSpeeds(left * 2, right * 2);
-    } else if (header == COMMAND_STOP_MOTOR) {
+    }
+    else if (header == COMMAND_READ_MOTOR_VALUE) {
+        ackCommand(outputStream, MOTOR_DEVICE_HEADER, COMMAND_READ_MOTOR_VALUE);
+        signed int left = getLeftSpeed();
+        signed int right = getRightSpeed();
+        appendHex2(outputStream, left / 2);
+        appendHex2(outputStream, right / 2);
+    }
+    else if (header == COMMAND_STOP_MOTOR) {
         ackCommand(outputStream, MOTOR_DEVICE_HEADER, COMMAND_STOP_MOTOR);
 
         stopMotors();

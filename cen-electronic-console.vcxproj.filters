@@ -376,6 +376,27 @@
     <Filter Include="Source Files\test\main\mainBoard32">
       <UniqueIdentifier>{a308fb08-899d-461a-a6b7-c58d3f92fa94}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\common\serial">
+      <UniqueIdentifier>{4840165b-c968-4b6f-b326-1ede53fd31db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\common\serial">
+      <UniqueIdentifier>{78f212ee-879a-4871-a960-6e2b2f61a634}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\common\serial\pc">
+      <UniqueIdentifier>{ac625d84-fafc-49f2-b2e3-13596a7342da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\device\servo">
+      <UniqueIdentifier>{fe5fa3d9-ec55-48e4-878a-e8b7f2d413ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\device\servo">
+      <UniqueIdentifier>{b3fdb7d3-009b-428c-b329-9c9b7718017e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\device\strategy">
+      <UniqueIdentifier>{95ff218d-c2f0-45cd-af9e-bc360fb95fc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\device\strategy">
+      <UniqueIdentifier>{8ac8bfa8-8b84-4ebd-b86b-82c1150e302a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -797,6 +818,39 @@
     </ClCompile>
     <ClCompile Include="test\main\mainBoard32\mainBoard32Pc.c">
       <Filter>Source Files\test\main\mainBoard32</Filter>
+    </ClCompile>
+    <ClCompile Include="device\system\systemDebugDevice.c">
+      <Filter>Source Files\device\system</Filter>
+    </ClCompile>
+    <ClCompile Include="device\system\systemDebugDeviceInterface.c">
+      <Filter>Source Files\device\system</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\dispatcher\driverDataDispatcherDebug.c">
+      <Filter>Source Files\drivers\dispatchers</Filter>
+    </ClCompile>
+    <ClCompile Include="common\serial\serialLink.c">
+      <Filter>Header Files\common\serial</Filter>
+    </ClCompile>
+    <ClCompile Include="common\serial\pc\serialInputInterruptPc.c">
+      <Filter>Source Files\common\serial\pc</Filter>
+    </ClCompile>
+    <ClCompile Include="common\serial\pc\serialPc.c">
+      <Filter>Source Files\common\serial\pc</Filter>
+    </ClCompile>
+    <ClCompile Include="common\serial\serialOutputStream.c">
+      <Filter>Source Files\common\serial</Filter>
+    </ClCompile>
+    <ClCompile Include="device\servo\servoDevice.c">
+      <Filter>Source Files\device\servo</Filter>
+    </ClCompile>
+    <ClCompile Include="device\servo\servoDeviceInterface.c">
+      <Filter>Source Files\device\servo</Filter>
+    </ClCompile>
+    <ClCompile Include="device\strategy\strategyDevice.c">
+      <Filter>Source Files\device\strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="device\strategy\strategyDeviceInterface.c">
+      <Filter>Source Files\device\strategy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1252,6 +1306,39 @@
     </ClInclude>
     <ClInclude Include="test\main\mainBoard32\mainBoard32Pc.h">
       <Filter>Header Files\test\main\mainBoard32</Filter>
+    </ClInclude>
+    <ClInclude Include="device\system\systemDebugDevice.h">
+      <Filter>Header Files\device\system</Filter>
+    </ClInclude>
+    <ClInclude Include="device\system\systemDebugDeviceInterface.h">
+      <Filter>Header Files\device\system</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\dispatcher\driverDataDispatcherDebug.h">
+      <Filter>Header Files\drivers\dispatchers</Filter>
+    </ClInclude>
+    <ClInclude Include="common\serial\serial.h">
+      <Filter>Header Files\common\serial</Filter>
+    </ClInclude>
+    <ClInclude Include="common\serial\serialInputInterrupt.h">
+      <Filter>Header Files\common\serial</Filter>
+    </ClInclude>
+    <ClInclude Include="common\serial\serialLink.h">
+      <Filter>Header Files\common\serial</Filter>
+    </ClInclude>
+    <ClInclude Include="common\serial\serialOutputStream.h">
+      <Filter>Header Files\common\serial</Filter>
+    </ClInclude>
+    <ClInclude Include="device\servo\servoDevice.h">
+      <Filter>Header Files\device\servo</Filter>
+    </ClInclude>
+    <ClInclude Include="device\servo\servoDeviceInterface.h">
+      <Filter>Header Files\device\servo</Filter>
+    </ClInclude>
+    <ClInclude Include="device\strategy\strategyDevice.h">
+      <Filter>Header Files\device\strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="device\strategy\strategyDeviceInterface.h">
+      <Filter>Header Files\device\strategy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -15,6 +15,7 @@
 #include "../../common/timer/cenTimer.h"
 #include "../../common/timer/timerList.h"
 
+#include "../../device/deviceConstants.h"
 #include "../../device/strategy/strategyDeviceInterface.h"
 #include "../../robot/match/startMatchDetectorDevice.h"
 #include "../../robot/match/endMatchDetectorDevice.h"
@@ -71,8 +72,8 @@ void robotNextStep() {
     // Send strategy opponent Robot position
     sendStrategyOpponentRobotPosition(opponentRobotPosition );
 
-     // Send next Step
-     sendStrategyNextStep();
+    // Send next Step
+    sendStrategyNextStep();
 }
 
 bool sendStrategyConfiguration(int configuration) {

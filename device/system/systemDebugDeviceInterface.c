@@ -3,7 +3,7 @@
 #include "../../device/deviceInterface.h"
 #include "../../device/deviceConstants.h"
 
-const char* deviceSystemDebugGetName() {
+const char* deviceSystemDebugGetName(void) {
     return "systemDebug";
 }
 
@@ -38,6 +38,6 @@ static DeviceInterface deviceInterface = {
     .deviceGetInterface = &deviceSystemDebugGetInterface
 };
 
-DeviceInterface* getSystemDebugDeviceInterface() {
+DeviceInterface* getSystemDebugDeviceInterface(void) {
     return &deviceInterface;
 }

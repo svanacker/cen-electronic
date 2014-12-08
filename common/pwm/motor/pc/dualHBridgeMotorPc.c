@@ -3,7 +3,7 @@
 static signed int motorSpeed1;
 static signed int motorSpeed2;
 
-void initPwmForDualHBridge() {
+void initPwmForDualHBridge(void) {
     motorSpeed1 = 0;
     motorSpeed2 = 0;
 }
@@ -22,6 +22,14 @@ void pwmMotor3(signed int value3) {
 
 void pwmMotor4(signed int value4) {
     // DON'T DO ANYTHING	
+}
+
+signed int getDualHBridgeSpeed1(void) {
+    return motorSpeed1;
+}
+
+signed int getDualHBridgeSpeed2(void) {
+    return motorSpeed2;
 }
 
 void pwmDualHBridgeMotor(signed int hBridgeSpeed1, signed int hBridgeSpeed2) {

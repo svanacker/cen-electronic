@@ -2,7 +2,6 @@
 #define SYSTEM_DEBUG_DEVICE_INTERFACE_H
 
 #include "../../device/deviceInterface.h"
-#include "../../device/deviceConstants.h"
 
 /** Command to change the log configuration. */
 #define COMMAND_WRITE_LOG_LEVEL           'L'
@@ -16,6 +15,6 @@
 /**
 * Get the system debug device interface.
 */
-DeviceInterface* getSystemDebugDeviceInterface();
+DeviceInterface* getSystemDebugDeviceInterface(void);
 
 #endif

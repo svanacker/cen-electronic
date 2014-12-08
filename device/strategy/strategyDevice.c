@@ -13,6 +13,7 @@
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
 
+#include "../../device/deviceConstants.h"
 #include "../../device/motion/simple/motionDeviceInterface.h"
 
 #include "../../robot/strategy/gameStrategyHandler.h"
@@ -48,9 +49,9 @@ void deviceStrategyHandleRawData(char commandHeader, InputStream* inputStream, O
 
         GameStrategyContext* context = getStrategyContext();
 
-        context->opponentRobotPosition.x = x;
+        context->opponentRobotPosition.x = (float) x;
         if (isViolet()) {
-            context->opponentRobotPosition.y = y;
+            context->opponentRobotPosition.y = (float) y;
         }
         else {
             // Opponent Robot position is relative to violet !
@@ -111,11 +112,11 @@ void deviceStrategyHandleRawData(char commandHeader, InputStream* inputStream, O
         // separator
         checkIsChar(inputStream, '-');
         // x
-        context->robotPosition.x = readHex4(inputStream);
+        context->robotPosition.x = (float) readHex4(inputStream);
         // separator
         checkIsChar(inputStream, '-');
         // y
-        context->robotPosition.y = readHex4(inputStream);
+        context->robotPosition.y = (float) readHex4(inputStream);
         // separator
         checkIsChar(inputStream, '-');
         // angle in ddeg
@@ -123,8 +124,8 @@ void deviceStrategyHandleRawData(char commandHeader, InputStream* inputStream, O
 
         OutputStream* debugOutputStream = getOutputStreamLogger(INFO);
         appendStringAndDec(debugOutputStream, "\nStrategySetRobotPosition:status=", status);
-        appendStringAndDec(debugOutputStream, ", x=", context->robotPosition.x);
-        appendStringAndDec(debugOutputStream, ", y=", context->robotPosition.y);
+        appendStringAndDecf(debugOutputStream, ", x=", context->robotPosition.x);
+        appendStringAndDecf(debugOutputStream, ", y=", context->robotPosition.y);
         appendStringAndDec(debugOutputStream, ", angle=", context->robotAngle);
         println(debugOutputStream);
     

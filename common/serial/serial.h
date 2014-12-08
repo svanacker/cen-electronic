@@ -66,6 +66,6 @@ char serialGetc(unsigned char serialPortIndex);
  * @param serialPortIndex the serialPortIndex we want to use
  * @return returns zero if no char is pending, else non-zero
  */
-int kbhit(unsigned char serialPortIndex);
+int serialKbhit(unsigned char serialPortIndex);
 
 #endif

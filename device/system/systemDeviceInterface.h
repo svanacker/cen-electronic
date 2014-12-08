@@ -4,7 +4,6 @@
 #include "../../device/deviceInterface.h"
 #include "../../device/deviceConstants.h"
 
-
 /** Command to show log configuration. */
 #define COMMAND_LOG 'L'
 

@@ -68,6 +68,6 @@ static DeviceInterface deviceInterface = {
     .deviceGetInterface = &deviceStrategyGetInterface
 };
 
-DeviceInterface* getStrategyDeviceInterface() {
+DeviceInterface* getStrategyDeviceInterface(void) {
     return &deviceInterface;
 }

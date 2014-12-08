@@ -3,7 +3,7 @@
 #include "../../device/deviceInterface.h"
 #include "../../device/deviceConstants.h"
 
-const char* deviceServoGetName() {
+const char* deviceServoGetName(void) {
     return "servo";
 }
 
@@ -50,14 +50,14 @@ int deviceServoGetInterface(char commandHeader, int mode, bool fillDeviceArgumen
         }
         return commandLengthValueForMode(mode, 2, 4);
     }
-	// DEBUG FUNCTIONS
+    // DEBUG FUNCTIONS
     else if (commandHeader == SERVO_COMMAND_TEST) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("servoTestAlls");
         }
         return 0;
     }
-	// DEBUG
+    // DEBUG
     else if (commandHeader == SERVO_COMMAND_DEBUG) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("servoDebugAlls");
@@ -73,6 +73,6 @@ static DeviceInterface deviceInterface = {
     .deviceGetInterface = &deviceServoGetInterface
 };
 
-DeviceInterface* getServoDeviceInterface() {
+DeviceInterface* getServoDeviceInterface(void) {
     return &deviceInterface;
 }

@@ -16,6 +16,13 @@ int deviceMotorGetInterface(char header, int mode, bool fillDeviceArgumentList) 
             setArgumentSignedHex2(1, "right");
         }
         return commandLengthValueForMode(mode, 4, 0);
+    } else if (header == COMMAND_READ_MOTOR_VALUE) {
+        if (fillDeviceArgumentList) {
+            setFunction("readMotorValue", 0, 2);
+            setResultSignedHex2(0, "left");
+            setResultSignedHex2(1, "right");
+        }
+        return commandLengthValueForMode(mode, 0, 4);
     } else if (header == COMMAND_STOP_MOTOR) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("stopMotor");

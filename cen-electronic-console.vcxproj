@@ -110,6 +110,10 @@
     <ClCompile Include="common\pwm\servo\pc\servoPwmPc.c" />
     <ClCompile Include="common\pwm\servo\servoPwm.c" />
     <ClCompile Include="common\pwm\servo\servoPwmDebug.c" />
+    <ClCompile Include="common\serial\pc\serialInputInterruptPc.c" />
+    <ClCompile Include="common\serial\pc\serialPc.c" />
+    <ClCompile Include="common\serial\serialLink.c" />
+    <ClCompile Include="common\serial\serialOutputStream.c" />
     <ClCompile Include="common\timer\cenTimer.c" />
     <ClCompile Include="common\timer\pc\timerSetupPc.c" />
     <ClCompile Include="common\timer\timerDebug.c" />
@@ -125,6 +129,12 @@
     <ClCompile Include="device\motor\pwmMotor.c" />
     <ClCompile Include="device\motor\pwmMotorDevice.c" />
     <ClCompile Include="device\motor\pwmMotorDeviceInterface.c" />
+    <ClCompile Include="device\servo\servoDevice.c" />
+    <ClCompile Include="device\servo\servoDeviceInterface.c" />
+    <ClCompile Include="device\strategy\strategyDevice.c" />
+    <ClCompile Include="device\strategy\strategyDeviceInterface.c" />
+    <ClCompile Include="device\system\systemDebugDevice.c" />
+    <ClCompile Include="device\system\systemDebugDeviceInterface.c" />
     <ClCompile Include="device\system\systemDevice.c" />
     <ClCompile Include="device\system\systemDeviceInterface.c" />
     <ClCompile Include="device\test\testDevice.c" />
@@ -132,6 +142,7 @@
     <ClCompile Include="drivers\beacon\beaconReceiverDriver.c" />
     <ClCompile Include="drivers\clock\mockClock.c" />
     <ClCompile Include="drivers\dispatcher\driverDataDispatcher.c" />
+    <ClCompile Include="drivers\dispatcher\driverDataDispatcherDebug.c" />
     <ClCompile Include="drivers\dispatcher\driverDataDispatcherList.c" />
     <ClCompile Include="drivers\dispatcher\localDriverDataDispatcher.c" />
     <ClCompile Include="drivers\driver.c" />
@@ -254,6 +265,10 @@
     <ClInclude Include="common\pwm\motor\motorPwm.h" />
     <ClInclude Include="common\pwm\servo\servoPwm.h" />
     <ClInclude Include="common\pwm\servo\servoPwmDebug.h" />
+    <ClInclude Include="common\serial\serial.h" />
+    <ClInclude Include="common\serial\serialInputInterrupt.h" />
+    <ClInclude Include="common\serial\serialLink.h" />
+    <ClInclude Include="common\serial\serialOutputStream.h" />
     <ClInclude Include="common\timer\cenTimer.h" />
     <ClInclude Include="common\timer\timerDebug.h" />
     <ClInclude Include="common\timer\timerInterrupt.h" />
@@ -273,6 +288,12 @@
     <ClInclude Include="device\motor\pwmMotor.h" />
     <ClInclude Include="device\motor\pwmMotorDevice.h" />
     <ClInclude Include="device\motor\pwmMotorDeviceInterface.h" />
+    <ClInclude Include="device\servo\servoDevice.h" />
+    <ClInclude Include="device\servo\servoDeviceInterface.h" />
+    <ClInclude Include="device\strategy\strategyDevice.h" />
+    <ClInclude Include="device\strategy\strategyDeviceInterface.h" />
+    <ClInclude Include="device\system\systemDebugDevice.h" />
+    <ClInclude Include="device\system\systemDebugDeviceInterface.h" />
     <ClInclude Include="device\system\systemDevice.h" />
     <ClInclude Include="device\system\systemDeviceInterface.h" />
     <ClInclude Include="device\test\testDevice.h" />
@@ -280,6 +301,7 @@
     <ClInclude Include="drivers\beacon\beaconReceiverDriver.h" />
     <ClInclude Include="drivers\clock\mockClock.h" />
     <ClInclude Include="drivers\dispatcher\driverDataDispatcher.h" />
+    <ClInclude Include="drivers\dispatcher\driverDataDispatcherDebug.h" />
     <ClInclude Include="drivers\dispatcher\driverDataDispatcherList.h" />
     <ClInclude Include="drivers\dispatcher\localDriverDataDispatcher.h" />
     <ClInclude Include="drivers\driver.h" />

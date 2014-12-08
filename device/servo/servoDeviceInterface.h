@@ -2,7 +2,6 @@
 #define SERVO_DEVICE_INTERFACE_H
 
 #include "../../device/deviceInterface.h"
-#include "../../device/deviceConstants.h"
 
 // WRITE FUNCTIONS
 
@@ -34,7 +33,7 @@
 /**
 * Interface for Servo Device.
 */
-DeviceInterface* getServoDeviceInterface();
+DeviceInterface* getServoDeviceInterface(void);
 
 #endif
 

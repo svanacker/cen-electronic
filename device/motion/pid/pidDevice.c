@@ -27,7 +27,7 @@ bool isPIDDeviceOk(void) {
 
 void devicePIDHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream) {
     if (header == COMMAND_WRITE_PID) {
-        // send acquittement
+        // send acknowledge
         appendAck(outputStream);
         // PID Index => 0..n char index
         char pidIndex = readHex2(inputStream);

@@ -48,7 +48,7 @@ void closeSerial(unsigned char serialPortIndex) {
     }
 }
 
-int kbhit(unsigned char serialPortIndex) {
+int serialKbhit(unsigned char serialPortIndex) {
     if (serialPortIndex == SERIAL_PORT_1) {
         return DataRdyUART1();
     } else if (serialPortIndex == SERIAL_PORT_2) {

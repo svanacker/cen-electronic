@@ -10,6 +10,11 @@
 #define COMMAND_MOVE_MOTOR         'w'
 
 /**
+* Defines the header to move the motor.
+*/
+#define COMMAND_READ_MOTOR_VALUE   'r'
+
+/**
 * Defines the header to stop the motors.
 */
 #define COMMAND_STOP_MOTOR         'c'

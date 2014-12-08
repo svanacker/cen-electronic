@@ -2,7 +2,6 @@
 #define STRATEGY_DEVICE_INTERFACE_H
 
 #include "../../device/deviceInterface.h"
-#include "../../device/deviceConstants.h"
 
 #define COMMAND_STRATEGY_SET_OPPONENT_ROBOT_POSITION    'o'
 
@@ -19,6 +18,6 @@
 /**
 * Interface for Device
 */
-DeviceInterface* getStrategyDeviceInterface();
+DeviceInterface* getStrategyDeviceInterface(void);
 
 #endif

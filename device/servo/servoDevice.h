@@ -6,6 +6,6 @@
 /**
  * The descriptor for the servo device.
  */
-DeviceDescriptor* getServoDeviceDescriptor();
+DeviceDescriptor* getServoDeviceDescriptor(void);
 
 #endif

@@ -20,15 +20,16 @@
 #include "../../drivers/dispatcher/driverDataDispatcherDebug.h"
 
 #include "../../device/device.h"
+#include "../../device/deviceConstants.h"
 #include "../../device/deviceUsage.h"
 
-void deviceSystemDebugInit() {
+void deviceSystemDebugInit(void) {
 }
 
-void deviceSystemDebugShutDown() {
+void deviceSystemDebugShutDown(void) {
 }
 
-bool deviceSystemDebugIsOk() {
+bool deviceSystemDebugIsOk(void) {
     return true;
 }
 
@@ -65,6 +66,6 @@ static DeviceDescriptor descriptor = {
     .deviceHandleRawData = &deviceSystemDebugHandleRawData,
 };
 
-DeviceDescriptor* getSystemDebugDeviceDescriptor() {
+DeviceDescriptor* getSystemDebugDeviceDescriptor(void) {
     return &descriptor;
 }

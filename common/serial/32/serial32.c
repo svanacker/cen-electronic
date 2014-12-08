@@ -1,4 +1,4 @@
-#include <plib.h>
+	#include <plib.h>
 
 #include "../../../common/commons.h"
 
@@ -50,7 +50,7 @@ void closeSerial(unsigned char serialPortIndex) {
     UARTEnable(uart, UART_DISABLE_FLAGS(UART_PERIPHERAL | UART_RX | UART_TX));
 }
 
-int kbhit(unsigned char serialPortIndex) {
+int serialKbhit(unsigned char serialPortIndex) {
     UART_MODULE uart = getUartModule(serialPortIndex);
     return UARTReceivedDataIsAvailable(uart);
 }

@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <conio.h>
 
 #include "consoleInputStream.h"
 #include "../../../common/io/inputStream.h"
@@ -16,16 +17,16 @@ void closeConsoleInputStream(InputStream* inputStream) {
 }
 
 char readCharConsole(InputStream* inputStream) {
-    char result = (char) getchar();
+    char result = (char) _getch();
     
     return result;
 }
 
 bool availableDataConsole(InputStream* inputStream) {
-    bool result = (getchar() != EOF);
+    bool result = _kbhit();
     return result;
 }
 
 void initConsoleInputStream(InputStream* inputStream) {
-	initInputStream(inputStream, openConsoleInputStream, closeConsoleInputStream, readCharConsole, availableDataConsole, NULL);
+    initInputStream(inputStream, openConsoleInputStream, closeConsoleInputStream, readCharConsole, availableDataConsole, NULL);
 }

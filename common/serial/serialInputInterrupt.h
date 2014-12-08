@@ -1,11 +1,11 @@
 #ifndef SERIAL_INPUT_INTERRUPT_H
 #define SERIAL_INPUT_INTERRUPT_H
 
-#include "../commons.h"
 #include "../../common/io/buffer.h"
+#include "../../common/io/outputStream.h"
 
 /**
- * Init an inputStream arround serial with index "serialPortIndex".
+ * Initializes an inputStream around serial with index "serialPortIndex".
  * @param buffer the pointer on buffer object to store input from serial
  * @param serialPortIndex the specific port index
  */
