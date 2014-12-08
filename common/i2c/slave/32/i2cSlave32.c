@@ -1,6 +1,7 @@
 #include "../../../../common/commons.h"
 
-#include <i2c.h>
+//#include <i2c.h>
+#include <peripheral/i2c.h>
 #include <stdlib.h>
 #include <plib.h>
 

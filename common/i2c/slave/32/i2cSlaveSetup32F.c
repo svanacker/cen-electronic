@@ -1,7 +1,7 @@
 
 #include <stdbool.h>
-#include <plib.h>
-#include <i2c.h>
+//#include <plib.h>
+#include <peripheral/i2c.h>
 
 #include "../../../../common/commons.h"
 #include "../../../../common/error/error.h"

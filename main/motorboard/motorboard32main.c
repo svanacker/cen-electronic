@@ -1,4 +1,4 @@
-#include <i2c.h>
+#include <peripheral/i2c.h>
 #include <stdlib.h>
 
 // List of available functionnality
@@ -178,6 +178,10 @@ void waitForInstruction() {
 int runMotorBoard() {
 // configure for multi-vectored mode
     INTConfigureSystem(INT_SYSTEM_CONFIG_MULT_VECTOR);
+
+// enable interrupts
+    INTEnableInterrupts();
+
     setPicName(MOTOR_BOARD_PIC_NAME);
 
     delaymSec(100);

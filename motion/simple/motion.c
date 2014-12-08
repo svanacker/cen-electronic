@@ -27,7 +27,8 @@
 #include "../../device/motor/pwmMotor.h"
 #include "../../device/motion/simple/motionDevice.h"
 
-#include "../../main/motorBoard/motorBoard.h"
+#include "../../main/motorboard/motorBoard.h"
+
 #include "../../robot/robotConstants.h"
 
 // MOTION PARAMETERS
