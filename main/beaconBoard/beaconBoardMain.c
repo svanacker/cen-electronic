@@ -49,8 +49,8 @@
 #include "../../drivers/jennic/jennic5139OutputStream.h"
 
 // Specific
-#include "../../device/test/deviceTest.h"
-#include "../../device/test/deviceTestInterface.h"
+#include "../../device/test/testDevice.h"
+#include "../../device/test/testDeviceInterface.h"
 
 // servo
 #include "../../device/servo/servoDevice.h"

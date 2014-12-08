@@ -33,6 +33,7 @@
 #include "../../common/timer/timerList.h"
 
 #include "../../device/device.h"
+#include "../../device/deviceList.h"
 #include "../../device/dispatcher/deviceDataDispatcher.h"
 
 // -> Devices

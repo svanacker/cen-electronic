@@ -37,6 +37,7 @@ void addZigbeeDriverDataDispatcher(DriverDataDispatcher* dispatcher,
                                     InputStream* zigbeeInputStream,
                                     OutputStream* zigbeeOutputStream,
                                     char* addressString) {
+    /* TODO
     dispatcher->transmitMode = TRANSMIT_ZIGBEE;
     dispatcher->name = dispatcherName;
     int address = stringChecksum(addressString);
@@ -57,5 +58,6 @@ void addZigbeeDriverDataDispatcher(DriverDataDispatcher* dispatcher,
 
     // add the dispatcher to the list
     addDriverDataDispatcher(dispatcher);
+    */
 }
 

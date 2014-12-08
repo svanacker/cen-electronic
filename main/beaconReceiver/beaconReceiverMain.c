@@ -32,13 +32,14 @@
 #include "../../common/timer/timerList.h"
 
 #include "../../device/device.h"
+#include "../../device/deviceList.h"
 #include "../../device/dispatcher/deviceDataDispatcher.h"
 
 // -> Devices
 
 // Test
-#include "../../device/test/deviceTest.h"
-#include "../../device/test/deviceTestInterface.h"
+#include "../../device/test/testDevice.h"
+#include "../../device/test/testDeviceInterface.h"
 
 // System
 #include "../../device/system/systemDevice.h"
