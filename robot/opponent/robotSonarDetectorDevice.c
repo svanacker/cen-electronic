@@ -145,7 +145,7 @@ void deviceRobotSonarDetectorInit() {
     // Timer for detector
     addTimer(ROBOT_SONAR_DETECTOR_TIMER_INDEX,
             TIME_DIVISER_16_HERTZ,
-            deviceRobotSonarDetectorCallbackFunc);
+            deviceRobotSonarDetectorCallbackFunc, "ROBOT SONAR DETECTOR TIMER");
     // useSonar = isConfigSet(CONFIG_USE_LASER_MASK);
     clearHistory();
     startSRF02Ranging(SONAR_INDEX);
