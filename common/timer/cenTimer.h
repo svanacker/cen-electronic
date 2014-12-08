@@ -1,7 +1,7 @@
 #ifndef CEN_TIMER_H
 #define CEN_TIMER_H
+
 #include <stdbool.h>
-#include "../../common/commons.h"
 
 /**
  * Define the timer diviser to have a timer at 1 Hertz (every second).
@@ -88,11 +88,14 @@ struct Timer {
     volatile bool lock;
     /** if the timer is in the callback function and is working. */
     volatile bool working;
+    /** name of the timer (to have a better way to debug) */
+    char* name;
 };
 
 /**
  * Returns the time value.
  * @param timer a pointer on the timer object for which we want the time value (POO simulation).
+ * @return the time value.
  */
 unsigned long getTime(Timer* Timer);
 

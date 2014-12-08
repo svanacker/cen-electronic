@@ -88,7 +88,8 @@ void initPwmForServo(int posInit) {
     // update at a certain frequency the position of the servo
     addTimer(SERVO_TIMER_INDEX,
                             TIME_DIVISER_50_HERTZ,
-                            &interruptServoTimerCallbackFunc);
+                            &interruptServoTimerCallbackFunc,
+							"SERVO");
     servoList.initialized = true;
 	servoList.useTimer = true;
 }

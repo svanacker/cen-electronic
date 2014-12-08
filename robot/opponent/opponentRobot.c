@@ -28,7 +28,8 @@ void initOpponentRobot() {
     // Timer for detector
     addTimer(OPPONENT_ROBOT_TIMER_INDEX,
             TIME_DIVISER_2_HERTZ,
-            &opponentRobotCallbackFunc);
+            &opponentRobotCallbackFunc,
+			"OPPONENT");
 }
 
 void updateOpponentRobotIfNecessary() {

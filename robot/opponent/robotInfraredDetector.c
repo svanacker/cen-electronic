@@ -117,7 +117,7 @@ void robotInfraredDetectorCallback(Timer* timer) {
 
 
 void initRobotInfraredDetector() {
-    addTimer(ROBOT_INFRARED_DETECTOR_TIMER_INDEX, TIME_DIVISER_30_HERTZ, &robotInfraredDetectorCallback);
+    addTimer(ROBOT_INFRARED_DETECTOR_TIMER_INDEX, TIME_DIVISER_30_HERTZ, &robotInfraredDetectorCallback, "ROBOT_INFRARED");
     forwardDetector.function = &forwardDetection;
     backwardDetector.function = &backwardDetection;
 }

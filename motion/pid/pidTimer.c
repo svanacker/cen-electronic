@@ -18,7 +18,7 @@
 static long lastPidTime;
 
 void initPidTimer(void) {
-    addTimer(TIMER_PID_CODE, PID_UPDATE_MOTORS_FREQUENCY, (interruptTimerCallbackFunc*) NULL);
+    addTimer(TIMER_PID_CODE, PID_UPDATE_MOTORS_FREQUENCY, (interruptTimerCallbackFunc*) NULL, "PID TIME");
     clearPidTime();
 }
 

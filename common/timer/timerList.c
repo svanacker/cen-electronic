@@ -31,7 +31,8 @@ void initTimerList(Timer (*timerListArray)[], unsigned char timerListSize) {
 
 Timer* addTimer(int timerCode,
                 unsigned long timeDiviser,
-                interruptTimerCallbackFunc* callback) {
+                interruptTimerCallbackFunc* callback,
+                char* timerName) {
     unsigned char size = timerList.size;
 
     if (&timerList == NULL || timerList.maxSize == 0) {
@@ -50,6 +51,7 @@ Timer* addTimer(int timerCode,
         result->enabled = false;
         result->lock = false;
         result->working = false;
+        result->name = timerName;
 
         timerList.size++;
         return result;

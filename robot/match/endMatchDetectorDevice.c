@@ -82,7 +82,8 @@ bool isEnd() {
 void initEndMatchDetector(void) {
     endMatchDetectorDeviceTimer = addTimer(END_MATCH_DETECTOR_TIMER_CODE,
                                             TIME_DIVISER_1_HERTZ,
-                                            endMatchDetectorCallbackFunc);
+                                            endMatchDetectorCallbackFunc,
+                                            "END MATCH TIMER");
 }
 
 void stopEndMatchDetector(void) {

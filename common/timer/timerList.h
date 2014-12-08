@@ -29,11 +29,13 @@ void initTimerList(Timer (*timerListArray)[], unsigned char timerListSize);
  * @param timerCode a unique code used to identify timer
  * @param timerDiviser Ex : if timeDiviser = 100, time frequency is 100 times slower than the main interruption
  * @param callback the function which must be used by the interruption
+ * @param timerName the name of the timer
  * @return the  a pointer on the timer Struct (POO simulation)
  */
 Timer* addTimer(int timerCode,
                 unsigned long timeDiviser,
-                interruptTimerCallbackFunc* callback);
+                interruptTimerCallbackFunc* callback,
+                char* timerName);
 
 /**
  * Get the device descriptor of index.
