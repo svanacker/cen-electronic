@@ -13,13 +13,15 @@ void printTimer(OutputStream* outputStream, Timer* timer) {
 
     appendStringAndDec(outputStream, ",enabled=", timer->enabled);
     appendStringAndDec(outputStream, ",working=", timer->working);
+	appendString(outputStream, ",name=");
+	appendString(outputStream, timer->name);
 }
 
 void printTimerList(OutputStream* outputStream, TimerList* timerList) {
     int i;
     for (i = 0; i < timerList->size; i++) {
         Timer* timer = (Timer*) timerList->timers;
-         timer += i;
+        timer += i;
 
         printTimer(outputStream, timer);
         appendCRLF(outputStream);
