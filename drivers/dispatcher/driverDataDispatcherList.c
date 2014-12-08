@@ -48,7 +48,7 @@ DriverDataDispatcher* addDriverDataDispatcher(
         result->address = address;
         result->inputStream = inputStream;
         result->outputStream = outputStream;
-        result->driverDataDispatcherTransmitData;
+        result->driverDataDispatcherTransmitData = driverDataDispatcherTransmitData;
         dispatcherList.size++;
         return result;
     } else {

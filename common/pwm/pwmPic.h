@@ -11,6 +11,6 @@
 /**
  * Init the PIC configuration to manage pwm.
  */
-void pwmInit();
+void pwmInit(void);
 
 #endif

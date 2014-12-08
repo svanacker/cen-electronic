@@ -7,8 +7,10 @@
 #ifdef PROG_32
     #include "32/hctl2032_pindefinition32.h"
 #else
-    #include "32/hctl2032_pindefinition30F.h"
+    #include "30F/hctl2032_pindefinition30F.h"
+    #include <p30Fxxxx.h>
 #endif
+
 
 // variables
 static Coder coders[CODER_COUNT];
