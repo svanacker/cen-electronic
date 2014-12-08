@@ -176,19 +176,19 @@ void printPosition(OutputStream* outputStream) {
     Position* p = getPosition();
     appendStringAndDec(outputStream, "left=", getCoderValue(CODER_LEFT));
     appendStringAndDec(outputStream, " | right=", getCoderValue(CODER_RIGHT));
+    println(outputStream);
     printPoint(outputStream, &(p->pos), " mm");
 
-    appendStringAndAngleInDeg(outputStream, "\rang:", p->orientation);
-    appendStringAndAngleInDeg(outputStream, "\rang ini:", p->initialOrientation);
+    appendStringAndAngleInDeg(outputStream, "ang:", p->orientation);
+    appendStringAndAngleInDeg(outputStream, "\r\nang init:", p->initialOrientation);
 
-    appendStringAndDecf(outputStream, "\rlastLeft:", lastLeft);
+    appendStringAndDecf(outputStream, "\r\nlastLeft:", lastLeft);
     appendString(outputStream, " pulse");
 
-    appendStringAndDecf(outputStream, "\rlastRight:", lastRight);
+    appendStringAndDecf(outputStream, "\r\nlastRight:", lastRight);
     appendString(outputStream, " pulse");
 
-    appendStringAndAngleInDeg(outputStream, "\rlastAng:", lastAngle);
-    appendString(outputStream, " deg");
+    appendStringAndAngleInDeg(outputStream, "\r\nlastAng:", lastAngle);
 
     println(outputStream);
 }

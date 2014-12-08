@@ -45,7 +45,7 @@ void scale(Point *point, float factor) {
 void printPoint(OutputStream* outputStream, Point* point, const char* unit) {
     appendStringAndDecf(outputStream, "x=", point->x);
     appendString(outputStream, unit);
-    appendStringAndDecf(outputStream, ",y=", point->y);
+    appendStringAndDecf(outputStream, ", y=", point->y);
     appendString(outputStream, unit);
     println(outputStream);
 }
