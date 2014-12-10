@@ -13,7 +13,6 @@
 
 #include "titanMainBoardClient.h"
 
-
 #include "../../common/delay/cenDelay.h"
 
 #include "../../common/i2c/i2cDebug.h"
