@@ -5,6 +5,7 @@
 
 void printClock(OutputStream* outputStream, Clock* clock) {
     ClockData* clockData = &(clock->clockData);
+
     appendHex2(outputStream, clockData->hour);
     append(outputStream, ':');
     appendHex2(outputStream, clockData->minute);

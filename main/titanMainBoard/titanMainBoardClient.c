@@ -150,6 +150,7 @@
 #include "../../robot/config/robotConfigDevice.h"
 #include "../../robot/config/robotConfigDeviceInterface.h"
 #include "../../robot/match/32/startMatchDetector32.h"
+#include "../../robot/match/startMatchDetector.h"
 #include "../../robot/match/startMatchDetectorDevice.h"
 #include "../../robot/match/startMatchDetectorDeviceInterface.h"
 #include "../../robot/match/endMatchDetectorDevice.h"
@@ -656,9 +657,21 @@ int main(void) {
     initDevicesDescriptor();
     initDriversDescriptor();
 
+    i2cMasterInitialize();
     // Initialize EEPROM and RTC
-    init24C512Eeprom(&eeprom_);
     initClockPCF8563(&globalClock);
+    init24C512Eeprom(&eeprom_);
+
+
+    while (1){
+            //CLOCK Read
+        globalClock.readClock(&globalClock);
+        printClock(&debugOutputStream,&globalClock);
+        appendCR(&debugOutputStream);
+        delaymSec(300);
+    }
+
+
 
     initRobotConfigPic32(&robotConfig);
 
