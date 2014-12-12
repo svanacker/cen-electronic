@@ -1,6 +1,7 @@
-#include "mainBoard32Pc.h"
+﻿#include "mainBoard32Pc.h"
 
 #include <stdlib.h>
+#include <stdio.h>
 
 #include "../../../common/clock/clock.h"
 #include "../../../common/eeprom/pc/eepromPc.h"
@@ -136,7 +137,16 @@ void waitForInstruction(void) {
 }
 
 void runMainBoard32PC(void) {
-	setPicName("MAIN BOARD 32 PC");
+	setPicName("MAIN BOARD PC");
+
+	printf(" __  __    _    ___ _   _    ____   ___    _    ____  ____     ____   ____ \r\n");
+	printf("|  \\/  |  / \\  |_ _| \\ | |  | __ ) / _ \\  / \\  |  _ \\|  _ \\   |  _ \\ / ___|\r\n");
+	printf("| |\\/| | / _ \\  | ||  \\| |  |  _ \\| | | |/ _ \\ | |_) | | | |  | |_) | |    \r\n");
+	printf("| |  | |/ ___ \\ | || |\\  |  | |_) | |_| / ___ \\|  _ <| |_| |  |  __/| |___ \r\n");
+	printf("|_|  |_/_/   \\_|___|_| \\_|  |____/ \\___/_/   \\_|_| \\_|____/   |_|    \\____|\r\n");
+	printf("\r\n");
+
+
 	initLog(DEBUG);
 	initConsoleInputStream(&consoleInputStream);
 	initConsoleOutputStream(&consoleOutputStream);
