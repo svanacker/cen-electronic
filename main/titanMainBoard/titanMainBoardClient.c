@@ -613,6 +613,8 @@ void waitForInstruction() {
 int main(void) {
     setPicName("TITAN ELECTRONICAL MAIN BOARD 32bits V-JJ_7");
 
+    i2cMasterInitialize();
+    
     //setRobotMustStop(false);
     // Open the serial Link for debug
     openSerialLink(&debugSerialStreamLink,
@@ -681,7 +683,7 @@ int main(void) {
     appendString(&debugOutputStream, "DEBUG\n");
     
     // Start interruptions
-    // startTimerList();
+    //startTimerList();  //////RALENTI FORTEMENT LE PIC!!! PLANTE I2C !!!!!!!!
 
     // Configure data dispatcher
     //addLocalDriverDataDispatcher();
@@ -729,8 +731,6 @@ int main(void) {
 
 
     appendStringConfig(&lcdOutputStream);
-
-
 
     // pingDriverDataDispatcherList(getOutputStreamLogger(DEBUG));
 

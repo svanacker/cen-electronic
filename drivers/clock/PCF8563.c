@@ -15,8 +15,7 @@
  */
 ClockData* _readPcf8563Clock(Clock* clock) {
     ClockData* clockData = &(clock->clockData);
-
-    portableStartI2C();
+    
     WaitI2C();
     portableMasterWriteI2C(PCF8563_WRITE_ADDRESS);
     WaitI2C();
@@ -62,7 +61,7 @@ ClockData* _readPcf8563Clock(Clock* clock) {
 /**
  * @see clock.h
  * @private
- * Set the Clock into the Pcf8573.
+ * Set the Clock into the Pcf8563.
  * @param clock the new value of clock
  */
 void _writePcf8563Clock(Clock* clock) {

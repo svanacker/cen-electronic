@@ -54,7 +54,6 @@ void setTemperatureAlertLimit(int TemperatureSensorAlert){
     portableStopI2C();
     WaitI2C();
 
-
     portableStartI2C();
     WaitI2C();
     portableMasterWriteI2C(LM75A_ADDRESS);
