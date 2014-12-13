@@ -814,6 +814,17 @@ int main(void) {
             globalClock.readClock(&globalClock);
             printClock(&debugOutputStream,&globalClock);
             appendCR(&debugOutputStream);
+           
+
+            portableMasterWaitSendI2C();
+            portableStartI2C();
+            WaitI2C();
+            portableMasterWriteI2C(FREE_ADDRESS_2);//0x54
+            WaitI2C();
+            portableMasterWriteI2C(0x55);
+            WaitI2C();
+            portableStopI2C();
+            WaitI2C();
             delaymSec(300);
             }
 

@@ -19,6 +19,8 @@
 #include "../../common/i2c/master/i2cMaster.h"
 #include "../../common/i2c/master/i2cMasterSetup.h"
 
+#include "../../common/i2c/slave/i2cSlaveSetup.h"
+
 #include "../../common/i2c/master/i2cMasterOutputStream.h"
 #include "../../common/i2c/master/i2cMasterInputStream.h"
 
@@ -190,6 +192,13 @@ static Timer timerListArray[MAIN_BOARD_TIMER_LENGTH];
 // Clock
 static Clock globalClock;
 
+
+
+static char data;
+
+// volatile variables to hold the switch and led states
+volatile unsigned char dataRead = 0;
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Constant Data
@@ -295,7 +304,8 @@ int main(void) {
     appendString(&pcOutputStream, "JK330 with PIC32...on UART PC\r");
     appendString(&debugOutputStream, "JK330 with PIC32...on UART DEBUG\r");
 
-    i2cMasterInitialize();
+    //i2cMasterInitialize();
+    i2cSlaveInitialize(FREE_ADDRESS_2);
 
     initTimerList(&timerListArray, MAIN_BOARD_TIMER_LENGTH);
 
@@ -305,8 +315,8 @@ int main(void) {
     addLogHandler(&lcdLogHandler, "LCD", &lcdOutputStream, ERROR);
 
     init74c922();
-    init24C512Eeprom(&eeprom_);
-    initClockPCF8563(&globalClock);
+    //init24C512Eeprom(&eeprom_);
+    //initClockPCF8563(&globalClock);
 
     appendString(getOutputStreamLogger(DEBUG), getPicName());
     println(getOutputStreamLogger(DEBUG));
@@ -322,14 +332,14 @@ int main(void) {
     appendString(getOutputStreamLogger(DEBUG), "Lecture Horloge : \r");
 
     //CLOCK Read
-    globalClock.readClock(&globalClock);
+    //globalClock.readClock(&globalClock);
 
     // Print on the OutputStream
 
     printClock(getOutputStreamLogger(DEBUG), &globalClock);
     appendCR(getOutputStreamLogger(DEBUG));
 
-    setTemperatureAlertLimit(0x35);//35?C
+    //setTemperatureAlertLimit(0x35);//35?C
 
     clearScreen();
     setCursorAtHome();
@@ -337,12 +347,14 @@ int main(void) {
 
     initBuffer(&eepromBuffer,&eepromBufferArray, EEPROM_BUFFER_LENGTH,"EEPROM BUFFER","");
 
-    printEepromBlock(&eeprom_, &debugOutputStream, 0x0000,0x10, &eepromBuffer);
+    //printEepromBlock(&eeprom_, &debugOutputStream, 0x0000,0x10, &eepromBuffer);
+
+    data = 0x44 ;
     while (1){
         setCursorPosition_24064(0,23);  //raw,col
 
         //CLOCK Read
-        globalClock.readClock(&globalClock);
+        //globalClock.readClock(&globalClock);
         // Print on the OutputStream
         printClock(&lcdOutputStream, &globalClock);
 
@@ -352,7 +364,77 @@ int main(void) {
         appendHex2(&lcdOutputStream, c);
 
         setCursorPosition_24064(0,19);
-        printTemperatureSensor(&lcdOutputStream);
+        //printTemperatureSensor(&lcdOutputStream);
+
+        setCursorPosition_24064(4,10);
+        appendHex2(&lcdOutputStream,data);
+
+
 
     }
+}
+
+void __ISR( _I2C_1_VECTOR, ipl6) _SlaveI2CHandler(void)
+{
+
+    	unsigned char temp;
+	static unsigned int dIndex;
+
+	// check for MASTER and Bus events and respond accordingly
+	if (IFS0bits.I2C1MIF == 1) {
+		mI2C1MClearIntFlag();
+		return;
+	}
+	if (IFS0bits.I2C1BIF == 1) {
+		mI2C1BClearIntFlag();
+		return;
+	}
+
+ // handle the incoming message
+	if ((I2C1STATbits.R_W == 0) && (I2C1STATbits.D_A == 0)) {
+		// R/W bit = 0 --> indicates data transfer is input to slave
+		// D/A bit = 0 --> indicates last byte was address
+
+		// reset any state variables needed by a message sequence
+		// perform a dummy read of the address
+		temp = SlaveReadI2C1();
+
+		// release the clock to restart I2C
+		I2C1CONbits.SCLREL = 1; // release the clock
+
+	} else if ((I2C1STATbits.R_W == 0) && (I2C1STATbits.D_A == 1)) {
+		// R/W bit = 0 --> indicates data transfer is input to slave
+		// D/A bit = 1 --> indicates last byte was data
+
+		// writing data to our module, just store it in adcSample
+		dataRead = SlaveReadI2C1();
+
+		// release the clock to restart I2C
+		I2C1CONbits.SCLREL = 1; // release clock stretch bit
+
+	} else if ((I2C1STATbits.R_W == 1) && (I2C1STATbits.D_A == 0)) {
+		// R/W bit = 1 --> indicates data transfer is output from slave
+		// D/A bit = 0 --> indicates last byte was address
+
+		// read of the slave device, read the address
+		temp = SlaveReadI2C1();
+		dIndex = 0;
+		SlaveWriteI2C1(dataRead);
+	} else if ((I2C1STATbits.R_W == 1) && (I2C1STATbits.D_A == 1)) {
+		// R/W bit = 1 --> indicates data transfer is output from slave
+		// D/A bit = 1 --> indicates last byte was data
+
+
+		// output the data until the MASTER terminates the
+		// transfer with a NACK, continuing reads return 0
+		if (dIndex == 0) {
+			SlaveWriteI2C1(dataRead);
+			dIndex++;
+		} else
+			SlaveWriteI2C1(0);
+	}
+
+	// finally clear the slave interrupt flag
+
+	mI2C1SClearIntFlag();
 }
