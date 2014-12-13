@@ -6,6 +6,7 @@
 #include "../../common/clock/clock.h"
 #include "../../common/i2c/i2cConstants.h"
 #include "../../common/i2c/i2cCommon.h"
+#include "../../common/serial/32/serial32.h"
 
 /**
  * @see clock.h
@@ -27,6 +28,8 @@ ClockData* _readPcf8563Clock(Clock* clock) {
     portableStartI2C();
     WaitI2C();
     portableMasterWriteI2C(PCF8563_READ_ADDRESS);
+    WaitI2C();
+
     clockData->second = portableMasterReadI2C();
     portableAckI2C();
     WaitI2C();
@@ -56,6 +59,7 @@ ClockData* _readPcf8563Clock(Clock* clock) {
     clockData->day = clockData->day & 0b00111111;
     clockData->dayofweek = clockData->dayofweek & 0b00001111;
     clockData->month = clockData->month & 0b00011111;
+
 }
 
 /**

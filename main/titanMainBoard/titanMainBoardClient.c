@@ -663,17 +663,13 @@ int main(void) {
     init24C512Eeprom(&eeprom_);
 
 
-    while (1){
-            //CLOCK Read
-        globalClock.readClock(&globalClock);
-        printClock(&debugOutputStream,&globalClock);
-        appendCR(&debugOutputStream);
-        delaymSec(300);
-    }
+
 
 
 
     initRobotConfigPic32(&robotConfig);
+
+
 
     initStartMatchDetector32(&startMatchDetector);
 
@@ -724,7 +720,7 @@ int main(void) {
             MECHANICAL_BOARD_2_I2C_ADDRESS);
     */
 
-/*    // Stream for Air Conditioning
+ /*   // Stream for Air Conditioning
     addI2CDriverDataDispatcher(&airConditioningI2cDispatcher,
             "AIR_CONDITIONING_DISPATCHER",
             &airConditioningBoardInputBuffer,
@@ -745,7 +741,7 @@ int main(void) {
 
     appendStringConfig(&lcdOutputStream);
 
-    // pingDriverDataDispatcherList(getOutputStreamLogger(DEBUG));
+    //pingDriverDataDispatcherList(getOutputStreamLogger(DEBUG));
 
     // Inform PC waiting
     showWaitingStart(&debugOutputStream);
@@ -777,7 +773,6 @@ int main(void) {
         appendString(getOutputStreamLogger(ALWAYS), "COLOR:RED\n");
     }    
 
-
     // TODO 2012 SV motionDriverMaintainPosition();
 
     // wait for start
@@ -802,6 +797,8 @@ int main(void) {
 
         while (1) {
             waitForInstruction();
+            //CLOCK Read
+
 
             if (isEnd()) {
                 break;
@@ -811,7 +808,20 @@ int main(void) {
         setReadyForNextMotion(true);
 
         while (1) {
+
+            while(1){
             waitForInstruction();
+            globalClock.readClock(&globalClock);
+            printClock(&debugOutputStream,&globalClock);
+            appendCR(&debugOutputStream);
+            delaymSec(300);
+            }
+
+
+
+
+
+
             homologation(homologationIndex, color);
 
             // We stop if we are in homologation mode
