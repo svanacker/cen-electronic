@@ -374,6 +374,7 @@ int main(void) {
     }
 }
 
+/*
 void __ISR( _I2C_1_VECTOR, ipl6) _SlaveI2CHandler(void)
 {
 
@@ -438,3 +439,4 @@ void __ISR( _I2C_1_VECTOR, ipl6) _SlaveI2CHandler(void)
 
 	mI2C1SClearIntFlag();
 }
+*/

@@ -176,6 +176,7 @@
         <itemPath>../common/i2c/master/32/i2cMasterSetup32.c</itemPath>
         <itemPath>../common/i2c/32/i2cCommon32.c</itemPath>
         <itemPath>../common/i2c/slave/32/i2cSlaveSetup32F.c</itemPath>
+        <itemPath>../common/i2c/slave/32/i2cSlave32.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f6" displayName="common.io" projectFiles="true">
         <itemPath>../common/io/printWriter.c</itemPath>
