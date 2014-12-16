@@ -314,7 +314,7 @@ int main(void) {
             DEFAULT_SERIAL_SPEED);
     
     // I2C
- /*   openSlaveI2cStreamLink(&i2cSerialStreamLink,
+    openSlaveI2cStreamLink(&i2cSerialStreamLink,
                             &i2cSlaveInputBuffer,
                             &i2cSlaveInputBufferArray,
                             MOTOR_BOARD_I2C_INPUT_BUFFER_LENGTH,
@@ -323,12 +323,12 @@ int main(void) {
                             MOTOR_BOARD_I2C_OUTPUT_BUFFER_LENGTH,
                             MOTOR_BOARD_I2C_ADDRESS
                         );
-*/
+
     appendString(&pcOutputStream, "JK330 with PIC32...on UART PC\r");
     appendString(&debugOutputStream, "JK330 with PIC32...on UART DEBUG\r");
 
     //i2cMasterInitialize();
-    i2cSlaveInitialize(FREE_ADDRESS_2);
+    //i2cSlaveInitialize(FREE_ADDRESS_2);
 
     initTimerList(&timerListArray, MAIN_BOARD_TIMER_LENGTH);
 
@@ -393,14 +393,13 @@ int main(void) {
         appendHex2(&lcdOutputStream,dataRead);
         //delaymSec(1000);
         setCursorPosition_24064(5,10);
-        //printBuffer(&lcdOutputStream,&i2cSlaveInputBuffer);
-
+        printBuffer(&lcdOutputStream,&i2cSlaveInputBuffer);
 
     }
 }
 
-/*
-void __ISR( _I2C_1_VECTOR, ipl6) _SlaveI2CHandler(void)
+
+/*void __ISR( _I2C_1_VECTOR, ipl6) _SlaveI2CHandler(void)
 {
 
     	unsigned char temp;
