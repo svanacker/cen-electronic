@@ -23,6 +23,8 @@
 /** The I2C link used by the interrupt routine. */
 static StreamLink* i2cStreamLink;
 
+volatile unsigned char dataRead;
+
 void setI2cStreamLink(StreamLink* streamLink) {
     i2cStreamLink = streamLink;
 }
@@ -37,7 +39,7 @@ StreamLink* getI2cStreamLink() {
  */
 void __ISR(_I2C_1_VECTOR, ipl3) _SlaveI2CHandler(void)
 {
-
+serialPutc(2,'T');
         // last byte received is address and not data
     char isData = I2C1STATbits.D_A;
     char read = I2C1STATbits.R_W;
@@ -65,6 +67,7 @@ void __ISR(_I2C_1_VECTOR, ipl3) _SlaveI2CHandler(void)
         // reset any state variables needed by a message sequence
         // perform a dummy read of the address
         temp = SlaveReadI2C1();
+        serialPutc(2,temp);
 
         // release the clock to restart I2C
         I2C1CONbits.SCLREL = 1; // release the clock
@@ -77,6 +80,8 @@ void __ISR(_I2C_1_VECTOR, ipl3) _SlaveI2CHandler(void)
         //dataRead = SlaveReadI2C1();
 
         int data = SlaveReadI2C1();
+        dataRead = data;
+        serialPutc(2,dataRead);
         if (data != INCORRECT_DATA && data != I2C_SLAVE_FAKE_WRITE) {
             Buffer* i2cSlaveInputBuffer = i2cStreamLink->inputBuffer;
             OutputStream* outputStream = getOutputStream(i2cSlaveInputBuffer);

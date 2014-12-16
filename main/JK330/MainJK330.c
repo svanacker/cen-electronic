@@ -24,6 +24,8 @@
 #include "../../common/i2c/master/i2cMasterOutputStream.h"
 #include "../../common/i2c/master/i2cMasterInputStream.h"
 
+#include "../../common/i2c/slave/i2cSlaveLink.h"
+
 #include "../../common/io/buffer.h"
 #include "../../common/io/compositeOutputStream.h"
 #include "../../common/io/inputStream.h"
@@ -133,6 +135,13 @@ static Buffer pcOutputBuffer;
 static OutputStream pcOutputStream;
 static StreamLink pcSerialStreamLink;
 
+// I2C
+static char i2cSlaveInputBufferArray[MOTOR_BOARD_I2C_INPUT_BUFFER_LENGTH];
+static Buffer i2cSlaveInputBuffer;
+static char i2cSlaveOutputBufferArray[MOTOR_BOARD_I2C_OUTPUT_BUFFER_LENGTH];
+static Buffer i2cSlaveOutputBuffer;
+static StreamLink i2cSerialStreamLink;
+
 // DRIVERS
 static Buffer driverRequestBuffer;
 static char driverRequestBufferArray[MAIN_BOARD_REQUEST_DRIVER_BUFFER_LENGTH];
@@ -193,10 +202,6 @@ static Timer timerListArray[MAIN_BOARD_TIMER_LENGTH];
 static Clock globalClock;
 
 
-
-static char data;
-
-// volatile variables to hold the switch and led states
 volatile unsigned char dataRead = 0;
 
 // *****************************************************************************
@@ -261,6 +266,13 @@ void waitForInstruction(void) {
             &debugOutputStream,
             &filterRemoveCRLF,
             NULL);
+
+    // I2C Stream
+    handleStreamInstruction(&i2cSlaveInputBuffer,
+                            &i2cSlaveOutputBuffer,
+                            NULL,
+                            &filterRemoveCRLF,
+                            NULL);
 }
 
 int main(void) {
@@ -300,7 +312,18 @@ int main(void) {
             &pcOutputStream,
             SERIAL_PORT_PC,
             DEFAULT_SERIAL_SPEED);
-
+    
+    // I2C
+ /*   openSlaveI2cStreamLink(&i2cSerialStreamLink,
+                            &i2cSlaveInputBuffer,
+                            &i2cSlaveInputBufferArray,
+                            MOTOR_BOARD_I2C_INPUT_BUFFER_LENGTH,
+                            &i2cSlaveOutputBuffer,
+                            &i2cSlaveOutputBufferArray,
+                            MOTOR_BOARD_I2C_OUTPUT_BUFFER_LENGTH,
+                            MOTOR_BOARD_I2C_ADDRESS
+                        );
+*/
     appendString(&pcOutputStream, "JK330 with PIC32...on UART PC\r");
     appendString(&debugOutputStream, "JK330 with PIC32...on UART DEBUG\r");
 
@@ -349,7 +372,6 @@ int main(void) {
 
     //printEepromBlock(&eeprom_, &debugOutputStream, 0x0000,0x10, &eepromBuffer);
 
-    data = 0x44 ;
     while (1){
         setCursorPosition_24064(0,23);  //raw,col
 
@@ -367,8 +389,11 @@ int main(void) {
         //printTemperatureSensor(&lcdOutputStream);
 
         setCursorPosition_24064(4,10);
-        appendHex2(&lcdOutputStream,data);
-
+        append(&lcdOutputStream,dataRead);
+        appendHex2(&lcdOutputStream,dataRead);
+        //delaymSec(1000);
+        setCursorPosition_24064(5,10);
+        //printBuffer(&lcdOutputStream,&i2cSlaveInputBuffer);
 
 
     }

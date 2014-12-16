@@ -821,7 +821,15 @@ int main(void) {
             WaitI2C();
             portableMasterWriteI2C(FREE_ADDRESS_2);//0x54
             WaitI2C();
-            portableMasterWriteI2C(0x55);
+            portableMasterWriteI2C('H');
+            WaitI2C();
+            portableMasterWriteI2C('E');
+            WaitI2C();
+            portableMasterWriteI2C('L');
+            WaitI2C();
+            portableMasterWriteI2C('L');
+            WaitI2C();
+            portableMasterWriteI2C('O');
             WaitI2C();
             portableStopI2C();
             WaitI2C();

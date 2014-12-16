@@ -30,6 +30,7 @@
         <itemPath>../common/i2c/master/i2cMaster.h</itemPath>
         <itemPath>../common/i2c/master/i2cMasterSetup.h</itemPath>
         <itemPath>../common/i2c/slave/i2cSlave.h</itemPath>
+        <itemPath>../common/i2c/slave/i2cSlaveLink.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f5" displayName="common.io" projectFiles="true">
         <itemPath>../common/io/printWriter.h</itemPath>
@@ -177,6 +178,7 @@
         <itemPath>../common/i2c/32/i2cCommon32.c</itemPath>
         <itemPath>../common/i2c/slave/32/i2cSlaveSetup32F.c</itemPath>
         <itemPath>../common/i2c/slave/32/i2cSlave32.c</itemPath>
+        <itemPath>../common/i2c/slave/i2cSlaveLink.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f6" displayName="common.io" projectFiles="true">
         <itemPath>../common/io/printWriter.c</itemPath>
