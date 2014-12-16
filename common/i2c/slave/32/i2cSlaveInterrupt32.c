@@ -2,12 +2,12 @@
 
 #include <i2c.h>
 #include <stdlib.h>
-#include <p30Fxxxx.h>
+#include <plib.h>
 
-#include "../i2cSlave.h"
-#include "../i2cSlaveSetup.h"
 #include "../../i2cConstants.h"
 #include "../../i2cDebug.h"
+#include "../i2cSlave.h"
+#include "../i2cSlaveSetup.h"
 
 #include "../../../../common/delay/cenDelay.h"
 
@@ -19,31 +19,22 @@
 
 #include "../../../../common/log/logger.h"
 
-/** The I2C link used by the interrupt routine. */
-static StreamLink* i2cStreamLink;
-
-void setI2cStreamLink(StreamLink* streamLink) {
-    i2cStreamLink = streamLink;
-}
-
-StreamLink* getI2cStreamLink() {
-    return i2cStreamLink;
-}
-
 /**
  * Function Name: SI2C1Interrupt
  * Description : This is the ISR for I2C1 Slave interrupt.
  */
-void __attribute__((__interrupt__)) __attribute__((no_auto_psv)) _SI2CInterrupt(void) {
+void __ISR(_I2C_1_VECTOR, ipl3) _SlaveI2CHandler(void)
+{
     // last byte received is address and not data
-    char isData = I2CSTATbits.D_A;
-    char read = I2CSTATbits.R_W;
+    char isData = I2C1STATbits.D_A;
+    char read = I2C1STATbits.R_W;
 
+	StreamLink* i2cStreamLink = getI2cStreamLink();
     // We must read first and not only if we read or write
 
     // Master want to READ
     if (read) {
-        SlaveReadI2C();
+        SlaveReadI2C1();
         // The buffer which must be send to the master
         Buffer* i2cSlaveOutputBuffer = i2cStreamLink->outputBuffer;
         // Get an inputStream to read the buffer to send to the master
@@ -58,25 +49,25 @@ void __attribute__((__interrupt__)) __attribute__((no_auto_psv)) _SI2CInterrupt(
                 bufferWriteChar(debugI2cOutputBuffer, c);
             }
             // we send it to the master
-            SlaveWriteI2C(c);
+            SlaveWriteI2C1(c);
         } else {
             // There is no data, we send it to the master
             // We send 0 (end of buffer)
             if (debugI2cOutputBuffer != NULL) {
                 bufferWriteChar(debugI2cOutputBuffer, I2C_SLAVE_NO_DATA_IN_READ_BUFFER);
             }
-            SlaveWriteI2C(I2C_SLAVE_NO_DATA_IN_READ_BUFFER);
+            SlaveWriteI2C1(I2C_SLAVE_NO_DATA_IN_READ_BUFFER);
         }
-        while (I2CSTATbits.TBF);
+        while (I2C1STATbits.TBF);
     }        // Master want to WRITE (InputStream)
     else {
         if (!isData) {
-            SlaveReadI2C();
+            SlaveReadI2C1();
             //clear I2C1 Slave interrupt flag
-            IFS0bits.SI2CIF = 0;
+            mI2C1SClearIntFlag();
             return;
         }
-        int data = SlaveReadI2C();
+        int data = SlaveReadI2C1();
         if (data != INCORRECT_DATA && data != I2C_SLAVE_FAKE_WRITE) {
             Buffer* i2cSlaveInputBuffer = i2cStreamLink->inputBuffer;
             OutputStream* outputStream = getOutputStream(i2cSlaveInputBuffer);
@@ -88,9 +79,10 @@ void __attribute__((__interrupt__)) __attribute__((no_auto_psv)) _SI2CInterrupt(
             }
         }
 
-        I2CCONbits.SCLREL = 1;
+        I2C1CONbits.SCLREL = 1;
     }
 
-    //clear I2C1 Slave interrupt flag
-    IFS0bits.SI2CIF = 0;
+    // clear I2C1 Slave interrupt flag
+    IFS0bits.I2C1MIF = 0;
 }
+

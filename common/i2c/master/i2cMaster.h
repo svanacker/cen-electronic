@@ -11,23 +11,23 @@
  * Indirection for I2C used to manage 30F/32 compatibility.
  * @param data to write by the I2C master component
  */
-inline int portableMasterWriteI2C(char data);
+int portableMasterWriteI2C(char data);
 
 /**
  * Indirection for I2C used to manage 30F/32 compatibility.
  * @return read by the I2C master component
  */
-inline char portableMasterReadI2C( void );
+char portableMasterReadI2C( void );
 
 /**
  * Indirection for I2C used to manage 30F/32 compatibility.
  */
-inline void portableCloseI2C( void );
+void portableCloseI2C( void );
 
 /**
  * Indirection for I2C used to manage 30F/32 compatibility.
  */
-inline void portableMasterWaitSendI2C( void );
+void portableMasterWaitSendI2C( void );
 
 // USEFUL FUNCTION
 

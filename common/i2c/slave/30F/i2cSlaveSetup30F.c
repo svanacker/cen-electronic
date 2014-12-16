@@ -17,9 +17,10 @@ bool initialized = false;
 void i2cSlaveInitialize(char writeAddress) {
     // Avoid more than one initialization
     if (initialized) {
-        writeError(I2C_MASTER_ALREADY_INITIALIZED);
+        writeError(I2C_SLAVE_ALREADY_INITIALIZED);
         return;
     }
+	initialized = true;
 
     I2CCONbits.STREN = 1;
     // I2CCONbits.GCEN = 1;

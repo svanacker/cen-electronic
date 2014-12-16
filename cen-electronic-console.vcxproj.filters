@@ -448,6 +448,39 @@
     <Filter Include="Header Files\device\eeprom\pc">
       <UniqueIdentifier>{7b072009-1f79-41f6-8ac5-4f15273874e2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\common\i2c">
+      <UniqueIdentifier>{91e6e0e3-0e89-4406-bae0-0a620800ca5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\common\i2c\master">
+      <UniqueIdentifier>{af82c878-6f8b-494a-90f5-0f78f39986fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\common\i2c\slave">
+      <UniqueIdentifier>{5685d343-7136-4218-b74f-f68760321c63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\common\i2c\master\pc">
+      <UniqueIdentifier>{a9a7c361-00ef-4be7-9d33-fd65e7dcf526}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\common\i2c\slave\pc">
+      <UniqueIdentifier>{a771b154-55a1-41e0-bb77-e8b9f1800a25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\common\i2c">
+      <UniqueIdentifier>{e20a3864-67e2-4baf-bb3d-df7c122ea3ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\common\i2c\slave">
+      <UniqueIdentifier>{9371f3f9-e513-4eec-bc8f-f72a7c5c03ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\common\i2c\master">
+      <UniqueIdentifier>{85e4d396-9aaf-4766-9f0b-1f53215a81a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\common\i2c\master\pc">
+      <UniqueIdentifier>{17c961ce-41b7-4eed-81d5-4216c375f99f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\common\i2c\pc">
+      <UniqueIdentifier>{36220cc6-95f3-4fc9-a274-719828368542}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\common\i2c\slave\pc">
+      <UniqueIdentifier>{51b8dd80-500d-4e59-a807-e8c31f8928f7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -944,6 +977,42 @@
     </ClCompile>
     <ClCompile Include="device\eeprom\eepromDeviceInterface.c">
       <Filter>Source Files\device\eeprom</Filter>
+    </ClCompile>
+    <ClCompile Include="device\deviceDebug.c">
+      <Filter>Source Files\device</Filter>
+    </ClCompile>
+    <ClCompile Include="common\i2c\i2cDebug.c">
+      <Filter>Source Files\common\i2c</Filter>
+    </ClCompile>
+    <ClCompile Include="common\i2c\master\i2cMaster.c">
+      <Filter>Source Files\common\i2c\master</Filter>
+    </ClCompile>
+    <ClCompile Include="common\i2c\master\i2cMasterInputStream.c">
+      <Filter>Source Files\common\i2c\master</Filter>
+    </ClCompile>
+    <ClCompile Include="common\i2c\master\i2cMasterOutputStream.c">
+      <Filter>Source Files\common\i2c\master</Filter>
+    </ClCompile>
+    <ClCompile Include="common\i2c\slave\i2cSlaveLink.c">
+      <Filter>Source Files\common\i2c\slave</Filter>
+    </ClCompile>
+    <ClCompile Include="common\i2c\master\pc\i2cMasterPc.c">
+      <Filter>Source Files\common\i2c\master\pc</Filter>
+    </ClCompile>
+    <ClCompile Include="common\i2c\master\pc\i2cMasterSetupPc.c">
+      <Filter>Source Files\common\i2c\master\pc</Filter>
+    </ClCompile>
+    <ClCompile Include="common\i2c\slave\pc\i2cSlavePc.c">
+      <Filter>Source Files\common\i2c\slave\pc</Filter>
+    </ClCompile>
+    <ClCompile Include="common\i2c\slave\pc\i2cSlaveSetupPc.c">
+      <Filter>Source Files\common\i2c\slave\pc</Filter>
+    </ClCompile>
+    <ClCompile Include="common\i2c\pc\i2cCommonPc.c">
+      <Filter>Source Files\common\i2c\pc</Filter>
+    </ClCompile>
+    <ClCompile Include="common\i2c\slave\i2cSlave.c">
+      <Filter>Source Files\common\i2c\slave</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1474,6 +1543,45 @@
     </ClInclude>
     <ClInclude Include="device\eeprom\eepromDeviceInterface.h">
       <Filter>Header Files\device\eeprom</Filter>
+    </ClInclude>
+    <ClInclude Include="common\i2c\slave\i2cSlave.h">
+      <Filter>Header Files\common\i2c\slave</Filter>
+    </ClInclude>
+    <ClInclude Include="common\i2c\slave\i2cSlaveLink.h">
+      <Filter>Header Files\common\i2c\slave</Filter>
+    </ClInclude>
+    <ClInclude Include="common\i2c\slave\i2cSlaveSetup.h">
+      <Filter>Header Files\common\i2c\slave</Filter>
+    </ClInclude>
+    <ClInclude Include="common\i2c\slave\i2cSlaveStream.h">
+      <Filter>Header Files\common\i2c\slave</Filter>
+    </ClInclude>
+    <ClInclude Include="common\i2c\master\i2cMaster.h">
+      <Filter>Header Files\common\i2c\master</Filter>
+    </ClInclude>
+    <ClInclude Include="common\i2c\master\i2cMasterInputStream.h">
+      <Filter>Header Files\common\i2c\master</Filter>
+    </ClInclude>
+    <ClInclude Include="common\i2c\master\i2cMasterOutputStream.h">
+      <Filter>Header Files\common\i2c\master</Filter>
+    </ClInclude>
+    <ClInclude Include="common\i2c\master\i2cMasterSetup.h">
+      <Filter>Header Files\common\i2c\master</Filter>
+    </ClInclude>
+    <ClInclude Include="common\i2c\i2cCommon.h">
+      <Filter>Header Files\common\i2c</Filter>
+    </ClInclude>
+    <ClInclude Include="common\i2c\i2cConstants.h">
+      <Filter>Header Files\common\i2c</Filter>
+    </ClInclude>
+    <ClInclude Include="common\i2c\i2cDebug.h">
+      <Filter>Header Files\common\i2c</Filter>
+    </ClInclude>
+    <ClInclude Include="common\i2c\master\pc\i2cMasterPc.h">
+      <Filter>Header Files\common\i2c\master\pc</Filter>
+    </ClInclude>
+    <ClInclude Include="common\i2c\slave\pc\i2cSlavePc.h">
+      <Filter>Header Files\common\i2c\slave\pc</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -13,17 +13,22 @@ void WaitI2C();
 /**
  * Indirection for I2C used to manage 30F/32 compatibility.
  */
-inline void portableStartI2C();
+void portableStartI2C();
 
 /**
  * Indirection for I2C used to manage 30F/32 compatibility.
  */
-inline void portableStopI2C();
+void portableStopI2C();
 
 /**
  * Indirection for I2C used to manage 30F/32 compatibility.
  */
-inline void portableAckI2C();
+void portableAckI2C();
+
+/**
+ * Indirection for I2C used to manage 30F/32 compatibility.
+ */
+void portableNackI2C();
 
 #endif
 

@@ -1,6 +1,7 @@
 #include "systemDeviceInterface.h"
 
 #include "../../device/deviceInterface.h"
+#include "../../device/deviceDebug.h"
 #include "../../device/deviceConstants.h"
 
 static char* picName;
@@ -25,7 +26,16 @@ int deviceSystemGetInterface(char commandHeader, int mode, bool fillDeviceArgume
             setFunctionNoArgumentAndNoResult("getPicName");
         }
         return 0;
-    } else if (commandHeader == COMMAND_PING) {
+    }
+    // getPicName()
+    else if (commandHeader == COMMAND_DEVICE_LIST) {
+        // Same INPUT/OUTPUT
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("deviceList");
+        }
+        return 0;
+    }
+    else if (commandHeader == COMMAND_PING) {
         // Same INPUT/OUTPUT
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("ping");

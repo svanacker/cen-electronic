@@ -1,10 +1,5 @@
-#include "../../../common/commons.h"
-
-#include "../../../drivers/clock/PCF8563.h"
-
 #include "i2cMaster.h"
-
-#include "../../../common/delay/cenDelay.h"
+#include "../i2cCommon.h"
 
 #include "../../../common/log/logger.h"
 #include "../../../common/log/logLevel.h"

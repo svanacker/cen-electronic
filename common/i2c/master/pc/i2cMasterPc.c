@@ -1,0 +1,37 @@
+#include "i2cMasterPc.h"
+#include "../i2cMaster.h"
+#include "../../../../common/i2c/i2cCommon.h"
+
+#include "../../../../common/io/buffer.h"
+#include "../../../../common/io/printWriter.h"
+#include "../../../../common/io/reader.h"
+
+static Buffer i2cMasterToSlavePcBuffer;
+#define I2C_MASTER_PC_LENGTH	40
+static char i2cMasterToSlavePcBufferArray[I2C_MASTER_PC_LENGTH];
+
+// Specific to Pc
+Buffer* getI2CMasterToSlavePcBuffer(void) {
+	if (i2cMasterToSlavePcBuffer.length == 0) {
+		initBuffer(&i2cMasterToSlavePcBuffer, (char(*)[]) &i2cMasterToSlavePcBufferArray, I2C_MASTER_PC_LENGTH, "i2cMasterPc", "TO_SLAVE");
+	}
+	return &i2cMasterToSlavePcBuffer;
+}
+
+int portableMasterWriteI2C(char data) {
+	append(getOutputStream(&i2cMasterToSlavePcBuffer), data);
+	return data;
+}
+
+char portableMasterReadI2C() {
+	char result = bufferReadChar(&i2cMasterToSlavePcBuffer);
+	return result;
+}
+
+void portableMasterWaitSendI2C(void) {
+	// No Wait
+}
+
+void portableCloseI2C() {
+
+}

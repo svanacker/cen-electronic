@@ -1,4 +1,3 @@
-
 #include <stdbool.h>
 #include <plib.h>
 #include <i2c.h>
@@ -19,6 +18,7 @@ void i2cSlaveInitialize(char writeAddress) {
         writeError(I2C_SLAVE_ALREADY_INITIALIZED);
         return;
     }
+	initialized = true;
     // Enable the I2C module with clock stretching enabled
 	OpenI2C1(I2C_ON | I2C_7BIT_ADD | I2C_STR_EN, BRG_VAL);
 

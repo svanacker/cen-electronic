@@ -34,10 +34,14 @@ void deviceSystemHandleRawData(char header, InputStream* inputStream, OutputStre
     if (header == COMMAND_PING) {
         // data
         ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_PING);
+    }
+    else if (header == COMMAND_DEVICE_LIST) {
+        ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_DEVICE_LIST);
+        printDeviceList(getOutputStreamLogger(INFO));
     } else if (header == COMMAND_USAGE) {
         ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_USAGE);
         // we don't use driver stream (buffered->too small), instead of log (not buffered)
-        printDeviceListUsage(getOutputStreamLogger(INFO));
+        printDeviceList(getOutputStreamLogger(INFO));
     } else if (header == COMMAND_WAIT) {
         appendAck(outputStream);
         int mSec = readHex4(inputStream);

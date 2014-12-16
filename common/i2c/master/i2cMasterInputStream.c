@@ -41,7 +41,6 @@ void _i2cMasterOpenInputStream(InputStream* inputStream, int param1) {
  * @private
  */
 void fillI2CInputInternalBuffer(InputStream* inputStream) {
-    int i;
     while (true) {
         // TODO : REMOVE the delay if it's OK
         // delay100us(5);

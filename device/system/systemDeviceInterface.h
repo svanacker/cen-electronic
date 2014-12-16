@@ -7,6 +7,9 @@
 /** Command to show log configuration. */
 #define COMMAND_LOG 'L'
 
+/** Command to show devices list. */
+#define COMMAND_DEVICE_LIST 'd'
+
 /** Command to show usage for all devices. */
 #define COMMAND_USAGE 'u'
 
@@ -24,16 +27,19 @@
 
 /**
 * Get the system device interface.
+* @return a pointer on the system device Interface.
 */
 DeviceInterface* getSystemDeviceInterface(void);
 
 /**
 * Defines the name of the PIC.
+* @apicName the name of the PIC (Ex : MAIN BOARD 32 ...)
 */
 void setPicName(char* apicName);
 
 /**
 * Returns the name of the PIC.
+* @return the name of the PIC (Ex : MAIN BOARD 32 ...)
 */
 char* getPicName(void);
 
