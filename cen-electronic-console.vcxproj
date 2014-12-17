@@ -251,7 +251,9 @@
     <ClCompile Include="test\common\math\hexUtilsTest.c" />
     <ClCompile Include="test\drivers\dispatchers\driverDataDispatcherListTest.c" />
     <ClCompile Include="test\drivers\test\testDriverTest.c" />
-    <ClCompile Include="test\main\mainBoard32\mainBoard32Pc.c" />
+    <ClCompile Include="test\main\mainBoard\mainBoardPc.c" />
+    <ClCompile Include="test\main\motorBoard\motorBoardPc.c" />
+    <ClCompile Include="test\main\processHelper.c" />
     <ClCompile Include="test\unity\unity.c" />
   </ItemGroup>
   <ItemGroup>
@@ -441,7 +443,9 @@
     <ClInclude Include="test\common\math\hexUtilsTest.h" />
     <ClInclude Include="test\drivers\dispatchers\driverDataDispatcherListTest.h" />
     <ClInclude Include="test\drivers\test\testDriverTest.h" />
-    <ClInclude Include="test\main\mainBoard32\mainBoard32Pc.h" />
+    <ClInclude Include="test\main\mainBoard\mainBoardPc.h" />
+    <ClInclude Include="test\main\motorBoard\motorBoardPc.h" />
+    <ClInclude Include="test\main\processHelper.h" />
     <ClInclude Include="test\unity\unity.h" />
     <ClInclude Include="test\unity\unity_internals.h" />
   </ItemGroup>

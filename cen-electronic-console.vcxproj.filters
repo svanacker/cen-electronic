@@ -361,12 +361,6 @@
     <Filter Include="Header Files\test\main">
       <UniqueIdentifier>{cac438f1-a094-4474-a0f6-5dbb5a678b27}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\test\main\mainBoard32">
-      <UniqueIdentifier>{4a127d65-827f-4ddb-984b-c94e7e84406b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\test\main\mainBoard32">
-      <UniqueIdentifier>{a308fb08-899d-461a-a6b7-c58d3f92fa94}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\common\serial">
       <UniqueIdentifier>{4840165b-c968-4b6f-b326-1ede53fd31db}</UniqueIdentifier>
     </Filter>
@@ -480,6 +474,18 @@
     </Filter>
     <Filter Include="Header Files\common\i2c\slave\pc">
       <UniqueIdentifier>{51b8dd80-500d-4e59-a807-e8c31f8928f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\test\main\mainBoardPc">
+      <UniqueIdentifier>{a308fb08-899d-461a-a6b7-c58d3f92fa94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\test\main\mainBoard">
+      <UniqueIdentifier>{4a127d65-827f-4ddb-984b-c94e7e84406b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\test\main\motorBoardPc">
+      <UniqueIdentifier>{23502012-62f5-4986-8c7f-16ff1aef2f13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\test\main\motorBoard">
+      <UniqueIdentifier>{c22fb731-ed79-493d-bc13-66e9f020f44e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -900,9 +906,6 @@
     <ClCompile Include="common\io\pc\consoleInputStream.c">
       <Filter>Source Files\common\io\pc</Filter>
     </ClCompile>
-    <ClCompile Include="test\main\mainBoard32\mainBoard32Pc.c">
-      <Filter>Source Files\test\main\mainBoard32</Filter>
-    </ClCompile>
     <ClCompile Include="device\system\systemDebugDevice.c">
       <Filter>Source Files\device\system</Filter>
     </ClCompile>
@@ -1013,6 +1016,15 @@
     </ClCompile>
     <ClCompile Include="common\i2c\slave\i2cSlave.c">
       <Filter>Source Files\common\i2c\slave</Filter>
+    </ClCompile>
+    <ClCompile Include="test\main\mainBoard\mainBoardPc.c">
+      <Filter>Source Files\test\main\mainBoardPc</Filter>
+    </ClCompile>
+    <ClCompile Include="test\main\motorBoard\motorBoardPc.c">
+      <Filter>Source Files\test\main\motorBoardPc</Filter>
+    </ClCompile>
+    <ClCompile Include="test\main\processHelper.c">
+      <Filter>Source Files\test\main</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1466,9 +1478,6 @@
     <ClInclude Include="common\io\pc\consoleInputStream.h">
       <Filter>Header Files\common\io\pc</Filter>
     </ClInclude>
-    <ClInclude Include="test\main\mainBoard32\mainBoard32Pc.h">
-      <Filter>Header Files\test\main\mainBoard32</Filter>
-    </ClInclude>
     <ClInclude Include="device\system\systemDebugDevice.h">
       <Filter>Header Files\device\system</Filter>
     </ClInclude>
@@ -1582,6 +1591,15 @@
     </ClInclude>
     <ClInclude Include="common\i2c\slave\pc\i2cSlavePc.h">
       <Filter>Header Files\common\i2c\slave\pc</Filter>
+    </ClInclude>
+    <ClInclude Include="test\main\mainBoard\mainBoardPc.h">
+      <Filter>Header Files\test\main\mainBoard</Filter>
+    </ClInclude>
+    <ClInclude Include="test\main\motorBoard\motorBoardPc.h">
+      <Filter>Header Files\test\main\motorBoard</Filter>
+    </ClInclude>
+    <ClInclude Include="test\main\processHelper.h">
+      <Filter>Header Files\test\main</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

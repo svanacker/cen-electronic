@@ -1,4 +1,4 @@
-﻿#include "mainBoard32Pc.h"
+﻿#include "mainBoardPc.h"
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -116,7 +116,7 @@ static Device deviceListArray[MAIN_BOARD_32_PC_DEVICE_LIST_LENGTH];
 // StartMatchDetector
 static StartMatchDetector startMatchDetector;
 
-void waitForInstruction(void) {
+void mainBoardWaitForInstruction(void) {
 
 	while (consoleInputStream.availableData(&consoleInputStream)) {
 		unsigned char c = consoleInputStream.readChar(&consoleInputStream);
@@ -136,9 +136,11 @@ void waitForInstruction(void) {
 			NULL);
 }
 
-void runMainBoard32PC(void) {
-	setPicName("MAIN BOARD PC");
+void runMainBoardPC(void) {
+	setPicName(MAIN_BOARD_PC_NAME);
 
+	// We use http://patorjk.com/software/taag/#p=testall&v=2&f=Acrobatic&t=MOTOR%20BOARD%20PC
+	// with Font : Jerusalem
 	printf(" __  __    _    ___ _   _    ____   ___    _    ____  ____     ____   ____ \r\n");
 	printf("|  \\/  |  / \\  |_ _| \\ | |  | __ ) / _ \\  / \\  |  _ \\|  _ \\   |  _ \\ / ___|\r\n");
 	printf("| |\\/| | / _ \\  | ||  \\| |  |  _ \\| | | |/ _ \\ | |_) | | | |  | |_) | |    \r\n");
@@ -192,6 +194,6 @@ void runMainBoard32PC(void) {
 	initDevices();
 
 	while (1) {
-		waitForInstruction();
+		mainBoardWaitForInstruction();
 	}
 }
