@@ -2,6 +2,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <windows.h>
 
 #include "../../../common/clock/clock.h"
 #include "../../../common/eeprom/pc/eepromPc.h"
@@ -79,6 +80,7 @@
 
 #include "../../../remote/clock/remoteClock.h"
 
+#include "../processHelper.h"
 
 // Dispatchers
 #define MAIN_BOARD_32_PC_DATA_DISPATCHER_LIST_LENGTH 2
@@ -138,6 +140,7 @@ void mainBoardWaitForInstruction(void) {
 
 void runMainBoardPC(void) {
 	setPicName(MAIN_BOARD_PC_NAME);
+	moveConsole(0, 0, HALF_SCREEN_WIDTH, CONSOLE_HEIGHT);
 
 	// We use http://patorjk.com/software/taag/#p=testall&v=2&f=Acrobatic&t=MOTOR%20BOARD%20PC
 	// with Font : Jerusalem

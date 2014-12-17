@@ -45,3 +45,11 @@ bool runProcess(char* applicationName, char* option) {
 
 	return TRUE;
 }
+
+void moveConsole(int left, int top, int width, int height)
+{
+	HWND console = GetConsoleWindow();
+	// RECT r;
+	// GetWindowRect(console, &r); //stores the console's current dimensions
+	MoveWindow(console, left, top, width, height, TRUE); // 800 width, 100 height
+}

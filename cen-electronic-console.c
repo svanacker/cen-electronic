@@ -9,11 +9,14 @@
 #include "test/allTests.h"
 #include "test/main/processHelper.h"
 
+#define PIPE_NAME	L"\\\\.\\pipe\\mainBoardPipe"
+
 unsigned __stdcall test(void* pArguments) {
+	/*
 	printf("test");
 
 	_endthreadex(0);
-
+	*/
 	return 0;
 }
 
@@ -40,11 +43,25 @@ int main(int argumentCount, char* arguments[])
 	if (argumentCount <= 1) {
 		char* applicationNameAsChar = arguments[0];
 
+		HANDLE mainPipe = CreateNamedPipe(PIPE_NAME, PIPE_ACCESS_DUPLEX, PIPE_TYPE_BYTE | PIPE_READMODE_BYTE, 2, 100, 100, 0, NULL);
+		if (mainPipe == INVALID_HANDLE_VALUE)
+		{
+			printf("CreateNamedPipe failed, GLE=%d.\n", GetLastError());
+			getchar();
+			return -1;
+		}
+
+		const wchar_t *data = L"Hello";
+		DWORD numBytesWritten = 0;
+		WriteFile(mainPipe, data, wcslen(data) * sizeof(wchar_t), &numBytesWritten, NULL);
+
 		// Run the Motor Board
 		runProcess(applicationNameAsChar, MOTOR_BOARD_PC_NAME);
 
 		// And After the main Board
 		runMainBoardPC();
+
+		WriteFile(mainPipe, data, wcslen(data) * sizeof(wchar_t), &numBytesWritten, NULL);
 	}
 	else {
 		char* boardName = arguments[1];
@@ -52,6 +69,29 @@ int main(int argumentCount, char* arguments[])
 			runMainBoardPC();
 		}
 		else if (strcmp(boardName, MOTOR_BOARD_PC_NAME) == 0) {
+
+			/*
+			wchar_t buffer[128];
+			DWORD numBytesRead = 0;
+			BOOL result = ReadFile(
+				motorBoardPipe,
+				buffer, // the data from the pipe will be put here
+				127 * sizeof(wchar_t), // number of bytes allocated
+				&numBytesRead, // this will store number of bytes actually read
+				NULL // not using overlapped IO
+				);
+
+			if (result) {
+				printf("Number of bytes read: %d", numBytesRead);
+			}
+			else {
+				printf("Failed to read data from the pipe.");
+			}
+			*/
+
+			// Close our pipe handle
+			// CloseHandle(motorBoardPipe);
+
 			runMotorBoardPC();
 		}
 		else {

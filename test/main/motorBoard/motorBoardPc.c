@@ -57,6 +57,7 @@
 
 #include "../../../remote/clock/remoteClock.h"
 
+#include "../processHelper.h"
 
 // Dispatchers
 #define MOTOR_BOARD_PC_DATA_DISPATCHER_LIST_LENGTH 2
@@ -110,6 +111,7 @@ void motorBoardWaitForInstruction(void) {
 
 void runMotorBoardPC(void) {
 	setPicName(MOTOR_BOARD_PC_NAME);
+	moveConsole(HALF_SCREEN_WIDTH, 0, HALF_SCREEN_WIDTH, CONSOLE_HEIGHT);
 
 	// We use http://patorjk.com/software/taag/#p=testall&v=2&f=Acrobatic&t=MOTOR%20BOARD%20PC
 	// with Font : Jerusalem
