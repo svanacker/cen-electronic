@@ -52,7 +52,7 @@ void ackCommand(OutputStream* deviceOutputStream, const char deviceHeader, const
 */
 struct Device {
     /** The interface of the device for a remote caller (without implementation). */
-    DeviceInterface* interface;
+    DeviceInterface* deviceInterface;
     /** Which bus the device use. */
     int transmitMode;
     /** The address as char (useful for zigbee for example). */

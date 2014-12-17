@@ -157,7 +157,7 @@ bool printMethodMetaData(OutputStream* outputStream, DeviceInterface* deviceInte
  * @private
  */
 void printDeviceUsageLine(OutputStream* outputStream, char header, Device* device) {
-    DeviceInterface* deviceInterface = device->interface;
+	DeviceInterface* deviceInterface = device->deviceInterface;
 
     int argumentLength = deviceInterface->deviceGetInterface(header, DEVICE_MODE_INPUT, true);
     int resultLength = deviceInterface->deviceGetInterface(header, DEVICE_MODE_OUTPUT, true);

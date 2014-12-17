@@ -47,7 +47,7 @@ Device* addDevice(DeviceInterface* interface,
     if (size < deviceList.maxSize) {
         Device* device = getDevice(size);
         // get a pointer on a device already allocated (because we provide at init a pointer on an array of device
-        device->interface = interface;
+        device->deviceInterface = interface;
         device->descriptor = descriptor;
         device->transmitMode = transmitMode;
         device->address = address;

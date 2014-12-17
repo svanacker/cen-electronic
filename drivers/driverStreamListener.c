@@ -84,7 +84,7 @@ bool handleStreamInstruction(Buffer* inputBuffer,
         }
 
         // At this moment, device Interface is found
-        DeviceInterface* deviceInterface = device->interface;
+        DeviceInterface* deviceInterface = device->deviceInterface;
 
         // We must send device Header + commandHeader + data => + 2
         int dataToTransferCount = deviceInterface->deviceGetInterface(commandHeader, DEVICE_MODE_INPUT, false) + DEVICE_AND_COMMAND_HEADER_LENGTH;

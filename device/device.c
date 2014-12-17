@@ -16,7 +16,7 @@
 bool initDevice(const Device* device) {
     int result = true;
     DeviceDescriptor* deviceDescriptor = device->descriptor;
-    DeviceInterface* deviceInterface = device->interface;
+	DeviceInterface* deviceInterface = device->deviceInterface;
 
     const char* deviceName = deviceInterface->deviceGetName();
     OutputStream* logStream = getDebugOutputStreamLogger();
@@ -53,7 +53,7 @@ void forwardCallbackRawDataTo(InputStream* inputStream,
         const Device* device,
         const char header,
         int mode) {
-    DeviceInterface* deviceInterface = device->interface;
+	DeviceInterface* deviceInterface = device->deviceInterface;
     // Length = data of output from the message and add the length of header message (deviceHeader + commandHeader)
     int dataLength = deviceInterface->deviceGetInterface(header, mode, false) + DEVICE_AND_COMMAND_HEADER_LENGTH;
 

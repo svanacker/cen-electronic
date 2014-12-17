@@ -50,10 +50,10 @@ Device* addI2CRemoteDevice(DeviceInterface* deviceInterface, int i2cAddress);
 /**
  * @deprecated we don't use zigbee anymore
  * Add a remote Device accessible via the zigbee bus.
- * @param interface the interface to describe the remote interface for device
+ * @param interface1 the interface to describe the remote interface for device
  * @return a pointer on the Device
  */
-Device* addZigbeeRemoteDevice(DeviceInterface* interface, char* addressString);
+Device* addZigbeeRemoteDevice(DeviceInterface* interface1, char* addressString);
 
 /**
 * Get the device of index;

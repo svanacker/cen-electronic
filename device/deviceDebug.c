@@ -20,7 +20,7 @@ void printDeviceList(OutputStream* outputStream) {
 
 void printDevice(OutputStream* outputStream, const Device* device) {
     if (device != NULL) {
-        DeviceInterface* deviceInterface = device->interface;
+		DeviceInterface* deviceInterface = device->deviceInterface;
         appendString(outputStream, "deviceName=");
         appendString(outputStream, deviceInterface->deviceGetName());
         appendStringAndDec(outputStream, ", header=", deviceInterface->deviceHeader);
