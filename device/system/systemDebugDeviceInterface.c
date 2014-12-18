@@ -13,8 +13,8 @@ int deviceSystemDebugGetInterface(char header, int mode, bool fillDeviceArgument
             setFunction("setLog", 2, 0);
             setArgumentUnsignedHex2(0, "handlerIdx");
             setArgumentUnsignedHex2(1, "logLevel");
-        }
-        commandLengthValueForMode(mode, 4, 0);
+       }
+       return commandLengthValueForMode(mode, 4, 0);
     }
     else if (header == COMMAND_DISPATCHER_LIST) {
         if (fillDeviceArgumentList) {
