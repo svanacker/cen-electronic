@@ -808,6 +808,23 @@ int main(void) {
         setReadyForNextMotion(true);
 
         while (1) {
+            
+            portableStartI2C();
+            WaitI2C();
+            portableMasterWriteI2C(FREE_ADDRESS_2);//0x54
+            WaitI2C();
+            portableMasterWriteI2C('H');
+            WaitI2C();
+            portableMasterWriteI2C('E');
+            WaitI2C();
+            portableMasterWriteI2C('L');
+            WaitI2C();
+            portableMasterWriteI2C('L');
+            WaitI2C();
+            portableMasterWriteI2C('O');
+
+            portableStopI2C();
+            WaitI2C();
 
             while(1){
                 waitForInstruction();

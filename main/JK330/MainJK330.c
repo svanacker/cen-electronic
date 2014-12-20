@@ -156,6 +156,12 @@ static Buffer i2cMasterDebugOutputBuffer;
 static char i2cMasterDebugInputBufferArray[MAIN_BOARD_I2C_DEBUG_MASTER_IN_BUFFER_LENGTH];
 static Buffer i2cMasterDebugInputBuffer;
 
+// DEBUG I2C
+static char i2cSlaveDebugOutputBufferArray[MAIN_BOARD_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH];
+static Buffer i2cSlaveDebugOutputBuffer;
+static char i2cSlaveDebugInputBufferArray[MAIN_BOARD_I2C_DEBUG_MASTER_IN_BUFFER_LENGTH];
+static Buffer i2cSlaveDebugInputBuffer;
+
 //EEPROM
 static Buffer eepromBuffer;
 static char eepromBufferArray[EEPROM_BUFFER_LENGTH];
@@ -324,6 +330,15 @@ int main(void) {
                             MOTOR_BOARD_I2C_ADDRESS
                         );
 
+        // I2C Debug
+    initI2CDebugBuffers(&i2cSlaveDebugInputBuffer,
+                        &i2cSlaveDebugInputBufferArray,
+                        MAIN_BOARD_I2C_DEBUG_MASTER_IN_BUFFER_LENGTH,
+                        &i2cSlaveDebugOutputBuffer,
+                        &i2cSlaveDebugOutputBufferArray,
+                        MAIN_BOARD_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH);
+
+
     appendString(&pcOutputStream, "JK330 with PIC32...on UART PC\r");
     appendString(&debugOutputStream, "JK330 with PIC32...on UART DEBUG\r");
 
@@ -409,6 +424,7 @@ int main(void) {
         setCursorPosition_24064(1,3);
         while (1){
             printBuffer(&lcdOutputStream,&i2cSlaveInputBuffer);
+            printBuffer(&lcdOutputStream,&i2cSlaveDebugOutputBuffer);
         }
     }
 }
