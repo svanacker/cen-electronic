@@ -62,7 +62,7 @@ void addOutputStream(CompositeOutputStream* compositeOutputStream, OutputStream*
         compositeOutputStream->children[size] = childOutputStream;
         compositeOutputStream->size++;
     } else {
-        appendString(getOutputStreamLogger(ERROR), "Too much composite output Stream");
+        appendString(getErrorOutputStreamLogger(), "Too much composite output Stream");
     }
 }
 

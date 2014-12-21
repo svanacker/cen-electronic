@@ -3,7 +3,7 @@
 #include "../../../device/deviceInterface.h"
 #include "../../../device/deviceConstants.h"
 
-const char* deviceI2cMasterDebugGetName() {
+const char* deviceI2cMasterDebugGetName(void) {
     return "i2cMasterDebug";
 }
 
@@ -39,6 +39,6 @@ static DeviceInterface deviceInterface = {
     .deviceGetInterface = &deviceI2cMasterDebugGetInterface
 };
 
-DeviceInterface* getI2cMasterDebugDeviceInterface() {
+DeviceInterface* getI2cMasterDebugDeviceInterface(void) {
     return &deviceInterface;
 }

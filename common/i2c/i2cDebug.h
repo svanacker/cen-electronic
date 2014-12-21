@@ -1,13 +1,15 @@
 #ifndef I2C_DEBUG_H
 #define I2C_DEBUG_H
 
+#include <stdbool.h>
+
 #include "../../common/io/buffer.h"
 
 /**
  * Returns if we must debug I2C or not.
  * @return true if the I2C debug mode is enabled, false else.
  */
-bool getDebugI2cCEnabled();
+bool getDebugI2cEnabled();
 
 /**
  * Enabled or not the I2C Debug Buffer.

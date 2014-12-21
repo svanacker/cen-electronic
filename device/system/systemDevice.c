@@ -18,7 +18,15 @@
 #include "../../common/log/logHandler.h"
 
 #include "../../device/device.h"
+#include "../../device/deviceDebug.h"
 #include "../../device/deviceUsage.h"
+
+// #include <Windows.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <windows.h>
+
 
 void deviceSystemInit(void) {
 }
@@ -37,11 +45,20 @@ void deviceSystemHandleRawData(char header, InputStream* inputStream, OutputStre
     }
     else if (header == COMMAND_DEVICE_LIST) {
         ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_DEVICE_LIST);
+
+        /*
+        const wchar_t *data = L"Hello";
+        DWORD numBytesWritten = 0;
+        WriteFile(mainPipe, data, wcslen(data) * sizeof(wchar_t), &numBytesWritten, NULL);
+
+        int error = GetLastError();
+        printf("Writting some bytes : %d", numBytesWritten);
+        */
         printDeviceList(getOutputStreamLogger(INFO));
     } else if (header == COMMAND_USAGE) {
         ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_USAGE);
         // we don't use driver stream (buffered->too small), instead of log (not buffered)
-        printDeviceList(getOutputStreamLogger(INFO));
+        printDeviceListUsage(getOutputStreamLogger(INFO));
     } else if (header == COMMAND_WAIT) {
         appendAck(outputStream);
         int mSec = readHex4(inputStream);

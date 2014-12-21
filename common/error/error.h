@@ -27,8 +27,6 @@ bool isThereAnyError();
  */
 void clearLastError();
 
-#define NO_ERROR							0x0000
-
 // List of error Code
 
 #define ILLEGAL_ARGUMENT_EXCEPTION         0x001

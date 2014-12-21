@@ -1,7 +1,7 @@
 #include "i2cSlaveDebugDevice.h"
 #include "i2cSlaveDebugDeviceInterface.h"
 
-#include <plib.h>
+// #include <plib.h>
 
 #include "../../../common/i2c/i2cDebug.h"
 
@@ -19,13 +19,13 @@
 #include "../../../device/device.h"
 #include "../../../device/deviceUsage.h"
 
-void deviceI2cSlaveDebugInit() {
+void deviceI2cSlaveDebugInit(void) {
 }
 
-void deviceI2cSlaveDebugShutDown() {
+void deviceI2cSlaveDebugShutDown(void) {
 }
 
-bool deviceI2cSlaveDebugIsOk() {
+bool deviceI2cSlaveDebugIsOk(void) {
     return true;
 }
 
@@ -40,15 +40,16 @@ void deviceI2cSlaveDebugHandleRawData(char header, InputStream* inputStream, Out
         int c = readHex2(inputStream);
     
         // TODO : Non Portable Function
-        SlaveWriteI2C1(c);
+        // TODO SlaveWriteI2C1(c);
     }
     else if (header == COMMAND_READ_CHAR_I2C_FROM_MASTER) {
         ackCommand(outputStream, I2C_SLAVE_DEBUG_DEVICE_HEADER, COMMAND_READ_CHAR_I2C_FROM_MASTER);
     
         // TODO : Non Portable Function
-        char c = SlaveReadI2C1();
+        // char c = SlaveReadI2C1();
 
-        appendHex2(outputStream, c);
+        // appendHex2(outputStream, c);
+		appendHex2(outputStream, 0x00);
     }
 }
 

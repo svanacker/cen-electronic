@@ -487,6 +487,24 @@
     <Filter Include="Header Files\test\main\motorBoard">
       <UniqueIdentifier>{c22fb731-ed79-493d-bc13-66e9f020f44e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\device\i2c">
+      <UniqueIdentifier>{b57db40e-ead6-473a-8d5b-45f2176dc84a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\device\i2c\master">
+      <UniqueIdentifier>{1251db49-19a5-4833-8582-1cd6e9b312fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\device\i2c\slave">
+      <UniqueIdentifier>{67ef8c76-a120-4615-9c39-6e26d9793dc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\device\i2c">
+      <UniqueIdentifier>{46c301cd-2eb1-4286-aa93-628dcb1a5002}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\device\i2c\master">
+      <UniqueIdentifier>{169cf383-956a-4ed3-a4da-c76af00abe0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\device\i2c\slave">
+      <UniqueIdentifier>{63011061-ffbc-4653-b394-692f3cb8fa9a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -1025,6 +1043,27 @@
     </ClCompile>
     <ClCompile Include="test\main\processHelper.c">
       <Filter>Source Files\test\main</Filter>
+    </ClCompile>
+    <ClCompile Include="test\main\pipeHelper.c">
+      <Filter>Source Files\test\main</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\dispatcher\i2cDriverDataDispatcher.c">
+      <Filter>Source Files\drivers\dispatchers</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\dispatcher\remoteDriverDataDispatcher.c">
+      <Filter>Source Files\drivers\dispatchers</Filter>
+    </ClCompile>
+    <ClCompile Include="device\i2c\master\i2cMasterDebugDevice.c">
+      <Filter>Source Files\device\i2c\master</Filter>
+    </ClCompile>
+    <ClCompile Include="device\i2c\master\i2cMasterDebugDeviceInterface.c">
+      <Filter>Source Files\device\i2c\master</Filter>
+    </ClCompile>
+    <ClCompile Include="device\i2c\slave\i2cSlaveDebugDevice.c">
+      <Filter>Source Files\device\i2c\slave</Filter>
+    </ClCompile>
+    <ClCompile Include="device\i2c\slave\i2cSlaveDebugDeviceInterface.c">
+      <Filter>Source Files\device\i2c\slave</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1600,6 +1639,30 @@
     </ClInclude>
     <ClInclude Include="test\main\processHelper.h">
       <Filter>Header Files\test\main</Filter>
+    </ClInclude>
+    <ClInclude Include="test\main\pipeHelper.h">
+      <Filter>Header Files\test\main</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\dispatcher\i2cDriverDataDispatcher.h">
+      <Filter>Header Files\drivers\dispatchers</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\dispatcher\remoteDriverDataDispatcher.h">
+      <Filter>Header Files\drivers\dispatchers</Filter>
+    </ClInclude>
+    <ClInclude Include="device\i2c\master\i2cMasterDebugDevice.h">
+      <Filter>Header Files\device\i2c\master</Filter>
+    </ClInclude>
+    <ClInclude Include="device\i2c\master\i2cMasterDebugDeviceInterface.h">
+      <Filter>Header Files\device\i2c\master</Filter>
+    </ClInclude>
+    <ClInclude Include="device\i2c\slave\i2cSlaveDebugDevice.h">
+      <Filter>Header Files\device\i2c\slave</Filter>
+    </ClInclude>
+    <ClInclude Include="device\i2c\slave\i2cSlaveDebugDeviceInterface.h">
+      <Filter>Header Files\device\i2c\slave</Filter>
+    </ClInclude>
+    <ClInclude Include="common\i2c\master\pc\i2cMasterSetupPc.h">
+      <Filter>Header Files\common\i2c\master\pc</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

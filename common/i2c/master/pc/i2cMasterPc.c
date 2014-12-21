@@ -1,10 +1,13 @@
 #include "i2cMasterPc.h"
+#include "i2cMasterSetupPc.h"
 #include "../i2cMaster.h"
 #include "../../../../common/i2c/i2cCommon.h"
 
 #include "../../../../common/io/buffer.h"
 #include "../../../../common/io/printWriter.h"
 #include "../../../../common/io/reader.h"
+
+#include "../../../../test/main/pipeHelper.h"
 
 static Buffer i2cMasterToSlavePcBuffer;
 #define I2C_MASTER_PC_LENGTH	40
@@ -19,7 +22,10 @@ Buffer* getI2CMasterToSlavePcBuffer(void) {
 }
 
 int portableMasterWriteI2C(char data) {
-	append(getOutputStream(&i2cMasterToSlavePcBuffer), data);
+
+	HANDLE pipe = getMasterPipeHandle();
+	// TODO : Create a local version of I2C ! append(getOutputStream(&i2cMasterToSlavePcBuffer), data);
+	writeCharToPipe(pipe, data);
 	return data;
 }
 

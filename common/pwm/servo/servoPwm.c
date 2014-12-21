@@ -103,7 +103,7 @@ void initPwmForServo(int posInit) {
 bool checkServoIndex(int servoIndex, char* errorString) {
     if (servoIndex == 0 || servoIndex > PWM_COUNT) {
         writeError(ILLEGAL_ARGUMENT_EXCEPTION);
-        appendString(getOutputStreamLogger(ERROR), errorString);
+		appendString(getOutputStreamLogger(LOG_LEVEL_ERROR), errorString);
         return false;
     }
     return true;

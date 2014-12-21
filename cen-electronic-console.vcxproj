@@ -142,6 +142,10 @@
     <ClCompile Include="device\dispatcher\deviceDataDispatcher.c" />
     <ClCompile Include="device\eeprom\eepromDevice.c" />
     <ClCompile Include="device\eeprom\eepromDeviceInterface.c" />
+    <ClCompile Include="device\i2c\master\i2cMasterDebugDevice.c" />
+    <ClCompile Include="device\i2c\master\i2cMasterDebugDeviceInterface.c" />
+    <ClCompile Include="device\i2c\slave\i2cSlaveDebugDevice.c" />
+    <ClCompile Include="device\i2c\slave\i2cSlaveDebugDeviceInterface.c" />
     <ClCompile Include="device\motion\pid\pidDevice.c" />
     <ClCompile Include="device\motion\pid\pidDeviceInterface.c" />
     <ClCompile Include="device\motion\position\codersDevice.c" />
@@ -168,7 +172,9 @@
     <ClCompile Include="drivers\dispatcher\driverDataDispatcher.c" />
     <ClCompile Include="drivers\dispatcher\driverDataDispatcherDebug.c" />
     <ClCompile Include="drivers\dispatcher\driverDataDispatcherList.c" />
+    <ClCompile Include="drivers\dispatcher\i2cDriverDataDispatcher.c" />
     <ClCompile Include="drivers\dispatcher\localDriverDataDispatcher.c" />
+    <ClCompile Include="drivers\dispatcher\remoteDriverDataDispatcher.c" />
     <ClCompile Include="drivers\driver.c" />
     <ClCompile Include="drivers\driverList.c" />
     <ClCompile Include="drivers\driverStreamListener.c" />
@@ -253,6 +259,7 @@
     <ClCompile Include="test\drivers\test\testDriverTest.c" />
     <ClCompile Include="test\main\mainBoard\mainBoardPc.c" />
     <ClCompile Include="test\main\motorBoard\motorBoardPc.c" />
+    <ClCompile Include="test\main\pipeHelper.c" />
     <ClCompile Include="test\main\processHelper.c" />
     <ClCompile Include="test\unity\unity.c" />
   </ItemGroup>
@@ -272,6 +279,7 @@
     <ClInclude Include="common\i2c\master\i2cMasterOutputStream.h" />
     <ClInclude Include="common\i2c\master\i2cMasterSetup.h" />
     <ClInclude Include="common\i2c\master\pc\i2cMasterPc.h" />
+    <ClInclude Include="common\i2c\master\pc\i2cMasterSetupPc.h" />
     <ClInclude Include="common\i2c\slave\i2cSlave.h" />
     <ClInclude Include="common\i2c\slave\i2cSlaveLink.h" />
     <ClInclude Include="common\i2c\slave\i2cSlaveSetup.h" />
@@ -330,6 +338,10 @@
     <ClInclude Include="device\dispatcher\deviceDataDispatcher.h" />
     <ClInclude Include="device\eeprom\eepromDevice.h" />
     <ClInclude Include="device\eeprom\eepromDeviceInterface.h" />
+    <ClInclude Include="device\i2c\master\i2cMasterDebugDevice.h" />
+    <ClInclude Include="device\i2c\master\i2cMasterDebugDeviceInterface.h" />
+    <ClInclude Include="device\i2c\slave\i2cSlaveDebugDevice.h" />
+    <ClInclude Include="device\i2c\slave\i2cSlaveDebugDeviceInterface.h" />
     <ClInclude Include="device\motion\pid\pidDevice.h" />
     <ClInclude Include="device\motion\pid\pidDeviceInterface.h" />
     <ClInclude Include="device\motion\position\codersDevice.h" />
@@ -356,7 +368,9 @@
     <ClInclude Include="drivers\dispatcher\driverDataDispatcher.h" />
     <ClInclude Include="drivers\dispatcher\driverDataDispatcherDebug.h" />
     <ClInclude Include="drivers\dispatcher\driverDataDispatcherList.h" />
+    <ClInclude Include="drivers\dispatcher\i2cDriverDataDispatcher.h" />
     <ClInclude Include="drivers\dispatcher\localDriverDataDispatcher.h" />
+    <ClInclude Include="drivers\dispatcher\remoteDriverDataDispatcher.h" />
     <ClInclude Include="drivers\driver.h" />
     <ClInclude Include="drivers\driverList.h" />
     <ClInclude Include="drivers\driverStreamListener.h" />
@@ -445,6 +459,7 @@
     <ClInclude Include="test\drivers\test\testDriverTest.h" />
     <ClInclude Include="test\main\mainBoard\mainBoardPc.h" />
     <ClInclude Include="test\main\motorBoard\motorBoardPc.h" />
+    <ClInclude Include="test\main\pipeHelper.h" />
     <ClInclude Include="test\main\processHelper.h" />
     <ClInclude Include="test\unity\unity.h" />
     <ClInclude Include="test\unity\unity_internals.h" />

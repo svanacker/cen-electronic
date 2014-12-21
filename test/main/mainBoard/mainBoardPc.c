@@ -26,6 +26,10 @@
 #include "../../../device/clock/clockDevice.h"
 #include "../../../device/clock/clockDeviceInterface.h"
 
+// I2C -> Master
+#include "../../../device/i2c/master/i2cMasterDebugDevice.h"
+#include "../../../device/i2c/master/i2cMasterDebugDeviceInterface.h"
+
 // EEPROM
 #include "../../../device/eeprom/eepromDevice.h"
 #include "../../../device/eeprom/eepromDeviceInterface.h"
@@ -71,6 +75,7 @@
 #include "../../../drivers/driverList.h"
 #include "../../../drivers/dispatcher/driverDataDispatcherList.h"
 #include "../../../drivers/dispatcher/localDriverDataDispatcher.h"
+#include "../../../drivers/dispatcher/i2cDriverDataDispatcher.h"
 #include "../../../drivers/test/testDriver.h"
 
 #include "../../../robot/match/startMatchDetector.h"
@@ -85,6 +90,13 @@
 // Dispatchers
 #define MAIN_BOARD_32_PC_DATA_DISPATCHER_LIST_LENGTH 2
 static DriverDataDispatcher driverDataDispatcherListArray[MAIN_BOARD_32_PC_DATA_DISPATCHER_LIST_LENGTH];
+
+// Dispatcher i2c->Motor
+#define MAIN_BOARD_PC_DATA_MOTOR_BOARD_DISPATCHER_BUFFER_LENGTH 50
+static char motorBoardInputBufferArray[MAIN_BOARD_PC_DATA_MOTOR_BOARD_DISPATCHER_BUFFER_LENGTH];
+static Buffer motorBoardInputBuffer;
+static InputStream motorBoardInputStream;
+static OutputStream motorBoardOutputStream;
 
 // Drivers
 #define MAIN_BOARD_32_PC_REQUEST_DRIVER_BUFFER_LENGTH	40
@@ -169,6 +181,14 @@ void runMainBoardPC(void) {
 	initDriverDataDispatcherList((DriverDataDispatcher(*)[]) &driverDataDispatcherListArray, MAIN_BOARD_32_PC_DATA_DISPATCHER_LIST_LENGTH);
 	addLocalDriverDataDispatcher();
 
+	addI2CDriverDataDispatcher("MOTOR_BOARD_DISPATCHER",
+	&motorBoardInputBuffer,
+	(char(*)[]) &motorBoardInputBufferArray,
+	MAIN_BOARD_PC_DATA_MOTOR_BOARD_DISPATCHER_BUFFER_LENGTH,
+	&motorBoardOutputStream,
+	&motorBoardInputStream,
+	0);
+
 	// Init the drivers
 	initDrivers(&driverRequestBuffer, (char(*)[]) &driverRequestBufferArray, MAIN_BOARD_32_PC_REQUEST_DRIVER_BUFFER_LENGTH,
 		&driverResponseBuffer, (char(*)[]) &driverResponseBufferArray, MAIN_BOARD_32_PC_RESPONSE_DRIVER_BUFFER_LENGTH);
@@ -179,6 +199,7 @@ void runMainBoardPC(void) {
 	// Devices
 	initDeviceList((Device(*)[]) &deviceListArray, MAIN_BOARD_32_PC_DEVICE_LIST_LENGTH);
 	addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
+	addLocalDevice(getI2cMasterDebugDeviceInterface(), getI2cMasterDebugDeviceDescriptor());
 	addLocalDevice(getStrategyDeviceInterface(), getStrategyDeviceDescriptor());
 	addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
 	addLocalDevice(getSystemDebugDeviceInterface(), getSystemDebugDeviceDescriptor());

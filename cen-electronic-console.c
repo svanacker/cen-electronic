@@ -43,25 +43,11 @@ int main(int argumentCount, char* arguments[])
 	if (argumentCount <= 1) {
 		char* applicationNameAsChar = arguments[0];
 
-		HANDLE mainPipe = CreateNamedPipe(PIPE_NAME, PIPE_ACCESS_DUPLEX, PIPE_TYPE_BYTE | PIPE_READMODE_BYTE, 2, 100, 100, 0, NULL);
-		if (mainPipe == INVALID_HANDLE_VALUE)
-		{
-			printf("CreateNamedPipe failed, GLE=%d.\n", GetLastError());
-			getchar();
-			return -1;
-		}
-
-		const wchar_t *data = L"Hello";
-		DWORD numBytesWritten = 0;
-		WriteFile(mainPipe, data, wcslen(data) * sizeof(wchar_t), &numBytesWritten, NULL);
-
 		// Run the Motor Board
 		runProcess(applicationNameAsChar, MOTOR_BOARD_PC_NAME);
 
 		// And After the main Board
 		runMainBoardPC();
-
-		WriteFile(mainPipe, data, wcslen(data) * sizeof(wchar_t), &numBytesWritten, NULL);
 	}
 	else {
 		char* boardName = arguments[1];

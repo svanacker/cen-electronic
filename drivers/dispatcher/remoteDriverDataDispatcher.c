@@ -37,12 +37,13 @@ void remoteDriverDataDispatcherTransmit(DriverDataDispatcher* dispatcher,
     OutputStream* responseOutputStream = getOutputStream(responseBuffer);
 
     // Wait the response : TODO : Have a smaller delay
-    unsigned int dataReceived = 0;
+    int dataReceived = 0;
     int counter = 0;
     delaymSec(2);
 
     while (dataReceived < dataToReceiveCount) {
-        delay100us(1);
+        // TODO : delay100us(1);
+		delaymSec(1);
         // Copy received data to the responseOutputStream (-> responseBuffer)
         // limit data reception to 1
         dataReceived += copyInputToOutputStream(dispatcherInputStream, responseOutputStream, NULL, 1);
@@ -50,10 +51,10 @@ void remoteDriverDataDispatcherTransmit(DriverDataDispatcher* dispatcher,
         // Time out
         if (counter > 10000) {
             appendString (getErrorOutputStreamLogger(), "Dispatcher:");
-            appendString (getOutputStreamLogger(ERROR), dispatcher->name);
-            appendString (getOutputStreamLogger(ERROR), "Time out:");
-            appendStringAndDec(getOutputStreamLogger(ERROR), "Not enough Data :wanted=", dataToReceiveCount);
-            appendStringAndDec(getOutputStreamLogger(ERROR), ",received=", getBufferElementsCount(responseBuffer));
+			appendString(getOutputStreamLogger(LOG_LEVEL_ERROR), dispatcher->name);
+			appendString(getOutputStreamLogger(LOG_LEVEL_ERROR), "Time out:");
+			appendStringAndDec(getOutputStreamLogger(LOG_LEVEL_ERROR), "Not enough Data :wanted=", dataToReceiveCount);
+			appendStringAndDec(getOutputStreamLogger(LOG_LEVEL_ERROR), ",received=", getBufferElementsCount(responseBuffer));
             break;
         }
     }

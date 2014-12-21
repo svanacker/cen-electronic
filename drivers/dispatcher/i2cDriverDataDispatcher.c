@@ -41,7 +41,7 @@ DriverDataDispatcher* addI2CDriverDataDispatcher(
 
 
     // Init the output Stream : I2C Master -> I2C Slave(address)
-    initBuffer(&i2cTempBuffer, &i2cTempBufferArray, I2C_DRIVER_DATA_DISPATCHER_BUFFER_LENGTH, "I2C Master Output", "global");
+    initBuffer(&i2cTempBuffer, (char(*)[]) &i2cTempBufferArray, I2C_DRIVER_DATA_DISPATCHER_BUFFER_LENGTH, "I2C Master Output", "global");
     initMasterI2cOutputStream(i2cMasterOutputStream, &i2cTempBuffer, i2cAddress);
 
     // Init the input Stream : I2C Slave (address) -> I2C Master

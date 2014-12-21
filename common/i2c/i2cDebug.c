@@ -1,3 +1,5 @@
+#include "i2cDebug.h"
+
 #include <stdbool.h>
 #include <stdlib.h>
 

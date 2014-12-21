@@ -1,6 +1,7 @@
 #include "i2cMasterDebugDevice.h"
 #include "i2cMasterDebugDeviceInterface.h"
 
+#include "../../../common/i2c/master/i2cMaster.h"
 #include "../../../common/i2c/i2cDebug.h"
 
 #include "../../../common/io/inputStream.h"
@@ -17,13 +18,13 @@
 #include "../../../device/device.h"
 #include "../../../device/deviceUsage.h"
 
-void deviceI2cMasterDebugInit() {
+void deviceI2cMasterDebugInit(void) {
 }
 
-void deviceI2cMasterDebugShutDown() {
+void deviceI2cMasterDebugShutDown(void) {
 }
 
-bool deviceI2cMasterDebugIsOk() {
+bool deviceI2cMasterDebugIsOk(void) {
     return true;
 }
 

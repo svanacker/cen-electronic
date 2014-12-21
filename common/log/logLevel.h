@@ -22,8 +22,9 @@ typedef int LogLevel;
 #define WARNING 3
 /**
  * Reserved for blocking error.
+ * Don't use "ERROR", because this macro is defined else in windows.h
  */
-#define ERROR     4
+#define LOG_LEVEL_ERROR     4
 
 /**
  * To ensure that it's always logged

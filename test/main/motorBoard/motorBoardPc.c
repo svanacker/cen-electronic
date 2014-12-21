@@ -21,6 +21,10 @@
 #include "../../../device/device.h"
 #include "../../../device/deviceList.h"
 
+// I2C -> Slave
+#include "../../../device/i2c/slave/i2cSlaveDebugDevice.h"
+#include "../../../device/i2c/slave/i2cSlaveDebugDeviceInterface.h"
+
 // MOTION
 
 #include "../../../device/motion/pid/pidDevice.h"
@@ -147,6 +151,7 @@ void runMotorBoardPC(void) {
 	// Devices
 	initDeviceList((Device(*)[]) &deviceListArray, MOTOR_BOARD_PC_DEVICE_LIST_LENGTH);
 	addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
+	addLocalDevice(getI2cSlaveDebugDeviceInterface(), getI2cSlaveDebugDeviceDescriptor());
 	addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
 	addLocalDevice(getSystemDebugDeviceInterface(), getSystemDebugDeviceDescriptor());
 	addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());
