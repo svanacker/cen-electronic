@@ -825,7 +825,7 @@ int main(void) {
 
             portableStopI2C();
             WaitI2C();
-
+            int data1,data2,data3;
             while(1){
                 waitForInstruction();
                 //globalClock.readClock(&globalClock);
@@ -833,29 +833,36 @@ int main(void) {
                 //appendCR(&debugOutputStream);
 
                 int data = 0;
-                //portableMasterWaitSendI2C();
+                portableMasterWaitSendI2C();
+
                 portableStartI2C();
-                WaitI2C();
+                IdleI2C1();
                 portableMasterWriteI2C(FREE_ADDRESS_2 + 1);//0x54
                 WaitI2C();
-
+                
                 data = portableMasterReadI2C();
                 portableAckI2C();
-                WaitI2C();
-                append(&lcdOutputStream,data);
+                IdleI2C1();
 
-                data = portableMasterReadI2C();
+                data1 = portableMasterReadI2C();
                 portableAckI2C();
-                WaitI2C();
-                append(&lcdOutputStream,data);
+                IdleI2C1();
 
-                data = portableMasterReadI2C();
+                data2= portableMasterReadI2C();
+                portableAckI2C();
+                IdleI2C1();
+
+
+                data3 = portableMasterReadI2C();
                 portableNackI2C();
-                WaitI2C();
+                IdleI2C1();
                 append(&lcdOutputStream,data);
+                append(&lcdOutputStream,data1);
+                append(&lcdOutputStream,data2);
+                append(&lcdOutputStream,data3);
 
                 portableStopI2C();
-                WaitI2C();
+                IdleI2C1();
                 
                 delaymSec(500);
             }

@@ -1,3 +1,4 @@
+#include <p32xxxx.h>
 #include "../../../../common/commons.h"
 
 //#include <i2c.h>
@@ -91,6 +92,7 @@ void __ISR(_I2C_1_VECTOR, ipl3) _SlaveI2CHandler(void)
         // R/W bit = 1 --> indicates data transfer is output from slave
         // D/A bit = 0 --> indicates last byte was address
         temp = SlaveReadI2C1();
+        //SlaveWriteI2C1('x');
 
         Buffer* i2cSlaveOutputBuffer = i2cStreamLink->outputBuffer;
         // Get an inputStream to read the buffer to send to the master
@@ -111,16 +113,20 @@ void __ISR(_I2C_1_VECTOR, ipl3) _SlaveI2CHandler(void)
             // There is no data, we send it to the master
             // We send 0 (end of buffer)
             if (debugI2cOutputBuffer != NULL) {
-                bufferWriteChar(debugI2cOutputBuffer, I2C_SLAVE_NO_DATA_IN_READ_BUFFER);
+                bufferWriteChar(debugI2cOutputBuffer, 'x');
             }
-            SlaveWriteI2C1(I2C_SLAVE_NO_DATA_IN_READ_BUFFER);
+            SlaveWriteI2C1('x');
         }
+
+ 
     }
     //Master want to read
-    else if ((read == 1) && (isData == 1)) {
+    else if (I2C1STATbits.S && I2C1STATbits.R_W && I2C1STATbits.D_A && !I2C1CONbits.SCLREL) {
         // R/W bit = 1 --> indicates data transfer is output from slave
         // D/A bit = 1 --> indicates last byte was data
 
+        //SlaveWriteI2C1('y');
+
         Buffer* i2cSlaveOutputBuffer = i2cStreamLink->outputBuffer;
         // Get an inputStream to read the buffer to send to the master
         InputStream* i2cInputStream = getInputStream(i2cSlaveOutputBuffer);
@@ -140,10 +146,18 @@ void __ISR(_I2C_1_VECTOR, ipl3) _SlaveI2CHandler(void)
             // There is no data, we send it to the master
             // We send 0 (end of buffer)
             if (debugI2cOutputBuffer != NULL) {
-                bufferWriteChar(debugI2cOutputBuffer, I2C_SLAVE_NO_DATA_IN_READ_BUFFER);
+                bufferWriteChar(debugI2cOutputBuffer, 'y');
             }
-            SlaveWriteI2C1(I2C_SLAVE_NO_DATA_IN_READ_BUFFER);
-        }         
+            SlaveWriteI2C1('y');
+        }
+        
+
+    }else if (I2C1STATbits.S && I2C1STATbits.R_W && I2C1STATbits.D_A && I2C1CONbits.SCLREL) {
+      //State5
+      //NACK from master
+      // dataToMaster = DATA_TO_MASTER;   // reset this value for next transaction
+    }else{
+
     }
 
     // finally clear the slave interrupt flag
