@@ -6,11 +6,11 @@
 #include "../../../../common/i2c/i2cCommon.h"
 
 
-inline int portableMasterWriteI2C(char data) {
+inline unsigned int portableMasterWriteI2C(unsigned char data) {
 	return MasterWriteI2C(data);
 }
 
-inline char portableMasterReadI2C() {
+inline unsigned char portableMasterReadI2C() {
 	return MasterReadI2C();
 }
 

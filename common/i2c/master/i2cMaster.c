@@ -7,7 +7,7 @@
 #include "../../../common/i2c/i2cCommon.h"
 #include "../../../common/io/buffer.h"
 
-void i2cMasterWriteBuffer(char address, Buffer* buffer) {
+void i2cMasterWriteBuffer(unsigned char address, Buffer* buffer) {
     portableMasterWaitSendI2C();
     // Wait till Start sequence is completed
     WaitI2C();
@@ -29,7 +29,7 @@ void i2cMasterWriteBuffer(char address, Buffer* buffer) {
     portableStopI2C();
 }
 
-void i2cMasterWriteChar(char address, char c) {
+void i2cMasterWriteChar(unsigned char address, unsigned char c) {
     // We append to a buffer
     portableStartI2C();
     // Wait till Start sequence is completed
@@ -47,7 +47,7 @@ void i2cMasterWriteChar(char address, char c) {
     WaitI2C();
 }
 
-char i2cMasterReadChar(char address) {
+unsigned char i2cMasterReadChar(unsigned char address) {
     portableStartI2C();
     WaitI2C();
 
@@ -63,7 +63,7 @@ char i2cMasterReadChar(char address) {
     return data;
 }
 
-char i2cMasterReadRegisterValue(char address, char commandRegister) {
+unsigned char i2cMasterReadRegisterValue(unsigned char address, unsigned char commandRegister) {
     // Set the register command
     WaitI2C();
     portableStartI2C();
@@ -97,9 +97,9 @@ char i2cMasterReadRegisterValue(char address, char commandRegister) {
     return data;
 }
 
-void i2cMasterRegisterReadBuffer(char address,char reg, char length, Buffer* buffer){
+void i2cMasterRegisterReadBuffer(unsigned char address, unsigned char reg, unsigned char length, Buffer* buffer){
     // Set the register command
-    i2cMasterWriteChar(address,reg);
+    i2cMasterWriteChar(address, reg);
 
     // read the data
     portableStartI2C();
@@ -122,7 +122,7 @@ void i2cMasterRegisterReadBuffer(char address,char reg, char length, Buffer* buf
     WaitI2C();
 }
 
-void i2cMasterReadBuffer(char address, char length, Buffer* buffer){
+void i2cMasterReadBuffer(unsigned char address, unsigned char length, Buffer* buffer){
     portableStartI2C();
     WaitI2C();
     portableMasterWriteI2C(address );

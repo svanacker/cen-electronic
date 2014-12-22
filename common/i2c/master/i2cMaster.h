@@ -11,13 +11,13 @@
  * Indirection for I2C used to manage 30F/32 compatibility.
  * @param data to write by the I2C master component
  */
-int portableMasterWriteI2C(char data);
+unsigned int portableMasterWriteI2C(unsigned char data);
 
 /**
  * Indirection for I2C used to manage 30F/32 compatibility.
  * @return read by the I2C master component
  */
-char portableMasterReadI2C( void );
+unsigned char portableMasterReadI2C( void );
 
 /**
  * Indirection for I2C used to manage 30F/32 compatibility.
@@ -36,25 +36,24 @@ void portableMasterWaitSendI2C( void );
 * @param address the address of I2C that we send
 * @param buffer the buffer of data
 */
-void i2cMasterWriteBuffer(char address, Buffer* buffer);
+void i2cMasterWriteBuffer(unsigned char address, Buffer* buffer);
 
 /**
 * Sends a char to the I2C.
 * @param address the address of I2C that we send
 * @param c the char to send to I2C bus
 */
-void i2cMasterWriteChar(char address, char c);
+void i2cMasterWriteChar(unsigned char address, unsigned char c);
 
 /**
  * Write a command register index, and read the corresponding
  * value.
  * Useful for many I2C Device, but not for stream
  * @see i2cMasterReadChar
- * @param adress the adresse where to read the register value
+ * @param address the address where to read the register value
  * @param commandRegister the register command
  */
-char i2cMasterReadRegisterValue(char address,
-                                char commandRegister);
+unsigned char i2cMasterReadRegisterValue(unsigned char address, unsigned char commandRegister);
 
 /**
  * Read the current value for the I2C device.
@@ -62,25 +61,25 @@ char i2cMasterReadRegisterValue(char address,
  * If not data available, Slave will return 
  * I2C_SLAVE_NO_DATA_IN_READ_BUFFER
  */
-char i2cMasterReadChar(char address);
+unsigned char i2cMasterReadChar(unsigned char address);
 
 /**
  * Read the all values from the I2C device.
  * Slave will return all values and store them in the buffer
- * @param address the adress of i2c slave
+ * @param address the address of i2c slave
  * @param register the register selected
  * @param length the number of data to read
  * @param Buffer* buffer the buffer
  */
-void i2cMasterRegisterReadBuffer(char address, char register, char length, Buffer* buffer);
+void i2cMasterRegisterReadBuffer(unsigned char address, unsigned char register, unsigned char length, Buffer* buffer);
 
 /**
  * Read the all values from the I2C device.
  * Slave will return all values and store them in the buffer
- * @param address the adress of i2c slave
+ * @param address the address of i2c slave
  * @param length the number of data to read
  * @param Buffer* buffer the buffer
  */
-void i2cMasterReadBuffer(char address, char length, Buffer* buffer);
+void i2cMasterReadBuffer(unsigned char address, unsigned char length, Buffer* buffer);
 
 #endif

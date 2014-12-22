@@ -1,8 +1,7 @@
 #include "i2cSlaveDebugDevice.h"
 #include "i2cSlaveDebugDeviceInterface.h"
 
-// #include <plib.h>
-
+#include "../../../common/i2c/slave/i2cSlave.h"
 #include "../../../common/i2c/i2cDebug.h"
 
 #include "../../../common/io/inputStream.h"
@@ -37,19 +36,15 @@ void deviceI2cSlaveDebugHandleRawData(char header, InputStream* inputStream, Out
     }
     else if (header == COMMAND_SEND_CHAR_I2C_TO_MASTER) {
         ackCommand(outputStream, I2C_SLAVE_DEBUG_DEVICE_HEADER, COMMAND_SEND_CHAR_I2C_TO_MASTER);
+
         int c = readHex2(inputStream);
-    
-        // TODO : Non Portable Function
-        // TODO SlaveWriteI2C1(c);
+        portableSlaveWriteI2C(c);
     }
     else if (header == COMMAND_READ_CHAR_I2C_FROM_MASTER) {
         ackCommand(outputStream, I2C_SLAVE_DEBUG_DEVICE_HEADER, COMMAND_READ_CHAR_I2C_FROM_MASTER);
     
-        // TODO : Non Portable Function
-        // char c = SlaveReadI2C1();
-
-        // appendHex2(outputStream, c);
-		appendHex2(outputStream, 0x00);
+        char c = portableSlaveReadI2C();
+        appendHex2(outputStream, c);
     }
 }
 
@@ -60,6 +55,6 @@ static DeviceDescriptor descriptor = {
     .deviceHandleRawData = &deviceI2cSlaveDebugHandleRawData,
 };
 
-DeviceDescriptor* getI2cSlaveDebugDeviceDescriptor() {
+DeviceDescriptor* getI2cSlaveDebugDeviceDescriptor(void) {
     return &descriptor;
 }

@@ -13,7 +13,19 @@ void setI2cStreamLink(StreamLink* aStreamLink);
  * Returns the stream link.
  * @return the stream link
  */
-StreamLink* getI2cStreamLink();
+StreamLink* getI2cStreamLink(void);
+
+/**
+ * Portable Function which must be used to read the I2C Slave.
+ * @return the read data
+ */
+unsigned char portableSlaveReadI2C(void);
+
+/**
+ * Portable Function which must be used to write from the I2C Slave to the Master.
+ * @param c the data to write back to the master
+ */
+void portableSlaveWriteI2C(unsigned char c);
 
 #endif
 

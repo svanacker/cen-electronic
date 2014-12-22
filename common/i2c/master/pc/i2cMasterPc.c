@@ -21,7 +21,7 @@ Buffer* getI2CMasterToSlavePcBuffer(void) {
 	return &i2cMasterToSlavePcBuffer;
 }
 
-int portableMasterWriteI2C(char data) {
+unsigned int portableMasterWriteI2C(unsigned char data) {
 
 	HANDLE pipe = getMasterPipeHandle();
 	// TODO : Create a local version of I2C ! append(getOutputStream(&i2cMasterToSlavePcBuffer), data);
@@ -29,9 +29,11 @@ int portableMasterWriteI2C(char data) {
 	return data;
 }
 
-char portableMasterReadI2C() {
-	char result = bufferReadChar(&i2cMasterToSlavePcBuffer);
-	return result;
+unsigned char portableMasterReadI2C() {
+	// char result = bufferReadChar(&i2cMasterToSlavePcBuffer);
+	// return result;
+	// TODO : Implementation
+	return I2C_SLAVE_NO_DATA_IN_READ_BUFFER;
 }
 
 void portableMasterWaitSendI2C(void) {

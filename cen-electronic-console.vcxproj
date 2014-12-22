@@ -285,6 +285,7 @@
     <ClInclude Include="common\i2c\slave\i2cSlaveSetup.h" />
     <ClInclude Include="common\i2c\slave\i2cSlaveStream.h" />
     <ClInclude Include="common\i2c\slave\pc\i2cSlavePc.h" />
+    <ClInclude Include="common\i2c\slave\pc\i2cSlaveSetupPc.h" />
     <ClInclude Include="common\io\binaryPrintWriter.h" />
     <ClInclude Include="common\io\binaryWriter.h" />
     <ClInclude Include="common\io\buffer.h" />

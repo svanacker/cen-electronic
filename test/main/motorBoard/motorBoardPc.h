@@ -8,4 +8,26 @@
  */
 void runMotorBoardPC(void);
 
+/** Define the I2C address used by motorBoardPc. */
+#define MOTOR_BOARD_PC_I2C_ADDRESS     0x50
+
+#define MOTOR_BOARD_PC_DATA_DISPATCHER_LIST_LENGTH 2
+
+// CONSOLE
+
+#define MOTOR_BOARD_PC_CONSOLE_INPUT_BUFFER_LENGTH	40
+#define MOTOR_BOARD_PC_CONSOLE_OUTPUT_BUFFER_LENGTH	40
+
+/** Maximal length for In Buffer length. */
+#define MOTOR_BOARD_PC_IN_BUFFER_LENGTH    30
+
+/** Maximal length for Out Buffer length. */
+#define MOTOR_BOARD_PC_OUT_BUFFER_LENGTH    30
+
+// DEVICES
+#define MOTOR_BOARD_PC_DEVICE_LIST_LENGTH        10
+
+// TIMERS
+#define MOTOR_BOARD_PC_TIMER_LENGTH         2
+
 #endif

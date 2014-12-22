@@ -1664,6 +1664,9 @@
     <ClInclude Include="common\i2c\master\pc\i2cMasterSetupPc.h">
       <Filter>Header Files\common\i2c\master\pc</Filter>
     </ClInclude>
+    <ClInclude Include="common\i2c\slave\pc\i2cSlaveSetupPc.h">
+      <Filter>Header Files\common\i2c\slave\pc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="cen-electronic-console.rc">

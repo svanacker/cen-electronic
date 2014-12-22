@@ -4,12 +4,17 @@
 #include <stdio.h>
 
 #include "../../../common/clock/clock.h"
+#include "../../../common/delay/cenDelay.h"
 #include "../../../common/eeprom/pc/eepromPc.h"
 #include "../../../common/error/error.h"
+#include "../../../common/i2c/slave/pc/i2cSlavePc.h"
+#include "../../../common/i2c/slave/pc/i2cSlaveSetupPc.h"
+#include "../../../common/i2c/slave/i2cSlaveLink.h"
 #include "../../../common/io/pc/consoleOutputStream.h"
 #include "../../../common/io/pc/consoleInputStream.h"
 #include "../../../common/io/filter.h"
 #include "../../../common/io/stream.h"
+#include "../../../common/io/streamLink.h"
 #include "../../../common/io/pc/consoleOutputStream.h"
 #include "../../../common/log/logger.h"
 #include "../../../common/log/logLevel.h"
@@ -64,37 +69,32 @@
 #include "../processHelper.h"
 
 // Dispatchers
-#define MOTOR_BOARD_PC_DATA_DISPATCHER_LIST_LENGTH 2
 static DriverDataDispatcher driverDataDispatcherListArray[MOTOR_BOARD_PC_DATA_DISPATCHER_LIST_LENGTH];
 
-// Drivers
-#define MOTOR_BOARD_PC_REQUEST_DRIVER_BUFFER_LENGTH	40
-static Buffer driverRequestBuffer;
-static char driverRequestBufferArray[MOTOR_BOARD_PC_REQUEST_DRIVER_BUFFER_LENGTH];
-#define MOTOR_BOARD_PC_RESPONSE_DRIVER_BUFFER_LENGTH	40
-static Buffer driverResponseBuffer;
-static char driverResponseBufferArray[MOTOR_BOARD_PC_RESPONSE_DRIVER_BUFFER_LENGTH];
-
 // Timers
-#define MOTOR_BOARD_PC_TIMER_LENGTH	10
 static Device timerListArray[MOTOR_BOARD_PC_TIMER_LENGTH];
 
 // ConsoleOutputStream
 static InputStream consoleInputStream;
 static OutputStream consoleOutputStream;
-#define MOTOR_BOARD_PC_CONSOLE_INPUT_BUFFER_LENGTH	40
 static char consoleInputBufferArray[MOTOR_BOARD_PC_CONSOLE_INPUT_BUFFER_LENGTH];
 static Buffer consoleInputBuffer;
-#define MOTOR_BOARD_PC_CONSOLE_OUTPUT_BUFFER_LENGTH	40
 static char consoleOutputBufferArray[MOTOR_BOARD_PC_CONSOLE_OUTPUT_BUFFER_LENGTH];
 static Buffer consoleOutputBuffer;
 
+// i2c Link
+static char i2cSlaveInputBufferArray[MOTOR_BOARD_PC_IN_BUFFER_LENGTH];
+static Buffer i2cSlaveInputBuffer;
+static char i2cSlaveOutputBufferArray[MOTOR_BOARD_PC_OUT_BUFFER_LENGTH];
+static Buffer i2cSlaveOutputBuffer;
+static StreamLink i2cSlaveStreamLink;
+
 // Devices
-#define MOTOR_BOARD_PC_DEVICE_LIST_LENGTH		20
 static Device deviceListArray[MOTOR_BOARD_PC_DEVICE_LIST_LENGTH];
 
 void motorBoardWaitForInstruction(void) {
 
+	// Analyze data from the Console
 	while (consoleInputStream.availableData(&consoleInputStream)) {
 		unsigned char c = consoleInputStream.readChar(&consoleInputStream);
 		consoleInputBuffer.outputStream.writeChar(&(consoleInputBuffer.outputStream), c);
@@ -103,6 +103,10 @@ void motorBoardWaitForInstruction(void) {
 		}
 		consoleOutputStream.writeChar(&consoleOutputStream, c);
 	}
+
+	// Analyse data from the I2C
+
+	// handleStreamInstruction(&i2cSlaveInputBuffer, &i2cSlaveOutputBuffer, NULL, &filterRemoveCRLF, NULL);
 
 	// TODO : Introduce the same as interrupt to be able to add char not in the main execution program
 		handleStreamInstruction(
@@ -141,13 +145,6 @@ void runMotorBoardPC(void) {
 	initDriverDataDispatcherList((DriverDataDispatcher(*)[]) &driverDataDispatcherListArray, MOTOR_BOARD_PC_DATA_DISPATCHER_LIST_LENGTH);
 	addLocalDriverDataDispatcher();
 
-	// Init the drivers
-	initDrivers(&driverRequestBuffer, (char(*)[]) &driverRequestBufferArray, MOTOR_BOARD_PC_REQUEST_DRIVER_BUFFER_LENGTH,
-		&driverResponseBuffer, (char(*)[]) &driverResponseBufferArray, MOTOR_BOARD_PC_RESPONSE_DRIVER_BUFFER_LENGTH);
-
-	// Get test driver for debug purpose
-	addDriver(testDriverGetDescriptor(), TRANSMIT_LOCAL);
-
 	// Devices
 	initDeviceList((Device(*)[]) &deviceListArray, MOTOR_BOARD_PC_DEVICE_LIST_LENGTH);
 	addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
@@ -163,6 +160,18 @@ void runMotorBoardPC(void) {
 	addLocalDevice(getMotionDeviceInterface(), getMotionDeviceDescriptor());
 
 	initDevices();
+
+	delaymSec(500);
+
+	openSlaveI2cStreamLink(&i2cSlaveStreamLink,
+		&i2cSlaveInputBuffer,
+		(char(*)[]) &i2cSlaveInputBufferArray,
+		MOTOR_BOARD_PC_IN_BUFFER_LENGTH,
+		&i2cSlaveOutputBuffer,
+		(char(*)[]) &i2cSlaveOutputBufferArray,
+		MOTOR_BOARD_PC_OUT_BUFFER_LENGTH,
+		MOTOR_BOARD_PC_I2C_ADDRESS
+	);
 
 	while (1) {
 		motorBoardWaitForInstruction();

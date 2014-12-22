@@ -85,46 +85,43 @@
 
 #include "../../../remote/clock/remoteClock.h"
 
+#include "../../../test/main/motorBoard/motorBoardPc.h"
+
 #include "../processHelper.h"
 
 // Dispatchers
-#define MAIN_BOARD_32_PC_DATA_DISPATCHER_LIST_LENGTH 2
-static DriverDataDispatcher driverDataDispatcherListArray[MAIN_BOARD_32_PC_DATA_DISPATCHER_LIST_LENGTH];
+static DriverDataDispatcher driverDataDispatcherListArray[MAIN_BOARD_PC_DATA_DISPATCHER_LIST_LENGTH];
 
 // Dispatcher i2c->Motor
-#define MAIN_BOARD_PC_DATA_MOTOR_BOARD_DISPATCHER_BUFFER_LENGTH 50
 static char motorBoardInputBufferArray[MAIN_BOARD_PC_DATA_MOTOR_BOARD_DISPATCHER_BUFFER_LENGTH];
 static Buffer motorBoardInputBuffer;
 static InputStream motorBoardInputStream;
 static OutputStream motorBoardOutputStream;
 
 // Drivers
-#define MAIN_BOARD_32_PC_REQUEST_DRIVER_BUFFER_LENGTH	40
 static Buffer driverRequestBuffer;
-static char driverRequestBufferArray[MAIN_BOARD_32_PC_REQUEST_DRIVER_BUFFER_LENGTH];
-#define MAIN_BOARD_32_PC_RESPONSE_DRIVER_BUFFER_LENGTH	40
+static char driverRequestBufferArray[MAIN_BOARD_PC_REQUEST_DRIVER_BUFFER_LENGTH];
 static Buffer driverResponseBuffer;
-static char driverResponseBufferArray[MAIN_BOARD_32_PC_RESPONSE_DRIVER_BUFFER_LENGTH];
+static char driverResponseBufferArray[MAIN_BOARD_PC_RESPONSE_DRIVER_BUFFER_LENGTH];
 
 // Timers
-#define MAIN_BOARD_32_PC_TIMER_LENGTH	10
-static Device timerListArray[MAIN_BOARD_32_PC_TIMER_LENGTH];
+#define MAIN_BOARD_PC_TIMER_LENGTH	10
+static Device timerListArray[MAIN_BOARD_PC_TIMER_LENGTH];
 
 // ConsoleOutputStream
 static InputStream consoleInputStream;
 static OutputStream consoleOutputStream;
-#define MAIN_BOARD_32_PC_CONSOLE_INPUT_BUFFER_LENGTH	40
-static char consoleInputBufferArray[MAIN_BOARD_32_PC_CONSOLE_INPUT_BUFFER_LENGTH];
+
+static char consoleInputBufferArray[MAIN_BOARD_PC_CONSOLE_INPUT_BUFFER_LENGTH];
 static Buffer consoleInputBuffer;
-#define MAIN_BOARD_32_PC_CONSOLE_OUTPUT_BUFFER_LENGTH	40
-static char consoleOutputBufferArray[MAIN_BOARD_32_PC_CONSOLE_OUTPUT_BUFFER_LENGTH];
+
+static char consoleOutputBufferArray[MAIN_BOARD_PC_CONSOLE_OUTPUT_BUFFER_LENGTH];
 static Buffer consoleOutputBuffer;
 
 // Eeprom
 static Eeprom eeprom;
 
 // Devices
-#define MAIN_BOARD_32_PC_DEVICE_LIST_LENGTH		20
 static Device deviceListArray[MAIN_BOARD_32_PC_DEVICE_LIST_LENGTH];
 
 // StartMatchDetector
@@ -172,13 +169,13 @@ void runMainBoardPC(void) {
 
 	initEepromPc(&eeprom);
 
-	initTimerList((Timer(*)[]) &timerListArray, MAIN_BOARD_32_PC_TIMER_LENGTH);
+	initTimerList((Timer(*)[]) &timerListArray, MAIN_BOARD_PC_TIMER_LENGTH);
 
-	initBuffer(&consoleInputBuffer, (char(*)[]) &consoleInputBufferArray, MAIN_BOARD_32_PC_CONSOLE_INPUT_BUFFER_LENGTH, "inputConsoleBuffer", "IN");
-	initBuffer(&consoleOutputBuffer, (char(*)[]) &consoleOutputBufferArray, MAIN_BOARD_32_PC_CONSOLE_OUTPUT_BUFFER_LENGTH, "outputConsoleBuffer", "IN");
+	initBuffer(&consoleInputBuffer, (char(*)[]) &consoleInputBufferArray, MAIN_BOARD_PC_CONSOLE_INPUT_BUFFER_LENGTH, "inputConsoleBuffer", "IN");
+	initBuffer(&consoleOutputBuffer, (char(*)[]) &consoleOutputBufferArray, MAIN_BOARD_PC_CONSOLE_OUTPUT_BUFFER_LENGTH, "outputConsoleBuffer", "IN");
 
 	// Dispatchers
-	initDriverDataDispatcherList((DriverDataDispatcher(*)[]) &driverDataDispatcherListArray, MAIN_BOARD_32_PC_DATA_DISPATCHER_LIST_LENGTH);
+	initDriverDataDispatcherList((DriverDataDispatcher(*)[]) &driverDataDispatcherListArray, MAIN_BOARD_PC_DATA_DISPATCHER_LIST_LENGTH);
 	addLocalDriverDataDispatcher();
 
 	addI2CDriverDataDispatcher("MOTOR_BOARD_DISPATCHER",
@@ -187,18 +184,21 @@ void runMainBoardPC(void) {
 	MAIN_BOARD_PC_DATA_MOTOR_BOARD_DISPATCHER_BUFFER_LENGTH,
 	&motorBoardOutputStream,
 	&motorBoardInputStream,
-	0);
+	MOTOR_BOARD_PC_I2C_ADDRESS);
 
 	// Init the drivers
-	initDrivers(&driverRequestBuffer, (char(*)[]) &driverRequestBufferArray, MAIN_BOARD_32_PC_REQUEST_DRIVER_BUFFER_LENGTH,
-		&driverResponseBuffer, (char(*)[]) &driverResponseBufferArray, MAIN_BOARD_32_PC_RESPONSE_DRIVER_BUFFER_LENGTH);
+	initDrivers(&driverRequestBuffer, (char(*)[]) &driverRequestBufferArray, MAIN_BOARD_PC_REQUEST_DRIVER_BUFFER_LENGTH,
+		&driverResponseBuffer, (char(*)[]) &driverResponseBufferArray, MAIN_BOARD_PC_RESPONSE_DRIVER_BUFFER_LENGTH);
 
 	// Get test driver for debug purpose
 	addDriver(testDriverGetDescriptor(), TRANSMIT_LOCAL);
 
 	// Devices
 	initDeviceList((Device(*)[]) &deviceListArray, MAIN_BOARD_32_PC_DEVICE_LIST_LENGTH);
-	addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
+	// addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
+
+	addI2CRemoteDevice(getTestDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
+
 	addLocalDevice(getI2cMasterDebugDeviceInterface(), getI2cMasterDebugDeviceDescriptor());
 	addLocalDevice(getStrategyDeviceInterface(), getStrategyDeviceDescriptor());
 	addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
