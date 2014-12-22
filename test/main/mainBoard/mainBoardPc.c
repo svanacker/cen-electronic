@@ -122,7 +122,7 @@ static Buffer consoleOutputBuffer;
 static Eeprom eeprom;
 
 // Devices
-static Device deviceListArray[MAIN_BOARD_32_PC_DEVICE_LIST_LENGTH];
+static Device deviceListArray[MAIN_BOARD_PC_DEVICE_LIST_LENGTH];
 
 // StartMatchDetector
 static StartMatchDetector startMatchDetector;
@@ -194,7 +194,7 @@ void runMainBoardPC(void) {
 	addDriver(testDriverGetDescriptor(), TRANSMIT_LOCAL);
 
 	// Devices
-	initDeviceList((Device(*)[]) &deviceListArray, MAIN_BOARD_32_PC_DEVICE_LIST_LENGTH);
+	initDeviceList((Device(*)[]) &deviceListArray, MAIN_BOARD_PC_DEVICE_LIST_LENGTH);
 	// addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
 
 	addI2CRemoteDevice(getTestDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);

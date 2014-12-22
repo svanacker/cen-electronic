@@ -15,7 +15,7 @@
 #define MAIN_BOARD_PC_CONSOLE_OUTPUT_BUFFER_LENGTH				40
 
 // Devices
-#define MAIN_BOARD_32_PC_DEVICE_LIST_LENGTH						20
+#define MAIN_BOARD_PC_DEVICE_LIST_LENGTH						20
 
 /**
  * Start Point to emulate the main Board PC.

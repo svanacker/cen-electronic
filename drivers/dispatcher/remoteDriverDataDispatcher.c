@@ -41,6 +41,8 @@ void remoteDriverDataDispatcherTransmit(DriverDataDispatcher* dispatcher,
     int counter = 0;
     delaymSec(2);
 
+	/*
+	// Wait as soon as we do not receive all the response
     while (dataReceived < dataToReceiveCount) {
         // TODO : delay100us(1);
 		delaymSec(1);
@@ -49,7 +51,7 @@ void remoteDriverDataDispatcherTransmit(DriverDataDispatcher* dispatcher,
         dataReceived += copyInputToOutputStream(dispatcherInputStream, responseOutputStream, NULL, 1);
         counter++;
         // Time out
-        if (counter > 10000) {
+        if (counter > 100) {
             appendString (getErrorOutputStreamLogger(), "Dispatcher:");
 			appendString(getOutputStreamLogger(LOG_LEVEL_ERROR), dispatcher->name);
 			appendString(getOutputStreamLogger(LOG_LEVEL_ERROR), "Time out:");
@@ -58,5 +60,6 @@ void remoteDriverDataDispatcherTransmit(DriverDataDispatcher* dispatcher,
             break;
         }
     }
+	*/
     // printDebugBuffer(getOutputStreamLogger(ERROR), responseBuffer);
 }

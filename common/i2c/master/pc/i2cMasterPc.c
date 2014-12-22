@@ -9,18 +9,6 @@
 
 #include "../../../../test/main/pipeHelper.h"
 
-static Buffer i2cMasterToSlavePcBuffer;
-#define I2C_MASTER_PC_LENGTH	40
-static char i2cMasterToSlavePcBufferArray[I2C_MASTER_PC_LENGTH];
-
-// Specific to Pc
-Buffer* getI2CMasterToSlavePcBuffer(void) {
-	if (i2cMasterToSlavePcBuffer.length == 0) {
-		initBuffer(&i2cMasterToSlavePcBuffer, (char(*)[]) &i2cMasterToSlavePcBufferArray, I2C_MASTER_PC_LENGTH, "i2cMasterPc", "TO_SLAVE");
-	}
-	return &i2cMasterToSlavePcBuffer;
-}
-
 unsigned int portableMasterWriteI2C(unsigned char data) {
 
 	HANDLE pipe = getMasterPipeHandle();

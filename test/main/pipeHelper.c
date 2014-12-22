@@ -15,7 +15,7 @@ HANDLE initMasterToSlavePipe(LPCWSTR pipeName) {
 		// outBufferSize
 		100,
 		// inBufferSize
-		0,
+		100,
 		// default time out, in milliseconds
 		0,
 		NULL);
@@ -42,14 +42,12 @@ HANDLE initMasterToSlavePipe(LPCWSTR pipeName) {
 	}
 	printf("OK !\r\n");
 
-	// SetNamedPipeHandleState(result, PIPE_TYPE_BYTE | PIPE_READMODE_BYTE | PIPE_NOWAIT, NULL, NULL);
-
 	return result;
 }
 
 bool writeCharToPipe(HANDLE pipe, char c) {
 	char dataBuffer[1];
-	dataBuffer[0] = 1;
+	dataBuffer[0] = c;
 	DWORD numBytesWritten = 0;
 	WriteFile(pipe, dataBuffer, 1, &numBytesWritten, NULL);
 
@@ -78,9 +76,6 @@ HANDLE initSlaveToMasterPipe(LPCWSTR pipeName) {
 		0,              // default attributes 
 		NULL);          // no template file 
 
-	DWORD pipeMode = PIPE_READMODE_BYTE | PIPE_NOWAIT;
-	// SetNamedPipeHandleState(result, &pipeMode, NULL, NULL);
-
 	if (GetLastError() != 0)
 	{
 		printf("Could not open pipe. LastError=%d\n", GetLastError());
@@ -91,24 +86,30 @@ HANDLE initSlaveToMasterPipe(LPCWSTR pipeName) {
 }
 
 unsigned char readCharFromPipe(HANDLE pipe) {
-	const numberOfByteToRead = 1;
-	unsigned char buffer[1];
+	#define NUMBER_OF_BYTES_TO_READ 1
+	unsigned char buffer[NUMBER_OF_BYTES_TO_READ + 1];
+	buffer[0] = '\0';
 	DWORD numBytesRead = 0;
 	BOOL ok = ReadFile(
 		pipe,
 		buffer, // the data from the pipe will be put here
-		numberOfByteToRead, // number of bytes allocated
+		NUMBER_OF_BYTES_TO_READ, // number of bytes allocated
 		&numBytesRead, // this will store number of bytes actually read
 		NULL // not using overlapped IO
 		);
+	int lastError = GetLastError();
 
-	if (ok) {
-		printf("Number of bytes read: %d\r\n", numBytesRead);
+	if (lastError != 0) {
+		printf("lastError: %d\r\n", lastError);
 	}
-	else {
+
+	unsigned char result = buffer[0];
+	if (!ok) {
 		printf("Failed to read data from the pipe.\r\n");
 	}
-	unsigned char result = buffer[0];
+	else {
+		// printf("Content of bytes read: %d\r\n", result);
+	}
 
 	return result;
 }
