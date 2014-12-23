@@ -10,6 +10,17 @@
 #define HBRIGE_1_DIRECTION_PIN    PORTDbits.RD6
 #define HBRIGE_2_DIRECTION_PIN    PORTDbits.RD7
 
+static signed int motorSpeed1;
+static signed int motorSpeed2;
+
+signed int getDualHBridgeSpeed1(void) {
+    return motorSpeed1;
+}
+
+signed int getDualHBridgeSpeed2(void) {
+    return motorSpeed2;
+}
+
 void initPwmForDualHBridge() {
     // Port as output to control the direction of the motors
     TRISDbits.TRISD6 = 0;
@@ -52,4 +63,7 @@ void pwmDualHBridgeMotor(signed int hBridgeSpeed1, signed int hBridgeSpeed2) {
             pwmMotor2(hBridgeSpeed2);
         }
     }
+	// TODO : Improve it
+	motorSpeed1 = hBridgeSpeed1;
+	motorSpeed2 = hBridgeSpeed2;
 }
