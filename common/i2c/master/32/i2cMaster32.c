@@ -8,15 +8,15 @@
 #include "../../../../common/i2c/i2cCommon.h"
 
 
-inline int portableMasterWriteI2C(char data) {
+unsigned int portableMasterWriteI2C(unsigned char data) {
 	return MasterWriteI2C1(data);
 }
 
-inline char portableMasterReadI2C() {
+unsigned char portableMasterReadI2C(void) {
 	return MasterReadI2C1();
 }
 
-inline void portableCloseI2C() {
+void portableCloseI2C(void) {
 	CloseI2C1();
 }
 

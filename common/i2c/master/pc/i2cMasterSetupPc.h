@@ -9,4 +9,11 @@
 */
 HANDLE getMasterPipeHandle();
 
+/**
+* Returns the Slave pipe Handle.
+* @param writeAddress the I2C Write Address
+* @return the slave pipe Handle, null if it was not yet initialized
+*/
+HANDLE getSlavePipeHandle(unsigned char writeAddress);
+
 #endif

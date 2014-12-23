@@ -1044,9 +1044,6 @@
     <ClCompile Include="test\main\processHelper.c">
       <Filter>Source Files\test\main</Filter>
     </ClCompile>
-    <ClCompile Include="test\main\pipeHelper.c">
-      <Filter>Source Files\test\main</Filter>
-    </ClCompile>
     <ClCompile Include="drivers\dispatcher\i2cDriverDataDispatcher.c">
       <Filter>Source Files\drivers\dispatchers</Filter>
     </ClCompile>
@@ -1064,6 +1061,15 @@
     </ClCompile>
     <ClCompile Include="device\i2c\slave\i2cSlaveDebugDeviceInterface.c">
       <Filter>Source Files\device\i2c\slave</Filter>
+    </ClCompile>
+    <ClCompile Include="test\main\pipeClientHelper.c">
+      <Filter>Source Files\test\main</Filter>
+    </ClCompile>
+    <ClCompile Include="test\main\pipeServerHelper.c">
+      <Filter>Source Files\test\main</Filter>
+    </ClCompile>
+    <ClCompile Include="common\i2c\slave\pc\i2cSlaveInterruptPc.c">
+      <Filter>Source Files\common\i2c\slave\pc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1640,9 +1646,6 @@
     <ClInclude Include="test\main\processHelper.h">
       <Filter>Header Files\test\main</Filter>
     </ClInclude>
-    <ClInclude Include="test\main\pipeHelper.h">
-      <Filter>Header Files\test\main</Filter>
-    </ClInclude>
     <ClInclude Include="drivers\dispatcher\i2cDriverDataDispatcher.h">
       <Filter>Header Files\drivers\dispatchers</Filter>
     </ClInclude>
@@ -1665,6 +1668,15 @@
       <Filter>Header Files\common\i2c\master\pc</Filter>
     </ClInclude>
     <ClInclude Include="common\i2c\slave\pc\i2cSlaveSetupPc.h">
+      <Filter>Header Files\common\i2c\slave\pc</Filter>
+    </ClInclude>
+    <ClInclude Include="test\main\pipeClientHelper.h">
+      <Filter>Header Files\test\main</Filter>
+    </ClInclude>
+    <ClInclude Include="test\main\pipeServerHelper.h">
+      <Filter>Header Files\test\main</Filter>
+    </ClInclude>
+    <ClInclude Include="common\i2c\slave\pc\i2cSlaveInterruptPc.h">
       <Filter>Header Files\common\i2c\slave\pc</Filter>
     </ClInclude>
   </ItemGroup>

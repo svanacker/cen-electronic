@@ -405,9 +405,9 @@ void mainBoardCallbackRawData(const Device* device,
     }
     // Cannot not handle the notification !
     else {
-        appendString(getOutputStreamLogger(ERROR), "\nNotification lost:\n");
-        copyInputToOutputStream(inputStream, getOutputStreamLogger(ERROR), NULL, COPY_ALL);
-        println(getOutputStreamLogger(ERROR));
+        appendString(getErrorOutputStreamLogger(), "\nNotification lost:\n");
+        copyInputToOutputStream(inputStream, getErrorOutputStreamLogger(), NULL, COPY_ALL);
+        println(getErrorOutputStreamLogger());
     }
 }
 
@@ -622,7 +622,7 @@ int main(void) {
     // Init the logs
     initLog(DEBUG);
     addLogHandler(&debugSerialLogHandler, "UART", &debugOutputStream, DEBUG);
-    addLogHandler(&lcdLogHandler, "LCD", &lcdOutputStream, ERROR);
+    addLogHandler(&lcdLogHandler, "LCD", &lcdOutputStream, LOG_LEVEL_ERROR);
 
     appendString(getOutputStreamLogger(ALWAYS), getPicName());
     println(getOutputStreamLogger(ALWAYS));

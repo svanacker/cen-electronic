@@ -23,9 +23,6 @@
 #include "../../device/deviceConstants.h"
 #include "../../device/deviceUsage.h"
 
-#include <windows.h>
-#include <stdio.h>
-
 void deviceSystemDebugInit(void) {
 }
 
@@ -51,42 +48,6 @@ void deviceSystemDebugHandleRawData(char header, InputStream* inputStream, Outpu
     }
     // Dispatcher List
     else if (header == COMMAND_DISPATCHER_LIST) {
-
-        HANDLE motorBoardPipe = CreateFile(
-            L"\\\\.\\pipe\\mainBoardPipe",		// pipe name 
-            GENERIC_READ |  // read and write access 
-            GENERIC_WRITE,
-            0,              // no sharing 
-            NULL,           // default security attributes
-            OPEN_EXISTING,  // opens existing pipe 
-            0,              // default attributes 
-            NULL);          // no template file 
-
-        if (GetLastError() != 0)
-        {
-            printf("Could not open pipe. LastError=%d\n", GetLastError());
-            getchar();
-            return;
-        }
-
-        wchar_t buffer[128];
-        DWORD numBytesRead = 0;
-        BOOL result = ReadFile(
-            motorBoardPipe,
-            buffer, // the data from the pipe will be put here
-            127 * sizeof(wchar_t), // number of bytes allocated
-            &numBytesRead, // this will store number of bytes actually read
-            NULL // not using overlapped IO
-            );
-
-        if (result) {
-            printf("Number of bytes read: %d", numBytesRead);
-        }
-        else {
-            printf("Failed to read data from the pipe.");
-        }
-
-
         ackCommand(outputStream, SYSTEM_DEBUG_DEVICE_HEADER, COMMAND_DISPATCHER_LIST);
         DriverDataDispatcherList* dispatcherList = getDispatcherList();
         printDriverDataDispatcherList(getOutputStreamLogger(ALWAYS), dispatcherList);         

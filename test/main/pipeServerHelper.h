@@ -1,23 +1,23 @@
-#ifndef PIPE_HELPER_H
-#define PIPE_HELPER_H
+#ifndef PIPE_SERVER_HELPER_H
+#define PIPE_SERVER_HELPER_H
 
 #include <stdio.h>
 #include <stdbool.h>
 #include <Windows.h>
 
 /**
- * Init the master to Slave Pipe with a pipeName.
+ * Init the pipe from the server part with a pipeName.
  * @param pipeName the name of the pipe
  * @return the handle of the pipe if it was successfully created, NULL else
  */
-HANDLE initMasterToSlavePipe(LPCWSTR pipeName);
+HANDLE initServerPipe(LPCWSTR pipeName);
 
 /**
- * Init the slave to master with a pipeName
+ * Init the client pipe which will consume data from a server a pipeName
  * @param pipeName the name of the pipe
  * @return the handle to the existing pipe which is opened.
  */
-HANDLE initSlaveToMasterPipe(LPCWSTR pipeName);
+HANDLE initClientPipe(LPCWSTR pipeName);
 
 /**
  * Write a char into a windows Pipe.

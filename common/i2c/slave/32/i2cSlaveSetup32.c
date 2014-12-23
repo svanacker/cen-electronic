@@ -12,7 +12,7 @@
 
 bool initialized = false;
 
-void i2cSlaveInitialize(char writeAddress) {
+void i2cSlaveInitialize(unsigned char writeAddress) {
     // Avoid more than one initialization
     if (initialized) {
         writeError(I2C_SLAVE_ALREADY_INITIALIZED);

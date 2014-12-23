@@ -7,7 +7,7 @@
 #include "../../../../common/io/printWriter.h"
 #include "../../../../common/io/reader.h"
 
-#include "../../../../test/main/pipeHelper.h"
+#include "../../../../test/main/pipeServerHelper.h"
 
 unsigned int portableMasterWriteI2C(unsigned char data) {
 
@@ -18,10 +18,13 @@ unsigned int portableMasterWriteI2C(unsigned char data) {
 }
 
 unsigned char portableMasterReadI2C() {
-	// char result = bufferReadChar(&i2cMasterToSlavePcBuffer);
-	// return result;
-	// TODO : Implementation
-	return I2C_SLAVE_NO_DATA_IN_READ_BUFFER;
+	// TODO : Find the right Address
+	HANDLE pipe = getSlavePipeHandle(0x00);
+	
+	unsigned char result = readCharFromPipe(pipe);
+	
+	// return I2C_SLAVE_NO_DATA_IN_READ_BUFFER;
+	return result;
 }
 
 void portableMasterWaitSendI2C(void) {

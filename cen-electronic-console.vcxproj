@@ -92,6 +92,7 @@
     <ClCompile Include="common\i2c\pc\i2cCommonPc.c" />
     <ClCompile Include="common\i2c\slave\i2cSlave.c" />
     <ClCompile Include="common\i2c\slave\i2cSlaveLink.c" />
+    <ClCompile Include="common\i2c\slave\pc\i2cSlaveInterruptPc.c" />
     <ClCompile Include="common\i2c\slave\pc\i2cSlavePc.c" />
     <ClCompile Include="common\i2c\slave\pc\i2cSlaveSetupPc.c" />
     <ClCompile Include="common\io\binaryPrintWriter.c" />
@@ -259,7 +260,8 @@
     <ClCompile Include="test\drivers\test\testDriverTest.c" />
     <ClCompile Include="test\main\mainBoard\mainBoardPc.c" />
     <ClCompile Include="test\main\motorBoard\motorBoardPc.c" />
-    <ClCompile Include="test\main\pipeHelper.c" />
+    <ClCompile Include="test\main\pipeClientHelper.c" />
+    <ClCompile Include="test\main\pipeServerHelper.c" />
     <ClCompile Include="test\main\processHelper.c" />
     <ClCompile Include="test\unity\unity.c" />
   </ItemGroup>
@@ -284,6 +286,7 @@
     <ClInclude Include="common\i2c\slave\i2cSlaveLink.h" />
     <ClInclude Include="common\i2c\slave\i2cSlaveSetup.h" />
     <ClInclude Include="common\i2c\slave\i2cSlaveStream.h" />
+    <ClInclude Include="common\i2c\slave\pc\i2cSlaveInterruptPc.h" />
     <ClInclude Include="common\i2c\slave\pc\i2cSlavePc.h" />
     <ClInclude Include="common\i2c\slave\pc\i2cSlaveSetupPc.h" />
     <ClInclude Include="common\io\binaryPrintWriter.h" />
@@ -460,7 +463,8 @@
     <ClInclude Include="test\drivers\test\testDriverTest.h" />
     <ClInclude Include="test\main\mainBoard\mainBoardPc.h" />
     <ClInclude Include="test\main\motorBoard\motorBoardPc.h" />
-    <ClInclude Include="test\main\pipeHelper.h" />
+    <ClInclude Include="test\main\pipeClientHelper.h" />
+    <ClInclude Include="test\main\pipeServerHelper.h" />
     <ClInclude Include="test\main\processHelper.h" />
     <ClInclude Include="test\unity\unity.h" />
     <ClInclude Include="test\unity\unity_internals.h" />

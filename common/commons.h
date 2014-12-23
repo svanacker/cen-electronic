@@ -39,13 +39,27 @@
 #define MIN_SIGNEDINT 0x8000
 #define MIN_UNSIGNEDINT 0x0000
 
-/** Carriage return : \r". */
-#define CR 13
+//// Special Characters Definition
+
+/** Define the ASCII table STX value. */
+#define ASCII_STX '\2'
+
+/** Define the ASCII table ETX value. */
+#define ASCII_ETX '\3'
+
+/** Define the ASCII table ASCII ACK value. */
+#define ASCII_ACK '\6'
 
 /** Line Feed : \n". */
 #define LF 10
 
+/** Carriage return : \r". */
+#define CR 13
+
+/** Clear Screnn. */
 #define CLS 12
+
+//// Classical values
 
 #define DECIMAL_SEPARATOR '.'
 

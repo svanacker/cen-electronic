@@ -41,7 +41,6 @@ void remoteDriverDataDispatcherTransmit(DriverDataDispatcher* dispatcher,
     int counter = 0;
     delaymSec(2);
 
-	/*
 	// Wait as soon as we do not receive all the response
     while (dataReceived < dataToReceiveCount) {
         // TODO : delay100us(1);
@@ -60,6 +59,5 @@ void remoteDriverDataDispatcherTransmit(DriverDataDispatcher* dispatcher,
             break;
         }
     }
-	*/
     // printDebugBuffer(getOutputStreamLogger(ERROR), responseBuffer);
 }

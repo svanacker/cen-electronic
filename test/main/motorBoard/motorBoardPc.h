@@ -3,6 +3,9 @@
 
 #define MOTOR_BOARD_PC_NAME	"motorBoardPc"
 
+#define MOTOR_BOARD_PC_DELAY_CONSOLE_ANALYZE_MILLISECONDS	20
+
+
 /**
  * Start Point to emulate the motor Board PC.
  */
@@ -12,6 +15,9 @@ void runMotorBoardPC(void);
 #define MOTOR_BOARD_PC_I2C_ADDRESS     0x50
 
 #define MOTOR_BOARD_PC_DATA_DISPATCHER_LIST_LENGTH 2
+
+#define MOTOR_BOARD_PC_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH 100
+#define MOTOR_BOARD_PC_I2C_DEBUG_MASTER_IN_BUFFER_LENGTH  100
 
 // CONSOLE
 

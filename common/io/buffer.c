@@ -109,7 +109,7 @@ bool _bufferAvailableData(InputStream* inputStream) {
 
 // BUFFER INTERFACE
 
-void initBuffer(Buffer* buffer, char (*array)[], unsigned char length, char* name, char* type) {
+void initBuffer(Buffer* buffer, char (*array)[], unsigned int length, char* name, char* type) {
     if (!checkBufferNotNull(buffer)) {
         return;    
     }
@@ -247,7 +247,7 @@ void clearBuffer(Buffer* buffer) {
 }
 
 void deepClearBuffer(Buffer* buffer) {
-    int i;
+    unsigned int i;
     char* sPointer = (char*) buffer->s;
     for (i = 0; i < buffer->length; i++) {
         // Shift to the right cell index
@@ -294,7 +294,7 @@ void printDebugBuffer(OutputStream* outputStream, Buffer* buffer) {
     appendStringAndDec(outputStream, ",readIdx=", buffer->readIndex);
 
     appendString(outputStream, ",START=");
-    int i;
+    unsigned int i;
     char* sPointer = (char*) buffer->s;
     for (i = 0; i < buffer->length; i++) {
         // Shift to the right cell index

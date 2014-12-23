@@ -5,6 +5,7 @@
 #include <windows.h>
 
 #include "../../../common/clock/clock.h"
+#include "../../../common/delay/cenDelay.h"
 #include "../../../common/eeprom/pc/eepromPc.h"
 #include "../../../common/error/error.h"
 #include "../../../common/io/pc/consoleOutputStream.h"
@@ -128,7 +129,7 @@ static Device deviceListArray[MAIN_BOARD_PC_DEVICE_LIST_LENGTH];
 static StartMatchDetector startMatchDetector;
 
 void mainBoardWaitForInstruction(void) {
-
+	delaymSec(MAIN_BOARD_PC_DELAY_CONSOLE_ANALYZE_MILLISECONDS);
 	while (consoleInputStream.availableData(&consoleInputStream)) {
 		unsigned char c = consoleInputStream.readChar(&consoleInputStream);
 		consoleInputBuffer.outputStream.writeChar(&(consoleInputBuffer.outputStream), c);

@@ -16,7 +16,7 @@
 #include "../../../../common/io/buffer.h"
 #include "../../../../common/io/printWriter.h"
 #include "../../../../common/io/ioUtils.h"
-
+#include "../../../../common/io/streamLink.h"
 #include "../../../../common/log/logger.h"
 
 /**

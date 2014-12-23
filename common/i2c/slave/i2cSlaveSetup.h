@@ -6,6 +6,6 @@
  * @param writeAddress (write address that the master sends)
  * BE CAREFUL that I2CADD register is the address >> 1 (divided by 2) !
  */
-void i2cSlaveInitialize(char writeAddress);
+void i2cSlaveInitialize(unsigned char writeAddress);
 
 #endif

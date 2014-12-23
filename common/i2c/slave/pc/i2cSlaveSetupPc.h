@@ -3,12 +3,16 @@
 
 #include <Windows.h>
 
+unsigned char getI2CWriteAddress(void);
+
+unsigned char getI2cReadAddress(void);
+
 /**
  * Return the Pipe Handle used by the Slave to read Data from the Master.
  * @return the Pipe Handle used by the Slave to read Data from the Master.
  */
-HANDLE getI2CMasterToSlaveHandle();
+HANDLE getI2CMasterToSlaveHandle(void);
 
-HANDLE getI2CSlaveToMasterHandle();
+HANDLE getI2CSlaveToMasterHandle(void);
 
 #endif

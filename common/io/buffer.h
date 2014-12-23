@@ -25,7 +25,7 @@ typedef struct {
     /** A pointer on an array of char. */
     char (*s)[];
     /** The max length of the buffer. */
-    unsigned char length;
+    unsigned int length;
     /** The pointer used to write Data (we write at the end). */
     unsigned int writeIndex;
     /** The pointer used to read (we read at the begin). */
@@ -45,7 +45,7 @@ typedef struct {
  * @param type the type (as string) of the buffer (for debugging purpose). Often to distinguish IN or OUT buffer
  * @throws IO_BUFFER_NULL if the pointer is NULL
  */
-void initBuffer(Buffer* buffer, char (*s)[], unsigned char length, char* name, char* type);
+void initBuffer(Buffer* buffer, char (*s)[], unsigned int length, char* name, char* type);
 
 /**
  * Retuns if a buffer is initialized or not.

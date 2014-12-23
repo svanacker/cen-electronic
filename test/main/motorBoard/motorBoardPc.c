@@ -7,6 +7,7 @@
 #include "../../../common/delay/cenDelay.h"
 #include "../../../common/eeprom/pc/eepromPc.h"
 #include "../../../common/error/error.h"
+#include "../../../common/i2c/i2cDebug.h"
 #include "../../../common/i2c/slave/pc/i2cSlavePc.h"
 #include "../../../common/i2c/slave/pc/i2cSlaveSetupPc.h"
 #include "../../../common/i2c/slave/i2cSlaveLink.h"
@@ -89,12 +90,19 @@ static char i2cSlaveOutputBufferArray[MOTOR_BOARD_PC_OUT_BUFFER_LENGTH];
 static Buffer i2cSlaveOutputBuffer;
 static StreamLink i2cSlaveStreamLink;
 
+static char i2cMasterDebugOutputBufferArray[MOTOR_BOARD_PC_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH];
+static Buffer i2cMasterDebugOutputBuffer;
+static char i2cMasterDebugInputBufferArray[MOTOR_BOARD_PC_I2C_DEBUG_MASTER_IN_BUFFER_LENGTH];
+static Buffer i2cMasterDebugInputBuffer;
+
 // Devices
 static Device deviceListArray[MOTOR_BOARD_PC_DEVICE_LIST_LENGTH];
 
 void motorBoardWaitForInstruction(void) {
 
-	// Analyze data from the Console
+	delaymSec(MOTOR_BOARD_PC_DELAY_CONSOLE_ANALYZE_MILLISECONDS);
+
+	// Analyze data from the Console (Specific to PC)
 	while (consoleInputStream.availableData(&consoleInputStream)) {
 		unsigned char c = consoleInputStream.readChar(&consoleInputStream);
 		consoleInputBuffer.outputStream.writeChar(&(consoleInputBuffer.outputStream), c);
@@ -104,17 +112,22 @@ void motorBoardWaitForInstruction(void) {
 		consoleOutputStream.writeChar(&consoleOutputStream, c);
 	}
 
+	// Analyse from the ConsoleBuffer
+	handleStreamInstruction(
+		&consoleInputBuffer,
+		&consoleOutputBuffer,
+		&consoleOutputStream,
+		&filterRemoveCRLF,
+		NULL);
+
+
 	// Analyse data from the I2C
-
-	// handleStreamInstruction(&i2cSlaveInputBuffer, &i2cSlaveOutputBuffer, NULL, &filterRemoveCRLF, NULL);
-
-	// TODO : Introduce the same as interrupt to be able to add char not in the main execution program
-		handleStreamInstruction(
-			&consoleInputBuffer,
-			&consoleOutputBuffer,
-			&consoleOutputStream,
-			&filterRemoveCRLF,
-			NULL);
+	handleStreamInstruction(
+		&i2cSlaveInputBuffer,
+		&i2cSlaveOutputBuffer,
+		NULL,
+		&filterRemoveCRLF,
+		NULL);
 }
 
 void runMotorBoardPC(void) {
@@ -172,6 +185,14 @@ void runMotorBoardPC(void) {
 		MOTOR_BOARD_PC_OUT_BUFFER_LENGTH,
 		MOTOR_BOARD_PC_I2C_ADDRESS
 	);
+
+	// I2C Debug
+	initI2CDebugBuffers(&i2cMasterDebugInputBuffer,
+		(char(*)[]) &i2cMasterDebugInputBufferArray,
+		MOTOR_BOARD_PC_I2C_DEBUG_MASTER_IN_BUFFER_LENGTH,
+		&i2cMasterDebugOutputBuffer,
+		(char(*)[]) &i2cMasterDebugOutputBufferArray,
+		MOTOR_BOARD_PC_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH);
 
 	while (1) {
 		motorBoardWaitForInstruction();

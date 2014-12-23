@@ -30,8 +30,8 @@ static BitList availablePaths;
 void initNavigation(void) {
     clearLocationList(&locations);
     clearPathList(&paths);
-    initBitList(&outgoingPaths, &bitListValues, BIT_LIST_NAVIGATION_ARRAY_LENGTH);
-    initBitList(&availablePaths, &availablePathsBitListValues, BIT_LIST_NAVIGATION_ARRAY_LENGTH);
+    initBitList(&outgoingPaths, (unsigned int(*)[]) &bitListValues, BIT_LIST_NAVIGATION_ARRAY_LENGTH);
+    initBitList(&availablePaths, (unsigned int(*)[]) &availablePathsBitListValues, BIT_LIST_NAVIGATION_ARRAY_LENGTH);
     clearBitList(&availablePaths, true);
 }
 

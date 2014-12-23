@@ -40,10 +40,10 @@ Buffer* getDebugI2cOutputBuffer();
  */
 void initI2CDebugBuffers(Buffer* aDebugI2cInputBuffer,
                          char (*debugI2cInputBufferArray)[],
-                         unsigned char debugI2cInputBufferLength,
+                         unsigned int debugI2cInputBufferLength,
                          Buffer* aDebugI2cOutputBuffer,
                          char (*debugI2cOutputBufferArray)[],
-                         unsigned char debugI2cOutputBufferLength
+						 unsigned int debugI2cOutputBufferLength
 );
 
 /**

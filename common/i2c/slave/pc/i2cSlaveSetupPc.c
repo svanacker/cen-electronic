@@ -1,5 +1,8 @@
 #include "i2cSlaveSetupPc.h"
 #include "i2cSlavePc.h"
+#include "i2cSlaveInterruptPc.h"
+#include "../i2cSlaveSetup.h"
+
 #include "../../../../common/commons.h"
 #include "../../../../common/delay/cenDelay.h"
 
@@ -10,64 +13,80 @@
 #include "../../../../common/log/logger.h"
 #include "../../../../common/log/logLevel.h"
 
-#include "../i2cSlaveSetup.h"
-#include "../../../../test/main/pipeHelper.h"
+#include "../../../../test/main/pipeClientHelper.h"
+#include "../../../../test/main/pipeServerHelper.h"
 
 #include <Windows.h>
 
 static HANDLE masterToSlaveHandle;
-static HANDLE threadHandle;
-static DWORD  threadId = 0;
+static HANDLE masterToSlaveThreadHandle;
+static DWORD  masterToSlaveThreadId = 0;
 
-// Callback function forward declaration
-DWORD WINAPI InstanceThread(LPVOID lpvParam);
+static HANDLE slaveToMasterHandle;
+static HANDLE slaveToMasterThreadHandle;
+static DWORD  slaveToMasterThreadId = 0;
 
 static bool initialized = false;
+static slaveWriteAddress = 0;
+
 
 HANDLE getI2CMasterToSlaveHandle() {
     return masterToSlaveHandle;
 }
 
-void i2cSlaveInitialize(char writeAddress) {
+HANDLE getI2CSlaveToMasterHandle() {
+    return slaveToMasterHandle;
+}
+
+unsigned char getI2CWriteAddress(void) {
+    return slaveWriteAddress;
+}
+
+unsigned char getI2cReadAddress(void) {
+    return slaveWriteAddress | 1;
+}
+
+void i2cSlaveInitialize(unsigned char writeAddress) {
     // Avoid more than one initialization
     if (initialized) {
         writeError(I2C_SLAVE_ALREADY_INITIALIZED);
         return;
     }
-    masterToSlaveHandle = initSlaveToMasterPipe(L"\\\\.\\pipe\\mainBoardPipe");
-    initialized = true;
-    getI2CSlaveToMasterPcBuffer();
+    slaveWriteAddress = writeAddress;
 
     appendString(getOutputStreamLogger(DEBUG), "I2C Slave Write Address=");
     appendHex2(getOutputStreamLogger(DEBUG), writeAddress);
     appendCRLF(getOutputStreamLogger(DEBUG));
 
-    // Create a thread for this client. 
-    threadHandle = CreateThread(
+    masterToSlaveHandle = initClientPipe(L"\\\\.\\pipe\\mainBoardPipe");
+    slaveToMasterHandle = initServerPipe(L"\\\\.\\pipe\\motorBoardPipe");
+    initialized = true;
+
+    // Create a thread to handle master to slave data
+    masterToSlaveThreadHandle = CreateThread(
         NULL,              // no security attribute 
         0,                 // default stack size 
-        InstanceThread,    // thread proc
+        masterToSlaveCallback,    // thread proc
         (LPVOID)masterToSlaveHandle,    // thread parameter 
         0,                 // not suspended 
-        &threadId);      // returns thread ID 
+        &masterToSlaveThreadId);      // returns thread ID 
 
-    if (threadHandle == NULL)
+    if (masterToSlaveThreadHandle == NULL)
     {
         printf("CreateThread failed, lastError=%d.\n", GetLastError());
     }
-    else
+
+    slaveToMasterThreadHandle = CreateThread(
+        NULL,              // no security attribute 
+        0,                 // default stack size 
+        slaveToMasterCallback,    // thread proc
+        (LPVOID)slaveToMasterHandle,    // thread parameter 
+        0,                 // not suspended 
+        &slaveToMasterThreadId);      // returns thread ID 
+
+    if (masterToSlaveThreadHandle == NULL)
     {
-        // CloseHandle(threadHandle);
+        printf("CreateThread failed, lastError=%d.\n", GetLastError());
     }
 }
 
-DWORD WINAPI InstanceThread(LPVOID lpvParam) {
-    printf("InstanceThread execute !");
-    while (true) {
-        delaymSec(500);
-        sendI2CDataToMaster();
-    }
-    printf("InstanceThread exitting.\n");
-
-    return 1;
-}
