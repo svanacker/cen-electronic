@@ -67,7 +67,7 @@
 
 #include "../../../remote/clock/remoteClock.h"
 
-#include "../processHelper.h"
+#include "../../../common/pc/process/processHelper.h"
 
 // Dispatchers
 static DriverDataDispatcher driverDataDispatcherListArray[MOTOR_BOARD_PC_DATA_DISPATCHER_LIST_LENGTH];

@@ -7,7 +7,7 @@
 #include "../../../../common/io/printWriter.h"
 #include "../../../../common/io/reader.h"
 
-#include "../../../../test/main/pipeServerHelper.h"
+#include "../../../../common/pc/pipe/pipeServerHelper.h"
 
 unsigned int portableMasterWriteI2C(unsigned char data) {
 

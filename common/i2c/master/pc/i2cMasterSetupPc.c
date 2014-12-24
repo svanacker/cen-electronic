@@ -10,7 +10,7 @@
 #include "../../../../common/log/logLevel.h"
 #include "../../../../common/io/printWriter.h"
 
-#include "../../../../test/main/pipeServerHelper.h"
+#include "../../../../common/pc/pipe/pipeServerHelper.h"
 
 #include <Windows.h>
 

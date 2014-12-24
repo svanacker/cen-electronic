@@ -3,8 +3,8 @@
 #include "../i2cCommon.h"
 #include "../master/pc/i2cMasterPc.h"
 #include "../master/pc/i2cMasterSetupPc.h"
-#include "../../../test/main/pipeServerHelper.h"
-#include "../../../test/main/pipeClientHelper.h"
+#include "../../../common/pc/pipe/pipeServerHelper.h"
+#include "../../../common/pc/pipe/pipeClientHelper.h"
 
 #include <Windows.h>
 

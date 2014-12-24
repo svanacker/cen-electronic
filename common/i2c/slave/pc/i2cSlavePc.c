@@ -19,8 +19,8 @@
 
 #include "../../../../common/log/logger.h"
 
-#include "../../../../test/main/pipeClientHelper.h"
-#include "../../../../test/main/pipeServerHelper.h"
+#include "../../../../common/pc/pipe/pipeClientHelper.h"
+#include "../../../../common/pc/pipe/pipeServerHelper.h"
 
 
 unsigned char portableSlaveReadI2C(void) {

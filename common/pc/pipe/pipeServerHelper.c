@@ -55,12 +55,12 @@ bool writeCharToPipe(HANDLE pipe, char c) {
 
 	int error = GetLastError();
 	if (error != 0) {
-		printf("Error when writeCharToPipe : %d", error);
+		printf("writeCharToPipe->Error when writeCharToPipe : %d\r\n", error);
 		return false;
 	}
 
 	if (numBytesWritten != 1) {
-		printf("Error when writeCharToPipe : numBytesWritten : %d", numBytesWritten);
+		printf("writeCharToPipe->Error when writeCharToPipe : numBytesWritten : %d\r\n", numBytesWritten);
 	}
 	return true;
 }

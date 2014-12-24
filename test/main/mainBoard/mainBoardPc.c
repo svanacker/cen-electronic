@@ -89,7 +89,7 @@
 
 #include "../../../test/main/motorBoard/motorBoardPc.h"
 
-#include "../processHelper.h"
+#include "../../../common/pc/process/processHelper.h"
 
 // Dispatchers
 static DriverDataDispatcher driverDataDispatcherListArray[MAIN_BOARD_PC_DATA_DISPATCHER_LIST_LENGTH];
@@ -233,11 +233,10 @@ void runMainBoardPC(void) {
 
 	initDevices();
 
-	delaymSec(1000);
+	delaymSec(100);
 
 	setDebugI2cEnabled(false);
-	testDriverIntensive(100);
-	// testDriverGetValue(10, 20);
+	testDriverIntensive(1);
 
 	while (1) {
 		mainBoardWaitForInstruction();

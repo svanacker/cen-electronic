@@ -15,7 +15,7 @@ HANDLE initClientPipe(LPCWSTR pipeName) {
 
 	if (GetLastError() != 0)
 	{
-		printf("Could not open pipe. LastError=%d\n", GetLastError());
+		printf("initClientPipe->Could not open pipe. LastError=%d\n", GetLastError());
 		getchar();
 		return NULL;
 	}
@@ -37,12 +37,12 @@ unsigned char readCharFromPipe(HANDLE pipe) {
 	int lastError = GetLastError();
 
 	if (lastError != 0) {
-		printf("lastError: %d\r\n", lastError);
+		printf("readCharFromPipe->lastError: %d\r\n", lastError);
 	}
 
 	unsigned char result = buffer[0];
 	if (!ok) {
-		printf("Failed to read data from the pipe.\r\n");
+		printf("readCharFromPipe->Failed to read data from the pipe.\r\n");
 	}
 	else {
 		// printf("Content of bytes read: %d\r\n", result);

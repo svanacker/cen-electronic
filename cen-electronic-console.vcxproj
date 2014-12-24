@@ -121,6 +121,9 @@
     <ClCompile Include="common\math\hexUtils.c" />
     <ClCompile Include="common\math\pc\randomPc32.c" />
     <ClCompile Include="common\math\random.c" />
+    <ClCompile Include="common\pc\pipe\pipeClientHelper.c" />
+    <ClCompile Include="common\pc\pipe\pipeServerHelper.c" />
+    <ClCompile Include="common\pc\process\processHelper.c" />
     <ClCompile Include="common\pwm\motor\motorPwm.c" />
     <ClCompile Include="common\pwm\motor\pc\dualHBridgeMotorPc.c" />
     <ClCompile Include="common\pwm\servo\pc\servoPwmPc.c" />
@@ -262,9 +265,6 @@
     <ClCompile Include="test\drivers\test\testDriverTest.c" />
     <ClCompile Include="test\main\mainBoard\mainBoardPc.c" />
     <ClCompile Include="test\main\motorBoard\motorBoardPc.c" />
-    <ClCompile Include="test\main\pipeClientHelper.c" />
-    <ClCompile Include="test\main\pipeServerHelper.c" />
-    <ClCompile Include="test\main\processHelper.c" />
     <ClCompile Include="test\unity\unity.c" />
   </ItemGroup>
   <ItemGroup>
@@ -319,6 +319,9 @@
     <ClInclude Include="common\math\cenMath.h" />
     <ClInclude Include="common\math\hexUtils.h" />
     <ClInclude Include="common\math\random.h" />
+    <ClInclude Include="common\pc\pipe\pipeClientHelper.h" />
+    <ClInclude Include="common\pc\pipe\pipeServerHelper.h" />
+    <ClInclude Include="common\pc\process\processHelper.h" />
     <ClInclude Include="common\pwm\motor\dualHBridgeMotorPwm.h" />
     <ClInclude Include="common\pwm\motor\motorPwm.h" />
     <ClInclude Include="common\pwm\servo\servoPwm.h" />
@@ -466,9 +469,6 @@
     <ClInclude Include="test\drivers\test\testDriverTest.h" />
     <ClInclude Include="test\main\mainBoard\mainBoardPc.h" />
     <ClInclude Include="test\main\motorBoard\motorBoardPc.h" />
-    <ClInclude Include="test\main\pipeClientHelper.h" />
-    <ClInclude Include="test\main\pipeServerHelper.h" />
-    <ClInclude Include="test\main\processHelper.h" />
     <ClInclude Include="test\unity\unity.h" />
     <ClInclude Include="test\unity\unity_internals.h" />
   </ItemGroup>

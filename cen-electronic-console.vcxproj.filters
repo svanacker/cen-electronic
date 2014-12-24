@@ -508,6 +508,24 @@
     <Filter Include="Source Files\common\math\pc">
       <UniqueIdentifier>{c65130ee-d9f8-44e2-922a-bd46b5fc4a26}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\common\pc">
+      <UniqueIdentifier>{5a1037cb-a713-486c-8b11-c7848d008ec4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\common\pc\pipe">
+      <UniqueIdentifier>{e2a667f7-a59c-4f12-b0cd-eb052450c412}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\common\pc\process">
+      <UniqueIdentifier>{34ef1017-a9c6-4a60-aebb-eecb0061be0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\common\pc">
+      <UniqueIdentifier>{84e1e2aa-33f7-43a0-a258-e631738df8f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\common\pc\pipe">
+      <UniqueIdentifier>{210163ac-28d7-4367-ac4d-b9553fa55081}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\common\pc\process">
+      <UniqueIdentifier>{4081845c-1c75-403b-abd5-2bf24c4c43b4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -1044,9 +1062,6 @@
     <ClCompile Include="test\main\motorBoard\motorBoardPc.c">
       <Filter>Source Files\test\main\motorBoardPc</Filter>
     </ClCompile>
-    <ClCompile Include="test\main\processHelper.c">
-      <Filter>Source Files\test\main</Filter>
-    </ClCompile>
     <ClCompile Include="drivers\dispatcher\i2cDriverDataDispatcher.c">
       <Filter>Source Files\drivers\dispatchers</Filter>
     </ClCompile>
@@ -1065,12 +1080,6 @@
     <ClCompile Include="device\i2c\slave\i2cSlaveDebugDeviceInterface.c">
       <Filter>Source Files\device\i2c\slave</Filter>
     </ClCompile>
-    <ClCompile Include="test\main\pipeClientHelper.c">
-      <Filter>Source Files\test\main</Filter>
-    </ClCompile>
-    <ClCompile Include="test\main\pipeServerHelper.c">
-      <Filter>Source Files\test\main</Filter>
-    </ClCompile>
     <ClCompile Include="common\i2c\slave\pc\i2cSlaveInterruptPc.c">
       <Filter>Source Files\common\i2c\slave\pc</Filter>
     </ClCompile>
@@ -1079,6 +1088,15 @@
     </ClCompile>
     <ClCompile Include="common\math\pc\randomPc32.c">
       <Filter>Source Files\common\math\pc</Filter>
+    </ClCompile>
+    <ClCompile Include="common\pc\pipe\pipeClientHelper.c">
+      <Filter>Source Files\common\pc\pipe</Filter>
+    </ClCompile>
+    <ClCompile Include="common\pc\pipe\pipeServerHelper.c">
+      <Filter>Source Files\common\pc\pipe</Filter>
+    </ClCompile>
+    <ClCompile Include="common\pc\process\processHelper.c">
+      <Filter>Source Files\common\pc\process</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1652,9 +1670,6 @@
     <ClInclude Include="test\main\motorBoard\motorBoardPc.h">
       <Filter>Header Files\test\main\motorBoard</Filter>
     </ClInclude>
-    <ClInclude Include="test\main\processHelper.h">
-      <Filter>Header Files\test\main</Filter>
-    </ClInclude>
     <ClInclude Include="drivers\dispatcher\i2cDriverDataDispatcher.h">
       <Filter>Header Files\drivers\dispatchers</Filter>
     </ClInclude>
@@ -1679,17 +1694,20 @@
     <ClInclude Include="common\i2c\slave\pc\i2cSlaveSetupPc.h">
       <Filter>Header Files\common\i2c\slave\pc</Filter>
     </ClInclude>
-    <ClInclude Include="test\main\pipeClientHelper.h">
-      <Filter>Header Files\test\main</Filter>
-    </ClInclude>
-    <ClInclude Include="test\main\pipeServerHelper.h">
-      <Filter>Header Files\test\main</Filter>
-    </ClInclude>
     <ClInclude Include="common\i2c\slave\pc\i2cSlaveInterruptPc.h">
       <Filter>Header Files\common\i2c\slave\pc</Filter>
     </ClInclude>
     <ClInclude Include="common\math\random.h">
       <Filter>Header Files\common\math</Filter>
+    </ClInclude>
+    <ClInclude Include="common\pc\process\processHelper.h">
+      <Filter>Header Files\common\pc\process</Filter>
+    </ClInclude>
+    <ClInclude Include="common\pc\pipe\pipeClientHelper.h">
+      <Filter>Header Files\common\pc\pipe</Filter>
+    </ClInclude>
+    <ClInclude Include="common\pc\pipe\pipeServerHelper.h">
+      <Filter>Header Files\common\pc\pipe</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

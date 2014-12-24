@@ -7,7 +7,7 @@
 #include "test/main/mainBoard/mainBoardPc.h"
 #include "test/main/motorBoard/motorBoardPc.h"
 #include "test/allTests.h"
-#include "test/main/processHelper.h"
+#include "common/pc/process/processHelper.h"
 
 void printUsage(void) {
 	printf("Run emulators for cen-electronic projects : \r\n");
