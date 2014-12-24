@@ -54,13 +54,6 @@
 #include "../../device/motor/pwmMotorDevice.h"
 #include "../../device/motor/pwmMotorDeviceInterface.h"
 
-// PID
-#include "../../motion/pid/pid.h"
-#include "../../motion/pid/pidDebug.h"
-#include "../../motion/pid/pidMotionProfileComputer.h"
-#include "../../device/motion/pid/pidDevice.h"
-#include "../../device/motion/pid/pidDeviceInterface.h"
-
 // Coders
 #include "../../device/motion/position/codersDevice.h"
 #include "../../device/motion/position/codersDeviceInterface.h"
@@ -132,8 +125,6 @@ void initDevicesDescriptor() {
 
     addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());
     addLocalDevice(getCodersDeviceInterface(), getCodersDeviceDescriptor());
-    addLocalDevice(getPIDDeviceInterface(), getPIDDeviceDescriptor());
-    addLocalDevice(getMotionDeviceInterface(), getMotionDeviceDescriptor());
     addLocalDevice(getTrajectoryDeviceInterface(), getTrajectoryDeviceDescriptor());
     // addLocalDevice(&testDevice, getTestDeviceInterface(), getTestDeviceDescriptor());
     addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
@@ -147,9 +138,6 @@ void waitForInstruction() {
 
     // UART Stream
     handleStreamInstruction(&debugInputBuffer, &debugOutputBuffer, &debugOutputStream, &filterRemoveCRLF, NULL);
-
-    // Manage Motion
-    handleInstructionAndMotion();
 }
 
 int runMotorBoard() {
