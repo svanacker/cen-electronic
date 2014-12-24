@@ -8,6 +8,7 @@
 #include "../../../common/delay/cenDelay.h"
 #include "../../../common/eeprom/pc/eepromPc.h"
 #include "../../../common/error/error.h"
+#include "../../../common/i2c/i2cDebug.h"
 #include "../../../common/io/pc/consoleOutputStream.h"
 #include "../../../common/io/pc/consoleInputStream.h"
 #include "../../../common/io/filter.h"
@@ -105,6 +106,12 @@ static char driverRequestBufferArray[MAIN_BOARD_PC_REQUEST_DRIVER_BUFFER_LENGTH]
 static Buffer driverResponseBuffer;
 static char driverResponseBufferArray[MAIN_BOARD_PC_RESPONSE_DRIVER_BUFFER_LENGTH];
 
+// I2C Debug
+static char i2cMasterDebugOutputBufferArray[MAIN_BOARD_PC_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH];
+static Buffer i2cMasterDebugOutputBuffer;
+static char i2cMasterDebugInputBufferArray[MAIN_BOARD_PC_I2C_DEBUG_MASTER_IN_BUFFER_LENGTH];
+static Buffer i2cMasterDebugInputBuffer;
+
 // Timers
 #define MAIN_BOARD_PC_TIMER_LENGTH	10
 static Device timerListArray[MAIN_BOARD_PC_TIMER_LENGTH];
@@ -186,6 +193,14 @@ void runMainBoardPC(void) {
 	&motorBoardOutputStream,
 	&motorBoardInputStream,
 	MOTOR_BOARD_PC_I2C_ADDRESS);
+
+	// I2C Debug
+	initI2CDebugBuffers(&i2cMasterDebugInputBuffer,
+		(char(*)[]) &i2cMasterDebugInputBufferArray,
+		MAIN_BOARD_PC_I2C_DEBUG_MASTER_IN_BUFFER_LENGTH,
+		&i2cMasterDebugOutputBuffer,
+		(char(*)[]) &i2cMasterDebugOutputBufferArray,
+		MAIN_BOARD_PC_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH);
 
 	// Init the drivers
 	initDrivers(&driverRequestBuffer, (char(*)[]) &driverRequestBufferArray, MAIN_BOARD_PC_REQUEST_DRIVER_BUFFER_LENGTH,

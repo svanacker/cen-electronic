@@ -12,7 +12,6 @@
 unsigned int portableMasterWriteI2C(unsigned char data) {
 
 	HANDLE pipe = getMasterPipeHandle();
-	// TODO : Create a local version of I2C ! append(getOutputStream(&i2cMasterToSlavePcBuffer), data);
 	writeCharToPipe(pipe, data);
 	return data;
 }
@@ -23,7 +22,6 @@ unsigned char portableMasterReadI2C() {
 	
 	unsigned char result = readCharFromPipe(pipe);
 	
-	// return I2C_SLAVE_NO_DATA_IN_READ_BUFFER;
 	return result;
 }
 

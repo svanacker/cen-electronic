@@ -90,10 +90,10 @@ static char i2cSlaveOutputBufferArray[MOTOR_BOARD_PC_OUT_BUFFER_LENGTH];
 static Buffer i2cSlaveOutputBuffer;
 static StreamLink i2cSlaveStreamLink;
 
-static char i2cMasterDebugOutputBufferArray[MOTOR_BOARD_PC_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH];
-static Buffer i2cMasterDebugOutputBuffer;
-static char i2cMasterDebugInputBufferArray[MOTOR_BOARD_PC_I2C_DEBUG_MASTER_IN_BUFFER_LENGTH];
-static Buffer i2cMasterDebugInputBuffer;
+static char i2cSlaveDebugOutputBufferArray[MOTOR_BOARD_PC_I2C_DEBUG_SLAVE_OUT_BUFFER_LENGTH];
+static Buffer i2cSlaveDebugOutputBuffer;
+static char i2cSlaveDebugInputBufferArray[MOTOR_BOARD_PC_I2C_DEBUG_SLAVE_IN_BUFFER_LENGTH];
+static Buffer i2cSlaveDebugInputBuffer;
 
 // Devices
 static Device deviceListArray[MOTOR_BOARD_PC_DEVICE_LIST_LENGTH];
@@ -187,12 +187,12 @@ void runMotorBoardPC(void) {
 	);
 
 	// I2C Debug
-	initI2CDebugBuffers(&i2cMasterDebugInputBuffer,
-		(char(*)[]) &i2cMasterDebugInputBufferArray,
-		MOTOR_BOARD_PC_I2C_DEBUG_MASTER_IN_BUFFER_LENGTH,
-		&i2cMasterDebugOutputBuffer,
-		(char(*)[]) &i2cMasterDebugOutputBufferArray,
-		MOTOR_BOARD_PC_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH);
+	initI2CDebugBuffers(&i2cSlaveDebugInputBuffer,
+		(char(*)[]) &i2cSlaveDebugInputBufferArray,
+		MOTOR_BOARD_PC_I2C_DEBUG_SLAVE_IN_BUFFER_LENGTH,
+		&i2cSlaveDebugOutputBuffer,
+		(char(*)[]) &i2cSlaveDebugOutputBufferArray,
+		MOTOR_BOARD_PC_I2C_DEBUG_SLAVE_OUT_BUFFER_LENGTH);
 
 	while (1) {
 		motorBoardWaitForInstruction();
