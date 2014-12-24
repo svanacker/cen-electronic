@@ -33,6 +33,25 @@ void deviceTestHandleRawData(char header, InputStream* inputStream, OutputStream
         // data
         appendHex2(outputStream, result);
     }
+	else if (header == COMMAND_HEAVY_TEST) {
+		int arg1 = readHex2(inputStream);
+		int arg2 = readHex2(inputStream);
+		int arg3 = readHex4(inputStream);
+		int arg4 = readHex4(inputStream);
+		int arg5 = readHex2(inputStream);
+		// Separator
+		readHex(inputStream);
+		int arg7 = readHex2(inputStream);
+		int arg8 = readHex4(inputStream);
+		long arg9 = (long) readHex6(inputStream);
+		int arg10 = readHex2(inputStream);
+
+		long result = arg1 + arg2 + arg3 + arg4 + arg5 + arg7 + arg8 + arg9 + arg10;
+
+		ackCommand(outputStream, TEST_DEVICE_HEADER, COMMAND_HEAVY_TEST);
+		// data
+		appendHex6(outputStream, result);
+	}
     /* TODO
     else if (header == COMMAND_NOTIFY_TEST) {
             int argument = readHex2(inputStream);
@@ -60,7 +79,7 @@ static DeviceDescriptor descriptor = {
     .deviceHandleRawData = &deviceTestHandleRawData
 };
 
-DeviceDescriptor* getTestDeviceDescriptor() {
+DeviceDescriptor* getTestDeviceDescriptor(void) {
     return &descriptor;
 }
 

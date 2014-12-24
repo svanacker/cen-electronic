@@ -25,10 +25,10 @@ void runMotorBoardPC(void);
 #define MOTOR_BOARD_PC_CONSOLE_OUTPUT_BUFFER_LENGTH	40
 
 /** Maximal length for In Buffer length. */
-#define MOTOR_BOARD_PC_IN_BUFFER_LENGTH    30
+#define MOTOR_BOARD_PC_IN_BUFFER_LENGTH    50
 
 /** Maximal length for Out Buffer length. */
-#define MOTOR_BOARD_PC_OUT_BUFFER_LENGTH    30
+#define MOTOR_BOARD_PC_OUT_BUFFER_LENGTH    50
 
 // DEVICES
 #define MOTOR_BOARD_PC_DEVICE_LIST_LENGTH        10

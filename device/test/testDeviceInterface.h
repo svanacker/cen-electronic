@@ -11,6 +11,12 @@
 #define COMMAND_TEST 'w'
 
 /**
+ * Command header for big Test
+ * The test is an addition of 10 values (to ensure that there is no overflow problems when sending lots of information).
+ */
+#define COMMAND_HEAVY_TEST 'W'
+
+/**
 * Command to notify information from the slave to the master and test it.
 */
 #define COMMAND_NOTIFY_TEST 'n'

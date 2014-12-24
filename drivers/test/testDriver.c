@@ -9,6 +9,9 @@
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
 #include "../../common/io/reader.h"
+
+#include "../../common/log/logger.h"
+
 #include "../../common/math/random.h"
 
 #include "../../device/test/testDeviceInterface.h"
@@ -41,23 +44,39 @@ bool testDriverIntensive(unsigned int testCount) {
     unsigned int i;
     for (i = 0; i < testCount; i++) {
         append(outputStream, TEST_DEVICE_HEADER);
-        append(outputStream, COMMAND_TEST);
+        append(outputStream, COMMAND_HEAVY_TEST);
 
         unsigned char value1 = (unsigned char)randomInRange(0, 255);
         unsigned char value2 = (unsigned char)randomInRange(0, 255);
+		unsigned int value3 = (unsigned int) randomInRange(0, 32535);
+		unsigned int value4 = (unsigned int) randomInRange(0, 32535);
+		unsigned char value5 = randomInRange(0, 32535);
+		// Separator / value 6
+		unsigned char value7 = (unsigned char)randomInRange(0, 255);
+		unsigned int value8 = (unsigned int)randomInRange(0, 32535);
+		unsigned long value9 = (unsigned long)randomInRange(0, 32535);
+		unsigned char value10 = (unsigned char)randomInRange(0, 255);
         appendHex2(outputStream, value1);
         appendHex2(outputStream, value2);
+		appendHex4(outputStream, value3);
+		appendHex4(outputStream, value4);
+		appendHex2(outputStream, value5);
+		appendSeparator(outputStream);
+		appendHex2(outputStream, value7);
+		appendHex4(outputStream, value8);
+		appendHex6(outputStream, value9);
+		appendHex2(outputStream, value10);
 
         bool ok = transmitFromDriverRequestBuffer();
         if (ok) {
-            int result = readHex2(resultStream);
-            int expected = value1 + value2;
-            if (expected >= 256) {
-                expected -= 256;
-            }
-            if (result != expected) {
+            int actual = readHex6(resultStream);
+            long expected = value1 + value2 + value3 + value4 + value5 + value7 + value8 + value9 + value10;
+			if (actual != expected) {
                 writeError(DEVICE_TEST_INTENSIVE_CHECK_PROBLEM);
-                return false;
+				appendStringAndDec(getErrorOutputStreamLogger(), " : expected=", expected);
+				appendStringAndDec(getErrorOutputStreamLogger(), ", actual=", actual);
+				appendCRLF(getErrorOutputStreamLogger());
+				return false;
             }
         }
         else {
