@@ -9,15 +9,13 @@
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
 #include "../../common/io/reader.h"
+#include "../../common/math/random.h"
 
 #include "../../device/test/testDeviceInterface.h"
 
 #include "../../drivers/driver.h"
 #include "../../drivers/driverList.h"
 #include "../../drivers/driverTransmitter.h"
-
-// TO REMOVE !
-#include <Windows.h>
 
 signed int testDriverGetValue(signed int argument1, signed int argument2) {
     OutputStream* outputStream = getDriverRequestOutputStream();
@@ -35,16 +33,10 @@ signed int testDriverGetValue(signed int argument1, signed int argument2) {
     return 0;
 }
 
-int randomInRange(int range_min, int range_max) {
-    int result = (int) ((double)rand() / (RAND_MAX + 1) * (range_max - range_min)
-        + range_min);
-    return result;
-}
-
 bool testDriverIntensive(unsigned int testCount) {
     OutputStream* outputStream = getDriverRequestOutputStream();
     InputStream* resultStream = getDriverResponseInputStream();
-    srand((unsigned)time(NULL));
+    
 
     unsigned int i;
     for (i = 0; i < testCount; i++) {

@@ -39,23 +39,15 @@ void __ISR(_I2C_1_VECTOR, ipl3) _SlaveI2CHandler(void)
         Buffer* i2cSlaveOutputBuffer = i2cStreamLink->outputBuffer;
         // Get an inputStream to read the buffer to send to the master
         InputStream* i2cInputStream = getInputStream(i2cSlaveOutputBuffer);
-        // For debug
-        Buffer* debugI2cOutputBuffer = getDebugI2cOutputBuffer();
         // There is available data
         if (i2cInputStream->availableData(i2cInputStream)) {
             char c = i2cInputStream->readChar(i2cInputStream);
+            
             // for debug support
-            if (debugI2cOutputBuffer != NULL) {
-                bufferWriteChar(debugI2cOutputBuffer, c);
-            }
+	    	appendI2cDebugOutputChar(c);
             // we send it to the master
             SlaveWriteI2C1(c);
         } else {
-            // There is no data, we send it to the master
-            // We send 0 (end of buffer)
-            if (debugI2cOutputBuffer != NULL) {
-                bufferWriteChar(debugI2cOutputBuffer, I2C_SLAVE_NO_DATA_IN_READ_BUFFER);
-            }
             SlaveWriteI2C1(I2C_SLAVE_NO_DATA_IN_READ_BUFFER);
         }
         while (I2C1STATbits.TBF);
@@ -71,12 +63,12 @@ void __ISR(_I2C_1_VECTOR, ipl3) _SlaveI2CHandler(void)
         if (data != INCORRECT_DATA && data != I2C_SLAVE_FAKE_WRITE) {
             Buffer* i2cSlaveInputBuffer = i2cStreamLink->inputBuffer;
             OutputStream* outputStream = getOutputStream(i2cSlaveInputBuffer);
+
+            // for debug support
+    		appendI2cDebugInputChar(data);
+
             // Read data from the Master
             append(outputStream, data);
-            Buffer* debugI2cInputBuffer = getDebugI2cInputBuffer();
-            if (debugI2cInputBuffer != NULL) {
-                bufferWriteChar(debugI2cInputBuffer, data);
-            }
         }
 
         I2C1CONbits.SCLREL = 1;

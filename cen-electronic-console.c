@@ -24,11 +24,15 @@ void printUsage(void) {
 	printf(MOTOR_BOARD_PC_NAME);
 	printf("\t : run the motor Board Emulator\r\n");
 
+	// All Tests
+	printf("\t\t\t");
+	printf(ALL_TESTS_NAME);
+	printf("\t : run All Tests\r\n");
+
 }
 
 int main(int argumentCount, char* arguments[])
 {
-	// runAllTests();
 	if (argumentCount <= 1) {
 		char* applicationNameAsChar = arguments[0];
 
@@ -45,6 +49,9 @@ int main(int argumentCount, char* arguments[])
 		}
 		else if (strcmp(boardName, MOTOR_BOARD_PC_NAME) == 0) {
 			runMotorBoardPC();
+		}
+		else if (strcmp(boardName, ALL_TESTS_NAME) == 0) {
+			runAllTests();
 		}
 		else {
 			printUsage();

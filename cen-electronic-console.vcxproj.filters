@@ -505,6 +505,9 @@
     <Filter Include="Header Files\device\i2c\slave">
       <UniqueIdentifier>{63011061-ffbc-4653-b394-692f3cb8fa9a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\common\math\pc">
+      <UniqueIdentifier>{c65130ee-d9f8-44e2-922a-bd46b5fc4a26}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -1070,6 +1073,12 @@
     </ClCompile>
     <ClCompile Include="common\i2c\slave\pc\i2cSlaveInterruptPc.c">
       <Filter>Source Files\common\i2c\slave\pc</Filter>
+    </ClCompile>
+    <ClCompile Include="common\math\random.c">
+      <Filter>Source Files\common\math</Filter>
+    </ClCompile>
+    <ClCompile Include="common\math\pc\randomPc32.c">
+      <Filter>Source Files\common\math\pc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1678,6 +1687,9 @@
     </ClInclude>
     <ClInclude Include="common\i2c\slave\pc\i2cSlaveInterruptPc.h">
       <Filter>Header Files\common\i2c\slave\pc</Filter>
+    </ClInclude>
+    <ClInclude Include="common\math\random.h">
+      <Filter>Header Files\common\math</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

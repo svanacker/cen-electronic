@@ -391,7 +391,7 @@ void homologation7(int color) {
 }
 
 void homologation(unsigned int homologationIndex, unsigned int color) {
-    if (homologation != 0) {
+    if (homologationIndex != 0) {
         // Wait after flag
         if (!isReadyForNextMotion()) {
             return;

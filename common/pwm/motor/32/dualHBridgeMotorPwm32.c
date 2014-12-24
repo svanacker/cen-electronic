@@ -4,6 +4,7 @@
 #include "../../../../common/error/error.h"
 
 #include "../../pwmPic.h"
+#include "../motorPwm.h"
 
 #include "../dualHBridgeMotorPwm.h"
 

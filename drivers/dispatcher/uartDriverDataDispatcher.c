@@ -22,6 +22,9 @@
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
 
+#include "../../common/serial/serialOutputStream.h"
+#include "../../common/serial/serialInputInterrupt.h"
+
 DriverDataDispatcher* addUartDriverDataDispatcher(
         char* dispatcherName,
 

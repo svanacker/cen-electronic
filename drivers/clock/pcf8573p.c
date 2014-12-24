@@ -4,6 +4,7 @@
 
 #include "../../common/clock/clock.h"
 #include "../../common/i2c/i2cCommon.h"
+#include "../../common/i2c/master/i2cMaster.h"
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
 
@@ -40,6 +41,8 @@ ClockData* _readPcf8573Clock(Clock* clock) {
     WaitI2C();
     portableCloseI2C();
     WaitI2C();
+
+    return clockData;
 }
 
 /**

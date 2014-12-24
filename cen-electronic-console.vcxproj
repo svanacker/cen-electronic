@@ -119,6 +119,8 @@
     <ClCompile Include="common\math\bitList.c" />
     <ClCompile Include="common\math\cenMath.c" />
     <ClCompile Include="common\math\hexUtils.c" />
+    <ClCompile Include="common\math\pc\randomPc32.c" />
+    <ClCompile Include="common\math\random.c" />
     <ClCompile Include="common\pwm\motor\motorPwm.c" />
     <ClCompile Include="common\pwm\motor\pc\dualHBridgeMotorPc.c" />
     <ClCompile Include="common\pwm\servo\pc\servoPwmPc.c" />
@@ -316,6 +318,7 @@
     <ClInclude Include="common\math\bitList.h" />
     <ClInclude Include="common\math\cenMath.h" />
     <ClInclude Include="common\math\hexUtils.h" />
+    <ClInclude Include="common\math\random.h" />
     <ClInclude Include="common\pwm\motor\dualHBridgeMotorPwm.h" />
     <ClInclude Include="common\pwm\motor\motorPwm.h" />
     <ClInclude Include="common\pwm\servo\servoPwm.h" />

@@ -69,5 +69,10 @@ void startTimerList();
  */
 TimerList* getTimerList();
 
+/**
+ * TODO : See to remove it
+ */
+void _internalUpdateTimerListValues(void);
+
 #endif
 

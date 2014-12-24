@@ -5,6 +5,7 @@
 
 #include "../../../common/io/buffer.h"
 #include "../../../common/io/outputStream.h"
+#include "../../../common/io/printWriter.h"
 #include "../serialInputInterrupt.h"
 #include "../serial.h"
 #include "serial32.h"
