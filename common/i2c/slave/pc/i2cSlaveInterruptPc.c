@@ -36,20 +36,19 @@ void sendI2CDataToMaster(void)
     Buffer* i2cSlaveOutputBuffer = i2cStreamLink->outputBuffer;
     // Get an inputStream to read the buffer to send to the master
     InputStream* i2cInputStream = getInputStream(i2cSlaveOutputBuffer);
-    // For debug
-    Buffer* debugI2cOutputBuffer = getDebugI2cOutputBuffer();
     // There is available data
     if (i2cInputStream->availableData(i2cInputStream)) {
         char c = i2cInputStream->readChar(i2cInputStream);
 
         // for debug support
-        if (debugI2cOutputBuffer != NULL) {
-            bufferWriteChar(debugI2cOutputBuffer, c);
-        }
-        // we send it to the master
-        printf("%c", c);
+		appendI2cDebugOutputChar(c);
+
+		// we send it to the master
         portableSlaveWriteI2C(c);
-    }
+
+		// To Remove
+		printf("%c", c);
+	}
     else {
         // In this case, we must NOT add '\0' to the debug buffer (we will not see anything !)
 		// In PC, the system is not the same than with interrupt, because we add something in a pipe
@@ -102,10 +101,8 @@ void handleI2CDataFromMaster(void) {
         OutputStream* outputStream = getOutputStream(i2cSlaveInputBuffer);
         // Read data from the Master
         append(outputStream, data);
-        Buffer* debugI2cInputBuffer = getDebugI2cInputBuffer();
-        if (debugI2cInputBuffer != NULL) {
-            bufferWriteChar(debugI2cInputBuffer, data);
-        }
+
+		appendI2cDebugInputChar(data);
     }
 }
 

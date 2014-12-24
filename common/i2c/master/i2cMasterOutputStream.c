@@ -44,11 +44,11 @@ void _i2cMasterCloseOutputStream(OutputStream* outputStream) {
  */
 void _writeCharI2C(OutputStream* outputStream, char c) {
     Buffer* buffer = _i2cMasterGetOutputBuffer(outputStream);
-    if (getDebugI2cEnabled()) {
-        Buffer* debugBuffer = getDebugI2cOutputBuffer();
-        bufferWriteChar(debugBuffer, c);
-    }
-    bufferWriteChar(buffer, c);
+
+	// Debug
+	appendI2cDebugOutputChar(c);
+	// Real
+	bufferWriteChar(buffer, c);
 }
 
 /**

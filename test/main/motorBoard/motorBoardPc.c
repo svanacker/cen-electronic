@@ -192,6 +192,7 @@ void runMotorBoardPC(void) {
 
 	initDevices();
 
+	setDebugI2cEnabled(false);
 	while (1) {
 		motorBoardWaitForInstruction();
 	}

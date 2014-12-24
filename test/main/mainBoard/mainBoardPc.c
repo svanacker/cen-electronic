@@ -233,6 +233,12 @@ void runMainBoardPC(void) {
 
 	initDevices();
 
+	delaymSec(1000);
+
+	setDebugI2cEnabled(false);
+	testDriverIntensive(100);
+	// testDriverGetValue(10, 20);
+
 	while (1) {
 		mainBoardWaitForInstruction();
 	}

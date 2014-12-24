@@ -21,13 +21,13 @@ void setDebugI2cEnabled(bool enabled);
  * Get the input buffer to debug I2C.
  * @return a pointer on the buffer used to debug the I2C (Input Part).
  */
-Buffer* getDebugI2cInputBuffer();
+// Buffer* getDebugI2cInputBuffer();
 
 /**
  * Get the output buffer to debug I2C.
  * @return a pointer on the buffer used to debug the I2C (Output Part).
  */
-Buffer* getDebugI2cOutputBuffer();
+// Buffer* getDebugI2cOutputBuffer();
 
 /**
  * Init the I2C debug buffers.
@@ -45,6 +45,10 @@ void initI2CDebugBuffers(Buffer* aDebugI2cInputBuffer,
                          char (*debugI2cOutputBufferArray)[],
 						 unsigned int debugI2cOutputBufferLength
 );
+
+void appendI2cDebugInputChar(unsigned char debugValue);
+
+void appendI2cDebugOutputChar(unsigned char debugValue);
 
 /**
  * Print the content of debug buffers.

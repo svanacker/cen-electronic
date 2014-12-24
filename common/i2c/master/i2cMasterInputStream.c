@@ -50,10 +50,7 @@ void fillI2CInputInternalBuffer(InputStream* inputStream) {
             break;
         }
 
-        if (getDebugI2cEnabled()) {
-            Buffer* debugBuffer = getDebugI2cInputBuffer();
-            bufferWriteChar(debugBuffer, c);
-        }
+        appendI2cDebugInputChar(c);
         
         /*
         append(getOutputStreamLogger(DEBUG), '(');

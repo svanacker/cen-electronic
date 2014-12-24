@@ -17,6 +17,7 @@ static Buffer* debugI2cInputBuffer;
 static Buffer* debugI2cOutputBuffer;
 static bool debugI2cEnabled;
 
+/*
 Buffer* getDebugI2cInputBuffer() {
     return debugI2cInputBuffer;
 }
@@ -24,6 +25,7 @@ Buffer* getDebugI2cInputBuffer() {
 Buffer* getDebugI2cOutputBuffer() {
     return debugI2cOutputBuffer;
 }
+*/
 
 bool getDebugI2cEnabled() {
     return debugI2cEnabled;
@@ -46,6 +48,24 @@ void initI2CDebugBuffers(Buffer* aDebugI2cInputBuffer,
     initBuffer(debugI2cInputBuffer, debugI2cInputBufferArray, debugI2cInputBufferLength, "I2C IN DBG", IN_AS_STRING);
     initBuffer(debugI2cOutputBuffer, debugI2cOutputBufferArray, debugI2cOutputBufferLength, "I2C OUT DBG", OUT_AS_STRING);
     debugI2cEnabled = true;
+}
+
+void appendI2cDebugInputChar(unsigned char debugValue) {
+	if (!debugI2cEnabled) {
+		return;
+	}
+	if (debugI2cInputBuffer != NULL) {
+		bufferWriteChar(debugI2cInputBuffer, debugValue);
+	}
+}
+
+void appendI2cDebugOutputChar(unsigned char debugValue) {
+	if (!debugI2cEnabled) {
+		return;
+	}
+	if (debugI2cInputBuffer != NULL) {
+		bufferWriteChar(debugI2cOutputBuffer, debugValue);
+	}
 }
 
 void printI2cDebugBuffers() {

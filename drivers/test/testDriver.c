@@ -3,6 +3,7 @@
 
 #include "testDriver.h"
 
+#include "../../common/error/error.h"
 #include "../../common/io/buffer.h"
 #include "../../common/io/inputStream.h"
 #include "../../common/io/outputStream.h"
@@ -14,6 +15,9 @@
 #include "../../drivers/driver.h"
 #include "../../drivers/driverList.h"
 #include "../../drivers/driverTransmitter.h"
+
+// TO REMOVE !
+#include <Windows.h>
 
 signed int testDriverGetValue(signed int argument1, signed int argument2) {
     OutputStream* outputStream = getDriverRequestOutputStream();
@@ -29,6 +33,46 @@ signed int testDriverGetValue(signed int argument1, signed int argument2) {
         return result;
     }
     return 0;
+}
+
+int randomInRange(int range_min, int range_max) {
+    int result = (int) ((double)rand() / (RAND_MAX + 1) * (range_max - range_min)
+        + range_min);
+    return result;
+}
+
+bool testDriverIntensive(unsigned int testCount) {
+    OutputStream* outputStream = getDriverRequestOutputStream();
+    InputStream* resultStream = getDriverResponseInputStream();
+    srand((unsigned)time(NULL));
+
+    unsigned int i;
+    for (i = 0; i < testCount; i++) {
+        append(outputStream, TEST_DEVICE_HEADER);
+        append(outputStream, COMMAND_TEST);
+
+        unsigned char value1 = (unsigned char)randomInRange(0, 255);
+        unsigned char value2 = (unsigned char)randomInRange(0, 255);
+        appendHex2(outputStream, value1);
+        appendHex2(outputStream, value2);
+
+        bool ok = transmitFromDriverRequestBuffer();
+        if (ok) {
+            int result = readHex2(resultStream);
+            int expected = value1 + value2;
+            if (expected >= 256) {
+                expected -= 256;
+            }
+            if (result != expected) {
+                writeError(DEVICE_TEST_INTENSIVE_CHECK_PROBLEM);
+                return false;
+            }
+        }
+        else {
+            return false;
+        }
+    }
+    return true;
 }
 
 // DRIVER INTERFACE
