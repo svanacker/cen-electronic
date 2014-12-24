@@ -136,7 +136,7 @@ static Device deviceListArray[MAIN_BOARD_PC_DEVICE_LIST_LENGTH];
 static StartMatchDetector startMatchDetector;
 
 void mainBoardWaitForInstruction(void) {
-	delaymSec(MAIN_BOARD_PC_DELAY_CONSOLE_ANALYZE_MILLISECONDS);
+	// delaymSec(MAIN_BOARD_PC_DELAY_CONSOLE_ANALYZE_MILLISECONDS);
 	while (consoleInputStream.availableData(&consoleInputStream)) {
 		unsigned char c = consoleInputStream.readChar(&consoleInputStream);
 		consoleInputBuffer.outputStream.writeChar(&(consoleInputBuffer.outputStream), c);

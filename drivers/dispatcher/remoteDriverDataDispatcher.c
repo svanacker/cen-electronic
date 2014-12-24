@@ -43,8 +43,7 @@ void remoteDriverDataDispatcherTransmit(DriverDataDispatcher* dispatcher,
 
 	// Wait as soon as we do not receive all the response
     while (dataReceived < dataToReceiveCount) {
-        // TODO : delay100us(1);
-		delaymSec(1);
+		delay100us(1);
         // Copy received data to the responseOutputStream (-> responseBuffer)
         // limit data reception to 1
         dataReceived += copyInputToOutputStream(dispatcherInputStream, responseOutputStream, NULL, 1);

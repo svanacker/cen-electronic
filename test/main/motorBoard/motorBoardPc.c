@@ -100,7 +100,7 @@ static Device deviceListArray[MOTOR_BOARD_PC_DEVICE_LIST_LENGTH];
 
 void motorBoardWaitForInstruction(void) {
 
-	delaymSec(MOTOR_BOARD_PC_DELAY_CONSOLE_ANALYZE_MILLISECONDS);
+	// delaymSec(MOTOR_BOARD_PC_DELAY_CONSOLE_ANALYZE_MILLISECONDS);
 
 	// Analyze data from the Console (Specific to PC)
 	while (consoleInputStream.availableData(&consoleInputStream)) {
@@ -158,24 +158,6 @@ void runMotorBoardPC(void) {
 	initDriverDataDispatcherList((DriverDataDispatcher(*)[]) &driverDataDispatcherListArray, MOTOR_BOARD_PC_DATA_DISPATCHER_LIST_LENGTH);
 	addLocalDriverDataDispatcher();
 
-	// Devices
-	initDeviceList((Device(*)[]) &deviceListArray, MOTOR_BOARD_PC_DEVICE_LIST_LENGTH);
-	addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
-	addLocalDevice(getI2cSlaveDebugDeviceInterface(), getI2cSlaveDebugDeviceDescriptor());
-	addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
-	addLocalDevice(getSystemDebugDeviceInterface(), getSystemDebugDeviceDescriptor());
-	addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());
-
-	addLocalDevice(getPIDDeviceInterface(), getPIDDeviceDescriptor());
-	addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());
-	addLocalDevice(getCodersDeviceInterface(), getCodersDeviceDescriptor());
-	addLocalDevice(getTrajectoryDeviceInterface(), getTrajectoryDeviceDescriptor());
-	addLocalDevice(getMotionDeviceInterface(), getMotionDeviceDescriptor());
-
-	initDevices();
-
-	delaymSec(500);
-
 	openSlaveI2cStreamLink(&i2cSlaveStreamLink,
 		&i2cSlaveInputBuffer,
 		(char(*)[]) &i2cSlaveInputBufferArray,
@@ -193,6 +175,22 @@ void runMotorBoardPC(void) {
 		&i2cSlaveDebugOutputBuffer,
 		(char(*)[]) &i2cSlaveDebugOutputBufferArray,
 		MOTOR_BOARD_PC_I2C_DEBUG_SLAVE_OUT_BUFFER_LENGTH);
+
+	// Devices
+	initDeviceList((Device(*)[]) &deviceListArray, MOTOR_BOARD_PC_DEVICE_LIST_LENGTH);
+	addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
+	addLocalDevice(getI2cSlaveDebugDeviceInterface(), getI2cSlaveDebugDeviceDescriptor());
+	addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
+	addLocalDevice(getSystemDebugDeviceInterface(), getSystemDebugDeviceDescriptor());
+	addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());
+
+	addLocalDevice(getPIDDeviceInterface(), getPIDDeviceDescriptor());
+	addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());
+	addLocalDevice(getCodersDeviceInterface(), getCodersDeviceDescriptor());
+	addLocalDevice(getTrajectoryDeviceInterface(), getTrajectoryDeviceDescriptor());
+	addLocalDevice(getMotionDeviceInterface(), getMotionDeviceDescriptor());
+
+	initDevices();
 
 	while (1) {
 		motorBoardWaitForInstruction();
