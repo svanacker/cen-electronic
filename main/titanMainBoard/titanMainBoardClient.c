@@ -13,7 +13,6 @@
 
 #include "titanMainBoardClient.h"
 
-
 #include "../../common/delay/cenDelay.h"
 
 #include "../../common/i2c/i2cDebug.h"
@@ -97,7 +96,6 @@
 
 // LCD
 #include "../../drivers/lcd/lcd.h"
-#include "../../drivers/lcd/lcd4d.h"
 #include "../../device/lcd/lcdDevice.h"
 #include "../../device/lcd/lcdDeviceInterface.h"
 
@@ -139,24 +137,20 @@
 #include "../../drivers/driverTransmitter.h"
 #include "../../drivers/strategy/strategyDriver.h"
 #include "../../drivers/sensor/LM75A.h"
-#include "../../drivers/robotConfig/PIC32/robotConfigPic32.h"
-
-
-
+//#include "../../drivers/robotConfig/PIC32/robotConfigPic32.h"
 
 #include "../../common/eeprom/eeprom.h"
 
 #include "../../device/eeprom/eepromDevice.h"
 #include "../../device/eeprom/eepromDeviceInterface.h"
 
-
-
-
-
 // Robot
+#include "../../robot/config/32/robotConfigPic32.h"
 #include "../../robot/config/robotConfig.h"
 #include "../../robot/config/robotConfigDevice.h"
 #include "../../robot/config/robotConfigDeviceInterface.h"
+#include "../../robot/match/32/startMatchDetector32.h"
+#include "../../robot/match/startMatchDetector.h"
 #include "../../robot/match/startMatchDetectorDevice.h"
 #include "../../robot/match/startMatchDetectorDeviceInterface.h"
 #include "../../robot/match/endMatchDetectorDevice.h"
@@ -257,6 +251,9 @@ static Clock globalClock;
 static Buffer eepromBuffer;
 static char eepromBufferArray[EEPROM_BUFFER_LENGTH];
 static Eeprom eeprom_;
+
+// StartMatchDetector
+static StartMatchDetector startMatchDetector;
 
 // Robot Configuration
 static RobotConfig robotConfig;
@@ -474,7 +471,7 @@ void initDevicesDescriptor() {
     addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor());
     addLocalDevice(getADCDeviceInterface(),getADCDeviceDescriptor());
     addLocalDevice(getRobotConfigDeviceInterface(), getRobotConfigDeviceDescriptor(&robotConfig));
-    addLocalDevice(getStartMatchDetectorDeviceInterface(), getStartMatchDetectorDeviceDescriptor());
+    addLocalDevice(getStartMatchDetectorDeviceInterface(), getStartMatchDetectorDeviceDescriptor(&startMatchDetector));
     addLocalDevice(getEndMatchDetectorDeviceInterface(), getEndMatchDetectorDeviceDescriptor());
     addLocalDevice(getSonarDeviceInterface(), getSonarDeviceDescriptor());
     addLocalDevice(getRobotSonarDetectorDeviceInterface(), getRobotSonarDetectorDeviceDescriptor());
@@ -617,6 +614,8 @@ void waitForInstruction() {
 int main(void) {
     setPicName("TITAN ELECTRONICAL MAIN BOARD 32bits V-JJ_7");
 
+    i2cMasterInitialize();
+    
     //setRobotMustStop(false);
     // Open the serial Link for debug
     openSerialLink(&debugSerialStreamLink,
@@ -658,11 +657,22 @@ int main(void) {
     initDevicesDescriptor();
     initDriversDescriptor();
 
+    i2cMasterInitialize();
     // Initialize EEPROM and RTC
-    init24C512Eeprom(&eeprom_);
     initClockPCF8563(&globalClock);
+    init24C512Eeprom(&eeprom_);
+
+
+
+
+
 
     initRobotConfigPic32(&robotConfig);
+
+
+
+    initStartMatchDetector32(&startMatchDetector);
+
 
     // Initializes the opponent robot
     // initOpponentRobot();
@@ -682,7 +692,7 @@ int main(void) {
     appendString(&debugOutputStream, "DEBUG\n");
     
     // Start interruptions
-    // startTimerList();
+    //startTimerList();  //////RALENTI FORTEMENT LE PIC!!! PLANTE I2C !!!!!!!!
 
     // Configure data dispatcher
     //addLocalDriverDataDispatcher();
@@ -710,7 +720,7 @@ int main(void) {
             MECHANICAL_BOARD_2_I2C_ADDRESS);
     */
 
-/*    // Stream for Air Conditioning
+ /*   // Stream for Air Conditioning
     addI2CDriverDataDispatcher(&airConditioningI2cDispatcher,
             "AIR_CONDITIONING_DISPATCHER",
             &airConditioningBoardInputBuffer,
@@ -731,9 +741,7 @@ int main(void) {
 
     appendStringConfig(&lcdOutputStream);
 
-
-
-    // pingDriverDataDispatcherList(getOutputStreamLogger(DEBUG));
+    //pingDriverDataDispatcherList(getOutputStreamLogger(DEBUG));
 
     // Inform PC waiting
     showWaitingStart(&debugOutputStream);
@@ -765,7 +773,6 @@ int main(void) {
         appendString(getOutputStreamLogger(ALWAYS), "COLOR:RED\n");
     }    
 
-
     // TODO 2012 SV motionDriverMaintainPosition();
 
     // wait for start
@@ -777,7 +784,7 @@ int main(void) {
     loopUntilStart(&waitForInstruction);
 
     // Enable the sonar Status only after start
-    setSonarStatus(configValue & CONFIG_USE_SONAR_MASK);
+    //setSonarStatus(configValue & CONFIG_USE_SONAR_MASK);
 
     // mark that match begins
     markStartMatch();
@@ -790,6 +797,8 @@ int main(void) {
 
         while (1) {
             waitForInstruction();
+            //CLOCK Read
+
 
             if (isEnd()) {
                 break;
@@ -799,7 +808,81 @@ int main(void) {
         setReadyForNextMotion(true);
 
         while (1) {
-            waitForInstruction();
+            
+            portableStartI2C();
+            WaitI2C();
+            portableMasterWriteI2C(FREE_ADDRESS_2);//0x54
+            WaitI2C();
+            portableMasterWriteI2C('H');
+            WaitI2C();
+            portableMasterWriteI2C('E');
+            WaitI2C();
+            portableMasterWriteI2C('L');
+            WaitI2C();
+            portableMasterWriteI2C('L');
+            WaitI2C();
+            portableMasterWriteI2C('O');
+
+            portableStopI2C();
+            WaitI2C();
+            int data1,data2,data3;
+            while(1){
+                waitForInstruction();
+                //globalClock.readClock(&globalClock);
+                //printClock(&debugOutputStream,&globalClock);
+                //appendCR(&debugOutputStream);
+
+                int data = 0;
+                portableMasterWaitSendI2C();
+
+                portableStartI2C();
+                IdleI2C1();
+                portableMasterWriteI2C(FREE_ADDRESS_2 + 1);//0x54
+                WaitI2C();
+                
+                data = portableMasterReadI2C();
+                portableAckI2C();
+                IdleI2C1();
+
+                data1 = portableMasterReadI2C();
+                portableAckI2C();
+                IdleI2C1();
+
+                data2= portableMasterReadI2C();
+                portableAckI2C();
+                IdleI2C1();
+
+
+                data3 = portableMasterReadI2C();
+                portableNackI2C();
+                IdleI2C1();
+                append(&lcdOutputStream,data);
+                append(&lcdOutputStream,data1);
+                append(&lcdOutputStream,data2);
+                append(&lcdOutputStream,data3);
+
+                portableStopI2C();
+                IdleI2C1();
+                
+                delaymSec(500);
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             homologation(homologationIndex, color);
 
             // We stop if we are in homologation mode

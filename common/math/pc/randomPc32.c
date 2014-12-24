@@ -1,7 +1,10 @@
 #include "../random.h"
 
 #include <stdlib.h>
+#include <Windows.h>
 
 void initRandomGenerator() {
-	srand((unsigned)time(NULL));
+	LARGE_INTEGER _time;
+	QueryPerformanceCounter(&_time);
+	srand((int)_time.LowPart);
 }

@@ -19,8 +19,12 @@
 #include "../../common/i2c/master/i2cMaster.h"
 #include "../../common/i2c/master/i2cMasterSetup.h"
 
+#include "../../common/i2c/slave/i2cSlaveSetup.h"
+
 #include "../../common/i2c/master/i2cMasterOutputStream.h"
 #include "../../common/i2c/master/i2cMasterInputStream.h"
+
+#include "../../common/i2c/slave/i2cSlaveLink.h"
 
 #include "../../common/io/buffer.h"
 #include "../../common/io/compositeOutputStream.h"
@@ -131,6 +135,13 @@ static Buffer pcOutputBuffer;
 static OutputStream pcOutputStream;
 static StreamLink pcSerialStreamLink;
 
+// I2C
+static char i2cSlaveInputBufferArray[MOTOR_BOARD_I2C_INPUT_BUFFER_LENGTH];
+static Buffer i2cSlaveInputBuffer;
+static char i2cSlaveOutputBufferArray[MOTOR_BOARD_I2C_OUTPUT_BUFFER_LENGTH];
+static Buffer i2cSlaveOutputBuffer;
+static StreamLink i2cSerialStreamLink;
+
 // DRIVERS
 static Buffer driverRequestBuffer;
 static char driverRequestBufferArray[MAIN_BOARD_REQUEST_DRIVER_BUFFER_LENGTH];
@@ -144,6 +155,12 @@ static char i2cMasterDebugOutputBufferArray[MAIN_BOARD_I2C_DEBUG_MASTER_OUT_BUFF
 static Buffer i2cMasterDebugOutputBuffer;
 static char i2cMasterDebugInputBufferArray[MAIN_BOARD_I2C_DEBUG_MASTER_IN_BUFFER_LENGTH];
 static Buffer i2cMasterDebugInputBuffer;
+
+// DEBUG I2C
+static char i2cSlaveDebugOutputBufferArray[MAIN_BOARD_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH];
+static Buffer i2cSlaveDebugOutputBuffer;
+static char i2cSlaveDebugInputBufferArray[MAIN_BOARD_I2C_DEBUG_MASTER_IN_BUFFER_LENGTH];
+static Buffer i2cSlaveDebugInputBuffer;
 
 //EEPROM
 static Buffer eepromBuffer;
@@ -189,6 +206,9 @@ static Timer timerListArray[MAIN_BOARD_TIMER_LENGTH];
 
 // Clock
 static Clock globalClock;
+
+
+volatile unsigned char dataRead = 0;
 
 // *****************************************************************************
 // *****************************************************************************
@@ -252,6 +272,13 @@ void waitForInstruction(void) {
             &debugOutputStream,
             &filterRemoveCRLF,
             NULL);
+
+    // I2C Stream
+    handleStreamInstruction(&i2cSlaveInputBuffer,
+                            &i2cSlaveOutputBuffer,
+                            NULL,
+                            &filterRemoveCRLF,
+                            NULL);
 }
 
 int main(void) {
@@ -291,11 +318,32 @@ int main(void) {
             &pcOutputStream,
             SERIAL_PORT_PC,
             DEFAULT_SERIAL_SPEED);
+    
+    // I2C
+    openSlaveI2cStreamLink(&i2cSerialStreamLink,
+                            &i2cSlaveInputBuffer,
+                            &i2cSlaveInputBufferArray,
+                            MOTOR_BOARD_I2C_INPUT_BUFFER_LENGTH,
+                            &i2cSlaveOutputBuffer,
+                            &i2cSlaveOutputBufferArray,
+                            MOTOR_BOARD_I2C_OUTPUT_BUFFER_LENGTH,
+                            MOTOR_BOARD_I2C_ADDRESS
+                        );
+
+        // I2C Debug
+    initI2CDebugBuffers(&i2cSlaveDebugInputBuffer,
+                        &i2cSlaveDebugInputBufferArray,
+                        MAIN_BOARD_I2C_DEBUG_MASTER_IN_BUFFER_LENGTH,
+                        &i2cSlaveDebugOutputBuffer,
+                        &i2cSlaveDebugOutputBufferArray,
+                        MAIN_BOARD_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH);
+
 
     appendString(&pcOutputStream, "JK330 with PIC32...on UART PC\r");
     appendString(&debugOutputStream, "JK330 with PIC32...on UART DEBUG\r");
 
-    i2cMasterInitialize();
+    //i2cMasterInitialize();
+    //i2cSlaveInitialize(FREE_ADDRESS_2);
 
     initTimerList(&timerListArray, MAIN_BOARD_TIMER_LENGTH);
 
@@ -305,8 +353,8 @@ int main(void) {
     addLogHandler(&lcdLogHandler, "LCD", &lcdOutputStream, ERROR);
 
     init74c922();
-    init24C512Eeprom(&eeprom_);
-    initClockPCF8563(&globalClock);
+    //init24C512Eeprom(&eeprom_);
+    //initClockPCF8563(&globalClock);
 
     appendString(getOutputStreamLogger(DEBUG), getPicName());
     println(getOutputStreamLogger(DEBUG));
@@ -322,14 +370,14 @@ int main(void) {
     appendString(getOutputStreamLogger(DEBUG), "Lecture Horloge : \r");
 
     //CLOCK Read
-    globalClock.readClock(&globalClock);
+    //globalClock.readClock(&globalClock);
 
     // Print on the OutputStream
 
     printClock(getOutputStreamLogger(DEBUG), &globalClock);
     appendCR(getOutputStreamLogger(DEBUG));
 
-    setTemperatureAlertLimit(0x35);//35?C
+    //setTemperatureAlertLimit(0x35);//35?C
 
     clearScreen();
     setCursorAtHome();
@@ -337,12 +385,13 @@ int main(void) {
 
     initBuffer(&eepromBuffer,&eepromBufferArray, EEPROM_BUFFER_LENGTH,"EEPROM BUFFER","");
 
-    printEepromBlock(&eeprom_, &debugOutputStream, 0x0000,0x10, &eepromBuffer);
+    //printEepromBlock(&eeprom_, &debugOutputStream, 0x0000,0x10, &eepromBuffer);
+
     while (1){
         setCursorPosition_24064(0,23);  //raw,col
 
         //CLOCK Read
-        globalClock.readClock(&globalClock);
+        //globalClock.readClock(&globalClock);
         // Print on the OutputStream
         printClock(&lcdOutputStream, &globalClock);
 
@@ -352,7 +401,30 @@ int main(void) {
         appendHex2(&lcdOutputStream, c);
 
         setCursorPosition_24064(0,19);
-        printTemperatureSensor(&lcdOutputStream);
+        //printTemperatureSensor(&lcdOutputStream);
 
+        bufferWriteChar(&i2cSlaveOutputBuffer,'T');
+        bufferWriteChar(&i2cSlaveOutputBuffer,'E');
+        bufferWriteChar(&i2cSlaveOutputBuffer,'S');
+        bufferWriteChar(&i2cSlaveOutputBuffer,'T');
+        bufferWriteChar(&i2cSlaveOutputBuffer,' ');
+        bufferWriteChar(&i2cSlaveOutputBuffer,'O');
+        bufferWriteChar(&i2cSlaveOutputBuffer,'K');
+        bufferWriteChar(&i2cSlaveOutputBuffer,' ');
+        bufferWriteChar(&i2cSlaveOutputBuffer,'a');
+        bufferWriteChar(&i2cSlaveOutputBuffer,'b');
+        bufferWriteChar(&i2cSlaveOutputBuffer,'c');
+        bufferWriteChar(&i2cSlaveOutputBuffer,'d');
+        bufferWriteChar(&i2cSlaveOutputBuffer,'e');
+        bufferWriteChar(&i2cSlaveOutputBuffer,'f');
+        bufferWriteChar(&i2cSlaveOutputBuffer,'g');
+        bufferWriteChar(&i2cSlaveOutputBuffer,'h');
+    
+        //delaymSec(1000);
+        setCursorPosition_24064(1,3);
+        while (1){
+            printBuffer(&lcdOutputStream,&i2cSlaveInputBuffer);
+            printBuffer(&lcdOutputStream,&i2cSlaveDebugOutputBuffer);
+        }
     }
 }
