@@ -234,7 +234,7 @@ void initBeaconIO() {
 }
 
 void onError(JennicEvent* jennicEvent) {
-    appendString(getOutputStreamLogger(ERROR), "ERROR ! \n");
+    appendString(getErrorOutputStreamLogger(), "ERROR ! \n");
     onJennicError();
 }
 

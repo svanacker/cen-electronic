@@ -10,18 +10,18 @@ void WaitI2C() {
     #endif
 }
 
-inline void portableStartI2C() {
+void portableStartI2C() {
     StartI2C1();
 }
 
-inline void portableStopI2C() {
+void portableStopI2C() {
     StopI2C1();
 }
 
-inline void portableAckI2C() {
+void portableAckI2C() {
     AckI2C1();
 }
 
-inline void portableNackI2C() {
+void portableNackI2C() {
     NotAckI2C1();
 }
