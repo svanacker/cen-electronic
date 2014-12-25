@@ -39,6 +39,19 @@ void delayUs(void) {
 	}
 }
 
+void delay10us(char value) {
+	initPerformanceCounter();
+	LARGE_INTEGER StartingTime;
+
+	QueryPerformanceCounter(&StartingTime);
+	while (true) {
+		LONGLONG ElapsedMicroseconds = getElapsedTimeInMicroSeconds(StartingTime);
+		if (ElapsedMicroseconds >= 10 * value) {
+			break;
+		}
+	}
+}
+
 void delay100us(char value) {
 	initPerformanceCounter();
 

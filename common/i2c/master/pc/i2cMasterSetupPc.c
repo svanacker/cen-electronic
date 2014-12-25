@@ -37,7 +37,7 @@ void i2cMasterInitialize(void) {
     }
     appendString(getOutputStreamLogger(DEBUG), "I2C Master Initialize\r\n");
     masterPipeHandle = initServerPipe(PIPE_I2C_MASTER_NAME);
-    delaymSec(600);
+    delaymSec(200);
     slavePipeHandle = initClientPipe(PIPE_I2C_SLAVE_NAME);
 }
 

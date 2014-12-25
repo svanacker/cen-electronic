@@ -5,9 +5,7 @@
 #include "../i2cCommon.h"
 
 void WaitI2C() {
-    #ifndef MPLAB_SIMULATION
-        IdleI2C1();
-    #endif
+    IdleI2C1();
 }
 
 void portableStartI2C() {

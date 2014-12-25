@@ -66,43 +66,20 @@ char serialGetc(unsigned char serialPortIndex) {
     return 0;
 }
 
-#ifdef MPLAB_SIMULATION
-
-void simulateDelay() {
-    int i = 1000;
-    while (i > 0) {
-        Nop();
-        Nop();
-        --i;
-    }
-}
-#endif
-
 void serialPutc(unsigned char serialPortIndex, char c) {
     // SERIAL 1
     if (serialPortIndex == SERIAL_PORT_1) {
         // waits for transmit buffer to be ready
-        #ifndef MPLAB_SIMULATION
-            while (U1STAbits.UTXBF) {
-            
-            }
-        #else
-            while (U1STAbits.UTXBF) {
-            
-            }
-            // simulateDelay();
-        #endif
+		while (U1STAbits.UTXBF) {
+		
+		}
         // transmits char
         WriteUART1(c);
     // SERIAL 2
     } else if (serialPortIndex == SERIAL_PORT_2) {
-        #ifndef MPLAB_SIMULATION
-            while (U2STAbits.UTXBF) {
-            
-            }
-        #else
-            simulateDelay();
-        #endif
+		while (U2STAbits.UTXBF) {
+		
+		}
         // transmits char
         WriteUART2(c);
     }

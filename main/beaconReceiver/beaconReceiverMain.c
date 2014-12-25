@@ -64,17 +64,11 @@
 #include "../../drivers/jennic/jennic5139EventParser.h"
 #include "../../drivers/jennic/jennic5139OutputStream.h"
 
-#ifndef MPLAB_SIMULATION
-    // The port for which we debug (we can send instruction too)
-    #define SERIAL_PORT_DEBUG     SERIAL_PORT_2
-    
-    // The port for which we dialog with ZIGBEE
-    #define SERIAL_PORT_ZIGBEE     SERIAL_PORT_1
-#else
-    // Same port when using Simulation
-    #define SERIAL_PORT_DEBUG         SERIAL_PORT_1
-    #define SERIAL_PORT_ZIGBEE         SERIAL_PORT_1
-#endif
+// The port for which we debug (we can send instruction too)
+#define SERIAL_PORT_DEBUG     SERIAL_PORT_2
+
+// The port for which we dialog with ZIGBEE
+#define SERIAL_PORT_ZIGBEE     SERIAL_PORT_1
 
 // DEVICES
 static Device deviceListArray[BEACON_RECEIVER_DEVICE_LENGTH];
@@ -288,9 +282,7 @@ int runZigBeeReceiver() {
     initDevicesDescriptor();
 
     // Init the timers management
-    #ifndef MPLAB_SIMULATION
     startTimerList();
-    #endif
 
     InputStream* zigbeeInputStream = getInputStream(&zigbeeInputBuffer);
     InputStream* debugInputStream = getInputStream(&debugInputBuffer);

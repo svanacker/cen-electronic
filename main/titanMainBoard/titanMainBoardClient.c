@@ -174,19 +174,13 @@
 
 #include "../../drivers/sonar/srf02.h"
 
-#ifndef MPLAB_SIMULATION
-    #ifdef PROG_32
-        #define SERIAL_PORT_DEBUG          SERIAL_PORT_2
-        #define SERIAL_PORT_PC             SERIAL_PORT_6
-        #define SERIAL_PORT_LCD            SERIAL_PORT_5
-    #else
-        #define SERIAL_PORT_DEBUG         SERIAL_PORT_1
-        #define SERIAL_PORT_PC             SERIAL_PORT_2
-    #endif
+#ifdef PROG_32
+	#define SERIAL_PORT_DEBUG          SERIAL_PORT_2
+	#define SERIAL_PORT_PC             SERIAL_PORT_6
+	#define SERIAL_PORT_LCD            SERIAL_PORT_5
 #else
-    // We use the same port for both
-    #define SERIAL_PORT_PC             SERIAL_PORT_1
-    #define SERIAL_PORT_DEBUG         SERIAL_PORT_1
+	#define SERIAL_PORT_DEBUG         SERIAL_PORT_1
+	#define SERIAL_PORT_PC             SERIAL_PORT_2
 #endif
 
 // serial link DEBUG 

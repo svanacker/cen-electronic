@@ -4,6 +4,7 @@
 //#include <timer.h>
 #include <peripheral/timer.h>
 
+#define VALUE_FOR_10_MICRO_SECOND    16
 #define VALUE_FOR_100_MICRO_SECOND   164
 #define VALUE_FOR_1000_MICRO_SECOND  1664
 

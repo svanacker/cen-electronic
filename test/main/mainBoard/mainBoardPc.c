@@ -236,7 +236,7 @@ void runMainBoardPC(void) {
 	delaymSec(100);
 
 	setDebugI2cEnabled(false);
-	testDriverIntensive(1);
+	testDriverIntensive(100);
 
 	while (1) {
 		mainBoardWaitForInstruction();

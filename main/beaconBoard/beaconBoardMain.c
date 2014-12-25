@@ -118,17 +118,11 @@ static DriverDataDispatcher beaconReceiverDispatcher;
 static InputStream beaconReceiverInputStream;
 static OutputStream beaconReceiverOutputStream;
 
-#ifndef MPLAB_SIMULATION
-    // The port for which we debug (we can send instruction too)
-    #define SERIAL_PORT_DEBUG     SERIAL_PORT_2
-    
-    // The port for which we dialog with ZIGBEE
-    #define SERIAL_PORT_ZIGBEE     SERIAL_PORT_1
-#else
-    // Same port when using Simulation
-    #define SERIAL_PORT_DEBUG         SERIAL_PORT_1
-    #define SERIAL_PORT_ZIGBEE         SERIAL_PORT_1
-#endif
+// The port for which we debug (we can send instruction too)
+#define SERIAL_PORT_DEBUG     SERIAL_PORT_2
+
+// The port for which we dialog with ZIGBEE
+#define SERIAL_PORT_ZIGBEE     SERIAL_PORT_1
 
 // logs
 static LogHandler serialLogHandler;
@@ -371,10 +365,8 @@ restart:
     initDriversDescriptor();
 
     // Start interruptions
-    #ifndef MPLAB_SIMULATION
     printTimerList(&debugOutputStream, getTimerList());
     startTimerList();
-    #endif
 
     // To Avoid Rotation at startup Time. The beacon will be activated as soon the network will be connected
     // to receiver

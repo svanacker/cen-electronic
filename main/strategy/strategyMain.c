@@ -75,12 +75,7 @@
 // The port for which we debug (we can send instruction too)
 #include "../../robot/robot.h"
 
-#ifndef MPLAB_SIMULATION
-    #define SERIAL_PORT_DEBUG         SERIAL_PORT_2
-#else
-    // We use the same port for both
-    #define SERIAL_PORT_DEBUG         SERIAL_PORT_1
-#endif
+#define SERIAL_PORT_DEBUG         SERIAL_PORT_2
 
 /**
 * Device list.
@@ -224,12 +219,10 @@ int main(void) {
 
     initStrategyHandler();
 
-    #ifdef MPLAB_SIMULATION
-        //addNavigationLocations();
-        //printDeviceListUsage(getOutputStreamLogger(INFO));
-        while (nextStep());
-        while (1);
-    #endif
+	//addNavigationLocations();
+	//printDeviceListUsage(getOutputStreamLogger(INFO));
+	while (nextStep());
+	while (1);
 
     // Init the timers management
     startTimerList();

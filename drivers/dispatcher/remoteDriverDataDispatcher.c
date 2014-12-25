@@ -41,15 +41,16 @@ void remoteDriverDataDispatcherTransmit(DriverDataDispatcher* dispatcher,
     int counter = 0;
     delaymSec(2);
 
+	int delayInDeciMicroseconds = 1;
 	// Wait as soon as we do not receive all the response
     while (dataReceived < dataToReceiveCount) {
-		delay100us(1);
+		delay10us(delayInDeciMicroseconds);
         // Copy received data to the responseOutputStream (-> responseBuffer)
         // limit data reception to 1
         dataReceived += copyInputToOutputStream(dispatcherInputStream, responseOutputStream, NULL, 1);
         counter++;
-        // Time out
-        if (counter > 100) {
+        // Time out : Wait 100 milliseconds !
+		if (counter > 10000 / delayInDeciMicroseconds) {
             appendString (getErrorOutputStreamLogger(), "Dispatcher:");
 			appendString(getOutputStreamLogger(LOG_LEVEL_ERROR), dispatcher->name);
 			appendString(getOutputStreamLogger(LOG_LEVEL_ERROR), "Time out:");

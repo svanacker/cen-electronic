@@ -78,11 +78,7 @@
 #include "../../test/motion/bspline/bsplinetest.h"
 
 // The port for which we debug (we can send instruction too)
-#ifndef MPLAB_SIMULATION
-    #define SERIAL_PORT_DEBUG     SERIAL_PORT_2
-#else
-    #define SERIAL_PORT_DEBUG     SERIAL_PORT_1
-#endif
+#define SERIAL_PORT_DEBUG     SERIAL_PORT_2
 
 // serial DEBUG 
 static char debugInputBufferArray[MOTOR_BOARD_IN_BUFFER_LENGTH];

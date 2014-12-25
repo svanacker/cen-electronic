@@ -1,11 +1,6 @@
 #ifndef COMMONS_H
 #define COMMONS_H
 
-/**
- * Defines that we want to run with MPLAB SIMULATION
- */
-// #define MPLAB_SIMULATION
-
 #ifdef _MSC_VER
     #define PC_COMPILER
 #endif

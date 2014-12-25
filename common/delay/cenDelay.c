@@ -20,9 +20,21 @@ void delayUs(void) {
     }
 }
 
+void delay10us(char uSecond) {
+    unsigned int i;
+
+    while (uSecond != 0) {
+        i = VALUE_FOR_10_MICRO_SECOND;
+        while (i > 0) {
+            Nop();
+            Nop();
+            --i;
+        }
+        --uSecond;
+    }
+}
+
 void delay100us(char uSecond) {
-// Simulation mode
-#ifndef MPLAB_SIMULATION
     unsigned int i;
 
     while (uSecond != 0) {
@@ -34,12 +46,9 @@ void delay100us(char uSecond) {
         }
         --uSecond;
     }
-#endif
 }
 
 void delaymSec(unsigned int mSecond) {
-// Simulation mode
-#ifndef MPLAB_SIMULATION
     unsigned int i;
 
     while (mSecond != 0) {
@@ -51,5 +60,4 @@ void delaymSec(unsigned int mSecond) {
         }
         --mSecond;
     }
-#endif
 }

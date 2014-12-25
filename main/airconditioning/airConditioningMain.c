@@ -63,12 +63,7 @@
 
 #include "../../drivers/temperature/MCP9804.h"
 
-#ifndef MPLAB_SIMULATION
 #define SERIAL_PORT_DEBUG         SERIAL_PORT_2
-#else
-// We use the same port for both
-#define SERIAL_PORT_DEBUG         SERIAL_PORT_1
-#endif
 
 #define        SERVO_INDEX                1
 #define        SERVO_VALUE_TOUCH          1620
