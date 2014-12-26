@@ -11,6 +11,11 @@
 #define COMMAND_TEST 'w'
 
 /**
+ * Very simple test, no argument, no result, to have a very short message (usefull to avoid hardware problem like buffer when testing I2C)
+ */
+#define COMMAND_SIMPLE_TEST 's'
+
+/**
  * Command header for big Test
  * The test is an addition of 10 values (to ensure that there is no overflow problems when sending lots of information).
  */

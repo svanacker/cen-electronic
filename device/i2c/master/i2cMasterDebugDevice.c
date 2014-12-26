@@ -18,6 +18,8 @@
 #include "../../../device/device.h"
 #include "../../../device/deviceUsage.h"
 
+#include "../../../drivers/test/testDriver.h"
+
 void deviceI2cMasterDebugInit(void) {
 }
 
@@ -30,22 +32,33 @@ bool deviceI2cMasterDebugIsOk(void) {
 
 void deviceI2cMasterDebugHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream) {
     // I2C Management
-    if (header == COMMAND_DEBUG_I2C) {
-        ackCommand(outputStream, I2C_MASTER_DEBUG_DEVICE_HEADER, COMMAND_DEBUG_I2C);
+    if (header == COMMAND_I2C_DEBUG_MASTER_DEBUG) {
+        ackCommand(outputStream, I2C_MASTER_DEBUG_DEVICE_HEADER, COMMAND_I2C_DEBUG_MASTER_DEBUG);
         printI2cDebugBuffers();
     }
-    else if (header == COMMAND_SEND_CHAR_I2C_SLAVE) {
-        ackCommand(outputStream, I2C_MASTER_DEBUG_DEVICE_HEADER, COMMAND_SEND_CHAR_I2C_SLAVE);
+    else if (header == COMMAND_I2C_DEBUG_MASTER_ENABLE_DISABLE) {
+        ackCommand(outputStream, I2C_MASTER_DEBUG_DEVICE_HEADER, COMMAND_I2C_DEBUG_MASTER_ENABLE_DISABLE);
+
+        unsigned char enable = readHex2(inputStream);
+        setDebugI2cEnabled(enable != 0);
+    }
+    else if (header == COMMAND_I2C_DEBUG_MASTER_SEND_CHAR_TO_SLAVE) {
+        ackCommand(outputStream, I2C_MASTER_DEBUG_DEVICE_HEADER, COMMAND_I2C_DEBUG_MASTER_SEND_CHAR_TO_SLAVE);
         int address = readHex2(inputStream);
         int c = readHex2(inputStream);
     
         i2cMasterWriteChar(address, c);
     }
-    else if (header == COMMAND_READ_CHAR_I2C_SLAVE) {
-        ackCommand(outputStream, I2C_MASTER_DEBUG_DEVICE_HEADER, COMMAND_READ_CHAR_I2C_SLAVE);
+    else if (header == COMMAND_I2C_DEBUG_MASTER_READ_CHAR_FROM_SLAVE) {
+        ackCommand(outputStream, I2C_MASTER_DEBUG_DEVICE_HEADER, COMMAND_I2C_DEBUG_MASTER_READ_CHAR_FROM_SLAVE);
         int address = readHex2(inputStream);
         char c = i2cMasterReadChar(address);
         appendHex2(outputStream, c);
+    }
+    else if (header == COMMAND_I2C_DEBUG_MASTER_INTENSIVE_CALL_TO_SLAVE) {
+        ackCommand(outputStream, I2C_MASTER_DEBUG_DEVICE_HEADER, COMMAND_I2C_DEBUG_MASTER_INTENSIVE_CALL_TO_SLAVE);
+        unsigned int count = readHex4(inputStream);
+        testDriverIntensive(count);
     }
 }
 

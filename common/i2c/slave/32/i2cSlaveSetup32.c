@@ -4,6 +4,13 @@
 
 #include "../../../../common/commons.h"
 #include "../../../../common/error/error.h"
+
+#include "../../../../common/io/printWriter.h"
+#include "../../../../common/io/binaryPrintWriter.h"
+
+#include "../../../../common/log/logger.h"
+#include "../../../../common/log/logLevel.h"
+
 #include "../i2cSlaveSetup.h"
 
 #define I2C_FREQUENCY	   100000L
@@ -13,12 +20,18 @@
 bool initialized = false;
 
 void i2cSlaveInitialize(unsigned char writeAddress) {
+
     // Avoid more than one initialization
     if (initialized) {
         writeError(I2C_SLAVE_ALREADY_INITIALIZED);
         return;
     }
 	initialized = true;
+	
+	appendString(getOutputStreamLogger(DEBUG), "I2C Slave Write Address=");
+    appendHex2(getOutputStreamLogger(DEBUG), writeAddress);
+    appendCRLF(getOutputStreamLogger(DEBUG));
+	
     // Enable the I2C module with clock stretching enabled
 	OpenI2C1(I2C_ON | I2C_7BIT_ADD | I2C_STR_EN, BRG_VAL);
 

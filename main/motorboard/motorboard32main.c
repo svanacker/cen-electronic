@@ -13,6 +13,7 @@
 
 #include "../../common/delay/cenDelay.h"
 
+#include "../../common/i2c/i2cDebug.h"
 #include "../../common/i2c/slave/i2cSlave.h"
 #include "../../common/i2c/slave/i2cSlaveSetup.h"
 #include "../../common/i2c/slave/i2cSlaveLink.h"
@@ -120,6 +121,12 @@ static char i2cSlaveOutputBufferArray[MOTOR_BOARD_OUT_BUFFER_LENGTH];
 static Buffer i2cSlaveOutputBuffer;
 static StreamLink i2cSlaveStreamLink;
 
+// I2C Debug
+static char i2cMasterDebugOutputBufferArray[MOTOR_BOARD_I2C_DEBUG_MASTER_IN_BUFFER_LENGTH];
+static Buffer i2cMasterDebugOutputBuffer;
+static char i2cMasterDebugInputBufferArray[MOTOR_BOARD_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH];
+static Buffer i2cMasterDebugInputBuffer;
+
 // Timers
 static Timer timerListArray[MOTOR_BOARD_TIMER_LENGTH];
 int currentTimeInSecond;
@@ -214,9 +221,6 @@ int runMotorBoard() {
 
     initTimerList(&timerListArray, MOTOR_BOARD_TIMER_LENGTH);
 
-    // Debug of I2C : Only if there is problems
-    // initI2CDebugBuffers(&debugI2cInputBuffer, &debugI2cOutputBuffer);
-
     openSlaveI2cStreamLink(&i2cSlaveStreamLink,
             &i2cSlaveInputBuffer,
             &i2cSlaveInputBufferArray,
@@ -226,6 +230,16 @@ int runMotorBoard() {
             MOTOR_BOARD_OUT_BUFFER_LENGTH,
             MOTOR_BOARD_I2C_ADDRESS
             );
+
+    // Debug of I2C : Only if there is problems
+	initI2CDebugBuffers(&i2cMasterDebugInputBuffer,
+		(char(*)[]) &i2cMasterDebugInputBufferArray,
+		MOTOR_BOARD_I2C_DEBUG_MASTER_IN_BUFFER_LENGTH,
+		&i2cMasterDebugOutputBuffer,
+		(char(*)[]) &i2cMasterDebugOutputBufferArray,
+		MOTOR_BOARD_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH);
+
+    setDebugI2cEnabled(false);
 
     // init the devices
     initDevicesDescriptor();

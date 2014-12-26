@@ -161,7 +161,7 @@
 #ifdef PROG_32
 	#define SERIAL_PORT_DEBUG         SERIAL_PORT_2 
 	#define SERIAL_PORT_PC             SERIAL_PORT_6
-	#define SERIAL_PORT_LCD            SERIAL_PORT_5
+	#define SERIAL_PORT_LCD            SERIAL_PORT_5    
 #else
 	#define SERIAL_PORT_DEBUG         SERIAL_PORT_1
 	#define SERIAL_PORT_PC             SERIAL_PORT_2
@@ -204,7 +204,6 @@ static Buffer i2cMasterDebugInputBuffer;
 
 // DISPATCHER I2C
 
-// TODO : Introduce Constants
 static DriverDataDispatcher driverDataDispatcherListArray[MAIN_BOARD_DRIVER_DATA_DISPATCHER_LENGTH];
 
 // i2c->Motor
@@ -427,7 +426,7 @@ void initDevicesDescriptor() {
     initDeviceList(&deviceListArray, MAIN_BOARD_DEVICE_LENGTH);
 
     // Test & System
-    // addI2CRemoteDevice(&testDevice, getTestDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
+    addI2CRemoteDevice(getTestDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
     addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
     addLocalDevice(getSystemDebugDeviceInterface(), getSystemDebugDeviceDescriptor());
     addLocalDevice(getI2cMasterDebugDeviceInterface(), getI2cMasterDebugDeviceDescriptor());
@@ -651,16 +650,14 @@ int main(void) {
     addLocalDriverDataDispatcher();
 
     // Stream for motorBoard
-    /*
-    addI2CDriverDataDispatcher(&motorI2cDispatcher,
-            "MOTOR_BOARD_DISPATCHER",
-            &motorBoardInputBuffer,
-            &motorBoardInputBufferArray,
-            MAIN_BOARD_LINK_TO_MOTOR_BOARD_BUFFER_LENGTH,
-            &motorBoardOutputStream,
-            &motorBoardInputStream,
-            MOTOR_BOARD_I2C_ADDRESS);
-    */
+    addI2CDriverDataDispatcher("MOTOR_BOARD_DISPATCHER",
+	&motorBoardInputBuffer,
+	(char(*)[]) &motorBoardInputBufferArray,
+	MAIN_BOARD_DRIVER_DATA_DISPATCHER_LENGTH,
+	&motorBoardOutputStream,
+	&motorBoardInputStream,
+	MOTOR_BOARD_I2C_ADDRESS);
+
     /*
     // Stream for Mechanical Board 2
     addI2CDriverDataDispatcher(&mechanical2I2cDispatcher,
@@ -690,6 +687,8 @@ int main(void) {
                         &i2cMasterDebugOutputBuffer,
                         &i2cMasterDebugOutputBufferArray,
                         MAIN_BOARD_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH);
+
+    setDebugI2cEnabled(false);
     /*
     Pcf8573Clock clock;
     getPcf8573Clock(&clock);

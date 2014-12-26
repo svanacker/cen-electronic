@@ -383,9 +383,7 @@ restart:
     // Initialisation is done by serial command    
     initJennic5139Coordinater();
 
-    #ifndef MPLAB_SIMULATION
     initBeaconIO();
-    #endif
 
     while (1) {
     

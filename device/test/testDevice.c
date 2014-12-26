@@ -33,6 +33,9 @@ void deviceTestHandleRawData(char header, InputStream* inputStream, OutputStream
         // data
         appendHex2(outputStream, result);
     }
+    else if (header == COMMAND_SIMPLE_TEST) {
+		ackCommand(outputStream, TEST_DEVICE_HEADER, COMMAND_SIMPLE_TEST);
+    }
 	else if (header == COMMAND_HEAVY_TEST) {
 		int arg1 = readHex2(inputStream);
 		int arg2 = readHex2(inputStream);

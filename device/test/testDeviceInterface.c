@@ -19,6 +19,12 @@ int deviceTestGetInterface(char commandHeader, int mode, bool fillDeviceArgument
         }
         return commandLengthValueForMode(mode, 4, 2);
     }
+    else if (commandHeader == COMMAND_SIMPLE_TEST) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("simpleTest");
+        }
+        return 0;
+    }
 	else if (commandHeader == COMMAND_HEAVY_TEST) {
 		if (fillDeviceArgumentList) {
 			setFunction("heavyTest", 10, 1);

@@ -42,8 +42,6 @@ void _i2cMasterOpenInputStream(InputStream* inputStream, int param1) {
  */
 void fillI2CInputInternalBuffer(InputStream* inputStream) {
     while (true) {
-        // TODO : REMOVE the delay if it's OK
-        // delay100us(5);
         unsigned char c = i2cMasterReadChar(inputStream->address);
 
         if (c == I2C_SLAVE_NO_DATA_IN_READ_BUFFER || c == INCORRECT_DATA) {
@@ -51,15 +49,8 @@ void fillI2CInputInternalBuffer(InputStream* inputStream) {
         }
 
         appendI2cDebugInputChar(c);
-        
-        /*
-        append(getOutputStreamLogger(DEBUG), '(');
-        appendHex2(getOutputStreamLogger(DEBUG), c);
-        append(getOutputStreamLogger(DEBUG), ')');
-        */
 
         Buffer* buffer = getI2CMasterInputBuffer(inputStream);
-
         bufferWriteChar(buffer, c);
     }
 }
