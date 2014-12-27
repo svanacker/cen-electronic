@@ -22,12 +22,6 @@ int deviceSystemDebugGetInterface(char header, int mode, bool fillDeviceArgument
         }
         return 0;
     }
-    else if (header == COMMAND_SERIAL_INPUT_BUFFERS) {
-        if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("showSerialInputBuffers");
-        }
-        return 0;
-    }
 
     return DEVICE_HEADER_NOT_HANDLED;
 }

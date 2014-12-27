@@ -9,9 +9,6 @@
 /** Command to see the list of dispacher. */
 #define COMMAND_DISPATCHER_LIST          'D'
 
-/** Command to see the content of Serial Input Buffers. */
-#define COMMAND_SERIAL_INPUT_BUFFERS     'S'
-
 /**
 * Get the system debug device interface.
 */

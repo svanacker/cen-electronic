@@ -75,6 +75,9 @@
 /** Header for Test Device. */
 #define TEST_DEVICE_HEADER 						't'
 
+/** Serial debug (U for "Uart"). */
+#define SERIAL_DEBUG_DEVICE_HEADER            	'u'
+
 /** Common Beacon device header. */
 #define COMMON_BEACON_DEVICE_HEADER            	'U'
 

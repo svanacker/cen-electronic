@@ -49,13 +49,8 @@ void deviceSystemDebugHandleRawData(char header, InputStream* inputStream, Outpu
     // Dispatcher List
     else if (header == COMMAND_DISPATCHER_LIST) {
         ackCommand(outputStream, SYSTEM_DEBUG_DEVICE_HEADER, COMMAND_DISPATCHER_LIST);
-        DriverDataDispatcherList* dispatcherList = getDispatcherList();
-        printDriverDataDispatcherList(getOutputStreamLogger(ALWAYS), dispatcherList);         
-    }
-    // Serial Input Buffers
-    else if (header == COMMAND_SERIAL_INPUT_BUFFERS) {
-        ackCommand(outputStream, SYSTEM_DEBUG_DEVICE_HEADER, COMMAND_SERIAL_INPUT_BUFFERS);
-        printSerialInputBuffers(getOutputStreamLogger(ALWAYS));         
+        // DriverDataDispatcherList* dispatcherList = getDispatcherList();
+        // printDriverDataDispatcherList(getOutputStreamLogger(ALWAYS), dispatcherList);         
     }
 }
 
