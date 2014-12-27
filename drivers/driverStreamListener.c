@@ -121,7 +121,7 @@ bool handleStreamInstruction(Buffer* inputBuffer,
             deviceDescriptor->deviceHandleRawData(commandHeader, bufferedInputStream, bufferedOutputStream);
 
         }// we forward the request through I2C
-        else if (device->transmitMode == TRANSMIT_I2C) {
+        else if (device->transmitMode == TRANSMIT_I2C || device->transmitMode == TRANSMIT_UART) {
             // copy Driver buffer through I2C
             transmitDriverData(device->transmitMode,
                     device->address,

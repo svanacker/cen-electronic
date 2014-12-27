@@ -11,6 +11,9 @@
 #include "../../common/io/reader.h"
 #include "../../common/io/stream.h"
 
+#include "../../common/log/logger.h"
+#include "../../common/log/logLevel.h"
+
 #include "../../device/device.h"
 
 void deviceTestInit(void) {
@@ -55,6 +58,10 @@ void deviceTestHandleRawData(char header, InputStream* inputStream, OutputStream
 		// data
 		appendHex6(outputStream, result);
 	}
+    else if (header == COMMAND_DEBUG_TEST) {
+		ackCommand(outputStream, TEST_DEVICE_HEADER, COMMAND_DEBUG_TEST);
+        appendString(getErrorOutputStreamLogger(), "TEST->DEBUG !");
+    }
     /* TODO
     else if (header == COMMAND_NOTIFY_TEST) {
             int argument = readHex2(inputStream);

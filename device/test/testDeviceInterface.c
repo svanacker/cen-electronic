@@ -51,6 +51,13 @@ int deviceTestGetInterface(char commandHeader, int mode, bool fillDeviceArgument
         }
         return commandLengthValueForMode(mode, 2, 2);
     }
+    // Debug Test
+    else if (commandHeader == COMMAND_DEBUG_TEST) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("debugTest");
+        }
+        return 0;
+    }
     return DEVICE_HEADER_NOT_HANDLED;
 }
 

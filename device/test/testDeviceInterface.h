@@ -26,6 +26,12 @@
 */
 #define COMMAND_NOTIFY_TEST 'n'
 
+/** 
+ * Command to write a character into the debug console on a board (either local, either remote),
+ * so that we can test if remote received some input information
+ */
+#define COMMAND_DEBUG_TEST  'd'
+
 /**
 * Interface for Test Device.
 * @return the interface for Test Device

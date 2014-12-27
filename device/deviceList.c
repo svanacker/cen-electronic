@@ -60,8 +60,12 @@ Device* addDevice(DeviceInterface* interface,
     }
 }
 
-Device* addI2CRemoteDevice(DeviceInterface* interface, int i2cAddress) {
+Device* addI2cRemoteDevice(DeviceInterface* interface, unsigned char i2cAddress) {
     return addDevice(interface, NULL, TRANSMIT_I2C, i2cAddress, NULL);
+}
+
+Device* addUartRemoteDevice(DeviceInterface* interface, unsigned char serialIndex) {
+    return addDevice(interface, NULL, TRANSMIT_UART, serialIndex, NULL);
 }
 
 Device* addZigbeeRemoteDevice(DeviceInterface* interface, char* addressString) {

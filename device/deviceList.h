@@ -45,7 +45,15 @@ Device* addLocalDevice(DeviceInterface* deviceInterface, DeviceDescriptor* devic
 * @param i2cAddress the address for the device
 * @return a pointer on the Device accessible by I2C
 */
-Device* addI2CRemoteDevice(DeviceInterface* deviceInterface, int i2cAddress);
+Device* addI2cRemoteDevice(DeviceInterface* deviceInterface, unsigned char i2cAddress);
+
+/**
+ * Add a remote Device accessible via the uart.
+ * @param deviceInterface the interface to describe the remote interface for device
+ * @param serialIndex the index of the serial
+ * @return a pointer on the Device accessible by UART
+ */
+Device* addUartRemoteDevice(DeviceInterface* deviceInterface, unsigned char serialIndex);
 
 /**
  * @deprecated we don't use zigbee anymore
