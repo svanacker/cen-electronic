@@ -40,29 +40,36 @@ void handleUartInterrupt(UART_MODULE uart, Buffer* buffer) {
 }
 
 void printSerialInputBuffers(OutputStream* outputStream) {
-    appendString(outputStream, "SERIAL INPUT BUFFER 1:");
-    appendStringAndDec(outputStream, "\nCounter1=", serialInterruptCounter1);
-    printDebugBuffer(outputStream, serialInputBuffer1);
-
-    appendString(outputStream, "SERIAL INPUT BUFFER 2:");
-    appendStringAndDec(outputStream, "\nCounter2=", serialInterruptCounter2);
-    printDebugBuffer(outputStream, serialInputBuffer2);
-
-    appendString(outputStream, "SERIAL INPUT BUFFER 3:");
-    appendStringAndDec(outputStream, "\nCounter3=", serialInterruptCounter3);
-    printDebugBuffer(outputStream, serialInputBuffer3);
-
-    appendString(outputStream, "SERIAL INPUT BUFFER 4:");
-    appendStringAndDec(outputStream, "\nCounter4=", serialInterruptCounter4);
-    printDebugBuffer(outputStream, serialInputBuffer4);
-
-    appendString(outputStream, "SERIAL INPUT BUFFER 5:");
-    appendStringAndDec(outputStream, "\nCounter5=", serialInterruptCounter5);
-    printDebugBuffer(outputStream, serialInputBuffer5);
-
-    appendString(outputStream, "SERIAL INPUT BUFFER 6:");
-    appendStringAndDec(outputStream, "\nCounter6=", serialInterruptCounter6);
-    printDebugBuffer(outputStream, serialInputBuffer6);
+    if (serialInputBuffer1 != NULL) {
+        appendString(outputStream, "SERIAL INPUT BUFFER 1:");
+        appendStringAndDec(outputStream, "\nCounter1=", serialInterruptCounter1);
+        printDebugBuffer(outputStream, serialInputBuffer1);
+    }
+    if (serialInputBuffer2 != NULL) {
+        appendString(outputStream, "SERIAL INPUT BUFFER 2:");
+        appendStringAndDec(outputStream, "\nCounter2=", serialInterruptCounter2);
+        printDebugBuffer(outputStream, serialInputBuffer2);
+    }
+    if (serialInputBuffer3 != NULL) {
+        appendString(outputStream, "SERIAL INPUT BUFFER 3:");
+        appendStringAndDec(outputStream, "\nCounter3=", serialInterruptCounter3);
+        printDebugBuffer(outputStream, serialInputBuffer3);
+    }
+    if (serialInputBuffer4 != NULL) {
+        appendString(outputStream, "SERIAL INPUT BUFFER 4:");
+        appendStringAndDec(outputStream, "\nCounter4=", serialInterruptCounter4);
+        printDebugBuffer(outputStream, serialInputBuffer4);
+    }
+    if (serialInputBuffer5 != NULL) {
+        appendString(outputStream, "SERIAL INPUT BUFFER 5:");
+        appendStringAndDec(outputStream, "\nCounter5=", serialInterruptCounter5);
+        printDebugBuffer(outputStream, serialInputBuffer5);
+    }
+    if (serialInputBuffer6 != NULL) {
+        appendString(outputStream, "SERIAL INPUT BUFFER 6:");
+        appendStringAndDec(outputStream, "\nCounter6=", serialInterruptCounter6);
+        printDebugBuffer(outputStream, serialInputBuffer6);
+    }
 }
 
 /**

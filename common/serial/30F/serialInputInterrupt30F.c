@@ -60,11 +60,14 @@ void initSerialInputBuffer(Buffer* buffer, int serialPortIndex) {
 }
 
 void printSerialInputBuffers(OutputStream* outputStream) {
-    appendString(outputStream, "SERIAL INPUT BUFFER 1:");
-    appendStringAndDec(outputStream, "\nCounter1=", serialInterruptCounter1);
-    printDebugBuffer(outputStream, serialInputBuffer1);
-
-    appendString(outputStream, "SERIAL INPUT BUFFER 2:");
-    appendStringAndDec(outputStream, "\nCounter2=", serialInterruptCounter2);
-    printDebugBuffer(outputStream, serialInputBuffer2);
+    if (serialInputBuffer1 != NULL) {
+		appendString(outputStream, "SERIAL INPUT BUFFER 1:");
+		appendStringAndDec(outputStream, "\nCounter1=", serialInterruptCounter1);
+		printDebugBuffer(outputStream, serialInputBuffer1);
+	}
+    if (serialInputBuffer2 != NULL) {
+	    appendString(outputStream, "SERIAL INPUT BUFFER 2:");
+    	appendStringAndDec(outputStream, "\nCounter2=", serialInterruptCounter2);
+    	printDebugBuffer(outputStream, serialInputBuffer2);
+	}
 }
