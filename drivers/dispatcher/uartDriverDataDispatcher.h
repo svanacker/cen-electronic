@@ -4,6 +4,7 @@
 #include "../../common/io/buffer.h"
 #include "../../common/io/inputStream.h"
 #include "../../common/io/outputStream.h"
+#include "../../common/io/streamLink.h"
 
 #include "driverDataDispatcher.h"
 #include "driverDataDispatcherList.h"
@@ -23,6 +24,7 @@
 * @return the structure to store information about dispatcher
 */
 DriverDataDispatcher* addUartDriverDataDispatcher(
+                            StreamLink* streamLink,
                             char* dispatcherName,
                     
                             Buffer* uartInputBuffer,

@@ -427,7 +427,9 @@ int main(void) {
 	MOTOR_BOARD_I2C_ADDRESS);
 
     // Uart Stream for motorBoard
-    addUartDriverDataDispatcher("MOTOR_BOARD_UART_DISPATCHER",
+    addUartDriverDataDispatcher(
+    &pcSerialStreamLink,
+    "MOTOR_BOARD_UART_DISPATCHER",
 	&motorBoardUartInputBuffer,
 	(char(*)[]) &motorBoardUartInputBufferArray,
 	MAIN_BOARD_UART_INPUT_DRIVER_DATA_DISPATCHER_BUFFER_LENGTH,

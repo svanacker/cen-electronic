@@ -26,6 +26,7 @@
 #include "../../common/serial/serialInputInterrupt.h"
 
 DriverDataDispatcher* addUartDriverDataDispatcher(
+        StreamLink* streamLink,
         char* dispatcherName,
 
         Buffer* uartInputBuffer,
@@ -35,27 +36,33 @@ DriverDataDispatcher* addUartDriverDataDispatcher(
         OutputStream* uartOutputStream,
         InputStream* uartInputStream,
         unsigned int targetUartIndex) {
-
-    // Init the output Stream : Uart Buffer -> Slave/Target UARTxx
-    initSerialOutputStream(uartOutputStream, targetUartIndex);
-
+    
+    /*
     // Init the input Stream : Slave/Target UARTxx -> Uart Buffer
     initBuffer(uartInputBuffer, uartInputBufferArray, uartInputBufferLength, "UART Input", dispatcherName);
-    initSerialInputBuffer(uartInputBuffer, targetUartIndex); // TODO : TO Verify !!!
+    // Init the output Stream : Uart Buffer -> Slave/Target UARTxx
+    initSerialInputBuffer(uartInputBuffer, targetUartIndex);
 
+    initSerialOutputStream(uartOutputStream, targetUartIndex);
+    */
+    Buffer* inputBuffer = streamLink->inputBuffer;
+    InputStream* inputStream = getInputStream(inputBuffer);
+
+    Buffer* outputBuffer = streamLink->outputBuffer;
+    // OutputStream* outputStream = getOutputStream(outputBuffer);
+    OutputStream* outputStream = streamLink->outputStream;
 
     DriverDataDispatcher* result = addDriverDataDispatcher(
                                         TRANSMIT_UART,
                                         dispatcherName,
                                         NULL,
                                         targetUartIndex,
-                                        uartInputStream,
-                                        uartOutputStream,
+                                        inputStream,
+                                        outputStream,
                                         remoteDriverDataDispatcherTransmit);
 
     // Clear previous data to avoid buffer from the other board
     // TODO : Check if we must to this at this time
-    clearInputStream(result->inputStream);
-
+    // clearInputStream(result->inputStream);
     return result;
 }
