@@ -4,9 +4,6 @@
 #include "../../device/deviceInterface.h"
 #include "../../device/deviceConstants.h"
 
-/** Command to show log configuration. */
-#define COMMAND_LOG 'L'
-
 /** Command to show devices list. */
 #define COMMAND_DEVICE_LIST 'd'
 
@@ -21,9 +18,6 @@
 
 /** Command to know if the remote board is present. */
 #define COMMAND_PING 'P'
-
-/** Command to see the list of Timer List. */
-#define COMMAND_TIMER_LIST 'T'
 
 /**
 * Get the system device interface.

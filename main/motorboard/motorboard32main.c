@@ -55,9 +55,9 @@
 #include "../../device/system/systemDevice.h"
 #include "../../device/system/systemDeviceInterface.h"
 
-// SystemDebug
-#include "../../device/system/systemDebugDevice.h"
-#include "../../device/system/systemDebugDeviceInterface.h"
+// Log
+#include "../../device/log/logDevice.h"
+#include "../../device/log/logDeviceInterface.h"
 
 // I2C Slave Device/
 #include "../../device/i2c/slave/i2cSlaveDebugDevice.h"
@@ -166,7 +166,7 @@ void initDevicesDescriptor() {
     addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
     addLocalDevice(getSerialDebugDeviceInterface(), getSerialDebugDeviceDescriptor());
     addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
-    addLocalDevice(getSystemDebugDeviceInterface(), getSystemDebugDeviceDescriptor());
+    addLocalDevice(getLogDeviceInterface(), getLogDeviceDescriptor());
     addLocalDevice(getI2cSlaveDebugDeviceInterface(), getI2cSlaveDebugDeviceDescriptor());
 
     initDevices();

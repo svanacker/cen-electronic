@@ -56,20 +56,6 @@ int deviceSystemGetInterface(char commandHeader, int mode, bool fillDeviceArgume
         }
         return 0;
     }
-    else if (commandHeader == COMMAND_LOG) {
-        // Same INPUT/OUTPUT
-        if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("showLog");
-        }
-        return 0;
-    }
-    else if (commandHeader == COMMAND_TIMER_LIST) {
-        // Same INPUT/OUTPUT
-        if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("showTimerList");
-        }
-        return 0;
-    }
     return DEVICE_HEADER_NOT_HANDLED;
 }
 

@@ -61,13 +61,17 @@
 #include "../../drivers/dispatcher/localDriverDataDispatcher.h"
 #include "../../drivers/dispatcher/uartDriverDataDispatcher.h"
 
+// DATA DISPATCHER
+#include "../../device/dispatcher/dataDispatcherDevice.h"
+#include "../../device/dispatcher/dataDispatcherDeviceInterface.h"
+
 // SYSTEM
 #include "../../device/system/systemDevice.h"
 #include "../../device/system/systemDeviceInterface.h"
 
-// SYSTEM DEBUG
-#include "../../device/system/systemDebugDevice.h"
-#include "../../device/system/systemDebugDeviceInterface.h"
+// LOG
+#include "../../device/log/logDevice.h"
+#include "../../device/log/logDeviceInterface.h"
 
 // I2C MASTER DEBUG
 #include "../../device/i2c/master/i2cMasterDebugDevice.h"
@@ -76,6 +80,10 @@
 // TEST
 #include "../../device/test/testDevice.h"
 #include "../../device/test/testDeviceInterface.h"
+
+// TIMER
+#include "../../device/timer/timerDevice.h"
+#include "../../device/timer/timerDeviceInterface.h"
 
 // SERVO
 #include "../../device/servo/servoDevice.h"
@@ -275,8 +283,10 @@ void initDevicesDescriptor() {
 
     // SYSTEM & DEBUG
     addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
-    addLocalDevice(getSystemDebugDeviceInterface(), getSystemDebugDeviceDescriptor());
+    addLocalDevice(getLogDeviceInterface(), getLogDeviceDescriptor());
     addLocalDevice(getSerialDebugDeviceInterface(), getSerialDebugDeviceDescriptor());
+    addLocalDevice(getTimerDeviceInterface(), getTimerDeviceDescriptor());
+    addLocalDevice(getDataDispatcherDeviceInterface(), getDataDispatcherDeviceDescriptor());
     addLocalDevice(getI2cMasterDebugDeviceInterface(), getI2cMasterDebugDeviceDescriptor());
 
     // LOCAL

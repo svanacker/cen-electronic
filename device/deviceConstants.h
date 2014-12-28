@@ -18,6 +18,8 @@
 
 #define AIR_CONDITIONING_DEVICE_HEADER         	'g'
 
+#define LOG_DEVICE_HEADER                       'G'
+
 // 'h' for Help
 #define SYSTEM_DEBUG_DEVICE_HEADER        		'h'
 
@@ -28,6 +30,9 @@
 
 /** Command to debug the I2C Slave. */
 #define I2C_SLAVE_DEBUG_DEVICE_HEADER       	'i'
+
+/** Command to debug the dispatchers. */
+#define DATA_DISPATCHER_DEVICE_HEADER           'j'
 
 /** Laser Beacon Device Header. */
 #define LASER_BEACON_DEVICE_HEADER            	'l'
@@ -46,7 +51,6 @@
  * Defines the header char used to identify the motor Device (low level).
  */
 #define MOTOR_DEVICE_HEADER     				'm'
-
 
 /**
  * Header char of Trajectory device : 'n' for 'navigation.
@@ -80,6 +84,8 @@
 
 /** Common Beacon device header. */
 #define COMMON_BEACON_DEVICE_HEADER            	'U'
+
+#define TIMER_DEVICE_HEADER                     'V'
 
 #define CODERS_DEVICE_HEADER                    'w'
 
