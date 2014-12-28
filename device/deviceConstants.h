@@ -85,6 +85,9 @@
 /** Common Beacon device header. */
 #define COMMON_BEACON_DEVICE_HEADER            	'U'
 
+/** Header for Test2 Device. */
+#define TEST2_DEVICE_HEADER 					'u'
+
 #define TIMER_DEVICE_HEADER                     'V'
 
 #define CODERS_DEVICE_HEADER                    'w'
@@ -94,7 +97,6 @@
 #define START_MATCH_DETECTOR_DEVICE_HEADER      '!'
 
 #define SONAR_DEVICE_HEADER                		'<'
-
 
 #define ROBOT_SONAR_DETECTOR_DEVICE_HEADER  	'#'
 

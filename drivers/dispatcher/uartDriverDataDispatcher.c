@@ -17,13 +17,14 @@
 #include "../../common/io/inputStream.h"
 #include "../../common/io/outputStream.h"
 #include "../../common/io/ioUtils.h"
-#include "../../common/io/stream.h"
 
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
 
 #include "../../common/serial/serialOutputStream.h"
 #include "../../common/serial/serialInputInterrupt.h"
+
+#include "../../device/transmitMode.h"
 
 DriverDataDispatcher* addUartDriverDataDispatcher(
         StreamLink* streamLink,

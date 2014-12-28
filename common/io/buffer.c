@@ -4,7 +4,6 @@
 
 #include "buffer.h"
 
-#include "stream.h"
 #include "inputStream.h"
 #include "outputStream.h"
 

@@ -16,9 +16,6 @@
 /** Command to read a char to an I2C slave with an address. */
 #define COMMAND_I2C_DEBUG_MASTER_READ_CHAR_FROM_SLAVE         'r'
 
-/** Command to do some intensive call to testDevice via Driver. */
-#define COMMAND_I2C_DEBUG_MASTER_INTENSIVE_CALL_TO_SLAVE      'i'
-
 /**
 * Get the I2C debug device interface.
 */

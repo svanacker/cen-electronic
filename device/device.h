@@ -1,6 +1,7 @@
 #ifndef DEVICE_H
 #define DEVICE_H
 
+#include "transmitMode.h"
 #include "deviceInterface.h"
 #include "deviceDescriptor.h"
 
@@ -54,7 +55,7 @@ struct Device {
     /** The interface of the device for a remote caller (without implementation). */
     DeviceInterface* deviceInterface;
     /** Which bus the device use. */
-    int transmitMode;
+    TransmitMode transmitMode;
     /** The address as char (useful for zigbee for example). */
     char* addressString;
     /** The address (only for remote transmitMode). In case of addressString, address contains a checksum of addressString. */

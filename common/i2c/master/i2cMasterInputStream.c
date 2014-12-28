@@ -7,7 +7,6 @@
 #include "../../../common/delay/cenDelay.h"
 
 #include "../../../common/io/buffer.h"
-#include "../../../common/io/stream.h"
 #include "../../../common/io/inputStream.h"
 
 // DEBUG

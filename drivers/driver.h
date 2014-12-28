@@ -3,6 +3,8 @@
 
 #include <stdbool.h>
 
+#include "../device/transmitMode.h"
+
 /**
  * Initialization function of the driver.
  * @return true if the function initialization is ok, false else.
@@ -37,7 +39,7 @@ typedef struct {
     /** Function to get the name of the function. */
     driverGetNameFunction *driverGetName;
     /** How we can communicate with the driver (Uart, I2C, local ...). */
-    int transmitMode;
+	TransmitMode transmitMode;
 } DriverDescriptor;
 
 /**

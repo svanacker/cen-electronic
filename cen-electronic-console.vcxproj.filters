@@ -1092,6 +1092,9 @@
     <ClCompile Include="common\pc\process\processHelper.c">
       <Filter>Source Files\common\pc\process</Filter>
     </ClCompile>
+    <ClCompile Include="device\transmitMode.c">
+      <Filter>Source Files\device</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -1696,6 +1699,9 @@
     </ClInclude>
     <ClInclude Include="common\pc\pipe\pipeServerHelper.h">
       <Filter>Header Files\common\pc\pipe</Filter>
+    </ClInclude>
+    <ClInclude Include="device\transmitMode.h">
+      <Filter>Header Files\device</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

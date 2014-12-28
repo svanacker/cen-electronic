@@ -45,7 +45,7 @@ DriverDataDispatcherList* getDispatcherList();
  * @return dispatcher the data dispatcher added to the list.
  */
 DriverDataDispatcher* addDriverDataDispatcher(
-						int transmitMode,
+						TransmitMode transmitMode,
 						char* name,
 						char* addressString,
 						int address,
@@ -67,7 +67,7 @@ DriverDataDispatcher* getDriverDataDispatcherByIndex(int index);
  * @param address the address of the DriverDataDispatcher (For example for I2C)
  * @return the first driver data dispatcher by transmit mode and address.
  */
-DriverDataDispatcher* getDriverDataDispatcherByTransmitMode(int transmitMode, int address);
+DriverDataDispatcher* getDriverDataDispatcherByTransmitMode(TransmitMode transmitMode, int address);
 
 /**
  * Get the size of the driver data dispatcher list.
@@ -79,7 +79,7 @@ int getDriverDataDispatcherCount();
  * Handle data from all dispatcher list with a particular transmit Mode.
  * @return true if data notification was handled
  */
-bool handleNotificationFromDispatcherList(int transmitMode);
+bool handleNotificationFromDispatcherList(TransmitMode transmitMode);
 
 
 #endif

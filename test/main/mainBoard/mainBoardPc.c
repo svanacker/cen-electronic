@@ -12,7 +12,6 @@
 #include "../../../common/io/pc/consoleOutputStream.h"
 #include "../../../common/io/pc/consoleInputStream.h"
 #include "../../../common/io/filter.h"
-#include "../../../common/io/stream.h"
 #include "../../../common/io/pc/consoleOutputStream.h"
 #include "../../../common/log/logger.h"
 #include "../../../common/log/logLevel.h"
@@ -23,6 +22,7 @@
 
 #include "../../../device/device.h"
 #include "../../../device/deviceList.h"
+#include "../../../device/transmitMode.h"
 
 // CLOCK
 #include "../../../device/clock/clockDevice.h"

@@ -21,7 +21,7 @@ static DriverDescriptorList drivers;
 static Buffer* driverRequestBuffer;
 static Buffer* driverResponseBuffer;
 
-void addDriver(DriverDescriptor* driverDescriptor, int transmitMode) {
+void addDriver(DriverDescriptor* driverDescriptor, TransmitMode transmitMode) {
     unsigned char size = drivers.size;
     if (size < MAX_DRIVER) {
         drivers.drivers[size] = driverDescriptor;

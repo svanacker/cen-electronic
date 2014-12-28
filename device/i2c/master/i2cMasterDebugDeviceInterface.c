@@ -37,13 +37,6 @@ int deviceI2cMasterDebugGetInterface(char header, int mode, bool fillDeviceArgum
         }
         return commandLengthValueForMode(mode, 2, 2);
     }
-    else if (header == COMMAND_I2C_DEBUG_MASTER_INTENSIVE_CALL_TO_SLAVE) {
-        if (fillDeviceArgumentList) {
-            setFunction("intensive", 1, 0);
-            setArgumentUnsignedHex4(0, "count");
-        }
-        return commandLengthValueForMode(mode, 4, 2);
-    }
     return DEVICE_HEADER_NOT_HANDLED;
 }
 

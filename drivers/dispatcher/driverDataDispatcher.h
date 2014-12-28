@@ -34,7 +34,7 @@ typedef void driverDataDispatcherTransmitDataFunction(struct DriverDataDispatche
  */
 typedef struct DriverDataDispatcher {
     /** The corresponding Transmit mode */
-    int transmitMode;
+	TransmitMode transmitMode;
     /** A name for debug. */
     char* name;
     /** The address as char (for zigbee for example). */
@@ -58,7 +58,7 @@ typedef struct DriverDataDispatcher {
  * @param dataToTransferCount number of bytes which must be sent
  * @param dataToReceiveCount number of bytes which must be received
  */
-void transmitDriverData(int transmitMode,
+void transmitDriverData(TransmitMode transmitMode,
                         int address,
                         Buffer* requestBuffer,
                         Buffer* responseBuffer,

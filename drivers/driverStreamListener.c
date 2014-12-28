@@ -12,10 +12,10 @@
 #include "../common/io/ioUtils.h"
 #include "../common/io/printWriter.h"
 #include "../common/io/outputStream.h"
-#include "../common/io/stream.h"
 
 #include "../common/log/logger.h"
 
+#include "../device/transmitMode.h"
 #include "../device/dispatcher/deviceDataDispatcher.h"
 #include "../drivers/dispatcher/driverDataDispatcher.h"
 

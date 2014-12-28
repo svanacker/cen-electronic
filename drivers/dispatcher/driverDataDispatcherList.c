@@ -11,6 +11,8 @@
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
 
+#include "../../device/transmitMode.h"
+
 /** Singleton : list of data dispatcher. */
 static DriverDataDispatcherList dispatcherList;
 
@@ -28,7 +30,7 @@ void initDriverDataDispatcherList(DriverDataDispatcher(*driverDataDispatcherList
 }
 
 DriverDataDispatcher* addDriverDataDispatcher(
-                            int transmitMode,
+							TransmitMode transmitMode,
                             char* name,
                             char* addressString,
                             int address,
@@ -67,7 +69,7 @@ DriverDataDispatcher* getDriverDataDispatcherByIndex(int index) {
     return result;
 }
 
-DriverDataDispatcher* getDriverDataDispatcherByTransmitMode(int transmitMode, int address) {
+DriverDataDispatcher* getDriverDataDispatcherByTransmitMode(TransmitMode transmitMode, int address) {
     int size = dispatcherList.size;
     int i;
     for (i = 0; i < size; i++) {
@@ -83,7 +85,7 @@ int getDriverDataDispatcherCount() {
     return dispatcherList.size;
 }
 
-bool handleNotificationFromDispatcherList(int transmitMode) {
+bool handleNotificationFromDispatcherList(TransmitMode transmitMode) {
     bool result = false;
     int size = dispatcherList.size;
     int i;

@@ -5,7 +5,6 @@
 #include "../../common/cmd/commonCommand.h"
 #include "../../common/io/printWriter.h"
 #include "../../common/io/reader.h"
-#include "../../common/io/stream.h"
 
 #include "../../device/device.h"
 

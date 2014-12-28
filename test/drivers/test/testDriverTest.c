@@ -5,7 +5,6 @@
 #include "../../../test/unity/unity.h"
 #include "../../../common/clock/clock.h"
 #include "../../../common/error/error.h"
-#include "../../../common/io/stream.h"
 #include "../../../common/io/pc/consoleOutputStream.h"
 #include "../../../common/log/logger.h"
 #include "../../../common/log/logLevel.h"
@@ -13,6 +12,7 @@
 
 #include "../../../device/device.h"
 #include "../../../device/deviceList.h"
+#include "../../../device/transmitMode.h"
 
 #include "../../../device/clock/clockDevice.h"
 #include "../../../device/clock/clockDeviceInterface.h"

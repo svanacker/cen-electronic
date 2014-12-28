@@ -14,7 +14,6 @@
 #include "../../../common/io/pc/consoleOutputStream.h"
 #include "../../../common/io/pc/consoleInputStream.h"
 #include "../../../common/io/filter.h"
-#include "../../../common/io/stream.h"
 #include "../../../common/io/streamLink.h"
 #include "../../../common/io/pc/consoleOutputStream.h"
 #include "../../../common/log/logger.h"

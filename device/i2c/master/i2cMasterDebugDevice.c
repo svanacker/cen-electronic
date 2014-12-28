@@ -8,7 +8,6 @@
 #include "../../../common/io/outputStream.h"
 #include "../../../common/io/reader.h"
 #include "../../../common/io/printWriter.h"
-#include "../../../common/io/stream.h"
 
 #include "../../../common/log/logger.h"
 #include "../../../common/log/logLevel.h"
@@ -54,11 +53,6 @@ void deviceI2cMasterDebugHandleRawData(char header, InputStream* inputStream, Ou
         int address = readHex2(inputStream);
         char c = i2cMasterReadChar(address);
         appendHex2(outputStream, c);
-    }
-    else if (header == COMMAND_I2C_DEBUG_MASTER_INTENSIVE_CALL_TO_SLAVE) {
-        ackCommand(outputStream, I2C_MASTER_DEBUG_DEVICE_HEADER, COMMAND_I2C_DEBUG_MASTER_INTENSIVE_CALL_TO_SLAVE);
-        unsigned int count = readHex4(inputStream);
-        testDriverIntensive(count);
     }
 }
 

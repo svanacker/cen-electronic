@@ -23,7 +23,6 @@
 #include "../../common/io/outputStream.h"
 #include "../../common/io/ioUtils.h"
 #include "../../common/io/printWriter.h"
-#include "../../common/io/stream.h"
 
 #include "../../common/pwm/pwmPic.h"
 
@@ -37,6 +36,7 @@
 
 #include "../../device/device.h"
 #include "../../device/deviceList.h"
+#include "../../device/transmitMode.h"
 #include "../../device/dispatcher/deviceDataDispatcher.h"
 
 #include "../../drivers/driverStreamListener.h"

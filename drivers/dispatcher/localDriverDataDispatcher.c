@@ -13,7 +13,8 @@
 #include "../../common/io/filter.h"
 #include "../../common/io/inputStream.h"
 #include "../../common/io/outputStream.h"
-#include "../../common/io/stream.h"
+
+#include "../../device/transmitMode.h"
 
 /**
 * @private

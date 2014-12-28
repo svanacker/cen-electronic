@@ -13,16 +13,16 @@
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
 #include "../../common/io/reader.h"
-#include "../../common/io/stream.h"
 
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
 
+#include "../../device/transmitMode.h"
 #include "../../device/dispatcher/deviceDataDispatcher.h"
 
 #include "../../drivers/driver.h"
 
-void transmitDriverData(int transmitMode,
+void transmitDriverData(TransmitMode transmitMode,
         int address,
         Buffer* requestBuffer,
         Buffer* responseBuffer,

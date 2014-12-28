@@ -2,7 +2,8 @@
 
 #include "../../../test/unity/unity.h"
 #include "../../../common/error/error.h"
-#include "../../../common/io/stream.h"
+
+#include "../../../device/transmitMode.h"
 
 #include "../../../drivers/dispatcher/driverDataDispatcherList.h"
 #include "../../../drivers/dispatcher/localDriverDataDispatcher.h"

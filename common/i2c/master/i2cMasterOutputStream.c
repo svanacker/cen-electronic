@@ -5,7 +5,6 @@
 #include "../../../common/i2c/i2cDebug.h"
 
 #include "../../../common/io/buffer.h"
-#include "../../../common/io/stream.h"
 #include "../../../common/io/inputStream.h"
 #include "../../../common/io/outputStream.h"
 

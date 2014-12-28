@@ -24,7 +24,7 @@ typedef struct {
  * Add a driver Descriptor to the list.
  * @param driverDescriptor the driver descriptor to add
  */
-void addDriver(DriverDescriptor* driverDescriptor, int transmitMode);
+void addDriver(DriverDescriptor* driverDescriptor, TransmitMode transmitMode);
 
 /**
  * Get the driver descriptor of index.

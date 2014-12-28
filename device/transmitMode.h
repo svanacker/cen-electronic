@@ -1,9 +1,7 @@
-#ifndef STREAM_H
-#define STREAM_H
+#ifndef TRANSMIT_MODE_H
+#define TRANSMIT_MODE_H
 
-#include "outputStream.h"
-
-#include "../../common/commons.h"
+typedef int TransmitMode;
 
 /**
  * Data will not be transfered, because the driver does not correspond to our communication standard
@@ -29,14 +27,13 @@
 /**
  * Data will be transmitted via ZIGBEE.
  */
-#define TRANSMIT_ZIGBEE 3
+#define TRANSMIT_ZIGBEE   3
 
 /**
- * Init an outputStream which redirect all to NULL (like dev/null in UNIX)
- * It allows compatibility with copy Function, as we can give it an outputStream
- * (because data is read but trashed to NULL)
- * @param outputStream outputStream object (POO simulation)
+ * Returns the transmit Mode as string.
+ * @param transmitMode the transmit Mode
+ * @return a string describing the transmit Mode
  */
-void initNullOutputStream(OutputStream* outputStream);
+const char* getTransmitModeAsString(TransmitMode transmitMode);
 
 #endif

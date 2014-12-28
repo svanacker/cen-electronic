@@ -17,10 +17,11 @@
 #include "../../common/io/inputStream.h"
 #include "../../common/io/outputStream.h"
 #include "../../common/io/ioUtils.h"
-#include "../../common/io/stream.h"
 
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
+
+#include "../../device/transmitMode.h"
 
 /**
  * The stream to send data through I2C

@@ -3,6 +3,7 @@
 #include "device.h"
 #include "deviceDebug.h"
 #include "deviceList.h"
+#include "transmitMode.h"
 
 #include "../common/io/outputStream.h"
 #include "../common/io/printWriter.h"
@@ -25,7 +26,11 @@ void printDevice(OutputStream* outputStream, const Device* device) {
         appendString(outputStream, deviceInterface->deviceGetName());
         appendString(outputStream, ", header=");
         append(outputStream, deviceInterface->deviceHeader);
-        appendStringAndDec(outputStream, ", transmitMode=", device->transmitMode);
+        TransmitMode transmitMode = device->transmitMode;
+        appendStringAndDec(outputStream, ", transmitMode=", transmitMode);
+        append(outputStream, '(');
+        appendString(outputStream, getTransmitModeAsString(transmitMode));
+        append(outputStream, ')');
         appendKeyAndName(outputStream, ", addressString=", device->addressString);
         appendStringAndDec(outputStream, ", address=", device->address);
         println(outputStream);

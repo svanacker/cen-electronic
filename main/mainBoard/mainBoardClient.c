@@ -25,7 +25,6 @@
 #include "../../common/io/ioUtils.h"
 #include "../../common/io/outputStream.h"
 #include "../../common/io/streamLink.h"
-#include "../../common/io/stream.h"
 #include "../../common/io/pin.h"
 #include "../../common/io/printWriter.h"
 #include "../../common/io/reader.h"
@@ -48,6 +47,7 @@
 #include "../../device/deviceDebug.h"
 #include "../../device/deviceUsage.h"
 #include "../../device/deviceList.h"
+#include "../../device/transmitMode.h"
 #include "../../device/dispatcher/deviceDataDispatcher.h"
 
 
@@ -88,6 +88,10 @@
 // TEST
 #include "../../device/test/testDevice.h"
 #include "../../device/test/testDeviceInterface.h"
+
+// TEST
+#include "../../device/test/test2Device.h"
+#include "../../device/test/test2DeviceInterface.h"
 
 // TIMER
 #include "../../device/timer/timerDevice.h"
@@ -294,6 +298,7 @@ void initDevicesDescriptor() {
     addLocalDevice(getLogDeviceInterface(), getLogDeviceDescriptor());
     addLocalDevice(getSerialDebugDeviceInterface(), getSerialDebugDeviceDescriptor());
     addLocalDevice(getTimerDeviceInterface(), getTimerDeviceDescriptor());
+    addLocalDevice(getTest2DeviceInterface(), getTest2DeviceDescriptor());
     addLocalDevice(getDataDispatcherDeviceInterface(), getDataDispatcherDeviceDescriptor());
     addLocalDevice(getI2cMasterDebugDeviceInterface(), getI2cMasterDebugDeviceDescriptor());
 

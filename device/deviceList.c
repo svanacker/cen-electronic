@@ -4,12 +4,12 @@
 #include "device.h"
 #include "deviceDescriptor.h"
 #include "deviceInterface.h"
+#include "transmitMode.h"
 
 #include "../common/commons.h"
 
 #include "../common/error/error.h"
 
-#include "../common/io/stream.h"
 #include "../common/io/outputStream.h"
 
 #include "../common/log/logger.h"
@@ -35,7 +35,7 @@ void initDeviceList(Device (*deviceListArray)[], unsigned char deviceListSize) {
  */
 Device* addDevice(DeviceInterface* interface,
         DeviceDescriptor* descriptor,
-        int transmitMode,
+        TransmitMode transmitMode,
         int address,
         char* addressString) {
     if (&deviceList == NULL || deviceList.maxSize == 0) {
