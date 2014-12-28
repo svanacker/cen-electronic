@@ -20,6 +20,11 @@
 #define COMMAND_STOP_MOTOR         'c'
 
 /**
+ * Defines the header to test both motors.
+ */
+#define COMMAND_TEST_MOTOR         't'
+
+/**
 * Interface for Device.
 */
 DeviceInterface* getMotorDeviceInterface();

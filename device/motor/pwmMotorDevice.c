@@ -3,6 +3,7 @@
 #include "pwmMotorDeviceInterface.h"
 
 #include "../../common/cmd/commonCommand.h"
+#include "../../common/delay/cenDelay.h"
 
 #include "../../common/pwm/motor/motorPwm.h"
 #include "../../common/pwm/motor/dualHBridgeMotorPwm.h"
@@ -11,6 +12,8 @@
 #include "../../common/io/reader.h"
 #include "../../common/io/stream.h"
 
+#include "../../common/log/logger.h"
+#include "../../common/log/logLevel.h"
 
 // DEVICE INTERFACE
 
@@ -38,6 +41,41 @@ void devicePwmMotorHandleRawData(char header, InputStream* inputStream, OutputSt
     }
     else if (header == COMMAND_STOP_MOTOR) {
         ackCommand(outputStream, MOTOR_DEVICE_HEADER, COMMAND_STOP_MOTOR);
+
+        stopMotors();
+    }
+    else if (header == COMMAND_TEST_MOTOR) {
+        ackCommand(outputStream, MOTOR_DEVICE_HEADER, COMMAND_TEST_MOTOR);
+
+        appendString(getOutputStreamLogger(ALWAYS), "Left Forward\n");
+        // Left forward
+        setMotorSpeeds(50, 0);
+        delaymSec(2000);
+
+        appendString(getOutputStreamLogger(ALWAYS), "Right Forward\n");
+        // Right forward
+        setMotorSpeeds(0, 50);
+        delaymSec(2000);
+
+        appendString(getOutputStreamLogger(ALWAYS), "Left Backward\n");
+        // Left backward
+        setMotorSpeeds(-50, 0);
+        delaymSec(2000);
+
+        appendString(getOutputStreamLogger(ALWAYS), "Right Forward\n");
+        // Right backward
+        setMotorSpeeds(0, -50);
+        delaymSec(2000);
+
+        appendString(getOutputStreamLogger(ALWAYS), "Both Forward\n");
+        // Both forward
+        setMotorSpeeds(50, 50);
+        delaymSec(2000);
+
+        appendString(getOutputStreamLogger(ALWAYS), "Both Backward\n");
+        // Both backward
+        setMotorSpeeds(-50, -50);
+        delaymSec(2000);
 
         stopMotors();
     }

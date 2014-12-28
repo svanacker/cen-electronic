@@ -28,6 +28,11 @@ int deviceMotorGetInterface(char header, int mode, bool fillDeviceArgumentList) 
             setFunctionNoArgumentAndNoResult("stopMotor");
         }
         return 0;
+    } else if (header == COMMAND_TEST_MOTOR) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("testMotor");
+        }
+        return 0;
     }
     return DEVICE_HEADER_NOT_HANDLED;
 }
