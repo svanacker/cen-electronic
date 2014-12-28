@@ -8,4 +8,8 @@
  */
 void i2cSlaveInitialize(unsigned char writeAddress);
 
+unsigned char getI2cWriteAddress(void);
+
+unsigned char getI2cReadAddress(void);
+
 #endif

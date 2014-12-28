@@ -945,12 +945,6 @@
     <ClCompile Include="common\io\pc\consoleInputStream.c">
       <Filter>Source Files\common\io\pc</Filter>
     </ClCompile>
-    <ClCompile Include="device\system\systemDebugDevice.c">
-      <Filter>Source Files\device\system</Filter>
-    </ClCompile>
-    <ClCompile Include="device\system\systemDebugDeviceInterface.c">
-      <Filter>Source Files\device\system</Filter>
-    </ClCompile>
     <ClCompile Include="drivers\dispatcher\driverDataDispatcherDebug.c">
       <Filter>Source Files\drivers\dispatchers</Filter>
     </ClCompile>
@@ -1549,12 +1543,6 @@
     </ClInclude>
     <ClInclude Include="common\io\pc\consoleInputStream.h">
       <Filter>Header Files\common\io\pc</Filter>
-    </ClInclude>
-    <ClInclude Include="device\system\systemDebugDevice.h">
-      <Filter>Header Files\device\system</Filter>
-    </ClInclude>
-    <ClInclude Include="device\system\systemDebugDeviceInterface.h">
-      <Filter>Header Files\device\system</Filter>
     </ClInclude>
     <ClInclude Include="drivers\dispatcher\driverDataDispatcherDebug.h">
       <Filter>Header Files\drivers\dispatchers</Filter>

@@ -38,7 +38,7 @@ HANDLE getI2CSlaveToMasterHandle() {
     return slaveToMasterHandle;
 }
 
-unsigned char getI2CWriteAddress(void) {
+unsigned char getI2cWriteAddress(void) {
     return slaveWriteAddress;
 }
 

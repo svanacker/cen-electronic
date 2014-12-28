@@ -2,6 +2,7 @@
 #include "i2cSlaveDebugDeviceInterface.h"
 
 #include "../../../common/i2c/slave/i2cSlave.h"
+#include "../../../common/i2c/slave/i2cSlaveSetup.h"
 #include "../../../common/i2c/i2cDebug.h"
 
 #include "../../../common/io/inputStream.h"
@@ -33,6 +34,12 @@ void deviceI2cSlaveDebugHandleRawData(char header, InputStream* inputStream, Out
     if (header == COMMAND_I2C_DEBUG_SLAVE_DEBUG) {
         ackCommand(outputStream, I2C_SLAVE_DEBUG_DEVICE_HEADER, COMMAND_I2C_DEBUG_SLAVE_DEBUG);
         printI2cDebugBuffers();
+    }
+    else if (header == COMMANG_I2C_DEBUG_SLAVE_ADDRESS) {
+        ackCommand(outputStream, I2C_SLAVE_DEBUG_DEVICE_HEADER, COMMANG_I2C_DEBUG_SLAVE_ADDRESS);
+    
+        char c = getI2cWriteAddress();
+        appendHex2(outputStream, c);
     }
     else if (header == COMMAND_I2C_DEBUG_SLAVE_ENABLE_DISABLE) {
         ackCommand(outputStream, I2C_SLAVE_DEBUG_DEVICE_HEADER, COMMAND_I2C_DEBUG_SLAVE_ENABLE_DISABLE);

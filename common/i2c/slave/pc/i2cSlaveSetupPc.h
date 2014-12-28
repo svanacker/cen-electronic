@@ -3,7 +3,7 @@
 
 #include <Windows.h>
 
-unsigned char getI2CWriteAddress(void);
+unsigned char getI2cWriteAddress(void);
 
 unsigned char getI2cReadAddress(void);
 

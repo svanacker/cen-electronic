@@ -62,10 +62,6 @@
 #include "../../../device/system/systemDevice.h"
 #include "../../../device/system/systemDeviceInterface.h"
 
-// SYSTEM DEBUG
-#include "../../../device/system/systemDebugDevice.h"
-#include "../../../device/system/systemDebugDeviceInterface.h"
-
 #include "../../../device/test/testDevice.h"
 #include "../../../device/test/testDeviceInterface.h"
 
@@ -213,12 +209,11 @@ void runMainBoardPC(void) {
 	initDeviceList((Device(*)[]) &deviceListArray, MAIN_BOARD_PC_DEVICE_LIST_LENGTH);
 	// addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
 
-	addI2CRemoteDevice(getTestDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
+	addI2cRemoteDevice(getTestDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
 
 	addLocalDevice(getI2cMasterDebugDeviceInterface(), getI2cMasterDebugDeviceDescriptor());
 	addLocalDevice(getStrategyDeviceInterface(), getStrategyDeviceDescriptor());
 	addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
-	addLocalDevice(getSystemDebugDeviceInterface(), getSystemDebugDeviceDescriptor());
 	addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor());
 	initStartMatchDetectorPc(&startMatchDetector);
 	addLocalDevice(getStartMatchDetectorDeviceInterface(), getStartMatchDetectorDeviceDescriptor(&startMatchDetector));

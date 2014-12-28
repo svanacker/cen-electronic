@@ -49,10 +49,6 @@
 #include "../../../device/system/systemDevice.h"
 #include "../../../device/system/systemDeviceInterface.h"
 
-// SYSTEM DEBUG
-#include "../../../device/system/systemDebugDevice.h"
-#include "../../../device/system/systemDebugDeviceInterface.h"
-
 #include "../../../device/test/testDevice.h"
 #include "../../../device/test/testDeviceInterface.h"
 
@@ -181,7 +177,6 @@ void runMotorBoardPC(void) {
 	addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
 	addLocalDevice(getI2cSlaveDebugDeviceInterface(), getI2cSlaveDebugDeviceDescriptor());
 	addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
-	addLocalDevice(getSystemDebugDeviceInterface(), getSystemDebugDeviceDescriptor());
 	addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());
 
 	addLocalDevice(getPIDDeviceInterface(), getPIDDeviceDescriptor());

@@ -17,7 +17,16 @@
 
 #define BRG_VAL 	((FOSC / 2 / I2C_FREQUENCY)-2)
 
-bool initialized = false;
+static bool initialized = false;
+static unsigned char slaveWriteAddress;
+
+unsigned char getI2cWriteAddress(void) {
+    return slaveWriteAddress;
+}
+
+unsigned char getI2cReadAddress(void) {
+    return slaveWriteAddress | 1;
+}
 
 void i2cSlaveInitialize(unsigned char writeAddress) {
 
@@ -26,6 +35,7 @@ void i2cSlaveInitialize(unsigned char writeAddress) {
         writeError(I2C_SLAVE_ALREADY_INITIALIZED);
         return;
     }
+	slaveWriteAddress = writeAddress;
 	initialized = true;
 	
 	appendString(getOutputStreamLogger(DEBUG), "I2C Slave Write Address=");

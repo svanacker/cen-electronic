@@ -14,6 +14,13 @@ int deviceI2cSlaveDebugGetInterface(char header, int mode, bool fillDeviceArgume
         }
         return 0;
     }
+    else if (header == COMMANG_I2C_DEBUG_SLAVE_ADDRESS) {
+        if (fillDeviceArgumentList) {        
+            setFunction("i2cSlaveAddress", 0, 1);
+            setResultUnsignedHex2(0, "i2cAddress");
+        }
+        return commandLengthValueForMode(mode, 0, 2);
+    }
     else if (header == COMMAND_I2C_DEBUG_SLAVE_ENABLE_DISABLE) {
         if (fillDeviceArgumentList) {        
             setFunction("enable/disable", 1, 0);

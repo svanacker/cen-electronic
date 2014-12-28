@@ -167,8 +167,6 @@
     <ClCompile Include="device\servo\servoDeviceInterface.c" />
     <ClCompile Include="device\strategy\strategyDevice.c" />
     <ClCompile Include="device\strategy\strategyDeviceInterface.c" />
-    <ClCompile Include="device\system\systemDebugDevice.c" />
-    <ClCompile Include="device\system\systemDebugDeviceInterface.c" />
     <ClCompile Include="device\system\systemDevice.c" />
     <ClCompile Include="device\system\systemDeviceInterface.c" />
     <ClCompile Include="device\test\testDevice.c" />
@@ -367,8 +365,6 @@
     <ClInclude Include="device\servo\servoDeviceInterface.h" />
     <ClInclude Include="device\strategy\strategyDevice.h" />
     <ClInclude Include="device\strategy\strategyDeviceInterface.h" />
-    <ClInclude Include="device\system\systemDebugDevice.h" />
-    <ClInclude Include="device\system\systemDebugDeviceInterface.h" />
     <ClInclude Include="device\system\systemDevice.h" />
     <ClInclude Include="device\system\systemDeviceInterface.h" />
     <ClInclude Include="device\test\testDevice.h" />
