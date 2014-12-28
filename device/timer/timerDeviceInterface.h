@@ -11,6 +11,6 @@
 * Get the timer device interface.
 * @return a pointer on the timer device Interface.
 */
-DeviceInterface* getSystemDeviceInterface(void);
+DeviceInterface* getTimerDeviceInterface(void);
 
 #endif

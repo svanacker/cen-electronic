@@ -28,28 +28,9 @@
 DriverDataDispatcher* addUartDriverDataDispatcher(
         StreamLink* streamLink,
         char* dispatcherName,
-
-        Buffer* uartInputBuffer,
-        char (*uartInputBufferArray)[],
-        unsigned char uartInputBufferLength,
-
-        OutputStream* uartOutputStream,
-        InputStream* uartInputStream,
         unsigned int targetUartIndex) {
-    
-    /*
-    // Init the input Stream : Slave/Target UARTxx -> Uart Buffer
-    initBuffer(uartInputBuffer, uartInputBufferArray, uartInputBufferLength, "UART Input", dispatcherName);
-    // Init the output Stream : Uart Buffer -> Slave/Target UARTxx
-    initSerialInputBuffer(uartInputBuffer, targetUartIndex);
-
-    initSerialOutputStream(uartOutputStream, targetUartIndex);
-    */
     Buffer* inputBuffer = streamLink->inputBuffer;
     InputStream* inputStream = getInputStream(inputBuffer);
-
-    Buffer* outputBuffer = streamLink->outputBuffer;
-    // OutputStream* outputStream = getOutputStream(outputBuffer);
     OutputStream* outputStream = streamLink->outputStream;
 
     DriverDataDispatcher* result = addDriverDataDispatcher(

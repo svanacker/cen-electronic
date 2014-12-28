@@ -65,6 +65,14 @@
 #include "../../device/dispatcher/dataDispatcherDevice.h"
 #include "../../device/dispatcher/dataDispatcherDeviceInterface.h"
 
+// SERIAL
+#include "../../device/serial/serialDebugDevice.h"
+#include "../../device/serial/serialDebugDeviceInterface.h"
+
+// TIMER
+#include "../../device/timer/timerDevice.h"
+#include "../../device/timer/timerDeviceInterface.h"
+
 // SYSTEM
 #include "../../device/system/systemDevice.h"
 #include "../../device/system/systemDeviceInterface.h"
@@ -441,11 +449,6 @@ int main(void) {
     addUartDriverDataDispatcher(
     &pcSerialStreamLink,
     "MOTOR_BOARD_UART_DISPATCHER",
-	&motorBoardUartInputBuffer,
-	(char(*)[]) &motorBoardUartInputBufferArray,
-	MAIN_BOARD_UART_INPUT_DRIVER_DATA_DISPATCHER_BUFFER_LENGTH,
-	&motorBoardUartOutputStream,
-	&motorBoardUartInputStream,
 	SERIAL_PORT_MOTOR);
 
     /*
