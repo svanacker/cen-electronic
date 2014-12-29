@@ -18,7 +18,6 @@
 #include "../../common/io/ioUtils.h"
 #include "../../common/io/pin.h"
 #include "../../common/io/printWriter.h"
-#include "../../common/io/stream.h"
 
 #include "../../common/pwm/pwmPic.h"
 #include "../../common/pwm/servo/servoPwm.h"
@@ -32,13 +31,14 @@
 #include "../../common/timer/timerList.h"
 
 #include "../../device/device.h"
+#include "../../device/deviceList.h"
 #include "../../device/dispatcher/deviceDataDispatcher.h"
 
 // -> Devices
 
 // Test
-#include "../../device/test/deviceTest.h"
-#include "../../device/test/deviceTestInterface.h"
+#include "../../device/test/testDevice.h"
+#include "../../device/test/testDeviceInterface.h"
 
 // Servo
 #include "../../device/servo/servoDevice.h"

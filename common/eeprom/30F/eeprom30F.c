@@ -11,7 +11,7 @@
 // Pointer to EEPROM data. The declaration causes the first WORD of EEPROM to be initialized when programming the device.
 static signed int _EEDATA(EEPROM_30F_MAX_INDEX + 1)* eeData;
 
-void my_eeprom_write_int(unsigned long index, signed int value) {
+void my_eeprom_write_int(Eeprom* eeprom_, unsigned long index, signed int value) {
 	if (index >= EEPROM_30F_MAX_INDEX) {
 		writeError(EEPROM_OUT_OF_BOUNDS);
 		return;
@@ -29,7 +29,7 @@ void my_eeprom_write_int(unsigned long index, signed int value) {
     _wait_eedata();
 }
 
-signed int my_eeprom_read_int(unsigned long index) {
+signed int my_eeprom_read_int(Eeprom* eeprom_, unsigned long index) {
 	if (index >= EEPROM_30F_MAX_INDEX) {
 		writeError(EEPROM_OUT_OF_BOUNDS);
 		return -1;
@@ -56,5 +56,5 @@ void eeprom30FWriteBlock(Eeprom* eeprom_, unsigned long index, unsigned int leng
 
 
 void initEeprom30F(Eeprom* eeprom_) {
-    initEeprom(eeprom_, EEPROM_24C512_MAX_INDEX, my_eeprom_write_int, my_eeprom_read_int, eeprom30FReadBlock, eeprom30FWriteBlock);
+    initEeprom(eeprom_, EEPROM_30F_MAX_INDEX, my_eeprom_write_int, my_eeprom_read_int, eeprom30FReadBlock, eeprom30FWriteBlock);
 }

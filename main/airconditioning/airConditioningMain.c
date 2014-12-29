@@ -16,8 +16,6 @@
 #include "../../common/io/ioUtils.h"
 #include "../../common/io/pin.h"
 #include "../../common/io/printWriter.h"
-#include "../../common/io/stream.h"
-
 
 #include "../../common/i2c/i2cDebug.h"
 #include "../../common/i2c/slave/i2cSlaveLink.h"
@@ -42,10 +40,6 @@
 // System
 #include "../../device/system/systemDevice.h"
 #include "../../device/system/systemDeviceInterface.h"
-
-// System
-#include "../../device/system/systemDebugDevice.h"
-#include "../../device/system/systemDebugDeviceInterface.h"
 
 // Servo
 #include "../../device/servo/servoDevice.h"
@@ -121,7 +115,6 @@ static char driverResponseBufferArray[AIR_CONDITIONING_BOARD_RESPONSE_DRIVER_BUF
 void initDevicesDescriptor() {
     initDeviceList(&deviceListArray, AIR_CONDITIONING_BOARD_DEVICE_LENGTH);
     addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
-    addLocalDevice(getSystemDebugDeviceInterface(), getSystemDebugDeviceDescriptor());
 
     addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor());
     addLocalDevice(getAirConditioningDeviceInterface(), getAirConditioningDeviceDescriptor());

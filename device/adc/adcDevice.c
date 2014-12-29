@@ -8,7 +8,6 @@
 
 #include "../../common/io/printWriter.h"
 #include "../../common/io/reader.h"
-#include "../../common/io/stream.h"
 
 #define ADC_SAMPLE_COUNT 5
 

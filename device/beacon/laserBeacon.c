@@ -12,7 +12,6 @@
 #include "../../common/io/inputStream.h"
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
-#include "../../common/io/stream.h"
 
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"

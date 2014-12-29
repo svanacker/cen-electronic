@@ -12,7 +12,6 @@
 #include "../../common/io/pin.h"
 #include "../../common/io/printWriter.h"
 #include "../../common/io/reader.h"
-#include "../../common/io/stream.h"
 
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
@@ -31,7 +30,7 @@ bool deviceRelayIsOk() {
 void deviceRelayHandleRawData(char header,
                              InputStream* inputStream,
                              OutputStream* outputStream) {
-    if (header == COMMAND_RELAY) {
+    if (header == COMMAND_SET_RELAY) {
         int relayIndex = readHex2(inputStream);
         unsigned char value = inputStream->readChar(inputStream);
         
@@ -42,7 +41,7 @@ void deviceRelayHandleRawData(char header,
             LATDbits.LATD9 = value;
         }
         appendAck(outputStream);
-        append(outputStream, COMMAND_RELAY);
+        append(outputStream, COMMAND_SET_RELAY);
     }
 }
 

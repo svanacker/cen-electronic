@@ -6,7 +6,6 @@
 
 #include "../../common/io/printWriter.h"
 #include "../../common/io/reader.h"
-#include "../../common/io/stream.h"
 
 void deviceTemperatureSensorInit(void) {
 }

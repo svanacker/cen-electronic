@@ -1,7 +1,7 @@
 #ifndef ROBOT_INFRARED_DETECTOR_H
 #define ROBOT_INFRARED_DETECTOR_H
 
-#include "../../common/commons.h"
+#include <stdbool.h>
 
 /** 
  * Define the underlying function type attached to a group to evaluate if 

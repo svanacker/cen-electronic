@@ -9,7 +9,6 @@
 #include "../../common/i2c/i2cConstants.h"
 #include "../../common/i2c/i2cCommon.h"
 
-#define EEPROM_24C512_MAX_INDEX	    0x07FFFF
 
 /**
 * @private

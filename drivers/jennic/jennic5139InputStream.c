@@ -4,7 +4,6 @@
 #include "jennic5139EventParser.h"
 
 #include "../../common/io/buffer.h"
-#include "../../common/io/stream.h"
 #include "../../common/io/inputStream.h"
 
 #include "../../common/log/logger.h"
