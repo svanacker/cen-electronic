@@ -25,6 +25,12 @@ bool deviceTestIsOk(void) {
     return true;
 }
 
+void notifyTest(OutputStream* outputStream, unsigned char notifyArgument) {
+	append(outputStream, TEST_DEVICE_HEADER);
+	append(outputStream, NOTIFY_TEST);
+	appendHex2(outputStream, notifyArgument);
+}
+
 void deviceTestHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream) {
     if (header == COMMAND_TEST) {
         int arg1 = readHex2(inputStream);
@@ -61,24 +67,13 @@ void deviceTestHandleRawData(char header, InputStream* inputStream, OutputStream
 		ackCommand(outputStream, TEST_DEVICE_HEADER, COMMAND_DEBUG_TEST);
         appendString(getErrorOutputStreamLogger(), "TEST->DEBUG !");
     }
-    /* TODO
-    else if (header == COMMAND_NOTIFY_TEST) {
-            int argument = readHex2(inputStream);
-            argument *= 2;
-
-            Buffer* buffer = getI2CSlaveOutputBuffer();
-            OutputStream* i2cOutputStream = getOutputStream(buffer);
-
-            // Add the value to I2C
-            append(i2cOutputStream, COMMAND_NOTIFY_TEST);
-            appendHex2(i2cOutputStream, argument);
-        
-            // Response to the call
-            appendAck(outputStream);
-            append(outputStream, COMMAND_NOTIFY_TEST);
-            appendHex2(outputStream, argument);
-    }
-     */
+	else if (header == COMMAND_GENERATE_NOTIFY_TEST) {
+		ackCommand(outputStream, TEST_DEVICE_HEADER, COMMAND_GENERATE_NOTIFY_TEST);
+		unsigned char value = readHex2(inputStream);
+		
+		// TODO : Find the right OutputStream corresponding to the device : I2C / UART
+		notifyTest(outputStream, value);
+	}
 }
 
 static DeviceDescriptor descriptor = {

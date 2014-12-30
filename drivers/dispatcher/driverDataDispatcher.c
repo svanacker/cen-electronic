@@ -75,48 +75,27 @@ bool handleNotificationFromDispatcher(DriverDataDispatcher* dispatcher) {
         }
 
         char deviceHeader = bufferGetCharAtIndex(inputBuffer, DEVICE_HEADER_INDEX);
-        char commandHeader = bufferGetCharAtIndex(inputBuffer, DEVICE_HEADER_INDEX);
+		char notifyHeader = bufferGetCharAtIndex(inputBuffer, NOTIFY_HEADER_INDEX);
 
-        /*
-        OutputStream* errorOutputStream = getErrorOutputStreamLogger();
-        appendStringAndDec(errorOutputStream, "bufferSize=", bufferSize);
-        appendStringAndDec(errorOutputStream, ", commandHeader=", commandHeader);
-        println(errorOutputStream);
-        */
-    
         // find the device corresponding to this header
-        const Device* device = deviceDataDispatcherFindDevice(deviceHeader, commandHeader, bufferSize, DEVICE_MODE_OUTPUT);
-        if (device == NULL) {
-            // For strategy device which send informations.
-            device = deviceDataDispatcherFindDevice(deviceHeader, commandHeader, bufferSize, DEVICE_MODE_INPUT);
-        }
+        const Device* device = deviceDataDispatcherFindDevice(deviceHeader, notifyHeader, bufferSize, DEVICE_MODE_NOTIFY);
         if (device == NULL) {
             return false;
         }
-        /* TODO : Distinguish the case when there is not enough bufferSize.
-        // if the device was not found, we continue
-        if (device == NULL) {
-            writeError(DEVICE_NOT_FOUND);
-            OutputStream* errorOutputStream = getErrorOutputStreamLogger();
-            appendString(errorOutputStream, "header=");
-            append(errorOutputStream, header);
-            appendStringAndDec(errorOutputStream, ",bufSize=", bufferSize);
-            appendString(errorOutputStream, ",content=");
-            copyInputToOutputStream(inputStream, errorOutputStream, NULL, COPY_ALL);
 
-            return false;
-        }
-        */
+		// Remove deviceHeader & notifyHeader
+		bufferReadChar(inputBuffer);
+		bufferReadChar(inputBuffer);
 
-        deviceHandleCallbackRawDataFunction* callbackFunction = device->deviceHandleCallbackRawData;
+		deviceHandleNotificationFunction* notificationFunction = device->deviceHandleNotification;
 
-        if (callbackFunction != NULL) {
+        if (notificationFunction != NULL) {
             // do the callback
-            callbackFunction(device, commandHeader, inputStream);
+            notificationFunction(device, notifyHeader, inputStream);
             return true;
         } else {
-            writeError(DISPATCHER_NO_CALLBACK_FOR);
-            append(getErrorOutputStreamLogger(), commandHeader);
+            writeError(DISPATCHER_NO_CALLBACK_FOR_NOTIFICATION);
+            append(getErrorOutputStreamLogger(), notifyHeader);
         }
     }
 

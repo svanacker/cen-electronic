@@ -12,7 +12,7 @@ int deviceI2cMasterDebugGetInterface(char header, DeviceInterfaceMode mode, bool
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("i2cDebug");
         }
-        return 0;
+        return commandLengthValueForMode(mode, 0, 0);
     }
     else if (header == COMMAND_I2C_DEBUG_MASTER_ENABLE_DISABLE) {
         if (fillDeviceArgumentList) {        

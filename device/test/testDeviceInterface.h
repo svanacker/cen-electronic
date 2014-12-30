@@ -22,9 +22,14 @@
 #define COMMAND_HEAVY_TEST 'W'
 
 /**
-* Command to notify information from the slave to the master and test it.
+ * Command header to generate a notification (through the driver).
+ */
+#define COMMAND_GENERATE_NOTIFY_TEST 'g'
+
+/**
+* Notify from the slave to the master and test it.
 */
-#define COMMAND_NOTIFY_TEST 'n'
+#define NOTIFY_TEST 'n'
 
 /** 
  * Command to write a character into the debug console on a board (either local, either remote),

@@ -19,6 +19,12 @@ void setFunctionNoArgumentAndNoResult(char* functionName) {
     deviceMethodMetaData.resultsSize = 0;
 }
 
+void setNotification(char* notificationName, int notificationArguments) {
+   deviceMethodMetaData.functionName = notificationName;
+   deviceMethodMetaData.argumentsSize = notificationArguments;
+   deviceMethodMetaData.resultsSize = 0;
+}
+
 int getLengthOfType(int parameterType) {
     switch (parameterType) {
         case DEVICE_ARG_SEPARATOR : return 1;
@@ -42,7 +48,7 @@ int getLengthOfType(int parameterType) {
     return -1;
 }
 
-int commandLengthValueForMode(const DeviceInterfaceMode mode, int input, int output) {
+int commandLengthValueForMode(DeviceInterfaceMode mode, int input, int output) {
     if (mode == DEVICE_MODE_INPUT) {
         return input;
     }

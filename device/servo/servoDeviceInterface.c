@@ -55,14 +55,14 @@ int deviceServoGetInterface(char commandHeader, DeviceInterfaceMode mode, bool f
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("servoTestAlls");
         }
-        return 0;
+        return commandLengthValueForMode(mode, 0, 0);
     }
     // DEBUG
     else if (commandHeader == SERVO_COMMAND_DEBUG) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("servoDebugAlls");
         }
-        return 0;
+        return commandLengthValueForMode(mode, 0, 0);
     }
     return DEVICE_HEADER_NOT_HANDLED;
 }

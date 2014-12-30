@@ -10,6 +10,9 @@
 /** Command to show usage for all devices. */
 #define COMMAND_USAGE 'u'
 
+/** Command to show notification for all devices. */
+#define COMMAND_NOTIFICATION 'n'
+
 /** Command to wait a certain amount of time (in milliseconds). */
 #define COMMAND_WAIT 'W'
 

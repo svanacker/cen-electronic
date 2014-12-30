@@ -31,7 +31,7 @@ int trajectoryGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fi
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult(GET_DEBUG_ABS_POS_STRING);
         }
-        return 0;
+        return commandLengthValueForMode(mode, 0, 0);
     } else if (commandHeader == COMMAND_SET_ABSOLUTE_POSITION) {
         if (fillDeviceArgumentList) {
             setFunction(SET_ABS_POS_STRING, 5, 0);

@@ -13,6 +13,9 @@
 #include "../../../common/io/pc/consoleInputStream.h"
 #include "../../../common/io/filter.h"
 #include "../../../common/io/pc/consoleOutputStream.h"
+#include "../../../common/io/printWriter.h"
+#include "../../../common/io/reader.h"
+
 #include "../../../common/log/logger.h"
 #include "../../../common/log/logLevel.h"
 #include "../../../common/log/pc/consoleLogHandler.h"
@@ -127,11 +130,29 @@ static Eeprom eeprom;
 
 // Devices
 static Device deviceListArray[MAIN_BOARD_PC_DEVICE_LIST_LENGTH];
+static Device* testDevice;
 
 // StartMatchDetector
 static StartMatchDetector startMatchDetector;
 
+void mainBoardDeviceHandleNotification(const Device* device, const char commandHeader, InputStream* inputStream) {
+	appendString(getDebugOutputStreamLogger(), "Notification ! commandHeader=");
+	append(getDebugOutputStreamLogger(), commandHeader);
+	appendCRLF(getDebugOutputStreamLogger());
+	if (commandHeader == NOTIFY_TEST) {
+		unsigned char value = readHex2(inputStream);
+		appendStringAndDec(getDebugOutputStreamLogger(), "value=", value);
+	}
+}
+
 void mainBoardWaitForInstruction(void) {
+
+	while (handleNotificationFromDispatcherList(TRANSMIT_I2C)) {
+		// loop for all notification
+		// notification handler must avoid to directly information in notification callback
+		// and never to the call back device
+	}
+
 	// delaymSec(MAIN_BOARD_PC_DELAY_CONSOLE_ANALYZE_MILLISECONDS);
 	while (consoleInputStream.availableData(&consoleInputStream)) {
 		unsigned char c = consoleInputStream.readChar(&consoleInputStream);
@@ -209,7 +230,8 @@ void runMainBoardPC(void) {
 	initDeviceList((Device(*)[]) &deviceListArray, MAIN_BOARD_PC_DEVICE_LIST_LENGTH);
 	// addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
 
-	addI2cRemoteDevice(getTestDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
+	testDevice = addI2cRemoteDevice(getTestDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
+	testDevice->deviceHandleNotification = mainBoardDeviceHandleNotification;
 
 	addLocalDevice(getI2cMasterDebugDeviceInterface(), getI2cMasterDebugDeviceDescriptor());
 	addLocalDevice(getStrategyDeviceInterface(), getStrategyDeviceDescriptor());
@@ -231,7 +253,7 @@ void runMainBoardPC(void) {
 	delaymSec(100);
 
 	setDebugI2cEnabled(false);
-	testDriverIntensive(100);
+	// testDriverIntensive(100);
 
 	while (1) {
 		mainBoardWaitForInstruction();

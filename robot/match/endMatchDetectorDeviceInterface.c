@@ -18,7 +18,7 @@ int deviceEndMatchDetectorGetInterface(char header, DeviceInterfaceMode mode, bo
             if (fillDeviceArgumentList) {
                 setFunctionNoArgumentAndNoResult("notifyMatchEnd");
             }
-            return 0;
+            return commandLengthValueForMode(mode, 0, 0);
         }
     }
     return DEVICE_HEADER_NOT_HANDLED;

@@ -35,7 +35,7 @@ int beaconReceiverDeviceGetInterface(char commandHeader, DeviceInterfaceMode mod
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("initJennicAsRouter");
         }
-        return 0;
+        return commandLengthValueForMode(mode, 0, 0);
     }
     // Network status
     else if (commandHeader == COMMAND_GET_RECEIVER_NETWORK_STATUS) {

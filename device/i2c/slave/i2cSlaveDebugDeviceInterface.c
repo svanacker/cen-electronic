@@ -12,7 +12,7 @@ int deviceI2cSlaveDebugGetInterface(char commandHeader, DeviceInterfaceMode mode
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("i2cDebug");
         }
-        return 0;
+        return commandLengthValueForMode(mode, 0, 0);
     }
     else if (commandHeader == COMMANG_I2C_DEBUG_SLAVE_ADDRESS) {
         if (fillDeviceArgumentList) {        

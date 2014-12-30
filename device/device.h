@@ -14,7 +14,7 @@ struct Device;
 typedef struct Device Device;
 
 /**
-* The function used to handle the data which are transmit aynchronously to the master.
+* The function used to handle the data which are transmit asynchronously to the master.
 * We don't have any OutputStream, because we don't want to have a ping-pong communication between client 
 * and master without control. So it is mainly intended to update state, or forward to other card (for example PC)
 
@@ -22,7 +22,7 @@ typedef struct Device Device;
 * @param commandHeader header the command header which is called
 * @param inputStream the inputStream to get data from the client
 */
-typedef void deviceHandleCallbackRawDataFunction(const Device* device, 
+typedef void deviceHandleNotificationFunction(const Device* device, 
                                                  const char commandHeader,
                                                   InputStream* inputStream);
 
@@ -49,7 +49,7 @@ struct Device {
     /** The real implementation of the device. */
     DeviceDescriptor* descriptor;
     /** The device callback function when Slave want to transmit something asynchronously to the master. */
-    deviceHandleCallbackRawDataFunction *deviceHandleCallbackRawData;
+    deviceHandleNotificationFunction* deviceHandleNotification;
 };
 
 

@@ -21,13 +21,13 @@ int deviceAirConditioningGetInterface(char commandHeader, DeviceInterfaceMode mo
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("On");
         }
-        return 0;
+        return commandLengthValueForMode(mode, 0, 0);
     }
     else if (AIR_CONDITIONING_COMMAND_OFF == commandHeader) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Off");
         }
-        return 0;
+        return commandLengthValueForMode(mode, 0, 0);
     }
     return DEVICE_HEADER_NOT_HANDLED;
 }

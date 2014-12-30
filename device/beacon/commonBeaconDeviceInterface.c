@@ -14,7 +14,7 @@ int commonBeaconDeviceGetInterface(char commandHeader, DeviceInterfaceMode mode,
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("redirectToJennic");
         }
-        return 0;
+        return commandLengthValueForMode(mode, 0, 0);
     }
     else if (commandHeader == COMMAND_LOCAL_LIGHT) {
         if (fillDeviceArgumentList) {
@@ -28,14 +28,14 @@ int commonBeaconDeviceGetInterface(char commandHeader, DeviceInterfaceMode mode,
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("showDataFromJennic");
         }
-        return 0;
+        return commandLengthValueForMode(mode, 0, 0);
     }
     else if (commandHeader == COMMAND_RESET_JENNIC) {
         // both input/output
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("resetJennic");
         }
-        return 0;
+        return commandLengthValueForMode(mode, 0, 0);
     }
 
     return DEVICE_HEADER_NOT_HANDLED;

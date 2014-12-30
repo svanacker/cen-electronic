@@ -18,7 +18,7 @@ int deviceStartMatchDetectorGetInterface(char commandHeader, DeviceInterfaceMode
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("stepByStep");
         }
-        return 0;
+        return commandLengthValueForMode(mode, 0, 0);
     }
     /*
     if (mode == DEVICE_MODE_OUTPUT) {
@@ -29,7 +29,7 @@ int deviceStartMatchDetectorGetInterface(char commandHeader, DeviceInterfaceMode
                             deviceArgumentList->args[0].type = DEVICE_ARG_UNSIGNED_CHAR_3;
                             deviceArgumentList->args[0].name = "XyY";
                     }
-                    return 0;
+                    return commandLengthValueForMode(mode, 0, 0);
             }
     }
      */

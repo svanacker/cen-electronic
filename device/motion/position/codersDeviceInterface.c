@@ -14,7 +14,7 @@ int deviceCodersGetInterface(char commandHeader, DeviceInterfaceMode mode, bool 
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("clrCoders");
         }
-        return 0;
+        return commandLengthValueForMode(mode, 0, 0);
     } else if (commandHeader == COMMAND_GET_WHEEL_POSITION) {
         if (fillDeviceArgumentList) {
             setFunction("codersVal", 0, 3);
@@ -28,7 +28,7 @@ int deviceCodersGetInterface(char commandHeader, DeviceInterfaceMode mode, bool 
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("dbgCodersVal");
         }
-        return 0;
+        return commandLengthValueForMode(mode, 0, 0);
     }
     return DEVICE_HEADER_NOT_HANDLED;
 }

@@ -79,7 +79,7 @@ unsigned int printArgument(OutputStream* outputStream, DeviceArgument* deviceArg
 /**
  * @private
  */
-bool printMethodMetaData(OutputStream* outputStream, DeviceInterface* deviceInterface, char commandHeader, char argumentLength, char resultLength) {
+bool printMethodOrNotificationMetaData(OutputStream* outputStream, DeviceInterface* deviceInterface, char commandHeader, char argumentLength, char resultLength, bool notification) {
     if (argumentLength != DEVICE_HEADER_NOT_HANDLED) {
         DeviceMethodMetaData* deviceMethodMetaData = getDeviceMethodMetaData();
         char deviceHeader = deviceInterface->deviceHeader;
@@ -107,7 +107,6 @@ bool printMethodMetaData(OutputStream* outputStream, DeviceInterface* deviceInte
             realArgumentLength += printArgument(outputStream, &deviceArgument, argumentIndex);
         }
         append(outputStream,  ARGUMENTS_STOP_CHAR);
-        appendString(outputStream, ARGUMENTS_AND_RESULTS_SEPARATOR);
 
         if (argumentLength != realArgumentLength) {
             appendString(outputStream, "Arguments Definition ERROR !!!!!!\n");
@@ -121,29 +120,32 @@ bool printMethodMetaData(OutputStream* outputStream, DeviceInterface* deviceInte
         }
 
         // results
-        append(outputStream,  ARGUMENTS_START_CHAR);
-        int resultCount = deviceMethodMetaData->resultsSize;
-        int realResultLength = 0;
-        int resultIndex;
-        for (resultIndex = 0; resultIndex < resultCount; resultIndex++) {
-            DeviceArgument resultArgument = deviceMethodMetaData->results[resultIndex];
-            realResultLength += printArgument(outputStream, &resultArgument, resultIndex);
-        }
+		if (!notification) {
+			appendString(outputStream, ARGUMENTS_AND_RESULTS_SEPARATOR);
+			append(outputStream,  ARGUMENTS_START_CHAR);
+			int resultCount = deviceMethodMetaData->resultsSize;
+			int realResultLength = 0;
+			int resultIndex;
+			for (resultIndex = 0; resultIndex < resultCount; resultIndex++) {
+				DeviceArgument resultArgument = deviceMethodMetaData->results[resultIndex];
+				realResultLength += printArgument(outputStream, &resultArgument, resultIndex);
+			}
 
-        if (resultLength != realResultLength) {
-            appendString(outputStream, "Result Parameters Definition ERROR !!!!!!");
-            appendCRLF(outputStream);
-            appendStringAndDec(outputStream, "resultCount=", resultCount);
-            appendCRLF(outputStream);
-            appendStringAndDec(outputStream, "resultLength=", resultLength);
-            appendCRLF(outputStream);
-            appendStringAndDec(outputStream, "realResultLength=", realResultLength);
-            appendCRLF(outputStream);
-        }
+			if (resultLength != realResultLength) {
+				appendString(outputStream, "Result Parameters Definition ERROR !!!!!!");
+				appendCRLF(outputStream);
+				appendStringAndDec(outputStream, "resultCount=", resultCount);
+				appendCRLF(outputStream);
+				appendStringAndDec(outputStream, "resultLength=", resultLength);
+				appendCRLF(outputStream);
+				appendStringAndDec(outputStream, "realResultLength=", realResultLength);
+				appendCRLF(outputStream);
+			}
 
-        if (resultCount == 0) {
-            appendString(outputStream, "void");
-        }
+			if (resultCount == 0) {
+				appendString(outputStream, "void");
+			}
+		}
         append(outputStream,  ARGUMENTS_STOP_CHAR);
 
         println(outputStream);
@@ -153,6 +155,8 @@ bool printMethodMetaData(OutputStream* outputStream, DeviceInterface* deviceInte
     return false;
 }
 
+// Usage
+
 /**
  * @private
  */
@@ -161,9 +165,12 @@ void printDeviceUsageLine(OutputStream* outputStream, char header, Device* devic
 
     int argumentLength = deviceInterface->deviceGetInterface(header, DEVICE_MODE_INPUT, true);
     int resultLength = deviceInterface->deviceGetInterface(header, DEVICE_MODE_OUTPUT, true);
-    printMethodMetaData(outputStream, deviceInterface, header, argumentLength, resultLength);
+    printMethodOrNotificationMetaData(outputStream, deviceInterface, header, argumentLength, resultLength, false);
 }
 
+/**
+ * @private
+ */
 void printDeviceUsage(OutputStream* outputStream, Device* device) {
     char header;
     // We start after special characters and use only ANSI chars
@@ -179,5 +186,37 @@ void printDeviceListUsage(OutputStream* outputStream) {
     for (deviceIndex = 0; deviceIndex < deviceCount; deviceIndex++) {
         Device* device = getDevice(deviceIndex);
         printDeviceUsage(outputStream, device);
+    }
+}
+
+// Notification
+
+/**
+ * @private
+ */
+void printDeviceNotificationLine(OutputStream* outputStream, char header, Device* device) {
+	DeviceInterface* deviceInterface = device->deviceInterface;
+
+    int argumentLength = deviceInterface->deviceGetInterface(header, DEVICE_MODE_NOTIFY, true);
+	printMethodOrNotificationMetaData(outputStream, deviceInterface, header, argumentLength, 0, true);
+}
+
+/**
+ * @private
+ */
+void printDeviceNotification(OutputStream* outputStream, Device* device) {
+    char header;
+    // We start after special characters and use only ANSI chars
+    for (header = 32; header < 127; header++) {
+        printDeviceNotificationLine(outputStream, header, device);
+    }
+}
+void printDeviceListNotification(OutputStream* outputStream) {
+    println(outputStream);
+    int deviceCount = getDeviceCount();
+    int deviceIndex;
+    for (deviceIndex = 0; deviceIndex < deviceCount; deviceIndex++) {
+        Device* device = getDevice(deviceIndex);
+        printDeviceNotification(outputStream, device);
     }
 }

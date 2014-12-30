@@ -100,6 +100,7 @@ void stopRobot(void) {
 // OBSTACLE
 
 void stopRobotObstacle(void) {
+    /*
     unsigned int currentTime = getCurrentTimeInSecond();
     appendString(getOutputStreamLogger(WARNING), "Current Time=");
     appendDec(getOutputStreamLogger(WARNING), currentTime);
@@ -117,5 +118,5 @@ void stopRobotObstacle(void) {
     } else {
         appendString(getOutputStreamLogger(WARNING), "Wait for new notification \n");
     }
-
+    */
 }

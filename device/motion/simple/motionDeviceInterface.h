@@ -4,6 +4,8 @@
 #include "../../../device/deviceInterface.h"
 #include "../../../device/deviceConstants.h"
 
+// COMMAND
+
 /** Goto with value in coder pulse. */
 #define COMMAND_MOTION_GOTO_IN_PULSE 'g'
 
@@ -38,7 +40,7 @@
 #define COMMAND_MOTION_SPLINE_TEST_RIGHT    '}'
 
 /** Defines the COMMAND used to get speed / acceleration parameters for different motion type. */
-#define COMMAND_GET_MOTION_PARAMETERS         'r'
+#define COMMAND_GET_MOTION_PARAMETERS         'p'
 
 /** Defines the COMMAND used to set speed / acceleration parameters for different motion type. */
 #define COMMAND_SET_MOTION_PARAMETERS         'w'
@@ -50,23 +52,21 @@
 #define COMMAND_MOTION_CANCEL                 'Z'
 
 /** Obstacle : stop the current Motion and maintain Position. */
-#define COMMAND_MOTION_OBSTACLE             'o'
+#define COMMAND_MOTION_OBSTACLE               '|'
 
-/** Notify the status of the robot. */
-#define NOTIFY_MOTION_STATUS                 'k'
+// NOTIFICATION
 
 /** Argument for the status of the robot when position reached. */
-#define NOTIFY_MOTION_ARG_REACHED     0
+#define NOTIFY_MOTION_STATUS_REACHED     	  'r'
 
 /** Argument for the status of the robot when robot failed to reach. */
-#define NOTIFY_MOTION_ARG_FAILED     1
+#define NOTIFY_MOTION_STATUS_FAILED     	  'e'
 
 /** Argument for the status of the robot when there is an obstacle. */
-#define NOTIFY_MOTION_ARG_OBSTACLE     2
+#define NOTIFY_MOTION_STATUS_OBSTACLE     	  'o'
 
 /** Argument for the status of the robot when position is in progress. */
-#define NOTIFY_MOTION_ARG_MOVING     3
-
+#define NOTIFY_MOTION_STATUS_MOVING     	  'm'
 
 /**
 * Interface for Device

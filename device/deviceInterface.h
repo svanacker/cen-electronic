@@ -19,12 +19,21 @@ typedef int DeviceInterfaceMode;
 #define DEVICE_MODE_OUTPUT 1
 
 /**
+ * Define the constant for device (output of device).
+ */
+#define DEVICE_MODE_NOTIFY 2
+
+// DEVICE HEADER
+
+/**
  * The index in the buffer to get the device Header.
  */
 #define DEVICE_HEADER_INDEX                        0
 
+// COMMAND HEADER
+
 /**
- * The index in the buffer to get the command Header for a specified Device Header (command header char is just after device command header).
+ * The index in the buffer to get the command Header for a specified Device Header (command header char is just after device header).
  */
 #define COMMAND_HEADER_INDEX                    	1
 
@@ -38,6 +47,18 @@ typedef int DeviceInterfaceMode;
  */
 #define DEVICE_AND_COMMAND_HEADER_LENGTH         2
 
+// NOTIFICATION
+
+/**
+ * The index in the buffer to get the notify (command equivalent) Header for a specified Device Header.
+ */
+#define NOTIFY_HEADER_INDEX                    		1
+
+/**
+ * Define the length used by the header length, and the notify header.
+ */
+#define DEVICE_AND_NOTIFY_HEADER_LENGTH         2
+
 /**
 * Define an argument.
 */
@@ -48,8 +69,8 @@ typedef struct DeviceArgument {
     char* name;
 } DeviceArgument;
 
-#define MAX_ARGUMENTS 13
-#define MAX_RETURNS      13
+#define MAX_ARGUMENTS 	13
+#define MAX_RETURNS     13
 
 /**
 * Define the result of deviceGetRawDataHeaderFunction if the
@@ -162,6 +183,12 @@ int getLengthOfType(int parameterType);
 * @param resultsSize the number of results (NOT the length of the marshalled string !)
 */
 void setFunction(char* functionName, int argumentsSize, int resultsSize);
+
+/**
+ * Set the notification name and the size of all arguments.
+ * Internally, use the same structure than the Function.
+ */
+void setNotification(char* notificationName, int notificationArguments);
 
 /**
 * Set the function Name and the size of all argument to 0.

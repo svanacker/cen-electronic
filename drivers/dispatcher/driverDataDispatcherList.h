@@ -73,10 +73,11 @@ DriverDataDispatcher* getDriverDataDispatcherByTransmitMode(TransmitMode transmi
  * Get the size of the driver data dispatcher list.
  * @return the size of the driver data dispatcher list.
  */
-int getDriverDataDispatcherCount();
+int getDriverDataDispatcherCount(void);
 
 /**
  * Handle data from all dispatcher list with a particular transmit Mode.
+ * @param transmitMode the transmitMode for the filter (we do not manage "LOCAL_TRANSMIT")
  * @return true if data notification was handled
  */
 bool handleNotificationFromDispatcherList(TransmitMode transmitMode);

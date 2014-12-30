@@ -35,7 +35,7 @@ int deviceStrategyGetInterface(char commandHeader, DeviceInterfaceMode mode, boo
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("printGameBoard");
         }
-        return 0;
+        return commandLengthValueForMode(mode, 0, 0);
     }
     // Next step
     else if (commandHeader == COMMAND_STRATEGY_NEXT_STEP) {

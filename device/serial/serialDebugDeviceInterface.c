@@ -12,7 +12,7 @@ int deviceSerialDebugGetInterface(char commandHeader, DeviceInterfaceMode mode, 
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("showSerialInputBuffers");
         }
-        return 0;
+        return commandLengthValueForMode(mode, 0, 0);
     }
 
     return DEVICE_HEADER_NOT_HANDLED;

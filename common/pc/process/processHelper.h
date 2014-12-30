@@ -3,7 +3,7 @@
 
 #include <stdbool.h>
 
-#define	HALF_SCREEN_WIDTH	684
+#define HALF_SCREEN_WIDTH	684
 #define CONSOLE_HEIGHT		700
 
 /***

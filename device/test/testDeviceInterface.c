@@ -23,7 +23,7 @@ int deviceTestGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fi
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("simpleTest");
         }
-        return 0;
+        return commandLengthValueForMode(mode, 0, 0);
     }
 	else if (commandHeader == COMMAND_HEAVY_TEST) {
 		if (fillDeviceArgumentList) {
@@ -42,22 +42,31 @@ int deviceTestGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fi
 		}
 		return commandLengthValueForMode(mode, 29, 6);
 	}
-	// Describe a notification test
-    else if (commandHeader == COMMAND_NOTIFY_TEST) {
-        if (fillDeviceArgumentList) {
-            setFunction("notifyTest", 1, 1);
-            setArgumentUnsignedHex2(0, "arg");
-            setResultUnsignedHex2(0, "arg");
-        }
-        return commandLengthValueForMode(mode, 2, 2);
-    }
     // Debug Test
     else if (commandHeader == COMMAND_DEBUG_TEST) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("debugTest");
         }
-        return 0;
+        return commandLengthValueForMode(mode, 0, 0);
     }
+	else if (commandHeader == COMMAND_GENERATE_NOTIFY_TEST) {
+        if (fillDeviceArgumentList) {
+            setFunction("generateNotifyTest", 1, 0);
+			setArgumentUnsignedHex2(0, "notifyTestValue");
+        }
+        return commandLengthValueForMode(mode, 2, 0);
+	}
+	// Handle a notification test
+    else if (mode == DEVICE_MODE_NOTIFY) {
+		if (commandHeader == NOTIFY_TEST) {
+			if (fillDeviceArgumentList) {
+				setNotification("notifyTest", 1);
+				setArgumentUnsignedHex2(0, "notifyArg0");
+			}
+			return 2;
+		}
+    }
+	
     return DEVICE_HEADER_NOT_HANDLED;
 }
 

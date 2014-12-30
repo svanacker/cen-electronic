@@ -9,4 +9,11 @@
  */
 DeviceDescriptor* getTestDeviceDescriptor();
 
+/**
+ * Notify a test.
+ * @param outputStream the stream in which we notify
+ * @param the value to notify
+ */
+void notifyTest(OutputStream* outputStream, unsigned char notifyArgument);
+
 #endif

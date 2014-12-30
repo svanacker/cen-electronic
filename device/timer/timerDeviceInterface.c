@@ -14,7 +14,7 @@ int deviceTimerGetInterface(char commandHeader, DeviceInterfaceMode mode, bool f
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("showTimerList");
         }
-        return 0;
+        return commandLengthValueForMode(mode, 0, 0);
     }
     return DEVICE_HEADER_NOT_HANDLED;
 }

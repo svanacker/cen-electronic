@@ -1,3 +1,5 @@
+#include <stdbool.h>
+
 #include "motionDevice.h"
 #include "motionDeviceInterface.h"
 
@@ -18,7 +20,6 @@
 #include "../../../device/device.h"
 #include "../../../device/motion/position/trajectoryDevice.h"
 
-// #include "../../../motion/extended/bsplineDebug.h"
 #include "../../../motion/simple/motion.h"
 #include "../../../motion/simple/motionPersistence.h"
 #include "../../../motion/pid/pidTimer.h"
@@ -51,8 +52,7 @@ void internalDebugNotify(char* notifyString) {
 
 void notifyReached(OutputStream* outputStream) {
     append(outputStream, MOTION_DEVICE_HEADER);
-    append(outputStream, NOTIFY_MOTION_STATUS);
-    appendHex2(outputStream, NOTIFY_MOTION_ARG_REACHED);
+    append(outputStream, NOTIFY_MOTION_STATUS_REACHED);
 
     // send position
     appendSeparator(outputStream);
@@ -63,8 +63,7 @@ void notifyReached(OutputStream* outputStream) {
 
 void notifyFailed(OutputStream* outputStream) {
     append(outputStream, MOTION_DEVICE_HEADER);
-    append(outputStream, NOTIFY_MOTION_STATUS);
-    appendHex2(outputStream, NOTIFY_MOTION_ARG_FAILED);
+    append(outputStream, NOTIFY_MOTION_STATUS_FAILED);
 
     // send position
     appendSeparator(outputStream);
@@ -75,8 +74,7 @@ void notifyFailed(OutputStream* outputStream) {
 
 void notifyMoving(OutputStream* outputStream) {
     append(outputStream, MOTION_DEVICE_HEADER);
-    append(outputStream, NOTIFY_MOTION_STATUS);
-    appendHex2(outputStream, NOTIFY_MOTION_ARG_MOVING);
+    append(outputStream, NOTIFY_MOTION_STATUS_MOVING);
 
     // send position
     appendSeparator(outputStream);
@@ -87,8 +85,7 @@ void notifyMoving(OutputStream* outputStream) {
 
 void notifyObstacle(OutputStream* outputStream) {
     append(outputStream, MOTION_DEVICE_HEADER);
-    append(outputStream, NOTIFY_MOTION_STATUS);
-    appendHex2(outputStream, NOTIFY_MOTION_ARG_OBSTACLE);
+    append(outputStream, NOTIFY_MOTION_STATUS_OBSTACLE);
 
     // send position
     appendSeparator(outputStream);
@@ -102,7 +99,7 @@ void deviceMotionHandleRawData(char commandHeader,
         OutputStream* outputStream) {
     // GOTO in impulsion
     if (commandHeader == COMMAND_MOTION_GOTO_IN_PULSE) {
-        // send acquittement
+        // send acknowledge
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_GOTO_IN_PULSE);
 
         // Ex: 000100 000100 01 10

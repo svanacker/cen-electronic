@@ -16,10 +16,10 @@ unsigned int getWaitedDataLength(const char header);
 * @param commandHeader the command header (to select command inside device)
 * @param dataLength the length of the InBuffer
 * @param mode DEVICE_MODE_INPUT ou DEVICE_MODE_OUTPUT, if we want to find a device
-* by the INPUT (command) or OUTPUT (notification)
+* by the INPUT (command/notification) or OUTPUT
 * @return the descriptor of the handling device, NULL if no registered device 
 * can handle the data header
 */
-const Device* deviceDataDispatcherFindDevice(const char deviceHeader, const char commandHeader, int dataLength, DeviceInterfaceMode mode);
+const Device* deviceDataDispatcherFindDevice(const char deviceHeader, const char commandHeader, const int dataLength, const DeviceInterfaceMode mode);
 
 #endif

@@ -18,14 +18,14 @@ int deviceBeaconGetInterface(char commandHeader, int mode, bool fillDeviceArgume
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("InitJennicAsCoordinater");
         }
-        return 0;
+        return commandLengthValueForMode(mode, 0, 0);
     }
     else if (commandHeader == COMMAND_SEND_ROBOT_POSITION_FROM_COORDINATER_TO_ROUTER) {
         // both input/output
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("sendRobotPositionFromCoordinaterToRouter");
         }
-        return 0;
+        return commandLengthValueForMode(mode, 0, 0);
     }
     else if (commandHeader == COMMAND_BEACON_POSITION) {
         if (fillDeviceArgumentList) {
@@ -42,7 +42,7 @@ int deviceBeaconGetInterface(char commandHeader, int mode, bool fillDeviceArgume
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("beaconConfiguration");
         }
-        return 0;
+        return commandLengthValueForMode(mode, 0, 0);
     }
     // Set the configuration to define distance between beacon, and position
     // of point calibration
@@ -62,7 +62,7 @@ int deviceBeaconGetInterface(char commandHeader, int mode, bool fillDeviceArgume
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("beaconCalibration");
         }
-        return 0;
+        return commandLengthValueForMode(mode, 0, 0);
     }
     else if (commandHeader == COMMAND_ROUTER_LIGHT) {
         if (fillDeviceArgumentList) {
@@ -76,14 +76,14 @@ int deviceBeaconGetInterface(char commandHeader, int mode, bool fillDeviceArgume
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("beaconServoRun");
         }
-        return 0;
+        return commandLengthValueForMode(mode, 0, 0);
     }
     else if (commandHeader == COMMAND_BEACON_SERVO_STOP) {
         // both input/output
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("beaconServoStop");
         }
-        return 0;
+        return commandLengthValueForMode(mode, 0, 0);
     }
     return DEVICE_HEADER_NOT_HANDLED;
 }
