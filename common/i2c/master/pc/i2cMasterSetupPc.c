@@ -14,8 +14,8 @@
 
 #include <Windows.h>
 
-#define PIPE_I2C_MASTER_NAME	L"\\\\.\\pipe\\mainBoardPipe"
-#define PIPE_I2C_SLAVE_NAME	L"\\\\.\\pipe\\motorBoardPipe"
+#define PIPE_I2C_MASTER_NAME    L"\\\\.\\pipe\\mainBoardPipe"
+#define PIPE_I2C_SLAVE_NAME    L"\\\\.\\pipe\\motorBoardPipe"
 
 static HANDLE masterPipeHandle = NULL;
 static HANDLE slavePipeHandle = NULL;
@@ -25,8 +25,8 @@ HANDLE getMasterPipeHandle() {
 }
 
 HANDLE getSlavePipeHandle(unsigned char writeAddress) {
-	// TODO : Handle Address !
-	return slavePipeHandle;
+    // TODO : Handle Address !
+    return slavePipeHandle;
 }
 
 void i2cMasterInitialize(void) {

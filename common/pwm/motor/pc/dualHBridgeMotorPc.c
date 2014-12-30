@@ -17,11 +17,11 @@ void pwmMotor2(signed int value2) {
 }
 
 void pwmMotor3(signed int value3) {
-    // DON'T DO ANYTHING	
+    // DON'T DO ANYTHING    
 }
 
 void pwmMotor4(signed int value4) {
-    // DON'T DO ANYTHING	
+    // DON'T DO ANYTHING    
 }
 
 signed int getDualHBridgeSpeed1(void) {

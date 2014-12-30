@@ -10,7 +10,7 @@ static OutputStream consoleOutputStream;
 static LogHandler consoleLogHandler;
 
 LogHandler* addConsoleLogHandler(LogLevel consoleLogLevel) {
-	initConsoleOutputStream(&consoleOutputStream);
-	addLogHandler(&consoleLogHandler, "CONSOLE", &consoleOutputStream, consoleLogLevel);
-	return &consoleLogHandler;
+    initConsoleOutputStream(&consoleOutputStream);
+    addLogHandler(&consoleLogHandler, "CONSOLE", &consoleOutputStream, consoleLogLevel);
+    return &consoleLogHandler;
 }

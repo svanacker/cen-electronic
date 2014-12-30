@@ -35,7 +35,7 @@ typedef int DeviceInterfaceMode;
 /**
  * The index in the buffer to get the command Header for a specified Device Header (command header char is just after device header).
  */
-#define COMMAND_HEADER_INDEX                    	1
+#define COMMAND_HEADER_INDEX                        1
 
 /**
  * Define the length of the ack (char).
@@ -52,7 +52,7 @@ typedef int DeviceInterfaceMode;
 /**
  * The index in the buffer to get the notify (command equivalent) Header for a specified Device Header.
  */
-#define NOTIFY_HEADER_INDEX                    		1
+#define NOTIFY_HEADER_INDEX                            1
 
 /**
  * Define the length used by the header length, and the notify header.
@@ -69,7 +69,7 @@ typedef struct DeviceArgument {
     char* name;
 } DeviceArgument;
 
-#define MAX_ARGUMENTS 	13
+#define MAX_ARGUMENTS     13
 #define MAX_RETURNS     13
 
 /**

@@ -5,9 +5,9 @@
 #include <plib.h>
 
 bool isMatchStarted30F(StartMatchDetector* startMatchDetector) {
-	return PORTFbits.RF6 != 0;
+    return PORTFbits.RF6 != 0;
 }
 
 void initStartMatchDetector30F(StartMatchDetector* startMatchDetector) {
-	initStartMatchDetector(startMatchDetector, isMatchStarted30F);
+    initStartMatchDetector(startMatchDetector, isMatchStarted30F);
 }

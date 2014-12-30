@@ -1,5 +1,5 @@
 #ifndef ROBOT_CONFIG_PIC32_H
-#define	ROBOT_CONFIG_PIC32_H
+#define    ROBOT_CONFIG_PIC32_H
 
 #include "../robotConfig.h"
 

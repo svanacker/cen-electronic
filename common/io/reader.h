@@ -5,7 +5,7 @@
 
 // READ METHODS
 
-#define	FILTERED_RESULT -1
+#define    FILTERED_RESULT -1
 
 /**
  * Read a char with filtering.

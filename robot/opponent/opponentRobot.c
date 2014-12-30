@@ -29,7 +29,7 @@ void initOpponentRobot() {
     addTimer(OPPONENT_ROBOT_TIMER_INDEX,
             TIME_DIVISER_2_HERTZ,
             &opponentRobotCallbackFunc,
-			"OPPONENT");
+            "OPPONENT");
 }
 
 void updateOpponentRobotIfNecessary() {

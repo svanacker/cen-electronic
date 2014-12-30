@@ -24,7 +24,7 @@ int deviceRelayGetInterface(char commandHeader, DeviceInterfaceMode mode, bool f
 }
 
 static DeviceInterface deviceInterface = {
-	.deviceHeader = RELAY_DEVICE_HEADER,
+    .deviceHeader = RELAY_DEVICE_HEADER,
     .deviceGetName = &deviceRelayGetName,
     .deviceGetInterface = &deviceRelayGetInterface
 };

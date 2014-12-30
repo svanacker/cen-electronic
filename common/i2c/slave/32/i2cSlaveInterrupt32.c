@@ -70,8 +70,8 @@ void __ISR(_I2C_1_VECTOR, ipl3) _SlaveI2CHandler(void)
         OutputStream* outputStream = getOutputStream(i2cSlaveInputBuffer);
         // Read data from the Master
         append(outputStream, data);
-		// for debug support
-    	appendI2cDebugInputChar(data);
+        // for debug support
+        appendI2cDebugInputChar(data);
   
         // release the clock to restart I2C
         I2C1CONbits.SCLREL = 1; // release clock stretch bit
@@ -89,8 +89,8 @@ void __ISR(_I2C_1_VECTOR, ipl3) _SlaveI2CHandler(void)
         // There is available data
         if (i2cInputStream->availableData(i2cInputStream)) {
             char c = i2cInputStream->readChar(i2cInputStream);
-			// for debug support
-    		appendI2cDebugOutputChar(c);
+            // for debug support
+            appendI2cDebugOutputChar(c);
             SlaveWriteI2C1(c);
         } else {
             SlaveWriteI2C1(I2C_SLAVE_NO_DATA_IN_READ_BUFFER);
@@ -109,7 +109,7 @@ void __ISR(_I2C_1_VECTOR, ipl3) _SlaveI2CHandler(void)
         if (i2cInputStream->availableData(i2cInputStream)) {
             char c = i2cInputStream->readChar(i2cInputStream);
             // for debug support
-    		appendI2cDebugInputChar(c);
+            appendI2cDebugInputChar(c);
             // we send it to the master
             SlaveWriteI2C1(c);
         } else {

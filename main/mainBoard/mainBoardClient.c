@@ -375,8 +375,8 @@ void waitForInstruction() {
 int main(void) {
     setPicName("MAIN BOARD");
 
-	initRobotConfigPic32(&robotConfig);
-	
+    initRobotConfigPic32(&robotConfig);
+    
     setRobotMustStop(false);
     // Open the serial Link for debug
     openSerialLink(&debugSerialStreamLink,
@@ -443,18 +443,18 @@ int main(void) {
 
     // I2C Stream for motorBoard
     addI2CDriverDataDispatcher("MOTOR_BOARD_I2C_DISPATCHER",
-	&motorBoardI2cInputBuffer,
-	(char(*)[]) &motorBoardI2cInputBufferArray,
-	MAIN_BOARD_I2C_INPUT_DRIVER_DATA_DISPATCHER_BUFFER_LENGTH,
-	&motorBoardI2cOutputStream,
-	&motorBoardI2cInputStream,
-	MOTOR_BOARD_I2C_ADDRESS);
+    &motorBoardI2cInputBuffer,
+    (char(*)[]) &motorBoardI2cInputBufferArray,
+    MAIN_BOARD_I2C_INPUT_DRIVER_DATA_DISPATCHER_BUFFER_LENGTH,
+    &motorBoardI2cOutputStream,
+    &motorBoardI2cInputStream,
+    MOTOR_BOARD_I2C_ADDRESS);
 
     // Uart Stream for motorBoard
     addUartDriverDataDispatcher(
     &pcSerialStreamLink,
     "MOTOR_BOARD_UART_DISPATCHER",
-	SERIAL_PORT_MOTOR);
+    SERIAL_PORT_MOTOR);
 
     /*
     // Stream for Mechanical Board 2

@@ -39,7 +39,7 @@ typedef struct {
     /** Function to get the name of the function. */
     driverGetNameFunction *driverGetName;
     /** How we can communicate with the driver (Uart, I2C, local ...). */
-	TransmitMode transmitMode;
+    TransmitMode transmitMode;
 } DriverDescriptor;
 
 /**

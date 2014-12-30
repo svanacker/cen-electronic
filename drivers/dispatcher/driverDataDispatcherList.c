@@ -31,7 +31,7 @@ void initDriverDataDispatcherList(DriverDataDispatcher(*driverDataDispatcherList
 }
 
 DriverDataDispatcher* addDriverDataDispatcher(
-							TransmitMode transmitMode,
+                            TransmitMode transmitMode,
                             char* name,
                             char* addressString,
                             int address,

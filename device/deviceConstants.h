@@ -2,91 +2,91 @@
 #define DEVICE_CONSTANTS_H
 
 // TODO : Change !!!
-#define CLOCK_DEVICE_HEADER     				'C'
+#define CLOCK_DEVICE_HEADER                     'C'
 
 
 /** Device header .*/
-#define ROBOT_CONFIG_DEVICE_HEADER      		'c'
+#define ROBOT_CONFIG_DEVICE_HEADER              'c'
 
-#define ADC_DEVICE_HEADER            			'd'
+#define ADC_DEVICE_HEADER                        'd'
 
 #define END_MATCH_DETECTOR_DEVICE_HEADER        'e'
 
 // The EEPROM DEVICE HEADER
 
-#define EEPROM_DEVICE_HEADER     				'E'
+#define EEPROM_DEVICE_HEADER                     'E'
 
-#define AIR_CONDITIONING_DEVICE_HEADER         	'g'
+#define AIR_CONDITIONING_DEVICE_HEADER             'g'
 
 #define LOG_DEVICE_HEADER                       'G'
 
 // 'h' for Help
-#define SYSTEM_DEBUG_DEVICE_HEADER        		'h'
+#define SYSTEM_DEBUG_DEVICE_HEADER                'h'
 
 /** Command to debug the I2C Master. */
-#define I2C_MASTER_DEBUG_DEVICE_HEADER        	'I'
+#define I2C_MASTER_DEBUG_DEVICE_HEADER            'I'
 
 #define ROBOT_INFRARED_DETECTOR_DEVICE_HEADER    'I'
 
 /** Command to debug the I2C Slave. */
-#define I2C_SLAVE_DEBUG_DEVICE_HEADER       	'i'
+#define I2C_SLAVE_DEBUG_DEVICE_HEADER           'i'
 
 /** Command to debug the dispatchers. */
 #define DATA_DISPATCHER_DEVICE_HEADER           'j'
 
 /** Laser Beacon Device Header. */
-#define LASER_BEACON_DEVICE_HEADER            	'l'
+#define LASER_BEACON_DEVICE_HEADER                'l'
 
 /**
  * Command header for LCD Device.
  */
-#define LCD_DEVICE_HEADER    					'L'
+#define LCD_DEVICE_HEADER                        'L'
 
 /**
  * Defines the header char used to identify the motion Device (high level).
  */
-#define MOTION_DEVICE_HEADER        			'M'
+#define MOTION_DEVICE_HEADER                    'M'
 
 /**
  * Defines the header char used to identify the motor Device (low level).
  */
-#define MOTOR_DEVICE_HEADER     				'm'
+#define MOTOR_DEVICE_HEADER                     'm'
 
 /**
  * Header char of Trajectory device : 'n' for 'navigation.
  */
-#define TRAJECTORY_DEVICE_HEADER        		'n'
+#define TRAJECTORY_DEVICE_HEADER                'n'
 
-#define PID_DEVICE_HEADER 						'p'
+#define PID_DEVICE_HEADER                         'p'
 
-#define PIN_DEVICE_HEADER						'P'
+#define PIN_DEVICE_HEADER                        'P'
 
 #define BEACON_RECEIVER_DEVICE_HEADER           'r'
 
-#define RELAY_DEVICE_HEADER						'R'
+#define RELAY_DEVICE_HEADER                        'R'
 
 /** Header for the servo device .*/
 #define SERVO_DEVICE_HEADER                     's'
 
 /** Header for System Device. */
-#define SYSTEM_DEVICE_HEADER    				'S'
+#define SYSTEM_DEVICE_HEADER                    'S'
 
 // The TEMPERATURE SENSOR DEVICE HEADER
 
 /** Header for Temperature Device. */
-#define TEMPERATURE_SENSOR_DEVICE_HEADER     	'T'
+#define TEMPERATURE_SENSOR_DEVICE_HEADER         'T'
 
 /** Header for Test Device. */
-#define TEST_DEVICE_HEADER 						't'
+#define TEST_DEVICE_HEADER                         't'
 
 /** Serial debug (U for "Uart"). */
-#define SERIAL_DEBUG_DEVICE_HEADER            	'u'
+#define SERIAL_DEBUG_DEVICE_HEADER                'u'
 
 /** Common Beacon device header. */
-#define COMMON_BEACON_DEVICE_HEADER            	'U'
+#define COMMON_BEACON_DEVICE_HEADER                'U'
 
 /** Header for Test2 Device. */
-#define TEST2_DEVICE_HEADER 					'u'
+#define TEST2_DEVICE_HEADER                     'u'
 
 #define TIMER_DEVICE_HEADER                     'V'
 
@@ -96,12 +96,12 @@
 
 #define START_MATCH_DETECTOR_DEVICE_HEADER      '!'
 
-#define SONAR_DEVICE_HEADER                		'<'
+#define SONAR_DEVICE_HEADER                        '<'
 
-#define ROBOT_SONAR_DETECTOR_DEVICE_HEADER  	'#'
+#define ROBOT_SONAR_DETECTOR_DEVICE_HEADER      '#'
 
-#define	PLIERS_DEVICE_2011_HEADER				'_'
+#define    PLIERS_DEVICE_2011_HEADER                '_'
 
-#define ARM_DEVICE_2012_HEADER					'|'
+#define ARM_DEVICE_2012_HEADER                    '|'
 
 #endif

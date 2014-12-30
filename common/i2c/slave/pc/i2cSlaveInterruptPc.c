@@ -23,7 +23,7 @@ static bool i2cStartFlag = false;
 static bool i2cAddressDefinedFlag = false;
 static bool i2cReadFlag = false;
 
-#define I2C_SLAVE_INTERRUPT_DELAY_MICRO_SECONDS	100
+#define I2C_SLAVE_INTERRUPT_DELAY_MICRO_SECONDS    100
 
 void sendI2CDataToMaster(void)
 {

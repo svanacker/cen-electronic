@@ -8,60 +8,60 @@ static LARGE_INTEGER Frequency;
 // WINDOWS NON PORTABLE FUNCTION
 
 void delaymSec(unsigned int mSecond) {
-	Sleep(mSecond);
+    Sleep(mSecond);
 }
 
 void initPerformanceCounter(void) {
-	QueryPerformanceFrequency(&Frequency);
+    QueryPerformanceFrequency(&Frequency);
 }
 
 LONGLONG getElapsedTimeInMicroSeconds(LARGE_INTEGER StartingTime) {
-	LARGE_INTEGER EndingTime, ElapsedMicroseconds;
-	QueryPerformanceCounter(&EndingTime);
-	ElapsedMicroseconds.QuadPart = EndingTime.QuadPart - StartingTime.QuadPart;
+    LARGE_INTEGER EndingTime, ElapsedMicroseconds;
+    QueryPerformanceCounter(&EndingTime);
+    ElapsedMicroseconds.QuadPart = EndingTime.QuadPart - StartingTime.QuadPart;
 
-	ElapsedMicroseconds.QuadPart *= 1000000;
-	ElapsedMicroseconds.QuadPart /= Frequency.QuadPart;
+    ElapsedMicroseconds.QuadPart *= 1000000;
+    ElapsedMicroseconds.QuadPart /= Frequency.QuadPart;
 
-	return ElapsedMicroseconds.QuadPart;
+    return ElapsedMicroseconds.QuadPart;
 }
 
 void delayUs(void) {
-	initPerformanceCounter();
-	LARGE_INTEGER StartingTime;
+    initPerformanceCounter();
+    LARGE_INTEGER StartingTime;
 
-	QueryPerformanceCounter(&StartingTime);
-	while (true) {
-		LONGLONG ElapsedMicroseconds = getElapsedTimeInMicroSeconds(StartingTime);
-		if (ElapsedMicroseconds >= 1) {
-			break;
-		}
-	}
+    QueryPerformanceCounter(&StartingTime);
+    while (true) {
+        LONGLONG ElapsedMicroseconds = getElapsedTimeInMicroSeconds(StartingTime);
+        if (ElapsedMicroseconds >= 1) {
+            break;
+        }
+    }
 }
 
 void delay10us(char value) {
-	initPerformanceCounter();
-	LARGE_INTEGER StartingTime;
+    initPerformanceCounter();
+    LARGE_INTEGER StartingTime;
 
-	QueryPerformanceCounter(&StartingTime);
-	while (true) {
-		LONGLONG ElapsedMicroseconds = getElapsedTimeInMicroSeconds(StartingTime);
-		if (ElapsedMicroseconds >= 10 * value) {
-			break;
-		}
-	}
+    QueryPerformanceCounter(&StartingTime);
+    while (true) {
+        LONGLONG ElapsedMicroseconds = getElapsedTimeInMicroSeconds(StartingTime);
+        if (ElapsedMicroseconds >= 10 * value) {
+            break;
+        }
+    }
 }
 
 void delay100us(char value) {
-	initPerformanceCounter();
+    initPerformanceCounter();
 
-	LARGE_INTEGER StartingTime;
-	QueryPerformanceCounter(&StartingTime);
+    LARGE_INTEGER StartingTime;
+    QueryPerformanceCounter(&StartingTime);
 
-	while (true) {
-		LONGLONG ElapsedMicroseconds = getElapsedTimeInMicroSeconds(StartingTime);
-		if (ElapsedMicroseconds >= 100 * value) {
-			break;
-		}
-	}
+    while (true) {
+        LONGLONG ElapsedMicroseconds = getElapsedTimeInMicroSeconds(StartingTime);
+        if (ElapsedMicroseconds >= 100 * value) {
+            break;
+        }
+    }
 }

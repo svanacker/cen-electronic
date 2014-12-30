@@ -10,9 +10,9 @@
 #pragma config FSOSCEN=OFF
 
 // calcul de la fréquence du bus
-#define	GetSystemClock() 			(80000000ul)
-#define	GetPeripheralClock()		(GetSystemClock()/(1 << OSCCONbits.PBDIV))
-#define	GetInstructionClock()		(GetSystemClock())
+#define    GetSystemClock()             (80000000ul)
+#define    GetPeripheralClock()        (GetSystemClock()/(1 << OSCCONbits.PBDIV))
+#define    GetInstructionClock()        (GetSystemClock())
 
 
 void delayUs(void) {
@@ -46,32 +46,32 @@ void delaymSec(unsigned int mSecond) {
 }
 
 int main(void)
-	{
+    {
 
-	PORTSetPinsDigitalOut(IOPORT_F,BIT_3);
-	PORTClearBits(IOPORT_F, BIT_3);
-
-
-	PORTSetPinsDigitalOut(IOPORT_C,BIT_14); 
-	PORTClearBits(IOPORT_C, BIT_14);
-
-	PORTSetPinsDigitalOut(IOPORT_D,BIT_11);
-	PORTClearBits(IOPORT_D, BIT_11);
+    PORTSetPinsDigitalOut(IOPORT_F,BIT_3);
+    PORTClearBits(IOPORT_F, BIT_3);
 
 
-	while (1)
-		{
-		delaymSec(1000);
-	
-		PORTToggleBits(IOPORT_C, BIT_14);
+    PORTSetPinsDigitalOut(IOPORT_C,BIT_14); 
+    PORTClearBits(IOPORT_C, BIT_14);
 
-		delaymSec(1000);
+    PORTSetPinsDigitalOut(IOPORT_D,BIT_11);
+    PORTClearBits(IOPORT_D, BIT_11);
 
-		PORTToggleBits(IOPORT_D, BIT_11);
 
-		delaymSec(1000);
+    while (1)
+        {
+        delaymSec(1000);
+    
+        PORTToggleBits(IOPORT_C, BIT_14);
 
-		PORTToggleBits(IOPORT_F, BIT_3);
-		}
-	return (0);
+        delaymSec(1000);
+
+        PORTToggleBits(IOPORT_D, BIT_11);
+
+        delaymSec(1000);
+
+        PORTToggleBits(IOPORT_F, BIT_3);
+        }
+    return (0);
 }

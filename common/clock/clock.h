@@ -1,5 +1,5 @@
 #ifndef CLOCK_H
-#define	CLOCK_H
+#define    CLOCK_H
 
 /**
  * Universal clock definition.

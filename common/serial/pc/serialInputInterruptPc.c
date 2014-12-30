@@ -11,8 +11,8 @@ static int consoleInterruptCounter;
 
 void initSerialInputBuffer(Buffer* buffer, int serialPortIndex) {
     if (serialPortIndex == SERIAL_PORT_1) {
-		consoleInputBuffer = buffer;
-	}
+        consoleInputBuffer = buffer;
+    }
 }
 
 void printSerialInputBuffers(OutputStream* outputStream) {

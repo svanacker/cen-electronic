@@ -21,7 +21,7 @@
 
 void setUp(void)
 {
-	clearLastError();
+    clearLastError();
 }
 
 void tearDown(void)
@@ -30,22 +30,22 @@ void tearDown(void)
 
 void runAllTests(void)
 {
-	UnityBegin("cen");
+    UnityBegin("cen");
 
-	// RUN_TEST calls runTest
-	hexUtilsTestSuite();
-	bufferTestSuite();
-	filterTestSuite();
-	printWriterTestSuite();
-	readerTestSuite();
-	ioUtilsTestSuite();
-	bcdUtilsTestSuite();
-	_2dTestSuite();
-	cenMathTestSuite();
-	driverDataDispatcherListTestSuite();
-	testDriverTestTestSuite();
+    // RUN_TEST calls runTest
+    hexUtilsTestSuite();
+    bufferTestSuite();
+    filterTestSuite();
+    printWriterTestSuite();
+    readerTestSuite();
+    ioUtilsTestSuite();
+    bcdUtilsTestSuite();
+    _2dTestSuite();
+    cenMathTestSuite();
+    driverDataDispatcherListTestSuite();
+    testDriverTestTestSuite();
 
-	UnityEnd();
+    UnityEnd();
 }
 
 

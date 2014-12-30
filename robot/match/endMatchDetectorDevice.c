@@ -66,7 +66,7 @@ bool isEnd() {
         return false;
     }
     if (!matchStarted) {
-		appendString(getOutputStreamLogger(LOG_LEVEL_ERROR), "You must call startMatch before");
+        appendString(getOutputStreamLogger(LOG_LEVEL_ERROR), "You must call startMatch before");
     }
     bool result = currentTimeInSecond >= MATCH_DURATION;
     

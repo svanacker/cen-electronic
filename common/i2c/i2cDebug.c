@@ -40,7 +40,7 @@ void initI2CDebugBuffers(Buffer* aDebugI2cInputBuffer,
                          unsigned int debugI2cInputBufferLength,
                          Buffer* aDebugI2cOutputBuffer,
                          char (*debugI2cOutputBufferArray)[],
-						 unsigned int debugI2cOutputBufferLength
+                         unsigned int debugI2cOutputBufferLength
 ) {
     debugI2cInputBuffer = aDebugI2cInputBuffer;
     debugI2cOutputBuffer = aDebugI2cOutputBuffer;
@@ -51,21 +51,21 @@ void initI2CDebugBuffers(Buffer* aDebugI2cInputBuffer,
 }
 
 void appendI2cDebugInputChar(unsigned char debugValue) {
-	if (!debugI2cEnabled) {
-		return;
-	}
-	if (debugI2cInputBuffer != NULL) {
-		bufferWriteChar(debugI2cInputBuffer, debugValue);
-	}
+    if (!debugI2cEnabled) {
+        return;
+    }
+    if (debugI2cInputBuffer != NULL) {
+        bufferWriteChar(debugI2cInputBuffer, debugValue);
+    }
 }
 
 void appendI2cDebugOutputChar(unsigned char debugValue) {
-	if (!debugI2cEnabled) {
-		return;
-	}
-	if (debugI2cInputBuffer != NULL) {
-		bufferWriteChar(debugI2cOutputBuffer, debugValue);
-	}
+    if (!debugI2cEnabled) {
+        return;
+    }
+    if (debugI2cInputBuffer != NULL) {
+        bufferWriteChar(debugI2cOutputBuffer, debugValue);
+    }
 }
 
 void printI2cDebugBuffers() {
@@ -78,12 +78,12 @@ void printI2cDebugBuffers() {
    
     if (debugI2cInputBuffer != NULL) {
         appendString(outputStreamLogger, "I2C:In:");
-		printDebugBuffer(outputStreamLogger, debugI2cInputBuffer);
+        printDebugBuffer(outputStreamLogger, debugI2cInputBuffer);
         println(outputStreamLogger);
     }
     if (debugI2cOutputBuffer != NULL) {
         appendString(outputStreamLogger, "I2C:Out:");
-		printDebugBuffer(outputStreamLogger, debugI2cOutputBuffer);
+        printDebugBuffer(outputStreamLogger, debugI2cOutputBuffer);
         println(outputStreamLogger);
     }
 }

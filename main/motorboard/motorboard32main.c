@@ -240,12 +240,12 @@ int runMotorBoard() {
             );
 
     // Debug of I2C : Only if there is problems
-	initI2CDebugBuffers(&i2cMasterDebugInputBuffer,
-		(char(*)[]) &i2cMasterDebugInputBufferArray,
-		MOTOR_BOARD_I2C_DEBUG_MASTER_IN_BUFFER_LENGTH,
-		&i2cMasterDebugOutputBuffer,
-		(char(*)[]) &i2cMasterDebugOutputBufferArray,
-		MOTOR_BOARD_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH);
+    initI2CDebugBuffers(&i2cMasterDebugInputBuffer,
+        (char(*)[]) &i2cMasterDebugInputBufferArray,
+        MOTOR_BOARD_I2C_DEBUG_MASTER_IN_BUFFER_LENGTH,
+        &i2cMasterDebugOutputBuffer,
+        (char(*)[]) &i2cMasterDebugOutputBufferArray,
+        MOTOR_BOARD_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH);
 
     setDebugI2cEnabled(false);
 

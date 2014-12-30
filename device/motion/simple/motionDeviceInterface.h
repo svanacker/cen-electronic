@@ -57,16 +57,16 @@
 // NOTIFICATION
 
 /** Argument for the status of the robot when position reached. */
-#define NOTIFY_MOTION_STATUS_REACHED     	  'r'
+#define NOTIFY_MOTION_STATUS_REACHED           'r'
 
 /** Argument for the status of the robot when robot failed to reach. */
-#define NOTIFY_MOTION_STATUS_FAILED     	  'e'
+#define NOTIFY_MOTION_STATUS_FAILED           'e'
 
 /** Argument for the status of the robot when there is an obstacle. */
-#define NOTIFY_MOTION_STATUS_OBSTACLE     	  'o'
+#define NOTIFY_MOTION_STATUS_OBSTACLE           'o'
 
 /** Argument for the status of the robot when position is in progress. */
-#define NOTIFY_MOTION_STATUS_MOVING     	  'm'
+#define NOTIFY_MOTION_STATUS_MOVING           'm'
 
 /**
 * Interface for Device

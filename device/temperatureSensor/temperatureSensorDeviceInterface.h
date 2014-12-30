@@ -1,5 +1,5 @@
 #ifndef TEMPERATURE_SENSOR_DEVICE_INTERFACE_H
-#define	TEMPERATURE_SENSOR_DEVICE_INTERFACE_H
+#define    TEMPERATURE_SENSOR_DEVICE_INTERFACE_H
 
 #include "../../device/deviceInterface.h"
 #include "../../device/deviceConstants.h"
@@ -24,5 +24,5 @@
 */
 DeviceInterface* getTemperatureSensorDeviceInterface();
 
-#endif	
+#endif    
 

@@ -7,19 +7,19 @@
 
 
 unsigned int portableMasterWriteI2C(unsigned char data) {
-	return MasterWriteI2C(data);
+    return MasterWriteI2C(data);
 }
 
 unsigned char portableMasterReadI2C() {
-	return MasterReadI2C();
+    return MasterReadI2C();
 }
 
 void portableCloseI2C() {
-	CloseI2C();
+    CloseI2C();
 }
 
 void portableMasterWaitSendI2C( void ) {
-	while (I2CCONbits.SEN) {
-	
-	}
+    while (I2CCONbits.SEN) {
+    
+    }
 }

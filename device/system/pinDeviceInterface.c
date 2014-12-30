@@ -35,7 +35,7 @@ int devicePinGetInterface(char header, int mode, bool fillDeviceArgumentList) {
 
 static DeviceInterface deviceInterface = {
     .deviceGetName = &devicePinGetName,
-	.deviceHeader = PIN_DEVICE_HEADER,
+    .deviceHeader = PIN_DEVICE_HEADER,
     .deviceGetInterface = &devicePinGetInterface
 };
 

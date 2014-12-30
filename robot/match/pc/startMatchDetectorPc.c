@@ -6,13 +6,13 @@
 static bool matchStarted;
 
 void startMatchPc(void) {
-	matchStarted = true;
+    matchStarted = true;
 }
 
 bool isMatchStartedPc(StartMatchDetector* startMatchDetector) {
-	return matchStarted;
+    return matchStarted;
 }
 
 void initStartMatchDetectorPc(StartMatchDetector* startMatchDetector) {
-	initStartMatchDetector(startMatchDetector, isMatchStartedPc);
+    initStartMatchDetector(startMatchDetector, isMatchStartedPc);
 }

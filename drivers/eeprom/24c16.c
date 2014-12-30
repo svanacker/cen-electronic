@@ -11,7 +11,7 @@
 #include "../../common/i2c/i2cConstants.h"
 #include "../../common/i2c/i2cCommon.h"
 
-#define EEPROM_24C16_MAX_INDEX	    0x3FFF
+#define EEPROM_24C16_MAX_INDEX        0x3FFF
 
 /**
 * @private
@@ -95,8 +95,8 @@ void _writeEeprom24C16Int(Eeprom* eeprom_, unsigned long index, signed int value
     WaitI2C();
     portableStopI2C();
     WaitI2C();
-	
-	delay100us(4);  // delay <=3 don't write correctly if we write several times
+    
+    delay100us(4);  // delay <=3 don't write correctly if we write several times
 }
 
 /**

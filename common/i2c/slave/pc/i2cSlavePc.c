@@ -24,14 +24,14 @@
 
 
 unsigned char portableSlaveReadI2C(void) {
-	HANDLE masterToSlaveHandle = getI2CMasterToSlaveHandle();
+    HANDLE masterToSlaveHandle = getI2CMasterToSlaveHandle();
 
-	unsigned char result = readCharFromPipe(masterToSlaveHandle);
-	return result;
+    unsigned char result = readCharFromPipe(masterToSlaveHandle);
+    return result;
 }
 
 void portableSlaveWriteI2C(unsigned char c) {
-	HANDLE slaveToMasterHandle = getI2CSlaveToMasterHandle();
+    HANDLE slaveToMasterHandle = getI2CSlaveToMasterHandle();
 
-	writeCharToPipe(slaveToMasterHandle, c);
+    writeCharToPipe(slaveToMasterHandle, c);
 }

@@ -30,7 +30,7 @@ bool trajectoryDriverSetAbsolutePosition(float x, float y, float deciDegree) {
     appendSeparator(outputStream);
     appendHex4(outputStream, (int) y);
     appendSeparator(outputStream);
-	appendHex4(outputStream, (int) deciDegree);
+    appendHex4(outputStream, (int) deciDegree);
 
     bool result = transmitFromDriverRequestBuffer();
 

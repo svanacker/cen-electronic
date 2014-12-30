@@ -9,28 +9,28 @@ const char* deviceMotionGetName(void) {
 }
 
 void fillNotifyResults(char* notificationName) {
-	setNotification(notificationName, 5);
-	setArgumentUnsignedHex4(0, "x(mm)");
-	setArgumentSeparator(1);
-	setArgumentUnsignedHex4(2, "y(mm)");
-	setArgumentSeparator(3);
-	setArgumentUnsignedHex4(4, "ang(1/10)deg");
+    setNotification(notificationName, 5);
+    setArgumentUnsignedHex4(0, "x(mm)");
+    setArgumentSeparator(1);
+    setArgumentUnsignedHex4(2, "y(mm)");
+    setArgumentSeparator(3);
+    setArgumentUnsignedHex4(4, "ang(1/10)deg");
 }
 
 void fillSplineParameters(void) {
-	// X3/Y3 as absolute position
-	setArgumentUnsignedHex4(0, "x3(mm)");
-	setArgumentSeparator(1);
-	setArgumentUnsignedHex4(2, "y3(mm)");
-	setArgumentSeparator(3);
-	setArgumentUnsignedHex4(4, "finalAngDecDeg");
-	setArgumentSeparator(5);
-	setArgumentSignedHex2(6, "distP0-P1(cm)");
-	setArgumentSeparator(7);
-	setArgumentSignedHex2(8, "distP2-P3(cm)");
-	setArgumentSeparator(9);
-	setArgumentUnsignedChar1(10, "speedFactor");
-	setArgumentUnsignedChar1(11, "accFactor");
+    // X3/Y3 as absolute position
+    setArgumentUnsignedHex4(0, "x3(mm)");
+    setArgumentSeparator(1);
+    setArgumentUnsignedHex4(2, "y3(mm)");
+    setArgumentSeparator(3);
+    setArgumentUnsignedHex4(4, "finalAngDecDeg");
+    setArgumentSeparator(5);
+    setArgumentSignedHex2(6, "distP0-P1(cm)");
+    setArgumentSeparator(7);
+    setArgumentSignedHex2(8, "distP2-P3(cm)");
+    setArgumentSeparator(9);
+    setArgumentUnsignedChar1(10, "speedFactor");
+    setArgumentUnsignedChar1(11, "accFactor");
 }
 
 int deviceMotionGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
@@ -155,33 +155,33 @@ int deviceMotionGetInterface(char commandHeader, DeviceInterfaceMode mode, bool 
             setArgumentUnsignedHex2(2, "s");
         }
         return commandLengthValueForMode(mode, 6, 0);
-	}
-	// NOTIFICATION
-	if (DEVICE_MODE_NOTIFY == mode) {
-		if (commandHeader == NOTIFY_MOTION_STATUS_REACHED) {
-			if (fillDeviceArgumentList) {
-				fillNotifyResults("notifyReached");
-			}
-			return 14;
-		}
-		else if (commandHeader == NOTIFY_MOTION_STATUS_FAILED) {
-			if (fillDeviceArgumentList) {
-				fillNotifyResults("notifyFailed");
-			}
-			return 14;
-		}
-		else if (commandHeader == NOTIFY_MOTION_STATUS_OBSTACLE) {
-			if (fillDeviceArgumentList) {
-				fillNotifyResults("notifyObstacle");
-			}
-			return 14;
-		}
-		else if (commandHeader == NOTIFY_MOTION_STATUS_MOVING) {
-			if (fillDeviceArgumentList) {
-				fillNotifyResults("notifyMoving");
-			}
-			return 14;
-		}
+    }
+    // NOTIFICATION
+    if (DEVICE_MODE_NOTIFY == mode) {
+        if (commandHeader == NOTIFY_MOTION_STATUS_REACHED) {
+            if (fillDeviceArgumentList) {
+                fillNotifyResults("notifyReached");
+            }
+            return 14;
+        }
+        else if (commandHeader == NOTIFY_MOTION_STATUS_FAILED) {
+            if (fillDeviceArgumentList) {
+                fillNotifyResults("notifyFailed");
+            }
+            return 14;
+        }
+        else if (commandHeader == NOTIFY_MOTION_STATUS_OBSTACLE) {
+            if (fillDeviceArgumentList) {
+                fillNotifyResults("notifyObstacle");
+            }
+            return 14;
+        }
+        else if (commandHeader == NOTIFY_MOTION_STATUS_MOVING) {
+            if (fillDeviceArgumentList) {
+                fillNotifyResults("notifyMoving");
+            }
+            return 14;
+        }
     }
     return DEVICE_HEADER_NOT_HANDLED;
 }

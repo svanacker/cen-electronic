@@ -13,8 +13,8 @@ void printTimer(OutputStream* outputStream, Timer* timer) {
 
     appendStringAndDec(outputStream, ",enabled=", timer->enabled);
     appendStringAndDec(outputStream, ",working=", timer->working);
-	appendString(outputStream, ",name=");
-	appendString(outputStream, timer->name);
+    appendString(outputStream, ",name=");
+    appendString(outputStream, timer->name);
 }
 
 void printTimerList(OutputStream* outputStream, TimerList* timerList) {

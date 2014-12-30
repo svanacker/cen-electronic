@@ -191,7 +191,7 @@ void motionGoLocation(Location* location,
     #endif
 
     angle = changeAngleForColor(angle);
-	motionDriverBSplineAbsolute((float)location->x, (float) location->y,
+    motionDriverBSplineAbsolute((float)location->x, (float) location->y,
                                 (float) angle,
                                 (float)controlPointDistance1, (float) controlPointDistance2,
                                 accelerationFactor, speedFactor);
@@ -234,7 +234,7 @@ void rotateAbsolute(int angle) {
     if (diff > 0) {
         motionDriverLeft((float) diff);
     } else {
-		motionDriverRight((float)-diff);
+        motionDriverRight((float)-diff);
     }
 
     // Simulate as if the robot goes to the position with a small error
@@ -271,7 +271,7 @@ bool motionRotateToFollowPath(PathDataFunction* pathDataFunction, bool reversed)
     if (diff > 0) {
         motionDriverLeft((float) diff);
     } else {
-		motionDriverRight((float)-diff);
+        motionDriverRight((float)-diff);
     }
 
     // Simulate as if the robot goes to the position with a small error
@@ -316,8 +316,8 @@ void motionFollowPath(PathDataFunction* pathDataFunction, bool reversed) {
     #endif
 
     // cast to unsigned, negative signed char send 00
-	motionDriverBSplineAbsolute((float) location->x, (float) location->y, (float) angle, (float) cp1, (float) cp2,
-		(int) pathData->accelerationFactor, (int) pathData->speedFactor);
+    motionDriverBSplineAbsolute((float) location->x, (float) location->y, (float) angle, (float) cp1, (float) cp2,
+        (int) pathData->accelerationFactor, (int) pathData->speedFactor);
 
     // Simulate as if the robot goes to the position with a small error
     #ifdef SIMULATE_ROBOT

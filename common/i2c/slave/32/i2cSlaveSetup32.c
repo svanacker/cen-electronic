@@ -13,9 +13,9 @@
 
 #include "../i2cSlaveSetup.h"
 
-#define I2C_FREQUENCY	   100000L
+#define I2C_FREQUENCY       100000L
 
-#define BRG_VAL 	((FOSC / 2 / I2C_FREQUENCY)-2)
+#define BRG_VAL     ((FOSC / 2 / I2C_FREQUENCY)-2)
 
 static bool initialized = false;
 static unsigned char slaveWriteAddress;
@@ -35,15 +35,15 @@ void i2cSlaveInitialize(unsigned char writeAddress) {
         writeError(I2C_SLAVE_ALREADY_INITIALIZED);
         return;
     }
-	slaveWriteAddress = writeAddress;
-	initialized = true;
-	
-	appendString(getOutputStreamLogger(DEBUG), "I2C Slave Write Address=");
+    slaveWriteAddress = writeAddress;
+    initialized = true;
+    
+    appendString(getOutputStreamLogger(DEBUG), "I2C Slave Write Address=");
     appendHex2(getOutputStreamLogger(DEBUG), writeAddress);
     appendCRLF(getOutputStreamLogger(DEBUG));
-	
+    
     // Enable the I2C module with clock stretching enabled
-	OpenI2C1(I2C_ON | I2C_7BIT_ADD | I2C_STR_EN, BRG_VAL);
+    OpenI2C1(I2C_ON | I2C_7BIT_ADD | I2C_STR_EN, BRG_VAL);
 
     // 7-bit I2C slave address must be initialised here.
     // we shift because i2c address is shift to the right

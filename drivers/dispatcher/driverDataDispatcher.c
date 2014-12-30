@@ -46,9 +46,9 @@ void transmitDriverData(TransmitMode transmitMode,
         writeError(NO_DISPATCHER_FOUND);
         OutputStream* errorOutputStream = getErrorOutputStreamLogger();
         appendStringAndDec(errorOutputStream, ",transmitMode=", transmitMode);
-		append(errorOutputStream, '(');
-		appendString(errorOutputStream, getTransmitModeAsString(transmitMode));
-		append(errorOutputStream, ')');
+        append(errorOutputStream, '(');
+        appendString(errorOutputStream, getTransmitModeAsString(transmitMode));
+        append(errorOutputStream, ')');
         appendStringAndDec(errorOutputStream, ",addr=", address);
     }
 }
@@ -75,7 +75,7 @@ bool handleNotificationFromDispatcher(DriverDataDispatcher* dispatcher) {
         }
 
         char deviceHeader = bufferGetCharAtIndex(inputBuffer, DEVICE_HEADER_INDEX);
-		char notifyHeader = bufferGetCharAtIndex(inputBuffer, NOTIFY_HEADER_INDEX);
+        char notifyHeader = bufferGetCharAtIndex(inputBuffer, NOTIFY_HEADER_INDEX);
 
         // find the device corresponding to this header
         const Device* device = deviceDataDispatcherFindDevice(deviceHeader, notifyHeader, bufferSize, DEVICE_MODE_NOTIFY);
@@ -83,11 +83,11 @@ bool handleNotificationFromDispatcher(DriverDataDispatcher* dispatcher) {
             return false;
         }
 
-		// Remove deviceHeader & notifyHeader
-		bufferReadChar(inputBuffer);
-		bufferReadChar(inputBuffer);
+        // Remove deviceHeader & notifyHeader
+        bufferReadChar(inputBuffer);
+        bufferReadChar(inputBuffer);
 
-		deviceHandleNotificationFunction* notificationFunction = device->deviceHandleNotification;
+        deviceHandleNotificationFunction* notificationFunction = device->deviceHandleNotification;
 
         if (notificationFunction != NULL) {
             // do the callback

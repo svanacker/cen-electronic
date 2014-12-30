@@ -30,7 +30,7 @@ int deviceTest2GetInterface(char commandHeader, int mode, bool fillDeviceArgumen
 }
 
 static DeviceInterface deviceInterface = {
-	.deviceHeader = TEST2_DEVICE_HEADER,
+    .deviceHeader = TEST2_DEVICE_HEADER,
     .deviceGetName = &deviceTest2GetName,
     .deviceGetInterface = &deviceTest2GetInterface
 };

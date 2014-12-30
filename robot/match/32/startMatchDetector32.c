@@ -5,9 +5,9 @@
 #include <plib.h>
 
 bool isMatchStarted32(StartMatchDetector* startMatchDetector) {
-	return PORTGbits.RG3 != 0;
+    return PORTGbits.RG3 != 0;
 }
 
 void initStartMatchDetector32(StartMatchDetector* startMatchDetector) {
-	initStartMatchDetector(startMatchDetector, isMatchStarted32);
+    initStartMatchDetector(startMatchDetector, isMatchStarted32);
 }

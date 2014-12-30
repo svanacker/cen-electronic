@@ -5,5 +5,5 @@
 #include <stdlib.h>
 
 void initRandomGenerator() {
-	srand(TMR1);
+    srand(TMR1);
 }

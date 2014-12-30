@@ -13,9 +13,9 @@
 #pragma config FSOSCEN=OFF
 
 // calcul de la fréquence du bus
-#define	GetSystemClock() 			(80000000ul)
-#define	GetPeripheralClock()		(GetSystemClock()/(1 << OSCCONbits.PBDIV))
-#define	GetInstructionClock()		(GetSystemClock())
+#define    GetSystemClock()             (80000000ul)
+#define    GetPeripheralClock()        (GetSystemClock()/(1 << OSCCONbits.PBDIV))
+#define    GetInstructionClock()        (GetSystemClock())
 
 // Définition de la vitesse du port serie
 #define BAUDERATE 115200
@@ -80,21 +80,21 @@ void delaymSec(unsigned int mSecond) {
 }
 
 void w_com (char com){
-	PORTClearBits(IOPORT_F,RS|RW); 
-	PORTSetBits(IOPORT_F,E); 
-	PORTE = com;
-	delay100us(10);
-	PORTClearBits(IOPORT_F,E); 
-	PORTSetBits(IOPORT_F,E);
+    PORTClearBits(IOPORT_F,RS|RW); 
+    PORTSetBits(IOPORT_F,E); 
+    PORTE = com;
+    delay100us(10);
+    PORTClearBits(IOPORT_F,E); 
+    PORTSetBits(IOPORT_F,E);
 }
 
 void w_data (char data){
-	PORTClearBits(IOPORT_F,RW); 
-	PORTSetBits(IOPORT_F,RS); 
-	PORTE = data;
-	delay100us(10);
-	PORTClearBits(IOPORT_F,E); 
-	PORTSetBits(IOPORT_F,E);
+    PORTClearBits(IOPORT_F,RW); 
+    PORTSetBits(IOPORT_F,RS); 
+    PORTE = data;
+    delay100us(10);
+    PORTClearBits(IOPORT_F,E); 
+    PORTSetBits(IOPORT_F,E);
 }
 
 
@@ -110,33 +110,33 @@ void w_text(const char *buffer)
 
 
 int main(void)
-{ 	
-	PORTSetPinsDigitalOut(IOPORT_F,E|RS|RW);
-	PORTSetPinsDigitalOut(IOPORT_E,D0|D1|D2|D3|D4|D5|D6|D7);
+{     
+    PORTSetPinsDigitalOut(IOPORT_F,E|RS|RW);
+    PORTSetPinsDigitalOut(IOPORT_E,D0|D1|D2|D3|D4|D5|D6|D7);
 
 
-	PORTClearBits(IOPORT_F, E|RS|RW);
+    PORTClearBits(IOPORT_F, E|RS|RW);
 
 
 
-	delaymSec(1000);
+    delaymSec(1000);
 
-	w_com(0b00111000);
-	delaymSec(100);
-	w_com(0b00111000);
-	delaymSec(100);
-	w_com(0b00111000);
-	delaymSec(100);
+    w_com(0b00111000);
+    delaymSec(100);
+    w_com(0b00111000);
+    delaymSec(100);
+    w_com(0b00111000);
+    delaymSec(100);
 
-	w_com(0b00001110);
-	delaymSec(100);
-	w_com(0b00000110);
-	delaymSec(100);
+    w_com(0b00001110);
+    delaymSec(100);
+    w_com(0b00000110);
+    delaymSec(100);
 
 
-	w_com(0b00000110);
-	w_text(myHelloStr1);
-	delaymSec(5000);
+    w_com(0b00000110);
+    w_text(myHelloStr1);
+    delaymSec(5000);
 
-	return (0);
+    return (0);
 }

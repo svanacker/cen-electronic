@@ -43,7 +43,7 @@ void initI2CDebugBuffers(Buffer* aDebugI2cInputBuffer,
                          unsigned int debugI2cInputBufferLength,
                          Buffer* aDebugI2cOutputBuffer,
                          char (*debugI2cOutputBufferArray)[],
-						 unsigned int debugI2cOutputBufferLength
+                         unsigned int debugI2cOutputBufferLength
 );
 
 void appendI2cDebugInputChar(unsigned char debugValue);

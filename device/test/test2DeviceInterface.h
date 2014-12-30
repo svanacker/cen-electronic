@@ -8,7 +8,7 @@
 * Command header for test.
 * The test is an addition between 2 values.
 */
-#define COMMAND_TEST2 				   'w'
+#define COMMAND_TEST2                    'w'
 
 /** 
  * Command to do an intensive test for Test Driver.

@@ -128,12 +128,12 @@ void deviceStrategyHandleRawData(char commandHeader, InputStream* inputStream, O
         appendStringAndDec(debugOutputStream, ", angle=", context->robotAngle);
         println(debugOutputStream);
     
-		/*
+        /*
         // After Robot position update, if the status corresponds to collision, handle collision
         if (status == NOTIFY_MOTION_ARG_OBSTACLE) {
             handleCollision();
         }
-		*/
+        */
     }
 }
 

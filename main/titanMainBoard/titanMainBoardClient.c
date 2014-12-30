@@ -175,12 +175,12 @@
 #include "../../drivers/sonar/srf02.h"
 
 #ifdef PROG_32
-	#define SERIAL_PORT_DEBUG          SERIAL_PORT_2
-	#define SERIAL_PORT_PC             SERIAL_PORT_6
-	#define SERIAL_PORT_LCD            SERIAL_PORT_5
+    #define SERIAL_PORT_DEBUG          SERIAL_PORT_2
+    #define SERIAL_PORT_PC             SERIAL_PORT_6
+    #define SERIAL_PORT_LCD            SERIAL_PORT_5
 #else
-	#define SERIAL_PORT_DEBUG         SERIAL_PORT_1
-	#define SERIAL_PORT_PC             SERIAL_PORT_2
+    #define SERIAL_PORT_DEBUG         SERIAL_PORT_1
+    #define SERIAL_PORT_PC             SERIAL_PORT_2
 #endif
 
 // serial link DEBUG 

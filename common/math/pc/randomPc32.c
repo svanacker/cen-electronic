@@ -4,7 +4,7 @@
 #include <Windows.h>
 
 void initRandomGenerator() {
-	LARGE_INTEGER _time;
-	QueryPerformanceCounter(&_time);
-	srand((int)_time.LowPart);
+    LARGE_INTEGER _time;
+    QueryPerformanceCounter(&_time);
+    srand((int)_time.LowPart);
 }

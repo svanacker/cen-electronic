@@ -56,7 +56,7 @@ void pwmDualHBridgeMotor(signed int hBridgeSpeed1, signed int hBridgeSpeed2) {
             pwmMotor3(hBridgeSpeed2);
         }
     }
-	// TODO : Improve it
-	motorSpeed1 = hBridgeSpeed1;
-	motorSpeed2 = hBridgeSpeed2;
+    // TODO : Improve it
+    motorSpeed1 = hBridgeSpeed1;
+    motorSpeed2 = hBridgeSpeed2;
 }

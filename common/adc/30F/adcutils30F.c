@@ -49,8 +49,8 @@ int getANX (char channel) {
     ADCON1bits.SAMP =  0; 
     // wait end of conversion
     while(!ADCON1bits.DONE){
-	
-	} 
+    
+    } 
           
     unsigned int result;
     result = ADCBUF0;
@@ -58,7 +58,7 @@ int getANX (char channel) {
     //stop ADC
     ADCON1bits.ADON = 0;    
     
-	return result;
+    return result;
 }
 
 

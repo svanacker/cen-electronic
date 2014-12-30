@@ -6,5 +6,5 @@
  * @private
  */
 void _initTimers() {
-	// TOOD : Implementation in C for PC !
+    // TOOD : Implementation in C for PC !
 }

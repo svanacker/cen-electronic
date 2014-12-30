@@ -16,7 +16,7 @@ void initEeprom(Eeprom* eeprom_,
     if (eeprom_ == NULL) {
         writeError(EEPROM_NULL);
         return;
-    }			
+    }            
     eeprom_->maxIndex = maxIndex;
     eeprom_->eepromWriteInt = eepromWriteInt;
     eeprom_->eepromReadInt = eepromReadInt;

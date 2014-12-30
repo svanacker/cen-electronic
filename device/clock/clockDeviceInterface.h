@@ -1,5 +1,5 @@
 #ifndef CLOCK_DEVICE_INTERFACE_H
-#define	CLOCK_DEVICE_INTERFACE_H
+#define    CLOCK_DEVICE_INTERFACE_H
 
 #include "../../device/deviceInterface.h"
 #include "../../device/deviceConstants.h"

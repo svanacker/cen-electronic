@@ -28,7 +28,7 @@ int devicePliers2011GetInterface(char commandHeader, DeviceInterfaceMode mode, b
 }
 
 static DeviceInterface deviceInterface = {
-	.deviceHeader = PLIERS_DEVICE_2011_HEADER,
+    .deviceHeader = PLIERS_DEVICE_2011_HEADER,
     .deviceGetName = &devicePliers2011GetName,
     .deviceGetInterface = &devicePliers2011GetInterface
 };

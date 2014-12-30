@@ -20,7 +20,7 @@ void i2cSlaveInitialize(unsigned char writeAddress) {
         writeError(I2C_SLAVE_ALREADY_INITIALIZED);
         return;
     }
-	initialized = true;
+    initialized = true;
 
     I2CCONbits.STREN = 1;
     // I2CCONbits.GCEN = 1;

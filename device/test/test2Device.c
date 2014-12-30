@@ -32,11 +32,11 @@ void deviceTest2HandleRawData(char commandHeader, InputStream* inputStream, Outp
         int arg2 = readHex2(inputStream);
         int result = arg1 + arg2;
 
-		ackCommand(outputStream, TEST2_DEVICE_HEADER, COMMAND_TEST2);
+        ackCommand(outputStream, TEST2_DEVICE_HEADER, COMMAND_TEST2);
         // data
         appendHex2(outputStream, result);
     }
-	else if (commandHeader == COMMAND_INTENSIVE_TEST_DRIVER) {
+    else if (commandHeader == COMMAND_INTENSIVE_TEST_DRIVER) {
         ackCommand(outputStream, TEST2_DEVICE_HEADER, COMMAND_INTENSIVE_TEST_DRIVER);
         unsigned int count = readHex4(inputStream);
         testDriverIntensive(count);

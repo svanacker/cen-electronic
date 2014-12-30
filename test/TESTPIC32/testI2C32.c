@@ -13,14 +13,14 @@
 #pragma config FSOSCEN=OFF
 
 // calcul de la fréquence du bus
-#define	GetSystemClock() 			(80000000ul)
-#define	GetPeripheralClock()		(GetSystemClock()/(1 << OSCCONbits.PBDIV))
-#define	GetInstructionClock()		(GetSystemClock())
-#define I2C_CLOCK_FREQ 				(100000)
+#define    GetSystemClock()             (80000000ul)
+#define    GetPeripheralClock()        (GetSystemClock()/(1 << OSCCONbits.PBDIV))
+#define    GetInstructionClock()        (GetSystemClock())
+#define I2C_CLOCK_FREQ                 (100000)
 
 //Définition I2C
 
-#define BRG_VAL 0xc6	//100khz
+#define BRG_VAL 0xc6    //100khz
 
 
 void delaymSec(unsigned int mSecond) {
@@ -38,7 +38,7 @@ void delaymSec(unsigned int mSecond) {
 
 int main(void){
 
-	OpenI2C1( I2C_ON, BRG_VAL );    //Enable I2C channel
+    OpenI2C1( I2C_ON, BRG_VAL );    //Enable I2C channel
 
 
 while (1)

@@ -120,32 +120,32 @@ bool printMethodOrNotificationMetaData(OutputStream* outputStream, DeviceInterfa
         }
 
         // results
-		if (!notification) {
-			appendString(outputStream, ARGUMENTS_AND_RESULTS_SEPARATOR);
-			append(outputStream,  ARGUMENTS_START_CHAR);
-			int resultCount = deviceMethodMetaData->resultsSize;
-			int realResultLength = 0;
-			int resultIndex;
-			for (resultIndex = 0; resultIndex < resultCount; resultIndex++) {
-				DeviceArgument resultArgument = deviceMethodMetaData->results[resultIndex];
-				realResultLength += printArgument(outputStream, &resultArgument, resultIndex);
-			}
+        if (!notification) {
+            appendString(outputStream, ARGUMENTS_AND_RESULTS_SEPARATOR);
+            append(outputStream,  ARGUMENTS_START_CHAR);
+            int resultCount = deviceMethodMetaData->resultsSize;
+            int realResultLength = 0;
+            int resultIndex;
+            for (resultIndex = 0; resultIndex < resultCount; resultIndex++) {
+                DeviceArgument resultArgument = deviceMethodMetaData->results[resultIndex];
+                realResultLength += printArgument(outputStream, &resultArgument, resultIndex);
+            }
 
-			if (resultLength != realResultLength) {
-				appendString(outputStream, "Result Parameters Definition ERROR !!!!!!");
-				appendCRLF(outputStream);
-				appendStringAndDec(outputStream, "resultCount=", resultCount);
-				appendCRLF(outputStream);
-				appendStringAndDec(outputStream, "resultLength=", resultLength);
-				appendCRLF(outputStream);
-				appendStringAndDec(outputStream, "realResultLength=", realResultLength);
-				appendCRLF(outputStream);
-			}
+            if (resultLength != realResultLength) {
+                appendString(outputStream, "Result Parameters Definition ERROR !!!!!!");
+                appendCRLF(outputStream);
+                appendStringAndDec(outputStream, "resultCount=", resultCount);
+                appendCRLF(outputStream);
+                appendStringAndDec(outputStream, "resultLength=", resultLength);
+                appendCRLF(outputStream);
+                appendStringAndDec(outputStream, "realResultLength=", realResultLength);
+                appendCRLF(outputStream);
+            }
 
-			if (resultCount == 0) {
-				appendString(outputStream, "void");
-			}
-		}
+            if (resultCount == 0) {
+                appendString(outputStream, "void");
+            }
+        }
         append(outputStream,  ARGUMENTS_STOP_CHAR);
 
         println(outputStream);
@@ -161,7 +161,7 @@ bool printMethodOrNotificationMetaData(OutputStream* outputStream, DeviceInterfa
  * @private
  */
 void printDeviceUsageLine(OutputStream* outputStream, char header, Device* device) {
-	DeviceInterface* deviceInterface = device->deviceInterface;
+    DeviceInterface* deviceInterface = device->deviceInterface;
 
     int argumentLength = deviceInterface->deviceGetInterface(header, DEVICE_MODE_INPUT, true);
     int resultLength = deviceInterface->deviceGetInterface(header, DEVICE_MODE_OUTPUT, true);
@@ -195,10 +195,10 @@ void printDeviceListUsage(OutputStream* outputStream) {
  * @private
  */
 void printDeviceNotificationLine(OutputStream* outputStream, char header, Device* device) {
-	DeviceInterface* deviceInterface = device->deviceInterface;
+    DeviceInterface* deviceInterface = device->deviceInterface;
 
     int argumentLength = deviceInterface->deviceGetInterface(header, DEVICE_MODE_NOTIFY, true);
-	printMethodOrNotificationMetaData(outputStream, deviceInterface, header, argumentLength, 0, true);
+    printMethodOrNotificationMetaData(outputStream, deviceInterface, header, argumentLength, 0, true);
 }
 
 /**

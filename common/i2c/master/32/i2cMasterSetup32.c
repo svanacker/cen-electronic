@@ -18,23 +18,23 @@ void i2cMasterInitialize(void) {
         appendString(getOutputStreamLogger(DEBUG), "I2C Master already initialized\n");
         return;
     }
-	#define I2C_BRG     0xC6    // 100khz for PIC32
-	// Configure I2C for 7 bit address mode
-	#define I2C_CON     I2C_ON
+    #define I2C_BRG     0xC6    // 100khz for PIC32
+    // Configure I2C for 7 bit address mode
+    #define I2C_CON     I2C_ON
 /*
-						& I2C_7BIT_ADD
-        				& I2C_SLW_DIS
-        				& I2C_SM_DIS
-//        				& I2C_GCALL_DIS
-        				& I2C_STR_DIS
-        				& I2C_NACK
-        				& I2C_ACK_EN
-        				& I2C_RCV_EN
-        				& I2C_STOP_DIS
-        				& I2C_RESTART_DIS
-        				& I2C_START_DIS);
+                        & I2C_7BIT_ADD
+                        & I2C_SLW_DIS
+                        & I2C_SM_DIS
+//                        & I2C_GCALL_DIS
+                        & I2C_STR_DIS
+                        & I2C_NACK
+                        & I2C_ACK_EN
+                        & I2C_RCV_EN
+                        & I2C_STOP_DIS
+                        & I2C_RESTART_DIS
+                        & I2C_START_DIS);
 */
-	OpenI2C1(I2C_CON, I2C_BRG);
+    OpenI2C1(I2C_CON, I2C_BRG);
 
     WaitI2C();
 

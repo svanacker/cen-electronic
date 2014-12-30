@@ -42,7 +42,7 @@ void loopUntilStart(handleFunctionType* handleFunction) {
         return;
     }
     while (startMatchDetector->isMatchStartedFunction(startMatchDetector)) {
-		handleFunction();
+        handleFunction();
     }
 }
 

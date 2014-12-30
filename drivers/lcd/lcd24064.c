@@ -6,11 +6,11 @@
 #include "../../common/delay/cenDelay.h"
 
 
-#define bus_LCD	PORTE
-#define wr_LCD	PORTFbits.RF0
-#define rd_LCD	PORTFbits.RF1
-#define ce_LCD	PORTFbits.RF3
-#define cd_LCD 	PORTDbits.RD11
+#define bus_LCD    PORTE
+#define wr_LCD    PORTFbits.RF0
+#define rd_LCD    PORTFbits.RF1
+#define ce_LCD    PORTFbits.RF3
+#define cd_LCD     PORTDbits.RD11
 
 
 #define ad_base_graph 0x0200
@@ -22,15 +22,15 @@
 #define lcd_nblign 8
 #define lcd_nbcol  40
 
-#define txhome	0x40
-#define txarea	0x41
-#define grhome	0x42
-#define grarea	0x43
-#define offset	0x22
-#define adpset	0x24
-#define awron	0xb0
-#define areon	0xb1
-#define awroff	0xb2
+#define txhome    0x40
+#define txarea    0x41
+#define grhome    0x42
+#define grarea    0x43
+#define offset    0x22
+#define adpset    0x24
+#define awron    0xb0
+#define areon    0xb1
+#define awroff    0xb2
 
 // data afficheur graphique
 

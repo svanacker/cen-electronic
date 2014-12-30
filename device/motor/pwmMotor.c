@@ -9,9 +9,9 @@ void stopMotors(void) {
 }
 
 signed int getLeftSpeed() {
-	return getDualHBridgeSpeed1();
+    return getDualHBridgeSpeed1();
 }
 
 signed int getRightSpeed() {
-	return getDualHBridgeSpeed2();
+    return getDualHBridgeSpeed2();
 }

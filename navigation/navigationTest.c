@@ -47,7 +47,7 @@ int addNavigationLocations() {
     addNavigationLocation(&locationI, "I", 0, 0);
     addNavigationLocation(&locationJ, "J", 0, 0);
 
-	addStrategyPaths();
+    addStrategyPaths();
 
     printPathList(getOutputStreamLogger(INFO), "Paths definition", getNavigationPathList());
 

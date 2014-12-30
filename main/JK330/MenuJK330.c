@@ -5,10 +5,10 @@
 #include "MenuJK330.h"
 
 /*************************************************************
- * menu_P						     *								*
+ * menu_P                             *                                *
  * Affiche le menu Principal                                 *
  * @param  :                                                 *
- * @return : none					     *
+ * @return : none                         *
  ************************************************************/
 void menu_P(OutputStream* outputStream){
     ClrGraphLCD_24064();

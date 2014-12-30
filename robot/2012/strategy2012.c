@@ -168,22 +168,22 @@ void initLocations2012() {
     addNavigationLocation(&bottle2Location, BOTTLE_2, BOTTLE_2_X, BOTTLE_2_Y);
     //addNavigationLocation(&cdTakeLocation, CD_TAKE, CD_TAKE_X, CD_TAKE_Y);
     addNavigationLocation(&dropZone1Location, DROP_ZONE_1, (int)DROP_ZONE_1_X, (int) DROP_ZONE_1_Y);
-	addNavigationLocation(&frontOfMapLocation, FRONT_OF_MAP_LOCATION, (int) FRONT_OF_MAP_LOCATION_X, (int)FRONT_OF_MAP_LOCATION_Y);
+    addNavigationLocation(&frontOfMapLocation, FRONT_OF_MAP_LOCATION, (int) FRONT_OF_MAP_LOCATION_X, (int)FRONT_OF_MAP_LOCATION_Y);
     // -> Bullion 1
     addNavigationLocation(&bullionRight1Location, BULLION_RIGHT_1, BULLION_RIGHT_1_X, BULLION_RIGHT_1_Y); 
     addNavigationLocation(&bullionLeft1Location, BULLION_LEFT_1, BULLION_LEFT_1_X, BULLION_LEFT_1_Y); 
     // -> Bullion 2 / Opponent CD
-	addNavigationLocation(&bullionMiddle2Location, BULLION_MIDDLE_2, (int)BULLION_MIDDLE_2_X, (int) BULLION_MIDDLE_2_Y);
+    addNavigationLocation(&bullionMiddle2Location, BULLION_MIDDLE_2, (int)BULLION_MIDDLE_2_X, (int) BULLION_MIDDLE_2_Y);
 
     addNavigationLocation(&obstacleL1Location, OBSTACLE_L1, OBSTACLE_L_X, OBSTACLE_1_Y);
     addNavigationLocation(&obstacleL2Location, OBSTACLE_L2, OBSTACLE_L_X, OBSTACLE_2_Y);
     addNavigationLocation(&obstacleL3Location, OBSTACLE_L3, OBSTACLE_L_X, (int) OBSTACLE_3_Y);
-	addNavigationLocation(&obstacleL4Location, OBSTACLE_L4, (int) OBSTACLE_L_X, (int)OBSTACLE_4_Y);
-	addNavigationLocation(&obstacleM1Location, OBSTACLE_M1, (int) OBSTACLE_M_X, (int)OBSTACLE_1_Y);
-	addNavigationLocation(&obstacleM2Location, OBSTACLE_M2, (int) OBSTACLE_M_X, (int)OBSTACLE_4_Y);
-	addNavigationLocation(&obstacleR1Location, OBSTACLE_R1, (int) OBSTACLE_R_X, (int) OBSTACLE_1_Y);
-	addNavigationLocation(&obstacleR2Location, OBSTACLE_R2, (int) OBSTACLE_R_X, (int) OBSTACLE_2_Y);
-	addNavigationLocation(&obstacleR3Location, OBSTACLE_R3, (int) OBSTACLE_R_X, (int) OBSTACLE_3_Y);
+    addNavigationLocation(&obstacleL4Location, OBSTACLE_L4, (int) OBSTACLE_L_X, (int)OBSTACLE_4_Y);
+    addNavigationLocation(&obstacleM1Location, OBSTACLE_M1, (int) OBSTACLE_M_X, (int)OBSTACLE_1_Y);
+    addNavigationLocation(&obstacleM2Location, OBSTACLE_M2, (int) OBSTACLE_M_X, (int)OBSTACLE_4_Y);
+    addNavigationLocation(&obstacleR1Location, OBSTACLE_R1, (int) OBSTACLE_R_X, (int) OBSTACLE_1_Y);
+    addNavigationLocation(&obstacleR2Location, OBSTACLE_R2, (int) OBSTACLE_R_X, (int) OBSTACLE_2_Y);
+    addNavigationLocation(&obstacleR3Location, OBSTACLE_R3, (int) OBSTACLE_R_X, (int) OBSTACLE_3_Y);
     addNavigationLocation(&obstacleR4Location, OBSTACLE_R4, (int) OBSTACLE_R_X, (int) OBSTACLE_4_Y);
 }
 

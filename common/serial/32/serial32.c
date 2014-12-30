@@ -1,4 +1,4 @@
-	#include <plib.h>
+    #include <plib.h>
 
 #include "../../../common/commons.h"
 
@@ -64,13 +64,13 @@ void serialPutc(unsigned char serialPortIndex, char c) {
     UART_MODULE uart = getUartModule(serialPortIndex);
 
     while (!UARTTransmitterIsReady(uart)) {
-	
-	}
+    
+    }
     
     UARTSendDataByte(uart, c);
 
     while (!UARTTransmissionHasCompleted(uart)) {
-	
-	}
+    
+    }
 }
 

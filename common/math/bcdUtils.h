@@ -1,5 +1,5 @@
 #ifndef BCD_UTILS_H
-#define	BCD_UTILS_H
+#define    BCD_UTILS_H
 
 /**
  * Transform the BCD value.
@@ -9,5 +9,5 @@
  */
 unsigned char bcd2CharToDec(unsigned char bcd);
 
-#endif	
+#endif    
 

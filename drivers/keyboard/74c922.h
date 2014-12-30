@@ -1,5 +1,5 @@
 #ifndef _74C922_H
-#define	_74C922_H
+#define    _74C922_H
 
 #define KDF PORTGbits.RG2
 #define KDE PORTGbits.RG3
@@ -24,4 +24,4 @@ void init74c922 (void);
 char readKey (void);
 
 
-#endif	/* 74C922_H */
+#endif    /* 74C922_H */

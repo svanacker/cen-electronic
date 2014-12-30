@@ -6,7 +6,7 @@
  */
 
 #ifndef MENU_H
-#define	MENU_H
+#define    MENU_H
 
 #define menu01 "Setup"
 #define menu02 "Config"
@@ -15,5 +15,5 @@
 void menu_P(OutputStream* outputStream);
 
 
-#endif	/* MENU_H */
+#endif    /* MENU_H */
 

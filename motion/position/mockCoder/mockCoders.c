@@ -6,7 +6,7 @@ void updateCoders(void) {
 
 signed long getCoderValue(int index) {
     // TODO
-	return 0;
+    return 0;
 }
 
 void clearCoders() {

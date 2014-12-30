@@ -1,5 +1,5 @@
 #ifndef PCF8563_H
-#define	PCF8563_H
+#define    PCF8563_H
 
 #include "../../common/i2c/i2cConstants.h"
 #include "../../common/io/outputStream.h"

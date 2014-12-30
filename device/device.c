@@ -16,7 +16,7 @@
 bool initDevice(const Device* device) {
     int result = true;
     DeviceDescriptor* deviceDescriptor = device->descriptor;
-	DeviceInterface* deviceInterface = device->deviceInterface;
+    DeviceInterface* deviceInterface = device->deviceInterface;
 
     const char* deviceName = deviceInterface->deviceGetName();
     OutputStream* logStream = getDebugOutputStreamLogger();

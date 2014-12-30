@@ -5,7 +5,7 @@
 #include "../../../common/io/buffer.h"
 #include "../../../common/io/printWriter.h"
 
-#define EEPROM_PC_MAX_INDEX		0xFFFF
+#define EEPROM_PC_MAX_INDEX        0xFFFF
 
 static signed int eepromPc[EEPROM_PC_MAX_INDEX + 1];
 

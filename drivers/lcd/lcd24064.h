@@ -8,13 +8,13 @@ void busyLCD_24064(void);
 
 /**
 * send a command write to LCD.
-* @param  : data			data to send
+* @param  : data            data to send
 */
 void commandWriteLCD_24064(int data2);
 
 /**
 * send a data to LCD.
-* @param  : data			the data to send
+* @param  : data            the data to send
 */
 void dataWriteLCD_24064(int data1);
 

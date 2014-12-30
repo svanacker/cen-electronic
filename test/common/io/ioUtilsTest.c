@@ -22,52 +22,52 @@ static char targetBufferArrayTest[TEST_BUFFER_SIZE];
 static OutputStream* targetOutputStream;
 
 void ioUtilsTestSuite(void) {
-	RUN_TEST(test_copyInputToOutputStream);
-	RUN_TEST(test_copyInputToOutputStream_long_string);
-	RUN_TEST(test_copyInputToOutputStream_long_string_limit_3);
+    RUN_TEST(test_copyInputToOutputStream);
+    RUN_TEST(test_copyInputToOutputStream_long_string);
+    RUN_TEST(test_copyInputToOutputStream_long_string_limit_3);
 }
 
 void initBufferForIoUtilsTest(void) {
-	// source
-	initBuffer(&sourceBufferTest, (char(*)[]) &sourceBufferArrayTest, TEST_BUFFER_SIZE, "ioUtilsTest", "ioUtilsTestType");
-	sourceOutputStream = getOutputStream(&sourceBufferTest);
-	sourceInputStream = getInputStream(&sourceBufferTest);
+    // source
+    initBuffer(&sourceBufferTest, (char(*)[]) &sourceBufferArrayTest, TEST_BUFFER_SIZE, "ioUtilsTest", "ioUtilsTestType");
+    sourceOutputStream = getOutputStream(&sourceBufferTest);
+    sourceInputStream = getInputStream(&sourceBufferTest);
 
-	// target
-	initBuffer(&targetBufferTest, (char(*)[]) &targetBufferArrayTest, TEST_BUFFER_SIZE, "ioUtilsTest", "ioUtilsTestType");
-	targetOutputStream = getOutputStream(&targetBufferTest);
+    // target
+    initBuffer(&targetBufferTest, (char(*)[]) &targetBufferArrayTest, TEST_BUFFER_SIZE, "ioUtilsTest", "ioUtilsTestType");
+    targetOutputStream = getOutputStream(&targetBufferTest);
 }
 
 
 void test_copyInputToOutputStream(void) {
-	initBufferForIoUtilsTest();
+    initBufferForIoUtilsTest();
 
-	append(sourceOutputStream, 'c');
+    append(sourceOutputStream, 'c');
 
-	copyInputToOutputStream(sourceInputStream, targetOutputStream, NULL, 1);
+    copyInputToOutputStream(sourceInputStream, targetOutputStream, NULL, 1);
 
-	char targetChar = bufferReadChar(&targetBufferTest);
-	TEST_ASSERT_EQUAL('c', targetChar);
+    char targetChar = bufferReadChar(&targetBufferTest);
+    TEST_ASSERT_EQUAL('c', targetChar);
 }
 
 void test_copyInputToOutputStream_long_string(void) {
-	initBufferForIoUtilsTest();
+    initBufferForIoUtilsTest();
 
-	appendString(sourceOutputStream, "HELLO WORLD !");
+    appendString(sourceOutputStream, "HELLO WORLD !");
 
-	copyInputToOutputStream(sourceInputStream, targetOutputStream, NULL, COPY_ALL);
+    copyInputToOutputStream(sourceInputStream, targetOutputStream, NULL, COPY_ALL);
 
-	bool expected = isBufferEqualsToString(&targetBufferTest, "HELLO WORLD !");
-	TEST_ASSERT_TRUE(expected);
+    bool expected = isBufferEqualsToString(&targetBufferTest, "HELLO WORLD !");
+    TEST_ASSERT_TRUE(expected);
 }
 
 void test_copyInputToOutputStream_long_string_limit_3(void) {
-	initBufferForIoUtilsTest();
+    initBufferForIoUtilsTest();
 
-	appendString(sourceOutputStream, "HELLO WORLD !");
+    appendString(sourceOutputStream, "HELLO WORLD !");
 
-	copyInputToOutputStream(sourceInputStream, targetOutputStream, NULL, 3);
+    copyInputToOutputStream(sourceInputStream, targetOutputStream, NULL, 3);
 
-	bool expected = isBufferEqualsToString(&targetBufferTest, "HEL");
-	TEST_ASSERT_TRUE(expected);
+    bool expected = isBufferEqualsToString(&targetBufferTest, "HEL");
+    TEST_ASSERT_TRUE(expected);
 }

@@ -34,7 +34,7 @@ void deviceTimerHandleRawData(char header, InputStream* inputStream, OutputStrea
     if (header == COMMAND_TIMER_LIST) {
         printTimerList(getOutputStreamLogger(ALWAYS), getTimerList());
         ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_TIMER_LIST);
-    }	
+    }    
 }
 
 static DeviceDescriptor descriptor = {

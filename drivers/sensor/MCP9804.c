@@ -17,11 +17,11 @@ int Temperature;
 
 /********************************************************
  * setRegMCP9804                                        *
- * Envoie la valeur "MSB" et "LSB" au registre "reg"   	*
- * @param : reg : adresse du registre   		*
+ * Envoie la valeur "MSB" et "LSB" au registre "reg"       *
+ * @param : reg : adresse du registre           *
  *          MSB : Poid fort transfere dans le registre  *
  *          LSB : Poid faible transfere dans le registre*
- * @return : none 					*
+ * @return : none                     *
  ********************************************************/
 void setRegMCP9804 (UINT8 reg, UINT8 MSB , UINT8 LSB){
     
@@ -39,7 +39,7 @@ void setRegMCP9804 (UINT8 reg, UINT8 MSB , UINT8 LSB){
  * configuration                                        *
  * @param : MSB : Poid fort transfere dans le registre  *
  *          LSB : Poid faible transfere dans le registre*
- * @return : none 					*
+ * @return : none                     *
  ********************************************************/
 void setConfRegMCP9804 ( UINT8 MSB , UINT8 LSB) {
     setRegMCP9804 (CONF_REG_MCP9804, MSB , LSB);
@@ -51,7 +51,7 @@ void setConfRegMCP9804 ( UINT8 MSB , UINT8 LSB) {
  * Temperature haute                                    *
  * @param : MSB : Poid fort transfere dans le registre  *
  *          LSB : Poid faible transfere dans le registre*
- * @return : none 					*
+ * @return : none                     *
  ********************************************************/
 void setTempUpperRegMCP9804 ( UINT8 MSB , UINT8 LSB){
     setRegMCP9804 (TEMP_UPPER_REG_MCP9804, MSB , LSB);
@@ -63,7 +63,7 @@ void setTempUpperRegMCP9804 ( UINT8 MSB , UINT8 LSB){
  * Temperature basse                                    *
  * @param : MSB : Poid fort transfere dans le registre  *
  *          LSB : Poid faible transfere dans le registre*
- * @return : none 					*
+ * @return : none                     *
  ********************************************************/
 void setTempLowerRegMCP9804 ( UINT8 MSB , UINT8 LSB){
     setRegMCP9804 (TEMP_LOWER_REG_MCP9804, MSB , LSB);
@@ -75,7 +75,7 @@ void setTempLowerRegMCP9804 ( UINT8 MSB , UINT8 LSB){
  * Temperature critique                                 *
  * @param : MSB : Poid fort transfere dans le registre  *
  *          LSB : Poid faible transfere dans le registre*
- * @return : none 					*
+ * @return : none                     *
  ********************************************************/
 void setTempCriticRegMCP9804 ( UINT8 MSB , UINT8 LSB){
     setRegMCP9804 (TEMP_CRITIC_REG_MCP9804, MSB , LSB);

@@ -112,7 +112,7 @@ static char i2cMasterDebugInputBufferArray[MAIN_BOARD_PC_I2C_DEBUG_MASTER_IN_BUF
 static Buffer i2cMasterDebugInputBuffer;
 
 // Timers
-#define MAIN_BOARD_PC_TIMER_LENGTH	10
+#define MAIN_BOARD_PC_TIMER_LENGTH    10
 static Device timerListArray[MAIN_BOARD_PC_TIMER_LENGTH];
 
 // ConsoleOutputStream
@@ -136,126 +136,126 @@ static Device* testDevice;
 static StartMatchDetector startMatchDetector;
 
 void mainBoardDeviceHandleNotification(const Device* device, const char commandHeader, InputStream* inputStream) {
-	appendString(getDebugOutputStreamLogger(), "Notification ! commandHeader=");
-	append(getDebugOutputStreamLogger(), commandHeader);
-	appendCRLF(getDebugOutputStreamLogger());
-	if (commandHeader == NOTIFY_TEST) {
-		unsigned char value = readHex2(inputStream);
-		appendStringAndDec(getDebugOutputStreamLogger(), "value=", value);
-	}
+    appendString(getDebugOutputStreamLogger(), "Notification ! commandHeader=");
+    append(getDebugOutputStreamLogger(), commandHeader);
+    appendCRLF(getDebugOutputStreamLogger());
+    if (commandHeader == NOTIFY_TEST) {
+        unsigned char value = readHex2(inputStream);
+        appendStringAndDec(getDebugOutputStreamLogger(), "value=", value);
+    }
 }
 
 void mainBoardWaitForInstruction(void) {
 
-	while (handleNotificationFromDispatcherList(TRANSMIT_I2C)) {
-		// loop for all notification
-		// notification handler must avoid to directly information in notification callback
-		// and never to the call back device
-	}
+    while (handleNotificationFromDispatcherList(TRANSMIT_I2C)) {
+        // loop for all notification
+        // notification handler must avoid to directly information in notification callback
+        // and never to the call back device
+    }
 
-	// delaymSec(MAIN_BOARD_PC_DELAY_CONSOLE_ANALYZE_MILLISECONDS);
-	while (consoleInputStream.availableData(&consoleInputStream)) {
-		unsigned char c = consoleInputStream.readChar(&consoleInputStream);
-		consoleInputBuffer.outputStream.writeChar(&(consoleInputBuffer.outputStream), c);
-		if (c == 13) {
-			appendCRLF(&consoleOutputStream);
-		}
-		consoleOutputStream.writeChar(&consoleOutputStream, c);
-	}
+    // delaymSec(MAIN_BOARD_PC_DELAY_CONSOLE_ANALYZE_MILLISECONDS);
+    while (consoleInputStream.availableData(&consoleInputStream)) {
+        unsigned char c = consoleInputStream.readChar(&consoleInputStream);
+        consoleInputBuffer.outputStream.writeChar(&(consoleInputBuffer.outputStream), c);
+        if (c == 13) {
+            appendCRLF(&consoleOutputStream);
+        }
+        consoleOutputStream.writeChar(&consoleOutputStream, c);
+    }
 
-	// TODO : Introduce the same as interrupt to be able to add char not in the main execution program
-		handleStreamInstruction(
-			&consoleInputBuffer,
-			&consoleOutputBuffer,
-			&consoleOutputStream,
-			&filterRemoveCRLF,
-			NULL);
+    // TODO : Introduce the same as interrupt to be able to add char not in the main execution program
+        handleStreamInstruction(
+            &consoleInputBuffer,
+            &consoleOutputBuffer,
+            &consoleOutputStream,
+            &filterRemoveCRLF,
+            NULL);
 }
 
 void runMainBoardPC(void) {
-	setPicName(MAIN_BOARD_PC_NAME);
-	moveConsole(0, 0, HALF_SCREEN_WIDTH, CONSOLE_HEIGHT);
+    setPicName(MAIN_BOARD_PC_NAME);
+    moveConsole(0, 0, HALF_SCREEN_WIDTH, CONSOLE_HEIGHT);
 
-	// We use http://patorjk.com/software/taag/#p=testall&v=2&f=Acrobatic&t=MOTOR%20BOARD%20PC
-	// with Font : Jerusalem
-	printf(" __  __    _    ___ _   _    ____   ___    _    ____  ____     ____   ____ \r\n");
-	printf("|  \\/  |  / \\  |_ _| \\ | |  | __ ) / _ \\  / \\  |  _ \\|  _ \\   |  _ \\ / ___|\r\n");
-	printf("| |\\/| | / _ \\  | ||  \\| |  |  _ \\| | | |/ _ \\ | |_) | | | |  | |_) | |    \r\n");
-	printf("| |  | |/ ___ \\ | || |\\  |  | |_) | |_| / ___ \\|  _ <| |_| |  |  __/| |___ \r\n");
-	printf("|_|  |_/_/   \\_|___|_| \\_|  |____/ \\___/_/   \\_|_| \\_|____/   |_|    \\____|\r\n");
-	printf("\r\n");
+    // We use http://patorjk.com/software/taag/#p=testall&v=2&f=Acrobatic&t=MOTOR%20BOARD%20PC
+    // with Font : Jerusalem
+    printf(" __  __    _    ___ _   _    ____   ___    _    ____  ____     ____   ____ \r\n");
+    printf("|  \\/  |  / \\  |_ _| \\ | |  | __ ) / _ \\  / \\  |  _ \\|  _ \\   |  _ \\ / ___|\r\n");
+    printf("| |\\/| | / _ \\  | ||  \\| |  |  _ \\| | | |/ _ \\ | |_) | | | |  | |_) | |    \r\n");
+    printf("| |  | |/ ___ \\ | || |\\  |  | |_) | |_| / ___ \\|  _ <| |_| |  |  __/| |___ \r\n");
+    printf("|_|  |_/_/   \\_|___|_| \\_|  |____/ \\___/_/   \\_|_| \\_|____/   |_|    \\____|\r\n");
+    printf("\r\n");
 
 
-	initLog(DEBUG);
-	initConsoleInputStream(&consoleInputStream);
-	initConsoleOutputStream(&consoleOutputStream);
-	addConsoleLogHandler(DEBUG);
-	appendStringCRLF(getDebugOutputStreamLogger(), getPicName());
+    initLog(DEBUG);
+    initConsoleInputStream(&consoleInputStream);
+    initConsoleOutputStream(&consoleOutputStream);
+    addConsoleLogHandler(DEBUG);
+    appendStringCRLF(getDebugOutputStreamLogger(), getPicName());
 
-	initEepromPc(&eeprom);
+    initEepromPc(&eeprom);
 
-	initTimerList((Timer(*)[]) &timerListArray, MAIN_BOARD_PC_TIMER_LENGTH);
+    initTimerList((Timer(*)[]) &timerListArray, MAIN_BOARD_PC_TIMER_LENGTH);
 
-	initBuffer(&consoleInputBuffer, (char(*)[]) &consoleInputBufferArray, MAIN_BOARD_PC_CONSOLE_INPUT_BUFFER_LENGTH, "inputConsoleBuffer", "IN");
-	initBuffer(&consoleOutputBuffer, (char(*)[]) &consoleOutputBufferArray, MAIN_BOARD_PC_CONSOLE_OUTPUT_BUFFER_LENGTH, "outputConsoleBuffer", "IN");
+    initBuffer(&consoleInputBuffer, (char(*)[]) &consoleInputBufferArray, MAIN_BOARD_PC_CONSOLE_INPUT_BUFFER_LENGTH, "inputConsoleBuffer", "IN");
+    initBuffer(&consoleOutputBuffer, (char(*)[]) &consoleOutputBufferArray, MAIN_BOARD_PC_CONSOLE_OUTPUT_BUFFER_LENGTH, "outputConsoleBuffer", "IN");
 
-	// Dispatchers
-	initDriverDataDispatcherList((DriverDataDispatcher(*)[]) &driverDataDispatcherListArray, MAIN_BOARD_PC_DATA_DISPATCHER_LIST_LENGTH);
-	addLocalDriverDataDispatcher();
+    // Dispatchers
+    initDriverDataDispatcherList((DriverDataDispatcher(*)[]) &driverDataDispatcherListArray, MAIN_BOARD_PC_DATA_DISPATCHER_LIST_LENGTH);
+    addLocalDriverDataDispatcher();
 
-	addI2CDriverDataDispatcher("MOTOR_BOARD_DISPATCHER",
-	&motorBoardInputBuffer,
-	(char(*)[]) &motorBoardInputBufferArray,
-	MAIN_BOARD_PC_DATA_MOTOR_BOARD_DISPATCHER_BUFFER_LENGTH,
-	&motorBoardOutputStream,
-	&motorBoardInputStream,
-	MOTOR_BOARD_PC_I2C_ADDRESS);
+    addI2CDriverDataDispatcher("MOTOR_BOARD_DISPATCHER",
+    &motorBoardInputBuffer,
+    (char(*)[]) &motorBoardInputBufferArray,
+    MAIN_BOARD_PC_DATA_MOTOR_BOARD_DISPATCHER_BUFFER_LENGTH,
+    &motorBoardOutputStream,
+    &motorBoardInputStream,
+    MOTOR_BOARD_PC_I2C_ADDRESS);
 
-	// I2C Debug
-	initI2CDebugBuffers(&i2cMasterDebugInputBuffer,
-		(char(*)[]) &i2cMasterDebugInputBufferArray,
-		MAIN_BOARD_PC_I2C_DEBUG_MASTER_IN_BUFFER_LENGTH,
-		&i2cMasterDebugOutputBuffer,
-		(char(*)[]) &i2cMasterDebugOutputBufferArray,
-		MAIN_BOARD_PC_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH);
+    // I2C Debug
+    initI2CDebugBuffers(&i2cMasterDebugInputBuffer,
+        (char(*)[]) &i2cMasterDebugInputBufferArray,
+        MAIN_BOARD_PC_I2C_DEBUG_MASTER_IN_BUFFER_LENGTH,
+        &i2cMasterDebugOutputBuffer,
+        (char(*)[]) &i2cMasterDebugOutputBufferArray,
+        MAIN_BOARD_PC_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH);
 
-	// Init the drivers
-	initDrivers(&driverRequestBuffer, (char(*)[]) &driverRequestBufferArray, MAIN_BOARD_PC_REQUEST_DRIVER_BUFFER_LENGTH,
-		&driverResponseBuffer, (char(*)[]) &driverResponseBufferArray, MAIN_BOARD_PC_RESPONSE_DRIVER_BUFFER_LENGTH);
+    // Init the drivers
+    initDrivers(&driverRequestBuffer, (char(*)[]) &driverRequestBufferArray, MAIN_BOARD_PC_REQUEST_DRIVER_BUFFER_LENGTH,
+        &driverResponseBuffer, (char(*)[]) &driverResponseBufferArray, MAIN_BOARD_PC_RESPONSE_DRIVER_BUFFER_LENGTH);
 
-	// Get test driver for debug purpose
-	addDriver(testDriverGetDescriptor(), TRANSMIT_LOCAL);
+    // Get test driver for debug purpose
+    addDriver(testDriverGetDescriptor(), TRANSMIT_LOCAL);
 
-	// Devices
-	initDeviceList((Device(*)[]) &deviceListArray, MAIN_BOARD_PC_DEVICE_LIST_LENGTH);
-	// addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
+    // Devices
+    initDeviceList((Device(*)[]) &deviceListArray, MAIN_BOARD_PC_DEVICE_LIST_LENGTH);
+    // addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
 
-	testDevice = addI2cRemoteDevice(getTestDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
-	testDevice->deviceHandleNotification = mainBoardDeviceHandleNotification;
+    testDevice = addI2cRemoteDevice(getTestDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
+    testDevice->deviceHandleNotification = mainBoardDeviceHandleNotification;
 
-	addLocalDevice(getI2cMasterDebugDeviceInterface(), getI2cMasterDebugDeviceDescriptor());
-	addLocalDevice(getStrategyDeviceInterface(), getStrategyDeviceDescriptor());
-	addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
-	addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor());
-	initStartMatchDetectorPc(&startMatchDetector);
-	addLocalDevice(getStartMatchDetectorDeviceInterface(), getStartMatchDetectorDeviceDescriptor(&startMatchDetector));
-	addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());
-	addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
+    addLocalDevice(getI2cMasterDebugDeviceInterface(), getI2cMasterDebugDeviceDescriptor());
+    addLocalDevice(getStrategyDeviceInterface(), getStrategyDeviceDescriptor());
+    addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
+    addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor());
+    initStartMatchDetectorPc(&startMatchDetector);
+    addLocalDevice(getStartMatchDetectorDeviceInterface(), getStartMatchDetectorDeviceDescriptor(&startMatchDetector));
+    addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());
+    addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
 
-	addLocalDevice(getPIDDeviceInterface(), getPIDDeviceDescriptor());
-	addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());
-	addLocalDevice(getCodersDeviceInterface(), getCodersDeviceDescriptor());
-	addLocalDevice(getTrajectoryDeviceInterface(), getTrajectoryDeviceDescriptor());
-	addLocalDevice(getMotionDeviceInterface(), getMotionDeviceDescriptor());
+    addLocalDevice(getPIDDeviceInterface(), getPIDDeviceDescriptor());
+    addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());
+    addLocalDevice(getCodersDeviceInterface(), getCodersDeviceDescriptor());
+    addLocalDevice(getTrajectoryDeviceInterface(), getTrajectoryDeviceDescriptor());
+    addLocalDevice(getMotionDeviceInterface(), getMotionDeviceDescriptor());
 
-	initDevices();
+    initDevices();
 
-	delaymSec(100);
+    delaymSec(100);
 
-	setDebugI2cEnabled(false);
-	// testDriverIntensive(100);
+    setDebugI2cEnabled(false);
+    // testDriverIntensive(100);
 
-	while (1) {
-		mainBoardWaitForInstruction();
-	}
+    while (1) {
+        mainBoardWaitForInstruction();
+    }
 }

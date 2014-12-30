@@ -38,7 +38,7 @@ void clearLastError();
 #define IO_BUFFER_NULL                    0x0102
 #define IO_BUFFER_NOT_ENOUGH_DATA         0x0103
 
-#define PRINT_WRITER_NOT_HEX_VALUE		0x0104
+#define PRINT_WRITER_NOT_HEX_VALUE        0x0104
 
 #define IO_PIN_INDEX_ERROR                0x0110
 
@@ -48,13 +48,13 @@ void clearLastError();
 
 
 // TIMER
-#define TIMERS_LIST_NOT_INITIALIZED		0x0200
+#define TIMERS_LIST_NOT_INITIALIZED        0x0200
 #define TOO_MUCH_TIMERS                 0x0201
 
 // EEPROM
-#define EEPROM_NULL						0x280
-#define EEPROM_NOT_INITIALIZED			0x281
-#define EEPROM_OUT_OF_BOUNDS			0x282
+#define EEPROM_NULL                        0x280
+#define EEPROM_NOT_INITIALIZED            0x281
+#define EEPROM_OUT_OF_BOUNDS            0x282
 
 // BIT LIST
 #define BIT_LIST_ARRAY_OUT_OF_BOUNDS    0x0300

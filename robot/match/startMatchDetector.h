@@ -14,8 +14,8 @@ typedef struct StartMatchDetector StartMatchDetector;
 typedef bool IsMatchStartedFunction(StartMatchDetector* startMatchDetector);
 
 struct StartMatchDetector {
-	/** The function which must be used to know if the match is started or not. */
-	IsMatchStartedFunction* isMatchStartedFunction;
+    /** The function which must be used to know if the match is started or not. */
+    IsMatchStartedFunction* isMatchStartedFunction;
 };
 
 /**

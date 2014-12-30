@@ -6,7 +6,7 @@ char* getLevelAsString(LogLevel level) {
         case DEBUG: return "DBG(1)";
         case INFO: return "INF(2)";
         case WARNING: return "WARN(3)";
-		case LOG_LEVEL_ERROR: return "ERR(4)";
+        case LOG_LEVEL_ERROR: return "ERR(4)";
         case ALWAYS: return "ALWAYS(5)";
     }
     return "?";

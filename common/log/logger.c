@@ -70,7 +70,7 @@ OutputStream* getDebugOutputStreamLogger() {
 }
 
 OutputStream* getErrorOutputStreamLogger() {
-	logger.writeLogLevel = LOG_LEVEL_ERROR;
+    logger.writeLogLevel = LOG_LEVEL_ERROR;
     return logger.outputStream;
 }
 

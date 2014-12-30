@@ -6,16 +6,16 @@
 #include "../../../common/error/error.h"
 #include "../eeprom.h"
 
-#define	EEPROM_30F_MAX_INDEX	31
+#define    EEPROM_30F_MAX_INDEX    31
 
 // Pointer to EEPROM data. The declaration causes the first WORD of EEPROM to be initialized when programming the device.
 static signed int _EEDATA(EEPROM_30F_MAX_INDEX + 1)* eeData;
 
 void my_eeprom_write_int(Eeprom* eeprom_, unsigned long index, signed int value) {
-	if (index >= EEPROM_30F_MAX_INDEX) {
-		writeError(EEPROM_OUT_OF_BOUNDS);
-		return;
-	}
+    if (index >= EEPROM_30F_MAX_INDEX) {
+        writeError(EEPROM_OUT_OF_BOUNDS);
+        return;
+    }
     _prog_addressT EE_addr;
 
     // initialize a variable to represent the EEPROM address
@@ -30,10 +30,10 @@ void my_eeprom_write_int(Eeprom* eeprom_, unsigned long index, signed int value)
 }
 
 signed int my_eeprom_read_int(Eeprom* eeprom_, unsigned long index) {
-	if (index >= EEPROM_30F_MAX_INDEX) {
-		writeError(EEPROM_OUT_OF_BOUNDS);
-		return -1;
-	}
+    if (index >= EEPROM_30F_MAX_INDEX) {
+        writeError(EEPROM_OUT_OF_BOUNDS);
+        return -1;
+    }
     signed int value;
     _prog_addressT EE_addr;
 

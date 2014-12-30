@@ -36,7 +36,7 @@ unsigned long get24C512BlockAddress (unsigned long index) {
     } else if (index < 0x080000) {
         blocAddress = ST24C512_ADDRESS_7;
     } else {
-		writeError(EEPROM_OUT_OF_BOUNDS);
+        writeError(EEPROM_OUT_OF_BOUNDS);
     }
     return blocAddress;
 }
@@ -67,7 +67,7 @@ unsigned long get24C512Address(unsigned long index) {
     } else if (index < 0x080000) {
         address -= 0x070000;
     } else {
-		writeError(EEPROM_OUT_OF_BOUNDS);
+        writeError(EEPROM_OUT_OF_BOUNDS);
     }
     return address;
 }
@@ -97,7 +97,7 @@ void _writeEeprom24C512Int(Eeprom* eeprom_, unsigned long index, signed int valu
     WaitI2C();
     portableStopI2C();
     WaitI2C();
-	delay100us(4);  // delay <=3 don't write correctly if we write several times
+    delay100us(4);  // delay <=3 don't write correctly if we write several times
 }
 
 /**

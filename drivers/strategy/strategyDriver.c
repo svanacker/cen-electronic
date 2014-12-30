@@ -51,7 +51,7 @@ void strategyDriverTimerCallback(Timer* timer) {
 
 void forceRobotNextStepIfNecessary() {
     if (strategyDriverInterruptCounter >= FORCE_ROBOT_NEXT_STEP_COUNTER) {
-		appendString(getOutputStreamLogger(LOG_LEVEL_ERROR), "forceRobotNextStepIfNecessary\n");
+        appendString(getOutputStreamLogger(LOG_LEVEL_ERROR), "forceRobotNextStepIfNecessary\n");
         strategyDriverInterruptCounter = 0;
         robotNextStep();
     }

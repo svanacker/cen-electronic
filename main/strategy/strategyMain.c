@@ -219,10 +219,10 @@ int main(void) {
 
     initStrategyHandler();
 
-	//addNavigationLocations();
-	//printDeviceListUsage(getOutputStreamLogger(INFO));
-	while (nextStep());
-	while (1);
+    //addNavigationLocations();
+    //printDeviceListUsage(getOutputStreamLogger(INFO));
+    while (nextStep());
+    while (1);
 
     // Init the timers management
     startTimerList();

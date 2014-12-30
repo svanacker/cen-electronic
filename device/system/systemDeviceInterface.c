@@ -39,7 +39,7 @@ int deviceSystemGetInterface(char commandHeader, DeviceInterfaceMode mode, bool 
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
-	// wait
+    // wait
     else if (commandHeader == COMMAND_WAIT) {
         if (fillDeviceArgumentList) {
             setFunction("wait", 1, 0);
@@ -47,14 +47,14 @@ int deviceSystemGetInterface(char commandHeader, DeviceInterfaceMode mode, bool 
         }
         return commandLengthValueForMode(mode, 4, 0);
     }
-	// usage
+    // usage
     else if (commandHeader == COMMAND_USAGE) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("usage");
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
-	else if (commandHeader == COMMAND_NOTIFICATION) {
+    else if (commandHeader == COMMAND_NOTIFICATION) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("notification");
         }

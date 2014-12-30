@@ -1,5 +1,5 @@
 #ifndef EEPROM_DEVICE_H
-#define	EEPROM_DEVICE_H
+#define    EEPROM_DEVICE_H
 
 #include "../../device/deviceDescriptor.h"
 #include "../../common/eeprom/eeprom.h"

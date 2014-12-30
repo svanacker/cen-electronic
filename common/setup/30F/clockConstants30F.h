@@ -13,10 +13,10 @@
 // REQUIRED SYMBOLS
 
 /** oscillator frequency in Hz. */
-#define FOSC 		QUARTZ_FREQUENCY
+#define FOSC         QUARTZ_FREQUENCY
 
 /** PLL multiplier, x1  x4  x8  x16. */
-#define FOSC_PLL 	CLOCK_PLL
+#define FOSC_PLL     CLOCK_PLL
 
 /** instruction cycle frequency. */
 #define FCY         CYCLE_FREQUENCY
