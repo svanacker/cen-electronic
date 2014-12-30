@@ -201,7 +201,6 @@ void deviceMotionHandleRawData(char commandHeader,
                          200.0f, 200.0f,
                         MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL,
                          true);
-        append(outputStream, commandHeader);
     }
     // STOP
         // cancel motion
@@ -215,8 +214,6 @@ void deviceMotionHandleRawData(char commandHeader,
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_OBSTACLE);
         // TODO : A REVOIR
         stopPosition(true);
-
-        notifyObstacle(outputStream);
     }        // CALIBRATION
     else if (commandHeader == COMMAND_SQUARE_CALIBRATION) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_SQUARE_CALIBRATION);

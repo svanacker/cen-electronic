@@ -131,9 +131,6 @@ static Buffer consoleInputBuffer;
 static char consoleOutputBufferArray[MAIN_BOARD_PC_CONSOLE_OUTPUT_BUFFER_LENGTH];
 static Buffer consoleOutputBuffer;
 
-// Eeprom
-static Eeprom eeprom;
-
 // Devices
 static Device deviceListArray[MAIN_BOARD_PC_DEVICE_LIST_LENGTH];
 static Device* testDevice;
@@ -198,8 +195,6 @@ void runMainBoardPC(void) {
     addConsoleLogHandler(DEBUG);
     appendStringCRLF(getDebugOutputStreamLogger(), getPicName());
 
-    initEepromPc(&eeprom);
-
     initTimerList((Timer(*)[]) &timerListArray, MAIN_BOARD_PC_TIMER_LENGTH);
 
     initBuffer(&consoleInputBuffer, (char(*)[]) &consoleInputBufferArray, MAIN_BOARD_PC_CONSOLE_INPUT_BUFFER_LENGTH, "inputConsoleBuffer", "IN");
@@ -239,21 +234,22 @@ void runMainBoardPC(void) {
     testDevice = addI2cRemoteDevice(getTestDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
     testDevice->deviceHandleNotification = mainBoardDeviceHandleNotification;
 
-    addLocalDevice(getI2cMasterDebugDeviceInterface(), getI2cMasterDebugDeviceDescriptor());
+	// LOCAL BOARD
     addLocalDevice(getStrategyDeviceInterface(), getStrategyDeviceDescriptor());
     addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
-    addLocalDevice(getDataDispatcherDeviceInterface(), getDataDispatcherDeviceDescriptor());
+	addLocalDevice(getI2cMasterDebugDeviceInterface(), getI2cMasterDebugDeviceDescriptor());
+	addLocalDevice(getDataDispatcherDeviceInterface(), getDataDispatcherDeviceDescriptor());
     addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor());
     initStartMatchDetectorPc(&startMatchDetector);
     addLocalDevice(getStartMatchDetectorDeviceInterface(), getStartMatchDetectorDeviceDescriptor(&startMatchDetector));
-    addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());
-    addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
-
-    addLocalDevice(getPIDDeviceInterface(), getPIDDeviceDescriptor());
-    addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());
-    addLocalDevice(getCodersDeviceInterface(), getCodersDeviceDescriptor());
-    addLocalDevice(getTrajectoryDeviceInterface(), getTrajectoryDeviceDescriptor());
-    addLocalDevice(getMotionDeviceInterface(), getMotionDeviceDescriptor());
+ 
+	// MOTOR BOARD
+	addI2cRemoteDevice(getEepromDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
+	addI2cRemoteDevice(getPIDDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
+	addI2cRemoteDevice(getMotorDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
+	addI2cRemoteDevice(getCodersDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
+	addI2cRemoteDevice(getTrajectoryDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
+	addI2cRemoteDevice(getMotionDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
 
     initDevices();
 

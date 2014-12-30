@@ -30,6 +30,10 @@
 #include "../../../device/i2c/slave/i2cSlaveDebugDevice.h"
 #include "../../../device/i2c/slave/i2cSlaveDebugDeviceInterface.h"
 
+// EEPROM
+#include "../../../device/eeprom/eepromDevice.h"
+#include "../../../device/eeprom/eepromDeviceInterface.h"
+
 // MOTION
 
 #include "../../../device/motion/pid/pidDevice.h"
@@ -89,6 +93,9 @@ static char i2cSlaveDebugOutputBufferArray[MOTOR_BOARD_PC_I2C_DEBUG_SLAVE_OUT_BU
 static Buffer i2cSlaveDebugOutputBuffer;
 static char i2cSlaveDebugInputBufferArray[MOTOR_BOARD_PC_I2C_DEBUG_SLAVE_IN_BUFFER_LENGTH];
 static Buffer i2cSlaveDebugInputBuffer;
+
+// Eeprom
+static Eeprom eeprom;
 
 // Devices
 static Device deviceListArray[MOTOR_BOARD_PC_DEVICE_LIST_LENGTH];
@@ -171,6 +178,8 @@ void runMotorBoardPC(void) {
         (char(*)[]) &i2cSlaveDebugOutputBufferArray,
         MOTOR_BOARD_PC_I2C_DEBUG_SLAVE_OUT_BUFFER_LENGTH);
 
+	initEepromPc(&eeprom);
+
     // Devices
     initDeviceList((Device(*)[]) &deviceListArray, MOTOR_BOARD_PC_DEVICE_LIST_LENGTH);
     addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
@@ -178,6 +187,7 @@ void runMotorBoardPC(void) {
     addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
     addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());
 
+	addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
     addLocalDevice(getPIDDeviceInterface(), getPIDDeviceDescriptor());
     addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());
     addLocalDevice(getCodersDeviceInterface(), getCodersDeviceDescriptor());
