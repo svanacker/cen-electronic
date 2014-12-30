@@ -78,7 +78,14 @@ Device* addLocalDevice(DeviceInterface* interface, DeviceDescriptor* descriptor)
 }
 
 Device* getDevice(int index) {
-    // TODO : Check size
+	if (&deviceList == NULL || deviceList.maxSize == 0) {
+		writeError(DEVICES_LIST_NOT_INITIALIZED);
+		return NULL;
+	}
+	if (index < 0 || index >= deviceList.maxSize) {
+		writeError(DEVICE_ILLEGAL_INDEX);
+		return NULL;
+	}
     Device* result = (Device*) deviceList.devices;
     // we don't need use sizeof because our pointer is a Device* pointer, so the shift
     // is already of the structure, we just have to shift of index.
