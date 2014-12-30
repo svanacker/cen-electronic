@@ -21,18 +21,18 @@ bool isEepromDeviceOk(void) {
     return true;
 }
 
-void deviceEepromHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream){
-    if (header == COMMAND_READ_DATA_EEPROM) {
+void deviceEepromHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream){
+    if (commandHeader == COMMAND_READ_DATA_EEPROM) {
         ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_READ_DATA_EEPROM);
         unsigned long address = readHex4(inputStream);
         signed int value = eeprom_->eepromReadInt(eeprom_, address);
         appendHex2(outputStream, value);
-    } else if (header == COMMAND_WRITE_DATA_EEPROM) {
+    } else if (commandHeader == COMMAND_WRITE_DATA_EEPROM) {
         ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_WRITE_DATA_EEPROM);
         unsigned long address = readHex4(inputStream);
         int data = readHex2(inputStream);
         eeprom_->eepromWriteInt(eeprom_, address, data);
-    } else if (header == COMMAND_READ_BLOC_EEPROM) {
+    } else if (commandHeader == COMMAND_READ_BLOC_EEPROM) {
         ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_READ_BLOC_EEPROM);
         unsigned long address = readHex4(inputStream);
         int index;
@@ -40,7 +40,7 @@ void deviceEepromHandleRawData(char header, InputStream* inputStream, OutputStre
             signed int value = eeprom_->eepromReadInt(eeprom_, address + index);
             appendHex2(outputStream, value);
         }
-    } else if (header == COMMAND_WRITE_BLOC_EEPROM) {
+    } else if (commandHeader == COMMAND_WRITE_BLOC_EEPROM) {
         ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_WRITE_BLOC_EEPROM);
         unsigned long address = readHex4(inputStream);
         signed int data;

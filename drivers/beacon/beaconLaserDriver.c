@@ -40,9 +40,9 @@ bool beaconLaserDriverServoStop() {
     return result;
 }
 
-void appendRobotPosition(OutputStream* outputStream, char header, Point* point) {
+void appendRobotPosition(OutputStream* outputStream, char commandHeader, Point* point) {
     // out Data will be ?XXXX-YYYY, where ? will be replaced by the header
-    append(outputStream, header);
+    append(outputStream, commandHeader);
     appendHex4(outputStream, point->x);
     append(outputStream, '-');
     appendHex4(outputStream, point->y);

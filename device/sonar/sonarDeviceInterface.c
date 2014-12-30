@@ -11,8 +11,8 @@ unsigned int deviceSonarGetSoftwareRevision() {
     return 1;
 }
 
-int deviceSonarGetInterface(char header, int mode, bool fillDeviceArgumentList) {
-    if (header == COMMAND_GET_SONAR) {
+int deviceSonarGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
+    if (commandHeader == COMMAND_GET_SONAR) {
         if (fillDeviceArgumentList) {
             setFunction("getSonar", 1, 5);
             setArgumentUnsignedHex2(0, "sonarIdx");
@@ -27,7 +27,7 @@ int deviceSonarGetInterface(char header, int mode, bool fillDeviceArgumentList) 
         }
         return commandLengthValueForMode(mode, 2, 14);
     }
-    else if (header == COMMAND_SONAR_CHANGE_ADDRESS) {
+    else if (commandHeader == COMMAND_SONAR_CHANGE_ADDRESS) {
         if (fillDeviceArgumentList) {
             setFunction("sonarChangeAddress", 2, 0);
             setArgumentUnsignedHex2(0, "oldSonarAddress");
@@ -41,7 +41,6 @@ int deviceSonarGetInterface(char header, int mode, bool fillDeviceArgumentList) 
 static DeviceInterface deviceInterface = {
     .deviceGetName = &deviceSonarGetName,
     .deviceHeader = SONAR_DEVICE_HEADER,
-//    .deviceGetSoftwareRevision = &deviceSonarGetSoftwareRevision,
     .deviceGetInterface = &deviceSonarGetInterface
 };
 

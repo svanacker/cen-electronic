@@ -7,8 +7,8 @@ const char* deviceSerialDebugGetName(void) {
     return "serialDebug";
 }
 
-int deviceSerialDebugGetInterface(char header, int mode, bool fillDeviceArgumentList) {
-    if (header == COMMAND_SERIAL_INPUT_BUFFERS) {
+int deviceSerialDebugGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
+    if (commandHeader == COMMAND_SERIAL_INPUT_BUFFERS) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("showSerialInputBuffers");
         }

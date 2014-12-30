@@ -26,8 +26,8 @@ bool deviceTest2IsOk(void) {
     return true;
 }
 
-void deviceTest2HandleRawData(char header, InputStream* inputStream, OutputStream* outputStream) {
-    if (header == COMMAND_TEST2) {
+void deviceTest2HandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream) {
+    if (commandHeader == COMMAND_TEST2) {
         int arg1 = readHex2(inputStream);
         int arg2 = readHex2(inputStream);
         int result = arg1 + arg2;
@@ -36,7 +36,7 @@ void deviceTest2HandleRawData(char header, InputStream* inputStream, OutputStrea
         // data
         appendHex2(outputStream, result);
     }
-	else if (header == COMMAND_INTENSIVE_TEST_DRIVER) {
+	else if (commandHeader == COMMAND_INTENSIVE_TEST_DRIVER) {
         ackCommand(outputStream, TEST2_DEVICE_HEADER, COMMAND_INTENSIVE_TEST_DRIVER);
         unsigned int count = readHex4(inputStream);
         testDriverIntensive(count);

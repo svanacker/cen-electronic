@@ -26,11 +26,11 @@ typedef bool deviceIsOkFunction(void);
 
 /**
 * Function for handling raw data sent to the device.
-* @param header the header char
+* @param commandHeader the header char
 * @param inputStream the input Stream where we can get commandHeader, and input parameters
 * @param outputStream the output Stream where we can write some results, ack (with commandHeader)
 */
-typedef void deviceHandleRawDataFunction(char header,
+typedef void deviceHandleRawDataFunction(char commandHeader,
                                          InputStream* inputStream,
                                          OutputStream* outputStream);
 

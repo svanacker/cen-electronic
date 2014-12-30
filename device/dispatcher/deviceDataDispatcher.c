@@ -24,7 +24,7 @@ unsigned int getWaitedDataLength(const char deviceHeader) {
     return -1;
 }
 
-const Device* deviceDataDispatcherFindDevice(const char deviceHeader, const char commandHeader, int dataLength, int mode) {
+const Device* deviceDataDispatcherFindDevice(const char deviceHeader, const char commandHeader, const int dataLength, const DeviceInterfaceMode mode) {
     int i;
     int size = getDeviceCount();
     for (i = 0; i < size; i++) {

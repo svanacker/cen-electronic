@@ -27,10 +27,8 @@ bool deviceRelayIsOk() {
     return true;
 }
 
-void deviceRelayHandleRawData(char header,
-                             InputStream* inputStream,
-                             OutputStream* outputStream) {
-    if (header == COMMAND_SET_RELAY) {
+void deviceRelayHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream) {
+    if (commandHeader == COMMAND_SET_RELAY) {
         int relayIndex = readHex2(inputStream);
         unsigned char value = inputStream->readChar(inputStream);
         

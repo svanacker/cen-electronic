@@ -7,21 +7,18 @@ const char* devicePliers2011GetName() {
     return "pliers2011";
 }
 
-int devicePliers2011GetInterface(char header, int mode, bool fillDeviceArgumentList) {
-    if (header == COMMAND_PLIERS_2011_CLOSE) {
-        // SAME INPUT / OUTPUT
+int devicePliers2011GetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
+    if (commandHeader == COMMAND_PLIERS_2011_CLOSE) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("pliersClose");
             return 0;
         }
-    } else if (header == COMMAND_PLIERS_2011_INIT_CLOSE) {
-        // SAME INPUT / OUTPUT
+    } else if (commandHeader == COMMAND_PLIERS_2011_INIT_CLOSE) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("initPliersClose");
             return 0;
         }
-    } else if (header == COMMAND_PLIERS_2011_OPEN) {
-        // SAME INPUT / OUTPUT
+    } else if (commandHeader == COMMAND_PLIERS_2011_OPEN) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("pliersOpen");
             return 0;

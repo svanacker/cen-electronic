@@ -11,14 +11,14 @@ unsigned int deviceArm2012GetSoftwareRevision(void) {
     return 1;
 }
 
-int deviceArm2012GetInterface(char header, int mode, bool fillDeviceArgumentList) {
-    if (header == COMMAND_ARM_2012_UP) {
+int deviceArm2012GetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
+    if (commandHeader == COMMAND_ARM_2012_UP) {
         if (fillDeviceArgumentList) {
             setFunction("armUp", 1, 0);
             setArgumentUnsignedHex2(0, "armIdx");
         }
         return commandLengthValueForMode(mode, 2, 0);
-    } else if (header == COMMAND_ARM_2012_DOWN) {
+    } else if (commandHeader == COMMAND_ARM_2012_DOWN) {
         if (fillDeviceArgumentList) {
             setFunction("armDown", 1, 0);
             setArgumentUnsignedHex2(0, "armIdx");

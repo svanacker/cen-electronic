@@ -12,8 +12,7 @@ unsigned int getEndMatchDetectorSoftwareRevision(void) {
     return 1;
 }
 
-int deviceEndMatchDetectorGetInterface(char header, int mode,
-        bool fillDeviceArgumentList) {
+int deviceEndMatchDetectorGetInterface(char header, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     if (mode == DEVICE_MODE_OUTPUT) {
         if (header == COMMAND_NOTIFY_MATCH_ENDED) {
             if (fillDeviceArgumentList) {

@@ -20,6 +20,6 @@ unsigned int getWaitedDataLength(const char header);
 * @return the descriptor of the handling device, NULL if no registered device 
 * can handle the data header
 */
-const Device* deviceDataDispatcherFindDevice(const char deviceHeader, const char commandHeader, int dataLength, int mode);
+const Device* deviceDataDispatcherFindDevice(const char deviceHeader, const char commandHeader, int dataLength, DeviceInterfaceMode mode);
 
 #endif

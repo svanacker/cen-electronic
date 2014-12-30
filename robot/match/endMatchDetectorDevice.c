@@ -94,9 +94,7 @@ bool isEndMatchDetectorDeviceOk(void) {
     return true;
 }
 
-void deviceEndMatchDetectorHandleRawData(char header,
-        InputStream* inputStream,
-        OutputStream* outputStream) {
+void deviceEndMatchDetectorHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream) {
 }
 
 // allocate memory

@@ -24,7 +24,7 @@ void fillSplineParameters(void) {
     setArgumentUnsignedChar1(11, "accFactor");
 }
 
-int deviceMotionGetInterface(char header, int mode, bool fillDeviceArgumentList) {
+int deviceMotionGetInterface(char header, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     // goto
     if (header == COMMAND_MOTION_GOTO_IN_PULSE) {
         if (fillDeviceArgumentList) {

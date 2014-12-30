@@ -11,9 +11,9 @@ unsigned int deviceRobotInfraredDetectorGetSoftwareRevision() {
     return 1;
 }
 
-int deviceRobotInfraredDetectorGetInterface(char header, int mode, bool fillDeviceArgumentList ) {
+int deviceRobotInfraredDetectorGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList ) {
     // command to ask
-    if (header == COMMAND_INFRARED_DETECTOR_DETECTION) {
+    if (commandHeader == COMMAND_INFRARED_DETECTOR_DETECTION) {
         if (fillDeviceArgumentList) {
             setFunction("infraredDetector", 1, 1);
             setArgumentUnsignedHex2(0, "backward/forward");
@@ -22,7 +22,7 @@ int deviceRobotInfraredDetectorGetInterface(char header, int mode, bool fillDevi
         return commandLengthValueForMode(mode, 2, 2);
     }
     // Notification !
-    else if (header == NOTIFY_INFRARED_DETECTOR_DETECTION) {
+    else if (commandHeader == NOTIFY_INFRARED_DETECTOR_DETECTION) {
         if (fillDeviceArgumentList) {
             setFunction("notifyInfraredDetector", 0, 1);
             setResultUnsignedHex2(0, "backward/forward");

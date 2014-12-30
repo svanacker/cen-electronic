@@ -280,7 +280,7 @@ static bool useBalise;
  * Call-back when Data send some notification message (like Position Reached, Position failed ...)
  */
 void mainBoardCallbackRawData(const Device* device,
-        char header,
+        char commandHeader,
         InputStream* inputStream) {
 
 //    if (header == NOTIFY_MOTION_STATUS || header == COMMAND_NOTIFY_TEST || header == COMMAND_PLIERS_2011_OPEN) {

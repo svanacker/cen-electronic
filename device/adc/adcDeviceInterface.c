@@ -8,9 +8,8 @@ const char* getADCDeviceName(void) {
     return "ADC";
 }
 
-int deviceADCGetInterface(char header, int mode,
-        bool fillDeviceArgumentList) {
-    if (header == COMMAND_GET_ADC_VALUE) {
+int deviceADCGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
+    if (commandHeader == COMMAND_GET_ADC_VALUE) {
         if (fillDeviceArgumentList) {
             setFunction("getADC", 1, 1);
             setArgumentUnsignedHex2(0, "ADC_idx");

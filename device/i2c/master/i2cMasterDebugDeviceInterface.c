@@ -7,7 +7,7 @@ const char* deviceI2cMasterDebugGetName(void) {
     return "i2cMasterDebug";
 }
 
-int deviceI2cMasterDebugGetInterface(char header, int mode, bool fillDeviceArgumentList) {
+int deviceI2cMasterDebugGetInterface(char header, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     if (header == COMMAND_I2C_DEBUG_MASTER_DEBUG) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("i2cDebug");

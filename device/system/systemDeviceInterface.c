@@ -18,7 +18,7 @@ const char* deviceSystemGetName(void) {
     return "system";
 }
 
-int deviceSystemGetInterface(char commandHeader, int mode, bool fillDeviceArgumentList) {
+int deviceSystemGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     // getPicName()
     if (commandHeader == COMMAND_PIC_NAME) {
         // Same INPUT/OUTPUT

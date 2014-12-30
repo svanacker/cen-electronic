@@ -163,11 +163,11 @@ bool deviceRobotSonarDetectorIsOk() {
     return true;
 }
 
-void deviceRobotSonarDetectorHandleRawData(char header,
+void deviceRobotSonarDetectorHandleRawData(char commandHeader,
         InputStream* inputStream,
         OutputStream* outputStream) {
 
-    if (header == COMMAND_SET_SONAR_STATUS) {
+    if (commandHeader == COMMAND_SET_SONAR_STATUS) {
         sonarStatus = readHex2(inputStream);
         ackCommand(outputStream, ROBOT_SONAR_DETECTOR_DEVICE_HEADER, COMMAND_SET_SONAR_STATUS);
     }

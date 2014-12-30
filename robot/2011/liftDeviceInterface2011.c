@@ -10,8 +10,8 @@ unsigned int deviceLift2011GetSotwareRevision() {
     return 1;
 }
 
-int deviceLift2011GetInterface(char header, int mode, DeviceArgumentList* deviceArgumentList) {
-    if (header == COMMAND_LIFT_2011_BOTTOM) {
+int deviceLift2011GetInterface(char commandHeader, DeviceInterfaceMode mode, DeviceArgumentList* deviceArgumentList) {
+    if (commandHeader == COMMAND_LIFT_2011_BOTTOM) {
         if (mode == DEVICE_MODE_INPUT) {
             if (deviceArgumentList) {
                 deviceArgumentList->functionName = "liftBottom";
@@ -26,7 +26,7 @@ int deviceLift2011GetInterface(char header, int mode, DeviceArgumentList* device
             return 0;
         }
     }
-    if (header == COMMAND_LIFT_2011_UP) {
+    if (commandHeader == COMMAND_LIFT_2011_UP) {
         if (mode == DEVICE_MODE_INPUT) {
             if (deviceArgumentList) {
                 deviceArgumentList->functionName = "liftUp";
@@ -40,7 +40,7 @@ int deviceLift2011GetInterface(char header, int mode, DeviceArgumentList* device
             }
             return 0;
         }
-    } else if (header == COMMAND_LIFT_2011_DOWN) {
+    } else if (commandHeader == COMMAND_LIFT_2011_DOWN) {
         if (mode == DEVICE_MODE_INPUT) {
             if (deviceArgumentList) {
                 deviceArgumentList->functionName = "liftDown";

@@ -6,6 +6,7 @@
 /**
 * Definition of the functions and types shared by devices
 */
+typedef int DeviceInterfaceMode;
 
 /**
 * Define the constant for device (input of device).
@@ -25,7 +26,7 @@
 /**
  * The index in the buffer to get the command Header for a specified Device Header (command header char is just after device command header).
  */
-#define COMMAND_HEADER_INDEX                    1
+#define COMMAND_HEADER_INDEX                    	1
 
 /**
  * Define the length of the ack (char).
@@ -172,7 +173,7 @@ void setFunctionNoArgumentAndNoResult(char* functionName);
  * Returns depending on the input mode, the input length or the outputLength.
  * It avoids to returns a structure, because we cares often only about input or ouput result.
  */
-int commandLengthValueForMode(int mode, int inputResult, int outputResult);
+int commandLengthValueForMode(DeviceInterfaceMode mode, int inputResult, int outputResult);
 
 // ARGUMENTS MANAGEMENT
 
@@ -250,7 +251,7 @@ typedef const char* deviceGetNameFunction(void);
 * Returns a value >= 0 if the device handle this char, and -1, if it's not handled
 */
 typedef int deviceGetInterfaceFunction(char commandHeader,
-                                        int mode,
+                                        DeviceInterfaceMode mode,
                                         bool fillDeviceArgumentList);
 
 

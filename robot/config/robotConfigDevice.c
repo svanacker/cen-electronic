@@ -89,8 +89,8 @@ bool isRobotConfigDeviceOk(void) {
     return true;
 }
 
-void deviceRobotConfigHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream) {
-    if (header == COMMAND_CONFIG) {
+void deviceRobotConfigHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream) {
+    if (commandHeader == COMMAND_CONFIG) {
         // can take a little time
         refreshConfig();  
         ackCommand(outputStream, ROBOT_CONFIG_DEVICE_HEADER, COMMAND_CONFIG);

@@ -11,8 +11,8 @@ unsigned int deviceRobotSonarDetectorGetSoftwareRevision(void) {
     return 1;
 }
 
-int deviceRobotSonarDetectorGetInterface(char header, int mode, bool fillDeviceArgumentList) {
-    if (header == COMMAND_SET_SONAR_STATUS) {
+int deviceRobotSonarDetectorGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
+    if (commandHeader == COMMAND_SET_SONAR_STATUS) {
         if (fillDeviceArgumentList) {
             setFunction("setSonarStatus", 1, 0);
             setArgumentUnsignedHex2(0, "false(00)/true(01)");

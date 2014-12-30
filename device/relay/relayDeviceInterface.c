@@ -11,8 +11,8 @@ unsigned int deviceRelayGetSotwareRevision() {
     return 1;
 }
 
-int deviceRelayGetInterface(char header, int mode, bool fillDeviceArgumentList) {
-    if (header == COMMAND_SET_RELAY) {
+int deviceRelayGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
+    if (commandHeader == COMMAND_SET_RELAY) {
         if (fillDeviceArgumentList) {
             setFunction("setRelay", 2, 0);
             setArgumentUnsignedHex2(0, "RelayIdx");

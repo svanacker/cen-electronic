@@ -8,7 +8,7 @@ const char* deviceTimerGetName(void) {
     return "timer";
 }
 
-int deviceTimerGetInterface(char commandHeader, int mode, bool fillDeviceArgumentList) {
+int deviceTimerGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     if (commandHeader == COMMAND_TIMER_LIST) {
         // Same INPUT/OUTPUT
         if (fillDeviceArgumentList) {

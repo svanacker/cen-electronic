@@ -7,7 +7,7 @@ const char* deviceServoGetName(void) {
     return "servo";
 }
 
-int deviceServoGetInterface(char commandHeader, int mode, bool fillDeviceArgumentList ) {
+int deviceServoGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     // WRITE FUNCTIONS
     if (commandHeader == SERVO_COMMAND_WRITE) {
         if (fillDeviceArgumentList) {

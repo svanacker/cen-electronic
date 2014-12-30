@@ -40,11 +40,11 @@ void notifyInfraredDetectorDetection(int type) {
     appendHex2(debugOutputStream, type);
 }
 
-void deviceRobotInfraredDetectorHandleRawData(char header,
+void deviceRobotInfraredDetectorHandleRawData(char commandHeader,
         InputStream* inputStream,
         OutputStream* outputStream) {
     // Command to ask
-    if (header == COMMAND_INFRARED_DETECTOR_DETECTION) {
+    if (commandHeader == COMMAND_INFRARED_DETECTOR_DETECTION) {
         appendAck(outputStream);
         append(outputStream, COMMAND_INFRARED_DETECTOR_DETECTION);
 
@@ -66,7 +66,6 @@ void deviceRobotInfraredDetectorHandleRawData(char header,
         }
     }
 }
-
 
 static DeviceDescriptor descriptor = {
     .deviceInit = &deviceRobotInfraredDetectorInit,

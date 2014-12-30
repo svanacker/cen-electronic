@@ -23,7 +23,7 @@
  * JENNIC_WAITING_FOR_NODE
  * JENNIC_LINK_CONNECTED
  */
-#define COMMANG_GET_RECEIVER_NETWORK_STATUS                            'n'
+#define COMMAND_GET_RECEIVER_NETWORK_STATUS                            'n'
 
 /** Initialize the jennic as router. */
 #define COMMAND_INIT_JENNIC_AS_ROUTER                                'i'

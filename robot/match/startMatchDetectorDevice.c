@@ -68,8 +68,8 @@ void showStarted(OutputStream* pcOutputStream) {
     appendStringCRLF(getOutputStreamLogger(ALWAYS), "Go !");
 }
 
-void deviceStartMatchDetectorHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream) {
-    if (header == COMMAND_STEP_BY_STEP) {
+void deviceStartMatchDetectorHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream) {
+    if (commandHeader == COMMAND_STEP_BY_STEP) {
         robotNextStep();
         ackCommand(outputStream, START_MATCH_DETECTOR_DEVICE_HEADER, COMMAND_STEP_BY_STEP);
     }

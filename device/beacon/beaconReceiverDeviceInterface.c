@@ -8,8 +8,7 @@ const char* beaconReceiverDeviceGetName(void) {
     return "beaconReceiver";
 }
 
-int beaconReceiverDeviceGetInterface(char commandHeader, int mode,
-        bool fillDeviceArgumentList) {
+int beaconReceiverDeviceGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     // getOpponentRobotPos
     if (commandHeader == COMMAND_GET_OPPONENT_ROBOT_POSITION) {
         if (fillDeviceArgumentList) {
@@ -21,7 +20,7 @@ int beaconReceiverDeviceGetInterface(char commandHeader, int mode,
         return commandLengthValueForMode(mode, 0, 9);
     }
     // setOpponentRobotPos
-    if (commandHeader == COMMAND_SET_OPPONENT_ROBOT_POSITION_FROM_LASER_TO_RECEIVER) {
+    else if (commandHeader == COMMAND_SET_OPPONENT_ROBOT_POSITION_FROM_LASER_TO_RECEIVER) {
         if (fillDeviceArgumentList) {
             setFunction("setOpponentRobotPos", 3, 0);
             setArgumentUnsignedHex4(0, "x(mm)");
@@ -39,7 +38,7 @@ int beaconReceiverDeviceGetInterface(char commandHeader, int mode,
         return 0;
     }
     // Network status
-    else if (commandHeader == COMMANG_GET_RECEIVER_NETWORK_STATUS) {
+    else if (commandHeader == COMMAND_GET_RECEIVER_NETWORK_STATUS) {
         if (fillDeviceArgumentList) {
             setFunction("getReceiverNetworkStatus", 0, 1);
             setResultUnsignedHex4(0, "status");

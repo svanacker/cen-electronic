@@ -8,7 +8,7 @@ const char* getCodersDeviceName(void) {
     return "Hctl Coders";
 }
 
-int deviceCodersGetInterface(char commandHeader, int mode, bool fillDeviceArgumentList) {
+int deviceCodersGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     if (commandHeader == COMMAND_CLEAR_CODERS) {
         // Same INPUT / OUTPUT
         if (fillDeviceArgumentList) {

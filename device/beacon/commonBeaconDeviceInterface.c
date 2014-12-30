@@ -7,7 +7,7 @@ const char* commonBeaconDeviceGetName() {
     return "commonBeacon";
 }
 
-int commonBeaconDeviceGetInterface(char commandHeader, int mode, bool fillDeviceArgumentList) {
+int commonBeaconDeviceGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     // Redirection
     if (commandHeader == COMMAND_REDIRECT_TO_JENNIC) {
         // same output / input

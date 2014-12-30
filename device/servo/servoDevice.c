@@ -31,12 +31,10 @@ bool deviceServoIsOk(void) {
     return true;
 }
 
-void deviceServoHandleRawData(char header,
-        InputStream* inputStream,
-        OutputStream* outputStream) {
+void deviceServoHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream) {
 
     // WRITE COMMANDS
-    if (header == SERVO_COMMAND_WRITE) {
+    if (commandHeader == SERVO_COMMAND_WRITE) {
         int servoIndex = readHex2(inputStream);
         int servoSpeed = readHex2(inputStream);
    
@@ -48,27 +46,27 @@ void deviceServoHandleRawData(char header,
         }
         ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_WRITE);
     }
-    else if (header == SERVO_COMMAND_WRITE_COMPACT) {
+    else if (commandHeader == SERVO_COMMAND_WRITE_COMPACT) {
         int servoValue = readHex4(inputStream);
         pwmServoAll(PWM_SERVO_SPEED_MAX, servoValue);
         ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_WRITE_COMPACT);
     }
     // READ COMMANDS
-    else if (header == SERVO_COMMAND_READ_SPEED) {
+    else if (commandHeader == SERVO_COMMAND_READ_SPEED) {
         int servoIndex = readHex2(inputStream);
         int speed = pwmServoReadSpeed(servoIndex);
 
         ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_READ_SPEED);
         appendHex2(outputStream, speed);
     }
-    else if (header == SERVO_COMMAND_READ_CURRENT_POSITION) {
+    else if (commandHeader == SERVO_COMMAND_READ_CURRENT_POSITION) {
         int servoIndex = readHex2(inputStream);
         int currentPosition = pwmServoReadCurrentPosition(servoIndex);
 
         ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_READ_CURRENT_POSITION);
         appendHex4(outputStream, currentPosition);
     }
-    else if (header == SERVO_COMMAND_READ_TARGET_POSITION) {
+    else if (commandHeader == SERVO_COMMAND_READ_TARGET_POSITION) {
         int servoIndex = readHex2(inputStream);
         int targetPosition = pwmServoReadTargetPosition(servoIndex);
 
@@ -76,11 +74,11 @@ void deviceServoHandleRawData(char header,
         appendHex4(outputStream, targetPosition);
     }
     // DEBUG COMMANDS
-    else if (header == SERVO_COMMAND_TEST) {
+    else if (commandHeader == SERVO_COMMAND_TEST) {
         testAllPwmServos();
         ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_TEST);
     }
-    else if (header == SERVO_COMMAND_DEBUG) {
+    else if (commandHeader == SERVO_COMMAND_DEBUG) {
         printServoList(getOutputStreamLogger(ALWAYS));
         ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_DEBUG);
     }

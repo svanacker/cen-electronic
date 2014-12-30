@@ -166,7 +166,7 @@ void printDeviceUsageLine(OutputStream* outputStream, char header, Device* devic
 
 void printDeviceUsage(OutputStream* outputStream, Device* device) {
     char header;
-    // We start after special caracters and use only ANSI chars
+    // We start after special characters and use only ANSI chars
     for (header = 32; header < 127; header++) {
         printDeviceUsageLine(outputStream, header, device);
     }

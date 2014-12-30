@@ -15,8 +15,8 @@ const char* getTrajectoryDeviceName(void) {
     return "Trajectory";
 }
 
-int trajectoryGetInterface(char header, int mode, bool fillDeviceArgumentList) {
-    if (header == COMMAND_GET_ABSOLUTE_POSITION) {
+int trajectoryGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
+    if (commandHeader == COMMAND_GET_ABSOLUTE_POSITION) {
         if (fillDeviceArgumentList) {
             setFunction(GET_ABS_POS_STRING, 0, 5);
             setResultUnsignedHex4(0, X_MM);
@@ -26,13 +26,13 @@ int trajectoryGetInterface(char header, int mode, bool fillDeviceArgumentList) {
             setResultUnsignedHex4(4, ANGLE_1_10_DEG);
         }
         return commandLengthValueForMode(mode, 0, 14);
-    } else if (header == COMMAND_DEBUG_GET_ABSOLUTE_POSITION) {
+    } else if (commandHeader == COMMAND_DEBUG_GET_ABSOLUTE_POSITION) {
         // Same return in case of input / output
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult(GET_DEBUG_ABS_POS_STRING);
         }
         return 0;
-    } else if (header == COMMAND_SET_ABSOLUTE_POSITION) {
+    } else if (commandHeader == COMMAND_SET_ABSOLUTE_POSITION) {
         if (fillDeviceArgumentList) {
             setFunction(SET_ABS_POS_STRING, 5, 0);
             setArgumentUnsignedHex4(0, X_MM);

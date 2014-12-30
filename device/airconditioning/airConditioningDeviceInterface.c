@@ -9,7 +9,7 @@ const char* deviceAirConditioningGetName(void) {
     return "AirConditioningDevice";
 }
 
-int deviceAirConditioningGetInterface(char commandHeader, int mode, bool fillDeviceArgumentList) {
+int deviceAirConditioningGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     if (AIR_CONDITIONING_COMMAND_WRITE == commandHeader) {
         if (fillDeviceArgumentList) {
             setFunction("Write", 1, 0);

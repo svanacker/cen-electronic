@@ -24,26 +24,26 @@ bool isPwmMotorDeviceOk(void) {
     return true;
 }
 
-void devicePwmMotorHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream) {
-    if (header == COMMAND_MOVE_MOTOR) {
+void devicePwmMotorHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream) {
+    if (commandHeader == COMMAND_MOVE_MOTOR) {
         signed int left = readSignedHex2(inputStream);
         signed int right = readSignedHex2(inputStream);
         ackCommand(outputStream, MOTOR_DEVICE_HEADER, COMMAND_MOVE_MOTOR);
         setMotorSpeeds(left * 2, right * 2);
     }
-    else if (header == COMMAND_READ_MOTOR_VALUE) {
+    else if (commandHeader == COMMAND_READ_MOTOR_VALUE) {
         ackCommand(outputStream, MOTOR_DEVICE_HEADER, COMMAND_READ_MOTOR_VALUE);
         signed int left = getLeftSpeed();
         signed int right = getRightSpeed();
         appendHex2(outputStream, left / 2);
         appendHex2(outputStream, right / 2);
     }
-    else if (header == COMMAND_STOP_MOTOR) {
+    else if (commandHeader == COMMAND_STOP_MOTOR) {
         ackCommand(outputStream, MOTOR_DEVICE_HEADER, COMMAND_STOP_MOTOR);
 
         stopMotors();
     }
-    else if (header == COMMAND_TEST_MOTOR) {
+    else if (commandHeader == COMMAND_TEST_MOTOR) {
         ackCommand(outputStream, MOTOR_DEVICE_HEADER, COMMAND_TEST_MOTOR);
 
         appendString(getOutputStreamLogger(ALWAYS), "Left Forward\n");

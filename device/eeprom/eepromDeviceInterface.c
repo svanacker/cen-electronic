@@ -8,7 +8,7 @@ const char* getEepromDeviceName(void) {
     return "EEPROM";
 }
 
-int deviceEepromGetInterface(char header, int mode, bool fillDeviceArgumentList){
+int deviceEepromGetInterface(char header, DeviceInterfaceMode mode, bool fillDeviceArgumentList){
     if (header == COMMAND_READ_DATA_EEPROM ) {
         if (fillDeviceArgumentList) {
             setFunction("Data Read", 1, 1);

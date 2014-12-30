@@ -7,8 +7,8 @@ const char* deviceDataDispatcherDebugGetName(void) {
     return "dataDispatcher";
 }
 
-int deviceDataDispatcherGetInterface(char header, int mode, bool fillDeviceArgumentList) {
-    if (header == COMMAND_DISPATCHER_LIST) {
+int deviceDataDispatcherGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
+    if (commandHeader == COMMAND_DISPATCHER_LIST) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("showDispatcherList");
         }

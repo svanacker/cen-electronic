@@ -34,10 +34,8 @@ unsigned char isSonarDeviceWithAddressOk(char addr) {
     return getSRF02SoftwareRevision(addr) < 255;
 }
 
-void deviceSonarHandleRawData(char header,
-        InputStream* inputStream,
-        OutputStream* outputStream) {
-    if (header == COMMAND_GET_SONAR) {
+void deviceSonarHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream) {
+    if (commandHeader == COMMAND_GET_SONAR) {
         int sonarIndex = readHex2(inputStream);
         ackCommand(outputStream, SONAR_DEVICE_HEADER, COMMAND_GET_SONAR);
         int i;
@@ -49,7 +47,7 @@ void deviceSonarHandleRawData(char header,
             appendHex4(outputStream, distance);
         }
     }
-    else if (header == COMMAND_SONAR_CHANGE_ADDRESS) {
+    else if (commandHeader == COMMAND_SONAR_CHANGE_ADDRESS) {
         int oldAddress = readHex2(inputStream);
         int newAddress = readHex2(inputStream);
 

@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdbool.h>
 
 #include "../../device/system/systemDeviceInterface.h"
 
@@ -45,6 +46,9 @@ void transmitDriverData(TransmitMode transmitMode,
         writeError(NO_DISPATCHER_FOUND);
         OutputStream* errorOutputStream = getErrorOutputStreamLogger();
         appendStringAndDec(errorOutputStream, ",transmitMode=", transmitMode);
+		append(errorOutputStream, '(');
+		appendString(errorOutputStream, getTransmitModeAsString(transmitMode));
+		append(errorOutputStream, ')');
         appendStringAndDec(errorOutputStream, ",addr=", address);
     }
 }
@@ -76,7 +80,7 @@ bool handleNotificationFromDispatcher(DriverDataDispatcher* dispatcher) {
         /*
         OutputStream* errorOutputStream = getErrorOutputStreamLogger();
         appendStringAndDec(errorOutputStream, "bufferSize=", bufferSize);
-        appendStringAndDec(errorOutputStream, ", header=", header);
+        appendStringAndDec(errorOutputStream, ", commandHeader=", commandHeader);
         println(errorOutputStream);
         */
     

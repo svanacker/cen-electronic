@@ -8,7 +8,7 @@ const char* getPIDDeviceName(void) {
     return "PID";
 }
 
-int devicePIDGetInterface(char commandHeader, int mode, bool fillDeviceArgumentList) {
+int devicePIDGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     if (commandHeader == COMMAND_WRITE_PID) {
         if (fillDeviceArgumentList) {
             setFunction("setPID", 5, 0);

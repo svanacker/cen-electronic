@@ -25,8 +25,8 @@ bool isADCDeviceOk ( void ) {
     return true;
 }
 
-void deviceADCHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream) {
-    if (header == COMMAND_GET_ADC_VALUE) {
+void deviceADCHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream) {
+    if (commandHeader == COMMAND_GET_ADC_VALUE) {
         signed int adcIndex = readSignedHex2(inputStream);
         appendAck(outputStream);
 

@@ -43,11 +43,11 @@ bool beaconReceiverDeviceIsOk() {
     return true;
 }
 
-void beaconReceiverDeviceHandleRawData(char header,
+void beaconReceiverDeviceHandleRawData(char commandHeader,
                              InputStream* inputStream,
                              OutputStream* outputStream) {
     // init Jennic Router
-    if (header == COMMAND_INIT_JENNIC_AS_ROUTER) {
+    if (commandHeader == COMMAND_INIT_JENNIC_AS_ROUTER) {
         // data
         appendAck(outputStream);
         append(outputStream, COMMAND_INIT_JENNIC_AS_ROUTER);
@@ -55,13 +55,13 @@ void beaconReceiverDeviceHandleRawData(char header,
         initJennic5139Router();
     }
     // Receive Network status
-    else if (header == COMMANG_GET_RECEIVER_NETWORK_STATUS) {
+    else if (commandHeader == COMMAND_GET_RECEIVER_NETWORK_STATUS) {
         appendAck(outputStream);
-        append(outputStream, COMMANG_GET_RECEIVER_NETWORK_STATUS);
+        append(outputStream, COMMAND_GET_RECEIVER_NETWORK_STATUS);
         appendHex2(outputStream, getJennicNetworkStatus());
     }
     // Handle the notification sent by the beacon Main Board via Zigbee
-    else if (header == COMMAND_SET_OPPONENT_ROBOT_POSITION_FROM_LASER_TO_RECEIVER) {
+    else if (commandHeader == COMMAND_SET_OPPONENT_ROBOT_POSITION_FROM_LASER_TO_RECEIVER) {
         appendAck(outputStream);
         append(outputStream, COMMAND_SET_OPPONENT_ROBOT_POSITION_FROM_LASER_TO_RECEIVER);
 
@@ -70,7 +70,7 @@ void beaconReceiverDeviceHandleRawData(char header,
         opponentRobotPosition.y = readHex4(inputStream);
     }
     // Ask the opponent Robot position stored by the receiver
-    else if (header == COMMAND_GET_OPPONENT_ROBOT_POSITION) {
+    else if (commandHeader == COMMAND_GET_OPPONENT_ROBOT_POSITION) {
         // data
         appendAck(outputStream);
         append(outputStream, COMMAND_GET_OPPONENT_ROBOT_POSITION);

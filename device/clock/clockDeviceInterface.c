@@ -8,8 +8,8 @@ const char* getClockDeviceName(void) {
     return "Clock";
 }
 
-int deviceClockGetInterface(char header, int mode, bool fillDeviceArgumentList){
-    if (header == COMMAND_READ_CLOCK ) {
+int deviceClockGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList){
+    if (commandHeader == COMMAND_READ_CLOCK ) {
         if (fillDeviceArgumentList) {
             setFunction("Clock Read", 0, 11);
             setResultUnsignedHex2(0, "HOUR");
@@ -25,7 +25,7 @@ int deviceClockGetInterface(char header, int mode, bool fillDeviceArgumentList){
             setResultUnsignedHex2(10, "YEAR");
         }
         return commandLengthValueForMode(mode, 0, 17);
-    } else if (header == COMMAND_WRITE_HOUR) {
+    } else if (commandHeader == COMMAND_WRITE_HOUR) {
         if (fillDeviceArgumentList) {
             setFunction("Hour Write", 3, 0);
             setArgumentUnsignedHex2(0, "HOUR");
@@ -33,7 +33,7 @@ int deviceClockGetInterface(char header, int mode, bool fillDeviceArgumentList){
             setArgumentUnsignedHex2(2, "SECONDE");
         }
         return commandLengthValueForMode(mode, 6, 0);
-    } else if (header == COMMAND_WRITE_DATE) {
+    } else if (commandHeader == COMMAND_WRITE_DATE) {
         if (fillDeviceArgumentList) {
             setFunction("Date Write", 3, 0);
             setArgumentUnsignedHex2(0, "DAY");

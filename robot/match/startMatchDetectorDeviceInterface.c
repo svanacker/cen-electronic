@@ -12,9 +12,8 @@ unsigned int getStartMatchDetectorSoftwareRevision(void) {
     return 1;
 }
 
-int deviceStartMatchDetectorGetInterface(char header, int mode,
-        bool fillDeviceArgumentList) {
-    if (header == COMMAND_STEP_BY_STEP) {
+int deviceStartMatchDetectorGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
+    if (commandHeader == COMMAND_STEP_BY_STEP) {
         // same input / output
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("stepByStep");

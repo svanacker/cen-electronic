@@ -19,7 +19,7 @@ bool beaconLaserDriverServoStop();
 /**
  * Notify the robot position to an outputStream.
  */
-void appendRobotPosition(OutputStream* outputStream, char header, Point* point);
+void appendRobotPosition(OutputStream* outputStream, char commandHeader, Point* point);
 
 /**
  * Notify the beacon receiver
