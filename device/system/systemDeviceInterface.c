@@ -35,9 +35,10 @@ int deviceSystemGetInterface(char commandHeader, DeviceInterfaceMode mode, bool 
     }
     else if (commandHeader == COMMAND_PING) {
         if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("ping");
+            setFunction("ping", 1, 0);
+			setArgumentUnsignedHex2(0, "pingIndex");
         }
-        return commandLengthValueForMode(mode, 0, 0);
+        return commandLengthValueForMode(mode, 2, 2);
     }
     // wait
     else if (commandHeader == COMMAND_WAIT) {

@@ -33,6 +33,7 @@
 
 /** Command to debug the dispatchers. */
 #define DATA_DISPATCHER_DEVICE_HEADER           'j'
+#define COMMAND_PING_DISPATCHER_INDEX			'p'
 
 /** Laser Beacon Device Header. */
 #define LASER_BEACON_DEVICE_HEADER                'l'

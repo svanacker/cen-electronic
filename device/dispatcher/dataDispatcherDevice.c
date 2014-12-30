@@ -1,6 +1,8 @@
 #include "dataDispatcherDevice.h"
 #include "dataDispatcherDeviceInterface.h"
 
+#include "../../common/error/error.h"
+
 #include "../../common/i2c/i2cDebug.h"
 
 #include "../../common/io/inputStream.h"
@@ -37,6 +39,10 @@ void deviceDataDispatcherHandleRawData(char header, InputStream* inputStream, Ou
         DriverDataDispatcherList* dispatcherList = getDispatcherList();
         printDriverDataDispatcherList(getOutputStreamLogger(ALWAYS), dispatcherList);         
     }
+	else if (header == COMMAND_PING_DISPATCHER_INDEX) {
+		// Handle directly by DriverStreamListener => Throw an error
+		writeError(DISPATCHER_PING_MUST_BE_HANDLE_IN_DRIVER_STREAM_LISTENER);
+	}
 }
 
 static DeviceDescriptor descriptor = {

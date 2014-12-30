@@ -27,6 +27,10 @@ void test_isBufferEqualsToString(void);
 
 void test_bufferGetCharAtIndex(void);
 
+// bufferWriteCharAtIndex
+
+void test_bufferWriteCharAtIndex(void);
+
 // bufferCapacity
 
 void test_getBufferCapacity(void);

@@ -35,10 +35,11 @@ void clearLastError();
 
 #define IO_BUFFER_EMPTY                  0x0100
 #define IO_BUFFER_FULL                   0x0101
-#define IO_BUFFER_NULL                    0x0102
-#define IO_BUFFER_NOT_ENOUGH_DATA         0x0103
+#define IO_BUFFER_NULL                   0x0102
+#define IO_BUFFER_NOT_ENOUGH_DATA        0x0103
+#define IO_BUFFER_ILLEGAL_INDEX_ACCESS   0x0104
 
-#define PRINT_WRITER_NOT_HEX_VALUE        0x0104
+#define PRINT_WRITER_NOT_HEX_VALUE        0x0109
 
 #define IO_PIN_INDEX_ERROR                0x0110
 
@@ -85,12 +86,13 @@ void clearLastError();
 #define NO_DISPATCHER_FOUND                0x2100
 #define NO_DISPATCHER_INPUT_STREAM        0x2101
 #define NO_DISPATCHER_INPUT_BUFFER        0x2102
-#define DEVICE_NOT_FOUND                0x2103
+#define DEVICE_NOT_FOUND                  0x2103
 
 #define DISPATCHER_NO_CALLBACK_FOR_NOTIFICATION 0x2110
 #define TOO_MUCH_DRIVER_DATA_DISPATCHER    0x2111
 #define DISPATCHERS_LIST_NOT_INITIALIZED   0x2120
 #define DISPATCHERS_LIST_ILLEGAL_INDEX     0x2121
+#define DISPATCHER_PING_MUST_BE_HANDLE_IN_DRIVER_STREAM_LISTENER 0x2122
 
 // DRIVER
 

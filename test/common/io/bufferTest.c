@@ -23,6 +23,7 @@ void bufferTestSuite(void) {
 
     RUN_TEST(test_isBufferEqualsToString);
 
+    RUN_TEST(test_bufferWriteCharAtIndex);
     RUN_TEST(test_bufferGetCharAtIndex);
 
     RUN_TEST(test_getBufferCapacity);
@@ -181,6 +182,20 @@ void test_bufferWriteChar_and_read_several_times(void) {
             TEST_ASSERT_FALSE(actual);
         }
     }
+}
+
+void test_bufferWriteCharAtIndex(void) {
+    initBufferForTest();
+    bufferWriteChar(&bufferTest, 'H');
+    bufferWriteChar(&bufferTest, 'E');
+    bufferWriteChar(&bufferTest, 'L');
+    bufferWriteChar(&bufferTest, 'L');
+    bufferWriteChar(&bufferTest, 'O');
+	bufferWriteCharAtIndex(&bufferTest, 1, 'A');
+
+    bool actual = isBufferEqualsToString(&bufferTest, "HALLO");
+    TEST_ASSERT_TRUE(actual);
+
 }
 
 // bufferGetCharAtIndex

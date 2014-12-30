@@ -220,8 +220,8 @@ char bufferReadChar(Buffer* buffer) {
     } else {
         // We must log the problem
         writeError(IO_BUFFER_EMPTY);
+		return 0;
     }
-    return 0;
 }
 
 char bufferGetCharAtIndex(const Buffer* buffer, int charIndex) {
@@ -230,7 +230,7 @@ char bufferGetCharAtIndex(const Buffer* buffer, int charIndex) {
         char* sPointer = (char*) buffer->s;
         // Shift to the right cell index
         sPointer += ((buffer->readIndex + charIndex) % buffer->length);
-        char result = *sPointer;        
+		char result = *sPointer;
 
         return result;
     } else {
@@ -240,12 +240,47 @@ char bufferGetCharAtIndex(const Buffer* buffer, int charIndex) {
     return 0;
 }
 
+bool bufferWriteCharAtIndex(const Buffer* buffer, int charIndex, char c) {
+    int size = getBufferElementsCount(buffer);
+    if (charIndex < size) {
+        char* sPointer = (char*) buffer->s;
+        // Shift to the right cell index
+        sPointer += ((buffer->readIndex + charIndex) % buffer->length);
+        *sPointer = c;
+
+        return true;
+    } else {
+        // We must log the problem
+        writeError(IO_BUFFER_ILLEGAL_INDEX_ACCESS);
+        return false;
+	}
+}
+
+void bufferClearLastChars(Buffer* buffer, unsigned char charToRemoveCount) {
+    if (!checkBufferNotNull(buffer)) {
+        return;
+    }
+	int size = getBufferElementsCount(buffer);
+    if (charToRemoveCount <= size) {
+        buffer->readIndex += charToRemoveCount;
+        buffer->readIndex %= buffer->length;
+    } else {
+        writeError(IO_BUFFER_NOT_ENOUGH_DATA);
+    }
+}
+
 void clearBuffer(Buffer* buffer) {
+    if (!checkBufferNotNull(buffer)) {
+        return;
+    }
     buffer->writeIndex = 0;
     buffer->readIndex = 0;
 }
 
 void deepClearBuffer(Buffer* buffer) {
+    if (!checkBufferNotNull(buffer)) {
+        return;
+    }
     unsigned int i;
     char* sPointer = (char*) buffer->s;
     for (i = 0; i < buffer->length; i++) {

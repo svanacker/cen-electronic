@@ -31,6 +31,10 @@
 #include "../../../device/clock/clockDevice.h"
 #include "../../../device/clock/clockDeviceInterface.h"
 
+// DISPATCHER DEVICE
+#include "../../../device/dispatcher/dataDispatcherDevice.h"
+#include "../../../device/dispatcher/dataDispatcherDeviceInterface.h"
+
 // I2C -> Master
 #include "../../../device/i2c/master/i2cMasterDebugDevice.h"
 #include "../../../device/i2c/master/i2cMasterDebugDeviceInterface.h"
@@ -74,6 +78,8 @@
 #include "../../../drivers/driverStreamListener.h"
 #include "../../../drivers/clock/mockClock.h"
 #include "../../../drivers/driverList.h"
+
+#include "../../../drivers/dispatcher/dataDispatcherDeviceDriver.h"
 #include "../../../drivers/dispatcher/driverDataDispatcherList.h"
 #include "../../../drivers/dispatcher/localDriverDataDispatcher.h"
 #include "../../../drivers/dispatcher/i2cDriverDataDispatcher.h"
@@ -236,6 +242,7 @@ void runMainBoardPC(void) {
     addLocalDevice(getI2cMasterDebugDeviceInterface(), getI2cMasterDebugDeviceDescriptor());
     addLocalDevice(getStrategyDeviceInterface(), getStrategyDeviceDescriptor());
     addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
+    addLocalDevice(getDataDispatcherDeviceInterface(), getDataDispatcherDeviceDescriptor());
     addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor());
     initStartMatchDetectorPc(&startMatchDetector);
     addLocalDevice(getStartMatchDetectorDeviceInterface(), getStartMatchDetectorDeviceDescriptor(&startMatchDetector));
@@ -253,6 +260,10 @@ void runMainBoardPC(void) {
     delaymSec(100);
 
     setDebugI2cEnabled(false);
+
+	if (!pingDriverDataDispatcherList()) {
+		printf("PING PROBLEM !");
+	}
     // testDriverIntensive(100);
 
     while (1) {

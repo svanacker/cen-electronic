@@ -145,6 +145,8 @@
     <ClCompile Include="device\deviceInterface.c" />
     <ClCompile Include="device\deviceList.c" />
     <ClCompile Include="device\deviceUsage.c" />
+    <ClCompile Include="device\dispatcher\dataDispatcherDevice.c" />
+    <ClCompile Include="device\dispatcher\dataDispatcherDeviceInterface.c" />
     <ClCompile Include="device\dispatcher\deviceDataDispatcher.c" />
     <ClCompile Include="device\eeprom\eepromDevice.c" />
     <ClCompile Include="device\eeprom\eepromDeviceInterface.c" />
@@ -174,6 +176,7 @@
     <ClCompile Include="device\transmitMode.c" />
     <ClCompile Include="drivers\beacon\beaconReceiverDriver.c" />
     <ClCompile Include="drivers\clock\mockClock.c" />
+    <ClCompile Include="drivers\dispatcher\dataDispatcherDeviceDriver.c" />
     <ClCompile Include="drivers\dispatcher\driverDataDispatcher.c" />
     <ClCompile Include="drivers\dispatcher\driverDataDispatcherDebug.c" />
     <ClCompile Include="drivers\dispatcher\driverDataDispatcherList.c" />
@@ -344,6 +347,8 @@
     <ClInclude Include="device\deviceInterface.h" />
     <ClInclude Include="device\deviceList.h" />
     <ClInclude Include="device\deviceUsage.h" />
+    <ClInclude Include="device\dispatcher\dataDispatcherDevice.h" />
+    <ClInclude Include="device\dispatcher\dataDispatcherDeviceInterface.h" />
     <ClInclude Include="device\dispatcher\deviceDataDispatcher.h" />
     <ClInclude Include="device\eeprom\eepromDevice.h" />
     <ClInclude Include="device\eeprom\eepromDeviceInterface.h" />
@@ -373,6 +378,7 @@
     <ClInclude Include="device\transmitMode.h" />
     <ClInclude Include="drivers\beacon\beaconReceiverDriver.h" />
     <ClInclude Include="drivers\clock\mockClock.h" />
+    <ClInclude Include="drivers\dispatcher\dataDispatcherDeviceDriver.h" />
     <ClInclude Include="drivers\dispatcher\driverDataDispatcher.h" />
     <ClInclude Include="drivers\dispatcher\driverDataDispatcherDebug.h" />
     <ClInclude Include="drivers\dispatcher\driverDataDispatcherList.h" />

@@ -64,7 +64,7 @@ bool transmitFromDriverRequestBuffer() {
 
     // We need ack
     checkIsAck(inputStream);
-    // Command header answer with the same header as the request
+    // Device header answer with the same header as the request
     checkIsChar(inputStream, deviceHeader);
     // Command header answer with the same header as the request
     checkIsChar(inputStream, commandHeader);

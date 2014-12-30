@@ -62,6 +62,16 @@ bool isBufferInitialized(Buffer* buffer);
  */
 void clearBuffer(Buffer* buffer);
 
+/** 
+ * TODO : Unit Test
+ * Clear last "n" chars
+ * @param buffer the buffer to clear (simulates object programming)
+ * @param charToRemoveCount how many char must be removed
+ * @throws IO_BUFFER_NULL if the pointer is NULL
+ * @throws IO_BUFFER_NOT_ENOUGH_DATA
+ */
+void bufferClearLastChars(Buffer* buffer, unsigned char charToRemoveCount);
+
 /**
  * Do a deep clear of buffer (write 0 on all cells of array);
  * @param buffer the buffer to clear very deeply (simulates object programming)
@@ -81,6 +91,7 @@ bool isBufferFull(const Buffer* buffer);
  * Returns true if the buffer is empty, false else.
  * @param buffer the buffer (simulates object programming)
  * @return true if the buffer is empty, false else
+ * @throws IO_BUFFER_NULL if the pointer is NULL
  */
 bool isBufferEmpty(const Buffer* buffer);
 
@@ -89,6 +100,7 @@ bool isBufferEmpty(const Buffer* buffer);
  * @param buffer the buffer (simulates object programming)
  * @param s the string to compare with the buffer
  * @returns true if the buffer is equals exactly to the string, and contains no more and no less characters than the passed string into parameters, false else
+ * @throws IO_BUFFER_NULL if the pointer is NULL
  */
 bool isBufferEqualsToString(const Buffer* buffer, char* s);
 
@@ -96,6 +108,7 @@ bool isBufferEqualsToString(const Buffer* buffer, char* s);
  * Returns the number of elements.
  * @param buffer the buffer (simulates object programming)
  * @return the number of elements.
+ * @throws IO_BUFFER_NULL if the pointer is NULL
  */
 int getBufferElementsCount(const Buffer* buffer);
 
@@ -104,6 +117,7 @@ int getBufferElementsCount(const Buffer* buffer);
  * As we use a circular buffer, we only store n - 1 elements (where n is the size of the array), and not n, because if we use n, we cannot distinguish when buffer is empty or full (if readIndex == writeIndex).
  * @param buffer the buffer (simulates object programming)
  * @return the total capacity to store Elements.
+ * @throws IO_BUFFER_NULL if the pointer is NULL
  */
 int getBufferCapacity(const Buffer* buffer);
 
@@ -112,6 +126,8 @@ int getBufferCapacity(const Buffer* buffer);
  * Shift the read buffer to the next char.
  * @param buffer the buffer (simulates object programming)
  * @return the the first char inserted (FIFO Stack).
+ * @throws IO_BUFFER_NULL if the pointer is NULL
+ * @throws IO_BUFFER_EMPTY if not enough char in the buffer
  */
 char bufferReadChar(Buffer* buffer);
 
@@ -120,6 +136,8 @@ char bufferReadChar(Buffer* buffer);
  * @param buffer the buffer (simulates object programming)
  * @param charIndex the index of the char (0 = first char)
  * @return the char at the specified index
+ * @throws IO_BUFFER_NULL if the pointer is NULL
+ * @throws IO_BUFFER_NOT_ENOUGH_DATA if not enough char in the buffer
  */
 char bufferGetCharAtIndex(const Buffer* buffer, int charIndex);
 
@@ -127,13 +145,26 @@ char bufferGetCharAtIndex(const Buffer* buffer, int charIndex);
  * Append a character to the buffer (FIFO buffer).
  * @param buffer the buffer (simulates object programming)
  * @param c the char which will be appended
+ * @throws IO_BUFFER_NULL if the pointer is NULL
+ * @throws IO_BUFFER_FULL if not enough space
  */
 void bufferWriteChar(Buffer* buffer, char c);
+
+/**
+ * @param buffer the buffer (simulates object programming).
+ * @param charIndex the index where we want to write
+ * @param c the new value for the index
+ * @return true if it was successfully updated, false else (not enough data, bad index ...)
+ * @throws IO_BUFFER_NULL if the pointer is NULL
+ * @throws IO_BUFFER_ILLEGAL_INDEX_ACCESS if we try to access to an non existing char
+ */
+bool bufferWriteCharAtIndex(const Buffer* buffer, int charIndex, char c);
 
 /**
  * Get a compatible InputStream associated to the buffer.
  * @param buffer the buffer (simulates object programming)
  * @return the inputStream associated to the buffer.
+ * @throws IO_BUFFER_NULL if the pointer is NULL
  */
 InputStream* getInputStream(Buffer* buffer);
 
@@ -141,6 +172,7 @@ InputStream* getInputStream(Buffer* buffer);
  * Get a compatible OutputStream with the buffer.
  * @param buffer the buffer (simulates object programming)
  * @return the outputStream associated to the buffer.
+ * @throws IO_BUFFER_NULL if the pointer is NULL 
  */
 OutputStream* getOutputStream(Buffer* buffer);
 
@@ -148,6 +180,7 @@ OutputStream* getOutputStream(Buffer* buffer);
  * Print the buffer in a debug mode, with all variables.
  * @param outputStream the output stream (often debug) where we writes some values
  * @param buffer the buffer (simulates object programming)
+ * @throws IO_BUFFER_NULL if the pointer is NULL 
  */
 void printDebugBuffer(OutputStream* outputStream, Buffer* buffer);
 

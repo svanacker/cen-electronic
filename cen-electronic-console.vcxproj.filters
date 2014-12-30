@@ -1095,6 +1095,15 @@
     <ClCompile Include="device\transmitMode.c">
       <Filter>Source Files\device</Filter>
     </ClCompile>
+    <ClCompile Include="device\dispatcher\dataDispatcherDevice.c">
+      <Filter>Source Files\device\dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="device\dispatcher\dataDispatcherDeviceInterface.c">
+      <Filter>Source Files\device\dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\dispatcher\dataDispatcherDeviceDriver.c">
+      <Filter>Source Files\drivers\dispatchers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -1702,6 +1711,15 @@
     </ClInclude>
     <ClInclude Include="device\transmitMode.h">
       <Filter>Header Files\device</Filter>
+    </ClInclude>
+    <ClInclude Include="device\dispatcher\dataDispatcherDevice.h">
+      <Filter>Header Files\device\dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="device\dispatcher\dataDispatcherDeviceInterface.h">
+      <Filter>Header Files\device\dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\dispatcher\dataDispatcherDeviceDriver.h">
+      <Filter>Header Files\drivers\dispatchers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
