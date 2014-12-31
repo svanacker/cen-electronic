@@ -1,5 +1,5 @@
-#ifndef IOUTILS_H
-#define IOUTILS_H
+#ifndef IO_UTILS_H
+#define IO_UTILS_H
 
 #include "filter.h"
 #include "inputStream.h"
@@ -21,4 +21,3 @@ unsigned int copyInputToOutputStream(InputStream* inputStream,
         int dataCountToCopy);
 
 #endif
-

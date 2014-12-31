@@ -1080,9 +1080,6 @@
     <ClCompile Include="common\math\random.c">
       <Filter>Source Files\common\math</Filter>
     </ClCompile>
-    <ClCompile Include="common\math\pc\randomPc32.c">
-      <Filter>Source Files\common\math\pc</Filter>
-    </ClCompile>
     <ClCompile Include="common\pc\pipe\pipeClientHelper.c">
       <Filter>Source Files\common\pc\pipe</Filter>
     </ClCompile>
@@ -1103,6 +1100,9 @@
     </ClCompile>
     <ClCompile Include="drivers\dispatcher\dataDispatcherDeviceDriver.c">
       <Filter>Source Files\drivers\dispatchers</Filter>
+    </ClCompile>
+    <ClCompile Include="common\math\pc\randomPc.c">
+      <Filter>Source Files\common\math\pc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

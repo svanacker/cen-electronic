@@ -11,7 +11,7 @@
  */
 void _initTimers() {
     // The following instruction sets up Timer 1 to set the T1 Flag at a rate of 
-    // 28 800 Hz assumming that the PBCLK is running at 8 MHz (PLL * 20) => 160 MHz / 4 / 256 / (4 + 1) => 28 800. This instruction 
+    // 28 800 Hz assuming that the PBCLK is running at 8 MHz (PLL * 20) => 160 MHz / 4 / 256 / (4 + 1) => 28 800. This instruction 
     // sets the PR1 value to 4 (compute = period + 1).
     OpenTimer1((T1_ON | T1_SOURCE_INT | T1_PS_1_256), 4); 
  

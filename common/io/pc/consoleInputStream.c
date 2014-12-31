@@ -3,6 +3,7 @@
 #include <conio.h>
 
 #include "consoleInputStream.h"
+
 #include "../../../common/io/inputStream.h"
 
 // CONSOLE INPUT STREAM

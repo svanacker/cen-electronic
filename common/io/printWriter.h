@@ -3,7 +3,6 @@
 
 #include <stdbool.h>
 
-#include "../../common/commons.h"
 #include "../../common/io/outputStream.h"
 #include "../../common/io/buffer.h"
 
@@ -44,7 +43,7 @@ void appendString(OutputStream* outputStream, const char* s);
 void appendStringCRLF(OutputStream* outputStream, const char* s);
 
 /**
- * Add an acknowledgment to the outputStream.
+ * Add an acknowledgement to the outputStream.
  * @param outputStream the pointer on outputStream (POO simulation)
  */
 void appendAck(OutputStream* outputStream);
@@ -128,7 +127,7 @@ void appendHex8(OutputStream* outputStream, signed long value);
 
 /**
  * Append a float value into hexadecimal value (4 chars).
- * We use a factor to decide how to trunc value (we multiply by factorToTrunc)
+ * We use a factor to decide how to trunk value (we multiply by factorToTrunc)
  * @param outputStream the pointer on outputStream (POO simulation)
  * @param value the float value
  * @param factorToTrunc ?????
@@ -137,7 +136,7 @@ void appendHexFloat4(OutputStream* outputStream, float value, float factorToTrun
 
 /**
  * Append a float value into hexadecimal value (8 chars).
- * We use a factor to decide how to trunc value (we multiply by factorToTrunc)
+ * We use a factor to decide how to trunk value (we multiply by factorToTrunc)
  * @param outputStream the pointer on outputStream (POO simulation)
  * @param value the float value
  * @param factorToTrunc ?????

@@ -89,7 +89,6 @@ void setPinValue(int pinIndex, bool pinValue) {
             writeError(IO_PIN_INDEX_ERROR);
         }
     }
-
 }
 
 bool getPinValue(int pinIndex) {

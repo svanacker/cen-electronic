@@ -23,7 +23,7 @@ typedef struct I2cSlaveLink{
 // --- INPUT STREAM ---
 
 /**
-* Init an inputStream arround i2c with an address.
+* Init an inputStream around i2c with an address.
 * @param inputStream a structure to initialize
 * @param i2cBuffer an internal i2cBuffer 
 * @param i2cAddress the address to respond to i2c request
@@ -35,7 +35,7 @@ void openSlaveI2cInputStream(InputStream* inputStream,
 // --- OUTPUT STREAM ---
 
 /**
-* Open a link (input/output) arround i2c with an address.
+* Open a link (input/output) around i2c with an address.
 * @param outputStream a structure to initialize
 * @param i2cBuffer an internal i2cBuffer 
 * @param i2cAddress the address to respond to i2c request

@@ -1,5 +1,7 @@
 #include <peripheral/legacy/i2c_legacy.h>
 
+#include <stdbool.h>
+
 #include "../i2cMasterSetup.h"
 
 #include "../../../../common/commons.h"

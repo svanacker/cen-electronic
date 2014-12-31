@@ -1,5 +1,6 @@
 #include "logHandler.h"
 #include "logLevel.h"
+
 #include "../../common/io/outputStream.h"
 
 void initHandler(

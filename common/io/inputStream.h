@@ -5,12 +5,9 @@
  * Encapsulates a Stream to read data from heterogeneous
  * Streams which can be encapsulated :
  * UART, I2C, Zigbee ...
- * @author svanacker
  */
 
 #include <stdbool.h>
-
-#include "../../common/commons.h"
 
 /** Define the command to clear the inputStream. */
 #define HEADER_CLEAR_INPUT_STREAM 'z'

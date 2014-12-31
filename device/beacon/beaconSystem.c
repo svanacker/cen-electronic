@@ -120,7 +120,7 @@ bool notifyRobotPositionIfNecessary() {
 // INIT / STOP
 
 void initLaserBeacon() {
-    addTimer(BEACON_TIMER_CODE, TIME_DIVISER_2000_HERTZ, beaconTimerCallback, "BEACON");
+    addTimer(BEACON_TIMER_CODE, TIME_DIVIDER_2000_HERTZ, beaconTimerCallback, "BEACON");
 }
 
 void stopLaserBeacon() {

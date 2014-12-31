@@ -1,5 +1,3 @@
-#include "../../../common/commons.h"
-
 #include <i2c.h>
 
 #include "../i2cCommon.h"

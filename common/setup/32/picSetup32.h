@@ -14,9 +14,9 @@
 #pragma config FPLLMUL  = MUL_20
 // -> PLL Input Divider
 #pragma config FPLLIDIV = DIV_2
-// ->Peripheral Clock Dividor
+// ->Peripheral Clock Divisor
 #pragma config FPBDIV   = DIV_2
-// -> System PLL Output Clock Divier
+// -> System PLL Output Clock Divider
 #pragma config FPLLODIV = DIV_1
 
 #define SYS_FREQ        (QUARTZ_FREQUENCY * CLOCK_PLL / 2)

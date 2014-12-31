@@ -27,7 +27,7 @@ Point* getLastOpponentRobotPosition() {
 void initOpponentRobot() {
     // Timer for detector
     addTimer(OPPONENT_ROBOT_TIMER_INDEX,
-            TIME_DIVISER_2_HERTZ,
+            TIME_DIVIDER_2_HERTZ,
             &opponentRobotCallbackFunc,
             "OPPONENT");
 }

@@ -1,10 +1,7 @@
-#include "../../../../common/commons.h"
-
 #include <i2c.h>
 
 #include "../i2cMaster.h"
 #include "../../../../common/i2c/i2cCommon.h"
-
 
 unsigned int portableMasterWriteI2C(unsigned char data) {
     return MasterWriteI2C(data);

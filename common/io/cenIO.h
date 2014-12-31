@@ -7,7 +7,7 @@
 #define RD3_OUTPUT RD3
 
 /**
- * Initialize the IO in input or ouput
+ * Initialize the IO in input or output.
  */
 void initIO();
 

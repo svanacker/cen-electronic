@@ -1,6 +1,7 @@
 #include <math.h>
 
 #include "2d.h"
+#include "../../common/io/printWriter.h"
 #include "../../common/math/cenMath.h"
 
 float distanceBetweenPoints(Point* p0, Point* p1) {

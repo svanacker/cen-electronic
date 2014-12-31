@@ -14,7 +14,7 @@ void i2cMasterWriteBuffer(unsigned char address, Buffer* buffer) {
 
     portableStartI2C();
     WaitI2C();
-    // Adress
+    // Address
     portableMasterWriteI2C(address);
     WaitI2C();
 
@@ -35,7 +35,7 @@ void i2cMasterWriteChar(unsigned char address, unsigned char c) {
     // Wait till Start sequence is completed
     WaitI2C();
 
-    // Adress
+    // Address
     portableMasterWriteI2C(address);
     WaitI2C();
 

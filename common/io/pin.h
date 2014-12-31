@@ -3,8 +3,6 @@
 
 #include <stdbool.h>
 
-#include "../../common/commons.h"
-
 #include "outputStream.h"
 
 // Port B

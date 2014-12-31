@@ -32,7 +32,7 @@
  * Define the timer diviser to have a timer at approximatively 1,5 Hertz.
  * Use primer number to avoid synchronization problem
  */
-#define TIME_DIVISER_1_5_HERTZ                 18181
+#define TIME_DIVIDER_1_5_HERTZ                 18181
 #define FORCE_ROBOT_NEXT_STEP_COUNTER        5        
 
 static unsigned int strategyDriverInterruptCounter;
@@ -61,7 +61,7 @@ void forceRobotNextStepIfNecessary() {
  * Initialize the strategy Driver and a timer used to send next Step in case of problem.
  */
 void initStrategyDriver() {
-    addTimer(STRATEGY_DRIVER_TIMER_INDEX, TIME_DIVISER_1_5_HERTZ, &strategyDriverTimerCallback, "STRATEGY");
+    addTimer(STRATEGY_DRIVER_TIMER_INDEX, TIME_DIVIDER_1_5_HERTZ, &strategyDriverTimerCallback, "STRATEGY");
 }
 
 void robotNextStep() {

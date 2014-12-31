@@ -1,7 +1,6 @@
 #include "../timerSetup.h"
 #include "../cenTimer.h"
 
-
 /**
  * @private
  */

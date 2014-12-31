@@ -7,11 +7,4 @@
  */
 #define COMMAND_ACK 'a'
 
-/**
- * Defines the separator used to split each arguments
- * (useful when using arguments of 4 or 8 Hexadecimal char).
- */
-#define ARGUMENT_SEPARATOR '-';
-
-
 #endif

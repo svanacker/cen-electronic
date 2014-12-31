@@ -1,13 +1,11 @@
 #include <i2c.h>
 #include <stdlib.h>
-
-#include "../../../../common/commons.h"
+#include <stdbool.h>
 
 #include "../i2cMasterSetup.h"
 
 #include "../../../../common/i2c/i2cCommon.h"
 #include "../../../../common/i2c/master/i2cMaster.h"
-
 
 #include "../../../../common/log/logger.h"
 #include "../../../../common/log/logLevel.h"
@@ -22,7 +20,7 @@ void i2cMasterInitialize(void) {
         appendString(getOutputStreamLogger(DEBUG), "I2C Master already initialized\n");
         return;
     }
-        int I2C_BRG = 0x10B;    // 100kHz for PIC30
+    int I2C_BRG = 0x10B;    // 100kHz for PIC30
     // Configure I2C for 7 bit address mode
     int I2C_CON =
 //                    I2C_ON & // Warning solved : #FFFF with & ==> NO EFFECT

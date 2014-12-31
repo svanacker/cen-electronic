@@ -1,7 +1,5 @@
 #include <stdlib.h>
 
-#include "../../../common/commons.h"
-
 #include <p30Fxxxx.h>
 
 #include "../serialInputInterrupt.h"

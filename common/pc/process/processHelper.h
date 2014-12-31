@@ -13,7 +13,7 @@ void moveConsole(int left, int top, int width, int height);
 
 /**
  * Run the process.
-*/
+ */
 bool runProcess(char* applicationName, char* option);
 
 #endif

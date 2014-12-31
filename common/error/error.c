@@ -1,3 +1,5 @@
+#include <stdbool.h>
+
 #include "error.h"
 
 #include "../../common/log/logger.h"
@@ -7,8 +9,6 @@
 #include "../../common/io/printWriter.h"
 
 static int lastErrorCode;
-
-// Liste of error Code
 
 void writeError(int errorCode) {
     lastErrorCode = errorCode;

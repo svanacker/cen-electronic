@@ -12,7 +12,7 @@ _FWDT(WDT_OFF);
 // Power On Reset                  
 _FBORPOR(PBOR_ON & PWRT_64 & MCLR_EN);
 
-// Codeprotect OFF
+// Code protect OFF
 _FGS(CODE_PROT_OFF);            
 
 #endif

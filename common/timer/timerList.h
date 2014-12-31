@@ -4,7 +4,7 @@
 #include "cenTimer.h"
 
 /**
- * Tre struct defining a list of timer.
+ * The struct defining a list of timer.
  */
 typedef struct {
     /** An array of pointer on timer pointer. */
@@ -25,7 +25,7 @@ typedef struct {
 void initTimerList(Timer (*timerListArray)[], unsigned char timerListSize);
 
 /**
- * Creates a timer and adds it to list with a frequency gived by timeDiviser.
+ * Creates a timer and adds it to list with a frequency given by timeDiviser.
  * @param timerCode a unique code used to identify timer
  * @param timerDiviser Ex : if timeDiviser = 100, time frequency is 100 times slower than the main interruption
  * @param callback the function which must be used by the interruption

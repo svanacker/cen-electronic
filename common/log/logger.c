@@ -1,6 +1,6 @@
 #include "logger.h"
 
-/** Singleton, used for instanciate memory necessary for struct */
+/** Singleton, used for instantiate memory necessary for struct */
 static Logger logger;
 static LogHandlerList logHandlerList;
 static OutputStream logOutputStream;

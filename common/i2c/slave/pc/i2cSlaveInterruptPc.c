@@ -1,10 +1,11 @@
+#include <stdbool.h>
+
 #include "i2cSlaveInterruptPc.h"
 #include "i2cSlaveSetupPc.h"
 #include "../i2cSlave.h"
 #include "../../i2cConstants.h"
 #include "../../i2cDebug.h"
 
-#include "../../../../common/commons.h"
 #include "../../../../common/delay/cenDelay.h"
 
 #include "../../../../common/error/error.h"
@@ -15,7 +16,6 @@
 #include "../../../../common/log/logger.h"
 #include "../../../../common/log/logLevel.h"
 
-
 #include "../../../../common/pc/pipe/pipeClientHelper.h"
 #include "../../../../common/pc/pipe/pipeServerHelper.h"
 
@@ -23,10 +23,7 @@ static bool i2cStartFlag = false;
 static bool i2cAddressDefinedFlag = false;
 static bool i2cReadFlag = false;
 
-#define I2C_SLAVE_INTERRUPT_DELAY_MICRO_SECONDS    100
-
-void sendI2CDataToMaster(void)
-{
+void sendI2CDataToMaster(void) {
     if (!i2cReadFlag) {
         return;
     }
@@ -55,7 +52,6 @@ void sendI2CDataToMaster(void)
         // and on real I2C, value is just read on the fly, but not stored !
         portableSlaveWriteI2C(I2C_SLAVE_NO_DATA_IN_READ_BUFFER);
     }
-    // printI2cDebugBuffers();
 }
 
 void handleI2CDataFromMaster(void) {
@@ -63,8 +59,6 @@ void handleI2CDataFromMaster(void) {
 
     unsigned char data = portableSlaveReadI2C();
     if (INCORRECT_DATA != data && I2C_SLAVE_FAKE_WRITE != data) {
-        // printf("Raw data : %c\r\n", data);
-        // printf("Address : %d\r\n", getI2CWriteAddress());
         if (ASCII_STX == data) {
             i2cStartFlag = true;
             i2cAddressDefinedFlag = false;
@@ -82,10 +76,8 @@ void handleI2CDataFromMaster(void) {
         }
         
         // Data here are real data (not start / stop or the address)
-        // printf("Real data : %c\r\n", data);
         if (!i2cAddressDefinedFlag) {
 
-            // printf("writeAddress : %c", data);
             // We don't care about write Address or Read address
             if (getI2cWriteAddress() == (data & 0xFE)) {
                 
@@ -109,11 +101,10 @@ void handleI2CDataFromMaster(void) {
 DWORD WINAPI masterToSlaveCallback(LPVOID lpvParam) {
     printf("PC : I2C Master -> Slave listening !\r\n");
     while (true) {
-        // delay10us(I2C_SLAVE_INTERRUPT_DELAY_MICRO_SECONDS / 10);
         delayUs();
         handleI2CDataFromMaster();
     }
-    printf("masterToSlaveCallback exitting.\n");
+    printf("masterToSlaveCallback exiting.\n");
 
     return 1;
 }
@@ -121,11 +112,10 @@ DWORD WINAPI masterToSlaveCallback(LPVOID lpvParam) {
 DWORD WINAPI slaveToMasterCallback(LPVOID lpvParam) {
     printf("PC : I2 Slave -> Master listening !\r\n");
     while (true) {
-        // delay1us(I2C_SLAVE_INTERRUPT_DELAY_MICRO_SECONDS / 10);
         delayUs();
         sendI2CDataToMaster();
     }
-    printf("slaveToMasterCallback exitting.\n");
+    printf("slaveToMasterCallback exiting.\n");
 
     return 1;
 }

@@ -5,7 +5,7 @@
 
 /**
  * Initializes a fake Eeprom which returns always 0 and does nothing when writing.
- * It is usefull for test
+ * It is useful for test
  * @param nullEeprom a pointer on eeprom object
  */
 void initNullEeprom(Eeprom* nullEeprom);

@@ -47,7 +47,7 @@ typedef struct {
     Buffer* inputBuffer;
     /** A FIFO buffer for the output stream. */
     Buffer* outputBuffer;
-    /** The output stream arround. */
+    /** The output stream around. */
     OutputStream* outputStream;
 }
 StreamLink;
@@ -57,7 +57,7 @@ StreamLink;
  * @param streamLink the structure which stores attributes of stream link
  * @param inputBuffer the buffer which use the input
  * @param inputBufferArrayPointer the array used by the input buffer
- * @param inputBufferLenght the length of the intput buffer
+ * @param inputBufferLenght the length of the input buffer
  * @param outputBuffer the buffer which use the output
  * @param outputBufferArrayPointer the array used by the output buffer
  * @param outputBufferLenght the length of the output buffer

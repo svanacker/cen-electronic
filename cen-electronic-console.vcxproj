@@ -119,7 +119,7 @@
     <ClCompile Include="common\math\bitList.c" />
     <ClCompile Include="common\math\cenMath.c" />
     <ClCompile Include="common\math\hexUtils.c" />
-    <ClCompile Include="common\math\pc\randomPc32.c" />
+    <ClCompile Include="common\math\pc\randomPc.c" />
     <ClCompile Include="common\math\random.c" />
     <ClCompile Include="common\pc\pipe\pipeClientHelper.c" />
     <ClCompile Include="common\pc\pipe\pipeServerHelper.c" />

@@ -7,7 +7,6 @@
 
 #include "../../common/io/buffer.h"
 #include "../../common/io/printWriter.h"
-#include "../../common/io/ioUtils.h"
 
 #include "../../common/log/logHandler.h"
 #include "../../common/log/logger.h"
@@ -16,16 +15,6 @@
 static Buffer* debugI2cInputBuffer;
 static Buffer* debugI2cOutputBuffer;
 static bool debugI2cEnabled;
-
-/*
-Buffer* getDebugI2cInputBuffer() {
-    return debugI2cInputBuffer;
-}
-
-Buffer* getDebugI2cOutputBuffer() {
-    return debugI2cOutputBuffer;
-}
-*/
 
 bool getDebugI2cEnabled() {
     return debugI2cEnabled;

@@ -24,7 +24,7 @@ OutputStream* getChildOutputStream(CompositeOutputStream* compositeOutputStream,
 }
 
 
-// Composite->OutputStream callbak
+// Composite->OutputStream callback
 
 void _openCompositeOutputStream(OutputStream* outputStream, int param1) {
     // don't do anything, only each leaf outputStream must be opened

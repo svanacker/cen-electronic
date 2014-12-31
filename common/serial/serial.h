@@ -19,7 +19,7 @@
 /** Define the index of serial port 6. */
 #define SERIAL_PORT_6         6
 
-/** The default speed of the serial tranmission is fixed to 115200. */
+/** The default speed of the serial transmission is fixed to 115200. */
 #define DEFAULT_SERIAL_SPEED 115200L
 
 /**

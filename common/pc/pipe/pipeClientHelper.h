@@ -2,7 +2,6 @@
 #define PIPE_CLIENT_HELPER_H
 
 #include <stdio.h>
-#include <stdbool.h>
 #include <Windows.h>
 
 /**

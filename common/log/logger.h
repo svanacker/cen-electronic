@@ -8,13 +8,13 @@
 #include "../../common/io/outputStream.h"
 
 typedef struct Logger {
-    /** A level corresponding to the minimal logLevel which must be loggued. */
+    /** A level corresponding to the minimal logLevel which must be logged. */
     LogLevel globalLogLevel;
     /** the level that we used to write. */
     LogLevel writeLogLevel;
     /** the list of handler. */
     LogHandlerList* logHandlerList;
-    /** The outputStream as an interface to the developper. */
+    /** The outputStream as an interface to the developer. */
     OutputStream* outputStream;
 } Logger;
 
@@ -27,7 +27,7 @@ LogHandlerList* getLoggerHandlerList();
 
 /**
  * Init the log system.
- * @param globalLevel the global level of log (independant of each handler level)
+ * @param globalLevel the global level of log (independent of each handler level)
  */
 void initLog(LogLevel globalLevel);
 

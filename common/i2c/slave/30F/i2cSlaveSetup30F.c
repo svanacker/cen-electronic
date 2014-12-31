@@ -1,6 +1,5 @@
-#include "../../../../common/commons.h"
-
 #include <i2c.h>
+#include <stdbool.h>
 #include <p30Fxxxx.h>
 
 #include "../../../../common/error/error.h"

@@ -1,7 +1,5 @@
 #include <stdlib.h>
 
-#include "../../common/commons.h"
-
 #include "streamLink.h"
 
 void initStreamLink(StreamLink* streamLink,

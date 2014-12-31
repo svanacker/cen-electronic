@@ -6,7 +6,7 @@
 #include "../../common/io/printWriter.h"
 
 /**
- * Defines a structure to wrap a handler arround outputStream.
+ * Defines a structure to wrap a handler around outputStream.
  */
 typedef struct {
     /** A level corresponding to logLevel. */

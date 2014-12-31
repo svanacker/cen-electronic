@@ -1,7 +1,7 @@
 #ifndef TWOD_H
 #define TWOD_H
 
-#include "../../common/io/printWriter.h"
+#include "../../common/io/outputStream.h"
 
 /**
  * Define a Point structure.

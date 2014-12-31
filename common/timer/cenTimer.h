@@ -4,57 +4,57 @@
 #include <stdbool.h>
 
 /**
- * Define the timer diviser to have a timer at 1 Hertz (every second).
+ * Define the timer divider to have a timer at 1 Hertz (every second).
  */
-#define TIME_DIVISER_1_HERTZ                 28800
+#define TIME_DIVIDER_1_HERTZ                 28800
 
 /**
- * Define the timer diviser to have a timer at 2 Hertz.
+ * Define the timer divider to have a timer at 2 Hertz.
  */
-#define TIME_DIVISER_2_HERTZ                 TIME_DIVISER_1_HERTZ / 2
+#define TIME_DIVIDER_2_HERTZ                 TIME_DIVIDER_1_HERTZ / 2
 
 /**
- * Define the timer diviser to have a timer at 10 Hertz.
+ * Define the timer divider to have a timer at 10 Hertz.
  */
-#define TIME_DIVISER_10_HERTZ                 TIME_DIVISER_1_HERTZ / 10
+#define TIME_DIVIDER_10_HERTZ                 TIME_DIVIDER_1_HERTZ / 10
 
 /**
- * Define the timer diviser to have a timer at 16 Hertz.
+ * Define the timer divider to have a timer at 16 Hertz.
  */
-#define TIME_DIVISER_16_HERTZ                 TIME_DIVISER_1_HERTZ / 16
+#define TIME_DIVIDER_16_HERTZ                 TIME_DIVIDER_1_HERTZ / 16
 
 /**
- * Define the timer diviser to have a timer at 30 Hertz.
+ * Define the timer divider to have a timer at 30 Hertz.
  */
-#define TIME_DIVISER_30_HERTZ                 TIME_DIVISER_1_HERTZ / 30
+#define TIME_DIVIDER_30_HERTZ                 TIME_DIVIDER_1_HERTZ / 30
 
 /**
- * Define the timer diviser to have a timer at 50 Hertz.
+ * Define the timer divider to have a timer at 50 Hertz.
  */
-#define TIME_DIVISER_50_HERTZ                 TIME_DIVISER_1_HERTZ / 50
+#define TIME_DIVIDER_50_HERTZ                 TIME_DIVIDER_1_HERTZ / 50
 
 /**
- * Define the timer diviser to have a timer at 100 Hertz.
+ * Define the timer divider to have a timer at 100 Hertz.
  */
-#define TIME_DIVISER_100_HERTZ                 TIME_DIVISER_1_HERTZ / 100
+#define TIME_DIVIDER_100_HERTZ                 TIME_DIVIDER_1_HERTZ / 100
 
 /**
- * Define the timer diviser to have a timer at 1000 Hertz (every millisecond).
+ * Define the timer divider to have a timer at 1000 Hertz (every millisecond).
  * This is approximative because division is not exact.
  */
-#define TIME_DIVISER_1000_HERTZ TIME_DIVISER_1_HERTZ / 1000
+#define TIME_DIVIDER_1000_HERTZ TIME_DIVIDER_1_HERTZ / 1000
 
 /**
- * Define the timer diviser to have a timer at 2000 Hertz
+ * Define the timer divider to have a timer at 2000 Hertz
  * This is approximative because division is not exact.
  */
-#define TIME_DIVISER_2000_HERTZ TIME_DIVISER_1_HERTZ / 2000
+#define TIME_DIVIDER_2000_HERTZ TIME_DIVIDER_1_HERTZ / 2000
 
 /**
- * Define the timer diviser to have a timer at 10000 Hertz.
+ * Define the timer divider to have a timer at 10000 Hertz.
  * This is approximative because division is not exact.
  */
-#define TIME_DIVISER_10000_HERTZ 3
+#define TIME_DIVIDER_10000_HERTZ 3
 
 // forward declaration
 struct Timer;
@@ -72,9 +72,9 @@ typedef void interruptTimerCallbackFunc(Timer* timer);
 struct Timer {
     /** The code of the timer (unique in all applications), not necessary equal to index in a timer List . */
     unsigned char timerCode;
-    /** The diviser timer. */
+    /** The divider timer. */
     unsigned long timeDiviser;
-    /** The internal counter to divise the timer. */
+    /** The internal counter to divide the timer. */
     unsigned long timeInternalCounter;
     /** The value of the timer. */
     unsigned long time;

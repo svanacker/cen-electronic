@@ -6,7 +6,7 @@
 
 /**
  * Convert char array to wide char array
- * PLEASE NOTE that it's the responsability of the caller to free the memory
+ * PLEASE NOTE that it's the responsibility of the caller to free the memory
  */
 wchar_t* convertCharArrayToWideCharArray(char* source) {
     size_t   charCopiedCount;

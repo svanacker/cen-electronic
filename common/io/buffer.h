@@ -9,9 +9,8 @@
 
 /**
  * Defines a circular buffer which can be used to insert at the end, and remove at first (with inputStream / outputStream interface) in constant time.
- * This is an alternatif to linked list which consumes more memory. We don't have to delete or insert in the middle, so this structure is perfect for us.
+ * This is an alternative to linked list which consumes more memory. We don't have to delete or insert in the middle, so this structure is perfect for us.
  * See following article http://en.wikipedia.org/wiki/Circular_buffer to understand the implementation
- * @author svanacker
  */
 
 /**
@@ -48,7 +47,7 @@ typedef struct {
 void initBuffer(Buffer* buffer, char (*s)[], unsigned int length, char* name, char* type);
 
 /**
- * Retuns if a buffer is initialized or not.
+ * Returns if a buffer is initialized or not.
  * @param buffer the pointer on buffer (simulates object programming)
  * @return true if the buffer is initialized, false else
  * @throws IO_BUFFER_NULL if the pointer is NULL

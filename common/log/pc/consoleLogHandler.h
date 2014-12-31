@@ -3,7 +3,7 @@
 
 #include "../../../common/log/logHandler.h"
 
-// This class must not be included into the microcontroller, because it will include otherwise function that are not wanted like fprintf or getchar() from stdio.h !
+// This class must not be included into the micro-controller, because it will include otherwise function that are not wanted like fprintf or getchar() from stdio.h !
 #ifdef PROG_32
     MUST FAIL !!!
 #endif

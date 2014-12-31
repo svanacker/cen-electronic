@@ -1,5 +1,3 @@
-#include "../../../common/commons.h"
-
 #include <uart.h>
 
 #include "../serial.h"
@@ -10,8 +8,8 @@ void openSerial(unsigned char serialPortIndex, unsigned long baudRate) {
     unsigned int config1 = UART_EN & UART_IDLE_CON & UART_DIS_ABAUD & UART_DIS_LOOPBACK & UART_NO_PAR_8BIT & UART_1STOPBIT;
     unsigned int config2 = UART_INT_TX_BUF_EMPTY & UART_TX_PIN_NORMAL & UART_TX_ENABLE & UART_INT_RX_CHAR & UART_ADR_DETECT_DIS & UART_RX_OVERRUN_CLEAR;
 
-    // Fcy de (117964800/4) = 29491200 hz
-    // UxBRG = FCY / (Vitesse * 16) - 1
+    // Fcy of (117964800/4) = 29491200 hz
+    // UxBRG = FCY / (Speed * 16) - 1
     // ubrg = 191;        // 9600 bps
     // ubrg = 95;        // 19200 bps
 

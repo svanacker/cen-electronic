@@ -36,12 +36,12 @@ typedef struct ServoList {
 #define PWM_SERVO_MIDDLE_POSITION 1480
 
 /**
-* Left position (arround 45° / middle position).
+* Left position (around 45° / middle position).
 */
 #define PWM_SERVO_LEFT_POSITION 1000
 
 /**
-* Right position (arround 45° / middle position).
+* Right position (around 45° / middle position).
 */
 #define PWM_SERVO_RIGHT_POSITION 2000
 
@@ -74,9 +74,9 @@ void __internalPwmServo(int pwmIndex, int dutyms);
 
 /**
 * initPwm for a 50 Hz operation with a position
-* Objet : Initialise le cycle de OC1 et OC2 à 20ms
-* Utilisation du TIMER2
-* @param posInt : Duty cycle de départ de 0 à 20000
+* Initialize the cycle of OC1 and OC2 to 20ms
+* Use TIMER2
+* @param posInt : Duty start cycle from 0 to 20000
 */
 void initPwmForServo (int dutyms);
 

@@ -1,7 +1,6 @@
 #ifndef CEN_DELAY_32_H
 #define CEN_DELAY_32_H
 
-//#include <timer.h>
 #include <peripheral/timer.h>
 
 #define VALUE_FOR_10_MICRO_SECOND    16

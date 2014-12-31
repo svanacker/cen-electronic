@@ -23,7 +23,7 @@ HANDLE initClientPipe(LPCWSTR pipeName);
  * Write a char into a windows Pipe.
  * @param pipe the pipe in which we write
  * @param c the char that we want to send
- * @return true if no error occured and bytes written count is egal to 1, false else
+ * @return true if no error occurred and bytes written count is equal to 1, false else
  */
 bool writeCharToPipe(HANDLE pipe, char c);
 

@@ -21,19 +21,21 @@
  * @param CONFIGPORT bit-masks selects which analog pins are enabled. This is similar to setting the AD1PCFG register.
  * @param CONFIGSCAN bit-masks selects which analog pins are to be scanned or skipped.
  */
-
 void _initADC(){
     CloseADC10();       
     SetChanADC10(ADC_CH0_NEG_SAMPLEA_NVREF);
     OpenADC10(CONFIG1, CONFIG2, CONFIG3, CONFIGPORT, CONFIGSCAN);
     EnableADC10();
-//mAD1GetIntFlag() checks the interrupt flag for the AD10.
-// Waits till a conversion is finished so that there's
-// values in the ADC result registers.
-    while(!mAD1GetIntFlag() );
+    // mAD1GetIntFlag() checks the interrupt flag for the AD10.
+    // Waits till a conversion is finished so that there's
+    // values in the ADC result registers.
+    while (!mAD1GetIntFlag() ) {
+	
+	}
 }
 
 int getANX (char channel){
     _initADC();        
-    return(ReadADC10(channel - 1));
+    int result = ReadADC10(channel - 1);
+	return result;
  }

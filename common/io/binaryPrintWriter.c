@@ -1,6 +1,7 @@
 #include "binaryPrintWriter.h"
 
 #include "printWriter.h"
+#include "outputStream.h"
 
 // BINARY
 

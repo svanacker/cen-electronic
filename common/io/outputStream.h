@@ -27,7 +27,7 @@ typedef void CloseOutputStreamFunction(OutputStream* outputStream);
 
 /**
  * Function which is able to write a character.
- * Be careful that this operation can be bufferized.
+ * Be careful that this operation can be buffered.
  * Use flush to ensure that data are sent
  * @param outputStream the pointer on object (POO simulation)
  * @param c the char to write
@@ -35,7 +35,7 @@ typedef void CloseOutputStreamFunction(OutputStream* outputStream);
 typedef void WriteCharFunction(OutputStream* outputStream, char c);
 
 /**
- * Flush the stream because char written via WriteCharFunction can be bufferized.
+ * Flush the stream because char written via WriteCharFunction can be buffered.
  * @param outputStream the pointer on object (POO simulation)
  */
 typedef void FlushFunction(OutputStream* outputStream);
@@ -50,7 +50,7 @@ struct OutputStream {
     OpenOutputStreamFunction* openOutputStream;
     /** The function which must be called to close the stream. */
     CloseOutputStreamFunction* closeOutputStream;
-    /** The function which must be callend to write a char into the stream. */
+    /** The function which must be call at the end to write a char into the stream. */
     WriteCharFunction* writeChar;
     /** Flush the stream. */
     FlushFunction* flush;

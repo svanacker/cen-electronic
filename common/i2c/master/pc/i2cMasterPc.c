@@ -1,11 +1,9 @@
 #include "i2cMasterPc.h"
+
 #include "i2cMasterSetupPc.h"
 #include "../i2cMaster.h"
-#include "../../../../common/i2c/i2cCommon.h"
 
-#include "../../../../common/io/buffer.h"
-#include "../../../../common/io/printWriter.h"
-#include "../../../../common/io/reader.h"
+#include "../../../../common/i2c/i2cCommon.h"
 
 #include "../../../../common/pc/pipe/pipeServerHelper.h"
 

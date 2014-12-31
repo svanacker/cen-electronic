@@ -1,7 +1,7 @@
+#include <stdbool.h>
+
 #include "servoPwm.h"
 #include "../pwmPic.h"
-
-#include "../../../common/commons.h"
 
 #include "../../../common/delay/cenDelay.h"
 
@@ -39,7 +39,6 @@ Servo* getServo(int index) {
 ServoList* _getServoList() {
     return &servoList;
 }
-
 
 /**
  * The interrupt timer.
@@ -87,7 +86,7 @@ void initPwmForServo(int posInit) {
     // and add the timer to the list, so that the interrupt function will
     // update at a certain frequency the position of the servo
     addTimer(SERVO_TIMER_INDEX,
-                            TIME_DIVISER_50_HERTZ,
+                            TIME_DIVIDER_50_HERTZ,
                             &interruptServoTimerCallbackFunc,
                             "SERVO");
     servoList.initialized = true;

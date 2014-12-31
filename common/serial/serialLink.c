@@ -5,8 +5,6 @@
 #include "serialInputInterrupt.h"
 #include "serialLink.h"
 
-#include "../../common/commons.h"
-
 #include "../../common/io/buffer.h"
 #include "../../common/io/inputStream.h"
 #include "../../common/io/outputStream.h"

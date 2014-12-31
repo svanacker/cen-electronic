@@ -4,8 +4,6 @@
 #include "i2cMasterSetup.h"
 #include "../../../common/i2c/i2cDebug.h"
 
-#include "../../../common/delay/cenDelay.h"
-
 #include "../../../common/io/buffer.h"
 #include "../../../common/io/inputStream.h"
 
@@ -13,8 +11,6 @@
 #include "../../../common/log/logHandler.h"
 #include "../../../common/log/logger.h"
 #include "../../../common/log/logLevel.h"
-
-#include "../../../common/io/printWriter.h"
 
 // INPUT STREAM INTERFACE
 
