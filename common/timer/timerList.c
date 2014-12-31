@@ -117,7 +117,7 @@ void _internalUpdateTimerListValues() {
                     continue;
                 }
 
-                // we only substract and not clear to 0, so that, if the timer is locked, we will not forget
+                // we only subtract and not clear to 0, so that, if the timer is locked, we will not forget
                 // any firing
                 currentTimer->timeInternalCounter -= (currentTimer->timeDiviser + 1);
                 currentTimer->time++;

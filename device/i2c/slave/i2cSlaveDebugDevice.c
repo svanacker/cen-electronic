@@ -1,3 +1,5 @@
+#include <stdbool.h>
+
 #include "i2cSlaveDebugDevice.h"
 #include "i2cSlaveDebugDeviceInterface.h"
 

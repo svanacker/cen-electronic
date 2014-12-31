@@ -1,7 +1,7 @@
+#include <stdbool.h>
+
 #include "strategyDevice.h"
 #include "strategyDeviceInterface.h"
-
-#include "../../common/cmd/commonCommand.h"
 
 #include "../../common/io/printWriter.h"
 #include "../../common/io/reader.h"
@@ -12,6 +12,7 @@
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
 
+#include "../../device/device.h"
 #include "../../device/deviceConstants.h"
 #include "../../device/motion/simple/motionDeviceInterface.h"
 

@@ -1,3 +1,5 @@
+#include <stdbool.h>
+
 #include "dataDispatcherDevice.h"
 #include "dataDispatcherDeviceInterface.h"
 

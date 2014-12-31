@@ -13,7 +13,7 @@
 /** 
  * Command to do an intensive test for Test Driver.
  */
-#define COMMAND_INTENSIVE_TEST_DRIVER 'I'
+#define COMMAND_INTENSIVE_TEST_DRIVER    'I'
 
 /**
 * Interface for Test2 Device.

@@ -1,3 +1,5 @@
+#include <stdbool.h>
+
 #include "pwmMotorDeviceInterface.h"
 
 #include "../../device/device.h"

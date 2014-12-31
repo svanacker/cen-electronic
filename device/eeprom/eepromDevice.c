@@ -3,7 +3,6 @@
 
 #include <stdbool.h>
 
-#include "../../common/cmd/commonCommand.h"
 #include "../../common/io/printWriter.h"
 #include "../../common/io/reader.h"
 

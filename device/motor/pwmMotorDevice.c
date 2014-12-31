@@ -1,3 +1,5 @@
+#include <stdbool.h>
+
 #include "pwmMotor.h"
 #include "pwmMotorDevice.h"
 #include "pwmMotorDeviceInterface.h"
@@ -13,6 +15,8 @@
 
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
+
+#include "../../device/device.h"
 
 // DEVICE INTERFACE
 

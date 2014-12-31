@@ -1,7 +1,7 @@
 #ifndef DEVICE_INTERFACE_H
 #define DEVICE_INTERFACE_H
+
 #include <stdbool.h>
-#include "../common/commons.h"
 
 /**
 * Definition of the functions and types shared by devices

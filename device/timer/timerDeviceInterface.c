@@ -1,3 +1,5 @@
+#include <stdbool.h>
+
 #include "timerDeviceInterface.h"
 
 #include "../../device/deviceInterface.h"

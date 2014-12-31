@@ -4,7 +4,7 @@
 typedef int TransmitMode;
 
 /**
- * Data will not be transfered, because the driver does not correspond to our communication standard
+ * Data will not be transferred, because the driver does not correspond to our communication standard
  * (Ex : For All Devantech Devices)
  */
 #define TRANSMIT_NONE     -1

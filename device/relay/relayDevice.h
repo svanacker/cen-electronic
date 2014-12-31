@@ -1,7 +1,7 @@
 #ifndef RELAY_DEVICE_H
 #define RELAY_DEVICE_H
 
-#include "../../device/device.h"
+#include "../../device/deviceDescriptor.h"
 
 /**
  * The descriptor for the relay device.

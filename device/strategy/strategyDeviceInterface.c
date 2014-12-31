@@ -1,3 +1,5 @@
+#include <stdbool.h>
+
 #include "strategyDeviceInterface.h"
 
 #include "../../common/commons.h"

@@ -1,10 +1,11 @@
 #ifndef MOTION_DEVICE_H
 #define MOTION_DEVICE_H
 
-#include "../../../device/device.h"
+#include "../../../device/deviceDescriptor.h"
+#include "../../../common/io/outputStream.h"
 
 /**
-* Returns a descriptor arround motion.
+* Returns a descriptor around motion.
 */
 DeviceDescriptor* getMotionDeviceDescriptor();
 

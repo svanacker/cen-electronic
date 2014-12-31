@@ -1,9 +1,7 @@
+#include <stdbool.h>
+
 #include "airConditioningDevice.h"
 #include "airConditioningDeviceInterface.h"
-
-#include "../../common/commons.h"
-
-#include "../../common/cmd/commonCommand.h"
 
 #include "../../common/io/inputStream.h"
 #include "../../common/io/outputStream.h"
@@ -14,9 +12,9 @@
 
 #include "../../common/delay/cenDelay.h"
 
-#define        SERVO_INDEX                1
-#define        SERVO_VALUE_TOUCH        1620
-#define        SERVO_VALUE_STAND_BY    1400
+#define        SERVO_INDEX                   1
+#define        SERVO_VALUE_TOUCH          1620
+#define        SERVO_VALUE_STAND_BY       1400
 #define        SERVO_SPEED                0xFF
 
 void deviceAirConditioningInit() {

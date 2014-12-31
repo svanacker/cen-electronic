@@ -1,5 +1,5 @@
 #ifndef TEMPERATURE_SENSOR_DEVICE_INTERFACE_H
-#define    TEMPERATURE_SENSOR_DEVICE_INTERFACE_H
+#define TEMPERATURE_SENSOR_DEVICE_INTERFACE_H
 
 #include "../../device/deviceInterface.h"
 #include "../../device/deviceConstants.h"
@@ -17,7 +17,7 @@
 * Defines the header to set the temperature sensor Alert 
 */
 
-#define COMMAND_SET_TEMPERATURE_SENSOR_ALERT         'a'
+#define COMMAND_SET_TEMPERATURE_SENSOR_ALERT    'a'
 
 /**
 * Interface for Device.

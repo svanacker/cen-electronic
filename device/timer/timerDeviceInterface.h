@@ -5,7 +5,7 @@
 #include "../../device/deviceConstants.h"
 
 /** Command to see the list of Timer List. */
-#define COMMAND_TIMER_LIST 'T'
+#define COMMAND_TIMER_LIST              'T'
 
 /**
 * Get the timer device interface.

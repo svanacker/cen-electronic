@@ -1,8 +1,9 @@
+#include <stdbool.h>
+
 #include "clockDevice.h"
 #include "clockDeviceInterface.h"
 
 #include "../../common/clock/clock.h"
-#include "../../common/cmd/commonCommand.h"
 #include "../../common/io/printWriter.h"
 #include "../../common/io/reader.h"
 

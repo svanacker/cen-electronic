@@ -1,5 +1,5 @@
 #ifndef CLOCK_DEVICE_INTERFACE_H
-#define    CLOCK_DEVICE_INTERFACE_H
+#define CLOCK_DEVICE_INTERFACE_H
 
 #include "../../device/deviceInterface.h"
 #include "../../device/deviceConstants.h"
@@ -13,12 +13,12 @@
 #define COMMAND_READ_CLOCK         'r'
 
 /**
-* Defines the header to write the Houre on the clock.
+* Defines the header to write the Hours on the clock.
 */
 #define COMMAND_WRITE_HOUR         'h'
 
 /**
-* Defines the header to write the Houre on the clock.
+* Defines the header to write the Hours on the clock.
 */
 #define COMMAND_WRITE_DATE         'd'
 

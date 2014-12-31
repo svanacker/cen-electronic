@@ -1,3 +1,5 @@
+#include <stdbool.h>
+
 #include <p30Fxxxx.h>
 
 #include "relayDevice.h"

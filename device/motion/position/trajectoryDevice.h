@@ -3,7 +3,7 @@
 
 #include "../../../common/io/outputStream.h"
 
-#include "../../../device/device.h"
+#include "../../../device/deviceDescriptor.h"
 
 // DEVICE INTERFACE
 

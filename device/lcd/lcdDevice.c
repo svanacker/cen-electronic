@@ -1,9 +1,7 @@
+#include <stdbool.h>
+
 #include "lcdDevice.h"
 #include "lcdDeviceInterface.h"
-
-#include "../../common/commons.h"
-
-#include "../../common/cmd/commonCommand.h"
 
 #include "../../common/io/inputStream.h"
 #include "../../common/io/outputStream.h"

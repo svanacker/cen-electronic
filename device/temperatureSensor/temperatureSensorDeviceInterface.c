@@ -1,3 +1,5 @@
+#include <stdbool.h>
+
 #include "temperatureSensorDeviceInterface.h"
 
 #include "../../device/device.h"

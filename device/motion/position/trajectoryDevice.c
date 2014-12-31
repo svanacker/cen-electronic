@@ -1,3 +1,5 @@
+#include <stdbool.h>
+
 #include "trajectoryDevice.h"
 
 #include "trajectoryDeviceInterface.h"

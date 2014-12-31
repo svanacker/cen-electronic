@@ -1,3 +1,5 @@
+#include <stdbool.h>
+
 #include "serialDebugDeviceInterface.h"
 
 #include "../../device/deviceInterface.h"

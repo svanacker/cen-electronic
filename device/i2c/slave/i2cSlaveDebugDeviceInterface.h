@@ -5,13 +5,13 @@
 #include "../../../device/deviceConstants.h"
 
 /** Command to see the content of the I2C debug. */
-#define COMMAND_I2C_DEBUG_SLAVE_DEBUG               'b'
+#define COMMAND_I2C_DEBUG_SLAVE_DEBUG                         'b'
 
 /** Command to get the address of the I2C Slave. */
-#define COMMANG_I2C_DEBUG_SLAVE_ADDRESS             'd'
+#define COMMANG_I2C_DEBUG_SLAVE_ADDRESS                       'd'
 
 /** Command to enable or disable the Debug. */
-#define COMMAND_I2C_DEBUG_SLAVE_ENABLE_DISABLE      'e'
+#define COMMAND_I2C_DEBUG_SLAVE_ENABLE_DISABLE                'e'
 
 /** Command to add a char to the master. */
 #define COMMAND_I2C_DEBUG_SLAVE_SEND_CHAR_I2C_TO_MASTER       'w'

@@ -1,5 +1,6 @@
+#include <stdbool.h>
+
 #include "servoDevice.h"
-#include "../../device/deviceConstants.h"
 #include "servoDeviceInterface.h"
 
 #include "../../common/commons.h"
@@ -19,6 +20,7 @@
 #include "../../common/pwm/servo/servoPwmDebug.h"
 
 #include "../../device/device.h"
+#include "../../device/deviceConstants.h"
 
 void deviceServoInit(void) {
     initPwmForServo(PWM_SERVO_MIDDLE_POSITION);

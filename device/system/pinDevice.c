@@ -1,3 +1,5 @@
+#include <stdbool.h>
+
 #include "pinDevice.h"
 #include "pinDeviceInterface.h"
 

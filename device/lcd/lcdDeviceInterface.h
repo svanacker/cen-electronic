@@ -7,7 +7,7 @@
 /**
 * Command to write on the LCD
 */
-#define COMMAND_LCD         'w'
+#define COMMAND_LCD                  'w'
 
 /**
 * Define the number of fixed count of char used

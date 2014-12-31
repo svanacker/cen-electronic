@@ -1,3 +1,5 @@
+#include <stdbool.h>
+
 #include "relayDeviceInterface.h"
 
 #include "../../device/deviceInterface.h"

@@ -1,7 +1,7 @@
 #ifndef SERIAL_DEBUG_DEVICE_H
 #define SERIAL_DEBUG_DEVICE_H
 
-#include "../../device/device.h"
+#include "../../device/deviceDescriptor.h"
 
 /**
  * The descriptor for the serial Debug device.

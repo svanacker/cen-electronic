@@ -1,3 +1,5 @@
+#include <stdbool.h>
+
 #include "sonarDevice.h"
 #include "sonarDeviceInterface.h"
 

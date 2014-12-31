@@ -1,7 +1,7 @@
 #ifndef DATA_DISPATCHER_DEVICE_H
-#define v
+#define DATA_DISPATCHER_DEVICE_H
 
-#include "../../device/device.h"
+#include "../../device/deviceDescriptor.h"
 
 /**
  * The descriptor for the Data Dispatcher device

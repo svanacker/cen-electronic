@@ -3,7 +3,7 @@
 
 #include "../../device/deviceInterface.h"
 
-/** Command to see the list of dispacher. */
+/** Command to see the list of dispatcher. */
 #define COMMAND_DISPATCHER_LIST          'D'
 
 /**

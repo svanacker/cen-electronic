@@ -1,7 +1,7 @@
 #ifndef TIMER_DEVICE_H
 #define TIMER_DEVICE_H
 
-#include "../../device/device.h"
+#include "../../device/deviceDescriptor.h"
 
 /**
  * The descriptor for the timer device.

@@ -1,12 +1,11 @@
 #include <stdlib.h>
+#include <stdbool.h>
 
 #include "deviceList.h"
 #include "device.h"
 #include "deviceDescriptor.h"
 #include "deviceInterface.h"
 #include "transmitMode.h"
-
-#include "../common/commons.h"
 
 #include "../common/error/error.h"
 

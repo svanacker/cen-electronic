@@ -1,3 +1,5 @@
+#include <stdbool.h>
+
 #include "sonarDeviceInterface.h"
 
 #include "../../device/deviceInterface.h"
@@ -5,10 +7,6 @@
 
 const char* deviceSonarGetName() {
     return "sonar";
-}
-
-unsigned int deviceSonarGetSoftwareRevision() {
-    return 1;
 }
 
 int deviceSonarGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {

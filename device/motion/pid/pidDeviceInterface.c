@@ -1,3 +1,5 @@
+#include <stdbool.h>
+
 #include "pidDeviceInterface.h"
 
 #include "../../../device/device.h"

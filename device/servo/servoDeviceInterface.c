@@ -1,3 +1,5 @@
+#include <stdbool.h>
+
 #include "servoDeviceInterface.h"
 
 #include "../../device/deviceInterface.h"

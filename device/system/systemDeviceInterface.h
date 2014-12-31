@@ -5,22 +5,22 @@
 #include "../../device/deviceConstants.h"
 
 /** Command to show devices list. */
-#define COMMAND_DEVICE_LIST 'd'
+#define COMMAND_DEVICE_LIST        'd'
 
 /** Command to show usage for all devices. */
-#define COMMAND_USAGE 'u'
+#define COMMAND_USAGE              'u'
 
 /** Command to show notification for all devices. */
-#define COMMAND_NOTIFICATION 'n'
+#define COMMAND_NOTIFICATION       'n'
 
 /** Command to wait a certain amount of time (in milliseconds). */
-#define COMMAND_WAIT 'W'
+#define COMMAND_WAIT               'W'
 
 /** Command to show the name of the PIC. */
-#define COMMAND_PIC_NAME 'N'
+#define COMMAND_PIC_NAME           'N'
 
 /** Command to know if the remote board is present. */
-#define COMMAND_PING 'P'
+#define COMMAND_PING               'P'
 
 /**
 * Get the system device interface.

@@ -1,7 +1,7 @@
 #ifndef SERVO_DEVICE_H
 #define SERVO_DEVICE_H
 
-#include "../../device/device.h"
+#include "../../device/deviceDescriptor.h"
 
 /**
  * The descriptor for the servo device.

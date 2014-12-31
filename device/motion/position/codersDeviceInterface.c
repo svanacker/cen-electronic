@@ -1,3 +1,5 @@
+#include <stdbool.h>
+
 #include "codersDeviceInterface.h"
 
 #include "../../../device/device.h"

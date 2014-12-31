@@ -4,7 +4,6 @@
 #include "adcDeviceInterface.h"
 
 #include "../../common/adc/adcutils.h"
-#include "../../common/cmd/commonCommand.h"
 
 #include "../../common/io/printWriter.h"
 #include "../../common/io/reader.h"

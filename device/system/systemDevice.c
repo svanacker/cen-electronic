@@ -1,3 +1,5 @@
+#include <stdbool.h>
+
 #include "systemDevice.h"
 #include "systemDeviceInterface.h"
 

@@ -1,3 +1,5 @@
+#include <stdbool.h>
+
 #include "motionDeviceInterface.h"
 
 #include "../../../device/device.h"
