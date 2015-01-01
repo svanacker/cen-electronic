@@ -12,6 +12,8 @@
 
 #include "../../common/delay/cenDelay.h"
 
+#include "../../device/device.h"
+
 #define        SERVO_INDEX                   1
 #define        SERVO_VALUE_TOUCH          1620
 #define        SERVO_VALUE_STAND_BY       1400

@@ -9,6 +9,8 @@
 #include "../../common/io/printWriter.h"
 #include "../../common/io/reader.h"
 
+#include "../../device/device.h"
+
 void deviceTemperatureSensorInit(void) {
 }
 
