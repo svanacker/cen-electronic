@@ -15,7 +15,7 @@ signed int testDriverGetValue(signed int argument1, signed int argument2);
 
 /** 
 * Intensive test of drivers.
-* Try with several combinaison of number and verify that the result is good !
+* Try with several combination of number and verify that the result is good !
 * @param tryCounter how many test we want to pass
 */
 bool testDriverIntensive(unsigned int testCount);

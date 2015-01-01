@@ -10,7 +10,7 @@
 #define MAX_DRIVER 3
 
 /**
- * Tre struct defining a list of drivers.
+ * The struct defining a list of drivers.
  */
 typedef struct {
     /** An array of pointer on driver Descriptor. */
@@ -58,12 +58,12 @@ OutputStream* getDriverRequestOutputStream();
 InputStream* getDriverResponseInputStream();
 
 /**
- * Get the buffer correspondings to the input of the driver.
+ * Get the buffer corresponding to the input of the driver.
  */
 Buffer* getDriverRequestBuffer();
 
 /**
- * Get the buffer correspondings to the output of the driver.
+ * Get the buffer corresponding to the output of the driver.
  */
 Buffer* getDriverResponseBuffer();
 

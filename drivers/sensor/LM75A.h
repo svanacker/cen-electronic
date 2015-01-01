@@ -1,6 +1,6 @@
 // SENSOR TEMPERATURE
 #ifndef LM75A_H
-#define    LM75A_H
+#define LM75A_H
 
 #define LM75A_READ_SENSOR_REGISTER              0x00
 #define LM75A_CONFIGURATION_SENSOR_REGISTER     0x01

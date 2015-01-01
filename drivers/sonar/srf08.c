@@ -1,13 +1,13 @@
 #include <i2c.h>
 #include "srf08.h"
 
-// First sequence command used to change I2C addres
+// First sequence command used to change I2C address
 #define CHANGE_ADDRESS_FIRST_COMMAND 0xA0
 
-// Second sequence command used to change I2C addres
+// Second sequence command used to change I2C address
 #define CHANGE_ADDRESS_SECOND_COMMAND 0xAA
 
-// Third sequence command used to change I2C addres
+// Third sequence command used to change I2C address
 #define CHANGE_ADDRESS_THIRD_COMMAND 0xA5
 
 // Command to get the software revision (read)
@@ -117,7 +117,7 @@ unsigned char readDistance(unsigned char addr) {
   int highByte = 0;
   int lowByte = 0;
   int i;
-  for (i=0; i<16; i++)
+  for (i=0; i < 16; i++)
   {
     // TODO : manage the timer and the 255 value if SRF08 not ready
     // high part of int value

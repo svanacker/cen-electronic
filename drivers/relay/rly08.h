@@ -74,7 +74,7 @@
   /**
   * Change the states of the all 8 relays
   * @param relayStates the word to change relay states
-  * the value must be in binary : 1 = active, 0 = unactive
+  * the value must be in binary : 1 = active, 0 = inactive
   * Ex : 1111 1111 = Alls ons, 0000 0000 = Alls Off
   * 0000 0010 = Only relay 02 ON
   */

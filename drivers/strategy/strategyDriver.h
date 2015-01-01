@@ -1,7 +1,8 @@
 #ifndef STRATEGY_DRIVER_H
 #define STRATEGY_DRIVER_H
 
-#include "../../common/commons.h"
+#include <stdbool.h>
+
 #include "../../common/2d/2d.h"
 
 #include "../driver.h"
@@ -37,7 +38,5 @@ bool sendStrategyNextStep();
 bool sendStrategyOpponentRobotPosition(Point* opponentRobotPosition);
 
 bool sentStrategyRobotPosition(unsigned char status, unsigned int x, unsigned int y, int angleInDeciDegree);
-
-
 
 #endif

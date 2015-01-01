@@ -1,6 +1,6 @@
 #include "trajectoryDriver.h"
 
-#include "../../common/commons.h"
+#include <stdbool.h>
 
 #include "../../common/io/buffer.h"
 #include "../../common/io/ioUtils.h"
@@ -19,7 +19,6 @@
 #include "../../drivers/driverTransmitter.h"
 
 #include "../../robot/robot.h"
-
 
 // SET TRAJECTORY
 

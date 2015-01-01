@@ -1,13 +1,14 @@
-#include "../../common/i2c/i2cCommon.h"
-#include "../../common/i2c/master/i2cMaster.h"
-
 #include "pcf8574.h"
 
 #include "../../common/delay/cenDelay.h"
-#include "../../common/log/logger.h"
-#include "../../common/log/logLevel.h"
+
+#include "../../common/i2c/i2cCommon.h"
+#include "../../common/i2c/master/i2cMaster.h"
 
 #include "../../common/io/printWriter.h"
+
+#include "../../common/log/logger.h"
+#include "../../common/log/logLevel.h"
 
 unsigned char internalGetAddress(unsigned char addr, unsigned char devAddr) {
     unsigned char result;
@@ -35,7 +36,7 @@ void writePCF8574(unsigned char addr, unsigned char devAddr, unsigned char outDa
     portableStartI2C();
     WaitI2C();
     portableMasterWaitSendI2C();
-    portableMasterWriteI2C(realAddress); // send write addres
+    portableMasterWriteI2C(realAddress); // send write address
     WaitI2C();
     portableMasterWriteI2C(outData | dirs); // write new outputs to buffer
     WaitI2C();

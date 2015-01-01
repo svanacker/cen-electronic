@@ -1,7 +1,6 @@
 #ifndef ST24C512_H
-#define    ST24C512_H
+#define ST24C512_H
 
-#include "../../common/io/buffer.h"
 #include "../../common/eeprom/eeprom.h"
 
 #define EEPROM_24C512_MAX_INDEX        0x07FFFF

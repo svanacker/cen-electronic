@@ -6,7 +6,7 @@
 
 /**
 * PING a data dispatcher.
-* @param dispacher the dispatcher that we want to PING
+* @param dispatcher the dispatcher that we want to PING
 */ 
 bool pingDriverDataDispatcher(DriverDataDispatcher* dispatcher);
 

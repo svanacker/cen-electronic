@@ -1,8 +1,5 @@
 #include "driverList.h"
-
 #include "driver.h"
-
-#include "../common/commons.h"
 
 #include "../common/error/error.h"
 
@@ -10,10 +7,8 @@
 #include "../common/io/inputStream.h"
 #include "../common/io/outputStream.h"
 
-/** Singleton. */
-
 /**
- * Driver list.
+ * Driver list (singleton pattern).
  */
 static DriverDescriptorList drivers;
 

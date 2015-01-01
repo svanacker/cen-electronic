@@ -3,8 +3,6 @@
 
 #include <stdbool.h>
 
-#include "../../drivers/dispatcher/driverDataDispatcher.h"
-
 /**
 * State to know if it's ready for Next Motion.
 * @param value the new status
@@ -116,6 +114,5 @@ bool motionDriverLeftOneWheel(float leftDeciDegree);
 bool motionDriverRightOneWheel(float rightDeciDegree);
 
 bool motionSetParameters(int motionType, int a, int speed);
-
 
 #endif

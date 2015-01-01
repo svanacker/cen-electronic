@@ -29,7 +29,7 @@
 #define STRATEGY_DRIVER_TIMER_INDEX            25
 
 /**
- * Define the timer diviser to have a timer at approximatively 1,5 Hertz.
+ * Define the timer divider to have a timer at approximatively 1,5 Hertz.
  * Use primer number to avoid synchronization problem
  */
 #define TIME_DIVIDER_1_5_HERTZ                 18181

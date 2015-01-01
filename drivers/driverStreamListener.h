@@ -11,7 +11,7 @@
 /**
  * Listen if there is any commands on the inputStream.
  * and returns true if it handled something
- * @param inputBuffer the buffer containaing data
+ * @param inputBuffer the buffer containing data
  * @param outputBuffer the result from the devices
  * @param outputStream the outputStream in which we will write (can be NULL)
  * @param inputFilterChar the function for filtering (can be NULL)

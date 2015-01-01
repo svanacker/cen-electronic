@@ -1,12 +1,12 @@
 #ifndef PCF8563_H
-#define    PCF8563_H
+#define PCF8563_H
 
 #include "../../common/i2c/i2cConstants.h"
 #include "../../common/io/outputStream.h"
 
 #include "../../common/clock/clock.h"
 
-#define PCF8563_READ_ADDRESS       PCF8563_WRITE_ADDRESS + 1
+#define PCF8563_READ_ADDRESS            PCF8563_WRITE_ADDRESS + 1
 
 #define PCF8563_CLOCK_REGISTER          0x02
 

@@ -1,6 +1,6 @@
 #include "motorDriver.h"
 
-#include "../../common/commons.h"
+#include <stdbool.h>
 
 #include "../../common/io/buffer.h"
 #include "../../common/io/ioUtils.h"

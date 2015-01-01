@@ -8,7 +8,7 @@
 #include "driverDataDispatcher.h"
 
 /**
- * Tre struct defining a list of driver Data dispatcher.
+ * The struct defining a list of driver Data dispatcher.
  */
 typedef struct {
     /** An array of pointer on driver Descriptor. */

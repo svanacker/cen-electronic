@@ -1,7 +1,6 @@
 #ifndef ST24C16_H
-#define    ST24C16_H
+#define ST24C16_H
 
-#include "../../common/io/buffer.h"
 #include "../../common/eeprom/eeprom.h"
 
 /**

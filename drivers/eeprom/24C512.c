@@ -9,7 +9,6 @@
 #include "../../common/i2c/i2cConstants.h"
 #include "../../common/i2c/i2cCommon.h"
 
-
 /**
 * @private
 * Calculate the chip address to select

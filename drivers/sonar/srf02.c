@@ -1,5 +1,3 @@
-#include "../../common/commons.h"
-
 #include "../../common/i2c/i2cCommon.h"
 #include "../../common/i2c/master/i2cMaster.h"
 
@@ -7,13 +5,13 @@
 
 #include "../../common/delay/cenDelay.h"
 
-// First sequence command used to change I2C addres
+// First sequence command used to change I2C address
 #define CHANGE_ADDRESS_FIRST_COMMAND 0xA0
 
-// Second sequence command used to change I2C addres
+// Second sequence command used to change I2C address
 #define CHANGE_ADDRESS_SECOND_COMMAND 0xAA
 
-// Third sequence command used to change I2C addres
+// Third sequence command used to change I2C address
 #define CHANGE_ADDRESS_THIRD_COMMAND 0xA5
 
 /**
