@@ -37,7 +37,7 @@ int deviceSystemGetInterface(char commandHeader, DeviceInterfaceMode mode, bool 
     }
     else if (commandHeader == COMMAND_PING) {
         if (fillDeviceArgumentList) {
-            setFunction("ping", 1, 0);
+            setFunction("ping", 1, 1);
 			setArgumentUnsignedHex2(0, "pingIndex");
 			setResultUnsignedHex2(0, "pingIndex");
         }

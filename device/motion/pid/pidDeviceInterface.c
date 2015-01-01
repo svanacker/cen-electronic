@@ -71,7 +71,7 @@ int devicePIDGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fil
             setResultSeparator(9);
             setResult(10, DEVICE_ARG_UNSIGNED_HEX_12, "time/absDelPosiInt/uIntegral");
         }
-        return commandLengthValueForMode(mode, 32, 1);
+        return commandLengthValueForMode(mode, 1, 32);
     } else if (commandHeader == COMMAND_SEND_MOTION_PARAMETER) {
         if (fillDeviceArgumentList) {    
             setFunction("sendMotParam", 1, 10);
