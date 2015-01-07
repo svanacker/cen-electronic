@@ -17,7 +17,7 @@ int deviceDataDispatcherGetInterface(char commandHeader, DeviceInterfaceMode mod
     else if (commandHeader == COMMAND_PING_DISPATCHER_INDEX) {
         if (fillDeviceArgumentList) {
             setFunction("PingDispatcherIndex", 1, 1);
-			setArgumentUnsignedHex2(0, "pingIndex");
+            setArgumentUnsignedHex2(0, "pingIndex");
         }
         return commandLengthValueForMode(mode, 2, 2);
     }

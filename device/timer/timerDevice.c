@@ -1,4 +1,5 @@
 #include <stdbool.h>
+#include <stdlib.h>
 
 #include "timerDevice.h"
 #include "timerDeviceInterface.h"
@@ -22,6 +23,8 @@
 #include "../../device/deviceDebug.h"
 #include "../../device/deviceUsage.h"
 
+static long demoCounter = 0;
+
 void deviceTimerInit(void) {
 }
 
@@ -32,11 +35,43 @@ bool deviceTimerIsOk(void) {
     return true;
 }
 
-void deviceTimerHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream) {
-    if (header == COMMAND_TIMER_LIST) {
+/**
+ * The interrupt demo timer.
+ */
+void interruptDemoTimerCallbackFunc(Timer* timer) {
+    appendStringAndDec(getOutputStreamLogger(ALWAYS), "counter=", demoCounter);
+    appendCRLF(getOutputStreamLogger(ALWAYS));
+    demoCounter++;
+}
+
+Timer* addTimerDemo(void) {
+    Timer* result = addTimer(DEMO_TIMER_INDEX,
+             TIME_DIVIDER_1_HERTZ,
+             &interruptDemoTimerCallbackFunc,
+             "DEMO");
+    result->enabled = true;
+    return result;
+}
+
+void deviceTimerHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream) {
+    if (commandHeader == COMMAND_TIMER_LIST) {
         printTimerList(getOutputStreamLogger(ALWAYS), getTimerList());
-        ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_TIMER_LIST);
+        ackCommand(outputStream, TIMER_DEVICE_HEADER, COMMAND_TIMER_LIST);
     }    
+    else if (commandHeader == COMMAND_TIMER_ENABLE_DEMO) {
+        Timer* timer = getTimerByCode(DEMO_TIMER_INDEX);
+        if (timer == NULL) {
+            addTimerDemo();
+        }
+        ackCommand(outputStream, TIMER_DEVICE_HEADER, COMMAND_TIMER_ENABLE_DEMO);
+    }
+    else if (commandHeader == COMMAND_TIMER_DISABLE_DEMO) {
+        Timer* timer = getTimerByCode(DEMO_TIMER_INDEX);
+        if (timer != NULL) {
+            timer->enabled = false;
+        }
+        ackCommand(outputStream, TIMER_DEVICE_HEADER, COMMAND_TIMER_DISABLE_DEMO);
+    }
 }
 
 static DeviceDescriptor descriptor = {

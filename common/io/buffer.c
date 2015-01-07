@@ -220,7 +220,7 @@ char bufferReadChar(Buffer* buffer) {
     } else {
         // We must log the problem
         writeError(IO_BUFFER_EMPTY);
-		return 0;
+        return 0;
     }
 }
 
@@ -230,7 +230,7 @@ char bufferGetCharAtIndex(const Buffer* buffer, int charIndex) {
         char* sPointer = (char*) buffer->s;
         // Shift to the right cell index
         sPointer += ((buffer->readIndex + charIndex) % buffer->length);
-		char result = *sPointer;
+        char result = *sPointer;
 
         return result;
     } else {
@@ -253,14 +253,14 @@ bool bufferWriteCharAtIndex(const Buffer* buffer, int charIndex, char c) {
         // We must log the problem
         writeError(IO_BUFFER_ILLEGAL_INDEX_ACCESS);
         return false;
-	}
+    }
 }
 
 void bufferClearLastChars(Buffer* buffer, unsigned char charToRemoveCount) {
     if (!checkBufferNotNull(buffer)) {
         return;
     }
-	int size = getBufferElementsCount(buffer);
+    int size = getBufferElementsCount(buffer);
     if (charToRemoveCount <= size) {
         buffer->readIndex += charToRemoveCount;
         buffer->readIndex %= buffer->length;

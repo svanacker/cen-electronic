@@ -22,7 +22,7 @@ void initHCTL2032() {
 
     // Init I/0
 
-    // Reset as ouput
+    // Reset as output
     TRIS_RSTX = 0;
     TRIS_RSTY = 0;
 

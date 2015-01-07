@@ -12,9 +12,20 @@ const char* deviceTimerGetName(void) {
 
 int deviceTimerGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     if (commandHeader == COMMAND_TIMER_LIST) {
-        // Same INPUT/OUTPUT
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("showTimerList");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }
+    else if (commandHeader == COMMAND_TIMER_ENABLE_DEMO) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("enableTimerDemo");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }
+    else if (commandHeader == COMMAND_TIMER_DISABLE_DEMO) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("disableTimerDemo");
         }
         return commandLengthValueForMode(mode, 0, 0);
     }

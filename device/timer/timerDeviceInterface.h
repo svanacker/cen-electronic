@@ -5,7 +5,15 @@
 #include "../../device/deviceConstants.h"
 
 /** Command to see the list of Timer List. */
-#define COMMAND_TIMER_LIST              'T'
+#define COMMAND_TIMER_LIST              'L'
+
+/** Command to add Timer Demo (print each seconds a timer index) by his index. */
+#define COMMAND_TIMER_ENABLE_DEMO       'e'
+
+/** Command to stop the Timer Demo. */
+#define COMMAND_TIMER_DISABLE_DEMO        'd'
+
+#define DEMO_TIMER_INDEX    124
 
 /**
 * Get the timer device interface.

@@ -78,7 +78,7 @@ void clearLastError();
 #define TOO_MUCH_DEVICES                0x2000
 #define NO_DEVICE_DESC_FOUND_FOR        0x2001
 #define DEVICES_LIST_NOT_INITIALIZED    0x2002
-#define DEVICE_ILLEGAL_INDEX			0x2003
+#define DEVICE_ILLEGAL_INDEX            0x2003
 
 #define DEVICE_TEST_INTENSIVE_CHECK_PROBLEM 0x2010
 

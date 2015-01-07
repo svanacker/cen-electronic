@@ -26,8 +26,8 @@ bool filterBinaryToValueChar(char c, char* output) {
         *output = c;
         return true;
     }
-    // c in ['a'..'z']
-    else if ((c >= 97) && (c <= 122)) {
+    // c in ['a'..'z'] or c in ['{'..'}']
+    else if ((c >= 97) && (c <= 125)) {
         *output = c;
         return true;
     }
@@ -38,11 +38,6 @@ bool filterBinaryToValueChar(char c, char* output) {
     }
     // c in [':'..'@']
     else if ((c >= 58) && (c <= 64)) {
-        *output = c;
-        return true;
-    }
-    // c in ['{'..'}']
-    else if ((c >= 123) && (c <= 125)) {
         *output = c;
         return true;
     }

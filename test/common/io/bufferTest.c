@@ -191,7 +191,7 @@ void test_bufferWriteCharAtIndex(void) {
     bufferWriteChar(&bufferTest, 'L');
     bufferWriteChar(&bufferTest, 'L');
     bufferWriteChar(&bufferTest, 'O');
-	bufferWriteCharAtIndex(&bufferTest, 1, 'A');
+    bufferWriteCharAtIndex(&bufferTest, 1, 'A');
 
     bool actual = isBufferEqualsToString(&bufferTest, "HALLO");
     TEST_ASSERT_TRUE(actual);

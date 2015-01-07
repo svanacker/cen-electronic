@@ -30,12 +30,12 @@ void _initADC(){
     // Waits till a conversion is finished so that there's
     // values in the ADC result registers.
     while (!mAD1GetIntFlag() ) {
-	
-	}
+    
+    }
 }
 
 int getANX (char channel){
     _initADC();        
     int result = ReadADC10(channel - 1);
-	return result;
+    return result;
  }

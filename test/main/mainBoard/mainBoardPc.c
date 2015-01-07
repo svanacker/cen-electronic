@@ -57,6 +57,10 @@
 #include "../../../device/motion/simple/motionDevice.h"
 #include "../../../device/motion/simple/motionDeviceInterface.h"
 
+// PWM
+#include "../../../device/motor/pwmMotorDevice.h"
+#include "../../../device/motor/pwmMotorDeviceInterface.h"
+
 // SERVO
 #include "../../../device/servo/servoDevice.h"
 #include "../../../device/servo/servoDeviceInterface.h"
@@ -69,11 +73,13 @@
 #include "../../../device/system/systemDevice.h"
 #include "../../../device/system/systemDeviceInterface.h"
 
+// TEST
 #include "../../../device/test/testDevice.h"
 #include "../../../device/test/testDeviceInterface.h"
 
-#include "../../../device/motor/pwmMotorDevice.h"
-#include "../../../device/motor/pwmMotorDeviceInterface.h"
+// TIMER
+#include "../../../device/timer/timerDevice.h"
+#include "../../../device/timer/timerDeviceInterface.h"
 
 #include "../../../drivers/driverStreamListener.h"
 #include "../../../drivers/clock/mockClock.h"
@@ -234,22 +240,24 @@ void runMainBoardPC(void) {
     testDevice = addI2cRemoteDevice(getTestDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
     testDevice->deviceHandleNotification = mainBoardDeviceHandleNotification;
 
-	// LOCAL BOARD
+    // LOCAL BOARD
     addLocalDevice(getStrategyDeviceInterface(), getStrategyDeviceDescriptor());
     addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
-	addLocalDevice(getI2cMasterDebugDeviceInterface(), getI2cMasterDebugDeviceDescriptor());
-	addLocalDevice(getDataDispatcherDeviceInterface(), getDataDispatcherDeviceDescriptor());
+    addLocalDevice(getI2cMasterDebugDeviceInterface(), getI2cMasterDebugDeviceDescriptor());
+    addLocalDevice(getDataDispatcherDeviceInterface(), getDataDispatcherDeviceDescriptor());
     addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor());
-    initStartMatchDetectorPc(&startMatchDetector);
+	addLocalDevice(getTimerDeviceInterface(), getTimerDeviceDescriptor());
+
+	initStartMatchDetectorPc(&startMatchDetector);
     addLocalDevice(getStartMatchDetectorDeviceInterface(), getStartMatchDetectorDeviceDescriptor(&startMatchDetector));
  
-	// MOTOR BOARD
-	addI2cRemoteDevice(getEepromDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
-	addI2cRemoteDevice(getPIDDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
-	addI2cRemoteDevice(getMotorDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
-	addI2cRemoteDevice(getCodersDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
-	addI2cRemoteDevice(getTrajectoryDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
-	addI2cRemoteDevice(getMotionDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
+    // MOTOR BOARD
+    addI2cRemoteDevice(getEepromDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
+    addI2cRemoteDevice(getPIDDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
+    addI2cRemoteDevice(getMotorDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
+    addI2cRemoteDevice(getCodersDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
+    addI2cRemoteDevice(getTrajectoryDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
+    addI2cRemoteDevice(getMotionDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
 
     initDevices();
 
@@ -257,10 +265,12 @@ void runMainBoardPC(void) {
 
     setDebugI2cEnabled(false);
 
-	if (!pingDriverDataDispatcherList()) {
-		printf("PING PROBLEM !");
-	}
+    if (!pingDriverDataDispatcherList()) {
+        printf("PING PROBLEM !");
+    }
     // testDriverIntensive(100);
+
+	startTimerList();
 
     while (1) {
         mainBoardWaitForInstruction();

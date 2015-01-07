@@ -526,6 +526,12 @@
     <Filter Include="Source Files\common\pc\process">
       <UniqueIdentifier>{4081845c-1c75-403b-abd5-2bf24c4c43b4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\device\timer">
+      <UniqueIdentifier>{0bce2d28-65f8-4c00-af8a-a4b4696d056d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\device\timer">
+      <UniqueIdentifier>{46f003a0-65ff-4246-81eb-d50d4edfa71b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -1103,6 +1109,12 @@
     </ClCompile>
     <ClCompile Include="common\math\pc\randomPc.c">
       <Filter>Source Files\common\math\pc</Filter>
+    </ClCompile>
+    <ClCompile Include="device\timer\timerDevice.c">
+      <Filter>Source Files\device\timer</Filter>
+    </ClCompile>
+    <ClCompile Include="device\timer\timerDeviceInterface.c">
+      <Filter>Source Files\device\timer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1720,6 +1732,12 @@
     </ClInclude>
     <ClInclude Include="drivers\dispatcher\dataDispatcherDeviceDriver.h">
       <Filter>Header Files\drivers\dispatchers</Filter>
+    </ClInclude>
+    <ClInclude Include="device\timer\timerDevice.h">
+      <Filter>Header Files\device\timer</Filter>
+    </ClInclude>
+    <ClInclude Include="device\timer\timerDeviceInterface.h">
+      <Filter>Header Files\device\timer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -173,6 +173,8 @@
     <ClCompile Include="device\system\systemDeviceInterface.c" />
     <ClCompile Include="device\test\testDevice.c" />
     <ClCompile Include="device\test\testDeviceInterface.c" />
+    <ClCompile Include="device\timer\timerDevice.c" />
+    <ClCompile Include="device\timer\timerDeviceInterface.c" />
     <ClCompile Include="device\transmitMode.c" />
     <ClCompile Include="drivers\beacon\beaconReceiverDriver.c" />
     <ClCompile Include="drivers\clock\mockClock.c" />
@@ -375,6 +377,8 @@
     <ClInclude Include="device\system\systemDeviceInterface.h" />
     <ClInclude Include="device\test\testDevice.h" />
     <ClInclude Include="device\test\testDeviceInterface.h" />
+    <ClInclude Include="device\timer\timerDevice.h" />
+    <ClInclude Include="device\timer\timerDeviceInterface.h" />
     <ClInclude Include="device\transmitMode.h" />
     <ClInclude Include="drivers\beacon\beaconReceiverDriver.h" />
     <ClInclude Include="drivers\clock\mockClock.h" />

@@ -58,10 +58,10 @@ void __attribute__((__interrupt__)) __attribute__((no_auto_psv)) _SI2CInterrupt(
             SlaveWriteI2C(I2C_SLAVE_NO_DATA_IN_READ_BUFFER);
         }
         while (I2CSTATbits.TBF) {
-		
-		}
+        
+        }
     }
-	// Master want to WRITE (InputStream)
+    // Master want to WRITE (InputStream)
     else {
         if (!isData) {
             SlaveReadI2C();

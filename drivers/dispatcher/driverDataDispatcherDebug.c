@@ -12,7 +12,7 @@ void printDriverDataDispatcher(OutputStream* outputStream, DriverDataDispatcher*
     appendString(outputStream, dispatcher->name);
     appendString(outputStream, ", transmitMode=");
     TransmitMode transmitMode = dispatcher->transmitMode;
-	appendDec(outputStream, transmitMode);
+    appendDec(outputStream, transmitMode);
     append(outputStream, '(');
     appendString(outputStream, getTransmitModeAsString(transmitMode));
     append(outputStream, ')');

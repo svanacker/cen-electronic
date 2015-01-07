@@ -101,7 +101,7 @@ bool handlePingSpecialCase(Buffer* inputBuffer,
 
         DriverDataDispatcher* dataDispatcher = getDriverDataDispatcherByIndex(dispatcherIndex);
         if (dataDispatcher == NULL) {
-			bufferClearLastChars(inputBuffer, pingMessageLength);
+            bufferClearLastChars(inputBuffer, pingMessageLength);
             return true;
         }
 
@@ -124,7 +124,7 @@ bool handlePingSpecialCase(Buffer* inputBuffer,
 
         return true;
     }
-	return false;
+    return false;
 }
 
 bool handleStreamInstruction(Buffer* inputBuffer,
@@ -167,7 +167,7 @@ bool handleStreamInstruction(Buffer* inputBuffer,
         unsigned char commandHeader = bufferGetCharAtIndex(inputBuffer, COMMAND_HEADER_INDEX);
 
         if (handlePingSpecialCase(inputBuffer, outputBuffer, outputStream, inputFilterChar, outputFilterChar, deviceHeader, commandHeader)) {
-			// We return if we handle the ping
+            // We return if we handle the ping
             return true;
         }
 
@@ -208,7 +208,7 @@ bool handleStreamInstruction(Buffer* inputBuffer,
             }
 
             // remove the first chars corresponding to the device header and command Header
-			bufferClearLastChars(inputBuffer, DEVICE_AND_COMMAND_HEADER_LENGTH);
+            bufferClearLastChars(inputBuffer, DEVICE_AND_COMMAND_HEADER_LENGTH);
 
             // Call to the device
             deviceDescriptor->deviceHandleRawData(commandHeader, bufferedInputStream, bufferedOutputStream);

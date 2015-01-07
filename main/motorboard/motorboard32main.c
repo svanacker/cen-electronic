@@ -55,6 +55,10 @@
 #include "../../device/system/systemDevice.h"
 #include "../../device/system/systemDeviceInterface.h"
 
+// Timer
+#include "../../device/timer/timerDevice.h"
+#include "../../device/timer/timerDeviceInterface.h"
+
 // Log
 #include "../../device/log/logDevice.h"
 #include "../../device/log/logDeviceInterface.h"
@@ -153,10 +157,10 @@ static Buffer debugI2cOutputBuffer;
  */
 
 // Devices
-static Device deviceListArray[MOTOR_BOARD_DEVICE_LENGTH];
+static Device deviceListArray[MOTOR_BOARD_DEVICE_LIST_LENGTH];
 
 void initDevicesDescriptor() {
-    initDeviceList(&deviceListArray, MOTOR_BOARD_DEVICE_LENGTH);
+    initDeviceList(&deviceListArray, MOTOR_BOARD_DEVICE_LIST_LENGTH);
 
     addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());
     addLocalDevice(getCodersDeviceInterface(), getCodersDeviceDescriptor());
@@ -166,8 +170,10 @@ void initDevicesDescriptor() {
     addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
     addLocalDevice(getSerialDebugDeviceInterface(), getSerialDebugDeviceDescriptor());
     addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
+    addLocalDevice(getTimerDeviceInterface(), getTimerDeviceDescriptor());
     addLocalDevice(getLogDeviceInterface(), getLogDeviceDescriptor());
     addLocalDevice(getI2cSlaveDebugDeviceInterface(), getI2cSlaveDebugDeviceDescriptor());
+
 
     initDevices();
 }

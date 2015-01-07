@@ -35,10 +35,10 @@ void deviceSystemHandleRawData(char header, InputStream* inputStream, OutputStre
     if (header == COMMAND_PING) {
         // data
         ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_PING);
-		
-		// Read and write in output the pingIndex (to control that it's the right which does the response)
-		unsigned char pingIndex = readHex2(inputStream);
-		appendHex2(outputStream, pingIndex);
+        
+        // Read and write in output the pingIndex (to control that it's the right which does the response)
+        unsigned char pingIndex = readHex2(inputStream);
+        appendHex2(outputStream, pingIndex);
     }
     else if (header == COMMAND_DEVICE_LIST) {
         ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_DEVICE_LIST);

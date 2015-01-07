@@ -107,7 +107,7 @@ unsigned char handleAndWaitFreeMotion(void) {
     unsigned char value = -1;
     while (true) {
         value = handleInstructionAndMotion();
-        // POSITION_BLOCKED_WHEELS is not necesseray because we block the position after
+        // POSITION_BLOCKED_WHEELS is not necessary because we block the position after
         if (value == NO_POSITION_TO_REACH || value == POSITION_TO_MAINTAIN || value == POSITION_OBSTACLE) {
             // if (value == NO_POSITION_TO_REACH || value == POSITION_OBSTACLE) {
             appendString(getDebugOutputStreamLogger(), "handleAndWaitFreeMotion->break=");

@@ -32,7 +32,7 @@
 #define DATA_DISPATCHER_DEVICE_HEADER              'j'
 
 /** Command to ping */
-#define COMMAND_PING_DISPATCHER_INDEX			   'p'
+#define COMMAND_PING_DISPATCHER_INDEX               'p'
 
 /** Command to manipulate the clock. */
 #define CLOCK_DEVICE_HEADER                        'k'

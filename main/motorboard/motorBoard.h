@@ -21,7 +21,7 @@ Buffer* getI2CSlaveOutputBuffer();
 #define MOTOR_BOARD_OUT_BUFFER_LENGTH    50
 
 // DEVICES
-#define MOTOR_BOARD_DEVICE_LENGTH        10
+#define MOTOR_BOARD_DEVICE_LIST_LENGTH   12
 
 // TIMERS
 #define MOTOR_BOARD_TIMER_LENGTH         2
