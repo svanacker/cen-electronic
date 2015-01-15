@@ -8,10 +8,6 @@ const char* getStartMatchDetectorDeviceName(void) {
     return "StartMatchDetector";
 }
 
-unsigned int getStartMatchDetectorSoftwareRevision(void) {
-    return 1;
-}
-
 int deviceStartMatchDetectorGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     if (commandHeader == COMMAND_STEP_BY_STEP) {
         // same input / output
@@ -39,7 +35,6 @@ int deviceStartMatchDetectorGetInterface(char commandHeader, DeviceInterfaceMode
 static DeviceInterface deviceInterface = {
     .deviceGetName = &getStartMatchDetectorDeviceName,
     .deviceHeader = START_MATCH_DETECTOR_DEVICE_HEADER,
-//    .deviceGetSoftwareRevision = &getStartMatchDetectorSoftwareRevision,
     .deviceGetInterface = &deviceStartMatchDetectorGetInterface
 };
 

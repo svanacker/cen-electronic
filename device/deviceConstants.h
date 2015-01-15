@@ -96,6 +96,12 @@
 
 #define CODERS_DEVICE_HEADER                       'w'
 
+/** Reserved to clear buffer. */
+#define NOT_TOO_USE_1							   'z'
+
+/** Reserved to clear deeply the buffer. */
+#define NOT_TOO_USE_1							   'Z'
+
 #define STRATEGY_DEVICE_HEADER                     'Y'
 
 #define START_MATCH_DETECTOR_DEVICE_HEADER         '!'
