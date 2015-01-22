@@ -7,10 +7,9 @@
 #include "../../../common/io/pc/consoleOutputStream.h"
 
 static OutputStream consoleOutputStream;
-static LogHandler consoleLogHandler;
 
 LogHandler* addConsoleLogHandler(LogLevel consoleLogLevel) {
     initConsoleOutputStream(&consoleOutputStream);
-    addLogHandler(&consoleLogHandler, "CONSOLE", &consoleOutputStream, consoleLogLevel);
-    return &consoleLogHandler;
+	LogHandler* result = addLogHandler("CONSOLE", &consoleOutputStream, consoleLogLevel);
+    return result;
 }

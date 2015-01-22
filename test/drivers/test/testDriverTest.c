@@ -32,6 +32,9 @@
 
 #include "../../../remote/clock/remoteClock.h"
 
+// Logs
+#define TEST_DRIVER_TEST_LOG_HANDLER_LIST_LENGTH 2
+static LogHandlerList logHandlerListArray[TEST_DRIVER_TEST_LOG_HANDLER_LIST_LENGTH];
 
 // Dispatchers
 #define TEST_DRIVER_TEST_DATA_DISPATCHER_LIST_LENGTH 2
@@ -55,7 +58,7 @@ void testDriverTestTestSuite(void) {
 }
 
 void test_testDriverGetValue(void) {
-    initLog(DEBUG);
+	initLogs(DEBUG, (LogHandler(*)[]) &logHandlerListArray, TEST_DRIVER_TEST_LOG_HANDLER_LIST_LENGTH);
     addConsoleLogHandler(DEBUG);
 
     // Dispatchers

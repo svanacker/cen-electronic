@@ -28,20 +28,21 @@ LogHandlerList* getLoggerHandlerList();
 /**
  * Init the log system.
  * @param globalLevel the global level of log (independent of each handler level)
+ * @param handlerListArray the array containing all log Handlers
+ * @param handlerListSize the size of the previous array
  */
-void initLog(LogLevel globalLevel);
+void initLogs(LogLevel globalLevel, LogHandler(*handlerListArray)[], unsigned char handlerListSize);
 
 /**
  * Add a log Handler to the system.
- * @param logHandler the logHandler structure
  * @param handlerName the name of the logHandler
  * @param outputStream the stream in which we write
  * @param logLevel the log level for this handler
+ * @param result the logHandler structure created
  */
-void addLogHandler(LogHandler* logHandler,
-        char* handlerName,
-        OutputStream* outputStream,
-        LogLevel logLevel);
+LogHandler* addLogHandler(char* handlerName,
+	OutputStream* outputStream,
+	LogLevel logLevel);
 
 /**
  * Get a compatible outputStream (to be used with printWriter) in which we write.

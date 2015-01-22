@@ -1,7 +1,7 @@
 #include <peripheral/i2c.h>
 #include <stdlib.h>
 
-// List of available functionnality
+// List of available functionality
 
 #include "motorBoard.h"
 
@@ -124,7 +124,7 @@ static OutputStream debugOutputStream;
 static StreamLink debugSerialStreamLink;
 
 // logs
-static LogHandler serialLogHandler;
+static LogHandler logHandlerListArray[MOTOR_BOARD_LOG_HANDLER_LIST_LENGTH];
 
 // i2c Link
 static char i2cSlaveInputBufferArray[MOTOR_BOARD_IN_BUFFER_LENGTH];
@@ -228,8 +228,8 @@ int runMotorBoard() {
             DEFAULT_SERIAL_SPEED);
 
     // Init the logs
-    initLog(DEBUG);
-    addLogHandler(&serialLogHandler, "UART", &debugOutputStream, DEBUG);
+    initLogs(DEBUG, (LogHandler(*)[]) &logHandlerListArray, MOTOR_BOARD_LOG_HANDLER_LIST_LENGTH);
+    addLogHandler("UART", &debugOutputStream, DEBUG);
     appendString(getDebugOutputStreamLogger(), getPicName());
     appendCRLF(getDebugOutputStreamLogger());
 

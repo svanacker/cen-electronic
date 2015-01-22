@@ -100,7 +100,7 @@
 #define NOT_TOO_USE_1							   'z'
 
 /** Reserved to clear deeply the buffer. */
-#define NOT_TOO_USE_1							   'Z'
+#define NOT_TOO_USE_2							   'Z'
 
 #define STRATEGY_DEVICE_HEADER                     'Y'
 

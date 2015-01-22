@@ -62,7 +62,7 @@ void deviceBeaconHandleRawData(char commandHeader, InputStream* inputStream, Out
 
         appendRobotPosition(outputStream, COMMAND_BEACON_POSITION, point);
     // Get the configuration of the both laser
-    } else if (header == COMMAND_BEACON_CONFIGURATION) {
+    } else if (commandHeader == COMMAND_BEACON_CONFIGURATION) {
         appendAck(outputStream);
         append(outputStream, COMMAND_BEACON_CONFIGURATION);
 

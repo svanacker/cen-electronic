@@ -68,11 +68,17 @@
 
 #include "../../../common/pc/process/processHelper.h"
 
+// Logs
+static LogHandlerList logHandlerListArray[MOTOR_BOARD_PC_LOG_HANDLER_LIST_LENGTH];
+
+
 // Dispatchers
 static DriverDataDispatcher driverDataDispatcherListArray[MOTOR_BOARD_PC_DATA_DISPATCHER_LIST_LENGTH];
 
 // Timers
 static Device timerListArray[MOTOR_BOARD_PC_TIMER_LENGTH];
+
+// Logs
 
 // ConsoleOutputStream
 static InputStream consoleInputStream;
@@ -145,7 +151,7 @@ void runMotorBoardPC(void) {
     printf("|_|  |_|\\___/ |_| \\___/|_| \\_\\  |____/ \\___/_/   \\_|_| \\_|____/   |_|    \\____|\r\n");
     printf("\r\n");
 
-    initLog(DEBUG);
+	initLogs(DEBUG, (LogHandler(*)[]) &logHandlerListArray, MOTOR_BOARD_PC_LOG_HANDLER_LIST_LENGTH);
     initConsoleInputStream(&consoleInputStream);
     initConsoleOutputStream(&consoleOutputStream);
     addConsoleLogHandler(DEBUG);

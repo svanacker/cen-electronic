@@ -124,7 +124,7 @@ static OutputStream beaconReceiverOutputStream;
 #define SERIAL_PORT_ZIGBEE     SERIAL_PORT_1
 
 // logs
-static LogHandler serialLogHandler;
+static LogHandler logHandlerListArray[BEACON_LOG_HANDLER_LIST_LENGTH];
 
 // Devices
 static Device deviceListArray[BEACON_BOARD_DEVICE_LENGTH];
@@ -344,8 +344,8 @@ restart:
     initZigbeeOutputStream(&responseDataOutputStream, &responseDataOutputBuffer, JENNIC_ROUTER_MAC_ADDRESS);
 
     // Init the logs
-    initLog(DEBUG);
-    addLogHandler(&serialLogHandler, "UART", &debugOutputStream, DEBUG);
+    initLogs(DEBUG, &logHandlerListArray, BEACON_LOG_HANDLER_LIST_LENGTH);
+    addLogHandler("UART", &debugOutputStream, DEBUG);
     appendString(getOutputStreamLogger(INFO), "BEACON BOARD MAIN \n");
     appendCRLF(getOutputStreamLogger(INFO));
     setPicName("BEACON BOARD MAIN");

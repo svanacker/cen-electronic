@@ -22,7 +22,7 @@ void printLogger(OutputStream* outputStream) {
     int count = getLogHandlerCount(logHandlerList);
     int i;
     for (i = 0; i < count; i++) {
-        LogHandler* logHandler = logHandlerList->logHandlers[i];
+        LogHandler* logHandler = getLogHandler(logHandlerList, i);
         appendStringAndDec(outputStream, "log(", i);
         appendString(outputStream, ")=");
         printLogHandler(outputStream, logHandler);

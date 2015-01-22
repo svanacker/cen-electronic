@@ -88,7 +88,7 @@ static OutputStream debugOutputStream;
 static StreamLink debugSerialStreamLink;
 
 // logs
-static LogHandler serialLogHandler;
+static LogHandler logHandlerListArray[MOTOR_BOARD_LOG_HANDLER_LIST_LENGTH];
 
 // i2c Link
 static char i2cSlaveInputBufferArray[MOTOR_BOARD_IN_BUFFER_LENGTH];
@@ -113,10 +113,10 @@ static Buffer debugI2cOutputBuffer;
  */
 
 // Devices
-static Device deviceListArray[MOTOR_BOARD_DEVICE_LENGTH];
+static Device deviceListArray[MOTOR_BOARD_DEVICE_LIST_LENGTH];
 
 void initDevicesDescriptor() {
-    initDeviceList(&deviceListArray, MOTOR_BOARD_DEVICE_LENGTH);
+    initDeviceList(&deviceListArray, MOTOR_BOARD_DEVICE_LIST_LENGTH);
 
     addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());
     addLocalDevice(getCodersDeviceInterface(), getCodersDeviceDescriptor());
@@ -150,8 +150,8 @@ int runMotorBoard() {
             0);
 
     // Init the logs
-    initLog(DEBUG);
-    addLogHandler(&serialLogHandler, "UART", &debugOutputStream, DEBUG);
+    initLogs(DEBUG, &logHandlerListArray, MOTOR_BOARD_DEVICE_LIST_LENGTH);
+    addLogHandler("UART", &debugOutputStream, DEBUG);
     appendString(getDebugOutputStreamLogger(), getPicName());
     appendCRLF(getDebugOutputStreamLogger());
 

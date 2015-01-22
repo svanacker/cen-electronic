@@ -32,7 +32,7 @@ void initDeviceList(Device (*deviceListArray)[], unsigned char deviceListSize) {
 /**
  * @private
  */
-Device* addDevice(DeviceInterface* interface,
+Device* addDevice(DeviceInterface* deviceInterface,
         DeviceDescriptor* descriptor,
         TransmitMode transmitMode,
         int address,
@@ -46,7 +46,7 @@ Device* addDevice(DeviceInterface* interface,
     if (size < deviceList.maxSize) {
         Device* device = getDevice(size);
         // get a pointer on a device already allocated (because we provide at init a pointer on an array of device
-        device->deviceInterface = interface;
+		device->deviceInterface = deviceInterface;
         device->descriptor = descriptor;
         device->transmitMode = transmitMode;
         device->address = address;

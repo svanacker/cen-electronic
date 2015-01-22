@@ -4,26 +4,35 @@
 #include "logHandlerList.h"
 #include "logHandler.h"
 
-/** The max limit of handler list. */
-// Currently, we use only 2 Handlers max (DEBUG, LCD ...) !
-#define MAX_LOG_HANDLER 2
-
 /**
  * The struct defining a list of log handler.
  */
 typedef struct {
     /** An array of pointer on device Descriptor. */
-    LogHandler* logHandlers[MAX_LOG_HANDLER];
-    /** the size of the list. */
-    unsigned char size;
+    LogHandler(*logHandlers)[];
+	/** the size of the list. */
+	unsigned char size;
+    /** the max size of the list. */
+    unsigned char maxSize;
 } LogHandlerList;
+
+
+/**
+* Init the list of logHandler
+* @param handlerListArray the array containing all log Handlers
+* @param handlerListSize the size of the previous array
+*/
+void initLogHandlerList(LogHandlerList* logHandlerList, LogHandler(*logHandlerListArray)[], unsigned char logHandlerListSize);
 
 /**
  * Add a log handler to the list.
  * @param logHandlerList the list in which we add the log handler
- * @param logHandler the handler that we want to add
+ * @param logLevel the log level
+ * @param handlerName the name of the handler
+ * @param outputStream the underlying outputStream
+ * @return logHandler the result.
  */
-void addLogHandlerToList(LogHandlerList* logHandlerList, LogHandler* logHandler);
+LogHandler* addLogHandlerToList(LogHandlerList* logHandlerList, LogLevel logLevel, char* handlerName, OutputStream* outputStream);
 
 /**
  * Get the log handler by the index.

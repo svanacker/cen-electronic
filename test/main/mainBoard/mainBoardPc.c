@@ -102,6 +102,9 @@
 
 #include "../../../common/pc/process/processHelper.h"
 
+// Logs
+static LogHandler logHandlerListArray[MAIN_BOARD_PC_LOG_HANDLER_LIST_LENGTH];
+
 // Dispatchers
 static DriverDataDispatcher driverDataDispatcherListArray[MAIN_BOARD_PC_DATA_DISPATCHER_LIST_LENGTH];
 
@@ -195,7 +198,7 @@ void runMainBoardPC(void) {
     printf("\r\n");
 
 
-    initLog(DEBUG);
+	initLogs(DEBUG, (LogHandler(*)[]) &logHandlerListArray, MAIN_BOARD_PC_LOG_HANDLER_LIST_LENGTH);
     initConsoleInputStream(&consoleInputStream);
     initConsoleOutputStream(&consoleOutputStream);
     addConsoleLogHandler(DEBUG);

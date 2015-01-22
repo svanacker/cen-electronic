@@ -1,4 +1,6 @@
 #include "logger.h"
+#include "logHandlerList.h"
+#include "logHandler.h"
 
 /** Singleton, used for instantiate memory necessary for struct */
 static Logger logger;
@@ -7,6 +9,13 @@ static OutputStream logOutputStream;
 
 LogHandlerList* getLoggerHandlerList() {
     return &logHandlerList;
+}
+
+/**
+* @private
+*/
+void flushLog(OutputStream* outputStream) {
+	// don't do anything for the moment
 }
 
 /**
@@ -21,7 +30,7 @@ void writeLogChar(OutputStream* outputStream, char c) {
     int count = getLogHandlerCount(&logHandlerList);
     int writeLoggerLevel = logger.writeLogLevel;
     for (i = 0; i < count; i++) {
-        LogHandler* logHandler = logHandlerList.logHandlers[i];
+        LogHandler* logHandler = getLogHandler(&logHandlerList, i);
         LogLevel logHandlerLevel = logHandler->logLevel;
         // we only write data which are with higher level
         if (writeLoggerLevel < logHandlerLevel) {
@@ -33,30 +42,25 @@ void writeLogChar(OutputStream* outputStream, char c) {
     }
 }
 
-/**
- * @private
- */
-void flushLog(OutputStream* outputStream) {
-    // don't do anything for the moment
+void initLogs(LogLevel globalLogLevel, LogHandler(*handlerListArray)[], unsigned char handlerListSize) {
+	// Init logger structure
+	logger.globalLogLevel = globalLogLevel;
+	logger.writeLogLevel = globalLogLevel;
+	logger.logHandlerList = &logHandlerList;
+	logger.outputStream = &logOutputStream;
+	// Init OutputStream
+	logOutputStream.writeChar = writeLogChar;
+	logOutputStream.flush = flushLog;
+	// Init the LogHandlerList
+	initLogHandlerList(&logHandlerList, handlerListArray, handlerListSize);
 }
 
-void initLog(LogLevel globalLogLevel) {
-    // Init logger structure
-    logger.globalLogLevel = globalLogLevel;
-    logger.writeLogLevel = globalLogLevel;
-    logger.logHandlerList = &logHandlerList;
-    logger.outputStream = &logOutputStream;
-    // Init OutputStream
-    logOutputStream.writeChar = writeLogChar;
-    logOutputStream.flush = flushLog;
-}
+LogHandler* addLogHandler(char* handlerName,
+                            OutputStream* outputStream,
+                            LogLevel logLevel) {
+    LogHandler* result = addLogHandlerToList(&logHandlerList, logLevel, handlerName, outputStream);
 
-void addLogHandler(LogHandler* logHandler,
-        char* handlerName,
-        OutputStream* outputStream,
-        LogLevel logLevel) {
-    initHandler(logHandler, handlerName, outputStream, logLevel);
-    addLogHandlerToList(&logHandlerList, logHandler);
+    return result;
 }
 
 OutputStream* getOutputStreamLogger(LogLevel writeLogLevel) {

@@ -9,6 +9,9 @@
 #include "../../main/beaconReceiver/beaconReceiverBoard.h"
 #include "../../main/strategy/strategyMain.h"
 
+// LOGS
+#define MAIN_BOARD_LOG_HANDLER_LIST_LENGTH   2
+
 // DEBUG UART
 
 #define MAIN_BOARD_DEBUG_INPUT_BUFFER_LENGTH    50

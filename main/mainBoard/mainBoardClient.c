@@ -251,9 +251,8 @@ static RobotConfig robotConfig;
 // lcd DEBUG 
 static OutputStream lcdOutputStream;
 
-// logs
-static LogHandler debugSerialLogHandler;
-static LogHandler lcdLogHandler;
+// Logs
+static LogHandler logHandlerListArray[MAIN_BOARD_LOG_HANDLER_LIST_LENGTH];
 
 // Devices
 static Device deviceListArray[MAIN_BOARD_DEVICE_LENGTH];
@@ -408,9 +407,9 @@ int main(void) {
     initTimerList(&timerListArray, MAIN_BOARD_TIMER_LENGTH);
 
     // Init the logs
-    initLog(DEBUG);
-    addLogHandler(&debugSerialLogHandler, "UART", &debugOutputStream, DEBUG);
-    addLogHandler(&lcdLogHandler, "LCD", &lcdOutputStream, LOG_LEVEL_ERROR);
+    initLogs(DEBUG, &logHandlerListArray, MAIN_BOARD_LOG_HANDLER_LIST_LENGTH);
+    addLogHandler("UART", &debugOutputStream, DEBUG);
+    addLogHandler("LCD", &lcdOutputStream, LOG_LEVEL_ERROR);
 
     appendString(getOutputStreamLogger(ALWAYS), getPicName());
     println(getOutputStreamLogger(ALWAYS));
