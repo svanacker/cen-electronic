@@ -1,6 +1,7 @@
 #include "testDriverTest.h"
 
 #include <stdlib.h>
+#include <time.h>
 
 #include "../../../test/unity/unity.h"
 #include "../../../common/clock/clock.h"
@@ -89,7 +90,16 @@ void test_testDriverGetValue(void) {
 
     ClockData clockData;
     getRemoteClockData(&clockData);
-    TEST_ASSERT_EQUAL(14, clockData.year);
+
+	// Get the real time
+	time_t rawtime;
+	struct tm timeinfo;
+	time(&rawtime);
+	localtime_s(&timeinfo, &rawtime);
+
+	int expected = timeinfo.tm_year - 100; // we store the date after 2000 (100 = 2000 - 1900)
+
+	TEST_ASSERT_EQUAL(expected, clockData.year);
 
     // Motor Driver Test
 
