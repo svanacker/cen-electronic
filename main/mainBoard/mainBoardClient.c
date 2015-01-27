@@ -176,8 +176,7 @@
 
 #define SERIAL_PORT_DEBUG         SERIAL_PORT_2 
 #define SERIAL_PORT_PC            SERIAL_PORT_6
-#define SERIAL_PORT_LCD           SERIAL_PORT_5    
-#define SERIAL_PORT_MOTOR         SERIAL_PORT_1
+#define SERIAL_PORT_MOTOR         SERIAL_PORT_5
 
 // serial link DEBUG 
 static char debugInputBufferArray[MAIN_BOARD_DEBUG_INPUT_BUFFER_LENGTH];
@@ -189,6 +188,14 @@ static StreamLink debugSerialStreamLink;
 
 // StartMatchDetector
 static StartMatchDetector startMatchDetector;
+
+// serial link Motor
+static char motorInputBufferArray[MAIN_BOARD_MOTOR_INPUT_BUFFER_LENGTH];
+static Buffer motorInputBuffer;
+static char motorOutputBufferArray[MAIN_BOARD_MOTOR_OUTPUT_BUFFER_LENGTH];
+static Buffer motorOutputBuffer;
+static OutputStream motorOutputStream;
+static StreamLink motorSerialStreamLink;
 
 // serial link PC
 static char pcInputBufferArray[MAIN_BOARD_PC_INPUT_BUFFER_LENGTH];
@@ -318,9 +325,9 @@ void initDevicesDescriptor() {
 
     // Motor Board->I2C
     // addI2cRemoteDevice(getTestDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
-    addI2cRemoteDevice(getMotorDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
-    addI2cRemoteDevice(getCodersDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
-    addI2cRemoteDevice(getPIDDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
+    // addI2cRemoteDevice(getMotorDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
+    // addI2cRemoteDevice(getCodersDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
+    // addI2cRemoteDevice(getPIDDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
 
     Device* trajectoryDevice = addI2cRemoteDevice(getTrajectoryDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
     Device* motionDevice = addI2cRemoteDevice(getMotionDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
@@ -328,6 +335,10 @@ void initDevicesDescriptor() {
     // MOTOR BOARD -> UART
     // addUartRemoteDevice(getMotorDeviceInterface(), SERIAL_PORT_MOTOR);
     addUartRemoteDevice(getTestDeviceInterface(), SERIAL_PORT_MOTOR);
+    addUartRemoteDevice(getMotorDeviceInterface(), SERIAL_PORT_MOTOR);
+    addUartRemoteDevice(getCodersDeviceInterface(), SERIAL_PORT_MOTOR);
+    addUartRemoteDevice(getPIDDeviceInterface(), SERIAL_PORT_MOTOR);
+
     
     // Beacon Receiver Board->I2C
     // addI2cRemoteDevice(getBeaconReceiverDeviceInterface(), BEACON_RECEIVER_I2C_ADDRESS);
@@ -387,6 +398,18 @@ int main(void) {
             MAIN_BOARD_DEBUG_OUTPUT_BUFFER_LENGTH,
             &debugOutputStream,
             SERIAL_PORT_DEBUG,
+            DEFAULT_SERIAL_SPEED);
+
+    // Open the serial Link for the Motor Board
+    openSerialLink(&motorSerialStreamLink,
+            &motorInputBuffer,
+            &motorInputBufferArray,
+            MAIN_BOARD_MOTOR_INPUT_BUFFER_LENGTH,
+            &motorOutputBuffer,
+            &motorOutputBufferArray,
+            MAIN_BOARD_MOTOR_OUTPUT_BUFFER_LENGTH,
+            &motorOutputStream,
+            SERIAL_PORT_MOTOR,
             DEFAULT_SERIAL_SPEED);
 
     // Open the serial Link for the PC
@@ -451,7 +474,7 @@ int main(void) {
 
     // Uart Stream for motorBoard
     addUartDriverDataDispatcher(
-    &pcSerialStreamLink,
+    &motorSerialStreamLink,
     "MOTOR_BOARD_UART_DISPATCHER",
     SERIAL_PORT_MOTOR);
 
