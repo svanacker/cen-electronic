@@ -40,6 +40,7 @@
         <itemPath>../common/i2c/slave/i2cSlaveSetup.h</itemPath>
         <itemPath>../common/i2c/slave/i2cSlave.h</itemPath>
         <itemPath>../common/i2c/slave/i2cSlaveLink.h</itemPath>
+        <itemPath>../common/i2c/slave/i2cSlaveStream.h</itemPath>
       </logicalFolder>
       <logicalFolder name="common.io" displayName="common.io" projectFiles="true">
         <itemPath>../common/io/buffer.h</itemPath>
@@ -104,6 +105,8 @@
         <itemPath>../device/deviceDescriptor.h</itemPath>
         <itemPath>../device/deviceUsage.h</itemPath>
         <itemPath>../device/deviceInterface.h</itemPath>
+        <itemPath>../device/deviceDebug.h</itemPath>
+        <itemPath>../device/transmitMode.h</itemPath>
       </logicalFolder>
       <logicalFolder name="device.dispatcher"
                      displayName="device.dispatcher"
@@ -143,6 +146,10 @@
         <itemPath>../device/motor/pwmMotorDeviceInterface.h</itemPath>
         <itemPath>../device/motor/pwmMotor.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f1" displayName="device.serial" projectFiles="true">
+        <itemPath>../device/serial/serialDebugDevice.h</itemPath>
+        <itemPath>../device/serial/serialDebugDeviceInterface.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="device.system"
                      displayName="device.system"
                      projectFiles="true">
@@ -152,6 +159,10 @@
       <logicalFolder name="device.test" displayName="device.test" projectFiles="true">
         <itemPath>../device/test/testDevice.h</itemPath>
         <itemPath>../device/test/testDeviceInterface.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f2" displayName="device.timer" projectFiles="true">
+        <itemPath>../device/timer/timerDevice.h</itemPath>
+        <itemPath>../device/timer/timerDeviceInterface.h</itemPath>
       </logicalFolder>
       <logicalFolder name="drivers" displayName="drivers" projectFiles="true">
         <itemPath>../drivers/driverStreamListener.h</itemPath>
@@ -255,12 +266,13 @@
                      displayName="common.i2c.slave"
                      projectFiles="true">
         <itemPath>../common/i2c/slave/i2cSlaveLink.c</itemPath>
+        <itemPath>../common/i2c/slave/i2cSlave.c</itemPath>
       </logicalFolder>
       <logicalFolder name="common.i2c.slave.32"
                      displayName="common.i2c.slave.32"
                      projectFiles="true">
-        <itemPath>../common/i2c/slave/32/i2cSlaveSetup32F.c</itemPath>
         <itemPath>../common/i2c/slave/32/i2cSlave32.c</itemPath>
+        <itemPath>../common/i2c/slave/32/i2cSlaveSetup32.c</itemPath>
       </logicalFolder>
       <logicalFolder name="common.io" displayName="common.io" projectFiles="true">
         <itemPath>../common/io/buffer.c</itemPath>
@@ -330,6 +342,8 @@
         <itemPath>../device/deviceInterface.c</itemPath>
         <itemPath>../device/deviceUsage.c</itemPath>
         <itemPath>../device/device.c</itemPath>
+        <itemPath>../device/deviceDebug.c</itemPath>
+        <itemPath>../device/transmitMode.c</itemPath>
       </logicalFolder>
       <logicalFolder name="device.dispatcher"
                      displayName="device.dispatcher"
@@ -369,6 +383,10 @@
         <itemPath>../device/motor/pwmMotorDeviceInterface.c</itemPath>
         <itemPath>../device/motor/pwmMotor.c</itemPath>
       </logicalFolder>
+      <logicalFolder name="f1" displayName="device.serial" projectFiles="true">
+        <itemPath>../device/serial/serialDebugDevice.c</itemPath>
+        <itemPath>../device/serial/serialDebugDeviceInterface.c</itemPath>
+      </logicalFolder>
       <logicalFolder name="device.system"
                      displayName="device.system"
                      projectFiles="true">
@@ -378,6 +396,10 @@
       <logicalFolder name="device.test" displayName="device.test" projectFiles="true">
         <itemPath>../device/test/testDevice.c</itemPath>
         <itemPath>../device/test/testDeviceInterface.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f2" displayName="device.timer" projectFiles="true">
+        <itemPath>../device/timer/timerDevice.c</itemPath>
+        <itemPath>../device/timer/timerDeviceInterface.c</itemPath>
       </logicalFolder>
       <logicalFolder name="drivers" displayName="drivers" projectFiles="true">
         <itemPath>../drivers/driverStreamListener.c</itemPath>
@@ -587,6 +609,7 @@
         <property key="wpo-lto" value="false"/>
       </C32Global>
       <ICD3PlatformTool>
+        <property key="firmware.download.all" value="false"/>
         <property key="tracecontrol.disablemacros" value="true"/>
         <property key="tracecontrol.medium" value="0"/>
         <property key="tracecontrol.select" value="0"/>

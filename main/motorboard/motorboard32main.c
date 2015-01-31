@@ -60,8 +60,8 @@
 #include "../../device/timer/timerDeviceInterface.h"
 
 // Log
-#include "../../device/log/logDevice.h"
-#include "../../device/log/logDeviceInterface.h"
+//#include "../../device/log/logDevice.h"
+//#include "../../device/log/logDeviceInterface.h"
 
 // I2C Slave Device/
 #include "../../device/i2c/slave/i2cSlaveDebugDevice.h"
@@ -171,8 +171,8 @@ void initDevicesDescriptor() {
     addLocalDevice(getSerialDebugDeviceInterface(), getSerialDebugDeviceDescriptor());
     addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
     addLocalDevice(getTimerDeviceInterface(), getTimerDeviceDescriptor());
-    addLocalDevice(getLogDeviceInterface(), getLogDeviceDescriptor());
-    addLocalDevice(getI2cSlaveDebugDeviceInterface(), getI2cSlaveDebugDeviceDescriptor());
+//    addLocalDevice(getLogDeviceInterface(), getLogDeviceDescriptor());
+//    addLocalDevice(getI2cSlaveDebugDeviceInterface(), getI2cSlaveDebugDeviceDescriptor());
 
 
     initDevices();
