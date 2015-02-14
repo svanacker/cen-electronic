@@ -258,6 +258,7 @@
     <ClCompile Include="test\allTests.c" />
     <ClCompile Include="test\common\2d\2dTest.c" />
     <ClCompile Include="test\common\io\bufferTest.c" />
+    <ClCompile Include="test\common\io\compositeOutputStreamTest.c" />
     <ClCompile Include="test\common\io\filterTest.c" />
     <ClCompile Include="test\common\io\ioUtilsTest.c" />
     <ClCompile Include="test\common\io\printWriterTest.c" />
@@ -466,6 +467,7 @@
     <ClInclude Include="test\allTests.h" />
     <ClInclude Include="test\common\2d\2dTest.h" />
     <ClInclude Include="test\common\io\bufferTest.h" />
+    <ClInclude Include="test\common\io\compositeOutputStreamTest.h" />
     <ClInclude Include="test\common\io\filterTest.h" />
     <ClInclude Include="test\common\io\ioUtilsTest.h" />
     <ClInclude Include="test\common\io\printWriterTest.h" />

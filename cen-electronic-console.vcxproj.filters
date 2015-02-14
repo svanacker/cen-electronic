@@ -1116,6 +1116,9 @@
     <ClCompile Include="device\timer\timerDeviceInterface.c">
       <Filter>Source Files\device\timer</Filter>
     </ClCompile>
+    <ClCompile Include="test\common\io\compositeOutputStreamTest.c">
+      <Filter>Source Files\test\common\io</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -1738,6 +1741,9 @@
     </ClInclude>
     <ClInclude Include="device\timer\timerDeviceInterface.h">
       <Filter>Header Files\device\timer</Filter>
+    </ClInclude>
+    <ClInclude Include="test\common\io\compositeOutputStreamTest.h">
+      <Filter>Header Files\test\common\io</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

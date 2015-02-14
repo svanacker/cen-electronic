@@ -3,18 +3,18 @@
 
 #include "outputStream.h"
 
-#define MAX_STREAM 2
-
 /**
 * Structure defining a composite of streams.
 */
 typedef struct CompositeOutputStream {
-    /** The array of sub-streams. */
-    OutputStream* children[MAX_STREAM];
-    /** The real size of the outputStream. */
-    unsigned char size;
-    // The outputStream exposed as an interface
-    OutputStream outputStream;
+	// The outputStream exposed as an interface
+	OutputStream outputStream;
+	/** An array of pointer on outputStream pointer. */
+	OutputStream*(*streams)[];
+	/** the size of the list. */
+	unsigned char size;
+	/** the max size of the list. */
+	unsigned char maxSize;
 } CompositeOutputStream;
 
 /**
@@ -34,7 +34,8 @@ int getCompositeOutputStreamChildrenCount(CompositeOutputStream* compositeOutput
 /**
 * Init a compositeOutputStream, and branch the outputStream exposed to use the streams children.
 * @param compositeOutputStream the composite stream to initialize
+
 */
-void initCompositeOutputStream(CompositeOutputStream* compositeOutputStream);
+void initCompositeOutputStream(CompositeOutputStream* compositeOutputStream, OutputStream*(*outputStreamListArray)[], unsigned char outputStreamListSize);
 
 #endif

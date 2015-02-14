@@ -7,6 +7,7 @@
 #include "../test/common/2d/2dTest.h"
 
 #include "../test/common/io/bufferTest.h"
+#include "../test/common/io/compositeOutputStreamTest.h"
 #include "../test/common/io/filterTest.h"
 #include "../test/common/io/ioUtilsTest.h"
 #include "../test/common/io/printWriterTest.h"
@@ -35,6 +36,7 @@ void runAllTests(void)
     // RUN_TEST calls runTest
     hexUtilsTestSuite();
     bufferTestSuite();
+	compositeOutputStreamTestSuite();
     filterTestSuite();
     printWriterTestSuite();
     readerTestSuite();
