@@ -31,16 +31,16 @@ void deviceEepromHandleRawData(char commandHeader, InputStream* inputStream, Out
         unsigned long address = readHex4(inputStream);
         int data = readHex2(inputStream);
         eeprom_->eepromWriteInt(eeprom_, address, data);
-    } else if (commandHeader == COMMAND_READ_BLOC_EEPROM) {
-        ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_READ_BLOC_EEPROM);
+    } else if (commandHeader == COMMAND_READ_BLOCK_EEPROM) {
+        ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_READ_BLOCK_EEPROM);
         unsigned long address = readHex4(inputStream);
         int index;
         for (index = 0; index < 8; index++) {
             signed int value = eeprom_->eepromReadInt(eeprom_, address + index);
             appendHex2(outputStream, value);
         }
-    } else if (commandHeader == COMMAND_WRITE_BLOC_EEPROM) {
-        ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_WRITE_BLOC_EEPROM);
+    } else if (commandHeader == COMMAND_WRITE_BLOCK_EEPROM) {
+        ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_WRITE_BLOCK_EEPROM);
         unsigned long address = readHex4(inputStream);
         signed int data;
         int index;

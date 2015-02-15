@@ -8,49 +8,48 @@ const char* getEepromDeviceName(void) {
     return "EEPROM";
 }
 
+#define EEPROM_DEVICE_READ_BLOCK_LENGTH   8
+#define EEPROM_DEVICE_WRITE_BLOCK_LENGTH  4
+
 int deviceEepromGetInterface(char header, DeviceInterfaceMode mode, bool fillDeviceArgumentList){
     if (header == COMMAND_READ_DATA_EEPROM ) {
         if (fillDeviceArgumentList) {
             setFunction("Data Read", 1, 1);
-            setArgumentUnsignedHex4(0, "SET ADDRESS");
-            setResultUnsignedHex2(0, "DATA");
+            setArgumentUnsignedHex4(0, "address");
+            setResultUnsignedHex2(0, "data");
         }
         return commandLengthValueForMode(mode, 4, 2);
 
     } else if (header == COMMAND_WRITE_DATA_EEPROM) {
         if (fillDeviceArgumentList) {
             setFunction("Date Write", 2, 0);
-            setArgumentUnsignedHex4(0, "ADDRESS");
-            setArgumentUnsignedHex2(1, "DATA");
+            setArgumentUnsignedHex4(0, "address");
+            setArgumentUnsignedHex2(1, "data");
         }
         return commandLengthValueForMode(mode, 6, 0);
 
-    } else if (header == COMMAND_READ_BLOC_EEPROM) {
+    } else if (header == COMMAND_READ_BLOCK_EEPROM) {
         if (fillDeviceArgumentList) {
-            setFunction("Bloc Read", 1, 9);
-            setArgumentUnsignedHex4(0, "SET ADDRESS");
-            setResultUnsignedHex2(0, "DATA");
-            setResultUnsignedHex2(1, "DATA");
-            setResultUnsignedHex2(2, "DATA");
-            setResultUnsignedHex2(3, "DATA");
-            setResultUnsignedHex2(4, "DATA");
-            setResultUnsignedHex2(5, "DATA");
-            setResultUnsignedHex2(6, "DATA");
-            setResultUnsignedHex2(7, "DATA");
-            setResultSeparator(8);
+            setFunction("Bloc Read", 1, EEPROM_DEVICE_READ_BLOCK_LENGTH + 1);
+            setArgumentUnsignedHex4(0, "address");
+            int i;
+            for (i = 0; i < EEPROM_DEVICE_READ_BLOCK_LENGTH; i++) {
+                setResultUnsignedHex2(i, "data");
+            }
+            setResultSeparator(EEPROM_DEVICE_READ_BLOCK_LENGTH);
         }
-        return commandLengthValueForMode(mode, 4, 17);
+        return commandLengthValueForMode(mode, 4, EEPROM_DEVICE_READ_BLOCK_LENGTH * 2 + 1);
 
-    } else if (header == COMMAND_WRITE_BLOC_EEPROM) {
+    } else if (header == COMMAND_WRITE_BLOCK_EEPROM) {
         if (fillDeviceArgumentList) {
-            setFunction("Bloc Write", 5, 0);
-            setArgumentUnsignedHex4(0, "SET ADDRESS");
-            setArgumentUnsignedHex2(1, "DATA0");
-            setArgumentUnsignedHex2(2, "DATA1");
-            setArgumentUnsignedHex2(3, "DATA2");
-            setArgumentUnsignedHex2(4, "DATA3");
+            setFunction("Bloc Write", EEPROM_DEVICE_WRITE_BLOCK_LENGTH + 1, 0);
+            setArgumentUnsignedHex4(0, "address");
+            int i;
+            for (i = 0; i < EEPROM_DEVICE_WRITE_BLOCK_LENGTH; i++) {
+                setArgumentUnsignedHex2(i + 1, "data");
+            }
         }
-        return commandLengthValueForMode(mode, 12, 0);
+        return commandLengthValueForMode(mode, 4 + EEPROM_DEVICE_WRITE_BLOCK_LENGTH * 2, 0);
 
     }
     return DEVICE_HEADER_NOT_HANDLED;

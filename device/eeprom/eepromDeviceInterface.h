@@ -20,12 +20,12 @@
 /**
 * Defines the header to read the buffer from the Eeprom
 */
-#define COMMAND_READ_BLOC_EEPROM         'R'
+#define COMMAND_READ_BLOCK_EEPROM         'R'
 
 /**
 * Defines the header to write the buffer on the Eeprom
 */
-#define COMMAND_WRITE_BLOC_EEPROM         'W'
+#define COMMAND_WRITE_BLOCK_EEPROM         'W'
 
 // Function to get the specific Device Interface
 
