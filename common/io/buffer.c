@@ -108,11 +108,11 @@ bool _bufferAvailableData(InputStream* inputStream) {
 
 // BUFFER INTERFACE
 
-void initBuffer(Buffer* buffer, char (*array)[], unsigned int length, char* name, char* type) {
+void initBuffer(Buffer* buffer, char (*s)[], unsigned int length, char* name, char* type) {
     if (!checkBufferNotNull(buffer)) {
         return;    
     }
-    buffer->s = array;
+    buffer->s = s;
     buffer->length = length;
     deepClearBuffer(buffer);
 

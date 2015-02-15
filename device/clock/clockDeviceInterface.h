@@ -7,7 +7,7 @@
 // List of CLOCK COMMAND HEADER
 
 /**
-* Defines the header to read the clock
+* Defines the header to read the clock.
 */
 
 #define COMMAND_READ_CLOCK         'r'

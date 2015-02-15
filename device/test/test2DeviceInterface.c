@@ -24,7 +24,7 @@ int deviceTest2GetInterface(char commandHeader, int mode, bool fillDeviceArgumen
             setFunction("testDriverIntensive", 1, 0);
             setArgumentUnsignedHex4(0, "count");
         }
-        return commandLengthValueForMode(mode, 4, 2);
+        return commandLengthValueForMode(mode, 4, 0);
     }
     return DEVICE_HEADER_NOT_HANDLED;
 }
