@@ -1,10 +1,10 @@
 #include "LM75A.h"
 
-#include "../../common/i2c/i2cCommon.h"
-#include "../../common/i2c/i2cConstants.h"
-#include "../../common/i2c/master/i2cMaster.h"
-#include "../../common/io/outputStream.h"
-#include "../../common/math/bcdUtils.h"
+#include "../../../common/i2c/i2cCommon.h"
+#include "../../../common/i2c/i2cConstants.h"
+#include "../../../common/i2c/master/i2cMaster.h"
+#include "../../../common/io/outputStream.h"
+#include "../../../common/math/bcdUtils.h"
 
 char getTemperatureSensor(void){
     char temperature = 0;

@@ -4,12 +4,12 @@
 #include "temperatureSensorDevice.h"
 #include "temperatureSensorDeviceInterface.h"
 
-#include "../../common/cmd/commonCommand.h"
+#include "../../../common/cmd/commonCommand.h"
 
-#include "../../common/io/printWriter.h"
-#include "../../common/io/reader.h"
+#include "../../../common/io/printWriter.h"
+#include "../../../common/io/reader.h"
 
-#include "../../device/device.h"
+#include "../../../device/device.h"
 
 void deviceTemperatureSensorInit(void) {
 }
