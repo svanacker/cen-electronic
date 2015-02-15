@@ -11,6 +11,8 @@
 
 #include "../../common/delay/cenDelay.h"
 
+#include "../../common/eeprom/eeprom.h"
+
 #include "../../common/i2c/i2cDebug.h"
 
 #include "../../common/i2c/master/i2cMaster.h"
@@ -61,9 +63,17 @@
 #include "../../drivers/dispatcher/localDriverDataDispatcher.h"
 #include "../../drivers/dispatcher/uartDriverDataDispatcher.h"
 
+// CLOCK
+#include "../../device/clock/clockDevice.h"
+#include "../../device/clock/clockDeviceInterface.h"
+
 // DATA DISPATCHER
 #include "../../device/dispatcher/dataDispatcherDevice.h"
 #include "../../device/dispatcher/dataDispatcherDeviceInterface.h"
+
+// EEPROM
+#include "../../device/eeprom/eepromDevice.h"
+#include "../../device/eeprom/eepromDeviceInterface.h"
 
 // SERIAL
 #include "../../device/serial/serialDebugDevice.h"
@@ -96,6 +106,10 @@
 // TIMER
 #include "../../device/timer/timerDevice.h"
 #include "../../device/timer/timerDeviceInterface.h"
+
+// SENSOR->TEMPERATURE
+#include "../../device/sensor/temperature/temperatureSensorDevice.h"
+#include "../../device/sensor/temperature/temperatureSensorDeviceInterface.h"
 
 // SERVO
 #include "../../device/servo/servoDevice.h"
@@ -177,6 +191,12 @@
 #define SERIAL_PORT_DEBUG         SERIAL_PORT_2 
 #define SERIAL_PORT_PC            SERIAL_PORT_6
 #define SERIAL_PORT_MOTOR         SERIAL_PORT_5
+
+// EEPROM
+static Eeprom eeprom;
+
+// CLOCK
+static Clock clock;
 
 // serial link DEBUG 
 static char debugInputBufferArray[MAIN_BOARD_DEBUG_INPUT_BUFFER_LENGTH];
@@ -318,6 +338,9 @@ void initDevicesDescriptor() {
     addLocalDevice(getEndMatchDetectorDeviceInterface(), getEndMatchDetectorDeviceDescriptor());
     addLocalDevice(getSonarDeviceInterface(), getSonarDeviceDescriptor());
     addLocalDevice(getRobotSonarDetectorDeviceInterface(), getRobotSonarDetectorDeviceDescriptor());
+    addLocalDevice(getTemperatureSensorDeviceInterface(), getTemperatureSensorDeviceDescriptor());
+    addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
+    addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
 
     // Mechanical Board 2->I2C
     // Device* armDevice = addI2cRemoteDevice(getArm2012DeviceInterface(), MECHANICAL_BOARD_2_I2C_ADDRESS);
