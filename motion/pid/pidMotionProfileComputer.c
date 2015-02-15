@@ -53,9 +53,9 @@ void initNextPositionVars(int index) {
     localMotion->oldPosition = 0;
     localMotion->u = 0;
 
-    localInst->profileType = 0;
-    localInst->pidType = 0;
-    localInst->motionType = 0;
+    localInst->profileType = PROFILE_TYPE_TRAPEZE;
+    localInst->pidType = PID_TYPE_GO_INDEX;
+    localInst->motionType = NO_POSITION_TO_REACH;
 
     // Initialization of motionEnd & motionBlocked
     MotionEndInfo* localEnd = &(computationValues->motionEnd[index]);
@@ -133,8 +133,8 @@ void computeMotionInstruction(MotionInstruction* inst) {
 }
 
 void setNextPosition(int instructionIndex,
-        unsigned char motionType,
-        unsigned char pidType,
+        MotionType motionType,
+        PidType pidType,
         float pNextPosition,
         float pa,
         float pSpeed) {

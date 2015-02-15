@@ -3,8 +3,6 @@
 
 #include <stdbool.h>
 
-#include "../../common/commons.h"
-
 /**
  * Motors update frequency in number of interruption cycles.
  * For example, if base frequency is 28800, and PID_UPDATE_MOTORS_FRQ = 400

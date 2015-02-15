@@ -44,7 +44,7 @@ static char mustReachPosition;
 /** Indicates if we use the testing Board (we take lower values for PID). */
 static unsigned char rollingTestMode = ROLLING_BOARD_TEST_MODE_OFF;
 
-unsigned char getIndexOfPid(unsigned char instructionIndex, unsigned char pidType) {
+unsigned char getIndexOfPid(unsigned char instructionIndex, PidType pidType) {
     return pidType * INSTRUCTION_COUNT + instructionIndex;
 }
 

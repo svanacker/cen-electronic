@@ -15,7 +15,9 @@
 
 #include "../extended/bsplineDebug.h"
 
+#include "../pid/motionType.h"
 #include "../pid/pid.h"
+#include "../pid/pidType.h"
 #include "../pid/pidDebug.h"
 #include "../pid/alphaTheta.h"
 #include "../pid/pidMotionProfileComputer.h"
@@ -36,7 +38,7 @@
 /** The parameters for motion. */
 static MotionParameter defaultMotionParameters[MOTION_PARAMETERS_COUNT];
 
-MotionParameter* getDefaultMotionParameters(unsigned char motionType) {
+MotionParameter* getDefaultMotionParameters(MotionType motionType) {
     return &defaultMotionParameters[motionType];
 }
 
@@ -139,7 +141,7 @@ unsigned char getMotionType(float left, float right) {
     }
 }
 
-unsigned char getPidType(unsigned char motionType) {
+unsigned char getPidType(MotionType motionType) {
     if (motionType == MOTION_TYPE_FORWARD_OR_BACKWARD) {
         return PID_TYPE_GO_INDEX;
     } else if (motionType == MOTION_TYPE_ROTATION) {
@@ -165,9 +167,9 @@ void gotoPosition(float left, float right, float a, float speed) {
     clearPidTime();
 
     // determine the type of motion
-    unsigned char motionType = getMotionType(left, right);
+    MotionType motionType = getMotionType(left, right);
     // determine the pidType to execute motionType
-    unsigned char pidType = getPidType(motionType);
+    PidType pidType = getPidType(motionType);
 
 
     // Alpha / Theta

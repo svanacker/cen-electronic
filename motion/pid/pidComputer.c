@@ -102,7 +102,7 @@ float computeNormalPosition(MotionInstruction* inst, float time) {
  */
 float computeNextPID(int instructionIndex, MotionInstruction* motionInstruction, Motion* motion, MotionError* motionError, float time) {
     unsigned char rollingTestMode = getRollingTestMode();
-    unsigned char pidType = motionInstruction->pidType;
+    PidType pidType = motionInstruction->pidType;
     float currentPosition = motion->position;
 
     // instructionIndex = Alpha / Theta

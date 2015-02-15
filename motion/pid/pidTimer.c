@@ -1,14 +1,10 @@
-#include <stdlib.h>
-
 #include "pidTimer.h"
 
-#include "../../common/commons.h"
+#include <stdlib.h>
+#include <stdbool.h>
 
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
-
-#include "../../common/log/logger.h"
-#include "../../common/log/logLevel.h"
 
 #include "../../common/timer/cenTimer.h"
 #include "../../common/timer/timerList.h"

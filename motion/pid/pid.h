@@ -1,7 +1,8 @@
 #ifndef PID_H
 #define PID_H
 
-#include "../../common/commons.h"
+#include <stdlib.h>
+#include <stdbool.h>
 
 #include "../../common/io/outputStream.h"
 
@@ -9,8 +10,12 @@
 
 #include "../../motion/extended/bspline.h"
 
+#include "../../motion/pid/instructionType.h"
 #include "../../motion/pid/motionEndDetection.h"
+#include "../../motion/pid/motionType.h"
+#include "../../motion/pid/pidType.h"
 #include "../../motion/pid/pidTimer.h"
+#include "../../motion/pid/profileType.h"
 
 #include "../../robot/robotConstants.h"
 
@@ -19,34 +24,6 @@
 
 // PID CONSTANT
 
-// -> PID TO CONTROL
-
-// Number of PID to control
-#define INSTRUCTION_COUNT 2
-
-// The index of theta & alpha instruction
-#define INSTRUCTION_THETA_INDEX 0
-#define INSTRUCTION_ALPHA_INDEX 1
-
-// -> TYPES OF PID
-
-// different types of PID_TYPE
-#define PID_TYPE_COUNT 5
-
-/** The mask used to indicate that we want to use value of PID to go forward and backward. */
-#define PID_TYPE_GO_INDEX 0
-
-/** The mask used to indicate that we want to use value of PID to rotate. */
-#define PID_TYPE_ROTATE_INDEX 1
-
-/** The mask used to indicate that we want to use value of PID to maintain very strongly the position. */
-#define PID_TYPE_MAINTAIN_POSITION_INDEX 2
-
-/** The mask used to indicate that we want to adjust the robot to the border of board. */
-#define PID_TYPE_ADJUST_DIRECTION 3
-
-/** The pid for final approach. */
-#define PID_TYPE_FINAL_APPROACH_INDEX 4
 
 // -> TEST MODE (to test with a rolling board instead of real motion)
 
@@ -105,31 +82,11 @@
  */
 #define TIME_PERIOD_AFTER_END_FOR_STRONG_PID     40
 
-// MOTION
-
-/** No position to reach. */
-#define NO_POSITION_TO_REACH 0
-
-/** No position to reach, but a position to maintain. */
-#define POSITION_TO_MAINTAIN 1
-
-/** The trajectory is in progress. */
-#define POSITION_IN_PROGRESS 2
-
-/** The robot reach the position. */
-#define POSITION_REACHED 3
-
-/** The robot is directly blocked to move. */
-#define POSITION_BLOCKED_WHEELS 4
-
-/** The robot will hurt something (detection by RobotDetector). */
-#define POSITION_OBSTACLE 5
-
 /**
  * Defines the structure which is used to store PID values
  */
 typedef struct Pid {
-    /** The proportionnal term */
+    /** The proportional term */
     float p;
     /** The integral term */
     float i;
@@ -138,7 +95,7 @@ typedef struct Pid {
     /** The maximal term of integral */
     float maxIntegral;
     /** Enable or not the pid. */
-    unsigned char enabled;
+    bool enabled;
 } Pid;
 
 /**
@@ -192,16 +149,16 @@ typedef struct MotionInstruction {
     float t2;
     /** The time after deceleration > 0 */
     float t3;
-    /** The first position after accceleration time */
+    /** The first position after acceleration time */
     float p1;
     /** The first position after speed constant */
     float p2;
     /** The type of the trajectory (TRAPEZE / TRIANGLE) */
-    char profileType;
+    ProfileType profileType;
     /** The type of motion (GO, ROTATION, MAINTAIN_POSITION). */
-    char motionType;
+    MotionType motionType;
     /** The type of pid which must be used. */
-    char pidType;
+    PidType pidType;
 } MotionInstruction;
 
 /**
@@ -233,7 +190,7 @@ typedef struct PidComputationValues {
 } PidComputationValues;
 
 /**
- * Definition of motion. There can be more than one PidMotion, but only one active
+ * Definition of motion. There can be more than one PidMotionDefinition, but only one active
  * at a time.
  */
 typedef struct PidMotionDefinition {
@@ -267,7 +224,7 @@ typedef struct PidMotion {
     PidMotionDefinition currentMotionDefinition;
     // Contains the next Motion Definition;
     PidMotionDefinition nextMotionDefinition[NEXT_MOTION_DEFINITION_COUNT];
-    // All current values (must be resetted after each new move) => CHANGE EVERY TIME COMPUTATION
+    // All current values (must be reset after each new move) => CHANGE EVERY TIME COMPUTATION
     PidComputationValues computationValues;
 } PidMotion;
 
@@ -282,11 +239,11 @@ PidMotion* getPidMotion();
 MotionEndDetectionParameter* getMotionEndDetectionParameter();
 
 /**
- * Returns the Index of Pid which must be choosen in function of pidType.
+ * Returns the Index of Pid which must be chosen in function of pidType.
  * @param instructionIndex THETA_INDEX or ALPHA_MASK
  * @param pidType the type of pid PID_TYPE_GO_INDEX / PID_TYPE_ROTATE_INDEX / PID_TYPE_MAINTAIN_POSITION
  */
-unsigned char getIndexOfPid(unsigned char instructionIndex, unsigned char pidType);
+unsigned char getIndexOfPid(unsigned char instructionIndex, PidType pidType);
 
 /**
  * Enable or disable a PID.
