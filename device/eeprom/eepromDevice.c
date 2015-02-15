@@ -2,6 +2,9 @@
 #include "eepromDeviceInterface.h"
 
 #include <stdbool.h>
+#include <stdlib.h>
+
+#include "../../common/error/error.h"
 
 #include "../../common/io/printWriter.h"
 #include "../../common/io/reader.h"
@@ -10,7 +13,17 @@
 
 static Eeprom* eeprom_;
 
+void _deviceEepromCheckInitialized() {
+    if (eeprom_ == NULL) {
+        writeError(EEPROM_NULL);
+    }
+    if (!isEepromInitialized(eeprom_)) {
+        writeError(EEPROM_NOT_INITIALIZED);
+    }
+}
+
 void deviceEepromInit(void) {
+    _deviceEepromCheckInitialized();
 }
 
 void deviceEepromShutDown(void) {
@@ -21,6 +34,7 @@ bool isEepromDeviceOk(void) {
 }
 
 void deviceEepromHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream){
+    _deviceEepromCheckInitialized();
     if (commandHeader == COMMAND_READ_DATA_EEPROM) {
         ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_READ_DATA_EEPROM);
         unsigned long address = readHex4(inputStream);

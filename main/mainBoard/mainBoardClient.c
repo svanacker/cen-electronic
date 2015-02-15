@@ -148,6 +148,7 @@
 
 // Drivers
 #include "../../drivers/clock/pcf8573p.h"
+#include "../../drivers/eeprom/24c16.h"
 #include "../../drivers/io/pcf8574.h"
 #include "../../drivers/test/testDriver.h"
 #include "../../drivers/system/systemDriver.h"
@@ -450,7 +451,11 @@ int main(void) {
     // LCD (LCD03 via Serial interface)
     initLCDOutputStream(&lcdOutputStream);
 
+    // Timers
     initTimerList(&timerListArray, MAIN_BOARD_TIMER_LENGTH);
+
+    // Eeproms
+    init24C16Eeprom(&eeprom);
 
     // Init the logs
     initLogs(DEBUG, &logHandlerListArray, MAIN_BOARD_LOG_HANDLER_LIST_LENGTH);

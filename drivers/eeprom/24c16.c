@@ -8,6 +8,8 @@
 #include "../../common/error/error.h"
 #include "../../common/io/buffer.h"
 
+#include "../../common/i2c/master/i2cMaster.h"
+
 #include "../../common/i2c/i2cConstants.h"
 #include "../../common/i2c/i2cCommon.h"
 

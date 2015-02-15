@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdbool.h>
 
 #include "eeprom.h"
 
@@ -31,6 +32,13 @@ long getMaxIndex(Eeprom* eeprom_) {
     }
     long result = eeprom_->maxIndex;
     return result;
+}
+
+bool isEepromInitialized(Eeprom* eeprom_) {
+    if (eeprom_->eepromWriteInt == NULL || eeprom_->eepromReadInt == NULL) {
+        return false;
+    }
+    return true;
 }
 
 void printEepromBlock(Eeprom* eeprom_, OutputStream* outputStream, long index, unsigned int length, Buffer* buffer) {

@@ -1,6 +1,9 @@
 #ifndef EEPROM_H
 #define EEPROM_H
 
+#include <stdlib.h>
+#include <stdbool.h>
+
 #include "../../common/io/buffer.h"
 
 /** Define a value which has been erased by ICD3 programming. */
@@ -85,6 +88,13 @@ void initEeprom(Eeprom* eeprom_,
                 EepromReadIntFunction* eepromReadInt,
                 EepromWriteBlockFunction* eepromWriteBlock,
                 EepromReadBlockFunction* eepromReadBlock);
+                
+/**
+ * Returns true if the eeprom is initialized (if the fields of callbacks are NOT NULL), false else.
+ * @param eeprom_ a pointer on the Eeprom object (Simulates POO programming) 
+ * @return true if the eeprom is initialized (if the fields of callbacks are NOT NULL), false else.
+ */
+bool isEepromInitialized(Eeprom* eeprom_);
 
 /**
  * Print the values of the buffer on the outputStream from the EEPROM device.
