@@ -196,7 +196,7 @@
     <ClCompile Include="drivers\test\testDriver.c" />
     <ClCompile Include="motion\extended\bspline.c" />
     <ClCompile Include="motion\extended\bsplineDebug.c" />
-    <ClCompile Include="motion\extended\singleBSpline.c" />
+    <ClCompile Include="motion\extended\bsplineList.c" />
     <ClCompile Include="motion\pid\alphaTheta.c" />
     <ClCompile Include="motion\pid\bSplinePidComputer.c" />
     <ClCompile Include="motion\pid\motionEndDetection.c" />
@@ -270,6 +270,7 @@
     <ClCompile Include="test\drivers\test\testDriverTest.c" />
     <ClCompile Include="test\main\mainBoard\mainBoardPc.c" />
     <ClCompile Include="test\main\motorBoard\motorBoardPc.c" />
+    <ClCompile Include="test\motion\bspline\bsplineListTest.c" />
     <ClCompile Include="test\unity\unity.c" />
   </ItemGroup>
   <ItemGroup>
@@ -401,16 +402,19 @@
     <ClInclude Include="drivers\test\testDriver.h" />
     <ClInclude Include="motion\extended\bspline.h" />
     <ClInclude Include="motion\extended\bsplineDebug.h" />
-    <ClInclude Include="motion\extended\singleBSpline.h" />
+    <ClInclude Include="motion\extended\bsplineList.h" />
     <ClInclude Include="motion\pid\alphaTheta.h" />
     <ClInclude Include="motion\pid\bSplinePidComputer.h" />
     <ClInclude Include="motion\pid\motionEndDetection.h" />
+    <ClInclude Include="motion\pid\motionType.h" />
     <ClInclude Include="motion\pid\pid.h" />
     <ClInclude Include="motion\pid\pidComputer.h" />
     <ClInclude Include="motion\pid\pidDebug.h" />
     <ClInclude Include="motion\pid\pidMotionProfileComputer.h" />
     <ClInclude Include="motion\pid\pidPersistence.h" />
     <ClInclude Include="motion\pid\pidTimer.h" />
+    <ClInclude Include="motion\pid\pidType.h" />
+    <ClInclude Include="motion\pid\profileType.h" />
     <ClInclude Include="motion\position\coderErrorComputer.h" />
     <ClInclude Include="motion\position\coders.h" />
     <ClInclude Include="motion\position\trajectory.h" />
@@ -479,6 +483,7 @@
     <ClInclude Include="test\drivers\test\testDriverTest.h" />
     <ClInclude Include="test\main\mainBoard\mainBoardPc.h" />
     <ClInclude Include="test\main\motorBoard\motorBoardPc.h" />
+    <ClInclude Include="test\motion\bspline\bsplineListTest.h" />
     <ClInclude Include="test\unity\unity.h" />
     <ClInclude Include="test\unity\unity_internals.h" />
   </ItemGroup>

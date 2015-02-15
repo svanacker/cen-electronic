@@ -43,10 +43,15 @@ typedef struct BSplinePointData {
  * Define a bezierCurve, with 4 points.
  */
 typedef struct BSplineCurve {
+	// first control point
     Point p0;
+	// second control point
     Point p1;
+	// third control point
     Point p2;
+	// last control point
     Point p3;
+	// if we go backward or not
     bool backward;
     // The length of the curve.
     float curveLength;
@@ -58,6 +63,7 @@ typedef struct BSplineCurve {
 
 /**
  * Init a bSpline Curve with values, and all structures necessary to allocate memory.
+ * @param bSplineCurve pointer on structure object (POO paradigm)
  */
 void initFirstTimeBSplineCurve(BSplineCurve* bSplineCurve);
 

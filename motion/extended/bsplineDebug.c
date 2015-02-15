@@ -115,19 +115,6 @@ void writeBSpline(OutputStream* outputStream, BSplineCurve* bSplineCurve) {
         splinePointData.time = t;
         writeBSplinePointData(outputStream, &(splinePointData));
     }
-
-    
-    /*
-    for (t = 0.0f; t <= 1.0f; t += BSPLINE_TIME_INCREMENT) {
-        computeBSplinePoint(bSplineCurve, t, point);
-        splinePointData->time = t;
-
-        float angle = computeBSplineOrientationWithDerivative(bSplineCurve, t);
-        splinePointData->orientation = angle;
-
-        writeBSplinePointData(outputStream, splinePointData);
-      }
-    */
 }
 
 

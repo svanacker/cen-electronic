@@ -21,7 +21,7 @@
 #include "../../drivers/motion/motionDriver.h"
 
 #include "../../motion/extended/bspline.h"
-#include "../../motion/extended/singleBSpline.h"
+#include "../../motion/extended/bsplineList.h"
 
 #include "../../navigation/location.h"
 #include "../../navigation/locationList.h"
@@ -398,10 +398,13 @@ int cpToDistance(signed char d) {
  * Loop on a pathDataFunction, to know if the path has an intersection with the opponentRobotPosition.
  * @private
  */
-bool isPathAvailable(PathDataFunction* pathDataFunction) {
+bool isPathAvailable(PathDataFunction* pathDataFunction, BSplineCurve* curve) {
+	// TODO : Fix why curve must be handled
+	if (curve == NULL) {
+		return true;
+	}
     pathDataFunction();
     PathData* pathData = getTmpPathData();
-    BSplineCurve* curve = getSingleBSplineCurve();
     Point* p0 = &(curve->p0);
     p0->x = (float) pathData->location1->x;
     p0->y = (float) pathData->location1->y;
@@ -467,7 +470,7 @@ void updatePathsAvailability() {
         bool available = true;
         // Don't do the compute if it's not necessary
         if (computePath) {    
-            available = isPathAvailable(pathDataFunction);
+            available = isPathAvailable(pathDataFunction, NULL);
         }
         setPathAvailability(i, available);
     }

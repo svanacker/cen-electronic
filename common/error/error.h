@@ -115,6 +115,14 @@ void clearLastError();
 
 #define PID_INDEX_INCORRECT                0x3000
 
+// MOTION
+
+#define MOTION_BSPLINE_LIST_NULL            0x3800
+#define MOTION_BSPLINE_LIST_NOT_INITIALIZED 0x3801
+#define MOTION_BSPLINE_LIST_OUT_OF_BOUNDS   0x3802
+#define MOTION_BSPLINE_LIST_FULL            0x3803
+#define MOTION_BSPLINE_LIST_EMPTY           0x3804
+
 // Zigbee
 #define TOO_MUCH_JENNIC_EVENT            0x4000
 

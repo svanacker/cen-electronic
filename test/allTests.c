@@ -20,6 +20,8 @@
 #include "../test/drivers/dispatchers/driverDataDispatcherListTest.h"
 #include "../test/drivers/test/testDriverTest.h"
 
+#include "../test/motion/bspline/bsplineListTest.h"
+
 void setUp(void)
 {
     clearLastError();
@@ -46,6 +48,7 @@ void runAllTests(void)
     cenMathTestSuite();
     driverDataDispatcherListTestSuite();
     testDriverTestTestSuite();
+	bsplineListTestSuite();
 
     UnityEnd();
 }

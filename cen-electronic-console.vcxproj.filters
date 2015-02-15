@@ -532,6 +532,18 @@
     <Filter Include="Header Files\device\timer">
       <UniqueIdentifier>{46f003a0-65ff-4246-81eb-d50d4edfa71b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\test\motion">
+      <UniqueIdentifier>{e58fdde8-8701-4047-9c54-efca09249f96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\test\motion\extended">
+      <UniqueIdentifier>{4e97368f-a023-4ead-9e2a-17b6d80ea07e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\test\motion">
+      <UniqueIdentifier>{f846f3b4-f89d-4093-96c8-d0aadbae4c44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\test\motion\extended">
+      <UniqueIdentifier>{aec87610-f813-400f-8ba9-59f0e1558299}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -793,9 +805,6 @@
       <Filter>Source Files\motion\extended</Filter>
     </ClCompile>
     <ClCompile Include="motion\extended\bsplineDebug.c">
-      <Filter>Source Files\motion\extended</Filter>
-    </ClCompile>
-    <ClCompile Include="motion\extended\singleBSpline.c">
       <Filter>Source Files\motion\extended</Filter>
     </ClCompile>
     <ClCompile Include="motion\pid\alphaTheta.c">
@@ -1119,6 +1128,12 @@
     <ClCompile Include="test\common\io\compositeOutputStreamTest.c">
       <Filter>Source Files\test\common\io</Filter>
     </ClCompile>
+    <ClCompile Include="motion\extended\bsplineList.c">
+      <Filter>Source Files\motion\extended</Filter>
+    </ClCompile>
+    <ClCompile Include="test\motion\bspline\bsplineListTest.c">
+      <Filter>Source Files\test\motion\extended</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -1416,9 +1431,6 @@
       <Filter>Header Files\motion\extended</Filter>
     </ClInclude>
     <ClInclude Include="motion\extended\bsplineDebug.h">
-      <Filter>Header Files\motion\extended</Filter>
-    </ClInclude>
-    <ClInclude Include="motion\extended\singleBSpline.h">
       <Filter>Header Files\motion\extended</Filter>
     </ClInclude>
     <ClInclude Include="motion\pid\alphaTheta.h">
@@ -1744,6 +1756,21 @@
     </ClInclude>
     <ClInclude Include="test\common\io\compositeOutputStreamTest.h">
       <Filter>Header Files\test\common\io</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\extended\bsplineList.h">
+      <Filter>Header Files\motion\extended</Filter>
+    </ClInclude>
+    <ClInclude Include="test\motion\bspline\bsplineListTest.h">
+      <Filter>Header Files\test\motion\extended</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\pidType.h">
+      <Filter>Header Files\motion\pid</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\motionType.h">
+      <Filter>Header Files\motion\pid</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\profileType.h">
+      <Filter>Header Files\motion\pid</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
