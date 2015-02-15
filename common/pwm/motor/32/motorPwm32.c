@@ -6,7 +6,7 @@
 #include "../../pwmPic.h"
 
 /** For 20 000 Hz operation. */
-#define PWM_TIMER_FOR_MOTOR         0x0FBF
+#define PWM_TIMER_FOR_MOTOR         0x001C
 
 /** For 20 000 Hz operation. */
 #define PWM_DUTY_CYCLE_FOR_MOTOR     255L
@@ -19,13 +19,18 @@ int convPwmMotor(int pwm) {
     return (int) duty;
 }
 
-void initPwmForMotor() {
-    // T = 1 / motor power hash frequency (microsec)
-    int PR20 = 50 * (FOSC / 2000000);  // pour 20khz => PR20 = 7D0
-    OpenOC1( OC_ON | OC_TIMER2_SRC | OC_PWM_FAULT_PIN_DISABLE, 0, 0);
-    OpenOC2( OC_ON | OC_TIMER2_SRC | OC_PWM_FAULT_PIN_DISABLE, 0, 0);
 
-    OpenTimer2( T2_ON | T2_PS_1_1 | T2_SOURCE_INT , PR20);
+
+
+
+
+
+void initPwmForMotor() {
+    OpenOC1( OC_ON | OC_TIMER_MODE16 | OC_TIMER2_SRC | OC_PWM_FAULT_PIN_DISABLE , 0,0 );
+    OpenOC2( OC_ON | OC_TIMER_MODE16 | OC_TIMER2_SRC | OC_PWM_FAULT_PIN_DISABLE , 0,0 );
+
+    OpenTimer2(T2_ON|T2_PS_1_64 | T2_SOURCE_INT, PWM_TIMER_FOR_MOTOR);
+
     OC1RS = (0x0000); // 0 % duty cycle
     OC2RS = (0x0000); // 0 % duty cycle
 }
