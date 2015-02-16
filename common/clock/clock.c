@@ -1,5 +1,8 @@
 #include "clock.h"
 
+#include <stdlib.h>
+#include <stdbool.h>
+
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
 
@@ -31,4 +34,11 @@ void initClock(Clock* clock, WriteClockFunction* writeClock, ReadClockFunction* 
     clock->writeClock = writeClock;
     clock->readClock = readClock;
     clock->object = object;
+}
+
+bool isClockInitialized(Clock* clock) {
+    if (clock->writeClock == NULL || clock->readClock == NULL) {
+        return false;
+    }
+    return true;
 }

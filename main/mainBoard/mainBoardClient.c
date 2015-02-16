@@ -148,8 +148,8 @@
 #include "../../device/beacon/beaconReceiverDeviceInterface.h"
 
 // Drivers
-#include "../../drivers/clock/pcf8573p.h"
-#include "../../drivers/eeprom/24c16.h"
+#include "../../drivers/clock/PCF8563.h"
+#include "../../drivers/eeprom/24c512.h"
 #include "../../drivers/io/pcf8574.h"
 #include "../../drivers/test/testDriver.h"
 #include "../../drivers/system/systemDriver.h"
@@ -201,7 +201,7 @@ static Eeprom eeprom;
 static Clock clock;
 
 // I2C
-//static I2cBus i2cBus;
+static I2cBus i2cBus;
 
 // serial link DEBUG 
 static char debugInputBufferArray[MAIN_BOARD_DEBUG_INPUT_BUFFER_LENGTH];
@@ -315,7 +315,7 @@ void initDriversDescriptor() {
     addDriver(testDriverGetDescriptor(), TRANSMIT_LOCAL);
 
     // Direct Devantech Driver
-    addDriver(getMD22DriverDescriptor(NULL), TRANSMIT_NONE);
+    addDriver(getMD22DriverDescriptor(&i2cBus), TRANSMIT_NONE);
 }
 
 /**
@@ -341,9 +341,9 @@ void initDevicesDescriptor() {
     initStartMatchDetector32(&startMatchDetector);
     addLocalDevice(getStartMatchDetectorDeviceInterface(), getStartMatchDetectorDeviceDescriptor(&startMatchDetector));
     addLocalDevice(getEndMatchDetectorDeviceInterface(), getEndMatchDetectorDeviceDescriptor());
-    addLocalDevice(getSonarDeviceInterface(), getSonarDeviceDescriptor(NULL));
-    addLocalDevice(getRobotSonarDetectorDeviceInterface(), getRobotSonarDetectorDeviceDescriptor(NULL));
-    addLocalDevice(getTemperatureSensorDeviceInterface(), getTemperatureSensorDeviceDescriptor(NULL));
+    addLocalDevice(getSonarDeviceInterface(), getSonarDeviceDescriptor(&i2cBus));
+    addLocalDevice(getRobotSonarDetectorDeviceInterface(), getRobotSonarDetectorDeviceDescriptor(&i2cBus));
+    addLocalDevice(getTemperatureSensorDeviceInterface(), getTemperatureSensorDeviceDescriptor(&i2cBus));
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
 
@@ -411,6 +411,7 @@ void waitForInstruction() {
 
 int main(void) {
     setPicName("MAIN BOARD");
+    i2cBus.portIndex = I2C_BUS_PORT_1;
 
     initRobotConfigPic32(&robotConfig);
     
@@ -458,7 +459,10 @@ int main(void) {
     initTimerList(&timerListArray, MAIN_BOARD_TIMER_LENGTH);
 
     // Eeproms
-    init24C16Eeprom(&eeprom, NULL/* &i2cBus */);
+    init24C512Eeprom(&eeprom, &i2cBus);
+
+    // Clock
+    initClockPCF8563(&clock, &i2cBus);
 
     // Init the logs
     initLogs(DEBUG, &logHandlerListArray, MAIN_BOARD_LOG_HANDLER_LIST_LENGTH);
@@ -499,8 +503,7 @@ int main(void) {
     MAIN_BOARD_I2C_INPUT_DRIVER_DATA_DISPATCHER_BUFFER_LENGTH,
     &motorBoardI2cOutputStream,
     &motorBoardI2cInputStream,
-    // &i2cBus,
-    NULL,
+    &i2cBus,
     MOTOR_BOARD_I2C_ADDRESS);
 
     // Uart Stream for motorBoard
