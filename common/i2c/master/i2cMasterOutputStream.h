@@ -14,7 +14,7 @@ typedef struct {
     // The outputStream object with specific callback
     OutputStream* outputStream;
     // The underlying buffer
-    Buffer* buffer;
+    Buffer* outputBuffer;
 } I2cMasterOutputStream;
 
 /**

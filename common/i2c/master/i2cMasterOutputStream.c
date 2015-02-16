@@ -31,7 +31,7 @@ I2cMasterOutputStream* _i2cMasterGetMasterOutputStream(OutputStream* outputStrea
 Buffer* _i2cMasterGetOutputBuffer(OutputStream* outputStream) {
     I2cMasterOutputStream* i2cMasterOutputStream = _i2cMasterGetMasterOutputStream(outputStream);
     
-    Buffer* result = i2cMasterOutputStream->buffer;
+    Buffer* result = i2cMasterOutputStream->outputBuffer;
 
     return result;
 }
@@ -90,11 +90,11 @@ void _flushI2C(OutputStream* outputStream) {
 }
 
 void initMasterI2cOutputStream(I2cMasterOutputStream* i2cMasterOutputStream, I2cBus* i2cBus, OutputStream* outputStream,
-        Buffer* i2cBuffer,
+        Buffer* i2cOutputBuffer,
         unsigned char i2cWriteAddress) {
     i2cMasterOutputStream->i2cBus = i2cBus;
     i2cMasterOutputStream->outputStream = outputStream;
-    i2cMasterOutputStream->buffer = i2cBuffer;
+    i2cMasterOutputStream->outputBuffer = i2cOutputBuffer;
     outputStream->object = (int*) i2cMasterOutputStream;
 
     outputStream->address = i2cWriteAddress;

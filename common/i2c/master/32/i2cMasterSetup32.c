@@ -25,12 +25,16 @@ void i2cMasterInitialize(I2cBus* i2cBus) {
         appendString(getOutputStreamLogger(DEBUG), "I2C Master already initialized\n");
         return;
     }
+    #define I2C_BRG     0xC6    // 100khz for PIC32
+    // Configure I2C for 7 bit address mode
+    #define I2C_CON     I2C_ON
+
     if (i2cBus == NULL) {
         OpenI2C1(
                  // Configure I2C for 7 bit address mode.
-                 I2C_ON,
+                 I2C_CON,
                  // 100khz for PIC32.
-                 0xC6);
+                 I2C_BRG);
     }
     else {
         I2C_MODULE i2cModule = getI2C_MODULE(i2cBus->portIndex);
@@ -41,7 +45,7 @@ void i2cMasterInitialize(I2cBus* i2cBus) {
     WaitI2C(i2cBus);
 
     appendString(getOutputStreamLogger(DEBUG), "I2C Master CONF=");
-    appendBinary16(getOutputStreamLogger(DEBUG), I2C_ON, 4);
+    appendBinary16(getOutputStreamLogger(DEBUG), I2C_CON, 4);
     appendCRLF(getOutputStreamLogger(DEBUG));
 
     initialized = true;

@@ -103,11 +103,16 @@ void initMasterI2cInputStream(I2cMasterInputStream* i2cMasterInputStream,
                                 Buffer* i2cInputBuffer,
                                 InputStream* inputStream,
                                 unsigned char i2cWriteAddress) {
+    i2cMasterInputStream->i2cBus = i2cBus;
+    i2cMasterInputStream->inputStream = inputStream;
+    i2cMasterInputStream->inputBuffer = i2cInputBuffer;
+    inputStream->object = (int*) i2cMasterInputStream;
+
+
     inputStream->address = i2cWriteAddress;
     inputStream->openInputStream = _i2cMasterOpenInputStream;
     inputStream->closeInputStream = _i2cMasterCloseInputStream;
     inputStream->readChar = _readCharI2C;
     inputStream->availableData = _i2cAvailableData;
-    inputStream->object = (int*) i2cInputBuffer;
     _i2cMasterOpenInputStream(inputStream, i2cWriteAddress);
 }

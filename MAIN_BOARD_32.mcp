@@ -19,7 +19,7 @@ filter_lib=*.a
 filter_lkr=*.ld
 [CAT_SUBFOLDERS]
 subfolder_src=common.2d;common.clock;common.delay;common.eeprom;common.error;common.i2c;common.i2c.32;common.i2c.master;common.i2c.master.32;common.io;common.log;common.math;common.math.32;common.pwm.32;common.pwm.motor;common.pwm.motor.32;common.serial;common.serial.32;common.timer;common.timer.32;device;device.adc;device.airconditioning;device.beacon;device.clock;device.dispatcher;device.dispatchers;device.eeprom;device.i2c.master;device.lcd;device.log;device.motion.pid;device.motion.position;device.motion.simple;device.motor;device.sensor.temperature;device.serial;device.servo;device.sonar;device.strategy;device.system;device.test;device.timer;drivers;drivers.beaconReceiver;drivers.clock;drivers.dispatcher;drivers.eeprom;drivers.io;drivers.lcd;drivers.motion;drivers.motor;drivers.sensor.temperature;drivers.sonar;drivers.strategy;drivers.system;drivers.test;main;robot;robot.2012;robot.config;robot.config.32;robot.match;robot.match.32;robot.opponent
-subfolder_inc=common;common.2d;common.clock;common.cmd;common.delay;common.delay.32;common.eeprom;common.error;common.i2c;common.i2c.master;common.io;common.log;common.math;common.pwm;common.serial;common.serial.32;common.setup.32;common.timer;device;device.adc;device.airconditioning;device.beacon;device.clock;device.dispatcher;device.eeprom;device.i2c;device.lcd;device.log;device.motion.pid;device.motion.position;device.motion.simple;device.motor;device.sensor.temperature;device.serial;device.servo;device.sonar;device.strategy;device.system;device.test;device.timer;drivers;drivers.beaconReceiver;drivers.clock;drivers.dispatcher;drivers.eeprom;drivers.io;drivers.lcd;drivers.motion;drivers.motor;drivers.sensor.temperature;drivers.sonar;drivers.strategy;drivers.system;drivers.test;main;motion.simple;robot;robot.2012;robot.config;robot.config.32;robot.match;robot.match.32;robot.opponent
+subfolder_inc=common;common.2d;common.clock;common.cmd;common.delay;common.delay.32;common.eeprom;common.error;common.i2c;common.i2c.32;common.i2c.master;common.io;common.log;common.math;common.pwm;common.serial;common.serial.32;common.setup.32;common.timer;device;device.adc;device.airconditioning;device.beacon;device.clock;device.dispatcher;device.eeprom;device.i2c;device.lcd;device.log;device.motion.pid;device.motion.position;device.motion.simple;device.motor;device.sensor.temperature;device.serial;device.servo;device.sonar;device.strategy;device.system;device.test;device.timer;drivers;drivers.beaconReceiver;drivers.clock;drivers.dispatcher;drivers.eeprom;drivers.io;drivers.lcd;drivers.motion;drivers.motor;drivers.sensor.temperature;drivers.sonar;drivers.strategy;drivers.system;drivers.test;main;motion.simple;robot;robot.2012;robot.config;robot.config.32;robot.match;robot.match.32;robot.opponent
 subfolder_obj=
 subfolder_lib=
 subfolder_lkr=
@@ -306,6 +306,7 @@ file_278=device.eeprom
 file_279=device.clock
 file_280=device.clock
 file_281=drivers.eeprom
+file_282=common.i2c.32
 [GENERATED_FILES]
 file_000=no
 file_001=no
@@ -589,6 +590,7 @@ file_278=no
 file_279=no
 file_280=no
 file_281=no
+file_282=no
 [OTHER_FILES]
 file_000=no
 file_001=no
@@ -872,6 +874,7 @@ file_278=no
 file_279=no
 file_280=no
 file_281=no
+file_282=no
 [FILE_INFO]
 file_000=main\mainBoard\mainBoardClient.c
 file_001=common\io\buffer.c
@@ -1155,6 +1158,7 @@ file_278=device\eeprom\eepromDeviceInterface.h
 file_279=device\clock\clockDevice.h
 file_280=device\clock\clockDeviceInterface.h
 file_281=drivers\eeprom\24c16.h
+file_282=common\i2c\32\i2cCommon32.h
 [SUITE_INFO]
 suite_guid={14495C23-81F8-43F3-8A44-859C583D7760}
 suite_state=

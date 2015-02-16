@@ -11,7 +11,7 @@ typedef struct {
     // The bus we manage
     I2cBus* i2cBus;
     // The inputStream object with specific callback
-    InputStream* outputStream;
+    InputStream* inputStream;
     // The underlying input buffer
     Buffer* inputBuffer;
 } I2cMasterInputStream;
