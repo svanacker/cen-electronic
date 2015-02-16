@@ -103,6 +103,9 @@ static Buffer i2cSlaveDebugInputBuffer;
 // Eeprom
 static Eeprom eeprom;
 
+// I2C
+static I2cBus motorI2cBus;
+
 // Devices
 static Device deviceListArray[MOTOR_BOARD_PC_DEVICE_LIST_LENGTH];
 
@@ -173,6 +176,7 @@ void runMotorBoardPC(void) {
         &i2cSlaveOutputBuffer,
         (char(*)[]) &i2cSlaveOutputBufferArray,
         MOTOR_BOARD_PC_OUT_BUFFER_LENGTH,
+		&motorI2cBus,
         MOTOR_BOARD_PC_I2C_ADDRESS
     );
 

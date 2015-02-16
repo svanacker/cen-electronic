@@ -109,6 +109,7 @@ static LogHandler logHandlerListArray[MAIN_BOARD_PC_LOG_HANDLER_LIST_LENGTH];
 static DriverDataDispatcher driverDataDispatcherListArray[MAIN_BOARD_PC_DATA_DISPATCHER_LIST_LENGTH];
 
 // Dispatcher i2c->Motor
+static I2cBus motorBoardI2cBus;
 static char motorBoardInputBufferArray[MAIN_BOARD_PC_DATA_MOTOR_BOARD_DISPATCHER_BUFFER_LENGTH];
 static Buffer motorBoardInputBuffer;
 static InputStream motorBoardInputStream;
@@ -219,6 +220,7 @@ void runMainBoardPC(void) {
     MAIN_BOARD_PC_DATA_MOTOR_BOARD_DISPATCHER_BUFFER_LENGTH,
     &motorBoardOutputStream,
     &motorBoardInputStream,
+	&motorBoardI2cBus,
     MOTOR_BOARD_PC_I2C_ADDRESS);
 
     // I2C Debug

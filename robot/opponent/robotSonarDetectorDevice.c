@@ -7,6 +7,8 @@
 
 #include "../../common/delay/cenDelay.h"
 
+#include "../../common/i2c/i2cCommon.h"
+
 #include "../../common/io/inputStream.h"
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
@@ -30,6 +32,8 @@
 #include "../../main/motorboard/motorBoard.h"
 
 #define SONAR_INDEX            0
+
+static I2cBus* robotSonarDetectorI2cBus;
 
 /** Use or not the sonar. */
 // static bool useSonar;
@@ -96,15 +100,15 @@ void deviceRobotSonarDetectorCallbackFunc(Timer* timer) {
     readNextDistanceFlag = true;
 }
 
-void readNextDistance() {
+void readNextDistance(I2cBus* i2cBus) {
     if (!readNextDistanceFlag) {
         return;
     }
     readNextDistanceFlag = false;
 
-    unsigned int distance = getSRF02DistanceEndRanging(SONAR_INDEX);
+    unsigned int distance = getSRF02DistanceEndRanging(i2cBus, SONAR_INDEX);
     delaymSec(1);
-    startSRF02Ranging(SONAR_INDEX);
+    startSRF02Ranging(i2cBus, SONAR_INDEX);
     distances[(unsigned int) distanceIndex] = distance;
 
     /*
@@ -124,8 +128,8 @@ void readNextDistance() {
     }
 }
 
-bool notifyObstacle() {
-    readNextDistance();
+bool notifyObstacle(I2cBus* i2cBus) {
+    readNextDistance(i2cBus);
     if (!obstacle) {
         return false;
     }
@@ -148,9 +152,9 @@ void deviceRobotSonarDetectorInit() {
             deviceRobotSonarDetectorCallbackFunc, "ROBOT SONAR DETECTOR TIMER");
     // useSonar = isConfigSet(CONFIG_USE_LASER_MASK);
     clearHistory();
-    startSRF02Ranging(SONAR_INDEX);
+    startSRF02Ranging(robotSonarDetectorI2cBus, SONAR_INDEX);
     delaymSec(65);
-    getSRF02DistanceEndRanging(SONAR_INDEX);
+    getSRF02DistanceEndRanging(robotSonarDetectorI2cBus, SONAR_INDEX);
     obstacle = false;
     readNextDistanceFlag = false;
 }
@@ -173,7 +177,6 @@ void deviceRobotSonarDetectorHandleRawData(char commandHeader,
     }
 }
 
-
 static DeviceDescriptor descriptor = {
     .deviceInit = &deviceRobotSonarDetectorInit,
     .deviceShutDown = &deviceRobotSonarDetectorShutDown,
@@ -181,6 +184,7 @@ static DeviceDescriptor descriptor = {
     .deviceHandleRawData = &deviceRobotSonarDetectorHandleRawData,
 };
 
-DeviceDescriptor* getRobotSonarDetectorDeviceDescriptor() {
+DeviceDescriptor* getRobotSonarDetectorDeviceDescriptor(I2cBus* i2cBus) {
+    robotSonarDetectorI2cBus = i2cBus;
     return &descriptor;
 }

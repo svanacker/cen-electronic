@@ -15,6 +15,12 @@
 
 #define EEPROM_24C16_MAX_INDEX        0x3FFF
 
+I2cBus* _24C16GetI2c(Eeprom* eeprom_) {
+    I2cBus* result = (I2cBus*) eeprom_->object;
+
+    return result;
+}
+
 /**
 * @private
 * Calculate the chip address to select
@@ -83,20 +89,21 @@ unsigned long get24C16Address(unsigned long index) {
  * @private
  */
 void _writeEeprom24C16Int(Eeprom* eeprom_, unsigned long index, signed int value){
-    portableMasterWaitSendI2C();
-    portableStartI2C();
-    WaitI2C();
+    I2cBus* i2cBus = _24C16GetI2c(eeprom_);
+    portableMasterWaitSendI2C(i2cBus);
+    portableStartI2C(i2cBus);
+    WaitI2C(i2cBus);
     unsigned int blockAddress = get24C16BlockAddress(index);
-    portableMasterWriteI2C(blockAddress);
-    WaitI2C();
+    portableMasterWriteI2C(i2cBus, blockAddress);
+    WaitI2C(i2cBus);
 
     unsigned int address = get24C16Address(index);
-    portableMasterWriteI2C(address);
-    WaitI2C();
-    portableMasterWriteI2C(value);
-    WaitI2C();
-    portableStopI2C();
-    WaitI2C();
+    portableMasterWriteI2C(i2cBus, address);
+    WaitI2C(i2cBus);
+    portableMasterWriteI2C(i2cBus, value);
+    WaitI2C(i2cBus);
+    portableStopI2C(i2cBus);
+    WaitI2C(i2cBus);
     
     delay100us(4);  // delay <=3 don't write correctly if we write several times
 }
@@ -107,25 +114,26 @@ void _writeEeprom24C16Int(Eeprom* eeprom_, unsigned long index, signed int value
  * @private
  */
 signed int _readEeprom24C16Int(Eeprom* eeprom_, unsigned long index){
-    portableMasterWaitSendI2C();
+    I2cBus* i2cBus = _24C16GetI2c(eeprom_);
+    portableMasterWaitSendI2C(i2cBus);
      // Set the register command
     int blockAddress = get24C16BlockAddress(index);
     int address = get24C16Address(index);
-    i2cMasterWriteChar(blockAddress, address);
+    i2cMasterWriteChar(i2cBus, blockAddress, address);
 
     // read one data
-    portableStartI2C();
-    WaitI2C();
+    portableStartI2C(i2cBus);
+    WaitI2C(i2cBus);
 
-    portableMasterWriteI2C(blockAddress | 0x01);
-    WaitI2C();
+    portableMasterWriteI2C(i2cBus, blockAddress | 0x01);
+    WaitI2C(i2cBus);
 
-    char data = portableMasterReadI2C();
-    portableNackI2C();
-    WaitI2C();
+    char data = portableMasterReadI2C(i2cBus);
+    portableNackI2C(i2cBus);
+    WaitI2C(i2cBus);
 
-    portableStopI2C();
-    WaitI2C();
+    portableStopI2C(i2cBus);
+    WaitI2C(i2cBus);
     return data;
 }
 
@@ -135,23 +143,24 @@ signed int _readEeprom24C16Int(Eeprom* eeprom_, unsigned long index){
  * @private
  */
 void _writeEeprom24C16Block (Eeprom* eeprom_, unsigned long index, unsigned int length, Buffer* buffer) {
+    I2cBus* i2cBus = _24C16GetI2c(eeprom_);
     int blockAddress = get24C16BlockAddress(index);
     int address = get24C16Address(index);
-    portableMasterWaitSendI2C();
-    portableStartI2C();
-    WaitI2C();
-    portableMasterWriteI2C(blockAddress);
-    WaitI2C();
-    portableMasterWriteI2C(address);
-    WaitI2C();
+    portableMasterWaitSendI2C(i2cBus);
+    portableStartI2C(i2cBus);
+    WaitI2C(i2cBus);
+    portableMasterWriteI2C(i2cBus, blockAddress);
+    WaitI2C(i2cBus);
+    portableMasterWriteI2C(i2cBus, address);
+    WaitI2C(i2cBus);
     int i;
     for (i = 0; i <(length) ; i++) {
         char c = bufferReadChar(buffer);
-        portableMasterWriteI2C(c);
-        WaitI2C();
+        portableMasterWriteI2C(i2cBus, c);
+        WaitI2C(i2cBus);
     }
-    portableStopI2C();
-    WaitI2C();
+    portableStopI2C(i2cBus);
+    WaitI2C(i2cBus);
 }
 
 
@@ -161,32 +170,33 @@ void _writeEeprom24C16Block (Eeprom* eeprom_, unsigned long index, unsigned int 
  * @private
  */
 void _readEeprom24C16Block(Eeprom* eeprom_, unsigned long index, unsigned int length, Buffer* buffer){
+    I2cBus* i2cBus = _24C16GetI2c(eeprom_);
     // Set the register command
     int blockAddress = get24C16BlockAddress(index);
     int address = get24C16Address(index);
-    i2cMasterWriteChar(blockAddress, address);
+    i2cMasterWriteChar(i2cBus, blockAddress, address);
 
     // read the data
-    portableStartI2C();
-    WaitI2C();
+    portableStartI2C(i2cBus);
+    WaitI2C(i2cBus);
 
-    portableMasterWriteI2C(address | 0x01);
+    portableMasterWriteI2C(i2cBus, address | 0x01);
 
     int i;
     for (i = 0; i < length - 1; i++) {
-        char c = portableMasterReadI2C();
-        portableAckI2C();
-        WaitI2C();
+        char c = portableMasterReadI2C(i2cBus);
+        portableAckI2C(i2cBus);
+        WaitI2C(i2cBus);
         bufferWriteChar(buffer, c);
     }
-    char c = portableMasterReadI2C();
-    portableNackI2C();
-    WaitI2C();
+    char c = portableMasterReadI2C(i2cBus);
+    portableNackI2C(i2cBus);
+    WaitI2C(i2cBus);
     bufferWriteChar(buffer, c);
-    portableStopI2C();
-    WaitI2C();
+    portableStopI2C(i2cBus);
+    WaitI2C(i2cBus);
 }
 
-void init24C16Eeprom(Eeprom* eeprom_) {
-    initEeprom(eeprom_, EEPROM_24C16_MAX_INDEX, _writeEeprom24C16Int, _readEeprom24C16Int, _writeEeprom24C16Block, _readEeprom24C16Block);
+void init24C16Eeprom(Eeprom* eeprom_, I2cBus* i2cBus) {
+    initEeprom(eeprom_, EEPROM_24C16_MAX_INDEX, _writeEeprom24C16Int, _readEeprom24C16Int, _writeEeprom24C16Block, _readEeprom24C16Block, (int*) i2cBus);
 }

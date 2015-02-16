@@ -17,6 +17,7 @@
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
 
+static I2cBus* sonarDeviceI2cBus;
 
 // DEVICE INTERFACE
 
@@ -29,11 +30,11 @@ void deviceSonarShutDown(void) {
 }
 
 bool isSonarDeviceOk(void) {
-    return getSRF02SoftwareRevision(SRF02_DEFAULT_ADDRESS) < 255;
+    return getSRF02SoftwareRevision(sonarDeviceI2cBus, SRF02_DEFAULT_ADDRESS) < 255;
 }
 
 unsigned char isSonarDeviceWithAddressOk(char addr) {
-    return getSRF02SoftwareRevision(addr) < 255;
+    return getSRF02SoftwareRevision(sonarDeviceI2cBus, addr) < 255;
 }
 
 void deviceSonarHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream) {
@@ -45,7 +46,7 @@ void deviceSonarHandleRawData(char commandHeader, InputStream* inputStream, Outp
             if (i > 0) {
                 appendSeparator(outputStream);
             }
-            int distance = getSRF02Distance(sonarIndex);
+            int distance = getSRF02Distance(sonarDeviceI2cBus, sonarIndex);
             appendHex4(outputStream, distance);
         }
     }
@@ -56,7 +57,7 @@ void deviceSonarHandleRawData(char commandHeader, InputStream* inputStream, Outp
         appendStringAndDec(getOutputStreamLogger(ALWAYS), "\noldAddress=", oldAddress);
         appendStringAndDec(getOutputStreamLogger(ALWAYS), "\newAddress=", newAddress);
 
-        SRF02ChangeAddress(oldAddress, newAddress); 
+        SRF02ChangeAddress(sonarDeviceI2cBus, oldAddress, newAddress); 
         
         ackCommand(outputStream, SONAR_DEVICE_HEADER, COMMAND_SONAR_CHANGE_ADDRESS);
         append(outputStream, COMMAND_SONAR_CHANGE_ADDRESS);
@@ -70,6 +71,7 @@ static DeviceDescriptor descriptor = {
     .deviceHandleRawData = &deviceSonarHandleRawData,
 };
 
-DeviceDescriptor* getSonarDeviceDescriptor() {
+DeviceDescriptor* getSonarDeviceDescriptor(I2cBus* i2cBus) {
+    sonarDeviceI2cBus = i2cBus;
     return &descriptor;
 }

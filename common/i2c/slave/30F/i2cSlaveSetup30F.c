@@ -2,6 +2,8 @@
 #include <stdbool.h>
 #include <p30Fxxxx.h>
 
+#include "../../../../common/i2c/i2cCommon.h"
+
 #include "../../../../common/error/error.h"
 
 #include "../../../../common/io/printWriter.h"
@@ -13,7 +15,7 @@
 
 bool initialized = false;
 
-void i2cSlaveInitialize(unsigned char writeAddress) {
+void i2cSlaveInitialize(I2cBus* i2cBus, unsigned char writeAddress) {
     // Avoid more than one initialization
     if (initialized) {
         writeError(I2C_SLAVE_ALREADY_INITIALIZED);

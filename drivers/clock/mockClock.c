@@ -40,5 +40,5 @@ void _writeMockClock(Clock* clockParam) {
 }
 
 void initMockClock(Clock* clockParam) {
-    initClock(clockParam, _writeMockClock, _readMockClock);
+    initClock(clockParam, _writeMockClock, _readMockClock, NULL);
 }

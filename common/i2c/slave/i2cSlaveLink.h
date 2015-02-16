@@ -1,6 +1,8 @@
 #ifndef I2C_SLAVE_LINK_H
 #define I2C_SLAVE_LINK_H
 
+#include "../../../common/i2c/i2cCommon.h"
+
 #include "../../../common/io/outputStream.h"
 #include "../../../common/io/inputStream.h"
 #include "../../../common/io/buffer.h"
@@ -62,6 +64,7 @@ void openSlaveI2cStreamLink(StreamLink* i2cStreamLink,
         Buffer* outputBuffer,
         char (*outputBufferArray)[],
         unsigned char outputBufferLength,
+        I2cBus* i2cBus,
         int i2cAddress);
 
 #endif

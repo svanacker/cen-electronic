@@ -24,12 +24,12 @@ HANDLE getMasterPipeHandle() {
     return masterPipeHandle;
 }
 
-HANDLE getSlavePipeHandle(unsigned char writeAddress) {
+HANDLE getSlavePipeHandle(I2cBus* i2cBus, unsigned char writeAddress) {
     // TODO : Handle Address !
     return slavePipeHandle;
 }
 
-void i2cMasterInitialize(void) {
+void i2cMasterInitialize(I2cBus* i2cBus) {
     // Avoid more than one initialization
     if (masterPipeHandle != NULL) {
         appendString(getOutputStreamLogger(DEBUG), "I2C PC Master (Pipe) already initialized\n");
@@ -41,9 +41,9 @@ void i2cMasterInitialize(void) {
     slavePipeHandle = initClientPipe(PIPE_I2C_SLAVE_NAME);
 }
 
-void i2cMasterFinalize(void) {
+void i2cMasterFinalize(I2cBus* i2cBus) {
     if (masterPipeHandle != NULL) {
-        portableCloseI2C();
+        portableCloseI2C(i2cBus);
         CloseHandle(masterPipeHandle);
     }
     if (slavePipeHandle != NULL) {

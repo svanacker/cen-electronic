@@ -41,6 +41,8 @@ struct Clock {
     ReadClockFunction* readClock;
     /** The content with all values. */
     ClockData clockData;
+    /** A pointer on generic object (for example to store I2cBus ...). */
+    int* object;
 };
 
 /**
@@ -48,7 +50,8 @@ struct Clock {
  * @param clockParam a pointer on clock structure to initialize it.
  * @param writeClockFunction a pointer on the writeClockFunction
  * @param readClockFunction a pointer on the readClockFunction
+ * @param object A pointer on generic object (for example to store I2cBus ...).
  */
-void initClock(Clock* clockParam, WriteClockFunction* writeClockFunction, ReadClockFunction* readClockFunction);
+void initClock(Clock* clockParam, WriteClockFunction* writeClockFunction, ReadClockFunction* readClockFunction, int* object);
 
 #endif

@@ -62,6 +62,8 @@ struct Eeprom {
     EepromReadBlockFunction* eepromReadBlock;
     /** Max Index. */
     long maxIndex;
+    /** A pointer on generic object (for example to store I2cBus ...). */
+    int* object;
 };
 
 /**
@@ -87,7 +89,8 @@ void initEeprom(Eeprom* eeprom_,
                 EepromWriteIntFunction* eepromWriteInt,
                 EepromReadIntFunction* eepromReadInt,
                 EepromWriteBlockFunction* eepromWriteBlock,
-                EepromReadBlockFunction* eepromReadBlock);
+                EepromReadBlockFunction* eepromReadBlock,
+                int* object);
                 
 /**
  * Returns true if the eeprom is initialized (if the fields of callbacks are NOT NULL), false else.

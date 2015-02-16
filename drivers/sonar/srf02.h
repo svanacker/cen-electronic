@@ -1,6 +1,8 @@
 #ifndef SRF02_H
 #define SRF02_H
 
+#include "../../common/i2c/i2cCommon.h"
+
 #include "../../device/device.h"
 
 /** Default address of the SRF02. */
@@ -24,13 +26,13 @@
 * @param reg register to read
 * @return distance in cm
 */
-unsigned char readSRF02(char addr, char reg);
+unsigned char readSRF02(I2cBus* i2cBus, char addr, char reg);
 
 /**
 * Get the software revision of the SRF02
 * TODO : rendre possible la lecture de plusieurs sonar
 */
-unsigned int getSRF02SoftwareRevision (unsigned char sonarIndex);
+unsigned int getSRF02SoftwareRevision (I2cBus* i2cBus, unsigned char sonarIndex);
 
 /**
 * Get the distance in centimeters
@@ -39,19 +41,19 @@ unsigned int getSRF02SoftwareRevision (unsigned char sonarIndex);
 * @return distance in cm
 * TODO : rendre possible la lecture de plusieurs sonar
 */
-unsigned int getSRF02Distance (unsigned char sonarIndex);
+unsigned int getSRF02Distance (I2cBus* i2cBus, unsigned char sonarIndex);
 
 /**
 * Start ranging.
 * @param sonarIndex between 0 and 15 (to address E0 -> FE)
 */
-void startSRF02Ranging(unsigned char sonarIndex);
+void startSRF02Ranging(I2cBus* i2cBus, unsigned char sonarIndex);
 
 /**
 * You need to call startSRF02 before !!
 * End the ranging, and return the distance.
 */
-unsigned int getSRF02DistanceEndRanging(unsigned char sonarIndex);
+unsigned int getSRF02DistanceEndRanging(I2cBus* i2cBus, unsigned char sonarIndex);
 
 /**
 * Write the command at the register of the selected SRF02.
@@ -59,21 +61,20 @@ unsigned int getSRF02DistanceEndRanging(unsigned char sonarIndex);
 * @param reg register to write
 * @param cmd command to do
 */
-void writeSRF02Command(char addr, char reg, char cmd);
+void writeSRF02Command(I2cBus* i2cBus, char addr, char reg, char cmd);
 
-void SRF02ChangeAddress(unsigned char oldAddress, unsigned char newAddress);
+void SRF02ChangeAddress(I2cBus* i2cBus, unsigned char oldAddress, unsigned char newAddress);
 
 /**
 * Returns if the SRF02 device with the specified address
 * is ok or not.
 * @param addr the address of the SRF02
 */
-unsigned char isSRF02DeviceWithAddressOk(char addr);
+unsigned char isSRF02DeviceWithAddressOk(I2cBus* i2cBus, char addr);
 
 /**
 * Returns a descriptor on the device.
 */
 DeviceDescriptor getSRF02DeviceDescriptor();
-
 
 #endif

@@ -1,6 +1,8 @@
 #include <p30Fxxxx.h>
 #include <libpic30.h>
 
+#include <stdlib.h>
+
 #include "../../../common/error/error.h"
 #include "../eeprom.h"
 
@@ -54,5 +56,5 @@ void eeprom30FWriteBlock(Eeprom* eeprom_, unsigned long index, unsigned int leng
 
 
 void initEeprom30F(Eeprom* eeprom_) {
-    initEeprom(eeprom_, EEPROM_30F_MAX_INDEX, my_eeprom_write_int, my_eeprom_read_int, eeprom30FReadBlock, eeprom30FWriteBlock);
+    initEeprom(eeprom_, EEPROM_30F_MAX_INDEX, my_eeprom_write_int, my_eeprom_read_int, eeprom30FReadBlock, eeprom30FWriteBlock, NULL);
 }

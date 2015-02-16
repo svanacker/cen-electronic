@@ -1,23 +1,91 @@
-#include <peripheral/legacy/i2c_legacy.h>
+#include <plib.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+#include "i2cCommon32.h"
 
 #include "../i2cCommon.h"
 
-void WaitI2C() {
-    IdleI2C1();
+I2C_MODULE getI2C_MODULE(unsigned char portIndex) {
+    if (portIndex == I2C_BUS_PORT_1) {
+        return I2C1;
+    }
+    else if (portIndex == I2C_BUS_PORT_2) {
+        // TODO : Throws Implemented Exception
+        // return I2C2;
+        return I2C1;
+    }
+    else if (portIndex == I2C_BUS_PORT_3) {
+        // TODO : Throws Implemented Exception
+        // return I2C3;
+        return I2C1;
+    }
+    else if (portIndex == I2C_BUS_PORT_4) {
+        return I2C4;
+    }
+    // TODO : Check
+    return 0;
 }
 
-void portableStartI2C() {
-    StartI2C1();
+void WaitI2C(I2cBus* i2cBus) {
+    if (i2cBus == NULL) {
+        IdleI2C1();
+    }
+    else {
+        unsigned portIndex = i2cBus->portIndex;
+        if (portIndex == I2C_BUS_PORT_1) {
+            while(I2C1CONbits.SEN || I2C1CONbits.PEN || I2C1CONbits.RSEN || I2C1CONbits.RCEN || I2C1CONbits.ACKEN || I2C1STATbits.TRSTAT);
+        }
+        else if (portIndex == I2C_BUS_PORT_2) {
+            // TODO : Throws Implemented Exception
+            // while(I2C2CONbits.SEN || I2C2CONbits.PEN || I2C2CONbits.RSEN || I2C2CONbits.RCEN || I2C2CONbits.ACKEN || I2C2STATbits.TRSTAT);
+        }
+        else if (portIndex == I2C_BUS_PORT_3) {
+            // TODO : Throws Implemented Exception
+            // while(I2C3CONbits.SEN || I2C3CONbits.PEN || I2C3CONbits.RSEN || I2C3CONbits.RCEN || I2C3CONbits.ACKEN || I2C3STATbits.TRSTAT);
+        }
+        else if (portIndex == I2C_BUS_PORT_4) {
+            while(I2C4CONbits.SEN || I2C4CONbits.PEN || I2C4CONbits.RSEN || I2C4CONbits.RCEN || I2C4CONbits.ACKEN || I2C4STATbits.TRSTAT);
+        }
+    }
 }
 
-void portableStopI2C() {
-    StopI2C1();
+void portableStartI2C(I2cBus* i2cBus) {
+    if (i2cBus == NULL) {
+        StartI2C1();
+    }
+    else {
+        I2C_MODULE i2cModule = getI2C_MODULE(i2cBus->portIndex);
+        I2CStart(i2cModule);
+    }
 }
 
-void portableAckI2C() {
-    AckI2C1();
+void portableStopI2C(I2cBus* i2cBus) {
+    if (i2cBus == NULL) {
+        StopI2C1();
+    }
+    else {
+        I2C_MODULE i2cModule = getI2C_MODULE(i2cBus->portIndex);
+        I2CStop(i2cModule);
+    }
 }
 
-void portableNackI2C() {
-    NotAckI2C1();
+void portableAckI2C(I2cBus* i2cBus) {
+    if (i2cBus == NULL) {
+        AckI2C1();
+    }
+    else {
+        I2C_MODULE i2cModule = getI2C_MODULE(i2cBus->portIndex);
+        I2CAcknowledgeByte(i2cModule, true);
+    }
+}
+
+void portableNackI2C(I2cBus* i2cBus) {
+    if (i2cBus == NULL) {
+        NotAckI2C1();
+    }
+    else {
+        I2C_MODULE i2cModule = getI2C_MODULE(i2cBus->portIndex);
+        I2CAcknowledgeByte(i2cModule, false);
+    }
 }

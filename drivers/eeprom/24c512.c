@@ -2,12 +2,25 @@
 
 #include "24c512.h"
 
+#include "../../common/delay/cenDelay.h"
+
+#include "../../common/i2c/i2cCommon.h"
+#include "../../common/i2c/master/i2cMaster.h"
+
 #include "../../common/eeprom/eeprom.h"
 #include "../../common/error/error.h"
 #include "../../common/io/buffer.h"
 
+#include "../../common/i2c/i2cCommon.h"
+
 #include "../../common/i2c/i2cConstants.h"
 #include "../../common/i2c/i2cCommon.h"
+
+I2cBus* _24c512GetI2c(Eeprom* eeprom_) {
+    I2cBus* result = (I2cBus*) eeprom_->object;
+
+    return result;
+}
 
 /**
 * @private
@@ -76,26 +89,27 @@ unsigned long get24C512Address(unsigned long index) {
  * @see eeprom.h
  * @private
  */
-void _writeEeprom24C512Int(Eeprom* eeprom_, unsigned long index, signed int value){
-    portableMasterWaitSendI2C();
-    portableStartI2C();
-    WaitI2C();
+void _writeEeprom24C512Int(Eeprom* eeprom_, unsigned long index, signed int value) {
+    I2cBus* i2cBus = _24c512GetI2c(eeprom_);
+    portableMasterWaitSendI2C(i2cBus);
+    portableStartI2C(i2cBus);
+    WaitI2C(i2cBus);
     unsigned int blockAddress = get24C512BlockAddress(index);
-    portableMasterWriteI2C(blockAddress);
-    WaitI2C();
+    portableMasterWriteI2C(i2cBus, blockAddress);
+    WaitI2C(i2cBus);
 
     unsigned int msbaddress = index >> 8;
     unsigned int lsbaddress = index & 0xFFFF;
 
-    portableMasterWriteI2C(msbaddress);
-    WaitI2C();
-    portableMasterWriteI2C(lsbaddress);
-    WaitI2C();
+    portableMasterWriteI2C(i2cBus, msbaddress);
+    WaitI2C(i2cBus);
+    portableMasterWriteI2C(i2cBus, lsbaddress);
+    WaitI2C(i2cBus);
 
-    portableMasterWriteI2C(value);
-    WaitI2C();
-    portableStopI2C();
-    WaitI2C();
+    portableMasterWriteI2C(i2cBus, value);
+    WaitI2C(i2cBus);
+    portableStopI2C(i2cBus);
+    WaitI2C(i2cBus);
     delay100us(4);  // delay <=3 don't write correctly if we write several times
 }
 
@@ -105,36 +119,38 @@ void _writeEeprom24C512Int(Eeprom* eeprom_, unsigned long index, signed int valu
  * @private
  */
 signed int _readEeprom24C512Int(Eeprom* eeprom_, unsigned long index){
-    portableMasterWaitSendI2C();
+    I2cBus* i2cBus = _24c512GetI2c(eeprom_);
 
-    portableMasterWaitSendI2C();
-    portableStartI2C();
-    WaitI2C();
+    portableMasterWaitSendI2C(i2cBus);
+
+    portableMasterWaitSendI2C(i2cBus);
+    portableStartI2C(i2cBus);
+    WaitI2C(i2cBus);
     unsigned int blockAddress = get24C512BlockAddress(index);
-    portableMasterWriteI2C(blockAddress);
-    WaitI2C();
+    portableMasterWriteI2C(i2cBus, blockAddress);
+    WaitI2C(i2cBus);
 
     unsigned int msbaddress = index >> 8;
     unsigned int lsbaddress = index & 0xFFFF;
 
-    portableMasterWriteI2C(msbaddress);
-    WaitI2C();
-    portableMasterWriteI2C(lsbaddress);
-    WaitI2C();
+    portableMasterWriteI2C(i2cBus, msbaddress);
+    WaitI2C(i2cBus);
+    portableMasterWriteI2C(i2cBus, lsbaddress);
+    WaitI2C(i2cBus);
 
     // read one data
-    portableStartI2C();
-    WaitI2C();
+    portableStartI2C(i2cBus);
+    WaitI2C(i2cBus);
 
-    portableMasterWriteI2C(blockAddress | 0x01);
-    WaitI2C();
+    portableMasterWriteI2C(i2cBus, blockAddress | 0x01);
+    WaitI2C(i2cBus);
 
-    char data = portableMasterReadI2C();
-    portableNackI2C();
-    WaitI2C();
+    char data = portableMasterReadI2C(i2cBus);
+    portableNackI2C(i2cBus);
+    WaitI2C(i2cBus);
 
-    portableStopI2C();
-    WaitI2C();
+    portableStopI2C(i2cBus);
+    WaitI2C(i2cBus);
     return data;
 }
 
@@ -144,25 +160,26 @@ signed int _readEeprom24C512Int(Eeprom* eeprom_, unsigned long index){
  * @private
  */
 void _writeEeprom24C512Block (Eeprom* eeprom_, unsigned long index, unsigned int length, Buffer* buffer) {
+    I2cBus* i2cBus = _24c512GetI2c(eeprom_);
+
     int blockAddress = get24C512BlockAddress(index);
     int address = get24C512Address(index);
-    portableMasterWaitSendI2C();
-    portableStartI2C();
-    WaitI2C();
-    portableMasterWriteI2C(blockAddress);
-    WaitI2C();
-    portableMasterWriteI2C(address);
-    WaitI2C();
+    portableMasterWaitSendI2C(i2cBus);
+    portableStartI2C(i2cBus);
+    WaitI2C(i2cBus);
+    portableMasterWriteI2C(i2cBus, blockAddress);
+    WaitI2C(i2cBus);
+    portableMasterWriteI2C(i2cBus, address);
+    WaitI2C(i2cBus);
     int i;
     for (i = 0; i <(length) ; i++) {
         char c = bufferReadChar(buffer);
-        portableMasterWriteI2C(c);
-        WaitI2C();
+        portableMasterWriteI2C(i2cBus, c);
+        WaitI2C(i2cBus);
     }
-    portableStopI2C();
-    WaitI2C();
+    portableStopI2C(i2cBus);
+    WaitI2C(i2cBus);
 }
-
 
 /**
  * Implementation of the readBlock Function of the 24C512 chip.
@@ -170,44 +187,46 @@ void _writeEeprom24C512Block (Eeprom* eeprom_, unsigned long index, unsigned int
  * @private
  */
 void _readEeprom24C512Block(Eeprom* eeprom_, unsigned long index, unsigned int length, Buffer* buffer){
-   portableMasterWaitSendI2C();
+   I2cBus* i2cBus = _24c512GetI2c(eeprom_);
 
-    portableMasterWaitSendI2C();
-    portableStartI2C();
-    WaitI2C();
+   portableMasterWaitSendI2C(i2cBus);
+
+    portableMasterWaitSendI2C(i2cBus);
+    portableStartI2C(i2cBus);
+    WaitI2C(i2cBus);
     unsigned int blockAddress = get24C512BlockAddress(index);
-    portableMasterWriteI2C(blockAddress);
-    WaitI2C();
+    portableMasterWriteI2C(i2cBus, blockAddress);
+    WaitI2C(i2cBus);
 
     unsigned int msbaddress = index >> 8;
     unsigned int lsbaddress = index & 0xFFFF;
 
-    portableMasterWriteI2C(msbaddress);
-    WaitI2C();
-    portableMasterWriteI2C(lsbaddress);
-    WaitI2C();
+    portableMasterWriteI2C(i2cBus, msbaddress);
+    WaitI2C(i2cBus);
+    portableMasterWriteI2C(i2cBus, lsbaddress);
+    WaitI2C(i2cBus);
 
     // read the data
-    portableStartI2C();
-    WaitI2C();
+    portableStartI2C(i2cBus);
+    WaitI2C(i2cBus);
 
-    portableMasterWriteI2C(blockAddress | 0x01);
+    portableMasterWriteI2C(i2cBus, blockAddress | 0x01);
 
     int i;
     for (i = 0; i < length - 1; i++) {
-        char c = portableMasterReadI2C();
-        portableAckI2C();
-        WaitI2C();
+        char c = portableMasterReadI2C(i2cBus);
+        portableAckI2C(i2cBus);
+        WaitI2C(i2cBus);
         bufferWriteChar(buffer, c);
     }
-    char c = portableMasterReadI2C();
-    portableNackI2C();
-    WaitI2C();
+    char c = portableMasterReadI2C(i2cBus);
+    portableNackI2C(i2cBus);
+    WaitI2C(i2cBus);
     bufferWriteChar(buffer, c);
-    portableStopI2C();
-    WaitI2C();
+    portableStopI2C(i2cBus);
+    WaitI2C(i2cBus);
 }
 
-void init24C512Eeprom(Eeprom* eeprom_) {
-    initEeprom(eeprom_, EEPROM_24C512_MAX_INDEX, writeEeprom24C512Int, _readEeprom24C512Int, _writeEeprom24C512Block, _readEeprom24C512Block);
+void init24C512Eeprom(Eeprom* eeprom_, I2cBus* i2cBus) {
+    initEeprom(eeprom_, EEPROM_24C512_MAX_INDEX, _writeEeprom24C512Int, _readEeprom24C512Int, _writeEeprom24C512Block, _readEeprom24C512Block, (int*) i2cBus);
 }

@@ -1,6 +1,7 @@
 #ifndef I2C_SLAVE_H
 #define I2C_SLAVE_H
 
+#include "../../../common/i2c/i2cCommon.h"
 #include "../../../common/io/streamLink.h"
 
 /**
@@ -19,13 +20,13 @@ StreamLink* getI2cStreamLink(void);
  * Portable Function which must be used to read the I2C Slave.
  * @return the read data
  */
-unsigned char portableSlaveReadI2C(void);
+unsigned char portableSlaveReadI2C(I2cBus* i2cBus);
 
 /**
  * Portable Function which must be used to write from the I2C Slave to the Master.
  * @param c the data to write back to the master
  */
-void portableSlaveWriteI2C(unsigned char c);
+void portableSlaveWriteI2C(I2cBus* i2cBus, unsigned char c);
 
 #endif
 

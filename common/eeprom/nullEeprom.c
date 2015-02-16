@@ -1,6 +1,8 @@
 #include "nullEeprom.h"
 #include "eeprom.h"
 
+#include <stdlib.h>
+
 #include "../../common/error/error.h"
 
 void nullEepromWriteInt(Eeprom* eeprom_, unsigned long index, signed int value) {
@@ -20,5 +22,5 @@ void nullEepromWriteBlock(Eeprom* eeprom_, unsigned long index, unsigned int len
 }
 
 void initNullEeprom(Eeprom* nullEeprom) {
-    initEeprom(nullEeprom, 35535, nullEepromWriteInt, nullEepromReadInt, nullEepromWriteBlock, nullEepromReadBlock);
+    initEeprom(nullEeprom, 35535, nullEepromWriteInt, nullEepromReadInt, nullEepromWriteBlock, nullEepromReadBlock, NULL);
 }

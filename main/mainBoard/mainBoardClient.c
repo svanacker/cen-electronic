@@ -13,6 +13,7 @@
 
 #include "../../common/eeprom/eeprom.h"
 
+#include "../../common/i2c/i2cCommon.h"
 #include "../../common/i2c/i2cDebug.h"
 
 #include "../../common/i2c/master/i2cMaster.h"
@@ -199,6 +200,9 @@ static Eeprom eeprom;
 // CLOCK
 static Clock clock;
 
+// I2C
+static I2cBus i2cBus;
+
 // serial link DEBUG 
 static char debugInputBufferArray[MAIN_BOARD_DEBUG_INPUT_BUFFER_LENGTH];
 static Buffer debugInputBuffer;
@@ -311,7 +315,7 @@ void initDriversDescriptor() {
     addDriver(testDriverGetDescriptor(), TRANSMIT_LOCAL);
 
     // Direct Devantech Driver
-    addDriver(getMD22DriverDescriptor(), TRANSMIT_NONE);
+    addDriver(getMD22DriverDescriptor(NULL), TRANSMIT_NONE);
 }
 
 /**
@@ -455,7 +459,7 @@ int main(void) {
     initTimerList(&timerListArray, MAIN_BOARD_TIMER_LENGTH);
 
     // Eeproms
-    init24C16Eeprom(&eeprom);
+    init24C16Eeprom(&eeprom, &i2cBus);
 
     // Init the logs
     initLogs(DEBUG, &logHandlerListArray, MAIN_BOARD_LOG_HANDLER_LIST_LENGTH);
@@ -498,6 +502,7 @@ int main(void) {
     MAIN_BOARD_I2C_INPUT_DRIVER_DATA_DISPATCHER_BUFFER_LENGTH,
     &motorBoardI2cOutputStream,
     &motorBoardI2cInputStream,
+    &i2cBus,
     MOTOR_BOARD_I2C_ADDRESS);
 
     // Uart Stream for motorBoard
@@ -526,6 +531,7 @@ int main(void) {
             MAIN_BOARD_LINK_TO_AIR_CONDITIONING_BOARD_BUFFER_LENGTH,
             &airConditioningBoardOutputStream,
             &airConditioningBoardInputStream,
+            &i2cBus,
             AIR_CONDITIONING_BOARD_I2C_ADDRESS);
 
     // I2C Debug

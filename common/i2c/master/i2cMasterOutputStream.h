@@ -1,16 +1,32 @@
 #ifndef I2C_MASTER_OUTPUT_STREAM_H
 #define I2C_MASTER_OUTPUT_STREAM_H
 
+#include "../../../common/i2c/i2cCommon.h"
 #include "../../../common/io/outputStream.h"
 #include "../../../common/io/buffer.h"
 
 /**
+ * A global structure used to store every information about the I2C outputStream.
+ */
+typedef struct {
+    // The bus we manage
+    I2cBus* i2cBus;
+    // The outputStream object with specific callback
+    OutputStream* outputStream;
+    // The underlying buffer
+    Buffer* buffer;
+} I2cMasterOutputStream;
+
+/**
 * Init an outputStream around i2c with an address.
+* @param i2cMasterOutputStream a global structure used to store every information about the outputStream
 * @param outputStream a structure to initialize
 * @param i2cBuffer an internal i2cBuffer to avoid
 * @param i2cWriteAddress the I2C address corresponding to the I2C Slave address
 */
-void initMasterI2cOutputStream(OutputStream* outputStream,
+void initMasterI2cOutputStream(I2cMasterOutputStream* i2cMasterOutputStream,
+                               I2cBus* i2cBus,
+                               OutputStream* outputStream,
                                Buffer* i2cBuffer,
                                unsigned char i2cWriteAddress);
 

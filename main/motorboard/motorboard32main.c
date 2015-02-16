@@ -107,6 +107,8 @@
 // The port for which we debug (we can send instruction too)
 #define SERIAL_PORT_DEBUG     SERIAL_PORT_2
 
+static I2cBus* mainBoardI2cBus;
+
 // serial INSTRUCTION
 static char standardInputBufferArray[MOTOR_BOARD_IN_BUFFER_LENGTH];
 static Buffer standardInputBuffer;
@@ -242,6 +244,7 @@ int runMotorBoard() {
             &i2cSlaveOutputBuffer,
             &i2cSlaveOutputBufferArray,
             MOTOR_BOARD_OUT_BUFFER_LENGTH,
+            mainBoardI2cBus,
             MOTOR_BOARD_I2C_ADDRESS
             );
 

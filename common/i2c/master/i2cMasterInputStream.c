@@ -1,6 +1,7 @@
 #include <stdlib.h>
 
 #include "i2cMaster.h"
+#include "i2cMasterInputStream.h"
 #include "i2cMasterSetup.h"
 #include "../../../common/i2c/i2cDebug.h"
 
@@ -15,12 +16,34 @@
 // INPUT STREAM INTERFACE
 
 /**
+ * @private
+ */
+I2cMasterInputStream* _i2cMasterGetMasterInputStream(InputStream* inputStream) {
+    I2cMasterInputStream* result = (I2cMasterInputStream*) inputStream->object;
+
+    return result;
+}
+
+/**
  * @private.
  * Get the buffer attached to the inputStream
  * @param inputStream returns the inputStream attached to the I2C Input Buffer.
  */
-Buffer* getI2CMasterInputBuffer(InputStream* inputStream) {
-    Buffer* result = (Buffer*) inputStream->object;
+Buffer* _i2cMasterInputStreamGetBuffer(InputStream* inputStream) {
+    I2cMasterInputStream* i2cMasterInputStream = _i2cMasterGetMasterInputStream(inputStream);
+    
+    Buffer* result = i2cMasterInputStream->inputBuffer;
+
+    return result;
+}
+
+/**
+ * @private
+ */
+I2cBus* _i2cMasterInputStreamGetI2cBus(InputStream* inputStream) {
+    I2cMasterInputStream* i2cMasterInputStream = _i2cMasterGetMasterInputStream(inputStream);
+    
+    I2cBus* result = i2cMasterInputStream->i2cBus;
 
     return result;
 }
@@ -37,7 +60,8 @@ void _i2cMasterOpenInputStream(InputStream* inputStream, int param1) {
  */
 void fillI2CInputInternalBuffer(InputStream* inputStream) {
     while (true) {
-        unsigned char c = i2cMasterReadChar(inputStream->address);
+        I2cBus* i2cBus = _i2cMasterInputStreamGetI2cBus(inputStream);
+        unsigned char c = i2cMasterReadChar(i2cBus, inputStream->address);
 
         if (c == I2C_SLAVE_NO_DATA_IN_READ_BUFFER || c == INCORRECT_DATA) {
             break;
@@ -45,7 +69,7 @@ void fillI2CInputInternalBuffer(InputStream* inputStream) {
 
         appendI2cDebugInputChar(c);
 
-        Buffer* buffer = getI2CMasterInputBuffer(inputStream);
+        Buffer* buffer = _i2cMasterInputStreamGetBuffer(inputStream);
         bufferWriteChar(buffer, c);
     }
 }
@@ -59,7 +83,7 @@ void _i2cMasterCloseInputStream(InputStream* inputStream) {
 
 bool _i2cAvailableData(InputStream* inputStream) {
     fillI2CInputInternalBuffer(inputStream);
-    Buffer* buffer = getI2CMasterInputBuffer(inputStream);
+    Buffer* buffer = _i2cMasterInputStreamGetBuffer(inputStream);
     bool result = !isBufferEmpty(buffer);
 
     return result;
@@ -70,11 +94,13 @@ bool _i2cAvailableData(InputStream* inputStream) {
  * @private
  */
 char _readCharI2C(InputStream* inputStream) {
-    Buffer* buffer = getI2CMasterInputBuffer(inputStream);
+    Buffer* buffer = _i2cMasterInputStreamGetBuffer(inputStream);
     return bufferReadChar(buffer);
 }
 
-void initMasterI2cInputStream(Buffer* i2cInputBuffer,
+void initMasterI2cInputStream(I2cMasterInputStream* i2cMasterInputStream,
+                              I2cBus* i2cBus,
+                                Buffer* i2cInputBuffer,
                                 InputStream* inputStream,
                                 unsigned char i2cWriteAddress) {
     inputStream->address = i2cWriteAddress;

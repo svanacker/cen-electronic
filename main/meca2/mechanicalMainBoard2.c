@@ -10,6 +10,7 @@
 
 #include "../../common/delay/cenDelay.h"
 
+#include "../../common/i2c/i2cCommon.h"
 #include "../../common/i2c/slave/i2cSlave.h"
 #include "../../common/i2c/slave/i2cSlaveSetup.h"
 #include "../../common/i2c/slave/i2cSlaveLink.h"
@@ -77,6 +78,9 @@
 */
 static DeviceList devices;
 
+// logs
+static LogHandler logHandlerListArray[MECA_BOARD_2_LOG_HANDLER_LIST_LENGTH];
+
 // serial DEBUG 
 static char debugInputBufferArray[MECA_BOARD_2_DEBUG_INPUT_BUFFER_LENGTH];
 static Buffer debugInputBuffer;
@@ -85,10 +89,8 @@ static Buffer debugOutputBuffer;
 static OutputStream debugOutputStream;
 static StreamLink debugSerialStreamLink;
 
-// logs
-static LogHandler serialLogHandler;
-
 // i2c Link
+static I2cBus mechanicalBoard2I2cBus;
 static char i2cSlaveInputBufferArray[MECA_BOARD_2_I2C_INPUT_BUFFER_LENGTH];
 static Buffer i2cSlaveInputBuffer;
 static char i2cSlaveOutputBufferArray[MECA_BOARD_2_I2C_OUTPUT_BUFFER_LENGTH];
@@ -159,8 +161,8 @@ int main(void) {
                     115200);
 
     // Init the logs
-    initLog(DEBUG);
-    addLogHandler(&serialLogHandler, "UART", &debugOutputStream, DEBUG);
+    initLogs(DEBUG, &logHandlerListArray, MECA_BOARD_2_LOG_HANDLER_LIST_LENGTH);
+    addLogHandler("UART", &debugOutputStream, DEBUG);
     appendString(getOutputStreamLogger(ALWAYS), getPicName());
     println(getOutputStreamLogger(ALWAYS));
 
@@ -177,9 +179,9 @@ int main(void) {
                             &i2cSlaveOutputBuffer,
                             &i2cSlaveOutputBufferArray,
                             MECA_BOARD_2_I2C_OUTPUT_BUFFER_LENGTH,
+                            &mechanicalBoard2I2cBus,
                             MECHANICAL_BOARD_2_I2C_ADDRESS
                         );
-
 
     // init the devices
     initDevicesDescriptor();
