@@ -803,22 +803,22 @@ int main(void) {
 
         while (1) {
             
-            portableStartI2C();
-            WaitI2C();
+            portableStartI2C(i2cBus);
+            WaitI2C(i2cBus);
             portableMasterWriteI2C(FREE_ADDRESS_2);//0x54
-            WaitI2C();
+            WaitI2C(i2cBus);
             portableMasterWriteI2C('H');
-            WaitI2C();
+            WaitI2C(i2cBus);
             portableMasterWriteI2C('E');
-            WaitI2C();
+            WaitI2C(i2cBus);
             portableMasterWriteI2C('L');
-            WaitI2C();
+            WaitI2C(i2cBus);
             portableMasterWriteI2C('L');
-            WaitI2C();
+            WaitI2C(i2cBus);
             portableMasterWriteI2C('O');
 
-            portableStopI2C();
-            WaitI2C();
+            portableStopI2C(i2cBus);
+            WaitI2C(i2cBus);
             int data1,data2,data3;
             while(1){
                 waitForInstruction();
@@ -827,35 +827,35 @@ int main(void) {
                 //appendCR(&debugOutputStream);
 
                 int data = 0;
-                portableMasterWaitSendI2C();
+                portableMasterWaitSendI2C(i2cBus);
 
-                portableStartI2C();
+                portableStartI2C(i2cBus);
                 IdleI2C1();
                 portableMasterWriteI2C(FREE_ADDRESS_2 + 1);//0x54
-                WaitI2C();
+                WaitI2C(i2cBus);
                 
-                data = portableMasterReadI2C();
-                portableAckI2C();
+                data = portableMasterReadI2C(i2cBus);
+                portableAckI2C(i2cBus);
                 IdleI2C1();
 
-                data1 = portableMasterReadI2C();
-                portableAckI2C();
+                data1 = portableMasterReadI2C(i2cBus);
+                portableAckI2C(i2cBus);
                 IdleI2C1();
 
-                data2= portableMasterReadI2C();
-                portableAckI2C();
+                data2= portableMasterReadI2C(i2cBus);
+                portableAckI2C(i2cBus);
                 IdleI2C1();
 
 
-                data3 = portableMasterReadI2C();
-                portableNackI2C();
+                data3 = portableMasterReadI2C(i2cBus);
+                portableNackI2C(i2cBus);
                 IdleI2C1();
                 append(&lcdOutputStream,data);
                 append(&lcdOutputStream,data1);
                 append(&lcdOutputStream,data2);
                 append(&lcdOutputStream,data3);
 
-                portableStopI2C();
+                portableStopI2C(i2cBus);
                 IdleI2C1();
                 
                 delaymSec(500);

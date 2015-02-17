@@ -27,6 +27,9 @@ void sendI2CDataToMaster(void) {
     if (!i2cReadFlag) {
         return;
     }
+	// TODO : Find the right I2CBus
+	I2cBus* i2cBus = NULL;
+
     StreamLink* i2cStreamLink = getI2cStreamLink();
 
     // The buffer which must be send to the master
@@ -40,8 +43,11 @@ void sendI2CDataToMaster(void) {
         // for debug support
         appendI2cDebugOutputChar(c);
 
+		// TODO : Find the right i2cBus
+		I2cBus* i2cBus = NULL;
+
         // we send it to the master
-        portableSlaveWriteI2C(c);
+        portableSlaveWriteI2C(i2cBus, c);
 
         // To Remove
         printf("%c", c);
@@ -50,14 +56,17 @@ void sendI2CDataToMaster(void) {
         // In this case, we must NOT add '\0' to the debug buffer (we will not see anything !)
         // In PC, the system is not the same than with interrupt, because we add something in a pipe
         // and on real I2C, value is just read on the fly, but not stored !
-        portableSlaveWriteI2C(I2C_SLAVE_NO_DATA_IN_READ_BUFFER);
+        portableSlaveWriteI2C(i2cBus, I2C_SLAVE_NO_DATA_IN_READ_BUFFER);
     }
 }
 
 void handleI2CDataFromMaster(void) {
     StreamLink* i2cStreamLink = getI2cStreamLink();
 
-    unsigned char data = portableSlaveReadI2C();
+	// TODO : Find the right I2CBus
+	I2cBus* i2cBus = NULL;
+
+    unsigned char data = portableSlaveReadI2C(i2cBus);
     if (INCORRECT_DATA != data && I2C_SLAVE_FAKE_WRITE != data) {
         if (ASCII_STX == data) {
             i2cStartFlag = true;

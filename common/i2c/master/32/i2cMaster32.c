@@ -1,23 +1,132 @@
 #include <peripheral/legacy/i2c_legacy.h>
+#include <peripheral/i2c.h>
+#include <plib.h>
 
 #include "../i2cMaster.h"
 
 #include "../../../../common/i2c/i2cCommon.h"
+#include "../../../../common/i2c/32/i2cCommon32.h"
 
-unsigned int portableMasterWriteI2C(unsigned char data) {
-    return MasterWriteI2C1(data);
+unsigned int portableMasterWriteI2C(I2cBus* i2cBus, unsigned char data) {
+    if (i2cBus == NULL) {
+        return MasterWriteI2C1(data);
+    }
+    else {
+        I2C_MODULE i2cModule = getI2C_MODULE(i2cBus->portIndex);
+        return I2CSendByte(i2cModule, data);
+    }
 }
 
-unsigned char portableMasterReadI2C(void) {
-    return MasterReadI2C1();
+unsigned char portableMasterReadI2C(I2cBus* i2cBus) {
+    if (i2cBus == NULL) {
+        return MasterReadI2C1();
+    }
+    else {
+        // I2C_MODULE i2cModule = getI2C_MODULE(i2cBus->portIndex);
+        // return TODO(i2cModule);
+
+        unsigned portIndex = i2cBus->portIndex;
+        if (portIndex == I2C_BUS_PORT_1) {
+            I2C1CONbits.RCEN = 1;
+            while(I2C1CONbits.RCEN);
+            I2C1STATbits.I2COV = 0;
+            return(I2C1RCV);
+        }
+        else if (portIndex == I2C_BUS_PORT_2) {
+            // TODO : Throw Not Implemented
+            // I2C2CONbits.RCEN = 1;
+            // while(I2C2CONbits.RCEN);
+            // I2C2STATbits.I2COV = 0;
+            // return(I2C2RCV);
+            return 0;
+        }
+        else if (portIndex == I2C_BUS_PORT_3) {
+            // TODO : Throw Not Implemented
+            // I2C3CONbits.RCEN = 1;
+            // while(I2C3CONbits.RCEN);
+            // I2C3STATbits.I2COV = 0;
+            // return(I2C3RCV);
+            return 0;
+        }
+        else if (portIndex == I2C_BUS_PORT_4) {
+            I2C4CONbits.RCEN = 1;
+            while(I2C4CONbits.RCEN);
+            I2C4STATbits.I2COV = 0;
+            return(I2C4RCV);
+        }
+    }
+    return 0;
 }
 
-void portableCloseI2C(void) {
-    CloseI2C1();
+void portableCloseI2C(I2cBus* i2cBus) {
+    if (i2cBus == NULL) {
+        CloseI2C1();
+    }
+    else {
+        unsigned portIndex = i2cBus->portIndex;
+        // I2C_MODULE i2cModule = getI2C_MODULE(i2cBus->portIndex);
+        // TODO(i2cModule);
+        if (portIndex == I2C_BUS_PORT_1) {
+            // I2C1CONCLR = _I2C1CON_ON_MASK,
+            // DisableIntSI2C1,
+            // DisableIntMI2C1,
+            // DisableIntBI2C1
+        }
+        else if (portIndex == I2C_BUS_PORT_2) {
+            // TODO : Throw Not Implemented
+            // I2C2CONCLR = _I2C2CON_ON_MASK,
+            // DisableIntSI2C2,
+            // DisableIntMI2C2,
+            // DisableIntBI2C2
+        }
+        else if (portIndex == I2C_BUS_PORT_3) {
+            // TODO : Throw Not Implemented
+            // I2C3CONCLR = _I2C3CON_ON_MASK,
+            // DisableIntSI2C3,
+            // DisableIntMI2C3,
+            // DisableIntBI2C3
+        }
+        else if (portIndex == I2C_BUS_PORT_4) {
+            // TODO : Find an implementation
+            // I2C4CONCLR = _I2C4CON_ON_MASK,
+            // mI2C4SIntEnable(0),
+            // mI2C4MIntEnable(0),
+            // mI2C1BIntEnable(0)
+        }
+    }
 }
 
-void portableMasterWaitSendI2C( void ) {
-    while (I2C1CONbits.SEN) {
-    
+void portableMasterWaitSendI2C(I2cBus* i2cBus) {
+    if (i2cBus == NULL) {
+        while (I2C1CONbits.SEN) {
+        }
+        return;
+    }
+    else {
+        unsigned portIndex = i2cBus->portIndex;
+        switch (portIndex) {
+            unsigned portIndex = i2cBus->portIndex;
+            if (portIndex == I2C_BUS_PORT_1) {
+                while (I2C1CONbits.SEN) {
+                }
+            }
+            else if (portIndex == I2C_BUS_PORT_2) {
+                /* TODO : Throw Not Implemented
+                while (I2C2CONbits.SEN) {
+                }
+                */
+            }
+            else if (portIndex == I2C_BUS_PORT_3) {
+                /* TODO : Throw Not Implemented
+                while (I2C3CONbits.SEN) {
+                }
+                */
+            }
+            else if (portIndex == I2C_BUS_PORT_4) {
+                while (I2C4CONbits.SEN) {
+                }
+                return;
+            }
+        }
     }
 }

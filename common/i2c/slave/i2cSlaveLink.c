@@ -5,6 +5,8 @@
 #include "i2cSlave.h"
 #include "i2cSlaveSetup.h"
 
+#include "../i2cCommon.h"
+
 #include "../../../common/io/buffer.h"
 #include "../../../common/io/inputStream.h"
 #include "../../../common/io/outputStream.h"
@@ -21,6 +23,7 @@ void openSlaveI2cStreamLink(StreamLink* i2cStreamLink,
         Buffer* outputBuffer,
         char (*outputBufferArray)[],
         unsigned char outputBufferLength,
+        I2cBus* i2cBus,
         int i2cAddress) {
     initBuffer(inputBuffer, inputBufferArray, inputBufferLength, BUFFER_NAME_I2C_SLAVE, "IN");
     initBuffer(outputBuffer, outputBufferArray, outputBufferLength, BUFFER_NAME_I2C_SLAVE, "OUT");
@@ -42,5 +45,5 @@ void openSlaveI2cStreamLink(StreamLink* i2cStreamLink,
 
     // Init the I2C Slave at the end to avoid problems with
     // variables
-    i2cSlaveInitialize(i2cAddress);
+    i2cSlaveInitialize(i2cBus, i2cAddress);
 }

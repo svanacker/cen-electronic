@@ -60,8 +60,8 @@
 #include "../../device/timer/timerDeviceInterface.h"
 
 // Log
-#include "../../device/log/logDevice.h"
-#include "../../device/log/logDeviceInterface.h"
+//#include "../../device/log/logDevice.h"
+//#include "../../device/log/logDeviceInterface.h"
 
 // I2C Slave Device/
 #include "../../device/i2c/slave/i2cSlaveDebugDevice.h"
@@ -106,6 +106,8 @@
 
 // The port for which we debug (we can send instruction too)
 #define SERIAL_PORT_DEBUG     SERIAL_PORT_2
+
+static I2cBus mainBoardI2cBus;
 
 // serial INSTRUCTION
 static char standardInputBufferArray[MOTOR_BOARD_IN_BUFFER_LENGTH];
@@ -171,8 +173,8 @@ void initDevicesDescriptor() {
     addLocalDevice(getSerialDebugDeviceInterface(), getSerialDebugDeviceDescriptor());
     addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
     addLocalDevice(getTimerDeviceInterface(), getTimerDeviceDescriptor());
-    addLocalDevice(getLogDeviceInterface(), getLogDeviceDescriptor());
-    addLocalDevice(getI2cSlaveDebugDeviceInterface(), getI2cSlaveDebugDeviceDescriptor());
+//    addLocalDevice(getLogDeviceInterface(), getLogDeviceDescriptor());
+//    addLocalDevice(getI2cSlaveDebugDeviceInterface(), getI2cSlaveDebugDeviceDescriptor());
 
 
     initDevices();
@@ -235,6 +237,8 @@ int runMotorBoard() {
 
     initTimerList(&timerListArray, MOTOR_BOARD_TIMER_LENGTH);
 
+    // TODO : Replace by an init I2cBus
+    mainBoardI2cBus.portIndex = I2C_BUS_PORT_1;
     openSlaveI2cStreamLink(&i2cSlaveStreamLink,
             &i2cSlaveInputBuffer,
             &i2cSlaveInputBufferArray,
@@ -242,6 +246,7 @@ int runMotorBoard() {
             &i2cSlaveOutputBuffer,
             &i2cSlaveOutputBufferArray,
             MOTOR_BOARD_OUT_BUFFER_LENGTH,
+            NULL, // &mainBoardI2cBus,
             MOTOR_BOARD_I2C_ADDRESS
             );
 

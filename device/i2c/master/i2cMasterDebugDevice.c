@@ -19,6 +19,9 @@
 
 #include "../../../drivers/test/testDriver.h"
 
+// TODO : Remove static
+static I2cBus* i2cMasterDebugI2cBus;
+
 void deviceI2cMasterDebugInit(void) {
 }
 
@@ -46,12 +49,12 @@ void deviceI2cMasterDebugHandleRawData(char header, InputStream* inputStream, Ou
         int address = readHex2(inputStream);
         int c = readHex2(inputStream);
     
-        i2cMasterWriteChar(address, c);
+        i2cMasterWriteChar(i2cMasterDebugI2cBus, address, c);
     }
     else if (header == COMMAND_I2C_DEBUG_MASTER_READ_CHAR_FROM_SLAVE) {
         ackCommand(outputStream, I2C_MASTER_DEBUG_DEVICE_HEADER, COMMAND_I2C_DEBUG_MASTER_READ_CHAR_FROM_SLAVE);
         int address = readHex2(inputStream);
-        char c = i2cMasterReadChar(address);
+        char c = i2cMasterReadChar(i2cMasterDebugI2cBus, address);
         appendHex2(outputStream, c);
     }
 }
@@ -63,6 +66,7 @@ static DeviceDescriptor descriptor = {
     .deviceHandleRawData = &deviceI2cMasterDebugHandleRawData,
 };
 
-DeviceDescriptor* getI2cMasterDebugDeviceDescriptor() {
+DeviceDescriptor* getI2cMasterDebugDeviceDescriptor(I2cBus* i2cBus) {
+    i2cMasterDebugI2cBus = i2cBus;
     return &descriptor;
 }

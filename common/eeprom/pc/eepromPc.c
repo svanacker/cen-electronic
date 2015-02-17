@@ -45,5 +45,5 @@ void eepromWriteBlock(Eeprom* eeprom_, unsigned long index, unsigned int length,
 }
 
 void initEepromPc(Eeprom* eepromPc) {
-    initEeprom(eepromPc, EEPROM_PC_MAX_INDEX, eepromPcWriteInt, eepromReadInt, eepromReadBlock, eepromWriteBlock);
+    initEeprom(eepromPc, EEPROM_PC_MAX_INDEX, eepromPcWriteInt, eepromReadInt, eepromReadBlock, eepromWriteBlock, NULL);
 }

@@ -1,9 +1,11 @@
 #include <stdbool.h>
+#include <stdlib.h>
 
 #include "clockDevice.h"
 #include "clockDeviceInterface.h"
 
 #include "../../common/clock/clock.h"
+#include "../../common/error/error.h"
 #include "../../common/io/printWriter.h"
 #include "../../common/io/reader.h"
 
@@ -11,7 +13,17 @@
 
 static Clock* clock;
 
+void _deviceClockCheckInitialized() {
+    if (clock == NULL) {
+        writeError(CLOCK_NULL);
+    }
+    if (!isClockInitialized(clock)) {
+        writeError(CLOCK_NOT_INITIALIZED);
+    }
+}
+
 void deviceClockInit(void) {
+    _deviceClockCheckInitialized();
 }
 
 void deviceClockShutDown(void) {
@@ -22,6 +34,7 @@ bool isClockDeviceOk(void) {
 }
 
 void deviceClockHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream){
+    _deviceClockCheckInitialized();
     if (header == COMMAND_READ_CLOCK) {
         ackCommand(outputStream, CLOCK_DEVICE_HEADER, COMMAND_READ_CLOCK);
         ClockData* clockData = clock->readClock(clock);

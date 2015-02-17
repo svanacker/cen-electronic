@@ -61,9 +61,13 @@ void clearLastError();
 #define TOO_MUCH_TIMERS                 0x0201
 
 // EEPROM
-#define EEPROM_NULL                        0x280
-#define EEPROM_NOT_INITIALIZED            0x281
+#define EEPROM_NULL                     0x280
+#define EEPROM_NOT_INITIALIZED          0x281
 #define EEPROM_OUT_OF_BOUNDS            0x282
+
+// CLOCK
+#define CLOCK_NULL                     0x290
+#define CLOCK_NOT_INITIALIZED          0x291
 
 // BIT LIST
 #define BIT_LIST_ARRAY_OUT_OF_BOUNDS    0x0300

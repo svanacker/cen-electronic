@@ -2,11 +2,13 @@
 
 #include <i2c.h>
 
-unsigned char portableSlaveReadI2C(void) {
+#include "../../../../common/i2c/i2cCommon.h"
+
+unsigned char portableSlaveReadI2C(I2cBus* i2cBus) {
     unsigned char result = SlaveReadI2C();
     return result;
 }
 
-void portableSlaveWriteI2C(unsigned char c) {
+void portableSlaveWriteI2C(I2cBus* i2cBus, unsigned char c) {
     SlaveWriteI2C(c);
 }

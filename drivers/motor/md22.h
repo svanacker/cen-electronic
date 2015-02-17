@@ -3,6 +3,8 @@
 
 #include "../driver.h"
 
+#include "../../common/i2c/i2cCommon.h"
+
 /**
 * Stops the motors
 */
@@ -13,8 +15,8 @@ void stopMD22Motors(void);
 * @param leftSpeed the left motor speed (value between -128 and 127)
 * @param rightSpeed the right motor speed (value between -128 and 127)
 */
-void setMD22MotorSpeeds(signed char leftSpeed, signed char rightSpeed);
+void setMD22MotorSpeeds(I2cBus* i2cBus, signed char leftSpeed, signed char rightSpeed);
 
-DriverDescriptor* getMD22DriverDescriptor();
+DriverDescriptor* getMD22DriverDescriptor(I2cBus* i2cBus);
 
 #endif

@@ -13,6 +13,7 @@
 
 #include "../../common/delay/cenDelay.h"
 
+#include "../../common/i2c/i2cCommon.h"
 #include "../../common/i2c/slave/i2cSlave.h"
 #include "../../common/i2c/slave/i2cSlaveSetup.h"
 #include "../../common/i2c/slave/i2cSlaveLink.h"
@@ -21,7 +22,6 @@
 #include "../../common/io/outputStream.h"
 #include "../../common/io/ioUtils.h"
 #include "../../common/io/printWriter.h"
-#include "../../common/io/stream.h"
 
 #include "../../common/serial/serial.h"
 #include "../../common/serial/serialLink.h"
@@ -70,6 +70,9 @@
 // The port for which we dialog with ZIGBEE
 #define SERIAL_PORT_ZIGBEE     SERIAL_PORT_1
 
+// logs
+static LogHandler logHandlerListArray[BEACON_RECEIVER_LOG_HANDLER_LIST_LENGTH];
+
 // DEVICES
 static Device deviceListArray[BEACON_RECEIVER_DEVICE_LENGTH];
 
@@ -107,10 +110,8 @@ static DriverDataDispatcher beaconBoardDispatcher;
 static InputStream beaconBoardInputStream;
 static OutputStream beaconBoardOutputStream;
 
-// logs
-static LogHandler serialLogHandler;
-
 // i2c Link
+static I2cBus beaconReceiverI2cBus;
 static char i2cSlaveInputBufferArray[BEACON_RECEIVER_BOARD_I2C_INPUT_BUFFER_LENGTH];
 static Buffer i2cSlaveInputBuffer;
 static char i2cSlaveOutputBufferArray[BEACON_RECEIVER_BOARD_I2C_OUTPUT_BUFFER_LENGTH];
@@ -174,7 +175,7 @@ void updatePinNetworkStatus() {
 }
 
 void onError(JennicEvent* jennicEvent) {
-    appendString(getOutputStreamLogger(ERROR), "ERROR ! \n");
+    appendString(getErrorOutputStreamLogger(), "ERROR ! \n");
     onJennicError();
 }
 
@@ -190,7 +191,7 @@ void onConnectionEstablished(JennicEvent* jennicEvent) {
 void onConnectionReset(JennicEvent* jennicEvent) {
     setJennicNetworkStatus(JENNIC_WAITING_FOR_NODE);
     updatePinNetworkStatus();
-    appendString(getOutputStreamLogger(ERROR), "CONNECTION RESET ! \n");
+    appendString(getErrorOutputStreamLogger(), "CONNECTION RESET ! \n");
     // TODO : Reset Robot Position
     // TODO : Get the time of the position
 }
@@ -253,8 +254,8 @@ int runZigBeeReceiver() {
 
 
     // Init the logs
-    initLog(DEBUG);
-    addLogHandler(&serialLogHandler, "UART", &debugOutputStream, DEBUG);
+    initLogs(DEBUG, &logHandlerListArray, BEACON_RECEIVER_LOG_HANDLER_LIST_LENGTH);
+    addLogHandler("UART", &debugOutputStream, DEBUG);
     appendString(getOutputStreamLogger(DEBUG), getPicName());
     println(getOutputStreamLogger(DEBUG));    
 
@@ -266,6 +267,7 @@ int runZigBeeReceiver() {
                             &i2cSlaveOutputBuffer,
                             &i2cSlaveOutputBufferArray,
                             BEACON_RECEIVER_BOARD_I2C_OUTPUT_BUFFER_LENGTH,
+                            &beaconReceiverI2cBus,
                             BEACON_RECEIVER_I2C_ADDRESS
                         );
 

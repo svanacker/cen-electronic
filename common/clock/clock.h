@@ -1,6 +1,8 @@
 #ifndef CLOCK_H
 #define CLOCK_H
 
+#include <stdbool.h>
+
 /**
  * Universal clock definition.
  */
@@ -41,14 +43,24 @@ struct Clock {
     ReadClockFunction* readClock;
     /** The content with all values. */
     ClockData clockData;
+    /** A pointer on generic object (for example to store I2cBus ...). */
+    int* object;
 };
+
+/**
+ * Returns true if the clock is initialized (if the fields of callbacks are NOT NULL), false else.
+ * @param clock a pointer on the Clock object (Simulates POO programming) 
+ * @return true if the clock is initialized (if the fields of callbacks are NOT NULL), false else.
+ */
+bool isClockInitialized(Clock* clock);
 
 /**
  * Initializes (Constructor in POO).
  * @param clockParam a pointer on clock structure to initialize it.
  * @param writeClockFunction a pointer on the writeClockFunction
  * @param readClockFunction a pointer on the readClockFunction
+ * @param object A pointer on generic object (for example to store I2cBus ...).
  */
-void initClock(Clock* clockParam, WriteClockFunction* writeClockFunction, ReadClockFunction* readClockFunction);
+void initClock(Clock* clockParam, WriteClockFunction* writeClockFunction, ReadClockFunction* readClockFunction, int* object);
 
 #endif

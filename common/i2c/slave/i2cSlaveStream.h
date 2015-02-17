@@ -18,6 +18,8 @@ typedef struct I2cSlaveLink{
     InputStream* i2cInputStream;
     /** The inputBuffer to handle Input Stream. */
     Buffer* i2cInputBuffer;
+    /** The bus. */
+    I2cBus* i2cBus;
 } I2cSlaveLink;
 
 // --- INPUT STREAM ---
@@ -28,9 +30,10 @@ typedef struct I2cSlaveLink{
 * @param i2cBuffer an internal i2cBuffer 
 * @param i2cAddress the address to respond to i2c request
 */
-void openSlaveI2cInputStream(InputStream* inputStream,
-                         Buffer* i2cInputBuffer,
-                         unsigned char i2cAddress);
+void openSlaveI2cInputStream(I2cBus* i2cBus, 
+                            InputStream* inputStream,
+                            Buffer* i2cInputBuffer,
+                            unsigned char i2cAddress);
 
 // --- OUTPUT STREAM ---
 
@@ -40,7 +43,9 @@ void openSlaveI2cInputStream(InputStream* inputStream,
 * @param i2cBuffer an internal i2cBuffer 
 * @param i2cAddress the address to respond to i2c request
 */
-void openSlaveI2cOutputStream(OutputStream* outputStream,
+void openSlaveI2cOutputStream(
+                        I2cBus* i2cBus,
+                        OutputStream* outputStream,
                          Buffer* i2cBuffer,
                          unsigned char i2cWriteAddress);
 

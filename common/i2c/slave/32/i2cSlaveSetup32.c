@@ -1,7 +1,11 @@
 #include <stdbool.h>
 #include <peripheral/i2c.h>
 
+#include "../../../../common/setup/32/clockConstants32.h"
+
 #include "../../../../common/error/error.h"
+#include "../../../../common/i2c/i2cCommon.h"
+#include "../../../../common/i2c/32/i2cCommon32.h"
 
 #include "../../../../common/io/printWriter.h"
 #include "../../../../common/io/binaryPrintWriter.h"
@@ -18,15 +22,15 @@
 static bool initialized = false;
 static unsigned char slaveWriteAddress;
 
-unsigned char getI2cWriteAddress(void) {
+unsigned char getI2cWriteAddress(I2cBus* i2cBus) {
     return slaveWriteAddress;
 }
 
-unsigned char getI2cReadAddress(void) {
+unsigned char getI2cReadAddress(I2cBus* i2cBus) {
     return slaveWriteAddress | 1;
 }
 
-void i2cSlaveInitialize(unsigned char writeAddress) {
+void i2cSlaveInitialize(I2cBus* i2cBus, unsigned char writeAddress) {
 
     // Avoid more than one initialization
     if (initialized) {
@@ -39,22 +43,32 @@ void i2cSlaveInitialize(unsigned char writeAddress) {
     appendString(getOutputStreamLogger(DEBUG), "I2C Slave Write Address=");
     appendHex2(getOutputStreamLogger(DEBUG), writeAddress);
     appendCRLF(getOutputStreamLogger(DEBUG));
+
+    if (i2cBus == NULL) {
+        
+        // Enable the I2C module with clock stretching enabled
+        OpenI2C1(I2C_ON | I2C_7BIT_ADD | I2C_STR_EN, BRG_VAL);
     
-    // Enable the I2C module with clock stretching enabled
-    OpenI2C1(I2C_ON | I2C_7BIT_ADD | I2C_STR_EN, BRG_VAL);
-
-    // 7-bit I2C slave address must be initialised here.
-    // we shift because i2c address is shift to the right
-    // to manage read and write address
-    I2C1ADD = writeAddress >> 1;
-    I2C1MSK = 0;
-
-    // Interruption on I2C Slave
-    // -> Priority of I2C Slave interruption
-    mI2C1SetIntPriority(I2C_INT_PRI_3 | I2C_INT_SLAVE);
-    // -> Enable Interruption Flag => See the same code in interruption
-    mI2C1SClearIntFlag();
-
-    // Enable I2C
-    EnableIntSI2C1;
+        // 7-bit I2C slave address must be initialised here.
+        // we shift because i2c address is shift to the right
+        // to manage read and write address
+        I2C1ADD = writeAddress >> 1;
+        I2C1MSK = 0;
+    
+        // Interruption on I2C Slave
+        // -> Priority of I2C Slave interruption
+        mI2C1SetIntPriority(I2C_INT_PRI_3 | I2C_INT_SLAVE);
+        // -> Enable Interruption Flag => See the same code in interruption
+        mI2C1SClearIntFlag();
+    
+        // Enable I2C (MACRO)
+        EnableIntSI2C1;
+    }
+    else {
+        // TODO : Not Necessary for the moment
+        I2C_MODULE i2cModule = getI2C_MODULE(i2cBus->portIndex);
+        I2CConfigure(i2cModule, I2C_ON | I2C_7BIT_ADD | I2C_STR_EN);
+        I2CSetFrequency(i2cModule, GetPeripheralClock(), I2C_FREQUENCY);
+        I2CSetSlaveAddress(i2cModule, writeAddress >> 1, 0, I2C_USE_7BIT_ADDRESS);
+    }
 }

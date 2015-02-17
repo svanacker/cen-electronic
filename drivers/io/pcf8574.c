@@ -10,67 +10,67 @@
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
 
-unsigned char internalGetAddress(unsigned char addr, unsigned char devAddr) {
+unsigned char internalGetAddress(I2cBus* i2cBus, unsigned char addr, unsigned char devAddr) {
     unsigned char result;
     result = addr | ((devAddr & 0x07) << 1);
     return result;
 }
 
-char isPCF8574Present(unsigned char addr, unsigned char devAddr) {
+char isPCF8574Present(I2cBus* i2cBus, unsigned char addr, unsigned char devAddr) {
     char result;
-    unsigned char realAddress = internalGetAddress(addr, devAddr);
-    WaitI2C();
-    portableStartI2C();
-    WaitI2C();
-    portableMasterWaitSendI2C();
-    result = portableMasterWriteI2C(realAddress);
-    WaitI2C();
-    portableStopI2C();
+    unsigned char realAddress = internalGetAddress(i2cBus, addr, devAddr);
+    WaitI2C(i2cBus);
+    portableStartI2C(i2cBus);
+    WaitI2C(i2cBus);
+    portableMasterWaitSendI2C(i2cBus);
+    result = portableMasterWriteI2C(i2cBus, realAddress);
+    WaitI2C(i2cBus);
+    portableStopI2C(i2cBus);
 
     return result;
 }
 
-void writePCF8574(unsigned char addr, unsigned char devAddr, unsigned char outData, unsigned char dirs) {
-    unsigned char realAddress = internalGetAddress(addr, devAddr);
-    WaitI2C();
-    portableStartI2C();
-    WaitI2C();
-    portableMasterWaitSendI2C();
-    portableMasterWriteI2C(realAddress); // send write address
-    WaitI2C();
-    portableMasterWriteI2C(outData | dirs); // write new outputs to buffer
-    WaitI2C();
-    portableMasterWriteI2C(outData | dirs); // force data to output pins
-    WaitI2C();
-    portableStopI2C();
+void writePCF8574(I2cBus* i2cBus, unsigned char addr, unsigned char devAddr, unsigned char outData, unsigned char dirs) {
+    unsigned char realAddress = internalGetAddress(i2cBus, addr, devAddr);
+    WaitI2C(i2cBus);
+    portableStartI2C(i2cBus);
+    WaitI2C(i2cBus);
+    portableMasterWaitSendI2C(i2cBus);
+    portableMasterWriteI2C(i2cBus, realAddress); // send write address
+    WaitI2C(i2cBus);
+    portableMasterWriteI2C(i2cBus, outData | dirs); // write new outputs to buffer
+    WaitI2C(i2cBus);
+    portableMasterWriteI2C(i2cBus, outData | dirs); // force data to output pins
+    WaitI2C(i2cBus);
+    portableStopI2C(i2cBus);
 }
 
-unsigned char readPCF8574(unsigned char addr, unsigned char devAddr, unsigned char dirs) {
+unsigned char readPCF8574(I2cBus* i2cBus, unsigned char addr, unsigned char devAddr, unsigned char dirs) {
     unsigned char result;
-    unsigned char realAddress = internalGetAddress(addr, devAddr);
-    WaitI2C();
-    portableStartI2C();
-    portableMasterWaitSendI2C();
+    unsigned char realAddress = internalGetAddress(i2cBus, addr, devAddr);
+    WaitI2C(i2cBus);
+    portableStartI2C(i2cBus);
+    portableMasterWaitSendI2C(i2cBus);
     // send read address (bit zero is set)
-    portableMasterWriteI2C(realAddress | 1);
-    WaitI2C();
-    result = portableMasterReadI2C();
+    portableMasterWriteI2C(i2cBus, realAddress | 1);
+    WaitI2C(i2cBus);
+    result = portableMasterReadI2C(i2cBus);
     //AckI2C();
-    portableStopI2C();
+    portableStopI2C(i2cBus);
 
     return (result & dirs);
 }
 
-void testPCF8574(OutputStream* outputStream) {
+void testPCF8574(I2cBus* i2cBus, OutputStream* outputStream) {
     char data;
     // PCF 0
     appendString(outputStream, "PCFADD0=");
-    data = readPCF8574(0x40, 0, 0xFF);
+    data = readPCF8574(i2cBus, 0x40, 0, 0xFF);
     appendHex2(outputStream, data);
     delaymSec(150);
     // PCF 1
     appendString(outputStream, " PCFADD1 : ");
-    data = readPCF8574(0x40, 1, 0xFF);
+    data = readPCF8574(i2cBus, 0x40, 1, 0xFF);
     appendHex2(outputStream, data);
     delaymSec(500);
 }

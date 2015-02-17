@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdbool.h>
 
 #include "eeprom.h"
 
@@ -12,7 +13,8 @@ void initEeprom(Eeprom* eeprom_,
                 EepromWriteIntFunction* eepromWriteInt,
                 EepromReadIntFunction* eepromReadInt,
                 EepromWriteBlockFunction* eepromWriteBlock,
-                EepromReadBlockFunction* eepromReadBlock) {
+                EepromReadBlockFunction* eepromReadBlock,
+                int* object) {
     if (eeprom_ == NULL) {
         writeError(EEPROM_NULL);
         return;
@@ -22,6 +24,7 @@ void initEeprom(Eeprom* eeprom_,
     eeprom_->eepromReadInt = eepromReadInt;
     eeprom_->eepromWriteBlock = eepromWriteBlock;
     eeprom_->eepromReadBlock = eepromReadBlock;
+    eeprom_->object = object;
 }
 
 long getMaxIndex(Eeprom* eeprom_) {
@@ -31,6 +34,13 @@ long getMaxIndex(Eeprom* eeprom_) {
     }
     long result = eeprom_->maxIndex;
     return result;
+}
+
+bool isEepromInitialized(Eeprom* eeprom_) {
+    if (eeprom_->eepromWriteInt == NULL || eeprom_->eepromReadInt == NULL) {
+        return false;
+    }
+    return true;
 }
 
 void printEepromBlock(Eeprom* eeprom_, OutputStream* outputStream, long index, unsigned int length, Buffer* buffer) {
