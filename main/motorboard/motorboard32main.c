@@ -14,6 +14,7 @@
 #include "../../common/delay/cenDelay.h"
 
 #include "../../common/i2c/i2cDebug.h"
+#include "../../common/i2c/master/i2cMasterSetup.h"
 #include "../../common/i2c/slave/i2cSlave.h"
 #include "../../common/i2c/slave/i2cSlaveSetup.h"
 #include "../../common/i2c/slave/i2cSlaveLink.h"
@@ -42,6 +43,10 @@
 #include "../../drivers/driverStreamListener.h"
 
 // -> Devices
+
+// EEPROM
+#include "../../device/eeprom/eepromDevice.h"
+#include "../../device/eeprom/eepromDeviceInterface.h"
 
 // Test
 #include "../../device/test/testDevice.h"
@@ -91,6 +96,8 @@
 #include "../../device/motion/simple/motionDeviceInterface.h"
 
 // Drivers
+#include "../../drivers/eeprom/24c512.h"
+
 #include "../../drivers/motor/motorDriver.h"
 
 // Direct implementation
@@ -107,7 +114,12 @@
 // The port for which we debug (we can send instruction too)
 #define SERIAL_PORT_DEBUG     SERIAL_PORT_2
 
+// I2C Bus
 static I2cBus mainBoardI2cBus;
+static I2cBus eepromI2cBus;
+
+// Eeprom
+static Eeprom eeprom_;
 
 // serial INSTRUCTION
 static char standardInputBufferArray[MOTOR_BOARD_IN_BUFFER_LENGTH];
@@ -173,6 +185,10 @@ void initDevicesDescriptor() {
     addLocalDevice(getSerialDebugDeviceInterface(), getSerialDebugDeviceDescriptor());
     addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
     addLocalDevice(getTimerDeviceInterface(), getTimerDeviceDescriptor());
+
+    // I2C_4
+    addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom_));
+
 //    addLocalDevice(getLogDeviceInterface(), getLogDeviceDescriptor());
 //    addLocalDevice(getI2cSlaveDebugDeviceInterface(), getI2cSlaveDebugDeviceDescriptor());
 
@@ -197,10 +213,10 @@ void waitForInstruction() {
 
 
 int runMotorBoard() {
-// configure for multi-vectored mode
+    // configure for multi-vectored mode
     INTConfigureSystem(INT_SYSTEM_CONFIG_MULT_VECTOR);
 
-// enable interrupts
+    // enable interrupts
     INTEnableInterrupts();
 
     setPicName(MOTOR_BOARD_PIC_NAME);
@@ -246,7 +262,8 @@ int runMotorBoard() {
             &i2cSlaveOutputBuffer,
             &i2cSlaveOutputBufferArray,
             MOTOR_BOARD_OUT_BUFFER_LENGTH,
-            NULL, // &mainBoardI2cBus,
+            // NULL, 
+            &mainBoardI2cBus,
             MOTOR_BOARD_I2C_ADDRESS
             );
 
@@ -259,6 +276,11 @@ int runMotorBoard() {
         MOTOR_BOARD_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH);
 
     setDebugI2cEnabled(false);
+
+    // Eeprom
+    eepromI2cBus.portIndex = I2C_BUS_PORT_4;
+    i2cMasterInitialize(&eepromI2cBus);
+    init24C512Eeprom(&eeprom_, &eepromI2cBus);
 
     // init the devices
     initDevicesDescriptor();

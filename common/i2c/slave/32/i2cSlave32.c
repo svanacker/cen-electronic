@@ -28,25 +28,30 @@ void portableSlaveWriteI2C(I2cBus* i2cBus, unsigned char c) {
     else {
         unsigned portIndex = i2cBus->portIndex;
         if (portIndex == I2C_BUS_PORT_1) {
-            I2C1TRN = c;               /* data transferred to I2C1TRN reg */
-            I2C1CONbits.SCLREL = 1;    /* Release the clock */
+            I2C1TRN = c;               // data transferred to I2C1TRN reg
+            I2C1CONbits.SCLREL = 1;    // Release the clock
         }
+    #if defined _I2C2
         else if (portIndex == I2C_BUS_PORT_2) {
-            // TODO : Throw not Implemented
-            // I2C2TRN = c;               /* data transferred to I2C1TRN reg */
-            // I2C2CONbits.SCLREL = 1;    /* Release the clock */
+            I2C2TRN = c;               // data transferred to I2C1TRN reg
+            I2C2CONbits.SCLREL = 1;    // Release the clock
         }
+    #endif
+    #if defined _I2C3
         else if (portIndex == I2C_BUS_PORT_3) {
-            // TODO : Throw not Implemented
-            // I2C3TRN = c;               /* data transferred to I2C1TRN reg */
-            // I2C3CONbits.SCLREL = 1;    /* Release the clock */
+            I2C3TRN = c;               // data transferred to I2C1TRN reg
+            I2C3CONbits.SCLREL = 1;    // Release the clock
         }
+    #endif
+    #if defined _I2C4
         else if (portIndex == I2C_BUS_PORT_4) {
-            I2C4TRN = c;               /* data transferred to I2C1TRN reg */
-            I2C4CONbits.SCLREL = 1;    /* Release the clock */
+            I2C4TRN = c;               // data transferred to I2C1TRN reg
+            I2C4CONbits.SCLREL = 1;    // Release the clock
         }
     }
+    #endif
 }
+
 
 void portableSlaveClockRelease(I2cBus* i2cBus) {
     if (i2cBus == NULL) {

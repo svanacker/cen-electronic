@@ -1,5 +1,7 @@
 #include <stdbool.h>
-#include <peripheral/i2c.h>
+#include <plib.h>
+// #include <peripheral/i2c.h>
+// #include <peripheral/int.h>
 
 #include "../../../../common/setup/32/clockConstants32.h"
 
@@ -65,10 +67,14 @@ void i2cSlaveInitialize(I2cBus* i2cBus, unsigned char writeAddress) {
         EnableIntSI2C1;
     }
     else {
-        // TODO : Not Necessary for the moment
         I2C_MODULE i2cModule = getI2C_MODULE(i2cBus->portIndex);
         I2CConfigure(i2cModule, I2C_ON | I2C_7BIT_ADD | I2C_STR_EN);
         I2CSetFrequency(i2cModule, GetPeripheralClock(), I2C_FREQUENCY);
         I2CSetSlaveAddress(i2cModule, writeAddress >> 1, 0, I2C_USE_7BIT_ADDRESS);
+
+        INTClearFlag(INT_SOURCE_I2C_SLAVE(INT_I2C1));
+        INTSetVectorPriority(INT_VECTOR_I2C(I2C1), INT_PRIORITY_LEVEL_3);
+        INTSetVectorSubPriority(INT_VECTOR_I2C(I2C1), INT_SUB_PRIORITY_LEVEL_0);
+        INTEnable(INT_SOURCE_I2C_SLAVE(I2C1), INT_ENABLED);
     }
 }

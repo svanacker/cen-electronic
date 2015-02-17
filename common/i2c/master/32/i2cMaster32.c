@@ -28,32 +28,35 @@ unsigned char portableMasterReadI2C(I2cBus* i2cBus) {
         unsigned portIndex = i2cBus->portIndex;
         if (portIndex == I2C_BUS_PORT_1) {
             I2C1CONbits.RCEN = 1;
-            while(I2C1CONbits.RCEN);
+            while (I2C1CONbits.RCEN);
             I2C1STATbits.I2COV = 0;
             return(I2C1RCV);
         }
+    #if defined _I2C2
         else if (portIndex == I2C_BUS_PORT_2) {
-            // TODO : Throw Not Implemented
-            // I2C2CONbits.RCEN = 1;
-            // while(I2C2CONbits.RCEN);
-            // I2C2STATbits.I2COV = 0;
-            // return(I2C2RCV);
-            return 0;
+            TODO : Throw Not Implemented
+            I2C2CONbits.RCEN = 1;
+            while (I2C2CONbits.RCEN);
+            I2C2STATbits.I2COV = 0;
+            return (I2C2RCV);
         }
+    #endif
+    #if defined _I2C3
         else if (portIndex == I2C_BUS_PORT_3) {
-            // TODO : Throw Not Implemented
-            // I2C3CONbits.RCEN = 1;
-            // while(I2C3CONbits.RCEN);
-            // I2C3STATbits.I2COV = 0;
-            // return(I2C3RCV);
-            return 0;
+            I2C3CONbits.RCEN = 1;
+            while(I2C3CONbits.RCEN);
+            I2C3STATbits.I2COV = 0;
+            return (I2C3RCV);
         }
+    #endif
+    #if defined _I2C4
         else if (portIndex == I2C_BUS_PORT_4) {
             I2C4CONbits.RCEN = 1;
             while(I2C4CONbits.RCEN);
             I2C4STATbits.I2COV = 0;
-            return(I2C4RCV);
+            return (I2C4RCV);
         }
+    #endif
     }
     return 0;
 }
@@ -67,18 +70,14 @@ void portableCloseI2C(I2cBus* i2cBus) {
         // I2C_MODULE i2cModule = getI2C_MODULE(i2cBus->portIndex);
         // TODO(i2cModule);
         if (portIndex == I2C_BUS_PORT_1) {
-            // I2C1CONCLR = _I2C1CON_ON_MASK,
-            // DisableIntSI2C1,
-            // DisableIntMI2C1,
-            // DisableIntBI2C1
+            CloseI2C1();
         }
+    #if defined _I2C2
         else if (portIndex == I2C_BUS_PORT_2) {
-            // TODO : Throw Not Implemented
-            // I2C2CONCLR = _I2C2CON_ON_MASK,
-            // DisableIntSI2C2,
-            // DisableIntMI2C2,
-            // DisableIntBI2C2
+            CloseI2C2();
         }
+    #endif
+    #if defined _I2C3
         else if (portIndex == I2C_BUS_PORT_3) {
             // TODO : Throw Not Implemented
             // I2C3CONCLR = _I2C3CON_ON_MASK,
@@ -86,14 +85,17 @@ void portableCloseI2C(I2cBus* i2cBus) {
             // DisableIntMI2C3,
             // DisableIntBI2C3
         }
+    #endif
+    #if defined _I2C4
         else if (portIndex == I2C_BUS_PORT_4) {
-            // TODO : Find an implementation
+            // TODO : Throw Not Implemented
             // I2C4CONCLR = _I2C4CON_ON_MASK,
             // mI2C4SIntEnable(0),
             // mI2C4MIntEnable(0),
             // mI2C1BIntEnable(0)
         }
     }
+    #endif
 }
 
 void portableMasterWaitSendI2C(I2cBus* i2cBus) {
@@ -110,23 +112,25 @@ void portableMasterWaitSendI2C(I2cBus* i2cBus) {
                 while (I2C1CONbits.SEN) {
                 }
             }
+        #if defined _I2C2
             else if (portIndex == I2C_BUS_PORT_2) {
-                /* TODO : Throw Not Implemented
                 while (I2C2CONbits.SEN) {
                 }
-                */
             }
+        #endif
+        #if defined _I2C3
             else if (portIndex == I2C_BUS_PORT_3) {
-                /* TODO : Throw Not Implemented
                 while (I2C3CONbits.SEN) {
                 }
-                */
             }
+        #endif
+        #if defined _I2C4
             else if (portIndex == I2C_BUS_PORT_4) {
                 while (I2C4CONbits.SEN) {
                 }
                 return;
             }
+        #endif
         }
     }
 }
