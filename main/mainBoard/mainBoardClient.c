@@ -352,21 +352,23 @@ void initDevicesDescriptor() {
     // Device* infraredDetectorDevice = addI2cRemoteDevice(getRobotInfraredDetectorDeviceInterface(), MECHANICAL_BOARD_2_I2C_ADDRESS);
 
     // Motor Board->I2C
-    // addI2cRemoteDevice(getTestDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
-    // addI2cRemoteDevice(getMotorDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
-    // addI2cRemoteDevice(getCodersDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
-    // addI2cRemoteDevice(getPIDDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
-
+    addI2cRemoteDevice(getTestDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
+    addI2cRemoteDevice(getMotorDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
+    addI2cRemoteDevice(getCodersDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
+    addI2cRemoteDevice(getPIDDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
     addI2cRemoteDevice(getTrajectoryDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
     addI2cRemoteDevice(getMotionDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
 
     // MOTOR BOARD -> UART
-    // addUartRemoteDevice(getMotorDeviceInterface(), SERIAL_PORT_MOTOR);
+    /*
     addUartRemoteDevice(getTestDeviceInterface(), SERIAL_PORT_MOTOR);
     addUartRemoteDevice(getMotorDeviceInterface(), SERIAL_PORT_MOTOR);
     addUartRemoteDevice(getCodersDeviceInterface(), SERIAL_PORT_MOTOR);
     addUartRemoteDevice(getPIDDeviceInterface(), SERIAL_PORT_MOTOR);
-    
+    addUartRemoteDevice(getTrajectoryDeviceInterface(), SERIAL_PORT_MOTOR);
+    addUartRemoteDevice(getMotionDeviceInterface(), SERIAL_PORT_MOTOR);
+    */    
+
     // Beacon Receiver Board->I2C
     // addI2cRemoteDevice(getBeaconReceiverDeviceInterface(), BEACON_RECEIVER_I2C_ADDRESS);
 
@@ -498,19 +500,19 @@ int main(void) {
 
     // I2C Stream for motorBoard
     addI2CDriverDataDispatcher("MOTOR_BOARD_I2C_DISPATCHER",
-    &motorBoardI2cInputBuffer,
-    (char(*)[]) &motorBoardI2cInputBufferArray,
-    MAIN_BOARD_I2C_INPUT_DRIVER_DATA_DISPATCHER_BUFFER_LENGTH,
-    &motorBoardI2cOutputStream,
-    &motorBoardI2cInputStream,
-    &i2cBus,
-    MOTOR_BOARD_I2C_ADDRESS);
+        &motorBoardI2cInputBuffer,
+        (char(*)[]) &motorBoardI2cInputBufferArray,
+        MAIN_BOARD_I2C_INPUT_DRIVER_DATA_DISPATCHER_BUFFER_LENGTH,
+        &motorBoardI2cOutputStream,
+        &motorBoardI2cInputStream,
+        &i2cBus,
+        MOTOR_BOARD_I2C_ADDRESS);
 
     // Uart Stream for motorBoard
     addUartDriverDataDispatcher(
-    &motorSerialStreamLink,
-    "MOTOR_BOARD_UART_DISPATCHER",
-    SERIAL_PORT_MOTOR);
+        &motorSerialStreamLink,
+        "MOTOR_BOARD_UART_DISPATCHER",
+        SERIAL_PORT_MOTOR);
 
     /*
     // Stream for Mechanical Board 2

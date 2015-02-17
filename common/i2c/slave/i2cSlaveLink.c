@@ -40,6 +40,9 @@ void openSlaveI2cStreamLink(StreamLink* i2cStreamLink,
             NULL,
             0);
 
+    // Set the I2C Stream used by interruption routine
+    setI2cStreamLink(i2cStreamLink);
+
     // Init the I2C Slave at the end to avoid problems with
     // variables
     i2cSlaveInitialize(i2cBus, i2cAddress);

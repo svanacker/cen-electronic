@@ -28,5 +28,10 @@ unsigned char portableSlaveReadI2C(I2cBus* i2cBus);
  */
 void portableSlaveWriteI2C(I2cBus* i2cBus, unsigned char c);
 
+/**
+ * Portable Function which must be used to release a previously-held SCL clock line.
+ */
+void portableSlaveClockRelease(I2cBus* i2cBus);
+
 #endif
 

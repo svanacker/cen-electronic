@@ -1,8 +1,11 @@
 #include <stdbool.h>
 #include <peripheral/i2c.h>
 
+#include "../../../../common/setup/32/clockConstants32.h"
+
 #include "../../../../common/error/error.h"
 #include "../../../../common/i2c/i2cCommon.h"
+#include "../../../../common/i2c/32/i2cCommon32.h"
 
 #include "../../../../common/io/printWriter.h"
 #include "../../../../common/io/binaryPrintWriter.h"
@@ -63,5 +66,9 @@ void i2cSlaveInitialize(I2cBus* i2cBus, unsigned char writeAddress) {
     }
     else {
         // TODO : Not Necessary for the moment
+        I2C_MODULE i2cModule = getI2C_MODULE(i2cBus->portIndex);
+        I2CConfigure(i2cModule, I2C_ON | I2C_7BIT_ADD | I2C_STR_EN);
+        I2CSetFrequency(i2cModule, GetPeripheralClock(), I2C_FREQUENCY);
+        I2CSetSlaveAddress(i2cModule, writeAddress >> 1, 0, I2C_USE_7BIT_ADDRESS);
     }
 }
