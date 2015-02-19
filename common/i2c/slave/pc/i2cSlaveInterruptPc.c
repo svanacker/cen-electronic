@@ -88,7 +88,7 @@ void handleI2CDataFromMaster(void) {
         if (!i2cAddressDefinedFlag) {
 
             // We don't care about write Address or Read address
-            if (getI2cWriteAddress() == (data & 0xFE)) {
+			if (getI2cWriteAddress(i2cBus) == (data & 0xFE)) {
                 
                 i2cAddressDefinedFlag = true;
                 // Read I2C Flag is activated when the last bit is activated

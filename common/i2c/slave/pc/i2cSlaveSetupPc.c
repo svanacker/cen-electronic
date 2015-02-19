@@ -8,6 +8,8 @@
 
 #include "../../../../common/error/error.h"
 
+#include "../../../../common/i2c/i2cCommon.h"
+
 #include "../../../../common/io/printWriter.h"
 #include "../../../../common/io/binaryPrintWriter.h"
 #include "../../../../common/log/logger.h"
@@ -38,15 +40,15 @@ HANDLE getI2CSlaveToMasterHandle() {
     return slaveToMasterHandle;
 }
 
-unsigned char getI2cWriteAddress(void) {
+unsigned char getI2cWriteAddress(I2cBus* i2cBus) {
     return slaveWriteAddress;
 }
 
-unsigned char getI2cReadAddress(void) {
+unsigned char getI2cReadAddress(I2cBus* i2cBus) {
     return slaveWriteAddress | 1;
 }
 
-void i2cSlaveInitialize(unsigned char writeAddress) {
+void i2cSlaveInitialize(I2cBus* i2cBus, unsigned char writeAddress) {
     // Avoid more than one initialization
     if (initialized) {
         writeError(I2C_SLAVE_ALREADY_INITIALIZED);

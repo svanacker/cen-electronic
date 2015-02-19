@@ -9,14 +9,14 @@
 #include "../../../../common/pc/pipe/pipeServerHelper.h"
 
 
-unsigned char portableSlaveReadI2C(void) {
+unsigned char portableSlaveReadI2C(I2cBus* i2cBus) {
     HANDLE masterToSlaveHandle = getI2CMasterToSlaveHandle();
 
     unsigned char result = readCharFromPipe(masterToSlaveHandle);
     return result;
 }
 
-void portableSlaveWriteI2C(unsigned char c) {
+void portableSlaveWriteI2C(I2cBus* i2cBus, unsigned char c) {
     HANDLE slaveToMasterHandle = getI2CSlaveToMasterHandle();
 
     writeCharToPipe(slaveToMasterHandle, c);

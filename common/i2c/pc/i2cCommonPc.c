@@ -8,31 +8,31 @@
 
 #include <Windows.h>
 
-void WaitI2C() {
+void WaitI2C(I2cBus* i2cBus) {
     // Nothing to do
 }
 
-void portableStartI2C() {
+void portableStartI2C(I2cBus* i2cBus) {
     // TODO : Check whether it's the master or the client which talks
     // Send STX special code (see ASCII table)
     HANDLE pipe = getMasterPipeHandle();
     writeCharToPipe(pipe, ASCII_STX);
 }
 
-void portableStopI2C() {
+void portableStopI2C(I2cBus* i2cBus) {
     // TODO : Check whether it's the master or the client which talks
     // Send ETX special code (see ASCII table)
     HANDLE pipe = getMasterPipeHandle();
     writeCharToPipe(pipe, ASCII_ETX);
 }
 
-void portableAckI2C() {
+void portableAckI2C(I2cBus* i2cBus) {
     // TODO : Check whether it's the master or the client which talks
     // Send ACK special code (see ASCII table)
     HANDLE pipe = getMasterPipeHandle();
     // writeCharToPipe(pipe, ASCII_ACK);
 }
 
-void portableNackI2C() {
+void portableNackI2C(I2cBus* i2cBus) {
    
 }

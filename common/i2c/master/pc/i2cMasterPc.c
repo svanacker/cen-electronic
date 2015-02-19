@@ -7,14 +7,14 @@
 
 #include "../../../../common/pc/pipe/pipeServerHelper.h"
 
-unsigned int portableMasterWriteI2C(unsigned char data) {
+unsigned int portableMasterWriteI2C(I2cBus* i2cBus, unsigned char data) {
 
     HANDLE pipe = getMasterPipeHandle();
     writeCharToPipe(pipe, data);
     return data;
 }
 
-unsigned char portableMasterReadI2C() {
+unsigned char portableMasterReadI2C(I2cBus* i2cBus) {
     // TODO : Find the right Address
     HANDLE pipe = getSlavePipeHandle(0x00);
     
@@ -23,10 +23,10 @@ unsigned char portableMasterReadI2C() {
     return result;
 }
 
-void portableMasterWaitSendI2C(void) {
+void portableMasterWaitSendI2C(I2cBus* i2cBus) {
     // No Wait
 }
 
-void portableCloseI2C() {
+void portableCloseI2C(I2cBus* i2cBus) {
 
 }

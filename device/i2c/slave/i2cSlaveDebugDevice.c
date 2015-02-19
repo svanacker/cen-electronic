@@ -1,4 +1,5 @@
 #include <stdbool.h>
+#include <stdlib.h>
 
 #include "i2cSlaveDebugDevice.h"
 #include "i2cSlaveDebugDeviceInterface.h"
@@ -42,7 +43,8 @@ void deviceI2cSlaveDebugHandleRawData(char header, InputStream* inputStream, Out
     else if (header == COMMANG_I2C_DEBUG_SLAVE_ADDRESS) {
         ackCommand(outputStream, I2C_SLAVE_DEBUG_DEVICE_HEADER, COMMANG_I2C_DEBUG_SLAVE_ADDRESS);
     
-        char c = getI2cWriteAddress(slaveDebugDeviceI2cBus);
+		// TODO : 
+        char c = getI2cWriteAddress(NULL, slaveDebugDeviceI2cBus);
         appendHex2(outputStream, c);
     }
     else if (header == COMMAND_I2C_DEBUG_SLAVE_ENABLE_DISABLE) {
