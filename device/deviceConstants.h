@@ -12,6 +12,8 @@
 
 #define EEPROM_DEVICE_HEADER                       'E'
 
+#define FILE_DEVICE_HEADER                         'f'
+
 #define AIR_CONDITIONING_DEVICE_HEADER             'g'
 
 #define LOG_DEVICE_HEADER                          'G'

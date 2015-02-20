@@ -42,9 +42,7 @@ void deviceI2cSlaveDebugHandleRawData(char header, InputStream* inputStream, Out
     }
     else if (header == COMMANG_I2C_DEBUG_SLAVE_ADDRESS) {
         ackCommand(outputStream, I2C_SLAVE_DEBUG_DEVICE_HEADER, COMMANG_I2C_DEBUG_SLAVE_ADDRESS);
-    
-		// TODO : 
-        char c = getI2cWriteAddress(NULL, slaveDebugDeviceI2cBus);
+        char c = getI2cWriteAddress(slaveDebugDeviceI2cBus);
         appendHex2(outputStream, c);
     }
     else if (header == COMMAND_I2C_DEBUG_SLAVE_ENABLE_DISABLE) {

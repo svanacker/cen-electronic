@@ -150,6 +150,8 @@
     <ClCompile Include="device\dispatcher\deviceDataDispatcher.c" />
     <ClCompile Include="device\eeprom\eepromDevice.c" />
     <ClCompile Include="device\eeprom\eepromDeviceInterface.c" />
+    <ClCompile Include="device\file\fileDevice.c" />
+    <ClCompile Include="device\file\fileDeviceInterface.c" />
     <ClCompile Include="device\i2c\master\i2cMasterDebugDevice.c" />
     <ClCompile Include="device\i2c\master\i2cMasterDebugDeviceInterface.c" />
     <ClCompile Include="device\i2c\slave\i2cSlaveDebugDevice.c" />
@@ -189,11 +191,13 @@
     <ClCompile Include="drivers\driverList.c" />
     <ClCompile Include="drivers\driverStreamListener.c" />
     <ClCompile Include="drivers\driverTransmitter.c" />
+    <ClCompile Include="drivers\file\eeprom\eepromFile.c" />
     <ClCompile Include="drivers\motion\motionDriver.c" />
     <ClCompile Include="drivers\motion\trajectoryDriver.c" />
     <ClCompile Include="drivers\motor\motorDriver.c" />
     <ClCompile Include="drivers\strategy\strategyDriver.c" />
     <ClCompile Include="drivers\test\testDriver.c" />
+    <ClCompile Include="external\fatfs\ff.c" />
     <ClCompile Include="motion\extended\bspline.c" />
     <ClCompile Include="motion\extended\bsplineDebug.c" />
     <ClCompile Include="motion\extended\bsplineList.c" />
@@ -356,6 +360,8 @@
     <ClInclude Include="device\dispatcher\deviceDataDispatcher.h" />
     <ClInclude Include="device\eeprom\eepromDevice.h" />
     <ClInclude Include="device\eeprom\eepromDeviceInterface.h" />
+    <ClInclude Include="device\file\fileDevice.h" />
+    <ClInclude Include="device\file\fileDeviceInterface.h" />
     <ClInclude Include="device\i2c\master\i2cMasterDebugDevice.h" />
     <ClInclude Include="device\i2c\master\i2cMasterDebugDeviceInterface.h" />
     <ClInclude Include="device\i2c\slave\i2cSlaveDebugDevice.h" />
@@ -400,6 +406,9 @@
     <ClInclude Include="drivers\motor\motorDriver.h" />
     <ClInclude Include="drivers\strategy\strategyDriver.h" />
     <ClInclude Include="drivers\test\testDriver.h" />
+    <ClInclude Include="external\fatfs\diskio.h" />
+    <ClInclude Include="external\fatfs\ff.h" />
+    <ClInclude Include="external\fatfs\ffconf.h" />
     <ClInclude Include="motion\extended\bspline.h" />
     <ClInclude Include="motion\extended\bsplineDebug.h" />
     <ClInclude Include="motion\extended\bsplineList.h" />

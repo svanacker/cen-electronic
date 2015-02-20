@@ -64,6 +64,7 @@ void clearLastError();
 #define EEPROM_NULL                     0x280
 #define EEPROM_NOT_INITIALIZED          0x281
 #define EEPROM_OUT_OF_BOUNDS            0x282
+#define EEPROM_FILE_ILLEGAL_CALL        0x283
 
 // CLOCK
 #define CLOCK_NULL                     0x290

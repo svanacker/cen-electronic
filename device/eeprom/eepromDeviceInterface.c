@@ -12,14 +12,19 @@ const char* getEepromDeviceName(void) {
 #define EEPROM_DEVICE_WRITE_BLOCK_LENGTH  4
 
 int deviceEepromGetInterface(char header, DeviceInterfaceMode mode, bool fillDeviceArgumentList){
-    if (header == COMMAND_READ_DATA_EEPROM ) {
+	if (header == COMMAND_DUMP_TO_FILE_EEPROM) {
+		if (fillDeviceArgumentList) {
+			setFunction("Dump Eeprom to File", 0, 0);
+		}
+		return 0;
+	}
+	else if (header == COMMAND_READ_DATA_EEPROM ) {
         if (fillDeviceArgumentList) {
             setFunction("Data Read", 1, 1);
             setArgumentUnsignedHex4(0, "address");
             setResultUnsignedHex2(0, "data");
         }
         return commandLengthValueForMode(mode, 4, 2);
-
     } else if (header == COMMAND_WRITE_DATA_EEPROM) {
         if (fillDeviceArgumentList) {
             setFunction("Date Write", 2, 0);

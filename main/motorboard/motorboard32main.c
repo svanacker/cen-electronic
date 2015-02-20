@@ -48,6 +48,10 @@
 #include "../../device/eeprom/eepromDevice.h"
 #include "../../device/eeprom/eepromDeviceInterface.h"
 
+// FILE
+#include "../../device/file/fileDevice.h"
+#include "../../device/file/fileDeviceInterface.h"
+
 // Test
 #include "../../device/test/testDevice.h"
 #include "../../device/test/testDeviceInterface.h"
@@ -188,6 +192,8 @@ void initDevicesDescriptor() {
 
     // I2C_4
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom_));
+    addLocalDevice(getFileDeviceInterface(), getFileDeviceDescriptor());
+
 
 //    addLocalDevice(getLogDeviceInterface(), getLogDeviceDescriptor());
 //    addLocalDevice(getI2cSlaveDebugDeviceInterface(), getI2cSlaveDebugDeviceDescriptor());

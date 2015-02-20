@@ -7,6 +7,11 @@
 // List of EEPROM COMMAND HEADER
 
 /**
+* Dump the content of the Eeprom into a file (can only be used on local device).
+*/
+#define COMMAND_DUMP_TO_FILE_EEPROM	      'd'
+
+/**
 * Defines the header to read one byte from the Eeprom
 */
 

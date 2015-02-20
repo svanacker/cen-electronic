@@ -544,6 +544,30 @@
     <Filter Include="Header Files\test\motion\extended">
       <UniqueIdentifier>{aec87610-f813-400f-8ba9-59f0e1558299}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\external">
+      <UniqueIdentifier>{5bc27d8b-183f-48cd-a71c-dd0ab41e3d26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\external\fatfs">
+      <UniqueIdentifier>{5e09d889-b6f8-4d2c-9d38-1a027c62e2a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\external">
+      <UniqueIdentifier>{3d50d083-7556-4d6c-a4b8-731f9b4d3cb6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\external\fatfs">
+      <UniqueIdentifier>{d81fb76d-0eff-4d37-bf3b-f92f4a7e6dbc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\drivers\file">
+      <UniqueIdentifier>{adc0846a-4110-433f-83ab-90bdaecaa0c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\drivers\file\eeprom">
+      <UniqueIdentifier>{f821f4f0-fb1c-4c7b-ad46-08e7f2e3fa0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\device\file">
+      <UniqueIdentifier>{e3f9663a-a347-407f-8546-95ab98bb5006}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\device\file">
+      <UniqueIdentifier>{59e30a54-3c41-4153-9152-0dc2b9f0cdec}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -1133,6 +1157,18 @@
     </ClCompile>
     <ClCompile Include="test\motion\bspline\bsplineListTest.c">
       <Filter>Source Files\test\motion\extended</Filter>
+    </ClCompile>
+    <ClCompile Include="external\fatfs\ff.c">
+      <Filter>Source Files\external\fatfs</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\file\eeprom\eepromFile.c">
+      <Filter>Source Files\drivers\file\eeprom</Filter>
+    </ClCompile>
+    <ClCompile Include="device\file\fileDevice.c">
+      <Filter>Source Files\device\file</Filter>
+    </ClCompile>
+    <ClCompile Include="device\file\fileDeviceInterface.c">
+      <Filter>Source Files\device\file</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1771,6 +1807,21 @@
     </ClInclude>
     <ClInclude Include="motion\pid\profileType.h">
       <Filter>Header Files\motion\pid</Filter>
+    </ClInclude>
+    <ClInclude Include="external\fatfs\ff.h">
+      <Filter>Header Files\external\fatfs</Filter>
+    </ClInclude>
+    <ClInclude Include="external\fatfs\ffconf.h">
+      <Filter>Header Files\external\fatfs</Filter>
+    </ClInclude>
+    <ClInclude Include="external\fatfs\diskio.h">
+      <Filter>Header Files\external\fatfs</Filter>
+    </ClInclude>
+    <ClInclude Include="device\file\fileDevice.h">
+      <Filter>Header Files\device\file</Filter>
+    </ClInclude>
+    <ClInclude Include="device\file\fileDeviceInterface.h">
+      <Filter>Header Files\device\file</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

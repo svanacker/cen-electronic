@@ -43,6 +43,10 @@
 #include "../../../device/eeprom/eepromDevice.h"
 #include "../../../device/eeprom/eepromDeviceInterface.h"
 
+// FILE
+#include "../../../device/file/fileDevice.h"
+#include "../../../device/file/fileDeviceInterface.h"
+
 // MOTION
 
 #include "../../../device/motion/pid/pidDevice.h"
@@ -120,6 +124,9 @@ static Buffer driverRequestBuffer;
 static char driverRequestBufferArray[MAIN_BOARD_PC_REQUEST_DRIVER_BUFFER_LENGTH];
 static Buffer driverResponseBuffer;
 static char driverResponseBufferArray[MAIN_BOARD_PC_RESPONSE_DRIVER_BUFFER_LENGTH];
+
+// Eeprom
+static Eeprom eeprom;
 
 // I2C Debug
 static char i2cMasterDebugOutputBufferArray[MAIN_BOARD_PC_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH];
@@ -223,6 +230,9 @@ void runMainBoardPC(void) {
 	&motorBoardI2cBus,
     MOTOR_BOARD_PC_I2C_ADDRESS);
 
+	// EEPROM
+	initEepromPc(&eeprom);
+
     // I2C Debug
     initI2CDebugBuffers(&i2cMasterDebugInputBuffer,
         (char(*)[]) &i2cMasterDebugInputBufferArray,
@@ -252,12 +262,14 @@ void runMainBoardPC(void) {
     addLocalDevice(getDataDispatcherDeviceInterface(), getDataDispatcherDeviceDescriptor());
     addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor());
 	addLocalDevice(getTimerDeviceInterface(), getTimerDeviceDescriptor());
+	addLocalDevice(getFileDeviceInterface(), getFileDeviceDescriptor());
+	addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
 
 	initStartMatchDetectorPc(&startMatchDetector);
     addLocalDevice(getStartMatchDetectorDeviceInterface(), getStartMatchDetectorDeviceDescriptor(&startMatchDetector));
  
     // MOTOR BOARD
-    addI2cRemoteDevice(getEepromDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
+    // addI2cRemoteDevice(getEepromDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
     addI2cRemoteDevice(getPIDDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
     addI2cRemoteDevice(getMotorDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
     addI2cRemoteDevice(getCodersDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);

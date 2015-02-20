@@ -30,11 +30,16 @@ void deviceEepromShutDown(void) {
 }
 
 bool isEepromDeviceOk(void) {
+    // TODO : Check by reading a value in the EEPROM
     return true;
 }
 
 void deviceEepromHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream){
     _deviceEepromCheckInitialized();
+	if (commandHeader == COMMAND_DUMP_TO_FILE_EEPROM) {
+		ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_DUMP_TO_FILE_EEPROM);
+		dumpEeprom(eeprom_);
+	}
     if (commandHeader == COMMAND_READ_DATA_EEPROM) {
         ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_READ_DATA_EEPROM);
         unsigned long address = readHex4(inputStream);
