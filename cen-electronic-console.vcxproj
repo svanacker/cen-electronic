@@ -401,6 +401,7 @@
     <ClInclude Include="drivers\driverList.h" />
     <ClInclude Include="drivers\driverStreamListener.h" />
     <ClInclude Include="drivers\driverTransmitter.h" />
+    <ClInclude Include="drivers\file\eeprom\eepromFile.h" />
     <ClInclude Include="drivers\motion\motionDriver.h" />
     <ClInclude Include="drivers\motion\trajectoryDriver.h" />
     <ClInclude Include="drivers\motor\motorDriver.h" />

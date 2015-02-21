@@ -96,7 +96,8 @@ void internalSavePidParameter(unsigned pidIndex, unsigned int dataIndex, signed 
         return;
     }
     unsigned realIndex = getRealDataIndex(pidIndex, dataIndex);
-    pidPersistenceEeprom->eepromWriteInt(pidPersistenceEeprom, realIndex, value);
+	// TODO : char / int problem
+    pidPersistenceEeprom->eepromWriteChar(pidPersistenceEeprom, realIndex, value);
 }
 
 /**
@@ -111,7 +112,8 @@ signed int internalLoadPidParameter(unsigned pidIndex, unsigned int dataIndex) {
     }
     unsigned realIndex = getRealDataIndex(pidIndex, dataIndex);
 
-    signed int result = pidPersistenceEeprom->eepromReadInt(pidPersistenceEeprom, realIndex);
+	// TODO : char / int problem
+    char result = pidPersistenceEeprom->eepromReadChar(pidPersistenceEeprom, realIndex);
     if (result == ERASED_VALUE_EEPROM) {
         result = DEFAULT_EEPROM_VALUES[realIndex];
     }

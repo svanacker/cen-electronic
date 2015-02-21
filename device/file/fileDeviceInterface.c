@@ -9,12 +9,24 @@ const char* getFileDeviceName(void) {
 }
 
 int deviceFileGetInterface(char header, DeviceInterfaceMode mode, bool fillDeviceArgumentList){
-    if (header == COMMAND_SHOW_LIST_FILE ) {
+	if (header == COMMAND_CREATE_FILE_SYSTEM) {
+		if (fillDeviceArgumentList) {
+			setFunctionNoArgumentAndNoResult("Create File System");
+		}
+		return 0;
+	}
+	else if (header == COMMAND_GET_FREE_SPACE) {
+		if (fillDeviceArgumentList) {
+			setFunction("Get Free Space", 0, 1);
+			setArgumentUnsignedHex4(0, "result");
+		}
+		return commandLengthValueForMode(mode, 0, 4);
+	}
+	else if (header == COMMAND_SHOW_LIST_FILE ) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Show File List");
         }
         return 0;
-
     } else if (header == COMMAND_SHOW_CONTENT_FILE) {
         if (fillDeviceArgumentList) {
             setFunction("Show File Content", 1, 0);

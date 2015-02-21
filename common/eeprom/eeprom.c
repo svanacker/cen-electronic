@@ -10,8 +10,8 @@
 
 void initEeprom(Eeprom* eeprom_,
                 long maxIndex,
-                EepromWriteIntFunction* eepromWriteInt,
-                EepromReadIntFunction* eepromReadInt,
+                EepromWriteCharFunction* eepromWriteChar,
+                EepromReadCharFunction* eepromReadChar,
                 EepromWriteBlockFunction* eepromWriteBlock,
                 EepromReadBlockFunction* eepromReadBlock,
                 int* object) {
@@ -20,8 +20,8 @@ void initEeprom(Eeprom* eeprom_,
         return;
     }            
     eeprom_->maxIndex = maxIndex;
-    eeprom_->eepromWriteInt = eepromWriteInt;
-    eeprom_->eepromReadInt = eepromReadInt;
+    eeprom_->eepromWriteChar = eepromWriteChar;
+    eeprom_->eepromReadChar = eepromReadChar;
     eeprom_->eepromWriteBlock = eepromWriteBlock;
     eeprom_->eepromReadBlock = eepromReadBlock;
     eeprom_->object = object;
@@ -37,7 +37,7 @@ long getMaxIndex(Eeprom* eeprom_) {
 }
 
 bool isEepromInitialized(Eeprom* eeprom_) {
-    if (eeprom_->eepromWriteInt == NULL || eeprom_->eepromReadInt == NULL) {
+    if (eeprom_->eepromWriteChar == NULL || eeprom_->eepromReadChar == NULL) {
         return false;
     }
     return true;

@@ -93,6 +93,9 @@
 #include "../../../drivers/dispatcher/driverDataDispatcherList.h"
 #include "../../../drivers/dispatcher/localDriverDataDispatcher.h"
 #include "../../../drivers/dispatcher/i2cDriverDataDispatcher.h"
+
+#include "../../../drivers/file/eeprom/eepromFile.h"
+
 #include "../../../drivers/test/testDriver.h"
 
 #include "../../../robot/match/startMatchDetector.h"
@@ -232,6 +235,7 @@ void runMainBoardPC(void) {
 
 	// EEPROM
 	initEepromPc(&eeprom);
+	initEepromFile(&eeprom);
 
     // I2C Debug
     initI2CDebugBuffers(&i2cMasterDebugInputBuffer,

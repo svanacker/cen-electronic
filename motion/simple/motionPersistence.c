@@ -26,8 +26,8 @@ signed int internalLoadMotionParameterItem(unsigned long dataIndex) {
         // TODO : WriteError
         return 0;
     }
-    signed int result = motionPersistenceEeprom->eepromReadInt(motionPersistenceEeprom, dataIndex);
-    if (result == 0xFFFF) {
+    char result = motionPersistenceEeprom->eepromReadChar(motionPersistenceEeprom, dataIndex);
+    if (result == 0xFF) {
         result = DEFAULT_EEPROM_VALUES[dataIndex - EEPROM_MOTION_START_INDEX];
     }
     return result;
@@ -50,8 +50,9 @@ void internalLoadMotionParameter(unsigned char motionType) {
 void internalSaveMotionParameter(unsigned char motionType) {
     MotionParameter* motionParameter = getDefaultMotionParameters(motionType);
     unsigned motionBlockIndexShift = motionType * EEPROM_MOTION_TYPE_BLOCK_SIZE;
-    motionPersistenceEeprom->eepromWriteInt(motionPersistenceEeprom, EEPROM_MOTION_START_INDEX + motionBlockIndexShift, (int) motionParameter->a);
-    motionPersistenceEeprom->eepromWriteInt(motionPersistenceEeprom, EEPROM_MOTION_START_INDEX + motionBlockIndexShift + 1, (int) motionParameter->speed);
+	// TODO : Be careful with int / char value
+    motionPersistenceEeprom->eepromWriteChar(motionPersistenceEeprom, EEPROM_MOTION_START_INDEX + motionBlockIndexShift, (int) motionParameter->a);
+    motionPersistenceEeprom->eepromWriteChar(motionPersistenceEeprom, EEPROM_MOTION_START_INDEX + motionBlockIndexShift + 1, (int) motionParameter->speed);
 }
 
 // Interface Implementation

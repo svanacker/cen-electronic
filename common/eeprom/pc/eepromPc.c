@@ -8,49 +8,49 @@
 
 #include "../../../common/error/error.h"
 #include "../../../common/io/buffer.h"
+#include "../../../common/io/outputStream.h"
 #include "../../../common/io/printWriter.h"
+#include "../../../common/io/reader.h"
 
 #define EEPROM_PC_MAX_INDEX        0xFFFF
 
-static signed int eepromPc[EEPROM_PC_MAX_INDEX + 1];
+static char eepromPc[EEPROM_PC_MAX_INDEX + 1];
 
-void eepromPcWriteInt(Eeprom* eeprom_, unsigned long index, signed int value) {
+void eepromPcWriteChar(Eeprom* eeprom_, unsigned long index, char value) {
     if (index > EEPROM_PC_MAX_INDEX) {
         writeError(EEPROM_OUT_OF_BOUNDS);
     }
     eepromPc[index] = value;
 }
 
-signed int eepromReadInt(Eeprom* eeprom_, unsigned long index) {
+char eepromPcReadChar(Eeprom* eeprom_, unsigned long index) {
     if (index > EEPROM_PC_MAX_INDEX) {
         writeError(EEPROM_OUT_OF_BOUNDS);
         return 0;
     }
-    signed int result = eepromPc[index];
+    char result = eepromPc[index];
     return result;
 }
 
-void eepromReadBlock(Eeprom* eeprom_, unsigned long index, unsigned int length, Buffer* buffer) {
+void eepromPcReadBlock(Eeprom* eeprom_, unsigned long index, unsigned int length, Buffer* buffer) {
     unsigned long i;
     for (i = index; i < index + length; i++) {
-        signed int value = eepromReadInt(eeprom_, i);
-        // TODO
-        writeError(UNIMPLETEMENTED_EXCEPTION);
+        char value = eepromPcReadChar(eeprom_, i);
+		append(getOutputStream(buffer), value);
     }
 }
 
-void eepromWriteBlock(Eeprom* eeprom_, unsigned long index, unsigned int length, Buffer* buffer) {
+void eepromPcWriteBlock(Eeprom* eeprom_, unsigned long index, unsigned int length, Buffer* buffer) {
     unsigned long i;
     for (i = index; i < index + length; i++) {
-        signed int value = eepromReadInt(eeprom_, i);
-        // TODO
-        writeError(UNIMPLETEMENTED_EXCEPTION);
+		InputStream* inputStream = getInputStream(buffer);
+		char value = readBinaryChar(inputStream);
+		eepromPcWriteChar(eeprom_, i, value);
     }
-
 }
 
 void initEepromPc(Eeprom* eepromPc) {
-    initEeprom(eepromPc, EEPROM_PC_MAX_INDEX, eepromPcWriteInt, eepromReadInt, eepromReadBlock, eepromWriteBlock, NULL);
+    initEeprom(eepromPc, EEPROM_PC_MAX_INDEX, eepromPcWriteChar, eepromPcReadChar, eepromPcReadBlock, eepromPcWriteBlock, NULL);
 }
 
 /**
@@ -59,18 +59,35 @@ void initEepromPc(Eeprom* eepromPc) {
 */
 void dumpEeprom(Eeprom* eeprom_) {
 	HANDLE handleFile;
-	char DataBuffer[] = "This is some test data to write to the file.";
-	DWORD dwBytesToWrite = (DWORD)strlen(DataBuffer);
+
+	long maxIndex = eeprom_->maxIndex;
+
+	char* dataBuffer = malloc(maxIndex);
+	char* currentDataBuffer = dataBuffer;
+	for (int i = 0; i < maxIndex; i++) {
+		char value = eeprom_->eepromReadChar(eeprom_, i);
+		*currentDataBuffer = value;
+		currentDataBuffer++;
+	}
+
+	// char* DataBuffer = "This is some test data to write to the file.";
+	DWORD dwBytesToWrite = (DWORD)maxIndex;
 	DWORD dwBytesWritten = 0;
 	BOOL bErrorFlag = FALSE;
 
-	handleFile = CreateFile(TEXT("c:/PERSO/test.txt"),                // name of the write
+	handleFile = CreateFile(TEXT("c:/PERSO/eeprom.hex"),                // name of the write
 		GENERIC_WRITE,          // open for writing
 		0,                      // do not share
 		NULL,                   // default security
-		CREATE_NEW,             // create new file only
+		TRUNCATE_EXISTING,             // create new file only
 		FILE_ATTRIBUTE_NORMAL,  // normal file
 		NULL);                  // no attr. template
+
+	if ((handleFile == NULL) && (GetLastError() == ERROR_FILE_NOT_FOUND))
+	{
+		handleFile = CreateFile(TEXT("c:/PERSO/eeprom.hex"), GENERIC_WRITE, 0, NULL, CREATE_NEW,
+			FILE_ATTRIBUTE_NORMAL, NULL);
+	}
 
 	if (handleFile == INVALID_HANDLE_VALUE)
 	{
@@ -82,7 +99,7 @@ void dumpEeprom(Eeprom* eeprom_) {
 
 	bErrorFlag = WriteFile(
 		handleFile,           // open file handle
-		DataBuffer,      // start of data to write
+		dataBuffer,      // start of data to write
 		dwBytesToWrite,  // number of bytes to write
 		&dwBytesWritten, // number of bytes that were written
 		NULL);            // no overlapped structure

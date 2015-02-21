@@ -5,11 +5,11 @@
 
 #include "../../common/error/error.h"
 
-void nullEepromWriteInt(Eeprom* eeprom_, unsigned long index, signed int value) {
+void nullEepromWriteChar(Eeprom* eeprom_, unsigned long index, char value) {
     // DO NOTHING
 }
 
-signed int nullEepromReadInt(Eeprom* eeprom_, unsigned long index) {
+char nullEepromReadChar(Eeprom* eeprom_, unsigned long index) {
     return 0;
 }
 
@@ -22,5 +22,5 @@ void nullEepromWriteBlock(Eeprom* eeprom_, unsigned long index, unsigned int len
 }
 
 void initNullEeprom(Eeprom* nullEeprom) {
-    initEeprom(nullEeprom, 35535, nullEepromWriteInt, nullEepromReadInt, nullEepromWriteBlock, nullEepromReadBlock, NULL);
+    initEeprom(nullEeprom, 35535, nullEepromWriteChar, nullEepromReadChar, nullEepromWriteBlock, nullEepromReadBlock, NULL);
 }

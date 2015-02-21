@@ -568,6 +568,12 @@
     <Filter Include="Source Files\device\file">
       <UniqueIdentifier>{59e30a54-3c41-4153-9152-0dc2b9f0cdec}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\drivers\file">
+      <UniqueIdentifier>{323d1e1d-0c7e-462b-8c8e-65ab0f495b27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\drivers\file\eeprom">
+      <UniqueIdentifier>{49eb4609-a65f-44dd-b1d0-94f1c4b9a8b2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -1822,6 +1828,9 @@
     </ClInclude>
     <ClInclude Include="device\file\fileDeviceInterface.h">
       <Filter>Header Files\device\file</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\file\eeprom\eepromFile.h">
+      <Filter>Header Files\drivers\file\eeprom</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

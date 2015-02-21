@@ -1,3 +1,5 @@
+#include "eepromFile.h"
+
 // Implementation of FAT Management for Eeprom with FATFS
 
 #include "../../../common/eeprom/eeprom.h"
@@ -8,7 +10,7 @@
 #include "../../../external/fatfs/ff.h"
 #include "../../../external/fatfs/diskio.h"
 
-#define EEPROM_DRIVE_NUMBER 0
+static Eeprom* eeprom_;
 
 /**
  * Returns a DWORD value with all information from the Clock.
@@ -39,11 +41,11 @@ DSTATUS disk_status (BYTE physicalDriveNumber) {
     DSTATUS result;
 
     if (physicalDriveNumber == EEPROM_DRIVE_NUMBER) {
-		result = 0; // TODO ATA_disk_status();
+        result = 0; // TODO ATA_disk_status();
 
-		return result;
+        return result;
     }   
-	return STA_NOINIT;
+    return STA_NOINIT;
 }
 
 /**
@@ -57,14 +59,14 @@ DSTATUS disk_status (BYTE physicalDriveNumber) {
 * - STA_PROTECT Indicates that the medium is write protected. This is always cleared on the drives without write protect feature. Not valid if no medium in the drive.
 */
 DSTATUS disk_initialize (BYTE physicalDriveNumber) {
-	DSTATUS result;
+    DSTATUS result;
 
     if (physicalDriveNumber == EEPROM_DRIVE_NUMBER) {
-		result = 0; // ATA_disk_initialize();
+        result = 0; // ATA_disk_initialize();
 
-		return result;
+        return result;
     }   
-	return STA_NOINIT;
+    return STA_NOINIT;
 }
 
 
@@ -81,18 +83,20 @@ DSTATUS disk_initialize (BYTE physicalDriveNumber) {
  * - RES_PARERR The command code or parameter is invalid.
  * - RES_NOTRDY The device has not been initialized.
  */ 
-DRESULT disk_read (BYTE physicalDriveNumber, BYTE *buffer, DWORD sector,UINT count) {
+DRESULT disk_read (BYTE physicalDriveNumber, BYTE *buffer, DWORD sector, UINT count) {
     if (physicalDriveNumber == EEPROM_DRIVE_NUMBER) {
-		// translate the arguments here
+        long base_index = sector * EEPROM_SECTOR_SIZE;
+        unsigned char i;
+        for (i = 0; i < count; i++) {
+			// TODO : Improve by using call to eepromWriteBlock instead of using WriteRead !
+            char value = eeprom_->eepromReadChar(eeprom_, base_index + i);
+            *buffer = value;
+            buffer++;
+        }
+        return RES_OK;
+    }
 
-		// result = ATA_disk_read(buff, sector, count);
-
-		// translate the reslut code here
-
-		return RES_OK;
-	}
-
-	return RES_PARERR;
+    return RES_PARERR;
 }
 
 /**
@@ -109,17 +113,20 @@ DRESULT disk_read (BYTE physicalDriveNumber, BYTE *buffer, DWORD sector,UINT cou
  * - RES_PARERR The command code or parameter is invalid.
  * - RES_NOTRDY The device has not been initialized.
  */
-DRESULT disk_write (BYTE physicalDriveNumber, const BYTE *buff, DWORD sector, UINT count) {
+DRESULT disk_write (BYTE physicalDriveNumber, const BYTE *buffer, DWORD sector, UINT count) {
     if (physicalDriveNumber == EEPROM_DRIVE_NUMBER) {
-		// translate the arguments here
+        long base_index = sector * EEPROM_SECTOR_SIZE;
+        long i;
+        for (i = 0; i < count; i++) {
+            char value = *buffer;
+            buffer++; 
+            // TODO : Improve by using call to eepromWriteBlock instead of using WriteInt !
+            eeprom_->eepromWriteChar(eeprom_, base_index + i, value);
+        }
 
-		// result = ATA_disk_write(buff, sector, count);
-
-		// translate the result code here
-
-		return RES_OK;
+        return RES_OK;
     }   
-	return RES_PARERR;
+    return RES_PARERR;
 }
 
 /**
@@ -136,7 +143,7 @@ DRESULT disk_write (BYTE physicalDriveNumber, const BYTE *buff, DWORD sector, UI
  * - RES_NOTRDY The device has not been initialized.
  */
 DRESULT disk_ioctl (BYTE physicalDriveNumber, BYTE cmd, void *buffer) {
-	if (physicalDriveNumber == EEPROM_DRIVE_NUMBER) {
+    if (physicalDriveNumber == EEPROM_DRIVE_NUMBER) {
         // Make sure that the device has finished pending write process. 
         // If the disk I/O module has a write back cache, the dirty buffers must be written back to the media immediately.
         // Nothing to do for this command if each write operation to the media is completed within the disk_write function.
@@ -149,12 +156,11 @@ DRESULT disk_ioctl (BYTE physicalDriveNumber, BYTE cmd, void *buffer) {
         // This command is used by only f_mkfs and f_fdisk function to determine the volume/partition size 
         // to be created. Required at _USE_MKFS == 1 or _MULTI_PARTITION == 1.
         else if (cmd == GET_SECTOR_COUNT) {
-            // MUST NOT BE CALLED
-            writeError(EEPROM_FILE_ILLEGAL_CALL);
-            return RES_PARERR;
+            // writeError(EEPROM_FILE_ILLEGAL_CALL);
+			return EEPROM_SECTOR_COUNT;
         }
         else if (cmd == GET_SECTOR_SIZE) {
-            return 512;
+            return EEPROM_SECTOR_SIZE;
         }
         // DOCUMENTATION : http://elm-chan.org/fsw/ff/en/dioctl.html
         // !! Required at _USE_MKFS == 1 !!
@@ -178,7 +184,10 @@ DRESULT disk_ioctl (BYTE physicalDriveNumber, BYTE cmd, void *buffer) {
             writeError(EEPROM_FILE_ILLEGAL_CALL);
             return RES_OK;
         }
-	}
+    }
     return RES_PARERR;
 }
 
+void initEepromFile(Eeprom* eepromParam) {
+	eeprom_ = eepromParam;
+}
