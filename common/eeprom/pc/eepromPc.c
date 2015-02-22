@@ -12,7 +12,8 @@
 #include "../../../common/io/printWriter.h"
 #include "../../../common/io/reader.h"
 
-#define EEPROM_PC_MAX_INDEX        0x03FFFF
+// #define EEPROM_PC_MAX_INDEX        0x03FFFF
+#define EEPROM_PC_MAX_INDEX        0x00FFFF
 
 static char eepromPc[EEPROM_PC_MAX_INDEX + 1];
 
