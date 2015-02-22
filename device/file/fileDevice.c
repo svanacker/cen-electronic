@@ -12,6 +12,7 @@
 #include "../../device/device.h"
 #include "../../drivers/file/eeprom/eepromFile.h"
 
+#include "../../external/fatfs/diskio.h"
 #include "../../external/fatfs/ff.h"
 
 void deviceFileInit(void) {
@@ -31,30 +32,31 @@ void deviceFileHandleRawData(char commandHeader, InputStream* inputStream, Outpu
 		FATFS fs;
 		FIL fil;       /* File object */
 		FRESULT res;   /* API result code */
-		UINT bw;       /* Bytes written */
+		UINT bw = 0;       /* Bytes written */
 
-		// f_mkfs(EEPROM_DRIVE_NUMBER);
+		// Register work area (do not care about error)
+		res = f_mount(&fs, "", 0);
 
-		/* Register work area (do not care about error) */
-		f_mount(&fs, "", 0);
-
-		/* Create FAT volume with default cluster size */
+		// Create FAT volume with default cluster size
 		res = f_mkfs("", 0, 0);
-		if (res) {
 
-			/* Create a file as new */
+		if (res == RES_OK) {
+
+			// Create a file as new
 			res = f_open(&fil, "hello.txt", FA_CREATE_NEW | FA_WRITE);
 		}
-		if (res) {
+		if (res == RES_OK) {
 
-			/* Write a message */
+			// Write a message
 			f_write(&fil, "Hello, World!\r\n", 15, &bw);
 		}
+		
 		if (bw != 15) {
-			/* Close the file */
+			// Close the file
 			f_close(&fil);
 		}
-		/* Unregister work area */
+		f_close(&fil);
+		// Unregister work area
 		f_mount(0, "", 0);
 	}
 	else if (commandHeader == COMMAND_GET_FREE_SPACE) {
