@@ -71,6 +71,9 @@
 #define        ITERATION_OFF            20000000L
 #define        ITERATION_ON             40000000L
 
+// I2C Bus
+static I2cBus airConditioningBoardI2cBus;
+
 /**
  * Device list.
  */
@@ -97,8 +100,8 @@ static Buffer i2cDebugSlaveInputBuffer;
 static char i2cDebugSlaveOutputBufferArray[AIR_CONDITIONING_BOARD_I2C_OUTPUT_BUFFER_LENGTH];
 static Buffer i2cDebugSlaveOutputBuffer;
 
-// logs
-static LogHandler serialLogHandler;
+// Logs
+static LogHandler logHandlerListArray[AIR_CONDITIONING_LOG_HANDLER_LIST_LENGTH];
 
 // devices
 static Device deviceListArray[AIR_CONDITIONING_BOARD_DEVICE_LENGTH];
@@ -161,12 +164,13 @@ int main(void) {
     initTimerList(&timerListArray, AIR_CONDITIONING_BOARD_TIMER_LENGTH);
 
     // Init the logs
-    initLog(DEBUG);
-    addLogHandler(&serialLogHandler, "UART", &debugOutputStream, DEBUG);
+    initLogs(DEBUG, &logHandlerListArray, AIR_CONDITIONING_LOG_HANDLER_LIST_LENGTH);
+    addLogHandler("UART", &debugOutputStream, DEBUG);
     appendString(getOutputStreamLogger(INFO), getPicName());
     println(getOutputStreamLogger(INFO));
 
     // I2C
+    airConditioningBoardI2cBus.portIndex = I2C_BUS_PORT_1;
     openSlaveI2cStreamLink(&i2cSerialStreamLink,
                             &i2cSlaveInputBuffer,
                             &i2cSlaveInputBufferArray,
@@ -174,6 +178,7 @@ int main(void) {
                             &i2cSlaveOutputBuffer,
                             &i2cSlaveOutputBufferArray,
                             AIR_CONDITIONING_BOARD_I2C_OUTPUT_BUFFER_LENGTH,
+                            &airConditioningBoardI2cBus,
                             AIR_CONDITIONING_BOARD_I2C_ADDRESS
                         );
 

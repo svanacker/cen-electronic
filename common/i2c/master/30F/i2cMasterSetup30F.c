@@ -14,7 +14,7 @@
 
 static bool initialized = false;
 
-void i2cMasterInitialize(void) {
+void i2cMasterInitialize(I2cBus* i2cBus) {
     // Avoid more than one initialization
     if (initialized) {
         appendString(getOutputStreamLogger(DEBUG), "I2C Master already initialized\n");
@@ -49,9 +49,9 @@ void i2cMasterInitialize(void) {
     initialized = true;
 }
 
-void i2cMasterFinalize(void) {
+void i2cMasterFinalize(I2cBus* i2cBus) {
     if (initialized) {
         initialized = false;
-        portableCloseI2C();
+        portableCloseI2C(i2cBus);
     }
 }

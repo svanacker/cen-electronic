@@ -23,4 +23,7 @@
 // Timer
 #define AIR_CONDITIONING_BOARD_TIMER_LENGTH                     1
 
+// Logs
+#define AIR_CONDITIONING_LOG_HANDLER_LIST_LENGTH                1
+
 #endif
