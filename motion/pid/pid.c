@@ -30,6 +30,8 @@
 
 #include "../extended/bspline.h"
 
+#include "detectedMotionType.h"
+
 #include "../position/coders.h"
 #include "../position/coderErrorComputer.h"
 #include "../simple/motion.h"
@@ -120,9 +122,9 @@ Pid* getPID(int index, unsigned int pidMode) {
     return result;
 }
 
-unsigned int updateMotors(void) {
+enum DetectedMotionType updateMotors(void) {
     if (!mustReachPosition) {
-        return NO_POSITION_TO_REACH;
+        return DETECTED_MOTION_TYPE_NO_POSITION_TO_REACH;
     }
     if (mustPidBeRecomputed()) {
         float pidTime = (float) getPidTime();
@@ -156,8 +158,8 @@ unsigned int updateMotors(void) {
         setMotorSpeeds((int)leftMotorSpeed, (int) rightMotorSpeed);
 
         // If we maintain the position, we consider that we must maintain indefinitely the position
-        if (thetaInst->motionType == MOTION_TYPE_MAINTAIN_POSITION) {
-            return POSITION_TO_MAINTAIN;
+        if (thetaInst->motionParameterType == MOTION_PARAMETER_TYPE_MAINTAIN_POSITION) {
+            return DETECTED_MOTION_TYPE_POSITION_TO_MAINTAIN;
         }
 
         MotionEndDetectionParameter* endDetectionParameter = getMotionEndDetectionParameter();
@@ -178,11 +180,11 @@ unsigned int updateMotors(void) {
 
         if (isThetaEnd && isAlphaEnd) {
             if (isThetaBlocked || isAlphaBlocked) {
-                return POSITION_BLOCKED_WHEELS;
+                return DETECTED_MOTION_TYPE_POSITION_BLOCKED_WHEELS;
             } else {
-                return POSITION_REACHED;
+                return DETECTED_MOTION_TYPE_POSITION_REACHED;
             }
         }
     }
-    return POSITION_IN_PROGRESS;
+    return DETECTED_MOTION_TYPE_POSITION_IN_PROGRESS;
 }

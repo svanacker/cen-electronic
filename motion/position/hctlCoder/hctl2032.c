@@ -4,6 +4,9 @@
 #include "../../../common/io/outputStream.h"
 #include "../../../common/io/printWriter.h"
 
+#include "../../../motion/position/coderType.h"
+
+
 #ifdef PROG_32
     #include "32/hctl2032_pindefinition32.h"
 #else
@@ -69,13 +72,13 @@ void initHCTL2032() {
 /**
  * Get the struct of a coder.
  */
-Coder* getCoder(int coderIndex) {
-    Coder* result = &coders[coderIndex];
+Coder* getCoder(enum CoderType coderType) {
+    Coder* result = &coders[coderType];
     return result;
 }
 
-signed long hctl_getCoderValue(int coderIndex) {
-    Coder* localCoder = getCoder(coderIndex);
+signed long hctl_getCoderValue(enum CoderType coderType) {
+    Coder* localCoder = getCoder(coderType);
     return localCoder->value;
 }
 

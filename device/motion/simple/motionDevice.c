@@ -21,9 +21,10 @@
 #include "../../../device/motion/position/trajectoryDevice.h"
 
 #include "../../../motion/simple/motion.h"
+#include "../../../motion/simple/motionParameterType.h"
 #include "../../../motion/simple/motionPersistence.h"
 
-#include "../../../motion/pid/motionType.h"
+#include "../../../motion/pid/detectedMotionType.h"
 #include "../../../motion/pid/pidType.h"
 #include "../../../motion/pid/pidTimer.h"
 
@@ -227,19 +228,19 @@ void deviceMotionHandleRawData(char commandHeader,
     }        // PARAMETERS
     else if (commandHeader == COMMAND_GET_MOTION_PARAMETERS) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_GET_MOTION_PARAMETERS);
-        enum MotionType motionType = (enum MotionType) readHex2(inputStream);
+        enum MotionParameterType motionParameterType = (enum MotionParameterType) readHex2(inputStream);
 
-        MotionParameter* motionParameter = getDefaultMotionParameters(motionType);
+        MotionParameter* motionParameter = getDefaultMotionParameters(motionParameterType);
         appendHex2(outputStream, (int) motionParameter->a);
         appendHex2(outputStream, (int) motionParameter->speed);
 
     } else if (commandHeader == COMMAND_SET_MOTION_PARAMETERS) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_SET_MOTION_PARAMETERS);
-        enum MotionType motionType = (enum MotionType) readHex2(inputStream);
+        enum MotionParameterType motionParameterType = (enum MotionParameterType) readHex2(inputStream);
         float a = (float) readHex2(inputStream);
         float speed = (float) readHex2(inputStream);
 
-        MotionParameter* motionParameter = getDefaultMotionParameters(motionType);
+        MotionParameter* motionParameter = getDefaultMotionParameters(motionParameterType);
         motionParameter->a = a;
         motionParameter->speed = speed;
 

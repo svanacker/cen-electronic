@@ -2,7 +2,8 @@
 #define MOTION_H
 
 #include <stdbool.h>
-#include "../../motion/pid/motionType.h"
+#include "motionParameterType.h"
+#include "../pid/detectedMotionType.h"
 
 /**
  * Structure defining default Motion Parameters.
@@ -14,33 +15,10 @@ typedef struct {
     float speed;
 } MotionParameter;
 
-#define MOTION_PARAMETERS_COUNT            4
-
-/**
- * The robot goes forward or backward.
- */
-#define MOTION_TYPE_FORWARD_OR_BACKWARD    0x00
-
-/**
- * The robot do a rotation.
- */
-#define MOTION_TYPE_ROTATION            0x01
-
-/**
- * The robot do a rotation with One Wheel
- */
-#define MOTION_TYPE_ROTATION_ONE_WHEEL    0x02
-
-/**
- * The robot must maintain a position.
- */
-#define MOTION_TYPE_MAINTAIN_POSITION    0x03
-
-
 // SPEED FACTOR
 
 #define    MOTION_SPEED_FACTOR_MAX                15
-#define    MOTION_SPEED_FACTOR_HIGH            10
+#define    MOTION_SPEED_FACTOR_HIGH               10
 #define    MOTION_SPEED_FACTOR_NORMAL            7
 #define    MOTION_SPEED_FACTOR_LOW                4
 #define    MOTION_SPEED_FACTOR_MIN                1
@@ -58,19 +36,19 @@ typedef struct {
 /**
  * Returns Parameters for Motion.
  */
-MotionParameter* getDefaultMotionParameters(enum MotionType motionType);
+MotionParameter* getDefaultMotionParameters(enum MotionParameterType motionParameterType);
 
 // HANDLING FUNCTION
 
 /**
  * Handle function so the robot is aware of asking.
  */
-unsigned char handleInstructionAndMotion(void);
+enum DetectedMotionType handleInstructionAndMotion(void);
 
 /**
  * Wait after the end of a position, or a position which is maintained.
  */
-unsigned char handleAndWaitFreeMotion(void);
+enum DetectedMotionType handleAndWaitFreeMotion(void);
 
 /**
  * Handle and wait after a delay of milliseconds.
@@ -230,11 +208,11 @@ void squareCalibration(unsigned char type, float lengthInMM);
  * @param right instruction for right wheel
  * @return a type of Motion (Ex: MOTION_TYPE_ROTATION)
  */
-unsigned char getMotionType(float left, float right);
+enum MotionParameterType getMotionParameterType(float left, float right);
 
 /**
  * Determines the type of pid which must be applied depending of the motionType.
  */
-unsigned char getPidType(enum MotionType motionType);
+enum PidType getPidType(enum MotionParameterType motionParameterType);
 
 #endif

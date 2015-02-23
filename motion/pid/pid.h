@@ -12,10 +12,12 @@
 
 #include "../../motion/pid/instructionType.h"
 #include "../../motion/pid/motionEndDetection.h"
-#include "../../motion/pid/motionType.h"
+#include "../../motion/pid/detectedMotionType.h"
 #include "../../motion/pid/pidType.h"
 #include "../../motion/pid/pidTimer.h"
 #include "../../motion/pid/profileType.h"
+
+#include "../../motion/simple/motionParameterType.h"
 
 #include "../../robot/robotConstants.h"
 
@@ -155,8 +157,8 @@ typedef struct MotionInstruction {
     float p2;
     /** The type of the trajectory (TRAPEZE / TRIANGLE) */
     enum ProfileType profileType;
-    /** The type of motion (GO, ROTATION, MAINTAIN_POSITION). */
-    enum MotionType motionType;
+    /** The type of MotionParameterType (GO, ROTATION, MAINTAIN_POSITION). */
+    enum MotionParameterType motionParameterType;
     /** The type of pid which must be used. */
     enum PidType pidType;
 } MotionInstruction;

@@ -1,11 +1,7 @@
 #ifndef CODERS_H
 #define CODERS_H
 
-/** The number of coders which are managed. */
-#define MAX_CODERS 2
-
-#define CODER_LEFT 0
-#define CODER_RIGHT 1
+#include "coderType.h"
 
 /** The index of timer used. */
 #define CODER_TIMER_INDEX 0
@@ -20,7 +16,7 @@ void updateCoders(void);
  * @param index the index of the coder
  * @return the coder value
  */
-signed long getCoderValue(int index);
+signed long getCoderValue(enum CoderType coderType);
 
 /**
  * Clears the coders values.

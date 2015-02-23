@@ -13,9 +13,11 @@
 
 #include "../../common/math/cenMath.h"
 
+#include "motionParameterType.h"
+
 #include "../extended/bsplineDebug.h"
 
-#include "../pid/motionType.h"
+#include "../pid/detectedMotionType.h"
 #include "../pid/pid.h"
 #include "../pid/pidType.h"
 #include "../pid/pidDebug.h"
@@ -38,8 +40,8 @@
 /** The parameters for motion. */
 static MotionParameter defaultMotionParameters[MOTION_PARAMETERS_COUNT];
 
-MotionParameter* getDefaultMotionParameters(enum MotionType motionType) {
-    return &defaultMotionParameters[motionType];
+MotionParameter* getDefaultMotionParameters(enum MotionParameterType motionParameterType) {
+    return &defaultMotionParameters[motionParameterType];
 }
 
 // MAIN FUNCTIONS
@@ -66,8 +68,7 @@ void maintainPosition(void) {
     gotoPosition(0.0f, 0.0f, 0.0f, 0.0f);
 }
 
-// Returns an enum with POSITION_TYPE
-unsigned char handleInstructionAndMotion(void) {
+enum DetectedMotionType handleInstructionAndMotion(void) {
     updateCoders();
     updateTrajectory();
 
@@ -76,7 +77,7 @@ unsigned char handleInstructionAndMotion(void) {
 
     // MANDATORY
 
-    unsigned char value = updateMotors();
+    enum DetectedMotionType result = updateMotors();
 
     /* TODO https://github.com/svanacker/cen-electronic/issues/28
     Buffer* buffer = getI2CSlaveOutputBuffer();
@@ -103,22 +104,22 @@ unsigned char handleInstructionAndMotion(void) {
         stopPosition(true);
     }
     */
-    return value;
+    return result;
 }
 
-unsigned char handleAndWaitFreeMotion(void) {
-    unsigned char value = -1;
+enum DetectedMotionType handleAndWaitFreeMotion(void) {
+    enum DetectedMotionType result = DETECTED_MOTION_TYPE_NO_POSITION_TO_REACH;
     while (true) {
-        value = handleInstructionAndMotion();
+        result = handleInstructionAndMotion();
         // POSITION_BLOCKED_WHEELS is not necessary because we block the position after
-        if (value == NO_POSITION_TO_REACH || value == POSITION_TO_MAINTAIN || value == POSITION_OBSTACLE) {
+        if (result == DETECTED_MOTION_TYPE_NO_POSITION_TO_REACH || result == DETECTED_MOTION_TYPE_POSITION_TO_MAINTAIN || result == DETECTED_MOTION_TYPE_POSITION_OBSTACLE) {
             // if (value == NO_POSITION_TO_REACH || value == POSITION_OBSTACLE) {
             appendString(getDebugOutputStreamLogger(), "handleAndWaitFreeMotion->break=");
-            appendDec(getDebugOutputStreamLogger(), value);
+            appendDec(getDebugOutputStreamLogger(), result);
             break;
         }
     }
-    return value;
+    return result;
 }
 
 void handleAndWaitMSec(unsigned long delayMs) {
@@ -130,24 +131,24 @@ void handleAndWaitMSec(unsigned long delayMs) {
     }
 }
 
-unsigned char getMotionType(float left, float right) {
+enum MotionParameterType getMotionParameterType(float left, float right) {
     if (floatEqualsZero(left) && floatEqualsZero(right)) {
-        return MOTION_TYPE_MAINTAIN_POSITION;
+        return MOTION_PARAMETER_TYPE_MAINTAIN_POSITION;
     } else if (left <= 0.0f && right >= 0.0f) {
-        return MOTION_TYPE_ROTATION;
+        return MOTION_PARAMETER_TYPE_ROTATION;
     } else if (left >= 0.0f && right <= 0.0f) {
-        return MOTION_TYPE_ROTATION;
+        return MOTION_PARAMETER_TYPE_ROTATION;
     } else {
-        return MOTION_TYPE_FORWARD_OR_BACKWARD;
+        return MOTION_PARAMETER_TYPE_FORWARD_OR_BACKWARD;
     }
 }
 
-unsigned char getPidType(enum MotionType motionType) {
-    if (motionType == MOTION_TYPE_FORWARD_OR_BACKWARD) {
+enum PidType getPidType(enum MotionParameterType motionParameterType) {
+    if (motionParameterType == MOTION_PARAMETER_TYPE_FORWARD_OR_BACKWARD) {
         return PID_TYPE_GO_INDEX;
-    } else if (motionType == MOTION_TYPE_ROTATION) {
+    } else if (motionParameterType == MOTION_PARAMETER_TYPE_ROTATION) {
         return PID_TYPE_ROTATE_INDEX;
-    } else if (motionType == MOTION_TYPE_MAINTAIN_POSITION) {
+    } else if (motionParameterType == MOTION_PARAMETER_TYPE_MAINTAIN_POSITION) {
         return PID_TYPE_MAINTAIN_POSITION_INDEX;
     }
     // Default value, must not enter here
@@ -168,16 +169,16 @@ void gotoPosition(float left, float right, float a, float speed) {
     clearPidTime();
 
     // determine the type of motion
-    enum MotionType motionType = getMotionType(left, right);
-    // determine the pidType to execute motionType
-    enum PidType pidType = getPidType(motionType);
+    enum MotionParameterType motionParameterType = getMotionParameterType(left, right);
+    // determine the pidType to execute motionParameterType
+    enum PidType pidType = getPidType(motionParameterType);
 
 
     // Alpha / Theta
     float theta = computeTheta(left, right);
     float alpha = computeAlpha(left, right);
-    setNextPosition(INSTRUCTION_THETA_INDEX, motionType, pidType, theta, (float) a, (float) speed);
-    setNextPosition(INSTRUCTION_ALPHA_INDEX, motionType, pidType, alpha, (float) a, (float) speed);
+    setNextPosition(INSTRUCTION_THETA_INDEX, motionParameterType, pidType, theta, (float) a, (float) speed);
+    setNextPosition(INSTRUCTION_ALPHA_INDEX, motionParameterType, pidType, alpha, (float) a, (float) speed);
 
     //OutputStream* outputStream = getDebugOutputStreamLogger();
     //printInst(outputStream, getMotionInstruction(INSTRUCTION_THETA_INDEX));
@@ -355,17 +356,17 @@ void gotoSpline() {
     clearPidTime();
 
     // determine the type of motion
-    unsigned char motionType = getMotionType(curveLength, curveLength);
+    enum MotionParameterType motionParameterType = getMotionParameterType(curveLength, curveLength);
     // determine the pidType to execute motionType
-    unsigned char pidType = getPidType(motionType);
+    enum PidType pidType = getPidType(motionParameterType);
 
     // do as if we follow a straight line
-    MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_TYPE_FORWARD_OR_BACKWARD);
+    MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_PARAMETER_TYPE_FORWARD_OR_BACKWARD);
     float bestA = computeBestAccelerationForBSpline(curve, motionParameter->a);
     float bestSpeed = computeBestSpeedForBSpline(curve, motionParameter->speed);
 
-    setNextPosition(INSTRUCTION_THETA_INDEX, motionType, pidType, curveLength, bestA, bestSpeed);
-    setNextPosition(INSTRUCTION_ALPHA_INDEX, motionType, pidType, 0.0f, motionParameter->a, motionParameter->speed);
+    setNextPosition(INSTRUCTION_THETA_INDEX, motionParameterType, pidType, curveLength, bestA, bestSpeed);
+    setNextPosition(INSTRUCTION_ALPHA_INDEX, motionParameterType, pidType, 0.0f, motionParameter->a, motionParameter->speed);
 
     getPidMotion()->currentMotionDefinition.computeU = &bSplineMotionUCompute;
 
@@ -378,13 +379,13 @@ void gotoSpline() {
 // -> Go/Back
 
 float forwardSimple(float pulse) {
-    MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_TYPE_FORWARD_OR_BACKWARD);
+    MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_PARAMETER_TYPE_FORWARD_OR_BACKWARD);
     gotoPosition(pulse, pulse, motionParameter->a, motionParameter->speed);
     return pulse;
 }
 
 float backwardSimple(float pulse) {
-    MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_TYPE_FORWARD_OR_BACKWARD);
+    MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_PARAMETER_TYPE_FORWARD_OR_BACKWARD);
     gotoPosition(-pulse, pulse, motionParameter->a, motionParameter->speed);
     return -pulse;
 }
@@ -392,13 +393,13 @@ float backwardSimple(float pulse) {
 // -> Rotation
 
 float leftSimple(float pulse) {
-    MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_TYPE_ROTATION);
+    MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_PARAMETER_TYPE_ROTATION);
     gotoPosition(-pulse, pulse, motionParameter->a, motionParameter->speed);
     return -pulse;
 }
 
 float rightSimple(float pulse) {
-    MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_TYPE_ROTATION);
+    MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_PARAMETER_TYPE_ROTATION);
     gotoPosition(pulse, pulse, motionParameter->a, motionParameter->speed);
     return pulse;
 }
@@ -406,13 +407,13 @@ float rightSimple(float pulse) {
 // -> OneWheel
 
 float leftOneWheelSimple(float pulse) {
-    MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_TYPE_ROTATION_ONE_WHEEL);
+    MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_PARAMETER_TYPE_ROTATION_ONE_WHEEL);
     gotoPosition(0, pulse, motionParameter->a, motionParameter->speed);
     return pulse;
 }
 
 float rightOneWheelSimple(float pulse) {
-    MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_TYPE_ROTATION_ONE_WHEEL);
+    MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_PARAMETER_TYPE_ROTATION_ONE_WHEEL);
     gotoPosition(pulse, 0, motionParameter->a, motionParameter->speed);
     return pulse;
 }
@@ -489,46 +490,46 @@ void rightOneWheelDegree(float angleDegree, float a, float speed) {
 // -> Go / Back
 
 float forwardSimpleMM(float distanceInMM) {
-    MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_TYPE_FORWARD_OR_BACKWARD);
+    MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_PARAMETER_TYPE_FORWARD_OR_BACKWARD);
     return forwardMM(distanceInMM, motionParameter->a, motionParameter->speed);
 }
 
 float backwardSimpleMM(float distanceInMM) {
-    MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_TYPE_FORWARD_OR_BACKWARD);
+    MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_PARAMETER_TYPE_FORWARD_OR_BACKWARD);
     return backwardMM(distanceInMM, motionParameter->a, motionParameter->speed);
 }
 
 // -> Left / Right
 
 float leftSimpleDegree(float angleDegree) {
-    MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_TYPE_ROTATION);
+    MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_PARAMETER_TYPE_ROTATION);
     return leftDegree(angleDegree, motionParameter->a, motionParameter->speed);
 }
 
 float leftSimpleMilliDegree(float angleMilliDegree) {
-    MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_TYPE_ROTATION);
+    MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_PARAMETER_TYPE_ROTATION);
     return leftMilliDegree(angleMilliDegree, motionParameter->a, motionParameter->speed);
 }
 
 float rightSimpleDegree(float angleDegree) {
-    MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_TYPE_ROTATION);
+    MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_PARAMETER_TYPE_ROTATION);
     return rightDegree(angleDegree, motionParameter->a, motionParameter->speed);
 }
 
 float rightSimpleMilliDegree(float angleMilliDegree) {
-    MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_TYPE_ROTATION);
+    MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_PARAMETER_TYPE_ROTATION);
     return rightMilliDegree(angleMilliDegree, motionParameter->a, motionParameter->speed);
 }
 
 // -> Left / Right : One Wheel
 
 void leftOneWheelSimpleDegree(float angleDegree) {
-    MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_TYPE_ROTATION_ONE_WHEEL);
+    MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_PARAMETER_TYPE_ROTATION_ONE_WHEEL);
     leftOneWheelDegree(angleDegree, motionParameter->a, motionParameter->speed);
 }
 
 void rightOneWheelSimpleDegree(float angleDegree) {
-    MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_TYPE_ROTATION_ONE_WHEEL);
+    MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_PARAMETER_TYPE_ROTATION_ONE_WHEEL);
     rightOneWheelDegree(angleDegree, motionParameter->a, motionParameter->speed);
 }
 

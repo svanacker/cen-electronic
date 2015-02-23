@@ -1,7 +1,7 @@
 #ifndef PID_MOTION_PROFIL_COMPUTER_H
 #define PID_MOTION_PROFIL_COMPUTER_H
 
-#include "motionType.h"
+#include "../simple/motionParameterType.h"
 #include "pidType.h"
 #include "profileType.h"
 
@@ -16,14 +16,14 @@ void computeMotionInstruction(MotionInstruction* inst);
 /**
  * Set the next Position that the robot must reach.
  * @param instructionIndex the index of which instruction to follow
- * @param motionType the type of motion which must be used
+ * @param motionParameterType the type of motion which must be used
  * @param pidType the type of pid which must be used
  * @param pNextPosition can be either negative or positive
  * @param pa is the maximal absolute value of acceleration
  * @param pSpeedMax is the maximal absolute value of speed
  */
 void setNextPosition(int instructionIndex,
-        enum MotionType motionType,
+        enum MotionParameterType motionParameterType,
         enum PidType pidType,
         float pNextPosition,
         float pa,

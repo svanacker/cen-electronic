@@ -2,6 +2,7 @@
 #define HCTL2032_H
 
 #include "../../../common/io/outputStream.h"
+#include "../../../motion/position/coderType.h"
 
 /**
  * The structure to encapsulate each coders value.
@@ -53,7 +54,7 @@ void hctl_clearCoders();
  */
 void initHCTL2032();
 
-signed long hctl_getCoderValue(int coderIndex);
+signed long hctl_getCoderValue(enum CoderType coderType);
 
 /**
  * Reset the coder value.

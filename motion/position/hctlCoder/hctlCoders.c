@@ -5,8 +5,8 @@ void updateCoders(void) {
     hctl_updateCoders();
 }
 
-signed long getCoderValue(int index) {
-    return hctl_getCoderValue(index);
+signed long getCoderValue(enum CoderType coderType) {
+    return hctl_getCoderValue(coderType);
 }
 
 void clearCoders() {

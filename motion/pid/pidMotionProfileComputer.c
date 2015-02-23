@@ -55,7 +55,7 @@ void initNextPositionVars(int index) {
 
     localInst->profileType = PROFILE_TYPE_TRAPEZE;
     localInst->pidType = PID_TYPE_GO_INDEX;
-    localInst->motionType = NO_POSITION_TO_REACH;
+    localInst->motionParameterType = MOTION_PARAMETER_TYPE_MAINTAIN_POSITION;
 
     // Initialization of motionEnd & motionBlocked
     MotionEndInfo* localEnd = &(computationValues->motionEnd[index]);
@@ -133,7 +133,7 @@ void computeMotionInstruction(MotionInstruction* inst) {
 }
 
 void setNextPosition(int instructionIndex,
-        enum MotionType motionType,
+        enum MotionParameterType motionParameterType,
         enum PidType pidType,
         float pNextPosition,
         float pa,
@@ -145,7 +145,7 @@ void setNextPosition(int instructionIndex,
     MotionInstruction* localInst = &(motionDefinition->inst[instructionIndex]);
 
     localInst->nextPosition = pNextPosition;
-    localInst->motionType = motionType;
+    localInst->motionParameterType = motionParameterType;
     localInst->pidType = pidType;
 
     if (pNextPosition > 0.0f) {
@@ -157,7 +157,7 @@ void setNextPosition(int instructionIndex,
         localInst->speed = -pSpeed * SPEED_FACTOR;
     }        // Don't change the position
     else {
-        if (motionType == MOTION_TYPE_MAINTAIN_POSITION) {
+        if (motionParameterType == MOTION_PARAMETER_TYPE_MAINTAIN_POSITION) {
             localInst->a = 1.0f;
             localInst->speed = 100.0f;
         } else {

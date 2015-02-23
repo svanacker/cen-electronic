@@ -161,7 +161,7 @@ void devicePIDHandleRawData(char commandHeader, InputStream* inputStream, Output
         appendSeparator(outputStream);
 
         appendHex(outputStream, localInst->profileType);
-        appendHex(outputStream, localInst->motionType);
+        appendHex(outputStream, localInst->motionParameterType);
         appendHex(outputStream, localInst->pidType);
     }    
 }

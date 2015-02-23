@@ -7,7 +7,7 @@
 #define PID_TYPE_COUNT 5
 
 enum PidType {
-        /** The mask used to indicate that we want to use value of PID to go forward and backward. */
+    /** The mask used to indicate that we want to use value of PID to go forward and backward. */
     PID_TYPE_GO_INDEX = 0,
     
     /** The mask used to indicate that we want to use value of PID to rotate. */

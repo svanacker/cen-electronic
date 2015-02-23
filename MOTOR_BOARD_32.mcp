@@ -244,7 +244,10 @@ file_216=external.fatfs
 file_217=device.file
 file_218=device.file
 file_219=external.fatfs
-file_220=motion.pid
+file_220=motion.position
+file_221=motion.pid
+file_222=motion.simple
+file_223=motion.pid
 [GENERATED_FILES]
 file_000=no
 file_001=no
@@ -467,6 +470,9 @@ file_217=no
 file_218=no
 file_219=no
 file_220=no
+file_221=no
+file_222=no
+file_223=no
 [OTHER_FILES]
 file_000=no
 file_001=no
@@ -689,6 +695,9 @@ file_217=no
 file_218=no
 file_219=no
 file_220=no
+file_221=no
+file_222=no
+file_223=no
 [FILE_INFO]
 file_000=motion\position\trajectory.c
 file_001=common\math\cenMath.c
@@ -910,7 +919,10 @@ file_216=external\fatfs\ffconf.h
 file_217=device\file\fileDevice.h
 file_218=device\file\fileDeviceInterface.h
 file_219=external\fatfs\diskio.h
-file_220=motion\pid\motionType.h
+file_220=motion\position\coderType.h
+file_221=motion\pid\instructionType.h
+file_222=motion\simple\motionParameterType.h
+file_223=motion\pid\detectedMotionType.h
 [SUITE_INFO]
 suite_guid={14495C23-81F8-43F3-8A44-859C583D7760}
 suite_state=
