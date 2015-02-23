@@ -1,6 +1,8 @@
 #ifndef PID_MOTION_PROFIL_COMPUTER_H
 #define PID_MOTION_PROFIL_COMPUTER_H
 
+#include "motionType.h"
+#include "pidType.h"
 #include "profileType.h"
 
 /**
@@ -21,8 +23,8 @@ void computeMotionInstruction(MotionInstruction* inst);
  * @param pSpeedMax is the maximal absolute value of speed
  */
 void setNextPosition(int instructionIndex,
-        unsigned char motionType,
-        unsigned char pidType,
+        enum MotionType motionType,
+        enum PidType pidType,
         float pNextPosition,
         float pa,
         float pSpeedMax);

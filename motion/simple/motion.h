@@ -2,6 +2,7 @@
 #define MOTION_H
 
 #include <stdbool.h>
+#include "../../motion/pid/motionType.h"
 
 /**
  * Structure defining default Motion Parameters.
@@ -57,7 +58,7 @@ typedef struct {
 /**
  * Returns Parameters for Motion.
  */
-MotionParameter* getDefaultMotionParameters(unsigned char motionType);
+MotionParameter* getDefaultMotionParameters(enum MotionType motionType);
 
 // HANDLING FUNCTION
 
@@ -234,6 +235,6 @@ unsigned char getMotionType(float left, float right);
 /**
  * Determines the type of pid which must be applied depending of the motionType.
  */
-unsigned char getPidType(unsigned char motionType);
+unsigned char getPidType(enum MotionType motionType);
 
 #endif

@@ -227,7 +227,7 @@ void deviceMotionHandleRawData(char commandHeader,
     }        // PARAMETERS
     else if (commandHeader == COMMAND_GET_MOTION_PARAMETERS) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_GET_MOTION_PARAMETERS);
-        MotionType motionType = (MotionType) readHex2(inputStream);
+        enum MotionType motionType = (enum MotionType) readHex2(inputStream);
 
         MotionParameter* motionParameter = getDefaultMotionParameters(motionType);
         appendHex2(outputStream, (int) motionParameter->a);
@@ -235,7 +235,7 @@ void deviceMotionHandleRawData(char commandHeader,
 
     } else if (commandHeader == COMMAND_SET_MOTION_PARAMETERS) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_SET_MOTION_PARAMETERS);
-        MotionType motionType = (MotionType) readHex2(inputStream);
+        enum MotionType motionType = (enum MotionType) readHex2(inputStream);
         float a = (float) readHex2(inputStream);
         float speed = (float) readHex2(inputStream);
 

@@ -154,11 +154,11 @@ typedef struct MotionInstruction {
     /** The first position after speed constant */
     float p2;
     /** The type of the trajectory (TRAPEZE / TRIANGLE) */
-    ProfileType profileType;
+    enum ProfileType profileType;
     /** The type of motion (GO, ROTATION, MAINTAIN_POSITION). */
-    MotionType motionType;
+    enum MotionType motionType;
     /** The type of pid which must be used. */
-    PidType pidType;
+    enum PidType pidType;
 } MotionInstruction;
 
 /**
@@ -243,7 +243,7 @@ MotionEndDetectionParameter* getMotionEndDetectionParameter();
  * @param instructionIndex THETA_INDEX or ALPHA_MASK
  * @param pidType the type of pid PID_TYPE_GO_INDEX / PID_TYPE_ROTATE_INDEX / PID_TYPE_MAINTAIN_POSITION
  */
-unsigned char getIndexOfPid(unsigned char instructionIndex, PidType pidType);
+unsigned char getIndexOfPid(unsigned char instructionIndex, enum PidType pidType);
 
 /**
  * Enable or disable a PID.

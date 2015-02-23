@@ -38,7 +38,7 @@
 /** The parameters for motion. */
 static MotionParameter defaultMotionParameters[MOTION_PARAMETERS_COUNT];
 
-MotionParameter* getDefaultMotionParameters(MotionType motionType) {
+MotionParameter* getDefaultMotionParameters(enum MotionType motionType) {
     return &defaultMotionParameters[motionType];
 }
 
@@ -66,6 +66,7 @@ void maintainPosition(void) {
     gotoPosition(0.0f, 0.0f, 0.0f, 0.0f);
 }
 
+// Returns an enum with POSITION_TYPE
 unsigned char handleInstructionAndMotion(void) {
     updateCoders();
     updateTrajectory();
@@ -141,7 +142,7 @@ unsigned char getMotionType(float left, float right) {
     }
 }
 
-unsigned char getPidType(MotionType motionType) {
+unsigned char getPidType(enum MotionType motionType) {
     if (motionType == MOTION_TYPE_FORWARD_OR_BACKWARD) {
         return PID_TYPE_GO_INDEX;
     } else if (motionType == MOTION_TYPE_ROTATION) {
@@ -167,9 +168,9 @@ void gotoPosition(float left, float right, float a, float speed) {
     clearPidTime();
 
     // determine the type of motion
-    MotionType motionType = getMotionType(left, right);
+    enum MotionType motionType = getMotionType(left, right);
     // determine the pidType to execute motionType
-    PidType pidType = getPidType(motionType);
+    enum PidType pidType = getPidType(motionType);
 
 
     // Alpha / Theta

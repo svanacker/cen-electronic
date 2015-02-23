@@ -133,8 +133,8 @@ void computeMotionInstruction(MotionInstruction* inst) {
 }
 
 void setNextPosition(int instructionIndex,
-        MotionType motionType,
-        PidType pidType,
+        enum MotionType motionType,
+        enum PidType pidType,
         float pNextPosition,
         float pa,
         float pSpeed) {
