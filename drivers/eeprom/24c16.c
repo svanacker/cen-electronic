@@ -1,4 +1,9 @@
-#include <peripheral/legacy/i2c_legacy.h>
+#ifdef PROG_32
+    #include <peripheral/legacy/i2c_legacy.h>
+#endif
+#ifdef PROG_30
+    #include <i2c.h>
+#endif
 
 #include "24c16.h"
 
@@ -88,7 +93,7 @@ unsigned long get24C16Address(unsigned long index) {
  * @see eeprom.h
  * @private
  */
-void _writeEeprom24C16Int(Eeprom* eeprom_, unsigned long index, signed int value){
+void _writeEeprom24C16Char(Eeprom* eeprom_, unsigned long index, char value){
     I2cBus* i2cBus = _24C16GetI2c(eeprom_);
     portableMasterWaitSendI2C(i2cBus);
     portableStartI2C(i2cBus);
@@ -113,7 +118,7 @@ void _writeEeprom24C16Int(Eeprom* eeprom_, unsigned long index, signed int value
  * @see eeprom.h
  * @private
  */
-signed int _readEeprom24C16Int(Eeprom* eeprom_, unsigned long index){
+char _readEeprom24C16Char(Eeprom* eeprom_, unsigned long index){
     I2cBus* i2cBus = _24C16GetI2c(eeprom_);
     portableMasterWaitSendI2C(i2cBus);
      // Set the register command
@@ -197,6 +202,14 @@ void _readEeprom24C16Block(Eeprom* eeprom_, unsigned long index, unsigned int le
     WaitI2C(i2cBus);
 }
 
+
+void dumpEeprom(Eeprom* eeprom_) {
+    if (eeprom_ == NULL) {
+        writeError(UNIMPLETEMENTED_EXCEPTION);
+        return;
+    }  
+}
+
 void init24C16Eeprom(Eeprom* eeprom_, I2cBus* i2cBus) {
-    initEeprom(eeprom_, EEPROM_24C16_MAX_INDEX, _writeEeprom24C16Int, _readEeprom24C16Int, _writeEeprom24C16Block, _readEeprom24C16Block, (int*) i2cBus);
+    initEeprom(eeprom_, EEPROM_24C16_MAX_INDEX, _writeEeprom24C16Char, _readEeprom24C16Char, _writeEeprom24C16Block, _readEeprom24C16Block, (int*) i2cBus);
 }

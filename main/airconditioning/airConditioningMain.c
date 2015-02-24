@@ -37,6 +37,14 @@
 // -> Devices
 #include "../../device/deviceUsage.h"
 
+// CLOCK
+#include "../../device/clock/clockDevice.h"
+#include "../../device/clock/clockDeviceInterface.h"
+
+// EEPROM
+#include "../../device/eeprom/eepromDevice.h"
+#include "../../device/eeprom/eepromDeviceInterface.h"
+
 // System
 #include "../../device/system/systemDevice.h"
 #include "../../device/system/systemDeviceInterface.h"
@@ -44,6 +52,10 @@
 // Servo
 #include "../../device/servo/servoDevice.h"
 #include "../../device/servo/servoDeviceInterface.h"
+
+// Temperature
+#include "../../device/sensor/temperature/temperatureSensorDevice.h"
+#include "../../device/sensor/temperature/temperatureSensorDeviceInterface.h"
 
 // Air Conditioning
 #include "../../device/airconditioning/airConditioningDevice.h"
@@ -55,7 +67,8 @@
 #include "../../drivers/driverList.h"
 #include "../../drivers/driverStreamListener.h"
 
-#include "../../drivers/temperature/MCP9804.h"
+#include "../../drivers/eeprom/24C16.h"
+#include "../../drivers/clock/PCF8563.h"
 
 #define SERIAL_PORT_DEBUG         SERIAL_PORT_2
 
@@ -71,8 +84,14 @@
 #define        ITERATION_OFF            20000000L
 #define        ITERATION_ON             40000000L
 
+// CLOCK
+static Clock clock;
+
 // I2C Bus
 static I2cBus airConditioningBoardI2cBus;
+
+// Eeprom
+static Eeprom eeprom_;
 
 /**
  * Device list.
@@ -117,10 +136,15 @@ static char driverResponseBufferArray[AIR_CONDITIONING_BOARD_RESPONSE_DRIVER_BUF
 
 void initDevicesDescriptor() {
     initDeviceList(&deviceListArray, AIR_CONDITIONING_BOARD_DEVICE_LENGTH);
+
     addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
 
     addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor());
     addLocalDevice(getAirConditioningDeviceInterface(), getAirConditioningDeviceDescriptor());
+
+    addLocalDevice(getTemperatureSensorDeviceInterface(), getTemperatureSensorDeviceDescriptor(&airConditioningBoardI2cBus));
+    addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom_));
+    addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
 
     initDevices(&devices);
 }
@@ -160,7 +184,6 @@ int main(void) {
             &debugOutputStream,
             SERIAL_PORT_DEBUG, 0);
 
-
     initTimerList(&timerListArray, AIR_CONDITIONING_BOARD_TIMER_LENGTH);
 
     // Init the logs
@@ -171,6 +194,13 @@ int main(void) {
 
     // I2C
     airConditioningBoardI2cBus.portIndex = I2C_BUS_PORT_1;
+    i2cMasterInitialize(&airConditioningBoardI2cBus);
+    init24C16Eeprom(&eeprom_, &airConditioningBoardI2cBus);
+
+    // Clock
+    initClockPCF8563(&clock, &airConditioningBoardI2cBus);
+
+    /* ONLY if I2C Slave slave
     openSlaveI2cStreamLink(&i2cSerialStreamLink,
                             &i2cSlaveInputBuffer,
                             &i2cSlaveInputBufferArray,
@@ -181,14 +211,13 @@ int main(void) {
                             &airConditioningBoardI2cBus,
                             AIR_CONDITIONING_BOARD_I2C_ADDRESS
                         );
-
-    // I2C Debug
     initI2CDebugBuffers(&i2cDebugSlaveInputBuffer,
                         &i2cDebugSlaveInputBufferArray,
                         AIR_CONDITIONING_BOARD_I2C_INPUT_BUFFER_LENGTH,
                         &i2cDebugSlaveOutputBuffer,
                         &i2cDebugSlaveOutputBufferArray,
                         AIR_CONDITIONING_BOARD_I2C_OUTPUT_BUFFER_LENGTH);
+    */
 
     // init the devices
     initDevicesDescriptor();
@@ -199,7 +228,7 @@ int main(void) {
     startTimerList();
 
     // Initialize the driver : TODO : Encapsulates into a driver.
-    initRegMCP9804(0x00, 0x18, 0x01, 0xE0, 0x01, 0x40, 0x02, 0x40); // 30C, 20C, 34C
+    // initRegMCP9804(0x00, 0x18, 0x01, 0xE0, 0x01, 0x40, 0x02, 0x40); // 30C, 20C, 34C
 
     clickOnButton();
     unsigned long timerIndex = 0L;
@@ -227,12 +256,14 @@ int main(void) {
                 &filterRemoveCRLF,
                 NULL);
 
-        // I2C Stream
+        // I2C Stream (only if master)
+        /*
         handleStreamInstruction(&i2cSlaveInputBuffer,
                                 &i2cSlaveOutputBuffer,
                                 NULL,
                                 &filterRemoveCRLF,
                                 NULL);
+        */
     }
-    return (0);
+    return 0;
 }

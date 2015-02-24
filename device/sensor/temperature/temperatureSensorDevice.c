@@ -29,7 +29,7 @@ void deviceTemperatureSensorHandleRawData(char header, InputStream* inputStream,
     if (header == COMMAND_READ_TEMPERATURE_SENSOR) {
         ackCommand(outputStream, TEMPERATURE_SENSOR_DEVICE_HEADER, COMMAND_READ_TEMPERATURE_SENSOR);
         unsigned char value = getTemperatureSensor(temperatureI2cBus);
-        appendDec(outputStream, value);
+        appendHex2(outputStream, value);
     } else if (header == COMMAND_SET_TEMPERATURE_SENSOR_ALERT) {
         char temperatureSensorAlert = readHex2(inputStream);
         ackCommand(outputStream, TEMPERATURE_SENSOR_DEVICE_HEADER, COMMAND_SET_TEMPERATURE_SENSOR_ALERT);

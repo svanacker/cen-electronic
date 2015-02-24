@@ -1,6 +1,11 @@
 #include "PCF8563.h"
 
-#include <peripheral/legacy/i2c_legacy.h>
+#ifdef PROG_32
+    #include <peripheral/legacy/i2c_legacy.h>
+#endif
+#ifdef PROG_30
+    #include <i2c.h>
+#endif
 
 #include "../../common/clock/clock.h"
 

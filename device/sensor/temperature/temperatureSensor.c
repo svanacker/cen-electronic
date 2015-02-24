@@ -4,5 +4,5 @@
 #include "../../../common/io/printWriter.h"
 
 void printTemperatureSensor(OutputStream* outputStream, I2cBus* i2cBus){
-    appendDec(outputStream, getTemperatureSensor(i2cBus));
+    appendHex2(outputStream, getTemperatureSensor(i2cBus));
 }
