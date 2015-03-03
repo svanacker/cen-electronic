@@ -30,6 +30,10 @@
 #include "../../../device/i2c/slave/i2cSlaveDebugDevice.h"
 #include "../../../device/i2c/slave/i2cSlaveDebugDeviceInterface.h"
 
+// CLOCK
+#include "../../../device/clock/clockDevice.h"
+#include "../../../device/clock/clockDeviceInterface.h"
+
 // EEPROM
 #include "../../../device/eeprom/eepromDevice.h"
 #include "../../../device/eeprom/eepromDeviceInterface.h"
@@ -64,7 +68,7 @@
 #include "../../../drivers/dispatcher/localDriverDataDispatcher.h"
 #include "../../../drivers/test/testDriver.h"
 
-#include "../../../remote/clock/remoteClock.h"
+#include "../../../drivers/clock/softClock.h"
 
 #include "../../../common/pc/process/processHelper.h"
 
@@ -102,6 +106,9 @@ static Buffer i2cSlaveDebugInputBuffer;
 
 // Eeprom
 static Eeprom eeprom;
+
+// Clock
+static Clock clock;
 
 // I2C
 static I2cBus motorI2cBus;
@@ -188,7 +195,11 @@ void runMotorBoardPC(void) {
         (char(*)[]) &i2cSlaveDebugOutputBufferArray,
         MOTOR_BOARD_PC_I2C_DEBUG_SLAVE_OUT_BUFFER_LENGTH);
 
+	// Eeprom
     initEepromPc(&eeprom);
+
+	// Clock
+	initSoftClock(&clock);
 
     // Devices
     initDeviceList((Device(*)[]) &deviceListArray, MOTOR_BOARD_PC_DEVICE_LIST_LENGTH);
@@ -198,6 +209,7 @@ void runMotorBoardPC(void) {
     addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());
 
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
+	addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
     addLocalDevice(getPIDDeviceInterface(), getPIDDeviceDescriptor());
     addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());
     addLocalDevice(getCodersDeviceInterface(), getCodersDeviceDescriptor());

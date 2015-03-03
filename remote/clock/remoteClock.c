@@ -1,5 +1,7 @@
 #include "remoteClock.h"
 
+#include <stdbool.h>
+
 #include "../../common/io/inputStream.h"
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
@@ -11,14 +13,14 @@
 #include "../../drivers/driverList.h"
 #include "../../drivers/driverTransmitter.h"
 
-void getRemoteClockData(ClockData* clockData) {
+bool getRemoteClockData(ClockData* clockData) {
     OutputStream* outputStream = getDriverRequestOutputStream();
     InputStream* resultStream = getDriverResponseInputStream();
     append(outputStream, CLOCK_DEVICE_HEADER);
     append(outputStream, COMMAND_READ_CLOCK);
 
-    bool ok = transmitFromDriverRequestBuffer();
-    if (ok) {
+	bool result = transmitFromDriverRequestBuffer();
+	if (result) {
         clockData->hour = readHex2(resultStream);
         resultStream->readChar(resultStream);
 
@@ -37,4 +39,44 @@ void getRemoteClockData(ClockData* clockData) {
         clockData->year = readHex2(resultStream);
         resultStream->readChar(resultStream);
     }
+	return result;
 }
+
+bool writeHourRemoteClockData(ClockData* clockData, int dispatcherIndex) {
+    OutputStream* outputStream = getDriverRequestOutputStream();
+    InputStream* resultStream = getDriverResponseInputStream();
+
+    // To select the Dispatcher
+    append(outputStream, DATA_DISPATCHER_DEVICE_HEADER);
+    appendHex2(outputStream, dispatcherIndex);
+    
+    // The device / command Header + Data
+    append(outputStream, CLOCK_DEVICE_HEADER);
+    append(outputStream, COMMAND_WRITE_HOUR);
+    appendHex2(outputStream, clockData->hour);
+    appendHex2(outputStream, clockData->minute);
+    appendHex2(outputStream, clockData->second);
+    bool result = transmitFromDriverRequestBuffer();
+    
+    return result;
+}
+
+bool writeDateRemoteClockData(ClockData* clockData, int dispatcherIndex) {
+    OutputStream* outputStream = getDriverRequestOutputStream();
+    InputStream* resultStream = getDriverResponseInputStream();
+
+    // To select the Dispatcher
+    append(outputStream, DATA_DISPATCHER_DEVICE_HEADER);
+    appendHex2(outputStream, dispatcherIndex);
+    
+    // The device / command Header + Data
+    append(outputStream, CLOCK_DEVICE_HEADER);
+    append(outputStream, COMMAND_WRITE_DATE);
+    appendHex2(outputStream, clockData->day);
+    appendHex2(outputStream, clockData->month);
+    appendHex2(outputStream, clockData->year);
+    bool result = transmitFromDriverRequestBuffer();
+    
+    return result;
+}
+    

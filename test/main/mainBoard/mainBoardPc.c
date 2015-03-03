@@ -86,7 +86,7 @@
 #include "../../../device/timer/timerDeviceInterface.h"
 
 #include "../../../drivers/driverStreamListener.h"
-#include "../../../drivers/clock/mockClock.h"
+#include "../../../drivers/clock/pc/pcClock.h"
 #include "../../../drivers/driverList.h"
 
 #include "../../../drivers/dispatcher/dataDispatcherDeviceDriver.h"
@@ -130,6 +130,9 @@ static char driverResponseBufferArray[MAIN_BOARD_PC_RESPONSE_DRIVER_BUFFER_LENGT
 
 // Eeprom
 static Eeprom eeprom;
+
+// Clock
+static Clock clock;
 
 // I2C Debug
 static char i2cMasterDebugOutputBufferArray[MAIN_BOARD_PC_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH];
@@ -237,6 +240,9 @@ void runMainBoardPC(void) {
 	initEepromPc(&eeprom);
 	initEepromFile(&eeprom);
 
+	// Clock
+	initPcClock(&clock);
+
     // I2C Debug
     initI2CDebugBuffers(&i2cMasterDebugInputBuffer,
         (char(*)[]) &i2cMasterDebugInputBufferArray,
@@ -266,6 +272,7 @@ void runMainBoardPC(void) {
     addLocalDevice(getDataDispatcherDeviceInterface(), getDataDispatcherDeviceDescriptor());
     addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor());
 	addLocalDevice(getTimerDeviceInterface(), getTimerDeviceDescriptor());
+	addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
 	addLocalDevice(getFileDeviceInterface(), getFileDeviceDescriptor());
 	addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
 
@@ -286,9 +293,19 @@ void runMainBoardPC(void) {
 
     setDebugI2cEnabled(false);
 
+	// Ping
     if (!pingDriverDataDispatcherList()) {
         printf("PING PROBLEM !");
     }
+
+	// Set Clock for Motor Board !
+
+	// Read Clock
+	ClockData* clockData = clock.readClock(&clock);
+	// TODO : Change Dispatcher Index ...
+	writeDateRemoteClockData(clockData, 0x01);
+	writeHourRemoteClockData(clockData, 0x01);
+
     // testDriverIntensive(100);
 
 	startTimerList();

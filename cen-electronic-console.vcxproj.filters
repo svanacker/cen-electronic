@@ -574,6 +574,12 @@
     <Filter Include="Header Files\drivers\file\eeprom">
       <UniqueIdentifier>{49eb4609-a65f-44dd-b1d0-94f1c4b9a8b2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\drivers\clock\pc">
+      <UniqueIdentifier>{ef0334f0-86b2-402c-a20e-710feac5374c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\drivers\clock\pc">
+      <UniqueIdentifier>{00d1ef4a-629c-4360-a857-0b6683741246}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -731,9 +737,6 @@
     </ClCompile>
     <ClCompile Include="device\clock\clockDeviceInterface.c">
       <Filter>Source Files\device\clock</Filter>
-    </ClCompile>
-    <ClCompile Include="drivers\clock\mockClock.c">
-      <Filter>Source Files\drivers\clock</Filter>
     </ClCompile>
     <ClCompile Include="common\clock\clock.c">
       <Filter>Source Files\common\clock</Filter>
@@ -1176,6 +1179,12 @@
     <ClCompile Include="device\file\fileDeviceInterface.c">
       <Filter>Source Files\device\file</Filter>
     </ClCompile>
+    <ClCompile Include="drivers\clock\pc\pcClock.c">
+      <Filter>Source Files\drivers\clock\pc</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\clock\softClock.c">
+      <Filter>Source Files\drivers\clock</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -1360,9 +1369,6 @@
     </ClInclude>
     <ClInclude Include="device\clock\clockDeviceInterface.h">
       <Filter>Header Files\device\clock</Filter>
-    </ClInclude>
-    <ClInclude Include="drivers\clock\mockClock.h">
-      <Filter>Header Files\drivers\clock</Filter>
     </ClInclude>
     <ClInclude Include="common\clock\clock.h">
       <Filter>Header Files\common\clock</Filter>
@@ -1831,6 +1837,12 @@
     </ClInclude>
     <ClInclude Include="drivers\file\eeprom\eepromFile.h">
       <Filter>Header Files\drivers\file\eeprom</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\clock\pc\pcClock.h">
+      <Filter>Header Files\drivers\clock\pc</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\clock\softClock.h">
+      <Filter>Header Files\drivers\clock\pc</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

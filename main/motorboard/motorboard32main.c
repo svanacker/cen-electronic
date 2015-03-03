@@ -44,6 +44,10 @@
 
 // -> Devices
 
+// Clock
+#include "../../device/clock/clockDevice.h"
+#include "../../device/clock/clockDeviceInterface.h"
+
 // EEPROM
 #include "../../device/eeprom/eepromDevice.h"
 #include "../../device/eeprom/eepromDeviceInterface.h"
@@ -100,6 +104,7 @@
 #include "../../device/motion/simple/motionDeviceInterface.h"
 
 // Drivers
+#include "../../drivers/clock/softClock.h"
 #include "../../drivers/eeprom/24c512.h"
 
 #include "../../drivers/motor/motorDriver.h"
@@ -124,6 +129,9 @@ static I2cBus eepromI2cBus;
 
 // Eeprom
 static Eeprom eeprom_;
+
+// Clock
+static Clock clock;
 
 // serial INSTRUCTION
 static char standardInputBufferArray[MOTOR_BOARD_IN_BUFFER_LENGTH];
@@ -188,6 +196,7 @@ void initDevicesDescriptor() {
     addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
     addLocalDevice(getSerialDebugDeviceInterface(), getSerialDebugDeviceDescriptor());
     addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
+    addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
     addLocalDevice(getTimerDeviceInterface(), getTimerDeviceDescriptor());
 
     // I2C_4
@@ -287,6 +296,9 @@ int runMotorBoard() {
     eepromI2cBus.portIndex = I2C_BUS_PORT_4;
     i2cMasterInitialize(&eepromI2cBus);
     init24C512Eeprom(&eeprom_, &eepromI2cBus);
+
+    // Clock
+    initSoftClock(&clock);
 
     // init the devices
     initDevicesDescriptor();

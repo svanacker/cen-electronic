@@ -25,7 +25,7 @@
 #include "../../../device/motor/pwmMotorDeviceInterface.h"
 
 
-#include "../../../drivers/clock/mockClock.h"
+#include "../../../drivers/clock/pc/pcClock.h"
 #include "../../../drivers/driverList.h"
 #include "../../../drivers/dispatcher/driverDataDispatcherList.h"
 #include "../../../drivers/dispatcher/localDriverDataDispatcher.h"
@@ -85,7 +85,7 @@ void test_testDriverGetValue(void) {
     // Clock Driver Test
 
     Clock clock;
-    initMockClock(&clock);
+    initPcClock(&clock);
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
 
     ClockData clockData;

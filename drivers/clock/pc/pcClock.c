@@ -1,9 +1,9 @@
-#include "mockClock.h"
+#include "pcClock.h"
 
 #include <stdlib.h>
 #include <time.h>
 
-#include "../../common/clock/clock.h"
+#include "../../../common/clock/clock.h"
 
 /**
 * @see clock.h
@@ -11,7 +11,7 @@
 * Mock a clock on the PC 
 * @param clockParam the clock
 */
-ClockData* _readMockClock(Clock* clockParam) {
+ClockData* _readPcClock(Clock* clockParam) {
     time_t rawtime;
     struct tm timeinfo;
     time(&rawtime);
@@ -35,10 +35,10 @@ ClockData* _readMockClock(Clock* clockParam) {
  * Set the Clock into the Mock
  * @param clockParam the new value of clock
  */
-void _writeMockClock(Clock* clockParam) {
+void _writePcClock(Clock* clockParam) {
     // We don't want to write the clock Data !
 }
 
-void initMockClock(Clock* clockParam) {
-    initClock(clockParam, _writeMockClock, _readMockClock, NULL);
+void initPcClock(Clock* clockParam) {
+    initClock(clockParam, _writePcClock, _readPcClock, NULL);
 }
