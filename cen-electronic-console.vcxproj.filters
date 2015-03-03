@@ -580,6 +580,12 @@
     <Filter Include="Header Files\drivers\clock\pc">
       <UniqueIdentifier>{00d1ef4a-629c-4360-a857-0b6683741246}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\common\delay">
+      <UniqueIdentifier>{427f536d-0f28-4ef3-9d5a-83ee1f0aaa4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\common\delay\pc">
+      <UniqueIdentifier>{2c1e92d2-1c1b-41ad-b258-4d59c1bbc15c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -1843,6 +1849,12 @@
     </ClInclude>
     <ClInclude Include="drivers\clock\softClock.h">
       <Filter>Header Files\drivers\clock\pc</Filter>
+    </ClInclude>
+    <ClInclude Include="common\delay\cenDelay.h">
+      <Filter>Header Files\common\delay</Filter>
+    </ClInclude>
+    <ClInclude Include="common\delay\pc\cenDelayPc.h">
+      <Filter>Header Files\common\delay\pc</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

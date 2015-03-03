@@ -12,7 +12,7 @@ void __attribute__((__interrupt__)) __attribute__((no_auto_psv)) _T1Interrupt(vo
     // Clear the interrupt flag
     _T1IF = 0;
 
-    _internalUpdateTimerListValues();
+    _internalUpdateTimerListValues(1);
 
     // Enable the interrupt
     _T1IE = 1;

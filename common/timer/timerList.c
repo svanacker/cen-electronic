@@ -100,7 +100,7 @@ void stopTimerList() {
 /**
 * @private 
 */
-void _internalUpdateTimerListValues() {
+void _internalUpdateTimerListValues(int incrementSinceLastCall) {
     if (timerList.size > 0) {
         int i = 0;
         for (i = 0; i < timerList.size; i++) {
@@ -110,7 +110,8 @@ void _internalUpdateTimerListValues() {
                 continue;
             }
             // increments the counter and test if it is > to the timeDiviser
-            if (++(currentTimer->timeInternalCounter) > currentTimer->timeDiviser) {
+			currentTimer->timeInternalCounter += incrementSinceLastCall;
+			if (currentTimer->timeInternalCounter >= currentTimer->timeDiviser) {
                 // block the timer if we wait for
                 bool lock = currentTimer->lock;
                 if (lock) {
@@ -119,7 +120,7 @@ void _internalUpdateTimerListValues() {
 
                 // we only subtract and not clear to 0, so that, if the timer is locked, we will not forget
                 // any firing
-                currentTimer->timeInternalCounter -= (currentTimer->timeDiviser + 1);
+				currentTimer->timeInternalCounter -= currentTimer->timeDiviser;
                 currentTimer->time++;
 
                 // lock the timer to avoid concurrence problem

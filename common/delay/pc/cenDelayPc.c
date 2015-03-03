@@ -12,10 +12,13 @@ void delaymSec(unsigned int mSecond) {
 }
 
 void initPerformanceCounter(void) {
-    QueryPerformanceFrequency(&Frequency);
+	if (Frequency.QuadPart == 0) {
+		QueryPerformanceFrequency(&Frequency);
+	}
 }
 
 LONGLONG getElapsedTimeInMicroSeconds(LARGE_INTEGER StartingTime) {
+	initPerformanceCounter();
     LARGE_INTEGER EndingTime, ElapsedMicroseconds;
     QueryPerformanceCounter(&EndingTime);
     ElapsedMicroseconds.QuadPart = EndingTime.QuadPart - StartingTime.QuadPart;

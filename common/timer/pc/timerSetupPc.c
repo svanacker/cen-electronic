@@ -2,6 +2,7 @@
 #include "../cenTimer.h"
 
 #include "../../../common/delay/cenDelay.h"
+#include "../../../common/delay/pc/cenDelayPc.h"
 #include "../../../common/timer/timerInterrupt.h"
 #include "../../../common/timer/timerList.h"
 
@@ -13,9 +14,23 @@ static DWORD  timerThreadId = 0;
 
 DWORD WINAPI timerCallback(LPVOID lpvParam) {
 	printf("PC : I2C Master -> Timer listening !\r\n");
+	LARGE_INTEGER startTime;
+	QueryPerformanceCounter(&startTime);
+
+	LONGLONG totalElapsedMicroseconds = 0;
+	LONGLONG elapsedMicrosecondsTriggered = 0;
+
+	const STEP_IN_MILLISECONDS = 10000;
+
 	while (true) {
 		delaymSec(1);
-		_internalUpdateTimerListValues();
+		totalElapsedMicroseconds = getElapsedTimeInMicroSeconds(startTime);
+		if (totalElapsedMicroseconds - elapsedMicrosecondsTriggered > STEP_IN_MILLISECONDS) {
+			elapsedMicrosecondsTriggered += STEP_IN_MILLISECONDS;
+
+			int increment = (int)((STEP_IN_MILLISECONDS * TIME_DIVIDER_1_HERTZ) / 1000000L);
+			_internalUpdateTimerListValues(increment);
+		}
 		// handleI2CDataFromMaster();
 	}
 	printf("timerCallback exiting.\n");

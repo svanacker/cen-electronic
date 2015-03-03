@@ -72,7 +72,7 @@ TimerList* getTimerList();
 /**
  * TODO : See to remove it
  */
-void _internalUpdateTimerListValues(void);
+void _internalUpdateTimerListValues(int incrementSinceLastCall);
 
 #endif
 

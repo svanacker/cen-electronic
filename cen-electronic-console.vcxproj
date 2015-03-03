@@ -283,6 +283,8 @@
     <ClInclude Include="common\clock\clock.h" />
     <ClInclude Include="common\cmd\commonCommand.h" />
     <ClInclude Include="common\commons.h" />
+    <ClInclude Include="common\delay\cenDelay.h" />
+    <ClInclude Include="common\delay\pc\cenDelayPc.h" />
     <ClInclude Include="common\eeprom\eeprom.h" />
     <ClInclude Include="common\eeprom\pc\eepromPc.h" />
     <ClInclude Include="common\error\error.h" />
