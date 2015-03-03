@@ -203,7 +203,7 @@ void _readEeprom24C16Block(Eeprom* eeprom_, unsigned long index, unsigned int le
 }
 
 
-void dumpEeprom(Eeprom* eeprom_) {
+void dumpEepromToFile(Eeprom* eeprom_) {
     if (eeprom_ == NULL) {
         writeError(UNIMPLETEMENTED_EXCEPTION);
         return;

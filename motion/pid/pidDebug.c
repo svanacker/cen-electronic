@@ -69,10 +69,10 @@ void printInst (OutputStream* outputStream, MotionInstruction * inst ) {
     // ProfileType
     appendString(outputStream, ",profileType=");
     if (inst->profileType == PROFILE_TYPE_TRIANGLE) {
-        appendString(outputStream, "TRI");
+        appendString(outputStream, "TRIANGLE");
     }
     else if (inst->profileType == PROFILE_TYPE_TRAPEZE) {
-        appendString(outputStream, "TRA");
+        appendString(outputStream, "TRAPEZE");
     }
     else {
         append(outputStream, '?');
@@ -98,14 +98,14 @@ void printInst (OutputStream* outputStream, MotionInstruction * inst ) {
 
     // MotionType
     const char* motionTypeAsString;
-    if (inst->motionType == MOTION_TYPE_FORWARD_OR_BACKWARD) {
-        motionTypeAsString = "FOR_OR_BACK";
+    if (inst->motionParameterType == MOTION_PARAMETER_TYPE_FORWARD_OR_BACKWARD) {
+        motionTypeAsString = "FORWARD_OR_BACKWARD";
     }
-    else if (inst->motionType == MOTION_TYPE_ROTATION) {
-        motionTypeAsString = "ROT";
+    else if (inst->motionParameterType == MOTION_PARAMETER_TYPE_ROTATION) {
+        motionTypeAsString = "ROTATION";
     }
-    else if (inst->motionType == MOTION_TYPE_MAINTAIN_POSITION) {
-        motionTypeAsString = "MAINT";
+    else if (inst->motionParameterType == MOTION_PARAMETER_TYPE_MAINTAIN_POSITION) {
+        motionTypeAsString = "MAINTAIN";
     }
     appendKeyAndName(outputStream, ",motionType=", motionTypeAsString);
          

@@ -9,6 +9,10 @@
 #include "../../common/io/printWriter.h"
 #include "../../common/io/reader.h"
 
+#include "../../common/log/logLevel.h"
+#include "../../common/log/logger.h"
+#include "../../common/log/logHandler.h"
+
 #include "../../device/device.h"
 
 static Eeprom* eeprom_;
@@ -34,31 +38,40 @@ bool isEepromDeviceOk(void) {
     return true;
 }
 
-void deviceEepromHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream){
+void deviceEepromHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream) {
     _deviceEepromCheckInitialized();
 	if (commandHeader == COMMAND_DUMP_TO_FILE_EEPROM) {
 		ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_DUMP_TO_FILE_EEPROM);
-		dumpEeprom(eeprom_);
+		dumpEepromToFile(eeprom_);
 	}
-    if (commandHeader == COMMAND_READ_DATA_EEPROM) {
+	else if (commandHeader == COMMAND_DUMP_TO_LOG_OUTPUT_STREAM_EEPROM) {
+		ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_DUMP_TO_LOG_OUTPUT_STREAM_EEPROM);
+		OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+		dumpEepromToOutputStream(eeprom_, debugOutputStream);
+	}
+	else if (commandHeader == COMMAND_READ_DATA_EEPROM) {
         ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_READ_DATA_EEPROM);
         unsigned long address = readHex4(inputStream);
         char value = eeprom_->eepromReadChar(eeprom_, address);
         appendHex2(outputStream, value);
-    } else if (commandHeader == COMMAND_WRITE_DATA_EEPROM) {
+    }
+	else if (commandHeader == COMMAND_WRITE_DATA_EEPROM) {
         ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_WRITE_DATA_EEPROM);
         unsigned long address = readHex4(inputStream);
         int data = readHex2(inputStream);
         eeprom_->eepromWriteChar(eeprom_, address, data);
-    } else if (commandHeader == COMMAND_READ_BLOCK_EEPROM) {
-        ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_READ_BLOCK_EEPROM);
+    }
+	else if (commandHeader == COMMAND_READ_BLOCK_EEPROM) {
+     
+		ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_READ_BLOCK_EEPROM);
         unsigned long address = readHex4(inputStream);
         int index;
         for (index = 0; index < 8; index++) {
             char value = eeprom_->eepromReadChar(eeprom_, address + index);
             appendHex2(outputStream, value);
         }
-    } else if (commandHeader == COMMAND_WRITE_BLOCK_EEPROM) {
+    }
+	else if (commandHeader == COMMAND_WRITE_BLOCK_EEPROM) {
         ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_WRITE_BLOCK_EEPROM);
         unsigned long address = readHex4(inputStream);
         char data;

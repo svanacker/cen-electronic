@@ -227,7 +227,7 @@ void _readEeprom24C512Block(Eeprom* eeprom_, unsigned long index, unsigned int l
     WaitI2C(i2cBus);
 }
 
-void dumpEeprom(Eeprom* eeprom_) {
+void dumpEepromToFile(Eeprom* eeprom_) {
     if (eeprom_ == NULL) {
         writeError(UNIMPLETEMENTED_EXCEPTION);
         return;

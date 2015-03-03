@@ -18,6 +18,12 @@ int deviceEepromGetInterface(char header, DeviceInterfaceMode mode, bool fillDev
 		}
 		return 0;
 	}
+	else if (header == COMMAND_DUMP_TO_LOG_OUTPUT_STREAM_EEPROM) {
+		if (fillDeviceArgumentList) {
+			setFunction("Dump Eeprom to log output Stream", 0, 0);
+		}
+		return 0;
+	}
 	else if (header == COMMAND_READ_DATA_EEPROM ) {
         if (fillDeviceArgumentList) {
             setFunction("Data Read", 1, 1);

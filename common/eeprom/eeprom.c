@@ -46,8 +46,34 @@ bool isEepromInitialized(Eeprom* eeprom_) {
 void printEepromBlock(Eeprom* eeprom_, OutputStream* outputStream, long index, unsigned int length, Buffer* buffer) {
     eeprom_->eepromReadBlock(eeprom_, index, length, buffer);
     unsigned long i;
-    for (i = 0; i < length; i++){
+    for (i = 0; i < length; i++) {
         char c = bufferReadChar(buffer);
         appendHex2(outputStream, c);
     }
+}
+
+void dumpEepromToOutputStream(Eeprom* eeprom_, OutputStream* outputStream) {
+	unsigned long i;
+	
+	// 40 => 80 in hexadecimal
+	const int WIDTH = 40;
+
+	appendCRLF(outputStream);
+	for (i = 0; i < WIDTH * 2; i++) {
+		append(outputStream, '_');
+	}
+
+	for (i = 0; i < eeprom_->maxIndex; i++) {
+		char c = eeprom_->eepromReadChar(eeprom_, i);
+		if ((i % WIDTH) == 0) {
+			appendCRLF(outputStream);
+		}
+		appendHex2(outputStream, c);
+	}
+	appendCRLF(outputStream);
+
+	for (i = 0; i < WIDTH * 2; i++) {
+		append(outputStream, '_');
+	}
+
 }

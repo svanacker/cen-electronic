@@ -352,22 +352,22 @@ void initDevicesDescriptor() {
     // Device* infraredDetectorDevice = addI2cRemoteDevice(getRobotInfraredDetectorDeviceInterface(), MECHANICAL_BOARD_2_I2C_ADDRESS);
 
     // Motor Board->I2C
+    /*
     addI2cRemoteDevice(getTestDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
     addI2cRemoteDevice(getMotorDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
     addI2cRemoteDevice(getCodersDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
     addI2cRemoteDevice(getPIDDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
     addI2cRemoteDevice(getTrajectoryDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
     addI2cRemoteDevice(getMotionDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
+    */
 
     // MOTOR BOARD -> UART
-    /*
     addUartRemoteDevice(getTestDeviceInterface(), SERIAL_PORT_MOTOR);
     addUartRemoteDevice(getMotorDeviceInterface(), SERIAL_PORT_MOTOR);
     addUartRemoteDevice(getCodersDeviceInterface(), SERIAL_PORT_MOTOR);
     addUartRemoteDevice(getPIDDeviceInterface(), SERIAL_PORT_MOTOR);
     addUartRemoteDevice(getTrajectoryDeviceInterface(), SERIAL_PORT_MOTOR);
     addUartRemoteDevice(getMotionDeviceInterface(), SERIAL_PORT_MOTOR);
-    */    
 
     // Beacon Receiver Board->I2C
     // addI2cRemoteDevice(getBeaconReceiverDeviceInterface(), BEACON_RECEIVER_I2C_ADDRESS);

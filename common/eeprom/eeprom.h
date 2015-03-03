@@ -114,6 +114,11 @@ void printEepromBlock(Eeprom* eeprom_, OutputStream* outputStream, long index, u
 * Dump the content of the eeprom_ into a file (always the same).
 * Only available on PC.
 */
-void dumpEeprom(Eeprom* eeprom_);
+void dumpEepromToFile(Eeprom* eeprom_);
+
+/**
+ * Dump the content of the eeprom_ into an outputStream
+ */
+void dumpEepromToOutputStream(Eeprom* eeprom_, OutputStream* outputStream);
 
 #endif

@@ -58,7 +58,7 @@ void initEepromPc(Eeprom* eepromPc) {
 * Dump the content of the eeprom_ into a file (always the same).
 * Only available on PC.
 */
-void dumpEeprom(Eeprom* eeprom_) {
+void dumpEepromToFile(Eeprom* eeprom_) {
 	HANDLE handleFile;
 
 	long maxIndex = eeprom_->maxIndex;

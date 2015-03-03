@@ -246,7 +246,7 @@ int main(void) {
             } else {
                 timerMax = ITERATION_OFF;
             }
-            clickOnButton();
+            // clickOnButton();
         }
 
         // UART Stream
