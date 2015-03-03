@@ -9,6 +9,7 @@
 #include "../../common/io/reader.h"
 
 #include "../../device/deviceConstants.h"
+#include "../../device/system/systemDeviceInterface.h"
 
 #include "../../drivers/driver.h"
 #include "../../drivers/driverList.h"
@@ -19,8 +20,13 @@ bool pingDriverDataDispatcher(unsigned char dispatcherIndex) {
     OutputStream* outputStream = getDriverRequestOutputStream();
     InputStream* inputStream = getDriverResponseInputStream();
 
+	// To Select the dispatcher
     append(outputStream, DATA_DISPATCHER_DEVICE_HEADER);
-    append(outputStream, COMMAND_PING_DISPATCHER_INDEX);
+    appendHex2(outputStream, dispatcherIndex);
+
+	// To check if it's not another board which replies ...
+	append(outputStream, SYSTEM_DEVICE_HEADER);
+    append(outputStream, COMMAND_PING);
     appendHex2(outputStream, dispatcherIndex);
 
     // We do exactly as if the data was written by a end-user

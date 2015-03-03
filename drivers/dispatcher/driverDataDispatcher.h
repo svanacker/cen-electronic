@@ -50,23 +50,6 @@ typedef struct DriverDataDispatcher {
 } DriverDataDispatcher;
 
 /**
- * Generalist method to send data from the Driver to the Device
- * Transmit the data to the device (via local or distant call).
- * @param requestBuffer the input buffer (device request)
- * @param responseBuffer the output buffer (device response which can be received locally or via remote 
- * I2C / UART ...)
- * @param dataToTransferCount number of bytes which must be sent
- * @param dataToReceiveCount number of bytes which must be received
- */
-void transmitDriverData(TransmitMode transmitMode,
-                        int address,
-                        Buffer* requestBuffer,
-                        Buffer* responseBuffer,
-                        int dataToTransferCount,
-                        int dataToReceiveCount
-                        );
-
-/**
  * Handle data which are notification (and not direct response) from dispatcher.
  * @param dispatcher the dispatcher from which we try to handle notification.
  * @return true if there is a notification, false else

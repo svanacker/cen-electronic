@@ -12,6 +12,7 @@
 #include "../common/io/inputStream.h"
 #include "../common/io/ioUtils.h"
 #include "../common/io/printWriter.h"
+#include "../common/io/reader.h"
 #include "../common/io/outputStream.h"
 
 #include "../common/math/hexUtils.h"
@@ -69,64 +70,6 @@ bool filterFirstNextChar(Buffer* inputBuffer,  filterCharFunction* inputFilterCh
     return false;
 }
 
-/**
- * Special function to handle the "Ping Calls"
- * Ping Calls are broadcast to a specified Dispatcher, and not to a dispatcher which handle only a specific Device.
- * This code is a little bit tricky and should be simplified
- * @return true if a ping was handle or if there is an error that goes to a remove of all inputbuffer chars, false else
- */
-bool handlePingSpecialCase(Buffer* inputBuffer,
-                            Buffer* outputBuffer,
-                            OutputStream* outputStream,
-                            filterCharFunction* inputFilterChar,
-                            filterCharFunction* outputFilterChar,
-                            unsigned char deviceHeader, unsigned char commandHeader) {
-    // Ping special case => We need to decide which dispatcher we ping !
-    if (DATA_DISPATCHER_DEVICE_HEADER == deviceHeader && commandHeader == COMMAND_PING_DISPATCHER_INDEX) {
-        
-        int bufferSize = getBufferElementsCount(inputBuffer);
-
-        unsigned char pingMessageLength = DEVICE_AND_COMMAND_HEADER_LENGTH + 2;
-        // We need deviceHeader + commandHeader + Dispatcher index
-        if (bufferSize < pingMessageLength) {
-            return false;
-        }
-        unsigned char dispatcherIndex0 = bufferGetCharAtIndex(inputBuffer, COMMAND_HEADER_INDEX + 1);
-        unsigned char dispatcherIndex1 = bufferGetCharAtIndex(inputBuffer, COMMAND_HEADER_INDEX + 2);
-
-        char b0, b1;
-        filterBinaryToValueChar(dispatcherIndex0, &b0);
-        filterBinaryToValueChar(dispatcherIndex1, &b1);
-        int dispatcherIndex = hex2CharToInt(b0, b1);
-
-        DriverDataDispatcher* dataDispatcher = getDriverDataDispatcherByIndex(dispatcherIndex);
-        if (dataDispatcher == NULL) {
-            bufferClearLastChars(inputBuffer, pingMessageLength);
-            return true;
-        }
-
-        // Change from 'jp' to 'SP' to be sure that it will be handled by the remote dispatcher (all boards must define a local system Device Interface)
-        bufferWriteCharAtIndex(inputBuffer, DEVICE_HEADER_INDEX, SYSTEM_DEVICE_HEADER);
-        bufferWriteCharAtIndex(inputBuffer, COMMAND_HEADER_INDEX, COMMAND_PING);
-        transmitDriverData(dataDispatcher->transmitMode,
-            dataDispatcher->address,
-            inputBuffer,
-            outputBuffer,
-            // Send Dispatcher Index : 2 chars (input & output)
-            DEVICE_AND_COMMAND_HEADER_LENGTH + 2,
-            ACK_LENGTH + DEVICE_AND_COMMAND_HEADER_LENGTH + 2
-            );
-
-        // Copy the data from bufferOutputStream to the outputStream
-        if (outputStream != NULL) {
-            copyInputToOutputStream(&(outputBuffer->inputStream), outputStream, outputFilterChar, ACK_LENGTH + DEVICE_AND_COMMAND_HEADER_LENGTH + 2);
-        }
-
-        return true;
-    }
-    return false;
-}
-
 bool handleStreamInstruction(Buffer* inputBuffer,
                             Buffer* outputBuffer,
                             OutputStream* outputStream,
@@ -159,20 +102,31 @@ bool handleStreamInstruction(Buffer* inputBuffer,
         // As there is clear of char filtering, we must reload the size of the buffer
         int bufferSize = getBufferElementsCount(inputBuffer);
 
-        if (bufferSize < DEVICE_AND_COMMAND_HEADER_LENGTH) {
-            return false;
-        }
+		if (bufferSize < DEVICE_HEADER_LENGTH) {
+			return false;
+		}
 
+		// Get the header
         unsigned char deviceHeader = bufferGetCharAtIndex(inputBuffer, DEVICE_HEADER_INDEX);
-        unsigned char commandHeader = bufferGetCharAtIndex(inputBuffer, COMMAND_HEADER_INDEX);
 
-        if (handlePingSpecialCase(inputBuffer, outputBuffer, outputStream, inputFilterChar, outputFilterChar, deviceHeader, commandHeader)) {
-            // We return if we handle the ping
-            return true;
-        }
+		// Manage the dispatcher specifier (3 chars : Ex j01 before real command ...)
+		unsigned char specifyDispatcherLength = 0;
+		if (deviceHeader == DATA_DISPATCHER_DEVICE_HEADER) {
+			specifyDispatcherLength += DISPATCHER_COMMAND_AND_INDEX_HEADER_LENGTH;
+		}
 
-        // find the device corresponding to this header
-        const Device* device = deviceDataDispatcherFindDevice(deviceHeader, commandHeader, bufferSize, DEVICE_MODE_INPUT);
+		// Check if enough data
+		if (bufferSize < specifyDispatcherLength + DEVICE_AND_COMMAND_HEADER_LENGTH) {
+			return false;
+		}
+
+		// Reload the deviceHeader to take the dispatcher specifier if any
+		deviceHeader = bufferGetCharAtIndex(inputBuffer, specifyDispatcherLength + DEVICE_HEADER_INDEX);
+		unsigned char commandHeader = bufferGetCharAtIndex(inputBuffer, specifyDispatcherLength + COMMAND_HEADER_INDEX);
+
+        // find the device corresponding to this header. It must at least be declared in local or in remote !
+		unsigned char dataSize = bufferSize - specifyDispatcherLength;
+		const Device* device = deviceDataDispatcherFindDevice(deviceHeader, commandHeader, dataSize, DEVICE_MODE_INPUT);
 
         // if the device was not found
         if (device == NULL) {
@@ -182,8 +136,8 @@ bool handleStreamInstruction(Buffer* inputBuffer,
         // At this moment, device Interface is found
         DeviceInterface* deviceInterface = device->deviceInterface;
 
-        // We must send device Header + commandHeader + data => + 2
-        int dataToTransferCount = deviceInterface->deviceGetInterface(commandHeader, DEVICE_MODE_INPUT, false) + DEVICE_AND_COMMAND_HEADER_LENGTH;
+        // We must send device specifyDispatcherLength + Header + commandHeader + data => + 2
+		int dataToTransferCount = deviceInterface->deviceGetInterface(commandHeader, DEVICE_MODE_INPUT, false) + specifyDispatcherLength + DEVICE_AND_COMMAND_HEADER_LENGTH;
 
         if (bufferSize < dataToTransferCount) {
             return false;
@@ -195,8 +149,10 @@ bool handleStreamInstruction(Buffer* inputBuffer,
         InputStream* bufferedInputStream = getInputStream(inputBuffer);
         OutputStream* bufferedOutputStream = getOutputStream(outputBuffer);
 
+		TransmitMode transmitMode = device->transmitMode;
+
         // we handle locally the request
-        if (device->transmitMode == TRANSMIT_LOCAL) {
+		if (specifyDispatcherLength == 0 && transmitMode == TRANSMIT_LOCAL) {
 
             // We need the implementation for local mode
             DeviceDescriptor* deviceDescriptor = device->descriptor;
@@ -213,12 +169,43 @@ bool handleStreamInstruction(Buffer* inputBuffer,
             // Call to the device
             deviceDescriptor->deviceHandleRawData(commandHeader, bufferedInputStream, bufferedOutputStream);
 
-        }// we forward the request through I2C
-        else if (device->transmitMode == TRANSMIT_I2C || device->transmitMode == TRANSMIT_UART || device->transmitMode == TRANSMIT_ZIGBEE) {
-            // copy Driver buffer through I2C
-            transmitDriverData(device->transmitMode,
-                    device->address,
-                    inputBuffer,
+        } // we forward the request through Remote Operation with Dispatcher
+		else if (specifyDispatcherLength > 0 || transmitMode == TRANSMIT_I2C || transmitMode == TRANSMIT_UART || transmitMode == TRANSMIT_ZIGBEE) {
+
+			// Find dispatcher
+			DriverDataDispatcher* dispatcher = NULL;
+
+			if (specifyDispatcherLength > 0) {
+				bufferClearLastChars(inputBuffer, DEVICE_HEADER_LENGTH);
+				unsigned char dispatcherIndex = readHex2(bufferedInputStream);
+
+				dispatcher = getDriverDataDispatcherByIndex(dispatcherIndex);
+				if (dispatcher == NULL) {
+					writeError(NO_DISPATCHER_FOUND);
+					OutputStream* errorOutputStream = getErrorOutputStreamLogger();
+					appendStringAndDec(errorOutputStream, ", dispatcherIndex=", dispatcherIndex);
+				}
+			}
+			else {
+				TransmitMode transmitMode = device->transmitMode;
+				int address = device->address;
+
+				dispatcher = getDriverDataDispatcherByTransmitMode(transmitMode, address);
+				
+				if (dispatcher == NULL) {
+					writeError(NO_DISPATCHER_FOUND);
+					OutputStream* errorOutputStream = getErrorOutputStreamLogger();
+					appendStringAndDec(errorOutputStream, ", transmitMode=", transmitMode);
+					append(errorOutputStream, '(');
+					appendString(errorOutputStream, getTransmitModeAsString(transmitMode));
+					append(errorOutputStream, ')');
+					appendStringAndDec(errorOutputStream, ", addr=", address);
+				}
+			}
+
+            // copy Driver buffer with remote Call
+			dispatcher->driverDataDispatcherTransmitData(dispatcher,
+					inputBuffer,
                     outputBuffer,
                     dataToTransferCount,
                     dataToReceiveCount

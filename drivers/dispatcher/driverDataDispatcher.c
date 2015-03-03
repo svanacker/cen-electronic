@@ -23,36 +23,6 @@
 
 #include "../../drivers/driver.h"
 
-void transmitDriverData(TransmitMode transmitMode,
-        int address,
-        Buffer* requestBuffer,
-        Buffer* responseBuffer,
-        int dataToTransferCount,
-        int dataToReceiveCount
-        ) {
-    // Find dispatcher
-    DriverDataDispatcher* dispatcher = getDriverDataDispatcherByTransmitMode(transmitMode, address);
-
-    // If the dispatcher is found
-    if (dispatcher != NULL) {
-        // Transmit the data
-        dispatcher->driverDataDispatcherTransmitData(dispatcher,
-                requestBuffer,
-                responseBuffer,
-                dataToTransferCount,
-                dataToReceiveCount
-                );
-    } else {
-        writeError(NO_DISPATCHER_FOUND);
-        OutputStream* errorOutputStream = getErrorOutputStreamLogger();
-        appendStringAndDec(errorOutputStream, ",transmitMode=", transmitMode);
-        append(errorOutputStream, '(');
-        appendString(errorOutputStream, getTransmitModeAsString(transmitMode));
-        append(errorOutputStream, ')');
-        appendStringAndDec(errorOutputStream, ",addr=", address);
-    }
-}
-
 bool handleNotificationFromDispatcher(DriverDataDispatcher* dispatcher) {
     InputStream* inputStream = dispatcher->inputStream;
 

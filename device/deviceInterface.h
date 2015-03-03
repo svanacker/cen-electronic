@@ -43,9 +43,19 @@ typedef int DeviceInterfaceMode;
 #define ACK_LENGTH                                1
 
 /**
+* Define the length used by the header length
+*/
+#define DEVICE_HEADER_LENGTH					1
+
+/**
  * Define the length used by the header length, and the command header.
  */
 #define DEVICE_AND_COMMAND_HEADER_LENGTH         2
+
+/**
+ * Define the length used by the dispatcher Prefix ('j' + index of the dispatcher in hex) => 3 chars
+ */
+#define DISPATCHER_COMMAND_AND_INDEX_HEADER_LENGTH 3
 
 // NOTIFICATION
 
