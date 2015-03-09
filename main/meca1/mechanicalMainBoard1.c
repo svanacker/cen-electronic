@@ -139,7 +139,7 @@ int main(void) {
     // Init the logs
     initLogs(DEBUG, &logHandlerListArray, MECA_BOARD_1_LOG_HANDLER_LIST_LENGTH);
     addLogHandler("UART", &debugOutputStream, DEBUG);
-    appendString(getOutputStreamLogger(INFO), "MECHANICAL 1 OK");
+    appendString(getInfoOutputStreamLogger(), "MECHANICAL 1 OK");
 
     openSlaveI2cStreamLink(&i2cSerialStreamLink,
                             &i2cSlaveInputBuffer,
@@ -162,7 +162,7 @@ int main(void) {
     // 2011 : TODO : A regarder
     ADPCFG = 0xFFFF;
 
-    // printAllPinValues(getOutputStreamLogger(DEBUG));
+    // printAllPinValues(getDebugOutputStreamLogger());
 
     while (1) {
 

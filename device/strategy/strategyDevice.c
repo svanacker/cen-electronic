@@ -71,8 +71,8 @@ void deviceStrategyHandleRawData(char commandHeader, InputStream* inputStream, O
         // TODO : Provide non specific function
         int strategyIndex = (c & CONFIG_STRATEGY_MASK);
         context->strategyIndex = strategyIndex;
-        appendStringAndDec(getOutputStreamLogger(INFO), "setStrategy:", strategyIndex);
-        println(getOutputStreamLogger(INFO));
+        appendStringAndDec(getInfoOutputStreamLogger(), "setStrategy:", strategyIndex);
+        println(getInfoOutputStreamLogger());
 
         initStrategy2012(strategyIndex);
         if (c & CONFIG_COLOR_BLUE_MASK) {
@@ -85,7 +85,7 @@ void deviceStrategyHandleRawData(char commandHeader, InputStream* inputStream, O
     }
     // Print Gameboard
     else if (commandHeader == COMMAND_STRATEGY_PRINT_GAME_BOARD) {
-        OutputStream* debugOutputStream = getOutputStreamLogger(ALWAYS);
+        OutputStream* debugOutputStream = getAlwaysOutputStreamLogger();
         ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_STRATEGY_PRINT_GAME_BOARD);
 
         printStrategyAllDatas(debugOutputStream);
@@ -122,7 +122,7 @@ void deviceStrategyHandleRawData(char commandHeader, InputStream* inputStream, O
         // angle in ddeg
         context->robotAngle = readHex4(inputStream);
 
-        OutputStream* debugOutputStream = getOutputStreamLogger(INFO);
+        OutputStream* debugOutputStream = getInfoOutputStreamLogger();
         appendStringAndDec(debugOutputStream, "\nStrategySetRobotPosition:status=", status);
         appendStringAndDecf(debugOutputStream, ", x=", context->robotPosition.x);
         appendStringAndDecf(debugOutputStream, ", y=", context->robotPosition.y);

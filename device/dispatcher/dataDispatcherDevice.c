@@ -39,7 +39,7 @@ void deviceDataDispatcherHandleRawData(char header, InputStream* inputStream, Ou
     if (header == COMMAND_DISPATCHER_LIST) {
         ackCommand(outputStream, SYSTEM_DEBUG_DEVICE_HEADER, COMMAND_DISPATCHER_LIST);
         DriverDataDispatcherList* dispatcherList = getDispatcherList();
-        printDriverDataDispatcherList(getOutputStreamLogger(ALWAYS), dispatcherList);         
+        printDriverDataDispatcherList(getAlwaysOutputStreamLogger(), dispatcherList);         
     }
     else if (header == COMMAND_PING_DISPATCHER_INDEX) {
         // Handle directly by DriverStreamListener => Throw an error

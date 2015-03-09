@@ -38,7 +38,7 @@ void deviceSerialDebugHandleRawData(char header, InputStream* inputStream, Outpu
     // Serial Input Buffers
     if (header == COMMAND_SERIAL_INPUT_BUFFERS) {
         ackCommand(outputStream, SERIAL_DEBUG_DEVICE_HEADER, COMMAND_SERIAL_INPUT_BUFFERS);
-        printSerialInputBuffers(getOutputStreamLogger(ALWAYS));         
+        printSerialInputBuffers(getAlwaysOutputStreamLogger());         
     }
 }
 

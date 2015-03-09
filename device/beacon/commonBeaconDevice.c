@@ -55,7 +55,7 @@ void commonBeaconDeviceHandleRawData(char commandHeader,
     if (commandHeader == COMMAND_REDIRECT_TO_JENNIC) {
         ackCommand(outputStream, COMMON_BEACON_DEVICE_HEADER, COMMAND_REDIRECT_TO_JENNIC);
         redirectToDevices = false;
-        appendString(getOutputStreamLogger(INFO), "REDIRECT COMMAND TO JENNIC \n");
+        appendString(getInfoOutputStreamLogger(), "REDIRECT COMMAND TO JENNIC \n");
     // Reset
     } else if (commandHeader == COMMAND_RESET_JENNIC) {
         ackCommand(outputStream, COMMON_BEACON_DEVICE_HEADER, COMMAND_RESET_JENNIC);
@@ -70,7 +70,7 @@ void commonBeaconDeviceHandleRawData(char commandHeader,
     else if (commandHeader == COMMAND_SHOW_DATA_FROM_JENNIC) {
         ackCommand(outputStream, COMMON_BEACON_DEVICE_HEADER, COMMAND_SHOW_DATA_FROM_JENNIC);
         Buffer* inDataBuffer = getJennicInDataBuffer();
-        copyInputToOutputStream(&(inDataBuffer->inputStream), getOutputStreamLogger(DEBUG), NULL, COPY_ALL);
+        copyInputToOutputStream(&(inDataBuffer->inputStream), getDebugOutputStreamLogger(), NULL, COPY_ALL);
     }
 }
 

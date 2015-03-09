@@ -61,7 +61,7 @@ void testI2CSlave() {
     // Logs
     initLog(DEBUG);
     addLogHandler(&serialLogHandler, "UART", &debugOutputStream, DEBUG);
-    appendString(getOutputStreamLogger(INFO), "TEST I2C SLAVE ");
+    appendString(getInfoOutputStreamLogger(), "TEST I2C SLAVE ");
 
     delaymSec(1000);
 

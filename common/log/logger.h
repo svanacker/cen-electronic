@@ -12,6 +12,10 @@ typedef struct Logger {
     LogLevel globalLogLevel;
     /** the level that we used to write. */
     LogLevel writeLogLevel;
+	/** The default categoryMask when we do not define it .*/
+	unsigned long defaultLogCategoryMask;
+	/** the current mask that we are currently using .*/
+	unsigned long logCategoryMask;
     /** the list of handler. */
     LogHandlerList* logHandlerList;
     /** The outputStream as an interface to the developer. */
@@ -31,7 +35,7 @@ LogHandlerList* getLoggerHandlerList();
  * @param handlerListArray the array containing all log Handlers
  * @param handlerListSize the size of the previous array
  */
-void initLogs(LogLevel globalLevel, LogHandler(*handlerListArray)[], unsigned char handlerListSize);
+void initLogs(LogLevel globalLevel, LogHandler(*handlerListArray)[], unsigned char handlerListSize, unsigned long defaultCategoryMask);
 
 /**
  * Add a log Handler to the system.
@@ -42,26 +46,46 @@ void initLogs(LogLevel globalLevel, LogHandler(*handlerListArray)[], unsigned ch
  */
 LogHandler* addLogHandler(char* handlerName,
 	OutputStream* outputStream,
-	LogLevel logLevel);
+	LogLevel logLevel,
+	unsigned long logCategoryMask);
 
 /**
  * Get a compatible outputStream (to be used with printWriter) in which we write.
  * @param writeLogLevel The log level which will be used to write the underlying log.
+ * @param logCategoryMask the mask which is used to select right handler target
  * @return the compatible outputStream (to be used with printWriter) in which we write
  */
-OutputStream* getOutputStreamLogger(LogLevel writeLogLevel);
+OutputStream* getOutputStreamLogger(LogLevel writeLogLevel, unsigned long logCategoryMask);
 
 /**
-* Get an outputStream for log with DEBUG level.
-* @return an outputStream for log with DEBUG level
+* Get an outputStream for log with DEBUG level and default category level.
+* @return an outputStream for log with DEBUG level and default category level
 */
 OutputStream* getDebugOutputStreamLogger();
 
 /**
-* Get an outputStream for log with ERROR level.
-* @return an outputStream for log with ERROR level
+* Get an outputStream for log with INFO level and default category level.
+* @return an outputStream for log with INFO level and default category level
+*/
+OutputStream* getInfoOutputStreamLogger();
+
+/**
+* Get an outputStream for log with WARNING level and default category level.
+* @return an outputStream for log with WARNING level and default category level
+*/
+OutputStream* getWarningOutputStreamLogger();
+
+/**
+* Get an outputStream for log with ERROR level and default category level.
+* @return an outputStream for log with ERROR level and default category level
 */
 OutputStream* getErrorOutputStreamLogger();
+
+/**
+* Get an outputStream for log with ALWAYS level and default category level.
+* @return an outputStream for log with ALWAYS level and default category level
+*/
+OutputStream* getAlwaysOutputStreamLogger();
 
 /**
  * Returns the singleton for logger.

@@ -39,8 +39,8 @@ bool deviceTimerIsOk(void) {
  * The interrupt demo timer.
  */
 void interruptDemoTimerCallbackFunc(Timer* timer) {
-    appendStringAndDec(getOutputStreamLogger(ALWAYS), "counter=", demoCounter);
-    appendCRLF(getOutputStreamLogger(ALWAYS));
+    appendStringAndDec(getAlwaysOutputStreamLogger(), "counter=", demoCounter);
+    appendCRLF(getAlwaysOutputStreamLogger());
     demoCounter++;
 }
 
@@ -55,7 +55,7 @@ Timer* addTimerDemo(void) {
 
 void deviceTimerHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream) {
     if (commandHeader == COMMAND_TIMER_LIST) {
-        printTimerList(getOutputStreamLogger(ALWAYS), getTimerList());
+        printTimerList(getAlwaysOutputStreamLogger(), getTimerList());
         ackCommand(outputStream, TIMER_DEVICE_HEADER, COMMAND_TIMER_LIST);
     }    
     else if (commandHeader == COMMAND_TIMER_ENABLE_DEMO) {

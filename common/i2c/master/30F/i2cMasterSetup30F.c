@@ -17,7 +17,7 @@ static bool initialized = false;
 void i2cMasterInitialize(I2cBus* i2cBus) {
     // Avoid more than one initialization
     if (initialized) {
-        appendString(getOutputStreamLogger(DEBUG), "I2C Master already initialized\n");
+        appendString(getDebugOutputStreamLogger(), "I2C Master already initialized\n");
         return;
     }
     int I2C_BRG = 0x10B;    // 100kHz for PIC30
@@ -42,9 +42,9 @@ void i2cMasterInitialize(I2cBus* i2cBus) {
 
     WaitI2C(i2cBus);
 
-    appendString(getOutputStreamLogger(DEBUG), "I2C Master CONF=");
-    appendBinary16(getOutputStreamLogger(DEBUG), I2C_CON, 4);
-    appendCRLF(getOutputStreamLogger(DEBUG));
+    appendString(getDebugOutputStreamLogger(), "I2C Master CONF=");
+    appendBinary16(getDebugOutputStreamLogger(), I2C_CON, 4);
+    appendCRLF(getDebugOutputStreamLogger());
 
     initialized = true;
 }

@@ -135,8 +135,8 @@ static GameStrategyItem bullionLeft1StrategyItem;
 void setColor(TEAM_COLOR color) {
     GameStrategyContext* context = getStrategyContext();
 
-    appendStringAndDec(getOutputStreamLogger(INFO), "setColor:", color);
-    println(getOutputStreamLogger(INFO));
+    appendStringAndDec(getInfoOutputStreamLogger(), "setColor:", color);
+    println(getInfoOutputStreamLogger());
 
     context->color = color;
     changeLocationsForColor();
@@ -152,7 +152,7 @@ void setColor(TEAM_COLOR color) {
 
     context->robotAngle = angle;
 
-    printStrategyAllDatas(getOutputStreamLogger(INFO));
+    printStrategyAllDatas(getInfoOutputStreamLogger());
 }
 
 void initLocations2012() {
@@ -487,7 +487,7 @@ void initStrategy2012(int strategyIndex) {
     else {
         strategyContext->maxTargetToHandle = getGameTargetList()->size;
     }
-    //OutputStream* debugOutputStream = getOutputStreamLogger(INFO);
+    //OutputStream* debugOutputStream = getInfoOutputStreamLogger();
     //printStrategyAllDatas(debugOutputStream);
 
     // opponent

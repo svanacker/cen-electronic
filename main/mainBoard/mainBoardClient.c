@@ -467,12 +467,12 @@ int main(void) {
     initClockPCF8563(&clock, &i2cBus);
 
     // Init the logs
-    initLogs(DEBUG, &logHandlerListArray, MAIN_BOARD_LOG_HANDLER_LIST_LENGTH);
-    addLogHandler("UART", &debugOutputStream, DEBUG);
-    addLogHandler("LCD", &lcdOutputStream, LOG_LEVEL_ERROR);
+    initLogs(DEBUG, &logHandlerListArray, MAIN_BOARD_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
+    addLogHandler("UART", &debugOutputStream, DEBUG, LOG_HANDLER_CATEGORY_ALL_MASK);
+    addLogHandler("LCD", &lcdOutputStream, LOG_LEVEL_ERROR, LOG_HANDLER_CATEGORY_ALL_MASK);
 
-    appendString(getOutputStreamLogger(ALWAYS), getPicName());
-    println(getOutputStreamLogger(ALWAYS));
+    appendString(getAlwaysOutputStreamLogger(), getPicName());
+    println(getAlwaysOutputStreamLogger());
 
     initDevicesDescriptor();
     initDriversDescriptor();

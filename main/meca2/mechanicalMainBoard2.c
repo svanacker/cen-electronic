@@ -163,8 +163,8 @@ int main(void) {
     // Init the logs
     initLogs(DEBUG, &logHandlerListArray, MECA_BOARD_2_LOG_HANDLER_LIST_LENGTH);
     addLogHandler("UART", &debugOutputStream, DEBUG);
-    appendString(getOutputStreamLogger(ALWAYS), getPicName());
-    println(getOutputStreamLogger(ALWAYS));
+    appendString(getAlwaysOutputStreamLogger(), getPicName());
+    println(getAlwaysOutputStreamLogger());
 
     
     initTimerList(&timerListArray, MECHANICAL_BOARD_2_TIMER_LENGTH);
@@ -203,13 +203,13 @@ int main(void) {
         // Forward Obstacle
         if (getRobotInfraredObstacleForward()) {
             notifyInfraredDetectorDetection(DETECTOR_FORWARD_INDEX);
-            appendString(getOutputStreamLogger(ALWAYS), "\nForward Obstacle, wait few seconds For New Notification !\n");
+            appendString(getAlwaysOutputStreamLogger(), "\nForward Obstacle, wait few seconds For New Notification !\n");
         }
 
         // Backward Obstacle
         if (getRobotInfraredObstacleBackward()) {
             notifyInfraredDetectorDetection(DETECTOR_BACKWARD_INDEX);
-            appendString(getOutputStreamLogger(ALWAYS), "\nBackward Obstacle, wait few seconds For New Notification !\n");
+            appendString(getAlwaysOutputStreamLogger(), "\nBackward Obstacle, wait few seconds For New Notification !\n");
         }
 
         // I2C Stream

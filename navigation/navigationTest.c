@@ -49,11 +49,11 @@ int addNavigationLocations() {
 
     addStrategyPaths();
 
-    printPathList(getOutputStreamLogger(INFO), "Paths definition", getNavigationPathList());
+    printPathList(getInfoOutputStreamLogger(), "Paths definition", getNavigationPathList());
 
     int cost = computeBestPath(&resultLocationList, &locationA, &locationJ);
 
-    printLocationList(getOutputStreamLogger(INFO), "Result=", &resultLocationList);
+    printLocationList(getInfoOutputStreamLogger(), "Result=", &resultLocationList);
 
     return cost;
 

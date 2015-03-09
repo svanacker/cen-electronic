@@ -43,12 +43,12 @@ void deviceFileHandleRawData(char commandHeader, InputStream* inputStream, Outpu
 		// Create FAT volume with default cluster size
 		res = f_mkfs("", 0, 0);
 
-		if (res == RES_OK) {
+		if (res == FR_OK) {
 
 			// Create a file as new
-			res = f_open(&fil, "hello.txt", FA_CREATE_NEW | FA_WRITE);
+			res = f_open(&fil, "toto.txt", FA_CREATE_NEW | FA_WRITE);
 		}
-		if (res == RES_OK) {
+		if (res == FR_OK) {
 
 			// Write a message
 			f_write(&fil, "Hello, World!\r\n", 15, &bw);
@@ -91,21 +91,37 @@ void deviceFileHandleRawData(char commandHeader, InputStream* inputStream, Outpu
 	}
 	else if (commandHeader == COMMAND_SHOW_LIST_FILE) {
         ackCommand(outputStream, FILE_DEVICE_HEADER, COMMAND_SHOW_LIST_FILE);
-		FRESULT fr;
-		DIR dj;         /* Directory search object */
-		FILINFO fno;    /* File information */
+		DIR dj;         // Directory search object
+		FILINFO fno;    // File information
 		FRESULT result;
 
 		FATFS fs;
 		f_mount(&fs, "", 0);
 
-		// f_opendir(&dj, "");
+		f_opendir(&dj, "");
+		/*
+		fr = f_findfirst(&dj, &fno, "", "*.*");
 
-		fr = f_findfirst(&dj, &fno, "", "*.txt");
-
-		while (fr == FR_OK && fno.fname[0]) {         /* Repeat while an item is found */
+		while (fr == FR_OK && fno.fname[0]) {         // Repeat while an item is found
 			appendString(getErrorOutputStreamLogger(), fno.fname[0]);
-			fr = f_findnext(&dj, &fno);               /* Search for next item */
+			fr = f_findnext(&dj, &fno);               // Search for next item
+		}
+		*/
+		for (;;) {
+			result = f_readdir(&dj, &fno); /* Read a directory item */
+			if (result || !fno.fname[0]) break; /* Error or end of dir */
+
+			if (fno.fattrib & AM_DIR) {
+				appendString(getErrorOutputStreamLogger(), "DIR:"); // is Directory  
+				appendStringCRLF(getErrorOutputStreamLogger(), fno.fname); // is Directory  
+			}
+			else {
+				appendString(getErrorOutputStreamLogger(), "FILE:"); // is Directory  
+				// char* pointer = &(fno.fname);
+				// appendStringCRLF(getErrorOutputStreamLogger(), pointer); // is Directory  
+
+				// printf("%8lu  %s\n\r", fno.fsize, fno.fname); // is file  
+			}
 		}
 		f_closedir(&dj);
 
@@ -119,13 +135,13 @@ void deviceFileHandleRawData(char commandHeader, InputStream* inputStream, Outpu
 
 		FATFS fs;
 		f_mount(&fs, "", 0);
-		result = f_open(&file, "hello.txt", FA_READ);
+		result = f_open(&file, "toto.txt", FA_READ);
 
-		DWORD size = f_size(&file);
-		DWORD byteRead;
+		UINT size = f_size(&file);
+		UINT byteRead;
 		result = f_read(&file, &buffer, size, &byteRead);
 
-		appendString(getErrorOutputStreamLogger(), &buffer);
+		// appendString(getErrorOutputStreamLogger(), &buffer);
 
         // TODO
     } else if (commandHeader == COMMAND_CREATE_NEW_FILE) {

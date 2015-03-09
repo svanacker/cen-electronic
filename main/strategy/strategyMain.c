@@ -128,7 +128,7 @@ void initDriverToI2CSlaveAndDebugCompositeOutputStream(bool includeI2C) {
     initCompositeOutputStream(&driverToI2CSlaveAndDebugCompositeOutputStream);
 
     // UART / DEBUG
-    addOutputStream(&driverToI2CSlaveAndDebugCompositeOutputStream, getOutputStreamLogger(INFO));
+    addOutputStream(&driverToI2CSlaveAndDebugCompositeOutputStream, getInfoOutputStreamLogger());
 
     // I2C
     if (includeI2C) {
@@ -193,8 +193,8 @@ int main(void) {
     // Init the logs
     initLog(DEBUG);
     addLogHandler(&serialLogHandler, "UART", &debugOutputStream, DEBUG);
-    appendString(getOutputStreamLogger(INFO), getPicName());
-    println(getOutputStreamLogger(INFO));
+    appendString(getInfoOutputStreamLogger(), getPicName());
+    println(getInfoOutputStreamLogger());
 
     openSlaveI2cStreamLink(&i2cSerialStreamLink,
                             &i2cSlaveInputBuffer,
@@ -214,13 +214,13 @@ int main(void) {
     // initStrategy2012(0);
     //setColor(COLOR_VIOLET);
 
-    // printGameboard(getOutputStreamLogger(INFO));
-    // printStrategyAllDatas(getOutputStreamLogger(INFO));
+    // printGameboard(getInfoOutputStreamLogger());
+    // printStrategyAllDatas(getInfoOutputStreamLogger());
 
     initStrategyHandler();
 
     //addNavigationLocations();
-    //printDeviceListUsage(getOutputStreamLogger(INFO));
+    //printDeviceListUsage(getInfoOutputStreamLogger());
     while (nextStep());
     while (1);
 

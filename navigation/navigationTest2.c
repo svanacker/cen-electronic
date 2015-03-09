@@ -64,7 +64,7 @@ int addNavigationLocationsTest2() {
 
     int cost = computeBestPath(&resultLocationList, &locationS, &locationS);
 
-    printLocationList(getOutputStreamLogger(INFO), "Result=", &resultLocationList);
+    printLocationList(getInfoOutputStreamLogger(), "Result=", &resultLocationList);
 
     return cost;
 }

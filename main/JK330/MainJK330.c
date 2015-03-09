@@ -356,8 +356,8 @@ int main(void) {
     //init24C512Eeprom(&eeprom_);
     //initClockPCF8563(&globalClock);
 
-    appendString(getOutputStreamLogger(DEBUG), getPicName());
-    println(getOutputStreamLogger(DEBUG));
+    appendString(getDebugOutputStreamLogger(), getPicName());
+    println(getDebugOutputStreamLogger());
 
     clearScreen();
 
@@ -365,17 +365,17 @@ int main(void) {
     initDriversDescriptor();
 
     //Affiche la liste des loggger sur DEBUG
-    printLogger(getOutputStreamLogger(DEBUG));
+    printLogger(getDebugOutputStreamLogger());
 
-    appendString(getOutputStreamLogger(DEBUG), "Lecture Horloge : \r");
+    appendString(getDebugOutputStreamLogger(), "Lecture Horloge : \r");
 
     //CLOCK Read
     //globalClock.readClock(&globalClock);
 
     // Print on the OutputStream
 
-    printClock(getOutputStreamLogger(DEBUG), &globalClock);
-    appendCR(getOutputStreamLogger(DEBUG));
+    printClock(getDebugOutputStreamLogger(), &globalClock);
+    appendCR(getDebugOutputStreamLogger());
 
     //setTemperatureAlertLimit(0x35);//35?C
 

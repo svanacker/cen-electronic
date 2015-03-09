@@ -56,9 +56,9 @@ void i2cSlaveInitialize(I2cBus* i2cBus, unsigned char writeAddress) {
     }
     slaveWriteAddress = writeAddress;
 
-    appendString(getOutputStreamLogger(DEBUG), "I2C Slave Write Address=");
-    appendHex2(getOutputStreamLogger(DEBUG), writeAddress);
-    appendCRLF(getOutputStreamLogger(DEBUG));
+    appendString(getDebugOutputStreamLogger(), "I2C Slave Write Address=");
+    appendHex2(getDebugOutputStreamLogger(), writeAddress);
+    appendCRLF(getDebugOutputStreamLogger());
 
     masterToSlaveHandle = initClientPipe(L"\\\\.\\pipe\\mainBoardPipe");
     slaveToMasterHandle = initServerPipe(L"\\\\.\\pipe\\motorBoardPipe");

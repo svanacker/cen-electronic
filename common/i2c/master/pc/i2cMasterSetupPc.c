@@ -32,10 +32,10 @@ HANDLE getSlavePipeHandle(I2cBus* i2cBus, unsigned char writeAddress) {
 void i2cMasterInitialize(I2cBus* i2cBus) {
     // Avoid more than one initialization
     if (masterPipeHandle != NULL) {
-        appendString(getOutputStreamLogger(DEBUG), "I2C PC Master (Pipe) already initialized\n");
+        appendString(getDebugOutputStreamLogger(), "I2C PC Master (Pipe) already initialized\n");
         return;
     }
-    appendString(getOutputStreamLogger(DEBUG), "I2C Master Initialize\r\n");
+    appendString(getDebugOutputStreamLogger(), "I2C Master Initialize\r\n");
     masterPipeHandle = initServerPipe(PIPE_I2C_MASTER_NAME);
     delaymSec(200);
     slavePipeHandle = initClientPipe(PIPE_I2C_SLAVE_NAME);

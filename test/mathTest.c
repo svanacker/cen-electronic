@@ -25,15 +25,15 @@ bool absLongTest(void) {
     return assertLongEquals(value, absValue, "");
 
     /*    
-    appendCRLF(getOutputStreamLogger(DEBUG));
-    appendString(getOutputStreamLogger(DEBUG), "absLongTest\n");
-    appendString(getOutputStreamLogger(DEBUG), "NORMAL=");
-    appendDec(getOutputStreamLogger(DEBUG), value);
-    appendCRLF(getOutputStreamLogger(DEBUG));
+    appendCRLF(getDebugOutputStreamLogger());
+    appendString(getDebugOutputStreamLogger(), "absLongTest\n");
+    appendString(getDebugOutputStreamLogger(), "NORMAL=");
+    appendDec(getDebugOutputStreamLogger(), value);
+    appendCRLF(getDebugOutputStreamLogger());
 
-    appendString(getOutputStreamLogger(DEBUG), "RESULT=");
-    appendDec(getOutputStreamLogger(DEBUG), absValue);
-    appendCRLF(getOutputStreamLogger(DEBUG));
+    appendString(getDebugOutputStreamLogger(), "RESULT=");
+    appendDec(getDebugOutputStreamLogger(), absValue);
+    appendCRLF(getDebugOutputStreamLogger());
     */
 
 }
@@ -44,15 +44,15 @@ bool absLimitTest(void) {
 
     signed long result = limit(value1, limitValue);
     
-    appendCRLF(getOutputStreamLogger(DEBUG));
-    appendString(getOutputStreamLogger(DEBUG), "absLimitTest\n");
-    appendString(getOutputStreamLogger(DEBUG), "NORMAL=");
-    appendDec(getOutputStreamLogger(DEBUG), limitValue);
-    appendCRLF(getOutputStreamLogger(DEBUG));
+    appendCRLF(getDebugOutputStreamLogger());
+    appendString(getDebugOutputStreamLogger(), "absLimitTest\n");
+    appendString(getDebugOutputStreamLogger(), "NORMAL=");
+    appendDec(getDebugOutputStreamLogger(), limitValue);
+    appendCRLF(getDebugOutputStreamLogger());
 
-    appendString(getOutputStreamLogger(DEBUG), "RESULT=");
-    appendDec(getOutputStreamLogger(DEBUG), result);
-    appendCRLF(getOutputStreamLogger(DEBUG));
+    appendString(getDebugOutputStreamLogger(), "RESULT=");
+    appendDec(getDebugOutputStreamLogger(), result);
+    appendCRLF(getDebugOutputStreamLogger());
 
     return false;
 }
@@ -61,15 +61,15 @@ bool absFloatTest(void) {
     signed long value = 40000.0;
     signed long absValue = fabsf(value);
     
-    appendCRLF(getOutputStreamLogger(DEBUG));
-    appendString(getOutputStreamLogger(DEBUG), "absFloatTest\n");
-    appendString(getOutputStreamLogger(DEBUG), "NORMAL=");
-    appendDecf(getOutputStreamLogger(DEBUG), value);
-    appendCRLF(getOutputStreamLogger(DEBUG));
+    appendCRLF(getDebugOutputStreamLogger());
+    appendString(getDebugOutputStreamLogger(), "absFloatTest\n");
+    appendString(getDebugOutputStreamLogger(), "NORMAL=");
+    appendDecf(getDebugOutputStreamLogger(), value);
+    appendCRLF(getDebugOutputStreamLogger());
 
-    appendString(getOutputStreamLogger(DEBUG), "RESULT=");
-    appendDecf(getOutputStreamLogger(DEBUG), absValue);
-    appendCRLF(getOutputStreamLogger(DEBUG));
+    appendString(getDebugOutputStreamLogger(), "RESULT=");
+    appendDecf(getDebugOutputStreamLogger(), absValue);
+    appendCRLF(getDebugOutputStreamLogger());
 
     return false;
 }
@@ -78,14 +78,14 @@ bool convertFloatTest1(void) {
     signed long value = 40000;
     float result = (float) value;
     
-    appendCRLF(getOutputStreamLogger(DEBUG));
-    appendString(getOutputStreamLogger(DEBUG), "convertFloatTest1\n");
-    appendString(getOutputStreamLogger(DEBUG), "NORMAL=40000.0000");
-    appendCRLF(getOutputStreamLogger(DEBUG));
+    appendCRLF(getDebugOutputStreamLogger());
+    appendString(getDebugOutputStreamLogger(), "convertFloatTest1\n");
+    appendString(getDebugOutputStreamLogger(), "NORMAL=40000.0000");
+    appendCRLF(getDebugOutputStreamLogger());
 
-    appendString(getOutputStreamLogger(DEBUG), "RESULT=");
-    appendDecf(getOutputStreamLogger(DEBUG), result);
-    appendCRLF(getOutputStreamLogger(DEBUG));
+    appendString(getDebugOutputStreamLogger(), "RESULT=");
+    appendDecf(getDebugOutputStreamLogger(), result);
+    appendCRLF(getDebugOutputStreamLogger());
 
     return false;
 }
@@ -94,14 +94,14 @@ bool convertFloatTest2(void) {
     signed long value = -40000;
     float result = (float) value;
     
-    appendCRLF(getOutputStreamLogger(DEBUG));
-    appendString(getOutputStreamLogger(DEBUG), "convertFloatTest2\n");
-    appendString(getOutputStreamLogger(DEBUG), "NORMAL=-40000.0000");
-    appendCRLF(getOutputStreamLogger(DEBUG));
+    appendCRLF(getDebugOutputStreamLogger());
+    appendString(getDebugOutputStreamLogger(), "convertFloatTest2\n");
+    appendString(getDebugOutputStreamLogger(), "NORMAL=-40000.0000");
+    appendCRLF(getDebugOutputStreamLogger());
 
-    appendString(getOutputStreamLogger(DEBUG), "RESULT=");
-    appendDecf(getOutputStreamLogger(DEBUG), result);
-    appendCRLF(getOutputStreamLogger(DEBUG));
+    appendString(getDebugOutputStreamLogger(), "RESULT=");
+    appendDecf(getDebugOutputStreamLogger(), result);
+    appendCRLF(getDebugOutputStreamLogger());
 
     return false;
 }
@@ -110,14 +110,14 @@ bool convertFloatTest3(void) {
     signed long value = -123456789;
     float result = (float) value;
     
-    appendCRLF(getOutputStreamLogger(DEBUG));
-    appendString(getOutputStreamLogger(DEBUG), "convertFloatTest2\n");
-    appendString(getOutputStreamLogger(DEBUG), "NORMAL=-123456789.0000");
-    appendCRLF(getOutputStreamLogger(DEBUG));
+    appendCRLF(getDebugOutputStreamLogger());
+    appendString(getDebugOutputStreamLogger(), "convertFloatTest2\n");
+    appendString(getDebugOutputStreamLogger(), "NORMAL=-123456789.0000");
+    appendCRLF(getDebugOutputStreamLogger());
 
-    appendString(getOutputStreamLogger(DEBUG), "RESULT=");
-    appendDecf(getOutputStreamLogger(DEBUG), result);
-    appendCRLF(getOutputStreamLogger(DEBUG));
+    appendString(getDebugOutputStreamLogger(), "RESULT=");
+    appendDecf(getDebugOutputStreamLogger(), result);
+    appendCRLF(getDebugOutputStreamLogger());
 
     return false;
 }

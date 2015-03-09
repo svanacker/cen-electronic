@@ -15,6 +15,6 @@
  * Add a console Handler to the list of logs, so that every log will be written on the console (with printf !).
  * @param consoleLogLevel the level of log for console
  */
- LogHandler* addConsoleLogHandler(int consoleLogLevel);
+ LogHandler* addConsoleLogHandler(int consoleLogLevel, unsigned long categoryLogMask);
 
 #endif

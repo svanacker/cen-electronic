@@ -41,10 +41,10 @@ void deviceLogHandleRawData(char header, InputStream* inputStream, OutputStream*
         // data
         ackCommand(outputStream, SYSTEM_DEBUG_DEVICE_HEADER, COMMAND_WRITE_LOG_LEVEL);
         // we don't use driver stream (buffered->too small), instead of log (not buffered)
-        printLogger(getOutputStreamLogger(ALWAYS));
+        printLogger(getAlwaysOutputStreamLogger());
     }
     else if (header == COMMAND_LOG) {
-        printLogger(getOutputStreamLogger(ALWAYS));
+        printLogger(getAlwaysOutputStreamLogger());
         ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_LOG);
     }    
 }

@@ -287,7 +287,7 @@ void mainBoardCallbackRawData(const Device* device,
     // MOTOR BOARD notification
     if (header == NOTIFY_MOTION_STATUS) {
         /*
-        appendString(getOutputStreamLogger(INFO), "\nNotification : From MOTOR BOARD \n");
+        appendString(getInfoOutputStreamLogger(), "\nNotification : From MOTOR BOARD \n");
         // NOTIFY_MOTION_STATUS / COMMAND_NOTIFY_TEST
         checkIsChar(inputStream, header);
         // status
@@ -328,8 +328,8 @@ void mainBoardCallbackRawData(const Device* device,
     // STRATEGY BOARD notification message of MOTOR => Must be relayed TO MOTOR
     else if (header == COMMAND_MOTION_SPLINE_ABSOLUTE || header == COMMAND_MOTION_SPLINE_RELATIVE) {
         /*
-        appendString(getOutputStreamLogger(INFO), "Notification : Spline : From STRATEGY BOARD : relayed to MOTOR_BOARD \n");
-        appendStringAndDec(getOutputStreamLogger(INFO), "getDriverResponseBuffer:", getBufferElementsCount(getDriverResponseBuffer()));
+        appendString(getInfoOutputStreamLogger(), "Notification : Spline : From STRATEGY BOARD : relayed to MOTOR_BOARD \n");
+        appendStringAndDec(getInfoOutputStreamLogger(), "getDriverResponseBuffer:", getBufferElementsCount(getDriverResponseBuffer()));
         // forwardCallbackRawDataTo(inputStream, &debugOutputStream, device, header, DEVICE_MODE_INPUT);
         OutputStream* outputStream = &(compositeDriverAndDebugOutputStream.outputStream);
         // OutputStream* outputStream = &debugOutputStream;
@@ -382,11 +382,11 @@ void mainBoardCallbackRawData(const Device* device,
         appendHex(outputStream, s);
     
         if (dist0 < 0) {
-            appendString(getOutputStreamLogger(INFO), "\nMotion Backward !");
+            appendString(getInfoOutputStreamLogger(), "\nMotion Backward !");
             instructionType = INSTRUCTION_TYPE_BACKWARD;
         }
         else {
-            appendString(getOutputStreamLogger(INFO), "\nMotion Forward !");
+            appendString(getInfoOutputStreamLogger(), "\nMotion Forward !");
             instructionType = INSTRUCTION_TYPE_FORWARD;
         }        
         // forwardCallbackRawDataTo(inputStream, &(compositeDriverAndDebugOutputStream.outputStream), device, header, DEVICE_MODE_INPUT);
@@ -394,7 +394,7 @@ void mainBoardCallbackRawData(const Device* device,
         */
     } else if (header == COMMAND_MOTION_LEFT_IN_DECI_DEGREE || header == COMMAND_MOTION_RIGHT_IN_DECI_DEGREE) {
         /*
-        appendString(getOutputStreamLogger(INFO), "Notification : Rotation : From STRATEGY BOARD : relayed to MOTOR_BOARD \n");
+        appendString(getInfoOutputStreamLogger(), "Notification : Rotation : From STRATEGY BOARD : relayed to MOTOR_BOARD \n");
         instructionType = INSTRUCTION_TYPE_ROTATION;
         forwardCallbackRawDataTo(inputStream, &(compositeDriverAndDebugOutputStream.outputStream), device, header, DEVICE_MODE_INPUT);
         transmitFromDriverRequestBuffer();
@@ -403,7 +403,7 @@ void mainBoardCallbackRawData(const Device* device,
     // Mechanical Board notification
     else if (header == NOTIFY_INFRARED_DETECTOR_DETECTION) {
         /*
-        appendString(getOutputStreamLogger(INFO), "\nNotification : From MECHANICAL BOARD :\n");
+        appendString(getInfoOutputStreamLogger(), "\nNotification : From MECHANICAL BOARD :\n");
         checkIsChar(inputStream, NOTIFY_INFRARED_DETECTOR_DETECTION);
         // type
         unsigned char type = readHex2(inputStream);
@@ -508,9 +508,9 @@ bool isObstacleOutsideTheTable(int distance) {
     int obstacleX = getRobotPositionX() + dca;
     int obstacleY = getRobotPositionY() + dsa;
     
-    appendStringAndDec(getOutputStreamLogger(INFO), "\nObstacle Position:x=", obstacleX);
-    appendStringAndDec(getOutputStreamLogger(INFO), ",y=", obstacleY);
-    println(getOutputStreamLogger(INFO));
+    appendStringAndDec(getInfoOutputStreamLogger(), "\nObstacle Position:x=", obstacleX);
+    appendStringAndDec(getInfoOutputStreamLogger(), ",y=", obstacleY);
+    println(getInfoOutputStreamLogger());
 
     
     int BORDER_THRESHOLD = 250;
@@ -579,16 +579,16 @@ void waitForInstruction() {
 
         // compute the obstacle position. If it's outside the table, does nothing
         int obstacleDistance = 350.0f;
-        appendStringAndDec(getOutputStreamLogger(INFO), "\nInstruction Type:", instructionType);
+        appendStringAndDec(getInfoOutputStreamLogger(), "\nInstruction Type:", instructionType);
 
         if (instructionType == INSTRUCTION_TYPE_BACKWARD) {
             obstacleDistance = -obstacleDistance;
         }
         if (isObstacleOutsideTheTable(obstacleDistance)) {
-            appendString(getOutputStreamLogger(INFO), "\nObstacle OUT side the Table!\n");
+            appendString(getInfoOutputStreamLogger(), "\nObstacle OUT side the Table!\n");
         }
         else {
-            appendString(getOutputStreamLogger(INFO), "\nObstacle !\n");
+            appendString(getInfoOutputStreamLogger(), "\nObstacle !\n");
             // Send information to Strategy Board
             stopRobotObstacle();
             armDriver2012Up(ARM_LEFT);
@@ -645,8 +645,8 @@ int main(void) {
     addLogHandler(&debugSerialLogHandler, "UART", &debugOutputStream, DEBUG);
     addLogHandler(&lcdLogHandler, "LCD", &lcdOutputStream, ERROR);
 
-    appendString(getOutputStreamLogger(ALWAYS), getPicName());
-    println(getOutputStreamLogger(ALWAYS));
+    appendString(getAlwaysOutputStreamLogger(), getPicName());
+    println(getAlwaysOutputStreamLogger());
 
     initDevicesDescriptor();
     initDriversDescriptor();
@@ -735,7 +735,7 @@ int main(void) {
 
     appendStringConfig(&lcdOutputStream);
 
-    //pingDriverDataDispatcherList(getOutputStreamLogger(DEBUG));
+    //pingDriverDataDispatcherList(getDebugOutputStreamLogger());
 
     // Inform PC waiting
     showWaitingStart(&debugOutputStream);
@@ -750,21 +750,21 @@ int main(void) {
     unsigned int homologationIndex = configValue & CONFIG_STRATEGY_MASK;
     unsigned int color = configValue & CONFIG_COLOR_BLUE_MASK;
 
-    appendString(getOutputStreamLogger(ALWAYS), "Homologation:");
-    appendCRLF(getOutputStreamLogger(ALWAYS));
-    appendDec(getOutputStreamLogger(ALWAYS), homologationIndex);
+    appendString(getAlwaysOutputStreamLogger(), "Homologation:");
+    appendCRLF(getAlwaysOutputStreamLogger());
+    appendDec(getAlwaysOutputStreamLogger(), homologationIndex);
     
-    appendString(getOutputStreamLogger(ALWAYS), "Config:");
-    appendHex4(getOutputStreamLogger(ALWAYS), configValue);
-    appendCRLF(getOutputStreamLogger(ALWAYS));
+    appendString(getAlwaysOutputStreamLogger(), "Config:");
+    appendHex4(getAlwaysOutputStreamLogger(), configValue);
+    appendCRLF(getAlwaysOutputStreamLogger());
     useBalise = configValue & CONFIG_USE_BALISE_MASK;
     useInfrared = configValue & CONFIG_USE_SONAR_MASK;
 
     if (color != 0) {
-        appendString(getOutputStreamLogger(ALWAYS), "COLOR:VIOLET\n");
+        appendString(getAlwaysOutputStreamLogger(), "COLOR:VIOLET\n");
     }
     else {
-        appendString(getOutputStreamLogger(ALWAYS), "COLOR:RED\n");
+        appendString(getAlwaysOutputStreamLogger(), "COLOR:RED\n");
     }    
 
     // TODO 2012 SV motionDriverMaintainPosition();

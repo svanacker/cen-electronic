@@ -42,13 +42,13 @@ void deviceSystemHandleRawData(char header, InputStream* inputStream, OutputStre
     }
     else if (header == COMMAND_DEVICE_LIST) {
         ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_DEVICE_LIST);
-        printDeviceList(getOutputStreamLogger(INFO));
+        printDeviceList(getInfoOutputStreamLogger());
     } else if (header == COMMAND_USAGE) {
         ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_USAGE);
-        printDeviceListUsage(getOutputStreamLogger(INFO));
+        printDeviceListUsage(getInfoOutputStreamLogger());
     } else if (header == COMMAND_NOTIFICATION) {
         ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_NOTIFICATION);
-        printDeviceListNotification(getOutputStreamLogger(INFO));
+        printDeviceListNotification(getInfoOutputStreamLogger());
     } else if (header == COMMAND_WAIT) {
         appendAck(outputStream);
         int mSec = readHex4(inputStream);
@@ -56,8 +56,8 @@ void deviceSystemHandleRawData(char header, InputStream* inputStream, OutputStre
         append(outputStream, SYSTEM_DEVICE_HEADER);
         append(outputStream, COMMAND_WAIT);
     } else if (header == COMMAND_PIC_NAME) {
-        appendString(getOutputStreamLogger(ALWAYS), getPicName());
-        println(getOutputStreamLogger(ALWAYS));
+        appendString(getAlwaysOutputStreamLogger(), getPicName());
+        println(getAlwaysOutputStreamLogger());
         ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_PIC_NAME);
     }
 }

@@ -66,7 +66,7 @@ void deviceBeaconHandleRawData(char commandHeader, InputStream* inputStream, Out
         appendAck(outputStream);
         append(outputStream, COMMAND_BEACON_CONFIGURATION);
 
-        OutputStream* logOutputStream = getOutputStreamLogger(INFO);
+        OutputStream* logOutputStream = getInfoOutputStreamLogger();
         printBeaconSystemConfiguration(logOutputStream);
     // Set the configuration of the system
     } else if (commandHeader == COMMAND_BEACON_SET_CONFIGURATION) {

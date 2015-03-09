@@ -192,7 +192,7 @@ Point* getOpponentRobotPosition() {
         if (getLastDetectionTimeInMillis() > getObsoleteDetectionTimeThreshold()) {
             opponentRobotPosition->x = 0;
             opponentRobotPosition->y = 0;
-            OutputStream* outputStream = getOutputStreamLogger(INFO);
+            OutputStream* outputStream = getInfoOutputStreamLogger();
             appendStringAndDec(outputStream, "LOST OBJECT SINCE=", getLastDetectionTimeInMillis());
             println(outputStream);
         }
@@ -219,7 +219,7 @@ void doBeaconCalibration() {
     getOpponentRobotPosition();
     Point* calibrationPoint = &(beaconSystem.calibrationPoint);
 
-    OutputStream* outputStream = getOutputStreamLogger(INFO);
+    OutputStream* outputStream = getInfoOutputStreamLogger();
 
     recalibrateServoInitValue(outputStream, getLaser(LASER_INDEX_1), calibrationPoint->x, calibrationPoint->y);
     recalibrateServoInitValue(outputStream, getLaser(LASER_INDEX_2), getDistanceBetweenBeacon() - calibrationPoint->x, calibrationPoint->y);

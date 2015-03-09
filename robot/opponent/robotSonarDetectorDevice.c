@@ -112,8 +112,8 @@ void readNextDistance(I2cBus* i2cBus) {
     distances[(unsigned int) distanceIndex] = distance;
 
     /*
-    appendDec(getOutputStreamLogger(DEBUG), distance);
-    append(getOutputStreamLogger(DEBUG), '.');
+    appendDec(getDebugOutputStreamLogger(), distance);
+    append(getDebugOutputStreamLogger(), '.');
      */
 
     // Manage index of history

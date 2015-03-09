@@ -8,8 +8,8 @@
 
 static OutputStream consoleOutputStream;
 
-LogHandler* addConsoleLogHandler(LogLevel consoleLogLevel) {
+LogHandler* addConsoleLogHandler(LogLevel consoleLogLevel, unsigned long categoryLogMask) {
     initConsoleOutputStream(&consoleOutputStream);
-	LogHandler* result = addLogHandler("CONSOLE", &consoleOutputStream, consoleLogLevel);
+	LogHandler* result = addLogHandler("CONSOLE", &consoleOutputStream, consoleLogLevel, categoryLogMask);
     return result;
 }

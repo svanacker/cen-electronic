@@ -185,7 +185,7 @@ void onError(JennicEvent* jennicEvent) {
 void onConnectionEstablished(JennicEvent* jennicEvent) {
     setJennicNetworkStatus(JENNIC_LINK_CONNECTED);
     updatePinNetworkStatus();
-    appendString(getOutputStreamLogger(INFO), "CONNECTION ESTABLISHED ! \n");
+    appendString(getInfoOutputStreamLogger(), "CONNECTION ESTABLISHED ! \n");
 }
 
 void onConnectionReset(JennicEvent* jennicEvent) {
@@ -256,8 +256,8 @@ int runZigBeeReceiver() {
     // Init the logs
     initLogs(DEBUG, &logHandlerListArray, BEACON_RECEIVER_LOG_HANDLER_LIST_LENGTH);
     addLogHandler("UART", &debugOutputStream, DEBUG);
-    appendString(getOutputStreamLogger(DEBUG), getPicName());
-    println(getOutputStreamLogger(DEBUG));    
+    appendString(getDebugOutputStreamLogger(), getPicName());
+    println(getDebugOutputStreamLogger());    
 
     // I2C Stream Link
     openSlaveI2cStreamLink(&i2cSerialStreamLink,
@@ -322,7 +322,7 @@ int runZigBeeReceiver() {
             /*
             // Detects if we want to redirect to devices
             if (bufferGetFirstChar(&debugInputBuffer) == '@') {
-                appendString(getOutputStreamLogger(INFO), "REDIRECT COMMAND TO DEVICES \n");
+                appendString(getInfoOutputStreamLogger(), "REDIRECT COMMAND TO DEVICES \n");
                 // delete the '@' char from the buffer
                 bufferReadChar(&debugInputBuffer);
                 setCommandRedirectToDevices();

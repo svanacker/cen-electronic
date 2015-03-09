@@ -49,10 +49,10 @@ void remoteDriverDataDispatcherTransmit(DriverDataDispatcher* dispatcher,
 
         if (counter > 10000) {
             appendString (getErrorOutputStreamLogger(), "Dispatcher:");
-            appendString(getOutputStreamLogger(LOG_LEVEL_ERROR), dispatcher->name);
-            appendString(getOutputStreamLogger(LOG_LEVEL_ERROR), "Time out:");
-            appendStringAndDec(getOutputStreamLogger(LOG_LEVEL_ERROR), "Not enough Data :wanted=", dataToReceiveCount);
-            appendStringAndDec(getOutputStreamLogger(LOG_LEVEL_ERROR), ",received=", getBufferElementsCount(responseBuffer));
+            appendString(getErrorOutputStreamLogger(), dispatcher->name);
+            appendString(getErrorOutputStreamLogger(), "Time out:");
+            appendStringAndDec(getErrorOutputStreamLogger(), "Not enough Data :wanted=", dataToReceiveCount);
+            appendStringAndDec(getErrorOutputStreamLogger(), ",received=", getBufferElementsCount(responseBuffer));
             break;
         }
     }

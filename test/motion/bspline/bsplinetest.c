@@ -18,7 +18,7 @@ void testBSpline1() {
                      9.0f, 6.0f,
                      11.0f, 3.0f
                     );
-    OutputStream* outputStream = getOutputStreamLogger(DEBUG);
+    OutputStream* outputStream = getDebugOutputStreamLogger();
 
     computeBSplineArcLength(curve);
     
@@ -33,7 +33,7 @@ void testBSpline2() {
                      9.0f, 6.0f,
                      5.0f, 3.0f
                     );
-    OutputStream* outputStream = getOutputStreamLogger(DEBUG);
+    OutputStream* outputStream = getDebugOutputStreamLogger();
 
     computeBSplineArcLength(curve);
     
@@ -48,7 +48,7 @@ void testBSpline3() {
                      7.0f, 8.0f,
                      6.0f, 3.0f
                     );
-    OutputStream* outputStream = getOutputStreamLogger(DEBUG);
+    OutputStream* outputStream = getDebugOutputStreamLogger();
 
     computeBSplineArcLength(curve);
     

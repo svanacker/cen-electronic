@@ -111,15 +111,15 @@ Location* extractMinCostLocation(void) {
             continue;
         }
         #ifdef NAVIGATION_DEBUG 
-            appendString(getOutputStreamLogger(INFO), "\t");
-            printLocation(getOutputStreamLogger(INFO), location);
+            appendString(getInfoOutputStreamLogger(), "\t");
+            printLocation(getInfoOutputStreamLogger(), location);
         #endif
 
         // get the cost
         int cost = getCost(location);
         #ifdef NAVIGATION_DEBUG
-            appendStringAndDec(getOutputStreamLogger(INFO), "\tcost:", cost);
-            println(getOutputStreamLogger(INFO));
+            appendStringAndDec(getInfoOutputStreamLogger(), "\tcost:", cost);
+            println(getInfoOutputStreamLogger());
         #endif
         if (cost <= minCost) {
             minCost = cost;
@@ -145,7 +145,7 @@ int computeBestPath(LocationList* outLocationList, Location* start, Location* en
 
     start->tmpCost = 0;
     #ifdef NAVIGATION_DEBUG
-        printLocation(getOutputStreamLogger(INFO), start);
+        printLocation(getInfoOutputStreamLogger(), start);
     #endif
 
     int size = locations.size;
@@ -153,13 +153,13 @@ int computeBestPath(LocationList* outLocationList, Location* start, Location* en
     for (i = 0; i < size; i++) {
         // search the nearest node of the nodeList
         #ifdef NAVIGATION_DEBUG
-            appendString(getOutputStreamLogger(INFO), "extractMinCostLocation\n");
+            appendString(getInfoOutputStreamLogger(), "extractMinCostLocation\n");
         #endif
         location1 = extractMinCostLocation();
 
         #ifdef NAVIGATION_DEBUG
-            appendString(getOutputStreamLogger(INFO), "bestLocation=");
-            printLocation(getOutputStreamLogger(INFO), location1);
+            appendString(getInfoOutputStreamLogger(), "bestLocation=");
+            printLocation(getInfoOutputStreamLogger(), location1);
         #endif
 
         // List of path going to the node (location)
@@ -169,8 +169,8 @@ int computeBestPath(LocationList* outLocationList, Location* start, Location* en
         int size = paths.size;
 
         #ifdef NAVIGATION_DEBUG
-            printLocationList(getOutputStreamLogger(INFO), "locations=", &locations);
-            printPathList(getOutputStreamLogger(INFO), "allPaths=", &paths);
+            printLocationList(getInfoOutputStreamLogger(), "locations=", &locations);
+            printPathList(getInfoOutputStreamLogger(), "allPaths=", &paths);
         #endif
 
         // loop on all outgoingPath
@@ -193,9 +193,9 @@ int computeBestPath(LocationList* outLocationList, Location* start, Location* en
             int costLocation2 = getCost(location2);
             
             #ifdef NAVIGATION_DEBUG
-                appendStringAndDec(getOutputStreamLogger(INFO), "costLocation1:", costLocation1);
-                appendStringAndDec(getOutputStreamLogger(INFO), ", costLocation2:", costLocation2);
-                println(getOutputStreamLogger(INFO));
+                appendStringAndDec(getInfoOutputStreamLogger(), "costLocation1:", costLocation1);
+                appendStringAndDec(getInfoOutputStreamLogger(), ", costLocation2:", costLocation2);
+                println(getInfoOutputStreamLogger());
             #endif
 
             // getOtherEnd called the current fonction to fill path information

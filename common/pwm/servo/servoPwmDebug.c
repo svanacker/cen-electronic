@@ -33,7 +33,7 @@ void printServoList(OutputStream* outputStream) {
 // TEST FUNCTIONS
 
 void testAllPwmServos() {
-    OutputStream* debugOutputStream = getOutputStreamLogger(DEBUG);
+    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
     int servoIndex;
     initPwmForServo(PWM_SERVO_MIDDLE_POSITION);
 

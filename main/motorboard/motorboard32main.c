@@ -261,8 +261,8 @@ int runMotorBoard() {
             DEFAULT_SERIAL_SPEED);
 
     // Init the logs
-    initLogs(DEBUG, (LogHandler(*)[]) &logHandlerListArray, MOTOR_BOARD_LOG_HANDLER_LIST_LENGTH);
-    addLogHandler("UART", &debugOutputStream, DEBUG);
+    initLogs(DEBUG, (LogHandler(*)[]) &logHandlerListArray, MOTOR_BOARD_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
+    addLogHandler("UART", &debugOutputStream, DEBUG, LOG_HANDLER_CATEGORY_ALL_MASK);
     appendString(getDebugOutputStreamLogger(), getPicName());
     appendCRLF(getDebugOutputStreamLogger());
 

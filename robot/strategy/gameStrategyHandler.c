@@ -53,7 +53,7 @@ GameStrategyContext* getStrategyContext() {
 void strategyTimerCallback(Timer* timer) {
     if (strategyTimer->time > strategyContext.timeSinceLastCollision + RESET_OBSTACLE_COLLISION_TIME_SECOND) {
         #ifdef DEBUG_OPPONENT_ROBOT
-            OutputStream* logStream = getOutputStreamLogger(INFO);
+            OutputStream* logStream = getInfoOutputStreamLogger();
             appendString(logStream, "resetAllPathsAsAvailable\n");
         #endif
         resetAllPathsAsAvailable();
@@ -81,13 +81,13 @@ void clearCurrentTarget() {
  * @private
  */
 void findNextTarget() {
-    appendString(getOutputStreamLogger(DEBUG), "findNextTarget\n");
+    appendString(getDebugOutputStreamLogger(), "findNextTarget\n");
 
     unsigned int targetHandledCount = getTargetHandledCount();
     if (targetHandledCount >= strategyContext.maxTargetToHandle) {
         clearCurrentTarget();
-        appendStringAndDec(getOutputStreamLogger(DEBUG), "Reach Max Target To Handle:", targetHandledCount);
-        println(getOutputStreamLogger(DEBUG));
+		appendStringAndDec(getDebugOutputStreamLogger(), "Reach Max Target To Handle:", targetHandledCount);
+		println(getDebugOutputStreamLogger());
         return;
     }
 
@@ -99,28 +99,28 @@ void findNextTarget() {
     strategyContext.nearestLocation = getNearestLocation(navigationLocationList, (int)robotPosition->x, (int) robotPosition->y);
 
     #ifdef DEBUG_STRATEGY_HANDLER
-        appendString(getOutputStreamLogger(DEBUG), "\tNearest Location:");    
-        printLocation(getOutputStreamLogger(DEBUG), strategyContext.nearestLocation);
-        appendString(getOutputStreamLogger(DEBUG), "\tcomputeBestNextTargetAction:\n");    
+        appendString(getDebugOutputStreamLogger(), "\tNearest Location:");    
+        printLocation(getDebugOutputStreamLogger(), strategyContext.nearestLocation);
+        appendString(getDebugOutputStreamLogger(), "\tcomputeBestNextTargetAction:\n");    
     #endif
 
     // Find best Target, store LocationList in the context in currentTrajectory
     computeBestNextTarget(&strategyContext);
 
     #ifdef DEBUG_STRATEGY_HANDLER
-        appendString(getOutputStreamLogger(DEBUG), "\t\tbestTarget:");
+        appendString(getDebugOutputStreamLogger(), "\t\tbestTarget:");
         if (strategyContext.currentTarget != NULL) {
-            printGameTarget(getOutputStreamLogger(DEBUG), strategyContext.currentTarget, false);
+            printGameTarget(getDebugOutputStreamLogger(), strategyContext.currentTarget, false);
         }
         else {
-            appendString(getOutputStreamLogger(DEBUG), "NULL\n");
+            appendString(getDebugOutputStreamLogger(), "NULL\n");
         }
-        appendString(getOutputStreamLogger(DEBUG), "\t\tbestTargetAction:");
+        appendString(getDebugOutputStreamLogger(), "\t\tbestTargetAction:");
         if (strategyContext.currentTargetAction != NULL) {
-            printGameTargetAction(getOutputStreamLogger(DEBUG), strategyContext.currentTargetAction, false);
+            printGameTargetAction(getDebugOutputStreamLogger(), strategyContext.currentTargetAction, false);
         }
         else {
-            appendString(getOutputStreamLogger(DEBUG), "NULL\n");
+            appendString(getDebugOutputStreamLogger(), "NULL\n");
         }
     #endif
 }
@@ -145,7 +145,7 @@ void markTargetInUse() {
  */
 bool executeTargetActions() {
     #ifdef DEBUG_STRATEGY_HANDLER
-        appendString(getOutputStreamLogger(DEBUG), "executeTargetActions\n");
+        appendString(getDebugOutputStreamLogger(), "executeTargetActions\n");
     #endif
 
     markTargetInUse();
@@ -154,7 +154,7 @@ bool executeTargetActions() {
     GameTargetActionItemList* actionItemList = targetAction->actionItemList;
     if (actionItemList == NULL) {
         #ifdef DEBUG_STRATEGY_HANDLER
-            appendString(getOutputStreamLogger(DEBUG), "-> no actions for this target\n");
+            appendString(getDebugOutputStreamLogger(), "-> no actions for this target\n");
         #endif
         markTargetAsHandled();
         return false;
@@ -165,7 +165,7 @@ bool executeTargetActions() {
         GameTargetActionItem* actionItem = targetActionItemListNext(actionItemList);
 
         #ifdef DEBUG_STRATEGY_HANDLER
-            printGameTargetActionItem(getOutputStreamLogger(DEBUG), actionItem);
+            printGameTargetActionItem(getDebugOutputStreamLogger(), actionItem);
         #endif
 
         // Do the action item
@@ -186,8 +186,8 @@ void motionGoLocation(Location* location,
                     int accelerationFactor, int speedFactor ) {
 
     #ifdef DEBUG_STRATEGY_HANDLER
-        appendString(getOutputStreamLogger(DEBUG), "motionGoLocation:goto:");    
-        printLocation(getOutputStreamLogger(DEBUG), location);
+        appendString(getDebugOutputStreamLogger(), "motionGoLocation:goto:");    
+        printLocation(getDebugOutputStreamLogger(), location);
     #endif
 
     angle = changeAngleForColor(angle);
@@ -224,8 +224,8 @@ void rotateAbsolute(int angle) {
     */
 
     #ifdef DEBUG_STRATEGY_HANDLER
-        appendStringAndDec(getOutputStreamLogger(DEBUG), "rotateAbsolute:angle:", diff);    
-        appendString(getOutputStreamLogger(DEBUG), " ddeg\n");
+        appendStringAndDec(getDebugOutputStreamLogger(), "rotateAbsolute:angle:", diff);    
+        appendString(getDebugOutputStreamLogger(), " ddeg\n");
     #endif
     if (diff == 0) {
         // instruction with 0 does not notify position.
@@ -264,8 +264,8 @@ bool motionRotateToFollowPath(PathDataFunction* pathDataFunction, bool reversed)
     }
 
     #ifdef DEBUG_STRATEGY_HANDLER
-        appendStringAndDec(getOutputStreamLogger(DEBUG), "motionRotateToFollowPath:angle:", diff);    
-        appendString(getOutputStreamLogger(DEBUG), " ddeg\n");
+        appendStringAndDec(getDebugOutputStreamLogger(), "motionRotateToFollowPath:angle:", diff);    
+        appendString(getDebugOutputStreamLogger(), " ddeg\n");
     #endif
 
     if (diff > 0) {
@@ -311,8 +311,8 @@ void motionFollowPath(PathDataFunction* pathDataFunction, bool reversed) {
     }
 
     #ifdef DEBUG_STRATEGY_HANDLER
-        appendString(getOutputStreamLogger(DEBUG), "motionFollowPath:goto:");    
-        printLocation(getOutputStreamLogger(DEBUG), location);
+        appendString(getDebugOutputStreamLogger(), "motionFollowPath:goto:");    
+        printLocation(getDebugOutputStreamLogger(), location);
     #endif
 
     // cast to unsigned, negative signed char send 00
@@ -333,18 +333,18 @@ void motionFollowPath(PathDataFunction* pathDataFunction, bool reversed) {
 */
 bool handleCurrentTrajectory() {
     #ifdef DEBUG_STRATEGY_HANDLER
-        appendString(getOutputStreamLogger(DEBUG), "handleCurrentTrajectory\n");    
+        appendString(getDebugOutputStreamLogger(), "handleCurrentTrajectory\n");    
     #endif
 
     LocationList* currentTrajectory = &(strategyContext.currentTrajectory);
 
     #ifdef DEBUG_STRATEGY_HANDLER
-        // printLocationList(getOutputStreamLogger(DEBUG), "currentTrajectory:", currentTrajectory);    
+        // printLocationList(getDebugOutputStreamLogger(), "currentTrajectory:", currentTrajectory);    
     #endif
 
     if (currentTrajectory == NULL || currentTrajectory->size < 2) {
         #ifdef DEBUG_STRATEGY_HANDLER
-            appendString(getOutputStreamLogger(DEBUG), "no more locations to reach\n");    
+            appendString(getDebugOutputStreamLogger(), "no more locations to reach\n");    
         #endif
 
         // no more locations to reach
@@ -453,7 +453,7 @@ bool mustComputePaths() {
 
 void updatePathsAvailability() {
     #ifdef DEBUG_OPPONENT_ROBOT
-        OutputStream* logStream = getOutputStreamLogger(INFO);
+        OutputStream* logStream = getInfoOutputStreamLogger();
         appendString(logStream, "\nUpdating available paths");
     //    printGameStrategyContext(logStream, getStrategyContext());
     #endif
@@ -507,8 +507,8 @@ void handleCollision() {
         strategyContext.timeSinceLastCollision = strategyTimer->time;
     }
     #ifdef DEBUG_STRATEGY_HANDLER
-        appendStringAndDec(getOutputStreamLogger(DEBUG), "\nCollision at time:", strategyContext.timeSinceLastCollision);    
-        appendString(getOutputStreamLogger(DEBUG), "\nhandleCollision");    
+        appendStringAndDec(getDebugOutputStreamLogger(), "\nCollision at time:", strategyContext.timeSinceLastCollision);    
+        appendString(getDebugOutputStreamLogger(), "\nhandleCollision");    
     #endif
     
     // Clears the current path and actions
@@ -521,13 +521,13 @@ void handleCollision() {
 bool nextStep() {
     unsigned int counter = 0;
     #ifdef DEBUG_STRATEGY_HANDLER
-        appendString(getOutputStreamLogger(DEBUG), "nextStep\n");    
+        appendString(getDebugOutputStreamLogger(), "nextStep\n");    
     #endif
     while (1) {
         counter++;
         #ifdef DEBUG_STRATEGY_HANDLER
-            appendStringAndDec(getOutputStreamLogger(DEBUG), "nextStep=>", counter);    
-            println(getOutputStreamLogger(DEBUG));
+            appendStringAndDec(getDebugOutputStreamLogger(), "nextStep=>", counter);    
+            println(getDebugOutputStreamLogger());
         #endif
         GameTargetAction* targetAction = strategyContext.currentTargetAction;
     
@@ -549,7 +549,7 @@ bool nextStep() {
             findNextTarget();
             if (strategyContext.currentTarget == NULL) {
                 #ifdef DEBUG_STRATEGY_HANDLER
-                    appendString(getOutputStreamLogger(DEBUG), "no more targets -> stopping");
+                    appendString(getDebugOutputStreamLogger(), "no more targets -> stopping");
                 #endif
                 clearCurrentTarget();
                 return false;

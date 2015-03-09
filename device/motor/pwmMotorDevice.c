@@ -50,32 +50,32 @@ void devicePwmMotorHandleRawData(char commandHeader, InputStream* inputStream, O
     else if (commandHeader == COMMAND_TEST_MOTOR) {
         ackCommand(outputStream, MOTOR_DEVICE_HEADER, COMMAND_TEST_MOTOR);
 
-        appendString(getOutputStreamLogger(ALWAYS), "Left Forward\n");
+        appendString(getAlwaysOutputStreamLogger(), "Left Forward\n");
         // Left forward
         setMotorSpeeds(50, 0);
         delaymSec(2000);
 
-        appendString(getOutputStreamLogger(ALWAYS), "Right Forward\n");
+        appendString(getAlwaysOutputStreamLogger(), "Right Forward\n");
         // Right forward
         setMotorSpeeds(0, 50);
         delaymSec(2000);
 
-        appendString(getOutputStreamLogger(ALWAYS), "Left Backward\n");
+        appendString(getAlwaysOutputStreamLogger(), "Left Backward\n");
         // Left backward
         setMotorSpeeds(-50, 0);
         delaymSec(2000);
 
-        appendString(getOutputStreamLogger(ALWAYS), "Right Forward\n");
+        appendString(getAlwaysOutputStreamLogger(), "Right Forward\n");
         // Right backward
         setMotorSpeeds(0, -50);
         delaymSec(2000);
 
-        appendString(getOutputStreamLogger(ALWAYS), "Both Forward\n");
+        appendString(getAlwaysOutputStreamLogger(), "Both Forward\n");
         // Both forward
         setMotorSpeeds(50, 50);
         delaymSec(2000);
 
-        appendString(getOutputStreamLogger(ALWAYS), "Both Backward\n");
+        appendString(getAlwaysOutputStreamLogger(), "Both Backward\n");
         // Both backward
         setMotorSpeeds(-50, -50);
         delaymSec(2000);

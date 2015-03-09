@@ -51,7 +51,7 @@ void strategyDriverTimerCallback(Timer* timer) {
 
 void forceRobotNextStepIfNecessary() {
     if (strategyDriverInterruptCounter >= FORCE_ROBOT_NEXT_STEP_COUNTER) {
-        appendString(getOutputStreamLogger(LOG_LEVEL_ERROR), "forceRobotNextStepIfNecessary\n");
+        appendString(getErrorOutputStreamLogger(), "forceRobotNextStepIfNecessary\n");
         strategyDriverInterruptCounter = 0;
         robotNextStep();
     }
@@ -77,7 +77,7 @@ void robotNextStep() {
 }
 
 bool sendStrategyConfiguration(int configuration) {
-    appendString(getOutputStreamLogger(INFO), "sendStrategyConfiguration\n");
+    appendString(getInfoOutputStreamLogger(), "sendStrategyConfiguration\n");
 
     OutputStream* outputStream = getDriverRequestOutputStream();
 
@@ -91,7 +91,7 @@ bool sendStrategyConfiguration(int configuration) {
 }
 
 bool sendStrategyNextStep() {
-    appendString(getOutputStreamLogger(INFO), "sendStrategyNextStep\n");
+    appendString(getInfoOutputStreamLogger(), "sendStrategyNextStep\n");
 
     OutputStream* outputStream = getDriverRequestOutputStream();
     InputStream* inputStream = getDriverResponseInputStream();
@@ -108,7 +108,7 @@ bool sendStrategyNextStep() {
 }
 
 bool sendStrategyOpponentRobotPosition(Point* opponentRobotPosition) {
-    OutputStream* debugOutputStream = getOutputStreamLogger(INFO);
+    OutputStream* debugOutputStream = getInfoOutputStreamLogger();
     appendString(debugOutputStream, "sendStrategyOpponentRobotPosition: ");
 
     OutputStream* outputStream = getDriverRequestOutputStream();
@@ -129,7 +129,7 @@ bool sendStrategyOpponentRobotPosition(Point* opponentRobotPosition) {
 }
 
 bool sentStrategyRobotPosition(unsigned char status, unsigned int x, unsigned int y, int angleInDeciDegree) {
-    OutputStream* debugOutputStream = getOutputStreamLogger(INFO);
+    OutputStream* debugOutputStream = getInfoOutputStreamLogger();
     appendString(debugOutputStream, "sentStrategyRobotPosition:");
 
     OutputStream* outputStream = getDriverRequestOutputStream();

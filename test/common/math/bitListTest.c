@@ -14,7 +14,7 @@ static BitList bitList;
 
 void testBitList() {
     initBitList(&bitList, &bitListValues, BIT_LIST_TEST_ARRAY_LENGTH);
-    OutputStream* outputStream = getOutputStreamLogger(ALWAYS);
+    OutputStream* outputStream = getAlwaysOutputStreamLogger();
 
     printBitList(outputStream, &bitList);
 

@@ -86,7 +86,7 @@ void openPliers(int delayCounter, int speed) {
         }
 
         if (!rightOpened && PIN_SWITCH_PLIER_OPEN_RIGHT) {
-            appendString(getOutputStreamLogger(INFO), "Pliers Right Opened\n");
+            appendString(getInfoOutputStreamLogger(), "Pliers Right Opened\n");
             rightOpened = true;
             stopPlier(1);
         } else if (!rightOpened) {
@@ -94,7 +94,7 @@ void openPliers(int delayCounter, int speed) {
         }
 
         if (!leftOpened && PIN_SWITCH_PLIER_OPEN_LEFT) {
-            appendString(getOutputStreamLogger(INFO), "Pliers Left Opened\n");
+            appendString(getInfoOutputStreamLogger(), "Pliers Left Opened\n");
             leftOpened = true;
             stopPlier(2);
         } else if (!leftOpened) {
@@ -104,7 +104,7 @@ void openPliers(int delayCounter, int speed) {
             break;
         }
     }
-    appendString(getOutputStreamLogger(INFO), "Both Pliers Opened\n");
+    appendString(getInfoOutputStreamLogger(), "Both Pliers Opened\n");
 
     stopPlier(1);
     stopPlier(2);
@@ -128,7 +128,7 @@ void closePliers(int delayCounter, int speed) {
         }
 
         if (!rightClosed && PIN_SWITCH_PLIER_CLOSE_RIGHT) {
-            appendString(getOutputStreamLogger(INFO), "Pliers Right Closed\n");
+            appendString(getInfoOutputStreamLogger(), "Pliers Right Closed\n");
             rightClosed = true;
             stopPlier(1);
         } else if (!rightClosed) {
@@ -136,7 +136,7 @@ void closePliers(int delayCounter, int speed) {
         }
 
         if (!leftClosed && PIN_SWITCH_PLIER_CLOSE_LEFT) {
-            appendString(getOutputStreamLogger(INFO), "Pliers Left Closed\n");
+            appendString(getInfoOutputStreamLogger(), "Pliers Left Closed\n");
             leftClosed = true;
             stopPlier(2);
         } else if (!leftClosed) {
@@ -146,7 +146,7 @@ void closePliers(int delayCounter, int speed) {
             break;
         }
     }
-    appendString(getOutputStreamLogger(INFO), "Both Pliers Closed\n");
+    appendString(getInfoOutputStreamLogger(), "Both Pliers Closed\n");
 
     stopPlier(1);
     stopPlier(2);
@@ -165,7 +165,7 @@ void devicePliers2011HandleRawData(char header,
         // Fini en douceur
         closePliers(5, PLIERS_INIT_CLOSE_PWM);
 
-        appendString(getOutputStreamLogger(INFO), "Init Pliers End\n");
+        appendString(getInfoOutputStreamLogger(), "Init Pliers End\n");
     } else if (header == COMMAND_PLIERS_2011_CLOSE) {
         appendAck(outputStream);
         append(outputStream, COMMAND_PLIERS_2011_CLOSE);
@@ -175,7 +175,7 @@ void devicePliers2011HandleRawData(char header,
 
         // Fermeture moins forte
         closePliers(4, PLIERS_CLOSE_END_PWM);
-        appendString(getOutputStreamLogger(INFO), "Close Pliers End\n");
+        appendString(getInfoOutputStreamLogger(), "Close Pliers End\n");
     } else if (header == COMMAND_PLIERS_2011_OPEN) {
         appendAck(outputStream);
         append(outputStream, COMMAND_PLIERS_2011_OPEN);

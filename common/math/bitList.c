@@ -29,39 +29,39 @@ void clearBitList(BitList* bitList, bool initValue) {
 
 void setBit(BitList* bitList, unsigned char index, bool value) {
     #ifdef BIT_LIST_DEBUG
-        println(getOutputStreamLogger(INFO));
-        appendStringAndDec(getOutputStreamLogger(INFO), ", index=", index);
-        appendStringAndDec(getOutputStreamLogger(INFO), ", value=", value);
+        println(getInfoOutputStreamLogger());
+        appendStringAndDec(getInfoOutputStreamLogger(), ", index=", index);
+        appendStringAndDec(getInfoOutputStreamLogger(), ", value=", value);
     #endif
     if (index > bitList->size) {
-        appendStringAndDec(getOutputStreamLogger(ALWAYS), ", index=", index);
-        appendStringAndDec(getOutputStreamLogger(ALWAYS), ", size=", bitList->size);
+        appendStringAndDec(getAlwaysOutputStreamLogger(), ", index=", index);
+        appendStringAndDec(getAlwaysOutputStreamLogger(), ", size=", bitList->size);
         writeError(BIT_LIST_ARRAY_OUT_OF_BOUNDS);
         return;
     }
     unsigned int* arrayPointer = (unsigned int*) bitList->array;
     #ifdef BIT_LIST_DEBUG
-        appendStringAndDec(getOutputStreamLogger(INFO), "arrayPointer=", (int) arrayPointer);
+        appendStringAndDec(getInfoOutputStreamLogger(), "arrayPointer=", (int) arrayPointer);
     #endif
 
     // Division by 16 (2^4))
     unsigned char arrayIndex = index >> 4;
     #ifdef BIT_LIST_DEBUG
-        appendStringAndDec(getOutputStreamLogger(INFO), ", arrayIndex=", arrayIndex);
+        appendStringAndDec(getInfoOutputStreamLogger(), ", arrayIndex=", arrayIndex);
     #endif
 
     // relative index = modulo
     unsigned char relativeIntIndex = index - (arrayIndex << 4);
     #ifdef BIT_LIST_DEBUG
-        appendStringAndDec(getOutputStreamLogger(INFO), ", relativeIntIndex=", relativeIntIndex);
+        appendStringAndDec(getInfoOutputStreamLogger(), ", relativeIntIndex=", relativeIntIndex);
     #endif
 
 
     // Shift to the right cell index
     arrayPointer += arrayIndex;
     #ifdef BIT_LIST_DEBUG
-        appendStringAndDec(getOutputStreamLogger(INFO), ", newArrayPointer=", (int) arrayPointer);
-        appendStringAndDec(getOutputStreamLogger(INFO), ", pointerValue=", *arrayPointer);
+        appendStringAndDec(getInfoOutputStreamLogger(), ", newArrayPointer=", (int) arrayPointer);
+        appendStringAndDec(getInfoOutputStreamLogger(), ", pointerValue=", *arrayPointer);
     #endif
 
     unsigned int mask = (1 << relativeIntIndex);
@@ -72,14 +72,14 @@ void setBit(BitList* bitList, unsigned char index, bool value) {
         *arrayPointer &= (~mask);
     }
     #ifdef BIT_LIST_DEBUG
-        appendStringAndDec(getOutputStreamLogger(INFO), ", newPointerValue=", *arrayPointer);
+        appendStringAndDec(getInfoOutputStreamLogger(), ", newPointerValue=", *arrayPointer);
     #endif
 }
 
 bool getBit(BitList* bitList, unsigned char index) {
     #ifdef BIT_LIST_DEBUG
-        println(getOutputStreamLogger(INFO));
-        appendStringAndDec(getOutputStreamLogger(INFO), ", index=", index);
+        println(getInfoOutputStreamLogger());
+        appendStringAndDec(getInfoOutputStreamLogger(), ", index=", index);
     #endif    
 
     if (index > bitList->size) {
@@ -92,18 +92,18 @@ bool getBit(BitList* bitList, unsigned char index) {
     // Division by 16 (2^4))
     unsigned char arrayIndex = index >> 4;
     #ifdef BIT_LIST_DEBUG
-        appendStringAndDec(getOutputStreamLogger(INFO), ", arrayIndex=", arrayIndex);
+        appendStringAndDec(getInfoOutputStreamLogger(), ", arrayIndex=", arrayIndex);
     #endif
 
     // relative index = modulo
     unsigned char relativeIntIndex = index - (arrayIndex << 4);
     #ifdef BIT_LIST_DEBUG
-        appendStringAndDec(getOutputStreamLogger(INFO), ", relativeIntIndex=", relativeIntIndex);
+        appendStringAndDec(getInfoOutputStreamLogger(), ", relativeIntIndex=", relativeIntIndex);
     #endif
     
     arrayPointer += arrayIndex;
     #ifdef BIT_LIST_DEBUG
-        appendStringAndDec(getOutputStreamLogger(INFO), ", arrayPointer=", *arrayPointer);
+        appendStringAndDec(getInfoOutputStreamLogger(), ", arrayPointer=", *arrayPointer);
     #endif
 
     unsigned int mask = (1 << relativeIntIndex);

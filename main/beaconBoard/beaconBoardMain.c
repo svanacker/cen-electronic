@@ -235,7 +235,7 @@ void onError(JennicEvent* jennicEvent) {
  * Called when the network started.
  */ 
 void onNetworkStart(JennicEvent* jennicEvent) {
-    appendString(getOutputStreamLogger(INFO), "NETWORK START ! \n");
+    appendString(getInfoOutputStreamLogger(), "NETWORK START ! \n");
     setJennicNetworkStatus(JENNIC_WAITING_FOR_NODE);
     pwmServo(LASER_SERVO_INDEX_1, 0xFF, 800.0f);
     pwmServo(LASER_SERVO_INDEX_2, 0xFF, 800.0f);
@@ -251,7 +251,7 @@ void onNetworkStart(JennicEvent* jennicEvent) {
  * Called when the child joined.
  */ 
 void onChildJoined(JennicEvent* jennicEvent) {
-    appendString(getOutputStreamLogger(INFO), "CHILD JOINED ! \n");
+    appendString(getInfoOutputStreamLogger(), "CHILD JOINED ! \n");
     setJennicNetworkStatus(JENNIC_LINK_CONNECTED);
     pwmServo(LASER_SERVO_INDEX_1, 0xFF, 1500.0f);
     pwmServo(LASER_SERVO_INDEX_2, 0xFF, 1500.0f);
@@ -263,7 +263,7 @@ void onChildJoined(JennicEvent* jennicEvent) {
  * Called when the child leave.
  */ 
 void onChildLeave(JennicEvent* jennicEvent) {
-    appendString(getOutputStreamLogger(INFO), "CHILD LEAVE ! \n");
+    appendString(getInfoOutputStreamLogger(), "CHILD LEAVE ! \n");
     setJennicNetworkStatus(JENNIC_WAITING_FOR_NODE);
     setBeaconSystemEnabled(false);
     pwmServo(LASER_SERVO_INDEX_1, 0xFF, 2200.0f);
@@ -346,8 +346,8 @@ restart:
     // Init the logs
     initLogs(DEBUG, &logHandlerListArray, BEACON_LOG_HANDLER_LIST_LENGTH);
     addLogHandler("UART", &debugOutputStream, DEBUG);
-    appendString(getOutputStreamLogger(INFO), "BEACON BOARD MAIN \n");
-    appendCRLF(getOutputStreamLogger(INFO));
+    appendString(getInfoOutputStreamLogger(), "BEACON BOARD MAIN \n");
+    appendCRLF(getInfoOutputStreamLogger());
     setPicName("BEACON BOARD MAIN");
 
     // Init Devices
@@ -401,7 +401,7 @@ restart:
             // Detects if we want to redirect to devices
             /*
             if (bufferGetFirstChar(&debugInputBuffer) == '@') {
-                appendString(getOutputStreamLogger(INFO), "REDIRECT COMMAND TO DEVICES \n");
+                appendString(getInfoOutputStreamLogger(), "REDIRECT COMMAND TO DEVICES \n");
                 // delete the '@' char from the buffer
                 bufferReadChar(&debugInputBuffer);
                 setCommandRedirectToDevices();

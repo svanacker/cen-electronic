@@ -53,7 +53,7 @@ void testPcf8574() {
     // Logs
     initLog(DEBUG);
     addLogHandler(&serialLogHandler, "UART", &debugOutputStream, DEBUG);
-    appendString(getOutputStreamLogger(INFO), "TEST I2C MASTER ");
+    appendString(getInfoOutputStreamLogger(), "TEST I2C MASTER ");
 
     delaymSec(1000);
 
@@ -84,7 +84,7 @@ void testInputStream() {
     // Logs
     initLog(DEBUG);
     addLogHandler(&serialLogHandler, "UART", &debugOutputStream, DEBUG);
-    appendString(getOutputStreamLogger(INFO), "TEST I2C MASTER ");
+    appendString(getInfoOutputStreamLogger(), "TEST I2C MASTER ");
 
     delaymSec(1000);
 

@@ -12,7 +12,7 @@ void initLogHandlerList(LogHandlerList* logHandlerList, LogHandler(*logHandlerLi
 	logHandlerList->maxSize = logHandlerListSize;
 }
 
-LogHandler* addLogHandlerToList(LogHandlerList* logHandlerList, LogLevel logLevel, char* handlerName, OutputStream* outputStream) {
+LogHandler* addLogHandlerToList(LogHandlerList* logHandlerList, LogLevel logLevel, unsigned long logCategoryMask, char* handlerName, OutputStream* outputStream) {
 	if (logHandlerList == NULL || logHandlerList->maxSize == 0) {
 		writeError(LOG_LIST_NOT_INITIALIZED);
 		return NULL;
@@ -23,7 +23,7 @@ LogHandler* addLogHandlerToList(LogHandlerList* logHandlerList, LogLevel logLeve
 		LogHandler* result = getLogHandler(logHandlerList, size);
 		// get a pointer on a logHandler already allocated (because we provide at init a pointer on an array of logHandler
 		logHandlerList->size++;
-		initHandler(result, handlerName, outputStream, logLevel);
+		initHandler(result, handlerName, outputStream, logLevel, logCategoryMask);
 		return result;
 	}
 	else {

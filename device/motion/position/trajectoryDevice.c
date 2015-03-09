@@ -56,7 +56,7 @@ void deviceTrajectoryHandleRawData(char header,
 
         updateTrajectoryWithNoThreshold();
 
-        OutputStream* debugOutputStream = getOutputStreamLogger(ALWAYS);
+        OutputStream* debugOutputStream = getAlwaysOutputStreamLogger();
         printPosition(debugOutputStream);
     }
 

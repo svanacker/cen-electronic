@@ -42,9 +42,9 @@ void i2cSlaveInitialize(I2cBus* i2cBus, unsigned char writeAddress) {
     slaveWriteAddress = writeAddress;
     initialized = true;
     
-    appendString(getOutputStreamLogger(DEBUG), "I2C Slave Write Address=");
-    appendHex2(getOutputStreamLogger(DEBUG), writeAddress);
-    appendCRLF(getOutputStreamLogger(DEBUG));
+    appendString(getDebugOutputStreamLogger(), "I2C Slave Write Address=");
+    appendHex2(getDebugOutputStreamLogger(), writeAddress);
+    appendCRLF(getDebugOutputStreamLogger());
 
     if (i2cBus == NULL) {
         

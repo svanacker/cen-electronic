@@ -3,9 +3,11 @@
 
 #include <Windows.h>
 
-unsigned char getI2cWriteAddress(void);
+#include "../../../../common/i2c/i2cCommon.h"
 
-unsigned char getI2cReadAddress(void);
+unsigned char getI2cWriteAddress(I2cBus* i2cBus);
+
+unsigned char getI2cReadAddress(I2cBus* i2cBus);
 
 /**
  * Return the Pipe Handle used by the Slave to read Data from the Master.

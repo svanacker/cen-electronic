@@ -56,16 +56,16 @@ bool isStarted(void) {
 
 void showWaitingStart(OutputStream* pcOutputStream) {
     appendString(pcOutputStream, MESSAGE_TO_PC_RESET);
-    appendString(getOutputStreamLogger(ALWAYS), "CFG:");
-    appendStringConfig(getOutputStreamLogger(ALWAYS));
-    println(getOutputStreamLogger(ALWAYS));
-    appendString(getOutputStreamLogger(ALWAYS), "Waiting start:");
+    appendString(getAlwaysOutputStreamLogger(), "CFG:");
+    appendStringConfig(getAlwaysOutputStreamLogger());
+    println(getAlwaysOutputStreamLogger());
+    appendString(getAlwaysOutputStreamLogger(), "Waiting start:");
 }
 
 void showStarted(OutputStream* pcOutputStream) {
     // Notify the pc that the match started
     appendString(pcOutputStream, MESSAGE_TO_PC_START);
-    appendStringCRLF(getOutputStreamLogger(ALWAYS), "Go !");
+    appendStringCRLF(getAlwaysOutputStreamLogger(), "Go !");
 }
 
 void deviceStartMatchDetectorHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream) {

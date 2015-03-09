@@ -189,8 +189,8 @@ int main(void) {
     // Init the logs
     initLogs(DEBUG, &logHandlerListArray, AIR_CONDITIONING_LOG_HANDLER_LIST_LENGTH);
     addLogHandler("UART", &debugOutputStream, DEBUG);
-    appendString(getOutputStreamLogger(INFO), getPicName());
-    println(getOutputStreamLogger(INFO));
+    appendString(getInfoOutputStreamLogger(), getPicName());
+    println(getInfoOutputStreamLogger());
 
     // I2C
     airConditioningBoardI2cBus.portIndex = I2C_BUS_PORT_1;

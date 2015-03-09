@@ -58,7 +58,7 @@ void appendI2cDebugOutputChar(unsigned char debugValue) {
 }
 
 void printI2cDebugBuffers() {
-    OutputStream* outputStreamLogger = getOutputStreamLogger(ALWAYS);
+    OutputStream* outputStreamLogger = getAlwaysOutputStreamLogger();
 
     println(outputStreamLogger);
     appendString(outputStreamLogger, "I2C:Is Enabled:");

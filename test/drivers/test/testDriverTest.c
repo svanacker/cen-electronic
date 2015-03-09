@@ -59,8 +59,8 @@ void testDriverTestTestSuite(void) {
 }
 
 void test_testDriverGetValue(void) {
-	initLogs(DEBUG, (LogHandler(*)[]) &logHandlerListArray, TEST_DRIVER_TEST_LOG_HANDLER_LIST_LENGTH);
-    addConsoleLogHandler(DEBUG);
+	initLogs(DEBUG, (LogHandler(*)[]) &logHandlerListArray, TEST_DRIVER_TEST_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
+	addConsoleLogHandler(DEBUG, LOG_HANDLER_CATEGORY_ALL_MASK);
 
     // Dispatchers
     initDriverDataDispatcherList((DriverDataDispatcher(*)[]) &driverDataDispatcherListArray, TEST_DRIVER_TEST_DATA_DISPATCHER_LIST_LENGTH);

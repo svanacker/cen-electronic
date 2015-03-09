@@ -36,16 +36,22 @@ void writeLogChar(OutputStream* outputStream, char c) {
         if (writeLoggerLevel < logHandlerLevel) {
             continue;
         }
+		// To exclude logger which does not correspond to the category
+		if (logHandler->logCategoryMask && logger.logCategoryMask == 0) {
+			continue;
+		}
         OutputStream* outputStream = logHandler->outputStream;
         // write the char of the corresponding stream of the handler
         outputStream->writeChar(outputStream, c);
     }
 }
 
-void initLogs(LogLevel globalLogLevel, LogHandler(*handlerListArray)[], unsigned char handlerListSize) {
+void initLogs(LogLevel globalLogLevel, LogHandler(*handlerListArray)[], unsigned char handlerListSize, unsigned long defaultLogCategoryMask) {
 	// Init logger structure
 	logger.globalLogLevel = globalLogLevel;
 	logger.writeLogLevel = globalLogLevel;
+	logger.defaultLogCategoryMask = defaultLogCategoryMask;
+	logger.logCategoryMask = defaultLogCategoryMask;
 	logger.logHandlerList = &logHandlerList;
 	logger.outputStream = &logOutputStream;
 	// Init OutputStream
@@ -57,25 +63,47 @@ void initLogs(LogLevel globalLogLevel, LogHandler(*handlerListArray)[], unsigned
 
 LogHandler* addLogHandler(char* handlerName,
                             OutputStream* outputStream,
-                            LogLevel logLevel) {
-    LogHandler* result = addLogHandlerToList(&logHandlerList, logLevel, handlerName, outputStream);
+                            LogLevel logLevel,
+							unsigned long logCategoryMask) {
+	LogHandler* result = addLogHandlerToList(&logHandlerList, logLevel, logCategoryMask, handlerName, outputStream);
 
     return result;
 }
 
-OutputStream* getOutputStreamLogger(LogLevel writeLogLevel) {
+OutputStream* getOutputStreamLogger(LogLevel writeLogLevel, unsigned long logCategoryMask) {
     logger.writeLogLevel = writeLogLevel;
+	logger.logCategoryMask = logCategoryMask;
     return logger.outputStream;
 }
 
 OutputStream* getDebugOutputStreamLogger() {
     logger.writeLogLevel = DEBUG;
+	logger.logCategoryMask = logger.defaultLogCategoryMask;
     return logger.outputStream;
+}
+
+OutputStream* getInfoOutputStreamLogger() {
+	logger.writeLogLevel = INFO;
+	logger.logCategoryMask = logger.defaultLogCategoryMask;
+	return logger.outputStream;
+}
+
+OutputStream* getWarningOutputStreamLogger() {
+	logger.writeLogLevel = WARNING;
+	logger.logCategoryMask = logger.defaultLogCategoryMask;
+	return logger.outputStream;
 }
 
 OutputStream* getErrorOutputStreamLogger() {
     logger.writeLogLevel = LOG_LEVEL_ERROR;
+	logger.logCategoryMask = logger.defaultLogCategoryMask;
     return logger.outputStream;
+}
+
+OutputStream* getAlwaysOutputStreamLogger() {
+	logger.writeLogLevel = ALWAYS;
+	logger.logCategoryMask = logger.defaultLogCategoryMask;
+	return logger.outputStream;
 }
 
 Logger* getLoggerInstance() {
