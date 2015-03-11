@@ -1,6 +1,7 @@
 #include <math.h>
 #include <float.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 #include "trajectory.h"
 
@@ -86,7 +87,7 @@ void debugTrajectoryVariables(char* valueName1, float value1, char* valueName2, 
  * @param right the value of the right coder
  * @return 1 if the position has been updated, 0 otherwise
  */
-int absoluteUpdateFromCoders(signed long left, signed long right, bool useThreshold, bool debug) {
+bool absoluteUpdateFromCoders(signed long left, signed long right, bool useThreshold, bool debug) {
     if (debug) {
         debugTrajectoryVariables("left=", (float)left, ", right=", (float) right);
     }
@@ -102,7 +103,7 @@ int absoluteUpdateFromCoders(signed long left, signed long right, bool useThresh
     }
     if (useThreshold) {
         if (fabsf(dl) <= UPDATE_THRESHOLD && fabsf(dr) <= UPDATE_THRESHOLD) {
-            return 0;
+            return false;
         }
     }
 
@@ -144,7 +145,7 @@ int absoluteUpdateFromCoders(signed long left, signed long right, bool useThresh
     lastLeft = l;
     lastRight = r;
 
-    return 1;
+    return true;
 }
 
 void updateTrajectory() {

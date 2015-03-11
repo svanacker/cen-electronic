@@ -75,7 +75,6 @@ void clearInitialSpeeds() {
 
 void computeMotionInstruction(MotionInstruction* inst) {
     if (inst->a != 0.0f) {
-
         // Time must be > 0
         // We compute the diff between initialSpeed and speed and apply the "a" factor
         inst->t1 = fabsf((inst->speed - inst->initialSpeed) / inst->a);
@@ -152,7 +151,7 @@ void setNextPosition(int instructionIndex,
         localInst->a = pa * A_FACTOR;
         localInst->speed = pSpeed * SPEED_FACTOR;
     }        // Acceleration and speed becomes negative
-    else if (pNextPosition < 0L) {
+    else if (pNextPosition < 0.0f) {
         localInst->a = -pa * A_FACTOR;
         localInst->speed = -pSpeed * SPEED_FACTOR;
     }        // Don't change the position

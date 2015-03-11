@@ -49,6 +49,10 @@ void deviceEepromHandleRawData(char commandHeader, InputStream* inputStream, Out
 		OutputStream* debugOutputStream = getDebugOutputStreamLogger();
 		dumpEepromToOutputStream(eeprom_, debugOutputStream);
 	}
+	else if (commandHeader == COMMAND_CLEAR_EEPROM) {
+		ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_CLEAR_EEPROM);
+		clearEeprom(eeprom_);
+	}
 	else if (commandHeader == COMMAND_READ_DATA_EEPROM) {
         ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_READ_DATA_EEPROM);
         unsigned long address = readHex4(inputStream);

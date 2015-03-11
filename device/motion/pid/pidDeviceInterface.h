@@ -20,6 +20,11 @@
 #define COMMAND_READ_PID                       'r'
 
 /**
+ * Load and save default Values
+ */
+#define COMMAND_LOAD_DEFAULT_VALUES            'd'
+
+/**
 * Send values to have information about profile at the begin of
 * trajectory compute.
 */

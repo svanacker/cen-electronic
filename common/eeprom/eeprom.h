@@ -111,6 +111,11 @@ bool isEepromInitialized(Eeprom* eeprom_);
 void printEepromBlock(Eeprom* eeprom_, OutputStream* outputStream, long index, unsigned int length, Buffer* buffer);
 
 /**
+ * Clear the eeprom by filling with 0 files.
+ */
+void clearEeprom(Eeprom* eeprom_);
+
+/**
 * Dump the content of the eeprom_ into a file (always the same).
 * Only available on PC.
 */

@@ -6,7 +6,7 @@
 #include "../../../common/commons.h"
 
 #include "../../../common/cmd/commonCommand.h"
-
+#include "../../../common/eeprom/eeprom.h"
 #include "../../../common/error/error.h"
 
 #include "../../../common/io/inputStream.h"
@@ -22,8 +22,18 @@
 #include "../../../motion/pid/motionEndDetection.h"
 #include "../../../motion/pid/pidPersistence.h"
 
+static Eeprom* pidDeviceEeprom;
+
 bool isPIDDeviceOk(void) {
-    return 1;
+    return true;
+}
+
+void initPidDevice(void) {
+    initPID(pidDeviceEeprom);
+}
+
+void stopPidDevice(void) {
+    stopPID();
 }
 
 void devicePIDHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream) {
@@ -42,7 +52,7 @@ void devicePIDHandleRawData(char commandHeader, InputStream* inputStream, Output
 
         if (pidIndex >= 0 && pidIndex < PID_COUNT) {
             setPID(pidIndex - 1, p, i, d, maxI);
-            savePID();
+            savePidParameters();
         } else {
             // All Values
             if (pidIndex == -1) {
@@ -50,7 +60,7 @@ void devicePIDHandleRawData(char commandHeader, InputStream* inputStream, Output
                 for (pidIndex2 = 0; pidIndex2 < PID_COUNT; pidIndex2++) {
                     setPID(pidIndex2, p, i, d, maxI);
                 }
-                savePID();
+                savePidParameters();
             } else {
                 writeError(PID_INDEX_INCORRECT);
             }
@@ -71,6 +81,14 @@ void devicePIDHandleRawData(char commandHeader, InputStream* inputStream, Output
         appendHex2(outputStream, (int) localPid->i);
         appendHex2(outputStream, (int) localPid->d);
         appendHex2(outputStream, (int) localPid->maxIntegral);
+    } else if (commandHeader == COMMAND_LOAD_DEFAULT_VALUES) {
+        // send acknowledgement
+        ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_LOAD_DEFAULT_VALUES);
+        
+        // Load default Values (and erase previous values)
+        loadPidParameters(true);
+        
+        savePidParameters();
     }
     // End Detection Parameter
     else if (commandHeader ==  COMMAND_GET_END_DETECTION_PARAMETER) {
@@ -167,12 +185,13 @@ void devicePIDHandleRawData(char commandHeader, InputStream* inputStream, Output
 }
 
 static DeviceDescriptor descriptor = {
-    .deviceInit = &initPID,
-    .deviceShutDown = &stopPID,
+    .deviceInit = &initPidDevice,
+    .deviceShutDown = &stopPidDevice,
     .deviceIsOk = &isPIDDeviceOk,
     .deviceHandleRawData = &devicePIDHandleRawData,
 };
 
-DeviceDescriptor* getPIDDeviceDescriptor() {
+DeviceDescriptor* getPIDDeviceDescriptor(Eeprom* pidPersistenceEeprom) {
+    pidDeviceEeprom = pidPersistenceEeprom;
     return &descriptor;
 }

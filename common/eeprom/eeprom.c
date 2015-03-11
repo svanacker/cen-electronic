@@ -8,6 +8,9 @@
 #include "../../common/io/printWriter.h"
 #include "../../common/io/outputStream.h"
 
+#include "../../common/log/logger.h"
+#include "../../common/log/logLevel.h"
+
 void initEeprom(Eeprom* eeprom_,
                 long maxIndex,
                 EepromWriteCharFunction* eepromWriteChar,
@@ -50,6 +53,13 @@ void printEepromBlock(Eeprom* eeprom_, OutputStream* outputStream, long index, u
         char c = bufferReadChar(buffer);
         appendHex2(outputStream, c);
     }
+}
+
+void clearEeprom(Eeprom* eeprom_) {
+	unsigned long i;
+	for (i = 0; i < eeprom_->maxIndex; i++) {
+		eeprom_->eepromWriteChar(eeprom_, i, '\0');
+	}
 }
 
 void dumpEepromToOutputStream(Eeprom* eeprom_, OutputStream* outputStream) {

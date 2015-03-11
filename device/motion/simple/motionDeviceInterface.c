@@ -36,8 +36,14 @@ void fillSplineParameters(void) {
 }
 
 int deviceMotionGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
+    if (commandHeader == COMMAND_MOTION_LOAD_DEFAULT_PARAMETERS) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("loadDefaultParameters");
+        }
+        return 0;
+    }
     // goto
-    if (commandHeader == COMMAND_MOTION_GOTO_IN_PULSE) {
+    else if (commandHeader == COMMAND_MOTION_GOTO_IN_PULSE) {
         if (fillDeviceArgumentList) {
             setFunction("gotoPulse", 4, 0);
             setArgument(0, DEVICE_ARG_SIGNED_HEX_6, "left");

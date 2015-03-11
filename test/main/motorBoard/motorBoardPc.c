@@ -210,7 +210,7 @@ void runMotorBoardPC(void) {
 
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
 	addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
-    addLocalDevice(getPIDDeviceInterface(), getPIDDeviceDescriptor());
+	addLocalDevice(getPIDDeviceInterface(), getPIDDeviceDescriptor(&eeprom));
     addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());
     addLocalDevice(getCodersDeviceInterface(), getCodersDeviceDescriptor());
     addLocalDevice(getTrajectoryDeviceInterface(), getTrajectoryDeviceDescriptor());

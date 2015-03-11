@@ -173,16 +173,17 @@ void gotoPosition(float left, float right, float a, float speed) {
     // determine the pidType to execute motionParameterType
     enum PidType pidType = getPidType(motionParameterType);
 
-
     // Alpha / Theta
     float theta = computeTheta(left, right);
     float alpha = computeAlpha(left, right);
     setNextPosition(INSTRUCTION_THETA_INDEX, motionParameterType, pidType, theta, (float) a, (float) speed);
     setNextPosition(INSTRUCTION_ALPHA_INDEX, motionParameterType, pidType, alpha, (float) a, (float) speed);
 
-    //OutputStream* outputStream = getDebugOutputStreamLogger();
-    //printInst(outputStream, getMotionInstruction(INSTRUCTION_THETA_INDEX));
-    //printInst(outputStream, getMotionInstruction(INSTRUCTION_ALPHA_INDEX));
+    PidMotion* pidMotion = getPidMotion();
+    PidMotionDefinition* pidMotionDefinition = &(pidMotion->currentMotionDefinition);
+    OutputStream* outputStream = getDebugOutputStreamLogger();
+    printInst(outputStream, &(pidMotionDefinition->inst[INSTRUCTION_THETA_INDEX]));
+    printInst(outputStream, &(pidMotionDefinition->inst[INSTRUCTION_ALPHA_INDEX]));
 
     // Indicates that the robot must reach the position
     setMustReachPosition(true);

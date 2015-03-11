@@ -12,6 +12,9 @@
 /** Cancel all current motion. */
 #define COMMAND_MOTION_CANCEL                 'c'
 
+/** Load default Motion parameters. */
+#define COMMAND_MOTION_LOAD_DEFAULT_PARAMETERS 'd'
+
 /** Forward with value in mm. */
 #define COMMAND_MOTION_FORWARD_IN_MM          'f'
 

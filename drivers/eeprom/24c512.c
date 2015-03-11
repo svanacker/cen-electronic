@@ -16,6 +16,12 @@
 #include "../../common/i2c/i2cConstants.h"
 #include "../../common/i2c/i2cCommon.h"
 
+#include "../../common/log/logger.h"
+#include "../../common/log/logLevel.h"
+
+#include "../../common/io/printWriter.h"
+#include "../../common/io/outputStream.h"
+
 I2cBus* _24c512GetI2c(Eeprom* eeprom_) {
     I2cBus* result = (I2cBus*) eeprom_->object;
 
@@ -90,6 +96,13 @@ unsigned long get24C512Address(unsigned long index) {
  * @private
  */
 void _writeEeprom24C512Char(Eeprom* eeprom_, unsigned long index, char value) {
+    /*
+    OutputStream* outputStream = getDebugOutputStreamLogger();
+    appendStringAndDec(outputStream, "write Eeprom index=", index);
+    appendStringAndDec(outputStream, ", value=", value);
+    appendCRLF(outputStream);
+    */
+
     I2cBus* i2cBus = _24c512GetI2c(eeprom_);
     portableMasterWaitSendI2C(i2cBus);
     portableStartI2C(i2cBus);
@@ -118,7 +131,12 @@ void _writeEeprom24C512Char(Eeprom* eeprom_, unsigned long index, char value) {
  * @see eeprom.h
  * @private
  */
-char _readEeprom24C512Char(Eeprom* eeprom_, unsigned long index){
+char _readEeprom24C512Char(Eeprom* eeprom_, unsigned long index) {
+    /*
+    OutputStream* outputStream = getDebugOutputStreamLogger();
+    appendStringAndDec(outputStream, "read Eeprom index=", index);
+    appendCRLF(outputStream);
+    */
     I2cBus* i2cBus = _24c512GetI2c(eeprom_);
 
     portableMasterWaitSendI2C(i2cBus);

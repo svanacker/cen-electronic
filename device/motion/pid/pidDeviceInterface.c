@@ -22,16 +22,21 @@ int devicePIDGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fil
         }
         return commandLengthValueForMode(mode, 10, 0);
     } else if (commandHeader == COMMAND_READ_PID) {
-            if (fillDeviceArgumentList) {
-                setFunction("getPID", 1, 5);
-                setArgumentUnsignedHex2(0, "pidIdx");
-                setResultUnsignedHex2(0, "pidIdx");
-                setResultUnsignedHex2(1, "p");
-                setResultUnsignedHex2(2, "i");
-                setResultUnsignedHex2(3, "d");
-                setResultUnsignedHex2(4, "mI");
-            }
-            return commandLengthValueForMode(mode, 2, 10);
+        if (fillDeviceArgumentList) {
+            setFunction("getPID", 1, 5);
+            setArgumentUnsignedHex2(0, "pidIdx");
+            setResultUnsignedHex2(0, "pidIdx");
+            setResultUnsignedHex2(1, "p");
+            setResultUnsignedHex2(2, "i");
+            setResultUnsignedHex2(3, "d");
+            setResultUnsignedHex2(4, "mI");
+        }
+        return commandLengthValueForMode(mode, 2, 10);
+    } else if (commandHeader == COMMAND_LOAD_DEFAULT_VALUES) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("loadDefaultValues");
+        }
+        return 0;
     } else if (commandHeader == COMMAND_SET_END_DETECTION_PARAMETER) {
         if (fillDeviceArgumentList) {
             setFunction("setEndDetectParam", 5, 0);

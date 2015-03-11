@@ -100,7 +100,6 @@ void bSplineMotionUCompute() {
     alphaMotion->u = alphaU;
     
     // LOG
-    /*
     OutputStream* out = getDebugOutputStreamLogger();
     
     // appendStringAndDecf(out, "pt=", pidTime);
@@ -136,5 +135,4 @@ void bSplineMotionUCompute() {
     appendStringAndDecf(out, ",tu=", thetaU);
     
     appendCRLF(out);
-    */
 }

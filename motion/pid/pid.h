@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+#include "../../common/eeprom/eeprom.h"
 #include "../../common/io/outputStream.h"
 
 #include "../../device/device.h"
@@ -324,7 +325,7 @@ float getNormalU(float normalSpeed);
 /**
  * Initializes the PID.
  */
-void initPID(void);
+void initPID(Eeprom* _eeprom);
 
 /**
  * Stop the PID.

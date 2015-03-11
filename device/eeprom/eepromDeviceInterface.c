@@ -14,13 +14,19 @@ const char* getEepromDeviceName(void) {
 int deviceEepromGetInterface(char header, DeviceInterfaceMode mode, bool fillDeviceArgumentList){
 	if (header == COMMAND_DUMP_TO_FILE_EEPROM) {
 		if (fillDeviceArgumentList) {
-			setFunction("Dump Eeprom to File", 0, 0);
+			setFunctionNoArgumentAndNoResult("Dump Eeprom to File");
 		}
 		return 0;
 	}
 	else if (header == COMMAND_DUMP_TO_LOG_OUTPUT_STREAM_EEPROM) {
 		if (fillDeviceArgumentList) {
-			setFunction("Dump Eeprom to log output Stream", 0, 0);
+			setFunctionNoArgumentAndNoResult("Dump Eeprom to log output Stream");
+		}
+		return 0;
+	}
+	else if (header == COMMAND_CLEAR_EEPROM) {
+		if (fillDeviceArgumentList) {
+			setFunctionNoArgumentAndNoResult("Clear Eeprom");
 		}
 		return 0;
 	}

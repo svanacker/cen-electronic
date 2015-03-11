@@ -1,6 +1,10 @@
 #ifndef MOTION_PERSISTENCE_H
 #define MOTION_PERSISTENCE_H
 
+#include <stdbool.h>
+
+#include "../../common/eeprom/eeprom.h"
+
 // First 2 octets are reserved
 #define EEPROM_MOTION_START_INDEX    100
 
@@ -25,13 +29,13 @@
  * Load the motion parameters from the EEPROM :
  * (for default speed / acceleration)
  */
-void loadMotionParameters();
+void loadMotionParameters(Eeprom* motionEeprom, bool loadDefaultValues);
 
 /**
  * Load the motion parameters from the EEPROM :
  * (for default speed / acceleration)
  */
-void saveMotionParameters();
+void saveMotionParameters(Eeprom* motionEeprom);
 
 #endif
 

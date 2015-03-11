@@ -7,6 +7,8 @@
 
 #include "../../../common/cmd/commonCommand.h"
 
+#include "../../../common/eeprom/eeprom.h"
+
 #include "../../../common/io/inputStream.h"
 #include "../../../common/io/outputStream.h"
 #include "../../../common/io/printWriter.h"
@@ -30,9 +32,10 @@
 
 #include "../../../motion/position/trajectory.h"
 
+static Eeprom* motionDeviceEeprom;
 
 void deviceMotionInit(void) {
-    loadMotionParameters();
+    loadMotionParameters(motionDeviceEeprom, false);
 }
 
 void deviceMotionShutDown(void) {
@@ -102,8 +105,14 @@ void notifyObstacle(OutputStream* outputStream) {
 void deviceMotionHandleRawData(char commandHeader,
         InputStream* inputStream,
         OutputStream* outputStream) {
+    if (commandHeader == COMMAND_MOTION_LOAD_DEFAULT_PARAMETERS) {
+        // send acknowledge
+        ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_LOAD_DEFAULT_PARAMETERS);
+        loadMotionParameters(motionDeviceEeprom, true);
+        saveMotionParameters(motionDeviceEeprom);
+    }
     // GOTO in impulsion
-    if (commandHeader == COMMAND_MOTION_GOTO_IN_PULSE) {
+    else if (commandHeader == COMMAND_MOTION_GOTO_IN_PULSE) {
         // send acknowledge
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_GOTO_IN_PULSE);
 
@@ -244,7 +253,7 @@ void deviceMotionHandleRawData(char commandHeader,
         motionParameter->a = a;
         motionParameter->speed = speed;
 
-        saveMotionParameters();
+        saveMotionParameters(motionDeviceEeprom);
     }
 }
 
@@ -255,6 +264,7 @@ static DeviceDescriptor descriptor = {
     .deviceHandleRawData = &deviceMotionHandleRawData,
 };
 
-DeviceDescriptor* getMotionDeviceDescriptor(void) {
+DeviceDescriptor* getMotionDeviceDescriptor(Eeprom* eeprom_) {
+    motionDeviceEeprom = eeprom_;
     return &descriptor;
 }

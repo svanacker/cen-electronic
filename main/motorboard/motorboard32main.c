@@ -190,8 +190,8 @@ void initDevicesDescriptor() {
 
     addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());
     addLocalDevice(getCodersDeviceInterface(), getCodersDeviceDescriptor());
-    addLocalDevice(getPIDDeviceInterface(), getPIDDeviceDescriptor());
-    addLocalDevice(getMotionDeviceInterface(), getMotionDeviceDescriptor());
+    addLocalDevice(getPIDDeviceInterface(), getPIDDeviceDescriptor(&eeprom_));
+    addLocalDevice(getMotionDeviceInterface(), getMotionDeviceDescriptor(&eeprom_));
     addLocalDevice(getTrajectoryDeviceInterface(), getTrajectoryDeviceDescriptor());
     addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
     addLocalDevice(getSerialDebugDeviceInterface(), getSerialDebugDeviceDescriptor());

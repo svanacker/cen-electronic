@@ -6,7 +6,7 @@
 
 #include "../../common/commons.h"
 #include "../../common/eeprom/eeprom.h"
-
+#include "../../common/error/error.h"
 
 // DEFAULT VALUES : As the PID value is stored into the eeprom, this will be erased by 
 // Programming. It's very dangerous if we forget to send default values
@@ -92,7 +92,7 @@ unsigned char getRealDataIndex(unsigned pidIndex, unsigned int dataIndex) {
  */
 void internalSavePidParameter(unsigned pidIndex, unsigned int dataIndex, signed int value) {
     if (pidPersistenceEeprom == NULL) {
-        // TODO : throw an error
+        writeError(PID_PERSISTENCE_NO_EEPROM);
         return;
     }
     unsigned realIndex = getRealDataIndex(pidIndex, dataIndex);
@@ -105,17 +105,20 @@ void internalSavePidParameter(unsigned pidIndex, unsigned int dataIndex, signed 
  * @param dataIndex the index of data (between 0 and EEPROM_PID_BLOCK_SIZE)
  * @return value the value to load
  */
-signed int internalLoadPidParameter(unsigned pidIndex, unsigned int dataIndex) {
+signed int internalLoadPidParameter(unsigned pidIndex, unsigned int dataIndex, bool loadDefaultValue) {
     if (pidPersistenceEeprom == NULL) {
-        // TODO : throw an error
+        writeError(PID_PERSISTENCE_NO_EEPROM);
         return 0;
     }
     unsigned realIndex = getRealDataIndex(pidIndex, dataIndex);
 
+    char result;
 	// TODO : char / int problem
-    char result = pidPersistenceEeprom->eepromReadChar(pidPersistenceEeprom, realIndex);
-    if (result == ERASED_VALUE_EEPROM) {
+    if (loadDefaultValue) {
         result = DEFAULT_EEPROM_VALUES[realIndex];
+    }
+    else {
+        result = pidPersistenceEeprom->eepromReadChar(pidPersistenceEeprom, realIndex);
     }
     return result;
 }
@@ -123,14 +126,14 @@ signed int internalLoadPidParameter(unsigned pidIndex, unsigned int dataIndex) {
 /**
  * Load the PID Parameters of the Eeprom into Memory.
  */
-void loadPID(void) {
+void loadPidParameters(bool loadDefaultValue) {
     int pidIndex;
     for (pidIndex = 0; pidIndex < PID_STORED_COUNT; pidIndex++) {
         Pid* localPid = getPID(pidIndex, 0);
-        localPid->p = (float) internalLoadPidParameter(pidIndex, EEPROM_KP);
-        localPid->i = (float) internalLoadPidParameter(pidIndex, EEPROM_KI);
-        localPid->d = (float) internalLoadPidParameter(pidIndex, EEPROM_KD);
-        localPid->maxIntegral = (float) internalLoadPidParameter(pidIndex, EEPROM_MI);
+        localPid->p = (float) internalLoadPidParameter(pidIndex, EEPROM_KP, loadDefaultValue);
+        localPid->i = (float) internalLoadPidParameter(pidIndex, EEPROM_KI, loadDefaultValue);
+        localPid->d = (float) internalLoadPidParameter(pidIndex, EEPROM_KD, loadDefaultValue);
+        localPid->maxIntegral = (float) internalLoadPidParameter(pidIndex, EEPROM_MI, loadDefaultValue);
         localPid->enabled = true;
     }
 
@@ -162,7 +165,7 @@ void loadPID(void) {
 /**
  * Save the parameters of the PID into Memory.
  */
-void savePID(void) {
+void savePidParameters(void) {
     int pidIndex;
     // we save both NORMAL_MODE AND ROLLING_TEST_MODE
     for (pidIndex = 0; pidIndex < PID_STORED_COUNT; pidIndex++) {
@@ -172,5 +175,9 @@ void savePID(void) {
         internalSavePidParameter(pidIndex, EEPROM_KD, (int) localPid->d);
         internalSavePidParameter(pidIndex, EEPROM_MI, (int) localPid->maxIntegral);
     }
+}
+
+void initPidPersistence(Eeprom* eeprom_) {
+    pidPersistenceEeprom = eeprom_;
 }
 

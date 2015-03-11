@@ -29,7 +29,7 @@ void stopTrajectoryDevice(void) {
 }
 
 bool isTrajectoryDeviceOk(void) {
-    return 1;
+    return true;
 }
 
 void notifyAbsolutePositionWithoutHeader(OutputStream* outputStream) {

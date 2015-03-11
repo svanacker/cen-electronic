@@ -1,6 +1,10 @@
 #ifndef PID_PERSISTENCE_H
 #define PID_PERSISTENCE_H
 
+#include <stdbool.h>
+
+#include "../../common/eeprom/eeprom.h"
+
 // First 2 octets are reserved
 #define EEPROM_PID_START_INDEX    1
 
@@ -17,13 +21,18 @@
 #define EEPROM_PID_BLOCK_SIZE    4
 
 /**
- * Loads the PID data from EEPROM.
+ * Loads the PID data from EEPROM (or Memory which simulates Eeprom)).
  */
-void loadPID(void);
+void loadPidParameters(bool loadDefaultValues);
 
 /**
  * Saves the PID data to EEPROM.
  */
-void savePID(void);
+void savePidParameters(void);
+
+/**
+ * Initializes the Eeprom used by the Pid Persistence.
+ */
+void initPidPersistence(Eeprom* eeprom_);
 
 #endif

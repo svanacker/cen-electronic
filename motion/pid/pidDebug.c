@@ -53,7 +53,7 @@ void printAllPids(OutputStream* outputStream) {
     }
 }
 
-void printInst (OutputStream* outputStream, MotionInstruction * inst ) {
+void printInst (OutputStream* outputStream, MotionInstruction* inst ) {
     appendStringAndDecf(outputStream, "nextPos=", inst->nextPosition);
     appendStringAndDecf(outputStream, ",a=", inst->a);
     appendStringAndDecf(outputStream, ",s=", inst->speed);
