@@ -67,8 +67,16 @@ int deviceEepromGetInterface(char header, DeviceInterfaceMode mode, bool fillDev
             }
         }
         return commandLengthValueForMode(mode, 4 + EEPROM_DEVICE_WRITE_BLOCK_LENGTH * 2, 0);
-
     }
+	else if (header == COMMAND_INTENSIVE_TEST) {
+		if (fillDeviceArgumentList) {
+			setFunction("intensiveTest", 2, 1);
+			setArgumentUnsignedHex4(0, "address");
+			setArgumentUnsignedHex4(1, "length of test");
+			setResultSignedHex2(0, "errors");
+		}
+		return commandLengthValueForMode(mode, 8, 2);
+	}
     return DEVICE_HEADER_NOT_HANDLED;
 }
 
