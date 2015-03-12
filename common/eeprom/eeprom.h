@@ -6,9 +6,6 @@
 
 #include "../../common/io/buffer.h"
 
-/** Define a value which has been erased by ICD3 programming. */
-#define ERASED_VALUE_EEPROM         0xFF
-
 // forward declaration
 struct Eeprom;
 typedef struct Eeprom Eeprom;
@@ -19,7 +16,7 @@ typedef struct Eeprom Eeprom;
  * @param index the index of the WORD in the EEPROM table. Index 0 should not be used because this value is erased when reprogramming the device.
  * @param value the value to store
  */
-typedef void EepromWriteCharFunction(Eeprom* eeprom_, unsigned long index, char value);
+typedef void EepromWriteCharFunction(Eeprom* eeprom_, unsigned long index, unsigned char value);
 
 /**
  * Reads the value from the EEPROM at the given index.
@@ -27,7 +24,7 @@ typedef void EepromWriteCharFunction(Eeprom* eeprom_, unsigned long index, char 
  * @param index the index of the WORD value to read
  * @return the char value
  */
-typedef char EepromReadCharFunction(Eeprom* eeprom_, unsigned long index);
+typedef unsigned char EepromReadCharFunction(Eeprom* eeprom_, unsigned long index);
 
 /**
 * Write the buffer into the Eeprom.
@@ -61,7 +58,7 @@ struct Eeprom {
     /** The function which must be used to read the content of an eeprom into a buffer. */
     EepromReadBlockFunction* eepromReadBlock;
     /** Max Index. */
-    long maxIndex;
+    unsigned long maxIndex;
     /** A pointer on generic object (for example to store I2cBus ...). */
     int* object;
 };
@@ -91,6 +88,38 @@ void initEeprom(Eeprom* eeprom_,
                 EepromWriteBlockFunction* eepromWriteBlock,
                 EepromReadBlockFunction* eepromReadBlock,
                 int* object);
+
+/**
+* Read an int from the eeprom at a specific index (needs 2 bytes).
+* @param eeprom_ a pointer on the Eeprom object (Simulates POO programming)
+* @param index where we read the first char
+* @return the value to read
+*/
+unsigned int eepromReadInt(Eeprom* eeprom_, unsigned int index);
+
+/**
+* Read a long from the eeprom at a specific index (needs 4 bytes).
+* @param eeprom_ a pointer on the Eeprom object (Simulates POO programming)
+* @param index where we read the first char
+* @return the value to read
+*/
+unsigned eepromReadLong(Eeprom* eeprom_, unsigned long index);
+
+/**
+ * Write an int into the eeprom at a specific index (needs 2 bytes).
+ * @param eeprom_ a pointer on the Eeprom object (Simulates POO programming)
+ * @param index where we write the first char
+ * @param value the value to write
+ */
+void eepromWriteInt(Eeprom* eeprom_, unsigned long index, unsigned int value);
+
+/**
+* Write a long into the eeprom at a specific index (needs 4 bytes).
+* @param eeprom_ a pointer on the Eeprom object (Simulates POO programming)
+* @param index where we write the first char
+* @param value the value to write
+*/
+void eepromWriteLong(Eeprom* eeprom_, unsigned long index, unsigned long value);
                 
 /**
  * Returns true if the eeprom is initialized (if the fields of callbacks are NOT NULL), false else.

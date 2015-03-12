@@ -18,7 +18,7 @@ int deviceFileGetInterface(char header, DeviceInterfaceMode mode, bool fillDevic
 	else if (header == COMMAND_GET_FREE_SPACE) {
 		if (fillDeviceArgumentList) {
 			setFunction("Get Free Space", 0, 1);
-			setArgumentUnsignedHex4(0, "result");
+			setResultUnsignedHex4(0, "result");
 		}
 		return commandLengthValueForMode(mode, 0, 4);
 	}

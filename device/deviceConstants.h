@@ -39,6 +39,9 @@
 /** Command to manipulate the clock. */
 #define CLOCK_DEVICE_HEADER                        'k'
 
+/** Command to handle the Kinematics. */
+#define KINEMATICS_HEADER                          'K'
+
 /** Laser Beacon Device Header. */
 #define LASER_BEACON_DEVICE_HEADER                 'l'
 

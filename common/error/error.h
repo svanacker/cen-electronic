@@ -120,6 +120,7 @@ void clearLastError();
 
 #define PID_INDEX_INCORRECT                 0x3000
 #define PID_PERSISTENCE_NO_EEPROM           0x3100
+#define PID_PERSISTENCE_EEPROM_NOT_INITIALIZED 0x3101
 
 // MOTION
 
@@ -130,6 +131,7 @@ void clearLastError();
 #define MOTION_BSPLINE_LIST_EMPTY           0x3804
 
 #define MOTION_PERSISTENCE_NO_EEPROM        0x3900
+#define MOTION_PERSISTENCE_EEPROM_NOT_INITIALIZED  0x3901
 
 // Zigbee
 #define TOO_MUCH_JENNIC_EVENT            0x4000
@@ -145,5 +147,9 @@ void clearLastError();
 #define TOO_MUCH_ACTION                    0x5060
 #define TOO_MUCH_TARGET_ACTION            0x5070
 #define TOO_MUCH_TARGET_ACTION_ITEM        0x5080
+
+// ROBOT
+#define ROBOT_KINEMATICS_NO_EEPROM		 0x6000
+#define ROBOT_KINEMATICS_EEPROM_NOT_INITIALIZED		 0x6001
 
 #endif

@@ -20,10 +20,7 @@
 
 #include "../../motion/simple/motionParameterType.h"
 
-#include "../../robot/robotConstants.h"
-
-#define WHEEL_PULSE_BY_PID_TIME_AT_FULL_SPEED        (WHEEL_PULSE_BY_SECONDS_AT_FULL_SPEED / PID_UPDATE_MOTORS_FREQUENCY)
-#define U_FACTOR_AT_FULL_SPEED                                128.0f    / WHEEL_PULSE_BY_PID_TIME_AT_FULL_SPEED
+#include "../../robot/kinematics/robotKinematics.h"
 
 // PID CONSTANT
 
@@ -240,6 +237,10 @@ PidMotion* getPidMotion();
  * Returns the parameters of the end motion.
  */
 MotionEndDetectionParameter* getMotionEndDetectionParameter();
+
+float getWheelPulseByPidTimeAtFullSpeed();
+
+float getUFactorAtFullSpeed();
 
 /**
  * Returns the Index of Pid which must be chosen in function of pidType.

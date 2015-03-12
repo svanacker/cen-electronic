@@ -33,7 +33,7 @@
 
 #include "../../main/motorboard/motorBoard.h"
 
-#include "../../robot/robotConstants.h"
+#include "../../robot/kinematics/robotKinematics.h"
 
 // MOTION PARAMETERS
 
@@ -210,6 +210,9 @@ void updateSimpleSplineWithDistance(float destX, float destY,
     // If the distance of the control point is negative, we considerer that we go
     // back
     bool backward = distance1 < 0.0f;
+
+	RobotKinematics* robotKinematics = getRobotKinematics();
+	float wheelAverageLength = robotKinematics->wheelAverageLengthForOnePulse;
     
     /*
     appendString(outputStream, ",rel=");
@@ -223,8 +226,8 @@ void updateSimpleSplineWithDistance(float destX, float destY,
     float x = position->pos.x;
     float y = position->pos.y;
     float a = position->orientation;
-    float xScaled = x  / WHEEL_AVERAGE_LENGTH;
-    float yScaled = y  / WHEEL_AVERAGE_LENGTH;
+	float xScaled = x / wheelAverageLength;
+	float yScaled = y / wheelAverageLength;
 
     // For P0-P1
     float c1 = cosf(a);
@@ -253,7 +256,7 @@ void updateSimpleSplineWithDistance(float destX, float destY,
     // P1 along x axis
     point->x = (x + dca1);
     point->y = (y + dsa1);
-    scale(point, WHEEL_AVERAGE_LENGTH);
+	scale(point, wheelAverageLength);
     
     if (relative) {    
 
@@ -283,8 +286,8 @@ void updateSimpleSplineWithDistance(float destX, float destY,
         point->y = destY;
     }
     // Scale points
-    scale(&(curve->p2), WHEEL_AVERAGE_LENGTH);
-    scale(&(curve->p3), WHEEL_AVERAGE_LENGTH);
+	scale(&(curve->p2), wheelAverageLength);
+	scale(&(curve->p3), wheelAverageLength);
 
     /*
     curve->p1->x = (x  +  distance1        * c) / WHEEL_AVERAGE_LENGTH;
@@ -341,7 +344,10 @@ void gotoSpline() {
     OutputStream* outputStream = getDebugOutputStreamLogger();
 
     BSplineCurve* curve = &getPidMotion()->currentMotionDefinition.curve;
-    writeBSplineControlPoints(outputStream, curve, WHEEL_AVERAGE_LENGTH);
+	RobotKinematics* robotKinematics = getRobotKinematics();
+	float wheelAverageLength = robotKinematics->wheelAverageLengthForOnePulse;
+
+	writeBSplineControlPoints(outputStream, curve, wheelAverageLength);
 
     // Update trajectory before clearing coders
     updateTrajectory();
@@ -422,8 +428,12 @@ float rightOneWheelSimple(float pulse) {
 // MM OR DEGREE FUNCTIONS
 
 float forwardMM(float distanceInMM, float a, float speed) {
-    float realDistanceLeft = distanceInMM / WHEEL_LENGTH_LEFT;
-    float realDistanceRight = distanceInMM / WHEEL_LENGTH_RIGHT;
+	RobotKinematics* robotKinematics = getRobotKinematics();
+	float leftWheelLengthForOnePulse = getLeftWheelLengthForOnePulse(robotKinematics);
+	float rightWheelLengthForOnePulse = getRightWheelLengthForOnePulse(robotKinematics);
+
+	float realDistanceLeft = distanceInMM / leftWheelLengthForOnePulse;
+	float realDistanceRight = distanceInMM / rightWheelLengthForOnePulse;
 
     // Go at a position in millimeter
     gotoPosition(realDistanceLeft, realDistanceRight, a, speed);
@@ -439,8 +449,12 @@ float backwardMM(float distanceInMM, float a, float speed) {
 
 float rotationDegree(float angleDeciDegree, float a, float speed) {
     float angleRadius = angleDeciDegree * PI_DIVIDE_1800;
-    float realDistanceLeft = -(WHEELS_DISTANCE_FROM_CENTER * angleRadius) / WHEEL_LENGTH_LEFT;
-    float realDistanceRight = (WHEELS_DISTANCE_FROM_CENTER * angleRadius) / WHEEL_LENGTH_RIGHT;
+	RobotKinematics* robotKinematics = getRobotKinematics();
+	float leftWheelLengthForOnePulse = getLeftWheelLengthForOnePulse(robotKinematics);
+	float rightWheelLengthForOnePulse = getRightWheelLengthForOnePulse(robotKinematics);
+	float wheelsDistanceFromCenter = getWheelsDistanceFromCenter(robotKinematics);
+	float realDistanceLeft = -(wheelsDistanceFromCenter * angleRadius) / leftWheelLengthForOnePulse;
+	float realDistanceRight = (wheelsDistanceFromCenter * angleRadius) / rightWheelLengthForOnePulse;
     gotoPosition(realDistanceLeft, realDistanceRight, a, speed);
 
     return angleDeciDegree;
@@ -475,14 +489,22 @@ float rightMilliDegree(float angleMilliDegree, float a, float speed) {
 void leftOneWheelDegree(float angleDegree, float a, float speed) {
     // We multiply by 2, because, only one wheel rotates
     float angleRadius = angleDegree * PI_DIVIDE_1800 * 2.0f;
-    float realDistanceRight = (WHEELS_DISTANCE_FROM_CENTER * angleRadius) / WHEEL_LENGTH_LEFT;
+	RobotKinematics* robotKinematics = getRobotKinematics();
+	float leftWheelLengthForOnePulse = getLeftWheelLengthForOnePulse(robotKinematics);
+	float wheelsDistanceFromCenter = getWheelsDistanceFromCenter(robotKinematics);
+
+	float realDistanceRight = (wheelsDistanceFromCenter * angleRadius) / leftWheelLengthForOnePulse;
     gotoPosition(0.0f, realDistanceRight, a, speed);
 }
 
 void rightOneWheelDegree(float angleDegree, float a, float speed) {
     // We multiply by 2, because, only one wheel rotates
     float angleRadius = angleDegree * PI_DIVIDE_1800 * 2.0f;
-    float realDistanceLeft = (WHEELS_DISTANCE_FROM_CENTER * angleRadius) / WHEEL_LENGTH_RIGHT;
+	RobotKinematics* robotKinematics = getRobotKinematics();
+	float rightWheelLengthForOnePulse = getRightWheelLengthForOnePulse(robotKinematics);
+	float wheelsDistanceFromCenter = getWheelsDistanceFromCenter(robotKinematics);
+
+	float realDistanceLeft = (wheelsDistanceFromCenter * angleRadius) / rightWheelLengthForOnePulse;
     gotoPosition(realDistanceLeft, 0.0f, a, speed);
 }
 

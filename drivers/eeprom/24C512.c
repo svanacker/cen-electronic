@@ -95,7 +95,7 @@ unsigned long get24C512Address(unsigned long index) {
  * @see eeprom.h
  * @private
  */
-void _writeEeprom24C512Char(Eeprom* eeprom_, unsigned long index, char value) {
+void _writeEeprom24C512Char(Eeprom* eeprom_, unsigned long index, unsigned char value) {
     /*
     OutputStream* outputStream = getDebugOutputStreamLogger();
     appendStringAndDec(outputStream, "write Eeprom index=", index);
@@ -123,7 +123,7 @@ void _writeEeprom24C512Char(Eeprom* eeprom_, unsigned long index, char value) {
     WaitI2C(i2cBus);
     portableStopI2C(i2cBus);
     WaitI2C(i2cBus);
-    delay100us(4);  // delay <=3 don't write correctly if we write several times
+    delay100us(10);  // delay <=3 don't write correctly if we write several times
 }
 
 /**
@@ -131,7 +131,7 @@ void _writeEeprom24C512Char(Eeprom* eeprom_, unsigned long index, char value) {
  * @see eeprom.h
  * @private
  */
-char _readEeprom24C512Char(Eeprom* eeprom_, unsigned long index) {
+unsigned char _readEeprom24C512Char(Eeprom* eeprom_, unsigned long index) {
     /*
     OutputStream* outputStream = getDebugOutputStreamLogger();
     appendStringAndDec(outputStream, "read Eeprom index=", index);

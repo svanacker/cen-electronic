@@ -103,6 +103,10 @@
 #include "../../device/motion/simple/motionDevice.h"
 #include "../../device/motion/simple/motionDeviceInterface.h"
 
+// Robot
+#include "../../robot/kinematics/robotKinematicsDevice.h"
+#include "../../robot/kinematics/robotKinematicsDeviceInterface.h"
+
 // Drivers
 #include "../../drivers/clock/softClock.h"
 #include "../../drivers/eeprom/24c512.h"
@@ -200,6 +204,7 @@ void initDevicesDescriptor() {
     addLocalDevice(getTimerDeviceInterface(), getTimerDeviceDescriptor());
 
     // I2C_4
+    addLocalDevice(getRobotKinematicsDeviceInterface(), getRobotKinematicsDeviceDescriptor(&eeprom_));
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom_));
     addLocalDevice(getFileDeviceInterface(), getFileDeviceDescriptor());
 

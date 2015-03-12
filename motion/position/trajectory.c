@@ -17,15 +17,13 @@
 
 #include "../../motion/position/coders.h"
 #include "../../motion/pid/pid.h"
-#include "../../robot/robotConstants.h"
+#include "../../robot/kinematics/robotKinematics.h"
 
 // Position update threshold in mm
 // #define UPDATE_THRESHOLD 5.0f
 // No Threshold, we compute at the end of a trajectory
 #define UPDATE_THRESHOLD 1.0f
 
-// wheels distance in true length
-static float width;
 // Position on the board in true length
 static Position position = {
     {0.0f, 0.0f}, 0.0f, 0.0f};
@@ -38,7 +36,6 @@ static float lastRight = 0.0f;
 static float lastAngle = 0.0f;
 
 void initializeTrajectory(void) {
-    width = WHEELS_DISTANCE;
     clearTrajectory();
 }
 
@@ -62,16 +59,6 @@ Position* getPosition(void) {
     return &position;
 }
 
-float getWheelsDistance(void) {
-    return width;
-}
-
-void setWheelsDistance(float distance) {
-    width = distance;
-}
-
-// --------------------------------------------------- NEW METHOD --------------------------------------------------------------------
-
 void debugTrajectoryVariables(char* valueName1, float value1, char* valueName2, float value2) {
     OutputStream* outputStream = getDebugOutputStreamLogger();
     appendStringAndDecf(outputStream, valueName1, value1);
@@ -81,7 +68,7 @@ void debugTrajectoryVariables(char* valueName1, float value1, char* valueName2, 
 
 /**
  * @private
- * Computes and updates the position from the sp�cified
+ * Computes and updates the position from the specified
  * values from the coders.
  * @param left the value of the left coder
  * @param right the value of the right coder
@@ -89,10 +76,14 @@ void debugTrajectoryVariables(char* valueName1, float value1, char* valueName2, 
  */
 bool absoluteUpdateFromCoders(signed long left, signed long right, bool useThreshold, bool debug) {
     if (debug) {
-        debugTrajectoryVariables("left=", (float)left, ", right=", (float) right);
+        debugTrajectoryVariables("left=", (float) left, ", right=", (float) right);
     }
-    float l = (float) left * WHEEL_LENGTH_LEFT;
-    float r = (float) right * WHEEL_LENGTH_RIGHT;
+	RobotKinematics* robotKinematics = getRobotKinematics();
+	float leftWheelLengthForOnePulse = getLeftWheelLengthForOnePulse(robotKinematics);
+	float rightWheelLengthForOnePulse = getRightWheelLengthForOnePulse(robotKinematics);
+
+	float l = (float) left * leftWheelLengthForOnePulse;
+	float r = (float) right * rightWheelLengthForOnePulse;
     if (debug) {
         debugTrajectoryVariables("l=", l, ", r=", r);
     }
@@ -110,7 +101,8 @@ bool absoluteUpdateFromCoders(signed long left, signed long right, bool useThres
     // difference des distances parcourues par les roues en m
     float dw = r - l;
     // orientation finale = difference des distances / demi-distance des roues
-    float orientation = fmodf(dw / width, 2.0f * PI) + lastAngle + position.initialOrientation;
+	float wheelsDistance = robotKinematics->wheelsDistance;
+	float orientation = fmodf(dw / wheelsDistance, 2.0f * PI) + lastAngle + position.initialOrientation;
     // angle relatif au dernier mouvement
     // lastAngle is only used when we clear Coders !
     float relativePositionOrientation = position.orientation;
@@ -137,7 +129,7 @@ bool absoluteUpdateFromCoders(signed long left, signed long right, bool useThres
         debugTrajectoryVariables("dx=", dx, ", dy=", dy);
     }
 
-    // mise a jour de la position
+    // update position
     position.pos.x += dx;
     position.pos.y += dy;
     position.orientation = orientation;

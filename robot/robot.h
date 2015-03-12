@@ -6,6 +6,11 @@
 #include "../common/commons.h"
 #include "../common/io/outputStream.h"
 
+/** 
+ * Defines some information needed by MainBoard about the status of the Robot.
+ * Very precise information about the position of the robot is handled by the trajectory handler
+ */
+
 // Time in seconds
 #define TIME_FOR_OBSTACLE_NEW_NOTIFICATION             4
 
@@ -14,12 +19,12 @@
 /**
 * Returns true if we must stop the robot
 */
-unsigned int isRobotMustStop();
+bool isRobotMustStop();
 
 /**
 * Change the fact that the robot must stop
 */
-void setRobotMustStop(unsigned int value);
+void setRobotMustStop(bool value);
 
 /**
 * Stop the robot and avoid the PIC to restart.

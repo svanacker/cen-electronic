@@ -240,6 +240,11 @@ void setArgumentSignedHex2(int index, char* name);
 void setArgumentUnsignedHex4(int index, char* name);
 
 /**
+* Set the argument of the deviceArgumentList with index for name
+*/
+void setArgumentUnsignedHex6(int index, char* name);
+
+/**
 * Set argument with index to a separator ("-")
 */
 void setArgumentSeparator(int index);
@@ -270,6 +275,11 @@ void setResultSignedHex2(int index, char* name);
 * Set the result of the deviceMethodMetaData with index for name
 */
 void setResultUnsignedHex4(int index, char* name);
+
+/**
+* Set the result of the deviceMethodMetaData with index for name
+*/
+void setResultUnsignedHex6(int index, char* name);
 
 /**
 * Set result with index to a separator ("-")

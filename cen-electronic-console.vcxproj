@@ -81,6 +81,7 @@
     <ClCompile Include="common\clock\clock.c" />
     <ClCompile Include="common\delay\pc\cenDelayPc.c" />
     <ClCompile Include="common\eeprom\eeprom.c" />
+    <ClCompile Include="common\eeprom\eepromAreas.c" />
     <ClCompile Include="common\eeprom\pc\eepromPc.c" />
     <ClCompile Include="common\error\error.c" />
     <ClCompile Include="common\i2c\i2cDebug.c" />
@@ -234,6 +235,9 @@
     <ClCompile Include="robot\config\robotConfigDeviceInterface.c" />
     <ClCompile Include="robot\gameboard\gameboard.c" />
     <ClCompile Include="robot\gameboard\gameboardElement.c" />
+    <ClCompile Include="robot\kinematics\robotKinematics.c" />
+    <ClCompile Include="robot\kinematics\robotKinematicsDevice.c" />
+    <ClCompile Include="robot\kinematics\robotKinematicsDeviceInterface.c" />
     <ClCompile Include="robot\match\endMatchDetectorDevice.c" />
     <ClCompile Include="robot\match\endMatchDetectorDeviceInterface.c" />
     <ClCompile Include="robot\match\pc\startMatchDetectorPc.c" />
@@ -286,6 +290,8 @@
     <ClInclude Include="common\delay\cenDelay.h" />
     <ClInclude Include="common\delay\pc\cenDelayPc.h" />
     <ClInclude Include="common\eeprom\eeprom.h" />
+    <ClInclude Include="common\eeprom\eepromAreas.h" />
+    <ClInclude Include="common\eeprom\eepromConstants.h" />
     <ClInclude Include="common\eeprom\pc\eepromPc.h" />
     <ClInclude Include="common\error\error.h" />
     <ClInclude Include="common\i2c\i2cCommon.h" />
@@ -454,6 +460,9 @@
     <ClInclude Include="robot\config\robotConfigDeviceInterface.h" />
     <ClInclude Include="robot\gameboard\gameboard.h" />
     <ClInclude Include="robot\gameboard\gameboardElement.h" />
+    <ClInclude Include="robot\kinematics\robotKinematics.h" />
+    <ClInclude Include="robot\kinematics\robotKinematicsDevice.h" />
+    <ClInclude Include="robot\kinematics\robotKinematicsDeviceInterface.h" />
     <ClInclude Include="robot\match\endMatchDetectorDevice.h" />
     <ClInclude Include="robot\match\endMatchDetectorDeviceInterface.h" />
     <ClInclude Include="robot\match\pc\startMatchDetectorPc.h" />

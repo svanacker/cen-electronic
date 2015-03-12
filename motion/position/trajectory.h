@@ -20,18 +20,6 @@ void initializeTrajectory(void);
  */
 void clearTrajectory(void);
 
-/**
- * Returns the wheels distance.
- * @return the wheels distance
- */
-float getWheelsDistance(void);
-
-/**
- * Sets the wheels distance.
- * @param distance the wheels distance
- */
-void setWheelsDistance(float distance);
-
 // POSITION
 
 /**

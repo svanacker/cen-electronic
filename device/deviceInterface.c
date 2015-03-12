@@ -84,6 +84,11 @@ void setArgumentUnsignedHex4(int index, char* name) {
     deviceMethodMetaData.arguments[index].name = name;
 }
 
+void setArgumentUnsignedHex6(int index, char* name) {
+	deviceMethodMetaData.arguments[index].type = DEVICE_ARG_UNSIGNED_HEX_6;
+	deviceMethodMetaData.arguments[index].name = name;
+}
+
 void setArgumentSeparator(int index) {
     deviceMethodMetaData.arguments[index].type = DEVICE_ARG_SEPARATOR;
     deviceMethodMetaData.arguments[index].name = "-";
@@ -114,6 +119,11 @@ void setResultUnsignedHex2(int index, char* name) {
 void setResultUnsignedHex4(int index, char* name) {
     deviceMethodMetaData.results[index].type = DEVICE_ARG_UNSIGNED_HEX_4;
     deviceMethodMetaData.results[index].name = name;
+}
+
+void setResultUnsignedHex6(int index, char* name) {
+	deviceMethodMetaData.results[index].type = DEVICE_ARG_UNSIGNED_HEX_6;
+	deviceMethodMetaData.results[index].name = name;
 }
 
 void setResultSeparator(int index) {

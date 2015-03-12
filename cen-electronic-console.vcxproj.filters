@@ -586,6 +586,12 @@
     <Filter Include="Header Files\common\delay\pc">
       <UniqueIdentifier>{2c1e92d2-1c1b-41ad-b258-4d59c1bbc15c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\robot\kinematics">
+      <UniqueIdentifier>{f1f5c4bd-f129-4aee-866e-f91d0c4a1845}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\robot\kinematics">
+      <UniqueIdentifier>{fe5d23ab-2892-4c2a-9a95-d7034d323b6d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -1190,6 +1196,18 @@
     </ClCompile>
     <ClCompile Include="drivers\clock\softClock.c">
       <Filter>Source Files\drivers\clock</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\kinematics\robotKinematics.c">
+      <Filter>Source Files\robot\kinematics</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\kinematics\robotKinematicsDevice.c">
+      <Filter>Source Files\robot\kinematics</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\kinematics\robotKinematicsDeviceInterface.c">
+      <Filter>Source Files\robot\kinematics</Filter>
+    </ClCompile>
+    <ClCompile Include="common\eeprom\eepromAreas.c">
+      <Filter>Source Files\common\eeprom</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1855,6 +1873,21 @@
     </ClInclude>
     <ClInclude Include="common\delay\pc\cenDelayPc.h">
       <Filter>Header Files\common\delay\pc</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\kinematics\robotKinematics.h">
+      <Filter>Header Files\robot\kinematics</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\kinematics\robotKinematicsDevice.h">
+      <Filter>Header Files\robot\kinematics</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\kinematics\robotKinematicsDeviceInterface.h">
+      <Filter>Header Files\robot\kinematics</Filter>
+    </ClInclude>
+    <ClInclude Include="common\eeprom\eepromConstants.h">
+      <Filter>Header Files\common\eeprom</Filter>
+    </ClInclude>
+    <ClInclude Include="common\eeprom\eepromAreas.h">
+      <Filter>Header Files\common\eeprom</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

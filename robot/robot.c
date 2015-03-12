@@ -1,5 +1,7 @@
 #include "robot.h"
 
+#include <stdbool.h>
+
 #include "../common/commons.h"
 #include "../common/2d/2d.h"
 #include "../common/delay/cenDelay.h"
@@ -29,16 +31,16 @@
 
 #include "../main/motorboard/motorBoard.h"
 
-// ROBOT POSITIONG
+// ROBOT POSITION
 // x / y
 static int robotPositionX;
 static int robotPositionY;
 
-// orientation in ddeg
+// orientation in decideg
 static int robotAngle;
 
 /** Global variable to know if the robot must stop.*/
-static unsigned int robotMustStop = false;
+static bool robotMustStop = false;
 
 static unsigned int timeAtLastCollision = 0;
 
@@ -56,7 +58,7 @@ void setRobotPositionChanged() {
     robotPositionChanged = true;
 }
 
-unsigned int isRobotMustStop() {
+bool isRobotMustStop() {
     return robotMustStop;
 }
 
@@ -85,7 +87,7 @@ void printRobotPosition(OutputStream* outputStream) {
     println(outputStream);
 }
 
-void setRobotMustStop(unsigned int value) {
+void setRobotMustStop(bool value) {
     // Comment this if we want that robot doesn't stop on collision
     robotMustStop = value;
 }

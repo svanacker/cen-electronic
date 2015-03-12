@@ -47,6 +47,9 @@
 #include "../../../device/file/fileDevice.h"
 #include "../../../device/file/fileDeviceInterface.h"
 
+// KINEMATICS
+#include "../../../robot/kinematics/robotKinematicsDeviceInterface.h"
+
 // MOTION
 
 #include "../../../device/motion/pid/pidDevice.h"
@@ -286,6 +289,7 @@ void runMainBoardPC(void) {
     addI2cRemoteDevice(getCodersDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
     addI2cRemoteDevice(getTrajectoryDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
     addI2cRemoteDevice(getMotionDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
+	addI2cRemoteDevice(getRobotKinematicsDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
 
     initDevices();
 

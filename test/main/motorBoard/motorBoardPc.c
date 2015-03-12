@@ -38,6 +38,11 @@
 #include "../../../device/eeprom/eepromDevice.h"
 #include "../../../device/eeprom/eepromDeviceInterface.h"
 
+// KINEMATICS
+
+#include "../../../robot/kinematics/robotKinematicsDevice.h"
+#include "../../../robot/kinematics/robotKinematicsDeviceInterface.h"
+
 // MOTION
 
 #include "../../../device/motion/pid/pidDevice.h"
@@ -210,6 +215,7 @@ void runMotorBoardPC(void) {
 
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
 	addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
+	addLocalDevice(getRobotKinematicsDeviceInterface(), getRobotKinematicsDeviceDescriptor(&eeprom));
 	addLocalDevice(getPIDDeviceInterface(), getPIDDeviceDescriptor(&eeprom));
     addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());
     addLocalDevice(getCodersDeviceInterface(), getCodersDeviceDescriptor());

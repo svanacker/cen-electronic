@@ -5,9 +5,6 @@
 
 #include "../../common/eeprom/eeprom.h"
 
-// First 2 octets are reserved
-#define EEPROM_PID_START_INDEX    1
-
 // -> EEPROM Index
 #define EEPROM_KP                0
 #define EEPROM_KI                1

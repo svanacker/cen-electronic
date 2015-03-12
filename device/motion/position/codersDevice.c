@@ -13,7 +13,7 @@
 #include "../../../motion/position/coders.h"
 #include "../../../motion/position/trajectory.h"
 
-#include "../../../robot/robotConstants.h"
+#include "../../../robot/kinematics/robotKinematics.h"
 
 void stopCoders(void) {
 
@@ -54,10 +54,14 @@ void deviceCodersHandleRawData(char commandHeader, InputStream* inputStream, Out
         signed long coderValue0 = getCoderValue(CODER_LEFT);
         signed long coderValue1 = getCoderValue(CODER_RIGHT);
 
+		RobotKinematics* robotKinematics = getRobotKinematics();
+		float leftWheelLengthForOnePulse = getLeftWheelLengthForOnePulse(robotKinematics);
+		float rightWheelLengthForOnePulse = getLeftWheelLengthForOnePulse(robotKinematics);
+
         appendCRLF(debugOutputStream);
-        printCoderDebug(debugOutputStream, "left", coderValue0, WHEEL_LENGTH_LEFT);
+		printCoderDebug(debugOutputStream, "left", coderValue0, leftWheelLengthForOnePulse);
         appendCRLF(debugOutputStream);
-        printCoderDebug(debugOutputStream, "right", coderValue1, WHEEL_LENGTH_RIGHT);
+		printCoderDebug(debugOutputStream, "right", coderValue1, rightWheelLengthForOnePulse);
     } else if (commandHeader == COMMAND_CLEAR_CODERS) {
         ackCommand(outputStream, CODERS_DEVICE_HEADER, COMMAND_CLEAR_CODERS);
 

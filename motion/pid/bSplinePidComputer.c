@@ -17,7 +17,7 @@
 #include "../../motion/pid/pidComputer.h"
 #include "../../motion/position/trajectory.h"
 
-#include "../../robot/robotConstants.h"
+#include "../../robot/kinematics/robotKinematics.h"
 
 void bSplineMotionUCompute() {
     PidMotion* pidMotion = getPidMotion();
@@ -37,8 +37,11 @@ void bSplineMotionUCompute() {
     // Computes the normal Point where the robot must be
     computeBSplinePoint(curve, bSplineTime, &normalPoint);
     // Convert normalPoint into mm space
-    normalPoint.x = normalPoint.x * WHEEL_AVERAGE_LENGTH;
-    normalPoint.y = normalPoint.y * WHEEL_AVERAGE_LENGTH;
+	RobotKinematics* robotKinematics = getRobotKinematics();
+	float wheelAverageLength = robotKinematics->wheelAverageLengthForOnePulse;
+
+	normalPoint.x = normalPoint.x * wheelAverageLength;
+	normalPoint.y = normalPoint.y * wheelAverageLength;
 
     Position* robotPosition = getPosition();
     Point robotPoint = robotPosition->pos;
@@ -64,13 +67,14 @@ void bSplineMotionUCompute() {
     alphaError = mod2PI(alphaError);
 
     // Convert angleError into pulse equivalent
-    float alphaPulseError = (- WHEELS_DISTANCE_FROM_CENTER * alphaError) / WHEEL_AVERAGE_LENGTH;
+	float wheelsDistanceFromCenter = getWheelsDistanceFromCenter(robotKinematics);
+	float alphaPulseError = (-wheelsDistanceFromCenter * alphaError) / wheelAverageLength;
 
     // THETA
     MotionError* thetaMotionError = &(computationValues->err[INSTRUCTION_THETA_INDEX]);
 
     // thetaError must be in Pulse and not in MM
-    float thetaError = distanceBetweenPoints(&robotPoint, &normalPoint) /  WHEEL_AVERAGE_LENGTH;
+	float thetaError = distanceBetweenPoints(&robotPoint, &normalPoint) / wheelAverageLength;
     float thetaAngle = angleOfVector(&robotPoint, &normalPoint);
     if (curve->backward) {
         thetaAngle += PI;

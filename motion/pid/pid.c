@@ -36,7 +36,7 @@
 #include "../position/coderErrorComputer.h"
 #include "../simple/motion.h"
 
-#include "../../robot/robotConstants.h"
+#include "../../robot/kinematics/robotKinematics.h"
 
 // Contains all information about current motion
 static PidMotion pidMotion;
@@ -89,12 +89,26 @@ void initPID(Eeprom* _eeprom) {
     rollingTestMode = 0;
     initPidPersistence(_eeprom);
     loadPidParameters(false);
+    RobotKinematics* robotKinematics = getRobotKinematics();
+    loadRobotKinematicsParameters(robotKinematics, _eeprom, false);
     initPidTimer();
     initPidMotion();
 }
 
 void stopPID(void) {
     mustReachPosition = false;
+}
+
+float getWheelPulseByPidTimeAtFullSpeed() {
+	RobotKinematics* robotKinematics = getRobotKinematics();
+	float result = getWheelPulseBySecondsAtFullSpeed(robotKinematics) / PID_UPDATE_MOTORS_FREQUENCY;
+	return result;
+}
+
+float getUFactorAtFullSpeed() {
+	// TODO : Why This Constant (must depend on the voltage) !!!
+	float result = 128.0f / getWheelPulseByPidTimeAtFullSpeed();
+	return result;
 }
 
 /**
@@ -105,7 +119,7 @@ float getNormalU(float pulseAtSpeed) {
     // at Frequency of 200 Hz => 730 pulses by pidTime at full Speed
     
     // NormalU = (pulseAtSpeed / pulseAtFullSpeed) * MAX_U
-    float result = pulseAtSpeed * U_FACTOR_AT_FULL_SPEED;
+	float result = pulseAtSpeed * getUFactorAtFullSpeed();
     // float result = 0.0f;
     return result;
 }

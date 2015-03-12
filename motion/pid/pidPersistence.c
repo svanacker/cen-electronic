@@ -6,37 +6,12 @@
 
 #include "../../common/commons.h"
 #include "../../common/eeprom/eeprom.h"
+#include "../../common/eeprom/eepromAreas.h"
 #include "../../common/error/error.h"
 
 // DEFAULT VALUES : As the PID value is stored into the eeprom, this will be erased by 
 // Programming. It's very dangerous if we forget to send default values
 
-// FOR 500 impulsions coders
-
-/*
-// PID at 10/05/2010 :
-// -> GO        : 40006000-80006000
-// -> ROTATION : 80006000-40006000
-// First Octet = EEPROM_RESERVED, Last_Octet = EEPROM_DEBUG
-signed int DEFAULT_EEPROM_VALUES[EEPROM_PID_START_INDEX + (EEPROM_PID_BLOCK_SIZE * PID_COUNT)] = 
-{
- // RESERVED area for EEPROM
- 0x00,
- // NORMAL VALUES
- // Go (P I D MI)
- 0x40, 0x00, 0x60, 0x00,
- 0x80, 0x00, 0x60, 0x00,
- // Rotation (P I D MI)
- 0x80, 0x00, 0x60, 0x00,
- 0x40, 0x00, 0x60, 0x00,
- // Maintain Position
- 0xF0, 0x00, 0xF0, 0x00,
- 0xF0, 0x00, 0xF0, 0x00,
- // Adjust to the border : it needs small Alpha PID to be able to adjust to the border
- 0x40, 0x00, 0x60, 0x00,
- 0x10, 0x00, 0x60, 0x00,
- };
- */
 // For 5000 impulsions coders
 #define PID_STORED_COUNT        8
 static signed int DEFAULT_EEPROM_VALUES[EEPROM_PID_START_INDEX + (EEPROM_PID_BLOCK_SIZE * PID_STORED_COUNT)] ={
@@ -71,7 +46,6 @@ static signed int DEFAULT_EEPROM_VALUES[EEPROM_PID_START_INDEX + (EEPROM_PID_BLO
 // Not used
 #define DEFAULT_MAX_INTEGRAL 0
 
-// TODO : To Init !
 static Eeprom* pidPersistenceEeprom;
 
 /**
@@ -112,12 +86,17 @@ signed int internalLoadPidParameter(unsigned pidIndex, unsigned int dataIndex, b
     }
     unsigned realIndex = getRealDataIndex(pidIndex, dataIndex);
 
-    char result;
+    unsigned char result;
 	// TODO : char / int problem
     if (loadDefaultValue) {
         result = DEFAULT_EEPROM_VALUES[realIndex];
     }
     else {
+    	bool pidParametersEepromAreaIsInitialized = isEepromAreaInitialized(pidPersistenceEeprom, EEPROM_PID_AREA_MARKER_INDEX);
+    	if (!pidParametersEepromAreaIsInitialized) {
+    		writeError(PID_PERSISTENCE_EEPROM_NOT_INITIALIZED);
+    		return 0;
+    	}
         result = pidPersistenceEeprom->eepromReadChar(pidPersistenceEeprom, realIndex);
     }
     return result;
@@ -163,9 +142,10 @@ void loadPidParameters(bool loadDefaultValue) {
 }
 
 /**
- * Save the parameters of the PID into Memory.
+ * Save the parameters of the PID into Eeprom.
  */
 void savePidParameters(void) {
+	initEepromArea(pidPersistenceEeprom, EEPROM_PID_AREA_MARKER_INDEX);
     int pidIndex;
     // we save both NORMAL_MODE AND ROLLING_TEST_MODE
     for (pidIndex = 0; pidIndex < PID_STORED_COUNT; pidIndex++) {

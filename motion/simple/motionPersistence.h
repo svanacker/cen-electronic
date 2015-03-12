@@ -5,17 +5,13 @@
 
 #include "../../common/eeprom/eeprom.h"
 
-// First 2 octets are reserved
-#define EEPROM_MOTION_START_INDEX    100
-
-
 // Forward / Backward
-#define DEFAULT_FORWARD_ACCELERATION             0x20
-#define DEFAULT_FORWARD_SPEED                     0x60
+#define DEFAULT_FORWARD_ACCELERATION             0x10
+#define DEFAULT_FORWARD_SPEED                     0x30
 
 // Default Rotation
-#define DEFAULT_ROTATION_ACCELERATION             0x20
-#define DEFAULT_ROTATION_SPEED                     0x60
+#define DEFAULT_ROTATION_ACCELERATION             0x08
+#define DEFAULT_ROTATION_SPEED                     0x40
 
 // One Wheel
 #define DEFAULT_ROTATION_ONE_WHEEL_ACCELERATION 0x08
