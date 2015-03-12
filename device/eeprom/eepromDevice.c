@@ -85,6 +85,28 @@ void deviceEepromHandleRawData(char commandHeader, InputStream* inputStream, Out
             eeprom_->eepromWriteChar(eeprom_, address + index, data);
         }
     }
+	else if (commandHeader == COMMAND_INTENSIVE_TEST) {
+		ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_INTENSIVE_TEST);
+		unsigned long address = readHex4(inputStream);
+		unsigned long length = readHex4(inputStream);
+		unsigned errorCount = 0;
+		unsigned int index;
+		// Writes
+		for (index = 0; index < length; index++) {
+			unsigned char value = (unsigned char) index;
+			eeprom_->eepromWriteChar(eeprom_, address + index, value);
+		}
+		// Reads
+		for (index = 0; index < length; index++) {
+			unsigned char value = (unsigned char) eeprom_->eepromReadChar(eeprom_, address + index);
+			if (value != (unsigned char)index) {
+				if (errorCount < 255) {
+					errorCount++;
+				}
+			}
+		}
+		appendHex2(outputStream, errorCount);
+	}
 }
 
 static DeviceDescriptor descriptor = {

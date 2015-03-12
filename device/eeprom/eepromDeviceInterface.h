@@ -38,6 +38,11 @@
 #define COMMAND_READ_BLOCK_EEPROM         'R'
 
 /**
+ * Do an intensive test with read and write.
+ */
+#define COMMAND_INTENSIVE_TEST			  'T'
+
+/**
 * Defines the header to write the buffer on the Eeprom
 */
 #define COMMAND_WRITE_BLOCK_EEPROM         'W'
