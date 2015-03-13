@@ -1209,6 +1209,18 @@
     <ClCompile Include="common\eeprom\eepromAreas.c">
       <Filter>Source Files\common\eeprom</Filter>
     </ClCompile>
+    <ClCompile Include="motion\pid\pidMotion.c">
+      <Filter>Source Files\motion\pid</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\pid\pidType.c">
+      <Filter>Source Files\motion\pid</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\pid\profileType.c">
+      <Filter>Source Files\motion\pid</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\simple\motionParameterType.c">
+      <Filter>Source Files\motion\simple</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -1888,6 +1900,36 @@
     </ClInclude>
     <ClInclude Include="common\eeprom\eepromAreas.h">
       <Filter>Header Files\common\eeprom</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\pidMotionError.h">
+      <Filter>Header Files\motion\pid</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\pidMotionDefinition.h">
+      <Filter>Header Files\motion\pid</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\pidMotion.h">
+      <Filter>Header Files\motion\pid</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\pidGlobalParameters.h">
+      <Filter>Header Files\motion\pid</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\pidCurrentValues.h">
+      <Filter>Header Files\motion\pid</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\pidComputationValues.h">
+      <Filter>Header Files\motion\pid</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\motionInstruction.h">
+      <Filter>Header Files\motion\pid</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\instructionType.h">
+      <Filter>Header Files\motion\pid</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\detectedMotionType.h">
+      <Filter>Header Files\motion\pid</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\simple\motionParameterType.h">
+      <Filter>Header Files\motion\simple</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
