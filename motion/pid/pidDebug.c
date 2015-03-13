@@ -12,6 +12,7 @@
 #include "../../common/io/reader.h"
 
 #include "../../motion/simple/motion.h"
+#include "../../motion/simple/motionParameterType.h"
 
 void printErrorStruct (OutputStream* outputStream, int index ) {
     // TODO 
@@ -68,47 +69,19 @@ void printInst (OutputStream* outputStream, MotionInstruction* inst ) {
 
     // ProfileType
     appendString(outputStream, ",profileType=");
-    if (inst->profileType == PROFILE_TYPE_TRIANGLE) {
-        appendString(outputStream, "TRIANGLE");
-    }
-    else if (inst->profileType == PROFILE_TYPE_TRAPEZE) {
-        appendString(outputStream, "TRAPEZE");
-    }
-    else {
-        append(outputStream, '?');
-    }
-    // PidType
-    const char* pidTypeAsString;
-    if (inst->pidType == PID_TYPE_GO_INDEX) {
-        pidTypeAsString = "GO";
-    }
-    else if (inst->pidType == PID_TYPE_ROTATE_INDEX) {
-        pidTypeAsString = "ROTATE";
-    }
-    else if (inst->pidType == PID_TYPE_MAINTAIN_POSITION_INDEX) {
-        pidTypeAsString = "MAINTAIN";
-    }
-    else if (inst->pidType == PID_TYPE_ADJUST_DIRECTION) {
-        pidTypeAsString = "ADJUST_DIR";
-    }
-    else if (inst->pidType == PID_TYPE_FINAL_APPROACH_INDEX) {
-        pidTypeAsString = "FINAL_APPROACH";
-    }
-    appendKeyAndName(outputStream, ",pidType=", pidTypeAsString);
+    appendProfileTypeAsString(inst->profileType, outputStream);
+    appendCRLF(outputStream);
 
-    // MotionType
-    const char* motionTypeAsString;
-    if (inst->motionParameterType == MOTION_PARAMETER_TYPE_FORWARD_OR_BACKWARD) {
-        motionTypeAsString = "FORWARD_OR_BACKWARD";
-    }
-    else if (inst->motionParameterType == MOTION_PARAMETER_TYPE_ROTATION) {
-        motionTypeAsString = "ROTATION";
-    }
-    else if (inst->motionParameterType == MOTION_PARAMETER_TYPE_MAINTAIN_POSITION) {
-        motionTypeAsString = "MAINTAIN";
-    }
-    appendKeyAndName(outputStream, ",motionType=", motionTypeAsString);
-         
+    // PidType
+    appendString(outputStream, ",pidType=");
+    appendPidTypeAsString(inst->pidType, outputStream);
+    appendCRLF(outputStream);
+
+    // MotionParameterType
+    appendString(outputStream, ",motionType=");
+    appendMotionParameterTypeAsString(inst->motionParameterType, outputStream);
+    appendCRLF(outputStream);
+     
     // unsigned pidIndex = getIndexOfPid(index, inst->pidType);
     // printPid(outputStream, pidIndex);
 

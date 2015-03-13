@@ -59,7 +59,7 @@ typedef struct MotionEndDetectionParameter {
  * To avoid Range analysis by block, we consider the compute of value like a Stack. When we add a value, we substracted
  * the first value to always have a sliping range
  */
-typedef struct MotionEndInfo{
+typedef struct MotionEndInfo {
     unsigned int integralTime;
     /** Current index in the array. */
     unsigned int index;
@@ -100,6 +100,11 @@ typedef struct MotionEndInfo{
  * The delay for which we do not try to know if the robot is rolling or blocked
  */
 #define BLOCKING_OR_REACH_SKIP_DETECTION_DELAY 60
+
+/**
+ * Returns the parameters of the end motion.
+ */
+MotionEndDetectionParameter* getMotionEndDetectionParameter();
 
 /**
 * Reset the structure to detects end of motion.

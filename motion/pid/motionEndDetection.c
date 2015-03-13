@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "motionEndDetection.h"
 
-#include "pid.h"
+#include "pidMotion.h"
 
 #include "../../common/commons.h"
 #include "../../common/math/cenMath.h"
@@ -14,6 +14,10 @@
 
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
+
+MotionEndDetectionParameter* getMotionEndDetectionParameter() {
+    return &(getPidMotion()->globalParameters.motionEndDetectionParameter);
+}
 
 void resetMotionEndData(MotionEndInfo* endMotion) {
     endMotion->integralTime = 0;
@@ -52,11 +56,11 @@ void updateAggregateValues(MotionEndInfo* endMotion) {
 void updateEndMotionData(int instructionIndex, MotionEndInfo* endMotion, MotionEndDetectionParameter* parameter, int time) {
     PidMotion* pidMotion = getPidMotion();
     PidComputationValues* computationValues = &(pidMotion->computationValues);
-    Motion* motion = &(computationValues->motion[instructionIndex]);
+    PidCurrentValues* pidCurrentValues = &(computationValues->currentValues[instructionIndex]);
 
     // Do not analyze it during startup time
     if (time < parameter->noAnalysisAtStartupTime) {
-        motion->oldPosition = motion->position;
+        pidCurrentValues->oldPosition = pidCurrentValues->position;
         return;
     }
     if ((time % parameter->timeRangeAnalysis) == 0) {
@@ -70,15 +74,15 @@ void updateEndMotionData(int instructionIndex, MotionEndInfo* endMotion, MotionE
             endMotion->absDeltaPositionIntegralHistory[endMotion->index] = 0;
         }
     }
-    float absU = fabsf(motion->u);
-    float absDeltaPosition = fabsf(motion->position - motion->oldPosition);
+    float absU = fabsf(pidCurrentValues->u);
+    float absDeltaPosition = fabsf(pidCurrentValues->position - pidCurrentValues->oldPosition);
 
     // In every case
     endMotion->absUIntegralHistory[endMotion->index] += absU;
     endMotion->absDeltaPositionIntegralHistory[endMotion->index] += absDeltaPosition;
 
     // To compute for next iteration
-    motion->oldPosition = motion->position;
+    pidCurrentValues->oldPosition = pidCurrentValues->position;
 
     // Update aggregate Values
     updateAggregateValues(endMotion);

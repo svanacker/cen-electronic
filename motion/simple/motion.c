@@ -19,6 +19,7 @@
 
 #include "../pid/detectedMotionType.h"
 #include "../pid/pid.h"
+#include "../pid/pidMotion.h"
 #include "../pid/pidType.h"
 #include "../pid/pidDebug.h"
 #include "../pid/alphaTheta.h"
@@ -343,7 +344,7 @@ float computeBestAccelerationForBSpline(BSplineCurve* curve, float a) {
 void gotoSpline() {
     OutputStream* outputStream = getDebugOutputStreamLogger();
 
-    BSplineCurve* curve = &getPidMotion()->currentMotionDefinition.curve;
+    BSplineCurve* curve = &(getPidMotion()->currentMotionDefinition.curve);
 	RobotKinematics* robotKinematics = getRobotKinematics();
 	float wheelAverageLength = robotKinematics->wheelAverageLengthForOnePulse;
 

@@ -1,6 +1,8 @@
 #ifndef PID_TYPE_H
 #define PID_TYPE_H
 
+#include "../../common/io/outputStream.h"
+
 // -> TYPES OF PID
 
 // different types of PID_TYPE
@@ -22,5 +24,11 @@ enum PidType {
     /** The pid for final approach. */
     PID_TYPE_FINAL_APPROACH_INDEX = 4
 };
+
+/**
+ * Append the type of the Pid as String into the outputStream.
+ */
+void appendPidTypeAsString(enum PidType pidType, OutputStream* outputStream);
+
 
 #endif

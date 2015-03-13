@@ -38,7 +38,7 @@ void initNextPositionVars(int index) {
     PidComputationValues* computationValues = &(pidMotion->computationValues);
 
     // Initialization of MotionError
-    MotionError* localErr = &(computationValues->err[index]);
+    PidMotionError* localErr = &(computationValues->err[index]);
 
     localErr->previousError = 0;
     localErr->error = 0;
@@ -46,12 +46,12 @@ void initNextPositionVars(int index) {
     localErr->integralError = 0;
 
     // Initialization of Motion
-    Motion* localMotion = &(computationValues->motion[index]);
-    localInst->initialSpeed = localMotion->currentSpeed;
+    PidCurrentValues* localCurrentValues = &(computationValues->currentValues[index]);
+    localInst->initialSpeed =  localCurrentValues->currentSpeed;
 
-    localMotion->position = 0;
-    localMotion->oldPosition = 0;
-    localMotion->u = 0;
+    localCurrentValues->position = 0;
+    localCurrentValues->oldPosition = 0;
+    localCurrentValues->u = 0;
 
     localInst->profileType = PROFILE_TYPE_TRAPEZE;
     localInst->pidType = PID_TYPE_GO_INDEX;
@@ -67,10 +67,10 @@ void clearInitialSpeeds() {
     PidComputationValues* computationValues = &(pidMotion->computationValues);
 
     // TODO : For continous trajectory : to change
-    Motion* alphaMotion = &(computationValues->motion[INSTRUCTION_ALPHA_INDEX]);
-    alphaMotion->currentSpeed = 0.0f;
-    Motion* thetaMotion = &(computationValues->motion[INSTRUCTION_THETA_INDEX]);
-    thetaMotion->currentSpeed = 0.0f;
+    PidCurrentValues* alphaCurrentValues = &(computationValues->currentValues[INSTRUCTION_ALPHA_INDEX]);
+    alphaCurrentValues->currentSpeed = 0.0f;
+    PidCurrentValues* thetaCurrentValues = &(computationValues->currentValues[INSTRUCTION_THETA_INDEX]);
+    thetaCurrentValues->currentSpeed = 0.0f;
 }
 
 void computeMotionInstruction(MotionInstruction* inst) {

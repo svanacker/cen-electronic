@@ -3,6 +3,11 @@
 
 #define MOTION_PARAMETERS_COUNT            4
 
+#include "../../common/io/outputStream.h"
+
+/**
+ * Defines the type of Motion Parameter (Forward / Backward / Rotation / One Wheel / Maintain Position)
+ */
 enum MotionParameterType {
 
     /**
@@ -16,7 +21,7 @@ enum MotionParameterType {
     MOTION_PARAMETER_TYPE_ROTATION = 1,
 
     /**
-     * The robot do a rotation with One Wheel
+     * The robot do a rotation with One Wheel.
      */
     MOTION_PARAMETER_TYPE_ROTATION_ONE_WHEEL = 2,
 
@@ -25,5 +30,10 @@ enum MotionParameterType {
      */
     MOTION_PARAMETER_TYPE_MAINTAIN_POSITION = 3
 };
+
+/**
+ * Append the MotionParameterType as a string into an outputStream
+ */
+void appendMotionParameterTypeAsString(enum MotionParameterType motionParameterType, OutputStream* outputStream);
 
 #endif

@@ -19,6 +19,12 @@
 
 #include "../../../device/device.h"
 #include "../../../motion/pid/pid.h"
+#include "../../../motion/pid/pidMotion.h"
+#include "../../../motion/pid/pidComputationValues.h"
+#include "../../../motion/pid/pidCurrentValues.h"
+#include "../../../motion/pid/motionInstruction.h"
+#include "../../../motion/pid/pidMotionError.h"
+#include "../../../motion/pid/pidMotionDefinition.h"
 #include "../../../motion/pid/motionEndDetection.h"
 #include "../../../motion/pid/pidPersistence.h"
 
@@ -121,7 +127,7 @@ void devicePIDHandleRawData(char commandHeader, InputStream* inputStream, Output
         PidMotion* pidMotion = getPidMotion();
         PidComputationValues* computationValues = &(pidMotion->computationValues);
 
-        MotionError* localError = &(computationValues->err[instructionIndex]);
+        PidMotionError* localError = &(computationValues->err[instructionIndex]);
 
         // send acknowledgement
         ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_SEND_DEBUG_DATA_PID);
@@ -133,8 +139,8 @@ void devicePIDHandleRawData(char commandHeader, InputStream* inputStream, Output
 
         appendSeparator(outputStream);
 
-        Motion* localMotion = &(computationValues->motion[instructionIndex]);
-        appendHex5(outputStream, (int) localMotion->position);
+        PidCurrentValues* pidCurrentValues = &(computationValues->currentValues[instructionIndex]);
+        appendHex5(outputStream, (int) pidCurrentValues->position);
 
         appendSeparator(outputStream);
 
@@ -142,7 +148,7 @@ void devicePIDHandleRawData(char commandHeader, InputStream* inputStream, Output
 
         appendSeparator(outputStream);
 
-        appendHex2(outputStream, (int) localMotion->u);
+        appendHex2(outputStream, (int) pidCurrentValues->u);
 
         appendSeparator(outputStream);
 

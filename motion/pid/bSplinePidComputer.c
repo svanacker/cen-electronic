@@ -3,7 +3,12 @@
 #include "bSplinePidComputer.h"
 
 #include "pidComputer.h"
+#include "pidComputationValues.h"
 #include "pid.h"
+#include "pidMotion.h"
+#include "motionInstruction.h"
+#include "pidMotionDefinition.h"
+#include "pidCurrentValues.h"
 
 #include "../../common/2d/2d.h"
 
@@ -52,7 +57,7 @@ void bSplineMotionUCompute() {
     Pid* pid = getPID(pidIndex, rollingTestMode);
 
     // ALPHA
-    MotionError* alphaMotionError = &(computationValues->err[INSTRUCTION_ALPHA_INDEX]);    
+    PidMotionError* alphaMotionError = &(computationValues->err[INSTRUCTION_ALPHA_INDEX]);    
 
     float normalAlpha = computeBSplineOrientationWithDerivative(curve, bSplineTime);
     float realAlpha = robotPosition->orientation;
@@ -71,7 +76,7 @@ void bSplineMotionUCompute() {
 	float alphaPulseError = (-wheelsDistanceFromCenter * alphaError) / wheelAverageLength;
 
     // THETA
-    MotionError* thetaMotionError = &(computationValues->err[INSTRUCTION_THETA_INDEX]);
+    PidMotionError* thetaMotionError = &(computationValues->err[INSTRUCTION_THETA_INDEX]);
 
     // thetaError must be in Pulse and not in MM
 	float thetaError = distanceBetweenPoints(&robotPoint, &normalPoint) / wheelAverageLength;
@@ -90,8 +95,8 @@ void bSplineMotionUCompute() {
     float normalSpeed = computeNormalSpeed(thetaInst, pidTime);
     float thetaU = computePidCorrection(thetaMotionError, pid, normalSpeed, thetaErrorWithCos);
 
-    Motion* thetaMotion = &(computationValues->motion[INSTRUCTION_THETA_INDEX]);
-    thetaMotion->u = thetaU;
+    PidCurrentValues* thetaCurrentValues = &(computationValues->currentValues[INSTRUCTION_THETA_INDEX]);
+    thetaCurrentValues->u = thetaU;
 
     // ALPHA CORRECTION
     alphaPulseError *= 5.0f;
@@ -100,8 +105,8 @@ void bSplineMotionUCompute() {
     alphaPulseError += alphaCorrection;
     float alphaU = computePidCorrection(alphaMotionError, pid, 0, alphaPulseError);
 
-    Motion* alphaMotion = &(computationValues->motion[INSTRUCTION_ALPHA_INDEX]);
-    alphaMotion->u = alphaU;
+    PidCurrentValues* alphaCurrentValues = &(computationValues->currentValues[INSTRUCTION_ALPHA_INDEX]);
+    alphaCurrentValues->u = alphaU;
     
     // LOG
     OutputStream* out = getDebugOutputStreamLogger();

@@ -2,15 +2,15 @@
 #include <stdlib.h>
 
 #include "pid.h"
+#include "pidMotion.h"
 #include "pidComputer.h"
 #include "pidPersistence.h"
 #include "pidDebug.h"
 #include "motionEndDetection.h"
 #include "pidTimer.h"
+#include "pidMotionDefinition.h"
 
 // Commons
-
-#include "pidTimer.h"
 
 #include "../../common/commons.h"
 
@@ -38,9 +38,6 @@
 
 #include "../../robot/kinematics/robotKinematics.h"
 
-// Contains all information about current motion
-static PidMotion pidMotion;
-
 static char mustReachPosition;
 
 /** Indicates if we use the testing Board (we take lower values for PID). */
@@ -67,21 +64,6 @@ void setEnabledPid(int pidIndex, unsigned char enabled) {
     localPid->enabled = enabled;
 }
 
-PidMotion* getPidMotion() {
-    return &pidMotion;
-}
-
-MotionEndDetectionParameter* getMotionEndDetectionParameter() {
-    return &(pidMotion.globalParameters.motionEndDetectionParameter);
-}
-
-/**
- * Init global variable storing information about motion.
- */
-void initPidMotion() {
-    initMotionEndParameter(getMotionEndDetectionParameter());
-    initFirstTimeBSplineCurve(&(pidMotion.currentMotionDefinition.curve));
-}
 
 void initPID(Eeprom* _eeprom) {
     // TODO : A Remettre
@@ -133,7 +115,7 @@ void setPID(int pidIndex, float p, float i, float d, float maxIntegral) {
 }
 
 Pid* getPID(int index, unsigned int pidMode) {
-    Pid* result = &(pidMotion.globalParameters.pid[index]);
+    Pid* result = &(getPidMotion()->globalParameters.pid[index]);
     return result;
 }
 
@@ -142,18 +124,19 @@ enum DetectedMotionType updateMotors(void) {
         return DETECTED_MOTION_TYPE_NO_POSITION_TO_REACH;
     }
     if (mustPidBeRecomputed()) {
+        PidMotion* pidMotion = getPidMotion();
         float pidTime = (float) getPidTime();
-        pidMotion.computationValues.pidTime = pidTime;
+        getPidMotion()->computationValues.pidTime = pidTime;
 
-        PidMotionDefinition* motionDefinition = &(pidMotion.currentMotionDefinition);
+        PidMotionDefinition* motionDefinition = &(pidMotion->currentMotionDefinition);
         MotionInstruction* thetaInst = &(motionDefinition->inst[INSTRUCTION_THETA_INDEX]);
         MotionInstruction* alphaInst = &(motionDefinition->inst[INSTRUCTION_ALPHA_INDEX]);
 
-        PidComputationValues* computationValues = &(pidMotion.computationValues);
-        Motion* thetaMotion = &(computationValues->motion[INSTRUCTION_THETA_INDEX]);
-        Motion* alphaMotion = &(computationValues->motion[INSTRUCTION_ALPHA_INDEX]);
+        PidComputationValues* computationValues = &(pidMotion->computationValues);
+        PidCurrentValues* thetaCurrentValues = &(computationValues->currentValues[INSTRUCTION_THETA_INDEX]);
+        PidCurrentValues* alphaCurrentValues = &(computationValues->currentValues[INSTRUCTION_ALPHA_INDEX]);
 
-        computeErrorsUsingCoders(&pidMotion);
+        computeErrorsUsingCoders(pidMotion);
         float thetaError = computationValues->thetaError;
         float alphaError = computationValues->alphaError;
 
@@ -165,11 +148,11 @@ enum DetectedMotionType updateMotors(void) {
         }
 
         // Computes the PID
-        motionDefinition->computeU(&pidMotion);
+        motionDefinition->computeU(pidMotion);
 
         // 2 dependant Wheels (direction + angle)
-        float leftMotorSpeed = (thetaMotion->u + alphaMotion->u) / 2.0f;
-        float rightMotorSpeed = (thetaMotion->u - alphaMotion->u) / 2.0f;
+        float leftMotorSpeed = (thetaCurrentValues->u + alphaCurrentValues->u) / 2.0f;
+        float rightMotorSpeed = (thetaCurrentValues->u - alphaCurrentValues->u) / 2.0f;
         setMotorSpeeds((int)leftMotorSpeed, (int) rightMotorSpeed);
 
         // If we maintain the position, we consider that we must maintain indefinitely the position
@@ -181,8 +164,8 @@ enum DetectedMotionType updateMotors(void) {
         MotionEndInfo* thetaEndMotion = &(computationValues->motionEnd[INSTRUCTION_THETA_INDEX]);
         MotionEndInfo* alphaEndMotion = &(computationValues->motionEnd[INSTRUCTION_ALPHA_INDEX]);
     
-        thetaMotion->currentSpeed = thetaMotion->position - thetaMotion->oldPosition;
-        alphaMotion->currentSpeed = alphaMotion->position - alphaMotion->oldPosition;
+        thetaCurrentValues->currentSpeed = thetaCurrentValues->position - thetaCurrentValues->oldPosition;
+        alphaCurrentValues->currentSpeed = alphaCurrentValues->position - alphaCurrentValues->oldPosition;
 
         updateEndMotionData(INSTRUCTION_THETA_INDEX, thetaEndMotion, endDetectionParameter, (int) pidTime);
         updateEndMotionData(INSTRUCTION_ALPHA_INDEX, alphaEndMotion, endDetectionParameter, (int) pidTime);

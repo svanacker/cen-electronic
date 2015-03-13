@@ -2,6 +2,8 @@
 #define PID_COMPUTER_H
 
 #include "pid.h"
+#include "pidMotionError.h"
+#include "motionInstruction.h"
 
 /**
  * Compute the correction.
@@ -10,7 +12,7 @@
  * @param normalSpeed 
  * @param error the error which must be stored into motionError
  */
-float computePidCorrection(MotionError* motionError,
+float computePidCorrection(PidMotionError* motionError,
         Pid* pid,
         float normalSpeed,
         float error);

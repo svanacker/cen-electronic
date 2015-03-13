@@ -3,6 +3,7 @@
 
 #include "../simple/motionParameterType.h"
 #include "pidType.h"
+#include "motionInstruction.h"
 #include "profileType.h"
 
 /**
