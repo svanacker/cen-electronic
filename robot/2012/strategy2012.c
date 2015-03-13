@@ -9,6 +9,10 @@
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
 
+#include "../../motion/motion.h"
+#include "../../motion/simple/simpleMotion.h"
+#include "../../motion/extended/bsplineMotion.h"
+
 #include "../../navigation/locationList.h"
 #include "../../navigation/path.h"
 #include "../../navigation/pathList.h"

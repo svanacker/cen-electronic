@@ -1,7 +1,7 @@
 #include "profileType.h"
 
-#include "../../common/io/outputStream.h"
-#include "../../common/io/printWriter.h"
+#include "../../../common/io/outputStream.h"
+#include "../../../common/io/printWriter.h"
 
 void appendProfileTypeAsString(enum ProfileType profileType, OutputStream* outputStream) {
     if (profileType == PROFILE_TYPE_TRIANGLE) {

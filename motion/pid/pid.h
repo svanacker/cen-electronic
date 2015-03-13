@@ -11,6 +11,7 @@
 
 #include "../../motion/extended/bspline.h"
 
+#include "../../motion/pid/parameters/pidParameter.h"
 #include "../../motion/pid/instructionType.h"
 #include "../../motion/pid/pidType.h"
 #include "../../motion/pid/pidTimer.h"
@@ -25,17 +26,15 @@
 #define TEST_MODE_COUNT 2
 
 /** we use test mode */
-#define ROLLING_BOARD_TEST_MODE_OFF 0
+#define ROLLING_BOARD_TEST_MODE_OFF		false
 
 /** We use the pid at the adress for test mode. */
-#define ROLLING_BOARD_TEST_MODE_ON 1
+#define ROLLING_BOARD_TEST_MODE_ON		true
 
 // NUMBER OF PID
 
 /** The total number of PID values (INSTRUCTION_COUNT * PID_TYPE_COUNT). */
 #define PID_COUNT (INSTRUCTION_COUNT * PID_TYPE_COUNT)
-
-
 
 /**
  * Limit value to next PID value.
@@ -75,32 +74,16 @@
  */
 #define TIME_PERIOD_AFTER_END_FOR_STRONG_PID     40
 
-/**
- * Defines the structure which is used to store PID values
- */
-typedef struct Pid {
-    /** The proportional term */
-    float p;
-    /** The integral term */
-    float i;
-    /** The derivative term */
-    float d;
-    /** The maximal term of integral */
-    float maxIntegral;
-    /** Enable or not the pid. */
-    bool enabled;
-} Pid;
-
 float getWheelPulseByPidTimeAtFullSpeed();
 
 float getUFactorAtFullSpeed();
 
 /**
  * Returns the Index of Pid which must be chosen in function of pidType.
- * @param instructionIndex THETA_INDEX or ALPHA_MASK
+ * @param instructionType THETA_INDEX or ALPHA_MASK
  * @param pidType the type of pid PID_TYPE_GO_INDEX / PID_TYPE_ROTATE_INDEX / PID_TYPE_MAINTAIN_POSITION
  */
-unsigned char getIndexOfPid(unsigned char instructionIndex, enum PidType pidType);
+unsigned char getIndexOfPid(enum InstructionType instructionType, enum PidType pidType);
 
 /**
  * Enable or disable a PID.
@@ -110,28 +93,18 @@ unsigned char getIndexOfPid(unsigned char instructionIndex, enum PidType pidType
 void setEnabledPid(int pidIndex, unsigned char enabled);
 
 /**
- * Sets the PID at the specified index.
- * @param pidIndex the index of the PID to set (between 0 and PID_COUNT)
- * @param p the P parameter
- * @param i the I parameter
- * @param d the D parameter
- * @param maxIntegral the bounds of the I term
- */
-void setPID(int pidIndex, float p, float i, float d, float maxIntegral);
-
-/**
  * Returns the PID at the specified index.
  * @param index the index of the PID to set (between 0 and PID_COUNT)
  * @param pidMode ROLLING_BOARD_TEST_MODE_ON or ROLLING_BOARD_TEST_MODE_OFF
  * @return the PID at the given index
  */
-Pid* getPID(int index, unsigned int pidMode);
+PidParameter* getPidParameter(int index, unsigned int pidMode);
 
-unsigned char getRollingTestMode();
+bool getRollingTestMode();
 
-Pid* getRollingTestModePid();
+PidParameter* getRollingTestModePid();
 
-Pid* getEndApproachPid();
+PidParameter* getEndApproachPid();
 
 /**
  * Returns the time of the PID
@@ -148,14 +121,14 @@ void clearPidTime(void);
  * position must be reached.
  * @return true or false
  */
-int getMustReachPosition(void);
+bool getMustReachPosition(void);
 
 /**
  * Sets the flag which determines if the
  * position must be reached.
  * @value the value of the flag, true or false
  */
-void setMustReachPosition(int value);
+void setMustReachPosition(bool value);
 
 /**
  * Updates the motors values and returns the type of control which is applied to the motors.

@@ -9,13 +9,13 @@
 
 /**
 * Print the error struct of the index.
-* @param errorIndex INSTRUCTION_THETA_INDEX / INSTRUCTION_ALPHA_INDEX
+* @param errorIndex THETA / ALPHA
 */
 void printErrorStruct(OutputStream* outputStream, int errorIndex);
 
 /**
 * Print the motion struct of the index.
-* @param motionIndex INSTRUCTION_THETA_INDEX / INSTRUCTION_ALPHA_INDEX
+* @param motionIndex THETA / ALPHA
 */
 void printMotionStruct(OutputStream* outputStream, int motionIndex);
 

@@ -1,6 +1,8 @@
 #include "pid.h"
+#include "parameters/pidParameter.h"
 #include "profile/pidMotionProfileComputer.h"
-#include "pidComputer.h"
+#include "computer/pidComputer.h"
+#include "computer/simplePidComputer.h"
 
 #include "../../common/commons.h"
 #include "../../common/eeprom/eeprom.h"
@@ -12,7 +14,7 @@
 #include "../../common/io/reader.h"
 
 #include "../../motion/parameters/motionParameterType.h"
-#include "../../motion/simple/motion.h"
+#include "../../motion/simple/simpleMotion.h"
 
 void printErrorStruct (OutputStream* outputStream, int index ) {
     // TODO 
@@ -34,12 +36,12 @@ void printMotionStruct (OutputStream* outputStream, int index) {
 
 void printPid(OutputStream* outputStream, int pidIndex) {
     unsigned char rollingTestMode = getRollingTestMode();
-    Pid* localPid= getPID(pidIndex, rollingTestMode);
+    PidParameter* localPidParameter= getPidParameter(pidIndex, rollingTestMode);
 
-    appendStringAndDecf(outputStream, "p=", localPid->p);
-    appendStringAndDecf(outputStream, ",i=", localPid->i);
-    appendStringAndDecf(outputStream, ",d=", localPid->d);
-    appendStringAndDecf(outputStream, ",mi=", localPid->maxIntegral);
+	appendStringAndDecf(outputStream, "p=", localPidParameter->p);
+	appendStringAndDecf(outputStream, ",i=", localPidParameter->i);
+	appendStringAndDecf(outputStream, ",d=", localPidParameter->d);
+	appendStringAndDecf(outputStream, ",mi=", localPidParameter->maxIntegral);
 
     println(outputStream);
 }

@@ -4,6 +4,7 @@
 #include <stdbool.h>
 
 #include "motionEndDetectionParameter.h"
+#include "../instructionType.h"
 
 #include "../../../common/commons.h"
 
@@ -77,24 +78,24 @@ void resetMotionEndData(MotionEndInfo* endMotion);
 
 /**
  * Detects for a instruction, if motion is finished, or blocked.
- * @param instructionIndex the instruction for which we want to know if it's finished or not
+ * @param instructionType the instruction for which we want to know if it's finished or not
  * @return binary mask 0x0000 0001 if stopped, 0x0000 0010 if stopped with blocking
  */
-unsigned int detectsEndOfMotion(int instructionIndex, MotionEndInfo* endMotion);
+unsigned int detectsEndOfMotion(enum InstructionType instructionType, MotionEndInfo* endMotion);
 
 /**
  * Necessary to call isEndOfMotion, or isRobotBlocked.
  */
-void updateEndMotionData(int instructionIndex, MotionEndInfo* endMotion, MotionEndDetectionParameter* parameter, int time);
+void updateEndMotionData(enum InstructionType instructionType, MotionEndInfo* endMotion, MotionEndDetectionParameter* parameter, int time);
 
 /**
  * Detects if the robot has end his motion and if it can continue to next instruction.
  */
-bool isEndOfMotion(int instructionIndex, MotionEndInfo* endMotion, MotionEndDetectionParameter* parameter);
+bool isEndOfMotion(enum InstructionType instructionType, MotionEndInfo* endMotion, MotionEndDetectionParameter* parameter);
 
 /**
  * Detects if the robot is blocked, and if it must be stopped to avoid problems with motors.
  */
-bool isRobotBlocked(int instructionIndex, MotionEndInfo* endMotion, MotionEndDetectionParameter* parameter);
+bool isRobotBlocked(enum InstructionType instructionType, MotionEndInfo* endMotion, MotionEndDetectionParameter* parameter);
 
 #endif

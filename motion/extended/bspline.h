@@ -99,6 +99,7 @@ void copyBSplineData(BSplinePointData* source, BSplinePointData* target);
 
 /**
  * Compute the length of a bezier arc curve.
+ * @param bSplineCurve the curve for which we compute the length
  * @param bezierPoints the point which define the bezier curve
  */
 float computeBSplineArcLength(BSplineCurve* bSplineCurve, float timeIncrement);
@@ -106,8 +107,9 @@ float computeBSplineArcLength(BSplineCurve* bSplineCurve, float timeIncrement);
 /**
  * Compute the interpolation when the length is between two points corresponding to
  * 2 length.
- * @param beforePoint the previous Point which was computed
- * @param nextPoint the next computed Point
+ * @param bSplineCurve the curve for which we compute the length
+ * @param beforePointData the previous Point which was computed
+ * @param afterPointData the next computed Point
  * @param length a length which must be in the segment [lengthBefore..lengthAfter]
  */
 float computeTimeWithInterpolation(BSplinePointData* beforePointData,
@@ -116,6 +118,7 @@ float computeTimeWithInterpolation(BSplinePointData* beforePointData,
 
 /**
  * Computes the time at the distance.
+ * @param bSplineCurve the curve for which we compute the time
  * @param distance the distance from which we must know the time
  * @return a value between 0 and 1 corresponding to the t parameter
  */

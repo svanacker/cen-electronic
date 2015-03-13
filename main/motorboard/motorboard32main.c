@@ -114,7 +114,7 @@
 #include "../../drivers/motor/motorDriver.h"
 
 // Direct implementation
-#include "../../motion/simple/motion.h"
+#include "../../motion/simple/simpleMotion.h"
 #include "../../motion/position/trajectory.h"
 #include "../../motion/position/coders.h"
 

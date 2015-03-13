@@ -3,6 +3,7 @@
 
 #include "../../../motion/parameters/motionParameterType.h"
 #include "../pidType.h"
+#include "../instructionType.h"
 #include "../motionInstruction.h"
 #include "profileType.h"
 
@@ -16,14 +17,14 @@ void computeMotionInstruction(MotionInstruction* inst);
 
 /**
  * Set the next Position that the robot must reach.
- * @param instructionIndex the index of which instruction to follow
+ * @param instructionType the index of which instruction to follow
  * @param motionParameterType the type of motion which must be used
  * @param pidType the type of pid which must be used
  * @param pNextPosition can be either negative or positive
  * @param pa is the maximal absolute value of acceleration
  * @param pSpeedMax is the maximal absolute value of speed
  */
-void setNextPosition(int instructionIndex,
+void setNextPosition(enum InstructionType instructionType,
         enum MotionParameterType motionParameterType,
         enum PidType pidType,
         float pNextPosition,

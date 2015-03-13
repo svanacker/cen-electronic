@@ -2,7 +2,8 @@
 
 #include "coderErrorComputer.h"
 
-#include "../../motion/pid/pid.h"
+#include "../pid/instructionType.h"
+#include "../../motion/pid/pidMotion.h"
 #include "../../motion/pid/alphaTheta.h"
 
 #include "../../motion/position/coders.h"
@@ -10,12 +11,12 @@
 void computeErrorsUsingCoders(PidMotion* pidMotion) {
     PidMotionDefinition* currentMotionDefinition = &(pidMotion->currentMotionDefinition);
 
-    MotionInstruction* thetaInst = &(currentMotionDefinition->inst[INSTRUCTION_THETA_INDEX]);
-    MotionInstruction* alphaInst = &(currentMotionDefinition->inst[INSTRUCTION_ALPHA_INDEX]);
+    MotionInstruction* thetaInst = &(currentMotionDefinition->inst[THETA]);
+    MotionInstruction* alphaInst = &(currentMotionDefinition->inst[ALPHA]);
 
     PidComputationValues* computationValues = &(pidMotion->computationValues);
-    PidCurrentValues* thetaCurrentValues = &(computationValues->currentValues[INSTRUCTION_THETA_INDEX]);
-    PidCurrentValues* alphaCurrentValues = &(computationValues->currentValues[INSTRUCTION_ALPHA_INDEX]);
+	PidCurrentValues* thetaCurrentValues = &(computationValues->currentValues[THETA]);
+	PidCurrentValues* alphaCurrentValues = &(computationValues->currentValues[ALPHA]);
 
     // 2 dependant Wheels (direction + angle)
     float value0 = (float) getCoderValue(CODER_LEFT);

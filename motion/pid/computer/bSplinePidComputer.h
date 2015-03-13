@@ -4,6 +4,6 @@
 /**
 * Define the function used to compute U for both alpha / theta motion in case of bspline.
 */
-void bSplineMotionUCompute();
+void bSplineMotionUCompute(void);
 
 #endif

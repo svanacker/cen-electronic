@@ -41,10 +41,10 @@ void updateAggregateValues(MotionEndInfo* endMotion) {
     }
 }
 
-void updateEndMotionData(int instructionIndex, MotionEndInfo* endMotion, MotionEndDetectionParameter* parameter, int time) {
+void updateEndMotionData(enum InstructionType instructionType, MotionEndInfo* endMotion, MotionEndDetectionParameter* parameter, int time) {
     PidMotion* pidMotion = getPidMotion();
     PidComputationValues* computationValues = &(pidMotion->computationValues);
-    PidCurrentValues* pidCurrentValues = &(computationValues->currentValues[instructionIndex]);
+    PidCurrentValues* pidCurrentValues = &(computationValues->currentValues[instructionType]);
 
     // Do not analyze it during startup time
     if (time < parameter->noAnalysisAtStartupTime) {
@@ -77,7 +77,7 @@ void updateEndMotionData(int instructionIndex, MotionEndInfo* endMotion, MotionE
 }
 
 
-bool isEndOfMotion(int instructionIndex, MotionEndInfo* endMotion, MotionEndDetectionParameter* parameter) {
+bool isEndOfMotion(enum InstructionType instructionType, MotionEndInfo* endMotion, MotionEndDetectionParameter* parameter) {
     if (endMotion->integralTime < parameter->timeRangeAnalysis) {
         return false;
     }
@@ -87,12 +87,12 @@ bool isEndOfMotion(int instructionIndex, MotionEndInfo* endMotion, MotionEndDete
     return false;
 }
 
-bool isRobotBlocked(int instructionIndex, MotionEndInfo* endMotion, MotionEndDetectionParameter* parameter) {
+bool isRobotBlocked(enum InstructionType instructionType, MotionEndInfo* endMotion, MotionEndDetectionParameter* parameter) {
     if (endMotion->integralTime < parameter->timeRangeAnalysis) {
         return false;
     }
     PidMotionDefinition* motionDefinition = &(getPidMotion()->currentMotionDefinition);
-    MotionInstruction* localInst = &(motionDefinition->inst[instructionIndex]);
+    MotionInstruction* localInst = &(motionDefinition->inst[instructionType]);
     float normalU = getNormalU(localInst->speed);
     float value = parameter->maxUIntegralConstantThreshold + normalU * parameter->maxUIntegralFactorThreshold;
     float limitValue = (float) limit((long) value, (long) PID_NEXT_VALUE_LIMIT);

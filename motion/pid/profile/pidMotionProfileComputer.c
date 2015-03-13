@@ -1,7 +1,8 @@
 #include <math.h>
 
 #include "../pid.h"
-#include "../pidComputer.h"
+#include "../computer/pidComputer.h"
+#include "../computer/simplePidComputer.h"
 #include "../profile/pidMotionProfileComputer.h"
 #include "../endDetection/motionEndDetection.h"
 
@@ -15,12 +16,12 @@
 
 #include "../../../motion/position/coderErrorComputer.h"
 
-#include "../../../motion/simple/motion.h"
+#include "../../../motion/simple/simpleMotion.h"
 
 /**
  * @private
  * Init all variables.
- * @param index corresponds to INSTRUCTION_THETA_INDEX or INSTRUCTION_ALPHA_INDEX
+ * @param index corresponds to THETA or ALPHA
  */
 void initNextPositionVars(int index) {
     PidMotion* pidMotion = getPidMotion();
@@ -66,17 +67,17 @@ void clearInitialSpeeds() {
     PidMotion* pidMotion = getPidMotion();
     PidComputationValues* computationValues = &(pidMotion->computationValues);
 
-    // TODO : For continous trajectory : to change
-    PidCurrentValues* alphaCurrentValues = &(computationValues->currentValues[INSTRUCTION_ALPHA_INDEX]);
+    // TODO : For continuous trajectory : to change
+    PidCurrentValues* alphaCurrentValues = &(computationValues->currentValues[ALPHA]);
     alphaCurrentValues->currentSpeed = 0.0f;
-    PidCurrentValues* thetaCurrentValues = &(computationValues->currentValues[INSTRUCTION_THETA_INDEX]);
+    PidCurrentValues* thetaCurrentValues = &(computationValues->currentValues[THETA]);
     thetaCurrentValues->currentSpeed = 0.0f;
 }
 
 void computeMotionInstruction(MotionInstruction* inst) {
     if (inst->a != 0.0f) {
         // Time must be > 0
-        // We compute the diff between initialSpeed and speed and apply the "a" factor
+        // We compute the difference between initialSpeed and speed and apply the "a" factor
         inst->t1 = fabsf((inst->speed - inst->initialSpeed) / inst->a);
         // P1 = (t1 * (is + s) * 1/2
         inst->p1 = inst->t1 * (inst->initialSpeed + inst->speed) / 2.0f;
@@ -131,17 +132,17 @@ void computeMotionInstruction(MotionInstruction* inst) {
     }
 }
 
-void setNextPosition(int instructionIndex,
+void setNextPosition(enum InstructionType instructionType,
         enum MotionParameterType motionParameterType,
         enum PidType pidType,
         float pNextPosition,
         float pa,
         float pSpeed) {
-    initNextPositionVars(instructionIndex);
+    initNextPositionVars(instructionType);
 
     PidMotion* pidMotion = getPidMotion();
     PidMotionDefinition* motionDefinition = &(pidMotion->currentMotionDefinition);
-    MotionInstruction* localInst = &(motionDefinition->inst[instructionIndex]);
+    MotionInstruction* localInst = &(motionDefinition->inst[instructionType]);
 
     localInst->nextPosition = pNextPosition;
     localInst->motionParameterType = motionParameterType;
@@ -150,11 +151,13 @@ void setNextPosition(int instructionIndex,
     if (pNextPosition > 0.0f) {
         localInst->a = pa * A_FACTOR;
         localInst->speed = pSpeed * SPEED_FACTOR;
-    }        // Acceleration and speed becomes negative
+    } 
+    // Acceleration and speed becomes negative
     else if (pNextPosition < 0.0f) {
         localInst->a = -pa * A_FACTOR;
         localInst->speed = -pSpeed * SPEED_FACTOR;
-    }        // Don't change the position
+    } 
+    // Don't change the position
     else {
         if (motionParameterType == MOTION_PARAMETER_TYPE_MAINTAIN_POSITION) {
             localInst->a = 1.0f;
@@ -166,7 +169,6 @@ void setNextPosition(int instructionIndex,
         }
     }
     computeMotionInstruction(localInst);
-
     
     pidMotion->currentMotionDefinition.computeU = &simpleMotionUCompute;
 }

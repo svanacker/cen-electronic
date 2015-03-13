@@ -26,7 +26,8 @@
 #include "../../../motion/parameters/motionParameter.h"
 #include "../../../motion/parameters/motionPersistence.h"
 
-#include "../../../motion/simple/motion.h"
+#include "../../../motion/extended/bsplineMotion.h"
+#include "../../../motion/simple/simpleMotion.h"
 #include "../../../motion/simple/motionCalibration.h"
 
 #include "../../../motion/pid/detectedMotionType.h"

@@ -1,6 +1,7 @@
 #ifndef PID_MOTION_DEFINITION_H
 #define PID_MOTION_DEFINITION_H
 
+#include "instructionType.h"
 #include "motionInstruction.h"
 #include "../extended/bspline.h"
 

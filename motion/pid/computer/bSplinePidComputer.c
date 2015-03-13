@@ -3,35 +3,36 @@
 #include "bSplinePidComputer.h"
 
 #include "pidComputer.h"
-#include "pidComputationValues.h"
-#include "pid.h"
-#include "pidMotion.h"
-#include "motionInstruction.h"
-#include "pidMotionDefinition.h"
-#include "pidCurrentValues.h"
+#include "../pidComputationValues.h"
+#include "../pid.h"
+#include "../parameters/pidParameter.h"
+#include "../pidMotion.h"
+#include "../motionInstruction.h"
+#include "../pidMotionDefinition.h"
+#include "../pidCurrentValues.h"
 
-#include "../../common/2d/2d.h"
+#include "../../../common/2d/2d.h"
 
-#include "../../common/log/logger.h"
-#include "../../common/log/logLevel.h"
+#include "../../../common/log/logger.h"
+#include "../../../common/log/logLevel.h"
 
-#include "../../common/math/cenMath.h"
+#include "../../../common/math/cenMath.h"
 
-#include "../../motion/extended/bspline.h"
+#include "../../../motion/extended/bspline.h"
 
-#include "../../motion/pid/pidComputer.h"
-#include "../../motion/position/trajectory.h"
+#include "../../../motion/pid/computer/pidComputer.h"
+#include "../../../motion/position/trajectory.h"
 
-#include "../../robot/kinematics/robotKinematics.h"
+#include "../../../robot/kinematics/robotKinematics.h"
 
-void bSplineMotionUCompute() {
+void bSplineMotionUCompute(void) {
     PidMotion* pidMotion = getPidMotion();
     PidComputationValues* computationValues = &(pidMotion->computationValues);
     PidMotionDefinition* motionDefinition = &(pidMotion->currentMotionDefinition);
 
     BSplineCurve* curve = &(motionDefinition->curve);
     float pidTime = computationValues->pidTime;
-    MotionInstruction* thetaInst = &(motionDefinition->inst[INSTRUCTION_THETA_INDEX]);
+    MotionInstruction* thetaInst = &(motionDefinition->inst[THETA]);
     float normalPosition = computeNormalPosition(thetaInst, pidTime);
 
     // Computes the time of the bSpline in [0.00, 1.00]
@@ -52,12 +53,12 @@ void bSplineMotionUCompute() {
     Point robotPoint = robotPosition->pos;
 
     // GET PID
-    unsigned pidIndex = getIndexOfPid(INSTRUCTION_THETA_INDEX, thetaInst->pidType);
+    unsigned pidIndex = getIndexOfPid(THETA, thetaInst->pidType);
     unsigned char rollingTestMode = getRollingTestMode();
-    Pid* pid = getPID(pidIndex, rollingTestMode);
+    PidParameter* pidParameter = getPidParameter(pidIndex, rollingTestMode);
 
     // ALPHA
-    PidMotionError* alphaMotionError = &(computationValues->err[INSTRUCTION_ALPHA_INDEX]);    
+    PidMotionError* alphaMotionError = &(computationValues->err[ALPHA]);    
 
     float normalAlpha = computeBSplineOrientationWithDerivative(curve, bSplineTime);
     float realAlpha = robotPosition->orientation;
@@ -76,7 +77,7 @@ void bSplineMotionUCompute() {
 	float alphaPulseError = (-wheelsDistanceFromCenter * alphaError) / wheelAverageLength;
 
     // THETA
-    PidMotionError* thetaMotionError = &(computationValues->err[INSTRUCTION_THETA_INDEX]);
+    PidMotionError* thetaMotionError = &(computationValues->err[THETA]);
 
     // thetaError must be in Pulse and not in MM
 	float thetaError = distanceBetweenPoints(&robotPoint, &normalPoint) / wheelAverageLength;
@@ -93,9 +94,9 @@ void bSplineMotionUCompute() {
     float thetaErrorWithCos = thetaError * cosAlphaAndThetaDiff;
     
     float normalSpeed = computeNormalSpeed(thetaInst, pidTime);
-    float thetaU = computePidCorrection(thetaMotionError, pid, normalSpeed, thetaErrorWithCos);
+	float thetaU = computePidCorrection(thetaMotionError, pidParameter, normalSpeed, thetaErrorWithCos);
 
-    PidCurrentValues* thetaCurrentValues = &(computationValues->currentValues[INSTRUCTION_THETA_INDEX]);
+    PidCurrentValues* thetaCurrentValues = &(computationValues->currentValues[THETA]);
     thetaCurrentValues->u = thetaU;
 
     // ALPHA CORRECTION
@@ -103,9 +104,9 @@ void bSplineMotionUCompute() {
     float alphaCorrection = -0.00050f * normalSpeed * thetaError * (alphaAndThetaDiff);
     // float alphaCorrection = 0.0f;
     alphaPulseError += alphaCorrection;
-    float alphaU = computePidCorrection(alphaMotionError, pid, 0, alphaPulseError);
+    float alphaU = computePidCorrection(alphaMotionError, pidParameter, 0, alphaPulseError);
 
-    PidCurrentValues* alphaCurrentValues = &(computationValues->currentValues[INSTRUCTION_ALPHA_INDEX]);
+    PidCurrentValues* alphaCurrentValues = &(computationValues->currentValues[ALPHA]);
     alphaCurrentValues->u = alphaU;
     
     // LOG
