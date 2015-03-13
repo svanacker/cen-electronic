@@ -2,22 +2,18 @@
 #include <stdlib.h>
 #include "motionEndDetection.h"
 
-#include "pidMotion.h"
+#include "../pidMotion.h"
 
-#include "../../common/commons.h"
-#include "../../common/math/cenMath.h"
+#include "../../../common/commons.h"
+#include "../../../common/math/cenMath.h"
 
-#include "../../common/io/buffer.h"
-#include "../../common/io/outputStream.h"
-#include "../../common/io/printWriter.h"
-#include "../../common/io/reader.h"
+#include "../../../common/io/buffer.h"
+#include "../../../common/io/outputStream.h"
+#include "../../../common/io/printWriter.h"
+#include "../../../common/io/reader.h"
 
-#include "../../common/log/logger.h"
-#include "../../common/log/logLevel.h"
-
-MotionEndDetectionParameter* getMotionEndDetectionParameter() {
-    return &(getPidMotion()->globalParameters.motionEndDetectionParameter);
-}
+#include "../../../common/log/logger.h"
+#include "../../../common/log/logLevel.h"
 
 void resetMotionEndData(MotionEndInfo* endMotion) {
     endMotion->integralTime = 0;
@@ -29,14 +25,6 @@ void resetMotionEndData(MotionEndInfo* endMotion) {
     }
     endMotion->absDeltaPositionIntegral = 0;
     endMotion->absUIntegral = 0;
-}
-
-void initMotionEndParameter(MotionEndDetectionParameter* parameter) {
-    parameter->absDeltaPositionIntegralFactorThreshold = (unsigned char) ABS_DELTA_POSITION_INTEGRAL_FACTOR_THRESHOLD;
-    parameter->maxUIntegralFactorThreshold = (unsigned char) MAX_U_INTEGRAL_FACTOR_THRESHOLD;
-    parameter->maxUIntegralConstantThreshold = (unsigned char) MAX_U_INTEGRAL_CONSTANT_THRESHOLD;
-    parameter->timeRangeAnalysis = BLOCKING_OR_REACH_DETECTION_DELAY;
-    parameter->noAnalysisAtStartupTime = BLOCKING_OR_REACH_SKIP_DETECTION_DELAY;
 }
 
 /**

@@ -4,9 +4,9 @@
 #include "pid.h"
 #include "pidMotion.h"
 #include "pidComputer.h"
-#include "pidPersistence.h"
+#include "parameters/pidPersistence.h"
 #include "pidDebug.h"
-#include "motionEndDetection.h"
+#include "endDetection/motionEndDetection.h"
 #include "pidTimer.h"
 #include "pidMotionDefinition.h"
 

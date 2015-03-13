@@ -1,9 +1,9 @@
 #ifndef MOTION_INSTRUCTION_H
 #define MOTION_INSTRUCTION_H
 
-#include "profileType.h"
+#include "profile/profileType.h"
 #include "pidType.h"
-#include "../../motion/simple/motionParameterType.h"
+#include "../../motion/parameters/motionParameterType.h"
 
 /**
  * Defines the structs which stores the instruction.

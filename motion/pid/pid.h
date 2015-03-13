@@ -12,18 +12,8 @@
 #include "../../motion/extended/bspline.h"
 
 #include "../../motion/pid/instructionType.h"
-// #include "../../motion/pid/motionInstruction.h"
-// #include "../../motion/pid/motionEndDetection.h"
-// #include "../../motion/pid/detectedMotionType.h"
-// #include "../../motion/pid/pidComputationValues.h"
-// #include "../../motion/pid/pidMotion.h"
-// #include "../../motion/pid/pidMotionDefinition.h"
-// #include "../../motion/pid/pidMotionError.h"
 #include "../../motion/pid/pidType.h"
 #include "../../motion/pid/pidTimer.h"
-// #include "../../motion/pid/profileType.h"
-
-// #include "../../motion/simple/motionParameterType.h"
 
 #include "../../robot/kinematics/robotKinematics.h"
 

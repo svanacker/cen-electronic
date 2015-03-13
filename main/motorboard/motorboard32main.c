@@ -87,7 +87,7 @@
 // PID
 #include "../../motion/pid/pid.h"
 #include "../../motion/pid/pidDebug.h"
-#include "../../motion/pid/pidMotionProfileComputer.h"
+#include "../../motion/pid/profile/pidMotionProfileComputer.h"
 #include "../../device/motion/pid/pidDevice.h"
 #include "../../device/motion/pid/pidDeviceInterface.h"
 

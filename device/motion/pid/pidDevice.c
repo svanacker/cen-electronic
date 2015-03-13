@@ -25,8 +25,8 @@
 #include "../../../motion/pid/motionInstruction.h"
 #include "../../../motion/pid/pidMotionError.h"
 #include "../../../motion/pid/pidMotionDefinition.h"
-#include "../../../motion/pid/motionEndDetection.h"
-#include "../../../motion/pid/pidPersistence.h"
+#include "../../../motion/pid/endDetection/motionEndDetection.h"
+#include "../../../motion/pid/parameters/pidPersistence.h"
 
 static Eeprom* pidDeviceEeprom;
 

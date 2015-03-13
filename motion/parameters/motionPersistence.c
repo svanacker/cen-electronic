@@ -1,9 +1,10 @@
+#include "motionPersistence.h"
+
 #include <stdbool.h>
 #include <stdlib.h>
 
-#include "motionPersistence.h"
-#include "motion.h"
 #include "motionParameterType.h"
+#include "motionParameter.h"
 
 #include "../../common/eeprom/eeprom.h"
 #include "../../common/eeprom/eepromAreas.h"
@@ -45,16 +46,16 @@ unsigned char internalLoadMotionParameterItem(Eeprom* eeprom, unsigned long data
     return result;
 }
 
-void internalLoadMotionParameter(Eeprom* eeprom, enum MotionParameterType motionType, bool loadDefaultValues) {
+void internalLoadMotionParameter(Eeprom* eeprom, enum MotionParameterType motionParameterType, bool loadDefaultValues) {
     if (motionPersistenceEeprom == NULL) {
         writeError(MOTION_PERSISTENCE_NO_EEPROM);
         return;
     }
-    unsigned long motionBlockIndexShift = motionType * MOTION_PARAMETER_BLOCK_SIZE;
+    unsigned long motionBlockIndexShift = motionParameterType * MOTION_PARAMETER_BLOCK_SIZE;
     float a = (float) internalLoadMotionParameterItem(eeprom, EEPROM_MOTION_START_INDEX + motionBlockIndexShift, loadDefaultValues);
     float speed = (float) internalLoadMotionParameterItem(eeprom, EEPROM_MOTION_START_INDEX + motionBlockIndexShift + 1, loadDefaultValues);
 
-    MotionParameter* motionParameter = getDefaultMotionParameters(motionType);
+    MotionParameter* motionParameter = getDefaultMotionParameters(motionParameterType);
     motionParameter->a = a;
     motionParameter->speed = speed;
 }

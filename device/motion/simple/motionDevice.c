@@ -22,9 +22,12 @@
 #include "../../../device/device.h"
 #include "../../../device/motion/position/trajectoryDevice.h"
 
+#include "../../../motion/parameters/motionParameterType.h"
+#include "../../../motion/parameters/motionParameter.h"
+#include "../../../motion/parameters/motionPersistence.h"
+
 #include "../../../motion/simple/motion.h"
-#include "../../../motion/simple/motionParameterType.h"
-#include "../../../motion/simple/motionPersistence.h"
+#include "../../../motion/simple/motionCalibration.h"
 
 #include "../../../motion/pid/detectedMotionType.h"
 #include "../../../motion/pid/pidType.h"

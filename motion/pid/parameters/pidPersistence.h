@@ -3,7 +3,7 @@
 
 #include <stdbool.h>
 
-#include "../../common/eeprom/eeprom.h"
+#include "../../../common/eeprom/eeprom.h"
 
 // -> EEPROM Index
 #define EEPROM_KP                0

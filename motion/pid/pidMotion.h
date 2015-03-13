@@ -1,7 +1,7 @@
 #ifndef PID_MOTION_H
 #define PID_MOTION_H
 
-#include "pidGlobalParameters.h"
+#include "parameters/pidGlobalParameters.h"
 #include "pidMotionDefinition.h"
 #include "pidComputationValues.h"
 

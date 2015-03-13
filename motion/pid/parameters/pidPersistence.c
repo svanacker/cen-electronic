@@ -2,12 +2,12 @@
 
 #include <stdlib.h>
 
-#include "pid.h"
+#include "../pid.h"
 
-#include "../../common/commons.h"
-#include "../../common/eeprom/eeprom.h"
-#include "../../common/eeprom/eepromAreas.h"
-#include "../../common/error/error.h"
+#include "../../../common/commons.h"
+#include "../../../common/eeprom/eeprom.h"
+#include "../../../common/eeprom/eepromAreas.h"
+#include "../../../common/error/error.h"
 
 // DEFAULT VALUES : As the PID value is stored into the eeprom, this will be erased by 
 // Programming. It's very dangerous if we forget to send default values

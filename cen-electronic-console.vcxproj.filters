@@ -592,6 +592,12 @@
     <Filter Include="Header Files\robot\kinematics">
       <UniqueIdentifier>{fe5d23ab-2892-4c2a-9a95-d7034d323b6d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\motion\parameters">
+      <UniqueIdentifier>{fb38777e-3022-4817-81e1-c416f4f30650}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\motion\parameters">
+      <UniqueIdentifier>{4e114f7f-bf91-49bc-ab11-c7ceec057baf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -1059,9 +1065,6 @@
     <ClCompile Include="motion\simple\motion.c">
       <Filter>Source Files\motion\simple</Filter>
     </ClCompile>
-    <ClCompile Include="motion\simple\motionPersistence.c">
-      <Filter>Source Files\motion\simple</Filter>
-    </ClCompile>
     <ClCompile Include="common\eeprom\eeprom.c">
       <Filter>Source Files\common\eeprom</Filter>
     </ClCompile>
@@ -1218,8 +1221,17 @@
     <ClCompile Include="motion\pid\profileType.c">
       <Filter>Source Files\motion\pid</Filter>
     </ClCompile>
-    <ClCompile Include="motion\simple\motionParameterType.c">
+    <ClCompile Include="motion\simple\motionCalibration.c">
       <Filter>Source Files\motion\simple</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\parameters\motionParameter.c">
+      <Filter>Source Files\motion\parameters</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\parameters\motionParameterType.c">
+      <Filter>Source Files\motion\parameters</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\parameters\motionPersistence.c">
+      <Filter>Source Files\motion\parameters</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1721,9 +1733,6 @@
     <ClInclude Include="motion\simple\motion.h">
       <Filter>Header Files\motion\simple</Filter>
     </ClInclude>
-    <ClInclude Include="motion\simple\motionPersistence.h">
-      <Filter>Header Files\motion\simple</Filter>
-    </ClInclude>
     <ClInclude Include="common\eeprom\eeprom.h">
       <Filter>Header Files\common\eeprom</Filter>
     </ClInclude>
@@ -1928,8 +1937,14 @@
     <ClInclude Include="motion\pid\detectedMotionType.h">
       <Filter>Header Files\motion\pid</Filter>
     </ClInclude>
-    <ClInclude Include="motion\simple\motionParameterType.h">
-      <Filter>Header Files\motion\simple</Filter>
+    <ClInclude Include="motion\parameters\motionParameter.h">
+      <Filter>Header Files\motion\parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\parameters\motionParameterType.h">
+      <Filter>Header Files\motion\parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\parameters\motionPersistence.h">
+      <Filter>Header Files\motion\parameters</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

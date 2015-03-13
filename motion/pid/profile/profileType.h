@@ -1,7 +1,7 @@
 #ifndef PROFILE_TYPE_H
 #define PROFILE_TYPE_H
 
-#include "../../common/io/outputStream.h"
+#include "../../../common/io/outputStream.h"
 
 enum ProfileType {
 

@@ -32,6 +32,14 @@ enum MotionParameterType {
 };
 
 /**
+ * Determine the type of motion by analysis of left and right instruction.
+ * @param left instruction for left wheel
+ * @param right instruction for right wheel
+ * @return a type of Motion (Ex: MOTION_TYPE_ROTATION)
+ */
+enum MotionParameterType getMotionParameterType(float left, float right);
+
+/**
  * Append the MotionParameterType as a string into an outputStream
  */
 void appendMotionParameterTypeAsString(enum MotionParameterType motionParameterType, OutputStream* outputStream);

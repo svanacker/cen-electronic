@@ -1,21 +1,21 @@
 #include <math.h>
 
-#include "pid.h"
-#include "pidComputer.h"
-#include "pidMotionProfileComputer.h"
-#include "motionEndDetection.h"
+#include "../pid.h"
+#include "../pidComputer.h"
+#include "../profile/pidMotionProfileComputer.h"
+#include "../endDetection/motionEndDetection.h"
 
-#include "../../common/commons.h"
-#include "../../common/math/cenMath.h"
+#include "../../../common/commons.h"
+#include "../../../common/math/cenMath.h"
 
-#include "../../common/io/printWriter.h"
+#include "../../../common/io/printWriter.h"
 
-#include "../../common/log/logger.h"
-#include "../../common/log/logLevel.h"
+#include "../../../common/log/logger.h"
+#include "../../../common/log/logLevel.h"
 
-#include "../../motion/position/coderErrorComputer.h"
+#include "../../../motion/position/coderErrorComputer.h"
 
-#include "../../motion/simple/motion.h"
+#include "../../../motion/simple/motion.h"
 
 /**
  * @private

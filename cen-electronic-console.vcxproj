@@ -203,6 +203,9 @@
     <ClCompile Include="motion\extended\bspline.c" />
     <ClCompile Include="motion\extended\bsplineDebug.c" />
     <ClCompile Include="motion\extended\bsplineList.c" />
+    <ClCompile Include="motion\parameters\motionParameter.c" />
+    <ClCompile Include="motion\parameters\motionParameterType.c" />
+    <ClCompile Include="motion\parameters\motionPersistence.c" />
     <ClCompile Include="motion\pid\alphaTheta.c" />
     <ClCompile Include="motion\pid\bSplinePidComputer.c" />
     <ClCompile Include="motion\pid\motionEndDetection.c" />
@@ -219,8 +222,7 @@
     <ClCompile Include="motion\position\mockCoder\mockCoders.c" />
     <ClCompile Include="motion\position\trajectory.c" />
     <ClCompile Include="motion\simple\motion.c" />
-    <ClCompile Include="motion\simple\motionParameterType.c" />
-    <ClCompile Include="motion\simple\motionPersistence.c" />
+    <ClCompile Include="motion\simple\motionCalibration.c" />
     <ClCompile Include="navigation\location.c" />
     <ClCompile Include="navigation\locationList.c" />
     <ClCompile Include="navigation\navigation.c" />
@@ -427,6 +429,9 @@
     <ClInclude Include="motion\extended\bspline.h" />
     <ClInclude Include="motion\extended\bsplineDebug.h" />
     <ClInclude Include="motion\extended\bsplineList.h" />
+    <ClInclude Include="motion\parameters\motionParameter.h" />
+    <ClInclude Include="motion\parameters\motionParameterType.h" />
+    <ClInclude Include="motion\parameters\motionPersistence.h" />
     <ClInclude Include="motion\pid\alphaTheta.h" />
     <ClInclude Include="motion\pid\bSplinePidComputer.h" />
     <ClInclude Include="motion\pid\detectedMotionType.h" />
@@ -452,8 +457,6 @@
     <ClInclude Include="motion\position\coders.h" />
     <ClInclude Include="motion\position\trajectory.h" />
     <ClInclude Include="motion\simple\motion.h" />
-    <ClInclude Include="motion\simple\motionParameterType.h" />
-    <ClInclude Include="motion\simple\motionPersistence.h" />
     <ClInclude Include="navigation\location.h" />
     <ClInclude Include="navigation\locationList.h" />
     <ClInclude Include="navigation\navigation.h" />

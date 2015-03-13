@@ -3,7 +3,9 @@
 
 #include <stdbool.h>
 
-#include "../../common/commons.h"
+#include "motionEndDetectionParameter.h"
+
+#include "../../../common/commons.h"
 
 /**
  * Define the detection of end of trajectory.
@@ -14,39 +16,6 @@
  * Define the detection of a blocking.
  */
 #define MOTION_END_MASK_BLOCKED 2
-
-/**
- * Define a structure which is able to detect either blocking or either end of trajectory.
- */
-typedef struct MotionEndDetectionParameter {
-    /**
-    * Defines the delta position integral for which we consider that below this value the robot don't move
-    */
-    unsigned char absDeltaPositionIntegralFactorThreshold;
-    /**
-    * Defines the u integral factor integral for which we consider that there is a blocking.
-     * For example, if the value is equal to 4, it indicates that if the average integral of U is more than 4x
-     * the normal value of u (with no load), we must consider it as a blocking
-    */
-    unsigned char maxUIntegralFactorThreshold;
-    /** 
-    * When the robot is very low, the answer of the motor is not linear, and we can thing that the robot is blocked, because,
-     * the consign is very high compared to the normal value. So this value is 
-    */
-    unsigned char maxUIntegralConstantThreshold;
-    /**
-    * TimeRangeAnalysis. It's important to detect on a small range to determine if the robot is blocked or not (to avoid problems with motors). But too short 
-    * range time analysis give sometimes bad analysis. It's also important to detect on a small range to have a decision of end detection (to continue on next instruction). But too short 
-    * range time analysis give sometimes bad analysis.
-    */
-    unsigned char timeRangeAnalysis;
-    /** 
-     * The delay for which we do not try to check the end detection parameter.
-     * It avoids that the robot stop immediately the begin of motion, because it consideres 
-     * that the robot is blocked or has ended his trajectory
-    */
-    unsigned char noAnalysisAtStartupTime;
-} MotionEndDetectionParameter;
 
 /**
  * Define the number of block of history for u and deltaPosition
@@ -102,19 +71,9 @@ typedef struct MotionEndInfo {
 #define BLOCKING_OR_REACH_SKIP_DETECTION_DELAY 60
 
 /**
- * Returns the parameters of the end motion.
- */
-MotionEndDetectionParameter* getMotionEndDetectionParameter();
-
-/**
 * Reset the structure to detects end of motion.
 */
 void resetMotionEndData(MotionEndInfo* endMotion);
-
-/**
-* Initialize the parameters for the detection of end or blocking of motion.
-*/
-void initMotionEndParameter(MotionEndDetectionParameter* parameter);
 
 /**
  * Detects for a instruction, if motion is finished, or blocked.

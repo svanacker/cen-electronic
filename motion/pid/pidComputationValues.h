@@ -3,7 +3,7 @@
 
 #include "pidMotionError.h"
 #include "pidCurrentValues.h"
-#include "motionEndDetection.h"
+#include "endDetection/motionEndDetection.h"
 
 /**
  * All current values about the current motion in progress.

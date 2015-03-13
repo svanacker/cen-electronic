@@ -1,5 +1,5 @@
 #include "pid.h"
-#include "pidMotionProfileComputer.h"
+#include "profile/pidMotionProfileComputer.h"
 #include "pidComputer.h"
 
 #include "../../common/commons.h"
@@ -11,8 +11,8 @@
 #include "../../common/io/printWriter.h"
 #include "../../common/io/reader.h"
 
+#include "../../motion/parameters/motionParameterType.h"
 #include "../../motion/simple/motion.h"
-#include "../../motion/simple/motionParameterType.h"
 
 void printErrorStruct (OutputStream* outputStream, int index ) {
     // TODO 

@@ -13,7 +13,9 @@
 
 #include "../../common/math/cenMath.h"
 
-#include "motionParameterType.h"
+#include "../parameters/motionParameterType.h"
+#include "../parameters/motionParameter.h"
+#include "../parameters/motionPersistence.h"
 
 #include "../extended/bsplineDebug.h"
 
@@ -23,7 +25,7 @@
 #include "../pid/pidType.h"
 #include "../pid/pidDebug.h"
 #include "../pid/alphaTheta.h"
-#include "../pid/pidMotionProfileComputer.h"
+#include "../pid/profile/pidMotionProfileComputer.h"
 #include "../pid/bSplinePidComputer.h"
 
 #include "../position/coders.h"
@@ -35,15 +37,6 @@
 #include "../../main/motorboard/motorBoard.h"
 
 #include "../../robot/kinematics/robotKinematics.h"
-
-// MOTION PARAMETERS
-
-/** The parameters for motion. */
-static MotionParameter defaultMotionParameters[MOTION_PARAMETERS_COUNT];
-
-MotionParameter* getDefaultMotionParameters(enum MotionParameterType motionParameterType) {
-    return &defaultMotionParameters[motionParameterType];
-}
 
 // MAIN FUNCTIONS
 
@@ -130,30 +123,6 @@ void handleAndWaitMSec(unsigned long delayMs) {
         delaymSec(DELAY);
         handleInstructionAndMotion();
     }
-}
-
-enum MotionParameterType getMotionParameterType(float left, float right) {
-    if (floatEqualsZero(left) && floatEqualsZero(right)) {
-        return MOTION_PARAMETER_TYPE_MAINTAIN_POSITION;
-    } else if (left <= 0.0f && right >= 0.0f) {
-        return MOTION_PARAMETER_TYPE_ROTATION;
-    } else if (left >= 0.0f && right <= 0.0f) {
-        return MOTION_PARAMETER_TYPE_ROTATION;
-    } else {
-        return MOTION_PARAMETER_TYPE_FORWARD_OR_BACKWARD;
-    }
-}
-
-enum PidType getPidType(enum MotionParameterType motionParameterType) {
-    if (motionParameterType == MOTION_PARAMETER_TYPE_FORWARD_OR_BACKWARD) {
-        return PID_TYPE_GO_INDEX;
-    } else if (motionParameterType == MOTION_PARAMETER_TYPE_ROTATION) {
-        return PID_TYPE_ROTATE_INDEX;
-    } else if (motionParameterType == MOTION_PARAMETER_TYPE_MAINTAIN_POSITION) {
-        return PID_TYPE_MAINTAIN_POSITION_INDEX;
-    }
-    // Default value, must not enter here
-    return PID_TYPE_GO_INDEX;
 }
 
 /**
@@ -593,64 +562,4 @@ float rightSimpleMilliDegreeAndWait(float angleMilliDegree) {
     rightSimpleMilliDegree(angleMilliDegree);
     handleAndWaitFreeMotion();
     return -angleMilliDegree;
-}
-
-// CALIBRATION
-
-void squareCalibrationRotationLeft(bool inverse) {
-    if (inverse) {
-        rightSimpleDegreeAndWait(DEG_90);
-    }
-    else {
-        leftSimpleDegreeAndWait(DEG_90);
-    }
-}
-
-void squareCalibrationRotationRight(bool inverse) {
-    if (inverse) {
-        leftSimpleDegreeAndWait(DEG_90);
-    }
-    else {
-        rightSimpleDegreeAndWait(DEG_90);
-    }
-}
-void squareCalibrationLine(float x, float y, float angle, bool inverse) {
-    float cp = 100.0f;
-    if (inverse) {
-        gotoSimpleSpline(x, -y, -angle, cp, cp, MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL, false);
-    }
-    else {
-        gotoSimpleSpline(x, y, angle, cp, cp, MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL, false);
-    }
-    handleAndWaitFreeMotion();
-}
-
-void squareCalibration(unsigned char type, float lengthInMM) {
-    // to the bottom middle
-    float lengthInMM2 = lengthInMM / 2.0f;
-
-    bool inverse = (type == 0);
-
-    // turn on right
-    squareCalibrationRotationRight(inverse);
-
-    // to the bottom right
-    squareCalibrationLine(0, -lengthInMM2, -900.0f, inverse);
-    squareCalibrationRotationLeft(inverse);
-
-    // to the top right
-    squareCalibrationLine(lengthInMM, -lengthInMM2, 0.0f, inverse);
-    squareCalibrationRotationLeft(inverse);
-
-    // to the top left
-    squareCalibrationLine(lengthInMM, lengthInMM2, 900.0f, inverse);
-    squareCalibrationRotationLeft(inverse);
-
-    // to the bottom left
-    squareCalibrationLine(0, lengthInMM2, 1800.0f, inverse);
-    squareCalibrationRotationLeft(inverse);
-
-    // to the bottom middle
-    squareCalibrationLine(0, 0, -900.0f, inverse);
-    squareCalibrationRotationLeft(inverse);
 }

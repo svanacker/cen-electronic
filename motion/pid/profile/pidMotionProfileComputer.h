@@ -1,9 +1,9 @@
 #ifndef PID_MOTION_PROFIL_COMPUTER_H
 #define PID_MOTION_PROFIL_COMPUTER_H
 
-#include "../simple/motionParameterType.h"
-#include "pidType.h"
-#include "motionInstruction.h"
+#include "../../../motion/parameters/motionParameterType.h"
+#include "../pidType.h"
+#include "../motionInstruction.h"
 #include "profileType.h"
 
 /**

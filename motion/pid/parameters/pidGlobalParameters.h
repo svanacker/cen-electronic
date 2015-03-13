@@ -1,8 +1,8 @@
 #ifndef PID_GLOBAL_PARAMETERS_H
 #define PID_GLOBAL_PARAMETERS_H
 
-#include "pid.h"
-#include "motionEndDetection.h"
+#include "../pid.h"
+#include "../endDetection/motionEndDetectionParameter.h"
 
 /**
  * All parameters about pid motion. Don't changed by PidMotion. Are normally constants

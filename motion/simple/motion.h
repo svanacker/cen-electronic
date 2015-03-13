@@ -2,18 +2,8 @@
 #define MOTION_H
 
 #include <stdbool.h>
-#include "motionParameterType.h"
+#include "../parameters/motionParameterType.h"
 #include "../pid/detectedMotionType.h"
-
-/**
- * Structure defining default Motion Parameters.
- */
-typedef struct {
-    /** The default acceleration. */
-    float a;
-    /** The default speed. */
-    float speed;
-} MotionParameter;
 
 // SPEED FACTOR
 
@@ -30,13 +20,6 @@ typedef struct {
 #define    MOTION_ACCELERATION_FACTOR_NORMAL    7
 #define    MOTION_ACCELERATION_FACTOR_LOW        4
 #define    MOTION_ACCELERATION_FACTOR_MIN        1
-
-// PARAMETERS
-
-/**
- * Returns Parameters for Motion.
- */
-MotionParameter* getDefaultMotionParameters(enum MotionParameterType motionParameterType);
 
 // HANDLING FUNCTION
 
@@ -195,24 +178,5 @@ float leftSimpleMilliDegreeAndWait(float milliAngleDegree);
 float rightSimpleDegreeAndWait(float angleDegree);
 
 float rightSimpleMilliDegreeAndWait(float milliAngleDegree);
-
-// CALIBRATION
-
-void squareCalibration(unsigned char type, float lengthInMM);
-
-// UTILITY FUNCTIONS
-
-/**
- * Determine the type of motion by analysis of left and right instruction.
- * @param left instruction for left wheel
- * @param right instruction for right wheel
- * @return a type of Motion (Ex: MOTION_TYPE_ROTATION)
- */
-enum MotionParameterType getMotionParameterType(float left, float right);
-
-/**
- * Determines the type of pid which must be applied depending of the motionType.
- */
-enum PidType getPidType(enum MotionParameterType motionParameterType);
 
 #endif
