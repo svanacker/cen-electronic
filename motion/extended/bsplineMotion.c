@@ -68,7 +68,7 @@ void gotoPosition(float left, float right, float a, float speed) {
     PidMotion* pidMotion = getPidMotion();
     PidMotionDefinition* pidMotionDefinition = &(pidMotion->currentMotionDefinition);
     OutputStream* outputStream = getDebugOutputStreamLogger();
-	printInst(outputStream, &(pidMotionDefinition->inst[THETA]));
+    printInst(outputStream, &(pidMotionDefinition->inst[THETA]));
     printInst(outputStream, &(pidMotionDefinition->inst[ALPHA]));
 
     // Indicates that the robot must reach the position
@@ -97,8 +97,8 @@ void updateSimpleSplineWithDistance(float destX, float destY,
     // back
     bool backward = distance1 < 0.0f;
 
-	RobotKinematics* robotKinematics = getRobotKinematics();
-	float wheelAverageLength = robotKinematics->wheelAverageLengthForOnePulse;
+    RobotKinematics* robotKinematics = getRobotKinematics();
+    float wheelAverageLength = robotKinematics->wheelAverageLengthForOnePulse;
     
     /*
     appendString(outputStream, ",rel=");
@@ -112,8 +112,8 @@ void updateSimpleSplineWithDistance(float destX, float destY,
     float x = position->pos.x;
     float y = position->pos.y;
     float a = position->orientation;
-	float xScaled = x / wheelAverageLength;
-	float yScaled = y / wheelAverageLength;
+    float xScaled = x / wheelAverageLength;
+    float yScaled = y / wheelAverageLength;
 
     // For P0-P1
     float c1 = cosf(a);
@@ -142,7 +142,7 @@ void updateSimpleSplineWithDistance(float destX, float destY,
     // P1 along x axis
     point->x = (x + dca1);
     point->y = (y + dsa1);
-	scale(point, wheelAverageLength);
+    scale(point, wheelAverageLength);
     
     if (relative) {    
 
@@ -172,8 +172,8 @@ void updateSimpleSplineWithDistance(float destX, float destY,
         point->y = destY;
     }
     // Scale points
-	scale(&(curve->p2), wheelAverageLength);
-	scale(&(curve->p3), wheelAverageLength);
+    scale(&(curve->p2), wheelAverageLength);
+    scale(&(curve->p3), wheelAverageLength);
 
     /*
     curve->p1->x = (x  +  distance1        * c) / WHEEL_AVERAGE_LENGTH;
@@ -230,10 +230,10 @@ void gotoSpline() {
     OutputStream* outputStream = getDebugOutputStreamLogger();
 
     BSplineCurve* curve = &(getPidMotion()->currentMotionDefinition.curve);
-	RobotKinematics* robotKinematics = getRobotKinematics();
-	float wheelAverageLength = robotKinematics->wheelAverageLengthForOnePulse;
+    RobotKinematics* robotKinematics = getRobotKinematics();
+    float wheelAverageLength = robotKinematics->wheelAverageLengthForOnePulse;
 
-	writeBSplineControlPoints(outputStream, curve, wheelAverageLength);
+    writeBSplineControlPoints(outputStream, curve, wheelAverageLength);
 
     // Update trajectory before clearing coders
     updateTrajectory();

@@ -4,8 +4,23 @@
 #include <stdbool.h>
 #include "../parameters/motionParameterType.h"
 #include "../pid/detectedMotionType.h"
-// TODO : To Remove
-#include "../extended/bspline.h"
+
+// MAIN FUNCTIONS
+
+/**
+ * Stop the robot.
+ */
+void stopPosition(bool maintainPositionValue);
+
+/**
+ * Ask the robot to maintain the position.
+ */
+void maintainPosition(void);
+
+/**
+ * Go to a position;
+ */
+void gotoPosition(float left, float right, float a, float speed);
 
 /**
  * Go simply forward with a distance in pulse and returns the pulse.

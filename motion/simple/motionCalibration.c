@@ -1,4 +1,6 @@
 #include "motionCalibration.h"
+
+#include "../motion.h"
 #include "simpleMotion.h"
 #include "../extended/bsplineMotion.h"
 

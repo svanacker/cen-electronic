@@ -18,27 +18,41 @@
 #include "../parameters/motionParameter.h"
 #include "../parameters/motionPersistence.h"
 
-#include "../extended/bsplineDebug.h"
-#include "../extended/bsplineMotion.h"
-
 #include "../pid/detectedMotionType.h"
 #include "../pid/pid.h"
 #include "../pid/pidMotion.h"
-#include "../pid/pidType.h"
-#include "../pid/pidDebug.h"
-#include "../pid/alphaTheta.h"
 #include "../pid/profile/pidMotionProfileComputer.h"
-#include "../pid/computer/bSplinePidComputer.h"
 
 #include "../position/coders.h"
 #include "../position/trajectory.h"
 
 #include "../../device/motor/pwmMotor.h"
-#include "../../device/motion/simple/motionDevice.h"
-
-#include "../../main/motorboard/motorBoard.h"
 
 #include "../../robot/kinematics/robotKinematics.h"
+
+// MAIN FUNCTIONS
+
+/**
+ * Stop the robot.
+ */
+void stopPosition(bool maintainPositionValue) {
+    updateTrajectoryAndClearCoders();
+
+    if (maintainPositionValue) {
+        maintainPosition();
+    } else {
+        // Avoid that robot reachs his position, and stops the motors
+        setMustReachPosition(false);
+    }
+    // Avoid that the robot considered he will remain the initial speed for next move (it is stopped).
+    clearInitialSpeeds();
+
+    stopMotors();
+}
+
+void maintainPosition(void) {
+    gotoPosition(0.0f, 0.0f, 0.0f, 0.0f);
+}
 
 // -> Go/Back
 
