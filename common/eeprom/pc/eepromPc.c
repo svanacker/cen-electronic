@@ -20,6 +20,7 @@ static char eepromPc[EEPROM_PC_MAX_INDEX + 1];
 void eepromPcWriteChar(Eeprom* eeprom_, unsigned long index, char value) {
     if (index > EEPROM_PC_MAX_INDEX) {
         writeError(EEPROM_OUT_OF_BOUNDS);
+		return;
     }
     eepromPc[index] = value;
 }

@@ -184,6 +184,7 @@ bool handleStreamInstruction(Buffer* inputBuffer,
 					writeError(NO_DISPATCHER_FOUND);
 					OutputStream* errorOutputStream = getErrorOutputStreamLogger();
 					appendStringAndDec(errorOutputStream, ", dispatcherIndex=", dispatcherIndex);
+					return false;
 				}
 			}
 			else {
@@ -200,6 +201,7 @@ bool handleStreamInstruction(Buffer* inputBuffer,
 					appendString(errorOutputStream, getTransmitModeAsString(transmitMode));
 					append(errorOutputStream, ')');
 					appendStringAndDec(errorOutputStream, ", addr=", address);
+					return false;
 				}
 			}
 
