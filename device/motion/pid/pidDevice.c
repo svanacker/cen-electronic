@@ -104,10 +104,10 @@ void devicePIDHandleRawData(char commandHeader, InputStream* inputStream, Output
 
         MotionEndDetectionParameter* motionEndDetectionParameter = getMotionEndDetectionParameter();
         appendHex2(outputStream, (unsigned char) motionEndDetectionParameter->absDeltaPositionIntegralFactorThreshold);
-		appendHex2(outputStream, (unsigned char)motionEndDetectionParameter->maxUIntegralFactorThreshold);
-		appendHex2(outputStream, (unsigned char)motionEndDetectionParameter->maxUIntegralConstantThreshold);
-		appendHex2(outputStream, (unsigned int)motionEndDetectionParameter->timeRangeAnalysis);
-		appendHex2(outputStream, (unsigned int)motionEndDetectionParameter->noAnalysisAtStartupTime);
+        appendHex2(outputStream, (unsigned char)motionEndDetectionParameter->maxUIntegralFactorThreshold);
+        appendHex2(outputStream, (unsigned char)motionEndDetectionParameter->maxUIntegralConstantThreshold);
+        appendHex2(outputStream, (unsigned int)motionEndDetectionParameter->timeRangeAnalysis);
+        appendHex2(outputStream, (unsigned int)motionEndDetectionParameter->noAnalysisAtStartupTime);
     }
     else if (commandHeader ==  COMMAND_SET_END_DETECTION_PARAMETER) {
         // send acknowledgement
@@ -116,14 +116,14 @@ void devicePIDHandleRawData(char commandHeader, InputStream* inputStream, Output
         MotionEndDetectionParameter* motionEndDetectionParameter = getMotionEndDetectionParameter();
 
         motionEndDetectionParameter->absDeltaPositionIntegralFactorThreshold = (float) readHex2(inputStream);
-		motionEndDetectionParameter->maxUIntegralFactorThreshold = (float)readHex2(inputStream);
-		motionEndDetectionParameter->maxUIntegralConstantThreshold = (float)readHex2(inputStream);
-		motionEndDetectionParameter->timeRangeAnalysis = (unsigned int)readHex2(inputStream);
-		motionEndDetectionParameter->noAnalysisAtStartupTime = (unsigned int)readHex2(inputStream);
+        motionEndDetectionParameter->maxUIntegralFactorThreshold = (float)readHex2(inputStream);
+        motionEndDetectionParameter->maxUIntegralConstantThreshold = (float)readHex2(inputStream);
+        motionEndDetectionParameter->timeRangeAnalysis = (unsigned int)readHex2(inputStream);
+        motionEndDetectionParameter->noAnalysisAtStartupTime = (unsigned int)readHex2(inputStream);
     }
     // Debug : _01001-0002005678-4000200050008000
     else if (commandHeader ==  COMMAND_SEND_DEBUG_DATA_PID) {
-		enum InstructionType instructionType = readHex(inputStream);
+        enum InstructionType instructionType = readHex(inputStream);
 
         PidMotion* pidMotion = getPidMotion();
         PidComputationValues* computationValues = &(pidMotion->computationValues);
@@ -133,14 +133,14 @@ void devicePIDHandleRawData(char commandHeader, InputStream* inputStream, Output
         // send acknowledgement
         ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_SEND_DEBUG_DATA_PID);
 
-		appendHex(outputStream, instructionType);
+        appendHex(outputStream, instructionType);
         appendHex3(outputStream, getPidTime());
         // TODO : pidType
         appendHex(outputStream, 0);
 
         appendSeparator(outputStream);
 
-		PidCurrentValues* pidCurrentValues = &(computationValues->currentValues[instructionType]);
+        PidCurrentValues* pidCurrentValues = &(computationValues->currentValues[instructionType]);
         appendHex5(outputStream, (int) pidCurrentValues->position);
 
         appendSeparator(outputStream);
@@ -153,21 +153,21 @@ void devicePIDHandleRawData(char commandHeader, InputStream* inputStream, Output
 
         appendSeparator(outputStream);
 
-		MotionEndInfo* motionEnd = &(computationValues->motionEnd[instructionType]);
+        MotionEndInfo* motionEnd = &(computationValues->motionEnd[instructionType]);
         appendHex4(outputStream, motionEnd->integralTime);
         appendHex4(outputStream, (int) motionEnd->absDeltaPositionIntegral);
         appendHex4(outputStream, (int) motionEnd->absUIntegral);
     }
     else if (commandHeader == COMMAND_SEND_MOTION_PARAMETER) {
-		enum InstructionType instructionType = (enum InstructionType) readHex(inputStream);
+        enum InstructionType instructionType = (enum InstructionType) readHex(inputStream);
 
         // send acknowledgement
         ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_SEND_MOTION_PARAMETER);
 
         PidMotion* pidMotion = getPidMotion();
         PidMotionDefinition* motionDefinition = &(pidMotion->currentMotionDefinition);
-		MotionInstruction* localInst = &(motionDefinition->inst[instructionType]);
-		appendHex(outputStream, instructionType);
+        MotionInstruction* localInst = &(motionDefinition->inst[instructionType]);
+        appendHex(outputStream, instructionType);
         appendHex2(outputStream, (int) localInst->a);
         appendHex2(outputStream, (int) localInst->speed);
         appendHex2(outputStream, (int) localInst->speedMax);

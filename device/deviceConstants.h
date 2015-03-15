@@ -102,10 +102,10 @@
 #define CODERS_DEVICE_HEADER                       'w'
 
 /** Reserved to clear buffer. */
-#define NOT_TOO_USE_1							   'z'
+#define NOT_TOO_USE_1                               'z'
 
 /** Reserved to clear deeply the buffer. */
-#define NOT_TOO_USE_2							   'Z'
+#define NOT_TOO_USE_2                               'Z'
 
 #define STRATEGY_DEVICE_HEADER                     'Y'
 

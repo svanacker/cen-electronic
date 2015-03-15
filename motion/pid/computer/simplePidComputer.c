@@ -32,10 +32,10 @@ float computeNextPID(enum InstructionType instructionType, MotionInstruction* mo
 
     // instructionIndex = Alpha / Theta
     // pidType = Forward / Rotation / Final Approach ...
-	unsigned pidIndex = getIndexOfPid(instructionType, pidType);
-	PidParameter* pidParameter = getPidParameter(pidIndex, rollingTestMode);
+    unsigned pidIndex = getIndexOfPid(instructionType, pidType);
+    PidParameter* pidParameter = getPidParameter(pidIndex, rollingTestMode);
 
-	if (!pidParameter->enabled) {
+    if (!pidParameter->enabled) {
         return 0.0f;
     }
 
@@ -43,7 +43,7 @@ float computeNextPID(enum InstructionType instructionType, MotionInstruction* mo
     float normalSpeed = computeNormalSpeed(motionInstruction, time);
 
     float positionError = normalPosition - currentPosition;
-	float result = computePidCorrection(motionError, pidParameter, normalSpeed, positionError);
+    float result = computePidCorrection(motionError, pidParameter, normalSpeed, positionError);
 
     return result;
 }

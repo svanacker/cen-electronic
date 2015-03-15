@@ -38,10 +38,10 @@ void printPid(OutputStream* outputStream, int pidIndex) {
     unsigned char rollingTestMode = getRollingTestMode();
     PidParameter* localPidParameter= getPidParameter(pidIndex, rollingTestMode);
 
-	appendStringAndDecf(outputStream, "p=", localPidParameter->p);
-	appendStringAndDecf(outputStream, ",i=", localPidParameter->i);
-	appendStringAndDecf(outputStream, ",d=", localPidParameter->d);
-	appendStringAndDecf(outputStream, ",mi=", localPidParameter->maxIntegral);
+    appendStringAndDecf(outputStream, "p=", localPidParameter->p);
+    appendStringAndDecf(outputStream, ",i=", localPidParameter->i);
+    appendStringAndDecf(outputStream, ",d=", localPidParameter->d);
+    appendStringAndDecf(outputStream, ",mi=", localPidParameter->maxIntegral);
 
     println(outputStream);
 }

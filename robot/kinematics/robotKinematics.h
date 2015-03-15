@@ -3,38 +3,38 @@
 
 #include "../../common/eeprom/eeprom.h"
 
-#define MILLI_TO_NANO_FACTOR									1000000.0f
-#define MILLI_TO_MICRO_FACTOR									1000.0f
+#define MILLI_TO_NANO_FACTOR                                    1000000.0f
+#define MILLI_TO_MICRO_FACTOR                                    1000.0f
 
 // EEPROM INDEX
 
-#define EEPROM_WHEEL_AVERAGE_LENGTH_FOR_ONE_PULSE_INDEX			EEPROM_KINETICS_START_INDEX
-#define EEPROM_WHEEL_ROTATION_BY_SECOND_AT_FULL_SPEED_INDEX		EEPROM_WHEEL_AVERAGE_LENGTH_FOR_ONE_PULSE_INDEX + 4
-#define EEPROM_PULSE_BY_ROTATION_INDEX							EEPROM_WHEEL_ROTATION_BY_SECOND_AT_FULL_SPEED_INDEX + 4
-#define EEPROM_WHEEL_DELTA_LENGTH_INDEX							EEPROM_PULSE_BY_ROTATION_INDEX + 4
-#define EEPROM_WHEELS_DISTANCE_INDEX							EEPROM_WHEEL_DELTA_LENGTH_INDEX + 4
+#define EEPROM_WHEEL_AVERAGE_LENGTH_FOR_ONE_PULSE_INDEX            EEPROM_KINETICS_START_INDEX
+#define EEPROM_WHEEL_ROTATION_BY_SECOND_AT_FULL_SPEED_INDEX        EEPROM_WHEEL_AVERAGE_LENGTH_FOR_ONE_PULSE_INDEX + 4
+#define EEPROM_PULSE_BY_ROTATION_INDEX                            EEPROM_WHEEL_ROTATION_BY_SECOND_AT_FULL_SPEED_INDEX + 4
+#define EEPROM_WHEEL_DELTA_LENGTH_INDEX                            EEPROM_PULSE_BY_ROTATION_INDEX + 4
+#define EEPROM_WHEELS_DISTANCE_INDEX                            EEPROM_WHEEL_DELTA_LENGTH_INDEX + 4
 
 // DEFAULT VALUES
 
 /** Average wheel length in mm for 1 impulsion. */
-#define KINEMATICS_WHEEL_AVERAGE_LENGTH_DEFAULT_VALUE						0.011685f
+#define KINEMATICS_WHEEL_AVERAGE_LENGTH_DEFAULT_VALUE                        0.011685f
 
-#define KINEMATICS_WHEEL_ROTATION_BY_SECONDS_AT_FULL_SPEED_DEFAULT_VALUE	7.0f
+#define KINEMATICS_WHEEL_ROTATION_BY_SECONDS_AT_FULL_SPEED_DEFAULT_VALUE    7.0f
 #define KINEMATICS_WHEEL_PULSE_BY_ROTATION_DEFAULT_VALUE                    20000.0f
 
 // To compensate difference between WHEELS
-#define KINEMATICS_WHEEL_DELTA_LENGTH_DEFAULT_VALUE				            0.0f            
+#define KINEMATICS_WHEEL_DELTA_LENGTH_DEFAULT_VALUE                            0.0f            
 
 /** Default wheels distance (micrometer)). */
 // #define WHEELS_DISTANCE 226.70f
-#define KINEMATICS_WHEELS_DISTANCE_DEFAULT_VALUE							242.00f
+#define KINEMATICS_WHEELS_DISTANCE_DEFAULT_VALUE                            242.00f
 
 /** 
  * Encapsulation of all information needed to manage the Kinematics (Rotation, Forward / Backward) and coders capacities.
  */
 typedef struct RobotKinematics {
     /** We don't have left and right, but an average and a + and - arround this value, because it's more easy to update it. */
-	float wheelAverageLengthForOnePulse;
+    float wheelAverageLengthForOnePulse;
     /** How many rotation by seconds the wheels do at full Speed (full PWM). */
     float wheelRotationBySecondsAtFullSpeed;
     /** How many pulse for a rotation in the incremental coder. */

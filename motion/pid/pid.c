@@ -46,7 +46,7 @@ static bool mustReachPosition;
 static bool rollingTestMode = ROLLING_BOARD_TEST_MODE_OFF;
 
 unsigned char getIndexOfPid(enum InstructionType instructionType, enum PidType pidType) {
-	return pidType * INSTRUCTION_COUNT + instructionType;
+    return pidType * INSTRUCTION_COUNT + instructionType;
 }
 
 bool getRollingTestMode() {
@@ -62,8 +62,8 @@ void setMustReachPosition(bool value) {
 }
 
 void setEnabledPid(int pidIndex, unsigned char enabled) {
-	PidParameter * localPidParameter = getPidParameter(pidIndex, rollingTestMode);
-	localPidParameter->enabled = enabled;
+    PidParameter * localPidParameter = getPidParameter(pidIndex, rollingTestMode);
+    localPidParameter->enabled = enabled;
 }
 
 
@@ -84,15 +84,15 @@ void stopPID(void) {
 }
 
 float getWheelPulseByPidTimeAtFullSpeed() {
-	RobotKinematics* robotKinematics = getRobotKinematics();
-	float result = getWheelPulseBySecondsAtFullSpeed(robotKinematics) / PID_UPDATE_MOTORS_FREQUENCY;
-	return result;
+    RobotKinematics* robotKinematics = getRobotKinematics();
+    float result = getWheelPulseBySecondsAtFullSpeed(robotKinematics) / PID_UPDATE_MOTORS_FREQUENCY;
+    return result;
 }
 
 float getUFactorAtFullSpeed() {
-	// TODO : Why This Constant (must depend on the voltage) !!!
-	float result = 128.0f / getWheelPulseByPidTimeAtFullSpeed();
-	return result;
+    // TODO : Why This Constant (must depend on the voltage) !!!
+    float result = 128.0f / getWheelPulseByPidTimeAtFullSpeed();
+    return result;
 }
 
 /**
@@ -103,7 +103,7 @@ float getNormalU(float pulseAtSpeed) {
     // at Frequency of 200 Hz => 730 pulses by pidTime at full Speed
     
     // NormalU = (pulseAtSpeed / pulseAtFullSpeed) * MAX_U
-	float result = pulseAtSpeed * getUFactorAtFullSpeed();
+    float result = pulseAtSpeed * getUFactorAtFullSpeed();
     // float result = 0.0f;
     return result;
 }

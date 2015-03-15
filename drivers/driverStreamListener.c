@@ -102,31 +102,31 @@ bool handleStreamInstruction(Buffer* inputBuffer,
         // As there is clear of char filtering, we must reload the size of the buffer
         int bufferSize = getBufferElementsCount(inputBuffer);
 
-		if (bufferSize < DEVICE_HEADER_LENGTH) {
-			return false;
-		}
+        if (bufferSize < DEVICE_HEADER_LENGTH) {
+            return false;
+        }
 
-		// Get the header
+        // Get the header
         unsigned char deviceHeader = bufferGetCharAtIndex(inputBuffer, DEVICE_HEADER_INDEX);
 
-		// Manage the dispatcher specifier (3 chars : Ex j01 before real command ...)
-		unsigned char specifyDispatcherLength = 0;
-		if (deviceHeader == DATA_DISPATCHER_DEVICE_HEADER) {
-			specifyDispatcherLength += DISPATCHER_COMMAND_AND_INDEX_HEADER_LENGTH;
-		}
+        // Manage the dispatcher specifier (3 chars : Ex j01 before real command ...)
+        unsigned char specifyDispatcherLength = 0;
+        if (deviceHeader == DATA_DISPATCHER_DEVICE_HEADER) {
+            specifyDispatcherLength += DISPATCHER_COMMAND_AND_INDEX_HEADER_LENGTH;
+        }
 
-		// Check if enough data
-		if (bufferSize < specifyDispatcherLength + DEVICE_AND_COMMAND_HEADER_LENGTH) {
-			return false;
-		}
+        // Check if enough data
+        if (bufferSize < specifyDispatcherLength + DEVICE_AND_COMMAND_HEADER_LENGTH) {
+            return false;
+        }
 
-		// Reload the deviceHeader to take the dispatcher specifier if any
-		deviceHeader = bufferGetCharAtIndex(inputBuffer, specifyDispatcherLength + DEVICE_HEADER_INDEX);
-		unsigned char commandHeader = bufferGetCharAtIndex(inputBuffer, specifyDispatcherLength + COMMAND_HEADER_INDEX);
+        // Reload the deviceHeader to take the dispatcher specifier if any
+        deviceHeader = bufferGetCharAtIndex(inputBuffer, specifyDispatcherLength + DEVICE_HEADER_INDEX);
+        unsigned char commandHeader = bufferGetCharAtIndex(inputBuffer, specifyDispatcherLength + COMMAND_HEADER_INDEX);
 
         // find the device corresponding to this header. It must at least be declared in local or in remote !
-		unsigned char dataSize = bufferSize - specifyDispatcherLength;
-		const Device* device = deviceDataDispatcherFindDevice(deviceHeader, commandHeader, dataSize, DEVICE_MODE_INPUT);
+        unsigned char dataSize = bufferSize - specifyDispatcherLength;
+        const Device* device = deviceDataDispatcherFindDevice(deviceHeader, commandHeader, dataSize, DEVICE_MODE_INPUT);
 
         // if the device was not found
         if (device == NULL) {
@@ -137,7 +137,7 @@ bool handleStreamInstruction(Buffer* inputBuffer,
         DeviceInterface* deviceInterface = device->deviceInterface;
 
         // We must send device specifyDispatcherLength + Header + commandHeader + data => + 2
-		int dataToTransferCount = deviceInterface->deviceGetInterface(commandHeader, DEVICE_MODE_INPUT, false) + specifyDispatcherLength + DEVICE_AND_COMMAND_HEADER_LENGTH;
+        int dataToTransferCount = deviceInterface->deviceGetInterface(commandHeader, DEVICE_MODE_INPUT, false) + specifyDispatcherLength + DEVICE_AND_COMMAND_HEADER_LENGTH;
 
         if (bufferSize < dataToTransferCount) {
             return false;
@@ -149,10 +149,10 @@ bool handleStreamInstruction(Buffer* inputBuffer,
         InputStream* bufferedInputStream = getInputStream(inputBuffer);
         OutputStream* bufferedOutputStream = getOutputStream(outputBuffer);
 
-		TransmitMode transmitMode = device->transmitMode;
+        TransmitMode transmitMode = device->transmitMode;
 
         // we handle locally the request
-		if (specifyDispatcherLength == 0 && transmitMode == TRANSMIT_LOCAL) {
+        if (specifyDispatcherLength == 0 && transmitMode == TRANSMIT_LOCAL) {
 
             // We need the implementation for local mode
             DeviceDescriptor* deviceDescriptor = device->descriptor;
@@ -170,44 +170,44 @@ bool handleStreamInstruction(Buffer* inputBuffer,
             deviceDescriptor->deviceHandleRawData(commandHeader, bufferedInputStream, bufferedOutputStream);
 
         } // we forward the request through Remote Operation with Dispatcher
-		else if (specifyDispatcherLength > 0 || transmitMode == TRANSMIT_I2C || transmitMode == TRANSMIT_UART || transmitMode == TRANSMIT_ZIGBEE) {
+        else if (specifyDispatcherLength > 0 || transmitMode == TRANSMIT_I2C || transmitMode == TRANSMIT_UART || transmitMode == TRANSMIT_ZIGBEE) {
 
-			// Find dispatcher
-			DriverDataDispatcher* dispatcher = NULL;
+            // Find dispatcher
+            DriverDataDispatcher* dispatcher = NULL;
 
-			if (specifyDispatcherLength > 0) {
-				bufferClearLastChars(inputBuffer, DEVICE_HEADER_LENGTH);
-				unsigned char dispatcherIndex = readHex2(bufferedInputStream);
+            if (specifyDispatcherLength > 0) {
+                bufferClearLastChars(inputBuffer, DEVICE_HEADER_LENGTH);
+                unsigned char dispatcherIndex = readHex2(bufferedInputStream);
 
-				dispatcher = getDriverDataDispatcherByIndex(dispatcherIndex);
-				if (dispatcher == NULL) {
-					writeError(NO_DISPATCHER_FOUND);
-					OutputStream* errorOutputStream = getErrorOutputStreamLogger();
-					appendStringAndDec(errorOutputStream, ", dispatcherIndex=", dispatcherIndex);
-					return false;
-				}
-			}
-			else {
-				TransmitMode transmitMode = device->transmitMode;
-				int address = device->address;
+                dispatcher = getDriverDataDispatcherByIndex(dispatcherIndex);
+                if (dispatcher == NULL) {
+                    writeError(NO_DISPATCHER_FOUND);
+                    OutputStream* errorOutputStream = getErrorOutputStreamLogger();
+                    appendStringAndDec(errorOutputStream, ", dispatcherIndex=", dispatcherIndex);
+                    return false;
+                }
+            }
+            else {
+                TransmitMode transmitMode = device->transmitMode;
+                int address = device->address;
 
-				dispatcher = getDriverDataDispatcherByTransmitMode(transmitMode, address);
-				
-				if (dispatcher == NULL) {
-					writeError(NO_DISPATCHER_FOUND);
-					OutputStream* errorOutputStream = getErrorOutputStreamLogger();
-					appendStringAndDec(errorOutputStream, ", transmitMode=", transmitMode);
-					append(errorOutputStream, '(');
-					appendString(errorOutputStream, getTransmitModeAsString(transmitMode));
-					append(errorOutputStream, ')');
-					appendStringAndDec(errorOutputStream, ", addr=", address);
-					return false;
-				}
-			}
+                dispatcher = getDriverDataDispatcherByTransmitMode(transmitMode, address);
+                
+                if (dispatcher == NULL) {
+                    writeError(NO_DISPATCHER_FOUND);
+                    OutputStream* errorOutputStream = getErrorOutputStreamLogger();
+                    appendStringAndDec(errorOutputStream, ", transmitMode=", transmitMode);
+                    append(errorOutputStream, '(');
+                    appendString(errorOutputStream, getTransmitModeAsString(transmitMode));
+                    append(errorOutputStream, ')');
+                    appendStringAndDec(errorOutputStream, ", addr=", address);
+                    return false;
+                }
+            }
 
             // copy Driver buffer with remote Call
-			dispatcher->driverDataDispatcherTransmitData(dispatcher,
-					inputBuffer,
+            dispatcher->driverDataDispatcherTransmitData(dispatcher,
+                    inputBuffer,
                     outputBuffer,
                     dataToTransferCount,
                     dataToReceiveCount

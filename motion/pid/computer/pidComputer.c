@@ -59,9 +59,9 @@ float computePidCorrection(PidMotionError* motionError,
     motionError->previousError = motionError->error;
 
     // Computes PID
-	float u = (motionError->error * pidParameter->p
-		+ motionError->integralError * pidParameter->i
-		+ motionError->derivativeError * pidParameter->d);
+    float u = (motionError->error * pidParameter->p
+        + motionError->integralError * pidParameter->i
+        + motionError->derivativeError * pidParameter->d);
 
     // We divide to be on cool range when defining PID constant
     float result = (u / PID_GLOBAL_DIVISER);

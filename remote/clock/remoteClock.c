@@ -19,8 +19,8 @@ bool getRemoteClockData(ClockData* clockData) {
     append(outputStream, CLOCK_DEVICE_HEADER);
     append(outputStream, COMMAND_READ_CLOCK);
 
-	bool result = transmitFromDriverRequestBuffer();
-	if (result) {
+    bool result = transmitFromDriverRequestBuffer();
+    if (result) {
         clockData->hour = readHex2(resultStream);
         resultStream->readChar(resultStream);
 
@@ -39,7 +39,7 @@ bool getRemoteClockData(ClockData* clockData) {
         clockData->year = readHex2(resultStream);
         resultStream->readChar(resultStream);
     }
-	return result;
+    return result;
 }
 
 bool writeHourRemoteClockData(ClockData* clockData, int dispatcherIndex) {

@@ -87,7 +87,7 @@ void computeBestNextTarget(GameStrategyContext* strategyContext) {
 
     #ifdef NEXT_GAME_STRATEGY_ITEM_COMPUTER_DEBUG
         if (strategyContext->targetAction != NULL) {
-			OutputStream outputStream = getInfoOutputStreamLogger();
+            OutputStream outputStream = getInfoOutputStreamLogger();
             appendStringAndDecf(outputStream, "cost=", maxGain);
             printGameTarget(outputStream, bestTarget, false);
             printLocationList(outputStream, ", currentTrajectory:", &(strategyContext->currentTrajectory));

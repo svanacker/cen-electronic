@@ -28,8 +28,8 @@ void sendI2CDataToMaster(void) {
     if (!i2cReadFlag) {
         return;
     }
-	// TODO : Find the right I2CBus
-	I2cBus* i2cBus = NULL;
+    // TODO : Find the right I2CBus
+    I2cBus* i2cBus = NULL;
 
     StreamLink* i2cStreamLink = getI2cStreamLink();
 
@@ -44,8 +44,8 @@ void sendI2CDataToMaster(void) {
         // for debug support
         appendI2cDebugOutputChar(c);
 
-		// TODO : Find the right i2cBus
-		I2cBus* i2cBus = NULL;
+        // TODO : Find the right i2cBus
+        I2cBus* i2cBus = NULL;
 
         // we send it to the master
         portableSlaveWriteI2C(i2cBus, c);
@@ -64,8 +64,8 @@ void sendI2CDataToMaster(void) {
 void handleI2CDataFromMaster(void) {
     StreamLink* i2cStreamLink = getI2cStreamLink();
 
-	// TODO : Find the right I2CBus
-	I2cBus* i2cBus = NULL;
+    // TODO : Find the right I2CBus
+    I2cBus* i2cBus = NULL;
 
     unsigned char data = portableSlaveReadI2C(i2cBus);
     if (INCORRECT_DATA != data && I2C_SLAVE_FAKE_WRITE != data) {
@@ -89,7 +89,7 @@ void handleI2CDataFromMaster(void) {
         if (!i2cAddressDefinedFlag) {
 
             // We don't care about write Address or Read address
-			if (getI2cWriteAddress(NULL) == (data & 0xFE)) {
+            if (getI2cWriteAddress(NULL) == (data & 0xFE)) {
                 
                 i2cAddressDefinedFlag = true;
                 // Read I2C Flag is activated when the last bit is activated

@@ -78,12 +78,12 @@ bool absoluteUpdateFromCoders(signed long left, signed long right, bool useThres
     if (debug) {
         debugTrajectoryVariables("left=", (float) left, ", right=", (float) right);
     }
-	RobotKinematics* robotKinematics = getRobotKinematics();
-	float leftWheelLengthForOnePulse = getLeftWheelLengthForOnePulse(robotKinematics);
-	float rightWheelLengthForOnePulse = getRightWheelLengthForOnePulse(robotKinematics);
+    RobotKinematics* robotKinematics = getRobotKinematics();
+    float leftWheelLengthForOnePulse = getLeftWheelLengthForOnePulse(robotKinematics);
+    float rightWheelLengthForOnePulse = getRightWheelLengthForOnePulse(robotKinematics);
 
-	float l = (float) left * leftWheelLengthForOnePulse;
-	float r = (float) right * rightWheelLengthForOnePulse;
+    float l = (float) left * leftWheelLengthForOnePulse;
+    float r = (float) right * rightWheelLengthForOnePulse;
     if (debug) {
         debugTrajectoryVariables("l=", l, ", r=", r);
     }
@@ -101,8 +101,8 @@ bool absoluteUpdateFromCoders(signed long left, signed long right, bool useThres
     // difference des distances parcourues par les roues en m
     float dw = r - l;
     // orientation finale = difference des distances / demi-distance des roues
-	float wheelsDistance = robotKinematics->wheelsDistance;
-	float orientation = fmodf(dw / wheelsDistance, 2.0f * PI) + lastAngle + position.initialOrientation;
+    float wheelsDistance = robotKinematics->wheelsDistance;
+    float orientation = fmodf(dw / wheelsDistance, 2.0f * PI) + lastAngle + position.initialOrientation;
     // angle relatif au dernier mouvement
     // lastAngle is only used when we clear Coders !
     float relativePositionOrientation = position.orientation;

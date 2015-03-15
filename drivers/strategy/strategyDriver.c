@@ -100,7 +100,7 @@ bool sendStrategyNextStep() {
     append(outputStream, COMMAND_STRATEGY_NEXT_STEP);
 
     bool resultFromDriver = transmitFromDriverRequestBuffer();
-	if (resultFromDriver) {
+    if (resultFromDriver) {
         int result = readHex2(inputStream);
         return result;
     }

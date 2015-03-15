@@ -6,19 +6,19 @@
 #include "eeprom.h"
 
 // Constant to know if the Area is Initialized or not
-#define EEPROM_AREA_IS_INITIALIZED_MARKER			0xCCCC
+#define EEPROM_AREA_IS_INITIALIZED_MARKER            0xCCCC
 
 // PID
-#define EEPROM_PID_AREA_MARKER_INDEX				0x0100
-#define EEPROM_PID_START_INDEX						0x0102
+#define EEPROM_PID_AREA_MARKER_INDEX                0x0100
+#define EEPROM_PID_START_INDEX                        0x0102
 
 // MOTION
-#define EEPROM_MOTION_AREA_MARKER_INDEX				0x0200
-#define EEPROM_MOTION_START_INDEX					0x0202
+#define EEPROM_MOTION_AREA_MARKER_INDEX                0x0200
+#define EEPROM_MOTION_START_INDEX                    0x0202
 
 // KINETICS
-#define EEPROM_KINETICS_AREA_MARKER_INDEX			0x0300
-#define EEPROM_KINETICS_START_INDEX					0x0302
+#define EEPROM_KINETICS_AREA_MARKER_INDEX            0x0300
+#define EEPROM_KINETICS_START_INDEX                    0x0302
 
 /**
  * Returns true if the area is initialized. A marker must be written at the two first character to consider it as initialized

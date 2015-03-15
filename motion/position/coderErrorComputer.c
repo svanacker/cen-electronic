@@ -15,8 +15,8 @@ void computeErrorsUsingCoders(PidMotion* pidMotion) {
     MotionInstruction* alphaInst = &(currentMotionDefinition->inst[ALPHA]);
 
     PidComputationValues* computationValues = &(pidMotion->computationValues);
-	PidCurrentValues* thetaCurrentValues = &(computationValues->currentValues[THETA]);
-	PidCurrentValues* alphaCurrentValues = &(computationValues->currentValues[ALPHA]);
+    PidCurrentValues* thetaCurrentValues = &(computationValues->currentValues[THETA]);
+    PidCurrentValues* alphaCurrentValues = &(computationValues->currentValues[ALPHA]);
 
     // 2 dependant Wheels (direction + angle)
     float value0 = (float) getCoderValue(CODER_LEFT);

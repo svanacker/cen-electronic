@@ -12,10 +12,10 @@ typedef struct Logger {
     LogLevel globalLogLevel;
     /** the level that we used to write. */
     LogLevel writeLogLevel;
-	/** The default categoryMask when we do not define it .*/
-	unsigned long defaultLogCategoryMask;
-	/** the current mask that we are currently using .*/
-	unsigned long logCategoryMask;
+    /** The default categoryMask when we do not define it .*/
+    unsigned long defaultLogCategoryMask;
+    /** the current mask that we are currently using .*/
+    unsigned long logCategoryMask;
     /** the list of handler. */
     LogHandlerList* logHandlerList;
     /** The outputStream as an interface to the developer. */
@@ -45,9 +45,9 @@ void initLogs(LogLevel globalLevel, LogHandler(*handlerListArray)[], unsigned ch
  * @param result the logHandler structure created
  */
 LogHandler* addLogHandler(char* handlerName,
-	OutputStream* outputStream,
-	LogLevel logLevel,
-	unsigned long logCategoryMask);
+    OutputStream* outputStream,
+    LogLevel logLevel,
+    unsigned long logCategoryMask);
 
 /**
  * Get a compatible outputStream (to be used with printWriter) in which we write.

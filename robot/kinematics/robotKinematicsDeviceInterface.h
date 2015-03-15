@@ -4,7 +4,7 @@
 #include "../../device/deviceInterface.h"
 #include "../../device/deviceConstants.h"
 
-#define COMMAND_KINEMATICS_LOAD_DEFAULT_VALUES			'd'
+#define COMMAND_KINEMATICS_LOAD_DEFAULT_VALUES            'd'
 
 #define COMMAND_GET_WHEELS_AVERAGE_FOR_ONE_PULSE_LENGTH 'l'
 #define COMMAND_SET_WHEELS_AVERAGE_FOR_ONE_PULSE_LENGTH 'L'

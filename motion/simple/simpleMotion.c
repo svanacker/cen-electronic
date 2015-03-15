@@ -99,12 +99,12 @@ float rightOneWheelSimple(float pulse) {
 // MM OR DEGREE FUNCTIONS
 
 float forwardMM(float distanceInMM, float a, float speed) {
-	RobotKinematics* robotKinematics = getRobotKinematics();
-	float leftWheelLengthForOnePulse = getLeftWheelLengthForOnePulse(robotKinematics);
-	float rightWheelLengthForOnePulse = getRightWheelLengthForOnePulse(robotKinematics);
+    RobotKinematics* robotKinematics = getRobotKinematics();
+    float leftWheelLengthForOnePulse = getLeftWheelLengthForOnePulse(robotKinematics);
+    float rightWheelLengthForOnePulse = getRightWheelLengthForOnePulse(robotKinematics);
 
-	float realDistanceLeft = distanceInMM / leftWheelLengthForOnePulse;
-	float realDistanceRight = distanceInMM / rightWheelLengthForOnePulse;
+    float realDistanceLeft = distanceInMM / leftWheelLengthForOnePulse;
+    float realDistanceRight = distanceInMM / rightWheelLengthForOnePulse;
 
     // Go at a position in millimeter
     gotoPosition(realDistanceLeft, realDistanceRight, a, speed);
@@ -120,12 +120,12 @@ float backwardMM(float distanceInMM, float a, float speed) {
 
 float rotationDegree(float angleDeciDegree, float a, float speed) {
     float angleRadius = angleDeciDegree * PI_DIVIDE_1800;
-	RobotKinematics* robotKinematics = getRobotKinematics();
-	float leftWheelLengthForOnePulse = getLeftWheelLengthForOnePulse(robotKinematics);
-	float rightWheelLengthForOnePulse = getRightWheelLengthForOnePulse(robotKinematics);
-	float wheelsDistanceFromCenter = getWheelsDistanceFromCenter(robotKinematics);
-	float realDistanceLeft = -(wheelsDistanceFromCenter * angleRadius) / leftWheelLengthForOnePulse;
-	float realDistanceRight = (wheelsDistanceFromCenter * angleRadius) / rightWheelLengthForOnePulse;
+    RobotKinematics* robotKinematics = getRobotKinematics();
+    float leftWheelLengthForOnePulse = getLeftWheelLengthForOnePulse(robotKinematics);
+    float rightWheelLengthForOnePulse = getRightWheelLengthForOnePulse(robotKinematics);
+    float wheelsDistanceFromCenter = getWheelsDistanceFromCenter(robotKinematics);
+    float realDistanceLeft = -(wheelsDistanceFromCenter * angleRadius) / leftWheelLengthForOnePulse;
+    float realDistanceRight = (wheelsDistanceFromCenter * angleRadius) / rightWheelLengthForOnePulse;
     gotoPosition(realDistanceLeft, realDistanceRight, a, speed);
 
     return angleDeciDegree;
@@ -160,22 +160,22 @@ float rightMilliDegree(float angleMilliDegree, float a, float speed) {
 void leftOneWheelDegree(float angleDegree, float a, float speed) {
     // We multiply by 2, because, only one wheel rotates
     float angleRadius = angleDegree * PI_DIVIDE_1800 * 2.0f;
-	RobotKinematics* robotKinematics = getRobotKinematics();
-	float leftWheelLengthForOnePulse = getLeftWheelLengthForOnePulse(robotKinematics);
-	float wheelsDistanceFromCenter = getWheelsDistanceFromCenter(robotKinematics);
+    RobotKinematics* robotKinematics = getRobotKinematics();
+    float leftWheelLengthForOnePulse = getLeftWheelLengthForOnePulse(robotKinematics);
+    float wheelsDistanceFromCenter = getWheelsDistanceFromCenter(robotKinematics);
 
-	float realDistanceRight = (wheelsDistanceFromCenter * angleRadius) / leftWheelLengthForOnePulse;
+    float realDistanceRight = (wheelsDistanceFromCenter * angleRadius) / leftWheelLengthForOnePulse;
     gotoPosition(0.0f, realDistanceRight, a, speed);
 }
 
 void rightOneWheelDegree(float angleDegree, float a, float speed) {
     // We multiply by 2, because, only one wheel rotates
     float angleRadius = angleDegree * PI_DIVIDE_1800 * 2.0f;
-	RobotKinematics* robotKinematics = getRobotKinematics();
-	float rightWheelLengthForOnePulse = getRightWheelLengthForOnePulse(robotKinematics);
-	float wheelsDistanceFromCenter = getWheelsDistanceFromCenter(robotKinematics);
+    RobotKinematics* robotKinematics = getRobotKinematics();
+    float rightWheelLengthForOnePulse = getRightWheelLengthForOnePulse(robotKinematics);
+    float wheelsDistanceFromCenter = getWheelsDistanceFromCenter(robotKinematics);
 
-	float realDistanceLeft = (wheelsDistanceFromCenter * angleRadius) / rightWheelLengthForOnePulse;
+    float realDistanceLeft = (wheelsDistanceFromCenter * angleRadius) / rightWheelLengthForOnePulse;
     gotoPosition(realDistanceLeft, 0.0f, a, speed);
 }
 

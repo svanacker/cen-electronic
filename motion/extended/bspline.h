@@ -43,15 +43,15 @@ typedef struct BSplinePointData {
  * Define a bezierCurve, with 4 points.
  */
 typedef struct BSplineCurve {
-	// first control point
+    // first control point
     Point p0;
-	// second control point
+    // second control point
     Point p1;
-	// third control point
+    // third control point
     Point p2;
-	// last control point
+    // last control point
     Point p3;
-	// if we go backward or not
+    // if we go backward or not
     bool backward;
     // The length of the curve.
     float curveLength;

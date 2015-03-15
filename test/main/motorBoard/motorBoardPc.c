@@ -166,10 +166,10 @@ void runMotorBoardPC(void) {
     printf("|_|  |_|\\___/ |_| \\___/|_| \\_\\  |____/ \\___/_/   \\_|_| \\_|____/   |_|    \\____|\r\n");
     printf("\r\n");
 
-	initLogs(DEBUG, (LogHandler(*)[]) &logHandlerListArray, MOTOR_BOARD_PC_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
+    initLogs(DEBUG, (LogHandler(*)[]) &logHandlerListArray, MOTOR_BOARD_PC_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
     initConsoleInputStream(&consoleInputStream);
     initConsoleOutputStream(&consoleOutputStream);
-	addConsoleLogHandler(DEBUG, LOG_HANDLER_CATEGORY_ALL_MASK);
+    addConsoleLogHandler(DEBUG, LOG_HANDLER_CATEGORY_ALL_MASK);
     appendStringCRLF(getDebugOutputStreamLogger(), getPicName());
 
     initTimerList((Timer(*)[]) &timerListArray, MOTOR_BOARD_PC_TIMER_LENGTH);
@@ -188,7 +188,7 @@ void runMotorBoardPC(void) {
         &i2cSlaveOutputBuffer,
         (char(*)[]) &i2cSlaveOutputBufferArray,
         MOTOR_BOARD_PC_OUT_BUFFER_LENGTH,
-		&motorI2cBus,
+        &motorI2cBus,
         MOTOR_BOARD_PC_I2C_ADDRESS
     );
 
@@ -200,11 +200,11 @@ void runMotorBoardPC(void) {
         (char(*)[]) &i2cSlaveDebugOutputBufferArray,
         MOTOR_BOARD_PC_I2C_DEBUG_SLAVE_OUT_BUFFER_LENGTH);
 
-	// Eeprom
+    // Eeprom
     initEepromPc(&eeprom);
 
-	// Clock
-	initSoftClock(&clock);
+    // Clock
+    initSoftClock(&clock);
 
     // Devices
     initDeviceList((Device(*)[]) &deviceListArray, MOTOR_BOARD_PC_DEVICE_LIST_LENGTH);
@@ -214,9 +214,9 @@ void runMotorBoardPC(void) {
     addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());
 
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
-	addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
-	addLocalDevice(getRobotKinematicsDeviceInterface(), getRobotKinematicsDeviceDescriptor(&eeprom));
-	addLocalDevice(getPIDDeviceInterface(), getPIDDeviceDescriptor(&eeprom));
+    addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
+    addLocalDevice(getRobotKinematicsDeviceInterface(), getRobotKinematicsDeviceDescriptor(&eeprom));
+    addLocalDevice(getPIDDeviceInterface(), getPIDDeviceDescriptor(&eeprom));
     addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());
     addLocalDevice(getCodersDeviceInterface(), getCodersDeviceDescriptor());
     addLocalDevice(getTrajectoryDeviceInterface(), getTrajectoryDeviceDescriptor());

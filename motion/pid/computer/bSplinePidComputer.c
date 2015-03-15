@@ -43,11 +43,11 @@ void bSplineMotionUCompute(void) {
     // Computes the normal Point where the robot must be
     computeBSplinePoint(curve, bSplineTime, &normalPoint);
     // Convert normalPoint into mm space
-	RobotKinematics* robotKinematics = getRobotKinematics();
-	float wheelAverageLength = robotKinematics->wheelAverageLengthForOnePulse;
+    RobotKinematics* robotKinematics = getRobotKinematics();
+    float wheelAverageLength = robotKinematics->wheelAverageLengthForOnePulse;
 
-	normalPoint.x = normalPoint.x * wheelAverageLength;
-	normalPoint.y = normalPoint.y * wheelAverageLength;
+    normalPoint.x = normalPoint.x * wheelAverageLength;
+    normalPoint.y = normalPoint.y * wheelAverageLength;
 
     Position* robotPosition = getPosition();
     Point robotPoint = robotPosition->pos;
@@ -73,14 +73,14 @@ void bSplineMotionUCompute(void) {
     alphaError = mod2PI(alphaError);
 
     // Convert angleError into pulse equivalent
-	float wheelsDistanceFromCenter = getWheelsDistanceFromCenter(robotKinematics);
-	float alphaPulseError = (-wheelsDistanceFromCenter * alphaError) / wheelAverageLength;
+    float wheelsDistanceFromCenter = getWheelsDistanceFromCenter(robotKinematics);
+    float alphaPulseError = (-wheelsDistanceFromCenter * alphaError) / wheelAverageLength;
 
     // THETA
     PidMotionError* thetaMotionError = &(computationValues->err[THETA]);
 
     // thetaError must be in Pulse and not in MM
-	float thetaError = distanceBetweenPoints(&robotPoint, &normalPoint) / wheelAverageLength;
+    float thetaError = distanceBetweenPoints(&robotPoint, &normalPoint) / wheelAverageLength;
     float thetaAngle = angleOfVector(&robotPoint, &normalPoint);
     if (curve->backward) {
         thetaAngle += PI;
@@ -94,7 +94,7 @@ void bSplineMotionUCompute(void) {
     float thetaErrorWithCos = thetaError * cosAlphaAndThetaDiff;
     
     float normalSpeed = computeNormalSpeed(thetaInst, pidTime);
-	float thetaU = computePidCorrection(thetaMotionError, pidParameter, normalSpeed, thetaErrorWithCos);
+    float thetaU = computePidCorrection(thetaMotionError, pidParameter, normalSpeed, thetaErrorWithCos);
 
     PidCurrentValues* thetaCurrentValues = &(computationValues->currentValues[THETA]);
     thetaCurrentValues->u = thetaU;

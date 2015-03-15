@@ -55,7 +55,7 @@ static Eeprom* pidPersistenceEeprom;
  * @param dataIndex the index of data (between 0 and EEPROM_PID_BLOCK_SIZE)
  */
 unsigned char getRealDataIndex(unsigned int pidIndex, unsigned int dataIndex) {
-	unsigned int result = EEPROM_PID_START_INDEX + ((pidIndex * EEPROM_PID_BLOCK_SIZE) + dataIndex);
+    unsigned int result = EEPROM_PID_START_INDEX + ((pidIndex * EEPROM_PID_BLOCK_SIZE) + dataIndex);
     return result;
 }
 
@@ -71,7 +71,7 @@ void internalSavePidParameter(unsigned int pidIndex, unsigned int dataIndex, sig
         return;
     }
     unsigned realIndex = getRealDataIndex(pidIndex, dataIndex);
-	// TODO : char / int problem
+    // TODO : char / int problem
     pidPersistenceEeprom->eepromWriteChar(pidPersistenceEeprom, realIndex, value);
 }
 
@@ -85,19 +85,19 @@ signed int internalLoadPidParameter(unsigned int pidIndex, unsigned int dataInde
         writeError(PID_PERSISTENCE_NO_EEPROM);
         return 0;
     }
-	unsigned int realIndex = getRealDataIndex(pidIndex, dataIndex);
+    unsigned int realIndex = getRealDataIndex(pidIndex, dataIndex);
 
     unsigned char result;
-	// TODO : char / int problem
+    // TODO : char / int problem
     if (loadDefaultValue) {
         result = DEFAULT_EEPROM_VALUES[realIndex];
     }
     else {
-    	bool pidParametersEepromAreaIsInitialized = isEepromAreaInitialized(pidPersistenceEeprom, EEPROM_PID_AREA_MARKER_INDEX);
-    	if (!pidParametersEepromAreaIsInitialized) {
-    		writeError(PID_PERSISTENCE_EEPROM_NOT_INITIALIZED);
-    		return 0;
-    	}
+        bool pidParametersEepromAreaIsInitialized = isEepromAreaInitialized(pidPersistenceEeprom, EEPROM_PID_AREA_MARKER_INDEX);
+        if (!pidParametersEepromAreaIsInitialized) {
+            writeError(PID_PERSISTENCE_EEPROM_NOT_INITIALIZED);
+            return 0;
+        }
         result = pidPersistenceEeprom->eepromReadChar(pidPersistenceEeprom, realIndex);
     }
     return result;
@@ -110,11 +110,11 @@ void loadPidParameters(bool loadDefaultValue) {
     int pidIndex;
     for (pidIndex = 0; pidIndex < PID_STORED_COUNT; pidIndex++) {
         PidParameter* localPidParameter = getPidParameter(pidIndex, 0);
-		localPidParameter->p = (float)internalLoadPidParameter(pidIndex, EEPROM_KP, loadDefaultValue);
-		localPidParameter->i = (float)internalLoadPidParameter(pidIndex, EEPROM_KI, loadDefaultValue);
-		localPidParameter->d = (float)internalLoadPidParameter(pidIndex, EEPROM_KD, loadDefaultValue);
-		localPidParameter->maxIntegral = (float)internalLoadPidParameter(pidIndex, EEPROM_MI, loadDefaultValue);
-		localPidParameter->enabled = true;
+        localPidParameter->p = (float)internalLoadPidParameter(pidIndex, EEPROM_KP, loadDefaultValue);
+        localPidParameter->i = (float)internalLoadPidParameter(pidIndex, EEPROM_KI, loadDefaultValue);
+        localPidParameter->d = (float)internalLoadPidParameter(pidIndex, EEPROM_KD, loadDefaultValue);
+        localPidParameter->maxIntegral = (float)internalLoadPidParameter(pidIndex, EEPROM_MI, loadDefaultValue);
+        localPidParameter->enabled = true;
     }
 
     // Load rolling Test parameters
@@ -129,16 +129,16 @@ void loadPidParameters(bool loadDefaultValue) {
      */
 
     // Parameter for End of trajectory
-	enum InstructionType instructionType;
+    enum InstructionType instructionType;
     // For Alpha / Theta
-	for (instructionType = 0; instructionType < INSTRUCTION_COUNT; instructionType++) {
-		pidIndex = getIndexOfPid(instructionType, PID_TYPE_FINAL_APPROACH_INDEX);
-		PidParameter* endApproachPidParameter = getPidParameter(pidIndex, 0);
-		endApproachPidParameter->p = END_APPROACH_P;
-		endApproachPidParameter->i = END_APPROACH_I;
-		endApproachPidParameter->d = END_APPROACH_D;
-		endApproachPidParameter->maxIntegral = END_APPROACH_MAX_INTEGRAL;
-		endApproachPidParameter->enabled = true;
+    for (instructionType = 0; instructionType < INSTRUCTION_COUNT; instructionType++) {
+        pidIndex = getIndexOfPid(instructionType, PID_TYPE_FINAL_APPROACH_INDEX);
+        PidParameter* endApproachPidParameter = getPidParameter(pidIndex, 0);
+        endApproachPidParameter->p = END_APPROACH_P;
+        endApproachPidParameter->i = END_APPROACH_I;
+        endApproachPidParameter->d = END_APPROACH_D;
+        endApproachPidParameter->maxIntegral = END_APPROACH_MAX_INTEGRAL;
+        endApproachPidParameter->enabled = true;
     }
 }
 
@@ -146,15 +146,15 @@ void loadPidParameters(bool loadDefaultValue) {
  * Save the parameters of the PID into Eeprom.
  */
 void savePidParameters(void) {
-	initEepromArea(pidPersistenceEeprom, EEPROM_PID_AREA_MARKER_INDEX);
+    initEepromArea(pidPersistenceEeprom, EEPROM_PID_AREA_MARKER_INDEX);
     int pidIndex;
     // we save both NORMAL_MODE AND ROLLING_TEST_MODE
     for (pidIndex = 0; pidIndex < PID_STORED_COUNT; pidIndex++) {
         PidParameter* localPidParameter = getPidParameter(pidIndex, 0);
-		internalSavePidParameter(pidIndex, EEPROM_KP, (int) localPidParameter->p);
-		internalSavePidParameter(pidIndex, EEPROM_KI, (int) localPidParameter->i);
-		internalSavePidParameter(pidIndex, EEPROM_KD, (int) localPidParameter->d);
-		internalSavePidParameter(pidIndex, EEPROM_MI, (int) localPidParameter->maxIntegral);
+        internalSavePidParameter(pidIndex, EEPROM_KP, (int) localPidParameter->p);
+        internalSavePidParameter(pidIndex, EEPROM_KI, (int) localPidParameter->i);
+        internalSavePidParameter(pidIndex, EEPROM_KD, (int) localPidParameter->d);
+        internalSavePidParameter(pidIndex, EEPROM_MI, (int) localPidParameter->maxIntegral);
     }
 }
 

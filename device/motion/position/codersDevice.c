@@ -54,14 +54,14 @@ void deviceCodersHandleRawData(char commandHeader, InputStream* inputStream, Out
         signed long coderValue0 = getCoderValue(CODER_LEFT);
         signed long coderValue1 = getCoderValue(CODER_RIGHT);
 
-		RobotKinematics* robotKinematics = getRobotKinematics();
-		float leftWheelLengthForOnePulse = getLeftWheelLengthForOnePulse(robotKinematics);
-		float rightWheelLengthForOnePulse = getLeftWheelLengthForOnePulse(robotKinematics);
+        RobotKinematics* robotKinematics = getRobotKinematics();
+        float leftWheelLengthForOnePulse = getLeftWheelLengthForOnePulse(robotKinematics);
+        float rightWheelLengthForOnePulse = getLeftWheelLengthForOnePulse(robotKinematics);
 
         appendCRLF(debugOutputStream);
-		printCoderDebug(debugOutputStream, "left", coderValue0, leftWheelLengthForOnePulse);
+        printCoderDebug(debugOutputStream, "left", coderValue0, leftWheelLengthForOnePulse);
         appendCRLF(debugOutputStream);
-		printCoderDebug(debugOutputStream, "right", coderValue1, rightWheelLengthForOnePulse);
+        printCoderDebug(debugOutputStream, "right", coderValue1, rightWheelLengthForOnePulse);
     } else if (commandHeader == COMMAND_CLEAR_CODERS) {
         ackCommand(outputStream, CODERS_DEVICE_HEADER, COMMAND_CLEAR_CODERS);
 

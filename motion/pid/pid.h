@@ -26,10 +26,10 @@
 #define TEST_MODE_COUNT 2
 
 /** we use test mode */
-#define ROLLING_BOARD_TEST_MODE_OFF		false
+#define ROLLING_BOARD_TEST_MODE_OFF        false
 
 /** We use the pid at the adress for test mode. */
-#define ROLLING_BOARD_TEST_MODE_ON		true
+#define ROLLING_BOARD_TEST_MODE_ON        true
 
 // NUMBER OF PID
 

@@ -45,7 +45,7 @@ typedef int DeviceInterfaceMode;
 /**
 * Define the length used by the header length
 */
-#define DEVICE_HEADER_LENGTH					1
+#define DEVICE_HEADER_LENGTH                    1
 
 /**
  * Define the length used by the header length, and the command header.

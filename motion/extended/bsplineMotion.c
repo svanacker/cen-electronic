@@ -42,7 +42,7 @@
 #include "../../robot/kinematics/robotKinematics.h"
 
 /**
- * Go to a position;
+ * Go to a position
  */
 void gotoPosition(float left, float right, float a, float speed) {
 

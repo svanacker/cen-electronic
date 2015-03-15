@@ -89,13 +89,13 @@ DSTATUS disk_initialize (BYTE physicalDriveNumber) {
  * - RES_NOTRDY The device has not been initialized.
  */ 
 DRESULT disk_read (BYTE physicalDriveNumber, BYTE *buffer, DWORD sector, UINT count) {
-	appendString(getErrorOutputStreamLogger(), "disk_read\r\n");
+    appendString(getErrorOutputStreamLogger(), "disk_read\r\n");
     if (physicalDriveNumber == EEPROM_DRIVE_NUMBER) {
         long base_index = sector * EEPROM_SECTOR_SIZE;
         long i;
-		long bytesToRead = count * EEPROM_SECTOR_SIZE;
-		for (i = 0; i < bytesToRead; i++) {
-			// TODO : Improve by using call to eepromWriteBlock instead of using WriteRead !
+        long bytesToRead = count * EEPROM_SECTOR_SIZE;
+        for (i = 0; i < bytesToRead; i++) {
+            // TODO : Improve by using call to eepromWriteBlock instead of using WriteRead !
             char value = eeprom_->eepromReadChar(eeprom_, base_index + i);
             *buffer = value;
             buffer++;
@@ -124,8 +124,8 @@ DRESULT disk_write (BYTE physicalDriveNumber, const BYTE *buffer, DWORD sector, 
     if (physicalDriveNumber == EEPROM_DRIVE_NUMBER) {
         long base_index = sector * EEPROM_SECTOR_SIZE;
         long i;
-		long bytesToWrite = count * EEPROM_SECTOR_SIZE;
-		for (i = 0; i < bytesToWrite; i++) {
+        long bytesToWrite = count * EEPROM_SECTOR_SIZE;
+        for (i = 0; i < bytesToWrite; i++) {
             char value = *buffer;
             buffer++; 
             // TODO : Improve by using call to eepromWriteBlock instead of using WriteInt !
@@ -164,14 +164,14 @@ DRESULT disk_ioctl (BYTE physicalDriveNumber, BYTE cmd, void *buffer) {
         // This command is used by only f_mkfs and f_fdisk function to determine the volume/partition size 
         // to be created. Required at _USE_MKFS == 1 or _MULTI_PARTITION == 1.
         else if (cmd == GET_SECTOR_COUNT) {
-			DWORD* realBuffer = (DWORD*) buffer;
-			*realBuffer = (DWORD) EEPROM_SECTOR_COUNT;
-			return RES_OK;
+            DWORD* realBuffer = (DWORD*) buffer;
+            *realBuffer = (DWORD) EEPROM_SECTOR_COUNT;
+            return RES_OK;
         }
         else if (cmd == GET_SECTOR_SIZE) {
-			DWORD* realBuffer = (DWORD*)buffer;
-			*realBuffer = (DWORD)EEPROM_SECTOR_SIZE;
-			return RES_OK;
+            DWORD* realBuffer = (DWORD*)buffer;
+            *realBuffer = (DWORD)EEPROM_SECTOR_SIZE;
+            return RES_OK;
         }
         // DOCUMENTATION : http://elm-chan.org/fsw/ff/en/dioctl.html
         // !! Required at _USE_MKFS == 1 !!
@@ -180,10 +180,10 @@ DRESULT disk_ioctl (BYTE physicalDriveNumber, BYTE cmd, void *buffer) {
         // Return 1 if the erase block size is unknown or non flash memory media.
         // This command is used by only f_mkfs function and it attempts to align data area to the erase block boundary.
         else if (cmd == GET_BLOCK_SIZE) {
-			DWORD* realBuffer = (DWORD*)buffer;
-			// *realBuffer = (WORD)EEPROM_SECTOR_SIZE;
-			*realBuffer = (DWORD) 1;
-			return RES_OK; // BLOCK_SIZE is unknown
+            DWORD* realBuffer = (DWORD*)buffer;
+            // *realBuffer = (WORD)EEPROM_SECTOR_SIZE;
+            *realBuffer = (DWORD) 1;
+            return RES_OK; // BLOCK_SIZE is unknown
         }       
         // DOCUMENTATION : http://elm-chan.org/fsw/ff/en/dioctl.html
         // !! Required at _USE_TRIM == 1 !!
@@ -202,5 +202,5 @@ DRESULT disk_ioctl (BYTE physicalDriveNumber, BYTE cmd, void *buffer) {
 }
 
 void initEepromFile(Eeprom* eepromParam) {
-	eeprom_ = eepromParam;
+    eeprom_ = eepromParam;
 }

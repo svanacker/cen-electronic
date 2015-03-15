@@ -8,10 +8,10 @@ void initHandler(
         char* handlerName,
         OutputStream* outputStream,
         LogLevel logLevel,
-		unsigned long logCategoryMask) {
+        unsigned long logCategoryMask) {
     logHandler->handlerName = handlerName;
     logHandler->outputStream = outputStream;
     logHandler->logLevel = logLevel;
-	logHandler->logCategoryMask = logCategoryMask;
+    logHandler->logCategoryMask = logCategoryMask;
 }
 

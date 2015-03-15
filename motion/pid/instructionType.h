@@ -11,9 +11,9 @@
  * @see alphaTheta.h
  */
 enum InstructionType {
-	// Theta => Length of the average of the wheels (left + right) / 2
+    // Theta => Length of the average of the wheels (left + right) / 2
     THETA = 0,
-	// Alpha => Angle (difference between the left and right wheels) / 2
+    // Alpha => Angle (difference between the left and right wheels) / 2
     ALPHA = 1
 };
 

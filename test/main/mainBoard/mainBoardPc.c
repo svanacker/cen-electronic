@@ -215,10 +215,10 @@ void runMainBoardPC(void) {
     printf("\r\n");
 
 
-	initLogs(DEBUG, (LogHandler(*)[]) &logHandlerListArray, MAIN_BOARD_PC_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
+    initLogs(DEBUG, (LogHandler(*)[]) &logHandlerListArray, MAIN_BOARD_PC_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
     initConsoleInputStream(&consoleInputStream);
     initConsoleOutputStream(&consoleOutputStream);
-	addConsoleLogHandler(DEBUG, LOG_HANDLER_CATEGORY_ALL_MASK);
+    addConsoleLogHandler(DEBUG, LOG_HANDLER_CATEGORY_ALL_MASK);
     appendStringCRLF(getDebugOutputStreamLogger(), getPicName());
 
     initTimerList((Timer(*)[]) &timerListArray, MAIN_BOARD_PC_TIMER_LENGTH);
@@ -236,15 +236,15 @@ void runMainBoardPC(void) {
     MAIN_BOARD_PC_DATA_MOTOR_BOARD_DISPATCHER_BUFFER_LENGTH,
     &motorBoardOutputStream,
     &motorBoardInputStream,
-	&motorBoardI2cBus,
+    &motorBoardI2cBus,
     MOTOR_BOARD_PC_I2C_ADDRESS);
 
-	// EEPROM
-	initEepromPc(&eeprom);
-	initEepromFile(&eeprom);
+    // EEPROM
+    initEepromPc(&eeprom);
+    initEepromFile(&eeprom);
 
-	// Clock
-	initPcClock(&clock);
+    // Clock
+    initPcClock(&clock);
 
     // I2C Debug
     initI2CDebugBuffers(&i2cMasterDebugInputBuffer,
@@ -274,12 +274,12 @@ void runMainBoardPC(void) {
     addLocalDevice(getI2cMasterDebugDeviceInterface(), getI2cMasterDebugDeviceDescriptor());
     addLocalDevice(getDataDispatcherDeviceInterface(), getDataDispatcherDeviceDescriptor());
     addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor());
-	addLocalDevice(getTimerDeviceInterface(), getTimerDeviceDescriptor());
-	addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
-	addLocalDevice(getFileDeviceInterface(), getFileDeviceDescriptor());
-	addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
+    addLocalDevice(getTimerDeviceInterface(), getTimerDeviceDescriptor());
+    addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
+    addLocalDevice(getFileDeviceInterface(), getFileDeviceDescriptor());
+    addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
 
-	initStartMatchDetectorPc(&startMatchDetector);
+    initStartMatchDetectorPc(&startMatchDetector);
     addLocalDevice(getStartMatchDetectorDeviceInterface(), getStartMatchDetectorDeviceDescriptor(&startMatchDetector));
  
     // MOTOR BOARD
@@ -289,7 +289,7 @@ void runMainBoardPC(void) {
     addI2cRemoteDevice(getCodersDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
     addI2cRemoteDevice(getTrajectoryDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
     addI2cRemoteDevice(getMotionDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
-	addI2cRemoteDevice(getRobotKinematicsDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
+    addI2cRemoteDevice(getRobotKinematicsDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
 
     initDevices();
 
@@ -297,22 +297,22 @@ void runMainBoardPC(void) {
 
     setDebugI2cEnabled(false);
 
-	// Ping
+    // Ping
     if (!pingDriverDataDispatcherList()) {
         printf("PING PROBLEM !");
     }
 
-	// Set Clock for Motor Board !
+    // Set Clock for Motor Board !
 
-	// Read Clock
-	ClockData* clockData = clock.readClock(&clock);
-	// TODO : Change Dispatcher Index ...
-	writeDateRemoteClockData(clockData, 0x01);
-	writeHourRemoteClockData(clockData, 0x01);
+    // Read Clock
+    ClockData* clockData = clock.readClock(&clock);
+    // TODO : Change Dispatcher Index ...
+    writeDateRemoteClockData(clockData, 0x01);
+    writeHourRemoteClockData(clockData, 0x01);
 
     // testDriverIntensive(100);
 
-	startTimerList();
+    startTimerList();
 
     while (1) {
         mainBoardWaitForInstruction();

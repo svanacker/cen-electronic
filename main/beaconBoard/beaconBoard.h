@@ -4,7 +4,7 @@
 #include "../../common/io/buffer.h"
 
 // LOGS
-#define BEACON_LOG_HANDLER_LIST_LENGTH					2
+#define BEACON_LOG_HANDLER_LIST_LENGTH                    2
 
 // BEACON SYSTEM
 

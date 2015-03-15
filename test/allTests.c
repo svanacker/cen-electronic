@@ -38,7 +38,7 @@ void runAllTests(void)
     // RUN_TEST calls runTest
     hexUtilsTestSuite();
     bufferTestSuite();
-	compositeOutputStreamTestSuite();
+    compositeOutputStreamTestSuite();
     filterTestSuite();
     printWriterTestSuite();
     readerTestSuite();
@@ -48,7 +48,7 @@ void runAllTests(void)
     cenMathTestSuite();
     driverDataDispatcherListTestSuite();
     testDriverTestTestSuite();
-	bsplineListTestSuite();
+    bsplineListTestSuite();
 
     UnityEnd();
 }

@@ -14,17 +14,17 @@
  * Returns true if the area is initialized. A marker must be written at the two first character to consider it as initialized.
  */
 bool isEepromAreaInitialized(Eeprom* eeprom_, unsigned long initiazedAreaIndex) {
-	unsigned int marker = eepromReadInt(eeprom_, initiazedAreaIndex);
+    unsigned int marker = eepromReadInt(eeprom_, initiazedAreaIndex);
     /*
-	appendString(getDebugOutputStreamLogger(), "marker=");
+    appendString(getDebugOutputStreamLogger(), "marker=");
     appendDec(getDebugOutputStreamLogger(), marker);
-	appendCRLF(getDebugOutputStreamLogger());
-	*/
+    appendCRLF(getDebugOutputStreamLogger());
+    */
     bool result = (marker == EEPROM_AREA_IS_INITIALIZED_MARKER);
-	
-	return result;
+    
+    return result;
 }
 
 void initEepromArea(Eeprom* eeprom_, unsigned long initiazedAreaIndex) {
-	eepromWriteInt(eeprom_, initiazedAreaIndex, EEPROM_AREA_IS_INITIALIZED_MARKER);
+    eepromWriteInt(eeprom_, initiazedAreaIndex, EEPROM_AREA_IS_INITIALIZED_MARKER);
 }

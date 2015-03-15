@@ -86,8 +86,8 @@ void findNextTarget() {
     unsigned int targetHandledCount = getTargetHandledCount();
     if (targetHandledCount >= strategyContext.maxTargetToHandle) {
         clearCurrentTarget();
-		appendStringAndDec(getDebugOutputStreamLogger(), "Reach Max Target To Handle:", targetHandledCount);
-		println(getDebugOutputStreamLogger());
+        appendStringAndDec(getDebugOutputStreamLogger(), "Reach Max Target To Handle:", targetHandledCount);
+        println(getDebugOutputStreamLogger());
         return;
     }
 
@@ -399,10 +399,10 @@ int cpToDistance(signed char d) {
  * @private
  */
 bool isPathAvailable(PathDataFunction* pathDataFunction, BSplineCurve* curve) {
-	// TODO : Fix why curve must be handled
-	if (curve == NULL) {
-		return true;
-	}
+    // TODO : Fix why curve must be handled
+    if (curve == NULL) {
+        return true;
+    }
     pathDataFunction();
     PathData* pathData = getTmpPathData();
     Point* p0 = &(curve->p0);

@@ -110,8 +110,8 @@ void _internalUpdateTimerListValues(int incrementSinceLastCall) {
                 continue;
             }
             // increments the counter and test if it is > to the timeDiviser
-			currentTimer->timeInternalCounter += incrementSinceLastCall;
-			if (currentTimer->timeInternalCounter >= currentTimer->timeDiviser) {
+            currentTimer->timeInternalCounter += incrementSinceLastCall;
+            if (currentTimer->timeInternalCounter >= currentTimer->timeDiviser) {
                 // block the timer if we wait for
                 bool lock = currentTimer->lock;
                 if (lock) {
@@ -120,7 +120,7 @@ void _internalUpdateTimerListValues(int incrementSinceLastCall) {
 
                 // we only subtract and not clear to 0, so that, if the timer is locked, we will not forget
                 // any firing
-				currentTimer->timeInternalCounter -= currentTimer->timeDiviser;
+                currentTimer->timeInternalCounter -= currentTimer->timeDiviser;
                 currentTimer->time++;
 
                 // lock the timer to avoid concurrence problem
