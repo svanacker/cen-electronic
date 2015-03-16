@@ -1,62 +1,12 @@
-#include "pid.h"
-#include "parameters/pidParameter.h"
-#include "profile/pidMotionProfileComputer.h"
-#include "computer/pidComputer.h"
-#include "computer/simplePidComputer.h"
+#include "motionInstruction.h"
 
-#include "../../common/commons.h"
-#include "../../common/eeprom/eeprom.h"
-#include "../../common/math/cenMath.h"
-
-#include "../../common/io/buffer.h"
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
-#include "../../common/io/reader.h"
 
-#include "../../motion/parameters/motionParameterType.h"
-#include "../../motion/simple/simpleMotion.h"
+// TODO : Move code into PIDComputer
+#include "computer/pidComputer.h"
 
-void printErrorStruct (OutputStream* outputStream, int index ) {
-    // TODO 
-    /*
-    MotionError* localErr = getMotionError(index);
-
-    appendStringAndDecf(outputStream, "pe=", localErr->previousError);
-    appendStringAndDecf(outputStream, ",e=", localErr->error);
-    appendStringAndDecf(outputStream, ",de=", localErr->derivativeError);
-    appendStringAndDecf(outputStream, "ie=", localErr->integralError);
-    println(outputStream);
-    */
-}
-
-void printMotionStruct (OutputStream* outputStream, int index) {
-    // TODO
-    println(outputStream);
-}
-
-void printPid(OutputStream* outputStream, int pidIndex) {
-    unsigned char rollingTestMode = getRollingTestMode();
-    PidParameter* localPidParameter= getPidParameter(pidIndex, rollingTestMode);
-
-    appendStringAndDecf(outputStream, "p=", localPidParameter->p);
-    appendStringAndDecf(outputStream, ",i=", localPidParameter->i);
-    appendStringAndDecf(outputStream, ",d=", localPidParameter->d);
-    appendStringAndDecf(outputStream, ",mi=", localPidParameter->maxIntegral);
-
-    println(outputStream);
-}
-
-void printAllPids(OutputStream* outputStream) {
-    int i;
-    int pidCount = PID_COUNT;
-    for (i = 0; i < pidCount; i++) {
-        appendDec(outputStream, i);
-        append(outputStream, ':');
-        printPid(outputStream, i);
-    }
-}
-
-void printInst (OutputStream* outputStream, MotionInstruction* inst ) {
+void printMotionInstruction (OutputStream* outputStream, MotionInstruction* inst ) {
     appendStringAndDecf(outputStream, "nextPos=", inst->nextPosition);
     appendStringAndDecf(outputStream, ",a=", inst->a);
     appendStringAndDecf(outputStream, ",s=", inst->speed);
@@ -106,5 +56,3 @@ void printTrajectory(OutputStream* outputStream,  MotionInstruction* instruction
         appendCRLF(outputStream);
     }
 }
-
-

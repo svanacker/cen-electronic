@@ -7,27 +7,6 @@
 #include "../../common/commons.h"
 #include "../../common/io/outputStream.h"
 
-/**
-* Print the error struct of the index.
-* @param errorIndex THETA / ALPHA
-*/
-void printErrorStruct(OutputStream* outputStream, int errorIndex);
-
-/**
-* Print the motion struct of the index.
-* @param motionIndex THETA / ALPHA
-*/
-void printMotionStruct(OutputStream* outputStream, int motionIndex);
-
-/**
-* Print the instruction struct of the index.
-*/
-void printInst(OutputStream* outputStream, MotionInstruction* inst);
-
-/**
-* Print a simulation of trajectory to an outputStream
-*/
-void printTrajectory(OutputStream* outputStream, MotionInstruction* instruction, float maxPidTime);
 
 void printPid(OutputStream* outputStream, int pidIndex);
 

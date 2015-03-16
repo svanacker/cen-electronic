@@ -39,4 +39,15 @@ typedef struct MotionInstruction {
     enum PidType pidType;
 } MotionInstruction;
 
+
+/**
+* Print the instruction struct of the index.
+*/
+void printInst(OutputStream* outputStream, MotionInstruction* inst);
+
+/**
+* Print a simulation of trajectory to an outputStream
+*/
+void printTrajectory(OutputStream* outputStream, MotionInstruction* instruction, float maxPidTime);
+
 #endif

@@ -1,22 +1,10 @@
-#include <math.h>
-#include "../motion.h"
 #include "simpleMotion.h"
-
-#include "../../common/commons.h"
-
-#include "../../common/delay/cenDelay.h"
-
-#include "../../common/io/buffer.h"
-#include "../../common/io/outputStream.h"
-
-#include "../../common/log/logger.h"
-#include "../../common/log/logLevel.h"
+#include "../motion.h"
 
 #include "../../common/math/cenMath.h"
 
 #include "../parameters/motionParameterType.h"
 #include "../parameters/motionParameter.h"
-#include "../parameters/motionPersistence.h"
 
 #include "../pid/detectedMotionType.h"
 #include "../pid/pid.h"

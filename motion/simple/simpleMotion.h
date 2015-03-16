@@ -1,11 +1,9 @@
 #ifndef SIMPLE_MOTION_H
 #define SIMPLE_MOTION_H
 
-#include <stdbool.h>
-#include "../parameters/motionParameterType.h"
-#include "../pid/detectedMotionType.h"
-
 // MAIN FUNCTIONS
+
+#include <stdbool.h>
 
 /**
  * Stop the robot.

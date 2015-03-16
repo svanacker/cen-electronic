@@ -4,13 +4,6 @@
 #include <stdbool.h>
 #include <math.h>
 
-#include "../../common/commons.h"
-
-#include "../../common/delay/cenDelay.h"
-
-#include "../../common/io/buffer.h"
-#include "../../common/io/outputStream.h"
-
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
 
@@ -22,10 +15,8 @@
 
 #include "../extended/bsplineDebug.h"
 
-#include "../pid/detectedMotionType.h"
 #include "../pid/pid.h"
 #include "../pid/pidMotion.h"
-#include "../pid/pidType.h"
 #include "../pid/pidDebug.h"
 #include "../pid/alphaTheta.h"
 #include "../pid/profile/pidMotionProfileComputer.h"
@@ -35,9 +26,6 @@
 #include "../position/trajectory.h"
 
 #include "../../device/motor/pwmMotor.h"
-#include "../../device/motion/simple/motionDevice.h"
-
-#include "../../main/motorboard/motorBoard.h"
 
 #include "../../robot/kinematics/robotKinematics.h"
 

@@ -1,6 +1,16 @@
-#include <math.h>
 #include <stdlib.h>
 #include <stdbool.h>
+
+// Commons
+
+#include "../../common/commons.h"
+
+#include "../../common/error/error.h"
+
+#include "../../common/math/cenMath.h"
+
+#include "../../common/log/logger.h"
+#include "../../common/log/logLevel.h"
 
 #include "pid.h"
 #include "pidMotion.h"
@@ -11,32 +21,12 @@
 #include "endDetection/motionEndDetection.h"
 #include "pidTimer.h"
 #include "pidMotionDefinition.h"
-
-// Commons
-
-#include "../../common/commons.h"
-
-#include "../../common/error/error.h"
-
-#include "../../common/math/cenMath.h"
-
-#include "../../common/io/buffer.h"
-#include "../../common/io/outputStream.h"
-#include "../../common/io/printWriter.h"
-#include "../../common/io/reader.h"
-
-#include "../../common/log/logger.h"
-#include "../../common/log/logLevel.h"
+#include "detectedMotionType.h"
 
 #include "../../device/motor/pwmMotor.h"
 
-#include "../extended/bspline.h"
-
-#include "detectedMotionType.h"
-
 #include "../position/coders.h"
 #include "../position/coderErrorComputer.h"
-#include "../simple/simpleMotion.h"
 
 #include "../../robot/kinematics/robotKinematics.h"
 

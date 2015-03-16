@@ -30,4 +30,8 @@ typedef struct PidParameter {
 */
 void setPidParameter(int pidIndex, float p, float i, float d, float maxIntegral);
 
+void printPidParameter(OutputStream* outputStream, int pidIndex);
+
+void printAllPidParameters(OutputStream* outputStream);
+
 #endif
