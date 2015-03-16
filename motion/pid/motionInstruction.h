@@ -43,7 +43,7 @@ typedef struct MotionInstruction {
 /**
 * Print the instruction struct of the index.
 */
-void printInst(OutputStream* outputStream, MotionInstruction* inst);
+void printMotionInstruction(OutputStream* outputStream, MotionInstruction* inst);
 
 /**
 * Print a simulation of trajectory to an outputStream

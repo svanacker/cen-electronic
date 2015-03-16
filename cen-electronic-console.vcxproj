@@ -215,10 +215,10 @@
     <ClCompile Include="motion\pid\computer\simplePidComputer.c" />
     <ClCompile Include="motion\pid\endDetection\motionEndDetection.c" />
     <ClCompile Include="motion\pid\endDetection\motionEndDetectionParameter.c" />
+    <ClCompile Include="motion\pid\motionInstruction.c" />
     <ClCompile Include="motion\pid\parameters\pidParameter.c" />
     <ClCompile Include="motion\pid\parameters\pidPersistence.c" />
     <ClCompile Include="motion\pid\pid.c" />
-    <ClCompile Include="motion\pid\pidDebug.c" />
     <ClCompile Include="motion\pid\pidMotion.c" />
     <ClCompile Include="motion\pid\pidTimer.c" />
     <ClCompile Include="motion\pid\pidType.c" />
@@ -457,7 +457,6 @@
     <ClInclude Include="motion\pid\pid.h" />
     <ClInclude Include="motion\pid\pidComputationValues.h" />
     <ClInclude Include="motion\pid\pidCurrentValues.h" />
-    <ClInclude Include="motion\pid\pidDebug.h" />
     <ClInclude Include="motion\pid\pidGlobalParameters.h" />
     <ClInclude Include="motion\pid\pidMotion.h" />
     <ClInclude Include="motion\pid\pidMotionDefinition.h" />

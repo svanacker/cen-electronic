@@ -3,6 +3,8 @@
 
 #include <stdbool.h>
 
+#include "../../../common/io/outputStream.h"
+
 /**
  * Defines the structure which is used to store PID parameters.
  */

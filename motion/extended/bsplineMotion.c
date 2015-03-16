@@ -56,8 +56,8 @@ void gotoPosition(float left, float right, float a, float speed) {
     PidMotion* pidMotion = getPidMotion();
     PidMotionDefinition* pidMotionDefinition = &(pidMotion->currentMotionDefinition);
     OutputStream* outputStream = getDebugOutputStreamLogger();
-    printInst(outputStream, &(pidMotionDefinition->inst[THETA]));
-    printInst(outputStream, &(pidMotionDefinition->inst[ALPHA]));
+    printMotionInstruction(outputStream, &(pidMotionDefinition->inst[THETA]));
+    printMotionInstruction(outputStream, &(pidMotionDefinition->inst[ALPHA]));
 
     // Indicates that the robot must reach the position
     setMustReachPosition(true);

@@ -286,6 +286,7 @@ file_258=motion.pid.computer
 file_259=motion.extended
 file_260=motion
 file_261=motion.simple
+file_262=motion.pid.parameters
 [GENERATED_FILES]
 file_000=no
 file_001=no
@@ -549,6 +550,7 @@ file_258=no
 file_259=no
 file_260=no
 file_261=no
+file_262=no
 [OTHER_FILES]
 file_000=no
 file_001=no
@@ -812,6 +814,7 @@ file_258=no
 file_259=no
 file_260=no
 file_261=no
+file_262=no
 [FILE_INFO]
 file_000=motion\position\trajectory.c
 file_001=common\math\cenMath.c
@@ -1075,6 +1078,7 @@ file_258=motion\pid\computer\simplePidComputer.h
 file_259=motion\extended\bsplineMotion.h
 file_260=motion\motion.h
 file_261=motion\simple\simpleMotion.h
+file_262=motion\pid\parameters\pidParameter.h
 [SUITE_INFO]
 suite_guid={14495C23-81F8-43F3-8A44-859C583D7760}
 suite_state=

@@ -888,9 +888,6 @@
     <ClCompile Include="motion\pid\pid.c">
       <Filter>Source Files\motion\pid</Filter>
     </ClCompile>
-    <ClCompile Include="motion\pid\pidDebug.c">
-      <Filter>Source Files\motion\pid</Filter>
-    </ClCompile>
     <ClCompile Include="motion\pid\pidTimer.c">
       <Filter>Source Files\motion\pid</Filter>
     </ClCompile>
@@ -1272,6 +1269,9 @@
     <ClCompile Include="motion\extended\bsplineMotion.c">
       <Filter>Source Files\motion\extended</Filter>
     </ClCompile>
+    <ClCompile Include="motion\pid\motionInstruction.c">
+      <Filter>Source Files\motion\pid</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -1575,9 +1575,6 @@
       <Filter>Header Files\motion\pid</Filter>
     </ClInclude>
     <ClInclude Include="motion\pid\pid.h">
-      <Filter>Header Files\motion\pid</Filter>
-    </ClInclude>
-    <ClInclude Include="motion\pid\pidDebug.h">
       <Filter>Header Files\motion\pid</Filter>
     </ClInclude>
     <ClInclude Include="motion\pid\pidMotionProfileComputer.h">
