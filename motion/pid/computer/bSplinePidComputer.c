@@ -58,7 +58,7 @@ void bSplineMotionUCompute(void) {
     PidParameter* pidParameter = getPidParameter(pidIndex, rollingTestMode);
 
     // ALPHA
-    PidMotionError* alphaMotionError = &(computationValues->err[ALPHA]);    
+    PidMotionError* alphaMotionError = &(computationValues->errors[ALPHA]);    
 
     float normalAlpha = computeBSplineOrientationWithDerivative(curve, bSplineTime);
     float realAlpha = robotPosition->orientation;
@@ -77,7 +77,7 @@ void bSplineMotionUCompute(void) {
     float alphaPulseError = (-wheelsDistanceFromCenter * alphaError) / wheelAverageLength;
 
     // THETA
-    PidMotionError* thetaMotionError = &(computationValues->err[THETA]);
+    PidMotionError* thetaMotionError = &(computationValues->errors[THETA]);
 
     // thetaError must be in Pulse and not in MM
     float thetaError = distanceBetweenPoints(&robotPoint, &normalPoint) / wheelAverageLength;

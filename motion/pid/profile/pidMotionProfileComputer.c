@@ -39,7 +39,7 @@ void initNextPositionVars(int index) {
     PidComputationValues* computationValues = &(pidMotion->computationValues);
 
     // Initialization of MotionError
-    PidMotionError* localErr = &(computationValues->err[index]);
+    PidMotionError* localErr = &(computationValues->errors[index]);
 
     localErr->previousError = 0;
     localErr->error = 0;

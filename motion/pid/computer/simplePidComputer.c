@@ -61,12 +61,12 @@ void simpleMotionUCompute(void) {
     PidCurrentValues* thetaCurrentValues = &(computationValues->currentValues[THETA]);
     PidCurrentValues* alphaCurrentValues = &(computationValues->currentValues[ALPHA]);
 
-    PidMotionError* thetaErr = &(computationValues->err[THETA]);
-    PidMotionError* alphaErr = &(computationValues->err[ALPHA]);
+    PidMotionError* thetaError = &(computationValues->errors[THETA]);
+    PidMotionError* alphaError = &(computationValues->errors[ALPHA]);
 
 
     float pidTime = computationValues->pidTime;
 
-    thetaCurrentValues->u = computeNextPID(THETA, thetaInst, thetaCurrentValues, thetaErr, pidTime);
-    alphaCurrentValues->u = computeNextPID(ALPHA, alphaInst, alphaCurrentValues, alphaErr, pidTime);
+    thetaCurrentValues->u = computeNextPID(THETA, thetaInst, thetaCurrentValues, thetaError, pidTime);
+    alphaCurrentValues->u = computeNextPID(ALPHA, alphaInst, alphaCurrentValues, alphaError, pidTime);
 }

@@ -44,18 +44,20 @@ void stopPidDevice(void) {
 }
 
 void devicePIDHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream) {
-    if (commandHeader == COMMAND_WRITE_PID) {
+    if (commandHeader == COMMAND_WRITE_PID_PARAMETERS) {
         // send acknowledge
         appendAck(outputStream);
         // PID Index => 0..n char index
         char pidIndex = readHex2(inputStream);
-
+        checkIsChar(inputStream, '-');
         // PID Value => 2..9 char index
         float p = (float) readHex2(inputStream);
+        checkIsChar(inputStream, '-');
         float i = (float) readHex2(inputStream);
+        checkIsChar(inputStream, '-');
         float d = (float) readHex2(inputStream);
+        checkIsChar(inputStream, '-');
         float maxI = (float) readHex2(inputStream);
-
 
         if (pidIndex >= 0 && pidIndex < PID_COUNT) {
             setPidParameter(pidIndex - 1, p, i, d, maxI);
@@ -73,10 +75,10 @@ void devicePIDHandleRawData(char commandHeader, InputStream* inputStream, Output
             }
         }
         append(outputStream, PID_DEVICE_HEADER);
-        append(outputStream, COMMAND_WRITE_PID);
-    } else if (commandHeader == COMMAND_READ_PID) {
+        append(outputStream, COMMAND_WRITE_PID_PARAMETERS);
+    } else if (commandHeader == COMMAND_READ_PID_PARAMETERS) {
         // send acknowledgement
-        ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_READ_PID);
+        ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_READ_PID_PARAMETERS);
 
         // PID Index => 0..n char index
         char pidIndex = readHex2(inputStream);
@@ -84,13 +86,17 @@ void devicePIDHandleRawData(char commandHeader, InputStream* inputStream, Output
         // we test all pid value (test mode included)
         PidParameter* localPidParameter = getPidParameter(pidIndex, 0);
         appendHex2(outputStream, pidIndex);
+        appendSeparator(outputStream);
         appendHex2(outputStream, (int) localPidParameter->p);
+        appendSeparator(outputStream);
         appendHex2(outputStream, (int) localPidParameter->i);
+        appendSeparator(outputStream);
         appendHex2(outputStream, (int) localPidParameter->d);
+        appendSeparator(outputStream);
         appendHex2(outputStream, (int) localPidParameter->maxIntegral);
-    } else if (commandHeader == COMMAND_LOAD_DEFAULT_VALUES) {
+    } else if (commandHeader == COMMAND_LOAD_PID_DEFAULT_VALUES) {
         // send acknowledgement
-        ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_LOAD_DEFAULT_VALUES);
+        ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_LOAD_PID_DEFAULT_VALUES);
         
         // Load default Values (and erase previous values)
         loadPidParameters(true);
@@ -104,9 +110,13 @@ void devicePIDHandleRawData(char commandHeader, InputStream* inputStream, Output
 
         MotionEndDetectionParameter* motionEndDetectionParameter = getMotionEndDetectionParameter();
         appendHex2(outputStream, (unsigned char) motionEndDetectionParameter->absDeltaPositionIntegralFactorThreshold);
+        appendSeparator(outputStream);
         appendHex2(outputStream, (unsigned char)motionEndDetectionParameter->maxUIntegralFactorThreshold);
+        appendSeparator(outputStream);
         appendHex2(outputStream, (unsigned char)motionEndDetectionParameter->maxUIntegralConstantThreshold);
+        appendSeparator(outputStream);
         appendHex2(outputStream, (unsigned int)motionEndDetectionParameter->timeRangeAnalysis);
+        appendSeparator(outputStream);
         appendHex2(outputStream, (unsigned int)motionEndDetectionParameter->noAnalysisAtStartupTime);
     }
     else if (commandHeader ==  COMMAND_SET_END_DETECTION_PARAMETER) {
@@ -116,77 +126,99 @@ void devicePIDHandleRawData(char commandHeader, InputStream* inputStream, Output
         MotionEndDetectionParameter* motionEndDetectionParameter = getMotionEndDetectionParameter();
 
         motionEndDetectionParameter->absDeltaPositionIntegralFactorThreshold = (float) readHex2(inputStream);
+        checkIsChar(inputStream, '-');
         motionEndDetectionParameter->maxUIntegralFactorThreshold = (float)readHex2(inputStream);
+        checkIsChar(inputStream, '-');
         motionEndDetectionParameter->maxUIntegralConstantThreshold = (float)readHex2(inputStream);
+        checkIsChar(inputStream, '-');
         motionEndDetectionParameter->timeRangeAnalysis = (unsigned int)readHex2(inputStream);
+        checkIsChar(inputStream, '-');
         motionEndDetectionParameter->noAnalysisAtStartupTime = (unsigned int)readHex2(inputStream);
     }
-    // Debug : _01001-0002005678-4000200050008000
-    else if (commandHeader ==  COMMAND_SEND_DEBUG_DATA_PID) {
-        enum InstructionType instructionType = readHex(inputStream);
+    // Debug : pg01-1001-000020-005678-4000-2000-5000-8000
+    else if (commandHeader ==  COMMAND_GET_DEBUG_DATA_PID) {
+        enum InstructionType instructionType = readHex2(inputStream);
 
         PidMotion* pidMotion = getPidMotion();
         PidComputationValues* computationValues = &(pidMotion->computationValues);
 
-        PidMotionError* localError = &(computationValues->err[instructionType]);
+        PidMotionError* localError = &(computationValues->errors[instructionType]);
 
         // send acknowledgement
-        ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_SEND_DEBUG_DATA_PID);
+        ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_GET_DEBUG_DATA_PID);
 
-        appendHex(outputStream, instructionType);
-        appendHex3(outputStream, getPidTime());
-        // TODO : pidType
-        appendHex(outputStream, 0);
-
+        // InstructionType
+        appendHex2(outputStream, instructionType);
         appendSeparator(outputStream);
 
+        // pidType
+        appendHex4(outputStream, getPidTime());
+        appendSeparator(outputStream);
+
+        // TODO
+        appendHex2(outputStream, 0);
+        appendSeparator(outputStream);
+
+        // position
         PidCurrentValues* pidCurrentValues = &(computationValues->currentValues[instructionType]);
-        appendHex5(outputStream, (int) pidCurrentValues->position);
-
+        appendHex6(outputStream, (int) pidCurrentValues->position);
         appendSeparator(outputStream);
 
+        // error
         appendHex4(outputStream, (int) localError->error);
-
         appendSeparator(outputStream);
 
+        // u
         appendHex2(outputStream, (int) pidCurrentValues->u);
-
         appendSeparator(outputStream);
 
+        // Motion End
         MotionEndInfo* motionEnd = &(computationValues->motionEnd[instructionType]);
         appendHex4(outputStream, motionEnd->integralTime);
+        appendSeparator(outputStream);
         appendHex4(outputStream, (int) motionEnd->absDeltaPositionIntegral);
+        appendSeparator(outputStream);
         appendHex4(outputStream, (int) motionEnd->absUIntegral);
     }
-    else if (commandHeader == COMMAND_SEND_MOTION_PARAMETER) {
-        enum InstructionType instructionType = (enum InstructionType) readHex(inputStream);
+    else if (commandHeader == COMMAND_GET_MOTION_PARAMETER) {
+        enum InstructionType instructionType = (enum InstructionType) readHex2(inputStream);
 
         // send acknowledgement
-        ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_SEND_MOTION_PARAMETER);
+        ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_GET_MOTION_PARAMETER);
 
         PidMotion* pidMotion = getPidMotion();
         PidMotionDefinition* motionDefinition = &(pidMotion->currentMotionDefinition);
         MotionInstruction* localInst = &(motionDefinition->inst[instructionType]);
-        appendHex(outputStream, instructionType);
+
+        appendHex2(outputStream, instructionType);
+        appendSeparator(outputStream);
         appendHex2(outputStream, (int) localInst->a);
+        appendSeparator(outputStream);
         appendHex2(outputStream, (int) localInst->speed);
+        appendSeparator(outputStream);
         appendHex2(outputStream, (int) localInst->speedMax);
         
         appendSeparator(outputStream);
 
-        appendHex3(outputStream, (int) localInst->t1);
-        appendHex3(outputStream, (int) localInst->t2);
-        appendHex3(outputStream, (int) localInst->t3);
-        
+        // t1/t2/t3
+        appendHex4(outputStream, (int) localInst->t1);
+        appendSeparator(outputStream);
+        appendHex4(outputStream, (int) localInst->t2);
+        appendSeparator(outputStream);
+        appendHex4(outputStream, (int) localInst->t3);
         appendSeparator(outputStream);
 
-        appendHex5(outputStream, (int) localInst->p1);
-        appendHex5(outputStream, (int) localInst->p2);
-
+        // p1/p2
+        appendHex6(outputStream, (int) localInst->p1);
+        appendSeparator(outputStream);
+        appendHex6(outputStream, (int) localInst->p2);
         appendSeparator(outputStream);
 
+        // types
         appendHex(outputStream, localInst->profileType);
+        appendSeparator(outputStream);
         appendHex(outputStream, localInst->motionParameterType);
+        appendSeparator(outputStream);
         appendHex(outputStream, localInst->pidType);
     }    
 }
