@@ -4,11 +4,8 @@
 
 #include "../../navigation/navigation.h"
 
-
 #include "../../robot/gameboard/gameboard.h"
 #include "../../robot/gameboard/gameboardElement.h"
-
-
 
 // START AREA
 

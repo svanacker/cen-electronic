@@ -10,10 +10,6 @@
 
 #include "../../navigation/location.h"
 
-#define TARGET_AVAILABLE 0
-#define TARGET_HANDLED   1
-#define TARGET_INUSE     2
-
 /**
  * Encapsulates the target.
  */

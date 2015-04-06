@@ -107,6 +107,12 @@ void addNavigationLocations(void) {
 
     tmpLocation = tmpLocation->resultNextLocation;
     TEST_ASSERT_NULL(tmpLocation);
+
+    // Renew Computation to be sure that it's reentrant
+    actual = computeBestPath(locationA, locationJ);
+
+    // The shortest distance in this example is 487 (A-E-J)
+    TEST_ASSERT_EQUAL(487, actual);
 }
 
 // paths

@@ -15,11 +15,11 @@ void initPathList(PathList* pathList, PathData(*pathListArray)[], unsigned int p
         writeError(PATH_LIST_NULL);
         return;
     }
-    pathList->locations = pathListArray;
+    pathList->paths = pathListArray;
     pathList->maxSize = pathListSize;
 }
 
-void clearPathList(PathList* pathList, PathData(*pathListArray)[], unsigned int pathListSize) {
+void clearPathList(PathList* pathList) {
     pathList->size = 0;
 }
 
@@ -41,7 +41,7 @@ PathData* addPath(PathList* pathList) {
     }
 }
 
-PathData* getPath(PathList* pathList, int index) {
+PathData* getPath(PathList* pathList, unsigned int index) {
     if (&pathList == NULL || pathList->maxSize == 0) {
         writeError(PATH_LIST_NOT_INITIALIZED);
         return NULL;
@@ -50,7 +50,7 @@ PathData* getPath(PathList* pathList, int index) {
         writeError(PATH_LIST_INDEX_OUT_OF_BOUNDS);
         return NULL;
     }
-    PathData* result = (PathData*)pathList->locations;
+    PathData* result = (PathData*)pathList->paths;
     // we don't need use sizeof because our pointer is a PathData* pointer, so the shift
     // is already of the structure, we just have to shift of index.
     result += index;

@@ -12,7 +12,7 @@
  */
 typedef struct {
     /** An array of pointer on paths. */
-    Location(*locations)[];
+    PathData(*paths)[];
     /** the size of the list. */
     unsigned int size;
     /** the max size of the list. */
@@ -39,7 +39,7 @@ PathData* addPath(PathList* pathList);
 /**
  * Get the path at index.
  */
-PathData* getPath(PathList* pathList, int index);
+PathData* getPath(PathList* pathList, unsigned int index);
 
 /**
  * Returns the path corresponding to the both location.
@@ -49,7 +49,7 @@ PathData* getPathOfLocations(PathList* pathList, Location* location1, Location* 
 /**
  * Get the count of paths.
  */
-int getPathCount(PathList* pathList);
+unsigned int getPathCount(PathList* pathList);
 
 /**
  * Clear the outgoing paths.
