@@ -25,6 +25,14 @@ typedef struct {
 void initLocationList(LocationList* locationList, Location(*locationListArray)[], unsigned int locationListSize);
 
 /**
+ * Initialize a Location object with name and coordinates.
+ * @param name the name of the point
+ * @param x the x coordinates of the location point
+ * @param y the x coordinates of the location point
+ */
+void initLocation(Location* location, char* name, int x, int y);
+
+/**
  * Clear the location list.
  * @param locationList the pointer on the struct (POO Programming)
  */

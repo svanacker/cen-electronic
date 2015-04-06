@@ -149,9 +149,13 @@ void clearLastError();
 #define LOCATION_LIST_INDEX_OUT_OF_BOUNDS 0x5043
 
 #define TOO_MUCH_PATHS                    0x5050
-#define TOO_MUCH_ACTION                    0x5060
+#define PATH_LIST_NULL                    0x5051
+#define PATH_LIST_NOT_INITIALIZED         0x5052
+#define PATH_LIST_INDEX_OUT_OF_BOUNDS     0x5053
+
+#define TOO_MUCH_ACTION                   0x5060
 #define TOO_MUCH_TARGET_ACTION            0x5070
-#define TOO_MUCH_TARGET_ACTION_ITEM        0x5080
+#define TOO_MUCH_TARGET_ACTION_ITEM       0x5080
 
 // ROBOT
 #define ROBOT_KINEMATICS_NO_EEPROM         0x6000

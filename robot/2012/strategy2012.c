@@ -475,7 +475,7 @@ void initStrategiesItems2012(int strategyIndex) {
 }
 
 void initStrategy2012(int strategyIndex) {
-    initNavigation();
+    // initNavigation();
     initLocations2012();
     initPaths2012(strategyIndex);
 

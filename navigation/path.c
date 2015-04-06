@@ -23,7 +23,7 @@ int getAngle2Path(PathData* pathData) {
     return result;
 }
 
-void fillPathData(PathData* pathData, 
+void initPathData(PathData* pathData, 
                     Location* location1,
                      Location* location2, 
                      int cost,
@@ -45,7 +45,7 @@ void fillPathData(PathData* pathData,
     pathData->mustGoBackward = false;
 }
 
-void fillAsymmetricPathData(
+void initAsymmetricPathData(
                       PathData* pathData,
                      Location* location1,
                      Location* location2, 
@@ -56,7 +56,7 @@ void fillAsymmetricPathData(
                      int angle2,
                      unsigned char accelerationFactor,
                      unsigned char speedFactor) {
-    fillPathData(pathData, location1, location2, cost, controlPointDistance1, controlPointDistance2, angle1, angle2, accelerationFactor, speedFactor);
+    initPathData(pathData, location1, location2, cost, controlPointDistance1, controlPointDistance2, angle1, angle2, accelerationFactor, speedFactor);
     pathData->mustGoBackward = true;
 }
 

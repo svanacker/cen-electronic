@@ -23,6 +23,7 @@
 
 #include "../test/motion/bspline/bsplineListTest.h"
 #include "../test/navigation/locationListTest.h"
+#include "../test/navigation/pathListTest.h"
 #include "../test/navigation/navigationTest.h"
 #include "../test/navigation/navigationTest2.h"
 
@@ -56,6 +57,7 @@ void runAllTests(void)
     testDriverTestTestSuite();
     bsplineListTestSuite();
     locationListTestSuite();
+    pathListTestSuite();
     navigationTestSuite();
 
     UnityEnd();

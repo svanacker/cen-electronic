@@ -295,6 +295,7 @@
     <ClCompile Include="test\navigation\locationListTest.c" />
     <ClCompile Include="test\navigation\navigationTest.c" />
     <ClCompile Include="test\navigation\navigationTest2.c" />
+    <ClCompile Include="test\navigation\pathListTest.c" />
     <ClCompile Include="test\unity\unity.c" />
   </ItemGroup>
   <ItemGroup>
@@ -546,6 +547,7 @@
     <ClInclude Include="test\navigation\locationListTest.h" />
     <ClInclude Include="test\navigation\navigationTest.h" />
     <ClInclude Include="test\navigation\navigationTest2.h" />
+    <ClInclude Include="test\navigation\pathListTest.h" />
     <ClInclude Include="test\unity\unity.h" />
     <ClInclude Include="test\unity\unity_internals.h" />
   </ItemGroup>

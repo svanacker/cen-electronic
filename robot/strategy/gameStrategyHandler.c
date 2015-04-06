@@ -455,9 +455,9 @@ void updatePathsAvailability() {
         appendString(logStream, "\nDon't compute Path !");
     }    
     PathList* paths = getNavigationPathList();
-    int i;
+    unsigned int i;
     for (i = 0; i < paths->size; i++) {
-        PathData* pathData = paths->paths[i];
+        PathData* pathData = getPath(paths, i);
         // by default, path is available
         bool available = true;
         // Don't do the compute if it's not necessary
@@ -469,9 +469,9 @@ void updatePathsAvailability() {
 
     #ifdef DEBUG_OPPONENT_ROBOT
         // LOG
-        int k;
+        unsigned int k;
         for (k = 0; k < paths->size; k++) {
-            PathData* pathData = paths->paths[k];
+            PathData* pathData = getPath(paths, k);
             if (!getPathAvailability(k)) {
                 appendString(logStream, "\n");
                 appendString(logStream, pathData->location1->name);

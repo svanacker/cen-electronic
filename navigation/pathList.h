@@ -8,15 +8,22 @@
 #define MAX_PATH          31
 
 /**
- * Tre struct defining a list of locations.
+ * Tre struct defining a list of paths.
  */
 typedef struct {
     /** An array of pointer on paths. */
-    PathData* paths[MAX_PATH];
+    Location(*locations)[];
     /** the size of the list. */
-    unsigned char size;
+    unsigned int size;
+    /** the max size of the list. */
+    unsigned int maxSize;
 } PathList;
 
+/**
+ * Initializes the path.
+ * @param pathList the pathList to initialize.
+ */
+void initPathList(PathList* pathList, PathData(*pathListArray)[], unsigned int pathListSize);
 
 /**
  * Clear the path list.
@@ -25,10 +32,9 @@ void clearPathList(PathList* pathList);
 
 /**
  * Fill a path and add a path to the list.
- * @param pathData the path to add to the list
+ * @return the path from the list
  */
-void addPath(PathList* pathList,
-             PathData* pathData);
+PathData* addPath(PathList* pathList);
 
 /**
  * Get the path at index.

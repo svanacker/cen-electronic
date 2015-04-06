@@ -16,6 +16,7 @@
 void initLocationList(LocationList* locationList, Location(*locationListArray)[], unsigned int locationListSize) {
     if (locationList == NULL) {
         writeError(LOCATION_LIST_NULL);
+        return;
     }
     locationList->locations = locationListArray;
     locationList->maxSize = locationListSize;
@@ -56,6 +57,16 @@ void copyLocation(Location* sourceLocation, Location* targetLocation) {
     targetLocation->y = sourceLocation->y;
 }
 
+void initLocation(Location* location, char* name, int x, int y) {
+    location->name = name;
+    location->x = x;
+    location->y = y;
+    location->tmpCost = NO_COMPUTED_COST;
+    location->tmpHandled = false;
+    location->tmpPreviousLocation = NULL;
+    location->resultNextLocation = NULL;
+}
+
 Location* addLocation(LocationList* locationList, char* name, int x, int y) {
     if (&locationList == NULL || locationList->maxSize == 0) {
         writeError(LOCATION_LIST_NOT_INITIALIZED);
@@ -65,13 +76,7 @@ Location* addLocation(LocationList* locationList, char* name, int x, int y) {
     unsigned int size = locationList->size;
     if (size < locationList->maxSize) {
         Location* location = getLocation(locationList, size);
-        location->name = name;
-        location->x = x;
-        location->y = y;
-        location->tmpCost = NO_COMPUTED_COST;
-        location->tmpHandled = false;
-        location->tmpPreviousLocation = NULL;
-        location->resultNextLocation = NULL;
+        initLocation(location, name, x, y);
         locationList->size++;
         return location;
     }

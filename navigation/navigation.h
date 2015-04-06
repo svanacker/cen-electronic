@@ -1,19 +1,37 @@
 #ifndef NAVIGATION_H
 #define NAVIGATION_H
 
+#include "../common/math/bitList.h"
 #include "locationList.h"
 #include "location.h"
 #include "pathList.h"
 #include "path.h"
 
-#define    BIT_LIST_NAVIGATION_ARRAY_LENGTH    (MAX_PATH / BITS_COUNT_IN_UNSIGNED_INT) + 1
+struct Navigation;
+typedef struct Navigation Navigation;
+
+/**
+* Contains all elements used by the system to find the paths. 
+*/
+struct Navigation {
+    // All points
+    LocationList* locationList;
+    // All Paths
+    PathList* paths;
+    // Outgoing Paths
+    BitList* outgoingPaths;
+    // Available Paths
+    BitList* availablePaths;
+};
+
+#define BIT_LIST_NAVIGATION_ARRAY_LENGTH    (MAX_PATH / BITS_COUNT_IN_UNSIGNED_INT) + 1
 
 #define COST_UNAVAILABLE_PATH 2000
 
 /**
  * Initialize the navigation system.
  */
-void initNavigation();
+void initNavigation(LocationList* locationList, PathList* pathList, BitList* outgoingPaths, BitList* availablePaths);
 
 /**
  * Returns the navigation (singleton) location List.
@@ -34,7 +52,7 @@ Location* addNavigationLocation(char* name, int x, int y);
 /**
  * Add the path to the navigation graph.
  */
-void addNavigationPath(PathData* pathData,
+PathData* addNavigationPath(
     Location* location1,
     Location* location2,
     int cost,
@@ -51,8 +69,8 @@ void addNavigationPath(PathData* pathData,
  * @param end endPoint
  * @return the cost to reach the best Path
  */
-int computeBestPath(Location* start,
-                    Location* end);
+unsigned int computeBestPath(Location* start,
+                             Location* end);
 
 void printNavigationContext(OutputStream* outputStream);
 

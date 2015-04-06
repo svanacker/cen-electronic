@@ -27,16 +27,16 @@ static Location* locationX;
 static Location* locationV;
 static Location* locationY;
 
-static PathData pathSU;
-static PathData pathUV;
-static PathData pathVY;
-static PathData pathYV;
-static PathData pathXY;
-static PathData pathXU;
-static PathData pathUX;
-static PathData pathSX;
-static PathData pathXV;
-static PathData pathYS;
+static PathData* pathSU;
+static PathData* pathUV;
+static PathData* pathVY;
+static PathData* pathYV;
+static PathData* pathXY;
+static PathData* pathXU;
+static PathData* pathUX;
+static PathData* pathSX;
+static PathData* pathXV;
+static PathData* pathYS;
 
 
 static LocationList locationList;
@@ -51,16 +51,16 @@ int addNavigationLocationsTest2() {
     locationY = addNavigationLocation("Y", 0, 0);
     
     // paths
-    addNavigationPath(&pathSU, locationS, locationU, 10, 0, 0, 0, 0, 0, 0);
-    addNavigationPath(&pathUV, locationU, locationV, 1, 0, 0, 0, 0, 0, 0);
-    addNavigationPath(&pathVY, locationV, locationY, 4, 0, 0, 0, 0, 0, 0);
-    addNavigationPath(&pathYV, locationY, locationV, 6, 0, 0, 0, 0, 0, 0);
-    addNavigationPath(&pathXY, locationX, locationY, 2, 0, 0, 0, 0, 0, 0);
-    addNavigationPath(&pathXU, locationX, locationU, 3, 0, 0, 0, 0, 0, 0);
-    addNavigationPath(&pathUX, locationU, locationX, 2, 0, 0, 0, 0, 0, 0);
-    addNavigationPath(&pathSX, locationS, locationX, 5, 0, 0, 0, 0, 0, 0);
-    addNavigationPath(&pathXV, locationX, locationV, 9, 0, 0, 0, 0, 0, 0);
-    addNavigationPath(&pathYS, locationY, locationS, 7, 0, 0, 0, 0, 0, 0);
+    pathSU = addNavigationPath(locationS, locationU, 10, 0, 0, 0, 0, 0, 0);
+    pathUV = addNavigationPath(locationU, locationV, 1, 0, 0, 0, 0, 0, 0);
+    pathVY = addNavigationPath(locationV, locationY, 4, 0, 0, 0, 0, 0, 0);
+    pathYV = addNavigationPath(locationY, locationV, 6, 0, 0, 0, 0, 0, 0);
+    pathXY = addNavigationPath(locationX, locationY, 2, 0, 0, 0, 0, 0, 0);
+    pathXU = addNavigationPath(locationX, locationU, 3, 0, 0, 0, 0, 0, 0);
+    pathUX = addNavigationPath(locationU, locationX, 2, 0, 0, 0, 0, 0, 0);
+    pathSX = addNavigationPath(locationS, locationX, 5, 0, 0, 0, 0, 0, 0);
+    pathXV = addNavigationPath(locationX, locationV, 9, 0, 0, 0, 0, 0, 0);
+    pathYS = addNavigationPath(locationY, locationS, 7, 0, 0, 0, 0, 0, 0);
 
     int cost = computeBestPath(locationS, locationS);
 
