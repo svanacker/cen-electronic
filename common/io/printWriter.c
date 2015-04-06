@@ -27,6 +27,15 @@ void appendBool(OutputStream* outputStream, bool b) {
     }
 }
 
+void appendBoolAsString(OutputStream* outputStream, bool b) {
+    if (b) {
+        appendString(outputStream, "true");
+    }
+    else {
+        appendString(outputStream, "false");
+    }
+}
+
 void appendSeparator(OutputStream* outputStream) {
     append(outputStream, '-');
 }

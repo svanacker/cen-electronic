@@ -15,11 +15,11 @@ void clearPathList(PathList* pathList) {
 }
 
 void addPath(PathList* pathList,
-             PathDataFunction* pathDataFunction) {
+             PathData* pathData) {
     unsigned char size = pathList->size;
 
     if (size < MAX_PATH) {
-        pathList->paths[size] = pathDataFunction;
+        pathList->paths[size] = pathData;
         pathList->size++;
     }
     else {
@@ -27,27 +27,26 @@ void addPath(PathList* pathList,
     }
 }
 
-PathDataFunction* getPath(PathList* pathList, int index) {
+PathData* getPath(PathList* pathList, int index) {
     return pathList->paths[index];
 }
 
-PathDataFunction* getPathOfLocations(PathList* pathList, Location* location1, Location* location2, bool* reversed) {
+PathData* getPathOfLocations(PathList* pathList, Location* location1, Location* location2, bool* reversed) {
     int i;
     int size = pathList->size;
     for (i = 0; i < size; i++) {
-        PathDataFunction* pathDataFunction = pathList->paths[i];
-        pathDataFunction();
-        Location* pathLocation1 = getTmpPathData()->location1;
-        Location* pathLocation2 = getTmpPathData()->location2;
+        PathData* pathData = pathList->paths[i];
+        Location* pathLocation1 = pathData->location1;
+        Location* pathLocation2 = pathData->location2;
         // same order
         if (locationEquals(pathLocation1, location1) && locationEquals(pathLocation2, location2)) {
             *reversed = false;
-            return pathDataFunction;
+            return pathData;
         }
         // inverse order
         if (locationEquals(pathLocation1, location2) && locationEquals(pathLocation2, location1)) {
             *reversed = true;
-            return pathDataFunction;
+            return pathData;
         }
     }
     return NULL;
@@ -65,7 +64,7 @@ void printPathList(OutputStream* outputStream, char* pathListName, PathList* pat
 
     println(outputStream);
     for (i = 0; i < size; i++) {
-        PathDataFunction* pathDataFunction = pathList->paths[i];
-        printPath(outputStream, pathDataFunction);
+        PathData* pathData = pathList->paths[i];
+        printPath(outputStream, pathData);
     }
 }

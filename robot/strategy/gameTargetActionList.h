@@ -37,7 +37,7 @@ void addTargetAction(GameTargetActionList* targetActionList,
                      Location* startLocation,
                      Location* endLocation,
                      int timeToAchieve,
-                     PathDataFunction* pathDataFunction,
+                     PathData* pathData,
                      GameTargetActionItemList* actionListItem
 );
 

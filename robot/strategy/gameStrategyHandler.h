@@ -66,7 +66,7 @@ void rotateAbsolute(int angle);
 /**
  * Ask to follow a path.
  */
-void motionFollowPath(PathDataFunction* pathDataFunction, bool reversed);
+void motionFollowPath(PathData* pathData, bool reversed);
 
 /**
  * Ask the robot to go to a location but without path (useful for actionItem).

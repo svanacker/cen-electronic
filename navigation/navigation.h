@@ -29,24 +29,32 @@ PathList* getNavigationPathList();
 /**
  * Add the location to the navigation graph.
  */
-void addNavigationLocation(Location* location, char* name, int x, int y);
+Location* addNavigationLocation(char* name, int x, int y);
 
 /**
  * Add the path to the navigation graph.
  */
-void addNavigationPath(PathDataFunction* pathDataFunction);
+void addNavigationPath(PathData* pathData,
+    Location* location1,
+    Location* location2,
+    int cost,
+    int controlPointDistance1,
+    int controlPointDistance2,
+    int angle1,
+    int angle2,
+    unsigned char accelerationFactor,
+    unsigned char speedFactor);
 
 /**
  * Computes the path.
- * @param outLocationList the out parameter which is filled
- * @param start startPoint
+ * @param start startPoint the start point will have a linked pointer on the next point to reach recursively to the end point
  * @param end endPoint
+ * @return the cost to reach the best Path
  */
-int computeBestPath(LocationList* outLocationList, 
-                    Location* start,
+int computeBestPath(Location* start,
                     Location* end);
 
-void printNavigationContext();
+void printNavigationContext(OutputStream* outputStream);
 
 // PATH AVAILABILITY
 

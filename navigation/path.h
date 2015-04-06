@@ -5,17 +5,9 @@
 
 #include "location.h"
 
-/**
- * Function which gives fill all informations in a intermediate structure.
- * All call must be done by getXXX(Path* path) which fill the data and then read it in common.
- * This trick enabled us to save memory and to use instead of program memory.
- * This trick is only possible on read data. So tmpOutgoing is a standard struc path member.
- */
-
-/** Define the function which will be called to fill PathData. */
-typedef void PathDataFunction();
-
 typedef struct PathData {
+    /** name of the path. */
+    char* pathName;
     /** first point (with name). */
     Location* location1;
     /** second point (with name). */
@@ -38,11 +30,12 @@ typedef struct PathData {
     bool mustGoBackward;
 } PathData;
 
-int getAngle1Path(PathDataFunction* pathDataFunction);
+int getAngle1Path(PathData* pathData);
 
-int getAngle2Path(PathDataFunction* pathDataFunction);
+int getAngle2Path(PathData* pathData);
 
-void fillPathData(Location* location1,
+void fillPathData(PathData* pathData,
+                        Location* location1,
                          Location* location2, 
                          int cost,
                          int controlPointDistance1,
@@ -56,7 +49,8 @@ void fillPathData(Location* location1,
  * Fills the data of an asymmetric path, a path on which 
  * the robot must move backward when reversed.
  */
-void fillAsymmetricPathData(Location* location1,
+void fillAsymmetricPathData(PathData* pathData, 
+                        Location* location1,
                          Location* location2, 
                          int cost,
                          int controlPointDistance1,
@@ -67,28 +61,20 @@ void fillAsymmetricPathData(Location* location1,
                          unsigned char speedFactor);
 
 /**
- * Return the unique structure which must be filled before.
- * Be careful to call path->pathDataFunction before any call ! If you don't, data will be random
- * (the last call) and does not corresponds to your current Path.
- */
-PathData* getTmpPathData();
-
-
-/**
  * Return if the path contains the location passed in parameter
  */
-bool pathContainsLocation(PathDataFunction* path, Location* location);
+bool pathContainsLocation(PathData* pathData, Location* location);
 
 /**
  * Returns the opposite location on the path.
  * @param path (this) the path for which we want to find the opposite location
  * @param location the location for which we want to search the opposite
  */
-Location* getOtherEnd(PathDataFunction* pathDataFunction, Location* location);
+Location* getOtherEnd(PathData* pathData, Location* location);
 
 /**
  * Print debugguable path.
  */
-void printPath(OutputStream* outputStream, PathDataFunction* path);
+void printPath(OutputStream* outputStream, PathData* pathData);
 
 #endif

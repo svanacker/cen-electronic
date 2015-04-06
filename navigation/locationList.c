@@ -13,6 +13,14 @@
 
 #include "../common/string/cenString.h"
 
+void initLocationList(LocationList* locationList, Location(*locationListArray)[], unsigned int locationListSize) {
+    if (locationList == NULL) {
+        writeError(LOCATION_LIST_NULL);
+    }
+    locationList->locations = locationListArray;
+    locationList->maxSize = locationListSize;
+}
+
 void clearLocationList(LocationList* locationList) {
     locationList->size = 0;
 }
@@ -21,45 +29,65 @@ bool isEmptyLocationList(LocationList* locationList) {
     return locationList->size == 0;
 }
 
-void reverseLocationList(LocationList* locationList) {
-    int i;
-    unsigned char size = locationList->size;
-    for (i = 0; i < size / 2; i++) {
-        int index1 = i;
-        int index2 = size - i - 1;
-        Location* locationTmp = locationList->locations[index1];
-        
-        locationList->locations[index1] = locationList->locations[index2];
-        locationList->locations[index2] = locationTmp;
+Location* getLocation(LocationList* locationList, unsigned int index) {
+    if (&locationList == NULL || locationList->maxSize == 0) {
+        writeError(LOCATION_LIST_NOT_INITIALIZED);
+        return NULL;
     }
+    if (index < 0 || index >= locationList->maxSize) {
+        writeError(LOCATION_LIST_INDEX_OUT_OF_BOUNDS);
+        return NULL;
+    }
+    Location* result = (Location*)locationList->locations;
+    // we don't need use sizeof because our pointer is a Location* pointer, so the shift
+    // is already of the structure, we just have to shift of index.
+    result += index;
+
+    return result;
 }
 
-void addLocation(LocationList* locationList, Location* location, char* name, int x, int y) {
-    location->name = name;
-    location->x = x;
-    location->y = y;
-    location->tmpCost = NO_COMPUTED_COST;
-    location->tmpHandled = false;
-    addFilledLocation(locationList, location);
+void copyLocation(Location* sourceLocation, Location* targetLocation) {
+    targetLocation->name = sourceLocation->name;
+    targetLocation->tmpCost = sourceLocation->tmpCost;
+    targetLocation->tmpHandled = sourceLocation->tmpHandled;
+    targetLocation->tmpPreviousLocation = sourceLocation->tmpPreviousLocation;
+    targetLocation->resultNextLocation = sourceLocation->resultNextLocation;
+    targetLocation->x = sourceLocation->x;
+    targetLocation->y = sourceLocation->y;
 }
 
-void addFilledLocation(LocationList* locationList, Location* location) {
-    unsigned char size = locationList->size;
-    if (size < MAX_LOCATION) {
-        locationList->locations[size] = location;
+Location* addLocation(LocationList* locationList, char* name, int x, int y) {
+    if (&locationList == NULL || locationList->maxSize == 0) {
+        writeError(LOCATION_LIST_NOT_INITIALIZED);
+        return NULL;
+    }
+
+    unsigned int size = locationList->size;
+    if (size < locationList->maxSize) {
+        Location* location = getLocation(locationList, size);
+        location->name = name;
+        location->x = x;
+        location->y = y;
+        location->tmpCost = NO_COMPUTED_COST;
+        location->tmpHandled = false;
+        location->tmpPreviousLocation = NULL;
+        location->resultNextLocation = NULL;
         locationList->size++;
+        return location;
     }
     else {
         writeError(TOO_MUCH_LOCATIONS);
+        return NULL;
     }
 }
 
+
 Location* findLocationByName(LocationList* locationList, char* locationName) {
-    int i;
-    int size = locationList->size;
+    unsigned int i;
+    unsigned int size = locationList->size;
     for (i = 0; i < size; i++) {
-        Location* location = locationList->locations[i];
-        if (strcmp(locationName, location->name)) {
+        Location* location = getLocation(locationList, i);
+        if (strcmp(locationName, location->name) == 0) {
             return location;
         }
     }
@@ -73,7 +101,7 @@ bool containsLocation(LocationList* locationList, Location* locationToFind, bool
     int i;
     int size = locationList->size;
     for (i = 0; i < size; i++) {
-        Location* location = locationList->locations[i];
+        Location* location = getLocation(locationList, i);
         if (location->tmpHandled != handled) {
             continue;
         }
@@ -91,7 +119,7 @@ Location* getNearestLocation(LocationList* locationList, int x, int y) {
     int min = MAX_COST;
 
     for (i = 0; i < size; i++) {
-        Location* location = locationList->locations[i];
+        Location* location = getLocation(locationList, i);
         // We can have hole because of "remove"
         if (location == NULL) {
             continue;
@@ -105,24 +133,23 @@ Location* getNearestLocation(LocationList* locationList, int x, int y) {
     return result;
 }
 
-Location* getLocation(LocationList* locationList, int index) {
-       return locationList->locations[index];
-}
-
 void removeFirstLocation(LocationList* locationList) {
+    // TODO : Implementation is not Optimized ! Use linked list ?
     int size = locationList->size;
     if (size == 0) {
         return;
     }
     int i;
     for (i = 1; i < size; i++) {
-        locationList->locations[i - 1] = locationList->locations[i];
+        Location* location1 = getLocation(locationList, i - 1);
+        Location* location2 = getLocation(locationList, i);
+        copyLocation(location2, location1);
     }
     size--;
     locationList->size = size;
 }
 
-int getLocationCount(LocationList* locationList) {
+unsigned int getLocationCount(LocationList* locationList) {
     return locationList->size;
 }
 
@@ -130,10 +157,10 @@ int getLocationCount(LocationList* locationList) {
 
 
 void clearLocationTmpInfo(LocationList* locationList) {
-    int i;
-    unsigned char size = locationList->size;
+    unsigned int i;
+    unsigned int size = locationList->size;
     for (i = 0; i < size; i++) {
-        Location* location = locationList->locations[i];
+        Location* location = getLocation(locationList, i);
         location->tmpCost = NO_COMPUTED_COST;
         location->tmpPreviousLocation = NULL;
         location->tmpHandled = false;
@@ -150,7 +177,16 @@ void printLocationList(OutputStream* outputStream, char* locationListName, Locat
     appendStringAndDec(outputStream, ", size=", locationList->size);
     println(outputStream);    
     for (i = 0; i < size; i++) {
-        Location* location = locationList->locations[i];
+        Location* location = getLocation(locationList, i);
         printLocation(outputStream, location);
+    }
+}
+
+void printLocationLinkedPath(OutputStream* outputStream, Location* startPoint) {
+    Location* currentLocation = startPoint;
+
+    while (startPoint != NULL) {
+        printLocation(outputStream, currentLocation);
+        startPoint = currentLocation->resultNextLocation;
     }
 }

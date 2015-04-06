@@ -37,7 +37,6 @@ bool getRemoteClockData(ClockData* clockData) {
         resultStream->readChar(resultStream);
 
         clockData->year = readHex2(resultStream);
-        resultStream->readChar(resultStream);
     }
     return result;
 }

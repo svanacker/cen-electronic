@@ -21,6 +21,10 @@
 #include "../test/drivers/test/testDriverTest.h"
 
 #include "../test/motion/bspline/bsplineListTest.h"
+#include "../test/navigation/locationListTest.h"
+#include "../test/navigation/navigationTest.h"
+#include "../test/navigation/navigationTest2.h"
+
 
 void setUp(void)
 {
@@ -49,6 +53,8 @@ void runAllTests(void)
     driverDataDispatcherListTestSuite();
     testDriverTestTestSuite();
     bsplineListTestSuite();
+    locationListTestSuite();
+    navigationTestSuite();
 
     UnityEnd();
 }

@@ -43,10 +43,10 @@ void changeLocationsForColor() {
         return;
     }
     LocationList* locationList = getNavigationLocationList();
-    int i;
-    unsigned char size = locationList->size;
+    unsigned int i;
+    unsigned int size = locationList->size;
     for (i = 0; i < size; i++) {
-        Location* location = locationList->locations[i];
+        Location* location = getLocation(locationList, i);
         location->y = (int) (GAMEBOARD_HEIGHT - location->y);
     }
 }

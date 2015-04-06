@@ -160,6 +160,7 @@ void setColor(TEAM_COLOR color) {
 }
 
 void initLocations2012() {
+    /*
     clearLocationList(getNavigationLocationList());
     // -> General locations
     addNavigationLocation(&startAreaLocation, START_AREA, START_AREA_X, START_AREA_Y);
@@ -189,14 +190,17 @@ void initLocations2012() {
     addNavigationLocation(&obstacleR2Location, OBSTACLE_R2, (int) OBSTACLE_R_X, (int) OBSTACLE_2_Y);
     addNavigationLocation(&obstacleR3Location, OBSTACLE_R3, (int) OBSTACLE_R_X, (int) OBSTACLE_3_Y);
     addNavigationLocation(&obstacleR4Location, OBSTACLE_R4, (int) OBSTACLE_R_X, (int) OBSTACLE_4_Y);
+    */
 }
 
+/*
 void bottle2ToCDPathFunction() { fillPathData(&bottle2Location, &obstacleR1Location, BOTTLE_2_TO_CD_COST, 0x1B, 0x30, 0xF8F8, 0xFAF6, BOTTLE_2_TO_CD_SPEED_FACTOR, BOTTLE_2_TO_CD_ACCELERATION_FACTOR);}
 void cdToDropZone1PathFunction() { fillPathData(&obstacleR1Location, &dropZone1Location, CD_TO_DROP_ZONE_1_COST, 0x11, 0x26, 0xFAF6, ANGLE_NEG_90, CD_TO_DROP_ZONE_1_SPEED_FACTOR, CD_TO_DROP_ZONE_1_ACCELERATION_FACTOR);}
 void dropZone1ToBullionLeft1PathFunction() { fillAsymmetricPathData(&dropZone1Location, &bullionLeft1Location, DROP_ZONE_1_TO_BULLION_LEFT_1_COST, 0xB0, 0x80, ANGLE_NEG_90, ANGLE_NEG_90, DROP_ZONE_1_TO_BULLION_LEFT_1_SPEED_FACTOR, DROP_ZONE_1_TO_BULLION_LEFT_1_ACCELERATION_FACTOR);} 
 void dropZone1ToBullionRight1PathFunction() { fillAsymmetricPathData(&dropZone1Location, &bullionRight1Location, DROP_ZONE_1_TO_BULLION_RIGHT_1_COST, 0xB0, 0x80, ANGLE_NEG_90, ANGLE_NEG_90, DROP_ZONE_1_TO_BULLION_RIGHT_1_SPEED_FACTOR, DROP_ZONE_1_TO_BULLION_RIGHT_1_ACCELERATION_FACTOR);} 
 void obstacleR3ToBullionRight1PathFunction() { fillAsymmetricPathData(&obstacleR3Location, &bullionRight1Location, OR3_TO_BULLIONRIGHT1_COST, 0x0A, 0x0A, ANGLE_NEG_135, ANGLE_NEG_90, OR3_TO_BULLIONRIGHT1_SPEED_FACTOR, OR3_TO_BULLIONRIGHT1_ACCELERATION_FACTOR);}
 void obstacleL3ToBullionLeft1PathFunction() { fillAsymmetricPathData(&obstacleL3Location, &bullionLeft1Location, OL3_TO_BULLIONRIGHT1_COST, 0x0A, 0x0A, ANGLE_NEG_45, ANGLE_NEG_90, OL3_TO_BULLIONRIGHT1_SPEED_FACTOR, OL3_TO_BULLIONRIGHT1_ACCELERATION_FACTOR);}
+*/
 
 void initPaths2012(int index) {
     /*
@@ -341,11 +345,11 @@ void initTargets2012() {
 // CD ActionItem
 
 void cdTakeStep1() {
-    motionFollowPath(&bottle2ToCDPathFunction, false);
+    // motionFollowPath(&bottle2ToCDPathFunction, false);
 }
 
 void cdTakeStep2() {
-    motionFollowPath(&cdToDropZone1PathFunction, false);
+    // motionFollowPath(&cdToDropZone1PathFunction, false);
 }
 
 // Bullion Right 1 ActionItem
@@ -362,11 +366,11 @@ void bullionRight1Step3GoToDropZone() {
 }
 
 void R3ToBullionRight1() {
-    motionFollowPath(&obstacleR3ToBullionRight1PathFunction, false);
+    // motionFollowPath(&obstacleR3ToBullionRight1PathFunction, false);
 }
 
 void dropZone1ToBullionRight1() {
-    motionFollowPath(&dropZone1ToBullionRight1PathFunction, false);
+    // motionFollowPath(&dropZone1ToBullionRight1PathFunction, false);
 }
 
 // Bullion Left 1 ActionItem
@@ -383,11 +387,11 @@ void bullionLeft1Step3GoToDropZone() {
 }
 
 void dropZone1ToBullionLeft1() {
-    motionFollowPath(&dropZone1ToBullionLeft1PathFunction, false);
+    // motionFollowPath(&dropZone1ToBullionLeft1PathFunction, false);
 }
 
 void L3ToBullionLeft1() {
-    motionFollowPath(&obstacleL3ToBullionLeft1PathFunction, false);
+    // motionFollowPath(&obstacleL3ToBullionLeft1PathFunction, false);
 }
 
 void initTargetActions2012() {

@@ -24,7 +24,7 @@ typedef struct GameTargetAction {
     // Reference to GameTargetActionListItem, can be NULL
     GameTargetActionItemList* actionItemList;
     /** Path (can be NULL) used to check if the target Action Item is available. */
-    PathDataFunction* pathDataFunction;
+    PathData* pathData;
 } GameTargetAction;
 
 /**

@@ -11,7 +11,7 @@
 #include "location.h"
 
 bool locationEquals(Location* location1, Location* location2) {
-    return strcmp(location1->name, location2->name);
+    return (strcmp(location1->name, location2->name) == 0);
 }
 
 void printLocation(OutputStream* outputStream, Location* location) {
@@ -27,6 +27,12 @@ void printLocation(OutputStream* outputStream, Location* location) {
     }
     else {
         appendKeyAndName(outputStream, ", tmpPrevious.name=", "NULL");
+    }
+    if (location->resultNextLocation != NULL) {
+        appendKeyAndName(outputStream, ", resultNext.name=", location->resultNextLocation->name);
+    }
+    else {
+        appendKeyAndName(outputStream, ", resultNext.name=", "NULL");
     }
     println(outputStream);
 }
