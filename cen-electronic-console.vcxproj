@@ -232,7 +232,6 @@
     <ClCompile Include="navigation\location.c" />
     <ClCompile Include="navigation\locationList.c" />
     <ClCompile Include="navigation\navigation.c" />
-    <ClCompile Include="navigation\navigationTest.c" />
     <ClCompile Include="navigation\path.c" />
     <ClCompile Include="navigation\pathList.c" />
     <ClCompile Include="remote\clock\remoteClock.c" />
@@ -285,6 +284,7 @@
     <ClCompile Include="test\common\io\printWriterTest.c" />
     <ClCompile Include="test\common\io\readerTest.c" />
     <ClCompile Include="test\common\math\bcdUtilsTest.c" />
+    <ClCompile Include="test\common\math\bitListTest.c" />
     <ClCompile Include="test\common\math\cenMathTest.c" />
     <ClCompile Include="test\common\math\hexUtilsTest.c" />
     <ClCompile Include="test\drivers\dispatchers\driverDataDispatcherListTest.c" />
@@ -292,6 +292,10 @@
     <ClCompile Include="test\main\mainBoard\mainBoardPc.c" />
     <ClCompile Include="test\main\motorBoard\motorBoardPc.c" />
     <ClCompile Include="test\motion\bspline\bsplineListTest.c" />
+    <ClCompile Include="test\navigation\locationListTest.c" />
+    <ClCompile Include="test\navigation\navigationTest.c" />
+    <ClCompile Include="test\navigation\navigationTest2.c" />
+    <ClCompile Include="test\navigation\pathListTest.c" />
     <ClCompile Include="test\unity\unity.c" />
   </ItemGroup>
   <ItemGroup>
@@ -475,7 +479,6 @@
     <ClInclude Include="navigation\location.h" />
     <ClInclude Include="navigation\locationList.h" />
     <ClInclude Include="navigation\navigation.h" />
-    <ClInclude Include="navigation\navigationTest.h" />
     <ClInclude Include="navigation\path.h" />
     <ClInclude Include="navigation\pathList.h" />
     <ClInclude Include="remote\clock\remoteClock.h" />
@@ -522,6 +525,7 @@
     <ClInclude Include="robot\strategy\gameTargetActionItemList.h" />
     <ClInclude Include="robot\strategy\gameTargetActionList.h" />
     <ClInclude Include="robot\strategy\gameTargetList.h" />
+    <ClInclude Include="robot\strategy\gameTargetStatus.h" />
     <ClInclude Include="robot\strategy\nextGameStrategyItemComputer.h" />
     <ClInclude Include="test\allTests.h" />
     <ClInclude Include="test\common\2d\2dTest.h" />
@@ -532,6 +536,7 @@
     <ClInclude Include="test\common\io\printWriterTest.h" />
     <ClInclude Include="test\common\io\readerTest.h" />
     <ClInclude Include="test\common\math\bcdUtilsTest.h" />
+    <ClInclude Include="test\common\math\bitListTest.h" />
     <ClInclude Include="test\common\math\cenMathTest.h" />
     <ClInclude Include="test\common\math\hexUtilsTest.h" />
     <ClInclude Include="test\drivers\dispatchers\driverDataDispatcherListTest.h" />
@@ -539,6 +544,10 @@
     <ClInclude Include="test\main\mainBoard\mainBoardPc.h" />
     <ClInclude Include="test\main\motorBoard\motorBoardPc.h" />
     <ClInclude Include="test\motion\bspline\bsplineListTest.h" />
+    <ClInclude Include="test\navigation\locationListTest.h" />
+    <ClInclude Include="test\navigation\navigationTest.h" />
+    <ClInclude Include="test\navigation\navigationTest2.h" />
+    <ClInclude Include="test\navigation\pathListTest.h" />
     <ClInclude Include="test\unity\unity.h" />
     <ClInclude Include="test\unity\unity_internals.h" />
   </ItemGroup>

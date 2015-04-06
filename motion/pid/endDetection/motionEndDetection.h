@@ -86,7 +86,7 @@ unsigned int detectsEndOfMotion(enum InstructionType instructionType, MotionEndI
 /**
  * Necessary to call isEndOfMotion, or isRobotBlocked.
  */
-void updateEndMotionData(enum InstructionType instructionType, MotionEndInfo* endMotion, MotionEndDetectionParameter* parameter, int time);
+void updateEndMotionData(enum InstructionType instructionType, MotionEndInfo* endMotion, MotionEndDetectionParameter* parameter, unsigned int time);
 
 /**
  * Detects if the robot has end his motion and if it can continue to next instruction.

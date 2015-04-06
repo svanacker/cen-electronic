@@ -26,7 +26,7 @@ void initCurveList(BSplineCurveList* curveList, BSplineCurve(*curves)[], unsigne
 }
 
 bool isCurveListInitialized(BSplineCurveList* curveList) {
-    if (!checkCurveListNotNull(curveList)) {
+    if (curveList == NULL) {
         return false;
     }
     return curveList->length > 0;

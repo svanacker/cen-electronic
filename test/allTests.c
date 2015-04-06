@@ -14,6 +14,7 @@
 #include "../test/common/io/readerTest.h"
 
 #include "../test/common/math/bcdUtilsTest.h"
+#include "../test/common/math/bitListTest.h"
 #include "../test/common/math/cenMathTest.h"
 #include "../test/common/math/hexUtilsTest.h"
 
@@ -21,6 +22,11 @@
 #include "../test/drivers/test/testDriverTest.h"
 
 #include "../test/motion/bspline/bsplineListTest.h"
+#include "../test/navigation/locationListTest.h"
+#include "../test/navigation/pathListTest.h"
+#include "../test/navigation/navigationTest.h"
+#include "../test/navigation/navigationTest2.h"
+
 
 void setUp(void)
 {
@@ -37,6 +43,7 @@ void runAllTests(void)
 
     // RUN_TEST calls runTest
     hexUtilsTestSuite();
+    bitListTestSuite();
     bufferTestSuite();
     compositeOutputStreamTestSuite();
     filterTestSuite();
@@ -49,6 +56,9 @@ void runAllTests(void)
     driverDataDispatcherListTestSuite();
     testDriverTestTestSuite();
     bsplineListTestSuite();
+    locationListTestSuite();
+    pathListTestSuite();
+    navigationTestSuite();
 
     UnityEnd();
 }

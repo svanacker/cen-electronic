@@ -137,16 +137,25 @@ void clearLastError();
 #define TOO_MUCH_JENNIC_EVENT            0x4000
 
 
-// Specific
+// Navigation
 #define TOO_MUCH_GAME_BOARD_ELEMENTS    0x5000
 #define TOO_MUCH_STRATEGIES                0x5010
 #define TOO_MUCH_STRATEGY_ITEMS            0x5020
 #define TOO_MUCH_TARGETS                0x5030
+
 #define TOO_MUCH_LOCATIONS                0x5040
+#define LOCATION_LIST_NULL                0x5041
+#define LOCATION_LIST_NOT_INITIALIZED     0x5042
+#define LOCATION_LIST_INDEX_OUT_OF_BOUNDS 0x5043
+
 #define TOO_MUCH_PATHS                    0x5050
-#define TOO_MUCH_ACTION                    0x5060
+#define PATH_LIST_NULL                    0x5051
+#define PATH_LIST_NOT_INITIALIZED         0x5052
+#define PATH_LIST_INDEX_OUT_OF_BOUNDS     0x5053
+
+#define TOO_MUCH_ACTION                   0x5060
 #define TOO_MUCH_TARGET_ACTION            0x5070
-#define TOO_MUCH_TARGET_ACTION_ITEM        0x5080
+#define TOO_MUCH_TARGET_ACTION_ITEM       0x5080
 
 // ROBOT
 #define ROBOT_KINEMATICS_NO_EEPROM         0x6000

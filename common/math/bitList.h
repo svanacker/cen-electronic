@@ -5,7 +5,11 @@
 
 #include "../../common/io/outputStream.h"
 
+// We use 16 to be compatible with 16/32 bits
 #define BITS_COUNT_IN_UNSIGNED_INT            16
+
+// 16 => 2^4
+#define BITS_SHIFT_WIDTH                      4
 
 /**
  * Define a structure which stores bool value as bit of 16 bits values.

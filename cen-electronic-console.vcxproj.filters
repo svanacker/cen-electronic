@@ -622,6 +622,21 @@
     <Filter Include="Header Files\motion\pid\computer">
       <UniqueIdentifier>{36e2ec00-4de3-4b02-8f88-02724795bb25}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\test\motion\pid">
+      <UniqueIdentifier>{7a3b27e9-8cac-4954-8136-07f49e3b40d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\test\device\motion">
+      <UniqueIdentifier>{8205f569-7548-423a-83e7-c39ebc8871bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\test\device\motion\pid">
+      <UniqueIdentifier>{4290f53d-25dd-49f7-9ade-f37cfc4670f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\test\navigation">
+      <UniqueIdentifier>{25ed0049-0493-4cf1-9534-1989251bb875}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\test\navigation">
+      <UniqueIdentifier>{97f1efea-cbd7-41cf-88f6-ae4f2b8f92fe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -865,9 +880,6 @@
       <Filter>Source Files\navigation</Filter>
     </ClCompile>
     <ClCompile Include="navigation\navigation.c">
-      <Filter>Source Files\navigation</Filter>
-    </ClCompile>
-    <ClCompile Include="navigation\navigationTest.c">
       <Filter>Source Files\navigation</Filter>
     </ClCompile>
     <ClCompile Include="navigation\path.c">
@@ -1272,6 +1284,21 @@
     <ClCompile Include="motion\pid\motionInstruction.c">
       <Filter>Source Files\motion\pid</Filter>
     </ClCompile>
+    <ClCompile Include="test\navigation\navigationTest.c">
+      <Filter>Source Files\test\navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="test\navigation\navigationTest2.c">
+      <Filter>Source Files\test\navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="test\navigation\locationListTest.c">
+      <Filter>Source Files\test\navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="test\common\math\bitListTest.c">
+      <Filter>Source Files\test\common\math</Filter>
+    </ClCompile>
+    <ClCompile Include="test\navigation\pathListTest.c">
+      <Filter>Source Files\test\navigation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -1545,9 +1572,6 @@
       <Filter>Header Files\navigation</Filter>
     </ClInclude>
     <ClInclude Include="navigation\navigation.h">
-      <Filter>Header Files\navigation</Filter>
-    </ClInclude>
-    <ClInclude Include="navigation\navigationTest.h">
       <Filter>Header Files\navigation</Filter>
     </ClInclude>
     <ClInclude Include="navigation\path.h">
@@ -2011,6 +2035,24 @@
     </ClInclude>
     <ClInclude Include="motion\extended\bsplineMotion.h">
       <Filter>Header Files\motion\extended</Filter>
+    </ClInclude>
+    <ClInclude Include="test\navigation\navigationTest.h">
+      <Filter>Header Files\test\navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="test\navigation\navigationTest2.h">
+      <Filter>Header Files\test\navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\strategy\gameTargetStatus.h">
+      <Filter>Header Files\robot\strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="test\navigation\locationListTest.h">
+      <Filter>Header Files\test\navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="test\common\math\bitListTest.h">
+      <Filter>Header Files\test\common\math</Filter>
+    </ClInclude>
+    <ClInclude Include="test\navigation\pathListTest.h">
+      <Filter>Header Files\test\navigation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

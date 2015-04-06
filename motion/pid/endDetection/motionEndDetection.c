@@ -41,7 +41,7 @@ void updateAggregateValues(MotionEndInfo* endMotion) {
     }
 }
 
-void updateEndMotionData(enum InstructionType instructionType, MotionEndInfo* endMotion, MotionEndDetectionParameter* parameter, int time) {
+void updateEndMotionData(enum InstructionType instructionType, MotionEndInfo* endMotion, MotionEndDetectionParameter* parameter, unsigned int time) {
     PidMotion* pidMotion = getPidMotion();
     PidComputationValues* computationValues = &(pidMotion->computationValues);
     PidCurrentValues* pidCurrentValues = &(computationValues->currentValues[instructionType]);

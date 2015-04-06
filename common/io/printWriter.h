@@ -23,6 +23,13 @@ void append(OutputStream* outputStream, char c);
 void appendBool(OutputStream* outputStream, bool b);
 
 /**
+ * Append a bool value, but as string ("true" for true, "false" for false)
+ * @param outputStream the pointer on outputStream (POO simulation)
+ * @param b the bool value to write
+ */
+void appendBoolAsString(OutputStream* outputStream, bool b);
+
+/**
  * Append a separator to the outputStream.
  * @param outputStream the pointer on outputStream (POO simulation)
  */

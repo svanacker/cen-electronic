@@ -1,9 +1,10 @@
 #ifndef GAME_TARGET_H
 #define GAME_TARGET_H
 
-#include "gameTargetActionList.h"
+#include <stdbool.h>
 
-#include "../../common/commons.h"
+#include "gameTargetStatus.h"
+#include "gameTargetActionList.h"
 
 #include "../../common/io/outputStream.h"
 
@@ -22,7 +23,7 @@ typedef struct GameTarget {
     // Returns the gain when reaching a such target.
     float gain;
     // availability status of the target
-    char status;    
+    enum GameTargetStatus status;    
     // Returns the position of the target on the gameboard
     Location* location;
     /** The actionList for this target. */

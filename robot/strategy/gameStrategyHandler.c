@@ -243,19 +243,16 @@ void rotateAbsolute(int angle) {
     #endif
 }
 
-bool motionRotateToFollowPath(PathDataFunction* pathDataFunction, bool reversed) {
-    pathDataFunction();
-
+bool motionRotateToFollowPath(PathData* pathData, bool reversed) {
     int angle;
     if (reversed) {
-        PathData* pathData = getTmpPathData();
         if (pathData->mustGoBackward) {
-            angle = getAngle2Path(pathDataFunction);
+            angle = getAngle2Path(pathData);
         } else {
-            angle = mod3600(ANGLE_180 + getAngle2Path(pathDataFunction));
+            angle = mod3600(ANGLE_180 + getAngle2Path(pathData));
         }
     } else {
-        angle = getAngle1Path(pathDataFunction);
+        angle = getAngle1Path(pathData);
     }
 
     int diff = mod3600(angle - strategyContext.robotAngle);
@@ -282,10 +279,7 @@ bool motionRotateToFollowPath(PathDataFunction* pathDataFunction, bool reversed)
     return true;
 }
 
-void motionFollowPath(PathDataFunction* pathDataFunction, bool reversed) {
-    pathDataFunction();
-    PathData* pathData = getTmpPathData();
-
+void motionFollowPath(PathData* pathData, bool reversed) {
     Location* location;
     int angle;
     signed char cp1;
@@ -294,18 +288,18 @@ void motionFollowPath(PathDataFunction* pathDataFunction, bool reversed) {
         location = pathData->location1;
         if (pathData->mustGoBackward) {
             // reverse the trajectory by going backward
-            angle = getAngle1Path(pathDataFunction);
+            angle = getAngle1Path(pathData);
             cp1 = -pathData->controlPointDistance2;
             cp2 = -pathData->controlPointDistance1;
         } else {
             // reverse the trajectory symmetrically
-            angle = mod3600(ANGLE_180 + getAngle1Path(pathDataFunction));
+            angle = mod3600(ANGLE_180 + getAngle1Path(pathData));
             cp1 = pathData->controlPointDistance2;
             cp2 = pathData->controlPointDistance1;
         }
     } else {
         location = pathData->location2;
-        angle = getAngle2Path(pathDataFunction);
+        angle = getAngle2Path(pathData);
         cp1 = pathData->controlPointDistance1;
         cp2 = pathData->controlPointDistance2;
     }
@@ -355,11 +349,11 @@ bool handleCurrentTrajectory() {
     Location* start = getLocation(currentTrajectory, 0);
     Location* end = getLocation(currentTrajectory, 1);
     bool reversed;
-    PathDataFunction* pathDataFunction = getPathOfLocations(getNavigationPathList(), start, end, &reversed);
+    PathData* pathData = getPathOfLocations(getNavigationPathList(), start, end, &reversed);
 
     // Follows the path
-    if (!motionRotateToFollowPath(pathDataFunction, reversed)) {
-        motionFollowPath(pathDataFunction, reversed);
+    if (!motionRotateToFollowPath(pathData, reversed)) {
+        motionFollowPath(pathData, reversed);
         removeFirstLocation(currentTrajectory);
     }
     return true;
@@ -395,24 +389,22 @@ int cpToDistance(signed char d) {
 }
 
 /**
- * Loop on a pathDataFunction, to know if the path has an intersection with the opponentRobotPosition.
+ * Loop on a pathData, to know if the path has an intersection with the opponentRobotPosition.
  * @private
  */
-bool isPathAvailable(PathDataFunction* pathDataFunction, BSplineCurve* curve) {
+bool isPathAvailable(PathData* pathData, BSplineCurve* curve) {
     // TODO : Fix why curve must be handled
     if (curve == NULL) {
         return true;
     }
-    pathDataFunction();
-    PathData* pathData = getTmpPathData();
     Point* p0 = &(curve->p0);
     p0->x = (float) pathData->location1->x;
     p0->y = (float) pathData->location1->y;
     Point* p3 = &(curve->p3);
     p3->x = (float) pathData->location2->x;
     p3->y = (float) pathData->location2->y;
-    int angle1 = getAngle1Path(pathDataFunction);
-    int angle2 = getAngle2Path(pathDataFunction);
+    int angle1 = getAngle1Path(pathData);
+    int angle2 = getAngle2Path(pathData);
     int d1 = cpToDistance(pathData->controlPointDistance1);
     int d2 = cpToDistance(-pathData->controlPointDistance2);
     computePoint(p0, &(curve->p1), d1, angle1);
@@ -463,30 +455,28 @@ void updatePathsAvailability() {
         appendString(logStream, "\nDon't compute Path !");
     }    
     PathList* paths = getNavigationPathList();
-    int i;
+    unsigned int i;
     for (i = 0; i < paths->size; i++) {
-        PathDataFunction* pathDataFunction = paths->paths[i];
+        PathData* pathData = getPath(paths, i);
         // by default, path is available
         bool available = true;
         // Don't do the compute if it's not necessary
         if (computePath) {    
-            available = isPathAvailable(pathDataFunction, NULL);
+            available = isPathAvailable(pathData, NULL);
         }
         setPathAvailability(i, available);
     }
 
     #ifdef DEBUG_OPPONENT_ROBOT
         // LOG
-        int k;
+        unsigned int k;
         for (k = 0; k < paths->size; k++) {
-            PathDataFunction* pathDataFunction = paths->paths[k];
-            pathDataFunction();
-            PathData* data = getTmpPathData();
+            PathData* pathData = getPath(paths, k);
             if (!getPathAvailability(k)) {
                 appendString(logStream, "\n");
-                appendString(logStream, data->location1->name);
+                appendString(logStream, pathData->location1->name);
                 appendString(logStream, "->");
-                appendString(logStream, data->location2->name);
+                appendString(logStream, pathData->location2->name);
                 appendString(logStream, ": UNAVAILABLE");        
             }
         }
