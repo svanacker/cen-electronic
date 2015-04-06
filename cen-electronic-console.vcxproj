@@ -284,6 +284,7 @@
     <ClCompile Include="test\common\io\printWriterTest.c" />
     <ClCompile Include="test\common\io\readerTest.c" />
     <ClCompile Include="test\common\math\bcdUtilsTest.c" />
+    <ClCompile Include="test\common\math\bitListTest.c" />
     <ClCompile Include="test\common\math\cenMathTest.c" />
     <ClCompile Include="test\common\math\hexUtilsTest.c" />
     <ClCompile Include="test\drivers\dispatchers\driverDataDispatcherListTest.c" />
@@ -534,6 +535,7 @@
     <ClInclude Include="test\common\io\printWriterTest.h" />
     <ClInclude Include="test\common\io\readerTest.h" />
     <ClInclude Include="test\common\math\bcdUtilsTest.h" />
+    <ClInclude Include="test\common\math\bitListTest.h" />
     <ClInclude Include="test\common\math\cenMathTest.h" />
     <ClInclude Include="test\common\math\hexUtilsTest.h" />
     <ClInclude Include="test\drivers\dispatchers\driverDataDispatcherListTest.h" />

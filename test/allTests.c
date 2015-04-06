@@ -14,6 +14,7 @@
 #include "../test/common/io/readerTest.h"
 
 #include "../test/common/math/bcdUtilsTest.h"
+#include "../test/common/math/bitListTest.h"
 #include "../test/common/math/cenMathTest.h"
 #include "../test/common/math/hexUtilsTest.h"
 
@@ -41,6 +42,7 @@ void runAllTests(void)
 
     // RUN_TEST calls runTest
     hexUtilsTestSuite();
+    bitListTestSuite();
     bufferTestSuite();
     compositeOutputStreamTestSuite();
     filterTestSuite();
