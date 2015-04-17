@@ -21,6 +21,8 @@
 
 #include "../../test/unity/unity.h"
 
+// Path Finding 1
+
 static Location* locationA;
 static Location* locationB;
 static Location* locationC;
@@ -45,7 +47,24 @@ static PathData* pathHJ;
 static PathData* pathEJ;
 static PathData* pathAE;
 
-// To Include in a navigation Struct !!!
+// Path Finding 2
+static Location* locationS;
+static Location* locationU;
+static Location* locationX;
+static Location* locationV;
+static Location* locationY;
+
+static PathData* pathSU;
+static PathData* pathUV;
+static PathData* pathVY;
+static PathData* pathYV;
+static PathData* pathXY;
+static PathData* pathXU;
+static PathData* pathUX;
+static PathData* pathSX;
+static PathData* pathXV;
+static PathData* pathYS;
+
 #define NAVIGATION_LOCATION_LIST_TEST_ARRAY_LENGTH        30
 #define NAVIGATION_PATH_LIST_TEST_ARRAY_LENGTH        15
 #define BIT_LIST_NAVIGATION_TEST_ARRAY_LENGTH             10
@@ -62,20 +81,26 @@ static BitList availablePathBitList;
 static unsigned int availablePathBitArray[BIT_LIST_NAVIGATION_TEST_ARRAY_LENGTH];
 
 // FORWARD DECLARATION
-void addNavigationLocations(void);
+void checkNavigationPathFinding1(void);
+void checkNavigationPathFinding2(void);
 void addStrategyPaths(void);
 
 void navigationTestSuite(void) {
-    RUN_TEST(addNavigationLocations);
+    RUN_TEST(checkNavigationPathFinding1);
+    RUN_TEST(checkNavigationPathFinding2);
 }
 
-void addNavigationLocations(void) {
+void initNavigationTest() {
     initLocationList(&locationList, (Location(*)[]) &locationListArray, NAVIGATION_LOCATION_LIST_TEST_ARRAY_LENGTH);
     initPathList(&pathList, (PathData(*)[]) &pathListArray, NAVIGATION_PATH_LIST_TEST_ARRAY_LENGTH);
     initBitList(&outgoingPathBitList, (unsigned int(*)[]) &outgoingPathBitArray, BIT_LIST_NAVIGATION_ARRAY_LENGTH);
     initBitList(&availablePathBitList, (unsigned int(*)[]) &availablePathBitArray, BIT_LIST_NAVIGATION_ARRAY_LENGTH);
 
     initNavigation(&locationList, &pathList, &outgoingPathBitList, &availablePathBitList);
+}
+
+void checkNavigationPathFinding1(void) {
+    initNavigationTest();
 
     // locations
     locationA = addNavigationLocation("A", 0, 0);
@@ -89,7 +114,17 @@ void addNavigationLocations(void) {
     locationI = addNavigationLocation("I", 0, 0);
     locationJ = addNavigationLocation("J", 0, 0);
 
-    addStrategyPaths();
+    pathAB = addNavigationPath(locationA, locationB, 85, 0, 0, 0, 0, 0, 0);
+    pathBF = addNavigationPath(locationB, locationF, 80, 0, 0, 0, 0, 0, 0);
+    pathFI = addNavigationPath(locationF, locationI, 250, 0, 0, 0, 0, 0, 0);
+    pathIJ = addNavigationPath(locationI, locationJ, 84, 0, 0, 0, 0, 0, 0);
+    pathAC = addNavigationPath(locationA, locationC, 217, 0, 0, 0, 0, 0, 0);
+    pathCG = addNavigationPath(locationC, locationG, 186, 0, 0, 0, 0, 0, 0);
+    pathCH = addNavigationPath(locationC, locationH, 103, 0, 0, 0, 0, 0, 0);
+    pathHD = addNavigationPath(locationH, locationD, 183, 0, 0, 0, 0, 0, 0);
+    pathHJ = addNavigationPath(locationH, locationJ, 167, 0, 0, 0, 0, 0, 0);
+    pathEJ = addNavigationPath(locationE, locationJ, 502, 0, 0, 0, 0, 0, 0);
+    pathAE = addNavigationPath(locationA, locationE, 173, 0, 0, 0, 0, 0, 0);
 
     // printPathList(getInfoOutputStreamLogger(), "Paths definition", getNavigationPathList());
 
@@ -115,29 +150,42 @@ void addNavigationLocations(void) {
     TEST_ASSERT_EQUAL(487, actual);
 }
 
-// paths
-    
-void addStrategyPaths(void) {
-    pathAB = addNavigationPath(locationA, locationB, 85, 0, 0, 0, 0, 0, 0);
-    pathBF = addNavigationPath(locationB, locationF, 80, 0, 0, 0, 0, 0, 0);
+void checkNavigationPathFinding2(void) {
+    initNavigationTest();
 
-    pathFI = addNavigationPath(locationF, locationI, 250, 0, 0, 0, 0, 0, 0);
+    // locations
+    locationS = addNavigationLocation("S", 0, 0);
+    locationU = addNavigationLocation("U", 0, 0);
+    locationX = addNavigationLocation("X", 0, 0);
+    locationV = addNavigationLocation("V", 0, 0);
+    locationY = addNavigationLocation("Y", 0, 0);
 
-    pathIJ = addNavigationPath(locationI, locationJ, 84, 0, 0, 0, 0, 0, 0);
+    // paths
+    pathSU = addNavigationPath(locationS, locationU, 10, 0, 0, 0, 0, 0, 0);
+    pathUV = addNavigationPath(locationU, locationV, 1, 0, 0, 0, 0, 0, 0);
+    pathVY = addNavigationPath(locationV, locationY, 4, 0, 0, 0, 0, 0, 0);
+    pathYV = addNavigationPath(locationY, locationV, 6, 0, 0, 0, 0, 0, 0);
+    pathXY = addNavigationPath(locationX, locationY, 2, 0, 0, 0, 0, 0, 0);
+    pathXU = addNavigationPath(locationX, locationU, 3, 0, 0, 0, 0, 0, 0);
+    pathUX = addNavigationPath(locationU, locationX, 2, 0, 0, 0, 0, 0, 0);
+    pathSX = addNavigationPath(locationS, locationX, 5, 0, 0, 0, 0, 0, 0);
+    pathXV = addNavigationPath(locationX, locationV, 9, 0, 0, 0, 0, 0, 0);
+    pathYS = addNavigationPath(locationY, locationS, 7, 0, 0, 0, 0, 0, 0);
 
-    pathAC = addNavigationPath(locationA, locationC, 217, 0, 0, 0, 0, 0, 0);
+    // First test
+    int actual = computeBestPath(locationS, locationS);
+    TEST_ASSERT_EQUAL(0, actual);
 
-    pathCG = addNavigationPath(locationC, locationG, 186, 0, 0, 0, 0, 0, 0);
+    // Second test : ignore in implementation the sens of location (we find the min cost between A->B or B->A
+    actual = computeBestPath(locationS, locationY);
+    TEST_ASSERT_EQUAL(7, actual);
 
+    // Third test : ignore in implementation the sens of location (we find the min cost between A->B or B->A
+    actual = computeBestPath(locationY, locationS);
+    TEST_ASSERT_EQUAL(7, actual);
 
-    pathCH = addNavigationPath(locationC, locationH, 103, 0, 0, 0, 0, 0, 0);
+    // Last Test : S->Y->V : problem !!!
+    actual = computeBestPath(locationS, locationV);
+    TEST_ASSERT_EQUAL(8, actual);
 
-    pathHD = addNavigationPath(locationH, locationD, 183, 0, 0, 0, 0, 0, 0);
-
-    pathHJ = addNavigationPath(locationH, locationJ, 167, 0, 0, 0, 0, 0, 0);
-
-
-    pathEJ = addNavigationPath(locationE, locationJ, 502, 0, 0, 0, 0, 0, 0);
-
-    pathAE = addNavigationPath(locationA, locationE, 173, 0, 0, 0, 0, 0, 0);
 }

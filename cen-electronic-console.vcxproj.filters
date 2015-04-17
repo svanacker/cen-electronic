@@ -1287,9 +1287,6 @@
     <ClCompile Include="test\navigation\navigationTest.c">
       <Filter>Source Files\test\navigation</Filter>
     </ClCompile>
-    <ClCompile Include="test\navigation\navigationTest2.c">
-      <Filter>Source Files\test\navigation</Filter>
-    </ClCompile>
     <ClCompile Include="test\navigation\locationListTest.c">
       <Filter>Source Files\test\navigation</Filter>
     </ClCompile>
@@ -2037,9 +2034,6 @@
       <Filter>Header Files\motion\extended</Filter>
     </ClInclude>
     <ClInclude Include="test\navigation\navigationTest.h">
-      <Filter>Header Files\test\navigation</Filter>
-    </ClInclude>
-    <ClInclude Include="test\navigation\navigationTest2.h">
       <Filter>Header Files\test\navigation</Filter>
     </ClInclude>
     <ClInclude Include="robot\strategy\gameTargetStatus.h">

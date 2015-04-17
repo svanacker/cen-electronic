@@ -25,8 +25,6 @@
 #include "../test/navigation/locationListTest.h"
 #include "../test/navigation/pathListTest.h"
 #include "../test/navigation/navigationTest.h"
-#include "../test/navigation/navigationTest2.h"
-
 
 void setUp(void)
 {
