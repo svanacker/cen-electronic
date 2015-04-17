@@ -154,6 +154,8 @@ void motorBoardWaitForInstruction(void) {
             &filterRemoveCRLF,
             NULL);
     }
+
+    handleInstructionAndMotion();
 }
 
 void runMotorBoardPC(bool singleMode) {
@@ -230,6 +232,8 @@ void runMotorBoardPC(bool singleMode) {
     addLocalDevice(getMotionDeviceInterface(), getMotionDeviceDescriptor(&eeprom, true));
 
     initDevices();
+
+    startTimerList();
 
     setDebugI2cEnabled(false);
     while (1) {
