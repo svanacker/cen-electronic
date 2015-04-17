@@ -27,14 +27,14 @@ void runMotorBoardPC(bool singleMode);
 
 // CONSOLE
 
-#define MOTOR_BOARD_PC_CONSOLE_INPUT_BUFFER_LENGTH    40
-#define MOTOR_BOARD_PC_CONSOLE_OUTPUT_BUFFER_LENGTH    40
+#define MOTOR_BOARD_PC_CONSOLE_INPUT_BUFFER_LENGTH     100
+#define MOTOR_BOARD_PC_CONSOLE_OUTPUT_BUFFER_LENGTH    100
 
 /** Maximal length for In Buffer length. */
-#define MOTOR_BOARD_PC_IN_BUFFER_LENGTH    50
+#define MOTOR_BOARD_PC_IN_BUFFER_LENGTH                100
 
 /** Maximal length for Out Buffer length. */
-#define MOTOR_BOARD_PC_OUT_BUFFER_LENGTH    50
+#define MOTOR_BOARD_PC_OUT_BUFFER_LENGTH               100
 
 // DEVICES
 #define MOTOR_BOARD_PC_DEVICE_LIST_LENGTH        20
