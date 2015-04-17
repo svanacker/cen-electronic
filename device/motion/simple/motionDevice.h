@@ -1,13 +1,20 @@
 #ifndef MOTION_DEVICE_H
 #define MOTION_DEVICE_H
 
+#include <stdbool.h>
+
+#include "../../../common/eeprom/eeprom.h"
+
 #include "../../../device/deviceDescriptor.h"
 #include "../../../common/io/outputStream.h"
 
 /**
 * Returns a descriptor around motion.
+* @param eeprom_ the eeprom to load the default speed and acceleration values
+* @param loadDefaultValues if we load the default values into the eeprom (useful for pc simulation)
+* @return a descriptor for motion device
 */
-DeviceDescriptor* getMotionDeviceDescriptor();
+DeviceDescriptor* getMotionDeviceDescriptor(Eeprom* eeprom_, bool loadDefaultValues);
 
 /**
  * Notify the main Board that the motorBoard has reached the asked position.

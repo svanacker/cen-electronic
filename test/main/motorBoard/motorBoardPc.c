@@ -222,11 +222,12 @@ void runMotorBoardPC(bool singleMode) {
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
     addLocalDevice(getRobotKinematicsDeviceInterface(), getRobotKinematicsDeviceDescriptor(&eeprom));
+
     addLocalDevice(getPIDDeviceInterface(), getPIDDeviceDescriptor(&eeprom, true));
     addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());
     addLocalDevice(getCodersDeviceInterface(), getCodersDeviceDescriptor());
     addLocalDevice(getTrajectoryDeviceInterface(), getTrajectoryDeviceDescriptor());
-    addLocalDevice(getMotionDeviceInterface(), getMotionDeviceDescriptor());
+    addLocalDevice(getMotionDeviceInterface(), getMotionDeviceDescriptor(&eeprom, true));
 
     initDevices();
 

@@ -17,7 +17,7 @@
 static Eeprom* robotKinematicsEeprom;
 
 void deviceRobotKinematicsInit(void) {
-
+    // TODO : initKinematics (and not in PID ?)
 }
 
 void deviceRobotKinematicsShutDown(void) {

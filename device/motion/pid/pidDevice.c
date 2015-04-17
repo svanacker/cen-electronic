@@ -30,13 +30,14 @@
 #include "../../../motion/pid/parameters/pidPersistence.h"
 
 static Eeprom* pidDeviceEeprom;
+static bool loadDefaultParameters;
 
 bool isPIDDeviceOk(void) {
     return true;
 }
 
 void initPidDevice(void) {
-    initPID(pidDeviceEeprom);
+    initPID(pidDeviceEeprom, loadDefaultParameters);
 }
 
 void stopPidDevice(void) {
@@ -230,7 +231,8 @@ static DeviceDescriptor descriptor = {
     .deviceHandleRawData = &devicePIDHandleRawData,
 };
 
-DeviceDescriptor* getPIDDeviceDescriptor(Eeprom* pidPersistenceEeprom) {
+DeviceDescriptor* getPIDDeviceDescriptor(Eeprom* pidPersistenceEeprom, bool loadDefaultValues) {
     pidDeviceEeprom = pidPersistenceEeprom;
+    loadDefaultParameters = loadDefaultValues;
     return &descriptor;
 }

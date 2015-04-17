@@ -152,7 +152,7 @@ float getNormalU(float normalSpeed);
 /**
  * Initializes the PID.
  */
-void initPID(Eeprom* _eeprom);
+void initPID(Eeprom* _eeprom, bool loadDefaultParameters);
 
 /**
  * Stop the PID.

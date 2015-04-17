@@ -41,6 +41,7 @@ int main(int argumentCount, char* arguments[])
         // Run the Motor Board
         char motorBoardOptionCommand[80];
         strcpy(motorBoardOptionCommand, MOTOR_BOARD_PC_NAME);
+        strcat(motorBoardOptionCommand, " ");
         strcat(motorBoardOptionCommand, MOTOR_BOARD_PC_RUN_STANDARD);
         runProcess(applicationNameAsChar, motorBoardOptionCommand);
 

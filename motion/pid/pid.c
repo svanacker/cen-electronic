@@ -57,14 +57,14 @@ void setEnabledPid(int pidIndex, unsigned char enabled) {
 }
 
 
-void initPID(Eeprom* _eeprom) {
+void initPID(Eeprom* _eeprom, bool loadDefaultParameters) {
     // TODO : A Remettre
     // rollingTestMode = (getConfigValue() & CONFIG_ROLLING_TEST_MASK) != 0;
     rollingTestMode = 0;
     initPidPersistence(_eeprom);
-    loadPidParameters(false);
+    loadPidParameters(loadDefaultParameters);
     RobotKinematics* robotKinematics = getRobotKinematics();
-    loadRobotKinematicsParameters(robotKinematics, _eeprom, false);
+    loadRobotKinematicsParameters(robotKinematics, _eeprom, loadDefaultParameters);
     initPidTimer();
     initPidMotion();
 }

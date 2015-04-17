@@ -38,9 +38,10 @@
 #include "../../../motion/position/trajectory.h"
 
 static Eeprom* motionDeviceEeprom;
+static bool motionLoadDefaultValues;
 
 void deviceMotionInit(void) {
-    loadMotionParameters(motionDeviceEeprom, false);
+    loadMotionParameters(motionDeviceEeprom, motionLoadDefaultValues);
 }
 
 void deviceMotionShutDown(void) {
@@ -269,7 +270,8 @@ static DeviceDescriptor descriptor = {
     .deviceHandleRawData = &deviceMotionHandleRawData,
 };
 
-DeviceDescriptor* getMotionDeviceDescriptor(Eeprom* eeprom_) {
+DeviceDescriptor* getMotionDeviceDescriptor(Eeprom* eeprom_, bool loadDefaultValues) {
     motionDeviceEeprom = eeprom_;
+    motionLoadDefaultValues = loadDefaultValues;
     return &descriptor;
 }
