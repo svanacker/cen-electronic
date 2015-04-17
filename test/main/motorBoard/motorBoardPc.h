@@ -1,7 +1,11 @@
 #ifndef MOTOR_BOARD_PC_H
 #define MOTOR_BOARD_PC_H
 
-#define MOTOR_BOARD_PC_NAME    "motorBoardPc"
+#include <stdbool.h>
+
+#define MOTOR_BOARD_PC_NAME         "motorBoardPc"
+#define MOTOR_BOARD_PC_RUN_SINGLE   "single"
+#define MOTOR_BOARD_PC_RUN_STANDARD "standard"
 
 #define MOTOR_BOARD_PC_LOG_HANDLER_LIST_LENGTH                     2
 
@@ -11,7 +15,7 @@
 /**
  * Start Point to emulate the motor Board PC.
  */
-void runMotorBoardPC(void);
+void runMotorBoardPC(bool singleMode);
 
 /** Define the I2C address used by motorBoardPc. */
 #define MOTOR_BOARD_PC_I2C_ADDRESS     0x50
@@ -33,7 +37,7 @@ void runMotorBoardPC(void);
 #define MOTOR_BOARD_PC_OUT_BUFFER_LENGTH    50
 
 // DEVICES
-#define MOTOR_BOARD_PC_DEVICE_LIST_LENGTH        10
+#define MOTOR_BOARD_PC_DEVICE_LIST_LENGTH        20
 
 // TIMERS
 #define MOTOR_BOARD_PC_TIMER_LENGTH         2
