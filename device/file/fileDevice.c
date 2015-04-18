@@ -30,118 +30,118 @@ bool isFileDeviceOk(void) {
 }
 
 void deviceFileHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream) {
-	if (commandHeader == COMMAND_CREATE_FILE_SYSTEM) {
-		ackCommand(outputStream, FILE_DEVICE_HEADER, COMMAND_CREATE_FILE_SYSTEM);
-		FATFS fs;
-		FIL fil;       /* File object */
-		FRESULT res;   /* API result code */
-		UINT bw = 0;       /* Bytes written */
+    if (commandHeader == COMMAND_CREATE_FILE_SYSTEM) {
+        ackCommand(outputStream, FILE_DEVICE_HEADER, COMMAND_CREATE_FILE_SYSTEM);
+        FATFS fs;
+        FIL fil;       /* File object */
+        FRESULT res;   /* API result code */
+        UINT bw = 0;       /* Bytes written */
 
-		// Register work area (do not care about error)
-		res = f_mount(&fs, "", 0);
+        // Register work area (do not care about error)
+        res = f_mount(&fs, "", 0);
 
-		// Create FAT volume with default cluster size
-		res = f_mkfs("", 0, 0);
+        // Create FAT volume with default cluster size
+        res = f_mkfs("", 0, 0);
 
-		if (res == FR_OK) {
+        if (res == FR_OK) {
 
-			// Create a file as new
-			res = f_open(&fil, "toto.txt", FA_CREATE_NEW | FA_WRITE);
-		}
-		if (res == FR_OK) {
+            // Create a file as new
+            res = f_open(&fil, "toto.txt", FA_CREATE_NEW | FA_WRITE);
+        }
+        if (res == FR_OK) {
 
-			// Write a message
-			f_write(&fil, "Hello, World!\r\n", 15, &bw);
-		}
-		
-		if (bw != 15) {
-			// Close the file
-			f_close(&fil);
-		}
-		f_close(&fil);
-		// Unregister work area
-		// f_mount(0, "", 0);
-	}
-	else if (commandHeader == COMMAND_GET_FREE_SPACE) {
-		ackCommand(outputStream, FILE_DEVICE_HEADER, COMMAND_GET_FREE_SPACE);
-		FATFS fs;
-		FATFS* fsPointer;
-		DWORD freeCluster, freeSector, tot_sect;
+            // Write a message
+            f_write(&fil, "Hello, World!\r\n", 15, &bw);
+        }
+        
+        if (bw != 15) {
+            // Close the file
+            f_close(&fil);
+        }
+        f_close(&fil);
+        // Unregister work area
+        // f_mount(0, "", 0);
+    }
+    else if (commandHeader == COMMAND_GET_FREE_SPACE) {
+        ackCommand(outputStream, FILE_DEVICE_HEADER, COMMAND_GET_FREE_SPACE);
+        FATFS fs;
+        FATFS* fsPointer;
+        DWORD freeCluster, freeSector, tot_sect;
 
-		fsPointer = &fs;
-		f_mount(fsPointer, "", 0);
-		
+        fsPointer = &fs;
+        f_mount(fsPointer, "", 0);
+        
 
-		char str[12];
+        char str[12];
 
-		/* Get volume label of the default drive */
-		f_getlabel("", str, 0);
+        /* Get volume label of the default drive */
+        f_getlabel("", str, 0);
 
-		appendString(getErrorOutputStreamLogger(), str);
-		// Get volume information and free clusters of drive */
-		f_getfree("", &freeCluster, &fsPointer);
+        appendString(getErrorOutputStreamLogger(), str);
+        // Get volume information and free clusters of drive */
+        f_getfree("", &freeCluster, &fsPointer);
 
-		/* Get total sectors and free sectors */
-		tot_sect = (fs.n_fatent - 2) * fs.csize;
-		freeSector = freeCluster * fs.csize;
-		appendHex4(outputStream, freeSector);
-		// appendHex4(outputStream, 0);
+        /* Get total sectors and free sectors */
+        tot_sect = (fs.n_fatent - 2) * fs.csize;
+        freeSector = freeCluster * fs.csize;
+        appendHex4(outputStream, freeSector);
+        // appendHex4(outputStream, 0);
 
-		// f_mount(0, "", 0);
-	}
-	else if (commandHeader == COMMAND_SHOW_LIST_FILE) {
+        // f_mount(0, "", 0);
+    }
+    else if (commandHeader == COMMAND_SHOW_LIST_FILE) {
         ackCommand(outputStream, FILE_DEVICE_HEADER, COMMAND_SHOW_LIST_FILE);
-		DIR dj;         // Directory search object
-		FILINFO fno;    // File information
-		FRESULT result;
+        DIR dj;         // Directory search object
+        FILINFO fno;    // File information
+        FRESULT result;
 
-		FATFS fs;
-		f_mount(&fs, "", 0);
+        FATFS fs;
+        f_mount(&fs, "", 0);
 
-		f_opendir(&dj, "");
-		/*
-		fr = f_findfirst(&dj, &fno, "", "*.*");
+        f_opendir(&dj, "");
+        /*
+        fr = f_findfirst(&dj, &fno, "", "*.*");
 
-		while (fr == FR_OK && fno.fname[0]) {         // Repeat while an item is found
-			appendString(getErrorOutputStreamLogger(), fno.fname[0]);
-			fr = f_findnext(&dj, &fno);               // Search for next item
-		}
-		*/
-		for (;;) {
-			result = f_readdir(&dj, &fno); /* Read a directory item */
-			if (result || !fno.fname[0]) break; /* Error or end of dir */
+        while (fr == FR_OK && fno.fname[0]) {         // Repeat while an item is found
+            appendString(getErrorOutputStreamLogger(), fno.fname[0]);
+            fr = f_findnext(&dj, &fno);               // Search for next item
+        }
+        */
+        for (;;) {
+            result = f_readdir(&dj, &fno); /* Read a directory item */
+            if (result || !fno.fname[0]) break; /* Error or end of dir */
 
-			if (fno.fattrib & AM_DIR) {
-				appendString(getErrorOutputStreamLogger(), "DIR:"); // is Directory  
-				appendStringCRLF(getErrorOutputStreamLogger(), fno.fname); // is Directory  
-			}
-			else {
-				appendString(getErrorOutputStreamLogger(), "FILE:"); // is Directory  
-				// char* pointer = &(fno.fname);
-				// appendStringCRLF(getErrorOutputStreamLogger(), pointer); // is Directory  
+            if (fno.fattrib & AM_DIR) {
+                appendString(getErrorOutputStreamLogger(), "DIR:"); // is Directory  
+                appendStringCRLF(getErrorOutputStreamLogger(), fno.fname); // is Directory  
+            }
+            else {
+                appendString(getErrorOutputStreamLogger(), "FILE:"); // is Directory  
+                // char* pointer = &(fno.fname);
+                // appendStringCRLF(getErrorOutputStreamLogger(), pointer); // is Directory  
 
-				// printf("%8lu  %s\n\r", fno.fsize, fno.fname); // is file  
-			}
-		}
-		f_closedir(&dj);
+                // printf("%8lu  %s\n\r", fno.fsize, fno.fname); // is file  
+            }
+        }
+        f_closedir(&dj);
 
         // TODO
     } else if (commandHeader == COMMAND_SHOW_CONTENT_FILE) {
         ackCommand(outputStream, FILE_DEVICE_HEADER, COMMAND_SHOW_CONTENT_FILE);
-		FIL file;
-		FRESULT result;
-		char buffer[512];
+        FIL file;
+        FRESULT result;
+        char buffer[512];
         unsigned int fileIndex = readHex2(inputStream);
 
-		FATFS fs;
-		f_mount(&fs, "", 0);
-		result = f_open(&file, "toto.txt", FA_READ);
+        FATFS fs;
+        f_mount(&fs, "", 0);
+        result = f_open(&file, "toto.txt", FA_READ);
 
-		UINT size = f_size(&file);
-		UINT byteRead;
-		result = f_read(&file, &buffer, size, &byteRead);
+        UINT size = f_size(&file);
+        UINT byteRead;
+        result = f_read(&file, &buffer, size, &byteRead);
 
-		// appendString(getErrorOutputStreamLogger(), &buffer);
+        // appendString(getErrorOutputStreamLogger(), &buffer);
 
         // TODO
     } else if (commandHeader == COMMAND_CREATE_NEW_FILE) {

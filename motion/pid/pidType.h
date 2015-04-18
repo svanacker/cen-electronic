@@ -1,6 +1,10 @@
 #ifndef PID_TYPE_H
 #define PID_TYPE_H
 
+#include "../../common/io/outputStream.h"
+
+#include "../../motion/parameters/motionParameterType.h"
+
 // -> TYPES OF PID
 
 // different types of PID_TYPE
@@ -22,5 +26,16 @@ enum PidType {
     /** The pid for final approach. */
     PID_TYPE_FINAL_APPROACH_INDEX = 4
 };
+
+/**
+ * Determines the type of pid which must be applied depending of the motionType.
+ */
+enum PidType getPidType(enum MotionParameterType motionParameterType);
+
+/**
+ * Append the type of the Pid as String into the outputStream.
+ */
+void appendPidTypeAsString(enum PidType pidType, OutputStream* outputStream);
+
 
 #endif

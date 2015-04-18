@@ -87,7 +87,7 @@
 // PID
 #include "../../motion/pid/pid.h"
 #include "../../motion/pid/pidDebug.h"
-#include "../../motion/pid/pidMotionProfileComputer.h"
+#include "../../motion/pid/profile/pidMotionProfileComputer.h"
 #include "../../device/motion/pid/pidDevice.h"
 #include "../../device/motion/pid/pidDeviceInterface.h"
 
@@ -114,7 +114,8 @@
 #include "../../drivers/motor/motorDriver.h"
 
 // Direct implementation
-#include "../../motion/simple/motion.h"
+#include "../../motion/motion.h"
+#include "../../motion/simple/simpleMotion.h"
 #include "../../motion/position/trajectory.h"
 #include "../../motion/position/coders.h"
 
@@ -194,8 +195,8 @@ void initDevicesDescriptor() {
 
     addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());
     addLocalDevice(getCodersDeviceInterface(), getCodersDeviceDescriptor());
-    addLocalDevice(getPIDDeviceInterface(), getPIDDeviceDescriptor(&eeprom_));
-    addLocalDevice(getMotionDeviceInterface(), getMotionDeviceDescriptor(&eeprom_));
+    addLocalDevice(getPIDDeviceInterface(), getPIDDeviceDescriptor(&eeprom_, false));
+    addLocalDevice(getMotionDeviceInterface(), getMotionDeviceDescriptor(&eeprom_, false));
     addLocalDevice(getTrajectoryDeviceInterface(), getTrajectoryDeviceDescriptor());
     addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
     addLocalDevice(getSerialDebugDeviceInterface(), getSerialDebugDeviceDescriptor());

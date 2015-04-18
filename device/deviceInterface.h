@@ -45,7 +45,7 @@ typedef int DeviceInterfaceMode;
 /**
 * Define the length used by the header length
 */
-#define DEVICE_HEADER_LENGTH					1
+#define DEVICE_HEADER_LENGTH                    1
 
 /**
  * Define the length used by the header length, and the command header.
@@ -79,8 +79,8 @@ typedef struct DeviceArgument {
     char* name;
 } DeviceArgument;
 
-#define MAX_ARGUMENTS     13
-#define MAX_RETURNS     13
+#define MAX_ARGUMENTS     25
+#define MAX_RETURNS     25
 
 /**
 * Define the result of deviceGetRawDataHeaderFunction if the

@@ -30,6 +30,7 @@ void clearLastError();
 // List of error Code
 
 #define ILLEGAL_ARGUMENT_EXCEPTION         0x001
+#define LIMIT_ARGUMENT_MUST_BE_POSITIVE    0x010
 
 // IO
 
@@ -49,12 +50,12 @@ void clearLastError();
 
 #define COMPOSITE_OUTPUT_STREAM_NOT_INITIALIZED 0x0170
 #define COMPOSITE_OUTPUT_STREAM_ILLEGAL_INDEX   0x0171
-#define COMPOSITE_OUTPUT_STREAM_FULL			0x0172
+#define COMPOSITE_OUTPUT_STREAM_FULL            0x0172
 
 // LOG
-#define LOG_LIST_NOT_INITIALIZED		0x180
-#define LOG_LIST_TOO_MUCH_LOG_HANDLERS	0x181
-#define LOG_LIST_OUT_OF_BOUNDS			0x182
+#define LOG_LIST_NOT_INITIALIZED        0x180
+#define LOG_LIST_TOO_MUCH_LOG_HANDLERS    0x181
+#define LOG_LIST_OUT_OF_BOUNDS            0x182
 
 // TIMER
 #define TIMERS_LIST_NOT_INITIALIZED        0x0200
@@ -137,19 +138,28 @@ void clearLastError();
 #define TOO_MUCH_JENNIC_EVENT            0x4000
 
 
-// Specific
+// Navigation
 #define TOO_MUCH_GAME_BOARD_ELEMENTS    0x5000
 #define TOO_MUCH_STRATEGIES                0x5010
 #define TOO_MUCH_STRATEGY_ITEMS            0x5020
 #define TOO_MUCH_TARGETS                0x5030
+
 #define TOO_MUCH_LOCATIONS                0x5040
+#define LOCATION_LIST_NULL                0x5041
+#define LOCATION_LIST_NOT_INITIALIZED     0x5042
+#define LOCATION_LIST_INDEX_OUT_OF_BOUNDS 0x5043
+
 #define TOO_MUCH_PATHS                    0x5050
-#define TOO_MUCH_ACTION                    0x5060
+#define PATH_LIST_NULL                    0x5051
+#define PATH_LIST_NOT_INITIALIZED         0x5052
+#define PATH_LIST_INDEX_OUT_OF_BOUNDS     0x5053
+
+#define TOO_MUCH_ACTION                   0x5060
 #define TOO_MUCH_TARGET_ACTION            0x5070
-#define TOO_MUCH_TARGET_ACTION_ITEM        0x5080
+#define TOO_MUCH_TARGET_ACTION_ITEM       0x5080
 
 // ROBOT
-#define ROBOT_KINEMATICS_NO_EEPROM		 0x6000
-#define ROBOT_KINEMATICS_EEPROM_NOT_INITIALIZED		 0x6001
+#define ROBOT_KINEMATICS_NO_EEPROM         0x6000
+#define ROBOT_KINEMATICS_EEPROM_NOT_INITIALIZED         0x6001
 
 #endif

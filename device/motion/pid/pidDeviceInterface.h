@@ -12,38 +12,38 @@
 /**
 * Set the value of PID.
 */
-#define COMMAND_WRITE_PID                      'w'
+#define COMMAND_WRITE_PID_PARAMETERS                'w'
 
 /**
 * Read the value of PID.
 */
-#define COMMAND_READ_PID                       'r'
+#define COMMAND_READ_PID_PARAMETERS                'r'
 
 /**
  * Load and save default Values
  */
-#define COMMAND_LOAD_DEFAULT_VALUES            'd'
+#define COMMAND_LOAD_PID_DEFAULT_VALUES            'd'
 
 /**
 * Send values to have information about profile at the begin of
 * trajectory compute.
 */
-#define COMMAND_SEND_MOTION_PARAMETER          'm'
+#define COMMAND_GET_MOTION_PARAMETER                'm'
 
 /**
 * Send values to have statistical debug informations.
 */
-#define COMMAND_SEND_DEBUG_DATA_PID            'd'
+#define COMMAND_GET_DEBUG_DATA_PID                  'g'
 
 /**
 * Change end Detection Motion Parameter.
 */
-#define COMMAND_SET_END_DETECTION_PARAMETER    'p'
+#define COMMAND_SET_END_DETECTION_PARAMETER         'p'
 
 /**
 * Get the Detection Motion Parameter.
 */
-#define COMMAND_GET_END_DETECTION_PARAMETER    'P'
+#define COMMAND_GET_END_DETECTION_PARAMETER         'P'
 
 /**
 * Get the PID device interface.

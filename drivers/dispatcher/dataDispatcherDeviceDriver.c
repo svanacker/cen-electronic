@@ -20,12 +20,12 @@ bool pingDriverDataDispatcher(unsigned char dispatcherIndex) {
     OutputStream* outputStream = getDriverRequestOutputStream();
     InputStream* inputStream = getDriverResponseInputStream();
 
-	// To Select the dispatcher
+    // To Select the dispatcher
     append(outputStream, DATA_DISPATCHER_DEVICE_HEADER);
     appendHex2(outputStream, dispatcherIndex);
 
-	// To check if it's not another board which replies ...
-	append(outputStream, SYSTEM_DEVICE_HEADER);
+    // To check if it's not another board which replies ...
+    append(outputStream, SYSTEM_DEVICE_HEADER);
     append(outputStream, COMMAND_PING);
     appendHex2(outputStream, dispatcherIndex);
 

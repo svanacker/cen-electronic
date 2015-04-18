@@ -184,7 +184,7 @@
 #include "../../main/meca2/mechanicalBoard2.h"
 #include "../../main/airconditioning/airConditioningMain.h"
 
-#include "../../motion/simple/motion.h"
+#include "../../motion/simple/simpleMotion.h"
 
 #include "../../robot/robot.h"
 

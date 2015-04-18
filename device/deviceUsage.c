@@ -170,7 +170,7 @@ void printDeviceUsageLine(OutputStream* outputStream, char header, Device* devic
 }
 
 /**
- * @private
+ * 
  */
 void printDeviceUsage(OutputStream* outputStream, Device* device) {
     char header;

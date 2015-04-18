@@ -22,9 +22,14 @@
 #include "../../../device/device.h"
 #include "../../../device/motion/position/trajectoryDevice.h"
 
-#include "../../../motion/simple/motion.h"
-#include "../../../motion/simple/motionParameterType.h"
-#include "../../../motion/simple/motionPersistence.h"
+#include "../../../motion/parameters/motionParameterType.h"
+#include "../../../motion/parameters/motionParameter.h"
+#include "../../../motion/parameters/motionPersistence.h"
+
+#include "../../../motion/motion.h"
+#include "../../../motion/extended/bsplineMotion.h"
+#include "../../../motion/simple/simpleMotion.h"
+#include "../../../motion/simple/motionCalibration.h"
 
 #include "../../../motion/pid/detectedMotionType.h"
 #include "../../../motion/pid/pidType.h"
@@ -33,9 +38,10 @@
 #include "../../../motion/position/trajectory.h"
 
 static Eeprom* motionDeviceEeprom;
+static bool motionLoadDefaultValues;
 
 void deviceMotionInit(void) {
-    loadMotionParameters(motionDeviceEeprom, false);
+    loadMotionParameters(motionDeviceEeprom, motionLoadDefaultValues);
 }
 
 void deviceMotionShutDown(void) {
@@ -264,7 +270,8 @@ static DeviceDescriptor descriptor = {
     .deviceHandleRawData = &deviceMotionHandleRawData,
 };
 
-DeviceDescriptor* getMotionDeviceDescriptor(Eeprom* eeprom_) {
+DeviceDescriptor* getMotionDeviceDescriptor(Eeprom* eeprom_, bool loadDefaultValues) {
     motionDeviceEeprom = eeprom_;
+    motionLoadDefaultValues = loadDefaultValues;
     return &descriptor;
 }

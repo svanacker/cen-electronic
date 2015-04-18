@@ -592,6 +592,51 @@
     <Filter Include="Header Files\robot\kinematics">
       <UniqueIdentifier>{fe5d23ab-2892-4c2a-9a95-d7034d323b6d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\motion\parameters">
+      <UniqueIdentifier>{fb38777e-3022-4817-81e1-c416f4f30650}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\motion\parameters">
+      <UniqueIdentifier>{4e114f7f-bf91-49bc-ab11-c7ceec057baf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\motion\pid\parameters">
+      <UniqueIdentifier>{eab58e52-6e34-4f09-a6bf-0a5ba9f5a360}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\motion\pid\profile">
+      <UniqueIdentifier>{ca79d769-1dd5-4bec-968b-665531e38cd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\motion\pid\endDetection">
+      <UniqueIdentifier>{d0aa82b3-6a2e-4156-b5eb-922d9f872a68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\motion\pid\parameters">
+      <UniqueIdentifier>{3aa96d8e-77ed-49a6-8721-cc276662fdbd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\motion\pid\profile">
+      <UniqueIdentifier>{594d147a-5085-4df4-a53c-7b566017c11e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\motion\pid\endDetection">
+      <UniqueIdentifier>{017882f0-12e0-45bd-91f4-3d12dff6d277}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\motion\pid\computer">
+      <UniqueIdentifier>{de95e512-dc80-44c3-87bc-a25927c0cf68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\motion\pid\computer">
+      <UniqueIdentifier>{36e2ec00-4de3-4b02-8f88-02724795bb25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\test\motion\pid">
+      <UniqueIdentifier>{7a3b27e9-8cac-4954-8136-07f49e3b40d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\test\device\motion">
+      <UniqueIdentifier>{8205f569-7548-423a-83e7-c39ebc8871bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\test\device\motion\pid">
+      <UniqueIdentifier>{4290f53d-25dd-49f7-9ade-f37cfc4670f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\test\navigation">
+      <UniqueIdentifier>{25ed0049-0493-4cf1-9534-1989251bb875}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\test\navigation">
+      <UniqueIdentifier>{97f1efea-cbd7-41cf-88f6-ae4f2b8f92fe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -837,9 +882,6 @@
     <ClCompile Include="navigation\navigation.c">
       <Filter>Source Files\navigation</Filter>
     </ClCompile>
-    <ClCompile Include="navigation\navigationTest.c">
-      <Filter>Source Files\navigation</Filter>
-    </ClCompile>
     <ClCompile Include="navigation\path.c">
       <Filter>Source Files\navigation</Filter>
     </ClCompile>
@@ -855,25 +897,7 @@
     <ClCompile Include="motion\pid\alphaTheta.c">
       <Filter>Source Files\motion\pid</Filter>
     </ClCompile>
-    <ClCompile Include="motion\pid\bSplinePidComputer.c">
-      <Filter>Source Files\motion\pid</Filter>
-    </ClCompile>
-    <ClCompile Include="motion\pid\motionEndDetection.c">
-      <Filter>Source Files\motion\pid</Filter>
-    </ClCompile>
     <ClCompile Include="motion\pid\pid.c">
-      <Filter>Source Files\motion\pid</Filter>
-    </ClCompile>
-    <ClCompile Include="motion\pid\pidComputer.c">
-      <Filter>Source Files\motion\pid</Filter>
-    </ClCompile>
-    <ClCompile Include="motion\pid\pidDebug.c">
-      <Filter>Source Files\motion\pid</Filter>
-    </ClCompile>
-    <ClCompile Include="motion\pid\pidMotionProfileComputer.c">
-      <Filter>Source Files\motion\pid</Filter>
-    </ClCompile>
-    <ClCompile Include="motion\pid\pidPersistence.c">
       <Filter>Source Files\motion\pid</Filter>
     </ClCompile>
     <ClCompile Include="motion\pid\pidTimer.c">
@@ -1056,12 +1080,6 @@
     <ClCompile Include="device\motion\pid\pidDeviceInterface.c">
       <Filter>Source Files\device\motion\pid</Filter>
     </ClCompile>
-    <ClCompile Include="motion\simple\motion.c">
-      <Filter>Source Files\motion\simple</Filter>
-    </ClCompile>
-    <ClCompile Include="motion\simple\motionPersistence.c">
-      <Filter>Source Files\motion\simple</Filter>
-    </ClCompile>
     <ClCompile Include="common\eeprom\eeprom.c">
       <Filter>Source Files\common\eeprom</Filter>
     </ClCompile>
@@ -1208,6 +1226,75 @@
     </ClCompile>
     <ClCompile Include="common\eeprom\eepromAreas.c">
       <Filter>Source Files\common\eeprom</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\pid\pidMotion.c">
+      <Filter>Source Files\motion\pid</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\pid\pidType.c">
+      <Filter>Source Files\motion\pid</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\simple\motionCalibration.c">
+      <Filter>Source Files\motion\simple</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\parameters\motionParameter.c">
+      <Filter>Source Files\motion\parameters</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\parameters\motionParameterType.c">
+      <Filter>Source Files\motion\parameters</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\parameters\motionPersistence.c">
+      <Filter>Source Files\motion\parameters</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\pid\profile\pidMotionProfileComputer.c">
+      <Filter>Source Files\motion\pid\profile</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\pid\profile\profileType.c">
+      <Filter>Source Files\motion\pid\profile</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\pid\parameters\pidPersistence.c">
+      <Filter>Source Files\motion\pid\parameters</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\pid\endDetection\motionEndDetection.c">
+      <Filter>Source Files\motion\pid\endDetection</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\pid\endDetection\motionEndDetectionParameter.c">
+      <Filter>Source Files\motion\pid\endDetection</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\pid\parameters\pidParameter.c">
+      <Filter>Source Files\motion\pid\parameters</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\simple\simpleMotion.c">
+      <Filter>Source Files\motion\simple</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\pid\computer\bSplinePidComputer.c">
+      <Filter>Source Files\motion\pid\computer</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\pid\computer\pidComputer.c">
+      <Filter>Source Files\motion\pid\computer</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\pid\computer\simplePidComputer.c">
+      <Filter>Source Files\motion\pid\computer</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\motion.c">
+      <Filter>Source Files\motion</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\extended\bsplineMotion.c">
+      <Filter>Source Files\motion\extended</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\pid\motionInstruction.c">
+      <Filter>Source Files\motion\pid</Filter>
+    </ClCompile>
+    <ClCompile Include="test\navigation\navigationTest.c">
+      <Filter>Source Files\test\navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="test\navigation\locationListTest.c">
+      <Filter>Source Files\test\navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="test\common\math\bitListTest.c">
+      <Filter>Source Files\test\common\math</Filter>
+    </ClCompile>
+    <ClCompile Include="test\navigation\pathListTest.c">
+      <Filter>Source Files\test\navigation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1484,9 +1571,6 @@
     <ClInclude Include="navigation\navigation.h">
       <Filter>Header Files\navigation</Filter>
     </ClInclude>
-    <ClInclude Include="navigation\navigationTest.h">
-      <Filter>Header Files\navigation</Filter>
-    </ClInclude>
     <ClInclude Include="navigation\path.h">
       <Filter>Header Files\navigation</Filter>
     </ClInclude>
@@ -1508,25 +1592,13 @@
     <ClInclude Include="motion\pid\alphaTheta.h">
       <Filter>Header Files\motion\pid</Filter>
     </ClInclude>
-    <ClInclude Include="motion\pid\bSplinePidComputer.h">
-      <Filter>Header Files\motion\pid</Filter>
-    </ClInclude>
     <ClInclude Include="motion\pid\motionEndDetection.h">
       <Filter>Header Files\motion\pid</Filter>
     </ClInclude>
     <ClInclude Include="motion\pid\pid.h">
       <Filter>Header Files\motion\pid</Filter>
     </ClInclude>
-    <ClInclude Include="motion\pid\pidComputer.h">
-      <Filter>Header Files\motion\pid</Filter>
-    </ClInclude>
-    <ClInclude Include="motion\pid\pidDebug.h">
-      <Filter>Header Files\motion\pid</Filter>
-    </ClInclude>
     <ClInclude Include="motion\pid\pidMotionProfileComputer.h">
-      <Filter>Header Files\motion\pid</Filter>
-    </ClInclude>
-    <ClInclude Include="motion\pid\pidPersistence.h">
       <Filter>Header Files\motion\pid</Filter>
     </ClInclude>
     <ClInclude Include="motion\pid\pidTimer.h">
@@ -1640,9 +1712,6 @@
     <ClInclude Include="robot\match\pc\startMatchDetectorPc.h">
       <Filter>Header Files\robot\match\pc</Filter>
     </ClInclude>
-    <ClInclude Include="motion\position\coders.h">
-      <Filter>Header Files\motion</Filter>
-    </ClInclude>
     <ClInclude Include="test\allTests.h">
       <Filter>Header Files\test</Filter>
     </ClInclude>
@@ -1705,12 +1774,6 @@
     </ClInclude>
     <ClInclude Include="device\motion\position\trajectoryDeviceInterface.h">
       <Filter>Header Files\device\motion\position</Filter>
-    </ClInclude>
-    <ClInclude Include="motion\simple\motion.h">
-      <Filter>Header Files\motion\simple</Filter>
-    </ClInclude>
-    <ClInclude Include="motion\simple\motionPersistence.h">
-      <Filter>Header Files\motion\simple</Filter>
     </ClInclude>
     <ClInclude Include="common\eeprom\eeprom.h">
       <Filter>Header Files\common\eeprom</Filter>
@@ -1888,6 +1951,102 @@
     </ClInclude>
     <ClInclude Include="common\eeprom\eepromAreas.h">
       <Filter>Header Files\common\eeprom</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\pidMotionError.h">
+      <Filter>Header Files\motion\pid</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\pidMotionDefinition.h">
+      <Filter>Header Files\motion\pid</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\pidMotion.h">
+      <Filter>Header Files\motion\pid</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\pidGlobalParameters.h">
+      <Filter>Header Files\motion\pid</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\pidCurrentValues.h">
+      <Filter>Header Files\motion\pid</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\pidComputationValues.h">
+      <Filter>Header Files\motion\pid</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\motionInstruction.h">
+      <Filter>Header Files\motion\pid</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\instructionType.h">
+      <Filter>Header Files\motion\pid</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\detectedMotionType.h">
+      <Filter>Header Files\motion\pid</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\parameters\motionParameter.h">
+      <Filter>Header Files\motion\parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\parameters\motionParameterType.h">
+      <Filter>Header Files\motion\parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\parameters\motionPersistence.h">
+      <Filter>Header Files\motion\parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\endDetection\motionEndDetection.h">
+      <Filter>Header Files\motion\pid\endDetection</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\endDetection\motionEndDetectionParameter.h">
+      <Filter>Header Files\motion\pid\endDetection</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\parameters\pidGlobalParameters.h">
+      <Filter>Header Files\motion\pid\parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\parameters\pidPersistence.h">
+      <Filter>Header Files\motion\pid\parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\profile\pidMotionProfileComputer.h">
+      <Filter>Header Files\motion\pid\profile</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\profile\profileType.h">
+      <Filter>Header Files\motion\pid\profile</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\parameters\pidParameter.h">
+      <Filter>Header Files\motion\pid\parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\simple\motionCalibration.h">
+      <Filter>Header Files\motion\simple</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\simple\simpleMotion.h">
+      <Filter>Header Files\motion\simple</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\motion.h">
+      <Filter>Header Files\motion</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\position\coders.h">
+      <Filter>Header Files\motion\position</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\computer\bSplinePidComputer.h">
+      <Filter>Header Files\motion\pid\computer</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\computer\pidComputer.h">
+      <Filter>Header Files\motion\pid\computer</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\computer\simplePidComputer.h">
+      <Filter>Header Files\motion\pid\computer</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\extended\bsplineMotion.h">
+      <Filter>Header Files\motion\extended</Filter>
+    </ClInclude>
+    <ClInclude Include="test\navigation\navigationTest.h">
+      <Filter>Header Files\test\navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\strategy\gameTargetStatus.h">
+      <Filter>Header Files\robot\strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="test\navigation\locationListTest.h">
+      <Filter>Header Files\test\navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="test\common\math\bitListTest.h">
+      <Filter>Header Files\test\common\math</Filter>
+    </ClInclude>
+    <ClInclude Include="test\navigation\pathListTest.h">
+      <Filter>Header Files\test\navigation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

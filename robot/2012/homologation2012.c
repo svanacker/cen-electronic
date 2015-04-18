@@ -14,7 +14,8 @@
 #include "../../drivers/strategy/strategyDriver.h"
 #include "../../drivers/beacon/beaconReceiverDriver.h"
 
-#include "../../motion/simple/motion.h"
+#include "../../motion/extended/bsplineMotion.h"
+#include "../../motion/simple/simpleMotion.h"
 
 #include "../../robot/2012/armDeviceInterface2012.h"
 #include "../../robot/2012/armDriver2012.h"

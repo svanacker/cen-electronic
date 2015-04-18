@@ -11,14 +11,10 @@
 
 #include "../../motion/extended/bspline.h"
 
+#include "../../motion/pid/parameters/pidParameter.h"
 #include "../../motion/pid/instructionType.h"
-#include "../../motion/pid/motionEndDetection.h"
-#include "../../motion/pid/detectedMotionType.h"
 #include "../../motion/pid/pidType.h"
 #include "../../motion/pid/pidTimer.h"
-#include "../../motion/pid/profileType.h"
-
-#include "../../motion/simple/motionParameterType.h"
 
 #include "../../robot/kinematics/robotKinematics.h"
 
@@ -30,19 +26,15 @@
 #define TEST_MODE_COUNT 2
 
 /** we use test mode */
-#define ROLLING_BOARD_TEST_MODE_OFF 0
+#define ROLLING_BOARD_TEST_MODE_OFF        false
 
 /** We use the pid at the adress for test mode. */
-#define ROLLING_BOARD_TEST_MODE_ON 1
+#define ROLLING_BOARD_TEST_MODE_ON        true
 
 // NUMBER OF PID
 
 /** The total number of PID values (INSTRUCTION_COUNT * PID_TYPE_COUNT). */
 #define PID_COUNT (INSTRUCTION_COUNT * PID_TYPE_COUNT)
-
-// NUMBER OF NEXT_MOTION_DEFINITION_COUNT
-
-#define NEXT_MOTION_DEFINITION_COUNT 2
 
 /**
  * Limit value to next PID value.
@@ -82,172 +74,16 @@
  */
 #define TIME_PERIOD_AFTER_END_FOR_STRONG_PID     40
 
-/**
- * Defines the structure which is used to store PID values
- */
-typedef struct Pid {
-    /** The proportional term */
-    float p;
-    /** The integral term */
-    float i;
-    /** The derivative term */
-    float d;
-    /** The maximal term of integral */
-    float maxIntegral;
-    /** Enable or not the pid. */
-    bool enabled;
-} Pid;
-
-/**
- * Defines the structs which stores the errors.
- */
-typedef struct MotionError {
-    /** Stores the previous error */
-    float previousError;
-    /** The error between normal speed and real speed */
-    float error;
-    /** The derivative error between normal speed and real speed */
-    float derivativeError;
-    /** The integral error between normal speed and real speed */
-    float integralError;
-} MotionError;
-
-
-/**
- * Defines a struct which stores current and old Values of position, and voltage supplied to the motor.
- */
-typedef struct Motion {
-    /** current position values. */
-    float position;
-    /** Old Position values. */
-    float oldPosition;
-    /** Speed. */
-    float currentSpeed;
-    /** U (voltage) values. */
-    float u;
-} Motion;
-
-/**
- * Defines the structs which stores the instruction.
- */
-typedef struct MotionInstruction {
-    /** the position which must be reached when using classic implementation */
-    float nextPosition;
-    /** The acceleration which is asked : > 0 */
-    float a;
-    /** The initial speed. */
-    float initialSpeed;
-    /** The maximal speed which is asked : > 0 */
-    float speed;
-    /** The maximal speed which can be reached : negative or positive */
-    float speedMax;
-    /** The target end Speed (decelerationTime). */
-    float endSpeed;
-    /** The acceleration time > 0 */
-    float t1;
-    /** The time before deceleration > 0 */
-    float t2;
-    /** The time after deceleration > 0 */
-    float t3;
-    /** The first position after acceleration time */
-    float p1;
-    /** The first position after speed constant */
-    float p2;
-    /** The type of the trajectory (TRAPEZE / TRIANGLE) */
-    enum ProfileType profileType;
-    /** The type of MotionParameterType (GO, ROTATION, MAINTAIN_POSITION). */
-    enum MotionParameterType motionParameterType;
-    /** The type of pid which must be used. */
-    enum PidType pidType;
-} MotionInstruction;
-
-/**
- * Define the function used to compute Errors.
- */
-typedef void ComputeUFunction();
-
-/**
- * All current values about the current motion in progress.
- */
-typedef struct PidComputationValues {
-    // ONLY ONE VALUE AT A TIME
-    // theta error (distance for normal trajectory, and along Y axis for Spline Curve)
-    float thetaError;
-    // angle error
-    float alphaError;
-    // theta error (only for Curve implementation)
-    // determine the distance between normal trajectory tangent line
-    // and real trajectory tangent line (=> X Axis)
-    float thetaXAxisError;
-    // store the time of the pid timer
-    float pidTime;
-    // Store error of each motion
-    MotionError err[INSTRUCTION_COUNT];
-    // store tension / position / current speed
-    Motion motion[INSTRUCTION_COUNT];
-    // Store Detection of end of trajectory
-    MotionEndInfo motionEnd[INSTRUCTION_COUNT];
-} PidComputationValues;
-
-/**
- * Definition of motion. There can be more than one PidMotionDefinition, but only one active
- * at a time.
- */
-typedef struct PidMotionDefinition {
-    // Alpha / Theta
-    MotionInstruction inst[INSTRUCTION_COUNT];
-    // When using BSPline
-    BSplineCurve curve;
-    /** The method which will compute the errors (by using coders or absolute positions) .*/
-    ComputeUFunction* computeU;
-} PidMotionDefinition;
-
-/**
- * All parameters about pid motion. Don't change by PidMotion. Are normally constants
- * or set only for a match.
- */
-typedef struct PidGlobalParameters {
-    // Parameters about PID
-    Pid pid[PID_COUNT];
-    // Parameters about end motion detection (avoid rotation of wheels in case of no move => Avoid BURN OUT)
-    MotionEndDetectionParameter motionEndDetectionParameter;
-} PidGlobalParameters;
-
-/**
- * Global struct to make links between all structures and variables to achieve
- * motion with PID.
- */
-typedef struct PidMotion {
-    // Parameters for all motions => INVARIANT.
-    PidGlobalParameters globalParameters;
-    // The current motion definition => CHANGE FOR EACH MOTION.
-    PidMotionDefinition currentMotionDefinition;
-    // Contains the next Motion Definition;
-    PidMotionDefinition nextMotionDefinition[NEXT_MOTION_DEFINITION_COUNT];
-    // All current values (must be reset after each new move) => CHANGE EVERY TIME COMPUTATION
-    PidComputationValues computationValues;
-} PidMotion;
-
-/**
- * Returns the current pidMotion.
- */
-PidMotion* getPidMotion();
-
-/**
- * Returns the parameters of the end motion.
- */
-MotionEndDetectionParameter* getMotionEndDetectionParameter();
-
 float getWheelPulseByPidTimeAtFullSpeed();
 
 float getUFactorAtFullSpeed();
 
 /**
  * Returns the Index of Pid which must be chosen in function of pidType.
- * @param instructionIndex THETA_INDEX or ALPHA_MASK
+ * @param instructionType THETA_INDEX or ALPHA_MASK
  * @param pidType the type of pid PID_TYPE_GO_INDEX / PID_TYPE_ROTATE_INDEX / PID_TYPE_MAINTAIN_POSITION
  */
-unsigned char getIndexOfPid(unsigned char instructionIndex, enum PidType pidType);
+unsigned char getIndexOfPid(enum InstructionType instructionType, enum PidType pidType);
 
 /**
  * Enable or disable a PID.
@@ -257,28 +93,18 @@ unsigned char getIndexOfPid(unsigned char instructionIndex, enum PidType pidType
 void setEnabledPid(int pidIndex, unsigned char enabled);
 
 /**
- * Sets the PID at the specified index.
- * @param pidIndex the index of the PID to set (between 0 and PID_COUNT)
- * @param p the P parameter
- * @param i the I parameter
- * @param d the D parameter
- * @param maxIntegral the bounds of the I term
- */
-void setPID(int pidIndex, float p, float i, float d, float maxIntegral);
-
-/**
  * Returns the PID at the specified index.
  * @param index the index of the PID to set (between 0 and PID_COUNT)
  * @param pidMode ROLLING_BOARD_TEST_MODE_ON or ROLLING_BOARD_TEST_MODE_OFF
  * @return the PID at the given index
  */
-Pid* getPID(int index, unsigned int pidMode);
+PidParameter* getPidParameter(int index, unsigned int pidMode);
 
-unsigned char getRollingTestMode();
+bool getRollingTestMode();
 
-Pid* getRollingTestModePid();
+PidParameter* getRollingTestModePid();
 
-Pid* getEndApproachPid();
+PidParameter* getEndApproachPid();
 
 /**
  * Returns the time of the PID
@@ -295,14 +121,14 @@ void clearPidTime(void);
  * position must be reached.
  * @return true or false
  */
-int getMustReachPosition(void);
+bool getMustReachPosition(void);
 
 /**
  * Sets the flag which determines if the
  * position must be reached.
  * @value the value of the flag, true or false
  */
-void setMustReachPosition(int value);
+void setMustReachPosition(bool value);
 
 /**
  * Updates the motors values and returns the type of control which is applied to the motors.
@@ -326,7 +152,7 @@ float getNormalU(float normalSpeed);
 /**
  * Initializes the PID.
  */
-void initPID(Eeprom* _eeprom);
+void initPID(Eeprom* _eeprom, bool loadDefaultParameters);
 
 /**
  * Stop the PID.

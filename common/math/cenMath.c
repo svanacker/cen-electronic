@@ -3,6 +3,7 @@
 #include "cenMath.h"
 
 #include "../../common/commons.h"
+#include "../../common/error/error.h"
 
 // TODO => Replace by unity
 bool floatEquals(float value1, float value2) {
@@ -24,7 +25,22 @@ long absLong(signed long value) {
     }
 }
 
-signed long limit(signed long value, signed long maxValue) {
+signed long limitLong(signed long value, long maxValue) {
+    if (value > maxValue) {
+        return maxValue;
+    }
+    else if (value < -maxValue) {
+        return -maxValue;
+    }
+    else {
+        return value;
+    }
+}
+
+float limitFloat(float value, float maxValue) {
+    if (maxValue < 0.0f) {
+        writeError(LIMIT_ARGUMENT_MUST_BE_POSITIVE);
+    }
     if (value > maxValue) {
         return maxValue;
     }

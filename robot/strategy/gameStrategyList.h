@@ -10,7 +10,7 @@
 #define MAX_STRATEGY         1
 
 /**
- * Tre struct defining a list of strategies.
+ * The struct defining a list of strategies.
  */
 typedef struct {
     /** An array of pointer on strategy. */

@@ -26,7 +26,6 @@
 long absLong(signed long value);
 
 /**
- * TODO : Introduce Limit For float, to avoid conversion
  * Limit the value by the maxValue either in positive or negative.
  * Ex: limit(100, 75) => 75
  * Ex: limit(40, 60) => 40
@@ -35,7 +34,18 @@ long absLong(signed long value);
  * @param maxValue the max Value which is the limit either positive or negative
  * @return the value limited by the maxValue either in positive or negative
  */
-signed long limit(long value, long maxValue);
+signed long limitLong(signed long value, long maxValue);
+
+/**
+* Limit the value by the maxValue either in positive or negative.
+* Ex: limit(100.0f, 75.5f) => 75.5f
+* Ex: limit(40.6f, 60.3f) => 40.3f
+* Ex: limit(-63.2f, 50.1f) => -50.1f
+* @param value the value that we want to limit
+* @param maxValue the max Value which is the limit either positive or negative
+* @return the value limited by the maxValue either in positive or negative
+*/
+float limitFloat(float value, float maxValue);
 
 /**
  * TODO : Not used => Not to be tested

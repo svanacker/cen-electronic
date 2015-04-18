@@ -3,7 +3,7 @@
 #include "bspline.h"
 #include "bsplineDebug.h"
 
-#include "../../motion/simple/motion.h"
+#include "bsplineMotion.h"
 
 // For debug
 #include "../../common/2d/2d.h"
@@ -13,7 +13,6 @@
 #include "../../common/log/logLevel.h"
 
 void initBSplineCurveData(BSplinePointData* pointData, float x, float y) {
-    
     pointData->time = 0.0f;
     pointData->length = 0.0f;
     pointData->orientation = 0.0f;

@@ -45,17 +45,16 @@ void setBit(BitList* bitList, unsigned char index, bool value) {
     #endif
 
     // Division by 16 (2^4))
-    unsigned char arrayIndex = index >> 4;
+    unsigned char arrayIndex = index >> BITS_SHIFT_WIDTH;
     #ifdef BIT_LIST_DEBUG
         appendStringAndDec(getInfoOutputStreamLogger(), ", arrayIndex=", arrayIndex);
     #endif
 
     // relative index = modulo
-    unsigned char relativeIntIndex = index - (arrayIndex << 4);
+    unsigned char relativeIntIndex = index - (arrayIndex << BITS_SHIFT_WIDTH);
     #ifdef BIT_LIST_DEBUG
         appendStringAndDec(getInfoOutputStreamLogger(), ", relativeIntIndex=", relativeIntIndex);
     #endif
-
 
     // Shift to the right cell index
     arrayPointer += arrayIndex;
@@ -90,13 +89,13 @@ bool getBit(BitList* bitList, unsigned char index) {
     unsigned int* arrayPointer = (unsigned int*) bitList->array;
 
     // Division by 16 (2^4))
-    unsigned char arrayIndex = index >> 4;
+    unsigned char arrayIndex = index >> BITS_SHIFT_WIDTH;
     #ifdef BIT_LIST_DEBUG
         appendStringAndDec(getInfoOutputStreamLogger(), ", arrayIndex=", arrayIndex);
     #endif
 
     // relative index = modulo
-    unsigned char relativeIntIndex = index - (arrayIndex << 4);
+    unsigned char relativeIntIndex = index - (arrayIndex << BITS_SHIFT_WIDTH);
     #ifdef BIT_LIST_DEBUG
         appendStringAndDec(getInfoOutputStreamLogger(), ", relativeIntIndex=", relativeIntIndex);
     #endif

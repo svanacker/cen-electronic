@@ -23,20 +23,20 @@ CompositeOutputStream* getCompositeOutputStream(OutputStream* outputStream) {
  * @private
  */
 OutputStream* getChildOutputStream(CompositeOutputStream* compositeOutputStream, int index) {
-	if (&compositeOutputStream == NULL || compositeOutputStream->maxSize == 0) {
-		writeError(COMPOSITE_OUTPUT_STREAM_NOT_INITIALIZED);
-		return NULL;
-	}
-	if (index < 0 || index >= compositeOutputStream->maxSize) {
-		writeError(COMPOSITE_OUTPUT_STREAM_ILLEGAL_INDEX);
-		return NULL;
-	}
-	OutputStream** result = (OutputStream**)compositeOutputStream->streams;
-	// we don't need use sizeof because our pointer is a OutputStream* pointer, so the shift
-	// is already of the structure, we just have to shift of index.
-	result += index;
+    if (&compositeOutputStream == NULL || compositeOutputStream->maxSize == 0) {
+        writeError(COMPOSITE_OUTPUT_STREAM_NOT_INITIALIZED);
+        return NULL;
+    }
+    if (index < 0 || index >= compositeOutputStream->maxSize) {
+        writeError(COMPOSITE_OUTPUT_STREAM_ILLEGAL_INDEX);
+        return NULL;
+    }
+    OutputStream** result = (OutputStream**)compositeOutputStream->streams;
+    // we don't need use sizeof because our pointer is a OutputStream* pointer, so the shift
+    // is already of the structure, we just have to shift of index.
+    result += index;
 
-	return *result;
+    return *result;
 }
 
 
@@ -73,24 +73,24 @@ void _compositeOutputStreamFlush(OutputStream* outputStream) {
 // Composite Implementation
 
 void addOutputStream(CompositeOutputStream* compositeOutputStream, OutputStream* childOutputStream) {
-	if (compositeOutputStream == NULL || compositeOutputStream->maxSize == 0) {
-		writeError(COMPOSITE_OUTPUT_STREAM_NOT_INITIALIZED);
-		return;
-	}
+    if (compositeOutputStream == NULL || compositeOutputStream->maxSize == 0) {
+        writeError(COMPOSITE_OUTPUT_STREAM_NOT_INITIALIZED);
+        return;
+    }
 
-	unsigned char size = compositeOutputStream->size;
-	if (size < compositeOutputStream->maxSize) {
-		OutputStream** pointer = (OutputStream**)compositeOutputStream->streams;
-		pointer += size;
-		*pointer = childOutputStream;
+    unsigned char size = compositeOutputStream->size;
+    if (size < compositeOutputStream->maxSize) {
+        OutputStream** pointer = (OutputStream**)compositeOutputStream->streams;
+        pointer += size;
+        *pointer = childOutputStream;
 
-		compositeOutputStream->size++;
-		return;
-	}
-	else {
-		writeError(COMPOSITE_OUTPUT_STREAM_FULL);
-		return;
-	}
+        compositeOutputStream->size++;
+        return;
+    }
+    else {
+        writeError(COMPOSITE_OUTPUT_STREAM_FULL);
+        return;
+    }
 }
 
 int getCompositeOutputStreamChildrenCount(CompositeOutputStream* compositeOutputStream) {
@@ -104,8 +104,8 @@ void initCompositeOutputStream(CompositeOutputStream* compositeOutputStream, Out
     outputStream->writeChar = _compositeOutputStreamWriteChar;
     outputStream->flush = _compositeOutputStreamFlush;
     outputStream->object = (int*) compositeOutputStream;
-	// TODO : Check Illegal Arguments
-	compositeOutputStream->streams = outputStreamArray;
-	compositeOutputStream->maxSize = outputStreamListSize;
+    // TODO : Check Illegal Arguments
+    compositeOutputStream->streams = outputStreamArray;
+    compositeOutputStream->maxSize = outputStreamListSize;
 
 }

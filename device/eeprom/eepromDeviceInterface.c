@@ -12,25 +12,25 @@ const char* getEepromDeviceName(void) {
 #define EEPROM_DEVICE_WRITE_BLOCK_LENGTH  4
 
 int deviceEepromGetInterface(char header, DeviceInterfaceMode mode, bool fillDeviceArgumentList){
-	if (header == COMMAND_DUMP_TO_FILE_EEPROM) {
-		if (fillDeviceArgumentList) {
-			setFunctionNoArgumentAndNoResult("Dump Eeprom to File");
-		}
-		return 0;
-	}
-	else if (header == COMMAND_DUMP_TO_LOG_OUTPUT_STREAM_EEPROM) {
-		if (fillDeviceArgumentList) {
-			setFunctionNoArgumentAndNoResult("Dump Eeprom to log output Stream");
-		}
-		return 0;
-	}
-	else if (header == COMMAND_CLEAR_EEPROM) {
-		if (fillDeviceArgumentList) {
-			setFunctionNoArgumentAndNoResult("Clear Eeprom");
-		}
-		return 0;
-	}
-	else if (header == COMMAND_READ_DATA_EEPROM ) {
+    if (header == COMMAND_DUMP_TO_FILE_EEPROM) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("Dump Eeprom to File");
+        }
+        return 0;
+    }
+    else if (header == COMMAND_DUMP_TO_LOG_OUTPUT_STREAM_EEPROM) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("Dump Eeprom to log output Stream");
+        }
+        return 0;
+    }
+    else if (header == COMMAND_CLEAR_EEPROM) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("Clear Eeprom");
+        }
+        return 0;
+    }
+    else if (header == COMMAND_READ_DATA_EEPROM ) {
         if (fillDeviceArgumentList) {
             setFunction("Data Read", 1, 1);
             setArgumentUnsignedHex4(0, "address");
@@ -68,15 +68,15 @@ int deviceEepromGetInterface(char header, DeviceInterfaceMode mode, bool fillDev
         }
         return commandLengthValueForMode(mode, 4 + EEPROM_DEVICE_WRITE_BLOCK_LENGTH * 2, 0);
     }
-	else if (header == COMMAND_INTENSIVE_TEST) {
-		if (fillDeviceArgumentList) {
-			setFunction("intensiveTest", 2, 1);
-			setArgumentUnsignedHex4(0, "address");
-			setArgumentUnsignedHex4(1, "length of test");
-			setResultSignedHex2(0, "errors");
-		}
-		return commandLengthValueForMode(mode, 8, 2);
-	}
+    else if (header == COMMAND_INTENSIVE_TEST) {
+        if (fillDeviceArgumentList) {
+            setFunction("intensiveTest", 2, 1);
+            setArgumentUnsignedHex4(0, "address");
+            setArgumentUnsignedHex4(1, "length of test");
+            setResultSignedHex2(0, "errors");
+        }
+        return commandLengthValueForMode(mode, 8, 2);
+    }
     return DEVICE_HEADER_NOT_HANDLED;
 }
 

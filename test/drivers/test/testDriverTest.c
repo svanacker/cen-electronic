@@ -59,8 +59,8 @@ void testDriverTestTestSuite(void) {
 }
 
 void test_testDriverGetValue(void) {
-	initLogs(DEBUG, (LogHandler(*)[]) &logHandlerListArray, TEST_DRIVER_TEST_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
-	addConsoleLogHandler(DEBUG, LOG_HANDLER_CATEGORY_ALL_MASK);
+    initLogs(DEBUG, (LogHandler(*)[]) &logHandlerListArray, TEST_DRIVER_TEST_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
+    addConsoleLogHandler(DEBUG, LOG_HANDLER_CATEGORY_ALL_MASK);
 
     // Dispatchers
     initDriverDataDispatcherList((DriverDataDispatcher(*)[]) &driverDataDispatcherListArray, TEST_DRIVER_TEST_DATA_DISPATCHER_LIST_LENGTH);
@@ -91,15 +91,15 @@ void test_testDriverGetValue(void) {
     ClockData clockData;
     getRemoteClockData(&clockData);
 
-	// Get the real time
-	time_t rawtime;
-	struct tm timeinfo;
-	time(&rawtime);
-	localtime_s(&timeinfo, &rawtime);
+    // Get the real time
+    time_t rawtime;
+    struct tm timeinfo;
+    time(&rawtime);
+    localtime_s(&timeinfo, &rawtime);
 
-	int expected = timeinfo.tm_year - 100; // we store the date after 2000 (100 = 2000 - 1900)
+    int expected = timeinfo.tm_year - 100; // we store the date after 2000 (100 = 2000 - 1900)
 
-	TEST_ASSERT_EQUAL(expected, clockData.year);
+    TEST_ASSERT_EQUAL(expected, clockData.year);
 
     // Motor Driver Test
 

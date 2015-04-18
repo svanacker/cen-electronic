@@ -18,7 +18,7 @@
 typedef struct GameStrategyContext {
     /** Time in seconds since last collision. */
     unsigned int timeSinceLastCollision;
-    /** The choosen gameStrategy. */
+    /** The chosen gameStrategy. */
     GameStrategy* gameStrategy;
     /** The elapsedMatchTime in seconds .*/
     float elapsedMatchTime;
@@ -32,13 +32,13 @@ typedef struct GameStrategyContext {
     Point opponentRobotPosition;
     // Obstacle position.
     Point lastObstaclePosition;
-    /** Flag indicateing that the opponent's position has changed. */
+    /** Flag indicating that the opponent's position has changed. */
     bool opponentRobotMoved;
     /** current Target. */
     GameTarget* currentTarget;
     /** current Target Action. */
     GameTargetAction* currentTargetAction;
-    /** current trajectory of the robot. */
+    /** TODO : Remove and Use Linked Pointer with current Point : Previously current trajectory of the robot. */
     LocationList currentTrajectory;
     /** Color. */
     TEAM_COLOR color;

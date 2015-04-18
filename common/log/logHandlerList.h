@@ -10,8 +10,8 @@
 typedef struct {
     /** An array of pointer on device Descriptor. */
     LogHandler(*logHandlers)[];
-	/** the size of the list. */
-	unsigned char size;
+    /** the size of the list. */
+    unsigned char size;
     /** the max size of the list. */
     unsigned char maxSize;
 } LogHandlerList;

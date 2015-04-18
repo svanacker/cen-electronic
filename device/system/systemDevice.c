@@ -1,4 +1,5 @@
 #include <stdbool.h>
+#include <stdlib.h>
 
 #include "systemDevice.h"
 #include "systemDeviceInterface.h"
@@ -17,6 +18,7 @@
 #include "../../common/log/logHandler.h"
 
 #include "../../device/device.h"
+#include "../../device/deviceList.h"
 #include "../../device/deviceDebug.h"
 #include "../../device/deviceUsage.h"
 #include "../../device/transmitMode.h"
@@ -46,7 +48,27 @@ void deviceSystemHandleRawData(char header, InputStream* inputStream, OutputStre
     } else if (header == COMMAND_USAGE) {
         ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_USAGE);
         printDeviceListUsage(getInfoOutputStreamLogger());
-    } else if (header == COMMAND_NOTIFICATION) {
+    }
+     else if (header == COMMAND_USAGE_SPECIFIC_DEVICE) {
+         ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_USAGE_SPECIFIC_DEVICE);
+         Device* device = NULL;
+         char deviceHeader = readBinaryChar(inputStream);
+         int size = getDeviceCount();
+         int i;
+         for (i = 0; i < size; i++) {
+             Device* device = getDevice(i);
+             if (deviceHeader == device->deviceInterface->deviceHeader) {
+                 println(getInfoOutputStreamLogger());
+                 printDeviceUsage(getInfoOutputStreamLogger(), device);
+                 return;
+             }
+         }
+         appendString(getErrorOutputStreamLogger(), "Device Not Found ! ");
+    } else if (header == COMMAND_USAGE) {
+        ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_USAGE);
+        printDeviceListUsage(getInfoOutputStreamLogger());
+    }
+    else if (header == COMMAND_NOTIFICATION) {
         ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_NOTIFICATION);
         printDeviceListNotification(getInfoOutputStreamLogger());
     } else if (header == COMMAND_WAIT) {

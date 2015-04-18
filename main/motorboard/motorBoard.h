@@ -3,7 +3,7 @@
 
 #include "../../common/io/buffer.h"
 
-#define MOTOR_BOARD_LOG_HANDLER_LIST_LENGTH			    1
+#define MOTOR_BOARD_LOG_HANDLER_LIST_LENGTH                1
 
 /** Define the I2C address used by motorBoard. */
 #define MOTOR_BOARD_I2C_ADDRESS     0x54

@@ -14,12 +14,12 @@
 /**
  * Clear the Eeprom by filling with 0 values
  */
-#define COMMAND_CLEAR_EEPROM			   'c'
+#define COMMAND_CLEAR_EEPROM               'c'
 
 /**
 * Dump the content of the Eeprom into a file (can only be used on local device).
 */
-#define COMMAND_DUMP_TO_FILE_EEPROM	      'd'
+#define COMMAND_DUMP_TO_FILE_EEPROM          'd'
 
 /**
 * Defines the header to read one byte from the Eeprom
@@ -40,7 +40,7 @@
 /**
  * Do an intensive test with read and write.
  */
-#define COMMAND_INTENSIVE_TEST			  'T'
+#define COMMAND_INTENSIVE_TEST              'T'
 
 /**
 * Defines the header to write the buffer on the Eeprom

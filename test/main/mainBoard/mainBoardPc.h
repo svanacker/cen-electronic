@@ -3,7 +3,7 @@
 
 #define MAIN_BOARD_PC_NAME    "mainBoardPc"
 
-#define MAIN_BOARD_PC_LOG_HANDLER_LIST_LENGTH					2
+#define MAIN_BOARD_PC_LOG_HANDLER_LIST_LENGTH                    2
 
 #define MAIN_BOARD_PC_DELAY_CONSOLE_ANALYZE_MILLISECONDS        1
 

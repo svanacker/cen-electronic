@@ -15,7 +15,7 @@ LogHandlerList* getLoggerHandlerList() {
 * @private
 */
 void flushLog(OutputStream* outputStream) {
-	// don't do anything for the moment
+    // don't do anything for the moment
 }
 
 /**
@@ -36,10 +36,10 @@ void writeLogChar(OutputStream* outputStream, char c) {
         if (writeLoggerLevel < logHandlerLevel) {
             continue;
         }
-		// To exclude logger which does not correspond to the category
-		if (logHandler->logCategoryMask && logger.logCategoryMask == 0) {
-			continue;
-		}
+        // To exclude logger which does not correspond to the category
+        if (logHandler->logCategoryMask && logger.logCategoryMask == 0) {
+            continue;
+        }
         OutputStream* outputStream = logHandler->outputStream;
         // write the char of the corresponding stream of the handler
         outputStream->writeChar(outputStream, c);
@@ -47,63 +47,63 @@ void writeLogChar(OutputStream* outputStream, char c) {
 }
 
 void initLogs(LogLevel globalLogLevel, LogHandler(*handlerListArray)[], unsigned char handlerListSize, unsigned long defaultLogCategoryMask) {
-	// Init logger structure
-	logger.globalLogLevel = globalLogLevel;
-	logger.writeLogLevel = globalLogLevel;
-	logger.defaultLogCategoryMask = defaultLogCategoryMask;
-	logger.logCategoryMask = defaultLogCategoryMask;
-	logger.logHandlerList = &logHandlerList;
-	logger.outputStream = &logOutputStream;
-	// Init OutputStream
-	logOutputStream.writeChar = writeLogChar;
-	logOutputStream.flush = flushLog;
-	// Init the LogHandlerList
-	initLogHandlerList(&logHandlerList, handlerListArray, handlerListSize);
+    // Init logger structure
+    logger.globalLogLevel = globalLogLevel;
+    logger.writeLogLevel = globalLogLevel;
+    logger.defaultLogCategoryMask = defaultLogCategoryMask;
+    logger.logCategoryMask = defaultLogCategoryMask;
+    logger.logHandlerList = &logHandlerList;
+    logger.outputStream = &logOutputStream;
+    // Init OutputStream
+    logOutputStream.writeChar = writeLogChar;
+    logOutputStream.flush = flushLog;
+    // Init the LogHandlerList
+    initLogHandlerList(&logHandlerList, handlerListArray, handlerListSize);
 }
 
 LogHandler* addLogHandler(char* handlerName,
                             OutputStream* outputStream,
                             LogLevel logLevel,
-							unsigned long logCategoryMask) {
-	LogHandler* result = addLogHandlerToList(&logHandlerList, logLevel, logCategoryMask, handlerName, outputStream);
+                            unsigned long logCategoryMask) {
+    LogHandler* result = addLogHandlerToList(&logHandlerList, logLevel, logCategoryMask, handlerName, outputStream);
 
     return result;
 }
 
 OutputStream* getOutputStreamLogger(LogLevel writeLogLevel, unsigned long logCategoryMask) {
     logger.writeLogLevel = writeLogLevel;
-	logger.logCategoryMask = logCategoryMask;
+    logger.logCategoryMask = logCategoryMask;
     return logger.outputStream;
 }
 
 OutputStream* getDebugOutputStreamLogger() {
     logger.writeLogLevel = DEBUG;
-	logger.logCategoryMask = logger.defaultLogCategoryMask;
+    logger.logCategoryMask = logger.defaultLogCategoryMask;
     return logger.outputStream;
 }
 
 OutputStream* getInfoOutputStreamLogger() {
-	logger.writeLogLevel = INFO;
-	logger.logCategoryMask = logger.defaultLogCategoryMask;
-	return logger.outputStream;
+    logger.writeLogLevel = INFO;
+    logger.logCategoryMask = logger.defaultLogCategoryMask;
+    return logger.outputStream;
 }
 
 OutputStream* getWarningOutputStreamLogger() {
-	logger.writeLogLevel = WARNING;
-	logger.logCategoryMask = logger.defaultLogCategoryMask;
-	return logger.outputStream;
+    logger.writeLogLevel = WARNING;
+    logger.logCategoryMask = logger.defaultLogCategoryMask;
+    return logger.outputStream;
 }
 
 OutputStream* getErrorOutputStreamLogger() {
     logger.writeLogLevel = LOG_LEVEL_ERROR;
-	logger.logCategoryMask = logger.defaultLogCategoryMask;
+    logger.logCategoryMask = logger.defaultLogCategoryMask;
     return logger.outputStream;
 }
 
 OutputStream* getAlwaysOutputStreamLogger() {
-	logger.writeLogLevel = ALWAYS;
-	logger.logCategoryMask = logger.defaultLogCategoryMask;
-	return logger.outputStream;
+    logger.writeLogLevel = ALWAYS;
+    logger.logCategoryMask = logger.defaultLogCategoryMask;
+    return logger.outputStream;
 }
 
 Logger* getLoggerInstance() {

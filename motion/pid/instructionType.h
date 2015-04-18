@@ -6,10 +6,15 @@
 // Number of PID to control
 #define INSTRUCTION_COUNT 2
 
+/**
+ * The index of theta & alpha instruction
+ * @see alphaTheta.h
+ */
 enum InstructionType {
-    // The index of theta & alpha instruction
-    INSTRUCTION_THETA_INDEX = 0,
-    INSTRUCTION_ALPHA_INDEX = 1
+    // Theta => Length of the average of the wheels (left + right) / 2
+    THETA = 0,
+    // Alpha => Angle (difference between the left and right wheels) / 2
+    ALPHA = 1
 };
 
 #endif

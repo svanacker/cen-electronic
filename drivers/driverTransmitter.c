@@ -48,17 +48,17 @@ bool transmitFromDriverRequestBuffer() {
     }
 
     // The first char is the device header
-	unsigned dataDispacherLength = 0;
+    unsigned dataDispacherLength = 0;
     unsigned char deviceHeader = bufferGetCharAtIndex(requestBuffer, DEVICE_HEADER_INDEX);
 
-	if (deviceHeader == DATA_DISPATCHER_DEVICE_HEADER) {
-		dataDispacherLength = DISPATCHER_COMMAND_AND_INDEX_HEADER_LENGTH;
-		// Reload the real Device Header
-		deviceHeader = bufferGetCharAtIndex(requestBuffer, dataDispacherLength + DEVICE_HEADER_INDEX);
-	}
+    if (deviceHeader == DATA_DISPATCHER_DEVICE_HEADER) {
+        dataDispacherLength = DISPATCHER_COMMAND_AND_INDEX_HEADER_LENGTH;
+        // Reload the real Device Header
+        deviceHeader = bufferGetCharAtIndex(requestBuffer, dataDispacherLength + DEVICE_HEADER_INDEX);
+    }
 
     // The second char is the command header
-	unsigned char commandHeader = bufferGetCharAtIndex(requestBuffer, dataDispacherLength + COMMAND_HEADER_INDEX);
+    unsigned char commandHeader = bufferGetCharAtIndex(requestBuffer, dataDispacherLength + COMMAND_HEADER_INDEX);
 
     bool result = handleStreamInstruction(
             requestBuffer,

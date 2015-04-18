@@ -7,14 +7,14 @@
 * Structure defining a composite of streams.
 */
 typedef struct CompositeOutputStream {
-	// The outputStream exposed as an interface
-	OutputStream outputStream;
-	/** An array of pointer on outputStream pointer. */
-	OutputStream*(*streams)[];
-	/** the size of the list. */
-	unsigned char size;
-	/** the max size of the list. */
-	unsigned char maxSize;
+    // The outputStream exposed as an interface
+    OutputStream outputStream;
+    /** An array of pointer on outputStream pointer. */
+    OutputStream*(*streams)[];
+    /** the size of the list. */
+    unsigned char size;
+    /** the max size of the list. */
+    unsigned char maxSize;
 } CompositeOutputStream;
 
 /**

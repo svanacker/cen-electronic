@@ -4,7 +4,7 @@
 #include "../../robot/strategy/gameTarget.h"
 #include "../../robot/match/teamColor.h"
 
-#include "../../motion/simple/motion.h"
+#include "../../motion/simple/simpleMotion.h"
 
 // #define     INCLUDE_HOMOLOGATION
 

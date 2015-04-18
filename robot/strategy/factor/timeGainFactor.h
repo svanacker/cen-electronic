@@ -9,7 +9,7 @@
  * @param timeToAchieveTargetAction
  * @return
  */
-typedef    float getTimeGainFactorFunction(float currentMatchingTime, float remainingTime, float timeToAchieveTargetAction);
+typedef float getTimeGainFactorFunction(float currentMatchingTime, float remainingTime, float timeToAchieveTargetAction);
 
 // default implementation
 

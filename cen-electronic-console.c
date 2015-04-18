@@ -23,6 +23,8 @@ void printUsage(void) {
     printf("\t\t\t");
     printf(MOTOR_BOARD_PC_NAME);
     printf("\t : run the motor Board Emulator\r\n");
+    printf("\t\t\t\t single : just launch motorBoard without initializing I2C to connect it to a master\r\n");
+    printf("\t\t\t\t single : just launch motorBoard without initializing I2C to connect it to a master\r\n");
 
     // All Tests
     printf("\t\t\t");
@@ -37,7 +39,11 @@ int main(int argumentCount, char* arguments[])
         char* applicationNameAsChar = arguments[0];
 
         // Run the Motor Board
-        runProcess(applicationNameAsChar, MOTOR_BOARD_PC_NAME);
+        char motorBoardOptionCommand[80];
+        strcpy(motorBoardOptionCommand, MOTOR_BOARD_PC_NAME);
+        strcat(motorBoardOptionCommand, " ");
+        strcat(motorBoardOptionCommand, MOTOR_BOARD_PC_RUN_STANDARD);
+        runProcess(applicationNameAsChar, motorBoardOptionCommand);
 
         // And After the main Board
         runMainBoardPC();
@@ -48,7 +54,12 @@ int main(int argumentCount, char* arguments[])
             runMainBoardPC();
         }
         else if (strcmp(boardName, MOTOR_BOARD_PC_NAME) == 0) {
-            runMotorBoardPC();
+            bool singleMode = true;
+            if (argumentCount > 2) {
+                char* motorBoardRunMode = arguments[2];
+                singleMode = (strcmp(boardName, MOTOR_BOARD_PC_RUN_SINGLE) == 0);
+            }
+            runMotorBoardPC(singleMode);
         }
         else if (strcmp(boardName, ALL_TESTS_NAME) == 0) {
             runAllTests();

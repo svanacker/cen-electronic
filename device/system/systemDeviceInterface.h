@@ -7,6 +7,9 @@
 /** Command to show devices list. */
 #define COMMAND_DEVICE_LIST        'd'
 
+/** Command to show the content of a device by his .*/
+#define COMMAND_USAGE_SPECIFIC_DEVICE 's'
+
 /** Command to show usage for all devices. */
 #define COMMAND_USAGE              'u'
 

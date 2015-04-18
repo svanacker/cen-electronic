@@ -1,9 +1,13 @@
 #ifndef MOTOR_BOARD_PC_H
 #define MOTOR_BOARD_PC_H
 
-#define MOTOR_BOARD_PC_NAME    "motorBoardPc"
+#include <stdbool.h>
 
-#define MOTOR_BOARD_PC_LOG_HANDLER_LIST_LENGTH					 2
+#define MOTOR_BOARD_PC_NAME         "motorBoardPc"
+#define MOTOR_BOARD_PC_RUN_SINGLE   "single"
+#define MOTOR_BOARD_PC_RUN_STANDARD "standard"
+
+#define MOTOR_BOARD_PC_LOG_HANDLER_LIST_LENGTH                     2
 
 #define MOTOR_BOARD_PC_DELAY_CONSOLE_ANALYZE_MILLISECONDS    1
 
@@ -11,7 +15,7 @@
 /**
  * Start Point to emulate the motor Board PC.
  */
-void runMotorBoardPC(void);
+void runMotorBoardPC(bool singleMode);
 
 /** Define the I2C address used by motorBoardPc. */
 #define MOTOR_BOARD_PC_I2C_ADDRESS     0x50
@@ -23,17 +27,17 @@ void runMotorBoardPC(void);
 
 // CONSOLE
 
-#define MOTOR_BOARD_PC_CONSOLE_INPUT_BUFFER_LENGTH    40
-#define MOTOR_BOARD_PC_CONSOLE_OUTPUT_BUFFER_LENGTH    40
+#define MOTOR_BOARD_PC_CONSOLE_INPUT_BUFFER_LENGTH     100
+#define MOTOR_BOARD_PC_CONSOLE_OUTPUT_BUFFER_LENGTH    100
 
 /** Maximal length for In Buffer length. */
-#define MOTOR_BOARD_PC_IN_BUFFER_LENGTH    50
+#define MOTOR_BOARD_PC_IN_BUFFER_LENGTH                100
 
 /** Maximal length for Out Buffer length. */
-#define MOTOR_BOARD_PC_OUT_BUFFER_LENGTH    50
+#define MOTOR_BOARD_PC_OUT_BUFFER_LENGTH               100
 
 // DEVICES
-#define MOTOR_BOARD_PC_DEVICE_LIST_LENGTH        10
+#define MOTOR_BOARD_PC_DEVICE_LIST_LENGTH        20
 
 // TIMERS
 #define MOTOR_BOARD_PC_TIMER_LENGTH         2

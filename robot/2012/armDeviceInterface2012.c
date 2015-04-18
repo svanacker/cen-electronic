@@ -7,10 +7,6 @@ const char* deviceArm2012GetName(void) {
     return "arm2012";
 }
 
-unsigned int deviceArm2012GetSoftwareRevision(void) {
-    return 1;
-}
-
 int deviceArm2012GetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     if (commandHeader == COMMAND_ARM_2012_UP) {
         if (fillDeviceArgumentList) {
