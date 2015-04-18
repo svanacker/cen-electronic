@@ -15,9 +15,7 @@
 
 // For 5000 impulsions coders
 #define PID_STORED_COUNT        8
-static signed int DEFAULT_EEPROM_VALUES[EEPROM_PID_START_INDEX + (EEPROM_PID_BLOCK_SIZE * PID_STORED_COUNT)] ={
-    // RESERVED area for EEPROM
-    0x00,
+static signed int DEFAULT_EEPROM_VALUES[EEPROM_PID_BLOCK_SIZE * PID_STORED_COUNT] = {
     // NORMAL VALUES
     // Go (P I D MI)
     0x20, 0x00, 0x30, 0x00,
@@ -54,8 +52,8 @@ static Eeprom* pidPersistenceEeprom;
  * @param pidIndex the index of PID (between 0 and PID_COUNT)
  * @param dataIndex the index of data (between 0 and EEPROM_PID_BLOCK_SIZE)
  */
-unsigned char getRealDataIndex(unsigned int pidIndex, unsigned int dataIndex) {
-    unsigned int result = EEPROM_PID_START_INDEX + ((pidIndex * EEPROM_PID_BLOCK_SIZE) + dataIndex);
+unsigned int getRealDataIndex(unsigned int pidIndex, unsigned int dataIndex) {
+    unsigned int result = (pidIndex * EEPROM_PID_BLOCK_SIZE) + dataIndex;
     return result;
 }
 
@@ -71,8 +69,7 @@ void internalSavePidParameter(unsigned int pidIndex, unsigned int dataIndex, sig
         return;
     }
     unsigned realIndex = getRealDataIndex(pidIndex, dataIndex);
-    // TODO : char / int problem
-    pidPersistenceEeprom->eepromWriteChar(pidPersistenceEeprom, realIndex, value);
+    pidPersistenceEeprom->eepromWriteChar(pidPersistenceEeprom, EEPROM_PID_START_INDEX + realIndex, value);
 }
 
 /**
@@ -88,7 +85,6 @@ signed int internalLoadPidParameter(unsigned int pidIndex, unsigned int dataInde
     unsigned int realIndex = getRealDataIndex(pidIndex, dataIndex);
 
     unsigned char result;
-    // TODO : char / int problem
     if (loadDefaultValue) {
         result = DEFAULT_EEPROM_VALUES[realIndex];
     }
@@ -98,7 +94,7 @@ signed int internalLoadPidParameter(unsigned int pidIndex, unsigned int dataInde
             writeError(PID_PERSISTENCE_EEPROM_NOT_INITIALIZED);
             return 0;
         }
-        result = pidPersistenceEeprom->eepromReadChar(pidPersistenceEeprom, realIndex);
+        result = pidPersistenceEeprom->eepromReadChar(pidPersistenceEeprom, EEPROM_PID_START_INDEX + realIndex);
     }
     return result;
 }
