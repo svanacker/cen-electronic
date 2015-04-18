@@ -33,6 +33,24 @@
 #include "armDeviceInterface2012.h"
 #include "armDriver2012.h"
 
+// ------------------------------------------------------- NAVIGATIONS ----------------------------------------------------------------
+
+#define STRATEGY_2012_NAVIGATION_LOCATION_LIST_ARRAY_LENGTH        30
+#define STRATEGY_2012_NAVIGATION_PATH_LIST_TEST_ARRAY_LENGTH       30
+#define STRATEGY_2012_BIT_LIST_NAVIGATION_TEST_ARRAY_LENGTH        30
+
+static LocationList locationList;
+static Location locationListArray[STRATEGY_2012_NAVIGATION_LOCATION_LIST_ARRAY_LENGTH];
+
+static PathList pathList;
+static PathData pathListArray[STRATEGY_2012_NAVIGATION_PATH_LIST_TEST_ARRAY_LENGTH];
+
+static BitList outgoingPathBitList;
+static unsigned int outgoingPathBitArray[STRATEGY_2012_BIT_LIST_NAVIGATION_TEST_ARRAY_LENGTH];
+static BitList availablePathBitList;
+static unsigned int availablePathBitArray[STRATEGY_2012_BIT_LIST_NAVIGATION_TEST_ARRAY_LENGTH];
+
+
 // ------------------------------------------------------ LOCATIONS --------------------------------------------------------------------
 // -> General Points
 static Location* startAreaLocation; 
@@ -230,7 +248,6 @@ void setColor(TEAM_COLOR color) {
 }
 
 void initLocations2012() {
-    clearLocationList(getNavigationLocationList());
     // -> General locations
     startAreaLocation = addNavigationLocation(START_AREA, START_AREA_X, START_AREA_Y);
     startAreaFrontLocation = addNavigationLocation(START_AREA_FRONT, START_AREA_FRONT_X, START_AREA_FRONT_Y);
@@ -260,8 +277,6 @@ void initLocations2012() {
 }
 
 void initPaths2012(int index) {
-    clearPathList(getNavigationPathList());
-
     bottle2ToCDPath = addNavigationPath(bottle2Location, obstacleR1Location, BOTTLE_2_TO_CD_COST, 0x1B, 0x30, 0xF8F8, 0xFAF6, BOTTLE_2_TO_CD_SPEED_FACTOR, BOTTLE_2_TO_CD_ACCELERATION_FACTOR);
     cdToDropZone1Path = addNavigationPath(obstacleR1Location, dropZone1Location, CD_TO_DROP_ZONE_1_COST, 0x11, 0x26, 0xFAF6, ANGLE_NEG_90, CD_TO_DROP_ZONE_1_SPEED_FACTOR, CD_TO_DROP_ZONE_1_ACCELERATION_FACTOR);
     // TODO : Replate by initAsymmetricPathData
@@ -501,7 +516,14 @@ void initStrategiesItems2012(int strategyIndex) {
 }
 
 void initStrategy2012(int strategyIndex) {
-    // initNavigation();
+
+    initLocationList(&locationList, (Location(*)[]) &locationListArray, STRATEGY_2012_BIT_LIST_NAVIGATION_TEST_ARRAY_LENGTH);
+    initPathList(&pathList, (PathData(*)[]) &pathListArray, STRATEGY_2012_NAVIGATION_PATH_LIST_TEST_ARRAY_LENGTH);
+    initBitList(&outgoingPathBitList, (unsigned int(*)[]) &outgoingPathBitArray, STRATEGY_2012_BIT_LIST_NAVIGATION_TEST_ARRAY_LENGTH);
+    initBitList(&availablePathBitList, (unsigned int(*)[]) &availablePathBitArray, STRATEGY_2012_BIT_LIST_NAVIGATION_TEST_ARRAY_LENGTH);
+
+    initNavigation(&locationList, &pathList, &outgoingPathBitList, &availablePathBitList);
+
     initLocations2012();
     initPaths2012(strategyIndex);
 
