@@ -95,7 +95,7 @@ bool isRobotBlocked(enum InstructionType instructionType, MotionEndInfo* endMoti
     MotionInstruction* localInst = &(motionDefinition->inst[instructionType]);
     float normalU = getNormalU(localInst->speed);
     float value = parameter->maxUIntegralConstantThreshold + normalU * parameter->maxUIntegralFactorThreshold;
-    float limitValue = (float) limit((long) value, (long) PID_NEXT_VALUE_LIMIT);
+    float limitValue = limitFloat(value, PID_NEXT_VALUE_LIMIT);
     float maxUIntegral = fabsf(limitValue * parameter->timeRangeAnalysis);
     if (endMotion->absUIntegral > maxUIntegral) {
         return true;
