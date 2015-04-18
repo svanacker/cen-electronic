@@ -142,7 +142,7 @@ void devicePIDHandleRawData(char commandHeader, InputStream* inputStream, Output
 
         PidMotion* pidMotion = getPidMotion();
         PidComputationValues* computationValues = &(pidMotion->computationValues);
-
+        MotionInstruction motionInstruction = pidMotion->currentMotionDefinition.inst[instructionType];
         PidMotionError* localError = &(computationValues->errors[instructionType]);
 
         // send acknowledgement
@@ -156,8 +156,8 @@ void devicePIDHandleRawData(char commandHeader, InputStream* inputStream, Output
         appendHex4(outputStream, getPidTime());
         appendSeparator(outputStream);
 
-        // TODO
-        appendHex2(outputStream, 0);
+        // MotionParameterType
+        appendHex2(outputStream, getPidType(motionInstruction.motionParameterType));
         appendSeparator(outputStream);
 
         // position

@@ -86,17 +86,17 @@ int devicePIDGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fil
             setResultSeparator(3);             
             setResultUnsignedHex2(4, "pidType");
             setResultSeparator(5); 
-            setResultUnsignedHex6(6, "pos");
+            setResultUnsignedHex6(6, "position");
             setResultSeparator(7);
-            setResultUnsignedHex4(8, "err");
+            setResultUnsignedHex4(8, "error");
             setResultSeparator(9);
             setResultUnsignedHex2(10, "u");
             setResultSeparator(11);
-            setResultUnsignedHex4(12, "integralTime");
+            setResultUnsignedHex4(12, "endMotion_integralTime");
             setResultSeparator(13);
-            setResultUnsignedHex4(14, "absDelPosiInt");
+            setResultUnsignedHex4(14, "endMotion_absDelPosiInt");
             setResultSeparator(15);
-            setResultUnsignedHex4(16, "uIntegral");
+            setResultUnsignedHex4(16, "endMotion_uIntegral");
             setResultSeparator(17);
         }
         return commandLengthValueForMode(mode, 2, 41);

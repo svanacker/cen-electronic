@@ -75,6 +75,8 @@
 
 #include "../../../drivers/clock/softClock.h"
 
+#include "../../../motion/motion.h"
+
 #include "../../../common/pc/process/processHelper.h"
 
 // Logs
