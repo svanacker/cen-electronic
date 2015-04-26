@@ -27,6 +27,7 @@ void computeErrorsUsingCoders(PidMotion* pidMotion) {
     alphaCurrentValues->position = computeAlpha(value0, value1);
 
     // Compute the difference between next position and real position
+    // TODO : Check why NextPosition and not Current Position !!!
     computationValues->thetaError = fabsf(thetaInst->nextPosition - thetaCurrentValues->position);
     computationValues->alphaError = fabsf(alphaInst->nextPosition - alphaCurrentValues->position);
 }

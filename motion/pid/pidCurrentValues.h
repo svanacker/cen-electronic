@@ -5,6 +5,8 @@
  * Defines a struct which stores current and old Values of position, and voltage supplied to the motor.
  */
 typedef struct PidCurrentValues {
+    /** Normal position. */
+    float normalPosition;
     /** current position values. */
     float position;
     /** Old Position values. */

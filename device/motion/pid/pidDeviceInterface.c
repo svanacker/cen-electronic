@@ -75,31 +75,31 @@ int devicePIDGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fil
         return commandLengthValueForMode(mode, 0, 14);
     } else if (commandHeader == COMMAND_GET_DEBUG_DATA_PID) {
         if (fillDeviceArgumentList) {
-            setFunction("sendDbgDataPid", 1, 18);
+            setFunction("sendDbgDataPid", 1, 19);
             
             setArgumentUnsignedHex2(0, "instructionType");
 
             setResultUnsignedHex2(0, "instructionType");
             setResultSeparator(1);             
-            // pg01-1001-01-000020-5678-40-200050008000
             setResultUnsignedHex4(2, "pidTime");
             setResultSeparator(3);             
             setResultUnsignedHex2(4, "pidType");
             setResultSeparator(5); 
-            setResultUnsignedHex6(6, "position");
+            setResultUnsignedHex6(6, "normalPosition");
             setResultSeparator(7);
-            setResultUnsignedHex4(8, "error");
+            setResultUnsignedHex6(8, "position");
             setResultSeparator(9);
-            setResultUnsignedHex2(10, "u");
+            setResultUnsignedHex4(10, "error");
             setResultSeparator(11);
-            setResultUnsignedHex4(12, "endMotion_integralTime");
+            setResultUnsignedHex4(12, "u");
             setResultSeparator(13);
-            setResultUnsignedHex4(14, "endMotion_absDelPosiInt");
+            setResultUnsignedHex4(14, "endMotion_integralTime");
             setResultSeparator(15);
-            setResultUnsignedHex4(16, "endMotion_uIntegral");
+            setResultUnsignedHex4(16, "endMotion_absDelPosiInt");
             setResultSeparator(17);
+            setResultUnsignedHex4(18, "endMotion_uIntegral");
         }
-        return commandLengthValueForMode(mode, 2, 41);
+        return commandLengthValueForMode(mode, 2, 49);
     } else if (commandHeader == COMMAND_GET_MOTION_PARAMETER) {
         if (fillDeviceArgumentList) {    
             setFunction("getMotionParameter", 1, 23);

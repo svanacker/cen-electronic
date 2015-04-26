@@ -40,6 +40,7 @@ float computeNextPID(enum InstructionType instructionType, MotionInstruction* mo
     }
 
     float normalPosition = computeNormalPosition(motionInstruction, time);
+    pidCurrentValues->normalPosition = normalPosition;
     float normalSpeed = computeNormalSpeed(motionInstruction, time);
 
     float positionError = normalPosition - currentPosition;

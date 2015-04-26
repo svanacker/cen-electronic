@@ -1592,13 +1592,7 @@
     <ClInclude Include="motion\pid\alphaTheta.h">
       <Filter>Header Files\motion\pid</Filter>
     </ClInclude>
-    <ClInclude Include="motion\pid\motionEndDetection.h">
-      <Filter>Header Files\motion\pid</Filter>
-    </ClInclude>
     <ClInclude Include="motion\pid\pid.h">
-      <Filter>Header Files\motion\pid</Filter>
-    </ClInclude>
-    <ClInclude Include="motion\pid\pidMotionProfileComputer.h">
       <Filter>Header Files\motion\pid</Filter>
     </ClInclude>
     <ClInclude Include="motion\pid\pidTimer.h">
@@ -1901,9 +1895,6 @@
     <ClInclude Include="motion\pid\pidType.h">
       <Filter>Header Files\motion\pid</Filter>
     </ClInclude>
-    <ClInclude Include="motion\pid\motionType.h">
-      <Filter>Header Files\motion\pid</Filter>
-    </ClInclude>
     <ClInclude Include="motion\pid\profileType.h">
       <Filter>Header Files\motion\pid</Filter>
     </ClInclude>
@@ -1959,9 +1950,6 @@
       <Filter>Header Files\motion\pid</Filter>
     </ClInclude>
     <ClInclude Include="motion\pid\pidMotion.h">
-      <Filter>Header Files\motion\pid</Filter>
-    </ClInclude>
-    <ClInclude Include="motion\pid\pidGlobalParameters.h">
       <Filter>Header Files\motion\pid</Filter>
     </ClInclude>
     <ClInclude Include="motion\pid\pidCurrentValues.h">
@@ -2051,7 +2039,7 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="cen-electronic-console.rc">
-      <Filter>Resource Files</Filter>
+      <Filter>Source Files</Filter>
     </ResourceCompile>
   </ItemGroup>
 </Project>

@@ -80,7 +80,7 @@ float getWheelPulseByPidTimeAtFullSpeed() {
 }
 
 float getUFactorAtFullSpeed() {
-    // TODO : Why This Constant (must depend on the voltage) !!!
+    // TODO : Why This Constant (must d epend on the voltage) !!!
     float result = 128.0f / getWheelPulseByPidTimeAtFullSpeed();
     return result;
 }

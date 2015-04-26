@@ -18,7 +18,7 @@ typedef struct PidComputationValues {
     // determine the distance between normal trajectory tangent line
     // and real trajectory tangent line (=> X Axis)
     float thetaXAxisError;
-    // store the time of the pid timer
+    // store the time of the pid timer when it was computer
     float pidTime;
     // Store error of each motion
     PidMotionError errors[INSTRUCTION_COUNT];

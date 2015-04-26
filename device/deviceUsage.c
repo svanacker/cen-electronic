@@ -148,7 +148,10 @@ bool printMethodOrNotificationMetaData(OutputStream* outputStream, DeviceInterfa
             }
         }
         append(outputStream,  ARGUMENTS_STOP_CHAR);
-
+        appendString(outputStream, ":");
+        appendDec(outputStream, argumentLength);
+        appendString(outputStream, "=>");
+        appendDec(outputStream, resultLength);
         println(outputStream);
 
         return true;

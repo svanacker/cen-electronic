@@ -61,7 +61,7 @@ void devicePIDHandleRawData(char commandHeader, InputStream* inputStream, Output
         float maxI = (float) readHex2(inputStream);
 
         if (pidIndex >= 0 && pidIndex < PID_COUNT) {
-            setPidParameter(pidIndex - 1, p, i, d, maxI);
+            setPidParameter(pidIndex, p, i, d, maxI);
             savePidParameters();
         } else {
             // All Values
@@ -153,15 +153,20 @@ void devicePIDHandleRawData(char commandHeader, InputStream* inputStream, Output
         appendSeparator(outputStream);
 
         // pidType
-        appendHex4(outputStream, getPidTime());
+        appendHex4(outputStream, computationValues->pidTime);
         appendSeparator(outputStream);
 
         // MotionParameterType
         appendHex2(outputStream, getPidType(motionInstruction.motionParameterType));
         appendSeparator(outputStream);
 
-        // position
         PidCurrentValues* pidCurrentValues = &(computationValues->currentValues[instructionType]);
+
+        // normalPosition
+        appendHex6(outputStream, (int)pidCurrentValues->normalPosition);
+        appendSeparator(outputStream);
+
+        // position
         appendHex6(outputStream, (int) pidCurrentValues->position);
         appendSeparator(outputStream);
 
@@ -170,7 +175,7 @@ void devicePIDHandleRawData(char commandHeader, InputStream* inputStream, Output
         appendSeparator(outputStream);
 
         // u
-        appendHex2(outputStream, (int) pidCurrentValues->u);
+        appendHex4(outputStream, (int) pidCurrentValues->u);
         appendSeparator(outputStream);
 
         // Motion End
