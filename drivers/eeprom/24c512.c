@@ -123,7 +123,7 @@ void _writeEeprom24C512Char(Eeprom* eeprom_, unsigned long index, unsigned char 
     WaitI2C(i2cBus);
     portableStopI2C(i2cBus);
     WaitI2C(i2cBus);
-    delay100us(10);  // delay <=3 don't write correctly if we write several times
+    delay100us(20);  // delay <=3 don't write correctly if we write several times
 }
 
 /**
