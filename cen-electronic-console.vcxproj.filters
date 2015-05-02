@@ -915,12 +915,6 @@
     <ClCompile Include="robot\match\endMatchDetectorDeviceInterface.c">
       <Filter>Source Files\robot\match</Filter>
     </ClCompile>
-    <ClCompile Include="robot\match\startMatchDetectorDevice.c">
-      <Filter>Source Files\robot\match</Filter>
-    </ClCompile>
-    <ClCompile Include="robot\match\startMatchDetectorDeviceInterface.c">
-      <Filter>Source Files\robot\match</Filter>
-    </ClCompile>
     <ClCompile Include="robot\match\strategy.c">
       <Filter>Source Files\robot\match</Filter>
     </ClCompile>
@@ -1296,6 +1290,12 @@
     <ClCompile Include="test\navigation\pathListTest.c">
       <Filter>Source Files\test\navigation</Filter>
     </ClCompile>
+    <ClCompile Include="robot\match\startMatchDevice.c">
+      <Filter>Source Files\robot\match</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\match\startMatchDeviceInterface.c">
+      <Filter>Source Files\robot\match</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -1608,12 +1608,6 @@
       <Filter>Header Files\robot\match</Filter>
     </ClInclude>
     <ClInclude Include="robot\match\endMatchDetectorDeviceInterface.h">
-      <Filter>Header Files\robot\match</Filter>
-    </ClInclude>
-    <ClInclude Include="robot\match\startMatchDetectorDevice.h">
-      <Filter>Header Files\robot\match</Filter>
-    </ClInclude>
-    <ClInclude Include="robot\match\startMatchDetectorDeviceInterface.h">
       <Filter>Header Files\robot\match</Filter>
     </ClInclude>
     <ClInclude Include="robot\match\strategy.h">
@@ -1937,9 +1931,6 @@
     <ClInclude Include="robot\kinematics\robotKinematicsDeviceInterface.h">
       <Filter>Header Files\robot\kinematics</Filter>
     </ClInclude>
-    <ClInclude Include="common\eeprom\eepromConstants.h">
-      <Filter>Header Files\common\eeprom</Filter>
-    </ClInclude>
     <ClInclude Include="common\eeprom\eepromAreas.h">
       <Filter>Header Files\common\eeprom</Filter>
     </ClInclude>
@@ -2035,6 +2026,12 @@
     </ClInclude>
     <ClInclude Include="test\navigation\pathListTest.h">
       <Filter>Header Files\test\navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\match\startMatchDevice.h">
+      <Filter>Header Files\robot\match</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\match\startMatchDeviceInterface.h">
+      <Filter>Header Files\robot\match</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

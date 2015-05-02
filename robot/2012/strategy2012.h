@@ -309,6 +309,6 @@ void printStrategyAllDatas(OutputStream* outputStream);
 /**
  * Define the color and update strategy.
  */
-void setColor(TEAM_COLOR color);
+void setColor(enum TeamColor color);
 
 #endif

@@ -7,20 +7,20 @@
 /**
 * The side for the match.
 */
-static signed int matchSide;
+static enum TeamColor matchSide;
 
 char* getMatchSideAsString() {
   switch (matchSide) {
-    case SIDE_BLUE: return "SIDE BLUE";
     case SIDE_YELLOW: return "SIDE YELLOW";
+    case SIDE_GREEN: return "SIDE GREEN";
     default: return "SIDE ????";
   }
 }
 
 void loadMatchSide() {
-    matchSide = getConfigValue() & CONFIG_COLOR_BLUE_MASK;
+    matchSide = getConfigValue() & CONFIG_COLOR_GREEN_MASK;
     if (matchSide != 0) {
-        matchSide = SIDE_BLUE;
+        matchSide = SIDE_GREEN;
     }
     else {
         matchSide = SIDE_YELLOW;

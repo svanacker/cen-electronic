@@ -73,9 +73,9 @@ void deviceBeaconHandleRawData(char commandHeader, InputStream* inputStream, Out
         appendAck(outputStream);
 
         float distanceBetweenBeacon = readHex4(inputStream);
-        checkIsChar(inputStream, '-');
+        checkIsSeparator(inputStream);
         float calibrationX = readHex4(inputStream);
-        checkIsChar(inputStream, '-');
+        checkIsSeparator(inputStream);
         float calibrationY = readHex4(inputStream);
 
         setDistanceBetweenBeacon(distanceBetweenBeacon);

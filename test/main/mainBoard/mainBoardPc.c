@@ -102,8 +102,8 @@
 #include "../../../drivers/test/testDriver.h"
 
 #include "../../../robot/match/startMatchDetector.h"
-#include "../../../robot/match/startMatchDetectorDevice.h"
-#include "../../../robot/match/startMatchDetectorDeviceInterface.h"
+#include "../../../robot/match/startMatchDevice.h"
+#include "../../../robot/match/startMatchDeviceInterface.h"
 #include "../../../robot/match/pc/startMatchDetectorPc.h"
 
 #include "../../../remote/clock/remoteClock.h"
@@ -280,7 +280,7 @@ void runMainBoardPC(void) {
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
 
     initStartMatchDetectorPc(&startMatchDetector);
-    addLocalDevice(getStartMatchDetectorDeviceInterface(), getStartMatchDetectorDeviceDescriptor(&startMatchDetector));
+    addLocalDevice(getStartMatchDeviceInterface(), getStartMatchDeviceDescriptor(&startMatchDetector, &eeprom));
  
     // MOTOR BOARD
     // addI2cRemoteDevice(getEepromDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);

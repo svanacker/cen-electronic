@@ -224,7 +224,7 @@ static GameStrategyItem bullionLeft1StrategyItem;
 
 // ------------------------------------------------------- INITIALIZATION ------------------------------------------------------------
 
-void setColor(TEAM_COLOR color) {
+void setColor(enum TeamColor color) {
     GameStrategyContext* context = getStrategyContext();
 
     appendStringAndDec(getInfoOutputStreamLogger(), "setColor:", color);
@@ -233,7 +233,7 @@ void setColor(TEAM_COLOR color) {
     context->color = color;
     changeLocationsForColor();
     int angle = 675;
-    if (!isViolet()) {
+    if (!isGreen()) {
         angle = -angle;
         context->robotPosition.y = 2840;
     }

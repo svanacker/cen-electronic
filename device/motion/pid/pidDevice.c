@@ -50,14 +50,14 @@ void devicePIDHandleRawData(char commandHeader, InputStream* inputStream, Output
         appendAck(outputStream);
         // PID Index => 0..n char index
         char pidIndex = readHex2(inputStream);
-        checkIsChar(inputStream, '-');
+        checkIsSeparator(inputStream);
         // PID Value => 2..9 char index
         float p = (float) readHex2(inputStream);
-        checkIsChar(inputStream, '-');
+        checkIsSeparator(inputStream);
         float i = (float) readHex2(inputStream);
-        checkIsChar(inputStream, '-');
+        checkIsSeparator(inputStream);
         float d = (float) readHex2(inputStream);
-        checkIsChar(inputStream, '-');
+        checkIsSeparator(inputStream);
         float maxI = (float) readHex2(inputStream);
 
         if (pidIndex >= 0 && pidIndex < PID_COUNT) {
@@ -127,13 +127,13 @@ void devicePIDHandleRawData(char commandHeader, InputStream* inputStream, Output
         MotionEndDetectionParameter* motionEndDetectionParameter = getMotionEndDetectionParameter();
 
         motionEndDetectionParameter->absDeltaPositionIntegralFactorThreshold = (float) readHex2(inputStream);
-        checkIsChar(inputStream, '-');
+        checkIsSeparator(inputStream);
         motionEndDetectionParameter->maxUIntegralFactorThreshold = (float)readHex2(inputStream);
-        checkIsChar(inputStream, '-');
+        checkIsSeparator(inputStream);
         motionEndDetectionParameter->maxUIntegralConstantThreshold = (float)readHex2(inputStream);
-        checkIsChar(inputStream, '-');
+        checkIsSeparator(inputStream);
         motionEndDetectionParameter->timeRangeAnalysis = (unsigned int)readHex2(inputStream);
-        checkIsChar(inputStream, '-');
+        checkIsSeparator(inputStream);
         motionEndDetectionParameter->noAnalysisAtStartupTime = (unsigned int)readHex2(inputStream);
     }
     // Debug : pg01-1001-000020-005678-4000-2000-5000-8000

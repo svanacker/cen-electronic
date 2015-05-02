@@ -2,9 +2,11 @@
 #define TEAM_COLOR_H
 
 /** Define the color defining the team. */
-#define TEAM_COLOR unsigned int
-
-#define COLOR_VIOLET        1
-#define COLOR_RED            0
+enum TeamColor {
+    /** 2015 Yellow Color. */
+    COLOR_YELLOW = 0,
+    /** 2015 Green Color. */
+    COLOR_GREEN = 1
+};
 
 #endif

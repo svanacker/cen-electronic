@@ -44,13 +44,13 @@ void deviceStrategyHandleRawData(char commandHeader, InputStream* inputStream, O
 
         // data
         int x = readHex4(inputStream);
-        checkIsChar(inputStream, '-');
+        checkIsSeparator(inputStream);
         int y = readHex4(inputStream);
 
         GameStrategyContext* context = getStrategyContext();
 
         context->opponentRobotPosition.x = (float) x;
-        if (isViolet()) {
+        if (isGreen()) {
             context->opponentRobotPosition.y = (float) y;
         }
         else {
@@ -75,11 +75,11 @@ void deviceStrategyHandleRawData(char commandHeader, InputStream* inputStream, O
         println(getInfoOutputStreamLogger());
 
         initStrategy2012(strategyIndex);
-        if (c & CONFIG_COLOR_BLUE_MASK) {
-            setColor(COLOR_VIOLET);
+        if (c & CONFIG_COLOR_GREEN_MASK) {
+            setColor(COLOR_GREEN);
         }
         else {
-            setColor(COLOR_RED);
+            setColor(COLOR_YELLOW);
         }
 
     }
@@ -110,15 +110,15 @@ void deviceStrategyHandleRawData(char commandHeader, InputStream* inputStream, O
         // status
         unsigned int status = readHex2(inputStream);
         // separator
-        checkIsChar(inputStream, '-');
+        checkIsSeparator(inputStream);
         // x
         context->robotPosition.x = (float) readHex4(inputStream);
         // separator
-        checkIsChar(inputStream, '-');
+        checkIsSeparator(inputStream);
         // y
         context->robotPosition.y = (float) readHex4(inputStream);
         // separator
-        checkIsChar(inputStream, '-');
+        checkIsSeparator(inputStream);
         // angle in ddeg
         context->robotAngle = readHex4(inputStream);
 

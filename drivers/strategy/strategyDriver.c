@@ -17,7 +17,7 @@
 
 #include "../../device/deviceConstants.h"
 #include "../../device/strategy/strategyDeviceInterface.h"
-#include "../../robot/match/startMatchDetectorDevice.h"
+#include "../../robot/match/startMatchDevice.h"
 #include "../../robot/match/endMatchDetectorDevice.h"
 
 #include "../../drivers/driver.h"

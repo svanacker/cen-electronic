@@ -36,10 +36,9 @@ unsigned int getConfigValue(void) {
 
 char* getConfigBitString(unsigned char configIndex) {
     switch (configIndex) {
-        case CONFIG_USE_BALISE_MASK: return "UseBalise";
-        case CONFIG_USE_SONAR_MASK: return "UseSonar";
+        case CONFIG_DONT_USE_BEACON_MASK: return "DontUseBeacon";
         case CONFIG_ROLLING_TEST_MASK: return "RollingTest";
-        case CONFIG_COLOR_BLUE_MASK: return "Blue";
+        case CONFIG_COLOR_GREEN_MASK: return "Green";
         default: return "?";
     }
 }
@@ -65,7 +64,7 @@ void appendStringConfig(OutputStream* outputStream) {
 
 unsigned char isConfigBalise() {
     refreshConfig();
-    return isConfigSet(CONFIG_USE_BALISE_MASK);
+    return !isConfigSet(CONFIG_DONT_USE_BEACON_MASK);
 }
 
 unsigned char getStrategy() {

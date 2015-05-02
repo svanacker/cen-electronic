@@ -177,19 +177,19 @@ void deviceMotionHandleRawData(char commandHeader,
         ackCommand(outputStream, MOTION_DEVICE_HEADER, commandHeader);
 
         float x = (float) readHex4(inputStream);
-        checkIsChar(inputStream, '-');
+        checkIsSeparator(inputStream);
 
         float y = (float) readHex4(inputStream);
-        checkIsChar(inputStream, '-');
+        checkIsSeparator(inputStream);
 
         float angle = (float) readHex4(inputStream);
         angle = angle * PI_DIVIDE_1800;
-        checkIsChar(inputStream, '-');
+        checkIsSeparator(inputStream);
 
         // the distance can be negative, so the robot go back instead of go forward
         // Distance1 in cm
         float distance1 = (float) readSignedHex2(inputStream);
-        checkIsChar(inputStream, '-');
+        checkIsSeparator(inputStream);
         distance1 *= 10.0f;
     
         // the distance can be negative, so the robot go back instead of go forward
@@ -197,7 +197,7 @@ void deviceMotionHandleRawData(char commandHeader,
         float distance2 = (float) readSignedHex2(inputStream);
         distance2 *= 10.0f;
 
-        checkIsChar(inputStream, '-');
+        checkIsSeparator(inputStream);
         int accelerationFactor = readHex(inputStream);
         int speedFactor = readHex(inputStream);
 

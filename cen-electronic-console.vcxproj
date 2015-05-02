@@ -253,8 +253,8 @@
     <ClCompile Include="robot\match\endMatchDetectorDeviceInterface.c" />
     <ClCompile Include="robot\match\pc\startMatchDetectorPc.c" />
     <ClCompile Include="robot\match\startMatchDetector.c" />
-    <ClCompile Include="robot\match\startMatchDetectorDevice.c" />
-    <ClCompile Include="robot\match\startMatchDetectorDeviceInterface.c" />
+    <ClCompile Include="robot\match\startMatchDevice.c" />
+    <ClCompile Include="robot\match\startMatchDeviceInterface.c" />
     <ClCompile Include="robot\match\strategy.c" />
     <ClCompile Include="robot\match\teamColor.c" />
     <ClCompile Include="robot\opponent\opponentRobot.c" />
@@ -306,7 +306,6 @@
     <ClInclude Include="common\delay\pc\cenDelayPc.h" />
     <ClInclude Include="common\eeprom\eeprom.h" />
     <ClInclude Include="common\eeprom\eepromAreas.h" />
-    <ClInclude Include="common\eeprom\eepromConstants.h" />
     <ClInclude Include="common\eeprom\pc\eepromPc.h" />
     <ClInclude Include="common\error\error.h" />
     <ClInclude Include="common\i2c\i2cCommon.h" />
@@ -497,8 +496,8 @@
     <ClInclude Include="robot\match\endMatchDetectorDeviceInterface.h" />
     <ClInclude Include="robot\match\pc\startMatchDetectorPc.h" />
     <ClInclude Include="robot\match\startMatchDetector.h" />
-    <ClInclude Include="robot\match\startMatchDetectorDevice.h" />
-    <ClInclude Include="robot\match\startMatchDetectorDeviceInterface.h" />
+    <ClInclude Include="robot\match\startMatchDevice.h" />
+    <ClInclude Include="robot\match\startMatchDeviceInterface.h" />
     <ClInclude Include="robot\match\strategy.h" />
     <ClInclude Include="robot\match\teamColor.h" />
     <ClInclude Include="robot\opponent\opponentRobot.h" />

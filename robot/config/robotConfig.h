@@ -1,35 +1,38 @@
 #ifndef ROBOT_CONFIG_H
 #define ROBOT_CONFIG_H
 
-/** Mask for the strategy : 0b00000111 */
+/** Mask for the strategy : 0b 0000 0111 */
 #define CONFIG_STRATEGY_MASK           0x0007
 
-/** The robot does not end (useful for test) : 0b00001000 */
-#define CONFIG_DO_NOT_END              0x0008
+/** The robot does not end (useful for test) : 0b 0000 1000 */
+#define CONFIG_DONT_WAIT_FOR_START     0x0008
 
-/** Send instruction to the robot to use test : 0b00010000 */
-#define CONFIG_ROLLING_TEST_MASK       0x0010
+/** The robot does not end (useful for test) : 0b 0000 1000 */
+#define CONFIG_DO_NOT_END              0x0010
 
 /** Use Sonar during the match : 0b00100000 */
-#define CONFIG_USE_SONAR_MASK          0x0020
+// #define CONFIG_USE_SONAR_MASK          0x0020
 
-// 0b01000000
-#define CONFIG_USE_BALISE_MASK         0x0040
+/** Send instruction to the robot to use test : 0b 0001 0000 */
+#define CONFIG_ROLLING_TEST_MASK       0x0020
 
-/** Indicates we have the color blue if set. */
-// 0b10000000
-#define CONFIG_COLOR_BLUE_MASK         0x0080
+// 0b 0100 0000
+#define CONFIG_DONT_USE_BEACON_MASK    0x0040
+
+/** Indicates we have the color green if set. */
+// 0b1000 0000
+#define CONFIG_COLOR_GREEN_MASK         0x0080
 
 /** Speed to low. */
-// 0b100000000
+// 0b 0001 0000 0000
 #define CONFIG_SPEED_LOW_MASK          0x0100
 
 /** Speed to very Low. */
-// 0b1000000000
+// 0b 0010 0000 0000
 #define CONFIG_SPEED_VERY_LOW_MASK     0x0200
 
 /** Speed to ultra very Low. */
-// 0b10000000000
+// 0b 0100 0000 0000
 #define CONFIG_SPEED_ULTRA_LOW_MASK    0x0400
 
 /** Address of the first PCF8574 for the configuration. */

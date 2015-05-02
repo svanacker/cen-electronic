@@ -41,7 +41,7 @@ typedef struct GameStrategyContext {
     /** TODO : Remove and Use Linked Pointer with current Point : Previously current trajectory of the robot. */
     LocationList currentTrajectory;
     /** Color. */
-    TEAM_COLOR color;
+    enum TeamColor color;
     /** Go to next Step. */
 //    bool mustDoNextStep;
     /** Step status. */

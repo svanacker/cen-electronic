@@ -65,7 +65,7 @@ void beaconReceiverDeviceHandleRawData(char commandHeader,
         append(outputStream, COMMAND_SET_OPPONENT_ROBOT_POSITION_FROM_LASER_TO_RECEIVER);
 
         opponentRobotPosition.x = readHex4(inputStream);
-        checkIsChar(inputStream, '-');
+        checkIsSeparator(inputStream);
         opponentRobotPosition.y = readHex4(inputStream);
     }
     // Ask the opponent Robot position stored by the receiver

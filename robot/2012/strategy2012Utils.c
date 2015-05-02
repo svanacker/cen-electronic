@@ -31,15 +31,15 @@
 
 // COLOR MANAGEMENT
 
-int isViolet() {
-    return getStrategyContext()->color == COLOR_VIOLET;
+bool isGreen() {
+    return getStrategyContext()->color == COLOR_GREEN;
 }
 
 /**
  * Change the location for color.
  */
 void changeLocationsForColor() {
-    if (isViolet()) {
+    if (isGreen()) {
         return;
     }
     LocationList* locationList = getNavigationLocationList();
@@ -52,7 +52,7 @@ void changeLocationsForColor() {
 }
 
 int changeAngleForColor(int angle) {
-    if (isViolet()) {
+    if (isGreen()) {
         return angle;
     } else {
         return -angle;
@@ -63,7 +63,7 @@ int changeAngleForColor(int angle) {
 // ARM
 
 void armLeftUp() {
-    if (isViolet()) {
+    if (isGreen()) {
         armDriver2012Up(ARM_LEFT);
     }
     else {
@@ -72,7 +72,7 @@ void armLeftUp() {
 }
 
 void armLeftDown() {
-    if (isViolet()) {
+    if (isGreen()) {
         armDriver2012Down(ARM_LEFT);
     }
     else {
@@ -81,7 +81,7 @@ void armLeftDown() {
 }
 
 void armRightUp() {
-    if (isViolet()) {
+    if (isGreen()) {
         armDriver2012Up(ARM_RIGHT);
     }
     else {
@@ -90,7 +90,7 @@ void armRightUp() {
 }
 
 void armRightDown() {
-    if (isViolet()) {
+    if (isGreen()) {
         armDriver2012Down(ARM_RIGHT);
     }
     else {
