@@ -167,8 +167,8 @@
 
 #include "../../robot/match/startMatchDetector.h"
 #include "../../robot/match/32/startMatchDetector32.h"
-#include "../../robot/match/startMatchDetectorDevice.h"
-#include "../../robot/match/startMatchDetectorDeviceInterface.h"
+#include "../../robot/match/startMatchDevice.h"
+#include "../../robot/match/startMatchDeviceInterface.h"
 #include "../../robot/match/endMatchDetectorDevice.h"
 #include "../../robot/match/endMatchDetectorDeviceInterface.h"
 
@@ -339,7 +339,7 @@ void initDevicesDescriptor() {
     addLocalDevice(getRobotConfigDeviceInterface(), getRobotConfigDeviceDescriptor(&robotConfig));
 
     initStartMatchDetector32(&startMatchDetector);
-    addLocalDevice(getStartMatchDetectorDeviceInterface(), getStartMatchDetectorDeviceDescriptor(&startMatchDetector));
+    addLocalDevice(getStartMatchDeviceInterface(), getStartMatchDeviceDescriptor(&startMatchDetector, &eeprom));
     addLocalDevice(getEndMatchDetectorDeviceInterface(), getEndMatchDetectorDeviceDescriptor());
     addLocalDevice(getSonarDeviceInterface(), getSonarDeviceDescriptor(&i2cBus));
     addLocalDevice(getRobotSonarDetectorDeviceInterface(), getRobotSonarDetectorDeviceDescriptor(&i2cBus));

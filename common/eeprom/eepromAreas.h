@@ -20,6 +20,10 @@
 #define EEPROM_KINETICS_AREA_MARKER_INDEX            0x0300
 #define EEPROM_KINETICS_START_INDEX                    0x0302
 
+// START MATCH
+#define EEPROM_START_MATCH_AREA_MARKER_INDEX        0x0400
+#define EEPROM_START_MATCH_START_INDEX              0x0402
+
 /**
  * Returns true if the area is initialized. A marker must be written at the two first character to consider it as initialized
  * @param eeprom_ the eeprom object

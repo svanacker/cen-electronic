@@ -10,6 +10,11 @@
 #define COMMAND_NOTIFY_MATCH_ENDED              'n'
 
 /**
+* Define the command sent to notify how much time there still is.
+*/
+#define COMMAND_GET_TIME_LEFT                   't'
+
+/**
  * The interface for the device EndMatchDetectorDevice.
  */
 DeviceInterface* getEndMatchDetectorDeviceInterface();

@@ -293,7 +293,7 @@ void mainBoardCallbackRawData(const Device* device,
         // status
         unsigned char status = readHex2(inputStream);
         // separator
-        checkIsChar(inputStream, '-');
+        checkIsSeparator(inputStream);
         // x
         unsigned int x = readHex4(inputStream);
         // separator
@@ -301,7 +301,7 @@ void mainBoardCallbackRawData(const Device* device,
         // y
         unsigned int y = readHex4(inputStream);
         // separator
-        checkIsChar(inputStream, '-');
+        checkIsSeparator(inputStream);
         // angle in ddeg
         unsigned int angle = readHex4(inputStream);
 
@@ -342,35 +342,35 @@ void mainBoardCallbackRawData(const Device* device,
         // appendString(outputStream, ",x=");
         appendHex4(outputStream, x);
 
-        checkIsChar(inputStream, '-');
+        checkIsSeparator(inputStream);
         appendSeparator(outputStream);
 
         float y = readHex4(inputStream);
         // appendString(outputStream, ",y=");
         appendHex4(outputStream, y);
 
-        checkIsChar(inputStream, '-');
+        checkIsSeparator(inputStream);
         appendSeparator(outputStream);
 
         float angle = readHex4(inputStream);
         // appendString(outputStream, ",angle=");
         appendHex4(outputStream, angle);
 
-        checkIsChar(inputStream, '-');
+        checkIsSeparator(inputStream);
         appendSeparator(outputStream);
 
         signed char dist0 = readHex2(inputStream);
         // appendString(outputStream, ",dist0=");
         appendHex2(outputStream, dist0);
 
-        checkIsChar(inputStream, '-');
+        checkIsSeparator(inputStream);
         appendSeparator(outputStream);
 
         signed char dist1 = readHex2(inputStream);
         // appendString(outputStream, ",dist1=");
         appendHex2(outputStream, dist1);
 
-        checkIsChar(inputStream, '-');
+        checkIsSeparator(inputStream);
         appendSeparator(outputStream);
 
         signed char a = readHex(inputStream);

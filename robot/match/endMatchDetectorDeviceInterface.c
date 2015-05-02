@@ -13,7 +13,13 @@ unsigned int getEndMatchDetectorSoftwareRevision(void) {
 }
 
 int deviceEndMatchDetectorGetInterface(char header, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
-    if (mode == DEVICE_MODE_OUTPUT) {
+    if (header == COMMAND_GET_TIME_LEFT) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("getTimeLeft");
+        }
+        return commandLengthValueForMode(mode, 0, 2);
+    }
+    else if (mode == DEVICE_MODE_OUTPUT) {
         if (header == COMMAND_NOTIFY_MATCH_ENDED) {
             if (fillDeviceArgumentList) {
                 setFunctionNoArgumentAndNoResult("notifyMatchEnd");

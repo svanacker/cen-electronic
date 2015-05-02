@@ -24,18 +24,27 @@
 /**
 * Defines the header to read one byte from the Eeprom
 */
+#define COMMAND_READ_BYTE_EEPROM         'r'
 
-#define COMMAND_READ_DATA_EEPROM         'r'
+/**
+* Defines the header to read an int from the Eeprom
+*/
+#define COMMAND_READ_INT_EEPROM         'R'
 
 /**
 * Defines the header to write one byte on the Eeprom.
 */
-#define COMMAND_WRITE_DATA_EEPROM         'w'
+#define COMMAND_WRITE_BYTE_EEPROM         'w'
+
+/**
+* Defines the header to write one int on the Eeprom.
+*/
+#define COMMAND_WRITE_INT_EEPROM         'W'
 
 /**
 * Defines the header to read the buffer from the Eeprom
 */
-#define COMMAND_READ_BLOCK_EEPROM         'R'
+#define COMMAND_READ_BLOCK_EEPROM         'b'
 
 /**
  * Do an intensive test with read and write.
@@ -45,7 +54,7 @@
 /**
 * Defines the header to write the buffer on the Eeprom
 */
-#define COMMAND_WRITE_BLOCK_EEPROM         'W'
+#define COMMAND_WRITE_BLOCK_EEPROM         'B'
 
 // Function to get the specific Device Interface
 

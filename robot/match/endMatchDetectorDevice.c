@@ -47,7 +47,7 @@ void initEndMatchConfig(void) {
     doNotEnd = isConfigSet(CONFIG_DO_NOT_END);
 }
 
-void markStartMatch() {
+void markStartMatch(void) {
     initEndMatchConfig();
     matchStarted = true;
     currentTimeInSecond = 0;
@@ -61,7 +61,7 @@ int getCurrentTimeInSecond(void) {
     return currentTimeInSecond;
 }
 
-bool isEnd() {
+bool isEnd(void) {
     if (doNotEnd) {
         return false;
     }
@@ -72,6 +72,7 @@ bool isEnd() {
     
     if (result) {    
         // If END
+        // TODO : Provide a callback in the Interface and not in the endMatchDetectorDevice !
         armDriver2012Up(0);
     }
     return result;
@@ -95,6 +96,10 @@ bool isEndMatchDetectorDeviceOk(void) {
 }
 
 void deviceEndMatchDetectorHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream) {
+    if (commandHeader == COMMAND_GET_TIME_LEFT) {
+        appendHex2(outputStream, MATCH_DURATION - currentTimeInSecond);
+        ackCommand(outputStream, END_MATCH_DETECTOR_DEVICE_HEADER, COMMAND_GET_TIME_LEFT);
+    }
 }
 
 // allocate memory

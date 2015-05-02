@@ -109,7 +109,7 @@
 
 #define STRATEGY_DEVICE_HEADER                     'Y'
 
-#define START_MATCH_DETECTOR_DEVICE_HEADER         '!'
+#define START_MATCH_DEVICE_HEADER                   '!'
 
 #define SONAR_DEVICE_HEADER                        '<'
 

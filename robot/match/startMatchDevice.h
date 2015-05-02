@@ -1,5 +1,5 @@
-#ifndef START_MATCH_DETECTOR_DEVICE_H
-#define START_MATCH_DETECTOR_DEVICE_H
+#ifndef START_MATCH_DEVICE_H
+#define START_MATCH_DEVICE_H
 
 /**
  * Small unit of code which detects the start of the match, by looping the
@@ -11,7 +11,10 @@
 #include "startMatchDetector.h"
 
 #include "../../device/device.h"
+
+#include "../../common/eeprom/eeprom.h"
 #include "../../common/io/outputStream.h"
+
 
 /**
 * Define a call back function which must be called during loopUntilStart.
@@ -23,7 +26,7 @@ typedef unsigned char handleFunctionType(void);
 * @param startMatchDetector the startMatchDetector structure to be independant of the hardware.
 * @return a device descriptor on startMatchDetector Device
 */
-DeviceDescriptor* getStartMatchDetectorDeviceDescriptor(StartMatchDetector* startMatchDetector);
+DeviceDescriptor* getStartMatchDeviceDescriptor(StartMatchDetector* startMatchDetector, Eeprom* eeprom);
 
 /**
 * Init the device.
@@ -50,12 +53,12 @@ bool isStarted(void);
 * Show the message to indicate that we wait for the match.
 * @param pcOutputStream the stream to the pc motherboard
 */
-void showWaitingStart(OutputStream* pcOutputStream);
+void notifyWaitingStart(OutputStream* pcOutputStream);
 
 /**
 * Inform user that the match is started.
 * @param the stream to the pc motherboard
 */
-void showStarted(OutputStream* pcOutputStream);
+void notifyStarted(OutputStream* pcOutputStream);
 
 #endif

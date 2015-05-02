@@ -53,20 +53,33 @@ void deviceEepromHandleRawData(char commandHeader, InputStream* inputStream, Out
         ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_CLEAR_EEPROM);
         clearEeprom(eeprom_);
     }
-    else if (commandHeader == COMMAND_READ_DATA_EEPROM) {
-        ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_READ_DATA_EEPROM);
+    else if (commandHeader == COMMAND_READ_BYTE_EEPROM) {
+        ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_READ_BYTE_EEPROM);
         unsigned long address = readHex4(inputStream);
         char value = eeprom_->eepromReadChar(eeprom_, address);
         appendHex2(outputStream, value);
     }
-    else if (commandHeader == COMMAND_WRITE_DATA_EEPROM) {
-        ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_WRITE_DATA_EEPROM);
+    else if (commandHeader == COMMAND_READ_INT_EEPROM) {
+        ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_READ_INT_EEPROM);
         unsigned long address = readHex4(inputStream);
-        int data = readHex2(inputStream);
+        int value = eepromReadInt(eeprom_, address);
+        appendHex4(outputStream, value);
+    }
+    else if (commandHeader == COMMAND_WRITE_BYTE_EEPROM) {
+        ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_WRITE_BYTE_EEPROM);
+        unsigned long address = readHex4(inputStream);
+        checkIsSeparator(inputStream);
+        char data = readHex2(inputStream);
         eeprom_->eepromWriteChar(eeprom_, address, data);
     }
+    else if (commandHeader == COMMAND_WRITE_INT_EEPROM) {
+        ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_WRITE_INT_EEPROM);
+        unsigned long address = readHex4(inputStream);
+        checkIsSeparator(inputStream);
+        int data = readHex4(inputStream);
+        eepromWriteInt(eeprom_, address, data);
+    }
     else if (commandHeader == COMMAND_READ_BLOCK_EEPROM) {
-     
         ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_READ_BLOCK_EEPROM);
         unsigned long address = readHex4(inputStream);
         int index;

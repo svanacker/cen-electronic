@@ -13,7 +13,7 @@
 /**
 * Returns the deviceDescriptor of the end Match Detector.
 */
-DeviceDescriptor* getEndMatchDetectorDeviceDescriptor();
+DeviceDescriptor* getEndMatchDetectorDeviceDescriptor(void);
 
 /**
 * Indicates that the match begins.
@@ -32,7 +32,8 @@ int getCurrentTimeInSecond ( void );
 bool isEnd( void );
 
 /**
-* Write into the stream that the match is finihed.
+* Write into the stream that the match is finished.
+* @param outputStream the outputStream in which we write the end
 */
 void showEnd(OutputStream* outputStream);
 
