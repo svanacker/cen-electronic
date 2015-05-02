@@ -138,3 +138,7 @@ bool checkIsChar(InputStream* inputStream, char expectedChar) {
     }
     return true;
 }
+
+bool checkIsSeparator(InputStream* inputStream) {
+    return checkIsChar(inputStream, '-');
+}

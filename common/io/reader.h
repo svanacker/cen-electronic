@@ -111,4 +111,11 @@ bool checkIsAck(InputStream* inputStream);
  */
 bool checkIsChar(InputStream* inputStream, char expectedChar);
 
+/**
+ * Check that the next char is a separator
+ * @param inputStream the inputStream in which we read char
+ * @return true if the data is a separator char, false else
+ */
+bool checkIsSeparator(InputStream* inputStream);
+
 #endif
