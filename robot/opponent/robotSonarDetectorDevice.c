@@ -15,6 +15,7 @@
 #include "../../common/io/reader.h"
 
 #include "../../common/timer/cenTimer.h"
+#include "../../common/timer/timerConstants.h"
 #include "../../common/timer/timerList.h"
 
 #include "../../common/log/logger.h"

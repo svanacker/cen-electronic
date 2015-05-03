@@ -10,6 +10,11 @@
 #define COMMAND_LCD                  'w'
 
 /**
+ * Command to clear the LCD
+ */
+#define COMMAND_CLEAR_LCD            'c'
+
+/**
 * Define the number of fixed count of char used
 * for each message.
 */

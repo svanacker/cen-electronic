@@ -20,6 +20,8 @@ DeviceDescriptor* getEndMatchDetectorDeviceDescriptor(void);
 */
 void markStartMatch( void );
 
+void resetStartMatch(void);
+
 /**
 * Get the current time for the match.
 */

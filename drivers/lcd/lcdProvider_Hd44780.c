@@ -1,5 +1,5 @@
 /**
- * Provider of lcf interface for lcd02
+ * Provider of lcd interface for lcd02
  */
 #include "lcd.h"
 #include "lcdHd44780.h"

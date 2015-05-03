@@ -637,6 +637,24 @@
     <Filter Include="Header Files\test\navigation">
       <UniqueIdentifier>{97f1efea-cbd7-41cf-88f6-ae4f2b8f92fe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\device\lcd">
+      <UniqueIdentifier>{a115f6ff-aad2-4d35-9910-44b2e0fc4c4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\device\lcd">
+      <UniqueIdentifier>{fa87b50d-cdb3-49c9-b083-aae46feb976c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\drivers\lcd">
+      <UniqueIdentifier>{2a0b68fb-e61d-4f3e-b582-47b5daf56e61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\drivers\lcd\pc">
+      <UniqueIdentifier>{5c858945-bf89-41c4-a393-115744ba1750}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\device\log">
+      <UniqueIdentifier>{78ab9e70-7449-43dd-84a3-084673e242c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\device\log">
+      <UniqueIdentifier>{7a4bf318-32d9-4c83-a67d-849f42e6b547}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -1295,6 +1313,27 @@
     </ClCompile>
     <ClCompile Include="robot\match\startMatchDeviceInterface.c">
       <Filter>Source Files\robot\match</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\extended\bsplinePersistence.c">
+      <Filter>Source Files\motion\extended</Filter>
+    </ClCompile>
+    <ClCompile Include="device\lcd\lcdDevice.c">
+      <Filter>Source Files\device\lcd</Filter>
+    </ClCompile>
+    <ClCompile Include="device\lcd\lcdDeviceInterface.c">
+      <Filter>Source Files\device\lcd</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\lcd\lcd.c">
+      <Filter>Source Files\drivers\lcd</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\lcd\pc\lcdProvider_Pc.c">
+      <Filter>Source Files\drivers\lcd\pc</Filter>
+    </ClCompile>
+    <ClCompile Include="device\log\logDevice.c">
+      <Filter>Source Files\device\log</Filter>
+    </ClCompile>
+    <ClCompile Include="device\log\logDeviceInterface.c">
+      <Filter>Source Files\device\log</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2032,6 +2071,24 @@
     </ClInclude>
     <ClInclude Include="robot\match\startMatchDeviceInterface.h">
       <Filter>Header Files\robot\match</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\extended\bsplinePersistence.h">
+      <Filter>Header Files\motion\extended</Filter>
+    </ClInclude>
+    <ClInclude Include="device\lcd\lcdDevice.h">
+      <Filter>Header Files\device\lcd</Filter>
+    </ClInclude>
+    <ClInclude Include="device\lcd\lcdDeviceInterface.h">
+      <Filter>Header Files\device\lcd</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\lcd\lcd.h">
+      <Filter>Source Files\drivers\lcd</Filter>
+    </ClInclude>
+    <ClInclude Include="device\log\logDevice.h">
+      <Filter>Header Files\device\log</Filter>
+    </ClInclude>
+    <ClInclude Include="device\log\logDeviceInterface.h">
+      <Filter>Header Files\device\log</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

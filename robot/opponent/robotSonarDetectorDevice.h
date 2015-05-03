@@ -3,7 +3,6 @@
 
 #include "../../device/device.h"
 
-#define ROBOT_SONAR_DETECTOR_TIMER_INDEX 123
 
 #define ROBOT_SONAR_DETECTOR_DEVICE_HISTORY_SIZE         3
 

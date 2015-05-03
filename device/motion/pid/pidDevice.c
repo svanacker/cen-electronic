@@ -153,7 +153,7 @@ void devicePIDHandleRawData(char commandHeader, InputStream* inputStream, Output
         appendSeparator(outputStream);
 
         // pidType
-        appendHex4(outputStream, computationValues->pidTime);
+        appendHex4(outputStream, (int) computationValues->pidTime);
         appendSeparator(outputStream);
 
         // MotionParameterType

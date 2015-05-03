@@ -112,9 +112,9 @@ void printEepromBlock(Eeprom* eeprom_, OutputStream* outputStream, long index, u
     }
 }
 
-void clearEeprom(Eeprom* eeprom_) {
+void clearEeprom(Eeprom* eeprom_, unsigned long startIndex, unsigned long endIndex) {
     unsigned long i;
-    for (i = 0; i < eeprom_->maxIndex; i++) {
+    for (i = startIndex; i < endIndex; i++) {
         eeprom_->eepromWriteChar(eeprom_, i, '\0');
     }
 }

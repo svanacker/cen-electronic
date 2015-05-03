@@ -23,7 +23,7 @@ void printTimerList(OutputStream* outputStream, TimerList* timerList) {
         Timer* timer = (Timer*) timerList->timers;
         timer += i;
 
-        printTimer(outputStream, timer);
         appendCRLF(outputStream);
+        printTimer(outputStream, timer);
     }
 }

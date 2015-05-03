@@ -35,7 +35,9 @@ static Timer* endMatchDetectorDeviceTimer;
 
 void endMatchDetectorCallbackFunc(Timer* timer) {
     if (matchStarted) {
-        currentTimeInSecond++;
+        if (currentTimeInSecond > 0) {
+            currentTimeInSecond++;
+        }
     }
 }
 
@@ -50,6 +52,11 @@ void initEndMatchConfig(void) {
 void markStartMatch(void) {
     initEndMatchConfig();
     matchStarted = true;
+    currentTimeInSecond = 0;
+}
+
+void resetStartMatch(void) {
+    matchStarted = false;
     currentTimeInSecond = 0;
 }
 
@@ -97,12 +104,11 @@ bool isEndMatchDetectorDeviceOk(void) {
 
 void deviceEndMatchDetectorHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream) {
     if (commandHeader == COMMAND_GET_TIME_LEFT) {
-        appendHex2(outputStream, MATCH_DURATION - currentTimeInSecond);
         ackCommand(outputStream, END_MATCH_DETECTOR_DEVICE_HEADER, COMMAND_GET_TIME_LEFT);
+        appendHex2(outputStream, MATCH_DURATION - currentTimeInSecond);
     }
 }
 
-// allocate memory
 static DeviceDescriptor endMatchDetectorDevice = {
     .deviceInit = &initEndMatchDetector,
     .deviceShutDown = &stopEndMatchDetector,

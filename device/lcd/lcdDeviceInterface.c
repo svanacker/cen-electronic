@@ -4,7 +4,7 @@
 #include "../../device/deviceInterface.h"
 #include "../../device/deviceConstants.h"
 
-const char* deviceLCDGetName() {
+const char* deviceLCDGetName(void) {
     return "LCD";
 }
 
@@ -20,6 +20,12 @@ int deviceLCDGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fil
         }
         return commandLengthValueForMode(mode, (LCD_CHAR_COUNT_BY_MESSAGE * 2) + 2, 0);
     }
+    else if (commandHeader == COMMAND_CLEAR_LCD) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("clear");
+        }
+        return 0;
+    }
     return DEVICE_HEADER_NOT_HANDLED;
 }
 
@@ -29,6 +35,6 @@ static DeviceInterface deviceInterface = {
     .deviceGetInterface = &deviceLCDGetInterface
 };
 
-DeviceInterface* getLCDDeviceInterface() {
+DeviceInterface* getLCDDeviceInterface(void) {
     return &deviceInterface;
 }

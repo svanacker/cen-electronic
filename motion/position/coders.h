@@ -3,9 +3,6 @@
 
 #include "coderType.h"
 
-/** The index of timer used. */
-#define CODER_TIMER_INDEX 0
-
 /**
  * Updates the coders values.
  */

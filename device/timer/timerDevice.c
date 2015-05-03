@@ -6,6 +6,7 @@
 
 #include "../../common/delay/cenDelay.h"
 #include "../../common/timer/timerDebug.h"
+#include "../../common/timer/timerConstants.h"
 #include "../../common/timer/timerList.h"
 
 #include "../../common/io/buffer.h"

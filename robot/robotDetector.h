@@ -116,11 +116,6 @@ void printDistances( void );
 // DEVICE INTERFACE
 
 /**
-* Defines the index for the timer to check if robot has detect something.
-*/
-#define ROBOT_DETECTOR_TIMER_INDEX 3
-
-/**
 * Returns a descriptor on the robot detector device.
 */
 DeviceDescriptor getRobotDetectorDeviceDescriptor();

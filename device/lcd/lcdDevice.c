@@ -10,13 +10,13 @@
 
 #include "../../drivers/lcd/lcd.h"
 
-void deviceLCDInit() {
+void deviceLCDInit(void) {
 }
 
-void deviceLCDShutDown() {
+void deviceLCDShutDown(void) {
 }
 
-bool deviceLCDIsOk() {
+bool deviceLCDIsOk(void) {
     return true;
 }
 
@@ -36,6 +36,10 @@ void deviceLCDHandleRawData(char commandHeader,
             }
         }
     }
+    else if (commandHeader == COMMAND_CLEAR_LCD) {
+        ackCommand(outputStream, LCD_DEVICE_HEADER, COMMAND_CLEAR_LCD);
+        clearScreen();
+    }
 }
 
 static DeviceDescriptor descriptor = {
@@ -45,6 +49,6 @@ static DeviceDescriptor descriptor = {
     .deviceHandleRawData = &deviceLCDHandleRawData,
 };
 
-DeviceDescriptor* getLCDDeviceDescriptor() {
+DeviceDescriptor* getLCDDeviceDescriptor(void) {
     return &descriptor;
 }

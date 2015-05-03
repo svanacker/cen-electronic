@@ -15,6 +15,9 @@
 /** Defines if the match is started or not. */
 #define COMMAND_MATCH_IS_STARTED 'r'
 
+/** Simulates that the match is started ! */
+#define COMMAND_MATCH_SET_STARTED 'w'
+
 /** Gets the initial position for both sides .*/
 #define COMMAND_START_MATCH_GET_INITIAL_POSITION 'p'
 

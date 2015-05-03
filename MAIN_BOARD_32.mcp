@@ -306,6 +306,7 @@ file_278=drivers.clock
 file_279=motion.simple
 file_280=robot.match
 file_281=robot.match
+file_282=common.timer
 [GENERATED_FILES]
 file_000=no
 file_001=no
@@ -589,6 +590,7 @@ file_278=no
 file_279=no
 file_280=no
 file_281=no
+file_282=no
 [OTHER_FILES]
 file_000=no
 file_001=no
@@ -872,6 +874,7 @@ file_278=no
 file_279=no
 file_280=no
 file_281=no
+file_282=no
 [FILE_INFO]
 file_000=main\mainBoard\mainBoardClient.c
 file_001=common\io\buffer.c
@@ -1155,6 +1158,7 @@ file_278=drivers\clock\PCF8563.h
 file_279=motion\simple\simpleMotion.h
 file_280=robot\match\startMatchDevice.h
 file_281=robot\match\startMatchDeviceInterface.h
+file_282=common\timer\timerConstants.h
 [SUITE_INFO]
 suite_guid={14495C23-81F8-43F3-8A44-859C583D7760}
 suite_state=

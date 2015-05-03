@@ -13,7 +13,6 @@
 /** Command to stop the Timer Demo. */
 #define COMMAND_TIMER_DISABLE_DEMO        'd'
 
-#define DEMO_TIMER_INDEX    124
 
 /**
 * Get the timer device interface.

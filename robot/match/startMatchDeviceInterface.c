@@ -9,8 +9,21 @@ const char* getStartMatchDeviceName(void) {
 }
 
 int deviceStartMatchGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
+    if (commandHeader == COMMAND_MATCH_IS_STARTED) {
+        if (fillDeviceArgumentList) {
+            setFunction("isStarted", 0, 1);
+            setResultUnsignedHex2(0, "value");
+        }
+        return commandLengthValueForMode(mode, 0, 2);
+    }
+    else if (commandHeader == COMMAND_MATCH_SET_STARTED) {
+        if (fillDeviceArgumentList) {
+            setFunction("setStarted", 0, 1);
+            setArgumentUnsignedHex2(0, "value");
+        }
+        return commandLengthValueForMode(mode, 2, 0);
+    }
     if (commandHeader == COMMAND_STEP_BY_STEP) {
-        // same input / output
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("stepByStep");
         }

@@ -489,9 +489,6 @@ int main(void) {
     addOutputStream(&compositeDriverAndDebugOutputStream, getDriverRequestOutputStream());
     */
 
-    // Start interruptions
-    // startTimerList();
-
     // Initializes the DriverDataDispatcherList
     initDriverDataDispatcherList(&driverDataDispatcherListArray, MAIN_BOARD_DRIVER_DATA_DISPATCHER_LIST_LENGTH);
 
@@ -547,6 +544,9 @@ int main(void) {
                         MAIN_BOARD_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH);
 
     setDebugI2cEnabled(false);
+
+    // Start interruptions
+    startTimerList();
 
     while (1) {
         waitForInstruction();

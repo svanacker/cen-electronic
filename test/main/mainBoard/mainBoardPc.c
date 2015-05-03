@@ -50,8 +50,15 @@
 // KINEMATICS
 #include "../../../robot/kinematics/robotKinematicsDeviceInterface.h"
 
-// MOTION
+// LCD
+#include "../../../device/lcd/lcdDevice.h"
+#include "../../../device/lcd/lcdDeviceInterface.h"
 
+// LOGS
+#include "../../../device/log/logDevice.h"
+#include "../../../device/log/logDeviceInterface.h"
+
+// MOTION
 #include "../../../device/motion/pid/pidDevice.h"
 #include "../../../device/motion/pid/pidDeviceInterface.h"
 
@@ -278,6 +285,9 @@ void runMainBoardPC(void) {
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
     addLocalDevice(getFileDeviceInterface(), getFileDeviceDescriptor());
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
+    addLocalDevice(getLogDeviceInterface(), getLogDeviceDescriptor());
+    addLocalDevice(getLCDDeviceInterface(), getLCDDeviceDescriptor());
+
 
     initStartMatchDetectorPc(&startMatchDetector);
     addLocalDevice(getStartMatchDeviceInterface(), getStartMatchDeviceDescriptor(&startMatchDetector, &eeprom));

@@ -14,10 +14,8 @@
 #include "../../../common/log/logLevel.h"
 
 #include "../../../common/timer/cenTimer.h"
+#include "../../../common/timer/timerConstants.h"
 #include "../../../common/timer/timerList.h"
-
-/** The index of the timer (used to update value of servo). */
-#define SERVO_TIMER_INDEX 10
 
 #define SERVO_SPEED_TIMER_FACTOR 3
 

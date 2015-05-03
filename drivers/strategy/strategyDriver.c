@@ -13,6 +13,7 @@
 #include "../../common/log/logHandler.h"
 
 #include "../../common/timer/cenTimer.h"
+#include "../../common/timer/timerConstants.h"
 #include "../../common/timer/timerList.h"
 
 #include "../../device/deviceConstants.h"
@@ -26,7 +27,6 @@
 
 #include "../../robot/opponent/opponentRobot.h"
 
-#define STRATEGY_DRIVER_TIMER_INDEX            25
 
 /**
  * Define the timer divider to have a timer at approximatively 1,5 Hertz.

@@ -51,7 +51,10 @@ void deviceEepromHandleRawData(char commandHeader, InputStream* inputStream, Out
     }
     else if (commandHeader == COMMAND_CLEAR_EEPROM) {
         ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_CLEAR_EEPROM);
-        clearEeprom(eeprom_);
+        unsigned long startAddress = readHex4(inputStream);
+        checkIsSeparator(inputStream);
+        unsigned long endAddress = readHex4(inputStream);
+        clearEeprom(eeprom_, startAddress, endAddress);
     }
     else if (commandHeader == COMMAND_READ_BYTE_EEPROM) {
         ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_READ_BYTE_EEPROM);

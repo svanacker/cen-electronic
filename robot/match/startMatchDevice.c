@@ -8,6 +8,7 @@
 #include "startMatchDetector.h"
 #include "startMatchDevice.h"
 #include "startMatchDeviceInterface.h"
+#include "endMatchDetectorDevice.h"
 
 #include "../../common/io/inputStream.h"
 #include "../../common/io/outputStream.h"
@@ -36,6 +37,8 @@ static Eeprom* startMatchEeprom;
 
 #define EEPROM_START_MATCH_ROBOT_POSITION_BLOCK_SIZE      20
 
+static bool simulateStartedMatch;
+
 void initStartMatchDevice(void) {
 
 }
@@ -58,6 +61,9 @@ void loopUntilStart(handleFunctionType* handleFunction) {
 }
 
 bool isStarted(void) {
+    if (simulateStartedMatch) {
+        return simulateStartedMatch;
+    }
     if (startMatchDetector == NULL) {
         return false;
     }
@@ -85,7 +91,24 @@ int getStartMatchDetectorEepromGetOffset(int color) {
 }
 
 void deviceStartMatchDetectorHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream) {
-    if (commandHeader == COMMAND_STEP_BY_STEP) {
+    if (commandHeader == COMMAND_MATCH_IS_STARTED) {
+        int value = isStarted();
+        ackCommand(outputStream, START_MATCH_DEVICE_HEADER, COMMAND_MATCH_IS_STARTED);
+        appendHex2(outputStream, value);
+    }
+    if (commandHeader == COMMAND_MATCH_SET_STARTED) {
+        int value = readHex2(inputStream);
+        simulateStartedMatch = value;
+        if (simulateStartedMatch) {
+            markStartMatch();
+        }
+        else {
+            resetStartMatch();
+        }
+        ackCommand(outputStream, START_MATCH_DEVICE_HEADER, COMMAND_MATCH_SET_STARTED);
+    }
+
+    else if (commandHeader == COMMAND_STEP_BY_STEP) {
         robotNextStep();
         ackCommand(outputStream, START_MATCH_DEVICE_HEADER, COMMAND_STEP_BY_STEP);
     }

@@ -140,9 +140,9 @@ bool isEepromInitialized(Eeprom* eeprom_);
 void printEepromBlock(Eeprom* eeprom_, OutputStream* outputStream, long index, unsigned int length, Buffer* buffer);
 
 /**
- * Clear the eeprom by filling with 0 files.
+ * Clear the eeprom by filling with 0 files between 2 index (including startIndex, but excluding endIndex)
  */
-void clearEeprom(Eeprom* eeprom_);
+void clearEeprom(Eeprom* eeprom_, unsigned long startIndex, unsigned long endIndex);
 
 /**
 * Dump the content of the eeprom_ into a file (always the same).

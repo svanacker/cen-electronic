@@ -15,7 +15,8 @@ unsigned int getEndMatchDetectorSoftwareRevision(void) {
 int deviceEndMatchDetectorGetInterface(char header, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     if (header == COMMAND_GET_TIME_LEFT) {
         if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("getTimeLeft");
+            setFunction("getTimeLeft", 0, 1);
+            setResultUnsignedHex2(0, "timeLeft");
         }
         return commandLengthValueForMode(mode, 0, 2);
     }
