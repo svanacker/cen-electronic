@@ -9,7 +9,7 @@ HANDLE initServerPipe(LPCWSTR pipeName) {
     HANDLE result = CreateNamedPipe(pipeName,
         PIPE_ACCESS_DUPLEX,
         PIPE_TYPE_BYTE | PIPE_READMODE_BYTE /* | PIPE_NOWAIT */,
-        // Only one instance
+        // Only xx instance
         2,
         // outBufferSize
         100,

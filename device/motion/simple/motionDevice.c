@@ -238,6 +238,7 @@ void deviceMotionHandleRawData(char commandHeader,
     else if (commandHeader == COMMAND_SQUARE_CALIBRATION) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_SQUARE_CALIBRATION);
         unsigned char type = readHex2(inputStream);
+        checkIsSeparator(inputStream);
         float length = (float) readHex4(inputStream);
         squareCalibration(type, length);
     }        // PARAMETERS

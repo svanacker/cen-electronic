@@ -141,11 +141,12 @@ int deviceMotionGetInterface(char commandHeader, DeviceInterfaceMode mode, bool 
     }// Calibration
     else if (commandHeader == COMMAND_SQUARE_CALIBRATION) {
         if (fillDeviceArgumentList) {
-            setFunction("squareCalib", 2, 0);
-            setArgumentUnsignedHex2(0, "l/r");
-            setArgumentUnsignedHex4(1, "length");
+            setFunction("squareCalib", 3, 0);
+            setArgumentUnsignedHex2(0, "left/right");
+            setArgumentSeparator(1);
+            setArgumentUnsignedHex4(2, "length");
         }
-        return commandLengthValueForMode(mode, 6, 0);
+        return commandLengthValueForMode(mode, 7, 0);
     }// Parameters
     else if (commandHeader == COMMAND_GET_MOTION_PARAMETERS) {
         if (fillDeviceArgumentList) {
