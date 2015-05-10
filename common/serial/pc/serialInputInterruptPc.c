@@ -57,6 +57,11 @@ DWORD WINAPI serialInputInterruptCallback(LPVOID lpvParam) {
 
         // Blocking Call
         char c = readCharFromPipe(serialPipeHandle1);
+
+        if (GetLastError() != 0) {
+            break;
+        }
+
         if (c == 0) {
             continue;
         }

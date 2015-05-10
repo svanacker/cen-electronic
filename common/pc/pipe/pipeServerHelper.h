@@ -27,11 +27,4 @@ HANDLE initClientPipe(LPCWSTR pipeName);
  */
 bool writeCharToPipe(HANDLE pipe, char c);
 
-/**
- * Returns the char read from the Pipe, 0x00 if no data
- * @param pipe the pipe in which we read
- * @return the char read from the Pipe, 0x00 if no data.
- */
-unsigned char readCharFromPipe(HANDLE pipe);
-
 #endif

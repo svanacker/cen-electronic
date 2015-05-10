@@ -34,13 +34,17 @@ unsigned char readCharFromPipe(HANDLE pipe) {
         &numBytesRead, // this will store number of bytes actually read
         NULL // not using overlapped IO
         );
+    unsigned char result = buffer[0];
+
     int lastError = GetLastError();
 
-    if (lastError != 0) {
+    if (lastError == ERROR_BROKEN_PIPE) {
+        printf("The pipe Has Been Ended (%d)\r\n", lastError);
+        return result;
+    }
+    else if (lastError != 0) {
         printf("readCharFromPipe->lastError: %d\r\n", lastError);
     }
-
-    unsigned char result = buffer[0];
     if (!ok) {
         printf("readCharFromPipe->Failed to read data from the pipe.\r\n");
     }

@@ -10,21 +10,21 @@
 #include "common/pc/process/processHelper.h"
 
 void printUsage(void) {
-    printf("Run emulators for cen-electronic projects : \r\n");
-    printf("cen-electronic-console.exe [BOARD_NAME]\r\n");
+    printf("ROBOT EMULATOR for cen-electronic projects : \r\n");
+    printf("cen-electronic-console.exe [BOARD_NAME] [OPTION]\r\n");
 
     // MainBoard
     printf("\t[BOARD_NAME]\t Select the board that you want to launch by providing name in the following list\r\n");
     printf("\t\t\t");
     printf(MAIN_BOARD_PC_NAME);
     printf(" \t : run the main Board Emulator\r\n");
+    printf("\t\t\t\t [OPTION] robotManager : launch the mainBoard with a connection to RobotManager\r\n");
 
     // MotorBoard
     printf("\t\t\t");
     printf(MOTOR_BOARD_PC_NAME);
     printf("\t : run the motor Board Emulator\r\n");
-    printf("\t\t\t\t single : just launch motorBoard without initializing I2C to connect it to a master\r\n");
-    printf("\t\t\t\t single : just launch motorBoard without initializing I2C to connect it to a master\r\n");
+    printf("\t\t\t\t [OPTION] single : just launch motorBoard without initializing I2C to connect it to a master\r\n");
 
     // All Tests
     printf("\t\t\t");
@@ -46,12 +46,17 @@ int main(int argumentCount, char* arguments[])
         runProcess(applicationNameAsChar, motorBoardOptionCommand);
 
         // And After the main Board
-        runMainBoardPC();
+        runMainBoardPC(false);
     }
     else {
         char* boardName = arguments[1];
         if (strcmp(boardName, MAIN_BOARD_PC_NAME) == 0) {
-            runMainBoardPC();
+            bool robotManager = false;
+            if (argumentCount > 2) {
+                char* mainBoardRunMode = arguments[2];
+                robotManager = (strcmp(boardName, MAIN_BOARD_PC_ROBOT_MANAGER) == 0);
+            }
+            runMainBoardPC(robotManager);
         }
         else if (strcmp(boardName, MOTOR_BOARD_PC_NAME) == 0) {
             bool singleMode = true;

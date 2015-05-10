@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <windows.h>
+#include <stdbool.h>
 
 #include "../../../common/clock/clock.h"
 #include "../../../common/delay/cenDelay.h"
@@ -185,6 +186,8 @@ static Device* testDevice;
 // StartMatchDetector
 static StartMatchDetector startMatchDetector;
 
+static bool connectToRobotManager = false;
+
 void mainBoardDeviceHandleNotification(const Device* device, const char commandHeader, InputStream* inputStream) {
     appendString(getDebugOutputStreamLogger(), "Notification ! commandHeader=");
     append(getDebugOutputStreamLogger(), commandHeader);
@@ -223,16 +226,19 @@ void mainBoardWaitForInstruction(void) {
         &filterRemoveCRLF,
         NULL);
 
-    // From RobotManager
-    handleStreamInstruction(
-        &robotManagerInputBuffer,
-        &robotManagerOutputBuffer,
-        &robotManagerOutputStream,
-        &filterRemoveCRLF,
-        NULL);
+    if (connectToRobotManager) {
+        // From RobotManager
+        handleStreamInstruction(
+            &robotManagerInputBuffer,
+            &robotManagerOutputBuffer,
+            &robotManagerOutputStream,
+            &filterRemoveCRLF,
+            NULL);
+    }
 }
 
-void runMainBoardPC(void) {
+void runMainBoardPC(bool connectToRobotManagerMode) {
+    connectToRobotManager = connectToRobotManagerMode;
     setPicName(MAIN_BOARD_PC_NAME);
     moveConsole(0, 0, HALF_SCREEN_WIDTH, CONSOLE_HEIGHT);
 
@@ -252,6 +258,7 @@ void runMainBoardPC(void) {
     addConsoleLogHandler(DEBUG, LOG_HANDLER_CATEGORY_ALL_MASK);
     appendStringCRLF(getDebugOutputStreamLogger(), getPicName());
 
+    if (connectToRobotManager) {
     // Open the serial Link between RobotManager (C# Project) and the MainBoardPc
     openSerialLink(&robotManagerSerialStreamLink,
         &robotManagerInputBuffer,
@@ -263,6 +270,7 @@ void runMainBoardPC(void) {
         &robotManagerOutputStream,
         SERIAL_PORT_ROBOT_MANAGER,
         0);
+    }
 
     initTimerList((Timer(*)[]) &timerListArray, MAIN_BOARD_PC_TIMER_LENGTH);
 
