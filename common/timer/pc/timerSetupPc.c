@@ -6,6 +6,8 @@
 #include "../../../common/timer/timerInterrupt.h"
 #include "../../../common/timer/timerList.h"
 
+#include "../../../common/pc/thread/threadHelper.h"
+
 #include <Windows.h>
 #include <stdio.h>
 
@@ -43,11 +45,8 @@ DWORD WINAPI timerCallback(LPVOID lpvParam) {
  */
 void _initTimers() {
     // Create a thread to handle timer
-    timerThreadHandle = CreateThread(
-        NULL,              // no security attribute 
-        0,                 // default stack size 
+    timerThreadHandle = createStandardThread(
         timerCallback,    // thread proc
         (LPVOID) timerThreadHandle,    // thread parameter 
-        0,                 // not suspended 
         &timerThreadId);      // returns thread ID 
 }

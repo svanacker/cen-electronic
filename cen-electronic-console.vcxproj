@@ -126,6 +126,7 @@
     <ClCompile Include="common\pc\pipe\pipeClientHelper.c" />
     <ClCompile Include="common\pc\pipe\pipeServerHelper.c" />
     <ClCompile Include="common\pc\process\processHelper.c" />
+    <ClCompile Include="common\pc\thread\threadHelper.c" />
     <ClCompile Include="common\pwm\motor\motorPwm.c" />
     <ClCompile Include="common\pwm\motor\pc\dualHBridgeMotorPc.c" />
     <ClCompile Include="common\pwm\servo\pc\servoPwmPc.c" />
@@ -362,10 +363,12 @@
     <ClInclude Include="common\pc\pipe\pipeClientHelper.h" />
     <ClInclude Include="common\pc\pipe\pipeServerHelper.h" />
     <ClInclude Include="common\pc\process\processHelper.h" />
+    <ClInclude Include="common\pc\thread\threadHelper.h" />
     <ClInclude Include="common\pwm\motor\dualHBridgeMotorPwm.h" />
     <ClInclude Include="common\pwm\motor\motorPwm.h" />
     <ClInclude Include="common\pwm\servo\servoPwm.h" />
     <ClInclude Include="common\pwm\servo\servoPwmDebug.h" />
+    <ClInclude Include="common\serial\pc\serialPc.h" />
     <ClInclude Include="common\serial\serial.h" />
     <ClInclude Include="common\serial\serialInputInterrupt.h" />
     <ClInclude Include="common\serial\serialLink.h" />

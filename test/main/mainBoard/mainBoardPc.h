@@ -1,9 +1,16 @@
 #ifndef MAIN_BOARD_PC_H
 #define MAIN_BOARD_PC_H
 
+#include <stdbool.h>
+
 #define MAIN_BOARD_PC_NAME    "mainBoardPc"
+#define MAIN_BOARD_PC_ROBOT_MANAGER   "robotManager"
 
 #define MAIN_BOARD_PC_LOG_HANDLER_LIST_LENGTH                    2
+
+// Serial Emulation from PC_MAIN_BOARD
+#define ROBOT_MANAGER_INPUT_BUFFER_LENGTH                   100
+#define ROBOT_MANAGER_OUTPUT_BUFFER_LENGTH                  100
 
 #define MAIN_BOARD_PC_DELAY_CONSOLE_ANALYZE_MILLISECONDS        1
 
@@ -26,7 +33,8 @@
 
 /**
  * Start Point to emulate the main Board PC.
+ * @param connectToRobotManagerMode if true, wait for a Pipe given by the RobotManager Program.
  */
-void runMainBoardPC(void);
+void runMainBoardPC(bool connectToRobotManagerMode);
 
 #endif

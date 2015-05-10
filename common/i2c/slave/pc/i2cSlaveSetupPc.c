@@ -17,6 +17,7 @@
 
 #include "../../../../common/pc/pipe/pipeClientHelper.h"
 #include "../../../../common/pc/pipe/pipeServerHelper.h"
+#include "../../../../common/pc/thread/threadHelper.h"
 
 #include <Windows.h>
 
@@ -64,31 +65,16 @@ void i2cSlaveInitialize(I2cBus* i2cBus, unsigned char writeAddress) {
     slaveToMasterHandle = initServerPipe(L"\\\\.\\pipe\\motorBoardPipe");
     initialized = true;
 
-    // Create a thread to handle master to slave data
-    masterToSlaveThreadHandle = CreateThread(
-        NULL,              // no security attribute 
-        0,                 // default stack size 
+    // Thread : master => slave
+    masterToSlaveThreadHandle = createStandardThread(
         masterToSlaveCallback,    // thread proc
         (LPVOID)masterToSlaveHandle,    // thread parameter 
-        0,                 // not suspended 
         &masterToSlaveThreadId);      // returns thread ID 
 
-    if (masterToSlaveThreadHandle == NULL)
-    {
-        printf("CreateThread failed, lastError=%d.\n", GetLastError());
-    }
-
-    slaveToMasterThreadHandle = CreateThread(
-        NULL,              // no security attribute 
-        0,                 // default stack size 
+    // Thread : slave => master
+    slaveToMasterThreadHandle = createStandardThread(
         slaveToMasterCallback,    // thread proc
         (LPVOID)slaveToMasterHandle,    // thread parameter 
-        0,                 // not suspended 
         &slaveToMasterThreadId);      // returns thread ID 
-
-    if (masterToSlaveThreadHandle == NULL)
-    {
-        printf("CreateThread failed, lastError=%d.\n", GetLastError());
-    }
 }
 

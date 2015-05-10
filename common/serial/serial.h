@@ -51,21 +51,4 @@ void closeSerial(unsigned char serialPortIndex);
  */
 void serialPutc(unsigned char serialPortIndex, char c);
 
-/**
- * Reads a char from the serial input. This function
- * blocks until a char is received. Use kbhit() to
- * avoid blocking.
- * @param serialPortIndex the serialPortIndex we want to use
- * @return the character read
- */
-char serialGetc(unsigned char serialPortIndex);
-
-/**
- * Checks whether a character is available from the serial input.
- * return true or false
- * @param serialPortIndex the serialPortIndex we want to use
- * @return returns zero if no char is pending, else non-zero
- */
-int serialKbhit(unsigned char serialPortIndex);
-
 #endif

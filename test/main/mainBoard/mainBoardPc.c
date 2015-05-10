@@ -3,22 +3,28 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <windows.h>
+#include <stdbool.h>
 
 #include "../../../common/clock/clock.h"
 #include "../../../common/delay/cenDelay.h"
 #include "../../../common/eeprom/pc/eepromPc.h"
 #include "../../../common/error/error.h"
 #include "../../../common/i2c/i2cDebug.h"
+
+#include "../../../common/io/filter.h"
 #include "../../../common/io/pc/consoleOutputStream.h"
 #include "../../../common/io/pc/consoleInputStream.h"
-#include "../../../common/io/filter.h"
 #include "../../../common/io/pc/consoleOutputStream.h"
 #include "../../../common/io/printWriter.h"
 #include "../../../common/io/reader.h"
+#include "../../../common/io/streamLink.h"
 
 #include "../../../common/log/logger.h"
 #include "../../../common/log/logLevel.h"
 #include "../../../common/log/pc/consoleLogHandler.h"
+
+#include "../../../common/serial/serial.h"
+#include "../../../common/serial/serialLink.h"
 
 #include "../../../common/timer/timerList.h"
 
@@ -122,6 +128,15 @@
 // Logs
 static LogHandler logHandlerListArray[MAIN_BOARD_PC_LOG_HANDLER_LIST_LENGTH];
 
+// Robot Manager Link
+#define SERIAL_PORT_ROBOT_MANAGER       SERIAL_PORT_1
+static char robotManagerInputBufferArray[ROBOT_MANAGER_INPUT_BUFFER_LENGTH];
+static Buffer robotManagerInputBuffer;
+static char robotManagerOutputBufferArray[ROBOT_MANAGER_OUTPUT_BUFFER_LENGTH];
+static Buffer robotManagerOutputBuffer;
+static OutputStream robotManagerOutputStream;
+static StreamLink robotManagerSerialStreamLink;
+
 // Dispatchers
 static DriverDataDispatcher driverDataDispatcherListArray[MAIN_BOARD_PC_DATA_DISPATCHER_LIST_LENGTH];
 
@@ -171,6 +186,8 @@ static Device* testDevice;
 // StartMatchDetector
 static StartMatchDetector startMatchDetector;
 
+static bool connectToRobotManager = false;
+
 void mainBoardDeviceHandleNotification(const Device* device, const char commandHeader, InputStream* inputStream) {
     appendString(getDebugOutputStreamLogger(), "Notification ! commandHeader=");
     append(getDebugOutputStreamLogger(), commandHeader);
@@ -190,6 +207,8 @@ void mainBoardWaitForInstruction(void) {
     }
 
     // delaymSec(MAIN_BOARD_PC_DELAY_CONSOLE_ANALYZE_MILLISECONDS);
+
+    // Fill Console Buffer
     while (consoleInputStream.availableData(&consoleInputStream)) {
         unsigned char c = consoleInputStream.readChar(&consoleInputStream);
         consoleInputBuffer.outputStream.writeChar(&(consoleInputBuffer.outputStream), c);
@@ -199,16 +218,27 @@ void mainBoardWaitForInstruction(void) {
         consoleOutputStream.writeChar(&consoleOutputStream, c);
     }
 
-    // TODO : Introduce the same as interrupt to be able to add char not in the main execution program
+    // From Text Console
+    handleStreamInstruction(
+        &consoleInputBuffer,
+        &consoleOutputBuffer,
+        &consoleOutputStream,
+        &filterRemoveCRLF,
+        NULL);
+
+    if (connectToRobotManager) {
+        // From RobotManager
         handleStreamInstruction(
-            &consoleInputBuffer,
-            &consoleOutputBuffer,
-            &consoleOutputStream,
+            &robotManagerInputBuffer,
+            &robotManagerOutputBuffer,
+            &robotManagerOutputStream,
             &filterRemoveCRLF,
             NULL);
+    }
 }
 
-void runMainBoardPC(void) {
+void runMainBoardPC(bool connectToRobotManagerMode) {
+    connectToRobotManager = connectToRobotManagerMode;
     setPicName(MAIN_BOARD_PC_NAME);
     moveConsole(0, 0, HALF_SCREEN_WIDTH, CONSOLE_HEIGHT);
 
@@ -227,6 +257,20 @@ void runMainBoardPC(void) {
     initConsoleOutputStream(&consoleOutputStream);
     addConsoleLogHandler(DEBUG, LOG_HANDLER_CATEGORY_ALL_MASK);
     appendStringCRLF(getDebugOutputStreamLogger(), getPicName());
+
+    if (connectToRobotManager) {
+    // Open the serial Link between RobotManager (C# Project) and the MainBoardPc
+    openSerialLink(&robotManagerSerialStreamLink,
+        &robotManagerInputBuffer,
+        (char(*)[]) &robotManagerInputBufferArray,
+        ROBOT_MANAGER_INPUT_BUFFER_LENGTH,
+        &robotManagerOutputBuffer,
+        (char(*)[]) &robotManagerOutputBufferArray,
+        ROBOT_MANAGER_OUTPUT_BUFFER_LENGTH,
+        &robotManagerOutputStream,
+        SERIAL_PORT_ROBOT_MANAGER,
+        0);
+    }
 
     initTimerList((Timer(*)[]) &timerListArray, MAIN_BOARD_PC_TIMER_LENGTH);
 

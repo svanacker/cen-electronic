@@ -48,16 +48,6 @@ void closeSerial(unsigned char serialPortIndex) {
     UARTEnable(uart, UART_DISABLE_FLAGS(UART_PERIPHERAL | UART_RX | UART_TX));
 }
 
-int serialKbhit(unsigned char serialPortIndex) {
-    UART_MODULE uart = getUartModule(serialPortIndex);
-    return UARTReceivedDataIsAvailable(uart);
-}
-
-char serialGetc(unsigned char serialPortIndex) {
-    UART_MODULE uart = getUartModule(serialPortIndex);
-    return UARTGetDataByte(uart);
-}
-
 void serialPutc(unsigned char serialPortIndex, char c) {
     UART_MODULE uart = getUartModule(serialPortIndex);
 

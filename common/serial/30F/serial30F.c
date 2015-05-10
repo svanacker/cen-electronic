@@ -46,24 +46,6 @@ void closeSerial(unsigned char serialPortIndex) {
     }
 }
 
-int serialKbhit(unsigned char serialPortIndex) {
-    if (serialPortIndex == SERIAL_PORT_1) {
-        return DataRdyUART1();
-    } else if (serialPortIndex == SERIAL_PORT_2) {
-        return DataRdyUART2();
-    }
-    return 0;
-}
-
-char serialGetc(unsigned char serialPortIndex) {
-    if (serialPortIndex == SERIAL_PORT_1) {
-        return ReadUART1();
-    } else if (serialPortIndex == SERIAL_PORT_2) {
-        return ReadUART2();
-    }
-    return 0;
-}
-
 void serialPutc(unsigned char serialPortIndex, char c) {
     // SERIAL 1
     if (serialPortIndex == SERIAL_PORT_1) {

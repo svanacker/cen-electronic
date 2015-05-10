@@ -44,7 +44,7 @@
 /**
  * Constant to have good PID range.
  */
-#define PID_GLOBAL_DIVISER 400.0f
+#define PID_GLOBAL_DIVISER 100.0f
 
 /** 
  The factor which defines by which factor we divide the expected acceleration.
