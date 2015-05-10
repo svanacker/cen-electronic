@@ -35,8 +35,9 @@ void printUsage(void) {
 
 int main(int argumentCount, char* arguments[])
 {
+    char* applicationNameAsChar = arguments[0];
+
     if (argumentCount <= 1) {
-        char* applicationNameAsChar = arguments[0];
 
         // Run the Motor Board
         char motorBoardOptionCommand[80];
@@ -54,8 +55,15 @@ int main(int argumentCount, char* arguments[])
             bool robotManager = false;
             if (argumentCount > 2) {
                 char* mainBoardRunMode = arguments[2];
-                robotManager = (strcmp(boardName, MAIN_BOARD_PC_ROBOT_MANAGER) == 0);
+                robotManager = (strcmp(mainBoardRunMode, MAIN_BOARD_PC_ROBOT_MANAGER) == 0);
+
+                char motorBoardOptionCommand[80];
+                strcpy(motorBoardOptionCommand, MOTOR_BOARD_PC_NAME);
+                strcat(motorBoardOptionCommand, " ");
+                strcat(motorBoardOptionCommand, MOTOR_BOARD_PC_RUN_STANDARD);
+                runProcess(applicationNameAsChar, motorBoardOptionCommand);
             }
+            // In all cases
             runMainBoardPC(robotManager);
         }
         else if (strcmp(boardName, MOTOR_BOARD_PC_NAME) == 0) {

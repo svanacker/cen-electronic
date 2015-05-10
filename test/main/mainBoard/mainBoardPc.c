@@ -258,19 +258,6 @@ void runMainBoardPC(bool connectToRobotManagerMode) {
     addConsoleLogHandler(DEBUG, LOG_HANDLER_CATEGORY_ALL_MASK);
     appendStringCRLF(getDebugOutputStreamLogger(), getPicName());
 
-    if (connectToRobotManager) {
-    // Open the serial Link between RobotManager (C# Project) and the MainBoardPc
-    openSerialLink(&robotManagerSerialStreamLink,
-        &robotManagerInputBuffer,
-        (char(*)[]) &robotManagerInputBufferArray,
-        ROBOT_MANAGER_INPUT_BUFFER_LENGTH,
-        &robotManagerOutputBuffer,
-        (char(*)[]) &robotManagerOutputBufferArray,
-        ROBOT_MANAGER_OUTPUT_BUFFER_LENGTH,
-        &robotManagerOutputStream,
-        SERIAL_PORT_ROBOT_MANAGER,
-        0);
-    }
 
     initTimerList((Timer(*)[]) &timerListArray, MAIN_BOARD_PC_TIMER_LENGTH);
 
@@ -285,13 +272,27 @@ void runMainBoardPC(bool connectToRobotManagerMode) {
     initI2cBusConnection(&motorBoardI2cBusConnection, &motorBoardI2cBus, MOTOR_BOARD_PC_I2C_ADDRESS);
 
     addI2CDriverDataDispatcher("MOTOR_BOARD_DISPATCHER",
-    &motorBoardInputBuffer,
-    (char(*)[]) &motorBoardInputBufferArray,
-    MAIN_BOARD_PC_DATA_MOTOR_BOARD_DISPATCHER_BUFFER_LENGTH,
-    &motorBoardOutputStream,
-    &motorBoardInputStream,
-    &motorBoardI2cBusConnection
+        &motorBoardInputBuffer,
+        (char(*)[]) &motorBoardInputBufferArray,
+        MAIN_BOARD_PC_DATA_MOTOR_BOARD_DISPATCHER_BUFFER_LENGTH,
+        &motorBoardOutputStream,
+        &motorBoardInputStream,
+        &motorBoardI2cBusConnection
     );
+
+    if (connectToRobotManager) {
+        // Open the serial Link between RobotManager (C# Project) and the MainBoardPc
+        openSerialLink(&robotManagerSerialStreamLink,
+            &robotManagerInputBuffer,
+            (char(*)[]) &robotManagerInputBufferArray,
+            ROBOT_MANAGER_INPUT_BUFFER_LENGTH,
+            &robotManagerOutputBuffer,
+            (char(*)[]) &robotManagerOutputBufferArray,
+            ROBOT_MANAGER_OUTPUT_BUFFER_LENGTH,
+            &robotManagerOutputStream,
+            SERIAL_PORT_ROBOT_MANAGER,
+            0);
+    }
 
     // EEPROM
     initEepromPc(&eeprom);
