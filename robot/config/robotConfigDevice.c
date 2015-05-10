@@ -1,3 +1,5 @@
+#include <stdlib.h>
+
 #include "robotConfig.h"
 #include "robotConfigDevice.h"
 #include "robotConfigDeviceInterface.h"
@@ -16,7 +18,7 @@
 
 static RobotConfig* robotConfig;
 
-/** Config is a 16 bit value */
+/** Config is a 16 bit value. We store the value here */
 static unsigned int config = 0;
 
 void refreshConfig(void) {
@@ -36,10 +38,10 @@ unsigned int getConfigValue(void) {
 
 char* getConfigBitString(unsigned char configIndex) {
     switch (configIndex) {
-        case CONFIG_DONT_USE_BEACON_MASK: return "DontUseBeacon";
-        case CONFIG_ROLLING_TEST_MASK: return "RollingTest";
-        case CONFIG_COLOR_GREEN_MASK: return "Green";
-        default: return "?";
+    case CONFIG_DONT_USE_BEACON_MASK: return "DontUseBeacon";
+    case CONFIG_ROLLING_TEST_MASK: return "RollingTest";
+    case CONFIG_COLOR_GREEN_MASK: return "Green";
+    default: return "?";
     }
 }
 
@@ -89,11 +91,18 @@ bool isRobotConfigDeviceOk(void) {
 }
 
 void deviceRobotConfigHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream) {
-    if (commandHeader == COMMAND_CONFIG) {
+    if (commandHeader == COMMAND_GET_CONFIG) {
         // can take a little time
-        refreshConfig();  
-        ackCommand(outputStream, ROBOT_CONFIG_DEVICE_HEADER, COMMAND_CONFIG);
-        appendHex4(outputStream, config);     
+        refreshConfig();
+        ackCommand(outputStream, ROBOT_CONFIG_DEVICE_HEADER, COMMAND_GET_CONFIG);
+        appendHex4(outputStream, config);
+    }
+    else if (commandHeader == COMMAND_SET_CONFIG) {
+        ackCommand(outputStream, ROBOT_CONFIG_DEVICE_HEADER, COMMAND_SET_CONFIG);
+        config = readHex4(inputStream);
+        if (robotConfig->robotConfigWriteInt != NULL) {
+            robotConfig->robotConfigWriteInt(robotConfig, config);
+        }
     }
 }
 

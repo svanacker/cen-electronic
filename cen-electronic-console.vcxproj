@@ -248,6 +248,8 @@
     <ClCompile Include="robot\2012\homologation2012.c" />
     <ClCompile Include="robot\2012\strategy2012.c" />
     <ClCompile Include="robot\2012\strategy2012Utils.c" />
+    <ClCompile Include="robot\config\pc\robotConfigPc.c" />
+    <ClCompile Include="robot\config\robotConfig.c" />
     <ClCompile Include="robot\config\robotConfigDevice.c" />
     <ClCompile Include="robot\config\robotConfigDeviceInterface.c" />
     <ClCompile Include="robot\gameboard\gameboard.c" />
@@ -495,6 +497,7 @@
     <ClInclude Include="robot\2012\homologation2012.h" />
     <ClInclude Include="robot\2012\strategy2012.h" />
     <ClInclude Include="robot\2012\strategy2012Utils.h" />
+    <ClInclude Include="robot\config\pc\robotConfigPc.h" />
     <ClInclude Include="robot\config\robotConfig.h" />
     <ClInclude Include="robot\config\robotConfigDevice.h" />
     <ClInclude Include="robot\config\robotConfigDeviceInterface.h" />

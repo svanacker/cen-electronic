@@ -5,7 +5,10 @@
 #include "../../device/deviceConstants.h"
 
 /** Command header to get the config. */
-#define COMMAND_CONFIG                  'r'
+#define COMMAND_GET_CONFIG                  'r'
+
+/** Command header to write the config (only for Windows simulation. */
+#define COMMAND_SET_CONFIG                  'w'
 
 /**
 * Interface for Device "RobotConfig"

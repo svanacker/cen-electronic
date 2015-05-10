@@ -1,13 +1,14 @@
 #ifndef ROBOT_CONFIG_DEVICE_H
 #define ROBOT_CONFIG_DEVICE_H
 
+#include "robotConfig.h"
 #include "../../device/device.h"
 
 /**
 * Returns a descriptor on the config.
 * @return the descriptor of the device.
 */
-DeviceDescriptor* getRobotConfigDeviceDescriptor();
+DeviceDescriptor* getRobotConfigDeviceDescriptor(RobotConfig* robotConfigParam);
 
 /**
 * Refresh the config in memory

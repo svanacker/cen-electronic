@@ -45,6 +45,11 @@
 #include "../../../device/i2c/master/i2cMasterDebugDevice.h"
 #include "../../../device/i2c/master/i2cMasterDebugDeviceInterface.h"
 
+// CONFIG
+#include "../../../robot/config/pc/robotConfigPc.h"
+#include "../../../robot/config/robotConfigDevice.h"
+#include "../../../robot/config/robotConfigDeviceInterface.h"
+
 // EEPROM
 #include "../../../device/eeprom/eepromDevice.h"
 #include "../../../device/eeprom/eepromDeviceInterface.h"
@@ -159,6 +164,9 @@ static Eeprom eeprom;
 
 // Clock
 static Clock clock;
+
+// RobotConfig
+static RobotConfig robotConfig;
 
 // I2C Debug
 static char i2cMasterDebugOutputBufferArray[MAIN_BOARD_PC_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH];
@@ -294,6 +302,9 @@ void runMainBoardPC(bool connectToRobotManagerMode) {
             0);
     }
 
+    // CONFIG
+    initRobotConfigPc(&robotConfig);
+
     // EEPROM
     initEepromPc(&eeprom);
     initEepromFile(&eeprom);
@@ -326,6 +337,7 @@ void runMainBoardPC(bool connectToRobotManagerMode) {
     // LOCAL BOARD
     addLocalDevice(getStrategyDeviceInterface(), getStrategyDeviceDescriptor());
     addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
+    addLocalDevice(getRobotConfigDeviceInterface(), getRobotConfigDeviceDescriptor(&robotConfig));
     addLocalDevice(getI2cMasterDebugDeviceInterface(), getI2cMasterDebugDeviceDescriptor());
     addLocalDevice(getDataDispatcherDeviceInterface(), getDataDispatcherDeviceDescriptor());
     addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor());
@@ -335,6 +347,7 @@ void runMainBoardPC(bool connectToRobotManagerMode) {
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
     addLocalDevice(getLogDeviceInterface(), getLogDeviceDescriptor());
     addLocalDevice(getLCDDeviceInterface(), getLCDDeviceDescriptor());
+
 
 
     initStartMatchDetectorPc(&startMatchDetector);

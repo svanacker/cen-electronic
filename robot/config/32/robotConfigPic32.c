@@ -1,4 +1,5 @@
 #include <p32xxxx.h>
+#include <stdlib.h>
 
 #include "robotConfigPic32.h"
 
@@ -10,8 +11,8 @@
  * @private
  */
 
-signed int _robotConfigReadInt (RobotConfig* robotConfig){
-    signed int value = 0;
+unsigned int _robotConfigReadInt (RobotConfig* robotConfig){
+    unsigned int value = 0;
 
     value = ((PORTG & 0x0004) << 11) | // PORTG2
             ((PORTC & 0x2000) >> 1) | // PORTC13
@@ -43,5 +44,5 @@ void initRobotConfigPic32(RobotConfig* robotConfig) {
     TRISCbits.TRISC13 = 1;
     TRISGbits.TRISG2 = 1;
 
-    initRobotConfig(robotConfig, _robotConfigReadInt);
+    initRobotConfig(robotConfig, _robotConfigReadInt, NULL);
 }
