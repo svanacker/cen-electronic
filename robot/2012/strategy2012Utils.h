@@ -1,9 +1,11 @@
 #ifndef STRATEGY_2012_UTILS_H
 #define STRATEGY_2012_UTILS_H
 
+#include <stdbool.h>
+
 #include "../../navigation/path.h"
 
-int isViolet();
+bool isGreen();
 
 /**
  * Change the location for color.

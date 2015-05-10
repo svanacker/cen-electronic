@@ -16,6 +16,6 @@
  * Initializes a clock object with a PCF8563 hardware component.
  * @param clock a pointer on the clock structure.
  */
-void initClockPCF8563(Clock* clock, I2cBus* i2cBus);
+void initClockPCF8563(Clock* clock, I2cBusConnection* i2cBusConnection);
 
 #endif

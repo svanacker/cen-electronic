@@ -24,8 +24,8 @@
  */
 void __ISR(_I2C_1_VECTOR, ipl3) _SlaveI2CHandler(void)
 {
-    // TODO : Find the right i2cBus
-    I2cBus* i2cBus = NULL;
+    // TODO : Find the right i2cBusConnection
+    I2cBusConnection* i2cBusConnection = NULL;
 
     // last byte received is address and not data
     char isData = I2C1STATbits.D_A;
@@ -54,16 +54,16 @@ void __ISR(_I2C_1_VECTOR, ipl3) _SlaveI2CHandler(void)
 
         // reset any state variables needed by a message sequence
         // perform a dummy read of the address
-        portableSlaveReadI2C(i2cBus);
+        portableSlaveReadI2C(i2cBusConnection);
         
         // release the clock to restart I2C
-        portableSlaveClockRelease(i2cBus);
+        portableSlaveClockRelease(i2cBusConnection);
     }
     // Master WRITE (InputStream)
     else if (isStart && !read && isData && readBufferFull) {
         // R/W bit = 0 --> indicates data transfer is input to slave
         // D/A bit = 1 --> indicates last byte was data
-        int data = portableSlaveReadI2C(i2cBus);
+        int data = portableSlaveReadI2C(i2cBusConnection);
         Buffer* i2cSlaveInputBuffer = i2cStreamLink->inputBuffer;
         OutputStream* outputStream = getOutputStream(i2cSlaveInputBuffer);
         // Read data from the Master
@@ -72,13 +72,13 @@ void __ISR(_I2C_1_VECTOR, ipl3) _SlaveI2CHandler(void)
         appendI2cDebugInputChar(data);
   
         // release the clock to restart I2C
-        portableSlaveClockRelease(i2cBus);
+        portableSlaveClockRelease(i2cBusConnection);
     }
     // Master send the address and want to read
     else if (isStart && read && !isData) {
         // R/W bit = 1 --> indicates data transfer is output from slave
         // D/A bit = 0 --> indicates last byte was address
-        portableSlaveReadI2C(i2cBus);
+        portableSlaveReadI2C(i2cBusConnection);
         
         Buffer* i2cSlaveOutputBuffer = i2cStreamLink->outputBuffer;
         // Get an inputStream to read the buffer to send to the master
@@ -89,9 +89,9 @@ void __ISR(_I2C_1_VECTOR, ipl3) _SlaveI2CHandler(void)
             char c = i2cInputStream->readChar(i2cInputStream);
             // for debug support
             appendI2cDebugOutputChar(c);
-            portableSlaveWriteI2C(i2cBus, c);
+            portableSlaveWriteI2C(i2cBusConnection, c);
         } else {
-            portableSlaveWriteI2C(i2cBus, I2C_SLAVE_NO_DATA_IN_READ_BUFFER);
+            portableSlaveWriteI2C(i2cBusConnection, I2C_SLAVE_NO_DATA_IN_READ_BUFFER);
         } 
     }
     // Master want to read
@@ -109,10 +109,10 @@ void __ISR(_I2C_1_VECTOR, ipl3) _SlaveI2CHandler(void)
             // for debug support
             appendI2cDebugInputChar(c);
             // we send it to the master
-            portableSlaveWriteI2C(i2cBus, c);
+            portableSlaveWriteI2C(i2cBusConnection, c);
         } else {
             // There is no data, we send it to the master
-            portableSlaveWriteI2C(i2cBus, I2C_SLAVE_NO_DATA_IN_READ_BUFFER);
+            portableSlaveWriteI2C(i2cBusConnection, I2C_SLAVE_NO_DATA_IN_READ_BUFFER);
         }
     }
     // finally clear the slave interrupt flag

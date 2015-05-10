@@ -11,7 +11,7 @@
  * Initialize a type of eeprom : 24C512
  * @param eeprom a pointer of eeprom type.
  */
-void init24C512Eeprom(Eeprom* eeprom_, I2cBus* i2cBus);
+void init24C512Eeprom(Eeprom* eeprom_, I2cBusConnection* i2cBusConnection);
 
 #endif
 

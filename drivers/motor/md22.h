@@ -15,8 +15,8 @@ void stopMD22Motors(void);
 * @param leftSpeed the left motor speed (value between -128 and 127)
 * @param rightSpeed the right motor speed (value between -128 and 127)
 */
-void setMD22MotorSpeeds(I2cBus* i2cBus, signed char leftSpeed, signed char rightSpeed);
+void setMD22MotorSpeeds(I2cBusConnection* i2cBusConnection, signed char leftSpeed, signed char rightSpeed);
 
-DriverDescriptor* getMD22DriverDescriptor(I2cBus* i2cBus);
+DriverDescriptor* getMD22DriverDescriptor(I2cBusConnection* i2cBusConnection);
 
 #endif

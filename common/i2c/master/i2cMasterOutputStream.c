@@ -39,10 +39,10 @@ Buffer* _i2cMasterGetOutputBuffer(OutputStream* outputStream) {
 /**
  * @private
  */
-I2cBus* _i2cMasterGetI2cBus(OutputStream* outputStream) {
+I2cBusConnection* _i2cMasterGetI2cBusConnection(OutputStream* outputStream) {
     I2cMasterOutputStream* i2cMasterOutputStream = _i2cMasterGetMasterOutputStream(outputStream);
     
-    I2cBus* result = i2cMasterOutputStream->i2cBus;
+    I2cBusConnection* result = i2cMasterOutputStream->i2cBusConnection;
 
     return result;
 }
@@ -52,7 +52,8 @@ I2cBus* _i2cMasterGetI2cBus(OutputStream* outputStream) {
  * @private
  */
 void _i2cMasterOpenOutputStream(OutputStream* outputStream, int param1) {
-    I2cBus* i2cBus = _i2cMasterGetI2cBus(outputStream);
+    I2cBusConnection* i2cBusConnection = _i2cMasterGetI2cBusConnection(outputStream);
+    I2cBus* i2cBus = i2cBusConnection->i2cBus;
     i2cMasterInitialize(i2cBus);
 }
 
@@ -60,7 +61,8 @@ void _i2cMasterOpenOutputStream(OutputStream* outputStream, int param1) {
  * @private
  */
 void _i2cMasterCloseOutputStream(OutputStream* outputStream) {
-    I2cBus* i2cBus = _i2cMasterGetI2cBus(outputStream);
+    I2cBusConnection* i2cBusConnection = _i2cMasterGetI2cBusConnection(outputStream);
+    I2cBus* i2cBus = i2cBusConnection->i2cBus;
     i2cMasterFinalize(i2cBus);
 }
 
@@ -83,21 +85,19 @@ void _writeCharI2C(OutputStream* outputStream, char c) {
  * We flush the buffer (more efficient)
  */
 void _flushI2C(OutputStream* outputStream) {
-    int address = outputStream->address;
     Buffer* buffer = _i2cMasterGetOutputBuffer(outputStream);
-    I2cBus* i2cBus = _i2cMasterGetI2cBus(outputStream);
-    i2cMasterWriteBuffer(i2cBus, address, buffer);
+    I2cBusConnection* i2cBusConnection = _i2cMasterGetI2cBusConnection(outputStream);
+    i2cMasterWriteBuffer(i2cBusConnection, buffer);
 }
 
-void initMasterI2cOutputStream(I2cMasterOutputStream* i2cMasterOutputStream, I2cBus* i2cBus, OutputStream* outputStream,
-        Buffer* i2cOutputBuffer,
-        unsigned char i2cWriteAddress) {
-    i2cMasterOutputStream->i2cBus = i2cBus;
+void initMasterI2cOutputStream(I2cMasterOutputStream* i2cMasterOutputStream, I2cBusConnection* i2cBusConnection, OutputStream* outputStream,
+        Buffer* i2cOutputBuffer) {
+    i2cMasterOutputStream->i2cBusConnection = i2cBusConnection;
     i2cMasterOutputStream->outputStream = outputStream;
     i2cMasterOutputStream->outputBuffer = i2cOutputBuffer;
     outputStream->object = (int*) i2cMasterOutputStream;
 
-    outputStream->address = i2cWriteAddress;
+    outputStream->address = i2cBusConnection->i2cAddress;
     outputStream->openOutputStream = _i2cMasterOpenOutputStream;
     outputStream->closeOutputStream = _i2cMasterCloseOutputStream;
     outputStream->writeChar = _writeCharI2C;

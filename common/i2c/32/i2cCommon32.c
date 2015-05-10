@@ -56,8 +56,10 @@ void WaitI2C(I2cBus* i2cBus) {
     #endif
 }
 
-void portableStartI2C(I2cBus* i2cBus) {
-    if (i2cBus == NULL) {
+void portableCommonStartI2C(I2cBusConnection* i2cBusConnection) {
+    I2cBus* i2cBus = i2cBusConnection->i2cBus;
+
+    if (i2cBusConnection == NULL) {
         StartI2C1();
     }
     else {
@@ -66,7 +68,9 @@ void portableStartI2C(I2cBus* i2cBus) {
     }
 }
 
-void portableStopI2C(I2cBus* i2cBus) {
+void portableCommonStopI2C(I2cBusConnection* i2cBusConnection) {
+    I2cBus* i2cBus = i2cBusConnection->i2cBus;
+
     if (i2cBus == NULL) {
         StopI2C1();
     }
@@ -76,7 +80,9 @@ void portableStopI2C(I2cBus* i2cBus) {
     }
 }
 
-void portableAckI2C(I2cBus* i2cBus) {
+void portableCommonAckI2C(I2cBusConnection* i2cBusConnection) {
+    I2cBus* i2cBus = i2cBusConnection->i2cBus;
+
     if (i2cBus == NULL) {
         AckI2C1();
     }
@@ -86,7 +92,8 @@ void portableAckI2C(I2cBus* i2cBus) {
     }
 }
 
-void portableNackI2C(I2cBus* i2cBus) {
+void portableCommonNackI2C(I2cBusConnection* i2cBusConnection) {
+    I2cBus* i2cBus = i2cBusConnection->i2cBus;
     if (i2cBus == NULL) {
         NotAckI2C1();
     }

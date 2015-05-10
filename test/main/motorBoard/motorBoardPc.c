@@ -119,6 +119,7 @@ static Clock clock;
 
 // I2C
 static I2cBus motorI2cBus;
+static I2cBusConnection motorI2cBusConnection;
 
 // Devices
 static Device deviceListArray[MOTOR_BOARD_PC_DEVICE_LIST_LENGTH];
@@ -190,6 +191,8 @@ void runMotorBoardPC(bool singleMode) {
     addLocalDriverDataDispatcher();
 
     if (!singleModeActivated) {
+        initI2cBus(&motorI2cBus, I2C_BUS_PORT_1);
+        initI2cBusConnection(&motorI2cBusConnection, &motorI2cBus, MOTOR_BOARD_PC_I2C_ADDRESS);
         openSlaveI2cStreamLink(&i2cSlaveStreamLink,
             &i2cSlaveInputBuffer,
             (char(*)[]) &i2cSlaveInputBufferArray,
@@ -197,8 +200,7 @@ void runMotorBoardPC(bool singleMode) {
             &i2cSlaveOutputBuffer,
             (char(*)[]) &i2cSlaveOutputBufferArray,
             MOTOR_BOARD_PC_OUT_BUFFER_LENGTH,
-            &motorI2cBus,
-            MOTOR_BOARD_PC_I2C_ADDRESS
+            &motorI2cBusConnection
         );
 
         // I2C Debug
@@ -219,7 +221,7 @@ void runMotorBoardPC(bool singleMode) {
     // Devices
     initDeviceList((Device(*)[]) &deviceListArray, MOTOR_BOARD_PC_DEVICE_LIST_LENGTH);
     addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
-    addLocalDevice(getI2cSlaveDebugDeviceInterface(), getI2cSlaveDebugDeviceDescriptor());
+    addLocalDevice(getI2cSlaveDebugDeviceInterface(), getI2cSlaveDebugDeviceDescriptor(&motorI2cBusConnection));
     addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
     addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());
 

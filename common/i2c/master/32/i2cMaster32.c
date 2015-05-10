@@ -7,7 +7,24 @@
 #include "../../../../common/i2c/i2cCommon.h"
 #include "../../../../common/i2c/32/i2cCommon32.h"
 
-unsigned int portableMasterWriteI2C(I2cBus* i2cBus, unsigned char data) {
+void portableMasterStartI2C(I2cBusConnection* i2cBusConnection) {
+    portableCommonStartI2C(i2cBusConnection);
+}
+
+void portableMasterStopI2C(I2cBusConnection* i2cBusConnection) {
+    portableCommonStopI2C(i2cBusConnection);
+}
+
+void portableMasterAckI2C(I2cBusConnection* i2cBusConnection) {
+    portableCommonAckI2C(i2cBusConnection);
+}
+
+void portableMasterNackI2C(I2cBusConnection* i2cBusConnection) {
+    portableCommonNackI2C(i2cBusConnection);
+}
+
+unsigned int portableMasterWriteI2C(I2cBusConnection* i2cBusConnection, unsigned char data) {
+    I2cBus* i2cBus = i2cBusConnection->i2cBus;
     if (i2cBus == NULL) {
         return MasterWriteI2C1(data);
     }
@@ -17,7 +34,8 @@ unsigned int portableMasterWriteI2C(I2cBus* i2cBus, unsigned char data) {
     }
 }
 
-unsigned char portableMasterReadI2C(I2cBus* i2cBus) {
+unsigned char portableMasterReadI2C(I2cBusConnection* i2cBusConnection) {
+    I2cBus* i2cBus = i2cBusConnection->i2cBus;
     if (i2cBus == NULL) {
         return MasterReadI2C1();
     }
@@ -61,7 +79,7 @@ unsigned char portableMasterReadI2C(I2cBus* i2cBus) {
     return 0;
 }
 
-void portableCloseI2C(I2cBus* i2cBus) {
+void portableMasterCloseI2C(I2cBus* i2cBus) {
     if (i2cBus == NULL) {
         CloseI2C1();
     }
@@ -98,7 +116,8 @@ void portableCloseI2C(I2cBus* i2cBus) {
     #endif
 }
 
-void portableMasterWaitSendI2C(I2cBus* i2cBus) {
+void portableMasterWaitSendI2C(I2cBusConnection* i2cBusConnection) {
+    I2cBus* i2cBus = i2cBusConnection->i2cBus;
     if (i2cBus == NULL) {
         while (I2C1CONbits.SEN) {
         }

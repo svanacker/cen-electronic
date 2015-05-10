@@ -21,60 +21,39 @@
 
 #include <Windows.h>
 
-static HANDLE masterToSlaveHandle;
-static HANDLE masterToSlaveThreadHandle;
-static DWORD  masterToSlaveThreadId = 0;
+static I2cSlaveBusConnectionPc i2cSlaveBusConnectionPc;
 
-static HANDLE slaveToMasterHandle;
-static HANDLE slaveToMasterThreadHandle;
-static DWORD  slaveToMasterThreadId = 0;
-
-static bool initialized = false;
-static slaveWriteAddress = 0;
-
-
-HANDLE getI2CMasterToSlaveHandle() {
-    return masterToSlaveHandle;
+I2cSlaveBusConnectionPc* getSlaveI2cBusConnectionPc(I2cBusConnection* i2cBusConnection) {
+    I2cSlaveBusConnectionPc* result = (I2cSlaveBusConnectionPc*)i2cBusConnection->object;
+    return result;
 }
 
-HANDLE getI2CSlaveToMasterHandle() {
-    return slaveToMasterHandle;
-}
-
-unsigned char getI2cWriteAddress(I2cBus* i2cBus) {
-    return slaveWriteAddress;
-}
-
-unsigned char getI2cReadAddress(I2cBus* i2cBus) {
-    return slaveWriteAddress | 1;
-}
-
-void i2cSlaveInitialize(I2cBus* i2cBus, unsigned char writeAddress) {
+void i2cSlaveInitialize(I2cBusConnection* i2cBusConnection) {
     // Avoid more than one initialization
-    if (initialized) {
+    if (i2cBusConnection->opened) {
         writeError(I2C_SLAVE_ALREADY_INITIALIZED);
         return;
     }
-    slaveWriteAddress = writeAddress;
+    i2cBusConnection->object = &i2cSlaveBusConnectionPc;
 
     appendString(getDebugOutputStreamLogger(), "I2C Slave Write Address=");
-    appendHex2(getDebugOutputStreamLogger(), writeAddress);
+    appendHex2(getDebugOutputStreamLogger(), i2cBusConnection->i2cAddress);
     appendCRLF(getDebugOutputStreamLogger());
 
-    masterToSlaveHandle = initClientPipe(L"\\\\.\\pipe\\mainBoardPipe");
-    slaveToMasterHandle = initServerPipe(L"\\\\.\\pipe\\motorBoardPipe");
-    initialized = true;
+    i2cSlaveBusConnectionPc.masterToSlaveHandle = initClientPipe(L"\\\\.\\pipe\\mainBoardPipe");
+    i2cSlaveBusConnectionPc.slaveToMasterHandle = initServerPipe(L"\\\\.\\pipe\\motorBoardPipe");
+    i2cBusConnection->opened = true;
 
     // Thread : master => slave
-    masterToSlaveThreadHandle = createStandardThread(
+    i2cSlaveBusConnectionPc.masterToSlaveThreadHandle = createStandardThread(
         masterToSlaveCallback,    // thread proc
-        (LPVOID)masterToSlaveHandle,    // thread parameter 
-        &masterToSlaveThreadId);      // returns thread ID 
+        (LPVOID)i2cBusConnection,    // thread parameter 
+        &(i2cSlaveBusConnectionPc.masterToSlaveThreadId));      // returns thread ID 
 
     // Thread : slave => master
-    slaveToMasterThreadHandle = createStandardThread(
+    i2cSlaveBusConnectionPc.slaveToMasterThreadHandle = createStandardThread(
         slaveToMasterCallback,    // thread proc
-        (LPVOID)slaveToMasterHandle,    // thread parameter 
-        &slaveToMasterThreadId);      // returns thread ID 
+        (LPVOID)i2cBusConnection,    // thread parameter 
+        &(i2cSlaveBusConnectionPc.slaveToMasterThreadId));      // returns thread ID 
 }
 

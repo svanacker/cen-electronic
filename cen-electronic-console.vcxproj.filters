@@ -1218,17 +1218,8 @@
     <ClCompile Include="test\motion\bspline\bsplineListTest.c">
       <Filter>Source Files\test\motion\extended</Filter>
     </ClCompile>
-    <ClCompile Include="external\fatfs\ff.c">
-      <Filter>Source Files\external\fatfs</Filter>
-    </ClCompile>
     <ClCompile Include="drivers\file\eeprom\eepromFile.c">
       <Filter>Source Files\drivers\file\eeprom</Filter>
-    </ClCompile>
-    <ClCompile Include="device\file\fileDevice.c">
-      <Filter>Source Files\device\file</Filter>
-    </ClCompile>
-    <ClCompile Include="device\file\fileDeviceInterface.c">
-      <Filter>Source Files\device\file</Filter>
     </ClCompile>
     <ClCompile Include="drivers\clock\pc\pcClock.c">
       <Filter>Source Files\drivers\clock\pc</Filter>
@@ -1346,6 +1337,9 @@
     </ClCompile>
     <ClCompile Include="common\pc\thread\threadHelper.c">
       <Filter>Source Files\common\pc\thread</Filter>
+    </ClCompile>
+    <ClCompile Include="common\i2c\i2cCommon.c">
+      <Filter>Source Files\common\i2c</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1942,15 +1936,6 @@
     </ClInclude>
     <ClInclude Include="motion\pid\profileType.h">
       <Filter>Header Files\motion\pid</Filter>
-    </ClInclude>
-    <ClInclude Include="external\fatfs\ff.h">
-      <Filter>Header Files\external\fatfs</Filter>
-    </ClInclude>
-    <ClInclude Include="external\fatfs\ffconf.h">
-      <Filter>Header Files\external\fatfs</Filter>
-    </ClInclude>
-    <ClInclude Include="external\fatfs\diskio.h">
-      <Filter>Header Files\external\fatfs</Filter>
     </ClInclude>
     <ClInclude Include="device\file\fileDevice.h">
       <Filter>Header Files\device\file</Filter>

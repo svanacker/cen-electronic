@@ -3,17 +3,21 @@
 
 #include <Windows.h>
 
-/**
-* Returns the master pipe Handle.
-* @return the pipe Handle, null if it was not yet initialized.
-*/
-HANDLE getMasterPipeHandle();
+#include "../../../../common/i2c/i2cCommon.h"
 
 /**
-* Returns the Slave pipe Handle.
-* @param writeAddress the I2C Write Address
-* @return the slave pipe Handle, null if it was not yet initialized
-*/
-HANDLE getSlavePipeHandle(unsigned char writeAddress);
+ * Extended information used by the Pc to manage a simulation of the i2cBus.
+ */
+typedef struct I2cMasterBusPc {
+    // the master pipe Handle.
+    HANDLE masterPipeHandle;
+    // the Slave pipe Handle
+    HANDLE slavePipeHandle;
+} I2cMasterBusPc;
+
+/**
+ * Returns the extended information used by the Pc to manage a simulation of the i2cBus.
+ */
+I2cMasterBusPc* getMasterI2cBusPc(I2cBus* i2cBus);
 
 #endif

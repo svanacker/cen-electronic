@@ -9,7 +9,7 @@
  */
 typedef struct {
     // The bus we manage
-    I2cBus* i2cBus;
+    I2cBusConnection* i2cBusConnection;
     // The inputStream object with specific callback
     InputStream* inputStream;
     // The underlying input buffer
@@ -21,12 +21,10 @@ typedef struct {
 * @param 
 * @param i2cInputBuffer the buffer to read from i2c slave
 * @param inputStream a structure to initialize
-* @param the write address for I2C
 */
 void initMasterI2cInputStream(I2cMasterInputStream* i2cMasterInputStream,
-                              I2cBus* i2cBus,
+                                 I2cBusConnection* i2cBusConnection,
                               Buffer* i2cInputBuffer,
-                              InputStream* inputStream,
-                              unsigned char i2cWriteAddress);
+                              InputStream* inputStream);
 
 #endif

@@ -40,10 +40,10 @@ Buffer* _i2cMasterInputStreamGetBuffer(InputStream* inputStream) {
 /**
  * @private
  */
-I2cBus* _i2cMasterInputStreamGetI2cBus(InputStream* inputStream) {
+I2cBusConnection* _i2cMasterInputStreamGetI2cBusConnection(InputStream* inputStream) {
     I2cMasterInputStream* i2cMasterInputStream = _i2cMasterGetMasterInputStream(inputStream);
     
-    I2cBus* result = i2cMasterInputStream->i2cBus;
+    I2cBusConnection* result = i2cMasterInputStream->i2cBusConnection;
 
     return result;
 }
@@ -60,8 +60,8 @@ void _i2cMasterOpenInputStream(InputStream* inputStream, int param1) {
  */
 void fillI2CInputInternalBuffer(InputStream* inputStream) {
     while (true) {
-        I2cBus* i2cBus = _i2cMasterInputStreamGetI2cBus(inputStream);
-        unsigned char c = i2cMasterReadChar(i2cBus, inputStream->address);
+        I2cBusConnection* i2cBusConnection = _i2cMasterInputStreamGetI2cBusConnection(inputStream);
+        unsigned char c = i2cMasterReadChar(i2cBusConnection);
 
         if (c == I2C_SLAVE_NO_DATA_IN_READ_BUFFER || c == INCORRECT_DATA) {
             break;
@@ -99,20 +99,19 @@ char _readCharI2C(InputStream* inputStream) {
 }
 
 void initMasterI2cInputStream(I2cMasterInputStream* i2cMasterInputStream,
-                              I2cBus* i2cBus,
+                              I2cBusConnection* i2cBusConnection,
                                 Buffer* i2cInputBuffer,
-                                InputStream* inputStream,
-                                unsigned char i2cWriteAddress) {
-    i2cMasterInputStream->i2cBus = i2cBus;
+                                InputStream* inputStream) {
+    i2cMasterInputStream->i2cBusConnection = i2cBusConnection;
     i2cMasterInputStream->inputStream = inputStream;
     i2cMasterInputStream->inputBuffer = i2cInputBuffer;
     inputStream->object = (int*) i2cMasterInputStream;
 
 
-    inputStream->address = i2cWriteAddress;
+    inputStream->address = i2cBusConnection->i2cAddress;
     inputStream->openInputStream = _i2cMasterOpenInputStream;
     inputStream->closeInputStream = _i2cMasterCloseInputStream;
     inputStream->readChar = _readCharI2C;
     inputStream->availableData = _i2cAvailableData;
-    _i2cMasterOpenInputStream(inputStream, i2cWriteAddress);
+    _i2cMasterOpenInputStream(inputStream, 0);
 }

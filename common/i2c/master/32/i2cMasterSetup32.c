@@ -54,6 +54,6 @@ void i2cMasterInitialize(I2cBus* i2cBus) {
 void i2cMasterFinalize(I2cBus* i2cBus) {
     if (initialized) {
         initialized = false;
-        portableCloseI2C(i2cBus);
+        portableMasterCloseI2C(i2cBus);
     }
 }

@@ -196,9 +196,11 @@
 
 // EEPROM
 static Eeprom eeprom;
+static I2cBusConnection eepromI2cBusConnection;
 
 // CLOCK
 static Clock clock;
+static I2cBusConnection clockI2cBusConnection;
 
 // I2C
 static I2cBus i2cBus;
@@ -251,12 +253,14 @@ static Buffer i2cMasterDebugInputBuffer;
 static DriverDataDispatcher driverDataDispatcherListArray[MAIN_BOARD_DRIVER_DATA_DISPATCHER_LIST_LENGTH];
 
 // i2c->Motor
+static I2cBusConnection motorI2cBusConnection;
 static char motorBoardI2cInputBufferArray[MAIN_BOARD_I2C_INPUT_DRIVER_DATA_DISPATCHER_BUFFER_LENGTH];
 static Buffer motorBoardI2cInputBuffer;
 static InputStream motorBoardI2cInputStream;
 static OutputStream motorBoardI2cOutputStream;
 
 // i2c->Air Conditioning
+static I2cBusConnection airConditioningI2cBusConnection;
 static char airConditioningBoardInputBufferArray[MAIN_BOARD_LINK_TO_MECA_BOARD_2_BUFFER_LENGTH];
 static Buffer airConditioningBoardInputBuffer;
 static InputStream airConditioningBoardInputStream;
@@ -315,7 +319,7 @@ void initDriversDescriptor() {
     addDriver(testDriverGetDescriptor(), TRANSMIT_LOCAL);
 
     // Direct Devantech Driver
-    addDriver(getMD22DriverDescriptor(&i2cBus), TRANSMIT_NONE);
+    // addDriver(getMD22DriverDescriptor(&i2cBus), TRANSMIT_NONE);
 }
 
 /**
@@ -413,7 +417,7 @@ void waitForInstruction() {
 
 int main(void) {
     setPicName("MAIN BOARD");
-    i2cBus.portIndex = I2C_BUS_PORT_1;
+    initI2cBus(&i2cBus, I2C_BUS_PORT_1);
 
     initRobotConfigPic32(&robotConfig);
     
@@ -461,10 +465,12 @@ int main(void) {
     initTimerList(&timerListArray, MAIN_BOARD_TIMER_LENGTH);
 
     // Eeproms
-    init24C512Eeprom(&eeprom, &i2cBus);
+    initI2cBusConnection(&eepromI2cBusConnection, &i2cBus, 0 /* TODO. */);
+    init24C512Eeprom(&eeprom, &eepromI2cBusConnection);
 
     // Clock
-    initClockPCF8563(&clock, &i2cBus);
+    initI2cBusConnection(&clockI2cBusConnection, &i2cBus, 0 /* TODO. */);
+    initClockPCF8563(&clock, &clockI2cBusConnection);
 
     // Init the logs
     initLogs(DEBUG, &logHandlerListArray, MAIN_BOARD_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
@@ -496,14 +502,15 @@ int main(void) {
     addLocalDriverDataDispatcher();
 
     // I2C Stream for motorBoard
+    initI2cBusConnection(&motorI2cBusConnection, &i2cBus, MOTOR_BOARD_I2C_ADDRESS);
     addI2CDriverDataDispatcher("MOTOR_BOARD_I2C_DISPATCHER",
         &motorBoardI2cInputBuffer,
         (char(*)[]) &motorBoardI2cInputBufferArray,
         MAIN_BOARD_I2C_INPUT_DRIVER_DATA_DISPATCHER_BUFFER_LENGTH,
         &motorBoardI2cOutputStream,
         &motorBoardI2cInputStream,
-        &i2cBus,
-        MOTOR_BOARD_I2C_ADDRESS);
+        &motorI2cBusConnection
+        );
 
     // Uart Stream for motorBoard
     addUartDriverDataDispatcher(

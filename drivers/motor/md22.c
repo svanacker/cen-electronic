@@ -8,7 +8,7 @@
 
 #include "../../common/delay/cenDelay.h"
 
-static I2cBus* md22I2cBus;
+static I2cBusConnection* md22I2cBusConnection;
 
 //addresses of modules on I2C bus
 #define MD22_BASE            0xB0
@@ -28,27 +28,29 @@ static I2cBus* md22I2cBus;
  * @param reg register from which to read
  * @return the value read from the register
  */
-unsigned char readMD22(I2cBus* i2cBus, char addr, char reg) {
+unsigned char readMD22(I2cBusConnection* i2cBusConnection, char addr, char reg) {
+    I2cBus* i2cBus = i2cBusConnection->i2cBus;
+
     WaitI2C(i2cBus);
-    portableStartI2C(i2cBus);
-    portableMasterWaitSendI2C(i2cBus);
+    portableMasterStartI2C(i2cBusConnection);
+    portableMasterWaitSendI2C(i2cBusConnection);
     // send the address
-    portableMasterWriteI2C(i2cBus, MD22_ADDR_W);
+    portableMasterWriteI2C(i2cBusConnection, MD22_ADDR_W);
     WaitI2C(i2cBus);
     // send the register
-    portableMasterWriteI2C(i2cBus, reg);
+    portableMasterWriteI2C(i2cBusConnection, reg);
     WaitI2C(i2cBus);
-    portableStopI2C(i2cBus);
+    portableMasterStopI2C(i2cBusConnection);
     WaitI2C(i2cBus);
-    portableStartI2C(i2cBus);
-    portableMasterWaitSendI2C(i2cBus);
+    portableMasterStartI2C(i2cBusConnection);
+    portableMasterWaitSendI2C(i2cBusConnection);
     // send the address again with read bit
 
-    portableMasterWriteI2C(i2cBus, MD22_ADDR_R);
+    portableMasterWriteI2C(i2cBusConnection, MD22_ADDR_R);
     WaitI2C(i2cBus);
     // read the data
-    unsigned char data = portableMasterReadI2C(i2cBus);
-    portableStopI2C(i2cBus);
+    unsigned char data = portableMasterReadI2C(i2cBusConnection);
+    portableMasterStopI2C(i2cBusConnection);
     return data;
 }
 
@@ -58,65 +60,69 @@ unsigned char readMD22(I2cBus* i2cBus, char addr, char reg) {
  * @param reg register in which to write
  * @param cmd command which is sent to the register
  */
-void writeMD22Command(I2cBus* i2cBus, char addr, char reg, char cmd) {
-    portableStartI2C(i2cBus);
+void writeMD22Command(I2cBusConnection* i2cBusConnection, char addr, char reg, char cmd) {
+    I2cBus* i2cBus = i2cBusConnection->i2cBus;
+
+    portableMasterStartI2C(i2cBusConnection);
 
     // Wait till Start sequence is completed
     WaitI2C(i2cBus);
 
-    portableMasterWriteI2C(i2cBus, addr);
-    portableMasterWriteI2C(i2cBus, reg);
+    portableMasterWriteI2C(i2cBusConnection, addr);
+    portableMasterWriteI2C(i2cBusConnection, reg);
     // command
-    portableMasterWriteI2C(i2cBus, cmd);
+    portableMasterWriteI2C(i2cBusConnection, cmd);
 
-    portableStopI2C(i2cBus);
+    portableMasterStopI2C(i2cBusConnection);
 }
 
-unsigned int getMD22Version(I2cBus* i2cBus) {
-    return readMD22(i2cBus, MD22_ADDR_R, MD22_SWVER);
+unsigned int getMD22Version(I2cBusConnection* i2cBusConnection) {
+    return readMD22(i2cBusConnection, MD22_ADDR_R, MD22_SWVER);
 }
 
-void setMD22MotorSpeeds(I2cBus* i2cBus, signed char leftSpeed, signed char rightSpeed) {
-    portableStartI2C(i2cBus);
+void setMD22MotorSpeeds(I2cBusConnection* i2cBusConnection, signed char leftSpeed, signed char rightSpeed) {
+    I2cBus* i2cBus = i2cBusConnection->i2cBus;
+
+    portableMasterStartI2C(i2cBusConnection);
 
     WaitI2C(i2cBus);
-    portableMasterWaitSendI2C(i2cBus);
-    portableMasterWriteI2C(i2cBus, MD22_ADDR_W);
+    portableMasterWaitSendI2C(i2cBusConnection);
+    portableMasterWriteI2C(i2cBusConnection, MD22_ADDR_W);
     WaitI2C(i2cBus);
-    portableMasterWriteI2C(i2cBus, MD22_SPEED);
+    portableMasterWriteI2C(i2cBusConnection, MD22_SPEED);
     WaitI2C(i2cBus);
     // left motor speed
-    portableMasterWriteI2C(i2cBus, leftSpeed);
+    portableMasterWriteI2C(i2cBusConnection, leftSpeed);
     WaitI2C(i2cBus);
     // the next value is written to the right motor speed register
-    portableMasterWriteI2C(i2cBus, rightSpeed);
+    portableMasterWriteI2C(i2cBusConnection, rightSpeed);
     WaitI2C(i2cBus);
 
-    portableStopI2C(i2cBus);
+    portableMasterStopI2C(i2cBusConnection);
 }
 
 void stopMD22Motors() {
-    setMD22MotorSpeeds(md22I2cBus, 0, 0);
+    setMD22MotorSpeeds(md22I2cBusConnection, 0, 0);
 }
 
 // DEVICE INTERFACE
 
 bool initMD22() {
-    getMD22Version(md22I2cBus);
+    getMD22Version(md22I2cBusConnection);
     delaymSec(10);
 
     // Sets data mode 1 (speeds between -128 and 127)
-    writeMD22Command(md22I2cBus, MD22_ADDR_W, MD22_MODE, 1);
+    writeMD22Command(md22I2cBusConnection, MD22_ADDR_W, MD22_MODE, 1);
     // Be careful, mode is not always taken in consideration, so we repeat it
     // and we use timer to be ensure that's is ok
     delaymSec(10);
-    writeMD22Command(md22I2cBus, MD22_ADDR_W, MD22_MODE, 1);
+    writeMD22Command(md22I2cBusConnection, MD22_ADDR_W, MD22_MODE, 1);
     delaymSec(10);
     // Initialize the device, first instruction is ignored
     // Sets acceleration to max
-    writeMD22Command(md22I2cBus, MD22_ADDR_W, MD22_ACCEL, 0);
+    writeMD22Command(md22I2cBusConnection, MD22_ADDR_W, MD22_ACCEL, 0);
     delaymSec(10);
-    setMD22MotorSpeeds(md22I2cBus, 0, 0);
+    setMD22MotorSpeeds(md22I2cBusConnection, 0, 0);
     delaymSec(10);
 
     return true;
@@ -127,7 +133,7 @@ void stopMD22() {
 }
 
 unsigned int isMD22DeviceOk(void) {
-    return getMD22Version(md22I2cBus);
+    return getMD22Version(md22I2cBusConnection);
 }
 
 const char* getMD22DeviceName(void) {
@@ -143,7 +149,7 @@ static DriverDescriptor descriptor = {
     .driverGetName = &getMD22DeviceName
 };
 
-DriverDescriptor* getMD22DriverDescriptor(I2cBus* i2cBus) {
-    md22I2cBus = i2cBus;
+DriverDescriptor* getMD22DriverDescriptor(I2cBusConnection* i2cBusConnection) {
+    md22I2cBusConnection = i2cBusConnection;
     return &descriptor;
 }

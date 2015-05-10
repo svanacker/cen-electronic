@@ -8,7 +8,24 @@
 #include <plib.h>
 #include <peripheral/i2c.h>
 
-unsigned char portableSlaveReadI2C(I2cBus* i2cBus) {
+void portableSlaveStartI2C(I2cBusConnection* i2cBusConnection) {
+    portableCommonStartI2C(i2cBusConnection);
+}
+
+void portableSlaveStopI2C(I2cBusConnection* i2cBusConnection) {
+    portableCommonStopI2C(i2cBusConnection);
+}
+
+void portableSlaveAckI2C(I2cBusConnection* i2cBusConnection) {
+    portableCommonAckI2C(i2cBusConnection);
+}
+
+void portableSlaveNackI2C(I2cBusConnection* i2cBusConnection) {
+    portableCommonNackI2C(i2cBusConnection);
+}
+
+unsigned char portableSlaveReadI2C(I2cBusConnection* i2cBusConnection) {
+    I2cBus* i2cBus = i2cBusConnection->i2cBus;
     if (i2cBus == NULL) {
         unsigned char result = SlaveReadI2C1();
         return result;
@@ -21,7 +38,8 @@ unsigned char portableSlaveReadI2C(I2cBus* i2cBus) {
     }
 }
 
-void portableSlaveWriteI2C(I2cBus* i2cBus, unsigned char c) {
+void portableSlaveWriteI2C(I2cBusConnection* i2cBusConnection, unsigned char c) {
+    I2cBus* i2cBus = i2cBusConnection->i2cBus;
     if (i2cBus == NULL) {
         SlaveWriteI2C1(c);
     }
@@ -52,8 +70,8 @@ void portableSlaveWriteI2C(I2cBus* i2cBus, unsigned char c) {
     #endif
 }
 
-
-void portableSlaveClockRelease(I2cBus* i2cBus) {
+void portableSlaveClockRelease(I2cBusConnection* i2cBusConnection) {
+    I2cBus* i2cBus = i2cBusConnection->i2cBus;
     if (i2cBus == NULL) {
         I2C1CONbits.SCLREL = 1; // release the clock
     }

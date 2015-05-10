@@ -22,7 +22,7 @@
 #include "../../../device/device.h"
 #include "../../../device/deviceUsage.h"
 
-static I2cBus* slaveDebugDeviceI2cBus;
+static I2cBusConnection* slaveDebugDeviceI2cBusConnection;
 
 void deviceI2cSlaveDebugInit(void) {
 }
@@ -42,8 +42,8 @@ void deviceI2cSlaveDebugHandleRawData(char header, InputStream* inputStream, Out
     }
     else if (header == COMMANG_I2C_DEBUG_SLAVE_ADDRESS) {
         ackCommand(outputStream, I2C_SLAVE_DEBUG_DEVICE_HEADER, COMMANG_I2C_DEBUG_SLAVE_ADDRESS);
-        char c = getI2cWriteAddress(slaveDebugDeviceI2cBus);
-        appendHex2(outputStream, c);
+        unsigned char address = slaveDebugDeviceI2cBusConnection->i2cAddress;
+        appendHex2(outputStream, address);
     }
     else if (header == COMMAND_I2C_DEBUG_SLAVE_ENABLE_DISABLE) {
         ackCommand(outputStream, I2C_SLAVE_DEBUG_DEVICE_HEADER, COMMAND_I2C_DEBUG_SLAVE_ENABLE_DISABLE);
@@ -55,12 +55,12 @@ void deviceI2cSlaveDebugHandleRawData(char header, InputStream* inputStream, Out
         ackCommand(outputStream, I2C_SLAVE_DEBUG_DEVICE_HEADER, COMMAND_I2C_DEBUG_SLAVE_SEND_CHAR_I2C_TO_MASTER);
 
         int c = readHex2(inputStream);
-        portableSlaveWriteI2C(slaveDebugDeviceI2cBus, c);
+        portableSlaveWriteI2C(slaveDebugDeviceI2cBusConnection, c);
     }
     else if (header == COMMAND_I2C_DEBUG_SLAVE_READ_CHAR_I2C_FROM_MASTER) {
         ackCommand(outputStream, I2C_SLAVE_DEBUG_DEVICE_HEADER, COMMAND_I2C_DEBUG_SLAVE_READ_CHAR_I2C_FROM_MASTER);
     
-        char c = portableSlaveReadI2C(slaveDebugDeviceI2cBus);
+        char c = portableSlaveReadI2C(slaveDebugDeviceI2cBusConnection);
         appendHex2(outputStream, c);
     }
 }
@@ -72,7 +72,7 @@ static DeviceDescriptor descriptor = {
     .deviceHandleRawData = &deviceI2cSlaveDebugHandleRawData,
 };
 
-DeviceDescriptor* getI2cSlaveDebugDeviceDescriptor(I2cBus* i2cBus) {
-    slaveDebugDeviceI2cBus = i2cBus;
+DeviceDescriptor* getI2cSlaveDebugDeviceDescriptor(I2cBusConnection* i2cBusConnection) {
+    slaveDebugDeviceI2cBusConnection = i2cBusConnection;
     return &descriptor;
 }

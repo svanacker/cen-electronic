@@ -13,6 +13,7 @@
 
 #include "../../common/delay/cenDelay.h"
 
+#include "../../common/i2c/i2cCommon.h"
 #include "../../common/i2c/i2cDebug.h"
 #include "../../common/i2c/master/i2cMasterSetup.h"
 #include "../../common/i2c/slave/i2cSlave.h"
@@ -130,7 +131,9 @@
 
 // I2C Bus
 static I2cBus mainBoardI2cBus;
+static I2cBusConnection mainBoardI2cBusConnection;
 static I2cBus eepromI2cBus;
+static I2cBusConnection eepromI2cBusConnection;
 
 // Eeprom
 static Eeprom eeprom_;
@@ -211,7 +214,7 @@ void initDevicesDescriptor() {
 
 
 //    addLocalDevice(getLogDeviceInterface(), getLogDeviceDescriptor());
-//    addLocalDevice(getI2cSlaveDebugDeviceInterface(), getI2cSlaveDebugDeviceDescriptor());
+   addLocalDevice(getI2cSlaveDebugDeviceInterface(), getI2cSlaveDebugDeviceDescriptor(&mainBoardI2cBusConnection));
 
 
     initDevices();
@@ -274,8 +277,8 @@ int runMotorBoard() {
 
     initTimerList(&timerListArray, MOTOR_BOARD_TIMER_LENGTH);
 
-    // TODO : Replace by an init I2cBus
-    mainBoardI2cBus.portIndex = I2C_BUS_PORT_1;
+    initI2cBus(&mainBoardI2cBus, I2C_BUS_PORT_1);
+    initI2cBusConnection(&mainBoardI2cBusConnection, &mainBoardI2cBus, MOTOR_BOARD_I2C_ADDRESS);
     openSlaveI2cStreamLink(&i2cSlaveStreamLink,
             &i2cSlaveInputBuffer,
             &i2cSlaveInputBufferArray,
@@ -284,8 +287,7 @@ int runMotorBoard() {
             &i2cSlaveOutputBufferArray,
             MOTOR_BOARD_OUT_BUFFER_LENGTH,
             // NULL, 
-            &mainBoardI2cBus,
-            MOTOR_BOARD_I2C_ADDRESS
+            &mainBoardI2cBusConnection
             );
 
     // Debug of I2C : Only if there is problems
@@ -299,9 +301,10 @@ int runMotorBoard() {
     setDebugI2cEnabled(false);
 
     // Eeprom
-    eepromI2cBus.portIndex = I2C_BUS_PORT_4;
+    initI2cBus(&eepromI2cBus, I2C_BUS_PORT_4);
     i2cMasterInitialize(&eepromI2cBus);
-    init24C512Eeprom(&eeprom_, &eepromI2cBus);
+    initI2cBusConnection(&eepromI2cBusConnection, &eepromI2cBus, /* TODO */ 0);
+    init24C512Eeprom(&eeprom_, &eepromI2cBusConnection);
 
     // Clock
     initSoftClock(&clock);

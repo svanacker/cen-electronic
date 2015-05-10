@@ -17,12 +17,12 @@
 
 /**
  * Check for presence of specific PCF8574 device.
- * @param pointer on I2c bus (Simulates POO Programming)
+ * @param i2cConnection on I2c bus (Simulates POO Programming)
  * @param addr either PCF8574_BASE_ADDRESS or PCF8574AP_BASE_ADDRESS
  * @param devAddr between 0 and 7
  * @return True if device exists on bus
  */
-char isPCF8574Present(I2cBus* i2c, unsigned char addr, unsigned char devAddr );
+char isPCF8574Present(I2cBusConnection* i2cConnection, unsigned char addr, unsigned char devAddr );
 
 /**
  * Set PCF8574 outputs (pins masked with dirs value).
@@ -31,7 +31,7 @@ char isPCF8574Present(I2cBus* i2c, unsigned char addr, unsigned char devAddr );
  * @param devAddr between 0 and 7
  * @param outData Data to write to PCF8574 port
  */
-void writePCF8574(I2cBus* i2c, unsigned char addr, unsigned char devAddr, unsigned char outData, unsigned char dirs);
+void writePCF8574(I2cBusConnection* i2cConnection, unsigned char addr, unsigned char devAddr, unsigned char outData, unsigned char dirs);
 
 /**
  * Get PCF8574 inputs (pins masked with dirs value)
@@ -39,11 +39,11 @@ void writePCF8574(I2cBus* i2c, unsigned char addr, unsigned char devAddr, unsign
  * @param devAddr between 0 and 7
  * @return Data from PCF8574 inputs
  */
-unsigned char readPCF8574(I2cBus* i2c, unsigned char addr, unsigned char devAddr, unsigned char dirs);
+unsigned char readPCF8574(I2cBusConnection* i2cConnection, unsigned char addr, unsigned char devAddr, unsigned char dirs);
 
 /**
 * Test functions for PCF.
 */
-void testPCF8574(I2cBus* i2c, OutputStream* outputStream);
+void testPCF8574(I2cBusConnection* i2cConnection, OutputStream* outputStream);
 
 #endif

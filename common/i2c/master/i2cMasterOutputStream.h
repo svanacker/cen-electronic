@@ -9,8 +9,8 @@
  * A global structure used to store every information about the I2C outputStream.
  */
 typedef struct {
-    // The bus we manage
-    I2cBus* i2cBus;
+    // The bus connection we manage
+    I2cBusConnection* i2cBusConnection;
     // The outputStream object with specific callback
     OutputStream* outputStream;
     // The underlying buffer
@@ -21,13 +21,11 @@ typedef struct {
 * Init an outputStream around i2c with an address.
 * @param i2cMasterOutputStream a global structure used to store every information about the outputStream
 * @param outputStream a structure to initialize
-* @param i2cBuffer an internal i2cBuffer to avoid
-* @param i2cWriteAddress the I2C address corresponding to the I2C Slave address
+* @param i2cBuffer an internal i2cBuffer to avoid unefficient multiples calls with chars
 */
 void initMasterI2cOutputStream(I2cMasterOutputStream* i2cMasterOutputStream,
-                               I2cBus* i2cBus,
+                               I2cBusConnection* i2cBusConnection,
                                OutputStream* outputStream,
-                               Buffer* i2cBuffer,
-                               unsigned char i2cWriteAddress);
+                               Buffer* i2cBuffer);
 
 #endif

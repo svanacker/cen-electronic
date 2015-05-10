@@ -5,16 +5,24 @@
 
 #include "../../../../common/i2c/i2cCommon.h"
 
-unsigned char getI2cWriteAddress(I2cBus* i2cBus);
+/**
+ * Define the extended structure which store the extra information/variable needed by
+ * PC
+ */
+typedef struct I2cSlaveBusConnectionPc {
+    HANDLE masterToSlaveHandle;
+    HANDLE masterToSlaveThreadHandle;
+    DWORD  masterToSlaveThreadId;
 
-unsigned char getI2cReadAddress(I2cBus* i2cBus);
+    HANDLE slaveToMasterHandle;
+    HANDLE slaveToMasterThreadHandle;
+    DWORD  slaveToMasterThreadId;
+} I2cSlaveBusConnectionPc;
 
 /**
- * Return the Pipe Handle used by the Slave to read Data from the Master.
- * @return the Pipe Handle used by the Slave to read Data from the Master.
+ * Returns the extended structure which store the extra information/variable needed by
+ * Pc to manage a simulation of I2cBus.
  */
-HANDLE getI2CMasterToSlaveHandle(void);
-
-HANDLE getI2CSlaveToMasterHandle(void);
+I2cSlaveBusConnectionPc* getSlaveI2cBusConnectionPc(I2cBusConnection* i2cBusConnection);
 
 #endif

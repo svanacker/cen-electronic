@@ -48,13 +48,20 @@ void deviceI2cMasterDebugHandleRawData(char header, InputStream* inputStream, Ou
         ackCommand(outputStream, I2C_MASTER_DEBUG_DEVICE_HEADER, COMMAND_I2C_DEBUG_MASTER_SEND_CHAR_TO_SLAVE);
         int address = readHex2(inputStream);
         int c = readHex2(inputStream);
-    
-        i2cMasterWriteChar(i2cMasterDebugI2cBus, address, c);
+        // local Variable
+        // TODO : CANNOT WORK ON PC !
+        I2cBusConnection i2cBusConnection;
+        initI2cBusConnection(&i2cBusConnection, i2cMasterDebugI2cBus, address);
+        i2cMasterWriteChar(&i2cBusConnection, address, c);
     }
     else if (header == COMMAND_I2C_DEBUG_MASTER_READ_CHAR_FROM_SLAVE) {
         ackCommand(outputStream, I2C_MASTER_DEBUG_DEVICE_HEADER, COMMAND_I2C_DEBUG_MASTER_READ_CHAR_FROM_SLAVE);
         int address = readHex2(inputStream);
-        char c = i2cMasterReadChar(i2cMasterDebugI2cBus, address);
+        // local Variable
+        // TODO : CANNOT WORK ON PC !
+        I2cBusConnection i2cBusConnection;
+        initI2cBusConnection(&i2cBusConnection, i2cMasterDebugI2cBus, address);
+        char c = i2cMasterReadChar(&i2cBusConnection);
         appendHex2(outputStream, c);
     }
 }

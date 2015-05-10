@@ -24,13 +24,10 @@ static bool i2cStartFlag = false;
 static bool i2cAddressDefinedFlag = false;
 static bool i2cReadFlag = false;
 
-void sendI2CDataToMaster(void) {
+void sendI2CDataToMaster(I2cBusConnection* i2cBusConnection) {
     if (!i2cReadFlag) {
         return;
     }
-    // TODO : Find the right I2CBus
-    I2cBus* i2cBus = NULL;
-
     StreamLink* i2cStreamLink = getI2cStreamLink();
 
     // The buffer which must be send to the master
@@ -44,11 +41,8 @@ void sendI2CDataToMaster(void) {
         // for debug support
         appendI2cDebugOutputChar(c);
 
-        // TODO : Find the right i2cBus
-        I2cBus* i2cBus = NULL;
-
         // we send it to the master
-        portableSlaveWriteI2C(i2cBus, c);
+        portableSlaveWriteI2C(i2cBusConnection, c);
 
         // To Remove
         printf("%c", c);
@@ -57,17 +51,14 @@ void sendI2CDataToMaster(void) {
         // In this case, we must NOT add '\0' to the debug buffer (we will not see anything !)
         // In PC, the system is not the same than with interrupt, because we add something in a pipe
         // and on real I2C, value is just read on the fly, but not stored !
-        portableSlaveWriteI2C(i2cBus, I2C_SLAVE_NO_DATA_IN_READ_BUFFER);
+        portableSlaveWriteI2C(i2cBusConnection, I2C_SLAVE_NO_DATA_IN_READ_BUFFER);
     }
 }
 
-void handleI2CDataFromMaster(void) {
+void handleI2CDataFromMaster(I2cBusConnection* i2cBusConnection) {
     StreamLink* i2cStreamLink = getI2cStreamLink();
 
-    // TODO : Find the right I2CBus
-    I2cBus* i2cBus = NULL;
-
-    unsigned char data = portableSlaveReadI2C(i2cBus);
+    unsigned char data = portableSlaveReadI2C(i2cBusConnection);
     if (INCORRECT_DATA != data && I2C_SLAVE_FAKE_WRITE != data) {
         if (ASCII_STX == data) {
             i2cStartFlag = true;
@@ -89,7 +80,7 @@ void handleI2CDataFromMaster(void) {
         if (!i2cAddressDefinedFlag) {
 
             // We don't care about write Address or Read address
-            if (getI2cWriteAddress(NULL) == (data & 0xFE)) {
+            if (i2cBusConnection->i2cAddress == (data & 0xFE)) {
                 
                 i2cAddressDefinedFlag = true;
                 // Read I2C Flag is activated when the last bit is activated
@@ -112,7 +103,8 @@ DWORD WINAPI masterToSlaveCallback(LPVOID lpvParam) {
     printf("PC : I2C Master -> Slave listening !\r\n");
     while (true) {
         delayUs();
-        handleI2CDataFromMaster();
+        I2cBusConnection* i2cBusConnection = (I2cBusConnection*)lpvParam;
+        handleI2CDataFromMaster(i2cBusConnection);
     }
     printf("masterToSlaveCallback exiting.\n");
 
@@ -123,7 +115,8 @@ DWORD WINAPI slaveToMasterCallback(LPVOID lpvParam) {
     printf("PC : I2 Slave -> Master listening !\r\n");
     while (true) {
         delayUs();
-        sendI2CDataToMaster();
+        I2cBusConnection* i2cBusConnection = (I2cBusConnection*)lpvParam;
+        sendI2CDataToMaster(i2cBusConnection);
     }
     printf("slaveToMasterCallback exiting.\n");
 

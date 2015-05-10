@@ -20,7 +20,7 @@
 * @param i2cMasterInputBufferLength the length of the i2cMasterInputBufferLength
 * @param i2cMasterOutputStream the stream which is used to manage the output of the I2C Master (I2C Master -> I2C Slave(address))
 * @param i2cMasterInputStream the stream which is used to manage the input of the I2C Master (I2C Slave (address) -> I2C Master)
-* @param i2cBus a pointer on the i2c Bus (to manage more than one)
+* @param i2cBusConnection a pointer on the i2c Bus (to manage more than one i2cBus, and to manage several target)
 * @return the created structure to store information about dispatcher
 */
 DriverDataDispatcher* addI2CDriverDataDispatcher(
@@ -30,8 +30,7 @@ DriverDataDispatcher* addI2CDriverDataDispatcher(
         unsigned char i2cMasterInputBufferLength,
         OutputStream* i2cMasterOutputStream,
         InputStream* i2cMasterInputStream,
-        I2cBus* i2cBus,
-        int i2cAddress);
+        I2cBusConnection* I2cBusConnection);
 
 #endif
 

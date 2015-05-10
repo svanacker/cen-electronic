@@ -1,5 +1,7 @@
 #include <stdbool.h>
 
+#include "i2cMasterSetupPc.h"
+
 #include "../i2cMasterSetup.h"
 
 #include "../../../../common/i2c/i2cCommon.h"
@@ -17,36 +19,32 @@
 #define PIPE_I2C_MASTER_NAME    L"\\\\.\\pipe\\mainBoardPipe"
 #define PIPE_I2C_SLAVE_NAME    L"\\\\.\\pipe\\motorBoardPipe"
 
-static HANDLE masterPipeHandle = NULL;
-static HANDLE slavePipeHandle = NULL;
+static I2cMasterBusPc i2cMasterBusPc;
 
-HANDLE getMasterPipeHandle() {
-    return masterPipeHandle;
-}
-
-HANDLE getSlavePipeHandle(I2cBus* i2cBus, unsigned char writeAddress) {
-    // TODO : Handle Address !
-    return slavePipeHandle;
+I2cMasterBusPc* getMasterI2cBusPc(I2cBus* i2cBus) {
+    I2cMasterBusPc* result = (I2cMasterBusPc*)i2cBus->object;
+    return result;
 }
 
 void i2cMasterInitialize(I2cBus* i2cBus) {
+    i2cBus->object = &i2cMasterBusPc;
     // Avoid more than one initialization
-    if (masterPipeHandle != NULL) {
+    if (i2cMasterBusPc.masterPipeHandle != NULL) {
         appendString(getDebugOutputStreamLogger(), "I2C PC Master (Pipe) already initialized\n");
         return;
     }
     appendString(getDebugOutputStreamLogger(), "I2C Master Initialize\r\n");
-    masterPipeHandle = initServerPipe(PIPE_I2C_MASTER_NAME);
+    i2cMasterBusPc.masterPipeHandle = initServerPipe(PIPE_I2C_MASTER_NAME);
     delaymSec(200);
-    slavePipeHandle = initClientPipe(PIPE_I2C_SLAVE_NAME);
+    i2cMasterBusPc.slavePipeHandle = initClientPipe(PIPE_I2C_SLAVE_NAME);
 }
 
 void i2cMasterFinalize(I2cBus* i2cBus) {
-    if (masterPipeHandle != NULL) {
+    if (i2cMasterBusPc.masterPipeHandle != NULL) {
         portableCloseI2C(i2cBus);
-        CloseHandle(masterPipeHandle);
+        CloseHandle(i2cMasterBusPc.masterPipeHandle);
     }
-    if (slavePipeHandle != NULL) {
-        CloseHandle(slavePipeHandle);
+    if (i2cMasterBusPc.slavePipeHandle != NULL) {
+        CloseHandle(i2cMasterBusPc.slavePipeHandle);
     }
 }

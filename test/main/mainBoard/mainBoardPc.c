@@ -50,8 +50,8 @@
 #include "../../../device/eeprom/eepromDeviceInterface.h"
 
 // FILE
-#include "../../../device/file/fileDevice.h"
-#include "../../../device/file/fileDeviceInterface.h"
+// #include "../../../device/file/fileDevice.h"
+// #include "../../../device/file/fileDeviceInterface.h"
 
 // KINEMATICS
 #include "../../../robot/kinematics/robotKinematicsDeviceInterface.h"
@@ -142,6 +142,7 @@ static DriverDataDispatcher driverDataDispatcherListArray[MAIN_BOARD_PC_DATA_DIS
 
 // Dispatcher i2c->Motor
 static I2cBus motorBoardI2cBus;
+static I2cBusConnection motorBoardI2cBusConnection;
 static char motorBoardInputBufferArray[MAIN_BOARD_PC_DATA_MOTOR_BOARD_DISPATCHER_BUFFER_LENGTH];
 static Buffer motorBoardInputBuffer;
 static InputStream motorBoardInputStream;
@@ -199,7 +200,6 @@ void mainBoardDeviceHandleNotification(const Device* device, const char commandH
 }
 
 void mainBoardWaitForInstruction(void) {
-
     while (handleNotificationFromDispatcherList(TRANSMIT_I2C)) {
         // loop for all notification
         // notification handler must avoid to directly information in notification callback
@@ -281,14 +281,17 @@ void runMainBoardPC(bool connectToRobotManagerMode) {
     initDriverDataDispatcherList((DriverDataDispatcher(*)[]) &driverDataDispatcherListArray, MAIN_BOARD_PC_DATA_DISPATCHER_LIST_LENGTH);
     addLocalDriverDataDispatcher();
 
+    initI2cBus(&motorBoardI2cBus, I2C_BUS_PORT_1);
+    initI2cBusConnection(&motorBoardI2cBusConnection, &motorBoardI2cBus, MOTOR_BOARD_PC_I2C_ADDRESS);
+
     addI2CDriverDataDispatcher("MOTOR_BOARD_DISPATCHER",
     &motorBoardInputBuffer,
     (char(*)[]) &motorBoardInputBufferArray,
     MAIN_BOARD_PC_DATA_MOTOR_BOARD_DISPATCHER_BUFFER_LENGTH,
     &motorBoardOutputStream,
     &motorBoardInputStream,
-    &motorBoardI2cBus,
-    MOTOR_BOARD_PC_I2C_ADDRESS);
+    &motorBoardI2cBusConnection
+    );
 
     // EEPROM
     initEepromPc(&eeprom);
@@ -327,7 +330,7 @@ void runMainBoardPC(bool connectToRobotManagerMode) {
     addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor());
     addLocalDevice(getTimerDeviceInterface(), getTimerDeviceDescriptor());
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
-    addLocalDevice(getFileDeviceInterface(), getFileDeviceDescriptor());
+    // addLocalDevice(getFileDeviceInterface(), getFileDeviceDescriptor());
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
     addLocalDevice(getLogDeviceInterface(), getLogDeviceDescriptor());
     addLocalDevice(getLCDDeviceInterface(), getLCDDeviceDescriptor());

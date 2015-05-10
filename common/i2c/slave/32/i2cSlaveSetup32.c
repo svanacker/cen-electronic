@@ -21,32 +21,20 @@
 
 #define BRG_VAL     ((FOSC / 2 / I2C_FREQUENCY)-2)
 
-static bool initialized = false;
-static unsigned char slaveWriteAddress;
-
-unsigned char getI2cWriteAddress(I2cBus* i2cBus) {
-    return slaveWriteAddress;
-}
-
-unsigned char getI2cReadAddress(I2cBus* i2cBus) {
-    return slaveWriteAddress | 1;
-}
-
-void i2cSlaveInitialize(I2cBus* i2cBus, unsigned char writeAddress) {
+void i2cSlaveInitialize(I2cBusConnection* i2cBusConnection) {
 
     // Avoid more than one initialization
-    if (initialized) {
+    if (i2cBusConnection->opened) {
         writeError(I2C_SLAVE_ALREADY_INITIALIZED);
         return;
     }
-    slaveWriteAddress = writeAddress;
-    initialized = true;
+    i2cBusConnection->opened = true;
     
     appendString(getDebugOutputStreamLogger(), "I2C Slave Write Address=");
-    appendHex2(getDebugOutputStreamLogger(), writeAddress);
+    appendHex2(getDebugOutputStreamLogger(), i2cBusConnection->i2cAddress);
     appendCRLF(getDebugOutputStreamLogger());
 
-    if (i2cBus == NULL) {
+    if (i2cBusConnection == NULL) {
         
         // Enable the I2C module with clock stretching enabled
         OpenI2C1(I2C_ON | I2C_7BIT_ADD | I2C_STR_EN, BRG_VAL);
@@ -54,7 +42,7 @@ void i2cSlaveInitialize(I2cBus* i2cBus, unsigned char writeAddress) {
         // 7-bit I2C slave address must be initialised here.
         // we shift because i2c address is shift to the right
         // to manage read and write address
-        I2C1ADD = writeAddress >> 1;
+        I2C1ADD = i2cBusConnection->i2cAddress >> 1;
         I2C1MSK = 0;
     
         // Interruption on I2C Slave
@@ -67,10 +55,11 @@ void i2cSlaveInitialize(I2cBus* i2cBus, unsigned char writeAddress) {
         EnableIntSI2C1;
     }
     else {
+        I2cBus* i2cBus = i2cBusConnection->i2cBus; 
         I2C_MODULE i2cModule = getI2C_MODULE(i2cBus->portIndex);
         I2CConfigure(i2cModule, I2C_ON | I2C_7BIT_ADD | I2C_STR_EN);
         I2CSetFrequency(i2cModule, GetPeripheralClock(), I2C_FREQUENCY);
-        I2CSetSlaveAddress(i2cModule, writeAddress >> 1, 0, I2C_USE_7BIT_ADDRESS);
+        I2CSetSlaveAddress(i2cModule, i2cBusConnection->i2cAddress >> 1, 0, I2C_USE_7BIT_ADDRESS);
 
         INTClearFlag(INT_SOURCE_I2C_SLAVE(INT_I2C1));
         INTSetVectorPriority(INT_VECTOR_I2C(I2C1), INT_PRIORITY_LEVEL_3);

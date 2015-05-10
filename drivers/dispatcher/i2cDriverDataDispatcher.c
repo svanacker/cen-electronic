@@ -40,17 +40,16 @@ DriverDataDispatcher* addI2CDriverDataDispatcher(
         unsigned char i2cMasterInputBufferLength,
         OutputStream* outputStream,
         InputStream* inputStream,
-        I2cBus* i2cBus,
-        int i2cAddress) {
+        I2cBusConnection* i2cBusConnection) {
 
 
     // Init the output Stream : I2C Master -> I2C Slave(address)
     initBuffer(&i2cTempBuffer, (char(*)[]) &i2cTempBufferArray, I2C_DRIVER_DATA_DISPATCHER_BUFFER_LENGTH, "I2C Master Output", "global");
-    initMasterI2cOutputStream(&i2cMasterOutputStream, i2cBus, outputStream, &i2cTempBuffer, i2cAddress);
+    initMasterI2cOutputStream(&i2cMasterOutputStream, i2cBusConnection, outputStream, &i2cTempBuffer);
 
     // Init the input Stream : I2C Slave (address) -> I2C Master
     initBuffer(i2cMasterInputBuffer, i2cMasterInputBufferArray, i2cMasterInputBufferLength, "I2C Master Input", dispatcherName);
-    initMasterI2cInputStream(&i2cMasterInputStream, i2cBus, i2cMasterInputBuffer, inputStream, i2cAddress);
+    initMasterI2cInputStream(&i2cMasterInputStream, i2cBusConnection, i2cMasterInputBuffer, inputStream);
 
     // Clear previous data to avoid buffer from the other board provided by error at the initialization
     // TODO : Clarify this, to avoid to read some bad data until we are ready !
@@ -60,7 +59,7 @@ DriverDataDispatcher* addI2CDriverDataDispatcher(
                                         TRANSMIT_I2C,
                                         dispatcherName,
                                         NULL,
-                                        i2cAddress,
+                                        i2cBusConnection->i2cAddress,
                                         inputStream,
                                         outputStream,
                                         remoteDriverDataDispatcherTransmit
