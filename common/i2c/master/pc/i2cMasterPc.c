@@ -51,6 +51,6 @@ void portableMasterWaitSendI2C(I2cBusConnection* i2cBusConnection) {
     // No Wait
 }
 
-void portableCloseI2C(I2cBus* i2cBus) {
+void portableMasterCloseI2C(I2cBus* i2cBus) {
 
 }

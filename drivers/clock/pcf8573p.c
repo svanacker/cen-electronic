@@ -46,7 +46,7 @@ ClockData* _readPcf8573Clock(Clock* clock) {
     clockData->month = portableMasterReadI2C(i2cBus);
     portableNackI2C(i2cBus);
     WaitI2C(i2cBus);
-    portableCloseI2C(i2cBus);
+    portableMasterCloseI2C(i2cBus);
     WaitI2C(i2cBus);
 
     return clockData;
@@ -70,7 +70,7 @@ void _writePcf8573Clock(Clock* clock) {
     portableMasterWriteI2C(i2cBus, clockData->minute);
     portableMasterWriteI2C(i2cBus, clockData->day);
     portableMasterWriteI2C(i2cBus, clockData->month);
-    portableCloseI2C(i2cBus);
+    portableMasterCloseI2C(i2cBus);
     WaitI2C(i2cBus);
 }
 

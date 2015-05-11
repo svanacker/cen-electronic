@@ -41,7 +41,7 @@ void i2cMasterInitialize(I2cBus* i2cBus) {
 
 void i2cMasterFinalize(I2cBus* i2cBus) {
     if (i2cMasterBusPc.masterPipeHandle != NULL) {
-        portableCloseI2C(i2cBus);
+        portableMasterCloseI2C(i2cBus);
         CloseHandle(i2cMasterBusPc.masterPipeHandle);
     }
     if (i2cMasterBusPc.slavePipeHandle != NULL) {

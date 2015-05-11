@@ -11,7 +11,7 @@ unsigned char portableMasterReadI2C(I2cBus* i2cBus) {
     return MasterReadI2C();
 }
 
-void portableCloseI2C(I2cBus* i2cBus) {
+void portableMasterCloseI2C(I2cBus* i2cBus) {
     CloseI2C();
 }
 
