@@ -4,6 +4,7 @@
 #include "../../../common/io/outputStream.h"
 #include "../../../common/io/printWriter.h"
 
+#include "../../../motion/position/coders.h"
 #include "../../../motion/position/coderType.h"
 
 
@@ -13,7 +14,6 @@
     #include "30F/hctl2032_pindefinition30F.h"
     #include <p30Fxxxx.h>
 #endif
-
 
 // variables
 static Coder coders[CODER_COUNT];
@@ -150,7 +150,7 @@ void setSelectionIndex(int selectionIndex) {
  * Read and latchs for BOTH coders position.
  * We must use latchs for BOTH coders to avoid gap between coders position due to read time gap.
  */
-void readAndLatchPositions() {
+void readAndLatchPositions(void) {
     // Ask to update the position
     OE = 1;
     delaymSec(1);
@@ -163,7 +163,7 @@ void readAndLatchPositions() {
  * Read the coder value on the D0-D7 on HCTL2032.
  * @return a value between 0 and 255
  */
-unsigned long readCoderByteValue() {
+unsigned long readCoderByteValue(void) {
     unsigned long value = 0;
 
     if (D7) {
@@ -197,26 +197,26 @@ unsigned long readCoderByteValue() {
  * Read the coderValue.
  * @param coderIndex either CODER_X or CODER_Y
  */
-void readCoderValue(int coderIndex) {
+void readCoderValue(enum CoderType coderType) {
     signed long value = 0;
 
     unsigned long coderByteValue;
     int shiftValue;
 
-    X_Y = coderIndex;
+    X_Y = coderType;
 
     int selectionIndex;
     for (selectionIndex = LOW_BYTE_INDEX; selectionIndex <= MASTER_BYTE_INDEX; selectionIndex++) {
         // Select the coder
         setSelectionIndex(selectionIndex);
         // read the byte indexed by selectionIndex
-        coderByteValue = readCoderByteValue(coderIndex);
+        coderByteValue = readCoderByteValue();
         // shift value : 0, 8, 16 or 24
         shiftValue = selectionIndex * 8;
         value += coderByteValue << shiftValue;
     }
     // Stores in memory the value
-    Coder* localCoder = getCoder(coderIndex);
+    Coder* localCoder = getCoder(coderType);
     localCoder->previousValue = localCoder->value;
     localCoder->value = value;
 }

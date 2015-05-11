@@ -4,16 +4,6 @@
 #include "../../../common/io/outputStream.h"
 #include "../../../motion/position/coderType.h"
 
-/**
- * The structure to encapsulate each coders value.
- */
-typedef struct {
-    /** The value of the codeur */
-    signed long value;
-    /** The previous value of the codeur */
-    signed long previousValue;
-} Coder;
-
 #define MASTER_BYTE_INDEX 3
 #define BYTE_3_INDEX 2
 #define BYTE_2_INDEX 1
@@ -38,11 +28,6 @@ typedef struct {
  * The index to read the PORT Y.
  */
 #define Y_INDEX 0
-
-/**
- * The total number of coder which are managed.
- */
-#define CODER_COUNT 2
 
 /**
  * Init the coders.

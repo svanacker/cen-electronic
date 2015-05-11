@@ -9,7 +9,7 @@ signed long getCoderValue(enum CoderType coderType) {
     return hctl_getCoderValue(coderType);
 }
 
-void clearCoders() {
+void clearCoders(void) {
     hctl_clearCoders();
 }
 
@@ -20,26 +20,26 @@ void initCoders(void) {
     clearCoders();
 }
 
-void checkCoders() {
+void checkCoders(void) {
     // TODO : Implementation
 }
 
-int getCodersErrorCount(int index) {
-    // TODO : Implementation
-    return 0;
-}
-
-int getCodersErrorValue(int index) {
+int getCodersErrorCount(enum CoderType coderType) {
     // TODO : Implementation
     return 0;
 }
 
-signed long getCodersInitialPosition(int index) {
+int getCodersErrorValue(enum CoderType coderType) {
     // TODO : Implementation
     return 0;
 }
 
-int getCodersZCount(int index) {
+signed long getCodersInitialPosition(enum CoderType coderType) {
+    // TODO : Implementation
+    return 0;
+}
+
+int getCodersZCount(enum CoderType coderType) {
     // TODO : Implementation
     return 0;
 }
