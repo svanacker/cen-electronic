@@ -56,6 +56,11 @@
 */
 #define COMMAND_WRITE_BLOCK_EEPROM         'B'
 
+/**
+* Defines the header to reload the content of the eeprom (useful only in Windows).
+*/
+#define COMMAND_RELOAD_EEPROM              'L'
+
 // Function to get the specific Device Interface
 
 /**

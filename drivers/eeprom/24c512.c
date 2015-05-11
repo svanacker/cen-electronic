@@ -250,7 +250,14 @@ void _readEeprom24C512Block(Eeprom* eeprom_, unsigned long index, unsigned int l
     WaitI2C(i2cBus);
 }
 
-void dumpEepromToFile(Eeprom* eeprom_) {
+void _loadEeprom24C512(Eeprom* eeprom_) {
+    if (eeprom_ == NULL) {
+        writeError(UNIMPLETEMENTED_EXCEPTION);
+        return;
+    }  
+}
+
+void _dumpEeprom24C512(Eeprom* eeprom_) {
     if (eeprom_ == NULL) {
         writeError(UNIMPLETEMENTED_EXCEPTION);
         return;
@@ -258,5 +265,13 @@ void dumpEepromToFile(Eeprom* eeprom_) {
 }
 
 void init24C512Eeprom(Eeprom* eeprom_, I2cBusConnection* i2cBusConnection) {
-    initEeprom(eeprom_, EEPROM_24C512_MAX_INDEX, _writeEeprom24C512Char, _readEeprom24C512Char, _writeEeprom24C512Block, _readEeprom24C512Block, (int*) i2cBusConnection);
+    initEeprom(eeprom_,
+               EEPROM_24C512_MAX_INDEX,
+               _writeEeprom24C512Char,
+               _readEeprom24C512Char,
+               _writeEeprom24C512Block,
+               _readEeprom24C512Block,
+               _loadEeprom24C512,
+               _dumpEeprom24C512,
+                 (int*) i2cBusConnection);
 }

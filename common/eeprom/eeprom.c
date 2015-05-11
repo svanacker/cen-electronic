@@ -18,6 +18,8 @@ void initEeprom(Eeprom* eeprom_,
                 EepromReadCharFunction* eepromReadChar,
                 EepromWriteBlockFunction* eepromWriteBlock,
                 EepromReadBlockFunction* eepromReadBlock,
+                EepromLoadFunction* eepromLoadFunction,
+                EepromDumpFunction* eepromDumpFunction,
                 int* object) {
     if (eeprom_ == NULL) {
         writeError(EEPROM_NULL);
@@ -28,6 +30,8 @@ void initEeprom(Eeprom* eeprom_,
     eeprom_->eepromReadChar = eepromReadChar;
     eeprom_->eepromWriteBlock = eepromWriteBlock;
     eeprom_->eepromReadBlock = eepromReadBlock;
+    eeprom_->eepromLoad = eepromLoadFunction;
+    eeprom_->eepromDump = eepromDumpFunction;
     eeprom_->object = object;
 }
 

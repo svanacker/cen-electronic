@@ -46,6 +46,18 @@ typedef void EepromWriteBlockFunction(Eeprom* eeprom_, unsigned long index, unsi
 typedef void EepromReadBlockFunction(Eeprom* eeprom_, unsigned long index, unsigned int length, Buffer* buffer);
 
 /**
+* Load the values from an existing Dump into the the EEPROM (useful for Pc simulation).
+* @param eeprom_ a pointer on the Eeprom object (Simulates POO programming)
+*/
+typedef void EepromLoadFunction(Eeprom* eeprom_);
+
+/**
+* Dump values from to the EEPROM device to a file (usefull for Pc simulation).
+* @param eeprom_ a pointer on the Eeprom object (Simulates POO programming)
+*/
+typedef void EepromDumpFunction(Eeprom* eeprom_);
+
+/**
  * Defines the contract for an eeprom.
  */
 struct Eeprom {
@@ -57,6 +69,10 @@ struct Eeprom {
     EepromWriteBlockFunction* eepromWriteBlock;
     /** The function which must be used to read the content of an eeprom into a buffer. */
     EepromReadBlockFunction* eepromReadBlock;
+    /** The function which must be used to load the content of a dump into an eeprom. */
+    EepromLoadFunction* eepromLoad;
+    /** The function which must be used to dump the content of the eeprom. */
+    EepromDumpFunction* eepromDump;
     /** Max Index. */
     unsigned long maxIndex;
     /** A pointer on generic object (for example to store I2cBus ...). */
@@ -87,6 +103,8 @@ void initEeprom(Eeprom* eeprom_,
                 EepromReadCharFunction* eepromReadChar,
                 EepromWriteBlockFunction* eepromWriteBlock,
                 EepromReadBlockFunction* eepromReadBlock,
+                EepromLoadFunction* eepromLoad,
+                EepromDumpFunction* eepromDump,
                 int* object);
 
 /**
@@ -143,12 +161,6 @@ void printEepromBlock(Eeprom* eeprom_, OutputStream* outputStream, long index, u
  * Clear the eeprom by filling with 0 files between 2 index (including startIndex, but excluding endIndex)
  */
 void clearEeprom(Eeprom* eeprom_, unsigned long startIndex, unsigned long endIndex);
-
-/**
-* Dump the content of the eeprom_ into a file (always the same).
-* Only available on PC.
-*/
-void dumpEepromToFile(Eeprom* eeprom_);
 
 /**
  * Dump the content of the eeprom_ into an outputStream

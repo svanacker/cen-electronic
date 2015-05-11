@@ -40,9 +40,13 @@ bool isEepromDeviceOk(void) {
 
 void deviceEepromHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream) {
     _deviceEepromCheckInitialized();
-    if (commandHeader == COMMAND_DUMP_TO_FILE_EEPROM) {
+    if (commandHeader == COMMAND_RELOAD_EEPROM) {
+        ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_RELOAD_EEPROM);
+        eeprom_->eepromLoad(eeprom_);
+    }
+    else if (commandHeader == COMMAND_DUMP_TO_FILE_EEPROM) {
         ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_DUMP_TO_FILE_EEPROM);
-        dumpEepromToFile(eeprom_);
+        eeprom_->eepromDump(eeprom_);
     }
     else if (commandHeader == COMMAND_DUMP_TO_LOG_OUTPUT_STREAM_EEPROM) {
         ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_DUMP_TO_LOG_OUTPUT_STREAM_EEPROM);
