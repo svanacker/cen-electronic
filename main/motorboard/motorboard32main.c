@@ -36,6 +36,8 @@
 
 #include "../../common/timer/timerList.h"
 
+#include "../../common/system/system.h"
+
 #include "../../device/device.h"
 #include "../../device/deviceList.h"
 #include "../../device/transmitMode.h"

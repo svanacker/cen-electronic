@@ -137,6 +137,7 @@
     <ClCompile Include="common\serial\pc\serialPc.c" />
     <ClCompile Include="common\serial\serialLink.c" />
     <ClCompile Include="common\serial\serialOutputStream.c" />
+    <ClCompile Include="common\system\system.c" />
     <ClCompile Include="common\timer\cenTimer.c" />
     <ClCompile Include="common\timer\pc\timerSetupPc.c" />
     <ClCompile Include="common\timer\timerDebug.c" />
@@ -373,6 +374,7 @@
     <ClInclude Include="common\serial\serialInputInterrupt.h" />
     <ClInclude Include="common\serial\serialLink.h" />
     <ClInclude Include="common\serial\serialOutputStream.h" />
+    <ClInclude Include="common\system\system.h" />
     <ClInclude Include="common\timer\cenTimer.h" />
     <ClInclude Include="common\timer\timerDebug.h" />
     <ClInclude Include="common\timer\timerInterrupt.h" />

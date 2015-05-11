@@ -670,6 +670,12 @@
     <Filter Include="Source Files\robot\config\pc">
       <UniqueIdentifier>{9d535f8d-a5e5-4b22-b9cb-5d59e328bd73}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\common\system">
+      <UniqueIdentifier>{70d2930e-86f7-42e2-bbd5-1077e1784f3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\common\system">
+      <UniqueIdentifier>{6a8dda18-0cf5-4d62-810c-4eebf8661fce}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -1352,6 +1358,9 @@
     </ClCompile>
     <ClCompile Include="robot\config\pc\robotConfigPc.c">
       <Filter>Source Files\robot\config\pc</Filter>
+    </ClCompile>
+    <ClCompile Include="common\system\system.c">
+      <Filter>Source Files\common\system</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2107,6 +2116,9 @@
     </ClInclude>
     <ClInclude Include="robot\config\pc\robotConfigPc.h">
       <Filter>Header Files\robot\config\pc</Filter>
+    </ClInclude>
+    <ClInclude Include="common\system\system.h">
+      <Filter>Header Files\common\system</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

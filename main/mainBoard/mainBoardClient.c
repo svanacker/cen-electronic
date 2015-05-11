@@ -46,6 +46,8 @@
 #include "../../common/timer/cenTimer.h"
 #include "../../common/timer/timerList.h"
 
+#include "../../common/system/system.h"
+
 #include "../../device/device.h"
 #include "../../device/deviceDebug.h"
 #include "../../device/deviceUsage.h"

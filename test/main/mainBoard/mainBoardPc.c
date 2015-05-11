@@ -26,6 +26,8 @@
 #include "../../../common/serial/serial.h"
 #include "../../../common/serial/serialLink.h"
 
+#include "../../../common/system/system.h"
+
 #include "../../../common/timer/timerList.h"
 
 

@@ -17,6 +17,8 @@
 #include "../../common/log/logLevel.h"
 #include "../../common/log/logHandler.h"
 
+#include "../../common/system/system.h"
+
 #include "../../device/device.h"
 #include "../../device/deviceList.h"
 #include "../../device/deviceDebug.h"
@@ -51,7 +53,6 @@ void deviceSystemHandleRawData(char header, InputStream* inputStream, OutputStre
     }
      else if (header == COMMAND_USAGE_SPECIFIC_DEVICE) {
          ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_USAGE_SPECIFIC_DEVICE);
-         Device* device = NULL;
          char deviceHeader = readBinaryChar(inputStream);
          int size = getDeviceCount();
          int i;

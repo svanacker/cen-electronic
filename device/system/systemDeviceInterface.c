@@ -6,16 +6,6 @@
 #include "../../device/deviceDebug.h"
 #include "../../device/deviceConstants.h"
 
-static char* picName;
-
-void setPicName(char* aPicName) {
-    picName = aPicName;
-}
-
-char* getPicName(void) {
-    return picName;
-}
-
 const char* deviceSystemGetName(void) {
     return "system";
 }

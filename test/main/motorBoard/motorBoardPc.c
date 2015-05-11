@@ -20,6 +20,8 @@
 #include "../../../common/log/logLevel.h"
 #include "../../../common/log/pc/consoleLogHandler.h"
 
+#include "../../../common/system/system.h"
+
 #include "../../../common/timer/timerList.h"
 
 
