@@ -4,6 +4,10 @@
 #include "../../device/deviceInterface.h"
 #include "../../device/deviceConstants.h"
 
+#define EEPROM_DEVICE_READ_BLOCK_LENGTH   8
+
+#define EEPROM_DEVICE_WRITE_BLOCK_LENGTH  4
+
 // List of EEPROM COMMAND HEADER
 
 /**

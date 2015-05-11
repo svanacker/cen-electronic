@@ -90,8 +90,11 @@ void deviceEepromHandleRawData(char commandHeader, InputStream* inputStream, Out
         ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_READ_BLOCK_EEPROM);
         unsigned long address = readHex4(inputStream);
         int index;
-        for (index = 0; index < 8; index++) {
+        for (index = 0; index < EEPROM_DEVICE_READ_BLOCK_LENGTH; index++) {
             char value = eeprom_->eepromReadChar(eeprom_, address + index);
+            if (index > 0) {
+                appendSeparator(outputStream);
+            }
             appendHex2(outputStream, value);
         }
     }
@@ -100,7 +103,8 @@ void deviceEepromHandleRawData(char commandHeader, InputStream* inputStream, Out
         unsigned long address = readHex4(inputStream);
         char data;
         int index;
-        for (index = 0; index < 4; index++) {
+        for (index = 0; index < EEPROM_DEVICE_WRITE_BLOCK_LENGTH; index++) {
+            checkIsSeparator(inputStream);
             data = readHex2(inputStream);
             eeprom_->eepromWriteChar(eeprom_, address + index, data);
         }
