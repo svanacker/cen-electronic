@@ -31,6 +31,7 @@
 #include "../../robot/kinematics/robotKinematics.h"
 
 static bool mustReachPosition;
+static bool simulatedMove;
 
 /** Indicates if we use the testing Board (we take lower values for PID). */
 static bool rollingTestMode = ROLLING_BOARD_TEST_MODE_OFF;
@@ -42,6 +43,8 @@ unsigned char getIndexOfPid(enum InstructionType instructionType, enum PidType p
 bool getRollingTestMode() {
     return rollingTestMode;
 }
+
+// Must Reach Position
 
 bool getMustReachPosition(void) {
     return mustReachPosition;
@@ -60,7 +63,7 @@ void setEnabledPid(int pidIndex, unsigned char enabled) {
 void initPID(Eeprom* _eeprom, bool loadDefaultParameters) {
     // TODO : A Remettre
     // rollingTestMode = (getConfigValue() & CONFIG_ROLLING_TEST_MASK) != 0;
-    rollingTestMode = 0;
+    rollingTestMode = false;
     initPidPersistence(_eeprom);
     loadPidParameters(loadDefaultParameters);
     RobotKinematics* robotKinematics = getRobotKinematics();
@@ -120,17 +123,18 @@ enum DetectedMotionType updateMotors(void) {
         float pidTime = (float) getPidTime();
         getPidMotion()->computationValues.pidTime = pidTime;
 
-        PidMotionDefinition* motionDefinition = &(pidMotion->currentMotionDefinition);
-        MotionInstruction* thetaInst = &(motionDefinition->inst[THETA]);
-        MotionInstruction* alphaInst = &(motionDefinition->inst[ALPHA]);
+        computeErrorsUsingCoders(pidMotion);
 
         PidComputationValues* computationValues = &(pidMotion->computationValues);
         PidCurrentValues* thetaCurrentValues = &(computationValues->currentValues[THETA]);
         PidCurrentValues* alphaCurrentValues = &(computationValues->currentValues[ALPHA]);
 
-        computeErrorsUsingCoders(pidMotion);
         float thetaError = computationValues->thetaError;
         float alphaError = computationValues->alphaError;
+
+        PidMotionDefinition* motionDefinition = &(pidMotion->currentMotionDefinition);
+        MotionInstruction* thetaInst = &(motionDefinition->inst[THETA]);
+        MotionInstruction* alphaInst = &(motionDefinition->inst[ALPHA]);
 
         // Change PID type for final Approach
         if ((thetaError < ERROR_FOR_STRONG_PID) && (pidTime > thetaInst->t3 + TIME_PERIOD_AFTER_END_FOR_STRONG_PID)
@@ -142,9 +146,9 @@ enum DetectedMotionType updateMotors(void) {
         // Computes the PID
         motionDefinition->computeU(pidMotion);
 
-        // 2 dependant Wheels (direction + angle)
-        float leftMotorSpeed = (thetaCurrentValues->u + alphaCurrentValues->u) / 2.0f;
-        float rightMotorSpeed = (thetaCurrentValues->u - alphaCurrentValues->u) / 2.0f;
+        // 2 dependant Wheels Alpha/Theta (direction +/- angle) => Left/Right correction
+        float leftMotorSpeed = computeLeft(thetaCurrentValues->u, alphaCurrentValues->u);
+        float rightMotorSpeed = computeRight(thetaCurrentValues->u, alphaCurrentValues->u);
         setMotorSpeeds((int)leftMotorSpeed, (int) rightMotorSpeed);
 
         // If we maintain the position, we consider that we must maintain indefinitely the position

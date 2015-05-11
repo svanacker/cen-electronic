@@ -116,6 +116,8 @@ long getPidTime(void);
  */
 void clearPidTime(void);
 
+// MustReachPosition
+
 /**
  * Returns the value of the flag which determines if the
  * position must be reached.
