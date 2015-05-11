@@ -35,7 +35,6 @@ void initNextPositionVars(int index) {
     localInst->speedMax = 0;
     localInst->endSpeed = 0;
 
-
     PidComputationValues* computationValues = &(pidMotion->computationValues);
 
     // Initialization of MotionError
@@ -148,16 +147,16 @@ void setNextPosition(enum InstructionType instructionType,
     localInst->motionParameterType = motionParameterType;
     localInst->pidType = pidType;
 
-    if (pNextPosition > 0.0f) {
+    if (pNextPosition > 0.001f) {
         localInst->a = pa * A_FACTOR;
         localInst->speed = pSpeed * SPEED_FACTOR;
     } 
     // Acceleration and speed becomes negative
-    else if (pNextPosition < 0.0f) {
+    else if (pNextPosition < -0.001f) {
         localInst->a = -pa * A_FACTOR;
         localInst->speed = -pSpeed * SPEED_FACTOR;
     } 
-    // Don't change the position
+    // pNextPosition == 0.0f Don't change the position
     else {
         if (motionParameterType == MOTION_PARAMETER_TYPE_MAINTAIN_POSITION) {
             localInst->a = 1.0f;
@@ -170,6 +169,7 @@ void setNextPosition(enum InstructionType instructionType,
     }
     computeMotionInstruction(localInst);
     
+    // When using classic motion, we compute a U value with alpha/theta (2 main parameters), and not with spline (3 values)
     pidMotion->currentMotionDefinition.computeU = &simpleMotionUCompute;
 }
 

@@ -72,17 +72,11 @@
 #include "../../../device/log/logDeviceInterface.h"
 
 // MOTION
-#include "../../../device/motion/pid/pidDevice.h"
 #include "../../../device/motion/pid/pidDeviceInterface.h"
-
-#include "../../../device/motion/position/codersDevice.h"
 #include "../../../device/motion/position/codersDeviceInterface.h"
-
-#include "../../../device/motion/position/trajectoryDevice.h"
 #include "../../../device/motion/position/trajectoryDeviceInterface.h"
-
-#include "../../../device/motion/simple/motionDevice.h"
 #include "../../../device/motion/simple/motionDeviceInterface.h"
+#include "../../../device/motion/simulation/motionSimulationDeviceInterface.h"
 
 // PWM
 #include "../../../device/motor/pwmMotorDevice.h"
@@ -363,6 +357,7 @@ void runMainBoardPC(bool connectToRobotManagerMode) {
     addI2cRemoteDevice(getTrajectoryDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
     addI2cRemoteDevice(getMotionDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
     addI2cRemoteDevice(getRobotKinematicsDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
+    addI2cRemoteDevice(getMotionSimulationDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
 
     initDevices();
 

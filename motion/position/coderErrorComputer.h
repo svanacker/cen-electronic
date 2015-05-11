@@ -4,8 +4,14 @@
 #include "../../motion/pid/pidMotion.h"
 
 /**
- * Compute errors using coders (and not absolute position).
+ * Compute current position using coders (and not absolute position).
  */
-void computeErrorsUsingCoders(PidMotion* pidMotion);
+void computeCurrentPositionUsingCoders(PidMotion* pidMotion);
+
+/**
+ * Compute errors using coders (and not absolute position).
+ * This information is useful only to manage final Approach.
+ */
+void computeErrorsWithNextPositionUsingCoders(PidMotion* pidMotion);
 
 #endif

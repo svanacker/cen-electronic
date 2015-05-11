@@ -676,6 +676,15 @@
     <Filter Include="Source Files\common\system">
       <UniqueIdentifier>{6a8dda18-0cf5-4d62-810c-4eebf8661fce}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\device\motion\simulation">
+      <UniqueIdentifier>{236ba666-6a82-4302-a424-82d01d16c6bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\motion\simulation">
+      <UniqueIdentifier>{7a4879ff-2ddd-4c15-a6ef-2f7be8acee74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\device\motion\simulation">
+      <UniqueIdentifier>{16a6cd8c-6feb-46ff-8a1a-0461d453a598}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -1361,6 +1370,15 @@
     </ClCompile>
     <ClCompile Include="common\system\system.c">
       <Filter>Source Files\common\system</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\simulation\motionSimulation.c">
+      <Filter>Source Files\motion\simulation</Filter>
+    </ClCompile>
+    <ClCompile Include="device\motion\simulation\motionSimulationDevice.c">
+      <Filter>Source Files\device\motion\simulation</Filter>
+    </ClCompile>
+    <ClCompile Include="device\motion\simulation\motionSimulationDeviceInterface.c">
+      <Filter>Source Files\device\motion\simulation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2119,6 +2137,12 @@
     </ClInclude>
     <ClInclude Include="common\system\system.h">
       <Filter>Header Files\common\system</Filter>
+    </ClInclude>
+    <ClInclude Include="device\motion\simulation\motionSimulationDevice.h">
+      <Filter>Header Files\device\motion\simulation</Filter>
+    </ClInclude>
+    <ClInclude Include="device\motion\simulation\motionSimulationDeviceInterface.h">
+      <Filter>Header Files\device\motion\simulation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

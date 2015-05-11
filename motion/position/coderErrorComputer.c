@@ -8,7 +8,7 @@
 
 #include "../../motion/position/coders.h"
 
-void computeErrorsUsingCoders(PidMotion* pidMotion) {
+void computeCurrentPositionUsingCoders(PidMotion* pidMotion) {
     PidMotionDefinition* currentMotionDefinition = &(pidMotion->currentMotionDefinition);
 
     MotionInstruction* thetaInst = &(currentMotionDefinition->inst[THETA]);
@@ -19,15 +19,27 @@ void computeErrorsUsingCoders(PidMotion* pidMotion) {
     PidCurrentValues* alphaCurrentValues = &(computationValues->currentValues[ALPHA]);
 
     // 2 dependant Wheels (direction + angle)
-    float value0 = (float) getCoderValue(CODER_LEFT);
-    float value1 = (float) getCoderValue(CODER_RIGHT);
+    float value0 = (float)getCoderValue(CODER_LEFT);
+    float value1 = (float)getCoderValue(CODER_RIGHT);
 
     // Compute real position of wheel
     thetaCurrentValues->position = computeTheta(value0, value1);
     alphaCurrentValues->position = computeAlpha(value0, value1);
+}
+
+void computeErrorsWithNextPositionUsingCoders(PidMotion* pidMotion) {
+    PidMotionDefinition* currentMotionDefinition = &(pidMotion->currentMotionDefinition);
+
+    MotionInstruction* thetaInst = &(currentMotionDefinition->inst[THETA]);
+    MotionInstruction* alphaInst = &(currentMotionDefinition->inst[ALPHA]);
+
+    PidComputationValues* computationValues = &(pidMotion->computationValues);
+    PidCurrentValues* thetaCurrentValues = &(computationValues->currentValues[THETA]);
+    PidCurrentValues* alphaCurrentValues = &(computationValues->currentValues[ALPHA]);
 
     // Compute the difference between next position and real position
-    // TODO : Check why NextPosition and not Current Position !!!
+    // In fact, we store thetaError and alphaError with nextPosition just to know if the error is small
+    // enough to consider that we are in final approach !
     computationValues->thetaError = fabsf(thetaInst->nextPosition - thetaCurrentValues->position);
     computationValues->alphaError = fabsf(alphaInst->nextPosition - alphaCurrentValues->position);
 }

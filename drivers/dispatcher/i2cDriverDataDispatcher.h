@@ -10,7 +10,7 @@
 #include "../../common/io/inputStream.h"
 #include "../../common/io/outputStream.h"
 
-#define I2C_DRIVER_DATA_DISPATCHER_BUFFER_LENGTH    40
+#define I2C_DRIVER_DATA_DISPATCHER_BUFFER_LENGTH    60
 
 /**
 * Add the i2c driver data dispatcher to the list.

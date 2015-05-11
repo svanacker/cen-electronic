@@ -10,11 +10,12 @@
 #include "../pidCurrentValues.h"
 #include "../pidMotionError.h"
 
+#include "../../simulation/motionSimulation.h"
+
 #include "../../../common/log/logger.h"
 #include "../../../common/log/logLevel.h"
 
 #include "../../../common/math/cenMath.h"
-
 
 
 /**
@@ -32,7 +33,7 @@ float computeNextPID(enum InstructionType instructionType, MotionInstruction* mo
 
     // instructionIndex = Alpha / Theta
     // pidType = Forward / Rotation / Final Approach ...
-    unsigned pidIndex = getIndexOfPid(instructionType, pidType);
+    unsigned char pidIndex = getIndexOfPid(instructionType, pidType);
     PidParameter* pidParameter = getPidParameter(pidIndex, rollingTestMode);
 
     if (!pidParameter->enabled) {
@@ -41,9 +42,9 @@ float computeNextPID(enum InstructionType instructionType, MotionInstruction* mo
 
     float normalPosition = computeNormalPosition(motionInstruction, time);
     pidCurrentValues->normalPosition = normalPosition;
-    float normalSpeed = computeNormalSpeed(motionInstruction, time);
 
     float positionError = normalPosition - currentPosition;
+    float normalSpeed = computeNormalSpeed(motionInstruction, time);
     float result = computePidCorrection(motionError, pidParameter, normalSpeed, positionError);
 
     return result;

@@ -119,4 +119,6 @@
 
 #define ARM_DEVICE_2012_HEADER                     '|'
 
+#define MOTION_SIMULATION_DEVICE_HEADER            '/' 
+
 #endif

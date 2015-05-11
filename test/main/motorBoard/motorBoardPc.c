@@ -59,6 +59,9 @@
 #include "../../../device/motion/simple/motionDevice.h"
 #include "../../../device/motion/simple/motionDeviceInterface.h"
 
+#include "../../../device/motion/simulation/motionSimulationDevice.h"
+#include "../../../device/motion/simulation/motionSimulationDeviceInterface.h"
+
 // SYSTEM
 #include "../../../device/system/systemDevice.h"
 #include "../../../device/system/systemDeviceInterface.h"
@@ -236,6 +239,7 @@ void runMotorBoardPC(bool singleMode) {
     addLocalDevice(getCodersDeviceInterface(), getCodersDeviceDescriptor());
     addLocalDevice(getTrajectoryDeviceInterface(), getTrajectoryDeviceDescriptor());
     addLocalDevice(getMotionDeviceInterface(), getMotionDeviceDescriptor(&eeprom, true));
+    addLocalDevice(getMotionSimulationDeviceInterface(), getMotionSimulationDeviceDescriptor());
 
     initDevices();
 

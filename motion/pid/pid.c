@@ -12,6 +12,7 @@
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
 
+#include "alphaTheta.h"
 #include "pid.h"
 #include "pidMotion.h"
 #include "computer/pidComputer.h"
@@ -31,7 +32,6 @@
 #include "../../robot/kinematics/robotKinematics.h"
 
 static bool mustReachPosition;
-static bool simulatedMove;
 
 /** Indicates if we use the testing Board (we take lower values for PID). */
 static bool rollingTestMode = ROLLING_BOARD_TEST_MODE_OFF;
@@ -83,7 +83,7 @@ float getWheelPulseByPidTimeAtFullSpeed() {
 }
 
 float getUFactorAtFullSpeed() {
-    // TODO : Why This Constant (must d epend on the voltage) !!!
+    // TODO : Why This Constant (must depend on the voltage) !!!
     float result = 128.0f / getWheelPulseByPidTimeAtFullSpeed();
     return result;
 }
@@ -114,6 +114,62 @@ PidParameter* getPidParameter(int index, unsigned int pidMode) {
     return result;
 }
 
+/**
+* @private
+*/
+void changePidTypeIfFinalApproach(PidMotion* pidMotion) {
+    float pidTime = pidMotion->computationValues.pidTime;
+
+    computeErrorsWithNextPositionUsingCoders(pidMotion);
+    PidComputationValues* computationValues = &(pidMotion->computationValues);
+
+    // Theta and Alpha Error are only used compared to the next position as
+    // we only use it to change the PID Type for final Approach
+    float thetaError = computationValues->thetaError;
+    float alphaError = computationValues->alphaError;
+
+    PidMotionDefinition* motionDefinition = &(pidMotion->currentMotionDefinition);
+    MotionInstruction* thetaInst = &(motionDefinition->inst[THETA]);
+    MotionInstruction* alphaInst = &(motionDefinition->inst[ALPHA]);
+
+    // Change PID type for final Approach
+    if ((thetaError < ERROR_FOR_STRONG_PID) && (pidTime > thetaInst->t3 + TIME_PERIOD_AFTER_END_FOR_STRONG_PID)
+        && (alphaError < ERROR_FOR_STRONG_PID) && (pidTime > alphaInst->t3 + TIME_PERIOD_AFTER_END_FOR_STRONG_PID)) {
+        thetaInst->pidType = PID_TYPE_FINAL_APPROACH_INDEX;
+        alphaInst->pidType = PID_TYPE_FINAL_APPROACH_INDEX;
+    }
+}
+
+
+#ifdef _MSC_VER
+    #include "../../motion/simulation/motionSimulation.h"
+    #include "../../motion/pid/computer/pidComputer.h"
+
+    /**
+     * @private
+     */
+    void simulateCurrentPositionReachIfNeeded(PidMotion* pidMotion) {
+        MotionSimulationParameter* motionSimulationParameter = getMotionSimulationParameter();
+        if (motionSimulationParameter->simulateCoders) {
+            PidMotionDefinition* currentMotionDefinition = &(pidMotion->currentMotionDefinition);
+            MotionInstruction* thetaInst = &(currentMotionDefinition->inst[THETA]);
+            MotionInstruction* alphaInst = &(currentMotionDefinition->inst[ALPHA]);
+
+            float pidTime = pidMotion->computationValues.pidTime;
+
+            float normalThetaPosition = computeNormalPosition(thetaInst, pidTime);
+            float normalAlphaPosition = computeNormalPosition(alphaInst, pidTime);
+
+            float normalLeftCoderValue = computeLeft(normalThetaPosition, normalAlphaPosition);
+            float normalRightCoderValue = computeRight(normalThetaPosition, normalAlphaPosition);
+
+            setCoderValue(CODER_LEFT, normalLeftCoderValue);
+            setCoderValue(CODER_RIGHT, normalRightCoderValue);
+        }
+    }
+#endif
+
+
 enum DetectedMotionType updateMotors(void) {
     if (!mustReachPosition) {
         return DETECTED_MOTION_TYPE_NO_POSITION_TO_REACH;
@@ -123,39 +179,37 @@ enum DetectedMotionType updateMotors(void) {
         float pidTime = (float) getPidTime();
         getPidMotion()->computationValues.pidTime = pidTime;
 
-        computeErrorsUsingCoders(pidMotion);
+        #ifdef _MSC_VER
+        simulateCurrentPositionReachIfNeeded(pidMotion);
+        #endif
 
+        // Compute the current Position
+        computeCurrentPositionUsingCoders(pidMotion);
+
+        // Adapt PID Type for Final Approach (when stabilized ...)
+        changePidTypeIfFinalApproach(pidMotion);
+
+        // Computes the PID
+        PidMotionDefinition* motionDefinition = &(pidMotion->currentMotionDefinition);
+        motionDefinition->computeU(pidMotion);
+
+        // Apply Correction
+
+        // 2 dependant Wheels Alpha/Theta (direction +/- angle) => Left/Right correction
         PidComputationValues* computationValues = &(pidMotion->computationValues);
         PidCurrentValues* thetaCurrentValues = &(computationValues->currentValues[THETA]);
         PidCurrentValues* alphaCurrentValues = &(computationValues->currentValues[ALPHA]);
-
-        float thetaError = computationValues->thetaError;
-        float alphaError = computationValues->alphaError;
-
-        PidMotionDefinition* motionDefinition = &(pidMotion->currentMotionDefinition);
-        MotionInstruction* thetaInst = &(motionDefinition->inst[THETA]);
-        MotionInstruction* alphaInst = &(motionDefinition->inst[ALPHA]);
-
-        // Change PID type for final Approach
-        if ((thetaError < ERROR_FOR_STRONG_PID) && (pidTime > thetaInst->t3 + TIME_PERIOD_AFTER_END_FOR_STRONG_PID)
-                && (alphaError < ERROR_FOR_STRONG_PID) && (pidTime > alphaInst->t3 + TIME_PERIOD_AFTER_END_FOR_STRONG_PID)) {
-            thetaInst->pidType = PID_TYPE_FINAL_APPROACH_INDEX;
-            alphaInst->pidType = PID_TYPE_FINAL_APPROACH_INDEX;
-        }
-
-        // Computes the PID
-        motionDefinition->computeU(pidMotion);
-
-        // 2 dependant Wheels Alpha/Theta (direction +/- angle) => Left/Right correction
         float leftMotorSpeed = computeLeft(thetaCurrentValues->u, alphaCurrentValues->u);
         float rightMotorSpeed = computeRight(thetaCurrentValues->u, alphaCurrentValues->u);
         setMotorSpeeds((int)leftMotorSpeed, (int) rightMotorSpeed);
 
         // If we maintain the position, we consider that we must maintain indefinitely the position
+        MotionInstruction* thetaInst = &(motionDefinition->inst[THETA]);
         if (thetaInst->motionParameterType == MOTION_PARAMETER_TYPE_MAINTAIN_POSITION) {
             return DETECTED_MOTION_TYPE_POSITION_TO_MAINTAIN;
         }
 
+        // DETECTS END OF MOTION => TODO : Extract it in a method
         MotionEndDetectionParameter* endDetectionParameter = getMotionEndDetectionParameter();
         MotionEndInfo* thetaEndMotion = &(computationValues->motionEnd[THETA]);
         MotionEndInfo* alphaEndMotion = &(computationValues->motionEnd[ALPHA]);

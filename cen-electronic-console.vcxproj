@@ -171,6 +171,8 @@
     <ClCompile Include="device\motion\position\trajectoryDeviceInterface.c" />
     <ClCompile Include="device\motion\simple\motionDevice.c" />
     <ClCompile Include="device\motion\simple\motionDeviceInterface.c" />
+    <ClCompile Include="device\motion\simulation\motionSimulationDevice.c" />
+    <ClCompile Include="device\motion\simulation\motionSimulationDeviceInterface.c" />
     <ClCompile Include="device\motor\pwmMotor.c" />
     <ClCompile Include="device\motor\pwmMotorDevice.c" />
     <ClCompile Include="device\motor\pwmMotorDeviceInterface.c" />
@@ -236,6 +238,7 @@
     <ClCompile Include="motion\position\trajectory.c" />
     <ClCompile Include="motion\simple\motionCalibration.c" />
     <ClCompile Include="motion\simple\simpleMotion.c" />
+    <ClCompile Include="motion\simulation\motionSimulation.c" />
     <ClCompile Include="navigation\location.c" />
     <ClCompile Include="navigation\locationList.c" />
     <ClCompile Include="navigation\navigation.c" />
@@ -413,6 +416,8 @@
     <ClInclude Include="device\motion\position\trajectoryDeviceInterface.h" />
     <ClInclude Include="device\motion\simple\motionDevice.h" />
     <ClInclude Include="device\motion\simple\motionDeviceInterface.h" />
+    <ClInclude Include="device\motion\simulation\motionSimulationDevice.h" />
+    <ClInclude Include="device\motion\simulation\motionSimulationDeviceInterface.h" />
     <ClInclude Include="device\motor\pwmMotor.h" />
     <ClInclude Include="device\motor\pwmMotorDevice.h" />
     <ClInclude Include="device\motor\pwmMotorDeviceInterface.h" />

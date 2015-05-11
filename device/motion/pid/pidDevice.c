@@ -214,10 +214,12 @@ void devicePIDHandleRawData(char commandHeader, InputStream* inputStream, Output
         appendHex4(outputStream, (int) localInst->t3);
         appendSeparator(outputStream);
 
-        // p1/p2
+        // p1/p2/nextPosition
         appendHex6(outputStream, (int) localInst->p1);
         appendSeparator(outputStream);
         appendHex6(outputStream, (int) localInst->p2);
+        appendSeparator(outputStream);
+        appendHex6(outputStream, (int)localInst->nextPosition);
         appendSeparator(outputStream);
 
         // types

@@ -46,6 +46,16 @@
 #define COMMAND_GET_END_DETECTION_PARAMETER         'P'
 
 /**
+ * Returns if the simulation mode is activated.
+ */
+#define COMMAND_GET_SIMULATION_MODE                 's'
+
+/**
+ * Set the simulation mode on or off.
+ */
+#define COMMAND_SET_SIMULATION_MODE                 'S'
+ 
+/**
 * Get the PID device interface.
 */
 DeviceInterface* getPIDDeviceInterface();
