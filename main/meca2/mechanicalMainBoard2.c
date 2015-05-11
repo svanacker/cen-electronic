@@ -33,6 +33,8 @@
 
 #include "../../common/timer/timerList.h"
 
+#include "../../common/system/system.h"
+
 #include "../../device/device.h"
 #include "../../device/deviceList.h"
 #include "../../device/dispatcher/deviceDataDispatcher.h"
@@ -161,8 +163,8 @@ int main(void) {
                     115200);
 
     // Init the logs
-    initLogs(DEBUG, &logHandlerListArray, MECA_BOARD_2_LOG_HANDLER_LIST_LENGTH);
-    addLogHandler("UART", &debugOutputStream, DEBUG);
+    initLogs(DEBUG, &logHandlerListArray, MECA_BOARD_2_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
+    addLogHandler("UART", &debugOutputStream, DEBUG, LOG_HANDLER_CATEGORY_ALL_MASK);
     appendString(getAlwaysOutputStreamLogger(), getPicName());
     println(getAlwaysOutputStreamLogger());
 
@@ -179,7 +181,6 @@ int main(void) {
                             &i2cSlaveOutputBuffer,
                             &i2cSlaveOutputBufferArray,
                             MECA_BOARD_2_I2C_OUTPUT_BUFFER_LENGTH,
-                            &mechanicalBoard2I2cBus,
                             MECHANICAL_BOARD_2_I2C_ADDRESS
                         );
 

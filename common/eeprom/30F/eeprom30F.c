@@ -11,7 +11,7 @@
 // Pointer to EEPROM data. The declaration causes the first WORD of EEPROM to be initialized when programming the device.
 static signed int _EEDATA(EEPROM_30F_MAX_INDEX + 1)* eeData;
 
-void my_eeprom_write_int(Eeprom* eeprom_, unsigned long index, signed int value) {
+void my_eeprom_write_int(Eeprom* eeprom_, unsigned long index, unsigned char value) {
     if (index >= EEPROM_30F_MAX_INDEX) {
         writeError(EEPROM_OUT_OF_BOUNDS);
         return;
@@ -29,7 +29,7 @@ void my_eeprom_write_int(Eeprom* eeprom_, unsigned long index, signed int value)
     _wait_eedata();
 }
 
-signed int my_eeprom_read_int(Eeprom* eeprom_, unsigned long index) {
+unsigned char my_eeprom_read_int(Eeprom* eeprom_, unsigned long index) {
     if (index >= EEPROM_30F_MAX_INDEX) {
         writeError(EEPROM_OUT_OF_BOUNDS);
         return -1;
@@ -43,7 +43,7 @@ signed int my_eeprom_read_int(Eeprom* eeprom_, unsigned long index) {
     // read value
     _memcpy_p2d16(&value, EE_addr + (index * _EE_WORD), _EE_WORD);
 
-    return value;
+    return (unsigned char) value;
 }
 
 void eeprom30FReadBlock(Eeprom* eeprom_, unsigned long index, unsigned int length, Buffer* buffer) {
@@ -54,7 +54,28 @@ void eeprom30FWriteBlock(Eeprom* eeprom_, unsigned long index, unsigned int leng
     writeError(UNIMPLETEMENTED_EXCEPTION);
 }
 
+void _loadEeprom30F(Eeprom* eeprom_) {
+    if (eeprom_ == NULL) {
+        writeError(UNIMPLETEMENTED_EXCEPTION);
+        return;
+    }  
+}
+
+void _dumpEeprom30F(Eeprom* eeprom_) {
+    if (eeprom_ == NULL) {
+        writeError(UNIMPLETEMENTED_EXCEPTION);
+        return;
+    }  
+}
 
 void initEeprom30F(Eeprom* eeprom_) {
-    initEeprom(eeprom_, EEPROM_30F_MAX_INDEX, my_eeprom_write_int, my_eeprom_read_int, eeprom30FReadBlock, eeprom30FWriteBlock, NULL);
+    initEeprom(eeprom_,
+               EEPROM_30F_MAX_INDEX,
+               my_eeprom_write_int,
+               my_eeprom_read_int,
+               eeprom30FWriteBlock,
+               eeprom30FReadBlock,
+               _loadEeprom30F,
+               _dumpEeprom30F,
+               NULL);
 }

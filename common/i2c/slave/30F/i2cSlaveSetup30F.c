@@ -15,13 +15,13 @@
 
 bool initialized = false;
 
-void i2cSlaveInitialize(I2cBus* i2cBus, unsigned char writeAddress) {
+void i2cSlaveInitialize(I2cBusConnection* i2cBusConnection) {
     // Avoid more than one initialization
-    if (initialized) {
+    if (i2cBusConnection->opened) {
         writeError(I2C_SLAVE_ALREADY_INITIALIZED);
         return;
     }
-    initialized = true;
+    i2cBusConnection->opened = true;
 
     I2CCONbits.STREN = 1;
     // I2CCONbits.GCEN = 1;
@@ -31,7 +31,7 @@ void i2cSlaveInitialize(I2cBus* i2cBus, unsigned char writeAddress) {
     // 7-bit I2C slave address must be initialised here.
     // we shift because i2c address is shift to the right
     // to manage read and write address
-    I2CADD = writeAddress >> 1;
+    I2CADD = i2cBusConnection->i2cAddress >> 1;
 
     // Interruption on I2C Slave
     // -> Priority of I2C Slave interruption
@@ -49,6 +49,6 @@ void i2cSlaveInitialize(I2cBus* i2cBus, unsigned char writeAddress) {
     appendCRLF(getDebugOutputStreamLogger());
 
     appendString(getDebugOutputStreamLogger(), "I2C Slave Write Address=");
-    appendHex2(getDebugOutputStreamLogger(), writeAddress);
+    appendHex2(getDebugOutputStreamLogger(), i2cBusConnection->i2cAddress);
     appendCRLF(getDebugOutputStreamLogger());
 }
