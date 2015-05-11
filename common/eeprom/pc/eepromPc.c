@@ -22,15 +22,20 @@
 
 static char eepromPc[EEPROM_PC_MAX_INDEX];
 
+
+
 /**
 * Creates or Open the File when initializing.
 */
 FILE* eepromPCGetOrCreateFile(Eeprom* eeprom_, bool load) {
     char fileName[255];
     // TODO ! Change the Path !
-    strcpy(&fileName, "c:/PERSO/");
-    strcat(&fileName, getPicName());
-    strcat(&fileName, ".hex");
+    char* directory = "c:/PERSO/";
+    char* picName = getPicName();
+    char* extension = ".hex";
+    strcpy(fileName, directory);
+    strcat(fileName, picName);
+    strcat(fileName, extension);
 
     FILE* file = fopen(fileName, "rb+");
     // if file does not exist, create it
@@ -98,7 +103,7 @@ void eepromPcWriteBlock(Eeprom* eeprom_, unsigned long index, unsigned int lengt
 * Reload the content (usefull for Windows).
 */
 void eepromPcReload(Eeprom* eeprom_) {
-    FILE* file = eepromPCGetOrCreateFile(eepromPc, true);
+    FILE* file = eepromPCGetOrCreateFile(eeprom_, true);
     fclose(file);
 }
 

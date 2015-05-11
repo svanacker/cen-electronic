@@ -40,10 +40,10 @@ int main(int argumentCount, char* arguments[])
     if (argumentCount <= 1) {
 
         // Run the Motor Board
-        char motorBoardOptionCommand[80];
-        strcpy(motorBoardOptionCommand, MOTOR_BOARD_PC_NAME);
-        strcat(motorBoardOptionCommand, " ");
-        strcat(motorBoardOptionCommand, MOTOR_BOARD_PC_RUN_STANDARD);
+        char motorBoardOptionCommand[255];
+        strcpy_s(motorBoardOptionCommand, _countof(motorBoardOptionCommand), MOTOR_BOARD_PC_NAME);
+        strcat_s(motorBoardOptionCommand, _countof(motorBoardOptionCommand), " ");
+        strcat_s(motorBoardOptionCommand, _countof(motorBoardOptionCommand), MOTOR_BOARD_PC_RUN_STANDARD);
         runProcess(applicationNameAsChar, motorBoardOptionCommand);
 
         // And After the main Board
@@ -57,10 +57,10 @@ int main(int argumentCount, char* arguments[])
                 char* mainBoardRunMode = arguments[2];
                 robotManager = (strcmp(mainBoardRunMode, MAIN_BOARD_PC_ROBOT_MANAGER) == 0);
 
-                char motorBoardOptionCommand[80];
-                strcpy(motorBoardOptionCommand, MOTOR_BOARD_PC_NAME);
-                strcat(motorBoardOptionCommand, " ");
-                strcat(motorBoardOptionCommand, MOTOR_BOARD_PC_RUN_STANDARD);
+                char motorBoardOptionCommand[255];
+                strcpy_s(motorBoardOptionCommand, _countof(motorBoardOptionCommand), MOTOR_BOARD_PC_NAME);
+                strcat_s(motorBoardOptionCommand, _countof(motorBoardOptionCommand), " ");
+                strcat_s(motorBoardOptionCommand, _countof(motorBoardOptionCommand), MOTOR_BOARD_PC_RUN_STANDARD);
                 runProcess(applicationNameAsChar, motorBoardOptionCommand);
             }
             // In all cases
