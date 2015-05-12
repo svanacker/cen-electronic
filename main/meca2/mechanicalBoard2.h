@@ -4,7 +4,7 @@
 #include "../../common/io/buffer.h"
 
 /** Define the I2C address used by Mechanical Board 2. */
-#define MECHANICAL_BOARD_2_I2C_ADDRESS     0x54
+#define MECHANICAL_BOARD_2_I2C_ADDRESS     0x56
 
 #define PIN_SWITCH_LIFT_BOTTOM            PORTBbits.RB12
 

@@ -93,6 +93,7 @@ static StreamLink debugSerialStreamLink;
 
 // i2c Link
 static I2cBus mechanicalBoard2I2cBus;
+static I2cBusConnection mechanicalBoard2I2cBusConnection;
 static char i2cSlaveInputBufferArray[MECA_BOARD_2_I2C_INPUT_BUFFER_LENGTH];
 static Buffer i2cSlaveInputBuffer;
 static char i2cSlaveOutputBufferArray[MECA_BOARD_2_I2C_OUTPUT_BUFFER_LENGTH];
@@ -160,7 +161,7 @@ int main(void) {
                     MECA_BOARD_2_DEBUG_OUTPUT_BUFFER_LENGTH,
                     &debugOutputStream,
                     SERIAL_PORT_DEBUG,
-                    115200);
+                    DEFAULT_SERIAL_SPEED);
 
     // Init the logs
     initLogs(DEBUG, &logHandlerListArray, MECA_BOARD_2_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
@@ -168,12 +169,17 @@ int main(void) {
     appendString(getAlwaysOutputStreamLogger(), getPicName());
     println(getAlwaysOutputStreamLogger());
 
+    while(true) {
+    
+    }
     
     initTimerList(&timerListArray, MECHANICAL_BOARD_2_TIMER_LENGTH);
 
-
     delaymSec(500);
+    // initI2cBus(&mechanicalBoard2I2cBus, I2C_BUS_TYPE_SLAVE, I2C_BUS_PORT_1);
+    // initI2cBusConnection(&mechanicalBoard2I2cBusConnection, &mechanicalBoard2I2cBus, MECHANICAL_BOARD_2_I2C_ADDRESS);
 
+    /*
     openSlaveI2cStreamLink(&i2cSerialStreamLink,
                             &i2cSlaveInputBuffer,
                             &i2cSlaveInputBufferArray,
@@ -181,26 +187,27 @@ int main(void) {
                             &i2cSlaveOutputBuffer,
                             &i2cSlaveOutputBufferArray,
                             MECA_BOARD_2_I2C_OUTPUT_BUFFER_LENGTH,
-                            MECHANICAL_BOARD_2_I2C_ADDRESS
+                            &mechanicalBoard2I2cBusConnection
                         );
-
+    */
     // init the devices
     initDevicesDescriptor();
 
     // Init the timers management
     startTimerList();
 
-    initMechanicalBoard2Pins();
+    // initMechanicalBoard2Pins();
 
     // 2011 : TODO : A regarder
     // ADPCFG = 0xFFFF;
 
-    upArm(ARM_LEFT);
-    upArm(ARM_RIGHT);
+    // upArm(ARM_LEFT);
+    // upArm(ARM_RIGHT);
 
     delaymSec(2000);
 
     while (1) {
+        /*
         // Forward Obstacle
         if (getRobotInfraredObstacleForward()) {
             notifyInfraredDetectorDetection(DETECTOR_FORWARD_INDEX);
@@ -219,6 +226,7 @@ int main(void) {
                                 NULL,
                                 &filterRemoveCRLF,
                                 NULL);
+        */
 
         // UART Stream
         handleStreamInstruction(&debugInputBuffer,
