@@ -163,8 +163,8 @@ void changePidTypeIfFinalApproach(PidMotion* pidMotion) {
             float normalLeftCoderValue = computeLeft(normalThetaPosition, normalAlphaPosition);
             float normalRightCoderValue = computeRight(normalThetaPosition, normalAlphaPosition);
 
-            setCoderValue(CODER_LEFT, normalLeftCoderValue);
-            setCoderValue(CODER_RIGHT, normalRightCoderValue);
+            setCoderValue(CODER_LEFT, (long) normalLeftCoderValue);
+            setCoderValue(CODER_RIGHT, (long) normalRightCoderValue);
         }
     }
 #endif

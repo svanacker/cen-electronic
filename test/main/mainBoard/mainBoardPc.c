@@ -272,7 +272,7 @@ void runMainBoardPC(bool connectToRobotManagerMode) {
     initDriverDataDispatcherList((DriverDataDispatcher(*)[]) &driverDataDispatcherListArray, MAIN_BOARD_PC_DATA_DISPATCHER_LIST_LENGTH);
     addLocalDriverDataDispatcher();
 
-    initI2cBus(&motorBoardI2cBus, I2C_BUS_PORT_1);
+    initI2cBus(&motorBoardI2cBus, I2C_BUS_TYPE_MASTER, I2C_BUS_PORT_1);
     initI2cBusConnection(&motorBoardI2cBusConnection, &motorBoardI2cBus, MOTOR_BOARD_PC_I2C_ADDRESS);
 
     addI2CDriverDataDispatcher("MOTOR_BOARD_DISPATCHER",

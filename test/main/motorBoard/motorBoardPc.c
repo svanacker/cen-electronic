@@ -196,7 +196,7 @@ void runMotorBoardPC(bool singleMode) {
     addLocalDriverDataDispatcher();
 
     if (!singleModeActivated) {
-        initI2cBus(&motorI2cBus, I2C_BUS_PORT_1);
+        initI2cBus(&motorI2cBus, I2C_BUS_TYPE_SLAVE, I2C_BUS_PORT_1);
         initI2cBusConnection(&motorI2cBusConnection, &motorI2cBus, MOTOR_BOARD_PC_I2C_ADDRESS);
         openSlaveI2cStreamLink(&i2cSlaveStreamLink,
             &i2cSlaveInputBuffer,
