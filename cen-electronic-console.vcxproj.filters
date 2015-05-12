@@ -1050,9 +1050,6 @@
     <ClCompile Include="motion\position\trajectory.c">
       <Filter>Source Files\motion\position</Filter>
     </ClCompile>
-    <ClCompile Include="robot\match\startMatchDetector.c">
-      <Filter>Source Files\robot\match</Filter>
-    </ClCompile>
     <ClCompile Include="robot\match\pc\startMatchDetectorPc.c">
       <Filter>Source Files\robot\match\pc</Filter>
     </ClCompile>
@@ -1379,6 +1376,9 @@
     </ClCompile>
     <ClCompile Include="device\motion\simulation\motionSimulationDeviceInterface.c">
       <Filter>Source Files\device\motion\simulation</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\match\startMatch.c">
+      <Filter>Source Files\robot\match</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2102,9 +2102,6 @@
     <ClInclude Include="test\navigation\pathListTest.h">
       <Filter>Header Files\test\navigation</Filter>
     </ClInclude>
-    <ClInclude Include="robot\match\startMatchDevice.h">
-      <Filter>Header Files\robot\match</Filter>
-    </ClInclude>
     <ClInclude Include="robot\match\startMatchDeviceInterface.h">
       <Filter>Header Files\robot\match</Filter>
     </ClInclude>
@@ -2143,6 +2140,9 @@
     </ClInclude>
     <ClInclude Include="device\motion\simulation\motionSimulationDeviceInterface.h">
       <Filter>Header Files\device\motion\simulation</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\match\startMatch.h">
+      <Filter>Header Files\robot\match</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

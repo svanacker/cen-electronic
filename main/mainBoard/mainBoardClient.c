@@ -167,7 +167,9 @@
 #include "../../robot/config/robotConfigDeviceInterface.h"
 #include "../../robot/config/32/robotConfigPic32.h"
 
-#include "../../robot/match/startMatchDetector.h"
+#include "../../robot/kinematics/robotKinematicsDeviceInterface.h"
+
+#include "../../robot/match/startMatch.h"
 #include "../../robot/match/32/startMatchDetector32.h"
 #include "../../robot/match/startMatchDevice.h"
 #include "../../robot/match/startMatchDeviceInterface.h"
@@ -215,8 +217,8 @@ static Buffer debugOutputBuffer;
 static OutputStream debugOutputStream;
 static StreamLink debugSerialStreamLink;
 
-// StartMatchDetector
-static StartMatchDetector startMatchDetector;
+// StartMatch
+static StartMatch startMatch;
 
 // serial link Motor
 static char motorInputBufferArray[MAIN_BOARD_MOTOR_INPUT_BUFFER_LENGTH];
@@ -309,6 +311,7 @@ static Timer timerListArray[MAIN_BOARD_TIMER_LENGTH];
 #define INSTRUCTION_TYPE_BACKWARD        2
 #define INSTRUCTION_TYPE_ROTATION        3
 
+
 /**
  * @private
  */
@@ -344,8 +347,8 @@ void initMainBoardDevicesDescriptor() {
     // addLocalDevice(&servoDevice, getServoDeviceInterface(), getServoDeviceDescriptor());
     addLocalDevice(getRobotConfigDeviceInterface(), getRobotConfigDeviceDescriptor(&robotConfig));
 
-    initStartMatchDetector32(&startMatchDetector);
-    addLocalDevice(getStartMatchDeviceInterface(), getStartMatchDeviceDescriptor(&startMatchDetector, &eeprom));
+    initStartMatch(&startMatch, isMatchStarted32, initMainBoardDevicesDescriptor, &eeprom);
+    addLocalDevice(getStartMatchDeviceInterface(), getStartMatchDeviceDescriptor(&startMatch));
     addLocalDevice(getEndMatchDetectorDeviceInterface(), getEndMatchDetectorDeviceDescriptor());
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
@@ -376,6 +379,7 @@ void initMainBoardDevicesDescriptor() {
     addUartRemoteDevice(getPIDDeviceInterface(), SERIAL_PORT_MOTOR);
     addUartRemoteDevice(getTrajectoryDeviceInterface(), SERIAL_PORT_MOTOR);
     addUartRemoteDevice(getMotionDeviceInterface(), SERIAL_PORT_MOTOR);
+    addUartRemoteDevice(getRobotKinematicsDeviceInterface(), SERIAL_PORT_MOTOR);
 
     // Beacon Receiver Board->I2C
     // addI2cRemoteDevice(getBeaconReceiverDeviceInterface(), BEACON_RECEIVER_I2C_ADDRESS);
@@ -446,7 +450,7 @@ void initMainBoardDriverDataDispatcherList(void) {
     */
 }
 
-void waitForInstruction() {
+void mainBoardWaitForInstruction(void) {
     // BE CAREFUL : UART 1 / UART 2 are physically connected : https://github.com/svanacker/cen-electronic-schema/issues/11
     // -> DO NOT USE IT AT THE SAME TIME !!
 
@@ -545,8 +549,15 @@ int main(void) {
     // Start interruptions
     startTimerList();
 
+    // loopUntilStart(&startMatch);
+
     while (1) {
-        waitForInstruction();
+        mainBoardWaitForInstruction();
     }
 
+    showEnd(&lcdOutputStream);
+
+    while (1) {
+        // Avoid reboot even at end
+    }
 }

@@ -1,5 +1,5 @@
 #include "startMatchDetectorPc.h"
-#include "../startMatchDetector.h"
+#include "../startMatch.h"
 
 #include <stdbool.h>
 
@@ -9,10 +9,6 @@ void startMatchPc(void) {
     matchStarted = true;
 }
 
-bool isMatchStartedPc(StartMatchDetector* startMatchDetector) {
+bool isMatchStartedPc(StartMatch* startMatch) {
     return matchStarted;
-}
-
-void initStartMatchDetectorPc(StartMatchDetector* startMatchDetector) {
-    initStartMatchDetector(startMatchDetector, isMatchStartedPc);
 }

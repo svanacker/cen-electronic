@@ -8,46 +8,21 @@
 
 #include <stdbool.h>
 
-#include "startMatchDetector.h"
+#include "startMatch.h"
+#include "teamColor.h"
+#include "../robot.h"
 
 #include "../../device/device.h"
 
 #include "../../common/eeprom/eeprom.h"
 #include "../../common/io/outputStream.h"
 
-
-/**
-* Define a call back function which must be called during loopUntilStart.
-*/
-typedef unsigned char handleFunctionType(void);
-
 /**
 * Returns the deviceDescriptor of the end Match Detector.
-* @param startMatchDetector the startMatchDetector structure to be independant of the hardware.
-* @return a device descriptor on startMatchDetector Device
+* @param startMatch the startMatch structure with all information needed.
+* @return a device descriptor on startMatch Device
 */
-DeviceDescriptor* getStartMatchDeviceDescriptor(StartMatchDetector* startMatchDetector, Eeprom* eeprom);
-
-/**
-* Init the device.
-*/
-void initStartMatchDetector();
-
-/**
-* Indicates if the match is started or not.
-*/
-unsigned int isStartMatchDetectorOk();
-
-/**
-* Wait before start, but call the function given in argument.
-*/
-void loopUntilStart();
-
-/**
-* Test if the match is started or not.
-* @return true if the match is started, false else.
-*/
-bool isStarted(void);
+DeviceDescriptor* getStartMatchDeviceDescriptor(StartMatch* startMatch);
 
 /**
 * Show the message to indicate that we wait for the match.

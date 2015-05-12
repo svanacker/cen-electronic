@@ -3,9 +3,7 @@
 
 #include "../../common/commons.h"
 
-// #include <plib.h>
-
-#include "startMatchDetector.h"
+#include "startMatch.h"
 #include "startMatchDevice.h"
 #include "startMatchDeviceInterface.h"
 #include "endMatchDetectorDevice.h"
@@ -28,16 +26,7 @@
 
 #include "../../robot/config/robotConfigDevice.h"
 
-static StartMatchDetector* startMatchDetector;
-static Eeprom* startMatchEeprom;
-
-#define EEPROM_START_MATCH_ROBOT_POSITION_X_OFFSET         0
-#define EEPROM_START_MATCH_ROBOT_POSITION_Y_OFFSET         6
-#define EEPROM_START_MATCH_ROBOT_POSITION_ANGLE_OFFSET    12
-
-#define EEPROM_START_MATCH_ROBOT_POSITION_BLOCK_SIZE      20
-
-static bool simulateStartedMatch;
+static StartMatch* startMatch;
 
 void initStartMatchDevice(void) {
 
@@ -49,26 +38,6 @@ void stopStartMatchDevice(void) {
 
 bool isStartMatchDeviceOk(void) {
     return true;
-}
-
-void loopUntilStart(handleFunctionType* handleFunction) {
-    if (startMatchDetector == NULL) {
-        return;
-    }
-    while (startMatchDetector->isMatchStartedFunction(startMatchDetector)) {
-        handleFunction();
-    }
-}
-
-bool isStarted(void) {
-    if (simulateStartedMatch) {
-        return simulateStartedMatch;
-    }
-    if (startMatchDetector == NULL) {
-        return false;
-    }
-    bool result = startMatchDetector->isMatchStartedFunction(startMatchDetector);
-    return result;
 }
 
 void notifyWaitingStart(OutputStream* pcOutputStream) {
@@ -85,26 +54,16 @@ void notifyStarted(OutputStream* pcOutputStream) {
     appendStringCRLF(getAlwaysOutputStreamLogger(), "Go !");
 }
 
-int getStartMatchDetectorEepromGetOffset(int color) {
-    int result = EEPROM_START_MATCH_START_INDEX + color * EEPROM_START_MATCH_ROBOT_POSITION_BLOCK_SIZE;
-    return result;
-}
-
 void deviceStartMatchDetectorHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream) {
     if (commandHeader == COMMAND_MATCH_IS_STARTED) {
-        int value = isStarted();
+        int value = isStarted(startMatch);
         ackCommand(outputStream, START_MATCH_DEVICE_HEADER, COMMAND_MATCH_IS_STARTED);
         appendHex2(outputStream, value);
     }
     if (commandHeader == COMMAND_MATCH_SET_STARTED) {
         int value = readHex2(inputStream);
-        simulateStartedMatch = value;
-        if (simulateStartedMatch) {
-            markStartMatch();
-        }
-        else {
-            resetStartMatch();
-        }
+        setSimulateStartedMatch(startMatch, value);
+
         ackCommand(outputStream, START_MATCH_DEVICE_HEADER, COMMAND_MATCH_SET_STARTED);
     }
 
@@ -114,38 +73,34 @@ void deviceStartMatchDetectorHandleRawData(char commandHeader, InputStream* inpu
     }
     else if (commandHeader == COMMAND_START_MATCH_GET_INITIAL_POSITION) {
         ackCommand(outputStream, START_MATCH_DEVICE_HEADER, COMMAND_START_MATCH_GET_INITIAL_POSITION);
-        int color = readHex2(inputStream);
-
-        int globalOffset = getStartMatchDetectorEepromGetOffset(color);
-        int x = eepromReadInt(startMatchEeprom, globalOffset + EEPROM_START_MATCH_ROBOT_POSITION_X_OFFSET);
-        int y = eepromReadInt(startMatchEeprom, globalOffset + EEPROM_START_MATCH_ROBOT_POSITION_Y_OFFSET);
-        int angle = eepromReadInt(startMatchEeprom, globalOffset + EEPROM_START_MATCH_ROBOT_POSITION_ANGLE_OFFSET);
-        appendHex2(outputStream, color);
+        enum TeamColor teamColor = (enum TeamColor) readHex2(inputStream);
+        RobotPosition robotPositionForColor;
+        fillStartMatchPositionForColor(startMatch, &robotPositionForColor, teamColor);
+    
+        appendHex2(outputStream, teamColor);
         appendSeparator(outputStream);
-        appendHex4(outputStream, x);
+        appendHex4(outputStream, robotPositionForColor.x);
         appendSeparator(outputStream);
-        appendHex4(outputStream, y);
+        appendHex4(outputStream, robotPositionForColor.y);
         appendSeparator(outputStream);
-        appendHex4(outputStream, angle);
+        appendHex4(outputStream, robotPositionForColor.angleDeciDeg);
     }
     else if (commandHeader == COMMAND_START_MATCH_SET_INITIAL_POSITION) {
         ackCommand(outputStream, START_MATCH_DEVICE_HEADER, COMMAND_START_MATCH_SET_INITIAL_POSITION);
 
-        int color = readHex2(inputStream);
-        int globalOffset = getStartMatchDetectorEepromGetOffset(color);
+        enum TeamColor teamColor = (enum TeamColor) readHex2(inputStream);
+
+        RobotPosition robotPositionForColor;
+        checkIsSeparator(inputStream);
+        robotPositionForColor.x = readHex4(inputStream);
 
         checkIsSeparator(inputStream);
-        int x = readHex4(inputStream);
+        robotPositionForColor.y = readHex4(inputStream);
 
         checkIsSeparator(inputStream);
-        int y = readHex4(inputStream);
-
-        checkIsSeparator(inputStream);
-        int angleDeciDeg = readHex4(inputStream);
-
-        eepromWriteInt(startMatchEeprom, globalOffset + EEPROM_START_MATCH_ROBOT_POSITION_X_OFFSET, x);
-        eepromWriteInt(startMatchEeprom, globalOffset + EEPROM_START_MATCH_ROBOT_POSITION_Y_OFFSET, y);
-        eepromWriteInt(startMatchEeprom, globalOffset + EEPROM_START_MATCH_ROBOT_POSITION_ANGLE_OFFSET, angleDeciDeg);
+        robotPositionForColor.angleDeciDeg = readHex4(inputStream);
+    
+        saveMatchPositionForColor(startMatch, &robotPositionForColor, teamColor);
     }
 }
 
@@ -157,8 +112,7 @@ DeviceDescriptor startMatchDetectorDevice = {
     .deviceHandleRawData = &deviceStartMatchDetectorHandleRawData,
 };
 
-DeviceDescriptor* getStartMatchDeviceDescriptor(StartMatchDetector* startMatchDetectorParam, Eeprom* eeprom) {
-    startMatchDetector = startMatchDetectorParam;
-    startMatchEeprom = eeprom;
+DeviceDescriptor* getStartMatchDeviceDescriptor(StartMatch* startMatchParam) {
+    startMatch = startMatchParam;
     return &startMatchDetectorDevice;
 }

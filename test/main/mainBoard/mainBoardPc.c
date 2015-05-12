@@ -115,7 +115,7 @@
 
 #include "../../../drivers/test/testDriver.h"
 
-#include "../../../robot/match/startMatchDetector.h"
+#include "../../../robot/match/startMatch.h"
 #include "../../../robot/match/startMatchDevice.h"
 #include "../../../robot/match/startMatchDeviceInterface.h"
 #include "../../../robot/match/pc/startMatchDetectorPc.h"
@@ -188,8 +188,8 @@ static Buffer consoleOutputBuffer;
 static Device deviceListArray[MAIN_BOARD_PC_DEVICE_LIST_LENGTH];
 static Device* testDevice;
 
-// StartMatchDetector
-static StartMatchDetector startMatchDetector;
+// StartMatch
+static StartMatch startMatch;
 
 static bool connectToRobotManager = false;
 
@@ -203,7 +203,7 @@ void mainBoardDeviceHandleNotification(const Device* device, const char commandH
     }
 }
 
-void mainBoardWaitForInstruction(void) {
+void mainBoardPcWaitForInstruction(void) {
     while (handleNotificationFromDispatcherList(TRANSMIT_I2C)) {
         // loop for all notification
         // notification handler must avoid to directly information in notification callback
@@ -345,9 +345,8 @@ void runMainBoardPC(bool connectToRobotManagerMode) {
     addLocalDevice(getLCDDeviceInterface(), getLCDDeviceDescriptor());
 
 
-
-    initStartMatchDetectorPc(&startMatchDetector);
-    addLocalDevice(getStartMatchDeviceInterface(), getStartMatchDeviceDescriptor(&startMatchDetector, &eeprom));
+    initStartMatch(&startMatch, isMatchStartedPc, &mainBoardPcWaitForInstruction, &eeprom);
+    addLocalDevice(getStartMatchDeviceInterface(), getStartMatchDeviceDescriptor(&startMatch));
  
     // MOTOR BOARD
     // addI2cRemoteDevice(getEepromDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
@@ -383,6 +382,6 @@ void runMainBoardPC(bool connectToRobotManagerMode) {
     startTimerList();
 
     while (1) {
-        mainBoardWaitForInstruction();
+        mainBoardPcWaitForInstruction();
     }
 }

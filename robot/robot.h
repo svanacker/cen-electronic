@@ -6,6 +6,18 @@
 #include "../common/commons.h"
 #include "../common/io/outputStream.h"
 
+/**
+ * Define the Structure which stores RobotPosition.
+ */
+typedef struct RobotPosition {
+    // x in millimeter
+    int x;
+    // y in millimeter
+    int y;
+    // angle in decidegree
+    int angleDeciDeg;
+} RobotPosition;
+
 /** 
  * Defines some information needed by MainBoard about the status of the Robot.
  * Very precise information about the position of the robot is handled by the trajectory handler

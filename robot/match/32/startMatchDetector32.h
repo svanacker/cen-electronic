@@ -1,8 +1,10 @@
 #ifndef START_MATCH_DETECTOR_32_H
 #define START_MATCH_DETECTOR_32_H
 
-#include "../startMatchDetector.h"
+#include <stdbool.h>
 
-void initStartMatchDetector32(StartMatchDetector* startMatchDetector);
+#include "../startMatch.h"
+
+bool isMatchStarted32(StartMatch* startMatch);
 
 #endif

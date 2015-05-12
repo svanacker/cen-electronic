@@ -38,6 +38,7 @@
 static unsigned int strategyDriverInterruptCounter;
 
 void strategyDriverTimerCallback(Timer* timer) {
+    /* TODO
     // enabled only if robot started
     if (!isStarted()) {
         return;
@@ -47,6 +48,7 @@ void strategyDriverTimerCallback(Timer* timer) {
         return;
     }
     strategyDriverInterruptCounter++;
+    */
 }
 
 void forceRobotNextStepIfNecessary() {

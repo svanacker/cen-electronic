@@ -18,7 +18,7 @@ int deviceStartMatchGetInterface(char commandHeader, DeviceInterfaceMode mode, b
     }
     else if (commandHeader == COMMAND_MATCH_SET_STARTED) {
         if (fillDeviceArgumentList) {
-            setFunction("setStarted", 0, 1);
+            setFunction("setStarted", 1, 0);
             setArgumentUnsignedHex2(0, "value");
         }
         return commandLengthValueForMode(mode, 2, 0);
