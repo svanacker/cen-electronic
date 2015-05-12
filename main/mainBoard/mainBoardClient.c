@@ -184,7 +184,6 @@
 
 // Other boards interface
 #include "../../main/motorBoard/motorBoard.h"
-#include "../../main/meca1/mechanicalBoard1.h"
 #include "../../main/meca2/mechanicalBoard2.h"
 #include "../../main/airconditioning/airConditioningMain.h"
 
@@ -361,7 +360,7 @@ void initMainBoardDevicesDescriptor() {
     // Mechanical Board 2->I2C
     // Device* armDevice = addI2cRemoteDevice(getArm2012DeviceInterface(), MECHANICAL_BOARD_2_I2C_ADDRESS);
     // Device* infraredDetectorDevice = addI2cRemoteDevice(getRobotInfraredDetectorDeviceInterface(), MECHANICAL_BOARD_2_I2C_ADDRESS);
-    addI2cRemoteDevice(getServoDeviceInterface(), MECHANICAL_BOARD_1_I2C_ADDRESS);
+    addI2cRemoteDevice(getServoDeviceInterface(), MECHANICAL_BOARD_2_I2C_ADDRESS);
 
 
     // Motor Board->I2C
@@ -427,7 +426,7 @@ void initMainBoardDriverDataDispatcherList(void) {
         SERIAL_PORT_MOTOR);
 
     // Stream for Mechanical Board 2
-    initI2cBusConnection(&mechanicalBoard2I2cBusConnection, &i2cBus, MECHANICAL_BOARD_1_I2C_ADDRESS);
+    initI2cBusConnection(&mechanicalBoard2I2cBusConnection, &i2cBus, MECHANICAL_BOARD_2_I2C_ADDRESS);
     addI2CDriverDataDispatcher(
             "MECHANICAL_BOARD_2_DISPATCHER",
             &mechanical2BoardInputBuffer,

@@ -1,6 +1,7 @@
 #include <i2c.h>
 #include <p30Fxxxx.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 #include "mechanicalBoard2.h"
 
@@ -152,7 +153,9 @@ void initMechanicalBoard2Pins() {
 int main(void) {
     setPicName("MECHANICAL 2");
 
-    openSerialLink(    &debugSerialStreamLink,
+    initMechanicalBoard2Pins();
+
+    openSerialLink( &debugSerialStreamLink,
                     &debugInputBuffer,
                     &debugInputBufferArray,
                     MECA_BOARD_2_DEBUG_INPUT_BUFFER_LENGTH,
@@ -161,7 +164,7 @@ int main(void) {
                     MECA_BOARD_2_DEBUG_OUTPUT_BUFFER_LENGTH,
                     &debugOutputStream,
                     SERIAL_PORT_DEBUG,
-                    DEFAULT_SERIAL_SPEED);
+                    0);
 
     // Init the logs
     initLogs(DEBUG, &logHandlerListArray, MECA_BOARD_2_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
@@ -169,17 +172,12 @@ int main(void) {
     appendString(getAlwaysOutputStreamLogger(), getPicName());
     println(getAlwaysOutputStreamLogger());
 
-    while(true) {
-    
-    }
-    
     initTimerList(&timerListArray, MECHANICAL_BOARD_2_TIMER_LENGTH);
 
     delaymSec(500);
-    // initI2cBus(&mechanicalBoard2I2cBus, I2C_BUS_TYPE_SLAVE, I2C_BUS_PORT_1);
-    // initI2cBusConnection(&mechanicalBoard2I2cBusConnection, &mechanicalBoard2I2cBus, MECHANICAL_BOARD_2_I2C_ADDRESS);
+    initI2cBus(&mechanicalBoard2I2cBus, I2C_BUS_TYPE_SLAVE, I2C_BUS_PORT_1);
+    initI2cBusConnection(&mechanicalBoard2I2cBusConnection, &mechanicalBoard2I2cBus, MECHANICAL_BOARD_2_I2C_ADDRESS);
 
-    /*
     openSlaveI2cStreamLink(&i2cSerialStreamLink,
                             &i2cSlaveInputBuffer,
                             &i2cSlaveInputBufferArray,
@@ -189,14 +187,12 @@ int main(void) {
                             MECA_BOARD_2_I2C_OUTPUT_BUFFER_LENGTH,
                             &mechanicalBoard2I2cBusConnection
                         );
-    */
+
     // init the devices
     initDevicesDescriptor();
 
     // Init the timers management
     startTimerList();
-
-    // initMechanicalBoard2Pins();
 
     // 2011 : TODO : A regarder
     // ADPCFG = 0xFFFF;
@@ -206,7 +202,7 @@ int main(void) {
 
     delaymSec(2000);
 
-    while (1) {
+    while (true) {
         /*
         // Forward Obstacle
         if (getRobotInfraredObstacleForward()) {
@@ -219,14 +215,13 @@ int main(void) {
             notifyInfraredDetectorDetection(DETECTOR_BACKWARD_INDEX);
             appendString(getAlwaysOutputStreamLogger(), "\nBackward Obstacle, wait few seconds For New Notification !\n");
         }
-
+        */
         // I2C Stream
         handleStreamInstruction(&i2cSlaveInputBuffer,
                                 &i2cSlaveOutputBuffer,
                                 NULL,
                                 &filterRemoveCRLF,
                                 NULL);
-        */
 
         // UART Stream
         handleStreamInstruction(&debugInputBuffer,

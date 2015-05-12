@@ -17,9 +17,9 @@
 // Timer Index for Robot infrared
 #define ROBOT_INFRARED_DETECTOR_TIMER_INDEX            15
 
-#define GP2D12_LEFT_ANX_INDEX            1
+#define GP2D12_LEFT_ANX_INDEX             1
 #define GP2D12_RIGHT_ANX_INDEX            0
-#define GP2DY0A02YK_CENTER_ANX_INDEX    2
+#define GP2DY0A02YK_CENTER_ANX_INDEX      2
 #define GP2DY0A02YK_BACK_ANX_INDEX        3
 
 
