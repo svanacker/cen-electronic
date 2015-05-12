@@ -264,19 +264,20 @@ static InputStream motorBoardI2cInputStream;
 static OutputStream motorBoardI2cOutputStream;
 
 // i2c->Air Conditioning
+/*
 static I2cBusConnection airConditioningI2cBusConnection;
 static char airConditioningBoardInputBufferArray[MAIN_BOARD_LINK_TO_MECA_BOARD_2_BUFFER_LENGTH];
 static Buffer airConditioningBoardInputBuffer;
 static InputStream airConditioningBoardInputStream;
 static OutputStream airConditioningBoardOutputStream;
+*/
 
 // i2c->Mechanical 2
-/*
+static I2cBusConnection mechanicalBoard2I2cBusConnection;
 static char mechanical2BoardInputBufferArray[MAIN_BOARD_LINK_TO_MECA_BOARD_2_BUFFER_LENGTH];
 static Buffer mechanical2BoardInputBuffer;
 static InputStream mechanical2BoardInputStream;
 static OutputStream mechanical2BoardOutputStream;
-*/
 
 // DISPATCHER UART
 // uart->Motor
@@ -344,7 +345,6 @@ void initMainBoardDevicesDescriptor() {
 
     // LOCAL
     addLocalDevice(getLCDDeviceInterface(), getLCDDeviceDescriptor());
-    // addLocalDevice(&servoDevice, getServoDeviceInterface(), getServoDeviceDescriptor());
     addLocalDevice(getRobotConfigDeviceInterface(), getRobotConfigDeviceDescriptor(&robotConfig));
 
     initStartMatch(&startMatch, isMatchStarted32, initMainBoardDevicesDescriptor, &eeprom);
@@ -361,6 +361,8 @@ void initMainBoardDevicesDescriptor() {
     // Mechanical Board 2->I2C
     // Device* armDevice = addI2cRemoteDevice(getArm2012DeviceInterface(), MECHANICAL_BOARD_2_I2C_ADDRESS);
     // Device* infraredDetectorDevice = addI2cRemoteDevice(getRobotInfraredDetectorDeviceInterface(), MECHANICAL_BOARD_2_I2C_ADDRESS);
+    addI2cRemoteDevice(getServoDeviceInterface(), MECHANICAL_BOARD_1_I2C_ADDRESS);
+
 
     // Motor Board->I2C
     /*
@@ -424,17 +426,16 @@ void initMainBoardDriverDataDispatcherList(void) {
         "MOTOR_BOARD_UART_DISPATCHER",
         SERIAL_PORT_MOTOR);
 
-    /*
     // Stream for Mechanical Board 2
-    addI2CDriverDataDispatcher(&mechanical2I2cDispatcher,
+    initI2cBusConnection(&mechanicalBoard2I2cBusConnection, &i2cBus, MECHANICAL_BOARD_1_I2C_ADDRESS);
+    addI2CDriverDataDispatcher(
             "MECHANICAL_BOARD_2_DISPATCHER",
             &mechanical2BoardInputBuffer,
             &mechanical2BoardInputBufferArray,
             MAIN_BOARD_LINK_TO_MECA_BOARD_2_BUFFER_LENGTH,
             &mechanical2BoardOutputStream,
             &mechanical2BoardInputStream,
-            MECHANICAL_BOARD_2_I2C_ADDRESS);
-    */
+            &mechanicalBoard2I2cBusConnection);
 
     /*
     // Stream for Air Conditioning
@@ -445,8 +446,7 @@ void initMainBoardDriverDataDispatcherList(void) {
             MAIN_BOARD_LINK_TO_AIR_CONDITIONING_BOARD_BUFFER_LENGTH,
             &airConditioningBoardOutputStream,
             &airConditioningBoardInputStream,
-            &i2cBus,
-            AIR_CONDITIONING_BOARD_I2C_ADDRESS);
+            &i2cBusConnection);
     */
 }
 

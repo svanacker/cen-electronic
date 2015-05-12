@@ -18,6 +18,7 @@ int deviceDataDispatcherGetInterface(char commandHeader, DeviceInterfaceMode mod
         if (fillDeviceArgumentList) {
             setFunction("PingDispatcherIndex", 1, 1);
             setArgumentUnsignedHex2(0, "pingIndex");
+            setResultUnsignedHex2(0, "pingIndex");
         }
         return commandLengthValueForMode(mode, 2, 2);
     }

@@ -31,6 +31,8 @@
 
 #include "../../common/timer/timerList.h"
 
+#include "../../common/system/system.h"
+
 #include "../../device/device.h"
 #include "../../device/deviceList.h"
 #include "../../device/dispatcher/deviceDataDispatcher.h"
@@ -79,12 +81,16 @@ static StreamLink debugSerialStreamLink;
 static LogHandler logHandlerListArray[MECA_BOARD_1_LOG_HANDLER_LIST_LENGTH];
 
 // i2c Link
-static I2cBus mechanicalMainBoard1I2cBus;
+static I2cBus mechanicalBoard1I2cBus;
+static I2cBusConnection mechanicalBoard1I2cBusConnection;
 static char i2cSlaveInputBufferArray[MECA_BOARD_1_I2C_INPUT_BUFFER_LENGTH];
 static Buffer i2cSlaveInputBuffer;
 static char i2cSlaveOutputBufferArray[MECA_BOARD_1_I2C_OUTPUT_BUFFER_LENGTH];
 static Buffer i2cSlaveOutputBuffer;
 static StreamLink i2cSerialStreamLink;
+
+// Timers
+static Timer timerListArray[MECHANICAL_BOARD_1_TIMER_LENGTH];
 
 static Device deviceListArray[MECHANICAL_BOARD_1_DEVICE_LENGTH];
 
@@ -124,8 +130,12 @@ void initMechanicalBoard1Pins() {
 }
 
 int main(void) {
+    setPicName("MECHANICAL 1");
+
     initMechanicalBoard1Pins();
-    openSerialLink(    &debugSerialStreamLink,
+
+    // Open Serial Link to enable the Serial LOGS !
+    openSerialLink( &debugSerialStreamLink,
                     &debugInputBuffer,
                     &debugInputBufferArray,
                     MECA_BOARD_1_DEBUG_INPUT_BUFFER_LENGTH,
@@ -137,9 +147,16 @@ int main(void) {
                                         0);
 
     // Init the logs
-    initLogs(DEBUG, &logHandlerListArray, MECA_BOARD_1_LOG_HANDLER_LIST_LENGTH);
-    addLogHandler("UART", &debugOutputStream, DEBUG);
-    appendString(getInfoOutputStreamLogger(), "MECHANICAL 1 OK");
+    initLogs(DEBUG, &logHandlerListArray, MECA_BOARD_1_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
+    addLogHandler("UART", &debugOutputStream, DEBUG, LOG_HANDLER_CATEGORY_ALL_MASK);
+    appendString(getDebugOutputStreamLogger(), getPicName());
+    appendCRLF(getDebugOutputStreamLogger());
+
+    initTimerList((Timer(*)[]) &timerListArray, MECHANICAL_BOARD_1_TIMER_LENGTH);
+    startTimerList();
+
+    initI2cBus(&mechanicalBoard1I2cBus, I2C_BUS_TYPE_SLAVE, I2C_BUS_PORT_1);
+    initI2cBusConnection(&mechanicalBoard1I2cBusConnection, &mechanicalBoard1I2cBus, MECHANICAL_BOARD_1_I2C_ADDRESS);
 
     openSlaveI2cStreamLink(&i2cSerialStreamLink,
                             &i2cSlaveInputBuffer,
@@ -148,16 +165,13 @@ int main(void) {
                             &i2cSlaveOutputBuffer,
                             &i2cSlaveOutputBufferArray,
                             MECA_BOARD_1_I2C_OUTPUT_BUFFER_LENGTH,
-                            &mechanicalMainBoard1I2cBus,
-                            MECHANICAL_BOARD_1_I2C_ADDRESS
+                            &mechanicalBoard1I2cBusConnection
                         );
+
+    // Init the timers management
 
     // init the devices
     initDevicesDescriptor();
-    setPicName("MECHANICAL 1");
-
-    // Init the timers management
-    startTimerList();
 
     // 2011 : TODO : A regarder
     ADPCFG = 0xFFFF;
