@@ -196,6 +196,9 @@
 #define SERIAL_PORT_PC            SERIAL_PORT_6
 #define SERIAL_PORT_MOTOR         SERIAL_PORT_5
 
+// I2C => PORT 1 (for All Peripherical, including Eeprom / Clock / Temperatur)
+static I2cBus i2cBus;
+
 // EEPROM
 static Eeprom eeprom;
 static I2cBusConnection eepromI2cBusConnection;
@@ -203,9 +206,6 @@ static I2cBusConnection eepromI2cBusConnection;
 // CLOCK
 static Clock clock;
 static I2cBusConnection clockI2cBusConnection;
-
-// I2C
-static I2cBus i2cBus;
 
 // serial link DEBUG 
 static char debugInputBufferArray[MAIN_BOARD_DEBUG_INPUT_BUFFER_LENGTH];
@@ -312,7 +312,7 @@ static Timer timerListArray[MAIN_BOARD_TIMER_LENGTH];
 /**
  * @private
  */
-void initDriversDescriptor() {
+void initMainBoardDriversDescriptor() {
     // Init the drivers
     initDrivers(&driverRequestBuffer, &driverRequestBufferArray, MAIN_BOARD_REQUEST_DRIVER_BUFFER_LENGTH,
                 &driverResponseBuffer, &driverResponseBufferArray, MAIN_BOARD_RESPONSE_DRIVER_BUFFER_LENGTH);
@@ -327,7 +327,7 @@ void initDriversDescriptor() {
 /**
  * @private
  */
-void initDevicesDescriptor() {
+void initMainBoardDevicesDescriptor() {
     initDeviceList(&deviceListArray, MAIN_BOARD_DEVICE_LENGTH);
 
     // SYSTEM & DEBUG
@@ -347,12 +347,14 @@ void initDevicesDescriptor() {
     initStartMatchDetector32(&startMatchDetector);
     addLocalDevice(getStartMatchDeviceInterface(), getStartMatchDeviceDescriptor(&startMatchDetector, &eeprom));
     addLocalDevice(getEndMatchDetectorDeviceInterface(), getEndMatchDetectorDeviceDescriptor());
-    addLocalDevice(getSonarDeviceInterface(), getSonarDeviceDescriptor(&i2cBus));
-    addLocalDevice(getRobotSonarDetectorDeviceInterface(), getRobotSonarDetectorDeviceDescriptor(&i2cBus));
-    addLocalDevice(getTemperatureSensorDeviceInterface(), getTemperatureSensorDeviceDescriptor(&i2cBus));
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
 
+    /*
+    addLocalDevice(getSonarDeviceInterface(), getSonarDeviceDescriptor(&i2cBus));
+    addLocalDevice(getRobotSonarDetectorDeviceInterface(), getRobotSonarDetectorDeviceDescriptor(&i2cBus));
+    addLocalDevice(getTemperatureSensorDeviceInterface(), getTemperatureSensorDeviceDescriptor(&i2cBus));
+    */
     // Mechanical Board 2->I2C
     // Device* armDevice = addI2cRemoteDevice(getArm2012DeviceInterface(), MECHANICAL_BOARD_2_I2C_ADDRESS);
     // Device* infraredDetectorDevice = addI2cRemoteDevice(getRobotInfraredDetectorDeviceInterface(), MECHANICAL_BOARD_2_I2C_ADDRESS);
@@ -394,109 +396,7 @@ void initDevicesDescriptor() {
     // infraredDetectorDevice->deviceHandleCallbackRawData = &mainBoardCallbackRawData;
 }
 
-void waitForInstruction() {
-    // BE CAREFUL : UART 1 / UART 2 are physically connected : https://github.com/svanacker/cen-electronic-schema/issues/11
-    // -> DO NOT USE IT AT THE SAME TIME !!
-
-    // Listen instruction from pcStream->Devices
-    /*
-    handleStreamInstruction(
-            &pcInputBuffer,
-            &pcOutputBuffer,
-            &pcOutputStream,
-            &filterRemoveCRLF,
-            NULL);
-    */
-
-    // Listen instruction from debugStream->Devices
-    handleStreamInstruction(
-            &debugInputBuffer,
-            &debugOutputBuffer,
-            &debugOutputStream,
-            &filterRemoveCRLF,
-            NULL);
-}
-
-int main(void) {
-    setPicName("MAIN BOARD");
-    initI2cBus(&i2cBus, I2C_BUS_PORT_1);
-
-    initRobotConfigPic32(&robotConfig);
-    
-    setRobotMustStop(false);
-    // Open the serial Link for debug
-    openSerialLink(&debugSerialStreamLink,
-            &debugInputBuffer,
-            &debugInputBufferArray,
-            MAIN_BOARD_DEBUG_INPUT_BUFFER_LENGTH,
-            &debugOutputBuffer,
-            &debugOutputBufferArray,
-            MAIN_BOARD_DEBUG_OUTPUT_BUFFER_LENGTH,
-            &debugOutputStream,
-            SERIAL_PORT_DEBUG,
-            DEFAULT_SERIAL_SPEED);
-
-    // Open the serial Link for the Motor Board
-    openSerialLink(&motorSerialStreamLink,
-            &motorInputBuffer,
-            &motorInputBufferArray,
-            MAIN_BOARD_MOTOR_INPUT_BUFFER_LENGTH,
-            &motorOutputBuffer,
-            &motorOutputBufferArray,
-            MAIN_BOARD_MOTOR_OUTPUT_BUFFER_LENGTH,
-            &motorOutputStream,
-            SERIAL_PORT_MOTOR,
-            DEFAULT_SERIAL_SPEED);
-
-    // Open the serial Link for the PC
-    openSerialLink(&pcSerialStreamLink,
-            &pcInputBuffer,
-            &pcInputBufferArray,
-            MAIN_BOARD_PC_INPUT_BUFFER_LENGTH,
-            &pcOutputBuffer,
-            &pcOutputBufferArray,
-            MAIN_BOARD_PC_OUTPUT_BUFFER_LENGTH,
-            &pcOutputStream,
-            SERIAL_PORT_PC,
-            DEFAULT_SERIAL_SPEED);
-
-    // LCD (LCD03 via Serial interface)
-    initLCDOutputStream(&lcdOutputStream);
-
-    // Timers
-    initTimerList(&timerListArray, MAIN_BOARD_TIMER_LENGTH);
-
-    // Eeproms
-    initI2cBusConnection(&eepromI2cBusConnection, &i2cBus, 0 /* TODO. */);
-    init24C512Eeprom(&eeprom, &eepromI2cBusConnection);
-
-    // Clock
-    initI2cBusConnection(&clockI2cBusConnection, &i2cBus, 0 /* TODO. */);
-    initClockPCF8563(&clock, &clockI2cBusConnection);
-
-    // Init the logs
-    initLogs(DEBUG, &logHandlerListArray, MAIN_BOARD_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
-    addLogHandler("UART", &debugOutputStream, DEBUG, LOG_HANDLER_CATEGORY_ALL_MASK);
-    addLogHandler("LCD", &lcdOutputStream, LOG_LEVEL_ERROR, LOG_HANDLER_CATEGORY_ALL_MASK);
-
-    appendString(getAlwaysOutputStreamLogger(), getPicName());
-    println(getAlwaysOutputStreamLogger());
-
-    initDevicesDescriptor();
-    initDriversDescriptor();
-
-    /*
-    // Creates a composite to notify both PC and Debug
-    initCompositeOutputStream(&compositePcAndDebugOutputStream);
-    addOutputStream(&compositePcAndDebugOutputStream, &debugOutputStream);
-    addOutputStream(&compositePcAndDebugOutputStream, &pcOutputStream);
-
-    // Creates a composite to redirect to driverRequest and Debug
-    initCompositeOutputStream(&compositeDriverAndDebugOutputStream);
-    addOutputStream(&compositeDriverAndDebugOutputStream, &debugOutputStream);
-    addOutputStream(&compositeDriverAndDebugOutputStream, getDriverRequestOutputStream());
-    */
-
+void initMainBoardDriverDataDispatcherList(void) {
     // Initializes the DriverDataDispatcherList
     initDriverDataDispatcherList(&driverDataDispatcherListArray, MAIN_BOARD_DRIVER_DATA_DISPATCHER_LIST_LENGTH);
 
@@ -506,7 +406,7 @@ int main(void) {
     // I2C Stream for motorBoard
     initI2cBusConnection(&motorI2cBusConnection, &i2cBus, MOTOR_BOARD_I2C_ADDRESS);
     addI2CDriverDataDispatcher("MOTOR_BOARD_I2C_DISPATCHER",
-        &motorBoardI2cInputBuffer,
+        &motorBoardI2cInputBuffer, 
         (char(*)[]) &motorBoardI2cInputBufferArray,
         MAIN_BOARD_I2C_INPUT_DRIVER_DATA_DISPATCHER_BUFFER_LENGTH,
         &motorBoardI2cOutputStream,
@@ -544,6 +444,94 @@ int main(void) {
             &i2cBus,
             AIR_CONDITIONING_BOARD_I2C_ADDRESS);
     */
+}
+
+void waitForInstruction() {
+    // BE CAREFUL : UART 1 / UART 2 are physically connected : https://github.com/svanacker/cen-electronic-schema/issues/11
+    // -> DO NOT USE IT AT THE SAME TIME !!
+
+    // Listen instruction from pcStream->Devices
+    /*
+    handleStreamInstruction(
+            &pcInputBuffer,
+            &pcOutputBuffer,
+            &pcOutputStream,
+            &filterRemoveCRLF,
+            NULL);
+    */
+
+    // Listen instruction from debugStream->Devices
+    handleStreamInstruction(
+            &debugInputBuffer,
+            &debugOutputBuffer,
+            &debugOutputStream,
+            &filterRemoveCRLF,
+            NULL);
+}
+
+int main(void) {
+    setPicName("MAIN BOARD");
+    setRobotMustStop(false);
+
+    // LOG Global Configuration
+    initLogs(DEBUG, &logHandlerListArray, MAIN_BOARD_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
+
+    // LCD (LCD via Parallel interface)
+    initLCDOutputStream(&lcdOutputStream);
+    addLogHandler("LCD", &lcdOutputStream, LOG_LEVEL_ERROR, LOG_HANDLER_CATEGORY_ALL_MASK);
+
+    // CONFIG
+    initRobotConfigPic32(&robotConfig);
+
+    // Open the serial Link for debug and LOG !
+    openSerialLink(&debugSerialStreamLink, 
+            &debugInputBuffer, &debugInputBufferArray, MAIN_BOARD_DEBUG_INPUT_BUFFER_LENGTH,
+            &debugOutputBuffer, &debugOutputBufferArray, MAIN_BOARD_DEBUG_OUTPUT_BUFFER_LENGTH,
+            &debugOutputStream,
+            SERIAL_PORT_DEBUG,
+            DEFAULT_SERIAL_SPEED);
+    // Serial Debug LOG
+    addLogHandler("UART", &debugOutputStream, DEBUG, LOG_HANDLER_CATEGORY_ALL_MASK);
+
+    // LOG the PicName
+    appendString(getAlwaysOutputStreamLogger(), getPicName());
+    println(getAlwaysOutputStreamLogger());
+    
+    // Open the serial Link for the Motor Board
+    openSerialLink(&motorSerialStreamLink,
+                   &motorInputBuffer, &motorInputBufferArray, MAIN_BOARD_MOTOR_INPUT_BUFFER_LENGTH,
+                   &motorOutputBuffer, &motorOutputBufferArray, MAIN_BOARD_MOTOR_OUTPUT_BUFFER_LENGTH,
+                   &motorOutputStream,
+                   SERIAL_PORT_MOTOR,
+                   DEFAULT_SERIAL_SPEED);
+
+    // Open the serial Link for the PC
+    openSerialLink(&pcSerialStreamLink,
+                    &pcInputBuffer, &pcInputBufferArray, MAIN_BOARD_PC_INPUT_BUFFER_LENGTH,
+                    &pcOutputBuffer, &pcOutputBufferArray, MAIN_BOARD_PC_OUTPUT_BUFFER_LENGTH,
+                    &pcOutputStream,
+                    SERIAL_PORT_PC,
+                    DEFAULT_SERIAL_SPEED);
+
+    // I2C
+    initI2cBus(&i2cBus, I2C_BUS_TYPE_MASTER, I2C_BUS_PORT_1);
+    i2cMasterInitialize(&i2cBus);
+
+    // Timers
+    initTimerList(&timerListArray, MAIN_BOARD_TIMER_LENGTH);
+
+    // Eeproms
+    initI2cBusConnection(&eepromI2cBusConnection, &i2cBus, 0 /* TODO. */);
+    init24C512Eeprom(&eeprom, &eepromI2cBusConnection);
+
+    // Clock
+    initI2cBusConnection(&clockI2cBusConnection, &i2cBus, 0 /* TODO. */);
+    initClockPCF8563(&clock, &clockI2cBusConnection);
+
+    initMainBoardDevicesDescriptor();
+    initMainBoardDriversDescriptor();
+    initMainBoardDriverDataDispatcherList();
+
     // I2C Debug
     initI2CDebugBuffers(&i2cMasterDebugInputBuffer,
                         &i2cMasterDebugInputBufferArray,

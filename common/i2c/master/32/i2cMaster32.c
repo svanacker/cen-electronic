@@ -29,7 +29,7 @@ unsigned int portableMasterWriteI2C(I2cBusConnection* i2cBusConnection, unsigned
         return MasterWriteI2C1(data);
     }
     else {
-        I2C_MODULE i2cModule = getI2C_MODULE(i2cBus->portIndex);
+        I2C_MODULE i2cModule = getI2C_MODULE(i2cBus->port);
         return I2CSendByte(i2cModule, data);
     }
 }
@@ -40,10 +40,7 @@ unsigned char portableMasterReadI2C(I2cBusConnection* i2cBusConnection) {
         return MasterReadI2C1();
     }
     else {
-        // I2C_MODULE i2cModule = getI2C_MODULE(i2cBus->portIndex);
-        // return TODO(i2cModule);
-
-        unsigned portIndex = i2cBus->portIndex;
+        unsigned portIndex = i2cBus->port;
         if (portIndex == I2C_BUS_PORT_1) {
             I2C1CONbits.RCEN = 1;
             while (I2C1CONbits.RCEN);
@@ -84,9 +81,7 @@ void portableMasterCloseI2C(I2cBus* i2cBus) {
         CloseI2C1();
     }
     else {
-        unsigned portIndex = i2cBus->portIndex;
-        // I2C_MODULE i2cModule = getI2C_MODULE(i2cBus->portIndex);
-        // TODO(i2cModule);
+        unsigned portIndex = i2cBus->port;
         if (portIndex == I2C_BUS_PORT_1) {
             CloseI2C1();
         }
@@ -124,9 +119,8 @@ void portableMasterWaitSendI2C(I2cBusConnection* i2cBusConnection) {
         return;
     }
     else {
-        unsigned portIndex = i2cBus->portIndex;
-        switch (portIndex) {
-            unsigned portIndex = i2cBus->portIndex;
+        unsigned portIndex = i2cBus->port;
+
             if (portIndex == I2C_BUS_PORT_1) {
                 while (I2C1CONbits.SEN) {
                 }
@@ -150,6 +144,5 @@ void portableMasterWaitSendI2C(I2cBusConnection* i2cBusConnection) {
                 return;
             }
         #endif
-        }
     }
 }

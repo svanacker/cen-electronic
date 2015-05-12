@@ -9,11 +9,6 @@
 #include "../../motion/position/coders.h"
 
 void computeCurrentPositionUsingCoders(PidMotion* pidMotion) {
-    PidMotionDefinition* currentMotionDefinition = &(pidMotion->currentMotionDefinition);
-
-    MotionInstruction* thetaInst = &(currentMotionDefinition->inst[THETA]);
-    MotionInstruction* alphaInst = &(currentMotionDefinition->inst[ALPHA]);
-
     PidComputationValues* computationValues = &(pidMotion->computationValues);
     PidCurrentValues* thetaCurrentValues = &(computationValues->currentValues[THETA]);
     PidCurrentValues* alphaCurrentValues = &(computationValues->currentValues[ALPHA]);

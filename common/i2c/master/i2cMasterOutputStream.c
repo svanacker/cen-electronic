@@ -54,6 +54,9 @@ I2cBusConnection* _i2cMasterGetI2cBusConnection(OutputStream* outputStream) {
 void _i2cMasterOpenOutputStream(OutputStream* outputStream, int param1) {
     I2cBusConnection* i2cBusConnection = _i2cMasterGetI2cBusConnection(outputStream);
     I2cBus* i2cBus = i2cBusConnection->i2cBus;
+    if (i2cBus->initialized) {
+        return;
+    }
     i2cMasterInitialize(i2cBus);
 }
 

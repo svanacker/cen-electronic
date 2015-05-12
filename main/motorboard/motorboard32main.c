@@ -279,7 +279,7 @@ int runMotorBoard() {
 
     initTimerList(&timerListArray, MOTOR_BOARD_TIMER_LENGTH);
 
-    initI2cBus(&mainBoardI2cBus, I2C_BUS_PORT_1);
+    initI2cBus(&mainBoardI2cBus, I2C_BUS_TYPE_SLAVE, I2C_BUS_PORT_1);
     initI2cBusConnection(&mainBoardI2cBusConnection, &mainBoardI2cBus, MOTOR_BOARD_I2C_ADDRESS);
     openSlaveI2cStreamLink(&i2cSlaveStreamLink,
             &i2cSlaveInputBuffer,
@@ -303,7 +303,7 @@ int runMotorBoard() {
     setDebugI2cEnabled(false);
 
     // Eeprom
-    initI2cBus(&eepromI2cBus, I2C_BUS_PORT_4);
+    initI2cBus(&eepromI2cBus, I2C_BUS_TYPE_MASTER, I2C_BUS_PORT_4);
     i2cMasterInitialize(&eepromI2cBus);
     initI2cBusConnection(&eepromI2cBusConnection, &eepromI2cBus, /* TODO */ 0);
     init24C512Eeprom(&eeprom_, &eepromI2cBusConnection);

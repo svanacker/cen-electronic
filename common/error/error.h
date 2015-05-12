@@ -85,8 +85,10 @@ void clearLastError();
 
 #define I2C_MASTER_ALREADY_INITIALIZED    0x1000
 #define I2C_SLAVE_ALREADY_INITIALIZED     0x1001
-#define I2C_BUS_PORT_INDEX_NOT_DEFINED    0x1002
-#define I2C_BUS_PORT_NULL                 0x1003
+#define I2C_BUS_PORT_NOT_DEFINED          0x1002
+#define I2C_BUS_NULL                      0x1003
+#define I2C_BUS_TYPE_NOT_DEFINED          0x1004
+#define I2C_BUS_CONNECTION_NULL           0x1003
 
 // DEVICE
 
