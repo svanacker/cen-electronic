@@ -27,7 +27,7 @@
 
 /** Default wheels distance (micrometer)). */
 // #define WHEELS_DISTANCE 226.70f
-#define KINEMATICS_WHEELS_DISTANCE_DEFAULT_VALUE                            242.00f
+#define KINEMATICS_WHEELS_DISTANCE_DEFAULT_VALUE                            240.80f
 
 /** 
  * Encapsulation of all information needed to manage the Kinematics (Rotation, Forward / Backward) and coders capacities.
