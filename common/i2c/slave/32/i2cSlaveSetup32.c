@@ -56,7 +56,7 @@ void i2cSlaveInitialize(I2cBusConnection* i2cBusConnection) {
     }
     else {
         I2cBus* i2cBus = i2cBusConnection->i2cBus; 
-        I2C_MODULE i2cModule = getI2C_MODULE(i2cBus->portIndex);
+        I2C_MODULE i2cModule = getI2C_MODULE(i2cBus->port);
         I2CConfigure(i2cModule, I2C_ON | I2C_7BIT_ADD | I2C_STR_EN);
         I2CSetFrequency(i2cModule, GetPeripheralClock(), I2C_FREQUENCY);
         I2CSetSlaveAddress(i2cModule, i2cBusConnection->i2cAddress >> 1, 0, I2C_USE_7BIT_ADDRESS);

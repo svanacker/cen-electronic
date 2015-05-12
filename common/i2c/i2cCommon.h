@@ -3,31 +3,58 @@
 
 #include <stdbool.h>
 
+#include "../../common/io/outputStream.h"
+
 // forward declaration
 struct I2cBus;
 typedef struct I2cBus I2cBus;
 struct I2cBusConnection;
 typedef struct I2cBusConnection I2cBusConnection;
 
-/** Define the index of i2c port 1. */
-#define I2C_BUS_PORT_1         1
+enum I2cPort {
+    /** To avoid to have a bad value. */
+    I2C_BUS_PORT_UNKOWN = 0,
 
-/** Define the index of i2c port 2. */
-#define I2C_BUS_PORT_2         2
+    /** Define the index of i2c port 1. */
+    I2C_BUS_PORT_1 = 1,
+    
+    /** Define the index of i2c port 2. */
+    I2C_BUS_PORT_2 = 2,
+    
+    /** Define the index of i2c port 3. */
+    I2C_BUS_PORT_3 = 3,
+    
+    /** Define the index of i2c port 4. */
+    I2C_BUS_PORT_4 = 4
+};
 
-/** Define the index of i2c port 3. */
-#define I2C_BUS_PORT_3         3
+/** 
+ * Defines if the Bus is a MASTER or SLAVE Type !
+ */
+enum I2cBusType {
+    /** Indicates that we don't know the type of I2C. */
+    I2C_BUS_TYPE_UNKNOWN = 0,
 
-/** Define the index of i2c port 4. */
-#define I2C_BUS_PORT_4         4
+    /** The enum which indicates that the I2C Bus is a Master Bus ! */
+    I2C_BUS_TYPE_MASTER = 1,
+
+    /** The enum which indicates that the I2C Bus is a Slave Bus ! */
+    I2C_BUS_TYPE_SLAVE = 2
+};
 
 /**
  * Defines the contract for an I2C bus.
  * A bus can manage multiple Connection, but we make an unidirectional Link between I2CBus and I2CBusConnection.
  */
 struct I2cBus {
+    /** Master or Slave Bus. */
+    enum I2cBusType busType;
     /** port Index. */
-    unsigned char portIndex;
+    enum I2cPort port;
+    /** Indicates if the Port is already initialized. */
+    bool initialized;
+    // Configuration (PIC Internal use)
+    unsigned int config;
     // An untyped object (For example to have a pipe Handle in Windows)
     void* object;
 };
@@ -53,7 +80,7 @@ struct I2cBusConnection {
  * Initializes a wrapping structure around I2cBus.
  * @param portIndex the index of the port.
  */
-void initI2cBus(I2cBus* i2cBus, unsigned char portIndex);
+void initI2cBus(I2cBus* i2cBus, enum I2cBusType i2cBusType, enum I2cPort i2cPort);
 
 /**
  * Initializez a wrapping structure around a connection betweeen a master and a specific address.
@@ -62,6 +89,25 @@ void initI2cBus(I2cBus* i2cBus, unsigned char portIndex);
  * @param slaveAddress the address of the slave
  */
 void initI2cBusConnection(I2cBusConnection* i2cBusConnection, I2cBus* i2cBus, unsigned char slaveAddress);
+
+// DEBUG
+
+/** 
+ * Print the content of an I2cBus.
+ * @param outputStream where we print the debug information
+ * @param i2cBus the information about the i2c Bus
+ */
+void printI2cBus(OutputStream* outputStream, I2cBus* i2cBus);
+
+/** 
+ * Print the content of an I2cBusConnection.
+ * @param outputStream where we print the debug information
+ * @param i2cBusConnection the information about the i2c Bus Connection
+ */
+void printI2cBusConnection(OutputStream* outputStream, I2cBusConnection* i2cBusConnection);
+
+
+// COMMON FUNCTION (SLAVE / MASTER)
 
 /**
  * Indirection for IdleI2C() used to manage Simulation.

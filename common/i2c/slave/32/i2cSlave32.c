@@ -31,7 +31,7 @@ unsigned char portableSlaveReadI2C(I2cBusConnection* i2cBusConnection) {
         return result;
     }
     else {
-        unsigned portIndex = i2cBus->portIndex;
+        unsigned portIndex = i2cBus->port;
         I2C_MODULE i2cModule = getI2C_MODULE(portIndex);
         unsigned char result = I2CGetByte(i2cModule);
         return result;
@@ -44,7 +44,7 @@ void portableSlaveWriteI2C(I2cBusConnection* i2cBusConnection, unsigned char c) 
         SlaveWriteI2C1(c);
     }
     else {
-        unsigned portIndex = i2cBus->portIndex;
+        unsigned portIndex = i2cBus->port;
         if (portIndex == I2C_BUS_PORT_1) {
             I2C1TRN = c;               // data transferred to I2C1TRN reg
             I2C1CONbits.SCLREL = 1;    // Release the clock
@@ -76,7 +76,7 @@ void portableSlaveClockRelease(I2cBusConnection* i2cBusConnection) {
         I2C1CONbits.SCLREL = 1; // release the clock
     }
     else {
-        unsigned portIndex = i2cBus->portIndex;
+        unsigned portIndex = i2cBus->port;
         I2C_MODULE i2cModule = getI2C_MODULE(portIndex);
         I2CSlaveClockRelease(i2cModule);
     }

@@ -34,7 +34,7 @@ void WaitI2C(I2cBus* i2cBus) {
         IdleI2C1();
     }
     else {
-        unsigned portIndex = i2cBus->portIndex;
+        enum I2cPort portIndex = i2cBus->port;
         if (portIndex == I2C_BUS_PORT_1) {
             while(I2C1CONbits.SEN || I2C1CONbits.PEN || I2C1CONbits.RSEN || I2C1CONbits.RCEN || I2C1CONbits.ACKEN || I2C1STATbits.TRSTAT);
         }
@@ -63,7 +63,7 @@ void portableCommonStartI2C(I2cBusConnection* i2cBusConnection) {
         StartI2C1();
     }
     else {
-        I2C_MODULE i2cModule = getI2C_MODULE(i2cBus->portIndex);
+        I2C_MODULE i2cModule = getI2C_MODULE(i2cBus->port);
         I2CStart(i2cModule);
     }
 }
@@ -75,7 +75,7 @@ void portableCommonStopI2C(I2cBusConnection* i2cBusConnection) {
         StopI2C1();
     }
     else {
-        I2C_MODULE i2cModule = getI2C_MODULE(i2cBus->portIndex);
+        I2C_MODULE i2cModule = getI2C_MODULE(i2cBus->port);
         I2CStop(i2cModule);
     }
 }
@@ -87,7 +87,7 @@ void portableCommonAckI2C(I2cBusConnection* i2cBusConnection) {
         AckI2C1();
     }
     else {
-        I2C_MODULE i2cModule = getI2C_MODULE(i2cBus->portIndex);
+        I2C_MODULE i2cModule = getI2C_MODULE(i2cBus->port);
         I2CAcknowledgeByte(i2cModule, true);
     }
 }
@@ -98,7 +98,7 @@ void portableCommonNackI2C(I2cBusConnection* i2cBusConnection) {
         NotAckI2C1();
     }
     else {
-        I2C_MODULE i2cModule = getI2C_MODULE(i2cBus->portIndex);
+        I2C_MODULE i2cModule = getI2C_MODULE(i2cBus->port);
         I2CAcknowledgeByte(i2cModule, false);
     }
 }

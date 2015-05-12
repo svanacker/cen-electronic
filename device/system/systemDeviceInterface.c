@@ -11,20 +11,21 @@ const char* deviceSystemGetName(void) {
 }
 
 int deviceSystemGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
-    // getPicName()
+    // picName
     if (commandHeader == COMMAND_PIC_NAME) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("getPicName");
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
-    // getPicName()
+    // DeviceList
     else if (commandHeader == COMMAND_DEVICE_LIST) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("deviceList");
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
+    // Ping
     else if (commandHeader == COMMAND_PING) {
         if (fillDeviceArgumentList) {
             setFunction("ping", 1, 1);
@@ -48,6 +49,7 @@ int deviceSystemGetInterface(char commandHeader, DeviceInterfaceMode mode, bool 
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
+    // Usage Specific
     else if (commandHeader == COMMAND_USAGE_SPECIFIC_DEVICE) {
         if (fillDeviceArgumentList) {
             setFunction("usageSpecificDevice", 1, 0);
@@ -55,6 +57,7 @@ int deviceSystemGetInterface(char commandHeader, DeviceInterfaceMode mode, bool 
         }
         return commandLengthValueForMode(mode, 1, 0);
     }
+    // Notification
     else if (commandHeader == COMMAND_NOTIFICATION) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("notification");
