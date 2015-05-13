@@ -77,6 +77,16 @@
 
 #include "../../drivers/driverStreamListener.h"
 
+#include "../../drivers/driver.h"
+#include "../../drivers/driverList.h"
+
+#include "../../drivers/driverStreamListener.h"
+#include "../../drivers/dispatcher/driverDataDispatcher.h"
+#include "../../drivers/dispatcher/driverDataDispatcherDebug.h"
+#include "../../drivers/dispatcher/uartDriverDataDispatcher.h"
+
+#include "../../drivers/system/systemDriver.h"
+
 // The port for which we debug (we can send instruction too)
 #define SERIAL_PORT_DEBUG     SERIAL_PORT_2
 
@@ -97,6 +107,7 @@ static OutputStream debugOutputStream;
 static StreamLink debugSerialStreamLink;
 
 // i2c Link
+/*
 static I2cBus mechanicalBoard2I2cBus;
 static I2cBusConnection mechanicalBoard2I2cBusConnection;
 static char i2cSlaveInputBufferArray[MECA_BOARD_2_I2C_INPUT_BUFFER_LENGTH];
@@ -104,6 +115,7 @@ static Buffer i2cSlaveInputBuffer;
 static char i2cSlaveOutputBufferArray[MECA_BOARD_2_I2C_OUTPUT_BUFFER_LENGTH];
 static Buffer i2cSlaveOutputBuffer;
 static StreamLink i2cSerialStreamLink;
+*/
 
 // Devices
 static Device deviceListArray[MECHANICAL_BOARD_2_DEVICE_LENGTH];
@@ -114,23 +126,52 @@ static Timer timerListArray[MECHANICAL_BOARD_2_TIMER_LENGTH];
 // RobotDetector
 static RobotInfraredDetector robotInfraredDetector;
 
+// DRIVERS
+static Buffer driverRequestBuffer;
+static char driverRequestBufferArray[MECA_2_REQUEST_DRIVER_BUFFER_LENGTH];
+static Buffer driverResponseBuffer;
+static char driverResponseBufferArray[MECA_2_RESPONSE_DRIVER_BUFFER_LENGTH];
+
+// DISPATCHER I2C
+static DriverDataDispatcher driverDataDispatcherListArray[MECHANICAL_BOARD_2_DRIVER_DATA_DISPATCHER_LIST_LENGTH];
+
+/*
 Buffer* getMechanicalBoard2I2CSlaveOutputBuffer() {
     return &i2cSlaveOutputBuffer;
 }
+*/
 
+void initMechanicalBoard2sDriversDescriptor() {
+    // Init the drivers
+    initDrivers(&driverRequestBuffer, &driverRequestBufferArray, MECA_2_REQUEST_DRIVER_BUFFER_LENGTH,
+                &driverResponseBuffer, &driverResponseBufferArray, MECA_2_RESPONSE_DRIVER_BUFFER_LENGTH);
+}
+
+void initMechanicalBoard2DriverDataDispatcherList(void) {
+    // Initializes the DriverDataDispatcherList
+    initDriverDataDispatcherList(&driverDataDispatcherListArray, MECHANICAL_BOARD_2_DRIVER_DATA_DISPATCHER_LIST_LENGTH);
+    
+    // Uart Stream for Notification to the mainBoard
+    addUartDriverDataDispatcher(
+        &debugSerialStreamLink,
+        "MAIN_BOARD_UART_DISPATCHER",
+        SERIAL_PORT_DEBUG);
+}
 
 void initDevicesDescriptor() {
     initDeviceList(&deviceListArray, MECHANICAL_BOARD_2_DEVICE_LENGTH);
 
+    // LOCAL
     addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
     addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
     addLocalDevice(getLogDeviceInterface(), getLogDeviceDescriptor());
     addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor());
     addLocalDevice(getADCDeviceInterface(), getADCDeviceDescriptor());
-
     addLocalDevice(getArm2012DeviceInterface(), getArm2012DeviceDescriptor());
-
     addLocalDevice(getRobotInfraredDetectorDeviceInterface(), getRobotInfraredDetectorDeviceDescriptor(&robotInfraredDetector));
+
+    // REMOTE
+    // addUartRemoteDevice(getSystemDeviceInterface(), SERIAL_PORT_DEBUG);
 
     initDevices(&devices);
 }
@@ -175,14 +216,14 @@ int main(void) {
                     0);
 
     // Init the logs
-    initLogs(LOG_LEVEL_ERROR, &logHandlerListArray, MECA_BOARD_2_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
+    initLogs(DEBUG, &logHandlerListArray, MECA_BOARD_2_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
     addLogHandler("UART", &debugOutputStream, DEBUG, LOG_HANDLER_CATEGORY_ALL_MASK);
     appendString(getDebugOutputStreamLogger(), getPicName());
     println(getDebugOutputStreamLogger());
 
     initTimerList(&timerListArray, MECHANICAL_BOARD_2_TIMER_LENGTH);
 
-    delaymSec(500);
+    /*
     initI2cBus(&mechanicalBoard2I2cBus, I2C_BUS_TYPE_SLAVE, I2C_BUS_PORT_1);
     initI2cBusConnection(&mechanicalBoard2I2cBusConnection, &mechanicalBoard2I2cBus, MECHANICAL_BOARD_2_I2C_ADDRESS);
 
@@ -195,9 +236,17 @@ int main(void) {
                             MECA_BOARD_2_I2C_OUTPUT_BUFFER_LENGTH,
                             &mechanicalBoard2I2cBusConnection
                         );
+    */
 
     // init the devices
     initDevicesDescriptor();
+
+    // Drivers
+    initMechanicalBoard2sDriversDescriptor();
+
+    // init the Dispatchers
+    initMechanicalBoard2DriverDataDispatcherList();
+
 
     // Init the timers management
     startTimerList();
@@ -207,8 +256,6 @@ int main(void) {
 
     // upArm(ARM_LEFT);
     // upArm(ARM_RIGHT);
-
-    delaymSec(2000);
 
     while (true) {
         // Forward Obstacle

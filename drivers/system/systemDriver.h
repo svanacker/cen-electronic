@@ -5,6 +5,11 @@
 #include "../../drivers/dispatcher/driverDataDispatcher.h"
 
 /**
+ * Call the systemDevice
+ */
+void systemDeviceList(void);
+
+/**
 * PING a data dispatcher.
 * @param dispatcher the dispatcher that we want to PING
 */ 

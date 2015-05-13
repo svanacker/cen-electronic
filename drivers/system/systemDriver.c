@@ -16,6 +16,15 @@
 #include "../../drivers/dispatcher/driverDataDispatcher.h"
 #include "../../drivers/dispatcher/driverDataDispatcherList.h"
 
+void systemDeviceList(void) {
+    OutputStream* outputStream = getDriverRequestOutputStream();
+
+    append(outputStream, SYSTEM_DEVICE_HEADER);
+    append(outputStream, COMMAND_DEVICE_LIST);
+
+    transmitFromDriverRequestBuffer();
+}
+
 bool pingDriverDataDispatcher(DriverDataDispatcher* dispatcher) {
     OutputStream* outputStream = getDriverRequestOutputStream();
     append(outputStream, COMMAND_PING);
