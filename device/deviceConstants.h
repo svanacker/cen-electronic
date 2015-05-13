@@ -24,9 +24,6 @@
 /** Command to debug the I2C Master. */
 #define I2C_MASTER_DEBUG_DEVICE_HEADER             'I'
 
-/** TODO : Collision with I2C Master! */
-#define ROBOT_INFRARED_DETECTOR_DEVICE_HEADER      'I'
-
 /** Command to debug the I2C Slave. */
 #define I2C_SLAVE_DEBUG_DEVICE_HEADER              'i'
 
@@ -120,5 +117,7 @@
 #define ARM_DEVICE_2012_HEADER                     '|'
 
 #define MOTION_SIMULATION_DEVICE_HEADER            '/' 
+
+#define ROBOT_INFRARED_DETECTOR_DEVICE_HEADER      '>'
 
 #endif

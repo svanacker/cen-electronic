@@ -13,10 +13,9 @@
 
 #include "../../common/timer/timerList.h"
 #include "../../common/timer/cenTimer.h"
+#include "../../common/timer/timerConstants.h"
 
-// Timer Index for Robot infrared
-#define ROBOT_INFRARED_DETECTOR_TIMER_INDEX            15
-
+// INDEX OF ADC
 #define GP2D12_LEFT_ANX_INDEX             1
 #define GP2D12_RIGHT_ANX_INDEX            0
 #define GP2DY0A02YK_CENTER_ANX_INDEX      2
@@ -31,15 +30,19 @@
 /** Distance of detection for backward. */
 #define ROBOT_INFRARED_DETECTOR_DISTANCE_THRESHOLD_BACK_CM            5
 
-
 /** Avoid to notify always. */
-#define NOTIFY_INFRARED_DETECTOR_TIMER_CYCLE                120
+#define NOTIFY_INFRARED_DETECTOR_TIMER_CYCLE                          120
 
-#define DETECTED_THRESHOLD                                    6
-#define NEG_VALUE                                            6
+/** Thresholds. */
+#define DETECTED_THRESHOLD                                          6
+#define NEG_VALUE                                                   6
 
-static InfraredDetectorGroup forwardDetector;
-static InfraredDetectorGroup backwardDetector;
+/** The pointer on the global robotInfraredDetector system. */
+static RobotInfraredDetector* robotInfraredDetector;
+
+RobotInfraredDetector* getRobotInfraredDetector(void) {
+    return robotInfraredDetector;
+}
 
 bool getRobotInfraredObstacleGroup(InfraredDetectorGroup* group) {
     // no detection
@@ -53,15 +56,15 @@ bool getRobotInfraredObstacleGroup(InfraredDetectorGroup* group) {
     return true;
 }
 
-bool getRobotInfraredObstacleForward() {
-    return getRobotInfraredObstacleGroup(&forwardDetector);
+bool getRobotInfraredObstacleForward(void) {
+    return getRobotInfraredObstacleGroup(&(robotInfraredDetector->forwardDetectorGroup));
 }
 
-bool getRobotInfraredObstacleBackward() {
-    return getRobotInfraredObstacleGroup(&backwardDetector);
+bool getRobotInfraredObstacleBackward(void) {
+    return getRobotInfraredObstacleGroup(&(robotInfraredDetector->backwardDetectorGroup));
 }
 
-bool forwardDetection() {
+bool forwardDetection(void) {
 
     float leftMilliVolt = getANX(GP2D12_LEFT_ANX_INDEX);
     float rightMilliVolt = getANX(GP2D12_RIGHT_ANX_INDEX);
@@ -69,8 +72,8 @@ bool forwardDetection() {
 
 
     float leftDistance = gp2d12GetCentimerDistanceForTension(leftMilliVolt);
-    float centerDistance = gp2y0a02ykGetCentimerDistanceForTension(rightMilliVolt);
-    float rightDistance = gp2d12GetCentimerDistanceForTension(centerMilliVolt);
+    float centerDistance = gp2y0a02ykGetCentimerDistanceForTension(centerMilliVolt);
+    float rightDistance = gp2d12GetCentimerDistanceForTension(rightMilliVolt);
 
     bool result = (leftDistance < ROBOT_INFRARED_DETECTOR_DISTANCE_THRESHOLD_LEFT_CM 
                 || rightDistance < ROBOT_INFRARED_DETECTOR_DISTANCE_THRESHOLD_RIGHT_CM 
@@ -79,7 +82,7 @@ bool forwardDetection() {
     return result;
 }
 
-bool backwardDetection() {
+bool backwardDetection(void) {
     float backMilliVolt = getANX(GP2DY0A02YK_BACK_ANX_INDEX);
     float backDistance = gp2y0a02ykGetCentimerDistanceForTension(backMilliVolt);
 
@@ -111,14 +114,30 @@ void updateInfraredDetector(InfraredDetectorGroup* group) {
 }
 
 void robotInfraredDetectorCallback(Timer* timer) {
-    updateInfraredDetector(&forwardDetector);
-    updateInfraredDetector(&backwardDetector);
+    updateInfraredDetector(&(robotInfraredDetector->forwardDetectorGroup));
+    updateInfraredDetector(&(robotInfraredDetector->backwardDetectorGroup));
 }
 
+void initInfraredDetectorGroup(InfraredDetectorGroup* group, enum InfraredDetectorGroupType type, InfraredDetectorFunction* function) {
+    group->type = type;
+    group->function = function;
+    // By default, we don't want it notify at the beginning, because other boards are maybe not available to receive
+    // the information ....
+    group->notifyIfDetected = false;
+}
 
-void initRobotInfraredDetector() {
+void initRobotInfraredDetector(RobotInfraredDetector* robotInfraredDetectorParam) {
+    robotInfraredDetector = robotInfraredDetectorParam;
+    initInfraredDetectorGroup(&(robotInfraredDetector->forwardDetectorGroup), DETECTOR_GROUP_TYPE_FORWARD, &forwardDetection);
+    initInfraredDetectorGroup(&(robotInfraredDetector->backwardDetectorGroup), DETECTOR_GROUP_TYPE_BACKWARD, &backwardDetection);
     addTimer(ROBOT_INFRARED_DETECTOR_TIMER_INDEX, TIME_DIVIDER_30_HERTZ, &robotInfraredDetectorCallback, "ROBOT_INFRARED");
-    forwardDetector.function = &forwardDetection;
-    backwardDetector.function = &backwardDetection;
 }
 
+void setInfraredRobotNotification(enum InfraredDetectorGroupType type, bool enable) {
+    if (type == DETECTOR_GROUP_TYPE_FORWARD) {
+        robotInfraredDetector->forwardDetectorGroup.notifyIfDetected = enable;
+    }
+    else if (type == DETECTOR_GROUP_TYPE_BACKWARD) {
+        robotInfraredDetector->backwardDetectorGroup.notifyIfDetected = enable;
+    }
+}

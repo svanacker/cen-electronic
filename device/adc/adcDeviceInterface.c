@@ -17,6 +17,35 @@ int deviceADCGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fil
         }
         return commandLengthValueForMode(mode, 2, 4);
     }
+    else if (commandHeader == COMMANG_GET_ADC_VALUE_DEBUG_PERIOD) {
+        if (fillDeviceArgumentList) {
+            setFunction("getADCPeriod", 5, 0);
+            setArgumentUnsignedHex2(0, "ADC_idx");
+            setArgumentSeparator(1);
+            setArgumentUnsignedHex2(2, "Sample Count");
+            setArgumentSeparator(3);
+            setArgumentUnsignedHex2(4, "Deci seconds between read");
+        }
+        return commandLengthValueForMode(mode, 8, 0);
+    }
+    else if (commandHeader == COMMAND_GET_ADC_ALL_VALUES) {
+        if (fillDeviceArgumentList) {
+        setFunction("getADC_AllValues", 0, 11);
+            setResultUnsignedHex4(0, "Value 0(mV)");
+            setResultSeparator(1);
+            setResultUnsignedHex4(2, "Value 1(mV)");
+            setResultSeparator(3);
+            setResultUnsignedHex4(4, "Value 2(mV)");
+            setResultSeparator(5);
+            setResultUnsignedHex4(6, "Value 3(mV)");
+            setResultSeparator(7);
+            setResultUnsignedHex4(8, "Value 4(mV)");
+            setResultSeparator(9);
+            setResultUnsignedHex4(10, "Value 5(mV)");
+        }
+        return commandLengthValueForMode(mode, 0, 29);
+    }
+
     return DEVICE_HEADER_NOT_HANDLED;
 }
 

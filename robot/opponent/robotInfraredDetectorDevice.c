@@ -17,22 +17,25 @@
 
 #include "../../main/meca2/mechanicalBoard2.h"
 
-void deviceRobotInfraredDetectorInit() {
-    initRobotInfraredDetector();
+static RobotInfraredDetector* robotInfraredDetector;
+
+void deviceRobotInfraredDetectorInit(void) {
+    initRobotInfraredDetector(robotInfraredDetector);
 }
 
-void deviceRobotInfraredDetectorShutDown() {
+void deviceRobotInfraredDetectorShutDown(void) {
 }
 
-bool deviceRobotInfraredDetectorIsOk() {
+bool deviceRobotInfraredDetectorIsOk(void) {
     return true;
 }
 
-void notifyInfraredDetectorDetection(int type) {
+void notifyInfraredDetectorDetection(enum InfraredDetectorGroupType type) {
+    // Notify OutputStream
     Buffer* buffer = getMechanicalBoard2I2CSlaveOutputBuffer();
-    OutputStream* outputStream = getOutputStream(buffer);
-    append(outputStream, NOTIFY_INFRARED_DETECTOR_DETECTION);
-    appendHex2(outputStream, type);
+    OutputStream* notifyOutputStream = getOutputStream(buffer);
+    append(notifyOutputStream, NOTIFY_INFRARED_DETECTOR_DETECTION);
+    appendHex2(notifyOutputStream, type);
 
     // Debug
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
@@ -43,14 +46,24 @@ void notifyInfraredDetectorDetection(int type) {
 void deviceRobotInfraredDetectorHandleRawData(char commandHeader,
         InputStream* inputStream,
         OutputStream* outputStream) {
-    // Command to ask
-    if (commandHeader == COMMAND_INFRARED_DETECTOR_DETECTION) {
-        appendAck(outputStream);
-        append(outputStream, COMMAND_INFRARED_DETECTOR_DETECTION);
+    // Command to ask to enable notification
+    if (commandHeader == DETECTOR_ENABLE_NOTIFICATION_COMMAND) {
+        ackCommand(outputStream, ROBOT_INFRARED_DETECTOR_DEVICE_HEADER, DETECTOR_ENABLE_NOTIFICATION_COMMAND);
+        enum InfraredDetectorGroupType type = readHex2(inputStream);
+        setInfraredRobotNotification(type, true);
+    }
+    else if (commandHeader == DETECTOR_DISABLE_NOTIFICATION_COMMAND) {
+        ackCommand(outputStream, ROBOT_INFRARED_DETECTOR_DEVICE_HEADER, DETECTOR_DISABLE_NOTIFICATION_COMMAND);
+        enum InfraredDetectorGroupType type = readHex2(inputStream);
+        setInfraredRobotNotification(type, false);
+    }
+    // Read if it detects
+    else if (commandHeader == COMMAND_INFRARED_DETECTOR_DETECTION) {
+        ackCommand(outputStream, ROBOT_INFRARED_DETECTOR_DEVICE_HEADER, COMMAND_INFRARED_DETECTOR_DETECTION);
 
-        int type = readHex2(inputStream);
+        enum InfraredDetectorGroupType type = readHex2(inputStream);
         bool hasDetected;
-        if (type == DETECTOR_FORWARD_INDEX) {
+        if (type == DETECTOR_GROUP_TYPE_FORWARD) {
             hasDetected = getRobotInfraredObstacleForward();
         }
         else {
@@ -74,6 +87,7 @@ static DeviceDescriptor descriptor = {
     .deviceHandleRawData = &deviceRobotInfraredDetectorHandleRawData,
 };
 
-DeviceDescriptor* getRobotInfraredDetectorDeviceDescriptor() {
+DeviceDescriptor* getRobotInfraredDetectorDeviceDescriptor(RobotInfraredDetector* robotInfraredDetectorParam) {
+    robotInfraredDetector = robotInfraredDetectorParam;
     return &descriptor;
 }

@@ -5,7 +5,13 @@
 #include "../../device/deviceConstants.h"
 
 /** Get the value of an ADC. */
-#define COMMAND_GET_ADC_VALUE         'r'
+#define COMMAND_GET_ADC_VALUE                   'r'
+
+/** Get the value of an ADC for x sample for a defined period of x deciseconds (and debug to the console the info). */
+#define COMMANG_GET_ADC_VALUE_DEBUG_PERIOD      's'
+
+/** Get the value of all ADC. */
+#define COMMAND_GET_ADC_ALL_VALUES              'R'
 
 /**
 * Interface for the Device

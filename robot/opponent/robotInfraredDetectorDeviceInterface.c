@@ -21,12 +21,27 @@ int deviceRobotInfraredDetectorGetInterface(char commandHeader, DeviceInterfaceM
         }
         return commandLengthValueForMode(mode, 2, 2);
     }
+    else if (commandHeader == DETECTOR_ENABLE_NOTIFICATION_COMMAND) {
+        if (fillDeviceArgumentList) {
+            setFunction("enable Notification", 1, 0);
+            setArgumentUnsignedHex2(0, "backward/forward");
+        }
+        return commandLengthValueForMode(mode, 2, 0);
+    }
+    else if (commandHeader == DETECTOR_DISABLE_NOTIFICATION_COMMAND) {
+        if (fillDeviceArgumentList) {
+            setFunction("disable Notification", 1, 0);
+            setArgumentUnsignedHex2(0, "backward/forward");
+        }
+        return commandLengthValueForMode(mode, 2, 0);
+    }
     // Notification !
     else if (commandHeader == NOTIFY_INFRARED_DETECTOR_DETECTION) {
         if (fillDeviceArgumentList) {
             setFunction("notifyInfraredDetector", 0, 1);
             setResultUnsignedHex2(0, "backward/forward");
         }
+        // TODO : Notification does not work like this
         return commandLengthValueForMode(mode, 0, 2);
     }
     return DEVICE_HEADER_NOT_HANDLED;

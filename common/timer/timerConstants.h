@@ -9,6 +9,9 @@
 */
 #define ROBOT_DETECTOR_TIMER_INDEX 3
 
+// Timer Index for Robot infrared
+#define ROBOT_INFRARED_DETECTOR_TIMER_INDEX            15
+
 /** The index of the timer (used to update value of servo). */
 #define SERVO_TIMER_INDEX   10
 

@@ -4,14 +4,29 @@
 #include "../../device/deviceInterface.h"
 #include "../../device/deviceConstants.h"
 
-/** Ask the status of the infrared detection. */
-#define COMMAND_INFRARED_DETECTOR_DETECTION         'X'
 
-#define DETECTOR_FORWARD_INDEX            0
-#define DETECTOR_BACKWARD_INDEX            1
+// COMMAND
+
+
+/** Ask the status of the infrared detection. */
+#define COMMAND_INFRARED_DETECTOR_DETECTION         'r'
+
+/**
+ * Enable the Infrared Detector notification.
+ */
+#define DETECTOR_ENABLE_NOTIFICATION_COMMAND        'e'
+
+/**
+ * Disable the Infrared Detector notification
+ */
+#define DETECTOR_DISABLE_NOTIFICATION_COMMAND       'd'
+
+
+
+// NOTIFICATION
 
 /** When detector detection is notified. */
-#define NOTIFY_INFRARED_DETECTOR_DETECTION         'O'
+#define NOTIFY_INFRARED_DETECTOR_DETECTION          'N'
 
 /**
 * Interface for Robot Infrared Detector Device

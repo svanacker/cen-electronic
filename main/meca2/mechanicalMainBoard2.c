@@ -107,6 +107,9 @@ static Device deviceListArray[MECHANICAL_BOARD_2_DEVICE_LENGTH];
 // Timers
 static Timer timerListArray[MECHANICAL_BOARD_2_TIMER_LENGTH];
 
+// RobotDetector
+static RobotInfraredDetector robotInfraredDetector;
+
 Buffer* getMechanicalBoard2I2CSlaveOutputBuffer() {
     return &i2cSlaveOutputBuffer;
 }
@@ -122,7 +125,7 @@ void initDevicesDescriptor() {
 
     addLocalDevice(getArm2012DeviceInterface(), getArm2012DeviceDescriptor());
 
-    addLocalDevice(getRobotInfraredDetectorDeviceInterface(), getRobotInfraredDetectorDeviceDescriptor());
+    addLocalDevice(getRobotInfraredDetectorDeviceInterface(), getRobotInfraredDetectorDeviceDescriptor(&robotInfraredDetector));
 
     initDevices(&devices);
 }
@@ -203,16 +206,18 @@ int main(void) {
     delaymSec(2000);
 
     while (true) {
-        /*
         // Forward Obstacle
         if (getRobotInfraredObstacleForward()) {
-            notifyInfraredDetectorDetection(DETECTOR_FORWARD_INDEX);
-            appendString(getAlwaysOutputStreamLogger(), "\nForward Obstacle, wait few seconds For New Notification !\n");
+            if (robotInfraredDetector.forwardDetectorGroup.notifyIfDetected) {
+                notifyInfraredDetectorDetection(DETECTOR_GROUP_TYPE_FORWARD);
+                appendString(getAlwaysOutputStreamLogger(), "\nForward Obstacle, wait few seconds For New Notification !\n");
+            }
         }
 
         // Backward Obstacle
+        /*
         if (getRobotInfraredObstacleBackward()) {
-            notifyInfraredDetectorDetection(DETECTOR_BACKWARD_INDEX);
+            notifyInfraredDetectorDetection(DETECTOR_GROUP_TYPE_BACKWARD);
             appendString(getAlwaysOutputStreamLogger(), "\nBackward Obstacle, wait few seconds For New Notification !\n");
         }
         */
