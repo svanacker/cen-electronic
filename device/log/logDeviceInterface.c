@@ -9,13 +9,20 @@ const char* deviceLogGetName(void) {
 }
 
 int deviceLogGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
-    if (commandHeader == COMMAND_WRITE_LOG_LEVEL) {
+    if (commandHeader == COMMAND_WRITE_HANDLER_LOG_LEVEL) {
        if (fillDeviceArgumentList) {
-            setFunction("setLog", 2, 0);
+            setFunction("setLogHandlerLevel", 2, 0);
             setArgumentUnsignedHex2(0, "handlerIdx");
             setArgumentUnsignedHex2(1, "logLevel");
        }
        return commandLengthValueForMode(mode, 4, 0);
+    }
+    else if (commandHeader == COMMAND_WRITE_GLOBAL_LOG_LEVEL) {
+       if (fillDeviceArgumentList) {
+            setFunction("setLogGlobalLevel", 1, 0);
+            setArgumentUnsignedHex2(0, "logLevel");
+       }
+       return commandLengthValueForMode(mode, 2, 0);
     }
     else if (commandHeader == COMMAND_LOG) {
         // Same INPUT/OUTPUT
