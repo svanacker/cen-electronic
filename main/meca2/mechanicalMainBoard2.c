@@ -163,7 +163,7 @@ void initDevicesDescriptor() {
 
     // LOCAL
     addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
-    addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
+    // addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
     addLocalDevice(getLogDeviceInterface(), getLogDeviceDescriptor());
     addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor());
     addLocalDevice(getADCDeviceInterface(), getADCDeviceDescriptor());
@@ -171,7 +171,7 @@ void initDevicesDescriptor() {
     addLocalDevice(getRobotInfraredDetectorDeviceInterface(), getRobotInfraredDetectorDeviceDescriptor(&robotInfraredDetector));
 
     // REMOTE
-    // addUartRemoteDevice(getSystemDeviceInterface(), SERIAL_PORT_DEBUG);
+    addUartRemoteDevice(getSystemDeviceInterface(), SERIAL_PORT_DEBUG);
 
     initDevices(&devices);
 }
@@ -216,7 +216,8 @@ int main(void) {
                     0);
 
     // Init the logs
-    initLogs(DEBUG, &logHandlerListArray, MECA_BOARD_2_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
+    initLogs(LOG_LEVEL_ERROR, &logHandlerListArray, MECA_BOARD_2_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
+    // initLogs(DEBUG, &logHandlerListArray, MECA_BOARD_2_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
     addLogHandler("UART", &debugOutputStream, DEBUG, LOG_HANDLER_CATEGORY_ALL_MASK);
     appendString(getDebugOutputStreamLogger(), getPicName());
     println(getDebugOutputStreamLogger());
@@ -262,6 +263,7 @@ int main(void) {
         // Only if robotDetector has something to notify
         if (mustNotifyRobotInfraredObstacleForward()) {
             resetNotifyRobotInfraredObstacleForward();
+            // systemDeviceList();
             appendString(getDebugOutputStreamLogger(), "\nForward Obstacle, wait few seconds For New Notification !\n");
         }
 

@@ -163,7 +163,7 @@ void initInfraredDetectorGroup(InfraredDetectorGroup* group, enum InfraredDetect
     group->function = function;
     // By default, we don't want it notify at the beginning, because other boards are maybe not available to receive
     // the information ....
-    group->notifyIfDetected = false;
+    group->notifyIfDetected = true;
 }
 
 void initRobotInfraredDetector(RobotInfraredDetector* robotInfraredDetectorParam) {

@@ -196,6 +196,7 @@
 #define SERIAL_PORT_DEBUG         SERIAL_PORT_2 
 #define SERIAL_PORT_PC            SERIAL_PORT_6
 #define SERIAL_PORT_MOTOR         SERIAL_PORT_5
+#define SERIAL_PORT_MECA2         SERIAL_PORT_1
 
 // I2C => PORT 1 (for All Peripherical, including Eeprom / Clock / Temperatur)
 static I2cBus i2cBus;
@@ -234,6 +235,14 @@ static char pcOutputBufferArray[MAIN_BOARD_PC_OUTPUT_BUFFER_LENGTH];
 static Buffer pcOutputBuffer;
 static OutputStream pcOutputStream;
 static StreamLink pcSerialStreamLink;
+
+// serial Link MechanicalBoard
+static char mechanicalBoard2InputBufferArray[MAIN_BOARD_MECA2_INPUT_BUFFER_LENGTH];
+static Buffer mechanicalBoard2InputBuffer;
+static char mechanicalBoard2OutputBufferArray[MAIN_BOARD_MECA2_OUTPUT_BUFFER_LENGTH];
+static Buffer mechanicalBoard2OutputBuffer;
+static OutputStream mechanicalBoard2OutputStream;
+static StreamLink mechanicalBoard2SerialStreamLink;
 
 // both OutputStream as composite
 // static CompositeOutputStream compositePcAndDebugOutputStream;
@@ -300,6 +309,8 @@ static Device deviceListArray[MAIN_BOARD_DEVICE_LENGTH];
 // Timers
 static Timer timerListArray[MAIN_BOARD_TIMER_LENGTH];
 
+static long counter;
+
 // Obstacle management
 // static bool mustNotifyObstacle;
 // static unsigned int instructionType;
@@ -360,8 +371,8 @@ void initMainBoardDevicesDescriptor() {
     // Mechanical Board 2->I2C
     // Device* armDevice = addI2cRemoteDevice(getArm2012DeviceInterface(), MECHANICAL_BOARD_2_I2C_ADDRESS);
     // Device* infraredDetectorDevice = addI2cRemoteDevice(getRobotInfraredDetectorDeviceInterface(), MECHANICAL_BOARD_2_I2C_ADDRESS);
-    addI2cRemoteDevice(getServoDeviceInterface(), MECHANICAL_BOARD_2_I2C_ADDRESS);
-
+    // addI2cRemoteDevice(getServoDeviceInterface(), MECHANICAL_BOARD_2_I2C_ADDRESS);
+    addUartRemoteDevice(getRobotInfraredDetectorDeviceInterface(), SERIAL_PORT_MECA2);
 
     // Motor Board->I2C
     /*
@@ -436,6 +447,12 @@ void initMainBoardDriverDataDispatcherList(void) {
             &mechanical2BoardInputStream,
             &mechanicalBoard2I2cBusConnection);
 
+    // Uart Stream for motorBoard
+    addUartDriverDataDispatcher(
+        &mechanicalBoard2SerialStreamLink,
+        "MECA2_UART_DISPATCHER",
+        SERIAL_PORT_MECA2);
+
     /*
     // Stream for Air Conditioning
     addI2CDriverDataDispatcher(
@@ -462,6 +479,14 @@ void mainBoardWaitForInstruction(void) {
             &filterRemoveCRLF,
             NULL);
     */
+    
+    counter++;
+    if ((counter % 20) == 0) {
+        // appendString(getAlwaysOutputStreamLogger(), "TOP\n");
+        if (robotInfraredDetectorHasObstacle(DETECTOR_GROUP_TYPE_FORWARD)) {
+            appendString(getAlwaysOutputStreamLogger(), "DETECTED ROBOT !");
+        }
+    }
 
     // Listen instruction from debugStream->Devices
     handleStreamInstruction(
@@ -506,6 +531,14 @@ int main(void) {
                    &motorOutputBuffer, &motorOutputBufferArray, MAIN_BOARD_MOTOR_OUTPUT_BUFFER_LENGTH,
                    &motorOutputStream,
                    SERIAL_PORT_MOTOR,
+                   DEFAULT_SERIAL_SPEED);
+
+    // Open the serial Link for the Mechanical Board
+    openSerialLink(&mechanicalBoard2SerialStreamLink,
+                   &mechanicalBoard2InputBuffer, &mechanicalBoard2InputBufferArray, MAIN_BOARD_MECA2_INPUT_BUFFER_LENGTH,
+                   &mechanicalBoard2OutputBuffer, &mechanicalBoard2OutputBufferArray, MAIN_BOARD_MECA2_OUTPUT_BUFFER_LENGTH,
+                   &mechanicalBoard2OutputStream,
+                   SERIAL_PORT_MECA2,
                    DEFAULT_SERIAL_SPEED);
 
     // Open the serial Link for the PC
