@@ -4,6 +4,9 @@
 #include <stdbool.h>
 #include "../../common/eeprom/eepromAreas.h"
 
+#include "../../common/log/logHandler.h"
+#include "../../common/log/logger.h"
+
 #define EEPROM_START_MATCH_ROBOT_POSITION_X_OFFSET         0
 #define EEPROM_START_MATCH_ROBOT_POSITION_Y_OFFSET         6
 #define EEPROM_START_MATCH_ROBOT_POSITION_ANGLE_OFFSET    12
@@ -49,9 +52,11 @@ void loopUntilStart(StartMatch* startMatch) {
     if (startMatch == NULL) {
         return;
     }
+    appendString(getAlwaysOutputStreamLogger(), "WAIT FOR START ...");
     while (startMatch->isMatchStartedFunction(startMatch)) {
         startMatch->loopUntilStartHandleFunction();
     }
+    appendString(getAlwaysOutputStreamLogger(), "OK\n");
 }
 
 bool isStarted(StartMatch* startMatch) {

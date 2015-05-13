@@ -357,7 +357,7 @@ void initMainBoardDevicesDescriptor() {
     addLocalDevice(getLCDDeviceInterface(), getLCDDeviceDescriptor());
     addLocalDevice(getRobotConfigDeviceInterface(), getRobotConfigDeviceDescriptor(&robotConfig));
 
-    initStartMatch(&startMatch, isMatchStarted32, initMainBoardDevicesDescriptor, &eeprom);
+    initStartMatch(&startMatch, isMatchStarted32, mainBoardWaitForInstruction, &eeprom);
     addLocalDevice(getStartMatchDeviceInterface(), getStartMatchDeviceDescriptor(&startMatch));
     addLocalDevice(getEndMatchDetectorDeviceInterface(), getEndMatchDetectorDeviceDescriptor());
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
@@ -581,7 +581,7 @@ int main(void) {
     // Start interruptions
     startTimerList();
 
-    // loopUntilStart(&startMatch);
+    loopUntilStart(&startMatch);
 
     while (1) {
         mainBoardWaitForInstruction();
