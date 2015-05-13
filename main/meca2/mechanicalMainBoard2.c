@@ -212,11 +212,10 @@ int main(void) {
 
     while (true) {
         // Forward Obstacle
-        if (getRobotInfraredObstacleForward()) {
-            if (robotInfraredDetector.forwardDetectorGroup.notifyIfDetected) {
-                notifyInfraredDetectorDetection(DETECTOR_GROUP_TYPE_FORWARD);
-                appendString(getAlwaysOutputStreamLogger(), "\nForward Obstacle, wait few seconds For New Notification !\n");
-            }
+        // Only if robotDetector has something to notify
+        if (mustNotifyRobotInfraredObstacleForward()) {
+            resetNotifyRobotInfraredObstacleForward();
+            appendString(getDebugOutputStreamLogger(), "\nForward Obstacle, wait few seconds For New Notification !\n");
         }
 
         // Backward Obstacle
@@ -227,11 +226,13 @@ int main(void) {
         }
         */
         // I2C Stream
+        /* TODO : Reactivate when I2C Slave for 30F will be ok !
         handleStreamInstruction(&i2cSlaveInputBuffer,
                                 &i2cSlaveOutputBuffer,
                                 NULL,
                                 &filterRemoveCRLF,
                                 NULL);
+        */
 
         // UART Stream
         handleStreamInstruction(&debugInputBuffer,
@@ -240,5 +241,5 @@ int main(void) {
                                 &filterRemoveCRLF,
                                 NULL);
     }
-    return (0);
+    return 0;
 }

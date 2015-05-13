@@ -3,6 +3,8 @@
 
 #include <stdbool.h>
 
+#include "../../common/io/outputStream.h"
+
 /** 
  * Define the underlying function type attached to a group to evaluate if 
  * the infrared detect something.
@@ -31,12 +33,16 @@ typedef struct InfraredDetectorGroup {
     /** If we must notify when we detects something */
     bool notifyIfDetected;
     // COMPUTATION VALUES
+    /** Returns the last Result. */
+    bool lastResult;    
+    /** Current result : we try to maintain the value for a while. */
+    bool result;
+    /** Indicates if we have to notify someone. */
+    bool notifyFlag;
+    /** A counter to avoid to notify to often. */
+    int nextNotifyCounter;
     /** The number of count which was detected. */
-    int wasDetectedCount;
-    /** A counter to avoid to notify. */
-    bool doNotCheckBeforeCounter;
-    /** A counter of interruption. */
-    unsigned int interruptCounter;
+    int detectedCount;
 } InfraredDetectorGroup;
 
 /** 
@@ -49,17 +55,19 @@ void initInfraredDetectorGroup(InfraredDetectorGroup* group, enum InfraredDetect
 /**
  * Encapsulates the all informations about detector
  */
-typedef struct RobotInfraredDetector{
-    /** Group of detector for backward. */
-    InfraredDetectorGroup backwardDetectorGroup;
+typedef struct RobotInfraredDetector {
     /** Group of detector for forward move. */
     InfraredDetectorGroup forwardDetectorGroup;
+    /** Group of detector for backward. */
+    InfraredDetectorGroup backwardDetectorGroup;
 } RobotInfraredDetector;
 
 /**
  * Init and a timer to search via infrared detector.
  */
 void initRobotInfraredDetector(RobotInfraredDetector* robotInfraredDetector);
+
+// READ VALUES
 
 /**
  * Returns if there is an obstacle forward.
@@ -71,12 +79,27 @@ bool getRobotInfraredObstacleForward(void);
  */
 bool getRobotInfraredObstacleBackward(void);
 
+// NOTIFY MANAGEMENT
+
 void setInfraredRobotNotification(enum InfraredDetectorGroupType type, bool enable);
+
+bool mustNotifyRobotInfraredObstacleForward(void);
+
+bool mustNotifyRobotInfraredObstacleBackward(void);
+
+void resetNotifyRobotInfraredObstacleForward(void);
+
+void resetNotifyRobotInfraredObstacleBackward(void);
+
+// SINGLETON
 
 /** 
  * Returns the global instance of RobotInfrared.
  */
 RobotInfraredDetector* getRobotInfraredDetector(void);
 
+// DEBUG
+
+void printRobotInfraredDetectorGroup(OutputStream* outputStream, InfraredDetectorGroup* group);
 
 #endif

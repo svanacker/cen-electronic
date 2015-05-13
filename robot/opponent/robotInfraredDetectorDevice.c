@@ -31,14 +31,18 @@ bool deviceRobotInfraredDetectorIsOk(void) {
 }
 
 void notifyInfraredDetectorDetection(enum InfraredDetectorGroupType type) {
-    // Notify OutputStream
+    // Notify I2C OutputStream
+    /* TODO : To Uncomment when I2C Slave for 30F will be stable.
     Buffer* buffer = getMechanicalBoard2I2CSlaveOutputBuffer();
     OutputStream* notifyOutputStream = getOutputStream(buffer);
+    append(notifyOutputStream, ROBOT_INFRARED_DETECTOR_DEVICE_HEADER);
     append(notifyOutputStream, NOTIFY_INFRARED_DETECTOR_DETECTION);
     appendHex2(notifyOutputStream, type);
+    */
 
     // Debug
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+    append(debugOutputStream, ROBOT_INFRARED_DETECTOR_DEVICE_HEADER);
     append(debugOutputStream, NOTIFY_INFRARED_DETECTOR_DETECTION);
     appendHex2(debugOutputStream, type);
 }

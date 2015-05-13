@@ -1,15 +1,15 @@
 #ifndef ROBOT_INFRARED_DETECTOR_DRIVER_H
 #define ROBOT_INFRARED_DETECTOR_DRIVER_H
 
-#include "../../common/commons.h"
+#include <stdbool.h>
 
-#include "robotInfraredDetectorDeviceInterface.h"
+#include "robotInfraredDetector.h"
 
 /**
  * Return true, if there is an obstacle
  * @param type BACKWARD / FORWARD
  */
-bool robotInfraredDetectorHasObstacle(unsigned char type);
+bool robotInfraredDetectorHasObstacle(enum InfraredDetectorGroupType type);
 
 #endif
 
