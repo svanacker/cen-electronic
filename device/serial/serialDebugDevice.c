@@ -36,9 +36,19 @@ bool deviceSerialDebugIsOk(void) {
 
 void deviceSerialDebugHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream) {
     // Serial Input Buffers
-    if (header == COMMAND_SERIAL_INPUT_BUFFERS) {
-        ackCommand(outputStream, SERIAL_DEBUG_DEVICE_HEADER, COMMAND_SERIAL_INPUT_BUFFERS);
+    if (header == COMMAND_SERIAL_INPUT_ALL_BUFFER) {
+        ackCommand(outputStream, SERIAL_DEBUG_DEVICE_HEADER, COMMAND_SERIAL_INPUT_ALL_BUFFER);
         printSerialInputBuffers(getAlwaysOutputStreamLogger());         
+    }
+    else if (header == COMMAND_SERIAL_INPUT_BUFFER) {
+        ackCommand(outputStream, SERIAL_DEBUG_DEVICE_HEADER, COMMAND_SERIAL_INPUT_BUFFER);
+        // TODO printSerialInputBuffers(getAlwaysOutputStreamLogger());
+        appendString(getErrorOutputStreamLogger(), "NOT IMPLEMENTED");
+    }
+    else if (header == COMMAND_SERIAL_CLEAR_INPUT_BUFFER) {
+        ackCommand(outputStream, SERIAL_DEBUG_DEVICE_HEADER, COMMAND_SERIAL_CLEAR_INPUT_BUFFER);
+        // TODO printSerialInputBuffers(getAlwaysOutputStreamLogger());
+        appendString(getErrorOutputStreamLogger(), "NOT IMPLEMENTED");
     }
 }
 
