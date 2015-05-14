@@ -6,8 +6,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-#include "mainBoardClient.h"
-
+#include "mainBoard32.h"
 
 #include "../../common/delay/cenDelay.h"
 
@@ -183,7 +182,7 @@
 #include "../../robot/opponent/opponentRobot.h"
 
 // Other boards interface
-#include "../../main/motorBoard/motorBoard.h"
+#include "../../main/motorBoard/motorBoard32.h"
 #include "../../main/meca2/mechanicalBoard2.h"
 #include "../../main/airconditioning/airConditioningMain.h"
 

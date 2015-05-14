@@ -3,7 +3,7 @@
 
 // List of available functionality
 
-#include "motorBoard.h"
+#include "motorBoard32.h"
 
 #include "../../common/commons.h"
 #include "../../common/2d/2d.h"
@@ -212,8 +212,6 @@ void initDevicesDescriptor() {
     // I2C_4
     addLocalDevice(getRobotKinematicsDeviceInterface(), getRobotKinematicsDeviceDescriptor(&eeprom_));
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom_));
-    addLocalDevice(getFileDeviceInterface(), getFileDeviceDescriptor());
-
 
 //    addLocalDevice(getLogDeviceInterface(), getLogDeviceDescriptor());
    addLocalDevice(getI2cSlaveDebugDeviceInterface(), getI2cSlaveDebugDeviceDescriptor(&mainBoardI2cBusConnection));

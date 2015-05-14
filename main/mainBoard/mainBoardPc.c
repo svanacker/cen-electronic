@@ -5,126 +5,126 @@
 #include <windows.h>
 #include <stdbool.h>
 
-#include "../../../common/clock/clock.h"
-#include "../../../common/delay/cenDelay.h"
-#include "../../../common/eeprom/pc/eepromPc.h"
-#include "../../../common/error/error.h"
-#include "../../../common/i2c/i2cDebug.h"
+#include "../../common/clock/clock.h"
+#include "../../common/delay/cenDelay.h"
+#include "../../common/eeprom/pc/eepromPc.h"
+#include "../../common/error/error.h"
+#include "../../common/i2c/i2cDebug.h"
 
-#include "../../../common/io/filter.h"
-#include "../../../common/io/pc/consoleOutputStream.h"
-#include "../../../common/io/pc/consoleInputStream.h"
-#include "../../../common/io/pc/consoleOutputStream.h"
-#include "../../../common/io/printWriter.h"
-#include "../../../common/io/reader.h"
-#include "../../../common/io/streamLink.h"
+#include "../../common/io/filter.h"
+#include "../../common/io/pc/consoleOutputStream.h"
+#include "../../common/io/pc/consoleInputStream.h"
+#include "../../common/io/pc/consoleOutputStream.h"
+#include "../../common/io/printWriter.h"
+#include "../../common/io/reader.h"
+#include "../../common/io/streamLink.h"
 
-#include "../../../common/log/logger.h"
-#include "../../../common/log/logLevel.h"
-#include "../../../common/log/pc/consoleLogHandler.h"
+#include "../../common/log/logger.h"
+#include "../../common/log/logLevel.h"
+#include "../../common/log/pc/consoleLogHandler.h"
 
-#include "../../../common/serial/serial.h"
-#include "../../../common/serial/serialLink.h"
+#include "../../common/serial/serial.h"
+#include "../../common/serial/serialLink.h"
 
-#include "../../../common/system/system.h"
+#include "../../common/system/system.h"
 
-#include "../../../common/timer/timerList.h"
+#include "../../common/timer/timerList.h"
 
 
-#include "../../../device/device.h"
-#include "../../../device/deviceList.h"
-#include "../../../device/transmitMode.h"
+#include "../../device/device.h"
+#include "../../device/deviceList.h"
+#include "../../device/transmitMode.h"
 
 // CLOCK
-#include "../../../device/clock/clockDevice.h"
-#include "../../../device/clock/clockDeviceInterface.h"
+#include "../../device/clock/clockDevice.h"
+#include "../../device/clock/clockDeviceInterface.h"
 
 // DISPATCHER DEVICE
-#include "../../../device/dispatcher/dataDispatcherDevice.h"
-#include "../../../device/dispatcher/dataDispatcherDeviceInterface.h"
+#include "../../device/dispatcher/dataDispatcherDevice.h"
+#include "../../device/dispatcher/dataDispatcherDeviceInterface.h"
 
 // I2C -> Master
-#include "../../../device/i2c/master/i2cMasterDebugDevice.h"
-#include "../../../device/i2c/master/i2cMasterDebugDeviceInterface.h"
+#include "../../device/i2c/master/i2cMasterDebugDevice.h"
+#include "../../device/i2c/master/i2cMasterDebugDeviceInterface.h"
 
 // CONFIG
-#include "../../../robot/config/pc/robotConfigPc.h"
-#include "../../../robot/config/robotConfigDevice.h"
-#include "../../../robot/config/robotConfigDeviceInterface.h"
+#include "../../robot/config/pc/robotConfigPc.h"
+#include "../../robot/config/robotConfigDevice.h"
+#include "../../robot/config/robotConfigDeviceInterface.h"
 
 // EEPROM
-#include "../../../device/eeprom/eepromDevice.h"
-#include "../../../device/eeprom/eepromDeviceInterface.h"
+#include "../../device/eeprom/eepromDevice.h"
+#include "../../device/eeprom/eepromDeviceInterface.h"
 
 // FILE
-// #include "../../../device/file/fileDevice.h"
-// #include "../../../device/file/fileDeviceInterface.h"
+// #include "../../device/file/fileDevice.h"
+// #include "../../device/file/fileDeviceInterface.h"
 
 // KINEMATICS
-#include "../../../robot/kinematics/robotKinematicsDeviceInterface.h"
+#include "../../robot/kinematics/robotKinematicsDeviceInterface.h"
 
 // LCD
-#include "../../../device/lcd/lcdDevice.h"
-#include "../../../device/lcd/lcdDeviceInterface.h"
+#include "../../device/lcd/lcdDevice.h"
+#include "../../device/lcd/lcdDeviceInterface.h"
 
 // LOGS
-#include "../../../device/log/logDevice.h"
-#include "../../../device/log/logDeviceInterface.h"
+#include "../../device/log/logDevice.h"
+#include "../../device/log/logDeviceInterface.h"
 
 // MOTION
-#include "../../../device/motion/pid/pidDeviceInterface.h"
-#include "../../../device/motion/position/codersDeviceInterface.h"
-#include "../../../device/motion/position/trajectoryDeviceInterface.h"
-#include "../../../device/motion/simple/motionDeviceInterface.h"
-#include "../../../device/motion/simulation/motionSimulationDeviceInterface.h"
+#include "../../device/motion/pid/pidDeviceInterface.h"
+#include "../../device/motion/position/codersDeviceInterface.h"
+#include "../../device/motion/position/trajectoryDeviceInterface.h"
+#include "../../device/motion/simple/motionDeviceInterface.h"
+#include "../../device/motion/simulation/motionSimulationDeviceInterface.h"
 
 // PWM
-#include "../../../device/motor/pwmMotorDevice.h"
-#include "../../../device/motor/pwmMotorDeviceInterface.h"
+#include "../../device/motor/pwmMotorDevice.h"
+#include "../../device/motor/pwmMotorDeviceInterface.h"
 
 // SERVO
-#include "../../../device/servo/servoDevice.h"
-#include "../../../device/servo/servoDeviceInterface.h"
+#include "../../device/servo/servoDevice.h"
+#include "../../device/servo/servoDeviceInterface.h"
 
 // STRATEGY
-#include "../../../device/strategy/strategyDevice.h"
-#include "../../../device/strategy/strategyDeviceInterface.h"
+#include "../../device/strategy/strategyDevice.h"
+#include "../../device/strategy/strategyDeviceInterface.h"
 
 // SYSTEM
-#include "../../../device/system/systemDevice.h"
-#include "../../../device/system/systemDeviceInterface.h"
+#include "../../device/system/systemDevice.h"
+#include "../../device/system/systemDeviceInterface.h"
 
 // TEST
-#include "../../../device/test/testDevice.h"
-#include "../../../device/test/testDeviceInterface.h"
+#include "../../device/test/testDevice.h"
+#include "../../device/test/testDeviceInterface.h"
 
 // TIMER
-#include "../../../device/timer/timerDevice.h"
-#include "../../../device/timer/timerDeviceInterface.h"
+#include "../../device/timer/timerDevice.h"
+#include "../../device/timer/timerDeviceInterface.h"
 
-#include "../../../drivers/driverStreamListener.h"
-#include "../../../drivers/clock/pc/pcClock.h"
-#include "../../../drivers/driverList.h"
+#include "../../drivers/driverStreamListener.h"
+#include "../../drivers/clock/pc/pcClock.h"
+#include "../../drivers/driverList.h"
 
-#include "../../../drivers/dispatcher/dataDispatcherDeviceDriver.h"
-#include "../../../drivers/dispatcher/driverDataDispatcherList.h"
-#include "../../../drivers/dispatcher/localDriverDataDispatcher.h"
-#include "../../../drivers/dispatcher/i2cDriverDataDispatcher.h"
+#include "../../drivers/dispatcher/dataDispatcherDeviceDriver.h"
+#include "../../drivers/dispatcher/driverDataDispatcherList.h"
+#include "../../drivers/dispatcher/localDriverDataDispatcher.h"
+#include "../../drivers/dispatcher/i2cDriverDataDispatcher.h"
 
-#include "../../../drivers/file/eeprom/eepromFile.h"
+#include "../../drivers/file/eeprom/eepromFile.h"
 
-#include "../../../drivers/test/testDriver.h"
+#include "../../drivers/test/testDriver.h"
 
-#include "../../../robot/match/startMatch.h"
-#include "../../../robot/match/startMatchDevice.h"
-#include "../../../robot/match/startMatchDeviceInterface.h"
-#include "../../../robot/match/pc/startMatchDetectorPc.h"
+#include "../../robot/match/startMatch.h"
+#include "../../robot/match/startMatchDevice.h"
+#include "../../robot/match/startMatchDeviceInterface.h"
+#include "../../robot/match/pc/startMatchDetectorPc.h"
 
-#include "../../../remote/clock/remoteClock.h"
+#include "../../remote/clock/remoteClock.h"
 
-#include "../../../test/main/motorBoard/motorBoardPc.h"
+#include "../../main/motorBoard/motorBoardPc.h"
 
-#include "../../../common/pc/process/processHelper.h"
+#include "../../common/pc/process/processHelper.h"
 
 // Logs
 static LogHandler logHandlerListArray[MAIN_BOARD_PC_LOG_HANDLER_LIST_LENGTH];
@@ -203,7 +203,7 @@ void mainBoardDeviceHandleNotification(const Device* device, const char commandH
     }
 }
 
-void mainBoardPcWaitForInstruction(void) {
+bool mainBoardPcWaitForInstruction(StartMatch* startMatch) {
     while (handleNotificationFromDispatcherList(TRANSMIT_I2C)) {
         // loop for all notification
         // notification handler must avoid to directly information in notification callback
@@ -239,6 +239,8 @@ void mainBoardPcWaitForInstruction(void) {
             &filterRemoveCRLF,
             NULL);
     }
+
+    return true;
 }
 
 void runMainBoardPC(bool connectToRobotManagerMode) {
@@ -345,7 +347,7 @@ void runMainBoardPC(bool connectToRobotManagerMode) {
     addLocalDevice(getLCDDeviceInterface(), getLCDDeviceDescriptor());
 
 
-    initStartMatch(&startMatch, isMatchStartedPc, &mainBoardPcWaitForInstruction, &eeprom);
+    initStartMatch(&startMatch, isMatchStartedPc, mainBoardPcWaitForInstruction, &eeprom);
     addLocalDevice(getStartMatchDeviceInterface(), getStartMatchDeviceDescriptor(&startMatch));
  
     // MOTOR BOARD
@@ -382,6 +384,8 @@ void runMainBoardPC(bool connectToRobotManagerMode) {
     startTimerList();
 
     while (1) {
-        mainBoardPcWaitForInstruction();
+        mainBoardPcWaitForInstruction(&startMatch);
     }
+
+    // TODO : ShowEnd
 }

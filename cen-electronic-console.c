@@ -4,8 +4,8 @@
 
 #include <windows.h>
 
-#include "test/main/mainBoard/mainBoardPc.h"
-#include "test/main/motorBoard/motorBoardPc.h"
+#include "main/mainBoard/mainBoardPc.h"
+#include "main/motorBoard/motorBoardPc.h"
 #include "test/allTests.h"
 #include "common/pc/process/processHelper.h"
 

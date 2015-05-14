@@ -358,9 +358,6 @@
     <Filter Include="Source Files\test\main">
       <UniqueIdentifier>{d591fef7-9c75-409f-84da-5692ce017ba1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\test\main">
-      <UniqueIdentifier>{cac438f1-a094-4474-a0f6-5dbb5a678b27}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\common\serial">
       <UniqueIdentifier>{4840165b-c968-4b6f-b326-1ede53fd31db}</UniqueIdentifier>
     </Filter>
@@ -474,18 +471,6 @@
     </Filter>
     <Filter Include="Header Files\common\i2c\slave\pc">
       <UniqueIdentifier>{51b8dd80-500d-4e59-a807-e8c31f8928f7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\test\main\mainBoardPc">
-      <UniqueIdentifier>{a308fb08-899d-461a-a6b7-c58d3f92fa94}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\test\main\mainBoard">
-      <UniqueIdentifier>{4a127d65-827f-4ddb-984b-c94e7e84406b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\test\main\motorBoardPc">
-      <UniqueIdentifier>{23502012-62f5-4986-8c7f-16ff1aef2f13}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\test\main\motorBoard">
-      <UniqueIdentifier>{c22fb731-ed79-493d-bc13-66e9f020f44e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\device\i2c">
       <UniqueIdentifier>{b57db40e-ead6-473a-8d5b-45f2176dc84a}</UniqueIdentifier>
@@ -684,6 +669,30 @@
     </Filter>
     <Filter Include="Header Files\device\motion\simulation">
       <UniqueIdentifier>{16a6cd8c-6feb-46ff-8a1a-0461d453a598}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\device\serial">
+      <UniqueIdentifier>{683bc1cd-8bc5-4f53-bd33-c9eda25a94bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\device\serial">
+      <UniqueIdentifier>{8f50f925-8e6f-49bb-a0a6-e3b0927922ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\main">
+      <UniqueIdentifier>{78252b6f-a62b-4424-9d94-c63a53d29455}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\main\mainBoard">
+      <UniqueIdentifier>{886b9026-21cb-402e-98d8-7715f443284e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\main\motorboard">
+      <UniqueIdentifier>{b33592ee-caf7-44b3-aa97-8504f65a9bcb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\main">
+      <UniqueIdentifier>{2af36ec0-27bb-4c31-80c9-62c3f668c2c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\main\mainBoard">
+      <UniqueIdentifier>{83288a91-76b2-4764-963f-104535fe8041}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\main\motorboard">
+      <UniqueIdentifier>{413511d5-b62d-4803-9122-ed676988c4f2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1167,12 +1176,6 @@
     <ClCompile Include="common\i2c\slave\i2cSlave.c">
       <Filter>Source Files\common\i2c\slave</Filter>
     </ClCompile>
-    <ClCompile Include="test\main\mainBoard\mainBoardPc.c">
-      <Filter>Source Files\test\main\mainBoardPc</Filter>
-    </ClCompile>
-    <ClCompile Include="test\main\motorBoard\motorBoardPc.c">
-      <Filter>Source Files\test\main\motorBoardPc</Filter>
-    </ClCompile>
     <ClCompile Include="drivers\dispatcher\i2cDriverDataDispatcher.c">
       <Filter>Source Files\drivers\dispatchers</Filter>
     </ClCompile>
@@ -1379,6 +1382,18 @@
     </ClCompile>
     <ClCompile Include="robot\match\startMatch.c">
       <Filter>Source Files\robot\match</Filter>
+    </ClCompile>
+    <ClCompile Include="device\serial\serialDebugDevice.c">
+      <Filter>Source Files\device\serial</Filter>
+    </ClCompile>
+    <ClCompile Include="device\serial\serialDebugDeviceInterface.c">
+      <Filter>Source Files\device\serial</Filter>
+    </ClCompile>
+    <ClCompile Include="main\mainBoard\mainBoardPc.c">
+      <Filter>Source Files\main\mainBoard</Filter>
+    </ClCompile>
+    <ClCompile Include="main\motorboard\motorBoardPc.c">
+      <Filter>Source Files\main\motorboard</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1898,12 +1913,6 @@
     <ClInclude Include="common\i2c\slave\pc\i2cSlavePc.h">
       <Filter>Header Files\common\i2c\slave\pc</Filter>
     </ClInclude>
-    <ClInclude Include="test\main\mainBoard\mainBoardPc.h">
-      <Filter>Header Files\test\main\mainBoard</Filter>
-    </ClInclude>
-    <ClInclude Include="test\main\motorBoard\motorBoardPc.h">
-      <Filter>Header Files\test\main\motorBoard</Filter>
-    </ClInclude>
     <ClInclude Include="drivers\dispatcher\i2cDriverDataDispatcher.h">
       <Filter>Header Files\drivers\dispatchers</Filter>
     </ClInclude>
@@ -2143,6 +2152,18 @@
     </ClInclude>
     <ClInclude Include="robot\match\startMatch.h">
       <Filter>Header Files\robot\match</Filter>
+    </ClInclude>
+    <ClInclude Include="device\serial\serialDebugDevice.h">
+      <Filter>Header Files\device\serial</Filter>
+    </ClInclude>
+    <ClInclude Include="device\serial\serialDebugDeviceInterface.h">
+      <Filter>Header Files\device\serial</Filter>
+    </ClInclude>
+    <ClInclude Include="main\mainBoard\mainBoardPc.h">
+      <Filter>Header Files\main\mainBoard</Filter>
+    </ClInclude>
+    <ClInclude Include="main\motorboard\motorBoardPc.h">
+      <Filter>Header Files\main\motorboard</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

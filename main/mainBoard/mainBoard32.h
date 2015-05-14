@@ -1,9 +1,9 @@
-#ifndef MAIN_BOARD_CLIENT_H
-#define MAIN_BOARD_CLIENT_H
+#ifndef MAIN_BOARD_32_H
+#define MAIN_BOARD_32_H
 
 #include "../../common/io/outputStream.h"
 
-#include "../../main/motorBoard/motorBoard.h"
+#include "../../main/motorBoard/motorBoard32.h"
 #include "../../main/meca1/mechanicalBoard1.h"
 #include "../../main/meca2/mechanicalBoard2.h"
 #include "../../main/beaconReceiver/beaconReceiverBoard.h"

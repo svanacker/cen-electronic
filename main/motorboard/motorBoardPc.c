@@ -3,86 +3,86 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "../../../common/clock/clock.h"
-#include "../../../common/delay/cenDelay.h"
-#include "../../../common/eeprom/pc/eepromPc.h"
-#include "../../../common/error/error.h"
-#include "../../../common/i2c/i2cDebug.h"
-#include "../../../common/i2c/slave/pc/i2cSlavePc.h"
-#include "../../../common/i2c/slave/pc/i2cSlaveSetupPc.h"
-#include "../../../common/i2c/slave/i2cSlaveLink.h"
-#include "../../../common/io/pc/consoleOutputStream.h"
-#include "../../../common/io/pc/consoleInputStream.h"
-#include "../../../common/io/filter.h"
-#include "../../../common/io/streamLink.h"
-#include "../../../common/io/pc/consoleOutputStream.h"
-#include "../../../common/log/logger.h"
-#include "../../../common/log/logLevel.h"
-#include "../../../common/log/pc/consoleLogHandler.h"
+#include "../../common/clock/clock.h"
+#include "../../common/delay/cenDelay.h"
+#include "../../common/eeprom/pc/eepromPc.h"
+#include "../../common/error/error.h"
+#include "../../common/i2c/i2cDebug.h"
+#include "../../common/i2c/slave/pc/i2cSlavePc.h"
+#include "../../common/i2c/slave/pc/i2cSlaveSetupPc.h"
+#include "../../common/i2c/slave/i2cSlaveLink.h"
+#include "../../common/io/pc/consoleOutputStream.h"
+#include "../../common/io/pc/consoleInputStream.h"
+#include "../../common/io/filter.h"
+#include "../../common/io/streamLink.h"
+#include "../../common/io/pc/consoleOutputStream.h"
+#include "../../common/log/logger.h"
+#include "../../common/log/logLevel.h"
+#include "../../common/log/pc/consoleLogHandler.h"
 
-#include "../../../common/system/system.h"
+#include "../../common/system/system.h"
 
-#include "../../../common/timer/timerList.h"
+#include "../../common/timer/timerList.h"
 
 
-#include "../../../device/device.h"
-#include "../../../device/deviceList.h"
+#include "../../device/device.h"
+#include "../../device/deviceList.h"
 
 // I2C -> Slave
-#include "../../../device/i2c/slave/i2cSlaveDebugDevice.h"
-#include "../../../device/i2c/slave/i2cSlaveDebugDeviceInterface.h"
+#include "../../device/i2c/slave/i2cSlaveDebugDevice.h"
+#include "../../device/i2c/slave/i2cSlaveDebugDeviceInterface.h"
 
 // CLOCK
-#include "../../../device/clock/clockDevice.h"
-#include "../../../device/clock/clockDeviceInterface.h"
+#include "../../device/clock/clockDevice.h"
+#include "../../device/clock/clockDeviceInterface.h"
 
 // EEPROM
-#include "../../../device/eeprom/eepromDevice.h"
-#include "../../../device/eeprom/eepromDeviceInterface.h"
+#include "../../device/eeprom/eepromDevice.h"
+#include "../../device/eeprom/eepromDeviceInterface.h"
 
 // KINEMATICS
 
-#include "../../../robot/kinematics/robotKinematicsDevice.h"
-#include "../../../robot/kinematics/robotKinematicsDeviceInterface.h"
+#include "../../robot/kinematics/robotKinematicsDevice.h"
+#include "../../robot/kinematics/robotKinematicsDeviceInterface.h"
 
 // MOTION
 
-#include "../../../device/motion/pid/pidDevice.h"
-#include "../../../device/motion/pid/pidDeviceInterface.h"
+#include "../../device/motion/pid/pidDevice.h"
+#include "../../device/motion/pid/pidDeviceInterface.h"
 
-#include "../../../device/motion/position/codersDevice.h"
-#include "../../../device/motion/position/codersDeviceInterface.h"
+#include "../../device/motion/position/codersDevice.h"
+#include "../../device/motion/position/codersDeviceInterface.h"
 
-#include "../../../device/motion/position/trajectoryDevice.h"
-#include "../../../device/motion/position/trajectoryDeviceInterface.h"
+#include "../../device/motion/position/trajectoryDevice.h"
+#include "../../device/motion/position/trajectoryDeviceInterface.h"
 
-#include "../../../device/motion/simple/motionDevice.h"
-#include "../../../device/motion/simple/motionDeviceInterface.h"
+#include "../../device/motion/simple/motionDevice.h"
+#include "../../device/motion/simple/motionDeviceInterface.h"
 
-#include "../../../device/motion/simulation/motionSimulationDevice.h"
-#include "../../../device/motion/simulation/motionSimulationDeviceInterface.h"
+#include "../../device/motion/simulation/motionSimulationDevice.h"
+#include "../../device/motion/simulation/motionSimulationDeviceInterface.h"
 
 // SYSTEM
-#include "../../../device/system/systemDevice.h"
-#include "../../../device/system/systemDeviceInterface.h"
+#include "../../device/system/systemDevice.h"
+#include "../../device/system/systemDeviceInterface.h"
 
-#include "../../../device/test/testDevice.h"
-#include "../../../device/test/testDeviceInterface.h"
+#include "../../device/test/testDevice.h"
+#include "../../device/test/testDeviceInterface.h"
 
-#include "../../../device/motor/pwmMotorDevice.h"
-#include "../../../device/motor/pwmMotorDeviceInterface.h"
+#include "../../device/motor/pwmMotorDevice.h"
+#include "../../device/motor/pwmMotorDeviceInterface.h"
 
-#include "../../../drivers/driverStreamListener.h"
-#include "../../../drivers/driverList.h"
-#include "../../../drivers/dispatcher/driverDataDispatcherList.h"
-#include "../../../drivers/dispatcher/localDriverDataDispatcher.h"
-#include "../../../drivers/test/testDriver.h"
+#include "../../drivers/driverStreamListener.h"
+#include "../../drivers/driverList.h"
+#include "../../drivers/dispatcher/driverDataDispatcherList.h"
+#include "../../drivers/dispatcher/localDriverDataDispatcher.h"
+#include "../../drivers/test/testDriver.h"
 
-#include "../../../drivers/clock/softClock.h"
+#include "../../drivers/clock/softClock.h"
 
-#include "../../../motion/motion.h"
+#include "../../motion/motion.h"
 
-#include "../../../common/pc/process/processHelper.h"
+#include "../../common/pc/process/processHelper.h"
 
 // Logs
 static LogHandlerList logHandlerListArray[MOTOR_BOARD_PC_LOG_HANDLER_LIST_LENGTH];

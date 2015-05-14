@@ -176,6 +176,8 @@
     <ClCompile Include="device\motor\pwmMotor.c" />
     <ClCompile Include="device\motor\pwmMotorDevice.c" />
     <ClCompile Include="device\motor\pwmMotorDeviceInterface.c" />
+    <ClCompile Include="device\serial\serialDebugDevice.c" />
+    <ClCompile Include="device\serial\serialDebugDeviceInterface.c" />
     <ClCompile Include="device\servo\servoDevice.c" />
     <ClCompile Include="device\servo\servoDeviceInterface.c" />
     <ClCompile Include="device\strategy\strategyDevice.c" />
@@ -209,6 +211,8 @@
     <ClCompile Include="drivers\motor\motorDriver.c" />
     <ClCompile Include="drivers\strategy\strategyDriver.c" />
     <ClCompile Include="drivers\test\testDriver.c" />
+    <ClCompile Include="main\mainBoard\mainBoardPc.c" />
+    <ClCompile Include="main\motorboard\motorBoardPc.c" />
     <ClCompile Include="motion\extended\bspline.c" />
     <ClCompile Include="motion\extended\bsplineDebug.c" />
     <ClCompile Include="motion\extended\bsplineList.c" />
@@ -301,8 +305,6 @@
     <ClCompile Include="test\common\math\hexUtilsTest.c" />
     <ClCompile Include="test\drivers\dispatchers\driverDataDispatcherListTest.c" />
     <ClCompile Include="test\drivers\test\testDriverTest.c" />
-    <ClCompile Include="test\main\mainBoard\mainBoardPc.c" />
-    <ClCompile Include="test\main\motorBoard\motorBoardPc.c" />
     <ClCompile Include="test\motion\bspline\bsplineListTest.c" />
     <ClCompile Include="test\navigation\locationListTest.c" />
     <ClCompile Include="test\navigation\navigationTest.c" />
@@ -421,6 +423,8 @@
     <ClInclude Include="device\motor\pwmMotor.h" />
     <ClInclude Include="device\motor\pwmMotorDevice.h" />
     <ClInclude Include="device\motor\pwmMotorDeviceInterface.h" />
+    <ClInclude Include="device\serial\serialDebugDevice.h" />
+    <ClInclude Include="device\serial\serialDebugDeviceInterface.h" />
     <ClInclude Include="device\servo\servoDevice.h" />
     <ClInclude Include="device\servo\servoDeviceInterface.h" />
     <ClInclude Include="device\strategy\strategyDevice.h" />
@@ -453,6 +457,8 @@
     <ClInclude Include="drivers\motor\motorDriver.h" />
     <ClInclude Include="drivers\strategy\strategyDriver.h" />
     <ClInclude Include="drivers\test\testDriver.h" />
+    <ClInclude Include="main\mainBoard\mainBoardPc.h" />
+    <ClInclude Include="main\motorboard\motorBoardPc.h" />
     <ClInclude Include="motion\extended\bspline.h" />
     <ClInclude Include="motion\extended\bsplineDebug.h" />
     <ClInclude Include="motion\extended\bsplineList.h" />
@@ -556,8 +562,6 @@
     <ClInclude Include="test\common\math\hexUtilsTest.h" />
     <ClInclude Include="test\drivers\dispatchers\driverDataDispatcherListTest.h" />
     <ClInclude Include="test\drivers\test\testDriverTest.h" />
-    <ClInclude Include="test\main\mainBoard\mainBoardPc.h" />
-    <ClInclude Include="test\main\motorBoard\motorBoardPc.h" />
     <ClInclude Include="test\motion\bspline\bsplineListTest.h" />
     <ClInclude Include="test\navigation\locationListTest.h" />
     <ClInclude Include="test\navigation\navigationTest.h" />
