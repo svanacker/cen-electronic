@@ -9,6 +9,8 @@
 #include "../../main/beaconReceiver/beaconReceiverBoard.h"
 #include "../../main/strategy/strategyMain.h"
 
+#include "../../robot/match/startMatch.h"
+
 // LOGS
 #define MAIN_BOARD_LOG_HANDLER_LIST_LENGTH   2
 
@@ -62,6 +64,6 @@
 #define MAIN_BOARD_DEVICE_LENGTH            25
 #define MAIN_BOARD_TIMER_LENGTH             5
 
-void mainBoardWaitForInstruction(void);
+bool mainBoardWaitForInstruction(StartMatch* startMatch);
 
 #endif

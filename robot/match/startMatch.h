@@ -14,8 +14,10 @@ typedef struct StartMatch StartMatch;
 
 /**
 * Define a call back function which must be called during loopUntilStart.
+* @param startMatch encapsulation of the information about the match
+* @return true if it must continue, false if we must escape
 */
-typedef void LoopUntilStartHandleFunction(void);
+typedef bool LoopUntilStartHandleFunction(StartMatch* startMatch);
 
 /**
  * Call back function which must be called to detect if the match is started or not !

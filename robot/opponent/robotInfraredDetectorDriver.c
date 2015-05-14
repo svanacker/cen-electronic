@@ -37,3 +37,21 @@ bool robotInfraredDetectorHasObstacle(enum InfraredDetectorGroupType type) {
     }
     return false;
 }
+
+void enableNotificationRobotInfraredDetector(enum InfraredDetectorGroupType type) {
+    OutputStream* outputStream = getDriverRequestOutputStream();
+
+    append(outputStream, ROBOT_INFRARED_DETECTOR_DEVICE_HEADER);
+    append(outputStream, DETECTOR_ENABLE_NOTIFICATION_COMMAND);
+    appendHex2(outputStream, type);
+    transmitFromDriverRequestBuffer();
+}
+
+void disableNotificationRobotInfraredDetector(enum InfraredDetectorGroupType type) {
+    OutputStream* outputStream = getDriverRequestOutputStream();
+
+    append(outputStream, ROBOT_INFRARED_DETECTOR_DEVICE_HEADER);
+    append(outputStream, DETECTOR_DISABLE_NOTIFICATION_COMMAND);
+    appendHex2(outputStream, type);
+    transmitFromDriverRequestBuffer();
+}

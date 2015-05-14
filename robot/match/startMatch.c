@@ -54,7 +54,7 @@ void loopUntilStart(StartMatch* startMatch) {
     }
     appendString(getAlwaysOutputStreamLogger(), "WAIT FOR START ...");
     while (startMatch->isMatchStartedFunction(startMatch)) {
-        startMatch->loopUntilStartHandleFunction();
+        startMatch->loopUntilStartHandleFunction(startMatch);
     }
     appendString(getAlwaysOutputStreamLogger(), "OK\n");
 }

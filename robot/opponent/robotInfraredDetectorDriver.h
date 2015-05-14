@@ -11,5 +11,17 @@
  */
 bool robotInfraredDetectorHasObstacle(enum InfraredDetectorGroupType type);
 
+/**
+ * Disable the Infrared notification
+ * @param type BACKWARD / FORWARD
+ */
+void disableNotificationRobotInfraredDetector(enum InfraredDetectorGroupType type);
+
+/**
+ * Enable the Infrared notification
+ * @param type BACKWARD / FORWARD
+ */
+void enableNotificationRobotInfraredDetector(enum InfraredDetectorGroupType type);
+
 #endif
 

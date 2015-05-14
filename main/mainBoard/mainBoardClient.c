@@ -140,7 +140,7 @@
 #include "../../device/strategy/strategyDevice.h"
 #include "../../device/strategy/strategyDeviceInterface.h"
 
-// Specific 2011
+#include "../../device/adc/adcDevice.h"
 #include "../../device/adc/adcDeviceInterface.h"
 
 // Air conditioning
@@ -310,6 +310,7 @@ static Device deviceListArray[MAIN_BOARD_DEVICE_LENGTH];
 static Timer timerListArray[MAIN_BOARD_TIMER_LENGTH];
 
 static long counter;
+static int instructionIndex;
 
 // Obstacle management
 // static bool mustNotifyObstacle;
@@ -362,6 +363,7 @@ void initMainBoardDevicesDescriptor() {
     addLocalDevice(getEndMatchDetectorDeviceInterface(), getEndMatchDetectorDeviceDescriptor());
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
+    addLocalDevice(getADCDeviceInterface(), getADCDeviceDescriptor());
 
     /*
     addLocalDevice(getSonarDeviceInterface(), getSonarDeviceDescriptor(&i2cBus));
@@ -466,7 +468,22 @@ void initMainBoardDriverDataDispatcherList(void) {
     */
 }
 
-void mainBoardWaitForInstruction(void) {
+void doInstruction() {
+    int currentTime = getCurrentTimeInSecond();
+
+    if (instructionIndex == 0 && currentTime > 1) {
+        motionDriverForward(600.0f);
+        instructionIndex++;
+    }
+    else if (instructionIndex == 1 && currentTime > 10) {
+        motionDriverLeft(1800.0f);
+    }
+    else if (instructionIndex == 2 && currentTime > 20) {
+        motionDriverForward(600.0f);
+    }
+}
+
+bool mainBoardWaitForInstruction(StartMatch* startMatchParam) {
     // BE CAREFUL : UART 1 / UART 2 are physically connected : https://github.com/svanacker/cen-electronic-schema/issues/11
     // -> DO NOT USE IT AT THE SAME TIME !!
 
@@ -479,14 +496,19 @@ void mainBoardWaitForInstruction(void) {
             &filterRemoveCRLF,
             NULL);
     */
-    
-    counter++;
-    if ((counter % 20) == 0) {
-        // appendString(getAlwaysOutputStreamLogger(), "TOP\n");
-        if (robotInfraredDetectorHasObstacle(DETECTOR_GROUP_TYPE_FORWARD)) {
-            appendString(getAlwaysOutputStreamLogger(), "DETECTED ROBOT !");
+    /*
+    if (counter > 0) {
+        counter++;
+        if ((counter % 20) == 0) {
+            appendString(getAlwaysOutputStreamLogger(), "ASK ! \n");
+            if (robotInfraredDetectorHasObstacle(DETECTOR_GROUP_TYPE_FORWARD)) {
+                appendString(getAlwaysOutputStreamLogger(), "DETECTED ROBOT !");
+                // We stop
+                return false;
+            }
         }
     }
+    */
 
     // Listen instruction from debugStream->Devices
     handleStreamInstruction(
@@ -495,6 +517,8 @@ void mainBoardWaitForInstruction(void) {
             &debugOutputStream,
             &filterRemoveCRLF,
             NULL);
+
+    return true;
 }
 
 int main(void) {
@@ -583,11 +607,19 @@ int main(void) {
 
     loopUntilStart(&startMatch);
 
+    counter = 1;
+
+    clearBuffer(&mechanicalBoard2InputBuffer);
+
+    enableNotificationRobotInfraredDetector(DETECTOR_GROUP_TYPE_FORWARD);
+
     while (1) {
-        mainBoardWaitForInstruction();
+        if (!mainBoardWaitForInstruction(&startMatch)) {
+            break;
+        }
     }
 
-    showEnd(&lcdOutputStream);
+    showEnd(getAlwaysOutputStreamLogger());
 
     while (1) {
         // Avoid reboot even at end
