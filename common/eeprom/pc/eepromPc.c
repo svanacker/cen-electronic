@@ -20,9 +20,8 @@
 // 4 Ko of Eeprom for the PC must be enough for lots of things
 #define EEPROM_PC_MAX_INDEX        0x001000
 
+/** TODO : STATIC must be removed. */
 static char eepromPc[EEPROM_PC_MAX_INDEX];
-
-
 
 /**
 * Creates or Open the File when initializing.
@@ -117,7 +116,7 @@ void eepromPcDump(Eeprom* eeprom_) {
     }
 }
 
-void initEepromPc(Eeprom* eepromPc) {
+void initEepromPc(Eeprom* eepromPc, char* fileName) {
     initEeprom(eepromPc,
         EEPROM_PC_MAX_INDEX,
         eepromPcWriteChar,
@@ -126,6 +125,6 @@ void initEepromPc(Eeprom* eepromPc) {
         eepromPcWriteBlock,
         eepromPcReload,
         eepromPcDump,
-        NULL);
+        fileName);
     eepromPcReload(eepromPc);
 }

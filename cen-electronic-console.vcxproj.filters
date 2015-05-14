@@ -694,6 +694,12 @@
     <Filter Include="Header Files\main\motorboard">
       <UniqueIdentifier>{413511d5-b62d-4803-9122-ed676988c4f2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\test\common\eeprom">
+      <UniqueIdentifier>{e0750244-8186-40b1-9f30-3c23224f2a8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\test\common\eeprom">
+      <UniqueIdentifier>{1831985f-35e6-4221-abd3-88b50a021a1b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -1394,6 +1400,12 @@
     </ClCompile>
     <ClCompile Include="main\motorboard\motorBoardPc.c">
       <Filter>Source Files\main\motorboard</Filter>
+    </ClCompile>
+    <ClCompile Include="test\common\eeprom\memoryEepromTest.c">
+      <Filter>Source Files\test\common\eeprom</Filter>
+    </ClCompile>
+    <ClCompile Include="common\eeprom\memoryEeprom.c">
+      <Filter>Source Files\common\eeprom</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2164,6 +2176,12 @@
     </ClInclude>
     <ClInclude Include="main\motorboard\motorBoardPc.h">
       <Filter>Header Files\main\motorboard</Filter>
+    </ClInclude>
+    <ClInclude Include="test\common\eeprom\memoryEepromTest.h">
+      <Filter>Header Files\test\common\eeprom</Filter>
+    </ClInclude>
+    <ClInclude Include="common\eeprom\memoryEeprom.h">
+      <Filter>Header Files\common\eeprom</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

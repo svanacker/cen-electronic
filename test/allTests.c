@@ -13,6 +13,8 @@
 #include "../test/common/io/printWriterTest.h"
 #include "../test/common/io/readerTest.h"
 
+#include "../test/common/eeprom/memoryEepromTest.h"
+
 #include "../test/common/math/bcdUtilsTest.h"
 #include "../test/common/math/bitListTest.h"
 #include "../test/common/math/cenMathTest.h"
@@ -40,20 +42,35 @@ void runAllTests(void)
     UnityBegin("cen");
 
     // RUN_TEST calls runTest
+
+    // 2d    
+    _2dTestSuite();
+
+    // eeprom
+    memoryEepromTestSuite();
+
+    // math
     hexUtilsTestSuite();
     bitListTestSuite();
+    bcdUtilsTestSuite();
+    cenMathTestSuite();
+
+    // io
     bufferTestSuite();
     compositeOutputStreamTestSuite();
     filterTestSuite();
     printWriterTestSuite();
     readerTestSuite();
     ioUtilsTestSuite();
-    bcdUtilsTestSuite();
-    _2dTestSuite();
-    cenMathTestSuite();
+    
+    // Drivers
     driverDataDispatcherListTestSuite();
     testDriverTestTestSuite();
+
+    // motion->extended
     bsplineListTestSuite();
+
+    // navigation
     locationListTestSuite();
     pathListTestSuite();
     navigationTestSuite();

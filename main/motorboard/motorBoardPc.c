@@ -218,7 +218,7 @@ void runMotorBoardPC(bool singleMode) {
     }
 
     // Eeprom
-    initEepromPc(&eeprom);
+    initEepromPc(&eeprom, "TODO");
 
     // Clock
     initSoftClock(&clock);

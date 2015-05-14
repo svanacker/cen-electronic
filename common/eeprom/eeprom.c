@@ -20,7 +20,7 @@ void initEeprom(Eeprom* eeprom_,
                 EepromReadBlockFunction* eepromReadBlock,
                 EepromLoadFunction* eepromLoadFunction,
                 EepromDumpFunction* eepromDumpFunction,
-                int* object) {
+                void* object) {
     if (eeprom_ == NULL) {
         writeError(EEPROM_NULL);
         return;

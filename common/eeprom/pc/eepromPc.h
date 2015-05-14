@@ -4,10 +4,10 @@
 #include "../eeprom.h"
 
 /**
- * Initializes an eeprom in memory for PC.
+ * Initializes an eeprom linked to a file for PC.
  * @param eepromPc a pointer on eeprom object
  */
-void initEepromPc(Eeprom* eepromPc);
+void initEepromPc(Eeprom* eepromPc, char* fileName);
 
 #endif
 

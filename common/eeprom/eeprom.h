@@ -76,7 +76,7 @@ struct Eeprom {
     /** Max Index. */
     unsigned long maxIndex;
     /** A pointer on generic object (for example to store I2cBus ...). */
-    int* object;
+    void* object;
 };
 
 /**
@@ -105,7 +105,7 @@ void initEeprom(Eeprom* eeprom_,
                 EepromReadBlockFunction* eepromReadBlock,
                 EepromLoadFunction* eepromLoad,
                 EepromDumpFunction* eepromDump,
-                int* object);
+                void* object);
 
 /**
 * Read an int from the eeprom at a specific index (needs 2 bytes).

@@ -5,6 +5,8 @@
 
 #include "../../common/error/error.h"
 
+#define EEPROM_NULL_MAX_INDEX        0x001000
+
 void nullEepromWriteChar(Eeprom* eeprom_, unsigned long index, char value) {
     // DO NOTHING
 }
@@ -22,5 +24,5 @@ void nullEepromWriteBlock(Eeprom* eeprom_, unsigned long index, unsigned int len
 }
 
 void initNullEeprom(Eeprom* nullEeprom) {
-    initEeprom(nullEeprom, 35535, nullEepromWriteChar, nullEepromReadChar, nullEepromWriteBlock, nullEepromReadBlock, NULL);
+    initEeprom(nullEeprom, EEPROM_NULL_MAX_INDEX, nullEepromWriteChar, nullEepromReadChar, nullEepromWriteBlock, nullEepromReadBlock, NULL);
 }
