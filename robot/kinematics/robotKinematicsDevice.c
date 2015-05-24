@@ -35,6 +35,7 @@ void deviceRobotKinematicsHandleRawData(char commandHeader, InputStream* inputSt
         loadRobotKinematicsParameters(robotKinematics, robotKinematicsEeprom, true);
         saveRobotKinematicsParameters(robotKinematics, robotKinematicsEeprom);
     }
+    // wheelAverageLengthForOnePulse
     else if (commandHeader == COMMAND_GET_WHEELS_AVERAGE_FOR_ONE_PULSE_LENGTH) {
         ackCommand(outputStream, KINEMATICS_HEADER, COMMAND_GET_WHEELS_AVERAGE_FOR_ONE_PULSE_LENGTH);
         RobotKinematics* robotKinematics = getRobotKinematics();
@@ -46,6 +47,7 @@ void deviceRobotKinematicsHandleRawData(char commandHeader, InputStream* inputSt
         float value = (float) readHex6(inputStream);
         robotKinematics->wheelAverageLengthForOnePulse = value / MILLI_TO_NANO_FACTOR;
     }
+    // wheelRotationBySecondsAtFullSpeed
     else if (commandHeader == COMMAND_GET_ROTATION_BY_SECONDS_AT_FULL_SPEED) {
         ackCommand(outputStream, KINEMATICS_HEADER, COMMAND_GET_ROTATION_BY_SECONDS_AT_FULL_SPEED);
         RobotKinematics* robotKinematics = getRobotKinematics();
@@ -57,6 +59,7 @@ void deviceRobotKinematicsHandleRawData(char commandHeader, InputStream* inputSt
         float value = (float)readHex2(inputStream);
         robotKinematics->wheelRotationBySecondsAtFullSpeed = value;
     }
+    // pulseByRotation
     else if (commandHeader == COMMAND_GET_PULSE_BY_ROTATION) {
         ackCommand(outputStream, KINEMATICS_HEADER, COMMAND_GET_PULSE_BY_ROTATION);
         RobotKinematics* robotKinematics = getRobotKinematics();
@@ -68,17 +71,19 @@ void deviceRobotKinematicsHandleRawData(char commandHeader, InputStream* inputSt
         float value = (float)readHex4(inputStream);
         robotKinematics->pulseByRotation = value;
     }
+    // wheelDeltaLengthForOnePulse
     else if (commandHeader == COMMAND_GET_WHEEL_DELTA_FOR_ONE_PULSE_LENGTH) {
         ackCommand(outputStream, KINEMATICS_HEADER, COMMAND_GET_WHEEL_DELTA_FOR_ONE_PULSE_LENGTH);
         RobotKinematics* robotKinematics = getRobotKinematics();
         appendHex6(outputStream, (long) (robotKinematics->wheelDeltaLengthForOnePulse * MILLI_TO_NANO_FACTOR));
     }
-    else if (commandHeader == COMMAND_SET_WHEELS_AVERAGE_FOR_ONE_PULSE_LENGTH) {
-        ackCommand(outputStream, KINEMATICS_HEADER, COMMAND_SET_WHEELS_AVERAGE_FOR_ONE_PULSE_LENGTH);
+    else if (commandHeader == COMMAND_SET_WHEEL_DELTA_FOR_ONE_PULSE_LENGTH) {
+        ackCommand(outputStream, KINEMATICS_HEADER, COMMAND_SET_WHEEL_DELTA_FOR_ONE_PULSE_LENGTH);
         RobotKinematics* robotKinematics = getRobotKinematics();
         float value = (float)readHex6(inputStream);
         robotKinematics->wheelDeltaLengthForOnePulse = value / MILLI_TO_NANO_FACTOR;
     }
+    // wheelsDistance
     else if (commandHeader == COMMAND_GET_WHEELS_DISTANCE) {
         ackCommand(outputStream, KINEMATICS_HEADER, COMMAND_GET_WHEELS_DISTANCE);
         RobotKinematics* robotKinematics = getRobotKinematics();
