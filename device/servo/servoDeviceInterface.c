@@ -13,12 +13,14 @@ int deviceServoGetInterface(char commandHeader, DeviceInterfaceMode mode, bool f
     // WRITE FUNCTIONS
     if (commandHeader == SERVO_COMMAND_WRITE) {
         if (fillDeviceArgumentList) {
-            setFunction("updateServoAllParams", 3, 0);
+            setFunction("updateServoAllParams", 5, 0);
             setArgumentUnsignedHex2(0, "ServoIdx");
-            setArgumentUnsignedHex2(1, "speed");
-            setArgumentUnsignedHex4(2, "value");
+            setArgumentSeparator(1);
+            setArgumentUnsignedHex2(2, "speed");
+            setArgumentSeparator(3);
+            setArgumentUnsignedHex4(4, "value");
         }
-        return commandLengthValueForMode(mode, 8, 0);
+        return commandLengthValueForMode(mode, 10, 0);
     }
     else if (commandHeader == SERVO_COMMAND_WRITE_COMPACT) {
         if (fillDeviceArgumentList) {

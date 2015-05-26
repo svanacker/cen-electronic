@@ -37,8 +37,9 @@ void deviceServoHandleRawData(char commandHeader, InputStream* inputStream, Outp
     // WRITE COMMANDS
     if (commandHeader == SERVO_COMMAND_WRITE) {
         int servoIndex = readHex2(inputStream);
+        checkIsSeparator(inputStream);
         int servoSpeed = readHex2(inputStream);
-   
+        checkIsSeparator(inputStream);
         int servoValue = readHex4(inputStream);
         if (servoIndex > 0 && servoIndex <= PWM_COUNT) {
             pwmServo(servoIndex, servoSpeed, servoValue);
