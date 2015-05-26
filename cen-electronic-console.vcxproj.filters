@@ -355,9 +355,6 @@
     <Filter Include="Source Files\device\beacon">
       <UniqueIdentifier>{fe78cb49-211c-46ca-893c-697157091c3f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\test\main">
-      <UniqueIdentifier>{d591fef7-9c75-409f-84da-5692ce017ba1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\common\serial">
       <UniqueIdentifier>{4840165b-c968-4b6f-b326-1ede53fd31db}</UniqueIdentifier>
     </Filter>
@@ -699,6 +696,18 @@
     </Filter>
     <Filter Include="Header Files\test\common\eeprom">
       <UniqueIdentifier>{1831985f-35e6-4221-abd3-88b50a021a1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\device\adc">
+      <UniqueIdentifier>{c5f31e0c-47d0-4ad8-8027-20a528c68535}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\device\adc">
+      <UniqueIdentifier>{af8292f4-8b01-434a-bc58-f57a1a5de58f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\common\adc">
+      <UniqueIdentifier>{e2e954cf-171d-4630-b1eb-965475110ac3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\common\adc\pc">
+      <UniqueIdentifier>{9569f187-73aa-4b23-bb73-d56622abba01}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1406,6 +1415,15 @@
     </ClCompile>
     <ClCompile Include="common\eeprom\memoryEeprom.c">
       <Filter>Source Files\common\eeprom</Filter>
+    </ClCompile>
+    <ClCompile Include="device\adc\adcDevice.c">
+      <Filter>Source Files\device\adc</Filter>
+    </ClCompile>
+    <ClCompile Include="device\adc\adcDeviceInterface.c">
+      <Filter>Source Files\device\adc</Filter>
+    </ClCompile>
+    <ClCompile Include="common\adc\pc\adcutilsPc.c">
+      <Filter>Source Files\common\adc\pc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2182,6 +2200,12 @@
     </ClInclude>
     <ClInclude Include="common\eeprom\memoryEeprom.h">
       <Filter>Header Files\common\eeprom</Filter>
+    </ClInclude>
+    <ClInclude Include="device\adc\adcDevice.h">
+      <Filter>Header Files\device\adc</Filter>
+    </ClInclude>
+    <ClInclude Include="device\adc\adcDeviceInterface.h">
+      <Filter>Header Files\device\adc</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

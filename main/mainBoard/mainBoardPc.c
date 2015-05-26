@@ -63,6 +63,10 @@
 // KINEMATICS
 #include "../../robot/kinematics/robotKinematicsDeviceInterface.h"
 
+// ADC
+#include "../../device/adc/adcDevice.h"
+#include "../../device/adc/adcDeviceInterface.h"
+
 // LCD
 #include "../../device/lcd/lcdDevice.h"
 #include "../../device/lcd/lcdDeviceInterface.h"
@@ -333,6 +337,7 @@ void runMainBoardPC(bool connectToRobotManagerMode) {
     testDevice->deviceHandleNotification = mainBoardDeviceHandleNotification;
 
     // LOCAL BOARD
+    addLocalDevice(getADCDeviceInterface(), getADCDeviceDescriptor());
     addLocalDevice(getStrategyDeviceInterface(), getStrategyDeviceDescriptor());
     addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
     addLocalDevice(getRobotConfigDeviceInterface(), getRobotConfigDeviceDescriptor(&robotConfig));
