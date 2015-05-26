@@ -28,13 +28,26 @@ int deviceServoGetInterface(char commandHeader, DeviceInterfaceMode mode, bool f
         return commandLengthValueForMode(mode, 4, 0);
     }
     // READ_FUNCTIONS
+    else if (commandHeader == SERVO_COMMAND_READ) {
+        if (fillDeviceArgumentList) {
+            setFunction("servoRead", 1, 5);
+            setArgumentUnsignedHex2(0, "ServoIdx");
+            setResultUnsignedHex2(0, "Speed");
+            setResultSeparator(1);
+            setResultUnsignedHex4(2, "Current Position");
+            setResultSeparator(3);
+            setResultUnsignedHex4(4, "Target Position");
+
+        }
+        return commandLengthValueForMode(mode, 2, 12);
+    }
     else if (commandHeader == SERVO_COMMAND_READ_SPEED) {
         if (fillDeviceArgumentList) {
             setFunction("servoReadSpeed", 1, 1);
             setArgumentUnsignedHex2(0, "ServoIdx");
-            setResultUnsignedHex4(0, "Speed");
+            setResultUnsignedHex2(0, "Speed");
         }
-        return commandLengthValueForMode(mode, 2, 4);
+        return commandLengthValueForMode(mode, 2, 2);
     }
     else if (commandHeader == SERVO_COMMAND_READ_CURRENT_POSITION) {
         if (fillDeviceArgumentList) {

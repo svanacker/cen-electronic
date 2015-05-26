@@ -13,6 +13,9 @@
 
 // READ FUNCTIONS
 
+// Command header to read the speed, current Position, targetPosition of a servo with the specified index
+#define SERVO_COMMAND_READ                          'r'
+
 // Command header to read the speed of a servo with the specified index
 #define SERVO_COMMAND_READ_SPEED                    's'
 
@@ -20,7 +23,7 @@
 #define SERVO_COMMAND_READ_CURRENT_POSITION         'p'
 
 // Command header to read the target Position of a servo with the specified index
-#define SERVO_COMMAND_READ_TARGET_POSITION          'r'
+#define SERVO_COMMAND_READ_TARGET_POSITION          't'
 
 // DEBUG FUNCTIONS
 
@@ -28,7 +31,7 @@
 #define SERVO_COMMAND_DEBUG                         'd'
 
 // Command header to do the test program
-#define SERVO_COMMAND_TEST                          't'
+#define SERVO_COMMAND_TEST                          'T'
 
 /**
 * Interface for Servo Device.
