@@ -59,6 +59,9 @@ void deviceServoHandleRawData(char commandHeader, InputStream* inputStream, Outp
         int speed = pwmServoReadSpeed(servoIndex);
         int currentPosition = pwmServoReadCurrentPosition(servoIndex);
         int targetPosition = pwmServoReadTargetPosition(servoIndex);
+
+        appendHex2(outputStream, servoIndex);
+        appendSeparator(outputStream);
         appendHex2(outputStream, speed);
         appendSeparator(outputStream);
         appendHex4(outputStream, currentPosition);

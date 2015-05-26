@@ -30,16 +30,18 @@ int deviceServoGetInterface(char commandHeader, DeviceInterfaceMode mode, bool f
     // READ_FUNCTIONS
     else if (commandHeader == SERVO_COMMAND_READ) {
         if (fillDeviceArgumentList) {
-            setFunction("servoRead", 1, 5);
+            setFunction("servoRead", 1, 7);
             setArgumentUnsignedHex2(0, "ServoIdx");
-            setResultUnsignedHex2(0, "Speed");
+            setResultUnsignedHex2(0, "ServoIdx");
             setResultSeparator(1);
-            setResultUnsignedHex4(2, "Current Position");
+            setResultUnsignedHex2(2, "Speed");
             setResultSeparator(3);
-            setResultUnsignedHex4(4, "Target Position");
+            setResultUnsignedHex4(4, "Current Position");
+            setResultSeparator(5);
+            setResultUnsignedHex4(6, "Target Position");
 
         }
-        return commandLengthValueForMode(mode, 2, 12);
+        return commandLengthValueForMode(mode, 2, 15);
     }
     else if (commandHeader == SERVO_COMMAND_READ_SPEED) {
         if (fillDeviceArgumentList) {
