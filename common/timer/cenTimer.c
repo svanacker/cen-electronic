@@ -24,12 +24,17 @@ void stopTimer(Timer* timer) {
 
 // MARK
 
-void mark(Timer* timer) {
+void markTimer(Timer* timer) {
     timer->markTime = timer->time;
 }
 
-bool timeout(Timer* timer, unsigned long time) {
-    return timer->markTime + time > timer->time;
+unsigned long getTimeSinceLastMark(Timer* timer) {
+    return (timer->time - timer->markTime);
+}
+
+bool timeout(Timer* timer, unsigned long timeToCheck) {
+    unsigned long timeSinceLastMarkValue = getTimeSinceLastMark(timer);
+    return timeToCheck > timeSinceLastMarkValue;
 }
 
 // LOCK / UNLOCK
