@@ -6,6 +6,8 @@
 
 #include "../../common/delay/cenDelay.h"
 
+#include "../../common/error/error.h"
+
 #include "../../common/io/buffer.h"
 #include "../../common/io/inputStream.h"
 #include "../../common/io/outputStream.h"
@@ -43,6 +45,15 @@ void deviceSystemHandleRawData(char header, InputStream* inputStream, OutputStre
         // Read and write in output the pingIndex (to control that it's the right which does the response)
         unsigned char pingIndex = readHex2(inputStream);
         appendHex2(outputStream, pingIndex);
+    }
+    else if (header == COMMAND_GET_LAST_ERROR) {
+        ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_GET_LAST_ERROR);
+        unsigned int lastError = getLastError();
+        appendHex4(outputStream, lastError);
+    }
+    else if (header == COMMAND_CLEAR_LAST_ERROR) {
+        ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_CLEAR_LAST_ERROR);
+        clearLastError();
     }
     else if (header == COMMAND_DEVICE_LIST) {
         ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_DEVICE_LIST);

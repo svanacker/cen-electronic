@@ -4,6 +4,12 @@
 #include "../../device/deviceInterface.h"
 #include "../../device/deviceConstants.h"
 
+/** Get the last error if any, 0x0000 if none. */
+#define COMMAND_GET_LAST_ERROR      'e'
+
+/** Clear the last error if any */
+#define COMMAND_CLEAR_LAST_ERROR    'E'
+
 /** Command to show devices list. */
 #define COMMAND_DEVICE_LIST        'd'
 
