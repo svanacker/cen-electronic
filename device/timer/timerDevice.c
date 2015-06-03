@@ -70,6 +70,8 @@ void deviceTimerHandleRawData(char commandHeader, InputStream* inputStream, Outp
         Timer* timer = getTimerByIndex(timerIndex);
         appendHex2(outputStream, timerIndex);
         appendSeparator(outputStream);
+        appendHex2(outputStream, timer->timerCode);
+        appendSeparator(outputStream);
         appendHex4(outputStream, timer->timeDiviser);
         appendSeparator(outputStream);
         appendHex4(outputStream, timer->timeInternalCounter);
@@ -96,8 +98,9 @@ void deviceTimerHandleRawData(char commandHeader, InputStream* inputStream, Outp
     else if (commandHeader == COMMAND_TIMER_MARK) {
         unsigned char timerIndex = readHex2(inputStream);
         Timer* timer = getTimerByIndex(timerIndex);
-        markTimer(timer);
+        unsigned long time = markTimer(timer);
         ackCommand(outputStream, TIMER_DEVICE_HEADER, COMMAND_TIMER_MARK);
+        appendHex6(outputStream, time);
     }
     else if (commandHeader == COMMAND_TIMER_TIME_SINCE_LAST_MARK) {
         unsigned char timerIndex = readHex2(inputStream);

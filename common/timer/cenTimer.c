@@ -24,8 +24,9 @@ void stopTimer(Timer* timer) {
 
 // MARK
 
-void markTimer(Timer* timer) {
+unsigned long markTimer(Timer* timer) {
     timer->markTime = timer->time;
+    return timer->markTime;
 }
 
 unsigned long getTimeSinceLastMark(Timer* timer) {
@@ -34,7 +35,7 @@ unsigned long getTimeSinceLastMark(Timer* timer) {
 
 bool timeout(Timer* timer, unsigned long timeToCheck) {
     unsigned long timeSinceLastMarkValue = getTimeSinceLastMark(timer);
-    return timeToCheck > timeSinceLastMarkValue;
+    return timeSinceLastMarkValue > timeToCheck;
 }
 
 // LOCK / UNLOCK

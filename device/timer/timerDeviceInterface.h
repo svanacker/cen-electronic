@@ -26,7 +26,7 @@
 /** Command to know if a timer has timeout . */
 #define COMMAND_TIMER_TIMEOUT           't'
 
-/** Command to stop or stat the Timer Demo. */
+/** Command to stop or start the Timer Demo (add it if it does not exist). */
 #define COMMAND_TIMER_DEMO             'D'
 
 /**

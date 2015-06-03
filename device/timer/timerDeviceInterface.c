@@ -26,21 +26,23 @@ int deviceTimerGetInterface(char commandHeader, DeviceInterfaceMode mode, bool f
     }
     else if (commandHeader == COMMAND_TIMER_READ) {
         if (fillDeviceArgumentList) {
-            setFunction("timerRead", 1, 11);
+            setFunction("timerRead", 1, 13);
             setArgumentUnsignedHex2(0, "timerIndex");
-            setResultUnsignedHex2(0, "timerIndex");
+            setResultUnsignedHex2(0, "Index");
             setResultSeparator(1);
-            setResultUnsignedHex4(2, "timeDiviser");
+            setResultUnsignedHex2(2, "Code");
             setResultSeparator(3);
-            setResultUnsignedHex4(4, "timeInternalCounter");
+            setResultUnsignedHex4(4, "Diviser");
             setResultSeparator(5);
-            setResultUnsignedHex6(6, "time");
+            setResultUnsignedHex4(6, "InternalCounter");
             setResultSeparator(7);
-            setResultUnsignedHex6(8, "markTime");
+            setResultUnsignedHex6(8, "time");
             setResultSeparator(9);
-            setResultUnsignedChar1(10, "enabled");
+            setResultUnsignedHex6(10, "markTime");
+            setResultSeparator(11);
+            setResultUnsignedChar1(12, "enabled");
         }
-        return commandLengthValueForMode(mode, 2, 28);
+        return commandLengthValueForMode(mode, 2, 31);
     }
     else if (commandHeader == COMMAND_TIMER_ENABLE_DISABLE) {
         if (fillDeviceArgumentList) {
@@ -62,10 +64,11 @@ int deviceTimerGetInterface(char commandHeader, DeviceInterfaceMode mode, bool f
     }
     else if (commandHeader == COMMAND_TIMER_MARK) {
         if (fillDeviceArgumentList) {
-            setFunction("mark Timer !", 1, 0);
+            setFunction("mark Timer !", 1, 1);
             setArgumentUnsignedHex2(0, "timerIndex");
+            setResultUnsignedHex6(0, "markTime");
         }
-        return commandLengthValueForMode(mode, 2, 0);
+        return commandLengthValueForMode(mode, 2, 6);
     }
     else if (commandHeader == COMMAND_TIMER_TIMEOUT) {
         if (fillDeviceArgumentList) {

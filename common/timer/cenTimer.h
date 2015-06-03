@@ -124,8 +124,9 @@ void stopTimer(Timer* timer);
 
 /**
  * Mark the timer. Remembers the current timer value  (POO simulation).
+ * @return the markTime
  */
-void markTimer(Timer* timer);
+unsigned long markTimer(Timer* timer);
 
 /**
  * Get the time difference since the last mark.
