@@ -1,7 +1,7 @@
 #ifndef I2C_COMMON_32_H
 #define I2C_COMMON_32_H
 
-#include <plib.h>
+//#include <plib.h>
 #include "../i2cCommon.h"
 
 /**

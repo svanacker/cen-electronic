@@ -34,6 +34,8 @@
       <logicalFolder name="f6" displayName="common.eeprom" projectFiles="true">
         <itemPath>../common/eeprom/eeprom.h</itemPath>
         <itemPath>../common/eeprom/nullEeprom.h</itemPath>
+        <itemPath>../common/eeprom/eepromAreas.h</itemPath>
+        <itemPath>../common/eeprom/memoryEeprom.h</itemPath>
       </logicalFolder>
       <logicalFolder name="common.error"
                      displayName="common.error"
@@ -58,7 +60,6 @@
         <itemPath>../common/io/inputStream.h</itemPath>
         <itemPath>../common/io/outputStream.h</itemPath>
         <itemPath>../common/io/printWriter.h</itemPath>
-        <itemPath>../common/io/stream.h</itemPath>
         <itemPath>../common/serial/serialLink.h</itemPath>
         <itemPath>../common/io/filter.h</itemPath>
         <itemPath>../common/io/ioUtils.h</itemPath>
@@ -80,6 +81,7 @@
         <itemPath>../common/math/cenMath.h</itemPath>
         <itemPath>../common/math/hexUtils.h</itemPath>
         <itemPath>../common/math/bcdUtils.h</itemPath>
+        <itemPath>../common/math/random.h</itemPath>
       </logicalFolder>
       <logicalFolder name="common.pwm" displayName="common.pwm" projectFiles="true">
         <itemPath>../common/pwm/pwmPic.h</itemPath>
@@ -106,6 +108,9 @@
         <itemPath>../common/setup/32/clockConstants32.h</itemPath>
         <itemPath>../common/setup/32/picSetup32.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f14" displayName="common.system" projectFiles="true">
+        <itemPath>../common/system/system.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="common.timer"
                      displayName="common.timer"
                      projectFiles="true">
@@ -119,6 +124,7 @@
         <itemPath>../device/deviceInterface.h</itemPath>
         <itemPath>../device/deviceDescriptor.h</itemPath>
         <itemPath>../device/deviceDebug.h</itemPath>
+        <itemPath>../device/transmitMode.h</itemPath>
       </logicalFolder>
       <logicalFolder name="device.adc" displayName="device.adc" projectFiles="true">
         <itemPath>../device/adc/adcDeviceInterface.h</itemPath>
@@ -142,6 +148,8 @@
                      displayName="device.dispatchers"
                      projectFiles="true">
         <itemPath>../device/dispatcher/deviceDataDispatcher.h</itemPath>
+        <itemPath>../device/dispatcher/dataDispatcherDevice.h</itemPath>
+        <itemPath>../device/dispatcher/dataDispatcherDeviceInterface.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f5" displayName="device.eeprom" projectFiles="true">
         <itemPath>../device/eeprom/eepromDevice.h</itemPath>
@@ -154,6 +162,10 @@
       <logicalFolder name="device.lcd" displayName="device.lcd" projectFiles="true">
         <itemPath>../device/lcd/lcdDevice.h</itemPath>
         <itemPath>../device/lcd/lcdDeviceInterface.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f10" displayName="device.log" projectFiles="true">
+        <itemPath>../device/log/logDeviceInterface.h</itemPath>
+        <itemPath>../device/log/logDevice.h</itemPath>
       </logicalFolder>
       <logicalFolder name="device.motion.pid"
                      displayName="device.motion.pid"
@@ -176,6 +188,10 @@
                      projectFiles="true">
         <itemPath>../device/motor/pwmMotorDeviceInterface.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f11" displayName="device.serial" projectFiles="true">
+        <itemPath>../device/serial/serialDebugDevice.h</itemPath>
+        <itemPath>../device/serial/serialDebugDeviceInterface.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="device.servo"
                      displayName="device.servo"
                      projectFiles="true">
@@ -197,17 +213,20 @@
                      projectFiles="true">
         <itemPath>../device/system/systemDevice.h</itemPath>
         <itemPath>../device/system/systemDeviceInterface.h</itemPath>
-        <itemPath>../device/system/systemDebugDevice.h</itemPath>
-        <itemPath>../device/system/systemDebugDeviceInterface.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f4"
                      displayName="device.temperatureSensor"
                      projectFiles="true">
-        <itemPath>../device/temperatureSensor/temperatureSensor.h</itemPath>
-        <itemPath>../device/temperatureSensor/temperatureSensorDevice.h</itemPath>
-        <itemPath>../device/temperatureSensor/temperatureSensorDeviceInterface.h</itemPath>
       </logicalFolder>
       <logicalFolder name="device.test" displayName="device.test" projectFiles="true">
+        <itemPath>../device/test/test2Device.h</itemPath>
+        <itemPath>../device/test/test2DeviceInterface.h</itemPath>
+        <itemPath>../device/test/testDevice.h</itemPath>
+        <itemPath>../device/test/testDeviceInterface.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f12" displayName="device.timer" projectFiles="true">
+        <itemPath>../device/timer/timerDevice.h</itemPath>
+        <itemPath>../device/timer/timerDeviceInterface.h</itemPath>
       </logicalFolder>
       <logicalFolder name="drivers" displayName="drivers" projectFiles="true">
         <itemPath>../drivers/driverList.h</itemPath>
@@ -261,7 +280,6 @@
       <logicalFolder name="f7" displayName="drivers.robotConfig" projectFiles="true">
       </logicalFolder>
       <logicalFolder name="f3" displayName="drivers.sensor" projectFiles="true">
-        <itemPath>../drivers/sensor/LM75A.h</itemPath>
       </logicalFolder>
       <logicalFolder name="drivers.sonar"
                      displayName="drivers.sonar"
@@ -281,21 +299,18 @@
       <logicalFolder name="drivers.test"
                      displayName="drivers.test"
                      projectFiles="true">
+        <itemPath>../drivers/test/testDriver.h</itemPath>
       </logicalFolder>
       <logicalFolder name="main" displayName="main" projectFiles="true">
-        <itemPath>../main/motorboard/motorBoard.h</itemPath>
         <itemPath>../main/meca2/mechanicalBoard2.h</itemPath>
-        <itemPath>../main/mainBoard/mainBoardClient.h</itemPath>
         <itemPath>../main/airconditioning/airConditioningMain.h</itemPath>
-        <itemPath>../main/titanMainBoard/titanMainBoardClient.h</itemPath>
+        <itemPath>../main/mainBoard/mainBoard32.h</itemPath>
       </logicalFolder>
       <logicalFolder name="motion.simple"
                      displayName="motion.simple"
                      projectFiles="true">
-        <itemPath>../motion/simple/motion.h</itemPath>
       </logicalFolder>
       <logicalFolder name="robot" displayName="robot" projectFiles="true">
-        <itemPath>../robot/robotConstants.h</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.2012" displayName="robot.2012" projectFiles="true">
         <itemPath>../robot/2012/armDeviceInterface2012.h</itemPath>
@@ -310,14 +325,19 @@
         <itemPath>../robot/config/robotConfigDevice.h</itemPath>
         <itemPath>../robot/config/32/robotConfigPic32.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f13" displayName="robot.kinematics" projectFiles="true">
+        <itemPath>../robot/kinematics/robotKinematics.h</itemPath>
+        <itemPath>../robot/kinematics/robotKinematicsDevice.h</itemPath>
+        <itemPath>../robot/kinematics/robotKinematicsDeviceInterface.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="robot.match" displayName="robot.match" projectFiles="true">
         <itemPath>../robot/robot.h</itemPath>
         <itemPath>../robot/match/endMatchDetectorDevice.h</itemPath>
-        <itemPath>../robot/match/startMatchDetectorDevice.h</itemPath>
         <itemPath>../robot/match/endMatchDetectorDeviceInterface.h</itemPath>
-        <itemPath>../robot/match/startMatchDetectorDeviceInterface.h</itemPath>
-        <itemPath>../robot/match/startMatchDetector.h</itemPath>
         <itemPath>../robot/match/32/startMatchDetector32.h</itemPath>
+        <itemPath>../robot/match/startMatch.h</itemPath>
+        <itemPath>../robot/match/startMatchDeviceInterface.h</itemPath>
+        <itemPath>../robot/match/startMatchDevice.h</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.opponent"
                      displayName="robot.opponent"
@@ -340,7 +360,7 @@
         <itemPath>../common/2d/2d.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f9" displayName="common.adc" projectFiles="true">
-        <itemPath>../common/adc/PIC32/adcutils32.c</itemPath>
+        <itemPath>../common/adc/32/adcutils32.c</itemPath>
       </logicalFolder>
       <logicalFolder name="common.clock"
                      displayName="common.clock"
@@ -355,6 +375,8 @@
       <logicalFolder name="f6" displayName="common.eeprom" projectFiles="true">
         <itemPath>../common/eeprom/eeprom.c</itemPath>
         <itemPath>../common/eeprom/nullEeprom.c</itemPath>
+        <itemPath>../common/eeprom/eepromAreas.c</itemPath>
+        <itemPath>../common/eeprom/memoryEeprom.c</itemPath>
       </logicalFolder>
       <logicalFolder name="common.error"
                      displayName="common.error"
@@ -363,6 +385,7 @@
       </logicalFolder>
       <logicalFolder name="common.i2c" displayName="common.i2c" projectFiles="true">
         <itemPath>../common/i2c/i2cDebug.c</itemPath>
+        <itemPath>../common/i2c/i2cCommon.c</itemPath>
       </logicalFolder>
       <logicalFolder name="common.i2c.32"
                      displayName="common.i2c.32"
@@ -407,6 +430,7 @@
         <itemPath>../common/math/cenMath.c</itemPath>
         <itemPath>../common/math/hexUtils.c</itemPath>
         <itemPath>../common/math/bcdUtils.c</itemPath>
+        <itemPath>../common/math/random.c</itemPath>
       </logicalFolder>
       <logicalFolder name="common.pwm.32"
                      displayName="common.pwm.32"
@@ -440,6 +464,9 @@
         <itemPath>../common/serial/32/serial32.c</itemPath>
         <itemPath>../common/serial/32/serialInputInterrupt32.c</itemPath>
       </logicalFolder>
+      <logicalFolder name="f14" displayName="common.system" projectFiles="true">
+        <itemPath>../common/system/system.c</itemPath>
+      </logicalFolder>
       <logicalFolder name="common.timer"
                      displayName="common.timer"
                      projectFiles="true">
@@ -460,6 +487,7 @@
         <itemPath>../device/deviceDescriptor.c</itemPath>
         <itemPath>../device/deviceInterface.c</itemPath>
         <itemPath>../device/deviceDebug.c</itemPath>
+        <itemPath>../device/transmitMode.c</itemPath>
       </logicalFolder>
       <logicalFolder name="device.adc" displayName="device.adc" projectFiles="true">
         <itemPath>../device/adc/adcDeviceInterface.c</itemPath>
@@ -483,6 +511,8 @@
                      displayName="device.dispatchers"
                      projectFiles="true">
         <itemPath>../device/dispatcher/deviceDataDispatcher.c</itemPath>
+        <itemPath>../device/dispatcher/dataDispatcherDevice.c</itemPath>
+        <itemPath>../device/dispatcher/dataDispatcherDeviceInterface.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f5" displayName="device.eeprom" projectFiles="true">
         <itemPath>../device/eeprom/eepromDevice.c</itemPath>
@@ -497,6 +527,10 @@
       <logicalFolder name="device.lcd" displayName="device.lcd" projectFiles="true">
         <itemPath>../device/lcd/lcdDevice.c</itemPath>
         <itemPath>../device/lcd/lcdDeviceInterface.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f10" displayName="device.log" projectFiles="true">
+        <itemPath>../device/log/logDevice.c</itemPath>
+        <itemPath>../device/log/logDeviceInterface.c</itemPath>
       </logicalFolder>
       <logicalFolder name="device.motion.pid"
                      displayName="device.motion.pid"
@@ -518,6 +552,10 @@
                      displayName="device.motor"
                      projectFiles="true">
         <itemPath>../device/motor/pwmMotorDeviceInterface.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f11" displayName="device.serial" projectFiles="true">
+        <itemPath>../device/serial/serialDebugDevice.c</itemPath>
+        <itemPath>../device/serial/serialDebugDeviceInterface.c</itemPath>
       </logicalFolder>
       <logicalFolder name="device.servo"
                      displayName="device.servo"
@@ -541,17 +579,20 @@
                      projectFiles="true">
         <itemPath>../device/system/systemDevice.c</itemPath>
         <itemPath>../device/system/systemDeviceInterface.c</itemPath>
-        <itemPath>../device/system/systemDebugDevice.c</itemPath>
-        <itemPath>../device/system/systemDebugDeviceInterface.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f4"
                      displayName="device.temperatureSensor"
                      projectFiles="true">
-        <itemPath>../device/temperatureSensor/temperatureSensor.c</itemPath>
-        <itemPath>../device/temperatureSensor/temperatureSensorDevice.c</itemPath>
-        <itemPath>../device/temperatureSensor/temperatureSensorDeviceInterface.c</itemPath>
       </logicalFolder>
       <logicalFolder name="device.test" displayName="device.test" projectFiles="true">
+        <itemPath>../device/test/test2Device.c</itemPath>
+        <itemPath>../device/test/test2DeviceInterface.c</itemPath>
+        <itemPath>../device/test/testDevice.c</itemPath>
+        <itemPath>../device/test/testDeviceInterface.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f12" displayName="device.timer" projectFiles="true">
+        <itemPath>../device/timer/timerDevice.c</itemPath>
+        <itemPath>../device/timer/timerDeviceInterface.c</itemPath>
       </logicalFolder>
       <logicalFolder name="drivers" displayName="drivers" projectFiles="true">
         <itemPath>../drivers/driver.c</itemPath>
@@ -606,7 +647,6 @@
       <logicalFolder name="f7" displayName="drivers.robotConfig" projectFiles="true">
       </logicalFolder>
       <logicalFolder name="f3" displayName="drivers.sensor" projectFiles="true">
-        <itemPath>../drivers/sensor/LM75A.c</itemPath>
       </logicalFolder>
       <logicalFolder name="drivers.sonar"
                      displayName="drivers.sonar"
@@ -626,9 +666,10 @@
       <logicalFolder name="drivers.test"
                      displayName="drivers.test"
                      projectFiles="true">
+        <itemPath>../drivers/test/testDriver.c</itemPath>
       </logicalFolder>
       <logicalFolder name="main" displayName="main" projectFiles="true">
-        <itemPath>../main/titanMainBoard/titanMainBoardClient.c</itemPath>
+        <itemPath>../main/mainBoard/mainBoard32.c</itemPath>
       </logicalFolder>
       <logicalFolder name="robot" displayName="robot" projectFiles="true">
         <itemPath>../robot/robot.c</itemPath>
@@ -646,13 +687,18 @@
         <itemPath>../robot/config/robotConfig.c</itemPath>
         <itemPath>../robot/config/32/robotConfigPic32.c</itemPath>
       </logicalFolder>
+      <logicalFolder name="f13" displayName="robot.kinematics" projectFiles="true">
+        <itemPath>../robot/kinematics/robotKinematics.c</itemPath>
+        <itemPath>../robot/kinematics/robotKinematicsDevice.c</itemPath>
+        <itemPath>../robot/kinematics/robotKinematicsDeviceInterface.c</itemPath>
+      </logicalFolder>
       <logicalFolder name="robot.match" displayName="robot.match" projectFiles="true">
         <itemPath>../robot/match/endMatchDetectorDevice.c</itemPath>
-        <itemPath>../robot/match/startMatchDetectorDevice.c</itemPath>
         <itemPath>../robot/match/endMatchDetectorDeviceInterface.c</itemPath>
-        <itemPath>../robot/match/startMatchDetectorDeviceInterface.c</itemPath>
         <itemPath>../robot/match/32/startMatchDetector32.c</itemPath>
-        <itemPath>../robot/match/startMatchDetector.c</itemPath>
+        <itemPath>../robot/match/startMatch.c</itemPath>
+        <itemPath>../robot/match/startMatchDeviceInterface.c</itemPath>
+        <itemPath>../robot/match/startMatchDevice.c</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.opponent"
                      displayName="robot.opponent"
@@ -683,7 +729,7 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>ICD3PlatformTool</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>1.32</languageToolchainVersion>
+        <languageToolchainVersion>1.34</languageToolchainVersion>
         <platform>2</platform>
       </toolsSet>
       <compileType>
@@ -725,7 +771,7 @@
         <property key="place-data-into-section" value="false"/>
         <property key="post-instruction-scheduling" value="default"/>
         <property key="pre-instruction-scheduling" value="default"/>
-        <property key="preprocessor-macros" value=""/>
+        <property key="preprocessor-macros" value="_SUPPRESS_PLIB_WARNING"/>
         <property key="strict-ansi" value="false"/>
         <property key="support-ansi" value="false"/>
         <property key="use-cci" value="false"/>
@@ -817,6 +863,7 @@
         <property key="common-include-directories" value=""/>
         <property key="gp-relative-option" value=""/>
         <property key="legacy-libc" value="false"/>
+        <property key="relaxed-math" value="false"/>
         <property key="save-temps" value="false"/>
         <property key="wpo-lto" value="false"/>
       </C32Global>
@@ -866,26 +913,34 @@
         <property key="UART5" value="true"/>
         <property key="UART6" value="true"/>
         <property key="debugoptions.useswbreakpoints" value="false"/>
-        <property key="firmware.download.all" value="false"/>
         <property key="hwtoolclock.frcindebug" value="false"/>
         <property key="memories.aux" value="false"/>
         <property key="memories.bootflash" value="false"/>
         <property key="memories.configurationmemory" value="true"/>
+        <property key="memories.configurationmemory2" value="true"/>
         <property key="memories.dataflash" value="true"/>
         <property key="memories.eeprom" value="true"/>
         <property key="memories.flashdata" value="true"/>
         <property key="memories.id" value="true"/>
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.end" value="0x1d07ffff"/>
+        <property key="memories.programmemory.partition2" value="true"/>
+        <property key="memories.programmemory.partition2.end"
+                  value="${memories.programmemory.partition2.end.value}"/>
+        <property key="memories.programmemory.partition2.start"
+                  value="${memories.programmemory.partition2.start.value}"/>
         <property key="memories.programmemory.start" value="0x1d000000"/>
         <property key="poweroptions.powerenable" value="false"/>
         <property key="programoptions.donoteraseauxmem" value="false"/>
         <property key="programoptions.eraseb4program" value="true"/>
+        <property key="programoptions.preservedataflash" value="false"/>
         <property key="programoptions.preserveeeprom" value="false"/>
         <property key="programoptions.preserveprogramrange" value="false"/>
         <property key="programoptions.preserveprogramrange.end" value="0x1d07ffff"/>
         <property key="programoptions.preserveprogramrange.start" value="0x1d000000"/>
         <property key="programoptions.preserveuserid" value="false"/>
+        <property key="programoptions.programcalmem" value="false"/>
+        <property key="programoptions.programuserotp" value="false"/>
         <property key="programoptions.testmodeentrymethod" value="VPPFirst"/>
         <property key="programoptions.usehighvoltageonmclr" value="false"/>
         <property key="programoptions.uselvpprogramming" value="false"/>

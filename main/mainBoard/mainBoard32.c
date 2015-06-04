@@ -182,7 +182,7 @@
 #include "../../robot/opponent/opponentRobot.h"
 
 // Other boards interface
-#include "../../main/motorBoard/motorBoard32.h"
+#include "../../main/motorboard/motorBoard32.h"
 #include "../../main/meca2/mechanicalBoard2.h"
 #include "../../main/airconditioning/airConditioningMain.h"
 
@@ -363,6 +363,7 @@ void initMainBoardDevicesDescriptor() {
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
     addLocalDevice(getADCDeviceInterface(), getADCDeviceDescriptor());
+    addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor());
 
     /*
     addLocalDevice(getSonarDeviceInterface(), getSonarDeviceDescriptor(&i2cBus));
@@ -438,7 +439,7 @@ void initMainBoardDriverDataDispatcherList(void) {
         SERIAL_PORT_MOTOR);
 
     // Stream for Mechanical Board 2
-    initI2cBusConnection(&mechanicalBoard2I2cBusConnection, &i2cBus, MECHANICAL_BOARD_2_I2C_ADDRESS);
+    /*initI2cBusConnection(&mechanicalBoard2I2cBusConnection, &i2cBus, MECHANICAL_BOARD_2_I2C_ADDRESS);
     addI2CDriverDataDispatcher(
             "MECHANICAL_BOARD_2_DISPATCHER",
             &mechanical2BoardInputBuffer,
@@ -447,7 +448,7 @@ void initMainBoardDriverDataDispatcherList(void) {
             &mechanical2BoardOutputStream,
             &mechanical2BoardInputStream,
             &mechanicalBoard2I2cBusConnection);
-
+*/
     // Uart Stream for motorBoard
     addUartDriverDataDispatcher(
         &mechanicalBoard2SerialStreamLink,
@@ -587,6 +588,7 @@ int main(void) {
     initI2cBusConnection(&clockI2cBusConnection, &i2cBus, 0 /* TODO. */);
     initClockPCF8563(&clock, &clockI2cBusConnection);
 
+	
     initMainBoardDevicesDescriptor();
     initMainBoardDriversDescriptor();
     initMainBoardDriverDataDispatcherList();

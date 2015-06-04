@@ -125,21 +125,15 @@ void stopTimer(Timer* timer);
 /**
  * Mark the timer. Remembers the current timer value  (POO simulation).
  */
-void markTimer(Timer* timer);
-
-/**
- * Get the time difference since the last mark.
- * @param timer the pointer on timer object (POO simulation)
- */
-unsigned long getTimeSinceLastMark(Timer* timer);
+void mark(Timer* timer);
 
 /**
  * Check if the last mark was done after markTime + time.
- * @param timer the pointer on timer object (POO simulation)
- * @param timeToCheck the time to compare if we are in timeout or not 
+ * @param timer the pointer on timer object ( (POO simulation)
+ * @param time the time to compare if we are in timeout or not 
  * return true if (markTime + time > timer->time)
  */
-bool timeout(Timer* timer, unsigned long timeToCheck);
+bool timeout(Timer* timer, unsigned long time);
 
 // LOCK
 

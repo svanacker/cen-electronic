@@ -18,21 +18,6 @@ int deviceSystemGetInterface(char commandHeader, DeviceInterfaceMode mode, bool 
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
-    // lastError
-    else if (commandHeader == COMMAND_GET_LAST_ERROR) {
-        if (fillDeviceArgumentList) {
-            setFunction("getLastError", 0, 1);
-            setResultUnsignedHex4(0, "error");
-        }
-        return commandLengthValueForMode(mode, 0, 4);
-    }
-    if (commandHeader == COMMAND_CLEAR_LAST_ERROR) {
-        if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("clearLastError");
-        }
-        return commandLengthValueForMode(mode, 0, 0);
-    }
-
     // DeviceList
     else if (commandHeader == COMMAND_DEVICE_LIST) {
         if (fillDeviceArgumentList) {

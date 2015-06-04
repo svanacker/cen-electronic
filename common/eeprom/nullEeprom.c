@@ -24,5 +24,5 @@ void nullEepromWriteBlock(Eeprom* eeprom_, unsigned long index, unsigned int len
 }
 
 void initNullEeprom(Eeprom* nullEeprom) {
-    initEeprom(nullEeprom, EEPROM_NULL_MAX_INDEX, nullEepromWriteChar, nullEepromReadChar, nullEepromWriteBlock, nullEepromReadBlock, NULL);
+//    initEeprom(nullEeprom, EEPROM_NULL_MAX_INDEX, nullEepromWriteChar, nullEepromReadChar, nullEepromWriteBlock, nullEepromReadBlock, NULL);
 }

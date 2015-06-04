@@ -4,30 +4,15 @@
 #include "../../device/deviceInterface.h"
 #include "../../device/deviceConstants.h"
 
-
-/** Command to see the count of timer. */
-#define COMMAND_TIMER_COUNT             'c'
-
-/** Command to see the list of Timer List (but in debug console). */
+/** Command to see the list of Timer List. */
 #define COMMAND_TIMER_LIST              'L'
 
-/** Command to read all values about a timer . */
-#define COMMAND_TIMER_READ              'r'
+/** Command to add Timer Demo (print each seconds a timer index) by his index. */
+#define COMMAND_TIMER_ENABLE_DEMO       'e'
 
-/** Command to write values about a timer . */
-#define COMMAND_TIMER_ENABLE_DISABLE      'e'
+/** Command to stop the Timer Demo. */
+#define COMMAND_TIMER_DISABLE_DEMO        'd'
 
-/** Command to read the time since last mark . */
-#define COMMAND_TIMER_TIME_SINCE_LAST_MARK 'm'
-
-/** Command to mark a timer . */
-#define COMMAND_TIMER_MARK              'M'
-
-/** Command to know if a timer has timeout . */
-#define COMMAND_TIMER_TIMEOUT           't'
-
-/** Command to stop or stat the Timer Demo. */
-#define COMMAND_TIMER_DEMO             'D'
 
 /**
 * Get the timer device interface.

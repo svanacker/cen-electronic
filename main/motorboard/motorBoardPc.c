@@ -40,11 +40,8 @@
 #include "../../device/eeprom/eepromDevice.h"
 #include "../../device/eeprom/eepromDeviceInterface.h"
 
-// TIMERS
-#include "../../device/timer/timerDevice.h"
-#include "../../device/timer/timerDeviceInterface.h"
-
 // KINEMATICS
+
 #include "../../robot/kinematics/robotKinematicsDevice.h"
 #include "../../robot/kinematics/robotKinematicsDeviceInterface.h"
 
@@ -229,7 +226,6 @@ void runMotorBoardPC(bool singleMode) {
     // Devices
     initDeviceList((Device(*)[]) &deviceListArray, MOTOR_BOARD_PC_DEVICE_LIST_LENGTH);
     addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
-    addLocalDevice(getTimerDeviceInterface(), getTimerDeviceDescriptor());
     addLocalDevice(getI2cSlaveDebugDeviceInterface(), getI2cSlaveDebugDeviceDescriptor(&motorI2cBusConnection));
     addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
     addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());
