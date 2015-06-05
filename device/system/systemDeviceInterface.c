@@ -11,10 +11,10 @@ const char* deviceSystemGetName(void) {
 }
 
 int deviceSystemGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
-    // picName
-    if (commandHeader == COMMAND_PIC_NAME) {
+    // BoardName
+    if (commandHeader == COMMAND_BOARD_NAME) {
         if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("getPicName");
+            setFunctionNoArgumentAndNoResult("getBoardName");
         }
         return commandLengthValueForMode(mode, 0, 0);
     }

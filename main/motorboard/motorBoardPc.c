@@ -171,7 +171,7 @@ void motorBoardWaitForInstruction(void) {
 
 void runMotorBoardPC(bool singleMode) {
     singleModeActivated = singleMode;
-    setPicName(MOTOR_BOARD_PC_NAME);
+    setBoardName(MOTOR_BOARD_PC_NAME);
     moveConsole(HALF_SCREEN_WIDTH, 0, HALF_SCREEN_WIDTH, CONSOLE_HEIGHT);
 
     // We use http://patorjk.com/software/taag/#p=testall&v=2&f=Acrobatic&t=MOTOR%20BOARD%20PC
@@ -187,7 +187,7 @@ void runMotorBoardPC(bool singleMode) {
     initConsoleInputStream(&consoleInputStream);
     initConsoleOutputStream(&consoleOutputStream);
     addConsoleLogHandler(DEBUG, LOG_HANDLER_CATEGORY_ALL_MASK);
-    appendStringCRLF(getDebugOutputStreamLogger(), getPicName());
+    appendStringCRLF(getDebugOutputStreamLogger(), getBoardName());
 
     initTimerList((Timer(*)[]) &timerListArray, MOTOR_BOARD_PC_TIMER_LENGTH);
 

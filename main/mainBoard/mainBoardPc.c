@@ -249,7 +249,7 @@ bool mainBoardPcWaitForInstruction(StartMatch* startMatch) {
 
 void runMainBoardPC(bool connectToRobotManagerMode) {
     connectToRobotManager = connectToRobotManagerMode;
-    setPicName(MAIN_BOARD_PC_NAME);
+    setBoardName(MAIN_BOARD_PC_NAME);
     moveConsole(0, 0, HALF_SCREEN_WIDTH, CONSOLE_HEIGHT);
 
     // We use http://patorjk.com/software/taag/#p=testall&v=2&f=Acrobatic&t=MOTOR%20BOARD%20PC
@@ -266,7 +266,7 @@ void runMainBoardPC(bool connectToRobotManagerMode) {
     initConsoleInputStream(&consoleInputStream);
     initConsoleOutputStream(&consoleOutputStream);
     addConsoleLogHandler(DEBUG, LOG_HANDLER_CATEGORY_ALL_MASK);
-    appendStringCRLF(getDebugOutputStreamLogger(), getPicName());
+    appendStringCRLF(getDebugOutputStreamLogger(), getBoardName());
 
 
     initTimerList((Timer(*)[]) &timerListArray, MAIN_BOARD_PC_TIMER_LENGTH);

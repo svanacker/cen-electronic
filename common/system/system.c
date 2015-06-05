@@ -1,11 +1,11 @@
 #include "system.h"
 
-static char* picName;
+static char* boardName;
 
-void setPicName(char* aPicName) {
-    picName = aPicName;
+void setBoardName(char* aBoardName) {
+    boardName = aBoardName;
 }
 
-char* getPicName(void) {
-    return picName;
+char* getBoardName(void) {
+    return boardName;
 }

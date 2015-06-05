@@ -30,10 +30,10 @@ FILE* eepromPCGetOrCreateFile(Eeprom* eeprom_, bool load) {
     char fileName[255];
     // TODO ! Change the Path !
     char* directory = "c:/PERSO/";
-    char* picName = getPicName();
+    char* boardName = getBoardName();
     char* extension = ".hex";
     strcpy(fileName, directory);
-    strcat(fileName, picName);
+    strcat(fileName, boardName);
     strcat(fileName, extension);
 
     FILE* file = fopen(fileName, "rb+");

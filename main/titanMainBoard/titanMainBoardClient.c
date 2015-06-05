@@ -606,7 +606,7 @@ void waitForInstruction() {
 }
 
 int main(void) {
-    setPicName("TITAN ELECTRONICAL MAIN BOARD 32bits V-JJ_7");
+    setBoardName("TITAN ELECTRONICAL MAIN BOARD 32bits V-JJ_7");
 
     i2cMasterInitialize();
     
@@ -645,7 +645,7 @@ int main(void) {
     addLogHandler(&debugSerialLogHandler, "UART", &debugOutputStream, DEBUG);
     addLogHandler(&lcdLogHandler, "LCD", &lcdOutputStream, ERROR);
 
-    appendString(getAlwaysOutputStreamLogger(), getPicName());
+    appendString(getAlwaysOutputStreamLogger(), getBoardName());
     println(getAlwaysOutputStreamLogger());
 
     initDevicesDescriptor();

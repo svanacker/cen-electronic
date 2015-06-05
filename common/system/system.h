@@ -2,15 +2,15 @@
 #define SYSTEM_H
 
 /**
-* Defines the name of the PIC.
-* @apicName the name of the PIC (Ex : MAIN BOARD 32 ...)
+* Defines the name of the BOARD.
+* @param boardName the name of the BOARD (Ex : MAIN BOARD 32 ...)
 */
-void setPicName(char* apicName);
+void setBoardName(char* boardName);
 
 /**
-* Returns the name of the PIC.
-* @return the name of the PIC (Ex : MAIN BOARD 32 ...)
+* Returns the name of the BOARD.
+* @return the name of the BOARD (Ex : MAIN BOARD 32 ...)
 */
-char* getPicName(void);
+char* getBoardName(void);
 
 #endif

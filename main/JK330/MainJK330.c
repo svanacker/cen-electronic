@@ -293,7 +293,7 @@ int main(void) {
     drawPicture();
 
    
-    setPicName("MAIN BOARD JK330");
+    setBoardName("MAIN BOARD JK330");
 
     // Open the serial Link for debug
     openSerialLink(&debugSerialStreamLink,
@@ -356,7 +356,7 @@ int main(void) {
     //init24C512Eeprom(&eeprom_);
     //initClockPCF8563(&globalClock);
 
-    appendString(getDebugOutputStreamLogger(), getPicName());
+    appendString(getDebugOutputStreamLogger(), getBoardName());
     println(getDebugOutputStreamLogger());
 
     clearScreen();

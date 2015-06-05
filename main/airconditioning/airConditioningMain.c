@@ -170,7 +170,7 @@ void clickOnButton() {
 }
 
 int main(void) {
-    setPicName("AIR_COND_BOARD");
+    setBoardName("AIR_COND_BOARD");
 
     initStrategyBoardIO();
 
@@ -189,7 +189,7 @@ int main(void) {
     // Init the logs
     initLogs(DEBUG, &logHandlerListArray, AIR_CONDITIONING_LOG_HANDLER_LIST_LENGTH);
     addLogHandler("UART", &debugOutputStream, DEBUG);
-    appendString(getInfoOutputStreamLogger(), getPicName());
+    appendString(getInfoOutputStreamLogger(), getBoardName());
     println(getInfoOutputStreamLogger());
 
     // I2C

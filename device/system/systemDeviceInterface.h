@@ -25,8 +25,8 @@
 /** Command to wait a certain amount of time (in milliseconds). */
 #define COMMAND_WAIT               'W'
 
-/** Command to show the name of the PIC. */
-#define COMMAND_PIC_NAME           'N'
+/** Command to show the name of the BOARD. */
+#define COMMAND_BOARD_NAME           'N'
 
 /** Command to know if the remote board is present. */
 #define COMMAND_PING               'P'
