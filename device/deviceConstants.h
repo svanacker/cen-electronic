@@ -2,6 +2,8 @@
 #define DEVICE_CONSTANTS_H
 
 /** Device header .*/
+#define BATTERY_DEVICE_HEADER                      'b'
+
 #define ROBOT_CONFIG_DEVICE_HEADER                 'c'
 
 #define ADC_DEVICE_HEADER                          'd'

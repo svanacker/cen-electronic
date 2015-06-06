@@ -146,6 +146,8 @@
     <ClCompile Include="common\timer\timerList.c" />
     <ClCompile Include="device\adc\adcDevice.c" />
     <ClCompile Include="device\adc\adcDeviceInterface.c" />
+    <ClCompile Include="device\battery\batteryDevice.c" />
+    <ClCompile Include="device\battery\batteryDeviceInterface.c" />
     <ClCompile Include="device\beacon\beaconReceiverDeviceInterface.c" />
     <ClCompile Include="device\clock\clockDevice.c" />
     <ClCompile Include="device\clock\clockDeviceInterface.c" />
@@ -193,6 +195,7 @@
     <ClCompile Include="device\timer\timerDevice.c" />
     <ClCompile Include="device\timer\timerDeviceInterface.c" />
     <ClCompile Include="device\transmitMode.c" />
+    <ClCompile Include="drivers\battery\battery.c" />
     <ClCompile Include="drivers\beacon\beaconReceiverDriver.c" />
     <ClCompile Include="drivers\clock\pc\pcClock.c" />
     <ClCompile Include="drivers\clock\softClock.c" />
@@ -393,6 +396,8 @@
     <ClInclude Include="common\timer\timerSetup.h" />
     <ClInclude Include="device\adc\adcDevice.h" />
     <ClInclude Include="device\adc\adcDeviceInterface.h" />
+    <ClInclude Include="device\battery\batteryDevice.h" />
+    <ClInclude Include="device\battery\batteryDeviceInterface.h" />
     <ClInclude Include="device\beacon\beaconReceiverDeviceInterface.h" />
     <ClInclude Include="device\clock\clockDevice.h" />
     <ClInclude Include="device\clock\clockDeviceInterface.h" />
@@ -444,6 +449,7 @@
     <ClInclude Include="device\timer\timerDevice.h" />
     <ClInclude Include="device\timer\timerDeviceInterface.h" />
     <ClInclude Include="device\transmitMode.h" />
+    <ClInclude Include="drivers\battery\battery.h" />
     <ClInclude Include="drivers\beacon\beaconReceiverDriver.h" />
     <ClInclude Include="drivers\clock\pc\pcClock.h" />
     <ClInclude Include="drivers\clock\softClock.h" />

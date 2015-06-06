@@ -35,6 +35,10 @@
 #include "../../device/deviceList.h"
 #include "../../device/transmitMode.h"
 
+// BATTERY
+#include "../../device/battery/batteryDevice.h"
+#include "../../device/battery/batteryDeviceInterface.h"
+
 // CLOCK
 #include "../../device/clock/clockDevice.h"
 #include "../../device/clock/clockDeviceInterface.h"
@@ -356,6 +360,7 @@ void runMainBoardPC(bool connectToRobotManagerMode) {
     addLocalDevice(getStartMatchDeviceInterface(), getStartMatchDeviceDescriptor(&startMatch));
  
     // MOTOR BOARD
+    addI2cRemoteDevice(getBatteryDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
     // addI2cRemoteDevice(getEepromDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
     addI2cRemoteDevice(getPIDDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
     addI2cRemoteDevice(getMotorDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);

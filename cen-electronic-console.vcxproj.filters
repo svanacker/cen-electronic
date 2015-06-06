@@ -709,6 +709,18 @@
     <Filter Include="Source Files\common\adc\pc">
       <UniqueIdentifier>{9569f187-73aa-4b23-bb73-d56622abba01}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\device\battery">
+      <UniqueIdentifier>{a7c257c0-cc79-4282-b655-b9c064d936d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\device\battery">
+      <UniqueIdentifier>{d635debf-b8cd-4c8d-b025-93f5cfb5d1c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\drivers\battery">
+      <UniqueIdentifier>{ba028cf2-df9e-4c87-9a6b-457aa1e378d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\drivers\battery">
+      <UniqueIdentifier>{c4aa81ee-8396-40a5-82d3-ef3fe5f07c36}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -1424,6 +1436,15 @@
     </ClCompile>
     <ClCompile Include="common\adc\pc\adcutilsPc.c">
       <Filter>Source Files\common\adc\pc</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\battery\battery.c">
+      <Filter>Source Files\drivers\battery</Filter>
+    </ClCompile>
+    <ClCompile Include="device\battery\batteryDevice.c">
+      <Filter>Source Files\device\battery</Filter>
+    </ClCompile>
+    <ClCompile Include="device\battery\batteryDeviceInterface.c">
+      <Filter>Source Files\device\battery</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2206,6 +2227,15 @@
     </ClInclude>
     <ClInclude Include="device\adc\adcDeviceInterface.h">
       <Filter>Header Files\device\adc</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\battery\battery.h">
+      <Filter>Header Files\drivers\battery</Filter>
+    </ClInclude>
+    <ClInclude Include="device\battery\batteryDevice.h">
+      <Filter>Header Files\device\battery</Filter>
+    </ClInclude>
+    <ClInclude Include="device\battery\batteryDeviceInterface.h">
+      <Filter>Header Files\device\battery</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

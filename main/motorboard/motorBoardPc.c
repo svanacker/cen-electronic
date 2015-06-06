@@ -32,6 +32,10 @@
 #include "../../device/i2c/slave/i2cSlaveDebugDevice.h"
 #include "../../device/i2c/slave/i2cSlaveDebugDeviceInterface.h"
 
+// BATTERY
+#include "../../device/battery/batteryDevice.h"
+#include "../../device/battery/batteryDeviceInterface.h"
+
 // CLOCK
 #include "../../device/clock/clockDevice.h"
 #include "../../device/clock/clockDeviceInterface.h"
@@ -81,6 +85,7 @@
 #include "../../drivers/dispatcher/localDriverDataDispatcher.h"
 #include "../../drivers/test/testDriver.h"
 
+#include "../../drivers/battery/battery.h"
 #include "../../drivers/clock/softClock.h"
 
 #include "../../motion/motion.h"
@@ -121,6 +126,9 @@ static Buffer i2cSlaveDebugInputBuffer;
 
 // Eeprom
 static Eeprom eeprom;
+
+// Battery
+static Battery battery;
 
 // Clock
 static Clock clock;
@@ -223,6 +231,9 @@ void runMotorBoardPC(bool singleMode) {
     // Eeprom
     initEepromPc(&eeprom, "TODO");
 
+    // Battery
+    initBattery(&battery, getBatteryVoltage);
+
     // Clock
     initSoftClock(&clock);
 
@@ -235,6 +246,7 @@ void runMotorBoardPC(bool singleMode) {
     addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());
 
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
+    addLocalDevice(getBatteryDeviceInterface(), getBatteryDeviceDescriptor(&battery));
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
     addLocalDevice(getRobotKinematicsDeviceInterface(), getRobotKinematicsDeviceDescriptor(&eeprom));
 
