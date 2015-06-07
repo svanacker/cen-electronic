@@ -122,6 +122,10 @@
 #include "../../device/lcd/lcdDevice.h"
 #include "../../device/lcd/lcdDeviceInterface.h"
 
+// LED
+#include "../../device/led/ledDevice.h"
+#include "../../device/led/ledDeviceInterface.h"
+
 // Motor
 #include "../../device/motor/pwmMotorDeviceInterface.h"
 
@@ -192,7 +196,7 @@
 
 #include "../../drivers/sonar/srf02.h"
 
-#define SERIAL_PORT_DEBUG         SERIAL_PORT_2 
+#define SERIAL_PORT_DEBUG         SERIAL_PORT_2
 #define SERIAL_PORT_PC            SERIAL_PORT_6
 #define SERIAL_PORT_MOTOR         SERIAL_PORT_5
 #define SERIAL_PORT_MECA2         SERIAL_PORT_1
@@ -359,11 +363,13 @@ void initMainBoardDevicesDescriptor() {
 
     initStartMatch(&startMatch, isMatchStarted32, mainBoardWaitForInstruction, &eeprom);
     addLocalDevice(getStartMatchDeviceInterface(), getStartMatchDeviceDescriptor(&startMatch));
-    addLocalDevice(getEndMatchDetectorDeviceInterface(), getEndMatchDetectorDeviceDescriptor());
+//  addLocalDevice(getEndMatchDetectorDeviceInterface(), getEndMatchDetectorDeviceDescriptor());
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
     addLocalDevice(getADCDeviceInterface(), getADCDeviceDescriptor());
     addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor());
+    addLocalDevice(getLedDeviceInterface(), getLedDeviceDescriptor());
+    addLocalDevice(getTemperatureSensorDeviceInterface(), getTemperatureSensorDeviceDescriptor(&i2cBus));
 
     /*
     addLocalDevice(getSonarDeviceInterface(), getSonarDeviceDescriptor(&i2cBus));

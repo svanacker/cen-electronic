@@ -70,6 +70,9 @@
         <itemPath>../common/io/binaryWriter.h</itemPath>
         <itemPath>../common/io/reader.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f16" displayName="common.led" projectFiles="true">
+        <itemPath>../common/led/ledutils.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="common.log" displayName="common.log" projectFiles="true">
         <itemPath>../common/log/logger.h</itemPath>
         <itemPath>../common/log/logHandler.h</itemPath>
@@ -163,6 +166,10 @@
         <itemPath>../device/lcd/lcdDevice.h</itemPath>
         <itemPath>../device/lcd/lcdDeviceInterface.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f15" displayName="device.led" projectFiles="true">
+        <itemPath>../device/led/ledDevice.h</itemPath>
+        <itemPath>../device/led/ledDeviceInterface.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="f10" displayName="device.log" projectFiles="true">
         <itemPath>../device/log/logDeviceInterface.h</itemPath>
         <itemPath>../device/log/logDevice.h</itemPath>
@@ -217,6 +224,9 @@
       <logicalFolder name="f4"
                      displayName="device.temperatureSensor"
                      projectFiles="true">
+        <itemPath>../device/sensor/temperature/temperatureSensor.h</itemPath>
+        <itemPath>../device/sensor/temperature/temperatureSensorDevice.h</itemPath>
+        <itemPath>../device/sensor/temperature/temperatureSensorDeviceInterface.h</itemPath>
       </logicalFolder>
       <logicalFolder name="device.test" displayName="device.test" projectFiles="true">
         <itemPath>../device/test/test2Device.h</itemPath>
@@ -280,6 +290,7 @@
       <logicalFolder name="f7" displayName="drivers.robotConfig" projectFiles="true">
       </logicalFolder>
       <logicalFolder name="f3" displayName="drivers.sensor" projectFiles="true">
+        <itemPath>../drivers/sensor/temperature/LM75A.h</itemPath>
       </logicalFolder>
       <logicalFolder name="drivers.sonar"
                      displayName="drivers.sonar"
@@ -419,6 +430,9 @@
         <itemPath>../common/io/binaryPrintWriter.c</itemPath>
         <itemPath>../common/io/binaryWriter.c</itemPath>
       </logicalFolder>
+      <logicalFolder name="f17" displayName="common.led" projectFiles="true">
+        <itemPath>../common/led/32/ledutils32.c</itemPath>
+      </logicalFolder>
       <logicalFolder name="common.log" displayName="common.log" projectFiles="true">
         <itemPath>../common/log/logger.c</itemPath>
         <itemPath>../common/log/logHandler.c</itemPath>
@@ -480,6 +494,8 @@
         <itemPath>../common/timer/32/timerInterrupt32.c</itemPath>
         <itemPath>../common/timer/32/timerSetup32.c</itemPath>
       </logicalFolder>
+      <logicalFolder name="f16" displayName="comon.led" projectFiles="true">
+      </logicalFolder>
       <logicalFolder name="device" displayName="device" projectFiles="true">
         <itemPath>../device/device.c</itemPath>
         <itemPath>../device/deviceList.c</itemPath>
@@ -527,6 +543,10 @@
       <logicalFolder name="device.lcd" displayName="device.lcd" projectFiles="true">
         <itemPath>../device/lcd/lcdDevice.c</itemPath>
         <itemPath>../device/lcd/lcdDeviceInterface.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f15" displayName="device.led" projectFiles="true">
+        <itemPath>../device/led/ledDevice.c</itemPath>
+        <itemPath>../device/led/ledDeviceInterface.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f10" displayName="device.log" projectFiles="true">
         <itemPath>../device/log/logDevice.c</itemPath>
@@ -583,6 +603,9 @@
       <logicalFolder name="f4"
                      displayName="device.temperatureSensor"
                      projectFiles="true">
+        <itemPath>../device/sensor/temperature/temperatureSensor.c</itemPath>
+        <itemPath>../device/sensor/temperature/temperatureSensorDevice.c</itemPath>
+        <itemPath>../device/sensor/temperature/temperatureSensorDeviceInterface.c</itemPath>
       </logicalFolder>
       <logicalFolder name="device.test" displayName="device.test" projectFiles="true">
         <itemPath>../device/test/test2Device.c</itemPath>
@@ -647,6 +670,7 @@
       <logicalFolder name="f7" displayName="drivers.robotConfig" projectFiles="true">
       </logicalFolder>
       <logicalFolder name="f3" displayName="drivers.sensor" projectFiles="true">
+        <itemPath>../drivers/sensor/temperature/LM75A.c</itemPath>
       </logicalFolder>
       <logicalFolder name="drivers.sonar"
                      displayName="drivers.sonar"
@@ -913,6 +937,7 @@
         <property key="UART5" value="true"/>
         <property key="UART6" value="true"/>
         <property key="debugoptions.useswbreakpoints" value="false"/>
+        <property key="firmware.download.all" value="false"/>
         <property key="hwtoolclock.frcindebug" value="false"/>
         <property key="memories.aux" value="false"/>
         <property key="memories.bootflash" value="false"/>
