@@ -90,6 +90,11 @@
 #include "../../device/motor/pwmMotorDevice.h"
 #include "../../device/motor/pwmMotorDeviceInterface.h"
 
+// SENSOR->TEMPERATURE
+#include "../../device/sensor/temperature/temperatureSensor.h"
+#include "../../device/sensor/temperature/temperatureSensorDevice.h"
+#include "../../device/sensor/temperature/temperatureSensorDeviceInterface.h"
+
 // SERVO
 #include "../../device/servo/servoDevice.h"
 #include "../../device/servo/servoDeviceInterface.h"
@@ -118,10 +123,9 @@
 #include "../../drivers/dispatcher/driverDataDispatcherList.h"
 #include "../../drivers/dispatcher/localDriverDataDispatcher.h"
 #include "../../drivers/dispatcher/i2cDriverDataDispatcher.h"
-
 #include "../../drivers/file/eeprom/eepromFile.h"
-
 #include "../../drivers/test/testDriver.h"
+#include "../../drivers/sensor/temperature/pc/temperaturePc.h"
 
 #include "../../robot/match/startMatch.h"
 #include "../../robot/match/startMatchDevice.h"
@@ -168,6 +172,9 @@ static Eeprom eeprom;
 
 // Clock
 static Clock clock;
+
+// Temperature
+static Temperature temperature;
 
 // RobotConfig
 static RobotConfig robotConfig;
@@ -318,6 +325,9 @@ void runMainBoardPC(bool connectToRobotManagerMode) {
     // Clock
     initPcClock(&clock);
 
+    // Temperature
+    initTemperaturePc(&temperature);
+
     // I2C Debug
     initI2CDebugBuffers(&i2cMasterDebugInputBuffer,
         (char(*)[]) &i2cMasterDebugInputBufferArray,
@@ -354,6 +364,7 @@ void runMainBoardPC(bool connectToRobotManagerMode) {
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
     addLocalDevice(getLogDeviceInterface(), getLogDeviceDescriptor());
     addLocalDevice(getLCDDeviceInterface(), getLCDDeviceDescriptor());
+    addLocalDevice(getTemperatureSensorDeviceInterface(), getTemperatureSensorDeviceDescriptor(&temperature));
 
 
     initStartMatch(&startMatch, isMatchStartedPc, mainBoardPcWaitForInstruction, &eeprom);

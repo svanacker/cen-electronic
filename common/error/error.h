@@ -75,6 +75,9 @@ void clearLastError();
 #define BATTERY_NULL                     0x2A0
 #define BATTERY_NOT_INITIALIZED          0x2A1
 
+// TEMPERATURE
+#define TEMPERATURE_NULL              0x2B0
+
 // BIT LIST
 #define BIT_LIST_ARRAY_OUT_OF_BOUNDS    0x0300
 

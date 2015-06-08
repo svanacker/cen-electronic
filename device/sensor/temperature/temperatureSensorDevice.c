@@ -11,9 +11,11 @@
 #include "../../../common/io/printWriter.h"
 #include "../../../common/io/reader.h"
 
+#include "../../../common/sensor/temperature/temperature.h"
+
 #include "../../../device/device.h"
 
-static I2cBus* temperatureI2cBus;
+static Temperature* temperature;
 
 void deviceTemperatureSensorInit(void) {
 }
@@ -28,12 +30,12 @@ bool isTemperatureSensorDeviceOk(void) {
 void deviceTemperatureSensorHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream){
     if (header == COMMAND_READ_TEMPERATURE_SENSOR) {
         ackCommand(outputStream, TEMPERATURE_SENSOR_DEVICE_HEADER, COMMAND_READ_TEMPERATURE_SENSOR);
-        unsigned char value = getTemperatureSensor(temperatureI2cBus);
+        unsigned char value = (unsigned char) temperature->readSensorValue(temperature);
         appendHex2(outputStream, value);
     } else if (header == COMMAND_SET_TEMPERATURE_SENSOR_ALERT) {
         char temperatureSensorAlert = readHex2(inputStream);
         ackCommand(outputStream, TEMPERATURE_SENSOR_DEVICE_HEADER, COMMAND_SET_TEMPERATURE_SENSOR_ALERT);
-        setTemperatureAlertLimit(temperatureI2cBus, temperatureSensorAlert);
+        temperature->writeAlertLimit(temperature, temperatureSensorAlert);
     }
 }
 
@@ -44,8 +46,7 @@ static DeviceDescriptor descriptor = {
     .deviceHandleRawData = &deviceTemperatureSensorHandleRawData,
 };
 
-DeviceDescriptor* getTemperatureSensorDeviceDescriptor(I2cBus* i2cBus) {
-    // TODO : Remove Static value
-    temperatureI2cBus = i2cBus;
+DeviceDescriptor* getTemperatureSensorDeviceDescriptor(Temperature* temperatureParam) {
+    temperature = temperatureParam;
     return &descriptor;
 }

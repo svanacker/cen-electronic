@@ -6,23 +6,35 @@
 #include "../../../common/io/outputStream.h"
 #include "../../../common/math/bcdUtils.h"
 
-char getTemperatureSensor(I2cBusConnection* i2cBusConnection){
+/**
+ * Get the internal I2cBusConnection.
+ * @param temperature the temperature structure (to simulate POO Programming).
+ * @private
+ */
+I2cBusConnection* _LM75A_getI2cBusConnection(Temperature* temperature) {
+    I2cBusConnection* result = (I2cBusConnection*) temperature->object;
+    
+    return result;
+}
+
+int _LM75A_readSensorValue(Temperature* temperature) {
+    I2cBusConnection* i2cBusConnection = _LM75A_getI2cBusConnection(temperature);
     I2cBus* i2cBus = i2cBusConnection->i2cBus;
 
-    char temperature = 0;
+    int result = 0;
     char lm75aMsb = 0;
     char lm75aLsb = 0;
 
     portableMasterStartI2C(i2cBusConnection);
     WaitI2C(i2cBus);
-    portableMasterWriteI2C(i2cBusConnection, LM75A_ADDRESS);
+    portableMasterWriteI2C(i2cBusConnection, i2cBusConnection->i2cAddress);
     WaitI2C(i2cBus);
     portableMasterWriteI2C(i2cBusConnection, LM75A_READ_SENSOR_REGISTER);
     WaitI2C(i2cBus);
     portableMasterStartI2C(i2cBusConnection);
     WaitI2C(i2cBus);
     //I2C read Address
-    portableMasterWriteI2C(i2cBusConnection, LM75A_ADDRESS | 0x01);
+    portableMasterWriteI2C(i2cBusConnection, i2cBusConnection->i2cAddress | 0x01);
     WaitI2C(i2cBus);
     lm75aMsb = portableMasterReadI2C(i2cBusConnection);
     WaitI2C(i2cBus);
@@ -36,20 +48,21 @@ char getTemperatureSensor(I2cBusConnection* i2cBusConnection){
     portableMasterStopI2C(i2cBusConnection);
     WaitI2C(i2cBus);
 
-    temperature = lm75aMsb;
-    return temperature;
+    result = lm75aMsb;
+    return result;
 }
 
-void setTemperatureAlertLimit(I2cBusConnection* i2cBusConnection, int TemperatureSensorAlert){
+void _LM75A_writeAlertLimit(Temperature* temperature, int temperatureSensorAlertValue) {
+    I2cBusConnection* i2cBusConnection = _LM75A_getI2cBusConnection(temperature);
     I2cBus* i2cBus = i2cBusConnection->i2cBus;
 
     portableMasterStartI2C(i2cBusConnection);
     WaitI2C(i2cBus);
-    portableMasterWriteI2C(i2cBusConnection, LM75A_ADDRESS);
+    portableMasterWriteI2C(i2cBusConnection, i2cBusConnection->i2cAddress);
     WaitI2C(i2cBus);
     portableMasterWriteI2C(i2cBusConnection, LM75A_OVER_TEMPERATURE_SENSOR_REGISTER);
     WaitI2C(i2cBus);
-    unsigned char value = bcd2CharToDec(TemperatureSensorAlert);
+    unsigned char value = bcd2CharToDec(temperatureSensorAlertValue);
     portableMasterWriteI2C(i2cBusConnection, value);
     WaitI2C(i2cBus);
     portableMasterWriteI2C(i2cBusConnection, 0x00);
@@ -59,7 +72,7 @@ void setTemperatureAlertLimit(I2cBusConnection* i2cBusConnection, int Temperatur
 
     portableMasterStartI2C(i2cBusConnection);
     WaitI2C(i2cBus);
-    portableMasterWriteI2C(i2cBusConnection, LM75A_ADDRESS);
+    portableMasterWriteI2C(i2cBusConnection, i2cBusConnection->i2cAddress);
     WaitI2C(i2cBus);
     portableMasterWriteI2C(i2cBusConnection, LM75A_CONFIGURATION_SENSOR_REGISTER);
     WaitI2C(i2cBus);
@@ -68,4 +81,8 @@ void setTemperatureAlertLimit(I2cBusConnection* i2cBusConnection, int Temperatur
     WaitI2C(i2cBus);
     portableMasterStopI2C(i2cBusConnection);
     WaitI2C(i2cBus);
+}
+
+void initTemperatureLM75A(Temperature* temperature, I2cBusConnection* i2cBusConnection) {
+    initTemperature(temperature, _LM75A_readSensorValue, _LM75A_writeAlertLimit, i2cBusConnection);
 }
