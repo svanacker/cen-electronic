@@ -17,6 +17,7 @@ static OutputStream* outputStream;
 static InputStream* inputStream;
 
 void readerTestSuite(void) {
+    RUN_TEST(test_readBool);
     RUN_TEST(test_readFilteredChar);
     RUN_TEST(test_readBinaryChar);
     RUN_TEST(test_readBinaryWord);
@@ -36,6 +37,24 @@ void initBufferForReaderTest(void) {
     initBuffer(&bufferTest, (char(*)[]) &bufferArrayTest, TEST_BUFFER_SIZE, "readerTest", "readerTestType");
     outputStream = getOutputStream(&bufferTest);
     inputStream = getInputStream(&bufferTest);
+}
+
+void test_readBool(void) {
+    initBufferForReaderTest();
+
+    appendString(outputStream, "015");
+
+    bool value = readBool(inputStream);
+    TEST_ASSERT_FALSE(value);
+    TEST_ASSERT_EQUAL(0, getLastError());
+    
+    value = readBool(inputStream);
+    TEST_ASSERT_TRUE(value);
+    TEST_ASSERT_EQUAL(0, getLastError());
+
+    value = readBool(inputStream);
+    TEST_ASSERT_TRUE(value);
+    TEST_ASSERT_EQUAL(IO_READER_NOT_BOOL_VALUE, getLastError());
 }
 
 void test_readFilteredChar(void) {

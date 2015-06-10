@@ -3,6 +3,10 @@
 
 void readerTestSuite(void);
 
+// test_readBool
+
+void test_readBool(void);
+
 // readFilteredChar
 
 void test_readFilteredChar(void);

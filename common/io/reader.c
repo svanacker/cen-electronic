@@ -1,5 +1,7 @@
 #include "reader.h"
 
+#include <stdbool.h>
+
 #include "filter.h"
 #include "inputStream.h"
 #include "printWriter.h"
@@ -18,6 +20,18 @@
  */
 
 // READ METHODS
+
+bool readBool(InputStream* inputStream) {
+    char c = inputStream->readChar(inputStream);
+    if (c == '0') {
+        return false;
+    }
+    else if (c == '1') {
+        return true;
+    }
+    writeError(IO_READER_NOT_BOOL_VALUE);
+    return true;
+}
 
 char readFilteredChar(InputStream* inputStream) {
     char b0 = inputStream->readChar(inputStream);
