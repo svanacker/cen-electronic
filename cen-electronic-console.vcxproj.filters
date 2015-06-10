@@ -763,6 +763,12 @@
     <Filter Include="Header Files\device\sensor\temperature">
       <UniqueIdentifier>{a2bf0442-f411-4e6b-984f-d1ea1db51aa5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\test\device\system">
+      <UniqueIdentifier>{90157b53-2cf3-4387-8f49-85376e2d493f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\test\device\system">
+      <UniqueIdentifier>{19887779-fc0c-488f-afa6-7d1947aa0b67}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -1502,6 +1508,12 @@
     </ClCompile>
     <ClCompile Include="device\sensor\temperature\temperatureSensorDeviceInterface.c">
       <Filter>Source Files\device\sensor\temperature</Filter>
+    </ClCompile>
+    <ClCompile Include="test\device\deviceTest.c">
+      <Filter>Source Files\test\device\test</Filter>
+    </ClCompile>
+    <ClCompile Include="test\device\system\systemDeviceTest.c">
+      <Filter>Source Files\test\device\system</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2308,6 +2320,9 @@
     </ClInclude>
     <ClInclude Include="device\sensor\temperature\temperatureSensorDeviceInterface.h">
       <Filter>Header Files\device\sensor\temperature</Filter>
+    </ClInclude>
+    <ClInclude Include="test\device\system\systemDeviceTest.h">
+      <Filter>Header Files\test\device\system</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

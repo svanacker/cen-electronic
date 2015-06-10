@@ -7,8 +7,12 @@
 #include "deviceInterface.h"
 #include "deviceList.h"
 
+#include "../common/error/error.h"
+
 #include "../common/io/outputStream.h"
+#include "../common/io/nullOutputStream.h"
 #include "../common/io/printWriter.h"
+
 
 // Main
 
@@ -49,6 +53,7 @@ void printTypeAsString(OutputStream* outputStream, int parameterType) {
         case DEVICE_ARG_UNSIGNED_HEX_10 : appendString(outputStream, "hex_u_10"); return;
         case DEVICE_ARG_UNSIGNED_HEX_12 : appendString(outputStream, "hex_u_12"); return;
     }
+    writeError(DEVICE_INTERFACE_PROBLEM);
     appendString(outputStream, "??????"); return;
 }
 
@@ -65,6 +70,7 @@ unsigned int printArgument(OutputStream* outputStream, DeviceArgument* deviceArg
     char type = deviceArgument->type;
     unsigned int result = getLengthOfType(type);
     if (result == -1) {
+        writeError(DEVICE_INTERFACE_PROBLEM);
         appendStringAndDec(outputStream, "type length Problem !!! : ", type);
     }
 
@@ -79,8 +85,10 @@ unsigned int printArgument(OutputStream* outputStream, DeviceArgument* deviceArg
 
 /**
  * @private
+ * @return true if it's ok, false if there is an error
  */
 bool printMethodOrNotificationMetaData(OutputStream* outputStream, DeviceInterface* deviceInterface, char commandHeader, char argumentLength, char resultLength, bool notification) {
+    bool result = true;
     if (argumentLength != DEVICE_HEADER_NOT_HANDLED) {
         DeviceMethodMetaData* deviceMethodMetaData = getDeviceMethodMetaData();
         char deviceHeader = deviceInterface->deviceHeader;
@@ -110,6 +118,8 @@ bool printMethodOrNotificationMetaData(OutputStream* outputStream, DeviceInterfa
         append(outputStream,  ARGUMENTS_STOP_CHAR);
 
         if (argumentLength != realArgumentLength) {
+            writeError(DEVICE_INTERFACE_PROBLEM);
+            result = false;
             appendString(outputStream, "Arguments Definition ERROR !!!!!!\n");
             appendCRLF(outputStream);
             appendStringAndDec(outputStream, "argumentCount=", argumentCount);
@@ -133,6 +143,8 @@ bool printMethodOrNotificationMetaData(OutputStream* outputStream, DeviceInterfa
             }
 
             if (resultLength != realResultLength) {
+                result = false;
+                writeError(DEVICE_INTERFACE_PROBLEM);
                 appendString(outputStream, "Result Parameters Definition ERROR !!!!!!");
                 appendCRLF(outputStream);
                 appendStringAndDec(outputStream, "resultCount=", resultCount);
@@ -153,10 +165,8 @@ bool printMethodOrNotificationMetaData(OutputStream* outputStream, DeviceInterfa
         appendString(outputStream, "=>");
         appendDec(outputStream, resultLength);
         println(outputStream);
-
-        return true;
     }
-    return false;
+    return result;
 }
 
 // Usage
@@ -164,32 +174,40 @@ bool printMethodOrNotificationMetaData(OutputStream* outputStream, DeviceInterfa
 /**
  * @private
  */
-void printDeviceUsageLine(OutputStream* outputStream, char header, Device* device) {
+void printDeviceUsageLine(OutputStream* outputStream, char header, Device* device, bool showOnlyProblem) {
     DeviceInterface* deviceInterface = device->deviceInterface;
 
     int argumentLength = deviceInterface->deviceGetInterface(header, DEVICE_MODE_INPUT, true);
     int resultLength = deviceInterface->deviceGetInterface(header, DEVICE_MODE_OUTPUT, true);
-    printMethodOrNotificationMetaData(outputStream, deviceInterface, header, argumentLength, resultLength, false);
-}
-
-/**
- * 
- */
-void printDeviceUsage(OutputStream* outputStream, Device* device) {
-    char header;
-    // We start after special characters and use only ANSI chars
-    for (header = 32; header < 127; header++) {
-        printDeviceUsageLine(outputStream, header, device);
+    if (showOnlyProblem) {
+        OutputStream nullOutputStream;
+        initNullOutputStream(&nullOutputStream);
+        bool ok = printMethodOrNotificationMetaData(&nullOutputStream, deviceInterface, header, argumentLength, resultLength, false);
+        // If there is a problem, we relaunch with a real outputStream
+        if (!ok) {
+            printMethodOrNotificationMetaData(outputStream, deviceInterface, header, argumentLength, resultLength, false);
+        }
+    }
+    else{
+        printMethodOrNotificationMetaData(outputStream, deviceInterface, header, argumentLength, resultLength, false);
     }
 }
 
-void printDeviceListUsage(OutputStream* outputStream) {
+void printDeviceUsage(OutputStream* outputStream, Device* device, bool showOnlyProblem) {
+    char header;
+    // We start after special characters and use only ANSI chars
+    for (header = 32; header < 127; header++) {
+        printDeviceUsageLine(outputStream, header, device, showOnlyProblem);
+    }
+}
+
+void printDeviceListUsage(OutputStream* outputStream, bool showOnlyProblem) {
     println(outputStream);
     int deviceCount = getDeviceCount();
     int deviceIndex;
     for (deviceIndex = 0; deviceIndex < deviceCount; deviceIndex++) {
         Device* device = getDevice(deviceIndex);
-        printDeviceUsage(outputStream, device);
+        printDeviceUsage(outputStream, device, showOnlyProblem);
     }
 }
 
@@ -215,7 +233,8 @@ void printDeviceNotification(OutputStream* outputStream, Device* device) {
         printDeviceNotificationLine(outputStream, header, device);
     }
 }
-void printDeviceListNotification(OutputStream* outputStream) {
+
+void printDeviceListNotification(OutputStream* outputStream, bool showOnlyProblem) {
     println(outputStream);
     int deviceCount = getDeviceCount();
     int deviceIndex;

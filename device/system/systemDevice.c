@@ -22,6 +22,7 @@
 #include "../../common/system/system.h"
 
 #include "../../device/device.h"
+#include "../../device/deviceDescriptor.h"
 #include "../../device/deviceList.h"
 #include "../../device/deviceDebug.h"
 #include "../../device/deviceUsage.h"
@@ -46,6 +47,7 @@ void deviceSystemHandleRawData(char header, InputStream* inputStream, OutputStre
         unsigned char pingIndex = readHex2(inputStream);
         appendHex2(outputStream, pingIndex);
     }
+    // Last Error
     else if (header == COMMAND_GET_LAST_ERROR) {
         ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_GET_LAST_ERROR);
         unsigned int lastError = getLastError();
@@ -55,14 +57,19 @@ void deviceSystemHandleRawData(char header, InputStream* inputStream, OutputStre
         ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_CLEAR_LAST_ERROR);
         clearLastError();
     }
+    // Device list
     else if (header == COMMAND_DEVICE_LIST) {
         ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_DEVICE_LIST);
         printDeviceList(getInfoOutputStreamLogger());
+    // Usage
     } else if (header == COMMAND_USAGE) {
         ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_USAGE);
-        printDeviceListUsage(getInfoOutputStreamLogger());
-    }
-     else if (header == COMMAND_USAGE_SPECIFIC_DEVICE) {
+        printDeviceListUsage(getInfoOutputStreamLogger(), false);
+    } else if (header == COMMAND_USAGE_PROBLEM) {
+        ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_USAGE_PROBLEM);
+        printDeviceListUsage(getInfoOutputStreamLogger(), true);
+    }    
+    else if (header == COMMAND_USAGE_SPECIFIC_DEVICE) {
          ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_USAGE_SPECIFIC_DEVICE);
          char deviceHeader = readBinaryChar(inputStream);
          int size = getDeviceCount();
@@ -71,18 +78,16 @@ void deviceSystemHandleRawData(char header, InputStream* inputStream, OutputStre
              Device* device = getDevice(i);
              if (deviceHeader == device->deviceInterface->deviceHeader) {
                  println(getInfoOutputStreamLogger());
-                 printDeviceUsage(getInfoOutputStreamLogger(), device);
+                 printDeviceUsage(getInfoOutputStreamLogger(), device, false);
                  return;
              }
          }
          appendString(getErrorOutputStreamLogger(), "Device Not Found ! ");
-    } else if (header == COMMAND_USAGE) {
-        ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_USAGE);
-        printDeviceListUsage(getInfoOutputStreamLogger());
     }
+    // Notifications
     else if (header == COMMAND_NOTIFICATION) {
         ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_NOTIFICATION);
-        printDeviceListNotification(getInfoOutputStreamLogger());
+        printDeviceListNotification(getInfoOutputStreamLogger(), false);
     } else if (header == COMMAND_WAIT) {
         appendAck(outputStream);
         int mSec = readHex4(inputStream);

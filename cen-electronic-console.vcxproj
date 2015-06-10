@@ -316,6 +316,8 @@
     <ClCompile Include="test\common\math\bitListTest.c" />
     <ClCompile Include="test\common\math\cenMathTest.c" />
     <ClCompile Include="test\common\math\hexUtilsTest.c" />
+    <ClCompile Include="test\device\deviceTest.c" />
+    <ClCompile Include="test\device\system\systemDeviceTest.c" />
     <ClCompile Include="test\drivers\dispatchers\driverDataDispatcherListTest.c" />
     <ClCompile Include="test\drivers\test\testDriverTest.c" />
     <ClCompile Include="test\motion\bspline\bsplineListTest.c" />
@@ -585,6 +587,7 @@
     <ClInclude Include="test\common\math\bitListTest.h" />
     <ClInclude Include="test\common\math\cenMathTest.h" />
     <ClInclude Include="test\common\math\hexUtilsTest.h" />
+    <ClInclude Include="test\device\system\systemDeviceTest.h" />
     <ClInclude Include="test\drivers\dispatchers\driverDataDispatcherListTest.h" />
     <ClInclude Include="test\drivers\test\testDriverTest.h" />
     <ClInclude Include="test\motion\bspline\bsplineListTest.h" />

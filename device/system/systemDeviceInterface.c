@@ -64,6 +64,12 @@ int deviceSystemGetInterface(char commandHeader, DeviceInterfaceMode mode, bool 
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
+    else if (commandHeader == COMMAND_USAGE_PROBLEM) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("usage (only Problems)");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }
     // Usage Specific
     else if (commandHeader == COMMAND_USAGE_SPECIFIC_DEVICE) {
         if (fillDeviceArgumentList) {

@@ -19,6 +19,9 @@
 /** Command to show usage for all devices. */
 #define COMMAND_USAGE              'u'
 
+/** Command to show usage all usages with a problem on definition. */
+#define COMMAND_USAGE_PROBLEM      'U'
+
 /** Command to show notification for all devices. */
 #define COMMAND_NOTIFICATION       'n'
 
