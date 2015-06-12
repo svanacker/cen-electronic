@@ -64,6 +64,11 @@
  */
 #define TRAJECTORY_DEVICE_HEADER                   'n'
 
+/**
+ * Header char of Navigation device
+ */
+#define NAVIGATION_DEVICE_HEADER                   'N'
+
 #define PID_DEVICE_HEADER                          'p'
 
 /** TODO : Collision with I2C PID */

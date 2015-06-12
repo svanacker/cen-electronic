@@ -128,6 +128,10 @@
 #include "../../../device/motion/simulation/motionSimulationDevice.h"
 #include "../../../device/motion/simulation/motionSimulationDeviceInterface.h"
 
+// NAVIGATION
+#include "../../../device/navigation/navigationDevice.h"
+#include "../../../device/navigation/navigationDeviceInterface.h"
+
 // SYSTEM
 #include "../../../device/system/systemDevice.h"
 #include "../../../device/system/systemDeviceInterface.h"
@@ -167,6 +171,7 @@ void testSystemDeviceUsage(void) {
     addLocalDevice(getMotionDeviceInterface(), NULL);
     addLocalDevice(getMotionSimulationDeviceInterface(), NULL);
     addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());
+    addLocalDevice(getNavigationDeviceInterface(), NULL);
     addLocalDevice(getPIDDeviceInterface(), NULL);
     addLocalDevice(getRobotConfigDeviceInterface(), NULL);
     addLocalDevice(getRobotKinematicsDeviceInterface(), NULL);

@@ -769,6 +769,12 @@
     <Filter Include="Header Files\test\device\system">
       <UniqueIdentifier>{19887779-fc0c-488f-afa6-7d1947aa0b67}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\device\navigation">
+      <UniqueIdentifier>{65cebeb3-8632-42ba-8d5f-56334dfb37f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\device\navigation">
+      <UniqueIdentifier>{8af67280-2456-4342-a187-28aea83b1a5c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -1514,6 +1520,12 @@
     </ClCompile>
     <ClCompile Include="test\device\system\systemDeviceTest.c">
       <Filter>Source Files\test\device\system</Filter>
+    </ClCompile>
+    <ClCompile Include="device\navigation\navigationDevice.c">
+      <Filter>Source Files\device\navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="device\navigation\navigationDeviceInterface.c">
+      <Filter>Source Files\device\navigation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2323,6 +2335,12 @@
     </ClInclude>
     <ClInclude Include="test\device\system\systemDeviceTest.h">
       <Filter>Header Files\test\device\system</Filter>
+    </ClInclude>
+    <ClInclude Include="device\navigation\navigationDevice.h">
+      <Filter>Header Files\device\navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="device\navigation\navigationDeviceInterface.h">
+      <Filter>Header Files\device\navigation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

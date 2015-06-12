@@ -86,6 +86,10 @@
 #include "../../device/motion/simple/motionDeviceInterface.h"
 #include "../../device/motion/simulation/motionSimulationDeviceInterface.h"
 
+// NAVIGATION
+#include "../../device/navigation/navigationDevice.h"
+#include "../../device/navigation/navigationDeviceInterface.h"
+
 // PWM
 #include "../../device/motor/pwmMotorDevice.h"
 #include "../../device/motor/pwmMotorDeviceInterface.h"
@@ -365,7 +369,7 @@ void runMainBoardPC(bool connectToRobotManagerMode) {
     addLocalDevice(getLogDeviceInterface(), getLogDeviceDescriptor());
     addLocalDevice(getLCDDeviceInterface(), getLCDDeviceDescriptor());
     addLocalDevice(getTemperatureSensorDeviceInterface(), getTemperatureSensorDeviceDescriptor(&temperature));
-
+    addLocalDevice(getNavigationDeviceInterface(), getNavigationDeviceDescriptor());
 
     initStartMatch(&startMatch, isMatchStartedPc, mainBoardPcWaitForInstruction, &eeprom);
     addLocalDevice(getStartMatchDeviceInterface(), getStartMatchDeviceDescriptor(&startMatch));
