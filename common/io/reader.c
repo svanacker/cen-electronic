@@ -112,6 +112,16 @@ float readHex6(InputStream* inputStream) {
     return result;
 }
 
+void readCharArray(InputStream* inputStream, char(*s)[], unsigned char length) {
+    int i;
+    char* sPointer = (char*) s;
+    for (i = 0; i < length; i++) {
+        char c = (char) readHex2(inputStream);
+        *sPointer = c;
+        sPointer++;
+    }
+}
+
 
 // CHECK METHODS
 
