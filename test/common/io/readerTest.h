@@ -43,9 +43,9 @@ void test_readSignedHex4(void);
 
 void test_readHex6(void);
 
-// readCharArray
+// readFixedCharArray
 
-void test_readCharArray(void);
+void test_readFixedCharArray(void);
 
 // isAck
 

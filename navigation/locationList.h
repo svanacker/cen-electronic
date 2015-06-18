@@ -61,13 +61,17 @@ void addLocationList(LocationList* targetLocationList, LocationList* sourceLocat
  */
 bool isEmptyLocationList(LocationList* locationList);
 
+/**
+ * Add a location to the list, but with a pointer on a string
+ * @param locationList the pointer on the struct (POO Programming)
+ */
+Location* addNamedLocation(LocationList* locationList, char* name, int x, int y);
 
 /**
- * Add a location to the list.
- * @param locationList the pointer on the struct (POO Programming)
- * @param location the location to add to the list
- */
-Location* addLocation(LocationList* locationList, char* name, int x, int y);
+* Add a location to the list, but with a char pointer structure.
+* @param locationList the pointer on the struct (POO Programming)
+*/
+Location* addLocation(LocationList* locationList, const FixedCharArray* s, int x, int y);
 
 /**
  * Copy the location from the source to the target location, by copying all fields by value.

@@ -9,12 +9,12 @@
 // -> LOCATIONS
 
 /**
-* Defines the header to read how many location there is.
+* Defines the header to read how many locations there are.
 */
 #define COMMAND_NAVIGATION_LOCATION_COUNT        'c'
 
 /**
- * Defines the header to get information about locations.
+ * Defines the header to get information about a specific location.
  */
 #define COMMAND_NAVIGATION_GET_LOCATION          'l'
 
@@ -27,6 +27,28 @@
  * Defines the header to clear all location
  */
 #define COMMAND_NAVIGATION_LOCATION_CLEAR        'd'
+
+// -> PATHS
+
+/**
+* Defines the header to read how many paths there are.
+*/
+#define COMMAND_NAVIGATION_PATH_COUNT        'C'
+
+/**
+* Defines the header to get information about a specific path.
+*/
+#define COMMAND_NAVIGATION_GET_PATH          'p'
+
+/**
+* Defines the header to add a new path.
+*/
+#define COMMAND_NAVIGATION_SET_PATH          'P'
+
+/**
+* Defines the header to clear all paths.
+*/
+#define COMMAND_NAVIGATION_PATH_CLEAR        '_'
 
 // Function to get the specific Device Interface
 

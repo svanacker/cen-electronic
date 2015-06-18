@@ -46,6 +46,7 @@ void printTypeAsString(OutputStream* outputStream, int parameterType) {
         case DEVICE_ARG_UNSIGNED_HEX_5 : appendString(outputStream, "hex_u_5"); return;
         case DEVICE_ARG_SIGNED_HEX_5 : appendString(outputStream, "hex_s_5"); return;
         case DEVICE_ARG_UNSIGNED_HEX_6 : appendString(outputStream, "hex_u_6"); return;
+        case DEVICE_ARG_FIXED_CHAR_ARRAY: appendString(outputStream, "charArray4_length_8"); return;
         case DEVICE_ARG_SIGNED_HEX_6 : appendString(outputStream, "hex_s_6"); return;
         case DEVICE_ARG_UNSIGNED_HEX_8 : appendString(outputStream, "hex_u_8"); return;
         case DEVICE_ARG_SIGNED_HEX_8 : appendString(outputStream, "hex_s_8"); return;

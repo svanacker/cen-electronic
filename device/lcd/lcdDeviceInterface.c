@@ -11,14 +11,10 @@ const char* deviceLCDGetName(void) {
 int deviceLCDGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     if (commandHeader == COMMAND_LCD) {
         if (fillDeviceArgumentList) {
-            setFunction("writeLCD", LCD_CHAR_COUNT_BY_MESSAGE + 1, 0);
-            setArgumentUnsignedHex2(0, "length");
-            int i;
-            for (i = 1; i <= LCD_CHAR_COUNT_BY_MESSAGE; i++) {
-                setArgumentUnsignedHex2(i, "char x");
-            }
+            setFunction("writeLCD", 1, 0);
+            setArgumentFixedCharArray(0, "char Array");
         }
-        return commandLengthValueForMode(mode, (LCD_CHAR_COUNT_BY_MESSAGE * 2) + 2, 0);
+        return commandLengthValueForMode(mode, (LCD_CHAR_COUNT_BY_MESSAGE * 2), 0);
     }
     else if (commandHeader == COMMAND_CLEAR_LCD) {
         if (fillDeviceArgumentList) {

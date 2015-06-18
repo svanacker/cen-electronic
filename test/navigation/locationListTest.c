@@ -31,11 +31,11 @@ void locationListTest(void) {
     bool isEmpty = isEmptyLocationList(&locationList);
     TEST_ASSERT_TRUE(isEmpty);
 
-    locationA = addLocation(&locationList, "A", 20, 20);
-    locationB = addLocation(&locationList, "B", 10, 30);
-    locationC = addLocation(&locationList, "C", -1, 2);
-    locationD = addLocation(&locationList, "D", -100, 200);
-    locationE = addLocation(&locationList, "E", -10, -50);
+    locationA = addNamedLocation(&locationList, "A", 20, 20);
+    locationB = addNamedLocation(&locationList, "B", 10, 30);
+    locationC = addNamedLocation(&locationList, "C", -1, 2);
+    locationD = addNamedLocation(&locationList, "D", -100, 200);
+    locationE = addNamedLocation(&locationList, "E", -10, -50);
 
     isEmpty = isEmptyLocationList(&locationList);
     TEST_ASSERT_FALSE(isEmpty);

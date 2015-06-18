@@ -49,10 +49,10 @@ void appendString(OutputStream* outputStream, const char* s) {
     }
 }
 
-void appendCharArray(OutputStream* outputStream, const char(*s)[], unsigned char length) {
+void appendFixedCharArray(OutputStream* outputStream, const FixedCharArray* s) {
     unsigned int i;
     char* sPointer = (char*)s;
-    for (i = 0; i < length; i++) {
+    for (i = 0; i < FIXED_CHAR_ARRAY_LENGTH; i++) {
         char c = *sPointer;
         appendHex2(outputStream, c);
         sPointer++;

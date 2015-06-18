@@ -6,6 +6,7 @@
 #include "inputStream.h"
 #include "printWriter.h"
 
+#include "../../common/string/cenString.h"
 #include "../../common/cmd/commonCommand.h"
 
 #include "../../common/error/error.h"
@@ -112,10 +113,10 @@ float readHex6(InputStream* inputStream) {
     return result;
 }
 
-void readCharArray(InputStream* inputStream, char(*s)[], unsigned char length) {
+void readFixedCharArray(InputStream* inputStream, const FixedCharArray* s) {
     int i;
     char* sPointer = (char*) s;
-    for (i = 0; i < length; i++) {
+    for (i = 0; i < FIXED_CHAR_ARRAY_LENGTH; i++) {
         char c = (char) readHex2(inputStream);
         *sPointer = c;
         sPointer++;

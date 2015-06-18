@@ -13,9 +13,34 @@
 #include "../../navigation/navigation.h"
 #include "../../navigation/location.h"
 #include "../../navigation/locationList.h"
+#include "../../navigation/path.h"
+#include "../../navigation/pathList.h"
+
+// TEMP
+
+#define NAVIGATION_LOCATION_LIST_ARRAY_LENGTH        30
+#define NAVIGATION_PATH_LIST_TEST_ARRAY_LENGTH       30
+#define BIT_LIST_NAVIGATION_TEST_ARRAY_LENGTH        30
+
+static LocationList locationList;
+static Location locationListArray[NAVIGATION_LOCATION_LIST_ARRAY_LENGTH];
+
+static PathList pathList;
+static PathData pathListArray[NAVIGATION_PATH_LIST_TEST_ARRAY_LENGTH];
+
+static BitList outgoingPathBitList;
+static unsigned int outgoingPathBitArray[BIT_LIST_NAVIGATION_TEST_ARRAY_LENGTH];
+static BitList availablePathBitList;
+static unsigned int availablePathBitArray[BIT_LIST_NAVIGATION_TEST_ARRAY_LENGTH];
 
 void deviceNavigationInit(void) {
 
+    initLocationList(&locationList, (Location(*)[]) &locationListArray, NAVIGATION_LOCATION_LIST_ARRAY_LENGTH);
+    initPathList(&pathList, (PathData(*)[]) &pathListArray, NAVIGATION_PATH_LIST_TEST_ARRAY_LENGTH);
+    initBitList(&outgoingPathBitList, (unsigned int(*)[]) &outgoingPathBitArray, BIT_LIST_NAVIGATION_TEST_ARRAY_LENGTH);
+    initBitList(&availablePathBitList, (unsigned int(*)[]) &availablePathBitArray, BIT_LIST_NAVIGATION_TEST_ARRAY_LENGTH);
+
+    initNavigation(&locationList, &pathList, &outgoingPathBitList, &availablePathBitList);
 }
 
 void deviceNavigationShutDown(void) {
@@ -38,7 +63,7 @@ void deviceNavigationHandleRawData(char commandHeader, InputStream* inputStream,
         unsigned int locationIndex = readHex4(inputStream);
         LocationList* locationList = getNavigationLocationList();
         Location* location = getLocation(locationList, locationIndex);
-        appendCharArray(outputStream, location->name, 4);
+        appendFixedCharArray(outputStream, &(location->name));
         appendSeparator(outputStream);
         appendHex4(outputStream, location->x);
         appendSeparator(outputStream);
@@ -52,10 +77,15 @@ void deviceNavigationHandleRawData(char commandHeader, InputStream* inputStream,
     else if (commandHeader == COMMAND_NAVIGATION_SET_LOCATION) {
         ackCommand(outputStream, NAVIGATION_DEVICE_HEADER, COMMAND_NAVIGATION_SET_LOCATION);
         LocationList* locationList = getNavigationLocationList();
-        // TODO : readCharArray(inputStream, xxxx ....)
+        unsigned int index = readHex4(inputStream);
+        checkIsSeparator(inputStream);
+        FixedCharArray tempCharArray;
+        readFixedCharArray(inputStream, &tempCharArray);
+        checkIsSeparator(inputStream);
         int x = readHex4(inputStream);
+        checkIsSeparator(inputStream);
         int y = readHex4(inputStream);
-        addLocation(locationList, NULL, x, y);
+        addLocation(locationList, &tempCharArray, x, y);
     }
 }
 

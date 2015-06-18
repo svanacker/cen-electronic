@@ -15,15 +15,15 @@ typedef struct PathData {
     Location* location2;
     /** Cost of the path. */
     unsigned int cost;
-    /** Distance of the control point P0-P1 in cm. */     
-    signed char controlPointDistance1;
-    /** Distance of the control point P1->P3 in cm. */     
-    signed char controlPointDistance2;
+    /** Distance of the control point P0-P1 in mm (can be negative). */     
+    int controlPointDistance1;
+    /** Distance of the control point P1->P3 in mm. */     
+    int controlPointDistance2;
     /** angle1 (when at P0) in decidegree. */
     int angle1;
     /** angle2 (when at P3) in decidegree. */
     int angle2;
-    /** AccelerationFactor factor (min = 1, max = 16). */
+    /** TODO : Convert into enum AccelerationFactor factor (min = 1, max = 16). */
     unsigned char accelerationFactor;
     /** Speed factor (min = 1, max = 16). */
     unsigned char speedFactor;

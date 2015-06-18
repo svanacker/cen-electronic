@@ -3,7 +3,7 @@
 
 #include <stdbool.h>
 
-#include "../common/commons.h"
+#include "../common/string/cenString.h"
 #include "../common/io/outputStream.h"
 
 #define MAX_COST             20000
@@ -17,7 +17,7 @@ typedef struct Location Location;
  */
 struct Location {
     /** The name. */
-    char* name;
+    FixedCharArray name;
     /** The coordinates in x. */
     int x;
     /** The coordinates in y. */

@@ -40,7 +40,8 @@ PathList* getNavigationPathList(void) {
 }
 
 Location* addNavigationLocation(char* name, int x, int y) {
-    Location* result = addLocation(navigation.locationList, name, x, y);
+    LocationList* locationList = navigation.locationList;
+    Location* result = addNamedLocation(locationList, name, x, y);
     return result;
 }
 
