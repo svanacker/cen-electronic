@@ -17,7 +17,7 @@
 #ifndef PROG_30
     #ifndef PROG_32
         #ifndef PC_COMPILER
-            // MUST NOT COMPILE !!
+#error "Must not Compile because target (30, 32 or PC) is not defined"
         #endif
     #endif
 #endif

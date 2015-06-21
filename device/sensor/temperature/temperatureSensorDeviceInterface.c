@@ -6,7 +6,7 @@
 #include "../../../device/deviceInterface.h"
 #include "../../../device/deviceConstants.h"
 
-const char* getTemperatureSensorDeviceName (){
+const char* getTemperatureSensorDeviceName(void) {
     return "Temperature Sensor";
 }
 
