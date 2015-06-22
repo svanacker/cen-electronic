@@ -26,10 +26,15 @@ typedef struct DeviceList {
 void initDeviceList(Device (*deviceListArray)[], unsigned char deviceListSize);
 
 /**
+ * Clear Device List. Useful to enable restart or unit test cleanup.
+ */
+void clearDeviceList(void);
+
+/**
 * Get the list of devices.
 * @return the list of devices.
 */
-DeviceList* getDeviceList();
+DeviceList* getDeviceList(void);
 
 /**
  * Add a local device : this device will respond to local calls.
@@ -74,12 +79,12 @@ Device* getDevice(int index);
 * Get the count of device.
 * @result the count of device
 */
-int getDeviceCount();
+int getDeviceCount(void);
 
 /**
 * Init the device descriptor list by initializing each devices.
 */
-void initDevices();
+void initDevices(void);
 
 #endif
 

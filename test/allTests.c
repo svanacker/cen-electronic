@@ -20,6 +20,8 @@
 #include "../test/common/math/cenMathTest.h"
 #include "../test/common/math/hexUtilsTest.h"
 
+#include "../test/device/system/systemDeviceTest.h"
+
 #include "../test/drivers/dispatchers/driverDataDispatcherListTest.h"
 #include "../test/drivers/test/testDriverTest.h"
 
@@ -74,6 +76,9 @@ void runAllTests(void)
     locationListTestSuite();
     pathListTestSuite();
     navigationTestSuite();
+
+    // device
+    systemDeviceTestSuite();
 
     UnityEnd();
 }

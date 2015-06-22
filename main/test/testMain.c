@@ -56,7 +56,7 @@ int main(void) {
     addLogHandler(&testLogHandler, "UART", &testOutputStream, DEBUG);
     appendString(getTestOutputStream(), "TEST MAIN");
 
-    // setPicName("TEST MAIN");
+    // setBoardName("TEST MAIN");
     addTest(&testSuite, hex2CharToIntTest1, "hex2CharToIntTest1");
 
     runTestSuite(&testSuite);

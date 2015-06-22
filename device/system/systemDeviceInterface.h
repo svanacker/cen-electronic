@@ -13,14 +13,17 @@
 /** Command to show usage for all devices. */
 #define COMMAND_USAGE              'u'
 
+/** Command to show usage all usages with a problem on definition. */
+#define COMMAND_USAGE_PROBLEM      'U'
+
 /** Command to show notification for all devices. */
 #define COMMAND_NOTIFICATION       'n'
 
 /** Command to wait a certain amount of time (in milliseconds). */
 #define COMMAND_WAIT               'W'
 
-/** Command to show the name of the PIC. */
-#define COMMAND_PIC_NAME           'N'
+/** Command to show the name of the BOARD. */
+#define COMMAND_BOARD_NAME           'N'
 
 /** Command to know if the remote board is present. */
 #define COMMAND_PING               'P'

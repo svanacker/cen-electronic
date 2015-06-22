@@ -17,6 +17,10 @@ void test_appendBool(void);
 
 void test_appendSeparator(void);
 
+// appendCharArray
+
+void test_appendCharArray(void);
+
 // appendString
 
 void test_appendString(void);

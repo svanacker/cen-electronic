@@ -490,15 +490,6 @@
     <Filter Include="Source Files\common\math\pc">
       <UniqueIdentifier>{c65130ee-d9f8-44e2-922a-bd46b5fc4a26}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\common\pc">
-      <UniqueIdentifier>{5a1037cb-a713-486c-8b11-c7848d008ec4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\common\pc\pipe">
-      <UniqueIdentifier>{e2a667f7-a59c-4f12-b0cd-eb052450c412}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\common\pc\process">
-      <UniqueIdentifier>{34ef1017-a9c6-4a60-aebb-eecb0061be0b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\common\pc">
       <UniqueIdentifier>{84e1e2aa-33f7-43a0-a258-e631738df8f1}</UniqueIdentifier>
     </Filter>
@@ -640,9 +631,6 @@
     <Filter Include="Source Files\common\pc\thread">
       <UniqueIdentifier>{b77e7409-949a-4fff-8846-f19b07cd3cd6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\common\pc\thread">
-      <UniqueIdentifier>{65a1119b-af49-4066-a215-1aa43558adf9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\common\serial\pc">
       <UniqueIdentifier>{cd8c3ee5-8c0e-4f94-a1fc-49c6d9e37c27}</UniqueIdentifier>
     </Filter>
@@ -708,6 +696,84 @@
     </Filter>
     <Filter Include="Source Files\common\adc\pc">
       <UniqueIdentifier>{9569f187-73aa-4b23-bb73-d56622abba01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\device\battery">
+      <UniqueIdentifier>{a7c257c0-cc79-4282-b655-b9c064d936d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\device\battery">
+      <UniqueIdentifier>{d635debf-b8cd-4c8d-b025-93f5cfb5d1c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\drivers\battery">
+      <UniqueIdentifier>{ba028cf2-df9e-4c87-9a6b-457aa1e378d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\drivers\battery">
+      <UniqueIdentifier>{c4aa81ee-8396-40a5-82d3-ef3fe5f07c36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\common\pc">
+      <UniqueIdentifier>{5a1037cb-a713-486c-8b11-c7848d008ec4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\common\pc\pipe">
+      <UniqueIdentifier>{e2a667f7-a59c-4f12-b0cd-eb052450c412}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\common\pc\process">
+      <UniqueIdentifier>{34ef1017-a9c6-4a60-aebb-eecb0061be0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\common\pc\thread">
+      <UniqueIdentifier>{65a1119b-af49-4066-a215-1aa43558adf9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\common\sensor">
+      <UniqueIdentifier>{b51abe6d-aefb-4109-8882-a1ee6518c7ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\common\sensor\temperature">
+      <UniqueIdentifier>{c6633ca7-5907-4b6e-be1f-8cea7aa8e684}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\common\sensor">
+      <UniqueIdentifier>{dd1c8dc2-3d57-4f4f-8e8b-df0328bcd984}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\common\sensor\temperature">
+      <UniqueIdentifier>{a5e26b5a-efd1-408f-9083-39336105064f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\drivers\sensor">
+      <UniqueIdentifier>{3686572c-d1db-4202-ae47-af2e036bb73e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\drivers\sensor\temperature">
+      <UniqueIdentifier>{b424ecbc-9624-4d68-aa25-126feec4ca4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\drivers\sensor\temperature\pc">
+      <UniqueIdentifier>{dab868d5-0b9f-4fba-bd28-cf87f3c8bdf1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\drivers\sensor">
+      <UniqueIdentifier>{7245d6b9-b2f5-4686-8dca-999b4d463da7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\drivers\sensor\temperature">
+      <UniqueIdentifier>{b25f370c-dae3-4d1b-8c3c-816fc326ff3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\drivers\sensor\temperature\pc">
+      <UniqueIdentifier>{f7e9085b-67a7-40f2-b830-9440b4c950cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\device\sensor">
+      <UniqueIdentifier>{a0f63338-a311-488b-bceb-cec12d0e90f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\device\sensor\temperature">
+      <UniqueIdentifier>{145c9b00-c279-4383-aa2f-d42e90225665}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\device\sensor">
+      <UniqueIdentifier>{58358d7c-ee23-493f-8101-01121e3e6571}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\device\sensor\temperature">
+      <UniqueIdentifier>{a2bf0442-f411-4e6b-984f-d1ea1db51aa5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\test\device\system">
+      <UniqueIdentifier>{90157b53-2cf3-4387-8f49-85376e2d493f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\test\device\system">
+      <UniqueIdentifier>{19887779-fc0c-488f-afa6-7d1947aa0b67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\device\navigation">
+      <UniqueIdentifier>{65cebeb3-8632-42ba-8d5f-56334dfb37f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\device\navigation">
+      <UniqueIdentifier>{8af67280-2456-4342-a187-28aea83b1a5c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1424,6 +1490,42 @@
     </ClCompile>
     <ClCompile Include="common\adc\pc\adcutilsPc.c">
       <Filter>Source Files\common\adc\pc</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\battery\battery.c">
+      <Filter>Source Files\drivers\battery</Filter>
+    </ClCompile>
+    <ClCompile Include="device\battery\batteryDevice.c">
+      <Filter>Source Files\device\battery</Filter>
+    </ClCompile>
+    <ClCompile Include="device\battery\batteryDeviceInterface.c">
+      <Filter>Source Files\device\battery</Filter>
+    </ClCompile>
+    <ClCompile Include="common\sensor\temperature\temperature.c">
+      <Filter>Source Files\common\sensor\temperature</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\sensor\temperature\pc\temperaturePc.c">
+      <Filter>Source Files\drivers\sensor\temperature\pc</Filter>
+    </ClCompile>
+    <ClCompile Include="device\sensor\temperature\temperatureSensor.c">
+      <Filter>Source Files\device\sensor\temperature</Filter>
+    </ClCompile>
+    <ClCompile Include="device\sensor\temperature\temperatureSensorDevice.c">
+      <Filter>Source Files\device\sensor\temperature</Filter>
+    </ClCompile>
+    <ClCompile Include="device\sensor\temperature\temperatureSensorDeviceInterface.c">
+      <Filter>Source Files\device\sensor\temperature</Filter>
+    </ClCompile>
+    <ClCompile Include="test\device\deviceTest.c">
+      <Filter>Source Files\test\device\test</Filter>
+    </ClCompile>
+    <ClCompile Include="test\device\system\systemDeviceTest.c">
+      <Filter>Source Files\test\device\system</Filter>
+    </ClCompile>
+    <ClCompile Include="device\navigation\navigationDevice.c">
+      <Filter>Source Files\device\navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="device\navigation\navigationDeviceInterface.c">
+      <Filter>Source Files\device\navigation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2206,6 +2308,39 @@
     </ClInclude>
     <ClInclude Include="device\adc\adcDeviceInterface.h">
       <Filter>Header Files\device\adc</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\battery\battery.h">
+      <Filter>Header Files\drivers\battery</Filter>
+    </ClInclude>
+    <ClInclude Include="device\battery\batteryDevice.h">
+      <Filter>Header Files\device\battery</Filter>
+    </ClInclude>
+    <ClInclude Include="device\battery\batteryDeviceInterface.h">
+      <Filter>Header Files\device\battery</Filter>
+    </ClInclude>
+    <ClInclude Include="common\sensor\temperature\temperature.h">
+      <Filter>Header Files\common\sensor\temperature</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\sensor\temperature\pc\temperaturePc.h">
+      <Filter>Header Files\drivers\sensor\temperature\pc</Filter>
+    </ClInclude>
+    <ClInclude Include="device\sensor\temperature\temperatureSensor.h">
+      <Filter>Header Files\device\sensor\temperature</Filter>
+    </ClInclude>
+    <ClInclude Include="device\sensor\temperature\temperatureSensorDevice.h">
+      <Filter>Header Files\device\sensor\temperature</Filter>
+    </ClInclude>
+    <ClInclude Include="device\sensor\temperature\temperatureSensorDeviceInterface.h">
+      <Filter>Header Files\device\sensor\temperature</Filter>
+    </ClInclude>
+    <ClInclude Include="test\device\system\systemDeviceTest.h">
+      <Filter>Header Files\test\device\system</Filter>
+    </ClInclude>
+    <ClInclude Include="device\navigation\navigationDevice.h">
+      <Filter>Header Files\device\navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="device\navigation\navigationDeviceInterface.h">
+      <Filter>Header Files\device\navigation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

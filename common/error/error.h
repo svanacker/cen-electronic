@@ -47,6 +47,7 @@ void clearLastError();
 
 #define IO_READER_READ_FILTERED_CHAR    0x0120
 #define IO_READER_CHECK_CHAR_PROBLEM    0x0130
+#define IO_READER_NOT_BOOL_VALUE        0x0131
 
 #define COMPOSITE_OUTPUT_STREAM_NOT_INITIALIZED 0x0170
 #define COMPOSITE_OUTPUT_STREAM_ILLEGAL_INDEX   0x0171
@@ -70,6 +71,13 @@ void clearLastError();
 // CLOCK
 #define CLOCK_NULL                     0x290
 #define CLOCK_NOT_INITIALIZED          0x291
+
+// BATTERY
+#define BATTERY_NULL                     0x2A0
+#define BATTERY_NOT_INITIALIZED          0x2A1
+
+// TEMPERATURE
+#define TEMPERATURE_NULL              0x2B0
 
 // BIT LIST
 #define BIT_LIST_ARRAY_OUT_OF_BOUNDS    0x0300
@@ -96,6 +104,7 @@ void clearLastError();
 #define NO_DEVICE_DESC_FOUND_FOR        0x2001
 #define DEVICES_LIST_NOT_INITIALIZED    0x2002
 #define DEVICE_ILLEGAL_INDEX            0x2003
+#define DEVICE_INTERFACE_PROBLEM        0x2004
 
 #define DEVICE_TEST_INTENSIVE_CHECK_PROBLEM 0x2010
 

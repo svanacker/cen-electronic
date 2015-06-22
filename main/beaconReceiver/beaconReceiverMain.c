@@ -219,7 +219,7 @@ void registerJennicEvents() {
 }
 
 int runZigBeeReceiver() {
-    setPicName("BEACON RECEIVER BOARD");
+    setBoardName("BEACON RECEIVER BOARD");
     initBeaconReceiverIO();
 
     // zigBee link through UART connected to Zigbee
@@ -256,7 +256,7 @@ int runZigBeeReceiver() {
     // Init the logs
     initLogs(DEBUG, &logHandlerListArray, BEACON_RECEIVER_LOG_HANDLER_LIST_LENGTH);
     addLogHandler("UART", &debugOutputStream, DEBUG);
-    appendString(getDebugOutputStreamLogger(), getPicName());
+    appendString(getDebugOutputStreamLogger(), getBoardName());
     println(getDebugOutputStreamLogger());    
 
     // I2C Stream Link

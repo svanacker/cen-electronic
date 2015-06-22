@@ -3,6 +3,10 @@
 
 void readerTestSuite(void);
 
+// test_readBool
+
+void test_readBool(void);
+
 // readFilteredChar
 
 void test_readFilteredChar(void);
@@ -38,6 +42,10 @@ void test_readSignedHex4(void);
 // readHex6
 
 void test_readHex6(void);
+
+// readCharArray
+
+void test_readCharArray(void);
 
 // isAck
 

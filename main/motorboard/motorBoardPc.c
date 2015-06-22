@@ -32,6 +32,10 @@
 #include "../../device/i2c/slave/i2cSlaveDebugDevice.h"
 #include "../../device/i2c/slave/i2cSlaveDebugDeviceInterface.h"
 
+// BATTERY
+#include "../../device/battery/batteryDevice.h"
+#include "../../device/battery/batteryDeviceInterface.h"
+
 // CLOCK
 #include "../../device/clock/clockDevice.h"
 #include "../../device/clock/clockDeviceInterface.h"
@@ -78,6 +82,7 @@
 #include "../../drivers/dispatcher/localDriverDataDispatcher.h"
 #include "../../drivers/test/testDriver.h"
 
+#include "../../drivers/battery/battery.h"
 #include "../../drivers/clock/softClock.h"
 
 #include "../../motion/motion.h"
@@ -118,6 +123,9 @@ static Buffer i2cSlaveDebugInputBuffer;
 
 // Eeprom
 static Eeprom eeprom;
+
+// Battery
+static Battery battery;
 
 // Clock
 static Clock clock;
@@ -168,7 +176,7 @@ void motorBoardWaitForInstruction(void) {
 
 void runMotorBoardPC(bool singleMode) {
     singleModeActivated = singleMode;
-    setPicName(MOTOR_BOARD_PC_NAME);
+    setBoardName(MOTOR_BOARD_PC_NAME);
     moveConsole(HALF_SCREEN_WIDTH, 0, HALF_SCREEN_WIDTH, CONSOLE_HEIGHT);
 
     // We use http://patorjk.com/software/taag/#p=testall&v=2&f=Acrobatic&t=MOTOR%20BOARD%20PC
@@ -184,7 +192,7 @@ void runMotorBoardPC(bool singleMode) {
     initConsoleInputStream(&consoleInputStream);
     initConsoleOutputStream(&consoleOutputStream);
     addConsoleLogHandler(DEBUG, LOG_HANDLER_CATEGORY_ALL_MASK);
-    appendStringCRLF(getDebugOutputStreamLogger(), getPicName());
+    appendStringCRLF(getDebugOutputStreamLogger(), getBoardName());
 
     initTimerList((Timer(*)[]) &timerListArray, MOTOR_BOARD_PC_TIMER_LENGTH);
 
@@ -220,6 +228,9 @@ void runMotorBoardPC(bool singleMode) {
     // Eeprom
     initEepromPc(&eeprom, "TODO");
 
+    // Battery
+    initBattery(&battery, getBatteryVoltage);
+
     // Clock
     initSoftClock(&clock);
 
@@ -231,6 +242,7 @@ void runMotorBoardPC(bool singleMode) {
     addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());
 
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
+    addLocalDevice(getBatteryDeviceInterface(), getBatteryDeviceDescriptor(&battery));
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
     addLocalDevice(getRobotKinematicsDeviceInterface(), getRobotKinematicsDeviceDescriptor(&eeprom));
 

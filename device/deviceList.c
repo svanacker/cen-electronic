@@ -26,7 +26,14 @@ DeviceList* getDeviceList() {
 void initDeviceList(Device (*deviceListArray)[], unsigned char deviceListSize) {
     // TODO : Check Illegal Arguments
     deviceList.devices = deviceListArray;
+    deviceList.size = 0;
     deviceList.maxSize = deviceListSize;
+}
+
+void clearDeviceList(void) {
+    deviceList.devices = NULL;
+    deviceList.size = 0;
+    deviceList.maxSize = 0;
 }
 
 /**

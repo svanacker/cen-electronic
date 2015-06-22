@@ -2,6 +2,8 @@
 #define DEVICE_CONSTANTS_H
 
 /** Device header .*/
+#define BATTERY_DEVICE_HEADER                      'b'
+
 #define ROBOT_CONFIG_DEVICE_HEADER                 'c'
 
 #define ADC_DEVICE_HEADER                          'd'
@@ -64,6 +66,11 @@
  * Header char of Trajectory device : 'n' for 'navigation.
  */
 #define TRAJECTORY_DEVICE_HEADER                   'n'
+
+/**
+ * Header char of Navigation device
+ */
+#define NAVIGATION_DEVICE_HEADER                   'N'
 
 #define PID_DEVICE_HEADER                          'p'
 

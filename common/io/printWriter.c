@@ -49,6 +49,16 @@ void appendString(OutputStream* outputStream, const char* s) {
     }
 }
 
+void appendCharArray(OutputStream* outputStream, const char(*s)[], unsigned char length) {
+    unsigned int i;
+    char* sPointer = (char*)s;
+    for (i = 0; i < length; i++) {
+        char c = *sPointer;
+        appendHex2(outputStream, c);
+        sPointer++;
+    }
+}
+
 void appendStringCRLF(OutputStream* outputStream, const char* s) {
     appendString(outputStream, s);
     appendCRLF(outputStream);

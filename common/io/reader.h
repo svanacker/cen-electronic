@@ -8,6 +8,13 @@
 #define    FILTERED_RESULT -1
 
 /**
+ * Read a char as bool (0 or 1) and returns the bool equivalent value.
+ * @param inputStream the pointer on inputStream (POO simulation)
+ * @return true if the char is equivalent to 1, false in case of 0 or true in case of != 0 || != 1, but writes an error
+ */
+ bool readBool(InputStream* inputStream);
+ 
+/**
  * Read a char with filtering.
  * TODO : To Review
  * Do NOT use it if the char is hexadecimal (with 2 chars)
@@ -75,6 +82,13 @@ signed long readSignedHex4(InputStream* inputStream);
  * TODO : Check the usage to know, if we must have a signed version too ???
  */
 float readHex6(InputStream* inputStream);
+
+/**
+ * Read an array of chars from an inputStream (chars are encoded as hex).
+ * @param s a pointer on a fixed char array
+ * @param length the length of the fixed char array
+ */
+void readCharArray(InputStream* inputStream, char(*s)[], unsigned char length);
 
 // CHECK METHODS 
 // 1) isXXX returns if the condition is ok, and return a BOO

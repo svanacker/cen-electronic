@@ -172,7 +172,7 @@ void initStrategyBoardIO() {
 }
 
 int main(void) {
-    setPicName("STRATEGY_BOARD");
+    setBoardName("STRATEGY_BOARD");
 
     initStrategyBoardIO();
 
@@ -193,7 +193,7 @@ int main(void) {
     // Init the logs
     initLog(DEBUG);
     addLogHandler(&serialLogHandler, "UART", &debugOutputStream, DEBUG);
-    appendString(getInfoOutputStreamLogger(), getPicName());
+    appendString(getInfoOutputStreamLogger(), getBoardName());
     println(getInfoOutputStreamLogger());
 
     openSlaveI2cStreamLink(&i2cSerialStreamLink,

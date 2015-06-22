@@ -205,7 +205,7 @@ void initDevicesDescriptor() {
     addLocalDevice(getTrajectoryDeviceInterface(), getTrajectoryDeviceDescriptor());
     addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
     addLocalDevice(getSerialDebugDeviceInterface(), getSerialDebugDeviceDescriptor());
-    addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
+//    addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
     addLocalDevice(getTimerDeviceInterface(), getTimerDeviceDescriptor());
 
@@ -243,7 +243,7 @@ int runMotorBoard() {
     // enable interrupts
     INTEnableInterrupts();
 
-    setPicName(MOTOR_BOARD_PIC_NAME);
+    setBoardName(MOTOR_BOARD_PIC_NAME);
 
     delaymSec(100);
 
@@ -272,7 +272,7 @@ int runMotorBoard() {
     // Init the logs
     initLogs(DEBUG, (LogHandler(*)[]) &logHandlerListArray, MOTOR_BOARD_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
     addLogHandler("UART", &debugOutputStream, DEBUG, LOG_HANDLER_CATEGORY_ALL_MASK);
-    appendString(getDebugOutputStreamLogger(), getPicName());
+    appendString(getDebugOutputStreamLogger(), getBoardName());
     appendCRLF(getDebugOutputStreamLogger());
 
     initTimerList(&timerListArray, MOTOR_BOARD_TIMER_LENGTH);

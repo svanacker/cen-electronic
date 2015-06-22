@@ -130,7 +130,7 @@ void initMechanicalBoard1Pins() {
 }
 
 int main(void) {
-    setPicName("MECHANICAL 1");
+    setBoardName("MECHANICAL 1");
 
     initMechanicalBoard1Pins();
 
@@ -149,7 +149,7 @@ int main(void) {
     // Init the logs
     initLogs(DEBUG, &logHandlerListArray, MECA_BOARD_1_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
     addLogHandler("UART", &debugOutputStream, DEBUG, LOG_HANDLER_CATEGORY_ALL_MASK);
-    appendString(getDebugOutputStreamLogger(), getPicName());
+    appendString(getDebugOutputStreamLogger(), getBoardName());
     appendCRLF(getDebugOutputStreamLogger());
 
     initTimerList((Timer(*)[]) &timerListArray, MECHANICAL_BOARD_1_TIMER_LENGTH);

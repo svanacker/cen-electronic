@@ -1,39 +1,17 @@
 /**
 * Device to handle the battery voltage.
 */
-#include <p30Fxxxx.h>
-#include <libpic30.h>
 
 #include "battery.h"
+
+#include <stdlib.h>
+#include <stdbool.h>
 
 #include "../../common/adc/adcutils.h"
 
 // COMMON PART
 
-/**
-* Init the device
-*/
-void initBattery() {
-
-}
-
-/**
- * Returns the revision of the Software.
- */
-unsigned int getBatterySoftwareRevision() {
-    return 1;
-}
-
-const char* getBatteryDeviceName() {
-    return "Battery";
-}
-
-unsigned int isBatteryDeviceOk() {
-  // we consider that the voltage must be over 12 V
-  return getBatteryVoltage(0) > 12000;
-}
-
-int getBatteryVoltage(int batteryIndex) {
+unsigned int getBatteryVoltage(Battery* battery) {
   int value = (long) getANX(BATTERY_ADC_INDEX);
   // AN conversion of PIC : 12 bits
   // 0V -> 0
@@ -52,48 +30,19 @@ int getBatteryVoltage(int batteryIndex) {
   return result;
 }
 
-/*
-int getMaskBatteryLevel(int batteryIndex) {
-  int value = getBatteryVoltage(batteryIndex);
-  if (value > 17000) {
-    return 0b0111;
-  }
-  if (value > 16000) {
-    return 0b0011;
-  }
-  if (value > 15000) {
-    return 0b0001;
-  }
-  return 0b0000;
-}
-*/
-
-/**
-* Shows the level of the battery.
-*/
-/*
-void showBatteryLevel(int batteryIndex) {
-  int value = getMaskBatteryLevel(batteryIndex);
-  PORTBbits.RB10 = value && 0b0001;
-  PORTBbits.RB11 = value && 0b0010;
-  PORTBbits.RB12 = value && 0b0100;
-}
-*/
-
-// DEVICE INTERFACE
-
-void stopBattery() {
-
+bool isBatteryInitialized(Battery* battery) {
+    if (battery == NULL) {
+        return false;
+    }
+    if (battery->readBatteryValue == NULL) {
+        return false;
+    }
+    return true;
 }
 
-DeviceDescriptor getBatteryDeviceDescriptor() {
-    DeviceDescriptor result;
-    result.deviceInit = &initBattery;
-    result.deviceShutDown = &stopBattery;
-    result.deviceIsOk = &isBatteryDeviceOk;
-    result.deviceGetSoftwareRevision = &getBatterySoftwareRevision;
-    result.deviceGetName = &getBatteryDeviceName;
-    result.enabled = 1;
-
-    return result;
+void initBattery(Battery* battery, ReadBatteryVoltageFunction* readBatteryValue) {
+    if (battery == NULL) {
+        return;
+    }
+    battery->readBatteryValue = readBatteryValue;
 }

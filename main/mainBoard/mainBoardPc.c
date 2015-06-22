@@ -35,6 +35,10 @@
 #include "../../device/deviceList.h"
 #include "../../device/transmitMode.h"
 
+// BATTERY
+#include "../../device/battery/batteryDevice.h"
+#include "../../device/battery/batteryDeviceInterface.h"
+
 // CLOCK
 #include "../../device/clock/clockDevice.h"
 #include "../../device/clock/clockDeviceInterface.h"
@@ -82,9 +86,18 @@
 #include "../../device/motion/simple/motionDeviceInterface.h"
 #include "../../device/motion/simulation/motionSimulationDeviceInterface.h"
 
+// NAVIGATION
+#include "../../device/navigation/navigationDevice.h"
+#include "../../device/navigation/navigationDeviceInterface.h"
+
 // PWM
 #include "../../device/motor/pwmMotorDevice.h"
 #include "../../device/motor/pwmMotorDeviceInterface.h"
+
+// SENSOR->TEMPERATURE
+#include "../../device/sensor/temperature/temperatureSensor.h"
+#include "../../device/sensor/temperature/temperatureSensorDevice.h"
+#include "../../device/sensor/temperature/temperatureSensorDeviceInterface.h"
 
 // SERVO
 #include "../../device/servo/servoDevice.h"
@@ -114,10 +127,9 @@
 #include "../../drivers/dispatcher/driverDataDispatcherList.h"
 #include "../../drivers/dispatcher/localDriverDataDispatcher.h"
 #include "../../drivers/dispatcher/i2cDriverDataDispatcher.h"
-
 #include "../../drivers/file/eeprom/eepromFile.h"
-
 #include "../../drivers/test/testDriver.h"
+#include "../../drivers/sensor/temperature/pc/temperaturePc.h"
 
 #include "../../robot/match/startMatch.h"
 #include "../../robot/match/startMatchDevice.h"
@@ -164,6 +176,9 @@ static Eeprom eeprom;
 
 // Clock
 static Clock clock;
+
+// Temperature
+static Temperature temperature;
 
 // RobotConfig
 static RobotConfig robotConfig;
@@ -249,7 +264,7 @@ bool mainBoardPcWaitForInstruction(StartMatch* startMatch) {
 
 void runMainBoardPC(bool connectToRobotManagerMode) {
     connectToRobotManager = connectToRobotManagerMode;
-    setPicName(MAIN_BOARD_PC_NAME);
+    setBoardName(MAIN_BOARD_PC_NAME);
     moveConsole(0, 0, HALF_SCREEN_WIDTH, CONSOLE_HEIGHT);
 
     // We use http://patorjk.com/software/taag/#p=testall&v=2&f=Acrobatic&t=MOTOR%20BOARD%20PC
@@ -266,7 +281,7 @@ void runMainBoardPC(bool connectToRobotManagerMode) {
     initConsoleInputStream(&consoleInputStream);
     initConsoleOutputStream(&consoleOutputStream);
     addConsoleLogHandler(DEBUG, LOG_HANDLER_CATEGORY_ALL_MASK);
-    appendStringCRLF(getDebugOutputStreamLogger(), getPicName());
+    appendStringCRLF(getDebugOutputStreamLogger(), getBoardName());
 
 
     initTimerList((Timer(*)[]) &timerListArray, MAIN_BOARD_PC_TIMER_LENGTH);
@@ -314,6 +329,9 @@ void runMainBoardPC(bool connectToRobotManagerMode) {
     // Clock
     initPcClock(&clock);
 
+    // Temperature
+    initTemperaturePc(&temperature);
+
     // I2C Debug
     initI2CDebugBuffers(&i2cMasterDebugInputBuffer,
         (char(*)[]) &i2cMasterDebugInputBufferArray,
@@ -350,12 +368,14 @@ void runMainBoardPC(bool connectToRobotManagerMode) {
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
     addLocalDevice(getLogDeviceInterface(), getLogDeviceDescriptor());
     addLocalDevice(getLCDDeviceInterface(), getLCDDeviceDescriptor());
-
+    addLocalDevice(getTemperatureSensorDeviceInterface(), getTemperatureSensorDeviceDescriptor(&temperature));
+    addLocalDevice(getNavigationDeviceInterface(), getNavigationDeviceDescriptor());
 
     initStartMatch(&startMatch, isMatchStartedPc, mainBoardPcWaitForInstruction, &eeprom);
     addLocalDevice(getStartMatchDeviceInterface(), getStartMatchDeviceDescriptor(&startMatch));
  
     // MOTOR BOARD
+    addI2cRemoteDevice(getBatteryDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
     // addI2cRemoteDevice(getEepromDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
     addI2cRemoteDevice(getPIDDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
     addI2cRemoteDevice(getMotorDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);

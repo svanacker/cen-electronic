@@ -10,6 +10,9 @@
       <logicalFolder name="common.2d" displayName="common.2d" projectFiles="true">
         <itemPath>../common/2d/2d.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f16" displayName="common.clock" projectFiles="true">
+        <itemPath>../common/clock/clock.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="common.cmd" displayName="common.cmd" projectFiles="true">
         <itemPath>../common/cmd/commonCommand.h</itemPath>
       </logicalFolder>
@@ -23,6 +26,8 @@
                      projectFiles="true">
         <itemPath>../common/eeprom/eeprom.h</itemPath>
         <itemPath>../common/eeprom/nullEeprom.h</itemPath>
+        <itemPath>../common/eeprom/eepromAreas.h</itemPath>
+        <itemPath>../common/eeprom/memoryEeprom.h</itemPath>
       </logicalFolder>
       <logicalFolder name="common.error"
                      displayName="common.error"
@@ -33,6 +38,13 @@
         <itemPath>../common/i2c/i2cConstants.h</itemPath>
         <itemPath>../common/i2c/i2cCommon.h</itemPath>
         <itemPath>../common/i2c/i2cDebug.h</itemPath>
+        <itemPath>../common/i2c/32/i2cCommon32.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f14" displayName="common.i2c.master" projectFiles="true">
+        <itemPath>../common/i2c/master/i2cMaster.h</itemPath>
+        <itemPath>../common/i2c/master/i2cMasterInputStream.h</itemPath>
+        <itemPath>../common/i2c/master/i2cMasterOutputStream.h</itemPath>
+        <itemPath>../common/i2c/master/i2cMasterSetup.h</itemPath>
       </logicalFolder>
       <logicalFolder name="common.i2c.slave"
                      displayName="common.i2c.slave"
@@ -47,11 +59,12 @@
         <itemPath>../common/io/inputStream.h</itemPath>
         <itemPath>../common/io/outputStream.h</itemPath>
         <itemPath>../common/io/printWriter.h</itemPath>
-        <itemPath>../common/io/stream.h</itemPath>
         <itemPath>../common/io/filter.h</itemPath>
         <itemPath>../common/io/ioUtils.h</itemPath>
         <itemPath>../common/io/reader.h</itemPath>
         <itemPath>../common/io/streamLink.h</itemPath>
+        <itemPath>../common/io/nullOutputStream.h</itemPath>
+        <itemPath>../common/io/binaryPrintWriter.h</itemPath>
       </logicalFolder>
       <logicalFolder name="common.log" displayName="common.log" projectFiles="true">
         <itemPath>../common/log/logHandler.h</itemPath>
@@ -93,6 +106,9 @@
         <itemPath>../common/setup/32/picSetup32.h</itemPath>
         <itemPath>../common/setup/32/clockConstants32.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f13" displayName="common.system" projectFiles="true">
+        <itemPath>../common/system/system.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="common.timer"
                      displayName="common.timer"
                      projectFiles="true">
@@ -108,10 +124,18 @@
         <itemPath>../device/deviceDebug.h</itemPath>
         <itemPath>../device/transmitMode.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f11" displayName="device.clock" projectFiles="true">
+        <itemPath>../device/clock/clockDevice.h</itemPath>
+        <itemPath>../device/clock/clockDeviceInterface.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="device.dispatcher"
                      displayName="device.dispatcher"
                      projectFiles="true">
         <itemPath>../device/dispatcher/deviceDataDispatcher.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f12" displayName="device.eeprom" projectFiles="true">
+        <itemPath>../device/eeprom/eepromDevice.h</itemPath>
+        <itemPath>../device/eeprom/eepromDeviceInterface.h</itemPath>
       </logicalFolder>
       <logicalFolder name="device.i2c.slave"
                      displayName="device.i2c.slave"
@@ -153,8 +177,8 @@
       <logicalFolder name="device.system"
                      displayName="device.system"
                      projectFiles="true">
-        <itemPath>../device/system/systemDevice.h</itemPath>
         <itemPath>../device/system/systemDeviceInterface.h</itemPath>
+        <itemPath>../device/system/systemDevice.h</itemPath>
       </logicalFolder>
       <logicalFolder name="device.test" displayName="device.test" projectFiles="true">
         <itemPath>../device/test/testDevice.h</itemPath>
@@ -169,6 +193,10 @@
         <itemPath>../drivers/driver.h</itemPath>
         <itemPath>../drivers/driverList.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f15" displayName="drivers.clock" projectFiles="true">
+        <itemPath>../drivers/clock/PCF8563.h</itemPath>
+        <itemPath>../drivers/clock/softClock.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="drivers.dispatcher"
                      displayName="drivers.dispatcher"
                      projectFiles="true">
@@ -179,26 +207,55 @@
                      displayName="drivers.eeprom"
                      projectFiles="true">
         <itemPath>../drivers/eeprom/24c16.h</itemPath>
+        <itemPath>../drivers/eeprom/24c512.h</itemPath>
       </logicalFolder>
       <logicalFolder name="main" displayName="main" projectFiles="true">
-        <itemPath>../main/motorboard/motorBoard.h</itemPath>
+        <itemPath>../main/motorboard/motorBoard32.h</itemPath>
       </logicalFolder>
-      <logicalFolder name="motion.bspline"
-                     displayName="motion.bspline"
-                     projectFiles="true">
-        <itemPath>../motion/extended/bspline.h</itemPath>
+      <logicalFolder name="f8" displayName="motion" projectFiles="true">
+        <itemPath>../motion/motion.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f7" displayName="motion.extended" projectFiles="true">
+        <itemPath>../motion/extended/bsplineList.h</itemPath>
+        <itemPath>../motion/extended/bsplineMotion.h</itemPath>
+        <itemPath>../motion/extended/bsplinePersistence.h</itemPath>
         <itemPath>../motion/extended/bsplineDebug.h</itemPath>
+        <itemPath>../motion/extended/bspline.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f6" displayName="motion.parameters" projectFiles="true">
+        <itemPath>../motion/parameters/motionParameter.h</itemPath>
+        <itemPath>../motion/parameters/motionParameterType.h</itemPath>
+        <itemPath>../motion/parameters/motionPersistence.h</itemPath>
       </logicalFolder>
       <logicalFolder name="motion.pid" displayName="motion.pid" projectFiles="true">
         <itemPath>../motion/pid/pid.h</itemPath>
-        <itemPath>../motion/pid/pidPersistence.h</itemPath>
-        <itemPath>../motion/pid/pidComputer.h</itemPath>
-        <itemPath>../motion/pid/pidMotionProfileComputer.h</itemPath>
-        <itemPath>../motion/pid/motionEndDetection.h</itemPath>
         <itemPath>../motion/pid/pidTimer.h</itemPath>
         <itemPath>../motion/pid/alphaTheta.h</itemPath>
         <itemPath>../motion/position/coderErrorComputer.h</itemPath>
-        <itemPath>../motion/pid/bSplinePidComputer.h</itemPath>
+        <itemPath>../motion/pid/pidMotion.h</itemPath>
+        <itemPath>../motion/pid/pidType.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f10" displayName="motion.pid.computer" projectFiles="true">
+        <itemPath>../motion/pid/computer/bSplinePidComputer.h</itemPath>
+        <itemPath>../motion/pid/computer/pidComputer.h</itemPath>
+        <itemPath>../motion/pid/computer/simplePidComputer.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f4"
+                     displayName="motion.pid.enddetection"
+                     projectFiles="true">
+        <itemPath>../motion/pid/endDetection/motionEndDetection.h</itemPath>
+        <itemPath>../motion/pid/endDetection/motionEndDetectionParameter.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f3"
+                     displayName="motion.pid.parameters"
+                     projectFiles="true">
+        <itemPath>../motion/pid/parameters/pidGlobalParameters.h</itemPath>
+        <itemPath>../motion/pid/parameters/pidParameter.h</itemPath>
+        <itemPath>../motion/pid/parameters/pidPersistence.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f9" displayName="motion.pid.profile" projectFiles="true">
+        <itemPath>../motion/pid/profile/pidMotionProfileComputer.h</itemPath>
+        <itemPath>../motion/pid/profile/profileType.h</itemPath>
       </logicalFolder>
       <logicalFolder name="motion.position"
                      displayName="motion.position"
@@ -219,11 +276,15 @@
       <logicalFolder name="motion.simple"
                      displayName="motion.simple"
                      projectFiles="true">
-        <itemPath>../motion/simple/motion.h</itemPath>
-        <itemPath>../motion/simple/motionPersistence.h</itemPath>
+        <itemPath>../motion/simple/motionCalibration.h</itemPath>
+        <itemPath>../motion/simple/simpleMotion.h</itemPath>
       </logicalFolder>
       <logicalFolder name="robot" displayName="robot" projectFiles="true">
-        <itemPath>../robot/robotConstants.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f5" displayName="robot.kinematics" projectFiles="true">
+        <itemPath>../robot/kinematics/robotKinematics.h</itemPath>
+        <itemPath>../robot/kinematics/robotKinematicsDevice.h</itemPath>
+        <itemPath>../robot/kinematics/robotKinematicsDeviceInterface.h</itemPath>
       </logicalFolder>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
@@ -235,6 +296,9 @@
                    projectFiles="true">
       <logicalFolder name="common.2d" displayName="common.2d" projectFiles="true">
         <itemPath>../common/2d/2d.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f18" displayName="common.clock" projectFiles="true">
+        <itemPath>../common/clock/clock.c</itemPath>
       </logicalFolder>
       <logicalFolder name="common.cmd" displayName="common.cmd" projectFiles="true">
       </logicalFolder>
@@ -248,6 +312,8 @@
                      projectFiles="true">
         <itemPath>../common/eeprom/nullEeprom.c</itemPath>
         <itemPath>../common/eeprom/eeprom.c</itemPath>
+        <itemPath>../common/eeprom/eepromAreas.c</itemPath>
+        <itemPath>../common/eeprom/memoryEeprom.c</itemPath>
       </logicalFolder>
       <logicalFolder name="common.error"
                      displayName="common.error"
@@ -256,11 +322,23 @@
       </logicalFolder>
       <logicalFolder name="common.i2c" displayName="common.i2c" projectFiles="true">
         <itemPath>../common/i2c/i2cDebug.c</itemPath>
+        <itemPath>../common/i2c/i2cCommon.c</itemPath>
       </logicalFolder>
       <logicalFolder name="common.i2c.32"
                      displayName="common.i2c.32"
                      projectFiles="true">
         <itemPath>../common/i2c/32/i2cCommon32.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f14" displayName="common.i2c.master" projectFiles="true">
+        <itemPath>../common/i2c/master/i2cMaster.c</itemPath>
+        <itemPath>../common/i2c/master/i2cMasterInputStream.c</itemPath>
+        <itemPath>../common/i2c/master/i2cMasterOutputStream.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f15"
+                     displayName="common.i2c.master.32"
+                     projectFiles="true">
+        <itemPath>../common/i2c/master/32/i2cMaster32.c</itemPath>
+        <itemPath>../common/i2c/master/32/i2cMasterSetup32.c</itemPath>
       </logicalFolder>
       <logicalFolder name="common.i2c.slave"
                      displayName="common.i2c.slave"
@@ -283,6 +361,8 @@
         <itemPath>../common/io/ioUtils.c</itemPath>
         <itemPath>../common/io/reader.c</itemPath>
         <itemPath>../common/io/streamLink.c</itemPath>
+        <itemPath>../common/io/nullOutputStream.c</itemPath>
+        <itemPath>../common/io/binaryPrintWriter.c</itemPath>
       </logicalFolder>
       <logicalFolder name="common.log" displayName="common.log" projectFiles="true">
         <itemPath>../common/log/logger.c</itemPath>
@@ -323,6 +403,9 @@
         <itemPath>../common/serial/32/serial32.c</itemPath>
         <itemPath>../common/serial/32/serialInputInterrupt32.c</itemPath>
       </logicalFolder>
+      <logicalFolder name="f13" displayName="common.system" projectFiles="true">
+        <itemPath>../common/system/system.c</itemPath>
+      </logicalFolder>
       <logicalFolder name="common.timer"
                      displayName="common.timer"
                      projectFiles="true">
@@ -345,10 +428,18 @@
         <itemPath>../device/deviceDebug.c</itemPath>
         <itemPath>../device/transmitMode.c</itemPath>
       </logicalFolder>
+      <logicalFolder name="f11" displayName="device.clock" projectFiles="true">
+        <itemPath>../device/clock/clockDevice.c</itemPath>
+        <itemPath>../device/clock/clockDeviceInterface.c</itemPath>
+      </logicalFolder>
       <logicalFolder name="device.dispatcher"
                      displayName="device.dispatcher"
                      projectFiles="true">
         <itemPath>../device/dispatcher/deviceDataDispatcher.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f12" displayName="device.eeprom" projectFiles="true">
+        <itemPath>../device/eeprom/eepromDevice.c</itemPath>
+        <itemPath>../device/eeprom/eepromDeviceInterface.c</itemPath>
       </logicalFolder>
       <logicalFolder name="device.i2c.slave"
                      displayName="device.i2c.slave"
@@ -390,7 +481,6 @@
       <logicalFolder name="device.system"
                      displayName="device.system"
                      projectFiles="true">
-        <itemPath>../device/system/systemDevice.c</itemPath>
         <itemPath>../device/system/systemDeviceInterface.c</itemPath>
       </logicalFolder>
       <logicalFolder name="device.test" displayName="device.test" projectFiles="true">
@@ -401,10 +491,17 @@
         <itemPath>../device/timer/timerDevice.c</itemPath>
         <itemPath>../device/timer/timerDeviceInterface.c</itemPath>
       </logicalFolder>
+      <logicalFolder name="f16" displayName="driver.eeprom" projectFiles="true">
+        <itemPath>../drivers/eeprom/24c512.c</itemPath>
+      </logicalFolder>
       <logicalFolder name="drivers" displayName="drivers" projectFiles="true">
         <itemPath>../drivers/driverStreamListener.c</itemPath>
         <itemPath>../drivers/driver.c</itemPath>
         <itemPath>../drivers/driverList.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f17" displayName="drivers.clock" projectFiles="true">
+        <itemPath>../drivers/clock/PCF8563.c</itemPath>
+        <itemPath>../drivers/clock/softClock.c</itemPath>
       </logicalFolder>
       <logicalFolder name="drivers.dispatcher"
                      displayName="drivers.dispatcher"
@@ -417,24 +514,51 @@
       <logicalFolder name="lib.i2c" displayName="lib.i2c" projectFiles="true">
       </logicalFolder>
       <logicalFolder name="main" displayName="main" projectFiles="true">
-        <itemPath>../main/motorboard/motorboard32main.c</itemPath>
+        <itemPath>../main/motorboard/motorboard32.c</itemPath>
       </logicalFolder>
-      <logicalFolder name="motion.bspline"
-                     displayName="motion.bspline"
-                     projectFiles="true">
-        <itemPath>../motion/extended/bspline.c</itemPath>
+      <logicalFolder name="f8" displayName="motion" projectFiles="true">
+        <itemPath>../motion/motion.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f7" displayName="motion.extended" projectFiles="true">
+        <itemPath>../motion/extended/bsplineList.c</itemPath>
+        <itemPath>../motion/extended/bsplineMotion.c</itemPath>
+        <itemPath>../motion/extended/bsplinePersistence.c</itemPath>
         <itemPath>../motion/extended/bsplineDebug.c</itemPath>
+        <itemPath>../motion/extended/bspline.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f6" displayName="motion.parameters" projectFiles="true">
+        <itemPath>../motion/parameters/motionParameter.c</itemPath>
+        <itemPath>../motion/parameters/motionParameterType.c</itemPath>
+        <itemPath>../motion/parameters/motionPersistence.c</itemPath>
       </logicalFolder>
       <logicalFolder name="motion.pid" displayName="motion.pid" projectFiles="true">
         <itemPath>../motion/pid/pid.c</itemPath>
-        <itemPath>../motion/pid/pidMotionProfileComputer.c</itemPath>
-        <itemPath>../motion/pid/motionEndDetection.c</itemPath>
         <itemPath>../motion/pid/pidTimer.c</itemPath>
         <itemPath>../motion/pid/alphaTheta.c</itemPath>
         <itemPath>../motion/position/coderErrorComputer.c</itemPath>
-        <itemPath>../motion/pid/pidComputer.c</itemPath>
-        <itemPath>../motion/pid/bSplinePidComputer.c</itemPath>
-        <itemPath>../motion/pid/pidPersistence.c</itemPath>
+        <itemPath>../motion/pid/pidMotion.c</itemPath>
+        <itemPath>../motion/pid/pidType.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f10" displayName="motion.pid.computer" projectFiles="true">
+        <itemPath>../motion/pid/computer/bSplinePidComputer.c</itemPath>
+        <itemPath>../motion/pid/computer/pidComputer.c</itemPath>
+        <itemPath>../motion/pid/computer/simplePidComputer.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f4"
+                     displayName="motion.pid.enddetection"
+                     projectFiles="true">
+        <itemPath>../motion/pid/endDetection/motionEndDetection.c</itemPath>
+        <itemPath>../motion/pid/endDetection/motionEndDetectionParameter.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f3"
+                     displayName="motion.pid.parameters"
+                     projectFiles="true">
+        <itemPath>../motion/pid/parameters/pidParameter.c</itemPath>
+        <itemPath>../motion/pid/parameters/pidPersistence.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f9" displayName="motion.pid.profile" projectFiles="true">
+        <itemPath>../motion/pid/profile/pidMotionProfileComputer.c</itemPath>
+        <itemPath>../motion/pid/profile/profileType.c</itemPath>
       </logicalFolder>
       <logicalFolder name="motion.position"
                      displayName="motion.position"
@@ -450,8 +574,13 @@
       <logicalFolder name="motion.simple"
                      displayName="motion.simple"
                      projectFiles="true">
-        <itemPath>../motion/simple/motion.c</itemPath>
-        <itemPath>../motion/simple/motionPersistence.c</itemPath>
+        <itemPath>../motion/simple/motionCalibration.c</itemPath>
+        <itemPath>../motion/simple/simpleMotion.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f5" displayName="robot.kinematics" projectFiles="true">
+        <itemPath>../robot/kinematics/robotKinematics.c</itemPath>
+        <itemPath>../robot/kinematics/robotKinematicsDevice.c</itemPath>
+        <itemPath>../robot/kinematics/robotKinematicsDeviceInterface.c</itemPath>
       </logicalFolder>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
@@ -506,7 +635,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="../D:/DEV/C/MPLAB_C32/pic32-libs/include/peripheral;../C:/devtools/Microchip/MPLAB C32 Suite/pic32-libs/include/peripheral;../common/pwm;../common/serial;../motion/position;../robot;../motion/pid;../common/eeprom;../motion/simple;../device;../common;../common/io;../common/cmd;../common/log;../common/timer;../common/math;../device/dispatcher;../device/motor;../device/system;../common/i2c;../common/i2c/slave;../main/motorboard;../drivers;../drivers/dispatcher;../device/motion/pid;../device/motion/position;../device/motion/simple;../common/2d;../common/error;../motion/extended;../common/delay;../common/serial/32;../common/pwm/motor;../common/setup/32;../device/i2c/slave;../drivers/eeprom;../device/test;../motion/position/hctlCoder;../motion/position/hctlCoder/32;;."/>
+                  value="../D:/DEV/C/MPLAB_C32/pic32-libs/include/peripheral;../C:/devtools/Microchip/MPLAB C32 Suite/pic32-libs/include/peripheral;../common/pwm;../common/serial;../motion/position;../robot;../motion/pid;../common/eeprom;../motion/simple;../device;../common;../common/io;../common/cmd;../common/log;../common/timer;../common/math;../device/dispatcher;../device/motor;../device/system;../common/i2c;../common/i2c/slave;../main/motorboard;../drivers;../drivers/dispatcher;../device/motion/pid;../device/motion/position;../device/motion/simple;../common/2d;../common/error;../motion/extended;../common/delay;../common/serial/32;../common/pwm/motor;../common/setup/32;../device/i2c/slave;../drivers/eeprom;../device/test;../motion/position/hctlCoder;../motion/position/hctlCoder/32;."/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="false"/>
@@ -515,13 +644,16 @@
         <property key="place-data-into-section" value="false"/>
         <property key="post-instruction-scheduling" value="default"/>
         <property key="pre-instruction-scheduling" value="default"/>
-        <property key="preprocessor-macros" value=""/>
+        <property key="preprocessor-macros" value="_SUPPRESS_PLIB_WARNING"/>
         <property key="strict-ansi" value="false"/>
         <property key="support-ansi" value="false"/>
         <property key="use-cci" value="false"/>
         <property key="use-iar" value="false"/>
         <property key="use-indirect-calls" value="false"/>
       </C32>
+      <C32-AR>
+        <property key="additional-options-chop-files" value="false"/>
+      </C32-AR>
       <C32-AS>
         <property key="assembler-symbols" value=""/>
         <property key="enable-symbols" value="false"/>
@@ -546,7 +678,7 @@
         <property key="exclude-floating-point-library" value="false"/>
         <property key="exclude-standard-libraries" value="false"/>
         <property key="extra-lib-directories"
-                  value="../C:/devtools/Microchip/MPLAB C32 Suite/lib;;."/>
+                  value="../C:/devtools/Microchip/MPLAB C32 Suite/lib;."/>
         <property key="fill-flash-options-addr" value=""/>
         <property key="fill-flash-options-const" value=""/>
         <property key="fill-flash-options-how" value="0"/>
@@ -603,14 +735,88 @@
         <property key="common-include-directories" value=""/>
         <property key="gp-relative-option" value=""/>
         <property key="legacy-libc" value="false"/>
+        <property key="relaxed-math" value="false"/>
         <property key="save-temps" value="false"/>
         <property key="wpo-lto" value="false"/>
       </C32Global>
       <ICD3PlatformTool>
-        <property key="firmware.download.all" value="false"/>
-        <property key="tracecontrol.disablemacros" value="true"/>
-        <property key="tracecontrol.medium" value="0"/>
-        <property key="tracecontrol.select" value="0"/>
+        <property key="ADC 1" value="true"/>
+        <property key="AutoSelectMemRanges" value="auto"/>
+        <property key="CAN1" value="true"/>
+        <property key="CAN2" value="true"/>
+        <property key="CHANGE NOTICE" value="true"/>
+        <property key="COMPARATOR" value="true"/>
+        <property key="DMA" value="true"/>
+        <property key="ETHERNET CONTROLLER" value="true"/>
+        <property key="Freeze All Other Peripherals" value="true"/>
+        <property key="I2C1" value="true"/>
+        <property key="I2C3" value="true"/>
+        <property key="I2C4" value="true"/>
+        <property key="I2C5" value="true"/>
+        <property key="INPUT CAPTURE 1" value="true"/>
+        <property key="INPUT CAPTURE 2" value="true"/>
+        <property key="INPUT CAPTURE 3" value="true"/>
+        <property key="INPUT CAPTURE 4" value="true"/>
+        <property key="INPUT CAPTURE 5" value="true"/>
+        <property key="INTERRUPT CONTROL" value="true"/>
+        <property key="OUTPUT COMPARE 1" value="true"/>
+        <property key="OUTPUT COMPARE 2" value="true"/>
+        <property key="OUTPUT COMPARE 3" value="true"/>
+        <property key="OUTPUT COMPARE 4" value="true"/>
+        <property key="OUTPUT COMPARE 5" value="true"/>
+        <property key="PARALLEL MASTER/SLAVE PORT" value="true"/>
+        <property key="REAL TIME CLOCK" value="true"/>
+        <property key="SPI 2" value="true"/>
+        <property key="SPI 3" value="true"/>
+        <property key="SPI 4" value="true"/>
+        <property key="SecureSegment.SegmentProgramming" value="FullChipProgramming"/>
+        <property key="TIMER1" value="true"/>
+        <property key="TIMER2" value="true"/>
+        <property key="TIMER3" value="true"/>
+        <property key="TIMER4" value="true"/>
+        <property key="TIMER5" value="true"/>
+        <property key="ToolFirmwareFilePath"
+                  value="Press to browse for a specific firmware version"/>
+        <property key="ToolFirmwareOption.UseLatestFirmware" value="true"/>
+        <property key="UART1" value="true"/>
+        <property key="UART2" value="true"/>
+        <property key="UART3" value="true"/>
+        <property key="UART4" value="true"/>
+        <property key="UART5" value="true"/>
+        <property key="UART6" value="true"/>
+        <property key="debugoptions.useswbreakpoints" value="false"/>
+        <property key="hwtoolclock.frcindebug" value="false"/>
+        <property key="memories.aux" value="false"/>
+        <property key="memories.bootflash" value="false"/>
+        <property key="memories.configurationmemory" value="true"/>
+        <property key="memories.configurationmemory2" value="true"/>
+        <property key="memories.dataflash" value="true"/>
+        <property key="memories.eeprom" value="true"/>
+        <property key="memories.flashdata" value="true"/>
+        <property key="memories.id" value="true"/>
+        <property key="memories.programmemory" value="true"/>
+        <property key="memories.programmemory.end" value="0x1d07ffff"/>
+        <property key="memories.programmemory.partition2" value="true"/>
+        <property key="memories.programmemory.partition2.end"
+                  value="${memories.programmemory.partition2.end.value}"/>
+        <property key="memories.programmemory.partition2.start"
+                  value="${memories.programmemory.partition2.start.value}"/>
+        <property key="memories.programmemory.start" value="0x1d000000"/>
+        <property key="poweroptions.powerenable" value="false"/>
+        <property key="programoptions.donoteraseauxmem" value="false"/>
+        <property key="programoptions.eraseb4program" value="true"/>
+        <property key="programoptions.preservedataflash" value="false"/>
+        <property key="programoptions.preserveeeprom" value="false"/>
+        <property key="programoptions.preserveprogramrange" value="false"/>
+        <property key="programoptions.preserveprogramrange.end" value="0x1d07ffff"/>
+        <property key="programoptions.preserveprogramrange.start" value="0x1d000000"/>
+        <property key="programoptions.preserveuserid" value="false"/>
+        <property key="programoptions.programcalmem" value="false"/>
+        <property key="programoptions.programuserotp" value="false"/>
+        <property key="programoptions.testmodeentrymethod" value="VPPFirst"/>
+        <property key="programoptions.usehighvoltageonmclr" value="false"/>
+        <property key="programoptions.uselvpprogramming" value="false"/>
+        <property key="voltagevalue" value="3.25"/>
       </ICD3PlatformTool>
     </conf>
   </confs>

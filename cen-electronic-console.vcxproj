@@ -135,6 +135,7 @@
     <ClCompile Include="common\pwm\servo\pc\servoPwmPc.c" />
     <ClCompile Include="common\pwm\servo\servoPwm.c" />
     <ClCompile Include="common\pwm\servo\servoPwmDebug.c" />
+    <ClCompile Include="common\sensor\temperature\temperature.c" />
     <ClCompile Include="common\serial\pc\serialInputInterruptPc.c" />
     <ClCompile Include="common\serial\pc\serialPc.c" />
     <ClCompile Include="common\serial\serialLink.c" />
@@ -146,6 +147,8 @@
     <ClCompile Include="common\timer\timerList.c" />
     <ClCompile Include="device\adc\adcDevice.c" />
     <ClCompile Include="device\adc\adcDeviceInterface.c" />
+    <ClCompile Include="device\battery\batteryDevice.c" />
+    <ClCompile Include="device\battery\batteryDeviceInterface.c" />
     <ClCompile Include="device\beacon\beaconReceiverDeviceInterface.c" />
     <ClCompile Include="device\clock\clockDevice.c" />
     <ClCompile Include="device\clock\clockDeviceInterface.c" />
@@ -180,6 +183,11 @@
     <ClCompile Include="device\motor\pwmMotor.c" />
     <ClCompile Include="device\motor\pwmMotorDevice.c" />
     <ClCompile Include="device\motor\pwmMotorDeviceInterface.c" />
+    <ClCompile Include="device\navigation\navigationDevice.c" />
+    <ClCompile Include="device\navigation\navigationDeviceInterface.c" />
+    <ClCompile Include="device\sensor\temperature\temperatureSensor.c" />
+    <ClCompile Include="device\sensor\temperature\temperatureSensorDevice.c" />
+    <ClCompile Include="device\sensor\temperature\temperatureSensorDeviceInterface.c" />
     <ClCompile Include="device\serial\serialDebugDevice.c" />
     <ClCompile Include="device\serial\serialDebugDeviceInterface.c" />
     <ClCompile Include="device\servo\servoDevice.c" />
@@ -193,6 +201,7 @@
     <ClCompile Include="device\timer\timerDevice.c" />
     <ClCompile Include="device\timer\timerDeviceInterface.c" />
     <ClCompile Include="device\transmitMode.c" />
+    <ClCompile Include="drivers\battery\battery.c" />
     <ClCompile Include="drivers\beacon\beaconReceiverDriver.c" />
     <ClCompile Include="drivers\clock\pc\pcClock.c" />
     <ClCompile Include="drivers\clock\softClock.c" />
@@ -213,6 +222,7 @@
     <ClCompile Include="drivers\motion\motionDriver.c" />
     <ClCompile Include="drivers\motion\trajectoryDriver.c" />
     <ClCompile Include="drivers\motor\motorDriver.c" />
+    <ClCompile Include="drivers\sensor\temperature\pc\temperaturePc.c" />
     <ClCompile Include="drivers\strategy\strategyDriver.c" />
     <ClCompile Include="drivers\test\testDriver.c" />
     <ClCompile Include="main\mainBoard\mainBoardPc.c" />
@@ -308,6 +318,8 @@
     <ClCompile Include="test\common\math\bitListTest.c" />
     <ClCompile Include="test\common\math\cenMathTest.c" />
     <ClCompile Include="test\common\math\hexUtilsTest.c" />
+    <ClCompile Include="test\device\deviceTest.c" />
+    <ClCompile Include="test\device\system\systemDeviceTest.c" />
     <ClCompile Include="test\drivers\dispatchers\driverDataDispatcherListTest.c" />
     <ClCompile Include="test\drivers\test\testDriverTest.c" />
     <ClCompile Include="test\motion\bspline\bsplineListTest.c" />
@@ -380,6 +392,7 @@
     <ClInclude Include="common\pwm\motor\motorPwm.h" />
     <ClInclude Include="common\pwm\servo\servoPwm.h" />
     <ClInclude Include="common\pwm\servo\servoPwmDebug.h" />
+    <ClInclude Include="common\sensor\temperature\temperature.h" />
     <ClInclude Include="common\serial\pc\serialPc.h" />
     <ClInclude Include="common\serial\serial.h" />
     <ClInclude Include="common\serial\serialInputInterrupt.h" />
@@ -393,6 +406,8 @@
     <ClInclude Include="common\timer\timerSetup.h" />
     <ClInclude Include="device\adc\adcDevice.h" />
     <ClInclude Include="device\adc\adcDeviceInterface.h" />
+    <ClInclude Include="device\battery\batteryDevice.h" />
+    <ClInclude Include="device\battery\batteryDeviceInterface.h" />
     <ClInclude Include="device\beacon\beaconReceiverDeviceInterface.h" />
     <ClInclude Include="device\clock\clockDevice.h" />
     <ClInclude Include="device\clock\clockDeviceInterface.h" />
@@ -431,6 +446,11 @@
     <ClInclude Include="device\motor\pwmMotor.h" />
     <ClInclude Include="device\motor\pwmMotorDevice.h" />
     <ClInclude Include="device\motor\pwmMotorDeviceInterface.h" />
+    <ClInclude Include="device\navigation\navigationDevice.h" />
+    <ClInclude Include="device\navigation\navigationDeviceInterface.h" />
+    <ClInclude Include="device\sensor\temperature\temperatureSensor.h" />
+    <ClInclude Include="device\sensor\temperature\temperatureSensorDevice.h" />
+    <ClInclude Include="device\sensor\temperature\temperatureSensorDeviceInterface.h" />
     <ClInclude Include="device\serial\serialDebugDevice.h" />
     <ClInclude Include="device\serial\serialDebugDeviceInterface.h" />
     <ClInclude Include="device\servo\servoDevice.h" />
@@ -444,6 +464,7 @@
     <ClInclude Include="device\timer\timerDevice.h" />
     <ClInclude Include="device\timer\timerDeviceInterface.h" />
     <ClInclude Include="device\transmitMode.h" />
+    <ClInclude Include="drivers\battery\battery.h" />
     <ClInclude Include="drivers\beacon\beaconReceiverDriver.h" />
     <ClInclude Include="drivers\clock\pc\pcClock.h" />
     <ClInclude Include="drivers\clock\softClock.h" />
@@ -463,6 +484,7 @@
     <ClInclude Include="drivers\motion\motionDriver.h" />
     <ClInclude Include="drivers\motion\trajectoryDriver.h" />
     <ClInclude Include="drivers\motor\motorDriver.h" />
+    <ClInclude Include="drivers\sensor\temperature\pc\temperaturePc.h" />
     <ClInclude Include="drivers\strategy\strategyDriver.h" />
     <ClInclude Include="drivers\test\testDriver.h" />
     <ClInclude Include="main\mainBoard\mainBoardPc.h" />
@@ -569,6 +591,7 @@
     <ClInclude Include="test\common\math\bitListTest.h" />
     <ClInclude Include="test\common\math\cenMathTest.h" />
     <ClInclude Include="test\common\math\hexUtilsTest.h" />
+    <ClInclude Include="test\device\system\systemDeviceTest.h" />
     <ClInclude Include="test\drivers\dispatchers\driverDataDispatcherListTest.h" />
     <ClInclude Include="test\drivers\test\testDriverTest.h" />
     <ClInclude Include="test\motion\bspline\bsplineListTest.h" />

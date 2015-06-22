@@ -348,7 +348,7 @@ restart:
     addLogHandler("UART", &debugOutputStream, DEBUG);
     appendString(getInfoOutputStreamLogger(), "BEACON BOARD MAIN \n");
     appendCRLF(getInfoOutputStreamLogger());
-    setPicName("BEACON BOARD MAIN");
+    setBoardName("BEACON BOARD MAIN");
 
     // Init Devices
     initLaserDetectorSettings();

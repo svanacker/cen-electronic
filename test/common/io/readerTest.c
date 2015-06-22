@@ -17,6 +17,7 @@ static OutputStream* outputStream;
 static InputStream* inputStream;
 
 void readerTestSuite(void) {
+    RUN_TEST(test_readBool);
     RUN_TEST(test_readFilteredChar);
     RUN_TEST(test_readBinaryChar);
     RUN_TEST(test_readBinaryWord);
@@ -30,12 +31,31 @@ void readerTestSuite(void) {
     RUN_TEST(test_isChar);
     RUN_TEST(test_checkIsAck);
     RUN_TEST(test_checkIsChar);
+    RUN_TEST(test_readCharArray);
 }
 
 void initBufferForReaderTest(void) {
     initBuffer(&bufferTest, (char(*)[]) &bufferArrayTest, TEST_BUFFER_SIZE, "readerTest", "readerTestType");
     outputStream = getOutputStream(&bufferTest);
     inputStream = getInputStream(&bufferTest);
+}
+
+void test_readBool(void) {
+    initBufferForReaderTest();
+
+    appendString(outputStream, "015");
+
+    bool value = readBool(inputStream);
+    TEST_ASSERT_FALSE(value);
+    TEST_ASSERT_EQUAL(0, getLastError());
+    
+    value = readBool(inputStream);
+    TEST_ASSERT_TRUE(value);
+    TEST_ASSERT_EQUAL(0, getLastError());
+
+    value = readBool(inputStream);
+    TEST_ASSERT_TRUE(value);
+    TEST_ASSERT_EQUAL(IO_READER_NOT_BOOL_VALUE, getLastError());
 }
 
 void test_readFilteredChar(void) {
@@ -194,6 +214,22 @@ void test_readHex6(void) {
     float value = readHex6(inputStream);
     TEST_ASSERT_EQUAL(value, 11927312.0F);
     TEST_ASSERT_EQUAL(0, getLastError());
+}
+
+void test_readCharArray(void) {
+    initBufferForReaderTest();
+    appendHex2(outputStream, 'H');
+    appendHex2(outputStream, 'E');
+    appendHex2(outputStream, 'L');
+    appendHex2(outputStream, 'L');
+
+    char s[4];
+    readCharArray(inputStream, (char(*)[]) &s, 4);
+
+    TEST_ASSERT_EQUAL('H', s[0]);
+    TEST_ASSERT_EQUAL('E', s[1]);
+    TEST_ASSERT_EQUAL('L', s[2]);
+    TEST_ASSERT_EQUAL('L', s[3]);
 }
 
 void test_isAck(void) {

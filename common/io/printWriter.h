@@ -43,6 +43,14 @@ void appendSeparator(OutputStream* outputStream);
 void appendString(OutputStream* outputStream, const char* s);
 
 /**
+ * Append a char array with a specific length.
+ * @param outputStream the pointer on outputStream (POO simulation)
+ * @param s the pointer on the char array
+ * @param length the length of the char array
+ */
+void appendCharArray(OutputStream* outputStream, const char(*s)[], unsigned char length);
+
+/**
  * Append a string with CRLF to the buffer.
  * @param outputStream the pointer on outputStream (POO simulation)
  * @param s a standard C String (terminated by \0)

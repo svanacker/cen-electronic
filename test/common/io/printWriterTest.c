@@ -27,6 +27,7 @@ void printWriterTestSuite(void) {
     RUN_TEST(test_appendSeparator);
 
     RUN_TEST(test_appendString);
+    RUN_TEST(test_appendCharArray);
 
     RUN_TEST(test_printBuffer);
 
@@ -106,6 +107,15 @@ void test_appendString(void) {
     appendString(outputStream, "HELLO");
 
     bool actual = isBufferEqualsToString(&bufferTest, "HELLO");
+    TEST_ASSERT_TRUE(actual);
+}
+
+void test_appendCharArray(void) {
+    initBufferForPrintWriterTest();
+    char s[5] = "HELLO";
+    appendCharArray(outputStream, (char(*)[]) &s, 5);
+    // HELLO in hexadecimal becomes : "48454C4C4F
+    bool actual = isBufferEqualsToString(&bufferTest, "48454C4C4F");
     TEST_ASSERT_TRUE(actual);
 }
 

@@ -1,5 +1,7 @@
 #include "reader.h"
 
+#include <stdbool.h>
+
 #include "filter.h"
 #include "inputStream.h"
 #include "printWriter.h"
@@ -18,6 +20,18 @@
  */
 
 // READ METHODS
+
+bool readBool(InputStream* inputStream) {
+    char c = inputStream->readChar(inputStream);
+    if (c == '0') {
+        return false;
+    }
+    else if (c == '1') {
+        return true;
+    }
+    writeError(IO_READER_NOT_BOOL_VALUE);
+    return true;
+}
 
 char readFilteredChar(InputStream* inputStream) {
     char b0 = inputStream->readChar(inputStream);
@@ -96,6 +110,16 @@ float readHex6(InputStream* inputStream) {
     char b5 = readFilteredChar(inputStream);
     float result = hex6CharToFloat(b0, b1, b2, b3, b4, b5);
     return result;
+}
+
+void readCharArray(InputStream* inputStream, char(*s)[], unsigned char length) {
+    int i;
+    char* sPointer = (char*) s;
+    for (i = 0; i < length; i++) {
+        char c = (char) readHex2(inputStream);
+        *sPointer = c;
+        sPointer++;
+    }
 }
 
 

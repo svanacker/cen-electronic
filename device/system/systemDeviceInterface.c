@@ -11,10 +11,10 @@ const char* deviceSystemGetName(void) {
 }
 
 int deviceSystemGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
-    // picName
-    if (commandHeader == COMMAND_PIC_NAME) {
+    // BoardName
+    if (commandHeader == COMMAND_BOARD_NAME) {
         if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("getPicName");
+            setFunctionNoArgumentAndNoResult("getBoardName");
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
@@ -46,6 +46,12 @@ int deviceSystemGetInterface(char commandHeader, DeviceInterfaceMode mode, bool 
     else if (commandHeader == COMMAND_USAGE) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("usage");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }
+    else if (commandHeader == COMMAND_USAGE_PROBLEM) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("usage (only Problems)");
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
