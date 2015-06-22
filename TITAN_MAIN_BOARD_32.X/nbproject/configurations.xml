@@ -69,6 +69,7 @@
         <itemPath>../common/io/binaryPrintWriter.h</itemPath>
         <itemPath>../common/io/binaryWriter.h</itemPath>
         <itemPath>../common/io/reader.h</itemPath>
+        <itemPath>../common/io/nullOutputStream.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f16" displayName="common.led" projectFiles="true">
         <itemPath>../common/led/ledutils.h</itemPath>
@@ -92,6 +93,11 @@
       <logicalFolder name="f8" displayName="common.pwm.servo" projectFiles="true">
         <itemPath>../common/pwm/servo/servoPwmDebug.h</itemPath>
         <itemPath>../common/pwm/servo/servoPwm.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f17"
+                     displayName="common.sensor.temperature"
+                     projectFiles="true">
+        <itemPath>../common/sensor/temperature/temperature.h</itemPath>
       </logicalFolder>
       <logicalFolder name="common.serial"
                      displayName="common.serial"
@@ -429,6 +435,7 @@
         <itemPath>../common/io/compositeOutputStream.c</itemPath>
         <itemPath>../common/io/binaryPrintWriter.c</itemPath>
         <itemPath>../common/io/binaryWriter.c</itemPath>
+        <itemPath>../common/io/nullOutputStream.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f17" displayName="common.led" projectFiles="true">
         <itemPath>../common/led/32/ledutils32.c</itemPath>
@@ -465,6 +472,11 @@
         <itemPath>../common/pwm/servo/32/servoPwm32.c</itemPath>
         <itemPath>../common/pwm/servo/servoPwmDebug.c</itemPath>
         <itemPath>../common/pwm/servo/servoPwm.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f18"
+                     displayName="common.sensor.temperature"
+                     projectFiles="true">
+        <itemPath>../common/sensor/temperature/temperature.c</itemPath>
       </logicalFolder>
       <logicalFolder name="common.serial"
                      displayName="common.serial"

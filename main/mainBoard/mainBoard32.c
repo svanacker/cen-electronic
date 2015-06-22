@@ -122,10 +122,6 @@
 #include "../../device/lcd/lcdDevice.h"
 #include "../../device/lcd/lcdDeviceInterface.h"
 
-// LED
-#include "../../device/led/ledDevice.h"
-#include "../../device/led/ledDeviceInterface.h"
-
 // Motor
 #include "../../device/motor/pwmMotorDeviceInterface.h"
 
@@ -197,23 +193,10 @@
 
 #include "../../drivers/sonar/srf02.h"
 
-#define SERIAL_PORT_DEBUG         SERIAL_PORT_2
+#define SERIAL_PORT_DEBUG         SERIAL_PORT_2 
 #define SERIAL_PORT_PC            SERIAL_PORT_6
 #define SERIAL_PORT_MOTOR         SERIAL_PORT_5
 #define SERIAL_PORT_MECA2         SERIAL_PORT_1
-<<<<<<< HEAD
-
-// I2C => PORT 1 (for All Peripherical, including Eeprom / Clock / Temperatur)
-static I2cBus i2cBus;
-
-// EEPROM
-static Eeprom eeprom;
-static I2cBusConnection eepromI2cBusConnection;
-
-// CLOCK
-static Clock clock;
-static I2cBusConnection clockI2cBusConnection;
-=======
 
 // I2C => PORT 1 (for All Peripherical, including Eeprom / Clock / Temperatur)
 static I2cBus i2cBus;
@@ -229,7 +212,6 @@ static I2cBusConnection clockI2cBusConnection;
 // TEMPERATURE
 static Temperature temperature;
 static I2cBusConnection temperatureI2cBusConnection;
->>>>>>> svanacker/master
 
 // serial link DEBUG 
 static char debugInputBufferArray[MAIN_BOARD_DEBUG_INPUT_BUFFER_LENGTH];
@@ -330,21 +312,6 @@ static Timer timerListArray[MAIN_BOARD_TIMER_LENGTH];
 static long counter;
 static int instructionIndex;
 
-<<<<<<< HEAD
-// Obstacle management
-// static bool mustNotifyObstacle;
-// static unsigned int instructionType;
-// static bool useInfrared;
-// static bool useBalise;
-
-#define INSTRUCTION_TYPE_NO_MOVE        0
-#define INSTRUCTION_TYPE_FORWARD        1
-#define INSTRUCTION_TYPE_BACKWARD        2
-#define INSTRUCTION_TYPE_ROTATION        3
-
-
-=======
->>>>>>> svanacker/master
 /**
  * @private
  */
@@ -355,12 +322,6 @@ void initMainBoardDriversDescriptor() {
 
     // Get test driver for debug purpose
     addDriver(testDriverGetDescriptor(), TRANSMIT_LOCAL);
-<<<<<<< HEAD
-
-    // Direct Devantech Driver
-    // addDriver(getMD22DriverDescriptor(&i2cBus), TRANSMIT_NONE);
-=======
->>>>>>> svanacker/master
 }
 
 /**
@@ -384,22 +345,14 @@ void initMainBoardDevicesDescriptor() {
 
     initStartMatch(&startMatch, isMatchStarted32, mainBoardWaitForInstruction, &eeprom);
     addLocalDevice(getStartMatchDeviceInterface(), getStartMatchDeviceDescriptor(&startMatch));
-//  addLocalDevice(getEndMatchDetectorDeviceInterface(), getEndMatchDetectorDeviceDescriptor());
+    addLocalDevice(getEndMatchDetectorDeviceInterface(), getEndMatchDetectorDeviceDescriptor());
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
     addLocalDevice(getADCDeviceInterface(), getADCDeviceDescriptor());
-<<<<<<< HEAD
-    addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor());
-    addLocalDevice(getLedDeviceInterface(), getLedDeviceDescriptor());
-    addLocalDevice(getTemperatureSensorDeviceInterface(), getTemperatureSensorDeviceDescriptor(&i2cBus));
-
-    /*
-=======
 
     addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
 
     /*
->>>>>>> svanacker/master
     addLocalDevice(getSonarDeviceInterface(), getSonarDeviceDescriptor(&i2cBus));
     addLocalDevice(getRobotSonarDetectorDeviceInterface(), getRobotSonarDetectorDeviceDescriptor(&i2cBus));
     addLocalDevice(getTemperatureSensorDeviceInterface(), getTemperatureSensorDeviceDescriptor(&i2cBus));
@@ -408,11 +361,7 @@ void initMainBoardDevicesDescriptor() {
     // Device* armDevice = addI2cRemoteDevice(getArm2012DeviceInterface(), MECHANICAL_BOARD_2_I2C_ADDRESS);
     // Device* infraredDetectorDevice = addI2cRemoteDevice(getRobotInfraredDetectorDeviceInterface(), MECHANICAL_BOARD_2_I2C_ADDRESS);
     // addI2cRemoteDevice(getServoDeviceInterface(), MECHANICAL_BOARD_2_I2C_ADDRESS);
-<<<<<<< HEAD
-    addUartRemoteDevice(getRobotInfraredDetectorDeviceInterface(), SERIAL_PORT_MECA2);
-=======
     // addUartRemoteDevice(getRobotInfraredDetectorDeviceInterface(), SERIAL_PORT_MECA2);
->>>>>>> svanacker/master
 
     // Motor Board->I2C
     /*
@@ -421,19 +370,11 @@ void initMainBoardDevicesDescriptor() {
     addI2cRemoteDevice(getCodersDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
     addI2cRemoteDevice(getPIDDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
     addI2cRemoteDevice(getTrajectoryDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
-<<<<<<< HEAD
-    addI2cRemoteDevice(getMotionDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
-    */
-
-    // MOTOR BOARD -> UART
-    addUartRemoteDevice(getTestDeviceInterface(), SERIAL_PORT_MOTOR);
-=======
     addI2cRemoteDevice(getMotionDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
     */
 
     // MOTOR BOARD -> UART
     // addUartRemoteDevice(getTestDeviceInterface(), SERIAL_PORT_MOTOR);
->>>>>>> svanacker/master
     addUartRemoteDevice(getMotorDeviceInterface(), SERIAL_PORT_MOTOR);
     addUartRemoteDevice(getCodersDeviceInterface(), SERIAL_PORT_MOTOR);
     addUartRemoteDevice(getPIDDeviceInterface(), SERIAL_PORT_MOTOR);
@@ -465,42 +406,20 @@ void initMainBoardDriverDataDispatcherList(void) {
     initDriverDataDispatcherList(&driverDataDispatcherListArray, MAIN_BOARD_DRIVER_DATA_DISPATCHER_LIST_LENGTH);
 
     // Configure data dispatcher
-<<<<<<< HEAD
-    addLocalDriverDataDispatcher();
-
-    // I2C Stream for motorBoard
-    initI2cBusConnection(&motorI2cBusConnection, &i2cBus, MOTOR_BOARD_I2C_ADDRESS);
-=======
     addLocalDriverDataDispatcher();
 
     // I2C
 
->>>>>>> svanacker/master
     addI2CDriverDataDispatcher("MOTOR_BOARD_I2C_DISPATCHER",
         &motorBoardI2cInputBuffer, 
         (char(*)[]) &motorBoardI2cInputBufferArray,
         MAIN_BOARD_I2C_INPUT_DRIVER_DATA_DISPATCHER_BUFFER_LENGTH,
         &motorBoardI2cOutputStream,
-<<<<<<< HEAD
-        &motorBoardI2cInputStream,
-        &motorI2cBusConnection
-        );
-
-    // Uart Stream for motorBoard
-    addUartDriverDataDispatcher(
-        &motorSerialStreamLink,
-        "MOTOR_BOARD_UART_DISPATCHER",
-        SERIAL_PORT_MOTOR);
-
-    // Stream for Mechanical Board 2
-    /*initI2cBusConnection(&mechanicalBoard2I2cBusConnection, &i2cBus, MECHANICAL_BOARD_2_I2C_ADDRESS);
-=======
         &motorBoardI2cInputStream,
         &motorI2cBusConnection
         );
 
     // Stream for Mechanical Board 2
->>>>>>> svanacker/master
     addI2CDriverDataDispatcher(
             "MECHANICAL_BOARD_2_DISPATCHER",
             &mechanical2BoardInputBuffer,
@@ -509,12 +428,6 @@ void initMainBoardDriverDataDispatcherList(void) {
             &mechanical2BoardOutputStream,
             &mechanical2BoardInputStream,
             &mechanicalBoard2I2cBusConnection);
-<<<<<<< HEAD
-*/
-    // Uart Stream for motorBoard
-    addUartDriverDataDispatcher(
-        &mechanicalBoard2SerialStreamLink,
-=======
 
     // SERIAL
 
@@ -527,7 +440,6 @@ void initMainBoardDriverDataDispatcherList(void) {
     // Uart Stream for mechanicalBoard
     addUartDriverDataDispatcher(
         &mechanicalBoard2SerialStreamLink,
->>>>>>> svanacker/master
         "MECA2_UART_DISPATCHER",
         SERIAL_PORT_MECA2);
 
@@ -620,19 +532,12 @@ int main(void) {
             DEFAULT_SERIAL_SPEED);
     // Serial Debug LOG
     addLogHandler("UART", &debugOutputStream, DEBUG, LOG_HANDLER_CATEGORY_ALL_MASK);
-<<<<<<< HEAD
-
-    // LOG the PicName
-    appendString(getAlwaysOutputStreamLogger(), getPicName());
-    println(getAlwaysOutputStreamLogger());
-=======
 
     // LOG the BoardName
     appendString(getAlwaysOutputStreamLogger(), getBoardName());
     println(getAlwaysOutputStreamLogger());
 
     // SERIAL
->>>>>>> svanacker/master
     
     // Open the serial Link for the Motor Board
     openSerialLink(&motorSerialStreamLink,
@@ -656,31 +561,6 @@ int main(void) {
                     &pcOutputBuffer, &pcOutputBufferArray, MAIN_BOARD_PC_OUTPUT_BUFFER_LENGTH,
                     &pcOutputStream,
                     SERIAL_PORT_PC,
-<<<<<<< HEAD
-                    DEFAULT_SERIAL_SPEED);
-
-    // I2C
-    initI2cBus(&i2cBus, I2C_BUS_TYPE_MASTER, I2C_BUS_PORT_1);
-    i2cMasterInitialize(&i2cBus);
-
-    // Timers
-    initTimerList(&timerListArray, MAIN_BOARD_TIMER_LENGTH);
-
-    // Eeproms
-    initI2cBusConnection(&eepromI2cBusConnection, &i2cBus, 0 /* TODO. */);
-    init24C512Eeprom(&eeprom, &eepromI2cBusConnection);
-
-    // Clock
-    initI2cBusConnection(&clockI2cBusConnection, &i2cBus, 0 /* TODO. */);
-    initClockPCF8563(&clock, &clockI2cBusConnection);
-
-	
-    initMainBoardDevicesDescriptor();
-    initMainBoardDriversDescriptor();
-    initMainBoardDriverDataDispatcherList();
-
-    // I2C Debug
-=======
                     DEFAULT_SERIAL_SPEED);
 
     // MAIN I2C
@@ -690,32 +570,11 @@ int main(void) {
     initI2cBusConnection(&mechanicalBoard2I2cBusConnection, &i2cBus, MECHANICAL_BOARD_2_I2C_ADDRESS);
 
     // I2C Debug
->>>>>>> svanacker/master
     initI2CDebugBuffers(&i2cMasterDebugInputBuffer,
                         &i2cMasterDebugInputBufferArray,
                         MAIN_BOARD_I2C_DEBUG_MASTER_IN_BUFFER_LENGTH,
                         &i2cMasterDebugOutputBuffer,
                         &i2cMasterDebugOutputBufferArray,
-<<<<<<< HEAD
-                        MAIN_BOARD_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH);
-
-    setDebugI2cEnabled(false);
-
-    // Start interruptions
-    startTimerList();
-
-    loopUntilStart(&startMatch);
-
-    counter = 1;
-
-    clearBuffer(&mechanicalBoard2InputBuffer);
-
-    enableNotificationRobotInfraredDetector(DETECTOR_GROUP_TYPE_FORWARD);
-
-    while (1) {
-        if (!mainBoardWaitForInstruction(&startMatch)) {
-            break;
-=======
                         MAIN_BOARD_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH);
     setDebugI2cEnabled(false);
 
@@ -752,7 +611,6 @@ int main(void) {
     while (1) {
         if (!mainBoardWaitForInstruction(&startMatch)) {
             break;
->>>>>>> svanacker/master
         }
     }
 
