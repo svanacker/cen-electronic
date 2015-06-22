@@ -6,14 +6,16 @@
 // Char / Strings typedef
 #define FIXED_CHAR_ARRAY_LENGTH         4
 // We reserve the last char as '\0' to be sure that we will not continue, if we use "string" routines
-typedef char FixedCharArray [FIXED_CHAR_ARRAY_LENGTH + 1];
+typedef char FixedCharArray [FIXED_CHAR_ARRAY_LENGTH];
+
+bool fixedCharArrayEquals(const FixedCharArray* fixedCharArray1, const FixedCharArray* fixedCharArray2);
 
 /**
  * Copy a fixed char array from a source to a target.
  * @param source the source fixed char array
  * @param target the target fixed char array
  */
-void copyFixedCharArray(FixedCharArray* source, FixedCharArray* target);
+void copyFixedCharArray(const FixedCharArray* source, FixedCharArray* target);
 
 /**
  * Clear the content of the fixedCharArray by filling the content to '\0'.
@@ -27,7 +29,7 @@ void clearFixedCharArray(FixedCharArray* fixedCharArray);
  * @param fixedCharArray the fixed Array Char which must be filled by the content of the string
  * @return true if the all content of the string was filled (because the size is < length(fixedCharArray)), else if all other cases.
  */
-bool stringToFixedCharArray(char* s, FixedCharArray* fixedCharArray);
+bool stringToFixedCharArray(const char* s, FixedCharArray* fixedCharArray);
 
 /**
  * Returns if both strings are equal or not.
@@ -35,6 +37,6 @@ bool stringToFixedCharArray(char* s, FixedCharArray* fixedCharArray);
  * @param s2 the second string to compare
  * @return true if both strings are equal, false else
  */
-bool stringEquals(char* s1, char* s2);
+bool stringEquals(const char* s1, const char* s2);
 
 #endif

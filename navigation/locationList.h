@@ -100,11 +100,16 @@ void removeFirstLocation(LocationList* locationList);
 Location* getLocation(LocationList* locationList, unsigned int index);
 
 /**
+ * TODO
+ */
+Location* findLocationByStringName(LocationList* locationList, char* name);
+
+/**
  * Find the location by the name.
  * @param locationList the list in which we search the location with the specified name
  * @param locationName the name of location which is searched
  */
-Location* findLocationByName(LocationList* locationList, char* locationName);
+Location* findLocationByName(LocationList* locationList, const FixedCharArray* locationName);
 
 /**
  * Returns true if the locationList contains the specified location.

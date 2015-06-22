@@ -160,6 +160,9 @@ void clearLastError();
 #define LOCATION_LIST_NULL                0x5041
 #define LOCATION_LIST_NOT_INITIALIZED     0x5042
 #define LOCATION_LIST_INDEX_OUT_OF_BOUNDS 0x5043
+#define LOCATION_SOURCE_TARGET_EQUAL      0x5044
+#define LOCATION_DOES_NOT_EXIST           0x5045
+
 
 #define TOO_MUCH_PATHS                    0x5050
 #define PATH_LIST_NULL                    0x5051

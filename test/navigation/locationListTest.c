@@ -46,7 +46,7 @@ void locationListTest(void) {
     TEST_ASSERT_EQUAL(5, locationCount);
 
     // findLocationByName
-    tmpLocation = findLocationByName(&locationList, "C");
+    tmpLocation = findLocationByStringName(&locationList, "C");
     TEST_ASSERT_EQUAL(locationC, tmpLocation);
 
     // locationEquals
