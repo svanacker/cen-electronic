@@ -349,6 +349,8 @@ void initMainBoardDevicesDescriptor() {
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
     addLocalDevice(getADCDeviceInterface(), getADCDeviceDescriptor());
+    addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor());
+    addLocalDevice(getLedDeviceInterface(), getLedDeviceDescriptor());
 
     addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
 
