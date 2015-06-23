@@ -1,6 +1,8 @@
 #ifndef LCD_DEVICE_INTERFACE_H
 #define LCD_DEVICE_INTERFACE_H
 
+#include "../../common/string/cenString.h"
+
 #include "../../device/deviceInterface.h"
 #include "../../device/deviceConstants.h"
 
@@ -18,7 +20,7 @@
 * Define the number of fixed count of char used
 * for each message.
 */
-#define LCD_CHAR_COUNT_BY_MESSAGE     4
+#define LCD_CHAR_COUNT_BY_MESSAGE    FIXED_CHAR_ARRAY_LENGTH 
 
 /**
 * Interface for Device.

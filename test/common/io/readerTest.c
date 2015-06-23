@@ -7,6 +7,8 @@
 #include "../../../common/io/printWriter.h"
 #include "../../../common/io/reader.h"
 
+#include "../../../common/string/cenString.h"
+
 #include "../../../test/unity/unity.h"
 
 #define TEST_BUFFER_SIZE 20
@@ -31,7 +33,7 @@ void readerTestSuite(void) {
     RUN_TEST(test_isChar);
     RUN_TEST(test_checkIsAck);
     RUN_TEST(test_checkIsChar);
-    RUN_TEST(test_readCharArray);
+    RUN_TEST(test_readFixedCharArray);
 }
 
 void initBufferForReaderTest(void) {
@@ -216,15 +218,15 @@ void test_readHex6(void) {
     TEST_ASSERT_EQUAL(0, getLastError());
 }
 
-void test_readCharArray(void) {
+void test_readFixedCharArray(void) {
     initBufferForReaderTest();
     appendHex2(outputStream, 'H');
     appendHex2(outputStream, 'E');
     appendHex2(outputStream, 'L');
     appendHex2(outputStream, 'L');
 
-    char s[4];
-    readCharArray(inputStream, (char(*)[]) &s, 4);
+    FixedCharArray s;
+    readFixedCharArray(inputStream, &s);
 
     TEST_ASSERT_EQUAL('H', s[0]);
     TEST_ASSERT_EQUAL('E', s[1]);

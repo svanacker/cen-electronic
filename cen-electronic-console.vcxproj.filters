@@ -775,6 +775,9 @@
     <Filter Include="Source Files\device\navigation">
       <UniqueIdentifier>{8af67280-2456-4342-a187-28aea83b1a5c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\common\string">
+      <UniqueIdentifier>{c09c964e-d88c-4273-868f-05561944de14}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -1526,6 +1529,9 @@
     </ClCompile>
     <ClCompile Include="device\navigation\navigationDeviceInterface.c">
       <Filter>Source Files\device\navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="common\string\cenString.c">
+      <Filter>Header Files\common\string</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

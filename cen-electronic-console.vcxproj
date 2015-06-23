@@ -140,6 +140,7 @@
     <ClCompile Include="common\serial\pc\serialPc.c" />
     <ClCompile Include="common\serial\serialLink.c" />
     <ClCompile Include="common\serial\serialOutputStream.c" />
+    <ClCompile Include="common\string\cenString.c" />
     <ClCompile Include="common\system\system.c" />
     <ClCompile Include="common\timer\cenTimer.c" />
     <ClCompile Include="common\timer\pc\timerSetupPc.c" />

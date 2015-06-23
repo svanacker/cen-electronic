@@ -9,6 +9,7 @@ const char* getNavigationDeviceName(void) {
 }
 
 int deviceNavigationGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList){
+    // Locations
     if (commandHeader == COMMAND_NAVIGATION_LOCATION_COUNT ) {
         if (fillDeviceArgumentList) {
             setFunction("Navigation Location Count", 0, 1);
@@ -17,34 +18,87 @@ int deviceNavigationGetInterface(char commandHeader, DeviceInterfaceMode mode, b
         return commandLengthValueForMode(mode, 0, 4);
     } else if (commandHeader == COMMAND_NAVIGATION_GET_LOCATION) {
         if (fillDeviceArgumentList) {
-            setFunction("GetLocation", 1, 8);
+            setFunction("GetLocation", 1, 5);
             setArgumentUnsignedHex4(0, "Index");
-            setResultUnsignedHex2(0, "Name(c0)");
-            setResultUnsignedHex2(1, "Name(c1)");
-            setResultUnsignedHex2(2, "Name(c2)");
-            setResultUnsignedHex2(3, "Name(c3)");
-            setResultSeparator(4);
-            setResultUnsignedHex4(5, "x (mm)");
-            setResultSeparator(6);
-            setResultUnsignedHex4(7, "y (mm)");
+            setResultFixedCharArray(0, "Name");
+            setResultSeparator(1);
+            setResultUnsignedHex4(2, "x (mm)");
+            setResultSeparator(3);
+            setResultUnsignedHex4(4, "y (mm)");
         }
         return commandLengthValueForMode(mode, 4, 18);
     } else if (commandHeader == COMMAND_NAVIGATION_SET_LOCATION) {
         if (fillDeviceArgumentList) {
-            setFunction("SetLocation", 10, 0);
-            setArgumentUnsignedHex4(0, "Index (replace, use 0xFFFF if just add)");
+            setFunction("SetLocation", 5, 0);
+            setArgumentFixedCharArray(0, "Name");
             setArgumentSeparator(1);
-            setArgumentUnsignedHex2(2, "Name(c0)");
-            setArgumentUnsignedHex2(3, "Name(c1)");
-            setArgumentUnsignedHex2(4, "Name(c2)");
-            setArgumentUnsignedHex2(5, "Name(c3)");
-            setArgumentSeparator(6);
-            setArgumentUnsignedHex4(7, "x (mm)");
-            setArgumentSeparator(8);
-            setArgumentUnsignedHex4(9, "y (mm)");
+            setArgumentUnsignedHex4(2, "x (mm)");
+            setArgumentSeparator(3);
+            setArgumentUnsignedHex4(4, "y (mm)");
         }
-        return commandLengthValueForMode(mode, 23, 0);
+        return commandLengthValueForMode(mode, 18, 0);
     }
+    // Paths
+    if (commandHeader == COMMAND_NAVIGATION_PATH_COUNT) {
+        if (fillDeviceArgumentList) {
+            setFunction("Navigation Path Count", 0, 1);
+            setResultUnsignedHex4(0, "Count");
+        }
+        return commandLengthValueForMode(mode, 0, 4);
+    }
+    else if (commandHeader == COMMAND_NAVIGATION_GET_PATH) {
+        if (fillDeviceArgumentList) {
+            setFunction("GetPath", 1, 19);
+            setArgumentUnsignedHex4(0, "Index");
+            setResultFixedCharArray(0, "LocationName1");
+            setResultSeparator(1);
+            setResultFixedCharArray(2, "LocationName2");
+            setResultSeparator(3);
+            setResultUnsignedHex4(4, "Cost");
+            setResultSeparator(5);
+            setResultUnsignedHex4(6, "ControlPoint1 (mm)");
+            setResultSeparator(7);
+            setResultUnsignedHex4(8, "ControlPoint2 (mm)");
+            setResultSeparator(9);
+            setResultUnsignedHex4(10, "angle1");
+            setResultSeparator(11);
+            setResultUnsignedHex4(12, "angle2");
+            setResultSeparator(13);
+            setResultUnsignedHex2(14, "accelerationFactor");
+            setResultSeparator(15);
+            setResultUnsignedHex2(16, "speedFactor");
+            setResultSeparator(17);
+            setResultUnsignedChar1(18, "mustGoBackward");
+        }
+        return commandLengthValueForMode(mode, 4, 50);
+    }
+    else if (commandHeader == COMMAND_NAVIGATION_SET_PATH) {
+        if (fillDeviceArgumentList) {
+            setFunction("SetPath", 19, 0);
+            setArgumentFixedCharArray(0, "LocationName1");
+            setArgumentSeparator(1);
+            setArgumentFixedCharArray(2, "LocationName2");
+            setArgumentSeparator(3);
+            setArgumentUnsignedHex4(4, "Cost");
+            setArgumentSeparator(5);
+            setArgumentUnsignedHex4(6, "ControlPoint1 (mm)");
+            setArgumentSeparator(7);
+            setArgumentUnsignedHex4(8, "ControlPoint2 (mm)");
+            setArgumentSeparator(9);
+            setArgumentUnsignedHex4(10, "angle1");
+            setArgumentSeparator(11);
+            setArgumentUnsignedHex4(12, "angle2");
+            setArgumentSeparator(13);
+            setArgumentUnsignedHex2(14, "accelerationFactor");
+            setArgumentSeparator(15);
+            setArgumentUnsignedHex2(16, "speedFactor");
+            setArgumentSeparator(17);
+            setArgumentUnsignedChar1(18, "mustGoBackward");
+        }
+        return commandLengthValueForMode(mode, 50, 0);
+    }
+
+
     return DEVICE_HEADER_NOT_HANDLED;
 }
 

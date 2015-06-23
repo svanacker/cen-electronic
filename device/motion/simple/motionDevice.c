@@ -187,15 +187,11 @@ void deviceMotionHandleRawData(char commandHeader,
         checkIsSeparator(inputStream);
 
         // the distance can be negative, so the robot go back instead of go forward
-        // Distance1 in cm
-        float distance1 = (float) readSignedHex2(inputStream);
+        float distance1 = (float) readSignedHex4(inputStream);
         checkIsSeparator(inputStream);
-        distance1 *= 10.0f;
     
         // the distance can be negative, so the robot go back instead of go forward
-        // Distance2 in cm
-        float distance2 = (float) readSignedHex2(inputStream);
-        distance2 *= 10.0f;
+        float distance2 = (float) readSignedHex4(inputStream);
 
         checkIsSeparator(inputStream);
         int accelerationFactor = readHex(inputStream);

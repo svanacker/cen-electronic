@@ -155,6 +155,9 @@ typedef struct DeviceMethodMetaData {
 /** signed long => hex8 */
 #define DEVICE_ARG_SIGNED_HEX_8 14
 
+/** Array of 4 chars. */
+#define DEVICE_ARG_FIXED_CHAR_ARRAY   15
+
 // LENGTH = 9 
 
 /** (used only for string aggregates values) */
@@ -242,7 +245,17 @@ void setArgumentUnsignedHex4(int index, char* name);
 /**
 * Set the argument of the deviceArgumentList with index for name
 */
+void setArgumentSignedHex4(int index, char* name);
+
+/**
+* Set the argument of the deviceArgumentList with index for name
+*/
 void setArgumentUnsignedHex6(int index, char* name);
+
+/**
+ * Set the argument of the deviceArgumentList with index for name.
+ */
+void setArgumentFixedCharArray(int index, char* name);
 
 /**
 * Set argument with index to a separator ("-")
@@ -280,6 +293,11 @@ void setResultUnsignedHex4(int index, char* name);
 * Set the result of the deviceMethodMetaData with index for name
 */
 void setResultUnsignedHex6(int index, char* name);
+
+/**
+*  Set the result of the deviceMethodMetaData with index for name
+*/
+void setResultFixedCharArray(int index, char* name);
 
 /**
 * Set result with index to a separator ("-")

@@ -3,6 +3,8 @@
 
 #include "inputStream.h"
 
+#include "../string/cenString.h"
+
 // READ METHODS
 
 #define    FILTERED_RESULT -1
@@ -86,9 +88,8 @@ float readHex6(InputStream* inputStream);
 /**
  * Read an array of chars from an inputStream (chars are encoded as hex).
  * @param s a pointer on a fixed char array
- * @param length the length of the fixed char array
  */
-void readCharArray(InputStream* inputStream, char(*s)[], unsigned char length);
+void readFixedCharArray(InputStream* inputStream, const FixedCharArray* s);
 
 // CHECK METHODS 
 // 1) isXXX returns if the condition is ok, and return a BOO

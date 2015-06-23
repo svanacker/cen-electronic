@@ -27,9 +27,9 @@ void fillSplineParameters(void) {
     setArgumentSeparator(3);
     setArgumentUnsignedHex4(4, "finalAngDecDeg");
     setArgumentSeparator(5);
-    setArgumentSignedHex2(6, "distP0-P1(cm)");
+    setArgumentSignedHex4(6, "distP0-P1(mm)");
     setArgumentSeparator(7);
-    setArgumentSignedHex2(8, "distP2-P3(cm)");
+    setArgumentSignedHex4(8, "distP2-P3(mm)");
     setArgumentSeparator(9);
     setArgumentUnsignedChar1(10, "speedFactor");
     setArgumentUnsignedChar1(11, "accFactor");
@@ -101,14 +101,14 @@ int deviceMotionGetInterface(char commandHeader, DeviceInterfaceMode mode, bool 
             setFunction("bSplineRel", 12, 0);
             fillSplineParameters();
         }
-        return commandLengthValueForMode(mode, 23, 0);
+        return commandLengthValueForMode(mode, 27, 0);
     }// B-Spline with absolute spline
     else if (commandHeader == COMMAND_MOTION_SPLINE_ABSOLUTE) {
         if (fillDeviceArgumentList) {
             setFunction("bSplineAbs", 12, 0);
             fillSplineParameters();
         }
-        return commandLengthValueForMode(mode, 23, 0);
+        return commandLengthValueForMode(mode, 27, 0);
     } // BSpline : test
     else if (commandHeader == COMMAND_MOTION_SPLINE_TEST_LEFT) {
         // Same INPUT/OUTPUT

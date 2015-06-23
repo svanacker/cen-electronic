@@ -6,6 +6,8 @@
 #include "../../../common/io/pc/consoleOutputStream.h"
 #include "../../../common/error/error.h"
 
+#include "../../../common/string/cenString.h"
+
 
 #include "../../../test/unity/unity.h"
 
@@ -112,10 +114,10 @@ void test_appendString(void) {
 
 void test_appendCharArray(void) {
     initBufferForPrintWriterTest();
-    char s[5] = "HELLO";
-    appendCharArray(outputStream, (char(*)[]) &s, 5);
-    // HELLO in hexadecimal becomes : "48454C4C4F
-    bool actual = isBufferEqualsToString(&bufferTest, "48454C4C4F");
+    FixedCharArray s = "HELL";
+    appendFixedCharArray(outputStream, &s);
+    // HELL in hexadecimal becomes : "48454C4C4F
+    bool actual = isBufferEqualsToString(&bufferTest, "48454C4C");
     TEST_ASSERT_TRUE(actual);
 }
 
