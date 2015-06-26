@@ -10,6 +10,9 @@
       <logicalFolder name="common.2d" displayName="common.2d" projectFiles="true">
         <itemPath>../common/2d/2d.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f18" displayName="common.adc" projectFiles="true">
+        <itemPath>../common/adc/adcutils.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="f16" displayName="common.clock" projectFiles="true">
         <itemPath>../common/clock/clock.h</itemPath>
       </logicalFolder>
@@ -123,6 +126,10 @@
         <itemPath>../device/deviceInterface.h</itemPath>
         <itemPath>../device/deviceDebug.h</itemPath>
         <itemPath>../device/transmitMode.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f17" displayName="device.adc" projectFiles="true">
+        <itemPath>../device/adc/adcDevice.h</itemPath>
+        <itemPath>../device/adc/adcDeviceInterface.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f11" displayName="device.clock" projectFiles="true">
         <itemPath>../device/clock/clockDevice.h</itemPath>
@@ -297,6 +304,9 @@
       <logicalFolder name="common.2d" displayName="common.2d" projectFiles="true">
         <itemPath>../common/2d/2d.c</itemPath>
       </logicalFolder>
+      <logicalFolder name="f20" displayName="common.adc" projectFiles="true">
+        <itemPath>../common/adc/32/adcutils32.c</itemPath>
+      </logicalFolder>
       <logicalFolder name="f18" displayName="common.clock" projectFiles="true">
         <itemPath>../common/clock/clock.c</itemPath>
       </logicalFolder>
@@ -427,6 +437,10 @@
         <itemPath>../device/device.c</itemPath>
         <itemPath>../device/deviceDebug.c</itemPath>
         <itemPath>../device/transmitMode.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f19" displayName="device.adc" projectFiles="true">
+        <itemPath>../device/adc/adcDevice.c</itemPath>
+        <itemPath>../device/adc/adcDeviceInterface.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f11" displayName="device.clock" projectFiles="true">
         <itemPath>../device/clock/clockDevice.c</itemPath>
@@ -785,6 +799,7 @@
         <property key="UART5" value="true"/>
         <property key="UART6" value="true"/>
         <property key="debugoptions.useswbreakpoints" value="false"/>
+        <property key="firmware.download.all" value="false"/>
         <property key="hwtoolclock.frcindebug" value="false"/>
         <property key="memories.aux" value="false"/>
         <property key="memories.bootflash" value="false"/>

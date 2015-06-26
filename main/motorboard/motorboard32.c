@@ -47,7 +47,11 @@
 
 // -> Devices
 
-// Clock
+//ADC
+#include "../../device/adc/adcDevice.h"
+#include "../../device/adc/adcDeviceInterface.h"
+
+//CLOCK
 #include "../../device/clock/clockDevice.h"
 #include "../../device/clock/clockDeviceInterface.h"
 
@@ -208,6 +212,7 @@ void initDevicesDescriptor() {
 //    addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
     addLocalDevice(getTimerDeviceInterface(), getTimerDeviceDescriptor());
+    addLocalDevice(getADCDeviceInterface(), getADCDeviceDescriptor());
 
     // I2C_4
     addLocalDevice(getRobotKinematicsDeviceInterface(), getRobotKinematicsDeviceDescriptor(&eeprom_));
