@@ -84,5 +84,8 @@ void _LM75A_writeAlertLimit(Temperature* temperature, int temperatureSensorAlert
 }
 
 void initTemperatureLM75A(Temperature* temperature, I2cBusConnection* i2cBusConnection) {
-    initTemperature(temperature, _LM75A_readSensorValue, _LM75A_writeAlertLimit, i2cBusConnection);
+    initTemperature(temperature,
+            _LM75A_readSensorValue,
+            _LM75A_writeAlertLimit,
+            (int*) i2cBusConnection);
 }

@@ -496,6 +496,7 @@
                      displayName="device.system"
                      projectFiles="true">
         <itemPath>../device/system/systemDeviceInterface.c</itemPath>
+        <itemPath>../device/system/systemDevice.c</itemPath>
       </logicalFolder>
       <logicalFolder name="device.test" displayName="device.test" projectFiles="true">
         <itemPath>../device/test/testDevice.c</itemPath>
@@ -504,9 +505,6 @@
       <logicalFolder name="f2" displayName="device.timer" projectFiles="true">
         <itemPath>../device/timer/timerDevice.c</itemPath>
         <itemPath>../device/timer/timerDeviceInterface.c</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f16" displayName="driver.eeprom" projectFiles="true">
-        <itemPath>../drivers/eeprom/24c512.c</itemPath>
       </logicalFolder>
       <logicalFolder name="drivers" displayName="drivers" projectFiles="true">
         <itemPath>../drivers/driverStreamListener.c</itemPath>
@@ -522,6 +520,9 @@
                      projectFiles="true">
         <itemPath>../drivers/dispatcher/driverDataDispatcher.c</itemPath>
         <itemPath>../drivers/dispatcher/driverDataDispatcherList.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f16" displayName="drivers.eeprom" projectFiles="true">
+        <itemPath>../drivers/eeprom/24c512.c</itemPath>
       </logicalFolder>
       <logicalFolder name="lib" displayName="lib" projectFiles="true">
       </logicalFolder>

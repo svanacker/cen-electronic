@@ -9,13 +9,22 @@
 #include "../../common/2d/2d.h"
 #include "../../common/math/cenMath.h"
 
+#include "../../common/eeprom/eeprom.h"
+
 #include "../../common/setup/32/picSetup32.h"
 
 #include "../../common/delay/cenDelay.h"
 
 #include "../../common/i2c/i2cCommon.h"
 #include "../../common/i2c/i2cDebug.h"
+
+#include "../../common/i2c/master/i2cMaster.h"
 #include "../../common/i2c/master/i2cMasterSetup.h"
+
+#include "../../common/i2c/master/i2cMasterOutputStream.h"
+#include "../../common/i2c/master/i2cMasterInputStream.h"
+
+
 #include "../../common/i2c/slave/i2cSlave.h"
 #include "../../common/i2c/slave/i2cSlaveSetup.h"
 #include "../../common/i2c/slave/i2cSlaveLink.h"
@@ -115,7 +124,8 @@
 #include "../../robot/kinematics/robotKinematicsDeviceInterface.h"
 
 // Drivers
-#include "../../drivers/clock/softClock.h"
+#include "../../drivers/clock/PCF8563.h"
+//#include "../../drivers/clock/softClock.h"
 #include "../../drivers/eeprom/24c512.h"
 
 #include "../../drivers/motor/motorDriver.h"
@@ -135,17 +145,21 @@
 // The port for which we debug (we can send instruction too)
 #define SERIAL_PORT_DEBUG     SERIAL_PORT_2
 
+// I2C => PORT 1 (for All Peripherical, including Eeprom / Clock / Temperatur)
+static I2cBus i2cBus;
+
 // I2C Bus
 static I2cBus mainBoardI2cBus;
 static I2cBusConnection mainBoardI2cBusConnection;
-static I2cBus eepromI2cBus;
-static I2cBusConnection eepromI2cBusConnection;
 
 // Eeprom
-static Eeprom eeprom_;
+static Eeprom eeprom;
+//static I2cBus eepromI2cBus;
+static I2cBusConnection eepromI2cBusConnection;
 
 // Clock
 static Clock clock;
+static I2cBusConnection clockI2cBusConnection;
 
 // serial INSTRUCTION
 static char standardInputBufferArray[MOTOR_BOARD_IN_BUFFER_LENGTH];
@@ -201,22 +215,22 @@ static Device deviceListArray[MOTOR_BOARD_DEVICE_LIST_LENGTH];
 
 void initDevicesDescriptor() {
     initDeviceList(&deviceListArray, MOTOR_BOARD_DEVICE_LIST_LENGTH);
-
+    addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
     addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());
     addLocalDevice(getCodersDeviceInterface(), getCodersDeviceDescriptor());
-    addLocalDevice(getPIDDeviceInterface(), getPIDDeviceDescriptor(&eeprom_, false));
-    addLocalDevice(getMotionDeviceInterface(), getMotionDeviceDescriptor(&eeprom_, false));
+    addLocalDevice(getPIDDeviceInterface(), getPIDDeviceDescriptor(&eeprom, false));
+    addLocalDevice(getMotionDeviceInterface(), getMotionDeviceDescriptor(&eeprom, false));
     addLocalDevice(getTrajectoryDeviceInterface(), getTrajectoryDeviceDescriptor());
     addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
     addLocalDevice(getSerialDebugDeviceInterface(), getSerialDebugDeviceDescriptor());
-//    addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
+
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
     addLocalDevice(getTimerDeviceInterface(), getTimerDeviceDescriptor());
     addLocalDevice(getADCDeviceInterface(), getADCDeviceDescriptor());
 
     // I2C_4
-    addLocalDevice(getRobotKinematicsDeviceInterface(), getRobotKinematicsDeviceDescriptor(&eeprom_));
-    addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom_));
+    addLocalDevice(getRobotKinematicsDeviceInterface(), getRobotKinematicsDeviceDescriptor(&eeprom));
+    addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
 
 //    addLocalDevice(getLogDeviceInterface(), getLogDeviceDescriptor());
    addLocalDevice(getI2cSlaveDebugDeviceInterface(), getI2cSlaveDebugDeviceDescriptor(&mainBoardI2cBusConnection));
@@ -306,13 +320,13 @@ int runMotorBoard() {
     setDebugI2cEnabled(false);
 
     // Eeprom
-    initI2cBus(&eepromI2cBus, I2C_BUS_TYPE_MASTER, I2C_BUS_PORT_4);
-    i2cMasterInitialize(&eepromI2cBus);
-    initI2cBusConnection(&eepromI2cBusConnection, &eepromI2cBus, /* TODO */ 0);
-    init24C512Eeprom(&eeprom_, &eepromI2cBusConnection);
-
-    // Clock
-    initSoftClock(&clock);
+    initI2cBus(&i2cBus, I2C_BUS_TYPE_MASTER, I2C_BUS_PORT_4);
+    i2cMasterInitialize(&i2cBus);
+    initI2cBusConnection(&eepromI2cBusConnection, &i2cBus, ST24C512_ADDRESS_0);
+    init24C512Eeprom(&eeprom, &eepromI2cBusConnection);
+    // -> Clock
+    initI2cBusConnection(&clockI2cBusConnection, &i2cBus, PCF8563_WRITE_ADDRESS);
+    initClockPCF8563(&clock, &clockI2cBusConnection);
 
     // init the devices
     initDevicesDescriptor();

@@ -351,6 +351,7 @@ void initMainBoardDevicesDescriptor() {
     addLocalDevice(getADCDeviceInterface(), getADCDeviceDescriptor());
     addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor());
     addLocalDevice(getLedDeviceInterface(), getLedDeviceDescriptor());
+    addLocalDevice(getTemperatureSensorDeviceInterface(), getTemperatureSensorDeviceDescriptor(&temperature));
 
     addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
 
