@@ -193,10 +193,6 @@
 
 #include "../../drivers/sonar/srf02.h"
 
-#define SERIAL_PORT_DEBUG         SERIAL_PORT_2 
-#define SERIAL_PORT_PC            SERIAL_PORT_6
-#define SERIAL_PORT_MOTOR         SERIAL_PORT_5
-#define SERIAL_PORT_MECA2         SERIAL_PORT_1
 
 // I2C => PORT 1 (for All Peripherical, including Eeprom / Clock / Temperatur)
 static I2cBus i2cBus;
