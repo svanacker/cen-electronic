@@ -25,30 +25,30 @@
 // -> 1/1 => Byte 2
 // -> 0/0 => Byte 3
 // -> 1/0 => Low Byte (Byte 4)
-#define SEL1           LATGbits.LATG6
-#define SEL2           LATGbits.LATG9
-#define TRIS_SEL1      TRISGbits.TRISG6
-#define TRIS_SEL2      TRISGbits.TRISG9
+#define SEL1           LATBbits.LATB2
+#define SEL2           LATBbits.LATB3
+#define TRIS_SEL1      TRISBbits.TRISB2
+#define TRIS_SEL2      TRISBbits.TRISB3
 
 
 // ---------
 // X_Y
 // ---------
-#define X_Y            LATFbits.LATF3
-#define TRIS_X_Y       TRISFbits.TRISF3
+#define X_Y            LATBbits.LATB6
+#define TRIS_X_Y       TRISBbits.TRISB6
 
 // ---------
 // OE (Output Enabled, when OE = 0, the position is latch, when 1, new position is updated
 // ---------
-#define OE             LATFbits.LATF0
-#define TRIS_OE        TRISFbits.TRISF0
+#define OE             LATBbits.LATB4
+#define TRIS_OE        TRISBbits.TRISB4
 
 // ---------
 // RSTX, RSTY
 // ---------
 
-#define RSTX         LATFbits.LATF1
-#define RSTY         LATFbits.LATF1
-#define TRIS_RSTX    TRISFbits.TRISF1
-#define TRIS_RSTY    TRISFbits.TRISF1    
+#define RSTX         LATBbits.LATB5
+#define RSTY         LATBbits.LATB5
+#define TRIS_RSTX    TRISBbits.TRISB5
+#define TRIS_RSTY    TRISBbits.TRISB5    
 

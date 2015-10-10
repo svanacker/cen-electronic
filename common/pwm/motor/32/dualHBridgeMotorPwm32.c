@@ -8,8 +8,8 @@
 
 #include "../dualHBridgeMotorPwm.h"
 
-#define HBRIGE_1_DIRECTION_PIN    PORTDbits.RD6
-#define HBRIGE_2_DIRECTION_PIN    PORTDbits.RD7
+#define HBRIGE_1_DIRECTION_PIN    LATBbits.LATB10//TRISDbits.RD6
+#define HBRIGE_2_DIRECTION_PIN    LATBbits.LATB11//TRISDbits.RD7
 
 static signed int motorSpeed1;
 static signed int motorSpeed2;
@@ -24,14 +24,15 @@ signed int getDualHBridgeSpeed2(void) {
 
 void initPwmForDualHBridge() {
     // Port as output to control the direction of the motors
-    TRISDbits.TRISD6 = 0;
-    TRISDbits.TRISD7 = 0;
+    TRISBbits.TRISB10 = 0;//TRISDbits.TRISD6
+    TRISBbits.TRISB11 = 0;//TRISDbits.TRISD6
 
     // Init pwm as usual
     initPwmForMotor();
 }
 
 void pwmDualHBridgeMotor(signed int hBridgeSpeed1, signed int hBridgeSpeed2) {
+    TRISB = 0;
     if (hBridgeSpeed1 < 0) {
         HBRIGE_1_DIRECTION_PIN = 0;
         if (hBridgeSpeed1 < -MAX_PWM) {
@@ -48,7 +49,7 @@ void pwmDualHBridgeMotor(signed int hBridgeSpeed1, signed int hBridgeSpeed2) {
             pwmMotor1(hBridgeSpeed1);
         }
     }
-    if (hBridgeSpeed2 < 0) {
+    if (hBridgeSpeed2 < 0) {    
        HBRIGE_2_DIRECTION_PIN = 0;
        if (hBridgeSpeed2 < -MAX_PWM) {
             pwmMotor2(MAX_PWM);
@@ -64,6 +65,7 @@ void pwmDualHBridgeMotor(signed int hBridgeSpeed1, signed int hBridgeSpeed2) {
             pwmMotor2(hBridgeSpeed2);
         }
     }
+
     // TODO : Improve it
     motorSpeed1 = hBridgeSpeed1;
     motorSpeed2 = hBridgeSpeed2;

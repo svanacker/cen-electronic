@@ -93,6 +93,7 @@ void deviceADCHandleRawData(char commandHeader, InputStream* inputStream, Output
         appendHex4(outputStream, readAdc(4));
         appendSeparator(outputStream);
         appendHex4(outputStream, readAdc(5));
+        appendSeparator(outputStream);
     }
 }
 
