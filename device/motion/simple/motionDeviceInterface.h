@@ -33,18 +33,6 @@
 /** Turn to the left in degree, but without turning right wheel. */
 #define COMMAND_MOTION_LEFT_ONE_WHEEL_IN_DECI_DEGREE ')'
 
-/** Define the header used to follow a spline with relative coordinates. */
-#define COMMAND_MOTION_SPLINE_RELATIVE         's'
-
-/** Define the header used to follow a spline with relative coordinates. */
-#define COMMAND_MOTION_SPLINE_ABSOLUTE         'S'
-
-/** Define the header used to follow a spline test. */
-#define COMMAND_MOTION_SPLINE_TEST_LEFT        '{'
-
-/** Define the header used to follow a spline test. */
-#define COMMAND_MOTION_SPLINE_TEST_RIGHT       '}'
-
 /** Defines the COMMAND used to get speed / acceleration parameters for different motion type. */
 #define COMMAND_GET_MOTION_PARAMETERS          'p'
 
@@ -54,9 +42,17 @@
 /** Define the command used to do a square useful for calibration. */
 #define COMMAND_SQUARE_CALIBRATION             '@'
 
-
 /** Obstacle : stop the current Motion and maintain Position. */
 #define COMMAND_MOTION_OBSTACLE                '|'
+
+/** Indicates that the instruction must be added on a stack and not replace the current instruction. */
+#define COMMAND_MOTION_MODE_ADD				   '+'
+
+/** Indicates that the instruction must replace the stack and not be added on stack */
+#define COMMAND_MOTION_MODE_REPLACE			   '_'
+
+/** Function to get the motion mode (Add/stacking or replace). */
+#define COMMAND_MOTION_MODE_GET				   '?'
 
 // NOTIFICATION
 

@@ -29,6 +29,7 @@
 #include "../../navigation/path.h"
 #include "../../navigation/pathList.h"
 
+#include "../../drivers/motion/extendedMotionDriver.h"
 #include "../../drivers/motion/motionDriver.h"
 
 #include "../../robot/strategy/gameTargetList.h"

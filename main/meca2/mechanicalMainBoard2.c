@@ -46,6 +46,10 @@
 #include "../../device/adc/adcDevice.h"
 #include "../../device/adc/adcDeviceInterface.h"
 
+// I2C Slave
+#include "../../device/i2c/slave/i2cSlaveDebugDevice.h"
+#include "../../device/i2c/slave/i2cSlaveDebugDeviceInterface.h"
+
 // LOGS
 #include "../../device/log/logDevice.h"
 #include "../../device/log/logDeviceInterface.h"
@@ -107,7 +111,6 @@ static OutputStream debugOutputStream;
 static StreamLink debugSerialStreamLink;
 
 // i2c Link
-/*
 static I2cBus mechanicalBoard2I2cBus;
 static I2cBusConnection mechanicalBoard2I2cBusConnection;
 static char i2cSlaveInputBufferArray[MECA_BOARD_2_I2C_INPUT_BUFFER_LENGTH];
@@ -115,7 +118,6 @@ static Buffer i2cSlaveInputBuffer;
 static char i2cSlaveOutputBufferArray[MECA_BOARD_2_I2C_OUTPUT_BUFFER_LENGTH];
 static Buffer i2cSlaveOutputBuffer;
 static StreamLink i2cSerialStreamLink;
-*/
 
 // Devices
 static Device deviceListArray[MECHANICAL_BOARD_2_DEVICE_LENGTH];
@@ -163,7 +165,8 @@ void initDevicesDescriptor() {
 
     // LOCAL
     addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
-    // addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
+    addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
+    addLocalDevice(getI2cSlaveDebugDeviceInterface(), getI2cSlaveDebugDeviceDescriptor(&mechanicalBoard2I2cBusConnection));
     addLocalDevice(getLogDeviceInterface(), getLogDeviceDescriptor());
     addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor());
     addLocalDevice(getADCDeviceInterface(), getADCDeviceDescriptor());
@@ -171,7 +174,7 @@ void initDevicesDescriptor() {
     addLocalDevice(getRobotInfraredDetectorDeviceInterface(), getRobotInfraredDetectorDeviceDescriptor(&robotInfraredDetector));
 
     // REMOTE
-    addUartRemoteDevice(getSystemDeviceInterface(), SERIAL_PORT_DEBUG);
+    // addUartRemoteDevice(getSystemDeviceInterface(), SERIAL_PORT_DEBUG);
 
     initDevices(&devices);
 }
@@ -200,7 +203,7 @@ void initMechanicalBoard2Pins() {
 }
 
 int main(void) {
-    setPicName("MECHANICAL 2");
+    setBoardName("MECHANICAL 2");
 
     initMechanicalBoard2Pins();
 
@@ -216,15 +219,14 @@ int main(void) {
                     0);
 
     // Init the logs
-    initLogs(LOG_LEVEL_ERROR, &logHandlerListArray, MECA_BOARD_2_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
-    // initLogs(DEBUG, &logHandlerListArray, MECA_BOARD_2_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
+    // initLogs(LOG_LEVEL_ERROR, &logHandlerListArray, MECA_BOARD_2_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
+    initLogs(DEBUG, &logHandlerListArray, MECA_BOARD_2_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
     addLogHandler("UART", &debugOutputStream, DEBUG, LOG_HANDLER_CATEGORY_ALL_MASK);
-    appendString(getDebugOutputStreamLogger(), getPicName());
+    appendString(getDebugOutputStreamLogger(), getBoardName());
     println(getDebugOutputStreamLogger());
 
     initTimerList(&timerListArray, MECHANICAL_BOARD_2_TIMER_LENGTH);
 
-    /*
     initI2cBus(&mechanicalBoard2I2cBus, I2C_BUS_TYPE_SLAVE, I2C_BUS_PORT_1);
     initI2cBusConnection(&mechanicalBoard2I2cBusConnection, &mechanicalBoard2I2cBus, MECHANICAL_BOARD_2_I2C_ADDRESS);
 
@@ -237,7 +239,6 @@ int main(void) {
                             MECA_BOARD_2_I2C_OUTPUT_BUFFER_LENGTH,
                             &mechanicalBoard2I2cBusConnection
                         );
-    */
 
     // init the devices
     initDevicesDescriptor();
@@ -259,6 +260,7 @@ int main(void) {
     // upArm(ARM_RIGHT);
 
     while (true) {
+        /*
         // Forward Obstacle
         // Only if robotDetector has something to notify
         if (mustNotifyRobotInfraredObstacleForward()) {
@@ -266,6 +268,7 @@ int main(void) {
             // systemDeviceList();
             appendString(getDebugOutputStreamLogger(), "\nForward Obstacle, wait few seconds For New Notification !\n");
         }
+        */
 
         // Backward Obstacle
         /*

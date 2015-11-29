@@ -105,6 +105,8 @@
 
 #define CODERS_DEVICE_HEADER                       'w'
 
+#define EXTENDED_MOTION_DEVICE_HEADER			   'X'
+
 /** Reserved to clear buffer. */
 #define NOT_TOO_USE_1                               'z'
 

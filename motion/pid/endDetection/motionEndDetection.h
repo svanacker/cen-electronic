@@ -3,6 +3,7 @@
 
 #include <stdbool.h>
 
+#include "../pidMotionDefinition.h"
 #include "motionEndDetectionParameter.h"
 #include "../instructionType.h"
 
@@ -81,7 +82,7 @@ void resetMotionEndData(MotionEndInfo* endMotion);
  * @param instructionType the instruction for which we want to know if it's finished or not
  * @return binary mask 0x0000 0001 if stopped, 0x0000 0010 if stopped with blocking
  */
-unsigned int detectsEndOfMotion(enum InstructionType instructionType, MotionEndInfo* endMotion);
+unsigned int detectsEndOfMotion(PidMotionDefinition* motionDefinition, enum InstructionType instructionType, MotionEndInfo* endMotion);
 
 /**
  * Necessary to call isEndOfMotion, or isRobotBlocked.
@@ -96,6 +97,6 @@ bool isEndOfMotion(enum InstructionType instructionType, MotionEndInfo* endMotio
 /**
  * Detects if the robot is blocked, and if it must be stopped to avoid problems with motors.
  */
-bool isRobotBlocked(enum InstructionType instructionType, MotionEndInfo* endMotion, MotionEndDetectionParameter* parameter);
+bool isRobotBlocked(PidMotionDefinition* motionDefinition, enum InstructionType instructionType, MotionEndInfo* endMotion, MotionEndDetectionParameter* parameter);
 
 #endif

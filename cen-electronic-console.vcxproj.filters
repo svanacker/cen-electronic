@@ -778,6 +778,12 @@
     <Filter Include="Header Files\common\string">
       <UniqueIdentifier>{c09c964e-d88c-4273-868f-05561944de14}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\device\motion\extended">
+      <UniqueIdentifier>{aaac79fd-c34b-4d1b-8d1d-1aa02f128b8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\device\motion\extended">
+      <UniqueIdentifier>{05f7c713-da2f-4373-9d65-072e777914e5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -1532,6 +1538,15 @@
     </ClCompile>
     <ClCompile Include="common\string\cenString.c">
       <Filter>Header Files\common\string</Filter>
+    </ClCompile>
+    <ClCompile Include="device\motion\extended\extendedMotionDeviceInterface.c">
+      <Filter>Source Files\device\motion\extended</Filter>
+    </ClCompile>
+    <ClCompile Include="device\motion\extended\extendedMotionDevice.c">
+      <Filter>Source Files\device\motion\extended</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\motion\extendedMotionDriver.c">
+      <Filter>Source Files\drivers\motion</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2347,6 +2362,15 @@
     </ClInclude>
     <ClInclude Include="device\navigation\navigationDeviceInterface.h">
       <Filter>Header Files\device\navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="device\motion\extended\extendedMotionDevice.h">
+      <Filter>Header Files\device\motion\extended</Filter>
+    </ClInclude>
+    <ClInclude Include="device\motion\extended\extendedMotionDeviceInterface.h">
+      <Filter>Header Files\device\motion\extended</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\motion\extendedMotionDriver.h">
+      <Filter>Header Files\drivers\motion</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

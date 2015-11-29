@@ -25,10 +25,9 @@
 
 #include "../../../robot/kinematics/robotKinematics.h"
 
-void bSplineMotionUCompute(void) {
+void bSplineMotionUCompute(PidMotionDefinition* motionDefinition) {
     PidMotion* pidMotion = getPidMotion();
     PidComputationValues* computationValues = &(pidMotion->computationValues);
-    PidMotionDefinition* motionDefinition = &(pidMotion->currentMotionDefinition);
 
     BSplineCurve* curve = &(motionDefinition->curve);
     float pidTime = computationValues->pidTime;

@@ -176,7 +176,7 @@ void deviceNavigationHandleRawData(char commandHeader, InputStream* inputStream,
         }
 
         bool reversed = false;
-        // TODO : Must returns a different path if reversed !
+        // TODO : Must returns a different path if reversed ?
         PathData* pathData = getPathOfLocations(pathList, location1, location2, &reversed);
 
         // Create if does not exist

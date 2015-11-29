@@ -30,44 +30,10 @@
 #include "../../robot/kinematics/robotKinematics.h"
 
 /**
- * Go to a position
- */
-void gotoPosition(float left, float right, float a, float speed) {
-
-    // Update trajectory before clearing coders
-    updateTrajectory();
-
-    updateTrajectoryAndClearCoders();
-
-    // resets the time
-    clearPidTime();
-
-    // determine the type of motion
-    enum MotionParameterType motionParameterType = getMotionParameterType(left, right);
-    // determine the pidType to execute motionParameterType
-    enum PidType pidType = getPidType(motionParameterType);
-
-    // Alpha / Theta
-    float thetaNextPosition = computeTheta(left, right);
-    float alphaNextPosition = computeAlpha(left, right);
-    setNextPosition(THETA, motionParameterType, pidType, thetaNextPosition, (float)a, (float)speed);
-    setNextPosition(ALPHA, motionParameterType, pidType, alphaNextPosition, (float)a, (float)speed);
-
-    // PidMotion* pidMotion = getPidMotion();
-    // PidMotionDefinition* pidMotionDefinition = &(pidMotion->currentMotionDefinition);
-    
-    // OutputStream* outputStream = getDebugOutputStreamLogger();
-    // printMotionInstruction(outputStream, &(pidMotionDefinition->inst[THETA]));
-    // printMotionInstruction(outputStream, &(pidMotionDefinition->inst[ALPHA]));
-
-    // Indicates that the robot must reach the position
-    setMustReachPosition(true);
-}
-
-/**
 * @private
 */
-void updateSimpleSplineWithDistance(float destX, float destY, 
+void updateSimpleSplineWithDistance(BSplineCurve* curve,
+									float destX, float destY, 
                                     float destAngle, 
                                     float distance1, float distance2, 
                                     unsigned char accelerationFactor, unsigned char speedFactor,
@@ -117,8 +83,6 @@ void updateSimpleSplineWithDistance(float destX, float destY,
 
     float dca2 = (distance2 * c2);
     float dsa2 = (distance2 * s2);
-
-    BSplineCurve* curve = &(getPidMotion()->currentMotionDefinition.curve);
 
     // Update the bspline curve
     // P0
@@ -184,7 +148,11 @@ void gotoSimpleSpline(float destX, float destY,
                       float controlPointDistance1, float controlPointDistance2,
                       unsigned int accelerationFactor, unsigned int speedFactor,
                       bool relative) {
-    updateSimpleSplineWithDistance(destX, destY,
+	PidMotionDefinition* motionDefinition = getNextMotionDefinition();
+	BSplineCurve* curve = &(motionDefinition->curve);
+	
+	updateSimpleSplineWithDistance(curve,
+									destX, destY,
                                     destAngle,
                                     controlPointDistance1, controlPointDistance2,
                                     accelerationFactor, speedFactor,
@@ -217,8 +185,11 @@ float computeBestAccelerationForBSpline(BSplineCurve* curve, float a) {
  */
 void gotoSpline() {
     OutputStream* outputStream = getDebugOutputStreamLogger();
+	PidMotionDefinition* motionDefinition = getCurrentMotionDefinition();
 
-    BSplineCurve* curve = &(getPidMotion()->currentMotionDefinition.curve);
+	// TODO : If MotionDefinition is NULL ?
+
+    BSplineCurve* curve = &(motionDefinition->curve);
     RobotKinematics* robotKinematics = getRobotKinematics();
     float wheelAverageLength = robotKinematics->wheelAverageLengthForOnePulse;
 
@@ -247,10 +218,10 @@ void gotoSpline() {
     float bestA = computeBestAccelerationForBSpline(curve, motionParameter->a);
     float bestSpeed = computeBestSpeedForBSpline(curve, motionParameter->speed);
 
-    setNextPosition(THETA, motionParameterType, pidType, curveLength, bestA, bestSpeed);
-    setNextPosition(ALPHA, motionParameterType, pidType, 0.0f, motionParameter->a, motionParameter->speed);
+    setNextPosition(motionDefinition, THETA, motionParameterType, pidType, curveLength, bestA, bestSpeed);
+    setNextPosition(motionDefinition, ALPHA, motionParameterType, pidType, 0.0f, motionParameter->a, motionParameter->speed);
 
-    getPidMotion()->currentMotionDefinition.computeU = &bSplineMotionUCompute;
+	motionDefinition->computeU = &bSplineMotionUCompute;
 
     // Indicates that the robot must reach the position
     setMustReachPosition(true);

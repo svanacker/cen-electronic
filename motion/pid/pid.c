@@ -117,18 +117,16 @@ PidParameter* getPidParameter(int index, unsigned int pidMode) {
 /**
 * @private
 */
-void changePidTypeIfFinalApproach(PidMotion* pidMotion) {
+void changePidTypeIfFinalApproach(PidMotion* pidMotion, PidMotionDefinition* motionDefinition) {
     float pidTime = pidMotion->computationValues.pidTime;
 
-    computeErrorsWithNextPositionUsingCoders(pidMotion);
+    computeErrorsWithNextPositionUsingCoders(pidMotion, motionDefinition);
     PidComputationValues* computationValues = &(pidMotion->computationValues);
 
     // Theta and Alpha Error are only used compared to the next position as
     // we only use it to change the PID Type for final Approach
     float thetaError = computationValues->thetaError;
     float alphaError = computationValues->alphaError;
-
-    PidMotionDefinition* motionDefinition = &(pidMotion->currentMotionDefinition);
     MotionInstruction* thetaInst = &(motionDefinition->inst[THETA]);
     MotionInstruction* alphaInst = &(motionDefinition->inst[ALPHA]);
 
@@ -148,12 +146,11 @@ void changePidTypeIfFinalApproach(PidMotion* pidMotion) {
     /**
      * @private
      */
-    void simulateCurrentPositionReachIfNeeded(PidMotion* pidMotion) {
+    void simulateCurrentPositionReachIfNeeded(PidMotion* pidMotion, PidMotionDefinition* motionDefinition) {
         MotionSimulationParameter* motionSimulationParameter = getMotionSimulationParameter();
         if (motionSimulationParameter->simulateCoders) {
-            PidMotionDefinition* currentMotionDefinition = &(pidMotion->currentMotionDefinition);
-            MotionInstruction* thetaInst = &(currentMotionDefinition->inst[THETA]);
-            MotionInstruction* alphaInst = &(currentMotionDefinition->inst[ALPHA]);
+            MotionInstruction* thetaInst = &(motionDefinition->inst[THETA]);
+            MotionInstruction* alphaInst = &(motionDefinition->inst[ALPHA]);
 
             float pidTime = pidMotion->computationValues.pidTime;
 
@@ -177,21 +174,21 @@ enum DetectedMotionType updateMotors(void) {
     if (mustPidBeRecomputed()) {
         PidMotion* pidMotion = getPidMotion();
         float pidTime = (float) getPidTime();
-        getPidMotion()->computationValues.pidTime = pidTime;
+		pidMotion->computationValues.pidTime = pidTime;
+		PidMotionDefinition* motionDefinition = getCurrentMotionDefinition();
 
         #ifdef _MSC_VER
-        simulateCurrentPositionReachIfNeeded(pidMotion);
+        simulateCurrentPositionReachIfNeeded(pidMotion, motionDefinition);
         #endif
 
         // Compute the current Position
-        computeCurrentPositionUsingCoders(pidMotion);
+        computeCurrentPositionUsingCoders(pidMotion, motionDefinition);
 
         // Adapt PID Type for Final Approach (when stabilized ...)
-        changePidTypeIfFinalApproach(pidMotion);
+        changePidTypeIfFinalApproach(pidMotion, motionDefinition);
 
         // Computes the PID
-        PidMotionDefinition* motionDefinition = &(pidMotion->currentMotionDefinition);
-        motionDefinition->computeU(pidMotion);
+        motionDefinition->computeU(motionDefinition);
 
         // Apply Correction
 
@@ -223,8 +220,8 @@ enum DetectedMotionType updateMotors(void) {
         bool isThetaEnd = isEndOfMotion(THETA, thetaEndMotion, endDetectionParameter);
         bool isAlphaEnd = isEndOfMotion(ALPHA, alphaEndMotion, endDetectionParameter);
 
-        bool isThetaBlocked = isRobotBlocked(THETA, thetaEndMotion, endDetectionParameter);
-        bool isAlphaBlocked = isRobotBlocked(ALPHA, alphaEndMotion, endDetectionParameter);
+        bool isThetaBlocked = isRobotBlocked(motionDefinition, THETA, thetaEndMotion, endDetectionParameter);
+        bool isAlphaBlocked = isRobotBlocked(motionDefinition, ALPHA, alphaEndMotion, endDetectionParameter);
 
         if (isThetaEnd && isAlphaEnd) {
             if (isThetaBlocked || isAlphaBlocked) {

@@ -54,6 +54,9 @@
 
 // MOTION
 
+#include "../../device/motion/extended/extendedMotionDevice.h"
+#include "../../device/motion/extended/extendedMotionDeviceInterface.h"
+
 #include "../../device/motion/pid/pidDevice.h"
 #include "../../device/motion/pid/pidDeviceInterface.h"
 
@@ -65,6 +68,7 @@
 
 #include "../../device/motion/simple/motionDevice.h"
 #include "../../device/motion/simple/motionDeviceInterface.h"
+
 
 #include "../../device/motion/simulation/motionSimulationDevice.h"
 #include "../../device/motion/simulation/motionSimulationDeviceInterface.h"
@@ -255,7 +259,8 @@ void runMotorBoardPC(bool singleMode) {
     addLocalDevice(getCodersDeviceInterface(), getCodersDeviceDescriptor());
     addLocalDevice(getTrajectoryDeviceInterface(), getTrajectoryDeviceDescriptor());
     addLocalDevice(getMotionDeviceInterface(), getMotionDeviceDescriptor(&eeprom, true));
-    addLocalDevice(getMotionSimulationDeviceInterface(), getMotionSimulationDeviceDescriptor());
+	addLocalDevice(getExtendedMotionDeviceInterface(), getExtendedMotionDeviceDescriptor(&eeprom, true));
+	addLocalDevice(getMotionSimulationDeviceInterface(), getMotionSimulationDeviceDescriptor());
 
     initDevices();
 

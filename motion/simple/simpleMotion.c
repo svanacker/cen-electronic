@@ -6,6 +6,7 @@
 #include "../parameters/motionParameterType.h"
 #include "../parameters/motionParameter.h"
 
+#include "../pid/alphaTheta.h"
 #include "../pid/detectedMotionType.h"
 #include "../pid/pid.h"
 #include "../pid/pidMotion.h"
@@ -18,7 +19,44 @@
 
 #include "../../robot/kinematics/robotKinematics.h"
 
-// MAIN FUNCTIONS
+/**
+* Go to a position
+*/
+void gotoPosition(float left, float right, float a, float speed) {
+
+	// Update trajectory before clearing coders
+	updateTrajectory();
+
+	updateTrajectoryAndClearCoders();
+
+	// resets the time
+	clearPidTime();
+
+	// determine the type of motion
+	enum MotionParameterType motionParameterType = getMotionParameterType(left, right);
+	// determine the pidType to execute motionParameterType
+	enum PidType pidType = getPidType(motionParameterType);
+
+	// Alpha / Theta
+	float thetaNextPosition = computeTheta(left, right);
+	float alphaNextPosition = computeAlpha(left, right);
+
+	PidMotionDefinition* motionDefinition = getNextMotionDefinition();
+
+	setNextPosition(motionDefinition, THETA, motionParameterType, pidType, thetaNextPosition, (float)a, (float)speed);
+	setNextPosition(motionDefinition, ALPHA, motionParameterType, pidType, alphaNextPosition, (float)a, (float)speed);
+
+	// PidMotion* pidMotion = getPidMotion();
+	// PidMotionDefinition* pidMotionDefinition = &(pidMotion->currentMotionDefinition);
+
+	// OutputStream* outputStream = getDebugOutputStreamLogger();
+	// printMotionInstruction(outputStream, &(pidMotionDefinition->inst[THETA]));
+	// printMotionInstruction(outputStream, &(pidMotionDefinition->inst[ALPHA]));
+
+	// Indicates that the robot must reach the position
+	setMustReachPosition(true);
+}
+
 
 /**
  * Stop the robot.
@@ -41,6 +79,7 @@ void stopPosition(bool maintainPositionValue) {
 void maintainPosition(void) {
     gotoPosition(0.0f, 0.0f, 0.0f, 0.0f);
 }
+
 
 // -> Go/Back
 

@@ -19,22 +19,6 @@ void fillNotifyResults(char* notificationName) {
     setArgumentUnsignedHex4(4, "ang(1/10)deg");
 }
 
-void fillSplineParameters(void) {
-    // X3/Y3 as absolute position
-    setArgumentUnsignedHex4(0, "x3(mm)");
-    setArgumentSeparator(1);
-    setArgumentUnsignedHex4(2, "y3(mm)");
-    setArgumentSeparator(3);
-    setArgumentUnsignedHex4(4, "finalAngDecDeg");
-    setArgumentSeparator(5);
-    setArgumentSignedHex4(6, "distP0-P1(mm)");
-    setArgumentSeparator(7);
-    setArgumentSignedHex4(8, "distP2-P3(mm)");
-    setArgumentSeparator(9);
-    setArgumentUnsignedChar1(10, "speedFactor");
-    setArgumentUnsignedChar1(11, "accFactor");
-}
-
 int deviceMotionGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     if (commandHeader == COMMAND_MOTION_LOAD_DEFAULT_PARAMETERS) {
         if (fillDeviceArgumentList) {
@@ -95,34 +79,6 @@ int deviceMotionGetInterface(char commandHeader, DeviceInterfaceMode mode, bool 
             setArgumentUnsignedHex4(0, "rightAngleDecDeg");
         }
         return commandLengthValueForMode(mode, 4, 0);
-    }// B-Spline with relative spline
-    else if (commandHeader == COMMAND_MOTION_SPLINE_RELATIVE) {
-        if (fillDeviceArgumentList) {
-            setFunction("bSplineRel", 12, 0);
-            fillSplineParameters();
-        }
-        return commandLengthValueForMode(mode, 27, 0);
-    }// B-Spline with absolute spline
-    else if (commandHeader == COMMAND_MOTION_SPLINE_ABSOLUTE) {
-        if (fillDeviceArgumentList) {
-            setFunction("bSplineAbs", 12, 0);
-            fillSplineParameters();
-        }
-        return commandLengthValueForMode(mode, 27, 0);
-    } // BSpline : test
-    else if (commandHeader == COMMAND_MOTION_SPLINE_TEST_LEFT) {
-        // Same INPUT/OUTPUT
-        if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("bSplineTestLeft");
-        }
-        return commandLengthValueForMode(mode, 0, 0);
-    } 
-    else if (commandHeader == COMMAND_MOTION_SPLINE_TEST_RIGHT) {
-        // Same INPUT/OUTPUT
-        if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("bSplineTestRight");
-        }
-        return commandLengthValueForMode(mode, 0, 0);
     }
     // motion : Cancel
     else if (commandHeader == COMMAND_MOTION_CANCEL) {
@@ -165,7 +121,27 @@ int deviceMotionGetInterface(char commandHeader, DeviceInterfaceMode mode, bool 
         }
         return commandLengthValueForMode(mode, 6, 0);
     }
-    // NOTIFICATION
+	// MODE REPLACE / ADD
+	else if (commandHeader == COMMAND_MOTION_MODE_ADD) {
+		if(fillDeviceArgumentList) {
+			setFunctionNoArgumentAndNoResult("motionModeAdd");
+		}
+		return commandLengthValueForMode(mode, 0, 0);
+	}
+	else if (commandHeader == COMMAND_MOTION_MODE_REPLACE) {
+		if(fillDeviceArgumentList) {
+			setFunctionNoArgumentAndNoResult("motionModeReplace");
+		}
+		return commandLengthValueForMode(mode, 0, 0);
+	}
+	else if (commandHeader == COMMAND_MOTION_MODE_GET) {
+		if (fillDeviceArgumentList) {
+			setFunction("motionModeGet", 0, 1);
+			setResultUnsignedChar1(0, "value");
+		}
+		return commandLengthValueForMode(mode, 0, 1);
+	}
+	// NOTIFICATION
     if (DEVICE_MODE_NOTIFY == mode) {
         if (commandHeader == NOTIFY_MOTION_STATUS_REACHED) {
             if (fillDeviceArgumentList) {
