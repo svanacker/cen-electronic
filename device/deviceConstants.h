@@ -35,6 +35,9 @@
 /** Command to debug the dispatchers. */
 #define DATA_DISPATCHER_DEVICE_HEADER              'j'
 
+/** Command header to handle the Motion Processing Unit "MPU" */
+#define MPU_DEVICE_HEADER                          'J'
+
 /** Command to ping */
 #define COMMAND_PING_DISPATCHER_INDEX               'p'
 

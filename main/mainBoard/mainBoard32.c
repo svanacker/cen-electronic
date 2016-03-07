@@ -12,6 +12,8 @@
 
 #include "../../common/eeprom/eeprom.h"
 
+#include "../../common/MPU/MPU.h"
+
 #include "../../common/i2c/i2cCommon.h"
 #include "../../common/i2c/i2cDebug.h"
 
@@ -76,6 +78,10 @@
 // EEPROM
 #include "../../device/eeprom/eepromDevice.h"
 #include "../../device/eeprom/eepromDeviceInterface.h"
+
+// MPU
+#include "../../device/MPU/mpuDevice.h"
+#include "../../device/MPU/mpuDeviceInterface.h"
 
 // SERIAL
 #include "../../device/serial/serialDebugDevice.h"
@@ -152,6 +158,7 @@
 #include "../../drivers/clock/PCF8563.h"
 #include "../../drivers/eeprom/24c512.h"
 #include "../../drivers/io/pcf8574.h"
+#include "../../drivers/MPU/MPU-6050.h"
 #include "../../drivers/test/testDriver.h"
 #include "../../drivers/system/systemDriver.h"
 #include "../../drivers/motion/motionDriver.h"
@@ -198,7 +205,7 @@
 #define SERIAL_PORT_MOTOR         SERIAL_PORT_5
 #define SERIAL_PORT_MECA2         SERIAL_PORT_1
 
-// I2C => PORT 1 (for All Peripherical, including Eeprom / Clock / Temperatur)
+// I2C => PORT 1 (for All Peripherical, including Eeprom / Clock / MPU / Temperatur)
 static I2cBus i2cBus;
 
 // EEPROM
@@ -208,6 +215,10 @@ static I2cBusConnection eepromI2cBusConnection;
 // CLOCK
 static Clock clock;
 static I2cBusConnection clockI2cBusConnection;
+
+// MPU
+static Mpu mpu;
+static I2cBusConnection mpuI2cBusConnection;
 
 // TEMPERATURE
 static Temperature temperature;
@@ -348,10 +359,11 @@ void initMainBoardDevicesDescriptor() {
     addLocalDevice(getEndMatchDetectorDeviceInterface(), getEndMatchDetectorDeviceDescriptor());
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
+    addLocalDevice(getMpuDeviceInterface(), getMpuDeviceDescriptor(&mpu));
     addLocalDevice(getADCDeviceInterface(), getADCDeviceDescriptor());
     addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor());
     addLocalDevice(getLedDeviceInterface(), getLedDeviceDescriptor());
-    addLocalDevice(getTemperatureSensorDeviceInterface(), getTemperatureSensorDeviceDescriptor(&temperature));
+//    addLocalDevice(getTemperatureSensorDeviceInterface(), getTemperatureSensorDeviceDescriptor(&temperature));
 
     addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
 
@@ -392,7 +404,7 @@ void initMainBoardDevicesDescriptor() {
     // addI2cRemoteDevice(getStrategyDeviceInterface(), STRATEGY_BOARD_I2C_ADDRESS);
 
     // Air Conditioning Board
-    addI2cRemoteDevice(getAirConditioningDeviceInterface(), AIR_CONDITIONING_BOARD_I2C_ADDRESS);
+//    addI2cRemoteDevice(getAirConditioningDeviceInterface(), AIR_CONDITIONING_BOARD_I2C_ADDRESS);
 
     // Init the devices
     initDevices();  
@@ -587,6 +599,9 @@ int main(void) {
     // -> Clock
     initI2cBusConnection(&clockI2cBusConnection, &i2cBus, PCF8563_WRITE_ADDRESS);
     initClockPCF8563(&clock, &clockI2cBusConnection);
+    //-> Mpu
+    initI2cBusConnection(&mpuI2cBusConnection, &i2cBus, MPU6050_WRITE_ADDRESS);
+    initMpuMPU6050(&mpu, &mpuI2cBusConnection);
     // -> Temperature
     initI2cBusConnection(&temperatureI2cBusConnection, &i2cBus, LM75A_ADDRESS);
     initTemperatureLM75A(&temperature, &temperatureI2cBusConnection);

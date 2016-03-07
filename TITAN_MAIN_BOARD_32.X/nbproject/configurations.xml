@@ -4,7 +4,7 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <logicalFolder name="common" displayName="common" projectFiles="true">
+      <logicalFolder name="f21" displayName="common" projectFiles="true">
         <itemPath>../common/commons.h</itemPath>
       </logicalFolder>
       <logicalFolder name="common.2d" displayName="common.2d" projectFiles="true">
@@ -86,6 +86,9 @@
         <itemPath>../common/math/hexUtils.h</itemPath>
         <itemPath>../common/math/bcdUtils.h</itemPath>
         <itemPath>../common/math/random.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f20" displayName="common.MPU" projectFiles="true">
+        <itemPath>../common/MPU/MPU.h</itemPath>
       </logicalFolder>
       <logicalFolder name="common.pwm" displayName="common.pwm" projectFiles="true">
         <itemPath>../common/pwm/pwmPic.h</itemPath>
@@ -201,6 +204,10 @@
                      projectFiles="true">
         <itemPath>../device/motor/pwmMotorDeviceInterface.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f19" displayName="device.MPU" projectFiles="true">
+        <itemPath>../device/MPU/mpuDeviceInterface.h</itemPath>
+        <itemPath>../device/MPU/mpuDevice.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="f11" displayName="device.serial" projectFiles="true">
         <itemPath>../device/serial/serialDebugDevice.h</itemPath>
         <itemPath>../device/serial/serialDebugDeviceInterface.h</itemPath>
@@ -292,6 +299,9 @@
                      projectFiles="true">
         <itemPath>../drivers/motor/motorDriver.h</itemPath>
         <itemPath>../drivers/motor/md22.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f18" displayName="drivers.MPU" projectFiles="true">
+        <itemPath>../drivers/MPU/MPU-6050.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f7" displayName="drivers.robotConfig" projectFiles="true">
       </logicalFolder>
@@ -453,6 +463,9 @@
         <itemPath>../common/math/bcdUtils.c</itemPath>
         <itemPath>../common/math/random.c</itemPath>
       </logicalFolder>
+      <logicalFolder name="f21" displayName="common.MPU" projectFiles="true">
+        <itemPath>../common/MPU/MPU.c</itemPath>
+      </logicalFolder>
       <logicalFolder name="common.pwm.32"
                      displayName="common.pwm.32"
                      projectFiles="true">
@@ -585,6 +598,10 @@
                      projectFiles="true">
         <itemPath>../device/motor/pwmMotorDeviceInterface.c</itemPath>
       </logicalFolder>
+      <logicalFolder name="f20" displayName="device.MPU" projectFiles="true">
+        <itemPath>../device/MPU/mpuDevice.c</itemPath>
+        <itemPath>../device/MPU/mpuDeviceInterface.c</itemPath>
+      </logicalFolder>
       <logicalFolder name="f11" displayName="device.serial" projectFiles="true">
         <itemPath>../device/serial/serialDebugDevice.c</itemPath>
         <itemPath>../device/serial/serialDebugDeviceInterface.c</itemPath>
@@ -678,6 +695,9 @@
                      projectFiles="true">
         <itemPath>../drivers/motor/motorDriver.c</itemPath>
         <itemPath>../drivers/motor/md22.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f19" displayName="drivers.MPU" projectFiles="true">
+        <itemPath>../drivers/MPU/MPU-6050.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f7" displayName="drivers.robotConfig" projectFiles="true">
       </logicalFolder>

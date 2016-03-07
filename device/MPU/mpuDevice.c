@@ -1,0 +1,71 @@
+#include <stdbool.h>
+#include <stdlib.h>
+
+#include "mpuDevice.h"
+#include "mpuDeviceInterface.h"
+
+#include "../../common/MPU/MPU.h"
+#include "../../common/error/error.h"
+#include "../../common/io/printWriter.h"
+#include "../../common/io/reader.h"
+
+#include "../../device/device.h"
+
+static Mpu* mpu;
+
+void _deviceMpuCheckInitialized() {
+    if (mpu == NULL) {
+        writeError(MPU_NULL);
+    }
+    if (!isMpuInitialized(mpu)) {
+        writeError(MPU_NOT_INITIALIZED);
+    }
+}
+
+void deviceMpuInit(void) {
+    _deviceMpuCheckInitialized();
+}
+
+void deviceMpuShutDown(void) {
+}
+
+bool isMpuDeviceOk(void) {
+    return true;
+}
+
+void deviceMpuHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream) {
+    _deviceMpuCheckInitialized();
+    if (header == GET_ACCELERATION_MPU) {
+        ackCommand(outputStream, MPU_DEVICE_HEADER, GET_ACCELERATION_MPU);
+        MpuData* mpuData = mpu->readMpu(mpu);
+        appendHex4(outputStream, mpuData->accel_X);
+        append(outputStream,':');
+        appendHex4(outputStream, mpuData->accel_Y);
+        append(outputStream,':');
+        appendHex4(outputStream, mpuData->accel_Z);
+    } else if (header == GET_GYROSCOPE_MPU) {
+        ackCommand(outputStream, MPU_DEVICE_HEADER, GET_GYROSCOPE_MPU);
+        MpuData* mpuData = mpu->readMpu(mpu);
+        appendHex4(outputStream, mpuData->gyro_X);
+        append(outputStream,':');
+        appendHex4(outputStream, mpuData->gyro_Y);
+        append(outputStream,':');
+        appendHex4(outputStream, mpuData->gyro_Z);
+    } else if (header == GET_TEMPERATURE_MPU) {
+        ackCommand(outputStream, MPU_DEVICE_HEADER, GET_TEMPERATURE_MPU);
+        MpuData* mpuData = mpu->readMpu(mpu);
+        appendHex4(outputStream, mpuData->temperature);
+    }     
+}
+
+static DeviceDescriptor descriptor = {
+    .deviceInit = &deviceMpuInit,
+    .deviceShutDown = &deviceMpuShutDown,
+    .deviceIsOk = &isMpuDeviceOk,
+    .deviceHandleRawData = &deviceMpuHandleRawData,
+};
+
+DeviceDescriptor* getMpuDeviceDescriptor(Mpu* mpuParam) {
+    mpu = mpuParam;
+    return &descriptor;
+}

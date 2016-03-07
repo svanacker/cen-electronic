@@ -79,6 +79,10 @@ void clearLastError();
 // TEMPERATURE
 #define TEMPERATURE_NULL              0x2B0
 
+// MPU (Motio Processor Unit)
+#define MPU_NULL                        0x2C0
+#define MPU_NOT_INITIALIZED             0x2C1
+
 // BIT LIST
 #define BIT_LIST_ARRAY_OUT_OF_BOUNDS    0x0300
 

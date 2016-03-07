@@ -45,6 +45,9 @@
 #define FREE_ADDRESS_6            0x5C
 #define FREE_ADDRESS_7            0x5E
 
+#define MPU_6050_ADDRESS_0        0x68
+#define MPU_6050_ADDRESS_1        0x6A
+
 // PCF8574A
 
 // !!! Conflict with RLY08_ADDRESS_0

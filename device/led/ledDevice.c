@@ -47,6 +47,7 @@ void deviceLedHandleRawData(char commandHeader, InputStream* inputStream, Output
     }
         else if (commandHeader == COMMAND_TEST_LED) {
         ackCommand(outputStream, LED_DEVICE_HEADER, COMMAND_TEST_LED);
+        
         testLedMainBoard();
     }
 }
