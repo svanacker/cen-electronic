@@ -124,6 +124,10 @@
 #define MPU6050_RA_FIFO_R_W 0x74
 #define MPU6050_RA_WHO_AM_I 0x75
 
+/** Setup the MPU-6050
+ * @param mpu a pointer on the mpu structure.
+*/
+void setupMPU6050 (Mpu* mpu);
 
 
 /**

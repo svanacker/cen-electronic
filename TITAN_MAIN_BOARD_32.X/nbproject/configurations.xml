@@ -86,6 +86,7 @@
         <itemPath>../common/math/hexUtils.h</itemPath>
         <itemPath>../common/math/bcdUtils.h</itemPath>
         <itemPath>../common/math/random.h</itemPath>
+        <itemPath>../common/math/mpuUtils.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f20" displayName="common.MPU" projectFiles="true">
         <itemPath>../common/MPU/MPU.h</itemPath>
@@ -462,6 +463,7 @@
         <itemPath>../common/math/hexUtils.c</itemPath>
         <itemPath>../common/math/bcdUtils.c</itemPath>
         <itemPath>../common/math/random.c</itemPath>
+        <itemPath>../common/math/mpuUtils.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f21" displayName="common.MPU" projectFiles="true">
         <itemPath>../common/MPU/MPU.c</itemPath>

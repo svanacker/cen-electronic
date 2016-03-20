@@ -17,22 +17,31 @@ void printMpu(OutputStream* outputStream, Mpu* mpu) {
     appendHex2(outputStream, mpuData->accel_Z);
 
     append(outputStream, ' ');
-    appendHex2(outputStream, mpuData->gyro_X);
+    appendHex2(outputStream, mpuData->accel_gyro_X);
 
     append(outputStream, '/');
-    appendHex2(outputStream, mpuData->gyro_Y);
+    appendHex2(outputStream, mpuData->accel_gyro_Y);
     append(outputStream, '/');
-    appendHex2(outputStream, mpuData->gyro_Z);
+    appendHex2(outputStream, mpuData->accel_gyro_Z);
 }
 
-void initMpu(Mpu* mpu, WriteMpuFunction* writeMpu, ReadMpuFunction* readMpu, int* object) {
-    mpu->writeMpu = writeMpu;
-    mpu->readMpu = readMpu;
+void initMpu(Mpu* mpu, 
+        InitMPUFunction* initMPU,
+        GetAccelMPUFunction* getAccelMPU, 
+        GetGyroMPUFunction* getGyroMPU,
+        GetTempMPUFunction* getTempMPU, 
+        GetAllDataMPUFunction* getAllDataMPU,
+        int* object) {
+    mpu->initMPU = initMPU;
+    mpu->getAccelMPU = getAccelMPU;
+    mpu->getGyroMPU = getGyroMPU;
+    mpu->getTempMPU = getTempMPU;
+    mpu->getAllDataMPU = getAllDataMPU;
     mpu->object = object;
 }
 
 bool isMpuInitialized(Mpu* mpu) {
-    if (mpu->writeMpu == NULL ) {
+    if (mpu->initMPU == NULL | mpu->getAccelMPU == NULL | mpu->getGyroMPU == NULL | mpu->getTempMPU == NULL | mpu->getAllDataMPU == NULL) {
         return false;
     }
     return true;
