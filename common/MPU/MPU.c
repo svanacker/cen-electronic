@@ -31,17 +31,24 @@ void initMpu(Mpu* mpu,
         GetGyroMPUFunction* getGyroMPU,
         GetTempMPUFunction* getTempMPU, 
         GetAllDataMPUFunction* getAllDataMPU,
+        GetRegisterMPUFunction* getRegisterMPU,
         int* object) {
     mpu->initMPU = initMPU;
     mpu->getAccelMPU = getAccelMPU;
     mpu->getGyroMPU = getGyroMPU;
     mpu->getTempMPU = getTempMPU;
     mpu->getAllDataMPU = getAllDataMPU;
+    mpu->getRegisterMPU = getRegisterMPU;
     mpu->object = object;
 }
 
 bool isMpuInitialized(Mpu* mpu) {
-    if (mpu->initMPU == NULL | mpu->getAccelMPU == NULL | mpu->getGyroMPU == NULL | mpu->getTempMPU == NULL | mpu->getAllDataMPU == NULL) {
+    if (mpu->initMPU == NULL 
+            | mpu->getAccelMPU == NULL 
+            | mpu->getGyroMPU == NULL 
+            | mpu->getTempMPU == NULL 
+            | mpu->getAllDataMPU == NULL 
+            | mpu->getRegisterMPU == NULL) {
         return false;
     }
     return true;

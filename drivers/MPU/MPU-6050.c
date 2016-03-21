@@ -223,7 +223,7 @@ MpuData* _readMpu6050TemperatureMpu(Mpu* mpu) {
     return mpuData;
 }
 
-MpuData* _readMpu650AllData (Mpu* mpu){
+MpuData* _readMpu6050AllData (Mpu* mpu){
     //temporary storage
     int data_h;
     int data_l;
@@ -332,12 +332,45 @@ MpuData* _readMpu650AllData (Mpu* mpu){
     return mpuData;
 }
 
+char _readMpu6050Register (Mpu* mpu, int address){
+    char dataRegister;
+    I2cBusConnection* i2cBusConnection = _mpu6050GetI2cBusConnection(mpu);
+    I2cBus* i2cBus = i2cBusConnection->i2cBus;
+
+    // address the register
+    portableMasterStartI2C(i2cBusConnection);
+    WaitI2C(i2cBus);
+    portableMasterWriteI2C(i2cBusConnection, MPU6050_WRITE_ADDRESS);
+    WaitI2C(i2cBus);
+    portableMasterWriteI2C(i2cBusConnection, address);
+    WaitI2C(i2cBus);
+//    portableMasterStopI2C(i2cBusConnection);
+//    WaitI2C(i2cBus);
+
+    // read the temperature register
+    portableMasterStartI2C(i2cBusConnection);
+    WaitI2C(i2cBus);
+    portableMasterWriteI2C(i2cBusConnection, MPU6050_READ_ADDRESS);
+    WaitI2C(i2cBus);
+    
+    dataRegister = portableMasterReadI2C(i2cBusConnection);
+    portableMasterNackI2C(i2cBusConnection);
+    WaitI2C(i2cBus);
+        
+    portableMasterStopI2C(i2cBusConnection);
+    WaitI2C(i2cBus);
+    
+    // transfert the result
+    return dataRegister;
+}
+
 void initMpuMPU6050(Mpu* mpu, I2cBusConnection* i2cBusConnection) {
     initMpu(mpu, 
             _setupMPU6050,
             _readMpu6050AccMpu,
             _readMpu6050GyroMpu,
             _readMpu6050TemperatureMpu,
-            _readMpu650AllData,
+            _readMpu6050AllData,
+            _readMpu6050Register,
             (int*) i2cBusConnection);
 }

@@ -46,7 +46,6 @@ void deviceMpuHandleRawData(char header, InputStream* inputStream, OutputStream*
         ackCommand(outputStream, MPU_DEVICE_HEADER, GET_ACCELERATION_MPU);
         } else if (header == GET_GYROSCOPE_MPU) {
         MpuData* mpuData = mpu->getGyroMPU(mpu);
-        getXRotation(mpu);
         appendHex4(outputStream, mpuData->accel_gyro_X);
         append(outputStream,':');
         appendHex4(outputStream, mpuData->accel_gyro_Y);
@@ -59,7 +58,6 @@ void deviceMpuHandleRawData(char header, InputStream* inputStream, OutputStream*
         ackCommand(outputStream, MPU_DEVICE_HEADER, GET_TEMPERATURE_MPU);
     } else if (header == GET_ALL_DATA_MPU) {
         MpuData* mpuData = mpu->getAllDataMPU(mpu);
-        getXRotation(mpu);
         appendHex4(outputStream, mpuData->accel_X);
         append(outputStream,':');
         appendHex4(outputStream, mpuData->accel_Y);
@@ -74,25 +72,18 @@ void deviceMpuHandleRawData(char header, InputStream* inputStream, OutputStream*
         append(outputStream,'-');
         appendHex4(outputStream, mpuData->temperature);
         ackCommand(outputStream, MPU_DEVICE_HEADER, GET_ALL_DATA_MPU);
-    } else if (header == GET_REGISTER_MPU) {
-        MpuData* mpuData = mpu->getAllDataMPU(mpu);
-        getXRotation(mpu);
-        appendHex4(outputStream, mpuData->accel_X);
-        append(outputStream,':');
-        appendHex4(outputStream, mpuData->accel_Y);
-        append(outputStream,':');
-        appendHex4(outputStream, mpuData->accel_Z);
-        append(outputStream,'-');
-        appendHex4(outputStream, mpuData->accel_gyro_X);
-        append(outputStream,':');
-        appendHex4(outputStream, mpuData->accel_gyro_Y);
-        append(outputStream,':');
-        appendHex4(outputStream, mpuData->accel_gyro_Z);
-        append(outputStream,'-');
-        appendHex4(outputStream, mpuData->temperature);
+    } else if (header == GET_REGISTER_MPU) {    
+        unsigned long address = readHex2(inputStream);
+        char value = mpu->getRegisterMPU(mpu, address);
+        appendHex2(outputStream, value);
         ackCommand(outputStream, MPU_DEVICE_HEADER, GET_REGISTER_MPU);
     }     
 }
+
+
+      
+        
+
 
 static DeviceDescriptor descriptor = {
     .deviceInit = &deviceMpuInit,

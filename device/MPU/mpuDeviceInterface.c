@@ -55,22 +55,11 @@ int deviceMpuGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fil
         return commandLengthValueForMode(mode, 0, 34);
     }else if (commandHeader == GET_REGISTER_MPU) {
         if (fillDeviceArgumentList) {            
-            setFunction("MPU Data", 0, 13);
-            setResultUnsignedHex4(0, "Acceleration X");
-            setResultSeparator(1);
-            setResultUnsignedHex4(2, "Acceleration Y");
-            setResultSeparator(3);
-            setResultUnsignedHex4(4, "Acceleration Z");
-            setResultSeparator(5);
-            setResultUnsignedHex4(6, "Gyroscope X");
-            setResultSeparator(7);
-            setResultUnsignedHex4(8, "Gyroscope Y");
-            setResultSeparator(9);
-            setResultUnsignedHex4(10, "Gyroscope Z");
-            setResultSeparator(11);
-            setResultUnsignedHex4(12, "Temperature Celcius");
+            setFunction("Byte Read", 1, 1);
+            setArgumentUnsignedHex2(0, "address");
+            setResultUnsignedHex2(0, "byte");
         }
-        return commandLengthValueForMode(mode, 0, 34);
+        return commandLengthValueForMode(mode, 2, 2);
     }
     return DEVICE_HEADER_NOT_HANDLED;
 }
