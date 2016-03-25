@@ -14,7 +14,6 @@ typedef struct {
     int accel_gyro_Y;
     int accel_gyro_Z;
     int temperature;
-    int registerMpu;
     float rall;  //rotation about the X-axis      phi
     float pitch;  // rotation about the Y-axis    theta
     float yaw;  //rotation about the Z-axis       psi
@@ -65,6 +64,12 @@ typedef MpuData* GetAllDataMPUFunction(Mpu* mpuParam);
  */
 typedef char GetRegisterMPUFunction(Mpu* mpuParam, char index);
 
+/**
+ * Update the software mpu structure from the hardware.
+ * @param mpuParam the pointer on Mpu object.
+ * @return the pointer on MpuData with refresh data (from hardware)
+ */
+typedef void SetRegisterMPUFunction(Mpu* mpuParam, char address, char data);
 
 /**
  * Defines the contract for a Mpu object.
@@ -82,6 +87,8 @@ struct Mpu {
     GetAllDataMPUFunction* getAllDataMPU;
     /** */
     GetRegisterMPUFunction* getRegisterMPU;
+    /** */
+    SetRegisterMPUFunction* setRegisterMPU;
     /** The content with all values. */    
     MpuData mpuData;
     /** A pointer on generic object (for example to store I2cBus ...). */
@@ -109,6 +116,7 @@ void initMpu(Mpu* mpuParam,
         GetTempMPUFunction* GetTempMPUFunction,
         GetAllDataMPUFunction* GetAllDataMPUFunction,
         GetRegisterMPUFunction* getRegisterMPU,
+        SetRegisterMPUFunction* setRegisterMPU,
         int* object);
 
 #endif

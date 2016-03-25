@@ -77,6 +77,11 @@ void deviceMpuHandleRawData(char header, InputStream* inputStream, OutputStream*
         char value = mpu->getRegisterMPU(mpu, address);
         appendHex2(outputStream, value);
         ackCommand(outputStream, MPU_DEVICE_HEADER, GET_REGISTER_MPU);
+    } else if (header == SET_REGISTER_MPU) {    
+        unsigned char address = readHex2(inputStream);
+        unsigned char data = readHex2(inputStream);
+        mpu->setRegisterMPU(mpu, address, data);
+        ackCommand(outputStream, MPU_DEVICE_HEADER, SET_REGISTER_MPU);
     }     
 }
 

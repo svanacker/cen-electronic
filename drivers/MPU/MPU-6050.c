@@ -10,7 +10,6 @@
 
 I2cBusConnection* _mpu6050GetI2cBusConnection(Mpu* mpu) {
     I2cBusConnection* result = (I2cBusConnection*) mpu->object;
-
     return result;
 }
 /** @private
@@ -21,18 +20,7 @@ void _setupMPU6050 (Mpu* mpu){
     I2cBusConnection* i2cBusConnection = _mpu6050GetI2cBusConnection(mpu);
     I2cBus* i2cBus = i2cBusConnection->i2cBus;
     
-    portableMasterWaitSendI2C(i2cBusConnection);
-    portableMasterStartI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
-    portableMasterWriteI2C(i2cBusConnection, MPU6050_WRITE_ADDRESS);
-    WaitI2C(i2cBus);
-    portableMasterWriteI2C(i2cBusConnection, 0x6B); //MPU6050_RA_PWR_MGMT_1
-    WaitI2C(i2cBus);
-    portableMasterWriteI2C(i2cBusConnection, 0);
-    WaitI2C(i2cBus);
-    
-    portableMasterStopI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    _writeMpu6050Register(mpu, MPU6050_RA_PWR_MGMT_1, 0);   
 }
 
 /**
@@ -100,7 +88,6 @@ MpuData* _readMpu6050AccMpu(Mpu* mpu) {
     portableMasterStopI2C(i2cBusConnection);
     WaitI2C(i2cBus);
     
-
     return mpuData;
 }
 
@@ -140,8 +127,7 @@ MpuData* _readMpu6050GyroMpu(Mpu* mpu) {
     data_l = portableMasterReadI2C(i2cBusConnection);
     portableMasterAckI2C(i2cBusConnection);
     
-    mpuData->accel_gyro_X = ((data_h<<8)|data_l);
-    
+    mpuData->accel_gyro_X = ((data_h<<8)|data_l);   
     
     WaitI2C(i2cBus);
     data_h = portableMasterReadI2C(i2cBusConnection);
@@ -223,6 +209,12 @@ MpuData* _readMpu6050TemperatureMpu(Mpu* mpu) {
     return mpuData;
 }
 
+/**
+ * @see MPU.h
+ * @private
+ * Read the data from the MPU-6050 and store in the structure.
+ * @param mpu the mpu
+ */
 MpuData* _readMpu6050AllData (Mpu* mpu){
     //temporary storage
     int data_h;
@@ -276,8 +268,7 @@ MpuData* _readMpu6050AllData (Mpu* mpu){
     portableMasterAckI2C(i2cBusConnection);
     
     mpuData->accel_Z = ((data_h<<8)|data_l);
-    WaitI2C(i2cBus);
-    
+    WaitI2C(i2cBus);    
     
     // at first, the MSB register
     data_h = portableMasterReadI2C(i2cBusConnection);
@@ -289,8 +280,7 @@ MpuData* _readMpu6050AllData (Mpu* mpu){
     WaitI2C(i2cBus);
         
     // temp  =  MSB + LSB
-    int temp =((data_h<<8)|data_l);
-    
+    int temp =((data_h<<8)|data_l);   
     
     // Conversion from Kelvin to Celsius
     mpuData->temperature = ((temp/340)*100 + 3653)/1000;
@@ -302,9 +292,8 @@ MpuData* _readMpu6050AllData (Mpu* mpu){
     portableMasterAckI2C(i2cBusConnection);
     
     mpuData->accel_gyro_X = ((data_h<<8)|data_l);
-    
-    
     WaitI2C(i2cBus);
+    
     data_h = portableMasterReadI2C(i2cBusConnection);
     portableMasterAckI2C(i2cBusConnection);
     WaitI2C(i2cBus);
@@ -323,16 +312,21 @@ MpuData* _readMpu6050AllData (Mpu* mpu){
     
     mpuData->accel_gyro_Z = ((data_h<<8)|data_l);
     WaitI2C(i2cBus);  
-    
-        
+
     portableMasterStopI2C(i2cBusConnection);
     WaitI2C(i2cBus);
-    
 
     return mpuData;
 }
 
-char _readMpu6050Register (Mpu* mpu, int address){
+/**
+ * @see MPU.h
+ * @private
+ * Read one register from the MPU-6050 
+ * @param mpu the mpu
+ * @return dataRegister the data from register
+ */
+char _readMpu6050Register (Mpu* mpu, int index){
     char dataRegister;
     I2cBusConnection* i2cBusConnection = _mpu6050GetI2cBusConnection(mpu);
     I2cBus* i2cBus = i2cBusConnection->i2cBus;
@@ -342,17 +336,16 @@ char _readMpu6050Register (Mpu* mpu, int address){
     WaitI2C(i2cBus);
     portableMasterWriteI2C(i2cBusConnection, MPU6050_WRITE_ADDRESS);
     WaitI2C(i2cBus);
-    portableMasterWriteI2C(i2cBusConnection, address);
+    portableMasterWriteI2C(i2cBusConnection, index);
     WaitI2C(i2cBus);
-//    portableMasterStopI2C(i2cBusConnection);
-//    WaitI2C(i2cBus);
 
-    // read the temperature register
+    // select the register
     portableMasterStartI2C(i2cBusConnection);
     WaitI2C(i2cBus);
     portableMasterWriteI2C(i2cBusConnection, MPU6050_READ_ADDRESS);
     WaitI2C(i2cBus);
     
+    // read the register
     dataRegister = portableMasterReadI2C(i2cBusConnection);
     portableMasterNackI2C(i2cBusConnection);
     WaitI2C(i2cBus);
@@ -364,6 +357,33 @@ char _readMpu6050Register (Mpu* mpu, int address){
     return dataRegister;
 }
 
+/**
+ * @see MPU.h
+ * @private
+ * Write one register in the MPU-6050 
+ * @param mpu the mpu
+ * @param index, the index to select the register
+ * @return dataRegister the data read from register
+ */
+void _writeMpu6050Register(Mpu* mpu, char index, char data){
+    I2cBusConnection* i2cBusConnection = _mpu6050GetI2cBusConnection(mpu);
+    I2cBus* i2cBus = i2cBusConnection->i2cBus;
+    
+    portableMasterWaitSendI2C(i2cBusConnection);
+    // address the register
+    portableMasterStartI2C(i2cBusConnection);
+    WaitI2C(i2cBus);
+    portableMasterWriteI2C(i2cBusConnection, MPU6050_WRITE_ADDRESS);
+    WaitI2C(i2cBus);
+    portableMasterWriteI2C(i2cBusConnection, index);
+    WaitI2C(i2cBus);
+    portableMasterWriteI2C(i2cBusConnection, data);
+    WaitI2C(i2cBus);    
+    
+    portableMasterStopI2C(i2cBusConnection);
+    WaitI2C(i2cBus);
+}
+
 void initMpuMPU6050(Mpu* mpu, I2cBusConnection* i2cBusConnection) {
     initMpu(mpu, 
             _setupMPU6050,
@@ -372,5 +392,6 @@ void initMpuMPU6050(Mpu* mpu, I2cBusConnection* i2cBusConnection) {
             _readMpu6050TemperatureMpu,
             _readMpu6050AllData,
             _readMpu6050Register,
+            _writeMpu6050Register,
             (int*) i2cBusConnection);
 }

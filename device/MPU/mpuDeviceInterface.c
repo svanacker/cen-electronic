@@ -60,6 +60,13 @@ int deviceMpuGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fil
             setResultUnsignedHex2(0, "byte");
         }
         return commandLengthValueForMode(mode, 2, 2);
+    }else if (commandHeader == SET_REGISTER_MPU) {
+        if (fillDeviceArgumentList) {            
+            setFunction("Byte Write", 2, 0);
+            setArgumentUnsignedHex2(0, "address");
+            setArgumentUnsignedHex2(1, "data");
+        }
+        return commandLengthValueForMode(mode, 4, 0);
     }
     return DEVICE_HEADER_NOT_HANDLED;
 }

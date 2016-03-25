@@ -19,6 +19,9 @@
 /*read register from MPU */
 #define GET_REGISTER_MPU                        'R'
 
+/* write register to MPU */
+#define SET_REGISTER_MPU                        'W'
+
 /**
 * Interface for the Device
 * @return the Interface for the MPU device.
