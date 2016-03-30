@@ -203,7 +203,7 @@ MpuData* _readMpu6050TemperatureMpu(Mpu* mpu) {
     int temp =((data_h<<8)|data_l);
     
     // Conversion from Kelvin to Celsius
-    mpuData->temperature = ((temp/340)*100 + 3653)/1000;
+    mpuData->temperature = temp;//((temp/340)*100 + 3653)/100;
 
     // transfert the result
     return mpuData;
@@ -283,7 +283,7 @@ MpuData* _readMpu6050AllData (Mpu* mpu){
     int temp =((data_h<<8)|data_l);   
     
     // Conversion from Kelvin to Celsius
-    mpuData->temperature = ((temp/340)*100 + 3653)/1000;
+    mpuData->temperature = ((temp/340)*100 + 3653)/100;
     
     data_h = portableMasterReadI2C(i2cBusConnection);
     portableMasterAckI2C(i2cBusConnection);
