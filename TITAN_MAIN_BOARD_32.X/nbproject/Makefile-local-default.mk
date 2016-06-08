@@ -14,23 +14,24 @@
 # You can invoke make with the values of the macros:
 # $ makeMP_CC="/opt/microchip/mplabc30/v3.30c/bin/pic30-gcc" ...  
 #
-PATH_TO_IDE_BIN=/opt/microchip/mplabx/v3.25/mplab_ide/mplab_ide/modules/../../bin/
+SHELL=cmd.exe
+PATH_TO_IDE_BIN=C:/Program Files (x86)/Microchip/MPLABX/v3.26/mplab_ide/mplab_ide/modules/../../bin/
 # Adding MPLAB X bin directory to path.
-PATH:=/opt/microchip/mplabx/v3.25/mplab_ide/mplab_ide/modules/../../bin/:$(PATH)
+PATH:=C:/Program Files (x86)/Microchip/MPLABX/v3.26/mplab_ide/mplab_ide/modules/../../bin/:$(PATH)
 # Path to java used to run MPLAB X when this makefile was created
-MP_JAVA_PATH="/opt/microchip/mplabx/v3.25/sys/java/jre1.8.0_65/bin/"
+MP_JAVA_PATH="C:\Program Files (x86)\Microchip\MPLABX\v3.26\sys\java\jre1.8.0_65/bin/"
 OS_CURRENT="$(shell uname -s)"
-MP_CC="/opt/microchip/xc32/v1.40/bin/xc32-gcc"
-MP_CPPC="/opt/microchip/xc32/v1.40/bin/xc32-g++"
+MP_CC="C:\Program Files (x86)\Microchip\xc32\v1.40\bin\xc32-gcc.exe"
+MP_CPPC="C:\Program Files (x86)\Microchip\xc32\v1.40\bin\xc32-g++.exe"
 # MP_BC is not defined
-MP_AS="/opt/microchip/xc32/v1.40/bin/xc32-as"
-MP_LD="/opt/microchip/xc32/v1.40/bin/xc32-ld"
-MP_AR="/opt/microchip/xc32/v1.40/bin/xc32-ar"
-DEP_GEN=${MP_JAVA_PATH}java -jar "/opt/microchip/mplabx/v3.25/mplab_ide/mplab_ide/modules/../../bin/extractobjectdependencies.jar"
-MP_CC_DIR="/opt/microchip/xc32/v1.40/bin"
-MP_CPPC_DIR="/opt/microchip/xc32/v1.40/bin"
+MP_AS="C:\Program Files (x86)\Microchip\xc32\v1.40\bin\xc32-as.exe"
+MP_LD="C:\Program Files (x86)\Microchip\xc32\v1.40\bin\xc32-ld.exe"
+MP_AR="C:\Program Files (x86)\Microchip\xc32\v1.40\bin\xc32-ar.exe"
+DEP_GEN=${MP_JAVA_PATH}java -jar "C:/Program Files (x86)/Microchip/MPLABX/v3.26/mplab_ide/mplab_ide/modules/../../bin/extractobjectdependencies.jar"
+MP_CC_DIR="C:\Program Files (x86)\Microchip\xc32\v1.40\bin"
+MP_CPPC_DIR="C:\Program Files (x86)\Microchip\xc32\v1.40\bin"
 # MP_BC_DIR is not defined
-MP_AS_DIR="/opt/microchip/xc32/v1.40/bin"
-MP_LD_DIR="/opt/microchip/xc32/v1.40/bin"
-MP_AR_DIR="/opt/microchip/xc32/v1.40/bin"
+MP_AS_DIR="C:\Program Files (x86)\Microchip\xc32\v1.40\bin"
+MP_LD_DIR="C:\Program Files (x86)\Microchip\xc32\v1.40\bin"
+MP_AR_DIR="C:\Program Files (x86)\Microchip\xc32\v1.40\bin"
 # MP_BC_DIR is not defined
