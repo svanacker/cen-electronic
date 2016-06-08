@@ -5,18 +5,20 @@
 #include "../ledutils.h"
 #include "../../io/pin.h"
 
+int ledstate;
 
 void _initLed(){
     led1_dir = 0;
     led2_dir = 0;    
+    ledstate = 0;
 }
 
 void setLedValue (char index,char state){
     _initLed();
 
     switch(index) {
-        case 1 : led1 = state;break;
-        case 2 : led2 = state;break;
+        case 1 : {led1 = state;break;}
+        case 2 : {led2 = state;break;}
     }
 }
 
@@ -28,4 +30,5 @@ void testLedMainBoard (void){
         led2 = !led2;
         delaymSec(300);
     }
+    led1 = 1;
 }
