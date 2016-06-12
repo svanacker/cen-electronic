@@ -5,6 +5,8 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/electronique/git-f4deb/cen-electronic/main/titanMainBoard/titanMainBoardClient.c</file>
+            <file>file:/D:/electronique/git-f4deb/cen-electronic/common/adc/32/adcutils32.c</file>
+            <file>file:/D:/electronique/git-f4deb/cen-electronic/robot/config/32/robotConfigPic32.c</file>
         </group>
     </open-files>
 </project-private>

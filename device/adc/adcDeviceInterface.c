@@ -45,6 +45,15 @@ int deviceADCGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fil
         }
         return commandLengthValueForMode(mode, 0, 29);
     }
+     else if (commandHeader == COMMAND_SET_ADC_PARAMETERS) {
+        if (fillDeviceArgumentList) {
+        setFunction("Define PortB ADC", 3, 0);
+            setArgumentUnsignedHex2(0, "ADC Port");
+            setArgumentSeparator(1);
+            setArgumentUnsignedHex2(2, "E/D");
+        }
+        return commandLengthValueForMode(mode, 5, 0);
+    } 
 
     return DEVICE_HEADER_NOT_HANDLED;
 }
