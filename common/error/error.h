@@ -83,6 +83,14 @@ void clearLastError();
 #define MPU_NULL                        0x2C0
 #define MPU_NOT_INITIALIZED             0x2C1
 
+// PLL
+#define PLL_NULL                        0x2C2
+#define PLL_NOT_INITIALIZED             0x2C3
+
+// SILEC
+#define SILEC_NULL                        0x2C4
+#define SILEC_NOT_INITIALIZED             0x2C5
+
 // BIT LIST
 #define BIT_LIST_ARRAY_OUT_OF_BOUNDS    0x0300
 

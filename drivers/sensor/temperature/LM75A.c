@@ -65,7 +65,7 @@ void _LM75A_writeAlertLimit(Temperature* temperature, int temperatureSensorAlert
     unsigned char value = bcd2CharToDec(temperatureSensorAlertValue);
     portableMasterWriteI2C(i2cBusConnection, value);
     WaitI2C(i2cBus);
-    portableMasterWriteI2C(i2cBusConnection, 0x00);
+    portableMasterWriteI2C(i2cBusConnection, 0x04);
     WaitI2C(i2cBus);
     portableMasterStopI2C(i2cBusConnection);
     WaitI2C(i2cBus);
@@ -76,7 +76,7 @@ void _LM75A_writeAlertLimit(Temperature* temperature, int temperatureSensorAlert
     WaitI2C(i2cBus);
     portableMasterWriteI2C(i2cBusConnection, LM75A_CONFIGURATION_SENSOR_REGISTER);
     WaitI2C(i2cBus);
-    portableMasterWriteI2C(i2cBusConnection, OS_POLARITY_HIGH);
+    portableMasterWriteI2C(i2cBusConnection, OS_POLARITY_LOW);
 
     WaitI2C(i2cBus);
     portableMasterStopI2C(i2cBusConnection);

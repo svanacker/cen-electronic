@@ -21,6 +21,8 @@
 #include "../../common/eeprom/eeprom.h"
 
 #include "../../common/MPU/MPU.h"
+#include "../../common/pll/pll.h"
+#include "../../common/silec/silec.h"
 
 #include "../../common/i2c/i2cCommon.h"
 #include "../../common/i2c/i2cDebug.h"
@@ -91,9 +93,17 @@
 #include "../../device/MPU/mpuDevice.h"
 #include "../../device/MPU/mpuDeviceInterface.h"
 
+// PLL
+#include "../../device/pll/pllDevice.h"
+#include "../../device/pll/pllDeviceInterface.h"
+
 // SERIAL
 #include "../../device/serial/serialDebugDevice.h"
 #include "../../device/serial/serialDebugDeviceInterface.h"
+
+// Silec afficheur
+#include "../../device/silec/silecDevice.h"
+#include "../../device/silec/silecDeviceInterface.h"
 
 // TIMER
 #include "../../device/timer/timerDevice.h"
@@ -227,6 +237,14 @@ static I2cBusConnection clockI2cBusConnection;
 // MPU
 static Mpu mpu;
 static I2cBusConnection mpuI2cBusConnection;
+
+//PLL
+static Pll pll;
+static I2cBusConnection pllI2cBusConnection;
+
+//PLL
+static Silec silec;
+static I2cBusConnection silecI2cBusConnection;
 
 // TEMPERATURE
 static Temperature temperature;
@@ -369,9 +387,11 @@ void initMainBoardDevicesDescriptor() {
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
     addLocalDevice(getMpuDeviceInterface(), getMpuDeviceDescriptor(&mpu));
     addLocalDevice(getADCDeviceInterface(), getADCDeviceDescriptor());
-    addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor());
+    //addLocalDevice(getPllDeviceInterface(), getPllDeviceDescriptor(&pll)); //WARNING DON't use with Servo
+    //addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor()); //WARNING DON't use with PLL
+    addLocalDevice(getSilecDeviceInterface(), getSilecDeviceDescriptor(&silec)); //WARNING DON't use with Servo
     addLocalDevice(getLedDeviceInterface(), getLedDeviceDescriptor());
-//    addLocalDevice(getTemperatureSensorDeviceInterface(), getTemperatureSensorDeviceDescriptor(&temperature));
+    addLocalDevice(getTemperatureSensorDeviceInterface(), getTemperatureSensorDeviceDescriptor(&temperature));
 
     addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
 

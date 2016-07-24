@@ -4,7 +4,14 @@
 #include "lcd.h"
 #include "lcdHd44780.h"
 
-/*
+/**
+ * 
+ */
+void retroLCD(int value){  
+    hd44780_driveRetro(value);
+}
+
+/**
 DeviceDescriptor getLCDDeviceDescriptor() {
         return getLCD02DeviceDescriptor();
 }

@@ -16,16 +16,18 @@ int getConfigPort(void){
     return configPortDAC;
 }
 
-int getConfigScant(void){
+int getConfigScan(void){
     return configScanDAC;
 }
 
 void setConfigPort(int data){
     configPortDAC = data;
+    AD1PCFG = configPortDAC;
 }
 
 void setConfigScan(int data){
     configScanDAC = data;
+    AD1CSSL = data;
 }
 
 /**
@@ -48,7 +50,7 @@ void _initADC(){
     CloseADC10();       
 
     SetChanADC10(ADC_CH0_NEG_SAMPLEA_NVREF);
-    OpenADC10(CONFIG1, CONFIG2, CONFIG3, CONFIGPORT, CONFIGSCAN);
+    OpenADC10(CONFIG1, CONFIG2, CONFIG3, getConfigPort(), getConfigScan());
     EnableADC10();
     // mAD1GetIntFlag() checks the interrupt flag for the AD10.
     // Waits till a conversion is finished so that there's
@@ -59,38 +61,36 @@ void _initADC(){
     
 }
 
-
-
 void setANXConfig(int index, int state){  
     int config;
-    int adcMask;
+    int scan;
 
     CloseADC10();       
     SetChanADC10(ADC_CH0_NEG_SAMPLEA_NVREF);
 
     //definit le bit à modifier
-    adcMask = 0x1 << index;
+    int adcMask = 0x1 << index;
 
     // ANALOG PortB Bit Config (AD1PCFG))
     if (state == 1 ){
         //definit le bit à modifier             
         config = getConfigPort() & ~adcMask;
-        //configScan = configScan | adcMask;
+        scan = getConfigScan() & ~adcMask;
     }
     // DIGITAL PortB Bit Config
     else {
         config = getConfigPort() | adcMask;  
-        //configScan = configScan & ~adcMask;
+        scan = getConfigScan() | adcMask;
     }
     setConfigPort(config);
+    setConfigScan(scan);
         
-    OpenADC10(CONFIG1, CONFIG2, CONFIG3, CONFIGPORT, CONFIGSCAN);
+    OpenADC10(CONFIG1, CONFIG2, CONFIG3, getConfigPort(), getConfigScan());
     EnableADC10();
     // mAD1GetIntFlag() checks the interrupt flag for the AD10.
     // Waits till a conversion is finished so that there's
     // values in the ADC result registers.
-    while (!mAD1GetIntFlag() ) {
-    
+    while (!mAD1GetIntFlag() ) {    
     }
 }
 

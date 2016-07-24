@@ -40,6 +40,11 @@ void deviceLCDHandleRawData(char commandHeader,
         ackCommand(outputStream, LCD_DEVICE_HEADER, COMMAND_CLEAR_LCD);
         clearScreen();
     }
+    else if (commandHeader == COMMAND_RETRO_LCD) {
+        ackCommand(outputStream, LCD_DEVICE_HEADER, COMMAND_RETRO_LCD);
+        int value = readHex2(inputStream);
+        retroLCD(value);        
+    }        
 }
 
 static DeviceDescriptor descriptor = {

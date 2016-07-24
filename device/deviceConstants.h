@@ -107,9 +107,13 @@
 /** Header for Test2 Device. */
 #define TEST2_DEVICE_HEADER                        'u'
 
+#define PLL_DEVICE_HEADER                          'v' 
+
 #define TIMER_DEVICE_HEADER                        'V'
 
 #define CODERS_DEVICE_HEADER                       'w'
+
+#define SILEC_DEVICE_HEADER                         'W'
 
 /** Reserved to clear buffer. */
 #define NOT_TOO_USE_1                               'z'

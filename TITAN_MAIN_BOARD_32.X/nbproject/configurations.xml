@@ -91,6 +91,9 @@
       <logicalFolder name="f20" displayName="common.MPU" projectFiles="true">
         <itemPath>../common/MPU/MPU.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f24" displayName="common.pll" projectFiles="true">
+        <itemPath>../common/pll/pll.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="common.pwm" displayName="common.pwm" projectFiles="true">
         <itemPath>../common/pwm/pwmPic.h</itemPath>
       </logicalFolder>
@@ -120,6 +123,9 @@
                      projectFiles="true">
         <itemPath>../common/setup/32/clockConstants32.h</itemPath>
         <itemPath>../common/setup/32/picSetup32.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f26" displayName="common.silec" projectFiles="true">
+        <itemPath>../common/silec/silec.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f14" displayName="common.system" projectFiles="true">
         <itemPath>../common/system/system.h</itemPath>
@@ -209,6 +215,10 @@
         <itemPath>../device/MPU/mpuDeviceInterface.h</itemPath>
         <itemPath>../device/MPU/mpuDevice.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f23" displayName="device.pll" projectFiles="true">
+        <itemPath>../device/pll/pllDevice.h</itemPath>
+        <itemPath>../device/pll/pllDeviceInterface.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="f11" displayName="device.serial" projectFiles="true">
         <itemPath>../device/serial/serialDebugDevice.h</itemPath>
         <itemPath>../device/serial/serialDebugDeviceInterface.h</itemPath>
@@ -218,6 +228,10 @@
                      projectFiles="true">
         <itemPath>../device/servo/servoDeviceInterface.h</itemPath>
         <itemPath>../device/servo/servoDevice.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f22" displayName="device.silec" projectFiles="true">
+        <itemPath>../device/silec/silecDevice.h</itemPath>
+        <itemPath>../device/silec/silecDeviceInterface.h</itemPath>
       </logicalFolder>
       <logicalFolder name="device.sonar"
                      displayName="device.sonar"
@@ -303,6 +317,9 @@
       </logicalFolder>
       <logicalFolder name="f18" displayName="drivers.MPU" projectFiles="true">
         <itemPath>../drivers/MPU/MPU-6050.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f25" displayName="drivers.pll" projectFiles="true">
+        <itemPath>../drivers/pll/NJ88C22.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f7" displayName="drivers.robotConfig" projectFiles="true">
       </logicalFolder>
@@ -469,6 +486,9 @@
       <logicalFolder name="f21" displayName="common.MPU" projectFiles="true">
         <itemPath>../common/MPU/MPU.c</itemPath>
       </logicalFolder>
+      <logicalFolder name="f24" displayName="common.pll" projectFiles="true">
+        <itemPath>../common/pll/pll.c</itemPath>
+      </logicalFolder>
       <logicalFolder name="common.pwm.32"
                      displayName="common.pwm.32"
                      projectFiles="true">
@@ -505,6 +525,9 @@
                      projectFiles="true">
         <itemPath>../common/serial/32/serial32.c</itemPath>
         <itemPath>../common/serial/32/serialInputInterrupt32.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f26" displayName="common.silec" projectFiles="true">
+        <itemPath>../common/silec/silec.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f14" displayName="common.system" projectFiles="true">
         <itemPath>../common/system/system.c</itemPath>
@@ -605,6 +628,10 @@
         <itemPath>../device/MPU/mpuDevice.c</itemPath>
         <itemPath>../device/MPU/mpuDeviceInterface.c</itemPath>
       </logicalFolder>
+      <logicalFolder name="f23" displayName="device.pll" projectFiles="true">
+        <itemPath>../device/pll/pllDevice.c</itemPath>
+        <itemPath>../device/pll/pllDeviceInterface.c</itemPath>
+      </logicalFolder>
       <logicalFolder name="f11" displayName="device.serial" projectFiles="true">
         <itemPath>../device/serial/serialDebugDevice.c</itemPath>
         <itemPath>../device/serial/serialDebugDeviceInterface.c</itemPath>
@@ -614,6 +641,10 @@
                      projectFiles="true">
         <itemPath>../device/servo/servoDeviceInterface.c</itemPath>
         <itemPath>../device/servo/servoDevice.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f22" displayName="device.silec" projectFiles="true">
+        <itemPath>../device/silec/silecDevice.c</itemPath>
+        <itemPath>../device/silec/silecDeviceInterface.c</itemPath>
       </logicalFolder>
       <logicalFolder name="device.sonar"
                      displayName="device.sonar"
@@ -701,6 +732,9 @@
       </logicalFolder>
       <logicalFolder name="f19" displayName="drivers.MPU" projectFiles="true">
         <itemPath>../drivers/MPU/MPU-6050.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f25" displayName="drivers.pll" projectFiles="true">
+        <itemPath>../drivers/pll/NJ88C22.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f7" displayName="drivers.robotConfig" projectFiles="true">
       </logicalFolder>
@@ -821,7 +855,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="C:\Program Files (x86)\Microchip\xc32\v1.40\pic32-libs\peripheral;C:\Program Files (x86)\Microchip\xc32\v1.40\pic32mx\include\lega-c;../common/serial;../device;../common/io;../common;../common/log;../common/math;../common/i2c;../common/timer;../common/cmd;../drivers;../drivers/dispatcher;../drivers/lcd;../device/system;../drivers/test;../device/test;../device/dispatcher;../device/servo;../drivers/motor;../robot;../robot/match;../device/lcd;../device/motor;../main/motorboard;../robot/config;../common/i2c/master;../device/sonar;../drivers/sonar;../drivers/motion;../drivers/system;../drivers/io;../device/motion/simple;../device/motion/position;../device/motion/pid;../device/beacon;../motion/simple;../main/meca2;../device/adc;../common/error;../robot/2012;../main/mainBoard;../device/strategy;../drivers/strategy;../common/2d;../drivers/beacon;../robot/opponent;../common/delay;../common/serial/32;../common/setup/32;../common/delay/32;../device/airconditioning;../main/airconditioning;../drivers/clock;../device/i2c/master;../common/clock;."/>
+                  value="C:\Program Files (x86)\Microchip\xc32\v1.40\lib\gcc\pic32mx\4.8.3\include;C:\Program Files (x86)\Microchip\xc32\v1.40\pic32-libs\peripheral;C:\Program Files (x86)\Microchip\xc32\v1.40\pic32mx\include\lega-c;../common/serial;../device;../common/io;../common;../common/log;../common/math;../common/i2c;../common/timer;../common/cmd;../drivers;../drivers/dispatcher;../drivers/lcd;../device/system;../drivers/test;../device/test;../device/dispatcher;../device/servo;../drivers/motor;../robot;../robot/match;../device/lcd;../device/motor;../main/motorboard;../robot/config;../common/i2c/master;../device/sonar;../drivers/sonar;../drivers/motion;../drivers/system;../drivers/io;../device/motion/simple;../device/motion/position;../device/motion/pid;../device/beacon;../motion/simple;../main/meca2;../device/adc;../common/error;../robot/2012;../main/mainBoard;../device/strategy;../drivers/strategy;../common/2d;../drivers/beacon;../robot/opponent;../common/delay;../common/serial/32;../common/setup/32;../common/delay/32;../device/airconditioning;../main/airconditioning;../drivers/clock;../device/i2c/master;../common/clock;."/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="false"/>
@@ -973,7 +1007,6 @@
         <property key="UART6" value="true"/>
         <property key="USB" value="true"/>
         <property key="debugoptions.useswbreakpoints" value="false"/>
-        <property key="firmware.download.all" value="false"/>
         <property key="hwtoolclock.frcindebug" value="false"/>
         <property key="memories.aux" value="false"/>
         <property key="memories.bootflash" value="false"/>

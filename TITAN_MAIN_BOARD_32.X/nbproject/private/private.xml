@@ -4,9 +4,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/D:/electronique/git-f4deb/cen-electronic/device/pll/pllDevice.c</file>
             <file>file:/D:/electronique/git-f4deb/cen-electronic/main/titanMainBoard/titanMainBoardClient.c</file>
-            <file>file:/D:/electronique/git-f4deb/cen-electronic/common/adc/32/adcutils32.c</file>
-            <file>file:/D:/electronique/git-f4deb/cen-electronic/robot/config/32/robotConfigPic32.c</file>
+            <file>file:/D:/electronique/git-f4deb/cen-electronic/device/silec/silecDevice.c</file>
+            <file>file:/D:/electronique/git-f4deb/cen-electronic/common/silec/silec.c</file>
+            <file>file:/D:/electronique/git-f4deb/cen-electronic/device/silec/silecDeviceInterface.c</file>
+            <file>file:/D:/electronique/git-f4deb/cen-electronic/common/pll/pll.c</file>
+            <file>file:/D:/electronique/git-f4deb/cen-electronic/device/pll/pllDeviceInterface.h</file>
+            <file>file:/D:/electronique/git-f4deb/cen-electronic/device/silec/silecDeviceInterface.h</file>
+            <file>file:/D:/electronique/git-f4deb/cen-electronic/common/silec/silec.h</file>
+            <file>file:/D:/electronique/git-f4deb/cen-electronic/device/pll/pllDeviceInterface.c</file>
+            <file>file:/D:/electronique/git-f4deb/cen-electronic/common/pll/pll.h</file>
         </group>
     </open-files>
 </project-private>

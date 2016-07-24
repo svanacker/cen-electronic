@@ -290,3 +290,9 @@ void hd44780_writeChar(char c) {
         incLcdColumn();
     }
 }
+
+void hd44780_driveRetro(int value){
+    
+    TRIS_RETRO_LCD  = 0;    // output
+    RETRO_LCD = value;      
+}
