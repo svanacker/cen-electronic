@@ -177,6 +177,8 @@
 #include "../../drivers/eeprom/24c512.h"
 #include "../../drivers/io/pcf8574.h"
 #include "../../drivers/MPU/MPU-6050.h"
+#include "../../drivers/pll/NJ88C22.h"
+#include "../../drivers/silec/shiftUCN5895A.h"
 #include "../../drivers/test/testDriver.h"
 #include "../../drivers/system/systemDriver.h"
 #include "../../drivers/motion/motionDriver.h"
@@ -637,6 +639,9 @@ int main(void) {
     //-> Mpu
     initI2cBusConnection(&mpuI2cBusConnection, &i2cBus, MPU6050_WRITE_ADDRESS);
     initMpuMPU6050(&mpu, &mpuI2cBusConnection);
+    //->PLL
+    initI2cBusConnection(&pllI2cBusConnection, &i2cBus, NJ88C22_WRITE_ADDRESS);
+    initPllNJ88C22(&pll, &pllI2cBusConnection);
     // -> Temperature
     initI2cBusConnection(&temperatureI2cBusConnection, &i2cBus, LM75A_ADDRESS);
     initTemperatureLM75A(&temperature, &temperatureI2cBusConnection);

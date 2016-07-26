@@ -326,6 +326,9 @@
       <logicalFolder name="f3" displayName="drivers.sensor" projectFiles="true">
         <itemPath>../drivers/sensor/temperature/LM75A.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f27" displayName="drivers.silec" projectFiles="true">
+        <itemPath>../drivers/silec/shiftUCN5895A.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="drivers.sonar"
                      displayName="drivers.sonar"
                      projectFiles="true">
@@ -741,6 +744,9 @@
       <logicalFolder name="f3" displayName="drivers.sensor" projectFiles="true">
         <itemPath>../drivers/sensor/temperature/LM75A.c</itemPath>
       </logicalFolder>
+      <logicalFolder name="f27" displayName="drivers.silec" projectFiles="true">
+        <itemPath>../drivers/silec/shiftUCN5895A.c</itemPath>
+      </logicalFolder>
       <logicalFolder name="drivers.sonar"
                      displayName="drivers.sonar"
                      projectFiles="true">
@@ -1007,6 +1013,7 @@
         <property key="UART6" value="true"/>
         <property key="USB" value="true"/>
         <property key="debugoptions.useswbreakpoints" value="false"/>
+        <property key="firmware.download.all" value="false"/>
         <property key="hwtoolclock.frcindebug" value="false"/>
         <property key="memories.aux" value="false"/>
         <property key="memories.bootflash" value="false"/>
