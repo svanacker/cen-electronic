@@ -561,6 +561,17 @@ bool mainBoardWaitForInstruction(StartMatch* startMatchParam) {
     return true;
 }
 
+void testrobotConfig (void){
+    unsigned int valueConfig = getConfigValue();
+    valueConfig = valueConfig & 0x2000;
+        if (valueConfig) {
+            retroLCD(1);
+        }
+        else {
+            retroLCD(0);
+        }
+}
+
 int main(void) {
     setBoardName("MAIN BOARD");
     setRobotMustStop(false);
@@ -640,8 +651,11 @@ int main(void) {
     initI2cBusConnection(&mpuI2cBusConnection, &i2cBus, MPU6050_WRITE_ADDRESS);
     initMpuMPU6050(&mpu, &mpuI2cBusConnection);
     //->PLL
-    initI2cBusConnection(&pllI2cBusConnection, &i2cBus, NJ88C22_WRITE_ADDRESS);
-    initPllNJ88C22(&pll, &pllI2cBusConnection);
+    // initI2cBusConnection(&pllI2cBusConnection, &i2cBus, NJ88C22_WRITE_ADDRESS);
+    //initPllNJ88C22(&pll, &pllI2cBusConnection);
+    //->SILEC
+    initI2cBusConnection(&silecI2cBusConnection, &i2cBus, SHIFTUCN5895_WRITE_ADDRESS);
+    initSHIFTUCN5895(&silec, &silecI2cBusConnection);
     // -> Temperature
     initI2cBusConnection(&temperatureI2cBusConnection, &i2cBus, LM75A_ADDRESS);
     initTemperatureLM75A(&temperature, &temperatureI2cBusConnection);
@@ -659,7 +673,6 @@ int main(void) {
     startTimerList();
 
     loopUntilStart(&startMatch);
-
     counter = 1;
 
     clearBuffer(&mechanicalBoard2InputBuffer);
@@ -668,8 +681,8 @@ int main(void) {
 
     while (1) {
         if (!mainBoardWaitForInstruction(&startMatch)) {
-            break;
-        }
+            break;         
+        }   
     }
 
     showEnd(getAlwaysOutputStreamLogger());

@@ -48,6 +48,7 @@ void saveMatchPositionForColor(StartMatch* startMatch, RobotPosition* robotPosit
 }
 
 
+
 void loopUntilStart(StartMatch* startMatch) {
     if (startMatch == NULL) {
         return;
@@ -55,6 +56,9 @@ void loopUntilStart(StartMatch* startMatch) {
     appendString(getAlwaysOutputStreamLogger(), "WAIT FOR START ...");
     while (startMatch->isMatchStartedFunction(startMatch)) {
         startMatch->loopUntilStartHandleFunction(startMatch);
+        testrobotConfig();
+        
+        
     }
     appendString(getAlwaysOutputStreamLogger(), "OK\n");
 }

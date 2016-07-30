@@ -12,10 +12,9 @@
 #define FCOMP_OL1_PLL 10   //10KHz
 #define DIV_P 64           //diviseur par 64
 
-
-
 #define SHIFTUCN5895_WRITE_ADDRESS       PCF8574_ADDRESS_6
 #define SHIFTUCN5895_READ_ADDRESS        SHIFTUCN5895_WRITE_ADDRESS + 1
+
 
 /** Setup the SHIFTUCN5895
  * @param silec a pointer on the silec structure.

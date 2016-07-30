@@ -9,10 +9,13 @@
  * Universal SILEC definition.
  */
 typedef struct {
-    INT32 REGA;
-    INT32 REGM;
-    INT32 REGR;
-    INT32 silecFrequency;
+    int line0;
+    int line1;
+    int line2;
+    int line3;
+    int line4;
+    int line5;
+    int line6;
 } SilecData;
 
 // forward declaration

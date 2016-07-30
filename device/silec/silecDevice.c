@@ -39,7 +39,6 @@ void deviceSilecHandleRawData(char header, InputStream* inputStream, OutputStrea
     _deviceSilecCheckInitialized();
     if (header == WRITE_FREQUENCY_SILEC) {     
         SilecData* silecData = &(silec->silecData);
-
         ackCommand(outputStream, SILEC_DEVICE_HEADER, WRITE_FREQUENCY_SILEC);
     }
 }

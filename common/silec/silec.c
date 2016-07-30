@@ -10,7 +10,7 @@
 
 void printSilec(OutputStream* outputStream, Silec* silec) {
     SilecData* silecData = &(silec->silecData);
-    appendHex4(outputStream, silecData->REGA);
+    appendHex4(outputStream, silecData->line1);
 }
 
 void initSilec(Silec* silec, 
