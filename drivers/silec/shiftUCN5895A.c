@@ -368,210 +368,66 @@ void _writeUCN5895(Silec* silec,int row,int *ramAddress) {
     E1_HC237 = 0;
 }
 
-void writeCharSilec(Silec* silec,int data){
+void writeCharSilec(Silec* silec,char *text){
     
     // variable initialisation
     int i;
+    int j;
     int value = 0;
     char caractere;
     
-    caractere = 'E';
-    for (i = 0; i <7; i++){
-        int octet = 0;
-        value = CGROM_7x5 [caractere] [0] & (0x01<<i);
-        value = value >>i;
-        octet = octet << 1;
-        octet = octet | value;
-        value = CGROM_7x5 [caractere] [1] & (0x01<<i);
-        value = value >>i;
-        octet = octet << 1;
-        octet = octet | value;
-        value = CGROM_7x5 [caractere] [2] & (0x01<<i);
-        value = value >>i;
-        octet = octet << 1;
-        octet = octet | value;
-        value = CGROM_7x5 [caractere] [3] & (0x01<<i);
-        value = value >>i;
-        octet = octet << 1;
-        octet = octet | value;
-        value = CGROM_7x5 [caractere] [4] & (0x01<<i);
-        value = value >>i;
-        octet = octet << 1;
-        octet = octet | value;
-        value = CGROM_7x5 [caractere] [5] & (0x01<<i);
-        value = value >>i;
-        octet = octet << 1;
-        octet = octet | value;
-        //value = CGROM_7x5 [caractere] [6] & (0x01<<i);
-        //value = value >>i;
-        //octet = octet << 1;
+    //char *text = "FUDOSHINKAN";
+    char *texte = text;
+    for (j = (strlen(text)); j >0 ; j--){ 
+        
+                        caractere = *texte;
+                        texte++;
+                        for (i = 0; i <7; i++){
+                            int octet = 0;
+                            value = CGROM_7x5 [caractere] [0] & (0x01<<i);
+                            value = value >>i;
+                            octet = octet << 1;
+                            octet = octet | value;
+                            value = CGROM_7x5 [caractere] [1] & (0x01<<i);
+                            value = value >>i;
+                            octet = octet << 1;
+                            octet = octet | value;
+                            value = CGROM_7x5 [caractere] [2] & (0x01<<i);
+                            value = value >>i;
+                            octet = octet << 1;
+                            octet = octet | value;
+                            value = CGROM_7x5 [caractere] [3] & (0x01<<i);
+                            value = value >>i;
+                            octet = octet << 1;
+                            octet = octet | value;
+                            value = CGROM_7x5 [caractere] [4] & (0x01<<i);
+                            value = value >>i;
+                            octet = octet << 1;
+                            octet = octet | value;
+                            value = CGROM_7x5 [caractere] [5] & (0x01<<i);
+                            value = value >>i;
+                            octet = octet << 1;
+                            octet = octet | value;
+                            //value = CGROM_7x5 [caractere] [6] & (0x01<<i);
+                            //value = value >>i;
+                            //octet = octet << 1;
 
-        CGRAM [0][i] = octet ;      
-    }  
-    
-    caractere = 'N';
-    for (i = 0; i <7; i++){
-        int octet = 0;
-        value = CGROM_7x5 [caractere] [0] & (0x01<<i);
-        value = value >>i;
-        octet = octet << 1;
-        octet = octet | value;
-        value = CGROM_7x5 [caractere] [1] & (0x01<<i);
-        value = value >>i;
-        octet = octet << 1;
-        octet = octet | value;
-        value = CGROM_7x5 [caractere] [2] & (0x01<<i);
-        value = value >>i;
-        octet = octet << 1;
-        octet = octet | value;
-        value = CGROM_7x5 [caractere] [3] & (0x01<<i);
-        value = value >>i;
-        octet = octet << 1;
-        octet = octet | value;
-        value = CGROM_7x5 [caractere] [4] & (0x01<<i);
-        value = value >>i;
-        octet = octet << 1;
-        octet = octet | value;
-        value = CGROM_7x5 [caractere] [5] & (0x01<<i);
-        value = value >>i;
-        octet = octet << 1;
-        octet = octet | value;
-
-
-        CGRAM [1][i] = octet ;      
-    }  
-    
-    caractere = 'E';
-    for (i = 0; i <7; i++){
-        int octet = 0;
-        value = CGROM_7x5 [caractere] [0] & (0x01<<i);
-        value = value >>i;
-        octet = octet << 1;
-        octet = octet | value;
-        value = CGROM_7x5 [caractere] [1] & (0x01<<i);
-        value = value >>i;
-        octet = octet << 1;
-        octet = octet | value;
-        value = CGROM_7x5 [caractere] [2] & (0x01<<i);
-        value = value >>i;
-        octet = octet << 1;
-        octet = octet | value;
-        value = CGROM_7x5 [caractere] [3] & (0x01<<i);
-        value = value >>i;
-        octet = octet << 1;
-        octet = octet | value;
-        value = CGROM_7x5 [caractere] [4] & (0x01<<i);
-        value = value >>i;
-        octet = octet << 1;
-        octet = octet | value;
-        value = CGROM_7x5 [caractere] [5] & (0x01<<i);
-        value = value >>i;
-        octet = octet << 1;
-        octet = octet | value;
-
-        CGRAM [2][i] = octet ;      
-    }  
-    
-    caractere = 'L';
-    for (i = 0; i <7; i++){
-        int octet = 0;
-        value = CGROM_7x5 [caractere] [0] & (0x01<<i);
-        value = value >>i;
-        octet = octet << 1;
-        octet = octet | value;
-        value = CGROM_7x5 [caractere] [1] & (0x01<<i);
-        value = value >>i;
-        octet = octet << 1;
-        octet = octet | value;
-        value = CGROM_7x5 [caractere] [2] & (0x01<<i);
-        value = value >>i;
-        octet = octet << 1;
-        octet = octet | value;
-        value = CGROM_7x5 [caractere] [3] & (0x01<<i);
-        value = value >>i;
-        octet = octet << 1;
-        octet = octet | value;
-        value = CGROM_7x5 [caractere] [4] & (0x01<<i);
-        value = value >>i;
-        octet = octet << 1;
-        octet = octet | value;
-        value = CGROM_7x5 [caractere] [5] & (0x01<<i);
-        value = value >>i;
-        octet = octet << 1;
-        octet = octet | value;
-
-        CGRAM [3][i] = octet ;      
-    }  
-    
-    caractere = 'O';
-    for (i = 0; i <7; i++){
-        int octet = 0;
-        value = CGROM_7x5 [caractere] [0] & (0x01<<i);
-        value = value >>i;
-        octet = octet << 1;
-        octet = octet | value;
-        value = CGROM_7x5 [caractere] [1] & (0x01<<i);
-        value = value >>i;
-        octet = octet << 1;
-        octet = octet | value;
-        value = CGROM_7x5 [caractere] [2] & (0x01<<i);
-        value = value >>i;
-        octet = octet << 1;
-        octet = octet | value;
-        value = CGROM_7x5 [caractere] [3] & (0x01<<i);
-        value = value >>i;
-        octet = octet << 1;
-        octet = octet | value;
-        value = CGROM_7x5 [caractere] [4] & (0x01<<i);
-        value = value >>i;
-        octet = octet << 1;
-        octet = octet | value;
-        value = CGROM_7x5 [caractere] [5] & (0x01<<i);
-        value = value >>i;
-        octet = octet << 1;
-        octet = octet | value;
-
-        CGRAM [4][i] = octet ;      
-    }  
-    
-    caractere = 'S';
-    for (i = 0; i <7; i++){
-        int octet = 0;
-        value = CGROM_7x5 [caractere] [0] & (0x01<<i);
-        value = value >>i;
-        octet = octet << 1;
-        octet = octet | value;
-        value = CGROM_7x5 [caractere] [1] & (0x01<<i);
-        value = value >>i;
-        octet = octet << 1;
-        octet = octet | value;
-        value = CGROM_7x5 [caractere] [2] & (0x01<<i);
-        value = value >>i;
-        octet = octet << 1;
-        octet = octet | value;
-        value = CGROM_7x5 [caractere] [3] & (0x01<<i);
-        value = value >>i;
-        octet = octet << 1;
-        octet = octet | value;
-        value = CGROM_7x5 [caractere] [4] & (0x01<<i);
-        value = value >>i;
-        octet = octet << 1;
-        octet = octet | value;
-        value = CGROM_7x5 [caractere] [5] & (0x01<<i);
-        value = value >>i;
-        octet = octet << 1;
-        octet = octet | value;
-
-        CGRAM [5][i] = octet ;      
-    }  
+                            CGRAM [j-1][i] = octet ;      
+                        }  
+    }                        
     
     int *a;
     a = &CGRAM;
-    while (1){
+    j= 6000; //10secondes
+    while (j>0){
         for (i = 0; i < 7; i++ ){
             _writeUCN5895(silec, i,a + i);  
+            j--;
+            
         }
+        
     }    
+    E1_HC237 = 1;
 }
 
 void initSHIFTUCN5895(Silec* silec, I2cBusConnection* i2cBusConnection) {
@@ -580,5 +436,9 @@ void initSHIFTUCN5895(Silec* silec, I2cBusConnection* i2cBusConnection) {
             _writeUCN5895,            
             (int*) i2cBusConnection);  
     int data = 0;
-    writeCharSilec(silec,data);
+    char *text = "KARATE 19H-20H30";
+    writeCharSilec(silec,text);
+    
+    *text = "KARATE 19H-20H30";
+    writeCharSilec(silec,text);
 }
