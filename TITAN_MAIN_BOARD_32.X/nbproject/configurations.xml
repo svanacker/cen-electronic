@@ -861,7 +861,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="C:\Program Files (x86)\Microchip\xc32\v1.40\lib\gcc\pic32mx\4.8.3\include;C:\Program Files (x86)\Microchip\xc32\v1.40\pic32-libs\peripheral;C:\Program Files (x86)\Microchip\xc32\v1.40\pic32mx\include\lega-c;../common/serial;../device;../common/io;../common;../common/log;../common/math;../common/i2c;../common/timer;../common/cmd;../drivers;../drivers/dispatcher;../drivers/lcd;../device/system;../drivers/test;../device/test;../device/dispatcher;../device/servo;../drivers/motor;../robot;../robot/match;../device/lcd;../device/motor;../main/motorboard;../robot/config;../common/i2c/master;../device/sonar;../drivers/sonar;../drivers/motion;../drivers/system;../drivers/io;../device/motion/simple;../device/motion/position;../device/motion/pid;../device/beacon;../motion/simple;../main/meca2;../device/adc;../common/error;../robot/2012;../main/mainBoard;../device/strategy;../drivers/strategy;../common/2d;../drivers/beacon;../robot/opponent;../common/delay;../common/serial/32;../common/setup/32;../common/delay/32;../device/airconditioning;../main/airconditioning;../drivers/clock;../device/i2c/master;../common/clock;."/>
+                  value="C:\Program Files (x86)\Microchip\xc32\v1.40\pic32mx\include\machine;C:\Program Files (x86)\Microchip\xc32\v1.40\lib\gcc\pic32mx\4.8.3\include;C:\Program Files (x86)\Microchip\xc32\v1.40\pic32-libs\peripheral;C:\Program Files (x86)\Microchip\xc32\v1.40\pic32mx\include\lega-c;../common/serial;../device;../common/io;../common;../common/log;../common/math;../common/i2c;../common/timer;../common/cmd;../drivers;../drivers/dispatcher;../drivers/lcd;../device/system;../drivers/test;../device/test;../device/dispatcher;../device/servo;../drivers/motor;../robot;../robot/match;../device/lcd;../device/motor;../main/motorboard;../robot/config;../common/i2c/master;../device/sonar;../drivers/sonar;../drivers/motion;../drivers/system;../drivers/io;../device/motion/simple;../device/motion/position;../device/motion/pid;../device/beacon;../motion/simple;../main/meca2;../device/adc;../common/error;../robot/2012;../main/mainBoard;../device/strategy;../drivers/strategy;../common/2d;../drivers/beacon;../robot/opponent;../common/delay;../common/serial/32;../common/setup/32;../common/delay/32;../device/airconditioning;../main/airconditioning;../drivers/clock;../device/i2c/master;../common/clock;."/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="false"/>
@@ -1013,7 +1013,6 @@
         <property key="UART6" value="true"/>
         <property key="USB" value="true"/>
         <property key="debugoptions.useswbreakpoints" value="false"/>
-        <property key="firmware.download.all" value="false"/>
         <property key="hwtoolclock.frcindebug" value="false"/>
         <property key="memories.aux" value="false"/>
         <property key="memories.bootflash" value="false"/>
