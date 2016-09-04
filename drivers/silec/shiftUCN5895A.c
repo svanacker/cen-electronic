@@ -368,7 +368,7 @@ void _writeUCN5895(Silec* silec,int row,int *ramAddress) {
     E1_HC237 = 0;
 }
 
-void writeCharSilec(Silec* silec,char *text){
+void writeCharSilec(Silec* silec,char *text, int tempo){
     
     // variable initialisation
     int i;
@@ -418,27 +418,66 @@ void writeCharSilec(Silec* silec,char *text){
     
     int *a;
     a = &CGRAM;
-    j= 6000; //10secondes
+    j= tempo;
+; //10secondes
     while (j>0){
         for (i = 0; i < 7; i++ ){
             _writeUCN5895(silec, i,a + i);  
             j--;
             
         }
-        
     }    
     E1_HC237 = 1;
 }
 
 void initSHIFTUCN5895(Silec* silec, I2cBusConnection* i2cBusConnection) {
+    // variable initialisation
+    int tempo =0;
+
+    
     initSilec(silec, 
             _setupUCN5895,
             _writeUCN5895,            
             (int*) i2cBusConnection);  
-    int data = 0;
-    char *text = "KARATE 19H-20H30";
-    writeCharSilec(silec,text);
-    
-    *text = "KARATE 19H-20H30";
-    writeCharSilec(silec,text);
+    while (1){
+        tempo = 600;
+        char *text = "KARATE   Adultes";
+        writeCharSilec(silec,text,tempo);
+
+        tempo = 1200;
+        text = "LUNDI  19H-20H30";
+        writeCharSilec(silec,text,tempo);
+        
+        tempo = 400;
+        text = "MERCREDI 18H-19H";
+        writeCharSilec(silec,text,tempo);
+        
+        tempo = 1000;
+        text = "RCREDI 18H-19H30";
+        writeCharSilec(silec,text,tempo);
+        
+        tempo = 1200;
+        text = "JEUDI  19H-20H30";
+        writeCharSilec(silec,text,tempo);
+        
+        tempo = 2000;
+        text = "                ";
+        writeCharSilec(silec,text,tempo);
+        
+        tempo = 1200;
+        text = "KARATE   Enfants";
+        writeCharSilec(silec,text,tempo);
+        
+        tempo = 1200;
+        text = "MARDI  18H-19H30";
+        writeCharSilec(silec,text,tempo);
+        
+        tempo = 1200;
+        text = "JEUDI  18H-19H30";
+        writeCharSilec(silec,text,tempo);
+        
+        tempo = 2000;
+        text = "                ";
+        writeCharSilec(silec,text,tempo);
+    }
 }
