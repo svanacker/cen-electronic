@@ -1,5 +1,5 @@
-#include <peripheral/legacy/i2c_legacy.h>
-#include <peripheral/i2c.h>
+#define _SUPPRESS_PLIB_WARNING
+#include <plib.h>
 
 #include <stdbool.h>
 

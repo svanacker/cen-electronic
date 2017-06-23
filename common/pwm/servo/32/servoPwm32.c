@@ -1,5 +1,7 @@
 #include <p32xxxx.h>
 #include "../servoPwm.h"
+
+#define _SUPPRESS_PLIB_WARNING
 #include <plib.h>
 
 /** For 50 Hz operation. */

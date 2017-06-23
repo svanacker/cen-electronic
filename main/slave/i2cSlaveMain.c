@@ -1,5 +1,6 @@
 #include <p30Fxxxx.h>
 
+#define _SUPPRESS_PLIB_WARNING
 #include <i2c.h>
 
 #include "../../common/delay/delay30F.h"

@@ -1,3 +1,4 @@
+#define _SUPPRESS_PLIB_WARNING
 #include <plib.h>
 
 #include "../serial.h"

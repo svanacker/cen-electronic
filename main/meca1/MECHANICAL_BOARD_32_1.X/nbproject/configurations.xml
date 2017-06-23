@@ -1,0 +1,664 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="62">
+  <logicalFolder name="root" displayName="root" projectFiles="true">
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
+      <logicalFolder name="common" displayName="common" projectFiles="true">
+        <itemPath>../../../common/commons.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="common.clock"
+                     displayName="common.clock"
+                     projectFiles="true">
+        <itemPath>../../../common/clock/clock.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="common.cmd" displayName="common.cmd" projectFiles="true">
+        <itemPath>../../../common/cmd/commonCommand.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="common.delay"
+                     displayName="common.delay"
+                     projectFiles="true">
+        <itemPath>../../../common/delay/cenDelay.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="common.delay.32"
+                     displayName="common.delay.32"
+                     projectFiles="true">
+        <itemPath>../../../common/delay/32/cenDelay32.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="common.eeprom"
+                     displayName="common.eeprom"
+                     projectFiles="true">
+        <itemPath>../../../common/eeprom/eeprom.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="common.error"
+                     displayName="common.error"
+                     projectFiles="true">
+        <itemPath>../../../common/error/error.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="common.i2c" displayName="common.i2c" projectFiles="true">
+        <itemPath>../../../common/i2c/i2cConstants.h</itemPath>
+        <itemPath>../../../common/i2c/i2cDebug.h</itemPath>
+        <itemPath>../../../common/i2c/i2cCommon.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="common.i2c.32"
+                     displayName="common.i2c.32"
+                     projectFiles="true">
+        <itemPath>../../../common/i2c/32/i2cCommon32.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="common.i2c.master"
+                     displayName="common.i2c.master"
+                     projectFiles="true">
+        <itemPath>../../../common/i2c/master/i2cMaster.h</itemPath>
+        <itemPath>../../../common/i2c/master/i2cMasterSetup.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="common.i2c.slave"
+                     displayName="common.i2c.slave"
+                     projectFiles="true">
+        <itemPath>../../../common/i2c/slave/i2cSlaveSetup.h</itemPath>
+        <itemPath>../../../common/i2c/slave/i2cSlave.h</itemPath>
+        <itemPath>../../../common/i2c/slave/i2cSlaveLink.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="common.io" displayName="common.io" projectFiles="true">
+        <itemPath>../../../common/io/buffer.h</itemPath>
+        <itemPath>../../../common/io/cenIO.h</itemPath>
+        <itemPath>../../../common/io/inputStream.h</itemPath>
+        <itemPath>../../../common/io/outputStream.h</itemPath>
+        <itemPath>../../../common/io/printWriter.h</itemPath>
+        <itemPath>../../../common/io/filter.h</itemPath>
+        <itemPath>../../../common/io/ioUtils.h</itemPath>
+        <itemPath>../../../common/io/reader.h</itemPath>
+        <itemPath>../../../common/io/streamLink.h</itemPath>
+        <itemPath>../../../common/io/pin.h</itemPath>
+        <itemPath>../../../common/io/binaryPrintWriter.h</itemPath>
+        <itemPath>../../../common/io/binaryWriter.h</itemPath>
+        <itemPath>../../../common/io/nullOutputStream.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="common.log" displayName="common.log" projectFiles="true">
+        <itemPath>../../../common/log/logger.h</itemPath>
+        <itemPath>../../../common/log/logHandler.h</itemPath>
+        <itemPath>../../../common/log/logHandlerList.h</itemPath>
+        <itemPath>../../../common/log/logLevel.h</itemPath>
+        <itemPath>../../../common/log/loggerDebug.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="common.math" displayName="common.math" projectFiles="true">
+        <itemPath>../../../common/math/cenMath.h</itemPath>
+        <itemPath>../../../common/math/hexUtils.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="common.pwm" displayName="common.pwm" projectFiles="true">
+        <itemPath>../../../common/pwm/pwmPic.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="common.pwm.motor"
+                     displayName="common.pwm.motor"
+                     projectFiles="true">
+        <itemPath>../../../common/pwm/motor/dualHBridgeMotorPwm.h</itemPath>
+        <itemPath>../../../common/pwm/motor/motorPwm.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="common.pwm.servo"
+                     displayName="common.pwm.servo"
+                     projectFiles="true">
+        <itemPath>../../../common/pwm/servo/servoPwm.h</itemPath>
+        <itemPath>../../../common/pwm/servo/servoPwmDebug.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="common.serial"
+                     displayName="common.serial"
+                     projectFiles="true">
+        <itemPath>../../../common/serial/serial.h</itemPath>
+        <itemPath>../../../common/serial/serialLink.h</itemPath>
+        <itemPath>../../../common/serial/serialOutputStream.h</itemPath>
+        <itemPath>../../../common/serial/serialInputInterrupt.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="common.serial.32"
+                     displayName="common.serial.32"
+                     projectFiles="true">
+        <itemPath>../../../common/serial/32/serial32.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="common.setup"
+                     displayName="common.setup"
+                     projectFiles="true">
+      </logicalFolder>
+      <logicalFolder name="common.setup.32"
+                     displayName="common.setup.32"
+                     projectFiles="true">
+        <itemPath>../../../common/setup/32/clockConstants32.h</itemPath>
+        <itemPath>../../../common/setup/32/picSetup32.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="common.system"
+                     displayName="common.system"
+                     projectFiles="true">
+        <itemPath>../../../common/system/system.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="common.timer"
+                     displayName="common.timer"
+                     projectFiles="true">
+        <itemPath>../../../common/timer/cenTimer.h</itemPath>
+        <itemPath>../../../common/timer/timerList.h</itemPath>
+        <itemPath>../../../common/timer/timerConstants.h</itemPath>
+        <itemPath>../../../common/timer/timerInterrupt.h</itemPath>
+        <itemPath>../../../common/timer/timerSetup.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="device" displayName="device" projectFiles="true">
+        <itemPath>../../../device/device.h</itemPath>
+        <itemPath>../../../device/deviceList.h</itemPath>
+        <itemPath>../../../device/deviceDescriptor.h</itemPath>
+        <itemPath>../../../device/deviceUsage.h</itemPath>
+        <itemPath>../../../device/deviceInterface.h</itemPath>
+        <itemPath>../../../device/transmitMode.h</itemPath>
+        <itemPath>../../../device/deviceDebug.h</itemPath>
+        <itemPath>../../../device/deviceConstants.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="device.clock"
+                     displayName="device.clock"
+                     projectFiles="true">
+        <itemPath>../../../device/clock/clockDevice.h</itemPath>
+        <itemPath>../../../device/clock/clockDeviceInterface.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="device.dispatcher"
+                     displayName="device.dispatcher"
+                     projectFiles="true">
+        <itemPath>../../../device/dispatcher/deviceDataDispatcher.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="device.motor"
+                     displayName="device.motor"
+                     projectFiles="true">
+        <itemPath>../../../device/motor/pwmMotorDevice.h</itemPath>
+        <itemPath>../../../device/motor/pwmMotorDeviceInterface.h</itemPath>
+        <itemPath>../../../device/motor/pwmMotor.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="device.serial"
+                     displayName="device.serial"
+                     projectFiles="true">
+        <itemPath>../../../device/serial/serialDebugDeviceInterface.h</itemPath>
+        <itemPath>../../../device/serial/serialDebugDevice.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="device.servo"
+                     displayName="device.servo"
+                     projectFiles="true">
+        <itemPath>../../../device/servo/servoDevice.h</itemPath>
+        <itemPath>../../../device/servo/servoDeviceInterface.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="device.system"
+                     displayName="device.system"
+                     projectFiles="true">
+        <itemPath>../../../device/system/systemDevice.h</itemPath>
+        <itemPath>../../../device/system/systemDeviceInterface.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="device.test" displayName="device.test" projectFiles="true">
+        <itemPath>../../../device/test/testDevice.h</itemPath>
+        <itemPath>../../../device/test/testDeviceInterface.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="device.timer"
+                     displayName="device.timer"
+                     projectFiles="true">
+        <itemPath>../../../device/timer/timerDevice.h</itemPath>
+        <itemPath>../../../device/timer/timerDeviceInterface.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="drivers" displayName="drivers" projectFiles="true">
+        <itemPath>../../../drivers/driverStreamListener.h</itemPath>
+        <itemPath>../../../drivers/driver.h</itemPath>
+        <itemPath>../../../drivers/driverList.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="drivers.clock"
+                     displayName="drivers.clock"
+                     projectFiles="true">
+        <itemPath>../../../drivers/clock/softClock.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="drivers.dispatcher"
+                     displayName="drivers.dispatcher"
+                     projectFiles="true">
+        <itemPath>../../../drivers/dispatcher/driverDataDispatcher.h</itemPath>
+        <itemPath>../../../drivers/dispatcher/driverDataDispatcherList.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="drivers.eeprom"
+                     displayName="drivers.eeprom"
+                     projectFiles="true">
+        <itemPath>../../../drivers/eeprom/24c512.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="main" displayName="main" projectFiles="true">
+        <itemPath>../mechanicalBoard32_1.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="robot" displayName="robot" projectFiles="true">
+      </logicalFolder>
+    </logicalFolder>
+    <logicalFolder name="LinkerScript"
+                   displayName="Linker Files"
+                   projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
+      <logicalFolder name="common.clock"
+                     displayName="common.clock"
+                     projectFiles="true">
+        <itemPath>../../../common/clock/clock.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="common.cmd" displayName="common.cmd" projectFiles="true">
+      </logicalFolder>
+      <logicalFolder name="common.delay"
+                     displayName="common.delay"
+                     projectFiles="true">
+        <itemPath>../../../common/delay/cenDelay.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="common.eeprom"
+                     displayName="common.eeprom"
+                     projectFiles="true">
+        <itemPath>../../../common/eeprom/eeprom.c</itemPath>
+        <itemPath>../../../drivers/eeprom/24c512.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="common.error"
+                     displayName="common.error"
+                     projectFiles="true">
+        <itemPath>../../../common/error/error.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="common.i2c" displayName="common.i2c" projectFiles="true">
+        <itemPath>../../../common/i2c/i2cDebug.c</itemPath>
+        <itemPath>../../../common/i2c/i2cCommon.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="common.i2c.32"
+                     displayName="common.i2c.32"
+                     projectFiles="true">
+        <itemPath>../../../common/i2c/32/i2cCommon32.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="common.i2c.master"
+                     displayName="common.i2c.master"
+                     projectFiles="true">
+        <itemPath>../../../common/i2c/master/i2cMaster.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="common.i2c.master.32"
+                     displayName="common.i2c.master.32"
+                     projectFiles="true">
+        <itemPath>../../../common/i2c/master/32/i2cMaster32.c</itemPath>
+        <itemPath>../../../common/i2c/master/32/i2cMasterSetup32.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="common.i2c.slave"
+                     displayName="common.i2c.slave"
+                     projectFiles="true">
+        <itemPath>../../../common/i2c/slave/i2cSlaveLink.c</itemPath>
+        <itemPath>../../../common/i2c/slave/i2cSlave.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="common.i2c.slave.32"
+                     displayName="common.i2c.slave.32"
+                     projectFiles="true">
+        <itemPath>../../../common/i2c/slave/32/i2cSlave32.c</itemPath>
+        <itemPath>../../../common/i2c/slave/32/i2cSlaveInterrupt32.c</itemPath>
+        <itemPath>../../../common/i2c/slave/32/i2cSlaveSetup32.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="common.io" displayName="common.io" projectFiles="true">
+        <itemPath>../../../common/io/buffer.c</itemPath>
+        <itemPath>../../../common/io/inputStream.c</itemPath>
+        <itemPath>../../../common/io/outputStream.c</itemPath>
+        <itemPath>../../../common/io/printWriter.c</itemPath>
+        <itemPath>../../../common/io/filter.c</itemPath>
+        <itemPath>../../../common/io/ioUtils.c</itemPath>
+        <itemPath>../../../common/io/reader.c</itemPath>
+        <itemPath>../../../common/io/streamLink.c</itemPath>
+        <itemPath>../../../common/io/pin.c</itemPath>
+        <itemPath>../../../common/io/binaryPrintWriter.c</itemPath>
+        <itemPath>../../../common/io/nullOutputStream.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="common.log" displayName="common.log" projectFiles="true">
+        <itemPath>../../../common/log/logger.c</itemPath>
+        <itemPath>../../../common/log/logHandler.c</itemPath>
+        <itemPath>../../../common/log/logHandlerList.c</itemPath>
+        <itemPath>../../../common/log/logLevel.c</itemPath>
+        <itemPath>../../../common/log/loggerDebug.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="common.math" displayName="common.math" projectFiles="true">
+        <itemPath>../../../common/math/cenMath.c</itemPath>
+        <itemPath>../../../common/math/hexUtils.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="common.pwm" displayName="common.pwm" projectFiles="true">
+      </logicalFolder>
+      <logicalFolder name="common.pwm.32"
+                     displayName="common.pwm.32"
+                     projectFiles="true">
+        <itemPath>../../../common/pwm/32/pwmPic32.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="common.pwm.motor"
+                     displayName="common.pwm.motor"
+                     projectFiles="true">
+        <itemPath>../../../common/pwm/motor/motorPwm.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="common.pwm.motor.32"
+                     displayName="common.pwm.motor.32"
+                     projectFiles="true">
+        <itemPath>../../../common/pwm/motor/32/dualHBridgeMotorPwm32.c</itemPath>
+        <itemPath>../../../common/pwm/motor/32/motorPwm32.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="common.pwm.servo"
+                     displayName="common.pwm.servo"
+                     projectFiles="true">
+        <itemPath>../../../common/pwm/servo/servoPwm.c</itemPath>
+        <itemPath>../../../common/pwm/servo/servoPwmDebug.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="common.pwm.servo.32"
+                     displayName="common.pwm.servo.32"
+                     projectFiles="true">
+        <itemPath>../../../common/pwm/servo/32/servoPwm32.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="common.serial"
+                     displayName="common.serial"
+                     projectFiles="true">
+        <itemPath>../../../common/serial/serialLink.c</itemPath>
+        <itemPath>../../../common/serial/serialOutputStream.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="common.serial.32"
+                     displayName="common.serial.32"
+                     projectFiles="true">
+        <itemPath>../../../common/serial/32/serial32.c</itemPath>
+        <itemPath>../../../common/serial/32/serialInputInterrupt32.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="common.system"
+                     displayName="common.system"
+                     projectFiles="true">
+        <itemPath>../../../common/system/system.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="common.timer"
+                     displayName="common.timer"
+                     projectFiles="true">
+        <itemPath>../../../common/timer/cenTimer.c</itemPath>
+        <itemPath>../../../common/timer/timerList.c</itemPath>
+        <itemPath>../../../common/timer/timerDebug.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="common.timer.32"
+                     displayName="common.timer.32"
+                     projectFiles="true">
+        <itemPath>../../../common/timer/32/timerInterrupt32.c</itemPath>
+        <itemPath>../../../common/timer/32/timerSetup32.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="device" displayName="device" projectFiles="true">
+        <itemPath>../../../device/device.c</itemPath>
+        <itemPath>../../../device/deviceList.c</itemPath>
+        <itemPath>../../../device/deviceDescriptor.c</itemPath>
+        <itemPath>../../../device/deviceInterface.c</itemPath>
+        <itemPath>../../../device/deviceUsage.c</itemPath>
+        <itemPath>../../../device/transmitMode.c</itemPath>
+        <itemPath>../../../device/deviceDebug.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="device.clock"
+                     displayName="device.clock"
+                     projectFiles="true">
+        <itemPath>../../../device/clock/clockDevice.c</itemPath>
+        <itemPath>../../../device/clock/clockDeviceInterface.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="device.dispatcher"
+                     displayName="device.dispatcher"
+                     projectFiles="true">
+        <itemPath>../../../device/dispatcher/deviceDataDispatcher.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="device.motor"
+                     displayName="device.motor"
+                     projectFiles="true">
+        <itemPath>../../../device/motor/pwmMotorDevice.c</itemPath>
+        <itemPath>../../../device/motor/pwmMotorDeviceInterface.c</itemPath>
+        <itemPath>../../../device/motor/pwmMotor.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="device.serial"
+                     displayName="device.serial"
+                     projectFiles="true">
+        <itemPath>../../../device/serial/serialDebugDevice.c</itemPath>
+        <itemPath>../../../device/serial/serialDebugDeviceInterface.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="device.servo"
+                     displayName="device.servo"
+                     projectFiles="true">
+        <itemPath>../../../device/servo/servoDevice.c</itemPath>
+        <itemPath>../../../device/servo/servoDeviceInterface.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="device.system"
+                     displayName="device.system"
+                     projectFiles="true">
+        <itemPath>../../../device/system/systemDevice.c</itemPath>
+        <itemPath>../../../device/system/systemDeviceInterface.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="device.test" displayName="device.test" projectFiles="true">
+        <itemPath>../../../device/test/testDeviceInterface.c</itemPath>
+        <itemPath>../../../device/test/testDevice.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="device.timer"
+                     displayName="device.timer"
+                     projectFiles="true">
+        <itemPath>../../../device/timer/timerDevice.c</itemPath>
+        <itemPath>../../../device/timer/timerDeviceInterface.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="drivers" displayName="drivers" projectFiles="true">
+        <itemPath>../../../drivers/driverStreamListener.c</itemPath>
+        <itemPath>../../../drivers/driver.c</itemPath>
+        <itemPath>../../../drivers/driverList.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="drivers.clock"
+                     displayName="drivers.clock"
+                     projectFiles="true">
+        <itemPath>../../../drivers/clock/softClock.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="drivers.dispatcher"
+                     displayName="drivers.dispatcher"
+                     projectFiles="true">
+        <itemPath>../../../drivers/dispatcher/driverDataDispatcher.c</itemPath>
+        <itemPath>../../../drivers/dispatcher/driverDataDispatcherList.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="main" displayName="main" projectFiles="true">
+        <itemPath>../mechanicalMainBoard32_1.c</itemPath>
+      </logicalFolder>
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <sourceRootList>
+    <Elem>..</Elem>
+    <Elem>..\..\..\common\serial</Elem>
+    <Elem>..\..\..\common\pwm\servo</Elem>
+    <Elem>..\..\..\device</Elem>
+    <Elem>..\..\..\common\i2c\master\32</Elem>
+    <Elem>..\..\..\device\system</Elem>
+    <Elem>..\..\..\device\timer</Elem>
+    <Elem>..\..\..\common</Elem>
+    <Elem>..\..\..\common\io</Elem>
+    <Elem>../../..</Elem>
+    <Elem>..\..\..\common\timer</Elem>
+    <Elem>..\..\..\drivers\clock</Elem>
+    <Elem>..\..\..\device\clock</Elem>
+    <Elem>..\..\..\common\pwm</Elem>
+    <Elem>..\..\..\device\dispatcher</Elem>
+    <Elem>..\..\..\common\log</Elem>
+    <Elem>..\..\..\common\pwm\motor\32</Elem>
+    <Elem>..\..\..\common\i2c\32</Elem>
+    <Elem>..\..\..\common\pwm\motor</Elem>
+    <Elem>..\..\..\common\delay\32</Elem>
+    <Elem>..\..\..\common\i2c\master</Elem>
+    <Elem>..\..\..\common\cmd</Elem>
+    <Elem>..\..\..\drivers\dispatcher</Elem>
+    <Elem>..\..\..\common\error</Elem>
+    <Elem>..\..\..\common\setup\32</Elem>
+    <Elem>..\..\..\drivers\eeprom</Elem>
+    <Elem>..\..\..\device\serial</Elem>
+    <Elem>..\..\..\common\i2c\slave</Elem>
+    <Elem>..\..\..\common\system</Elem>
+    <Elem>..\..\..\device\servo</Elem>
+    <Elem>..\..\..\common\pwm\servo\32</Elem>
+    <Elem>..\..\..\common\serial\32</Elem>
+    <Elem>..\..\..\device\test</Elem>
+    <Elem>..\..\..\common\pwm\32</Elem>
+    <Elem>..\..\..\drivers</Elem>
+    <Elem>..\..\..\device\motor</Elem>
+    <Elem>..\..\..\common\clock</Elem>
+    <Elem>..\..\..\common\eeprom</Elem>
+    <Elem>..\..\..\common\math</Elem>
+    <Elem>..\..\..\common\i2c\slave\32</Elem>
+    <Elem>..\..\..\common\i2c</Elem>
+    <Elem>..\..\..\common\timer\32</Elem>
+    <Elem>..\..\..\common\delay</Elem>
+  </sourceRootList>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="default" type="2">
+      <toolsSet>
+        <developmentServer>localhost</developmentServer>
+        <targetDevice>PIC32MX795F512H</targetDevice>
+        <targetHeader></targetHeader>
+        <targetPluginBoard></targetPluginBoard>
+        <platformTool>ICD3PlatformTool</platformTool>
+        <languageToolchain>XC32</languageToolchain>
+        <languageToolchainVersion>1.43</languageToolchainVersion>
+        <platform>3</platform>
+      </toolsSet>
+      <compileType>
+        <linkerTool>
+          <linkerLibItems>
+          </linkerLibItems>
+        </linkerTool>
+        <archiverTool>
+        </archiverTool>
+        <loading>
+          <useAlternateLoadableFile>false</useAlternateLoadableFile>
+          <parseOnProdLoad>false</parseOnProdLoad>
+          <alternateLoadableFile></alternateLoadableFile>
+        </loading>
+        <subordinates>
+        </subordinates>
+      </compileType>
+      <makeCustomizationType>
+        <makeCustomizationPreStepEnabled>false</makeCustomizationPreStepEnabled>
+        <makeCustomizationPreStep></makeCustomizationPreStep>
+        <makeCustomizationPostStepEnabled>false</makeCustomizationPostStepEnabled>
+        <makeCustomizationPostStep></makeCustomizationPostStep>
+        <makeCustomizationPutChecksumInUserID>false</makeCustomizationPutChecksumInUserID>
+        <makeCustomizationEnableLongLines>false</makeCustomizationEnableLongLines>
+        <makeCustomizationNormalizeHexFile>false</makeCustomizationNormalizeHexFile>
+      </makeCustomizationType>
+      <C32>
+        <property key="additional-warnings" value="false"/>
+        <property key="addresss-attribute-use" value="false"/>
+        <property key="enable-app-io" value="false"/>
+        <property key="enable-omit-frame-pointer" value="false"/>
+        <property key="enable-symbols" value="true"/>
+        <property key="enable-unroll-loops" value="false"/>
+        <property key="exclude-floating-point" value="false"/>
+        <property key="extra-include-directories"
+                  value="..;..\..\..\..\..\..\..\Program Files (x86)\Microchip\MPLAB C30\include;..\..\..\common;..\..\..\common\clock;..\..\..\common\cmd;..\..\..\common\delay;..\..\..\common\delay\32;..\..\..\common\eeprom;..\..\..\common\error;..\..\..\common\i2c;..\..\..\common\i2c\32;..\..\..\common\i2c\master;..\..\..\common\i2c\slave;..\..\..\common\io;..\..\..\common\log;..\..\..\common\math;..\..\..\common\pwm;..\..\..\common\pwm\motor;..\..\..\common\pwm\servo;..\..\..\common\serial;..\..\..\common\serial\32;..\..\..\common\setup\32;..\..\..\common\system;..\..\..\common\timer;..\..\..\device;..\..\..\device\clock;..\..\..\device\dispatcher;..\..\..\device\motor;..\..\..\device\serial;..\..\..\device\servo;..\..\..\device\system;..\..\..\device\test;..\..\..\device\timer;..\..\..\drivers;..\..\..\drivers\clock;..\..\..\drivers\dispatcher;..\..\..\drivers\eeprom;;."/>
+        <property key="generate-16-bit-code" value="false"/>
+        <property key="generate-micro-compressed-code" value="false"/>
+        <property key="isolate-each-function" value="false"/>
+        <property key="make-warnings-into-errors" value="false"/>
+        <property key="optimization-level" value=""/>
+        <property key="place-data-into-section" value="false"/>
+        <property key="post-instruction-scheduling" value="default"/>
+        <property key="pre-instruction-scheduling" value="default"/>
+        <property key="preprocessor-macros" value=""/>
+        <property key="strict-ansi" value="false"/>
+        <property key="support-ansi" value="false"/>
+        <property key="toplevel-reordering" value=""/>
+        <property key="use-cci" value="false"/>
+        <property key="use-iar" value="false"/>
+        <property key="use-indirect-calls" value="false"/>
+      </C32>
+      <C32-AR>
+        <property key="additional-options-chop-files" value="false"/>
+      </C32-AR>
+      <C32-AS>
+        <property key="assembler-symbols" value=""/>
+        <property key="enable-symbols" value="false"/>
+        <property key="exclude-floating-point-library" value="false"/>
+        <property key="expand-macros" value="false"/>
+        <property key="extra-include-directories-for-assembler" value="..\..\..;;."/>
+        <property key="extra-include-directories-for-preprocessor" value=""/>
+        <property key="false-conditionals" value="false"/>
+        <property key="generate-16-bit-code" value="false"/>
+        <property key="generate-micro-compressed-code" value="false"/>
+        <property key="keep-locals" value="false"/>
+        <property key="list-assembly" value="false"/>
+        <property key="list-source" value="false"/>
+        <property key="list-symbols" value="false"/>
+        <property key="oXC32asm-list-to-file" value="false"/>
+        <property key="omit-debug-dirs" value="false"/>
+        <property key="omit-forms" value="false"/>
+        <property key="preprocessor-macros" value=""/>
+        <property key="warning-level" value=""/>
+        <appendMe value="-gdwarf-2"/>
+      </C32-AS>
+      <C32-LD>
+        <property key="additional-options-use-response-files" value="false"/>
+        <property key="allocate-dinit" value="false"/>
+        <property key="code-dinit" value="false"/>
+        <property key="ebase-addr" value=""/>
+        <property key="enable-check-sections" value="false"/>
+        <property key="exclude-floating-point-library" value="false"/>
+        <property key="exclude-standard-libraries" value="false"/>
+        <property key="extra-lib-directories"
+                  value="..\..\..\..\..\..\..\Program Files (x86)\Microchip\MPLAB C30\src\peripheral_30F_24H_33F\libs;;."/>
+        <property key="fill-flash-options-addr" value=""/>
+        <property key="fill-flash-options-const" value=""/>
+        <property key="fill-flash-options-how" value="0"/>
+        <property key="fill-flash-options-inc-const" value=""/>
+        <property key="fill-flash-options-increment" value=""/>
+        <property key="fill-flash-options-seq" value=""/>
+        <property key="fill-flash-options-what" value="0"/>
+        <property key="generate-16-bit-code" value="false"/>
+        <property key="generate-cross-reference-file" value="false"/>
+        <property key="generate-micro-compressed-code" value="false"/>
+        <property key="heap-size" value=""/>
+        <property key="input-libraries" value=""/>
+        <property key="kseg-length" value=""/>
+        <property key="kseg-origin" value=""/>
+        <property key="linker-symbols" value=""/>
+        <property key="map-file"
+                  value="&quot;${DISTDIR}/MECHANICAL_BOARD_32_1.X.${IMAGE_TYPE}.map&quot;"/>
+        <property key="no-startup-files" value="false"/>
+        <property key="oXC32ld-extra-opts" value=""/>
+        <property key="optimization-level" value=""/>
+        <property key="preprocessor-macros" value=""/>
+        <property key="remove-unused-sections" value="false"/>
+        <property key="report-memory-usage" value="false"/>
+        <property key="serial-length" value=""/>
+        <property key="serial-origin" value=""/>
+        <property key="stack-size" value=""/>
+        <property key="symbol-stripping" value=""/>
+        <property key="trace-symbols" value=""/>
+        <property key="warn-section-align" value="false"/>
+      </C32-LD>
+      <C32CPP>
+        <property key="additional-warnings" value="false"/>
+        <property key="addresss-attribute-use" value="false"/>
+        <property key="check-new" value="false"/>
+        <property key="eh-specs" value="true"/>
+        <property key="enable-app-io" value="false"/>
+        <property key="enable-omit-frame-pointer" value="false"/>
+        <property key="enable-symbols" value="true"/>
+        <property key="enable-unroll-loops" value="false"/>
+        <property key="exceptions" value="true"/>
+        <property key="exclude-floating-point" value="false"/>
+        <property key="extra-include-directories" value=""/>
+        <property key="generate-16-bit-code" value="false"/>
+        <property key="generate-micro-compressed-code" value="false"/>
+        <property key="isolate-each-function" value="false"/>
+        <property key="make-warnings-into-errors" value="false"/>
+        <property key="optimization-level" value=""/>
+        <property key="place-data-into-section" value="false"/>
+        <property key="post-instruction-scheduling" value="default"/>
+        <property key="pre-instruction-scheduling" value="default"/>
+        <property key="preprocessor-macros" value=""/>
+        <property key="rtti" value="true"/>
+        <property key="strict-ansi" value="false"/>
+        <property key="toplevel-reordering" value=""/>
+        <property key="use-cci" value="false"/>
+        <property key="use-iar" value="false"/>
+        <property key="use-indirect-calls" value="false"/>
+      </C32CPP>
+      <C32Global>
+        <property key="common-include-directories" value=""/>
+        <property key="gp-relative-option" value=""/>
+        <property key="legacy-libc" value="false"/>
+        <property key="relaxed-math" value="false"/>
+        <property key="save-temps" value="false"/>
+        <property key="wpo-lto" value="false"/>
+      </C32Global>
+      <ICD3PlatformTool>
+        <property key="tracecontrol.disablemacros" value="true"/>
+        <property key="tracecontrol.medium" value="0"/>
+        <property key="tracecontrol.select" value="0"/>
+      </ICD3PlatformTool>
+    </conf>
+  </confs>
+</configurationDescriptor>

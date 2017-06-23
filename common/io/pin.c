@@ -5,6 +5,7 @@
 #endif
 
 #ifdef PROG_32
+    #define _SUPPRESS_PLIB_WARNING
     #include <plib.h>
 #endif
 

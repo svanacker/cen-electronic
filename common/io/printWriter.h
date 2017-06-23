@@ -22,14 +22,14 @@ void append(OutputStream* outputStream, char c);
  * @param outputStream the pointer on outputStream (POO simulation)
  * @param b the bool value to write
  */
-void appendBool(OutputStream* outputStream, bool b);
+unsigned int appendBool(OutputStream* outputStream, bool b);
 
 /**
  * Append a bool value, but as string ("true" for true, "false" for false)
  * @param outputStream the pointer on outputStream (POO simulation)
  * @param b the bool value to write
  */
-void appendBoolAsString(OutputStream* outputStream, bool b);
+unsigned int appendBoolAsString(OutputStream* outputStream, bool b);
 
 /**
  * Append a separator to the outputStream.
@@ -42,7 +42,7 @@ void appendSeparator(OutputStream* outputStream);
  * @param outputStream the pointer on outputStream (POO simulation)
  * @param s a standard C String (terminated by \0)
  */
-void appendString(OutputStream* outputStream, const char* s);
+unsigned int appendString(OutputStream* outputStream, const char* s);
 
 /**
  * Append a char array with a specific length.
@@ -56,25 +56,25 @@ void appendFixedCharArray(OutputStream* outputStream, const FixedCharArray* s);
  * @param outputStream the pointer on outputStream (POO simulation)
  * @param s a standard C String (terminated by \0)
  */
-void appendStringCRLF(OutputStream* outputStream, const char* s);
+unsigned int appendStringCRLF(OutputStream* outputStream, const char* s);
 
 /**
  * Add an acknowledgement to the outputStream.
  * @param outputStream the pointer on outputStream (POO simulation)
  */
-void appendAck(OutputStream* outputStream);
+unsigned int appendAck(OutputStream* outputStream);
 
 /**
  * Write a LF to the outputStream.
  * @param outputStream the pointer on outputStream (POO simulation)
  */
-void println(OutputStream* outputStream);
+unsigned int println(OutputStream* outputStream);
 
 /**
  * Write a CRLF to the outputStream.
  * @param outputStream the pointer on outputStream (POO simulation)
  */
-void appendCRLF(OutputStream* outputStream);
+unsigned int appendCRLF(OutputStream* outputStream);
 
 // BUFFER
 
@@ -83,9 +83,7 @@ void appendCRLF(OutputStream* outputStream);
  * @param outputStream the pointer on outputStream (POO simulation)
  * @param buffer the buffer that we want to write
  */
-void printBuffer(OutputStream* outputStream, Buffer* buffer);
-
-
+unsigned int printBuffer(OutputStream* outputStream, Buffer* buffer);
 
 // --- Management of hex conversion
 

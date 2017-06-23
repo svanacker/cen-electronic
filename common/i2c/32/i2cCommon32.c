@@ -1,4 +1,6 @@
+#define _SUPPRESS_PLIB_WARNING
 #include <plib.h>
+
 #include <stdlib.h>
 #include <stdbool.h>
 

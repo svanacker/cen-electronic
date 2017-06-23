@@ -1,6 +1,7 @@
 #ifndef COMMONS_H
 #define COMMONS_H
 
+// For Visual Studio - Emulation Program
 #ifdef _MSC_VER
     #define PC_COMPILER
 #endif
@@ -21,6 +22,8 @@
         #endif
     #endif
 #endif
+
+#define _SUPPRESS_PLIB_WARNING
 
 #ifdef PROG_32
     #define QUARTZ_FREQUENCY    8000000L

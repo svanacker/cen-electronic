@@ -1,5 +1,6 @@
 #include "../../common/commons.h"
 
+#define _SUPPRESS_PLIB_WARNING
 #ifdef PROG_32
     #include <plib.h>
     #include "../../common/setup/32/picSetup32.h"

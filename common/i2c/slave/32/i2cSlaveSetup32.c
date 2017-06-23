@@ -1,7 +1,7 @@
 #include <stdbool.h>
+
+#define _SUPPRESS_PLIB_WARNING
 #include <plib.h>
-// #include <peripheral/i2c.h>
-// #include <peripheral/int.h>
 
 #include "../../../../common/setup/32/clockConstants32.h"
 

@@ -1,6 +1,7 @@
 #ifndef PIC_32F_SETUP_H
 #define PIC_32F_SETUP_H
 
+#define _SUPPRESS_PLIB_WARNING
 #include <plib.h>
 
 // Oscillator Selection Bit

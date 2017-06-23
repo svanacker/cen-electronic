@@ -1,3 +1,4 @@
+#define _SUPPRESS_PLIB_WARNING
 #include <i2c.h>
 #include <p30Fxxxx.h>
 #include <stdlib.h>

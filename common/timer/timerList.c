@@ -32,7 +32,7 @@ Timer* addTimer(int timerCode,
                 char* timerName) {
     unsigned char size = timerList.size;
 
-    if (&timerList == NULL || timerList.maxSize == 0) {
+    if (timerList.maxSize == 0) {
         writeError(TIMERS_LIST_NOT_INITIALIZED);
         return NULL;
     }

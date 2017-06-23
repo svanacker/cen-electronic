@@ -139,7 +139,7 @@ void setNextPosition(PidMotionDefinition* motionDefinition,
         float pSpeed) {
     initNextPositionVars(motionDefinition, instructionType);
 
-    PidMotion* pidMotion = getPidMotion();
+    // PidMotion* pidMotion = getPidMotion();
     MotionInstruction* localInst = &(motionDefinition->inst[instructionType]);
 
     localInst->nextPosition = pNextPosition;

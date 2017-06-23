@@ -44,7 +44,7 @@ Device* addDevice(DeviceInterface* deviceInterface,
         TransmitMode transmitMode,
         int address,
         char* addressString) {
-    if (&deviceList == NULL || deviceList.maxSize == 0) {
+    if (deviceList.maxSize == 0) {
         writeError(DEVICES_LIST_NOT_INITIALIZED);
         return NULL;
     }
@@ -84,7 +84,7 @@ Device* addLocalDevice(DeviceInterface* interface, DeviceDescriptor* descriptor)
 }
 
 Device* getDevice(int index) {
-    if (&deviceList == NULL || deviceList.maxSize == 0) {
+    if (deviceList.maxSize == 0) {
         writeError(DEVICES_LIST_NOT_INITIALIZED);
         return NULL;
     }

@@ -23,7 +23,7 @@ CompositeOutputStream* getCompositeOutputStream(OutputStream* outputStream) {
  * @private
  */
 OutputStream* getChildOutputStream(CompositeOutputStream* compositeOutputStream, int index) {
-    if (&compositeOutputStream == NULL || compositeOutputStream->maxSize == 0) {
+    if (compositeOutputStream == NULL || compositeOutputStream->maxSize == 0) {
         writeError(COMPOSITE_OUTPUT_STREAM_NOT_INITIALIZED);
         return NULL;
     }

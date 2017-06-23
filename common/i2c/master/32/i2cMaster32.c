@@ -1,5 +1,5 @@
-#include <peripheral/legacy/i2c_legacy.h>
-#include <peripheral/i2c.h>
+// FOR MPLAB.X
+#define _SUPPRESS_PLIB_WARNING
 #include <plib.h>
 
 #include "../i2cMaster.h"

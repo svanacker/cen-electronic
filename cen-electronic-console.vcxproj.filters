@@ -1548,6 +1548,9 @@
     <ClCompile Include="drivers\motion\extendedMotionDriver.c">
       <Filter>Source Files\drivers\motion</Filter>
     </ClCompile>
+    <ClCompile Include="common\io\printTableWriter.c">
+      <Filter>Source Files\common\io</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -2371,6 +2374,9 @@
     </ClInclude>
     <ClInclude Include="drivers\motion\extendedMotionDriver.h">
       <Filter>Header Files\drivers\motion</Filter>
+    </ClInclude>
+    <ClInclude Include="common\io\printTableWriter.h">
+      <Filter>Header Files\common\io</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

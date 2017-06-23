@@ -3,10 +3,14 @@
 #include "cenDelay.h"
 
 #ifdef PROG_32
-    #include "32/cenDelay32.h"
+    #define _SUPPRESS_PLIB_WARNING
+    #include <plib.h>
+#include "32/cenDelay32.h"
 #else
+    #include <timer.h>
     #include "30F/cenDelay30F.h"
 #endif
+
 
 void delayUs(void) {
     char i;

@@ -34,6 +34,6 @@ typedef int TransmitMode;
  * @param transmitMode the transmit Mode
  * @return a string describing the transmit Mode
  */
-const char* getTransmitModeAsString(TransmitMode transmitMode);
+const char* getTransmitModeAsString(const TransmitMode transmitMode);
 
 #endif

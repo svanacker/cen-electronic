@@ -14,6 +14,7 @@
     <ProjectGuid>{DCB1D86A-5AE0-4527-B347-96E0815B3D74}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>cenelectronicconsole</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -111,6 +112,7 @@
     <ClCompile Include="common\io\outputStream.c" />
     <ClCompile Include="common\io\pc\consoleInputStream.c" />
     <ClCompile Include="common\io\pc\consoleOutputStream.c" />
+    <ClCompile Include="common\io\printTableWriter.c" />
     <ClCompile Include="common\io\printWriter.c" />
     <ClCompile Include="common\io\reader.c" />
     <ClCompile Include="common\io\streamLink.c" />
@@ -373,6 +375,7 @@
     <ClInclude Include="common\io\pc\consoleInputStream.h" />
     <ClInclude Include="common\io\pc\consoleOutputStream.h" />
     <ClInclude Include="common\io\pin.h" />
+    <ClInclude Include="common\io\printTableWriter.h" />
     <ClInclude Include="common\io\printWriter.h" />
     <ClInclude Include="common\io\reader.h" />
     <ClInclude Include="common\io\stream.h" />
