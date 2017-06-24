@@ -14,15 +14,12 @@ void appendTableSeparator(OutputStream* outputStream) {
 	append(outputStream, '|');
 }
 
-unsigned int appendStringHeader(OutputStream* outputStream, char* s) {
-    if (outputStream == NULL) {
-        return 0;
-    }
+void appendStringHeader(OutputStream* outputStream, char* s, int totalLength) {
 	appendTableSeparator(outputStream);
-	append(outputStream, ' ');
-	unsigned int result = appendString(outputStream, s);
-	append(outputStream, ' ');
-	return result + 3;
+	appendSpace(outputStream);
+	unsigned int length = appendString(outputStream, s);
+	appendSpace(outputStream);
+	appendSpaces(outputStream, totalLength - length);
 }
 
 unsigned int appendRepeatedChars(OutputStream* outputStream, char c, int count) {
@@ -30,10 +27,13 @@ unsigned int appendRepeatedChars(OutputStream* outputStream, char c, int count) 
 	for (i = 0; i < count; i++) {
 		append(outputStream, c);
 	}
+	if (count < 0) {
+		return 0;
+	}
 	return count;
 }
 
-unsigned int appendRepeatedDash(OutputStream* outputStream, int count) {
+unsigned int appendDashes(OutputStream* outputStream, int count) {
 	return appendRepeatedChars(outputStream, '-', count);
 }
 
@@ -41,19 +41,29 @@ unsigned int appendSpaces(OutputStream* outputStream, int count) {
 	return appendRepeatedChars(outputStream, ' ', count);
 }
 
-void appendStringTableData(OutputStream* outputStream, const char* s, int totalLength) {
+unsigned int appendStringTableData(OutputStream* outputStream, const char* s, int columnSize) {
 	appendTableSeparator(outputStream);
-	append(outputStream, ' ');
+	appendSpace(outputStream);
 	int length = appendString(outputStream, s);
-	append(outputStream, ' ');
-	appendSpaces(outputStream, totalLength - length);
+	appendSpace(outputStream);
+	return length + appendSpaces(outputStream, columnSize - length) + 3;
 }
 
-void appendCharTableData(OutputStream* outputStream, const char c, int totalLength) {
+unsigned int appendDecTableData(OutputStream* outputStream, const value, int columnSize) {
 	appendTableSeparator(outputStream);
-	append(outputStream, ' ');
+	appendSpace(outputStream);
+	int length = appendDec(outputStream, value);
+	appendSpace(outputStream);
+	return length + appendSpaces(outputStream, columnSize - length) + 3;
+}
+
+unsigned int appendCharTableData(OutputStream* outputStream, const char c, int columnSize) {
+	appendTableSeparator(outputStream);
+	appendSpace(outputStream);
 	append(outputStream, c);
-	appendSpaces(outputStream, totalLength - 1);
+	appendSpace(outputStream);
+	// lenght of char is equal to 1
+	return appendSpaces(outputStream, columnSize - 1) + 4;
 }
 
 

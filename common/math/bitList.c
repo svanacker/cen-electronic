@@ -120,8 +120,8 @@ void printBitList(OutputStream* outputStream, BitList* bitList) {
     println(outputStream);    
     for (i = 0; i < size; i++) {
         if ((i != 0) && (i % BITS_COUNT_IN_UNSIGNED_INT == 0)) {
-            append(outputStream, ' ');
-        }
+			appendSpace(outputStream);
+		}
         bool value = getBit(bitList, i);
         appendDec(outputStream, value);
     }

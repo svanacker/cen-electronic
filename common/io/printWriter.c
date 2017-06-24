@@ -41,6 +41,10 @@ void appendSeparator(OutputStream* outputStream) {
     append(outputStream, '-');
 }
 
+void appendSpace(OutputStream* outputStream) {
+	append(outputStream, ' ');
+}
+
 unsigned int appendString(OutputStream* outputStream, const char* s) {
     unsigned int result = 0;
 	if (s == NULL) {
@@ -263,4 +267,3 @@ void appendKeyAndName(OutputStream* stream, const char* key, const char* name) {
     appendString(stream, key);
     appendString(stream, name);
 }
-

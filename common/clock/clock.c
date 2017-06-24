@@ -14,7 +14,7 @@ void printClock(OutputStream* outputStream, Clock* clock) {
     append(outputStream, ':');
     appendHex2(outputStream, clockData->second);
 
-    append(outputStream, ' ');
+    appendSpace(outputStream);
     appendHex2(outputStream, clockData->day);
 
     append(outputStream, '/');

@@ -38,6 +38,12 @@ unsigned int appendBoolAsString(OutputStream* outputStream, bool b);
 void appendSeparator(OutputStream* outputStream);
 
 /**
+* Append a space to the outputStream.
+* @param outputStream the pointer on outputStream (POO simulation)
+*/
+void appendSpace(OutputStream* outputStream);
+
+/**
  * Append a string to the buffer.
  * @param outputStream the pointer on outputStream (POO simulation)
  * @param s a standard C String (terminated by \0)

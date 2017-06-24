@@ -9,19 +9,25 @@
 #include "../common/io/printWriter.h"
 #include "../common/io/printTableWriter.h"
 
-#define DEVICE_DEBUG_TABLE_HEADER_LENGTH	66
+#define DEVICE_DEBUG_TABLE_HEADER_LENGTH			79
+
+#define DEVICE_DEBUG_NAME_COLUMN_LENGTH				25
+#define DEVICE_DEBUG_HEADER_COLUMN_LENGTH			5
+#define DEVICE_DEBUG_TRANSMIT_MODE_COLUMN_LENGTH	8
+#define DEVICE_DEBUG_ADDRESS_STRING_COLUMN_LENGTH	16
+#define DEVICE_DEBUG_ADDRESS_COLUMN_LENGTH			9
 
 void printDeviceHeader(OutputStream* outputStream) {
-	appendRepeatedDash(outputStream, DEVICE_DEBUG_TABLE_HEADER_LENGTH);
+	appendDashes(outputStream, DEVICE_DEBUG_TABLE_HEADER_LENGTH);
 	println(outputStream);
-	appendStringHeader(outputStream, "deviceName         ");
-	appendStringHeader(outputStream, "header");
-	appendStringHeader(outputStream, "transmitMode");
-	appendStringHeader(outputStream, "addString");
-	appendStringHeader(outputStream, "addr");
+	appendStringHeader(outputStream, "deviceName", DEVICE_DEBUG_NAME_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "cmd", DEVICE_DEBUG_HEADER_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "transmit", DEVICE_DEBUG_TRANSMIT_MODE_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "addString", DEVICE_DEBUG_ADDRESS_STRING_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "addr", DEVICE_DEBUG_ADDRESS_COLUMN_LENGTH);
 	appendTableSeparator(outputStream);
 	println(outputStream);
-	appendRepeatedDash(outputStream, DEVICE_DEBUG_TABLE_HEADER_LENGTH);
+	appendDashes(outputStream, DEVICE_DEBUG_TABLE_HEADER_LENGTH);
 }
 
 void printDeviceList(OutputStream* outputStream) {
@@ -35,29 +41,26 @@ void printDeviceList(OutputStream* outputStream) {
         Device* device = getDevice(i);
         printDevice(outputStream, device);
     }
-	appendRepeatedDash(outputStream, DEVICE_DEBUG_TABLE_HEADER_LENGTH);
+	appendDashes(outputStream, DEVICE_DEBUG_TABLE_HEADER_LENGTH);
 }
 
 void printDevice(OutputStream* outputStream, const Device* device) {
     if (device != NULL) {
         DeviceInterface* deviceInterface = device->deviceInterface;
-		appendStringTableData(outputStream, deviceInterface->deviceGetName(), 19);
+		appendStringTableData(outputStream, deviceInterface->deviceGetName(), DEVICE_DEBUG_NAME_COLUMN_LENGTH);
 
-		appendCharTableData(outputStream, deviceInterface->deviceHeader, 7);
+		appendCharTableData(outputStream, deviceInterface->deviceHeader, DEVICE_DEBUG_HEADER_COLUMN_LENGTH);
 
         TransmitMode transmitMode = device->transmitMode;
-		char* transmitModeAsString = getTransmitModeAsString(transmitMode);
+		const char* transmitModeAsString = getTransmitModeAsString(transmitMode);
 
-		appendStringTableData(outputStream, transmitModeAsString, 12);
+		appendStringTableData(outputStream, transmitModeAsString, DEVICE_DEBUG_TRANSMIT_MODE_COLUMN_LENGTH);
 
-		appendStringTableData(outputStream, device->addressString, 9);
+		appendStringTableData(outputStream, device->addressString, DEVICE_DEBUG_ADDRESS_STRING_COLUMN_LENGTH);
 
-		// TODO : Replace by appendDecTableData
+		appendDecTableData(outputStream, device->address, DEVICE_DEBUG_ADDRESS_COLUMN_LENGTH);
+
 		appendTableSeparator(outputStream);
-		int length = appendDec(outputStream, device->address);
-		appendSpaces(outputStream, 6 - length);
-		appendTableSeparator(outputStream);
-
 		println(outputStream);
     }
 }

@@ -8,6 +8,8 @@
 
 #include "../../common/string/cenString.h"
 
+// COMMON TABLE FUNCTIONS
+
 /**
  * Append the symbol '|'.
  * @param outputStream the pointer on outputStream (POO simulation)
@@ -15,25 +17,58 @@
 void appendTableSeparator(OutputStream* outputStream);
 
 /**
+* Append by repeating chars to the outputStream.
+* @param outputStream the pointer on outputStream (POO simulation)
+* @param c the char to repeat
+* @param count how many char we repeat
+*/
+unsigned int appendRepeatedChars(OutputStream* outputStream, char c, int count);
+
+/**
+* Append by repeating '-' to the outputStream.
+* @param outputStream the pointer on outputStream (POO simulation)
+* @param count how many dash we repeat
+*/
+unsigned int appendDashes(OutputStream* outputStream, int count);
+
+/**
+* Append a certain amount of spaces (use of table aligment).
+* @param outputStream the pointer on outputStream (POO simulation)
+* @param count how many spaces we want to append
+*/
+unsigned int appendSpaces(OutputStream* outputStream, int count);
+
+// HEADER
+
+/**
  * Append an header followed by '|' character.
  * @param outputStream the pointer on outputStream (POO simulation)
  * @param s string the header
  */
-unsigned int appendStringHeader(OutputStream* outputStream, char* s);
+void appendStringHeader(OutputStream* outputStream, char* s, int columnSize);
 
-void appendStringTableData(OutputStream* outputStream, const char* s, int totalLength);
-
-void appendCharTableData(OutputStream* outputStream, const char c, int totalLength);
+// DATA
 
 /**
- * Append a certain amount of spaces (use of table aligment).
- * @param outputStream the pointer on outputStream (POO simulation)
- * @param count how many space we want to append
- */
-unsigned int appendSpaces(OutputStream* outputStream, int count);
+* Add a String table data to the outputStream with | and space arround
+* @param s the string to add
+* @param columnSize the size of the column (for alignment)
+*/
+unsigned int  appendStringTableData(OutputStream* outputStream, const char* s, int columnSize);
 
-unsigned int appendRepeatedChars(OutputStream* outputStream, char c, int count);
+/**
+* Add a Char table data to the outputStream with | and space arround
+* @param c the char to append
+* @param columnSize the size of the column (for alignment)
+*/
+unsigned int  appendCharTableData(OutputStream* outputStream, const char c, int columnSize);
 
-unsigned int appendRepeatedDash(OutputStream* outputStream, int count);
+/**
+* Add a Decimal table data to the outputStream with | and space arround
+* @param value the value to append (in decimal)
+* @param columnSize the size of the column (for alignment)
+*/
+unsigned int  appendDecTableData(OutputStream* outputStream, const value, int columnSize);
+
 
 #endif
