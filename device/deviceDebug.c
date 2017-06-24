@@ -9,8 +9,6 @@
 #include "../common/io/printWriter.h"
 #include "../common/io/printTableWriter.h"
 
-#define DEVICE_DEBUG_TABLE_HEADER_LENGTH			79
-
 #define DEVICE_DEBUG_NAME_COLUMN_LENGTH				25
 #define DEVICE_DEBUG_HEADER_COLUMN_LENGTH			5
 #define DEVICE_DEBUG_TRANSMIT_MODE_COLUMN_LENGTH	8
@@ -18,8 +16,7 @@
 #define DEVICE_DEBUG_ADDRESS_COLUMN_LENGTH			9
 
 void printDeviceHeader(OutputStream* outputStream) {
-	appendDashes(outputStream, DEVICE_DEBUG_TABLE_HEADER_LENGTH);
-	println(outputStream);
+	appendTableHeaderSeparatorLine(outputStream);
 	appendStringHeader(outputStream, "deviceName", DEVICE_DEBUG_NAME_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "cmd", DEVICE_DEBUG_HEADER_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "transmit", DEVICE_DEBUG_TRANSMIT_MODE_COLUMN_LENGTH);
@@ -27,7 +24,7 @@ void printDeviceHeader(OutputStream* outputStream) {
 	appendStringHeader(outputStream, "addr", DEVICE_DEBUG_ADDRESS_COLUMN_LENGTH);
 	appendTableSeparator(outputStream);
 	println(outputStream);
-	appendDashes(outputStream, DEVICE_DEBUG_TABLE_HEADER_LENGTH);
+	appendTableHeaderSeparatorLine(outputStream);
 }
 
 void printDeviceList(OutputStream* outputStream) {
@@ -36,12 +33,11 @@ void printDeviceList(OutputStream* outputStream) {
     int i;
 	println(outputStream);
 	printDeviceHeader(outputStream);
-    println(outputStream);
     for (i = 0; i < size; i++) {
         Device* device = getDevice(i);
         printDevice(outputStream, device);
     }
-	appendDashes(outputStream, DEVICE_DEBUG_TABLE_HEADER_LENGTH);
+	appendTableHeaderSeparatorLine(outputStream);
 }
 
 void printDevice(OutputStream* outputStream, const Device* device) {

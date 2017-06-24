@@ -16,7 +16,6 @@
 
 // Length of different columns
 
-#define DEVICE_USAGE_TABLE_HEADER_LENGTH	 79
 #define DEVICE_USAGE_HEADER_COLUMN_LENGTH     1
 #define DEVICE_USAGE_NAME_COLUMN_LENGTH       20
 #define DEVICE_USAGE_IO_COLUMN_LENGTH		  3
@@ -182,8 +181,7 @@ bool printMethodOrNotificationMetaData(OutputStream* outputStream, DeviceInterfa
             }
 			*/
         }
-		appendDashes(outputStream, DEVICE_USAGE_TABLE_HEADER_LENGTH);
-		println(outputStream);
+		appendTableHeaderSeparatorLine(outputStream);
     }
     return result;
 }
@@ -215,17 +213,15 @@ void printDeviceUsageLine(OutputStream* outputStream, char header, Device* devic
 void printDeviceUsage(OutputStream* outputStream, Device* device, bool showOnlyProblem) {
 	DeviceInterface* deviceInterface = device->deviceInterface;;
 	const char* deviceName = deviceInterface->deviceGetName();
-	appendDashes(outputStream, DEVICE_USAGE_TABLE_HEADER_LENGTH);
-	println(outputStream);
+	appendTableHeaderSeparatorLine(outputStream);
 	int length = appendStringTableData(outputStream, deviceName, 0);
 	char deviceHeader = deviceInterface->deviceHeader;
-	appendCharTableData(outputStream, deviceHeader, DEVICE_USAGE_TABLE_HEADER_LENGTH - length - 4);
+	appendCharTableData(outputStream, deviceHeader, PRINT_TABLE_WRITER_DEFAULT_PAGE_CHAR_WIDTH - length - 4);
 	appendTableSeparator(outputStream);
 	println(outputStream);
 
 	// Table Header
-	appendDashes(outputStream, DEVICE_USAGE_TABLE_HEADER_LENGTH);
-	println(outputStream);
+	appendTableHeaderSeparatorLine(outputStream);
 	appendStringHeader(outputStream, "h", DEVICE_USAGE_HEADER_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "name", DEVICE_USAGE_NAME_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "I/0", DEVICE_USAGE_IO_COLUMN_LENGTH);
@@ -235,8 +231,7 @@ void printDeviceUsage(OutputStream* outputStream, Device* device, bool showOnlyP
 	appendStringHeader(outputStream, "type", DEVICE_USAGE_PARAM_TYPE_COLUMN_LENGTH);
 	appendTableSeparator(outputStream);
 	println(outputStream);
-	appendDashes(outputStream, DEVICE_USAGE_TABLE_HEADER_LENGTH);
-	println(outputStream);
+	appendTableHeaderSeparatorLine(outputStream);
 
     char header;
     // We start after special characters and use only ANSI chars

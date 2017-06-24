@@ -8,6 +8,13 @@
 
 #include "../../common/string/cenString.h"
 
+
+/** 
+* How many chars for a table We use 79, because 80 is often the max of chars we could print on a page, 
+* and to avoid to interfer with println which could cause to go back.
+*/
+#define PRINT_TABLE_WRITER_DEFAULT_PAGE_CHAR_WIDTH   79
+
 // COMMON TABLE FUNCTIONS
 
 /**
@@ -41,11 +48,18 @@ unsigned int appendSpaces(OutputStream* outputStream, int count);
 // HEADER
 
 /**
+* Create a dash line to fill a line and return to the next line via println.
+*/
+void appendTableHeaderSeparatorLine(OutputStream* outputStream);
+
+/**
  * Append an header followed by '|' character.
  * @param outputStream the pointer on outputStream (POO simulation)
  * @param s string the header
  */
 void appendStringHeader(OutputStream* outputStream, char* s, int columnSize);
+
+void appendEndOfTableColumn(OutputStream* outputStream, int columnSize);
 
 // DATA
 

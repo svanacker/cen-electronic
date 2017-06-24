@@ -10,17 +10,8 @@
 #include "../../common/commons.h"
 #include "../../common/error/error.h"
 
-void appendTableSeparator(OutputStream* outputStream) {
-	append(outputStream, '|');
-}
 
-void appendStringHeader(OutputStream* outputStream, char* s, int totalLength) {
-	appendTableSeparator(outputStream);
-	appendSpace(outputStream);
-	unsigned int length = appendString(outputStream, s);
-	appendSpace(outputStream);
-	appendSpaces(outputStream, totalLength - length);
-}
+// COMMON
 
 unsigned int appendRepeatedChars(OutputStream* outputStream, char c, int count) {
 	int i;
@@ -40,6 +31,33 @@ unsigned int appendDashes(OutputStream* outputStream, int count) {
 unsigned int appendSpaces(OutputStream* outputStream, int count) {
 	return appendRepeatedChars(outputStream, ' ', count);
 }
+
+// TABLE HEADER
+
+void appendTableHeaderSeparatorLine(OutputStream* outputStream) {
+	appendDashes(outputStream, PRINT_TABLE_WRITER_DEFAULT_PAGE_CHAR_WIDTH);
+	println(outputStream);
+}
+
+void appendTableSeparator(OutputStream* outputStream) {
+	append(outputStream, '|');
+}
+
+void appendStringHeader(OutputStream* outputStream, char* s, int totalLength) {
+	appendTableSeparator(outputStream);
+	appendSpace(outputStream);
+	unsigned int length = appendString(outputStream, s);
+	appendSpace(outputStream);
+	appendSpaces(outputStream, totalLength - length);
+}
+
+void appendEndOfTableColumn(OutputStream* outputStream, int columnSize) {
+	appendSpaces(outputStream, columnSize);
+	appendTableSeparator(outputStream);
+	println(outputStream);
+}
+
+// TABLE DATA
 
 unsigned int appendStringTableData(OutputStream* outputStream, const char* s, int columnSize) {
 	appendTableSeparator(outputStream);
