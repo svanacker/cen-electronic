@@ -44,6 +44,10 @@
 #include "../../device/eeprom/eepromDevice.h"
 #include "../../device/eeprom/eepromDeviceInterface.h"
 
+// LOG
+#include "../../device/log/logDevice.h"
+#include "../../device/log/logDeviceInterface.h"
+
 // TIMERS
 #include "../../device/timer/timerDevice.h"
 #include "../../device/timer/timerDeviceInterface.h"
@@ -248,6 +252,7 @@ void runMotorBoardPC(bool singleMode) {
     addLocalDevice(getI2cSlaveDebugDeviceInterface(), getI2cSlaveDebugDeviceDescriptor(&motorI2cBusConnection));
     addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
     addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());
+	addLocalDevice(getLogDeviceInterface(), getLogDeviceDescriptor());
 
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
     addLocalDevice(getBatteryDeviceInterface(), getBatteryDeviceDescriptor(&battery));

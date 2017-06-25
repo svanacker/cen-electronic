@@ -49,13 +49,13 @@ void deviceClockHandleRawData(char header, InputStream* inputStream, OutputStrea
         appendHex2(outputStream, clockData->month);
         append(outputStream,'/');
         appendHex2(outputStream, clockData->year);
-    } else if (header == COMMAND_WRITE_HOUR) {
+    } else if (header == COMMAND_WRITE_TIME) {
         ClockData* clockData = &(clock->clockData);
         clockData->hour = readHex2(inputStream);
         clockData->minute = readHex2(inputStream);
         clockData->second = readHex2(inputStream);
         
-        ackCommand(outputStream, CLOCK_DEVICE_HEADER, COMMAND_WRITE_HOUR);
+        ackCommand(outputStream, CLOCK_DEVICE_HEADER, COMMAND_WRITE_TIME);
         clock->writeClock(clock);
     } else if (header == COMMAND_WRITE_DATE) {
         ClockData* clockData = &(clock->clockData);

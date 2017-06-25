@@ -16,12 +16,12 @@
 
 // Length of different columns
 
-#define DEVICE_USAGE_HEADER_COLUMN_LENGTH     1
-#define DEVICE_USAGE_NAME_COLUMN_LENGTH       20
-#define DEVICE_USAGE_IO_COLUMN_LENGTH		  3
-#define DEVICE_USAGE_IO_SIZE_COLUMN_LENGTH    2 
-#define DEVICE_USAGE_PARAM_NAME_COLUMN_LENGTH  20
-#define DEVICE_USAGE_PARAM_SIZE_COLUMN_LENGTH  4
+#define DEVICE_USAGE_HEADER_COLUMN_LENGTH     3
+#define DEVICE_USAGE_NAME_COLUMN_LENGTH       28
+#define DEVICE_USAGE_IO_COLUMN_LENGTH		  4
+#define DEVICE_USAGE_IO_SIZE_COLUMN_LENGTH    3
+#define DEVICE_USAGE_PARAM_NAME_COLUMN_LENGTH  16
+#define DEVICE_USAGE_PARAM_SIZE_COLUMN_LENGTH  3
 #define DEVICE_USAGE_PARAM_TYPE_COLUMN_LENGTH  7
 
 char* getTypeAsString(OutputStream* outputStream, int parameterType) {
@@ -227,7 +227,7 @@ void printDeviceUsage(OutputStream* outputStream, Device* device, bool showOnlyP
 	appendStringHeader(outputStream, "I/0", DEVICE_USAGE_IO_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "L ", DEVICE_USAGE_IO_SIZE_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "param/res name", DEVICE_USAGE_PARAM_NAME_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "size", DEVICE_USAGE_PARAM_SIZE_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "L", DEVICE_USAGE_PARAM_SIZE_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "type", DEVICE_USAGE_PARAM_TYPE_COLUMN_LENGTH);
 	appendTableSeparator(outputStream);
 	println(outputStream);

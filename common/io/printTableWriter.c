@@ -47,7 +47,6 @@ void appendStringHeader(OutputStream* outputStream, char* s, int totalLength) {
 	appendTableSeparator(outputStream);
 	appendSpace(outputStream);
 	unsigned int length = appendString(outputStream, s);
-	appendSpace(outputStream);
 	appendSpaces(outputStream, totalLength - length);
 }
 
@@ -63,7 +62,6 @@ unsigned int appendStringTableData(OutputStream* outputStream, const char* s, in
 	appendTableSeparator(outputStream);
 	appendSpace(outputStream);
 	int length = appendString(outputStream, s);
-	appendSpace(outputStream);
 	return length + appendSpaces(outputStream, columnSize - length) + 3;
 }
 
@@ -71,7 +69,6 @@ unsigned int appendDecTableData(OutputStream* outputStream, const value, int col
 	appendTableSeparator(outputStream);
 	appendSpace(outputStream);
 	int length = appendDec(outputStream, value);
-	appendSpace(outputStream);
 	return length + appendSpaces(outputStream, columnSize - length) + 3;
 }
 
@@ -79,7 +76,6 @@ unsigned int appendCharTableData(OutputStream* outputStream, const char c, int c
 	appendTableSeparator(outputStream);
 	appendSpace(outputStream);
 	append(outputStream, c);
-	appendSpace(outputStream);
 	// lenght of char is equal to 1
 	return appendSpaces(outputStream, columnSize - 1) + 4;
 }

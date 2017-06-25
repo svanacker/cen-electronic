@@ -51,7 +51,7 @@ bool writeHourRemoteClockData(ClockData* clockData, int dispatcherIndex) {
     
     // The device / command Header + Data
     append(outputStream, CLOCK_DEVICE_HEADER);
-    append(outputStream, COMMAND_WRITE_HOUR);
+    append(outputStream, COMMAND_WRITE_TIME);
     appendHex2(outputStream, clockData->hour);
     appendHex2(outputStream, clockData->minute);
     appendHex2(outputStream, clockData->second);

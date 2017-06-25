@@ -11,7 +11,7 @@ const char* getBatteryDeviceName(void) {
 int deviceBatteryGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList){
     if (commandHeader == COMMAND_READ_BATTERY ) {
         if (fillDeviceArgumentList) {
-            setFunction("Clock Read", 0, 1);
+            setFunction("Battery Read", 0, 1);
             setResultUnsignedHex4(0, "Battery Value (mV)");
         }
         return commandLengthValueForMode(mode, 0, 4);

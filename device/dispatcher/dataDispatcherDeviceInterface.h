@@ -4,7 +4,7 @@
 #include "../../device/deviceInterface.h"
 
 /** Command to see the list of dispatcher. */
-#define COMMAND_DISPATCHER_LIST          'D'
+#define COMMAND_DISPATCHER_LIST          'd'
 
 /**
 * Get the data dispatcher device interface.

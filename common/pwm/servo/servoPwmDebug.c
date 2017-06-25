@@ -8,26 +8,48 @@
 
 #include "../../../common/io/outputStream.h"
 #include "../../../common/io/printWriter.h"
+#include "../../../common/io/printTableWriter.h"
 
-void printServo(OutputStream* outputStream, Servo* servo) {
-    appendString(outputStream, ",speed=");
-    appendDec(outputStream, servo->speed);
-    appendString(outputStream, ",currentPos=");
-    appendDec(outputStream, servo->currentPosition);
-    appendString(outputStream, ",targePos=");
-    appendDec(outputStream, servo->targetPosition);
-    appendCRLF(outputStream);
+#define SERVO_PWM_DEBUG_INDEX_COLUMN_LENGTH           7
+#define SERVO_PWM_DEBUG_SPEED_COLUMN_LENGTH           7
+#define SERVO_PWM_DEBUG_CURRENT_POS_COLUMN_LENGTH     10
+#define SERVO_PWM_DEBUG_TARGET_POS_COLUMN_LENGTH      10
+
+/**
+* Private.
+*/
+void printServoListHeader(OutputStream* outputStream) {
+	// Table Header
+	appendTableHeaderSeparatorLine(outputStream);
+	appendStringHeader(outputStream, "index", SERVO_PWM_DEBUG_INDEX_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "speed", SERVO_PWM_DEBUG_SPEED_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "currentPos", SERVO_PWM_DEBUG_CURRENT_POS_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "targetPos", SERVO_PWM_DEBUG_TARGET_POS_COLUMN_LENGTH);
+	appendTableSeparator(outputStream);
+	println(outputStream);
+	appendTableHeaderSeparatorLine(outputStream);
+}
+
+void printServo(OutputStream* outputStream, Servo* servo, int index) {
+	appendDecTableData(outputStream, index, SERVO_PWM_DEBUG_SPEED_COLUMN_LENGTH);
+	appendDecTableData(outputStream, servo->speed, SERVO_PWM_DEBUG_SPEED_COLUMN_LENGTH);
+	appendDecTableData(outputStream, servo->currentPosition, SERVO_PWM_DEBUG_CURRENT_POS_COLUMN_LENGTH);
+	appendDecTableData(outputStream, servo->targetPosition, SERVO_PWM_DEBUG_TARGET_POS_COLUMN_LENGTH);
+	appendEndOfTableColumn(outputStream, 0);
 }
 
 
 void printServoList(OutputStream* outputStream) {
+	println(outputStream);
+	printServoListHeader(outputStream);
     ServoList* servoList = _getServoList();
     int i;
     for (i = 0; i < PWM_COUNT; i++) {
         Servo* servo = &(servoList->servos[i]);
 
-        printServo(outputStream, servo);
+        printServo(outputStream, servo, i);
     }
+	appendTableHeaderSeparatorLine(outputStream);
 }
 
 // TEST FUNCTIONS
