@@ -52,8 +52,10 @@ typedef int DeviceInterfaceMode;
  */
 #define DEVICE_AND_COMMAND_HEADER_LENGTH         2
 
+#define DISPATCHER_COMMAND_HEADER                'J'
+
 /**
- * Define the length used by the dispatcher Prefix ('j' + index of the dispatcher in hex) => 3 chars
+ * Define the length used by the dispatcher Prefix ('J' + index of the dispatcher in hex) => 3 chars
  */
 #define DISPATCHER_COMMAND_AND_INDEX_HEADER_LENGTH 3
 

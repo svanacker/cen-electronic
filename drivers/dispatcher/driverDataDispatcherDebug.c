@@ -7,11 +7,11 @@
 #include "../../device/transmitMode.h"
 
 
-#define DISPATCHER_INDEX_NAME_COLUMN_LENGTH					 7
-#define DISPATCHER_DEBUG_NAME_COLUMN_LENGTH					 20
-#define DISPATCHER_DEBUG_TRANSMIT_MODE_COLUMN_LENGTH		 15
-#define DISPATCHER_DEBUG_TRANSMIT_MODE_STRING_COLUMN_LENGTH  20
-#define DISPATCHER_DEBUG_ADDRESS_COLUMN_LENGTH               10
+#define DISPATCHER_INDEX_NAME_COLUMN_LENGTH					 5
+#define DISPATCHER_DEBUG_NAME_COLUMN_LENGTH					 25
+#define DISPATCHER_DEBUG_TRANSMIT_MODE_COLUMN_LENGTH		 12
+#define DISPATCHER_DEBUG_TRANSMIT_MODE_STRING_COLUMN_LENGTH  10
+#define DISPATCHER_DEBUG_ADDRESS_COLUMN_LENGTH               12
 
 // DEBUG
 
@@ -25,8 +25,8 @@ void printDriverDataDispatcherListHeader(OutputStream* outputStream) {
 	appendStringHeader(outputStream, "Index", DISPATCHER_INDEX_NAME_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "Dispatcher Name", DISPATCHER_DEBUG_NAME_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "transmitMode", DISPATCHER_DEBUG_TRANSMIT_MODE_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "transmitMode String", DISPATCHER_DEBUG_TRANSMIT_MODE_STRING_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "address (Hex)", DISPATCHER_DEBUG_ADDRESS_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "(String)", DISPATCHER_DEBUG_TRANSMIT_MODE_STRING_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "addr (Hex)", DISPATCHER_DEBUG_ADDRESS_COLUMN_LENGTH);
 	appendTableSeparator(outputStream);
 	println(outputStream);
 	appendTableHeaderSeparatorLine(outputStream);

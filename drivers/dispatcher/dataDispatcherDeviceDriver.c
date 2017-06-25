@@ -21,7 +21,7 @@ bool pingDriverDataDispatcher(unsigned char dispatcherIndex) {
     InputStream* inputStream = getDriverResponseInputStream();
 
     // To Select the dispatcher
-    append(outputStream, DATA_DISPATCHER_DEVICE_HEADER);
+    append(outputStream, DISPATCHER_COMMAND_HEADER);
     appendHex2(outputStream, dispatcherIndex);
 
     // To check if it's not another board which replies ...

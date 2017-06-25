@@ -51,7 +51,7 @@ bool transmitFromDriverRequestBuffer() {
     unsigned dataDispacherLength = 0;
     unsigned char deviceHeader = bufferGetCharAtIndex(requestBuffer, DEVICE_HEADER_INDEX);
 
-    if (deviceHeader == DATA_DISPATCHER_DEVICE_HEADER) {
+    if (deviceHeader == DISPATCHER_COMMAND_HEADER) {
         dataDispacherLength = DISPATCHER_COMMAND_AND_INDEX_HEADER_LENGTH;
         // Reload the real Device Header
         deviceHeader = bufferGetCharAtIndex(requestBuffer, dataDispacherLength + DEVICE_HEADER_INDEX);
