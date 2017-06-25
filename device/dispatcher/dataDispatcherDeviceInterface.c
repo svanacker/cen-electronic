@@ -12,7 +12,7 @@ int deviceDataDispatcherGetInterface(char commandHeader, DeviceInterfaceMode mod
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("showDispatcherList");
         }
-        return 0;
+        return commandLengthValueForMode(mode, 0, 0);
     }
     else if (commandHeader == COMMAND_PING_DISPATCHER_INDEX) {
         if (fillDeviceArgumentList) {

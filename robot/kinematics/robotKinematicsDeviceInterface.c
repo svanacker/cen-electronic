@@ -13,7 +13,7 @@ int deviceRobotKinematicsGetInterface(char commandHeader, DeviceInterfaceMode mo
             setFunctionNoArgumentAndNoResult("loadDefaultValues");
             setResultUnsignedHex6(0, "value");
         }
-        return 0;
+        return commandLengthValueForMode(mode, 0, 0);
     }
     // Wheels Average Length (get/set)
     else if (commandHeader == COMMAND_GET_WHEELS_AVERAGE_FOR_ONE_PULSE_LENGTH) {

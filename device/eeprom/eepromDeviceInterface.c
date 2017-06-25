@@ -13,19 +13,19 @@ int deviceEepromGetInterface(char header, DeviceInterfaceMode mode, bool fillDev
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Dump Eeprom to File");
         }
-        return 0;
+        return commandLengthValueForMode(mode, 0, 0);
     }
     if (header == COMMAND_RELOAD_EEPROM) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Reload Dum File to Eeprom");
         }
-        return 0;
+        return commandLengthValueForMode(mode, 0, 0);
     }
     else if (header == COMMAND_DUMP_TO_LOG_OUTPUT_STREAM_EEPROM) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Dump Eeprom to log output Stream");
         }
-        return 0;
+        return commandLengthValueForMode(mode, 0, 0);
     }
     else if (header == COMMAND_CLEAR_EEPROM) {
         if (fillDeviceArgumentList) {

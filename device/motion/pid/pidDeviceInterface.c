@@ -44,7 +44,7 @@ int devicePIDGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fil
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("loadDefaultValues");
         }
-        return 0;
+        return commandLengthValueForMode(mode, 0, 0);
     } else if (commandHeader == COMMAND_SET_END_DETECTION_PARAMETER) {
         if (fillDeviceArgumentList) {
             setFunction("setEndDetectParam", 9, 0);

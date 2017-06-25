@@ -90,8 +90,6 @@ bool printMethodOrNotificationMetaData(OutputStream* outputStream, DeviceInterfa
         DeviceMethodMetaData* deviceMethodMetaData = getDeviceMethodMetaData();
         char deviceHeader = deviceInterface->deviceHeader;
 
-
-
         // Function Header
 		appendCharTableData(outputStream, commandHeader, DEVICE_USAGE_HEADER_COLUMN_LENGTH);
 
@@ -210,9 +208,11 @@ void printDeviceUsageLine(OutputStream* outputStream, char header, Device* devic
     }
 }
 
-void printDeviceUsage(OutputStream* outputStream, Device* device, bool showOnlyProblem) {
+void printDeviceHeader(OutputStream* outputStream, Device* device) {
 	DeviceInterface* deviceInterface = device->deviceInterface;;
 	const char* deviceName = deviceInterface->deviceGetName();
+
+	println(outputStream);
 	appendTableHeaderSeparatorLine(outputStream);
 	int length = appendStringTableData(outputStream, deviceName, 0);
 	char deviceHeader = deviceInterface->deviceHeader;
@@ -232,7 +232,10 @@ void printDeviceUsage(OutputStream* outputStream, Device* device, bool showOnlyP
 	appendTableSeparator(outputStream);
 	println(outputStream);
 	appendTableHeaderSeparatorLine(outputStream);
+}
 
+void printDeviceUsage(OutputStream* outputStream, Device* device, bool showOnlyProblem) {
+	printDeviceHeader(outputStream, device);
     char header;
     // We start after special characters and use only ANSI chars
 	// We must search, because there is no list of header provided, we provide a char, and after this is catch (or not) by the device
@@ -267,7 +270,17 @@ void printDeviceNotificationLine(OutputStream* outputStream, char header, Device
  * @private
  */
 void printDeviceNotification(OutputStream* outputStream, Device* device) {
-    char header;
+	char header;
+	// Not all Device have notification, so we check it before
+	for (header = 32; header < 127; header++) {
+		DeviceInterface* deviceInterface = device->deviceInterface;
+		int argumentLength = deviceInterface->deviceGetInterface(header, DEVICE_MODE_NOTIFY, true);
+		if (argumentLength != DEVICE_HEADER_NOT_HANDLED) {
+			printDeviceHeader(outputStream, device);
+			break;
+		}
+	}
+
     // We start after special characters and use only ANSI chars
     for (header = 32; header < 127; header++) {
         printDeviceNotificationLine(outputStream, header, device);

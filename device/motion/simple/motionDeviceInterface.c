@@ -24,7 +24,7 @@ int deviceMotionGetInterface(char commandHeader, DeviceInterfaceMode mode, bool 
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("loadDefaultParameters");
         }
-        return 0;
+        return commandLengthValueForMode(mode, 0, 0);
     }
     // goto
     else if (commandHeader == COMMAND_MOTION_GOTO_IN_PULSE) {

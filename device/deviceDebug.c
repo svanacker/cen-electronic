@@ -15,7 +15,10 @@
 #define DEVICE_DEBUG_ADDRESS_STRING_COLUMN_LENGTH	16
 #define DEVICE_DEBUG_ADDRESS_COLUMN_LENGTH			9
 
-void printDeviceHeader(OutputStream* outputStream) {
+/**
+ * Private.
+ */
+void printDeviceDebugHeader(OutputStream* outputStream) {
 	appendTableHeaderSeparatorLine(outputStream);
 	appendStringHeader(outputStream, "deviceName", DEVICE_DEBUG_NAME_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "cmd", DEVICE_DEBUG_HEADER_COLUMN_LENGTH);
@@ -32,7 +35,7 @@ void printDeviceList(OutputStream* outputStream) {
     appendStringAndDec(outputStream, ", deviceCount=", size);
     int i;
 	println(outputStream);
-	printDeviceHeader(outputStream);
+	printDeviceDebugHeader(outputStream);
     for (i = 0; i < size; i++) {
         Device* device = getDevice(i);
 		if (i > 0 && (i % 4) == 0) {

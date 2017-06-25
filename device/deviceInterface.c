@@ -57,7 +57,7 @@ int commandLengthValueForMode(DeviceInterfaceMode mode, int input, int output) {
     else if (mode == DEVICE_MODE_OUTPUT) {
         return output;
     }
-    return -1;
+    return DEVICE_HEADER_NOT_HANDLED;
 }
 
 
