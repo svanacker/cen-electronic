@@ -72,6 +72,13 @@ unsigned int appendDecTableData(OutputStream* outputStream, const value, int col
 	return length + appendSpaces(outputStream, columnSize - length) + 3;
 }
 
+void appendHex2TableData(OutputStream* outputStream, char* s, int totalLength) {
+	appendTableSeparator(outputStream);
+	appendSpace(outputStream);
+	appendHex2(outputStream, s);
+	appendSpaces(outputStream, totalLength - 2) + 3;
+}
+
 unsigned int appendCharTableData(OutputStream* outputStream, const char c, int columnSize) {
 	appendTableSeparator(outputStream);
 	appendSpace(outputStream);

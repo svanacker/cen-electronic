@@ -84,5 +84,11 @@ unsigned int  appendCharTableData(OutputStream* outputStream, const char c, int 
 */
 unsigned int  appendDecTableData(OutputStream* outputStream, const value, int columnSize);
 
+/**
+* Add an hexadecimal table data to the outputStream with | and space arround
+* @param value the value to append (in hexadecimal)
+* @param columnSize the size of the column (for alignment)
+*/
+void appendHex2TableData(OutputStream* outputStream, char* s, int totalLength);
 
 #endif
