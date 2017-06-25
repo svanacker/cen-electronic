@@ -68,27 +68,34 @@ void appendEndOfTableColumn(OutputStream* outputStream, int columnSize);
 * @param s the string to add
 * @param columnSize the size of the column (for alignment)
 */
-unsigned int  appendStringTableData(OutputStream* outputStream, const char* s, int columnSize);
+unsigned int appendStringTableData(OutputStream* outputStream, const char* s, int columnSize);
 
 /**
 * Add a Char table data to the outputStream with | and space arround
 * @param c the char to append
 * @param columnSize the size of the column (for alignment)
 */
-unsigned int  appendCharTableData(OutputStream* outputStream, const char c, int columnSize);
+unsigned int appendCharTableData(OutputStream* outputStream, const char c, int columnSize);
 
 /**
 * Add a Decimal table data to the outputStream with | and space arround
 * @param value the value to append (in decimal)
 * @param columnSize the size of the column (for alignment)
 */
-unsigned int  appendDecTableData(OutputStream* outputStream, const value, int columnSize);
+unsigned int appendDecTableData(OutputStream* outputStream, const int value, int columnSize);
 
 /**
 * Add an hexadecimal table data to the outputStream with | and space arround
 * @param value the value to append (in hexadecimal)
 * @param columnSize the size of the column (for alignment)
 */
-void appendHex2TableData(OutputStream* outputStream, char* s, int totalLength);
+void appendHex2TableData(OutputStream* outputStream, char value, int columnSize);
+
+/**
+* Add an hexadecimal table data to the outputStream with | and space arround
+* @param value the value to append (in hexadecimal)
+* @param columnSize the size of the column (for alignment)
+*/
+void appendHex4TableData(OutputStream* outputStream, signed int value, int columnSize);
 
 #endif

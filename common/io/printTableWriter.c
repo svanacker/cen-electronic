@@ -65,18 +65,25 @@ unsigned int appendStringTableData(OutputStream* outputStream, const char* s, in
 	return length + appendSpaces(outputStream, columnSize - length) + 3;
 }
 
-unsigned int appendDecTableData(OutputStream* outputStream, const value, int columnSize) {
+unsigned int appendDecTableData(OutputStream* outputStream, const int value, int columnSize) {
 	appendTableSeparator(outputStream);
 	appendSpace(outputStream);
 	int length = appendDec(outputStream, value);
 	return length + appendSpaces(outputStream, columnSize - length) + 3;
 }
 
-void appendHex2TableData(OutputStream* outputStream, char* s, int totalLength) {
+void appendHex2TableData(OutputStream* outputStream, char value, int columnSize) {
 	appendTableSeparator(outputStream);
 	appendSpace(outputStream);
-	appendHex2(outputStream, s);
-	appendSpaces(outputStream, totalLength - 2) + 3;
+	appendHex2(outputStream, value);
+	appendSpaces(outputStream, columnSize - 2) + 3;
+}
+
+void appendHex4TableData(OutputStream* outputStream, signed int value, int columnSize) {
+	appendTableSeparator(outputStream);
+	appendSpace(outputStream);
+	appendHex4(outputStream, value);
+	appendSpaces(outputStream, columnSize - 4) + 3;
 }
 
 unsigned int appendCharTableData(OutputStream* outputStream, const char c, int columnSize) {

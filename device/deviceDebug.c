@@ -35,6 +35,9 @@ void printDeviceList(OutputStream* outputStream) {
 	printDeviceHeader(outputStream);
     for (i = 0; i < size; i++) {
         Device* device = getDevice(i);
+		if (i > 0 && (i % 4) == 0) {
+			appendTableHeaderSeparatorLine(outputStream);
+		}
         printDevice(outputStream, device);
     }
 	appendTableHeaderSeparatorLine(outputStream);
