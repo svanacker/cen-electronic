@@ -199,8 +199,7 @@ static char i2cMasterDebugInputBufferArray[MAIN_BOARD_PC_I2C_DEBUG_MASTER_IN_BUF
 static Buffer i2cMasterDebugInputBuffer;
 
 // Timers
-#define MAIN_BOARD_PC_TIMER_LENGTH    10
-static Device timerListArray[MAIN_BOARD_PC_TIMER_LENGTH];
+static Timer timerListArray[MAIN_BOARD_PC_TIMER_LENGTH];
 
 // ConsoleOutputStream
 static InputStream consoleInputStream;
@@ -400,6 +399,8 @@ void runMainBoardPC(bool connectToRobotManagerMode) {
     addI2cRemoteDevice(getMotionSimulationDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
 
     initDevices();
+
+	startTimerList();
 
     delaymSec(100);
 

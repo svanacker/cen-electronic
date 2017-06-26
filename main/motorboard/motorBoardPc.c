@@ -112,7 +112,7 @@ static DriverDataDispatcher driverDataDispatcherListArray[MOTOR_BOARD_PC_DATA_DI
 static I2cBus i2cBusListArray[MOTOR_BOARD_I2C_BUS_LIST_LENGTH];
 
 // Timers
-static Device timerListArray[MOTOR_BOARD_PC_TIMER_LENGTH];
+static Timer timerListArray[MOTOR_BOARD_PC_TIMER_LENGTH];
 
 // Logs
 

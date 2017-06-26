@@ -50,7 +50,10 @@ Timer* addTimerDemo(void) {
              TIME_DIVIDER_1_HERTZ,
              &interruptDemoTimerCallbackFunc,
              "DEMO");
-    result->enabled = true;
+	// addTimer could return null if not enough timer => In this case, it will change setErrorCode, and return NULL
+	if (result != NULL) {
+	    result->enabled = true;
+	}
     return result;
 }
 
@@ -126,9 +129,12 @@ void deviceTimerHandleRawData(char commandHeader, InputStream* inputStream, Outp
         if (timer == NULL) {
             timer = addTimerDemo();
         }
-        unsigned enableAsChar = readHex(inputStream);
-        bool enabled = enableAsChar != 0;
-        timer->enabled = enabled;
+		// Timer could be null when adding the timerDemo because of limit, we don't want any crash !
+		if (timer != NULL) {
+			unsigned enableAsChar = readHex(inputStream);
+			bool enabled = enableAsChar != 0;
+			timer->enabled = enabled;
+		}
         ackCommand(outputStream, TIMER_DEVICE_HEADER, COMMAND_TIMER_DEMO);
     }
 }

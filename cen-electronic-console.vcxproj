@@ -88,6 +88,7 @@
     <ClCompile Include="common\eeprom\memoryEeprom.c" />
     <ClCompile Include="common\eeprom\pc\eepromPc.c" />
     <ClCompile Include="common\error\error.c" />
+    <ClCompile Include="common\i2c\i2cBusList.c" />
     <ClCompile Include="common\i2c\i2cCommon.c" />
     <ClCompile Include="common\i2c\i2cDebug.c" />
     <ClCompile Include="common\i2c\master\i2cMaster.c" />
@@ -165,6 +166,8 @@
     <ClCompile Include="device\dispatcher\deviceDataDispatcher.c" />
     <ClCompile Include="device\eeprom\eepromDevice.c" />
     <ClCompile Include="device\eeprom\eepromDeviceInterface.c" />
+    <ClCompile Include="device\i2c\i2cCommonDebugDevice.c" />
+    <ClCompile Include="device\i2c\i2cCommonDebugDeviceInterface.c" />
     <ClCompile Include="device\i2c\master\i2cMasterDebugDevice.c" />
     <ClCompile Include="device\i2c\master\i2cMasterDebugDeviceInterface.c" />
     <ClCompile Include="device\i2c\slave\i2cSlaveDebugDevice.c" />
@@ -346,6 +349,7 @@
     <ClInclude Include="common\eeprom\memoryEeprom.h" />
     <ClInclude Include="common\eeprom\pc\eepromPc.h" />
     <ClInclude Include="common\error\error.h" />
+    <ClInclude Include="common\i2c\i2cBusList.h" />
     <ClInclude Include="common\i2c\i2cCommon.h" />
     <ClInclude Include="common\i2c\i2cConstants.h" />
     <ClInclude Include="common\i2c\i2cDebug.h" />
@@ -432,6 +436,8 @@
     <ClInclude Include="device\eeprom\eepromDeviceInterface.h" />
     <ClInclude Include="device\file\fileDevice.h" />
     <ClInclude Include="device\file\fileDeviceInterface.h" />
+    <ClInclude Include="device\i2c\i2cCommonDebugDevice.h" />
+    <ClInclude Include="device\i2c\i2cCommonDebugDeviceInterface.h" />
     <ClInclude Include="device\i2c\master\i2cMasterDebugDevice.h" />
     <ClInclude Include="device\i2c\master\i2cMasterDebugDeviceInterface.h" />
     <ClInclude Include="device\i2c\slave\i2cSlaveDebugDevice.h" />

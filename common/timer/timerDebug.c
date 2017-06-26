@@ -52,8 +52,6 @@ void printTimerList(OutputStream* outputStream, TimerList* timerList) {
     for (i = 0; i < timerList->size; i++) {
         Timer* timer = (Timer*) timerList->timers;
         timer += i;
-
-        appendCRLF(outputStream);
         printTimer(outputStream, timer);
     }
 	appendTableHeaderSeparatorLine(outputStream);

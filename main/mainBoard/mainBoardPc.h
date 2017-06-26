@@ -33,6 +33,10 @@
 // Devices
 #define MAIN_BOARD_PC_DEVICE_LIST_LENGTH                        30
 
+// Timers
+#define MAIN_BOARD_PC_TIMER_LENGTH                              2
+
+
 /**
  * Start Point to emulate the main Board PC.
  * @param connectToRobotManagerMode if true, wait for a Pipe given by the RobotManager Program.

@@ -61,6 +61,9 @@ void clearLastError();
 // TIMER
 #define TIMERS_LIST_NOT_INITIALIZED        0x0200
 #define TOO_MUCH_TIMERS                 0x0201
+#define TIMERS_LIST_ILLEGAL_INDEX       0x0202
+#define TIMER_NULL					    0x0203
+
 
 // EEPROM
 #define EEPROM_NULL                     0x280

@@ -1551,6 +1551,15 @@
     <ClCompile Include="common\io\printTableWriter.c">
       <Filter>Source Files\common\io</Filter>
     </ClCompile>
+    <ClCompile Include="common\i2c\i2cBusList.c">
+      <Filter>Source Files\common\i2c</Filter>
+    </ClCompile>
+    <ClCompile Include="device\i2c\i2cCommonDebugDevice.c">
+      <Filter>Source Files\device\i2c</Filter>
+    </ClCompile>
+    <ClCompile Include="device\i2c\i2cCommonDebugDeviceInterface.c">
+      <Filter>Source Files\device\i2c</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -2377,6 +2386,15 @@
     </ClInclude>
     <ClInclude Include="common\io\printTableWriter.h">
       <Filter>Header Files\common\io</Filter>
+    </ClInclude>
+    <ClInclude Include="common\i2c\i2cBusList.h">
+      <Filter>Header Files\common\i2c</Filter>
+    </ClInclude>
+    <ClInclude Include="device\i2c\i2cCommonDebugDevice.h">
+      <Filter>Header Files\device\i2c</Filter>
+    </ClInclude>
+    <ClInclude Include="device\i2c\i2cCommonDebugDeviceInterface.h">
+      <Filter>Header Files\device\i2c</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
