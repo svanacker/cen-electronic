@@ -5,6 +5,8 @@
 #include "i2cCommonDebugDeviceInterface.h"
 
 #include "../../common/i2c/i2cCommon.h"
+#include "../../common/i2c/i2cDebug.h"
+#include "../../common/i2c/i2cBusList.h"
 
 #include "../../common/io/inputStream.h"
 #include "../../common/io/outputStream.h"

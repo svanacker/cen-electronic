@@ -89,13 +89,13 @@ unsigned int appendDecTableData(OutputStream* outputStream, const int value, int
 * @param value the value to append (in hexadecimal)
 * @param columnSize the size of the column (for alignment)
 */
-void appendHex2TableData(OutputStream* outputStream, char value, int columnSize);
+unsigned int appendHex2TableData(OutputStream* outputStream, char value, int columnSize);
 
 /**
 * Add an hexadecimal table data to the outputStream with | and space arround
 * @param value the value to append (in hexadecimal)
 * @param columnSize the size of the column (for alignment)
 */
-void appendHex4TableData(OutputStream* outputStream, signed int value, int columnSize);
+unsigned int appendHex4TableData(OutputStream* outputStream, signed int value, int columnSize);
 
 #endif
