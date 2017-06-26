@@ -98,6 +98,10 @@ void clearLastError();
 #define I2C_BUS_TYPE_NOT_DEFINED          0x1004
 #define I2C_BUS_CONNECTION_NULL           0x1003
 
+#define I2C_BUS_LIST_NOT_INITIALIZED	  0x1010
+#define TOO_MUCH_I2C_BUS				  0x1011
+#define I2C_BUS_LIST_ILLEGAL_INDEX        0x1012
+
 // DEVICE
 
 #define TOO_MUCH_DEVICES                0x2000

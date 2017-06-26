@@ -7,6 +7,8 @@
 #include "../../common/delay/cenDelay.h"
 #include "../../common/eeprom/pc/eepromPc.h"
 #include "../../common/error/error.h"
+#include "../../common/i2c/i2cCommon.h"
+#include "../../common/i2c/i2cBusList.h"
 #include "../../common/i2c/i2cDebug.h"
 #include "../../common/i2c/slave/pc/i2cSlavePc.h"
 #include "../../common/i2c/slave/pc/i2cSlaveSetupPc.h"
@@ -103,9 +105,11 @@
 // Logs
 static LogHandlerList logHandlerListArray[MOTOR_BOARD_PC_LOG_HANDLER_LIST_LENGTH];
 
-
 // Dispatchers
 static DriverDataDispatcher driverDataDispatcherListArray[MOTOR_BOARD_PC_DATA_DISPATCHER_LIST_LENGTH];
+
+// I2C
+static I2cBus i2cBusListArray[MOTOR_BOARD_I2C_BUS_LIST_LENGTH];
 
 // Timers
 static Device timerListArray[MOTOR_BOARD_PC_TIMER_LENGTH];
@@ -142,7 +146,7 @@ static Battery battery;
 static Clock clock;
 
 // I2C
-static I2cBus motorI2cBus;
+static I2cBus* motorI2cBus;
 static I2cBusConnection motorI2cBusConnection;
 
 // Devices
@@ -215,9 +219,11 @@ void runMotorBoardPC(bool singleMode) {
     addLocalDriverDataDispatcher();
 
     if (!singleModeActivated) {
-        initI2cBus(&motorI2cBus, I2C_BUS_TYPE_SLAVE, I2C_BUS_PORT_1);
-        initI2cBusConnection(&motorI2cBusConnection, &motorI2cBus, MOTOR_BOARD_PC_I2C_ADDRESS);
-        openSlaveI2cStreamLink(&i2cSlaveStreamLink,
+		// I2c
+		initI2cBusList((I2cBus(*)[]) &i2cBusListArray, MOTOR_BOARD_I2C_BUS_LIST_LENGTH);
+		motorI2cBus = addI2cBus(I2C_BUS_TYPE_SLAVE, I2C_BUS_PORT_1);
+        initI2cBusConnection(&motorI2cBusConnection, motorI2cBus, MOTOR_BOARD_PC_I2C_ADDRESS);
+		openSlaveI2cStreamLink(&i2cSlaveStreamLink,
             &i2cSlaveInputBuffer,
             (char(*)[]) &i2cSlaveInputBufferArray,
             MOTOR_BOARD_PC_IN_BUFFER_LENGTH,
@@ -226,7 +232,6 @@ void runMotorBoardPC(bool singleMode) {
             MOTOR_BOARD_PC_OUT_BUFFER_LENGTH,
             &motorI2cBusConnection
         );
-
         // I2C Debug
         initI2CDebugBuffers(&i2cSlaveDebugInputBuffer,
             (char(*)[]) &i2cSlaveDebugInputBufferArray,
@@ -234,7 +239,7 @@ void runMotorBoardPC(bool singleMode) {
             &i2cSlaveDebugOutputBuffer,
             (char(*)[]) &i2cSlaveDebugOutputBufferArray,
             MOTOR_BOARD_PC_I2C_DEBUG_SLAVE_OUT_BUFFER_LENGTH);
-    }
+	}
 
     // Eeprom
     initEepromPc(&eeprom, "TODO");
