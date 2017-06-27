@@ -11,16 +11,16 @@
 // Map between SERIAL_PORT_X and UARTX
 static UART_MODULE     UART_MODULES[] = { UART1, UART2, UART3, UART4, UART5, UART6 };
 
-UART_MODULE getUartModule(unsigned char serialPortIndex) {
-    return UART_MODULES[serialPortIndex - 1];
+UART_MODULE getUartModule(enum SerialPort serialPort) {
+    return UART_MODULES[(int) serialPort - 1];
 }
 
-void openSerial(unsigned char serialPortIndex, unsigned long baudRate) {
+void openSerial(enum SerialPort serialPort, unsigned long baudRate) {
     // important to activate the RX for UART5. Information found on the net
-    if (serialPortIndex == SERIAL_PORT_5) {
+    if (serialPort == SERIAL_PORT_5) {
         PORTSetPinsDigitalIn(IOPORT_B, BIT_8);
     }
-    UART_MODULE uart = getUartModule(serialPortIndex);
+    UART_MODULE uart = getUartModule(serialPort);
     UARTConfigure(uart, UART_ENABLE_PINS_TX_RX_ONLY);
     UARTSetFifoMode(uart, UART_INTERRUPT_ON_TX_NOT_FULL | UART_INTERRUPT_ON_RX_NOT_EMPTY);
     UARTSetLineControl(uart, UART_DATA_SIZE_8_BITS | UART_PARITY_NONE | UART_STOP_BITS_1);
@@ -40,17 +40,17 @@ void openSerial(unsigned char serialPortIndex, unsigned long baudRate) {
     INTEnableInterrupts();
 }
 
-void openSerialAtDefaultSpeed(unsigned char serialPortIndex) {
-    openSerial(serialPortIndex, DEFAULT_SERIAL_SPEED);
+void openSerialAtDefaultSpeed(enum SerialPort serialPort) {
+    openSerial(serialPort, DEFAULT_SERIAL_SPEED);
 }
 
-void closeSerial(unsigned char serialPortIndex) {
-    UART_MODULE uart = getUartModule(serialPortIndex);
+void closeSerial(enum SerialPort serialPort) {
+    UART_MODULE uart = getUartModule(serialPort);
     UARTEnable(uart, UART_DISABLE_FLAGS(UART_PERIPHERAL | UART_RX | UART_TX));
 }
 
-void serialPutc(unsigned char serialPortIndex, char c) {
-    UART_MODULE uart = getUartModule(serialPortIndex);
+void serialPutc(enum SerialPort serialPort, char c) {
+    UART_MODULE uart = getUartModule(serialPort);
 
     while (!UARTTransmitterIsReady(uart)) {
     
