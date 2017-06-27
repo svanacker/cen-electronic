@@ -118,21 +118,19 @@ bool printMethodOrNotificationMetaData(OutputStream* outputStream, DeviceInterfa
 			DeviceArgument deviceArgument = deviceMethodMetaData->arguments[argumentIndex];
 			printArgument(outputStream, &deviceArgument, argumentIndex);
 		}
-		/*
 		// TODO : Error must be check at the beginning of the function and not Inside
         if (argumentLength != realArgumentLength) {
             writeError(DEVICE_INTERFACE_PROBLEM);
             result = false;
             appendString(outputStream, "Arguments Definition ERROR !!!!!!\n");
-            appendCRLF(outputStream);
+            println(outputStream);
             appendStringAndDec(outputStream, "argumentCount=", argumentCount);
-            appendCRLF(outputStream);
+            println(outputStream);
             appendStringAndDec(outputStream, "argumentLength=", argumentLength);
-            appendCRLF(outputStream);
+            println(outputStream);
             appendStringAndDec(outputStream, "realArgumentLength=", realArgumentLength);
-            appendCRLF(outputStream);
+            println(outputStream);
         }
-		*/
         // results
         if (!notification) {
 
@@ -159,7 +157,6 @@ bool printMethodOrNotificationMetaData(OutputStream* outputStream, DeviceInterfa
                 DeviceArgument resultArgument = deviceMethodMetaData->results[resultIndex];
                 printArgument(outputStream, &resultArgument, resultIndex);
             }
-			/*
             if (resultLength != realResultLength) {
                 result = false;
                 writeError(DEVICE_INTERFACE_PROBLEM);
@@ -176,7 +173,6 @@ bool printMethodOrNotificationMetaData(OutputStream* outputStream, DeviceInterfa
             if (resultCount == 0) {
                 appendString(outputStream, "void");
             }
-			*/
         }
 		appendTableHeaderSeparatorLine(outputStream);
     }
