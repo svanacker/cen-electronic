@@ -4,6 +4,9 @@
 #include "../../device/deviceInterface.h"
 #include "../../device/deviceConstants.h"
 
+/** Command to clear the screen (only on PC). */
+#define COMMAND_CLS                'c'
+
 /** Get the last error if any, 0x0000 if none. */
 #define COMMAND_GET_LAST_ERROR      'e'
 
@@ -33,6 +36,7 @@
 
 /** Command to know if the remote board is present. */
 #define COMMAND_PING               'P'
+
 
 /**
 * Get the system device interface.

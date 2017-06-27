@@ -215,7 +215,9 @@ void printDeviceHeader(OutputStream* outputStream, Device* device) {
 	appendTableHeaderSeparatorLine(outputStream);
 	int length = appendStringTableData(outputStream, deviceName, 0);
 	char deviceHeader = deviceInterface->deviceHeader;
-	appendCharTableData(outputStream, deviceHeader, PRINT_TABLE_WRITER_DEFAULT_PAGE_CHAR_WIDTH - length - 4);
+	appendString(outputStream, " : ");
+	append(outputStream, deviceHeader);
+	appendSpaces(outputStream, PRINT_TABLE_WRITER_DEFAULT_PAGE_CHAR_WIDTH - length - 5);
 	appendTableSeparator(outputStream);
 	println(outputStream);
 

@@ -84,6 +84,16 @@ void deviceSystemHandleRawData(char header, InputStream* inputStream, OutputStre
          }
          appendString(getErrorOutputStreamLogger(), "Device Not Found ! ");
     }
+	else if (header == COMMAND_CLS) {
+		ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_CLS);
+#ifdef PC_COMPILER
+		system("cls");
+#elif
+		appendString("Unsupported Operation");
+#endif // PC_COMPILER
+
+		system("cls");
+	}
     // Notifications
     else if (header == COMMAND_NOTIFICATION) {
         ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_NOTIFICATION);

@@ -78,6 +78,12 @@ int deviceSystemGetInterface(char commandHeader, DeviceInterfaceMode mode, bool 
         }
         return commandLengthValueForMode(mode, 1, 0);
     }
+	else if (commandHeader == COMMAND_CLS) {
+		if (fillDeviceArgumentList) {
+			setFunctionNoArgumentAndNoResult("clearScreen");
+		}
+		return commandLengthValueForMode(mode, 0, 0);
+	}
     // Notification
     else if (commandHeader == COMMAND_NOTIFICATION) {
         if (fillDeviceArgumentList) {
@@ -85,6 +91,7 @@ int deviceSystemGetInterface(char commandHeader, DeviceInterfaceMode mode, bool 
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
+
     return DEVICE_HEADER_NOT_HANDLED;
 }
 
