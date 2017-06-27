@@ -117,7 +117,7 @@ const char* getI2cBusTypeAsString(enum I2cBusType i2cBusType) {
 	switch (i2cBusType) {
 		case I2C_BUS_TYPE_MASTER: return "I2C_MASTER";
 		case I2C_BUS_TYPE_SLAVE: return "I2C_SLAVE";
-		case I2C_BUS_TYPE_NOT_DEFINED: return "I2C_UNDEFINED";
+		case I2C_BUS_TYPE_UNKNOWN: return "I2C_UNKOWN";
 		default: return "I2C_???";
 	}
 	return "I2C_???";

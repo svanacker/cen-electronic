@@ -40,7 +40,7 @@ Timer* addTimer(int timerCode,
 		Timer* result = getTimerByIndex(size);
 		if (result == NULL) {
 			writeError(TIMER_NULL);
-			return;
+			return NULL;
 		}
         result->time = 0;
         result->markTime = 0;
@@ -82,7 +82,7 @@ Timer* getTimerByCode(int timerCode) {
         Timer* timer = getTimerByIndex(i);
 		if (timer == NULL) {
 			writeError(TIMER_NULL);
-			return;
+			return NULL;
 		}
         if (timer->timerCode == timerCode) {
             return timer;

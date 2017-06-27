@@ -88,7 +88,6 @@ bool printMethodOrNotificationMetaData(OutputStream* outputStream, DeviceInterfa
     bool result = true;
     if (argumentLength != DEVICE_HEADER_NOT_HANDLED) {
         DeviceMethodMetaData* deviceMethodMetaData = getDeviceMethodMetaData();
-        char deviceHeader = deviceInterface->deviceHeader;
 
         // Function Header
 		appendCharTableData(outputStream, commandHeader, DEVICE_USAGE_HEADER_COLUMN_LENGTH);
