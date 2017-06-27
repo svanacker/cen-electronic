@@ -104,6 +104,10 @@ void deviceRobotConfigHandleRawData(char commandHeader, InputStream* inputStream
             robotConfig->robotConfigWriteInt(robotConfig, config);
         }
     }
+	else if (commandHeader == COMMAND_CONFIG_DEBUG) {
+		ackCommand(outputStream, ROBOT_CONFIG_DEVICE_HEADER, COMMAND_CONFIG_DEBUG);
+		printRobotTableConfig(getAlwaysOutputStreamLogger(), robotConfig);
+	}
 }
 
 static DeviceDescriptor descriptor = {

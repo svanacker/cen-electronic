@@ -1,6 +1,8 @@
 #ifndef ROBOT_CONFIG_H
 #define ROBOT_CONFIG_H
 
+#include "../../common/io/outputStream.h"
+
 /** Mask for the strategy : 0b 0000 0111 */
 #define CONFIG_STRATEGY_MASK           0x0007
 
@@ -58,6 +60,12 @@ typedef unsigned int robotConfigReadIntFunction(RobotConfig* robotConfig);
  * Write a fake value to replace the switch configuration.
  */
 typedef void robotConfigWriteIntFunction(RobotConfig* robotConfig, unsigned int robotConfigValue);
+
+/**
+* Print a table to debug the config.
+* @param outputStream where we print the table
+*/
+void printRobotTableConfig(OutputStream* outputStream, RobotConfig* robotConfig);
 
 /**
  * Defines the contract for switch robot configuration.

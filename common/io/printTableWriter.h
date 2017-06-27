@@ -85,6 +85,13 @@ unsigned int appendCharTableData(OutputStream* outputStream, const char c, int c
 unsigned int appendDecTableData(OutputStream* outputStream, const int value, int columnSize);
 
 /**
+* Add a Boolean table data to the outputStream with | and space arround
+* @param value the value to append (boolean)
+* @param columnSize the size of the column (for alignment)
+*/
+unsigned int appendBoolTableData(OutputStream* outputStream, const bool value, int columnSize);
+
+/**
 * Add an hexadecimal table data to the outputStream with | and space arround
 * @param value the value to append (in hexadecimal)
 * @param columnSize the size of the column (for alignment)

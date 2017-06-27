@@ -2,6 +2,7 @@
 * Contains all string manipulations to write table writer.
 */
 #include <stdlib.h>
+#include <stdbool.h>
 
 #include "outputStream.h"
 #include "printTableWriter.h"
@@ -69,6 +70,13 @@ unsigned int appendDecTableData(OutputStream* outputStream, const int value, int
 	appendTableSeparator(outputStream);
 	appendSpace(outputStream);
 	int length = appendDec(outputStream, value);
+	return length + appendSpaces(outputStream, columnSize - length) + 2;
+}
+
+unsigned int appendBoolTableData(OutputStream* outputStream, const bool value, int columnSize) {
+	appendTableSeparator(outputStream);
+	appendSpace(outputStream);
+	int length = appendBool(outputStream, value);
 	return length + appendSpaces(outputStream, columnSize - length) + 2;
 }
 

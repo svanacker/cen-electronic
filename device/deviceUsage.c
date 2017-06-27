@@ -169,10 +169,6 @@ bool printMethodOrNotificationMetaData(OutputStream* outputStream, DeviceInterfa
                 appendStringAndDec(outputStream, "realResultLength=", realResultLength);
                 appendCRLF(outputStream);
             }
-
-            if (resultCount == 0) {
-                appendString(outputStream, "void");
-            }
         }
 		appendTableHeaderSeparatorLine(outputStream);
     }
