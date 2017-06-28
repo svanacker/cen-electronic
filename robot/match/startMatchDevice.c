@@ -8,6 +8,7 @@
 #include "startMatchDeviceInterface.h"
 #include "endMatchDetectorDevice.h"
 
+#include "../../common/io/binaryPrintWriter.h"
 #include "../../common/io/inputStream.h"
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
@@ -43,7 +44,7 @@ bool isStartMatchDeviceOk(void) {
 void notifyWaitingStart(OutputStream* pcOutputStream) {
     appendString(pcOutputStream, NOTIFY_TO_PC_RESET);
     appendString(getAlwaysOutputStreamLogger(), "CFG:");
-    appendStringConfig(getAlwaysOutputStreamLogger());
+    appendBinary16(getAlwaysOutputStreamLogger(), getConfigValue(), 4);
     println(getAlwaysOutputStreamLogger());
     appendString(getAlwaysOutputStreamLogger(), "Waiting start:");
 }

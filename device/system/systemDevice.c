@@ -88,8 +88,8 @@ void deviceSystemHandleRawData(char header, InputStream* inputStream, OutputStre
 		ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_CLS);
 #ifdef PC_COMPILER
 		system("cls");
-#elif
-		appendString("Unsupported Operation");
+#else
+		appendString(outputStream, "Unsupported Operation");
 #endif // PC_COMPILER
 
 		system("cls");

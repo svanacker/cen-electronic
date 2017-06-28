@@ -5,6 +5,7 @@
 #include <stdbool.h>
 
 #include "outputStream.h"
+#include "binaryPrintWriter.h"
 #include "printTableWriter.h"
 #include "printWriter.h"
 
@@ -104,6 +105,14 @@ unsigned int appendHex6TableData(OutputStream* outputStream, signed long value, 
 	return appendSpaces(outputStream, columnSize - 6) + 8;
 }
 
+unsigned int appendBinary16TableData(OutputStream* outputStream, unsigned int value, unsigned int groupBy, int columnSize) {
+	appendTableSeparator(outputStream);
+	appendSpace(outputStream);
+	int length = appendBinary16(outputStream, value, groupBy);
+	// length of hex6 = 6
+	return appendSpaces(outputStream, columnSize - length) + 3;
+}
+
 unsigned int appendCharTableData(OutputStream* outputStream, const char c, int columnSize) {
 	appendTableSeparator(outputStream);
 	appendSpace(outputStream);
@@ -111,5 +120,4 @@ unsigned int appendCharTableData(OutputStream* outputStream, const char c, int c
 	// lenght of char is equal to 1
 	return appendSpaces(outputStream, columnSize - 1) + 3;
 }
-
 
