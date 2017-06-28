@@ -105,4 +105,11 @@ unsigned int appendHex2TableData(OutputStream* outputStream, char value, int col
 */
 unsigned int appendHex4TableData(OutputStream* outputStream, signed int value, int columnSize);
 
+/**
+* Add an hexadecimal table data to the outputStream with | and space arround
+* @param value the value to append (in hexadecimal)
+* @param columnSize the size of the column (for alignment)
+*/
+unsigned int appendHex6TableData(OutputStream* outputStream, signed long value, int columnSize);
+
 #endif

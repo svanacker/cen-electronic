@@ -14,6 +14,8 @@
 
 #include "../../drivers/driver.h"
 
+#include "../../robot/kinematics/robotKinematics.h"
+
 static Eeprom* robotKinematicsEeprom;
 
 void deviceRobotKinematicsInit(void) {
@@ -95,6 +97,11 @@ void deviceRobotKinematicsHandleRawData(char commandHeader, InputStream* inputSt
         float value = (float)readHex6(inputStream);
         robotKinematics->wheelsDistance = value / MILLI_TO_MICRO_FACTOR;
     }
+	else if (commandHeader == COMMAND_KINEMATICS_DEBUG) {
+		ackCommand(outputStream, KINEMATICS_HEADER, COMMAND_KINEMATICS_DEBUG);
+		RobotKinematics* robotKinematics = getRobotKinematics();
+		printRobotKinematicsTable(getAlwaysOutputStreamLogger(), robotKinematics);
+	}
 }
 
 static DeviceDescriptor descriptor = {

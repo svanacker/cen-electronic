@@ -96,6 +96,14 @@ unsigned int appendHex4TableData(OutputStream* outputStream, signed int value, i
 	return appendSpaces(outputStream, columnSize - 4) + 6;
 }
 
+unsigned int appendHex6TableData(OutputStream* outputStream, signed long value, int columnSize) {
+	appendTableSeparator(outputStream);
+	appendSpace(outputStream);
+	appendHex6(outputStream, value);
+	// length of hex6 = 6
+	return appendSpaces(outputStream, columnSize - 6) + 8;
+}
+
 unsigned int appendCharTableData(OutputStream* outputStream, const char c, int columnSize) {
 	appendTableSeparator(outputStream);
 	appendSpace(outputStream);

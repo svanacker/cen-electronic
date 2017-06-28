@@ -90,6 +90,13 @@ int deviceRobotKinematicsGetInterface(char commandHeader, DeviceInterfaceMode mo
         }
         return commandLengthValueForMode(mode, 6, 0);
     }
+	// DEBUG
+	else if (commandHeader == COMMAND_KINEMATICS_DEBUG) {
+		if (fillDeviceArgumentList) {
+			setFunctionNoArgumentAndNoResult("debug");
+		}
+		return commandLengthValueForMode(mode, 0, 0);
+	}
     return DEVICE_HEADER_NOT_HANDLED;
 }
 
