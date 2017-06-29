@@ -115,7 +115,7 @@ void test_appendString(void) {
 void test_appendCharArray(void) {
     initBufferForPrintWriterTest();
     FixedCharArray s = "HELL";
-    appendFixedCharArray(outputStream, &s);
+	appendHexFixedCharArray(outputStream, &s);
     // HELL in hexadecimal becomes : "48454C4C4F
     bool actual = isBufferEqualsToString(&bufferTest, "48454C4C");
     TEST_ASSERT_TRUE(actual);

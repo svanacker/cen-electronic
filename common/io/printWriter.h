@@ -47,6 +47,7 @@ void appendSpace(OutputStream* outputStream);
  * Append a string to the buffer.
  * @param outputStream the pointer on outputStream (POO simulation)
  * @param s a standard C String (terminated by \0)
+ * @return how many chars were written
  */
 unsigned int appendString(OutputStream* outputStream, const char* s);
 
@@ -54,8 +55,17 @@ unsigned int appendString(OutputStream* outputStream, const char* s);
  * Append a char array with a specific length.
  * @param outputStream the pointer on outputStream (POO simulation)
  * @param s the pointer on the char array
+ * @return how many chars were written
  */
-void appendFixedCharArray(OutputStream* outputStream, const FixedCharArray* s);
+unsigned int appendFixedCharArray(OutputStream* outputStream, const FixedCharArray* s);
+
+/**
+* Append a char array with a specific length but encoded in hexadecimal.
+* @param outputStream the pointer on outputStream (POO simulation)
+* @param s the pointer on the char array
+* @return how many chars were written
+*/
+unsigned int appendHexFixedCharArray(OutputStream* outputStream, const FixedCharArray* s);
 
 /**
  * Append a string with CRLF to the buffer.

@@ -30,6 +30,10 @@
 #include "../../device/device.h"
 #include "../../device/deviceList.h"
 
+// I2C
+#include "../../device/i2c/i2cCommonDebugDevice.h"
+#include "../../device/i2c/i2cCommonDebugDeviceInterface.h"
+
 // I2C -> Slave
 #include "../../device/i2c/slave/i2cSlaveDebugDevice.h"
 #include "../../device/i2c/slave/i2cSlaveDebugDeviceInterface.h"
@@ -254,6 +258,7 @@ void runMotorBoardPC(bool singleMode) {
     initDeviceList((Device(*)[]) &deviceListArray, MOTOR_BOARD_PC_DEVICE_LIST_LENGTH);
     addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
     addLocalDevice(getTimerDeviceInterface(), getTimerDeviceDescriptor());
+	addLocalDevice(getI2cCommonDebugDeviceInterface(), getI2cCommonDebugDeviceDescriptor());
     addLocalDevice(getI2cSlaveDebugDeviceInterface(), getI2cSlaveDebugDeviceDescriptor(&motorI2cBusConnection));
     addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
     addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());

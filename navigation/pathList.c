@@ -7,6 +7,7 @@
 
 #include "../common/io/outputStream.h"
 #include "../common/io/printWriter.h"
+#include "../common/io/printTableWriter.h"
 
 #include "../common/error/error.h"
 
@@ -24,7 +25,7 @@ void clearPathList(PathList* pathList) {
 }
 
 PathData* addPath(PathList* pathList) {
-    if (&pathList == NULL || pathList->maxSize == 0) {
+    if (pathList == NULL || pathList->maxSize == 0) {
         writeError(PATH_LIST_NOT_INITIALIZED);
         return NULL;
     }
@@ -41,8 +42,36 @@ PathData* addPath(PathList* pathList) {
     }
 }
 
+PathData* addFilledPath(PathList* pathList,
+						LocationList* locationList,
+					    char* locationName1, char* locationName2, 
+						unsigned int cost, 
+						int controlPointDistance1, int controlPointDistance2, 
+						int angle1, int angle2, 
+						unsigned char accelerationFactor, unsigned char speedFactor,
+						bool mustGoBackward) {
+	PathData* result = addPath(pathList);
+
+	Location* location1 = findLocationByStringName(locationList, locationName1);
+	result->location1 = location1;
+
+	Location* location2 = findLocationByStringName(locationList, locationName2);
+	result->location2 = location2;
+
+	result->cost = cost;
+	result->controlPointDistance1 = controlPointDistance1;
+	result->controlPointDistance2 = controlPointDistance2;
+	result->angle1 = angle1;
+	result->angle2 = angle2;
+	result->accelerationFactor = accelerationFactor;
+	result->speedFactor = speedFactor;
+	result->mustGoBackward = mustGoBackward;
+
+	return result;
+}
+
 PathData* getPath(PathList* pathList, unsigned int index) {
-    if (&pathList == NULL || pathList->maxSize == 0) {
+    if (pathList == NULL || pathList->maxSize == 0) {
         writeError(PATH_LIST_NOT_INITIALIZED);
         return NULL;
     }
@@ -84,6 +113,8 @@ unsigned int getPathCount(PathList* pathList) {
     return pathList->size;
 }
 
+// DEBUG
+
 void printPathList(OutputStream* outputStream, char* pathListName, PathList* pathList) {
     unsigned int i;
     unsigned int size = pathList->size;
@@ -95,4 +126,79 @@ void printPathList(OutputStream* outputStream, char* pathListName, PathList* pat
         PathData* pathData = getPath(pathList, i);
         printPath(outputStream, pathData);
     }
+}
+
+#define PATH_LIST_NAME_1_COLUMN_LENGTH                       4
+#define PATH_LIST_NAME_2_COLUMN_LENGTH                       4
+#define PATH_LIST_NAME_HEX_1_COLUMN_LENGTH                   8
+#define PATH_LIST_NAME_HEX_2_COLUMN_LENGTH                   8
+#define PATH_LIST_COST_COLUMN_LENGTH                         4
+#define PATH_LIST_CP1_COLUMN_LENGTH                          4
+#define PATH_LIST_CP2_COLUMN_LENGTH                          4
+#define PATH_LIST_ANGLE_1_COLUMN_LENGTH                      4
+#define PATH_LIST_ANGLE_2_COLUMN_LENGTH                      4
+#define PATH_LIST_ACCELERATION_FACTOR_COLUMN_LENGTH          4
+#define PATH_LIST_SPEED_FACTOR_COLUMN_LENGTH                 5
+#define PATH_LIST_GO_BACK_COLUMN_LENGTH                      1
+
+/**
+* Private.
+*/
+void printPathListHeader(OutputStream* outputStream) {
+	println(outputStream);
+	// Table Header
+	appendTableHeaderSeparatorLine(outputStream);
+	appendStringHeader(outputStream, "loc1", PATH_LIST_NAME_1_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "loc2", PATH_LIST_NAME_2_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "loc1 Hex", PATH_LIST_NAME_HEX_1_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "loc2 Hex", PATH_LIST_NAME_HEX_2_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "cost", PATH_LIST_COST_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "cp1", PATH_LIST_CP1_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "cp2", PATH_LIST_CP2_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "ang1", PATH_LIST_ANGLE_1_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "ang2", PATH_LIST_ANGLE_2_COLUMN_LENGTH);
+
+	appendStringHeader(outputStream, "Acc", PATH_LIST_ACCELERATION_FACTOR_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "Speed", PATH_LIST_SPEED_FACTOR_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "B", PATH_LIST_GO_BACK_COLUMN_LENGTH);
+
+	appendEndOfTableColumn(outputStream, 0);
+	appendTableHeaderSeparatorLine(outputStream);
+}
+
+void printPathTable(OutputStream* outputStream, PathData* pathData) {
+	appendFixedCharArrayTableData(outputStream, &(pathData->location1->name), PATH_LIST_NAME_1_COLUMN_LENGTH);
+	appendFixedCharArrayTableData(outputStream, &(pathData->location2->name), PATH_LIST_NAME_2_COLUMN_LENGTH);
+	appendHexFixedCharArrayTableData(outputStream, &(pathData->location1->name), PATH_LIST_NAME_HEX_1_COLUMN_LENGTH);
+	appendHexFixedCharArrayTableData(outputStream, &(pathData->location2->name), PATH_LIST_NAME_HEX_2_COLUMN_LENGTH);
+	appendDecTableData(outputStream, pathData->cost, PATH_LIST_COST_COLUMN_LENGTH);
+	appendDecTableData(outputStream, pathData->controlPointDistance1, PATH_LIST_CP1_COLUMN_LENGTH);
+	appendDecTableData(outputStream, pathData->controlPointDistance2, PATH_LIST_CP2_COLUMN_LENGTH);
+	appendDecTableData(outputStream, pathData->angle1, PATH_LIST_ANGLE_1_COLUMN_LENGTH);
+	appendDecTableData(outputStream, pathData->angle2, PATH_LIST_ANGLE_2_COLUMN_LENGTH);
+	appendDecTableData(outputStream, pathData-> accelerationFactor, PATH_LIST_ACCELERATION_FACTOR_COLUMN_LENGTH);
+	appendDecTableData(outputStream, pathData->speedFactor, PATH_LIST_SPEED_FACTOR_COLUMN_LENGTH);
+	appendBoolTableData(outputStream, pathData->mustGoBackward, PATH_LIST_GO_BACK_COLUMN_LENGTH);
+	appendEndOfTableColumn(outputStream, 0);
+}
+
+void printPathListTable(OutputStream* outputStream, PathList* pathList) {
+	int size = pathList->size;
+	printPathListHeader(outputStream);
+	int i;
+	for (i = 0; i < size; i++) {
+		PathData* pathData = getPath(pathList, i);
+		printPathTable(outputStream, pathData);
+	}
+	appendTableHeaderSeparatorLine(outputStream);
+}
+
+// TESTS DATA
+
+// Tests Data
+
+void addPathListTestsData(PathList* pathList, LocationList* locationList) {
+	addFilledPath(pathList, locationList, "STAR", "OBJ1", 10, 20, 30, 15, 25, 2, 2, false);
+	addFilledPath(pathList, locationList, "OBJ1", "OBJ2", 15, 10, 15, 10, 20, 3, 2, false);
+	addFilledPath(pathList, locationList, "OBJ2", "END", 10, 17, 5, 5, 5, 1, 2, false);
 }

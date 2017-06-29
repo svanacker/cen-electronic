@@ -1,6 +1,8 @@
 #ifndef PATH_LIST_H
 #define PATH_LIST_H
 
+#include "../common/io/outputStream.h"
+
 #include "path.h"
 #include "location.h"
 
@@ -37,6 +39,18 @@ void clearPathList(PathList* pathList);
 PathData* addPath(PathList* pathList);
 
 /**
+* Add a Path, with structure filled with all data.
+*/
+PathData* addFilledPath(PathList* pathList,
+	LocationList* locationList,
+	char* locationName1, char* locationName2,
+	unsigned int cost,
+	int controlPointDistance1, int controlPointDistance2,
+	int angle1, int angle2,
+	unsigned char accelerationFactor, unsigned char speedFactor,
+	bool mustGoBackward);
+
+/**
  * Get the path at index.
  */
 PathData* getPath(PathList* pathList, unsigned int index);
@@ -56,9 +70,20 @@ unsigned int getPathCount(PathList* pathList);
  */
 void resetOutgoingPathInfo(PathList* pathList);
 
+// DEBUG
+
 /**
  * Print the list of path.
  */
 void printPathList(OutputStream* outputStream, char* pathListName, PathList* pathList);
+
+/**
+* Print the list of path as table.
+*/
+void printPathListTable(OutputStream* outputStream, PathList* pathList);
+
+// TESTS DATA
+
+void addPathListTestsData(PathList* pathList, LocationList* locationList);
 
 #endif
