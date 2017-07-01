@@ -32,7 +32,7 @@ bool isEmptyLocationList(LocationList* locationList) {
 }
 
 Location* getLocation(LocationList* locationList, unsigned int index) {
-    if (&locationList == NULL || locationList->maxSize == 0) {
+    if (locationList == NULL || locationList->maxSize == 0) {
         writeError(LOCATION_LIST_NOT_INITIALIZED);
         return NULL;
     }
