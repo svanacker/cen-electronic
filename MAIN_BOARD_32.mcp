@@ -349,6 +349,8 @@ file_321=device.adc
 file_322=drivers.motion
 file_323=common.io
 file_324=common.i2c
+file_325=.
+file_326=.
 [GENERATED_FILES]
 file_000=no
 file_001=no
@@ -675,6 +677,8 @@ file_321=no
 file_322=no
 file_323=no
 file_324=no
+file_325=no
+file_326=no
 [OTHER_FILES]
 file_000=no
 file_001=no
@@ -1001,6 +1005,8 @@ file_321=no
 file_322=no
 file_323=no
 file_324=no
+file_325=no
+file_326=no
 [FILE_INFO]
 file_000=common\io\buffer.c
 file_001=common\log\logger.c
@@ -1327,6 +1333,8 @@ file_321=device\adc\adcDevice.h
 file_322=drivers\motion\extendedMotionDriver.h
 file_323=common\io\printTableWriter.h
 file_324=common\i2c\i2cBusList.h
+file_325=device\motion\extended\extendedMotionDeviceInterface.h
+file_326=motion\extended\bspline.h
 [SUITE_INFO]
 suite_guid={14495C23-81F8-43F3-8A44-859C583D7760}
 suite_state=

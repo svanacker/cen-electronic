@@ -38,6 +38,7 @@
         <itemPath>../../../common/io/filter.h</itemPath>
         <itemPath>../../../common/io/buffer.h</itemPath>
         <itemPath>../../../common/io/cenIO.h</itemPath>
+        <itemPath>../../../common/io/printTableWriter.h</itemPath>
       </logicalFolder>
       <logicalFolder name="common.log" displayName="common.log" projectFiles="true">
         <itemPath>../../../common/log/logLevel.h</itemPath>
@@ -191,6 +192,7 @@
         <itemPath>../../../common/io/filter.c</itemPath>
         <itemPath>../../../common/io/pin.c</itemPath>
         <itemPath>../../../common/io/compositeOutputStream.c</itemPath>
+        <itemPath>../../../common/io/printTableWriter.c</itemPath>
       </logicalFolder>
       <logicalFolder name="common.log" displayName="common.log" projectFiles="true">
         <itemPath>../../../common/log/logHandler.c</itemPath>

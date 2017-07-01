@@ -46,6 +46,7 @@
         <itemPath>../../../common/i2c/i2cConstants.h</itemPath>
         <itemPath>../../../common/i2c/i2cCommon.h</itemPath>
         <itemPath>../../../common/i2c/i2cDebug.h</itemPath>
+        <itemPath>../../../common/i2c/i2cBusList.h</itemPath>
       </logicalFolder>
       <logicalFolder name="common.i2c.32"
                      displayName="common.i2c.32"
@@ -75,6 +76,7 @@
         <itemPath>../../../common/io/binaryWriter.h</itemPath>
         <itemPath>../../../common/io/reader.h</itemPath>
         <itemPath>../../../common/io/nullOutputStream.h</itemPath>
+        <itemPath>../../../common/io/printTableWriter.h</itemPath>
       </logicalFolder>
       <logicalFolder name="common.log" displayName="common.log" projectFiles="true">
         <itemPath>../../../common/log/logger.h</itemPath>
@@ -457,6 +459,7 @@
       <logicalFolder name="common.i2c" displayName="common.i2c" projectFiles="true">
         <itemPath>../../../common/i2c/i2cDebug.c</itemPath>
         <itemPath>../../../common/i2c/i2cCommon.c</itemPath>
+        <itemPath>../../../common/i2c/i2cBusList.c</itemPath>
       </logicalFolder>
       <logicalFolder name="common.i2c.32"
                      displayName="common.i2c.32"
@@ -490,6 +493,7 @@
         <itemPath>../../../common/io/binaryPrintWriter.c</itemPath>
         <itemPath>../../../common/io/binaryWriter.c</itemPath>
         <itemPath>../../../common/io/nullOutputStream.c</itemPath>
+        <itemPath>../../../common/io/printTableWriter.c</itemPath>
       </logicalFolder>
       <logicalFolder name="common.log" displayName="common.log" projectFiles="true">
         <itemPath>../../../common/log/logger.c</itemPath>
@@ -825,7 +829,6 @@
   </logicalFolder>
   <sourceRootList>
     <Elem>..\..\..\common\serial</Elem>
-    <Elem>..\..\..\common\i2c\master\32</Elem>
     <Elem>..\..\..\device\system</Elem>
     <Elem>..\..\..\device\airconditioning</Elem>
     <Elem>..\..\..\device\timer</Elem>
