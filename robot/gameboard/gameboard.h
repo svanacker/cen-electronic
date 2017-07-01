@@ -7,8 +7,8 @@
 
 #define CHAR_NO_DRAW                ' '
 
-#define GAMEBOARD_COLUMN_COUNT        40
-#define GAMEBOARD_LINE_COUNT        30
+#define GAMEBOARD_COLUMN_COUNT        80
+#define GAMEBOARD_LINE_COUNT        60
 
 #define GAMEBOARD_WIDTH                2000.0f
 #define GAMEBOARD_HEIGHT            3000.0f

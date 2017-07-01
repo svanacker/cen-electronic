@@ -168,12 +168,14 @@ void printGameboard(OutputStream* outputStream) {
     println(outputStream);
     int line;
     int column;
-    for (line = 0; line < GAMEBOARD_LINE_COUNT; line++) {
-        for (column = 0; column < GAMEBOARD_COLUMN_COUNT; column++) {
-            char c = printAllElements(NULL, column, line);
-            append(outputStream, c);
-        }
-        append(outputStream, '\n');
+	for (line = 0; line < GAMEBOARD_LINE_COUNT; line++) {
+		for (column = 0; column < GAMEBOARD_COLUMN_COUNT; column++) {
+			char c = printAllElements(NULL, column, line);
+			append(outputStream, c);
+		}
+		if (GAMEBOARD_COLUMN_COUNT < 80) {
+			append(outputStream, '\n');
+		}
     }
 }
 
