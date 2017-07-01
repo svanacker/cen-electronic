@@ -12,6 +12,11 @@
 #define COMMAND_LCD                  'w'
 
 /**
+ * Command to write "Hello World quickly !"
+ */
+#define COMMAND_LCD_TEST             'T'
+
+/**
  * Command to clear the LCD
  */
 #define COMMAND_CLEAR_LCD            'c'

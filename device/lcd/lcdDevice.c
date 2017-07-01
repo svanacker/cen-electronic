@@ -36,6 +36,20 @@ void deviceLCDHandleRawData(char commandHeader,
             writeLCDChar(c);
         }
     }
+    else if (commandHeader == COMMAND_LCD_TEST) {
+        ackCommand(outputStream, LCD_DEVICE_HEADER, COMMAND_LCD_TEST);
+        writeLCDChar('H');
+        writeLCDChar('E');
+        writeLCDChar('L');
+        writeLCDChar('L');
+        writeLCDChar('O');
+        writeLCDChar(' ');
+        writeLCDChar('W');
+        writeLCDChar('O');
+        writeLCDChar('R');
+        writeLCDChar('L');
+        writeLCDChar('D');
+    }
     else if (commandHeader == COMMAND_CLEAR_LCD) {
         ackCommand(outputStream, LCD_DEVICE_HEADER, COMMAND_CLEAR_LCD);
         clearScreen();

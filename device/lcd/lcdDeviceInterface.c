@@ -22,6 +22,12 @@ int deviceLCDGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fil
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
+    else if (commandHeader == COMMAND_LCD_TEST) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("test");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }
     return DEVICE_HEADER_NOT_HANDLED;
 }
 
