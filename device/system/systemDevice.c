@@ -91,8 +91,14 @@ void deviceSystemHandleRawData(char header, InputStream* inputStream, OutputStre
 #else
 		appendString(outputStream, "Unsupported Operation");
 #endif // PC_COMPILER
-
-		system("cls");
+	}
+	else if (header == COMMAND_RESET) {
+		ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_RESET);
+		#ifdef PC_COMPILER
+			appendString(outputStream, "Unsupported Operation");
+		#else
+			// goto 0;
+		#endif // PC_COMPILER
 	}
     // Notifications
     else if (header == COMMAND_NOTIFICATION) {

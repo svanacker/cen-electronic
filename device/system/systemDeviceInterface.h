@@ -37,6 +37,8 @@
 /** Command to know if the remote board is present. */
 #define COMMAND_PING               'P'
 
+/** Command to reset the device. */
+#define COMMAND_RESET              'R'
 
 /**
 * Get the system device interface.

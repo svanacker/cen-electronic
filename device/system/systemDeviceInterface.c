@@ -84,6 +84,12 @@ int deviceSystemGetInterface(char commandHeader, DeviceInterfaceMode mode, bool 
 		}
 		return commandLengthValueForMode(mode, 0, 0);
 	}
+	else if (commandHeader == COMMAND_RESET) {
+		if (fillDeviceArgumentList) {
+			setFunctionNoArgumentAndNoResult("reset MicroController");
+		}
+		return commandLengthValueForMode(mode, 0, 0);
+	}
     // Notification
     else if (commandHeader == COMMAND_NOTIFICATION) {
         if (fillDeviceArgumentList) {
