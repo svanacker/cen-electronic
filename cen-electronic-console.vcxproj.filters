@@ -784,6 +784,9 @@
     <Filter Include="Header Files\device\motion\extended">
       <UniqueIdentifier>{05f7c713-da2f-4373-9d65-072e777914e5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\device\pc">
+      <UniqueIdentifier>{eef45eb7-dd9a-403a-af6b-50a8244d557e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -1559,6 +1562,12 @@
     </ClCompile>
     <ClCompile Include="device\i2c\i2cCommonDebugDeviceInterface.c">
       <Filter>Source Files\device\i2c</Filter>
+    </ClCompile>
+    <ClCompile Include="device\pc\pcDevice.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="device\pc\pcDeviceInterface.c">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2395,6 +2404,12 @@
     </ClInclude>
     <ClInclude Include="device\i2c\i2cCommonDebugDeviceInterface.h">
       <Filter>Header Files\device\i2c</Filter>
+    </ClInclude>
+    <ClInclude Include="device\pc\pcDevice.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="device\pc\pcDeviceInterface.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

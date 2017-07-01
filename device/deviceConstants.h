@@ -108,6 +108,8 @@
 
 #define CODERS_DEVICE_HEADER                       'w'
 
+#define PC_DEVICE_HEADER                           'W'
+
 #define EXTENDED_MOTION_DEVICE_HEADER			   'X'
 
 /** Reserved to clear buffer. */

@@ -193,6 +193,8 @@
     <ClCompile Include="device\motor\pwmMotorDeviceInterface.c" />
     <ClCompile Include="device\navigation\navigationDevice.c" />
     <ClCompile Include="device\navigation\navigationDeviceInterface.c" />
+    <ClCompile Include="device\pc\pcDevice.c" />
+    <ClCompile Include="device\pc\pcDeviceInterface.c" />
     <ClCompile Include="device\sensor\temperature\temperatureSensor.c" />
     <ClCompile Include="device\sensor\temperature\temperatureSensorDevice.c" />
     <ClCompile Include="device\sensor\temperature\temperatureSensorDeviceInterface.c" />
@@ -463,6 +465,8 @@
     <ClInclude Include="device\motor\pwmMotorDeviceInterface.h" />
     <ClInclude Include="device\navigation\navigationDevice.h" />
     <ClInclude Include="device\navigation\navigationDeviceInterface.h" />
+    <ClInclude Include="device\pc\pcDevice.h" />
+    <ClInclude Include="device\pc\pcDeviceInterface.h" />
     <ClInclude Include="device\sensor\temperature\temperatureSensor.h" />
     <ClInclude Include="device\sensor\temperature\temperatureSensorDevice.h" />
     <ClInclude Include="device\sensor\temperature\temperatureSensorDeviceInterface.h" />
