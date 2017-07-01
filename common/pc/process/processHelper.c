@@ -3,6 +3,7 @@
 #include <windows.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include <Wincon.h>
 
 /**
  * Convert char array to wide char array
@@ -45,11 +46,27 @@ bool runProcess(char* applicationName, char* option) {
 
     return TRUE;
 }
-
 void moveConsole(int left, int top, int width, int height)
 {
     HWND console = GetConsoleWindow();
     // RECT r;
     // GetWindowRect(console, &r); //stores the console's current dimensions
     MoveWindow(console, left, top, width, height, TRUE); // 800 width, 100 height
+}
+
+void setConsoleSizeAndBuffer(int width, int height, int bufferWidth, int bufferHeight) {
+	COORD coord;
+	HWND console = GetConsoleWindow();
+	coord.X = bufferWidth;
+	coord.Y = bufferHeight;
+
+	SMALL_RECT Rect;
+	Rect.Top = 0;
+	Rect.Left = 0;
+	Rect.Bottom = height - 1;
+	Rect.Right = width - 1;
+
+	HANDLE Handle = GetStdHandle(STD_OUTPUT_HANDLE);      // Get Handle 
+	SetConsoleScreenBufferSize(Handle, coord);            // Set Buffer Size 
+	SetConsoleWindowInfo(Handle, TRUE, &Rect);            // Set Window Size 
 }

@@ -275,6 +275,7 @@ bool mainBoardPcWaitForInstruction(StartMatch* startMatch) {
 void runMainBoardPC(bool connectToRobotManagerMode) {
     connectToRobotManager = connectToRobotManagerMode;
     setBoardName(MAIN_BOARD_PC_NAME);
+	setConsoleSizeAndBuffer(CONSOLE_CHARS_WIDTH, CONSOLE_CHARS_HEIGHT, CONSOLE_BUFFER_WIDTH, CONSOLE_BUFFER_HEIGHT);
     moveConsole(0, 0, HALF_SCREEN_WIDTH, CONSOLE_HEIGHT);
 
     // We use http://patorjk.com/software/taag/#p=testall&v=2&f=Acrobatic&t=MOTOR%20BOARD%20PC

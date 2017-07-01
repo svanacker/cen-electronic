@@ -196,6 +196,7 @@ void motorBoardWaitForInstruction(void) {
 void runMotorBoardPC(bool singleMode) {
     singleModeActivated = singleMode;
     setBoardName(MOTOR_BOARD_PC_NAME);
+	setConsoleSizeAndBuffer(CONSOLE_CHARS_WIDTH, CONSOLE_CHARS_HEIGHT, CONSOLE_BUFFER_WIDTH, CONSOLE_BUFFER_HEIGHT);
     moveConsole(HALF_SCREEN_WIDTH, 0, HALF_SCREEN_WIDTH, CONSOLE_HEIGHT);
 
     // We use http://patorjk.com/software/taag/#p=testall&v=2&f=Acrobatic&t=MOTOR%20BOARD%20PC
