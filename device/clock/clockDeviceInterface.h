@@ -9,8 +9,12 @@
 /**
 * Defines the header to read the clock.
 */
-
 #define COMMAND_READ_CLOCK         'r'
+
+/**
+* Defines the header to read the clock but in Debug Mode.
+*/
+#define COMMAND_READ_CLOCK_DEBUG         'D'
 
 /**
 * Defines the header to write the time on the clock.

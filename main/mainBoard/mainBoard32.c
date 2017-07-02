@@ -349,6 +349,7 @@ void initMainBoardDevicesDescriptor() {
     addLocalDevice(getEndMatchDetectorDeviceInterface(), getEndMatchDetectorDeviceDescriptor());
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
+    addLocalDevice(getTemperatureSensorDeviceInterface(), getTemperatureSensorDeviceDescriptor(&temperature));
     addLocalDevice(getADCDeviceInterface(), getADCDeviceDescriptor());
 
     addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
@@ -356,7 +357,6 @@ void initMainBoardDevicesDescriptor() {
     /*
     addLocalDevice(getSonarDeviceInterface(), getSonarDeviceDescriptor(&i2cBus));
     addLocalDevice(getRobotSonarDetectorDeviceInterface(), getRobotSonarDetectorDeviceDescriptor(&i2cBus));
-    addLocalDevice(getTemperatureSensorDeviceInterface(), getTemperatureSensorDeviceDescriptor(&i2cBus));
     */
     // Mechanical Board 2->I2C
     // Device* armDevice = addI2cRemoteDevice(getArm2012DeviceInterface(), MECHANICAL_BOARD_2_I2C_ADDRESS);

@@ -108,12 +108,13 @@ int deviceEepromGetInterface(char header, DeviceInterfaceMode mode, bool fillDev
     }
     else if (header == COMMAND_INTENSIVE_TEST) {
         if (fillDeviceArgumentList) {
-            setFunction("intensiveTest", 2, 1);
+            setFunction("intensiveTest", 3, 1);
             setArgumentUnsignedHex4(0, "address");
-            setArgumentUnsignedHex4(1, "length of test");
-            setResultSignedHex2(0, "errors");
+            setArgumentSeparator(1);
+            setArgumentUnsignedHex4(2, "length of test");
+            setResultUnsignedHex4(0, "errors");
         }
-        return commandLengthValueForMode(mode, 8, 2);
+        return commandLengthValueForMode(mode, 9, 4);
     }
     return DEVICE_HEADER_NOT_HANDLED;
 }

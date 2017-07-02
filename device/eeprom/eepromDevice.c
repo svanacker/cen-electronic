@@ -120,8 +120,9 @@ void deviceEepromHandleRawData(char commandHeader, InputStream* inputStream, Out
     else if (commandHeader == COMMAND_INTENSIVE_TEST) {
         ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_INTENSIVE_TEST);
         unsigned long address = readHex4(inputStream);
+        checkIsSeparator(inputStream);
         unsigned long length = readHex4(inputStream);
-        unsigned errorCount = 0;
+        unsigned int errorCount = 0;
         unsigned int index;
         // Writes
         for (index = 0; index < length; index++) {
@@ -137,7 +138,7 @@ void deviceEepromHandleRawData(char commandHeader, InputStream* inputStream, Out
                 }
             }
         }
-        appendHex2(outputStream, errorCount);
+        appendHex4(outputStream, errorCount);
     }
 }
 

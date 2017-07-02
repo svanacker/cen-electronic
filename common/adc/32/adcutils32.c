@@ -2,7 +2,7 @@
 #include <p32xxxx.h>
 
 // TODO : Remove this Include and see if the warning is important
-#include _DISABLE_OPENADC10_CONFIGPORT_WARNING
+// #include _DISABLE_OPENADC10_CONFIGPORT_WARNING
 #include <peripheral/adc10.h>
 #include <peripheral/ports.h>
 
