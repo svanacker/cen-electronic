@@ -93,6 +93,10 @@
 #include "../../device/log/logDevice.h"
 #include "../../device/log/logDeviceInterface.h"
 
+// I2C
+#include "../../device/i2c/i2cCommonDebugDevice.h"
+#include "../../device/i2c/i2cCommonDebugDeviceInterface.h"
+
 // I2C MASTER DEBUG
 #include "../../device/i2c/master/i2cMasterDebugDevice.h"
 #include "../../device/i2c/master/i2cMasterDebugDeviceInterface.h"
@@ -333,6 +337,7 @@ void initMainBoardDevicesDescriptor() {
     addLocalDevice(getTimerDeviceInterface(), getTimerDeviceDescriptor());
     addLocalDevice(getTest2DeviceInterface(), getTest2DeviceDescriptor());
     addLocalDevice(getDataDispatcherDeviceInterface(), getDataDispatcherDeviceDescriptor());
+    addLocalDevice(getI2cCommonDebugDeviceInterface(), getI2cCommonDebugDeviceDescriptor());
     addLocalDevice(getI2cMasterDebugDeviceInterface(), getI2cMasterDebugDeviceDescriptor());
 
     // LOCAL

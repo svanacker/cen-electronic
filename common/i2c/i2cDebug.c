@@ -62,7 +62,7 @@ void appendI2cDebugOutputChar(unsigned char debugValue) {
 }
 
 void printI2cDebugBuffers() {
-    OutputStream* outputStreamLogger = getAlwaysOutputStreamLogger();
+    OutputStream* outputStreamLogger = getInfoOutputStreamLogger();
 
     println(outputStreamLogger);
     appendString(outputStreamLogger, "I2C:Is Enabled:");
@@ -105,8 +105,6 @@ void printI2cBusListTableHeader(OutputStream* outputStream) {
 	appendStringHeader(outputStream, "init ?", I2C_DEBUG_INITIALIZED_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "config", I2C_DEBUG_CONFIG_COLUMN_LENGTH);
 	appendEndOfTableColumn(outputStream, I2C_DEBUG_LAST_COLUMN_LENGTH);
-	appendTableSeparator(outputStream);
-	println(outputStream);
 	appendTableHeaderSeparatorLine(outputStream);
 }
 

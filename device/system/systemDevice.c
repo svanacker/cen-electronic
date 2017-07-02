@@ -111,8 +111,8 @@ void deviceSystemHandleRawData(char header, InputStream* inputStream, OutputStre
         append(outputStream, SYSTEM_DEVICE_HEADER);
         append(outputStream, COMMAND_WAIT);
     } else if (header == COMMAND_BOARD_NAME) {
-        appendString(getAlwaysOutputStreamLogger(), getBoardName());
-        println(getAlwaysOutputStreamLogger());
+        appendString(getInfoOutputStreamLogger(), getBoardName());
+        println(getInfoOutputStreamLogger());
         ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_BOARD_NAME);
     }
 }

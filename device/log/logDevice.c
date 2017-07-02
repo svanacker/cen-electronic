@@ -42,7 +42,7 @@ void deviceLogHandleRawData(char header, InputStream* inputStream, OutputStream*
         logHandler->logLevel = logLevel;
 
         // we don't use driver stream (buffered->too small), instead of log (not buffered)
-        printLogger(getAlwaysOutputStreamLogger());
+        printLogger(getInfoOutputStreamLogger());
     }
     if (header == COMMAND_WRITE_GLOBAL_LOG_LEVEL) {
         // data
@@ -52,11 +52,11 @@ void deviceLogHandleRawData(char header, InputStream* inputStream, OutputStream*
         Logger* logger = getLoggerInstance();
         logger->globalLogLevel = logLevel;
         // we don't use driver stream (buffered->too small), instead of log (not buffered)
-        printLogger(getAlwaysOutputStreamLogger());
+        printLogger(getInfoOutputStreamLogger());
     }
     else if (header == COMMAND_LOG) {
         ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_LOG);
-        printLogger(getAlwaysOutputStreamLogger());
+        printLogger(getInfoOutputStreamLogger());
     }    
 }
 

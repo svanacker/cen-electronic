@@ -35,7 +35,7 @@ void deviceI2cCommonDebugHandleRawData(char header, InputStream* inputStream, Ou
     // I2C Management
     if (header == COMMAND_I2C_DEBUG_COMMON_LIST_BUS) {
         ackCommand(outputStream, I2C_COMMON_DEBUG_DEVICE_HEADER, COMMAND_I2C_DEBUG_COMMON_LIST_BUS);
-		printI2cBusList(getAlwaysOutputStreamLogger());
+		printI2cBusList(getInfoOutputStreamLogger());
     }
 }
 

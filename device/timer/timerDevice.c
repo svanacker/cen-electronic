@@ -59,7 +59,7 @@ Timer* addTimerDemo(void) {
 
 void deviceTimerHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream) {
     if (commandHeader == COMMAND_TIMER_LIST) {
-        printTimerList(getAlwaysOutputStreamLogger(), getTimerList());
+        printTimerList(getInfoOutputStreamLogger(), getTimerList());
         ackCommand(outputStream, TIMER_DEVICE_HEADER, COMMAND_TIMER_LIST);
     }    
     else if (commandHeader == COMMAND_TIMER_COUNT) {

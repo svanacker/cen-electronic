@@ -87,7 +87,7 @@ void deviceRobotConfigHandleRawData(char commandHeader, InputStream* inputStream
     }
 	else if (commandHeader == COMMAND_CONFIG_DEBUG) {
 		ackCommand(outputStream, ROBOT_CONFIG_DEVICE_HEADER, COMMAND_CONFIG_DEBUG);
-		printRobotTableConfig(getAlwaysOutputStreamLogger(), robotConfig);
+		printRobotTableConfig(getInfoOutputStreamLogger(), robotConfig);
 	}
 }
 
