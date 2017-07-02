@@ -24,7 +24,7 @@
 *.sdb
 *.cceadd 
 NMakefile
-Makefile
+#Makefile
 #*.X
 *.zip
 #*.mcw
