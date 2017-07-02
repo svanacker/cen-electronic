@@ -2,6 +2,8 @@
 
 #include <stdlib.h>
 
+#include "i2cBusList.h"
+
 #include "../../common/error/error.h"
 
 #include "../../common/io/outputStream.h"
@@ -109,4 +111,25 @@ void printI2cBusConnection(OutputStream* outputStream, I2cBusConnection* i2cBusC
 
     // Opened
     appendBool(outputStream, i2cBusConnection->opened);
+}
+
+const char* getI2cBusTypeAsString(enum I2cBusType i2cBusType) {
+	switch (i2cBusType) {
+		case I2C_BUS_TYPE_MASTER: return "I2C_MASTER";
+		case I2C_BUS_TYPE_SLAVE: return "I2C_SLAVE";
+		case I2C_BUS_TYPE_UNKNOWN: return "I2C_UNKOWN";
+		default: return "I2C_???";
+	}
+	return "I2C_???";
+}
+
+const char* getI2cPortAsString(enum I2cPort i2cPort) {
+	switch (i2cPort) {
+		case I2C_BUS_PORT_1: return "I2C_BUS_PORT_1";
+		case I2C_BUS_PORT_2: return "I2C_BUS_PORT_2";
+		case I2C_BUS_PORT_3: return "I2C_BUS_PORT_3";
+		case I2C_BUS_PORT_4: return "I2C_BUS_PORT_4";
+		default: return "I2C_PORT_??";
+	}
+	return "I2C_PORT_??";
 }

@@ -54,8 +54,8 @@ void deviceSonarHandleRawData(char commandHeader, InputStream* inputStream, Outp
         int oldAddress = readHex2(inputStream);
         int newAddress = readHex2(inputStream);
 
-        appendStringAndDec(getAlwaysOutputStreamLogger(), "\noldAddress=", oldAddress);
-        appendStringAndDec(getAlwaysOutputStreamLogger(), "\newAddress=", newAddress);
+        appendStringAndDec(getInfoOutputStreamLogger(), "\noldAddress=", oldAddress);
+        appendStringAndDec(getInfoOutputStreamLogger(), "\newAddress=", newAddress);
 
         SRF02ChangeAddress(sonarDeviceI2cBusConnection, oldAddress, newAddress); 
         

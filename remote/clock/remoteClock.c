@@ -46,12 +46,12 @@ bool writeHourRemoteClockData(ClockData* clockData, int dispatcherIndex) {
     InputStream* resultStream = getDriverResponseInputStream();
 
     // To select the Dispatcher
-    append(outputStream, DATA_DISPATCHER_DEVICE_HEADER);
+    append(outputStream, DISPATCHER_COMMAND_HEADER);
     appendHex2(outputStream, dispatcherIndex);
     
     // The device / command Header + Data
     append(outputStream, CLOCK_DEVICE_HEADER);
-    append(outputStream, COMMAND_WRITE_HOUR);
+    append(outputStream, COMMAND_WRITE_TIME);
     appendHex2(outputStream, clockData->hour);
     appendHex2(outputStream, clockData->minute);
     appendHex2(outputStream, clockData->second);
@@ -65,7 +65,7 @@ bool writeDateRemoteClockData(ClockData* clockData, int dispatcherIndex) {
     InputStream* resultStream = getDriverResponseInputStream();
 
     // To select the Dispatcher
-    append(outputStream, DATA_DISPATCHER_DEVICE_HEADER);
+    append(outputStream, DISPATCHER_COMMAND_HEADER);
     appendHex2(outputStream, dispatcherIndex);
     
     // The device / command Header + Data

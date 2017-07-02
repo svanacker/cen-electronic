@@ -30,6 +30,8 @@
 
 #include "../../common/timer/timerList.h"
 
+#include "../../common/system/system.h"
+
 #include "../../device/device.h"
 #include "../../device/deviceList.h"
 #include "../../device/dispatcher/deviceDataDispatcher.h"
@@ -107,6 +109,7 @@ static OutputStream debugOutputStream;
 static StreamLink debugSerialStreamLink;
 
 // I2C
+/*
 static char i2cSlaveInputBufferArray[AIR_CONDITIONING_BOARD_I2C_INPUT_BUFFER_LENGTH];
 static Buffer i2cSlaveInputBuffer;
 static char i2cSlaveOutputBufferArray[AIR_CONDITIONING_BOARD_I2C_OUTPUT_BUFFER_LENGTH];
@@ -118,6 +121,7 @@ static char i2cDebugSlaveInputBufferArray[AIR_CONDITIONING_BOARD_I2C_INPUT_BUFFE
 static Buffer i2cDebugSlaveInputBuffer;
 static char i2cDebugSlaveOutputBufferArray[AIR_CONDITIONING_BOARD_I2C_OUTPUT_BUFFER_LENGTH];
 static Buffer i2cDebugSlaveOutputBuffer;
+*/
 
 // Logs
 static LogHandler logHandlerListArray[AIR_CONDITIONING_LOG_HANDLER_LIST_LENGTH];

@@ -61,7 +61,7 @@ DriverDataDispatcher* addDriverDataDispatcher(
 }
 
 DriverDataDispatcher* getDriverDataDispatcherByIndex(int index) {
-    if (&dispatcherList == NULL || dispatcherList.maxSize == 0) {
+    if (dispatcherList.maxSize == 0) {
         writeError(DISPATCHERS_LIST_NOT_INITIALIZED);
         return NULL;
     }

@@ -1,23 +1,25 @@
 #ifndef SERIAL_H
 #define SERIAL_H
 
-/** Define the index of serial port 1. */
-#define SERIAL_PORT_1         1
+enum SerialPort {
+	/** Define the index of serial port 1. */
+	SERIAL_PORT_1 = 1,
 
-/** Define the index of serial port 2. */
-#define SERIAL_PORT_2         2
+	/** Define the index of serial port 2. */
+	SERIAL_PORT_2 = 2,
 
-/** Define the index of serial port 3. */
-#define SERIAL_PORT_3         3
+	/** Define the index of serial port 3. */
+	SERIAL_PORT_3 = 3,
 
-/** Define the index of serial port 4. */
-#define SERIAL_PORT_4         4
+	/** Define the index of serial port 4. */
+	SERIAL_PORT_4 = 4,
 
-/** Define the index of serial port 5. */
-#define SERIAL_PORT_5         5
+	/** Define the index of serial port 5. */
+	SERIAL_PORT_5 = 5,
 
-/** Define the index of serial port 6. */
-#define SERIAL_PORT_6         6
+	/** Define the index of serial port 6. */
+	SERIAL_PORT_6 = 6
+};
 
 /** The default speed of the serial transmission is fixed to 115200. */
 #define DEFAULT_SERIAL_SPEED 115200L
@@ -25,22 +27,22 @@
 /**
  * Open the serial port with the specified transmission rate.
  * 8 data bits, 1 stop bit, no parity bits.
- * @param serialPortIndex the serialPortIndex we want to use
+ * @param serialPort the serial Port we want to use
  * @param baudRate the number of bits per second
  */
-void openSerial(unsigned char serialPortIndex, unsigned long baudRate);
+void openSerial(enum SerialPort serialPort, unsigned long baudRate);
 
 /**
  * Open the serial port with a default serial speed.
- * @param serialPortIndex the serialPortIndex we want to use
+ * @param serialPort the serialPortIndex we want to use
  */
-void openSerialAtDefaultSpeed(unsigned char serialPortIndex);
+void openSerialAtDefaultSpeed(enum SerialPort serialPort);
 
 /**
  * Closes the serial port.
  * @param serialPortIndex the serialPortIndex we want to close
  */
-void closeSerial(unsigned char serialPortIndex);
+void closeSerial(enum SerialPort serialPort);
 
 /**
  * Sends a character to the serial output. This
@@ -49,6 +51,6 @@ void closeSerial(unsigned char serialPortIndex);
  * @param serialPortIndex the serialPortIndex we want to use
  * @param c the character to send
  */
-void serialPutc(unsigned char serialPortIndex, char c);
+void serialPutc(enum SerialPort serialPort, char c);
 
 #endif

@@ -7,7 +7,7 @@
 
 /**
  * Define the extended structure which store the extra information/variable needed by
- * PC
+ * PC.
  */
 typedef struct I2cSlaveBusConnectionPc {
     HANDLE masterToSlaveHandle;

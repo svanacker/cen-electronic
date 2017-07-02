@@ -38,8 +38,20 @@ int deviceNavigationGetInterface(char commandHeader, DeviceInterfaceMode mode, b
         }
         return commandLengthValueForMode(mode, 18, 0);
     }
+	else if (commandHeader == COMMAND_NAVIGATION_LOCATION_LIST) {
+		if (fillDeviceArgumentList) {
+			setFunctionNoArgumentAndNoResult("Location List");
+		}
+		return commandLengthValueForMode(mode, 0, 0);
+	}
+	else if (commandHeader == COMMAND_NAVIGATION_LOCATION_ADD_TESTS_DATA) {
+		if (fillDeviceArgumentList) {
+			setFunctionNoArgumentAndNoResult("Location Add Tests Data");
+		}
+		return commandLengthValueForMode(mode, 0, 0);
+	}
     // Paths
-    if (commandHeader == COMMAND_NAVIGATION_PATH_COUNT) {
+    else if (commandHeader == COMMAND_NAVIGATION_PATH_COUNT) {
         if (fillDeviceArgumentList) {
             setFunction("Navigation Path Count", 0, 1);
             setResultUnsignedHex4(0, "Count");
@@ -97,8 +109,18 @@ int deviceNavigationGetInterface(char commandHeader, DeviceInterfaceMode mode, b
         }
         return commandLengthValueForMode(mode, 50, 0);
     }
-
-
+	else if (commandHeader == COMMAND_NAVIGATION_PATH_LIST) {
+		if (fillDeviceArgumentList) {
+			setFunctionNoArgumentAndNoResult("PathList");
+		}
+		return commandLengthValueForMode(mode, 0, 0);
+	}
+	else if (commandHeader == COMMAND_NAVIGATION_PATH_LIST_ADD_TESTS_DATA) {
+		if (fillDeviceArgumentList) {
+			setFunctionNoArgumentAndNoResult("Path Add Tests Data");
+		}
+		return commandLengthValueForMode(mode, 0, 0);
+	}
     return DEVICE_HEADER_NOT_HANDLED;
 }
 

@@ -10,6 +10,7 @@
 
 #include "../common/io/outputStream.h"
 #include "../common/io/printWriter.h"
+#include "../common/io/printTableWriter.h"
 
 #include "../common/string/cenString.h"
 
@@ -31,7 +32,7 @@ bool isEmptyLocationList(LocationList* locationList) {
 }
 
 Location* getLocation(LocationList* locationList, unsigned int index) {
-    if (&locationList == NULL || locationList->maxSize == 0) {
+    if (locationList == NULL || locationList->maxSize == 0) {
         writeError(LOCATION_LIST_NOT_INITIALIZED);
         return NULL;
     }
@@ -69,7 +70,7 @@ void initLocation(Location* location, char* name, int x, int y) {
 }
 
 Location* addNamedLocation(LocationList* locationList, char* name, int x, int y) {
-    if (&locationList == NULL || locationList->maxSize == 0) {
+    if (locationList == NULL || locationList->maxSize == 0) {
         writeError(LOCATION_LIST_NOT_INITIALIZED);
         return NULL;
     }
@@ -211,4 +212,61 @@ void printLocationLinkedPath(OutputStream* outputStream, Location* startPoint) {
         printLocation(outputStream, currentLocation);
         startPoint = currentLocation->resultNextLocation;
     }
+}
+
+// DEBUG AS TABLE
+
+#define LOCATION_LIST_LOCATION_NAME_COLUMN_LENGTH     12
+#define LOCATION_LIST_LOCATION_NAME_HEX_COLUMN_LENGTH 12
+#define LOCATION_LIST_LOCATION_X_COLUMN_LENGTH        10
+#define LOCATION_LIST_LOCATION_Y_COLUMN_LENGTH        10
+#define LOCATION_LIST_LOCATION_X_HEXA_COLUMN_LENGTH   10
+#define LOCATION_LIST_LOCATION_Y_HEXA_COLUMN_LENGTH   10
+#define LOCATION_LIST_LOCATION_LAST_COLUMN_LENGTH     37
+
+/**
+* Private.
+*/
+void printLocationListHeader(OutputStream* outputStream) {
+	println(outputStream);
+	// Table Header
+	appendTableHeaderSeparatorLine(outputStream);
+	appendStringHeader(outputStream, "name", LOCATION_LIST_LOCATION_NAME_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "name (hex)", LOCATION_LIST_LOCATION_NAME_HEX_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "x (mm)", LOCATION_LIST_LOCATION_X_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "y (mm)", LOCATION_LIST_LOCATION_Y_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "xHex (mm)", LOCATION_LIST_LOCATION_X_HEXA_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "xHex (mm)", LOCATION_LIST_LOCATION_Y_HEXA_COLUMN_LENGTH);
+	appendEndOfTableColumn(outputStream, LOCATION_LIST_LOCATION_LAST_COLUMN_LENGTH);
+	appendTableHeaderSeparatorLine(outputStream);
+}
+
+void printLocationTable(OutputStream* outputStream, Location* location) {
+	appendFixedCharArrayTableData(outputStream, &(location->name), LOCATION_LIST_LOCATION_NAME_COLUMN_LENGTH);
+	appendHexFixedCharArrayTableData(outputStream, &(location->name), LOCATION_LIST_LOCATION_NAME_COLUMN_LENGTH);
+	appendDecTableData(outputStream, location->x, LOCATION_LIST_LOCATION_X_COLUMN_LENGTH);
+	appendDecTableData(outputStream, location->y, LOCATION_LIST_LOCATION_Y_COLUMN_LENGTH);
+	appendHex4TableData(outputStream, location->x, LOCATION_LIST_LOCATION_X_HEXA_COLUMN_LENGTH);
+	appendHex4TableData(outputStream, location->y, LOCATION_LIST_LOCATION_Y_HEXA_COLUMN_LENGTH);
+	appendEndOfTableColumn(outputStream, LOCATION_LIST_LOCATION_LAST_COLUMN_LENGTH);
+}
+
+void printLocationListTable(OutputStream* outputStream, LocationList* locationList) {
+	int i;
+	int size = locationList->size;
+	printLocationListHeader(outputStream);
+	for (i = 0; i < size; i++) {
+		Location* location = getLocation(locationList, i);
+		printLocationTable(outputStream, location);
+	}
+	appendTableHeaderSeparatorLine(outputStream);
+}
+
+// Tests Data
+
+void addLocationListTestsData(LocationList* locationList) {
+	addNamedLocation(locationList, "STAR", 10, 20);
+	addNamedLocation(locationList, "OBJ1", 200, 300);
+	addNamedLocation(locationList, "OBJ2", 400, 700);
+	addNamedLocation(locationList, "END", 1500, 2000);
 }

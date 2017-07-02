@@ -8,7 +8,7 @@
 
 #include "../../motion/position/coders.h"
 
-void computeCurrentPositionUsingCoders(PidMotion* pidMotion) {
+void computeCurrentPositionUsingCoders(PidMotion* pidMotion, PidMotionDefinition* motionDefinition) {
     PidComputationValues* computationValues = &(pidMotion->computationValues);
     PidCurrentValues* thetaCurrentValues = &(computationValues->currentValues[THETA]);
     PidCurrentValues* alphaCurrentValues = &(computationValues->currentValues[ALPHA]);
@@ -22,11 +22,10 @@ void computeCurrentPositionUsingCoders(PidMotion* pidMotion) {
     alphaCurrentValues->position = computeAlpha(value0, value1);
 }
 
-void computeErrorsWithNextPositionUsingCoders(PidMotion* pidMotion) {
-    PidMotionDefinition* currentMotionDefinition = &(pidMotion->currentMotionDefinition);
+void computeErrorsWithNextPositionUsingCoders(PidMotion* pidMotion, PidMotionDefinition* motionDefinition) {
 
-    MotionInstruction* thetaInst = &(currentMotionDefinition->inst[THETA]);
-    MotionInstruction* alphaInst = &(currentMotionDefinition->inst[ALPHA]);
+    MotionInstruction* thetaInst = &(motionDefinition->inst[THETA]);
+    MotionInstruction* alphaInst = &(motionDefinition->inst[ALPHA]);
 
     PidComputationValues* computationValues = &(pidMotion->computationValues);
     PidCurrentValues* thetaCurrentValues = &(computationValues->currentValues[THETA]);

@@ -8,28 +8,35 @@ const char* getEepromDeviceName(void) {
     return "EEPROM";
 }
 
-
-
 int deviceEepromGetInterface(char header, DeviceInterfaceMode mode, bool fillDeviceArgumentList){
     if (header == COMMAND_DUMP_TO_FILE_EEPROM) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Dump Eeprom to File");
         }
-        return 0;
+        return commandLengthValueForMode(mode, 0, 0);
     }
     if (header == COMMAND_RELOAD_EEPROM) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Reload Dum File to Eeprom");
         }
-        return 0;
+        return commandLengthValueForMode(mode, 0, 0);
     }
     else if (header == COMMAND_DUMP_TO_LOG_OUTPUT_STREAM_EEPROM) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Dump Eeprom to log output Stream");
         }
-        return 0;
+        return commandLengthValueForMode(mode, 0, 0);
     }
-    else if (header == COMMAND_CLEAR_EEPROM) {
+	else if (header == COMMAND_DUMP_PARTIAL_CONTENT_TO_LOG_OUTPUT_STREAM_EEPROM) {
+		if (fillDeviceArgumentList) {
+			setFunction("Dump Part of Eeprom to log output Stream", 3, 0);
+			setArgumentUnsignedHex4(0, "startAddress");
+			setArgumentSeparator(1);
+			setArgumentUnsignedHex4(2, "length");
+		}
+		return commandLengthValueForMode(mode, 9, 0);
+	}
+	else if (header == COMMAND_CLEAR_EEPROM) {
         if (fillDeviceArgumentList) {
             setFunction("Clear Eeprom", 3, 0);
             setArgumentUnsignedHex4(0, "startAddress");
@@ -101,12 +108,13 @@ int deviceEepromGetInterface(char header, DeviceInterfaceMode mode, bool fillDev
     }
     else if (header == COMMAND_INTENSIVE_TEST) {
         if (fillDeviceArgumentList) {
-            setFunction("intensiveTest", 2, 1);
+            setFunction("intensiveTest", 3, 1);
             setArgumentUnsignedHex4(0, "address");
-            setArgumentUnsignedHex4(1, "length of test");
-            setResultSignedHex2(0, "errors");
+            setArgumentSeparator(1);
+            setArgumentUnsignedHex4(2, "length of test");
+            setResultUnsignedHex4(0, "errors");
         }
-        return commandLengthValueForMode(mode, 8, 2);
+        return commandLengthValueForMode(mode, 9, 4);
     }
     return DEVICE_HEADER_NOT_HANDLED;
 }

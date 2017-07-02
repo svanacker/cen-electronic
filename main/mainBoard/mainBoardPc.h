@@ -17,6 +17,8 @@
 #define MAIN_BOARD_PC_DATA_DISPATCHER_LIST_LENGTH                2
 #define MAIN_BOARD_PC_DATA_MOTOR_BOARD_DISPATCHER_BUFFER_LENGTH 100
 
+#define MAIN_BOARD_I2C_BUS_LIST_LENGTH							1
+
 #define MAIN_BOARD_PC_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH        100
 #define MAIN_BOARD_PC_I2C_DEBUG_MASTER_IN_BUFFER_LENGTH            100
 
@@ -30,6 +32,10 @@
 
 // Devices
 #define MAIN_BOARD_PC_DEVICE_LIST_LENGTH                        30
+
+// Timers
+#define MAIN_BOARD_PC_TIMER_LENGTH                              2
+
 
 /**
  * Start Point to emulate the main Board PC.

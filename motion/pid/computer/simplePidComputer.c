@@ -53,9 +53,8 @@ float computeNextPID(enum InstructionType instructionType, MotionInstruction* mo
 /**
  * Compute the PID when the instruction is very simple (not b spline)
  */
-void simpleMotionUCompute(void) {
+void simpleMotionUCompute(PidMotionDefinition* motionDefinition) {
     PidMotion* pidMotion = getPidMotion();
-    PidMotionDefinition* motionDefinition = &(pidMotion->currentMotionDefinition);
     MotionInstruction* thetaInst = &(motionDefinition->inst[THETA]);
     MotionInstruction* alphaInst = &(motionDefinition->inst[ALPHA]);
 

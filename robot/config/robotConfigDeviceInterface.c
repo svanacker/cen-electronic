@@ -26,6 +26,13 @@ int deviceRobotConfigGetInterface(char commandHeader, DeviceInterfaceMode mode, 
         }
         return commandLengthValueForMode(mode, 4, 0);
     }
+	else if (commandHeader == COMMAND_CONFIG_DEBUG) {
+		if (fillDeviceArgumentList) {
+			setFunctionNoArgumentAndNoResult("debug");
+		}
+		return commandLengthValueForMode(mode, 0, 0);
+	}
+
     return DEVICE_HEADER_NOT_HANDLED;
 }
 

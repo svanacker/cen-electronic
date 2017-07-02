@@ -7,8 +7,8 @@
 /**
  * Initialize a type of eeprom : 24C16
  * @param eeprom a pointer of eeprom type.
- * @param i2cBus the I2C bus for the eeprom
+ * @param i2cBusConnection the I2C bus connection for the eeprom
  */
-void init24C16Eeprom(Eeprom* eeprom_, I2cBus* i2cBus);
+void init24C16Eeprom(Eeprom* eeprom_, I2cBusConnection* i2cBusConnection);
 
 #endif

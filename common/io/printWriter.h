@@ -22,14 +22,14 @@ void append(OutputStream* outputStream, char c);
  * @param outputStream the pointer on outputStream (POO simulation)
  * @param b the bool value to write
  */
-void appendBool(OutputStream* outputStream, bool b);
+unsigned int appendBool(OutputStream* outputStream, bool b);
 
 /**
  * Append a bool value, but as string ("true" for true, "false" for false)
  * @param outputStream the pointer on outputStream (POO simulation)
  * @param b the bool value to write
  */
-void appendBoolAsString(OutputStream* outputStream, bool b);
+unsigned int appendBoolAsString(OutputStream* outputStream, bool b);
 
 /**
  * Append a separator to the outputStream.
@@ -38,43 +38,59 @@ void appendBoolAsString(OutputStream* outputStream, bool b);
 void appendSeparator(OutputStream* outputStream);
 
 /**
+* Append a space to the outputStream.
+* @param outputStream the pointer on outputStream (POO simulation)
+*/
+void appendSpace(OutputStream* outputStream);
+
+/**
  * Append a string to the buffer.
  * @param outputStream the pointer on outputStream (POO simulation)
  * @param s a standard C String (terminated by \0)
+ * @return how many chars were written
  */
-void appendString(OutputStream* outputStream, const char* s);
+unsigned int appendString(OutputStream* outputStream, const char* s);
 
 /**
  * Append a char array with a specific length.
  * @param outputStream the pointer on outputStream (POO simulation)
  * @param s the pointer on the char array
+ * @return how many chars were written
  */
-void appendFixedCharArray(OutputStream* outputStream, const FixedCharArray* s);
+unsigned int appendFixedCharArray(OutputStream* outputStream, const FixedCharArray* s);
+
+/**
+* Append a char array with a specific length but encoded in hexadecimal.
+* @param outputStream the pointer on outputStream (POO simulation)
+* @param s the pointer on the char array
+* @return how many chars were written
+*/
+unsigned int appendHexFixedCharArray(OutputStream* outputStream, const FixedCharArray* s);
 
 /**
  * Append a string with CRLF to the buffer.
  * @param outputStream the pointer on outputStream (POO simulation)
  * @param s a standard C String (terminated by \0)
  */
-void appendStringCRLF(OutputStream* outputStream, const char* s);
+unsigned int appendStringCRLF(OutputStream* outputStream, const char* s);
 
 /**
  * Add an acknowledgement to the outputStream.
  * @param outputStream the pointer on outputStream (POO simulation)
  */
-void appendAck(OutputStream* outputStream);
+unsigned int appendAck(OutputStream* outputStream);
 
 /**
  * Write a LF to the outputStream.
  * @param outputStream the pointer on outputStream (POO simulation)
  */
-void println(OutputStream* outputStream);
+unsigned int println(OutputStream* outputStream);
 
 /**
  * Write a CRLF to the outputStream.
  * @param outputStream the pointer on outputStream (POO simulation)
  */
-void appendCRLF(OutputStream* outputStream);
+unsigned int appendCRLF(OutputStream* outputStream);
 
 // BUFFER
 
@@ -83,9 +99,7 @@ void appendCRLF(OutputStream* outputStream);
  * @param outputStream the pointer on outputStream (POO simulation)
  * @param buffer the buffer that we want to write
  */
-void printBuffer(OutputStream* outputStream, Buffer* buffer);
-
-
+unsigned int printBuffer(OutputStream* outputStream, Buffer* buffer);
 
 // --- Management of hex conversion
 

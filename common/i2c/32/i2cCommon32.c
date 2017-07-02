@@ -1,4 +1,6 @@
+#define _SUPPRESS_PLIB_WARNING
 #include <plib.h>
+
 #include <stdlib.h>
 #include <stdbool.h>
 
@@ -59,7 +61,7 @@ void WaitI2C(I2cBus* i2cBus) {
 void portableCommonStartI2C(I2cBusConnection* i2cBusConnection) {
     I2cBus* i2cBus = i2cBusConnection->i2cBus;
 
-    if (i2cBusConnection == NULL) {
+    if (i2cBus == NULL) {
         StartI2C1();
     }
     else {

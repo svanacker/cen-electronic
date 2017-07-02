@@ -6,7 +6,10 @@
 
 #include "../../common/error/error.h"
 #include "../../common/io/printWriter.h"
+#include "../../common/io/printTableWriter.h"
 #include "../../common/io/reader.h"
+
+#include "../../common/log/logger.h"
 
 #include "../../device/device.h"
 
@@ -64,7 +67,7 @@ void deviceNavigationHandleRawData(char commandHeader, InputStream* inputStream,
         unsigned int locationIndex = readHex4(inputStream);
         LocationList* locationList = getNavigationLocationList();
         Location* location = getLocation(locationList, locationIndex);
-        appendFixedCharArray(outputStream, &(location->name));
+        appendHexFixedCharArray(outputStream, &(location->name));
         appendSeparator(outputStream);
         appendHex4(outputStream, location->x);
         appendSeparator(outputStream);
@@ -79,7 +82,7 @@ void deviceNavigationHandleRawData(char commandHeader, InputStream* inputStream,
         ackCommand(outputStream, NAVIGATION_DEVICE_HEADER, COMMAND_NAVIGATION_SET_LOCATION);
         LocationList* locationList = getNavigationLocationList();
         FixedCharArray locationNameFixedCharArray;
-        readFixedCharArray(inputStream, &locationNameFixedCharArray);
+		readHexFixedCharArray(inputStream, &locationNameFixedCharArray);
         checkIsSeparator(inputStream);
         int x = readHex4(inputStream);
         checkIsSeparator(inputStream);
@@ -96,8 +99,18 @@ void deviceNavigationHandleRawData(char commandHeader, InputStream* inputStream,
             location->y = y;
         }
     }
+	else if (commandHeader == COMMAND_NAVIGATION_LOCATION_LIST) {
+		ackCommand(outputStream, NAVIGATION_DEVICE_HEADER, COMMAND_NAVIGATION_LOCATION_LIST);
+		LocationList* locationList = getNavigationLocationList();
+		printLocationListTable(getAlwaysOutputStreamLogger(), locationList);
+	}
+	else if (commandHeader == COMMAND_NAVIGATION_LOCATION_ADD_TESTS_DATA) {
+		ackCommand(outputStream, NAVIGATION_DEVICE_HEADER, COMMAND_NAVIGATION_LOCATION_ADD_TESTS_DATA);
+		LocationList* locationList = getNavigationLocationList();
+		addLocationListTestsData(locationList);
+	}
     // Paths
-    if (commandHeader == COMMAND_NAVIGATION_PATH_COUNT) {
+    else if (commandHeader == COMMAND_NAVIGATION_PATH_COUNT) {
         ackCommand(outputStream, NAVIGATION_DEVICE_HEADER, COMMAND_NAVIGATION_PATH_COUNT);
 
         PathList* pathList = getNavigationPathList();
@@ -117,7 +130,7 @@ void deviceNavigationHandleRawData(char commandHeader, InputStream* inputStream,
         }
         else {
             FixedCharArray* locationName1 = &(location1->name);
-            appendFixedCharArray(outputStream, locationName1);
+			appendHexFixedCharArray(outputStream, locationName1);
         }
         appendSeparator(outputStream);
 
@@ -128,7 +141,7 @@ void deviceNavigationHandleRawData(char commandHeader, InputStream* inputStream,
         }
         else {
             FixedCharArray* locationName2 = &(location2->name);
-            appendFixedCharArray(outputStream, locationName2);
+			appendHexFixedCharArray(outputStream, locationName2);
         }
         appendSeparator(outputStream);
         appendHex4(outputStream, pathData->cost);
@@ -158,10 +171,10 @@ void deviceNavigationHandleRawData(char commandHeader, InputStream* inputStream,
         LocationList* locationList = getNavigationLocationList();
 
         FixedCharArray tempLocationName1;
-        readFixedCharArray(inputStream, &tempLocationName1);
+		readHexFixedCharArray(inputStream, &tempLocationName1);
         checkIsSeparator(inputStream);
         FixedCharArray tempLocationName2;
-        readFixedCharArray(inputStream, &tempLocationName2);
+		readHexFixedCharArray(inputStream, &tempLocationName2);
         checkIsSeparator(inputStream);
 
 
@@ -202,6 +215,17 @@ void deviceNavigationHandleRawData(char commandHeader, InputStream* inputStream,
         checkIsSeparator(inputStream);
         pathData->mustGoBackward = readBool(inputStream);
     }
+	else if (commandHeader == COMMAND_NAVIGATION_PATH_LIST) {
+		ackCommand(outputStream, NAVIGATION_DEVICE_HEADER, COMMAND_NAVIGATION_PATH_LIST);
+		PathList* pathList = getNavigationPathList();
+		printPathListTable(getAlwaysOutputStreamLogger(), pathList);
+	}
+	else if (commandHeader == COMMAND_NAVIGATION_PATH_LIST_ADD_TESTS_DATA) {
+		ackCommand(outputStream, NAVIGATION_DEVICE_HEADER, COMMAND_NAVIGATION_PATH_LIST_ADD_TESTS_DATA);
+		LocationList* locationList = getNavigationLocationList();
+		PathList* pathList = getNavigationPathList();
+		addPathListTestsData(pathList, locationList);
+	}
 }
 
 static DeviceDescriptor descriptor = {

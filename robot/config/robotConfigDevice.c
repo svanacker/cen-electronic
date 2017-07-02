@@ -45,25 +45,6 @@ char* getConfigBitString(unsigned char configIndex) {
     }
 }
 
-/**
- * Returns a String corresponding to the configuration
- * '1' when the bit is set, '0' when not set
- */
-void appendStringConfig(OutputStream* outputStream) {
-    refreshConfig();
-    signed int i;
-    for (i = CONFIG_BIT_COUNT - 1; i >= 0; i--) {
-        char c;
-        if ((config & (1 << i)) > 0) {
-            c = '1';
-        }
-        else {
-            c = '0';
-        }
-        append(outputStream, c);
-    }
-}
-
 unsigned char isConfigBalise() {
     refreshConfig();
     return !isConfigSet(CONFIG_DONT_USE_BEACON_MASK);
@@ -104,6 +85,10 @@ void deviceRobotConfigHandleRawData(char commandHeader, InputStream* inputStream
             robotConfig->robotConfigWriteInt(robotConfig, config);
         }
     }
+	else if (commandHeader == COMMAND_CONFIG_DEBUG) {
+		ackCommand(outputStream, ROBOT_CONFIG_DEVICE_HEADER, COMMAND_CONFIG_DEBUG);
+		printRobotTableConfig(getInfoOutputStreamLogger(), robotConfig);
+	}
 }
 
 static DeviceDescriptor descriptor = {

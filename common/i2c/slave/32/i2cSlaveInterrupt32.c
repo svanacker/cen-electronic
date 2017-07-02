@@ -1,6 +1,8 @@
 #include "../../../../common/commons.h"
-#include <peripheral/i2c.h>
+
 #include <stdlib.h>
+
+#define _SUPPRESS_PLIB_WARNING
 #include <plib.h>
 
 #include "../../i2cConstants.h"

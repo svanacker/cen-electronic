@@ -34,6 +34,8 @@
 
 #include "../../common/2d/2d.h"
 
+#include "../../common/system/system.h"
+
 #include "../../device/device.h"
 #include "../../device/deviceDescriptor.h"
 #include "../../device/deviceInterface.h"
@@ -344,8 +346,8 @@ restart:
     initZigbeeOutputStream(&responseDataOutputStream, &responseDataOutputBuffer, JENNIC_ROUTER_MAC_ADDRESS);
 
     // Init the logs
-    initLogs(DEBUG, &logHandlerListArray, BEACON_LOG_HANDLER_LIST_LENGTH);
-    addLogHandler("UART", &debugOutputStream, DEBUG);
+    initLogs(DEBUG, &logHandlerListArray, BEACON_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
+    addLogHandler("UART", &debugOutputStream, DEBUG, LOG_HANDLER_CATEGORY_ALL_MASK);
     appendString(getInfoOutputStreamLogger(), "BEACON BOARD MAIN \n");
     appendCRLF(getInfoOutputStreamLogger());
     setBoardName("BEACON BOARD MAIN");

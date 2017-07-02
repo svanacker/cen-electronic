@@ -1,7 +1,9 @@
 #include "../timerInterrupt.h"
 #include "../timerList.h"
 
+#define _SUPPRESS_PLIB_WARNING
 #include <plib.h>
+
 #include <sys/attribs.h>     /* For __ISR definition */
 
 /**

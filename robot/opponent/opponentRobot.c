@@ -1,5 +1,7 @@
 #include "opponentRobot.h"
 
+#include <stdlib.h>
+
 #include "../../common/commons.h"
 #include "../../common/2d/2d.h"
 
@@ -29,7 +31,8 @@ void initOpponentRobot() {
     addTimer(OPPONENT_ROBOT_TIMER_INDEX,
             TIME_DIVIDER_2_HERTZ,
             &opponentRobotCallbackFunc,
-            "OPPONENT");
+            "OPPONENT", 
+			NULL);
 }
 
 void updateOpponentRobotIfNecessary() {

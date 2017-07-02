@@ -142,7 +142,8 @@ void devicePIDHandleRawData(char commandHeader, InputStream* inputStream, Output
 
         PidMotion* pidMotion = getPidMotion();
         PidComputationValues* computationValues = &(pidMotion->computationValues);
-        MotionInstruction motionInstruction = pidMotion->currentMotionDefinition.inst[instructionType];
+		PidMotionDefinition* motionDefinition = getCurrentMotionDefinition();
+        MotionInstruction motionInstruction = motionDefinition->inst[instructionType];
         PidMotionError* localError = &(computationValues->errors[instructionType]);
 
         // send acknowledgement
@@ -192,8 +193,7 @@ void devicePIDHandleRawData(char commandHeader, InputStream* inputStream, Output
         // send acknowledgement
         ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_GET_MOTION_PARAMETER);
 
-        PidMotion* pidMotion = getPidMotion();
-        PidMotionDefinition* motionDefinition = &(pidMotion->currentMotionDefinition);
+		PidMotionDefinition* motionDefinition = getCurrentMotionDefinition();
         MotionInstruction* localInst = &(motionDefinition->inst[instructionType]);
 
         appendHex2(outputStream, instructionType);

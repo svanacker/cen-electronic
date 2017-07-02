@@ -11,6 +11,9 @@ typedef struct I2cBus I2cBus;
 struct I2cBusConnection;
 typedef struct I2cBusConnection I2cBusConnection;
 
+/**
+* Encapsulate which I2C Port we use (4 on PIC32)
+*/
 enum I2cPort {
     /** To avoid to have a bad value. */
     I2C_BUS_PORT_UNKOWN = 0,
@@ -55,7 +58,7 @@ struct I2cBus {
     bool initialized;
     // Configuration (PIC Internal use)
     unsigned int config;
-    // An untyped object (For example to have a pipe Handle in Windows)
+    // An untyped object (For example to store a structure referencing the pipe Handle in Windows)
     void* object;
 };
 
@@ -70,7 +73,7 @@ struct I2cBusConnection {
     unsigned char i2cAddress;
     // If the connection is established (useful for Windows Emulation with Pipe)
     bool opened;
-    // An untyped object (For example to have a pipe Handle in Windows)
+    // An untyped object (to store for PC : I2cSlaveBusConnectionPc)
     void* object;
 };
 
@@ -83,29 +86,12 @@ struct I2cBusConnection {
 void initI2cBus(I2cBus* i2cBus, enum I2cBusType i2cBusType, enum I2cPort i2cPort);
 
 /**
- * Initializez a wrapping structure around a connection betweeen a master and a specific address.
+ * Initialize a wrapping structure around a connection betweeen a master and a specific address.
  * @param i2cBusConnection the connection to initialize
  * @param i2cBus the underlying bus (shared by multiple connection).
  * @param slaveAddress the address of the slave
  */
 void initI2cBusConnection(I2cBusConnection* i2cBusConnection, I2cBus* i2cBus, unsigned char slaveAddress);
-
-// DEBUG
-
-/** 
- * Print the content of an I2cBus.
- * @param outputStream where we print the debug information
- * @param i2cBus the information about the i2c Bus
- */
-void printI2cBus(OutputStream* outputStream, I2cBus* i2cBus);
-
-/** 
- * Print the content of an I2cBusConnection.
- * @param outputStream where we print the debug information
- * @param i2cBusConnection the information about the i2c Bus Connection
- */
-void printI2cBusConnection(OutputStream* outputStream, I2cBusConnection* i2cBusConnection);
-
 
 // COMMON FUNCTION (SLAVE / MASTER)
 
@@ -113,6 +99,26 @@ void printI2cBusConnection(OutputStream* outputStream, I2cBusConnection* i2cBusC
  * Indirection for IdleI2C() used to manage Simulation.
  */
 void WaitI2C(I2cBus* i2cBus);
+
+// DEBUG
+
+/**
+* Print the content of an I2cBus.
+* @param outputStream where we print the debug information
+* @param i2cBus the information about the i2c Bus
+*/
+void printI2cBus(OutputStream* outputStream, I2cBus* i2cBus);
+
+/**
+* Print the content of an I2cBusConnection.
+* @param outputStream where we print the debug information
+* @param i2cBusConnection the information about the i2c Bus Connection
+*/
+void printI2cBusConnection(OutputStream* outputStream, I2cBusConnection* i2cBusConnection);
+
+const char* getI2cBusTypeAsString(enum I2cBusType i2cBusType);
+
+const char* getI2cPortAsString(enum I2cPort i2cPort);
 
 #endif
 

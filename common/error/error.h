@@ -61,6 +61,9 @@ void clearLastError();
 // TIMER
 #define TIMERS_LIST_NOT_INITIALIZED        0x0200
 #define TOO_MUCH_TIMERS                 0x0201
+#define TIMERS_LIST_ILLEGAL_INDEX       0x0202
+#define TIMER_NULL					    0x0203
+
 
 // EEPROM
 #define EEPROM_NULL                     0x280
@@ -94,9 +97,18 @@ void clearLastError();
 #define I2C_MASTER_ALREADY_INITIALIZED    0x1000
 #define I2C_SLAVE_ALREADY_INITIALIZED     0x1001
 #define I2C_BUS_PORT_NOT_DEFINED          0x1002
+// -> I2C  : Bus
 #define I2C_BUS_NULL                      0x1003
 #define I2C_BUS_TYPE_NOT_DEFINED          0x1004
 #define I2C_BUS_CONNECTION_NULL           0x1003
+// -> I2C : BusList
+#define I2C_BUS_LIST_NOT_INITIALIZED	  0x1010
+#define TOO_MUCH_I2C_BUS				  0x1011
+#define I2C_BUS_LIST_ILLEGAL_INDEX        0x1012
+// -> I2C : BusConnectionList
+#define I2C_BUS_CONNECTION_LIST_NOT_INITIALIZED	  0x1020
+#define TOO_MUCH_I2C_BUS_CONNECTION				  0x1021
+#define I2C_BUS_CONNECTION_LIST_ILLEGAL_INDEX     0x1022
 
 // DEVICE
 
@@ -136,6 +148,9 @@ void clearLastError();
 #define PID_PERSISTENCE_EEPROM_NOT_INITIALIZED 0x3101
 
 // MOTION
+
+#define MOTION_DEFINITION_LIST_FULL			0x3700
+#define MOTION_DEFINITION_LIST_OUT_OF_BOUNDS 0x3701
 
 #define MOTION_BSPLINE_LIST_NULL            0x3800
 #define MOTION_BSPLINE_LIST_NOT_INITIALIZED 0x3801

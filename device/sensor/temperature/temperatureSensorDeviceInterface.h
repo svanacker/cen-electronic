@@ -15,13 +15,12 @@
 /**
 * Defines the header to set the temperature sensor Alert 
 */
-
-#define COMMAND_SET_TEMPERATURE_SENSOR_ALERT    'a'
+#define COMMAND_SET_TEMPERATURE_SENSOR_ALERT    'w'
 
 /**
 * Interface for Device.
 */
-DeviceInterface* getTemperatureSensorDeviceInterface();
+DeviceInterface* getTemperatureSensorDeviceInterface(void);
 
 #endif    
 

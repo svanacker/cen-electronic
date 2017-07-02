@@ -29,6 +29,9 @@
 /** Command to debug the I2C Slave. */
 #define I2C_SLAVE_DEBUG_DEVICE_HEADER              'i'
 
+/** Command to debug the I2C (Master or Slave). */
+#define I2C_COMMON_DEBUG_DEVICE_HEADER             'Q'
+
 /** Command to debug the dispatchers. */
 #define DATA_DISPATCHER_DEVICE_HEADER              'j'
 
@@ -104,6 +107,10 @@
 #define TIMER_DEVICE_HEADER                        'V'
 
 #define CODERS_DEVICE_HEADER                       'w'
+
+#define PC_DEVICE_HEADER                           'W'
+
+#define EXTENDED_MOTION_DEVICE_HEADER			   'X'
 
 /** Reserved to clear buffer. */
 #define NOT_TOO_USE_1                               'z'

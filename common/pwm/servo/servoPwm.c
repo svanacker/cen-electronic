@@ -1,4 +1,5 @@
 #include <stdbool.h>
+#include <stdlib.h>
 
 #include "servoPwm.h"
 #include "../pwmPic.h"
@@ -86,7 +87,8 @@ void initPwmForServo(int posInit) {
     addTimer(SERVO_TIMER_INDEX,
                             TIME_DIVIDER_50_HERTZ,
                             &interruptServoTimerCallbackFunc,
-                            "SERVO");
+                            "SERVO", 
+							NULL);
     servoList.initialized = true;
     servoList.useTimer = true;
 }

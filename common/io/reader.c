@@ -113,7 +113,7 @@ float readHex6(InputStream* inputStream) {
     return result;
 }
 
-void readFixedCharArray(InputStream* inputStream, const FixedCharArray* s) {
+void readHexFixedCharArray(InputStream* inputStream, const FixedCharArray* s) {
     int i;
     char* sPointer = (char*) s;
     for (i = 0; i < FIXED_CHAR_ARRAY_LENGTH; i++) {

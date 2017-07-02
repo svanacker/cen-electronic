@@ -10,7 +10,12 @@
 
 #include "../../common/io/buffer.h"
 #include "../../common/io/printWriter.h"
+#include "../../common/io/printTableWriter.h"
 #include "../../common/io/outputStream.h"
+
+#define EEPROM_ADDRESS_LENGTH				7
+#define EEPROM_BLOCK_4_VALUE_LENGTH			24
+#define EEPROM_BLOCK_COUNT			        8
 
 void initEeprom(Eeprom* eeprom_,
                 long maxIndex,
@@ -123,28 +128,45 @@ void clearEeprom(Eeprom* eeprom_, unsigned long startIndex, unsigned long endInd
     }
 }
 
-void dumpEepromToOutputStream(Eeprom* eeprom_, OutputStream* outputStream) {
+void dumpEepromToOutputStream(Eeprom* eeprom_, OutputStream* outputStream, unsigned long startIndex, unsigned long maxIndex) {
     unsigned long i;
     
-    // 40 => 80 in hexadecimal
-    const unsigned int WIDTH = 40;
+    const unsigned int WIDTH = EEPROM_BLOCK_COUNT * 4;
 
-    appendCRLF(outputStream);
-    for (i = 0; i < WIDTH * 2; i++) {
-        append(outputStream, '_');
-    }
+	// Table Header
+	println(outputStream);
+	appendTableHeaderSeparatorLine(outputStream);
+	appendStringHeader(outputStream, "addr", EEPROM_ADDRESS_LENGTH);
+	appendStringHeader(outputStream, "Block 0", EEPROM_BLOCK_4_VALUE_LENGTH);
+	appendStringHeader(outputStream, "Block 1", EEPROM_BLOCK_4_VALUE_LENGTH);
+	appendStringHeader(outputStream, "Block 2", EEPROM_BLOCK_4_VALUE_LENGTH);
+	appendStringHeader(outputStream, "Block 3", EEPROM_BLOCK_4_VALUE_LENGTH);
+	appendTableSeparator(outputStream);
+	println(outputStream);
+	appendTableHeaderSeparatorLine(outputStream);
 
-    for (i = 0; i < eeprom_->maxIndex; i++) {
+	unsigned long rowIndex = 0;
+    for (i = startIndex; i < maxIndex; i++) {
         char c = eeprom_->eepromReadChar(eeprom_, i);
-        if ((i % WIDTH) == 0) {
-            appendCRLF(outputStream);
+		unsigned int columnIndex = (i % WIDTH);
+		if (columnIndex == 0) {
+			// address
+			appendHex6TableData(outputStream, i, EEPROM_ADDRESS_LENGTH);
         }
-        appendHex2(outputStream, c);
-    }
-    appendCRLF(outputStream);
-
-    for (i = 0; i < WIDTH * 2; i++) {
-        append(outputStream, '_');
-    }
-
+		if ((i % EEPROM_BLOCK_COUNT) == 0) {
+			appendHex2TableData(outputStream, c, 3);
+		}
+		else {
+			appendHex2(outputStream, c);
+			appendSpace(outputStream);
+		}
+		if (columnIndex == WIDTH - 1) {
+			rowIndex++;
+			appendTableSeparator(outputStream);
+			println(outputStream);
+			if ((rowIndex % EEPROM_BLOCK_COUNT) == 0) {
+				appendTableHeaderSeparatorLine(outputStream);
+			}
+		}
+	}
 }

@@ -9,6 +9,8 @@
 #include "../../drivers/driverList.h"
 #include "../../drivers/driverTransmitter.h"
 
+
+#include "../../drivers/motion/extendedMotionDriver.h"
 #include "../../drivers/motion/motionDriver.h"
 #include "../../drivers/motion/trajectoryDriver.h"
 #include "../../drivers/strategy/strategyDriver.h"

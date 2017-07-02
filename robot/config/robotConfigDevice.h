@@ -16,17 +16,10 @@ DeviceDescriptor* getRobotConfigDeviceDescriptor(RobotConfig* robotConfigParam);
 void refreshConfig(void);
 
 /**
-* Returns if the config is present or not.
-*/
-// char isConfigPresent( void );
-
-void appendStringConfig(OutputStream* outputStream);
-
-/**
 * Reads the raw config Value.
 * You must call refreshConfig for the first time
 */
-unsigned int  getConfigValue( void );
+unsigned int getConfigValue( void );
 
 /**
 * Returns if the specified configMask is set or not

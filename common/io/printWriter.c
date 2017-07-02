@@ -19,20 +19,21 @@ void append(OutputStream* outputStream, char c) {
     outputStream->writeChar(outputStream, c);
 }
 
-void appendBool(OutputStream* outputStream, bool b) {
+unsigned int appendBool(OutputStream* outputStream, bool b) {
     if (b) {
         append(outputStream, '1');
     } else {
         append(outputStream, '0');
     }
+	return 1;
 }
 
-void appendBoolAsString(OutputStream* outputStream, bool b) {
+unsigned int appendBoolAsString(OutputStream* outputStream, bool b) {
     if (b) {
-        appendString(outputStream, "true");
+        return appendString(outputStream, "true");
     }
     else {
-        appendString(outputStream, "false");
+        return appendString(outputStream, "false");
     }
 }
 
@@ -40,58 +41,86 @@ void appendSeparator(OutputStream* outputStream) {
     append(outputStream, '-');
 }
 
-void appendString(OutputStream* outputStream, const char* s) {
-    if (s == NULL) {
-        return;
+void appendSpace(OutputStream* outputStream) {
+	append(outputStream, ' ');
+}
+
+unsigned int appendString(OutputStream* outputStream, const char* s) {
+    unsigned int result = 0;
+	if (s == NULL) {
+        return result;
     }
     while (*s != '\0') {
         append(outputStream, *s++);
+		result++;
     }
+	return result;
 }
 
-void appendFixedCharArray(OutputStream* outputStream, const FixedCharArray* s) {
+unsigned int appendHexFixedCharArray(OutputStream* outputStream, const FixedCharArray* s) {
+	unsigned int i;
+	char* sPointer = (char*)s;
+	for (i = 0; i < FIXED_CHAR_ARRAY_LENGTH; i++) {
+		char c = *sPointer;
+		appendHex2(outputStream, c);
+		sPointer++;
+	}
+	return FIXED_CHAR_ARRAY_LENGTH * 2;
+}
+
+unsigned int appendFixedCharArray(OutputStream* outputStream, const FixedCharArray* s) {
     unsigned int i;
     char* sPointer = (char*)s;
     for (i = 0; i < FIXED_CHAR_ARRAY_LENGTH; i++) {
         char c = *sPointer;
-        appendHex2(outputStream, c);
+        append(outputStream, c);
         sPointer++;
     }
+	return FIXED_CHAR_ARRAY_LENGTH;
 }
 
-void appendStringCRLF(OutputStream* outputStream, const char* s) {
-    appendString(outputStream, s);
-    appendCRLF(outputStream);
+unsigned int appendStringCRLF(OutputStream* outputStream, const char* s) {
+    unsigned int result;
+	result = appendString(outputStream, s);
+    result += appendCRLF(outputStream);
+	return result;
 }
 
-void appendCR(OutputStream* outputStream) {
+unsigned int appendCR(OutputStream* outputStream) {
     append(outputStream, CR);
+	return 1;
 }
 
-void appendLF(OutputStream* outputStream) {
+unsigned int appendLF(OutputStream* outputStream) {
     append(outputStream, LF);
+	return 1;
 }
 
-void appendCRLF(OutputStream* outputStream) {
+unsigned int appendCRLF(OutputStream* outputStream) {
     append(outputStream, CR);
     append(outputStream, LF);
+	return 2;
 }
 
-void println(OutputStream* outputStream) {
-    appendLF(outputStream);
+unsigned int println(OutputStream* outputStream) {
+    return appendLF(outputStream);
 }
 
-void appendAck(OutputStream* outputStream) {
+unsigned int appendAck(OutputStream* outputStream) {
     append(outputStream, ACK);
+	return 1;
 }
 
 // BUFFER
 
-void printBuffer(OutputStream* outputStream, Buffer* buffer) {
-    while(!isBufferEmpty(buffer)) {
+unsigned int printBuffer(OutputStream* outputStream, Buffer* buffer) {
+    unsigned int result = 0;
+	while(!isBufferEmpty(buffer)) {
         char c = bufferReadChar(buffer);
         append(outputStream, c);
+		result++;
     }
+	return result;
 }
 
 // HEXADECIMAL
@@ -250,4 +279,3 @@ void appendKeyAndName(OutputStream* stream, const char* key, const char* name) {
     appendString(stream, key);
     appendString(stream, name);
 }
-

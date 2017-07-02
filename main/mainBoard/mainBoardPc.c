@@ -9,6 +9,8 @@
 #include "../../common/delay/cenDelay.h"
 #include "../../common/eeprom/pc/eepromPc.h"
 #include "../../common/error/error.h"
+#include "../../common/i2c/i2cCommon.h"
+#include "../../common/i2c/i2cBusList.h"
 #include "../../common/i2c/i2cDebug.h"
 
 #include "../../common/io/filter.h"
@@ -46,6 +48,10 @@
 // DISPATCHER DEVICE
 #include "../../device/dispatcher/dataDispatcherDevice.h"
 #include "../../device/dispatcher/dataDispatcherDeviceInterface.h"
+
+// I2C Common
+#include "../../device/i2c/i2cCommonDebugDevice.h"
+#include "../../device/i2c/i2cCommonDebugDeviceInterface.h"
 
 // I2C -> Master
 #include "../../device/i2c/master/i2cMasterDebugDevice.h"
@@ -157,8 +163,11 @@ static StreamLink robotManagerSerialStreamLink;
 // Dispatchers
 static DriverDataDispatcher driverDataDispatcherListArray[MAIN_BOARD_PC_DATA_DISPATCHER_LIST_LENGTH];
 
+// I2C
+static I2cBus i2cBusListArray[MAIN_BOARD_I2C_BUS_LIST_LENGTH];
+
 // Dispatcher i2c->Motor
-static I2cBus motorBoardI2cBus;
+static I2cBus* motorBoardI2cBus;
 static I2cBusConnection motorBoardI2cBusConnection;
 static char motorBoardInputBufferArray[MAIN_BOARD_PC_DATA_MOTOR_BOARD_DISPATCHER_BUFFER_LENGTH];
 static Buffer motorBoardInputBuffer;
@@ -190,8 +199,7 @@ static char i2cMasterDebugInputBufferArray[MAIN_BOARD_PC_I2C_DEBUG_MASTER_IN_BUF
 static Buffer i2cMasterDebugInputBuffer;
 
 // Timers
-#define MAIN_BOARD_PC_TIMER_LENGTH    10
-static Device timerListArray[MAIN_BOARD_PC_TIMER_LENGTH];
+static Timer timerListArray[MAIN_BOARD_PC_TIMER_LENGTH];
 
 // ConsoleOutputStream
 static InputStream consoleInputStream;
@@ -223,11 +231,13 @@ void mainBoardDeviceHandleNotification(const Device* device, const char commandH
 }
 
 bool mainBoardPcWaitForInstruction(StartMatch* startMatch) {
+	/*
     while (handleNotificationFromDispatcherList(TRANSMIT_I2C)) {
         // loop for all notification
         // notification handler must avoid to directly information in notification callback
         // and never to the call back device
     }
+	*/
 
     // delaymSec(MAIN_BOARD_PC_DELAY_CONSOLE_ANALYZE_MILLISECONDS);
 
@@ -265,6 +275,7 @@ bool mainBoardPcWaitForInstruction(StartMatch* startMatch) {
 void runMainBoardPC(bool connectToRobotManagerMode) {
     connectToRobotManager = connectToRobotManagerMode;
     setBoardName(MAIN_BOARD_PC_NAME);
+	setConsoleSizeAndBuffer(CONSOLE_CHARS_WIDTH, CONSOLE_CHARS_HEIGHT, CONSOLE_BUFFER_WIDTH, CONSOLE_BUFFER_HEIGHT);
     moveConsole(0, 0, HALF_SCREEN_WIDTH, CONSOLE_HEIGHT);
 
     // We use http://patorjk.com/software/taag/#p=testall&v=2&f=Acrobatic&t=MOTOR%20BOARD%20PC
@@ -293,8 +304,10 @@ void runMainBoardPC(bool connectToRobotManagerMode) {
     initDriverDataDispatcherList((DriverDataDispatcher(*)[]) &driverDataDispatcherListArray, MAIN_BOARD_PC_DATA_DISPATCHER_LIST_LENGTH);
     addLocalDriverDataDispatcher();
 
-    initI2cBus(&motorBoardI2cBus, I2C_BUS_TYPE_MASTER, I2C_BUS_PORT_1);
-    initI2cBusConnection(&motorBoardI2cBusConnection, &motorBoardI2cBus, MOTOR_BOARD_PC_I2C_ADDRESS);
+	// I2c
+	initI2cBusList((I2cBus(*)[]) &i2cBusListArray, MAIN_BOARD_I2C_BUS_LIST_LENGTH);
+	motorBoardI2cBus = addI2cBus(I2C_BUS_TYPE_MASTER, I2C_BUS_PORT_1);
+    initI2cBusConnection(&motorBoardI2cBusConnection, motorBoardI2cBus, MOTOR_BOARD_PC_I2C_ADDRESS);
 
     addI2CDriverDataDispatcher("MOTOR_BOARD_DISPATCHER",
         &motorBoardInputBuffer,
@@ -359,7 +372,8 @@ void runMainBoardPC(bool connectToRobotManagerMode) {
     addLocalDevice(getStrategyDeviceInterface(), getStrategyDeviceDescriptor());
     addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
     addLocalDevice(getRobotConfigDeviceInterface(), getRobotConfigDeviceDescriptor(&robotConfig));
-    addLocalDevice(getI2cMasterDebugDeviceInterface(), getI2cMasterDebugDeviceDescriptor());
+    addLocalDevice(getI2cCommonDebugDeviceInterface(), getI2cCommonDebugDeviceDescriptor());
+	addLocalDevice(getI2cMasterDebugDeviceInterface(), getI2cMasterDebugDeviceDescriptor());
     addLocalDevice(getDataDispatcherDeviceInterface(), getDataDispatcherDeviceDescriptor());
     addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor());
     addLocalDevice(getTimerDeviceInterface(), getTimerDeviceDescriptor());
@@ -387,10 +401,13 @@ void runMainBoardPC(bool connectToRobotManagerMode) {
 
     initDevices();
 
+	startTimerList();
+
     delaymSec(100);
 
     setDebugI2cEnabled(false);
 
+	/*
     // Ping
     if (!pingDriverDataDispatcherList()) {
         printf("PING PROBLEM !");
@@ -407,10 +424,9 @@ void runMainBoardPC(bool connectToRobotManagerMode) {
     // testDriverIntensive(100);
 
     startTimerList();
-
+	*/
     while (1) {
         mainBoardPcWaitForInstruction(&startMatch);
     }
-
     // TODO : ShowEnd
 }

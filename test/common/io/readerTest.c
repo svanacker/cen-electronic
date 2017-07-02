@@ -33,7 +33,7 @@ void readerTestSuite(void) {
     RUN_TEST(test_isChar);
     RUN_TEST(test_checkIsAck);
     RUN_TEST(test_checkIsChar);
-    RUN_TEST(test_readFixedCharArray);
+    RUN_TEST(test_readHexFixedCharArray);
 }
 
 void initBufferForReaderTest(void) {
@@ -218,7 +218,7 @@ void test_readHex6(void) {
     TEST_ASSERT_EQUAL(0, getLastError());
 }
 
-void test_readFixedCharArray(void) {
+void test_readHexFixedCharArray(void) {
     initBufferForReaderTest();
     appendHex2(outputStream, 'H');
     appendHex2(outputStream, 'E');
@@ -226,7 +226,7 @@ void test_readFixedCharArray(void) {
     appendHex2(outputStream, 'L');
 
     FixedCharArray s;
-    readFixedCharArray(inputStream, &s);
+    readHexFixedCharArray(inputStream, &s);
 
     TEST_ASSERT_EQUAL('H', s[0]);
     TEST_ASSERT_EQUAL('E', s[1]);

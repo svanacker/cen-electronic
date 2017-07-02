@@ -20,7 +20,12 @@ void runMotorBoardPC(bool singleMode);
 /** Define the I2C address used by motorBoardPc. */
 #define MOTOR_BOARD_PC_I2C_ADDRESS     0x50
 
-#define MOTOR_BOARD_PC_DATA_DISPATCHER_LIST_LENGTH 2
+// Dispatchers
+
+#define MOTOR_BOARD_PC_DATA_DISPATCHER_LIST_LENGTH       2
+
+// I2cBus
+#define MOTOR_BOARD_I2C_BUS_LIST_LENGTH                  1
 
 #define MOTOR_BOARD_PC_I2C_DEBUG_SLAVE_OUT_BUFFER_LENGTH 150
 #define MOTOR_BOARD_PC_I2C_DEBUG_SLAVE_IN_BUFFER_LENGTH  150

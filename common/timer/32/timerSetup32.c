@@ -2,9 +2,8 @@
 #include "../cenTimer.h"
 #include "../timerList.h"
 
+#define _SUPPRESS_PLIB_WARNING
 #include <plib.h>
-//#include <timer.h>
-#include <peripheral/timer.h>
 
 /**
  * @private

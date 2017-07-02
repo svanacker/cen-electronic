@@ -1,3 +1,5 @@
+#include <stdlib.h>
+
 #include "robotSonarDetectorDevice.h"
 #include "robotSonarDetectorDeviceInterface.h"
 
@@ -150,7 +152,7 @@ void deviceRobotSonarDetectorInit() {
     // Timer for detector
     addTimer(ROBOT_SONAR_DETECTOR_TIMER_INDEX,
             TIME_DIVIDER_16_HERTZ,
-            deviceRobotSonarDetectorCallbackFunc, "ROBOT SONAR DETECTOR TIMER");
+            deviceRobotSonarDetectorCallbackFunc, "ROBOT SONAR DETECTOR TIMER", NULL);
     // useSonar = isConfigSet(CONFIG_USE_LASER_MASK);
     clearHistory();
     startSRF02Ranging(robotSonarDetectorI2cBusConnection, SONAR_INDEX);

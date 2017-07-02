@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -14,18 +14,19 @@
     <ProjectGuid>{DCB1D86A-5AE0-4527-B347-96E0815B3D74}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>cenelectronicconsole</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -87,6 +88,8 @@
     <ClCompile Include="common\eeprom\memoryEeprom.c" />
     <ClCompile Include="common\eeprom\pc\eepromPc.c" />
     <ClCompile Include="common\error\error.c" />
+    <ClCompile Include="common\i2c\i2cBusConnectionList.c" />
+    <ClCompile Include="common\i2c\i2cBusList.c" />
     <ClCompile Include="common\i2c\i2cCommon.c" />
     <ClCompile Include="common\i2c\i2cDebug.c" />
     <ClCompile Include="common\i2c\master\i2cMaster.c" />
@@ -111,6 +114,7 @@
     <ClCompile Include="common\io\outputStream.c" />
     <ClCompile Include="common\io\pc\consoleInputStream.c" />
     <ClCompile Include="common\io\pc\consoleOutputStream.c" />
+    <ClCompile Include="common\io\printTableWriter.c" />
     <ClCompile Include="common\io\printWriter.c" />
     <ClCompile Include="common\io\reader.c" />
     <ClCompile Include="common\io\streamLink.c" />
@@ -163,6 +167,8 @@
     <ClCompile Include="device\dispatcher\deviceDataDispatcher.c" />
     <ClCompile Include="device\eeprom\eepromDevice.c" />
     <ClCompile Include="device\eeprom\eepromDeviceInterface.c" />
+    <ClCompile Include="device\i2c\i2cCommonDebugDevice.c" />
+    <ClCompile Include="device\i2c\i2cCommonDebugDeviceInterface.c" />
     <ClCompile Include="device\i2c\master\i2cMasterDebugDevice.c" />
     <ClCompile Include="device\i2c\master\i2cMasterDebugDeviceInterface.c" />
     <ClCompile Include="device\i2c\slave\i2cSlaveDebugDevice.c" />
@@ -171,6 +177,8 @@
     <ClCompile Include="device\lcd\lcdDeviceInterface.c" />
     <ClCompile Include="device\log\logDevice.c" />
     <ClCompile Include="device\log\logDeviceInterface.c" />
+    <ClCompile Include="device\motion\extended\extendedMotionDevice.c" />
+    <ClCompile Include="device\motion\extended\extendedMotionDeviceInterface.c" />
     <ClCompile Include="device\motion\pid\pidDevice.c" />
     <ClCompile Include="device\motion\pid\pidDeviceInterface.c" />
     <ClCompile Include="device\motion\position\codersDevice.c" />
@@ -186,6 +194,8 @@
     <ClCompile Include="device\motor\pwmMotorDeviceInterface.c" />
     <ClCompile Include="device\navigation\navigationDevice.c" />
     <ClCompile Include="device\navigation\navigationDeviceInterface.c" />
+    <ClCompile Include="device\pc\pcDevice.c" />
+    <ClCompile Include="device\pc\pcDeviceInterface.c" />
     <ClCompile Include="device\sensor\temperature\temperatureSensor.c" />
     <ClCompile Include="device\sensor\temperature\temperatureSensorDevice.c" />
     <ClCompile Include="device\sensor\temperature\temperatureSensorDeviceInterface.c" />
@@ -220,6 +230,7 @@
     <ClCompile Include="drivers\file\eeprom\eepromFile.c" />
     <ClCompile Include="drivers\lcd\lcd.c" />
     <ClCompile Include="drivers\lcd\pc\lcdProvider_Pc.c" />
+    <ClCompile Include="drivers\motion\extendedMotionDriver.c" />
     <ClCompile Include="drivers\motion\motionDriver.c" />
     <ClCompile Include="drivers\motion\trajectoryDriver.c" />
     <ClCompile Include="drivers\motor\motorDriver.c" />
@@ -341,6 +352,8 @@
     <ClInclude Include="common\eeprom\memoryEeprom.h" />
     <ClInclude Include="common\eeprom\pc\eepromPc.h" />
     <ClInclude Include="common\error\error.h" />
+    <ClInclude Include="common\i2c\i2cBusConnectionList.h" />
+    <ClInclude Include="common\i2c\i2cBusList.h" />
     <ClInclude Include="common\i2c\i2cCommon.h" />
     <ClInclude Include="common\i2c\i2cConstants.h" />
     <ClInclude Include="common\i2c\i2cDebug.h" />
@@ -370,6 +383,7 @@
     <ClInclude Include="common\io\pc\consoleInputStream.h" />
     <ClInclude Include="common\io\pc\consoleOutputStream.h" />
     <ClInclude Include="common\io\pin.h" />
+    <ClInclude Include="common\io\printTableWriter.h" />
     <ClInclude Include="common\io\printWriter.h" />
     <ClInclude Include="common\io\reader.h" />
     <ClInclude Include="common\io\stream.h" />
@@ -426,6 +440,8 @@
     <ClInclude Include="device\eeprom\eepromDeviceInterface.h" />
     <ClInclude Include="device\file\fileDevice.h" />
     <ClInclude Include="device\file\fileDeviceInterface.h" />
+    <ClInclude Include="device\i2c\i2cCommonDebugDevice.h" />
+    <ClInclude Include="device\i2c\i2cCommonDebugDeviceInterface.h" />
     <ClInclude Include="device\i2c\master\i2cMasterDebugDevice.h" />
     <ClInclude Include="device\i2c\master\i2cMasterDebugDeviceInterface.h" />
     <ClInclude Include="device\i2c\slave\i2cSlaveDebugDevice.h" />
@@ -434,6 +450,8 @@
     <ClInclude Include="device\lcd\lcdDeviceInterface.h" />
     <ClInclude Include="device\log\logDevice.h" />
     <ClInclude Include="device\log\logDeviceInterface.h" />
+    <ClInclude Include="device\motion\extended\extendedMotionDevice.h" />
+    <ClInclude Include="device\motion\extended\extendedMotionDeviceInterface.h" />
     <ClInclude Include="device\motion\pid\pidDevice.h" />
     <ClInclude Include="device\motion\pid\pidDeviceInterface.h" />
     <ClInclude Include="device\motion\position\codersDevice.h" />
@@ -449,6 +467,8 @@
     <ClInclude Include="device\motor\pwmMotorDeviceInterface.h" />
     <ClInclude Include="device\navigation\navigationDevice.h" />
     <ClInclude Include="device\navigation\navigationDeviceInterface.h" />
+    <ClInclude Include="device\pc\pcDevice.h" />
+    <ClInclude Include="device\pc\pcDeviceInterface.h" />
     <ClInclude Include="device\sensor\temperature\temperatureSensor.h" />
     <ClInclude Include="device\sensor\temperature\temperatureSensorDevice.h" />
     <ClInclude Include="device\sensor\temperature\temperatureSensorDeviceInterface.h" />
@@ -482,6 +502,7 @@
     <ClInclude Include="drivers\driverTransmitter.h" />
     <ClInclude Include="drivers\file\eeprom\eepromFile.h" />
     <ClInclude Include="drivers\lcd\lcd.h" />
+    <ClInclude Include="drivers\motion\extendedMotionDriver.h" />
     <ClInclude Include="drivers\motion\motionDriver.h" />
     <ClInclude Include="drivers\motion\trajectoryDriver.h" />
     <ClInclude Include="drivers\motor\motorDriver.h" />

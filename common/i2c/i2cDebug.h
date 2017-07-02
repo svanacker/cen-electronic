@@ -55,4 +55,11 @@ void appendI2cDebugOutputChar(unsigned char debugValue);
  */
 void printI2cDebugBuffers();
 
+// LIST DEBUG
+
+/**
+* Print the list of I2cBus
+*/
+void printI2cBusList(OutputStream* outputStream);
+
 #endif

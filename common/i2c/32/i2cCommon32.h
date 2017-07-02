@@ -1,7 +1,9 @@
 #ifndef I2C_COMMON_32_H
 #define I2C_COMMON_32_H
 
+#define _SUPPRESS_PLIB_WARNING
 #include <plib.h>
+
 #include "../i2cCommon.h"
 
 /**

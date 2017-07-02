@@ -10,22 +10,22 @@ const char* getKinematicsDeviceName(void) {
 int deviceRobotKinematicsGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     if (commandHeader == COMMAND_KINEMATICS_LOAD_DEFAULT_VALUES) {
         if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("kinematicsLoadDefaultValues");
+            setFunctionNoArgumentAndNoResult("loadDefaultValues");
             setResultUnsignedHex6(0, "value");
         }
-        return 0;
+        return commandLengthValueForMode(mode, 0, 0);
     }
     // Wheels Average Length (get/set)
     else if (commandHeader == COMMAND_GET_WHEELS_AVERAGE_FOR_ONE_PULSE_LENGTH) {
         if (fillDeviceArgumentList) {
-            setFunction("getWheelsAverageLengthForOnePulse (nanometer)", 0, 1);
+            setFunction("getWheelsAvgLengthFor1Pulse(nanoM)", 0, 1);
             setResultUnsignedHex6(0, "value");
         }
         return commandLengthValueForMode(mode, 0, 6);
     }
     else if (commandHeader == COMMAND_SET_WHEELS_AVERAGE_FOR_ONE_PULSE_LENGTH) {
         if (fillDeviceArgumentList) {
-            setFunction("setWheelsAverageLengthForOnePulse (nanometer)", 1, 0);
+            setFunction("setWheelsAvgLengthFor1Pulse(nanoM)", 1, 0);
             setArgumentUnsignedHex6(0, "value");
         }
         return commandLengthValueForMode(mode, 6, 0);
@@ -33,14 +33,14 @@ int deviceRobotKinematicsGetInterface(char commandHeader, DeviceInterfaceMode mo
     // Rotation By Seconds (get/set)
     else if (commandHeader == COMMAND_GET_ROTATION_BY_SECONDS_AT_FULL_SPEED) {
         if (fillDeviceArgumentList) {
-            setFunction("getRotationBySecondsAtFullSpeed", 0, 1);
+            setFunction("getRotBySecAtFullSpeed", 0, 1);
             setResultUnsignedHex2(0, "value");
         }
         return commandLengthValueForMode(mode, 0, 2);
     }
     else if (commandHeader == COMMAND_SET_ROTATION_BY_SECONDS_AT_FULL_SPEED) {
         if (fillDeviceArgumentList) {
-            setFunction("setRotationBySecondsAtFullSpeed", 1, 0);
+            setFunction("setRotBySecAtFullSpeed", 1, 0);
             setArgumentUnsignedHex2(0, "value");
         }
         return commandLengthValueForMode(mode, 2, 0);
@@ -63,14 +63,14 @@ int deviceRobotKinematicsGetInterface(char commandHeader, DeviceInterfaceMode mo
     // Wheel delta length (get/set)
     else if (commandHeader == COMMAND_GET_WHEEL_DELTA_FOR_ONE_PULSE_LENGTH) {
         if (fillDeviceArgumentList) {
-            setFunction("getWheelDeltaLengthForOnePulse (nanometer)", 0, 1);
+            setFunction("getWheelDeltaLengthFor1Pulse(nanoM)", 0, 1);
             setResultUnsignedHex6(0, "value");
         }
         return commandLengthValueForMode(mode, 0, 6);
     }
     else if (commandHeader == COMMAND_SET_WHEEL_DELTA_FOR_ONE_PULSE_LENGTH) {
         if (fillDeviceArgumentList) {
-            setFunction("setWheelDeltaLengthForOnePulse (nanometer)", 1, 0);
+            setFunction("setWheelDeltaLengthFor1Pulse(nanoM)", 1, 0);
             setArgumentUnsignedHex6(0, "value");
         }
         return commandLengthValueForMode(mode, 6, 0);
@@ -78,18 +78,25 @@ int deviceRobotKinematicsGetInterface(char commandHeader, DeviceInterfaceMode mo
     // Wheel distance (get/set)
     else if (commandHeader == COMMAND_GET_WHEELS_DISTANCE) {
         if (fillDeviceArgumentList) {
-            setFunction("getWheelsDistance (µm)", 0, 1);
+            setFunction("getWheelsDist(microM)", 0, 1);
             setResultUnsignedHex6(0, "value");
         }
         return commandLengthValueForMode(mode, 0, 6);
     }
     else if (commandHeader == COMMAND_SET_WHEELS_DISTANCE) {
         if (fillDeviceArgumentList) {
-            setFunction("setWheelsDistance (µm)", 1, 0);
+            setFunction("setWheelsDist(microM)", 1, 0);
             setArgumentUnsignedHex6(0, "value");
         }
         return commandLengthValueForMode(mode, 6, 0);
     }
+	// DEBUG
+	else if (commandHeader == COMMAND_KINEMATICS_DEBUG) {
+		if (fillDeviceArgumentList) {
+			setFunctionNoArgumentAndNoResult("debug");
+		}
+		return commandLengthValueForMode(mode, 0, 0);
+	}
     return DEVICE_HEADER_NOT_HANDLED;
 }
 

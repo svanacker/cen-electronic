@@ -37,7 +37,7 @@ GameStrategy* getGameStrategy(int index) {
     return strategies.strategies[index];
 }
 
-int getStrategyCount() {
+int getGameStrategyCount(void) {
     return strategies.size;
 }
 

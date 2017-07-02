@@ -5,8 +5,8 @@
 #include "../../../../common/i2c/i2cCommon.h"
 #include "../../../../common/i2c/32/i2cCommon32.h"
 
+#define _SUPPRESS_PLIB_WARNING
 #include <plib.h>
-#include <peripheral/i2c.h>
 
 void portableSlaveStartI2C(I2cBusConnection* i2cBusConnection) {
     portableCommonStartI2C(i2cBusConnection);

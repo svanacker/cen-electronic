@@ -16,17 +16,27 @@
 /**
  * Defines the header to get information about a specific location.
  */
-#define COMMAND_NAVIGATION_GET_LOCATION          'l'
+#define COMMAND_NAVIGATION_GET_LOCATION          'r'
 
 /**
- * Defines the header to add a new location.
+ * Defines the header to add a new location or replace an existing one (if it has the same name).
  */
-#define COMMAND_NAVIGATION_SET_LOCATION          'L'
+#define COMMAND_NAVIGATION_SET_LOCATION          'w'
 
 /**
  * Defines the header to clear all location
  */
-#define COMMAND_NAVIGATION_LOCATION_CLEAR        'd'
+#define COMMAND_NAVIGATION_LOCATION_CLEAR        'k'
+
+ /**
+ * Defines the header to list all location.
+ */
+#define COMMAND_NAVIGATION_LOCATION_LIST        'd'
+
+/**
+ * Add some test data (to avoid to fill them manually).
+ */
+#define COMMAND_NAVIGATION_LOCATION_ADD_TESTS_DATA       't'
 
 // -> PATHS
 
@@ -38,17 +48,27 @@
 /**
 * Defines the header to get information about a specific path.
 */
-#define COMMAND_NAVIGATION_GET_PATH          'p'
+#define COMMAND_NAVIGATION_GET_PATH          'R'
 
 /**
-* Defines the header to add a new path.
+* Defines the header to add a new path or replace an existing one (if it has the same name).
 */
-#define COMMAND_NAVIGATION_SET_PATH          'P'
+#define COMMAND_NAVIGATION_SET_PATH          'W'
 
 /**
 * Defines the header to clear all paths.
 */
-#define COMMAND_NAVIGATION_PATH_CLEAR        '_'
+#define COMMAND_NAVIGATION_PATH_CLEAR        'K'
+
+/**
+* Defines the header to list all paths.
+*/
+#define COMMAND_NAVIGATION_PATH_LIST     'D'
+
+/**
+* Add some test data (to avoid to fill them manually).
+*/
+#define COMMAND_NAVIGATION_PATH_LIST_ADD_TESTS_DATA       'T'
 
 // Function to get the specific Device Interface
 

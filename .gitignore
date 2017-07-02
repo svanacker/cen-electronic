@@ -46,3 +46,7 @@ Debug
 *.aps
 *.opensdf
 *.sdf
+*.VC.db
+*.ipch
+*.opendb
+

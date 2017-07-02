@@ -3,6 +3,8 @@
 
 #include <stdbool.h>
 
+#include "../extended/bspline.h"
+
 // SPEED FACTOR
 
 #define    MOTION_SPEED_FACTOR_MAX                15
@@ -19,7 +21,8 @@
 #define    MOTION_ACCELERATION_FACTOR_LOW        4
 #define    MOTION_ACCELERATION_FACTOR_MIN        1
 
-void updateSimpleSplineWithDistance(float destX, float destY,
+void updateSimpleSplineWithDistance(BSplineCurve* spline, 
+									float destX, float destY,
                                     float destAngle,
                                     float distance1, float distance2,
                                     unsigned char accelerationFactor, unsigned char speedFactor,

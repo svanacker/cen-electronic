@@ -7,6 +7,8 @@
 #include "../../common/delay/cenDelay.h"
 #include "../../common/eeprom/pc/eepromPc.h"
 #include "../../common/error/error.h"
+#include "../../common/i2c/i2cCommon.h"
+#include "../../common/i2c/i2cBusList.h"
 #include "../../common/i2c/i2cDebug.h"
 #include "../../common/i2c/slave/pc/i2cSlavePc.h"
 #include "../../common/i2c/slave/pc/i2cSlaveSetupPc.h"
@@ -28,6 +30,10 @@
 #include "../../device/device.h"
 #include "../../device/deviceList.h"
 
+// I2C
+#include "../../device/i2c/i2cCommonDebugDevice.h"
+#include "../../device/i2c/i2cCommonDebugDeviceInterface.h"
+
 // I2C -> Slave
 #include "../../device/i2c/slave/i2cSlaveDebugDevice.h"
 #include "../../device/i2c/slave/i2cSlaveDebugDeviceInterface.h"
@@ -44,6 +50,10 @@
 #include "../../device/eeprom/eepromDevice.h"
 #include "../../device/eeprom/eepromDeviceInterface.h"
 
+// LOG
+#include "../../device/log/logDevice.h"
+#include "../../device/log/logDeviceInterface.h"
+
 // TIMERS
 #include "../../device/timer/timerDevice.h"
 #include "../../device/timer/timerDeviceInterface.h"
@@ -53,6 +63,9 @@
 #include "../../robot/kinematics/robotKinematicsDeviceInterface.h"
 
 // MOTION
+
+#include "../../device/motion/extended/extendedMotionDevice.h"
+#include "../../device/motion/extended/extendedMotionDeviceInterface.h"
 
 #include "../../device/motion/pid/pidDevice.h"
 #include "../../device/motion/pid/pidDeviceInterface.h"
@@ -65,6 +78,7 @@
 
 #include "../../device/motion/simple/motionDevice.h"
 #include "../../device/motion/simple/motionDeviceInterface.h"
+
 
 #include "../../device/motion/simulation/motionSimulationDevice.h"
 #include "../../device/motion/simulation/motionSimulationDeviceInterface.h"
@@ -95,12 +109,14 @@
 // Logs
 static LogHandlerList logHandlerListArray[MOTOR_BOARD_PC_LOG_HANDLER_LIST_LENGTH];
 
-
 // Dispatchers
 static DriverDataDispatcher driverDataDispatcherListArray[MOTOR_BOARD_PC_DATA_DISPATCHER_LIST_LENGTH];
 
+// I2C
+static I2cBus i2cBusListArray[MOTOR_BOARD_I2C_BUS_LIST_LENGTH];
+
 // Timers
-static Device timerListArray[MOTOR_BOARD_PC_TIMER_LENGTH];
+static Timer timerListArray[MOTOR_BOARD_PC_TIMER_LENGTH];
 
 // Logs
 
@@ -134,7 +150,7 @@ static Battery battery;
 static Clock clock;
 
 // I2C
-static I2cBus motorI2cBus;
+static I2cBus* motorI2cBus;
 static I2cBusConnection motorI2cBusConnection;
 
 // Devices
@@ -180,6 +196,7 @@ void motorBoardWaitForInstruction(void) {
 void runMotorBoardPC(bool singleMode) {
     singleModeActivated = singleMode;
     setBoardName(MOTOR_BOARD_PC_NAME);
+	setConsoleSizeAndBuffer(CONSOLE_CHARS_WIDTH, CONSOLE_CHARS_HEIGHT, CONSOLE_BUFFER_WIDTH, CONSOLE_BUFFER_HEIGHT);
     moveConsole(HALF_SCREEN_WIDTH, 0, HALF_SCREEN_WIDTH, CONSOLE_HEIGHT);
 
     // We use http://patorjk.com/software/taag/#p=testall&v=2&f=Acrobatic&t=MOTOR%20BOARD%20PC
@@ -207,9 +224,11 @@ void runMotorBoardPC(bool singleMode) {
     addLocalDriverDataDispatcher();
 
     if (!singleModeActivated) {
-        initI2cBus(&motorI2cBus, I2C_BUS_TYPE_SLAVE, I2C_BUS_PORT_1);
-        initI2cBusConnection(&motorI2cBusConnection, &motorI2cBus, MOTOR_BOARD_PC_I2C_ADDRESS);
-        openSlaveI2cStreamLink(&i2cSlaveStreamLink,
+		// I2c
+		initI2cBusList((I2cBus(*)[]) &i2cBusListArray, MOTOR_BOARD_I2C_BUS_LIST_LENGTH);
+		motorI2cBus = addI2cBus(I2C_BUS_TYPE_SLAVE, I2C_BUS_PORT_1);
+        initI2cBusConnection(&motorI2cBusConnection, motorI2cBus, MOTOR_BOARD_PC_I2C_ADDRESS);
+		openSlaveI2cStreamLink(&i2cSlaveStreamLink,
             &i2cSlaveInputBuffer,
             (char(*)[]) &i2cSlaveInputBufferArray,
             MOTOR_BOARD_PC_IN_BUFFER_LENGTH,
@@ -218,7 +237,6 @@ void runMotorBoardPC(bool singleMode) {
             MOTOR_BOARD_PC_OUT_BUFFER_LENGTH,
             &motorI2cBusConnection
         );
-
         // I2C Debug
         initI2CDebugBuffers(&i2cSlaveDebugInputBuffer,
             (char(*)[]) &i2cSlaveDebugInputBufferArray,
@@ -226,7 +244,7 @@ void runMotorBoardPC(bool singleMode) {
             &i2cSlaveDebugOutputBuffer,
             (char(*)[]) &i2cSlaveDebugOutputBufferArray,
             MOTOR_BOARD_PC_I2C_DEBUG_SLAVE_OUT_BUFFER_LENGTH);
-    }
+	}
 
     // Eeprom
     initEepromPc(&eeprom, "TODO");
@@ -241,9 +259,11 @@ void runMotorBoardPC(bool singleMode) {
     initDeviceList((Device(*)[]) &deviceListArray, MOTOR_BOARD_PC_DEVICE_LIST_LENGTH);
     addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
     addLocalDevice(getTimerDeviceInterface(), getTimerDeviceDescriptor());
+	addLocalDevice(getI2cCommonDebugDeviceInterface(), getI2cCommonDebugDeviceDescriptor());
     addLocalDevice(getI2cSlaveDebugDeviceInterface(), getI2cSlaveDebugDeviceDescriptor(&motorI2cBusConnection));
     addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
     addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());
+	addLocalDevice(getLogDeviceInterface(), getLogDeviceDescriptor());
 
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
     addLocalDevice(getBatteryDeviceInterface(), getBatteryDeviceDescriptor(&battery));
@@ -255,7 +275,8 @@ void runMotorBoardPC(bool singleMode) {
     addLocalDevice(getCodersDeviceInterface(), getCodersDeviceDescriptor());
     addLocalDevice(getTrajectoryDeviceInterface(), getTrajectoryDeviceDescriptor());
     addLocalDevice(getMotionDeviceInterface(), getMotionDeviceDescriptor(&eeprom, true));
-    addLocalDevice(getMotionSimulationDeviceInterface(), getMotionSimulationDeviceDescriptor());
+	addLocalDevice(getExtendedMotionDeviceInterface(), getExtendedMotionDeviceDescriptor(&eeprom, true));
+	addLocalDevice(getMotionSimulationDeviceInterface(), getMotionSimulationDeviceDescriptor());
 
     initDevices();
 

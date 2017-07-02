@@ -143,8 +143,17 @@ Location* getNearestLocation(LocationList* locationList, int x, int y);
 void printLocationList(OutputStream* outputStream, char* locationListName, LocationList* locationList);
 
 /**
+* Print the list of location as table.
+*/
+void printLocationListTable(OutputStream* outputStream, LocationList* locationList);
+
+/**
  * TODO:
  */
 void printLocationLinkedPath(OutputStream* outputStream, Location* startPoint);
+
+// TESTS DATA
+
+void addLocationListTestsData(LocationList* locationList);
 
 #endif

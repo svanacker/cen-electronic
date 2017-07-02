@@ -87,11 +87,10 @@ bool isEndOfMotion(enum InstructionType instructionType, MotionEndInfo* endMotio
     return false;
 }
 
-bool isRobotBlocked(enum InstructionType instructionType, MotionEndInfo* endMotion, MotionEndDetectionParameter* parameter) {
+bool isRobotBlocked(PidMotionDefinition* motionDefinition, enum InstructionType instructionType, MotionEndInfo* endMotion, MotionEndDetectionParameter* parameter) {
     if (endMotion->integralTime < parameter->timeRangeAnalysis) {
         return false;
     }
-    PidMotionDefinition* motionDefinition = &(getPidMotion()->currentMotionDefinition);
     MotionInstruction* localInst = &(motionDefinition->inst[instructionType]);
     float normalU = getNormalU(localInst->speed);
     float value = parameter->maxUIntegralConstantThreshold + normalU * parameter->maxUIntegralFactorThreshold;

@@ -9,6 +9,9 @@
 #include "../../common/io/printWriter.h"
 #include "../../common/io/reader.h"
 
+#include "../../common/log/logLevel.h"
+#include "../../common/log/logger.h"
+
 #include "../../device/device.h"
 
 static Clock* clock;
@@ -49,13 +52,29 @@ void deviceClockHandleRawData(char header, InputStream* inputStream, OutputStrea
         appendHex2(outputStream, clockData->month);
         append(outputStream,'/');
         appendHex2(outputStream, clockData->year);
-    } else if (header == COMMAND_WRITE_HOUR) {
+    } else if (header == COMMAND_READ_CLOCK_DEBUG) {
+        ackCommand(outputStream, CLOCK_DEVICE_HEADER, COMMAND_READ_CLOCK_DEBUG);
+        ClockData* clockData = clock->readClock(clock);
+        OutputStream* debugOutputStream = getInfoOutputStreamLogger();
+        appendDec(debugOutputStream, clockData->hour);
+        append(debugOutputStream,':');
+        appendDec(debugOutputStream, clockData->minute);
+        append(debugOutputStream,':');
+        appendDec(debugOutputStream, clockData->second);
+        append(debugOutputStream,' ');
+        appendDec(debugOutputStream, clockData->day);
+        append(debugOutputStream,'/');
+        appendDec(debugOutputStream, clockData->month);
+        append(debugOutputStream,'/');
+        appendDec(debugOutputStream, clockData->year);
+        println(debugOutputStream);
+    } else if (header == COMMAND_WRITE_TIME) {
         ClockData* clockData = &(clock->clockData);
         clockData->hour = readHex2(inputStream);
         clockData->minute = readHex2(inputStream);
         clockData->second = readHex2(inputStream);
         
-        ackCommand(outputStream, CLOCK_DEVICE_HEADER, COMMAND_WRITE_HOUR);
+        ackCommand(outputStream, CLOCK_DEVICE_HEADER, COMMAND_WRITE_TIME);
         clock->writeClock(clock);
     } else if (header == COMMAND_WRITE_DATE) {
         ClockData* clockData = &(clock->clockData);

@@ -9,8 +9,9 @@
  * Print the values of the specified servo.
  * @param outputStream the stream in which we print debug values for the specified servo.
  * @param servo the pointer on the servo
+ * @param index the index of the servo
  */
-void printServo(OutputStream* outputStream, Servo* servo);
+void printServo(OutputStream* outputStream, Servo* servo, int index);
 
 /**
 * Print the Servo List loaded in the system.

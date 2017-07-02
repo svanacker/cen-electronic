@@ -10,8 +10,9 @@
  * @param outputStream the outputStream in which we write the binary value
  * @param value a 32 bit value
  * @param groupBy the number of bits grouped and separated by space
+ * @return the number of char written
  */
-void appendBinary32(OutputStream* outputStream,
+unsigned int appendBinary32(OutputStream* outputStream,
         unsigned long value,
         unsigned groupBy);
 
@@ -20,8 +21,9 @@ void appendBinary32(OutputStream* outputStream,
  * @param outputStream the outputStream in which we write the binary value
  * @param value a 16 bit value
  * @param groupBy the number of bits grouped and separated by space
+ * @return the number of char written
  */
-void appendBinary16(OutputStream* outputStream,
+unsigned int appendBinary16(OutputStream* outputStream,
         unsigned int value,
         unsigned groupBy);
 
@@ -30,8 +32,9 @@ void appendBinary16(OutputStream* outputStream,
  * @param outputStream the outputStream in which we write the binary value 
  * @param value a 8 bit value
  * @param groupBy the number of bits grouped and separated by space
+ * @return the number of char written
  */
-void appendBinary8(OutputStream* outputStream,
+unsigned int appendBinary8(OutputStream* outputStream,
         unsigned char value,
         unsigned groupBy);
 

@@ -43,7 +43,7 @@ bool clearBufferIfNeeded(Buffer* inputBuffer) {
         }
         // remove all informations to the latest char
         if (bufferElement == HEADER_WRITE_CONTENT_AND_DEEP_CLEAR_BUFFER) {
-            printDebugBuffer(getAlwaysOutputStreamLogger(), inputBuffer);
+            printDebugBuffer(getDebugOutputStreamLogger(), inputBuffer);
             deepClearBuffer(inputBuffer);
             return true;
         }
@@ -109,9 +109,9 @@ bool handleStreamInstruction(Buffer* inputBuffer,
         // Get the header
         unsigned char deviceHeader = bufferGetCharAtIndex(inputBuffer, DEVICE_HEADER_INDEX);
 
-        // Manage the dispatcher specifier (3 chars : Ex j01 before real command ...)
+        // Manage the dispatcher specifier (3 chars : Ex J01 before real command ...)
         unsigned char specifyDispatcherLength = 0;
-        if (deviceHeader == DATA_DISPATCHER_DEVICE_HEADER) {
+        if (deviceHeader == DISPATCHER_COMMAND_HEADER) {
             specifyDispatcherLength += DISPATCHER_COMMAND_AND_INDEX_HEADER_LENGTH;
         }
 

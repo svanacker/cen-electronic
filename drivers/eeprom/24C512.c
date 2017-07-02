@@ -1,4 +1,5 @@
-#include <peripheral/legacy/i2c_legacy.h>
+#define _SUPPRESS_PLIB_WARNING
+#include <plib.h>
 
 #include "24c512.h"
 
@@ -125,7 +126,7 @@ void _writeEeprom24C512Char(Eeprom* eeprom_, unsigned long index, unsigned char 
     WaitI2C(i2cBus);
     portableMasterStopI2C(i2cBusConnection);
     WaitI2C(i2cBus);
-    delay100us(20);  // delay <=3 don't write correctly if we write several times
+    delaymSec(3); // in Datasheet, write needs 5 milliSeconds, but it seems that 1ms is enough
 }
 
 /**

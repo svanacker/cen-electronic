@@ -3,27 +3,56 @@
 
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
+#include "../../common/io/printTableWriter.h"
+
+#define TIMER_DEBUG_CODE_COLUMN_LENGTH	            5
+#define TIMER_DEBUG_NAME_COLUMN_LENGTH	            30
+#define TIMER_DEBUG_DIV_COLUMN_LENGTH	            8
+#define TIMER_DEBUG_TIME_COLUMN_LENGTH	            10
+#define TIMER_DEBUG_INTERNAL_COUNTER_COLUMN_LENGTH	10
+#define TIMER_DEBUG_MARK_TIME_COLUMN_LENGTH	        10
+#define TIMER_DEBUG_ENABLED_COLUMN_LENGTH	        7
+#define TIMER_DEBUG_WORKING_COLUMN_LENGTH	        7
+#define TIMER_DEBUG_LAST_COLUMN_LENGTH	            10
+
+/**
+* Private.
+*/
+void printTimerListHeader(OutputStream* outputStream) {
+	println(outputStream);
+	appendTableHeaderSeparatorLine(outputStream);
+	appendStringHeader(outputStream, "code", TIMER_DEBUG_CODE_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "name", TIMER_DEBUG_NAME_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "div", TIMER_DEBUG_DIV_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "time", TIMER_DEBUG_TIME_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "counter", TIMER_DEBUG_INTERNAL_COUNTER_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "markTime", TIMER_DEBUG_MARK_TIME_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "ON/OFF", TIMER_DEBUG_ENABLED_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "working", TIMER_DEBUG_WORKING_COLUMN_LENGTH);
+	appendEndOfTableColumn(outputStream, TIMER_DEBUG_LAST_COLUMN_LENGTH);
+	appendTableHeaderSeparatorLine(outputStream);
+
+}
 
 void printTimer(OutputStream* outputStream, Timer* timer) {
-    appendStringAndDec(outputStream, "Timer:code=", timer->timerCode);
-    appendStringAndDec(outputStream, ",div=", timer->timeDiviser);
-    appendStringAndDec(outputStream, ",time=", timer->time);
-    appendStringAndDec(outputStream, ",timeInternalCounter=", timer->timeInternalCounter);
-    appendStringAndDec(outputStream, ",markTime=", timer->markTime);
-
-    appendStringAndDec(outputStream, ",enabled=", timer->enabled);
-    appendStringAndDec(outputStream, ",working=", timer->working);
-    appendString(outputStream, ",name=");
-    appendString(outputStream, timer->name);
+	appendDecTableData(outputStream, timer->timerCode, TIMER_DEBUG_CODE_COLUMN_LENGTH);
+	appendStringTableData(outputStream, timer->name, TIMER_DEBUG_NAME_COLUMN_LENGTH);
+	appendDecTableData(outputStream, timer->timeDiviser, TIMER_DEBUG_DIV_COLUMN_LENGTH);
+	appendDecTableData(outputStream, timer->time, TIMER_DEBUG_TIME_COLUMN_LENGTH);
+	appendDecTableData(outputStream, timer->timeInternalCounter, TIMER_DEBUG_INTERNAL_COUNTER_COLUMN_LENGTH);
+	appendDecTableData(outputStream, timer->markTime, TIMER_DEBUG_MARK_TIME_COLUMN_LENGTH);
+	appendDecTableData(outputStream, timer->enabled, TIMER_DEBUG_ENABLED_COLUMN_LENGTH);
+	appendDecTableData(outputStream, timer->working, TIMER_DEBUG_WORKING_COLUMN_LENGTH);
+	appendEndOfTableColumn(outputStream, TIMER_DEBUG_LAST_COLUMN_LENGTH);
 }
 
 void printTimerList(OutputStream* outputStream, TimerList* timerList) {
+	printTimerListHeader(outputStream);
     int i;
     for (i = 0; i < timerList->size; i++) {
         Timer* timer = (Timer*) timerList->timers;
         timer += i;
-
-        appendCRLF(outputStream);
         printTimer(outputStream, timer);
     }
+	appendTableHeaderSeparatorLine(outputStream);
 }

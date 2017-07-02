@@ -23,12 +23,11 @@
  * Init all variables.
  * @param index corresponds to THETA or ALPHA
  */
-void initNextPositionVars(int index) {
+void initNextPositionVars(PidMotionDefinition* motionDefinition, enum InstructionType instructionType) {
     PidMotion* pidMotion = getPidMotion();
-    PidMotionDefinition* motionDefinition = &(pidMotion->currentMotionDefinition);
 
     // Initialization of MotionInstruction : TODO : do not reset it !
-    MotionInstruction* localInst = &(motionDefinition->inst[index]);
+    MotionInstruction* localInst = &(motionDefinition->inst[instructionType]);
     localInst->nextPosition = 0;
     localInst->a = 0;
     localInst->speed = 0;
@@ -38,7 +37,7 @@ void initNextPositionVars(int index) {
     PidComputationValues* computationValues = &(pidMotion->computationValues);
 
     // Initialization of MotionError
-    PidMotionError* localErr = &(computationValues->errors[index]);
+    PidMotionError* localErr = &(computationValues->errors[instructionType]);
 
     localErr->previousError = 0;
     localErr->error = 0;
@@ -46,7 +45,7 @@ void initNextPositionVars(int index) {
     localErr->integralError = 0;
 
     // Initialization of Motion
-    PidCurrentValues* localCurrentValues = &(computationValues->currentValues[index]);
+    PidCurrentValues* localCurrentValues = &(computationValues->currentValues[instructionType]);
     localInst->initialSpeed =  localCurrentValues->currentSpeed;
 
     localCurrentValues->position = 0;
@@ -58,7 +57,7 @@ void initNextPositionVars(int index) {
     localInst->motionParameterType = MOTION_PARAMETER_TYPE_MAINTAIN_POSITION;
 
     // Initialization of motionEnd & motionBlocked
-    MotionEndInfo* localEnd = &(computationValues->motionEnd[index]);
+    MotionEndInfo* localEnd = &(computationValues->motionEnd[instructionType]);
     resetMotionEndData(localEnd);
 }
 
@@ -131,16 +130,16 @@ void computeMotionInstruction(MotionInstruction* inst) {
     }
 }
 
-void setNextPosition(enum InstructionType instructionType,
+void setNextPosition(PidMotionDefinition* motionDefinition, 
+		enum InstructionType instructionType,
         enum MotionParameterType motionParameterType,
         enum PidType pidType,
         float pNextPosition,
         float pa,
         float pSpeed) {
-    initNextPositionVars(instructionType);
+    initNextPositionVars(motionDefinition, instructionType);
 
-    PidMotion* pidMotion = getPidMotion();
-    PidMotionDefinition* motionDefinition = &(pidMotion->currentMotionDefinition);
+    // PidMotion* pidMotion = getPidMotion();
     MotionInstruction* localInst = &(motionDefinition->inst[instructionType]);
 
     localInst->nextPosition = pNextPosition;
@@ -170,6 +169,6 @@ void setNextPosition(enum InstructionType instructionType,
     computeMotionInstruction(localInst);
     
     // When using classic motion, we compute a U value with alpha/theta (2 main parameters), and not with spline (3 values)
-    pidMotion->currentMotionDefinition.computeU = &simpleMotionUCompute;
+    motionDefinition->computeU = &simpleMotionUCompute;
 }
 

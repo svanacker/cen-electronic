@@ -1,4 +1,5 @@
-#include <I2C.h>
+#define _SUPPRESS_PLIB_WARNING
+#include <i2c.h>
 #include <delay.h>
 
 #include "cmps03.h"

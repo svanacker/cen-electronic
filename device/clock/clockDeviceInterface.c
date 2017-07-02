@@ -16,7 +16,7 @@ int deviceClockGetInterface(char commandHeader, DeviceInterfaceMode mode, bool f
             setResultSeparator(1);
             setResultUnsignedHex2(2, "MINUTE");
             setResultSeparator(3);
-            setResultUnsignedHex2(4, "SECONDE");
+            setResultUnsignedHex2(4, "SECOND");
             setResultSeparator(5);
             setResultUnsignedHex2(6, "DAY");
             setResultSeparator(7);
@@ -25,12 +25,18 @@ int deviceClockGetInterface(char commandHeader, DeviceInterfaceMode mode, bool f
             setResultUnsignedHex2(10, "YEAR");
         }
         return commandLengthValueForMode(mode, 0, 17);
-    } else if (commandHeader == COMMAND_WRITE_HOUR) {
+    }
+    if (commandHeader == COMMAND_READ_CLOCK_DEBUG) {
         if (fillDeviceArgumentList) {
-            setFunction("Hour Write", 3, 0);
+            setFunctionNoArgumentAndNoResult("Clock Read (Debug) ");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    } else if (commandHeader == COMMAND_WRITE_TIME) {
+        if (fillDeviceArgumentList) {
+            setFunction("Time Write", 3, 0);
             setArgumentUnsignedHex2(0, "HOUR");
             setArgumentUnsignedHex2(1, "MINUTE");
-            setArgumentUnsignedHex2(2, "SECONDE");
+            setArgumentUnsignedHex2(2, "SECOND");
         }
         return commandLengthValueForMode(mode, 6, 0);
     } else if (commandHeader == COMMAND_WRITE_DATE) {
