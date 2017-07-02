@@ -156,6 +156,7 @@
 #include "../../drivers/clock/PCF8563.h"
 #include "../../drivers/eeprom/24c512.h"
 #include "../../drivers/io/pcf8574.h"
+#include "../../drivers/clock/PCF8563.h"
 #include "../../drivers/test/testDriver.h"
 #include "../../drivers/system/systemDriver.h"
 #include "../../drivers/motion/motionDriver.h"

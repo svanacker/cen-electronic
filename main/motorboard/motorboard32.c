@@ -15,6 +15,7 @@
 #include "../../common/delay/cenDelay.h"
 
 #include "../../common/i2c/i2cCommon.h"
+#include "../../common/i2c/i2cConstants.h"
 #include "../../common/i2c/i2cDebug.h"
 #include "../../common/i2c/i2cBusList.h"
 #include "../../common/i2c/master/i2cMasterSetup.h"
@@ -119,6 +120,7 @@
 // Drivers
 #include "../../drivers/clock/softClock.h"
 #include "../../drivers/eeprom/24c512.h"
+#include "../../drivers/clock/PCF8563.h"
 
 #include "../../drivers/motor/motorDriver.h"
 
@@ -134,8 +136,9 @@
 // I2C Bus
 static I2cBus* mainBoardI2cBus;
 static I2cBusConnection mainBoardI2cBusConnection;
-static I2cBus* eepromI2cBus;
+static I2cBus* masterI2cBus;
 static I2cBusConnection eepromI2cBusConnection;
+static I2cBusConnection clockI2cBusConnection;
 
 // Eeprom
 static Eeprom eeprom_;
@@ -305,13 +308,17 @@ int runMotorBoard() {
     setDebugI2cEnabled(false);
 
     // Eeprom
-    eepromI2cBus = addI2cBus(I2C_BUS_TYPE_MASTER, I2C_BUS_PORT_4);
-    i2cMasterInitialize(eepromI2cBus);
-    initI2cBusConnection(&eepromI2cBusConnection, eepromI2cBus, /* TODO */ 0);
+    masterI2cBus = addI2cBus(I2C_BUS_TYPE_MASTER, I2C_BUS_PORT_4);
+    i2cMasterInitialize(masterI2cBus);
+    initI2cBusConnection(&eepromI2cBusConnection, masterI2cBus, ST24C512_ADDRESS_0);
     init24C512Eeprom(&eeprom_, &eepromI2cBusConnection);
 
     // Clock
-    initSoftClock(&clock);
+    // -> Clock
+    initI2cBusConnection(&clockI2cBusConnection, eepromI2cBus, PCF8563_WRITE_ADDRESS);
+    initClockPCF8563(&clock, &clockI2cBusConnection);
+
+    // initSoftClock(&clock);
 
     // init the devices
     initDevicesDescriptor();
