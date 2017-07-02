@@ -97,13 +97,18 @@ void clearLastError();
 #define I2C_MASTER_ALREADY_INITIALIZED    0x1000
 #define I2C_SLAVE_ALREADY_INITIALIZED     0x1001
 #define I2C_BUS_PORT_NOT_DEFINED          0x1002
+// -> I2C  : Bus
 #define I2C_BUS_NULL                      0x1003
 #define I2C_BUS_TYPE_NOT_DEFINED          0x1004
 #define I2C_BUS_CONNECTION_NULL           0x1003
-
+// -> I2C : BusList
 #define I2C_BUS_LIST_NOT_INITIALIZED	  0x1010
 #define TOO_MUCH_I2C_BUS				  0x1011
 #define I2C_BUS_LIST_ILLEGAL_INDEX        0x1012
+// -> I2C : BusConnectionList
+#define I2C_BUS_CONNECTION_LIST_NOT_INITIALIZED	  0x1020
+#define TOO_MUCH_I2C_BUS_CONNECTION				  0x1021
+#define I2C_BUS_CONNECTION_LIST_ILLEGAL_INDEX     0x1022
 
 // DEVICE
 

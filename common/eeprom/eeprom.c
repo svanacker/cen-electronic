@@ -128,7 +128,7 @@ void clearEeprom(Eeprom* eeprom_, unsigned long startIndex, unsigned long endInd
     }
 }
 
-void dumpEepromToOutputStream(Eeprom* eeprom_, OutputStream* outputStream, long startIndex, long maxIndex) {
+void dumpEepromToOutputStream(Eeprom* eeprom_, OutputStream* outputStream, unsigned long startIndex, unsigned long maxIndex) {
     unsigned long i;
     
     const unsigned int WIDTH = EEPROM_BLOCK_COUNT * 4;

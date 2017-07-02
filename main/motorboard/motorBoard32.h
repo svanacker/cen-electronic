@@ -3,6 +3,8 @@
 
 #include "../../common/io/buffer.h"
 
+#define MOTOR_BOARD_PIC_NAME "MOTOR BOARD 32"
+
 #define MOTOR_BOARD_LOG_HANDLER_LIST_LENGTH                1
 
 #define MOTOR_BOARD_I2C_BUS_LIST_LENGTH                    2

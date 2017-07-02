@@ -43,7 +43,7 @@ bool clearBufferIfNeeded(Buffer* inputBuffer) {
         }
         // remove all informations to the latest char
         if (bufferElement == HEADER_WRITE_CONTENT_AND_DEEP_CLEAR_BUFFER) {
-            printDebugBuffer(getAlwaysOutputStreamLogger(), inputBuffer);
+            printDebugBuffer(getDebugOutputStreamLogger(), inputBuffer);
             deepClearBuffer(inputBuffer);
             return true;
         }

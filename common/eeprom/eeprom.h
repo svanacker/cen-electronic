@@ -166,6 +166,6 @@ void clearEeprom(Eeprom* eeprom_, unsigned long startIndex, unsigned long endInd
  * Dump the content of the eeprom_ into an outputStream.
  * @param outputStream the outputStream in which we write the content of the eeprom
  */
-void dumpEepromToOutputStream(Eeprom* eeprom_, OutputStream* outputStream, long startIndex, long maxIndex);
+void dumpEepromToOutputStream(Eeprom* eeprom_, OutputStream* outputStream, unsigned long startIndex, unsigned long maxIndex);
 
 #endif

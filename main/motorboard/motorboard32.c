@@ -183,8 +183,6 @@ static Timer timerListArray[MOTOR_BOARD_TIMER_LENGTH];
 int currentTimeInSecond;
 bool currentTimeChanged;
 
-#define MOTOR_BOARD_PIC_NAME "MOTOR BOARD 32"
-
 Buffer* getI2CSlaveOutputBuffer() {
     return &i2cSlaveOutputBuffer;
 }
