@@ -1569,6 +1569,9 @@
     <ClCompile Include="device\pc\pcDeviceInterface.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="common\i2c\i2cBusConnectionList.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -2409,6 +2412,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="device\pc\pcDeviceInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="common\i2c\i2cBusConnectionList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

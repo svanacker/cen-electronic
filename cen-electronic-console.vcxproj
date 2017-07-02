@@ -88,6 +88,7 @@
     <ClCompile Include="common\eeprom\memoryEeprom.c" />
     <ClCompile Include="common\eeprom\pc\eepromPc.c" />
     <ClCompile Include="common\error\error.c" />
+    <ClCompile Include="common\i2c\i2cBusConnectionList.c" />
     <ClCompile Include="common\i2c\i2cBusList.c" />
     <ClCompile Include="common\i2c\i2cCommon.c" />
     <ClCompile Include="common\i2c\i2cDebug.c" />
@@ -351,6 +352,7 @@
     <ClInclude Include="common\eeprom\memoryEeprom.h" />
     <ClInclude Include="common\eeprom\pc\eepromPc.h" />
     <ClInclude Include="common\error\error.h" />
+    <ClInclude Include="common\i2c\i2cBusConnectionList.h" />
     <ClInclude Include="common\i2c\i2cBusList.h" />
     <ClInclude Include="common\i2c\i2cCommon.h" />
     <ClInclude Include="common\i2c\i2cConstants.h" />
