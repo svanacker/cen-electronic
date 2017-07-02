@@ -27,7 +27,16 @@ int deviceEepromGetInterface(char header, DeviceInterfaceMode mode, bool fillDev
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
-    else if (header == COMMAND_CLEAR_EEPROM) {
+	else if (header == COMMAND_DUMP_PARTIAL_CONTENT_TO_LOG_OUTPUT_STREAM_EEPROM) {
+		if (fillDeviceArgumentList) {
+			setFunction("Dump Part of Eeprom to log output Stream", 3, 0);
+			setArgumentUnsignedHex4(0, "startAddress");
+			setArgumentSeparator(1);
+			setArgumentUnsignedHex4(2, "length");
+		}
+		return commandLengthValueForMode(mode, 9, 0);
+	}
+	else if (header == COMMAND_CLEAR_EEPROM) {
         if (fillDeviceArgumentList) {
             setFunction("Clear Eeprom", 3, 0);
             setArgumentUnsignedHex4(0, "startAddress");

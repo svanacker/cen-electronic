@@ -50,9 +50,17 @@ void deviceEepromHandleRawData(char commandHeader, InputStream* inputStream, Out
     }
     else if (commandHeader == COMMAND_DUMP_TO_LOG_OUTPUT_STREAM_EEPROM) {
         ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_DUMP_TO_LOG_OUTPUT_STREAM_EEPROM);
-        OutputStream* debugOutputStream = getDebugOutputStreamLogger();
-        dumpEepromToOutputStream(eeprom_, debugOutputStream);
+        OutputStream* debugOutputStream = getInfoOutputStreamLogger();
+        dumpEepromToOutputStream(eeprom_, debugOutputStream, 0, eeprom_->maxIndex);
     }
+	else if (commandHeader == COMMAND_DUMP_PARTIAL_CONTENT_TO_LOG_OUTPUT_STREAM_EEPROM) {
+		ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_DUMP_PARTIAL_CONTENT_TO_LOG_OUTPUT_STREAM_EEPROM);
+		unsigned long startAddress = readHex4(inputStream);
+		checkIsSeparator(inputStream);
+		unsigned long length = readHex4(inputStream);
+		OutputStream* debugOutputStream = getInfoOutputStreamLogger();
+		dumpEepromToOutputStream(eeprom_, debugOutputStream, startAddress, startAddress + length);
+	}
     else if (commandHeader == COMMAND_CLEAR_EEPROM) {
         ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_CLEAR_EEPROM);
         unsigned long startAddress = readHex4(inputStream);

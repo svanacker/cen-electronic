@@ -13,7 +13,12 @@
 /**
 * Dump the content of the Eeprom to an outputStream (can only be used on local device).
 */
-#define COMMAND_DUMP_TO_LOG_OUTPUT_STREAM_EEPROM 'o'
+#define COMMAND_DUMP_TO_LOG_OUTPUT_STREAM_EEPROM 'O'
+
+/**
+* Dump a part of the content of the Eeprom to an outputStream (can only be used on local device).
+*/
+#define COMMAND_DUMP_PARTIAL_CONTENT_TO_LOG_OUTPUT_STREAM_EEPROM 'o'
 
 /**
  * Clear the Eeprom by filling with 0 values

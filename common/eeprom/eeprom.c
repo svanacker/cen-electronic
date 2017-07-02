@@ -13,8 +13,9 @@
 #include "../../common/io/printTableWriter.h"
 #include "../../common/io/outputStream.h"
 
-#define EEPROM_ADDRESS_LENGTH				6
-#define EEPROM_BLOCK_4_VALUE_LENGTH			12
+#define EEPROM_ADDRESS_LENGTH				7
+#define EEPROM_BLOCK_4_VALUE_LENGTH			24
+#define EEPROM_BLOCK_COUNT			        8
 
 void initEeprom(Eeprom* eeprom_,
                 long maxIndex,
@@ -127,10 +128,10 @@ void clearEeprom(Eeprom* eeprom_, unsigned long startIndex, unsigned long endInd
     }
 }
 
-void dumpEepromToOutputStream(Eeprom* eeprom_, OutputStream* outputStream) {
+void dumpEepromToOutputStream(Eeprom* eeprom_, OutputStream* outputStream, long startIndex, long maxIndex) {
     unsigned long i;
     
-    const unsigned int WIDTH = 16;
+    const unsigned int WIDTH = EEPROM_BLOCK_COUNT * 4;
 
 	// Table Header
 	println(outputStream);
@@ -145,14 +146,14 @@ void dumpEepromToOutputStream(Eeprom* eeprom_, OutputStream* outputStream) {
 	appendTableHeaderSeparatorLine(outputStream);
 
 	unsigned long rowIndex = 0;
-    for (i = 0; i < eeprom_->maxIndex; i++) {
+    for (i = startIndex; i < maxIndex; i++) {
         char c = eeprom_->eepromReadChar(eeprom_, i);
 		unsigned int columnIndex = (i % WIDTH);
 		if (columnIndex == 0) {
 			// address
-			appendHex4TableData(outputStream, i, EEPROM_ADDRESS_LENGTH);
+			appendHex6TableData(outputStream, i, EEPROM_ADDRESS_LENGTH);
         }
-		if ((i % 4) == 0) {
+		if ((i % EEPROM_BLOCK_COUNT) == 0) {
 			appendHex2TableData(outputStream, c, 3);
 		}
 		else {
@@ -163,7 +164,7 @@ void dumpEepromToOutputStream(Eeprom* eeprom_, OutputStream* outputStream) {
 			rowIndex++;
 			appendTableSeparator(outputStream);
 			println(outputStream);
-			if ((rowIndex % 4) == 0) {
+			if ((rowIndex % EEPROM_BLOCK_COUNT) == 0) {
 				appendTableHeaderSeparatorLine(outputStream);
 			}
 		}

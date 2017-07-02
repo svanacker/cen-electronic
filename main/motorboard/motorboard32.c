@@ -16,6 +16,7 @@
 
 #include "../../common/i2c/i2cCommon.h"
 #include "../../common/i2c/i2cDebug.h"
+#include "../../common/i2c/i2cBusList.h"
 #include "../../common/i2c/master/i2cMasterSetup.h"
 #include "../../common/i2c/slave/i2cSlave.h"
 #include "../../common/i2c/slave/i2cSlaveSetup.h"
@@ -80,6 +81,10 @@
 //#include "../../device/log/logDevice.h"
 //#include "../../device/log/logDeviceInterface.h"
 
+// I2C
+#include "../../device/i2c/i2cCommonDebugDevice.h"
+#include "../../device/i2c/i2cCommonDebugDeviceInterface.h"
+
 // I2C Slave Device/
 #include "../../device/i2c/slave/i2cSlaveDebugDevice.h"
 #include "../../device/i2c/slave/i2cSlaveDebugDeviceInterface.h"
@@ -126,16 +131,10 @@
 // #include "../../test/mathTest.h"
 #include "../../test/motion/bspline/bsplinetest.h"
 
-// The port used to send instruction if we connect MainBoard and MotorBoard via RS232
-#define SERIAL_PORT_STANDARD  SERIAL_PORT_1
-
-// The port for which we debug (we can send instruction too)
-#define SERIAL_PORT_DEBUG     SERIAL_PORT_2
-
 // I2C Bus
-static I2cBus mainBoardI2cBus;
+static I2cBus* mainBoardI2cBus;
 static I2cBusConnection mainBoardI2cBusConnection;
-static I2cBus eepromI2cBus;
+static I2cBus* eepromI2cBus;
 static I2cBusConnection eepromI2cBusConnection;
 
 // Eeprom
@@ -162,6 +161,9 @@ static StreamLink debugSerialStreamLink;
 
 // logs
 static LogHandler logHandlerListArray[MOTOR_BOARD_LOG_HANDLER_LIST_LENGTH];
+
+// I2C
+static I2cBus i2cBusListArray[MOTOR_BOARD_I2C_BUS_LIST_LENGTH];
 
 // i2c Link
 static char i2cSlaveInputBufferArray[MOTOR_BOARD_IN_BUFFER_LENGTH];
@@ -215,8 +217,8 @@ void initDevicesDescriptor() {
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom_));
 
 //    addLocalDevice(getLogDeviceInterface(), getLogDeviceDescriptor());
+   addLocalDevice(getI2cCommonDebugDeviceInterface(), getI2cCommonDebugDeviceDescriptor(&mainBoardI2cBusConnection));
    addLocalDevice(getI2cSlaveDebugDeviceInterface(), getI2cSlaveDebugDeviceDescriptor(&mainBoardI2cBusConnection));
-
 
     initDevices();
 }
@@ -278,8 +280,11 @@ int runMotorBoard() {
 
     initTimerList(&timerListArray, MOTOR_BOARD_TIMER_LENGTH);
 
-    initI2cBus(&mainBoardI2cBus, I2C_BUS_TYPE_SLAVE, I2C_BUS_PORT_1);
-    initI2cBusConnection(&mainBoardI2cBusConnection, &mainBoardI2cBus, MOTOR_BOARD_I2C_ADDRESS);
+	// I2c
+	initI2cBusList((I2cBus(*)[]) &i2cBusListArray, MOTOR_BOARD_I2C_BUS_LIST_LENGTH);
+
+    mainBoardI2cBus = addI2cBus(I2C_BUS_TYPE_SLAVE, I2C_BUS_PORT_1);
+    initI2cBusConnection(&mainBoardI2cBusConnection, mainBoardI2cBus, MOTOR_BOARD_I2C_ADDRESS);
     openSlaveI2cStreamLink(&i2cSlaveStreamLink,
             &i2cSlaveInputBuffer,
             &i2cSlaveInputBufferArray,
@@ -302,9 +307,9 @@ int runMotorBoard() {
     setDebugI2cEnabled(false);
 
     // Eeprom
-    initI2cBus(&eepromI2cBus, I2C_BUS_TYPE_MASTER, I2C_BUS_PORT_4);
-    i2cMasterInitialize(&eepromI2cBus);
-    initI2cBusConnection(&eepromI2cBusConnection, &eepromI2cBus, /* TODO */ 0);
+    eepromI2cBus = addI2cBus(I2C_BUS_TYPE_MASTER, I2C_BUS_PORT_4);
+    i2cMasterInitialize(eepromI2cBus);
+    initI2cBusConnection(&eepromI2cBusConnection, eepromI2cBus, /* TODO */ 0);
     init24C512Eeprom(&eeprom_, &eepromI2cBusConnection);
 
     // Clock
