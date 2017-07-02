@@ -10,10 +10,9 @@
 
 
 /** 
-* How many chars for a table We use 79, because 80 is often the max of chars we could print on a page, 
-* and to avoid to interfer with println which could cause to go back.
+* How many chars on a page. On windows, default width is 80, but it could be change.
 */
-#define PRINT_TABLE_WRITER_DEFAULT_PAGE_CHAR_WIDTH   79
+#define PRINT_TABLE_WRITER_DEFAULT_PAGE_CHAR_WIDTH   114
 
 // COMMON TABLE FUNCTIONS
 

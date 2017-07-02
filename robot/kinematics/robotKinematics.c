@@ -82,11 +82,11 @@ void saveRobotKinematicsParameters(RobotKinematics* robotKinematics, Eeprom* eep
 
 // DEBUG
 
-#define ROBOT_KINEMATICS_KEY_COLUMN_LENGTH     38
+#define ROBOT_KINEMATICS_KEY_COLUMN_LENGTH        38
 #define ROBOT_KINEMATICS_HEX_VALUE_COLUMN_LENGTH  10
-#define ROBOT_KINEMATICS_VALUE_COLUMN_LENGTH   10
-#define ROBOT_KINEMATICS_UNIT_COLUMN_LENGTH   12
-#define ROBOT_KINEMATICS_LAST_COLUMN   0
+#define ROBOT_KINEMATICS_VALUE_COLUMN_LENGTH      10
+#define ROBOT_KINEMATICS_UNIT_COLUMN_LENGTH       12
+#define ROBOT_KINEMATICS_LAST_COLUMN              35
 
 void printRobotKinematicsTableHeader(OutputStream* outputStream) {
 	println(outputStream);

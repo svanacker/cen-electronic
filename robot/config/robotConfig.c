@@ -9,7 +9,7 @@
 #define ROBOT_CONFIG_KEY_COLUMN_LENGTH				35
 #define ROBOT_CONFIG_MASK_COLUMN_LENGTH             22
 #define ROBOT_CONFIG_VALUE_COLUMN_LENGTH            15
-#define ROBOT_CONFIG_LAST_COLUMN					0
+#define ROBOT_CONFIG_LAST_COLUMN					35
 
 
 void initRobotConfig(RobotConfig* robotConfig,

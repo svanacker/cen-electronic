@@ -222,6 +222,7 @@ void printLocationLinkedPath(OutputStream* outputStream, Location* startPoint) {
 #define LOCATION_LIST_LOCATION_Y_COLUMN_LENGTH        10
 #define LOCATION_LIST_LOCATION_X_HEXA_COLUMN_LENGTH   10
 #define LOCATION_LIST_LOCATION_Y_HEXA_COLUMN_LENGTH   10
+#define LOCATION_LIST_LOCATION_LAST_COLUMN_LENGTH     37
 
 /**
 * Private.
@@ -236,7 +237,7 @@ void printLocationListHeader(OutputStream* outputStream) {
 	appendStringHeader(outputStream, "y (mm)", LOCATION_LIST_LOCATION_Y_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "xHex (mm)", LOCATION_LIST_LOCATION_X_HEXA_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "xHex (mm)", LOCATION_LIST_LOCATION_Y_HEXA_COLUMN_LENGTH);
-	appendEndOfTableColumn(outputStream, 0);
+	appendEndOfTableColumn(outputStream, LOCATION_LIST_LOCATION_LAST_COLUMN_LENGTH);
 	appendTableHeaderSeparatorLine(outputStream);
 }
 
@@ -247,7 +248,7 @@ void printLocationTable(OutputStream* outputStream, Location* location) {
 	appendDecTableData(outputStream, location->y, LOCATION_LIST_LOCATION_Y_COLUMN_LENGTH);
 	appendHex4TableData(outputStream, location->x, LOCATION_LIST_LOCATION_X_HEXA_COLUMN_LENGTH);
 	appendHex4TableData(outputStream, location->y, LOCATION_LIST_LOCATION_Y_HEXA_COLUMN_LENGTH);
-	appendEndOfTableColumn(outputStream, 0);
+	appendEndOfTableColumn(outputStream, LOCATION_LIST_LOCATION_LAST_COLUMN_LENGTH);
 }
 
 void printLocationListTable(OutputStream* outputStream, LocationList* locationList) {

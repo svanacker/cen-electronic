@@ -7,11 +7,12 @@
 #include "../../device/transmitMode.h"
 
 
-#define DISPATCHER_INDEX_NAME_COLUMN_LENGTH					 5
+#define DISPATCHER_INDEX_NAME_COLUMN_LENGTH					 6
 #define DISPATCHER_DEBUG_NAME_COLUMN_LENGTH					 25
-#define DISPATCHER_DEBUG_TRANSMIT_MODE_COLUMN_LENGTH		 12
-#define DISPATCHER_DEBUG_TRANSMIT_MODE_STRING_COLUMN_LENGTH  10
+#define DISPATCHER_DEBUG_TRANSMIT_MODE_COLUMN_LENGTH		 13
+#define DISPATCHER_DEBUG_TRANSMIT_MODE_STRING_COLUMN_LENGTH  20
 #define DISPATCHER_DEBUG_ADDRESS_COLUMN_LENGTH               12
+#define DISPATCHER_DEBUG_LAST_COLUMN_LENGTH                  27
 
 // DEBUG
 
@@ -25,10 +26,9 @@ void printDriverDataDispatcherListHeader(OutputStream* outputStream) {
 	appendStringHeader(outputStream, "Index", DISPATCHER_INDEX_NAME_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "Dispatcher Name", DISPATCHER_DEBUG_NAME_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "transmitMode", DISPATCHER_DEBUG_TRANSMIT_MODE_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "(String)", DISPATCHER_DEBUG_TRANSMIT_MODE_STRING_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "transmit (String)", DISPATCHER_DEBUG_TRANSMIT_MODE_STRING_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "addr (Hex)", DISPATCHER_DEBUG_ADDRESS_COLUMN_LENGTH);
-	appendTableSeparator(outputStream);
-	println(outputStream);
+	appendEndOfTableColumn(outputStream, DISPATCHER_DEBUG_LAST_COLUMN_LENGTH);
 	appendTableHeaderSeparatorLine(outputStream);
 }
 
@@ -40,7 +40,7 @@ void printDriverDataDispatcher(OutputStream* outputStream, DriverDataDispatcher*
 	const char* transmitModeAsString = getTransmitModeAsString(transmitMode);
 	appendStringTableData(outputStream, transmitModeAsString, DISPATCHER_DEBUG_TRANSMIT_MODE_STRING_COLUMN_LENGTH);
 	appendHex2TableData(outputStream, dispatcher->address, DISPATCHER_DEBUG_ADDRESS_COLUMN_LENGTH);
-	appendEndOfTableColumn(outputStream, 0);
+	appendEndOfTableColumn(outputStream, DISPATCHER_DEBUG_LAST_COLUMN_LENGTH);
 }
 
 void printDriverDataDispatcherList(OutputStream* outputStream, DriverDataDispatcherList* dispatcherList) {

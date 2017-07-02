@@ -14,6 +14,7 @@
 #define SERVO_PWM_DEBUG_SPEED_COLUMN_LENGTH           7
 #define SERVO_PWM_DEBUG_CURRENT_POS_COLUMN_LENGTH     10
 #define SERVO_PWM_DEBUG_TARGET_POS_COLUMN_LENGTH      10
+#define SERVO_PWM_DEBUG_LAST_COLUMN_LENGTH            71
 
 /**
 * Private.
@@ -25,8 +26,7 @@ void printServoListHeader(OutputStream* outputStream) {
 	appendStringHeader(outputStream, "speed", SERVO_PWM_DEBUG_SPEED_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "currentPos", SERVO_PWM_DEBUG_CURRENT_POS_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "targetPos", SERVO_PWM_DEBUG_TARGET_POS_COLUMN_LENGTH);
-	appendTableSeparator(outputStream);
-	println(outputStream);
+	appendEndOfTableColumn(outputStream, SERVO_PWM_DEBUG_LAST_COLUMN_LENGTH);
 	appendTableHeaderSeparatorLine(outputStream);
 }
 
@@ -35,7 +35,7 @@ void printServo(OutputStream* outputStream, Servo* servo, int index) {
 	appendDecTableData(outputStream, servo->speed, SERVO_PWM_DEBUG_SPEED_COLUMN_LENGTH);
 	appendDecTableData(outputStream, servo->currentPosition, SERVO_PWM_DEBUG_CURRENT_POS_COLUMN_LENGTH);
 	appendDecTableData(outputStream, servo->targetPosition, SERVO_PWM_DEBUG_TARGET_POS_COLUMN_LENGTH);
-	appendEndOfTableColumn(outputStream, 0);
+	appendEndOfTableColumn(outputStream, SERVO_PWM_DEBUG_LAST_COLUMN_LENGTH);
 }
 
 

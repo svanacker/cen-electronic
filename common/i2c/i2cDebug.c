@@ -83,11 +83,13 @@ void printI2cDebugBuffers() {
 
 // I2C BUS LIST
 
-#define I2C_DEBUG_INDEX_COLUMN_LENGTH		   3
+#define I2C_DEBUG_INDEX_COLUMN_LENGTH		   4
 #define I2C_DEBUG_BUS_TYPE_COLUMN_LENGTH      15
 #define I2C_DEBUG_PORT_COLUMN_LENGTH		  15
 #define I2C_DEBUG_INITIALIZED_COLUMN_LENGTH   8
 #define I2C_DEBUG_CONFIG_COLUMN_LENGTH        8
+#define I2C_DEBUG_LAST_COLUMN_LENGTH          48
+
 
 /**
 * @private
@@ -102,6 +104,7 @@ void printI2cBusListTableHeader(OutputStream* outputStream) {
 	appendStringHeader(outputStream, "port", I2C_DEBUG_PORT_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "init ?", I2C_DEBUG_INITIALIZED_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "config", I2C_DEBUG_CONFIG_COLUMN_LENGTH);
+	appendEndOfTableColumn(outputStream, I2C_DEBUG_LAST_COLUMN_LENGTH);
 	appendTableSeparator(outputStream);
 	println(outputStream);
 	appendTableHeaderSeparatorLine(outputStream);
@@ -119,7 +122,7 @@ void printI2cBusList(OutputStream* outputStream) {
 		appendStringTableData(outputStream, i2cPortAsString, I2C_DEBUG_PORT_COLUMN_LENGTH);
 		appendDecTableData(outputStream, i2cBus->initialized, I2C_DEBUG_INITIALIZED_COLUMN_LENGTH);
 		appendHex2TableData(outputStream, i2cBus->config, I2C_DEBUG_CONFIG_COLUMN_LENGTH);
-		appendEndOfTableColumn(outputStream, 0);
+		appendEndOfTableColumn(outputStream, I2C_DEBUG_LAST_COLUMN_LENGTH);
 	}
 	appendTableHeaderSeparatorLine(outputStream);
 }

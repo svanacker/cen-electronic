@@ -12,8 +12,9 @@
 #define DEVICE_DEBUG_NAME_COLUMN_LENGTH				25
 #define DEVICE_DEBUG_HEADER_COLUMN_LENGTH			5
 #define DEVICE_DEBUG_TRANSMIT_MODE_COLUMN_LENGTH	8
-#define DEVICE_DEBUG_ADDRESS_STRING_COLUMN_LENGTH	16
 #define DEVICE_DEBUG_ADDRESS_COLUMN_LENGTH			9
+#define DEVICE_DEBUG_ADDRESS_STRING_COLUMN_LENGTH	16
+#define DEVICE_DEBUG_LAST_COLUMN_LENGTH             40
 
 /**
  * Private.
@@ -23,10 +24,9 @@ void printDeviceDebugHeader(OutputStream* outputStream) {
 	appendStringHeader(outputStream, "deviceName", DEVICE_DEBUG_NAME_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "cmd", DEVICE_DEBUG_HEADER_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "transmit", DEVICE_DEBUG_TRANSMIT_MODE_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "address", DEVICE_DEBUG_ADDRESS_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "addString", DEVICE_DEBUG_ADDRESS_STRING_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "addr", DEVICE_DEBUG_ADDRESS_COLUMN_LENGTH);
-	appendTableSeparator(outputStream);
-	println(outputStream);
+	appendEndOfTableColumn(outputStream, DEVICE_DEBUG_LAST_COLUMN_LENGTH);
 	appendTableHeaderSeparatorLine(outputStream);
 }
 
@@ -58,11 +58,9 @@ void printDevice(OutputStream* outputStream, const Device* device) {
 
 		appendStringTableData(outputStream, transmitModeAsString, DEVICE_DEBUG_TRANSMIT_MODE_COLUMN_LENGTH);
 
+		appendDecTableData(outputStream, device->address, DEVICE_DEBUG_ADDRESS_COLUMN_LENGTH);
 		appendStringTableData(outputStream, device->addressString, DEVICE_DEBUG_ADDRESS_STRING_COLUMN_LENGTH);
 
-		appendDecTableData(outputStream, device->address, DEVICE_DEBUG_ADDRESS_COLUMN_LENGTH);
-
-		appendTableSeparator(outputStream);
-		println(outputStream);
+		appendEndOfTableColumn(outputStream, DEVICE_DEBUG_LAST_COLUMN_LENGTH);
     }
 }

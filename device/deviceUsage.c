@@ -17,12 +17,12 @@
 // Length of different columns
 
 #define DEVICE_USAGE_HEADER_COLUMN_LENGTH     3
-#define DEVICE_USAGE_NAME_COLUMN_LENGTH       28
+#define DEVICE_USAGE_NAME_COLUMN_LENGTH       34
 #define DEVICE_USAGE_IO_COLUMN_LENGTH		  4
 #define DEVICE_USAGE_IO_SIZE_COLUMN_LENGTH    3
-#define DEVICE_USAGE_PARAM_NAME_COLUMN_LENGTH  16
+#define DEVICE_USAGE_PARAM_NAME_COLUMN_LENGTH  40
 #define DEVICE_USAGE_PARAM_SIZE_COLUMN_LENGTH  3
-#define DEVICE_USAGE_PARAM_TYPE_COLUMN_LENGTH  7
+#define DEVICE_USAGE_PARAM_TYPE_COLUMN_LENGTH  12
 
 char* getTypeAsString(OutputStream* outputStream, int parameterType) {
     switch (parameterType) {
@@ -37,7 +37,7 @@ char* getTypeAsString(OutputStream* outputStream, int parameterType) {
         case DEVICE_ARG_UNSIGNED_HEX_5 : return "hex_u_5";
         case DEVICE_ARG_SIGNED_HEX_5 : return "hex_s_5";
         case DEVICE_ARG_UNSIGNED_HEX_6 : return "hex_u_6";
-        case DEVICE_ARG_FIXED_CHAR_ARRAY: return "charArray4_length_8";
+        case DEVICE_ARG_FIXED_CHAR_ARRAY: return "char[4]_L_8";
         case DEVICE_ARG_SIGNED_HEX_6 : return "hex_s_6";
         case DEVICE_ARG_UNSIGNED_HEX_8 : return "hex_u_8";
         case DEVICE_ARG_SIGNED_HEX_8 : return "hex_s_8";
