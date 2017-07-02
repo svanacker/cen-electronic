@@ -11,6 +11,7 @@
 #include "../../common/error/error.h"
 #include "../../common/i2c/i2cCommon.h"
 #include "../../common/i2c/i2cBusList.h"
+#include "../../common/i2c/i2cBusConnectionList.h"
 #include "../../common/i2c/i2cDebug.h"
 
 #include "../../common/io/filter.h"
@@ -165,10 +166,11 @@ static DriverDataDispatcher driverDataDispatcherListArray[MAIN_BOARD_PC_DATA_DIS
 
 // I2C
 static I2cBus i2cBusListArray[MAIN_BOARD_I2C_BUS_LIST_LENGTH];
+static I2cBusConnection i2cBusConnectionListArray[MAIN_BOARD_I2C_BUS_CONNECTION_LIST_LENGTH];
 
 // Dispatcher i2c->Motor
 static I2cBus* motorBoardI2cBus;
-static I2cBusConnection motorBoardI2cBusConnection;
+static I2cBusConnection* motorBoardI2cBusConnection;
 static char motorBoardInputBufferArray[MAIN_BOARD_PC_DATA_MOTOR_BOARD_DISPATCHER_BUFFER_LENGTH];
 static Buffer motorBoardInputBuffer;
 static InputStream motorBoardInputStream;
@@ -307,7 +309,9 @@ void runMainBoardPC(bool connectToRobotManagerMode) {
 	// I2c
 	initI2cBusList((I2cBus(*)[]) &i2cBusListArray, MAIN_BOARD_I2C_BUS_LIST_LENGTH);
 	motorBoardI2cBus = addI2cBus(I2C_BUS_TYPE_MASTER, I2C_BUS_PORT_1);
-    initI2cBusConnection(&motorBoardI2cBusConnection, motorBoardI2cBus, MOTOR_BOARD_PC_I2C_ADDRESS);
+
+	initI2cBusConnectionList((I2cBusConnection(*)[]) &i2cBusConnectionListArray, MAIN_BOARD_I2C_BUS_CONNECTION_LIST_LENGTH);
+	motorBoardI2cBusConnection = addI2cBusConnection(motorBoardI2cBus, MOTOR_BOARD_PC_I2C_ADDRESS);
 
     addI2CDriverDataDispatcher("MOTOR_BOARD_DISPATCHER",
         &motorBoardInputBuffer,
@@ -315,7 +319,7 @@ void runMainBoardPC(bool connectToRobotManagerMode) {
         MAIN_BOARD_PC_DATA_MOTOR_BOARD_DISPATCHER_BUFFER_LENGTH,
         &motorBoardOutputStream,
         &motorBoardInputStream,
-        &motorBoardI2cBusConnection
+        motorBoardI2cBusConnection
     );
 
     if (connectToRobotManager) {

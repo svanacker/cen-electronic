@@ -14,7 +14,13 @@ int deviceI2cCommonDebugGetInterface(char commandHeader, DeviceInterfaceMode mod
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
-    return DEVICE_HEADER_NOT_HANDLED;
+	else if (commandHeader == COMMAND_I2C_DEBUG_COMMON_LIST_BUS_CONNECTION) {
+		if (fillDeviceArgumentList) {
+			setFunctionNoArgumentAndNoResult("i2cDebugListBusConnection");
+		}
+		return commandLengthValueForMode(mode, 0, 0);
+	}
+	return DEVICE_HEADER_NOT_HANDLED;
 }
 
 static DeviceInterface deviceInterface = {

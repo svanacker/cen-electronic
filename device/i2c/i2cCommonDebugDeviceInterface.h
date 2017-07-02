@@ -7,6 +7,8 @@
 /** Command to see the content of the I2C debug. */
 #define COMMAND_I2C_DEBUG_COMMON_LIST_BUS                     'L'
 
+#define COMMAND_I2C_DEBUG_COMMON_LIST_BUS_CONNECTION          'l'
+
 /**
 * Get the I2C debug device interface.
 */

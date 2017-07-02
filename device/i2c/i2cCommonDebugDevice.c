@@ -7,6 +7,7 @@
 #include "../../common/i2c/i2cCommon.h"
 #include "../../common/i2c/i2cDebug.h"
 #include "../../common/i2c/i2cBusList.h"
+#include "../../common/i2c/i2cBusConnectionList.h"
 
 #include "../../common/io/inputStream.h"
 #include "../../common/io/outputStream.h"
@@ -37,6 +38,10 @@ void deviceI2cCommonDebugHandleRawData(char header, InputStream* inputStream, Ou
         ackCommand(outputStream, I2C_COMMON_DEBUG_DEVICE_HEADER, COMMAND_I2C_DEBUG_COMMON_LIST_BUS);
 		printI2cBusList(getInfoOutputStreamLogger());
     }
+	else if (header == COMMAND_I2C_DEBUG_COMMON_LIST_BUS_CONNECTION) {
+		ackCommand(outputStream, I2C_COMMON_DEBUG_DEVICE_HEADER, COMMAND_I2C_DEBUG_COMMON_LIST_BUS_CONNECTION);
+		printI2cBusConnectionList(getInfoOutputStreamLogger());
+	}
 }
 
 static DeviceDescriptor descriptor = {

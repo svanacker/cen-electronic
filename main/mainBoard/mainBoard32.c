@@ -14,6 +14,8 @@
 
 #include "../../common/i2c/i2cCommon.h"
 #include "../../common/i2c/i2cDebug.h"
+#include "../../common/i2c/i2cBusList.h"
+#include "../../common/i2c/i2cBusConnectionList.h"
 
 #include "../../common/i2c/master/i2cMaster.h"
 #include "../../common/i2c/master/i2cMasterSetup.h"
@@ -198,21 +200,22 @@
 
 #include "../../drivers/sonar/srf02.h"
 
-
 // I2C => PORT 1 (for All Peripherical, including Eeprom / Clock / Temperatur)
-static I2cBus i2cBus;
+static I2cBus i2cBusListArray[MAIN_BOARD_I2C_BUS_LIST_LENGTH];
+static I2cBusConnection i2cBusConnectionListArray[MAIN_BOARD_I2C_BUS_CONNECTION_LIST_LENGTH];
+static I2cBus* i2cBus;
 
 // EEPROM
 static Eeprom eeprom;
-static I2cBusConnection eepromI2cBusConnection;
+static I2cBusConnection* eepromI2cBusConnection;
 
 // CLOCK
 static Clock clock;
-static I2cBusConnection clockI2cBusConnection;
+static I2cBusConnection* clockI2cBusConnection;
 
 // TEMPERATURE
 static Temperature temperature;
-static I2cBusConnection temperatureI2cBusConnection;
+static I2cBusConnection* temperatureI2cBusConnection;
 
 // serial link DEBUG 
 static char debugInputBufferArray[MAIN_BOARD_DEBUG_INPUT_BUFFER_LENGTH];
@@ -266,7 +269,7 @@ static Buffer i2cMasterDebugInputBuffer;
 static DriverDataDispatcher driverDataDispatcherListArray[MAIN_BOARD_DRIVER_DATA_DISPATCHER_LIST_LENGTH];
 
 // i2c->Motor
-static I2cBusConnection motorI2cBusConnection;
+static I2cBusConnection* motorI2cBusConnection;
 static char motorBoardI2cInputBufferArray[MAIN_BOARD_I2C_INPUT_DRIVER_DATA_DISPATCHER_BUFFER_LENGTH];
 static Buffer motorBoardI2cInputBuffer;
 static InputStream motorBoardI2cInputStream;
@@ -274,7 +277,7 @@ static OutputStream motorBoardI2cOutputStream;
 
 // i2c->Air Conditioning
 /*
-static I2cBusConnection airConditioningI2cBusConnection;
+static I2cBusConnection* airConditioningI2cBusConnection;
 static char airConditioningBoardInputBufferArray[MAIN_BOARD_LINK_TO_MECA_BOARD_2_BUFFER_LENGTH];
 static Buffer airConditioningBoardInputBuffer;
 static InputStream airConditioningBoardInputStream;
@@ -282,7 +285,7 @@ static OutputStream airConditioningBoardOutputStream;
 */
 
 // i2c->Mechanical 2
-static I2cBusConnection mechanicalBoard2I2cBusConnection;
+static I2cBusConnection* mechanicalBoard2I2cBusConnection;
 static char mechanical2BoardInputBufferArray[MAIN_BOARD_LINK_TO_MECA_BOARD_2_BUFFER_LENGTH];
 static Buffer mechanical2BoardInputBuffer;
 static InputStream mechanical2BoardInputStream;
@@ -356,8 +359,8 @@ void initMainBoardDevicesDescriptor() {
     addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
 
     /*
-    addLocalDevice(getSonarDeviceInterface(), getSonarDeviceDescriptor(&i2cBus));
-    addLocalDevice(getRobotSonarDetectorDeviceInterface(), getRobotSonarDetectorDeviceDescriptor(&i2cBus));
+    addLocalDevice(getSonarDeviceInterface(), getSonarDeviceDescriptor(i2cBus));
+    addLocalDevice(getRobotSonarDetectorDeviceInterface(), getRobotSonarDetectorDeviceDescriptor(i2cBus));
     */
     // Mechanical Board 2->I2C
     // Device* armDevice = addI2cRemoteDevice(getArm2012DeviceInterface(), MECHANICAL_BOARD_2_I2C_ADDRESS);
@@ -418,7 +421,7 @@ void initMainBoardDriverDataDispatcherList(void) {
         MAIN_BOARD_I2C_INPUT_DRIVER_DATA_DISPATCHER_BUFFER_LENGTH,
         &motorBoardI2cOutputStream,
         &motorBoardI2cInputStream,
-        &motorI2cBusConnection
+        motorI2cBusConnection
         );
 
     // Stream for Mechanical Board 2
@@ -429,7 +432,7 @@ void initMainBoardDriverDataDispatcherList(void) {
             MAIN_BOARD_LINK_TO_MECA_BOARD_2_BUFFER_LENGTH,
             &mechanical2BoardOutputStream,
             &mechanical2BoardInputStream,
-            &mechanicalBoard2I2cBusConnection);
+            mechanicalBoard2I2cBusConnection);
 
     // SERIAL
 
@@ -454,7 +457,7 @@ void initMainBoardDriverDataDispatcherList(void) {
             MAIN_BOARD_LINK_TO_AIR_CONDITIONING_BOARD_BUFFER_LENGTH,
             &airConditioningBoardOutputStream,
             &airConditioningBoardInputStream,
-            &i2cBusConnection);
+            i2cBusConnection);
     */
 }
 
@@ -566,10 +569,13 @@ int main(void) {
                     DEFAULT_SERIAL_SPEED);
 
     // MAIN I2C
-    initI2cBus(&i2cBus, I2C_BUS_TYPE_MASTER, I2C_BUS_PORT_1);
-    i2cMasterInitialize(&i2cBus);
-    initI2cBusConnection(&motorI2cBusConnection, &i2cBus, MOTOR_BOARD_I2C_ADDRESS);
-    initI2cBusConnection(&mechanicalBoard2I2cBusConnection, &i2cBus, MECHANICAL_BOARD_2_I2C_ADDRESS);
+    initI2cBusList((I2cBus(*)[]) &i2cBusListArray, MAIN_BOARD_I2C_BUS_LIST_LENGTH);
+	initI2cBusConnectionList((I2cBusConnection(*)[]) &i2cBusConnectionListArray, MAIN_BOARD_I2C_BUS_CONNECTION_LIST_LENGTH);
+
+    i2cBus = addI2cBus(I2C_BUS_TYPE_MASTER, I2C_BUS_PORT_1);
+    i2cMasterInitialize(i2cBus);
+    motorI2cBusConnection = addI2cBusConnection(i2cBus, MOTOR_BOARD_I2C_ADDRESS);
+    mechanicalBoard2I2cBusConnection = addI2cBusConnection(i2cBus, MECHANICAL_BOARD_2_I2C_ADDRESS);
 
     // I2C Debug
     initI2CDebugBuffers(&i2cMasterDebugInputBuffer,
@@ -581,14 +587,14 @@ int main(void) {
     setDebugI2cEnabled(false);
 
     // -> Eeproms
-    initI2cBusConnection(&eepromI2cBusConnection, &i2cBus, ST24C512_ADDRESS_0);
-    init24C512Eeprom(&eeprom, &eepromI2cBusConnection);
+    eepromI2cBusConnection = addI2cBusConnection(i2cBus, ST24C512_ADDRESS_0);
+    init24C512Eeprom(&eeprom, eepromI2cBusConnection);
     // -> Clock
-    initI2cBusConnection(&clockI2cBusConnection, &i2cBus, PCF8563_WRITE_ADDRESS);
-    initClockPCF8563(&clock, &clockI2cBusConnection);
+    clockI2cBusConnection = addI2cBusConnection(i2cBus, PCF8563_WRITE_ADDRESS);
+    initClockPCF8563(&clock, clockI2cBusConnection);
     // -> Temperature
-    initI2cBusConnection(&temperatureI2cBusConnection, &i2cBus, LM75A_ADDRESS);
-    initTemperatureLM75A(&temperature, &temperatureI2cBusConnection);
+    temperatureI2cBusConnection = addI2cBusConnection(i2cBus, LM75A_ADDRESS);
+    initTemperatureLM75A(&temperature, temperatureI2cBusConnection);
 
     // TIMERS
     initTimerList(&timerListArray, MAIN_BOARD_TIMER_LENGTH);
