@@ -26,12 +26,7 @@ int deviceClockGetInterface(char commandHeader, DeviceInterfaceMode mode, bool f
         }
         return commandLengthValueForMode(mode, 0, 17);
     }
-    if (commandHeader == COMMAND_READ_CLOCK_DEBUG) {
-        if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("Clock Read (Debug) ");
-        }
-        return commandLengthValueForMode(mode, 0, 0);
-    } else if (commandHeader == COMMAND_WRITE_TIME) {
+    else if (commandHeader == COMMAND_WRITE_TIME) {
         if (fillDeviceArgumentList) {
             setFunction("Time Write", 3, 0);
             setArgumentUnsignedHex2(0, "HOUR");
