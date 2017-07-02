@@ -35,7 +35,8 @@ void initTimerList(Timer (*timerListArray)[], unsigned char timerListSize);
 Timer* addTimer(int timerCode,
                 unsigned long timeDiviser,
                 interruptTimerCallbackFunc* callback,
-                char* timerName);
+                char* timerName,
+                int* object);
 
 /**
  * Get the device descriptor of index.

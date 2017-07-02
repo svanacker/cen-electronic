@@ -43,7 +43,7 @@ struct Clock {
     ReadClockFunction* readClock;
     /** The content with all values. */
     ClockData clockData;
-    /** A pointer on generic object (for example to store I2cBus ...). */
+    /** A pointer on generic object (for example to store I2cBus, timer ...). */
     int* object;
 };
 

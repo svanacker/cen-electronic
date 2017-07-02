@@ -90,6 +90,8 @@ struct Timer {
     volatile bool working;
     /** name of the timer (to have a better way to debug) */
     char* name;
+    /** A generic object so that we could something external to the timer when firing timer. */
+    int* object;
 };
 
 /**

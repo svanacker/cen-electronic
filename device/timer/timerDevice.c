@@ -49,7 +49,8 @@ Timer* addTimerDemo(void) {
     Timer* result = addTimer(DEMO_TIMER_INDEX,
              TIME_DIVIDER_1_HERTZ,
              &interruptDemoTimerCallbackFunc,
-             "DEMO");
+             "DEMO",
+             NULL);
 	// addTimer could return null if not enough timer => In this case, it will change setErrorCode, and return NULL
 	if (result != NULL) {
 	    result->enabled = true;

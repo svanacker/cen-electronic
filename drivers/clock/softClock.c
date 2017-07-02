@@ -3,6 +3,7 @@
 #include <stdlib.h>
 
 #include "../../common/clock/clock.h"
+#include "../../common/timer/timerList.h"
 
 /**
 * @see clock.h
@@ -13,7 +14,12 @@ ClockData* _readSoftClock(Clock* clockParam) {
     return &(clockParam->clockData);
 }
 
-void incrementOneSecondSoftClock(ClockData* clockData) {
+/**
+ * @private
+ * Initialized by init
+ */
+void incrementOneSecondSoftClock(Timer* timer) {
+    ClockData* clockData = (ClockData*) timer->object;
     clockData->second++;
     if (clockData->second >= 60) {
         clockData->second -= 60;
@@ -42,4 +48,6 @@ void _writeSoftClock(Clock* clockParam) {
 
 void initSoftClock(Clock* clockParam) {
     initClock(clockParam, _writeSoftClock, _readSoftClock, NULL);
+    ClockData* clockData = &(clockParam->clockData);
+    addTimer(TIMER_SOFT_CLOCK_CODE, SOFT_CLOCK_UPDATE_FREQUENCY, &incrementOneSecondSoftClock, "SOFT CLOCK", (int*) clockData);
 }
