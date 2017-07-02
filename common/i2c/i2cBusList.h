@@ -1,8 +1,6 @@
 #ifndef I2C_BUS_LIST_H
 #define I2C_BUS_LIST_H
 
-#define MAX_BUS_LIST 4
-
 #include <stdbool.h>
 
 #include "i2cCommon.h"
@@ -34,7 +32,6 @@ I2cBusList* getI2cBusList();
 
 /**
  * Add an i2cBus to the list.
- * @return dispatcher the data dispatcher added to the list.
  */
 I2cBus* addI2cBus(enum I2cBusType i2cBusType, enum I2cPort i2cPort);
 

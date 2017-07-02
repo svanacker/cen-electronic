@@ -1,3 +1,5 @@
+#include <stdlib.h>
+
 #include "endMatchDetectorDevice.h"
 #include "endMatchDetectorDeviceInterface.h"
 
@@ -91,7 +93,8 @@ void initEndMatchDetector(void) {
     endMatchDetectorDeviceTimer = addTimer(END_MATCH_DETECTOR_TIMER_CODE,
                                             TIME_DIVIDER_1_HERTZ,
                                             endMatchDetectorCallbackFunc,
-                                            "END MATCH TIMER");
+                                            "END MATCH TIMER",
+											NULL);
 }
 
 void stopEndMatchDetector(void) {
