@@ -93,6 +93,15 @@ void deviceADCHandleRawData(char commandHeader, InputStream* inputStream, Output
         appendHex4(outputStream, readAdc(4));
         appendSeparator(outputStream);
         appendHex4(outputStream, readAdc(5));
+        appendSeparator(outputStream);
+    }
+    else if (commandHeader == COMMAND_SET_ADC_PARAMETERS) {
+        ackCommand(outputStream, ADC_DEVICE_HEADER, COMMAND_SET_ADC_PARAMETERS);
+        int index = readHex2(inputStream);
+        checkIsSeparator(inputStream);
+        int state = readHex2(inputStream);
+        setANXConfig(index, state);
+        
     }
 }
 

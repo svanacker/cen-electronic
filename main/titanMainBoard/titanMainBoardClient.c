@@ -9,13 +9,21 @@
     #include "../../common/setup/30F/picSetup30F.h"
 #endif
 
+#include <plib.h>
 #include <stdlib.h>
 #include <math.h>
 
-#include "titanMainBoardClient.h"
+#include "mainBoard32.h"
 
 #include "../../common/delay/cenDelay.h"
 
+#include "../../common/eeprom/eeprom.h"
+
+#include "../../common/MPU/MPU.h"
+#include "../../common/pll/pll.h"
+#include "../../common/silec/silec.h"
+
+#include "../../common/i2c/i2cCommon.h"
 #include "../../common/i2c/i2cDebug.h"
 
 #include "../../common/i2c/master/i2cMaster.h"
@@ -30,7 +38,6 @@
 #include "../../common/io/ioUtils.h"
 #include "../../common/io/outputStream.h"
 #include "../../common/io/streamLink.h"
-#include "../../common/io/stream.h"
 #include "../../common/io/pin.h"
 #include "../../common/io/printWriter.h"
 #include "../../common/io/reader.h"
@@ -49,10 +56,13 @@
 #include "../../common/timer/cenTimer.h"
 #include "../../common/timer/timerList.h"
 
+#include "../../common/system/system.h"
+
 #include "../../device/device.h"
 #include "../../device/deviceDebug.h"
 #include "../../device/deviceUsage.h"
 #include "../../device/deviceList.h"
+#include "../../device/transmitMode.h"
 #include "../../device/dispatcher/deviceDataDispatcher.h"
 
 
@@ -64,32 +74,67 @@
 #include "../../drivers/dispatcher/driverDataDispatcherDebug.h"
 #include "../../drivers/dispatcher/i2cDriverDataDispatcher.h"
 #include "../../drivers/dispatcher/localDriverDataDispatcher.h"
+#include "../../drivers/dispatcher/uartDriverDataDispatcher.h"
 
 // CLOCK
-#include "../../common/clock/clock.h"
 #include "../../device/clock/clockDevice.h"
 #include "../../device/clock/clockDeviceInterface.h"
 
-// TEMPERATURE SENSOR
-#include "../../device/temperatureSensor/temperatureSensor.h"
-#include "../../device/temperatureSensor/temperatureSensorDevice.h"
-#include "../../device/temperatureSensor/temperatureSensorDeviceInterface.h"
+// DATA DISPATCHER
+#include "../../device/dispatcher/dataDispatcherDevice.h"
+#include "../../device/dispatcher/dataDispatcherDeviceInterface.h"
+
+// EEPROM
+#include "../../device/eeprom/eepromDevice.h"
+#include "../../device/eeprom/eepromDeviceInterface.h"
+
+// MPU
+#include "../../device/MPU/mpuDevice.h"
+#include "../../device/MPU/mpuDeviceInterface.h"
+
+// PLL
+#include "../../device/pll/pllDevice.h"
+#include "../../device/pll/pllDeviceInterface.h"
+
+// SERIAL
+#include "../../device/serial/serialDebugDevice.h"
+#include "../../device/serial/serialDebugDeviceInterface.h"
+
+// Silec afficheur
+#include "../../device/silec/silecDevice.h"
+#include "../../device/silec/silecDeviceInterface.h"
+
+// TIMER
+#include "../../device/timer/timerDevice.h"
+#include "../../device/timer/timerDeviceInterface.h"
 
 // SYSTEM
 #include "../../device/system/systemDevice.h"
 #include "../../device/system/systemDeviceInterface.h"
 
-// SYSTEM DEBUG
-#include "../../device/system/systemDebugDevice.h"
-#include "../../device/system/systemDebugDeviceInterface.h"
+// LOG
+#include "../../device/log/logDevice.h"
+#include "../../device/log/logDeviceInterface.h"
 
 // I2C MASTER DEBUG
 #include "../../device/i2c/master/i2cMasterDebugDevice.h"
 #include "../../device/i2c/master/i2cMasterDebugDeviceInterface.h"
 
 // TEST
-//#include "../../device/test/deviceTest.h"
-//#include "../../device/test/deviceTestInterface.h"
+#include "../../device/test/testDevice.h"
+#include "../../device/test/testDeviceInterface.h"
+
+// TEST
+#include "../../device/test/test2Device.h"
+#include "../../device/test/test2DeviceInterface.h"
+
+// TIMER
+#include "../../device/timer/timerDevice.h"
+#include "../../device/timer/timerDeviceInterface.h"
+
+// SENSOR->TEMPERATURE
+#include "../../device/sensor/temperature/temperatureSensorDevice.h"
+#include "../../device/sensor/temperature/temperatureSensorDeviceInterface.h"
 
 // SERVO
 #include "../../device/servo/servoDevice.h"
@@ -117,7 +162,6 @@
 #include "../../device/strategy/strategyDevice.h"
 #include "../../device/strategy/strategyDeviceInterface.h"
 
-// Specific 2011
 #include "../../device/adc/adcDevice.h"
 #include "../../device/adc/adcDeviceInterface.h"
 
@@ -129,31 +173,32 @@
 
 // Drivers
 #include "../../drivers/clock/PCF8563.h"
+#include "../../drivers/eeprom/24c512.h"
 #include "../../drivers/io/pcf8574.h"
-//#include "../../drivers/test/driverTest.h"
+#include "../../drivers/MPU/MPU-6050.h"
+#include "../../drivers/pll/NJ88C22.h"
+#include "../../drivers/silec/shiftUCN5895A.h"
+#include "../../drivers/test/testDriver.h"
 #include "../../drivers/system/systemDriver.h"
 #include "../../drivers/motion/motionDriver.h"
 #include "../../drivers/motion/trajectoryDriver.h"
 #include "../../drivers/motor/md22.h"
 #include "../../drivers/driverTransmitter.h"
+#include "../../drivers/sensor/temperature/LM75A.h"
 #include "../../drivers/strategy/strategyDriver.h"
-#include "../../drivers/sensor/LM75A.h"
-//#include "../../drivers/robotConfig/PIC32/robotConfigPic32.h"
-
-#include "../../common/eeprom/eeprom.h"
-
-#include "../../device/eeprom/eepromDevice.h"
-#include "../../device/eeprom/eepromDeviceInterface.h"
 
 // Robot
-#include "../../robot/config/32/robotConfigPic32.h"
 #include "../../robot/config/robotConfig.h"
 #include "../../robot/config/robotConfigDevice.h"
 #include "../../robot/config/robotConfigDeviceInterface.h"
+#include "../../robot/config/32/robotConfigPic32.h"
+
+#include "../../robot/kinematics/robotKinematicsDeviceInterface.h"
+
+#include "../../robot/match/startMatch.h"
 #include "../../robot/match/32/startMatchDetector32.h"
-#include "../../robot/match/startMatchDetector.h"
-#include "../../robot/match/startMatchDetectorDevice.h"
-#include "../../robot/match/startMatchDetectorDeviceInterface.h"
+#include "../../robot/match/startMatchDevice.h"
+#include "../../robot/match/startMatchDeviceInterface.h"
 #include "../../robot/match/endMatchDetectorDevice.h"
 #include "../../robot/match/endMatchDetectorDeviceInterface.h"
 
@@ -164,25 +209,47 @@
 #include "../../robot/opponent/opponentRobot.h"
 
 // Other boards interface
-#include "../../main/motorboard/motorBoard.h"
-#include "../../main/meca1/mechanicalBoard1.h"
+#include "../../main/motorboard/motorBoard32.h"
 #include "../../main/meca2/mechanicalBoard2.h"
 #include "../../main/airconditioning/airConditioningMain.h"
 
-#include "../../motion/simple/motion.h"
+#include "../../motion/simple/simpleMotion.h"
 
 #include "../../robot/robot.h"
 
 #include "../../drivers/sonar/srf02.h"
 
-#ifdef PROG_32
-    #define SERIAL_PORT_DEBUG          SERIAL_PORT_2
-    #define SERIAL_PORT_PC             SERIAL_PORT_6
-    #define SERIAL_PORT_LCD            SERIAL_PORT_5
-#else
-    #define SERIAL_PORT_DEBUG         SERIAL_PORT_1
-    #define SERIAL_PORT_PC             SERIAL_PORT_2
-#endif
+#define SERIAL_PORT_DEBUG         SERIAL_PORT_2 
+#define SERIAL_PORT_PC            SERIAL_PORT_6
+#define SERIAL_PORT_MOTOR         SERIAL_PORT_5
+#define SERIAL_PORT_MECA2         SERIAL_PORT_1
+
+// I2C => PORT 1 (for All Peripherical, including Eeprom / Clock / MPU / Temperatur)
+static I2cBus i2cBus;
+
+// EEPROM
+static Eeprom eeprom;
+static I2cBusConnection eepromI2cBusConnection;
+
+// CLOCK
+static Clock clock;
+static I2cBusConnection clockI2cBusConnection;
+
+// MPU
+static Mpu mpu;
+static I2cBusConnection mpuI2cBusConnection;
+
+//PLL
+static Pll pll;
+static I2cBusConnection pllI2cBusConnection;
+
+//PLL
+static Silec silec;
+static I2cBusConnection silecI2cBusConnection;
+
+// TEMPERATURE
+static Temperature temperature;
+static I2cBusConnection temperatureI2cBusConnection;
 
 // serial link DEBUG 
 static char debugInputBufferArray[MAIN_BOARD_DEBUG_INPUT_BUFFER_LENGTH];
@@ -192,6 +259,17 @@ static Buffer debugOutputBuffer;
 static OutputStream debugOutputStream;
 static StreamLink debugSerialStreamLink;
 
+// StartMatch
+static StartMatch startMatch;
+
+// serial link Motor
+static char motorInputBufferArray[MAIN_BOARD_MOTOR_INPUT_BUFFER_LENGTH];
+static Buffer motorInputBuffer;
+static char motorOutputBufferArray[MAIN_BOARD_MOTOR_OUTPUT_BUFFER_LENGTH];
+static Buffer motorOutputBuffer;
+static OutputStream motorOutputStream;
+static StreamLink motorSerialStreamLink;
+
 // serial link PC
 static char pcInputBufferArray[MAIN_BOARD_PC_INPUT_BUFFER_LENGTH];
 static Buffer pcInputBuffer;
@@ -200,9 +278,13 @@ static Buffer pcOutputBuffer;
 static OutputStream pcOutputStream;
 static StreamLink pcSerialStreamLink;
 
-// both OutputStream as composite
-// static CompositeOutputStream compositePcAndDebugOutputStream;
-// static CompositeOutputStream compositeDriverAndDebugOutputStream;
+// serial Link MechanicalBoard
+static char mechanicalBoard2InputBufferArray[MAIN_BOARD_MECA2_INPUT_BUFFER_LENGTH];
+static Buffer mechanicalBoard2InputBuffer;
+static char mechanicalBoard2OutputBufferArray[MAIN_BOARD_MECA2_OUTPUT_BUFFER_LENGTH];
+static Buffer mechanicalBoard2OutputBuffer;
+static OutputStream mechanicalBoard2OutputStream;
+static StreamLink mechanicalBoard2SerialStreamLink;
 
 // DRIVERS
 static Buffer driverRequestBuffer;
@@ -218,37 +300,37 @@ static Buffer i2cMasterDebugInputBuffer;
 
 // DISPATCHER I2C
 
+static DriverDataDispatcher driverDataDispatcherListArray[MAIN_BOARD_DRIVER_DATA_DISPATCHER_LIST_LENGTH];
+
 // i2c->Motor
-static DriverDataDispatcher motorI2cDispatcher;
-static char motorBoardInputBufferArray[MAIN_BOARD_LINK_TO_MOTOR_BOARD_BUFFER_LENGTH];
-static Buffer motorBoardInputBuffer;
-static InputStream motorBoardInputStream;
-static OutputStream motorBoardOutputStream;
+static I2cBusConnection motorI2cBusConnection;
+static char motorBoardI2cInputBufferArray[MAIN_BOARD_I2C_INPUT_DRIVER_DATA_DISPATCHER_BUFFER_LENGTH];
+static Buffer motorBoardI2cInputBuffer;
+static InputStream motorBoardI2cInputStream;
+static OutputStream motorBoardI2cOutputStream;
 
 // i2c->Air Conditioning
-static DriverDataDispatcher airConditioningI2cDispatcher;
+/*
+static I2cBusConnection airConditioningI2cBusConnection;
 static char airConditioningBoardInputBufferArray[MAIN_BOARD_LINK_TO_MECA_BOARD_2_BUFFER_LENGTH];
 static Buffer airConditioningBoardInputBuffer;
 static InputStream airConditioningBoardInputStream;
 static OutputStream airConditioningBoardOutputStream;
+*/
 
 // i2c->Mechanical 2
-static DriverDataDispatcher mechanical2I2cDispatcher;
+static I2cBusConnection mechanicalBoard2I2cBusConnection;
 static char mechanical2BoardInputBufferArray[MAIN_BOARD_LINK_TO_MECA_BOARD_2_BUFFER_LENGTH];
 static Buffer mechanical2BoardInputBuffer;
 static InputStream mechanical2BoardInputStream;
 static OutputStream mechanical2BoardOutputStream;
 
-// i2c->Clock
-static Clock globalClock;
-
-// i2c->Eeprom
-static Buffer eepromBuffer;
-static char eepromBufferArray[EEPROM_BUFFER_LENGTH];
-static Eeprom eeprom_;
-
-// StartMatchDetector
-static StartMatchDetector startMatchDetector;
+// DISPATCHER UART
+// uart->Motor
+// static char motorBoardUartInputBufferArray[MAIN_BOARD_UART_INPUT_DRIVER_DATA_DISPATCHER_BUFFER_LENGTH];
+// static Buffer motorBoardUartInputBuffer;
+// static InputStream motorBoardUartInputStream;
+// static OutputStream motorBoardUartOutputStream;
 
 // Robot Configuration
 static RobotConfig robotConfig;
@@ -256,9 +338,8 @@ static RobotConfig robotConfig;
 // lcd DEBUG 
 static OutputStream lcdOutputStream;
 
-// logs
-static LogHandler debugSerialLogHandler;
-static LogHandler lcdLogHandler;
+// Logs
+static LogHandler logHandlerListArray[MAIN_BOARD_LOG_HANDLER_LIST_LENGTH];
 
 // Devices
 static Device deviceListArray[MAIN_BOARD_DEVICE_LENGTH];
@@ -266,288 +347,201 @@ static Device deviceListArray[MAIN_BOARD_DEVICE_LENGTH];
 // Timers
 static Timer timerListArray[MAIN_BOARD_TIMER_LENGTH];
 
-// Obstacle management
-static bool mustNotifyObstacle;
-static unsigned int instructionType;
-static bool useInfrared;
-static bool useBalise;
-
-#define INSTRUCTION_TYPE_NO_MOVE        0
-#define INSTRUCTION_TYPE_FORWARD        1
-#define INSTRUCTION_TYPE_BACKWARD        2
-#define INSTRUCTION_TYPE_ROTATION        3
-
-/**
- * Call-back when Data send some notification message (like Position Reached, Position failed ...)
- */
-void mainBoardCallbackRawData(const Device* device,
-        char commandHeader,
-        InputStream* inputStream) {
-
-//    if (header == NOTIFY_MOTION_STATUS || header == COMMAND_NOTIFY_TEST || header == COMMAND_PLIERS_2011_OPEN) {
-    // MOTOR BOARD notification
-    if (header == NOTIFY_MOTION_STATUS) {
-        /*
-        appendString(getInfoOutputStreamLogger(), "\nNotification : From MOTOR BOARD \n");
-        // NOTIFY_MOTION_STATUS / COMMAND_NOTIFY_TEST
-        checkIsChar(inputStream, header);
-        // status
-        unsigned char status = readHex2(inputStream);
-        // separator
-        checkIsSeparator(inputStream);
-        // x
-        unsigned int x = readHex4(inputStream);
-        // separator
-        checkIsChar(inputStream, '-');
-        // y
-        unsigned int y = readHex4(inputStream);
-        // separator
-        checkIsSeparator(inputStream);
-        // angle in ddeg
-        unsigned int angle = readHex4(inputStream);
-
-        updateRobotPosition(x, y, angle);
-        setRobotPositionChanged();
-        
-        // FOR DEBUG AND MOTHER BOARD
-        OutputStream* outputStream = &(compositePcAndDebugOutputStream.outputStream);
-        append(outputStream, header);
-        appendHex2(outputStream, status);
-        appendSeparator(outputStream);
-        appendHex4(outputStream, x);
-        appendSeparator(outputStream);
-        appendHex4(outputStream, y);
-        appendSeparator(outputStream);
-        appendHex4(outputStream, angle);
-
-        // ready for next motion instruction Index
-        setReadyForNextMotion(true);
-        // Robot finished the trajectory
-        instructionType = INSTRUCTION_TYPE_NO_MOVE;
-        */
-    }
-    // STRATEGY BOARD notification message of MOTOR => Must be relayed TO MOTOR
-    else if (header == COMMAND_MOTION_SPLINE_ABSOLUTE || header == COMMAND_MOTION_SPLINE_RELATIVE) {
-        /*
-        appendString(getInfoOutputStreamLogger(), "Notification : Spline : From STRATEGY BOARD : relayed to MOTOR_BOARD \n");
-        appendStringAndDec(getInfoOutputStreamLogger(), "getDriverResponseBuffer:", getBufferElementsCount(getDriverResponseBuffer()));
-        // forwardCallbackRawDataTo(inputStream, &debugOutputStream, device, header, DEVICE_MODE_INPUT);
-        OutputStream* outputStream = &(compositeDriverAndDebugOutputStream.outputStream);
-        // OutputStream* outputStream = &debugOutputStream;
-
-        readHex(inputStream);
-        // appendString(outputStream, ",header=");
-        append(outputStream, header);
-
-        float x = readHex4(inputStream);
-        // appendString(outputStream, ",x=");
-        appendHex4(outputStream, x);
-
-        checkIsSeparator(inputStream);
-        appendSeparator(outputStream);
-
-        float y = readHex4(inputStream);
-        // appendString(outputStream, ",y=");
-        appendHex4(outputStream, y);
-
-        checkIsSeparator(inputStream);
-        appendSeparator(outputStream);
-
-        float angle = readHex4(inputStream);
-        // appendString(outputStream, ",angle=");
-        appendHex4(outputStream, angle);
-
-        checkIsSeparator(inputStream);
-        appendSeparator(outputStream);
-
-        signed char dist0 = readHex2(inputStream);
-        // appendString(outputStream, ",dist0=");
-        appendHex2(outputStream, dist0);
-
-        checkIsSeparator(inputStream);
-        appendSeparator(outputStream);
-
-        signed char dist1 = readHex2(inputStream);
-        // appendString(outputStream, ",dist1=");
-        appendHex2(outputStream, dist1);
-
-        checkIsSeparator(inputStream);
-        appendSeparator(outputStream);
-
-        signed char a = readHex(inputStream);
-        // appendString(outputStream, ",a=");
-        appendHex(outputStream, a);
-
-        signed char s = readHex(inputStream);
-        // appendString(outputStream, ",s=");
-        appendHex(outputStream, s);
-    
-        if (dist0 < 0) {
-            appendString(getInfoOutputStreamLogger(), "\nMotion Backward !");
-            instructionType = INSTRUCTION_TYPE_BACKWARD;
-        }
-        else {
-            appendString(getInfoOutputStreamLogger(), "\nMotion Forward !");
-            instructionType = INSTRUCTION_TYPE_FORWARD;
-        }        
-        // forwardCallbackRawDataTo(inputStream, &(compositeDriverAndDebugOutputStream.outputStream), device, header, DEVICE_MODE_INPUT);
-        transmitFromDriverRequestBuffer();
-        */
-    } else if (header == COMMAND_MOTION_LEFT_IN_DECI_DEGREE || header == COMMAND_MOTION_RIGHT_IN_DECI_DEGREE) {
-        /*
-        appendString(getInfoOutputStreamLogger(), "Notification : Rotation : From STRATEGY BOARD : relayed to MOTOR_BOARD \n");
-        instructionType = INSTRUCTION_TYPE_ROTATION;
-        forwardCallbackRawDataTo(inputStream, &(compositeDriverAndDebugOutputStream.outputStream), device, header, DEVICE_MODE_INPUT);
-        transmitFromDriverRequestBuffer();
-        */
-    } 
-    // Mechanical Board notification
-    else if (header == NOTIFY_INFRARED_DETECTOR_DETECTION) {
-        /*
-        appendString(getInfoOutputStreamLogger(), "\nNotification : From MECHANICAL BOARD :\n");
-        checkIsChar(inputStream, NOTIFY_INFRARED_DETECTOR_DETECTION);
-        // type
-        unsigned char type = readHex2(inputStream);
-        OutputStream* outputStream = &(compositePcAndDebugOutputStream.outputStream);
-        append(outputStream, NOTIFY_INFRARED_DETECTOR_DETECTION);
-        appendHex2(outputStream, type);
-        if (useInfrared) {
-            // Notify only if we are in a compatible move !
-            if ((instructionType == INSTRUCTION_TYPE_BACKWARD) && (type == DETECTOR_BACKWARD_INDEX)) {
-                mustNotifyObstacle = true;
-            }
-            else if ((instructionType == INSTRUCTION_TYPE_FORWARD) && (type == DETECTOR_FORWARD_INDEX)) {
-                mustNotifyObstacle = true;
-            }
-        }
-        */
-    }
-    // Cannot not handle the notification !
-    else {
-        appendString(getOutputStreamLogger(ERROR), "\nNotification lost:\n");
-        copyInputToOutputStream(inputStream, getOutputStreamLogger(ERROR), NULL, COPY_ALL);
-        println(getOutputStreamLogger(ERROR));
-    }
-}
+static long counter;
+static int instructionIndex;
 
 /**
  * @private
  */
-void initDriversDescriptor() {
+void initMainBoardDriversDescriptor() {
     // Init the drivers
     initDrivers(&driverRequestBuffer, &driverRequestBufferArray, MAIN_BOARD_REQUEST_DRIVER_BUFFER_LENGTH,
                 &driverResponseBuffer, &driverResponseBufferArray, MAIN_BOARD_RESPONSE_DRIVER_BUFFER_LENGTH);
 
     // Get test driver for debug purpose
-//    addDriver(driverTestGetDescriptor(), TRANSMIT_LOCAL);
-
-    // Direct Devantech Driver
-    addDriver(getMD22DriverDescriptor(), TRANSMIT_NONE);
+    addDriver(testDriverGetDescriptor(), TRANSMIT_LOCAL);
 }
 
 /**
  * @private
  */
-void initDevicesDescriptor() {
+void initMainBoardDevicesDescriptor() {
     initDeviceList(&deviceListArray, MAIN_BOARD_DEVICE_LENGTH);
 
-    // Test & System
-    // addI2CRemoteDevice(&testDevice, getTestDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
+    // SYSTEM & DEBUG
     addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
-    addLocalDevice(getSystemDebugDeviceInterface(), getSystemDebugDeviceDescriptor());
+    addLocalDevice(getLogDeviceInterface(), getLogDeviceDescriptor());
+    addLocalDevice(getSerialDebugDeviceInterface(), getSerialDebugDeviceDescriptor());
+    addLocalDevice(getTimerDeviceInterface(), getTimerDeviceDescriptor());
+    addLocalDevice(getTest2DeviceInterface(), getTest2DeviceDescriptor());
+    addLocalDevice(getDataDispatcherDeviceInterface(), getDataDispatcherDeviceDescriptor());
     addLocalDevice(getI2cMasterDebugDeviceInterface(), getI2cMasterDebugDeviceDescriptor());
 
-    // Local
-    addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&globalClock));
+    // LOCAL
     addLocalDevice(getLCDDeviceInterface(), getLCDDeviceDescriptor());
-    addLocalDevice(getTemperatureSensorDeviceInterface(), getTemperatureSensorDeviceDescriptor());
-    addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom_));
-
-    addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor());
-    addLocalDevice(getADCDeviceInterface(),getADCDeviceDescriptor());
     addLocalDevice(getRobotConfigDeviceInterface(), getRobotConfigDeviceDescriptor(&robotConfig));
-    addLocalDevice(getStartMatchDetectorDeviceInterface(), getStartMatchDetectorDeviceDescriptor(&startMatchDetector));
-    addLocalDevice(getEndMatchDetectorDeviceInterface(), getEndMatchDetectorDeviceDescriptor());
-    addLocalDevice(getSonarDeviceInterface(), getSonarDeviceDescriptor());
-    addLocalDevice(getRobotSonarDetectorDeviceInterface(), getRobotSonarDetectorDeviceDescriptor());
 
+    initStartMatch(&startMatch, isMatchStarted32, mainBoardWaitForInstruction, &eeprom);
+    addLocalDevice(getStartMatchDeviceInterface(), getStartMatchDeviceDescriptor(&startMatch));
+    addLocalDevice(getEndMatchDetectorDeviceInterface(), getEndMatchDetectorDeviceDescriptor());
+    addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
+    addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
+    addLocalDevice(getMpuDeviceInterface(), getMpuDeviceDescriptor(&mpu));
+    addLocalDevice(getADCDeviceInterface(), getADCDeviceDescriptor());
+    //addLocalDevice(getPllDeviceInterface(), getPllDeviceDescriptor(&pll)); //WARNING DON't use with Servo
+    //addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor()); //WARNING DON't use with PLL
+    addLocalDevice(getSilecDeviceInterface(), getSilecDeviceDescriptor(&silec)); //WARNING DON't use with Servo
+    addLocalDevice(getLedDeviceInterface(), getLedDeviceDescriptor());
+    addLocalDevice(getTemperatureSensorDeviceInterface(), getTemperatureSensorDeviceDescriptor(&temperature));
+
+    addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
+
+    /*
+    addLocalDevice(getSonarDeviceInterface(), getSonarDeviceDescriptor(&i2cBus));
+    addLocalDevice(getRobotSonarDetectorDeviceInterface(), getRobotSonarDetectorDeviceDescriptor(&i2cBus));
+    addLocalDevice(getTemperatureSensorDeviceInterface(), getTemperatureSensorDeviceDescriptor(&i2cBus));
+    */
     // Mechanical Board 2->I2C
-    // Device* armDevice = addI2CRemoteDevice(getArm2012DeviceInterface(), MECHANICAL_BOARD_2_I2C_ADDRESS);
-    // Device* infraredDetectorDevice = addI2CRemoteDevice(getRobotInfraredDetectorDeviceInterface(), MECHANICAL_BOARD_2_I2C_ADDRESS);
+    // Device* armDevice = addI2cRemoteDevice(getArm2012DeviceInterface(), MECHANICAL_BOARD_2_I2C_ADDRESS);
+    // Device* infraredDetectorDevice = addI2cRemoteDevice(getRobotInfraredDetectorDeviceInterface(), MECHANICAL_BOARD_2_I2C_ADDRESS);
+    // addI2cRemoteDevice(getServoDeviceInterface(), MECHANICAL_BOARD_2_I2C_ADDRESS);
+    // addUartRemoteDevice(getRobotInfraredDetectorDeviceInterface(), SERIAL_PORT_MECA2);
 
     // Motor Board->I2C
-    addI2CRemoteDevice(getPIDDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
-    addI2CRemoteDevice(getMotorDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
-    addI2CRemoteDevice(getCodersDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
-    Device* trajectoryDevice = addI2CRemoteDevice(getTrajectoryDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
-    Device* motionDevice = addI2CRemoteDevice(getMotionDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
+    /*
+    addI2cRemoteDevice(getTestDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
+    addI2cRemoteDevice(getMotorDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
+    addI2cRemoteDevice(getCodersDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
+    addI2cRemoteDevice(getPIDDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
+    addI2cRemoteDevice(getTrajectoryDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
+    addI2cRemoteDevice(getMotionDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
+    */
+
+    // MOTOR BOARD -> UART
+    // addUartRemoteDevice(getTestDeviceInterface(), SERIAL_PORT_MOTOR);
+    addUartRemoteDevice(getMotorDeviceInterface(), SERIAL_PORT_MOTOR);
+    addUartRemoteDevice(getCodersDeviceInterface(), SERIAL_PORT_MOTOR);
+    addUartRemoteDevice(getPIDDeviceInterface(), SERIAL_PORT_MOTOR);
+    addUartRemoteDevice(getTrajectoryDeviceInterface(), SERIAL_PORT_MOTOR);
+    addUartRemoteDevice(getMotionDeviceInterface(), SERIAL_PORT_MOTOR);
+    addUartRemoteDevice(getRobotKinematicsDeviceInterface(), SERIAL_PORT_MOTOR);
 
     // Beacon Receiver Board->I2C
-    // addI2CRemoteDevice(getBeaconReceiverDeviceInterface(), BEACON_RECEIVER_I2C_ADDRESS);
+    // addI2cRemoteDevice(getBeaconReceiverDeviceInterface(), BEACON_RECEIVER_I2C_ADDRESS);
 
     // Strategy Board->I2C
-    // addI2CRemoteDevice(getStrategyDeviceInterface(), STRATEGY_BOARD_I2C_ADDRESS);
+    // addI2cRemoteDevice(getStrategyDeviceInterface(), STRATEGY_BOARD_I2C_ADDRESS);
 
     // Air Conditioning Board
-    addI2CRemoteDevice(getAirConditioningDeviceInterface(), AIR_CONDITIONING_BOARD_I2C_ADDRESS);
+//    addI2cRemoteDevice(getAirConditioningDeviceInterface(), AIR_CONDITIONING_BOARD_I2C_ADDRESS);
 
     // Init the devices
     initDevices();  
 
     // Manage the callback notification
-    trajectoryDevice->deviceHandleCallbackRawData = &mainBoardCallbackRawData;
+    // trajectoryDevice->deviceHandleCallbackRawData = &mainBoardCallbackRawData;
     // testDevice.deviceHandleCallbackRawData = &mainBoardCallbackRawData;
-    motionDevice->deviceHandleCallbackRawData = &mainBoardCallbackRawData;
+    // motionDevice->deviceHandleCallbackRawData = &mainBoardCallbackRawData;
     // infraredDetectorDevice->deviceHandleCallbackRawData = &mainBoardCallbackRawData;
 }
 
-/*
-bool isObstacleOutsideTheTable(int distance) {
-    float a = getRobotAngle() * (PI / 1800.0);
-    float dca = cosf(a) * distance;
-    float dsa = sinf(a) * distance;
-    int obstacleX = getRobotPositionX() + dca;
-    int obstacleY = getRobotPositionY() + dsa;
-    
-    appendStringAndDec(getInfoOutputStreamLogger(), "\nObstacle Position:x=", obstacleX);
-    appendStringAndDec(getInfoOutputStreamLogger(), ",y=", obstacleY);
-    println(getInfoOutputStreamLogger());
+void initMainBoardDriverDataDispatcherList(void) {
+    // Initializes the DriverDataDispatcherList
+    initDriverDataDispatcherList(&driverDataDispatcherListArray, MAIN_BOARD_DRIVER_DATA_DISPATCHER_LIST_LENGTH);
 
-    
-    int BORDER_THRESHOLD = 250;
-    int TOTEM_THRESHOLD_X = 250;
-    int TOTEM_THRESHOLD_Y = 600;
+    // Configure data dispatcher
+    addLocalDriverDataDispatcher();
 
-    // Table border X
-    if (obstacleX < BORDER_THRESHOLD || obstacleX > GAME_BOARD_WIDTH - BORDER_THRESHOLD) {
-        return true;
-    }
-    // Table border Y
-    if (obstacleY < BORDER_THRESHOLD || obstacleY > GAME_BOARD_HEIGHT - BORDER_THRESHOLD) {
-        return true;
-    }
-    
-    // Totem Zone
-    if (    (obstacleX > GAME_BOARD_MIDDLE_WIDTH - TOTEM_THRESHOLD_X) 
-         && (obstacleX < GAME_BOARD_MIDDLE_WIDTH + TOTEM_THRESHOLD_X)
-         && (obstacleY > GAME_BOARD_MIDDLE_HEIGHT - TOTEM_THRESHOLD_Y) 
-         && (obstacleY < GAME_BOARD_MIDDLE_HEIGHT - TOTEM_THRESHOLD_Y)) {
-        return true;
-    }
-    return false;
+    // I2C
+
+    addI2CDriverDataDispatcher("MOTOR_BOARD_I2C_DISPATCHER",
+        &motorBoardI2cInputBuffer, 
+        (char(*)[]) &motorBoardI2cInputBufferArray,
+        MAIN_BOARD_I2C_INPUT_DRIVER_DATA_DISPATCHER_BUFFER_LENGTH,
+        &motorBoardI2cOutputStream,
+        &motorBoardI2cInputStream,
+        &motorI2cBusConnection
+        );
+
+    // Stream for Mechanical Board 2
+    addI2CDriverDataDispatcher(
+            "MECHANICAL_BOARD_2_DISPATCHER",
+            &mechanical2BoardInputBuffer,
+            &mechanical2BoardInputBufferArray,
+            MAIN_BOARD_LINK_TO_MECA_BOARD_2_BUFFER_LENGTH,
+            &mechanical2BoardOutputStream,
+            &mechanical2BoardInputStream,
+            &mechanicalBoard2I2cBusConnection);
+
+    // SERIAL
+
+    // Uart Stream for motorBoard
+    addUartDriverDataDispatcher(
+        &motorSerialStreamLink,
+        "MOTOR_BOARD_UART_DISPATCHER",
+        SERIAL_PORT_MOTOR);
+
+    // Uart Stream for mechanicalBoard
+    addUartDriverDataDispatcher(
+        &mechanicalBoard2SerialStreamLink,
+        "MECA2_UART_DISPATCHER",
+        SERIAL_PORT_MECA2);
+
+    /*
+    // Stream for Air Conditioning
+    addI2CDriverDataDispatcher(
+            "AIR_CONDITIONING_DISPATCHER",
+            &airConditioningBoardInputBuffer,
+            &airConditioningBoardInputBufferArray,
+            MAIN_BOARD_LINK_TO_AIR_CONDITIONING_BOARD_BUFFER_LENGTH,
+            &airConditioningBoardOutputStream,
+            &airConditioningBoardInputStream,
+            &i2cBusConnection);
+    */
 }
-*/
 
-void waitForInstruction() {
-    
+void doInstruction() {
+    int currentTime = getCurrentTimeInSecond();
+
+    if (instructionIndex == 0 && currentTime > 1) {
+        motionDriverForward(600.0f);
+        instructionIndex++;
+    }
+    else if (instructionIndex == 1 && currentTime > 10) {
+        motionDriverLeft(1800.0f);
+    }
+    else if (instructionIndex == 2 && currentTime > 20) {
+        motionDriverForward(600.0f);
+    }
+}
+
+bool mainBoardWaitForInstruction(StartMatch* startMatchParam) {
+    // BE CAREFUL : UART 1 / UART 2 are physically connected : https://github.com/svanacker/cen-electronic-schema/issues/11
+    // -> DO NOT USE IT AT THE SAME TIME !!
+
     // Listen instruction from pcStream->Devices
+    /*
     handleStreamInstruction(
             &pcInputBuffer,
             &pcOutputBuffer,
             &pcOutputStream,
             &filterRemoveCRLF,
             NULL);
-    
+    */
+    /*
+    if (counter > 0) {
+        counter++;
+        if ((counter % 20) == 0) {
+            appendString(getAlwaysOutputStreamLogger(), "ASK ! \n");
+            if (robotInfraredDetectorHasObstacle(DETECTOR_GROUP_TYPE_FORWARD)) {
+                appendString(getAlwaysOutputStreamLogger(), "DETECTED ROBOT !");
+                // We stop
+                return false;
+            }
+        }
+    }
+    */
+
     // Listen instruction from debugStream->Devices
     handleStreamInstruction(
             &debugInputBuffer,
@@ -555,176 +549,88 @@ void waitForInstruction() {
             &debugOutputStream,
             &filterRemoveCRLF,
             NULL);
+    // Listen instruction from debugStream->Devices
+    handleStreamInstruction(
+            &pcInputBuffer,
+            &pcOutputBuffer,
+            &pcOutputStream,
+            &filterRemoveCRLF,
+            NULL);
 
-    // Listen instructions from Devices (I2C Slave) -> Main Board (I2C Master)
-    /*
-    while (handleNotificationFromDispatcherList(TRANSMIT_I2C)) {
-        // loop for all notification
-        // notification handler must avoid to directly information in notification callback
-        // and never to the call back device
-    }
-    */
+    return true;
+}
 
-    /*
-    // Notify to the strategy board the position of the robot
-    if (isRobotPositionChanged()) {
-        sentStrategyRobotPosition(0, getRobotPositionX(), getRobotPositionY(), getRobotAngle());
-        resetRobotPositionChanged();
-    }
-
-    if (mustNotifyObstacle) {
-        mustNotifyObstacle = false;
-        // Obtain robot position
-        // Ask the robot position from the MOTOR BOARD
-        trajectoryDriverUpdateRobotPosition();
-
-        // compute the obstacle position. If it's outside the table, does nothing
-        int obstacleDistance = 350.0f;
-        appendStringAndDec(getInfoOutputStreamLogger(), "\nInstruction Type:", instructionType);
-
-        if (instructionType == INSTRUCTION_TYPE_BACKWARD) {
-            obstacleDistance = -obstacleDistance;
-        }
-        if (isObstacleOutsideTheTable(obstacleDistance)) {
-            appendString(getInfoOutputStreamLogger(), "\nObstacle OUT side the Table!\n");
+void testrobotConfig (void){
+    unsigned int valueConfig = getConfigValue();
+    valueConfig = valueConfig & 0x2000;
+        if (valueConfig) {
+            retroLCD(1);
         }
         else {
-            appendString(getInfoOutputStreamLogger(), "\nObstacle !\n");
-            // Send information to Strategy Board
-            stopRobotObstacle();
-            armDriver2012Up(ARM_LEFT);
-            armDriver2012Up(ARM_RIGHT);
-            // we are ready for next motion (next loop)
-            setReadyForNextMotion(true);
+            retroLCD(0);
         }
-    }
-
-    // Update the current Opponent Robot position
-    if (useBalise) {
-        updateOpponentRobotIfNecessary();
-    }
-    */    
 }
 
 int main(void) {
-    setBoardName("TITAN ELECTRONICAL MAIN BOARD 32bits V-JJ_7");
+    setBoardName("MAIN BOARD");
+    setRobotMustStop(false);
 
-    i2cMasterInitialize();
-    
-    //setRobotMustStop(false);
-    // Open the serial Link for debug
-    openSerialLink(&debugSerialStreamLink,
-            &debugInputBuffer,
-            &debugInputBufferArray,
-            MAIN_BOARD_DEBUG_INPUT_BUFFER_LENGTH,
-            &debugOutputBuffer,
-            &debugOutputBufferArray,
-            MAIN_BOARD_DEBUG_OUTPUT_BUFFER_LENGTH,
+    // LOG Global Configuration
+    initLogs(DEBUG, &logHandlerListArray, MAIN_BOARD_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
+
+    // LCD (LCD via Parallel interface)
+    initLCDOutputStream(&lcdOutputStream);
+    addLogHandler("LCD", &lcdOutputStream, LOG_LEVEL_ERROR, LOG_HANDLER_CATEGORY_ALL_MASK);
+
+    // CONFIG
+    initRobotConfigPic32(&robotConfig);
+
+    // Open the serial Link for debug and LOG !
+    openSerialLink(&debugSerialStreamLink, 
+            &debugInputBuffer, &debugInputBufferArray, MAIN_BOARD_DEBUG_INPUT_BUFFER_LENGTH,
+            &debugOutputBuffer, &debugOutputBufferArray, MAIN_BOARD_DEBUG_OUTPUT_BUFFER_LENGTH,
             &debugOutputStream,
             SERIAL_PORT_DEBUG,
             DEFAULT_SERIAL_SPEED);
+    // Serial Debug LOG
+    addLogHandler("UART", &debugOutputStream, DEBUG, LOG_HANDLER_CATEGORY_ALL_MASK);
 
-    // Open the serial Link for the PC
-    openSerialLink(&pcSerialStreamLink,
-            &pcInputBuffer,
-            &pcInputBufferArray,
-            MAIN_BOARD_PC_INPUT_BUFFER_LENGTH,
-            &pcOutputBuffer,
-            &pcOutputBufferArray,
-            MAIN_BOARD_PC_OUTPUT_BUFFER_LENGTH,
-            &pcOutputStream,
-            SERIAL_PORT_PC,
-            DEFAULT_SERIAL_SPEED);
-
-    // LCD (LCD03 via Serial interface)
-    initLCDOutputStream(&lcdOutputStream);
-
-    initTimerList(&timerListArray, MAIN_BOARD_TIMER_LENGTH);
-
-    // Init the logs
-    initLog(DEBUG);
-    addLogHandler(&debugSerialLogHandler, "UART", &debugOutputStream, DEBUG);
-    addLogHandler(&lcdLogHandler, "LCD", &lcdOutputStream, ERROR);
-
+    // LOG the BoardName
     appendString(getAlwaysOutputStreamLogger(), getBoardName());
     println(getAlwaysOutputStreamLogger());
 
-    initDevicesDescriptor();
-    initDriversDescriptor();
-
-    i2cMasterInitialize();
-    // Initialize EEPROM and RTC
-    initClockPCF8563(&globalClock);
-    init24C512Eeprom(&eeprom_);
-
-
-
-
-
-
-    initRobotConfigPic32(&robotConfig);
-
-
-
-    initStartMatchDetector32(&startMatchDetector);
-
-
-    // Initializes the opponent robot
-    // initOpponentRobot();
-
-    /*
-    // Creates a composite to notify both PC and Debug
-    initCompositeOutputStream(&compositePcAndDebugOutputStream);
-    addOutputStream(&compositePcAndDebugOutputStream, &debugOutputStream);
-    addOutputStream(&compositePcAndDebugOutputStream, &pcOutputStream);
-
-    // Creates a composite to redirect to driverRequest and Debug
-    initCompositeOutputStream(&compositeDriverAndDebugOutputStream);
-    addOutputStream(&compositeDriverAndDebugOutputStream, &debugOutputStream);
-    addOutputStream(&compositeDriverAndDebugOutputStream, getDriverRequestOutputStream());
-    */
-
-    appendString(&debugOutputStream, "DEBUG\n");
+    // SERIAL
     
-    // Start interruptions
-    //startTimerList();  //////RALENTI FORTEMENT LE PIC!!! PLANTE I2C !!!!!!!!
+    // Open the serial Link for the Motor Board
+    openSerialLink(&motorSerialStreamLink,
+                   &motorInputBuffer, &motorInputBufferArray, MAIN_BOARD_MOTOR_INPUT_BUFFER_LENGTH,
+                   &motorOutputBuffer, &motorOutputBufferArray, MAIN_BOARD_MOTOR_OUTPUT_BUFFER_LENGTH,
+                   &motorOutputStream,
+                   SERIAL_PORT_MOTOR,
+                   DEFAULT_SERIAL_SPEED);
 
-    // Configure data dispatcher
-    //addLocalDriverDataDispatcher();
+    // Open the serial Link for the Mechanical Board
+    openSerialLink(&mechanicalBoard2SerialStreamLink,
+                   &mechanicalBoard2InputBuffer, &mechanicalBoard2InputBufferArray, MAIN_BOARD_MECA2_INPUT_BUFFER_LENGTH,
+                   &mechanicalBoard2OutputBuffer, &mechanicalBoard2OutputBufferArray, MAIN_BOARD_MECA2_OUTPUT_BUFFER_LENGTH,
+                   &mechanicalBoard2OutputStream,
+                   SERIAL_PORT_MECA2,
+                   DEFAULT_SERIAL_SPEED);
 
-    // Stream for motorBoard
-    /*
-    addI2CDriverDataDispatcher(&motorI2cDispatcher,
-            "MOTOR_BOARD_DISPATCHER",
-            &motorBoardInputBuffer,
-            &motorBoardInputBufferArray,
-            MAIN_BOARD_LINK_TO_MOTOR_BOARD_BUFFER_LENGTH,
-            &motorBoardOutputStream,
-            &motorBoardInputStream,
-            MOTOR_BOARD_I2C_ADDRESS);
-    */
-    /*
-    // Stream for Mechanical Board 2
-    addI2CDriverDataDispatcher(&mechanical2I2cDispatcher,
-            "MECHANICAL_BOARD_2_DISPATCHER",
-            &mechanical2BoardInputBuffer,
-            &mechanical2BoardInputBufferArray,
-            MAIN_BOARD_LINK_TO_MECA_BOARD_2_BUFFER_LENGTH,
-            &mechanical2BoardOutputStream,
-            &mechanical2BoardInputStream,
-            MECHANICAL_BOARD_2_I2C_ADDRESS);
-    */
+    // Open the serial Link for the PC
+    openSerialLink(&pcSerialStreamLink,
+                    &pcInputBuffer, &pcInputBufferArray, MAIN_BOARD_PC_INPUT_BUFFER_LENGTH,
+                    &pcOutputBuffer, &pcOutputBufferArray, MAIN_BOARD_PC_OUTPUT_BUFFER_LENGTH,
+                    &pcOutputStream,
+                    SERIAL_PORT_PC,
+                    DEFAULT_SERIAL_SPEED);
 
- /*   // Stream for Air Conditioning
-    addI2CDriverDataDispatcher(&airConditioningI2cDispatcher,
-            "AIR_CONDITIONING_DISPATCHER",
-            &airConditioningBoardInputBuffer,
-            &airConditioningBoardInputBufferArray,
-            MAIN_BOARD_LINK_TO_AIR_CONDITIONING_BOARD_BUFFER_LENGTH,
-            &airConditioningBoardOutputStream,
-            &airConditioningBoardInputStream,
-            AIR_CONDITIONING_BOARD_I2C_ADDRESS);
-*/
+    // MAIN I2C
+    initI2cBus(&i2cBus, I2C_BUS_TYPE_MASTER, I2C_BUS_PORT_1);
+    i2cMasterInitialize(&i2cBus);
+    initI2cBusConnection(&motorI2cBusConnection, &i2cBus, MOTOR_BOARD_I2C_ADDRESS);
+    initI2cBusConnection(&mechanicalBoard2I2cBusConnection, &i2cBus, MECHANICAL_BOARD_2_I2C_ADDRESS);
+
     // I2C Debug
     initI2CDebugBuffers(&i2cMasterDebugInputBuffer,
                         &i2cMasterDebugInputBufferArray,
@@ -732,166 +638,53 @@ int main(void) {
                         &i2cMasterDebugOutputBuffer,
                         &i2cMasterDebugOutputBufferArray,
                         MAIN_BOARD_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH);
+    setDebugI2cEnabled(false);
+
+    // -> Eeproms
+    initI2cBusConnection(&eepromI2cBusConnection, &i2cBus, ST24C512_ADDRESS_0);
+    init24C512Eeprom(&eeprom, &eepromI2cBusConnection);
+    // -> Clock
+    initI2cBusConnection(&clockI2cBusConnection, &i2cBus, PCF8563_WRITE_ADDRESS);
+    initClockPCF8563(&clock, &clockI2cBusConnection);
+    //-> Mpu
+    initI2cBusConnection(&mpuI2cBusConnection, &i2cBus, MPU6050_WRITE_ADDRESS);
+    initMpuMPU6050(&mpu, &mpuI2cBusConnection);
+    //->PLL
+    // initI2cBusConnection(&pllI2cBusConnection, &i2cBus, NJ88C22_WRITE_ADDRESS);
+    //initPllNJ88C22(&pll, &pllI2cBusConnection);
+    //->SILEC
+    initI2cBusConnection(&silecI2cBusConnection, &i2cBus, SHIFTUCN5895_WRITE_ADDRESS);
+    initSHIFTUCN5895(&silec, &silecI2cBusConnection);
+    // -> Temperature
+    initI2cBusConnection(&temperatureI2cBusConnection, &i2cBus, LM75A_ADDRESS);
+    initTemperatureLM75A(&temperature, &temperatureI2cBusConnection);
+
+    // TIMERS
+    initTimerList(&timerListArray, MAIN_BOARD_TIMER_LENGTH);
+
+    // DEVICES, DRIVERS, DISPATCHERS
+    initMainBoardDevicesDescriptor();
+    initMainBoardDriversDescriptor();
+    initMainBoardDriverDataDispatcherList();
 
 
-    appendStringConfig(&lcdOutputStream);
+    // Start interruptions
+    startTimerList();
 
-    //pingDriverDataDispatcherList(getDebugOutputStreamLogger());
+    loopUntilStart(&startMatch);
+    counter = 1;
 
-    // Inform PC waiting
-    showWaitingStart(&debugOutputStream);
+    clearBuffer(&mechanicalBoard2InputBuffer);
 
+    // enableNotificationRobotInfraredDetector(DETECTOR_GROUP_TYPE_FORWARD);
 
-
-    // wait other board initialization
-    delaymSec(1500);
-
-    // 2012 VALUE
-    unsigned int configValue = getConfigValue();
-    unsigned int homologationIndex = configValue & CONFIG_STRATEGY_MASK;
-    unsigned int color = configValue & CONFIG_COLOR_BLUE_MASK;
-
-    appendString(getAlwaysOutputStreamLogger(), "Homologation:");
-    appendCRLF(getAlwaysOutputStreamLogger());
-    appendDec(getAlwaysOutputStreamLogger(), homologationIndex);
-    
-    appendString(getAlwaysOutputStreamLogger(), "Config:");
-    appendHex4(getAlwaysOutputStreamLogger(), configValue);
-    appendCRLF(getAlwaysOutputStreamLogger());
-    useBalise = configValue & CONFIG_USE_BALISE_MASK;
-    useInfrared = configValue & CONFIG_USE_SONAR_MASK;
-
-    if (color != 0) {
-        appendString(getAlwaysOutputStreamLogger(), "COLOR:VIOLET\n");
-    }
-    else {
-        appendString(getAlwaysOutputStreamLogger(), "COLOR:RED\n");
-    }    
-
-    // TODO 2012 SV motionDriverMaintainPosition();
-
-    // wait for start
- //   setInitialPosition(color);
-
-    // notify game strategy
- //   sendStrategyConfiguration(configValue);
-
-    loopUntilStart(&waitForInstruction);
-
-    // Enable the sonar Status only after start
-    //setSonarStatus(configValue & CONFIG_USE_SONAR_MASK);
-
-    // mark that match begins
-    markStartMatch();
-
-    // write begin of match
-    showStarted(&pcOutputStream);
-
-    if (homologationIndex == 0) {
-        // MATCH
-
-        while (1) {
-            waitForInstruction();
-            //CLOCK Read
-
-
-            if (isEnd()) {
-                break;
-            }
-        }
-    } else {
-        setReadyForNextMotion(true);
-
-        while (1) {
-            
-            portableStartI2C(i2cBus);
-            WaitI2C(i2cBus);
-            portableMasterWriteI2C(FREE_ADDRESS_2);//0x54
-            WaitI2C(i2cBus);
-            portableMasterWriteI2C('H');
-            WaitI2C(i2cBus);
-            portableMasterWriteI2C('E');
-            WaitI2C(i2cBus);
-            portableMasterWriteI2C('L');
-            WaitI2C(i2cBus);
-            portableMasterWriteI2C('L');
-            WaitI2C(i2cBus);
-            portableMasterWriteI2C('O');
-
-            portableStopI2C(i2cBus);
-            WaitI2C(i2cBus);
-            int data1,data2,data3;
-            while(1){
-                waitForInstruction();
-                //globalClock.readClock(&globalClock);
-                //printClock(&debugOutputStream,&globalClock);
-                //appendCR(&debugOutputStream);
-
-                int data = 0;
-                portableMasterWaitSendI2C(i2cBus);
-
-                portableStartI2C(i2cBus);
-                IdleI2C1();
-                portableMasterWriteI2C(FREE_ADDRESS_2 + 1);//0x54
-                WaitI2C(i2cBus);
-                
-                data = portableMasterReadI2C(i2cBus);
-                portableAckI2C(i2cBus);
-                IdleI2C1();
-
-                data1 = portableMasterReadI2C(i2cBus);
-                portableAckI2C(i2cBus);
-                IdleI2C1();
-
-                data2= portableMasterReadI2C(i2cBus);
-                portableAckI2C(i2cBus);
-                IdleI2C1();
-
-
-                data3 = portableMasterReadI2C(i2cBus);
-                portableNackI2C(i2cBus);
-                IdleI2C1();
-                append(&lcdOutputStream,data);
-                append(&lcdOutputStream,data1);
-                append(&lcdOutputStream,data2);
-                append(&lcdOutputStream,data3);
-
-                portableStopI2C(i2cBus);
-                IdleI2C1();
-                
-                delaymSec(500);
-            }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            homologation(homologationIndex, color);
-
-            // We stop if we are in homologation mode
-            if (isRobotMustStop()) {
-                motionDriverStop();
-                break;
-            }
-
-            // ultimate tentative to restart the robot if it is blocked
-            forceRobotNextStepIfNecessary();
-        }
+    while (1) {
+        if (!mainBoardWaitForInstruction(&startMatch)) {
+            break;         
+        }   
     }
 
-    showEnd(&lcdOutputStream);
+    showEnd(getAlwaysOutputStreamLogger());
 
     while (1) {
         // Avoid reboot even at end

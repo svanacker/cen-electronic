@@ -55,8 +55,8 @@ void initHCTL2032() {
         ADPCFG = 0xFFFF;
     #endif
 
-    // PORTB as input for data (8 bits in parallel)
-    TRISB = TRIS_DX;
+    // PORTE as input for data (8 bits in parallel)
+    TRISE = TRIS_DX;
 
     // RSTX / RSTY to 1 to avoid reset (see doc)
     RSTX = 1;

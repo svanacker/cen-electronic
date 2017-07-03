@@ -12,6 +12,8 @@
 
 #include "../../common/eeprom/eeprom.h"
 
+#include "../../common/MPU/MPU.h"
+
 #include "../../common/i2c/i2cCommon.h"
 #include "../../common/i2c/i2cDebug.h"
 #include "../../common/i2c/i2cBusList.h"
@@ -79,6 +81,10 @@
 #include "../../device/eeprom/eepromDevice.h"
 #include "../../device/eeprom/eepromDeviceInterface.h"
 
+// MPU
+#include "../../device/MPU/mpuDevice.h"
+#include "../../device/MPU/mpuDeviceInterface.h"
+
 // SERIAL
 #include "../../device/serial/serialDebugDevice.h"
 #include "../../device/serial/serialDebugDeviceInterface.h"
@@ -103,11 +109,23 @@
 #include "../../device/i2c/master/i2cMasterDebugDevice.h"
 #include "../../device/i2c/master/i2cMasterDebugDeviceInterface.h"
 
+// LED
+#include "../../device/led/ledDevice.h"
+#include "../../device/led/ledDeviceInterface.h"
+
+// LCD
+#include "../../device/lcd/lcdDevice.h"
+#include "../../device/lcd/lcdDeviceInterface.h"
+
+// TEST
+#include "../../device/MPU/MPUDevice.h"
+#include "../../device/MPU/MPUDeviceInterface.h"
+
 // TEST
 #include "../../device/test/testDevice.h"
 #include "../../device/test/testDeviceInterface.h"
 
-// TEST
+// TEST2
 #include "../../device/test/test2Device.h"
 #include "../../device/test/test2DeviceInterface.h"
 
@@ -159,6 +177,8 @@
 #include "../../drivers/eeprom/24c512.h"
 #include "../../drivers/io/pcf8574.h"
 #include "../../drivers/clock/PCF8563.h"
+#include "../../drivers/io/pcf8574.h"
+#include "../../drivers/MPU/MPU-6050.h"
 #include "../../drivers/test/testDriver.h"
 #include "../../drivers/system/systemDriver.h"
 #include "../../drivers/motion/motionDriver.h"
@@ -190,7 +210,7 @@
 #include "../../robot/opponent/opponentRobot.h"
 
 // Other boards interface
-#include "../../main/motorBoard/motorBoard32.h"
+#include "../../main/motorboard/motorBoard32.h"
 #include "../../main/meca2/mechanicalBoard2.h"
 #include "../../main/airconditioning/airConditioningMain.h"
 
@@ -213,9 +233,13 @@ static I2cBusConnection* eepromI2cBusConnection;
 static Clock clock;
 static I2cBusConnection* clockI2cBusConnection;
 
+// MPU
+static Mpu mpu;
+
 // TEMPERATURE
 static Temperature temperature;
 static I2cBusConnection* temperatureI2cBusConnection;
+
 
 // serial link DEBUG 
 static char debugInputBufferArray[MAIN_BOARD_DEBUG_INPUT_BUFFER_LENGTH];
@@ -266,10 +290,9 @@ static Buffer i2cMasterDebugInputBuffer;
 
 // DISPATCHER I2C
 
-static DriverDataDispatcher driverDataDispatcherListArray[MAIN_BOARD_DRIVER_DATA_DISPATCHER_LIST_LENGTH];
-
 // i2c->Motor
 static I2cBusConnection* motorI2cBusConnection;
+static DriverDataDispatcher driverDataDispatcherListArray[MAIN_BOARD_DRIVER_DATA_DISPATCHER_LIST_LENGTH];
 static char motorBoardI2cInputBufferArray[MAIN_BOARD_I2C_INPUT_DRIVER_DATA_DISPATCHER_BUFFER_LENGTH];
 static Buffer motorBoardI2cInputBuffer;
 static InputStream motorBoardI2cInputStream;
@@ -354,7 +377,11 @@ void initMainBoardDevicesDescriptor() {
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
     addLocalDevice(getTemperatureSensorDeviceInterface(), getTemperatureSensorDeviceDescriptor(&temperature));
+    addLocalDevice(getMpuDeviceInterface(), getMpuDeviceDescriptor(&mpu));
     addLocalDevice(getADCDeviceInterface(), getADCDeviceDescriptor());
+    addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor());
+    addLocalDevice(getLedDeviceInterface(), getLedDeviceDescriptor());
+//    addLocalDevice(getTemperatureSensorDeviceInterface(), getTemperatureSensorDeviceDescriptor(&temperature));
 
     addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
 
@@ -394,7 +421,7 @@ void initMainBoardDevicesDescriptor() {
     // addI2cRemoteDevice(getStrategyDeviceInterface(), STRATEGY_BOARD_I2C_ADDRESS);
 
     // Air Conditioning Board
-    addI2cRemoteDevice(getAirConditioningDeviceInterface(), AIR_CONDITIONING_BOARD_I2C_ADDRESS);
+//    addI2cRemoteDevice(getAirConditioningDeviceInterface(), AIR_CONDITIONING_BOARD_I2C_ADDRESS);
 
     // Init the devices
     initDevices();  
@@ -435,7 +462,6 @@ void initMainBoardDriverDataDispatcherList(void) {
             mechanicalBoard2I2cBusConnection);
 
     // SERIAL
-
     // Uart Stream for motorBoard
     addUartDriverDataDispatcher(
         &motorSerialStreamLink,

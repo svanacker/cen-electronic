@@ -3,7 +3,7 @@
 
 #include "../../common/io/outputStream.h"
 
-#include "../../main/motorBoard/motorBoard32.h"
+#include "../../main/motorboard/motorBoard32.h"
 #include "../../main/meca1/mechanicalBoard1.h"
 #include "../../main/meca2/mechanicalBoard2.h"
 #include "../../main/beaconReceiver/beaconReceiverBoard.h"
@@ -19,6 +19,11 @@
 
 #define MAIN_BOARD_I2C_BUS_LIST_LENGTH                    1
 #define MAIN_BOARD_I2C_BUS_CONNECTION_LIST_LENGTH         5
+
+// LOGS
+#include "../../main/strategy/strategyMain.h"
+
+#include "../../robot/match/startMatch.h"
 
 // LOGS
 #define MAIN_BOARD_LOG_HANDLER_LIST_LENGTH   2

@@ -6,6 +6,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+void retroLCD(int value) {
+	// TODO
+}
+
 void setCursorAtHome(void) {
     // TODO
 }

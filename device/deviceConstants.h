@@ -23,6 +23,9 @@
 // 'h' for Help
 #define SYSTEM_DEBUG_DEVICE_HEADER                 'h'
 
+/** Command header for led */
+#define LED_DEVICE_HEADER                          'H'
+
 /** Command to debug the I2C Master. */
 #define I2C_MASTER_DEBUG_DEVICE_HEADER             'I'
 
@@ -34,6 +37,9 @@
 
 /** Command to debug the dispatchers. */
 #define DATA_DISPATCHER_DEVICE_HEADER              'j'
+
+/** Command header to handle the Motion Processing Unit "MPU" */
+#define MPU_DEVICE_HEADER                          'J'
 
 /** Command to ping */
 #define COMMAND_PING_DISPATCHER_INDEX               'p'
@@ -104,6 +110,8 @@
 /** Header for Test2 Device. */
 #define TEST2_DEVICE_HEADER                        'u'
 
+#define PLL_DEVICE_HEADER                          'v' 
+
 #define TIMER_DEVICE_HEADER                        'V'
 
 #define CODERS_DEVICE_HEADER                       'w'
@@ -111,6 +119,8 @@
 #define PC_DEVICE_HEADER                           'W'
 
 #define EXTENDED_MOTION_DEVICE_HEADER			   'X'
+
+#define SILEC_DEVICE_HEADER                         'x'
 
 /** Reserved to clear buffer. */
 #define NOT_TOO_USE_1                               'z'

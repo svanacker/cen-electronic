@@ -22,6 +22,12 @@
 #define COMMAND_CLEAR_LCD            'c'
 
 /**
+ * 
+ * @return 
+ */
+#define COMMAND_RETRO_LCD            'r'
+
+/**
 * Define the number of fixed count of char used
 * for each message.
 */

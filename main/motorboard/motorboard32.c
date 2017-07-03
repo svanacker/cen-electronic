@@ -10,6 +10,8 @@
 #include "../../common/2d/2d.h"
 #include "../../common/math/cenMath.h"
 
+#include "../../common/eeprom/eeprom.h"
+
 #include "../../common/setup/32/picSetup32.h"
 
 #include "../../common/delay/cenDelay.h"
@@ -19,7 +21,13 @@
 #include "../../common/i2c/i2cDebug.h"
 #include "../../common/i2c/i2cBusList.h"
 #include "../../common/i2c/i2cBusConnectionList.h"
+#include "../../common/i2c/master/i2cMaster.h"
 #include "../../common/i2c/master/i2cMasterSetup.h"
+
+#include "../../common/i2c/master/i2cMasterOutputStream.h"
+#include "../../common/i2c/master/i2cMasterInputStream.h"
+
+
 #include "../../common/i2c/slave/i2cSlave.h"
 #include "../../common/i2c/slave/i2cSlaveSetup.h"
 #include "../../common/i2c/slave/i2cSlaveLink.h"
@@ -51,7 +59,11 @@
 
 // -> Devices
 
-// Clock
+//ADC
+#include "../../device/adc/adcDevice.h"
+#include "../../device/adc/adcDeviceInterface.h"
+
+//CLOCK
 #include "../../device/clock/clockDevice.h"
 #include "../../device/clock/clockDeviceInterface.h"
 
@@ -119,10 +131,10 @@
 #include "../../robot/kinematics/robotKinematicsDeviceInterface.h"
 
 // Drivers
-#include "../../drivers/clock/softClock.h"
+#include "../../drivers/clock/PCF8563.h"
+//#include "../../drivers/clock/softClock.h"
 #include "../../drivers/eeprom/24c512.h"
 #include "../../drivers/clock/PCF8563.h"
-
 #include "../../drivers/motor/motorDriver.h"
 
 // Direct implementation
@@ -204,7 +216,7 @@ static Device deviceListArray[MOTOR_BOARD_DEVICE_LIST_LENGTH];
 
 void initDevicesDescriptor() {
     initDeviceList(&deviceListArray, MOTOR_BOARD_DEVICE_LIST_LENGTH);
-
+    addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
     addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());
     addLocalDevice(getCodersDeviceInterface(), getCodersDeviceDescriptor());
     addLocalDevice(getPIDDeviceInterface(), getPIDDeviceDescriptor(&eeprom_, false));
@@ -212,9 +224,10 @@ void initDevicesDescriptor() {
     addLocalDevice(getTrajectoryDeviceInterface(), getTrajectoryDeviceDescriptor());
     addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
     addLocalDevice(getSerialDebugDeviceInterface(), getSerialDebugDeviceDescriptor());
-    addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
+
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
     addLocalDevice(getTimerDeviceInterface(), getTimerDeviceDescriptor());
+    addLocalDevice(getADCDeviceInterface(), getADCDeviceDescriptor());
 
     // I2C_4
     addLocalDevice(getRobotKinematicsDeviceInterface(), getRobotKinematicsDeviceDescriptor(&eeprom_));

@@ -13,7 +13,7 @@
 
 unsigned int _robotConfigReadInt (RobotConfig* robotConfig){
     unsigned int value = 0;
-
+    
     value = ((PORTG & 0x0004) << 11) | // PORTG2
             ((PORTC & 0x2000) >> 1) | // PORTC13
             ((PORTB & 0x8000) >> 4)|// PORTB15
@@ -26,8 +26,10 @@ unsigned int _robotConfigReadInt (RobotConfig* robotConfig){
 
 void initRobotConfigPic32(RobotConfig* robotConfig) {
     // Init the portb input selected as I/O
-    AD1PCFG = 0xBFC0;//0b1011111011000000;
-
+    //D1PCFG = 0xBFC0;//0b1011111011000011;
+    setConfigPort(0xBFC3);
+    setConfigScan(0xFF83);
+    
     //Init the port selected as Input
     TRISDbits.TRISD5 = 1;
     TRISDbits.TRISD6 = 1;

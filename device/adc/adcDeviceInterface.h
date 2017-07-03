@@ -13,6 +13,9 @@
 /** Get the value of all ADC. */
 #define COMMAND_GET_ADC_ALL_VALUES              'R'
 
+/** define the portBbits to be ADC.*/           
+#define COMMAND_SET_ADC_PARAMETERS              'P'
+
 /**
 * Interface for the Device
 * @return the Interface for the ADC device.

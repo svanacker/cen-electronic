@@ -123,6 +123,11 @@ void setResultSignedHex2(int index, char* name) {
     deviceMethodMetaData.results[index].name = name;
 }
 
+void setResultSignedHex6(int index, char* name) {
+    deviceMethodMetaData.results[index].type = DEVICE_ARG_SIGNED_HEX_6;
+    deviceMethodMetaData.results[index].name = name;
+}
+
 void setResultUnsignedHex2(int index, char* name) {
     deviceMethodMetaData.results[index].type = DEVICE_ARG_UNSIGNED_HEX_2;
     deviceMethodMetaData.results[index].name = name;

@@ -82,6 +82,18 @@ void clearLastError();
 // TEMPERATURE
 #define TEMPERATURE_NULL              0x2B0
 
+// MPU (Motio Processor Unit)
+#define MPU_NULL                        0x2C0
+#define MPU_NOT_INITIALIZED             0x2C1
+
+// PLL
+#define PLL_NULL                        0x2C2
+#define PLL_NOT_INITIALIZED             0x2C3
+
+// SILEC
+#define SILEC_NULL                        0x2C4
+#define SILEC_NOT_INITIALIZED             0x2C5
+
 // BIT LIST
 #define BIT_LIST_ARRAY_OUT_OF_BOUNDS    0x0300
 
@@ -97,6 +109,7 @@ void clearLastError();
 #define I2C_MASTER_ALREADY_INITIALIZED    0x1000
 #define I2C_SLAVE_ALREADY_INITIALIZED     0x1001
 #define I2C_BUS_PORT_NOT_DEFINED          0x1002
+
 // -> I2C  : Bus
 #define I2C_BUS_NULL                      0x1003
 #define I2C_BUS_TYPE_NOT_DEFINED          0x1004

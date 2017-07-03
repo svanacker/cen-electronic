@@ -33,6 +33,9 @@
     #define TRIS_D6_LCD TRISEbits.TRISE6
     #define TRIS_D7_LCD TRISEbits.TRISE7
 
+    #define TRIS_RETRO_LCD TRISDbits.TRISD11
+    #define RETRO_LCD LATDbits.LATD11
+
 
 #else
 

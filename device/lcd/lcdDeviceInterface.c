@@ -28,6 +28,13 @@ int deviceLCDGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fil
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
+    else if (commandHeader == COMMAND_RETRO_LCD) {
+        if (fillDeviceArgumentList) {
+            setFunction("Retroeclairage", 1, 0);
+            setArgumentUnsignedHex2(0, "ON/OFF");
+        }
+        return commandLengthValueForMode(mode, 2, 0);
+    }
     return DEVICE_HEADER_NOT_HANDLED;
 }
 

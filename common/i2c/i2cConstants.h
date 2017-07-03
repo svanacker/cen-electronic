@@ -45,6 +45,7 @@
 #define FREE_ADDRESS_6            0x5C
 #define FREE_ADDRESS_7            0x5E
 
+
 // PCF8574A
 
 // !!! Conflict with RLY08_ADDRESS_0
@@ -124,8 +125,13 @@
 #define MD22_ADDRESS_6             0xBC
 #define MD22_ADDRESS_7             0xBE
 
-// PCF8573 Address
-#define PCF8573P_WRITE_ADDRESS     0xD0
+// MPU6050 Motion Processor Unit address
+#define MPU_6050_ADDRESS_0        0xD0
+#define MPU_6050_ADDRESS_1        0xD2
+
+
+// PCF8573 Clock Address 
+#define PCF8573P_WRITE_ADDRESS     0xD4
 
 // SRF02
 

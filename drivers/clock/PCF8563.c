@@ -68,9 +68,9 @@ ClockData* _readPcf8563Clock(Clock* clock) {
     WaitI2C(i2cBus);
     portableMasterStopI2C(i2cBusConnection);
     WaitI2C(i2cBus);
-    clockData->second = clockData->second & 0b01111111;
-    clockData->minute = clockData->minute & 0b01111111;
-    clockData->hour = clockData->hour & 0b00111111;
+    clockData->second = clockData->second;// & 0b01111111;
+    clockData->minute = clockData->minute;// & 0b01111111;
+    clockData->hour = clockData->hour;// & 0b00111111;
     clockData->day = clockData->day & 0b00111111;
     clockData->dayofweek = clockData->dayofweek & 0b00001111;
     clockData->month = clockData->month & 0b00011111;
@@ -116,5 +116,8 @@ void _writePcf8563Clock(Clock* clock) {
 }
 
 void initClockPCF8563(Clock* clock, I2cBusConnection* i2cBusConnection) {
-    initClock(clock, _writePcf8563Clock, _readPcf8563Clock, (int*) i2cBusConnection);
+    initClock(clock,
+            _writePcf8563Clock,
+            _readPcf8563Clock,
+            (int*) i2cBusConnection);
 }

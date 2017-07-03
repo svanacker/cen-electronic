@@ -59,6 +59,7 @@
 #include "../../device/timer/timerDeviceInterface.h"
 
 // KINEMATICS
+
 #include "../../robot/kinematics/robotKinematicsDevice.h"
 #include "../../robot/kinematics/robotKinematicsDeviceInterface.h"
 

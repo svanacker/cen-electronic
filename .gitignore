@@ -24,7 +24,7 @@
 *.sdb
 *.cceadd 
 NMakefile
-Makefile
+#Makefile
 #*.X
 *.zip
 #*.mcw
@@ -50,3 +50,6 @@ Debug
 *.ipch
 *.opendb
 
+/MOTOR_BOARD_32.X/dist/default/
+/MECHANICAL_MAIN_BOARD_32_CPU1 _FOR_MOTOR/dist/default/
+/TITAN_MAIN_BOARD_32.X/dist/default/
