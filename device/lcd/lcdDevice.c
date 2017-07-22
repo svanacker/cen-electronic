@@ -50,6 +50,11 @@ void deviceLCDHandleRawData(char commandHeader,
         writeLCDChar('L');
         writeLCDChar('D');
     }
+    else if (commandHeader == COMMAND_BACKLIGHT_LCD) {
+        ackCommand(outputStream, LCD_DEVICE_HEADER, COMMAND_BACKLIGHT_LCD);
+        bool enabled = readBool(inputStream);
+        setBacklight(enabled);
+    }
     else if (commandHeader == COMMAND_CLEAR_LCD) {
         ackCommand(outputStream, LCD_DEVICE_HEADER, COMMAND_CLEAR_LCD);
         clearScreen();

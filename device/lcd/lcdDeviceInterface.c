@@ -22,6 +22,13 @@ int deviceLCDGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fil
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
+    else if (commandHeader == COMMAND_BACKLIGHT_LCD) {
+        if (fillDeviceArgumentList) {
+            setFunction("backlight", 1, 0);
+            setArgumentUnsignedChar1(0, "on/off");
+        }
+        return commandLengthValueForMode(mode, 1, 0);
+    }
     else if (commandHeader == COMMAND_LCD_TEST) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("test");

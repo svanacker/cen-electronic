@@ -247,6 +247,13 @@ void hd44780_showUnderlineCursor(void) {
     hd44780_sendComLcd(0b00001110);
 }
 
+void hd44780_setBacklight(bool enabled) {
+    // output
+    TRIS_D11_LCD = 0;
+    // on / off
+    D11_LCD = enabled;
+}
+
 void hd44780_setBlinkCursor(void) {
     hd44780_sendComLcd(0b00001111);
 }

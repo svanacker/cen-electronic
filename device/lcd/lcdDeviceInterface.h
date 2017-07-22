@@ -22,6 +22,11 @@
 #define COMMAND_CLEAR_LCD            'c'
 
 /**
+ * Command to enable the backlight 
+ */
+#define COMMAND_BACKLIGHT_LCD        'b' 
+
+/**
 * Define the number of fixed count of char used
 * for each message.
 */

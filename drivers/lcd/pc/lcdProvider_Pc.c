@@ -22,6 +22,10 @@ void showUnderlineCursor(void) {
     // TODO
 }
 
+void setBacklight(bool enabled) {
+	// TODO
+}
+
 void setBlinkCursor(void) {
     // TODO
 }

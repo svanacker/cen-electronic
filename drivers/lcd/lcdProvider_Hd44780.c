@@ -4,6 +4,8 @@
 #include "lcd.h"
 #include "lcdHd44780.h"
 
+#include <stdbool.h>
+
 /*
 DeviceDescriptor getLCDDeviceDescriptor() {
         return getLCD02DeviceDescriptor();
@@ -30,6 +32,10 @@ void hideCursor(void) {
 
 void showUnderlineCursor(void) {
     hd44780_showUnderlineCursor();
+}
+
+void setBacklight(bool enabled) {
+    hd44780_setBacklight(enabled);
 }
 
 void setBlinkCursor(void) {

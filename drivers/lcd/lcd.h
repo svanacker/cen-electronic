@@ -1,6 +1,8 @@
 #ifndef LCD_H
 #define LCD_H
 
+#include <stdbool.h>
+
 #include "../../device/device.h"
 #include "../../common/io/outputStream.h"
 
@@ -75,7 +77,7 @@ void clearScreen (void);
 /**
 * Active or not the backlight on the LCD.
 */
-void setBacklight(unsigned char enabled);
+void setBacklight(bool enabled);
 
 /**
 * Do a carriage return operation on the cursor.
