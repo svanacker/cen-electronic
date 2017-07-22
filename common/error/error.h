@@ -92,6 +92,9 @@ void clearLastError();
 // OTHERS COMMON ERRORS
 #define UNIMPLETEMENTED_EXCEPTION        0x500
 
+// ADC
+#define ADC_BAD_INDEX                     0x0600
+
 // I2C 
 
 #define I2C_MASTER_ALREADY_INITIALIZED    0x1000

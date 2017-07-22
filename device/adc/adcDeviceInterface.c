@@ -30,7 +30,7 @@ int deviceADCGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fil
     }
     else if (commandHeader == COMMAND_GET_ADC_ALL_VALUES) {
         if (fillDeviceArgumentList) {
-        setFunction("getADC_AllValues", 0, 11);
+            setFunction("getADC_AllValues", 0, 11);
             setResultUnsignedHex4(0, "Value 0(mV)");
             setResultSeparator(1);
             setResultUnsignedHex4(2, "Value 1(mV)");
@@ -44,6 +44,12 @@ int deviceADCGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fil
             setResultUnsignedHex4(10, "Value 5(mV)");
         }
         return commandLengthValueForMode(mode, 0, 29);
+    }
+    else if (commandHeader == COMMAND_GET_ADC_LIST) {   
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("getADCList");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
     }
 
     return DEVICE_HEADER_NOT_HANDLED;

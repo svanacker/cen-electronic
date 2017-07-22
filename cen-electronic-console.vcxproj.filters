@@ -1572,6 +1572,9 @@
     <ClCompile Include="common\i2c\i2cBusConnectionList.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="common\adc\adcutils.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">

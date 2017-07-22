@@ -80,6 +80,7 @@
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c" />
     <ClCompile Include="common\2d\2d.c" />
+    <ClCompile Include="common\adc\adcutils.c" />
     <ClCompile Include="common\adc\pc\adcutilsPc.c" />
     <ClCompile Include="common\clock\clock.c" />
     <ClCompile Include="common\delay\pc\cenDelayPc.c" />

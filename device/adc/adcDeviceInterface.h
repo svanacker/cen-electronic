@@ -13,6 +13,9 @@
 /** Get the value of all ADC. */
 #define COMMAND_GET_ADC_ALL_VALUES              'R'
 
+/** Get the value of all ADC as List. */
+#define COMMAND_GET_ADC_LIST                    'L'
+
 /**
 * Interface for the Device
 * @return the Interface for the ADC device.

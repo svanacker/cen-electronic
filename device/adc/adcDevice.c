@@ -60,7 +60,7 @@ void deviceADCHandleRawData(char commandHeader, InputStream* inputStream, Output
 
         appendHex4(outputStream, value);
     }
-    if (commandHeader == COMMANG_GET_ADC_VALUE_DEBUG_PERIOD) {
+    else if (commandHeader == COMMANG_GET_ADC_VALUE_DEBUG_PERIOD) {
         ackCommand(outputStream, ADC_DEVICE_HEADER, COMMAND_GET_ADC_VALUE);
 
         unsigned char adcIndex = readHex2(inputStream);
@@ -70,29 +70,30 @@ void deviceADCHandleRawData(char commandHeader, InputStream* inputStream, Output
         unsigned char delayPeriodBetweenSample = readHex2(inputStream);
 
         int i; 
-        for (i = 0; i < sampleCount; i++) {
+        OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+        for (i = 1; i <= sampleCount; i++) {
             if (i > 0) {
                 delaymSec(100 * delayPeriodBetweenSample);
             }
             unsigned int value = readAdc(adcIndex);
-            appendStringAndDec(getDebugOutputStreamLogger(), "value=", value);
-            appendString(getDebugOutputStreamLogger(), " mV\n");
+            appendStringAndDec(debugOutputStream, "value=", value);
+            appendString(debugOutputStream, " mV\n");
         }
     }
     else if (commandHeader == COMMAND_GET_ADC_ALL_VALUES) {
         ackCommand(outputStream, ADC_DEVICE_HEADER, COMMAND_GET_ADC_ALL_VALUES);
-
-        appendHex4(outputStream, readAdc(0));
-        appendSeparator(outputStream);
-        appendHex4(outputStream, readAdc(1));
-        appendSeparator(outputStream);
-        appendHex4(outputStream, readAdc(2));
-        appendSeparator(outputStream);
-        appendHex4(outputStream, readAdc(3));
-        appendSeparator(outputStream);
-        appendHex4(outputStream, readAdc(4));
-        appendSeparator(outputStream);
-        appendHex4(outputStream, readAdc(5));
+        int i;        
+        for (i = 1; i <= getANXCount(); i++) {
+            if (i != 1) {
+                appendSeparator(outputStream);
+            }
+            appendHex4(outputStream, readAdc(i));
+        }
+    }
+    else if (commandHeader == COMMAND_GET_ADC_LIST) {
+        ackCommand(outputStream, ADC_DEVICE_HEADER, COMMAND_GET_ADC_LIST);
+        OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+        printAdcList(debugOutputStream);
     }
 }
 
