@@ -42,23 +42,8 @@ void initEeprom(Eeprom* eeprom_,
 
 unsigned int eepromReadInt(Eeprom* eeprom_, unsigned int index) {
     // We use Big Endian format !
-    /*
-    appendString(getDebugOutputStreamLogger(), "index=");
-    appendDec(getDebugOutputStreamLogger(), index);
-    appendCRLF(getDebugOutputStreamLogger());
-    */
     unsigned int msb = eeprom_->eepromReadChar(eeprom_, index);
-    /*
-    appendString(getDebugOutputStreamLogger(), "msb=");
-    appendDec(getDebugOutputStreamLogger(), msb);
-    appendCRLF(getDebugOutputStreamLogger());
-    */
     unsigned int lsb = eeprom_->eepromReadChar(eeprom_, index + 1);
-    /*
-    appendString(getDebugOutputStreamLogger(), "lsb=");
-    appendDec(getDebugOutputStreamLogger(), lsb);
-    appendCRLF(getDebugOutputStreamLogger());
-    */
     unsigned int result = (msb << 8) + lsb;
 
     return result;
@@ -78,11 +63,6 @@ unsigned eepromReadLong(Eeprom* eeprom_, unsigned long index) {
 
 
 void eepromWriteInt(Eeprom* eeprom_, unsigned long index, unsigned int value) {
-    /*
-    appendString(getDebugOutputStreamLogger(), "writeInt=");
-    appendHex4(getDebugOutputStreamLogger(), index);
-    appendCRLF(getDebugOutputStreamLogger());
-    */
     // We use Big Endian format !
     eeprom_->eepromWriteChar(eeprom_, index, value >> 8);
     eeprom_->eepromWriteChar(eeprom_, index + 1, value & 0xFF);
@@ -121,10 +101,10 @@ void printEepromBlock(Eeprom* eeprom_, OutputStream* outputStream, long index, u
     }
 }
 
-void clearEeprom(Eeprom* eeprom_, unsigned long startIndex, unsigned long endIndex) {
+void clearEeprom(Eeprom* eeprom_, unsigned long startIndex, unsigned int length, unsigned char clearValue) {
     unsigned long i;
-    for (i = startIndex; i < endIndex; i++) {
-        eeprom_->eepromWriteChar(eeprom_, i, '\0');
+    for (i = startIndex; i < startIndex + length; i++) {
+        eeprom_->eepromWriteChar(eeprom_, i, clearValue);
     }
 }
 

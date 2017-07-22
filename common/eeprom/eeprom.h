@@ -159,8 +159,10 @@ void printEepromBlock(Eeprom* eeprom_, OutputStream* outputStream, long index, u
 
 /**
  * Clear the eeprom by filling with 0 files between 2 index (including startIndex, but excluding endIndex)
+ * @param startIndex from which index we erase
+ * @param length
  */
-void clearEeprom(Eeprom* eeprom_, unsigned long startIndex, unsigned long endIndex);
+void clearEeprom(Eeprom* eeprom_, unsigned long startIndex, unsigned int length, unsigned char clearValue);
 
 /**
  * Dump the content of the eeprom_ into an outputStream.

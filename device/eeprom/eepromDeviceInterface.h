@@ -21,9 +21,9 @@
 #define COMMAND_DUMP_PARTIAL_CONTENT_TO_LOG_OUTPUT_STREAM_EEPROM 'o'
 
 /**
- * Clear the Eeprom by filling with 0 values
+ * Clear the Eeprom by filling the eeprom
  */
-#define COMMAND_CLEAR_EEPROM               'c'
+#define COMMAND_FORMAT_EEPROM               'f'
 
 /**
 * Dump the content of the Eeprom into a file (can only be used on local device).

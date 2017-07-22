@@ -17,7 +17,7 @@ int deviceEepromGetInterface(char header, DeviceInterfaceMode mode, bool fillDev
     }
     if (header == COMMAND_RELOAD_EEPROM) {
         if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("Reload Dum File to Eeprom");
+            setFunctionNoArgumentAndNoResult("Reload Dump File to Eeprom (PC)");
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
@@ -36,14 +36,16 @@ int deviceEepromGetInterface(char header, DeviceInterfaceMode mode, bool fillDev
 		}
 		return commandLengthValueForMode(mode, 9, 0);
 	}
-	else if (header == COMMAND_CLEAR_EEPROM) {
+	else if (header == COMMAND_FORMAT_EEPROM) {
         if (fillDeviceArgumentList) {
-            setFunction("Clear Eeprom", 3, 0);
+            setFunction("Clear Eeprom", 5, 0);
             setArgumentUnsignedHex4(0, "startAddress");
             setArgumentSeparator(1);
-            setArgumentUnsignedHex4(2, "endAddress");
+            setArgumentUnsignedHex4(2, "length");
+            setArgumentSeparator(3);
+            setArgumentUnsignedHex2(4, "clearValue");
         }
-        return commandLengthValueForMode(mode, 9, 0);
+        return commandLengthValueForMode(mode, 12, 0);
     }
     else if (header == COMMAND_READ_BYTE_EEPROM) {
         if (fillDeviceArgumentList) {
