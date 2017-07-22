@@ -102,7 +102,7 @@
 #define COMMON_BEACON_DEVICE_HEADER                'U'
 
 /** Header for Test2 Device. */
-#define TEST2_DEVICE_HEADER                        'u'
+#define TEST2_DEVICE_HEADER                        'v'
 
 #define TIMER_DEVICE_HEADER                        'V'
 
