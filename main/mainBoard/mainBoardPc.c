@@ -390,7 +390,7 @@ void runMainBoardPC(bool connectToRobotManagerMode) {
     addLocalDevice(getNavigationDeviceInterface(), getNavigationDeviceDescriptor());
 
     initStartMatch(&startMatch, isMatchStartedPc, mainBoardPcWaitForInstruction, &eeprom);
-    addLocalDevice(getStartMatchDeviceInterface(), getStartMatchDeviceDescriptor(&startMatch));
+    addLocalDevice(getStartMatchDeviceInterface(), getStartMatchDeviceDescriptor(&startMatch, &robotConfig));
  
     // MOTOR BOARD
     addI2cRemoteDevice(getBatteryDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);

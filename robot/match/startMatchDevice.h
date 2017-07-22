@@ -10,19 +10,22 @@
 
 #include "startMatch.h"
 #include "teamColor.h"
-#include "../robot.h"
-
-#include "../../device/device.h"
 
 #include "../../common/eeprom/eeprom.h"
 #include "../../common/io/outputStream.h"
+
+#include "../../device/device.h"
+
+#include "../../robot/robot.h"
+#include "../../robot/config/robotConfig.h"
+
 
 /**
 * Returns the deviceDescriptor of the end Match Detector.
 * @param startMatch the startMatch structure with all information needed.
 * @return a device descriptor on startMatch Device
 */
-DeviceDescriptor* getStartMatchDeviceDescriptor(StartMatch* startMatch);
+DeviceDescriptor* getStartMatchDeviceDescriptor(StartMatch* startMatch, RobotConfig* robotConfigParam);
 
 /**
 * Show the message to indicate that we wait for the match.

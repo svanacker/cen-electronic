@@ -18,43 +18,6 @@
 
 static RobotConfig* robotConfig;
 
-/** Config is a 16 bit value. We store the value here */
-static unsigned int config = 0;
-
-void refreshConfig(void) {
-    config = robotConfig->robotConfigReadInt(robotConfig);
-}
-
-int isConfigSet(unsigned int configMask) {
-    refreshConfig();
-    int intersection = (config & configMask);
-    return intersection != 0;
-}
-
-unsigned int getConfigValue(void) {
-    refreshConfig();
-    return config;
-}
-
-char* getConfigBitString(unsigned char configIndex) {
-    switch (configIndex) {
-    case CONFIG_DONT_USE_BEACON_MASK: return "DontUseBeacon";
-    case CONFIG_ROLLING_TEST_MASK: return "RollingTest";
-    case CONFIG_COLOR_GREEN_MASK: return "Green";
-    default: return "?";
-    }
-}
-
-unsigned char isConfigBalise() {
-    refreshConfig();
-    return !isConfigSet(CONFIG_DONT_USE_BEACON_MASK);
-}
-
-unsigned char getStrategy() {
-    refreshConfig();
-    return config & CONFIG_STRATEGY_MASK;
-}
-
 // Device interface
 
 void deviceRobotConfigInit(void) {
@@ -74,13 +37,13 @@ bool isRobotConfigDeviceOk(void) {
 void deviceRobotConfigHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream) {
     if (commandHeader == COMMAND_GET_CONFIG) {
         // can take a little time
-        refreshConfig();
+        unsigned int config = getConfigValue(robotConfig);
         ackCommand(outputStream, ROBOT_CONFIG_DEVICE_HEADER, COMMAND_GET_CONFIG);
         appendHex4(outputStream, config);
     }
     else if (commandHeader == COMMAND_SET_CONFIG) {
         ackCommand(outputStream, ROBOT_CONFIG_DEVICE_HEADER, COMMAND_SET_CONFIG);
-        config = readHex4(inputStream);
+        unsigned int config = readHex4(inputStream);
         if (robotConfig->robotConfigWriteInt != NULL) {
             robotConfig->robotConfigWriteInt(robotConfig, config);
         }

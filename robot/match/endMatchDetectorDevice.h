@@ -3,6 +3,8 @@
 
 #include "../../device/device.h"
 
+#include "../../robot/config/robotConfig.h"
+
 #define MATCH_DURATION 85
 
 /**
@@ -12,8 +14,9 @@
 
 /**
 * Returns the deviceDescriptor of the end Match Detector.
+* @param we need the robotConfig to know if we end the match or not !
 */
-DeviceDescriptor* getEndMatchDetectorDeviceDescriptor(void);
+DeviceDescriptor* getEndMatchDetectorDeviceDescriptor(RobotConfig* robotConfigParam);
 
 /**
 * Indicates that the match begins.

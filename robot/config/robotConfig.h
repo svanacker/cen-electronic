@@ -1,6 +1,8 @@
 #ifndef ROBOT_CONFIG_H
 #define ROBOT_CONFIG_H
 
+#include <stdbool.h>
+
 #include "../../common/io/outputStream.h"
 
 // --- 8 LOW CONFIG BITS ---
@@ -49,20 +51,16 @@
 // 0b 0001 0000 0000 0000
 #define CONFIG_UNDEFINED_2_MASK        0x1000
 
-/** Config Undefined 2. */
+// LCD - BACKLIGHT
+
+/** Config LCD. */
 // 0b 0010 0000 0000 0000
-#define CONFIG_UNDEFINED_3_MASK        0x2000
+#define CONFIG_LCD_MASK                0x2000
 
-/** Config Undefined 3. */
-// 0b 0100 0000 0000 0000
-#define CONFIG_UNDEFINED_4_MASK        0x4000
-
-/** Config Undefined 5. */
-// 0b 0100 0000 0000 0000
-#define CONFIG_UNDEFINED_5_MASK        0x8000
+// IMPORTANT : There is only 14 bits and not 16 bits, so 0x4000 and 0x8000 does not exist !!
 
 /** The count of bits managed handled by the device. */
-#define CONFIG_BIT_COUNT 16
+#define CONFIG_BIT_COUNT 14
 
 // forward declaration
 struct RobotConfig;
@@ -103,6 +101,23 @@ struct RobotConfig {
  */
 void initRobotConfig(RobotConfig* robotConfig,
                 robotConfigReadIntFunction* robotConfigReadInt, robotConfigWriteIntFunction* robotConfigWriteInt);
+
+/**
+* Reads the raw config Value.
+* You must call refreshConfig for the first time
+*/
+unsigned int getConfigValue(RobotConfig* robotConfig);
+
+/**
+* Returns if the specified configMask is set or not
+*/
+bool isConfigSet(RobotConfig* robotConfig, unsigned int configMask);
+
+/**
+* Return for a configIndex given in parameter the string representation of the configuration
+* @param configIndex the index for the config
+*/
+char* getConfigBitString(RobotConfig* robotConfig, unsigned char configIndex);
 
 
 #endif

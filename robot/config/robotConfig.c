@@ -1,4 +1,5 @@
 #include "robotConfig.h"
+#include <stdbool.h>
 
 #include "../../common/io/binaryPrintWriter.h"
 #include "../../common/io/outputStream.h"
@@ -17,6 +18,27 @@ void initRobotConfig(RobotConfig* robotConfig,
     robotConfig->robotConfigReadInt = robotConfigReadInt;
     robotConfig->robotConfigWriteInt = robotConfigWriteInt;
 }
+
+bool isConfigSet(RobotConfig* robotConfig, unsigned int configMask) {
+    unsigned int config = getConfigValue(robotConfig);
+    int intersection = (config & configMask);
+    return intersection != 0;
+}
+
+unsigned int getConfigValue(RobotConfig* robotConfig) {
+    return robotConfig->robotConfigReadInt(robotConfig);;
+}
+
+char* getConfigBitString(RobotConfig* robotConfig, unsigned char configIndex) {
+    switch (configIndex) {
+        case CONFIG_DONT_USE_BEACON_MASK: return "DontUseBeacon";
+        case CONFIG_ROLLING_TEST_MASK: return "RollingTest";
+        case CONFIG_COLOR_GREEN_MASK: return "Green";
+        default: return "?";
+    }
+}
+
+// DEBUG PART
 
 /**
 * Private.
@@ -94,6 +116,11 @@ void printRobotTableConfig(OutputStream* outputStream, RobotConfig* robotConfig)
 	appendBoolTableData(outputStream, configValue & CONFIG_SPEED_ULTRA_LOW_MASK, ROBOT_CONFIG_VALUE_COLUMN_LENGTH);
 	appendEndOfTableColumn(outputStream, ROBOT_CONFIG_LAST_COLUMN);
 
-	appendTableHeaderSeparatorLine(outputStream);
+	// LCD Backlight
+	appendStringTableData(outputStream, "LCD BackLight", ROBOT_CONFIG_KEY_COLUMN_LENGTH);
+	appendBinary16TableData(outputStream, CONFIG_LCD_MASK, 4, ROBOT_CONFIG_MASK_COLUMN_LENGTH);
+	appendBoolTableData(outputStream, configValue & CONFIG_LCD_MASK, ROBOT_CONFIG_VALUE_COLUMN_LENGTH);
+	appendEndOfTableColumn(outputStream, ROBOT_CONFIG_LAST_COLUMN);
 
+	appendTableHeaderSeparatorLine(outputStream);
 }

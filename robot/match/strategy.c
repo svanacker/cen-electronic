@@ -5,16 +5,14 @@
 #include "../../robot/config/robotConfigDevice.h"
 
 #include "../../drivers/motion/trajectoryDriver.h"
-// #include "../../device/drivers/lcd.h"
 
 /**
 * The side for the match.
 */
 static enum TeamColor teamColor;
 
-void loadMatchSideAndUpdateRobotPosition(void) {
-    teamColor = getConfigValue() & CONFIG_COLOR_GREEN_MASK;
-    if (teamColor != 0) {
+void loadMatchSideAndUpdateRobotPosition(RobotConfig* robotConfig) {
+    if (isConfigSet(robotConfig, CONFIG_COLOR_GREEN_MASK)) {
         teamColor = COLOR_GREEN;
     }
     else {

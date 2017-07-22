@@ -22,6 +22,8 @@
 
 #include "../../robot/2012/armDriver2012.h"
 
+static RobotConfig* robotConfig;
+
 static bool matchStarted = false;
 
 /** Current Time In Second. */
@@ -48,7 +50,7 @@ void endMatchDetectorCallbackFunc(Timer* timer) {
 * We send it after
 */
 void initEndMatchConfig(void) {
-    doNotEnd = isConfigSet(CONFIG_DO_NOT_END);
+    doNotEnd = isConfigSet(robotConfig, CONFIG_DO_NOT_END);
 }
 
 void markStartMatch(void) {
@@ -119,6 +121,7 @@ static DeviceDescriptor endMatchDetectorDevice = {
     .deviceHandleRawData = &deviceEndMatchDetectorHandleRawData,
 };
 
-DeviceDescriptor* getEndMatchDetectorDeviceDescriptor() {
+DeviceDescriptor* getEndMatchDetectorDeviceDescriptor(RobotConfig* robotConfigParam) {
+    robotConfig = robotConfigParam;
     return &endMatchDetectorDevice;
 }

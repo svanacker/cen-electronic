@@ -349,8 +349,8 @@ void initMainBoardDevicesDescriptor() {
     addLocalDevice(getRobotConfigDeviceInterface(), getRobotConfigDeviceDescriptor(&robotConfig));
 
     initStartMatch(&startMatch, isMatchStarted32, mainBoardWaitForInstruction, &eeprom);
-    addLocalDevice(getStartMatchDeviceInterface(), getStartMatchDeviceDescriptor(&startMatch));
-    addLocalDevice(getEndMatchDetectorDeviceInterface(), getEndMatchDetectorDeviceDescriptor());
+    addLocalDevice(getStartMatchDeviceInterface(), getStartMatchDeviceDescriptor(&startMatch, &robotConfig));
+    addLocalDevice(getEndMatchDetectorDeviceInterface(), getEndMatchDetectorDeviceDescriptor(&robotConfig));
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
     addLocalDevice(getTemperatureSensorDeviceInterface(), getTemperatureSensorDeviceDescriptor(&temperature));
@@ -528,6 +528,9 @@ int main(void) {
     // CONFIG
     initRobotConfigPic32(&robotConfig);
 
+    // Backlight the LCD is needed
+    setBacklight(isConfigSet(&robotConfig, CONFIG_LCD_MASK));
+
     // Open the serial Link for debug and LOG !
     openSerialLink(&debugSerialStreamLink, 
             &debugInputBuffer, &debugInputBufferArray, MAIN_BOARD_DEBUG_INPUT_BUFFER_LENGTH,
@@ -615,6 +618,7 @@ int main(void) {
     clearBuffer(&mechanicalBoard2InputBuffer);
 
     // enableNotificationRobotInfraredDetector(DETECTOR_GROUP_TYPE_FORWARD);
+
 
     while (1) {
         if (!mainBoardWaitForInstruction(&startMatch)) {

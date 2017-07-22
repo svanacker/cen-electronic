@@ -28,6 +28,7 @@
 #include "../../robot/config/robotConfigDevice.h"
 
 static StartMatch* startMatch;
+static RobotConfig* robotConfig;
 
 void initStartMatchDevice(void) {
 
@@ -44,7 +45,7 @@ bool isStartMatchDeviceOk(void) {
 void notifyWaitingStart(OutputStream* pcOutputStream) {
     appendString(pcOutputStream, NOTIFY_TO_PC_RESET);
     appendString(getAlwaysOutputStreamLogger(), "CFG:");
-    appendBinary16(getAlwaysOutputStreamLogger(), getConfigValue(), 4);
+    appendBinary16(getAlwaysOutputStreamLogger(), getConfigValue(robotConfig), 4);
     println(getAlwaysOutputStreamLogger());
     appendString(getAlwaysOutputStreamLogger(), "Waiting start:");
 }
@@ -113,7 +114,8 @@ DeviceDescriptor startMatchDetectorDevice = {
     .deviceHandleRawData = &deviceStartMatchDetectorHandleRawData,
 };
 
-DeviceDescriptor* getStartMatchDeviceDescriptor(StartMatch* startMatchParam) {
+DeviceDescriptor* getStartMatchDeviceDescriptor(StartMatch* startMatchParam, RobotConfig* robotConfigParam) {
     startMatch = startMatchParam;
+    robotConfig = robotConfigParam;
     return &startMatchDetectorDevice;
 }
