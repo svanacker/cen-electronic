@@ -95,9 +95,9 @@ void deviceSystemHandleRawData(char header, InputStream* inputStream, OutputStre
 	else if (header == COMMAND_RESET) {
 		ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_RESET);
 		#ifdef PC_COMPILER
-			appendString(outputStream, "Unsupported Operation");
+			appendString(getAlwaysOutputStreamLogger(), "Unsupported Operation");
 		#else
-			// goto 0;
+			SoftReset();
 		#endif // PC_COMPILER
 	}
     // Notifications
