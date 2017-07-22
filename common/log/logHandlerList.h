@@ -32,7 +32,7 @@ void initLogHandlerList(LogHandlerList* logHandlerList, LogHandler(*logHandlerLi
  * @param outputStream the underlying outputStream
  * @return logHandler the result.
  */
-LogHandler* addLogHandlerToList(LogHandlerList* logHandlerList, LogLevel logLevel, unsigned long logCategoryMask, char* handlerName, OutputStream* outputStream);
+LogHandler* addLogHandlerToList(LogHandlerList* logHandlerList, enum LogLevel logLevel, unsigned long logCategoryMask, char* handlerName, OutputStream* outputStream);
 
 /**
  * Get the log handler by the index.

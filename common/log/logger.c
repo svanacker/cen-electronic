@@ -31,13 +31,13 @@ void writeLogChar(OutputStream* outputStream, char c) {
     int writeLoggerLevel = logger.writeLogLevel;
     for (i = 0; i < count; i++) {
         LogHandler* logHandler = getLogHandler(&logHandlerList, i);
-        LogLevel logHandlerLevel = logHandler->logLevel;
+        enum LogLevel logHandlerLevel = logHandler->logLevel;
         // we only write data which are with higher level
-        if (writeLoggerLevel < logHandlerLevel) {
+        if (logHandlerLevel != LOG_LEVEL_ALWAYS && writeLoggerLevel < logHandlerLevel) {
             continue;
         }
         // To exclude logger which does not correspond to the category
-        if (logHandler->logCategoryMask && logger.logCategoryMask == 0) {
+        if ((logHandler->logCategoryMask & logger.logCategoryMask) == 0) {
             continue;
         }
         OutputStream* outputStream = logHandler->outputStream;
@@ -46,7 +46,7 @@ void writeLogChar(OutputStream* outputStream, char c) {
     }
 }
 
-void initLogs(LogLevel globalLogLevel, LogHandler(*handlerListArray)[], unsigned char handlerListSize, unsigned long defaultLogCategoryMask) {
+void initLogs(enum LogLevel globalLogLevel, LogHandler(*handlerListArray)[], unsigned char handlerListSize, unsigned long defaultLogCategoryMask) {
     // Init logger structure
     logger.globalLogLevel = globalLogLevel;
     logger.writeLogLevel = globalLogLevel;
@@ -63,33 +63,33 @@ void initLogs(LogLevel globalLogLevel, LogHandler(*handlerListArray)[], unsigned
 
 LogHandler* addLogHandler(char* handlerName,
                             OutputStream* outputStream,
-                            LogLevel logLevel,
+                            enum LogLevel logLevel,
                             unsigned long logCategoryMask) {
     LogHandler* result = addLogHandlerToList(&logHandlerList, logLevel, logCategoryMask, handlerName, outputStream);
 
     return result;
 }
 
-OutputStream* getOutputStreamLogger(LogLevel writeLogLevel, unsigned long logCategoryMask) {
+OutputStream* getOutputStreamLogger(enum LogLevel writeLogLevel, unsigned long logCategoryMask) {
     logger.writeLogLevel = writeLogLevel;
     logger.logCategoryMask = logCategoryMask;
     return logger.outputStream;
 }
 
 OutputStream* getDebugOutputStreamLogger() {
-    logger.writeLogLevel = DEBUG;
+    logger.writeLogLevel = LOG_LEVEL_DEBUG;
     logger.logCategoryMask = logger.defaultLogCategoryMask;
     return logger.outputStream;
 }
 
 OutputStream* getInfoOutputStreamLogger() {
-    logger.writeLogLevel = INFO;
+    logger.writeLogLevel = LOG_LEVEL_INFO;
     logger.logCategoryMask = logger.defaultLogCategoryMask;
     return logger.outputStream;
 }
 
 OutputStream* getWarningOutputStreamLogger() {
-    logger.writeLogLevel = WARNING;
+    logger.writeLogLevel = LOG_LEVEL_WARNING;
     logger.logCategoryMask = logger.defaultLogCategoryMask;
     return logger.outputStream;
 }
@@ -101,7 +101,7 @@ OutputStream* getErrorOutputStreamLogger() {
 }
 
 OutputStream* getAlwaysOutputStreamLogger() {
-    logger.writeLogLevel = ALWAYS;
+    logger.writeLogLevel = LOG_LEVEL_ALWAYS;
     logger.logCategoryMask = logger.defaultLogCategoryMask;
     return logger.outputStream;
 }

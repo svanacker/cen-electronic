@@ -290,10 +290,10 @@ void runMainBoardPC(bool connectToRobotManagerMode) {
     printf("\r\n");
 
 
-    initLogs(DEBUG, (LogHandler(*)[]) &logHandlerListArray, MAIN_BOARD_PC_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
+    initLogs(LOG_LEVEL_DEBUG, (LogHandler(*)[]) &logHandlerListArray, MAIN_BOARD_PC_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
     initConsoleInputStream(&consoleInputStream);
     initConsoleOutputStream(&consoleOutputStream);
-    addConsoleLogHandler(DEBUG, LOG_HANDLER_CATEGORY_ALL_MASK);
+    addConsoleLogHandler(LOG_LEVEL_DEBUG, LOG_HANDLER_CATEGORY_ALL_MASK);
     appendStringCRLF(getDebugOutputStreamLogger(), getBoardName());
 
 

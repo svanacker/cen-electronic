@@ -31,32 +31,39 @@ bool deviceLogIsOk(void) {
 }
 
 void deviceLogHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream) {
-    if (header == COMMAND_WRITE_HANDLER_LOG_LEVEL) {
+    if (header == COMMAND_GET_LOG_COUNT) {
+        ackCommand(outputStream, LOG_DEVICE_HEADER, COMMAND_GET_LOG_COUNT);
+        unsigned logCount = getLogHandlerCount(getLoggerInstance()->logHandlerList);
+        appendHex2(outputStream, logCount);
+    }
+    else if (header == COMMAND_WRITE_HANDLER_LOG_LEVEL) {
         // data
-        ackCommand(outputStream, SYSTEM_DEBUG_DEVICE_HEADER, COMMAND_WRITE_HANDLER_LOG_LEVEL);
+        ackCommand(outputStream, LOG_DEVICE_HEADER, COMMAND_WRITE_HANDLER_LOG_LEVEL);
 
         int logHandlerIndex = readHex2(inputStream);
         int logLevel = readHex2(inputStream);
 
         LogHandler* logHandler = getLogHandler(getLoggerInstance()->logHandlerList, logHandlerIndex);
         logHandler->logLevel = logLevel;
-
-        // we don't use driver stream (buffered->too small), instead of log (not buffered)
-        printLogger(getInfoOutputStreamLogger());
     }
-    if (header == COMMAND_WRITE_GLOBAL_LOG_LEVEL) {
+    else if (header == COMMAND_WRITE_GLOBAL_LOG_LEVEL) {
         // data
-        ackCommand(outputStream, SYSTEM_DEBUG_DEVICE_HEADER, COMMAND_WRITE_GLOBAL_LOG_LEVEL);
+        ackCommand(outputStream, LOG_DEVICE_HEADER, COMMAND_WRITE_GLOBAL_LOG_LEVEL);
         int logLevel = readHex2(inputStream);
 
         Logger* logger = getLoggerInstance();
         logger->globalLogLevel = logLevel;
-        // we don't use driver stream (buffered->too small), instead of log (not buffered)
+    }
+    else if (header == COMMAND_LOG_HANDLER_LIST) {
+        ackCommand(outputStream, LOG_DEVICE_HEADER, COMMAND_LOG_HANDLER_LIST);
         printLogger(getInfoOutputStreamLogger());
     }
-    else if (header == COMMAND_LOG) {
-        ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_LOG);
-        printLogger(getInfoOutputStreamLogger());
+    else if (header == COMMAND_TEST_LOG) {
+        ackCommand(outputStream, LOG_DEVICE_HEADER, COMMAND_TEST_LOG);
+        int logLevel = readHex2(inputStream);
+        // Get the outputStreamLogger with the right Level
+        OutputStream* logOutputStream = getOutputStreamLogger(logLevel, getLoggerInstance()->defaultLogCategoryMask);
+        appendString(logOutputStream, "LOG_TEST !");
     }    
 }
 

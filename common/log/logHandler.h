@@ -10,7 +10,7 @@
  */
 typedef struct {
     /** A level corresponding to logLevel. */
-    LogLevel logLevel;
+    enum LogLevel logLevel;
     /** A mask to enable to log only if it corresponds to a certain category. */
     unsigned long logCategoryMask;
     /** name of handler. */
@@ -32,7 +32,7 @@ void initHandler(
         LogHandler* logHandler,
         char* handlerName,
         OutputStream* outputStream,
-        LogLevel logLevel,
+        enum LogLevel logLevel,
         unsigned long logCategoryMask);
 
 #endif

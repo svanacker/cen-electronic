@@ -519,7 +519,7 @@ int main(void) {
     setRobotMustStop(false);
 
     // LOG Global Configuration
-    initLogs(DEBUG, &logHandlerListArray, MAIN_BOARD_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
+    initLogs(LOG_LEVEL_DEBUG, &logHandlerListArray, MAIN_BOARD_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
 
     // LCD (LCD via Parallel interface)
     initLCDOutputStream(&lcdOutputStream);
@@ -536,7 +536,7 @@ int main(void) {
             SERIAL_PORT_DEBUG,
             DEFAULT_SERIAL_SPEED);
     // Serial Debug LOG
-    addLogHandler("UART", &debugOutputStream, DEBUG, LOG_HANDLER_CATEGORY_ALL_MASK);
+    addLogHandler("UART", &debugOutputStream, LOG_LEVEL_DEBUG, LOG_HANDLER_CATEGORY_ALL_MASK);
 
     // LOG the BoardName
     appendString(getAlwaysOutputStreamLogger(), getBoardName());

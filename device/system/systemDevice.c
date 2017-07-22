@@ -28,6 +28,10 @@
 #include "../../device/deviceUsage.h"
 #include "../../device/transmitMode.h"
 
+#ifndef PC_COMPILER
+    #include <plib.h>
+#endif
+
 void deviceSystemInit(void) {
 }
 

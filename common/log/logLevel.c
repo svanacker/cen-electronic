@@ -1,13 +1,13 @@
 #include "logLevel.h"
 
-char* getLevelAsString(LogLevel level) {
+char* getLevelAsString(enum LogLevel level) {
     switch (level) {
-        case TRACE: return "TRACE(0)";
-        case DEBUG: return "DBG(1)";
-        case INFO: return "INF(2)";
-        case WARNING: return "WARN(3)";
-        case LOG_LEVEL_ERROR: return "ERR(4)";
-        case ALWAYS: return "ALWAYS(5)";
+        case LOG_LEVEL_TRACE: return "TRACE(0)";
+        case LOG_LEVEL_DEBUG: return "DEBUG(1)";
+        case LOG_LEVEL_INFO: return "INFO(2)";
+        case LOG_LEVEL_WARNING: return "WARNING(3)";
+        case LOG_LEVEL_ERROR: return "ERROR(4)";
+        case LOG_LEVEL_ALWAYS: return "ALWAYS(5)";
     }
     return "?";
 }

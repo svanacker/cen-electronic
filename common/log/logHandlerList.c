@@ -12,7 +12,7 @@ void initLogHandlerList(LogHandlerList* logHandlerList, LogHandler(*logHandlerLi
     logHandlerList->maxSize = logHandlerListSize;
 }
 
-LogHandler* addLogHandlerToList(LogHandlerList* logHandlerList, LogLevel logLevel, unsigned long logCategoryMask, char* handlerName, OutputStream* outputStream) {
+LogHandler* addLogHandlerToList(LogHandlerList* logHandlerList, enum LogLevel logLevel, unsigned long logCategoryMask, char* handlerName, OutputStream* outputStream) {
     if (logHandlerList == NULL || logHandlerList->maxSize == 0) {
         writeError(LOG_LIST_NOT_INITIALIZED);
         return NULL;

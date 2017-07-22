@@ -9,9 +9,9 @@
 
 typedef struct Logger {
     /** A level corresponding to the minimal logLevel which must be logged. */
-    LogLevel globalLogLevel;
+    enum LogLevel globalLogLevel;
     /** the level that we used to write. */
-    LogLevel writeLogLevel;
+    enum LogLevel writeLogLevel;
     /** The default categoryMask when we do not define it .*/
     unsigned long defaultLogCategoryMask;
     /** the current mask that we are currently using .*/
@@ -35,7 +35,7 @@ LogHandlerList* getLoggerHandlerList();
  * @param handlerListArray the array containing all log Handlers
  * @param handlerListSize the size of the previous array
  */
-void initLogs(LogLevel globalLevel, LogHandler(*handlerListArray)[], unsigned char handlerListSize, unsigned long defaultCategoryMask);
+void initLogs(enum LogLevel globalLevel, LogHandler(*handlerListArray)[], unsigned char handlerListSize, unsigned long defaultCategoryMask);
 
 /**
  * Add a log Handler to the system.
@@ -46,7 +46,7 @@ void initLogs(LogLevel globalLevel, LogHandler(*handlerListArray)[], unsigned ch
  */
 LogHandler* addLogHandler(char* handlerName,
     OutputStream* outputStream,
-    LogLevel logLevel,
+    enum LogLevel logLevel,
     unsigned long logCategoryMask);
 
 /**
@@ -55,7 +55,7 @@ LogHandler* addLogHandler(char* handlerName,
  * @param logCategoryMask the mask which is used to select right handler target
  * @return the compatible outputStream (to be used with printWriter) in which we write
  */
-OutputStream* getOutputStreamLogger(LogLevel writeLogLevel, unsigned long logCategoryMask);
+OutputStream* getOutputStreamLogger(enum LogLevel writeLogLevel, unsigned long logCategoryMask);
 
 /**
 * Get an outputStream for log with DEBUG level and default category level.

@@ -7,7 +7,7 @@ void initHandler(
         LogHandler* logHandler,
         char* handlerName,
         OutputStream* outputStream,
-        LogLevel logLevel,
+        enum LogLevel logLevel,
         unsigned long logCategoryMask) {
     logHandler->handlerName = handlerName;
     logHandler->outputStream = outputStream;

@@ -1,41 +1,33 @@
 #ifndef LOG_LEVEL_H
+
 #define LOG_LEVEL_H
 
 // Define the type of LOG_LEVEL (to avoid to manipulate int and avoid type error)
-typedef int LogLevel;
+enum LogLevel {
+    /** the minimal log level, reserved for fine log. */
+    LOG_LEVEL_TRACE = 0,
+    
+    /** debug level. */
+    LOG_LEVEL_DEBUG = 1,
+    
+    /** default level. */
+    LOG_LEVEL_INFO = 2,
+    
+    /** warning level. */
+    LOG_LEVEL_WARNING = 3,
+    
+    /** Reserved for blocking error. */
+    LOG_LEVEL_ERROR = 4,
 
-/**
- * the minimal log level, reserved for fine log.
- */
-#define TRACE     0
-/**
- * debug level.
- */
-#define DEBUG     1
-/**
- * default level.
- */
-#define INFO     2
-/**
- * warning level.
- */
-#define WARNING 3
-/**
- * Reserved for blocking error.
- * Don't use "ERROR", because this macro is defined else in windows.h
- */
-#define LOG_LEVEL_ERROR     4
-
-/**
- * To ensure that it's always logged
- */
-#define ALWAYS     5
+    /** To ensure that it's always logged. */
+    LOG_LEVEL_ALWAYS = 5
+};
 
 /**
  * Transforms a level into his string representation.
  * @param level the level in int value
  * @return the string representation of the level
  */
-char* getLevelAsString(LogLevel level);
+char* getLevelAsString(enum LogLevel level);
 
 #endif
