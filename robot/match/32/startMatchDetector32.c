@@ -5,5 +5,6 @@
 #include <plib.h>
 
 bool isMatchStarted32(StartMatch* startMatch) {
-    return PORTGbits.RG3 != 0;
+    // The match is started if the pin is to 0V
+    return PORTGbits.RG3 == 0;
 }
