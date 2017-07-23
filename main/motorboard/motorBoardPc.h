@@ -24,6 +24,9 @@ void runMotorBoardPC(bool singleMode);
 
 #define MOTOR_BOARD_PC_DATA_DISPATCHER_LIST_LENGTH       2
 
+// SERIAL
+#define MOTOR_BOARD_PC_SERIAL_LINK_LIST_LENGTH           2
+
 // I2cBus
 #define MOTOR_BOARD_I2C_BUS_LIST_LENGTH                  1
 

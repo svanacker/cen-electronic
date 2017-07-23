@@ -1575,6 +1575,12 @@
     <ClCompile Include="common\adc\adcutils.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="common\serial\serialLinkDebug.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="common\serial\serialLinkList.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -2418,6 +2424,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="common\i2c\i2cBusConnectionList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="common\serial\serialLinkDebug.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="common\serial\serialLinkList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

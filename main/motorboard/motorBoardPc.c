@@ -21,6 +21,9 @@
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
 #include "../../common/log/pc/consoleLogHandler.h"
+#include "../../common/serial/serial.h"
+#include "../../common/serial/serialLink.h"
+#include "../../common/serial/serialLinkList.h"
 
 #include "../../common/system/system.h"
 
@@ -111,6 +114,9 @@ static LogHandlerList logHandlerListArray[MOTOR_BOARD_PC_LOG_HANDLER_LIST_LENGTH
 
 // Dispatchers
 static DriverDataDispatcher driverDataDispatcherListArray[MOTOR_BOARD_PC_DATA_DISPATCHER_LIST_LENGTH];
+
+// SERIAL
+static SerialLink serialLinkListArray[MOTOR_BOARD_PC_SERIAL_LINK_LIST_LENGTH];
 
 // I2C
 static I2cBus i2cBusListArray[MOTOR_BOARD_I2C_BUS_LIST_LENGTH];
@@ -213,6 +219,8 @@ void runMotorBoardPC(bool singleMode) {
     initConsoleOutputStream(&consoleOutputStream);
     addConsoleLogHandler(LOG_LEVEL_DEBUG, LOG_HANDLER_CATEGORY_ALL_MASK);
     appendStringCRLF(getDebugOutputStreamLogger(), getBoardName());
+
+	initSerialLinkList((SerialLink(*)[]) &serialLinkListArray, MOTOR_BOARD_PC_SERIAL_LINK_LIST_LENGTH);
 
     initTimerList((Timer(*)[]) &timerListArray, MOTOR_BOARD_PC_TIMER_LENGTH);
 

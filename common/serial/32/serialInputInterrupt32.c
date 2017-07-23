@@ -121,18 +121,18 @@ void __ISR(_UART_6_VECTOR, IPL2SOFT) IntUart6Handler(void) {
     serialInterruptCounter6++;
 }
 
-void initSerialInputBuffer(Buffer* buffer, int serialPortIndex) {
-    if (serialPortIndex == SERIAL_PORT_1) {
+void initSerialInputBuffer(Buffer* buffer, enum SerialPort serialPort) {
+    if (serialPort == SERIAL_PORT_1) {
         serialInputBuffer1 = buffer;
-    } else if (serialPortIndex == SERIAL_PORT_2) {
+    } else if (serialPort == SERIAL_PORT_2) {
         serialInputBuffer2 = buffer;
-    } else if (serialPortIndex == SERIAL_PORT_3) {
+    } else if (serialPort == SERIAL_PORT_3) {
         serialInputBuffer3 = buffer;
-    } else if (serialPortIndex == SERIAL_PORT_4) {
+    } else if (serialPort == SERIAL_PORT_4) {
         serialInputBuffer4 = buffer;
-    } else if (serialPortIndex == SERIAL_PORT_5) {
+    } else if (serialPort == SERIAL_PORT_5) {
         serialInputBuffer5 = buffer;
-    } else if (serialPortIndex == SERIAL_PORT_6) {
+    } else if (serialPort == SERIAL_PORT_6) {
         serialInputBuffer6 = buffer;
     }
 }

@@ -28,6 +28,7 @@
 
 #include "../../common/serial/serial.h"
 #include "../../common/serial/serialLink.h"
+#include "../../common/serial/serialLinkList.h"
 
 #include "../../common/system/system.h"
 
@@ -194,6 +195,9 @@ static Temperature temperature;
 // RobotConfig
 static RobotConfig robotConfig;
 
+// SERIAL
+static SerialLink serialLinkListArray[MAIN_BOARD_PC_SERIAL_LINK_LIST_LENGTH];
+
 // I2C Debug
 static char i2cMasterDebugOutputBufferArray[MAIN_BOARD_PC_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH];
 static Buffer i2cMasterDebugOutputBuffer;
@@ -296,6 +300,7 @@ void runMainBoardPC(bool connectToRobotManagerMode) {
     addConsoleLogHandler(LOG_LEVEL_DEBUG, LOG_HANDLER_CATEGORY_ALL_MASK);
     appendStringCRLF(getDebugOutputStreamLogger(), getBoardName());
 
+	initSerialLinkList((SerialLink(*)[]) &serialLinkListArray, MAIN_BOARD_PC_SERIAL_LINK_LIST_LENGTH);
 
     initTimerList((Timer(*)[]) &timerListArray, MAIN_BOARD_PC_TIMER_LENGTH);
 
@@ -325,6 +330,7 @@ void runMainBoardPC(bool connectToRobotManagerMode) {
     if (connectToRobotManager) {
         // Open the serial Link between RobotManager (C# Project) and the MainBoardPc
         openSerialLink(&robotManagerSerialStreamLink,
+			"SERIAL_PC",
             &robotManagerInputBuffer,
             (char(*)[]) &robotManagerInputBufferArray,
             ROBOT_MANAGER_INPUT_BUFFER_LENGTH,

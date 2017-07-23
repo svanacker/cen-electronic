@@ -43,6 +43,7 @@
 
 #include "../../common/serial/serial.h"
 #include "../../common/serial/serialLink.h"
+#include "../../common/serial/serialLinkList.h"
 
 #include "../../common/timer/cenTimer.h"
 #include "../../common/timer/timerList.h"
@@ -217,6 +218,12 @@ static I2cBusConnection* clockI2cBusConnection;
 static Temperature temperature;
 static I2cBusConnection* temperatureI2cBusConnection;
 
+// StartMatch
+static StartMatch startMatch;
+
+// SERIAL
+static SerialLink serialLinkListArray[MAIN_BOARD_SERIAL_LINK_LIST_LENGTH];
+
 // serial link DEBUG 
 static char debugInputBufferArray[MAIN_BOARD_DEBUG_INPUT_BUFFER_LENGTH];
 static Buffer debugInputBuffer;
@@ -224,9 +231,6 @@ static char debugOutputBufferArray[MAIN_BOARD_DEBUG_OUTPUT_BUFFER_LENGTH];
 static Buffer debugOutputBuffer;
 static OutputStream debugOutputStream;
 static StreamLink debugSerialStreamLink;
-
-// StartMatch
-static StartMatch startMatch;
 
 // serial link Motor
 static char motorInputBufferArray[MAIN_BOARD_MOTOR_INPUT_BUFFER_LENGTH];
@@ -355,6 +359,7 @@ void initMainBoardDevicesDescriptor() {
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
     addLocalDevice(getTemperatureSensorDeviceInterface(), getTemperatureSensorDeviceDescriptor(&temperature));
     addLocalDevice(getADCDeviceInterface(), getADCDeviceDescriptor());
+    addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor());
 
     addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
 
@@ -380,12 +385,12 @@ void initMainBoardDevicesDescriptor() {
 
     // MOTOR BOARD -> UART
     // addUartRemoteDevice(getTestDeviceInterface(), SERIAL_PORT_MOTOR);
-    addUartRemoteDevice(getMotorDeviceInterface(), SERIAL_PORT_MOTOR);
-    addUartRemoteDevice(getCodersDeviceInterface(), SERIAL_PORT_MOTOR);
-    addUartRemoteDevice(getPIDDeviceInterface(), SERIAL_PORT_MOTOR);
-    addUartRemoteDevice(getTrajectoryDeviceInterface(), SERIAL_PORT_MOTOR);
-    addUartRemoteDevice(getMotionDeviceInterface(), SERIAL_PORT_MOTOR);
-    addUartRemoteDevice(getRobotKinematicsDeviceInterface(), SERIAL_PORT_MOTOR);
+    addUartRemoteDevice(getMotorDeviceInterface(), MAIN_BOARD_SERIAL_PORT_MOTOR);
+    addUartRemoteDevice(getCodersDeviceInterface(), MAIN_BOARD_SERIAL_PORT_MOTOR);
+    addUartRemoteDevice(getPIDDeviceInterface(), MAIN_BOARD_SERIAL_PORT_MOTOR);
+    addUartRemoteDevice(getTrajectoryDeviceInterface(), MAIN_BOARD_SERIAL_PORT_MOTOR);
+    addUartRemoteDevice(getMotionDeviceInterface(), MAIN_BOARD_SERIAL_PORT_MOTOR);
+    addUartRemoteDevice(getRobotKinematicsDeviceInterface(), MAIN_BOARD_SERIAL_PORT_MOTOR);
 
     // Beacon Receiver Board->I2C
     // addI2cRemoteDevice(getBeaconReceiverDeviceInterface(), BEACON_RECEIVER_I2C_ADDRESS);
@@ -440,14 +445,15 @@ void initMainBoardDriverDataDispatcherList(void) {
     addUartDriverDataDispatcher(
         &motorSerialStreamLink,
         "MOTOR_BOARD_UART_DISPATCHER",
-        SERIAL_PORT_MOTOR);
+        MAIN_BOARD_SERIAL_PORT_MOTOR);
 
     // Uart Stream for mechanicalBoard
+    /*
     addUartDriverDataDispatcher(
         &mechanicalBoard2SerialStreamLink,
         "MECA2_UART_DISPATCHER",
         SERIAL_PORT_MECA2);
-
+    */
     /*
     // Stream for Air Conditioning
     addI2CDriverDataDispatcher(
@@ -477,18 +483,13 @@ void doInstruction() {
 }
 
 bool mainBoardWaitForInstruction(StartMatch* startMatchParam) {
-    // BE CAREFUL : UART 1 / UART 2 are physically connected : https://github.com/svanacker/cen-electronic-schema/issues/11
-    // -> DO NOT USE IT AT THE SAME TIME !!
-
     // Listen instruction from pcStream->Devices
-    /*
     handleStreamInstruction(
             &pcInputBuffer,
             &pcOutputBuffer,
             &pcOutputStream,
             &filterRemoveCRLF,
             NULL);
-    */
     /*
     if (counter > 0) {
         counter++;
@@ -531,12 +532,15 @@ int main(void) {
     // Backlight the LCD is needed
     setBacklight(isConfigSet(&robotConfig, CONFIG_LCD_MASK));
 
+    initSerialLinkList(&serialLinkListArray, MAIN_BOARD_SERIAL_LINK_LIST_LENGTH);
+
     // Open the serial Link for debug and LOG !
     openSerialLink(&debugSerialStreamLink, 
+            "SERIAL_DEBUG",
             &debugInputBuffer, &debugInputBufferArray, MAIN_BOARD_DEBUG_INPUT_BUFFER_LENGTH,
             &debugOutputBuffer, &debugOutputBufferArray, MAIN_BOARD_DEBUG_OUTPUT_BUFFER_LENGTH,
             &debugOutputStream,
-            SERIAL_PORT_DEBUG,
+            MAIN_BOARD_SERIAL_PORT_DEBUG,
             DEFAULT_SERIAL_SPEED);
     // Serial Debug LOG
     addLogHandler("UART", &debugOutputStream, LOG_LEVEL_DEBUG, LOG_HANDLER_CATEGORY_ALL_MASK);
@@ -549,26 +553,31 @@ int main(void) {
     
     // Open the serial Link for the Motor Board
     openSerialLink(&motorSerialStreamLink,
+                   "SERIAL_MOTOR", 
                    &motorInputBuffer, &motorInputBufferArray, MAIN_BOARD_MOTOR_INPUT_BUFFER_LENGTH,
                    &motorOutputBuffer, &motorOutputBufferArray, MAIN_BOARD_MOTOR_OUTPUT_BUFFER_LENGTH,
                    &motorOutputStream,
-                   SERIAL_PORT_MOTOR,
+                   MAIN_BOARD_SERIAL_PORT_MOTOR,
                    DEFAULT_SERIAL_SPEED);
 
     // Open the serial Link for the Mechanical Board
+    /*
     openSerialLink(&mechanicalBoard2SerialStreamLink,
+                   "SERIAL_MECA_2", 
                    &mechanicalBoard2InputBuffer, &mechanicalBoard2InputBufferArray, MAIN_BOARD_MECA2_INPUT_BUFFER_LENGTH,
                    &mechanicalBoard2OutputBuffer, &mechanicalBoard2OutputBufferArray, MAIN_BOARD_MECA2_OUTPUT_BUFFER_LENGTH,
                    &mechanicalBoard2OutputStream,
                    SERIAL_PORT_MECA2,
                    DEFAULT_SERIAL_SPEED);
+    */
 
     // Open the serial Link for the PC
     openSerialLink(&pcSerialStreamLink,
+                   "SERIAL_PC", 
                     &pcInputBuffer, &pcInputBufferArray, MAIN_BOARD_PC_INPUT_BUFFER_LENGTH,
                     &pcOutputBuffer, &pcOutputBufferArray, MAIN_BOARD_PC_OUTPUT_BUFFER_LENGTH,
                     &pcOutputStream,
-                    SERIAL_PORT_PC,
+                    MAIN_BOARD_SERIAL_PORT_PC,
                     DEFAULT_SERIAL_SPEED);
 
     // MAIN I2C

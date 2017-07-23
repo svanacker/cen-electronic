@@ -6,6 +6,21 @@
 /** Command to see the content of Serial Input Buffers. */
 #define COMMAND_SERIAL_INPUT_BUFFERS     'b'
 
+/** Command to list all registered Serial. */
+#define COMMAND_SERIAL_LIST              'L'
+
+/** Ask to output a char into a specific serial port. */
+#define COMMAND_SERIAL_CHAR_OUTPUT            'o'
+
+/** Ask to output 4 chars into a specific serial port. */
+#define COMMAND_SERIAL_CHAR_ARRAY_OUTPUT      'O'
+
+/** Ask to simulate an input of a char to a specific serial port. */
+#define COMMAND_SERIAL_CHAR_INPUT             'i'
+
+/** Ask to simulate an input of 4 chars to a specific serial port. */
+#define COMMAND_SERIAL_CHAR_ARRAY_INPUT       'I'
+
 /**
 * Get the serial debug device interface.
 */

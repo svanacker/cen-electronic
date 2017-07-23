@@ -65,7 +65,7 @@ StreamLink;
  * @param param a parameter to be used to open the right material (for example : speed)
  */
 void initStreamLink(StreamLink* streamLink,
-        char* streamName,
+        const char* streamName,
         Buffer* inputBuffer,
         char (*inputBufferArrayPointer)[],
         unsigned char inputBufferLength,

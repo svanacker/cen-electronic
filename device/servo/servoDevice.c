@@ -96,7 +96,7 @@ void deviceServoHandleRawData(char commandHeader, InputStream* inputStream, Outp
         ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_TEST);
     }
     else if (commandHeader == SERVO_COMMAND_DEBUG) {
-        printServoList(getAlwaysOutputStreamLogger());
+        printServoList(getDebugOutputStreamLogger());
         ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_DEBUG);
     }
 }

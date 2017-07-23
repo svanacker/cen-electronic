@@ -1,6 +1,9 @@
 #ifndef SERIAL_H
 #define SERIAL_H
 
+/**
+ * Wrap the port number for a serial link.
+ */
 enum SerialPort {
 	/** Define the index of serial port 1. */
 	SERIAL_PORT_1 = 1,

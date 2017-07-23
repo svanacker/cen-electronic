@@ -34,6 +34,7 @@
 
 #include "../../common/serial/serial.h"
 #include "../../common/serial/serialLink.h"
+#include "../../common/serial/serialLinkList.h"
 
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
@@ -151,6 +152,9 @@ static Eeprom eeprom_;
 // Clock
 static Clock clock;
 
+// SERIAL
+static SerialLink serialLinkListArray[MOTOR_BOARD_SERIAL_LINK_LIST_LENGTH];
+
 // serial INSTRUCTION
 static char standardInputBufferArray[MOTOR_BOARD_IN_BUFFER_LENGTH];
 static Buffer standardInputBuffer;
@@ -252,9 +256,10 @@ int runMotorBoard() {
 
     setBoardName(MOTOR_BOARD_PIC_NAME);
 
-    delaymSec(100);
+    initSerialLinkList(&serialLinkListArray, MOTOR_BOARD_SERIAL_LINK_LIST_LENGTH);
 
     openSerialLink(&standardSerialStreamLink,
+            "SERIAL_STANDARD",
             &standardInputBuffer,
             &standardInputBufferArray,
             MOTOR_BOARD_IN_BUFFER_LENGTH,
@@ -262,10 +267,11 @@ int runMotorBoard() {
             &standardOutputBufferArray,
             MOTOR_BOARD_OUT_BUFFER_LENGTH,
             &standardOutputStream,
-            SERIAL_PORT_STANDARD,
+            MOTOR_BOARD_SERIAL_PORT_STANDARD,
             DEFAULT_SERIAL_SPEED);
 
     openSerialLink(&debugSerialStreamLink,
+            "SERIAL_DEBUG",
             &debugInputBuffer,
             &debugInputBufferArray,
             MOTOR_BOARD_IN_BUFFER_LENGTH,
@@ -273,7 +279,7 @@ int runMotorBoard() {
             &debugOutputBufferArray,
             MOTOR_BOARD_OUT_BUFFER_LENGTH,
             &debugOutputStream,
-            SERIAL_PORT_DEBUG,
+            MOTOR_BOARD_SERIAL_PORT_DEBUG,
             DEFAULT_SERIAL_SPEED);
 
     // Init the logs

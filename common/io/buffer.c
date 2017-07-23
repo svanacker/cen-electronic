@@ -108,7 +108,7 @@ bool _bufferAvailableData(InputStream* inputStream) {
 
 // BUFFER INTERFACE
 
-void initBuffer(Buffer* buffer, char (*s)[], unsigned int length, char* name, char* type) {
+void initBuffer(Buffer* buffer, char (*s)[], unsigned int length, const char* name, const char* type) {
     if (!checkBufferNotNull(buffer)) {
         return;    
     }

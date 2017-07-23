@@ -33,7 +33,6 @@ void printTimerListHeader(OutputStream* outputStream) {
 	appendStringHeader(outputStream, "working", TIMER_DEBUG_WORKING_COLUMN_LENGTH);
 	appendEndOfTableColumn(outputStream, TIMER_DEBUG_LAST_COLUMN_LENGTH);
 	appendTableHeaderSeparatorLine(outputStream);
-
 }
 
 void printTimer(OutputStream* outputStream, int index, Timer* timer) {

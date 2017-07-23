@@ -4,6 +4,7 @@
 #include "serialOutputStream.h"
 #include "serialInputInterrupt.h"
 #include "serialLink.h"
+#include "serialLinkList.h"
 
 #include "../../common/io/buffer.h"
 #include "../../common/io/inputStream.h"
@@ -13,7 +14,9 @@
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
 
-void openSerialLink(StreamLink* streamLink,
+SerialLink* openSerialLink( 
+        StreamLink* streamLink,
+        const char* serialName, 
         Buffer* inputBuffer,
         char (*inputBufferArray)[],
         unsigned char inputBufferLength,
@@ -21,20 +24,26 @@ void openSerialLink(StreamLink* streamLink,
         char (*outputBufferArray)[],
         unsigned char outputBufferLength,
         OutputStream* outputStream,
-        int serialPortIndex,
+        enum SerialPort serialPort,
         long speed) {
+    SerialLink* result = addSerialLink();
+    result->speed = speed;
+    result->name = serialName;
+    result->serialPort = serialPort;
+    result->streamLink = streamLink;
+
     // Provide to the Hardware Uart the needed Buffer
     // appendStringAndDec(getDebugOutputStreamLogger(), "\ninitSerialInputBuffer:", serialPortIndex);
-    initSerialInputBuffer(inputBuffer, serialPortIndex);
+    initSerialInputBuffer(inputBuffer, serialPort);
 
     // Initializes the Hardware uart output
     // appendStringAndDec(getDebugOutputStreamLogger(), "\ninitSerialOutputStream:", serialPortIndex);
-    initSerialOutputStream(outputStream, serialPortIndex);
+    initSerialOutputStream(outputStream, serialPort);
 
     // Initializes All Buffers / Memory
     // appendStringAndDec(getDebugOutputStreamLogger(), "\ninitStreamLink", serialPortIndex);
     initStreamLink(streamLink,
-                    "Serial",
+                    serialName,
                     inputBuffer,
                     inputBufferArray,
                     inputBufferLength,
@@ -43,6 +52,8 @@ void openSerialLink(StreamLink* streamLink,
                     outputBufferLength,
                     outputStream,
                     speed);
+
+    return result;
 }
 
 void closeSerialLink(StreamLink* streamLink) {

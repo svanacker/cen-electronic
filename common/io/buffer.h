@@ -18,9 +18,9 @@
  */
 typedef struct {
     /** a name to identify the struct. */
-    char* name;
+    const char* name;
     /** A type if name are equals. */
-    char* type;
+	const char* type;
     /** A pointer on an array of char. */
     char (*s)[];
     /** The max length of the buffer. */
@@ -44,7 +44,7 @@ typedef struct {
  * @param type the type (as string) of the buffer (for debugging purpose). Often to distinguish IN or OUT buffer
  * @throws IO_BUFFER_NULL if the pointer is NULL
  */
-void initBuffer(Buffer* buffer, char (*s)[], unsigned int length, char* name, char* type);
+void initBuffer(Buffer* buffer, char (*s)[], unsigned int length, const char* name, const char* type);
 
 /**
  * Returns if a buffer is initialized or not.
