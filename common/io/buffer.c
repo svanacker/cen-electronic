@@ -313,27 +313,36 @@ void printDebugBuffer(OutputStream* outputStream, Buffer* buffer) {
         appendString(outputStream, "\nBuffer is NULL !\n");
         return;
     }
-    appendString(outputStream, "\nBuf:");
+    appendString(outputStream, "\nBuffer:");
 
     if (buffer->name != NULL) {
         appendKeyAndName(outputStream, "name=", buffer->name);
     }
 
     if (buffer->type) {
-        appendKeyAndName(outputStream, ",type=", buffer->type);
+        appendKeyAndName(outputStream, ", type=", buffer->type);
     }
 
-    appendStringAndDec(outputStream, ",length=", buffer->length);
-    appendStringAndDec(outputStream, ",writeIdx=", buffer->writeIndex);
-    appendStringAndDec(outputStream, ",readIdx=", buffer->readIndex);
-
-    appendString(outputStream, ",START=");
+    appendStringAndDec(outputStream, ", length=", buffer->length);
+    appendStringAndDec(outputStream, ", writeIdx=", buffer->writeIndex);
+    appendStringAndDec(outputStream, ", readIdx=", buffer->readIndex);
+    appendCRLF(outputStream);
+    appendString(outputStream, "---START---");
+    appendCRLF(outputStream);
     unsigned int i;
     char* sPointer = (char*) buffer->s;
     for (i = 0; i < buffer->length; i++) {
         // Shift to the right cell index
-        append(outputStream, *sPointer);
+        char c = *sPointer;
+        if (c == 0) {
+            append(outputStream, '#');
+        }
+        else {
+            append(outputStream, c);
+        }
         sPointer++;
     }
-    appendString(outputStream, "END\n");
+    appendCRLF(outputStream);
+    appendString(outputStream, "---END---");
+    appendCRLF(outputStream);
 }

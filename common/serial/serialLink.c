@@ -33,15 +33,12 @@ SerialLink* openSerialLink(
     result->streamLink = streamLink;
 
     // Provide to the Hardware Uart the needed Buffer
-    // appendStringAndDec(getDebugOutputStreamLogger(), "\ninitSerialInputBuffer:", serialPortIndex);
     initSerialInputBuffer(inputBuffer, serialPort);
 
     // Initializes the Hardware uart output
-    // appendStringAndDec(getDebugOutputStreamLogger(), "\ninitSerialOutputStream:", serialPortIndex);
     initSerialOutputStream(outputStream, serialPort);
 
     // Initializes All Buffers / Memory
-    // appendStringAndDec(getDebugOutputStreamLogger(), "\ninitStreamLink", serialPortIndex);
     initStreamLink(streamLink,
                     serialName,
                     inputBuffer,

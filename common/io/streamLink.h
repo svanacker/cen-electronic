@@ -61,7 +61,7 @@ StreamLink;
  * @param outputBuffer the buffer which use the output
  * @param outputBufferArrayPointer the array used by the output buffer
  * @param outputBufferLenght the length of the output buffer
- * @param outputStream ???
+ * @param outputStream the physical outputStream (Ex : serial)
  * @param param a parameter to be used to open the right material (for example : speed)
  */
 void initStreamLink(StreamLink* streamLink,

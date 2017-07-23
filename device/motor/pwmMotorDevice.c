@@ -47,8 +47,16 @@ void devicePwmMotorHandleRawData(char commandHeader, InputStream* inputStream, O
 
         stopMotors();
     }
-    else if (commandHeader == COMMAND_TEST_MOTOR) {
-        ackCommand(outputStream, MOTOR_DEVICE_HEADER, COMMAND_TEST_MOTOR);
+    else if (commandHeader == COMMAND_SMALL_TEST_MOTOR) {
+        ackCommand(outputStream, MOTOR_DEVICE_HEADER, COMMAND_SMALL_TEST_MOTOR);
+        appendString(getAlwaysOutputStreamLogger(), "Both Forward\n");
+        // Left forward
+        setMotorSpeeds(50, 50);
+        delaymSec(2000);
+        stopMotors();
+    }
+    else if (commandHeader == COMMAND_NORMAL_TEST_MOTOR) {
+        ackCommand(outputStream, MOTOR_DEVICE_HEADER, COMMAND_NORMAL_TEST_MOTOR);
 
         appendString(getAlwaysOutputStreamLogger(), "Left Forward\n");
         // Left forward

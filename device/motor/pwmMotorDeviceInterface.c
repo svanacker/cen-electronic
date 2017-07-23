@@ -30,9 +30,14 @@ int deviceMotorGetInterface(char header, DeviceInterfaceMode mode, bool fillDevi
             setFunctionNoArgumentAndNoResult("stopMotor");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    } else if (header == COMMAND_TEST_MOTOR) {
+    } else if (header == COMMAND_SMALL_TEST_MOTOR) {
         if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("testMotor");
+            setFunctionNoArgumentAndNoResult("smallTestMotor");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    } else if (header == COMMAND_NORMAL_TEST_MOTOR) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("normalTestMotor");
         }
         return commandLengthValueForMode(mode, 0, 0);
     }

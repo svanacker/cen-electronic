@@ -3,8 +3,11 @@
 
 #include "../../device/deviceInterface.h"
 
-/** Command to see the content of Serial Input Buffers. */
-#define COMMAND_SERIAL_INPUT_BUFFERS     'b'
+/** Command to see the content of Serial Buffers. */
+#define COMMAND_SERIAL_DEBUG              'd'
+
+/** Command to clear the Serial Input & Output Buffers. */
+#define COMMAND_SERIAL_CLEAR              'c'
 
 /** Command to list all registered Serial. */
 #define COMMAND_SERIAL_LIST              'L'

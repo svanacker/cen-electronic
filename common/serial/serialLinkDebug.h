@@ -21,4 +21,17 @@ void printSerialLink(OutputStream* outputStream, const SerialLink* serialLink, i
  */
 void printSerialLinkList(OutputStream* outputStream);
 
+/**
+ * Debug Function which writes the content of each Buffer (input / output) to an outputStream.
+ * @param outputStream the outputStream where we want to print the content of the buffer
+ * @param serialLink the pointer on serialLink for which we want to debug information.
+ */
+void printSerialLinkBuffer(OutputStream* outputStream, const SerialLink* serialLink);
+
+/**
+ * Clear the content of each buffer (input / output) of the serialLink
+ * @param serialLink the serialLink for which we would like to clear the buffers
+ */
+void clearSerialLinkBuffer(const SerialLink* serialLink);
+
 #endif

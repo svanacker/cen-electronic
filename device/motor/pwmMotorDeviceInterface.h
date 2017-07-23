@@ -20,9 +20,14 @@
 #define COMMAND_STOP_MOTOR         'c'
 
 /**
- * Defines the header to test both motors.
+ * Defines the header to test both motors but very quicly.
  */
-#define COMMAND_TEST_MOTOR         't'
+#define COMMAND_SMALL_TEST_MOTOR    't'
+
+/**
+ * Defines the header to test both motors but in every sense.
+ */
+#define COMMAND_NORMAL_TEST_MOTOR    'T'
 
 /**
 * Interface for Device.

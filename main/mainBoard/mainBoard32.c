@@ -333,11 +333,9 @@ void initMainBoardDriversDescriptor() {
 }
 
 /**
- * @private
+ * @private.
  */
-void initMainBoardDevicesDescriptor() {
-    initDeviceList(&deviceListArray, MAIN_BOARD_DEVICE_LENGTH);
-
+void addLocalDevices(void) {
     // SYSTEM & DEBUG
     addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
     addLocalDevice(getLogDeviceInterface(), getLogDeviceDescriptor());
@@ -367,22 +365,22 @@ void initMainBoardDevicesDescriptor() {
     addLocalDevice(getSonarDeviceInterface(), getSonarDeviceDescriptor(i2cBus));
     addLocalDevice(getRobotSonarDetectorDeviceInterface(), getRobotSonarDetectorDeviceDescriptor(i2cBus));
     */
-    // Mechanical Board 2->I2C
-    // Device* armDevice = addI2cRemoteDevice(getArm2012DeviceInterface(), MECHANICAL_BOARD_2_I2C_ADDRESS);
-    // Device* infraredDetectorDevice = addI2cRemoteDevice(getRobotInfraredDetectorDeviceInterface(), MECHANICAL_BOARD_2_I2C_ADDRESS);
-    // addI2cRemoteDevice(getServoDeviceInterface(), MECHANICAL_BOARD_2_I2C_ADDRESS);
-    // addUartRemoteDevice(getRobotInfraredDetectorDeviceInterface(), SERIAL_PORT_MECA2);
+}
+
+/**
+ * @private
+ */
+void addMotorRemoteDevices(void) {
 
     // Motor Board->I2C
-    /*
     addI2cRemoteDevice(getTestDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
     addI2cRemoteDevice(getMotorDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
     addI2cRemoteDevice(getCodersDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
     addI2cRemoteDevice(getPIDDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
     addI2cRemoteDevice(getTrajectoryDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
     addI2cRemoteDevice(getMotionDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
-    */
 
+    /*
     // MOTOR BOARD -> UART
     // addUartRemoteDevice(getTestDeviceInterface(), SERIAL_PORT_MOTOR);
     addUartRemoteDevice(getMotorDeviceInterface(), MAIN_BOARD_SERIAL_PORT_MOTOR);
@@ -391,24 +389,64 @@ void initMainBoardDevicesDescriptor() {
     addUartRemoteDevice(getTrajectoryDeviceInterface(), MAIN_BOARD_SERIAL_PORT_MOTOR);
     addUartRemoteDevice(getMotionDeviceInterface(), MAIN_BOARD_SERIAL_PORT_MOTOR);
     addUartRemoteDevice(getRobotKinematicsDeviceInterface(), MAIN_BOARD_SERIAL_PORT_MOTOR);
+    */
+}
 
-    // Beacon Receiver Board->I2C
-    // addI2cRemoteDevice(getBeaconReceiverDeviceInterface(), BEACON_RECEIVER_I2C_ADDRESS);
+/**
+ * @private. 
+ */
+void addMeca2RemoteDevices(void) {
+    // Mechanical Board 2->I2C
+    // Device* armDevice = addI2cRemoteDevice(getArm2012DeviceInterface(), MECHANICAL_BOARD_2_I2C_ADDRESS);
+    // Device* infraredDetectorDevice = addI2cRemoteDevice(getRobotInfraredDetectorDeviceInterface(), MECHANICAL_BOARD_2_I2C_ADDRESS);
+    // addI2cRemoteDevice(getServoDeviceInterface(), MECHANICAL_BOARD_2_I2C_ADDRESS);
+    // addUartRemoteDevice(getRobotInfraredDetectorDeviceInterface(), SERIAL_PORT_MECA2);
+}
 
+/**
+ * @private.
+ */
+void addStrategyBoardDevices(void) {
     // Strategy Board->I2C
     // addI2cRemoteDevice(getStrategyDeviceInterface(), STRATEGY_BOARD_I2C_ADDRESS);
+}
 
-    // Air Conditioning Board
-    addI2cRemoteDevice(getAirConditioningDeviceInterface(), AIR_CONDITIONING_BOARD_I2C_ADDRESS);
+/**
+ * @private.
+ */
+void addBeaconBoardReceiverBoardDevices(void) {
+    // Beacon Receiver Board->I2C
+    // addI2cRemoteDevice(getBeaconReceiverDeviceInterface(), BEACON_RECEIVER_I2C_ADDRESS);
+}
 
-    // Init the devices
-    initDevices();  
-
+/**
+ * @private.
+ */
+void initNotifications(void) {
     // Manage the callback notification
     // trajectoryDevice->deviceHandleCallbackRawData = &mainBoardCallbackRawData;
     // testDevice.deviceHandleCallbackRawData = &mainBoardCallbackRawData;
     // motionDevice->deviceHandleCallbackRawData = &mainBoardCallbackRawData;
     // infraredDetectorDevice->deviceHandleCallbackRawData = &mainBoardCallbackRawData;
+}
+
+/**
+ * @private
+ */
+void initMainBoardDevicesDescriptor() {
+    initDeviceList(&deviceListArray, MAIN_BOARD_DEVICE_LENGTH);
+
+    addLocalDevices();
+    addMotorRemoteDevices();
+
+    // addMeca2RemoteDevices();
+    // addStrategyBoardDevices();
+    // addBeaconBoardReceiverBoardDevices();
+
+    // Init the devices
+    initDevices();
+
+    initNotifications();  
 }
 
 void initMainBoardDriverDataDispatcherList(void) {
@@ -490,19 +528,6 @@ bool mainBoardWaitForInstruction(StartMatch* startMatchParam) {
             &pcOutputStream,
             &filterRemoveCRLF,
             NULL);
-    /*
-    if (counter > 0) {
-        counter++;
-        if ((counter % 20) == 0) {
-            appendString(getAlwaysOutputStreamLogger(), "ASK ! \n");
-            if (robotInfraredDetectorHasObstacle(DETECTOR_GROUP_TYPE_FORWARD)) {
-                appendString(getAlwaysOutputStreamLogger(), "DETECTED ROBOT !");
-                // We stop
-                return false;
-            }
-        }
-    }
-    */
 
     // Listen instruction from debugStream->Devices
     handleStreamInstruction(
@@ -532,7 +557,18 @@ int main(void) {
     // Backlight the LCD is needed
     setBacklight(isConfigSet(&robotConfig, CONFIG_LCD_MASK));
 
+    // SERIAL
+
     initSerialLinkList(&serialLinkListArray, MAIN_BOARD_SERIAL_LINK_LIST_LENGTH);
+
+    // Open the serial Link for the PC : No Log, only instruction
+    openSerialLink(&pcSerialStreamLink,
+                   "SERIAL_PC", 
+                    &pcInputBuffer, &pcInputBufferArray, MAIN_BOARD_PC_INPUT_BUFFER_LENGTH,
+                    &pcOutputBuffer, &pcOutputBufferArray, MAIN_BOARD_PC_OUTPUT_BUFFER_LENGTH,
+                    &pcOutputStream,
+                    MAIN_BOARD_SERIAL_PORT_PC,
+                    DEFAULT_SERIAL_SPEED);
 
     // Open the serial Link for debug and LOG !
     openSerialLink(&debugSerialStreamLink, 
@@ -548,8 +584,6 @@ int main(void) {
     // LOG the BoardName
     appendString(getAlwaysOutputStreamLogger(), getBoardName());
     println(getAlwaysOutputStreamLogger());
-
-    // SERIAL
     
     // Open the serial Link for the Motor Board
     openSerialLink(&motorSerialStreamLink,
@@ -570,15 +604,6 @@ int main(void) {
                    SERIAL_PORT_MECA2,
                    DEFAULT_SERIAL_SPEED);
     */
-
-    // Open the serial Link for the PC
-    openSerialLink(&pcSerialStreamLink,
-                   "SERIAL_PC", 
-                    &pcInputBuffer, &pcInputBufferArray, MAIN_BOARD_PC_INPUT_BUFFER_LENGTH,
-                    &pcOutputBuffer, &pcOutputBufferArray, MAIN_BOARD_PC_OUTPUT_BUFFER_LENGTH,
-                    &pcOutputStream,
-                    MAIN_BOARD_SERIAL_PORT_PC,
-                    DEFAULT_SERIAL_SPEED);
 
     // MAIN I2C
     initI2cBusList((I2cBus(*)[]) &i2cBusListArray, MAIN_BOARD_I2C_BUS_LIST_LENGTH);

@@ -12,10 +12,4 @@
  */
 void initSerialInputBuffer(Buffer* buffer, enum SerialPort serialPort);
 
-/**
- * Debug Function which writes the content of each input Buffer to an outputStream.
- * @param outputStream the outputStream where we want to print the content of the buffer
- */
-void printSerialInputBuffers(OutputStream* outputStream);
-
 #endif

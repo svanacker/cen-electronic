@@ -49,3 +49,35 @@ void printSerialLink(OutputStream* outputStream, const SerialLink* serialLink, i
 		appendEndOfTableColumn(outputStream, SERIAL_LINK_DEBUG_LAST_COLUMN_LENGTH);
     }
 }
+
+void printSerialLinkBuffer(OutputStream* outputStream, const SerialLink* serialLink) {
+    if (serialLink != NULL) {
+        StreamLink* streamLink = serialLink->streamLink;
+
+        // Serial Input Buffer
+        appendCRLF(outputStream);
+        Buffer* serialInputBuffer = streamLink->inputBuffer;
+        appendString(outputStream, "SERIAL INPUT BUFFER : ");
+        printDebugBuffer(outputStream, serialInputBuffer);
+
+        // Serial Output Buffer
+        appendCRLF(outputStream);
+        Buffer* serialOutputBuffer = streamLink->outputBuffer;
+        appendString(outputStream, "SERIAL OUTPUT BUFFER : ");
+        printDebugBuffer(outputStream, serialOutputBuffer);
+    }
+}
+
+void clearSerialLinkBuffer(const SerialLink* serialLink) {
+    if (serialLink != NULL) {
+        StreamLink* streamLink = serialLink->streamLink;
+
+        // Serial Input Buffer
+        Buffer* serialInputBuffer = streamLink->inputBuffer;
+        deepClearBuffer(serialInputBuffer);
+
+        // Serial Output Buffer
+        Buffer* serialOutputBuffer = streamLink->outputBuffer;
+        deepClearBuffer(serialOutputBuffer);
+    }
+}

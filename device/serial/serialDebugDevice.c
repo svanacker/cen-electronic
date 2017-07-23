@@ -1,4 +1,5 @@
 #include <stdbool.h>
+#include <stdlib.h>
 
 #include "serialDebugDevice.h"
 #include "serialDebugDeviceInterface.h"
@@ -9,6 +10,7 @@
 #include "../../common/io/outputStream.h"
 #include "../../common/io/reader.h"
 #include "../../common/io/printWriter.h"
+#include "../../common/io/ioUtils.h"
 
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
@@ -42,33 +44,54 @@ bool deviceSerialDebugIsOk(void) {
 
 void deviceSerialDebugHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream) {
     // Serial Input Buffers
-    if (commandHeader == COMMAND_SERIAL_INPUT_BUFFERS) {
-        ackCommand(outputStream, SERIAL_DEBUG_DEVICE_HEADER, COMMAND_SERIAL_INPUT_BUFFERS);
-        printSerialInputBuffers(getInfoOutputStreamLogger());         
+    if (commandHeader == COMMAND_SERIAL_DEBUG) {
+        ackCommand(outputStream, SERIAL_DEBUG_DEVICE_HEADER, COMMAND_SERIAL_DEBUG);
+        enum SerialPort serialPort = (enum SerialPort) readHex2(inputStream);
+        SerialLink* serialLink = getSerialLinkBySerialPort(serialPort);
+        printSerialLinkBuffer(getInfoOutputStreamLogger(), serialLink);
+    }
+    else if (commandHeader == COMMAND_SERIAL_CLEAR) {
+        enum SerialPort serialPort = (enum SerialPort) readHex2(inputStream);
+        SerialLink* serialLink = getSerialLinkBySerialPort(serialPort);
+        clearSerialLinkBuffer(serialLink);
+        // We ack at the end because we just clear the buffer !
+        ackCommand(outputStream, SERIAL_DEBUG_DEVICE_HEADER, COMMAND_SERIAL_CLEAR);
     }
     else if (commandHeader == COMMAND_SERIAL_LIST) {
         ackCommand(outputStream, SERIAL_DEBUG_DEVICE_HEADER, COMMAND_SERIAL_LIST);
         printSerialLinkList(getInfoOutputStreamLogger());         
     }
+    // OUTPUT
     else if (commandHeader == COMMAND_SERIAL_CHAR_OUTPUT) {
         ackCommand(outputStream, SERIAL_DEBUG_DEVICE_HEADER, COMMAND_SERIAL_CHAR_OUTPUT);
         enum SerialPort serialPort = (enum SerialPort) readHex2(inputStream);
         checkIsSeparator(inputStream);
         char c = readHex2(inputStream);
-        serialPutc(serialPort, c);
+        SerialLink* serialLink = getSerialLinkBySerialPort(serialPort);
+        StreamLink* streamLink = serialLink->streamLink;
+        Buffer* outputBuffer = streamLink->outputBuffer;
+        OutputStream* bufferOutputStream = getOutputStream(outputBuffer);
+        append(bufferOutputStream, c);
+        copyInputToOutputStream(&(outputBuffer->inputStream), streamLink->outputStream, NULL, COPY_ALL);
     }
     else if (commandHeader == COMMAND_SERIAL_CHAR_ARRAY_OUTPUT) {
         ackCommand(outputStream, SERIAL_DEBUG_DEVICE_HEADER, COMMAND_SERIAL_CHAR_ARRAY_OUTPUT);
         enum SerialPort serialPort = (enum SerialPort) readHex2(inputStream);
+        SerialLink* serialLink = getSerialLinkBySerialPort(serialPort);
+        StreamLink* streamLink = serialLink->streamLink;
+        Buffer* outputBuffer = streamLink->outputBuffer;
+        OutputStream* bufferOutputStream = getOutputStream(outputBuffer);
         int i;
         for (i = 0; i < FIXED_CHAR_ARRAY_LENGTH; i++) {
             checkIsSeparator(inputStream);
             char c = readHex2(inputStream);
             if (c != 0) {
-                serialPutc(serialPort, c);
+                append(bufferOutputStream, c);
+                copyInputToOutputStream(&(outputBuffer->inputStream), streamLink->outputStream, NULL, COPY_ALL);
             }
         }
     }
+    // INPUT
     else if (commandHeader == COMMAND_SERIAL_CHAR_INPUT) {
         ackCommand(outputStream, SERIAL_DEBUG_DEVICE_HEADER, COMMAND_SERIAL_CHAR_INPUT);
         enum SerialPort serialPort = (enum SerialPort) readHex2(inputStream);

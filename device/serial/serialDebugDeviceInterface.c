@@ -39,11 +39,19 @@ void serialDebugCharArrayFunctionArgument(char* functionName) {
 
 
 int deviceSerialDebugGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
-    if (commandHeader == COMMAND_SERIAL_INPUT_BUFFERS) {
+    if (commandHeader == COMMAND_SERIAL_DEBUG) {
         if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("showSerialInputBuffers");
+            setFunction("serialDebug", 1, 0);
+            setArgumentUnsignedHex2(0, "serialPort");
         }
-        return commandLengthValueForMode(mode, 0, 0);
+        return commandLengthValueForMode(mode, 2, 0);
+    }
+    else if (commandHeader == COMMAND_SERIAL_CLEAR) {
+        if (fillDeviceArgumentList) {
+            setFunction("serialClear", 1, 0);
+            setArgumentUnsignedHex2(0, "serialPort");
+        }
+        return commandLengthValueForMode(mode, 2, 0);
     }
     else if (commandHeader == COMMAND_SERIAL_LIST) {
         if (fillDeviceArgumentList) {
