@@ -3,6 +3,9 @@
 
 #include "../../../common/io/outputStream.h"
 
+/**
+ * The profile of the motion. If we reach the speed max, it will be a Trapeze, if we don't have time to reach speed max, it will be a triangle
+*/
 enum ProfileType {
 
     /** Acceleration phase / constant speed / Deceleration phase. */
@@ -12,6 +15,14 @@ enum ProfileType {
     PROFILE_TYPE_TRIANGLE = 1
 };
 
-void appendProfileTypeAsString(enum ProfileType profileType, OutputStream* outputStream);
+/**
+ * Append in the stream a string representation of the enum ProfileType.
+ */
+unsigned int appendProfileTypeAsString(OutputStream* outputStream, enum ProfileType profileType);
+
+/**
+ * Append a column value with the profile type.
+ */
+unsigned int addMotionProfileTypeTableData(OutputStream* outputStream, enum ProfileType profileType, int columnSize);
 
 #endif

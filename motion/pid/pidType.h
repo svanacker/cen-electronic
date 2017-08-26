@@ -35,7 +35,11 @@ enum PidType getPidType(enum MotionParameterType motionParameterType);
 /**
  * Append the type of the Pid as String into the outputStream.
  */
-void appendPidTypeAsString(enum PidType pidType, OutputStream* outputStream);
+unsigned int appendPidTypeAsString(OutputStream* outputStream, enum PidType pidType);
 
+/**
+ * Append the pid Type in a table column data.
+ */
+unsigned int addPidTypeTableData(OutputStream* outputStream, enum PidType pidType, int columnSize);
 
 #endif

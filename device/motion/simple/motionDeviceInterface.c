@@ -26,6 +26,12 @@ int deviceMotionGetInterface(char commandHeader, DeviceInterfaceMode mode, bool 
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
+	else if (commandHeader == COMMAND_MOTION_PARAMETERS_DEBUG) {
+		if (fillDeviceArgumentList) {
+			setFunctionNoArgumentAndNoResult("debugParameters");
+		}
+		return commandLengthValueForMode(mode, 0, 0);
+	}
     // goto
     else if (commandHeader == COMMAND_MOTION_GOTO_IN_PULSE) {
         if (fillDeviceArgumentList) {

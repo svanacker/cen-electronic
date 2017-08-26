@@ -134,7 +134,13 @@ int devicePIDGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fil
         }
         return commandLengthValueForMode(mode, 2, 53);
     }
-    return DEVICE_HEADER_NOT_HANDLED;
+	else if (commandHeader == COMMAND_PID_MOTION_PARAMETER_DEBUG) {
+		if (fillDeviceArgumentList) {
+			setFunctionNoArgumentAndNoResult("pidMotionParameterDebug");
+		}
+		return commandLengthValueForMode(mode, 0, 0);
+	}
+	return DEVICE_HEADER_NOT_HANDLED;
 }
 
 static DeviceInterface deviceInterface = {

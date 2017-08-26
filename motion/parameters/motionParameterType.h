@@ -45,6 +45,11 @@ enum MotionParameterType getMotionParameterType(float left, float right);
  * @param outputStream the output stream
  * @return how many char have been written in the outputStream
  */
-unsigned char appendMotionParameterTypeAsString(enum MotionParameterType motionParameterType, OutputStream* outputStream);
+unsigned char appendMotionParameterTypeAsString(OutputStream* outputStream, enum MotionParameterType motionParameterType);
+
+/**
+ * Add a motion Parameter Type value in a column.
+ */
+unsigned int addMotionParameterTypeTableData(OutputStream* outputStream, enum MotionParameterType motionParameterType, int columnSize);
 
 #endif

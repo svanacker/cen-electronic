@@ -2,15 +2,25 @@
 
 #include "../../../common/io/outputStream.h"
 #include "../../../common/io/printWriter.h"
+#include "../../../common/io/printTableWriter.h"
 
-void appendProfileTypeAsString(enum ProfileType profileType, OutputStream* outputStream) {
+unsigned int appendProfileTypeAsString(OutputStream* outputStream, enum ProfileType profileType) {
     if (profileType == PROFILE_TYPE_TRIANGLE) {
-        appendString(outputStream, "TRIANGLE");
+        return appendString(outputStream, "TRIANGLE");
     }
     else if (profileType == PROFILE_TYPE_TRAPEZE) {
-        appendString(outputStream, "TRAPEZE");
+		return appendString(outputStream, "TRAPEZE");
     }
     else {
-        append(outputStream, '?');
+		append(outputStream, '?');
+		return 1;
     }
+	return 0;
+}
+
+unsigned int addMotionProfileTypeTableData(OutputStream* outputStream, enum ProfileType profileType, int columnSize) {
+	appendTableSeparator(outputStream);
+	appendSpace(outputStream);
+	unsigned int length = appendProfileTypeAsString(outputStream, profileType);
+	return length + appendSpaces(outputStream, columnSize - length) + 2;
 }

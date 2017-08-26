@@ -261,6 +261,7 @@
     <ClCompile Include="motion\pid\parameters\pidParameter.c" />
     <ClCompile Include="motion\pid\parameters\pidPersistence.c" />
     <ClCompile Include="motion\pid\pid.c" />
+    <ClCompile Include="motion\pid\pidDebug.c" />
     <ClCompile Include="motion\pid\pidMotion.c" />
     <ClCompile Include="motion\pid\pidTimer.c" />
     <ClCompile Include="motion\pid\pidType.c" />

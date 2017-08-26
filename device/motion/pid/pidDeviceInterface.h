@@ -25,6 +25,11 @@
 #define COMMAND_LOAD_PID_DEFAULT_VALUES            'd'
 
 /**
+ * Debug all pid values. 
+ */
+#define COMMAND_PID_MOTION_PARAMETER_DEBUG         'D'
+
+/**
 * Send values to have information about profile at the begin of
 * trajectory compute.
 */

@@ -21,17 +21,17 @@ void printMotionInstruction (OutputStream* outputStream, MotionInstruction* inst
 
     // ProfileType
     appendString(outputStream, ",profileType=");
-    appendProfileTypeAsString(inst->profileType, outputStream);
+    appendProfileTypeAsString(outputStream, inst->profileType);
     appendCRLF(outputStream);
 
     // PidType
     appendString(outputStream, ",pidType=");
-    appendPidTypeAsString(inst->pidType, outputStream);
+    appendPidTypeAsString(outputStream, inst->pidType);
     appendCRLF(outputStream);
 
     // MotionParameterType
     appendString(outputStream, ",motionType=");
-    appendMotionParameterTypeAsString(inst->motionParameterType, outputStream);
+    appendMotionParameterTypeAsString(outputStream, inst->motionParameterType);
     appendCRLF(outputStream);
      
     // unsigned pidIndex = getIndexOfPid(index, inst->pidType);

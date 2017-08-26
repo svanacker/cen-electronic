@@ -25,6 +25,21 @@ PidMotionDefinition* getCurrentMotionDefinition(void) {
 	return &(pidMotion.motionDefinitions[0]);
 }
 
+/**
+* Returns the motion definition with a specified index
+*/
+PidMotionDefinition* getMotionDefinition(unsigned int index) {
+	// TODO : Check array bounds
+	return &(pidMotion.motionDefinitions[index]);
+}
+
+/**
+* Returns how many motion definition are stored.
+*/
+unsigned int getMotionDefinitionCount(void) {
+	return pidMotion.motionDefinitionCount;
+}
+
 /*
 PidMotionDefinition* removeCurrentMotionDefinition(void) {
 	if (pidMotion.motionDefinitionCount > 0) {
@@ -32,10 +47,6 @@ PidMotionDefinition* removeCurrentMotionDefinition(void) {
 	}
 }
 */
-
-PidMotionDefinition* getMotionDefinition(int index) {
-	return &(pidMotion.motionDefinitions[index]);
-}
 
 PidMotionDefinition* getNextMotionDefinition(void) {
 	int index = 0;

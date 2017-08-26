@@ -7,9 +7,9 @@
 #include "../../common/commons.h"
 #include "../../common/io/outputStream.h"
 
-
-void printPid(OutputStream* outputStream, int pidIndex);
-
-void printAllPids(OutputStream* outputStream);
+/**
+ * Print the list of motion instruction as a table with all instructions.
+ */
+void printMotionInstructionTable(OutputStream* outputStream);
 
 #endif

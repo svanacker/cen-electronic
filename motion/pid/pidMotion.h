@@ -47,6 +47,16 @@ PidMotionDefinition* removeCurrentMotionDefinition(void);
 PidMotionDefinition* getNextMotionDefinition(void);
 
 /**
+* Returns the motion definition with a specified index
+*/
+PidMotionDefinition* getMotionDefinition(unsigned int index);
+
+/**
+ * Returns how many motion definition are stored.
+ */
+unsigned int getMotionDefinitionCount(void);
+
+/**
 * Set the motion mode in ADDING Mode (All new motion instructions are stacked).
 */
 void setMotionModeAdd(void);

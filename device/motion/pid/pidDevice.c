@@ -19,6 +19,7 @@
 
 #include "../../../device/device.h"
 #include "../../../motion/pid/pid.h"
+#include "../../../motion/pid/pidDebug.h"
 #include "../../../motion/pid/parameters/pidParameter.h"
 #include "../../../motion/pid/pidMotion.h"
 #include "../../../motion/pid/pidComputationValues.h"
@@ -228,7 +229,12 @@ void devicePIDHandleRawData(char commandHeader, InputStream* inputStream, Output
         appendHex(outputStream, localInst->motionParameterType);
         appendSeparator(outputStream);
         appendHex(outputStream, localInst->pidType);
-    }    
+    }   
+	else if (commandHeader == COMMAND_PID_MOTION_PARAMETER_DEBUG) {
+		ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_PID_MOTION_PARAMETER_DEBUG);
+		OutputStream* outputStream = getDebugOutputStreamLogger();
+		printMotionInstructionTable(outputStream);
+	}
 }
 
 static DeviceDescriptor descriptor = {

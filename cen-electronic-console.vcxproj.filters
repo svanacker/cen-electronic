@@ -1581,6 +1581,9 @@
     <ClCompile Include="common\serial\serialLinkList.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="motion\pid\pidDebug.c">
+      <Filter>Source Files\motion\pid</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">

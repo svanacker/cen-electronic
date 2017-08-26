@@ -110,61 +110,13 @@ void notifyObstacle(OutputStream* outputStream) {
     internalDebugNotify("obstacle");
 }
 
-#define MOTION_PARAMETERS_DEBUG_IDX_COLUMN_LENGTH	            5
-#define MOTION_PARAMETERS_DEBUG_MOTION_TYPE_COLUMN_LENGTH	    20
-#define MOTION_PARAMETERS_DEBUG_SPEED_HEX_COLUMN_LENGTH	        10
-#define MOTION_PARAMETERS_DEBUG_ACCELERATION_HEX_COLUMN_LENGTH	10
-#define MOTION_PARAMETERS_DEBUG_SPEED_DEC_COLUMN_LENGTH	        10
-#define MOTION_PARAMETERS_DEBUG_ACCELERATION_DEC_COLUMN_LENGTH	10
-#define MOTION_PARAMETERS_DEBUG_LAST_COLUMN_LENGTH	            10
-/**
-* Private.
-*/
-void printMotionParameterListHeader(OutputStream* outputStream) {
-	println(outputStream);
-	appendTableHeaderSeparatorLine(outputStream);
-	appendStringHeader(outputStream, "idx", MOTION_PARAMETERS_DEBUG_IDX_COLUMN_LENGTH);
-
-	appendStringHeader(outputStream, "speed_HEX", MOTION_PARAMETERS_DEBUG_SPEED_HEX_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "a_HEX", MOTION_PARAMETERS_DEBUG_ACCELERATION_HEX_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "speed", MOTION_PARAMETERS_DEBUG_SPEED_DEC_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "a", MOTION_PARAMETERS_DEBUG_ACCELERATION_DEC_COLUMN_LENGTH);
-	appendEndOfTableColumn(outputStream, MOTION_PARAMETERS_DEBUG_LAST_COLUMN_LENGTH);
-	appendTableHeaderSeparatorLine(outputStream);
-}
-
-void printMotionParameter(OutputStream* outputStream, int index, MotionParameter* motionParameter) {
-	appendDecTableData(outputStream, index, MOTION_PARAMETERS_DEBUG_IDX_COLUMN_LENGTH);
-	appendHex2TableData(outputStream, (int) motionParameter->speed, MOTION_PARAMETERS_DEBUG_SPEED_HEX_COLUMN_LENGTH);
-	appendHex2TableData(outputStream, (int) motionParameter->a, MOTION_PARAMETERS_DEBUG_ACCELERATION_HEX_COLUMN_LENGTH);
-	appendDecTableData(outputStream, (int) motionParameter->speed, MOTION_PARAMETERS_DEBUG_SPEED_HEX_COLUMN_LENGTH);
-	appendDecTableData(outputStream, (int) motionParameter->a, MOTION_PARAMETERS_DEBUG_ACCELERATION_HEX_COLUMN_LENGTH);
-	appendEndOfTableColumn(outputStream, MOTION_PARAMETERS_DEBUG_LAST_COLUMN_LENGTH);
-}
-
-void printMotionParameterList(OutputStream* outputStream) {
-	printMotionParameterListHeader(outputStream);
-    enum MotionParameterType motionType;
-    int i = 0;
-    for (motionType = 0; motionType < MOTION_PARAMETERS_COUNT; motionType++) {
-        MotionParameter* motionParameter = getDefaultMotionParameters(motionType);
-        printMotionParameter(outputStream, i, motionParameter);
-        i++;
-    }
-	appendTableHeaderSeparatorLine(outputStream);
-}
 
 void deviceMotionHandleRawData(char commandHeader,
         InputStream* inputStream,
         OutputStream* outputStream) {
-    if (commandHeader == COMMAND_MOTION_LOAD_DEFAULT_PARAMETERS) {
-        // send acknowledge
-        ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_LOAD_DEFAULT_PARAMETERS);
-        loadMotionParameters(motionDeviceEeprom, true);
-        saveMotionParameters(motionDeviceEeprom);
-    }
+	// LIST Instruction
     // GOTO in impulsion
-    else if (commandHeader == COMMAND_MOTION_GOTO_IN_PULSE) {
+    if (commandHeader == COMMAND_MOTION_GOTO_IN_PULSE) {
         // send acknowledge
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_GOTO_IN_PULSE);
 
@@ -239,6 +191,19 @@ void deviceMotionHandleRawData(char commandHeader,
         float length = (float) readHex4(inputStream);
         squareCalibration(type, length);
     }        // PARAMETERS
+	else if (commandHeader == COMMAND_MOTION_LOAD_DEFAULT_PARAMETERS) {
+		// send acknowledge
+		ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_LOAD_DEFAULT_PARAMETERS);
+		loadMotionParameters(motionDeviceEeprom, true);
+		saveMotionParameters(motionDeviceEeprom);
+	}
+	else if (commandHeader == COMMAND_MOTION_PARAMETERS_DEBUG) {
+		// send acknowledge
+		ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_PARAMETERS_DEBUG);
+		OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+		printMotionParameterList(debugOutputStream);
+	}
+
     else if (commandHeader == COMMAND_GET_MOTION_PARAMETERS) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_GET_MOTION_PARAMETERS);
         enum MotionParameterType motionParameterType = (enum MotionParameterType) readHex2(inputStream);
