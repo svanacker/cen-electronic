@@ -270,7 +270,6 @@ void runMotorBoardPC(bool singleMode) {
 	addLocalDevice(getI2cCommonDebugDeviceInterface(), getI2cCommonDebugDeviceDescriptor());
     addLocalDevice(getI2cSlaveDebugDeviceInterface(), getI2cSlaveDebugDeviceDescriptor(&motorI2cBusConnection));
     addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
-    addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());
 	addLocalDevice(getLogDeviceInterface(), getLogDeviceDescriptor());
 
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
@@ -285,6 +284,7 @@ void runMotorBoardPC(bool singleMode) {
     addLocalDevice(getMotionDeviceInterface(), getMotionDeviceDescriptor(&eeprom, true));
 	addLocalDevice(getExtendedMotionDeviceInterface(), getExtendedMotionDeviceDescriptor(&eeprom, true));
 	addLocalDevice(getMotionSimulationDeviceInterface(), getMotionSimulationDeviceDescriptor());
+	addLocalDevice(getRobotKinematicsDeviceInterface(), getRobotKinematicsDeviceDescriptor(&eeprom));
 
     initDevices();
 

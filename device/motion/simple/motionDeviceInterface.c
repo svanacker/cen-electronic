@@ -121,6 +121,12 @@ int deviceMotionGetInterface(char commandHeader, DeviceInterfaceMode mode, bool 
         }
         return commandLengthValueForMode(mode, 6, 0);
     }
+    else if (commandHeader == COMMAND_MOTION_SAVE_TO_EEPROM_PARAMETERS) {
+		if(fillDeviceArgumentList) {
+			setFunctionNoArgumentAndNoResult("saveToEeprom");
+		}
+		return commandLengthValueForMode(mode, 0, 0);
+    }
 	// MODE REPLACE / ADD
 	else if (commandHeader == COMMAND_MOTION_MODE_ADD) {
 		if(fillDeviceArgumentList) {

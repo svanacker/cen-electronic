@@ -24,7 +24,7 @@
 
 bool trajectoryDriverSetAbsolutePosition(float x, float y, float deciDegree) {
     OutputStream* outputStream = getDriverRequestOutputStream();
-    append(outputStream, COMMAND_SET_ABSOLUTE_POSITION);
+    append(outputStream, COMMAND_TRAJECTORY_SET_ABSOLUTE_POSITION);
     appendHex4(outputStream, (int) x);
     appendSeparator(outputStream);
     appendHex4(outputStream, (int) y);
@@ -41,7 +41,7 @@ bool trajectoryDriverUpdateRobotPosition() {
     OutputStream* outputStream = getDriverRequestOutputStream();
     InputStream* inputStream = getDriverResponseInputStream();
 
-    append(outputStream, COMMAND_GET_ABSOLUTE_POSITION);
+    append(outputStream, COMMAND_TRAJECTORY_GET_ABSOLUTE_POSITION);
 
     bool result = transmitFromDriverRequestBuffer();
     if (result) {

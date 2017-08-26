@@ -12,6 +12,7 @@
 #include "../../../common/io/inputStream.h"
 #include "../../../common/io/outputStream.h"
 #include "../../../common/io/printWriter.h"
+#include "../../../common/io/printTableWriter.h"
 #include "../../../common/io/reader.h"
 
 #include "../../../common/log/logger.h"
@@ -107,6 +108,50 @@ void notifyObstacle(OutputStream* outputStream) {
     notifyAbsolutePositionWithoutHeader(outputStream);
 
     internalDebugNotify("obstacle");
+}
+
+#define MOTION_PARAMETERS_DEBUG_IDX_COLUMN_LENGTH	            5
+#define MOTION_PARAMETERS_DEBUG_MOTION_TYPE_COLUMN_LENGTH	    20
+#define MOTION_PARAMETERS_DEBUG_SPEED_HEX_COLUMN_LENGTH	        10
+#define MOTION_PARAMETERS_DEBUG_ACCELERATION_HEX_COLUMN_LENGTH	10
+#define MOTION_PARAMETERS_DEBUG_SPEED_DEC_COLUMN_LENGTH	        10
+#define MOTION_PARAMETERS_DEBUG_ACCELERATION_DEC_COLUMN_LENGTH	10
+#define MOTION_PARAMETERS_DEBUG_LAST_COLUMN_LENGTH	            10
+/**
+* Private.
+*/
+void printMotionParameterListHeader(OutputStream* outputStream) {
+	println(outputStream);
+	appendTableHeaderSeparatorLine(outputStream);
+	appendStringHeader(outputStream, "idx", MOTION_PARAMETERS_DEBUG_IDX_COLUMN_LENGTH);
+
+	appendStringHeader(outputStream, "speed_HEX", MOTION_PARAMETERS_DEBUG_SPEED_HEX_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "a_HEX", MOTION_PARAMETERS_DEBUG_ACCELERATION_HEX_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "speed", MOTION_PARAMETERS_DEBUG_SPEED_DEC_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "a", MOTION_PARAMETERS_DEBUG_ACCELERATION_DEC_COLUMN_LENGTH);
+	appendEndOfTableColumn(outputStream, MOTION_PARAMETERS_DEBUG_LAST_COLUMN_LENGTH);
+	appendTableHeaderSeparatorLine(outputStream);
+}
+
+void printMotionParameter(OutputStream* outputStream, int index, MotionParameter* motionParameter) {
+	appendDecTableData(outputStream, index, MOTION_PARAMETERS_DEBUG_IDX_COLUMN_LENGTH);
+	appendHex2TableData(outputStream, (int) motionParameter->speed, MOTION_PARAMETERS_DEBUG_SPEED_HEX_COLUMN_LENGTH);
+	appendHex2TableData(outputStream, (int) motionParameter->a, MOTION_PARAMETERS_DEBUG_ACCELERATION_HEX_COLUMN_LENGTH);
+	appendDecTableData(outputStream, (int) motionParameter->speed, MOTION_PARAMETERS_DEBUG_SPEED_HEX_COLUMN_LENGTH);
+	appendDecTableData(outputStream, (int) motionParameter->a, MOTION_PARAMETERS_DEBUG_ACCELERATION_HEX_COLUMN_LENGTH);
+	appendEndOfTableColumn(outputStream, MOTION_PARAMETERS_DEBUG_LAST_COLUMN_LENGTH);
+}
+
+void printMotionParameterList(OutputStream* outputStream) {
+	printMotionParameterListHeader(outputStream);
+    enum MotionParameterType motionType;
+    int i = 0;
+    for (motionType = 0; motionType < MOTION_PARAMETERS_COUNT; motionType++) {
+        MotionParameter* motionParameter = getDefaultMotionParameters(motionType);
+        printMotionParameter(outputStream, i, motionParameter);
+        i++;
+    }
+	appendTableHeaderSeparatorLine(outputStream);
 }
 
 void deviceMotionHandleRawData(char commandHeader,
@@ -211,6 +256,10 @@ void deviceMotionHandleRawData(char commandHeader,
         MotionParameter* motionParameter = getDefaultMotionParameters(motionParameterType);
         motionParameter->a = a;
         motionParameter->speed = speed;
+
+        saveMotionParameters(motionDeviceEeprom);
+    } else if (commandHeader == COMMAND_MOTION_SAVE_TO_EEPROM_PARAMETERS) {
+        ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_SAVE_TO_EEPROM_PARAMETERS);
 
         saveMotionParameters(motionDeviceEeprom);
     }

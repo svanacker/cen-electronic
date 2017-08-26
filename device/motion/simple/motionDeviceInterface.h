@@ -12,9 +12,6 @@
 /** Cancel all current motion. */
 #define COMMAND_MOTION_CANCEL                 'c'
 
-/** Load default Motion parameters. */
-#define COMMAND_MOTION_LOAD_DEFAULT_PARAMETERS 'd'
-
 /** Forward with value in mm. */
 #define COMMAND_MOTION_FORWARD_IN_MM          'f'
 
@@ -33,17 +30,29 @@
 /** Turn to the left in degree, but without turning right wheel. */
 #define COMMAND_MOTION_LEFT_ONE_WHEEL_IN_DECI_DEGREE ')'
 
+// PARAMETERS
+
+/** Load default Motion parameters. */
+#define COMMAND_MOTION_LOAD_DEFAULT_PARAMETERS 'd'
+
+/** Show in a table the different value of Speed / Acceleration for each kind of move. */
+#define COMMAND_MOTION_PARAMETERS_DEBUG        'D'
+
 /** Defines the COMMAND used to get speed / acceleration parameters for different motion type. */
 #define COMMAND_GET_MOTION_PARAMETERS          'p'
 
 /** Defines the COMMAND used to set speed / acceleration parameters for different motion type. */
 #define COMMAND_SET_MOTION_PARAMETERS          'w'
 
+/** Save the motion parameters to the eeprom. */
+#define COMMAND_MOTION_SAVE_TO_EEPROM_PARAMETERS 's'
+
+// CALIBRATION
+
 /** Define the command used to do a square useful for calibration. */
 #define COMMAND_SQUARE_CALIBRATION             '@'
 
-/** Obstacle : stop the current Motion and maintain Position. */
-#define COMMAND_MOTION_OBSTACLE                '|'
+// MOTION MODE
 
 /** Indicates that the instruction must be added on a stack and not replace the current instruction. */
 #define COMMAND_MOTION_MODE_ADD				   '+'
@@ -67,6 +76,9 @@
 
 /** Argument for the status of the robot when position is in progress. */
 #define NOTIFY_MOTION_STATUS_MOVING            'm'
+
+/** Obstacle : stop the current Motion and maintain Position. */
+#define COMMAND_MOTION_OBSTACLE                '|'
 
 /**
 * Interface for Device

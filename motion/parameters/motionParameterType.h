@@ -41,7 +41,10 @@ enum MotionParameterType getMotionParameterType(float left, float right);
 
 /**
  * Append the MotionParameterType as a string into an outputStream
+ * @param motionParameterType the type of motionParameter
+ * @param outputStream the output stream
+ * @return how many char have been written in the outputStream
  */
-void appendMotionParameterTypeAsString(enum MotionParameterType motionParameterType, OutputStream* outputStream);
+unsigned char appendMotionParameterTypeAsString(enum MotionParameterType motionParameterType, OutputStream* outputStream);
 
 #endif

@@ -55,14 +55,16 @@ void updateTrajectoryWithNoThreshold(void);
  */
 void updateTrajectoryAndClearCoders(void);
 
+// DEBUG
+
 /**
  * Print the position of the robot.
  */
-void printPosition(OutputStream* outputStream);
+void printDebugPosition(OutputStream* outputStream);
 
-/** 
- * Sets the computation method.
- */
-void setMethod(int method);
+/**
+* Print the value used to analyze coders value
+*/
+void printDebugCoderHistory(OutputStream* outputStream);
 
 #endif

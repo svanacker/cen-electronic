@@ -17,20 +17,22 @@ enum MotionParameterType getMotionParameterType(float left, float right) {
     }
 }
 
-void appendMotionParameterTypeAsString(enum MotionParameterType motionParameterType, OutputStream* outputStream) {
+unsigned char appendMotionParameterTypeAsString(enum MotionParameterType motionParameterType, OutputStream* outputStream) {
     if (motionParameterType == MOTION_PARAMETER_TYPE_FORWARD_OR_BACKWARD) {
-        appendString(outputStream, "FORWARD_OR_BACKWARD");
+        return appendString(outputStream, "FORWARD_OR_BACKWARD");
     }
     else if (motionParameterType == MOTION_PARAMETER_TYPE_ROTATION) {
-        appendString(outputStream, "ROTATION");
+        return appendString(outputStream, "ROTATION");
     }
     else if (motionParameterType == MOTION_PARAMETER_TYPE_ROTATION_ONE_WHEEL) {
-        appendString(outputStream, "ROTATION_ONE_WHEEL");
+        return appendString(outputStream, "ROTATION_ONE_WHEEL");
     }
     else if (motionParameterType == MOTION_PARAMETER_TYPE_MAINTAIN_POSITION) {
-        appendString(outputStream, "MAINTAIN_POSITION");
+        return appendString(outputStream, "MAINTAIN_POSITION");
     }
     else {
         append(outputStream, '?');
+		return 1;
     }
+    return 0;
 }

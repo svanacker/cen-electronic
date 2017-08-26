@@ -250,12 +250,15 @@ int appendDecf(OutputStream* stream, float value) {
 
     if (decimalValueLong < 100) {
         append(stream, '0');
+		result++;
         if (decimalValueLong < 10) {
             append(stream, '0');
-        }
+			result++;
+		}
         if (decimalValueLong < 1 && decimalValueLong > 0) {
             append(stream, '0');
-        }
+			result++;
+		}
     }
     result += appendDec(stream, decimalValueLong);
 

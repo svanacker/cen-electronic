@@ -98,6 +98,13 @@ unsigned int appendCharTableData(OutputStream* outputStream, const char c, int c
 unsigned int appendDecTableData(OutputStream* outputStream, const int value, int columnSize);
 
 /**
+* Add a Decimal Floating point table data to the outputStream with | and space arround
+* @param value the value to append (in decimal with floating)
+* @param columnSize the size of the column (for alignment)
+*/
+unsigned int appendDecfTableData(OutputStream* outputStream, const float value, int columnSize);
+
+/**
 * Add a Boolean table data to the outputStream with | and space arround
 * @param value the value to append (boolean)
 * @param columnSize the size of the column (for alignment)

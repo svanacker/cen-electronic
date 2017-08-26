@@ -44,30 +44,37 @@ void notifyAbsolutePositionWithoutHeader(OutputStream* outputStream) {
 void deviceTrajectoryHandleRawData(char header,
         InputStream* inputStream,
         OutputStream* outputStream) {
-    if (header == COMMAND_GET_ABSOLUTE_POSITION) {
-        ackCommand(outputStream, TRAJECTORY_DEVICE_HEADER, COMMAND_GET_ABSOLUTE_POSITION);
+    if (header == COMMAND_TRAJECTORY_GET_ABSOLUTE_POSITION) {
+        ackCommand(outputStream, TRAJECTORY_DEVICE_HEADER, COMMAND_TRAJECTORY_GET_ABSOLUTE_POSITION);
 
         updateTrajectoryWithNoThreshold();
         notifyAbsolutePositionWithoutHeader(outputStream);
 
     }
-    else if (header == COMMAND_DEBUG_GET_ABSOLUTE_POSITION) {
-        ackCommand(outputStream, TRAJECTORY_DEVICE_HEADER, COMMAND_DEBUG_GET_ABSOLUTE_POSITION);
+    else if (header == COMMAND_TRAJECTORY_DEBUG_GET_ABSOLUTE_POSITION) {
+        ackCommand(outputStream, TRAJECTORY_DEVICE_HEADER, COMMAND_TRAJECTORY_DEBUG_GET_ABSOLUTE_POSITION);
 
         updateTrajectoryWithNoThreshold();
 
         OutputStream* debugOutputStream = getAlwaysOutputStreamLogger();
-        printPosition(debugOutputStream);
+        printDebugPosition(debugOutputStream);
     }
+	else if (header == COMMAND_TRAJECTORY_DEBUG_CODERS) {
+		ackCommand(outputStream, TRAJECTORY_DEVICE_HEADER, COMMAND_TRAJECTORY_DEBUG_CODERS);
 
-    else if (header == COMMAND_SET_ABSOLUTE_POSITION) {
+		updateTrajectoryWithNoThreshold();
+
+		OutputStream* debugOutputStream = getAlwaysOutputStreamLogger();
+		printDebugCoderHistory(debugOutputStream);
+	}
+    else if (header == COMMAND_TRAJECTORY_SET_ABSOLUTE_POSITION) {
         long newX = readHex4(inputStream);
         inputStream->readChar(inputStream);
         long newY = readHex4(inputStream);
         inputStream->readChar(inputStream);
         long newAngle = readHex4(inputStream);
 
-        ackCommand(outputStream, TRAJECTORY_DEVICE_HEADER, COMMAND_SET_ABSOLUTE_POSITION);
+        ackCommand(outputStream, TRAJECTORY_DEVICE_HEADER, COMMAND_TRAJECTORY_SET_ABSOLUTE_POSITION);
 
         OutputStream* debugOutputStream = getDebugOutputStreamLogger();
 

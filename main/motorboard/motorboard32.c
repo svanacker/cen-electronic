@@ -81,14 +81,18 @@
 #include "../../device/timer/timerDeviceInterface.h"
 
 // Log
-//#include "../../device/log/logDevice.h"
-//#include "../../device/log/logDeviceInterface.h"
+#include "../../device/log/logDevice.h"
+#include "../../device/log/logDeviceInterface.h"
 
 // I2C
 #include "../../device/i2c/i2cCommonDebugDevice.h"
 #include "../../device/i2c/i2cCommonDebugDeviceInterface.h"
 
-// I2C Slave Device/
+// I2C Master Device
+#include "../../device/i2c/master/i2cMasterDebugDevice.h"
+#include "../../device/i2c/master/i2cMasterDebugDeviceInterface.h"
+
+// I2C Slave Device
 #include "../../device/i2c/slave/i2cSlaveDebugDevice.h"
 #include "../../device/i2c/slave/i2cSlaveDebugDeviceInterface.h"
 
@@ -219,14 +223,19 @@ void initDevicesDescriptor() {
     addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
     addLocalDevice(getTimerDeviceInterface(), getTimerDeviceDescriptor());
+    addLocalDevice(getLogDeviceInterface(), getLogDeviceDescriptor());
+
+    // Common I2C
+    addLocalDevice(getI2cCommonDebugDeviceInterface(), getI2cCommonDebugDeviceDescriptor(mainBoardI2cBusConnection));
+
+    // I2C_1
+    addLocalDevice(getI2cSlaveDebugDeviceInterface(), getI2cSlaveDebugDeviceDescriptor(mainBoardI2cBusConnection));
 
     // I2C_4
+    addLocalDevice(getI2cMasterDebugDeviceInterface(), getI2cMasterDebugDeviceDescriptor(mainBoardI2cBusConnection));
     addLocalDevice(getRobotKinematicsDeviceInterface(), getRobotKinematicsDeviceDescriptor(&eeprom_));
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom_));
 
-//    addLocalDevice(getLogDeviceInterface(), getLogDeviceDescriptor());
-   addLocalDevice(getI2cCommonDebugDeviceInterface(), getI2cCommonDebugDeviceDescriptor(mainBoardI2cBusConnection));
-   addLocalDevice(getI2cSlaveDebugDeviceInterface(), getI2cSlaveDebugDeviceDescriptor(mainBoardI2cBusConnection));
 
     initDevices();
 }

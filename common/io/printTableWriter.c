@@ -88,6 +88,13 @@ unsigned int appendDecTableData(OutputStream* outputStream, const int value, int
 	return length + appendSpaces(outputStream, columnSize - length) + 2;
 }
 
+unsigned int appendDecfTableData(OutputStream* outputStream, const float value, int columnSize) {
+	appendTableSeparator(outputStream);
+	appendSpace(outputStream);
+	int length = appendDecf(outputStream, value);
+	return length + appendSpaces(outputStream, columnSize - length) + 2;
+}
+
 unsigned int appendBoolTableData(OutputStream* outputStream, const bool value, int columnSize) {
 	appendTableSeparator(outputStream);
 	appendSpace(outputStream);
