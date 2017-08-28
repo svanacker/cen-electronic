@@ -44,10 +44,10 @@ I2cBusConnection* getI2cBusConnectionByIndex(int index);
 
 /**
  * Find the i2cBusConnection by his type in the list.
- * @param busConnectionAddress the address corresponding to the busConnectionAddress 
+ * @param slaveAddress the address corresponding to the busConnectionAddress 
  * @return the i2cBusConnection, NULL if not found.
  */
-I2cBusConnection* getI2cBusConnectionBySlaveAddress(unsigned char busConnectionAddress);
+I2cBusConnection* getI2cBusConnectionBySlaveAddress(unsigned char slaveAddress);
 
 /**
  * Get the size of the i2c Bus Connection List.

@@ -116,9 +116,20 @@ void printI2cBus(OutputStream* outputStream, I2cBus* i2cBus);
 */
 void printI2cBusConnection(OutputStream* outputStream, I2cBusConnection* i2cBusConnection);
 
+/**
+ * Returns an I2cBusType into his String representation.
+ * @param i2cBusType the type of i2cBus for which we want the String representation
+ * @return a string representation of the I2cBusType
+ */
 const char* getI2cBusTypeAsString(enum I2cBusType i2cBusType);
 
+/**
+ * Returns an i2cPort into his String representation.
+ * @param i2cPort the type of i2cPort for which we want the String representation
+ * @return a string representation of the i2cPort
+ */
 const char* getI2cPortAsString(enum I2cPort i2cPort);
+
 
 #endif
 

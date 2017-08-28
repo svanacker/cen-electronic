@@ -5,16 +5,28 @@
 #include "../../../device/deviceConstants.h"
 
 /** Command to debug the I2C. */
-#define COMMAND_I2C_DEBUG_MASTER_DEBUG                       'd'
+#define COMMAND_I2C_MASTER_DEBUG_PRINT_BUFFER                'd'
 
 /** Command to enable or disable the Debug. */
-#define COMMAND_I2C_DEBUG_MASTER_ENABLE_DISABLE              'e'
+#define COMMAND_I2C_MASTER_DEBUG_ENABLE_DISABLE              'e'
 
 /** Command to add a char to an I2C slave with an address. */
-#define COMMAND_I2C_DEBUG_MASTER_SEND_CHAR_TO_SLAVE          'w'
+#define COMMAND_I2C_MASTER_DEBUG_SEND_CHAR_TO_SLAVE          'w'
 
 /** Command to read a char to an I2C slave with an address. */
-#define COMMAND_I2C_DEBUG_MASTER_READ_CHAR_FROM_SLAVE        'r'
+#define COMMAND_I2C_MASTER_DEBUG_READ_CHAR_FROM_SLAVE        'r'
+
+/** Command to start the I2C bus. */
+#define COMMAND_I2C_MASTER_DEBUG_START_I2C_BUS               'S'
+
+/** Command to stop the I2C bus. */
+#define COMMAND_I2C_MASTER_DEBUG_STOP_I2C_BUS                's'
+
+/** Command to do an ack to the I2C Bus. */
+#define COMMAND_I2C_MASTER_DEBUG_ACK                         'K'
+
+/** Command to do an Nack to the I2C Bus. */
+#define COMMAND_I2C_MASTER_DEBUG_NACK                        'k'
 
 /**
 * Get the I2C debug device interface.

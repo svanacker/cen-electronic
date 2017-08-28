@@ -7,21 +7,21 @@ const char* deviceI2cMasterDebugGetName(void) {
     return "i2cMasterDebug";
 }
 
-int deviceI2cMasterDebugGetInterface(char header, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
-    if (header == COMMAND_I2C_DEBUG_MASTER_DEBUG) {
+int deviceI2cMasterDebugGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
+    if (commandHeader == COMMAND_I2C_MASTER_DEBUG_PRINT_BUFFER) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("i2cDebug");
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
-    else if (header == COMMAND_I2C_DEBUG_MASTER_ENABLE_DISABLE) {
+    else if (commandHeader == COMMAND_I2C_MASTER_DEBUG_ENABLE_DISABLE) {
         if (fillDeviceArgumentList) {        
             setFunction("enable/disable", 1, 0);
             setArgumentUnsignedHex2(0, "mode");
         }
         return commandLengthValueForMode(mode, 2, 0);        
     }
-    else if (header == COMMAND_I2C_DEBUG_MASTER_SEND_CHAR_TO_SLAVE) {
+    else if (commandHeader == COMMAND_I2C_MASTER_DEBUG_SEND_CHAR_TO_SLAVE) {
         if (fillDeviceArgumentList) {        
             setFunction("sendCharI2cSlave", 2, 0);
             setArgumentUnsignedHex2(0, "adress");
@@ -29,7 +29,7 @@ int deviceI2cMasterDebugGetInterface(char header, DeviceInterfaceMode mode, bool
         }
         return commandLengthValueForMode(mode, 4, 0);
     }
-    else if (header == COMMAND_I2C_DEBUG_MASTER_READ_CHAR_FROM_SLAVE) {
+    else if (commandHeader == COMMAND_I2C_MASTER_DEBUG_READ_CHAR_FROM_SLAVE) {
         if (fillDeviceArgumentList) {        
             setFunction("readCharI2cSlave", 1, 1);
             setArgumentUnsignedHex2(0, "readChar");
@@ -37,6 +37,35 @@ int deviceI2cMasterDebugGetInterface(char header, DeviceInterfaceMode mode, bool
         }
         return commandLengthValueForMode(mode, 2, 2);
     }
+    else if (commandHeader == COMMAND_I2C_MASTER_DEBUG_START_I2C_BUS) {
+		if (fillDeviceArgumentList) {
+            setFunction("masterStartI2cBus", 2, 0);
+            setArgumentUnsignedHex2(0, "slaveAdress");
+		}
+		return commandLengthValueForMode(mode, 0, 0);
+    }
+    else if (commandHeader == COMMAND_I2C_MASTER_DEBUG_STOP_I2C_BUS) {
+		if (fillDeviceArgumentList) {
+            setFunction("masterStopI2cBus", 2, 0);
+            setArgumentUnsignedHex2(0, "slaveAdress");
+		}
+		return commandLengthValueForMode(mode, 0, 0);
+    }
+    else if (commandHeader == COMMAND_I2C_MASTER_DEBUG_ACK) {
+		if (fillDeviceArgumentList) {
+            setFunction("masterAckI2cBus", 2, 0);
+            setArgumentUnsignedHex2(0, "slaveAdress");
+		}
+		return commandLengthValueForMode(mode, 0, 0);
+    }
+    else if (commandHeader == COMMAND_I2C_MASTER_DEBUG_NACK) {
+		if (fillDeviceArgumentList) {
+            setFunction("masterNackI2cBus", 2, 0);
+            setArgumentUnsignedHex2(0, "slaveAdress");
+		}
+		return commandLengthValueForMode(mode, 0, 0);
+    }
+
     return DEVICE_HEADER_NOT_HANDLED;
 }
 

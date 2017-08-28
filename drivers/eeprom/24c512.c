@@ -97,13 +97,6 @@ unsigned long get24C512Address(unsigned long index) {
  * @private
  */
 void _writeEeprom24C512Char(Eeprom* eeprom_, unsigned long index, unsigned char value) {
-    /*
-    OutputStream* outputStream = getDebugOutputStreamLogger();
-    appendStringAndDec(outputStream, "write Eeprom index=", index);
-    appendStringAndDec(outputStream, ", value=", value);
-    appendCRLF(outputStream);
-    */
-
     I2cBusConnection* i2cBusConnection = _24c512GetI2cBusConnection(eeprom_);
     I2cBus* i2cBus = i2cBusConnection->i2cBus;
 
@@ -135,11 +128,6 @@ void _writeEeprom24C512Char(Eeprom* eeprom_, unsigned long index, unsigned char 
  * @private
  */
 unsigned char _readEeprom24C512Char(Eeprom* eeprom_, unsigned long index) {
-    /*
-    OutputStream* outputStream = getDebugOutputStreamLogger();
-    appendStringAndDec(outputStream, "read Eeprom index=", index);
-    appendCRLF(outputStream);
-    */
     I2cBusConnection* i2cBusConnection = _24c512GetI2cBusConnection(eeprom_);
     I2cBus* i2cBus = i2cBusConnection->i2cBus;
 

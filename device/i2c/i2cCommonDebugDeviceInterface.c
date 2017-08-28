@@ -8,18 +8,31 @@ const char* deviceI2cCommonDebugGetName(void) {
 }
 
 int deviceI2cCommonDebugGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
-    if (commandHeader == COMMAND_I2C_DEBUG_COMMON_LIST_BUS) {
+    if (commandHeader == COMMAND_I2C_COMMON_DEBUG_LIST_BUS) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("i2cDebugListBus");
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
-	else if (commandHeader == COMMAND_I2C_DEBUG_COMMON_LIST_BUS_CONNECTION) {
+	else if (commandHeader == COMMAND_I2C_COMMON_DEBUG_LIST_BUS_CONNECTION) {
 		if (fillDeviceArgumentList) {
 			setFunctionNoArgumentAndNoResult("i2cDebugListBusConnection");
 		}
 		return commandLengthValueForMode(mode, 0, 0);
 	}
+	else if (commandHeader == COMMAND_I2C_COMMON_DEBUG_LIST_BUS_CONNECTION) {
+		if (fillDeviceArgumentList) {
+			setFunctionNoArgumentAndNoResult("i2cDebugListBusConnection");
+		}
+		return commandLengthValueForMode(mode, 0, 0);
+	}
+    else if (commandHeader == COMMAND_I2C_COMMON_DEBUG_WAIT) {
+		if (fillDeviceArgumentList) {
+            setFunction("waitI2cBus", 2, 0);
+            setArgumentUnsignedHex2(0, "slaveAdress");
+		}
+		return commandLengthValueForMode(mode, 0, 0);
+    }
 	return DEVICE_HEADER_NOT_HANDLED;
 }
 

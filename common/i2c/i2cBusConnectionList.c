@@ -64,12 +64,12 @@ I2cBusConnection* addI2cBusConnection(I2cBus* i2cBus, unsigned char i2cSlaveAddr
     }
 }
 
-I2cBusConnection* getI2cBusConnectionBySlaveAddress(unsigned char busConnectionAddress) {
+I2cBusConnection* getI2cBusConnectionBySlaveAddress(unsigned char slaveAddress) {
     int size = i2cBusConnectionList.size;
     int i;
     for (i = 0; i < size; i++) {
         I2cBusConnection* i2cBusConnection = getI2cBusConnectionByIndex(i);
-        if (i2cBusConnection->i2cAddress == busConnectionAddress) {
+        if (i2cBusConnection->i2cAddress == slaveAddress) {
             return i2cBusConnection;
         }
     }
