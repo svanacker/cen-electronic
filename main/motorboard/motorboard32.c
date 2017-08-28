@@ -197,6 +197,10 @@ static Timer timerListArray[MOTOR_BOARD_TIMER_LENGTH];
 int currentTimeInSecond;
 bool currentTimeChanged;
 
+// Pid Motion
+static PidMotion pidMotion;
+static PidMotionDefinition motionDefinitionArray[MOTOR_BOARD_PID_MOTION_INSTRUCTION_COUNT];
+
 Buffer* getI2CSlaveOutputBuffer() {
     return &i2cSlaveOutputBuffer;
 }
@@ -215,8 +219,8 @@ void initDevicesDescriptor() {
 
     addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());
     addLocalDevice(getCodersDeviceInterface(), getCodersDeviceDescriptor());
-    addLocalDevice(getPIDDeviceInterface(), getPIDDeviceDescriptor(&eeprom_, false));
-    addLocalDevice(getMotionDeviceInterface(), getMotionDeviceDescriptor(&eeprom_, false));
+    addLocalDevice(getPIDDeviceInterface(), getPIDDeviceDescriptor(&pidMotion));
+    addLocalDevice(getMotionDeviceInterface(), getMotionDeviceDescriptor(&pidMotion));
     addLocalDevice(getTrajectoryDeviceInterface(), getTrajectoryDeviceDescriptor());
     addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
     addLocalDevice(getSerialDebugDeviceInterface(), getSerialDebugDeviceDescriptor());
@@ -236,7 +240,6 @@ void initDevicesDescriptor() {
     addLocalDevice(getRobotKinematicsDeviceInterface(), getRobotKinematicsDeviceDescriptor(&eeprom_));
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom_));
 
-
     initDevices();
 }
 
@@ -251,10 +254,8 @@ void waitForInstruction() {
     handleStreamInstruction(&debugInputBuffer, &debugOutputBuffer, &debugOutputStream, &filterRemoveCRLF, NULL);
 
     // Manage Motion
-    handleInstructionAndMotion();
+    handleInstructionAndMotion(&pidMotion);
 }
-
-
 
 int runMotorBoard() {
     // configure for multi-vectored mode
@@ -336,6 +337,9 @@ int runMotorBoard() {
     // -> Clock
     clockI2cBusConnection = addI2cBusConnection(masterI2cBus, PCF8563_WRITE_ADDRESS);
     initClockPCF8563(&clock, clockI2cBusConnection);
+
+    // PidMotion
+    initPidMotion(&pidMotion, &eeprom_, (PidMotionDefinition(*)[]) &motionDefinitionArray, MOTOR_BOARD_PID_MOTION_INSTRUCTION_COUNT);
 
     // initSoftClock(&clock);
 

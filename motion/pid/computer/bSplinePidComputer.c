@@ -8,7 +8,6 @@
 #include "../parameters/pidParameter.h"
 #include "../pidMotion.h"
 #include "../motionInstruction.h"
-#include "../pidMotionDefinition.h"
 #include "../pidCurrentValues.h"
 
 #include "../../../common/2d/2d.h"
@@ -25,11 +24,9 @@
 
 #include "../../../robot/kinematics/robotKinematics.h"
 
-void bSplineMotionUCompute(PidMotionDefinition* motionDefinition) {
-    PidMotion* pidMotion = getPidMotion();
-    PidComputationValues* computationValues = &(pidMotion->computationValues);
-
+void bSplineMotionUCompute(PidMotion* pidMotion, PidMotionDefinition* motionDefinition) {
     BSplineCurve* curve = &(motionDefinition->curve);
+	PidComputationValues* computationValues = &(pidMotion->computationValues);
     float pidTime = computationValues->pidTime;
     MotionInstruction* thetaInst = &(motionDefinition->inst[THETA]);
     float normalPosition = computeNormalPosition(thetaInst, pidTime);
@@ -53,8 +50,8 @@ void bSplineMotionUCompute(PidMotionDefinition* motionDefinition) {
 
     // GET PID
     unsigned pidIndex = getIndexOfPid(THETA, thetaInst->pidType);
-    unsigned char rollingTestMode = getRollingTestMode();
-    PidParameter* pidParameter = getPidParameter(pidIndex, rollingTestMode);
+	unsigned char rollingTestMode = getRollingTestMode(pidMotion);
+    PidParameter* pidParameter = getPidParameter(pidMotion, pidIndex, rollingTestMode);
 
     // ALPHA
     PidMotionError* alphaMotionError = &(computationValues->errors[ALPHA]);    
@@ -109,10 +106,10 @@ void bSplineMotionUCompute(PidMotionDefinition* motionDefinition) {
     alphaCurrentValues->u = alphaU;
     
     // LOG
-    OutputStream* out = getDebugOutputStreamLogger();
+    // OutputStream* out = getDebugOutputStreamLogger();
     
     // appendStringAndDecf(out, "pt=", pidTime);
-
+	/*
     appendStringAndDecf(out, ",t=", bSplineTime);
 
     // Normal Position
@@ -144,4 +141,5 @@ void bSplineMotionUCompute(PidMotionDefinition* motionDefinition) {
     appendStringAndDecf(out, ",tu=", thetaU);
     
     appendCRLF(out);
+	*/
 }

@@ -14,11 +14,12 @@
 #include "../common/math/cenMath.h"
 
 #include "pid/pid.h"
+#include "pid/pidMotion.h"
 
 #include "position/coders.h"
 #include "position/trajectory.h"
 
-enum DetectedMotionType handleInstructionAndMotion(void) {
+enum DetectedMotionType handleInstructionAndMotion(PidMotion* pidMotion) {
     updateCoders();
     updateTrajectory();
 
@@ -27,7 +28,7 @@ enum DetectedMotionType handleInstructionAndMotion(void) {
 
     // MANDATORY
 
-    enum DetectedMotionType result = updateMotors();
+    enum DetectedMotionType result = updateMotors(pidMotion);
 
     /* TODO https://github.com/svanacker/cen-electronic/issues/28
     Buffer* buffer = getI2CSlaveOutputBuffer();
@@ -57,10 +58,10 @@ enum DetectedMotionType handleInstructionAndMotion(void) {
     return result;
 }
 
-enum DetectedMotionType handleAndWaitFreeMotion(void) {
+enum DetectedMotionType handleAndWaitFreeMotion(PidMotion* pidMotion) {
     enum DetectedMotionType result = DETECTED_MOTION_TYPE_NO_POSITION_TO_REACH;
     while (true) {
-        result = handleInstructionAndMotion();
+        result = handleInstructionAndMotion(pidMotion);
         // POSITION_BLOCKED_WHEELS is not necessary because we block the position after
         if (result == DETECTED_MOTION_TYPE_NO_POSITION_TO_REACH || result == DETECTED_MOTION_TYPE_POSITION_TO_MAINTAIN || result == DETECTED_MOTION_TYPE_POSITION_OBSTACLE) {
             // if (value == NO_POSITION_TO_REACH || value == POSITION_OBSTACLE) {
@@ -72,11 +73,11 @@ enum DetectedMotionType handleAndWaitFreeMotion(void) {
     return result;
 }
 
-void handleAndWaitMSec(unsigned long delayMs) {
+void handleAndWaitMSec(PidMotion* pidMotion, unsigned long delayMs) {
     unsigned long DELAY = 10;
     unsigned long counter;
     for (counter = 0; counter < delayMs; counter += DELAY) {
         delaymSec(DELAY);
-        handleInstructionAndMotion();
+        handleInstructionAndMotion(pidMotion);
     }
 }

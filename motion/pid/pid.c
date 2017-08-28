@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+#include "pid.h"
+
 // Commons
 
 #include "../../common/commons.h"
@@ -13,7 +15,6 @@
 #include "../../common/log/logLevel.h"
 
 #include "alphaTheta.h"
-#include "pid.h"
 #include "pidMotion.h"
 #include "computer/pidComputer.h"
 #include "parameters/pidParameter.h"
@@ -21,7 +22,6 @@
 #include "pidDebug.h"
 #include "endDetection/motionEndDetection.h"
 #include "pidTimer.h"
-#include "pidMotionDefinition.h"
 #include "detectedMotionType.h"
 
 #include "../../device/motor/pwmMotor.h"
@@ -31,58 +31,40 @@
 
 #include "../../robot/kinematics/robotKinematics.h"
 
-static bool mustReachPosition;
-
-/** Indicates if we use the testing Board (we take lower values for PID). */
-static bool rollingTestMode = ROLLING_BOARD_TEST_MODE_OFF;
-
 unsigned char getIndexOfPid(enum InstructionType instructionType, enum PidType pidType) {
     return pidType * INSTRUCTION_COUNT + instructionType;
 }
 
-bool getRollingTestMode() {
-    return rollingTestMode;
+bool getRollingTestMode(PidMotion* pidMotion) {
+    return pidMotion->rollingTestMode;
 }
 
 // Must Reach Position
 
-bool getMustReachPosition(void) {
-    return mustReachPosition;
+bool getMustReachPosition(PidMotion* pidMotion) {
+    return pidMotion->mustReachPosition;
 }
 
-void setMustReachPosition(bool value) {
-    mustReachPosition = value;
+void setMustReachPosition(PidMotion* pidMotion, bool value) {
+	pidMotion->mustReachPosition = value;
 }
 
-void setEnabledPid(int pidIndex, unsigned char enabled) {
-    PidParameter * localPidParameter = getPidParameter(pidIndex, rollingTestMode);
+void setEnabledPid(PidMotion* pidMotion, int pidIndex, unsigned char enabled) {
+    PidParameter * localPidParameter = getPidParameter(pidMotion, pidIndex, pidMotion->rollingTestMode);
     localPidParameter->enabled = enabled;
 }
 
-
-void initPID(Eeprom* _eeprom, bool loadDefaultParameters) {
-    // TODO : A Remettre
-    // rollingTestMode = (getConfigValue() & CONFIG_ROLLING_TEST_MASK) != 0;
-    rollingTestMode = false;
-    initPidPersistence(_eeprom);
-    loadPidParameters(loadDefaultParameters);
-    RobotKinematics* robotKinematics = getRobotKinematics();
-    loadRobotKinematicsParameters(robotKinematics, _eeprom, loadDefaultParameters);
-    initPidTimer();
-    initPidMotion();
+void stopPID(PidMotion* pidMotion) {
+	setMustReachPosition(pidMotion, false);
 }
 
-void stopPID(void) {
-    mustReachPosition = false;
-}
-
-float getWheelPulseByPidTimeAtFullSpeed() {
+float getWheelPulseByPidTimeAtFullSpeed(void) {
     RobotKinematics* robotKinematics = getRobotKinematics();
     float result = getWheelPulseBySecondsAtFullSpeed(robotKinematics) / PID_UPDATE_MOTORS_FREQUENCY;
     return result;
 }
 
-float getUFactorAtFullSpeed() {
+float getUFactorAtFullSpeed(void) {
     // TODO : Why This Constant (must depend on the voltage) !!!
     float result = 128.0f / getWheelPulseByPidTimeAtFullSpeed();
     return result;
@@ -101,16 +83,16 @@ float getNormalU(float pulseAtSpeed) {
     return result;
 }
 
-void setPidParameter(int pidIndex, float p, float i, float d, float maxIntegral) {
-    PidParameter* localPidParameter = getPidParameter(pidIndex, rollingTestMode);
+void setPidParameter(PidMotion* pidMotion, int pidIndex, float p, float i, float d, float maxIntegral) {
+    PidParameter* localPidParameter = getPidParameter(pidMotion, pidIndex, pidMotion->rollingTestMode);
     localPidParameter->p = p;
     localPidParameter->i = i;
     localPidParameter->d = d;
     localPidParameter->maxIntegral = maxIntegral;
 }
 
-PidParameter* getPidParameter(int index, unsigned int pidMode) {
-    PidParameter* result = &(getPidMotion()->globalParameters.pidParameters[index]);
+PidParameter* getPidParameter(PidMotion* pidMotion, int index, unsigned int pidMode) {
+    PidParameter* result = &(pidMotion->globalParameters.pidParameters[index]);
     return result;
 }
 
@@ -138,47 +120,18 @@ void changePidTypeIfFinalApproach(PidMotion* pidMotion, PidMotionDefinition* mot
     }
 }
 
-
-#ifdef _MSC_VER
-    #include "../../motion/simulation/motionSimulation.h"
-    #include "../../motion/pid/computer/pidComputer.h"
-
-    /**
-     * @private
-     */
-    void simulateCurrentPositionReachIfNeeded(PidMotion* pidMotion, PidMotionDefinition* motionDefinition) {
-        MotionSimulationParameter* motionSimulationParameter = getMotionSimulationParameter();
-        if (motionSimulationParameter->simulateCoders) {
-            MotionInstruction* thetaInst = &(motionDefinition->inst[THETA]);
-            MotionInstruction* alphaInst = &(motionDefinition->inst[ALPHA]);
-
-            float pidTime = pidMotion->computationValues.pidTime;
-
-            float normalThetaPosition = computeNormalPosition(thetaInst, pidTime);
-            float normalAlphaPosition = computeNormalPosition(alphaInst, pidTime);
-
-            float normalLeftCoderValue = computeLeft(normalThetaPosition, normalAlphaPosition);
-            float normalRightCoderValue = computeRight(normalThetaPosition, normalAlphaPosition);
-
-            setCoderValue(CODER_LEFT, (long) normalLeftCoderValue);
-            setCoderValue(CODER_RIGHT, (long) normalRightCoderValue);
-        }
-    }
-#endif
-
-
-enum DetectedMotionType updateMotors(void) {
-    if (!mustReachPosition) {
+enum DetectedMotionType updateMotors(PidMotion* pidMotion) {
+    if (!getMustReachPosition(pidMotion)) {
         return DETECTED_MOTION_TYPE_NO_POSITION_TO_REACH;
     }
     if (mustPidBeRecomputed()) {
-        PidMotion* pidMotion = getPidMotion();
         float pidTime = (float) getPidTime();
 		pidMotion->computationValues.pidTime = pidTime;
-		PidMotionDefinition* motionDefinition = getCurrentMotionDefinition();
+		PidMotionDefinition* motionDefinition = pidMotionGetCurrentMotionDefinition(pidMotion);
 
         #ifdef _MSC_VER
-        simulateCurrentPositionReachIfNeeded(pidMotion, motionDefinition);
+			#include "pc/pidPc.h"
+			simulateCurrentPositionReachIfNeeded(pidMotion, motionDefinition);
         #endif
 
         // Compute the current Position
@@ -188,7 +141,7 @@ enum DetectedMotionType updateMotors(void) {
         changePidTypeIfFinalApproach(pidMotion, motionDefinition);
 
         // Computes the PID
-        motionDefinition->computeU(motionDefinition);
+        motionDefinition->computeU(pidMotion, motionDefinition);
 
         // Apply Correction
 
@@ -207,15 +160,15 @@ enum DetectedMotionType updateMotors(void) {
         }
 
         // DETECTS END OF MOTION => TODO : Extract it in a method
-        MotionEndDetectionParameter* endDetectionParameter = getMotionEndDetectionParameter();
+        MotionEndDetectionParameter* endDetectionParameter = getMotionEndDetectionParameter(pidMotion);
         MotionEndInfo* thetaEndMotion = &(computationValues->motionEnd[THETA]);
         MotionEndInfo* alphaEndMotion = &(computationValues->motionEnd[ALPHA]);
     
         thetaCurrentValues->currentSpeed = thetaCurrentValues->position - thetaCurrentValues->oldPosition;
         alphaCurrentValues->currentSpeed = alphaCurrentValues->position - alphaCurrentValues->oldPosition;
 
-        updateEndMotionData(THETA, thetaEndMotion, endDetectionParameter, (int) pidTime);
-        updateEndMotionData(ALPHA, alphaEndMotion, endDetectionParameter, (int) pidTime);
+        updateEndMotionData(computationValues, THETA, thetaEndMotion, endDetectionParameter, (int) pidTime);
+        updateEndMotionData(computationValues, ALPHA, alphaEndMotion, endDetectionParameter, (int) pidTime);
 
         bool isThetaEnd = isEndOfMotion(THETA, thetaEndMotion, endDetectionParameter);
         bool isAlphaEnd = isEndOfMotion(ALPHA, alphaEndMotion, endDetectionParameter);

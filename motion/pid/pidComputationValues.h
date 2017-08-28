@@ -1,9 +1,10 @@
 #ifndef PID_COMPUTATION_VALUES_H
 #define PID_COMPUTATION_VALUES_H
 
+#include "instructionType.h"
 #include "pidMotionError.h"
 #include "pidCurrentValues.h"
-#include "endDetection/motionEndDetection.h"
+#include "endDetection/motionEndInfo.h"
 
 /**
  * All current values about the current motion in progress.

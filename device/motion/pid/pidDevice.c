@@ -26,23 +26,20 @@
 #include "../../../motion/pid/pidCurrentValues.h"
 #include "../../../motion/pid/motionInstruction.h"
 #include "../../../motion/pid/pidMotionError.h"
-#include "../../../motion/pid/pidMotionDefinition.h"
 #include "../../../motion/pid/endDetection/motionEndDetection.h"
 #include "../../../motion/pid/parameters/pidPersistence.h"
 
-static Eeprom* pidDeviceEeprom;
-static bool loadDefaultParameters;
+static PidMotion* pidMotion;
 
 bool isPIDDeviceOk(void) {
     return true;
 }
 
 void initPidDevice(void) {
-    initPID(pidDeviceEeprom, loadDefaultParameters);
 }
 
 void stopPidDevice(void) {
-    stopPID();
+    stopPID(pidMotion);
 }
 
 void devicePIDHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream) {
@@ -62,16 +59,16 @@ void devicePIDHandleRawData(char commandHeader, InputStream* inputStream, Output
         float maxI = (float) readHex2(inputStream);
 
         if (pidIndex >= 0 && pidIndex < PID_COUNT) {
-            setPidParameter(pidIndex, p, i, d, maxI);
-            savePidParameters();
+            setPidParameter(pidMotion, pidIndex, p, i, d, maxI);
+            savePidParameters(pidMotion);
         } else {
             // All Values
             if (pidIndex == -1) {
                 int pidIndex2;
                 for (pidIndex2 = 0; pidIndex2 < PID_COUNT; pidIndex2++) {
-                    setPidParameter(pidIndex2, p, i, d, maxI);
+                    setPidParameter(pidMotion, pidIndex2, p, i, d, maxI);
                 }
-                savePidParameters();
+                savePidParameters(pidMotion);
             } else {
                 writeError(PID_INDEX_INCORRECT);
             }
@@ -86,7 +83,7 @@ void devicePIDHandleRawData(char commandHeader, InputStream* inputStream, Output
         char pidIndex = readHex2(inputStream);
 
         // we test all pid value (test mode included)
-        PidParameter* localPidParameter = getPidParameter(pidIndex, 0);
+        PidParameter* localPidParameter = getPidParameter(pidMotion, pidIndex, 0);
         appendHex2(outputStream, pidIndex);
         appendSeparator(outputStream);
         appendHex2(outputStream, (int) localPidParameter->p);
@@ -101,16 +98,16 @@ void devicePIDHandleRawData(char commandHeader, InputStream* inputStream, Output
         ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_LOAD_PID_DEFAULT_VALUES);
         
         // Load default Values (and erase previous values)
-        loadPidParameters(true);
+        loadPidParameters(pidMotion, true);
         
-        savePidParameters();
+        savePidParameters(pidMotion);
     }
     // End Detection Parameter
     else if (commandHeader ==  COMMAND_GET_END_DETECTION_PARAMETER) {
         // send acknowledgement
         ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_GET_END_DETECTION_PARAMETER);
 
-        MotionEndDetectionParameter* motionEndDetectionParameter = getMotionEndDetectionParameter();
+        MotionEndDetectionParameter* motionEndDetectionParameter = getMotionEndDetectionParameter(pidMotion);
         appendHex2(outputStream, (unsigned char) motionEndDetectionParameter->absDeltaPositionIntegralFactorThreshold);
         appendSeparator(outputStream);
         appendHex2(outputStream, (unsigned char)motionEndDetectionParameter->maxUIntegralFactorThreshold);
@@ -125,7 +122,7 @@ void devicePIDHandleRawData(char commandHeader, InputStream* inputStream, Output
         // send acknowledgement
         ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_GET_END_DETECTION_PARAMETER);
 
-        MotionEndDetectionParameter* motionEndDetectionParameter = getMotionEndDetectionParameter();
+        MotionEndDetectionParameter* motionEndDetectionParameter = getMotionEndDetectionParameter(pidMotion);
 
         motionEndDetectionParameter->absDeltaPositionIntegralFactorThreshold = (float) readHex2(inputStream);
         checkIsSeparator(inputStream);
@@ -141,9 +138,8 @@ void devicePIDHandleRawData(char commandHeader, InputStream* inputStream, Output
     else if (commandHeader ==  COMMAND_GET_DEBUG_DATA_PID) {
         enum InstructionType instructionType = readHex2(inputStream);
 
-        PidMotion* pidMotion = getPidMotion();
         PidComputationValues* computationValues = &(pidMotion->computationValues);
-		PidMotionDefinition* motionDefinition = getCurrentMotionDefinition();
+        PidMotionDefinition* motionDefinition = pidMotionGetCurrentMotionDefinition(pidMotion);
         MotionInstruction motionInstruction = motionDefinition->inst[instructionType];
         PidMotionError* localError = &(computationValues->errors[instructionType]);
 
@@ -194,8 +190,8 @@ void devicePIDHandleRawData(char commandHeader, InputStream* inputStream, Output
         // send acknowledgement
         ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_GET_MOTION_PARAMETER);
 
-		PidMotionDefinition* motionDefinition = getCurrentMotionDefinition();
-        MotionInstruction* localInst = &(motionDefinition->inst[instructionType]);
+		PidMotionDefinition* motionDefinition = pidMotionGetCurrentMotionDefinition(pidMotion);
+		MotionInstruction* localInst = &(motionDefinition->inst[instructionType]);
 
         appendHex2(outputStream, instructionType);
         appendSeparator(outputStream);
@@ -233,7 +229,7 @@ void devicePIDHandleRawData(char commandHeader, InputStream* inputStream, Output
 	else if (commandHeader == COMMAND_PID_MOTION_PARAMETER_DEBUG) {
 		ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_PID_MOTION_PARAMETER_DEBUG);
 		OutputStream* outputStream = getDebugOutputStreamLogger();
-		printMotionInstructionTable(outputStream);
+		printMotionInstructionTable(outputStream, pidMotion);
 	}
 }
 
@@ -244,8 +240,7 @@ static DeviceDescriptor descriptor = {
     .deviceHandleRawData = &devicePIDHandleRawData,
 };
 
-DeviceDescriptor* getPIDDeviceDescriptor(Eeprom* pidPersistenceEeprom, bool loadDefaultValues) {
-    pidDeviceEeprom = pidPersistenceEeprom;
-    loadDefaultParameters = loadDefaultValues;
+DeviceDescriptor* getPIDDeviceDescriptor(PidMotion* pidMotionParam) {
+	pidMotion = pidMotionParam;
     return &descriptor;
 }

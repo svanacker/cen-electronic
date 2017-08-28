@@ -35,11 +35,10 @@
 
 #include "../../../motion/position/trajectory.h"
 
-static Eeprom* motionDeviceEeprom;
-static bool motionLoadDefaultValues;
+static PidMotion* pidMotion;
 
 void deviceExtendedMotionInit(void) {
-    loadMotionParameters(motionDeviceEeprom, motionLoadDefaultValues);
+    loadMotionParameters(pidMotion->pidPersistenceEeprom, true);
 }
 
 void deviceExtendedMotionShutDown(void) {
@@ -79,7 +78,8 @@ void deviceExtendedMotionHandleRawData(char commandHeader,
 
         // if distance = 0, the system computes the optimum distance
         // we use relative
-        gotoSimpleSpline(x, y,
+        gotoSimpleSpline(pidMotion,
+						x, y,
                         angle, 
                         distance1, distance2, 
                         accelerationFactor, speedFactor,
@@ -92,7 +92,8 @@ void deviceExtendedMotionHandleRawData(char commandHeader,
         if (commandHeader == COMMAND_MOTION_SPLINE_TEST_RIGHT) {
             sign = -sign;
         }
-        gotoSimpleSpline(400.0f, sign * 400.0f,
+        gotoSimpleSpline(pidMotion,
+						 400.0f, sign * 400.0f,
                          sign * 0.75f * PI,
                          200.0f, 200.0f,
                         MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL,
@@ -107,8 +108,7 @@ static DeviceDescriptor descriptor = {
     .deviceHandleRawData = &deviceExtendedMotionHandleRawData,
 };
 
-DeviceDescriptor* getExtendedMotionDeviceDescriptor(Eeprom* eeprom_, bool loadDefaultValues) {
-    motionDeviceEeprom = eeprom_;
-    motionLoadDefaultValues = loadDefaultValues;
+DeviceDescriptor* getExtendedMotionDeviceDescriptor(PidMotion* pidMotionParam) {
+	pidMotion = pidMotionParam;
     return &descriptor;
 }

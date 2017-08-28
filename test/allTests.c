@@ -25,7 +25,7 @@
 #include "../test/drivers/dispatchers/driverDataDispatcherListTest.h"
 #include "../test/drivers/test/testDriverTest.h"
 
-#include "../test/motion/bspline/bsplineListTest.h"
+// #include "../test/motion/bspline/bsplineListTest.h"
 #include "../test/navigation/locationListTest.h"
 #include "../test/navigation/pathListTest.h"
 #include "../test/navigation/navigationTest.h"
@@ -70,7 +70,7 @@ void runAllTests(void)
     testDriverTestTestSuite();
 
     // motion->extended
-    bsplineListTestSuite();
+    // bsplineListTestSuite();
 
     // navigation
     locationListTestSuite();

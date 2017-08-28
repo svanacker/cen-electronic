@@ -6,7 +6,6 @@
 #include "../instructionType.h"
 #include "../parameters/pidParameter.h"
 #include "../pidMotion.h"
-#include "../pidMotionDefinition.h"
 #include "../pidCurrentValues.h"
 #include "../pidMotionError.h"
 
@@ -26,15 +25,15 @@
  * @param currentPosition the current position of the wheels (either alphaPosition, either thetaPosition)
  * @param time the time in pid sampling
  */
-float computeNextPID(enum InstructionType instructionType, MotionInstruction* motionInstruction, PidCurrentValues* pidCurrentValues, PidMotionError* motionError, float time) {
-    unsigned char rollingTestMode = getRollingTestMode();
+float computeNextPID(PidMotion* pidMotion, enum InstructionType instructionType, MotionInstruction* motionInstruction, PidCurrentValues* pidCurrentValues, PidMotionError* motionError, float time) {
+    unsigned char rollingTestMode = getRollingTestMode(pidMotion);
     enum PidType pidType = motionInstruction->pidType;
     float currentPosition = pidCurrentValues->position;
 
     // instructionIndex = Alpha / Theta
     // pidType = Forward / Rotation / Final Approach ...
     unsigned char pidIndex = getIndexOfPid(instructionType, pidType);
-    PidParameter* pidParameter = getPidParameter(pidIndex, rollingTestMode);
+    PidParameter* pidParameter = getPidParameter(pidMotion, pidIndex, rollingTestMode);
 
     if (!pidParameter->enabled) {
         return 0.0f;
@@ -53,12 +52,11 @@ float computeNextPID(enum InstructionType instructionType, MotionInstruction* mo
 /**
  * Compute the PID when the instruction is very simple (not b spline)
  */
-void simpleMotionUCompute(PidMotionDefinition* motionDefinition) {
-    PidMotion* pidMotion = getPidMotion();
+void simpleMotionUCompute(PidMotion* pidMotion, PidMotionDefinition* motionDefinition) {
+	PidComputationValues* computationValues = &(pidMotion->computationValues);
     MotionInstruction* thetaInst = &(motionDefinition->inst[THETA]);
     MotionInstruction* alphaInst = &(motionDefinition->inst[ALPHA]);
 
-    PidComputationValues* computationValues = &(pidMotion->computationValues);
     PidCurrentValues* thetaCurrentValues = &(computationValues->currentValues[THETA]);
     PidCurrentValues* alphaCurrentValues = &(computationValues->currentValues[ALPHA]);
 
@@ -68,6 +66,6 @@ void simpleMotionUCompute(PidMotionDefinition* motionDefinition) {
 
     float pidTime = computationValues->pidTime;
 
-    thetaCurrentValues->u = computeNextPID(THETA, thetaInst, thetaCurrentValues, thetaError, pidTime);
-    alphaCurrentValues->u = computeNextPID(ALPHA, alphaInst, alphaCurrentValues, alphaError, pidTime);
+    thetaCurrentValues->u = computeNextPID(pidMotion, THETA, thetaInst, thetaCurrentValues, thetaError, pidTime);
+    alphaCurrentValues->u = computeNextPID(pidMotion, ALPHA, alphaInst, alphaCurrentValues, alphaError, pidTime);
 }

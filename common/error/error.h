@@ -155,11 +155,16 @@ void clearLastError();
 #define PID_INDEX_INCORRECT                 0x3000
 #define PID_PERSISTENCE_NO_EEPROM           0x3100
 #define PID_PERSISTENCE_EEPROM_NOT_INITIALIZED 0x3101
+#define PID_MOTION_NULL                     0x3102
+#define PID_MOTION_EMPTY                    0x3103
+#define PID_MOTION_NOT_ENOUGH_DATA          0x3104
+#define PID_MOTION_FULL                     0x3105
 
 // MOTION
 
 #define MOTION_DEFINITION_LIST_FULL			0x3700
 #define MOTION_DEFINITION_LIST_OUT_OF_BOUNDS 0x3701
+#define MOTION_DEFINITION_NULL              0x3702
 
 #define MOTION_BSPLINE_LIST_NULL            0x3800
 #define MOTION_BSPLINE_LIST_NOT_INITIALIZED 0x3801

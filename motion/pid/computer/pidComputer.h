@@ -17,7 +17,7 @@
  * @param normalSpeed the normal speed which must be reached
  * @param error the error which must be stored into motionError
  */
-float computePidCorrection(PidMotionError* motionError,
+float computePidCorrection( PidMotionError* motionError,
                             PidParameter* pidParameter,
                             float normalSpeed,
                             float error);

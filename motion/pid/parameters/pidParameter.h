@@ -21,19 +21,9 @@ typedef struct PidParameter {
     bool enabled;
 } PidParameter;
 
-
-/**
-* Sets the PID at the specified index.
-* @param pidIndex the index of the PID to set (between 0 and PID_COUNT)
-* @param p the P parameter
-* @param i the I parameter
-* @param d the D parameter
-* @param maxIntegral the bounds of the I term
-*/
-void setPidParameter(int pidIndex, float p, float i, float d, float maxIntegral);
-
+/*
 void printPidParameter(OutputStream* outputStream, int pidIndex);
 
 void printAllPidParameters(OutputStream* outputStream);
-
+*/
 #endif

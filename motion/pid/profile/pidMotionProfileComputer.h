@@ -2,7 +2,7 @@
 #define PID_MOTION_PROFIL_COMPUTER_H
 
 #include "../../../motion/parameters/motionParameterType.h"
-#include "../pidMotionDefinition.h"
+#include "../pidMotion.h"
 #include "../pidType.h"
 #include "../instructionType.h"
 #include "../motionInstruction.h"
@@ -12,7 +12,7 @@
  * Clear initial speeds to avoid that the trajectory finished
  * when we stop the robot.
  */
-void clearInitialSpeeds();
+void clearInitialSpeeds(PidMotion* pidMotion);
 
 void computeMotionInstruction(MotionInstruction* inst);
 
@@ -27,6 +27,7 @@ void computeMotionInstruction(MotionInstruction* inst);
  * @param pSpeedMax is the maximal absolute value of speed
  */
 void setNextPosition(
+		PidMotion* pidMotion,
 		PidMotionDefinition* motionDefinition,
 		enum InstructionType instructionType,
         enum MotionParameterType motionParameterType,

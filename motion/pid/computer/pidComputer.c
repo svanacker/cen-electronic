@@ -5,7 +5,6 @@
 #include "../instructionType.h"
 #include "../parameters/pidParameter.h"
 #include "../pidMotion.h"
-#include "../pidMotionDefinition.h"
 #include "../pidCurrentValues.h"
 #include "../pidMotionError.h"
 

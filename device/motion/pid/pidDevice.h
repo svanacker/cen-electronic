@@ -5,12 +5,13 @@
 
 #include "../../../device/deviceDescriptor.h"
 
+#include "../../../motion/pid/pidMotion.h"
+
 /**
 * Returns a descriptor on the device which manages the PID.
-* @param pidPersistenceEeprom the object to store parametesr
-* @param loadDefaultValues if we load into the eeprom the default Values (useful for pc simulation).
+* @param pidMotion the object to store parametesr
 */
-DeviceDescriptor* getPIDDeviceDescriptor(Eeprom* pidPersistenceEeprom, bool loadDefaultValues);
+DeviceDescriptor* getPIDDeviceDescriptor(PidMotion* pidMotion);
 
 #endif
 

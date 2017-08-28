@@ -209,6 +209,14 @@ void appendStringAndDecf(OutputStream* outputStream, const char* s, float value)
 void appendStringAndDec(OutputStream* outputStream, const char* s, long value);
 
 /**
+* Append a string followed by a bool value.
+* @param outputStream the pointer on outputStream (POO simulation)
+* @param s the string to write
+* @param value the value to write
+*/
+void appendStringAndBool(OutputStream* outputStream, const char* s, bool value);
+
+/**
  * Append both string : key followed by a value.
  * @param outputStream the pointer on outputStream (POO simulation)
  * @param key the key to write

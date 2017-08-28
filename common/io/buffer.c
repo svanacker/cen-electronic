@@ -189,7 +189,7 @@ int getBufferCapacity(const Buffer* buffer) {
 }
 
 void bufferWriteChar(Buffer* buffer, char c) {
-    int isFull = isBufferFull(buffer);
+	bool isFull = isBufferFull(buffer);
     if (!isFull) {
         char* sPointer = (char*) buffer->s;
         // Shift to the right cell index
@@ -206,7 +206,7 @@ void bufferWriteChar(Buffer* buffer, char c) {
 }
 
 char bufferReadChar(Buffer* buffer) {
-    int isEmpty = isBufferEmpty(buffer);
+    bool isEmpty = isBufferEmpty(buffer);
     if (!isEmpty) {
         // char result = buffer->s[buffer->readIndex];
         char* sPointer = (char*) buffer->s;

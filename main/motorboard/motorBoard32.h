@@ -44,6 +44,8 @@
 // TIMERS
 #define MOTOR_BOARD_TIMER_LENGTH         2
 
+// PID MOTION INSTRUCTION COUNT
+#define MOTOR_BOARD_PID_MOTION_INSTRUCTION_COUNT    10
 
 /**
  * Get the I2C Slave Output Buffer.

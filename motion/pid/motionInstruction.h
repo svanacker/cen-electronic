@@ -1,6 +1,8 @@
 #ifndef MOTION_INSTRUCTION_H
 #define MOTION_INSTRUCTION_H
 
+#include "../../common/io/outputStream.h"
+
 #include "profile/profileType.h"
 #include "pidType.h"
 #include "../../motion/parameters/motionParameterType.h"

@@ -1,7 +1,7 @@
 #ifndef PID_GLOBAL_PARAMETERS_H
 #define PID_GLOBAL_PARAMETERS_H
 
-#include "../pid.h"
+#include "../pidConstants.h"
 #include "pidParameter.h"
 #include "../endDetection/motionEndDetectionParameter.h"
 

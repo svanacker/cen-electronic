@@ -3,6 +3,7 @@
 
 #include <stdbool.h>
 
+#include "../pid/pidMotion.h"
 #include "../extended/bspline.h"
 
 // SPEED FACTOR
@@ -39,7 +40,8 @@ void updateSimpleSplineWithDistance(BSplineCurve* spline,
  * @param controlPointDistance2 the distance of P2->P3. If egal to 0.0f, the 
  * system determines the best distance to avoid too huge curve
  */
-void gotoSimpleSpline(float relativeDestX,
+void gotoSimpleSpline(PidMotion* pidMotion,
+					  float relativeDestX,
                       float relativeDestY,
                       float relativeDestAngle,
                       float controlPointDistance1,
@@ -52,7 +54,7 @@ void gotoSimpleSpline(float relativeDestX,
 /**
 * Go to a spline with indication of maxDerivative which indicates how the curve is huge
 */
-void gotoSpline(void);
+void gotoSpline(PidMotion* pidMotion);
 
 
 #endif

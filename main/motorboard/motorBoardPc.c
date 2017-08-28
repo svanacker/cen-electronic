@@ -106,6 +106,7 @@
 #include "../../drivers/clock/softClock.h"
 
 #include "../../motion/motion.h"
+#include "../../motion/pid/pidMotion.h"
 
 #include "../../common/pc/process/processHelper.h"
 
@@ -162,6 +163,10 @@ static I2cBusConnection motorI2cBusConnection;
 // Devices
 static Device deviceListArray[MOTOR_BOARD_PC_DEVICE_LIST_LENGTH];
 
+// Pid Motion
+static PidMotion pidMotion;
+static PidMotionDefinition motionDefinitionArray[MOTOR_BOARD_PC_PID_MOTION_INSTRUCTION_COUNT];
+
 static bool singleModeActivated = true;
 
 void motorBoardWaitForInstruction(void) {
@@ -196,7 +201,7 @@ void motorBoardWaitForInstruction(void) {
             NULL);
     }
 
-    handleInstructionAndMotion();
+    handleInstructionAndMotion(&pidMotion);
 }
 
 void runMotorBoardPC(bool singleMode) {
@@ -259,9 +264,12 @@ void runMotorBoardPC(bool singleMode) {
 
     // Battery
     initBattery(&battery, getBatteryVoltage);
-
+	
     // Clock
     initSoftClock(&clock);
+
+	// Pid Motion
+	initPidMotion(&pidMotion, &eeprom, (PidMotionDefinition(*)[]) &motionDefinitionArray, MOTOR_BOARD_PC_PID_MOTION_INSTRUCTION_COUNT);
 
     // Devices
     initDeviceList((Device(*)[]) &deviceListArray, MOTOR_BOARD_PC_DEVICE_LIST_LENGTH);
@@ -277,12 +285,12 @@ void runMotorBoardPC(bool singleMode) {
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
     addLocalDevice(getRobotKinematicsDeviceInterface(), getRobotKinematicsDeviceDescriptor(&eeprom));
 
-    addLocalDevice(getPIDDeviceInterface(), getPIDDeviceDescriptor(&eeprom, true));
+    addLocalDevice(getPIDDeviceInterface(), getPIDDeviceDescriptor(&pidMotion));
     addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());
     addLocalDevice(getCodersDeviceInterface(), getCodersDeviceDescriptor());
     addLocalDevice(getTrajectoryDeviceInterface(), getTrajectoryDeviceDescriptor());
-    addLocalDevice(getMotionDeviceInterface(), getMotionDeviceDescriptor(&eeprom, true));
-	addLocalDevice(getExtendedMotionDeviceInterface(), getExtendedMotionDeviceDescriptor(&eeprom, true));
+    addLocalDevice(getMotionDeviceInterface(), getMotionDeviceDescriptor(&pidMotion));
+	addLocalDevice(getExtendedMotionDeviceInterface(), getExtendedMotionDeviceDescriptor(&pidMotion));
 	addLocalDevice(getMotionSimulationDeviceInterface(), getMotionSimulationDeviceDescriptor());
 	addLocalDevice(getRobotKinematicsDeviceInterface(), getRobotKinematicsDeviceDescriptor(&eeprom));
 

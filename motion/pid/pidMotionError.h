@@ -17,10 +17,4 @@ typedef struct PidMotionError {
     float integralError;
 } PidMotionError;
 
-/**
-* Print the error struct of the index.
-* @param errorIndex THETA / ALPHA
-*/
-void printErrorStruct(OutputStream* outputStream, int errorIndex);
-
 #endif

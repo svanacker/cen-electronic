@@ -1,8 +1,7 @@
 #include <math.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include "motionEndDetection.h"
-
-#include "../pidMotion.h"
 
 #include "../../../common/commons.h"
 #include "../../../common/math/cenMath.h"
@@ -14,6 +13,10 @@
 
 #include "../../../common/log/logger.h"
 #include "../../../common/log/logLevel.h"
+
+#include "../pidComputationValues.h"
+#include "../pidConstants.h"
+#include "../pid.h"
 
 void resetMotionEndData(MotionEndInfo* endMotion) {
     endMotion->integralTime = 0;
@@ -41,9 +44,11 @@ void updateAggregateValues(MotionEndInfo* endMotion) {
     }
 }
 
-void updateEndMotionData(enum InstructionType instructionType, MotionEndInfo* endMotion, MotionEndDetectionParameter* parameter, unsigned int time) {
-    PidMotion* pidMotion = getPidMotion();
-    PidComputationValues* computationValues = &(pidMotion->computationValues);
+void updateEndMotionData(PidComputationValues* computationValues, 
+	                     enum InstructionType instructionType,
+	                     MotionEndInfo* endMotion,
+	                     MotionEndDetectionParameter* parameter,
+	                     unsigned int time) {
     PidCurrentValues* pidCurrentValues = &(computationValues->currentValues[instructionType]);
 
     // Do not analyze it during startup time

@@ -787,6 +787,12 @@
     <Filter Include="Header Files\device\pc">
       <UniqueIdentifier>{eef45eb7-dd9a-403a-af6b-50a8244d557e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\motion\pid\pc">
+      <UniqueIdentifier>{17590166-583a-4846-b757-bd98e87e3adf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\motion\pid\pc">
+      <UniqueIdentifier>{274a3c45-a654-4b6d-974e-8c4f217df108}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -1326,12 +1332,6 @@
     <ClCompile Include="test\common\io\compositeOutputStreamTest.c">
       <Filter>Source Files\test\common\io</Filter>
     </ClCompile>
-    <ClCompile Include="motion\extended\bsplineList.c">
-      <Filter>Source Files\motion\extended</Filter>
-    </ClCompile>
-    <ClCompile Include="test\motion\bspline\bsplineListTest.c">
-      <Filter>Source Files\test\motion\extended</Filter>
-    </ClCompile>
     <ClCompile Include="drivers\file\eeprom\eepromFile.c">
       <Filter>Source Files\drivers\file\eeprom</Filter>
     </ClCompile>
@@ -1583,6 +1583,15 @@
     </ClCompile>
     <ClCompile Include="motion\pid\pidDebug.c">
       <Filter>Source Files\motion\pid</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\pid\instructionType.c">
+      <Filter>Source Files\motion\pid</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\extended\bsplineCSVExport.c">
+      <Filter>Source Files\motion\extended</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\pid\pc\pidPc.c">
+      <Filter>Source Files\motion\pid\pc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2162,9 +2171,6 @@
     <ClInclude Include="test\common\io\compositeOutputStreamTest.h">
       <Filter>Header Files\test\common\io</Filter>
     </ClInclude>
-    <ClInclude Include="motion\extended\bsplineList.h">
-      <Filter>Header Files\motion\extended</Filter>
-    </ClInclude>
     <ClInclude Include="test\motion\bspline\bsplineListTest.h">
       <Filter>Header Files\test\motion\extended</Filter>
     </ClInclude>
@@ -2208,9 +2214,6 @@
       <Filter>Header Files\common\eeprom</Filter>
     </ClInclude>
     <ClInclude Include="motion\pid\pidMotionError.h">
-      <Filter>Header Files\motion\pid</Filter>
-    </ClInclude>
-    <ClInclude Include="motion\pid\pidMotionDefinition.h">
       <Filter>Header Files\motion\pid</Filter>
     </ClInclude>
     <ClInclude Include="motion\pid\pidMotion.h">
@@ -2434,6 +2437,18 @@
     </ClInclude>
     <ClInclude Include="common\serial\serialLinkList.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\pidConstants.h">
+      <Filter>Header Files\motion\pid</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\endDetection\motionEndInfo.h">
+      <Filter>Header Files\motion\pid\endDetection</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\extended\bsplineCSVExport.h">
+      <Filter>Header Files\motion\extended</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\pc\pidPc.h">
+      <Filter>Header Files\motion\pid\pc</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

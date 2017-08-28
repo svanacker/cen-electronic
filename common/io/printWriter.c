@@ -230,36 +230,47 @@ int appendDecf(OutputStream* stream, float value) {
     float decimalValue;
     long decimalValueLong;
 
+	float absValue = value;
+	if (absValue < 0) {
+		absValue = -absValue;
+	}
+	// By default, 1 decimal
+	int decimalCount = 1;
+	float decimalFactorMultiplicator = 10;
+	if (absValue < 10) {
+		// 3 decimal
+		decimalCount = 3;
+		decimalFactorMultiplicator = 1000;
+	}
+	else if (absValue < 100) {
+		// 2 decimal
+		decimalCount = 2;
+		decimalFactorMultiplicator = 100;
+	}
+
     if (value < 0) {
-        decimalValue = ((value - (long) value) * -1000);
+        decimalValue = ((value - (long) value) * (-decimalFactorMultiplicator));
         append(stream, '-');
         result++;
         result += appendDec(stream, -(long) value);
     } else {
-        decimalValue = ((value - (long) value) * 1000);
+        decimalValue = ((value - (long) value) * decimalFactorMultiplicator);
         result += appendDec(stream, (long) value);
     }
     decimalValueLong = (long) decimalValue;
 
-    if (decimalValue - decimalValueLong > 0.5f) {
-        decimalValueLong++;
-    }
-
     append(stream, DECIMAL_SEPARATOR);
     result++;
 
-    if (decimalValueLong < 100) {
+	// Decimals
+	if (decimalCount >= 3 && decimalValueLong < 100) {
+		append(stream, '0');
+		result++;
+	}
+    if (decimalCount >= 2 && decimalValueLong < 10) {
         append(stream, '0');
 		result++;
-        if (decimalValueLong < 10) {
-            append(stream, '0');
-			result++;
-		}
-        if (decimalValueLong < 1 && decimalValueLong > 0) {
-            append(stream, '0');
-			result++;
-		}
-    }
+	}
     result += appendDec(stream, decimalValueLong);
 
     return result;
@@ -276,6 +287,11 @@ void appendStringAndDecf(OutputStream* stream, const char* s, float value) {
 void appendStringAndDec(OutputStream* stream, const char* s, long value) {
     appendString(stream, s);
     appendDec(stream, value);
+}
+
+void appendStringAndBool(OutputStream* outputStream, const char* s, bool value) {
+	appendString(outputStream, s);
+	appendBool(outputStream, value);
 }
 
 void appendKeyAndName(OutputStream* stream, const char* key, const char* name) {

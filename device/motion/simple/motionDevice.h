@@ -4,17 +4,20 @@
 #include <stdbool.h>
 
 #include "../../../common/eeprom/eeprom.h"
+#include "../../../common/io/outputStream.h"
 
 #include "../../../device/deviceDescriptor.h"
-#include "../../../common/io/outputStream.h"
+
+#include "../../../motion/pid/pidMotion.h"
 
 /**
 * Returns a descriptor around motion.
 * @param eeprom_ the eeprom to load the default speed and acceleration values
+* @param pidMotionParam the pidMotion object with all instructions and pid parameters
 * @param loadDefaultValues if we load the default values into the eeprom (useful for pc simulation)
 * @return a descriptor for motion device
 */
-DeviceDescriptor* getMotionDeviceDescriptor(Eeprom* eeprom_, bool loadDefaultValues);
+DeviceDescriptor* getMotionDeviceDescriptor(PidMotion* pidMotionParam);
 
 /**
  * Notify the main Board that the motorBoard has reached the asked position.

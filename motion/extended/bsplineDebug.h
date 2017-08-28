@@ -7,30 +7,17 @@
 
 #include "../../common/io/outputStream.h"
 
-#define CSV_SEPARATOR "\t"
-
-// DEBUG FUNCTION
+// CSV DEBUG FUNCTION
 
 /**
- * Write the content of a point to an outputStream
+ * Write the BSpline Table Definition Header
  */
-void writePoint(OutputStream* outputStream, Point* point);
+void writeBSplineDefinitionTableHeader(OutputStream* outputStream);
 
 /**
- * Write into the serial port a point with the associated t value.
+ * Write a row with the definition of the bspline.
  * It's very useful to debug.
  */
-void writeBSplinePointData(OutputStream* outputStream, BSplinePointData* splinePointData);
-
-/**
- * Write into the serial port the list of point for the bezier spline.
- * It's very useful to debug.
- */
-void writeBSpline(OutputStream* outputStream, BSplineCurve* bSplineCurve);
-
-/**
- * Write the control points (4) of the BSpline Curve.
- */
-void writeBSplineControlPoints(OutputStream* outputStream, BSplineCurve* bSplineCurve, float factor);
+void writeBSplineDefinitionRow(OutputStream* outputStream, unsigned int index, BSplineCurve* bSplineCurve);
 
 #endif

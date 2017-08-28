@@ -5,116 +5,55 @@
 
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
+#include "../../common/io/printTableWriter.h"
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
 
-void writePoint(OutputStream* outputStream, Point* point) {
-    appendDecf(outputStream, point->x);
-    appendString(outputStream, CSV_SEPARATOR);
+#define SPLINE_DEFINITION_INDEX_COLUMN_LENGTH				4
+#define SPLINE_DEFINITION_POINT_X_COLUMN_LENGTH				8
+#define SPLINE_DEFINITION_POINT_Y_COLUMN_LENGTH				8
+#define SPLINE_DEFINITION_CURVE_LENGTH_COLUMN_LENGTH		9
+#define SPLINE_DEFINITION_ACC_FACTOR_COLUMN_LENGTH		    4
+#define SPLINE_DEFINITION_SPEED_FACTOR_COLUMN_LENGTH		3
+#define SPLINE_DEFINITION_BACKWARD_COLUMN_LENGTH			3
+#define SPLINE_DEFINITION_LAST_COLUMN_LENGTH		 	    0
 
-    appendDecf(outputStream, point->y);
-    appendString(outputStream, CSV_SEPARATOR);
+void writeBSplineDefinitionTableHeader(OutputStream* outputStream) {
+	println(outputStream);
+	appendTableHeaderSeparatorLine(outputStream);
+	appendStringHeader(outputStream, "Idx", SPLINE_DEFINITION_INDEX_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "P0.X", SPLINE_DEFINITION_POINT_X_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "P0.Y", SPLINE_DEFINITION_POINT_Y_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "P1.X", SPLINE_DEFINITION_POINT_X_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "P1.Y", SPLINE_DEFINITION_POINT_Y_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "P2.X", SPLINE_DEFINITION_POINT_X_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "P2.Y", SPLINE_DEFINITION_POINT_Y_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "P3.X", SPLINE_DEFINITION_POINT_X_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "P3.Y", SPLINE_DEFINITION_POINT_Y_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "Lgth(mm)", SPLINE_DEFINITION_CURVE_LENGTH_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "a", SPLINE_DEFINITION_ACC_FACTOR_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "s", SPLINE_DEFINITION_SPEED_FACTOR_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "Back", SPLINE_DEFINITION_BACKWARD_COLUMN_LENGTH);
+	appendEndOfTableColumn(outputStream, SPLINE_DEFINITION_LAST_COLUMN_LENGTH);
+	appendTableHeaderSeparatorLine(outputStream);
 }
 
-void writeBSplinePointData(OutputStream* outputStream, BSplinePointData* splinePointData) {
-    float t = splinePointData->time;
-    appendDecf(outputStream, t);
-    appendString(outputStream, CSV_SEPARATOR);
+void writeBSplineDefinitionRow(OutputStream* outputStream, unsigned int index, BSplineCurve* bSplineCurve) {
+	appendDecTableData(outputStream, index, SPLINE_DEFINITION_INDEX_COLUMN_LENGTH);
+	
+	appendDecfTableData(outputStream, bSplineCurve->p0.x, SPLINE_DEFINITION_POINT_X_COLUMN_LENGTH);
+	appendDecfTableData(outputStream, bSplineCurve->p0.y, SPLINE_DEFINITION_POINT_Y_COLUMN_LENGTH);
+	appendDecfTableData(outputStream, bSplineCurve->p1.x, SPLINE_DEFINITION_POINT_X_COLUMN_LENGTH);
+	appendDecfTableData(outputStream, bSplineCurve->p1.y, SPLINE_DEFINITION_POINT_Y_COLUMN_LENGTH);
+	appendDecfTableData(outputStream, bSplineCurve->p2.x, SPLINE_DEFINITION_POINT_X_COLUMN_LENGTH);
+	appendDecfTableData(outputStream, bSplineCurve->p2.y, SPLINE_DEFINITION_POINT_Y_COLUMN_LENGTH);
+	appendDecfTableData(outputStream, bSplineCurve->p3.x, SPLINE_DEFINITION_POINT_X_COLUMN_LENGTH);
+	appendDecfTableData(outputStream, bSplineCurve->p3.y, SPLINE_DEFINITION_POINT_Y_COLUMN_LENGTH);
 
-    Point point = splinePointData->point;
-    writePoint(outputStream, &point);
-
-    float distance = splinePointData->length;
-    appendDecf(outputStream, distance);
-    appendString(outputStream, CSV_SEPARATOR);
-
-    float orientation = splinePointData->orientation;
-    appendDecf(outputStream, orientation);
-
-    println(outputStream);
+	appendDecfTableData(outputStream, bSplineCurve->curveLength, SPLINE_DEFINITION_CURVE_LENGTH_COLUMN_LENGTH);
+	appendDecTableData(outputStream, bSplineCurve->accelerationFactor, SPLINE_DEFINITION_ACC_FACTOR_COLUMN_LENGTH);
+	appendDecTableData(outputStream, bSplineCurve->speedFactor, SPLINE_DEFINITION_SPEED_FACTOR_COLUMN_LENGTH);
+	appendBoolTableData(outputStream, bSplineCurve->backward, SPLINE_DEFINITION_BACKWARD_COLUMN_LENGTH);
+	appendEndOfTableColumn(outputStream, SPLINE_DEFINITION_LAST_COLUMN_LENGTH);
 }
-
-void writeBSplineHeader(OutputStream* outputStream) {
-    appendCRLF(outputStream);
-    appendKeyAndName(outputStream, "t", CSV_SEPARATOR);
-
-    appendKeyAndName(outputStream, "p.x", CSV_SEPARATOR);
-    appendKeyAndName(outputStream, "p.y", CSV_SEPARATOR);
-
-    appendKeyAndName(outputStream, "length", CSV_SEPARATOR);
-
-    appendKeyAndName(outputStream, "orientation", CSV_SEPARATOR);
-
-    appendCRLF(outputStream);
-}
-
-void writeBSplineDefinitionPoint(OutputStream* outputStream, Point* point, char* pointName, float factor) {
-    appendString(outputStream, pointName);
-    appendStringAndDecf(outputStream, "(x=", point->x * factor);
-    appendStringAndDecf(outputStream, ",y=", point->y * factor);
-    appendString(outputStream, ")\n");
-}
-
-void writeBSplineControlPoints(OutputStream* outputStream, BSplineCurve* bSplineCurve, float factor) {
-    writeBSplineDefinitionPoint(outputStream, &(bSplineCurve->p0), "p0", factor);
-    writeBSplineDefinitionPoint(outputStream, &(bSplineCurve->p1), "p1", factor);
-    writeBSplineDefinitionPoint(outputStream, &(bSplineCurve->p2), "p2", factor);
-    writeBSplineDefinitionPoint(outputStream, &(bSplineCurve->p3), "p3", factor);
-}
-
-void writeBSplineDefinition(OutputStream* outputStream, BSplineCurve* bSplineCurve) {
-    writeBSplineControlPoints(outputStream, bSplineCurve, 1.0f);
-
-    float curveLength = bSplineCurve->curveLength;
-    appendStringAndDecf(outputStream, "\ncurve.length=", curveLength);
-    appendString(outputStream, " mm\n");
-
-    /*
-    appendString(outputStream, "lastPointData:\n");
-    writeBSplinePointData(outputStream, &(bSplineCurve->lastPointData));
-
-    appendString(outputStream, "tempPointData:\n");
-    writeBSplinePointData(outputStream, &(bSplineCurve->tempPointData));
-    */
-
-    appendStringAndDec(outputStream, "acc Factor:", bSplineCurve->accelerationFactor);
-    println(outputStream);
-
-    appendStringAndDec(outputStream, "Speed Factor:", bSplineCurve->speedFactor);
-    println(outputStream);
-}
-
-void writeBSpline(OutputStream* outputStream, BSplineCurve* bSplineCurve) {
-    writeBSplineDefinition(outputStream, bSplineCurve);
-
-    // BSplinePointData* splinePointData = &(bSplineCurve->lastPointData);
-
-    /*
-    float curveLength = bSplineCurve->curveLength;
-
-    // Using constant length segment
-    appendString(outputStream, "Const length:\n");
-    writeBSplineHeader(outputStream);
-    float length;
-    for (length = 0.0f; length <= curveLength; length += (curveLength / 40.0f)) {
-        computeBSplineTimeAtDistance(bSplineCurve, length);
-
-        writeBSplinePointData(outputStream, splinePointData);
-    }
-    */
-
-    // Using constant time
-    appendString(outputStream, "\nConst time:\n");
-    writeBSplineHeader(outputStream);
-    float t;
-    BSplinePointData splinePointData;
-    for (t = 0.0f; t <= 1.0f; t += 0.025f) {
-        computeBSplinePoint(bSplineCurve, t, &(splinePointData.point));
-        float angle = computeBSplineOrientationWithDerivative(bSplineCurve, t);
-        splinePointData.orientation = angle;
-        splinePointData.time = t;
-        writeBSplinePointData(outputStream, &(splinePointData));
-    }
-}
-
 

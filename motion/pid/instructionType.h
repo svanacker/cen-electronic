@@ -1,6 +1,8 @@
 #ifndef INSTRUCTION_TYPE_H
 #define INSTRUCTION_TYPE_H
 
+#include "../../common/io/outputStream.h"
+
 // -> PID TO CONTROL
 
 // Number of PID to control
@@ -16,5 +18,13 @@ enum InstructionType {
     // Alpha => Angle (difference between the left and right wheels) / 2
     ALPHA = 1
 };
+
+/**
+ * Append the instruction Type As String.
+ * @param outputStream the outputStream where we will write
+ * @param instructionType the instructionType for which we want a String representation
+ * @return the number of chars written
+ */
+unsigned int appendInstructionTypeAsString(OutputStream* outputStream, enum InstructionType instructionType);
 
 #endif

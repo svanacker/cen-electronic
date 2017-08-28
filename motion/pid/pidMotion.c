@@ -1,74 +1,178 @@
 #include "pidMotion.h"
 
+#include <stdbool.h>
+
 #include "../../common/error/error.h"
+#include "../../robot/kinematics/robotKinematics.h"
 
-// Contains all information about current motion (singleton)
-static PidMotion pidMotion;
+#include "pidTimer.h"
 
-PidMotion* getPidMotion(void) {
-    return &pidMotion;
+bool checkPidMotionNotNull(const PidMotion* pidMotion) {
+	if (pidMotion == NULL) {
+		writeError(PID_MOTION_NULL);
+		return false;
+	}
+	return true;
 }
 
-void setMotionModeAdd(void) {
-	pidMotion.stackMotionDefinitions = true;
+bool isPidMotionInitialized(const PidMotion* pidMotion) {
+	if (!checkPidMotionNotNull(pidMotion)) {
+		return false;
+	}
+	return pidMotion->length > 0;
 }
 
-void setMotionModeReplace(void) {
-	pidMotion.stackMotionDefinitions = false;
+void clearPidMotion(PidMotion* pidMotion) {
+	if (!checkPidMotionNotNull(pidMotion)) {
+		return;
+	}
+	pidMotion->writeIndex = 0;
+	pidMotion->readIndex = 0;
 }
 
-bool isStackMotionDefinitions(void) {
-	return pidMotion.stackMotionDefinitions;
+bool isPidMotionFull(const PidMotion* pidMotion) {
+	if (!checkPidMotionNotNull(pidMotion)) {
+		return false;
+	}
+	return ((pidMotion->writeIndex + 1) % pidMotion->length) == pidMotion->readIndex;
 }
 
-PidMotionDefinition* getCurrentMotionDefinition(void) {
-	return &(pidMotion.motionDefinitions[0]);
+bool isPidMotionEmpty(const PidMotion* pidMotion) {
+	if (!checkPidMotionNotNull(pidMotion)) {
+		return true;
+	}
+	return pidMotion->readIndex == pidMotion->writeIndex;
 }
 
-/**
-* Returns the motion definition with a specified index
-*/
-PidMotionDefinition* getMotionDefinition(unsigned int index) {
-	// TODO : Check array bounds
-	return &(pidMotion.motionDefinitions[index]);
+unsigned int getPidMotionElementsCount(const PidMotion* pidMotion) {
+	if (!checkPidMotionNotNull(pidMotion)) {
+		return 0;
+	}
+	int result = pidMotion->writeIndex - pidMotion->readIndex;
+	if (result < 0) {
+		result += pidMotion->length;
+	}
+	return result;
 }
 
-/**
-* Returns how many motion definition are stored.
-*/
-unsigned int getMotionDefinitionCount(void) {
-	return pidMotion.motionDefinitionCount;
+unsigned int getPidMotionCapacity(const PidMotion* pidMotion) {
+	if (!checkPidMotionNotNull(pidMotion)) {
+		return 0;
+	}
+	return pidMotion->length - 1;
 }
 
-/*
-PidMotionDefinition* removeCurrentMotionDefinition(void) {
-	if (pidMotion.motionDefinitionCount > 0) {
-		pidMotion.motionDefinitionCount--;
+PidMotionDefinition* pidMotionReadMotionDefinition(PidMotion* pidMotion) {
+	if (!checkPidMotionNotNull(pidMotion)) {
+		return NULL;
+	}
+	bool isEmpty = isPidMotionEmpty(pidMotion);
+	if (!isEmpty) {
+		PidMotionDefinition* result = (PidMotionDefinition*)pidMotion->motionDefinitions;
+		// Shift to the right cell index
+		result += pidMotion->readIndex;
+
+		pidMotion->readIndex++;
+		pidMotion->readIndex %= pidMotion->length;
+		return result;
+	}
+	else {
+		// We must log the problem
+		writeError(PID_MOTION_EMPTY);
+		return 0;
 	}
 }
-*/
 
-PidMotionDefinition* getNextMotionDefinition(void) {
-	int index = 0;
-	// If we stack
-	if (isStackMotionDefinitions()) {
-		// we check that the list is not full
-		if (pidMotion.motionDefinitionCount >= NEXT_MOTION_DEFINITION_COUNT) {
-			writeError(MOTION_DEFINITION_LIST_FULL);
-			// We return the same pidMotion to avoid to get Null Pointer Exception if we returns NULL
-			return &(pidMotion.motionDefinitions[index]);
+PidMotionDefinition* pidMotionGetNextToWritePidMotionDefinition(PidMotion* pidMotion) {
+	if (!checkPidMotionNotNull(pidMotion)) {
+		return NULL;
+	}
+	// If we stack or if the pidMotion is Empty, we add a new definition !
+	if (pidMotion->stackMotionDefinitions || isPidMotionEmpty(pidMotion)) {
+		bool isFull = isPidMotionFull(pidMotion);
+		if (!isFull) {
+			PidMotionDefinition* result = (PidMotionDefinition*)pidMotion->motionDefinitions;
+			// Shift to the right cell index
+			result += pidMotion->writeIndex;
+			// For next time
+			pidMotion->writeIndex++;
+			pidMotion->writeIndex %= pidMotion->length;
+			return result;
 		}
-		// Compute index
-		index = pidMotion.motionDefinitionCount;
-		pidMotion.motionDefinitionCount++;
+		else {
+			// We must log the problem
+			writeError(PID_MOTION_FULL);
+			return NULL;
+		}
 	}
-	return &(pidMotion.motionDefinitions[index]);
+	// if we don't stack and already a current motion Definition
+	return pidMotionGetCurrentMotionDefinition(pidMotion);
 }
 
-void initPidMotion(void) {
-	// We have always a motion ???
-	pidMotion.motionDefinitionCount = 1;
-    initMotionEndParameter(getMotionEndDetectionParameter());
-	PidMotionDefinition* motionDefinition = getCurrentMotionDefinition();
-    initFirstTimeBSplineCurve(&(motionDefinition->curve));
+PidMotionDefinition* pidMotionGetCurrentMotionDefinition(PidMotion* pidMotion) {
+	if (!checkPidMotionNotNull(pidMotion)) {
+		return NULL;
+	}
+	PidMotionDefinition* result = (PidMotionDefinition*)pidMotion->motionDefinitions;
+	// Shift to the right cell index
+	result += pidMotion->readIndex;
+
+	return result;
 }
+
+PidMotionDefinition* getMotionDefinition(PidMotion* pidMotion, unsigned int index) {
+	unsigned int size = getPidMotionElementsCount(pidMotion);
+	if (index < size) {
+		PidMotionDefinition* result = (PidMotionDefinition*)pidMotion->motionDefinitions;
+		// Shift to the right cell index
+		result += ((pidMotion->readIndex + index) % pidMotion->length);
+
+		return result;
+	}
+	else {
+		// We must log the problem
+		writeError(PID_MOTION_NOT_ENOUGH_DATA);
+	}
+	return 0;
+}
+
+// STACK / REPLACE MODE
+
+void setMotionModeAdd(PidMotion* pidMotion) {
+	pidMotion->stackMotionDefinitions = true;
+}
+
+void setMotionModeReplace(PidMotion* pidMotion) {
+	pidMotion->stackMotionDefinitions = false;
+}
+
+bool isStackMotionDefinitions(PidMotion* pidMotion) {
+	return pidMotion->stackMotionDefinitions;
+}
+
+// MOTION PARAMETERS
+
+MotionEndDetectionParameter* getMotionEndDetectionParameter(PidMotion* pidMotion) {
+	return &(pidMotion->globalParameters.motionEndDetectionParameter);
+}
+
+// INIT
+
+void initPidMotion(PidMotion* pidMotion, Eeprom* _eeprom, PidMotionDefinition(*array)[], unsigned int length) {
+	if (!checkPidMotionNotNull(pidMotion)) {
+		return;
+	}
+	pidMotion->motionDefinitions = array;
+	pidMotion->length = length;
+	pidMotion->pidPersistenceEeprom = _eeprom;
+    initMotionEndParameter(getMotionEndDetectionParameter(pidMotion));
+
+	// loadPidParameters(loadDefaultParameters);
+	RobotKinematics* robotKinematics = getRobotKinematics();
+	loadRobotKinematicsParameters(robotKinematics, _eeprom, true);
+	initPidTimer();
+
+	// PidMotionDefinition* motionDefinition = getCurrentMotionDefinition();
+	// initFirstTimeBSplineCurve(&(motionDefinition->curve));
+}
+

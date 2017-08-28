@@ -7,6 +7,7 @@
 #include "../endDetection/motionEndDetection.h"
 
 #include "../../../common/commons.h"
+#include "../../../common/error/error.h"
 #include "../../../common/math/cenMath.h"
 
 #include "../../../common/io/printWriter.h"
@@ -23,9 +24,11 @@
  * Init all variables.
  * @param index corresponds to THETA or ALPHA
  */
-void initNextPositionVars(PidMotionDefinition* motionDefinition, enum InstructionType instructionType) {
-    PidMotion* pidMotion = getPidMotion();
-
+void initNextPositionVars(PidMotion* pidMotion, PidMotionDefinition* motionDefinition, enum InstructionType instructionType) {
+	if (motionDefinition == NULL) {
+		writeError(MOTION_DEFINITION_NULL);
+		return;
+	}
     // Initialization of MotionInstruction : TODO : do not reset it !
     MotionInstruction* localInst = &(motionDefinition->inst[instructionType]);
     localInst->nextPosition = 0;
@@ -61,8 +64,7 @@ void initNextPositionVars(PidMotionDefinition* motionDefinition, enum Instructio
     resetMotionEndData(localEnd);
 }
 
-void clearInitialSpeeds() {
-    PidMotion* pidMotion = getPidMotion();
+void clearInitialSpeeds(PidMotion* pidMotion) {
     PidComputationValues* computationValues = &(pidMotion->computationValues);
 
     // TODO : For continuous trajectory : to change
@@ -130,16 +132,19 @@ void computeMotionInstruction(MotionInstruction* inst) {
     }
 }
 
-void setNextPosition(PidMotionDefinition* motionDefinition, 
+void setNextPosition(PidMotion* pidMotion, PidMotionDefinition* motionDefinition, 
 		enum InstructionType instructionType,
         enum MotionParameterType motionParameterType,
         enum PidType pidType,
         float pNextPosition,
         float pa,
         float pSpeed) {
-    initNextPositionVars(motionDefinition, instructionType);
+	if (motionDefinition == NULL) {
+		writeError(MOTION_DEFINITION_NULL);
+		return;
+	}
+    initNextPositionVars(pidMotion, motionDefinition, instructionType);
 
-    // PidMotion* pidMotion = getPidMotion();
     MotionInstruction* localInst = &(motionDefinition->inst[instructionType]);
 
     localInst->nextPosition = pNextPosition;

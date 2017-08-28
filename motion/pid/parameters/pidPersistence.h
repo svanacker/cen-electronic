@@ -4,6 +4,7 @@
 #include <stdbool.h>
 
 #include "../../../common/eeprom/eeprom.h"
+#include "../pidMotion.h"
 
 // -> EEPROM Index
 #define EEPROM_KP                0
@@ -20,16 +21,11 @@
 /**
  * Loads the PID data from EEPROM (or Memory which simulates Eeprom)).
  */
-void loadPidParameters(bool loadDefaultValues);
+void loadPidParameters(PidMotion* pidMotion, bool loadDefaultValues);
 
 /**
  * Saves the PID data to EEPROM.
  */
-void savePidParameters(void);
-
-/**
- * Initializes the Eeprom used by the Pid Persistence.
- */
-void initPidPersistence(Eeprom* eeprom_);
+void savePidParameters(PidMotion* pidMotion);
 
 #endif

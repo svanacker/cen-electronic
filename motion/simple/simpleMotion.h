@@ -4,36 +4,37 @@
 // MAIN FUNCTIONS
 
 #include <stdbool.h>
+#include "../pid/pidMotion.h"
 
 /**
  * Stop the robot.
  */
-void stopPosition(bool maintainPositionValue);
+void stopPosition(PidMotion* pidMotion, bool maintainPositionValue);
 
 /**
  * Ask the robot to maintain the position.
  */
-void maintainPosition(void);
+void maintainPosition(PidMotion* pidMotion);
 
 /**
  * Go to a position;
  */
-void gotoPosition(float left, float right, float a, float speed);
+void gotoPosition(PidMotion* pidMotion, float left, float right, float a, float speed);
 
 /**
  * Go simply forward with a distance in pulse and returns the pulse.
  */
-float forwardSimple(float pulse);
+float forwardSimple(PidMotion* pidMotion, float pulse);
 
-float backwardSimple(float pulse);
+float backwardSimple(PidMotion* pidMotion, float pulse);
 
-float leftSimple(float pulse);
+float leftSimple(PidMotion* pidMotion, float pulse);
 
-float rightSimple(float pulse);
+float rightSimple(PidMotion* pidMotion, float pulse);
 
-float leftOneWheelSimple(float pulse);
+float leftOneWheelSimple(PidMotion* pidMotion, float pulse);
 
-float rightOneWheelSimple(float pulse);
+float rightOneWheelSimple(PidMotion* pidMotion, float pulse);
 
 // Function with distance or degree
 
@@ -42,9 +43,9 @@ float rightOneWheelSimple(float pulse);
  * @param a acceleration
  * @param speed
  */
-float forwardMM(float distanceInMM, float a, float speed);
+float forwardMM(PidMotion* pidMotion, float distanceInMM, float a, float speed);
 
-float backwardMM(float distanceInMM, float a, float speed);
+float backwardMM(PidMotion* pidMotion, float distanceInMM, float a, float speed);
 
 /**
  * Do a rotation with an angle in the trigonometric turn.
@@ -52,7 +53,7 @@ float backwardMM(float distanceInMM, float a, float speed);
  * @param a acceleration
  * @param speed
  */
-float rotationDegree(float angleDegree, float a, float speed);
+float rotationDegree(PidMotion* pidMotion, float angleDegree, float a, float speed);
 
 /**
  * Do a rotation with an angle in milliDegree in the trigonometric turn.
@@ -60,53 +61,53 @@ float rotationDegree(float angleDegree, float a, float speed);
  * @param a acceleration
  * @param speed
  */
-float rotationMilliDegree(float milliAngleDegree, float a, float speed);
+float rotationMilliDegree(PidMotion* pidMotion, float milliAngleDegree, float a, float speed);
 
-float leftDegree(float angleDegree, float a, float speed);
+float leftDegree(PidMotion* pidMotion, float angleDegree, float a, float speed);
 
-float leftMilliDegree(float milliAngleDegree, float a, float speed);
+float leftMilliDegree(PidMotion* pidMotion, float milliAngleDegree, float a, float speed);
 
-float rightDegree(float angleDegree, float a, float speed);
+float rightDegree(PidMotion* pidMotion, float angleDegree, float a, float speed);
 
-float rightMilliDegree(float milliAngleDegree, float a, float speed);
+float rightMilliDegree(PidMotion* pidMotion, float milliAngleDegree, float a, float speed);
 
-void leftOneWheelDegree(float angleDegree, float a, float speed);
+void leftOneWheelDegree(PidMotion* pidMotion, float angleDegree, float a, float speed);
 
-void rightOneWheelDegree(float angleDegree, float a, float speed);
+void rightOneWheelDegree(PidMotion* pidMotion, float angleDegree, float a, float speed);
 
 // Simplest function
 
 /**
  * Go Forward with a distance in mm.
  */
-float forwardSimpleMM(float distanceInMM);
+float forwardSimpleMM(PidMotion* pidMotion, float distanceInMM);
 
-float backwardSimpleMM(float distanceInMM);
+float backwardSimpleMM(PidMotion* pidMotion, float distanceInMM);
 
-float leftSimpleDegree(float angleDegree);
+float leftSimpleDegree(PidMotion* pidMotion, float angleDegree);
 
-float leftSimpleMilliDegree(float milliAngleDegree);
+float leftSimpleMilliDegree(PidMotion* pidMotion, float milliAngleDegree);
 
-float rightSimpleDegree(float angleDegree);
+float rightSimpleDegree(PidMotion* pidMotion, float angleDegree);
 
-float rightSimpleMilliDegree(float milliAngleDegree);
+float rightSimpleMilliDegree(PidMotion* pidMotion, float milliAngleDegree);
 
-void leftOneWheelSimpleDegree(float angleDegree);
+void leftOneWheelSimpleDegree(PidMotion* pidMotion, float angleDegree);
 
-void rightOneWheelSimpleDegree(float angleDegree);
+void rightOneWheelSimpleDegree(PidMotion* pidMotion, float angleDegree);
 
 // With Wait
 
-float forwardSimpleMMAndWait(float distanceInMM);
+float forwardSimpleMMAndWait(PidMotion* pidMotion, float distanceInMM);
 
-float backwardSimpleMMAndWait(float distanceInMM);
+float backwardSimpleMMAndWait(PidMotion* pidMotion, float distanceInMM);
 
-float leftSimpleDegreeAndWait(float angleDegree);
+float leftSimpleDegreeAndWait(PidMotion* pidMotion, float angleDegree);
 
-float leftSimpleMilliDegreeAndWait(float milliAngleDegree);
+float leftSimpleMilliDegreeAndWait(PidMotion* pidMotion, float milliAngleDegree);
 
-float rightSimpleDegreeAndWait(float angleDegree);
+float rightSimpleDegreeAndWait(PidMotion* pidMotion, float angleDegree);
 
-float rightSimpleMilliDegreeAndWait(float milliAngleDegree);
+float rightSimpleMilliDegreeAndWait(PidMotion* pidMotion, float milliAngleDegree);
 
 #endif
