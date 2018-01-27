@@ -193,18 +193,6 @@ void clearLocationTmpInfo(LocationList* locationList) {
 
 // DEBUG
 
-void printLocationList(OutputStream* outputStream, char* locationListName, LocationList* locationList) {
-    int i;
-    int size = locationList->size;
-    appendString(outputStream, locationListName);
-    appendStringAndDec(outputStream, ", size=", locationList->size);
-    println(outputStream);    
-    for (i = 0; i < size; i++) {
-        Location* location = getLocation(locationList, i);
-        printLocation(outputStream, location);
-    }
-}
-
 void printLocationLinkedPath(OutputStream* outputStream, Location* startPoint) {
     Location* currentLocation = startPoint;
 

@@ -102,52 +102,6 @@ char printAllElements(int* element, int column, int line) {
         return result;
     }
 
-    // Gameboard 2012
-    result = startAreaVioletPrint(element, column, line);
-    if (result != CHAR_NO_DRAW) {
-        return result;
-    }
-    result = startAreaRedPrint(element, column, line);
-    if (result != CHAR_NO_DRAW) {
-        return result;
-    }
-    result = boatVioletPrint(element, column, line);
-    if (result != CHAR_NO_DRAW) {
-        return result;
-    }
-    result = boatRedPrint(element, column, line);
-    if (result != CHAR_NO_DRAW) {
-        return result;
-    }
-    result = bottle1VioletPrint(element, column, line);
-    if (result != CHAR_NO_DRAW) {
-        return result;
-    }
-    result = bottle2VioletPrint(element, column, line);
-    if (result != CHAR_NO_DRAW) {
-        return result;
-    }
-    result = bottle1RedPrint(element, column, line);
-    if (result != CHAR_NO_DRAW) {
-        return result;
-    }
-    result = bottle2RedPrint(element, column, line);
-    if (result != CHAR_NO_DRAW) {
-        return result;
-    }
-    result = palmTreePrint(element, column, line);
-    if (result != CHAR_NO_DRAW) {
-        return result;
-    }
-    result = totemRedPrint(element, column, line);
-    if (result != CHAR_NO_DRAW) {
-        return result;
-    }
-    result = totemVioletPrint(element, column, line);
-    if (result != CHAR_NO_DRAW) {
-        return result;
-    }
-
     // Targets
     int i;
     GameTargetList* gameTargetList = getGameTargetList();

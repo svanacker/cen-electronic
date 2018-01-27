@@ -11,13 +11,15 @@
 #include "../../navigation/location.h"
 
 /**
- * Encapsulates the target.
+ * Encapsulates the target for a game.
  */
 typedef struct GameTarget {
     // Returns the name of the target.
     char* name;
     // Returns the gain when reaching a such target.
-    float gain;
+    float potentialGain;
+	// Returns the real gain that we actually have
+	float gain;
     // availability status of the target
     enum GameTargetStatus status;    
     // Returns the position of the target on the gameboard

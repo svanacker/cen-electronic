@@ -229,7 +229,7 @@ unsigned int computeBestPath(Location* start, Location* end) {
 }
 
 void printNavigationContext(OutputStream* outputStream) {
-    printLocationList(outputStream, "locations:", navigation.locationList);
+    printLocationListTable(outputStream, navigation.locationList);
     printPathList(outputStream, "paths:", navigation.paths);
 }
 

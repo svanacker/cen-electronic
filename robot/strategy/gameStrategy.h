@@ -45,6 +45,8 @@ GameStrategyItem* getStrategyItem(GameStrategy* gameStrategy, int index);
  */
 int getStrategyItemCount(GameStrategy* gameStrategy);
 
+// DEBUG
+
 /**
  * Print the detail of each strategy.
  */

@@ -14,7 +14,7 @@ float getComposedGainFactor(ComposedGainFactor* composedGainFactor,
                               float opponentRobotY) {
     float result;
     // Basic Gain
-    float targetGainFactorValue = target->gain;
+    float targetGainFactorValue = target->potentialGain;
 
     // Distance : TODO
     float distanceGainFactorValue = distanceToTargetAction;

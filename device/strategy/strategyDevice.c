@@ -20,9 +20,11 @@
 #include "../../robot/strategy/gameStrategyContext.h"
 
 #include "../../robot/gameboard/gameboard.h"
+#include "../../robot/strategy/gameStrategy.h"
+#include "../../robot/strategy/gameStrategyList.h"
 
-#include "../../robot/2012/strategy2012.h"
-#include "../../robot/2012/strategy2012Utils.h"
+#include "../../robot/2018/strategy2018.h"
+#include "../../robot/2018/strategy2018Utils.h"
 #include "../../robot/config/robotConfig.h"
 
 // DEVICE INTERFACE
@@ -74,12 +76,12 @@ void deviceStrategyHandleRawData(char commandHeader, InputStream* inputStream, O
         appendStringAndDec(getInfoOutputStreamLogger(), "setStrategy:", strategyIndex);
         println(getInfoOutputStreamLogger());
 
-        initStrategy2012(strategyIndex);
+        initStrategy2018(strategyIndex);
         if (c & CONFIG_COLOR_GREEN_MASK) {
             setColor(COLOR_GREEN);
         }
         else {
-            setColor(COLOR_YELLOW);
+            setColor(COLOR_ORANGE);
         }
 
     }
@@ -88,10 +90,23 @@ void deviceStrategyHandleRawData(char commandHeader, InputStream* inputStream, O
         OutputStream* debugOutputStream = getAlwaysOutputStreamLogger();
         ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_STRATEGY_PRINT_GAME_BOARD);
 
-        printStrategyAllDatas(debugOutputStream);
         printGameboard(debugOutputStream);
     }
-    // next step
+	// List Strategies
+	else if (commandHeader == COMMAND_STRATEGY_LIST) {
+		OutputStream* debugOutputStream = getAlwaysOutputStreamLogger();
+		ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_STRATEGY_LIST);
+		printStrategyAllDatas(debugOutputStream);
+	}
+	// Specific Strategy
+	else if (commandHeader == COMMAND_STRATEGY_ITEM) {
+		int strategyIndex = readHex2(inputStream);
+		GameStrategy* gameStrategy = getGameStrategy(strategyIndex);
+		OutputStream* debugOutputStream = getAlwaysOutputStreamLogger();
+		ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_STRATEGY_ITEM);
+		printGameStrategy(debugOutputStream, gameStrategy);
+	}
+	// next step
     else if (commandHeader == COMMAND_STRATEGY_NEXT_STEP) {
         GameStrategyContext* context = getStrategyContext();
         // response

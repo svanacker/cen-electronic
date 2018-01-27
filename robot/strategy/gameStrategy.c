@@ -6,6 +6,8 @@
 
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
+#include "../../common/io/printTableWriter.h"
+
 
 void clearGameStrategy(GameStrategy* gameStrategy) {
     gameStrategy->size = 0;
@@ -34,14 +36,38 @@ int getStrategyItemCount(GameStrategy* gameStrategy) {
     return gameStrategy->size;
 }
 
-void printGameStrategy(OutputStream* outputStream, GameStrategy* gameStrategy) {
-    appendKeyAndName(outputStream, "strategy.name=", gameStrategy->name);
-    println(outputStream);
-    int size = gameStrategy->size;
-    int i;
-    for (i = 0; i < size; i++) {
-        GameStrategyItem* strategyItem = gameStrategy->items[i];
-        printGameStrategyItem(outputStream, strategyItem);
-    }
 
+// DEBUG AS TABLE
+
+#define GAME_STRATEGY_ITEM_LIST_TARGET_NAME_COLUMN_LENGTH     12
+#define GAME_STRATEGY_ITEM_LIST_LAST_COLUMN_LENGTH            37
+
+/**
+* Private.
+*/
+void printGameStrategyItemListHeader(OutputStream* outputStream) {
+	println(outputStream);
+	// Table Header
+	appendTableHeaderSeparatorLine(outputStream);
+	appendStringHeader(outputStream, "target->name", GAME_STRATEGY_ITEM_LIST_TARGET_NAME_COLUMN_LENGTH);
+	appendEndOfTableColumn(outputStream, GAME_STRATEGY_ITEM_LIST_LAST_COLUMN_LENGTH);
+	appendTableHeaderSeparatorLine(outputStream);
+}
+
+/**
+* @private
+*/
+void printGameStrategyItem(OutputStream* outputStream, GameStrategyItem* strategyItem) {
+	GameTarget* target = strategyItem->target;
+	appendStringTableData(outputStream, target->name, GAME_STRATEGY_ITEM_LIST_TARGET_NAME_COLUMN_LENGTH);
+	appendEndOfTableColumn(outputStream, GAME_STRATEGY_ITEM_LIST_LAST_COLUMN_LENGTH);
+}
+
+void printGameStrategyTable(OutputStream* outputStream, GameStrategy* gameStrategy) {
+	int size = gameStrategy->size;
+	int i;
+	for (i = 0; i < size; i++) {
+		GameStrategyItem* strategyItem = gameStrategy->items[i];
+		printGameStrategyItem(outputStream, strategyItem);
+	}
 }

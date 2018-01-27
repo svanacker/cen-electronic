@@ -39,7 +39,23 @@ int deviceStrategyGetInterface(char commandHeader, DeviceInterfaceMode mode, boo
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
-    // Next step
+	// Print Strategy List
+	else if (commandHeader == COMMAND_STRATEGY_LIST) {
+		// same input/output
+		if (fillDeviceArgumentList) {
+			setFunctionNoArgumentAndNoResult("strategyList");
+		}
+		return commandLengthValueForMode(mode, 0, 0);
+	}
+	// Print Strategy Item
+	else if (commandHeader == COMMAND_STRATEGY_ITEM) {
+		if (fillDeviceArgumentList) {
+			setFunction("strategyItem", 1, 0);
+			setArgumentUnsignedHex2(0, "index");
+		}
+		return commandLengthValueForMode(mode, 2, 0);
+	}
+	// Next step
     else if (commandHeader == COMMAND_STRATEGY_NEXT_STEP) {
         if (fillDeviceArgumentList) {
             setFunction("nextStep", 0, 1);

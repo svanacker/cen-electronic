@@ -11,7 +11,7 @@
 
 void clearGameTarget(GameTarget* target) {
     target->name = "?";
-    target->gain = 0;
+    target->potentialGain = 0;
     target->status = TARGET_HANDLED;
     
     if (&(target->actionList) != NULL) {
@@ -22,7 +22,7 @@ void clearGameTarget(GameTarget* target) {
 void printGameTarget(OutputStream* outputStream, GameTarget* target, bool includeItems) {
     appendString(outputStream, "target:");
     appendKeyAndName(outputStream, "name=", target->name);
-    appendStringAndDecf(outputStream, ", gain=", target->gain);
+    appendStringAndDecf(outputStream, ", potentialGain=", target->potentialGain);
     appendStringAndDec(outputStream, ", status=", target->status);
     // TODO : Point
     println(outputStream);

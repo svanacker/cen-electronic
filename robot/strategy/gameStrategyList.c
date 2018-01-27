@@ -5,6 +5,7 @@
 
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
+#include "../../common/io/printTableWriter.h"
 
 /**
  * Strategy list.
@@ -41,12 +42,34 @@ int getGameStrategyCount(void) {
     return strategies.size;
 }
 
-void printGameStrategyList(OutputStream* outputStream) {
+// DEBUG AS TABLE
+
+#define STRATEGY_LIST_NAME_COLUMN_LENGTH              12
+#define STRATEGY_LIST_LOCATION_LAST_COLUMN_LENGTH     37
+
+void printStrategyListHeader(OutputStream* outputStream) {
+	println(outputStream);
+	// Table Header
+	appendTableHeaderSeparatorLine(outputStream);
+	appendStringHeader(outputStream, "name", STRATEGY_LIST_NAME_COLUMN_LENGTH);
+	appendEndOfTableColumn(outputStream, STRATEGY_LIST_LOCATION_LAST_COLUMN_LENGTH);
+	appendTableHeaderSeparatorLine(outputStream);
+}
+
+void printGameStrategyTableList(OutputStream* outputStream) {
     int i;
     int size = strategies.size;
-    println(outputStream);    
+	printStrategyListHeader(outputStream);
     for (i = 0; i < size; i++) {
         GameStrategy* strategy = strategies.strategies[i];
         printGameStrategy(outputStream, strategy);
     }
+	appendTableHeaderSeparatorLine(outputStream);
+}
+
+void printGameStrategy(OutputStream* outputStream, GameStrategy* gameStrategy) {
+	appendStringTableData(outputStream, gameStrategy->name, STRATEGY_LIST_NAME_COLUMN_LENGTH);
+	appendEndOfTableColumn(outputStream, STRATEGY_LIST_LOCATION_LAST_COLUMN_LENGTH);
+
+	println(outputStream);
 }

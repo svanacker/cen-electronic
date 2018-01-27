@@ -286,12 +286,6 @@
     <Filter Include="Source Files\robot\config">
       <UniqueIdentifier>{7e270b38-8ffe-4b11-b51a-9559fb5c417c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\robot\2012">
-      <UniqueIdentifier>{a2eb171f-8977-4a6d-a41b-d21e9a365b07}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\robot\2012">
-      <UniqueIdentifier>{48991814-0780-4909-bb06-b16c625b70bf}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\drivers\strategy">
       <UniqueIdentifier>{6675e0f0-6bc0-4d22-bc0a-4141ae7af695}</UniqueIdentifier>
     </Filter>
@@ -793,6 +787,12 @@
     <Filter Include="Source Files\motion\pid\pc">
       <UniqueIdentifier>{274a3c45-a654-4b6d-974e-8c4f217df108}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\robot\2018">
+      <UniqueIdentifier>{f260461d-573a-47a1-ac5f-0241219104af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\robot\2018">
+      <UniqueIdentifier>{10e2986f-0922-4035-99c2-5f9715d73e84}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -1088,27 +1088,6 @@
     </ClCompile>
     <ClCompile Include="common\math\bitList.c">
       <Filter>Source Files\common\math</Filter>
-    </ClCompile>
-    <ClCompile Include="robot\2012\armDevice2012.c">
-      <Filter>Source Files\robot\2012</Filter>
-    </ClCompile>
-    <ClCompile Include="robot\2012\armDeviceInterface2012.c">
-      <Filter>Source Files\robot\2012</Filter>
-    </ClCompile>
-    <ClCompile Include="robot\2012\armDriver2012.c">
-      <Filter>Source Files\robot\2012</Filter>
-    </ClCompile>
-    <ClCompile Include="robot\2012\gameBoardElement2012.c">
-      <Filter>Source Files\robot\2012</Filter>
-    </ClCompile>
-    <ClCompile Include="robot\2012\homologation2012.c">
-      <Filter>Source Files\robot\2012</Filter>
-    </ClCompile>
-    <ClCompile Include="robot\2012\strategy2012.c">
-      <Filter>Source Files\robot\2012</Filter>
-    </ClCompile>
-    <ClCompile Include="robot\2012\strategy2012Utils.c">
-      <Filter>Source Files\robot\2012</Filter>
     </ClCompile>
     <ClCompile Include="drivers\strategy\strategyDriver.c">
       <Filter>Source Files\drivers\strategy</Filter>
@@ -1593,6 +1572,12 @@
     <ClCompile Include="motion\pid\pc\pidPc.c">
       <Filter>Source Files\motion\pid\pc</Filter>
     </ClCompile>
+    <ClCompile Include="robot\2018\strategy2018.c">
+      <Filter>Source Files\robot\2018</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2018\strategy2018Utils.c">
+      <Filter>Source Files\robot\2018</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -1930,27 +1915,6 @@
     </ClInclude>
     <ClInclude Include="common\math\bitList.h">
       <Filter>Header Files\common\math</Filter>
-    </ClInclude>
-    <ClInclude Include="robot\2012\armDevice2012.h">
-      <Filter>Header Files\robot\2012</Filter>
-    </ClInclude>
-    <ClInclude Include="robot\2012\armDeviceInterface2012.h">
-      <Filter>Header Files\robot\2012</Filter>
-    </ClInclude>
-    <ClInclude Include="robot\2012\armDriver2012.h">
-      <Filter>Header Files\robot\2012</Filter>
-    </ClInclude>
-    <ClInclude Include="robot\2012\gameBoardElement2012.h">
-      <Filter>Header Files\robot\2012</Filter>
-    </ClInclude>
-    <ClInclude Include="robot\2012\homologation2012.h">
-      <Filter>Header Files\robot\2012</Filter>
-    </ClInclude>
-    <ClInclude Include="robot\2012\strategy2012.h">
-      <Filter>Header Files\robot\2012</Filter>
-    </ClInclude>
-    <ClInclude Include="robot\2012\strategy2012Utils.h">
-      <Filter>Header Files\robot\2012</Filter>
     </ClInclude>
     <ClInclude Include="drivers\strategy\strategyDriver.h">
       <Filter>Header Files\drivers\strategy</Filter>
@@ -2449,6 +2413,12 @@
     </ClInclude>
     <ClInclude Include="motion\pid\pc\pidPc.h">
       <Filter>Header Files\motion\pid\pc</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2018\strategy2018.h">
+      <Filter>Header Files\robot\2018</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2018\strategy2018Utils.h">
+      <Filter>Header Files\robot\2018</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

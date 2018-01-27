@@ -29,7 +29,7 @@ Makefile
 *.zip
 #*.mcw
 
-
+Release
 build
 objects
 bin/debug

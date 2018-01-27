@@ -20,8 +20,6 @@
 #include "../../robot/config/robotConfig.h"
 #include "../../robot/config/robotConfigDevice.h"
 
-#include "../../robot/2012/armDriver2012.h"
-
 static RobotConfig* robotConfig;
 
 static bool matchStarted = false;
@@ -84,7 +82,7 @@ bool isEnd(void) {
     if (result) {    
         // If END
         // TODO : Provide a callback in the Interface and not in the endMatchDetectorDevice !
-        armDriver2012Up(0);
+        // armDriver2012Up(0);
     }
     return result;
 }

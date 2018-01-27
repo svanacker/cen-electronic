@@ -17,10 +17,6 @@ typedef struct GameStrategyItem {
     // getGainFunction* gainFunction;
 } GameStrategyItem;
 
-/**
- * Print the detail of each strategy.
- */
-void printGameStrategyItem(OutputStream* outputStream, GameStrategyItem* strategyItem);
 
 #endif
 

@@ -135,15 +135,9 @@ Location* getNearestLocation(LocationList* locationList, int x, int y);
 // DEBUG
 
 /**
- * Print on the outputStream the location.
- * @param outputStream the stream to show information
- * @param locationListName TODO : integrates into the struct ????
- * @param locationList the pointer on the struct (POO Programming)
- */
-void printLocationList(OutputStream* outputStream, char* locationListName, LocationList* locationList);
-
-/**
 * Print the list of location as table.
+* @param outputStream the stream to show information
+* @param locationList the pointer on the struct (POO Programming)
 */
 void printLocationListTable(OutputStream* outputStream, LocationList* locationList);
 

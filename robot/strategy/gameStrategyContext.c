@@ -57,7 +57,7 @@ void printGameStrategyContext(OutputStream* outputStream, GameStrategyContext* c
 
     // currentTrajectory
     if (&(context->currentTrajectory) != NULL) {
-        printLocationList(outputStream, "\n\tcurrentTrajectory:", &(context->currentTrajectory));
+        printLocationListTable(outputStream, &(context->currentTrajectory));
     }
     else {
         appendString(outputStream, "\n\tcurrentTrajectory=NULL");

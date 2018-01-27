@@ -16,7 +16,7 @@ void loadMatchSideAndUpdateRobotPosition(RobotConfig* robotConfig) {
         teamColor = COLOR_GREEN;
     }
     else {
-        teamColor = COLOR_YELLOW;
+        teamColor = COLOR_ORANGE;
     }
     // TODO : Write on LCD
     // writeStringCR(getMatchSideAsString());
