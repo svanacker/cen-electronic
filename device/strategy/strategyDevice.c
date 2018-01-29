@@ -16,12 +16,17 @@
 #include "../../device/deviceConstants.h"
 #include "../../device/motion/simple/motionDeviceInterface.h"
 
+#include "../../navigation/navigation.h"
+#include "../../navigation/locationList.h"
+#include "../../navigation/pathList.h"
+
 #include "../../robot/strategy/gameStrategyHandler.h"
 #include "../../robot/strategy/gameStrategyContext.h"
 
 #include "../../robot/gameboard/gameboard.h"
 #include "../../robot/strategy/gameStrategy.h"
 #include "../../robot/strategy/gameStrategyList.h"
+#include "../../robot/strategy/gameStrategyItem.h"
 
 #include "../../robot/2018/strategy2018.h"
 #include "../../robot/2018/strategy2018Utils.h"
@@ -96,7 +101,7 @@ void deviceStrategyHandleRawData(char commandHeader, InputStream* inputStream, O
 	else if (commandHeader == COMMAND_STRATEGY_LIST) {
 		OutputStream* debugOutputStream = getAlwaysOutputStreamLogger();
 		ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_STRATEGY_LIST);
-		printStrategyAllDatas(debugOutputStream);
+        printGameStrategyTableList(debugOutputStream);
 	}
 	// Specific Strategy
 	else if (commandHeader == COMMAND_STRATEGY_ITEM) {
@@ -104,9 +109,23 @@ void deviceStrategyHandleRawData(char commandHeader, InputStream* inputStream, O
 		GameStrategy* gameStrategy = getGameStrategy(strategyIndex);
 		OutputStream* debugOutputStream = getAlwaysOutputStreamLogger();
 		ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_STRATEGY_ITEM);
-		printGameStrategy(debugOutputStream, gameStrategy);
+		// TODO printGameStrategy(debugOutputStream, gameStrategy);
 	}
-	// next step
+    // LocationList
+    else if (commandHeader == COMMAND_LOCATION_LIST) {
+        OutputStream* debugOutputStream = getAlwaysOutputStreamLogger();
+        ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_LOCATION_LIST);
+        LocationList* locationList = getNavigationLocationList();
+        printLocationListTable(debugOutputStream, locationList);
+    }
+    // PathList
+    else if (commandHeader == COMMAND_PATH_LIST) {
+        OutputStream* debugOutputStream = getAlwaysOutputStreamLogger();
+        ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_PATH_LIST);
+        PathList* pathList = getNavigationPathList();
+        printPathListTable(debugOutputStream, pathList);
+    }
+    // next step
     else if (commandHeader == COMMAND_STRATEGY_NEXT_STEP) {
         GameStrategyContext* context = getStrategyContext();
         // response

@@ -168,10 +168,10 @@ void printPathListHeader(OutputStream* outputStream) {
 }
 
 void printPathTable(OutputStream* outputStream, PathData* pathData) {
-	appendFixedCharArrayTableData(outputStream, &(pathData->location1->name), PATH_LIST_NAME_1_COLUMN_LENGTH);
-	appendFixedCharArrayTableData(outputStream, &(pathData->location2->name), PATH_LIST_NAME_2_COLUMN_LENGTH);
-	appendHexFixedCharArrayTableData(outputStream, &(pathData->location1->name), PATH_LIST_NAME_HEX_1_COLUMN_LENGTH);
-	appendHexFixedCharArrayTableData(outputStream, &(pathData->location2->name), PATH_LIST_NAME_HEX_2_COLUMN_LENGTH);
+	appendStringTableData(outputStream, pathData->location1->name, PATH_LIST_NAME_1_COLUMN_LENGTH);
+	appendStringTableData(outputStream, pathData->location2->name, PATH_LIST_NAME_2_COLUMN_LENGTH);
+	appendStringTableData(outputStream, pathData->location1->name, PATH_LIST_NAME_HEX_1_COLUMN_LENGTH);
+	appendStringTableData(outputStream, pathData->location2->name, PATH_LIST_NAME_HEX_2_COLUMN_LENGTH);
 	appendDecTableData(outputStream, pathData->cost, PATH_LIST_COST_COLUMN_LENGTH);
 	appendDecTableData(outputStream, pathData->controlPointDistance1, PATH_LIST_CP1_COLUMN_LENGTH);
 	appendDecTableData(outputStream, pathData->controlPointDistance2, PATH_LIST_CP2_COLUMN_LENGTH);

@@ -10,8 +10,11 @@
 #define COMMAND_STRATEGY_PRINT_GAME_BOARD                  'g'
 
 #define COMMAND_STRATEGY_LIST							   'S'
-
 #define COMMAND_STRATEGY_ITEM							   's'
+
+#define COMMAND_LOCATION_LIST							   'L'
+
+#define COMMAND_PATH_LIST							       'P'
 
 /** ask the robot to go to the next step. */    
 #define COMMAND_STRATEGY_NEXT_STEP                         'n'

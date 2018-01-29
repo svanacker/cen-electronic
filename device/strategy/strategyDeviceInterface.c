@@ -55,7 +55,23 @@ int deviceStrategyGetInterface(char commandHeader, DeviceInterfaceMode mode, boo
 		}
 		return commandLengthValueForMode(mode, 2, 0);
 	}
-	// Next step
+    // Print Location List
+    else if (commandHeader == COMMAND_LOCATION_LIST) {
+        // same input/output
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("locationList");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }
+    // Print Path List
+    else if (commandHeader == COMMAND_PATH_LIST) {
+        // same input/output
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("pathList");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }
+    // Next step
     else if (commandHeader == COMMAND_STRATEGY_NEXT_STEP) {
         if (fillDeviceArgumentList) {
             setFunction("nextStep", 0, 1);

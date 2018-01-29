@@ -35,17 +35,16 @@ void printUsage(void) {
 
 int main(int argumentCount, char* arguments[])
 {
-	/*
     char* applicationNameAsChar = arguments[0];
 
     if (argumentCount <= 1) {
 
         // Run the Motor Board
-        // char motorBoardOptionCommand[255];
-		// strcpy_s(motorBoardOptionCommand, _countof(motorBoardOptionCommand), MOTOR_BOARD_PC_NAME);
-		// strcat_s(motorBoardOptionCommand, _countof(motorBoardOptionCommand), " ");
-		// strcat_s(motorBoardOptionCommand, _countof(motorBoardOptionCommand), MOTOR_BOARD_PC_RUN_STANDARD);
-		// runProcess(applicationNameAsChar, motorBoardOptionCommand);
+        char motorBoardOptionCommand[255];
+		strcpy_s(motorBoardOptionCommand, _countof(motorBoardOptionCommand), MOTOR_BOARD_PC_NAME);
+		strcat_s(motorBoardOptionCommand, _countof(motorBoardOptionCommand), " ");
+		strcat_s(motorBoardOptionCommand, _countof(motorBoardOptionCommand), MOTOR_BOARD_PC_RUN_STANDARD);
+		runProcess(applicationNameAsChar, motorBoardOptionCommand);
 
         // And After the main Board
         runMainBoardPC(false);
@@ -85,7 +84,6 @@ int main(int argumentCount, char* arguments[])
     }
     
     getchar();
-	*/
     return EXIT_SUCCESS;
 }
 

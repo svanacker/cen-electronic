@@ -47,10 +47,5 @@ int getStrategyItemCount(GameStrategy* gameStrategy);
 
 // DEBUG
 
-/**
- * Print the detail of each strategy.
- */
-void printGameStrategy(OutputStream* outputStream, GameStrategy* strategy);
-
 #endif
 
