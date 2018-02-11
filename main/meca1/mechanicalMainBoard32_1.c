@@ -152,31 +152,25 @@ int main(void) {
 
     // Open Standard Serial Link
     openSerialLink(&standardSerialStreamLink,
-            &standardInputBuffer,
-            &standardInputBufferArray,
-            MECA_BOARD_32_1_STANDARD_INPUT_BUFFER_LENGTH,
-            &standardOutputBuffer,
-            &standardOutputBufferArray,
-            MECA_BOARD_32_1_STANDARD_OUTPUT_BUFFER_LENGTH,
+		    "SERIAL_MAIN",
+            &standardInputBuffer, &standardInputBufferArray, MECA_BOARD_32_1_STANDARD_INPUT_BUFFER_LENGTH,
+            &standardOutputBuffer, &standardOutputBufferArray, MECA_BOARD_32_1_STANDARD_OUTPUT_BUFFER_LENGTH,
             &standardOutputStream,
             MECA_BOARD_32_1_SERIAL_PORT_STANDARD,
             DEFAULT_SERIAL_SPEED);
 
     // Open Serial Link to enable the Serial LOGS !
     openSerialLink( &debugSerialStreamLink,
-                    &debugInputBuffer,
-                    &debugInputBufferArray,
-                    MECA_BOARD_32_1_DEBUG_INPUT_BUFFER_LENGTH,
-                    &debugOutputBuffer,
-                    &debugOutputBufferArray,
-                    MECA_BOARD_32_1_DEBUG_OUTPUT_BUFFER_LENGTH,
+                    "SERIAL_DEBUG",
+                    &debugInputBuffer, &debugInputBufferArray, MECA_BOARD_32_1_DEBUG_INPUT_BUFFER_LENGTH,
+                    &debugOutputBuffer, &debugOutputBufferArray, MECA_BOARD_32_1_DEBUG_OUTPUT_BUFFER_LENGTH,
                     &debugOutputStream,
                     MECA_BOARD_32_1_SERIAL_PORT_DEBUG,
                     DEFAULT_SERIAL_SPEED);
 
     // Init the logs
-    initLogs(DEBUG, &logHandlerListArray, MECA_BOARD_32_1_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
-    addLogHandler("UART", &debugOutputStream, DEBUG, LOG_HANDLER_CATEGORY_ALL_MASK);
+    initLogs(LOG_LEVEL_DEBUG, &logHandlerListArray, MECA_BOARD_32_1_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
+    addLogHandler("UART", &debugOutputStream, LOG_LEVEL_DEBUG, LOG_HANDLER_CATEGORY_ALL_MASK);
     appendString(getDebugOutputStreamLogger(), getBoardName());
     appendCRLF(getDebugOutputStreamLogger());
 
