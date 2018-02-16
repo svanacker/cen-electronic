@@ -62,7 +62,7 @@ void printStrategyListHeader(OutputStream* outputStream) {
  * @private
 */
 void printGameStrategy(OutputStream* outputStream, GameStrategy* gameStrategy, int index) {
-    appendStringTableData(outputStream, index, STRATEGY_LIST_INDEX_COLUMN_LENGTH);
+    appendDecTableData(outputStream, index, STRATEGY_LIST_INDEX_COLUMN_LENGTH);
     appendStringTableData(outputStream, gameStrategy->name, STRATEGY_LIST_NAME_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, STRATEGY_LIST_LOCATION_LAST_COLUMN_LENGTH);
 }

@@ -305,6 +305,7 @@
     <ClCompile Include="drivers\strategy\strategyDriver.c" />
     <ClCompile Include="drivers\test\testDriver.c" />
     <ClCompile Include="main\mainBoard\mainBoardPc.c" />
+    <ClCompile Include="main\meca1\mechanicalBoard1Pc.c" />
     <ClCompile Include="main\motorboard\motorBoardPc.c" />
     <ClCompile Include="motion\extended\bspline.c" />
     <ClCompile Include="motion\extended\bsplineCSVExport.c" />
@@ -576,6 +577,7 @@
     <ClInclude Include="drivers\strategy\strategyDriver.h" />
     <ClInclude Include="drivers\test\testDriver.h" />
     <ClInclude Include="main\mainBoard\mainBoardPc.h" />
+    <ClInclude Include="main\meca1\mechanicalBoard1Pc.h" />
     <ClInclude Include="main\motorboard\motorBoardPc.h" />
     <ClInclude Include="motion\extended\bspline.h" />
     <ClInclude Include="motion\extended\bsplineCSVExport.h" />

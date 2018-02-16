@@ -38,7 +38,7 @@ int deviceCodersGetInterface(char commandHeader, DeviceInterfaceMode mode, bool 
 			setArgumentSeparator(1);
 			setArgument(2, DEVICE_ARG_UNSIGNED_HEX_2, "iteration count");
         }
-        return commandLengthValueForMode(mode, 0, 5);
+        return commandLengthValueForMode(mode, 5, 0);
     }
     return DEVICE_HEADER_NOT_HANDLED;
 }

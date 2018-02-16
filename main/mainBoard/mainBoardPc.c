@@ -13,6 +13,7 @@
 #include "../../common/i2c/i2cBusList.h"
 #include "../../common/i2c/i2cBusConnectionList.h"
 #include "../../common/i2c/i2cDebug.h"
+#include "../../common/i2c/master/pc/i2cMasterSetupPc.h"
 
 #include "../../common/io/filter.h"
 #include "../../common/io/pc/consoleOutputStream.h"
@@ -58,6 +59,9 @@
 // I2C -> Master
 #include "../../device/i2c/master/i2cMasterDebugDevice.h"
 #include "../../device/i2c/master/i2cMasterDebugDeviceInterface.h"
+
+// MAIN
+#include "../../main/motorboard/motorBoardPc.h"
 
 // CONFIG
 #include "../../robot/config/pc/robotConfigPc.h"
@@ -171,6 +175,7 @@ static I2cBusConnection i2cBusConnectionListArray[MAIN_BOARD_I2C_BUS_CONNECTION_
 
 // Dispatcher i2c->Motor
 static I2cBus* motorBoardI2cBus;
+static I2cMasterBusPc i2cMasterBusPc;
 static I2cBusConnection* motorBoardI2cBusConnection;
 static char motorBoardInputBufferArray[MAIN_BOARD_PC_DATA_MOTOR_BOARD_DISPATCHER_BUFFER_LENGTH];
 static Buffer motorBoardInputBuffer;
@@ -314,7 +319,9 @@ void runMainBoardPC(bool connectToRobotManagerMode) {
 	// I2c
 	initI2cBusList((I2cBus(*)[]) &i2cBusListArray, MAIN_BOARD_I2C_BUS_LIST_LENGTH);
 	motorBoardI2cBus = addI2cBus(I2C_BUS_TYPE_MASTER, I2C_BUS_PORT_1);
-
+    i2cMasterBusPcInitialize(&i2cMasterBusPc, MAIN_BOARD_PC_PIPE_I2C_MASTER_NAME, MOTOR_BOARD_PC_PIPE_I2C_SLAVE_NAME);
+    motorBoardI2cBus->object = &i2cMasterBusPc;
+    
 	initI2cBusConnectionList((I2cBusConnection(*)[]) &i2cBusConnectionListArray, MAIN_BOARD_I2C_BUS_CONNECTION_LIST_LENGTH);
 	motorBoardI2cBusConnection = addI2cBusConnection(motorBoardI2cBus, MOTOR_BOARD_PC_I2C_ADDRESS);
 

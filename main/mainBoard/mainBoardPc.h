@@ -24,6 +24,8 @@
 
 // I2C
 
+#define MAIN_BOARD_PC_PIPE_I2C_MASTER_NAME    L"\\\\.\\pipe\\mainBoardPipe"
+
 #define MAIN_BOARD_I2C_BUS_LIST_LENGTH							2
 #define MAIN_BOARD_I2C_BUS_CONNECTION_LIST_LENGTH				3
 

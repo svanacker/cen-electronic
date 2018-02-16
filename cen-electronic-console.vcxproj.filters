@@ -793,6 +793,12 @@
     <Filter Include="Header Files\robot\2018">
       <UniqueIdentifier>{10e2986f-0922-4035-99c2-5f9715d73e84}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\main\meca1">
+      <UniqueIdentifier>{06a58f68-9aa7-4885-bb9a-61ed1bb7253d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\main\meca1">
+      <UniqueIdentifier>{243bab5f-417e-4759-ae98-fc8c953ae4e8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -1577,6 +1583,9 @@
     </ClCompile>
     <ClCompile Include="robot\2018\strategy2018Utils.c">
       <Filter>Source Files\robot\2018</Filter>
+    </ClCompile>
+    <ClCompile Include="main\meca1\mechanicalBoard1Pc.c">
+      <Filter>Source Files\main\meca1</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2419,6 +2428,9 @@
     </ClInclude>
     <ClInclude Include="robot\2018\strategy2018Utils.h">
       <Filter>Header Files\robot\2018</Filter>
+    </ClInclude>
+    <ClInclude Include="main\meca1\mechanicalBoard1Pc.h">
+      <Filter>Header Files\main\meca1</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

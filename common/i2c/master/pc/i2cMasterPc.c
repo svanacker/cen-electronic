@@ -31,7 +31,13 @@ void portableMasterNackI2C(I2cBusConnection* i2cBusConnection) {
 unsigned int portableMasterWriteI2C(I2cBusConnection* i2cBusConnection, unsigned char data) {
     I2cBus* i2cBus = i2cBusConnection->i2cBus;
     I2cMasterBusPc* masterBusPc = getMasterI2cBusPc(i2cBus);
+    if (masterBusPc == NULL) {
+        return 0;
+    }
     HANDLE pipe = masterBusPc->masterPipeHandle;
+    if (masterBusPc == NULL) {
+        return 0;
+    }
 
     writeCharToPipe(pipe, data);
     return data;
@@ -40,7 +46,14 @@ unsigned int portableMasterWriteI2C(I2cBusConnection* i2cBusConnection, unsigned
 unsigned char portableMasterReadI2C(I2cBusConnection* i2cBusConnection) {
     I2cBus* i2cBus = i2cBusConnection->i2cBus;
     I2cMasterBusPc* masterBusPc = getMasterI2cBusPc(i2cBus);
+    if (masterBusPc == NULL) {
+        return '?';
+    }
+
     HANDLE pipe = masterBusPc->slavePipeHandle;
+    if (pipe == NULL) {
+        return '?';
+    }
 
     unsigned char result = readCharFromPipe(pipe);
     

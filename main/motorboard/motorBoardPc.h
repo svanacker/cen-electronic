@@ -28,7 +28,9 @@ void runMotorBoardPC(bool singleMode);
 #define MOTOR_BOARD_PC_SERIAL_LINK_LIST_LENGTH           2
 
 // I2cBus
-#define MOTOR_BOARD_I2C_BUS_LIST_LENGTH                  1
+#define MOTOR_BOARD_PC_PIPE_I2C_SLAVE_NAME    L"\\\\.\\pipe\\motorBoardPipe"
+
+#define MOTOR_BOARD_PC_I2C_BUS_LIST_LENGTH                  1
 
 #define MOTOR_BOARD_PC_I2C_DEBUG_SLAVE_OUT_BUFFER_LENGTH 150
 #define MOTOR_BOARD_PC_I2C_DEBUG_SLAVE_IN_BUFFER_LENGTH  150

@@ -149,7 +149,7 @@ void initPaths2018(int index) {
     beeToGreenBuildingAreaPath = addNavigationPath(beeLocation, buildingAreaLocation, BEE_TO_BUILDING_AREA_COST, 0x10, 0x60, 0, ANGLE_30, BEE_TO_BUILDING_AREA_ACCELERATION_FACTOR, BEE_TO_BUILDING_AREA_SPEED_FACTOR);
     greenBuildingAreaToSwitch1Path = addNavigationPath(buildingAreaLocation, switchLocation, BUILDING_AREA_TO_SWITCH_COST, 0x10, 0x20, ANGLE_30, 0, BUILDING_AREA_TO_SWITCH_ACCELERATION_FACTOR, BUILDING_AREA_TO_SWITCH_SPEED_FACTOR);
 
-    switch1ToGreenDistributor2Path = addNavigationPath(switchLocation, distributor2FrontLocation, SWITCH_TO_DISTRIBUTOR_2_ACCELERATION_FACTOR, 0x20, 0x80, 0, ANGLE_30);
+    // switch1ToGreenDistributor2Path = addNavigationPath(switchLocation, distributor2FrontLocation, SWITCH_TO_DISTRIBUTOR_2_ACCELERATION_FACTOR, 0x20, 0x80, 0, ANGLE_30);
     /*
     PathData* greenDistributor2ToGarbageAreaFrontPath;
     PathData* garbageAreaFrontPathTo;

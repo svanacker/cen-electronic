@@ -27,11 +27,11 @@ bool isCodersDeviceOk(void) {
     return true;
 }
 
-#define CODERS_DEVICE_NAME_COLUMN_LENGTH			5
-#define CODERS_DEVICE_PULSE_DEC_COLUMN_LENGTH		10
-#define CODERS_DEVICE_PULSE_HEX_COLUMN_LENGTH		12
-#define CODERS_DEVICE_DISTANCE__COLUMN_LENGTH		9
-#define CODERS_DEVICE_LAST_COLUMN_LENGTH            40
+#define CODERS_DEVICE_NAME_COLUMN_LENGTH			8
+#define CODERS_DEVICE_PULSE_DEC_COLUMN_LENGTH		15
+#define CODERS_DEVICE_PULSE_HEX_COLUMN_LENGTH		15
+#define CODERS_DEVICE_DISTANCE__COLUMN_LENGTH		10
+#define CODERS_DEVICE_LAST_COLUMN_LENGTH            35
 
 /**
 * Private.
@@ -53,9 +53,11 @@ void printCoderDebug(OutputStream* outputStream, char* name, signed long value, 
 	appendHex6TableData(outputStream, value, CODERS_DEVICE_PULSE_DEC_COLUMN_LENGTH);
 	float dist = ((float)value) * wheelFactor;
 	appendDecfTableData(outputStream, dist, CODERS_DEVICE_PULSE_DEC_COLUMN_LENGTH);
+	appendEndOfTableColumn(outputStream, CODERS_DEVICE_LAST_COLUMN_LENGTH);
 }
 
 void printCoderTable(OutputStream* outputStream) {
+	println(outputStream);
 	printCoderListHeader(outputStream);
 	signed long coderValue0 = getCoderValue(CODER_LEFT);
 	signed long coderValue1 = getCoderValue(CODER_RIGHT);
@@ -72,7 +74,7 @@ void printCoderTable(OutputStream* outputStream) {
 void deviceCodersHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream) {
     if (commandHeader == COMMAND_GET_WHEEL_POSITION) {
         ackCommand(outputStream, CODERS_DEVICE_HEADER, COMMAND_GET_WHEEL_POSITION);
-        
+        updateTrajectory();
         signed long coderValue0 = getCoderValue(CODER_LEFT);
         signed long coderValue1 = getCoderValue(CODER_RIGHT);
 
@@ -83,6 +85,8 @@ void deviceCodersHandleRawData(char commandHeader, InputStream* inputStream, Out
         ackCommand(outputStream, CODERS_DEVICE_HEADER, COMMAND_DEBUG_GET_WHEEL_POSITION);
 
         OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+        updateTrajectory();
+
 		printCoderTable(debugOutputStream);
     } else if (commandHeader == COMMAND_DEBUG_TIMER_GET_WHEEL_POSITION) {
 		ackCommand(outputStream, CODERS_DEVICE_HEADER, COMMAND_DEBUG_TIMER_GET_WHEEL_POSITION);
@@ -93,8 +97,9 @@ void deviceCodersHandleRawData(char commandHeader, InputStream* inputStream, Out
 
 		unsigned int i;
 		for (i = 0; i < iterationCount; i++) {
+	        updateTrajectory();
 			printCoderTable(debugOutputStream);
-			delaymSec(100);
+			delaymSec(100 * durationInDeciSec);
 		}
 	}
 	else if (commandHeader == COMMAND_CLEAR_CODERS) {

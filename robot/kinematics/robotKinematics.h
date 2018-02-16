@@ -17,9 +17,11 @@
 // DEFAULT VALUES
 
 /** Average wheel length in mm for 1 impulsion. */
-#define KINEMATICS_WHEEL_AVERAGE_LENGTH_DEFAULT_VALUE                        0.011685f
+// Change for a wheel of an average 30 mm
+#define KINEMATICS_WHEEL_AVERAGE_LENGTH_DEFAULT_VALUE                        0.00465f
 
 #define KINEMATICS_WHEEL_ROTATION_BY_SECONDS_AT_FULL_SPEED_DEFAULT_VALUE    7.0f
+// FOR 7500 x 4 (quadratic) = 30 000
 #define KINEMATICS_WHEEL_PULSE_BY_ROTATION_DEFAULT_VALUE                    20000.0f
 
 // To compensate difference between WHEELS

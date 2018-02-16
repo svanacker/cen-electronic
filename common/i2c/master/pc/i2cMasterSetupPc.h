@@ -20,4 +20,9 @@ typedef struct I2cMasterBusPc {
  */
 I2cMasterBusPc* getMasterI2cBusPc(I2cBus* i2cBus);
 
+/**
+* Initialize the extended information used by the Pc to manage a simulation of the i2cBus
+*/
+void i2cMasterBusPcInitialize(I2cMasterBusPc* i2cMasterBusPc, LPCWSTR i2cPipeMasterName, LPCWSTR i2cPipeSlaveName);
+
 #endif

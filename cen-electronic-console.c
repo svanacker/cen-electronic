@@ -6,6 +6,7 @@
 
 #include "main/mainBoard/mainBoardPc.h"
 #include "main/motorBoard/motorBoardPc.h"
+#include "main/meca1/mechanicalBoard1Pc.h"
 #include "test/allTests.h"
 #include "common/pc/process/processHelper.h"
 
@@ -46,6 +47,14 @@ int main(int argumentCount, char* arguments[])
 		strcat_s(motorBoardOptionCommand, _countof(motorBoardOptionCommand), MOTOR_BOARD_PC_RUN_STANDARD);
 		runProcess(applicationNameAsChar, motorBoardOptionCommand);
 
+        // Run the Mecanical Board 1
+        /*
+        char mechanical1OptionCommand[255];
+        strcpy_s(mechanical1OptionCommand, _countof(mechanical1OptionCommand), MECHANICAL_BOARD_1_PC_NAME);
+        strcat_s(mechanical1OptionCommand, _countof(mechanical1OptionCommand), " ");
+        strcat_s(mechanical1OptionCommand, _countof(mechanical1OptionCommand), MOTOR_BOARD_PC_RUN_STANDARD);
+        runProcess(applicationNameAsChar, motorBoardOptionCommand);
+        */
         // And After the main Board
         runMainBoardPC(false);
     }
@@ -74,6 +83,16 @@ int main(int argumentCount, char* arguments[])
             }
             runMotorBoardPC(singleMode);
         }
+        /*
+        else if (strcmp(boardName, MECHANICAL_BOARD_1_PC_NAME) == 0) {
+            bool singleMode = true;
+            if (argumentCount > 2) {
+                char* mechanicalBoard1RunMode = arguments[2];
+                singleMode = (strcmp(boardName, MOTOR_BOARD_PC_RUN_SINGLE) == 0);
+            }
+            runMotorBoardPC(singleMode);
+        }
+        */
         else if (strcmp(boardName, ALL_TESTS_NAME) == 0) {
             runAllTests();
         }
