@@ -31,6 +31,14 @@ int deviceCodersGetInterface(char commandHeader, DeviceInterfaceMode mode, bool 
             setFunctionNoArgumentAndNoResult("dbgCodersVal");
         }
         return commandLengthValueForMode(mode, 0, 0);
+    } else if (commandHeader == COMMAND_DEBUG_TIMER_GET_WHEEL_POSITION) {
+        if (fillDeviceArgumentList) {
+            setFunction("debugTimerCodersVal", 3, 0);
+            setArgument(0, DEVICE_ARG_UNSIGNED_HEX_2, "time in 1/10 sec");
+			setArgumentSeparator(1);
+			setArgument(2, DEVICE_ARG_UNSIGNED_HEX_2, "iteration count");
+        }
+        return commandLengthValueForMode(mode, 0, 5);
     }
     return DEVICE_HEADER_NOT_HANDLED;
 }
