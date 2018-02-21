@@ -3,7 +3,7 @@
 
 #include "../../common/clock/clock.h"
 
-#define TIMER_SOFT_CLOCK_CODE           96
+
 #define SOFT_CLOCK_UPDATE_FREQUENCY     28800
 
 /**

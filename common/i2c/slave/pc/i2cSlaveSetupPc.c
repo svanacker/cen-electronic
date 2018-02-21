@@ -21,12 +21,7 @@
 
 #include <Windows.h>
 
-static I2cSlaveBusConnectionPc i2cSlaveBusConnectionPc;
-
-I2cSlaveBusConnectionPc* getSlaveI2cBusConnectionPc(I2cBusConnection* i2cBusConnection) {
-    I2cSlaveBusConnectionPc* result = (I2cSlaveBusConnectionPc*)i2cBusConnection->object;
-    return result;
-}
+static I2cBusConnectionPc i2cSlaveBusConnectionPc;
 
 void i2cSlaveInitialize(I2cBusConnection* i2cBusConnection) {
     // Avoid more than one initialization

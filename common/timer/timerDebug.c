@@ -14,7 +14,7 @@
 #define TIMER_DEBUG_MARK_TIME_COLUMN_LENGTH	        10
 #define TIMER_DEBUG_ENABLED_COLUMN_LENGTH	        7
 #define TIMER_DEBUG_WORKING_COLUMN_LENGTH	        7
-#define TIMER_DEBUG_LAST_COLUMN_LENGTH	            10
+#define TIMER_DEBUG_LAST_COLUMN_LENGTH	            9
 
 /**
 * Private.

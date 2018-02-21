@@ -12,6 +12,7 @@ HANDLE initServerPipe(LPCWSTR pipeName) {
         // Only xx instance
         2,
         // outBufferSize
+        // TODO : Specify the buffer sizes !
         100,
         // inBufferSize
         100,

@@ -208,7 +208,7 @@ void runMotorBoardPC(bool singleMode) {
     singleModeActivated = singleMode;
     setBoardName(MOTOR_BOARD_PC_NAME);
 	setConsoleSizeAndBuffer(CONSOLE_CHARS_WIDTH, CONSOLE_CHARS_HEIGHT, CONSOLE_BUFFER_WIDTH, CONSOLE_BUFFER_HEIGHT);
-    moveConsole(HALF_SCREEN_WIDTH, 0, HALF_SCREEN_WIDTH, CONSOLE_HEIGHT);
+    moveConsole(HALF_SCREEN_WIDTH, 0, HALF_SCREEN_WIDTH, CONSOLE_HEIGHT / 2);
 
     // We use http://patorjk.com/software/taag/#p=testall&v=2&f=Acrobatic&t=MOTOR%20BOARD%20PC
     // with Font : Jerusalem
@@ -217,13 +217,11 @@ void runMotorBoardPC(bool singleMode) {
     printf("| |\\/| | | | || || | | | |_) |  |  _ \\| | | |/ _ \\ | |_) | | | |  | |_) | |    \r\n");
     printf("| |  | | |_| || || |_| |  _ <   | |_) | |_| / ___ \\|  _ <| |_| |  |  __/| |___ \r\n");
     printf("|_|  |_|\\___/ |_| \\___/|_| \\_\\  |____/ \\___/_/   \\_|_| \\_|____/   |_|    \\____|\r\n");
-    printf("\r\n");
 
     initLogs(LOG_LEVEL_DEBUG, (LogHandler(*)[]) &logHandlerListArray, MOTOR_BOARD_PC_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
     initConsoleInputStream(&consoleInputStream);
     initConsoleOutputStream(&consoleOutputStream);
     addConsoleLogHandler(LOG_LEVEL_DEBUG, LOG_HANDLER_CATEGORY_ALL_MASK);
-    appendStringCRLF(getDebugOutputStreamLogger(), getBoardName());
 
 	initSerialLinkList((SerialLink(*)[]) &serialLinkListArray, MOTOR_BOARD_PC_SERIAL_LINK_LIST_LENGTH);
 

@@ -47,8 +47,8 @@ int deviceClockGetInterface(char commandHeader, DeviceInterfaceMode mode, bool f
 }
 
 static DeviceInterface deviceInterface = {
-    .deviceHeader = CLOCK_DEVICE_HEADER,
     .deviceGetName = &getClockDeviceName,
+    .deviceHeader = CLOCK_DEVICE_HEADER,
     .deviceGetInterface = &deviceClockGetInterface
 };
 

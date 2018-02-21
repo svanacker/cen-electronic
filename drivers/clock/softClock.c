@@ -3,6 +3,8 @@
 #include <stdlib.h>
 
 #include "../../common/clock/clock.h"
+#include "../../common/timer/cenTimer.h"
+#include "../../common/timer/timerConstants.h"
 #include "../../common/timer/timerList.h"
 
 /**

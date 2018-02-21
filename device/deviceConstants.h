@@ -126,12 +126,17 @@
 
 #define ROBOT_SONAR_DETECTOR_DEVICE_HEADER         '#'
 
-#define PLIERS_DEVICE_2011_HEADER                  '_'
-
-#define ARM_DEVICE_2012_HEADER                     '|'
-
 #define MOTION_SIMULATION_DEVICE_HEADER            '/' 
 
 #define ROBOT_INFRARED_DETECTOR_DEVICE_HEADER      '>'
+
+#define LAUNCHER_2018_DEVICE_HEADER                '_'
+
+/** Not Used anymore. */
+#define PLIERS_DEVICE_2011_HEADER                  '_'
+#define ARM_DEVICE_2012_HEADER                     '|'
+
+
+
 
 #endif

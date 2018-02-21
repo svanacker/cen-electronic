@@ -296,14 +296,11 @@ void runMainBoardPC(bool connectToRobotManagerMode) {
     printf("| |\\/| | / _ \\  | ||  \\| |  |  _ \\| | | |/ _ \\ | |_) | | | |  | |_) | |    \r\n");
     printf("| |  | |/ ___ \\ | || |\\  |  | |_) | |_| / ___ \\|  _ <| |_| |  |  __/| |___ \r\n");
     printf("|_|  |_/_/   \\_|___|_| \\_|  |____/ \\___/_/   \\_|_| \\_|____/   |_|    \\____|\r\n");
-    printf("\r\n");
-
 
     initLogs(LOG_LEVEL_DEBUG, (LogHandler(*)[]) &logHandlerListArray, MAIN_BOARD_PC_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
     initConsoleInputStream(&consoleInputStream);
     initConsoleOutputStream(&consoleOutputStream);
     addConsoleLogHandler(LOG_LEVEL_DEBUG, LOG_HANDLER_CATEGORY_ALL_MASK);
-    appendStringCRLF(getDebugOutputStreamLogger(), getBoardName());
 
 	initSerialLinkList((SerialLink(*)[]) &serialLinkListArray, MAIN_BOARD_PC_SERIAL_LINK_LIST_LENGTH);
 

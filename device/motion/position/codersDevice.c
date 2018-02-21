@@ -5,6 +5,8 @@
 
 #include "../../../common/delay/cenDelay.h"
 
+#include "../../../common/error/error.h"
+
 #include "../../../common/io/inputStream.h"
 #include "../../../common/io/outputStream.h"
 #include "../../../common/io/printWriter.h"
@@ -13,6 +15,10 @@
 
 #include "../../../common/log/logger.h"
 #include "../../../common/log/logLevel.h"
+
+#include "../../../common/timer/cenTimer.h"
+#include "../../../common/timer/timerConstants.h"
+#include "../../../common/timer/timerList.h"
 
 #include "../../../motion/position/coders.h"
 #include "../../../motion/position/trajectory.h"
@@ -32,6 +38,8 @@ bool isCodersDeviceOk(void) {
 #define CODERS_DEVICE_PULSE_HEX_COLUMN_LENGTH		15
 #define CODERS_DEVICE_DISTANCE__COLUMN_LENGTH		10
 #define CODERS_DEVICE_LAST_COLUMN_LENGTH            35
+
+static unsigned int coderDebugIterationCount;
 
 /**
 * Private.
@@ -71,6 +79,25 @@ void printCoderTable(OutputStream* outputStream) {
 	appendTableHeaderSeparatorLine(outputStream);
 }
 
+/**
+* Callback.
+*/
+void debugGetWheelCallback(Timer* timer) {
+    if (coderDebugIterationCount <= 0) {
+        return;
+    }
+    updateTrajectory();
+    coderDebugIterationCount--;
+    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+
+    printCoderTable(debugOutputStream);
+}
+
+void initDeviceCoders(void) {
+    initCoders();
+    addTimer(CODERS_TIMER_INDEX, TIME_DIVIDER_1_HERTZ, &debugGetWheelCallback, "CODERS TIMER", NULL);
+}
+
 void deviceCodersHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream) {
     if (commandHeader == COMMAND_GET_WHEEL_POSITION) {
         ackCommand(outputStream, CODERS_DEVICE_HEADER, COMMAND_GET_WHEEL_POSITION);
@@ -90,17 +117,15 @@ void deviceCodersHandleRawData(char commandHeader, InputStream* inputStream, Out
 		printCoderTable(debugOutputStream);
     } else if (commandHeader == COMMAND_DEBUG_TIMER_GET_WHEEL_POSITION) {
 		ackCommand(outputStream, CODERS_DEVICE_HEADER, COMMAND_DEBUG_TIMER_GET_WHEEL_POSITION);
+		Timer* timer = getTimerByCode(CODERS_TIMER_INDEX);
+		if (timer == NULL) {
+			writeError(CODERS_TIMER_NOT_FOUND);
+			return;
+		}
 		unsigned int durationInDeciSec = readHex2(inputStream);
 		checkIsSeparator(inputStream);
-		unsigned int iterationCount = readHex2(inputStream);
-		OutputStream* debugOutputStream = getDebugOutputStreamLogger();
-
-		unsigned int i;
-		for (i = 0; i < iterationCount; i++) {
-	        updateTrajectory();
-			printCoderTable(debugOutputStream);
-			delaymSec(100 * durationInDeciSec);
-		}
+		coderDebugIterationCount = readHex2(inputStream);
+		timer->timeDiviser = TIME_DIVIDER_10_HERTZ * durationInDeciSec;
 	}
 	else if (commandHeader == COMMAND_CLEAR_CODERS) {
         ackCommand(outputStream, CODERS_DEVICE_HEADER, COMMAND_CLEAR_CODERS);
@@ -111,7 +136,7 @@ void deviceCodersHandleRawData(char commandHeader, InputStream* inputStream, Out
 
 
 static DeviceDescriptor descriptor = {
-    .deviceInit = &initCoders,
+    .deviceInit = &initDeviceCoders,
     .deviceShutDown = &stopCoders,
     .deviceIsOk = &isCodersDeviceOk,
     .deviceHandleRawData = &deviceCodersHandleRawData,

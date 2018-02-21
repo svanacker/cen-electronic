@@ -50,7 +50,7 @@ void runMotorBoardPC(bool singleMode);
 #define MOTOR_BOARD_PC_DEVICE_LIST_LENGTH              20
 
 // TIMERS
-#define MOTOR_BOARD_PC_TIMER_LENGTH                     2
+#define MOTOR_BOARD_PC_TIMER_LENGTH                    3
 
 // PID MOTION INSTRUCTION COUNT
 #define MOTOR_BOARD_PC_PID_MOTION_INSTRUCTION_COUNT    10

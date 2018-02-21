@@ -67,6 +67,10 @@
 #include "../../device/motor/pwmMotorDevice.h"
 #include "../../device/motor/pwmMotorDeviceInterface.h"
 
+// 2018
+#include "../../robot/2018/launcherDevice2018.h"
+#include "../../robot/2018/launcherDeviceInterface2018.h"
+
 #include "../../drivers/driverStreamListener.h"
 #include "../../drivers/driverList.h"
 #include "../../drivers/dispatcher/driverDataDispatcherList.h"
@@ -173,7 +177,7 @@ void runMechanicalBoard1PC(bool singleMode) {
     singleModeActivated = singleMode;
     setBoardName(MECHANICAL_BOARD_1_PC_NAME);
 	setConsoleSizeAndBuffer(CONSOLE_CHARS_WIDTH, CONSOLE_CHARS_HEIGHT, CONSOLE_BUFFER_WIDTH, CONSOLE_BUFFER_HEIGHT);
-    moveConsole(HALF_SCREEN_WIDTH, 0, HALF_SCREEN_WIDTH, CONSOLE_HEIGHT);
+    moveConsole(HALF_SCREEN_WIDTH, CONSOLE_HEIGHT / 2, HALF_SCREEN_WIDTH, CONSOLE_HEIGHT / 2);
 
     // We use http://patorjk.com/software/taag/#p=display&v=2&f=Jerusalem&t=MECA%20%20%201%20%20%20PC
     // with Font : Jerusalem
@@ -182,13 +186,11 @@ void runMechanicalBoard1PC(bool singleMode) {
     printf("| |\\/| |  _|| |      / _ \\     | |   | |_) | |\r\n");
     printf("| |  | | |__| |___  / ___ \\    | |   |  __/| |___\r\n");
     printf("|_|  |_| _____\\____/ _ / \\_\\   |_|   |_|    \\____ |\r\n");
-    printf("\r\n");
 
     initLogs(LOG_LEVEL_DEBUG, (LogHandler(*)[]) &logHandlerListArray, MECHANICAL_BOARD_1_PC_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
     initConsoleInputStream(&consoleInputStream);
     initConsoleOutputStream(&consoleOutputStream);
     addConsoleLogHandler(LOG_LEVEL_DEBUG, LOG_HANDLER_CATEGORY_ALL_MASK);
-    appendStringCRLF(getDebugOutputStreamLogger(), getBoardName());
 
 	initSerialLinkList((SerialLink(*)[]) &serialLinkListArray, MECHANICAL_BOARD_1_PC_SERIAL_LINK_LIST_LENGTH);
 
@@ -244,6 +246,9 @@ void runMechanicalBoard1PC(bool singleMode) {
 
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
+
+    // 2018
+    addLocalDevice(getLauncher2018DeviceInterface(), getLauncher2018DeviceDescriptor());
 
     initDevices();
 

@@ -346,6 +346,9 @@
     <ClCompile Include="navigation\path.c" />
     <ClCompile Include="navigation\pathList.c" />
     <ClCompile Include="remote\clock\remoteClock.c" />
+    <ClCompile Include="robot\2018\launcherDevice2018.c" />
+    <ClCompile Include="robot\2018\launcherDeviceInterface2018.c" />
+    <ClCompile Include="robot\2018\launcherDriver2018.c" />
     <ClCompile Include="robot\2018\strategy2018.c" />
     <ClCompile Include="robot\2018\strategy2018Utils.c" />
     <ClCompile Include="robot\config\pc\robotConfigPc.c" />
@@ -428,6 +431,7 @@
     <ClInclude Include="common\i2c\master\i2cMasterSetup.h" />
     <ClInclude Include="common\i2c\master\pc\i2cMasterPc.h" />
     <ClInclude Include="common\i2c\master\pc\i2cMasterSetupPc.h" />
+    <ClInclude Include="common\i2c\pc\i2cCommonPc.h" />
     <ClInclude Include="common\i2c\slave\i2cSlave.h" />
     <ClInclude Include="common\i2c\slave\i2cSlaveLink.h" />
     <ClInclude Include="common\i2c\slave\i2cSlaveSetup.h" />
@@ -625,6 +629,9 @@
     <ClInclude Include="navigation\pathList.h" />
     <ClInclude Include="remote\clock\remoteClock.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="robot\2018\launcherDevice2018.h" />
+    <ClInclude Include="robot\2018\launcherDeviceInterface2018.h" />
+    <ClInclude Include="robot\2018\launcherDriver2018.h" />
     <ClInclude Include="robot\2018\strategy2018.h" />
     <ClInclude Include="robot\2018\strategy2018Utils.h" />
     <ClInclude Include="robot\config\pc\robotConfigPc.h" />

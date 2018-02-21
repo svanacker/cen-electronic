@@ -178,6 +178,7 @@ void clearLastError();
 // Zigbee
 #define TOO_MUCH_JENNIC_EVENT            0x4000
 
+#define CODERS_TIMER_NOT_FOUND             0x4100
 
 // Navigation
 #define TOO_MUCH_GAME_BOARD_ELEMENTS    0x5000

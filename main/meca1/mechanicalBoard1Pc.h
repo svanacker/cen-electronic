@@ -3,7 +3,9 @@
 
 #include <stdbool.h>
 
-#define MECHANICAL_BOARD_1_PC_NAME    "mechanicalBoard1Pc"
+#define MECHANICAL_BOARD_1_PC_NAME           "mechanicalBoard1Pc"
+#define MECHANICAL_BOARD_1_PC_RUN_SINGLE     "single"
+#define MECHANICAL_BOARD_1_PC_RUN_STANDARD   "standard"
 
 #define MECHANICAL_BOARD_1_PC_LOG_HANDLER_LIST_LENGTH                     2
 

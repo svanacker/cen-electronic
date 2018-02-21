@@ -799,6 +799,12 @@
     <Filter Include="Source Files\main\meca1">
       <UniqueIdentifier>{243bab5f-417e-4759-ae98-fc8c953ae4e8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\device\pc">
+      <UniqueIdentifier>{ab3c60a3-4980-47f4-bce3-f4b5c28ee0db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\common\i2c\pc">
+      <UniqueIdentifier>{a6e3ee03-59b8-4ff4-aa77-1af1e60757eb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -1548,24 +1554,6 @@
     <ClCompile Include="device\i2c\i2cCommonDebugDeviceInterface.c">
       <Filter>Source Files\device\i2c</Filter>
     </ClCompile>
-    <ClCompile Include="device\pc\pcDevice.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="device\pc\pcDeviceInterface.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="common\i2c\i2cBusConnectionList.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="common\adc\adcutils.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="common\serial\serialLinkDebug.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="common\serial\serialLinkList.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="motion\pid\pidDebug.c">
       <Filter>Source Files\motion\pid</Filter>
     </ClCompile>
@@ -1586,6 +1574,33 @@
     </ClCompile>
     <ClCompile Include="main\meca1\mechanicalBoard1Pc.c">
       <Filter>Source Files\main\meca1</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2018\launcherDevice2018.c">
+      <Filter>Source Files\robot\2018</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2018\launcherDeviceInterface2018.c">
+      <Filter>Source Files\robot\2018</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2018\launcherDriver2018.c">
+      <Filter>Source Files\robot\2018</Filter>
+    </ClCompile>
+    <ClCompile Include="device\pc\pcDeviceInterface.c">
+      <Filter>Source Files\device\pc</Filter>
+    </ClCompile>
+    <ClCompile Include="device\pc\pcDevice.c">
+      <Filter>Source Files\device\pc</Filter>
+    </ClCompile>
+    <ClCompile Include="common\serial\serialLinkList.c">
+      <Filter>Source Files\common\serial</Filter>
+    </ClCompile>
+    <ClCompile Include="common\serial\serialLinkDebug.c">
+      <Filter>Source Files\common\serial</Filter>
+    </ClCompile>
+    <ClCompile Include="common\adc\adcutils.c">
+      <Filter>Source Files\common\adc</Filter>
+    </ClCompile>
+    <ClCompile Include="common\i2c\i2cBusConnectionList.c">
+      <Filter>Source Files\common\i2c</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2396,15 +2411,6 @@
     <ClInclude Include="device\i2c\i2cCommonDebugDeviceInterface.h">
       <Filter>Header Files\device\i2c</Filter>
     </ClInclude>
-    <ClInclude Include="device\pc\pcDevice.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="device\pc\pcDeviceInterface.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="common\i2c\i2cBusConnectionList.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="common\serial\serialLinkDebug.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -2431,6 +2437,27 @@
     </ClInclude>
     <ClInclude Include="main\meca1\mechanicalBoard1Pc.h">
       <Filter>Header Files\main\meca1</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2018\launcherDevice2018.h">
+      <Filter>Header Files\robot\2018</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2018\launcherDeviceInterface2018.h">
+      <Filter>Header Files\robot\2018</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2018\launcherDriver2018.h">
+      <Filter>Header Files\robot\2018</Filter>
+    </ClInclude>
+    <ClInclude Include="common\i2c\i2cBusConnectionList.h">
+      <Filter>Header Files\common\i2c</Filter>
+    </ClInclude>
+    <ClInclude Include="device\pc\pcDevice.h">
+      <Filter>Header Files\device\pc</Filter>
+    </ClInclude>
+    <ClInclude Include="device\pc\pcDeviceInterface.h">
+      <Filter>Header Files\device\pc</Filter>
+    </ClInclude>
+    <ClInclude Include="common\i2c\pc\i2cCommonPc.h">
+      <Filter>Header Files\common\i2c\pc</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

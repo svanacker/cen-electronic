@@ -1,5 +1,7 @@
 #include "i2cSlaveSetupPc.h"
 
+#include "../../pc/i2cCommonPc.h"
+
 #include "../i2cSlave.h"
 #include "../i2cSlaveSetup.h"
 #include "../../i2cConstants.h"
@@ -10,16 +12,16 @@
 
 
 unsigned char portableSlaveReadI2C(I2cBusConnection* i2cBusConnection) {
-    I2cSlaveBusConnectionPc* i2cSlaveBusConnectionPc = getSlaveI2cBusConnectionPc(i2cBusConnection);
-    HANDLE masterToSlaveHandle = i2cSlaveBusConnectionPc->masterToSlaveHandle;
+    I2cBusConnectionPc* i2cBusConnectionPc = getI2cBusConnectionPc(i2cBusConnection);
+    HANDLE masterToSlaveHandle = i2cBusConnectionPc->masterToSlaveHandle;
 
     unsigned char result = readCharFromPipe(masterToSlaveHandle);
     return result;
 }
 
 void portableSlaveWriteI2C(I2cBusConnection* i2cBusConnection, unsigned char c) {
-    I2cSlaveBusConnectionPc* i2cSlaveBusConnectionPc = getSlaveI2cBusConnectionPc(i2cBusConnection);
-    HANDLE slaveToMasterHandle = i2cSlaveBusConnectionPc->slaveToMasterHandle;
+    I2cBusConnectionPc* i2cBusConnectionPc = getI2cBusConnectionPc(i2cBusConnection);
+    HANDLE slaveToMasterHandle = i2cBusConnectionPc->slaveToMasterHandle;
 
     writeCharToPipe(slaveToMasterHandle, c);
 }
