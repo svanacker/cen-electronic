@@ -5,24 +5,4 @@
 
 #include "../../../../common/i2c/i2cCommon.h"
 
-/**
- * Extended information used by the Pc to manage a simulation of the i2cBus.
- */
-typedef struct I2cMasterBusPc {
-    // the master pipe Handle.
-    HANDLE masterPipeHandle;
-    // the Slave pipe Handle
-    HANDLE slavePipeHandle;
-} I2cMasterBusPc;
-
-/**
- * Returns the extended information used by the Pc to manage a simulation of the i2cBus.
- */
-I2cMasterBusPc* getMasterI2cBusPc(I2cBus* i2cBus);
-
-/**
-* Initialize the extended information used by the Pc to manage a simulation of the i2cBus
-*/
-void i2cMasterBusPcInitialize(I2cMasterBusPc* i2cMasterBusPc, LPCWSTR i2cPipeMasterName, LPCWSTR i2cPipeSlaveName);
-
 #endif

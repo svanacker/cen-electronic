@@ -109,7 +109,11 @@ void clearLastError();
 // -> I2C  : Bus
 #define I2C_BUS_NULL                      0x1003
 #define I2C_BUS_TYPE_NOT_DEFINED          0x1004
-#define I2C_BUS_CONNECTION_NULL           0x1003
+#define I2C_BUS_CONNECTION_NULL           0x1005
+#define I2C_BUS_CONNECTION_OBJECT_NULL    0x1006
+#define I2C_BUS_CONNECTION_MASTER_TO_SLAVE_PIPE_NULL      0x1007
+#define I2C_BUS_CONNECTION_SLAVE_TO_MASTER_PIPE_NULL      0x1008
+
 // -> I2C : BusList
 #define I2C_BUS_LIST_NOT_INITIALIZED	  0x1010
 #define TOO_MUCH_I2C_BUS				  0x1011

@@ -4,6 +4,7 @@
 #include <stdbool.h>
 
 HANDLE initClientPipe(LPCWSTR pipeName) {
+    printf("Create the Client Pipe '%ls' ... ", pipeName);
     HANDLE result = CreateFile(
         pipeName,        // pipe name 
         GENERIC_READ,    // read,
@@ -15,9 +16,12 @@ HANDLE initClientPipe(LPCWSTR pipeName) {
 
     if (GetLastError() != 0)
     {
-        printf("initClientPipe->Could not open pipe. LastError=%d\n", GetLastError());
+        printf("KO : lastError=%d.\r\n", GetLastError());
         getchar();
         return NULL;
+    }
+    else {
+        printf("OK !\r\n");
     }
     return result;
 }
@@ -27,6 +31,15 @@ unsigned char readCharFromPipe(HANDLE pipe) {
     unsigned char buffer[NUMBER_OF_BYTES_TO_READ + 1];
     buffer[0] = '\0';
     DWORD numBytesRead = 0;
+
+    DWORD lpBytesReads;
+    DWORD lpTotalBytesAvail;
+    DWORD lpBytesLeftThisMessage;
+    PeekNamedPipe(pipe, buffer, NUMBER_OF_BYTES_TO_READ, &lpBytesReads, &lpTotalBytesAvail, &lpBytesLeftThisMessage);
+    if (lpTotalBytesAvail == 0) {
+        return 0;
+    }
+ 
     BOOL ok = ReadFile(
         pipe,
         buffer, // the data from the pipe will be put here

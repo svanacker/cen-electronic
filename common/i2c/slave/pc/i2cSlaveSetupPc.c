@@ -21,34 +21,35 @@
 
 #include <Windows.h>
 
-static I2cBusConnectionPc i2cSlaveBusConnectionPc;
-
 void i2cSlaveInitialize(I2cBusConnection* i2cBusConnection) {
     // Avoid more than one initialization
     if (i2cBusConnection->opened) {
         writeError(I2C_SLAVE_ALREADY_INITIALIZED);
         return;
     }
-    i2cBusConnection->object = &i2cSlaveBusConnectionPc;
+    I2cBusConnectionPc* i2cBusConnectionPc = getI2cBusConnectionPc(i2cBusConnection);
+    if (i2cBusConnectionPc == NULL) {
+        writeError(I2C_BUS_CONNECTION_OBJECT_NULL);
+    }
 
     appendString(getDebugOutputStreamLogger(), "I2C Slave Write Address=");
     appendHex2(getDebugOutputStreamLogger(), i2cBusConnection->i2cAddress);
     appendCRLF(getDebugOutputStreamLogger());
 
-    i2cSlaveBusConnectionPc.masterToSlaveHandle = initClientPipe(L"\\\\.\\pipe\\mainBoardPipe");
-    i2cSlaveBusConnectionPc.slaveToMasterHandle = initServerPipe(L"\\\\.\\pipe\\motorBoardPipe");
+    i2cBusConnectionPc->masterToSlaveHandle = initClientPipe(i2cBusConnectionPc->i2cPipeMasterName);
+    i2cBusConnectionPc->slaveToMasterHandle = initServerPipe(i2cBusConnectionPc->i2cPipeSlaveName);
     i2cBusConnection->opened = true;
 
     // Thread : master => slave
-    i2cSlaveBusConnectionPc.masterToSlaveThreadHandle = createStandardThread(
+    i2cBusConnectionPc->masterToSlaveThreadHandle = createStandardThread(
         masterToSlaveCallback,    // thread proc
         (LPVOID)i2cBusConnection,    // thread parameter 
-        &(i2cSlaveBusConnectionPc.masterToSlaveThreadId));      // returns thread ID 
+        &(i2cBusConnectionPc->masterToSlaveThreadId));      // returns thread ID 
 
     // Thread : slave => master
-    i2cSlaveBusConnectionPc.slaveToMasterThreadHandle = createStandardThread(
+    i2cBusConnectionPc->slaveToMasterThreadHandle = createStandardThread(
         slaveToMasterCallback,    // thread proc
         (LPVOID)i2cBusConnection,    // thread parameter 
-        &(i2cSlaveBusConnectionPc.slaveToMasterThreadId));      // returns thread ID 
+        &(i2cBusConnectionPc->slaveToMasterThreadId));      // returns thread ID 
 }
 

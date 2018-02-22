@@ -130,6 +130,10 @@ const char* getI2cBusTypeAsString(enum I2cBusType i2cBusType);
  */
 const char* getI2cPortAsString(enum I2cPort i2cPort);
 
+// CHECK FUNCTIONS
+bool checkI2cBusConnectionNotNull(I2cBusConnection* i2cBusConnection);
+bool checkI2cBusNotNull(I2cBus* i2cBus);
+bool checkI2cBus(I2cBus* i2cBus);
 
 #endif
 

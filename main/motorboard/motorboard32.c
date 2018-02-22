@@ -305,7 +305,7 @@ int runMotorBoard() {
 	initI2cBusConnectionList((I2cBusConnection(*)[]) &i2cBusConnectionListArray, MOTOR_BOARD_I2C_BUS_CONNECTION_LIST_LENGTH);
 
     mainBoardI2cBus = addI2cBus(I2C_BUS_TYPE_SLAVE, I2C_BUS_PORT_1);
-    mainBoardI2cBusConnection = addI2cBusConnection(mainBoardI2cBus, MOTOR_BOARD_I2C_ADDRESS);
+    mainBoardI2cBusConnection = addI2cBusConnection(mainBoardI2cBus, MOTOR_BOARD_I2C_ADDRESS, true);
     openSlaveI2cStreamLink(&i2cSlaveStreamLink,
             &i2cSlaveInputBuffer,
             &i2cSlaveInputBufferArray,
@@ -330,12 +330,12 @@ int runMotorBoard() {
     // Eeprom
     masterI2cBus = addI2cBus(I2C_BUS_TYPE_MASTER, I2C_BUS_PORT_4);
     i2cMasterInitialize(masterI2cBus);
-    eepromI2cBusConnection = addI2cBusConnection(masterI2cBus, ST24C512_ADDRESS_0);
+    eepromI2cBusConnection = addI2cBusConnection(masterI2cBus, ST24C512_ADDRESS_0, true);
     init24C512Eeprom(&eeprom_, eepromI2cBusConnection);
 
     // Clock
     // -> Clock
-    clockI2cBusConnection = addI2cBusConnection(masterI2cBus, PCF8563_WRITE_ADDRESS);
+    clockI2cBusConnection = addI2cBusConnection(masterI2cBus, PCF8563_WRITE_ADDRESS, true);
     initClockPCF8563(&clock, clockI2cBusConnection);
 
     // PidMotion

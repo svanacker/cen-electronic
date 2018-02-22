@@ -15,7 +15,7 @@ static HANDLE timerThreadHandle;
 static DWORD  timerThreadId = 0;
 
 DWORD WINAPI timerCallback(LPVOID lpvParam) {
-    printf("PC : I2C Master -> Timer listening !\r\n");
+    printf("Timer Callback start !\r\n");
     LARGE_INTEGER startTime;
     QueryPerformanceCounter(&startTime);
 

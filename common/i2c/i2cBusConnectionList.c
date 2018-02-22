@@ -47,7 +47,7 @@ I2cBusConnection* getI2cBusConnectionByIndex(int index) {
 	return result;
 }
 
-I2cBusConnection* addI2cBusConnection(I2cBus* i2cBus, unsigned char i2cSlaveAddress) {
+I2cBusConnection* addI2cBusConnection(I2cBus* i2cBus, unsigned char i2cSlaveAddress, bool defaultInitConnection) {
     if (i2cBusConnectionList.busConnectionArray == NULL) {
         writeError(I2C_BUS_CONNECTION_LIST_NOT_INITIALIZED);
         return NULL;
@@ -55,8 +55,11 @@ I2cBusConnection* addI2cBusConnection(I2cBus* i2cBus, unsigned char i2cSlaveAddr
     unsigned char size = i2cBusConnectionList.size;
     if (size < i2cBusConnectionList.maxSize) {
         I2cBusConnection* result = getI2cBusConnectionByIndex(size);
-		initI2cBusConnection(result, i2cBus, i2cSlaveAddress);
+        result->i2cAddress = i2cSlaveAddress;
         i2cBusConnectionList.size++;
+        if (defaultInitConnection) {
+            initI2cBusConnection(result, i2cBus, i2cSlaveAddress);
+        }
         return result;
     } else {
         writeError(TOO_MUCH_I2C_BUS_CONNECTION);

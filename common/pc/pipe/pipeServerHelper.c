@@ -4,7 +4,6 @@
 #include <stdbool.h>
 
 HANDLE initServerPipe(LPCWSTR pipeName) {
-
     printf("Create the Server Pipe '%ls' ... ", pipeName);
     HANDLE result = CreateNamedPipe(pipeName,
         PIPE_ACCESS_DUPLEX,

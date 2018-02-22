@@ -611,8 +611,8 @@ int main(void) {
 
     i2cBus = addI2cBus(I2C_BUS_TYPE_MASTER, I2C_BUS_PORT_1);
     i2cMasterInitialize(i2cBus);
-    motorI2cBusConnection = addI2cBusConnection(i2cBus, MOTOR_BOARD_I2C_ADDRESS);
-    mechanicalBoard2I2cBusConnection = addI2cBusConnection(i2cBus, MECHANICAL_BOARD_2_I2C_ADDRESS);
+    motorI2cBusConnection = addI2cBusConnection(i2cBus, MOTOR_BOARD_I2C_ADDRESS, true);
+    mechanicalBoard2I2cBusConnection = addI2cBusConnection(i2cBus, MECHANICAL_BOARD_2_I2C_ADDRESS, true);
 
     // I2C Debug
     initI2CDebugBuffers(&i2cMasterDebugInputBuffer,
@@ -624,13 +624,13 @@ int main(void) {
     setDebugI2cEnabled(false);
 
     // -> Eeproms
-    eepromI2cBusConnection = addI2cBusConnection(i2cBus, ST24C512_ADDRESS_0);
+    eepromI2cBusConnection = addI2cBusConnection(i2cBus, ST24C512_ADDRESS_0, true);
     init24C512Eeprom(&eeprom, eepromI2cBusConnection);
     // -> Clock
-    clockI2cBusConnection = addI2cBusConnection(i2cBus, PCF8563_WRITE_ADDRESS);
+    clockI2cBusConnection = addI2cBusConnection(i2cBus, PCF8563_WRITE_ADDRESS, true);
     initClockPCF8563(&clock, clockI2cBusConnection);
     // -> Temperature
-    temperatureI2cBusConnection = addI2cBusConnection(i2cBus, LM75A_ADDRESS);
+    temperatureI2cBusConnection = addI2cBusConnection(i2cBus, LM75A_ADDRESS, true);
     initTemperatureLM75A(&temperature, temperatureI2cBusConnection);
 
     // TIMERS

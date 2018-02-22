@@ -16,13 +16,13 @@
 
 #include <Windows.h>
 
+/*
 I2cMasterBusPc* getMasterI2cBusPc(I2cBus* i2cBus) {
     I2cMasterBusPc* result = (I2cMasterBusPc*)i2cBus->object;
     return result;
 }
-
 void i2cMasterBusPcInitialize(I2cMasterBusPc* i2cMasterBusPc, LPCWSTR i2cPipeMasterName, LPCWSTR i2cPipeSlaveName) {
-    if (i2cMasterBusPc == NULL) {
+if (i2cMasterBusPc == NULL) {
         appendString(getErrorOutputStreamLogger(), "i2cBus->object must be initialized");
         return;
     }
@@ -36,16 +36,20 @@ void i2cMasterBusPcInitialize(I2cMasterBusPc* i2cMasterBusPc, LPCWSTR i2cPipeMas
     delaymSec(200);
     i2cMasterBusPc->slavePipeHandle = initClientPipe(i2cPipeSlaveName);
 }
+*/
 
 void i2cMasterInitialize(I2cBus* i2cBus) {
+/*
     I2cMasterBusPc* i2cMasterBusPc = getMasterI2cBusPc(i2cBus);
     if (i2cMasterBusPc == NULL) {
         appendString(getErrorOutputStreamLogger(), "i2cBus->object must be initialized by calling i2cMasterBusPcInitialize first !");
         return;
     }
+    */
 }
 
 void i2cMasterFinalize(I2cBus* i2cBus) {
+    /*
     I2cMasterBusPc* i2cMasterBusPc = getMasterI2cBusPc(i2cBus);
     if (i2cMasterBusPc->masterPipeHandle != NULL) {
         portableMasterCloseI2C(i2cBus);
@@ -54,4 +58,5 @@ void i2cMasterFinalize(I2cBus* i2cBus) {
     if (i2cMasterBusPc->slavePipeHandle != NULL) {
         CloseHandle(i2cMasterBusPc->slavePipeHandle);
     }
+    */
 }

@@ -21,6 +21,7 @@ typedef struct I2cBusConnectionPc {
     DWORD  slaveToMasterThreadId;
 } I2cBusConnectionPc;
 
+void initI2cBusConnectionPc(I2cBusConnection* i2cBusConnection, I2cBus* i2cBus, I2cBusConnectionPc* i2cBusConnectionPc, unsigned char slaveAddress, LPCWSTR i2cPipeMasterName, LPCWSTR i2cPipeSlaveName);
 
 /**
 * Returns the extended structure which store the extra information/variable needed by

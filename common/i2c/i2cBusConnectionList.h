@@ -32,8 +32,11 @@ I2cBusConnectionList* getI2cBusConnectionList();
 
 /**
  * Add an i2cBusConnection to the list.
+ * @param i2cBus the i2cBus linked to the connection
+ * @param slaveAddress the address corresponding to the connection
+ * @param defaultInitConnection if we call the default connection method or NOT. If not, you will must call explicitely an init method to the connection
  */
-I2cBusConnection* addI2cBusConnection(I2cBus* i2cBus, unsigned char slaveAddress);
+I2cBusConnection* addI2cBusConnection(I2cBus* i2cBus, unsigned char slaveAddress, bool defaultInitConnection);
 
 /**
  * Get a i2cBusConnection by his index.
