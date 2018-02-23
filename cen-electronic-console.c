@@ -52,7 +52,7 @@ int main(int argumentCount, char* arguments[])
         strcpy_s(mechanical1OptionCommand, _countof(mechanical1OptionCommand), MECHANICAL_BOARD_1_PC_NAME);
         strcat_s(mechanical1OptionCommand, _countof(mechanical1OptionCommand), " ");
         strcat_s(mechanical1OptionCommand, _countof(mechanical1OptionCommand), MECHANICAL_BOARD_1_PC_RUN_STANDARD);
-        // runProcess(applicationNameAsChar, mechanical1OptionCommand);
+        runProcess(applicationNameAsChar, mechanical1OptionCommand);
 
         // And After the main Board
         runMainBoardPC(false);

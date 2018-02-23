@@ -112,6 +112,8 @@
 
 #include "../../common/pc/process/processHelper.h"
 
+#include "../../main/mainBoard/mainBoardPc.h"
+
 // Logs
 static LogHandlerList logHandlerListArray[MOTOR_BOARD_PC_LOG_HANDLER_LIST_LENGTH];
 
@@ -246,11 +248,9 @@ void runMotorBoardPC(bool singleMode) {
         
         motorI2cBusConnection = addI2cBusConnection(motorI2cBus, MOTOR_BOARD_PC_I2C_ADDRESS, false);
         motorI2cBusConnection->i2cBus = motorI2cBus;
-        motorI2cBusConnectionPc.i2cPipeMasterName = L"\\\\.\\pipe\\mainBoardPipe";
-        motorI2cBusConnectionPc.i2cPipeSlaveName = L"\\\\.\\pipe\\motorBoardPipe";
+        motorI2cBusConnectionPc.i2cPipeMasterName = MAIN_BOARD_TO_MOTOR_BOARD_PC_PIPE_I2C_MASTER_NAME;
+        motorI2cBusConnectionPc.i2cPipeSlaveName = MOTOR_BOARD_PC_PIPE_I2C_SLAVE_NAME;
         motorI2cBusConnection->object = &motorI2cBusConnectionPc;
-        // initI2cBusConnectionPc(motorI2cBusConnection, motorI2cBus, &motorI2cBusConnectionPc, MOTOR_BOARD_PC_I2C_ADDRESS, L"\\\\.\\pipe\\motorBoardPipe", L"\\\\.\\pipe\\mainBoardPipe");
-        // initI2cBusConnection(&motorI2cBusConnection, motorI2cBus, MOTOR_BOARD_PC_I2C_ADDRESS);
 		openSlaveI2cStreamLink(&i2cSlaveStreamLink,
             &i2cSlaveInputBuffer,
             (char(*)[]) &i2cSlaveInputBufferArray,

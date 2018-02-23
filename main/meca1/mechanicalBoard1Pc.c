@@ -9,6 +9,7 @@
 #include "../../common/error/error.h"
 #include "../../common/i2c/i2cCommon.h"
 #include "../../common/i2c/i2cBusList.h"
+#include "../../common/i2c/i2cBusConnectionList.h"
 #include "../../common/i2c/i2cDebug.h"
 #include "../../common/i2c/slave/pc/i2cSlavePc.h"
 #include "../../common/i2c/slave/pc/i2cSlaveSetupPc.h"
@@ -85,6 +86,8 @@
 
 #include "../../common/pc/process/processHelper.h"
 
+#include "../../main/mainBoard/mainBoardPc.h"
+
 // Logs
 static LogHandlerList logHandlerListArray[MECHANICAL_BOARD_1_PC_LOG_HANDLER_LIST_LENGTH];
 
@@ -96,6 +99,7 @@ static SerialLink serialLinkListArray[MECHANICAL_BOARD_1_PC_SERIAL_LINK_LIST_LEN
 
 // I2C
 static I2cBus i2cBusListArray[MECHANICAL_BOARD_1_PC_I2C_BUS_LIST_LENGTH];
+static I2cBusConnection i2cBusConnectionListArray[MECHANICAL_BOARD_1_PC_I2C_BUS_CONNECTION_LIST_LENGTH];
 
 // Timers
 static Timer timerListArray[MECHANICAL_BOARD_1_PC_TIMER_LENGTH];
@@ -132,8 +136,9 @@ static Battery battery;
 static Clock clock;
 
 // I2C
-static I2cBus* motorI2cBus;
-static I2cBusConnection motorI2cBusConnection;
+static I2cBus* mechanical1I2cBus;
+static I2cBusConnection* mechanical1I2cBusConnection;
+static I2cBusConnectionPc mechanical1I2cBusConnectionPc;
 
 // Devices
 static Device deviceListArray[MECHANICAL_BOARD_1_PC_DEVICE_LIST_LENGTH];
@@ -141,9 +146,6 @@ static Device deviceListArray[MECHANICAL_BOARD_1_PC_DEVICE_LIST_LENGTH];
 static bool singleModeActivated = true;
 
 void mechanicalBoard1PcWaitForInstruction(void) {
-
-    // delaymSec(MOTOR_BOARD_PC_DELAY_CONSOLE_ANALYZE_MILLISECONDS);
-
     // Analyze data from the Console (Specific to PC)
     while (consoleInputStream.availableData(&consoleInputStream)) {
         unsigned char c = consoleInputStream.readChar(&consoleInputStream);
@@ -206,8 +208,15 @@ void runMechanicalBoard1PC(bool singleMode) {
     if (!singleModeActivated) {
 		// I2c
 		initI2cBusList((I2cBus(*)[]) &i2cBusListArray, MECHANICAL_BOARD_1_PC_I2C_BUS_LIST_LENGTH);
-		motorI2cBus = addI2cBus(I2C_BUS_TYPE_SLAVE, I2C_BUS_PORT_1);
-        initI2cBusConnection(&motorI2cBusConnection, motorI2cBus, MECHANICAL_BOARD_1_PC_I2C_ADDRESS);
+		mechanical1I2cBus = addI2cBus(I2C_BUS_TYPE_SLAVE, I2C_BUS_PORT_1);
+
+        initI2cBusConnectionList((I2cBusConnection(*)[]) &i2cBusConnectionListArray, MECHANICAL_BOARD_1_PC_I2C_BUS_CONNECTION_LIST_LENGTH);
+        mechanical1I2cBusConnection = addI2cBusConnection(mechanical1I2cBus, MECHANICAL_BOARD_1_PC_I2C_ADDRESS, false);
+        mechanical1I2cBusConnection->i2cBus = mechanical1I2cBus;
+        mechanical1I2cBusConnectionPc.i2cPipeMasterName = MAIN_BOARD_TO_MECA1_BOARD_PC_PIPE_I2C_MASTER_NAME;
+        mechanical1I2cBusConnectionPc.i2cPipeSlaveName = MECHANICAL_BOARD_1_PC_PIPE_I2C_SLAVE_NAME;
+        mechanical1I2cBusConnection->object = &mechanical1I2cBusConnectionPc;
+
 		openSlaveI2cStreamLink(&i2cSlaveStreamLink,
             &i2cSlaveInputBuffer,
             (char(*)[]) &i2cSlaveInputBufferArray,
@@ -215,7 +224,7 @@ void runMechanicalBoard1PC(bool singleMode) {
             &i2cSlaveOutputBuffer,
             (char(*)[]) &i2cSlaveOutputBufferArray,
             MECHANICAL_BOARD_1_PC_OUT_BUFFER_LENGTH,
-            &motorI2cBusConnection
+            mechanical1I2cBusConnection
         );
         // I2C Debug
         initI2CDebugBuffers(&i2cSlaveDebugInputBuffer,
@@ -240,7 +249,7 @@ void runMechanicalBoard1PC(bool singleMode) {
     addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
     addLocalDevice(getTimerDeviceInterface(), getTimerDeviceDescriptor());
 	addLocalDevice(getI2cCommonDebugDeviceInterface(), getI2cCommonDebugDeviceDescriptor());
-    addLocalDevice(getI2cSlaveDebugDeviceInterface(), getI2cSlaveDebugDeviceDescriptor(&motorI2cBusConnection));
+    addLocalDevice(getI2cSlaveDebugDeviceInterface(), getI2cSlaveDebugDeviceDescriptor(mechanical1I2cBusConnection));
     addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
 	addLocalDevice(getLogDeviceInterface(), getLogDeviceDescriptor());
 

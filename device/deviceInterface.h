@@ -6,6 +6,7 @@
 /**
 * Definition of the functions and types shared by devices
 */
+// TODO : change to Enum !
 typedef int DeviceInterfaceMode;
 
 /**

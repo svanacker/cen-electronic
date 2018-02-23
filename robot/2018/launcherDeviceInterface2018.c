@@ -23,7 +23,7 @@ int deviceLauncher2018GetInterface(char commandHeader, DeviceInterfaceMode mode,
 static DeviceInterface deviceInterface = {
     .deviceHeader = LAUNCHER_2018_DEVICE_HEADER,
     .deviceGetName = &deviceLauncher2018GetName,
-    .deviceGetInterface = &getLauncher2018DeviceInterface
+    .deviceGetInterface = &deviceLauncher2018GetInterface
 };
 
 DeviceInterface* getLauncher2018DeviceInterface(void) {

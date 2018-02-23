@@ -37,10 +37,8 @@ bool deviceLauncher2018IsOk(void) {
     return true;
 }
 
-void deviceLauncher2018HandleRawData(char header,
-        InputStream* inputStream,
-        OutputStream* outputStream) {
-    if (header == LAUNCHER_BALL_COMMAND) {
+void deviceLauncher2018HandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream) {
+    if (commandHeader == LAUNCHER_BALL_COMMAND) {
         int launcherIndex = readHex2(inputStream);
         launcher2018(launcherIndex);
         appendAck(outputStream);
@@ -55,6 +53,7 @@ static DeviceDescriptor descriptor = {
     .deviceIsOk = &deviceLauncher2018IsOk,
     .deviceHandleRawData = &deviceLauncher2018HandleRawData,
 };
+
 
 DeviceDescriptor* getLauncher2018DeviceDescriptor() {
     return &descriptor;
