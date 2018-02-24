@@ -28,13 +28,6 @@
 #define PID_DEBUG_PID_TYPE_COLUMN_LENGTH		            10
 #define PID_DEBUG_LAST_COLUMN_LENGTH		                0
 
-unsigned int addInstructionTypeTableData(OutputStream* outputStream, enum InstructionType instructionType, unsigned int columnSize) {
-	appendTableSeparator(outputStream);
-	appendSpace(outputStream);
-	unsigned int length = appendInstructionTypeAsString(outputStream, instructionType);
-	return length + appendSpaces(outputStream, columnSize - length) + 2;
-}
-
 /**
 * Private.
 */

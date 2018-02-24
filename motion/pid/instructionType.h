@@ -27,4 +27,13 @@ enum InstructionType {
  */
 unsigned int appendInstructionTypeAsString(OutputStream* outputStream, enum InstructionType instructionType);
 
+/** 
+ * Print into a table data the string representation of Instruction Type
+ * @param outputStream the outputStream where we will write
+ * @param instructionType the instructionType for which we want a String representation
+ * @param columnSize to fit to the data cell size
+ * @return the number of chars written
+ */
+unsigned int addInstructionTypeTableData(OutputStream* outputStream, enum InstructionType instructionType, unsigned int columnSize);
+
 #endif

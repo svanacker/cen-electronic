@@ -2,6 +2,7 @@
 
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
+#include "../../common/io/printTableWriter.h"
 
 unsigned int appendInstructionTypeAsString(OutputStream* outputStream, enum InstructionType instructionType) {
 	if (instructionType == THETA) {
@@ -16,3 +17,11 @@ unsigned int appendInstructionTypeAsString(OutputStream* outputStream, enum Inst
 	}
 	return 0;
 }
+
+unsigned int addInstructionTypeTableData(OutputStream* outputStream, enum InstructionType instructionType, unsigned int columnSize) {
+	appendTableSeparator(outputStream);
+	appendSpace(outputStream);
+	unsigned int length = appendInstructionTypeAsString(outputStream, instructionType);
+	return length + appendSpaces(outputStream, columnSize - length) + 2;
+}
+

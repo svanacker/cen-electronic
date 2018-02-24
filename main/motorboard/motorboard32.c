@@ -217,6 +217,17 @@ static Device deviceListArray[MOTOR_BOARD_DEVICE_LIST_LENGTH];
 void initDevicesDescriptor() {
     initDeviceList(&deviceListArray, MOTOR_BOARD_DEVICE_LIST_LENGTH);
 
+    // Common I2C
+    addLocalDevice(getI2cCommonDebugDeviceInterface(), getI2cCommonDebugDeviceDescriptor(mainBoardI2cBusConnection));
+
+    // I2C_1
+    addLocalDevice(getI2cSlaveDebugDeviceInterface(), getI2cSlaveDebugDeviceDescriptor(mainBoardI2cBusConnection));
+
+    // I2C_4
+    addLocalDevice(getI2cMasterDebugDeviceInterface(), getI2cMasterDebugDeviceDescriptor(mainBoardI2cBusConnection));
+    addLocalDevice(getRobotKinematicsDeviceInterface(), getRobotKinematicsDeviceDescriptor(&eeprom_));
+    addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom_));
+
     addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());
     addLocalDevice(getCodersDeviceInterface(), getCodersDeviceDescriptor());
     addLocalDevice(getPIDDeviceInterface(), getPIDDeviceDescriptor(&pidMotion));
@@ -228,17 +239,6 @@ void initDevicesDescriptor() {
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
     addLocalDevice(getTimerDeviceInterface(), getTimerDeviceDescriptor());
     addLocalDevice(getLogDeviceInterface(), getLogDeviceDescriptor());
-
-    // Common I2C
-    addLocalDevice(getI2cCommonDebugDeviceInterface(), getI2cCommonDebugDeviceDescriptor(mainBoardI2cBusConnection));
-
-    // I2C_1
-    addLocalDevice(getI2cSlaveDebugDeviceInterface(), getI2cSlaveDebugDeviceDescriptor(mainBoardI2cBusConnection));
-
-    // I2C_4
-    addLocalDevice(getI2cMasterDebugDeviceInterface(), getI2cMasterDebugDeviceDescriptor(mainBoardI2cBusConnection));
-    addLocalDevice(getRobotKinematicsDeviceInterface(), getRobotKinematicsDeviceDescriptor(&eeprom_));
-    addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom_));
 
     initDevices();
 }

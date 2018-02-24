@@ -6,6 +6,7 @@
 #include "../../robot/kinematics/robotKinematics.h"
 
 #include "pidTimer.h"
+#include "parameters/pidPersistence.h"
 
 bool checkPidMotionNotNull(const PidMotion* pidMotion) {
 	if (pidMotion == NULL) {
@@ -167,7 +168,8 @@ void initPidMotion(PidMotion* pidMotion, Eeprom* _eeprom, PidMotionDefinition(*a
 	pidMotion->pidPersistenceEeprom = _eeprom;
     initMotionEndParameter(getMotionEndDetectionParameter(pidMotion));
 
-	// loadPidParameters(loadDefaultParameters);
+	// We load the values from the eeprom, but we don't load default values
+	loadPidParameters(pidMotion, false);
 	RobotKinematics* robotKinematics = getRobotKinematics();
 	loadRobotKinematicsParameters(robotKinematics, _eeprom, true);
 	initPidTimer();
