@@ -1377,9 +1377,6 @@
     <ClCompile Include="motion\pid\endDetection\motionEndDetectionParameter.c">
       <Filter>Source Files\motion\pid\endDetection</Filter>
     </ClCompile>
-    <ClCompile Include="motion\pid\parameters\pidParameter.c">
-      <Filter>Source Files\motion\pid\parameters</Filter>
-    </ClCompile>
     <ClCompile Include="motion\simple\simpleMotion.c">
       <Filter>Source Files\motion\simple</Filter>
     </ClCompile>
@@ -1601,6 +1598,9 @@
     </ClCompile>
     <ClCompile Include="common\i2c\i2cBusConnectionList.c">
       <Filter>Source Files\common\i2c</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\pid\parameters\pidParameterDebug.c">
+      <Filter>Source Files\motion\pid\parameters</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2458,6 +2458,9 @@
     </ClInclude>
     <ClInclude Include="common\i2c\pc\i2cCommonPc.h">
       <Filter>Header Files\common\i2c\pc</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\parameters\pidParameterDebug.h">
+      <Filter>Header Files\motion\pid\parameters</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -10,14 +10,19 @@
 // COMMAND
 
 /**
-* Set the value of PID.
+* Set the some parameters for a specific PID.
 */
 #define COMMAND_WRITE_PID_PARAMETERS                'w'
 
 /**
-* Read the value of PID.
+* Read some parameters for a specific PID
 */
 #define COMMAND_READ_PID_PARAMETERS                'r'
+
+/**
+* Write into a table all PID Parameters
+*/
+#define COMMAND_DEBUG_PID_PARAMETERS                'R'
 
 /**
  * Load and save default Values
@@ -39,6 +44,11 @@
 * Send values to have statistical debug informations.
 */
 #define COMMAND_GET_DEBUG_DATA_PID                  'g'
+
+/**
+* Debug all values for the PID
+*/
+#define COMMAND_DEBUG_DATA_PID_CONSOLE              'G'
 
 /**
 * Change end Detection Motion Parameter.

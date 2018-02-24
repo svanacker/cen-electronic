@@ -56,7 +56,7 @@
  */
 #define TIME_PERIOD_AFTER_END_FOR_STRONG_PID     40
 
-/** The total number of PID values (INSTRUCTION_COUNT * PID_TYPE_COUNT). */
-#define PID_COUNT (INSTRUCTION_COUNT * PID_TYPE_COUNT)
+/** The total number of PID values (INSTRUCTION_TYPE_COUNT * PID_TYPE_COUNT). */
+#define PID_COUNT (INSTRUCTION_TYPE_COUNT * PID_TYPE_COUNT)
 
 #endif

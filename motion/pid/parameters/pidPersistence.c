@@ -13,7 +13,7 @@
 // DEFAULT VALUES : As the PID value is stored into the eeprom, this will be erased by 
 // Programming. It's very dangerous if we forget to send default values
 
-// For 5000 impulsions coders
+// For 5000 impulsions coders * 4 => 20 000
 #define PID_STORED_COUNT        8
 static signed int DEFAULT_EEPROM_VALUES[EEPROM_PID_BLOCK_SIZE * PID_STORED_COUNT] = {
     // NORMAL VALUES
@@ -127,7 +127,7 @@ void loadPidParameters(PidMotion* pidMotion, bool loadDefaultValue) {
     // Parameter for End of trajectory
     enum InstructionType instructionType;
     // For Alpha / Theta
-    for (instructionType = 0; instructionType < INSTRUCTION_COUNT; instructionType++) {
+    for (instructionType = 0; instructionType < INSTRUCTION_TYPE_COUNT; instructionType++) {
         pidIndex = getIndexOfPid(instructionType, PID_TYPE_FINAL_APPROACH_INDEX);
         PidParameter* endApproachPidParameter = getPidParameter(pidMotion, pidIndex, 0);
         endApproachPidParameter->p = END_APPROACH_P;

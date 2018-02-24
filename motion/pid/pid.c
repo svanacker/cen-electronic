@@ -32,7 +32,7 @@
 #include "../../robot/kinematics/robotKinematics.h"
 
 unsigned char getIndexOfPid(enum InstructionType instructionType, enum PidType pidType) {
-    return pidType * INSTRUCTION_COUNT + instructionType;
+    return pidType * INSTRUCTION_TYPE_COUNT + instructionType;
 }
 
 bool getRollingTestMode(PidMotion* pidMotion) {

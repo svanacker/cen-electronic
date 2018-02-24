@@ -21,6 +21,7 @@
 #include "../../../motion/pid/pid.h"
 #include "../../../motion/pid/pidDebug.h"
 #include "../../../motion/pid/parameters/pidParameter.h"
+#include "../../../motion/pid/parameters/pidParameterDebug.h"
 #include "../../../motion/pid/pidMotion.h"
 #include "../../../motion/pid/pidComputationValues.h"
 #include "../../../motion/pid/pidCurrentValues.h"
@@ -226,10 +227,20 @@ void devicePIDHandleRawData(char commandHeader, InputStream* inputStream, Output
         appendSeparator(outputStream);
         appendHex(outputStream, localInst->pidType);
     }   
+	else if (commandHeader == COMMAND_DEBUG_DATA_PID_CONSOLE) {
+		ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_DEBUG_DATA_PID_CONSOLE);
+		OutputStream* outputStream = getDebugOutputStreamLogger();
+		printPidDataDebugTable(outputStream, pidMotion);
+	}
 	else if (commandHeader == COMMAND_PID_MOTION_PARAMETER_DEBUG) {
 		ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_PID_MOTION_PARAMETER_DEBUG);
 		OutputStream* outputStream = getDebugOutputStreamLogger();
 		printMotionInstructionTable(outputStream, pidMotion);
+	}
+	else if (commandHeader == COMMAND_DEBUG_PID_PARAMETERS) {
+		ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_DEBUG_PID_PARAMETERS);
+		OutputStream* outputStream = getDebugOutputStreamLogger();
+		printAllPidParametersTable(outputStream, pidMotion);
 	}
 }
 

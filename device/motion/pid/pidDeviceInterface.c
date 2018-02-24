@@ -100,6 +100,11 @@ int devicePIDGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fil
             setResultUnsignedHex4(18, "endMotion_uIntegral");
         }
         return commandLengthValueForMode(mode, 2, 49);
+    } else if (commandHeader == COMMAND_DEBUG_DATA_PID_CONSOLE) {
+        if (fillDeviceArgumentList) {
+            setFunction("sendDbgDataPidConsole", 0, 0);
+        }
+        return commandLengthValueForMode(mode, 0, 0);
     } else if (commandHeader == COMMAND_GET_MOTION_PARAMETER) {
         if (fillDeviceArgumentList) {    
             setFunction("getMotionParameter", 1, 25);
@@ -137,6 +142,12 @@ int devicePIDGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fil
 	else if (commandHeader == COMMAND_PID_MOTION_PARAMETER_DEBUG) {
 		if (fillDeviceArgumentList) {
 			setFunctionNoArgumentAndNoResult("pidMotionParameterDebug");
+		}
+		return commandLengthValueForMode(mode, 0, 0);
+	}
+	else if (commandHeader == COMMAND_DEBUG_PID_PARAMETERS) {
+		if (fillDeviceArgumentList) {
+			setFunctionNoArgumentAndNoResult("pidParametersDebug");
 		}
 		return commandLengthValueForMode(mode, 0, 0);
 	}

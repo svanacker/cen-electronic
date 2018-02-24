@@ -6,7 +6,7 @@
 // -> PID TO CONTROL
 
 // Number of PID to control
-#define INSTRUCTION_COUNT 2
+#define INSTRUCTION_TYPE_COUNT    2
 
 /**
  * The index of theta & alpha instruction

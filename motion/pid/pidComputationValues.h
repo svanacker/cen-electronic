@@ -22,11 +22,11 @@ typedef struct PidComputationValues {
     // store the time of the pid timer when it was computer
     float pidTime;
     // Store error of each motion
-    PidMotionError errors[INSTRUCTION_COUNT];
+    PidMotionError errors[INSTRUCTION_TYPE_COUNT];
     // store tension / position / current speed
-    PidCurrentValues currentValues[INSTRUCTION_COUNT];
+    PidCurrentValues currentValues[INSTRUCTION_TYPE_COUNT];
     // Store Detection of end of trajectory
-    MotionEndInfo motionEnd[INSTRUCTION_COUNT];
+    MotionEndInfo motionEnd[INSTRUCTION_TYPE_COUNT];
 } PidComputationValues;
 
 #endif

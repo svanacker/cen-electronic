@@ -48,7 +48,7 @@ struct PidMotionDefinition {
 	// To know if we must use MotionInstruction or BSplineCurve
 	enum PidMotionType motionType;
 	// Alpha / Theta
-	MotionInstruction inst[INSTRUCTION_COUNT];
+	MotionInstruction inst[INSTRUCTION_TYPE_COUNT];
 	// When using BSPline
 	BSplineCurve curve;
 	/** The method which will compute the errors (by using coders or absolute positions) .*/
