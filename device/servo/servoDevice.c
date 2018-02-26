@@ -33,7 +33,7 @@ bool deviceServoIsOk(void) {
     return true;
 }
 
-void deviceServoHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream) {
+void deviceServoHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     // WRITE COMMANDS
     if (commandHeader == SERVO_COMMAND_WRITE) {
         int servoIndex = readHex2(inputStream);

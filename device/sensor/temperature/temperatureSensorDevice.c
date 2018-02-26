@@ -27,7 +27,7 @@ bool isTemperatureSensorDeviceOk(void) {
     return true;
 }
 
-void deviceTemperatureSensorHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream){
+void deviceTemperatureSensorHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream){
     if (header == COMMAND_READ_TEMPERATURE_SENSOR) {
         ackCommand(outputStream, TEMPERATURE_SENSOR_DEVICE_HEADER, COMMAND_READ_TEMPERATURE_SENSOR);
         unsigned char value = (unsigned char) temperature->readSensorValue(temperature);

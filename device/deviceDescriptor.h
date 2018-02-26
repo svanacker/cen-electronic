@@ -29,10 +29,12 @@ typedef bool deviceIsOkFunction(void);
 * @param commandHeader the header char
 * @param inputStream the input Stream where we can get commandHeader, and input parameters
 * @param outputStream the output Stream where we can write some results, ack (with commandHeader)
+* @param notificationOutputStream the output Stream in which we will write, but probably later by a callback
 */
 typedef void deviceHandleRawDataFunction(char commandHeader,
                                          InputStream* inputStream,
-                                         OutputStream* outputStream);
+                                         OutputStream* outputStream,
+                                         OutputStream* notificationOutputStream);
 
 /**
 * Defines the structure used to describe a device descriptor.

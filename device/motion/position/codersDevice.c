@@ -98,7 +98,7 @@ void initDeviceCoders(void) {
     addTimer(CODERS_TIMER_INDEX, TIME_DIVIDER_1_HERTZ, &debugGetWheelCallback, "CODERS TIMER", NULL);
 }
 
-void deviceCodersHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream) {
+void deviceCodersHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     if (commandHeader == COMMAND_GET_WHEEL_POSITION) {
         ackCommand(outputStream, CODERS_DEVICE_HEADER, COMMAND_GET_WHEEL_POSITION);
         updateTrajectory();

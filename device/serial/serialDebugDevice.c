@@ -42,7 +42,7 @@ bool deviceSerialDebugIsOk(void) {
     return true;
 }
 
-void deviceSerialDebugHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream) {
+void deviceSerialDebugHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     // Serial Input Buffers
     if (commandHeader == COMMAND_SERIAL_DEBUG) {
         ackCommand(outputStream, SERIAL_DEBUG_DEVICE_HEADER, COMMAND_SERIAL_DEBUG);

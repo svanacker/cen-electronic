@@ -42,7 +42,7 @@
 static PidMotion* pidMotion;
 
 void deviceMotionInit(void) {
-    loadMotionParameters(pidMotion->pidPersistenceEeprom, true);
+    loadMotionParameters(pidMotion->pidPersistenceEeprom, false);
 }
 
 void deviceMotionShutDown(void) {
@@ -66,6 +66,9 @@ void internalDebugNotify(char* notifyString) {
 }
 
 void notifyReached(OutputStream* outputStream) {
+	if (outputStream == NULL) {
+		return;
+	}
     append(outputStream, MOTION_DEVICE_HEADER);
     append(outputStream, NOTIFY_MOTION_STATUS_REACHED);
 
@@ -77,6 +80,9 @@ void notifyReached(OutputStream* outputStream) {
 }
 
 void notifyFailed(OutputStream* outputStream) {
+	if (outputStream == NULL) {
+		return;
+	}
     append(outputStream, MOTION_DEVICE_HEADER);
     append(outputStream, NOTIFY_MOTION_STATUS_FAILED);
 
@@ -88,6 +94,9 @@ void notifyFailed(OutputStream* outputStream) {
 }
 
 void notifyMoving(OutputStream* outputStream) {
+	if (outputStream == NULL) {
+		return;
+	}
     append(outputStream, MOTION_DEVICE_HEADER);
     append(outputStream, NOTIFY_MOTION_STATUS_MOVING);
 
@@ -99,6 +108,9 @@ void notifyMoving(OutputStream* outputStream) {
 }
 
 void notifyObstacle(OutputStream* outputStream) {
+	if (outputStream == NULL) {
+		return;
+	}
     append(outputStream, MOTION_DEVICE_HEADER);
     append(outputStream, NOTIFY_MOTION_STATUS_OBSTACLE);
 
@@ -112,7 +124,8 @@ void notifyObstacle(OutputStream* outputStream) {
 
 void deviceMotionHandleRawData(char commandHeader,
         InputStream* inputStream,
-        OutputStream* outputStream) {
+        OutputStream* outputStream,
+        OutputStream* notificationOutputStream) {
 	// LIST Instruction
     // GOTO in impulsion
     if (commandHeader == COMMAND_MOTION_GOTO_IN_PULSE) {
@@ -130,65 +143,65 @@ void deviceMotionHandleRawData(char commandHeader,
         float s = (float) readHex2(inputStream);
 
         // Execute Motion
-        gotoPosition(pidMotion, left, right, a, s);
+        gotoPosition(pidMotion, left, right, a, s, notificationOutputStream);
     }        // "forward" in millimeter
     else if (commandHeader == COMMAND_MOTION_FORWARD_IN_MM) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_FORWARD_IN_MM);
 
         float distanceMM = (float) readHex4(inputStream);
-        forwardSimpleMM(pidMotion, distanceMM);
+        forwardSimpleMM(pidMotion, distanceMM, notificationOutputStream);
     }        // "backward" in millimeter
     else if (commandHeader == COMMAND_MOTION_BACKWARD_IN_MM) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_BACKWARD_IN_MM);
 
         float distanceMM = (float) readHex4(inputStream);
-        backwardSimpleMM(pidMotion, distanceMM);
+        backwardSimpleMM(pidMotion, distanceMM, notificationOutputStream);
     }        // ROTATION
         // -> left
     else if (commandHeader == COMMAND_MOTION_LEFT_IN_DECI_DEGREE) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_LEFT_IN_DECI_DEGREE);
 
         float leftDegree = (float) readHex4(inputStream);
-        leftSimpleDegree(pidMotion, leftDegree);
+        leftSimpleDegree(pidMotion, leftDegree, notificationOutputStream);
     }        // -> right
     else if (commandHeader == COMMAND_MOTION_RIGHT_IN_DECI_DEGREE) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_RIGHT_IN_DECI_DEGREE);
 
         float rightDegree = (float) readHex4(inputStream);
-        rightSimpleDegree(pidMotion, rightDegree);
+        rightSimpleDegree(pidMotion, rightDegree, notificationOutputStream);
     }        // ONE WHEEL
         // -> left
     else if (commandHeader == COMMAND_MOTION_LEFT_ONE_WHEEL_IN_DECI_DEGREE) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_LEFT_ONE_WHEEL_IN_DECI_DEGREE);
 
         float leftDegree = (float) readHex4(inputStream);
-        leftOneWheelSimpleDegree(pidMotion, leftDegree);
+        leftOneWheelSimpleDegree(pidMotion, leftDegree, notificationOutputStream);
     }        // -> right
     else if (commandHeader == COMMAND_MOTION_RIGHT_ONE_WHEEL_IN_DECI_DEGREE) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_RIGHT_ONE_WHEEL_IN_DECI_DEGREE);
 
         float rightDegree = (float) readHex4(inputStream);
-        rightOneWheelSimpleDegree(pidMotion, rightDegree);
+        rightOneWheelSimpleDegree(pidMotion, rightDegree, notificationOutputStream);
     }
     // STOP
         // cancel motion
     else if (commandHeader == COMMAND_MOTION_CANCEL) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_CANCEL);
 
-        stopPosition(pidMotion, false);
+        stopPosition(pidMotion, false, notificationOutputStream);
     }        // OBSTACLE
         // cancel motion
     else if (commandHeader == COMMAND_MOTION_OBSTACLE) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_OBSTACLE);
         // TODO : A REVOIR
-        stopPosition(pidMotion, true);
+        stopPosition(pidMotion, true, notificationOutputStream);
     }        // CALIBRATION
     else if (commandHeader == COMMAND_SQUARE_CALIBRATION) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_SQUARE_CALIBRATION);
         unsigned char type = readHex2(inputStream);
         checkIsSeparator(inputStream);
         float length = (float) readHex4(inputStream);
-        squareCalibration(pidMotion, type, length);
+        squareCalibration(pidMotion, type, length, notificationOutputStream);
     }        // PARAMETERS
 	else if (commandHeader == COMMAND_MOTION_LOAD_DEFAULT_PARAMETERS) {
 		// send acknowledge

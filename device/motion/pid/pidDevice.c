@@ -43,7 +43,7 @@ void stopPidDevice(void) {
     stopPID(pidMotion);
 }
 
-void devicePIDHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream) {
+void devicePIDHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     if (commandHeader == COMMAND_WRITE_PID_PARAMETERS) {
         // send acknowledge
         appendAck(outputStream);

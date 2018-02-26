@@ -3,6 +3,8 @@
 
 #include <stdbool.h>
 
+#include "../../common/io/outputStream.h"
+
 #include "../pid/pidMotion.h"
 #include "../extended/bspline.h"
 
@@ -48,7 +50,8 @@ void gotoSimpleSpline(PidMotion* pidMotion,
                       float controlPointDistance2,
                       unsigned int accelerationFactor,
                       unsigned int speedFactor,
-                      bool relative
+                      bool relative,
+                      OutputStream* notificationOutputStream
                     );
 
 /**

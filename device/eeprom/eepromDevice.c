@@ -38,7 +38,7 @@ bool isEepromDeviceOk(void) {
     return true;
 }
 
-void deviceEepromHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream) {
+void deviceEepromHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     _deviceEepromCheckInitialized();
     if (commandHeader == COMMAND_RELOAD_EEPROM) {
         ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_RELOAD_EEPROM);

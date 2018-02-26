@@ -32,7 +32,8 @@ bool deviceMotionSimulationIsOk(void) {
 
 void deviceMotionSimulationHandleRawData(char commandHeader,
                                         InputStream* inputStream,
-                                        OutputStream* outputStream) {
+                                        OutputStream* outputStream,
+                                        OutputStream* notificationOutputStream) {
     if (commandHeader == COMMAND_MOTION_SIMULATION_GET) {
         // send acknowledge
         ackCommand(outputStream, MOTION_SIMULATION_DEVICE_HEADER, COMMAND_MOTION_SIMULATION_GET);

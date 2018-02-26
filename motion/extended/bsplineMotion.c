@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include <math.h>
 
+#include "../../common/io/outputStream.h"
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
 
@@ -148,7 +149,8 @@ void gotoSimpleSpline(PidMotion* pidMotion,
                       float destAngle, 
                       float controlPointDistance1, float controlPointDistance2,
                       unsigned int accelerationFactor, unsigned int speedFactor,
-                      bool relative) {
+                      bool relative,
+					  OutputStream* notificationOutputStream) {
 	PidMotionDefinition* motionDefinition = pidMotionGetNextToWritePidMotionDefinition(pidMotion);
 	motionDefinition->motionType = MOTION_TYPE_BSPLINE;
 	BSplineCurve* curve = &(motionDefinition->curve);

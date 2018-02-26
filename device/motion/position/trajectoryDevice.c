@@ -43,7 +43,8 @@ void notifyAbsolutePositionWithoutHeader(OutputStream* outputStream) {
 
 void deviceTrajectoryHandleRawData(char header,
         InputStream* inputStream,
-        OutputStream* outputStream) {
+        OutputStream* outputStream,
+        OutputStream* notificationOutputStream) {
     if (header == COMMAND_TRAJECTORY_GET_ABSOLUTE_POSITION) {
         ackCommand(outputStream, TRAJECTORY_DEVICE_HEADER, COMMAND_TRAJECTORY_GET_ABSOLUTE_POSITION);
 

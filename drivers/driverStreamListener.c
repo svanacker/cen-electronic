@@ -76,6 +76,11 @@ bool handleStreamInstruction(Buffer* inputBuffer,
                             filterCharFunction* inputFilterChar,
                             filterCharFunction* outputFilterChar) {
 
+	// We flush the ouputStream to handle notification from Device
+	if (outputStream != NULL) {
+		outputStream->flush(outputStream);
+	}
+
     if (inputBuffer == NULL) {
         writeError(DRIVER_STREAM_LISTENER_INPUT_BUFFER_NULL);
         return false;
@@ -167,7 +172,7 @@ bool handleStreamInstruction(Buffer* inputBuffer,
             bufferClearLastChars(inputBuffer, DEVICE_AND_COMMAND_HEADER_LENGTH);
 
             // Call to the device
-            deviceDescriptor->deviceHandleRawData(commandHeader, bufferedInputStream, bufferedOutputStream);
+            deviceDescriptor->deviceHandleRawData(commandHeader, bufferedInputStream, bufferedOutputStream, outputStream);
 
         } // we forward the request through Remote Operation with Dispatcher
         else if (specifyDispatcherLength > 0 || transmitMode == TRANSMIT_I2C || transmitMode == TRANSMIT_UART || transmitMode == TRANSMIT_ZIGBEE) {

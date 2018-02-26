@@ -116,6 +116,9 @@
 #include "../../device/motion/position/trajectoryDeviceInterface.h"
 
 // Motion
+#include "../../device/motion/extended/extendedMotionDevice.h"
+#include "../../device/motion/extended/extendedMotionDeviceInterface.h"
+
 #include "../../device/motion/simple/motionDevice.h"
 #include "../../device/motion/simple/motionDeviceInterface.h"
 
@@ -231,6 +234,7 @@ void initDevicesDescriptor() {
     addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());
     addLocalDevice(getCodersDeviceInterface(), getCodersDeviceDescriptor());
     addLocalDevice(getPIDDeviceInterface(), getPIDDeviceDescriptor(&pidMotion));
+    addLocalDevice(getExtendedMotionDeviceInterface(), getExtendedMotionDeviceDescriptor(&pidMotion));
     addLocalDevice(getMotionDeviceInterface(), getMotionDeviceDescriptor(&pidMotion));
     addLocalDevice(getTrajectoryDeviceInterface(), getTrajectoryDeviceDescriptor());
     addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());

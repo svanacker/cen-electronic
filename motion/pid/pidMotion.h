@@ -53,6 +53,8 @@ struct PidMotionDefinition {
 	BSplineCurve curve;
 	/** The method which will compute the errors (by using coders or absolute positions) .*/
 	ComputeUFunction* computeU;
+	// OutputStream for notification so that caller could have it !
+	OutputStream* notificationOutputStream;
 };
 
 /**
@@ -193,6 +195,10 @@ MotionEndDetectionParameter* getMotionEndDetectionParameter(PidMotion* pidMotion
 
 /**
  * Initializes the Pid Motion global structure.
+ * @param pidMotion the pointer to the structure to initialize
+ * @param eepromParam the param to the eeprom
+ * @param array the array with all motion definition
+ * @param length the length of the array with motion definitions
  */
 void initPidMotion(PidMotion* pidMotion, Eeprom* eepromParam, PidMotionDefinition(*array)[], unsigned int length);
 

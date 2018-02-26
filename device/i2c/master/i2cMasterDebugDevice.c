@@ -40,7 +40,7 @@ I2cBusConnection* getI2cMasterDebugBusConnection(InputStream* inputStream) {
     return getI2cBusConnectionBySlaveAddress(slaveAddress);
 }
 
-void deviceI2cMasterDebugHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream) {
+void deviceI2cMasterDebugHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     // I2C Management
     if (header == COMMAND_I2C_MASTER_DEBUG_PRINT_BUFFER) {
         ackCommand(outputStream, I2C_MASTER_DEBUG_DEVICE_HEADER, COMMAND_I2C_MASTER_DEBUG_PRINT_BUFFER);

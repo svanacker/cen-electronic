@@ -58,7 +58,7 @@ Timer* addTimerDemo(void) {
     return result;
 }
 
-void deviceTimerHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream) {
+void deviceTimerHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     if (commandHeader == COMMAND_TIMER_LIST) {
         printTimerList(getInfoOutputStreamLogger(), getTimerList());
         ackCommand(outputStream, TIMER_DEVICE_HEADER, COMMAND_TIMER_LIST);

@@ -66,7 +66,7 @@
 // NOTIFICATION
 
 /** Argument for the status of the robot when position reached. */
-#define NOTIFY_MOTION_STATUS_REACHED           'r'
+#define NOTIFY_MOTION_STATUS_REACHED           'R'
 
 /** Argument for the status of the robot when robot failed to reach. */
 #define NOTIFY_MOTION_STATUS_FAILED            'e'

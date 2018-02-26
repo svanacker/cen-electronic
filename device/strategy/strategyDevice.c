@@ -46,7 +46,7 @@ bool isStrategyDeviceOk(void) {
     return true;
 }
 
-void deviceStrategyHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream) {
+void deviceStrategyHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
      if (commandHeader == COMMAND_STRATEGY_SET_OPPONENT_ROBOT_POSITION) {
 
         // data

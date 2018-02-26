@@ -28,7 +28,7 @@ bool isPwmMotorDeviceOk(void) {
     return true;
 }
 
-void devicePwmMotorHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream) {
+void devicePwmMotorHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     if (commandHeader == COMMAND_MOVE_MOTOR) {
         signed int left = readSignedHex2(inputStream);
         signed int right = readSignedHex2(inputStream);

@@ -13,6 +13,7 @@
 
 #include "../../../common/log/logger.h"
 #include "../../../common/log/logLevel.h"
+#include "../../../common/io/printWriter.h"
 
 #include "../../../common/math/cenMath.h"
 
@@ -34,6 +35,8 @@ float computeNextPID(PidMotion* pidMotion, enum InstructionType instructionType,
     // pidType = Forward / Rotation / Final Approach ...
     unsigned char pidIndex = getIndexOfPid(instructionType, pidType);
     PidParameter* pidParameter = getPidParameter(pidMotion, pidIndex, rollingTestMode);
+
+//	OutputStream* outputStream = getDebugOutputStreamLogger();
 
     if (!pidParameter->enabled) {
         return 0.0f;

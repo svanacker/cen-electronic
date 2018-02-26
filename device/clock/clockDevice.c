@@ -36,7 +36,7 @@ bool isClockDeviceOk(void) {
     return true;
 }
 
-void deviceClockHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream){
+void deviceClockHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream){
     _deviceClockCheckInitialized();
     if (header == COMMAND_READ_CLOCK) {
         ackCommand(outputStream, CLOCK_DEVICE_HEADER, COMMAND_READ_CLOCK);

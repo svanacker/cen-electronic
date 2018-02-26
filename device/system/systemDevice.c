@@ -42,7 +42,7 @@ bool deviceSystemIsOk(void) {
     return true;
 }
 
-void deviceSystemHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream) {
+void deviceSystemHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     if (header == COMMAND_PING) {
         // data
         ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_PING);

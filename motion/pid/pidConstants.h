@@ -26,7 +26,7 @@
 /**
  * Constant to have good PID range.
  */
-#define PID_GLOBAL_DIVISER 100.0f
+#define PID_GLOBAL_DIVISER 500.0f
 
 /** 
  The factor which defines by which factor we divide the expected acceleration.
@@ -39,12 +39,12 @@
   (10 / 10000) / 0.005Hz = 40 m s-2 which is too much
  If we increase this factor, we must enhanced the acceleration value to have the same acceleration
  */
-#define A_FACTOR 0.1f
+#define A_FACTOR 0.3f
 
 /**
  * The factor for improving speed.
  */
-#define SPEED_FACTOR 10.0f
+#define SPEED_FACTOR 20.0f
 
 /**
  * Defines the error for which we apply strong PID and not normal PID.

@@ -1,9 +1,14 @@
 #include <math.h>
 #include "motion.h"
 
+#include <stdbool.h>
+#include <stdlib.h>
+
 #include "../common/commons.h"
 
 #include "../common/delay/cenDelay.h"
+
+#include "../common/error/error.h"
 
 #include "../common/io/buffer.h"
 #include "../common/io/outputStream.h"
@@ -13,6 +18,11 @@
 
 #include "../common/math/cenMath.h"
 
+#include "../device/motion/simple/motionDevice.h"
+
+#include "../motion/simple/simpleMotion.h"
+
+#include "pid/detectedMotionType.h"
 #include "pid/pid.h"
 #include "pid/pidMotion.h"
 
@@ -30,31 +40,36 @@ enum DetectedMotionType handleInstructionAndMotion(PidMotion* pidMotion) {
 
     enum DetectedMotionType result = updateMotors(pidMotion);
 
-    /* TODO https://github.com/svanacker/cen-electronic/issues/28
-    Buffer* buffer = getI2CSlaveOutputBuffer();
-    OutputStream* outputStream = getOutputStream(buffer);
-    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+    OutputStream* outputStream = NULL;
+	PidMotionDefinition* currentMotionDefinition = pidMotionGetCurrentMotionDefinition(pidMotion);
+	if (currentMotionDefinition != NULL) {
+		outputStream = currentMotionDefinition->notificationOutputStream;
+	}
+	else {
+		writeError(MOTION_DEFINITION_NO_CURRENT_DEFINITION);
+	}
 
-    if (value == NO_POSITION_TO_REACH) {
+    if (result == DETECTED_MOTION_TYPE_NO_POSITION_TO_REACH) {
         // don't do anything
     }
-    if (value == POSITION_TO_MAINTAIN) {
+    if (result == DETECTED_MOTION_TYPE_POSITION_TO_MAINTAIN) {
         // does not end
-    } else if (value == POSITION_IN_PROGRESS) {
+    } else if (result == DETECTED_MOTION_TYPE_POSITION_IN_PROGRESS) {
         // don't do anything, wait
-    } else if (value == POSITION_REACHED) {
+    } else if (result == DETECTED_MOTION_TYPE_POSITION_REACHED) {
         notifyReached(outputStream);
-        notifyReached(debugOutputStream);
-        stopPosition(true);
-    } else if (value == POSITION_BLOCKED_WHEELS) {
+        stopPosition(pidMotion, true, outputStream);
+    } else if (result == DETECTED_MOTION_TYPE_POSITION_BLOCKED_WHEELS) {
         notifyFailed(outputStream);
-        notifyFailed(debugOutputStream);
-        stopPosition(true);
-    } else if (value == POSITION_OBSTACLE) {
+        stopPosition(pidMotion, true, outputStream);
+    } else if (result == DETECTED_MOTION_TYPE_POSITION_OBSTACLE) {
         notifyObstacle(outputStream);
-        stopPosition(true);
+        stopPosition(pidMotion, true, outputStream);
     }
-    */
+	if (outputStream != NULL) {
+		outputStream->flush(outputStream);
+	}
+	
     return result;
 }
 

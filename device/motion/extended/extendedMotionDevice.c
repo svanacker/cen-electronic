@@ -50,7 +50,8 @@ bool deviceExtendedMotionIsOk(void) {
 
 void deviceExtendedMotionHandleRawData(char commandHeader,
         InputStream* inputStream,
-        OutputStream* outputStream) {
+        OutputStream* outputStream,
+        OutputStream* notificationOutputStream) {
 	// -> bspline
     if (commandHeader == COMMAND_MOTION_SPLINE_RELATIVE || commandHeader == COMMAND_MOTION_SPLINE_ABSOLUTE) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, commandHeader);
@@ -83,7 +84,8 @@ void deviceExtendedMotionHandleRawData(char commandHeader,
                         angle, 
                         distance1, distance2, 
                         accelerationFactor, speedFactor,
-                        commandHeader == COMMAND_MOTION_SPLINE_RELATIVE
+                        commandHeader == COMMAND_MOTION_SPLINE_RELATIVE,
+					    notificationOutputStream
                         );
     }
     else if (commandHeader == COMMAND_MOTION_SPLINE_TEST_LEFT || commandHeader == COMMAND_MOTION_SPLINE_TEST_RIGHT) {
@@ -97,7 +99,8 @@ void deviceExtendedMotionHandleRawData(char commandHeader,
                          sign * 0.75f * PI,
                          200.0f, 200.0f,
                         MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL,
-                         true);
+                         true,
+					    notificationOutputStream);
     }
  }
 

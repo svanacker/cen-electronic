@@ -22,7 +22,7 @@ bool deviceLCDIsOk(void) {
 
 void deviceLCDHandleRawData(char commandHeader,
                             InputStream* inputStream,
-                            OutputStream* outputStream) {
+                            OutputStream* outputStream, OutputStream* notificationOutputStream) {
     if (commandHeader == COMMAND_LCD) {
         ackCommand(outputStream, LCD_DEVICE_HEADER, COMMAND_LCD);
         // print character

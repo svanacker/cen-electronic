@@ -34,7 +34,7 @@ bool deviceDataDispatcherIsOk(void) {
     return true;
 }
 
-void deviceDataDispatcherHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream) {
+void deviceDataDispatcherHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     // Dispatcher List
     if (header == COMMAND_DISPATCHER_LIST) {
         ackCommand(outputStream, SYSTEM_DEBUG_DEVICE_HEADER, COMMAND_DISPATCHER_LIST);

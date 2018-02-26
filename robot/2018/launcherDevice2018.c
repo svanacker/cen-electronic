@@ -37,7 +37,7 @@ bool deviceLauncher2018IsOk(void) {
     return true;
 }
 
-void deviceLauncher2018HandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream) {
+void deviceLauncher2018HandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     if (commandHeader == LAUNCHER_BALL_COMMAND) {
         int launcherIndex = readHex2(inputStream);
         launcher2018(launcherIndex);

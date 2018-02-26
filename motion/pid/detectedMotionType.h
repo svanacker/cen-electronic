@@ -1,5 +1,5 @@
-#ifndef PID_POSITION_TYPE_H
-#define PID_POSITION_TYPE_H
+#ifndef DETECTED_MOTION_TYPE_H
+#define DETECTED_MOTION_TYPE_H
 
 /**
  * Define the type of Position which is detected by the PID

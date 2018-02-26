@@ -105,7 +105,7 @@ bool isEndMatchDetectorDeviceOk(void) {
     return true;
 }
 
-void deviceEndMatchDetectorHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream) {
+void deviceEndMatchDetectorHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     if (commandHeader == COMMAND_GET_TIME_LEFT) {
         ackCommand(outputStream, END_MATCH_DETECTOR_DEVICE_HEADER, COMMAND_GET_TIME_LEFT);
         appendHex2(outputStream, MATCH_DURATION - currentTimeInSecond);

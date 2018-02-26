@@ -30,7 +30,7 @@ bool isRobotKinematicsDeviceOk(void) {
     return true;
 }
 
-void deviceRobotKinematicsHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream) {
+void deviceRobotKinematicsHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     if (commandHeader == COMMAND_KINEMATICS_LOAD_DEFAULT_VALUES) {
         ackCommand(outputStream, KINEMATICS_HEADER, COMMAND_KINEMATICS_LOAD_DEFAULT_VALUES);
         RobotKinematics* robotKinematics = getRobotKinematics();

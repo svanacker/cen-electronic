@@ -29,7 +29,7 @@ void notifyTest(OutputStream* outputStream, unsigned char notifyArgument) {
     appendHex2(outputStream, notifyArgument);
 }
 
-void deviceTestHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream) {
+void deviceTestHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     if (header == COMMAND_TEST) {
         int arg1 = readHex2(inputStream);
         int arg2 = readHex2(inputStream);
