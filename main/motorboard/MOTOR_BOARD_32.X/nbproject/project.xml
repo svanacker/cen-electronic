@@ -4,14 +4,14 @@
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/make-project/1">
             <name>MOTOR_BOARD_32</name>
-            <creation-uuid>2143d5dc-46e2-474f-940b-44ff8fd84320</creation-uuid>
+            <creation-uuid>daeb5a96-569b-4361-8d32-7a1174b911ed</creation-uuid>
             <make-project-type>0</make-project-type>
             <c-extensions>c</c-extensions>
             <cpp-extensions/>
             <header-extensions>h</header-extensions>
             <asminc-extensions/>
-            <sourceEncoding>ISO-8859-1</sourceEncoding>
             <make-dep-projects/>
+            <sourceEncoding>ISO-8859-1</sourceEncoding>
         </data>
     </configuration>
 </project>
