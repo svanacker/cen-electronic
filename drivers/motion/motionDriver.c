@@ -143,7 +143,7 @@ bool motionDriverRightOneWheel(float rightDeciDegree) {
 bool motionDriverStop() {
     OutputStream* outputStream = getDriverRequestOutputStream();
     append(outputStream, MOTION_DEVICE_HEADER);
-    append(outputStream, COMMAND_MOTION_CANCEL);
+    append(outputStream, COMMAND_MOTION_STOP);
 
     bool result = transmitFromDriverRequestBuffer();
 

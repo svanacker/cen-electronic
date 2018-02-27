@@ -389,7 +389,7 @@ void runMainBoardPC(bool connectToRobotManagerMode) {
     initRobotConfigPc(&robotConfig);
 
     // EEPROM
-    initEepromPc(&eeprom, "TODO");
+    initEepromPc(&eeprom, "MAIN_BOARD_EEPROM");
     initEepromFile(&eeprom);
 
     // Clock

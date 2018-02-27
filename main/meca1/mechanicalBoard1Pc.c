@@ -236,7 +236,7 @@ void runMechanicalBoard1PC(bool singleMode) {
 	}
 
     // Eeprom
-    initEepromPc(&eeprom, "TODO");
+    initEepromPc(&eeprom, "MECHANICAL_BOARD_1_PC_EEPROM");
 
     // Battery
     initBattery(&battery, getBatteryVoltage);

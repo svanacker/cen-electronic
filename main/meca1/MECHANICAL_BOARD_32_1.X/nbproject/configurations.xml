@@ -39,6 +39,7 @@
         <itemPath>../../../common/i2c/i2cConstants.h</itemPath>
         <itemPath>../../../common/i2c/i2cDebug.h</itemPath>
         <itemPath>../../../common/i2c/i2cCommon.h</itemPath>
+        <itemPath>../../../common/i2c/i2cBusConnectionList.h</itemPath>
         <itemPath>../../../common/i2c/i2cBusList.h</itemPath>
       </logicalFolder>
       <logicalFolder name="common.i2c.32"
@@ -108,6 +109,8 @@
         <itemPath>../../../common/serial/serialLink.h</itemPath>
         <itemPath>../../../common/serial/serialOutputStream.h</itemPath>
         <itemPath>../../../common/serial/serialInputInterrupt.h</itemPath>
+        <itemPath>../../../common/serial/serialLinkDebug.h</itemPath>
+        <itemPath>../../../common/serial/serialLinkList.h</itemPath>
       </logicalFolder>
       <logicalFolder name="common.serial.32"
                      displayName="common.serial.32"
@@ -254,6 +257,7 @@
       <logicalFolder name="common.i2c" displayName="common.i2c" projectFiles="true">
         <itemPath>../../../common/i2c/i2cDebug.c</itemPath>
         <itemPath>../../../common/i2c/i2cCommon.c</itemPath>
+        <itemPath>../../../common/i2c/i2cBusConnectionList.c</itemPath>
         <itemPath>../../../common/i2c/i2cBusList.c</itemPath>
       </logicalFolder>
       <logicalFolder name="common.i2c.32"
@@ -344,6 +348,8 @@
                      projectFiles="true">
         <itemPath>../../../common/serial/serialLink.c</itemPath>
         <itemPath>../../../common/serial/serialOutputStream.c</itemPath>
+        <itemPath>../../../common/serial/serialLinkDebug.c</itemPath>
+        <itemPath>../../../common/serial/serialLinkList.c</itemPath>
       </logicalFolder>
       <logicalFolder name="common.serial.32"
                      displayName="common.serial.32"
@@ -455,6 +461,7 @@
     <Elem>..\..\..\common\serial</Elem>
     <Elem>..\..\..\common\pwm\servo</Elem>
     <Elem>..\..\..\device</Elem>
+    <Elem>..\..\..\common\i2c\master\32</Elem>
     <Elem>..\..\..\device\system</Elem>
     <Elem>..\..\..\device\timer</Elem>
     <Elem>..\..\..\common</Elem>
@@ -504,7 +511,7 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>ICD3PlatformTool</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>1.43</languageToolchainVersion>
+        <languageToolchainVersion>2.05</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <compileType>
@@ -540,7 +547,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="..;..\..\..\..\..\..\..\Program Files (x86)\Microchip\MPLAB C30\include;..\..\..\common;..\..\..\common\clock;..\..\..\common\cmd;..\..\..\common\delay;..\..\..\common\delay\32;..\..\..\common\eeprom;..\..\..\common\error;..\..\..\common\i2c;..\..\..\common\i2c\32;..\..\..\common\i2c\master;..\..\..\common\i2c\slave;..\..\..\common\io;..\..\..\common\log;..\..\..\common\math;..\..\..\common\pwm;..\..\..\common\pwm\motor;..\..\..\common\pwm\servo;..\..\..\common\serial;..\..\..\common\serial\32;..\..\..\common\setup\32;..\..\..\common\system;..\..\..\common\timer;..\..\..\device;..\..\..\device\clock;..\..\..\device\dispatcher;..\..\..\device\motor;..\..\..\device\serial;..\..\..\device\servo;..\..\..\device\system;..\..\..\device\test;..\..\..\device\timer;..\..\..\drivers;..\..\..\drivers\clock;..\..\..\drivers\dispatcher;..\..\..\drivers\eeprom;."/>
+                  value="..;..\..\..\..\..\..\..\Program Files (x86)\Microchip\MPLAB C30\include;..\..\..\common;..\..\..\common\clock;..\..\..\common\cmd;..\..\..\common\delay;..\..\..\common\delay\32;..\..\..\common\eeprom;..\..\..\common\error;..\..\..\common\i2c;..\..\..\common\i2c\32;..\..\..\common\i2c\master;..\..\..\common\i2c\slave;..\..\..\common\io;..\..\..\common\log;..\..\..\common\math;..\..\..\common\pwm;..\..\..\common\pwm\motor;..\..\..\common\pwm\servo;..\..\..\common\serial;..\..\..\common\serial\32;..\..\..\common\setup\32;..\..\..\common\system;..\..\..\common\timer;..\..\..\device;..\..\..\device\clock;..\..\..\device\dispatcher;..\..\..\device\motor;..\..\..\device\serial;..\..\..\device\servo;..\..\..\device\system;..\..\..\device\test;..\..\..\device\timer;..\..\..\drivers;..\..\..\drivers\clock;..\..\..\drivers\dispatcher;..\..\..\drivers\eeprom;;."/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="false"/>
@@ -553,19 +560,17 @@
         <property key="strict-ansi" value="false"/>
         <property key="support-ansi" value="false"/>
         <property key="toplevel-reordering" value=""/>
+        <property key="unaligned-access" value=""/>
         <property key="use-cci" value="false"/>
         <property key="use-iar" value="false"/>
         <property key="use-indirect-calls" value="false"/>
       </C32>
-      <C32-AR>
-        <property key="additional-options-chop-files" value="false"/>
-      </C32-AR>
       <C32-AS>
         <property key="assembler-symbols" value=""/>
         <property key="enable-symbols" value="false"/>
         <property key="exclude-floating-point-library" value="false"/>
         <property key="expand-macros" value="false"/>
-        <property key="extra-include-directories-for-assembler" value="..\..\..;."/>
+        <property key="extra-include-directories-for-assembler" value="..\..\..;;."/>
         <property key="extra-include-directories-for-preprocessor" value=""/>
         <property key="false-conditionals" value="false"/>
         <property key="generate-16-bit-code" value="false"/>
@@ -590,7 +595,7 @@
         <property key="exclude-floating-point-library" value="false"/>
         <property key="exclude-standard-libraries" value="false"/>
         <property key="extra-lib-directories"
-                  value="..\..\..\..\..\..\..\Program Files (x86)\Microchip\MPLAB C30\src\peripheral_30F_24H_33F\libs;."/>
+                  value="..\..\..\..\..\..\..\Program Files (x86)\Microchip\MPLAB C30\src\peripheral_30F_24H_33F\libs;;."/>
         <property key="fill-flash-options-addr" value=""/>
         <property key="fill-flash-options-const" value=""/>
         <property key="fill-flash-options-how" value="0"/>
@@ -608,6 +613,7 @@
         <property key="linker-symbols" value=""/>
         <property key="map-file"
                   value="&quot;${DISTDIR}/MECHANICAL_BOARD_32_1.X.${IMAGE_TYPE}.map&quot;"/>
+        <property key="no-device-startup-code" value="false"/>
         <property key="no-startup-files" value="false"/>
         <property key="oXC32ld-extra-opts" value=""/>
         <property key="optimization-level" value=""/>
@@ -621,119 +627,21 @@
         <property key="trace-symbols" value=""/>
         <property key="warn-section-align" value="false"/>
       </C32-LD>
-      <C32CPP>
-        <property key="additional-warnings" value="false"/>
-        <property key="addresss-attribute-use" value="false"/>
-        <property key="check-new" value="false"/>
-        <property key="eh-specs" value="true"/>
-        <property key="enable-app-io" value="false"/>
-        <property key="enable-omit-frame-pointer" value="false"/>
-        <property key="enable-symbols" value="true"/>
-        <property key="enable-unroll-loops" value="false"/>
-        <property key="exceptions" value="true"/>
-        <property key="exclude-floating-point" value="false"/>
-        <property key="extra-include-directories" value=""/>
-        <property key="generate-16-bit-code" value="false"/>
-        <property key="generate-micro-compressed-code" value="false"/>
-        <property key="isolate-each-function" value="false"/>
-        <property key="make-warnings-into-errors" value="false"/>
-        <property key="optimization-level" value=""/>
-        <property key="place-data-into-section" value="false"/>
-        <property key="post-instruction-scheduling" value="default"/>
-        <property key="pre-instruction-scheduling" value="default"/>
-        <property key="preprocessor-macros" value=""/>
-        <property key="rtti" value="true"/>
-        <property key="strict-ansi" value="false"/>
-        <property key="toplevel-reordering" value=""/>
-        <property key="use-cci" value="false"/>
-        <property key="use-iar" value="false"/>
-        <property key="use-indirect-calls" value="false"/>
-      </C32CPP>
       <C32Global>
         <property key="common-include-directories" value=""/>
         <property key="gp-relative-option" value=""/>
         <property key="legacy-libc" value="false"/>
+        <property key="mdtcm" value=""/>
+        <property key="mitcm" value=""/>
+        <property key="mstacktcm" value="false"/>
         <property key="relaxed-math" value="false"/>
         <property key="save-temps" value="false"/>
         <property key="wpo-lto" value="false"/>
       </C32Global>
       <ICD3PlatformTool>
-        <property key="ADC 1" value="true"/>
-        <property key="AutoSelectMemRanges" value="auto"/>
-        <property key="CAN1" value="true"/>
-        <property key="CAN2" value="true"/>
-        <property key="CHANGE NOTICE" value="true"/>
-        <property key="COMPARATOR" value="true"/>
-        <property key="DMA" value="true"/>
-        <property key="ETHERNET CONTROLLER" value="true"/>
-        <property key="Freeze All Other Peripherals" value="true"/>
-        <property key="I2C1" value="true"/>
-        <property key="I2C3" value="true"/>
-        <property key="I2C4" value="true"/>
-        <property key="I2C5" value="true"/>
-        <property key="INPUT CAPTURE 1" value="true"/>
-        <property key="INPUT CAPTURE 2" value="true"/>
-        <property key="INPUT CAPTURE 3" value="true"/>
-        <property key="INPUT CAPTURE 4" value="true"/>
-        <property key="INPUT CAPTURE 5" value="true"/>
-        <property key="INTERRUPT CONTROL" value="true"/>
-        <property key="OUTPUT COMPARE 1" value="true"/>
-        <property key="OUTPUT COMPARE 2" value="true"/>
-        <property key="OUTPUT COMPARE 3" value="true"/>
-        <property key="OUTPUT COMPARE 4" value="true"/>
-        <property key="OUTPUT COMPARE 5" value="true"/>
-        <property key="PARALLEL MASTER/SLAVE PORT" value="true"/>
-        <property key="REAL TIME CLOCK" value="true"/>
-        <property key="SPI 2" value="true"/>
-        <property key="SPI 3" value="true"/>
-        <property key="SPI 4" value="true"/>
-        <property key="SecureSegment.SegmentProgramming" value="FullChipProgramming"/>
-        <property key="TIMER1" value="true"/>
-        <property key="TIMER2" value="true"/>
-        <property key="TIMER3" value="true"/>
-        <property key="TIMER4" value="true"/>
-        <property key="TIMER5" value="true"/>
-        <property key="ToolFirmwareFilePath"
-                  value="Press to browse for a specific firmware version"/>
-        <property key="ToolFirmwareOption.UseLatestFirmware" value="true"/>
-        <property key="UART1" value="true"/>
-        <property key="UART2" value="true"/>
-        <property key="UART3" value="true"/>
-        <property key="UART4" value="true"/>
-        <property key="UART5" value="true"/>
-        <property key="UART6" value="true"/>
-        <property key="USB" value="true"/>
-        <property key="debugoptions.useswbreakpoints" value="false"/>
-        <property key="hwtoolclock.frcindebug" value="false"/>
-        <property key="memories.aux" value="false"/>
-        <property key="memories.bootflash" value="false"/>
-        <property key="memories.configurationmemory" value="true"/>
-        <property key="memories.configurationmemory2" value="true"/>
-        <property key="memories.dataflash" value="true"/>
-        <property key="memories.eeprom" value="true"/>
-        <property key="memories.flashdata" value="true"/>
-        <property key="memories.id" value="true"/>
-        <property key="memories.instruction.ram" value="true"/>
-        <property key="memories.instruction.ram.ranges"
-                  value="${memories.instruction.ram.ranges}"/>
-        <property key="memories.programmemory" value="true"/>
-        <property key="memories.programmemory.ranges" value="1d000000-1d07ffff"/>
-        <property key="poweroptions.powerenable" value="false"/>
-        <property key="programoptions.donoteraseauxmem" value="false"/>
-        <property key="programoptions.eraseb4program" value="true"/>
-        <property key="programoptions.preservedataflash" value="false"/>
-        <property key="programoptions.preservedataflash.ranges" value=""/>
-        <property key="programoptions.preserveeeprom" value="false"/>
-        <property key="programoptions.preserveeeprom.ranges" value=""/>
-        <property key="programoptions.preserveprogram.ranges" value=""/>
-        <property key="programoptions.preserveprogramrange" value="false"/>
-        <property key="programoptions.preserveuserid" value="false"/>
-        <property key="programoptions.programcalmem" value="false"/>
-        <property key="programoptions.programuserotp" value="false"/>
-        <property key="programoptions.testmodeentrymethod" value="VDDFirst"/>
-        <property key="programoptions.usehighvoltageonmclr" value="false"/>
-        <property key="programoptions.uselvpprogramming" value="false"/>
-        <property key="voltagevalue" value="3.25"/>
+        <property key="tracecontrol.disablemacros" value="true"/>
+        <property key="tracecontrol.medium" value="0"/>
+        <property key="tracecontrol.select" value="0"/>
       </ICD3PlatformTool>
     </conf>
   </confs>

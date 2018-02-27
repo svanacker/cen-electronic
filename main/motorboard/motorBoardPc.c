@@ -270,7 +270,7 @@ void runMotorBoardPC(bool singleMode) {
 	}
 
     // Eeprom
-    initEepromPc(&eeprom, "TODO");
+    initEepromPc(&eeprom, "MOTOR_BOARD_PC_EEPROM");
 
     // Battery
     initBattery(&battery, getBatteryVoltage);
