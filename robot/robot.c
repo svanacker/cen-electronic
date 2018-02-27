@@ -42,7 +42,7 @@ static int robotAngle;
 /** Global variable to know if the robot must stop.*/
 static bool robotMustStop = false;
 
-static unsigned int timeAtLastCollision = 0;
+// static unsigned int timeAtLastCollision = 0;
 
 static bool robotPositionChanged;
 

@@ -67,14 +67,14 @@ unsigned int appendStringTableData(OutputStream* outputStream, const char* s, in
 	return length + appendSpaces(outputStream, columnSize - length) + 2;
 }
 
-unsigned int appendFixedCharArrayTableData(OutputStream* outputStream, const FixedCharArray* s, int columnSize) {
+unsigned int appendFixedCharArrayTableData(OutputStream* outputStream, FixedCharArray* s, int columnSize) {
 	appendTableSeparator(outputStream);
 	appendSpace(outputStream);
 	int length = appendFixedCharArray(outputStream, s);
 	return length + appendSpaces(outputStream, columnSize - length) + FIXED_CHAR_ARRAY_LENGTH + 2;
 }
 
-unsigned int appendHexFixedCharArrayTableData(OutputStream* outputStream, const FixedCharArray* s, int columnSize) {
+unsigned int appendHexFixedCharArrayTableData(OutputStream* outputStream, FixedCharArray* s, int columnSize) {
 	appendTableSeparator(outputStream);
 	appendSpace(outputStream);
 	int length = appendHexFixedCharArray(outputStream, s);

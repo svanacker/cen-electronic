@@ -57,7 +57,7 @@ unsigned int appendString(OutputStream* outputStream, const char* s);
  * @param s the pointer on the char array
  * @return how many chars were written
  */
-unsigned int appendFixedCharArray(OutputStream* outputStream, const FixedCharArray* s);
+unsigned int appendFixedCharArray(OutputStream* outputStream, FixedCharArray* s);
 
 /**
 * Append a char array with a specific length but encoded in hexadecimal.
@@ -65,7 +65,7 @@ unsigned int appendFixedCharArray(OutputStream* outputStream, const FixedCharArr
 * @param s the pointer on the char array
 * @return how many chars were written
 */
-unsigned int appendHexFixedCharArray(OutputStream* outputStream, const FixedCharArray* s);
+unsigned int appendHexFixedCharArray(OutputStream* outputStream, FixedCharArray* s);
 
 /**
  * Append a string with CRLF to the buffer.

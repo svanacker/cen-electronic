@@ -249,12 +249,14 @@ static OutputStream pcOutputStream;
 static StreamLink pcSerialStreamLink;
 
 // serial Link MechanicalBoard
+/*
 static char mechanicalBoard2InputBufferArray[MAIN_BOARD_MECA2_INPUT_BUFFER_LENGTH];
 static Buffer mechanicalBoard2InputBuffer;
 static char mechanicalBoard2OutputBufferArray[MAIN_BOARD_MECA2_OUTPUT_BUFFER_LENGTH];
 static Buffer mechanicalBoard2OutputBuffer;
 static OutputStream mechanicalBoard2OutputStream;
 static StreamLink mechanicalBoard2SerialStreamLink;
+*/
 
 // DRIVERS
 static Buffer driverRequestBuffer;
@@ -649,7 +651,7 @@ int main(void) {
 
     counter = 1;
 
-    clearBuffer(&mechanicalBoard2InputBuffer);
+    // clearBuffer(&mechanicalBoard1InputBuffer);
 
     // enableNotificationRobotInfraredDetector(DETECTOR_GROUP_TYPE_FORWARD);
 

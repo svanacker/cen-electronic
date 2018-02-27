@@ -71,7 +71,7 @@ Location* addNamedLocation(LocationList* locationList, char* name, int x, int y)
 * Add a location to the list, but with a char pointer structure.
 * @param locationList the pointer on the struct (POO Programming)
 */
-Location* addLocation(LocationList* locationList, const FixedCharArray* s, int x, int y);
+Location* addLocation(LocationList* locationList, FixedCharArray* s, int x, int y);
 
 /**
  * Copy the location from the source to the target location, by copying all fields by value.
@@ -109,7 +109,7 @@ Location* findLocationByStringName(LocationList* locationList, char* name);
  * @param locationList the list in which we search the location with the specified name
  * @param locationName the name of location which is searched
  */
-Location* findLocationByName(LocationList* locationList, const FixedCharArray* locationName);
+Location* findLocationByName(LocationList* locationList, FixedCharArray* locationName);
 
 /**
  * Returns true if the locationList contains the specified location.

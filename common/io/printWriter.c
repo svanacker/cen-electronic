@@ -57,7 +57,7 @@ unsigned int appendString(OutputStream* outputStream, const char* s) {
 	return result;
 }
 
-unsigned int appendHexFixedCharArray(OutputStream* outputStream, const FixedCharArray* s) {
+unsigned int appendHexFixedCharArray(OutputStream* outputStream, FixedCharArray* s) {
 	unsigned int i;
 	char* sPointer = (char*)s;
 	for (i = 0; i < FIXED_CHAR_ARRAY_LENGTH; i++) {
@@ -68,7 +68,7 @@ unsigned int appendHexFixedCharArray(OutputStream* outputStream, const FixedChar
 	return FIXED_CHAR_ARRAY_LENGTH * 2;
 }
 
-unsigned int appendFixedCharArray(OutputStream* outputStream, const FixedCharArray* s) {
+unsigned int appendFixedCharArray(OutputStream* outputStream, FixedCharArray* s) {
     unsigned int i;
     char* sPointer = (char*)s;
     for (i = 0; i < FIXED_CHAR_ARRAY_LENGTH; i++) {

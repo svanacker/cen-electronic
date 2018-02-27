@@ -79,15 +79,15 @@ PathData* garbageAreaFrontPathTo;
 // ------------------------------------------------------- TARGETS -----------------------------------------------------------------------
 
 // Targets List
-static GameTarget distributor1GameTarget;
+// static GameTarget distributor1GameTarget;
 
 // ------------------------------------------------------- TARGETS ACTIONS ---------------------------------------------------------------
 
-static GameTargetAction distributor1TakeTargetAction;
+// static GameTargetAction distributor1TakeTargetAction;
 
 // ------------------------------------------------------- TARGETS ACTIONS ITEMS --------------------------------------------------------
 
-static GameTargetActionItemList distributor1TakeTargetActionItemList;
+// static GameTargetActionItemList distributor1TakeTargetActionItemList;
 
 // ------------------------------------------------------- STRATEGIES ----------------------------------------------------------------
 
@@ -95,7 +95,7 @@ static GameTargetActionItemList distributor1TakeTargetActionItemList;
 static GameStrategy strategy1;
 
 // strategies Items
-static GameStrategyItem distributor1StrategyItem;
+// static GameStrategyItem distributor1StrategyItem;
 
 // ------------------------------------------------------- INITIALIZATION ------------------------------------------------------------
 

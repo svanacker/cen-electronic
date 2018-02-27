@@ -23,7 +23,7 @@ int _LM75A_readSensorValue(Temperature* temperature) {
 
     int result = 0;
     char lm75aMsb = 0;
-    char lm75aLsb = 0;
+    // char lm75aLsb;
 
     portableMasterStartI2C(i2cBusConnection);
     WaitI2C(i2cBus);
@@ -41,7 +41,8 @@ int _LM75A_readSensorValue(Temperature* temperature) {
     portableMasterAckI2C(i2cBusConnection);
     WaitI2C(i2cBus);
 
-    lm75aLsb = portableMasterReadI2C(i2cBusConnection);
+    // lm75aLsb = 
+    portableMasterReadI2C(i2cBusConnection);
     WaitI2C(i2cBus);
     portableMasterAckI2C(i2cBusConnection);
     WaitI2C(i2cBus);

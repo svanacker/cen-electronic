@@ -172,7 +172,8 @@ bool deviceRobotSonarDetectorIsOk() {
 
 void deviceRobotSonarDetectorHandleRawData(char commandHeader,
         InputStream* inputStream,
-        OutputStream* outputStream) {
+        OutputStream* outputStream,
+        OutputStream* notificationOutputStream) {
 
     if (commandHeader == COMMAND_SET_SONAR_STATUS) {
         sonarStatus = readHex2(inputStream);

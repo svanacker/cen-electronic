@@ -88,7 +88,7 @@ Location* addNamedLocation(LocationList* locationList, char* name, int x, int y)
     }
 }
 
-Location* addLocation(LocationList* locationList, const FixedCharArray* s, int x, int y) {
+Location* addLocation(LocationList* locationList, FixedCharArray* s, int x, int y) {
     Location* result = addNamedLocation(locationList, NULL, x, y);
     if (result != NULL) {
         FixedCharArray* target = &(result->name);
@@ -104,7 +104,7 @@ Location* findLocationByStringName(LocationList* locationList, char* name) {
     return result;
 }
 
-Location* findLocationByName(LocationList* locationList, const FixedCharArray* locationName) {
+Location* findLocationByName(LocationList* locationList, FixedCharArray* locationName) {
     unsigned int i;
     unsigned int size = locationList->size;
     for (i = 0; i < size; i++) {

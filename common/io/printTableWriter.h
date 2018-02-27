@@ -74,14 +74,14 @@ unsigned int appendStringTableData(OutputStream* outputStream, const char* s, in
 * @param s the string to add
 * @param columnSize the size of the column (for alignment)
 */
-unsigned int appendFixedCharArrayTableData(OutputStream* outputStream, const FixedCharArray* s, int columnSize);
+unsigned int appendFixedCharArrayTableData(OutputStream* outputStream, FixedCharArray* s, int columnSize);
 
 /**
 * Add a String (with only XXXX chars, fixed length) table data (but encoded in hexadecimal) to the outputStream with | and space arround
 * @param s the string to add
 * @param columnSize the size of the column (for alignment)
 */
-unsigned int appendHexFixedCharArrayTableData(OutputStream* outputStream, const FixedCharArray* s, int columnSize);
+unsigned int appendHexFixedCharArrayTableData(OutputStream* outputStream, FixedCharArray* s, int columnSize);
 
 /**
 * Add a Char table data to the outputStream with | and space arround

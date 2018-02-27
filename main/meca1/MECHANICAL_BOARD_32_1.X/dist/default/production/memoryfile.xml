@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?> 
 <project>                                  
-  <executable name="dist/default/production/MAIN_BOARD_32.X.production.elf">                 
+  <executable name="dist/default/production/MECHANICAL_BOARD_32_1.X.production.elf">                 
     <memory name="program">                 
       <units>bytes</units>                 
       <length>531968</length>                 
-      <used>199384</used>                     
-      <free>332584</free>                     
+      <used>95180</used>                     
+      <free>436788</free>                     
     </memory>                              
     <memory name="data">              
       <units>bytes</units>                 
       <length>131072</length>                 
-      <used>7624</used>                     
-      <free>123448</free>                     
+      <used>2980</used>                     
+      <free>128092</free>                     
     </memory>                              
   </executable>                            
 </project>                                 

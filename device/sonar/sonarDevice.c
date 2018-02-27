@@ -37,7 +37,7 @@ unsigned char isSonarDeviceWithAddressOk(char addr) {
     return getSRF02SoftwareRevision(sonarDeviceI2cBusConnection, addr) < 255;
 }
 
-void deviceSonarHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream) {
+void deviceSonarHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     if (commandHeader == COMMAND_GET_SONAR) {
         int sonarIndex = readHex2(inputStream);
         ackCommand(outputStream, SONAR_DEVICE_HEADER, COMMAND_GET_SONAR);

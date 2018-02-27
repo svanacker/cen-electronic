@@ -24,7 +24,7 @@ bool deviceTest2IsOk(void) {
     return true;
 }
 
-void deviceTest2HandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream) {
+void deviceTest2HandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     if (commandHeader == COMMAND_TEST2) {
         int arg1 = readHex2(inputStream);
         int arg2 = readHex2(inputStream);

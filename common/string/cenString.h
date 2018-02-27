@@ -8,14 +8,14 @@
 // We reserve the last char as '\0' to be sure that we will not continue, if we use "string" routines
 typedef char FixedCharArray [FIXED_CHAR_ARRAY_LENGTH];
 
-bool fixedCharArrayEquals(const FixedCharArray* fixedCharArray1, const FixedCharArray* fixedCharArray2);
+bool fixedCharArrayEquals(FixedCharArray* fixedCharArray1, FixedCharArray* fixedCharArray2);
 
 /**
  * Copy a fixed char array from a source to a target.
  * @param source the source fixed char array
  * @param target the target fixed char array
  */
-void copyFixedCharArray(const FixedCharArray* source, FixedCharArray* target);
+void copyFixedCharArray(FixedCharArray* source, FixedCharArray* target);
 
 /**
  * Clear the content of the fixedCharArray by filling the content to '\0'.

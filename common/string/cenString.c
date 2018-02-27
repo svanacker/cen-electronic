@@ -10,7 +10,7 @@ bool stringEquals(const char* s1, const char* s2) {
 }
 
 // TODO : Add Unit Test
-bool fixedCharArrayEquals(const FixedCharArray* fixedCharArray1, const FixedCharArray* fixedCharArray2) {
+bool fixedCharArrayEquals(FixedCharArray* fixedCharArray1, FixedCharArray* fixedCharArray2) {
     if (fixedCharArray1 == NULL || fixedCharArray2 == NULL) {
         // TODO : Throw an error
         return false;
@@ -41,7 +41,7 @@ void clearFixedCharArray(FixedCharArray* fixedCharArray) {
     }
 }
 
-void copyFixedCharArray(const FixedCharArray* source, FixedCharArray* target) {
+void copyFixedCharArray(FixedCharArray* source, FixedCharArray* target) {
     if (source == NULL || target == NULL) {
         // TODO : Throw an error
         return;
