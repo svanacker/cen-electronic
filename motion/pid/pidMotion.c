@@ -29,6 +29,15 @@ void clearPidMotion(PidMotion* pidMotion) {
 	}
 	pidMotion->writeIndex = 0;
 	pidMotion->readIndex = 0;
+	int i;
+	
+	// Reinit all values to make the Debug more easy
+	for (i = 0; i < pidMotion->length; i++) {
+		PidMotionDefinition* pidMotionDefinition = (PidMotionDefinition*)pidMotion->motionDefinitions;
+		pidMotionDefinition->motionType = MOTION_TYPE_UNDEFINED;
+		pidMotionDefinition->computeU = NULL;
+		pidMotionDefinition->notificationOutputStream = NULL;
+	}
 }
 
 bool isPidMotionFull(const PidMotion* pidMotion) {

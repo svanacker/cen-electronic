@@ -87,10 +87,18 @@ int deviceMotionGetInterface(char commandHeader, DeviceInterfaceMode mode, bool 
         return commandLengthValueForMode(mode, 4, 0);
     }
     // motion : Cancel
-    else if (commandHeader == COMMAND_MOTION_CANCEL) {
+    else if (commandHeader == COMMAND_MOTION_STOP) {
         // Same INPUT/OUTPUT
         if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("cancelMot");
+            setFunctionNoArgumentAndNoResult("cancelMotion");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }
+    // motion : Cancel ALL
+    else if (commandHeader == COMMAND_MOTION_CANCEL_ALL) {
+        // Same INPUT/OUTPUT
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("cancelMotionAll");
         }
         return commandLengthValueForMode(mode, 0, 0);
     }// motion : Obstacle

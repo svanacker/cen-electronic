@@ -58,10 +58,24 @@ enum DetectedMotionType handleInstructionAndMotion(PidMotion* pidMotion) {
         // don't do anything, wait
     } else if (result == DETECTED_MOTION_TYPE_POSITION_REACHED) {
         notifyReached(outputStream);
-        stopPosition(pidMotion, true, outputStream);
+		if (getPidMotionElementsCount(pidMotion) > 0) {
+			// To go next pid to the next motion Definition
+			pidMotionReadMotionDefinition(pidMotion);	
+	        stopPosition(pidMotion, false, outputStream);
+		}
+		else {
+	        stopPosition(pidMotion, true, outputStream);
+		}
     } else if (result == DETECTED_MOTION_TYPE_POSITION_BLOCKED_WHEELS) {
         notifyFailed(outputStream);
-        stopPosition(pidMotion, true, outputStream);
+		if (getPidMotionElementsCount(pidMotion) > 0) {
+			// To go next pid to the next motion Definition
+			pidMotionReadMotionDefinition(pidMotion);	
+	        stopPosition(pidMotion, false, outputStream);
+		}
+		else {
+	        stopPosition(pidMotion, true, outputStream);
+		}
     } else if (result == DETECTED_MOTION_TYPE_POSITION_OBSTACLE) {
         notifyObstacle(outputStream);
         stopPosition(pidMotion, true, outputStream);

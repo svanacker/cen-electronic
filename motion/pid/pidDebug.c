@@ -11,11 +11,16 @@
 #include "../../common/io/printWriter.h"
 #include "../../common/io/printTableWriter.h"
 
+// PID GENERAL DATA
+#define PID_DEBUG_KEY_COLUMN_LENGTH                         25
+#define PID_DEBUG_VALUE_COLUMN_LENGTH                       5
+#define PID_DEBUG_KEY_VALUE_LAST_COLUMN_LENGTH		        60
+
 // PID MOTION INSTRUCTION
 #define PID_DEBUG_INDEX_COLUMN_LENGTH						4
 #define PID_DEBUG_INSTRUCTION_TYPE_COLUMN_LENGTH			6
 #define PID_DEBUG_A_COLUMN_LENGTH							3
-#define PID_DEBUG_SPEED_COLUMN_LENGTH						3
+#define PID_DEBUG_SPEED_COLUMN_LENGTH						5
 #define PID_DEBUG_SPEED_MAX_COLUMN_LENGTH					5
 #define PID_DEBUG_T1_COLUMN_LENGTH							4
 #define PID_DEBUG_T2_COLUMN_LENGTH							4
@@ -25,21 +30,53 @@
 #define PID_DEBUG_NEXT_POSITION_COLUMN_LENGTH				6
 #define PID_DEBUG_PROFILE_TYPE_COLUMN_LENGTH				8
 #define PID_DEBUG_MOTION_PARAMETER_TYPE_COLUMN_LENGTH		15
-#define PID_DEBUG_PID_TYPE_COLUMN_LENGTH		            10
+#define PID_DEBUG_PID_TYPE_COLUMN_LENGTH		            6
 #define PID_DEBUG_LAST_COLUMN_LENGTH		                0
+
+/**
+ * Print the global value for motion
+ * @Private
+ */
+void printMotionGlobalVarsData(OutputStream* outputStream, PidMotion* pidMotion) {
+	println(outputStream);
+	appendTableHeaderSeparatorLine(outputStream);
+	appendStringHeader(outputStream, "Key", PID_DEBUG_KEY_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "Value", PID_DEBUG_VALUE_COLUMN_LENGTH);
+	appendEndOfTableColumn(outputStream, PID_DEBUG_KEY_VALUE_LAST_COLUMN_LENGTH);
+	appendTableHeaderSeparatorLine(outputStream);
+
+	appendStringTableData(outputStream, "readIndex", PID_DEBUG_KEY_COLUMN_LENGTH);
+	appendDecTableData(outputStream, pidMotion->readIndex, PID_DEBUG_KEY_COLUMN_LENGTH);
+	appendEndOfTableColumn(outputStream, PID_DEBUG_KEY_VALUE_LAST_COLUMN_LENGTH);
+
+	appendStringTableData(outputStream, "writeIndex", PID_DEBUG_KEY_COLUMN_LENGTH);
+	appendDecTableData(outputStream, pidMotion->writeIndex, PID_DEBUG_KEY_COLUMN_LENGTH);
+	appendEndOfTableColumn(outputStream, PID_DEBUG_KEY_VALUE_LAST_COLUMN_LENGTH);
+
+	appendStringTableData(outputStream, "length", PID_DEBUG_KEY_COLUMN_LENGTH);
+	appendDecTableData(outputStream, pidMotion->length, PID_DEBUG_KEY_COLUMN_LENGTH);
+	appendEndOfTableColumn(outputStream, PID_DEBUG_KEY_VALUE_LAST_COLUMN_LENGTH);
+
+	appendStringTableData(outputStream, "stackMotionDefinition", PID_DEBUG_KEY_COLUMN_LENGTH);
+	appendBoolTableData(outputStream, pidMotion->stackMotionDefinitions, PID_DEBUG_KEY_COLUMN_LENGTH);
+	appendEndOfTableColumn(outputStream, PID_DEBUG_KEY_VALUE_LAST_COLUMN_LENGTH);
+
+	appendStringTableData(outputStream, "mustReachPosition", PID_DEBUG_KEY_COLUMN_LENGTH);
+	appendBoolTableData(outputStream, pidMotion->mustReachPosition, PID_DEBUG_KEY_COLUMN_LENGTH);
+	appendEndOfTableColumn(outputStream, PID_DEBUG_KEY_VALUE_LAST_COLUMN_LENGTH);
+
+	appendStringTableData(outputStream, "rollingTestMode", PID_DEBUG_KEY_COLUMN_LENGTH);
+	appendBoolTableData(outputStream, pidMotion->rollingTestMode, PID_DEBUG_KEY_COLUMN_LENGTH);
+	appendEndOfTableColumn(outputStream, PID_DEBUG_KEY_VALUE_LAST_COLUMN_LENGTH);
+	appendTableHeaderSeparatorLine(outputStream);
+}
+
+// MOTION_TYPE_NORMAL
 
 /**
 * Private.
 */
 void printMotionInstructionHeader(OutputStream* outputStream, PidMotion* pidMotion) {
-	println(outputStream);
-	appendStringAndDec(outputStream, "readIndex=", pidMotion->readIndex);
-	appendStringAndDec(outputStream, ", writeIndex=", pidMotion->writeIndex);
-	appendStringAndDec(outputStream, ", length=", pidMotion->length);
-	appendStringAndBool(outputStream, ", stackMotionDefinitions=", pidMotion->stackMotionDefinitions);
-	appendStringAndBool(outputStream, ", mustReachPosition=", pidMotion->mustReachPosition);
-	appendStringAndBool(outputStream, ", rollingTestMode=", pidMotion->rollingTestMode);
-	println(outputStream);
 	appendTableHeaderSeparatorLine(outputStream);
 	appendStringHeader(outputStream, "Idx", PID_DEBUG_INDEX_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "T/A", PID_DEBUG_INSTRUCTION_TYPE_COLUMN_LENGTH);
@@ -77,51 +114,59 @@ void printMotionInstructionLine(OutputStream* outputStream, PidMotion* pidMotion
 	appendEndOfTableColumn(outputStream, PID_DEBUG_LAST_COLUMN_LENGTH);
 }
 
-void printMotionInstructionTable(OutputStream* outputStream, PidMotion* pidMotion) {
-	enum PidMotionType currentPidMotionType = MOTION_TYPE_UNDEFINED;
-	bool firstSeparator = true;
-	unsigned int i;
-	unsigned int count = getPidMotionElementsCount(pidMotion);
-	for (i = 0; i < count; i++) {
-		PidMotionDefinition* pidMotionDefinition = getMotionDefinition(pidMotion, i);
+// MOTION_TYPE_UNDEFINED
+void printUndefinedMotionLine(OutputStream* outputStream, PidMotion* pidMotion, int index) {
+	appendDecTableData(outputStream, index, PID_DEBUG_INDEX_COLUMN_LENGTH);
+	appendStringTableData(outputStream, "UNDEFINED", PID_DEBUG_INSTRUCTION_TYPE_COLUMN_LENGTH);
+	appendEndOfTableColumn(outputStream, PID_DEBUG_LAST_COLUMN_LENGTH);
+}
 
+/**
+* Private.
+*/
+void printUndefinedMotionHeader(OutputStream* outputStream, PidMotion* pidMotion) {
+	appendTableHeaderSeparatorLine(outputStream);
+	appendStringHeader(outputStream, "Idx", PID_DEBUG_INDEX_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "Undefined", PID_DEBUG_INSTRUCTION_TYPE_COLUMN_LENGTH);
+	appendEndOfTableColumn(outputStream, PID_DEBUG_LAST_COLUMN_LENGTH);
+	appendTableHeaderSeparatorLine(outputStream);
+}
+
+void printMotionInstructionTable(OutputStream* outputStream, PidMotion* pidMotion) {
+	printMotionGlobalVarsData(outputStream, pidMotion);
+	unsigned int i;
+	// unsigned int count = getPidMotionElementsCount(pidMotion);
+	unsigned int length = pidMotion->length;
+	PidMotionDefinition* pidMotionDefinition = (PidMotionDefinition*)pidMotion->motionDefinitions;
+    pidMotionDefinition--;
+	for (i = 0; i < length; i++) {
+        pidMotionDefinition++;
+		// PidMotionDefinition* pidMotionDefinition = getMotionDefinition(pidMotion, i);
+		enum PidMotionType currentPidMotionType = pidMotionDefinition->motionType;
+		println(outputStream);
 		// Header Management
-		if (currentPidMotionType != pidMotionDefinition->motionType) {
-			currentPidMotionType = pidMotionDefinition->motionType;
-			if (!firstSeparator) {
-				appendTableHeaderSeparatorLine(outputStream);
-			}
-			firstSeparator = false;
-			switch (currentPidMotionType) {
-				case MOTION_TYPE_NORMAL: {
-					printMotionInstructionHeader(outputStream, pidMotion);
-					break;
-				}
-				case MOTION_TYPE_BSPLINE: {
-					appendTableHeaderSeparatorLine(outputStream);
-					writeBSplineDefinitionTableHeader(outputStream);
-					break;
-				}
-				case MOTION_TYPE_UNDEFINED:
-					break;
-			}
-		}
-		// Content
 		switch (currentPidMotionType) {
-		case MOTION_TYPE_NORMAL: {
-			MotionInstruction* theta = &(pidMotionDefinition->inst[THETA]);
-			printMotionInstructionLine(outputStream, pidMotion, i, THETA, theta);
-			MotionInstruction* alpha = &(pidMotionDefinition->inst[ALPHA]);
-			printMotionInstructionLine(outputStream, pidMotion, i, ALPHA, alpha);
-			appendTableHeaderSeparatorLine(outputStream);
-			break;
-		}
-		case MOTION_TYPE_BSPLINE: {
-			writeBSplineDefinitionRow(outputStream, i, &(pidMotionDefinition->curve));
-			break;
-		}
-		case MOTION_TYPE_UNDEFINED:
-			break;
+			case MOTION_TYPE_NORMAL: {
+				printMotionInstructionHeader(outputStream, pidMotion);
+				MotionInstruction* theta = &(pidMotionDefinition->inst[THETA]);
+				printMotionInstructionLine(outputStream, pidMotion, i, THETA, theta);
+				MotionInstruction* alpha = &(pidMotionDefinition->inst[ALPHA]);
+				printMotionInstructionLine(outputStream, pidMotion, i, ALPHA, alpha);
+				appendTableHeaderSeparatorLine(outputStream);
+				continue;
+			}
+			case MOTION_TYPE_BSPLINE: {
+				appendTableHeaderSeparatorLine(outputStream);
+				writeBSplineDefinitionTableHeader(outputStream);
+				writeBSplineDefinitionRow(outputStream, i, &(pidMotionDefinition->curve));
+				appendTableHeaderSeparatorLine(outputStream);
+				continue;
+			}
+			case MOTION_TYPE_UNDEFINED:
+				printUndefinedMotionHeader(outputStream, pidMotion);
+				printUndefinedMotionLine(outputStream, pidMotion, i);
+				appendTableHeaderSeparatorLine(outputStream);
+				continue;
 		}
 	}
 }

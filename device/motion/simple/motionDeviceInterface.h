@@ -9,8 +9,11 @@
 /** Backward with value in mm. */
 #define COMMAND_MOTION_BACKWARD_IN_MM         'b'
 
-/** Cancel all current motion. */
-#define COMMAND_MOTION_CANCEL                 'c'
+/** Stop and cancel the current motion, to cancel all, use COMMAND_MOTION_CANCEL_ALL. */
+#define COMMAND_MOTION_STOP                   's'
+
+/** Cancel all motion. */
+#define COMMAND_MOTION_CANCEL_ALL             'c'
 
 /** Forward with value in mm. */
 #define COMMAND_MOTION_FORWARD_IN_MM          'f'

@@ -184,13 +184,18 @@ void deviceMotionHandleRawData(char commandHeader,
         rightOneWheelSimpleDegree(pidMotion, rightDegree, notificationOutputStream);
     }
     // STOP
-        // cancel motion
-    else if (commandHeader == COMMAND_MOTION_CANCEL) {
-        ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_CANCEL);
+        // stop/cancel motion
+    else if (commandHeader == COMMAND_MOTION_STOP) {
+        ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_STOP);
 
         stopPosition(pidMotion, false, notificationOutputStream);
-    }        // OBSTACLE
-        // cancel motion
+    }
+    else if (commandHeader == COMMAND_MOTION_CANCEL_ALL) {
+        ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_CANCEL_ALL);
+		clearPidMotion(pidMotion);
+        stopPosition(pidMotion, false, notificationOutputStream);
+    }
+	// OBSTACLE
     else if (commandHeader == COMMAND_MOTION_OBSTACLE) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_OBSTACLE);
         // TODO : A REVOIR
