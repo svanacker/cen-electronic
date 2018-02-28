@@ -23,6 +23,13 @@ bool isPidMotionInitialized(const PidMotion* pidMotion) {
 	return pidMotion->length > 0;
 }
 
+void clearPidMotionDefinition(PidMotionDefinition* pidMotionDefinition) {
+    pidMotionDefinition->motionType = MOTION_TYPE_UNDEFINED;
+    pidMotionDefinition->computeU = NULL;
+    pidMotionDefinition->notificationOutputStream = NULL;
+    pidMotionDefinition->state = PID_MOTION_DEFINITION_STATE_UNDEFINED;
+}
+
 void clearPidMotion(PidMotion* pidMotion) {
 	if (!checkPidMotionNotNull(pidMotion)) {
 		return;
@@ -30,13 +37,13 @@ void clearPidMotion(PidMotion* pidMotion) {
 	pidMotion->writeIndex = 0;
 	pidMotion->readIndex = 0;
 	int i;
+
+    PidMotionDefinition* pidMotionDefinition = (PidMotionDefinition*)pidMotion->motionDefinitions;
 	
 	// Reinit all values to make the Debug more easy
 	for (i = 0; i < pidMotion->length; i++) {
-		PidMotionDefinition* pidMotionDefinition = (PidMotionDefinition*)pidMotion->motionDefinitions;
-		pidMotionDefinition->motionType = MOTION_TYPE_UNDEFINED;
-		pidMotionDefinition->computeU = NULL;
-		pidMotionDefinition->notificationOutputStream = NULL;
+        clearPidMotionDefinition(pidMotionDefinition);
+        pidMotionDefinition++;
 	}
 }
 

@@ -29,6 +29,24 @@
 #include "position/coders.h"
 #include "position/trajectory.h"
 
+/**
+ * @private
+ * If we have a next position to reach, stop the current motion, initialize the next motion and switch to it
+ * @param pidMotion
+ * @return the new pidMotionDefinition if found, NULL if it does not exist
+ */
+PidMotionDefinition* switchToNextMotionDefinitionIfAny(PidMotion* pidMotion, PidMotionDefinition* currentMotionDefinition) {
+    PidMotionDefinition* result = NULL;
+    currentMotionDefinition->state = PID_MOTION_DEFINITION_STATE_ENDED;
+    // There is the current motion definition, and the next one (so we test that there is >= 2)
+    if (getPidMotionElementsCount(pidMotion) >= 2) {
+        // To go next pid to the next motion Definition
+        clearPidTime();
+        result = pidMotionReadMotionDefinition(pidMotion);
+    }
+    return result;
+}
+
 enum DetectedMotionType handleInstructionAndMotion(PidMotion* pidMotion) {
     updateCoders();
     updateTrajectory();
@@ -58,24 +76,10 @@ enum DetectedMotionType handleInstructionAndMotion(PidMotion* pidMotion) {
         // don't do anything, wait
     } else if (result == DETECTED_MOTION_TYPE_POSITION_REACHED) {
         notifyReached(outputStream);
-		if (getPidMotionElementsCount(pidMotion) > 0) {
-			// To go next pid to the next motion Definition
-			pidMotionReadMotionDefinition(pidMotion);	
-	        stopPosition(pidMotion, false, outputStream);
-		}
-		else {
-	        stopPosition(pidMotion, true, outputStream);
-		}
+        switchToNextMotionDefinitionIfAny(pidMotion, currentMotionDefinition);
     } else if (result == DETECTED_MOTION_TYPE_POSITION_BLOCKED_WHEELS) {
         notifyFailed(outputStream);
-		if (getPidMotionElementsCount(pidMotion) > 0) {
-			// To go next pid to the next motion Definition
-			pidMotionReadMotionDefinition(pidMotion);	
-	        stopPosition(pidMotion, false, outputStream);
-		}
-		else {
-	        stopPosition(pidMotion, true, outputStream);
-		}
+        switchToNextMotionDefinitionIfAny(pidMotion, currentMotionDefinition);
     } else if (result == DETECTED_MOTION_TYPE_POSITION_OBSTACLE) {
         notifyObstacle(outputStream);
         stopPosition(pidMotion, true, outputStream);

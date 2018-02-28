@@ -1,6 +1,7 @@
 #include <math.h>
 
 #include "../pid.h"
+#include "../pidCurrentValues.h"
 #include "../computer/pidComputer.h"
 #include "../computer/simplePidComputer.h"
 #include "../profile/pidMotionProfileComputer.h"
@@ -29,35 +30,25 @@ void initNextPositionVars(PidMotion* pidMotion, PidMotionDefinition* motionDefin
 		writeError(MOTION_DEFINITION_NULL);
 		return;
 	}
-    // Initialization of MotionInstruction : TODO : do not reset it !
-    MotionInstruction* localInst = &(motionDefinition->inst[instructionType]);
-    localInst->nextPosition = 0;
-    localInst->a = 0;
-    localInst->speed = 0;
-    localInst->speedMax = 0;
-    localInst->endSpeed = 0;
+    MotionInstruction* motionInstruction = &(motionDefinition->inst[instructionType]);
+    clearMotionInstruction(motionInstruction);
 
     PidComputationValues* computationValues = &(pidMotion->computationValues);
 
     // Initialization of MotionError
-    PidMotionError* localErr = &(computationValues->errors[instructionType]);
-
-    localErr->previousError = 0;
-    localErr->error = 0;
-    localErr->derivativeError = 0;
-    localErr->integralError = 0;
-
+    PidMotionError* localError = &(computationValues->errors[instructionType]);
+    clearMotionError(localError);
+            
     // Initialization of Motion
     PidCurrentValues* localCurrentValues = &(computationValues->currentValues[instructionType]);
-    localInst->initialSpeed =  localCurrentValues->currentSpeed;
+    // Get the current Speed to initialize the initial Speed
+    motionInstruction->initialSpeed =  localCurrentValues->currentSpeed;
+    // Clear the values of localCurrentValues
+    clearPidCurrentValues(localCurrentValues);
 
-    localCurrentValues->position = 0;
-    localCurrentValues->oldPosition = 0;
-    localCurrentValues->u = 0;
-
-    localInst->profileType = PROFILE_TYPE_TRAPEZE;
-    localInst->pidType = PID_TYPE_GO_INDEX;
-    localInst->motionParameterType = MOTION_PARAMETER_TYPE_MAINTAIN_POSITION;
+    motionInstruction->profileType = PROFILE_TYPE_TRAPEZE;
+    motionInstruction->pidType = PID_TYPE_GO_INDEX;
+    motionInstruction->motionParameterType = MOTION_PARAMETER_TYPE_MAINTAIN_POSITION;
 
     // Initialization of motionEnd & motionBlocked
     MotionEndInfo* localEnd = &(computationValues->motionEnd[instructionType]);

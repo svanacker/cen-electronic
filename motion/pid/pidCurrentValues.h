@@ -17,4 +17,10 @@ typedef struct PidCurrentValues {
     float u;
 } PidCurrentValues;
 
+/**
+ * Clear all values of the current structure.
+ * @param pidCurrentValues
+ */
+void clearPidCurrentValues(PidCurrentValues* pidCurrentValues);
+
 #endif

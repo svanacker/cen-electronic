@@ -4,6 +4,7 @@
 #include "motionInstruction.h"
 #include "pid.h"
 #include "pidMotion.h"
+#include "pidMotionDefinitionState.h"
 #include "../extended/bsplineDebug.h"
 
 #include "../../common/commons.h"
@@ -74,10 +75,20 @@ void printMotionGlobalVarsData(OutputStream* outputStream, PidMotion* pidMotion)
 // MOTION_TYPE_NORMAL
 
 /**
+ * @private
+ */
+void printMotionInstructionStateHeader(OutputStream* outputStream, PidMotionDefinition* pidMotionDefinition) {
+    appendDashes(outputStream, 40);
+    appendSpace(outputStream);
+    int stateLength = appendMotionDefinitionStateString(outputStream, pidMotionDefinition->state);
+    appendDashes(outputStream, PRINT_TABLE_WRITER_DEFAULT_PAGE_CHAR_WIDTH - 40 - stateLength - 2);
+}
+
+/**
 * Private.
 */
-void printMotionInstructionHeader(OutputStream* outputStream, PidMotion* pidMotion) {
-	appendTableHeaderSeparatorLine(outputStream);
+void printMotionInstructionHeader(OutputStream* outputStream, PidMotionDefinition* pidMotionDefinition) {
+	printMotionInstructionStateHeader(outputStream, pidMotionDefinition);
 	appendStringHeader(outputStream, "Idx", PID_DEBUG_INDEX_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "T/A", PID_DEBUG_INSTRUCTION_TYPE_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "a", PID_DEBUG_A_COLUMN_LENGTH);
@@ -115,22 +126,24 @@ void printMotionInstructionLine(OutputStream* outputStream, PidMotion* pidMotion
 }
 
 // MOTION_TYPE_UNDEFINED
-void printUndefinedMotionLine(OutputStream* outputStream, PidMotion* pidMotion, int index) {
-	appendDecTableData(outputStream, index, PID_DEBUG_INDEX_COLUMN_LENGTH);
-	appendStringTableData(outputStream, "UNDEFINED", PID_DEBUG_INSTRUCTION_TYPE_COLUMN_LENGTH);
-	appendEndOfTableColumn(outputStream, PID_DEBUG_LAST_COLUMN_LENGTH);
-}
 
 /**
 * Private.
 */
-void printUndefinedMotionHeader(OutputStream* outputStream, PidMotion* pidMotion) {
-	appendTableHeaderSeparatorLine(outputStream);
+void printUndefinedMotionHeader(OutputStream* outputStream, PidMotionDefinition* pidMotionDefinition) {
+    printMotionInstructionStateHeader(outputStream, pidMotionDefinition);
 	appendStringHeader(outputStream, "Idx", PID_DEBUG_INDEX_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "Undefined", PID_DEBUG_INSTRUCTION_TYPE_COLUMN_LENGTH);
 	appendEndOfTableColumn(outputStream, PID_DEBUG_LAST_COLUMN_LENGTH);
 	appendTableHeaderSeparatorLine(outputStream);
 }
+
+void printUndefinedMotionLine(OutputStream* outputStream, PidMotionDefinition* pidMotionDefinition, int index) {
+	appendDecTableData(outputStream, index, PID_DEBUG_INDEX_COLUMN_LENGTH);
+	appendStringTableData(outputStream, "UNDEFINED", PID_DEBUG_INSTRUCTION_TYPE_COLUMN_LENGTH);
+	appendEndOfTableColumn(outputStream, PID_DEBUG_LAST_COLUMN_LENGTH);
+}
+
 
 void printMotionInstructionTable(OutputStream* outputStream, PidMotion* pidMotion) {
 	printMotionGlobalVarsData(outputStream, pidMotion);
@@ -147,7 +160,7 @@ void printMotionInstructionTable(OutputStream* outputStream, PidMotion* pidMotio
 		// Header Management
 		switch (currentPidMotionType) {
 			case MOTION_TYPE_NORMAL: {
-				printMotionInstructionHeader(outputStream, pidMotion);
+				printMotionInstructionHeader(outputStream, pidMotionDefinition);
 				MotionInstruction* theta = &(pidMotionDefinition->inst[THETA]);
 				printMotionInstructionLine(outputStream, pidMotion, i, THETA, theta);
 				MotionInstruction* alpha = &(pidMotionDefinition->inst[ALPHA]);
@@ -163,8 +176,8 @@ void printMotionInstructionTable(OutputStream* outputStream, PidMotion* pidMotio
 				continue;
 			}
 			case MOTION_TYPE_UNDEFINED:
-				printUndefinedMotionHeader(outputStream, pidMotion);
-				printUndefinedMotionLine(outputStream, pidMotion, i);
+				printUndefinedMotionHeader(outputStream, pidMotionDefinition);
+				printUndefinedMotionLine(outputStream, pidMotionDefinition, i);
 				appendTableHeaderSeparatorLine(outputStream);
 				continue;
 		}

@@ -1602,6 +1602,15 @@
     <ClCompile Include="motion\pid\parameters\pidParameterDebug.c">
       <Filter>Source Files\motion\pid\parameters</Filter>
     </ClCompile>
+    <ClCompile Include="motion\pid\pidCurrentValues.c">
+      <Filter>Source Files\motion\pid</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\pid\pidMotionDefinitionState.c">
+      <Filter>Source Files\motion\pid</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\pid\pidMotionError.c">
+      <Filter>Source Files\motion\pid</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -2461,6 +2470,9 @@
     </ClInclude>
     <ClInclude Include="motion\pid\parameters\pidParameterDebug.h">
       <Filter>Header Files\motion\pid\parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\pidMotionDefinitionState.h">
+      <Filter>Header Files\motion\pid</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

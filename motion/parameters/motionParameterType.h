@@ -9,7 +9,8 @@
  * Defines the type of Motion Parameter (Forward / Backward / Rotation / One Wheel / Maintain Position)
  */
 enum MotionParameterType {
-
+    /** TODO : Define a profile UNKNOW*/
+    
     /**
      * The robot goes forward or backward.
      */

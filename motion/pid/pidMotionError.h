@@ -17,4 +17,10 @@ typedef struct PidMotionError {
     float integralError;
 } PidMotionError;
 
+/**
+ * Clear the pidMotionError structure.
+ * @param pidMotionError the structure to (re)initialize
+ */
+void clearMotionError(PidMotionError* pidMotionError);
+
 #endif

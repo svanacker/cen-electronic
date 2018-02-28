@@ -143,7 +143,7 @@ void deviceMotionHandleRawData(char commandHeader,
         float s = (float) readHex2(inputStream);
 
         // Execute Motion
-        gotoPosition(pidMotion, left, right, a, s, notificationOutputStream);
+        gotoSimplePosition(pidMotion, left, right, a, s, notificationOutputStream);
     }        // "forward" in millimeter
     else if (commandHeader == COMMAND_MOTION_FORWARD_IN_MM) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_FORWARD_IN_MM);

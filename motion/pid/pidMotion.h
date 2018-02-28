@@ -3,6 +3,7 @@
 
 #include <stdbool.h>
 
+#include "pidMotionDefinitionState.h"
 #include "parameters/pidGlobalParameters.h"
 #include "pidComputationValues.h"
 #include "motionInstruction.h"
@@ -45,6 +46,8 @@ enum PidMotionType {
 * at a time.
 */
 struct PidMotionDefinition {
+    // to know the state of the motion
+    enum PidMotionDefinitionState state;
 	// To know if we must use MotionInstruction or BSplineCurve
 	enum PidMotionType motionType;
 	// Alpha / Theta

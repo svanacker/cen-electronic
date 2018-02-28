@@ -24,7 +24,7 @@
 /**
 * Go to a position
 */
-void gotoPosition(PidMotion* pidMotion, float left, float right, float a, float speed, OutputStream* notificationOutputStream) {
+void gotoSimplePosition(PidMotion* pidMotion, float left, float right, float a, float speed, OutputStream* notificationOutputStream) {
 
 	// Update trajectory before clearing coders
 	updateTrajectory();
@@ -55,6 +55,8 @@ void gotoPosition(PidMotion* pidMotion, float left, float right, float a, float 
 	printMotionInstruction(outputStream, &(motionDefinition->inst[THETA]));
 	printMotionInstruction(outputStream, &(motionDefinition->inst[ALPHA]));
 	*/
+    // All main information are defined
+    motionDefinition->state = PID_MOTION_DEFINITION_STATE_SET;
 
 	// Indicates that the robot must reach the position
 	setMustReachPosition(pidMotion, true);
@@ -80,7 +82,7 @@ void stopPosition(PidMotion* pidMotion, bool maintainPositionValue, OutputStream
 }
 
 void maintainPosition(PidMotion* pidMotion, OutputStream* notificationOutputStream) {
-    gotoPosition(pidMotion, 0.0f, 0.0f, 0.0f, 0.0f, notificationOutputStream);
+    gotoSimplePosition(pidMotion, 0.0f, 0.0f, 0.0f, 0.0f, notificationOutputStream);
 }
 
 
@@ -88,13 +90,13 @@ void maintainPosition(PidMotion* pidMotion, OutputStream* notificationOutputStre
 
 float forwardSimple(PidMotion* pidMotion, float pulse, OutputStream* notificationOutputStream) {
     MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_PARAMETER_TYPE_FORWARD_OR_BACKWARD);
-    gotoPosition(pidMotion, pulse, pulse, motionParameter->a, motionParameter->speed, notificationOutputStream);
+    gotoSimplePosition(pidMotion, pulse, pulse, motionParameter->a, motionParameter->speed, notificationOutputStream);
     return pulse;
 }
 
 float backwardSimple(PidMotion* pidMotion, float pulse, OutputStream* notificationOutputStream) {
     MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_PARAMETER_TYPE_FORWARD_OR_BACKWARD);
-    gotoPosition(pidMotion, -pulse, -pulse, motionParameter->a, motionParameter->speed, notificationOutputStream);
+    gotoSimplePosition(pidMotion, -pulse, -pulse, motionParameter->a, motionParameter->speed, notificationOutputStream);
     return -pulse;
 }
 
@@ -102,13 +104,13 @@ float backwardSimple(PidMotion* pidMotion, float pulse, OutputStream* notificati
 
 float leftSimple(PidMotion* pidMotion, float pulse, OutputStream* notificationOutputStream) {
     MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_PARAMETER_TYPE_ROTATION);
-    gotoPosition(pidMotion, -pulse, pulse, motionParameter->a, motionParameter->speed, notificationOutputStream);
+    gotoSimplePosition(pidMotion, -pulse, pulse, motionParameter->a, motionParameter->speed, notificationOutputStream);
     return -pulse;
 }
 
 float rightSimple(PidMotion* pidMotion, float pulse, OutputStream* notificationOutputStream) {
     MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_PARAMETER_TYPE_ROTATION);
-    gotoPosition(pidMotion, pulse, pulse, motionParameter->a, motionParameter->speed, notificationOutputStream);
+    gotoSimplePosition(pidMotion, pulse, pulse, motionParameter->a, motionParameter->speed, notificationOutputStream);
     return pulse;
 }
 
@@ -116,13 +118,13 @@ float rightSimple(PidMotion* pidMotion, float pulse, OutputStream* notificationO
 
 float leftOneWheelSimple(PidMotion* pidMotion, float pulse, OutputStream* notificationOutputStream) {
     MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_PARAMETER_TYPE_ROTATION_ONE_WHEEL);
-    gotoPosition(pidMotion, 0, pulse, motionParameter->a, motionParameter->speed, notificationOutputStream);
+    gotoSimplePosition(pidMotion, 0, pulse, motionParameter->a, motionParameter->speed, notificationOutputStream);
     return pulse;
 }
 
 float rightOneWheelSimple(PidMotion* pidMotion, float pulse, OutputStream* notificationOutputStream) {
     MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_PARAMETER_TYPE_ROTATION_ONE_WHEEL);
-    gotoPosition(pidMotion, pulse, 0, motionParameter->a, motionParameter->speed, notificationOutputStream);
+    gotoSimplePosition(pidMotion, pulse, 0, motionParameter->a, motionParameter->speed, notificationOutputStream);
     return pulse;
 }
 
@@ -137,7 +139,7 @@ float forwardMM(PidMotion* pidMotion, float distanceInMM, float a, float speed, 
     float realDistanceRight = distanceInMM / rightWheelLengthForOnePulse;
 
     // Go at a position in millimeter
-    gotoPosition(pidMotion, realDistanceLeft, realDistanceRight, a, speed, notificationOutputStream);
+    gotoSimplePosition(pidMotion, realDistanceLeft, realDistanceRight, a, speed, notificationOutputStream);
 
     return distanceInMM;
 }
@@ -156,7 +158,7 @@ float rotationDegree(PidMotion* pidMotion, float angleDeciDegree, float a, float
     float wheelsDistanceFromCenter = getWheelsDistanceFromCenter(robotKinematics);
     float realDistanceLeft = -(wheelsDistanceFromCenter * angleRadius) / leftWheelLengthForOnePulse;
     float realDistanceRight = (wheelsDistanceFromCenter * angleRadius) / rightWheelLengthForOnePulse;
-    gotoPosition(pidMotion, realDistanceLeft, realDistanceRight, a, speed, notificationOutputStream);
+    gotoSimplePosition(pidMotion, realDistanceLeft, realDistanceRight, a, speed, notificationOutputStream);
 
     return angleDeciDegree;
 }
@@ -195,7 +197,7 @@ void leftOneWheelDegree(PidMotion* pidMotion, float angleDegree, float a, float 
     float wheelsDistanceFromCenter = getWheelsDistanceFromCenter(robotKinematics);
 
     float realDistanceRight = (wheelsDistanceFromCenter * angleRadius) / leftWheelLengthForOnePulse;
-    gotoPosition(pidMotion, 0.0f, realDistanceRight, a, speed, notificationOutputStream);
+    gotoSimplePosition(pidMotion, 0.0f, realDistanceRight, a, speed, notificationOutputStream);
 }
 
 void rightOneWheelDegree(PidMotion* pidMotion, float angleDegree, float a, float speed, OutputStream* notificationOutputStream) {
@@ -206,7 +208,7 @@ void rightOneWheelDegree(PidMotion* pidMotion, float angleDegree, float a, float
     float wheelsDistanceFromCenter = getWheelsDistanceFromCenter(robotKinematics);
 
     float realDistanceLeft = (wheelsDistanceFromCenter * angleRadius) / rightWheelLengthForOnePulse;
-    gotoPosition(pidMotion, realDistanceLeft, 0.0f, a, speed, notificationOutputStream);
+    gotoSimplePosition(pidMotion, realDistanceLeft, 0.0f, a, speed, notificationOutputStream);
 }
 
 // SIMPLEST FUNCTION

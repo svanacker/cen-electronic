@@ -17,7 +17,7 @@ enum DetectedMotionType {
     /** The robot reach the position. */
     DETECTED_MOTION_TYPE_POSITION_REACHED = 3,
     
-    /** The robot is directly blocked to move. */
+    /** The robot seems to have his wheels blocked. */
     DETECTED_MOTION_TYPE_POSITION_BLOCKED_WHEELS = 4,
     
     /** The robot will hurt something (detection by RobotDetector). */

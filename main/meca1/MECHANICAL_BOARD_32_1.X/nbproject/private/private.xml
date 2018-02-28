@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/D:/dev/git/cen-electronic/motion/pid/pidMotion.c</file>
+            <file>file:/D:/dev/git/cen-electronic/motion/pid/pid.c</file>
+            <file>file:/D:/dev/git/cen-electronic/motion/motion.c</file>
+            <file>file:/D:/dev/git/cen-electronic/motion/simple/simpleMotion.c</file>
+            <file>file:/D:/dev/git/cen-electronic/motion/simple/simpleMotion.h</file>
+            <file>file:/D:/dev/git/cen-electronic/device/motion/simple/motionDevice.c</file>
+            <file>file:/D:/dev/git/cen-electronic/motion/pid/profile/pidMotionProfileComputer.c</file>
+            <file>file:/D:/dev/git/cen-electronic/main/motorboard/motorboard32.c</file>
+            <file>file:/D:/dev/git/cen-electronic/motion/motion.h</file>
+        </group>
+    </open-files>
+</project-private>

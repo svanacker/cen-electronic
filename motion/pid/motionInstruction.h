@@ -41,6 +41,11 @@ typedef struct MotionInstruction {
     enum PidType pidType;
 } MotionInstruction;
 
+/**
+ * Clear the motion Instruction data
+ * @param motionInstruction
+ */
+void clearMotionInstruction(MotionInstruction* motionInstruction);
 
 /**
 * Print the instruction struct of the index.

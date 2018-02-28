@@ -328,8 +328,11 @@
     <ClCompile Include="motion\pid\parameters\pidPersistence.c" />
     <ClCompile Include="motion\pid\pc\pidPc.c" />
     <ClCompile Include="motion\pid\pid.c" />
+    <ClCompile Include="motion\pid\pidCurrentValues.c" />
     <ClCompile Include="motion\pid\pidDebug.c" />
     <ClCompile Include="motion\pid\pidMotion.c" />
+    <ClCompile Include="motion\pid\pidMotionDefinitionState.c" />
+    <ClCompile Include="motion\pid\pidMotionError.c" />
     <ClCompile Include="motion\pid\pidTimer.c" />
     <ClCompile Include="motion\pid\pidType.c" />
     <ClCompile Include="motion\pid\profile\pidMotionProfileComputer.c" />
@@ -612,6 +615,7 @@
     <ClInclude Include="motion\pid\pidConstants.h" />
     <ClInclude Include="motion\pid\pidCurrentValues.h" />
     <ClInclude Include="motion\pid\pidMotion.h" />
+    <ClInclude Include="motion\pid\pidMotionDefinitionState.h" />
     <ClInclude Include="motion\pid\pidMotionError.h" />
     <ClInclude Include="motion\pid\pidTimer.h" />
     <ClInclude Include="motion\pid\pidType.h" />

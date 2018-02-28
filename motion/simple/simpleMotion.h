@@ -21,7 +21,7 @@ void maintainPosition(PidMotion* pidMotion, OutputStream* notificationOutputStre
 /**
  * Go to a position;
  */
-void gotoPosition(PidMotion* pidMotion, float left, float right, float a, float speed, OutputStream* notificationOutputStream);
+void gotoSimplePosition(PidMotion* pidMotion, float left, float right, float a, float speed, OutputStream* notificationOutputStream);
 
 /**
  * Go simply forward with a distance in pulse and returns the pulse.
