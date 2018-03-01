@@ -25,15 +25,6 @@
 * Go to a position
 */
 void gotoSimplePosition(PidMotion* pidMotion, float left, float right, float a, float speed, OutputStream* notificationOutputStream) {
-
-	// Update trajectory before clearing coders
-	updateTrajectory();
-
-	updateTrajectoryAndClearCoders();
-
-	// resets the time
-	clearPidTime();
-
 	// determine the type of motion
 	enum MotionParameterType motionParameterType = getMotionParameterType(left, right);
 	// determine the pidType to execute motionParameterType
@@ -47,8 +38,8 @@ void gotoSimplePosition(PidMotion* pidMotion, float left, float right, float a, 
 	motionDefinition->motionType = MOTION_TYPE_NORMAL;
 	motionDefinition->notificationOutputStream = notificationOutputStream;
 
-	setNextPosition(pidMotion, motionDefinition, THETA, motionParameterType, pidType, thetaNextPosition, (float)a, (float)speed);
-	setNextPosition(pidMotion, motionDefinition, ALPHA, motionParameterType, pidType, alphaNextPosition, (float)a, (float)speed);
+	setNextPosition(motionDefinition, THETA, motionParameterType, pidType, thetaNextPosition, (float)a, (float)speed);
+	setNextPosition(motionDefinition, ALPHA, motionParameterType, pidType, alphaNextPosition, (float)a, (float)speed);
 
 	/*
 	OutputStream* outputStream = getDebugOutputStreamLogger();
@@ -57,9 +48,6 @@ void gotoSimplePosition(PidMotion* pidMotion, float left, float right, float a, 
 	*/
     // All main information are defined
     motionDefinition->state = PID_MOTION_DEFINITION_STATE_SET;
-
-	// Indicates that the robot must reach the position
-	setMustReachPosition(pidMotion, true);
 }
 
 
@@ -71,10 +59,8 @@ void stopPosition(PidMotion* pidMotion, bool maintainPositionValue, OutputStream
 
     if (maintainPositionValue) {
         maintainPosition(pidMotion, notificationOutputStream);
-    } else {
-        // Avoid that robot reachs his position, and stops the motors
-        setMustReachPosition(pidMotion, false);
     }
+    
     // Avoid that the robot considered he will remain the initial speed for next move (it is stopped).
     clearInitialSpeeds(pidMotion);
 

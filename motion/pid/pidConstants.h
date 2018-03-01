@@ -49,11 +49,13 @@
 /**
  * Defines the error for which we apply strong PID and not normal PID.
  */
+// TODO : Use a parameter in Eeprom
 #define ERROR_FOR_STRONG_PID                     20
 
 /**
  * Defines the number of pid interrupt after the end (t3) to apply strong PID.
  */
+// TODO : Use a parameter in Eeprom
 #define TIME_PERIOD_AFTER_END_FOR_STRONG_PID     40
 
 /** The total number of PID values (INSTRUCTION_TYPE_COUNT * PID_TYPE_COUNT). */

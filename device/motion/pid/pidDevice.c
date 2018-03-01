@@ -40,7 +40,7 @@ void initPidDevice(void) {
 }
 
 void stopPidDevice(void) {
-    stopPID(pidMotion);
+
 }
 
 void devicePIDHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
@@ -140,8 +140,6 @@ void devicePIDHandleRawData(char commandHeader, InputStream* inputStream, Output
         enum InstructionType instructionType = readHex2(inputStream);
 
         PidComputationValues* computationValues = &(pidMotion->computationValues);
-        PidMotionDefinition* motionDefinition = pidMotionGetCurrentMotionDefinition(pidMotion);
-        MotionInstruction motionInstruction = motionDefinition->inst[instructionType];
         PidMotionError* localError = &(computationValues->errors[instructionType]);
 
         // send acknowledgement
@@ -153,10 +151,6 @@ void devicePIDHandleRawData(char commandHeader, InputStream* inputStream, Output
 
         // pidType
         appendHex4(outputStream, (int) computationValues->pidTime);
-        appendSeparator(outputStream);
-
-        // MotionParameterType
-        appendHex2(outputStream, getPidType(motionInstruction.motionParameterType));
         appendSeparator(outputStream);
 
         PidCurrentValues* pidCurrentValues = &(computationValues->currentValues[instructionType]);
@@ -192,6 +186,7 @@ void devicePIDHandleRawData(char commandHeader, InputStream* inputStream, Output
         ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_GET_MOTION_PARAMETER);
 
 		PidMotionDefinition* motionDefinition = pidMotionGetCurrentMotionDefinition(pidMotion);
+        // TODO : Manage if motionDefinition is NULL
 		MotionInstruction* localInst = &(motionDefinition->inst[instructionType]);
 
         appendHex2(outputStream, instructionType);

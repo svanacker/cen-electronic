@@ -6,9 +6,8 @@
 /**
  * Compute current position using coders (and not absolute position).
  * @param pidMotion all parameters about motion.
- * @param motionDefinition the current Motion Definition which is applied
  */
-void computeCurrentPositionUsingCoders(PidMotion* pidMotion, PidMotionDefinition* motionDefinition);
+void computeCurrentPositionUsingCoders(PidMotion* pidMotion);
 
 /**
  * Compute errors using coders (and not absolute position).

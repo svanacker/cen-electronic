@@ -11,9 +11,6 @@ unsigned int appendMotionDefinitionStateString(OutputStream* outputStream, enum 
     else if (state == PID_MOTION_DEFINITION_STATE_SET) {
 		return appendString(outputStream, "SET");
     }
-    else if (state == PID_MOTION_DEFINITION_STATE_READY) {
-		return appendString(outputStream, "READY");
-    }
     else if (state == PID_MOTION_DEFINITION_STATE_ACTIVE) {
 		return appendString(outputStream, "ACTIVE");
     }

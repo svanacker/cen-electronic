@@ -8,7 +8,7 @@
 
 #include "../../motion/position/coders.h"
 
-void computeCurrentPositionUsingCoders(PidMotion* pidMotion, PidMotionDefinition* motionDefinition) {
+void computeCurrentPositionUsingCoders(PidMotion* pidMotion) {
     PidComputationValues* computationValues = &(pidMotion->computationValues);
     PidCurrentValues* thetaCurrentValues = &(computationValues->currentValues[THETA]);
     PidCurrentValues* alphaCurrentValues = &(computationValues->currentValues[ALPHA]);

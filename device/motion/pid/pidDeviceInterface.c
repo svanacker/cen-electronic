@@ -75,7 +75,7 @@ int devicePIDGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fil
         return commandLengthValueForMode(mode, 0, 14);
     } else if (commandHeader == COMMAND_GET_DEBUG_DATA_PID) {
         if (fillDeviceArgumentList) {
-            setFunction("sendDbgDataPid", 1, 19);
+            setFunction("sendDbgDataPid", 1, 18);
             
             setArgumentUnsignedHex2(0, "instructionType");
 
@@ -83,23 +83,21 @@ int devicePIDGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fil
             setResultSeparator(1);             
             setResultUnsignedHex4(2, "pidTime");
             setResultSeparator(3);             
-            setResultUnsignedHex2(4, "pidType");
-            setResultSeparator(5); 
-            setResultUnsignedHex6(6, "normalPosition");
+            setResultUnsignedHex6(4, "normalPosition");
+            setResultSeparator(5);
+            setResultUnsignedHex6(6, "position");
             setResultSeparator(7);
-            setResultUnsignedHex6(8, "position");
+            setResultUnsignedHex4(8, "error");
             setResultSeparator(9);
-            setResultUnsignedHex4(10, "error");
+            setResultUnsignedHex4(10, "u");
             setResultSeparator(11);
-            setResultUnsignedHex4(12, "u");
+            setResultUnsignedHex4(12, "endMotion_integralTime");
             setResultSeparator(13);
-            setResultUnsignedHex4(14, "endMotion_integralTime");
+            setResultUnsignedHex4(14, "endMotion_absDelPosiInt");
             setResultSeparator(15);
-            setResultUnsignedHex4(16, "endMotion_absDelPosiInt");
-            setResultSeparator(17);
-            setResultUnsignedHex4(18, "endMotion_uIntegral");
+            setResultUnsignedHex4(16, "endMotion_uIntegral");
         }
-        return commandLengthValueForMode(mode, 2, 49);
+        return commandLengthValueForMode(mode, 2, 46);
     } else if (commandHeader == COMMAND_DEBUG_DATA_PID_CONSOLE) {
         if (fillDeviceArgumentList) {
             setFunction("sendDbgDataPidConsole", 0, 0);

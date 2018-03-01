@@ -82,8 +82,6 @@ struct PidMotion {
     PidComputationValues computationValues;
 	// For persistence
 	Eeprom* pidPersistenceEeprom;
-	// Some parameters
-	bool mustReachPosition;
 	// Are we in rolling Test Mode
 	bool rollingTestMode;
 };
@@ -141,11 +139,12 @@ unsigned int getPidMotionCapacity(const PidMotion* pidMotion);
 * Get and result the first PidMotionDefinition inserted (FIFO Stack)..
 * Shift the read array to the next PidMotionDefinition.
 * @param pidMotion the pointer on pidMotion (simulates object programming)
+* @param errorIfEndOfList throws an exception if we reach the end of the list
 * @return the the first PidMotionDefinition inserted (FIFO Stack).
-* @throws PID_MOTION_NULL if the pointer is NULL
+* @throws PID_MOTION_NULL if the pointer is NULL && errorIfEndOfList is true
 * @throws PID_MOTION_EMPTY if not enough PidMotionDefinition in the PidMotion object
 */
-PidMotionDefinition* pidMotionReadMotionDefinition(PidMotion* pidMotion);
+PidMotionDefinition* pidMotionReadMotionDefinition(PidMotion* pidMotion, bool errorIfEndOfList);
 
 /**
 * Get and result the current PidMotionDefinition 

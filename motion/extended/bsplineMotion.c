@@ -219,12 +219,10 @@ void gotoSpline(PidMotion* pidMotion) {
     float bestA = computeBestAccelerationForBSpline(curve, motionParameter->a);
     float bestSpeed = computeBestSpeedForBSpline(curve, motionParameter->speed);
 
-    setNextPosition(pidMotion, motionDefinition, THETA, motionParameterType, pidType, curveLength, bestA, bestSpeed);
-    setNextPosition(pidMotion, motionDefinition, ALPHA, motionParameterType, pidType, 0.0f, motionParameter->a, motionParameter->speed);
+    setNextPosition(motionDefinition, THETA, motionParameterType, pidType, curveLength, bestA, bestSpeed);
+    setNextPosition(motionDefinition, ALPHA, motionParameterType, pidType, 0.0f, motionParameter->a, motionParameter->speed);
 
 	motionDefinition->computeU = &bSplineMotionUCompute;
-
-    // Indicates that the robot must reach the position
-    setMustReachPosition(pidMotion, true);
+    motionDefinition->state = PID_MOTION_DEFINITION_STATE_SET;
 }
 

@@ -19,7 +19,10 @@ enum MotionParameterType getMotionParameterType(float left, float right) {
 }
 
 unsigned char appendMotionParameterTypeAsString(OutputStream* outputStream, enum MotionParameterType motionParameterType) {
-    if (motionParameterType == MOTION_PARAMETER_TYPE_FORWARD_OR_BACKWARD) {
+    if (motionParameterType == MOTION_PARAMETER_TYPE_UNDEFINED) {
+        return appendString(outputStream, "UNDEFINED");
+    }
+    else if (motionParameterType == MOTION_PARAMETER_TYPE_FORWARD_OR_BACKWARD) {
         return appendString(outputStream, "FORWARD-BACKWARD");
     }
     else if (motionParameterType == MOTION_PARAMETER_TYPE_ROTATION) {

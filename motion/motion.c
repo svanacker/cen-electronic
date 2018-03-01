@@ -37,17 +37,44 @@
  */
 PidMotionDefinition* switchToNextMotionDefinitionIfAny(PidMotion* pidMotion, PidMotionDefinition* currentMotionDefinition) {
     PidMotionDefinition* result = NULL;
+    if (currentMotionDefinition == NULL) {
+        return result;
+    }
     currentMotionDefinition->state = PID_MOTION_DEFINITION_STATE_ENDED;
     // There is the current motion definition, and the next one (so we test that there is >= 2)
-    if (getPidMotionElementsCount(pidMotion) >= 2) {
-        // To go next pid to the next motion Definition
-        clearPidTime();
-        result = pidMotionReadMotionDefinition(pidMotion);
+    int elementCount = getPidMotionElementsCount(pidMotion);
+    if (elementCount >= 1) {
+        result = pidMotionReadMotionDefinition(pidMotion, false);
     }
     return result;
 }
 
-enum DetectedMotionType handleInstructionAndMotion(PidMotion* pidMotion) {
+void handleInstructionAndMotion(PidMotion* pidMotion) {
+	// Get the current Motion Definition
+    PidMotionDefinition* currentMotionDefinition = pidMotionGetCurrentMotionDefinition(pidMotion);
+    if (currentMotionDefinition == NULL) {
+        return;
+    }
+    if (currentMotionDefinition->state == PID_MOTION_DEFINITION_STATE_UNDEFINED) {
+        return;
+    }
+    // Avoid to handle a motion definition which is ended
+    if (currentMotionDefinition->state == PID_MOTION_DEFINITION_STATE_ENDED) {
+        return;
+    }
+    // Init the motion Definition
+    if (currentMotionDefinition->state == PID_MOTION_DEFINITION_STATE_SET) {
+        // Update trajectory before clearing coders
+        updateTrajectoryAndClearCoders();
+
+        // resets the time
+        clearPidTime();
+
+        clearPidComputationValues(&(pidMotion->computationValues));
+        
+        currentMotionDefinition->state = PID_MOTION_DEFINITION_STATE_ACTIVE; 
+    }
+
     updateCoders();
     updateTrajectory();
 
@@ -55,11 +82,10 @@ enum DetectedMotionType handleInstructionAndMotion(PidMotion* pidMotion) {
     // checkCoders();
 
     // MANDATORY
-
-    enum DetectedMotionType result = updateMotors(pidMotion);
+    updateMotorsAndDetectedMotionType(pidMotion);
+    enum DetectedMotionType motionType = pidMotion->computationValues.detectedMotionType;
 
     OutputStream* outputStream = NULL;
-	PidMotionDefinition* currentMotionDefinition = pidMotionGetCurrentMotionDefinition(pidMotion);
 	if (currentMotionDefinition != NULL) {
 		outputStream = currentMotionDefinition->notificationOutputStream;
 	}
@@ -67,43 +93,42 @@ enum DetectedMotionType handleInstructionAndMotion(PidMotion* pidMotion) {
 		writeError(MOTION_DEFINITION_NO_CURRENT_DEFINITION);
 	}
 
-    if (result == DETECTED_MOTION_TYPE_NO_POSITION_TO_REACH) {
+    if (motionType == DETECTED_MOTION_TYPE_NO_POSITION_TO_REACH) {
         // don't do anything
     }
-    if (result == DETECTED_MOTION_TYPE_POSITION_TO_MAINTAIN) {
+    if (motionType == DETECTED_MOTION_TYPE_POSITION_TO_MAINTAIN) {
         // does not end
-    } else if (result == DETECTED_MOTION_TYPE_POSITION_IN_PROGRESS) {
+    } else if (motionType == DETECTED_MOTION_TYPE_POSITION_IN_PROGRESS) {
         // don't do anything, wait
-    } else if (result == DETECTED_MOTION_TYPE_POSITION_REACHED) {
+    } else if (motionType == DETECTED_MOTION_TYPE_POSITION_REACHED) {
         notifyReached(outputStream);
         switchToNextMotionDefinitionIfAny(pidMotion, currentMotionDefinition);
-    } else if (result == DETECTED_MOTION_TYPE_POSITION_BLOCKED_WHEELS) {
+    } else if (motionType == DETECTED_MOTION_TYPE_POSITION_BLOCKED_WHEELS) {
         notifyFailed(outputStream);
         switchToNextMotionDefinitionIfAny(pidMotion, currentMotionDefinition);
-    } else if (result == DETECTED_MOTION_TYPE_POSITION_OBSTACLE) {
+    } else if (motionType == DETECTED_MOTION_TYPE_POSITION_OBSTACLE) {
         notifyObstacle(outputStream);
         stopPosition(pidMotion, true, outputStream);
     }
 	if (outputStream != NULL) {
 		outputStream->flush(outputStream);
 	}
-	
-    return result;
 }
 
-enum DetectedMotionType handleAndWaitFreeMotion(PidMotion* pidMotion) {
-    enum DetectedMotionType result = DETECTED_MOTION_TYPE_NO_POSITION_TO_REACH;
+void handleAndWaitFreeMotion(PidMotion* pidMotion) {
     while (true) {
-        result = handleInstructionAndMotion(pidMotion);
+        handleInstructionAndMotion(pidMotion);
+        enum DetectedMotionType motionType = pidMotion->computationValues.detectedMotionType; 
         // POSITION_BLOCKED_WHEELS is not necessary because we block the position after
-        if (result == DETECTED_MOTION_TYPE_NO_POSITION_TO_REACH || result == DETECTED_MOTION_TYPE_POSITION_TO_MAINTAIN || result == DETECTED_MOTION_TYPE_POSITION_OBSTACLE) {
+        if (motionType == DETECTED_MOTION_TYPE_NO_POSITION_TO_REACH 
+         || motionType == DETECTED_MOTION_TYPE_POSITION_TO_MAINTAIN
+         || motionType == DETECTED_MOTION_TYPE_POSITION_OBSTACLE) {
             // if (value == NO_POSITION_TO_REACH || value == POSITION_OBSTACLE) {
             appendString(getDebugOutputStreamLogger(), "handleAndWaitFreeMotion->break=");
-            appendDec(getDebugOutputStreamLogger(), result);
+            appendDec(getDebugOutputStreamLogger(), motionType);
             break;
         }
     }
-    return result;
 }
 
 void handleAndWaitMSec(PidMotion* pidMotion, unsigned long delayMs) {

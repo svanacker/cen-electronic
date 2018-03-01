@@ -325,6 +325,7 @@
         <itemPath>../../../motion/pid/pidDebug.h</itemPath>
         <itemPath>../../../motion/pid/pidConstants.h</itemPath>
         <itemPath>../../../motion/pid/pidMotionDefinitionState.h</itemPath>
+        <itemPath>D:/dev/git/cen-electronic/motion/pid/pidTypeOptimizer.h</itemPath>
       </logicalFolder>
       <logicalFolder name="motion.pid.computer"
                      displayName="motion.pid.computer"
@@ -715,6 +716,9 @@
         <itemPath>../../../motion/pid/instructionType.c</itemPath>
         <itemPath>../../../motion/pid/pidCurrentValues.c</itemPath>
         <itemPath>../../../motion/pid/pidMotionDefinitionState.c</itemPath>
+        <itemPath>D:/dev/git/cen-electronic/motion/pid/pidTypeOptimizer.c</itemPath>
+        <itemPath>D:/dev/git/cen-electronic/motion/pid/detectedMotionType.c</itemPath>
+        <itemPath>D:/dev/git/cen-electronic/motion/pid/pidComputationValues.c</itemPath>
       </logicalFolder>
       <logicalFolder name="motion.pid.computer"
                      displayName="motion.pid.computer"
@@ -728,6 +732,7 @@
                      projectFiles="true">
         <itemPath>../../../motion/pid/endDetection/motionEndDetection.c</itemPath>
         <itemPath>../../../motion/pid/endDetection/motionEndDetectionParameter.c</itemPath>
+        <itemPath>D:/dev/git/cen-electronic/motion/pid/endDetection/motionEndInfo.c</itemPath>
       </logicalFolder>
       <logicalFolder name="motion.pid.parameters"
                      displayName="motion.pid.parameters"
@@ -1062,6 +1067,7 @@
         <property key="UART6" value="true"/>
         <property key="USB" value="true"/>
         <property key="debugoptions.useswbreakpoints" value="false"/>
+        <property key="firmware.download.all" value="false"/>
         <property key="hwtoolclock.frcindebug" value="false"/>
         <property key="memories.aux" value="false"/>
         <property key="memories.bootflash" value="false"/>

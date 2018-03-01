@@ -19,8 +19,8 @@ void clearMotionInstruction(MotionInstruction* motionInstruction) {
     motionInstruction->p1 = 0.0f;
     motionInstruction->p2 = 0.0f;
     // TODO : Define a profile "UNKNOWN"
-    motionInstruction->profileType = PROFILE_TYPE_TRAPEZE;
-    motionInstruction->motionParameterType = MOTION_PARAMETER_TYPE_FORWARD_OR_BACKWARD;
+    motionInstruction->profileType = PROFILE_TYPE_UNDEFINED;
+    motionInstruction->motionParameterType = MOTION_PARAMETER_TYPE_UNDEFINED;
     motionInstruction->pidType = PID_TYPE_GO_INDEX;
 }
 

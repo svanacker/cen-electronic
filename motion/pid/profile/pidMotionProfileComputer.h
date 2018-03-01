@@ -27,7 +27,6 @@ void computeMotionInstruction(MotionInstruction* inst);
  * @param pSpeedMax is the maximal absolute value of speed
  */
 void setNextPosition(
-		PidMotion* pidMotion,
 		PidMotionDefinition* motionDefinition,
 		enum InstructionType instructionType,
         enum MotionParameterType motionParameterType,

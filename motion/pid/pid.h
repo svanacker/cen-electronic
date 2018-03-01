@@ -94,7 +94,7 @@ bool getMustReachPosition(PidMotion* pidMotion);
 void setMustReachPosition(PidMotion* pidMotion, bool value);
 
 /**
- * Updates the motors values and returns the type of control which is applied to the motors.
+ * Updates the motors values and set the type of control which is applied to the motors.
  * <ul>
  * <li>NO_POSITION_TO_REACH if we don't have any position to reach</li>
  * <li>POSITION_TO_MAINTAIN if we don't have any position, but we want to maintain the position</li>
@@ -103,7 +103,7 @@ void setMustReachPosition(PidMotion* pidMotion, bool value);
  * <li>POSITION_FAILED if we have failed to reach the position (for example, if we are blocked)</li>
  * </li>
  */
-unsigned int updateMotors(PidMotion* pidMotion);
+void updateMotorsAndDetectedMotionType(PidMotion* pidMotion);
 
 /**
 * Get the normal voltage value at the speed defined by the parameter

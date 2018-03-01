@@ -40,4 +40,10 @@ typedef struct MotionEndInfo {
 	float absUIntegral;
 } MotionEndInfo;
 
+/**
+ * Clear the structure to init or reinit it
+ * @param endMotion
+ */
+void resetMotionEndInfo(MotionEndInfo* endMotion);
+
 #endif

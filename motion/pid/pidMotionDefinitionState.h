@@ -17,11 +17,6 @@ enum PidMotionDefinitionState {
      */
     PID_MOTION_DEFINITION_STATE_SET,
     /**
-     * The last information was set or reinitialized (like PidTYpe, initial Speed, 
-     * current values, end Motion Detection ...
-     */
-    PID_MOTION_DEFINITION_STATE_READY,
-    /**
      * The motion definition is active and is the current motion
      */
     PID_MOTION_DEFINITION_STATE_ACTIVE,

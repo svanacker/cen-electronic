@@ -20,41 +20,6 @@
 
 #include "../../../motion/simple/simpleMotion.h"
 
-/**
- * @private
- * Init all variables.
- * @param index corresponds to THETA or ALPHA
- */
-void initNextPositionVars(PidMotion* pidMotion, PidMotionDefinition* motionDefinition, enum InstructionType instructionType) {
-	if (motionDefinition == NULL) {
-		writeError(MOTION_DEFINITION_NULL);
-		return;
-	}
-    MotionInstruction* motionInstruction = &(motionDefinition->inst[instructionType]);
-    clearMotionInstruction(motionInstruction);
-
-    PidComputationValues* computationValues = &(pidMotion->computationValues);
-
-    // Initialization of MotionError
-    PidMotionError* localError = &(computationValues->errors[instructionType]);
-    clearMotionError(localError);
-            
-    // Initialization of Motion
-    PidCurrentValues* localCurrentValues = &(computationValues->currentValues[instructionType]);
-    // Get the current Speed to initialize the initial Speed
-    motionInstruction->initialSpeed =  localCurrentValues->currentSpeed;
-    // Clear the values of localCurrentValues
-    clearPidCurrentValues(localCurrentValues);
-
-    motionInstruction->profileType = PROFILE_TYPE_TRAPEZE;
-    motionInstruction->pidType = PID_TYPE_GO_INDEX;
-    motionInstruction->motionParameterType = MOTION_PARAMETER_TYPE_MAINTAIN_POSITION;
-
-    // Initialization of motionEnd & motionBlocked
-    MotionEndInfo* localEnd = &(computationValues->motionEnd[instructionType]);
-    resetMotionEndData(localEnd);
-}
-
 void clearInitialSpeeds(PidMotion* pidMotion) {
     PidComputationValues* computationValues = &(pidMotion->computationValues);
 
@@ -123,7 +88,7 @@ void computeMotionInstruction(MotionInstruction* inst) {
     }
 }
 
-void setNextPosition(PidMotion* pidMotion, PidMotionDefinition* motionDefinition, 
+void setNextPosition(PidMotionDefinition* motionDefinition, 
 		enum InstructionType instructionType,
         enum MotionParameterType motionParameterType,
         enum PidType pidType,
@@ -134,8 +99,6 @@ void setNextPosition(PidMotion* pidMotion, PidMotionDefinition* motionDefinition
 		writeError(MOTION_DEFINITION_NULL);
 		return;
 	}
-    initNextPositionVars(pidMotion, motionDefinition, instructionType);
-
     MotionInstruction* localInst = &(motionDefinition->inst[instructionType]);
 
     localInst->nextPosition = pNextPosition;
@@ -154,6 +117,7 @@ void setNextPosition(PidMotion* pidMotion, PidMotionDefinition* motionDefinition
     // pNextPosition == 0.0f Don't change the position
     else {
         if (motionParameterType == MOTION_PARAMETER_TYPE_MAINTAIN_POSITION) {
+            // TODO : Remove magic Numbers
             localInst->a = 1.0f;
             localInst->speed = 100.0f;
         } else {

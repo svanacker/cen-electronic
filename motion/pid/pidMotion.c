@@ -7,6 +7,7 @@
 
 #include "pidTimer.h"
 #include "parameters/pidPersistence.h"
+#include "pidComputationValues.h"
 
 bool checkPidMotionNotNull(const PidMotion* pidMotion) {
 	if (pidMotion == NULL) {
@@ -45,6 +46,8 @@ void clearPidMotion(PidMotion* pidMotion) {
         clearPidMotionDefinition(pidMotionDefinition);
         pidMotionDefinition++;
 	}
+    
+    clearPidComputationValues(&(pidMotion->computationValues));
 }
 
 bool isPidMotionFull(const PidMotion* pidMotion) {
@@ -79,7 +82,7 @@ unsigned int getPidMotionCapacity(const PidMotion* pidMotion) {
 	return pidMotion->length - 1;
 }
 
-PidMotionDefinition* pidMotionReadMotionDefinition(PidMotion* pidMotion) {
+PidMotionDefinition* pidMotionReadMotionDefinition(PidMotion* pidMotion, bool errorIfEndOfList) {
 	if (!checkPidMotionNotNull(pidMotion)) {
 		return NULL;
 	}
@@ -94,9 +97,11 @@ PidMotionDefinition* pidMotionReadMotionDefinition(PidMotion* pidMotion) {
 		return result;
 	}
 	else {
-		// We must log the problem
-		writeError(PID_MOTION_EMPTY);
-		return 0;
+        if (errorIfEndOfList) {
+            // We must log the problem
+            writeError(PID_MOTION_EMPTY);
+        }
+		return NULL;
 	}
 }
 
@@ -122,19 +127,26 @@ PidMotionDefinition* pidMotionGetNextToWritePidMotionDefinition(PidMotion* pidMo
 			return NULL;
 		}
 	}
-	// if we don't stack and already a current motion Definition
-	return pidMotionGetCurrentMotionDefinition(pidMotion);
+    // We overwrite on the read Index
+    PidMotionDefinition* result = (PidMotionDefinition*)pidMotion->motionDefinitions;
+    // Shift to the right cell index
+    result += pidMotion->readIndex;
+    // We overwrite the writeIndex to the next one to avoid inconsistency
+    pidMotion->writeIndex = (pidMotion->readIndex + 1) % pidMotion->length;
 }
 
 PidMotionDefinition* pidMotionGetCurrentMotionDefinition(PidMotion* pidMotion) {
 	if (!checkPidMotionNotNull(pidMotion)) {
 		return NULL;
 	}
-	PidMotionDefinition* result = (PidMotionDefinition*)pidMotion->motionDefinitions;
-	// Shift to the right cell index
-	result += pidMotion->readIndex;
-
-	return result;
+	unsigned int size = getPidMotionElementsCount(pidMotion);
+	if (size <= 0) {
+        return NULL;
+    }
+    PidMotionDefinition* result = (PidMotionDefinition*)pidMotion->motionDefinitions;
+    // Shift to the right cell index
+    result += pidMotion->readIndex;
+    return result;
 }
 
 PidMotionDefinition* getMotionDefinition(PidMotion* pidMotion, unsigned int index) {
@@ -150,7 +162,7 @@ PidMotionDefinition* getMotionDefinition(PidMotion* pidMotion, unsigned int inde
 		// We must log the problem
 		writeError(PID_MOTION_NOT_ENOUGH_DATA);
 	}
-	return 0;
+	return NULL;
 }
 
 // STACK / REPLACE MODE

@@ -11,12 +11,12 @@
 /**
  * Handle function so the robot is aware of asking.
  */
-enum DetectedMotionType handleInstructionAndMotion(PidMotion* pidMotion);
+void handleInstructionAndMotion(PidMotion* pidMotion);
 
 /**
  * Wait after the end of a position, or a position which is maintained.
  */
-enum DetectedMotionType handleAndWaitFreeMotion(PidMotion* pidMotion);
+void handleAndWaitFreeMotion(PidMotion* pidMotion);
 
 /**
  * Handle and wait after a delay of milliseconds.

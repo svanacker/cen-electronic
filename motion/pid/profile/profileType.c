@@ -5,7 +5,10 @@
 #include "../../../common/io/printTableWriter.h"
 
 unsigned int appendProfileTypeAsString(OutputStream* outputStream, enum ProfileType profileType) {
-    if (profileType == PROFILE_TYPE_TRIANGLE) {
+    if (profileType == PROFILE_TYPE_UNDEFINED) {
+        return appendString(outputStream, "UNDEFINED");
+    }
+    else if (profileType == PROFILE_TYPE_TRIANGLE) {
         return appendString(outputStream, "TRIANGLE");
     }
     else if (profileType == PROFILE_TYPE_TRAPEZE) {

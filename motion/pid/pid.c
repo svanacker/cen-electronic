@@ -16,6 +16,7 @@
 
 #include "alphaTheta.h"
 #include "pidMotion.h"
+#include "pidTypeOptimizer.h"
 #include "computer/pidComputer.h"
 #include "parameters/pidParameter.h"
 #include "parameters/pidPersistence.h"
@@ -39,23 +40,9 @@ bool getRollingTestMode(PidMotion* pidMotion) {
     return pidMotion->rollingTestMode;
 }
 
-// Must Reach Position
-
-bool getMustReachPosition(PidMotion* pidMotion) {
-    return pidMotion->mustReachPosition;
-}
-
-void setMustReachPosition(PidMotion* pidMotion, bool value) {
-	pidMotion->mustReachPosition = value;
-}
-
 void setEnabledPid(PidMotion* pidMotion, int pidIndex, unsigned char enabled) {
     PidParameter * localPidParameter = getPidParameter(pidMotion, pidIndex, pidMotion->rollingTestMode);
     localPidParameter->enabled = enabled;
-}
-
-void stopPID(PidMotion* pidMotion) {
-	setMustReachPosition(pidMotion, false);
 }
 
 float getWheelPulseByPidTimeAtFullSpeed(void) {
@@ -96,93 +83,57 @@ PidParameter* getPidParameter(PidMotion* pidMotion, int index, unsigned int pidM
     return result;
 }
 
-/**
-* @private
-*/
-void changePidTypeIfFinalApproach(PidMotion* pidMotion, PidMotionDefinition* motionDefinition) {
-    float pidTime = pidMotion->computationValues.pidTime;
+void updateMotorsAndDetectedMotionType(PidMotion* pidMotion) {
+    PidMotionDefinition* motionDefinition = pidMotionGetCurrentMotionDefinition(pidMotion);
+    if (motionDefinition == NULL) {
+        pidMotion->computationValues.detectedMotionType = DETECTED_MOTION_TYPE_NO_POSITION_TO_REACH;
+        return;
+    }
+    if (motionDefinition->state != PID_MOTION_DEFINITION_STATE_ACTIVE) {
+        pidMotion->computationValues.detectedMotionType = DETECTED_MOTION_TYPE_NO_POSITION_TO_REACH;
+        return;
+    }
+    if (!mustPidBeRecomputed()) {
+        pidMotion->computationValues.detectedMotionType = DETECTED_MOTION_TYPE_POSITION_IN_PROGRESS;
+        return;
+    }
+    // Here, we must recompute pid
+    float pidTime = (float) getPidTime();
+    pidMotion->computationValues.pidTime = pidTime;
 
-    computeErrorsWithNextPositionUsingCoders(pidMotion, motionDefinition);
+    #ifdef _MSC_VER
+        #include "pc/pidPc.h"
+        simulateCurrentPositionReachIfNeeded(pidMotion, motionDefinition);
+    #endif
+
+    // Compute the current Position
+    computeCurrentPositionUsingCoders(pidMotion);
+
+    // Adapt PID Type for Final Approach (when stabilized ...)
+    changePidTypeIfFinalApproach(pidMotion, motionDefinition);
+
+    // Computes the PID
+    motionDefinition->computeU(pidMotion, motionDefinition);
+
+    // Apply Correction
+
+    // 2 dependant Wheels Alpha/Theta (direction +/- angle) => Left/Right correction
     PidComputationValues* computationValues = &(pidMotion->computationValues);
+    PidCurrentValues* thetaCurrentValues = &(computationValues->currentValues[THETA]);
+    PidCurrentValues* alphaCurrentValues = &(computationValues->currentValues[ALPHA]);
+    float leftMotorSpeed = computeLeft(thetaCurrentValues->u, alphaCurrentValues->u);
+    float rightMotorSpeed = computeRight(thetaCurrentValues->u, alphaCurrentValues->u);
+    setMotorSpeeds((int)leftMotorSpeed, (int) rightMotorSpeed);
 
-    // Theta and Alpha Error are only used compared to the next position as
-    // we only use it to change the PID Type for final Approach
-    float thetaError = computationValues->thetaError;
-    float alphaError = computationValues->alphaError;
+    // If we maintain the position, we consider that we must do not check the end of motion (next paragraph)
+    /*
     MotionInstruction* thetaInst = &(motionDefinition->inst[THETA]);
-    MotionInstruction* alphaInst = &(motionDefinition->inst[ALPHA]);
-
-    // Change PID type for final Approach
-    if ((thetaError < ERROR_FOR_STRONG_PID) && (pidTime > thetaInst->t3 + TIME_PERIOD_AFTER_END_FOR_STRONG_PID)
-        && (alphaError < ERROR_FOR_STRONG_PID) && (pidTime > alphaInst->t3 + TIME_PERIOD_AFTER_END_FOR_STRONG_PID)) {
-        thetaInst->pidType = PID_TYPE_FINAL_APPROACH_INDEX;
-        alphaInst->pidType = PID_TYPE_FINAL_APPROACH_INDEX;
+    if (thetaInst->motionParameterType == MOTION_PARAMETER_TYPE_MAINTAIN_POSITION) {
+        pidMotion->computationValues.detectedMotionType = DETECTED_MOTION_TYPE_POSITION_TO_MAINTAIN;
+        return;
     }
-}
-
-enum DetectedMotionType updateMotors(PidMotion* pidMotion) {
-    if (!getMustReachPosition(pidMotion)) {
-        return DETECTED_MOTION_TYPE_NO_POSITION_TO_REACH;
-    }
-    if (mustPidBeRecomputed()) {
-        float pidTime = (float) getPidTime();
-		pidMotion->computationValues.pidTime = pidTime;
-		PidMotionDefinition* motionDefinition = pidMotionGetCurrentMotionDefinition(pidMotion);
-
-        #ifdef _MSC_VER
-			#include "pc/pidPc.h"
-			simulateCurrentPositionReachIfNeeded(pidMotion, motionDefinition);
-        #endif
-
-        // Compute the current Position
-        computeCurrentPositionUsingCoders(pidMotion, motionDefinition);
-
-        // Adapt PID Type for Final Approach (when stabilized ...)
-        changePidTypeIfFinalApproach(pidMotion, motionDefinition);
-
-        // Computes the PID
-        motionDefinition->computeU(pidMotion, motionDefinition);
-
-        // Apply Correction
-
-        // 2 dependant Wheels Alpha/Theta (direction +/- angle) => Left/Right correction
-        PidComputationValues* computationValues = &(pidMotion->computationValues);
-        PidCurrentValues* thetaCurrentValues = &(computationValues->currentValues[THETA]);
-        PidCurrentValues* alphaCurrentValues = &(computationValues->currentValues[ALPHA]);
-        float leftMotorSpeed = computeLeft(thetaCurrentValues->u, alphaCurrentValues->u);
-        float rightMotorSpeed = computeRight(thetaCurrentValues->u, alphaCurrentValues->u);
-        setMotorSpeeds((int)leftMotorSpeed, (int) rightMotorSpeed);
-
-        // If we maintain the position, we consider that we must maintain indefinitely the position
-        MotionInstruction* thetaInst = &(motionDefinition->inst[THETA]);
-        if (thetaInst->motionParameterType == MOTION_PARAMETER_TYPE_MAINTAIN_POSITION) {
-            return DETECTED_MOTION_TYPE_POSITION_TO_MAINTAIN;
-        }
-
-        // DETECTS END OF MOTION => TODO : Extract it in a method
-        MotionEndDetectionParameter* endDetectionParameter = getMotionEndDetectionParameter(pidMotion);
-        MotionEndInfo* thetaEndMotion = &(computationValues->motionEnd[THETA]);
-        MotionEndInfo* alphaEndMotion = &(computationValues->motionEnd[ALPHA]);
+    */
     
-        thetaCurrentValues->currentSpeed = thetaCurrentValues->position - thetaCurrentValues->oldPosition;
-        alphaCurrentValues->currentSpeed = alphaCurrentValues->position - alphaCurrentValues->oldPosition;
-
-        updateEndMotionData(computationValues, THETA, thetaEndMotion, endDetectionParameter, (int) pidTime);
-        updateEndMotionData(computationValues, ALPHA, alphaEndMotion, endDetectionParameter, (int) pidTime);
-
-        bool isThetaEnd = isEndOfMotion(THETA, thetaEndMotion, endDetectionParameter);
-        bool isAlphaEnd = isEndOfMotion(ALPHA, alphaEndMotion, endDetectionParameter);
-
-        bool isThetaBlocked = isRobotBlocked(motionDefinition, THETA, thetaEndMotion, endDetectionParameter);
-        bool isAlphaBlocked = isRobotBlocked(motionDefinition, ALPHA, alphaEndMotion, endDetectionParameter);
-
-        if (isThetaEnd && isAlphaEnd) {
-            if (isThetaBlocked || isAlphaBlocked) {
-                return DETECTED_MOTION_TYPE_POSITION_BLOCKED_WHEELS;
-            } else {
-                return DETECTED_MOTION_TYPE_POSITION_REACHED;
-            }
-        }
-    }
-    return DETECTED_MOTION_TYPE_POSITION_IN_PROGRESS;
+    // Detection if the robot is blocked or not
+    pidMotion->computationValues.detectedMotionType = isRobotBlocked(pidMotion, motionDefinition);
 }

@@ -11,6 +11,9 @@
 #define PID_TYPE_COUNT 5
 
 enum PidType {
+    /** The type of pid when we don't know */
+    PID_TYPE_UNDEFINED = -1,
+    
     /** The mask used to indicate that we want to use value of PID to go forward and backward. */
     PID_TYPE_GO_INDEX = 0,
     

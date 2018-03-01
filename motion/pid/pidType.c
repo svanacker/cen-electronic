@@ -19,7 +19,10 @@ enum PidType getPidType(enum MotionParameterType motionParameterType) {
 }
 
 unsigned int appendPidTypeAsString(OutputStream* outputStream, enum PidType pidType) {
-    if (pidType == PID_TYPE_GO_INDEX) {
+    if (pidType == PID_TYPE_UNDEFINED) {
+        return appendString(outputStream, "UNDEFINED");
+    }
+    else if (pidType == PID_TYPE_GO_INDEX) {
         return appendString(outputStream, "GO");
     }
     else if (pidType == PID_TYPE_ROTATE_INDEX) {

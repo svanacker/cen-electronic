@@ -16,18 +16,11 @@
 void resetMotionEndData(MotionEndInfo* endMotion);
 
 /**
- * Necessary to call isEndOfMotion, or isRobotBlocked.
+ * Detect if the robot is blocked or not.
+ * @param pidMotion
+ * @param motionDefinition
+ * @return 
  */
-void updateEndMotionData(PidComputationValues* computationValues, enum InstructionType instructionType, MotionEndInfo* endMotion, MotionEndDetectionParameter* parameter, unsigned int time);
-
-/**
- * Detects if the robot has end his motion and if it can continue to next instruction.
- */
-bool isEndOfMotion(enum InstructionType instructionType, MotionEndInfo* endMotion, MotionEndDetectionParameter* parameter);
-
-/**
- * Detects if the robot is blocked, and if it must be stopped to avoid problems with motors.
- */
-bool isRobotBlocked(PidMotionDefinition* motionDefinition, enum InstructionType instructionType, MotionEndInfo* endMotion, MotionEndDetectionParameter* parameter);
+bool isRobotBlocked(PidMotion* pidMotion, PidMotionDefinition* motionDefinition);
 
 #endif
