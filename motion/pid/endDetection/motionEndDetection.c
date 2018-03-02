@@ -119,7 +119,7 @@ bool isMotionInstructionIsBlocked(PidMotionDefinition* motionDefinition, enum In
     return false;
 }
 
-bool isRobotBlocked(PidMotion* pidMotion, PidMotionDefinition* motionDefinition) {
+void detectIfRobotIsBlocked(PidMotion* pidMotion, PidMotionDefinition* motionDefinition) {
     MotionEndDetectionParameter* endDetectionParameter = getMotionEndDetectionParameter(pidMotion);
         
     PidComputationValues* computationValues = &(pidMotion->computationValues);
@@ -144,10 +144,13 @@ bool isRobotBlocked(PidMotion* pidMotion, PidMotionDefinition* motionDefinition)
 
     if (isThetaEnd && isAlphaEnd) {
         if (isThetaBlocked || isAlphaBlocked) {
-            return DETECTED_MOTION_TYPE_POSITION_BLOCKED_WHEELS;
+            setDetectedMotionType(computationValues, DETECTED_MOTION_TYPE_POSITION_BLOCKED_WHEELS);
+            return;
         } else {
-            return DETECTED_MOTION_TYPE_POSITION_REACHED;
+            setDetectedMotionType(computationValues, DETECTED_MOTION_TYPE_POSITION_REACHED);
+            return;
         }
     }
-    return DETECTED_MOTION_TYPE_POSITION_IN_PROGRESS;
+    // If not blocked or not reached -> In Progress
+    setDetectedMotionType(computationValues, DETECTED_MOTION_TYPE_POSITION_IN_PROGRESS);
 }

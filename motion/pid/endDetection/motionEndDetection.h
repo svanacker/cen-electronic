@@ -21,6 +21,6 @@ void resetMotionEndData(MotionEndInfo* endMotion);
  * @param motionDefinition
  * @return 
  */
-bool isRobotBlocked(PidMotion* pidMotion, PidMotionDefinition* motionDefinition);
+void detectIfRobotIsBlocked(PidMotion* pidMotion, PidMotionDefinition* motionDefinition);
 
 #endif

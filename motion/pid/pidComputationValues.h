@@ -32,6 +32,8 @@ typedef struct PidComputationValues {
     MotionEndInfo motionEnd[INSTRUCTION_TYPE_COUNT];
 } PidComputationValues;
 
+void setDetectedMotionType(PidComputationValues* pidComputationValues, enum DetectedMotionType detectedMotionType);
+
 /**
  * Clear all current values so that we will be sure not to keep some old values from the previous Pid.
  * @param pidComputationValues

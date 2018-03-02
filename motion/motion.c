@@ -33,20 +33,17 @@
  * @private
  * If we have a next position to reach, stop the current motion, initialize the next motion and switch to it
  * @param pidMotion
- * @return the new pidMotionDefinition if found, NULL if it does not exist
  */
-PidMotionDefinition* switchToNextMotionDefinitionIfAny(PidMotion* pidMotion, PidMotionDefinition* currentMotionDefinition) {
-    PidMotionDefinition* result = NULL;
+void switchToNextMotionDefinitionIfAny(PidMotion* pidMotion, PidMotionDefinition* currentMotionDefinition) {
     if (currentMotionDefinition == NULL) {
-        return result;
+        return;
     }
     currentMotionDefinition->state = PID_MOTION_DEFINITION_STATE_ENDED;
     // There is the current motion definition, and the next one (so we test that there is >= 2)
     int elementCount = getPidMotionElementsCount(pidMotion);
     if (elementCount >= 1) {
-        result = pidMotionReadMotionDefinition(pidMotion, false);
+        pidMotionReadMotionDefinition(pidMotion, false);
     }
-    return result;
 }
 
 void handleInstructionAndMotion(PidMotion* pidMotion) {
@@ -67,9 +64,8 @@ void handleInstructionAndMotion(PidMotion* pidMotion) {
         // Update trajectory before clearing coders
         updateTrajectoryAndClearCoders();
 
-        // resets the time
+        // resets all current values
         clearPidTime();
-
         clearPidComputationValues(&(pidMotion->computationValues));
         
         currentMotionDefinition->state = PID_MOTION_DEFINITION_STATE_ACTIVE; 

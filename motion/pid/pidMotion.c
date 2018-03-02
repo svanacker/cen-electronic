@@ -4,6 +4,7 @@
 
 #include "../../common/error/error.h"
 #include "../../robot/kinematics/robotKinematics.h"
+#include "../../robot/kinematics/robotKinematicsPersistence.h"
 
 #include "pidTimer.h"
 #include "parameters/pidPersistence.h"
@@ -133,6 +134,8 @@ PidMotionDefinition* pidMotionGetNextToWritePidMotionDefinition(PidMotion* pidMo
     result += pidMotion->readIndex;
     // We overwrite the writeIndex to the next one to avoid inconsistency
     pidMotion->writeIndex = (pidMotion->readIndex + 1) % pidMotion->length;
+
+    return result;
 }
 
 PidMotionDefinition* pidMotionGetCurrentMotionDefinition(PidMotion* pidMotion) {

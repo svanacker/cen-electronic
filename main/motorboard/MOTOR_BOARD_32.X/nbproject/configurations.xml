@@ -389,6 +389,8 @@
         <itemPath>../../../robot/kinematics/robotKinematics.h</itemPath>
         <itemPath>../../../robot/kinematics/robotKinematicsDevice.h</itemPath>
         <itemPath>../../../robot/kinematics/robotKinematicsDeviceInterface.h</itemPath>
+        <itemPath>D:/dev/git/cen-electronic/robot/kinematics/robotKinematicsDebug.h</itemPath>
+        <itemPath>D:/dev/git/cen-electronic/robot/kinematics/robotKinematicsPersistence.h</itemPath>
       </logicalFolder>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
@@ -770,6 +772,8 @@
         <itemPath>../../../robot/kinematics/robotKinematics.c</itemPath>
         <itemPath>../../../robot/kinematics/robotKinematicsDevice.c</itemPath>
         <itemPath>../../../robot/kinematics/robotKinematicsDeviceInterface.c</itemPath>
+        <itemPath>D:/dev/git/cen-electronic/robot/kinematics/robotKinematicsDebug.c</itemPath>
+        <itemPath>D:/dev/git/cen-electronic/robot/kinematics/robotKinematicsPersistence.c</itemPath>
       </logicalFolder>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"

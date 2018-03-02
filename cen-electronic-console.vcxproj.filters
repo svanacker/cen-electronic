@@ -1623,6 +1623,12 @@
     <ClCompile Include="motion\pid\endDetection\motionEndInfo.c">
       <Filter>Source Files\motion\pid\endDetection</Filter>
     </ClCompile>
+    <ClCompile Include="robot\kinematics\robotKinematicsDebug.c">
+      <Filter>Source Files\robot\kinematics</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\kinematics\robotKinematicsPersistence.c">
+      <Filter>Source Files\robot\kinematics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -2488,6 +2494,12 @@
     </ClInclude>
     <ClInclude Include="motion\pid\pidTypeOptimizer.h">
       <Filter>Header Files\motion\pid</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\kinematics\robotKinematicsDebug.h">
+      <Filter>Header Files\robot\kinematics</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\kinematics\robotKinematicsPersistence.h">
+      <Filter>Header Files\robot\kinematics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

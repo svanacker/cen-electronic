@@ -86,15 +86,15 @@ PidParameter* getPidParameter(PidMotion* pidMotion, int index, unsigned int pidM
 void updateMotorsAndDetectedMotionType(PidMotion* pidMotion) {
     PidMotionDefinition* motionDefinition = pidMotionGetCurrentMotionDefinition(pidMotion);
     if (motionDefinition == NULL) {
-        pidMotion->computationValues.detectedMotionType = DETECTED_MOTION_TYPE_NO_POSITION_TO_REACH;
+        setDetectedMotionType(&(pidMotion->computationValues), DETECTED_MOTION_TYPE_NO_POSITION_TO_REACH);
         return;
     }
     if (motionDefinition->state != PID_MOTION_DEFINITION_STATE_ACTIVE) {
-        pidMotion->computationValues.detectedMotionType = DETECTED_MOTION_TYPE_NO_POSITION_TO_REACH;
+        setDetectedMotionType(&(pidMotion->computationValues), DETECTED_MOTION_TYPE_NO_POSITION_TO_REACH);
         return;
     }
     if (!mustPidBeRecomputed()) {
-        pidMotion->computationValues.detectedMotionType = DETECTED_MOTION_TYPE_POSITION_IN_PROGRESS;
+        setDetectedMotionType(&(pidMotion->computationValues), DETECTED_MOTION_TYPE_POSITION_IN_PROGRESS);
         return;
     }
     // Here, we must recompute pid
@@ -126,14 +126,12 @@ void updateMotorsAndDetectedMotionType(PidMotion* pidMotion) {
     setMotorSpeeds((int)leftMotorSpeed, (int) rightMotorSpeed);
 
     // If we maintain the position, we consider that we must do not check the end of motion (next paragraph)
-    /*
     MotionInstruction* thetaInst = &(motionDefinition->inst[THETA]);
     if (thetaInst->motionParameterType == MOTION_PARAMETER_TYPE_MAINTAIN_POSITION) {
-        pidMotion->computationValues.detectedMotionType = DETECTED_MOTION_TYPE_POSITION_TO_MAINTAIN;
+        setDetectedMotionType(computationValues, DETECTED_MOTION_TYPE_POSITION_TO_MAINTAIN);
         return;
     }
-    */
     
-    // Detection if the robot is blocked or not
-    pidMotion->computationValues.detectedMotionType = isRobotBlocked(pidMotion, motionDefinition);
+    // Detection if the robot is blocked or not, and update the DetectedMotionType
+    detectIfRobotIsBlocked(pidMotion, motionDefinition);
 }

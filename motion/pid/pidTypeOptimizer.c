@@ -2,6 +2,8 @@
 
 #include "pidMotion.h"
 
+#include "../position/coderErrorComputer.h"
+
 void changePidTypeIfFinalApproach(PidMotion* pidMotion, PidMotionDefinition* motionDefinition) {
     float pidTime = pidMotion->computationValues.pidTime;
 

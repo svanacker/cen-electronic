@@ -1,4 +1,5 @@
 #include "robotKinematics.h"
+#include "robotKinematicsPersistence.h"
 #include "robotKinematicsDevice.h"
 #include "robotKinematicsDeviceInterface.h"
 
