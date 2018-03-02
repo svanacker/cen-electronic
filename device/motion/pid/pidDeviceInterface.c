@@ -45,6 +45,11 @@ int devicePIDGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fil
             setFunctionNoArgumentAndNoResult("loadDefaultValues");
         }
         return commandLengthValueForMode(mode, 0, 0);
+    } else if (commandHeader == COMMAND_SAVE_PID) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("saveValues");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
     } else if (commandHeader == COMMAND_SET_END_DETECTION_PARAMETER) {
         if (fillDeviceArgumentList) {
             setFunction("setEndDetectParam", 9, 0);

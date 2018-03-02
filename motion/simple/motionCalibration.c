@@ -10,19 +10,19 @@
 
 void squareCalibrationRotationLeft(PidMotion* pidMotion, bool inverse, OutputStream* notificationOutputStream) {
     if (inverse) {
-        rightSimpleDegreeAndWait(pidMotion, DEG_90, notificationOutputStream);
+        rightSimpleDeciDegreeAndWait(pidMotion, DEG_90, notificationOutputStream);
     }
     else {
-        leftSimpleDegreeAndWait(pidMotion, DEG_90, notificationOutputStream);
+        leftSimpleDeciDegreeAndWait(pidMotion, DEG_90, notificationOutputStream);
     }
 }
 
 void squareCalibrationRotationRight(PidMotion* pidMotion, bool inverse, OutputStream* notificationOutputStream) {
     if (inverse) {
-        leftSimpleDegreeAndWait(pidMotion, DEG_90, notificationOutputStream);
+        leftSimpleDeciDegreeAndWait(pidMotion, DEG_90, notificationOutputStream);
     }
     else {
-        rightSimpleDegreeAndWait(pidMotion, DEG_90, notificationOutputStream);
+        rightSimpleDeciDegreeAndWait(pidMotion, DEG_90, notificationOutputStream);
     }
 }
 void squareCalibrationLine(PidMotion* pidMotion, float x, float y, float angle, bool inverse, OutputStream* notificationOutputStream) {

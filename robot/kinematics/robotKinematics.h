@@ -54,5 +54,38 @@ float getWheelPulseBySecondsAtFullSpeed(RobotKinematics* robotKinematics);
  */
 float getWheelsDistanceFromCenter(RobotKinematics* robotKinematics);
 
+// CONVERSION
+
+/**
+ * Return the number of pulse to do one millimeter for left wheel
+ * @param robotKinematics
+ * @return 
+ */
+float getLeftWheelPulseCountForOneMillimeter(RobotKinematics* robotKinematics);
+
+/**
+ * Return the number of pulse to do one millimeter for right wheel
+ * @param robotKinematics
+ * @return 
+ */
+float getRightWheelPulseCountForOneMillimeter(RobotKinematics* robotKinematics);
+
+/**
+ * Convert for a rotation around center (both left and right wheel) the distance to do 
+ * for the left Wheel to reach an angle of angleDeciDegree (unit = 1/10 degree)
+ * @param robotKinematics
+ * @param angleDeciDegree the rotation
+ * @return the number of left pulse to do to accomplish the rotation
+ */
+float rotationInDeciDegreeToRealDistanceForLeftWheel(RobotKinematics* robotKinematics, int angleDeciDegree);
+
+/**
+ * Convert for a rotation around center (both left and right wheel) the distance to do 
+ * for the right Wheel to reach an angle of angleDeciDegree (unit = 1/10 degree)
+ * @param robotKinematics
+ * @param angleDeciDegree the rotation
+ * @return the number of right pulse to do to accomplish the rotation
+ */
+float rotationInDeciDegreeToRealDistanceForRightWheel(RobotKinematics* robotKinematics, int angleDeciDegree);
 
 #endif

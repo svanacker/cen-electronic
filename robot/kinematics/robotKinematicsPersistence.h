@@ -24,7 +24,7 @@
 
 /** Default wheels distance (micrometer)). */
 // #define WHEELS_DISTANCE 226.70f
-#define KINEMATICS_WHEELS_DISTANCE_DEFAULT_VALUE                            240.80f
+#define KINEMATICS_WHEELS_DISTANCE_DEFAULT_VALUE                            283.00f
 
 /**
  * Load the Kinematics parameters from the eeprom_ to the structure given in parameter. It can be used to load Default Values when nothing is in the eeprom.

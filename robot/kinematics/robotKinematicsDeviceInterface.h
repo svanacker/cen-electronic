@@ -22,6 +22,8 @@
 #define COMMAND_GET_WHEELS_DISTANCE                     'h'
 #define COMMAND_SET_WHEELS_DISTANCE                     'H'
 
+#define COMMAND_KINEMATICS_SAVE                         's'
+
 /**
 * Interface for Device "RobotKinematics"
 */

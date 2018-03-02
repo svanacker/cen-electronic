@@ -20,7 +20,9 @@
 static Eeprom* robotKinematicsEeprom;
 
 void deviceRobotKinematicsInit(void) {
-    // TODO : initKinematics (and not in PID ?)
+    RobotKinematics* robotKinematics = getRobotKinematics();
+    // Load from the eeprom but do not overwrite by reading default values
+	loadRobotKinematicsParameters(robotKinematics, robotKinematicsEeprom, false);
 }
 
 void deviceRobotKinematicsShutDown(void) {
@@ -36,6 +38,10 @@ void deviceRobotKinematicsHandleRawData(char commandHeader, InputStream* inputSt
         ackCommand(outputStream, KINEMATICS_HEADER, COMMAND_KINEMATICS_LOAD_DEFAULT_VALUES);
         RobotKinematics* robotKinematics = getRobotKinematics();
         loadRobotKinematicsParameters(robotKinematics, robotKinematicsEeprom, true);
+    }
+    else if (commandHeader == COMMAND_KINEMATICS_SAVE) {
+        ackCommand(outputStream, KINEMATICS_HEADER, COMMAND_KINEMATICS_SAVE);
+        RobotKinematics* robotKinematics = getRobotKinematics();
         saveRobotKinematicsParameters(robotKinematics, robotKinematicsEeprom);
     }
     // wheelAverageLengthForOnePulse

@@ -25,9 +25,14 @@
 #define COMMAND_DEBUG_PID_PARAMETERS                'R'
 
 /**
- * Load and save default Values
+ * Load default Values
  */
 #define COMMAND_LOAD_PID_DEFAULT_VALUES            'd'
+
+/**
+ * Save Values
+ */
+#define COMMAND_SAVE_PID                           's'
 
 /**
  * Debug all pid values. 

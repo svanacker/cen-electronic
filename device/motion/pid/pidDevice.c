@@ -95,17 +95,16 @@ void devicePIDHandleRawData(char commandHeader, InputStream* inputStream, Output
         appendSeparator(outputStream);
         appendHex2(outputStream, (int) localPidParameter->maxIntegral);
     } else if (commandHeader == COMMAND_LOAD_PID_DEFAULT_VALUES) {
-        // send acknowledgement
         ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_LOAD_PID_DEFAULT_VALUES);
         
         // Load default Values (and erase previous values)
         loadPidParameters(pidMotion, true);
-        
+    } else if (commandHeader == COMMAND_SAVE_PID) {
+        ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_SAVE_PID);
         savePidParameters(pidMotion);
     }
     // End Detection Parameter
     else if (commandHeader ==  COMMAND_GET_END_DETECTION_PARAMETER) {
-        // send acknowledgement
         ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_GET_END_DETECTION_PARAMETER);
 
         MotionEndDetectionParameter* motionEndDetectionParameter = getMotionEndDetectionParameter(pidMotion);

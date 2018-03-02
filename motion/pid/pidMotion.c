@@ -202,7 +202,6 @@ void initPidMotion(PidMotion* pidMotion, Eeprom* _eeprom, PidMotionDefinition(*a
 	// We load the values from the eeprom, but we don't load default values
 	loadPidParameters(pidMotion, false);
 	RobotKinematics* robotKinematics = getRobotKinematics();
-	loadRobotKinematicsParameters(robotKinematics, _eeprom, true);
 	initPidTimer();
 
 	// PidMotionDefinition* motionDefinition = getCurrentMotionDefinition();

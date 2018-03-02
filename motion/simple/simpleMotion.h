@@ -55,27 +55,15 @@ float backwardMM(PidMotion* pidMotion, float distanceInMM, float a, float speed,
  * @param a acceleration
  * @param speed
  */
-float rotationDegree(PidMotion* pidMotion, float angleDegree, float a, float speed, OutputStream* notificationOutputStream);
+float rotationDeciDegree(PidMotion* pidMotion, float angleDeciDegree, float a, float speed, OutputStream* notificationOutputStream);
 
-/**
- * Do a rotation with an angle in milliDegree in the trigonometric turn.
- * @param angle in milliDegree
- * @param a acceleration
- * @param speed
- */
-float rotationMilliDegree(PidMotion* pidMotion, float milliAngleDegree, float a, float speed, OutputStream* notificationOutputStream);
+float leftDeciDegree(PidMotion* pidMotion, float angleDeciDegree, float a, float speed, OutputStream* notificationOutputStream);
 
-float leftDegree(PidMotion* pidMotion, float angleDegree, float a, float speed, OutputStream* notificationOutputStream);
+float rightDeciDegree(PidMotion* pidMotion, float angleDeciDegree, float a, float speed, OutputStream* notificationOutputStream);
 
-float leftMilliDegree(PidMotion* pidMotion, float milliAngleDegree, float a, float speed, OutputStream* notificationOutputStream);
+void leftOneWheelDeciDegree(PidMotion* pidMotion, float angleDeciDegree, float a, float speed, OutputStream* notificationOutputStream);
 
-float rightDegree(PidMotion* pidMotion, float angleDegree, float a, float speed, OutputStream* notificationOutputStream);
-
-float rightMilliDegree(PidMotion* pidMotion, float milliAngleDegree, float a, float speed, OutputStream* notificationOutputStream);
-
-void leftOneWheelDegree(PidMotion* pidMotion, float angleDegree, float a, float speed, OutputStream* notificationOutputStream);
-
-void rightOneWheelDegree(PidMotion* pidMotion, float angleDegree, float a, float speed, OutputStream* notificationOutputStream);
+void rightOneWheelDeciDegree(PidMotion* pidMotion, float angleDeciDegree, float a, float speed, OutputStream* notificationOutputStream);
 
 // Simplest function
 
