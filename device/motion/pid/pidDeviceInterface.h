@@ -6,6 +6,19 @@
 #include "../../../device/deviceConstants.h"
 
 // COMMAND
+// PARAMETERS
+
+/** Load default Motion parameters. */
+#define COMMAND_MOTION_LOAD_DEFAULT_PARAMETERS 'l'
+
+/** Defines the COMMAND used to get speed / acceleration parameters for different motion type. */
+#define COMMAND_GET_MOTION_PARAMETERS          'm'
+
+/** Defines the COMMAND used to set speed / acceleration parameters for different motion type. */
+#define COMMAND_SET_MOTION_PARAMETERS          'W'
+
+/** Save the motion parameters to the eeprom. */
+#define COMMAND_MOTION_SAVE_TO_EEPROM_PARAMETERS 'R'
 
 /**
 * Set the some parameters for a specific PID.

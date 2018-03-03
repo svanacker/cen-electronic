@@ -33,22 +33,7 @@
 /** Turn to the left in degree, but without turning right wheel. */
 #define COMMAND_MOTION_LEFT_ONE_WHEEL_IN_DECI_DEGREE ')'
 
-// PARAMETERS
 
-/** Load default Motion parameters. */
-#define COMMAND_MOTION_LOAD_DEFAULT_PARAMETERS 'd'
-
-/** Show in a table the different value of Speed / Acceleration for each kind of move. */
-#define COMMAND_MOTION_PARAMETERS_DEBUG        'D'
-
-/** Defines the COMMAND used to get speed / acceleration parameters for different motion type. */
-#define COMMAND_GET_MOTION_PARAMETERS          'p'
-
-/** Defines the COMMAND used to set speed / acceleration parameters for different motion type. */
-#define COMMAND_SET_MOTION_PARAMETERS          'w'
-
-/** Save the motion parameters to the eeprom. */
-#define COMMAND_MOTION_SAVE_TO_EEPROM_PARAMETERS 's'
 
 // CALIBRATION
 

@@ -11,6 +11,14 @@ const char* getPidDebugDeviceName(void) {
 }
 
 int devicePidDebugGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
+    // MOTION PARAMETERS DEBUG
+    if (commandHeader == COMMAND_MOTION_PARAMETERS_DEBUG) {
+		if (fillDeviceArgumentList) {
+			setFunctionNoArgumentAndNoResult("debugParameters");
+		}
+		return commandLengthValueForMode(mode, 0, 0);
+	}
+    // PID DEBUG
     if (commandHeader == COMMAND_END_MOTION_DEBUG) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("motionEndDebug");

@@ -12,7 +12,7 @@
 
 #include "../parameters/motionParameterType.h"
 #include "../parameters/motionParameter.h"
-#include "../parameters/motionPersistence.h"
+#include "../parameters/motionParameterPersistence.h"
 
 #include "../extended/bsplineDebug.h"
 
@@ -215,7 +215,7 @@ void gotoSpline(PidMotion* pidMotion) {
     enum PidType pidType = getPidType(motionParameterType);
 
     // do as if we follow a straight line
-    MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_PARAMETER_TYPE_FORWARD_OR_BACKWARD);
+    MotionParameter* motionParameter = getMotionParameters(MOTION_PARAMETER_TYPE_FORWARD_OR_BACKWARD);
     float bestA = computeBestAccelerationForBSpline(curve, motionParameter->a);
     float bestSpeed = computeBestSpeedForBSpline(curve, motionParameter->speed);
 

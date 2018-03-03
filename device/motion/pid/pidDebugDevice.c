@@ -19,6 +19,7 @@
 #include "../../../common/log/logLevel.h"
 
 #include "../../../device/device.h"
+#include "../../../motion/parameters/motionParameterDebug.h"
 #include "../../../motion/pid/pidDebug.h"
 #include "../../../motion/pid/parameters/pidParameterDebug.h"
 #include "../../../motion/pid/endDetection/motionEndDetectionDebug.h"
@@ -37,24 +38,32 @@ void stopPidDebugDevice(void) {
 }
 
 void devicePidDebugHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
-    if (commandHeader == COMMAND_END_MOTION_DEBUG) {
-        ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_END_MOTION_DEBUG);
+	// MOTION PARAMETERS DEBUG
+    if (commandHeader == COMMAND_MOTION_PARAMETERS_DEBUG) {
+		// send acknowledge
+		ackCommand(outputStream, PID_DEBUG_DEVICE_HEADER, COMMAND_MOTION_PARAMETERS_DEBUG);
+		OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+		printMotionParameterList(debugOutputStream);
+	}
+    // PID DEBUG
+    else if (commandHeader == COMMAND_END_MOTION_DEBUG) {
+        ackCommand(outputStream, PID_DEBUG_DEVICE_HEADER, COMMAND_END_MOTION_DEBUG);
         OutputStream* debugOutputStream = getDebugOutputStreamLogger();
         printMotionEndDetectionParameter(debugOutputStream, &(pidMotion->globalParameters.motionEndDetectionParameter));
         printMotionEndInfos(debugOutputStream, pidMotion);
     }
 	else if (commandHeader == COMMAND_DEBUG_DATA_PID_CONSOLE) {
-		ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_DEBUG_DATA_PID_CONSOLE);
+		ackCommand(outputStream, PID_DEBUG_DEVICE_HEADER, COMMAND_DEBUG_DATA_PID_CONSOLE);
 		OutputStream* debugOutputStream = getDebugOutputStreamLogger();
 		printPidDataDebugTable(debugOutputStream, pidMotion);
 	}
 	else if (commandHeader == COMMAND_PID_MOTION_PARAMETER_DEBUG) {
-		ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_PID_MOTION_PARAMETER_DEBUG);
+		ackCommand(outputStream, PID_DEBUG_DEVICE_HEADER, COMMAND_PID_MOTION_PARAMETER_DEBUG);
 		OutputStream* debugOutputStream = getDebugOutputStreamLogger();
 		printMotionInstructionTable(debugOutputStream, pidMotion);
 	}
 	else if (commandHeader == COMMAND_DEBUG_PID_PARAMETERS) {
-		ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_DEBUG_PID_PARAMETERS);
+		ackCommand(outputStream, PID_DEBUG_DEVICE_HEADER, COMMAND_DEBUG_PID_PARAMETERS);
 		OutputStream* debugOutputStream = getDebugOutputStreamLogger();
 		printAllPidParametersTable(debugOutputStream, pidMotion);
 	}

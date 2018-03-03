@@ -11,6 +11,38 @@ const char* getPidDeviceName(void) {
 }
 
 int devicePidGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
+    // MOTION PARAMETER
+    if (commandHeader == COMMAND_MOTION_LOAD_DEFAULT_PARAMETERS) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("loadDefaultParameters");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }
+    else if (commandHeader == COMMAND_GET_MOTION_PARAMETERS) {
+        if (fillDeviceArgumentList) {
+            setFunction("getMotionParam", 1, 2);
+            setArgumentUnsignedHex2(0, "motionType");
+            setResultUnsignedHex2(0, "a");
+            setResultUnsignedHex2(1, "s");
+        }
+        return commandLengthValueForMode(mode, 2, 4);
+    } else if (commandHeader == COMMAND_SET_MOTION_PARAMETERS) {
+        if (fillDeviceArgumentList) {
+            setFunction("setMotionParam", 3, 0);
+            setArgumentUnsignedHex2(0, "motionType");
+            setArgumentUnsignedHex2(1, "a");
+            setArgumentUnsignedHex2(2, "s");
+        }
+        return commandLengthValueForMode(mode, 6, 0);
+    }
+    else if (commandHeader == COMMAND_MOTION_SAVE_TO_EEPROM_PARAMETERS) {
+		if(fillDeviceArgumentList) {
+			setFunctionNoArgumentAndNoResult("saveToEeprom");
+		}
+		return commandLengthValueForMode(mode, 0, 0);
+    }
+
+    // PID PARAMETER
     if (commandHeader == COMMAND_WRITE_PID_PARAMETERS) {
         if (fillDeviceArgumentList) {
             setFunction("setPID", 9, 0);
@@ -102,7 +134,7 @@ int devicePidGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fil
             setResultSeparator(15);
             setResultUnsignedHex4(16, "endMotion_uIntegral");
         }
-        return commandLengthValueForMode(mode, 2, 45);
+        return commandLengthValueForMode(mode, 2, 46);
     } else if (commandHeader == COMMAND_GET_MOTION_PARAMETER) {
         if (fillDeviceArgumentList) {    
             setFunction("getMotionParameter", 1, 25);

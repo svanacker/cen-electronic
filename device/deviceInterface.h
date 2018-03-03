@@ -333,6 +333,10 @@ typedef struct DeviceInterface{
      * @see https://github.com/svanacker/cen-electronic/wiki/Device-Header-List
      */
     char deviceHeader;
+    /**
+     * Gets the error Code during initialization, 0 if the device has no error.
+     */
+    unsigned int initErrorCode;
     /** Function returning the name of the device. */
     deviceGetNameFunction *deviceGetName;
     /** Function returning information about interface. */

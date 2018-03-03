@@ -29,8 +29,10 @@ void clearLastError();
 
 // List of error Code
 
-#define ILLEGAL_ARGUMENT_EXCEPTION         0x001
-#define LIMIT_ARGUMENT_MUST_BE_POSITIVE    0x010
+#define ERROR_NONE                         0x0000
+
+#define ILLEGAL_ARGUMENT_EXCEPTION         0x0001
+#define LIMIT_ARGUMENT_MUST_BE_POSITIVE    0x0010
 
 // IO
 

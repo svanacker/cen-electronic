@@ -10,6 +10,7 @@
 #include "../common/io/printWriter.h"
 
 #include "../common/log/logger.h"
+#include "../common/error/error.h"
 
 bool initDevice(const Device* device) {
     int result = true;
@@ -19,22 +20,26 @@ bool initDevice(const Device* device) {
     const char* deviceName = deviceInterface->deviceGetName();
     OutputStream* logStream = getDebugOutputStreamLogger();
 
-    appendString(logStream, deviceName);
-    append(logStream, ':');
+    unsigned length = appendString(logStream, deviceName);
+    appendSpaces(logStream, 18 - length);
 
     if (deviceDescriptor != NULL) {
+        clearLastError();
         deviceDescriptor->deviceInit();
 
-        int result = deviceDescriptor->deviceIsOk();
+        bool deviceOk = deviceDescriptor->deviceIsOk();
 
         if (result) {
             appendString(logStream, "OK");
-        } else {
-            appendString(logStream, "KO");
         }
+        else {
+            appendString(logStream, "KO (");
+            appendDec(logStream, getLastError());
+            append(logStream, ')');
+        }
+        println(logStream);
+        deviceDescriptor->initErrorCode = getLastError();
     }
-
-    println(logStream);
 
     return result;
 }

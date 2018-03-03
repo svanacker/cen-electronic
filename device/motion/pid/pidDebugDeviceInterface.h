@@ -7,10 +7,13 @@
 
 // COMMAND
 
+/** Show in a table the different value of Speed / Acceleration for each kind of move. */
+#define COMMAND_MOTION_PARAMETERS_DEBUG            'M'
+
 /**
 * Write into a table all PID Parameters
 */
-#define COMMAND_DEBUG_PID_PARAMETERS                'R'
+#define COMMAND_DEBUG_PID_PARAMETERS                'P'
 
 /**
  * Show all values for the end Motion data.

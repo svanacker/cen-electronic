@@ -22,28 +22,6 @@
  */
 void appendTableSeparator(OutputStream* outputStream);
 
-/**
-* Append by repeating chars to the outputStream.
-* @param outputStream the pointer on outputStream (POO simulation)
-* @param c the char to repeat
-* @param count how many char we repeat
-*/
-unsigned int appendRepeatedChars(OutputStream* outputStream, char c, int count);
-
-/**
-* Append by repeating '-' to the outputStream.
-* @param outputStream the pointer on outputStream (POO simulation)
-* @param count how many dash we repeat
-*/
-unsigned int appendDashes(OutputStream* outputStream, int count);
-
-/**
-* Append a certain amount of spaces (use of table aligment).
-* @param outputStream the pointer on outputStream (POO simulation)
-* @param count how many spaces we want to append
-*/
-unsigned int appendSpaces(OutputStream* outputStream, int count);
-
 // HEADER
 
 /**

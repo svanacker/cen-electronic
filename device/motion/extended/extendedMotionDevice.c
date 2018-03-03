@@ -24,7 +24,7 @@
 
 #include "../../../motion/parameters/motionParameterType.h"
 #include "../../../motion/parameters/motionParameter.h"
-#include "../../../motion/parameters/motionPersistence.h"
+#include "../../../motion/parameters/motionParameterPersistence.h"
 
 #include "../../../motion/motion.h"
 #include "../../../motion/extended/bsplineMotion.h"

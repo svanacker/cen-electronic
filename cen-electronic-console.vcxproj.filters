@@ -1359,9 +1359,6 @@
     <ClCompile Include="motion\parameters\motionParameterType.c">
       <Filter>Source Files\motion\parameters</Filter>
     </ClCompile>
-    <ClCompile Include="motion\parameters\motionPersistence.c">
-      <Filter>Source Files\motion\parameters</Filter>
-    </ClCompile>
     <ClCompile Include="motion\pid\profile\pidMotionProfileComputer.c">
       <Filter>Source Files\motion\pid\profile</Filter>
     </ClCompile>
@@ -1637,6 +1634,15 @@
     </ClCompile>
     <ClCompile Include="device\motion\pid\pidDebugDeviceInterface.c">
       <Filter>Source Files\device\motion\pid</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\parameters\motionParameterPersistence.c">
+      <Filter>Source Files\motion\parameters</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\parameters\motionParameterDebug.c">
+      <Filter>Source Files\motion\parameters</Filter>
+    </ClCompile>
+    <ClCompile Include="device\deviceDescriptor.c">
+      <Filter>Source Files\device</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2264,9 +2270,6 @@
     <ClInclude Include="motion\parameters\motionParameterType.h">
       <Filter>Header Files\motion\parameters</Filter>
     </ClInclude>
-    <ClInclude Include="motion\parameters\motionPersistence.h">
-      <Filter>Header Files\motion\parameters</Filter>
-    </ClInclude>
     <ClInclude Include="motion\pid\endDetection\motionEndDetection.h">
       <Filter>Header Files\motion\pid\endDetection</Filter>
     </ClInclude>
@@ -2518,6 +2521,12 @@
     </ClInclude>
     <ClInclude Include="device\motion\pid\pidDebugDevice.h">
       <Filter>Header Files\device\motion\pid</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\parameters\motionParameterPersistence.h">
+      <Filter>Header Files\motion\parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\parameters\motionParameterDebug.h">
+      <Filter>Header Files\motion\parameters</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

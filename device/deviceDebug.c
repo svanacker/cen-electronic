@@ -11,10 +11,12 @@
 
 #define DEVICE_DEBUG_NAME_COLUMN_LENGTH				25
 #define DEVICE_DEBUG_HEADER_COLUMN_LENGTH			5
+#define DEVICE_DEBUG_ERROR_CODE_COLUMN_LENGTH       12
+
 #define DEVICE_DEBUG_TRANSMIT_MODE_COLUMN_LENGTH	8
 #define DEVICE_DEBUG_ADDRESS_COLUMN_LENGTH			9
 #define DEVICE_DEBUG_ADDRESS_STRING_COLUMN_LENGTH	16
-#define DEVICE_DEBUG_LAST_COLUMN_LENGTH             40
+#define DEVICE_DEBUG_LAST_COLUMN_LENGTH             26
 
 /**
  * Private.
@@ -23,6 +25,7 @@ void printDeviceDebugHeader(OutputStream* outputStream) {
 	appendTableHeaderSeparatorLine(outputStream);
 	appendStringHeader(outputStream, "deviceName", DEVICE_DEBUG_NAME_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "cmd", DEVICE_DEBUG_HEADER_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "error Code", DEVICE_DEBUG_ERROR_CODE_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "transmit", DEVICE_DEBUG_TRANSMIT_MODE_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "address", DEVICE_DEBUG_ADDRESS_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "addString", DEVICE_DEBUG_ADDRESS_STRING_COLUMN_LENGTH);
@@ -51,7 +54,15 @@ void printDevice(OutputStream* outputStream, const Device* device) {
         DeviceInterface* deviceInterface = device->deviceInterface;
 		appendStringTableData(outputStream, deviceInterface->deviceGetName(), DEVICE_DEBUG_NAME_COLUMN_LENGTH);
 
-		appendCharTableData(outputStream, deviceInterface->deviceHeader, DEVICE_DEBUG_HEADER_COLUMN_LENGTH);
+        appendCharTableData(outputStream, deviceInterface->deviceHeader, DEVICE_DEBUG_HEADER_COLUMN_LENGTH);
+
+        DeviceDescriptor* deviceDescriptor = device->descriptor;
+        if (deviceDescriptor != NULL && deviceDescriptor->initErrorCode != 0) {
+            appendDecTableData(outputStream, deviceDescriptor->initErrorCode, DEVICE_DEBUG_ERROR_CODE_COLUMN_LENGTH);
+        }
+        else {
+            appendStringTableData(outputStream, "OK", DEVICE_DEBUG_ERROR_CODE_COLUMN_LENGTH);
+        }
 
         TransmitMode transmitMode = device->transmitMode;
 		const char* transmitModeAsString = getTransmitModeAsString(transmitMode);

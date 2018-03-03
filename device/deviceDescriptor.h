@@ -40,6 +40,10 @@ typedef void deviceHandleRawDataFunction(char commandHeader,
 * Defines the structure used to describe a device descriptor.
 */
 typedef struct DeviceDescriptor {
+    /**
+     * Gets the error Code during initialization, 0 if the device has no error.
+     */
+    unsigned int initErrorCode;
     /** A callback on the Function which must be used to initialized the device. */
     deviceInitFunction *deviceInit;
     /** A callback on the Function which must be used to shutdown the device. */
@@ -50,5 +54,11 @@ typedef struct DeviceDescriptor {
     deviceHandleRawDataFunction *deviceHandleRawData;
 } DeviceDescriptor;
 
+/**
+ * Returns true if the device descriptor was initialized properly
+ * @param deviceInterface
+ * @return 
+ */
+bool isDeviceDescriptorInitializedProperly(DeviceDescriptor* deviceDescriptor);
 
 #endif

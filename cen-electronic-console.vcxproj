@@ -226,6 +226,7 @@
     <ClCompile Include="device\clock\clockDeviceInterface.c" />
     <ClCompile Include="device\device.c" />
     <ClCompile Include="device\deviceDebug.c" />
+    <ClCompile Include="device\deviceDescriptor.c" />
     <ClCompile Include="device\deviceInterface.c" />
     <ClCompile Include="device\deviceList.c" />
     <ClCompile Include="device\deviceUsage.c" />
@@ -316,8 +317,9 @@
     <ClCompile Include="motion\extended\bsplinePersistence.c" />
     <ClCompile Include="motion\motion.c" />
     <ClCompile Include="motion\parameters\motionParameter.c" />
+    <ClCompile Include="motion\parameters\motionParameterDebug.c" />
+    <ClCompile Include="motion\parameters\motionParameterPersistence.c" />
     <ClCompile Include="motion\parameters\motionParameterType.c" />
-    <ClCompile Include="motion\parameters\motionPersistence.c" />
     <ClCompile Include="motion\pid\alphaTheta.c" />
     <ClCompile Include="motion\pid\computer\bSplinePidComputer.c" />
     <ClCompile Include="motion\pid\computer\pidComputer.c" />
@@ -604,8 +606,9 @@
     <ClInclude Include="motion\extended\bsplinePersistence.h" />
     <ClInclude Include="motion\motion.h" />
     <ClInclude Include="motion\parameters\motionParameter.h" />
+    <ClInclude Include="motion\parameters\motionParameterDebug.h" />
+    <ClInclude Include="motion\parameters\motionParameterPersistence.h" />
     <ClInclude Include="motion\parameters\motionParameterType.h" />
-    <ClInclude Include="motion\parameters\motionPersistence.h" />
     <ClInclude Include="motion\pid\alphaTheta.h" />
     <ClInclude Include="motion\pid\computer\bSplinePidComputer.h" />
     <ClInclude Include="motion\pid\computer\pidComputer.h" />

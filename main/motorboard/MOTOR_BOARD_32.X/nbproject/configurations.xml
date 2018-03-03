@@ -308,8 +308,9 @@
                      displayName="motion.parameters"
                      projectFiles="true">
         <itemPath>../../../motion/parameters/motionParameterType.h</itemPath>
-        <itemPath>../../../motion/parameters/motionPersistence.h</itemPath>
         <itemPath>../../../motion/parameters/motionParameter.h</itemPath>
+        <itemPath>D:/dev/git/cen-electronic/motion/parameters/motionParameterPersistence.h</itemPath>
+        <itemPath>D:/dev/git/cen-electronic/motion/parameters/motionParameterDebug.h</itemPath>
       </logicalFolder>
       <logicalFolder name="motion.pid" displayName="motion.pid" projectFiles="true">
         <itemPath>../../../motion/pid/pid.h</itemPath>
@@ -708,8 +709,9 @@
                      displayName="motion.parameters"
                      projectFiles="true">
         <itemPath>../../../motion/parameters/motionParameterType.c</itemPath>
-        <itemPath>../../../motion/parameters/motionPersistence.c</itemPath>
         <itemPath>../../../motion/parameters/motionParameter.c</itemPath>
+        <itemPath>D:/dev/git/cen-electronic/motion/parameters/motionParameterPersistence.c</itemPath>
+        <itemPath>D:/dev/git/cen-electronic/motion/parameters/motionParameterDebug.c</itemPath>
       </logicalFolder>
       <logicalFolder name="motion.pid" displayName="motion.pid" projectFiles="true">
         <itemPath>../../../motion/pid/pid.c</itemPath>

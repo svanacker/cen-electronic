@@ -74,6 +74,8 @@
 
 #include "../../device/motion/pid/pidDevice.h"
 #include "../../device/motion/pid/pidDeviceInterface.h"
+#include "../../device/motion/pid/pidDebugDevice.h"
+#include "../../device/motion/pid/pidDebugDeviceInterface.h"
 
 #include "../../device/motion/position/codersDevice.h"
 #include "../../device/motion/position/codersDeviceInterface.h"

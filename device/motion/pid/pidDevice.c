@@ -18,6 +18,9 @@
 #include "../../../common/log/logLevel.h"
 
 #include "../../../device/device.h"
+
+#include "../../../motion/parameters/motionParameter.h"
+#include "../../../motion/parameters/motionParameterPersistence.h"
 #include "../../../motion/pid/pid.h"
 #include "../../../motion/pid/parameters/pidParameter.h"
 #include "../../../motion/pid/pidMotion.h"
@@ -42,9 +45,36 @@ void stopPidDevice(void) {
 }
 
 void devicePidHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
-    if (commandHeader == COMMAND_WRITE_PID_PARAMETERS) {
-        // send acknowledge
-        appendAck(outputStream);
+    // MOTION PARAMETERS 
+    if (commandHeader == COMMAND_MOTION_LOAD_DEFAULT_PARAMETERS) {
+		// send acknowledge
+		ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_MOTION_LOAD_DEFAULT_PARAMETERS);
+		loadMotionParameters(pidMotion->pidPersistenceEeprom, true);
+	}
+    else if (commandHeader == COMMAND_GET_MOTION_PARAMETERS) {
+        ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_GET_MOTION_PARAMETERS);
+        enum MotionParameterType motionParameterType = (enum MotionParameterType) readHex2(inputStream);
+
+        MotionParameter* motionParameter = getMotionParameters(motionParameterType);
+        appendHex2(outputStream, (int) motionParameter->a);
+        appendHex2(outputStream, (int) motionParameter->speed);
+
+    } else if (commandHeader == COMMAND_SET_MOTION_PARAMETERS) {
+        ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_SET_MOTION_PARAMETERS);
+        enum MotionParameterType motionParameterType = (enum MotionParameterType) readHex2(inputStream);
+        float a = (float) readHex2(inputStream);
+        float speed = (float) readHex2(inputStream);
+
+        MotionParameter* motionParameter = getMotionParameters(motionParameterType);
+        motionParameter->a = a;
+        motionParameter->speed = speed;
+    } else if (commandHeader == COMMAND_MOTION_SAVE_TO_EEPROM_PARAMETERS) {
+        ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_MOTION_SAVE_TO_EEPROM_PARAMETERS);
+
+        saveMotionParameters(pidMotion->pidPersistenceEeprom);
+    }
+    // PID PARAMETERS
+    else if (commandHeader == COMMAND_WRITE_PID_PARAMETERS) {
         // PID Index => 0..n char index
         char pidIndex = readHex2(inputStream);
         checkIsSeparator(inputStream);
@@ -59,7 +89,6 @@ void devicePidHandleRawData(char commandHeader, InputStream* inputStream, Output
 
         if (pidIndex >= 0 && pidIndex < PID_COUNT) {
             setPidParameter(pidMotion, pidIndex, p, i, d, maxI);
-            savePidParameters(pidMotion);
         } else {
             // All Values
             if (pidIndex == -1) {
@@ -67,13 +96,11 @@ void devicePidHandleRawData(char commandHeader, InputStream* inputStream, Output
                 for (pidIndex2 = 0; pidIndex2 < PID_COUNT; pidIndex2++) {
                     setPidParameter(pidMotion, pidIndex2, p, i, d, maxI);
                 }
-                savePidParameters(pidMotion);
             } else {
                 writeError(PID_INDEX_INCORRECT);
             }
         }
-        append(outputStream, PID_DEVICE_HEADER);
-        append(outputStream, COMMAND_WRITE_PID_PARAMETERS);
+        ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_WRITE_PID_PARAMETERS);
     } else if (commandHeader == COMMAND_READ_PID_PARAMETERS) {
         // send acknowledgement
         ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_READ_PID_PARAMETERS);

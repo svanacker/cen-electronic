@@ -20,20 +20,8 @@ void fillNotifyResults(char* notificationName) {
 }
 
 int deviceMotionGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
-    if (commandHeader == COMMAND_MOTION_LOAD_DEFAULT_PARAMETERS) {
-        if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("loadDefaultParameters");
-        }
-        return commandLengthValueForMode(mode, 0, 0);
-    }
-	else if (commandHeader == COMMAND_MOTION_PARAMETERS_DEBUG) {
-		if (fillDeviceArgumentList) {
-			setFunctionNoArgumentAndNoResult("debugParameters");
-		}
-		return commandLengthValueForMode(mode, 0, 0);
-	}
     // goto
-    else if (commandHeader == COMMAND_MOTION_GOTO_IN_PULSE) {
+    if (commandHeader == COMMAND_MOTION_GOTO_IN_PULSE) {
         if (fillDeviceArgumentList) {
             setFunction("gotoPulse", 4, 0);
             setArgument(0, DEVICE_ARG_SIGNED_HEX_6, "left (pulse)");
@@ -118,29 +106,6 @@ int deviceMotionGetInterface(char commandHeader, DeviceInterfaceMode mode, bool 
         }
         return commandLengthValueForMode(mode, 7, 0);
     }// Parameters
-    else if (commandHeader == COMMAND_GET_MOTION_PARAMETERS) {
-        if (fillDeviceArgumentList) {
-            setFunction("getMotionParam", 1, 2);
-            setArgumentUnsignedHex2(0, "motionType");
-            setResultUnsignedHex2(0, "a");
-            setResultUnsignedHex2(1, "s");
-        }
-        return commandLengthValueForMode(mode, 2, 4);
-    } else if (commandHeader == COMMAND_SET_MOTION_PARAMETERS) {
-        if (fillDeviceArgumentList) {
-            setFunction("setMotionParam", 3, 0);
-            setArgumentUnsignedHex2(0, "motionType");
-            setArgumentUnsignedHex2(1, "a");
-            setArgumentUnsignedHex2(2, "s");
-        }
-        return commandLengthValueForMode(mode, 6, 0);
-    }
-    else if (commandHeader == COMMAND_MOTION_SAVE_TO_EEPROM_PARAMETERS) {
-		if(fillDeviceArgumentList) {
-			setFunctionNoArgumentAndNoResult("saveToEeprom");
-		}
-		return commandLengthValueForMode(mode, 0, 0);
-    }
 	// MODE REPLACE / ADD
 	else if (commandHeader == COMMAND_MOTION_MODE_ADD) {
 		if(fillDeviceArgumentList) {

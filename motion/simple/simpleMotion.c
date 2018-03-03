@@ -75,13 +75,13 @@ void maintainPosition(PidMotion* pidMotion, OutputStream* notificationOutputStre
 // -> Go/Back
 
 float forwardSimple(PidMotion* pidMotion, float pulse, OutputStream* notificationOutputStream) {
-    MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_PARAMETER_TYPE_FORWARD_OR_BACKWARD);
+    MotionParameter* motionParameter = getMotionParameters(MOTION_PARAMETER_TYPE_FORWARD_OR_BACKWARD);
     gotoSimplePosition(pidMotion, pulse, pulse, motionParameter->a, motionParameter->speed, notificationOutputStream);
     return pulse;
 }
 
 float backwardSimple(PidMotion* pidMotion, float pulse, OutputStream* notificationOutputStream) {
-    MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_PARAMETER_TYPE_FORWARD_OR_BACKWARD);
+    MotionParameter* motionParameter = getMotionParameters(MOTION_PARAMETER_TYPE_FORWARD_OR_BACKWARD);
     gotoSimplePosition(pidMotion, -pulse, -pulse, motionParameter->a, motionParameter->speed, notificationOutputStream);
     return -pulse;
 }
@@ -89,13 +89,13 @@ float backwardSimple(PidMotion* pidMotion, float pulse, OutputStream* notificati
 // -> Rotation
 
 float leftSimple(PidMotion* pidMotion, float pulse, OutputStream* notificationOutputStream) {
-    MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_PARAMETER_TYPE_ROTATION);
+    MotionParameter* motionParameter = getMotionParameters(MOTION_PARAMETER_TYPE_ROTATION);
     gotoSimplePosition(pidMotion, -pulse, pulse, motionParameter->a, motionParameter->speed, notificationOutputStream);
     return -pulse;
 }
 
 float rightSimple(PidMotion* pidMotion, float pulse, OutputStream* notificationOutputStream) {
-    MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_PARAMETER_TYPE_ROTATION);
+    MotionParameter* motionParameter = getMotionParameters(MOTION_PARAMETER_TYPE_ROTATION);
     gotoSimplePosition(pidMotion, pulse, pulse, motionParameter->a, motionParameter->speed, notificationOutputStream);
     return pulse;
 }
@@ -103,13 +103,13 @@ float rightSimple(PidMotion* pidMotion, float pulse, OutputStream* notificationO
 // -> OneWheel
 
 float leftOneWheelSimple(PidMotion* pidMotion, float pulse, OutputStream* notificationOutputStream) {
-    MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_PARAMETER_TYPE_ROTATION_ONE_WHEEL);
+    MotionParameter* motionParameter = getMotionParameters(MOTION_PARAMETER_TYPE_ROTATION_ONE_WHEEL);
     gotoSimplePosition(pidMotion, 0, pulse, motionParameter->a, motionParameter->speed, notificationOutputStream);
     return pulse;
 }
 
 float rightOneWheelSimple(PidMotion* pidMotion, float pulse, OutputStream* notificationOutputStream) {
-    MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_PARAMETER_TYPE_ROTATION_ONE_WHEEL);
+    MotionParameter* motionParameter = getMotionParameters(MOTION_PARAMETER_TYPE_ROTATION_ONE_WHEEL);
     gotoSimplePosition(pidMotion, pulse, 0, motionParameter->a, motionParameter->speed, notificationOutputStream);
     return pulse;
 }
@@ -185,36 +185,36 @@ void rightOneWheelDeciDegree(PidMotion* pidMotion, float angleDeciDegree, float 
 // -> Go / Back
 
 float forwardSimpleMM(PidMotion* pidMotion, float distanceInMM, OutputStream* notificationOutputStream) {
-    MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_PARAMETER_TYPE_FORWARD_OR_BACKWARD);
+    MotionParameter* motionParameter = getMotionParameters(MOTION_PARAMETER_TYPE_FORWARD_OR_BACKWARD);
     return forwardMM(pidMotion, distanceInMM, motionParameter->a, motionParameter->speed, notificationOutputStream);
 }
 
 float backwardSimpleMM(PidMotion* pidMotion, float distanceInMM, OutputStream* notificationOutputStream) {
-    MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_PARAMETER_TYPE_FORWARD_OR_BACKWARD);
+    MotionParameter* motionParameter = getMotionParameters(MOTION_PARAMETER_TYPE_FORWARD_OR_BACKWARD);
     return backwardMM(pidMotion, distanceInMM, motionParameter->a, motionParameter->speed, notificationOutputStream);
 }
 
 // -> Left / Right
 
 float leftSimpleDeciDegree(PidMotion* pidMotion, float angleDeciDegree, OutputStream* notificationOutputStream) {
-    MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_PARAMETER_TYPE_ROTATION);
+    MotionParameter* motionParameter = getMotionParameters(MOTION_PARAMETER_TYPE_ROTATION);
     return leftDeciDegree(pidMotion, angleDeciDegree, motionParameter->a, motionParameter->speed, notificationOutputStream);
 }
 
 float rightSimpleDeciDegree(PidMotion* pidMotion, float angleDeciDegree, OutputStream* notificationOutputStream) {
-    MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_PARAMETER_TYPE_ROTATION);
+    MotionParameter* motionParameter = getMotionParameters(MOTION_PARAMETER_TYPE_ROTATION);
     return rightDeciDegree(pidMotion, angleDeciDegree, motionParameter->a, motionParameter->speed, notificationOutputStream);
 }
 
 // -> Left / Right : One Wheel
 
 void leftOneWheelSimpleDeciDegree(PidMotion* pidMotion, float angleDeciDegree, OutputStream* notificationOutputStream) {
-    MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_PARAMETER_TYPE_ROTATION_ONE_WHEEL);
+    MotionParameter* motionParameter = getMotionParameters(MOTION_PARAMETER_TYPE_ROTATION_ONE_WHEEL);
     leftOneWheelDeciDegree(pidMotion, angleDeciDegree, motionParameter->a, motionParameter->speed, notificationOutputStream);
 }
 
 void rightOneWheelSimpleDeciDegree(PidMotion* pidMotion, float angleDeciDegree, OutputStream* notificationOutputStream) {
-    MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_PARAMETER_TYPE_ROTATION_ONE_WHEEL);
+    MotionParameter* motionParameter = getMotionParameters(MOTION_PARAMETER_TYPE_ROTATION_ONE_WHEEL);
     rightOneWheelDeciDegree(pidMotion, angleDeciDegree, motionParameter->a, motionParameter->speed, notificationOutputStream);
 }
 

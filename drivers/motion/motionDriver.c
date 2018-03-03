@@ -13,6 +13,7 @@
 #include "../../common/log/logHandler.h"
 
 #include "../../device/motion/simple/motionDeviceInterface.h"
+#include "../../device/motion/pid/pidDeviceInterface.h"
 
 #include "../../drivers/driver.h"
 #include "../../drivers/driverList.h"

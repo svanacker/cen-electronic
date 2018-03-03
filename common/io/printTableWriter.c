@@ -13,26 +13,6 @@
 #include "../../common/error/error.h"
 
 
-// COMMON
-
-unsigned int appendRepeatedChars(OutputStream* outputStream, char c, int count) {
-	int i;
-	for (i = 0; i < count; i++) {
-		append(outputStream, c);
-	}
-	if (count < 0) {
-		return 0;
-	}
-	return count;
-}
-
-unsigned int appendDashes(OutputStream* outputStream, int count) {
-	return appendRepeatedChars(outputStream, '-', count);
-}
-
-unsigned int appendSpaces(OutputStream* outputStream, int count) {
-	return appendRepeatedChars(outputStream, ' ', count);
-}
 
 // TABLE HEADER
 

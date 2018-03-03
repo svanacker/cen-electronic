@@ -16,7 +16,7 @@ typedef struct {
 /**
  * Returns Parameters for Motion.
  */
-MotionParameter* getDefaultMotionParameters(enum MotionParameterType motionParameterType);
+MotionParameter* getMotionParameters(enum MotionParameterType motionParameterType);
 
 /**
  * Print a table with the list of motion Parameter.

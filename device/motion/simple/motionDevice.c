@@ -25,7 +25,7 @@
 
 #include "../../../motion/parameters/motionParameterType.h"
 #include "../../../motion/parameters/motionParameter.h"
-#include "../../../motion/parameters/motionPersistence.h"
+#include "../../../motion/parameters/motionParameterPersistence.h"
 
 #include "../../../motion/motion.h"
 #include "../../../motion/simple/simpleMotion.h"
@@ -208,40 +208,7 @@ void deviceMotionHandleRawData(char commandHeader,
         float length = (float) readHex4(inputStream);
         squareCalibration(pidMotion, type, length, notificationOutputStream);
     }        // PARAMETERS
-	else if (commandHeader == COMMAND_MOTION_LOAD_DEFAULT_PARAMETERS) {
-		// send acknowledge
-		ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_LOAD_DEFAULT_PARAMETERS);
-		loadMotionParameters(pidMotion->pidPersistenceEeprom, true);
-	}
-	else if (commandHeader == COMMAND_MOTION_PARAMETERS_DEBUG) {
-		// send acknowledge
-		ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_PARAMETERS_DEBUG);
-		OutputStream* debugOutputStream = getDebugOutputStreamLogger();
-		printMotionParameterList(debugOutputStream);
-	}
 
-    else if (commandHeader == COMMAND_GET_MOTION_PARAMETERS) {
-        ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_GET_MOTION_PARAMETERS);
-        enum MotionParameterType motionParameterType = (enum MotionParameterType) readHex2(inputStream);
-
-        MotionParameter* motionParameter = getDefaultMotionParameters(motionParameterType);
-        appendHex2(outputStream, (int) motionParameter->a);
-        appendHex2(outputStream, (int) motionParameter->speed);
-
-    } else if (commandHeader == COMMAND_SET_MOTION_PARAMETERS) {
-        ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_SET_MOTION_PARAMETERS);
-        enum MotionParameterType motionParameterType = (enum MotionParameterType) readHex2(inputStream);
-        float a = (float) readHex2(inputStream);
-        float speed = (float) readHex2(inputStream);
-
-        MotionParameter* motionParameter = getDefaultMotionParameters(motionParameterType);
-        motionParameter->a = a;
-        motionParameter->speed = speed;
-    } else if (commandHeader == COMMAND_MOTION_SAVE_TO_EEPROM_PARAMETERS) {
-        ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_SAVE_TO_EEPROM_PARAMETERS);
-
-        saveMotionParameters(pidMotion->pidPersistenceEeprom);
-    }
 	// MODE
 	else if (commandHeader == COMMAND_MOTION_MODE_ADD) {
 		ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_MODE_ADD);
