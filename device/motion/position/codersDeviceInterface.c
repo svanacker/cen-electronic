@@ -14,26 +14,26 @@ int deviceCodersGetInterface(char commandHeader, DeviceInterfaceMode mode, bool 
     if (commandHeader == COMMAND_CLEAR_CODERS) {
         // Same INPUT / OUTPUT
         if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("clrCoders");
+            setFunctionNoArgumentAndNoResult("clear Coders");
         }
         return commandLengthValueForMode(mode, 0, 0);
     } else if (commandHeader == COMMAND_GET_WHEEL_POSITION) {
         if (fillDeviceArgumentList) {
-            setFunction("codersVal", 0, 3);
-            setResult(0, DEVICE_ARG_UNSIGNED_HEX_8, "left");
+            setFunction("coders Value", 0, 3);
+            setResult(0, DEVICE_ARG_UNSIGNED_HEX_8, "left (pulse)");
             setResultSeparator(1);
-            setResult(2, DEVICE_ARG_UNSIGNED_HEX_8, "right");
+            setResult(2, DEVICE_ARG_UNSIGNED_HEX_8, "right (pulse)");
         }
         return commandLengthValueForMode(mode, 0, 17);
     } else if (commandHeader == COMMAND_DEBUG_GET_WHEEL_POSITION) {
         // Same INPUT / OUTPUT
         if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("dbgCodersVal");
+            setFunctionNoArgumentAndNoResult("debug Coders Value");
         }
         return commandLengthValueForMode(mode, 0, 0);
     } else if (commandHeader == COMMAND_DEBUG_TIMER_GET_WHEEL_POSITION) {
         if (fillDeviceArgumentList) {
-            setFunction("debugTimerCodersVal", 3, 0);
+            setFunction("debug Coders Value with Timer", 3, 0);
             setArgument(0, DEVICE_ARG_UNSIGNED_HEX_2, "time in 1/10 sec");
 			setArgumentSeparator(1);
 			setArgument(2, DEVICE_ARG_UNSIGNED_HEX_2, "iteration count");

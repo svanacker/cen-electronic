@@ -57,8 +57,8 @@ void devicePidDebugHandleRawData(char commandHeader, InputStream* inputStream, O
 		OutputStream* debugOutputStream = getDebugOutputStreamLogger();
 		printPidDataDebugTable(debugOutputStream, pidMotion);
 	}
-	else if (commandHeader == COMMAND_PID_MOTION_PARAMETER_DEBUG) {
-		ackCommand(outputStream, PID_DEBUG_DEVICE_HEADER, COMMAND_PID_MOTION_PARAMETER_DEBUG);
+	else if (commandHeader == COMMAND_PID_MOTION_INSTRUCTION_TABLE) {
+		ackCommand(outputStream, PID_DEBUG_DEVICE_HEADER, COMMAND_PID_MOTION_INSTRUCTION_TABLE);
 		OutputStream* debugOutputStream = getDebugOutputStreamLogger();
 		printMotionInstructionTable(debugOutputStream, pidMotion);
 	}

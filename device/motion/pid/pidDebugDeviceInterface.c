@@ -14,30 +14,30 @@ int devicePidDebugGetInterface(char commandHeader, DeviceInterfaceMode mode, boo
     // MOTION PARAMETERS DEBUG
     if (commandHeader == COMMAND_MOTION_PARAMETERS_DEBUG) {
 		if (fillDeviceArgumentList) {
-			setFunctionNoArgumentAndNoResult("debugParameters");
+			setFunctionNoArgumentAndNoResult("Motion Parameters Table");
 		}
 		return commandLengthValueForMode(mode, 0, 0);
 	}
     // PID DEBUG
     if (commandHeader == COMMAND_END_MOTION_DEBUG) {
         if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("motionEndDebug");
+            setFunctionNoArgumentAndNoResult("Motion End Detection Table");
         }
         return commandLengthValueForMode(mode, 0, 0);
     } else if (commandHeader == COMMAND_DEBUG_DATA_PID_CONSOLE) {
         if (fillDeviceArgumentList) {
-            setFunction("sendDbgDataPidConsole", 0, 0);
+            setFunction("PID Computation Values Table", 0, 0);
         }
         return commandLengthValueForMode(mode, 0, 0);
-	} else if (commandHeader == COMMAND_PID_MOTION_PARAMETER_DEBUG) {
+	} else if (commandHeader == COMMAND_PID_MOTION_INSTRUCTION_TABLE) {
 		if (fillDeviceArgumentList) {
-			setFunctionNoArgumentAndNoResult("pidMotionParameterDebug");
+			setFunctionNoArgumentAndNoResult("Motion Instruction Table");
 		}
 		return commandLengthValueForMode(mode, 0, 0);
 	}
 	else if (commandHeader == COMMAND_DEBUG_PID_PARAMETERS) {
 		if (fillDeviceArgumentList) {
-			setFunctionNoArgumentAndNoResult("pidParametersDebug");
+			setFunctionNoArgumentAndNoResult("PID Parameters Table (by Pid Type)");
 		}
 		return commandLengthValueForMode(mode, 0, 0);
 	}

@@ -22,9 +22,9 @@
 #define COMMAND_END_MOTION_DEBUG                   'e'
 
 /**
- * Debug all pid values. 
+ * Show the table with all instructions. 
  */
-#define COMMAND_PID_MOTION_PARAMETER_DEBUG         'D'
+#define COMMAND_PID_MOTION_INSTRUCTION_TABLE       'L'
 
 /**
 * Debug all values for the PID as Table

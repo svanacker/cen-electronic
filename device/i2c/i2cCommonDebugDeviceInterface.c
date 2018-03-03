@@ -28,10 +28,10 @@ int deviceI2cCommonDebugGetInterface(char commandHeader, DeviceInterfaceMode mod
 	}
     else if (commandHeader == COMMAND_I2C_COMMON_DEBUG_WAIT) {
 		if (fillDeviceArgumentList) {
-            setFunction("waitI2cBus", 2, 0);
+            setFunction("waitI2cBus", 1, 0);
             setArgumentUnsignedHex2(0, "slaveAdress");
 		}
-		return commandLengthValueForMode(mode, 0, 0);
+		return commandLengthValueForMode(mode, 2, 0);
     }
 	return DEVICE_HEADER_NOT_HANDLED;
 }

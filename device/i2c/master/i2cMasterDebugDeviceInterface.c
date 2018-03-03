@@ -39,31 +39,31 @@ int deviceI2cMasterDebugGetInterface(char commandHeader, DeviceInterfaceMode mod
     }
     else if (commandHeader == COMMAND_I2C_MASTER_DEBUG_START_I2C_BUS) {
 		if (fillDeviceArgumentList) {
-            setFunction("masterStartI2cBus", 2, 0);
+            setFunction("masterStartI2cBus", 1, 0);
             setArgumentUnsignedHex2(0, "slaveAdress");
 		}
-		return commandLengthValueForMode(mode, 0, 0);
+		return commandLengthValueForMode(mode, 2, 0);
     }
     else if (commandHeader == COMMAND_I2C_MASTER_DEBUG_STOP_I2C_BUS) {
 		if (fillDeviceArgumentList) {
-            setFunction("masterStopI2cBus", 2, 0);
+            setFunction("masterStopI2cBus", 1, 0);
             setArgumentUnsignedHex2(0, "slaveAdress");
 		}
-		return commandLengthValueForMode(mode, 0, 0);
+		return commandLengthValueForMode(mode, 2, 0);
     }
     else if (commandHeader == COMMAND_I2C_MASTER_DEBUG_ACK) {
 		if (fillDeviceArgumentList) {
-            setFunction("masterAckI2cBus", 2, 0);
+            setFunction("masterAckI2cBus", 1, 0);
             setArgumentUnsignedHex2(0, "slaveAdress");
 		}
-		return commandLengthValueForMode(mode, 0, 0);
+		return commandLengthValueForMode(mode, 2, 0);
     }
     else if (commandHeader == COMMAND_I2C_MASTER_DEBUG_NACK) {
 		if (fillDeviceArgumentList) {
-            setFunction("masterNackI2cBus", 2, 0);
+            setFunction("masterNackI2cBus", 1, 0);
             setArgumentUnsignedHex2(0, "slaveAdress");
 		}
-		return commandLengthValueForMode(mode, 0, 0);
+		return commandLengthValueForMode(mode, 2, 0);
     }
 
     return DEVICE_HEADER_NOT_HANDLED;

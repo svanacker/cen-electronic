@@ -41,45 +41,45 @@ void serialDebugCharArrayFunctionArgument(char* functionName) {
 int deviceSerialDebugGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     if (commandHeader == COMMAND_SERIAL_DEBUG) {
         if (fillDeviceArgumentList) {
-            setFunction("serialDebug", 1, 0);
+            setFunction("serial Port Debug", 1, 0);
             setArgumentUnsignedHex2(0, "serialPort");
         }
         return commandLengthValueForMode(mode, 2, 0);
     }
     else if (commandHeader == COMMAND_SERIAL_CLEAR) {
         if (fillDeviceArgumentList) {
-            setFunction("serialClear", 1, 0);
+            setFunction("serial Clear", 1, 0);
             setArgumentUnsignedHex2(0, "serialPort");
         }
         return commandLengthValueForMode(mode, 2, 0);
     }
     else if (commandHeader == COMMAND_SERIAL_LIST) {
         if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("showSerialList");
+            setFunctionNoArgumentAndNoResult("show Serial Port List");
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
     else if (commandHeader == COMMAND_SERIAL_CHAR_OUTPUT) {
         if (fillDeviceArgumentList) {
-            serialDebugCharFunctionArgument("serialCharOutput");
+            serialDebugCharFunctionArgument("serial Char Output");
         }
         return commandLengthValueForMode(mode, 5, 0);
     }
     else if (commandHeader == COMMAND_SERIAL_CHAR_ARRAY_OUTPUT) {
         if (fillDeviceArgumentList) {
-            serialDebugCharArrayFunctionArgument("serialCharArrayOutput");
+            serialDebugCharArrayFunctionArgument("serial Char Array Output");
         }
         return commandLengthValueForMode(mode, 14, 0);
     }
     else if (commandHeader == COMMAND_SERIAL_CHAR_INPUT) {
         if (fillDeviceArgumentList) {
-            serialDebugCharFunctionArgument("serialCharInput");
+            serialDebugCharFunctionArgument("serial Char Input");
         }
         return commandLengthValueForMode(mode, 5, 0);
     }
     else if (commandHeader == COMMAND_SERIAL_CHAR_ARRAY_INPUT) {
         if (fillDeviceArgumentList) {
-            serialDebugCharArrayFunctionArgument("serialCharArrayInput");
+            serialDebugCharArrayFunctionArgument("serial Char Array Input");
         }
         return commandLengthValueForMode(mode, 14, 0);
     }

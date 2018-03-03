@@ -13,7 +13,7 @@
 #include "../common/error/error.h"
 
 bool initDevice(const Device* device) {
-    int result = true;
+    bool result = true;
     DeviceDescriptor* deviceDescriptor = device->descriptor;
     DeviceInterface* deviceInterface = device->deviceInterface;
 
@@ -27,7 +27,7 @@ bool initDevice(const Device* device) {
         clearLastError();
         deviceDescriptor->deviceInit();
 
-        bool deviceOk = deviceDescriptor->deviceIsOk();
+        result = deviceDescriptor->deviceIsOk();
 
         if (result) {
             appendString(logStream, "OK");

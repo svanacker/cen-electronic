@@ -6,12 +6,12 @@
 #include "../../../device/deviceInterface.h"
 #include "../../../device/deviceConstants.h"
 
-#define GET_ABS_POS_STRING             "getAbsPosition"
-#define GET_DEBUG_ABS_POS_STRING     "getDebugAbsPosition"
-#define SET_ABS_POS_STRING             "setAbsPosition"
-#define ANGLE_1_10_DEG                 "angle(1/10)deg"
-#define X_MM                         "x(mm)"
-#define Y_MM                         "y(mm)"
+#define GET_ABS_POS_STRING             "get Absolute Position"
+#define GET_DEBUG_ABS_POS_STRING     "get Debug Absolute Position"
+#define SET_ABS_POS_STRING             "set Absolute Position"
+#define ANGLE_1_10_DEG                 "angle (deci degree)"
+#define X_MM                         "x (mm)"
+#define Y_MM                         "y (mm)"
 
 const char* getTrajectoryDeviceName(void) {
     return "Trajectory";

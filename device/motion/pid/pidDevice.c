@@ -119,13 +119,13 @@ void devicePidHandleRawData(char commandHeader, InputStream* inputStream, Output
         appendHex2(outputStream, (int) localPidParameter->d);
         appendSeparator(outputStream);
         appendHex2(outputStream, (int) localPidParameter->maxIntegral);
-    } else if (commandHeader == COMMAND_LOAD_PID_DEFAULT_VALUES) {
-        ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_LOAD_PID_DEFAULT_VALUES);
+    } else if (commandHeader == COMMAND_LOAD_PID_PARAMETERS_DEFAULT_VALUES) {
+        ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_LOAD_PID_PARAMETERS_DEFAULT_VALUES);
         
         // Load default Values (and erase previous values)
         loadPidParameters(pidMotion, true);
-    } else if (commandHeader == COMMAND_SAVE_PID) {
-        ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_SAVE_PID);
+    } else if (commandHeader == COMMAND_SAVE_PID_PARAMETERS) {
+        ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_SAVE_PID_PARAMETERS);
         savePidParameters(pidMotion);
     } // End Detection Parameter
     else if (commandHeader ==  COMMAND_GET_END_DETECTION_PARAMETER) {

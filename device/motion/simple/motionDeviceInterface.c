@@ -23,7 +23,7 @@ int deviceMotionGetInterface(char commandHeader, DeviceInterfaceMode mode, bool 
     // goto
     if (commandHeader == COMMAND_MOTION_GOTO_IN_PULSE) {
         if (fillDeviceArgumentList) {
-            setFunction("gotoPulse", 4, 0);
+            setFunction("goto Pulse", 4, 0);
             setArgument(0, DEVICE_ARG_SIGNED_HEX_6, "left (pulse)");
             setArgument(1, DEVICE_ARG_SIGNED_HEX_6, "right (pulse)");
             setArgumentUnsignedHex2(2, "a");
@@ -33,28 +33,28 @@ int deviceMotionGetInterface(char commandHeader, DeviceInterfaceMode mode, bool 
     }// forward MM
     else if (commandHeader == COMMAND_MOTION_FORWARD_IN_MM) {
         if (fillDeviceArgumentList) {
-            setFunction("forwardMM", 1, 0);
+            setFunction("forward", 1, 0);
             setArgumentUnsignedHex4(0, "distance (MM)");
         }
         return commandLengthValueForMode(mode, 4, 0);
     }// backward MM
     else if (commandHeader == COMMAND_MOTION_BACKWARD_IN_MM) {
         if (fillDeviceArgumentList) {
-            setFunction("backwardMM", 1, 0);
+            setFunction("backward", 1, 0);
             setArgumentUnsignedHex4(0, "distance (MM)");
         }
         return commandLengthValueForMode(mode, 4, 0);
     }// turn left in degree
     else if (commandHeader == COMMAND_MOTION_LEFT_IN_DECI_DEGREE) {
         if (fillDeviceArgumentList) {
-            setFunction("rotation Left DeciDeg", 1, 0);
+            setFunction("rotation Left", 1, 0);
             setArgumentUnsignedHex4(0, "leftAngle (DeciDeg)");
         }
         return commandLengthValueForMode(mode, 4, 0);
     }// turn right in degree
     else if (commandHeader == COMMAND_MOTION_RIGHT_IN_DECI_DEGREE) {
         if (fillDeviceArgumentList) {
-            setFunction("rotation Right DeciDeg", 1, 0);
+            setFunction("rotation Right", 1, 0);
             setArgumentUnsignedHex4(0, "rightAngle (DeciDeg)");
         }
         return commandLengthValueForMode(mode, 4, 0);
@@ -62,14 +62,14 @@ int deviceMotionGetInterface(char commandHeader, DeviceInterfaceMode mode, bool 
         // turn left (only right in degree
     else if (commandHeader == COMMAND_MOTION_LEFT_ONE_WHEEL_IN_DECI_DEGREE) {
         if (fillDeviceArgumentList) {
-            setFunction("rotation Left One Wheel DeciDeg", 1, 0);
+            setFunction("rotation Left One Wheel", 1, 0);
             setArgumentUnsignedHex4(0, "leftAngle (DeciDeg)");
         }
         return commandLengthValueForMode(mode, 4, 0);
     }// turn right (only right wheel) in degree
     else if (commandHeader == COMMAND_MOTION_RIGHT_ONE_WHEEL_IN_DECI_DEGREE) {
         if (fillDeviceArgumentList) {
-            setFunction("rotation Right One Wheel DeciDeg", 1, 0);
+            setFunction("rotation Right One Wheel", 1, 0);
             setArgumentUnsignedHex4(0, "rightAngle (DeciDeg)");
         }
         return commandLengthValueForMode(mode, 4, 0);
@@ -78,7 +78,7 @@ int deviceMotionGetInterface(char commandHeader, DeviceInterfaceMode mode, bool 
     else if (commandHeader == COMMAND_MOTION_STOP) {
         // Same INPUT/OUTPUT
         if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("cancelMotion");
+            setFunctionNoArgumentAndNoResult("Cancel Motion");
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
@@ -86,42 +86,42 @@ int deviceMotionGetInterface(char commandHeader, DeviceInterfaceMode mode, bool 
     else if (commandHeader == COMMAND_MOTION_CANCEL_ALL) {
         // Same INPUT/OUTPUT
         if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("cancelMotionAll");
+            setFunctionNoArgumentAndNoResult("Cancel Motion All");
         }
         return commandLengthValueForMode(mode, 0, 0);
     }// motion : Obstacle
     else if (commandHeader == COMMAND_MOTION_OBSTACLE) {
         // Same INPUT/OUTPUT
         if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("motionObstacle");
+            setFunctionNoArgumentAndNoResult("motion Obstacle");
         }
         return commandLengthValueForMode(mode, 0, 0);
     }// Calibration
     else if (commandHeader == COMMAND_SQUARE_CALIBRATION) {
         if (fillDeviceArgumentList) {
-            setFunction("squareCalib", 3, 0);
-            setArgumentUnsignedHex2(0, "left/right");
+            setFunction("square Calibration", 3, 0);
+            setArgumentUnsignedHex2(0, "left or right");
             setArgumentSeparator(1);
-            setArgumentUnsignedHex4(2, "length");
+            setArgumentUnsignedHex4(2, "length (distance in mm)");
         }
         return commandLengthValueForMode(mode, 7, 0);
     }// Parameters
 	// MODE REPLACE / ADD
 	else if (commandHeader == COMMAND_MOTION_MODE_ADD) {
 		if(fillDeviceArgumentList) {
-			setFunctionNoArgumentAndNoResult("motionModeAdd");
+			setFunctionNoArgumentAndNoResult("motion Mode Add");
 		}
 		return commandLengthValueForMode(mode, 0, 0);
 	}
 	else if (commandHeader == COMMAND_MOTION_MODE_REPLACE) {
 		if(fillDeviceArgumentList) {
-			setFunctionNoArgumentAndNoResult("motionModeReplace");
+			setFunctionNoArgumentAndNoResult("motion Mode Replace");
 		}
 		return commandLengthValueForMode(mode, 0, 0);
 	}
 	else if (commandHeader == COMMAND_MOTION_MODE_GET) {
 		if (fillDeviceArgumentList) {
-			setFunction("motionModeGet", 0, 1);
+			setFunction("motion Mode Get", 0, 1);
 			setResultUnsignedChar1(0, "value");
 		}
 		return commandLengthValueForMode(mode, 0, 1);
@@ -130,25 +130,25 @@ int deviceMotionGetInterface(char commandHeader, DeviceInterfaceMode mode, bool 
     if (DEVICE_MODE_NOTIFY == mode) {
         if (commandHeader == NOTIFY_MOTION_STATUS_REACHED) {
             if (fillDeviceArgumentList) {
-                fillNotifyResults("notifyReached");
+                fillNotifyResults("notify Reached");
             }
             return 14;
         }
         else if (commandHeader == NOTIFY_MOTION_STATUS_FAILED) {
             if (fillDeviceArgumentList) {
-                fillNotifyResults("notifyFailed");
+                fillNotifyResults("notify Failed");
             }
             return 14;
         }
         else if (commandHeader == NOTIFY_MOTION_STATUS_OBSTACLE) {
             if (fillDeviceArgumentList) {
-                fillNotifyResults("notifyObstacle");
+                fillNotifyResults("notify Obstacle");
             }
             return 14;
         }
         else if (commandHeader == NOTIFY_MOTION_STATUS_MOVING) {
             if (fillDeviceArgumentList) {
-                fillNotifyResults("notifyMoving");
+                fillNotifyResults("notify Moving");
             }
             return 14;
         }

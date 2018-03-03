@@ -166,11 +166,6 @@
         <itemPath>../../../device/adc/adcDeviceInterface.h</itemPath>
         <itemPath>../../../device/adc/adcDevice.h</itemPath>
       </logicalFolder>
-      <logicalFolder name="device.airconditioning"
-                     displayName="device.airconditioning"
-                     projectFiles="true">
-        <itemPath>../../../device/airconditioning/airConditioningDeviceInterface.h</itemPath>
-      </logicalFolder>
       <logicalFolder name="device.beacon"
                      displayName="device.beacon"
                      projectFiles="true">
@@ -657,7 +652,6 @@
       <logicalFolder name="device.airconditioning"
                      displayName="device.airconditioning"
                      projectFiles="true">
-        <itemPath>../../../device/airconditioning/airConditioningDeviceInterface.c</itemPath>
       </logicalFolder>
       <logicalFolder name="device.beacon"
                      displayName="device.beacon"

@@ -14,7 +14,7 @@ int devicePidGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fil
     // MOTION PARAMETER
     if (commandHeader == COMMAND_MOTION_LOAD_DEFAULT_PARAMETERS) {
         if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("loadDefaultParameters");
+            setFunctionNoArgumentAndNoResult("load Motion Default Parameters");
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
@@ -37,7 +37,7 @@ int devicePidGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fil
     }
     else if (commandHeader == COMMAND_MOTION_SAVE_TO_EEPROM_PARAMETERS) {
 		if(fillDeviceArgumentList) {
-			setFunctionNoArgumentAndNoResult("saveToEeprom");
+			setFunctionNoArgumentAndNoResult("save Motion Param. To Eeprom");
 		}
 		return commandLengthValueForMode(mode, 0, 0);
     }
@@ -72,14 +72,14 @@ int devicePidGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fil
             setResultUnsignedHex2(8, "mI");
         }
         return commandLengthValueForMode(mode, 2, 14);
-    } else if (commandHeader == COMMAND_LOAD_PID_DEFAULT_VALUES) {
+    } else if (commandHeader == COMMAND_LOAD_PID_PARAMETERS_DEFAULT_VALUES) {
         if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("loadDefaultValues");
+            setFunctionNoArgumentAndNoResult("load Pid Param. Default Values");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    } else if (commandHeader == COMMAND_SAVE_PID) {
+    } else if (commandHeader == COMMAND_SAVE_PID_PARAMETERS) {
         if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("saveValues");
+            setFunctionNoArgumentAndNoResult("save PID Parameters To Eeprom");
         }
         return commandLengthValueForMode(mode, 0, 0);
     } else if (commandHeader == COMMAND_SET_END_DETECTION_PARAMETER) {
