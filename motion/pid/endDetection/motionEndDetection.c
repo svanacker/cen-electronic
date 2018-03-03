@@ -87,6 +87,7 @@ void updateEndMotionData(PidComputationValues* computationValues,
  * @return 
  */
 bool isEndOfMotion(enum InstructionType instructionType, MotionEndInfo* endMotion, MotionEndDetectionParameter* parameter) {
+    
     if (endMotion->integralTime < parameter->timeRangeAnalysis) {
         return false;
     }

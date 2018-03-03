@@ -106,6 +106,8 @@
 #include "../../motion/pid/profile/pidMotionProfileComputer.h"
 #include "../../device/motion/pid/pidDevice.h"
 #include "../../device/motion/pid/pidDeviceInterface.h"
+#include "../../device/motion/pid/pidDebugDevice.h"
+#include "../../device/motion/pid/pidDebugDeviceInterface.h"
 
 // Coders
 #include "../../device/motion/position/codersDevice.h"
@@ -233,7 +235,8 @@ void initDevicesDescriptor() {
 
     addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());
     addLocalDevice(getCodersDeviceInterface(), getCodersDeviceDescriptor());
-    addLocalDevice(getPIDDeviceInterface(), getPIDDeviceDescriptor(&pidMotion));
+    addLocalDevice(getPidDeviceInterface(), getPidDeviceDescriptor(&pidMotion));
+    addLocalDevice(getPidDebugDeviceInterface(), getPidDebugDeviceDescriptor(&pidMotion));
     addLocalDevice(getExtendedMotionDeviceInterface(), getExtendedMotionDeviceDescriptor(&pidMotion));
     addLocalDevice(getMotionDeviceInterface(), getMotionDeviceDescriptor(&pidMotion));
     addLocalDevice(getTrajectoryDeviceInterface(), getTrajectoryDeviceDescriptor());

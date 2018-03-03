@@ -16,6 +16,7 @@
 #include "../../drivers/driver.h"
 
 #include "../../robot/kinematics/robotKinematics.h"
+#include "../../robot/kinematics/robotKinematicsDebug.h"
 
 static Eeprom* robotKinematicsEeprom;
 

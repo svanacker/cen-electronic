@@ -19,21 +19,18 @@
 
 #include "../../../device/device.h"
 #include "../../../motion/pid/pid.h"
-#include "../../../motion/pid/pidDebug.h"
 #include "../../../motion/pid/parameters/pidParameter.h"
-#include "../../../motion/pid/parameters/pidParameterDebug.h"
 #include "../../../motion/pid/pidMotion.h"
 #include "../../../motion/pid/pidComputationValues.h"
 #include "../../../motion/pid/pidCurrentValues.h"
 #include "../../../motion/pid/motionInstruction.h"
 #include "../../../motion/pid/pidMotionError.h"
 #include "../../../motion/pid/endDetection/motionEndDetection.h"
-#include "../../../motion/pid/endDetection/motionEndDetectionDebug.h"
 #include "../../../motion/pid/parameters/pidPersistence.h"
 
 static PidMotion* pidMotion;
 
-bool isPIDDeviceOk(void) {
+bool isPidDeviceOk(void) {
     return true;
 }
 
@@ -44,7 +41,7 @@ void stopPidDevice(void) {
 
 }
 
-void devicePIDHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
+void devicePidHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     if (commandHeader == COMMAND_WRITE_PID_PARAMETERS) {
         // send acknowledge
         appendAck(outputStream);
@@ -103,13 +100,7 @@ void devicePIDHandleRawData(char commandHeader, InputStream* inputStream, Output
     } else if (commandHeader == COMMAND_SAVE_PID) {
         ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_SAVE_PID);
         savePidParameters(pidMotion);
-    } else if (commandHeader == COMMAND_END_MOTION_DEBUG) {
-        ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_END_MOTION_DEBUG);
-        OutputStream* debugOutputStream = getDebugOutputStreamLogger();
-        printMotionEndDetectionParameter(debugOutputStream, &(pidMotion->globalParameters.motionEndDetectionParameter));
-        printMotionEndInfos(debugOutputStream, pidMotion);
-    }
-    // End Detection Parameter
+    } // End Detection Parameter
     else if (commandHeader ==  COMMAND_GET_END_DETECTION_PARAMETER) {
         ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_GET_END_DETECTION_PARAMETER);
 
@@ -125,7 +116,6 @@ void devicePIDHandleRawData(char commandHeader, InputStream* inputStream, Output
         appendHex2(outputStream, (unsigned int)motionEndDetectionParameter->noAnalysisAtStartupTime);
     }
     else if (commandHeader ==  COMMAND_SET_END_DETECTION_PARAMETER) {
-        // send acknowledgement
         ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_GET_END_DETECTION_PARAMETER);
 
         MotionEndDetectionParameter* motionEndDetectionParameter = getMotionEndDetectionParameter(pidMotion);
@@ -227,31 +217,16 @@ void devicePIDHandleRawData(char commandHeader, InputStream* inputStream, Output
         appendSeparator(outputStream);
         appendHex(outputStream, localInst->pidType);
     }   
-	else if (commandHeader == COMMAND_DEBUG_DATA_PID_CONSOLE) {
-		ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_DEBUG_DATA_PID_CONSOLE);
-		OutputStream* debugOutputStream = getDebugOutputStreamLogger();
-		printPidDataDebugTable(debugOutputStream, pidMotion);
-	}
-	else if (commandHeader == COMMAND_PID_MOTION_PARAMETER_DEBUG) {
-		ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_PID_MOTION_PARAMETER_DEBUG);
-		OutputStream* debugOutputStream = getDebugOutputStreamLogger();
-		printMotionInstructionTable(debugOutputStream, pidMotion);
-	}
-	else if (commandHeader == COMMAND_DEBUG_PID_PARAMETERS) {
-		ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_DEBUG_PID_PARAMETERS);
-		OutputStream* debugOutputStream = getDebugOutputStreamLogger();
-		printAllPidParametersTable(debugOutputStream, pidMotion);
-	}
 }
 
 static DeviceDescriptor descriptor = {
     .deviceInit = &initPidDevice,
     .deviceShutDown = &stopPidDevice,
-    .deviceIsOk = &isPIDDeviceOk,
-    .deviceHandleRawData = &devicePIDHandleRawData,
+    .deviceIsOk = &isPidDeviceOk,
+    .deviceHandleRawData = &devicePidHandleRawData,
 };
 
-DeviceDescriptor* getPIDDeviceDescriptor(PidMotion* pidMotionParam) {
+DeviceDescriptor* getPidDeviceDescriptor(PidMotion* pidMotionParam) {
 	pidMotion = pidMotionParam;
     return &descriptor;
 }

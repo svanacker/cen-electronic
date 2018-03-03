@@ -4,7 +4,7 @@
 // BLOCKING DETECTION
 
 /** Defines the delta position integral for which we consider that below this value the robot don't move */
-#define ABS_DELTA_POSITION_INTEGRAL_FACTOR_THRESHOLD 0.3f
+#define ABS_DELTA_POSITION_INTEGRAL_FACTOR_THRESHOLD 1.0f
 
 /**
 * Defines the u integral factor integral for which we consider that there is a blocking.

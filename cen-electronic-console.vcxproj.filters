@@ -1632,6 +1632,12 @@
     <ClCompile Include="motion\pid\endDetection\motionEndDetectionDebug.c">
       <Filter>Source Files\motion\pid\endDetection</Filter>
     </ClCompile>
+    <ClCompile Include="device\motion\pid\pidDebugDevice.c">
+      <Filter>Source Files\device\motion\pid</Filter>
+    </ClCompile>
+    <ClCompile Include="device\motion\pid\pidDebugDeviceInterface.c">
+      <Filter>Source Files\device\motion\pid</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -2506,6 +2512,12 @@
     </ClInclude>
     <ClInclude Include="motion\pid\endDetection\motionEndDetectionDebug.h">
       <Filter>Header Files\motion\pid\endDetection</Filter>
+    </ClInclude>
+    <ClInclude Include="device\motion\pid\pidDebugDeviceInterface.h">
+      <Filter>Header Files\device\motion\pid</Filter>
+    </ClInclude>
+    <ClInclude Include="device\motion\pid\pidDebugDevice.h">
+      <Filter>Header Files\device\motion\pid</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

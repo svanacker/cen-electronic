@@ -205,6 +205,8 @@
                      projectFiles="true">
         <itemPath>../../../device/motion/pid/pidDevice.h</itemPath>
         <itemPath>../../../device/motion/pid/pidDeviceInterface.h</itemPath>
+        <itemPath>D:/dev/git/cen-electronic/device/motion/pid/pidDebugDevice.h</itemPath>
+        <itemPath>D:/dev/git/cen-electronic/device/motion/pid/pidDebugDeviceInterface.h</itemPath>
       </logicalFolder>
       <logicalFolder name="device.motion.position"
                      displayName="device.motion.position"
@@ -600,6 +602,8 @@
                      projectFiles="true">
         <itemPath>../../../device/motion/pid/pidDevice.c</itemPath>
         <itemPath>../../../device/motion/pid/pidDeviceInterface.c</itemPath>
+        <itemPath>D:/dev/git/cen-electronic/device/motion/pid/pidDebugDevice.c</itemPath>
+        <itemPath>D:/dev/git/cen-electronic/device/motion/pid/pidDebugDeviceInterface.c</itemPath>
       </logicalFolder>
       <logicalFolder name="device.motion.position"
                      displayName="device.motion.position"

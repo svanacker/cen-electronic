@@ -49,7 +49,7 @@ void printMotionEndDetectionParameter(OutputStream* outputStream, MotionEndDetec
 
     appendStringTableData(outputStream, "Time Range Analysis", MOTION_END_DETECTION_PARAMETERS_KEY_COLUMN_LENGTH);
 	appendHex4TableData(outputStream, (long) parameter->timeRangeAnalysis, MOTION_END_DETECTION_PARAMETERS_DEC_VALUE_COLUMN_LENGTH);
-	appendDecfTableData(outputStream, parameter->timeRangeAnalysis, MOTION_END_DETECTION_PARAMETERS_HEX_VALUE_COLUMN_LENGTH);
+	appendDecTableData(outputStream, parameter->timeRangeAnalysis, MOTION_END_DETECTION_PARAMETERS_HEX_VALUE_COLUMN_LENGTH);
 	appendEndOfTableColumn(outputStream, MOTION_END_DETECTION_PARAMETERS_LAST_COLUMN_LENGTH);
 
     appendStringTableData(outputStream, "No Analysis At Startup Range Time", MOTION_END_DETECTION_PARAMETERS_KEY_COLUMN_LENGTH);
@@ -67,13 +67,13 @@ void printMotionEndDetectionParameter(OutputStream* outputStream, MotionEndDetec
 
 // COMPUTATION VALUES
 
-#define MOTION_END_DETECTION_DEBUG_INSTRUCTION_TYPE_COLUMN_LENGTH                     10
-#define MOTION_END_DETECTION_DEBUG_INTEGRAL_TIME_COLUMN_LENGTH                        13
-#define MOTION_END_DETECTION_DEBUG_INDEX_COLUMN_LENGTH                                5
-#define MOTION_END_DETECTION_DEBUG_ABS_DELTA_POSITION_INTEGRAL_COLUMN_LENGTH          28
-#define MOTION_END_DETECTION_DEBUG_ABS_DELTA_POSITION_COLUMN_LENGTH                   19
-#define MOTION_END_DETECTION_DEBUG_ABS_U_INTEGRAL_COLUMN_LENGTH                       15
-#define MOTION_END_DETECTION_DEBUG_ABS_U_COLUMN_LENGTH                                14
+#define MOTION_END_DETECTION_DEBUG_INSTRUCTION_TYPE_COLUMN_LENGTH                     11
+#define MOTION_END_DETECTION_DEBUG_INTEGRAL_TIME_COLUMN_LENGTH                        9
+#define MOTION_END_DETECTION_DEBUG_INDEX_COLUMN_LENGTH                                6
+#define MOTION_END_DETECTION_DEBUG_ABS_DELTA_POSITION_INTEGRAL_COLUMN_LENGTH          18
+#define MOTION_END_DETECTION_DEBUG_ABS_DELTA_POSITION_COLUMN_LENGTH                   18
+#define MOTION_END_DETECTION_DEBUG_ABS_U_INTEGRAL_COLUMN_LENGTH                       10
+#define MOTION_END_DETECTION_DEBUG_ABS_U_COLUMN_LENGTH                                10
 #define MOTION_END_DETECTION_DEBUG_LAST_COLUMN_LENGTH                                 0
 
 /**
@@ -82,14 +82,27 @@ void printMotionEndDetectionParameter(OutputStream* outputStream, MotionEndDetec
 void printMotionEndInfoDebugHeader(OutputStream* outputStream) {
 	println(outputStream);
 	appendTableHeaderSeparatorLine(outputStream);
-    appendStringHeader(outputStream, "Inst Type", MOTION_END_DETECTION_DEBUG_INSTRUCTION_TYPE_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "integralTime", MOTION_END_DETECTION_DEBUG_INTEGRAL_TIME_COLUMN_LENGTH);
+    
+    // First header Line
+    appendStringHeader(outputStream, "Instruction", MOTION_END_DETECTION_DEBUG_INSTRUCTION_TYPE_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "integral", MOTION_END_DETECTION_DEBUG_INTEGRAL_TIME_COLUMN_LENGTH);
     appendStringHeader(outputStream, "index", MOTION_END_DETECTION_DEBUG_INDEX_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "abs Delta Position Integral", MOTION_END_DETECTION_DEBUG_ABS_DELTA_POSITION_INTEGRAL_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "abs Delta Position", MOTION_END_DETECTION_DEBUG_ABS_DELTA_POSITION_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "abs U Integral", MOTION_END_DETECTION_DEBUG_ABS_U_INTEGRAL_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "abs Delta", MOTION_END_DETECTION_DEBUG_ABS_DELTA_POSITION_INTEGRAL_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "abs Delta", MOTION_END_DETECTION_DEBUG_ABS_DELTA_POSITION_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "abs U", MOTION_END_DETECTION_DEBUG_ABS_U_INTEGRAL_COLUMN_LENGTH);
     appendStringHeader(outputStream, "abs U", MOTION_END_DETECTION_DEBUG_ABS_U_COLUMN_LENGTH);
 	appendEndOfTableColumn(outputStream, MOTION_END_DETECTION_DEBUG_LAST_COLUMN_LENGTH);
+    
+    // Second header line
+    appendStringHeader(outputStream, "Type", MOTION_END_DETECTION_DEBUG_INSTRUCTION_TYPE_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Time", MOTION_END_DETECTION_DEBUG_INTEGRAL_TIME_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "", MOTION_END_DETECTION_DEBUG_INDEX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Position Integral", MOTION_END_DETECTION_DEBUG_ABS_DELTA_POSITION_INTEGRAL_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Position", MOTION_END_DETECTION_DEBUG_ABS_DELTA_POSITION_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Integral", MOTION_END_DETECTION_DEBUG_ABS_U_INTEGRAL_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "", MOTION_END_DETECTION_DEBUG_ABS_U_COLUMN_LENGTH);
+	appendEndOfTableColumn(outputStream, MOTION_END_DETECTION_DEBUG_LAST_COLUMN_LENGTH);
+    
 	appendTableHeaderSeparatorLine(outputStream);
 }
 
@@ -101,7 +114,7 @@ void printMotionEndInfoLine(OutputStream* outputStream,
                             MotionEndDetectionParameter* motionEndDetectionParameter,
                             MotionEndInfo* motionEndInfo) {
     addInstructionTypeTableData(outputStream, instructionType, MOTION_END_DETECTION_DEBUG_INSTRUCTION_TYPE_COLUMN_LENGTH);
-    appendDecfTableData(outputStream, motionEndInfo->integralTime, MOTION_END_DETECTION_DEBUG_INTEGRAL_TIME_COLUMN_LENGTH);
+    appendDecTableData(outputStream, motionEndInfo->integralTime, MOTION_END_DETECTION_DEBUG_INTEGRAL_TIME_COLUMN_LENGTH);
     appendDecTableData(outputStream, motionEndInfo->index, MOTION_END_DETECTION_DEBUG_INDEX_COLUMN_LENGTH);
     
     // Delta Position

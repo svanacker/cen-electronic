@@ -208,12 +208,12 @@ float rightSimpleDeciDegree(PidMotion* pidMotion, float angleDeciDegree, OutputS
 
 // -> Left / Right : One Wheel
 
-void leftOneWheelSimpleDegree(PidMotion* pidMotion, float angleDeciDegree, OutputStream* notificationOutputStream) {
+void leftOneWheelSimpleDeciDegree(PidMotion* pidMotion, float angleDeciDegree, OutputStream* notificationOutputStream) {
     MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_PARAMETER_TYPE_ROTATION_ONE_WHEEL);
     leftOneWheelDeciDegree(pidMotion, angleDeciDegree, motionParameter->a, motionParameter->speed, notificationOutputStream);
 }
 
-void rightOneWheelSimpleDegree(PidMotion* pidMotion, float angleDeciDegree, OutputStream* notificationOutputStream) {
+void rightOneWheelSimpleDeciDegree(PidMotion* pidMotion, float angleDeciDegree, OutputStream* notificationOutputStream) {
     MotionParameter* motionParameter = getDefaultMotionParameters(MOTION_PARAMETER_TYPE_ROTATION_ONE_WHEEL);
     rightOneWheelDeciDegree(pidMotion, angleDeciDegree, motionParameter->a, motionParameter->speed, notificationOutputStream);
 }

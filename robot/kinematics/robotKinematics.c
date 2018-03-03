@@ -37,7 +37,7 @@ float getRightWheelPulseCountForOneMillimeter(RobotKinematics* robotKinematics) 
     return 1.0f / getRightWheelLengthForOnePulse(robotKinematics);
 }
 
-float rotationInDeciDegreeToRealDistanceForLeftWheel(RobotKinematics* robotKinematics, int angleDeciDegree) {
+float rotationInDeciDegreeToRealDistanceForLeftWheel(RobotKinematics* robotKinematics, float angleDeciDegree) {
     float angleRadius = angleDeciDegree * PI_DIVIDE_1800;
     float leftWheelLengthForOnePulse = getLeftWheelLengthForOnePulse(robotKinematics);
     float wheelsDistanceFromCenter = getWheelsDistanceFromCenter(robotKinematics);
@@ -46,7 +46,7 @@ float rotationInDeciDegreeToRealDistanceForLeftWheel(RobotKinematics* robotKinem
     return result;
 }
 
-float rotationInDeciDegreeToRealDistanceForRightWheel(RobotKinematics* robotKinematics, int angleDeciDegree) {
+float rotationInDeciDegreeToRealDistanceForRightWheel(RobotKinematics* robotKinematics, float angleDeciDegree) {
     float angleRadius = angleDeciDegree * PI_DIVIDE_1800;
     float rightWheelLengthForOnePulse = getRightWheelLengthForOnePulse(robotKinematics);
     float wheelsDistanceFromCenter = getWheelsDistanceFromCenter(robotKinematics);

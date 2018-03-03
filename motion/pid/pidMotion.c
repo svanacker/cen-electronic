@@ -38,7 +38,7 @@ void clearPidMotion(PidMotion* pidMotion) {
 	}
 	pidMotion->writeIndex = 0;
 	pidMotion->readIndex = 0;
-	int i;
+	unsigned int i;
 
     PidMotionDefinition* pidMotionDefinition = (PidMotionDefinition*)pidMotion->motionDefinitions;
 	

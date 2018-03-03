@@ -18,7 +18,7 @@
 /**
 * Define the number of block of history for u and deltaPosition
 */
-#define MAX_HISTORY_COUNT 3
+#define MAX_HISTORY_COUNT 10
 
 /**
 * Defines the structure about motion blocking detection to be able to detect blocking or end of motion.

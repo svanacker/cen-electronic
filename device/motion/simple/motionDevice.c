@@ -175,13 +175,13 @@ void deviceMotionHandleRawData(char commandHeader,
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_LEFT_ONE_WHEEL_IN_DECI_DEGREE);
 
         float leftDegree = (float) readHex4(inputStream);
-        leftOneWheelSimpleDegree(pidMotion, leftDegree, notificationOutputStream);
+        leftOneWheelSimpleDeciDegree(pidMotion, leftDegree, notificationOutputStream);
     }        // -> right
     else if (commandHeader == COMMAND_MOTION_RIGHT_ONE_WHEEL_IN_DECI_DEGREE) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_RIGHT_ONE_WHEEL_IN_DECI_DEGREE);
 
         float rightDegree = (float) readHex4(inputStream);
-        rightOneWheelSimpleDegree(pidMotion, rightDegree, notificationOutputStream);
+        rightOneWheelSimpleDeciDegree(pidMotion, rightDegree, notificationOutputStream);
     }
     // STOP
         // stop/cancel motion

@@ -81,10 +81,10 @@ void printPidParameterLine(OutputStream* outputStream, PidMotion* pidMotion, enu
 	appendDecfTableData(outputStream, localPidParameter->d, PID_PARAMETER_D_DEC_COLUMN_LENGTH);
 	appendDecfTableData(outputStream, localPidParameter->maxIntegral, PID_PARAMETER_MI_DEC_COLUMN_LENGTH);
 
-	appendHex2TableData(outputStream, localPidParameter->p, PID_PARAMETER_P_HEX_COLUMN_LENGTH);
-	appendHex2TableData(outputStream, localPidParameter->i, PID_PARAMETER_I_HEX_COLUMN_LENGTH);
-	appendHex2TableData(outputStream, localPidParameter->d, PID_PARAMETER_D_HEX_COLUMN_LENGTH);
-	appendHex2TableData(outputStream, localPidParameter->maxIntegral, PID_PARAMETER_MI_HEX_COLUMN_LENGTH);
+	appendHex2TableData(outputStream, (char) localPidParameter->p, PID_PARAMETER_P_HEX_COLUMN_LENGTH);
+	appendHex2TableData(outputStream, (char) localPidParameter->i, PID_PARAMETER_I_HEX_COLUMN_LENGTH);
+	appendHex2TableData(outputStream, (char) localPidParameter->d, PID_PARAMETER_D_HEX_COLUMN_LENGTH);
+	appendHex2TableData(outputStream, (char) localPidParameter->maxIntegral, PID_PARAMETER_MI_HEX_COLUMN_LENGTH);
 
 	appendEndOfTableColumn(outputStream, PID_PARAMETER_LAST_COLUMN_LENGTH);
 }

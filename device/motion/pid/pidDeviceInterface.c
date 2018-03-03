@@ -6,11 +6,11 @@
 #include "../../../device/deviceInterface.h"
 #include "../../../device/deviceConstants.h"
 
-const char* getPIDDeviceName(void) {
+const char* getPidDeviceName(void) {
     return "PID";
 }
 
-int devicePIDGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
+int devicePidGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     if (commandHeader == COMMAND_WRITE_PID_PARAMETERS) {
         if (fillDeviceArgumentList) {
             setFunction("setPID", 9, 0);
@@ -48,11 +48,6 @@ int devicePIDGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fil
     } else if (commandHeader == COMMAND_SAVE_PID) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("saveValues");
-        }
-        return commandLengthValueForMode(mode, 0, 0);
-    } else if (commandHeader == COMMAND_END_MOTION_DEBUG) {
-        if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("motionEndDebug");
         }
         return commandLengthValueForMode(mode, 0, 0);
     } else if (commandHeader == COMMAND_SET_END_DETECTION_PARAMETER) {
@@ -108,11 +103,6 @@ int devicePIDGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fil
             setResultUnsignedHex4(16, "endMotion_uIntegral");
         }
         return commandLengthValueForMode(mode, 2, 45);
-    } else if (commandHeader == COMMAND_DEBUG_DATA_PID_CONSOLE) {
-        if (fillDeviceArgumentList) {
-            setFunction("sendDbgDataPidConsole", 0, 0);
-        }
-        return commandLengthValueForMode(mode, 0, 0);
     } else if (commandHeader == COMMAND_GET_MOTION_PARAMETER) {
         if (fillDeviceArgumentList) {    
             setFunction("getMotionParameter", 1, 25);
@@ -147,27 +137,15 @@ int devicePIDGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fil
         }
         return commandLengthValueForMode(mode, 2, 53);
     }
-	else if (commandHeader == COMMAND_PID_MOTION_PARAMETER_DEBUG) {
-		if (fillDeviceArgumentList) {
-			setFunctionNoArgumentAndNoResult("pidMotionParameterDebug");
-		}
-		return commandLengthValueForMode(mode, 0, 0);
-	}
-	else if (commandHeader == COMMAND_DEBUG_PID_PARAMETERS) {
-		if (fillDeviceArgumentList) {
-			setFunctionNoArgumentAndNoResult("pidParametersDebug");
-		}
-		return commandLengthValueForMode(mode, 0, 0);
-	}
 	return DEVICE_HEADER_NOT_HANDLED;
 }
 
 static DeviceInterface deviceInterface = {
     .deviceHeader = PID_DEVICE_HEADER,
-    .deviceGetName = &getPIDDeviceName,
-    .deviceGetInterface = &devicePIDGetInterface
+    .deviceGetName = &getPidDeviceName,
+    .deviceGetInterface = &devicePidGetInterface
 };
 
-DeviceInterface* getPIDDeviceInterface() {
+DeviceInterface* getPidDeviceInterface() {
     return &deviceInterface;
 }

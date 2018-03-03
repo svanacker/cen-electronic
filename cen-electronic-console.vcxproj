@@ -246,6 +246,8 @@
     <ClCompile Include="device\log\logDeviceInterface.c" />
     <ClCompile Include="device\motion\extended\extendedMotionDevice.c" />
     <ClCompile Include="device\motion\extended\extendedMotionDeviceInterface.c" />
+    <ClCompile Include="device\motion\pid\pidDebugDevice.c" />
+    <ClCompile Include="device\motion\pid\pidDebugDeviceInterface.c" />
     <ClCompile Include="device\motion\pid\pidDevice.c" />
     <ClCompile Include="device\motion\pid\pidDeviceInterface.c" />
     <ClCompile Include="device\motion\position\codersDevice.c" />
@@ -533,6 +535,8 @@
     <ClInclude Include="device\log\logDeviceInterface.h" />
     <ClInclude Include="device\motion\extended\extendedMotionDevice.h" />
     <ClInclude Include="device\motion\extended\extendedMotionDeviceInterface.h" />
+    <ClInclude Include="device\motion\pid\pidDebugDevice.h" />
+    <ClInclude Include="device\motion\pid\pidDebugDeviceInterface.h" />
     <ClInclude Include="device\motion\pid\pidDevice.h" />
     <ClInclude Include="device\motion\pid\pidDeviceInterface.h" />
     <ClInclude Include="device\motion\position\codersDevice.h" />
