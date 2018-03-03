@@ -3,7 +3,7 @@
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
 #include "../../common/io/printTableWriter.h"
-#include "cenMath.h"
+#include "../../common/math/cenMath.h"
 
 #define ROBOT_KINEMATICS_KEY_COLUMN_LENGTH        38
 #define ROBOT_KINEMATICS_HEX_VALUE_COLUMN_LENGTH  10

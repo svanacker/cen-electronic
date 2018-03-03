@@ -30,6 +30,12 @@
 #define COMMAND_LOAD_PID_DEFAULT_VALUES            'd'
 
 /**
+ * Show all values for the end Motion data.
+ * @return 
+ */
+#define COMMAND_END_MOTION_DEBUG                   'e'
+
+/**
  * Save Values
  */
 #define COMMAND_SAVE_PID                           's'

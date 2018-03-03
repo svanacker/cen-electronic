@@ -21,12 +21,13 @@
 #define MAX_HISTORY_COUNT 3
 
 /**
-* Defines the structs about motion blocking detection to be able to detect blocking or end of motion.
+* Defines the structure about motion blocking detection to be able to detect blocking or end of motion.
 * We analyze the motion during a constant time maxTime.
-* To avoid Range analysis by block, we consider the compute of value like a Stack. When we add a value, we substracted
-* the first value to always have a sliping range
+* To avoid Range analysis by block, we consider the compute of value like a Stack. When we add a value, we subtract
+* the first value to always have a sliding range
 */
 typedef struct MotionEndInfo {
+    /** How many measure we have done */
 	unsigned int integralTime;
 	/** Current index in the array. */
 	unsigned int index;

@@ -75,18 +75,18 @@ int main(int argumentCount, char* arguments[])
             runMainBoardPC(robotManager);
         }
         else if (strcmp(boardName, MOTOR_BOARD_PC_NAME) == 0) {
-            bool singleMode = true;
+            bool singleMode = false;
             if (argumentCount > 2) {
                 char* motorBoardRunMode = arguments[2];
-                singleMode = (strcmp(boardName, MOTOR_BOARD_PC_RUN_SINGLE) == 0);
+                singleMode = (strcmp(motorBoardRunMode, MOTOR_BOARD_PC_RUN_SINGLE) == 0);
             }
             runMotorBoardPC(singleMode);
         }
         else if (strcmp(boardName, MECHANICAL_BOARD_1_PC_NAME) == 0) {
-            bool singleMode = true;
+            bool singleMode = false;
             if (argumentCount > 2) {
                 char* mechanicalBoard1RunMode = arguments[2];
-                singleMode = (strcmp(boardName, MOTOR_BOARD_PC_RUN_SINGLE) == 0);
+                singleMode = (strcmp(mechanicalBoard1RunMode, MOTOR_BOARD_PC_RUN_SINGLE) == 0);
             }
             runMechanicalBoard1PC(singleMode);
         }

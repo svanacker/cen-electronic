@@ -36,8 +36,8 @@ int deviceMotionGetInterface(char commandHeader, DeviceInterfaceMode mode, bool 
     else if (commandHeader == COMMAND_MOTION_GOTO_IN_PULSE) {
         if (fillDeviceArgumentList) {
             setFunction("gotoPulse", 4, 0);
-            setArgument(0, DEVICE_ARG_SIGNED_HEX_6, "left");
-            setArgument(1, DEVICE_ARG_SIGNED_HEX_6, "right");
+            setArgument(0, DEVICE_ARG_SIGNED_HEX_6, "left (pulse)");
+            setArgument(1, DEVICE_ARG_SIGNED_HEX_6, "right (pulse)");
             setArgumentUnsignedHex2(2, "a");
             setArgumentUnsignedHex2(3, "s");
         }
@@ -46,43 +46,43 @@ int deviceMotionGetInterface(char commandHeader, DeviceInterfaceMode mode, bool 
     else if (commandHeader == COMMAND_MOTION_FORWARD_IN_MM) {
         if (fillDeviceArgumentList) {
             setFunction("forwardMM", 1, 0);
-            setArgumentUnsignedHex4(0, "distMM");
+            setArgumentUnsignedHex4(0, "distance (MM)");
         }
         return commandLengthValueForMode(mode, 4, 0);
     }// backward MM
     else if (commandHeader == COMMAND_MOTION_BACKWARD_IN_MM) {
         if (fillDeviceArgumentList) {
             setFunction("backwardMM", 1, 0);
-            setArgumentUnsignedHex4(0, "distMM");
+            setArgumentUnsignedHex4(0, "distance (MM)");
         }
         return commandLengthValueForMode(mode, 4, 0);
     }// turn left in degree
     else if (commandHeader == COMMAND_MOTION_LEFT_IN_DECI_DEGREE) {
         if (fillDeviceArgumentList) {
-            setFunction("rotLeftDecDeg", 1, 0);
-            setArgumentUnsignedHex4(0, "leftAngleDecDeg");
+            setFunction("rotation Left DeciDeg", 1, 0);
+            setArgumentUnsignedHex4(0, "leftAngle (DeciDeg)");
         }
         return commandLengthValueForMode(mode, 4, 0);
     }// turn right in degree
     else if (commandHeader == COMMAND_MOTION_RIGHT_IN_DECI_DEGREE) {
         if (fillDeviceArgumentList) {
-            setFunction("rotRightDecDeg", 1, 0);
-            setArgumentUnsignedHex4(0, "rightAngleDecDeg");
+            setFunction("rotation Right DeciDeg", 1, 0);
+            setArgumentUnsignedHex4(0, "rightAngle (DeciDeg)");
         }
         return commandLengthValueForMode(mode, 4, 0);
     }// ONLY ONE WHEEL
         // turn left (only right in degree
     else if (commandHeader == COMMAND_MOTION_LEFT_ONE_WHEEL_IN_DECI_DEGREE) {
         if (fillDeviceArgumentList) {
-            setFunction("rotLeft1WheelDecDeg", 1, 0);
-            setArgumentUnsignedHex4(0, "leftAngleDecDeg");
+            setFunction("rotation Left One Wheel DeciDeg", 1, 0);
+            setArgumentUnsignedHex4(0, "leftAngle (DeciDeg)");
         }
         return commandLengthValueForMode(mode, 4, 0);
     }// turn right (only right wheel) in degree
     else if (commandHeader == COMMAND_MOTION_RIGHT_ONE_WHEEL_IN_DECI_DEGREE) {
         if (fillDeviceArgumentList) {
-            setFunction("rotRight1WheelDecDeg", 1, 0);
-            setArgumentUnsignedHex4(0, "rightAngleDecDeg");
+            setFunction("rotation Right One Wheel DeciDeg", 1, 0);
+            setArgumentUnsignedHex4(0, "rightAngle (DeciDeg)");
         }
         return commandLengthValueForMode(mode, 4, 0);
     }

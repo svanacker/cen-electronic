@@ -4,7 +4,7 @@
 // BLOCKING DETECTION
 
 /** Defines the delta position integral for which we consider that below this value the robot don't move */
-#define ABS_DELTA_POSITION_INTEGRAL_FACTOR_THRESHOLD 1.0f
+#define ABS_DELTA_POSITION_INTEGRAL_FACTOR_THRESHOLD 0.3f
 
 /**
 * Defines the u integral factor integral for which we consider that there is a blocking.
@@ -56,8 +56,8 @@ typedef struct MotionEndDetectionParameter {
     unsigned int timeRangeAnalysis;
     /** 
      * The delay in milliseconds for which we do not try to check the end detection parameter.
-     * It avoids that the robot stop immediately the begin of motion, because it consideres 
-     * that the robot is blocked or has ended his trajectory
+     * It avoids that the robot stop immediately the begin of motion, because it analyzes 
+     * if the robot is blocked or has ended his trajectory
     */
     unsigned int noAnalysisAtStartupTime;
 } MotionEndDetectionParameter;

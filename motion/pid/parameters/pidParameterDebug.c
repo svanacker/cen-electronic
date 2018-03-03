@@ -11,22 +11,22 @@
 #include "../../../common/io/printTableWriter.h"
 
 
-#define PID_PARAMETER_PID_INDEX_COLUMN_LENGTH                 8
-#define PID_PARAMETER_PID_TYPE_COLUMN_LENGTH                  10
-#define PID_PARAMETER_INSTRUCTION_TYPE_COLUMN_LENGTH          10
+#define PID_PARAMETER_PID_INDEX_COLUMN_LENGTH                 4
+#define PID_PARAMETER_PID_TYPE_COLUMN_LENGTH                  11
+#define PID_PARAMETER_INSTRUCTION_TYPE_COLUMN_LENGTH          11
 
-#define PID_PARAMETER_P_DEC_COLUMN_LENGTH                     13
-#define PID_PARAMETER_I_DEC_COLUMN_LENGTH                     12
-#define PID_PARAMETER_D_DEC_COLUMN_LENGTH                     13
-#define PID_PARAMETER_MI_DEC_COLUMN_LENGTH                    14
+#define PID_PARAMETER_P_DEC_COLUMN_LENGTH                     6
+#define PID_PARAMETER_I_DEC_COLUMN_LENGTH                     6
+#define PID_PARAMETER_D_DEC_COLUMN_LENGTH                     7
+#define PID_PARAMETER_MI_DEC_COLUMN_LENGTH                    9
 
-#define PID_PARAMETER_P_HEX_COLUMN_LENGTH                     13
-#define PID_PARAMETER_I_HEX_COLUMN_LENGTH                     12
-#define PID_PARAMETER_D_HEX_COLUMN_LENGTH                     13
-#define PID_PARAMETER_MI_HEX_COLUMN_LENGTH                    14
+#define PID_PARAMETER_P_HEX_COLUMN_LENGTH                     6
+#define PID_PARAMETER_I_HEX_COLUMN_LENGTH                     6
+#define PID_PARAMETER_D_HEX_COLUMN_LENGTH                     7
+#define PID_PARAMETER_MI_HEX_COLUMN_LENGTH                    9
 
 
-#define PID_PARAMETER_LAST_COLUMN_LENGTH                  10
+#define PID_PARAMETER_LAST_COLUMN_LENGTH                      5
 
 /**
 * Private.
@@ -34,17 +34,33 @@
 void printPidParameterTableHeader(OutputStream* outputStream) {
 	println(outputStream);
 	appendTableHeaderSeparatorLine(outputStream);
-	appendStringHeader(outputStream, "PID Idx", PID_PARAMETER_PID_INDEX_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "PID Type", PID_PARAMETER_PID_TYPE_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "Inst Type", PID_PARAMETER_INSTRUCTION_TYPE_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "Prop. (Dec).", PID_PARAMETER_P_DEC_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "Int. (Dec)", PID_PARAMETER_I_DEC_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "Deriv. (Dec)", PID_PARAMETER_D_DEC_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "Max Int. (Dec)", PID_PARAMETER_MI_DEC_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "Prop. (Hex).", PID_PARAMETER_P_HEX_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "Int. (Hex)", PID_PARAMETER_I_HEX_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "Deriv. (Hex)", PID_PARAMETER_D_HEX_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "Max Int. (Hex)", PID_PARAMETER_MI_HEX_COLUMN_LENGTH);
+    // First Header Line
+	appendStringHeader(outputStream, "PID", PID_PARAMETER_PID_INDEX_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "PID", PID_PARAMETER_PID_TYPE_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "Instruction", PID_PARAMETER_INSTRUCTION_TYPE_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "Prop..", PID_PARAMETER_P_DEC_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "Int.", PID_PARAMETER_I_DEC_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "Deriv.", PID_PARAMETER_D_DEC_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "Max Int.", PID_PARAMETER_MI_DEC_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "Prop.", PID_PARAMETER_P_HEX_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "Int.", PID_PARAMETER_I_HEX_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "Deriv.", PID_PARAMETER_D_HEX_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "Max Int.", PID_PARAMETER_MI_HEX_COLUMN_LENGTH);
+	appendEndOfTableColumn(outputStream, PID_PARAMETER_LAST_COLUMN_LENGTH);
+    
+    // Second Header Line
+	appendStringHeader(outputStream, "Idx", PID_PARAMETER_PID_INDEX_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "Type", PID_PARAMETER_PID_TYPE_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "Type", PID_PARAMETER_INSTRUCTION_TYPE_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "(Dec).", PID_PARAMETER_P_DEC_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "(Dec)", PID_PARAMETER_I_DEC_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "(Dec)", PID_PARAMETER_D_DEC_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "(Dec)", PID_PARAMETER_MI_DEC_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "(Hex)", PID_PARAMETER_P_HEX_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "(Hex)", PID_PARAMETER_I_HEX_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "(Hex)", PID_PARAMETER_D_HEX_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "(Hex)", PID_PARAMETER_MI_HEX_COLUMN_LENGTH);
+    
 	appendEndOfTableColumn(outputStream, PID_PARAMETER_LAST_COLUMN_LENGTH);
 	appendTableHeaderSeparatorLine(outputStream);
 }

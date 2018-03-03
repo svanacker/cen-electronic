@@ -1629,6 +1629,9 @@
     <ClCompile Include="robot\kinematics\robotKinematicsPersistence.c">
       <Filter>Source Files\robot\kinematics</Filter>
     </ClCompile>
+    <ClCompile Include="motion\pid\endDetection\motionEndDetectionDebug.c">
+      <Filter>Source Files\motion\pid\endDetection</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -2500,6 +2503,9 @@
     </ClInclude>
     <ClInclude Include="robot\kinematics\robotKinematicsPersistence.h">
       <Filter>Header Files\robot\kinematics</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\endDetection\motionEndDetectionDebug.h">
+      <Filter>Header Files\motion\pid\endDetection</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

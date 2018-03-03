@@ -340,6 +340,7 @@
         <itemPath>../../../motion/pid/endDetection/motionEndDetection.h</itemPath>
         <itemPath>../../../motion/pid/endDetection/motionEndDetectionParameter.h</itemPath>
         <itemPath>../../../motion/pid/endDetection/motionEndInfo.h</itemPath>
+        <itemPath>D:/dev/git/cen-electronic/motion/pid/endDetection/motionEndDetectionDebug.h</itemPath>
       </logicalFolder>
       <logicalFolder name="motion.pid.parameters"
                      displayName="motion.pid.parameters"
@@ -735,6 +736,7 @@
         <itemPath>../../../motion/pid/endDetection/motionEndDetection.c</itemPath>
         <itemPath>../../../motion/pid/endDetection/motionEndDetectionParameter.c</itemPath>
         <itemPath>D:/dev/git/cen-electronic/motion/pid/endDetection/motionEndInfo.c</itemPath>
+        <itemPath>D:/dev/git/cen-electronic/motion/pid/endDetection/motionEndDetectionDebug.c</itemPath>
       </logicalFolder>
       <logicalFolder name="motion.pid.parameters"
                      displayName="motion.pid.parameters"

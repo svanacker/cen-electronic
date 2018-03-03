@@ -74,17 +74,13 @@ float forwardSimpleMM(PidMotion* pidMotion, float distanceInMM, OutputStream* no
 
 float backwardSimpleMM(PidMotion* pidMotion, float distanceInMM, OutputStream* notificationOutputStream);
 
-float leftSimpleDegree(PidMotion* pidMotion, float angleDegree, OutputStream* notificationOutputStream);
+float leftSimpleDeciDegree(PidMotion* pidMotion, float angleDegree, OutputStream* notificationOutputStream);
 
-float leftSimpleMilliDegree(PidMotion* pidMotion, float milliAngleDegree, OutputStream* notificationOutputStream);
+float rightSimpleDeciDegree(PidMotion* pidMotion, float angleDegree, OutputStream* notificationOutputStream);
 
-float rightSimpleDegree(PidMotion* pidMotion, float angleDegree, OutputStream* notificationOutputStream);
+void leftOneWheelSimpleDeciDegree(PidMotion* pidMotion, float angleDegree, OutputStream* notificationOutputStream);
 
-float rightSimpleMilliDegree(PidMotion* pidMotion, float milliAngleDegree, OutputStream* notificationOutputStream);
-
-void leftOneWheelSimpleDegree(PidMotion* pidMotion, float angleDegree, OutputStream* notificationOutputStream);
-
-void rightOneWheelSimpleDegree(PidMotion* pidMotion, float angleDegree, OutputStream* notificationOutputStream);
+void rightOneWheelSimpleDeciDegree(PidMotion* pidMotion, float angleDegree, OutputStream* notificationOutputStream);
 
 // With Wait
 
@@ -92,12 +88,8 @@ float forwardSimpleMMAndWait(PidMotion* pidMotion, float distanceInMM, OutputStr
 
 float backwardSimpleMMAndWait(PidMotion* pidMotion, float distanceInMM, OutputStream* notificationOutputStream);
 
-float leftSimpleDegreeAndWait(PidMotion* pidMotion, float angleDegree, OutputStream* notificationOutputStream);
+float leftSimpleDeciDegreeAndWait(PidMotion* pidMotion, float angleDegree, OutputStream* notificationOutputStream);
 
-float leftSimpleMilliDegreeAndWait(PidMotion* pidMotion, float milliAngleDegree, OutputStream* notificationOutputStream);
-
-float rightSimpleDegreeAndWait(PidMotion* pidMotion, float angleDegree, OutputStream* notificationOutputStream);
-
-float rightSimpleMilliDegreeAndWait(PidMotion* pidMotion, float milliAngleDegree, OutputStream* notificationOutputStream);
+float rightSimpleDeciDegreeAndWait(PidMotion* pidMotion, float angleDegree, OutputStream* notificationOutputStream);
 
 #endif

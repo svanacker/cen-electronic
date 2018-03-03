@@ -16,8 +16,6 @@
 
 #define FILE_DEVICE_HEADER                         'f'
 
-#define AIR_CONDITIONING_DEVICE_HEADER             'g'
-
 #define LOG_DEVICE_HEADER                          'G'
 
 // 'h' for Help
@@ -34,9 +32,6 @@
 
 /** Command to debug the dispatchers. */
 #define DATA_DISPATCHER_DEVICE_HEADER              'j'
-
-/** Command to ping */
-#define COMMAND_PING_DISPATCHER_INDEX               'p'
 
 /** Command to manipulate the clock. */
 #define CLOCK_DEVICE_HEADER                        'k'
@@ -72,10 +67,17 @@
  */
 #define NAVIGATION_DEVICE_HEADER                   'N'
 
+/** To set PID values */
 #define PID_DEVICE_HEADER                          'p'
 
-/** TODO : Collision with I2C PID */
-#define PIN_DEVICE_HEADER                          'P'
+/** To debug PID values */
+#define PID_DEBUG_DEVICE_HEADER                    'P'
+
+/** Command to ping */
+#define COMMAND_PING_DISPATCHER_INDEX              'Q'
+
+/** To access to each pin of the PIC */
+#define PIN_DEVICE_HEADER                          'q'
 
 #define BEACON_RECEIVER_DEVICE_HEADER              'r'
 
@@ -95,11 +97,11 @@
 /** Header for Test Device. */
 #define TEST_DEVICE_HEADER                         't'
 
-/** Serial debug (U for "Uart"). */
-#define SERIAL_DEBUG_DEVICE_HEADER                 'u'
-
 /** Common Beacon device header. */
-#define COMMON_BEACON_DEVICE_HEADER                'U'
+#define COMMON_BEACON_DEVICE_HEADER                'u'
+
+/** Serial debug (U for "Uart"). */
+#define SERIAL_DEBUG_DEVICE_HEADER                 'U'
 
 /** Header for Test2 Device. */
 #define TEST2_DEVICE_HEADER                        'v'
@@ -118,12 +120,16 @@
 /** Reserved to clear deeply the buffer. */
 #define NOT_TOO_USE_2                               'Z'
 
+/** To access to the strategy (list of points, targets...) */
 #define STRATEGY_DEVICE_HEADER                     'Y'
 
+/** To send the signal of start Match */
 #define START_MATCH_DEVICE_HEADER                   '!'
 
+/** To check if an object is in front of the robot */
 #define SONAR_DEVICE_HEADER                        '<'
 
+/** TODO */
 #define ROBOT_SONAR_DETECTOR_DEVICE_HEADER         '#'
 
 #define MOTION_SIMULATION_DEVICE_HEADER            '/' 
@@ -131,12 +137,5 @@
 #define ROBOT_INFRARED_DETECTOR_DEVICE_HEADER      '>'
 
 #define LAUNCHER_2018_DEVICE_HEADER                '_'
-
-/** Not Used anymore. */
-#define PLIERS_DEVICE_2011_HEADER                  '_'
-#define ARM_DEVICE_2012_HEADER                     '|'
-
-
-
 
 #endif

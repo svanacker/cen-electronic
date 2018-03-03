@@ -212,7 +212,6 @@ void deviceMotionHandleRawData(char commandHeader,
 		// send acknowledge
 		ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_LOAD_DEFAULT_PARAMETERS);
 		loadMotionParameters(pidMotion->pidPersistenceEeprom, true);
-		saveMotionParameters(pidMotion->pidPersistenceEeprom);
 	}
 	else if (commandHeader == COMMAND_MOTION_PARAMETERS_DEBUG) {
 		// send acknowledge
@@ -238,8 +237,6 @@ void deviceMotionHandleRawData(char commandHeader,
         MotionParameter* motionParameter = getDefaultMotionParameters(motionParameterType);
         motionParameter->a = a;
         motionParameter->speed = speed;
-
-        saveMotionParameters(pidMotion->pidPersistenceEeprom);
     } else if (commandHeader == COMMAND_MOTION_SAVE_TO_EEPROM_PARAMETERS) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_SAVE_TO_EEPROM_PARAMETERS);
 

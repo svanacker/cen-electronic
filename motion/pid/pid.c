@@ -133,5 +133,5 @@ void updateMotorsAndDetectedMotionType(PidMotion* pidMotion) {
     }
     
     // Detection if the robot is blocked or not, and update the DetectedMotionType
-    detectIfRobotIsBlocked(pidMotion, motionDefinition);
+    // detectIfRobotIsBlocked(pidMotion, motionDefinition);
 }

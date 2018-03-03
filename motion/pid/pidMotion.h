@@ -22,7 +22,7 @@ typedef struct PidMotionDefinition PidMotionDefinition;
 typedef void ComputeUFunction(PidMotion* pidMotion,	PidMotionDefinition* motionDefinition);
 
 /**
- * Store if the motion is a bspline curve or a classical (rotation / forward) move
+ * Store if the motion is a bspline curve or a classical (rotation / forward) move.
  */
 enum PidMotionType {
 	/**
