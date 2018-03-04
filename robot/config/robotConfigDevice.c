@@ -1,6 +1,7 @@
 #include <stdlib.h>
 
 #include "robotConfig.h"
+#include "robotConfigDebug.h"
 #include "robotConfigDevice.h"
 #include "robotConfigDeviceInterface.h"
 

@@ -6,7 +6,6 @@
 
 #include "../../common/error/error.h"
 #include "../../common/io/printWriter.h"
-#include "../../common/io/printTableWriter.h"
 #include "../../common/io/reader.h"
 
 #include "../../common/log/logger.h"
@@ -15,9 +14,10 @@
 
 #include "../../navigation/navigation.h"
 #include "../../navigation/location.h"
-#include "../../navigation/locationList.h"
+#include "../../navigation/locationListDebug.h"
 #include "../../navigation/path.h"
 #include "../../navigation/pathList.h"
+#include "../../navigation/pathListDebug.h"
 
 // TEMP
 

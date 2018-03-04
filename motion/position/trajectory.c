@@ -11,8 +11,6 @@
 #include "../../common/math/cenMath.h"
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
-#include "../../common/io/printTableWriter.h"
-
 
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
@@ -22,20 +20,35 @@
 #include "../../robot/kinematics/robotKinematics.h"
 
 // Position update threshold in mm
-// #define UPDATE_THRESHOLD 5.0f
-// No Threshold, we compute at the end of a trajectory
+// If No Threshold, we compute at the end of a trajectory
 #define UPDATE_THRESHOLD 1.0f
 
 // Position on the board in true length
-static Position position = {
-    {0.0f, 0.0f}, 0.0f, 0.0f};
+static TrajectoryInfo trajectory = {
+    {
+        // trajectory->position->pos
+        {
+            // trajectory->position->pos.x
+            0.0f,
+            // trajectory->position->pos.y
+            0.0f
+        },
+        // trajectory->position->orientation
+        0.0f,
+        // trajectory->position->initialOrientation
+        0.0f,
+    },
+    // trajectory->lastLeft,
+    0.0f,
+    // trajectory->lastRight,
+    0.0f,
+    // trajectory->lastAngle
+    0.0f
+};
 
-// Last left coder value
-static float lastLeft = 0.0f;
-// Last right coder value
-static float lastRight = 0.0f;
-// Last angle
-static float lastAngle = 0.0f;
+TrajectoryInfo* getTrajectory(void) {
+    return &trajectory;
+}
 
 void initializeTrajectory(void) {
     clearTrajectory();
@@ -43,22 +56,22 @@ void initializeTrajectory(void) {
 
 
 void clearTrajectory(void) {
-    setPosition(0, 0, 0);
-    lastLeft = 0.0f;
-    lastRight = 0.0f;
-    lastAngle = 0.0f;
+    setPosition(0.0f, 0.0f, 0.0f);
+    trajectory.lastLeft = 0.0f;
+    trajectory.lastRight = 0.0f;
+    trajectory.lastAngle = 0.0f;
 }
 
 void setPosition(float x, float y, float orientation) {
-    position.pos.x = x;
-    position.pos.y = y;
-    position.initialOrientation = orientation - position.orientation + position.initialOrientation;
-    position.orientation = orientation;
-    lastAngle = 0.0f;
+    trajectory.position.pos.x = x;
+    trajectory.position.pos.y = y;
+    trajectory.position.initialOrientation = orientation - trajectory.position.orientation + trajectory.position.initialOrientation;
+    trajectory.position.orientation = orientation;
+    trajectory.lastAngle = 0.0f;
 }
 
 Position* getPosition(void) {
-    return &position;
+    return &trajectory.position;
 }
 
 void debugTrajectoryVariables(char* valueName1, float value1, char* valueName2, float value2) {
@@ -89,8 +102,8 @@ bool absoluteUpdateFromCoders(signed long left, signed long right, bool useThres
     if (debug) {
         debugTrajectoryVariables("l=", l, ", r=", r);
     }
-    float dl = l - lastLeft;
-    float dr = r - lastRight;
+    float dl = l - trajectory.lastLeft;
+    float dr = r - trajectory.lastRight;
     if (debug) {
         debugTrajectoryVariables("dl=", dl, ", dr=", dr);
     }
@@ -104,16 +117,16 @@ bool absoluteUpdateFromCoders(signed long left, signed long right, bool useThres
     float dw = r - l;
     // orientation finale = difference des distances / demi-distance des roues
     float wheelsDistance = robotKinematics->wheelsDistance;
-    float orientation = fmodf(dw / wheelsDistance, 2.0f * PI) + lastAngle + position.initialOrientation;
+    float orientation = fmodf(dw / wheelsDistance, 2.0f * PI) + trajectory.lastAngle + trajectory.position.initialOrientation;
     // angle relatif au dernier mouvement
     // lastAngle is only used when we clear Coders !
-    float relativePositionOrientation = position.orientation;
+    float relativePositionOrientation = trajectory.position.orientation;
     float angle = orientation - relativePositionOrientation;
     float meanOrientation = (orientation + relativePositionOrientation) / 2.0f;
 
     if (debug) {
-        debugTrajectoryVariables("dw=", dw, ", orien=", orientation);
-        debugTrajectoryVariables("angle=", angle, ",meanOrien=", meanOrientation);
+        debugTrajectoryVariables("dw=", dw, ", orientationi=", orientation);
+        debugTrajectoryVariables("angle=", angle, ",meanOrientation=", meanOrientation);
     }
 
     // distance during last move
@@ -132,12 +145,12 @@ bool absoluteUpdateFromCoders(signed long left, signed long right, bool useThres
     }
 
     // update position
-    position.pos.x += dx;
-    position.pos.y += dy;
-    position.orientation = orientation;
+    trajectory.position.pos.x += dx;
+    trajectory.position.pos.y += dy;
+    trajectory.position.orientation = orientation;
 
-    lastLeft = l;
-    lastRight = r;
+    trajectory.lastLeft = l;
+    trajectory.lastRight = r;
 
     return true;
 }
@@ -158,98 +171,9 @@ void updateTrajectoryWithNoThreshold() {
 
 void updateTrajectoryAndClearCoders() {
     updateTrajectoryWithNoThreshold();
-    lastAngle = position.orientation - position.initialOrientation;
+    trajectory.lastAngle = trajectory.position.orientation - trajectory.position.initialOrientation;
     clearCoders();
-    lastLeft = 0;
-    lastRight = 0;
+    trajectory.lastLeft = 0;
+    trajectory.lastRight = 0;
 }
 
-// DEBUG
-
-
-void printDebugPosition(OutputStream* outputStream) {
-	#define TRAJECTORY_X_DEC_COLUMN_LENGTH	                12
-	#define TRAJECTORY_Y_DEC_COLUMN_LENGTH	                12
-	#define TRAJECTORY_X_HEX_COLUMN_LENGTH	                12
-	#define TRAJECTORY_Y_HEX_COLUMN_LENGTH	                12
-	#define TRAJECTORY_ANGLE_DEC_COLUMN_LENGTH	            16
-	#define TRAJECTORY_ANGLE_INIT_DEC_COLUMN_LENGTH	        16
-
-	// HEADER
-	println(outputStream);
-	appendTableHeaderSeparatorLine(outputStream);
-	appendStringHeader(outputStream, "x (Dec) mm", TRAJECTORY_X_DEC_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "y (Dec) mm", TRAJECTORY_Y_DEC_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "x (Hex) mm", TRAJECTORY_X_HEX_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "y (Hex) mm", TRAJECTORY_Y_HEX_COLUMN_LENGTH);
-
-	appendStringHeader(outputStream, "angle (deg)", TRAJECTORY_ANGLE_DEC_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "angle init (deg)", TRAJECTORY_ANGLE_INIT_DEC_COLUMN_LENGTH);
-
-	appendEndOfTableColumn(outputStream, 0);
-	appendTableHeaderSeparatorLine(outputStream);
-
-	// VALUES
-    Position* position = getPosition();
-	Point* point = &(position->pos);
-
-	// X / Y
-	appendDecfTableData(outputStream, point->x, TRAJECTORY_X_DEC_COLUMN_LENGTH);
-	appendDecfTableData(outputStream, point->y, TRAJECTORY_Y_DEC_COLUMN_LENGTH);
-
-	appendHex4TableData(outputStream, (int) point->x, TRAJECTORY_X_HEX_COLUMN_LENGTH);
-	appendHex4TableData(outputStream, (int) point->y, TRAJECTORY_Y_HEX_COLUMN_LENGTH);
-
-	// Angle / Last Angle
-	appendDecfTableData(outputStream, position->orientation / PI_DIVIDE_180, TRAJECTORY_ANGLE_DEC_COLUMN_LENGTH);
-	appendDecfTableData(outputStream, position->initialOrientation / PI_DIVIDE_180, TRAJECTORY_ANGLE_INIT_DEC_COLUMN_LENGTH);
-
-	appendEndOfTableColumn(outputStream, 0);
-
-	// END OF TABLE
-	appendTableHeaderSeparatorLine(outputStream);
-}
-
-void printDebugCoderHistory(OutputStream* outputStream) {
-	#define TRAJECTORY_LEFT_DEC_COLUMN_LENGTH	            11
-	#define TRAJECTORY_RIGHT_DEC_COLUMN_LENGTH	            12
-	#define TRAJECTORY_LEFT_HEX_COLUMN_LENGTH	            11
-	#define TRAJECTORY_RIGHT_HEX_COLUMN_LENGTH	            12
-	#define TRAJECTORY_LAST_LEFT_COLUMN_LENGTH	            17
-	#define TRAJECTORY_LAST_RIGHT_COLUMN_LENGTH	            18
-	#define TRAJECTORY_LAST_ANGLE_COLUMN_LENGTH	            16
-	#define TRAJECTORY_LAST_COLUMN_LENGTH					0
-
-	// HEADER
-	println(outputStream);
-	appendTableHeaderSeparatorLine(outputStream);
-
-	appendStringHeader(outputStream, "left (Dec)", TRAJECTORY_LEFT_DEC_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "right (Dec)", TRAJECTORY_RIGHT_DEC_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "left (Hex)", TRAJECTORY_LEFT_HEX_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "right (Hex)", TRAJECTORY_RIGHT_HEX_COLUMN_LENGTH);
-
-	appendStringHeader(outputStream, "lastLeft (pulse)", TRAJECTORY_LAST_LEFT_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "lastRight (pulse)", TRAJECTORY_LAST_RIGHT_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "lastAngle (deg)", TRAJECTORY_LAST_ANGLE_COLUMN_LENGTH);
-
-	appendEndOfTableColumn(outputStream, TRAJECTORY_LAST_COLUMN_LENGTH);
-	appendTableHeaderSeparatorLine(outputStream);
-
-	// VALUES
-	// Left / Right
-	appendDecTableData(outputStream, getCoderValue(CODER_LEFT), TRAJECTORY_LEFT_DEC_COLUMN_LENGTH);
-	appendDecTableData(outputStream, getCoderValue(CODER_RIGHT), TRAJECTORY_RIGHT_DEC_COLUMN_LENGTH);
-
-	appendHex4TableData(outputStream, getCoderValue(CODER_LEFT), TRAJECTORY_LEFT_HEX_COLUMN_LENGTH);
-	appendHex4TableData(outputStream, getCoderValue(CODER_RIGHT), TRAJECTORY_RIGHT_HEX_COLUMN_LENGTH);
-
-	// Last left / Right / Angle
-	appendDecTableData(outputStream, (long) lastLeft, TRAJECTORY_LAST_LEFT_COLUMN_LENGTH);
-	appendDecTableData(outputStream, (long) lastRight, TRAJECTORY_LAST_RIGHT_COLUMN_LENGTH);
-	appendDecfTableData(outputStream, lastAngle / PI_DIVIDE_180, TRAJECTORY_LAST_ANGLE_COLUMN_LENGTH);
-	appendEndOfTableColumn(outputStream, TRAJECTORY_LAST_COLUMN_LENGTH);
-
-	// END OF TABLE
-	appendTableHeaderSeparatorLine(outputStream);
-}

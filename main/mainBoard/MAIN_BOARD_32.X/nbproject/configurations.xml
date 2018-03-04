@@ -395,6 +395,8 @@
         <itemPath>../../../navigation/navigation.h</itemPath>
         <itemPath>../../../navigation/path.h</itemPath>
         <itemPath>../../../navigation/pathList.h</itemPath>
+        <itemPath>D:/dev/git/cen-electronic/navigation/locationListDebug.h</itemPath>
+        <itemPath>D:/dev/git/cen-electronic/navigation/pathListDebug.h</itemPath>
       </logicalFolder>
       <logicalFolder name="robot" displayName="robot" projectFiles="true">
         <itemPath>../../../robot/robot.h</itemPath>
@@ -409,6 +411,7 @@
         <itemPath>../../../robot/config/robotConfigDeviceInterface.h</itemPath>
         <itemPath>../../../robot/config/robotConfig.h</itemPath>
         <itemPath>../../../robot/config/robotConfigDevice.h</itemPath>
+        <itemPath>D:/dev/git/cen-electronic/robot/config/robotConfigDebug.h</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.config.32"
                      displayName="robot.config.32"
@@ -460,6 +463,8 @@
         <itemPath>../../../robot/strategy/gameTargetList.h</itemPath>
         <itemPath>../../../robot/strategy/gameTargetStatus.h</itemPath>
         <itemPath>../../../robot/strategy/nextGameStrategyItemComputer.h</itemPath>
+        <itemPath>D:/dev/git/cen-electronic/robot/strategy/gameStrategyListDebug.h</itemPath>
+        <itemPath>D:/dev/git/cen-electronic/robot/strategy/gameStrategyDebug.h</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.strategy.factor"
                      displayName="robot.strategy.factor"
@@ -861,6 +866,8 @@
         <itemPath>../../../navigation/navigation.c</itemPath>
         <itemPath>../../../navigation/path.c</itemPath>
         <itemPath>../../../navigation/pathList.c</itemPath>
+        <itemPath>D:/dev/git/cen-electronic/navigation/locationListDebug.c</itemPath>
+        <itemPath>D:/dev/git/cen-electronic/navigation/pathListDebug.c</itemPath>
       </logicalFolder>
       <logicalFolder name="robot" displayName="robot" projectFiles="true">
         <itemPath>../../../robot/robot.c</itemPath>
@@ -875,6 +882,7 @@
         <itemPath>../../../robot/config/robotConfigDevice.c</itemPath>
         <itemPath>../../../robot/config/robotConfigDeviceInterface.c</itemPath>
         <itemPath>../../../robot/config/robotConfig.c</itemPath>
+        <itemPath>D:/dev/git/cen-electronic/robot/config/robotConfigDebug.c</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.config.32"
                      displayName="robot.config.32"
@@ -924,6 +932,8 @@
         <itemPath>../../../robot/strategy/gameTargetActionList.c</itemPath>
         <itemPath>../../../robot/strategy/gameTargetList.c</itemPath>
         <itemPath>../../../robot/strategy/nextGameStrategyItemComputer.c</itemPath>
+        <itemPath>D:/dev/git/cen-electronic/robot/strategy/gameStrategyListDebug.c</itemPath>
+        <itemPath>D:/dev/git/cen-electronic/robot/strategy/gameStrategyDebug.c</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.strategy.factor"
                      displayName="robot.strategy.factor"

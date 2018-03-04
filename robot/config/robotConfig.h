@@ -78,12 +78,6 @@ typedef unsigned int robotConfigReadIntFunction(RobotConfig* robotConfig);
 typedef void robotConfigWriteIntFunction(RobotConfig* robotConfig, unsigned int robotConfigValue);
 
 /**
-* Print a table to debug the config.
-* @param outputStream where we print the table
-*/
-void printRobotTableConfig(OutputStream* outputStream, RobotConfig* robotConfig);
-
-/**
  * Defines the contract for switch robot configuration.
  */
 struct RobotConfig {

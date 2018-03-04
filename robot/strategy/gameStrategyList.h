@@ -19,6 +19,14 @@ typedef struct {
     unsigned char size;
 } GameStrategyList;
 
+/**
+ * Returns the single instance of GameStrategyList.
+*/
+GameStrategyList* getGameStrategyList(void);
+
+/**
+ * Clear all game Strategy Item
+ */
 void clearGameStrategies();
 
 /**

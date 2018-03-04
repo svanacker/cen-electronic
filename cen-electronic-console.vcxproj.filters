@@ -1641,6 +1641,24 @@
     <ClCompile Include="motion\pid\parameters\pidParameterPersistence.c">
       <Filter>Source Files\motion\pid\parameters</Filter>
     </ClCompile>
+    <ClCompile Include="motion\position\trajectoryDebug.c">
+      <Filter>Source Files\motion\position</Filter>
+    </ClCompile>
+    <ClCompile Include="navigation\locationListDebug.c">
+      <Filter>Source Files\navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="navigation\pathListDebug.c">
+      <Filter>Source Files\navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\strategy\gameStrategyListDebug.c">
+      <Filter>Source Files\robot\strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\strategy\gameStrategyDebug.c">
+      <Filter>Source Files\robot\strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\config\robotConfigDebug.c">
+      <Filter>Source Files\robot\config</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -2524,6 +2542,24 @@
     </ClInclude>
     <ClInclude Include="motion\pid\parameters\pidParameterPersistence.h">
       <Filter>Header Files\motion\pid\parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\position\trajectoryDebug.h">
+      <Filter>Header Files\motion\position</Filter>
+    </ClInclude>
+    <ClInclude Include="navigation\locationListDebug.h">
+      <Filter>Header Files\navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="navigation\pathListDebug.h">
+      <Filter>Header Files\navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\strategy\gameStrategyListDebug.h">
+      <Filter>Header Files\robot\strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\strategy\gameStrategyDebug.h">
+      <Filter>Header Files\robot\strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\config\robotConfigDebug.h">
+      <Filter>Header Files\robot\config</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -5,8 +5,23 @@
 #include "../../common/2d/2d.h"
 #include "../../common/io/outputStream.h"
 
-#define LEFT 0
-#define RIGHT 1
+/**
+ * Structure to store all informations linked to the follow of trajectory.
+ */
+typedef struct {
+    Position position;
+    // Last left coder value
+    float lastLeft;
+    // Last right coder value
+    float lastRight;
+    // Last angle
+    float lastAngle;
+} TrajectoryInfo;
+
+/**
+ * Returns all data about the follow of the trajectory.
+ */
+TrajectoryInfo* getTrajectory(void);
 
 /**
  * Initializes the trajectory computer and sets the current
@@ -54,17 +69,5 @@ void updateTrajectoryWithNoThreshold(void);
  * lost of information, and clear Coders.
  */
 void updateTrajectoryAndClearCoders(void);
-
-// DEBUG
-
-/**
- * Print the position of the robot.
- */
-void printDebugPosition(OutputStream* outputStream);
-
-/**
-* Print the value used to analyze coders value
-*/
-void printDebugCoderHistory(OutputStream* outputStream);
 
 #endif

@@ -4,6 +4,8 @@
 #include "location.h"
 #include "locationList.h"
 #include "path.h"
+#include "pathList.h"
+#include "pathListDebug.h"
 
 #include "../common/io/outputStream.h"
 #include "../common/io/printWriter.h"

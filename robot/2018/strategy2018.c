@@ -16,6 +16,7 @@
 #include "../../navigation/locationList.h"
 #include "../../navigation/path.h"
 #include "../../navigation/pathList.h"
+#include "../../navigation/pathListDebug.h"
 #include "../../navigation/navigation.h"
 
 #include "../../robot/gameboard/gameBoard.h"
