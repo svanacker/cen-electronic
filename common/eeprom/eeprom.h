@@ -121,7 +121,19 @@ unsigned int eepromReadInt(Eeprom* eeprom_, unsigned int index);
 * @param index where we read the first char
 * @return the value to read
 */
-unsigned eepromReadLong(Eeprom* eeprom_, unsigned long index);
+unsigned long eepromReadLong(Eeprom* eeprom_, unsigned long index);
+
+/**
+ * Read a float (but unsigned) from the eeprom at a specific index (needs 4 bytes).
+ * @param eeprom_ a pointer on the Eeprom object (Simulates POO programming)
+ * @param index where we read the first char
+ * @param digitPrecision float are difficult to handle because digit. As we 
+ * store float using basic eeprom function, the consumer need to know what 
+ * was the digit precision to recover the comma
+ * @return the value to read
+ * @return 
+ */
+float eepromReadUnsignedFloat(Eeprom* eeprom_, unsigned long index, unsigned int digitPrecision);
 
 /**
  * Write an int into the eeprom at a specific index (needs 2 bytes).
@@ -138,6 +150,18 @@ void eepromWriteInt(Eeprom* eeprom_, unsigned long index, unsigned int value);
 * @param value the value to write
 */
 void eepromWriteLong(Eeprom* eeprom_, unsigned long index, unsigned long value);
+
+/**
+* Write a float into the eeprom at a specific index (needs 4 bytes).
+* @param eeprom_ a pointer on the Eeprom object (Simulates POO programming)
+* @param index where we write the first char
+* @param value the value to write
+* @param digitPrecision float are difficult to handle because digit. As we 
+* store float using basic eeprom function, the consumer need to know what 
+* was the digit precision to store the comma
+* @throws EEPROM_NEGATIVE_FLOAT_NOT_ALLOWED if the value is negative
+*/
+void eepromWriteUnsignedFloat(Eeprom* eeprom_, unsigned long index, float value, unsigned int digitPrecision);
                 
 /**
  * Returns true if the eeprom is initialized (if the fields of callbacks are NOT NULL), false else.

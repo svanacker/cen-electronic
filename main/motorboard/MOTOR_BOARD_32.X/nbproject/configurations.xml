@@ -349,9 +349,9 @@
                      displayName="motion.pid.parameters"
                      projectFiles="true">
         <itemPath>../../../motion/pid/parameters/pidGlobalParameters.h</itemPath>
-        <itemPath>../../../motion/pid/parameters/pidPersistence.h</itemPath>
         <itemPath>../../../motion/pid/parameters/pidParameter.h</itemPath>
         <itemPath>../../../motion/pid/parameters/pidParameterDebug.h</itemPath>
+        <itemPath>D:/dev/git/cen-electronic/motion/pid/parameters/pidParameterPersistence.h</itemPath>
       </logicalFolder>
       <logicalFolder name="motion.pid.profile"
                      displayName="motion.pid.profile"
@@ -740,15 +740,14 @@
                      displayName="motion.pid.endDetection"
                      projectFiles="true">
         <itemPath>../../../motion/pid/endDetection/motionEndDetection.c</itemPath>
-        <itemPath>../../../motion/pid/endDetection/motionEndDetectionParameter.c</itemPath>
         <itemPath>D:/dev/git/cen-electronic/motion/pid/endDetection/motionEndInfo.c</itemPath>
         <itemPath>D:/dev/git/cen-electronic/motion/pid/endDetection/motionEndDetectionDebug.c</itemPath>
       </logicalFolder>
       <logicalFolder name="motion.pid.parameters"
                      displayName="motion.pid.parameters"
                      projectFiles="true">
-        <itemPath>../../../motion/pid/parameters/pidPersistence.c</itemPath>
         <itemPath>../../../motion/pid/parameters/pidParameterDebug.c</itemPath>
+        <itemPath>D:/dev/git/cen-electronic/motion/pid/parameters/pidParameterPersistence.c</itemPath>
       </logicalFolder>
       <logicalFolder name="motion.pid.profile"
                      displayName="motion.pid.profile"

@@ -48,13 +48,13 @@ void printMotionEndDetectionParameter(OutputStream* outputStream, MotionEndDetec
 	appendEndOfTableColumn(outputStream, MOTION_END_DETECTION_PARAMETERS_LAST_COLUMN_LENGTH);    
 
     appendStringTableData(outputStream, "Time Range Analysis", MOTION_END_DETECTION_PARAMETERS_KEY_COLUMN_LENGTH);
-	appendHex4TableData(outputStream, (long) parameter->timeRangeAnalysis, MOTION_END_DETECTION_PARAMETERS_DEC_VALUE_COLUMN_LENGTH);
+	appendHex4TableData(outputStream, parameter->timeRangeAnalysis, MOTION_END_DETECTION_PARAMETERS_DEC_VALUE_COLUMN_LENGTH);
 	appendDecTableData(outputStream, parameter->timeRangeAnalysis, MOTION_END_DETECTION_PARAMETERS_HEX_VALUE_COLUMN_LENGTH);
 	appendEndOfTableColumn(outputStream, MOTION_END_DETECTION_PARAMETERS_LAST_COLUMN_LENGTH);
 
     appendStringTableData(outputStream, "No Analysis At Startup Range Time", MOTION_END_DETECTION_PARAMETERS_KEY_COLUMN_LENGTH);
-	appendHex4TableData(outputStream, (long) parameter->timeRangeAnalysis, MOTION_END_DETECTION_PARAMETERS_DEC_VALUE_COLUMN_LENGTH);
-	appendDecTableData(outputStream, (long) parameter->timeRangeAnalysis, MOTION_END_DETECTION_PARAMETERS_HEX_VALUE_COLUMN_LENGTH);
+	appendHex4TableData(outputStream, parameter->noAnalysisAtStartupTime, MOTION_END_DETECTION_PARAMETERS_DEC_VALUE_COLUMN_LENGTH);
+	appendDecTableData(outputStream, parameter->noAnalysisAtStartupTime, MOTION_END_DETECTION_PARAMETERS_HEX_VALUE_COLUMN_LENGTH);
 	appendEndOfTableColumn(outputStream, MOTION_END_DETECTION_PARAMETERS_LAST_COLUMN_LENGTH); 
 
     appendStringTableData(outputStream, "Max History Count", MOTION_END_DETECTION_PARAMETERS_KEY_COLUMN_LENGTH);

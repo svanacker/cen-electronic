@@ -19,7 +19,7 @@
 #include "pidTypeOptimizer.h"
 #include "computer/pidComputer.h"
 #include "parameters/pidParameter.h"
-#include "parameters/pidPersistence.h"
+#include "parameters/pidParameterPersistence.h"
 #include "pidDebug.h"
 #include "endDetection/motionEndDetection.h"
 #include "pidTimer.h"

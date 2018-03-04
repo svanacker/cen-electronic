@@ -6,23 +6,28 @@
 #include "eeprom.h"
 
 // Constant to know if the Area is Initialized or not
-#define EEPROM_AREA_IS_INITIALIZED_MARKER            0xCCCC
+#define EEPROM_AREA_IS_INITIALIZED_MARKER                                 0xCCCC
+
+// INTERNAL EEPROM
+#define EEPROM_INTERNAL_AREA_MARKER_INDEX                                 0x0080
+#define EEPROM_INTERNAL_START_INDEX                                       0x0082
 
 // PID
-#define EEPROM_PID_AREA_MARKER_INDEX                0x0100
-#define EEPROM_PID_START_INDEX                        0x0102
+#define EEPROM_PID_PARAMETERS_AREA_MARKER_INDEX                           0x0100
+#define EEPROM_PID_PARAMETERS_START_INDEX                                 0x0102
+#define EEPROM_PID_PARAMETERS_END_DETECTION_START_INDEX                   0x0182 
 
 // MOTION
-#define EEPROM_MOTION_AREA_MARKER_INDEX                0x0200
-#define EEPROM_MOTION_START_INDEX                    0x0202
+#define EEPROM_MOTION_PARAMETERS_AREA_MARKER_INDEX                        0x0200
+#define EEPROM_MOTION_PARAMETERS_START_INDEX                              0x0202
 
 // KINETICS
-#define EEPROM_KINETICS_AREA_MARKER_INDEX            0x0300
-#define EEPROM_KINETICS_START_INDEX                    0x0302
+#define EEPROM_KINETICS_AREA_MARKER_INDEX                                 0x0300
+#define EEPROM_KINETICS_START_INDEX                                       0x0302
 
 // START MATCH
-#define EEPROM_START_MATCH_AREA_MARKER_INDEX        0x0400
-#define EEPROM_START_MATCH_START_INDEX              0x0402
+#define EEPROM_START_MATCH_AREA_MARKER_INDEX                              0x0400
+#define EEPROM_START_MATCH_START_INDEX                                    0x0402
 
 /**
  * Returns true if the area is initialized. A marker must be written at the two first character to consider it as initialized
