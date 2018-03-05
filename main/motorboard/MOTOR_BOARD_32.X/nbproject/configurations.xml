@@ -205,8 +205,8 @@
                      projectFiles="true">
         <itemPath>../../../device/motion/pid/pidDevice.h</itemPath>
         <itemPath>../../../device/motion/pid/pidDeviceInterface.h</itemPath>
-        <itemPath>D:/dev/git/cen-electronic/device/motion/pid/pidDebugDevice.h</itemPath>
-        <itemPath>D:/dev/git/cen-electronic/device/motion/pid/pidDebugDeviceInterface.h</itemPath>
+        <itemPath>../../../device/motion/pid/pidDebugDevice.h</itemPath>
+        <itemPath>../../../device/motion/pid/pidDebugDeviceInterface.h</itemPath>
       </logicalFolder>
       <logicalFolder name="device.motion.position"
                      displayName="device.motion.position"
@@ -309,8 +309,8 @@
                      projectFiles="true">
         <itemPath>../../../motion/parameters/motionParameterType.h</itemPath>
         <itemPath>../../../motion/parameters/motionParameter.h</itemPath>
-        <itemPath>D:/dev/git/cen-electronic/motion/parameters/motionParameterPersistence.h</itemPath>
-        <itemPath>D:/dev/git/cen-electronic/motion/parameters/motionParameterDebug.h</itemPath>
+        <itemPath>../../../motion/parameters/motionParameterPersistence.h</itemPath>
+        <itemPath>../../../motion/parameters/motionParameterDebug.h</itemPath>
       </logicalFolder>
       <logicalFolder name="motion.pid" displayName="motion.pid" projectFiles="true">
         <itemPath>../../../motion/pid/pid.h</itemPath>
@@ -326,9 +326,9 @@
         <itemPath>../../../motion/pid/pidDebug.h</itemPath>
         <itemPath>../../../motion/pid/pidConstants.h</itemPath>
         <itemPath>../../../motion/pid/pidMotionDefinitionState.h</itemPath>
-        <itemPath>D:/dev/git/cen-electronic/motion/pid/pidTypeOptimizer.h</itemPath>
-        <itemPath>D:/dev/git/cen-electronic/motion/pid/pidComputationInstructionValues.h</itemPath>
-        <itemPath>D:/dev/git/cen-electronic/motion/pid/motionInstructionDebug.h</itemPath>
+        <itemPath>../../../motion/pid/pidTypeOptimizer.h</itemPath>
+        <itemPath>../../../motion/pid/pidComputationInstructionValues.h</itemPath>
+        <itemPath>../../../motion/pid/motionInstructionDebug.h</itemPath>
       </logicalFolder>
       <logicalFolder name="motion.pid.computer"
                      displayName="motion.pid.computer"
@@ -343,7 +343,7 @@
         <itemPath>../../../motion/pid/endDetection/motionEndDetection.h</itemPath>
         <itemPath>../../../motion/pid/endDetection/motionEndDetectionParameter.h</itemPath>
         <itemPath>../../../motion/pid/endDetection/motionEndInfo.h</itemPath>
-        <itemPath>D:/dev/git/cen-electronic/motion/pid/endDetection/motionEndDetectionDebug.h</itemPath>
+        <itemPath>../../../motion/pid/endDetection/motionEndDetectionDebug.h</itemPath>
       </logicalFolder>
       <logicalFolder name="motion.pid.parameters"
                      displayName="motion.pid.parameters"
@@ -351,7 +351,7 @@
         <itemPath>../../../motion/pid/parameters/pidGlobalParameters.h</itemPath>
         <itemPath>../../../motion/pid/parameters/pidParameter.h</itemPath>
         <itemPath>../../../motion/pid/parameters/pidParameterDebug.h</itemPath>
-        <itemPath>D:/dev/git/cen-electronic/motion/pid/parameters/pidParameterPersistence.h</itemPath>
+        <itemPath>../../../motion/pid/parameters/pidParameterPersistence.h</itemPath>
       </logicalFolder>
       <logicalFolder name="motion.pid.profile"
                      displayName="motion.pid.profile"
@@ -365,7 +365,7 @@
         <itemPath>../../../motion/position/coders.h</itemPath>
         <itemPath>../../../motion/position/trajectory.h</itemPath>
         <itemPath>../../../motion/position/coderType.h</itemPath>
-        <itemPath>D:/dev/git/cen-electronic/motion/position/trajectoryDebug.h</itemPath>
+        <itemPath>../../../motion/position/trajectoryDebug.h</itemPath>
       </logicalFolder>
       <logicalFolder name="motion.position.hctlCoder"
                      displayName="motion.position.hctlCoder"
@@ -394,8 +394,8 @@
         <itemPath>../../../robot/kinematics/robotKinematics.h</itemPath>
         <itemPath>../../../robot/kinematics/robotKinematicsDevice.h</itemPath>
         <itemPath>../../../robot/kinematics/robotKinematicsDeviceInterface.h</itemPath>
-        <itemPath>D:/dev/git/cen-electronic/robot/kinematics/robotKinematicsDebug.h</itemPath>
-        <itemPath>D:/dev/git/cen-electronic/robot/kinematics/robotKinematicsPersistence.h</itemPath>
+        <itemPath>../../../robot/kinematics/robotKinematicsDebug.h</itemPath>
+        <itemPath>../../../robot/kinematics/robotKinematicsPersistence.h</itemPath>
       </logicalFolder>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
@@ -604,8 +604,8 @@
                      projectFiles="true">
         <itemPath>../../../device/motion/pid/pidDevice.c</itemPath>
         <itemPath>../../../device/motion/pid/pidDeviceInterface.c</itemPath>
-        <itemPath>D:/dev/git/cen-electronic/device/motion/pid/pidDebugDevice.c</itemPath>
-        <itemPath>D:/dev/git/cen-electronic/device/motion/pid/pidDebugDeviceInterface.c</itemPath>
+        <itemPath>../../../device/motion/pid/pidDebugDevice.c</itemPath>
+        <itemPath>../../../device/motion/pid/pidDebugDeviceInterface.c</itemPath>
       </logicalFolder>
       <logicalFolder name="device.motion.position"
                      displayName="device.motion.position"
@@ -711,8 +711,8 @@
                      projectFiles="true">
         <itemPath>../../../motion/parameters/motionParameterType.c</itemPath>
         <itemPath>../../../motion/parameters/motionParameter.c</itemPath>
-        <itemPath>D:/dev/git/cen-electronic/motion/parameters/motionParameterPersistence.c</itemPath>
-        <itemPath>D:/dev/git/cen-electronic/motion/parameters/motionParameterDebug.c</itemPath>
+        <itemPath>../../../motion/parameters/motionParameterPersistence.c</itemPath>
+        <itemPath>../../../motion/parameters/motionParameterDebug.c</itemPath>
       </logicalFolder>
       <logicalFolder name="motion.pid" displayName="motion.pid" projectFiles="true">
         <itemPath>../../../motion/pid/pid.c</itemPath>
@@ -724,11 +724,11 @@
         <itemPath>../../../motion/pid/pidDebug.c</itemPath>
         <itemPath>../../../motion/pid/instructionType.c</itemPath>
         <itemPath>../../../motion/pid/pidMotionDefinitionState.c</itemPath>
-        <itemPath>D:/dev/git/cen-electronic/motion/pid/pidTypeOptimizer.c</itemPath>
-        <itemPath>D:/dev/git/cen-electronic/motion/pid/detectedMotionType.c</itemPath>
-        <itemPath>D:/dev/git/cen-electronic/motion/pid/pidComputationValues.c</itemPath>
-        <itemPath>D:/dev/git/cen-electronic/motion/pid/pidComputationInstructionValues.c</itemPath>
-        <itemPath>D:/dev/git/cen-electronic/motion/pid/motionInstructionDebug.c</itemPath>
+        <itemPath>../../../motion/pid/pidTypeOptimizer.c</itemPath>
+        <itemPath>../../../motion/pid/detectedMotionType.c</itemPath>
+        <itemPath>../../../motion/pid/pidComputationValues.c</itemPath>
+        <itemPath>../../../motion/pid/pidComputationInstructionValues.c</itemPath>
+        <itemPath>../../../motion/pid/motionInstructionDebug.c</itemPath>
       </logicalFolder>
       <logicalFolder name="motion.pid.computer"
                      displayName="motion.pid.computer"
@@ -741,14 +741,14 @@
                      displayName="motion.pid.endDetection"
                      projectFiles="true">
         <itemPath>../../../motion/pid/endDetection/motionEndDetection.c</itemPath>
-        <itemPath>D:/dev/git/cen-electronic/motion/pid/endDetection/motionEndInfo.c</itemPath>
-        <itemPath>D:/dev/git/cen-electronic/motion/pid/endDetection/motionEndDetectionDebug.c</itemPath>
+        <itemPath>../../../motion/pid/endDetection/motionEndInfo.c</itemPath>
+        <itemPath>../../../motion/pid/endDetection/motionEndDetectionDebug.c</itemPath>
       </logicalFolder>
       <logicalFolder name="motion.pid.parameters"
                      displayName="motion.pid.parameters"
                      projectFiles="true">
         <itemPath>../../../motion/pid/parameters/pidParameterDebug.c</itemPath>
-        <itemPath>D:/dev/git/cen-electronic/motion/pid/parameters/pidParameterPersistence.c</itemPath>
+        <itemPath>../../../motion/pid/parameters/pidParameterPersistence.c</itemPath>
       </logicalFolder>
       <logicalFolder name="motion.pid.profile"
                      displayName="motion.pid.profile"
@@ -761,7 +761,7 @@
                      projectFiles="true">
         <itemPath>../../../motion/position/trajectory.c</itemPath>
         <itemPath>../../../motion/position/coderErrorComputer.c</itemPath>
-        <itemPath>D:/dev/git/cen-electronic/motion/position/trajectoryDebug.c</itemPath>
+        <itemPath>../../../motion/position/trajectoryDebug.c</itemPath>
       </logicalFolder>
       <logicalFolder name="motion.position.hctlCoders"
                      displayName="motion.position.hctlCoders"
@@ -781,8 +781,8 @@
         <itemPath>../../../robot/kinematics/robotKinematics.c</itemPath>
         <itemPath>../../../robot/kinematics/robotKinematicsDevice.c</itemPath>
         <itemPath>../../../robot/kinematics/robotKinematicsDeviceInterface.c</itemPath>
-        <itemPath>D:/dev/git/cen-electronic/robot/kinematics/robotKinematicsDebug.c</itemPath>
-        <itemPath>D:/dev/git/cen-electronic/robot/kinematics/robotKinematicsPersistence.c</itemPath>
+        <itemPath>../../../robot/kinematics/robotKinematicsDebug.c</itemPath>
+        <itemPath>../../../robot/kinematics/robotKinematicsPersistence.c</itemPath>
       </logicalFolder>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"

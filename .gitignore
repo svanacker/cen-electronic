@@ -37,7 +37,7 @@ bin
 *.elf
 
 *.d
-log
+log-*
 Debug
 *.suo
 *.v12.suo
@@ -49,3 +49,8 @@ Debug
 *.ipch
 *.opendb
 
+#MPLAB.X
+private.xml
+memoryfile.xml
+Makefile-genesis.properties
+Makefile-default.mk
