@@ -1,7 +1,7 @@
 #include "pidComputationValues.h"
+#include "pidComputationInstructionValues.h"
 
 #include "detectedMotionType.h"
-#include "pidMotionError.h"
 #include "endDetection/motionEndDetection.h"
 
 #include "../../common/io/outputStream.h"
@@ -14,22 +14,18 @@ void clearPidComputationValues(PidComputationValues* pidComputationValues) {
     pidComputationValues->thetaXAxisError = 0.0f;
     pidComputationValues->pidTime = 0.0f;
     
-    resetMotionEndInfo(&(pidComputationValues->motionEnd[THETA]));
-    resetMotionEndInfo(&(pidComputationValues->motionEnd[ALPHA]));
-    
-    clearPidCurrentValues(&(pidComputationValues->currentValues[THETA]));
-    clearPidCurrentValues(&(pidComputationValues->currentValues[ALPHA]));
-     
-    clearMotionError(&(pidComputationValues->errors[THETA]));
-    clearMotionError(&(pidComputationValues->errors[ALPHA]));
+    clearPidComputationInstructionValues(&(pidComputationValues->values[THETA]));
+    clearPidComputationInstructionValues(&(pidComputationValues->values[ALPHA]));
 }
 
 void setDetectedMotionType(PidComputationValues* pidComputationValues, enum DetectedMotionType detectedMotionType) {
     if (detectedMotionType != pidComputationValues->detectedMotionType) {
+        
         OutputStream* outputStream = getDebugOutputStreamLogger();
         appendDetectedMotionTypeAsString(outputStream, pidComputationValues->detectedMotionType);
         appendString(outputStream, "->");
         appendDetectedMotionTypeAsString(outputStream, detectedMotionType);
+        
         pidComputationValues->detectedMotionType = detectedMotionType;
         println(outputStream);
     }

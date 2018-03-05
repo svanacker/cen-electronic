@@ -106,13 +106,6 @@ void setMustReachPosition(PidMotion* pidMotion, bool value);
 void updateMotorsAndDetectedMotionType(PidMotion* pidMotion);
 
 /**
-* Get the normal voltage value at the speed defined by the parameter
-* @param pulseAtNormalSpeed the speed for which we want the normal voltage
-* TODO : Must be Test By Experimentation
-*/
-float getNormalU(float pulseAtNormalSpeed);
-
-/**
  * Stop the PID.
  */
 void stopPID(PidMotion* pidMotion);

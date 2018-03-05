@@ -6,6 +6,13 @@
 #include "../../../common/commons.h"
 
 /**
+ * Unit which handle to detect if we are at the end of a motion
+ * The motion could be ended for 2 reasons :
+ * - The integral of speed is very low compared to what it should be
+ */
+
+
+/**
 * Define the detection of end of trajectory.
 */
 #define MOTION_END_MASK_STOP 1
@@ -29,13 +36,11 @@
 typedef struct MotionEndInfo {
     /** How many measure we have done */
 	unsigned int integralTime;
-	/** Current index in the array. */
-	unsigned int index;
-	/** The integral of the absolute value of delta position. */
-	float absDeltaPositionIntegralHistory[MAX_HISTORY_COUNT];
-	// the compute of related array
-	float absDeltaPositionIntegral;
-	/** The integral of the consign determined by the pid computer */
+	/** The integral of the absolute value of each delta position for a period of time. */
+	float absSpeedIntegralHistory[MAX_HISTORY_COUNT];
+	// the compute of related array (sum of each previous element between )
+	float absSpeedIntegral;
+	/** The integral of the value (in volt) determined by the pid computer */
 	float absUIntegralHistory[MAX_HISTORY_COUNT];
 	// the compute of related array
 	float absUIntegral;

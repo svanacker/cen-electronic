@@ -1,10 +1,10 @@
 #ifndef PID_COMPUTATION_VALUES_H
 #define PID_COMPUTATION_VALUES_H
 
+#include "pidComputationInstructionValues.h"
 #include "detectedMotionType.h"
 #include "instructionType.h"
-#include "pidMotionError.h"
-#include "pidCurrentValues.h"
+
 #include "endDetection/motionEndInfo.h"
 
 /**
@@ -22,16 +22,18 @@ typedef struct PidComputationValues {
     // determine the distance between normal trajectory tangent line
     // and real trajectory tangent line (=> X Axis)
     float thetaXAxisError;
-    // store the current pid timer
+    // store the current pid time
     float pidTime;
-    // Store error of each motion
-    PidMotionError errors[INSTRUCTION_TYPE_COUNT];
-    // store tension / position / current speed
-    PidCurrentValues currentValues[INSTRUCTION_TYPE_COUNT];
-    // Store Detection of end of trajectory
-    MotionEndInfo motionEnd[INSTRUCTION_TYPE_COUNT];
+    /** Store all values indexed by INSTRUCTION_TYPE */
+    PidComputationInstructionValues values[INSTRUCTION_TYPE_COUNT];
+
 } PidComputationValues;
 
+/**
+ * Change the motion Type.
+ * @param pidComputationValues
+ * @param detectedMotionType
+ */
 void setDetectedMotionType(PidComputationValues* pidComputationValues, enum DetectedMotionType detectedMotionType);
 
 /**

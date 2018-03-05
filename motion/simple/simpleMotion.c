@@ -41,11 +41,6 @@ void gotoSimplePosition(PidMotion* pidMotion, float leftPulse, float rightPulse,
 	setNextPosition(motionDefinition, THETA, motionParameterType, pidType, thetaNextPosition, (float)a, (float)speed);
 	setNextPosition(motionDefinition, ALPHA, motionParameterType, pidType, alphaNextPosition, (float)a, (float)speed);
 
-	/*
-	OutputStream* outputStream = getDebugOutputStreamLogger();
-	printMotionInstruction(outputStream, &(motionDefinition->inst[THETA]));
-	printMotionInstruction(outputStream, &(motionDefinition->inst[ALPHA]));
-	*/
     // All main information are defined
     motionDefinition->state = PID_MOTION_DEFINITION_STATE_SET;
 }

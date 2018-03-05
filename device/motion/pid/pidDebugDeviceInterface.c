@@ -41,6 +41,12 @@ int devicePidDebugGetInterface(char commandHeader, DeviceInterfaceMode mode, boo
 		}
 		return commandLengthValueForMode(mode, 0, 0);
 	}
+	else if (commandHeader == COMMAND_PID_TRAJECTORY_TABLE) {
+		if (fillDeviceArgumentList) {
+			setFunctionNoArgumentAndNoResult("PID Trajectory Table");
+		}
+		return commandLengthValueForMode(mode, 0, 0);
+	}
 	return DEVICE_HEADER_NOT_HANDLED;
 }
 

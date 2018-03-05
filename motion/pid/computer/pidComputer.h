@@ -7,17 +7,17 @@
 
 #include "../pid.h"
 #include "../parameters/pidParameter.h"
-#include "../pidMotionError.h"
+#include "../pidComputationInstructionValues.h"
 #include "../motionInstruction.h"
 
 /**
  * Compute the correction.
- * @param motionError all information about errors (for alpha and theta)
+ * @param computationInstructionValues the values for a specific instruction
  * @param pid the PID which must be applied
  * @param normalSpeed the normal speed which must be reached
  * @param error the error which must be stored into motionError
  */
-float computePidCorrection( PidMotionError* motionError,
+float computePidCorrection( PidComputationInstructionValues* computationInstructionValues,
                             PidParameter* pidParameter,
                             float normalSpeed,
                             float error);
@@ -36,6 +36,12 @@ float computeNormalPosition(MotionInstruction* motionInstruction, float time);
  */
 float computeNormalSpeed(MotionInstruction* motionInstruction, float time);
 
+/**
+* Get the normal voltage value at the speed defined by the parameter
+* @param pulseAtNormalSpeed the speed for which we want the normal voltage
+* TODO : Must be Test By Experimentation
+*/
+float getNormalU(float pulseAtNormalSpeed);
 
 #endif
 

@@ -8,16 +8,16 @@
 #include "../../motion/parameters/motionParameterType.h"
 
 /**
- * Defines the structs which stores the instruction.
+ * Defines the structure which stores the instruction.
  */
 typedef struct MotionInstruction {
     /** the position which must be reached when using classic implementation */
     float nextPosition;
-    /** The acceleration which is asked : > 0 */
+    /** The acceleration which is requested : > 0 */
     float a;
     /** The initial speed. */
     float initialSpeed;
-    /** The maximal speed which is asked : > 0 */
+    /** The maximal speed which is requested : > 0 */
     float speed;
     /** The maximal speed which can be reached : negative or positive */
     float speedMax;
@@ -42,19 +42,9 @@ typedef struct MotionInstruction {
 } MotionInstruction;
 
 /**
- * Clear the motion Instruction data
- * @param motionInstruction
+ * Clear the motion Instruction data.
+ * @param motionInstruction the motion instruction to clear
  */
 void clearMotionInstruction(MotionInstruction* motionInstruction);
-
-/**
-* Print the instruction struct of the index.
-*/
-void printMotionInstruction(OutputStream* outputStream, MotionInstruction* inst);
-
-/**
-* Print a simulation of trajectory to an outputStream
-*/
-void printTrajectory(OutputStream* outputStream, MotionInstruction* instruction, float maxPidTime);
 
 #endif

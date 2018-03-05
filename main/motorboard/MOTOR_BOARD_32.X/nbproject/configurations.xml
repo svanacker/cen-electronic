@@ -321,14 +321,14 @@
         <itemPath>../../../motion/pid/detectedMotionType.h</itemPath>
         <itemPath>../../../motion/pid/pidComputationValues.h</itemPath>
         <itemPath>../../../motion/pid/motionInstruction.h</itemPath>
-        <itemPath>../../../motion/pid/pidMotionError.h</itemPath>
-        <itemPath>../../../motion/pid/pidCurrentValues.h</itemPath>
         <itemPath>../../../motion/pid/pidMotion.h</itemPath>
         <itemPath>../../../motion/pid/pidTimer.h</itemPath>
         <itemPath>../../../motion/pid/pidDebug.h</itemPath>
         <itemPath>../../../motion/pid/pidConstants.h</itemPath>
         <itemPath>../../../motion/pid/pidMotionDefinitionState.h</itemPath>
         <itemPath>D:/dev/git/cen-electronic/motion/pid/pidTypeOptimizer.h</itemPath>
+        <itemPath>D:/dev/git/cen-electronic/motion/pid/pidComputationInstructionValues.h</itemPath>
+        <itemPath>D:/dev/git/cen-electronic/motion/pid/motionInstructionDebug.h</itemPath>
       </logicalFolder>
       <logicalFolder name="motion.pid.computer"
                      displayName="motion.pid.computer"
@@ -721,14 +721,14 @@
         <itemPath>../../../motion/pid/pidType.c</itemPath>
         <itemPath>../../../motion/pid/pidMotion.c</itemPath>
         <itemPath>../../../motion/pid/motionInstruction.c</itemPath>
-        <itemPath>../../../motion/pid/pidMotionError.c</itemPath>
         <itemPath>../../../motion/pid/pidDebug.c</itemPath>
         <itemPath>../../../motion/pid/instructionType.c</itemPath>
-        <itemPath>../../../motion/pid/pidCurrentValues.c</itemPath>
         <itemPath>../../../motion/pid/pidMotionDefinitionState.c</itemPath>
         <itemPath>D:/dev/git/cen-electronic/motion/pid/pidTypeOptimizer.c</itemPath>
         <itemPath>D:/dev/git/cen-electronic/motion/pid/detectedMotionType.c</itemPath>
         <itemPath>D:/dev/git/cen-electronic/motion/pid/pidComputationValues.c</itemPath>
+        <itemPath>D:/dev/git/cen-electronic/motion/pid/pidComputationInstructionValues.c</itemPath>
+        <itemPath>D:/dev/git/cen-electronic/motion/pid/motionInstructionDebug.c</itemPath>
       </logicalFolder>
       <logicalFolder name="motion.pid.computer"
                      displayName="motion.pid.computer"

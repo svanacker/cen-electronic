@@ -54,7 +54,7 @@ struct PidMotionDefinition {
 	MotionInstruction inst[INSTRUCTION_TYPE_COUNT];
 	// When using BSPline
 	BSplineCurve curve;
-	/** The method which will compute the errors (by using coders or absolute positions) .*/
+	/** The pointer on the method which will compute the errors (by using coders or absolute positions) .*/
 	ComputeUFunction* computeU;
 	// OutputStream for notification so that caller could have it !
 	OutputStream* notificationOutputStream;
@@ -70,12 +70,12 @@ struct PidMotion {
     PidGlobalParameters globalParameters;
 	// If false (default value), replace Motion Definition, if true stack All New Motion Definition
 	bool stackMotionDefinitions;
-	// Count the total motionDefinition
-	unsigned int length;
-	// read Index
-	unsigned int readIndex;
-	// write Index
-	unsigned int writeIndex;
+	// Count the total motionDefinition in the list
+	unsigned int motionLength;
+	// motion List read Index
+	unsigned int motionReadIndex;
+	// motion List write Index
+	unsigned int motionWriteIndex;
     // Contains the all motion Definitions;
 	PidMotionDefinition(*motionDefinitions)[];
     // All current values (must be reset after each new move) => CHANGE EVERY TIME COMPUTATION

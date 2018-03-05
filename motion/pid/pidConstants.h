@@ -6,6 +6,9 @@
 
 // PID CONSTANT
 
+/** How many Item of PID Computation Values we store */
+#define PID_HISTORY_ITEM_COUNT                                              1000
+
 
 // -> TEST MODE (to test with a rolling board instead of real motion)
 

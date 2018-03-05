@@ -1593,13 +1593,7 @@
     <ClCompile Include="motion\pid\parameters\pidParameterDebug.c">
       <Filter>Source Files\motion\pid\parameters</Filter>
     </ClCompile>
-    <ClCompile Include="motion\pid\pidCurrentValues.c">
-      <Filter>Source Files\motion\pid</Filter>
-    </ClCompile>
     <ClCompile Include="motion\pid\pidMotionDefinitionState.c">
-      <Filter>Source Files\motion\pid</Filter>
-    </ClCompile>
-    <ClCompile Include="motion\pid\pidMotionError.c">
       <Filter>Source Files\motion\pid</Filter>
     </ClCompile>
     <ClCompile Include="motion\pid\pidTypeOptimizer.c">
@@ -1658,6 +1652,12 @@
     </ClCompile>
     <ClCompile Include="robot\config\robotConfigDebug.c">
       <Filter>Source Files\robot\config</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\pid\pidComputationInstructionValues.c">
+      <Filter>Source Files\motion\pid</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\pid\motionInstructionDebug.c">
+      <Filter>Source Files\motion\pid</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2258,13 +2258,7 @@
     <ClInclude Include="common\eeprom\eepromAreas.h">
       <Filter>Header Files\common\eeprom</Filter>
     </ClInclude>
-    <ClInclude Include="motion\pid\pidMotionError.h">
-      <Filter>Header Files\motion\pid</Filter>
-    </ClInclude>
     <ClInclude Include="motion\pid\pidMotion.h">
-      <Filter>Header Files\motion\pid</Filter>
-    </ClInclude>
-    <ClInclude Include="motion\pid\pidCurrentValues.h">
       <Filter>Header Files\motion\pid</Filter>
     </ClInclude>
     <ClInclude Include="motion\pid\pidComputationValues.h">
@@ -2560,6 +2554,12 @@
     </ClInclude>
     <ClInclude Include="robot\config\robotConfigDebug.h">
       <Filter>Header Files\robot\config</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\pidComputationInstructionValues.h">
+      <Filter>Header Files\motion\pid</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\motionInstructionDebug.h">
+      <Filter>Header Files\motion\pid</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

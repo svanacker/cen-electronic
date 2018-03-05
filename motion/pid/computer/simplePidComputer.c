@@ -6,8 +6,7 @@
 #include "../instructionType.h"
 #include "../parameters/pidParameter.h"
 #include "../pidMotion.h"
-#include "../pidCurrentValues.h"
-#include "../pidMotionError.h"
+#include "../pidComputationInstructionValues.h"
 
 #include "../../simulation/motionSimulation.h"
 
@@ -26,49 +25,45 @@
  * @param currentPosition the current position of the wheels (either alphaPosition, either thetaPosition)
  * @param time the time in pid sampling
  */
-float computeNextPID(PidMotion* pidMotion, enum InstructionType instructionType, MotionInstruction* motionInstruction, PidCurrentValues* pidCurrentValues, PidMotionError* motionError, float time) {
+float computeNextPID(PidMotion* pidMotion, enum InstructionType instructionType, MotionInstruction* motionInstruction, PidComputationInstructionValues* values, float time) {
     unsigned char rollingTestMode = getRollingTestMode(pidMotion);
     enum PidType pidType = motionInstruction->pidType;
-    float currentPosition = pidCurrentValues->position;
+    float currentPosition = values->currentPosition;
 
     // instructionIndex = Alpha / Theta
     // pidType = Forward / Rotation / Final Approach ...
     unsigned char pidIndex = getIndexOfPid(instructionType, pidType);
     PidParameter* pidParameter = getPidParameter(pidMotion, pidIndex, rollingTestMode);
 
-//	OutputStream* outputStream = getDebugOutputStreamLogger();
-
     if (!pidParameter->enabled) {
         return 0.0f;
     }
 
     float normalPosition = computeNormalPosition(motionInstruction, time);
-    pidCurrentValues->normalPosition = normalPosition;
-
+    values->normalPosition = normalPosition;
     float positionError = normalPosition - currentPosition;
+    
     float normalSpeed = computeNormalSpeed(motionInstruction, time);
-    float result = computePidCorrection(motionError, pidParameter, normalSpeed, positionError);
+    values->normalSpeed = normalSpeed;
+    
+    float result = computePidCorrection(values, pidParameter, normalSpeed, positionError);
 
     return result;
 }
 
-/**
- * Compute the PID when the instruction is very simple (not b spline)
- */
-void simpleMotionUCompute(PidMotion* pidMotion, PidMotionDefinition* motionDefinition) {
-	PidComputationValues* computationValues = &(pidMotion->computationValues);
-    MotionInstruction* thetaInst = &(motionDefinition->inst[THETA]);
-    MotionInstruction* alphaInst = &(motionDefinition->inst[ALPHA]);
-
-    PidCurrentValues* thetaCurrentValues = &(computationValues->currentValues[THETA]);
-    PidCurrentValues* alphaCurrentValues = &(computationValues->currentValues[ALPHA]);
-
-    PidMotionError* thetaError = &(computationValues->errors[THETA]);
-    PidMotionError* alphaError = &(computationValues->errors[ALPHA]);
-
+void simpleMotionUComputeInstruction(PidMotion* pidMotion, PidMotionDefinition* motionDefinition, enum InstructionType instructionType) {
+    PidComputationValues* computationValues = &(pidMotion->computationValues);
+    MotionInstruction* motionInstruction = &(motionDefinition->inst[instructionType]);
+    PidComputationInstructionValues* computationInstructionValues = &(computationValues->values[instructionType]);
 
     float pidTime = computationValues->pidTime;
+    computationInstructionValues->u = computeNextPID(pidMotion, instructionType, motionInstruction, computationInstructionValues, pidTime);
+}
 
-    thetaCurrentValues->u = computeNextPID(pidMotion, THETA, thetaInst, thetaCurrentValues, thetaError, pidTime);
-    alphaCurrentValues->u = computeNextPID(pidMotion, ALPHA, alphaInst, alphaCurrentValues, alphaError, pidTime);
+/**
+ * Compute the PID when the instruction is very simple (not b spline).
+ */
+void simpleMotionUCompute(PidMotion* pidMotion, PidMotionDefinition* motionDefinition) {
+    simpleMotionUComputeInstruction(pidMotion, motionDefinition, THETA);
+    simpleMotionUComputeInstruction(pidMotion, motionDefinition, ALPHA);
 }

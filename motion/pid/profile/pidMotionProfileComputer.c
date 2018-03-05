@@ -1,7 +1,7 @@
 #include <math.h>
 
 #include "../pid.h"
-#include "../pidCurrentValues.h"
+#include "../pidComputationInstructionValues.h"
 #include "../computer/pidComputer.h"
 #include "../computer/simplePidComputer.h"
 #include "../profile/pidMotionProfileComputer.h"
@@ -24,9 +24,9 @@ void clearInitialSpeeds(PidMotion* pidMotion) {
     PidComputationValues* computationValues = &(pidMotion->computationValues);
 
     // TODO : For continuous trajectory : to change
-    PidCurrentValues* alphaCurrentValues = &(computationValues->currentValues[ALPHA]);
+    PidComputationInstructionValues* alphaCurrentValues = &(computationValues->values[ALPHA]);
     alphaCurrentValues->currentSpeed = 0.0f;
-    PidCurrentValues* thetaCurrentValues = &(computationValues->currentValues[THETA]);
+    PidComputationInstructionValues* thetaCurrentValues = &(computationValues->values[THETA]);
     thetaCurrentValues->currentSpeed = 0.0f;
 }
 

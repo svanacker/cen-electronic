@@ -22,7 +22,7 @@ bool isPidMotionInitialized(const PidMotion* pidMotion) {
 	if (!checkPidMotionNotNull(pidMotion)) {
 		return false;
 	}
-	return pidMotion->length > 0;
+	return pidMotion->motionLength > 0;
 }
 
 void clearPidMotionDefinition(PidMotionDefinition* pidMotionDefinition) {
@@ -36,14 +36,14 @@ void clearPidMotion(PidMotion* pidMotion) {
 	if (!checkPidMotionNotNull(pidMotion)) {
 		return;
 	}
-	pidMotion->writeIndex = 0;
-	pidMotion->readIndex = 0;
+	pidMotion->motionWriteIndex = 0;
+	pidMotion->motionReadIndex = 0;
 	unsigned int i;
 
     PidMotionDefinition* pidMotionDefinition = (PidMotionDefinition*)pidMotion->motionDefinitions;
 	
 	// Reinit all values to make the Debug more easy
-	for (i = 0; i < pidMotion->length; i++) {
+	for (i = 0; i < pidMotion->motionLength; i++) {
         clearPidMotionDefinition(pidMotionDefinition);
         pidMotionDefinition++;
 	}
@@ -55,23 +55,23 @@ bool isPidMotionFull(const PidMotion* pidMotion) {
 	if (!checkPidMotionNotNull(pidMotion)) {
 		return false;
 	}
-	return ((pidMotion->writeIndex + 1) % pidMotion->length) == pidMotion->readIndex;
+	return ((pidMotion->motionWriteIndex + 1) % pidMotion->motionLength) == pidMotion->motionReadIndex;
 }
 
 bool isPidMotionEmpty(const PidMotion* pidMotion) {
 	if (!checkPidMotionNotNull(pidMotion)) {
 		return true;
 	}
-	return pidMotion->readIndex == pidMotion->writeIndex;
+	return pidMotion->motionReadIndex == pidMotion->motionWriteIndex;
 }
 
 unsigned int getPidMotionElementsCount(const PidMotion* pidMotion) {
 	if (!checkPidMotionNotNull(pidMotion)) {
 		return 0;
 	}
-	int result = pidMotion->writeIndex - pidMotion->readIndex;
+	int result = pidMotion->motionWriteIndex - pidMotion->motionReadIndex;
 	if (result < 0) {
-		result += pidMotion->length;
+		result += pidMotion->motionLength;
 	}
 	return result;
 }
@@ -80,7 +80,7 @@ unsigned int getPidMotionCapacity(const PidMotion* pidMotion) {
 	if (!checkPidMotionNotNull(pidMotion)) {
 		return 0;
 	}
-	return pidMotion->length - 1;
+	return pidMotion->motionLength - 1;
 }
 
 PidMotionDefinition* pidMotionReadMotionDefinition(PidMotion* pidMotion, bool errorIfEndOfList) {
@@ -91,10 +91,10 @@ PidMotionDefinition* pidMotionReadMotionDefinition(PidMotion* pidMotion, bool er
 	if (!isEmpty) {
 		PidMotionDefinition* result = (PidMotionDefinition*)pidMotion->motionDefinitions;
 		// Shift to the right cell index
-		result += pidMotion->readIndex;
+		result += pidMotion->motionReadIndex;
 
-		pidMotion->readIndex++;
-		pidMotion->readIndex %= pidMotion->length;
+		pidMotion->motionReadIndex++;
+		pidMotion->motionReadIndex %= pidMotion->motionLength;
 		return result;
 	}
 	else {
@@ -116,10 +116,10 @@ PidMotionDefinition* pidMotionGetNextToWritePidMotionDefinition(PidMotion* pidMo
 		if (!isFull) {
 			PidMotionDefinition* result = (PidMotionDefinition*)pidMotion->motionDefinitions;
 			// Shift to the right cell index
-			result += pidMotion->writeIndex;
+			result += pidMotion->motionWriteIndex;
 			// For next time
-			pidMotion->writeIndex++;
-			pidMotion->writeIndex %= pidMotion->length;
+			pidMotion->motionWriteIndex++;
+			pidMotion->motionWriteIndex %= pidMotion->motionLength;
 			return result;
 		}
 		else {
@@ -131,9 +131,9 @@ PidMotionDefinition* pidMotionGetNextToWritePidMotionDefinition(PidMotion* pidMo
     // We overwrite on the read Index
     PidMotionDefinition* result = (PidMotionDefinition*)pidMotion->motionDefinitions;
     // Shift to the right cell index
-    result += pidMotion->readIndex;
+    result += pidMotion->motionReadIndex;
     // We overwrite the writeIndex to the next one to avoid inconsistency
-    pidMotion->writeIndex = (pidMotion->readIndex + 1) % pidMotion->length;
+    pidMotion->motionWriteIndex = (pidMotion->motionReadIndex + 1) % pidMotion->motionLength;
 
     return result;
 }
@@ -148,7 +148,7 @@ PidMotionDefinition* pidMotionGetCurrentMotionDefinition(PidMotion* pidMotion) {
     }
     PidMotionDefinition* result = (PidMotionDefinition*)pidMotion->motionDefinitions;
     // Shift to the right cell index
-    result += pidMotion->readIndex;
+    result += pidMotion->motionReadIndex;
     return result;
 }
 
@@ -157,7 +157,7 @@ PidMotionDefinition* getMotionDefinition(PidMotion* pidMotion, unsigned int inde
 	if (index < size) {
 		PidMotionDefinition* result = (PidMotionDefinition*)pidMotion->motionDefinitions;
 		// Shift to the right cell index
-		result += ((pidMotion->readIndex + index) % pidMotion->length);
+		result += ((pidMotion->motionReadIndex + index) % pidMotion->motionLength);
 
 		return result;
 	}
@@ -195,15 +195,12 @@ void initPidMotion(PidMotion* pidMotion, Eeprom* _eeprom, PidMotionDefinition(*a
 		return;
 	}
 	pidMotion->motionDefinitions = array;
-	pidMotion->length = length;
+	pidMotion->motionLength = length;
 	pidMotion->pidPersistenceEeprom = _eeprom;
 
 	// We load the values from the eeprom, but we don't load default values
 	loadPidParameters(pidMotion, false);
 	RobotKinematics* robotKinematics = getRobotKinematics();
 	initPidTimer();
-
-	// PidMotionDefinition* motionDefinition = getCurrentMotionDefinition();
-	// initFirstTimeBSplineCurve(&(motionDefinition->curve));
 }
 

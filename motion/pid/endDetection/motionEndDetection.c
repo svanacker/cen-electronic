@@ -16,22 +16,26 @@
 
 #include "../detectedMotionType.h"
 #include "../pidComputationValues.h"
+#include "../computer/pidComputer.h"
 #include "../pidConstants.h"
 #include "../pid.h"
 
 
 /**
+ * Aggregates the value by doing the integral of the speed, and the integral of the U
  * private function
  */
 void updateAggregateValues(MotionEndInfo* endMotion) {
-    endMotion->absDeltaPositionIntegral = 0;
+    /*
+    endMotion->absSpeedIntegral = 0;
     endMotion->absUIntegral = 0;
-    int index = endMotion->index;
+    int index = endMotion->writeIndex;
     int i;
     for (i = index + 1; i < index + MAX_HISTORY_COUNT; i++) {
-        endMotion->absDeltaPositionIntegral += endMotion->absDeltaPositionIntegralHistory[i % MAX_HISTORY_COUNT];
+        endMotion->absSpeedIntegral += endMotion->absSpeedIntegralHistory[i % MAX_HISTORY_COUNT];
         endMotion->absUIntegral += endMotion->absUIntegralHistory[i % MAX_HISTORY_COUNT];
     }
+    */
 }
 
 /**
@@ -47,39 +51,41 @@ void updateEndMotionData(PidComputationValues* computationValues,
 	                     MotionEndInfo* endMotion,
 	                     MotionEndDetectionParameter* parameter,
 	                     unsigned int time) {
-    PidCurrentValues* pidCurrentValues = &(computationValues->currentValues[instructionType]);
+    /*
+    PidCurrentValues* pidCurrentValues = &(computationValues->values[instructionType].currentValues);
 
     // Do not analyze it during startup time
     if (time < parameter->noAnalysisAtStartupTime) {
-        pidCurrentValues->oldPosition = pidCurrentValues->position;
+        // Store it for next pid loop and return
+        pidCurrentValues->oldPosition = pidCurrentValues->currentPosition;
         return;
     }
+    // We launch analysis only each timeRangeAnalysis (reason why there is modulo)
     if ((time % parameter->timeRangeAnalysis) == 0) {
         endMotion->integralTime++;
         // the current array value is full
         if ((endMotion->integralTime % MAX_HISTORY_COUNT) == 0) {
             // get the next Index
-            endMotion->index = (endMotion->index + 1) % MAX_HISTORY_COUNT;
-            // clean it before using it
-            endMotion->absUIntegralHistory[endMotion->index] = 0;
-            endMotion->absDeltaPositionIntegralHistory[endMotion->index] = 0;
+            endMotion->writeIndex = (endMotion->writeIndex + 1) % MAX_HISTORY_COUNT;
         }
+        float absU = fabsf(pidCurrentValues->u);
+        float absDeltaPosition = fabsf(pidCurrentValues->currentPosition - pidCurrentValues->oldPosition);
+
+        endMotion->absUIntegralHistory[endMotion->writeIndex] = absU;
+        endMotion->absSpeedIntegralHistory[endMotion->writeIndex] = absDeltaPosition;
+
+        // To compute for next iteration
+        pidCurrentValues->oldPosition = pidCurrentValues->currentPosition;
+
+        // Update aggregate Values
+        updateAggregateValues(endMotion);
     }
-    float absU = fabsf(pidCurrentValues->u);
-    float absDeltaPosition = fabsf(pidCurrentValues->position - pidCurrentValues->oldPosition);
-
-    // In every case
-    endMotion->absUIntegralHistory[endMotion->index] += absU;
-    endMotion->absDeltaPositionIntegralHistory[endMotion->index] += absDeltaPosition;
-
-    // To compute for next iteration
-    pidCurrentValues->oldPosition = pidCurrentValues->position;
-
-    // Update aggregate Values
-    updateAggregateValues(endMotion);
+    */
 }
 
 /**
+ * Detect if we are at the end of the motion. End of motion means that 
+ * the integral of 
  * @private
  * @param instructionType
  * @param endMotion
@@ -91,7 +97,7 @@ bool isEndOfMotion(enum InstructionType instructionType, MotionEndInfo* endMotio
     if (endMotion->integralTime < parameter->timeRangeAnalysis) {
         return false;
     }
-    if (endMotion->absDeltaPositionIntegral < (parameter->absDeltaPositionIntegralFactorThreshold * parameter->timeRangeAnalysis * MAX_HISTORY_COUNT)) {
+    if (endMotion->absSpeedIntegral < (parameter->absDeltaPositionIntegralFactorThreshold * parameter->timeRangeAnalysis * MAX_HISTORY_COUNT)) {
         return true;
     }
     return false;
@@ -121,18 +127,18 @@ bool isMotionInstructionIsBlocked(PidMotionDefinition* motionDefinition, enum In
 }
 
 void detectIfRobotIsBlocked(PidMotion* pidMotion, PidMotionDefinition* motionDefinition) {
+    /*
     MotionEndDetectionParameter* endDetectionParameter = getMotionEndDetectionParameter(pidMotion);
         
     PidComputationValues* computationValues = &(pidMotion->computationValues);
-    PidCurrentValues* thetaCurrentValues = &(computationValues->currentValues[THETA]);
-    PidCurrentValues* alphaCurrentValues = &(computationValues->currentValues[ALPHA]);
-    
+    PidComputationInstructionValues* thetaCurrentValues = &(computationValues->values[THETA]);
+    PidComputationInstructionValues* alphaCurrentValues = &(computationValues->values[ALPHA]);
         
-    MotionEndInfo* thetaEndMotion = &(computationValues->motionEnd[THETA]);
-    MotionEndInfo* alphaEndMotion = &(computationValues->motionEnd[ALPHA]);
+    MotionEndInfo* thetaEndMotion = &(computationValues->values[THETA].motionEnd);
+    MotionEndInfo* alphaEndMotion = &(computationValues->values[ALPHA].motionEnd);
 
-    thetaCurrentValues->currentSpeed = thetaCurrentValues->position - thetaCurrentValues->oldPosition;
-    alphaCurrentValues->currentSpeed = alphaCurrentValues->position - alphaCurrentValues->oldPosition;
+    thetaCurrentValues->currentSpeed = thetaCurrentValues->currentPosition - thetaCurrentValues->oldPosition;
+    alphaCurrentValues->currentSpeed = alphaCurrentValues->currentPosition - alphaCurrentValues->oldPosition;
 
     updateEndMotionData(computationValues, THETA, thetaEndMotion, endDetectionParameter, (int) computationValues->pidTime);
     updateEndMotionData(computationValues, ALPHA, alphaEndMotion, endDetectionParameter, (int) computationValues->pidTime);
@@ -154,4 +160,5 @@ void detectIfRobotIsBlocked(PidMotion* pidMotion, PidMotionDefinition* motionDef
     }
     // If not blocked or not reached -> In Progress
     setDetectedMotionType(computationValues, DETECTED_MOTION_TYPE_POSITION_IN_PROGRESS);
+    */
 }

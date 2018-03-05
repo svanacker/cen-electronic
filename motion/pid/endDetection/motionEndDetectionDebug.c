@@ -67,14 +67,14 @@ void printMotionEndDetectionParameter(OutputStream* outputStream, MotionEndDetec
 
 // COMPUTATION VALUES
 
-#define MOTION_END_DETECTION_DEBUG_INSTRUCTION_TYPE_COLUMN_LENGTH                     11
-#define MOTION_END_DETECTION_DEBUG_INTEGRAL_TIME_COLUMN_LENGTH                        9
-#define MOTION_END_DETECTION_DEBUG_INDEX_COLUMN_LENGTH                                6
-#define MOTION_END_DETECTION_DEBUG_ABS_DELTA_POSITION_INTEGRAL_COLUMN_LENGTH          18
-#define MOTION_END_DETECTION_DEBUG_ABS_DELTA_POSITION_COLUMN_LENGTH                   18
-#define MOTION_END_DETECTION_DEBUG_ABS_U_INTEGRAL_COLUMN_LENGTH                       10
-#define MOTION_END_DETECTION_DEBUG_ABS_U_COLUMN_LENGTH                                10
-#define MOTION_END_DETECTION_DEBUG_LAST_COLUMN_LENGTH                                 0
+#define MOTION_END_DETECTION_DEBUG_INSTRUCTION_TYPE_COLUMN_LENGTH            11
+#define MOTION_END_DETECTION_DEBUG_INTEGRAL_TIME_COLUMN_LENGTH                9
+#define MOTION_END_DETECTION_DEBUG_INDEX_COLUMN_LENGTH                        6
+#define MOTION_END_DETECTION_DEBUG_ABS_SPEED_INTEGRAL_COLUMN_LENGTH          18
+#define MOTION_END_DETECTION_DEBUG_ABS_SPEED_COLUMN_LENGTH                   18
+#define MOTION_END_DETECTION_DEBUG_ABS_U_INTEGRAL_COLUMN_LENGTH              10
+#define MOTION_END_DETECTION_DEBUG_ABS_U_COLUMN_LENGTH                       10
+#define MOTION_END_DETECTION_DEBUG_LAST_COLUMN_LENGTH                         0
 
 /**
 * Private.
@@ -87,8 +87,8 @@ void printMotionEndInfoDebugHeader(OutputStream* outputStream) {
     appendStringHeader(outputStream, "Instruction", MOTION_END_DETECTION_DEBUG_INSTRUCTION_TYPE_COLUMN_LENGTH);
     appendStringHeader(outputStream, "integral", MOTION_END_DETECTION_DEBUG_INTEGRAL_TIME_COLUMN_LENGTH);
     appendStringHeader(outputStream, "index", MOTION_END_DETECTION_DEBUG_INDEX_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "abs Delta", MOTION_END_DETECTION_DEBUG_ABS_DELTA_POSITION_INTEGRAL_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "abs Delta", MOTION_END_DETECTION_DEBUG_ABS_DELTA_POSITION_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "abs Delta", MOTION_END_DETECTION_DEBUG_ABS_SPEED_INTEGRAL_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "abs Delta", MOTION_END_DETECTION_DEBUG_ABS_SPEED_COLUMN_LENGTH);
     appendStringHeader(outputStream, "abs U", MOTION_END_DETECTION_DEBUG_ABS_U_INTEGRAL_COLUMN_LENGTH);
     appendStringHeader(outputStream, "abs U", MOTION_END_DETECTION_DEBUG_ABS_U_COLUMN_LENGTH);
 	appendEndOfTableColumn(outputStream, MOTION_END_DETECTION_DEBUG_LAST_COLUMN_LENGTH);
@@ -97,8 +97,8 @@ void printMotionEndInfoDebugHeader(OutputStream* outputStream) {
     appendStringHeader(outputStream, "Type", MOTION_END_DETECTION_DEBUG_INSTRUCTION_TYPE_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Time", MOTION_END_DETECTION_DEBUG_INTEGRAL_TIME_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", MOTION_END_DETECTION_DEBUG_INDEX_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "Position Integral", MOTION_END_DETECTION_DEBUG_ABS_DELTA_POSITION_INTEGRAL_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "Position", MOTION_END_DETECTION_DEBUG_ABS_DELTA_POSITION_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Position Integral", MOTION_END_DETECTION_DEBUG_ABS_SPEED_INTEGRAL_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Position", MOTION_END_DETECTION_DEBUG_ABS_SPEED_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Integral", MOTION_END_DETECTION_DEBUG_ABS_U_INTEGRAL_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", MOTION_END_DETECTION_DEBUG_ABS_U_COLUMN_LENGTH);
 	appendEndOfTableColumn(outputStream, MOTION_END_DETECTION_DEBUG_LAST_COLUMN_LENGTH);
@@ -115,11 +115,11 @@ void printMotionEndInfoLine(OutputStream* outputStream,
                             MotionEndInfo* motionEndInfo) {
     addInstructionTypeTableData(outputStream, instructionType, MOTION_END_DETECTION_DEBUG_INSTRUCTION_TYPE_COLUMN_LENGTH);
     appendDecTableData(outputStream, motionEndInfo->integralTime, MOTION_END_DETECTION_DEBUG_INTEGRAL_TIME_COLUMN_LENGTH);
-    appendDecTableData(outputStream, motionEndInfo->index, MOTION_END_DETECTION_DEBUG_INDEX_COLUMN_LENGTH);
+    // appendDecTableData(outputStream, motionEndInfo->writeIndex, MOTION_END_DETECTION_DEBUG_INDEX_COLUMN_LENGTH);
     
     // Delta Position
-    appendDecfTableData(outputStream, motionEndInfo->absDeltaPositionIntegral, MOTION_END_DETECTION_DEBUG_ABS_DELTA_POSITION_INTEGRAL_COLUMN_LENGTH);
-    appendStringTableData(outputStream, "", MOTION_END_DETECTION_DEBUG_ABS_DELTA_POSITION_COLUMN_LENGTH);
+    appendDecfTableData(outputStream, motionEndInfo->absSpeedIntegral, MOTION_END_DETECTION_DEBUG_ABS_SPEED_INTEGRAL_COLUMN_LENGTH);
+    appendStringTableData(outputStream, "", MOTION_END_DETECTION_DEBUG_ABS_SPEED_COLUMN_LENGTH);
     
     // Delta U
     appendDecfTableData(outputStream, motionEndInfo->absUIntegral, MOTION_END_DETECTION_DEBUG_ABS_U_INTEGRAL_COLUMN_LENGTH);
@@ -135,8 +135,8 @@ void printMotionEndInfoLine(OutputStream* outputStream,
         appendDecTableData(outputStream, i, MOTION_END_DETECTION_DEBUG_INDEX_COLUMN_LENGTH);
 
         // Delta Position
-        appendStringTableData(outputStream, "", MOTION_END_DETECTION_DEBUG_ABS_DELTA_POSITION_INTEGRAL_COLUMN_LENGTH);
-        appendDecfTableData(outputStream, motionEndInfo->absDeltaPositionIntegralHistory[i], MOTION_END_DETECTION_DEBUG_ABS_DELTA_POSITION_COLUMN_LENGTH);
+        appendStringTableData(outputStream, "", MOTION_END_DETECTION_DEBUG_ABS_SPEED_INTEGRAL_COLUMN_LENGTH);
+        appendDecfTableData(outputStream, motionEndInfo->absSpeedIntegralHistory[i], MOTION_END_DETECTION_DEBUG_ABS_SPEED_COLUMN_LENGTH);
 
         // Delta U
         appendStringTableData(outputStream, "", MOTION_END_DETECTION_DEBUG_ABS_U_INTEGRAL_COLUMN_LENGTH);
@@ -151,6 +151,8 @@ void printMotionEndInfoLine(OutputStream* outputStream,
 void printMotionEndInfos(OutputStream* outputStream, PidMotion* pidMotion) {
     printMotionEndInfoDebugHeader(outputStream);
     MotionEndDetectionParameter* motionEndDetectionParameter = &(pidMotion->globalParameters.motionEndDetectionParameter);
-    printMotionEndInfoLine(outputStream, THETA, motionEndDetectionParameter, &(pidMotion->computationValues.motionEnd[THETA]));
-    printMotionEndInfoLine(outputStream, ALPHA, motionEndDetectionParameter, &(pidMotion->computationValues.motionEnd[ALPHA]));
+    /*
+    printMotionEndInfoLine(outputStream, THETA, motionEndDetectionParameter, &(pidMotion->computationValues.values[THETA].motionEnd));
+    printMotionEndInfoLine(outputStream, ALPHA, motionEndDetectionParameter, &(pidMotion->computationValues.values[ALPHA].motionEnd));
+    */
 }

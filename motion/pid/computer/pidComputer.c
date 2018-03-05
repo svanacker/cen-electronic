@@ -5,8 +5,7 @@
 #include "../instructionType.h"
 #include "../parameters/pidParameter.h"
 #include "../pidMotion.h"
-#include "../pidCurrentValues.h"
-#include "../pidMotionError.h"
+#include "../pidComputationInstructionValues.h"
 
 #include "../../../common/log/logger.h"
 #include "../../../common/log/logLevel.h"
@@ -39,40 +38,6 @@ float computeNormalPosition(MotionInstruction* inst, float time) {
     return result;
 }
 
-float computePidCorrection(PidMotionError* motionError,
-                            PidParameter* pidParameter,
-                            float normalSpeed,
-                            float error) {
-    // Computes the error, and limit too high value
-    motionError->error = error;
-
-    // Computes the integral error, and limit too high value
-    motionError->integralError += motionError->error;
-    motionError->integralError = limitFloat(motionError->integralError, pidParameter->maxIntegral);
-
-    // Saves the error
-    // When error increases if speed > 0 : error - previousError > 0 (Ex : error (t) = 200, error (t-1) = 150 => 50 (=> increases u)
-    // When error decreases if speed > 0 : error - previousError < 0 (Ex : error (t) = 180, error (t-1) = 220 => -40 (=> limits u)
-
-    motionError->derivativeError = motionError->error - motionError->previousError;
-    motionError->previousError = motionError->error;
-
-    // Computes PID
-    float u = (motionError->error * pidParameter->p
-        + motionError->integralError * pidParameter->i
-        + motionError->derivativeError * pidParameter->d);
-
-    // We divide to be on cool range when defining PID constant
-    float result = (u / PID_GLOBAL_DIVISER);
-
-    // Corresponds to the normal speed which must be added
-    result += getNormalU(normalSpeed);
-
-    // Limits the value of "u"
-    result = (float) limitFloat(result, PID_NEXT_VALUE_LIMIT);
-
-    return result;
-}
 
 float computeNormalSpeed(MotionInstruction* inst, float time) {
     float result = inst->initialSpeed;
@@ -99,5 +64,63 @@ float computeNormalSpeed(MotionInstruction* inst, float time) {
     return result;
 }
 
+float getWheelPulseByPidTimeAtFullSpeed(void) {
+    RobotKinematics* robotKinematics = getRobotKinematics();
+    float result = getWheelPulseBySecondsAtFullSpeed(robotKinematics) / PID_UPDATE_MOTORS_FREQUENCY;
+    return result;
+}
 
+float getUFactorAtFullSpeed(void) {
+    // TODO : Why This Constant (must depend on the voltage) !!!
+    float result = 128.0f / getWheelPulseByPidTimeAtFullSpeed();
+    return result;
+}
 
+/**
+ * Returns the tension which must be applied to the motor to reach normalSpeed, with no load on motor.
+ */
+float getNormalU(float pulseAtSpeed) {
+    // at full Speed (value = 127), 7 rotations / seconds * 20000 impulsions
+    // at Frequency of 200 Hz => 730 pulses by pidTime at full Speed
+    
+    // NormalU = (pulseAtSpeed / pulseAtFullSpeed) * MAX_U
+    float result = pulseAtSpeed * getUFactorAtFullSpeed();
+    // float result = 0.0f;
+    return result;
+}
+
+float computePidCorrection(PidComputationInstructionValues* values,
+                            PidParameter* pidParameter,
+                            float normalSpeed,
+                            float error) {
+    // Computes the error, and limit too high value
+    values->error = error;
+
+    // Computes the integral error, and limit too high value
+    values->integralError += values->error;
+    values->integralError = limitFloat(values->integralError, pidParameter->maxIntegral);
+
+    // Saves the error
+    // When error increases if speed > 0 : error - previousError > 0 (Ex : error (t) = 200, error (t-1) = 150 => 50 (=> increases u)
+    // When error decreases if speed > 0 : error - previousError < 0 (Ex : error (t) = 180, error (t-1) = 220 => -40 (=> limits u)
+
+    values->derivativeError = values->error - values->previousError;
+    values->previousError = values->error;
+
+    // Computes PID
+    float u = (values->error * pidParameter->p
+        + values->integralError * pidParameter->i
+        + values->derivativeError * pidParameter->d);
+
+    // We divide to be on cool range when defining PID constant
+    float result = (u / PID_GLOBAL_DIVISER);
+
+    // Corresponds to the normal speed which must be added if we would like to 
+    // go to the desired speed
+    result += getNormalU(normalSpeed);
+
+    // Limits the value of "u"
+    result = (float) limitFloat(result, PID_NEXT_VALUE_LIMIT);
+
+    return result;
+}

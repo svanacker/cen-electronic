@@ -8,7 +8,7 @@
 #include "../parameters/pidParameter.h"
 #include "../pidMotion.h"
 #include "../motionInstruction.h"
-#include "../pidCurrentValues.h"
+#include "../pidComputationInstructionValues.h"
 
 #include "../../../common/2d/2d.h"
 
@@ -54,7 +54,7 @@ void bSplineMotionUCompute(PidMotion* pidMotion, PidMotionDefinition* motionDefi
     PidParameter* pidParameter = getPidParameter(pidMotion, pidIndex, rollingTestMode);
 
     // ALPHA
-    PidMotionError* alphaMotionError = &(computationValues->errors[ALPHA]);    
+    PidComputationInstructionValues* alphaValues = &(computationValues->values[ALPHA]);    
 
     float normalAlpha = computeBSplineOrientationWithDerivative(curve, bSplineTime);
     float realAlpha = robotPosition->orientation;
@@ -73,7 +73,7 @@ void bSplineMotionUCompute(PidMotion* pidMotion, PidMotionDefinition* motionDefi
     float alphaPulseError = (-wheelsDistanceFromCenter * alphaError) / wheelAverageLength;
 
     // THETA
-    PidMotionError* thetaMotionError = &(computationValues->errors[THETA]);
+    PidComputationInstructionValues* thetaValues = &(computationValues->values[THETA]);
 
     // thetaError must be in Pulse and not in MM
     float thetaError = distanceBetweenPoints(&robotPoint, &normalPoint) / wheelAverageLength;
@@ -90,20 +90,18 @@ void bSplineMotionUCompute(PidMotion* pidMotion, PidMotionDefinition* motionDefi
     float thetaErrorWithCos = thetaError * cosAlphaAndThetaDiff;
     
     float normalSpeed = computeNormalSpeed(thetaInst, pidTime);
-    float thetaU = computePidCorrection(thetaMotionError, pidParameter, normalSpeed, thetaErrorWithCos);
+    float thetaU = computePidCorrection(thetaValues, pidParameter, normalSpeed, thetaErrorWithCos);
 
-    PidCurrentValues* thetaCurrentValues = &(computationValues->currentValues[THETA]);
-    thetaCurrentValues->u = thetaU;
+    thetaValues->u = thetaU;
 
     // ALPHA CORRECTION
     alphaPulseError *= 5.0f;
     float alphaCorrection = -0.00050f * normalSpeed * thetaError * (alphaAndThetaDiff);
     // float alphaCorrection = 0.0f;
     alphaPulseError += alphaCorrection;
-    float alphaU = computePidCorrection(alphaMotionError, pidParameter, 0, alphaPulseError);
+    float alphaU = computePidCorrection(alphaValues, pidParameter, 0, alphaPulseError);
 
-    PidCurrentValues* alphaCurrentValues = &(computationValues->currentValues[ALPHA]);
-    alphaCurrentValues->u = alphaU;
+    alphaValues->u = alphaU;
     
     // LOG
     // OutputStream* out = getDebugOutputStreamLogger();

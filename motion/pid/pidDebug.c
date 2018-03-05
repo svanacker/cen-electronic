@@ -21,8 +21,10 @@
 #define PID_DEBUG_INDEX_COLUMN_LENGTH						4
 #define PID_DEBUG_INSTRUCTION_TYPE_COLUMN_LENGTH			7
 #define PID_DEBUG_A_COLUMN_LENGTH							3
+#define PID_DEBUG_INITIAL_SPEED_COLUMN_LENGTH				6
 #define PID_DEBUG_SPEED_COLUMN_LENGTH						5
 #define PID_DEBUG_SPEED_MAX_COLUMN_LENGTH					5
+#define PID_DEBUG_END_SPEED_COLUMN_LENGTH				    5
 #define PID_DEBUG_T1_COLUMN_LENGTH							4
 #define PID_DEBUG_T2_COLUMN_LENGTH							4
 #define PID_DEBUG_T3_COLUMN_LENGTH							4
@@ -47,15 +49,15 @@ void printMotionGlobalVarsData(OutputStream* outputStream, PidMotion* pidMotion)
 	appendTableHeaderSeparatorLine(outputStream);
 
 	appendStringTableData(outputStream, "readIndex", PID_DEBUG_KEY_COLUMN_LENGTH);
-	appendDecTableData(outputStream, pidMotion->readIndex, PID_DEBUG_KEY_COLUMN_LENGTH);
+	appendDecTableData(outputStream, pidMotion->motionReadIndex, PID_DEBUG_KEY_COLUMN_LENGTH);
 	appendEndOfTableColumn(outputStream, PID_DEBUG_KEY_VALUE_LAST_COLUMN_LENGTH);
 
 	appendStringTableData(outputStream, "writeIndex", PID_DEBUG_KEY_COLUMN_LENGTH);
-	appendDecTableData(outputStream, pidMotion->writeIndex, PID_DEBUG_KEY_COLUMN_LENGTH);
+	appendDecTableData(outputStream, pidMotion->motionWriteIndex, PID_DEBUG_KEY_COLUMN_LENGTH);
 	appendEndOfTableColumn(outputStream, PID_DEBUG_KEY_VALUE_LAST_COLUMN_LENGTH);
 
 	appendStringTableData(outputStream, "length", PID_DEBUG_KEY_COLUMN_LENGTH);
-	appendDecTableData(outputStream, pidMotion->length, PID_DEBUG_KEY_COLUMN_LENGTH);
+	appendDecTableData(outputStream, pidMotion->motionLength, PID_DEBUG_KEY_COLUMN_LENGTH);
 	appendEndOfTableColumn(outputStream, PID_DEBUG_KEY_VALUE_LAST_COLUMN_LENGTH);
 
 	appendStringTableData(outputStream, "stackMotionDefinition", PID_DEBUG_KEY_COLUMN_LENGTH);
@@ -96,8 +98,10 @@ void printMotionInstructionHeader(OutputStream* outputStream, PidMotionDefinitio
 	appendStringHeader(outputStream, "Idx", PID_DEBUG_INDEX_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "T/A", PID_DEBUG_INSTRUCTION_TYPE_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "a", PID_DEBUG_A_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Init s", PID_DEBUG_INITIAL_SPEED_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "s", PID_DEBUG_SPEED_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "sMax", PID_DEBUG_SPEED_MAX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "End s", PID_DEBUG_END_SPEED_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "t1", PID_DEBUG_T1_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "t2", PID_DEBUG_T2_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "t3", PID_DEBUG_T3_COLUMN_LENGTH);
@@ -115,6 +119,7 @@ void printMotionInstructionLine(OutputStream* outputStream, PidMotion* pidMotion
 	appendDecTableData(outputStream, index, PID_DEBUG_INDEX_COLUMN_LENGTH);
 	addInstructionTypeTableData(outputStream, instructionType, PID_DEBUG_INSTRUCTION_TYPE_COLUMN_LENGTH);
 	appendDecTableData(outputStream, (int) motionInstruction->a, PID_DEBUG_A_COLUMN_LENGTH);
+    appendDecTableData(outputStream, (int) motionInstruction->initialSpeed, PID_DEBUG_SPEED_COLUMN_LENGTH);
 	appendDecTableData(outputStream, (int) motionInstruction->speed, PID_DEBUG_SPEED_COLUMN_LENGTH);
 	appendDecTableData(outputStream, (int) motionInstruction->speedMax, PID_DEBUG_SPEED_MAX_COLUMN_LENGTH);
 	appendDecTableData(outputStream, (int) motionInstruction->t1, PID_DEBUG_T1_COLUMN_LENGTH);
@@ -153,7 +158,7 @@ void printMotionInstructionTable(OutputStream* outputStream, PidMotion* pidMotio
 	printMotionGlobalVarsData(outputStream, pidMotion);
 	unsigned int i;
 	// unsigned int count = getPidMotionElementsCount(pidMotion);
-	unsigned int length = pidMotion->length;
+	unsigned int length = pidMotion->motionLength;
 	PidMotionDefinition* pidMotionDefinition = (PidMotionDefinition*)pidMotion->motionDefinitions;
     pidMotionDefinition--;
 	for (i = 0; i < length; i++) {
@@ -190,15 +195,15 @@ void printMotionInstructionTable(OutputStream* outputStream, PidMotion* pidMotio
 
 // PID DEBUG DATA
 
-#define PID_DEBUG_DATA_INSTRUCTION_TYPE_COLUMN_LENGTH                     10
-#define PID_DEBUG_DATA_PID_TIME_COLUMN_LENGTH                             8
-#define PID_DEBUG_DATA_NORMAL_POSITION_COLUMN_LENGTH                      10
-#define PID_DEBUG_DATA_POSITION_COLUMN_LENGTH                             8
+#define PID_DEBUG_DATA_INSTRUCTION_TYPE_COLUMN_LENGTH                     6
+#define PID_DEBUG_DATA_PID_TIME_COLUMN_LENGTH                             5
+#define PID_DEBUG_DATA_NORMAL_POSITION_COLUMN_LENGTH                      9
+#define PID_DEBUG_DATA_POSITION_COLUMN_LENGTH                             9
 #define PID_DEBUG_DATA_ERROR_COLUMN_LENGTH                                5
 #define PID_DEBUG_DATA_U_COLUMN_LENGTH                                    4
-#define PID_DEBUG_DATA_MOTION_END_INTEGRAL_TIME_COLUMN_LENGTH             17
-#define PID_DEBUG_DATA_MOTION_END_ABS_DELTA_POSITION_INT_COLUMN_LENGTH    17
-#define PID_DEBUG_DATA_MOTION_END_ABS_INTEGRAL_COLUMN_LENGTH              17
+#define PID_DEBUG_DATA_MOTION_END_INTEGRAL_TIME_COLUMN_LENGTH             13
+#define PID_DEBUG_DATA_MOTION_END_ABS_SPEED_INTEGRAL_COLUMN_LENGTH        10
+#define PID_DEBUG_DATA_MOTION_END_ABS_INTEGRAL_COLUMN_LENGTH              10
 #define PID_DEBUG_DATA_LAST_COLUMN_LENGTH_COLUMN_LENGTH		            0
 
 
@@ -207,17 +212,31 @@ void printMotionInstructionTable(OutputStream* outputStream, PidMotion* pidMotio
 */
 void printDebugDataHeader(OutputStream* outputStream) {
 	println(outputStream);
+    // First line
 	appendTableHeaderSeparatorLine(outputStream);
-	appendStringHeader(outputStream, "Inst Type", PID_DEBUG_DATA_INSTRUCTION_TYPE_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "Pid Time", PID_DEBUG_DATA_PID_TIME_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "Normal Pos", PID_DEBUG_DATA_NORMAL_POSITION_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "Instr.", PID_DEBUG_DATA_INSTRUCTION_TYPE_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "Pid", PID_DEBUG_DATA_PID_TIME_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "Normal", PID_DEBUG_DATA_NORMAL_POSITION_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "Position", PID_DEBUG_DATA_POSITION_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "Error", PID_DEBUG_DATA_ERROR_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "U", PID_DEBUG_DATA_U_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "End Integral Time", PID_DEBUG_DATA_MOTION_END_INTEGRAL_TIME_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "End Abs Delta Pos", PID_DEBUG_DATA_MOTION_END_ABS_DELTA_POSITION_INT_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "End Abs Integral", PID_DEBUG_DATA_MOTION_END_ABS_INTEGRAL_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "End Integral", PID_DEBUG_DATA_MOTION_END_INTEGRAL_TIME_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "End Abs", PID_DEBUG_DATA_MOTION_END_ABS_SPEED_INTEGRAL_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "End Abs", PID_DEBUG_DATA_MOTION_END_ABS_INTEGRAL_COLUMN_LENGTH);
 	appendEndOfTableColumn(outputStream, PID_DEBUG_DATA_LAST_COLUMN_LENGTH_COLUMN_LENGTH);
+    
+    // second line
+    appendStringHeader(outputStream, "Type", PID_DEBUG_DATA_INSTRUCTION_TYPE_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "Time", PID_DEBUG_DATA_PID_TIME_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "Position", PID_DEBUG_DATA_NORMAL_POSITION_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "", PID_DEBUG_DATA_POSITION_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "", PID_DEBUG_DATA_ERROR_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "", PID_DEBUG_DATA_U_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "Time", PID_DEBUG_DATA_MOTION_END_INTEGRAL_TIME_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "Speed Int.", PID_DEBUG_DATA_MOTION_END_ABS_SPEED_INTEGRAL_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "U Int.", PID_DEBUG_DATA_MOTION_END_ABS_INTEGRAL_COLUMN_LENGTH);
+	appendEndOfTableColumn(outputStream, PID_DEBUG_DATA_LAST_COLUMN_LENGTH_COLUMN_LENGTH);
+    
 	appendTableHeaderSeparatorLine(outputStream);
 }
 
@@ -227,21 +246,21 @@ void printDebugDataHeader(OutputStream* outputStream) {
  */
 void printDebugDataInstructionTypeLine(OutputStream* outputStream, PidMotion* pidMotion, enum InstructionType instructionType) {
     PidComputationValues* computationValues = &(pidMotion->computationValues);
-    PidMotionError* localError = &(computationValues->errors[instructionType]);
-
-    PidCurrentValues* pidCurrentValues = &(computationValues->currentValues[instructionType]);
+    PidComputationInstructionValues* computationInstructionValues = &(computationValues->values[instructionType]);
 
 	addInstructionTypeTableData(outputStream, instructionType, PID_DEBUG_DATA_INSTRUCTION_TYPE_COLUMN_LENGTH);
 	appendDecTableData(outputStream, (int) computationValues->pidTime, PID_DEBUG_DATA_PID_TIME_COLUMN_LENGTH);
-	appendDecTableData(outputStream, (int) pidCurrentValues->normalPosition, PID_DEBUG_DATA_NORMAL_POSITION_COLUMN_LENGTH);
-	appendDecTableData(outputStream, (int) pidCurrentValues->position, PID_DEBUG_DATA_POSITION_COLUMN_LENGTH);
-	appendDecTableData(outputStream, (int) localError->error, PID_DEBUG_DATA_ERROR_COLUMN_LENGTH);
-	appendDecTableData(outputStream, (int) pidCurrentValues->u, PID_DEBUG_DATA_U_COLUMN_LENGTH);
+	appendDecTableData(outputStream, (int) computationInstructionValues->normalPosition, PID_DEBUG_DATA_NORMAL_POSITION_COLUMN_LENGTH);
+	appendDecTableData(outputStream, (int) computationInstructionValues->currentPosition, PID_DEBUG_DATA_POSITION_COLUMN_LENGTH);
+	appendDecTableData(outputStream, (int) computationInstructionValues->error, PID_DEBUG_DATA_ERROR_COLUMN_LENGTH);
+	appendDecTableData(outputStream, (int) computationInstructionValues->u, PID_DEBUG_DATA_U_COLUMN_LENGTH);
 
-    MotionEndInfo* motionEnd = &(computationValues->motionEnd[instructionType]);
+    /*
+    MotionEndInfo* motionEnd = &(computationValues->values[instructionType].motionEnd);
 	appendDecTableData(outputStream, motionEnd->integralTime, PID_DEBUG_DATA_MOTION_END_INTEGRAL_TIME_COLUMN_LENGTH);
-	appendDecTableData(outputStream, (int) motionEnd->absDeltaPositionIntegral, PID_DEBUG_DATA_MOTION_END_ABS_DELTA_POSITION_INT_COLUMN_LENGTH);
+	appendDecTableData(outputStream, (int) motionEnd->absSpeedIntegral, PID_DEBUG_DATA_MOTION_END_ABS_SPEED_INTEGRAL_COLUMN_LENGTH);
 	appendDecTableData(outputStream, (int) motionEnd->absUIntegral, PID_DEBUG_DATA_MOTION_END_ABS_INTEGRAL_COLUMN_LENGTH);
+    */
 	appendEndOfTableColumn(outputStream, PID_DEBUG_DATA_LAST_COLUMN_LENGTH_COLUMN_LENGTH);
 }
 

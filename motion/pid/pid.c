@@ -45,31 +45,6 @@ void setEnabledPid(PidMotion* pidMotion, int pidIndex, unsigned char enabled) {
     localPidParameter->enabled = enabled;
 }
 
-float getWheelPulseByPidTimeAtFullSpeed(void) {
-    RobotKinematics* robotKinematics = getRobotKinematics();
-    float result = getWheelPulseBySecondsAtFullSpeed(robotKinematics) / PID_UPDATE_MOTORS_FREQUENCY;
-    return result;
-}
-
-float getUFactorAtFullSpeed(void) {
-    // TODO : Why This Constant (must depend on the voltage) !!!
-    float result = 128.0f / getWheelPulseByPidTimeAtFullSpeed();
-    return result;
-}
-
-/**
- * Returns the tension which must be applied to the motor to reach normalSpeed, with no load on motor.
- */
-float getNormalU(float pulseAtSpeed) {
-    // at full Speed (value = 127), 7 rotations / seconds * 20000 impulsions
-    // at Frequency of 200 Hz => 730 pulses by pidTime at full Speed
-    
-    // NormalU = (pulseAtSpeed / pulseAtFullSpeed) * MAX_U
-    float result = pulseAtSpeed * getUFactorAtFullSpeed();
-    // float result = 0.0f;
-    return result;
-}
-
 void setPidParameter(PidMotion* pidMotion, int pidIndex, float p, float i, float d, float maxIntegral) {
     PidParameter* localPidParameter = getPidParameter(pidMotion, pidIndex, pidMotion->rollingTestMode);
     localPidParameter->p = p;
@@ -119,10 +94,10 @@ void updateMotorsAndDetectedMotionType(PidMotion* pidMotion) {
 
     // 2 dependant Wheels Alpha/Theta (direction +/- angle) => Left/Right correction
     PidComputationValues* computationValues = &(pidMotion->computationValues);
-    PidCurrentValues* thetaCurrentValues = &(computationValues->currentValues[THETA]);
-    PidCurrentValues* alphaCurrentValues = &(computationValues->currentValues[ALPHA]);
-    float leftMotorSpeed = computeLeft(thetaCurrentValues->u, alphaCurrentValues->u);
-    float rightMotorSpeed = computeRight(thetaCurrentValues->u, alphaCurrentValues->u);
+    PidComputationInstructionValues* thetaValues = &(computationValues->values[THETA]);
+    PidComputationInstructionValues* alphaValues = &(computationValues->values[ALPHA]);
+    float leftMotorSpeed = computeLeft(thetaValues->u, alphaValues->u);
+    float rightMotorSpeed = computeRight(thetaValues->u, alphaValues->u);
     setMotorSpeeds((int)leftMotorSpeed, (int) rightMotorSpeed);
 
     // If we maintain the position, we consider that we must do not check the end of motion (next paragraph)

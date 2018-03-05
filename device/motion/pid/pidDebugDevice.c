@@ -21,6 +21,7 @@
 #include "../../../device/device.h"
 #include "../../../motion/parameters/motionParameterDebug.h"
 #include "../../../motion/pid/pidDebug.h"
+#include "../../../motion/pid/motionInstructionDebug.h"
 #include "../../../motion/pid/parameters/pidParameterDebug.h"
 #include "../../../motion/pid/endDetection/motionEndDetectionDebug.h"
 
@@ -56,6 +57,19 @@ void devicePidDebugHandleRawData(char commandHeader, InputStream* inputStream, O
 		ackCommand(outputStream, PID_DEBUG_DEVICE_HEADER, COMMAND_DEBUG_DATA_PID_CONSOLE);
 		OutputStream* debugOutputStream = getDebugOutputStreamLogger();
 		printPidDataDebugTable(debugOutputStream, pidMotion);
+	}
+    else if (commandHeader == COMMAND_PID_TRAJECTORY_TABLE) {
+		ackCommand(outputStream, PID_DEBUG_DEVICE_HEADER, COMMAND_PID_TRAJECTORY_TABLE);
+		OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+        PidMotionDefinition* motionDefinition = pidMotionGetCurrentMotionDefinition(pidMotion);
+        if (motionDefinition != NULL) {
+		    printMotionInstructionTableTrajectory(debugOutputStream, &(motionDefinition->inst[THETA]));
+		    printMotionInstructionTableTrajectory(debugOutputStream, &(motionDefinition->inst[ALPHA]));
+        }
+        else {
+            appendString(debugOutputStream, "NO CURRENT MOTION DEFINITION");
+            println(debugOutputStream);
+        }
 	}
 	else if (commandHeader == COMMAND_PID_MOTION_INSTRUCTION_TABLE) {
 		ackCommand(outputStream, PID_DEBUG_DEVICE_HEADER, COMMAND_PID_MOTION_INSTRUCTION_TABLE);

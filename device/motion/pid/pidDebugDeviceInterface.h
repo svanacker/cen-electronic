@@ -29,8 +29,13 @@
 /**
 * Debug all values for the PID as Table
 */
-#define COMMAND_DEBUG_DATA_PID_CONSOLE              'G'
+#define COMMAND_DEBUG_DATA_PID_CONSOLE             'G'
 
+/**
+ * Show the table with the trajectory for the current instruction
+ * @return 
+ */
+#define COMMAND_PID_TRAJECTORY_TABLE               'T'
  
 /**
 * Get the PID device interface.

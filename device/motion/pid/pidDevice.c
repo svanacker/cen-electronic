@@ -25,9 +25,8 @@
 #include "../../../motion/pid/parameters/pidParameter.h"
 #include "../../../motion/pid/pidMotion.h"
 #include "../../../motion/pid/pidComputationValues.h"
-#include "../../../motion/pid/pidCurrentValues.h"
 #include "../../../motion/pid/motionInstruction.h"
-#include "../../../motion/pid/pidMotionError.h"
+#include "../../../motion/pid/pidComputationInstructionValues.h"
 #include "../../../motion/pid/endDetection/motionEndDetection.h"
 #include "../../../motion/pid/parameters/pidParameterPersistence.h"
 
@@ -162,7 +161,7 @@ void devicePidHandleRawData(char commandHeader, InputStream* inputStream, Output
         enum InstructionType instructionType = readHex2(inputStream);
 
         PidComputationValues* computationValues = &(pidMotion->computationValues);
-        PidMotionError* localError = &(computationValues->errors[instructionType]);
+        PidComputationInstructionValues* computationInstructionValues = &(computationValues->values[instructionType]);
 
         // send acknowledgement
         ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_GET_DEBUG_DATA_PID);
@@ -175,31 +174,31 @@ void devicePidHandleRawData(char commandHeader, InputStream* inputStream, Output
         appendHex4(outputStream, (int) computationValues->pidTime);
         appendSeparator(outputStream);
 
-        PidCurrentValues* pidCurrentValues = &(computationValues->currentValues[instructionType]);
-
         // normalPosition
-        appendHex6(outputStream, (int)pidCurrentValues->normalPosition);
+        appendHex6(outputStream, (int)computationInstructionValues->normalPosition);
         appendSeparator(outputStream);
 
         // position
-        appendHex6(outputStream, (int) pidCurrentValues->position);
+        appendHex6(outputStream, (int) computationInstructionValues->currentPosition);
         appendSeparator(outputStream);
 
         // error
-        appendHex4(outputStream, (int) localError->error);
+        appendHex4(outputStream, (int) computationInstructionValues->error);
         appendSeparator(outputStream);
 
         // u
-        appendHex4(outputStream, (int) pidCurrentValues->u);
+        appendHex4(outputStream, (int) computationInstructionValues->u);
         appendSeparator(outputStream);
 
         // Motion End
-        MotionEndInfo* motionEnd = &(computationValues->motionEnd[instructionType]);
+        /*
+        MotionEndInfo* motionEnd = &(computationValues->values[instructionType].motionEnd);
         appendHex4(outputStream, motionEnd->integralTime);
         appendSeparator(outputStream);
-        appendHex4(outputStream, (int) motionEnd->absDeltaPositionIntegral);
+        appendHex4(outputStream, (int) motionEnd->absSpeedIntegral);
         appendSeparator(outputStream);
         appendHex4(outputStream, (int) motionEnd->absUIntegral);
+        */
     }
     else if (commandHeader == COMMAND_GET_MOTION_PARAMETER) {
         enum InstructionType instructionType = (enum InstructionType) readHex2(inputStream);
