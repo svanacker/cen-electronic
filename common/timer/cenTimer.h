@@ -95,6 +95,13 @@ struct Timer {
 };
 
 /**
+* Convert a time Diviser into a frequency value in Hertz
+* @param timeDiviser the low level value used internally in the timer
+* @return the frequency value in Hertz
+*/
+float timeDiviserToFrequencyInHertz(float timeDiviser);
+
+/**
  * Returns the time value.
  * @param timer a pointer on the timer object for which we want the time value (POO simulation).
  * @return the time value.

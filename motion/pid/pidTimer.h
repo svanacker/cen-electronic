@@ -1,6 +1,8 @@
 #ifndef PID_TIMER_H
 #define PID_TIMER_H
 
+#include "../../common/timer/cenTimer.h"
+
 #include <stdbool.h>
 
 /**
@@ -8,7 +10,8 @@
  * For example, if base frequency is 31250, and PID_UPDATE_MOTORS_FRQ = 400
  * we have a pid frequency of 78,125 Hz
  */
-#define PID_UPDATE_MOTORS_FREQUENCY 208
+#define PID_UPDATE_MOTORS_TIME_DIVISER             208
+#define PID_UPDATE_MOTORS_FREQUENCY_HERTZ          (TIME_DIVIDER_1_HERTZ / PID_UPDATE_MOTORS_TIME_DIVISER)
 
 /**
  * Random Code to be sure there is no conflict with other TIMER Code.

@@ -43,5 +43,14 @@ float computeNormalSpeed(MotionInstruction* motionInstruction, float time);
 */
 float getNormalU(float pulseAtNormalSpeed);
 
+// CONVERSION UTILS
+
+/**
+* Convert a speed in pulse / pid Time to a speed in mm/second.
+* @param pulseSpeed the speed in pulse / pidTime to convert
+* @return a speed in mm/second
+*/
+float pulseByPidTimeSpeedToMMBySecondSpeed(float pulseSpeed);
+
 #endif
 

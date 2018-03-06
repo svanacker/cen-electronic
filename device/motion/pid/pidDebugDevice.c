@@ -60,11 +60,15 @@ void devicePidDebugHandleRawData(char commandHeader, InputStream* inputStream, O
 	}
     else if (commandHeader == COMMAND_PID_TRAJECTORY_TABLE) {
 		ackCommand(outputStream, PID_DEBUG_DEVICE_HEADER, COMMAND_PID_TRAJECTORY_TABLE);
+        unsigned int pidTimeInterval = readHex2(inputStream);
+        if (pidTimeInterval < 1) {
+            pidTimeInterval = 1;
+        }
 		OutputStream* debugOutputStream = getDebugOutputStreamLogger();
         PidMotionDefinition* motionDefinition = pidMotionGetCurrentMotionDefinition(pidMotion);
         if (motionDefinition != NULL) {
-		    printMotionInstructionTableTrajectory(debugOutputStream, &(motionDefinition->inst[THETA]));
-		    printMotionInstructionTableTrajectory(debugOutputStream, &(motionDefinition->inst[ALPHA]));
+		    printMotionInstructionTableTrajectory(debugOutputStream, THETA, &(motionDefinition->inst[THETA]), (float) pidTimeInterval);
+		    printMotionInstructionTableTrajectory(debugOutputStream, ALPHA, &(motionDefinition->inst[ALPHA]), (float) pidTimeInterval);
         }
         else {
             appendString(debugOutputStream, "NO CURRENT MOTION DEFINITION");

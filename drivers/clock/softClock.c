@@ -51,5 +51,5 @@ void _writeSoftClock(Clock* clockParam) {
 void initSoftClock(Clock* clockParam) {
     initClock(clockParam, _writeSoftClock, _readSoftClock, NULL);
     ClockData* clockData = &(clockParam->clockData);
-    addTimer(TIMER_SOFT_CLOCK_CODE, SOFT_CLOCK_UPDATE_FREQUENCY, &incrementOneSecondSoftClock, "SOFT CLOCK", (int*) clockData);
+    addTimer(TIMER_SOFT_CLOCK_CODE, SOFT_CLOCK_UPDATE_TIME_DIVISER, &incrementOneSecondSoftClock, "SOFT CLOCK", (int*) clockData);
 }

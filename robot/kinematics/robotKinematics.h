@@ -40,6 +40,11 @@ float getLeftWheelLengthForOnePulse(RobotKinematics* robotKinematics);
 */
 float getRightWheelLengthForOnePulse(RobotKinematics* robotKinematics);
 
+/**
+ * Returns the average wheel length distance in mm for One Pulse in coder 
+ * We use the average value of both wheels and we use delta value (+ for left, - for right).
+ */
+float getAverageWheelLengthForOnePulse(RobotKinematics* robotKinematics);
 
 /**
  * Get the total amount of pulse done by seconds at full speed (number of pulse for one rotation * number rotation at full speed).

@@ -13,6 +13,10 @@ RobotKinematics* getRobotKinematics(void) {
     return &robotKinematicsInstance;
 }
 
+float getAverageWheelLengthForOnePulse(RobotKinematics* robotKinematics) {
+    return robotKinematics->wheelAverageLengthForOnePulse;
+}
+
 float getLeftWheelLengthForOnePulse(RobotKinematics* robotKinematics) {
     return (robotKinematics->wheelAverageLengthForOnePulse + robotKinematics->wheelDeltaLengthForOnePulse);
 }

@@ -1,7 +1,9 @@
 #include "pidComputer.h"
 
+#include "../../../common/pwm/motor/dualHBridgeMotorPwm.h"
 #include "../pidComputationValues.h"
 #include "../pid.h"
+#include "../pidTimer.h"
 #include "../instructionType.h"
 #include "../parameters/pidParameter.h"
 #include "../pidMotion.h"
@@ -64,15 +66,21 @@ float computeNormalSpeed(MotionInstruction* inst, float time) {
     return result;
 }
 
+float pulseByPidTimeSpeedToMMBySecondSpeed(float pulseSpeed) {
+    RobotKinematics* robotKinematics = getRobotKinematics();
+    float result = pulseSpeed * getAverageWheelLengthForOnePulse(robotKinematics) * PID_UPDATE_MOTORS_FREQUENCY_HERTZ;
+    return result;
+}
+
 float getWheelPulseByPidTimeAtFullSpeed(void) {
     RobotKinematics* robotKinematics = getRobotKinematics();
-    float result = getWheelPulseBySecondsAtFullSpeed(robotKinematics) / PID_UPDATE_MOTORS_FREQUENCY;
+    float result = getWheelPulseBySecondsAtFullSpeed(robotKinematics) / PID_UPDATE_MOTORS_FREQUENCY_HERTZ;
     return result;
 }
 
 float getUFactorAtFullSpeed(void) {
-    // TODO : Why This Constant (must depend on the voltage) !!!
-    float result = 128.0f / getWheelPulseByPidTimeAtFullSpeed();
+    // TODO : This expression must also depend on the voltage !!!
+    float result = MAX_PWM / getWheelPulseByPidTimeAtFullSpeed();
     return result;
 }
 
@@ -85,7 +93,6 @@ float getNormalU(float pulseAtSpeed) {
     
     // NormalU = (pulseAtSpeed / pulseAtFullSpeed) * MAX_U
     float result = pulseAtSpeed * getUFactorAtFullSpeed();
-    // float result = 0.0f;
     return result;
 }
 

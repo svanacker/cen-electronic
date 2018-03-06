@@ -9,6 +9,7 @@
  */
 void initPwmForDualHBridge(void);
 
+/** Define the max value for the PWM applied to the motors */
 #define MAX_PWM 250
 
 /**

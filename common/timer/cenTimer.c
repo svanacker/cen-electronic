@@ -6,6 +6,10 @@
 #include "../../common/commons.h"
 #include "../../common/error/error.h"
 
+float timeDiviserToFrequencyInHertz(float timeDiviser) {
+    return TIME_DIVIDER_1_HERTZ / timeDiviser;
+}
+
 unsigned long getTime(Timer* timer) {
     return timer->time;
 }
