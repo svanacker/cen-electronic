@@ -73,10 +73,56 @@ void setMotorWheelRotationBySecondAtFullSpeed(RobotKinematics* robotKinematics, 
     robotKinematics->motorWheelRotationBySecondAtFullSpeed = value;
 }
 
+float getMotorMaxTorqueMilliNewton(RobotKinematics* robotKinematics) {
+    return robotKinematics->motorMaxTorqueMilliNewton;
+}
+
+void setMotorMaxTorqueMilliNewton(RobotKinematics* robotKinematics, float value) {
+    robotKinematics->motorMaxTorqueMilliNewton = value;
+}
+
+float getMotorReductorRatio(RobotKinematics* robotKinematics) {
+    return robotKinematics->motorReductorRatio;
+}
+
+void setMotorReductorRatio(RobotKinematics* robotKinematics, float value) {
+    robotKinematics->motorReductorRatio = value;
+}
+
+// ROBOT VALUES
+
+float getRobotSpeedMaxMillimeterBySecond(RobotKinematics* robotKinematics) {
+    return robotKinematics->motorWheelRotationBySecondAtFullSpeed * robotKinematics->motorWheelAverageDiameterMM * PI;
+}
+
+float getRobotWeightGrams(RobotKinematics* robotKinematics) {
+    return robotKinematics->robotWeightGrams;
+}
+
+void setRobotWeightGrams(RobotKinematics* robotKinematics, float value) {
+    robotKinematics->robotWeightGrams = value;
+}
+
 // COMPUTED VALUES
 
 float getCoderLeftWheelDiameter(RobotKinematics* robotKinematics) {
     return robotKinematics->coderWheelAverageDiameterMM + robotKinematics->coderWheelAverageDeltaDiameterMM;
+}
+
+float getRobotAccelerationMaxMillimeterBySecondSquare(RobotKinematics* robotKinematics) {
+    // * Acceleration = Force / Weight
+    // * Force = Torque / Radius
+    // Torque = MotorTorque * motorReductorRadio
+    // * Radius = Diameter / 2
+    // 2*  Motors which provider power
+    // => Robot Acceleration = (Motor Torque * motorReductorRadio / Motor Diameter) / Weight
+
+    float result = (robotKinematics->motorMaxTorqueMilliNewton * 0.001f); // Torque in Newton Meter
+    result *= robotKinematics->motorReductorRatio;
+    result /= (robotKinematics->motorWheelAverageDiameterMM * 0.001f); // Diameter in Meter
+    result /= (robotKinematics->robotWeightGrams * 0.001f);            // Weight in kg
+    result *= 1000.0f;                                                 // In Millimeter
+    return result;
 }
 
 float getCoderRightWheelDiameter(RobotKinematics* robotKinematics) {

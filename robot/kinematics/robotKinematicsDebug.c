@@ -72,9 +72,44 @@ void printRobotKinematicsTable(OutputStream* outputStream, RobotKinematics* robo
     appendStringTableData(outputStream, "rotation / second", ROBOT_KINEMATICS_UNIT_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, ROBOT_KINEMATICS_LAST_COLUMN);
 
+    appendStringTableData(outputStream, "Motor Max Torque", ROBOT_KINEMATICS_KEY_COLUMN_LENGTH);
+    appendHex6TableData(outputStream, (long) getMotorMaxTorqueMilliNewton(robotKinematics), ROBOT_KINEMATICS_HEX_VALUE_COLUMN_LENGTH);
+    appendDecfTableData(outputStream, getMotorMaxTorqueMilliNewton(robotKinematics), ROBOT_KINEMATICS_VALUE_COLUMN_LENGTH);
+    appendStringTableData(outputStream, "milliNewton", ROBOT_KINEMATICS_UNIT_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, ROBOT_KINEMATICS_LAST_COLUMN);
+
+    appendStringTableData(outputStream, "Motor Reductor Ratio", ROBOT_KINEMATICS_KEY_COLUMN_LENGTH);
+    appendHex6TableData(outputStream, (long)getMotorReductorRatio(robotKinematics), ROBOT_KINEMATICS_HEX_VALUE_COLUMN_LENGTH);
+    appendDecfTableData(outputStream, getMotorReductorRatio(robotKinematics), ROBOT_KINEMATICS_VALUE_COLUMN_LENGTH);
+    appendStringTableData(outputStream, "-", ROBOT_KINEMATICS_UNIT_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, ROBOT_KINEMATICS_LAST_COLUMN);
+
+    appendTableHeaderSeparatorLine(outputStream);
+    
+    // ROBOT VALUE
+    appendStringTableData(outputStream, "Robot Weight", ROBOT_KINEMATICS_KEY_COLUMN_LENGTH);
+    appendHex6TableData(outputStream, (long)getRobotWeightGrams(robotKinematics), ROBOT_KINEMATICS_HEX_VALUE_COLUMN_LENGTH);
+    appendDecfTableData(outputStream, getRobotWeightGrams(robotKinematics), ROBOT_KINEMATICS_VALUE_COLUMN_LENGTH);
+    appendStringTableData(outputStream, "grams", ROBOT_KINEMATICS_UNIT_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, ROBOT_KINEMATICS_LAST_COLUMN);
+
     appendTableHeaderSeparatorLine(outputStream);
 
     // COMPUTE VALUE
+    // -> Speed / Acceleration
+    appendStringTableData(outputStream, "Computed : Robot Speed Max", ROBOT_KINEMATICS_KEY_COLUMN_LENGTH);
+    appendHex6TableData(outputStream, getRobotSpeedMaxMillimeterBySecond(robotKinematics), ROBOT_KINEMATICS_HEX_VALUE_COLUMN_LENGTH);
+    appendDecfTableData(outputStream, getRobotSpeedMaxMillimeterBySecond(robotKinematics), ROBOT_KINEMATICS_VALUE_COLUMN_LENGTH);
+    appendStringTableData(outputStream, "mm / second", ROBOT_KINEMATICS_UNIT_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, ROBOT_KINEMATICS_LAST_COLUMN);
+
+    appendStringTableData(outputStream, "Computed : Robot Acceleration Max", ROBOT_KINEMATICS_KEY_COLUMN_LENGTH);
+    appendHex6TableData(outputStream, getRobotAccelerationMaxMillimeterBySecondSquare(robotKinematics), ROBOT_KINEMATICS_HEX_VALUE_COLUMN_LENGTH);
+    appendDecfTableData(outputStream, getRobotAccelerationMaxMillimeterBySecondSquare(robotKinematics), ROBOT_KINEMATICS_VALUE_COLUMN_LENGTH);
+    appendStringTableData(outputStream, "mm / Second^2", ROBOT_KINEMATICS_UNIT_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, ROBOT_KINEMATICS_LAST_COLUMN);
+
+
     appendStringTableData(outputStream, "Computed : Coder Wheels Distance from Center", ROBOT_KINEMATICS_KEY_COLUMN_LENGTH);
 	appendHex6TableData(outputStream, (long) (getCoderWheelsDistanceFromCenter(robotKinematics) * MILLI_TO_MICRO_FACTOR), ROBOT_KINEMATICS_HEX_VALUE_COLUMN_LENGTH);
 	appendDecfTableData(outputStream, getCoderWheelsDistanceFromCenter(robotKinematics), ROBOT_KINEMATICS_VALUE_COLUMN_LENGTH);

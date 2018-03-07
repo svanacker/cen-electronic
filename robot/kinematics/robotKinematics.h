@@ -28,6 +28,13 @@ typedef struct RobotKinematics {
     float motorWheelDistanceBetweenWheelsMM;
     /** How many rotation the motor do by second at full speed (full PWM). */
     float motorWheelRotationBySecondAtFullSpeed;
+    /** The max torque of the motor .*/
+    float motorMaxTorqueMilliNewton;
+    /** The reductor ratio. */
+    float motorReductorRatio;
+
+    // ROBOT Constant Parameter
+    float robotWeightGrams;
 } RobotKinematics;
 
 /** 
@@ -82,9 +89,31 @@ float getMotorWheelRotationBySecondAtFullSpeed(RobotKinematics* robotKinematics)
 
 void setMotorWheelRotationBySecondAtFullSpeed(RobotKinematics* robotKinematics, float value);
 
+/** The max torque of the motor .*/
+float getMotorMaxTorqueMilliNewton(RobotKinematics* robotKinematics);
+
+void setMotorMaxTorqueMilliNewton(RobotKinematics* robotKinematics, float value);
+
+/** The reductor ratio. */
+float getMotorReductorRatio(RobotKinematics* robotKinematics);
+
+void setMotorReductorRatio(RobotKinematics* robotKinematics, float value);
+
+
+// ROBOT VALUES
+float getRobotWeightGrams(RobotKinematics* robotKinematics);
+
+void setRobotWeightGrams(RobotKinematics* robotKinematics, float value);
+
 // COMPUTED VALUES
 
-// 
+// -> Speed And Acceleration
+
+float getRobotSpeedMaxMillimeterBySecond(RobotKinematics* robotKinematics);
+
+float getRobotAccelerationMaxMillimeterBySecondSquare(RobotKinematics* robotKinematics);
+
+// -> Diameter / Distance
 
 float getCoderLeftWheelDiameter(RobotKinematics* robotKinematics);
 
