@@ -71,8 +71,8 @@ void printCoderTable(OutputStream* outputStream) {
 	signed long coderValue1 = getCoderValue(CODER_RIGHT);
 
 	RobotKinematics* robotKinematics = getRobotKinematics();
-	float leftWheelLengthForOnePulse = getLeftWheelLengthForOnePulse(robotKinematics);
-	float rightWheelLengthForOnePulse = getLeftWheelLengthForOnePulse(robotKinematics);
+	float leftWheelLengthForOnePulse = getCoderLeftWheelLengthForOnePulse(robotKinematics);
+	float rightWheelLengthForOnePulse = getCoderRightWheelLengthForOnePulse(robotKinematics);
 
 	printCoderDebug(outputStream, "left", coderValue0, leftWheelLengthForOnePulse);
 	printCoderDebug(outputStream, "right", coderValue1, rightWheelLengthForOnePulse);

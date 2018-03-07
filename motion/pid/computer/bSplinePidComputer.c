@@ -40,10 +40,11 @@ void bSplineMotionUCompute(PidMotion* pidMotion, PidMotionDefinition* motionDefi
     computeBSplinePoint(curve, bSplineTime, &normalPoint);
     // Convert normalPoint into mm space
     RobotKinematics* robotKinematics = getRobotKinematics();
-    float wheelAverageLength = robotKinematics->wheelAverageLengthForOnePulse;
+    // TODO : It could be interesting to distinguish left / right value if there is a delta != 0.0f at coder wheel diameter
+    float coderWheelAverageLength = getCoderAverageWheelLengthForOnePulse(robotKinematics);
 
-    normalPoint.x = normalPoint.x * wheelAverageLength;
-    normalPoint.y = normalPoint.y * wheelAverageLength;
+    normalPoint.x = normalPoint.x * coderWheelAverageLength;
+    normalPoint.y = normalPoint.y * coderWheelAverageLength;
 
     Position* robotPosition = getPosition();
     Point robotPoint = robotPosition->pos;
@@ -69,14 +70,14 @@ void bSplineMotionUCompute(PidMotion* pidMotion, PidMotionDefinition* motionDefi
     alphaError = mod2PI(alphaError);
 
     // Convert angleError into pulse equivalent
-    float wheelsDistanceFromCenter = getWheelsDistanceFromCenter(robotKinematics);
-    float alphaPulseError = (-wheelsDistanceFromCenter * alphaError) / wheelAverageLength;
+    float coderWheelsDistanceFromCenter = getCoderWheelsDistanceFromCenter(robotKinematics);
+    float alphaPulseError = (-coderWheelsDistanceFromCenter * alphaError) / coderWheelAverageLength;
 
     // THETA
     PidComputationInstructionValues* thetaValues = &(computationValues->values[THETA]);
 
     // thetaError must be in Pulse and not in MM
-    float thetaError = distanceBetweenPoints(&robotPoint, &normalPoint) / wheelAverageLength;
+    float thetaError = distanceBetweenPoints(&robotPoint, &normalPoint) / coderWheelAverageLength;
     float thetaAngle = angleOfVector(&robotPoint, &normalPoint);
     if (curve->backward) {
         thetaAngle += PI;

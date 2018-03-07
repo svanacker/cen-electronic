@@ -12,11 +12,15 @@ void loadRobotKinematicsParameters(RobotKinematics* robotKinematics, Eeprom* eep
     }
 
     if (loadDefaultValues) {
-        robotKinematics->wheelAverageLengthForOnePulse = KINEMATICS_WHEEL_AVERAGE_LENGTH_DEFAULT_VALUE;
-        robotKinematics->wheelRotationBySecondsAtFullSpeed = KINEMATICS_WHEEL_ROTATION_BY_SECONDS_AT_FULL_SPEED_DEFAULT_VALUE;
-        robotKinematics->pulseByRotation = KINEMATICS_WHEEL_PULSE_BY_ROTATION_DEFAULT_VALUE;
-        robotKinematics->wheelDeltaLengthForOnePulse = KINEMATICS_WHEEL_DELTA_LENGTH_DEFAULT_VALUE;
-        robotKinematics->wheelsDistance = KINEMATICS_WHEELS_DISTANCE_DEFAULT_VALUE;
+        // Coder Value
+        robotKinematics->coderWheelAverageDiameterMM = KINEMATICS_CODER_WHEEL_AVERAGE_DIAMETER_MM_DEFAULT_VALUE;
+        robotKinematics->coderWheelAverageDeltaDiameterMM = KINEMATICS_CODER_WHEEL_AVERAGE_DELTA_DIAMETER_MM_DEFAULT_VALUE;
+        robotKinematics->coderWheelDistanceBetweenWheelsMM = KINEMATICS_CODER_WHEEL_DISTANCE_BETWEEN_WHEELS_MM_DEFAULT_VALUE;
+        robotKinematics->coderWheelPulseByRotation = KINEMATICS_CODER_WHEEL_PULSE_BY_ROTATION_DEFAULT_VALUE;
+        // Motor Value
+        robotKinematics->motorWheelAverageDiameterMM = KINEMATICS_MOTOR_WHEEL_AVERAGE_DIAMETER_MM_DEFAULT_VALUE;
+        robotKinematics->motorWheelDistanceBetweenWheelsMM = KINEMATICS_MOTOR_WHEEL_DISTANCE_BETWEEN_WHEELS_MM_DEFAULT_VALUE;
+        robotKinematics->motorWheelRotationBySecondAtFullSpeed = KINEMATICS_MOTOR_WHEEL_ROTATION_BY_SECONDS_AT_FULL_SPEED_DEFAULT_VALUE;
     }
     else {
         bool eepromKinematicsAreaInitialized = isEepromAreaInitialized(eeprom_, EEPROM_KINETICS_AREA_MARKER_INDEX);
@@ -24,14 +28,16 @@ void loadRobotKinematicsParameters(RobotKinematics* robotKinematics, Eeprom* eep
             writeError(ROBOT_KINEMATICS_EEPROM_NOT_INITIALIZED);
             return;
         }
-        // We store a value * 10^6 (millimeter->nanometer)
-        robotKinematics->wheelAverageLengthForOnePulse = (float) eepromReadLong(eeprom_, EEPROM_WHEEL_AVERAGE_LENGTH_FOR_ONE_PULSE_INDEX) / MILLI_TO_NANO_FACTOR;
-        robotKinematics->wheelRotationBySecondsAtFullSpeed = (float) eepromReadLong(eeprom_, EEPROM_WHEEL_ROTATION_BY_SECOND_AT_FULL_SPEED_INDEX);
-        robotKinematics->pulseByRotation = (float) eepromReadLong(eeprom_, EEPROM_PULSE_BY_ROTATION_INDEX);
-        // We store a value * 10^6 (millimeter->nanometer)
-        robotKinematics->wheelDeltaLengthForOnePulse = (float) eepromReadLong(eeprom_, EEPROM_WHEEL_DELTA_LENGTH_INDEX) / MILLI_TO_NANO_FACTOR;
-        // We store a value * 10^3 (millimeter->micrometer)
-        robotKinematics->wheelsDistance = (float) eepromReadLong(eeprom_, EEPROM_WHEELS_DISTANCE_INDEX) / MILLI_TO_MICRO_FACTOR;
+        // CODER VALUE
+        // We store a value * 10^3 (millimeter->nanometer)
+        robotKinematics->coderWheelAverageDiameterMM = (float) eepromReadLong(eeprom_, EEPROM_CODER_WHEEL_AVERAGE_DIAMETER_INDEX) / MILLI_TO_MICRO_FACTOR;
+        robotKinematics->coderWheelAverageDeltaDiameterMM = (float) eepromReadLong(eeprom_, EEPROM_CODER_WHEEL_AVERAGE_DELTA_DIAMETER_INDEX) / MILLI_TO_MICRO_FACTOR;
+        robotKinematics->coderWheelDistanceBetweenWheelsMM = (float) eepromReadLong(eeprom_, EEPROM_CODER_WHEEL_DISTANCE_BETWEEN_WHEELS_INDEX) / MILLI_TO_MICRO_FACTOR;
+        robotKinematics->coderWheelPulseByRotation = (float) eepromReadLong(eeprom_, EEPROM_CODER_WHEEL_PULSE_BY_ROTATION_INDEX);
+        // MOTOR VALUE
+        robotKinematics->motorWheelAverageDiameterMM = (float) eepromReadLong(eeprom_, EEPROM_MOTOR_WHEEL_AVERAGE_DIAMETER_INDEX) / MILLI_TO_MICRO_FACTOR;
+        robotKinematics->motorWheelDistanceBetweenWheelsMM = (float)eepromReadLong(eeprom_, EEPROM_MOTOR_WHEEL_DISTANCE_BETWEEN_WHEELS_INDEX) / MILLI_TO_MICRO_FACTOR;
+        robotKinematics->motorWheelRotationBySecondAtFullSpeed = (float)eepromReadLong(eeprom_, EEPROM_MOTOR_WHEEL_ROTATION_BY_SECONDS_AT_FULL_SPEED_INDEX);
     }
 }
 
@@ -41,10 +47,13 @@ void saveRobotKinematicsParameters(RobotKinematics* robotKinematics, Eeprom* eep
         return;
     }
     initEepromArea(eeprom_, EEPROM_KINETICS_AREA_MARKER_INDEX);
-    // We store a value * 10^6 (millimeter->nanometer)
-    eepromWriteLong(eeprom_, EEPROM_WHEEL_AVERAGE_LENGTH_FOR_ONE_PULSE_INDEX, (long) (robotKinematics->wheelAverageLengthForOnePulse * MILLI_TO_NANO_FACTOR));
-    eepromWriteLong(eeprom_, EEPROM_WHEEL_ROTATION_BY_SECOND_AT_FULL_SPEED_INDEX, (long) (robotKinematics->wheelRotationBySecondsAtFullSpeed));
-    eepromWriteLong(eeprom_, EEPROM_PULSE_BY_ROTATION_INDEX, (long) (robotKinematics->pulseByRotation));
-    eepromWriteLong(eeprom_, EEPROM_WHEEL_DELTA_LENGTH_INDEX, (long) (robotKinematics->wheelDeltaLengthForOnePulse * MILLI_TO_NANO_FACTOR));
-    eepromWriteLong(eeprom_, EEPROM_WHEELS_DISTANCE_INDEX, (long) (robotKinematics->wheelsDistance * MILLI_TO_MICRO_FACTOR));
+    // CODER VALUE
+    eepromWriteLong(eeprom_, EEPROM_CODER_WHEEL_AVERAGE_DIAMETER_INDEX, (long) (robotKinematics->coderWheelAverageDiameterMM * MILLI_TO_MICRO_FACTOR));
+    eepromWriteLong(eeprom_, EEPROM_CODER_WHEEL_AVERAGE_DELTA_DIAMETER_INDEX, (long) (robotKinematics->coderWheelAverageDeltaDiameterMM * MILLI_TO_MICRO_FACTOR));
+    eepromWriteLong(eeprom_, EEPROM_CODER_WHEEL_DISTANCE_BETWEEN_WHEELS_INDEX, (long) (robotKinematics->coderWheelDistanceBetweenWheelsMM * MILLI_TO_MICRO_FACTOR));
+    eepromWriteLong(eeprom_, EEPROM_CODER_WHEEL_PULSE_BY_ROTATION_INDEX, (long) (robotKinematics->coderWheelPulseByRotation));
+    // MOTOR VALUE
+    eepromWriteLong(eeprom_, EEPROM_MOTOR_WHEEL_AVERAGE_DIAMETER_INDEX, (long) (robotKinematics->motorWheelAverageDiameterMM * MILLI_TO_MICRO_FACTOR));
+    eepromWriteLong(eeprom_, EEPROM_MOTOR_WHEEL_DISTANCE_BETWEEN_WHEELS_INDEX, (long)(robotKinematics->motorWheelDistanceBetweenWheelsMM * MILLI_TO_MICRO_FACTOR));
+    eepromWriteLong(eeprom_, EEPROM_MOTOR_WHEEL_ROTATION_BY_SECONDS_AT_FULL_SPEED_INDEX, (long)(robotKinematics->motorWheelRotationBySecondAtFullSpeed));
 }

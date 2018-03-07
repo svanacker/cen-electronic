@@ -113,7 +113,7 @@ void printMotionInstructionTableTrajectory(OutputStream* outputStream, enum Inst
         float pulseNormalPosition = computeNormalPosition(instruction, pidTime);
         float pwmNormalU = getNormalU(pulseNormalSpeed);
         float mmBySecondNormalSpeed = pulseByPidTimeSpeedToMMBySecondSpeed(pulseNormalSpeed);
-        float mmNormalPosition = pulseNormalPosition * getAverageWheelLengthForOnePulse(robotKinematics);
+        float mmNormalPosition = pulseNormalPosition * getCoderAverageWheelLengthForOnePulse(robotKinematics);
         index++;
         printMotionInstructionTableTrajectoryLine(outputStream, index, pidTime, pulseNormalSpeed, pulseNormalPosition, pwmNormalU, mmBySecondNormalSpeed, mmNormalPosition);
     }

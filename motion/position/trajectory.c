@@ -94,8 +94,8 @@ bool absoluteUpdateFromCoders(signed long left, signed long right, bool useThres
         debugTrajectoryVariables("left=", (float) left, ", right=", (float) right);
     }
     RobotKinematics* robotKinematics = getRobotKinematics();
-    float leftWheelLengthForOnePulse = getLeftWheelLengthForOnePulse(robotKinematics);
-    float rightWheelLengthForOnePulse = getRightWheelLengthForOnePulse(robotKinematics);
+    float leftWheelLengthForOnePulse = getCoderLeftWheelLengthForOnePulse(robotKinematics);
+    float rightWheelLengthForOnePulse = getCoderRightWheelLengthForOnePulse(robotKinematics);
 
     float l = (float) left * leftWheelLengthForOnePulse;
     float r = (float) right * rightWheelLengthForOnePulse;
@@ -116,7 +116,7 @@ bool absoluteUpdateFromCoders(signed long left, signed long right, bool useThres
     // difference des distances parcourues par les roues en m
     float dw = r - l;
     // orientation finale = difference des distances / demi-distance des roues
-    float wheelsDistance = robotKinematics->wheelsDistance;
+    float wheelsDistance = robotKinematics->coderWheelDistanceBetweenWheelsMM;
     float orientation = fmodf(dw / wheelsDistance, 2.0f * PI) + trajectory.lastAngle + trajectory.position.initialOrientation;
     // angle relatif au dernier mouvement
     // lastAngle is only used when we clear Coders !

@@ -113,8 +113,8 @@ float rightOneWheelSimple(PidMotion* pidMotion, float pulse, OutputStream* notif
 
 float forwardMM(PidMotion* pidMotion, float distanceInMM, float a, float speed, OutputStream* notificationOutputStream) {
     RobotKinematics* robotKinematics = getRobotKinematics();
-    float leftWheelLengthForOnePulse = getLeftWheelLengthForOnePulse(robotKinematics);
-    float rightWheelLengthForOnePulse = getRightWheelLengthForOnePulse(robotKinematics);
+    float leftWheelLengthForOnePulse = getCoderLeftWheelLengthForOnePulse(robotKinematics);
+    float rightWheelLengthForOnePulse = getCoderRightWheelLengthForOnePulse(robotKinematics);
 
     float leftPulse = distanceInMM / leftWheelLengthForOnePulse;
     float rightPulse = distanceInMM / rightWheelLengthForOnePulse;
@@ -157,8 +157,8 @@ void leftOneWheelDeciDegree(PidMotion* pidMotion, float angleDeciDegree, float a
     // We multiply by 2, because, only one wheel rotates
     float angleRadius = angleDeciDegree * PI_DIVIDE_1800 * 2.0f;
     RobotKinematics* robotKinematics = getRobotKinematics();
-    float leftWheelLengthForOnePulse = getLeftWheelLengthForOnePulse(robotKinematics);
-    float wheelsDistanceFromCenter = getWheelsDistanceFromCenter(robotKinematics);
+    float leftWheelLengthForOnePulse = getCoderLeftWheelLengthForOnePulse(robotKinematics);
+    float wheelsDistanceFromCenter = getCoderWheelsDistanceFromCenter(robotKinematics);
 
     float realDistanceRight = (wheelsDistanceFromCenter * angleRadius) / leftWheelLengthForOnePulse;
     gotoSimplePosition(pidMotion, 0.0f, realDistanceRight, a, speed, notificationOutputStream);
@@ -168,8 +168,8 @@ void rightOneWheelDeciDegree(PidMotion* pidMotion, float angleDeciDegree, float 
     // We multiply by 2, because, only one wheel rotates
     float angleRadius = angleDeciDegree * PI_DIVIDE_1800 * 2.0f;
     RobotKinematics* robotKinematics = getRobotKinematics();
-    float rightWheelLengthForOnePulse = getRightWheelLengthForOnePulse(robotKinematics);
-    float wheelsDistanceFromCenter = getWheelsDistanceFromCenter(robotKinematics);
+    float rightWheelLengthForOnePulse = getCoderRightWheelLengthForOnePulse(robotKinematics);
+    float wheelsDistanceFromCenter = getCoderWheelsDistanceFromCenter(robotKinematics);
 
     float realDistanceLeft = (wheelsDistanceFromCenter * angleRadius) / rightWheelLengthForOnePulse;
     gotoSimplePosition(pidMotion, realDistanceLeft, 0.0f, a, speed, notificationOutputStream);

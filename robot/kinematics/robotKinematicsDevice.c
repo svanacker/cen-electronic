@@ -45,71 +45,76 @@ void deviceRobotKinematicsHandleRawData(char commandHeader, InputStream* inputSt
         RobotKinematics* robotKinematics = getRobotKinematics();
         saveRobotKinematicsParameters(robotKinematics, robotKinematicsEeprom);
     }
-    // wheelAverageLengthForOnePulse
-    else if (commandHeader == COMMAND_GET_WHEELS_AVERAGE_FOR_ONE_PULSE_LENGTH) {
-        ackCommand(outputStream, KINEMATICS_HEADER, COMMAND_GET_WHEELS_AVERAGE_FOR_ONE_PULSE_LENGTH);
+    else if (commandHeader == COMMAND_KINEMATICS_LIST_DEBUG) {
+        ackCommand(outputStream, KINEMATICS_HEADER, COMMAND_KINEMATICS_LIST_DEBUG);
         RobotKinematics* robotKinematics = getRobotKinematics();
-        appendHex6(outputStream, (long) (robotKinematics->wheelAverageLengthForOnePulse * MILLI_TO_NANO_FACTOR));
+        printRobotKinematicsTable(getAlwaysOutputStreamLogger(), robotKinematics);
     }
-    else if (commandHeader == COMMAND_SET_WHEELS_AVERAGE_FOR_ONE_PULSE_LENGTH) {
-        ackCommand(outputStream, KINEMATICS_HEADER, COMMAND_SET_WHEELS_AVERAGE_FOR_ONE_PULSE_LENGTH);
+    // READ ALL
+    // wheelAverageLengthForOnePulse
+    else if (commandHeader == COMMAND_KINEMATICS_READ_ALL) {
+        ackCommand(outputStream, KINEMATICS_HEADER, COMMAND_KINEMATICS_READ_ALL);
+        RobotKinematics* robotKinematics = getRobotKinematics();
+        // CODER PART
+        appendHex6(outputStream, (long) (robotKinematics->coderWheelAverageDiameterMM * MILLI_TO_MICRO_FACTOR));
+        appendSeparator(outputStream);
+        appendHex6(outputStream, (long)(robotKinematics->coderWheelAverageDeltaDiameterMM * MILLI_TO_MICRO_FACTOR));
+        appendSeparator(outputStream);
+        appendHex6(outputStream, (long)(robotKinematics->coderWheelDistanceBetweenWheelsMM * MILLI_TO_MICRO_FACTOR));
+        appendSeparator(outputStream);
+        appendHex6(outputStream, (long)(robotKinematics->coderWheelPulseByRotation));
+        appendSeparator(outputStream);
+        // MOTOR PART
+        appendHex6(outputStream, (long)(robotKinematics->motorWheelAverageDiameterMM * MILLI_TO_MICRO_FACTOR));
+        appendSeparator(outputStream);
+        appendHex6(outputStream, (long)(robotKinematics->motorWheelDistanceBetweenWheelsMM * MILLI_TO_MICRO_FACTOR));
+        appendSeparator(outputStream);
+        appendHex6(outputStream, (long)(robotKinematics->motorWheelRotationBySecondAtFullSpeed));
+    }
+    // CODER PART
+    else if (commandHeader == COMMAND_SET_CODER_WHEEL_AVERAGE_DIAMETER_MM) {
+        ackCommand(outputStream, KINEMATICS_HEADER, COMMAND_SET_CODER_WHEEL_AVERAGE_DIAMETER_MM);
         RobotKinematics* robotKinematics = getRobotKinematics();
         float value = (float) readHex6(inputStream);
-        robotKinematics->wheelAverageLengthForOnePulse = value / MILLI_TO_NANO_FACTOR;
+        robotKinematics->coderWheelAverageDiameterMM = value / MILLI_TO_MICRO_FACTOR;
     }
-    // wheelRotationBySecondsAtFullSpeed
-    else if (commandHeader == COMMAND_GET_ROTATION_BY_SECONDS_AT_FULL_SPEED) {
-        ackCommand(outputStream, KINEMATICS_HEADER, COMMAND_GET_ROTATION_BY_SECONDS_AT_FULL_SPEED);
-        RobotKinematics* robotKinematics = getRobotKinematics();
-        appendHex2(outputStream, (unsigned char) robotKinematics->wheelRotationBySecondsAtFullSpeed);
-    }
-    else if (commandHeader == COMMAND_SET_ROTATION_BY_SECONDS_AT_FULL_SPEED) {
-        ackCommand(outputStream, KINEMATICS_HEADER, COMMAND_SET_ROTATION_BY_SECONDS_AT_FULL_SPEED);
-        RobotKinematics* robotKinematics = getRobotKinematics();
-        float value = (float)readHex2(inputStream);
-        robotKinematics->wheelRotationBySecondsAtFullSpeed = value;
-    }
-    // pulseByRotation
-    else if (commandHeader == COMMAND_GET_PULSE_BY_ROTATION) {
-        ackCommand(outputStream, KINEMATICS_HEADER, COMMAND_GET_PULSE_BY_ROTATION);
-        RobotKinematics* robotKinematics = getRobotKinematics();
-        appendHex4(outputStream, (unsigned int) robotKinematics->pulseByRotation);
-    }
-    else if (commandHeader == COMMAND_SET_PULSE_BY_ROTATION) {
-        ackCommand(outputStream, KINEMATICS_HEADER, COMMAND_SET_PULSE_BY_ROTATION);
-        RobotKinematics* robotKinematics = getRobotKinematics();
-        float value = (float)readHex4(inputStream);
-        robotKinematics->pulseByRotation = value;
-    }
-    // wheelDeltaLengthForOnePulse
-    else if (commandHeader == COMMAND_GET_WHEEL_DELTA_FOR_ONE_PULSE_LENGTH) {
-        ackCommand(outputStream, KINEMATICS_HEADER, COMMAND_GET_WHEEL_DELTA_FOR_ONE_PULSE_LENGTH);
-        RobotKinematics* robotKinematics = getRobotKinematics();
-        appendHex6(outputStream, (long) (robotKinematics->wheelDeltaLengthForOnePulse * MILLI_TO_NANO_FACTOR));
-    }
-    else if (commandHeader == COMMAND_SET_WHEEL_DELTA_FOR_ONE_PULSE_LENGTH) {
-        ackCommand(outputStream, KINEMATICS_HEADER, COMMAND_SET_WHEEL_DELTA_FOR_ONE_PULSE_LENGTH);
+    else if (commandHeader == COMMAND_SET_CODER_WHEEL_AVERAGE_DELTA_DIAMETER_MM) {
+        ackCommand(outputStream, KINEMATICS_HEADER, COMMAND_SET_CODER_WHEEL_AVERAGE_DELTA_DIAMETER_MM);
         RobotKinematics* robotKinematics = getRobotKinematics();
         float value = (float)readHex6(inputStream);
-        robotKinematics->wheelDeltaLengthForOnePulse = value / MILLI_TO_NANO_FACTOR;
+        robotKinematics->coderWheelAverageDeltaDiameterMM = value / MILLI_TO_MICRO_FACTOR;
     }
-    // wheelsDistance
-    else if (commandHeader == COMMAND_GET_WHEELS_DISTANCE) {
-        ackCommand(outputStream, KINEMATICS_HEADER, COMMAND_GET_WHEELS_DISTANCE);
-        RobotKinematics* robotKinematics = getRobotKinematics();
-        appendHex6(outputStream, (long) (robotKinematics->wheelsDistance * MILLI_TO_MICRO_FACTOR));
-    }
-    else if (commandHeader == COMMAND_SET_WHEELS_DISTANCE) {
-        ackCommand(outputStream, KINEMATICS_HEADER, COMMAND_SET_WHEELS_DISTANCE);
+    else if (commandHeader == COMMAND_SET_CODER_DISTANCE_BETWEEN_WHEELS_MM) {
+        ackCommand(outputStream, KINEMATICS_HEADER, COMMAND_SET_CODER_DISTANCE_BETWEEN_WHEELS_MM);
         RobotKinematics* robotKinematics = getRobotKinematics();
         float value = (float)readHex6(inputStream);
-        robotKinematics->wheelsDistance = value / MILLI_TO_MICRO_FACTOR;
+        robotKinematics->coderWheelDistanceBetweenWheelsMM =  value / MILLI_TO_MICRO_FACTOR;
     }
-	else if (commandHeader == COMMAND_KINEMATICS_DEBUG) {
-		ackCommand(outputStream, KINEMATICS_HEADER, COMMAND_KINEMATICS_DEBUG);
-		RobotKinematics* robotKinematics = getRobotKinematics();
-		printRobotKinematicsTable(getAlwaysOutputStreamLogger(), robotKinematics);
-	}
+    else if (commandHeader == COMMAND_SET_CODER_WHEEL_PULSE_BY_ROTATION) {
+        ackCommand(outputStream, KINEMATICS_HEADER, COMMAND_SET_CODER_WHEEL_PULSE_BY_ROTATION);
+        RobotKinematics* robotKinematics = getRobotKinematics();
+        float value = (float)readHex6(inputStream);
+        robotKinematics->coderWheelPulseByRotation = value;
+    }
+    // MOTOR PART
+    else if (commandHeader == COMMAND_SET_MOTOR_WHEEL_AVERAGE_DIAMETER_MM) {
+        ackCommand(outputStream, KINEMATICS_HEADER, COMMAND_SET_MOTOR_WHEEL_AVERAGE_DIAMETER_MM);
+        RobotKinematics* robotKinematics = getRobotKinematics();
+        float value = (float)readHex6(inputStream);
+        robotKinematics->motorWheelAverageDiameterMM = value / MILLI_TO_MICRO_FACTOR;
+    }
+    else if (commandHeader == COMMAND_SET_MOTOR_DISTANCE_BETWEEN_WHEELS_MM) {
+        ackCommand(outputStream, KINEMATICS_HEADER, COMMAND_SET_MOTOR_DISTANCE_BETWEEN_WHEELS_MM);
+        RobotKinematics* robotKinematics = getRobotKinematics();
+        float value = (float)readHex6(inputStream);
+        robotKinematics->motorWheelDistanceBetweenWheelsMM = value / MILLI_TO_MICRO_FACTOR;
+    }
+    else if (commandHeader == COMMAND_SET_MOTOR_WHEEL_ROTATION_BY_SECONDS_AT_FULL_SPEED) {
+        ackCommand(outputStream, KINEMATICS_HEADER, COMMAND_SET_MOTOR_WHEEL_ROTATION_BY_SECONDS_AT_FULL_SPEED);
+        RobotKinematics* robotKinematics = getRobotKinematics();
+        float value = (float)readHex6(inputStream);
+        robotKinematics->motorWheelRotationBySecondAtFullSpeed = value;
+    }
 }
 
 static DeviceDescriptor descriptor = {

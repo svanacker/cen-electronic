@@ -54,7 +54,7 @@ void updateSimpleSplineWithDistance(BSplineCurve* curve,
     bool backward = distance1 < 0.0f;
 
     RobotKinematics* robotKinematics = getRobotKinematics();
-    float wheelAverageLength = robotKinematics->wheelAverageLengthForOnePulse;
+    float wheelAverageLength = getCoderAverageWheelLengthForOnePulse(robotKinematics);
     
     /*
     appendString(outputStream, ",rel=");

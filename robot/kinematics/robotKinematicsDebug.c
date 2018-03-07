@@ -5,11 +5,11 @@
 #include "../../common/io/printTableWriter.h"
 #include "../../common/math/cenMath.h"
 
-#define ROBOT_KINEMATICS_KEY_COLUMN_LENGTH        38
+#define ROBOT_KINEMATICS_KEY_COLUMN_LENGTH        65
 #define ROBOT_KINEMATICS_HEX_VALUE_COLUMN_LENGTH  10
 #define ROBOT_KINEMATICS_VALUE_COLUMN_LENGTH      10
-#define ROBOT_KINEMATICS_UNIT_COLUMN_LENGTH       12
-#define ROBOT_KINEMATICS_LAST_COLUMN              35
+#define ROBOT_KINEMATICS_UNIT_COLUMN_LENGTH       18
+#define ROBOT_KINEMATICS_LAST_COLUMN               0
 
 void printRobotKinematicsTableHeader(OutputStream* outputStream) {
 	println(outputStream);
@@ -26,58 +26,105 @@ void printRobotKinematicsTableHeader(OutputStream* outputStream) {
 
 void printRobotKinematicsTable(OutputStream* outputStream, RobotKinematics* robotKinematics) {
 	printRobotKinematicsTableHeader(outputStream);
-	appendStringTableData(outputStream, "wheels Distance", ROBOT_KINEMATICS_KEY_COLUMN_LENGTH);
-	appendHex6TableData(outputStream, (long) (robotKinematics->wheelsDistance * MILLI_TO_MICRO_FACTOR), ROBOT_KINEMATICS_HEX_VALUE_COLUMN_LENGTH);
-	appendDecTableData(outputStream, (long) (robotKinematics->wheelsDistance * MILLI_TO_MICRO_FACTOR), ROBOT_KINEMATICS_VALUE_COLUMN_LENGTH);
-	appendStringTableData(outputStream, "microMM", ROBOT_KINEMATICS_UNIT_COLUMN_LENGTH);
+    // CODER VALUE
+	appendStringTableData(outputStream, "Coder Wheel Average Diameter", ROBOT_KINEMATICS_KEY_COLUMN_LENGTH);
+	appendHex6TableData(outputStream, (long) (getCoderWheelAverageDiameterMM(robotKinematics) * MILLI_TO_MICRO_FACTOR), ROBOT_KINEMATICS_HEX_VALUE_COLUMN_LENGTH);
+	appendDecfTableData(outputStream, getCoderWheelAverageDiameterMM(robotKinematics), ROBOT_KINEMATICS_VALUE_COLUMN_LENGTH);
+	appendStringTableData(outputStream, "mm", ROBOT_KINEMATICS_UNIT_COLUMN_LENGTH);
 	appendEndOfTableColumn(outputStream, ROBOT_KINEMATICS_LAST_COLUMN);
 
-	appendStringTableData(outputStream, "pulse By Rotation", ROBOT_KINEMATICS_KEY_COLUMN_LENGTH);
-	appendHex6TableData(outputStream, (long) robotKinematics->pulseByRotation, ROBOT_KINEMATICS_HEX_VALUE_COLUMN_LENGTH);
-	appendDecTableData(outputStream, (long) robotKinematics->pulseByRotation, ROBOT_KINEMATICS_VALUE_COLUMN_LENGTH);
-	appendStringTableData(outputStream, "-", ROBOT_KINEMATICS_UNIT_COLUMN_LENGTH);
+	appendStringTableData(outputStream, "Coder Wheel Average Delta Diameter", ROBOT_KINEMATICS_KEY_COLUMN_LENGTH);
+	appendHex6TableData(outputStream, (long) (getCoderWheelAverageDeltaDiameterMM(robotKinematics) * MILLI_TO_MICRO_FACTOR), ROBOT_KINEMATICS_HEX_VALUE_COLUMN_LENGTH);
+	appendDecfTableData(outputStream, getCoderWheelAverageDeltaDiameterMM(robotKinematics), ROBOT_KINEMATICS_VALUE_COLUMN_LENGTH);
+	appendStringTableData(outputStream, "mm", ROBOT_KINEMATICS_UNIT_COLUMN_LENGTH);
 	appendEndOfTableColumn(outputStream, ROBOT_KINEMATICS_LAST_COLUMN);
 
-	appendStringTableData(outputStream, "wheel Average Length For One Pulse", ROBOT_KINEMATICS_KEY_COLUMN_LENGTH);
-	appendHex6TableData(outputStream, (long) (robotKinematics->wheelAverageLengthForOnePulse * MILLI_TO_NANO_FACTOR), ROBOT_KINEMATICS_HEX_VALUE_COLUMN_LENGTH);
-	appendDecTableData(outputStream, (long)(robotKinematics->wheelAverageLengthForOnePulse * MILLI_TO_NANO_FACTOR), ROBOT_KINEMATICS_VALUE_COLUMN_LENGTH);
-	appendStringTableData(outputStream, "nano mm", ROBOT_KINEMATICS_UNIT_COLUMN_LENGTH);
+	appendStringTableData(outputStream, "Coder Wheel Distance Between Wheels", ROBOT_KINEMATICS_KEY_COLUMN_LENGTH);
+	appendHex6TableData(outputStream, (long) (getCoderWheelDistanceBetweenWheelsMM(robotKinematics) * MILLI_TO_MICRO_FACTOR), ROBOT_KINEMATICS_HEX_VALUE_COLUMN_LENGTH);
+	appendDecfTableData(outputStream, getCoderWheelDistanceBetweenWheelsMM(robotKinematics), ROBOT_KINEMATICS_VALUE_COLUMN_LENGTH);
+	appendStringTableData(outputStream, "mm", ROBOT_KINEMATICS_UNIT_COLUMN_LENGTH);
 	appendEndOfTableColumn(outputStream, ROBOT_KINEMATICS_LAST_COLUMN);
 
-	appendStringTableData(outputStream, "wheel Delta Length For One Pulse", ROBOT_KINEMATICS_KEY_COLUMN_LENGTH);
-	appendHex6TableData(outputStream, (long) (robotKinematics->wheelDeltaLengthForOnePulse * MILLI_TO_NANO_FACTOR), ROBOT_KINEMATICS_HEX_VALUE_COLUMN_LENGTH);
-	appendDecTableData(outputStream, (long) (robotKinematics->wheelDeltaLengthForOnePulse * MILLI_TO_NANO_FACTOR), ROBOT_KINEMATICS_VALUE_COLUMN_LENGTH);
-	appendStringTableData(outputStream, "nano mm", ROBOT_KINEMATICS_UNIT_COLUMN_LENGTH);
-	appendEndOfTableColumn(outputStream, ROBOT_KINEMATICS_LAST_COLUMN);
-
-	appendStringTableData(outputStream, "rotation By Sec At FullSpeed", ROBOT_KINEMATICS_KEY_COLUMN_LENGTH);
-	appendHex6TableData(outputStream, (long) robotKinematics->wheelRotationBySecondsAtFullSpeed, ROBOT_KINEMATICS_HEX_VALUE_COLUMN_LENGTH);
-	appendDecTableData(outputStream, (long) robotKinematics->wheelRotationBySecondsAtFullSpeed, ROBOT_KINEMATICS_VALUE_COLUMN_LENGTH);
-	appendStringTableData(outputStream, "rot / sec", ROBOT_KINEMATICS_UNIT_COLUMN_LENGTH);
+    appendStringTableData(outputStream, "Coder Wheel Pulse By Rotation", ROBOT_KINEMATICS_KEY_COLUMN_LENGTH);
+	appendHex6TableData(outputStream, (long) getCoderWheelPulseByRotation(robotKinematics), ROBOT_KINEMATICS_HEX_VALUE_COLUMN_LENGTH);
+	appendDecfTableData(outputStream, getCoderWheelPulseByRotation(robotKinematics), ROBOT_KINEMATICS_VALUE_COLUMN_LENGTH);
+	appendStringTableData(outputStream, "pulse / rotation", ROBOT_KINEMATICS_UNIT_COLUMN_LENGTH);
 	appendEndOfTableColumn(outputStream, ROBOT_KINEMATICS_LAST_COLUMN);
 
     appendTableHeaderSeparatorLine(outputStream);
 
-    appendStringTableData(outputStream, "Computed Left : pulse for 1 meter", ROBOT_KINEMATICS_KEY_COLUMN_LENGTH);
-	appendHex4TableData(outputStream, (long) getLeftWheelPulseCountForOneMillimeter(robotKinematics), ROBOT_KINEMATICS_HEX_VALUE_COLUMN_LENGTH);
-	appendDecfTableData(outputStream, getLeftWheelPulseCountForOneMillimeter(robotKinematics), ROBOT_KINEMATICS_VALUE_COLUMN_LENGTH);
-	appendStringTableData(outputStream, "pulse", ROBOT_KINEMATICS_UNIT_COLUMN_LENGTH);
+    // MOTOR VALUE
+    appendStringTableData(outputStream, "Motor Wheel Average Diameter", ROBOT_KINEMATICS_KEY_COLUMN_LENGTH);
+    appendHex6TableData(outputStream, (long) (getMotorWheelAverageDiameterMM(robotKinematics) * MILLI_TO_MICRO_FACTOR), ROBOT_KINEMATICS_HEX_VALUE_COLUMN_LENGTH);
+    appendDecfTableData(outputStream, robotKinematics->motorWheelAverageDiameterMM, ROBOT_KINEMATICS_VALUE_COLUMN_LENGTH);
+    appendStringTableData(outputStream, "mm", ROBOT_KINEMATICS_UNIT_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, ROBOT_KINEMATICS_LAST_COLUMN);
+
+    appendStringTableData(outputStream, "Motor Wheel Distance Between Wheels", ROBOT_KINEMATICS_KEY_COLUMN_LENGTH);
+    appendHex6TableData(outputStream, (long) (getMotorWheelDistanceBetweenWheelsMM(robotKinematics) * MILLI_TO_MICRO_FACTOR), ROBOT_KINEMATICS_HEX_VALUE_COLUMN_LENGTH);
+    appendDecfTableData(outputStream, getMotorWheelDistanceBetweenWheelsMM(robotKinematics), ROBOT_KINEMATICS_VALUE_COLUMN_LENGTH);
+    appendStringTableData(outputStream, "mm", ROBOT_KINEMATICS_UNIT_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, ROBOT_KINEMATICS_LAST_COLUMN);
+
+    appendStringTableData(outputStream, "Motor Wheel Rotation By Second At Full Speed/PWM", ROBOT_KINEMATICS_KEY_COLUMN_LENGTH);
+    appendHex6TableData(outputStream, (long) getMotorWheelRotationBySecondAtFullSpeed(robotKinematics), ROBOT_KINEMATICS_HEX_VALUE_COLUMN_LENGTH);
+    appendDecfTableData(outputStream, getMotorWheelRotationBySecondAtFullSpeed(robotKinematics), ROBOT_KINEMATICS_VALUE_COLUMN_LENGTH);
+    appendStringTableData(outputStream, "rotation / second", ROBOT_KINEMATICS_UNIT_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, ROBOT_KINEMATICS_LAST_COLUMN);
+
+    appendTableHeaderSeparatorLine(outputStream);
+
+    // COMPUTE VALUE
+    appendStringTableData(outputStream, "Computed : Coder Wheels Distance from Center", ROBOT_KINEMATICS_KEY_COLUMN_LENGTH);
+	appendHex6TableData(outputStream, (long) (getCoderWheelsDistanceFromCenter(robotKinematics) * MILLI_TO_MICRO_FACTOR), ROBOT_KINEMATICS_HEX_VALUE_COLUMN_LENGTH);
+	appendDecfTableData(outputStream, getCoderWheelsDistanceFromCenter(robotKinematics), ROBOT_KINEMATICS_VALUE_COLUMN_LENGTH);
+	appendStringTableData(outputStream, "mm", ROBOT_KINEMATICS_UNIT_COLUMN_LENGTH);
 	appendEndOfTableColumn(outputStream, ROBOT_KINEMATICS_LAST_COLUMN);
     
-    appendStringTableData(outputStream, "Computed Right : pulse for 1 meter", ROBOT_KINEMATICS_KEY_COLUMN_LENGTH);
-	appendHex4TableData(outputStream, (long) getRightWheelPulseCountForOneMillimeter(robotKinematics), ROBOT_KINEMATICS_HEX_VALUE_COLUMN_LENGTH);
-	appendDecfTableData(outputStream, getRightWheelPulseCountForOneMillimeter(robotKinematics), ROBOT_KINEMATICS_VALUE_COLUMN_LENGTH);
-	appendStringTableData(outputStream, "pulse", ROBOT_KINEMATICS_UNIT_COLUMN_LENGTH);
+    appendStringTableData(outputStream, "Computed : Coder Left Wheel Length for One Pulse", ROBOT_KINEMATICS_KEY_COLUMN_LENGTH);
+	appendHex6TableData(outputStream, (long) (getCoderLeftWheelLengthForOnePulse(robotKinematics) * MILLI_TO_NANO_FACTOR), ROBOT_KINEMATICS_HEX_VALUE_COLUMN_LENGTH);
+	appendDecfTableData(outputStream, getCoderLeftWheelLengthForOnePulse(robotKinematics) * MILLI_TO_NANO_FACTOR, ROBOT_KINEMATICS_VALUE_COLUMN_LENGTH);
+	appendStringTableData(outputStream, "nanometer", ROBOT_KINEMATICS_UNIT_COLUMN_LENGTH);
 	appendEndOfTableColumn(outputStream, ROBOT_KINEMATICS_LAST_COLUMN);
     
-    appendStringTableData(outputStream, "Computed Left : pulse for 90 deg", ROBOT_KINEMATICS_KEY_COLUMN_LENGTH);
-	appendHex4TableData(outputStream, (long) rotationInDeciDegreeToRealDistanceForLeftWheel(robotKinematics, DEG_90), ROBOT_KINEMATICS_HEX_VALUE_COLUMN_LENGTH);
+    appendStringTableData(outputStream, "Computed : Coder Right Wheel Length for One Pulse", ROBOT_KINEMATICS_KEY_COLUMN_LENGTH);
+	appendHex6TableData(outputStream, (long) (getCoderRightWheelLengthForOnePulse(robotKinematics) * MILLI_TO_NANO_FACTOR), ROBOT_KINEMATICS_HEX_VALUE_COLUMN_LENGTH);
+	appendDecfTableData(outputStream, getCoderRightWheelLengthForOnePulse(robotKinematics) * MILLI_TO_NANO_FACTOR, ROBOT_KINEMATICS_VALUE_COLUMN_LENGTH);
+	appendStringTableData(outputStream, "nanometer", ROBOT_KINEMATICS_UNIT_COLUMN_LENGTH);
+	appendEndOfTableColumn(outputStream, ROBOT_KINEMATICS_LAST_COLUMN);
+    
+    appendStringTableData(outputStream, "Computed : Coder Average Wheel Length for One Pulse", ROBOT_KINEMATICS_KEY_COLUMN_LENGTH);
+	appendHex6TableData(outputStream, (long) (getCoderAverageWheelLengthForOnePulse(robotKinematics) * MILLI_TO_NANO_FACTOR), ROBOT_KINEMATICS_HEX_VALUE_COLUMN_LENGTH);
+	appendDecfTableData(outputStream, getCoderAverageWheelLengthForOnePulse(robotKinematics) * MILLI_TO_NANO_FACTOR, ROBOT_KINEMATICS_VALUE_COLUMN_LENGTH);
+	appendStringTableData(outputStream, "nanometer", ROBOT_KINEMATICS_UNIT_COLUMN_LENGTH);
+	appendEndOfTableColumn(outputStream, ROBOT_KINEMATICS_LAST_COLUMN);
+    
+    appendStringTableData(outputStream, "Computed : Coder Wheel / Motor Wheel Average Diameter Factor", ROBOT_KINEMATICS_KEY_COLUMN_LENGTH);
+	appendHex6TableData(outputStream, (long) getCoderWheelAndMotorWheelAverageDiameterFactor(robotKinematics), ROBOT_KINEMATICS_HEX_VALUE_COLUMN_LENGTH);
+	appendDecfTableData(outputStream, getCoderWheelAndMotorWheelAverageDiameterFactor(robotKinematics), ROBOT_KINEMATICS_VALUE_COLUMN_LENGTH);
+	appendStringTableData(outputStream, "-", ROBOT_KINEMATICS_UNIT_COLUMN_LENGTH);
+	appendEndOfTableColumn(outputStream, ROBOT_KINEMATICS_LAST_COLUMN);
+
+    appendStringTableData(outputStream, "Computed : Coder Wheel Pulse By Seconds At FullSpeed (Forward)", ROBOT_KINEMATICS_KEY_COLUMN_LENGTH);
+    appendHex6TableData(outputStream, (long)getCoderWheelPulseBySecondsAtFullSpeed(robotKinematics, false), ROBOT_KINEMATICS_HEX_VALUE_COLUMN_LENGTH);
+    appendDecfTableData(outputStream, getCoderWheelPulseBySecondsAtFullSpeed(robotKinematics, false), ROBOT_KINEMATICS_VALUE_COLUMN_LENGTH);
+    appendStringTableData(outputStream, "pulse / second", ROBOT_KINEMATICS_UNIT_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, ROBOT_KINEMATICS_LAST_COLUMN);
+    
+    appendStringTableData(outputStream, "Computed : Coder Wheel Pulse By Seconds At FullSpeed (Rotation)", ROBOT_KINEMATICS_KEY_COLUMN_LENGTH);
+    appendHex6TableData(outputStream, (long)getCoderWheelPulseBySecondsAtFullSpeed(robotKinematics, true), ROBOT_KINEMATICS_HEX_VALUE_COLUMN_LENGTH);
+    appendDecfTableData(outputStream, getCoderWheelPulseBySecondsAtFullSpeed(robotKinematics, true), ROBOT_KINEMATICS_VALUE_COLUMN_LENGTH);
+    appendStringTableData(outputStream, "pulse / second", ROBOT_KINEMATICS_UNIT_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, ROBOT_KINEMATICS_LAST_COLUMN);
+    
+    appendStringTableData(outputStream, "Computed : Left Wheel pulse for 90 deg", ROBOT_KINEMATICS_KEY_COLUMN_LENGTH);
+	appendHex6TableData(outputStream, (long) rotationInDeciDegreeToRealDistanceForLeftWheel(robotKinematics, DEG_90), ROBOT_KINEMATICS_HEX_VALUE_COLUMN_LENGTH);
 	appendDecfTableData(outputStream, rotationInDeciDegreeToRealDistanceForLeftWheel(robotKinematics, DEG_90), ROBOT_KINEMATICS_VALUE_COLUMN_LENGTH);
 	appendStringTableData(outputStream, "pulse", ROBOT_KINEMATICS_UNIT_COLUMN_LENGTH);
 	appendEndOfTableColumn(outputStream, ROBOT_KINEMATICS_LAST_COLUMN);
     
-    appendStringTableData(outputStream, "Computed Right : pulse for 90 deg", ROBOT_KINEMATICS_KEY_COLUMN_LENGTH);
-	appendHex4TableData(outputStream, (long) rotationInDeciDegreeToRealDistanceForRightWheel(robotKinematics, DEG_90), ROBOT_KINEMATICS_HEX_VALUE_COLUMN_LENGTH);
+    appendStringTableData(outputStream, "Computed : Right Wheel pulse for 90 deg", ROBOT_KINEMATICS_KEY_COLUMN_LENGTH);
+	appendHex6TableData(outputStream, (long) rotationInDeciDegreeToRealDistanceForRightWheel(robotKinematics, DEG_90), ROBOT_KINEMATICS_HEX_VALUE_COLUMN_LENGTH);
 	appendDecfTableData(outputStream, rotationInDeciDegreeToRealDistanceForRightWheel(robotKinematics, DEG_90), ROBOT_KINEMATICS_VALUE_COLUMN_LENGTH);
 	appendStringTableData(outputStream, "pulse", ROBOT_KINEMATICS_UNIT_COLUMN_LENGTH);
 	appendEndOfTableColumn(outputStream, ROBOT_KINEMATICS_LAST_COLUMN);

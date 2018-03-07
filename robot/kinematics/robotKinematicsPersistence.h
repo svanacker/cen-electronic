@@ -3,28 +3,42 @@
 
 // EEPROM INDEX
 
-#define EEPROM_WHEEL_AVERAGE_LENGTH_FOR_ONE_PULSE_INDEX            EEPROM_KINETICS_START_INDEX
-#define EEPROM_WHEEL_ROTATION_BY_SECOND_AT_FULL_SPEED_INDEX        EEPROM_WHEEL_AVERAGE_LENGTH_FOR_ONE_PULSE_INDEX + 4
-#define EEPROM_PULSE_BY_ROTATION_INDEX                            EEPROM_WHEEL_ROTATION_BY_SECOND_AT_FULL_SPEED_INDEX + 4
-#define EEPROM_WHEEL_DELTA_LENGTH_INDEX                            EEPROM_PULSE_BY_ROTATION_INDEX + 4
-#define EEPROM_WHEELS_DISTANCE_INDEX                            EEPROM_WHEEL_DELTA_LENGTH_INDEX + 4
+#define EEPROM_CODER_WHEEL_AVERAGE_DIAMETER_INDEX                     EEPROM_KINETICS_START_INDEX
+#define EEPROM_CODER_WHEEL_AVERAGE_DELTA_DIAMETER_INDEX               EEPROM_KINETICS_START_INDEX + 4
+#define EEPROM_CODER_WHEEL_DISTANCE_BETWEEN_WHEELS_INDEX              EEPROM_KINETICS_START_INDEX + 8
+#define EEPROM_CODER_WHEEL_PULSE_BY_ROTATION_INDEX                       EEPROM_KINETICS_START_INDEX + 12
+
+#define EEPROM_MOTOR_WHEEL_AVERAGE_DIAMETER_INDEX                     EEPROM_KINETICS_START_INDEX + 16
+#define EEPROM_MOTOR_WHEEL_DISTANCE_BETWEEN_WHEELS_INDEX              EEPROM_KINETICS_START_INDEX + 20
+#define EEPROM_MOTOR_WHEEL_ROTATION_BY_SECONDS_AT_FULL_SPEED_INDEX       EEPROM_KINETICS_START_INDEX + 24
 
 // DEFAULT VALUES
 
-/** Average wheel length in mm for 1 impulsion. */
-// Change for a wheel of an average 30 mm
-#define KINEMATICS_WHEEL_AVERAGE_LENGTH_DEFAULT_VALUE                        0.004776f
+// -> CODER WHEEL
 
-#define KINEMATICS_WHEEL_ROTATION_BY_SECONDS_AT_FULL_SPEED_DEFAULT_VALUE    7.0f
+/** Average coder wheel diameter (mm). */
+#define KINEMATICS_CODER_WHEEL_AVERAGE_DIAMETER_MM_DEFAULT_VALUE                       30.405f
+
+// To compensate difference between Coder Wheels Diameter (mm)
+#define KINEMATICS_CODER_WHEEL_AVERAGE_DELTA_DIAMETER_MM_DEFAULT_VALUE                     0.0f            
+
+/** Default wheels distance (mm)). */
+#define KINEMATICS_CODER_WHEEL_DISTANCE_BETWEEN_WHEELS_MM_DEFAULT_VALUE                 283.00f
+
 // FOR 7500 x 4 (quadratic) = 30 000
-#define KINEMATICS_WHEEL_PULSE_BY_ROTATION_DEFAULT_VALUE                    20000.0f
+#define KINEMATICS_CODER_WHEEL_PULSE_BY_ROTATION_DEFAULT_VALUE                         20000.0f
 
-// To compensate difference between WHEELS
-#define KINEMATICS_WHEEL_DELTA_LENGTH_DEFAULT_VALUE                            0.0f            
+// -> MOTOR WHEEL
 
-/** Default wheels distance (micrometer)). */
-// #define WHEELS_DISTANCE 226.70f
-#define KINEMATICS_WHEELS_DISTANCE_DEFAULT_VALUE                            283.00f
+// The average diameter of the motor wheel
+#define KINEMATICS_MOTOR_WHEEL_AVERAGE_DIAMETER_MM_DEFAULT_VALUE                         62.0f
+
+// The average distance between motor wheel. It could be needed when we do some rotation, between the must apply 
+// a factor between the distance of motor and the distance of coder wheel. This is not the case when we go forward
+#define KINEMATICS_MOTOR_WHEEL_DISTANCE_BETWEEN_WHEELS_MM_DEFAULT_VALUE               240.00f
+
+// How many rotation the motor do by second at full speed (full PWM)
+#define KINEMATICS_MOTOR_WHEEL_ROTATION_BY_SECONDS_AT_FULL_SPEED_DEFAULT_VALUE           7.0f
 
 /**
  * Load the Kinematics parameters from the eeprom_ to the structure given in parameter. It can be used to load Default Values when nothing is in the eeprom.

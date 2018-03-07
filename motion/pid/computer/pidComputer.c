@@ -68,19 +68,19 @@ float computeNormalSpeed(MotionInstruction* inst, float time) {
 
 float pulseByPidTimeSpeedToMMBySecondSpeed(float pulseSpeed) {
     RobotKinematics* robotKinematics = getRobotKinematics();
-    float result = pulseSpeed * getAverageWheelLengthForOnePulse(robotKinematics) * PID_UPDATE_MOTORS_FREQUENCY_HERTZ;
+    float result = pulseSpeed * getCoderAverageWheelLengthForOnePulse(robotKinematics) * PID_UPDATE_MOTORS_FREQUENCY_HERTZ;
     return result;
 }
 
-float getWheelPulseByPidTimeAtFullSpeed(void) {
+float getCoderWheelPulseByPidTimeAtFullSpeed(bool rotation) {
     RobotKinematics* robotKinematics = getRobotKinematics();
-    float result = getWheelPulseBySecondsAtFullSpeed(robotKinematics) / PID_UPDATE_MOTORS_FREQUENCY_HERTZ;
+    float result = getCoderWheelPulseBySecondsAtFullSpeed(robotKinematics, rotation) / PID_UPDATE_MOTORS_FREQUENCY_HERTZ;
     return result;
 }
 
-float getUFactorAtFullSpeed(void) {
+float getUFactorAtFullSpeed(bool rotation) {
     // TODO : This expression must also depend on the voltage !!!
-    float result = MAX_PWM / getWheelPulseByPidTimeAtFullSpeed();
+    float result = MAX_PWM / getCoderWheelPulseByPidTimeAtFullSpeed(rotation);
     return result;
 }
 
@@ -92,7 +92,8 @@ float getNormalU(float pulseAtSpeed) {
     // at Frequency of 200 Hz => 730 pulses by pidTime at full Speed
     
     // NormalU = (pulseAtSpeed / pulseAtFullSpeed) * MAX_U
-    float result = pulseAtSpeed * getUFactorAtFullSpeed();
+    // TODO : Manage when rotation
+    float result = pulseAtSpeed * getUFactorAtFullSpeed(false);
     return result;
 }
 

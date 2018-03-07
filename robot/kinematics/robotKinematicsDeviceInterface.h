@@ -4,25 +4,23 @@
 #include "../../device/deviceInterface.h"
 #include "../../device/deviceConstants.h"
 
-#define COMMAND_KINEMATICS_LOAD_DEFAULT_VALUES            'd'
-#define COMMAND_KINEMATICS_DEBUG						  'D'
+// GLOBAL COMMAND
+#define COMMAND_KINEMATICS_LOAD_DEFAULT_VALUES                     'D'
+#define COMMAND_KINEMATICS_LIST_DEBUG					           'L'
 
-#define COMMAND_GET_WHEELS_AVERAGE_FOR_ONE_PULSE_LENGTH 'l'
-#define COMMAND_SET_WHEELS_AVERAGE_FOR_ONE_PULSE_LENGTH 'L'
+#define COMMAND_KINEMATICS_READ_ALL                                'G'
+#define COMMAND_KINEMATICS_SAVE                                    'S'
 
-#define COMMAND_GET_ROTATION_BY_SECONDS_AT_FULL_SPEED   'r'
-#define COMMAND_SET_ROTATION_BY_SECONDS_AT_FULL_SPEED   'R'
+// CODER COMMAND
+#define COMMAND_SET_CODER_WHEEL_AVERAGE_DIAMETER_MM                'w'
+#define COMMAND_SET_CODER_WHEEL_AVERAGE_DELTA_DIAMETER_MM          'd'
+#define COMMAND_SET_CODER_DISTANCE_BETWEEN_WHEELS_MM               'h'
+#define COMMAND_SET_CODER_WHEEL_PULSE_BY_ROTATION                  'p'
 
-#define COMMAND_GET_PULSE_BY_ROTATION                   'p'
-#define COMMAND_SET_PULSE_BY_ROTATION                   'P'
-
-#define COMMAND_GET_WHEEL_DELTA_FOR_ONE_PULSE_LENGTH    'w'
-#define COMMAND_SET_WHEEL_DELTA_FOR_ONE_PULSE_LENGTH    'W'
-
-#define COMMAND_GET_WHEELS_DISTANCE                     'h'
-#define COMMAND_SET_WHEELS_DISTANCE                     'H'
-
-#define COMMAND_KINEMATICS_SAVE                         's'
+// MOTOR COMMAND
+#define COMMAND_SET_MOTOR_WHEEL_AVERAGE_DIAMETER_MM                'M'
+#define COMMAND_SET_MOTOR_DISTANCE_BETWEEN_WHEELS_MM               'H'
+#define COMMAND_SET_MOTOR_WHEEL_ROTATION_BY_SECONDS_AT_FULL_SPEED  'R'
 
 /**
 * Interface for Device "RobotKinematics"

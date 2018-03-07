@@ -1,6 +1,8 @@
 #ifndef PID_COMPUTER_H
 #define PID_COMPUTER_H
 
+#include <stdbool.h>
+
 /** 
  * All Common Functions for Simple or BSpline Pid Compute.
  */
@@ -45,12 +47,20 @@ float getNormalU(float pulseAtNormalSpeed);
 
 // CONVERSION UTILS
 
+float getUFactorAtFullSpeed(bool rotation);
+
 /**
 * Convert a speed in pulse / pid Time to a speed in mm/second.
 * @param pulseSpeed the speed in pulse / pidTime to convert
 * @return a speed in mm/second
 */
 float pulseByPidTimeSpeedToMMBySecondSpeed(float pulseSpeed);
+
+/**
+ * Get how many pulse at the coder wheel are triggered at full motor Speed 
+ * for a specific PidTime Frequency 
+ */
+float getCoderWheelPulseByPidTimeAtFullSpeed(bool rotation);
 
 #endif
 

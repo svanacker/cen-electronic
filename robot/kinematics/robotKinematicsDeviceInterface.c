@@ -10,100 +10,96 @@ const char* getKinematicsDeviceName(void) {
 int deviceRobotKinematicsGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     if (commandHeader == COMMAND_KINEMATICS_LOAD_DEFAULT_VALUES) {
         if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("loadDefaultValues");
-            setResultUnsignedHex6(0, "value");
+            setFunctionNoArgumentAndNoResult("load Default Values");
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
     else if (commandHeader == COMMAND_KINEMATICS_SAVE) {
         if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("saveToEeprom");
-            setResultUnsignedHex6(0, "value");
+            setFunctionNoArgumentAndNoResult("save To Eeprom");
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
-    // Wheels Average Length (get/set)
-    else if (commandHeader == COMMAND_GET_WHEELS_AVERAGE_FOR_ONE_PULSE_LENGTH) {
+    // DEBUG
+    else if (commandHeader == COMMAND_KINEMATICS_LIST_DEBUG) {
         if (fillDeviceArgumentList) {
-            setFunction("getWheelsAvgLengthForOnePulse", 0, 1);
-            setResultUnsignedHex6(0, "value (nanoM)");
+            setFunctionNoArgumentAndNoResult("debug as Table List");
         }
-        return commandLengthValueForMode(mode, 0, 6);
+        return commandLengthValueForMode(mode, 0, 0);
     }
-    else if (commandHeader == COMMAND_SET_WHEELS_AVERAGE_FOR_ONE_PULSE_LENGTH) {
+    // GET ALL values
+    else if (commandHeader == COMMAND_KINEMATICS_READ_ALL) {
         if (fillDeviceArgumentList) {
-            setFunction("setWheelsAvgLengthForOnePulse", 1, 0);
+            setFunction("real All", 0, 13);
+            // CODER VALUE
+            setResultUnsignedHex6(0, "coder Wheel Average Diameter (nanoM)");
+            setResultSeparator(1);
+            setResultUnsignedHex6(2, "coder Wheel Average Delta Diameter (nanoM)");
+            setResultSeparator(3);
+            setResultUnsignedHex6(4, "coder Wheel Distance Between Wheels (microM)");
+            setResultSeparator(5);
+            setResultUnsignedHex6(6, "coder Wheel Pulse By Rotation (pulse/rotation)");
+            setResultSeparator(7);
+            // MOTOR VALUE
+            setResultUnsignedHex6(8, "motor Wheel Average Diameter (microMM)");
+            setResultSeparator(9);
+            setResultUnsignedHex6(10, "motor Wheel Distance Between Wheels (microM)");
+            setResultSeparator(11);
+            setResultUnsignedHex6(12, "motor Wheel Rotation By Second At FullSpeed (rot/sec)");
+        }
+        return commandLengthValueForMode(mode, 0, 48);
+    }
+    // CODER VALUE
+    else if (commandHeader == COMMAND_SET_CODER_WHEEL_AVERAGE_DIAMETER_MM) {
+        if (fillDeviceArgumentList) {
+            setFunction("set Coder Wheel Average Diameter", 1, 0);
             setArgumentUnsignedHex6(0, "value (nanoM)");
         }
         return commandLengthValueForMode(mode, 6, 0);
     }
-    // Rotation By Seconds (get/set)
-    else if (commandHeader == COMMAND_GET_ROTATION_BY_SECONDS_AT_FULL_SPEED) {
+    else if (commandHeader == COMMAND_SET_CODER_WHEEL_AVERAGE_DELTA_DIAMETER_MM) {
         if (fillDeviceArgumentList) {
-            setFunction("getRotationBySecondAtFullSpeed", 0, 1);
-            setResultUnsignedHex2(0, "value (pulse)");
-        }
-        return commandLengthValueForMode(mode, 0, 2);
-    }
-    else if (commandHeader == COMMAND_SET_ROTATION_BY_SECONDS_AT_FULL_SPEED) {
-        if (fillDeviceArgumentList) {
-            setFunction("setRotationBySecondAtFullSpeed", 1, 0);
-            setArgumentUnsignedHex2(0, "value (rotation)");
-        }
-        return commandLengthValueForMode(mode, 2, 0);
-    }
-    // Pulse by rotation (get/set)
-    else if (commandHeader == COMMAND_GET_PULSE_BY_ROTATION) {
-        if (fillDeviceArgumentList) {
-            setFunction("getPulseByWheelRotation", 0, 1);
-            setResultUnsignedHex4(0, "value (pulse)");
-        }
-        return commandLengthValueForMode(mode, 0, 4);
-    }
-    else if (commandHeader == COMMAND_SET_PULSE_BY_ROTATION) {
-        if (fillDeviceArgumentList) {
-            setFunction("setPulseByWheelRotation", 1, 0);
-            setArgumentUnsignedHex4(0, "value (pulse)");
-        }
-        return commandLengthValueForMode(mode, 4, 0);
-    }
-    // Wheel delta length (get/set)
-    else if (commandHeader == COMMAND_GET_WHEEL_DELTA_FOR_ONE_PULSE_LENGTH) {
-        if (fillDeviceArgumentList) {
-            setFunction("getWheelDeltaLengthForOnePulse", 0, 1);
-            setResultUnsignedHex6(0, "value (nanoM)");
-        }
-        return commandLengthValueForMode(mode, 0, 6);
-    }
-    else if (commandHeader == COMMAND_SET_WHEEL_DELTA_FOR_ONE_PULSE_LENGTH) {
-        if (fillDeviceArgumentList) {
-            setFunction("setWheelDeltaLengthForOnePulse", 1, 0);
+            setFunction("set Coder Wheel Average Delta Diameter", 1, 0);
             setArgumentUnsignedHex6(0, "value (nanoM)");
         }
         return commandLengthValueForMode(mode, 6, 0);
     }
-    // Wheel distance (get/set)
-    else if (commandHeader == COMMAND_GET_WHEELS_DISTANCE) {
+    else if (commandHeader == COMMAND_SET_CODER_DISTANCE_BETWEEN_WHEELS_MM) {
         if (fillDeviceArgumentList) {
-            setFunction("getWheelsDistance", 0, 1);
-            setResultUnsignedHex6(0, "value (microM)");
-        }
-        return commandLengthValueForMode(mode, 0, 6);
-    }
-    else if (commandHeader == COMMAND_SET_WHEELS_DISTANCE) {
-        if (fillDeviceArgumentList) {
-            setFunction("setWheelsDistance", 1, 0);
+            setFunction("set Coder Distance Between Wheels", 1, 0);
             setArgumentUnsignedHex6(0, "value (microM)");
         }
         return commandLengthValueForMode(mode, 6, 0);
     }
-	// DEBUG
-	else if (commandHeader == COMMAND_KINEMATICS_DEBUG) {
-		if (fillDeviceArgumentList) {
-			setFunctionNoArgumentAndNoResult("debug");
-		}
-		return commandLengthValueForMode(mode, 0, 0);
-	}
+    else if (commandHeader == COMMAND_SET_CODER_WHEEL_PULSE_BY_ROTATION) {
+        if (fillDeviceArgumentList) {
+            setFunction("set Coder Wheel Pulse By Rotation", 1, 0);
+            setArgumentUnsignedHex6(0, "value (pulse / rotation)");
+        }
+        return commandLengthValueForMode(mode, 6, 0);
+    }
+    // MOTOR VALUE
+    else if (commandHeader == COMMAND_SET_MOTOR_WHEEL_AVERAGE_DIAMETER_MM) {
+        if (fillDeviceArgumentList) {
+            setFunction("set Motor Wheel Average Diameter", 1, 0);
+            setArgumentUnsignedHex6(0, "value (microM)");
+        }
+        return commandLengthValueForMode(mode, 6, 0);
+    }
+    else if (commandHeader == COMMAND_SET_MOTOR_DISTANCE_BETWEEN_WHEELS_MM) {
+        if (fillDeviceArgumentList) {
+            setFunction("set Motor Distance Between Wheels", 1, 0);
+            setArgumentUnsignedHex6(0, "value (microM)");
+        }
+        return commandLengthValueForMode(mode, 6, 0);
+    }
+    else if (commandHeader == COMMAND_SET_MOTOR_WHEEL_ROTATION_BY_SECONDS_AT_FULL_SPEED) {
+        if (fillDeviceArgumentList) {
+            setFunction("set Motor Wheel Rotation By Seconds At Full Speed", 1, 0);
+            setArgumentUnsignedHex6(0, "rotation / second");
+        }
+        return commandLengthValueForMode(mode, 6, 0);
+    }
     return DEVICE_HEADER_NOT_HANDLED;
 }
 
