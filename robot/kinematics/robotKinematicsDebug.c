@@ -78,19 +78,19 @@ void printRobotKinematicsTable(OutputStream* outputStream, RobotKinematics* robo
     appendEndOfTableColumn(outputStream, ROBOT_KINEMATICS_LAST_COLUMN);
 
     appendStringTableData(outputStream, "Motor Wheel Rotation By Second At Full Speed/PWM", ROBOT_KINEMATICS_KEY_COLUMN_LENGTH);
-    appendHexFloat4TableData(outputStream, getMotorWheelRotationBySecondAtFullSpeed(robotKinematics), ROBOT_KINEMATICS_DEFAULT_DIGIT_PRECISION, ROBOT_KINEMATICS_HEX_VALUE_COLUMN_LENGTH);
+    appendHexFloat6TableData(outputStream, getMotorWheelRotationBySecondAtFullSpeed(robotKinematics), ROBOT_KINEMATICS_DEFAULT_DIGIT_PRECISION, ROBOT_KINEMATICS_HEX_VALUE_COLUMN_LENGTH);
     appendDecfTableData(outputStream, getMotorWheelRotationBySecondAtFullSpeed(robotKinematics), ROBOT_KINEMATICS_VALUE_COLUMN_LENGTH);
     appendStringTableData(outputStream, "rotation / second", ROBOT_KINEMATICS_UNIT_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, ROBOT_KINEMATICS_LAST_COLUMN);
 
     appendStringTableData(outputStream, "Motor Max Torque", ROBOT_KINEMATICS_KEY_COLUMN_LENGTH);
-    appendHexFloat4TableData(outputStream, getMotorMaxTorqueMilliNewton(robotKinematics), ROBOT_KINEMATICS_DEFAULT_DIGIT_PRECISION, ROBOT_KINEMATICS_HEX_VALUE_COLUMN_LENGTH);
+    appendHexFloat6TableData(outputStream, getMotorMaxTorqueMilliNewton(robotKinematics), ROBOT_KINEMATICS_DEFAULT_DIGIT_PRECISION, ROBOT_KINEMATICS_HEX_VALUE_COLUMN_LENGTH);
     appendDecfTableData(outputStream, getMotorMaxTorqueMilliNewton(robotKinematics), ROBOT_KINEMATICS_VALUE_COLUMN_LENGTH);
     appendStringTableData(outputStream, "milliNewton", ROBOT_KINEMATICS_UNIT_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, ROBOT_KINEMATICS_LAST_COLUMN);
 
     appendStringTableData(outputStream, "Motor Reductor Ratio", ROBOT_KINEMATICS_KEY_COLUMN_LENGTH);
-    appendHexFloat4TableData(outputStream, getMotorReductorRatio(robotKinematics), ROBOT_KINEMATICS_DEFAULT_DIGIT_PRECISION, ROBOT_KINEMATICS_HEX_VALUE_COLUMN_LENGTH);
+    appendHexFloat6TableData(outputStream, getMotorReductorRatio(robotKinematics), ROBOT_KINEMATICS_DEFAULT_DIGIT_PRECISION, ROBOT_KINEMATICS_HEX_VALUE_COLUMN_LENGTH);
     appendDecfTableData(outputStream, getMotorReductorRatio(robotKinematics), ROBOT_KINEMATICS_VALUE_COLUMN_LENGTH);
     appendStringTableData(outputStream, "-", ROBOT_KINEMATICS_UNIT_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, ROBOT_KINEMATICS_LAST_COLUMN);
@@ -99,7 +99,7 @@ void printRobotKinematicsTable(OutputStream* outputStream, RobotKinematics* robo
     
     // ROBOT VALUE
     appendStringTableData(outputStream, "Robot Weight", ROBOT_KINEMATICS_KEY_COLUMN_LENGTH);
-    appendHexFloat4TableData(outputStream, getRobotWeightGrams(robotKinematics), ROBOT_KINEMATICS_WEIGHT_DIGIT_PRECISION, ROBOT_KINEMATICS_HEX_VALUE_COLUMN_LENGTH);
+    appendHexFloat6TableData(outputStream, getRobotWeightGrams(robotKinematics), ROBOT_KINEMATICS_WEIGHT_DIGIT_PRECISION, ROBOT_KINEMATICS_HEX_VALUE_COLUMN_LENGTH);
     appendDecfTableData(outputStream, getRobotWeightGrams(robotKinematics), ROBOT_KINEMATICS_VALUE_COLUMN_LENGTH);
     appendStringTableData(outputStream, "grams", ROBOT_KINEMATICS_UNIT_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, ROBOT_KINEMATICS_LAST_COLUMN);
@@ -155,14 +155,14 @@ void printRobotKinematicsTable(OutputStream* outputStream, RobotKinematics* robo
     appendStringTableData(outputStream, "pulse / second", ROBOT_KINEMATICS_UNIT_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, ROBOT_KINEMATICS_LAST_COLUMN);
     
-    appendStringTableData(outputStream, "Computed : Left Wheel pulse for 90 deg", ROBOT_KINEMATICS_KEY_COLUMN_LENGTH);
+    appendStringTableData(outputStream, "Computed : Left Wheel mm for 90 deg", ROBOT_KINEMATICS_KEY_COLUMN_LENGTH);
 	appendDecfTableData(outputStream, rotationInDegreeToRealDistanceForLeftWheel(robotKinematics, DEG_90), ROBOT_KINEMATICS_VALUE_COLUMN_LENGTH);
-	appendStringTableData(outputStream, "pulse", ROBOT_KINEMATICS_UNIT_COLUMN_LENGTH);
+	appendStringTableData(outputStream, "mm", ROBOT_KINEMATICS_UNIT_COLUMN_LENGTH);
 	appendEndOfTableColumn(outputStream, ROBOT_KINEMATICS_LAST_COLUMN);
     
-    appendStringTableData(outputStream, "Computed : Right Wheel pulse for 90 deg", ROBOT_KINEMATICS_KEY_COLUMN_LENGTH);
+    appendStringTableData(outputStream, "Computed : Right Wheel mm for 90 deg", ROBOT_KINEMATICS_KEY_COLUMN_LENGTH);
 	appendDecfTableData(outputStream, rotationInDegreeToRealDistanceForRightWheel(robotKinematics, DEG_90), ROBOT_KINEMATICS_VALUE_COLUMN_LENGTH);
-	appendStringTableData(outputStream, "pulse", ROBOT_KINEMATICS_UNIT_COLUMN_LENGTH);
+	appendStringTableData(outputStream, "mm", ROBOT_KINEMATICS_UNIT_COLUMN_LENGTH);
 	appendEndOfTableColumn(outputStream, ROBOT_KINEMATICS_LAST_COLUMN);
     
 	appendTableHeaderSeparatorLine(outputStream);

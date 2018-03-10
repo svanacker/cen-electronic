@@ -17,11 +17,11 @@
 static float PID_PARAMETERS_EEPROM_DEFAULT_VALUES[EEPROM_PID_PARAMETERS_VALUE_COUNT * PID_STORED_COUNT] = {
     // NORMAL VALUES
     // Go (P I D MI)
-    0.5f, 0.0f, 0.3f, 0.0f,
-    0.5f, 0.0f, 0.3f, 0.0f,
+    5.0f, 0.0f, 51.2f, 0.0f,
+    12.8f, 0.0f, 128.0f, 0.0f,
     // Rotation (P I D MI)
-    0.5f, 0.0f, 0.3f, 0.0f,
-    0.5f, 0.0f, 0.3f, 0.0f,
+    5.0f, 0.0f, 51.2f, 0.0f,
+    5.0f, 0.0f, 51.2f, 0.0f,
     // Maintain Position
     1.0f, 0.0f, 1.0f, 0.0f,
     1.0f, 0.0f, 1.0f, 0.0f,

@@ -1,6 +1,9 @@
 #include "pidComputer.h"
 
+#include "../../../common/error/error.h"
+
 #include "../../../common/pwm/motor/dualHBridgeMotorPwm.h"
+
 #include "../pidComputationValues.h"
 #include "../pid.h"
 #include "../pidTimer.h"
@@ -90,21 +93,26 @@ float computeNormalSpeed(MotionInstruction* inst, float time) {
 float getUFactorAtFullSpeed(bool rotation) {
     // TODO : This expression must also depend on the voltage !!!
     RobotKinematics* robotKinematics = getRobotKinematics();
+    float coderWheelDistanceMMBySeconds = getCoderWheelDistanceMMBySecondsAtFullSpeed(robotKinematics, rotation);
+    if (coderWheelDistanceMMBySeconds < 0.001f) {
+        writeError(ROBOT_KINEMATICS_EEPROM_NOT_INITIALIZED);
+        return 0.0f;
+    }
     // We calculate the ratio to apply for PWM !
-    float result = (float) MAX_PWM / getCoderWheelDistanceMMBySecondsAtFullSpeed(robotKinematics, rotation);
+    float result = (float) MAX_PWM / coderWheelDistanceMMBySeconds;
     return result;
 }
 
 /**
  * Returns the tension which must be applied to the motor to reach normalSpeed, with no load on motor.
  */
-float getNormalU(float pulseAtSpeed) {
+float getNormalU(float speed) {
     // at full Speed (value = 127), 7 rotations / seconds * 20000 impulsions
     // at Frequency of 200 Hz => 730 pulses by pidTime at full Speed
     
     // NormalU = (pulseAtSpeed / pulseAtFullSpeed) * MAX_U
     // TODO : Manage when rotation
-    float result = pulseAtSpeed * getUFactorAtFullSpeed(false);
+    float result = speed * getUFactorAtFullSpeed(false);
     return result;
 }
 

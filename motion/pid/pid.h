@@ -29,8 +29,8 @@
 // We manage a precision of time to the millisecond
 #define PID_TIME_SECOND_DIGIT_PRECISION 3
 
-// We manage a precision for the PID of 3 digits
-#define PID_VALUE_DIGIT_PRECISION       3
+// We manage a precision for the PID of 1 digits
+#define PID_VALUE_DIGIT_PRECISION       1
 
 /**
  * Returns the Index of Pid which must be chosen in function of pidType.

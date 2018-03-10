@@ -7,23 +7,31 @@
 #include "../../motion/pid/alphaTheta.h"
 
 #include "../../motion/position/coders.h"
+#include "../../robot/kinematics/robotKinematics.h"
 
 void computeCurrentPositionUsingCoders(PidMotion* pidMotion) {
     PidComputationValues* computationValues = &(pidMotion->computationValues);
     PidComputationInstructionValues* thetaCurrentValues = &(computationValues->values[THETA]);
     PidComputationInstructionValues* alphaCurrentValues = &(computationValues->values[ALPHA]);
 
-    // 2 dependant Wheels (direction + angle)
-    float value0 = (float)getCoderValue(CODER_LEFT);
-    float value1 = (float)getCoderValue(CODER_RIGHT);
+    // 2 dependant Wheels (left / right)
+    float coderValueLeft = (float)getCoderValue(CODER_LEFT);
+    float coderValueRight = (float)getCoderValue(CODER_RIGHT);
 
-    // Compute real position of wheel
-    thetaCurrentValues->currentPosition = computeTheta(value0, value1);
-    alphaCurrentValues->currentPosition = computeAlpha(value0, value1);
+    RobotKinematics* robotKinematics = getRobotKinematics();
+    float coderValueDistanceMMLeft = getCoderLeftWheelLengthForOnePulse(robotKinematics) * coderValueLeft;
+    float coderValueDistanceMMRight = getCoderRightWheelLengthForOnePulse(robotKinematics) * coderValueRight;
+
+    // left / right => theta / alpha
+    float theta = computeTheta(coderValueDistanceMMLeft, coderValueDistanceMMRight);
+    float alpha = computeAlpha(coderValueDistanceMMLeft, coderValueDistanceMMRight);
+
+    // Store the current Position
+    thetaCurrentValues->currentPosition = theta;
+    alphaCurrentValues->currentPosition = alpha;
 }
 
 void computeErrorsWithNextPositionUsingCoders(PidMotion* pidMotion, PidMotionDefinition* motionDefinition) {
-
     MotionInstruction* thetaInst = &(motionDefinition->inst[THETA]);
     MotionInstruction* alphaInst = &(motionDefinition->inst[ALPHA]);
 

@@ -7,13 +7,13 @@
 
 // Forward / Backward
 // 768 mm / s^2
-#define DEFAULT_FORWARD_ACCELERATION             768.0f
+#define DEFAULT_FORWARD_ACCELERATION             896.0f
 // 1024 mm / s
 #define DEFAULT_FORWARD_SPEED                    1024.0f
 
 // Default Rotation
-#define DEFAULT_ROTATION_ACCELERATION            256.0f
-#define DEFAULT_ROTATION_SPEED                   256.0f
+#define DEFAULT_ROTATION_ACCELERATION            768.0f
+#define DEFAULT_ROTATION_SPEED                   768.0f
 
 // One Wheel
 #define DEFAULT_ROTATION_ONE_WHEEL_ACCELERATION  512.0f

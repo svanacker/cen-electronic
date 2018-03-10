@@ -15,7 +15,7 @@
 // PID
 #define EEPROM_PID_PARAMETERS_AREA_MARKER_INDEX                           0x0100
 #define EEPROM_PID_PARAMETERS_START_INDEX                                 0x0102
-#define EEPROM_PID_PARAMETERS_END_DETECTION_START_INDEX                   0x0182 
+#define EEPROM_PID_PARAMETERS_END_DETECTION_START_INDEX                   0x01C2 
 
 // MOTION
 #define EEPROM_MOTION_PARAMETERS_AREA_MARKER_INDEX                        0x0200

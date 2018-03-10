@@ -120,7 +120,7 @@ unsigned int appendHexFloat6TableData(OutputStream* outputStream, float value, u
     appendSpace(outputStream);
     appendHexFloat6(outputStream, value, digitPrecision);
     // length of hexFloat6 = 6
-    return appendSpaces(outputStream, columnSize - 4) + 8;
+    return appendSpaces(outputStream, columnSize - 6) + 8;
 }
 
 unsigned int appendBinary16TableData(OutputStream* outputStream, unsigned int value, unsigned int groupBy, int columnSize) {
