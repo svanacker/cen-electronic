@@ -45,10 +45,10 @@ void printLocationListHeader(OutputStream* outputStream) {
 void printLocationTable(OutputStream* outputStream, Location* location) {
 	appendFixedCharArrayTableData(outputStream, &(location->name), LOCATION_LIST_LOCATION_NAME_COLUMN_LENGTH);
 	appendHexFixedCharArrayTableData(outputStream, &(location->name), LOCATION_LIST_LOCATION_NAME_COLUMN_LENGTH);
-	appendDecTableData(outputStream, location->x, LOCATION_LIST_LOCATION_X_COLUMN_LENGTH);
-	appendDecTableData(outputStream, location->y, LOCATION_LIST_LOCATION_Y_COLUMN_LENGTH);
-	appendHex4TableData(outputStream, location->x, LOCATION_LIST_LOCATION_X_HEXA_COLUMN_LENGTH);
-	appendHex4TableData(outputStream, location->y, LOCATION_LIST_LOCATION_Y_HEXA_COLUMN_LENGTH);
+	appendDecfTableData(outputStream, location->x, LOCATION_LIST_LOCATION_X_COLUMN_LENGTH);
+	appendDecfTableData(outputStream, location->y, LOCATION_LIST_LOCATION_Y_COLUMN_LENGTH);
+	appendHexFloat4TableData(outputStream, location->x, POSITION_DIGIT_MM_PRECISION, LOCATION_LIST_LOCATION_X_HEXA_COLUMN_LENGTH);
+    appendHexFloat4TableData(outputStream, location->y, POSITION_DIGIT_MM_PRECISION, LOCATION_LIST_LOCATION_Y_HEXA_COLUMN_LENGTH);
 	appendEndOfTableColumn(outputStream, LOCATION_LIST_LOCATION_LAST_COLUMN_LENGTH);
 }
 

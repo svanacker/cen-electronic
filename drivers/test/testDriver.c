@@ -69,7 +69,7 @@ bool testDriverIntensive(unsigned int testCount) {
 
         bool ok = transmitFromDriverRequestBuffer();
         if (ok) {
-            int actual = (int) readHex6(resultStream);
+            long actual = (long) readHex6(resultStream);
             long expected = value1 + value2 + value3 + value4 + value5 + value7 + value8 + value9 + value10;
             if (actual != expected) {
                 writeError(DEVICE_TEST_INTENSIVE_CHECK_PROBLEM);

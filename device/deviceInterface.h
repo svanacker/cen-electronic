@@ -177,7 +177,7 @@ typedef struct DeviceMethodMetaData {
 #define DEVICE_ARG_UNSIGNED_HEX_12     24
 
 /** Unsigned float with Digit 0. */
-#define DEVICE_ARG_UNSIGNED_FLOAT_DIGIT_0_HEX_4   25  
+#define DEVICE_ARG_UNSIGNED_FLOAT_HEX_4   25  
 
 // ARGUMENT LIST
 
@@ -266,7 +266,7 @@ void setArgumentFixedCharArray(int index, char* name);
 /**
 * Set the argument of the deviceArgumentList with index for name.
 */
-void setArgumentUnsignedFloatDigit0(int index, char* name);
+void setArgumentFloatHex4(int index, char* name);
 
 /**
 * Set argument with index to a separator ("-")
@@ -313,7 +313,7 @@ void setResultFixedCharArray(int index, char* name);
 /**
 *  Set the result of the deviceMethodMetaData with index for name
 */
-void setResultUnsignedFloatDigit0(int index, char* name);
+void setResultFloatHex4(int index, char* name);
 
 /**
 * Set result with index to a separator ("-")

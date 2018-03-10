@@ -23,7 +23,7 @@ float getComposedGainFactor(ComposedGainFactor* composedGainFactor,
     }
 
     // Time : TODO : Constant to remove
-    float timeToAchieve = (float) targetAction->timeToAchieve;
+    float timeToAchieve = targetAction->timeToAchieve;
     float timeFactorValue = timeToAchieve;
     if (composedGainFactor->timeGainFactor != NULL) {
         timeFactorValue = composedGainFactor->timeGainFactor (currentMatchingTime, 90000, timeToAchieve);

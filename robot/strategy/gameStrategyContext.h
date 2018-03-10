@@ -17,15 +17,15 @@
  */
 typedef struct GameStrategyContext {
     /** Time in seconds since last collision. */
-    unsigned int timeSinceLastCollision;
+    float timeSinceLastCollision;
     /** The chosen gameStrategy. */
     GameStrategy* gameStrategy;
     /** The elapsedMatchTime in seconds .*/
     float elapsedMatchTime;
     /** Position of robot. */
     Point robotPosition;
-    /** Angle of the robot in deci degrees. */
-    int robotAngle;
+    /** Angle of the robot in degrees. */
+    float robotAngle;
     /** The nearestLocation of the robot. */
     Location* nearestLocation;
     // Opponent Robot.

@@ -12,13 +12,13 @@
 
 // DEFAULT VALUES : As the PID value is stored into the eeprom, this will be erased by 
 // Programming. It's very dangerous if we forget to send default values
-#define PID_STORED_COUNT        8
+#define PID_STORED_COUNT        10
 
 static float PID_PARAMETERS_EEPROM_DEFAULT_VALUES[EEPROM_PID_PARAMETERS_VALUE_COUNT * PID_STORED_COUNT] = {
     // NORMAL VALUES
     // Go (P I D MI)
     0.5f, 0.0f, 0.3f, 0.0f,
-    0x5f, 0.0f, 0.3f, 0.0f,
+    0.5f, 0.0f, 0.3f, 0.0f,
     // Rotation (P I D MI)
     0.5f, 0.0f, 0.3f, 0.0f,
     0.5f, 0.0f, 0.3f, 0.0f,
@@ -28,18 +28,16 @@ static float PID_PARAMETERS_EEPROM_DEFAULT_VALUES[EEPROM_PID_PARAMETERS_VALUE_CO
     // Adjust to the border : it needs small Alpha PID to be able to adjust to the border
     0.2f, 0.0f, 0.3f, 0.0f,
     0.05f, 0.0f, 0.3f, 0.0f,
+    // Final Approach
+    1.0f, 0.0f, 1.0f, 0.0f,
+    1.0f, 0.0f, 1.0f, 0.0f
 };
 
-// Values not stored into the EEPROM
+// Values not stored into the EEPROM => TODO, store into
 #define ROLLING_TEST_P                0.1f
 #define ROLLING_TEST_I                0.0f
 #define ROLLING_TEST_D                0.1f
 #define ROLLING_TEST_MAX_INTEGRAL     0.1f
-
-#define END_APPROACH_P                1.0f
-#define END_APPROACH_I                0.0f
-#define END_APPROACH_D                1.0f
-#define END_APPROACH_MAX_INTEGRAL     0.0f
 
 // Not used
 #define DEFAULT_MAX_INTEGRAL 0
@@ -162,19 +160,6 @@ void loadPidParameters(PidMotion* pidMotion, bool loadDefaultValues) {
     rollingTestModePid->derivativePeriod = DEFAULT_DERIVATIVE_PERIOD;
     rollingTestModePid->enabled = true;
      */
-
-    // Parameter for End of trajectory
-    enum InstructionType instructionType;
-    // For Alpha / Theta
-    for (instructionType = 0; instructionType < INSTRUCTION_TYPE_COUNT; instructionType++) {
-        pidIndex = getIndexOfPid(instructionType, PID_TYPE_FINAL_APPROACH_INDEX);
-        PidParameter* endApproachPidParameter = getPidParameter(pidMotion, pidIndex, 0);
-        endApproachPidParameter->p = END_APPROACH_P;
-        endApproachPidParameter->i = END_APPROACH_I;
-        endApproachPidParameter->d = END_APPROACH_D;
-        endApproachPidParameter->maxIntegral = END_APPROACH_MAX_INTEGRAL;
-        endApproachPidParameter->enabled = true;
-    }
     
     // Load Motion End Detection Parameter
     MotionEndDetectionParameter* motionEndDetectionParameter = &(pidMotion->globalParameters.motionEndDetectionParameter);

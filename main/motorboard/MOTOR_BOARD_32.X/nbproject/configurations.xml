@@ -366,6 +366,7 @@
         <itemPath>../../../motion/position/trajectory.h</itemPath>
         <itemPath>../../../motion/position/coderType.h</itemPath>
         <itemPath>../../../motion/position/trajectoryDebug.h</itemPath>
+        <itemPath>../../../motion/position/codersDebug.h</itemPath>
       </logicalFolder>
       <logicalFolder name="motion.position.hctlCoder"
                      displayName="motion.position.hctlCoder"
@@ -762,6 +763,7 @@
         <itemPath>../../../motion/position/trajectory.c</itemPath>
         <itemPath>../../../motion/position/coderErrorComputer.c</itemPath>
         <itemPath>../../../motion/position/trajectoryDebug.c</itemPath>
+        <itemPath>../../../motion/position/codersDebug.c</itemPath>
       </logicalFolder>
       <logicalFolder name="motion.position.hctlCoders"
                      displayName="motion.position.hctlCoders"

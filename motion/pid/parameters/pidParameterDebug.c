@@ -38,7 +38,7 @@ void printPidParameterTableHeader(OutputStream* outputStream) {
 	appendStringHeader(outputStream, "PID", PID_PARAMETER_PID_INDEX_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "PID", PID_PARAMETER_PID_TYPE_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "Instruction", PID_PARAMETER_INSTRUCTION_TYPE_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "Prop..", PID_PARAMETER_P_DEC_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "Prop.", PID_PARAMETER_P_DEC_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "Int.", PID_PARAMETER_I_DEC_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "Deriv.", PID_PARAMETER_D_DEC_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "Max Int.", PID_PARAMETER_MI_DEC_COLUMN_LENGTH);
@@ -81,10 +81,10 @@ void printPidParameterLine(OutputStream* outputStream, PidMotion* pidMotion, enu
 	appendDecfTableData(outputStream, localPidParameter->d, PID_PARAMETER_D_DEC_COLUMN_LENGTH);
 	appendDecfTableData(outputStream, localPidParameter->maxIntegral, PID_PARAMETER_MI_DEC_COLUMN_LENGTH);
 
-	appendHex2TableData(outputStream, (char) localPidParameter->p, PID_PARAMETER_P_HEX_COLUMN_LENGTH);
-	appendHex2TableData(outputStream, (char) localPidParameter->i, PID_PARAMETER_I_HEX_COLUMN_LENGTH);
-	appendHex2TableData(outputStream, (char) localPidParameter->d, PID_PARAMETER_D_HEX_COLUMN_LENGTH);
-	appendHex2TableData(outputStream, (char) localPidParameter->maxIntegral, PID_PARAMETER_MI_HEX_COLUMN_LENGTH);
+	appendHexFloat4TableData(outputStream, localPidParameter->p, PID_VALUE_DIGIT_PRECISION, PID_PARAMETER_P_HEX_COLUMN_LENGTH);
+    appendHexFloat4TableData(outputStream, localPidParameter->i, PID_VALUE_DIGIT_PRECISION, PID_PARAMETER_I_HEX_COLUMN_LENGTH);
+    appendHexFloat4TableData(outputStream, localPidParameter->d, PID_VALUE_DIGIT_PRECISION, PID_PARAMETER_D_HEX_COLUMN_LENGTH);
+    appendHexFloat4TableData(outputStream, localPidParameter->maxIntegral, PID_VALUE_DIGIT_PRECISION, PID_PARAMETER_MI_HEX_COLUMN_LENGTH);
 
 	appendEndOfTableColumn(outputStream, PID_PARAMETER_LAST_COLUMN_LENGTH);
 }

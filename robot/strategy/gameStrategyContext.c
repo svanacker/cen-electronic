@@ -26,7 +26,7 @@ void printGameStrategyContext(OutputStream* outputStream, GameStrategyContext* c
     // Robot Position
     appendString(outputStream, "\trobotPosition=");
     printPoint(outputStream, &(context->robotPosition), "");
-    appendStringAndDec(outputStream, "\n\trobotAngle (ddeg)=", context->robotAngle);
+    appendStringAndDecf(outputStream, "\n\trobotAngle (degree)=", context->robotAngle);
 
     // nearestLocation
     appendString(outputStream, "\n\tnearestLocation=");
@@ -37,7 +37,7 @@ void printGameStrategyContext(OutputStream* outputStream, GameStrategyContext* c
         appendString(outputStream, "NULL");
     }
 
-    appendStringAndDec(outputStream, "\ntimeSinceLastCollision=", context->timeSinceLastCollision);
+    appendStringAndDecf(outputStream, "\ntimeSinceLastCollision=", context->timeSinceLastCollision);
     // Robot Position
     appendString(outputStream, "\n\topponentRobotPosition=");
     printPoint(outputStream, &(context->opponentRobotPosition), "");

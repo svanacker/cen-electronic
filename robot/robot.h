@@ -47,13 +47,13 @@ void stopRobotObstacle(void);
 
 // POSITION
 
-int getRobotPositionX();
+float getRobotPositionX();
 
-int getRobotPositionY();
+float getRobotPositionY();
 
-int getRobotAngle();
+float getRobotAngle();
 
-void updateRobotPosition(int x, int y, int angle);
+void updateRobotPosition(float x, float y, float angle);
 
 void printRobotPosition(OutputStream* outputStream);
 

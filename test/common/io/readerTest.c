@@ -213,8 +213,8 @@ void test_readHex6(void) {
     appendString(outputStream, "B5FF10");
 
     // Value is > 0 always
-    float value = readHex6(inputStream);
-    TEST_ASSERT_EQUAL(value, 11927312.0F);
+    long value = readHex6(inputStream);
+    TEST_ASSERT_EQUAL(value, 11927312);
     TEST_ASSERT_EQUAL(0, getLastError());
 }
 

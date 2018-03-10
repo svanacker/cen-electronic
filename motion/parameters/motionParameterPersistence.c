@@ -61,8 +61,8 @@ void internalSaveMotionParameterItem(Eeprom* motionParameterEeprom, unsigned lon
 }
 
 void internalLoadMotionParameter(Eeprom* motionParameterEeprom, enum MotionParameterType motionParameterType, bool loadDefaultValues) {
-    float a = (float) internalLoadMotionParameterItem(motionParameterEeprom, (int) motionParameterType * 2, MOTION_PARAMETERS_ACCELERATION_DIGIT, loadDefaultValues);
-    float speed = (float) internalLoadMotionParameterItem(motionParameterEeprom, (int) motionParameterType * 2 + 1, MOTION_PARAMETERS_SPEED_DIGIT, loadDefaultValues);
+    float a = internalLoadMotionParameterItem(motionParameterEeprom, (int) motionParameterType * 2, MOTION_PARAMETERS_ACCELERATION_DIGIT, loadDefaultValues);
+    float speed = internalLoadMotionParameterItem(motionParameterEeprom, (int) motionParameterType * 2 + 1, MOTION_PARAMETERS_SPEED_DIGIT, loadDefaultValues);
 
     MotionParameter* motionParameter = getMotionParameters(motionParameterType);
     motionParameter->a = a;

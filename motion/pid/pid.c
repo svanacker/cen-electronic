@@ -73,7 +73,7 @@ void updateMotorsAndDetectedMotionType(PidMotion* pidMotion) {
         return;
     }
     // Here, we must recompute pid
-    float pidTime = (float) getPidTime();
+    float pidTime = getPidTimeInSecond();
     pidMotion->computationValues.pidTime = pidTime;
 
     #ifdef _MSC_VER

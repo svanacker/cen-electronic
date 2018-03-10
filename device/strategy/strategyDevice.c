@@ -51,15 +51,15 @@ void deviceStrategyHandleRawData(char commandHeader, InputStream* inputStream, O
      if (commandHeader == COMMAND_STRATEGY_SET_OPPONENT_ROBOT_POSITION) {
 
         // data
-        int x = readHex4(inputStream);
+        float x = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
         checkIsSeparator(inputStream);
-        int y = readHex4(inputStream);
+        float y = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
 
         GameStrategyContext* context = getStrategyContext();
 
-        context->opponentRobotPosition.x = (float) x;
+        context->opponentRobotPosition.x = x;
         if (isGreen()) {
-            context->opponentRobotPosition.y = (float) y;
+            context->opponentRobotPosition.y = y;
         }
         else {
             // Opponent Robot position is relative to violet !
@@ -147,21 +147,21 @@ void deviceStrategyHandleRawData(char commandHeader, InputStream* inputStream, O
         // separator
         checkIsSeparator(inputStream);
         // x
-        context->robotPosition.x = (float) readHex4(inputStream);
+        context->robotPosition.x = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
         // separator
         checkIsSeparator(inputStream);
         // y
-        context->robotPosition.y = (float) readHex4(inputStream);
+        context->robotPosition.y = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
         // separator
         checkIsSeparator(inputStream);
         // angle in ddeg
-        context->robotAngle = readHex4(inputStream);
+        context->robotAngle = readHexFloat4(inputStream, ANGLE_DIGIT_DEGREE_PRECISION);
 
         OutputStream* debugOutputStream = getInfoOutputStreamLogger();
         appendStringAndDec(debugOutputStream, "\nStrategySetRobotPosition:status=", status);
         appendStringAndDecf(debugOutputStream, ", x=", context->robotPosition.x);
         appendStringAndDecf(debugOutputStream, ", y=", context->robotPosition.y);
-        appendStringAndDec(debugOutputStream, ", angle=", context->robotAngle);
+        appendStringAndDecf(debugOutputStream, ", angle=", context->robotAngle);
         println(debugOutputStream);
     
         /*

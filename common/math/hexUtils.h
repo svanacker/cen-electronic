@@ -2,7 +2,7 @@
 #define HEX_UTILS_H
 
 /**
- * Transform the hexadecimal value (4 bytes length) and return it.
+ * Transform the hexadecimal value (6 bytes length) and return it.
  * the hexadecimal value must be in Up case.
  * Ex : 2001AF
  * @param b0 value between 0 and 15
@@ -13,7 +13,7 @@
  * @param b5 value between 0 and 15
  * @return value value between 0 and 2^32 - 1
  */
-float hex6CharToFloat(char b0,
+long hex6CharToLong(char b0,
         char b1,
         char b2,
         char b3,

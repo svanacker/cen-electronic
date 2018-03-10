@@ -97,7 +97,7 @@ void findNextTarget() {
 
     Point* robotPosition = &(strategyContext.robotPosition);
     // Find nearest location
-    strategyContext.nearestLocation = getNearestLocation(navigationLocationList, (int)robotPosition->x, (int) robotPosition->y);
+    strategyContext.nearestLocation = getNearestLocation(navigationLocationList, robotPosition->x, robotPosition->y);
 
     #ifdef DEBUG_STRATEGY_HANDLER
         appendString(getDebugOutputStreamLogger(), "\tNearest Location:");    
@@ -182,8 +182,8 @@ bool executeTargetActions() {
 }
 
 void motionGoLocation(Location* location, 
-                    int angle,
-                    int controlPointDistance1, int controlPointDistance2,
+                    float angle,
+                    float controlPointDistance1, float controlPointDistance2,
                     int accelerationFactor, int speedFactor ) {
 
     #ifdef DEBUG_STRATEGY_HANDLER
@@ -192,9 +192,9 @@ void motionGoLocation(Location* location,
     #endif
 
     angle = changeAngleForColor(angle);
-    motionDriverBSplineAbsolute((float)location->x, (float) location->y,
-                                (float) angle,
-                                (float)controlPointDistance1, (float) controlPointDistance2,
+    motionDriverBSplineAbsolute(location->x, location->y,
+                                angle,
+                                controlPointDistance1, controlPointDistance2,
                                 accelerationFactor, speedFactor);
 
     // Simulate as if the robot goes to the position with a small error
@@ -204,7 +204,7 @@ void motionGoLocation(Location* location,
     #endif
 }
 
-int mod3600(int value) {
+float mod360(float value) {
     if (value < - ANGLE_180) {
         return (value + ANGLE_360);
     } else if (value >= ANGLE_180) {
@@ -213,11 +213,11 @@ int mod3600(int value) {
     return value;
 }
 
-void rotateAbsolute(int angle) {
+void rotateAbsolute(float angle) {
     angle = changeAngleForColor(angle);
     GameStrategyContext* strategyContext = getStrategyContext();
-    int robotAngle = strategyContext->robotAngle;
-    int diff = mod3600(angle - robotAngle);
+    float robotAngle = strategyContext->robotAngle;
+    float diff = mod360(angle - robotAngle);
     /*
     if (abs(diff) < ANGLE_ROTATION_MIN) {
         return;
@@ -225,17 +225,17 @@ void rotateAbsolute(int angle) {
     */
 
     #ifdef DEBUG_STRATEGY_HANDLER
-        appendStringAndDec(getDebugOutputStreamLogger(), "rotateAbsolute:angle:", diff);    
-        appendString(getDebugOutputStreamLogger(), " ddeg\n");
+        appendStringAndDecf(getDebugOutputStreamLogger(), "rotateAbsolute:angle:", diff);    
+        appendString(getDebugOutputStreamLogger(), " deg\n");
     #endif
     if (diff == 0) {
         // instruction with 0 does not notify position.
         diff = 1;
     }
     if (diff > 0) {
-        motionDriverLeft((float) diff);
+        motionDriverLeft(diff);
     } else {
-        motionDriverRight((float)-diff);
+        motionDriverRight(-diff);
     }
 
     // Simulate as if the robot goes to the position with a small error
@@ -245,25 +245,25 @@ void rotateAbsolute(int angle) {
 }
 
 bool motionRotateToFollowPath(PathData* pathData, bool reversed) {
-    int angle;
+    float angle;
     if (reversed) {
         if (pathData->mustGoBackward) {
             angle = getAngle2Path(pathData);
         } else {
-            angle = mod3600(ANGLE_180 + getAngle2Path(pathData));
+            angle = mod360(ANGLE_180 + getAngle2Path(pathData));
         }
     } else {
         angle = getAngle1Path(pathData);
     }
 
-    int diff = mod3600(angle - strategyContext.robotAngle);
-    if (abs(diff) < ANGLE_ROTATION_MIN) {
+    float diff = mod360(angle - strategyContext.robotAngle);
+    if (fabs(diff) < ANGLE_ROTATION_MIN) {
         return false;
     }
 
     #ifdef DEBUG_STRATEGY_HANDLER
-        appendStringAndDec(getDebugOutputStreamLogger(), "motionRotateToFollowPath:angle:", diff);    
-        appendString(getDebugOutputStreamLogger(), " ddeg\n");
+        appendStringAndDecf(getDebugOutputStreamLogger(), "motionRotateToFollowPath:angle:", diff);    
+        appendString(getDebugOutputStreamLogger(), " degree\n");
     #endif
 
     if (diff > 0) {
@@ -282,9 +282,9 @@ bool motionRotateToFollowPath(PathData* pathData, bool reversed) {
 
 void motionFollowPath(PathData* pathData, bool reversed) {
     Location* location;
-    int angle;
-    signed char cp1;
-    signed char cp2;
+    float angle;
+    float cp1;
+    float cp2;
     if (reversed) {
         location = pathData->location1;
         if (pathData->mustGoBackward) {
@@ -294,7 +294,7 @@ void motionFollowPath(PathData* pathData, bool reversed) {
             cp2 = -pathData->controlPointDistance1;
         } else {
             // reverse the trajectory symmetrically
-            angle = mod3600(ANGLE_180 + getAngle1Path(pathData));
+            angle = mod360(ANGLE_180 + getAngle1Path(pathData));
             cp1 = pathData->controlPointDistance2;
             cp2 = pathData->controlPointDistance1;
         }
@@ -311,7 +311,7 @@ void motionFollowPath(PathData* pathData, bool reversed) {
     #endif
 
     // cast to unsigned, negative signed char send 00
-    motionDriverBSplineAbsolute((float) location->x, (float) location->y, (float) angle, (float) cp1, (float) cp2,
+    motionDriverBSplineAbsolute(location->x, location->y, angle, cp1, cp2,
         (int) pathData->accelerationFactor, (int) pathData->speedFactor);
 
     // Simulate as if the robot goes to the position with a small error
@@ -360,12 +360,12 @@ bool handleCurrentTrajectory() {
     return true;
 }
 
-float deciDegreesToRad(int ddegrees) {
-    return (float) ddegrees * (PI / 1800.0f);
+float degreesToRad(float ddegrees) {
+    return ddegrees * PI_DIVIDE_180;
 }
 
-void computePoint(Point* ref, Point* cp, int distance, int angle) {
-    float a = deciDegreesToRad(angle);
+void computePoint(Point* ref, Point* cp, float distance, float angle) {
+    float a = degreesToRad(angle);
     float dca = cosf(a) * distance;
     float dsa = sinf(a) * distance;
     cp->x = ref->x + dca;
@@ -385,8 +385,8 @@ bool isValidLocation(Point* p) {
 /**
  * Control point distance to mm.
  */
-int cpToDistance(signed char d) {
-    return (d * 10);
+float cpToDistance(float distance) {
+    return (distance * 10.0f);
 }
 
 /**
@@ -404,10 +404,10 @@ bool isPathAvailable(PathData* pathData, BSplineCurve* curve) {
     Point* p3 = &(curve->p3);
     p3->x = (float) pathData->location2->x;
     p3->y = (float) pathData->location2->y;
-    int angle1 = getAngle1Path(pathData);
-    int angle2 = getAngle2Path(pathData);
-    int d1 = cpToDistance(pathData->controlPointDistance1);
-    int d2 = cpToDistance(-pathData->controlPointDistance2);
+    float angle1 = getAngle1Path(pathData);
+    float angle2 = getAngle2Path(pathData);
+    float d1 = cpToDistance(pathData->controlPointDistance1);
+    float d2 = cpToDistance(-pathData->controlPointDistance2);
     computePoint(p0, &(curve->p1), d1, angle1);
     computePoint(p3, &(curve->p2), d2, angle2);
 
@@ -488,17 +488,17 @@ void updatePathsAvailability() {
 void setLastObstaclePosition() {
     Point* robotPosition = &(strategyContext.robotPosition);
     Point* lastObstaclePosition = &(strategyContext.lastObstaclePosition);
-    int angle = strategyContext.robotAngle;
+    float angle = strategyContext.robotAngle;
     computePoint(robotPosition, lastObstaclePosition, DISTANCE_OBSTACLE, angle);
 }
 
 void handleCollision() {
     // Mark the timer.
     if (strategyTimer != NULL) {
-        strategyContext.timeSinceLastCollision = strategyTimer->time;
+        strategyContext.timeSinceLastCollision = (float) strategyTimer->time;
     }
     #ifdef DEBUG_STRATEGY_HANDLER
-        appendStringAndDec(getDebugOutputStreamLogger(), "\nCollision at time:", strategyContext.timeSinceLastCollision);    
+        appendStringAndDecf(getDebugOutputStreamLogger(), "\nCollision at time:", strategyContext.timeSinceLastCollision);    
         appendString(getDebugOutputStreamLogger(), "\nhandleCollision");    
     #endif
     

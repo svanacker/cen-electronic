@@ -273,11 +273,11 @@ void printDebugDataInstructionTypeLine(OutputStream* outputStream, PidMotion* pi
     PidComputationInstructionValues* computationInstructionValues = &(computationValues->values[instructionType]);
 
 	addInstructionTypeTableData(outputStream, instructionType, PID_DEBUG_DATA_INSTRUCTION_TYPE_COLUMN_LENGTH);
-	appendDecTableData(outputStream, (int) computationValues->pidTime, PID_DEBUG_DATA_PID_TIME_COLUMN_LENGTH);
-	appendDecTableData(outputStream, (int) computationInstructionValues->normalPosition, PID_DEBUG_DATA_NORMAL_POSITION_COLUMN_LENGTH);
-	appendDecTableData(outputStream, (int) computationInstructionValues->currentPosition, PID_DEBUG_DATA_POSITION_COLUMN_LENGTH);
-	appendDecTableData(outputStream, (int) computationInstructionValues->error, PID_DEBUG_DATA_ERROR_COLUMN_LENGTH);
-	appendDecTableData(outputStream, (int) computationInstructionValues->u, PID_DEBUG_DATA_U_COLUMN_LENGTH);
+	appendDecfTableData(outputStream, computationValues->pidTime, PID_DEBUG_DATA_PID_TIME_COLUMN_LENGTH);
+	appendDecfTableData(outputStream, computationInstructionValues->normalPosition, PID_DEBUG_DATA_NORMAL_POSITION_COLUMN_LENGTH);
+	appendDecfTableData(outputStream, computationInstructionValues->currentPosition, PID_DEBUG_DATA_POSITION_COLUMN_LENGTH);
+	appendDecfTableData(outputStream, computationInstructionValues->error, PID_DEBUG_DATA_ERROR_COLUMN_LENGTH);
+	appendDecfTableData(outputStream, computationInstructionValues->u, PID_DEBUG_DATA_U_COLUMN_LENGTH);
 
     /*
     MotionEndInfo* motionEnd = &(computationValues->values[instructionType].motionEnd);

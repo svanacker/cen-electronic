@@ -14,7 +14,7 @@ void changeLocationsForColor();
 
 void changePathsForColor();
 
-int changeAngleForColor(int angle);
+float changeAngleForColor(float angle);
 
 // ARM
 

@@ -19,6 +19,7 @@
 // ROBOT PART
 #define EEPROM_ROBOT_WEIGHT_GRAMS_INDEX                                     EEPROM_KINETICS_START_INDEX + 36
 
+
 // DEFAULT VALUES
 
 // -> CODER WHEEL

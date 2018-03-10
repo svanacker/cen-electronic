@@ -6,7 +6,7 @@
 #include "../common/string/cenString.h"
 #include "../common/io/outputStream.h"
 
-#define MAX_COST             20000
+#define MAX_COST             20000.0f
 #define NO_COMPUTED_COST    -1
 
 struct Location;
@@ -19,11 +19,11 @@ struct Location {
     /** The name. */
     FixedCharArray name;
     /** The coordinates in x. */
-    int x;
+    float x;
     /** The coordinates in y. */
-    int y;
+    float y;
     /** Temporary information needed by path finding algorithm. */
-    int tmpCost;
+    float tmpCost;
     /** Temporary information needed by path finding algorithm. */
     Location* tmpPreviousLocation;
     /** Temporary information needed by path finding algorithm. */

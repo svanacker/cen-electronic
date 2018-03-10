@@ -34,18 +34,18 @@ void loadRobotKinematicsParameters(RobotKinematics* robotKinematics, Eeprom* eep
         }
         // CODER VALUES
         // We store a value * 10^3 (millimeter->nanometer)
-        robotKinematics->coderWheelAverageDiameterMM = (float) eepromReadLong(eeprom_, EEPROM_CODER_WHEEL_AVERAGE_DIAMETER_INDEX) / MILLI_TO_MICRO_FACTOR;
-        robotKinematics->coderWheelAverageDeltaDiameterMM = (float) eepromReadLong(eeprom_, EEPROM_CODER_WHEEL_AVERAGE_DELTA_DIAMETER_INDEX) / MILLI_TO_MICRO_FACTOR;
-        robotKinematics->coderWheelDistanceBetweenWheelsMM = (float) eepromReadLong(eeprom_, EEPROM_CODER_WHEEL_DISTANCE_BETWEEN_WHEELS_INDEX) / MILLI_TO_MICRO_FACTOR;
-        robotKinematics->coderWheelPulseByRotation = (float) eepromReadLong(eeprom_, EEPROM_CODER_WHEEL_PULSE_BY_ROTATION_INDEX);
+        robotKinematics->coderWheelAverageDiameterMM = eepromReadUnsignedFloat(eeprom_, EEPROM_CODER_WHEEL_AVERAGE_DIAMETER_INDEX, ROBOT_KINEMATICS_DEFAULT_DIGIT_PRECISION);
+        robotKinematics->coderWheelAverageDeltaDiameterMM = eepromReadUnsignedFloat(eeprom_, EEPROM_CODER_WHEEL_AVERAGE_DELTA_DIAMETER_INDEX, ROBOT_KINEMATICS_DEFAULT_DIGIT_PRECISION);
+        robotKinematics->coderWheelDistanceBetweenWheelsMM = eepromReadUnsignedFloat(eeprom_, EEPROM_CODER_WHEEL_DISTANCE_BETWEEN_WHEELS_INDEX, ROBOT_KINEMATICS_DEFAULT_DIGIT_PRECISION);
+        robotKinematics->coderWheelPulseByRotation = eepromReadUnsignedFloat(eeprom_, EEPROM_CODER_WHEEL_PULSE_BY_ROTATION_INDEX, ROBOT_KINEMATICS_DEFAULT_DIGIT_PRECISION);
         // MOTOR VALUES
-        robotKinematics->motorWheelAverageDiameterMM = (float) eepromReadLong(eeprom_, EEPROM_MOTOR_WHEEL_AVERAGE_DIAMETER_INDEX) / MILLI_TO_MICRO_FACTOR;
-        robotKinematics->motorWheelDistanceBetweenWheelsMM = (float)eepromReadLong(eeprom_, EEPROM_MOTOR_WHEEL_DISTANCE_BETWEEN_WHEELS_INDEX) / MILLI_TO_MICRO_FACTOR;
-        robotKinematics->motorWheelRotationBySecondAtFullSpeed = (float)eepromReadLong(eeprom_, EEPROM_MOTOR_WHEEL_ROTATION_BY_SECONDS_AT_FULL_SPEED_INDEX);
-        robotKinematics->motorMaxTorqueMilliNewton = (float)eepromReadLong(eeprom_, EEPROM_MOTOR_MAX_TORQUE_MILLI_NEWTON_INDEX);
-        robotKinematics->motorReductorRatio = (float)eepromReadLong(eeprom_, EEPROM_MOTOR_REDUCTOR_RATIO_INDEX);
+        robotKinematics->motorWheelAverageDiameterMM = eepromReadUnsignedFloat(eeprom_, EEPROM_MOTOR_WHEEL_AVERAGE_DIAMETER_INDEX, ROBOT_KINEMATICS_DEFAULT_DIGIT_PRECISION);
+        robotKinematics->motorWheelDistanceBetweenWheelsMM = eepromReadUnsignedFloat(eeprom_, EEPROM_MOTOR_WHEEL_DISTANCE_BETWEEN_WHEELS_INDEX, ROBOT_KINEMATICS_DEFAULT_DIGIT_PRECISION);
+        robotKinematics->motorWheelRotationBySecondAtFullSpeed = eepromReadUnsignedFloat(eeprom_, EEPROM_MOTOR_WHEEL_ROTATION_BY_SECONDS_AT_FULL_SPEED_INDEX, ROBOT_KINEMATICS_DEFAULT_DIGIT_PRECISION);
+        robotKinematics->motorMaxTorqueMilliNewton = eepromReadUnsignedFloat(eeprom_, EEPROM_MOTOR_MAX_TORQUE_MILLI_NEWTON_INDEX, ROBOT_KINEMATICS_DEFAULT_DIGIT_PRECISION);
+        robotKinematics->motorReductorRatio = eepromReadUnsignedFloat(eeprom_, EEPROM_MOTOR_REDUCTOR_RATIO_INDEX, ROBOT_KINEMATICS_DEFAULT_DIGIT_PRECISION);
         // ROBOT VALUES
-        robotKinematics->robotWeightGrams = (float)eepromReadLong(eeprom_, EEPROM_ROBOT_WEIGHT_GRAMS_INDEX);
+        robotKinematics->robotWeightGrams = eepromReadUnsignedFloat(eeprom_, EEPROM_ROBOT_WEIGHT_GRAMS_INDEX, ROBOT_KINEMATICS_WEIGHT_DIGIT_PRECISION);
     }
 }
 
@@ -56,16 +56,16 @@ void saveRobotKinematicsParameters(RobotKinematics* robotKinematics, Eeprom* eep
     }
     initEepromArea(eeprom_, EEPROM_KINETICS_AREA_MARKER_INDEX);
     // CODER VALUE
-    eepromWriteLong(eeprom_, EEPROM_CODER_WHEEL_AVERAGE_DIAMETER_INDEX, (long) (robotKinematics->coderWheelAverageDiameterMM * MILLI_TO_MICRO_FACTOR));
-    eepromWriteLong(eeprom_, EEPROM_CODER_WHEEL_AVERAGE_DELTA_DIAMETER_INDEX, (long) (robotKinematics->coderWheelAverageDeltaDiameterMM * MILLI_TO_MICRO_FACTOR));
-    eepromWriteLong(eeprom_, EEPROM_CODER_WHEEL_DISTANCE_BETWEEN_WHEELS_INDEX, (long) (robotKinematics->coderWheelDistanceBetweenWheelsMM * MILLI_TO_MICRO_FACTOR));
-    eepromWriteLong(eeprom_, EEPROM_CODER_WHEEL_PULSE_BY_ROTATION_INDEX, (long) (robotKinematics->coderWheelPulseByRotation));
+    eepromWriteUnsignedFloat(eeprom_, EEPROM_CODER_WHEEL_AVERAGE_DIAMETER_INDEX, robotKinematics->coderWheelAverageDiameterMM, ROBOT_KINEMATICS_DEFAULT_DIGIT_PRECISION);
+    eepromWriteUnsignedFloat(eeprom_, EEPROM_CODER_WHEEL_AVERAGE_DELTA_DIAMETER_INDEX, robotKinematics->coderWheelAverageDeltaDiameterMM, ROBOT_KINEMATICS_DEFAULT_DIGIT_PRECISION);
+    eepromWriteUnsignedFloat(eeprom_, EEPROM_CODER_WHEEL_DISTANCE_BETWEEN_WHEELS_INDEX, robotKinematics->coderWheelDistanceBetweenWheelsMM, ROBOT_KINEMATICS_DEFAULT_DIGIT_PRECISION);
+    eepromWriteUnsignedFloat(eeprom_, EEPROM_CODER_WHEEL_PULSE_BY_ROTATION_INDEX, robotKinematics->coderWheelPulseByRotation, ROBOT_KINEMATICS_DEFAULT_DIGIT_PRECISION);
     // MOTOR VALUE
-    eepromWriteLong(eeprom_, EEPROM_MOTOR_WHEEL_AVERAGE_DIAMETER_INDEX, (long) (robotKinematics->motorWheelAverageDiameterMM * MILLI_TO_MICRO_FACTOR));
-    eepromWriteLong(eeprom_, EEPROM_MOTOR_WHEEL_DISTANCE_BETWEEN_WHEELS_INDEX, (long)(robotKinematics->motorWheelDistanceBetweenWheelsMM * MILLI_TO_MICRO_FACTOR));
-    eepromWriteLong(eeprom_, EEPROM_MOTOR_WHEEL_ROTATION_BY_SECONDS_AT_FULL_SPEED_INDEX, (long)(robotKinematics->motorWheelRotationBySecondAtFullSpeed));
-    eepromWriteLong(eeprom_, EEPROM_MOTOR_MAX_TORQUE_MILLI_NEWTON_INDEX, (long)(robotKinematics->motorMaxTorqueMilliNewton));
-    eepromWriteLong(eeprom_, EEPROM_MOTOR_REDUCTOR_RATIO_INDEX, (long)(robotKinematics->motorReductorRatio));
+    eepromWriteUnsignedFloat(eeprom_, EEPROM_MOTOR_WHEEL_AVERAGE_DIAMETER_INDEX, robotKinematics->motorWheelAverageDiameterMM, ROBOT_KINEMATICS_DEFAULT_DIGIT_PRECISION);
+    eepromWriteUnsignedFloat(eeprom_, EEPROM_MOTOR_WHEEL_DISTANCE_BETWEEN_WHEELS_INDEX, robotKinematics->motorWheelDistanceBetweenWheelsMM, ROBOT_KINEMATICS_DEFAULT_DIGIT_PRECISION);
+    eepromWriteUnsignedFloat(eeprom_, EEPROM_MOTOR_WHEEL_ROTATION_BY_SECONDS_AT_FULL_SPEED_INDEX, robotKinematics->motorWheelRotationBySecondAtFullSpeed, ROBOT_KINEMATICS_DEFAULT_DIGIT_PRECISION);
+    eepromWriteUnsignedFloat(eeprom_, EEPROM_MOTOR_MAX_TORQUE_MILLI_NEWTON_INDEX, robotKinematics->motorMaxTorqueMilliNewton, ROBOT_KINEMATICS_DEFAULT_DIGIT_PRECISION);
+    eepromWriteUnsignedFloat(eeprom_, EEPROM_MOTOR_REDUCTOR_RATIO_INDEX, robotKinematics->motorReductorRatio, ROBOT_KINEMATICS_DEFAULT_DIGIT_PRECISION);
     // ROBOT VALUE
-    eepromWriteLong(eeprom_, EEPROM_ROBOT_WEIGHT_GRAMS_INDEX, (long)(robotKinematics->robotWeightGrams));
+    eepromWriteUnsignedFloat(eeprom_, EEPROM_ROBOT_WEIGHT_GRAMS_INDEX, robotKinematics->robotWeightGrams, ROBOT_KINEMATICS_WEIGHT_DIGIT_PRECISION);
 }

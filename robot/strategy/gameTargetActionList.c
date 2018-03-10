@@ -23,10 +23,9 @@ void addTargetAction(GameTargetActionList* targetActionList,
                      GameTargetAction* targetAction,
                      Location* startLocation,
                      Location* endLocation,
-                     int timeToAchieve,
+                     float timeToAchieve,
                      PathData* pathData,
-                     GameTargetActionItemList* actionItemList
-) {
+                     GameTargetActionItemList* actionItemList) {
     unsigned char size = targetActionList->size;
     if (size < MAX_TARGET_ACTION) {
         targetAction->startLocation = startLocation;

@@ -74,7 +74,7 @@ char gameTargetPrint(int* element, int column, int line) {
     else {
         c = 'O';
     }
-    return pointPrint(column, line, location->x, location->y, c);
+    return pointPrint(column, line, (int) location->x, (int)location->y, c);
 }
 
 char printAllElements(int* element, int column, int line) {

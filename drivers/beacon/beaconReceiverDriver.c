@@ -26,10 +26,10 @@ bool updateOpponentRobotPosition(Point* opponentRobotPosition) {
 
     bool result = transmitFromDriverRequestBuffer();
 
-    opponentRobotPosition->x = (float) readHex4(inputStream);
+    opponentRobotPosition->x = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
     // separator    
     readHex(inputStream);
-    opponentRobotPosition->y = (float) readHex4(inputStream);
+    opponentRobotPosition->y = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
 
     return result;
 }

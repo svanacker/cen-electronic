@@ -15,9 +15,9 @@ void hexUtilsTestSuite(void) {
     RUN_TEST(test_hex2CharToLong_should_equal_to_0_if_D4B3);
     RUN_TEST(test_hex2CharToLong_should_equal_to_0_if_FFFF);
 
-    RUN_TEST(hex6CharToFloat_should_equal_to_0_if_0);
-    RUN_TEST(hex6CharToFloat_should_equal_to_1193046_if_123456);
-    RUN_TEST(hex6CharToFloat_should_equal_to_16777215_if_FFFFFF);
+    RUN_TEST(hex6CharToLong_should_equal_to_0_if_0);
+    RUN_TEST(hex6CharToLong_should_equal_to_1193046_if_123456);
+    RUN_TEST(hex6CharToLong_should_equal_to_16777215_if_FFFFFF);
 }
 
 // hex2CharToInt
@@ -62,20 +62,20 @@ void test_hex2CharToLong_should_equal_to_0_if_FFFF(void) {
 
 // hex6CharToFloat
 
-void hex6CharToFloat_should_equal_to_0_if_0(void) {
-    float actual = hex6CharToFloat(0, 0, 0, 0, 0, 0);
+void hex6CharToLong_should_equal_to_0_if_0(void) {
+    long actual = hex6CharToLong(0, 0, 0, 0, 0, 0);
 
-    TEST_ASSERT_EQUAL_FLOAT(0.0F, actual);
+    TEST_ASSERT_EQUAL_FLOAT(0, actual);
 }
 
-void hex6CharToFloat_should_equal_to_1193046_if_123456(void) {
-    float actual = hex6CharToFloat(0x01, 0x02, 0x03, 0x04, 0x05, 0x06);
+void hex6CharToLong_should_equal_to_1193046_if_123456(void) {
+    long actual = hex6CharToLong(0x01, 0x02, 0x03, 0x04, 0x05, 0x06);
 
-    TEST_ASSERT_EQUAL_FLOAT(1193046.0F, actual);
+    TEST_ASSERT_EQUAL_FLOAT(1193046, actual);
 }
 
-void hex6CharToFloat_should_equal_to_16777215_if_FFFFFF(void) {
-    float actual = hex6CharToFloat(0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F);
+void hex6CharToLong_should_equal_to_16777215_if_FFFFFF(void) {
+    long actual = hex6CharToLong(0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F);
 
-    TEST_ASSERT_EQUAL_FLOAT(16777215.0F, actual);
+    TEST_ASSERT_EQUAL_FLOAT(16777215, actual);
 }

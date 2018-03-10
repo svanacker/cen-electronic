@@ -78,17 +78,17 @@ void devicePidHandleRawData(char commandHeader, InputStream* inputStream, Output
     }
     // PID PARAMETERS
     else if (commandHeader == COMMAND_WRITE_PID_PARAMETERS) {
-        // PID Index => 0..n char index
+        // PID Index
         char pidIndex = readHex2(inputStream);
         checkIsSeparator(inputStream);
-        // PID Value => 2..9 char index
-        float p = (float) readHex2(inputStream);
+        // PID Values
+        float p = readHexFloat4(inputStream, PID_VALUE_DIGIT_PRECISION);
         checkIsSeparator(inputStream);
-        float i = (float) readHex2(inputStream);
+        float i = readHexFloat4(inputStream, PID_VALUE_DIGIT_PRECISION);
         checkIsSeparator(inputStream);
-        float d = (float) readHex2(inputStream);
+        float d = readHexFloat4(inputStream, PID_VALUE_DIGIT_PRECISION);
         checkIsSeparator(inputStream);
-        float maxI = (float) readHex2(inputStream);
+        float maxI = readHexFloat4(inputStream, PID_VALUE_DIGIT_PRECISION);
 
         if (pidIndex >= 0 && pidIndex < PID_COUNT) {
             setPidParameter(pidMotion, pidIndex, p, i, d, maxI);
@@ -115,13 +115,13 @@ void devicePidHandleRawData(char commandHeader, InputStream* inputStream, Output
         PidParameter* localPidParameter = getPidParameter(pidMotion, pidIndex, 0);
         appendHex2(outputStream, pidIndex);
         appendSeparator(outputStream);
-        appendHex2(outputStream, (int) localPidParameter->p);
+        appendHexFloat4(outputStream, localPidParameter->p, PID_VALUE_DIGIT_PRECISION);
         appendSeparator(outputStream);
-        appendHex2(outputStream, (int) localPidParameter->i);
+        appendHexFloat4(outputStream, localPidParameter->i, PID_VALUE_DIGIT_PRECISION);
         appendSeparator(outputStream);
-        appendHex2(outputStream, (int) localPidParameter->d);
+        appendHexFloat4(outputStream, localPidParameter->d, PID_VALUE_DIGIT_PRECISION);
         appendSeparator(outputStream);
-        appendHex2(outputStream, (int) localPidParameter->maxIntegral);
+        appendHexFloat4(outputStream, localPidParameter->maxIntegral, PID_VALUE_DIGIT_PRECISION);
     } else if (commandHeader == COMMAND_LOAD_PID_PARAMETERS_DEFAULT_VALUES) {
         ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_LOAD_PID_PARAMETERS_DEFAULT_VALUES);
         
@@ -175,26 +175,27 @@ void devicePidHandleRawData(char commandHeader, InputStream* inputStream, Output
         appendSeparator(outputStream);
 
         // pidType
-        appendHex4(outputStream, (int) computationValues->pidTime);
+        appendHexFloat4(outputStream, computationValues->pidTime, PID_TIME_SECOND_DIGIT_PRECISION);
         appendSeparator(outputStream);
 
         // normalPosition
-        appendHex6(outputStream, (int)computationInstructionValues->normalPosition);
+        appendHexFloat4(outputStream, computationInstructionValues->normalPosition, POSITION_DIGIT_MM_PRECISION);
         appendSeparator(outputStream);
 
         // position
-        appendHex6(outputStream, (int) computationInstructionValues->currentPosition);
+        appendHexFloat4(outputStream, computationInstructionValues->currentPosition, POSITION_DIGIT_MM_PRECISION);
         appendSeparator(outputStream);
 
         // error
-        appendHex4(outputStream, (int) computationInstructionValues->error);
+        appendHexFloat4(outputStream, computationInstructionValues->error, POSITION_DIGIT_MM_PRECISION);
         appendSeparator(outputStream);
 
         // u
-        appendHex4(outputStream, (int) computationInstructionValues->u);
+        appendHexFloat4(outputStream, computationInstructionValues->u, PID_VALUE_DIGIT_PRECISION);
         appendSeparator(outputStream);
 
         // Motion End
+        // TODO : Compute End Motion Computation
         /*
         MotionEndInfo* motionEnd = &(computationValues->values[instructionType].motionEnd);
         appendHex4(outputStream, motionEnd->integralTime);
@@ -233,11 +234,11 @@ void devicePidHandleRawData(char commandHeader, InputStream* inputStream, Output
         appendSeparator(outputStream);
 
         // p1/p2/nextPosition
-        appendHexFloat6(outputStream, localInst->p1, POSITION_DIGIT_MM_PRECISION);
+        appendHexFloat4(outputStream, localInst->p1, POSITION_DIGIT_MM_PRECISION);
         appendSeparator(outputStream);
-        appendHexFloat6(outputStream, localInst->p2, POSITION_DIGIT_MM_PRECISION);
+        appendHexFloat4(outputStream, localInst->p2, POSITION_DIGIT_MM_PRECISION);
         appendSeparator(outputStream);
-        appendHexFloat6(outputStream, localInst->nextPosition, POSITION_DIGIT_MM_PRECISION);
+        appendHexFloat4(outputStream, localInst->nextPosition, POSITION_DIGIT_MM_PRECISION);
         appendSeparator(outputStream);
 
         // types

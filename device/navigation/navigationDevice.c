@@ -4,6 +4,7 @@
 #include "navigationDevice.h"
 #include "navigationDeviceInterface.h"
 
+#include "../../common/2d/2d.h"
 #include "../../common/error/error.h"
 #include "../../common/io/printWriter.h"
 #include "../../common/io/reader.h"
@@ -69,9 +70,9 @@ void deviceNavigationHandleRawData(char commandHeader, InputStream* inputStream,
         Location* location = getLocation(locationList, locationIndex);
         appendHexFixedCharArray(outputStream, &(location->name));
         appendSeparator(outputStream);
-        appendHex4(outputStream, location->x);
+        appendHexFloat4(outputStream, location->x, POSITION_DIGIT_MM_PRECISION);
         appendSeparator(outputStream);
-        appendHex4(outputStream, location->y);
+        appendHexFloat4(outputStream, location->y, POSITION_DIGIT_MM_PRECISION);
     }
     else if (commandHeader == COMMAND_NAVIGATION_LOCATION_CLEAR) {
         ackCommand(outputStream, NAVIGATION_DEVICE_HEADER, COMMAND_NAVIGATION_GET_LOCATION);
@@ -84,9 +85,9 @@ void deviceNavigationHandleRawData(char commandHeader, InputStream* inputStream,
         FixedCharArray locationNameFixedCharArray;
 		readHexFixedCharArray(inputStream, &locationNameFixedCharArray);
         checkIsSeparator(inputStream);
-        int x = readHex4(inputStream);
+        float x = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
         checkIsSeparator(inputStream);
-        int y = readHex4(inputStream);
+        float y = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
 
         // Find an existing location if any to update or create if it doesn't find
         Location* location = findLocationByName(locationList, &locationNameFixedCharArray);
@@ -144,15 +145,15 @@ void deviceNavigationHandleRawData(char commandHeader, InputStream* inputStream,
 			appendHexFixedCharArray(outputStream, locationName2);
         }
         appendSeparator(outputStream);
-        appendHex4(outputStream, pathData->cost);
+        appendHexFloat4(outputStream, pathData->cost, 0);
         appendSeparator(outputStream);
-        appendHex4(outputStream, pathData->controlPointDistance1);
+        appendHexFloat4(outputStream, pathData->controlPointDistance1, POSITION_DIGIT_MM_PRECISION);
         appendSeparator(outputStream);
-        appendHex4(outputStream, pathData->controlPointDistance2);
+        appendHexFloat4(outputStream, pathData->controlPointDistance2, POSITION_DIGIT_MM_PRECISION);
         appendSeparator(outputStream);
-        appendHex4(outputStream, pathData->angle1);
+        appendHexFloat4(outputStream, pathData->angle1, ANGLE_DIGIT_DEGREE_PRECISION);
         appendSeparator(outputStream);
-        appendHex4(outputStream, pathData->angle2);
+        appendHexFloat4(outputStream, pathData->angle2, ANGLE_DIGIT_DEGREE_PRECISION);
         appendSeparator(outputStream);
         appendHex2(outputStream, pathData->accelerationFactor);
         appendSeparator(outputStream);
@@ -199,15 +200,15 @@ void deviceNavigationHandleRawData(char commandHeader, InputStream* inputStream,
         pathData->location1 = location1;
         pathData->location2 = location2;
 
-        pathData->cost = readHex4(inputStream);
+        pathData->cost = readHexFloat4(inputStream, 0);
         checkIsSeparator(inputStream);
-        pathData->controlPointDistance1 = readHex4(inputStream);
+        pathData->controlPointDistance1 = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
         checkIsSeparator(inputStream);
-        pathData->controlPointDistance2 = readHex4(inputStream);
+        pathData->controlPointDistance2 = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
         checkIsSeparator(inputStream);
-        pathData->angle1 = readHex4(inputStream);
+        pathData->angle1 = readHexFloat4(inputStream, ANGLE_DIGIT_DEGREE_PRECISION);
         checkIsSeparator(inputStream);
-        pathData->angle2 = readHex4(inputStream);
+        pathData->angle2 = readHexFloat4(inputStream, ANGLE_DIGIT_DEGREE_PRECISION);
         checkIsSeparator(inputStream);
         pathData->accelerationFactor = readHex2(inputStream);
         checkIsSeparator(inputStream);

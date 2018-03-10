@@ -284,7 +284,7 @@ void test_appendDecf_positive_value1(void) {
 
     int value = appendDecf(outputStream, 1234.56789F);
 
-    bool actual = isBufferEqualsToString(&bufferTest, "1234.568");
+    bool actual = isBufferEqualsToString(&bufferTest, "1234.6");
     TEST_ASSERT_TRUE(actual);
 
     TEST_ASSERT_FALSE(isThereAnyError());
@@ -294,7 +294,7 @@ void test_appendDecf_positive_value2(void) {
     initBufferForPrintWriterTest();
 
     appendDecf(outputStream, 1234.000F);
-    bool actual = isBufferEqualsToString(&bufferTest, "1234.000");
+    bool actual = isBufferEqualsToString(&bufferTest, "1234.0");
     TEST_ASSERT_TRUE(actual);
 
     TEST_ASSERT_FALSE(isThereAnyError());
@@ -304,14 +304,7 @@ void test_appendDecf_positive_value3(void) {
     initBufferForPrintWriterTest();
 
     appendDecf(outputStream, 1234.002F);
-
-    /*
-    OutputStream consoleOutputStream;
-    initConsoleOutputStream(&consoleOutputStream);
-    printDebugBuffer(&consoleOutputStream, &bufferTest);
-    */
-
-    bool actual = isBufferEqualsToString(&bufferTest, "1234.002");
+    bool actual = isBufferEqualsToString(&bufferTest, "1234.0");
     TEST_ASSERT_TRUE(actual);
 
     TEST_ASSERT_FALSE(isThereAnyError());
@@ -321,7 +314,7 @@ void test_appendDecf_positive_value4(void) {
     initBufferForPrintWriterTest();
 
     appendDecf(outputStream, 1234.020F);
-    bool actual = isBufferEqualsToString(&bufferTest, "1234.020");
+    bool actual = isBufferEqualsToString(&bufferTest, "1234.0");
     TEST_ASSERT_TRUE(actual);
 
     TEST_ASSERT_FALSE(isThereAnyError());
@@ -331,7 +324,7 @@ void test_appendDecf_positive_value5(void) {
     initBufferForPrintWriterTest();
 
     appendDecf(outputStream, 1234.300F);
-    bool actual = isBufferEqualsToString(&bufferTest, "1234.300");
+    bool actual = isBufferEqualsToString(&bufferTest, "1234.3");
     TEST_ASSERT_TRUE(actual);
 
     TEST_ASSERT_FALSE(isThereAnyError());
@@ -341,7 +334,7 @@ void test_appendDecf_negative_value1(void) {
     initBufferForPrintWriterTest();
 
     appendDecf(outputStream, -1234.56789F);
-    bool actual = isBufferEqualsToString(&bufferTest, "-1234.568");
+    bool actual = isBufferEqualsToString(&bufferTest, "-1234.6");
     TEST_ASSERT_TRUE(actual);
 
     TEST_ASSERT_FALSE(isThereAnyError());
@@ -351,7 +344,7 @@ void test_appendDecf_negative_value2(void) {
     initBufferForPrintWriterTest();
 
     appendDecf(outputStream, -1234.0F);
-    bool actual = isBufferEqualsToString(&bufferTest, "-1234.000");
+    bool actual = isBufferEqualsToString(&bufferTest, "-1234.0");
 
     // OutputStream consoleOutputStream;
     // initConsoleOutputStream(&consoleOutputStream);

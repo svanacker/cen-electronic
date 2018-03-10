@@ -11,16 +11,16 @@
 
 // TIMER
 
-static long lastPidTime;
+static float lastPidTimeInSecond;
 
 void initPidTimer(void) {
     addTimer(TIMER_PID_CODE, PID_UPDATE_MOTORS_TIME_DIVISER, (interruptTimerCallbackFunc*) NULL, "PID TIME", NULL);
     clearPidTime();
 }
 
-long getPidTime(void) {
+float getPidTimeInSecond(void) {
     Timer* timer = getTimerByCode(TIMER_PID_CODE);
-    long result = timer->time;
+    float result = (float) timer->time / PID_UPDATE_MOTORS_FREQUENCY_HERTZ;
     return result;
 }
 
@@ -29,13 +29,13 @@ long getPidTime(void) {
 void clearPidTime(void) {
     Timer* timer = getTimerByCode(TIMER_PID_CODE);
     timer->time = 0;
-    lastPidTime = 0;
+    lastPidTimeInSecond = 0;
 }
 
 bool mustPidBeRecomputed(void) {
-    long pidTime = getPidTime();
-    if (pidTime != lastPidTime) {
-        lastPidTime = pidTime;
+    float pidTimeInSecond = getPidTimeInSecond();
+    if (pidTimeInSecond > lastPidTimeInSecond) {
+        lastPidTimeInSecond = pidTimeInSecond;
         return true;
     }
     return false;

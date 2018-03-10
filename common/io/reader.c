@@ -90,7 +90,7 @@ long readHex4(InputStream* inputStream) {
     char b1 = readFilteredChar(inputStream);
     char b2 = readFilteredChar(inputStream);
     char b3 = readFilteredChar(inputStream);
-    int result = hex4CharToLong(b0, b1, b2, b3);
+    long result = hex4CharToLong(b0, b1, b2, b3);
     return result;
 }
 
@@ -102,19 +102,36 @@ signed long readSignedHex4(InputStream* inputStream) {
     return result;
 }
 
-float readHex6(InputStream* inputStream) {
+long readHex6(InputStream* inputStream) {
     char b0 = readFilteredChar(inputStream);
     char b1 = readFilteredChar(inputStream);
     char b2 = readFilteredChar(inputStream);
     char b3 = readFilteredChar(inputStream);
     char b4 = readFilteredChar(inputStream);
     char b5 = readFilteredChar(inputStream);
-    float result = hex6CharToFloat(b0, b1, b2, b3, b4, b5);
+    long result = hex6CharToLong(b0, b1, b2, b3, b4, b5);
+    return result;
+}
+
+signed long readSignedHex6(InputStream* inputStream) {
+    signed long result = readHex6(inputStream);
+    if (result > 0x7FFFFF) {
+        result -= 0x1000000;
+    }
     return result;
 }
 
 float readHexFloat4(InputStream* inputStream, unsigned int digitPrecision) {
     float result = (float) readSignedHex4(inputStream);
+    unsigned int i;
+    for (i = 0; i < digitPrecision; i++) {
+        result /= 10.0f;
+    }
+    return result;
+}
+
+float readHexFloat6(InputStream* inputStream, unsigned int digitPrecision) {
+    float result = (float)readSignedHex6(inputStream);
     unsigned int i;
     for (i = 0; i < digitPrecision; i++) {
         result /= 10.0f;

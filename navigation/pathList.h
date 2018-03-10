@@ -45,9 +45,11 @@ PathData* addPath(PathList* pathList);
 PathData* addFilledPath(PathList* pathList,
 	LocationList* locationList,
 	char* locationName1, char* locationName2,
-	unsigned int cost,
-	int controlPointDistance1, int controlPointDistance2,
-	int angle1, int angle2,
+	float cost,
+	float controlPointDistance1, 
+    float controlPointDistance2,
+	float angle1, 
+    float angle2,
 	unsigned char accelerationFactor, unsigned char speedFactor,
 	bool mustGoBackward);
 

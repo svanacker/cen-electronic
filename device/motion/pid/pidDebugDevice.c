@@ -20,6 +20,7 @@
 
 #include "../../../device/device.h"
 #include "../../../motion/parameters/motionParameterDebug.h"
+#include "../../../motion/pid/pid.h"
 #include "../../../motion/pid/pidDebug.h"
 #include "../../../motion/pid/motionInstructionDebug.h"
 #include "../../../motion/pid/parameters/pidParameterDebug.h"
@@ -60,15 +61,16 @@ void devicePidDebugHandleRawData(char commandHeader, InputStream* inputStream, O
 	}
     else if (commandHeader == COMMAND_PID_TRAJECTORY_TABLE) {
 		ackCommand(outputStream, PID_DEBUG_DEVICE_HEADER, COMMAND_PID_TRAJECTORY_TABLE);
-        unsigned int pidTimeInterval = readHex2(inputStream);
-        if (pidTimeInterval < 1) {
-            pidTimeInterval = 1;
+        float pidTimeInterval = readHexFloat4(inputStream, PID_VALUE_DIGIT_PRECISION);
+        // No need to go more than 200 Hz ! 
+        if (pidTimeInterval < 0.005f) {
+            pidTimeInterval = 0.005f;
         }
 		OutputStream* debugOutputStream = getDebugOutputStreamLogger();
         PidMotionDefinition* motionDefinition = pidMotionGetCurrentMotionDefinition(pidMotion);
         if (motionDefinition != NULL) {
-		    printMotionInstructionTableTrajectory(debugOutputStream, THETA, &(motionDefinition->inst[THETA]), (float) pidTimeInterval);
-		    printMotionInstructionTableTrajectory(debugOutputStream, ALPHA, &(motionDefinition->inst[ALPHA]), (float) pidTimeInterval);
+		    printMotionInstructionTableTrajectory(debugOutputStream, THETA, &(motionDefinition->inst[THETA]), pidTimeInterval);
+		    printMotionInstructionTableTrajectory(debugOutputStream, ALPHA, &(motionDefinition->inst[ALPHA]), pidTimeInterval);
         }
         else {
             appendString(debugOutputStream, "NO CURRENT MOTION DEFINITION");

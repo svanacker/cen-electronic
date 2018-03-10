@@ -108,7 +108,7 @@ void setColor(enum TeamColor color) {
 
 	context->color = color;
 	// changeLocationsForColor();
-	int angle = 675;
+	float angle = 67.5f;
 	if (!isGreen()) {
 		angle = -angle;
 		context->robotPosition.y = 2840;

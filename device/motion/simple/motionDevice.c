@@ -61,7 +61,7 @@ void internalDebugNotify(char* notifyString) {
     appendString(outputStream, "Motion ");
     appendString(outputStream, notifyString);
     appendString(outputStream, "t=");
-    appendDec(outputStream, getPidTime());
+    appendDecf(outputStream, getPidTimeInSecond());
     appendString(outputStream, ")\n");
 }
 
@@ -187,7 +187,7 @@ void deviceMotionHandleRawData(char commandHeader,
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_SQUARE_CALIBRATION);
         unsigned char type = readHex2(inputStream);
         checkIsSeparator(inputStream);
-        float length = (float) readHex4(inputStream);
+        float length = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
         squareCalibration(pidMotion, type, length, notificationOutputStream);
     }        // PARAMETERS
 

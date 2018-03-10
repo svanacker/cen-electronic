@@ -30,7 +30,7 @@ void initLocationList(LocationList* locationList, Location(*locationListArray)[]
  * @param x the x coordinates of the location point
  * @param y the x coordinates of the location point
  */
-void initLocation(Location* location, char* name, int x, int y);
+void initLocation(Location* location, char* name, float x, float y);
 
 /**
  * Clear the location list.
@@ -65,13 +65,13 @@ bool isEmptyLocationList(LocationList* locationList);
  * Add a location to the list, but with a pointer on a string
  * @param locationList the pointer on the struct (POO Programming)
  */
-Location* addNamedLocation(LocationList* locationList, char* name, int x, int y);
+Location* addNamedLocation(LocationList* locationList, char* name, float x, float y);
 
 /**
 * Add a location to the list, but with a char pointer structure.
 * @param locationList the pointer on the struct (POO Programming)
 */
-Location* addLocation(LocationList* locationList, FixedCharArray* s, int x, int y);
+Location* addLocation(LocationList* locationList, FixedCharArray* s, float x, float y);
 
 /**
  * Copy the location from the source to the target location, by copying all fields by value.
@@ -130,7 +130,7 @@ unsigned int getLocationCount(LocationList* locationList);
  * @param y the y value to compare with each location Point
  * @return NULL if the locationList is empty, the nearest location (distance) from the locationList.
  */
-Location* getNearestLocation(LocationList* locationList, int x, int y);
+Location* getNearestLocation(LocationList* locationList, float x, float y);
 
 // DEBUG
 

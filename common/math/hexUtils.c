@@ -1,19 +1,12 @@
 #include "hexUtils.h"
 
-float hex6CharToFloat(char b0,
+long hex6CharToLong(char b0,
         char b1,
         char b2,
         char b3,
         char b4,
         char b5) {
-    return (
-            ((float) b0 * 1048576.0f) +
-            ((float) b1 * 65536.0f) +
-            ((float) b2 * 4096.0f) +
-            ((float) b3 * 256.0f) +
-            ((float) b4 * 16.0f) +
-            (float) b5
-            );
+    return (b0 << 20) + (b1 << 16) + (b2 << 12) + (b3 << 8) + (b4 << 4) + b5;
 }
 
 long hex4CharToLong(char b0, char b1, char b2, char b3) {

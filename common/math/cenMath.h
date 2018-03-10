@@ -26,6 +26,13 @@
 long absLong(signed long value);
 
 /**
+* Returns the absolute value of a value.
+* @param value the signed value
+* @return the absolute value of the value
+*/
+float absFloat(float value);
+
+/**
  * Limit the value by the maxValue either in positive or negative.
  * Ex: limit(100, 75) => 75
  * Ex: limit(40, 60) => 40

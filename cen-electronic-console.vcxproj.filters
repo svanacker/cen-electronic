@@ -1659,6 +1659,9 @@
     <ClCompile Include="common\2d\2d.c">
       <Filter>Source Files\common\2d</Filter>
     </ClCompile>
+    <ClCompile Include="motion\position\codersDebug.c">
+      <Filter>Source Files\motion\position</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -2560,6 +2563,9 @@
     </ClInclude>
     <ClInclude Include="common\2d\2d.h">
       <Filter>Header Files\common\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\position\codersDebug.h">
+      <Filter>Header Files\motion\position</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

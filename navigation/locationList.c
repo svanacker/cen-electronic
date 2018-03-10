@@ -57,7 +57,7 @@ void copyLocation(Location* sourceLocation, Location* targetLocation) {
     targetLocation->y = sourceLocation->y;
 }
 
-void initLocation(Location* location, char* name, int x, int y) {
+void initLocation(Location* location, char* name, float x, float y) {
     FixedCharArray* existingLocationName = &(location->name);
     stringToFixedCharArray(name, existingLocationName);
     location->x = x;
@@ -68,7 +68,7 @@ void initLocation(Location* location, char* name, int x, int y) {
     location->resultNextLocation = NULL;
 }
 
-Location* addNamedLocation(LocationList* locationList, char* name, int x, int y) {
+Location* addNamedLocation(LocationList* locationList, char* name, float x, float y) {
     if (locationList == NULL || locationList->maxSize == 0) {
         writeError(LOCATION_LIST_NOT_INITIALIZED);
         return NULL;
@@ -87,7 +87,7 @@ Location* addNamedLocation(LocationList* locationList, char* name, int x, int y)
     }
 }
 
-Location* addLocation(LocationList* locationList, FixedCharArray* s, int x, int y) {
+Location* addLocation(LocationList* locationList, FixedCharArray* s, float x, float y) {
     Location* result = addNamedLocation(locationList, NULL, x, y);
     if (result != NULL) {
         FixedCharArray* target = &(result->name);
@@ -134,11 +134,11 @@ bool containsLocation(LocationList* locationList, Location* locationToFind, bool
     return false;
 }
 
-Location* getNearestLocation(LocationList* locationList, int x, int y) {
+Location* getNearestLocation(LocationList* locationList, float x, float y) {
     Location* result = NULL;
     int i;
     int size = locationList->size;
-    int min = MAX_COST;
+    float min = MAX_COST;
 
     for (i = 0; i < size; i++) {
         Location* location = getLocation(locationList, i);
@@ -146,7 +146,7 @@ Location* getNearestLocation(LocationList* locationList, int x, int y) {
         if (location == NULL) {
             continue;
         }
-        int distance = (int) distanceBetweenPoints2((float) location->x, (float) location->y, (float) x, (float) y);
+        float distance = distanceBetweenPoints2(location->x, location->y, x, y);
         if (distance < min) {
             min = distance;
             result = location;

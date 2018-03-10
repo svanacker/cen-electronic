@@ -2,6 +2,8 @@
 
 #include <stdbool.h>
 
+#include "../../common/2d/2d.h"
+
 #include "../../common/io/buffer.h"
 #include "../../common/io/ioUtils.h"
 #include "../../common/io/inputStream.h"
@@ -22,14 +24,14 @@
 
 // SET TRAJECTORY
 
-bool trajectoryDriverSetAbsolutePosition(float x, float y, float deciDegree) {
+bool trajectoryDriverSetAbsolutePosition(float x, float y, float degree) {
     OutputStream* outputStream = getDriverRequestOutputStream();
     append(outputStream, COMMAND_TRAJECTORY_SET_ABSOLUTE_POSITION);
-    appendHex4(outputStream, (int) x);
+    appendHexFloat4(outputStream, x, POSITION_DIGIT_MM_PRECISION);
     appendSeparator(outputStream);
-    appendHex4(outputStream, (int) y);
+    appendHexFloat4(outputStream, y, POSITION_DIGIT_MM_PRECISION);
     appendSeparator(outputStream);
-    appendHex4(outputStream, (int) deciDegree);
+    appendHexFloat4(outputStream, degree, ANGLE_DIGIT_DEGREE_PRECISION);
 
     bool result = transmitFromDriverRequestBuffer();
 
@@ -45,11 +47,11 @@ bool trajectoryDriverUpdateRobotPosition() {
 
     bool result = transmitFromDriverRequestBuffer();
     if (result) {
-        int x = readHex4(inputStream);
+        float x = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
         readHex(inputStream);
-        int y = readHex4(inputStream);
+        float y = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
         readHex(inputStream);
-        int angle = readHex4(inputStream);
+        float angle = readHexFloat4(inputStream, ANGLE_DIGIT_DEGREE_PRECISION);
 
         updateRobotPosition(x, y, angle);
         return result;

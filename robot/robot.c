@@ -33,11 +33,11 @@
 
 // ROBOT POSITION
 // x / y
-static int robotPositionX;
-static int robotPositionY;
+static float robotPositionX;
+static float robotPositionY;
 
 // orientation in decideg
-static int robotAngle;
+static float robotAngle;
 
 /** Global variable to know if the robot must stop.*/
 static bool robotMustStop = false;
@@ -62,28 +62,28 @@ bool isRobotMustStop() {
     return robotMustStop;
 }
 
-int getRobotPositionX() {
+float getRobotPositionX() {
     return robotPositionX;
 }    
 
-int getRobotPositionY() {
+float getRobotPositionY() {
     return robotPositionY;
 }    
 
-int getRobotAngle() {
+float getRobotAngle() {
     return robotAngle;
 }    
 
-void updateRobotPosition(int x, int y, int angle) {
+void updateRobotPosition(float x, float y, float angle) {
     robotPositionX = x;
     robotPositionY = y;
     robotAngle = angle;
 }
 
 void printRobotPosition(OutputStream* outputStream) {
-    appendStringAndDec(outputStream, "\nRobotPositionX=", robotPositionX);
-    appendStringAndDec(outputStream, "\nRobotPositionY=", robotPositionY);
-    appendStringAndDec(outputStream, "\nRobotAngle=", robotAngle);
+    appendStringAndDecf(outputStream, "\nRobotPositionX=", robotPositionX);
+    appendStringAndDecf(outputStream, "\nRobotPositionY=", robotPositionY);
+    appendStringAndDecf(outputStream, "\nRobotAngle=", robotAngle);
     println(outputStream);
 }
 

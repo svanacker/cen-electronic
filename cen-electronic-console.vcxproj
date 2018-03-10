@@ -346,6 +346,7 @@
     <ClCompile Include="motion\pid\profile\pidMotionProfileComputer.c" />
     <ClCompile Include="motion\pid\profile\profileType.c" />
     <ClCompile Include="motion\position\coderErrorComputer.c" />
+    <ClCompile Include="motion\position\codersDebug.c" />
     <ClCompile Include="motion\position\mockCoder\mockCoders.c" />
     <ClCompile Include="motion\position\trajectory.c" />
     <ClCompile Include="motion\position\trajectoryDebug.c" />
@@ -645,6 +646,7 @@
     <ClInclude Include="motion\pid\profile\profileType.h" />
     <ClInclude Include="motion\position\coderErrorComputer.h" />
     <ClInclude Include="motion\position\coders.h" />
+    <ClInclude Include="motion\position\codersDebug.h" />
     <ClInclude Include="motion\position\trajectory.h" />
     <ClInclude Include="motion\position\trajectoryDebug.h" />
     <ClInclude Include="motion\simple\motionCalibration.h" />

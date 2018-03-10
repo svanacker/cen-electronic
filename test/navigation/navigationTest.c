@@ -128,7 +128,7 @@ void checkNavigationPathFinding1(void) {
 
     // printPathList(getInfoOutputStreamLogger(), "Paths definition", getNavigationPathList());
 
-    int actual = computeBestPath(locationA, locationJ);
+    float actual = computeBestPath(locationA, locationJ);
 
     // The shortest distance in this example is 487 (A-E-J)
     TEST_ASSERT_EQUAL(487, actual);
@@ -173,7 +173,7 @@ void checkNavigationPathFinding2(void) {
     pathYS = addNavigationPath(locationY, locationS, 7, 0, 0, 0, 0, 0, 0);
 
     // First test
-    int actual = computeBestPath(locationS, locationS);
+    float actual = computeBestPath(locationS, locationS);
     TEST_ASSERT_EQUAL(0, actual);
 
     // Second test : ignore in implementation the sens of location (we find the min cost between A->B or B->A

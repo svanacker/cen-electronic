@@ -14,15 +14,15 @@ typedef struct PathData {
     /** second point (with name). */
     Location* location2;
     /** Cost of the path. */
-    unsigned int cost;
+    float cost;
     /** Distance of the control point P0-P1 in mm (can be negative). */     
-    int controlPointDistance1;
+    float controlPointDistance1;
     /** Distance of the control point P1->P3 in mm. */     
-    int controlPointDistance2;
-    /** angle1 (when at P0) in decidegree. */
-    int angle1;
-    /** angle2 (when at P3) in decidegree. */
-    int angle2;
+    float controlPointDistance2;
+    /** angle1 (when at P0) in degree. */
+    float angle1;
+    /** angle2 (when at P3) in degree. */
+    float angle2;
     /** TODO : Convert into enum AccelerationFactor factor (min = 1, max = 16). */
     unsigned char accelerationFactor;
     /** Speed factor (min = 1, max = 16). */
@@ -34,12 +34,12 @@ typedef struct PathData {
 /**
  * TODO
  */
-int getAngle1Path(PathData* pathData);
+float getAngle1Path(PathData* pathData);
 
 /**
 * TODO
 */
-int getAngle2Path(PathData* pathData);
+float getAngle2Path(PathData* pathData);
 
 /**
  * Initializes the PathData structure with all informations.
@@ -47,11 +47,11 @@ int getAngle2Path(PathData* pathData);
 void initPathData(PathData* pathData,
                         Location* location1,
                          Location* location2, 
-                         int cost,
-                         int controlPointDistance1,
-                         int controlPointDistance2,
-                         int angle1,
-                         int angle2,
+                         float cost,
+                         float controlPointDistance1,
+                         float controlPointDistance2,
+                         float angle1,
+                         float angle2,
                          unsigned char accelerationFactor,
                          unsigned char speedFactor);
 
@@ -62,11 +62,11 @@ void initPathData(PathData* pathData,
 void initAsymmetricPathData(PathData* pathData, 
                         Location* location1,
                          Location* location2, 
-                         int cost,
-                         int controlPointDistance1,
-                         int controlPointDistance2,
-                         int angle1,
-                         int angle2,
+                         float cost,
+                         float controlPointDistance1,
+                         float controlPointDistance2,
+                         float angle1,
+                         float angle2,
                          unsigned char accelerationFactor,
                          unsigned char speedFactor);
 

@@ -67,32 +67,6 @@ PidParameter* getPidParameter(PidMotion* pidMotion, int index, unsigned int pidM
 bool getRollingTestMode(PidMotion* pidMotion);
 
 /**
- * Returns the time of the PID
- */
-long getPidTime(void);
-
-/**
- * Clear to 0 the time of the PID
- */
-void clearPidTime(void);
-
-// MustReachPosition
-
-/**
- * Returns the value of the flag which determines if the
- * position must be reached.
- * @return true or false
- */
-bool getMustReachPosition(PidMotion* pidMotion);
-
-/**
- * Sets the flag which determines if the
- * position must be reached.
- * @value the value of the flag, true or false
- */
-void setMustReachPosition(PidMotion* pidMotion, bool value);
-
-/**
  * Updates the motors values and set the type of control which is applied to the motors.
  * <ul>
  * <li>NO_POSITION_TO_REACH if we don't have any position to reach</li>
@@ -103,10 +77,5 @@ void setMustReachPosition(PidMotion* pidMotion, bool value);
  * </li>
  */
 void updateMotorsAndDetectedMotionType(PidMotion* pidMotion);
-
-/**
- * Stop the PID.
- */
-void stopPID(PidMotion* pidMotion);
 
 #endif

@@ -20,7 +20,7 @@ void printGameTargetAction(OutputStream* outputStream, GameTargetAction* targetA
     appendString(outputStream, "\taction:");
     appendKeyAndName(outputStream, "startLocation=", targetAction->startLocation->name);
     appendKeyAndName(outputStream, ", end=", targetAction->endLocation->name);
-    appendStringAndDec(outputStream, ", timeToAchieve=", targetAction->timeToAchieve);
+    appendStringAndDecf(outputStream, ", timeToAchieve=", targetAction->timeToAchieve);
     println(outputStream);
     GameTargetActionItemList* actionItemList = targetAction->actionItemList;
     if (actionItemList != NULL && includeItems) {

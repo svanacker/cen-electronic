@@ -51,70 +51,78 @@ void deviceRobotKinematicsHandleRawData(char commandHeader, InputStream* inputSt
         printRobotKinematicsTable(getAlwaysOutputStreamLogger(), robotKinematics);
     }
     // READ ALL
-    // wheelAverageLengthForOnePulse
+    // TODO : Split between CODER PART / MOTOR PART / ROBOT PART
     else if (commandHeader == COMMAND_KINEMATICS_READ_ALL) {
         ackCommand(outputStream, KINEMATICS_HEADER, COMMAND_KINEMATICS_READ_ALL);
         RobotKinematics* robotKinematics = getRobotKinematics();
         // CODER PART
-        appendHex6(outputStream, (long) (robotKinematics->coderWheelAverageDiameterMM * MILLI_TO_MICRO_FACTOR));
+        appendHexFloat6(outputStream, robotKinematics->coderWheelAverageDiameterMM, ROBOT_KINEMATICS_DEFAULT_DIGIT_PRECISION);
         appendSeparator(outputStream);
-        appendHex6(outputStream, (long)(robotKinematics->coderWheelAverageDeltaDiameterMM * MILLI_TO_MICRO_FACTOR));
+        appendHexFloat6(outputStream, robotKinematics->coderWheelAverageDeltaDiameterMM, ROBOT_KINEMATICS_DEFAULT_DIGIT_PRECISION);
         appendSeparator(outputStream);
-        appendHex6(outputStream, (long)(robotKinematics->coderWheelDistanceBetweenWheelsMM * MILLI_TO_MICRO_FACTOR));
+        appendHexFloat6(outputStream, robotKinematics->coderWheelDistanceBetweenWheelsMM, ROBOT_KINEMATICS_DEFAULT_DIGIT_PRECISION);
         appendSeparator(outputStream);
-        appendHex6(outputStream, (long)(robotKinematics->coderWheelPulseByRotation));
+        appendHexFloat6(outputStream, robotKinematics->coderWheelPulseByRotation, ROBOT_KINEMATICS_DEFAULT_DIGIT_PRECISION);
         appendSeparator(outputStream);
         // MOTOR PART
-        appendHex6(outputStream, (long)(robotKinematics->motorWheelAverageDiameterMM * MILLI_TO_MICRO_FACTOR));
+        appendHexFloat6(outputStream, robotKinematics->motorWheelAverageDiameterMM, ROBOT_KINEMATICS_DEFAULT_DIGIT_PRECISION);
         appendSeparator(outputStream);
-        appendHex6(outputStream, (long)(robotKinematics->motorWheelDistanceBetweenWheelsMM * MILLI_TO_MICRO_FACTOR));
+        appendHexFloat6(outputStream, robotKinematics->motorWheelDistanceBetweenWheelsMM, ROBOT_KINEMATICS_DEFAULT_DIGIT_PRECISION);
         appendSeparator(outputStream);
-        appendHex6(outputStream, (long)(robotKinematics->motorWheelRotationBySecondAtFullSpeed));
+        appendHexFloat6(outputStream, robotKinematics->motorWheelRotationBySecondAtFullSpeed, ROBOT_KINEMATICS_DEFAULT_DIGIT_PRECISION);
+        appendSeparator(outputStream);
+        appendHexFloat6(outputStream, robotKinematics->motorMaxTorqueMilliNewton, ROBOT_KINEMATICS_DEFAULT_DIGIT_PRECISION);
+        appendSeparator(outputStream);
+        appendHexFloat6(outputStream, robotKinematics->motorReductorRatio, ROBOT_KINEMATICS_DEFAULT_DIGIT_PRECISION);
+        // ROBOT PART
+        appendSeparator(outputStream);
+        appendHexFloat6(outputStream, robotKinematics->robotWeightGrams, ROBOT_KINEMATICS_DEFAULT_DIGIT_PRECISION);
     }
     // CODER PART
     else if (commandHeader == COMMAND_SET_CODER_WHEEL_AVERAGE_DIAMETER_MM) {
         ackCommand(outputStream, KINEMATICS_HEADER, COMMAND_SET_CODER_WHEEL_AVERAGE_DIAMETER_MM);
         RobotKinematics* robotKinematics = getRobotKinematics();
-        float value = (float) readHex6(inputStream);
-        robotKinematics->coderWheelAverageDiameterMM = value / MILLI_TO_MICRO_FACTOR;
+        float value = readHexFloat6(inputStream, ROBOT_KINEMATICS_DEFAULT_DIGIT_PRECISION);
+        robotKinematics->coderWheelAverageDiameterMM = value;
     }
     else if (commandHeader == COMMAND_SET_CODER_WHEEL_AVERAGE_DELTA_DIAMETER_MM) {
         ackCommand(outputStream, KINEMATICS_HEADER, COMMAND_SET_CODER_WHEEL_AVERAGE_DELTA_DIAMETER_MM);
         RobotKinematics* robotKinematics = getRobotKinematics();
-        float value = (float)readHex6(inputStream);
-        robotKinematics->coderWheelAverageDeltaDiameterMM = value / MILLI_TO_MICRO_FACTOR;
+        float value = readHexFloat6(inputStream, ROBOT_KINEMATICS_DEFAULT_DIGIT_PRECISION);
+        robotKinematics->coderWheelAverageDeltaDiameterMM = value;
     }
     else if (commandHeader == COMMAND_SET_CODER_DISTANCE_BETWEEN_WHEELS_MM) {
         ackCommand(outputStream, KINEMATICS_HEADER, COMMAND_SET_CODER_DISTANCE_BETWEEN_WHEELS_MM);
         RobotKinematics* robotKinematics = getRobotKinematics();
-        float value = (float)readHex6(inputStream);
-        robotKinematics->coderWheelDistanceBetweenWheelsMM =  value / MILLI_TO_MICRO_FACTOR;
+        float value = readHexFloat6(inputStream, ROBOT_KINEMATICS_DEFAULT_DIGIT_PRECISION);
+        robotKinematics->coderWheelDistanceBetweenWheelsMM =  value;
     }
     else if (commandHeader == COMMAND_SET_CODER_WHEEL_PULSE_BY_ROTATION) {
         ackCommand(outputStream, KINEMATICS_HEADER, COMMAND_SET_CODER_WHEEL_PULSE_BY_ROTATION);
         RobotKinematics* robotKinematics = getRobotKinematics();
-        float value = (float)readHex6(inputStream);
+        float value = readHexFloat6(inputStream, ROBOT_KINEMATICS_DEFAULT_DIGIT_PRECISION);
         robotKinematics->coderWheelPulseByRotation = value;
     }
     // MOTOR PART
     else if (commandHeader == COMMAND_SET_MOTOR_WHEEL_AVERAGE_DIAMETER_MM) {
         ackCommand(outputStream, KINEMATICS_HEADER, COMMAND_SET_MOTOR_WHEEL_AVERAGE_DIAMETER_MM);
         RobotKinematics* robotKinematics = getRobotKinematics();
-        float value = (float)readHex6(inputStream);
-        robotKinematics->motorWheelAverageDiameterMM = value / MILLI_TO_MICRO_FACTOR;
+        float value = readHexFloat6(inputStream, ROBOT_KINEMATICS_DEFAULT_DIGIT_PRECISION);
+        robotKinematics->motorWheelAverageDiameterMM = value;
     }
     else if (commandHeader == COMMAND_SET_MOTOR_DISTANCE_BETWEEN_WHEELS_MM) {
         ackCommand(outputStream, KINEMATICS_HEADER, COMMAND_SET_MOTOR_DISTANCE_BETWEEN_WHEELS_MM);
         RobotKinematics* robotKinematics = getRobotKinematics();
-        float value = (float)readHex6(inputStream);
-        robotKinematics->motorWheelDistanceBetweenWheelsMM = value / MILLI_TO_MICRO_FACTOR;
+        float value = readHexFloat6(inputStream, ROBOT_KINEMATICS_DEFAULT_DIGIT_PRECISION);
+        robotKinematics->motorWheelDistanceBetweenWheelsMM = value;
     }
     else if (commandHeader == COMMAND_SET_MOTOR_WHEEL_ROTATION_BY_SECONDS_AT_FULL_SPEED) {
         ackCommand(outputStream, KINEMATICS_HEADER, COMMAND_SET_MOTOR_WHEEL_ROTATION_BY_SECONDS_AT_FULL_SPEED);
         RobotKinematics* robotKinematics = getRobotKinematics();
-        float value = (float)readHex6(inputStream);
+        float value = readHexFloat6(inputStream, ROBOT_KINEMATICS_DEFAULT_DIGIT_PRECISION);
         robotKinematics->motorWheelRotationBySecondAtFullSpeed = value;
     }
+    // TODO : END OF MOTOR PART + ROBOT PART
 }
 
 static DeviceDescriptor descriptor = {

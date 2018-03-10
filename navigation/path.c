@@ -11,26 +11,26 @@
 // TODO : TO REMOVE
 #include "../robot/2012/strategy2012Utils.h"
 
-int getAngle1Path(PathData* pathData) {
-    int angle1 = pathData->angle1;
-    int result = changeAngleForColor(angle1);
+float getAngle1Path(PathData* pathData) {
+    float angle1 = pathData->angle1;
+    float result = changeAngleForColor(angle1);
     return result;
 }
 
-int getAngle2Path(PathData* pathData) {
-    int angle2 = pathData->angle2;
-    int result = changeAngleForColor(angle2);
+float getAngle2Path(PathData* pathData) {
+    float angle2 = pathData->angle2;
+    float result = changeAngleForColor(angle2);
     return result;
 }
 
 void initPathData(PathData* pathData, 
                     Location* location1,
                      Location* location2, 
-                     int cost,
-                     int controlPointDistance1,
-                     int controlPointDistance2,
-                     int angle1,
-                     int angle2,
+                     float cost,
+                     float controlPointDistance1,
+                     float controlPointDistance2,
+                     float angle1,
+                     float angle2,
                      unsigned char accelerationFactor,
                      unsigned char speedFactor) {
     pathData->location1 = location1;
@@ -49,11 +49,11 @@ void initAsymmetricPathData(
                       PathData* pathData,
                      Location* location1,
                      Location* location2, 
-                     int cost,
-                     int controlPointDistance1,
-                     int controlPointDistance2,
-                     int angle1,
-                     int angle2,
+                     float cost,
+                     float controlPointDistance1,
+                     float controlPointDistance2,
+                     float angle1,
+                     float angle2,
                      unsigned char accelerationFactor,
                      unsigned char speedFactor) {
     initPathData(pathData, location1, location2, cost, controlPointDistance1, controlPointDistance2, angle1, angle2, accelerationFactor, speedFactor);
@@ -91,13 +91,13 @@ void printPath(OutputStream* outputStream, PathData* pathData) {
         appendString(outputStream, pathData->location2->name);
     }
 
-    appendStringAndDec(outputStream, ", cost=", pathData->cost);
+    appendStringAndDecf(outputStream, ", cost=", pathData->cost);
 
-    appendStringAndDec(outputStream, ", controlPointDist1=", pathData->controlPointDistance1);
-    appendStringAndDec(outputStream, ", controlPointDist2=", pathData->controlPointDistance2);
+    appendStringAndDecf(outputStream, ", controlPointDist1=", pathData->controlPointDistance1);
+    appendStringAndDecf(outputStream, ", controlPointDist2=", pathData->controlPointDistance2);
 
-    appendStringAndDec(outputStream, ", angle1=", getAngle1Path(pathData));
-    appendStringAndDec(outputStream, ", angle2=", getAngle2Path(pathData));
+    appendStringAndDecf(outputStream, ", angle1=", getAngle1Path(pathData));
+    appendStringAndDecf(outputStream, ", angle2=", getAngle2Path(pathData));
 
     appendStringAndDec(outputStream, ", accFactor=", pathData->accelerationFactor);
     appendStringAndDec(outputStream, ", speedFactor=", pathData->speedFactor);

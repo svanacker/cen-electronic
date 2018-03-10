@@ -83,14 +83,27 @@ signed long readSignedHex4(InputStream* inputStream);
  * @param inputStream the pointer on inputStream (POO simulation)
  * TODO : Check the usage to know, if we must have a signed version too ???
  */
-float readHex6(InputStream* inputStream);
+long readHex6(InputStream* inputStream);
 
+/**
+* Read a Hex6 and returns signed value.
+* @param inputStream the pointer on inputStream (POO simulation)
+* @return the long value  converted from hexadecimal
+*/
+signed long readSignedHex4(InputStream* inputStream);
 /**
 * Read an hexadecimal value from an inputStream (4 hex char as "051D") and transform it to a float.
 * @param inputStream the pointer on inputStream (POO simulation)
 * @param digitPrecision how many digit we want. If digitPrecision = 2, the readed value will be divided by 100.0f
 */
 float readHexFloat4(InputStream* inputStream, unsigned int digitPrecision);
+
+/**
+* Read an hexadecimal value from an inputStream (4 hex char as "BD051D") and transform it to a float.
+* @param inputStream the pointer on inputStream (POO simulation)
+* @param digitPrecision how many digit we want. If digitPrecision = 2, the readed value will be divided by 100.0f
+*/
+float readHexFloat6(InputStream* inputStream, unsigned int digitPrecision);
 
 /**
  * Read an array of chars from an inputStream (chars are encoded as hex).

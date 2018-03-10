@@ -47,7 +47,7 @@ PathList* getNavigationPathList();
 /**
  * Add the location to the navigation graph.
  */
-Location* addNavigationLocation(char* name, int x, int y);
+Location* addNavigationLocation(char* name, float x, float y);
 
 /**
  * Add the path to the navigation graph.
@@ -55,11 +55,11 @@ Location* addNavigationLocation(char* name, int x, int y);
 PathData* addNavigationPath(
     Location* location1,
     Location* location2,
-    int cost,
-    int controlPointDistance1,
-    int controlPointDistance2,
-    int angle1,
-    int angle2,
+    float cost,
+    float controlPointDistance1,
+    float controlPointDistance2,
+    float angle1,
+    float angle2,
     unsigned char accelerationFactor,
     unsigned char speedFactor);
 
@@ -69,7 +69,7 @@ PathData* addNavigationPath(
  * @param end endPoint
  * @return the cost to reach the best Path
  */
-unsigned int computeBestPath(Location* start,
+float computeBestPath(Location* start,
                              Location* end);
 
 void printNavigationContext(OutputStream* outputStream);

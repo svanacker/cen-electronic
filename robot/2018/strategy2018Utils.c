@@ -44,11 +44,11 @@ void changeLocationsForColor() {
     unsigned int size = locationList->size;
     for (i = 0; i < size; i++) {
         Location* location = getLocation(locationList, i);
-        location->y = (int) (GAMEBOARD_HEIGHT - location->y);
+        location->y = (float) (GAMEBOARD_HEIGHT - location->y);
     }
 }
 
-int changeAngleForColor(int angle) {
+float changeAngleForColor(float angle) {
     if (isGreen()) {
         return angle;
     } else {

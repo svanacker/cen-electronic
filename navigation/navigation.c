@@ -41,7 +41,7 @@ PathList* getNavigationPathList(void) {
     return navigation.paths;
 }
 
-Location* addNavigationLocation(char* name, int x, int y) {
+Location* addNavigationLocation(char* name, float x, float y) {
     LocationList* locationList = navigation.locationList;
     Location* result = addNamedLocation(locationList, name, x, y);
     return result;
@@ -50,11 +50,11 @@ Location* addNavigationLocation(char* name, int x, int y) {
 PathData* addNavigationPath(
             Location* location1,
             Location* location2,
-            int cost,
-            int controlPointDistance1,
-            int controlPointDistance2,
-            int angle1,
-            int angle2,
+            float cost,
+            float controlPointDistance1,
+            float controlPointDistance2,
+            float angle1,
+            float angle2,
             unsigned char accelerationFactor,
             unsigned char speedFactor) {
     PathData* pathData = addPath(navigation.paths);
@@ -91,7 +91,7 @@ void updateOutgoingPaths(Location* location) {
 /** 
  * Returns the cost associated to location.
  */
-unsigned int getCost(Location* location) {
+float getCost(Location* location) {
     if (location->tmpCost == NO_COMPUTED_COST) {
         return MAX_COST;
     }
@@ -101,7 +101,7 @@ unsigned int getCost(Location* location) {
 /**
  * Change the cost associated to the location.
  */
-void setCost(Location* location, unsigned int cost) {
+void setCost(Location* location, float cost) {
     location->tmpCost = cost;
 }
 
@@ -112,7 +112,7 @@ void setCost(Location* location, unsigned int cost) {
 Location* extractMinCostLocation(void) {
     // Search the nearest node in terms of cost
     Location* result = NULL;
-    unsigned int minCost = MAX_COST;
+    float minCost = MAX_COST;
     int size = navigation.locationList->size;
     int i;
     for (i = 0; i < size; i++) {
@@ -127,7 +127,7 @@ Location* extractMinCostLocation(void) {
         #endif
 
         // get the cost
-        unsigned int cost = getCost(location);
+        float cost = getCost(location);
         #ifdef NAVIGATION_DEBUG
             appendStringAndDec(getInfoOutputStreamLogger(), "\tcost:", cost);
             println(getInfoOutputStreamLogger());
@@ -142,8 +142,8 @@ Location* extractMinCostLocation(void) {
     return result;
 }
 
-unsigned int computeBestPath(Location* start, Location* end) {
-    unsigned int result = 0;
+float computeBestPath(Location* start, Location* end) {
+    float result = 0;
 
     // not necessary because handledLocationList elements are removed from unhandled to handled.
     // we can not have doublon.
@@ -198,8 +198,8 @@ unsigned int computeBestPath(Location* start, Location* end) {
 
             PathData* pathData = getPath(navigation.paths, i);
             Location* location2 = getOtherEnd(pathData, location1);
-            unsigned int costLocation1 = getCost(location1);
-            unsigned int costLocation2 = getCost(location2);
+            float costLocation1 = getCost(location1);
+            float costLocation2 = getCost(location2);
             
             #ifdef NAVIGATION_DEBUG
                 appendStringAndDec(getInfoOutputStreamLogger(), "costLocation1:", costLocation1);
@@ -209,7 +209,7 @@ unsigned int computeBestPath(Location* start, Location* end) {
 
             // getOtherEnd called the current fonction to fill path information
             // so we can use pathData without problem.
-            unsigned int cost = costLocation1 + pathData->cost;
+            float cost = costLocation1 + pathData->cost;
 
             if (!available) {
                 cost += COST_UNAVAILABLE_PATH;

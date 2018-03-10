@@ -14,6 +14,6 @@ void changeLocationsForColor();
 
 void changePathsForColor(void);
 
-int changeAngleForColor(int angle);
+float changeAngleForColor(float angle);
 
 #endif

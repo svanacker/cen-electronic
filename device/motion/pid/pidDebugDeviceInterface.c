@@ -44,9 +44,9 @@ int devicePidDebugGetInterface(char commandHeader, DeviceInterfaceMode mode, boo
 	else if (commandHeader == COMMAND_PID_TRAJECTORY_TABLE) {
 		if (fillDeviceArgumentList) {
 			setFunction("PID Trajectory Table", 1, 0);
-            setArgumentUnsignedHex2(0, "pidTime Interval");
+            setArgumentFloatHex4(0, "pidTime Interval (milliSeconds). > 5");
 		}
-		return commandLengthValueForMode(mode, 2, 0);
+		return commandLengthValueForMode(mode, 4, 0);
 	}
 	return DEVICE_HEADER_NOT_HANDLED;
 }

@@ -56,11 +56,11 @@ void printPathTable(OutputStream* outputStream, PathData* pathData) {
 	appendStringTableData(outputStream, pathData->location2->name, PATH_LIST_NAME_2_COLUMN_LENGTH);
 	appendStringTableData(outputStream, pathData->location1->name, PATH_LIST_NAME_HEX_1_COLUMN_LENGTH);
 	appendStringTableData(outputStream, pathData->location2->name, PATH_LIST_NAME_HEX_2_COLUMN_LENGTH);
-	appendDecTableData(outputStream, pathData->cost, PATH_LIST_COST_COLUMN_LENGTH);
-	appendDecTableData(outputStream, pathData->controlPointDistance1, PATH_LIST_CP1_COLUMN_LENGTH);
-	appendDecTableData(outputStream, pathData->controlPointDistance2, PATH_LIST_CP2_COLUMN_LENGTH);
-	appendDecTableData(outputStream, pathData->angle1, PATH_LIST_ANGLE_1_COLUMN_LENGTH);
-	appendDecTableData(outputStream, pathData->angle2, PATH_LIST_ANGLE_2_COLUMN_LENGTH);
+	appendDecfTableData(outputStream, pathData->cost, PATH_LIST_COST_COLUMN_LENGTH);
+	appendDecfTableData(outputStream, pathData->controlPointDistance1, PATH_LIST_CP1_COLUMN_LENGTH);
+	appendDecfTableData(outputStream, pathData->controlPointDistance2, PATH_LIST_CP2_COLUMN_LENGTH);
+	appendDecfTableData(outputStream, pathData->angle1, PATH_LIST_ANGLE_1_COLUMN_LENGTH);
+	appendDecfTableData(outputStream, pathData->angle2, PATH_LIST_ANGLE_2_COLUMN_LENGTH);
 	appendDecTableData(outputStream, pathData-> accelerationFactor, PATH_LIST_ACCELERATION_FACTOR_COLUMN_LENGTH);
 	appendDecTableData(outputStream, pathData->speedFactor, PATH_LIST_SPEED_FACTOR_COLUMN_LENGTH);
 	appendBoolTableData(outputStream, pathData->mustGoBackward, PATH_LIST_GO_BACK_COLUMN_LENGTH);

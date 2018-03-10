@@ -44,7 +44,7 @@ char* getTypeAsString(OutputStream* outputStream, int parameterType) {
         case DEVICE_ARG_UNSIGNED_HEX_9 : return "hex_u_9";
         case DEVICE_ARG_UNSIGNED_HEX_10 : return "hex_u_10";
         case DEVICE_ARG_UNSIGNED_HEX_12 : return "hex_u_12";
-        case DEVICE_ARG_UNSIGNED_FLOAT_DIGIT_0_HEX_4: return "hex_f_4";
+        case DEVICE_ARG_UNSIGNED_FLOAT_HEX_4: return "hex_f_4";
     }
 	// TODO
     writeError(DEVICE_INTERFACE_PROBLEM);

@@ -22,9 +22,9 @@ int devicePidGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fil
         if (fillDeviceArgumentList) {
             setFunction("get Motion Parameter", 1, 3);
             setArgumentUnsignedHex2(0, "motionType");
-            setResultUnsignedFloatDigit0(0, "a (mm / sec)");
+            setResultFloatHex4(0, "a (mm / sec)");
             setResultSeparator(1);
-            setResultUnsignedFloatDigit0(2, "s (mm / sec^2)");
+            setResultFloatHex4(2, "s (mm / sec^2)");
         }
         return commandLengthValueForMode(mode, 2, 9);
     } else if (commandHeader == COMMAND_SET_MOTION_PARAMETERS) {
@@ -32,9 +32,9 @@ int devicePidGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fil
             setFunction("set Motion Parameter", 5, 0);
             setArgumentUnsignedHex2(0, "motionType");
             setArgumentSeparator(1);
-            setArgumentUnsignedFloatDigit0(2, "a (mm / sec)");
+            setArgumentFloatHex4(2, "a (mm / sec)");
             setArgumentSeparator(3);
-            setArgumentUnsignedFloatDigit0(4, "s (mm / sec^2)");
+            setArgumentFloatHex4(4, "s (mm / sec^2)");
         }
         return commandLengthValueForMode(mode, 12, 0);
     }
@@ -49,32 +49,32 @@ int devicePidGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fil
     if (commandHeader == COMMAND_WRITE_PID_PARAMETERS) {
         if (fillDeviceArgumentList) {
             setFunction("setPID", 9, 0);
-            setArgumentUnsignedHex2(0, "pidIdx");
+            setArgumentUnsignedHex2(0, "pid Index");
             setArgumentSeparator(1);
-            setArgumentUnsignedHex2(2, "p");
+            setArgumentFloatHex4(2, "p (milli)");
             setArgumentSeparator(3);
-            setArgumentUnsignedHex2(4, "i");
+            setArgumentFloatHex4(4, "i (milli)");
             setArgumentSeparator(5);
-            setArgumentUnsignedHex2(6, "d");
+            setArgumentFloatHex4(6, "d (milli)");
             setArgumentSeparator(7);
-            setArgumentUnsignedHex2(8, "mI");
+            setArgumentFloatHex4(8, "mI (milli)");
         }
-        return commandLengthValueForMode(mode, 14, 0);
+        return commandLengthValueForMode(mode, 22, 0);
     } else if (commandHeader == COMMAND_READ_PID_PARAMETERS) {
         if (fillDeviceArgumentList) {
-            setFunction("getPID", 1, 9);
-            setArgumentUnsignedHex2(0, "pidIdx");
-            setResultUnsignedHex2(0, "pidIdx");
+            setFunction("get PID", 1, 9);
+            setArgumentUnsignedHex2(0, "pid Index");
+            setResultUnsignedHex2(0, "pid Index");
             setResultSeparator(1);
-            setResultUnsignedHex2(2, "p");
+            setResultFloatHex4(2, "p (milli)");
             setResultSeparator(3);
-            setResultUnsignedHex2(4, "i");
+            setResultFloatHex4(4, "i (milli)");
             setResultSeparator(5);
-            setResultUnsignedHex2(6, "d");
+            setResultFloatHex4(6, "d (milli)");
             setResultSeparator(7);
-            setResultUnsignedHex2(8, "mI");
+            setResultFloatHex4(8, "mI (milli)");
         }
-        return commandLengthValueForMode(mode, 2, 14);
+        return commandLengthValueForMode(mode, 2, 22);
     } else if (commandHeader == COMMAND_LOAD_PID_PARAMETERS_DEFAULT_VALUES) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("load Pid Param. Default Values");
@@ -88,31 +88,31 @@ int devicePidGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fil
     } else if (commandHeader == COMMAND_SET_END_DETECTION_PARAMETER) {
         if (fillDeviceArgumentList) {
             setFunction("set End Detection Parameter", 9, 0);
-            setArgumentUnsignedHex2(0, "absDeltaPositionIntegralFactorThreshold");
+            setArgumentFloatHex4(0, "absDeltaPositionIntegralFactorThreshold");
             setArgumentSeparator(1);
-            setArgumentUnsignedHex2(2, "maxUIntegralFactorThreshold");
+            setArgumentFloatHex4(2, "maxUIntegralFactorThreshold");
             setArgumentSeparator(3);
-            setArgumentUnsignedHex2(4, "maxUIntegralConstantThreshold");
+            setArgumentFloatHex4(4, "maxUIntegralConstantThreshold");
             setArgumentSeparator(5);
-            setArgumentUnsignedHex2(6, "timeRangeAnalysis");
+            setArgumentFloatHex4(6, "timeRangeAnalysis");
             setArgumentSeparator(7);
-            setArgumentUnsignedHex2(8, "noAnalysisAtStartupTime");
+            setArgumentFloatHex4(8, "noAnalysisAtStartupTime");
         }
-        return commandLengthValueForMode(mode, 14, 0);
+        return commandLengthValueForMode(mode, 24, 0);
     } else if (commandHeader == COMMAND_GET_END_DETECTION_PARAMETER) {
         if (fillDeviceArgumentList) {
             setFunction("get End Detection Parameter", 0, 9);
-            setResultUnsignedHex2(0, "absDeltaPositionIntegralFactorThreshold");
+            setResultFloatHex4(0, "absDeltaPositionIntegralFactorThreshold");
             setResultSeparator(1);             
-            setResultUnsignedHex2(2, "maxUIntegralFactorThreshold");
+            setResultFloatHex4(2, "maxUIntegralFactorThreshold");
             setResultSeparator(3);             
-            setResultUnsignedHex2(4, "maxUIntegralConstantThreshold");
+            setResultFloatHex4(4, "maxUIntegralConstantThreshold");
             setResultSeparator(5);             
-            setResultUnsignedHex2(6, "timeRangeAnalysis");
+            setResultFloatHex4(6, "timeRangeAnalysis");
             setResultSeparator(7);             
-            setResultUnsignedHex2(8, "noAnalysisAtStartupTime");
+            setResultFloatHex4(8, "noAnalysisAtStartupTime");
         }
-        return commandLengthValueForMode(mode, 0, 14);
+        return commandLengthValueForMode(mode, 0, 24);
     } else if (commandHeader == COMMAND_GET_DEBUG_DATA_PID) {
         if (fillDeviceArgumentList) {
             setFunction("send Debug Data Pid", 1, 17);
@@ -121,23 +121,23 @@ int devicePidGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fil
 
             setResultUnsignedHex2(0, "instructionType");
             setResultSeparator(1);             
-            setResultUnsignedHex4(2, "pidTime");
+            setResultFloatHex4(2, "pidTime (milliSec)");
             setResultSeparator(3);             
-            setResultUnsignedHex6(4, "normalPosition");
+            setResultFloatHex4(4, "normal Position (mm)");
             setResultSeparator(5);
-            setResultUnsignedHex6(6, "position");
+            setResultFloatHex4(6, "position (mm)");
             setResultSeparator(7);
-            setResultUnsignedHex4(8, "error");
+            setResultFloatHex4(8, "error (mm)");
             setResultSeparator(9);
-            setResultUnsignedHex4(10, "u");
+            setResultFloatHex4(10, "u");
             setResultSeparator(11);
-            setResultUnsignedHex4(12, "endMotion_integralTime");
+            setResultFloatHex4(12, "endMotion integralTime");
             setResultSeparator(13);
-            setResultUnsignedHex4(14, "endMotion_absDelPosiInt");
+            setResultFloatHex4(14, "endMotion absDelta Position Integral");
             setResultSeparator(15);
-            setResultUnsignedHex4(16, "endMotion_uIntegral");
+            setResultFloatHex4(16, "endMotion Integral");
         }
-        return commandLengthValueForMode(mode, 2, 46);
+        return commandLengthValueForMode(mode, 2, 42);
     } else if (commandHeader == COMMAND_GET_MOTION_PARAMETER) {
         if (fillDeviceArgumentList) {    
             setFunction("get Motion Parameter", 1, 25);
@@ -146,23 +146,23 @@ int devicePidGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fil
             
             setResultUnsignedHex2(0, "idx");
             setResultSeparator(1);
-            setResultUnsignedHex2(2, "a");
+            setResultFloatHex4(2, "a (mm / sec^2)");
             setResultSeparator(3);
-            setResultUnsignedHex2(4, "s");
+            setResultFloatHex4(4, "s (mm / sec)");
             setResultSeparator(5);
-            setResultUnsignedHex2(6, "smax");
+            setResultFloatHex4(6, "smax (mm / sec)");
             setResultSeparator(7);
-            setResultUnsignedHex4(8, "t1");
+            setResultFloatHex4(8, "t1 (sec)");
             setResultSeparator(9);
-            setResultUnsignedHex4(10, "t2");
+            setResultFloatHex4(10, "t2 (sec)");
             setResultSeparator(11);
-            setResultUnsignedHex4(12, "t3");
+            setResultFloatHex4(12, "t3 (sec)");
             setResultSeparator(13);
-            setResultUnsignedHex6(14, "p1");
+            setResultFloatHex4(14, "p1 (mm)");
             setResultSeparator(15);
-            setResultUnsignedHex6(16, "p2");
+            setResultFloatHex4(16, "p2 (mm)");
             setResultSeparator(17);
-            setResultUnsignedHex6(18, "p3/nextPosition");
+            setResultFloatHex4(18, "p3/nextPosition (mm)");
             setResultSeparator(19);
             setResultUnsignedChar1(20, "profileType");
             setResultSeparator(21);

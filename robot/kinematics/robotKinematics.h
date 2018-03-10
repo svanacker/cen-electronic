@@ -3,6 +3,9 @@
 
 #include "../../common/eeprom/eeprom.h"
 
+#define ROBOT_KINEMATICS_DEFAULT_DIGIT_PRECISION                3
+#define ROBOT_KINEMATICS_WEIGHT_DIGIT_PRECISION                 0
+
 #define MILLI_TO_MICRO_FACTOR                                    1000.0f
 #define MILLI_TO_NANO_FACTOR                                     1000000.0f
 /** 

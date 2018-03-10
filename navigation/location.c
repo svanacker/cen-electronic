@@ -19,9 +19,9 @@ void printLocation(OutputStream* outputStream, Location* location) {
     // Print pointer value
     appendStringAndDec(outputStream, ", ref=", (int) location);
 
-    appendStringAndDec(outputStream, ", x=", location->x);
-    appendStringAndDec(outputStream, ", y=", location->y);
-    appendStringAndDec(outputStream, ", tmpCost=", location->tmpCost);
+    appendStringAndDecf(outputStream, ", x=", location->x);
+    appendStringAndDecf(outputStream, ", y=", location->y);
+    appendStringAndDecf(outputStream, ", tmpCost=", location->tmpCost);
     if (location->tmpPreviousLocation != NULL) {
         appendKeyAndName(outputStream, ", tmpPrevious.name=", location->tmpPreviousLocation->name);
     }
