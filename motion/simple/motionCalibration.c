@@ -10,19 +10,19 @@
 
 void squareCalibrationRotationLeft(PidMotion* pidMotion, bool inverse, OutputStream* notificationOutputStream) {
     if (inverse) {
-        rightSimpleDeciDegreeAndWait(pidMotion, DEG_90, notificationOutputStream);
+        rightSimpleDegreeAndWait(pidMotion, DEG_90, notificationOutputStream);
     }
     else {
-        leftSimpleDeciDegreeAndWait(pidMotion, DEG_90, notificationOutputStream);
+        leftSimpleDegreeAndWait(pidMotion, DEG_90, notificationOutputStream);
     }
 }
 
 void squareCalibrationRotationRight(PidMotion* pidMotion, bool inverse, OutputStream* notificationOutputStream) {
     if (inverse) {
-        leftSimpleDeciDegreeAndWait(pidMotion, DEG_90, notificationOutputStream);
+        leftSimpleDegreeAndWait(pidMotion, DEG_90, notificationOutputStream);
     }
     else {
-        rightSimpleDeciDegreeAndWait(pidMotion, DEG_90, notificationOutputStream);
+        rightSimpleDegreeAndWait(pidMotion, DEG_90, notificationOutputStream);
     }
 }
 void squareCalibrationLine(PidMotion* pidMotion, float x, float y, float angle, bool inverse, OutputStream* notificationOutputStream) {
@@ -46,7 +46,7 @@ void squareCalibration(PidMotion* pidMotion, unsigned char type, float lengthInM
     squareCalibrationRotationRight(pidMotion, inverse, notificationOutputStream);
 
     // to the bottom right
-    squareCalibrationLine(pidMotion, 0, -lengthInMM2, -900.0f, inverse, notificationOutputStream);
+    squareCalibrationLine(pidMotion, 0, -lengthInMM2, -DEG_90, inverse, notificationOutputStream);
     squareCalibrationRotationLeft(pidMotion, inverse, notificationOutputStream);
 
     // to the top right
@@ -54,14 +54,14 @@ void squareCalibration(PidMotion* pidMotion, unsigned char type, float lengthInM
     squareCalibrationRotationLeft(pidMotion, inverse, notificationOutputStream);
 
     // to the top left
-    squareCalibrationLine(pidMotion, lengthInMM, lengthInMM2, 900.0f, inverse, notificationOutputStream);
+    squareCalibrationLine(pidMotion, lengthInMM, lengthInMM2, DEG_90, inverse, notificationOutputStream);
     squareCalibrationRotationLeft(pidMotion, inverse, notificationOutputStream);
 
     // to the bottom left
-    squareCalibrationLine(pidMotion, 0, lengthInMM2, 1800.0f, inverse, notificationOutputStream);
+    squareCalibrationLine(pidMotion, 0, lengthInMM2, DEG_180, inverse, notificationOutputStream);
     squareCalibrationRotationLeft(pidMotion, inverse, notificationOutputStream);
 
     // to the bottom middle
-    squareCalibrationLine(pidMotion, 0, 0, -900.0f, inverse, notificationOutputStream);
+    squareCalibrationLine(pidMotion, 0, 0, -DEG_90, inverse, notificationOutputStream);
     squareCalibrationRotationLeft(pidMotion, inverse, notificationOutputStream);
 }

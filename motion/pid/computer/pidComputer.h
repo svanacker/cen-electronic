@@ -39,28 +39,22 @@ float computeNormalPosition(MotionInstruction* motionInstruction, float time);
 float computeNormalSpeed(MotionInstruction* motionInstruction, float time);
 
 /**
+* Compute the normal acceleration at the specified pidTime
+* @param motionInstruction information about motion
+* @param time pidTime
+*/
+float computeNormalAcceleration(MotionInstruction* inst, float time);
+
+/**
 * Get the normal voltage value at the speed defined by the parameter
-* @param pulseAtNormalSpeed the speed for which we want the normal voltage
+* @param normalSpeed the speed for which we want the normal voltage
 * TODO : Must be Test By Experimentation
 */
-float getNormalU(float pulseAtNormalSpeed);
+float getNormalU(float normalSpeed);
 
 // CONVERSION UTILS
 
 float getUFactorAtFullSpeed(bool rotation);
-
-/**
-* Convert a speed in pulse / pid Time to a speed in mm/second.
-* @param pulseSpeed the speed in pulse / pidTime to convert
-* @return a speed in mm/second
-*/
-float pulseByPidTimeSpeedToMMBySecondSpeed(float pulseSpeed);
-
-/**
- * Get how many pulse at the coder wheel are triggered at full motor Speed 
- * for a specific PidTime Frequency 
- */
-float getCoderWheelPulseByPidTimeAtFullSpeed(bool rotation);
 
 #endif
 

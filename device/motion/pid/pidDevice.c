@@ -19,6 +19,7 @@
 
 #include "../../../device/device.h"
 
+#include "../../../motion/motion.h"
 #include "../../../motion/parameters/motionParameter.h"
 #include "../../../motion/parameters/motionParameterPersistence.h"
 #include "../../../motion/pid/pid.h"
@@ -134,30 +135,30 @@ void devicePidHandleRawData(char commandHeader, InputStream* inputStream, Output
         ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_GET_END_DETECTION_PARAMETER);
 
         MotionEndDetectionParameter* motionEndDetectionParameter = getMotionEndDetectionParameter(pidMotion);
-        appendHex2(outputStream, (unsigned char) motionEndDetectionParameter->absDeltaPositionIntegralFactorThreshold);
+        appendHexFloat4(outputStream, motionEndDetectionParameter->absDeltaPositionIntegralFactorThreshold, MOTION_END_DETECTION_PARAMETER_DIGIT);
         appendSeparator(outputStream);
-        appendHex2(outputStream, (unsigned char)motionEndDetectionParameter->maxUIntegralFactorThreshold);
+        appendHexFloat4(outputStream, motionEndDetectionParameter->maxUIntegralFactorThreshold, MOTION_END_DETECTION_PARAMETER_DIGIT);
         appendSeparator(outputStream);
-        appendHex2(outputStream, (unsigned char)motionEndDetectionParameter->maxUIntegralConstantThreshold);
+        appendHexFloat4(outputStream, motionEndDetectionParameter->maxUIntegralConstantThreshold, MOTION_END_DETECTION_PARAMETER_DIGIT);
         appendSeparator(outputStream);
-        appendHex2(outputStream, (unsigned int)motionEndDetectionParameter->timeRangeAnalysis);
+        appendHexFloat4(outputStream, motionEndDetectionParameter->timeRangeAnalysisInSecond, MOTION_END_DETECTION_PARAMETER_DIGIT);
         appendSeparator(outputStream);
-        appendHex2(outputStream, (unsigned int)motionEndDetectionParameter->noAnalysisAtStartupTime);
+        appendHexFloat4(outputStream, motionEndDetectionParameter->noAnalysisAtStartupTimeInSecond, MOTION_END_DETECTION_PARAMETER_DIGIT);
     }
     else if (commandHeader ==  COMMAND_SET_END_DETECTION_PARAMETER) {
         ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_GET_END_DETECTION_PARAMETER);
 
         MotionEndDetectionParameter* motionEndDetectionParameter = getMotionEndDetectionParameter(pidMotion);
 
-        motionEndDetectionParameter->absDeltaPositionIntegralFactorThreshold = (float) readHex2(inputStream);
+        motionEndDetectionParameter->absDeltaPositionIntegralFactorThreshold = readHexFloat4(inputStream, MOTION_END_DETECTION_PARAMETER_DIGIT);
         checkIsSeparator(inputStream);
-        motionEndDetectionParameter->maxUIntegralFactorThreshold = (float)readHex2(inputStream);
+        motionEndDetectionParameter->maxUIntegralFactorThreshold = readHexFloat4(inputStream, MOTION_END_DETECTION_PARAMETER_DIGIT);
         checkIsSeparator(inputStream);
-        motionEndDetectionParameter->maxUIntegralConstantThreshold = (float)readHex2(inputStream);
+        motionEndDetectionParameter->maxUIntegralConstantThreshold = readHexFloat4(inputStream, MOTION_END_DETECTION_PARAMETER_DIGIT);
         checkIsSeparator(inputStream);
-        motionEndDetectionParameter->timeRangeAnalysis = (unsigned int)readHex2(inputStream);
+        motionEndDetectionParameter->timeRangeAnalysisInSecond = readHexFloat4(inputStream, MOTION_END_DETECTION_PARAMETER_DIGIT);
         checkIsSeparator(inputStream);
-        motionEndDetectionParameter->noAnalysisAtStartupTime = (unsigned int)readHex2(inputStream);
+        motionEndDetectionParameter->noAnalysisAtStartupTimeInSecond = readHexFloat4(inputStream, MOTION_END_DETECTION_PARAMETER_DIGIT);
     }
     // Debug : pg01-1001-000020-005678-4000-2000-5000-8000
     else if (commandHeader ==  COMMAND_GET_DEBUG_DATA_PID) {
@@ -215,28 +216,28 @@ void devicePidHandleRawData(char commandHeader, InputStream* inputStream, Output
 
         appendHex2(outputStream, instructionType);
         appendSeparator(outputStream);
-        appendHex2(outputStream, (int) localInst->a);
+        appendHexFloat4(outputStream, localInst->a, MOTION_PARAMETERS_ACCELERATION_DIGIT);
         appendSeparator(outputStream);
-        appendHex2(outputStream, (int) localInst->speed);
+        appendHexFloat4(outputStream, localInst->speed, MOTION_PARAMETERS_SPEED_DIGIT);
         appendSeparator(outputStream);
-        appendHex2(outputStream, (int) localInst->speedMax);
+        appendHexFloat4(outputStream, localInst->speedMax, MOTION_PARAMETERS_SPEED_DIGIT);
         
         appendSeparator(outputStream);
 
         // t1/t2/t3
-        appendHex4(outputStream, (int) localInst->t1);
+        appendHexFloat4(outputStream, localInst->t1, PID_TIME_SECOND_DIGIT_PRECISION);
         appendSeparator(outputStream);
-        appendHex4(outputStream, (int) localInst->t2);
+        appendHexFloat4(outputStream, localInst->t2, PID_TIME_SECOND_DIGIT_PRECISION);
         appendSeparator(outputStream);
-        appendHex4(outputStream, (int) localInst->t3);
+        appendHexFloat4(outputStream, localInst->t3, PID_TIME_SECOND_DIGIT_PRECISION);
         appendSeparator(outputStream);
 
         // p1/p2/nextPosition
-        appendHex6(outputStream, (int) localInst->p1);
+        appendHexFloat6(outputStream, localInst->p1, POSITION_DIGIT_MM_PRECISION);
         appendSeparator(outputStream);
-        appendHex6(outputStream, (int) localInst->p2);
+        appendHexFloat6(outputStream, localInst->p2, POSITION_DIGIT_MM_PRECISION);
         appendSeparator(outputStream);
-        appendHex6(outputStream, (int)localInst->nextPosition);
+        appendHexFloat6(outputStream, localInst->nextPosition, POSITION_DIGIT_MM_PRECISION);
         appendSeparator(outputStream);
 
         // types

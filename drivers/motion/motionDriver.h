@@ -58,14 +58,14 @@ bool motionDriverBackward(float distanceInMM);
 * @param leftDegree the angle to turn left
 * @return true if the driver answer
 */
-bool motionDriverLeft(float leftDeciDegree);
+bool motionDriverLeft(float leftDegree);
 
 /**
 * Ask the motor to turn right for an angle in degree.
 * @param rightDegree the angle to turn right
 * @return true if the driver answer
 */
-bool motionDriverRight(float rightDeciDegree);
+bool motionDriverRight(float rightDegree);
 
 // ONE WHEEL
 
@@ -74,14 +74,14 @@ bool motionDriverRight(float rightDeciDegree);
 * @param leftDegree the angle to turn left
 * @return true if the driver answer
 */
-bool motionDriverOneWheelLeft(float leftDeciDegree);
+bool motionDriverOneWheelLeft(float leftDegree);
 
 /**
 * Ask the motor to turn right for an angle in degree (Left Wheel don't move).
 * @param rightDegree the angle to turn right
 * @return true if the driver answer
 */
-bool motionDriverOneWheelRight(float rightDeciDegree);
+bool motionDriverOneWheelRight(float rightDegree);
 
 // STOP
 
@@ -97,10 +97,10 @@ bool motionDriverStop();
 */
 bool motionDriverObstacle();
 
-bool motionDriverLeftOneWheel(float leftDeciDegree);
+bool motionDriverLeftOneWheel(float leftDegree);
 
-bool motionDriverRightOneWheel(float rightDeciDegree);
+bool motionDriverRightOneWheel(float rightDegree);
 
-bool motionSetParameters(int motionType, int a, int speed);
+bool motionSetParameters(int motionType, float a, float speed);
 
 #endif

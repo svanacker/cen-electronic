@@ -19,15 +19,15 @@
 
 // PID MOTION INSTRUCTION
 #define PID_DEBUG_INDEX_COLUMN_LENGTH						4
-#define PID_DEBUG_INSTRUCTION_TYPE_COLUMN_LENGTH			7
-#define PID_DEBUG_A_COLUMN_LENGTH							3
+#define PID_DEBUG_INSTRUCTION_TYPE_COLUMN_LENGTH			6
+#define PID_DEBUG_A_COLUMN_LENGTH							6
 #define PID_DEBUG_INITIAL_SPEED_COLUMN_LENGTH				6
-#define PID_DEBUG_SPEED_COLUMN_LENGTH						5
-#define PID_DEBUG_SPEED_MAX_COLUMN_LENGTH					5
-#define PID_DEBUG_END_SPEED_COLUMN_LENGTH				    5
-#define PID_DEBUG_T1_COLUMN_LENGTH							4
-#define PID_DEBUG_T2_COLUMN_LENGTH							4
-#define PID_DEBUG_T3_COLUMN_LENGTH							4
+#define PID_DEBUG_SPEED_COLUMN_LENGTH						6
+#define PID_DEBUG_SPEED_MAX_COLUMN_LENGTH					6
+#define PID_DEBUG_END_SPEED_COLUMN_LENGTH				    6
+#define PID_DEBUG_T1_COLUMN_LENGTH							6
+#define PID_DEBUG_T2_COLUMN_LENGTH							6
+#define PID_DEBUG_T3_COLUMN_LENGTH							6
 #define PID_DEBUG_P1_COLUMN_LENGTH							6
 #define PID_DEBUG_P2_COLUMN_LENGTH							6
 #define PID_DEBUG_NEXT_POSITION_COLUMN_LENGTH				6
@@ -95,6 +95,8 @@ void printMotionInstructionStateHeader(OutputStream* outputStream, PidMotionDefi
 */
 void printMotionInstructionHeader(OutputStream* outputStream, PidMotionDefinition* pidMotionDefinition) {
 	printMotionInstructionStateHeader(outputStream, pidMotionDefinition);
+
+    // First Line Header
 	appendStringHeader(outputStream, "Idx", PID_DEBUG_INDEX_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "T/A", PID_DEBUG_INSTRUCTION_TYPE_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "a", PID_DEBUG_A_COLUMN_LENGTH);
@@ -109,25 +111,47 @@ void printMotionInstructionHeader(OutputStream* outputStream, PidMotionDefinitio
 	appendStringHeader(outputStream, "p2", PID_DEBUG_P2_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "p3", PID_DEBUG_NEXT_POSITION_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "profile", PID_DEBUG_PROFILE_TYPE_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "motionParamType", PID_DEBUG_MOTION_PARAMETER_TYPE_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "pidType", PID_DEBUG_PID_TYPE_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "motion Param", PID_DEBUG_MOTION_PARAMETER_TYPE_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "pid", PID_DEBUG_PID_TYPE_COLUMN_LENGTH);
 	appendEndOfTableColumn(outputStream, PID_DEBUG_LAST_COLUMN_LENGTH);
+
+    // Second Line Header
+    appendStringHeader(outputStream, "", PID_DEBUG_INDEX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "", PID_DEBUG_INSTRUCTION_TYPE_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "mm/s^2", PID_DEBUG_A_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "mm/s", PID_DEBUG_INITIAL_SPEED_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "mm/s", PID_DEBUG_SPEED_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "mm/s", PID_DEBUG_SPEED_MAX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "mm/s", PID_DEBUG_END_SPEED_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "sec", PID_DEBUG_T1_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "sec", PID_DEBUG_T2_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "sec", PID_DEBUG_T3_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "mm", PID_DEBUG_P1_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "mm", PID_DEBUG_P2_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "mm", PID_DEBUG_NEXT_POSITION_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "type", PID_DEBUG_PROFILE_TYPE_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "type", PID_DEBUG_MOTION_PARAMETER_TYPE_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "type", PID_DEBUG_PID_TYPE_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, PID_DEBUG_LAST_COLUMN_LENGTH);
+
+
 	appendTableHeaderSeparatorLine(outputStream);
 }
 
 void printMotionInstructionLine(OutputStream* outputStream, PidMotion* pidMotion, int index, enum InstructionType instructionType, MotionInstruction* motionInstruction) {
 	appendDecTableData(outputStream, index, PID_DEBUG_INDEX_COLUMN_LENGTH);
 	addInstructionTypeTableData(outputStream, instructionType, PID_DEBUG_INSTRUCTION_TYPE_COLUMN_LENGTH);
-	appendDecTableData(outputStream, (int) motionInstruction->a, PID_DEBUG_A_COLUMN_LENGTH);
-    appendDecTableData(outputStream, (int) motionInstruction->initialSpeed, PID_DEBUG_SPEED_COLUMN_LENGTH);
-	appendDecTableData(outputStream, (int) motionInstruction->speed, PID_DEBUG_SPEED_COLUMN_LENGTH);
-	appendDecTableData(outputStream, (int) motionInstruction->speedMax, PID_DEBUG_SPEED_MAX_COLUMN_LENGTH);
-	appendDecTableData(outputStream, (int) motionInstruction->t1, PID_DEBUG_T1_COLUMN_LENGTH);
-	appendDecTableData(outputStream, (int) motionInstruction->t2, PID_DEBUG_T2_COLUMN_LENGTH);
-	appendDecTableData(outputStream, (int) motionInstruction->t3, PID_DEBUG_T3_COLUMN_LENGTH);
-	appendDecTableData(outputStream, (int) motionInstruction->p1, PID_DEBUG_P1_COLUMN_LENGTH);
-	appendDecTableData(outputStream, (int) motionInstruction->p2, PID_DEBUG_P2_COLUMN_LENGTH);
-	appendDecTableData(outputStream, (int) motionInstruction->nextPosition, PID_DEBUG_NEXT_POSITION_COLUMN_LENGTH);
+	appendDecfTableData(outputStream, motionInstruction->a, PID_DEBUG_A_COLUMN_LENGTH);
+    appendDecfTableData(outputStream, motionInstruction->initialSpeed, PID_DEBUG_SPEED_COLUMN_LENGTH);
+	appendDecfTableData(outputStream, motionInstruction->speed, PID_DEBUG_SPEED_COLUMN_LENGTH);
+	appendDecfTableData(outputStream, motionInstruction->speedMax, PID_DEBUG_SPEED_MAX_COLUMN_LENGTH);
+    appendDecfTableData(outputStream, motionInstruction->endSpeed, PID_DEBUG_END_SPEED_COLUMN_LENGTH);
+    appendDecfTableData(outputStream, motionInstruction->t1, PID_DEBUG_T1_COLUMN_LENGTH);
+	appendDecfTableData(outputStream, motionInstruction->t2, PID_DEBUG_T2_COLUMN_LENGTH);
+	appendDecfTableData(outputStream, motionInstruction->t3, PID_DEBUG_T3_COLUMN_LENGTH);
+	appendDecfTableData(outputStream, motionInstruction->p1, PID_DEBUG_P1_COLUMN_LENGTH);
+	appendDecfTableData(outputStream, motionInstruction->p2, PID_DEBUG_P2_COLUMN_LENGTH);
+	appendDecfTableData(outputStream, motionInstruction->nextPosition, PID_DEBUG_NEXT_POSITION_COLUMN_LENGTH);
 	addMotionProfileTypeTableData(outputStream, motionInstruction->profileType, PID_DEBUG_PROFILE_TYPE_COLUMN_LENGTH);
 	addMotionParameterTypeTableData(outputStream, motionInstruction->motionParameterType, PID_DEBUG_MOTION_PARAMETER_TYPE_COLUMN_LENGTH);
 	addPidTypeTableData(outputStream, motionInstruction->pidType, PID_DEBUG_PID_TYPE_COLUMN_LENGTH);

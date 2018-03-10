@@ -24,12 +24,12 @@
 /**
 * The delay for which we consider that we are blocked or if we have reached if we don't go anymore
 */
-#define BLOCKING_OR_REACH_DETECTION_DELAY_DEFAULT_VALUE 10
+#define BLOCKING_OR_REACH_DETECTION_DELAY_DEFAULT_VALUE 0.1f
 
 /**
 * The delay for which we do not try to know if the robot is rolling or blocked
 */
-#define BLOCKING_OR_REACH_SKIP_DETECTION_DELAY_DEFAULT_VALUE 60
+#define BLOCKING_OR_REACH_SKIP_DETECTION_DELAY_DEFAULT_VALUE 0.3f
 
 /**
  * Define a structure which is able to detect either blocking or either end of trajectory.
@@ -55,14 +55,16 @@ typedef struct MotionEndDetectionParameter {
     * range time analysis give sometimes bad analysis. It's also important to detect on a small range to have a decision of end detection (to continue on next instruction). But too short 
     * range time analysis give sometimes bad analysis.
     */
-    unsigned int timeRangeAnalysis;
+    float timeRangeAnalysisInSecond;
     /** 
      * The delay in milliseconds for which we do not try to check the end detection parameter.
      * It avoids that the robot stop immediately the begin of motion, because it analyzes 
      * if the robot is blocked or has ended his trajectory
     */
-    unsigned int noAnalysisAtStartupTime;
+    float noAnalysisAtStartupTimeInSecond;
 } MotionEndDetectionParameter;
+
+#define MOTION_END_DETECTION_PARAMETER_DIGIT           3
 
 /**
 * Initialize the parameters for the detection of end or blocking of motion.

@@ -26,6 +26,12 @@
 
 #include "../../robot/kinematics/robotKinematics.h"
 
+// We manage a precision of time to the millisecond
+#define PID_TIME_SECOND_DIGIT_PRECISION 3
+
+// We manage a precision for the PID of 3 digits
+#define PID_VALUE_DIGIT_PRECISION       3
+
 /**
  * Returns the Index of Pid which must be chosen in function of pidType.
  * @param instructionType THETA_INDEX or ALPHA_MASK

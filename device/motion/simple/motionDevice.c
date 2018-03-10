@@ -126,62 +126,44 @@ void deviceMotionHandleRawData(char commandHeader,
         InputStream* inputStream,
         OutputStream* outputStream,
         OutputStream* notificationOutputStream) {
-	// LIST Instruction
-    // GOTO in impulsion
-    if (commandHeader == COMMAND_MOTION_GOTO_IN_PULSE) {
-        // send acknowledge
-        ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_GOTO_IN_PULSE);
-
-        // Ex: 000100 000100 01 10
-        // Left position
-        float left = (float) readHex6(inputStream);
-        // Right position
-        float right = (float) readHex6(inputStream);
-        // Acceleration
-        float a = (float) readHex2(inputStream);
-        // Speed
-        float s = (float) readHex2(inputStream);
-
-        // Execute Motion
-        gotoSimplePosition(pidMotion, left, right, a, s, notificationOutputStream);
-    }        // "forward" in millimeter
-    else if (commandHeader == COMMAND_MOTION_FORWARD_IN_MM) {
+    // "forward" in millimeter
+    if (commandHeader == COMMAND_MOTION_FORWARD_IN_MM) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_FORWARD_IN_MM);
 
-        float distanceMM = (float) readHex4(inputStream);
+        float distanceMM = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
         forwardSimpleMM(pidMotion, distanceMM, notificationOutputStream);
     }        // "backward" in millimeter
     else if (commandHeader == COMMAND_MOTION_BACKWARD_IN_MM) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_BACKWARD_IN_MM);
 
-        float distanceMM = (float) readHex4(inputStream);
+        float distanceMM = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
         backwardSimpleMM(pidMotion, distanceMM, notificationOutputStream);
     }        // ROTATION
         // -> left
     else if (commandHeader == COMMAND_MOTION_LEFT_IN_DECI_DEGREE) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_LEFT_IN_DECI_DEGREE);
 
-        float leftDeciDegree = (float) readHex4(inputStream);
-        leftSimpleDeciDegree(pidMotion, leftDeciDegree, notificationOutputStream);
+        float leftDegree = readHexFloat4(inputStream, ANGLE_DIGIT_DEGREE_PRECISION);
+        leftSimpleDegree(pidMotion, leftDegree, notificationOutputStream);
     }        // -> right
     else if (commandHeader == COMMAND_MOTION_RIGHT_IN_DECI_DEGREE) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_RIGHT_IN_DECI_DEGREE);
 
-        float rightDeciDegree = (float) readHex4(inputStream);
-        rightSimpleDeciDegree(pidMotion, rightDeciDegree, notificationOutputStream);
+        float rightDegree = readHexFloat4(inputStream, ANGLE_DIGIT_DEGREE_PRECISION);
+        rightSimpleDegree(pidMotion, rightDegree, notificationOutputStream);
     }        // ONE WHEEL
         // -> left
     else if (commandHeader == COMMAND_MOTION_LEFT_ONE_WHEEL_IN_DECI_DEGREE) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_LEFT_ONE_WHEEL_IN_DECI_DEGREE);
 
-        float leftDegree = (float) readHex4(inputStream);
-        leftOneWheelSimpleDeciDegree(pidMotion, leftDegree, notificationOutputStream);
+        float leftDegree = readHexFloat4(inputStream, ANGLE_DIGIT_DEGREE_PRECISION);
+        leftOneWheelSimpleDegree(pidMotion, leftDegree, notificationOutputStream);
     }        // -> right
     else if (commandHeader == COMMAND_MOTION_RIGHT_ONE_WHEEL_IN_DECI_DEGREE) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_RIGHT_ONE_WHEEL_IN_DECI_DEGREE);
 
-        float rightDegree = (float) readHex4(inputStream);
-        rightOneWheelSimpleDeciDegree(pidMotion, rightDegree, notificationOutputStream);
+        float rightDegree = readHexFloat4(inputStream, ANGLE_DIGIT_DEGREE_PRECISION);
+        rightOneWheelSimpleDegree(pidMotion, rightDegree, notificationOutputStream);
     }
     // STOP
         // stop/cancel motion

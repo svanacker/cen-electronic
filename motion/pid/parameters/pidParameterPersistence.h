@@ -5,17 +5,21 @@
 
 #include "../pidMotion.h"
 
-// -> EEPROM Index
+// -> Index in the table
 #define PID_PARAMETERS_EEPROM_INDEX_KP                0
 #define PID_PARAMETERS_EEPROM_INDEX_KI                1
 #define PID_PARAMETERS_EEPROM_INDEX_KD                2
 #define PID_PARAMETERS_EEPROM_INDEX_MI                3
 
 /**
- * There are n PID structures to store with 4 values for each PID,
- * so EEPROM_PID_BLOCK_SIZE is used to store on different location.
+ * There are n PID structures to store with 4 values 
  */
-#define EEPROM_PID_PARAMETERS_BLOCK_SIZE    4
+#define EEPROM_PID_PARAMETERS_VALUE_COUNT    4
+
+/**
+ * for each PID, we needs 4 octets as we store float
+ */
+#define EEPROM_PID_PARAMETERS_VALUE_LENGTH   4
 
 /**
  * Loads the PID data from EEPROM (or Memory which simulates Eeprom)).

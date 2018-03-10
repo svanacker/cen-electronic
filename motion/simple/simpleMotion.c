@@ -24,22 +24,22 @@
 /**
 * Go to a position
 */
-void gotoSimplePosition(PidMotion* pidMotion, float leftPulse, float rightPulse, float a, float speed, OutputStream* notificationOutputStream) {
+void gotoSimplePosition(PidMotion* pidMotion, float leftMM, float rightMM, float a, float speed, OutputStream* notificationOutputStream) {
 	// determine the type of motion
-	enum MotionParameterType motionParameterType = getMotionParameterType(leftPulse, rightPulse);
+	enum MotionParameterType motionParameterType = getMotionParameterType(leftMM, rightMM);
 	// determine the pidType to execute motionParameterType
 	enum PidType pidType = getPidType(motionParameterType);
 
 	// Alpha / Theta
-	float thetaNextPosition = computeTheta(leftPulse, rightPulse);
-	float alphaNextPosition = computeAlpha(leftPulse, rightPulse);
+	float thetaNextPosition = computeTheta(leftMM, rightMM);
+	float alphaNextPosition = computeAlpha(leftMM, rightMM);
 
 	PidMotionDefinition* motionDefinition = pidMotionGetNextToWritePidMotionDefinition(pidMotion);
 	motionDefinition->motionType = MOTION_TYPE_NORMAL;
 	motionDefinition->notificationOutputStream = notificationOutputStream;
 
-	setNextPosition(motionDefinition, THETA, motionParameterType, pidType, thetaNextPosition, (float)a, (float)speed);
-	setNextPosition(motionDefinition, ALPHA, motionParameterType, pidType, alphaNextPosition, (float)a, (float)speed);
+	setNextPosition(motionDefinition, THETA, motionParameterType, pidType, thetaNextPosition, a, speed);
+	setNextPosition(motionDefinition, ALPHA, motionParameterType, pidType, alphaNextPosition, a, speed);
 
     // All main information are defined
     motionDefinition->state = PID_MOTION_DEFINITION_STATE_SET;
@@ -66,96 +66,41 @@ void maintainPosition(PidMotion* pidMotion, OutputStream* notificationOutputStre
     gotoSimplePosition(pidMotion, 0.0f, 0.0f, 0.0f, 0.0f, notificationOutputStream);
 }
 
-
-// -> Go/Back
-
-float forwardSimple(PidMotion* pidMotion, float pulse, OutputStream* notificationOutputStream) {
-    MotionParameter* motionParameter = getMotionParameters(MOTION_PARAMETER_TYPE_FORWARD_OR_BACKWARD);
-    gotoSimplePosition(pidMotion, pulse, pulse, motionParameter->a, motionParameter->speed, notificationOutputStream);
-    return pulse;
-}
-
-float backwardSimple(PidMotion* pidMotion, float pulse, OutputStream* notificationOutputStream) {
-    MotionParameter* motionParameter = getMotionParameters(MOTION_PARAMETER_TYPE_FORWARD_OR_BACKWARD);
-    gotoSimplePosition(pidMotion, -pulse, -pulse, motionParameter->a, motionParameter->speed, notificationOutputStream);
-    return -pulse;
-}
-
-// -> Rotation
-
-float leftSimple(PidMotion* pidMotion, float pulse, OutputStream* notificationOutputStream) {
-    MotionParameter* motionParameter = getMotionParameters(MOTION_PARAMETER_TYPE_ROTATION);
-    gotoSimplePosition(pidMotion, -pulse, pulse, motionParameter->a, motionParameter->speed, notificationOutputStream);
-    return -pulse;
-}
-
-float rightSimple(PidMotion* pidMotion, float pulse, OutputStream* notificationOutputStream) {
-    MotionParameter* motionParameter = getMotionParameters(MOTION_PARAMETER_TYPE_ROTATION);
-    gotoSimplePosition(pidMotion, pulse, pulse, motionParameter->a, motionParameter->speed, notificationOutputStream);
-    return pulse;
-}
-
-// -> OneWheel
-
-float leftOneWheelSimple(PidMotion* pidMotion, float pulse, OutputStream* notificationOutputStream) {
-    MotionParameter* motionParameter = getMotionParameters(MOTION_PARAMETER_TYPE_ROTATION_ONE_WHEEL);
-    gotoSimplePosition(pidMotion, 0, pulse, motionParameter->a, motionParameter->speed, notificationOutputStream);
-    return pulse;
-}
-
-float rightOneWheelSimple(PidMotion* pidMotion, float pulse, OutputStream* notificationOutputStream) {
-    MotionParameter* motionParameter = getMotionParameters(MOTION_PARAMETER_TYPE_ROTATION_ONE_WHEEL);
-    gotoSimplePosition(pidMotion, pulse, 0, motionParameter->a, motionParameter->speed, notificationOutputStream);
-    return pulse;
-}
-
 // MM OR DEGREE FUNCTIONS
 
-float forwardMM(PidMotion* pidMotion, float distanceInMM, float a, float speed, OutputStream* notificationOutputStream) {
-    RobotKinematics* robotKinematics = getRobotKinematics();
-    float leftWheelLengthForOnePulse = getCoderLeftWheelLengthForOnePulse(robotKinematics);
-    float rightWheelLengthForOnePulse = getCoderRightWheelLengthForOnePulse(robotKinematics);
-
-    float leftPulse = distanceInMM / leftWheelLengthForOnePulse;
-    float rightPulse = distanceInMM / rightWheelLengthForOnePulse;
-
+void forwardMM(PidMotion* pidMotion, float distanceInMM, float a, float speed, OutputStream* notificationOutputStream) {
     // Go at a position in millimeter
-    gotoSimplePosition(pidMotion, leftPulse, rightPulse, a, speed, notificationOutputStream);
-
-    return distanceInMM;
+    gotoSimplePosition(pidMotion, distanceInMM, distanceInMM, a, speed, notificationOutputStream);
 }
 
-float backwardMM(PidMotion* pidMotion, float distanceInMM, float a, float speed, OutputStream* notificationOutputStream) {
+void backwardMM(PidMotion* pidMotion, float distanceInMM, float a, float speed, OutputStream* notificationOutputStream) {
     // Go at a position in millimeter
     forwardMM(pidMotion, -distanceInMM, a, speed, notificationOutputStream);
-    return -distanceInMM;
 }
 
-float rotationDeciDegree(PidMotion* pidMotion, float angleDeciDegree, float a, float speed, OutputStream* notificationOutputStream) {
+void rotationDegree(PidMotion* pidMotion, float angleDegree, float a, float speed, OutputStream* notificationOutputStream) {
     RobotKinematics* robotKinematics = getRobotKinematics();
-    float leftPulse = rotationInDeciDegreeToRealDistanceForLeftWheel(robotKinematics, angleDeciDegree);
-    float rightPulse = rotationInDeciDegreeToRealDistanceForRightWheel(robotKinematics, angleDeciDegree);
+    float leftMM = rotationInDegreeToRealDistanceForLeftWheel(robotKinematics, angleDegree);
+    float rightMM = rotationInDegreeToRealDistanceForRightWheel(robotKinematics, angleDegree);
 
-    gotoSimplePosition(pidMotion, leftPulse, rightPulse, a, speed, notificationOutputStream);
-
-    return angleDeciDegree;
+    gotoSimplePosition(pidMotion, leftMM, rightMM, a, speed, notificationOutputStream);
 }
 
 // -> rotation left/right
 
-float leftDeciDegree(PidMotion* pidMotion, float angleDeciDegree, float a, float speed, OutputStream* notificationOutputStream) {
-    return rotationDeciDegree(pidMotion, angleDeciDegree, a, speed, notificationOutputStream);
+void leftDegree(PidMotion* pidMotion, float angleDegree, float a, float speed, OutputStream* notificationOutputStream) {
+    rotationDegree(pidMotion, angleDegree, a, speed, notificationOutputStream);
 }
 
-float rightDeciDegree(PidMotion* pidMotion, float angleDeciDegree, float a, float speed, OutputStream* notificationOutputStream) {
-    return rotationDeciDegree(pidMotion, -angleDeciDegree, a, speed, notificationOutputStream);
+void rightDegree(PidMotion* pidMotion, float angleDegree, float a, float speed, OutputStream* notificationOutputStream) {
+    rotationDegree(pidMotion, -angleDegree, a, speed, notificationOutputStream);
 }
 
 // -> rotation one Wheel
 
-void leftOneWheelDeciDegree(PidMotion* pidMotion, float angleDeciDegree, float a, float speed, OutputStream* notificationOutputStream) {
+void leftOneWheelDegree(PidMotion* pidMotion, float angleDegree, float a, float speed, OutputStream* notificationOutputStream) {
     // We multiply by 2, because, only one wheel rotates
-    float angleRadius = angleDeciDegree * PI_DIVIDE_1800 * 2.0f;
+    float angleRadius = angleDegree * PI_DIVIDE_180 * 2.0f;
     RobotKinematics* robotKinematics = getRobotKinematics();
     float leftWheelLengthForOnePulse = getCoderLeftWheelLengthForOnePulse(robotKinematics);
     float wheelsDistanceFromCenter = getCoderWheelsDistanceFromCenter(robotKinematics);
@@ -164,9 +109,9 @@ void leftOneWheelDeciDegree(PidMotion* pidMotion, float angleDeciDegree, float a
     gotoSimplePosition(pidMotion, 0.0f, realDistanceRight, a, speed, notificationOutputStream);
 }
 
-void rightOneWheelDeciDegree(PidMotion* pidMotion, float angleDeciDegree, float a, float speed, OutputStream* notificationOutputStream) {
+void rightOneWheelDegree(PidMotion* pidMotion, float angleDegree, float a, float speed, OutputStream* notificationOutputStream) {
     // We multiply by 2, because, only one wheel rotates
-    float angleRadius = angleDeciDegree * PI_DIVIDE_1800 * 2.0f;
+    float angleRadius = angleDegree * PI_DIVIDE_180 * 2.0f;
     RobotKinematics* robotKinematics = getRobotKinematics();
     float rightWheelLengthForOnePulse = getCoderRightWheelLengthForOnePulse(robotKinematics);
     float wheelsDistanceFromCenter = getCoderWheelsDistanceFromCenter(robotKinematics);
@@ -179,62 +124,58 @@ void rightOneWheelDeciDegree(PidMotion* pidMotion, float angleDeciDegree, float 
 
 // -> Go / Back
 
-float forwardSimpleMM(PidMotion* pidMotion, float distanceInMM, OutputStream* notificationOutputStream) {
+void forwardSimpleMM(PidMotion* pidMotion, float distanceInMM, OutputStream* notificationOutputStream) {
     MotionParameter* motionParameter = getMotionParameters(MOTION_PARAMETER_TYPE_FORWARD_OR_BACKWARD);
-    return forwardMM(pidMotion, distanceInMM, motionParameter->a, motionParameter->speed, notificationOutputStream);
+    forwardMM(pidMotion, distanceInMM, motionParameter->a, motionParameter->speed, notificationOutputStream);
 }
 
-float backwardSimpleMM(PidMotion* pidMotion, float distanceInMM, OutputStream* notificationOutputStream) {
+void backwardSimpleMM(PidMotion* pidMotion, float distanceInMM, OutputStream* notificationOutputStream) {
     MotionParameter* motionParameter = getMotionParameters(MOTION_PARAMETER_TYPE_FORWARD_OR_BACKWARD);
-    return backwardMM(pidMotion, distanceInMM, motionParameter->a, motionParameter->speed, notificationOutputStream);
+    backwardMM(pidMotion, distanceInMM, motionParameter->a, motionParameter->speed, notificationOutputStream);
 }
 
 // -> Left / Right
 
-float leftSimpleDeciDegree(PidMotion* pidMotion, float angleDeciDegree, OutputStream* notificationOutputStream) {
+void leftSimpleDegree(PidMotion* pidMotion, float angleDegree, OutputStream* notificationOutputStream) {
     MotionParameter* motionParameter = getMotionParameters(MOTION_PARAMETER_TYPE_ROTATION);
-    return leftDeciDegree(pidMotion, angleDeciDegree, motionParameter->a, motionParameter->speed, notificationOutputStream);
+    leftDegree(pidMotion, angleDegree, motionParameter->a, motionParameter->speed, notificationOutputStream);
 }
 
-float rightSimpleDeciDegree(PidMotion* pidMotion, float angleDeciDegree, OutputStream* notificationOutputStream) {
+void rightSimpleDegree(PidMotion* pidMotion, float angleDegree, OutputStream* notificationOutputStream) {
     MotionParameter* motionParameter = getMotionParameters(MOTION_PARAMETER_TYPE_ROTATION);
-    return rightDeciDegree(pidMotion, angleDeciDegree, motionParameter->a, motionParameter->speed, notificationOutputStream);
+    rightDegree(pidMotion, angleDegree, motionParameter->a, motionParameter->speed, notificationOutputStream);
 }
 
 // -> Left / Right : One Wheel
 
-void leftOneWheelSimpleDeciDegree(PidMotion* pidMotion, float angleDeciDegree, OutputStream* notificationOutputStream) {
+void leftOneWheelSimpleDegree(PidMotion* pidMotion, float angleDegree, OutputStream* notificationOutputStream) {
     MotionParameter* motionParameter = getMotionParameters(MOTION_PARAMETER_TYPE_ROTATION_ONE_WHEEL);
-    leftOneWheelDeciDegree(pidMotion, angleDeciDegree, motionParameter->a, motionParameter->speed, notificationOutputStream);
+    leftOneWheelDegree(pidMotion, angleDegree, motionParameter->a, motionParameter->speed, notificationOutputStream);
 }
 
-void rightOneWheelSimpleDeciDegree(PidMotion* pidMotion, float angleDeciDegree, OutputStream* notificationOutputStream) {
+void rightOneWheelSimpleDegree(PidMotion* pidMotion, float angleDegree, OutputStream* notificationOutputStream) {
     MotionParameter* motionParameter = getMotionParameters(MOTION_PARAMETER_TYPE_ROTATION_ONE_WHEEL);
-    rightOneWheelDeciDegree(pidMotion, angleDeciDegree, motionParameter->a, motionParameter->speed, notificationOutputStream);
+    rightOneWheelDegree(pidMotion, angleDegree, motionParameter->a, motionParameter->speed, notificationOutputStream);
 }
 
 // With Wait
 
-float forwardSimpleMMAndWait(PidMotion* pidMotion, float distanceInMM, OutputStream* notificationOutputStream) {
+void forwardSimpleMMAndWait(PidMotion* pidMotion, float distanceInMM, OutputStream* notificationOutputStream) {
     forwardSimpleMM(pidMotion, distanceInMM, notificationOutputStream);
     handleAndWaitFreeMotion(pidMotion);
-    return distanceInMM;
 }
 
-float backwardSimpleMMAndWait(PidMotion* pidMotion, float distanceInMM, OutputStream* notificationOutputStream) {
+void backwardSimpleMMAndWait(PidMotion* pidMotion, float distanceInMM, OutputStream* notificationOutputStream) {
     backwardSimpleMM(pidMotion, distanceInMM, notificationOutputStream);
     handleAndWaitFreeMotion(pidMotion);
-    return distanceInMM;
 }
 
-float leftSimpleDeciDegreeAndWait(PidMotion* pidMotion, float angleDegree, OutputStream* notificationOutputStream) {
-    leftSimpleDeciDegree(pidMotion, angleDegree, notificationOutputStream);
+void leftSimpleDegreeAndWait(PidMotion* pidMotion, float angleDegree, OutputStream* notificationOutputStream) {
+    leftSimpleDegree(pidMotion, angleDegree, notificationOutputStream);
     handleAndWaitFreeMotion(pidMotion);
-    return angleDegree;
 }
 
-float rightSimpleDeciDegreeAndWait(PidMotion* pidMotion, float angleDegree, OutputStream* notificationOutputStream) {
-    rightSimpleDeciDegree(pidMotion, angleDegree, notificationOutputStream);
+void rightSimpleDegreeAndWait(PidMotion* pidMotion, float angleDegree, OutputStream* notificationOutputStream) {
+    rightSimpleDegree(pidMotion, angleDegree, notificationOutputStream);
     handleAndWaitFreeMotion(pidMotion);
-    return -angleDegree;
 }

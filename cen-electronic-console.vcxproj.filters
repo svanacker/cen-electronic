@@ -897,9 +897,6 @@
     <ClCompile Include="test\common\math\bcdUtilsTest.c">
       <Filter>Source Files\test\common\math</Filter>
     </ClCompile>
-    <ClCompile Include="common\2d\2d.c">
-      <Filter>Header Files\common\2d</Filter>
-    </ClCompile>
     <ClCompile Include="test\common\2d\2dTest.c">
       <Filter>Source Files\test\common\2d</Filter>
     </ClCompile>
@@ -1659,6 +1656,9 @@
     <ClCompile Include="motion\pid\motionInstructionDebug.c">
       <Filter>Source Files\motion\pid</Filter>
     </ClCompile>
+    <ClCompile Include="common\2d\2d.c">
+      <Filter>Source Files\common\2d</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -1765,9 +1765,6 @@
     </ClInclude>
     <ClInclude Include="test\common\math\bcdUtilsTest.h">
       <Filter>Header Files\test\common\math</Filter>
-    </ClInclude>
-    <ClInclude Include="common\2d\2d.h">
-      <Filter>Source Files\common\2d</Filter>
     </ClInclude>
     <ClInclude Include="test\common\2d\2dTest.h">
       <Filter>Header Files\test\common\2d</Filter>
@@ -2560,6 +2557,9 @@
     </ClInclude>
     <ClInclude Include="motion\pid\motionInstructionDebug.h">
       <Filter>Header Files\motion\pid</Filter>
+    </ClInclude>
+    <ClInclude Include="common\2d\2d.h">
+      <Filter>Header Files\common\2d</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

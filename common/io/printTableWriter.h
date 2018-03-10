@@ -111,6 +111,20 @@ unsigned int appendHex4TableData(OutputStream* outputStream, signed int value, i
 unsigned int appendHex6TableData(OutputStream* outputStream, signed long value, int columnSize);
 
 /**
+* Add an hexadecimal table data to the outputStream with | and space arround
+* @param value the value to append (in hexadecimal)
+* @param columnSize the size of the column (for alignment)
+*/
+unsigned int appendHexFloat4TableData(OutputStream* outputStream, float value, unsigned int digitPrecision, int columnSize);
+
+/**
+* Add an hexadecimal table data to the outputStream with | and space arround
+* @param value the value to append (in hexadecimal)
+* @param columnSize the size of the column (for alignment)
+*/
+unsigned int appendHexFloat6TableData(OutputStream* outputStream, float value, unsigned int digitPrecision, int columnSize);
+
+/**
 * Add an binary table data to the outputStream with | and space arround
 * @param value the value to append (in binary) and group by xxxx chars
 * @param columnSize the size of the column (for alignment)

@@ -98,12 +98,29 @@ unsigned int appendHex4TableData(OutputStream* outputStream, signed int value, i
 	return appendSpaces(outputStream, columnSize - 4) + 6;
 }
 
+unsigned int appendHexFloat4TableData(OutputStream* outputStream, float value, unsigned int digitPrecision, int columnSize) {
+    appendTableSeparator(outputStream);
+    appendSpace(outputStream);
+    appendHexFloat4(outputStream, value, digitPrecision);
+    // length of hexFloat4 = 4
+    return appendSpaces(outputStream, columnSize - 4) + 6;
+}
+
+
 unsigned int appendHex6TableData(OutputStream* outputStream, signed long value, int columnSize) {
 	appendTableSeparator(outputStream);
 	appendSpace(outputStream);
 	appendHex6(outputStream, value);
 	// length of hex6 = 6
 	return appendSpaces(outputStream, columnSize - 6) + 8;
+}
+
+unsigned int appendHexFloat6TableData(OutputStream* outputStream, float value, unsigned int digitPrecision, int columnSize) {
+    appendTableSeparator(outputStream);
+    appendSpace(outputStream);
+    appendHexFloat6(outputStream, value, digitPrecision);
+    // length of hexFloat6 = 6
+    return appendSpaces(outputStream, columnSize - 4) + 8;
 }
 
 unsigned int appendBinary16TableData(OutputStream* outputStream, unsigned int value, unsigned int groupBy, int columnSize) {

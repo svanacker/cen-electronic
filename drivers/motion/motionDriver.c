@@ -1,5 +1,6 @@
 #include "motionDriver.h"
 
+#include "../../common/2d/2d.h"
 #include "../../common/commons.h"
 
 #include "../../common/io/buffer.h"
@@ -11,6 +12,8 @@
 
 #include "../../common/log/logger.h"
 #include "../../common/log/logHandler.h"
+
+#include "../../motion/parameters/motionParameter.h"
 
 #include "../../device/motion/simple/motionDeviceInterface.h"
 #include "../../device/motion/pid/pidDeviceInterface.h"
@@ -41,30 +44,12 @@ unsigned int getMotionInstructionIndex() {
 
 // GO / ROTATE MOTION
 
-bool motionDriverGotoPositionPulse(float left,
-                                    float right,
-                                    float a,
-                                    float s) {
-    OutputStream* outputStream = getDriverRequestOutputStream();
-
-    append(outputStream, MOTION_DEVICE_HEADER);
-    append(outputStream, COMMAND_MOTION_GOTO_IN_PULSE);
-    appendHex4(outputStream, (int) left);
-    appendHex4(outputStream, (int) right);
-    appendHex2(outputStream, (char) a);
-    appendHex2(outputStream, (char) s);
-
-    bool result = transmitFromDriverRequestBuffer();
-
-    return result;
-}
-
 bool motionDriverForward(float distanceInMM) {
     OutputStream* outputStream = getDriverRequestOutputStream();
 
     append(outputStream, MOTION_DEVICE_HEADER);
     append(outputStream, COMMAND_MOTION_FORWARD_IN_MM);
-    appendHex4(outputStream, (signed int)distanceInMM);
+    appendHexFloat4(outputStream, distanceInMM, POSITION_DIGIT_MM_PRECISION);
 
     bool result = transmitFromDriverRequestBuffer();
 
@@ -82,31 +67,31 @@ bool motionDriverBackward(float distanceInMM) {
 
     append(outputStream, MOTION_DEVICE_HEADER);
     append(outputStream, COMMAND_MOTION_BACKWARD_IN_MM);
-    appendHex4(outputStream, (signed int) distanceInMM);
+    appendHexFloat4(outputStream, distanceInMM, POSITION_DIGIT_MM_PRECISION);
 
     bool result = transmitFromDriverRequestBuffer();
 
     return result;
 }
 
-bool motionDriverLeft(float leftDeciDegree) {
+bool motionDriverLeft(float leftDegree) {
     OutputStream* outputStream = getDriverRequestOutputStream();
 
     append(outputStream, MOTION_DEVICE_HEADER);
     append(outputStream, COMMAND_MOTION_LEFT_IN_DECI_DEGREE);
-    appendHex4(outputStream, (signed int) leftDeciDegree);
+    appendHexFloat4(outputStream, leftDegree, ANGLE_DIGIT_DEGREE_PRECISION);
 
     bool result = transmitFromDriverRequestBuffer();
 
     return result;
 }
 
-bool motionDriverRight(float rightDeciDegree) {
+bool motionDriverRight(float rightDegree) {
     OutputStream* outputStream = getDriverRequestOutputStream();
 
     append(outputStream, MOTION_DEVICE_HEADER);
     append(outputStream, COMMAND_MOTION_RIGHT_IN_DECI_DEGREE);
-    appendHex4(outputStream, (signed int) rightDeciDegree);
+    appendHexFloat4(outputStream, rightDegree, ANGLE_DIGIT_DEGREE_PRECISION);
 
     bool result = transmitFromDriverRequestBuffer();
 
@@ -115,24 +100,24 @@ bool motionDriverRight(float rightDeciDegree) {
 
 // ONLY ONE WHEEL
 
-bool motionDriverLeftOneWheel(float leftDeciDegree) {
+bool motionDriverLeftOneWheel(float leftDegree) {
     OutputStream* outputStream = getDriverRequestOutputStream();
 
     append(outputStream, MOTION_DEVICE_HEADER);
     append(outputStream, COMMAND_MOTION_LEFT_ONE_WHEEL_IN_DECI_DEGREE);
-    appendHex4(outputStream, (signed int) leftDeciDegree);
+    appendHexFloat4(outputStream, leftDegree, ANGLE_DIGIT_DEGREE_PRECISION);
 
     bool result = transmitFromDriverRequestBuffer();
 
     return result;
 }
 
-bool motionDriverRightOneWheel(float rightDeciDegree) {
+bool motionDriverRightOneWheel(float rightDegree) {
     OutputStream* outputStream = getDriverRequestOutputStream();
 
     append(outputStream, MOTION_DEVICE_HEADER);
     append(outputStream, COMMAND_MOTION_RIGHT_ONE_WHEEL_IN_DECI_DEGREE);
-    appendHex4(outputStream, (signed int) rightDeciDegree);
+    appendHexFloat4(outputStream, rightDegree, ANGLE_DIGIT_DEGREE_PRECISION);
 
     bool result = transmitFromDriverRequestBuffer();
 
@@ -165,13 +150,15 @@ bool motionDriverObstacle() {
 
 // SET MOTION PARAMETERS
 
-bool motionSetParameters(int motionType, int a, int speed) {
+bool motionSetParameters(int motionType, float a, float speed) {
     OutputStream* outputStream = getDriverRequestOutputStream();
     append(outputStream, MOTION_DEVICE_HEADER);
     append(outputStream, COMMAND_SET_MOTION_PARAMETERS);
     appendHex2(outputStream, motionType);
-    appendHex2(outputStream, a);
-    appendHex2(outputStream, speed);
+    appendSeparator(outputStream);
+    appendHexFloat4(outputStream, a, MOTION_PARAMETERS_ACCELERATION_DIGIT);
+    appendSeparator(outputStream);
+    appendHexFloat4(outputStream, speed, MOTION_PARAMETERS_SPEED_DIGIT);
 
     bool result = transmitFromDriverRequestBuffer();
 

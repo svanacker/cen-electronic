@@ -46,8 +46,8 @@ void printMotionParameter(OutputStream* outputStream, int index, MotionParameter
 	appendDecTableData(outputStream, index, MOTION_PARAMETERS_DEBUG_IDX_COLUMN_LENGTH);
 	enum MotionParameterType motionParameterType = (enum MotionParameterType) index;
 	addMotionParameterTypeTableData(outputStream, motionParameterType, MOTION_PARAMETERS_DEBUG_MOTION_TYPE_COLUMN_LENGTH);
-    appendHex4TableData(outputStream, motionParameter->speed, MOTION_PARAMETERS_DEBUG_SPEED_HEX_COLUMN_LENGTH);
-	appendHex4TableData(outputStream, motionParameter->a, MOTION_PARAMETERS_DEBUG_ACCELERATION_HEX_COLUMN_LENGTH);
+    appendHexFloat4TableData(outputStream, motionParameter->speed, MOTION_PARAMETERS_SPEED_DIGIT, MOTION_PARAMETERS_DEBUG_SPEED_HEX_COLUMN_LENGTH);
+    appendHexFloat4TableData(outputStream, motionParameter->a, MOTION_PARAMETERS_ACCELERATION_DIGIT, MOTION_PARAMETERS_DEBUG_ACCELERATION_HEX_COLUMN_LENGTH);
 	appendDecfTableData(outputStream, motionParameter->speed, MOTION_PARAMETERS_DEBUG_SPEED_HEX_COLUMN_LENGTH);
 	appendDecfTableData(outputStream, motionParameter->a, MOTION_PARAMETERS_DEBUG_ACCELERATION_HEX_COLUMN_LENGTH);
 	appendEndOfTableColumn(outputStream, MOTION_PARAMETERS_DEBUG_LAST_COLUMN_LENGTH);

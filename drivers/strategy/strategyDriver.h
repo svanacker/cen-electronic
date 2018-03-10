@@ -37,6 +37,6 @@ bool sendStrategyNextStep();
  */
 bool sendStrategyOpponentRobotPosition(Point* opponentRobotPosition);
 
-bool sentStrategyRobotPosition(unsigned char status, unsigned int x, unsigned int y, int angleInDeciDegree);
+bool sentStrategyRobotPosition(unsigned char status, float x, float y, float angleDegree);
 
 #endif

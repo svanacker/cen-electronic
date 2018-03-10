@@ -11,6 +11,8 @@ typedef struct Point {
     float y;
 } Point;
 
+// We store (not for compute) a precision of position to the millimeter
+#define POSITION_DIGIT_MM_PRECISION      0
 /**
  * Structures to define the position with angle.
  */
@@ -23,6 +25,8 @@ typedef struct {
     float initialOrientation;
 } Position;
 
+// We store or interact via outputStream/inputStream an angle with a precision of 0,1 degree
+#define ANGLE_DIGIT_DEGREE_PRECISION  1
 
 /**
  * Computes the distance between 2 points.

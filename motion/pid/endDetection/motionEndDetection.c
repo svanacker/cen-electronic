@@ -94,10 +94,10 @@ void updateEndMotionData(PidComputationValues* computationValues,
  */
 bool isEndOfMotion(enum InstructionType instructionType, MotionEndInfo* endMotion, MotionEndDetectionParameter* parameter) {
     
-    if (endMotion->integralTime < parameter->timeRangeAnalysis) {
+    if (endMotion->integralTime < parameter->timeRangeAnalysisInSecond) {
         return false;
     }
-    if (endMotion->absSpeedIntegral < (parameter->absDeltaPositionIntegralFactorThreshold * parameter->timeRangeAnalysis * MAX_HISTORY_COUNT)) {
+    if (endMotion->absSpeedIntegral < (parameter->absDeltaPositionIntegralFactorThreshold * parameter->timeRangeAnalysisInSecond * MAX_HISTORY_COUNT)) {
         return true;
     }
     return false;
@@ -112,14 +112,13 @@ bool isEndOfMotion(enum InstructionType instructionType, MotionEndInfo* endMotio
  * @return 
  */
 bool isMotionInstructionIsBlocked(PidMotionDefinition* motionDefinition, enum InstructionType instructionType, MotionEndInfo* endMotion, MotionEndDetectionParameter* parameter) {
-    if (endMotion->integralTime < parameter->timeRangeAnalysis) {
+    if (endMotion->integralTime < parameter->timeRangeAnalysisInSecond) {
         return false;
     }
     MotionInstruction* localInst = &(motionDefinition->inst[instructionType]);
     float normalU = getNormalU(localInst->speed);
     float value = parameter->maxUIntegralConstantThreshold + normalU * parameter->maxUIntegralFactorThreshold;
-    float limitValue = limitFloat(value, PID_NEXT_VALUE_LIMIT);
-    float maxUIntegral = fabsf(limitValue * parameter->timeRangeAnalysis);
+    float maxUIntegral = fabsf(value * parameter->timeRangeAnalysisInSecond);
     if (endMotion->absUIntegral > maxUIntegral) {
         return true;
     }

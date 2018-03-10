@@ -7,21 +7,21 @@
 
 // Forward / Backward
 // 768 mm / s^2
-#define DEFAULT_FORWARD_ACCELERATION             0X0300
+#define DEFAULT_FORWARD_ACCELERATION             768.0f
 // 1024 mm / s
-#define DEFAULT_FORWARD_SPEED                    0x0400
+#define DEFAULT_FORWARD_SPEED                    1024.0f
 
 // Default Rotation
-#define DEFAULT_ROTATION_ACCELERATION            0x0100
-#define DEFAULT_ROTATION_SPEED                   0x0100
+#define DEFAULT_ROTATION_ACCELERATION            256.0f
+#define DEFAULT_ROTATION_SPEED                   256.0f
 
 // One Wheel
-#define DEFAULT_ROTATION_ONE_WHEEL_ACCELERATION  0x0200
-#define DEFAULT_ROTATION_ONE_WHEEL_SPEED         0x0200
+#define DEFAULT_ROTATION_ONE_WHEEL_ACCELERATION  512.0f
+#define DEFAULT_ROTATION_ONE_WHEEL_SPEED         512.0f
 
 // Maintain Position
-#define DEFAULT_ROTATION_MAINTAIN_POSITION_ACCELERATION  0x0010
-#define DEFAULT_ROTATION_MAINTAIN_POSITION_SPEED         0x0010
+#define DEFAULT_ROTATION_MAINTAIN_POSITION_ACCELERATION  16.0f
+#define DEFAULT_ROTATION_MAINTAIN_POSITION_SPEED         16.0f
 
 /**
  * Load the motion parameters from the EEPROM :

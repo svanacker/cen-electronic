@@ -153,14 +153,14 @@ void printRobotKinematicsTable(OutputStream* outputStream, RobotKinematics* robo
     appendEndOfTableColumn(outputStream, ROBOT_KINEMATICS_LAST_COLUMN);
     
     appendStringTableData(outputStream, "Computed : Left Wheel pulse for 90 deg", ROBOT_KINEMATICS_KEY_COLUMN_LENGTH);
-	appendHex6TableData(outputStream, (long) rotationInDeciDegreeToRealDistanceForLeftWheel(robotKinematics, DEG_90), ROBOT_KINEMATICS_HEX_VALUE_COLUMN_LENGTH);
-	appendDecfTableData(outputStream, rotationInDeciDegreeToRealDistanceForLeftWheel(robotKinematics, DEG_90), ROBOT_KINEMATICS_VALUE_COLUMN_LENGTH);
+	appendHex6TableData(outputStream, (long) rotationInDegreeToRealDistanceForLeftWheel(robotKinematics, DEG_90), ROBOT_KINEMATICS_HEX_VALUE_COLUMN_LENGTH);
+	appendDecfTableData(outputStream, rotationInDegreeToRealDistanceForLeftWheel(robotKinematics, DEG_90), ROBOT_KINEMATICS_VALUE_COLUMN_LENGTH);
 	appendStringTableData(outputStream, "pulse", ROBOT_KINEMATICS_UNIT_COLUMN_LENGTH);
 	appendEndOfTableColumn(outputStream, ROBOT_KINEMATICS_LAST_COLUMN);
     
     appendStringTableData(outputStream, "Computed : Right Wheel pulse for 90 deg", ROBOT_KINEMATICS_KEY_COLUMN_LENGTH);
-	appendHex6TableData(outputStream, (long) rotationInDeciDegreeToRealDistanceForRightWheel(robotKinematics, DEG_90), ROBOT_KINEMATICS_HEX_VALUE_COLUMN_LENGTH);
-	appendDecfTableData(outputStream, rotationInDeciDegreeToRealDistanceForRightWheel(robotKinematics, DEG_90), ROBOT_KINEMATICS_VALUE_COLUMN_LENGTH);
+	appendHex6TableData(outputStream, (long) rotationInDegreeToRealDistanceForRightWheel(robotKinematics, DEG_90), ROBOT_KINEMATICS_HEX_VALUE_COLUMN_LENGTH);
+	appendDecfTableData(outputStream, rotationInDegreeToRealDistanceForRightWheel(robotKinematics, DEG_90), ROBOT_KINEMATICS_VALUE_COLUMN_LENGTH);
 	appendStringTableData(outputStream, "pulse", ROBOT_KINEMATICS_UNIT_COLUMN_LENGTH);
 	appendEndOfTableColumn(outputStream, ROBOT_KINEMATICS_LAST_COLUMN);
     

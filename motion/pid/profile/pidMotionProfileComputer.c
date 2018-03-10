@@ -58,7 +58,7 @@ void computeMotionInstruction(MotionInstruction* inst) {
             // the p1 position is greater than the final Position / 2 => TRIANGLE : we do not reach the max speed
             inst->profileType = PROFILE_TYPE_TRIANGLE;
             float numerator = fabsf(distanceAtConstantSpeed)*(inst->initialSpeed + inst->endSpeed)
-                             + inst->speed * (2 * inst->nextPosition - inst->t1 * inst->initialSpeed - decelerationTime * inst->endSpeed);
+                             + inst->speed * (2.0f * inst->nextPosition - inst->t1 * inst->initialSpeed - decelerationTime * inst->endSpeed);
             inst->speedMax = (float) (sqrt(fabsf(numerator) / (inst->t1 + decelerationTime)));
             // speedmax must be of the same sign of speed, and sqrt always returns a value > 0    
             if (inst->speedMax * inst->speed < 0) {
@@ -106,13 +106,13 @@ void setNextPosition(PidMotionDefinition* motionDefinition,
     localInst->pidType = pidType;
 
     if (pNextPosition > 0.001f) {
-        localInst->a = pa * A_FACTOR;
-        localInst->speed = pSpeed * SPEED_FACTOR;
+        localInst->a = pa;
+        localInst->speed = pSpeed;
     } 
     // Acceleration and speed becomes negative
     else if (pNextPosition < -0.001f) {
-        localInst->a = -pa * A_FACTOR;
-        localInst->speed = -pSpeed * SPEED_FACTOR;
+        localInst->a = -pa;
+        localInst->speed = -pSpeed;
     } 
     // pNextPosition == 0.0f Don't change the position
     else {

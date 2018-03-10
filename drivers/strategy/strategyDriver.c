@@ -130,7 +130,7 @@ bool sendStrategyOpponentRobotPosition(Point* opponentRobotPosition) {
     return result;
 }
 
-bool sentStrategyRobotPosition(unsigned char status, unsigned int x, unsigned int y, int angleInDeciDegree) {
+bool sentStrategyRobotPosition(unsigned char status, float x, float y, float angleDegree) {
     OutputStream* debugOutputStream = getInfoOutputStreamLogger();
     appendString(debugOutputStream, "sentStrategyRobotPosition:");
 
@@ -141,18 +141,18 @@ bool sentStrategyRobotPosition(unsigned char status, unsigned int x, unsigned in
     appendHex2(outputStream, status);
     appendSeparator(outputStream);
 
-    appendHex4(outputStream, x);
+    appendHexFloat4(outputStream, x, POSITION_DIGIT_MM_PRECISION);
     appendSeparator(outputStream);
 
-    appendHex4(outputStream, y);
+    appendHexFloat4(outputStream, y, POSITION_DIGIT_MM_PRECISION);
     appendSeparator(outputStream);
 
-    appendHex4(outputStream, angleInDeciDegree);
+    appendHexFloat4(outputStream, angleDegree, ANGLE_DIGIT_DEGREE_PRECISION);
 
-    appendStringAndDec(debugOutputStream, "status=", status);
-    appendStringAndDec(debugOutputStream, ", x=", x);
-    appendStringAndDec(debugOutputStream, ", y=", y);
-    appendStringAndDec(debugOutputStream, ", angle=", angleInDeciDegree);
+    appendStringAndDecf(debugOutputStream, "status=", status);
+    appendStringAndDecf(debugOutputStream, ", x=", x);
+    appendStringAndDecf(debugOutputStream, ", y=", y);
+    appendStringAndDecf(debugOutputStream, ", angle=", angleDegree);
     println(debugOutputStream);
 
     bool result = transmitFromDriverRequestBuffer();

@@ -10,62 +10,69 @@
 #include "../../common/eeprom/eepromAreas.h"
 #include "../../common/error/error.h"
 
-// Store speed (4 bytes for float) and acceleration (4 bytes for float)
-#define MOTION_PARAMETER_BLOCK_SIZE                     8
+// Store speed or acceleration (4 bytes for float on eeprom)
+#define MOTION_PARAMETER_DATA_SIZE                     4
 
 // Count values
 #define MOTION_PARAMETERS_VALUES_COUNT                  MOTION_PARAMETERS_COUNT * 2
 
-#define MOTION_PARAMETERS_SPEED_EEPROM_DIGIT            0
-#define MOTION_PARAMETERS_ACCELERATION_EEPROM_DIGIT     2
 
 // EEPROM values
-static unsigned float DEFAULT_EEPROM_VALUES[MOTION_PARAMETERS_VALUES_COUNT] = {
+static float DEFAULT_EEPROM_VALUES[MOTION_PARAMETERS_VALUES_COUNT] = {
     DEFAULT_FORWARD_ACCELERATION,                    DEFAULT_FORWARD_SPEED,
     DEFAULT_ROTATION_ACCELERATION,                   DEFAULT_ROTATION_SPEED,
     DEFAULT_ROTATION_ONE_WHEEL_ACCELERATION,         DEFAULT_ROTATION_ONE_WHEEL_SPEED,
     DEFAULT_ROTATION_MAINTAIN_POSITION_ACCELERATION, DEFAULT_ROTATION_MAINTAIN_POSITION_SPEED
 };
 
-float internalLoadMotionParameterItem(Eeprom* motionParameterEeprom, unsigned long dataIndex, bool loadDefaultValues) {
+float internalLoadMotionParameterItem(Eeprom* motionParameterEeprom, unsigned long index, unsigned int digitPrecision, bool loadDefaultValues) {
     if (motionParameterEeprom == NULL) {
         writeError(MOTION_PARAMETERS_PERSISTENCE_NO_EEPROM);
         return 0;
     }
     bool motionEepromAreaIsInitialized = isEepromAreaInitialized(motionParameterEeprom, EEPROM_MOTION_PARAMETERS_AREA_MARKER_INDEX);
-    unsigned char result;
+    float result;
     if (loadDefaultValues) {
-        result = DEFAULT_EEPROM_VALUES[dataIndex - EEPROM_MOTION_PARAMETERS_START_INDEX];
+        result = DEFAULT_EEPROM_VALUES[index];
     }
     else {
         if (!motionEepromAreaIsInitialized) {
             writeError(MOTION_PARAMETERS_PERSISTENCE_EEPROM_NOT_INITIALIZED);
             return 0;
         }
-        result = eepromReadUnsignedFloat(motionParameterEeprom, dataIndex, MOTION_PARAMETERS_ACCELERATION_EEPROM_DIGIT);
+        unsigned long dataIndex = EEPROM_MOTION_PARAMETERS_START_INDEX + index * MOTION_PARAMETER_DATA_SIZE;
+        result = eepromReadUnsignedFloat(motionParameterEeprom, dataIndex, digitPrecision);
     }
     return result;
 }
 
-void internalLoadMotionParameter(Eeprom* motionParameterEeprom, enum MotionParameterType motionParameterType, bool loadDefaultValues) {
+void internalSaveMotionParameterItem(Eeprom* motionParameterEeprom, unsigned long index, float value, unsigned int digitPrecision) {
     if (motionParameterEeprom == NULL) {
         writeError(MOTION_PARAMETERS_PERSISTENCE_NO_EEPROM);
         return;
     }
-    unsigned long motionBlockIndexShift = motionParameterType * MOTION_PARAMETER_BLOCK_SIZE;
-    float a = (float) internalLoadMotionParameterItem(motionParameterEeprom, EEPROM_MOTION_PARAMETERS_START_INDEX + motionBlockIndexShift, loadDefaultValues);
-    float speed = (float) internalLoadMotionParameterItem(motionParameterEeprom, EEPROM_MOTION_PARAMETERS_START_INDEX + motionBlockIndexShift + 4, loadDefaultValues);
+    bool motionEepromAreaIsInitialized = isEepromAreaInitialized(motionParameterEeprom, EEPROM_MOTION_PARAMETERS_AREA_MARKER_INDEX);
+    if (!motionEepromAreaIsInitialized) {
+        writeError(MOTION_PARAMETERS_PERSISTENCE_EEPROM_NOT_INITIALIZED);
+        return;
+    }
+    unsigned long dataIndex = EEPROM_MOTION_PARAMETERS_START_INDEX + index * MOTION_PARAMETER_DATA_SIZE;
+    eepromWriteUnsignedFloat(motionParameterEeprom, dataIndex, value, digitPrecision);
+}
+
+void internalLoadMotionParameter(Eeprom* motionParameterEeprom, enum MotionParameterType motionParameterType, bool loadDefaultValues) {
+    float a = (float) internalLoadMotionParameterItem(motionParameterEeprom, (int) motionParameterType * 2, MOTION_PARAMETERS_ACCELERATION_DIGIT, loadDefaultValues);
+    float speed = (float) internalLoadMotionParameterItem(motionParameterEeprom, (int) motionParameterType * 2 + 1, MOTION_PARAMETERS_SPEED_DIGIT, loadDefaultValues);
 
     MotionParameter* motionParameter = getMotionParameters(motionParameterType);
     motionParameter->a = a;
     motionParameter->speed = speed;
 }
 
-void internalSaveMotionParameter(Eeprom* motionParameterEeprom, enum MotionParameterType motionType) {
-    MotionParameter* motionParameter = getMotionParameters(motionType);
-    unsigned motionBlockIndexShift = motionType * MOTION_PARAMETER_BLOCK_SIZE;
-    eepromWriteUnsignedFloat(motionParameterEeprom, EEPROM_MOTION_PARAMETERS_START_INDEX + motionBlockIndexShift, motionParameter->a, 0);
-    eepromWriteUnsignedFloat(motionParameterEeprom, EEPROM_MOTION_PARAMETERS_START_INDEX + motionBlockIndexShift + 4, motionParameter->speed, 0);
+void internalSaveMotionParameter(Eeprom* motionParameterEeprom, enum MotionParameterType motionParameterType) {
+    MotionParameter* motionParameter = getMotionParameters(motionParameterType);
+    internalSaveMotionParameterItem(motionParameterEeprom, (int) motionParameterType * 2, motionParameter->a, MOTION_PARAMETERS_ACCELERATION_DIGIT);
+    internalSaveMotionParameterItem(motionParameterEeprom, (int) motionParameterType * 2 + 1, motionParameter->speed, MOTION_PARAMETERS_SPEED_DIGIT);
 }
 
 // Interface Implementation

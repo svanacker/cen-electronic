@@ -13,21 +13,21 @@
 typedef struct MotionInstruction {
     /** the position which must be reached when using classic implementation */
     float nextPosition;
-    /** The acceleration which is requested : > 0 */
+    /** The acceleration which is requested : > 0, in mm / sec^2 */
     float a;
-    /** The initial speed. */
+    /** The initial speed in mm / sec. */
     float initialSpeed;
-    /** The maximal speed which is requested : > 0 */
+    /** The maximal speed which is requested : > 0 : in mm / sec */
     float speed;
-    /** The maximal speed which can be reached : negative or positive */
+    /** The maximal speed which can be reached : negative or positive : in mm / sec */
     float speedMax;
-    /** The target end Speed (decelerationTime). */
+    /** The target end Speed (decelerationTime). : in mm / sec */
     float endSpeed;
-    /** The acceleration time > 0 */
+    /** The acceleration time > 0 : in second */
     float t1;
-    /** The time before deceleration > 0 */
+    /** The time before deceleration > 0 : in second */
     float t2;
-    /** The time after deceleration > 0 */
+    /** The time after deceleration > 0 : in second */
     float t3;
     /** The first position after acceleration time */
     float p1;

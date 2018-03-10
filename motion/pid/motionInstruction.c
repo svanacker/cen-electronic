@@ -18,7 +18,6 @@ void clearMotionInstruction(MotionInstruction* motionInstruction) {
     motionInstruction->t3 = 0.0f;
     motionInstruction->p1 = 0.0f;
     motionInstruction->p2 = 0.0f;
-    // TODO : Define a profile "UNKNOWN"
     motionInstruction->profileType = PROFILE_TYPE_UNDEFINED;
     motionInstruction->motionParameterType = MOTION_PARAMETER_TYPE_UNDEFINED;
     motionInstruction->pidType = PID_TYPE_GO_INDEX;

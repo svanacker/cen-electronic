@@ -179,7 +179,6 @@ void appendHex8(OutputStream* outputStream, signed long value);
 
 /**
  * Append a float value into hexadecimal value (4 chars).
- * We use a factor to decide how to trunk value (we multiply by factorToTrunc)
  * @param outputStream the pointer on outputStream (POO simulation)
  * @param value the float value
  * @param digitPrecision how many digit we would like to have
@@ -187,8 +186,15 @@ void appendHex8(OutputStream* outputStream, signed long value);
 void appendHexFloat4(OutputStream* outputStream, float value, unsigned int digitPrecision);
 
 /**
+* Append a float value into hexadecimal value (6 chars).
+* @param outputStream the pointer on outputStream (POO simulation)
+* @param value the float value
+* @param digitPrecision how many digit we would like to have
+*/
+void appendHexFloat6(OutputStream* outputStream, float value, unsigned int digitPrecision);
+
+/**
  * Append a float value into hexadecimal value (8 chars).
- * We use a factor to decide how to trunk value (we multiply by factorToTrunc)
  * @param outputStream the pointer on outputStream (POO simulation)
  * @param value the float value
  * @param digitPrecision how many digit we would like to have
@@ -205,7 +211,7 @@ void appendHexFloat8(OutputStream* outputStream, float value, unsigned int digit
 int appendDec(OutputStream* outputStream, signed long value);
 
 /**
- * Sends the decimal value of a float. We keep only 3 chars after the comma.
+ * Sends the decimal value of a float. The precision after the comma depend on the value. For value very low, we have 3 chars after the comma, but we could have only 1.
  * @param outputStream the pointer on outputStream (POO simulation)
  * @param value the value to send
  * @return the number of char which are written including part before comma, the comma, and after the comma

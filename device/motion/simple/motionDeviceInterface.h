@@ -18,9 +18,6 @@
 /** Forward with value in mm. */
 #define COMMAND_MOTION_FORWARD_IN_MM          'f'
 
-/** Goto with value in coder pulse. */
-#define COMMAND_MOTION_GOTO_IN_PULSE          'g'
-
 /** Turn to the left in degree. */
 #define COMMAND_MOTION_LEFT_IN_DECI_DEGREE    'l'
 

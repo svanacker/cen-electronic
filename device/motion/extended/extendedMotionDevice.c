@@ -38,7 +38,7 @@
 static PidMotion* pidMotion;
 
 void deviceExtendedMotionInit(void) {
-    loadMotionParameters(pidMotion->pidPersistenceEeprom, true);
+    loadMotionParameters(pidMotion->pidPersistenceEeprom, false);
 }
 
 void deviceExtendedMotionShutDown(void) {
@@ -56,22 +56,22 @@ void deviceExtendedMotionHandleRawData(char commandHeader,
     if (commandHeader == COMMAND_MOTION_SPLINE_RELATIVE || commandHeader == COMMAND_MOTION_SPLINE_ABSOLUTE) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, commandHeader);
 
-        float x = (float) readHex4(inputStream);
+        float x = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
         checkIsSeparator(inputStream);
 
-        float y = (float) readHex4(inputStream);
+        float y = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
         checkIsSeparator(inputStream);
 
-        float angle = (float) readHex4(inputStream);
-        angle = angle * PI_DIVIDE_1800;
+        float angle = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
+        angle = angle * PI_DIVIDE_180;
         checkIsSeparator(inputStream);
 
         // the distance can be negative, so the robot go back instead of go forward
-        float distance1 = (float) readSignedHex4(inputStream);
+        float distance1 = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
         checkIsSeparator(inputStream);
     
         // the distance can be negative, so the robot go back instead of go forward
-        float distance2 = (float) readSignedHex4(inputStream);
+        float distance2 = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
 
         checkIsSeparator(inputStream);
         int accelerationFactor = readHex(inputStream);

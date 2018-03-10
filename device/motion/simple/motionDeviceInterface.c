@@ -20,18 +20,8 @@ void fillNotifyResults(char* notificationName) {
 }
 
 int deviceMotionGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
-    // goto
-    if (commandHeader == COMMAND_MOTION_GOTO_IN_PULSE) {
-        if (fillDeviceArgumentList) {
-            setFunction("goto Pulse", 4, 0);
-            setArgument(0, DEVICE_ARG_SIGNED_HEX_6, "left (pulse)");
-            setArgument(1, DEVICE_ARG_SIGNED_HEX_6, "right (pulse)");
-            setArgumentUnsignedHex2(2, "a");
-            setArgumentUnsignedHex2(3, "s");
-        }
-        return commandLengthValueForMode(mode, 16, 0);
-    }// forward MM
-    else if (commandHeader == COMMAND_MOTION_FORWARD_IN_MM) {
+    // forward MM
+    if (commandHeader == COMMAND_MOTION_FORWARD_IN_MM) {
         if (fillDeviceArgumentList) {
             setFunction("forward", 1, 0);
             setArgumentUnsignedHex4(0, "distance (MM)");

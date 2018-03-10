@@ -40,6 +40,27 @@ float computeNormalPosition(MotionInstruction* inst, float time) {
     return result;
 }
 
+float computeNormalAcceleration(MotionInstruction* inst, float time) {
+    // Check If we must move
+    if (inst->a == 0.0f) {
+        return 0.0f;
+    }
+
+    // Acceleration phase
+    if (time <= inst->t1) {
+        return inst->a;
+    }
+    // Constant speed -> Acceleration = 0
+    else if (time <= inst->t2) {
+        // speed = normalSpeed
+        return 0.0f;
+    }
+    // Deceleration : TODO : Manage initial and final Speed
+    else if (time <= inst->t3) {
+        return -inst->a;
+    }
+    return 0.0f;
+}
 
 float computeNormalSpeed(MotionInstruction* inst, float time) {
     float result = inst->initialSpeed;
@@ -66,21 +87,11 @@ float computeNormalSpeed(MotionInstruction* inst, float time) {
     return result;
 }
 
-float pulseByPidTimeSpeedToMMBySecondSpeed(float pulseSpeed) {
-    RobotKinematics* robotKinematics = getRobotKinematics();
-    float result = pulseSpeed * getCoderAverageWheelLengthForOnePulse(robotKinematics) * PID_UPDATE_MOTORS_FREQUENCY_HERTZ;
-    return result;
-}
-
-float getCoderWheelPulseByPidTimeAtFullSpeed(bool rotation) {
-    RobotKinematics* robotKinematics = getRobotKinematics();
-    float result = getCoderWheelPulseBySecondsAtFullSpeed(robotKinematics, rotation) / PID_UPDATE_MOTORS_FREQUENCY_HERTZ;
-    return result;
-}
-
 float getUFactorAtFullSpeed(bool rotation) {
     // TODO : This expression must also depend on the voltage !!!
-    float result = MAX_PWM / getCoderWheelPulseByPidTimeAtFullSpeed(rotation);
+    RobotKinematics* robotKinematics = getRobotKinematics();
+    // We calculate the ratio to apply for PWM !
+    float result = (float) MAX_PWM / getCoderWheelDistanceMMBySecondsAtFullSpeed(robotKinematics, rotation);
     return result;
 }
 
@@ -115,20 +126,14 @@ float computePidCorrection(PidComputationInstructionValues* values,
     values->derivativeError = values->error - values->previousError;
     values->previousError = values->error;
 
-    // Computes PID
-    float u = (values->error * pidParameter->p
-        + values->integralError * pidParameter->i
-        + values->derivativeError * pidParameter->d);
-
-    // We divide to be on cool range when defining PID constant
-    float result = (u / PID_GLOBAL_DIVISER);
-
     // Corresponds to the normal speed which must be added if we would like to 
     // go to the desired speed
-    result += getNormalU(normalSpeed);
+    float result = getNormalU(normalSpeed);
 
-    // Limits the value of "u"
-    result = (float) limitFloat(result, PID_NEXT_VALUE_LIMIT);
+    // Computes PID
+    result += (values->error * pidParameter->p
+        + values->integralError * pidParameter->i
+        + values->derivativeError * pidParameter->d);
 
     return result;
 }

@@ -211,6 +211,17 @@ void appendHexFloat4(OutputStream* stream, float value, unsigned int digitPrecis
     appendHex4(stream, longValue);
 }
 
+void appendHexFloat6(OutputStream* stream, float value, unsigned int digitPrecision) {
+    // we append it as a long value excluding digit after comma (but we multiply it before)
+    float valueWrite = value;
+    unsigned int i;
+    for (i = 0; i < digitPrecision; i++) {
+        valueWrite *= 10.0f;
+    }
+    signed long longValue = (signed long)valueWrite;
+    appendHex6(stream, longValue);
+}
+
 void appendHexFloat8(OutputStream* stream, float value, unsigned int digitPrecision) {
     // we append it as a long value excluding digit after comma (but we multiply it before)
     float valueWrite = value;
