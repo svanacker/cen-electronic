@@ -55,14 +55,17 @@ void devicePidHandleRawData(char commandHeader, InputStream* inputStream, Output
         enum MotionParameterType motionParameterType = (enum MotionParameterType) readHex2(inputStream);
 
         MotionParameter* motionParameter = getMotionParameters(motionParameterType);
-        appendHex2(outputStream, (int) motionParameter->a);
-        appendHex2(outputStream, (int) motionParameter->speed);
+        appendHexFloat4(outputStream, motionParameter->a, 0);
+        appendSeparator(outputStream);
+        appendHexFloat4(outputStream, motionParameter->speed, 0);
 
     } else if (commandHeader == COMMAND_SET_MOTION_PARAMETERS) {
         ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_SET_MOTION_PARAMETERS);
         enum MotionParameterType motionParameterType = (enum MotionParameterType) readHex2(inputStream);
-        float a = (float) readHex2(inputStream);
-        float speed = (float) readHex2(inputStream);
+        checkIsSeparator(inputStream);
+        float a = readHexFloat4(inputStream, 0);
+        checkIsSeparator(inputStream);
+        float speed = readHexFloat4(inputStream, 0);
 
         MotionParameter* motionParameter = getMotionParameters(motionParameterType);
         motionParameter->a = a;

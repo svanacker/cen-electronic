@@ -18,9 +18,4 @@ typedef struct {
  */
 MotionParameter* getMotionParameters(enum MotionParameterType motionParameterType);
 
-/**
- * Print a table with the list of motion Parameter.
- */
-void printMotionParameterList(OutputStream* outputStream);
-
 #endif

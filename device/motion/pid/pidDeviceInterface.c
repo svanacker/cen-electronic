@@ -20,20 +20,23 @@ int devicePidGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fil
     }
     else if (commandHeader == COMMAND_GET_MOTION_PARAMETERS) {
         if (fillDeviceArgumentList) {
-            setFunction("getMotionParam", 1, 2);
+            setFunction("get Motion Parameter", 1, 3);
             setArgumentUnsignedHex2(0, "motionType");
-            setResultUnsignedHex2(0, "a");
-            setResultUnsignedHex2(1, "s");
+            setResultUnsignedFloatDigit0(0, "a (mm / sec)");
+            setResultSeparator(1);
+            setResultUnsignedFloatDigit0(2, "s (mm / sec^2)");
         }
-        return commandLengthValueForMode(mode, 2, 4);
+        return commandLengthValueForMode(mode, 2, 9);
     } else if (commandHeader == COMMAND_SET_MOTION_PARAMETERS) {
         if (fillDeviceArgumentList) {
-            setFunction("setMotionParam", 3, 0);
+            setFunction("set Motion Parameter", 5, 0);
             setArgumentUnsignedHex2(0, "motionType");
-            setArgumentUnsignedHex2(1, "a");
-            setArgumentUnsignedHex2(2, "s");
+            setArgumentSeparator(1);
+            setArgumentUnsignedFloatDigit0(2, "a (mm / sec)");
+            setArgumentSeparator(3);
+            setArgumentUnsignedFloatDigit0(4, "s (mm / sec^2)");
         }
-        return commandLengthValueForMode(mode, 6, 0);
+        return commandLengthValueForMode(mode, 12, 0);
     }
     else if (commandHeader == COMMAND_MOTION_SAVE_TO_EEPROM_PARAMETERS) {
 		if(fillDeviceArgumentList) {
@@ -84,7 +87,7 @@ int devicePidGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fil
         return commandLengthValueForMode(mode, 0, 0);
     } else if (commandHeader == COMMAND_SET_END_DETECTION_PARAMETER) {
         if (fillDeviceArgumentList) {
-            setFunction("setEndDetectParam", 9, 0);
+            setFunction("set End Detection Parameter", 9, 0);
             setArgumentUnsignedHex2(0, "absDeltaPositionIntegralFactorThreshold");
             setArgumentSeparator(1);
             setArgumentUnsignedHex2(2, "maxUIntegralFactorThreshold");
@@ -98,7 +101,7 @@ int devicePidGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fil
         return commandLengthValueForMode(mode, 14, 0);
     } else if (commandHeader == COMMAND_GET_END_DETECTION_PARAMETER) {
         if (fillDeviceArgumentList) {
-            setFunction("getEndDetectParameter", 0, 9);
+            setFunction("get End Detection Parameter", 0, 9);
             setResultUnsignedHex2(0, "absDeltaPositionIntegralFactorThreshold");
             setResultSeparator(1);             
             setResultUnsignedHex2(2, "maxUIntegralFactorThreshold");
@@ -137,7 +140,7 @@ int devicePidGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fil
         return commandLengthValueForMode(mode, 2, 46);
     } else if (commandHeader == COMMAND_GET_MOTION_PARAMETER) {
         if (fillDeviceArgumentList) {    
-            setFunction("getMotionParameter", 1, 25);
+            setFunction("get Motion Parameter", 1, 25);
             
             setArgumentUnsignedHex2(0, "idx");
             

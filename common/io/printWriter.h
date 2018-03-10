@@ -182,18 +182,18 @@ void appendHex8(OutputStream* outputStream, signed long value);
  * We use a factor to decide how to trunk value (we multiply by factorToTrunc)
  * @param outputStream the pointer on outputStream (POO simulation)
  * @param value the float value
- * @param factorToTrunc ?????
+ * @param digitPrecision how many digit we would like to have
  */
-void appendHexFloat4(OutputStream* outputStream, float value, float factorToTrunc);
+void appendHexFloat4(OutputStream* outputStream, float value, unsigned int digitPrecision);
 
 /**
  * Append a float value into hexadecimal value (8 chars).
  * We use a factor to decide how to trunk value (we multiply by factorToTrunc)
  * @param outputStream the pointer on outputStream (POO simulation)
  * @param value the float value
- * @param factorToTrunc ?????
+ * @param digitPrecision how many digit we would like to have
  */
-void appendHexFloat8(OutputStream* outputStream, float value, float factorToTrunc);
+void appendHexFloat8(OutputStream* outputStream, float value, unsigned int digitPrecision);
 
 /**
  * Sends the decimal value of a long.

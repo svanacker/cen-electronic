@@ -200,14 +200,26 @@ void appendHex8(OutputStream* outputStream, signed long value) {
 
 // FLOAT
 
-void appendHexFloat4(OutputStream* stream, float value, float factorToTrunc) {
-    signed long longValue = (signed long) (value * factorToTrunc);
+void appendHexFloat4(OutputStream* stream, float value, unsigned int digitPrecision) {
+    // we append it as a long value excluding digit after comma (but we multiply it before)
+    float valueWrite = value;
+    unsigned int i;
+    for (i = 0; i < digitPrecision; i++) {
+        valueWrite *= 10.0f;
+    }
+    signed long longValue = (signed long) valueWrite;
     appendHex4(stream, longValue);
 }
 
-void appendHexFloat8(OutputStream* stream, float value, float factorToTrunc) {
-    signed long longValue = (signed long) (value * factorToTrunc);
-    appendHex4(stream, longValue);
+void appendHexFloat8(OutputStream* stream, float value, unsigned int digitPrecision) {
+    // we append it as a long value excluding digit after comma (but we multiply it before)
+    float valueWrite = value;
+    unsigned int i;
+    for (i = 0; i < digitPrecision; i++) {
+        valueWrite *= 10.0f;
+    }
+    signed long longValue = (signed long)valueWrite;
+    appendHex8(stream, longValue);
 }
 
 // DECIMAL CONVERSION

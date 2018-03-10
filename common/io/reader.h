@@ -86,6 +86,13 @@ signed long readSignedHex4(InputStream* inputStream);
 float readHex6(InputStream* inputStream);
 
 /**
+* Read an hexadecimal value from an inputStream (4 hex char as "051D") and transform it to a float.
+* @param inputStream the pointer on inputStream (POO simulation)
+* @param digitPrecision how many digit we want. If digitPrecision = 2, the readed value will be divided by 100.0f
+*/
+float readHexFloat4(InputStream* inputStream, unsigned int digitPrecision);
+
+/**
  * Read an array of chars from an inputStream (chars are encoded as hex).
  * @param s a pointer on a fixed char array
  */

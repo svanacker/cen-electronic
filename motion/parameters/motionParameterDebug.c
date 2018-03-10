@@ -10,9 +10,9 @@
 #define MOTION_PARAMETERS_DEBUG_IDX_COLUMN_LENGTH	            5
 #define MOTION_PARAMETERS_DEBUG_MOTION_TYPE_COLUMN_LENGTH	    25
 #define MOTION_PARAMETERS_DEBUG_SPEED_HEX_COLUMN_LENGTH	        12
-#define MOTION_PARAMETERS_DEBUG_ACCELERATION_HEX_COLUMN_LENGTH	10
+#define MOTION_PARAMETERS_DEBUG_ACCELERATION_HEX_COLUMN_LENGTH	12
 #define MOTION_PARAMETERS_DEBUG_SPEED_DEC_COLUMN_LENGTH	        12
-#define MOTION_PARAMETERS_DEBUG_ACCELERATION_DEC_COLUMN_LENGTH	10
+#define MOTION_PARAMETERS_DEBUG_ACCELERATION_DEC_COLUMN_LENGTH	12
 #define MOTION_PARAMETERS_DEBUG_LAST_COLUMN_LENGTH	            20
 
 /**
@@ -21,25 +21,35 @@
 void printMotionParameterHeader(OutputStream* outputStream) {
 	println(outputStream);
 	appendTableHeaderSeparatorLine(outputStream);
-	appendStringHeader(outputStream, "idx", MOTION_PARAMETERS_DEBUG_IDX_COLUMN_LENGTH);
 
+    // First Header Line
+	appendStringHeader(outputStream, "idx", MOTION_PARAMETERS_DEBUG_IDX_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "motionType", MOTION_PARAMETERS_DEBUG_MOTION_TYPE_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "speed (Hex)", MOTION_PARAMETERS_DEBUG_SPEED_HEX_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "a (Hex)", MOTION_PARAMETERS_DEBUG_ACCELERATION_HEX_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "speed (Dec)", MOTION_PARAMETERS_DEBUG_SPEED_DEC_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "a (Dec)", MOTION_PARAMETERS_DEBUG_ACCELERATION_DEC_COLUMN_LENGTH);
 	appendEndOfTableColumn(outputStream, MOTION_PARAMETERS_DEBUG_LAST_COLUMN_LENGTH);
-	appendTableHeaderSeparatorLine(outputStream);
+
+    // Second Header Line
+    appendStringHeader(outputStream, "", MOTION_PARAMETERS_DEBUG_IDX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "", MOTION_PARAMETERS_DEBUG_MOTION_TYPE_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "mm / sec", MOTION_PARAMETERS_DEBUG_SPEED_HEX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "mm / sec^2", MOTION_PARAMETERS_DEBUG_ACCELERATION_HEX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "mm / sec", MOTION_PARAMETERS_DEBUG_SPEED_DEC_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "mm / sec^2", MOTION_PARAMETERS_DEBUG_ACCELERATION_DEC_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, MOTION_PARAMETERS_DEBUG_LAST_COLUMN_LENGTH);
+    appendTableHeaderSeparatorLine(outputStream);
 }
 
 void printMotionParameter(OutputStream* outputStream, int index, MotionParameter* motionParameter) {
 	appendDecTableData(outputStream, index, MOTION_PARAMETERS_DEBUG_IDX_COLUMN_LENGTH);
 	enum MotionParameterType motionParameterType = (enum MotionParameterType) index;
 	addMotionParameterTypeTableData(outputStream, motionParameterType, MOTION_PARAMETERS_DEBUG_MOTION_TYPE_COLUMN_LENGTH);
-	appendHex2TableData(outputStream, (int)motionParameter->speed, MOTION_PARAMETERS_DEBUG_SPEED_HEX_COLUMN_LENGTH);
-	appendHex2TableData(outputStream, (int)motionParameter->a, MOTION_PARAMETERS_DEBUG_ACCELERATION_HEX_COLUMN_LENGTH);
-	appendDecTableData(outputStream, (int)motionParameter->speed, MOTION_PARAMETERS_DEBUG_SPEED_HEX_COLUMN_LENGTH);
-	appendDecTableData(outputStream, (int)motionParameter->a, MOTION_PARAMETERS_DEBUG_ACCELERATION_HEX_COLUMN_LENGTH);
+    appendHex4TableData(outputStream, motionParameter->speed, MOTION_PARAMETERS_DEBUG_SPEED_HEX_COLUMN_LENGTH);
+	appendHex4TableData(outputStream, motionParameter->a, MOTION_PARAMETERS_DEBUG_ACCELERATION_HEX_COLUMN_LENGTH);
+	appendDecfTableData(outputStream, motionParameter->speed, MOTION_PARAMETERS_DEBUG_SPEED_HEX_COLUMN_LENGTH);
+	appendDecfTableData(outputStream, motionParameter->a, MOTION_PARAMETERS_DEBUG_ACCELERATION_HEX_COLUMN_LENGTH);
 	appendEndOfTableColumn(outputStream, MOTION_PARAMETERS_DEBUG_LAST_COLUMN_LENGTH);
 }
 
