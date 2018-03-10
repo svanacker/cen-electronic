@@ -10,10 +10,13 @@
  * - u (voltage for pwm) and associated history)
  */
 typedef struct PidComputationInstructionValues {
-    /** Current index in which we must write next values (for u and delta position) */
+    /** Current index in which we must write next values (for historic values) */
+    /** We use the array as a circular buffer, so we lost some values if the motion instruction is too long .*/
 	unsigned int historyWriteIndex;
+    /** How many history Values are stored . */
+    unsigned int historyCount;
     /** The history of pid Time */
-    unsigned int pidTimeHistory[PID_HISTORY_ITEM_COUNT];
+    float pidTimeHistory[PID_HISTORY_ITEM_COUNT];
     
     // POSITION / SPEED
     /** Normal position. */
@@ -63,5 +66,10 @@ typedef struct PidComputationInstructionValues {
  * @param pidComputationValues
  */
 void clearPidComputationInstructionValues(PidComputationInstructionValues* pidComputationInstructionValues);
+
+/**
+* Store a snapshot on all current values (position, normalPosition, speed, error, derivativeError ...)
+*/
+void storePidComputationInstructionValueHistory(PidComputationInstructionValues* pidComputationInstructionValues, float pidTimeInSecond);
 
 #endif

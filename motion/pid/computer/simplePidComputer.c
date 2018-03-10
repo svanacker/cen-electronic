@@ -25,10 +25,16 @@
  * @param currentPosition the current position of the wheels (either alphaPosition, either thetaPosition)
  * @param time the time in pid sampling
  */
-float computeNextPID(PidMotion* pidMotion, enum InstructionType instructionType, MotionInstruction* motionInstruction, PidComputationInstructionValues* values, float time) {
+float computeNextPID(PidMotion* pidMotion,
+                    PidMotionDefinition* motionDefinition,
+                     enum InstructionType instructionType) {
+    PidComputationValues* computationValues = &(pidMotion->computationValues);
+    MotionInstruction* motionInstruction = &(motionDefinition->inst[instructionType]);
+    PidComputationInstructionValues* computationInstructionValues = &(computationValues->values[instructionType]);
+
     unsigned char rollingTestMode = getRollingTestMode(pidMotion);
     enum PidType pidType = motionInstruction->pidType;
-    float currentPosition = values->currentPosition;
+    float currentPosition = computationInstructionValues->currentPosition;
 
     // instructionIndex = Alpha / Theta
     // pidType = Forward / Rotation / Final Approach ...
@@ -39,31 +45,27 @@ float computeNextPID(PidMotion* pidMotion, enum InstructionType instructionType,
         return 0.0f;
     }
 
-    float normalPosition = computeNormalPosition(motionInstruction, time);
-    values->normalPosition = normalPosition;
+    float pidTimeInSecond = computationValues->pidTime;
+    float normalPosition = computeNormalPosition(motionInstruction, pidTimeInSecond);
+    computationInstructionValues->normalPosition = normalPosition;
     float positionError = normalPosition - currentPosition;
     
-    float normalSpeed = computeNormalSpeed(motionInstruction, time);
-    values->normalSpeed = normalSpeed;
+    float normalSpeed = computeNormalSpeed(motionInstruction, pidTimeInSecond);
+    computationInstructionValues->normalSpeed = normalSpeed;
     
-    float result = computePidCorrection(values, pidParameter, normalSpeed, positionError);
+    // Do the compute on P, I, D and return u
+    float result = computePidCorrection(computationInstructionValues, pidParameter, normalSpeed, positionError);
+    computationInstructionValues->u = result;
+
+    storePidComputationInstructionValueHistory(computationInstructionValues, pidTimeInSecond);
 
     return result;
-}
-
-void simpleMotionUComputeInstruction(PidMotion* pidMotion, PidMotionDefinition* motionDefinition, enum InstructionType instructionType) {
-    PidComputationValues* computationValues = &(pidMotion->computationValues);
-    MotionInstruction* motionInstruction = &(motionDefinition->inst[instructionType]);
-    PidComputationInstructionValues* computationInstructionValues = &(computationValues->values[instructionType]);
-
-    float pidTime = computationValues->pidTime;
-    computationInstructionValues->u = computeNextPID(pidMotion, instructionType, motionInstruction, computationInstructionValues, pidTime);
 }
 
 /**
  * Compute the PID when the instruction is very simple (not b spline).
  */
 void simpleMotionUCompute(PidMotion* pidMotion, PidMotionDefinition* motionDefinition) {
-    simpleMotionUComputeInstruction(pidMotion, motionDefinition, THETA);
-    simpleMotionUComputeInstruction(pidMotion, motionDefinition, ALPHA);
+    computeNextPID(pidMotion, motionDefinition, THETA);
+    computeNextPID(pidMotion, motionDefinition, ALPHA);
 }

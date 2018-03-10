@@ -2,6 +2,7 @@
 
 void clearPidComputationInstructionValues(PidComputationInstructionValues* pidComputationInstructionValues) {
     pidComputationInstructionValues->historyWriteIndex = 0;
+    pidComputationInstructionValues->historyCount = 0;
         
     // POSITION / SPEED
     pidComputationInstructionValues->normalPosition = 0;
@@ -40,4 +41,32 @@ void clearPidComputationInstructionValues(PidComputationInstructionValues* pidCo
         // U
         pidComputationInstructionValues->uHistory[i] = 0;
     }
+}
+
+void storePidComputationInstructionValueHistory(PidComputationInstructionValues* pidComputationInstructionValues, float pidTimeInSecond) {
+    pidComputationInstructionValues->historyWriteIndex++;
+    if (pidComputationInstructionValues->historyWriteIndex >= PID_HISTORY_ITEM_COUNT) {
+        // Restart to 0
+        pidComputationInstructionValues->historyWriteIndex = 0;
+    }
+    else {
+        pidComputationInstructionValues->historyCount++;
+    }
+    unsigned int i = pidComputationInstructionValues->historyWriteIndex;
+    
+    pidComputationInstructionValues->pidTimeHistory[i] = pidTimeInSecond;
+
+    // POSITION
+    pidComputationInstructionValues->positionHistory[i] = pidComputationInstructionValues->currentPosition;
+
+    // SPEED
+    pidComputationInstructionValues->speedHistory[i] = pidComputationInstructionValues->currentSpeed;
+
+    // ERRORS
+    pidComputationInstructionValues->errorHistory[i] = pidComputationInstructionValues->error;
+    pidComputationInstructionValues->derivativeErrorHistory[i] = pidComputationInstructionValues->derivativeError;
+    pidComputationInstructionValues->integralErrorHistory[i] = pidComputationInstructionValues->integralError;
+
+    // U
+    pidComputationInstructionValues->uHistory[i] = pidComputationInstructionValues->u;
 }
