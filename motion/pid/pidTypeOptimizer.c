@@ -20,7 +20,7 @@ void changePidTypeIfFinalApproach(PidMotion* pidMotion, PidMotionDefinition* mot
     // Change PID type for final Approach
     if ((thetaError < ERROR_FOR_STRONG_PID) && (pidTime > thetaInst->t3 + TIME_PERIOD_AFTER_END_FOR_STRONG_PID)
         && (alphaError < ERROR_FOR_STRONG_PID) && (pidTime > alphaInst->t3 + TIME_PERIOD_AFTER_END_FOR_STRONG_PID)) {
-        thetaInst->pidType = PID_TYPE_FINAL_APPROACH_INDEX;
-        alphaInst->pidType = PID_TYPE_FINAL_APPROACH_INDEX;
+        thetaInst->initialPidType = PID_TYPE_FINAL_APPROACH_INDEX;
+        alphaInst->initialPidType = PID_TYPE_FINAL_APPROACH_INDEX;
     }
 }

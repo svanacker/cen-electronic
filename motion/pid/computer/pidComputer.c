@@ -125,8 +125,10 @@ float computePidCorrection(PidComputationInstructionValues* values,
 
     // Computes the integral error, and limit too high value
     values->integralError += values->error;
-    values->integralError = limitFloat(values->integralError, pidParameter->maxIntegral);
-
+    // We only limit if maxIntegral is set
+    if (!floatEqualsZero( pidParameter->maxIntegral)) {
+        values->integralError = limitFloat(values->integralError, pidParameter->maxIntegral);
+    }
     // Saves the error
     // When error increases if speed > 0 : error - previousError > 0 (Ex : error (t) = 200, error (t-1) = 150 => 50 (=> increases u)
     // When error decreases if speed > 0 : error - previousError < 0 (Ex : error (t) = 180, error (t-1) = 220 => -40 (=> limits u)

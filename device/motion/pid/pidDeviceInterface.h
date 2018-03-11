@@ -6,71 +6,60 @@
 #include "../../../device/deviceConstants.h"
 
 // COMMAND
+
 // PARAMETERS
 
-/** Load default Motion parameters. */
-#define COMMAND_MOTION_LOAD_DEFAULT_PARAMETERS 'l'
-
 /** Defines the COMMAND used to get speed / acceleration parameters for different motion type. */
-#define COMMAND_GET_MOTION_PARAMETERS          'm'
+#define COMMAND_GET_MOTION_PARAMETERS                'm'
 
 /** Defines the COMMAND used to set speed / acceleration parameters for different motion type. */
-#define COMMAND_SET_MOTION_PARAMETERS          'W'
-
-/** Save the motion parameters to the eeprom. */
-#define COMMAND_MOTION_SAVE_TO_EEPROM_PARAMETERS 'R'
-
-/**
-* Set the some parameters for a specific PID.
-*/
-#define COMMAND_WRITE_PID_PARAMETERS                'w'
+#define COMMAND_SET_MOTION_PARAMETERS                'M'
 
 /**
 * Read some parameters for a specific PID
 */
-#define COMMAND_READ_PID_PARAMETERS                'r'
+#define COMMAND_GET_PID_PARAMETERS                   'p'
+
+/**
+* Set the some parameters for a specific PID.
+*/
+#define COMMAND_SET_PID_PARAMETERS                   'P'
+
+// PERSISTENCE
 
 /**
  * Load default Values
  */
-#define COMMAND_LOAD_PID_PARAMETERS_DEFAULT_VALUES  'd'
+#define COMMAND_LOAD_PID_PARAMETERS_DEFAULT_VALUES  'D'
 
 /**
  * Save Values
  */
-#define COMMAND_SAVE_PID_PARAMETERS                 's'
+#define COMMAND_SAVE_PID_PARAMETERS                 'S'
 
 /**
 * Send values to have information about profile at the begin of
 * trajectory compute.
 */
-#define COMMAND_GET_MOTION_PARAMETER                'm'
+#define COMMAND_GET_MOTION_DEFINITION_TRAJECTORY    't'
 
 /**
 * Send values to have statistical debug informations.
 */
-#define COMMAND_GET_DEBUG_DATA_PID                  'g'
+#define COMMAND_GET_COMPUTATION_VALUES_DATA_PID     'g'
 
-/**
-* Change end Detection Motion Parameter.
-*/
-#define COMMAND_SET_END_DETECTION_PARAMETER         'p'
+// END DETECTION PARAMETER
 
 /**
 * Get the Detection Motion Parameter.
 */
-#define COMMAND_GET_END_DETECTION_PARAMETER         'P'
+#define COMMAND_GET_END_DETECTION_PARAMETER         'e'
 
 /**
- * Returns if the simulation mode is activated.
- */
-#define COMMAND_GET_SIMULATION_MODE                 's'
+* Change end Detection Motion Parameter.
+*/
+#define COMMAND_SET_END_DETECTION_PARAMETER         'E'
 
-/**
- * Set the simulation mode on or off.
- */
-#define COMMAND_SET_SIMULATION_MODE                 'S'
- 
 /**
 * Get the PID device interface.
 */

@@ -17,6 +17,11 @@ typedef struct PidComputationInstructionValues {
     unsigned int historyCount;
     /** The history of pid Time */
     float pidTimeHistory[PID_HISTORY_ITEM_COUNT];
+
+    // PID TYPE
+    enum PidType pidType;
+    /** The history of pid Type */
+    enum PidType pidTypeHistory[PID_HISTORY_ITEM_COUNT];
     
     // POSITION / SPEED
     /** Normal position. */

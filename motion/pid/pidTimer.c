@@ -18,6 +18,13 @@ void initPidTimer(void) {
     clearPidTime();
 }
 
+/**
+* Get the pid Timer frequency in hertz.
+*/
+float getPidTimerFrequencyHertz(void) {
+    return PID_UPDATE_MOTORS_FREQUENCY_HERTZ;
+}
+
 float getPidTimeInSecond(void) {
     Timer* timer = getTimerByCode(TIMER_PID_CODE);
     float result = (float) timer->time / PID_UPDATE_MOTORS_FREQUENCY_HERTZ;

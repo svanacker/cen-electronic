@@ -6,7 +6,7 @@
 #include "../../common/io/outputStream.h"
 
 /**
- * Defines the type of Motion Parameter (Forward / Backward / Rotation / One Wheel / Maintain Position)
+ * Defines the type of Motion Parameter (Forward / Backward / Rotation / One Wheel / Maintain Position).
  */
 enum MotionParameterType {
     /** 
@@ -41,18 +41,5 @@ enum MotionParameterType {
  * @return a type of Motion (Ex: MOTION_TYPE_ROTATION)
  */
 enum MotionParameterType getMotionParameterType(float left, float right);
-
-/**
- * Append the MotionParameterType as a string into an outputStream
- * @param motionParameterType the type of motionParameter
- * @param outputStream the output stream
- * @return how many char have been written in the outputStream
- */
-unsigned char appendMotionParameterTypeAsString(OutputStream* outputStream, enum MotionParameterType motionParameterType);
-
-/**
- * Add a motion Parameter Type value in a column.
- */
-unsigned int addMotionParameterTypeTableData(OutputStream* outputStream, enum MotionParameterType motionParameterType, int columnSize);
 
 #endif

@@ -20,6 +20,6 @@ void clearMotionInstruction(MotionInstruction* motionInstruction) {
     motionInstruction->p2 = 0.0f;
     motionInstruction->profileType = PROFILE_TYPE_UNDEFINED;
     motionInstruction->motionParameterType = MOTION_PARAMETER_TYPE_UNDEFINED;
-    motionInstruction->pidType = PID_TYPE_GO_INDEX;
+    motionInstruction->initialPidType = PID_TYPE_GO_INDEX;
 }
 

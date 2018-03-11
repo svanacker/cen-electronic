@@ -1,5 +1,6 @@
 #include "eepromPc.h"
 #include "../eeprom.h"
+#include "../eepromType.h"
 
 #include <windows.h>
 #include <stdbool.h>
@@ -118,6 +119,7 @@ void eepromPcDump(Eeprom* eeprom_) {
 
 void initEepromPc(Eeprom* eepromPc, char* fileName) {
     initEeprom(eepromPc,
+        EEPROM_TYPE_FILE,
         EEPROM_PC_MAX_INDEX,
         eepromPcWriteChar,
         eepromPcReadChar,

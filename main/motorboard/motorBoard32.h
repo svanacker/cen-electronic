@@ -31,6 +31,8 @@
 // The port for which we debug (we can send instruction too)
 #define MOTOR_BOARD_SERIAL_PORT_DEBUG       SERIAL_PORT_2
 
+// EEPROM
+#define MOTOR_BOARD_MEMORY_EEPROM_LENGTH    0x0500
 
 /** Maximal length for In Buffer length. */
 #define MOTOR_BOARD_IN_BUFFER_LENGTH     200

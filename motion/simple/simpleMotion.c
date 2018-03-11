@@ -27,8 +27,6 @@
 void gotoSimplePosition(PidMotion* pidMotion, float leftMM, float rightMM, float a, float speed, OutputStream* notificationOutputStream) {
 	// determine the type of motion
 	enum MotionParameterType motionParameterType = getMotionParameterType(leftMM, rightMM);
-	// determine the pidType to execute motionParameterType
-	enum PidType pidType = getPidType(motionParameterType);
 
 	// Alpha / Theta
 	float thetaNextPosition = computeTheta(leftMM, rightMM);
@@ -38,8 +36,8 @@ void gotoSimplePosition(PidMotion* pidMotion, float leftMM, float rightMM, float
 	motionDefinition->motionType = MOTION_TYPE_NORMAL;
 	motionDefinition->notificationOutputStream = notificationOutputStream;
 
-	setNextPosition(motionDefinition, THETA, motionParameterType, pidType, thetaNextPosition, a, speed);
-	setNextPosition(motionDefinition, ALPHA, motionParameterType, pidType, alphaNextPosition, a, speed);
+	setNextPosition(motionDefinition, THETA, motionParameterType, thetaNextPosition, a, speed);
+	setNextPosition(motionDefinition, ALPHA, motionParameterType, alphaNextPosition, a, speed);
 
     // All main information are defined
     motionDefinition->state = PID_MOTION_DEFINITION_STATE_SET;

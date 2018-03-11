@@ -10,6 +10,7 @@
 #include "../../common/i2c/master/i2cMaster.h"
 
 #include "../../common/eeprom/eeprom.h"
+#include "../../common/eeprom/eepromType.h"
 #include "../../common/error/error.h"
 #include "../../common/io/buffer.h"
 
@@ -256,6 +257,7 @@ void _dumpEeprom24C512(Eeprom* eeprom_) {
 
 void init24C512Eeprom(Eeprom* eeprom_, I2cBusConnection* i2cBusConnection) {
     initEeprom(eeprom_,
+               EEPROM_TYPE_HARDWARE,
                EEPROM_24C512_MAX_INDEX,
                _writeEeprom24C512Char,
                _readEeprom24C512Char,

@@ -1,4 +1,5 @@
 #include "motionParameterDebug.h"
+#include "motionParameterTypeDebug.h"
 #include "motionParameter.h"
 
 #include "../../common/io/outputStream.h"

@@ -91,7 +91,6 @@ void computeMotionInstruction(MotionInstruction* inst) {
 void setNextPosition(PidMotionDefinition* motionDefinition, 
 		enum InstructionType instructionType,
         enum MotionParameterType motionParameterType,
-        enum PidType pidType,
         float pNextPosition,
         float pa,
         float pSpeed) {
@@ -103,7 +102,7 @@ void setNextPosition(PidMotionDefinition* motionDefinition,
 
     localInst->nextPosition = pNextPosition;
     localInst->motionParameterType = motionParameterType;
-    localInst->pidType = pidType;
+    localInst->initialPidType = getPidType(motionParameterType, instructionType);
 
     if (pNextPosition > 0.001f) {
         localInst->a = pa;
@@ -117,9 +116,8 @@ void setNextPosition(PidMotionDefinition* motionDefinition,
     // pNextPosition == 0.0f Don't change the position
     else {
         if (motionParameterType == MOTION_PARAMETER_TYPE_MAINTAIN_POSITION) {
-            // TODO : Remove magic Numbers
-            localInst->a = 1.0f;
-            localInst->speed = 100.0f;
+            localInst->a = pa;
+            localInst->speed = pSpeed;
         } else {
             // Slavery free
             localInst->a = 0.0f;

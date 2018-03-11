@@ -32,29 +32,36 @@
 
 #include "../../robot/kinematics/robotKinematics.h"
 
-unsigned char getIndexOfPid(enum InstructionType instructionType, enum PidType pidType) {
-    return pidType * INSTRUCTION_TYPE_COUNT + instructionType;
+unsigned int getPidIndex(enum PidType pidType) {
+    return (unsigned int) pidType;
 }
 
-bool getRollingTestMode(PidMotion* pidMotion) {
-    return pidMotion->rollingTestMode;
-}
-
-void setEnabledPid(PidMotion* pidMotion, int pidIndex, unsigned char enabled) {
-    PidParameter * localPidParameter = getPidParameter(pidMotion, pidIndex, pidMotion->rollingTestMode);
+void setEnabledPid(PidMotion* pidMotion, unsigned int pidIndex, bool enabled) {
+    PidParameter * localPidParameter = getPidParameterByIndex(pidMotion, pidIndex);
     localPidParameter->enabled = enabled;
 }
 
-void setPidParameter(PidMotion* pidMotion, int pidIndex, float p, float i, float d, float maxIntegral) {
-    PidParameter* localPidParameter = getPidParameter(pidMotion, pidIndex, pidMotion->rollingTestMode);
+void setPidParameter(PidMotion* pidMotion, unsigned int pidIndex, float p, float i, float d, float maxIntegral) {
+    PidParameter* localPidParameter = getPidParameterByIndex(pidMotion, pidIndex);
     localPidParameter->p = p;
     localPidParameter->i = i;
     localPidParameter->d = d;
     localPidParameter->maxIntegral = maxIntegral;
 }
 
-PidParameter* getPidParameter(PidMotion* pidMotion, int index, unsigned int pidMode) {
-    PidParameter* result = &(pidMotion->globalParameters.pidParameters[index]);
+PidParameter* getPidParameterByIndex(PidMotion* pidMotion, unsigned int pidIndex) {
+    // To avoid to return NULL
+    if (!checkPidTypeIndexInRange(pidIndex)) {
+        writeError(PID_TYPE_UNKNOWN_ENUM);
+        return &(pidMotion->globalParameters.pidParameters[(unsigned int) PID_TYPE_NONE]);
+    }
+    PidParameter* result = &(pidMotion->globalParameters.pidParameters[pidIndex]);
+    return result;
+}
+
+PidParameter* getPidParameterByPidType(PidMotion* pidMotion, enum PidType pidType) {
+    unsigned int pidIndex = getPidIndex(pidType);
+    PidParameter* result = &(pidMotion->globalParameters.pidParameters[pidIndex]);
     return result;
 }
 

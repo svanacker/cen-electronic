@@ -2,6 +2,7 @@
 
 #include "coderErrorComputer.h"
 
+#include "../pid/pidTimer.h"
 #include "../pid/instructionType.h"
 #include "../../motion/pid/pidMotion.h"
 #include "../../motion/pid/alphaTheta.h"
@@ -25,6 +26,10 @@ void computeCurrentPositionUsingCoders(PidMotion* pidMotion) {
     // left / right => theta / alpha
     float theta = computeTheta(coderValueDistanceMMLeft, coderValueDistanceMMRight);
     float alpha = computeAlpha(coderValueDistanceMMLeft, coderValueDistanceMMRight);
+
+    // Compute the speed by multiplying the delta between current and previous position by the frequency
+    thetaCurrentValues->currentSpeed = (theta - thetaCurrentValues->currentPosition) * getPidTimerFrequencyHertz();
+    alphaCurrentValues->currentSpeed = (alpha - thetaCurrentValues->currentPosition) * getPidTimerFrequencyHertz();
 
     // Store the current Position
     thetaCurrentValues->currentPosition = theta;

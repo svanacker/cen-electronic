@@ -45,13 +45,8 @@ void stopPidDevice(void) {
 }
 
 void devicePidHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
-    // MOTION PARAMETERS 
-    if (commandHeader == COMMAND_MOTION_LOAD_DEFAULT_PARAMETERS) {
-		// send acknowledge
-		ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_MOTION_LOAD_DEFAULT_PARAMETERS);
-		loadMotionParameters(pidMotion->pidPersistenceEeprom, true);
-	}
-    else if (commandHeader == COMMAND_GET_MOTION_PARAMETERS) {
+    // MOTION PARAMETERS
+    if (commandHeader == COMMAND_GET_MOTION_PARAMETERS) {
         ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_GET_MOTION_PARAMETERS);
         enum MotionParameterType motionParameterType = (enum MotionParameterType) readHex2(inputStream);
 
@@ -71,13 +66,47 @@ void devicePidHandleRawData(char commandHeader, InputStream* inputStream, Output
         MotionParameter* motionParameter = getMotionParameters(motionParameterType);
         motionParameter->a = a;
         motionParameter->speed = speed;
-    } else if (commandHeader == COMMAND_MOTION_SAVE_TO_EEPROM_PARAMETERS) {
-        ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_MOTION_SAVE_TO_EEPROM_PARAMETERS);
-
-        saveMotionParameters(pidMotion->pidPersistenceEeprom);
     }
+    else if (commandHeader == COMMAND_GET_PID_PARAMETERS) {
+        // send acknowledgement
+        ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_GET_PID_PARAMETERS);
+
+        // PID Index => 0..n char index
+        unsigned int pidIndex = readHex2(inputStream);
+
+        // we test all pid value (test mode included)
+        PidParameter* localPidParameter = getPidParameterByIndex(pidMotion, pidIndex);
+        appendHex2(outputStream, pidIndex);
+        appendSeparator(outputStream);
+        appendHexFloat4(outputStream, localPidParameter->p, PID_VALUE_DIGIT_PRECISION);
+        appendSeparator(outputStream);
+        appendHexFloat4(outputStream, localPidParameter->i, PID_VALUE_DIGIT_PRECISION);
+        appendSeparator(outputStream);
+        appendHexFloat4(outputStream, localPidParameter->d, PID_VALUE_DIGIT_PRECISION);
+        appendSeparator(outputStream);
+        appendHexFloat4(outputStream, localPidParameter->maxIntegral, PID_VALUE_DIGIT_PRECISION);
     // PID PARAMETERS
-    else if (commandHeader == COMMAND_WRITE_PID_PARAMETERS) {
+    }
+    else if (commandHeader == COMMAND_GET_PID_PARAMETERS) {
+        // send acknowledgement
+        ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_GET_PID_PARAMETERS);
+
+        // PID Index => 0..n char index
+        unsigned int pidIndex = readHex2(inputStream);
+
+        // we test all pid value (test mode included)
+        PidParameter* localPidParameter = getPidParameterByIndex(pidMotion, pidIndex);
+        appendHex2(outputStream, pidIndex);
+        appendSeparator(outputStream);
+        appendHexFloat4(outputStream, localPidParameter->p, PID_VALUE_DIGIT_PRECISION);
+        appendSeparator(outputStream);
+        appendHexFloat4(outputStream, localPidParameter->i, PID_VALUE_DIGIT_PRECISION);
+        appendSeparator(outputStream);
+        appendHexFloat4(outputStream, localPidParameter->d, PID_VALUE_DIGIT_PRECISION);
+        appendSeparator(outputStream);
+        appendHexFloat4(outputStream, localPidParameter->maxIntegral, PID_VALUE_DIGIT_PRECISION);
+    }
+    else if (commandHeader == COMMAND_SET_PID_PARAMETERS) {
         // PID Index
         char pidIndex = readHex2(inputStream);
         checkIsSeparator(inputStream);
@@ -90,85 +119,44 @@ void devicePidHandleRawData(char commandHeader, InputStream* inputStream, Output
         checkIsSeparator(inputStream);
         float maxI = readHexFloat4(inputStream, PID_VALUE_DIGIT_PRECISION);
 
-        if (pidIndex >= 0 && pidIndex < PID_COUNT) {
+        if (pidIndex >= 0 && pidIndex < PID_TYPE_COUNT) {
             setPidParameter(pidMotion, pidIndex, p, i, d, maxI);
         } else {
             // All Values
             if (pidIndex == -1) {
-                int pidIndex2;
-                for (pidIndex2 = 0; pidIndex2 < PID_COUNT; pidIndex2++) {
+                unsigned int pidIndex2;
+                for (pidIndex2 = 0; pidIndex2 < PID_TYPE_COUNT; pidIndex2++) {
                     setPidParameter(pidMotion, pidIndex2, p, i, d, maxI);
                 }
             } else {
                 writeError(PID_INDEX_INCORRECT);
             }
         }
-        ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_WRITE_PID_PARAMETERS);
-    } else if (commandHeader == COMMAND_READ_PID_PARAMETERS) {
-        // send acknowledgement
-        ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_READ_PID_PARAMETERS);
+        ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_SET_PID_PARAMETERS);
 
-        // PID Index => 0..n char index
-        char pidIndex = readHex2(inputStream);
-
-        // we test all pid value (test mode included)
-        PidParameter* localPidParameter = getPidParameter(pidMotion, pidIndex, 0);
-        appendHex2(outputStream, pidIndex);
-        appendSeparator(outputStream);
-        appendHexFloat4(outputStream, localPidParameter->p, PID_VALUE_DIGIT_PRECISION);
-        appendSeparator(outputStream);
-        appendHexFloat4(outputStream, localPidParameter->i, PID_VALUE_DIGIT_PRECISION);
-        appendSeparator(outputStream);
-        appendHexFloat4(outputStream, localPidParameter->d, PID_VALUE_DIGIT_PRECISION);
-        appendSeparator(outputStream);
-        appendHexFloat4(outputStream, localPidParameter->maxIntegral, PID_VALUE_DIGIT_PRECISION);
+    // PERSISTENCE
     } else if (commandHeader == COMMAND_LOAD_PID_PARAMETERS_DEFAULT_VALUES) {
         ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_LOAD_PID_PARAMETERS_DEFAULT_VALUES);
-        
-        // Load default Values (and erase previous values)
+
+        // Load Motion Parameters (speed / acceleration)
+        loadMotionParameters(pidMotion->pidPersistenceEeprom, true);
+
+        // Load Pid Parameters default Values (and erase previous values)
         loadPidParameters(pidMotion, true);
     } else if (commandHeader == COMMAND_SAVE_PID_PARAMETERS) {
         ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_SAVE_PID_PARAMETERS);
         savePidParameters(pidMotion);
-    } // End Detection Parameter
-    else if (commandHeader ==  COMMAND_GET_END_DETECTION_PARAMETER) {
-        ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_GET_END_DETECTION_PARAMETER);
-
-        MotionEndDetectionParameter* motionEndDetectionParameter = getMotionEndDetectionParameter(pidMotion);
-        appendHexFloat4(outputStream, motionEndDetectionParameter->absDeltaPositionIntegralFactorThreshold, MOTION_END_DETECTION_PARAMETER_DIGIT);
-        appendSeparator(outputStream);
-        appendHexFloat4(outputStream, motionEndDetectionParameter->maxUIntegralFactorThreshold, MOTION_END_DETECTION_PARAMETER_DIGIT);
-        appendSeparator(outputStream);
-        appendHexFloat4(outputStream, motionEndDetectionParameter->maxUIntegralConstantThreshold, MOTION_END_DETECTION_PARAMETER_DIGIT);
-        appendSeparator(outputStream);
-        appendHexFloat4(outputStream, motionEndDetectionParameter->timeRangeAnalysisInSecond, MOTION_END_DETECTION_PARAMETER_DIGIT);
-        appendSeparator(outputStream);
-        appendHexFloat4(outputStream, motionEndDetectionParameter->noAnalysisAtStartupTimeInSecond, MOTION_END_DETECTION_PARAMETER_DIGIT);
     }
-    else if (commandHeader ==  COMMAND_SET_END_DETECTION_PARAMETER) {
-        ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_GET_END_DETECTION_PARAMETER);
-
-        MotionEndDetectionParameter* motionEndDetectionParameter = getMotionEndDetectionParameter(pidMotion);
-
-        motionEndDetectionParameter->absDeltaPositionIntegralFactorThreshold = readHexFloat4(inputStream, MOTION_END_DETECTION_PARAMETER_DIGIT);
-        checkIsSeparator(inputStream);
-        motionEndDetectionParameter->maxUIntegralFactorThreshold = readHexFloat4(inputStream, MOTION_END_DETECTION_PARAMETER_DIGIT);
-        checkIsSeparator(inputStream);
-        motionEndDetectionParameter->maxUIntegralConstantThreshold = readHexFloat4(inputStream, MOTION_END_DETECTION_PARAMETER_DIGIT);
-        checkIsSeparator(inputStream);
-        motionEndDetectionParameter->timeRangeAnalysisInSecond = readHexFloat4(inputStream, MOTION_END_DETECTION_PARAMETER_DIGIT);
-        checkIsSeparator(inputStream);
-        motionEndDetectionParameter->noAnalysisAtStartupTimeInSecond = readHexFloat4(inputStream, MOTION_END_DETECTION_PARAMETER_DIGIT);
-    }
-    // Debug : pg01-1001-000020-005678-4000-2000-5000-8000
-    else if (commandHeader ==  COMMAND_GET_DEBUG_DATA_PID) {
+    // TRAJECTORY
+    // pg01-1001-000020-005678-4000-2000-5000-8000
+    else if (commandHeader ==  COMMAND_GET_COMPUTATION_VALUES_DATA_PID) {
         enum InstructionType instructionType = readHex2(inputStream);
 
         PidComputationValues* computationValues = &(pidMotion->computationValues);
         PidComputationInstructionValues* computationInstructionValues = &(computationValues->values[instructionType]);
 
         // send acknowledgement
-        ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_GET_DEBUG_DATA_PID);
+        ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_GET_COMPUTATION_VALUES_DATA_PID);
 
         // InstructionType
         appendHex2(outputStream, instructionType);
@@ -205,11 +193,11 @@ void devicePidHandleRawData(char commandHeader, InputStream* inputStream, Output
         appendHex4(outputStream, (int) motionEnd->absUIntegral);
         */
     }
-    else if (commandHeader == COMMAND_GET_MOTION_PARAMETER) {
+    else if (commandHeader == COMMAND_GET_MOTION_DEFINITION_TRAJECTORY) {
         enum InstructionType instructionType = (enum InstructionType) readHex2(inputStream);
 
         // send acknowledgement
-        ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_GET_MOTION_PARAMETER);
+        ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_GET_MOTION_DEFINITION_TRAJECTORY);
 
 		PidMotionDefinition* motionDefinition = pidMotionGetCurrentMotionDefinition(pidMotion);
         // TODO : Manage if motionDefinition is NULL
@@ -246,8 +234,38 @@ void devicePidHandleRawData(char commandHeader, InputStream* inputStream, Output
         appendSeparator(outputStream);
         appendHex(outputStream, localInst->motionParameterType);
         appendSeparator(outputStream);
-        appendHex(outputStream, localInst->pidType);
+        appendHex(outputStream, localInst->initialPidType);
     }   
+    // End Detection Parameter
+    else if (commandHeader == COMMAND_GET_END_DETECTION_PARAMETER) {
+        ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_GET_END_DETECTION_PARAMETER);
+
+        MotionEndDetectionParameter* motionEndDetectionParameter = getMotionEndDetectionParameter(pidMotion);
+        appendHexFloat4(outputStream, motionEndDetectionParameter->absDeltaPositionIntegralFactorThreshold, MOTION_END_DETECTION_PARAMETER_DIGIT);
+        appendSeparator(outputStream);
+        appendHexFloat4(outputStream, motionEndDetectionParameter->maxUIntegralFactorThreshold, MOTION_END_DETECTION_PARAMETER_DIGIT);
+        appendSeparator(outputStream);
+        appendHexFloat4(outputStream, motionEndDetectionParameter->maxUIntegralConstantThreshold, MOTION_END_DETECTION_PARAMETER_DIGIT);
+        appendSeparator(outputStream);
+        appendHexFloat4(outputStream, motionEndDetectionParameter->timeRangeAnalysisInSecond, MOTION_END_DETECTION_PARAMETER_DIGIT);
+        appendSeparator(outputStream);
+        appendHexFloat4(outputStream, motionEndDetectionParameter->noAnalysisAtStartupTimeInSecond, MOTION_END_DETECTION_PARAMETER_DIGIT);
+    }
+    else if (commandHeader == COMMAND_SET_END_DETECTION_PARAMETER) {
+        ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_GET_END_DETECTION_PARAMETER);
+
+        MotionEndDetectionParameter* motionEndDetectionParameter = getMotionEndDetectionParameter(pidMotion);
+
+        motionEndDetectionParameter->absDeltaPositionIntegralFactorThreshold = readHexFloat4(inputStream, MOTION_END_DETECTION_PARAMETER_DIGIT);
+        checkIsSeparator(inputStream);
+        motionEndDetectionParameter->maxUIntegralFactorThreshold = readHexFloat4(inputStream, MOTION_END_DETECTION_PARAMETER_DIGIT);
+        checkIsSeparator(inputStream);
+        motionEndDetectionParameter->maxUIntegralConstantThreshold = readHexFloat4(inputStream, MOTION_END_DETECTION_PARAMETER_DIGIT);
+        checkIsSeparator(inputStream);
+        motionEndDetectionParameter->timeRangeAnalysisInSecond = readHexFloat4(inputStream, MOTION_END_DETECTION_PARAMETER_DIGIT);
+        checkIsSeparator(inputStream);
+        motionEndDetectionParameter->noAnalysisAtStartupTimeInSecond = readHexFloat4(inputStream, MOTION_END_DETECTION_PARAMETER_DIGIT);
+    }
 }
 
 static DeviceDescriptor descriptor = {

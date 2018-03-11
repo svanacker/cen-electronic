@@ -10,9 +10,4 @@
  */
 void printMotionInstructionTable(OutputStream* outputStream, PidMotion* pidMotion);
 
-/**
- * Print the list of debug data as table with all variables.
- */
-void printPidDataDebugTable(OutputStream* outputStream, PidMotion* pidMotion);
-
 #endif

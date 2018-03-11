@@ -166,6 +166,7 @@ void clearLastError();
 #define PID_MOTION_EMPTY                                                  0x3103
 #define PID_MOTION_NOT_ENOUGH_DATA                                        0x3104
 #define PID_MOTION_FULL                                                   0x3105
+#define PID_TYPE_UNKNOWN_ENUM                                             0x3106
 
 // MOTION
 

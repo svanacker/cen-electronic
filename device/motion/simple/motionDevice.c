@@ -8,11 +8,11 @@
 #include "../../../common/cmd/commonCommand.h"
 
 #include "../../../common/eeprom/eeprom.h"
+#include "../../../common/eeprom/eepromType.h"
 
 #include "../../../common/io/inputStream.h"
 #include "../../../common/io/outputStream.h"
 #include "../../../common/io/printWriter.h"
-#include "../../../common/io/printTableWriter.h"
 #include "../../../common/io/reader.h"
 
 #include "../../../common/log/logger.h"
@@ -42,7 +42,15 @@
 static PidMotion* pidMotion;
 
 void deviceMotionInit(void) {
-    loadMotionParameters(pidMotion->pidPersistenceEeprom, false);
+    Eeprom* eeprom_ = pidMotion->pidPersistenceEeprom;
+    if (eeprom_->eepromType == EEPROM_TYPE_MEMORY) {
+        loadMotionParameters(eeprom_, true);
+        // We store to do as it was already previously store !
+        saveMotionParameters(eeprom_);
+    }
+    else {
+        loadMotionParameters(eeprom_, false);
+    }
 }
 
 void deviceMotionShutDown(void) {

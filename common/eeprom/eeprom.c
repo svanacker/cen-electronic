@@ -2,6 +2,7 @@
 #include <stdbool.h>
 
 #include "eeprom.h"
+#include "eepromType.h"
 
 #include "../../common/error/error.h"
 
@@ -18,6 +19,7 @@
 #define EEPROM_BLOCK_COUNT			        8
 
 void initEeprom(Eeprom* eeprom_,
+                enum EepromType eepromType,
                 long maxIndex,
                 EepromWriteCharFunction* eepromWriteChar,
                 EepromReadCharFunction* eepromReadChar,
@@ -29,7 +31,8 @@ void initEeprom(Eeprom* eeprom_,
     if (eeprom_ == NULL) {
         writeError(EEPROM_NULL);
         return;
-    }            
+    }
+    eeprom_->eepromType = eepromType;
     eeprom_->maxIndex = maxIndex;
     eeprom_->eepromWriteChar = eepromWriteChar;
     eeprom_->eepromReadChar = eepromReadChar;
@@ -137,6 +140,10 @@ void dumpEepromToOutputStream(Eeprom* eeprom_, OutputStream* outputStream, unsig
 
 	// Table Header
 	println(outputStream);
+	appendTableHeaderSeparatorLine(outputStream);
+    addEepromTypeTableData(outputStream, eeprom_->eepromType, 0);
+    println(outputStream);
+	appendTableHeaderSeparatorLine(outputStream);
 	appendTableHeaderSeparatorLine(outputStream);
 	appendStringHeader(outputStream, "addr", EEPROM_ADDRESS_LENGTH);
 	appendStringHeader(outputStream, "Block 0", EEPROM_BLOCK_4_VALUE_LENGTH);

@@ -150,6 +150,7 @@
     <ClCompile Include="common\delay\pc\cenDelayPc.c" />
     <ClCompile Include="common\eeprom\eeprom.c" />
     <ClCompile Include="common\eeprom\eepromAreas.c" />
+    <ClCompile Include="common\eeprom\eepromType.c" />
     <ClCompile Include="common\eeprom\memoryEeprom.c" />
     <ClCompile Include="common\eeprom\pc\eepromPc.c" />
     <ClCompile Include="common\error\error.c" />
@@ -320,6 +321,7 @@
     <ClCompile Include="motion\parameters\motionParameterDebug.c" />
     <ClCompile Include="motion\parameters\motionParameterPersistence.c" />
     <ClCompile Include="motion\parameters\motionParameterType.c" />
+    <ClCompile Include="motion\parameters\motionParameterTypeDebug.c" />
     <ClCompile Include="motion\pid\alphaTheta.c" />
     <ClCompile Include="motion\pid\computer\bSplinePidComputer.c" />
     <ClCompile Include="motion\pid\computer\pidComputer.c" />
@@ -336,12 +338,15 @@
     <ClCompile Include="motion\pid\pc\pidPc.c" />
     <ClCompile Include="motion\pid\pid.c" />
     <ClCompile Include="motion\pid\pidComputationInstructionValues.c" />
+    <ClCompile Include="motion\pid\pidComputationInstructionValuesDebug.c" />
     <ClCompile Include="motion\pid\pidComputationValues.c" />
     <ClCompile Include="motion\pid\pidDebug.c" />
     <ClCompile Include="motion\pid\pidMotion.c" />
     <ClCompile Include="motion\pid\pidMotionDefinitionState.c" />
+    <ClCompile Include="motion\pid\pidMotionType.c" />
     <ClCompile Include="motion\pid\pidTimer.c" />
     <ClCompile Include="motion\pid\pidType.c" />
+    <ClCompile Include="motion\pid\pidTypeDebug.c" />
     <ClCompile Include="motion\pid\pidTypeOptimizer.c" />
     <ClCompile Include="motion\pid\profile\pidMotionProfileComputer.c" />
     <ClCompile Include="motion\pid\profile\profileType.c" />
@@ -615,6 +620,7 @@
     <ClInclude Include="motion\parameters\motionParameterDebug.h" />
     <ClInclude Include="motion\parameters\motionParameterPersistence.h" />
     <ClInclude Include="motion\parameters\motionParameterType.h" />
+    <ClInclude Include="motion\parameters\motionParameterTypeDebug.h" />
     <ClInclude Include="motion\pid\alphaTheta.h" />
     <ClInclude Include="motion\pid\computer\bSplinePidComputer.h" />
     <ClInclude Include="motion\pid\computer\pidComputer.h" />
@@ -634,12 +640,15 @@
     <ClInclude Include="motion\pid\pc\pidPc.h" />
     <ClInclude Include="motion\pid\pid.h" />
     <ClInclude Include="motion\pid\pidComputationInstructionValues.h" />
+    <ClInclude Include="motion\pid\pidComputationInstructionValuesDebug.h" />
     <ClInclude Include="motion\pid\pidComputationValues.h" />
     <ClInclude Include="motion\pid\pidConstants.h" />
     <ClInclude Include="motion\pid\pidMotion.h" />
     <ClInclude Include="motion\pid\pidMotionDefinitionState.h" />
+    <ClInclude Include="motion\pid\pidMotionType.h" />
     <ClInclude Include="motion\pid\pidTimer.h" />
     <ClInclude Include="motion\pid\pidType.h" />
+    <ClInclude Include="motion\pid\pidTypeDebug.h" />
     <ClInclude Include="motion\pid\pidTypeOptimizer.h" />
     <ClInclude Include="motion\pid\profileType.h" />
     <ClInclude Include="motion\pid\profile\pidMotionProfileComputer.h" />

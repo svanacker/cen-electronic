@@ -1,52 +1,54 @@
 #include "pidType.h"
 
-#include "../../common/io/outputStream.h"
-#include "../../common/io/printWriter.h"
-#include "../../common/io/printTableWriter.h"
+#include <stdbool.h>
 
+#include "../../common/error/error.h"
+
+#include "../../motion/pid/instructionType.h"
 #include "../../motion/parameters/motionParameterType.h"
 
-enum PidType getPidType(enum MotionParameterType motionParameterType) {
+// STANDARD ENUM MANAGEMENT
+
+bool checkPidTypeIndexInRange(unsigned int pidTypeIndex) {
+    return (pidTypeIndex >= 0 || pidTypeIndex < PID_TYPE_COUNT);
+}
+
+unsigned int getPidTypeCount(void) {
+    return PID_TYPE_COUNT;
+}
+
+unsigned int pidTypeEnumToIndex(enum PidType pidType) {
+    return (unsigned int)pidType;
+}
+
+enum PidType pidTypeValueOf(unsigned int pidTypeIndex) {
+    if (!checkPidTypeIndexInRange(pidTypeIndex)) {
+        writeError(PID_TYPE_UNKNOWN_ENUM);
+        return PID_TYPE_NONE;
+    }
+    return (enum PidType) pidTypeIndex;
+}
+
+// PID TYPE SPECIFIC
+
+enum PidType getPidType(enum MotionParameterType motionParameterType, enum InstructionType instructionType) {
     if (motionParameterType == MOTION_PARAMETER_TYPE_FORWARD_OR_BACKWARD) {
-        return PID_TYPE_GO_INDEX;
+        if (instructionType == THETA) {
+            return PID_TYPE_GO_INDEX;
+        }
+        // For Alpha, we maintain
+        return PID_TYPE_MAINTAIN_POSITION_INDEX;
     } else if (motionParameterType == MOTION_PARAMETER_TYPE_ROTATION) {
-        return PID_TYPE_ROTATE_INDEX;
+        if (instructionType == ALPHA) {
+            return PID_TYPE_ROTATE_INDEX;
+        }
+        // For Theta, we maintain
+        return PID_TYPE_MAINTAIN_POSITION_INDEX;
     } else if (motionParameterType == MOTION_PARAMETER_TYPE_MAINTAIN_POSITION) {
+        // For both Theta / Alpha Maintain
         return PID_TYPE_MAINTAIN_POSITION_INDEX;
     }
     // Default value, must not enter here
-    return PID_TYPE_GO_INDEX;
+    return PID_TYPE_NONE;
 }
 
-unsigned int appendPidTypeAsString(OutputStream* outputStream, enum PidType pidType) {
-    if (pidType == PID_TYPE_UNDEFINED) {
-        return appendString(outputStream, "UNDEFINED");
-    }
-    else if (pidType == PID_TYPE_GO_INDEX) {
-        return appendString(outputStream, "GO");
-    }
-    else if (pidType == PID_TYPE_ROTATE_INDEX) {
-		return appendString(outputStream, "ROTATE");
-    }
-    else if (pidType == PID_TYPE_MAINTAIN_POSITION_INDEX) {
-		return appendString(outputStream, "MAINTAIN");
-    }
-    else if (pidType == PID_TYPE_ADJUST_DIRECTION) {
-		return appendString(outputStream, "ADJUST_DIR");
-    }
-    else if (pidType == PID_TYPE_FINAL_APPROACH_INDEX) {
-		return appendString(outputStream, "FINAL");
-    }
-    else {
-        append(outputStream, '?');
-		return 1;
-    }
-	return 0;
-}
-
-unsigned int addPidTypeTableData(OutputStream* outputStream, enum PidType pidType, int columnSize) {
-	appendTableSeparator(outputStream);
-	appendSpace(outputStream);
-	unsigned int length = appendPidTypeAsString(outputStream, pidType);
-	return length + appendSpaces(outputStream, columnSize - length) + 2;
-}

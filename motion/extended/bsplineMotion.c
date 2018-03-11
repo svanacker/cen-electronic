@@ -212,15 +212,15 @@ void gotoSpline(PidMotion* pidMotion) {
     // determine the type of motion
     enum MotionParameterType motionParameterType = getMotionParameterType(curveLength, curveLength);
     // determine the pidType to execute motionType
-    enum PidType pidType = getPidType(motionParameterType);
+    // enum PidType pidType = getPidType(motionParameterType);
 
     // do as if we follow a straight line
     MotionParameter* motionParameter = getMotionParameters(MOTION_PARAMETER_TYPE_FORWARD_OR_BACKWARD);
     float bestA = computeBestAccelerationForBSpline(curve, motionParameter->a);
     float bestSpeed = computeBestSpeedForBSpline(curve, motionParameter->speed);
 
-    setNextPosition(motionDefinition, THETA, motionParameterType, pidType, curveLength, bestA, bestSpeed);
-    setNextPosition(motionDefinition, ALPHA, motionParameterType, pidType, 0.0f, motionParameter->a, motionParameter->speed);
+    setNextPosition(motionDefinition, THETA, motionParameterType, curveLength, bestA, bestSpeed);
+    setNextPosition(motionDefinition, ALPHA, motionParameterType, 0.0f, motionParameter->a, motionParameter->speed);
 
 	motionDefinition->computeU = &bSplineMotionUCompute;
     motionDefinition->state = PID_MOTION_DEFINITION_STATE_SET;

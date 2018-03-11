@@ -12,7 +12,7 @@
 #define PID_PARAMETERS_EEPROM_INDEX_MI                3
 
 /**
- * There are n PID structures to store with 4 values 
+ * There are n PID structures to store with 4 values  (P, I, D, MI)
  */
 #define EEPROM_PID_PARAMETERS_VALUE_COUNT    4
 

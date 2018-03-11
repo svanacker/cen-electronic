@@ -51,11 +51,8 @@ void internalSaveMotionParameterItem(Eeprom* motionParameterEeprom, unsigned lon
         writeError(MOTION_PARAMETERS_PERSISTENCE_NO_EEPROM);
         return;
     }
-    bool motionEepromAreaIsInitialized = isEepromAreaInitialized(motionParameterEeprom, EEPROM_MOTION_PARAMETERS_AREA_MARKER_INDEX);
-    if (!motionEepromAreaIsInitialized) {
-        writeError(MOTION_PARAMETERS_PERSISTENCE_EEPROM_NOT_INITIALIZED);
-        return;
-    }
+    initEepromArea(motionParameterEeprom, EEPROM_MOTION_PARAMETERS_AREA_MARKER_INDEX);
+
     unsigned long dataIndex = EEPROM_MOTION_PARAMETERS_START_INDEX + index * MOTION_PARAMETER_DATA_SIZE;
     eepromWriteUnsignedFloat(motionParameterEeprom, dataIndex, value, digitPrecision);
 }

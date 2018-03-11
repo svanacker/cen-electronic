@@ -22,6 +22,7 @@
 #include "../../../motion/parameters/motionParameterDebug.h"
 #include "../../../motion/pid/pid.h"
 #include "../../../motion/pid/pidDebug.h"
+#include "../../../motion/pid/pidComputationInstructionValuesDebug.h"
 #include "../../../motion/pid/motionInstructionDebug.h"
 #include "../../../motion/pid/parameters/pidParameterDebug.h"
 #include "../../../motion/pid/endDetection/motionEndDetectionDebug.h"

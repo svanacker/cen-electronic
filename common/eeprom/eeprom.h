@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+#include "eepromType.h"
+
 #include "../../common/io/buffer.h"
 
 // forward declaration
@@ -61,6 +63,8 @@ typedef void EepromDumpFunction(Eeprom* eeprom_);
  * Defines the contract for an eeprom.
  */
 struct Eeprom {
+    /** The type of Eeprom */
+    enum EepromType eepromType;
     /** The function which must be used to write a char (8 bits). */
     EepromWriteCharFunction* eepromWriteChar;
     /** The function which must be used to read a char (8 bits). */
@@ -98,6 +102,7 @@ long getMaxIndex(Eeprom* eeprom_);
  * @param eepromWriteBlock the pointer on the real hardware function which reads a block of data.
  */
 void initEeprom(Eeprom* eeprom_,
+                enum EepromType eepromType,
                 long maxIndex,
                 EepromWriteCharFunction* eepromWriteChar,
                 EepromReadCharFunction* eepromReadChar,

@@ -3,6 +3,7 @@
 
 #include <stdbool.h>
 
+#include "pidMotionType.h"
 #include "pidMotionDefinitionState.h"
 #include "parameters/pidGlobalParameters.h"
 #include "pidComputationValues.h"
@@ -20,26 +21,6 @@ typedef struct PidMotionDefinition PidMotionDefinition;
 * Define the function used to compute Errors.
 */
 typedef void ComputeUFunction(PidMotion* pidMotion,	PidMotionDefinition* motionDefinition);
-
-/**
- * Store if the motion is a bspline curve or a classical (rotation / forward) move.
- */
-enum PidMotionType {
-	/**
-	* The type is not defined so that we could know if pidMotionDefinition is not defined.
-	*/
-	MOTION_TYPE_UNDEFINED,
-
-	/**
-	* Classical Move: rotation / forward
-	*/
-	MOTION_TYPE_NORMAL,
-
-	/**
-	* Use of BSpline.
-	*/
-	MOTION_TYPE_BSPLINE
-};
 
 /**
 * Definition of motion. There can be more than one PidMotionDefinition, but only one active
@@ -82,8 +63,6 @@ struct PidMotion {
     PidComputationValues computationValues;
 	// For persistence
 	Eeprom* pidPersistenceEeprom;
-	// Are we in rolling Test Mode
-	bool rollingTestMode;
 };
 
 

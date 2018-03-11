@@ -1,8 +1,10 @@
 #ifndef PID_GLOBAL_PARAMETERS_H
 #define PID_GLOBAL_PARAMETERS_H
 
-#include "../pidConstants.h"
 #include "pidParameter.h"
+
+#include "../pidConstants.h"
+#include "../pidType.h"
 #include "../endDetection/motionEndDetectionParameter.h"
 
 /**
@@ -11,7 +13,7 @@
  */
 typedef struct PidGlobalParameters {
     // Parameters about PID
-    PidParameter pidParameters[PID_COUNT];
+    PidParameter pidParameters[PID_TYPE_COUNT];
     // Parameters about end motion detection (avoid rotation of wheels in case of no move => Avoid BURN OUT)
     MotionEndDetectionParameter motionEndDetectionParameter;
 } PidGlobalParameters;

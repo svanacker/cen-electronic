@@ -50,9 +50,7 @@ void bSplineMotionUCompute(PidMotion* pidMotion, PidMotionDefinition* motionDefi
     Point robotPoint = robotPosition->pos;
 
     // GET PID
-    unsigned pidIndex = getIndexOfPid(THETA, thetaInst->pidType);
-	unsigned char rollingTestMode = getRollingTestMode(pidMotion);
-    PidParameter* pidParameter = getPidParameter(pidMotion, pidIndex, rollingTestMode);
+    PidParameter* pidParameter = getPidParameterByPidType(pidMotion, PID_TYPE_GO_INDEX);
 
     // ALPHA
     PidComputationInstructionValues* alphaValues = &(computationValues->values[ALPHA]);    
@@ -96,6 +94,7 @@ void bSplineMotionUCompute(PidMotion* pidMotion, PidMotionDefinition* motionDefi
     thetaValues->u = thetaU;
 
     // ALPHA CORRECTION
+    // TODO : Introduce Parameters stored in Eeprom !
     alphaPulseError *= 5.0f;
     float alphaCorrection = -0.00050f * normalSpeed * thetaError * (alphaAndThetaDiff);
     // float alphaCorrection = 0.0f;

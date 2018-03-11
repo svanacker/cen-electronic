@@ -38,7 +38,15 @@
 static PidMotion* pidMotion;
 
 void deviceExtendedMotionInit(void) {
-    loadMotionParameters(pidMotion->pidPersistenceEeprom, false);
+    Eeprom* eeprom_ = pidMotion->pidPersistenceEeprom;
+    if (eeprom_->eepromType == EEPROM_TYPE_MEMORY) {
+        loadMotionParameters(eeprom_, true);
+        // We store to do as it was already previously store !
+        saveMotionParameters(eeprom_);
+    }
+    else {
+        loadMotionParameters(eeprom_, false);
+    }
 }
 
 void deviceExtendedMotionShutDown(void) {

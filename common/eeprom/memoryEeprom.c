@@ -1,5 +1,6 @@
 #include "memoryEeprom.h"
 #include "eeprom.h"
+#include "eepromType.h"
 
 #include "../../common/error/error.h"
 #include "../../common/io/buffer.h"
@@ -49,5 +50,5 @@ void eepromMemoryWriteBlock(Eeprom* eeprom_, unsigned long index, unsigned int l
 }
 
 void initEepromMemory(Eeprom* memoryEeprom, char(*valuesArray)[], unsigned int maxIndex) {
-    initEeprom(memoryEeprom, maxIndex, eepromMemoryWriteChar, eepromMemoryReadChar, eepromMemoryReadBlock, eepromMemoryWriteBlock, NULL, NULL, valuesArray);
+    initEeprom(memoryEeprom, EEPROM_TYPE_MEMORY, maxIndex, eepromMemoryWriteChar, eepromMemoryReadChar, eepromMemoryReadBlock, eepromMemoryWriteBlock, NULL, NULL, valuesArray);
 }

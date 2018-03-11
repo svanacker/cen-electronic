@@ -1662,6 +1662,21 @@
     <ClCompile Include="motion\position\codersDebug.c">
       <Filter>Source Files\motion\position</Filter>
     </ClCompile>
+    <ClCompile Include="motion\pid\pidTypeDebug.c">
+      <Filter>Source Files\motion\pid</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\parameters\motionParameterTypeDebug.c">
+      <Filter>Source Files\motion\parameters</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\pid\pidMotionType.c">
+      <Filter>Source Files\motion\pid</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\pid\pidComputationInstructionValuesDebug.c">
+      <Filter>Source Files\motion\pid</Filter>
+    </ClCompile>
+    <ClCompile Include="common\eeprom\eepromType.c">
+      <Filter>Source Files\common\eeprom</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -2566,6 +2581,18 @@
     </ClInclude>
     <ClInclude Include="motion\position\codersDebug.h">
       <Filter>Header Files\motion\position</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\pidTypeDebug.h">
+      <Filter>Header Files\motion\pid</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\parameters\motionParameterTypeDebug.h">
+      <Filter>Header Files\motion\parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\pidMotionType.h">
+      <Filter>Header Files\motion</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\pidComputationInstructionValuesDebug.h">
+      <Filter>Header Files\motion\pid</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

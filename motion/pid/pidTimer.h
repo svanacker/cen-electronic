@@ -34,6 +34,10 @@ void clearPidTime(void);
 bool mustPidBeRecomputed(void);
 
 /**
+ * Get the pid Timer frequency in hertz.
+ */
+float getPidTimerFrequencyHertz(void);
+/**
  * Get the pid time, used to compare where the robot has to be at a specific pid Time, with the real position at the same specific pidTime.
  */
 float getPidTimeInSecond(void);

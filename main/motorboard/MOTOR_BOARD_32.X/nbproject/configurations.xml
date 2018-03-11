@@ -33,6 +33,8 @@
                      projectFiles="true">
         <itemPath>../../../common/eeprom/eeprom.h</itemPath>
         <itemPath>../../../common/eeprom/eepromAreas.h</itemPath>
+        <itemPath>../../../common/eeprom/memoryEeprom.h</itemPath>
+        <itemPath>../../../common/eeprom/eepromType.h</itemPath>
       </logicalFolder>
       <logicalFolder name="common.error"
                      displayName="common.error"
@@ -311,6 +313,7 @@
         <itemPath>../../../motion/parameters/motionParameter.h</itemPath>
         <itemPath>../../../motion/parameters/motionParameterPersistence.h</itemPath>
         <itemPath>../../../motion/parameters/motionParameterDebug.h</itemPath>
+        <itemPath>../../../motion/parameters/motionParameterTypeDebug.h</itemPath>
       </logicalFolder>
       <logicalFolder name="motion.pid" displayName="motion.pid" projectFiles="true">
         <itemPath>../../../motion/pid/pid.h</itemPath>
@@ -329,6 +332,9 @@
         <itemPath>../../../motion/pid/pidTypeOptimizer.h</itemPath>
         <itemPath>../../../motion/pid/pidComputationInstructionValues.h</itemPath>
         <itemPath>../../../motion/pid/motionInstructionDebug.h</itemPath>
+        <itemPath>../../../motion/pid/pidTypeDebug.h</itemPath>
+        <itemPath>../../../motion/pid/pidMotionType.h</itemPath>
+        <itemPath>../../../motion/pid/pidComputationInstructionValuesDebug.h</itemPath>
       </logicalFolder>
       <logicalFolder name="motion.pid.computer"
                      displayName="motion.pid.computer"
@@ -426,6 +432,8 @@
                      projectFiles="true">
         <itemPath>../../../common/eeprom/eeprom.c</itemPath>
         <itemPath>../../../common/eeprom/eepromAreas.c</itemPath>
+        <itemPath>../../../common/eeprom/memoryEeprom.c</itemPath>
+        <itemPath>../../../common/eeprom/eepromType.c</itemPath>
       </logicalFolder>
       <logicalFolder name="common.error"
                      displayName="common.error"
@@ -714,6 +722,7 @@
         <itemPath>../../../motion/parameters/motionParameter.c</itemPath>
         <itemPath>../../../motion/parameters/motionParameterPersistence.c</itemPath>
         <itemPath>../../../motion/parameters/motionParameterDebug.c</itemPath>
+        <itemPath>../../../motion/parameters/motionParameterTypeDebug.c</itemPath>
       </logicalFolder>
       <logicalFolder name="motion.pid" displayName="motion.pid" projectFiles="true">
         <itemPath>../../../motion/pid/pid.c</itemPath>
@@ -730,6 +739,9 @@
         <itemPath>../../../motion/pid/pidComputationValues.c</itemPath>
         <itemPath>../../../motion/pid/pidComputationInstructionValues.c</itemPath>
         <itemPath>../../../motion/pid/motionInstructionDebug.c</itemPath>
+        <itemPath>../../../motion/pid/pidTypeDebug.c</itemPath>
+        <itemPath>../../../motion/pid/pidMotionType.c</itemPath>
+        <itemPath>../../../motion/pid/pidComputationInstructionValuesDebug.c</itemPath>
       </logicalFolder>
       <logicalFolder name="motion.pid.computer"
                      displayName="motion.pid.computer"

@@ -3,6 +3,9 @@
 void clearPidComputationInstructionValues(PidComputationInstructionValues* pidComputationInstructionValues) {
     pidComputationInstructionValues->historyWriteIndex = 0;
     pidComputationInstructionValues->historyCount = 0;
+
+    // PID
+    pidComputationInstructionValues->pidType = PID_TYPE_NONE;
         
     // POSITION / SPEED
     pidComputationInstructionValues->normalPosition = 0;
@@ -26,6 +29,9 @@ void clearPidComputationInstructionValues(PidComputationInstructionValues* pidCo
     for (i = 0; i < PID_HISTORY_ITEM_COUNT; i++) {
         // PID TIME
         pidComputationInstructionValues->pidTimeHistory[i] = 0;
+
+        // PID TYPE
+        pidComputationInstructionValues->pidTypeHistory[i] = PID_TYPE_NONE;
        
         // POSITION
         pidComputationInstructionValues->positionHistory[i] = 0;
@@ -44,17 +50,13 @@ void clearPidComputationInstructionValues(PidComputationInstructionValues* pidCo
 }
 
 void storePidComputationInstructionValueHistory(PidComputationInstructionValues* pidComputationInstructionValues, float pidTimeInSecond) {
-    pidComputationInstructionValues->historyWriteIndex++;
-    if (pidComputationInstructionValues->historyWriteIndex >= PID_HISTORY_ITEM_COUNT) {
-        // Restart to 0
-        pidComputationInstructionValues->historyWriteIndex = 0;
-    }
-    else {
-        pidComputationInstructionValues->historyCount++;
-    }
     unsigned int i = pidComputationInstructionValues->historyWriteIndex;
     
+    // PID TIME
     pidComputationInstructionValues->pidTimeHistory[i] = pidTimeInSecond;
+
+    // PID TYPE
+    pidComputationInstructionValues->pidTypeHistory[i] = pidComputationInstructionValues->pidType;
 
     // POSITION
     pidComputationInstructionValues->positionHistory[i] = pidComputationInstructionValues->currentPosition;
@@ -69,4 +71,16 @@ void storePidComputationInstructionValueHistory(PidComputationInstructionValues*
 
     // U
     pidComputationInstructionValues->uHistory[i] = pidComputationInstructionValues->u;
+
+    // For next time
+    pidComputationInstructionValues->historyWriteIndex++;
+    if (pidComputationInstructionValues->historyWriteIndex >= PID_HISTORY_ITEM_COUNT) {
+        // Restart to 0
+        pidComputationInstructionValues->historyWriteIndex = 0;
+    }
+    else {
+        if (pidComputationInstructionValues->historyCount < PID_HISTORY_ITEM_COUNT) {
+            pidComputationInstructionValues->historyCount++;
+        }
+    }
 }

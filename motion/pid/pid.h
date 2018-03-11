@@ -33,18 +33,11 @@
 #define PID_VALUE_DIGIT_PRECISION       1
 
 /**
- * Returns the Index of Pid which must be chosen in function of pidType.
- * @param instructionType THETA_INDEX or ALPHA_MASK
- * @param pidType the type of pid PID_TYPE_GO_INDEX / PID_TYPE_ROTATE_INDEX / PID_TYPE_MAINTAIN_POSITION
- */
-unsigned char getIndexOfPid(enum InstructionType instructionType, enum PidType pidType);
-
-/**
  * Enable or disable a PID.
  * @param pidIndex the index of which pid we must change (between 0 and PID_INDEX_COUNT)
  * @param enabled false or true if we want to enabled or not the specified pid
  */
-void setEnabledPid(PidMotion* pidMotion, int pidIndex, unsigned char enabled);
+void setEnabledPid(PidMotion* pidMotion, unsigned int pidIndex, bool enabled);
 
 /**
 * Sets the PID at the specified index.
@@ -54,17 +47,21 @@ void setEnabledPid(PidMotion* pidMotion, int pidIndex, unsigned char enabled);
 * @param d the D parameter
 * @param maxIntegral the bounds of the I term
 */
-void setPidParameter(PidMotion* pidMotion, int pidIndex, float p, float i, float d, float maxIntegral);
+void setPidParameter(PidMotion* pidMotion, unsigned int pidIndex, float p, float i, float d, float maxIntegral);
 
 /**
  * Returns the PID at the specified index.
- * @param index the index of the PID to set (between 0 and PID_COUNT)
- * @param pidMode ROLLING_BOARD_TEST_MODE_ON or ROLLING_BOARD_TEST_MODE_OFF
+ * @param index the index of the PID to set (between 0 and PID_TYPE_COUNT)
  * @return the PID at the given index
  */
-PidParameter* getPidParameter(PidMotion* pidMotion, int index, unsigned int pidMode);
+PidParameter* getPidParameterByIndex(PidMotion* pidMotion, unsigned int pidTypeIndex);
 
-bool getRollingTestMode(PidMotion* pidMotion);
+/**
+* Returns the PID at the specified index.
+* @param index the index of the PID to set (between 0 and PID_TYPE_COUNT)
+* @return the PID at the given index
+*/
+PidParameter* getPidParameterByPidType(PidMotion* pidMotion, enum PidType pidType);
 
 /**
  * Updates the motors values and set the type of control which is applied to the motors.

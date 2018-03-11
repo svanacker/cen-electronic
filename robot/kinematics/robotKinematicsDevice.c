@@ -5,6 +5,7 @@
 
 #include "../../common/cmd/commonCommand.h"
 #include "../../common/eeprom/eeprom.h"
+#include "../../common/eeprom/eepromType.h"
 #include "../../common/io/printWriter.h"
 #include "../../common/io/reader.h"
 
@@ -22,8 +23,8 @@ static Eeprom* robotKinematicsEeprom;
 
 void deviceRobotKinematicsInit(void) {
     RobotKinematics* robotKinematics = getRobotKinematics();
-    // Load from the eeprom but do not overwrite by reading default values
-	loadRobotKinematicsParameters(robotKinematics, robotKinematicsEeprom, false);
+    // Load from the eeprom but do not overwrite by reading default values unless this is a memory Eeprom
+	loadRobotKinematicsParameters(robotKinematics, robotKinematicsEeprom, robotKinematicsEeprom->eepromType == EEPROM_TYPE_MEMORY);
 }
 
 void deviceRobotKinematicsShutDown(void) {

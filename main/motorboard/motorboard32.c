@@ -7,7 +7,12 @@
 #include "motorBoard32.h"
 
 #include "../../common/commons.h"
+
 #include "../../common/2d/2d.h"
+
+#include "../../common/eeprom/eeprom.h"
+#include "../../common/eeprom/memoryEeprom.h"
+
 #include "../../common/math/cenMath.h"
 
 #include "../../common/setup/32/picSetup32.h"
@@ -157,6 +162,9 @@ static I2cBusConnection* clockI2cBusConnection;
 
 // Eeprom
 static Eeprom eeprom_;
+
+// Memory Eeprom
+static char memoryEepromArray[MOTOR_BOARD_MEMORY_EEPROM_LENGTH];
 
 // Clock
 static Clock clock;
@@ -334,11 +342,16 @@ int runMotorBoard() {
 
     setDebugI2cEnabled(false);
 
-    // Eeprom
+    // I2C Master (PORT 4)
     masterI2cBus = addI2cBus(I2C_BUS_TYPE_MASTER, I2C_BUS_PORT_4);
     i2cMasterInitialize(masterI2cBus);
-    eepromI2cBusConnection = addI2cBusConnection(masterI2cBus, ST24C512_ADDRESS_0, true);
-    init24C512Eeprom(&eeprom_, eepromI2cBusConnection);
+    
+    // EEPROM : If Eeprom is installed
+    // eepromI2cBusConnection = addI2cBusConnection(masterI2cBus, ST24C512_ADDRESS_0, true);
+    // init24C512Eeprom(&eeprom_, eepromI2cBusConnection);
+    
+    // EEPROM : If we use Software Eeprom
+    initEepromMemory(&eeprom_, &memoryEepromArray, MOTOR_BOARD_MEMORY_EEPROM_LENGTH);
 
     // Clock
     // -> Clock

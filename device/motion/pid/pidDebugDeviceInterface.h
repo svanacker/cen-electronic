@@ -13,7 +13,7 @@
 /**
 * Write into a table all PID Parameters
 */
-#define COMMAND_DEBUG_PID_PARAMETERS                'P'
+#define COMMAND_DEBUG_PID_PARAMETERS               'P'
 
 /**
  * Show all values for the end Motion data.

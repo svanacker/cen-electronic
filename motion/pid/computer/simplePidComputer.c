@@ -32,24 +32,27 @@ float computeNextPID(PidMotion* pidMotion,
     MotionInstruction* motionInstruction = &(motionDefinition->inst[instructionType]);
     PidComputationInstructionValues* computationInstructionValues = &(computationValues->values[instructionType]);
 
-    unsigned char rollingTestMode = getRollingTestMode(pidMotion);
-    enum PidType pidType = motionInstruction->pidType;
-    float currentPosition = computationInstructionValues->currentPosition;
+    enum PidType pidType = motionInstruction->initialPidType;
+    computationInstructionValues->pidType = pidType;
 
-    // instructionIndex = Alpha / Theta
     // pidType = Forward / Rotation / Final Approach ...
-    unsigned char pidIndex = getIndexOfPid(instructionType, pidType);
-    PidParameter* pidParameter = getPidParameter(pidMotion, pidIndex, rollingTestMode);
+    PidParameter* pidParameter = getPidParameterByPidType(pidMotion, pidType);
 
     if (!pidParameter->enabled) {
         return 0.0f;
     }
 
     float pidTimeInSecond = computationValues->pidTime;
+
+    // Position
+    float currentPosition = computationInstructionValues->currentPosition;
     float normalPosition = computeNormalPosition(motionInstruction, pidTimeInSecond);
     computationInstructionValues->normalPosition = normalPosition;
+
+    // Error
     float positionError = normalPosition - currentPosition;
     
+    // Speed
     float normalSpeed = computeNormalSpeed(motionInstruction, pidTimeInSecond);
     computationInstructionValues->normalSpeed = normalSpeed;
     
@@ -57,6 +60,7 @@ float computeNextPID(PidMotion* pidMotion,
     float result = computePidCorrection(computationInstructionValues, pidParameter, normalSpeed, positionError);
     computationInstructionValues->u = result;
 
+    // For History
     storePidComputationInstructionValueHistory(computationInstructionValues, pidTimeInSecond);
 
     return result;

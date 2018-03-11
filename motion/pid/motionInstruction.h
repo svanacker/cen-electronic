@@ -37,8 +37,8 @@ typedef struct MotionInstruction {
     enum ProfileType profileType;
     /** The type of MotionParameterType (GO, ROTATION, MAINTAIN_POSITION). */
     enum MotionParameterType motionParameterType;
-    /** The type of pid which must be used. */
-    enum PidType pidType;
+    /** The type of pid which must be used (for the beginning). */
+    enum PidType initialPidType;
 } MotionInstruction;
 
 /**

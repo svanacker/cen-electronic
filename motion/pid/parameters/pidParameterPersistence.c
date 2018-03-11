@@ -10,37 +10,20 @@
 #include "../../../common/eeprom/eepromAreas.h"
 #include "../../../common/error/error.h"
 
-// DEFAULT VALUES : As the PID value is stored into the eeprom, this will be erased by 
-// Programming. It's very dangerous if we forget to send default values
-#define PID_STORED_COUNT        10
-
-static float PID_PARAMETERS_EEPROM_DEFAULT_VALUES[EEPROM_PID_PARAMETERS_VALUE_COUNT * PID_STORED_COUNT] = {
-    // NORMAL VALUES
-    // Go (P I D MI)
+static float PID_PARAMETERS_EEPROM_DEFAULT_VALUES[EEPROM_PID_PARAMETERS_VALUE_COUNT * PID_TYPE_COUNT] = {
+    // PID_TYPE_NONE
+    0.0f, 0.0f, 0.0f, 0.0f,
+    // PID_TYPE_GO_INDEX
     5.0f, 0.0f, 51.2f, 0.0f,
+    // PID_TYPE_ROTATE_INDEX
+    5.0f, 0.0f, 51.2f, 0.0f,
+    // PID_TYPE_FINAL_APPROACH
+    5.0f, 0.0f, 51.2f, 0.0f,
+    // PID_TYPE_MAINTAIN_POSITION_INDEX
     12.8f, 0.0f, 128.0f, 0.0f,
-    // Rotation (P I D MI)
-    5.0f, 0.0f, 51.2f, 0.0f,
-    5.0f, 0.0f, 51.2f, 0.0f,
-    // Maintain Position
-    1.0f, 0.0f, 1.0f, 0.0f,
-    1.0f, 0.0f, 1.0f, 0.0f,
-    // Adjust to the border : it needs small Alpha PID to be able to adjust to the border
-    0.2f, 0.0f, 0.3f, 0.0f,
-    0.05f, 0.0f, 0.3f, 0.0f,
-    // Final Approach
-    1.0f, 0.0f, 1.0f, 0.0f,
+    // PID_TYPE_ADJUST
     1.0f, 0.0f, 1.0f, 0.0f
 };
-
-// Values not stored into the EEPROM => TODO, store into
-#define ROLLING_TEST_P                0.1f
-#define ROLLING_TEST_I                0.0f
-#define ROLLING_TEST_D                0.1f
-#define ROLLING_TEST_MAX_INTEGRAL     0.1f
-
-// Not used
-#define DEFAULT_MAX_INTEGRAL 0
 
 // EEPROM CHECK
 
@@ -78,7 +61,7 @@ bool internalPidParametersCheckIfEepromIsInitialized(Eeprom* _eeprom) {
 /**
  * @private
  * Returns the real data Index in storage area for a specific pid and a specific value
- * @param pidIndex the index of PID (between 0 and PID_COUNT)
+ * @param pidIndex the index of PID (between 0 and PID_TYPE_COUNT)
  * @param dataIndex the index of data (between 0 and EEPROM_PID_PARAMETERS_VALUE_COUNT)
  */
 unsigned int getPidParameterPersistenceRealDataIndex(unsigned int pidIndex, unsigned int dataIndex) {
@@ -121,7 +104,7 @@ float internalLoadPidParameter(PidMotion* pidMotion, unsigned int pidIndex, unsi
     }
     else {
         Eeprom* _eeprom = pidMotion->pidPersistenceEeprom;
-        unsigned long realDataEepromIndex = EEPROM_PID_PARAMETERS_START_INDEX + realIndex * EEPROM_PID_PARAMETERS_VALUE_LENGTH;
+        unsigned long realDataEepromIndex = EEPROM_PID_PARAMETERS_START_INDEX + (realIndex * EEPROM_PID_PARAMETERS_VALUE_LENGTH);
         result = eepromReadUnsignedFloat(_eeprom, realDataEepromIndex, PID_VALUE_DIGIT_PRECISION);
     }
     return result;
@@ -140,26 +123,16 @@ void loadPidParameters(PidMotion* pidMotion, bool loadDefaultValues) {
             return;
         }
     }
-    int pidIndex;
-    for (pidIndex = 0; pidIndex < PID_STORED_COUNT; pidIndex++) {
-        PidParameter* localPidParameter = getPidParameter(pidMotion, pidIndex, 0);
+    unsigned int pidIndex;
+    unsigned int pidTypeCount = getPidTypeCount();
+    for (pidIndex = 0; pidIndex < pidTypeCount; pidIndex++) {
+        PidParameter* localPidParameter = getPidParameterByIndex(pidMotion, pidIndex);
         localPidParameter->p = internalLoadPidParameter(pidMotion, pidIndex, PID_PARAMETERS_EEPROM_INDEX_KP, loadDefaultValues);
         localPidParameter->i = internalLoadPidParameter(pidMotion, pidIndex, PID_PARAMETERS_EEPROM_INDEX_KI, loadDefaultValues);
         localPidParameter->d = internalLoadPidParameter(pidMotion, pidIndex, PID_PARAMETERS_EEPROM_INDEX_KD, loadDefaultValues);
         localPidParameter->maxIntegral = internalLoadPidParameter(pidMotion, pidIndex, PID_PARAMETERS_EEPROM_INDEX_MI, loadDefaultValues);
         localPidParameter->enabled = true;
     }
-
-    // Load rolling Test parameters
-    /*
-    Pid* rollingTestModePid = getPID(ROLLING_TEST);
-    rollingTestModePid->p = ROLLING_TEST_P;
-    rollingTestModePid->i = ROLLING_TEST_I;
-    rollingTestModePid->d = ROLLING_TEST_D;
-    rollingTestModePid->maxIntegral = ROLLING_TEST_MAX_INTEGRAL;
-    rollingTestModePid->derivativePeriod = DEFAULT_DERIVATIVE_PERIOD;
-    rollingTestModePid->enabled = true;
-     */
     
     // Load Motion End Detection Parameter
     MotionEndDetectionParameter* motionEndDetectionParameter = &(pidMotion->globalParameters.motionEndDetectionParameter);
@@ -190,8 +163,8 @@ void savePidParameters(PidMotion* pidMotion) {
     // Store All Pid Parameters (P, I, D, MI)
     int pidIndex;
     // we save both NORMAL_MODE AND ROLLING_TEST_MODE
-    for (pidIndex = 0; pidIndex < PID_STORED_COUNT; pidIndex++) {
-        PidParameter* localPidParameter = getPidParameter(pidMotion, pidIndex, 0);
+    for (pidIndex = 0; pidIndex < PID_TYPE_COUNT; pidIndex++) {
+        PidParameter* localPidParameter = getPidParameterByIndex(pidMotion, pidIndex);
         internalSavePidParameter(pidMotion, pidIndex, PID_PARAMETERS_EEPROM_INDEX_KP, localPidParameter->p);
         internalSavePidParameter(pidMotion, pidIndex, PID_PARAMETERS_EEPROM_INDEX_KI, localPidParameter->i);
         internalSavePidParameter(pidMotion, pidIndex, PID_PARAMETERS_EEPROM_INDEX_KD, localPidParameter->d);

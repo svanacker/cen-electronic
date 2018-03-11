@@ -21,7 +21,6 @@ void computeMotionInstruction(MotionInstruction* inst);
  * @param motionDefinition the motionDefinition that we want to update
  * @param instructionType the index of which instruction to follow
  * @param motionParameterType the type of motion which must be used
- * @param pidType the type of pid which must be used
  * @param pNextPosition can be either negative or positive
  * @param pa is the maximal absolute value of acceleration
  * @param pSpeedMax is the maximal absolute value of speed
@@ -30,7 +29,6 @@ void setNextPosition(
 		PidMotionDefinition* motionDefinition,
 		enum InstructionType instructionType,
         enum MotionParameterType motionParameterType,
-        enum PidType pidType,
         float pNextPosition,
         float pa,
         float pSpeedMax);

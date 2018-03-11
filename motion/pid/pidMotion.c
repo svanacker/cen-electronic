@@ -2,6 +2,7 @@
 
 #include <stdbool.h>
 
+#include "../../common/eeprom/eeprom.h"
 #include "../../common/error/error.h"
 #include "../../robot/kinematics/robotKinematics.h"
 #include "../../robot/kinematics/robotKinematicsPersistence.h"
@@ -9,6 +10,7 @@
 #include "pidTimer.h"
 #include "parameters/pidParameterPersistence.h"
 #include "pidComputationValues.h"
+#include "motionParameterPersistence.h"
 
 bool checkPidMotionNotNull(const PidMotion* pidMotion) {
 	if (pidMotion == NULL) {
@@ -194,12 +196,27 @@ void initPidMotion(PidMotion* pidMotion, Eeprom* _eeprom, PidMotionDefinition(*a
 	if (!checkPidMotionNotNull(pidMotion)) {
 		return;
 	}
+    if (_eeprom == NULL) {
+        writeError(EEPROM_NULL);
+        return;
+    }
 	pidMotion->motionDefinitions = array;
 	pidMotion->motionLength = length;
 	pidMotion->pidPersistenceEeprom = _eeprom;
 
-	// We load the values from the eeprom, but we don't load default values
-	loadPidParameters(pidMotion, false);
+	// We load the values from the eeprom, but we don't load default values unless the eeprom is a memory type
+	loadPidParameters(pidMotion, _eeprom->eepromType == EEPROM_TYPE_MEMORY);
+
+    if (_eeprom->eepromType == EEPROM_TYPE_MEMORY) {
+        loadPidParameters(pidMotion, true);
+        // We store to do as it was already previously store !
+        savePidParameters(pidMotion);
+    }
+    else {
+        loadPidParameters(pidMotion, false);
+    }
+
+
 	RobotKinematics* robotKinematics = getRobotKinematics();
 	initPidTimer();
 }
