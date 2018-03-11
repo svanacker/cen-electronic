@@ -47,6 +47,9 @@ void switchToNextMotionDefinitionIfAny(PidMotion* pidMotion, PidMotionDefinition
 }
 
 void handleInstructionAndMotion(PidMotion* pidMotion) {
+    updateCoders();
+    updateTrajectory();
+
 	// Get the current Motion Definition
     PidMotionDefinition* currentMotionDefinition = pidMotionGetCurrentMotionDefinition(pidMotion);
     if (currentMotionDefinition == NULL) {
@@ -70,9 +73,6 @@ void handleInstructionAndMotion(PidMotion* pidMotion) {
         
         currentMotionDefinition->state = PID_MOTION_DEFINITION_STATE_ACTIVE; 
     }
-
-    updateCoders();
-    updateTrajectory();
 
     // OPTIONAL
     // checkCoders();

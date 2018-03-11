@@ -163,7 +163,7 @@ void devicePidHandleRawData(char commandHeader, InputStream* inputStream, Output
         appendSeparator(outputStream);
 
         // pidType
-        appendHexFloat4(outputStream, computationValues->pidTime, PID_TIME_SECOND_DIGIT_PRECISION);
+        appendHexFloat4(outputStream, computationValues->pidTimeInSecond, PID_TIME_SECOND_DIGIT_PRECISION);
         appendSeparator(outputStream);
 
         // normalPosition

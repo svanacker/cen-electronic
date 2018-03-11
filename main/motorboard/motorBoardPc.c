@@ -6,6 +6,7 @@
 #include "../../common/clock/clock.h"
 #include "../../common/delay/cenDelay.h"
 #include "../../common/eeprom/pc/eepromPc.h"
+#include "../../common/eeprom/memoryEeprom.h"
 #include "../../common/error/error.h"
 #include "../../common/i2c/i2cCommon.h"
 #include "../../common/i2c/i2cBusList.h"
@@ -156,6 +157,7 @@ static Buffer i2cSlaveDebugInputBuffer;
 
 // Eeprom
 static Eeprom eeprom;
+static char memoryEepromArray[MOTOR_BOARD_PC_MEMORY_EEPROM_LENGTH];
 
 // Battery
 static Battery battery;
@@ -272,7 +274,9 @@ void runMotorBoardPC(bool singleMode) {
 	}
 
     // Eeprom
-    initEepromPc(&eeprom, "MOTOR_BOARD_PC_EEPROM");
+    // initEepromPc(&eeprom, "MOTOR_BOARD_PC_EEPROM");
+    initEepromMemory(&eeprom, (char(*)[]) &memoryEepromArray, MOTOR_BOARD_PC_MEMORY_EEPROM_LENGTH);
+
 
     // Battery
     initBattery(&battery, getBatteryVoltage);

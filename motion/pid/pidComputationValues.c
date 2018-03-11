@@ -12,7 +12,8 @@ void clearPidComputationValues(PidComputationValues* pidComputationValues) {
     pidComputationValues->alphaError = 0.0f;
     pidComputationValues->thetaError = 0.0f;
     pidComputationValues->thetaXAxisError = 0.0f;
-    pidComputationValues->pidTime = 0.0f;
+    pidComputationValues->lastPidTimeInSecond = 0.0f;
+    pidComputationValues->pidTimeInSecond = 0.0f;
     
     clearPidComputationInstructionValues(&(pidComputationValues->values[THETA]));
     clearPidComputationInstructionValues(&(pidComputationValues->values[ALPHA]));

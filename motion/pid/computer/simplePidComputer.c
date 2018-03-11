@@ -42,7 +42,7 @@ float computeNextPID(PidMotion* pidMotion,
         return 0.0f;
     }
 
-    float pidTimeInSecond = computationValues->pidTime;
+    float pidTimeInSecond = computationValues->pidTimeInSecond;
 
     // Position
     float currentPosition = computationInstructionValues->currentPosition;

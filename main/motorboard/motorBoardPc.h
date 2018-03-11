@@ -27,6 +27,9 @@ void runMotorBoardPC(bool singleMode);
 // SERIAL
 #define MOTOR_BOARD_PC_SERIAL_LINK_LIST_LENGTH           2
 
+// MEMORY EEPROM
+#define MOTOR_BOARD_PC_MEMORY_EEPROM_LENGTH           0x500
+
 // I2cBus
 #define MOTOR_BOARD_PC_PIPE_I2C_SLAVE_NAME    L"\\\\.\\pipe\\motorBoardPipe"
 

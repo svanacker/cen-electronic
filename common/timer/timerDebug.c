@@ -23,7 +23,7 @@
 void printTimerListHeader(OutputStream* outputStream) {
 	println(outputStream);
 	appendTableHeaderSeparatorLine(outputStream);
-	appendStringHeader(outputStream, "idx", TIMER_DEBUG_CODE_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "idx", TIMER_DEBUG_IDX_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "code", TIMER_DEBUG_CODE_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "name", TIMER_DEBUG_NAME_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Frequ.", TIMER_DEBUG_FREQUENCY_COLUMN_LENGTH);
@@ -31,7 +31,7 @@ void printTimerListHeader(OutputStream* outputStream) {
 	appendStringHeader(outputStream, "counter", TIMER_DEBUG_INTERNAL_COUNTER_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "time", TIMER_DEBUG_TIME_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "markTime", TIMER_DEBUG_MARK_TIME_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "ON/OFF", TIMER_DEBUG_ENABLED_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "enabled", TIMER_DEBUG_ENABLED_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "working", TIMER_DEBUG_WORKING_COLUMN_LENGTH);
 	appendEndOfTableColumn(outputStream, TIMER_DEBUG_LAST_COLUMN_LENGTH);
 	appendTableHeaderSeparatorLine(outputStream);

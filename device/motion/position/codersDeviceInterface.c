@@ -31,15 +31,24 @@ int deviceCodersGetInterface(char commandHeader, DeviceInterfaceMode mode, bool 
             setFunctionNoArgumentAndNoResult("debug Coders Value");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    } else if (commandHeader == COMMAND_DEBUG_TIMER_GET_WHEEL_POSITION) {
-        if (fillDeviceArgumentList) {
-            setFunction("debug Coders Value with Timer", 3, 0);
-            setArgumentUnsignedHex2(0, "time in 1/10 sec");
-			setArgumentSeparator(1);
-            setArgumentUnsignedHex2(2, "iteration count");
-        }
-        return commandLengthValueForMode(mode, 5, 0);
     }
+    else if (commandHeader == COMMAND_DEBUG_ACQUIRE_SAMPLE_WHEEL_POSITION) {
+        if (fillDeviceArgumentList) {
+            setFunction("acquire Sample for xx milliSec", 3, 0);
+            setArgumentUnsignedHex4(0, "time in 1/1000 sec");
+            setArgumentSeparator(1);
+            setArgumentUnsignedHex4(2, "iteration count (max 1000)");
+        }
+        return commandLengthValueForMode(mode, 9, 0);
+    } 
+    else if (commandHeader == COMMAND_DEBUG_PRINT_SAMPLE_WHEEL_POSITION) {
+        // Same INPUT / OUTPUT
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("print the sample previouly recorded");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }
+
     return DEVICE_HEADER_NOT_HANDLED;
 }
 

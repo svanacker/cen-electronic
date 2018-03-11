@@ -5,7 +5,7 @@
 #include "../position/coderErrorComputer.h"
 
 void changePidTypeIfFinalApproach(PidMotion* pidMotion, PidMotionDefinition* motionDefinition) {
-    float pidTime = pidMotion->computationValues.pidTime;
+    float pidTime = pidMotion->computationValues.pidTimeInSecond;
 
     computeErrorsWithNextPositionUsingCoders(pidMotion, motionDefinition);
     PidComputationValues* computationValues = &(pidMotion->computationValues);

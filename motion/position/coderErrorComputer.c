@@ -2,6 +2,8 @@
 
 #include "coderErrorComputer.h"
 
+#include "../../common/math/cenMath.h"
+
 #include "../pid/pidTimer.h"
 #include "../pid/instructionType.h"
 #include "../../motion/pid/pidMotion.h"
@@ -9,6 +11,7 @@
 
 #include "../../motion/position/coders.h"
 #include "../../robot/kinematics/robotKinematics.h"
+#include "../../common/math/cenMath.h"
 
 void computeCurrentPositionUsingCoders(PidMotion* pidMotion) {
     PidComputationValues* computationValues = &(pidMotion->computationValues);
@@ -27,9 +30,16 @@ void computeCurrentPositionUsingCoders(PidMotion* pidMotion) {
     float theta = computeTheta(coderValueDistanceMMLeft, coderValueDistanceMMRight);
     float alpha = computeAlpha(coderValueDistanceMMLeft, coderValueDistanceMMRight);
 
-    // Compute the speed by multiplying the delta between current and previous position by the frequency
-    thetaCurrentValues->currentSpeed = (theta - thetaCurrentValues->currentPosition) * getPidTimerFrequencyHertz();
-    alphaCurrentValues->currentSpeed = (alpha - thetaCurrentValues->currentPosition) * getPidTimerFrequencyHertz();
+    // Compute the speed by using the delta between current and previous position / elapsedTime (if not equal to 0))
+    float elapsedTimeInSecond = computationValues->pidTimeInSecond - computationValues->lastPidTimeInSecond;
+    if (floatEqualsZero(elapsedTimeInSecond)) {
+        thetaCurrentValues->currentSpeed = 0.0f;
+        alphaCurrentValues->currentSpeed = 0.0f;        
+    }
+    else {
+        thetaCurrentValues->currentSpeed = (theta - thetaCurrentValues->currentPosition) / elapsedTimeInSecond;
+        alphaCurrentValues->currentSpeed = (alpha - alphaCurrentValues->currentPosition) / elapsedTimeInSecond;        
+    }
 
     // Store the current Position
     thetaCurrentValues->currentPosition = theta;

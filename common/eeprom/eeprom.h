@@ -108,8 +108,8 @@ void initEeprom(Eeprom* eeprom_,
                 EepromReadCharFunction* eepromReadChar,
                 EepromWriteBlockFunction* eepromWriteBlock,
                 EepromReadBlockFunction* eepromReadBlock,
-                EepromLoadFunction* eepromLoad,
-                EepromDumpFunction* eepromDump,
+                EepromLoadFunction* eepromLoadFunction,
+                EepromDumpFunction* eepromDumpFunction,
                 void* object);
 
 /**

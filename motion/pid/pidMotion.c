@@ -10,7 +10,7 @@
 #include "pidTimer.h"
 #include "parameters/pidParameterPersistence.h"
 #include "pidComputationValues.h"
-#include "motionParameterPersistence.h"
+#include "../../motion/parameters/motionParameterPersistence.h"
 
 bool checkPidMotionNotNull(const PidMotion* pidMotion) {
 	if (pidMotion == NULL) {

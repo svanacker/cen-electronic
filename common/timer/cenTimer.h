@@ -11,50 +11,50 @@
 /**
  * Define the timer divider to have a timer at 2 Hertz.
  */
-#define TIME_DIVIDER_2_HERTZ                 TIME_DIVIDER_1_HERTZ / 2
+#define TIME_DIVIDER_2_HERTZ                 (TIME_DIVIDER_1_HERTZ / 2)
 
 /**
  * Define the timer divider to have a timer at 10 Hertz.
  */
-#define TIME_DIVIDER_10_HERTZ                 TIME_DIVIDER_1_HERTZ / 10
+#define TIME_DIVIDER_10_HERTZ                 (TIME_DIVIDER_1_HERTZ / 10)
 
 /**
  * Define the timer divider to have a timer at 16 Hertz.
  */
-#define TIME_DIVIDER_16_HERTZ                 TIME_DIVIDER_1_HERTZ / 16
+#define TIME_DIVIDER_16_HERTZ                 (TIME_DIVIDER_1_HERTZ / 16)
 
 /**
  * Define the timer divider to have a timer at 30 Hertz.
  */
-#define TIME_DIVIDER_30_HERTZ                 TIME_DIVIDER_1_HERTZ / 30
+#define TIME_DIVIDER_30_HERTZ                 (TIME_DIVIDER_1_HERTZ / 30)
 
 /**
  * Define the timer divider to have a timer at 50 Hertz.
  */
-#define TIME_DIVIDER_50_HERTZ                 TIME_DIVIDER_1_HERTZ / 50
+#define TIME_DIVIDER_50_HERTZ                 (TIME_DIVIDER_1_HERTZ / 50)
 
 /**
  * Define the timer divider to have a timer at 100 Hertz.
  */
-#define TIME_DIVIDER_100_HERTZ                 TIME_DIVIDER_1_HERTZ / 100
+#define TIME_DIVIDER_100_HERTZ                 (TIME_DIVIDER_1_HERTZ / 100)
 
 /**
  * Define the timer divider to have a timer at 1000 Hertz (every millisecond).
  * This is approximative because division is not exact.
  */
-#define TIME_DIVIDER_1000_HERTZ TIME_DIVIDER_1_HERTZ / 1000
+#define TIME_DIVIDER_1000_HERTZ                (TIME_DIVIDER_1_HERTZ / 1000)
 
 /**
  * Define the timer divider to have a timer at 2000 Hertz
  * This is approximative because division is not exact.
  */
-#define TIME_DIVIDER_2000_HERTZ TIME_DIVIDER_1_HERTZ / 2000
+#define TIME_DIVIDER_2000_HERTZ                (TIME_DIVIDER_1_HERTZ / 2000)
 
 /**
  * Define the timer divider to have a timer at 10000 Hertz.
  * This is approximative because division is not exact.
  */
-#define TIME_DIVIDER_10000_HERTZ 3
+#define TIME_DIVIDER_10000_HERTZ                3
 
 // forward declaration
 struct Timer;

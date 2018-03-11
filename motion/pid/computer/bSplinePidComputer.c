@@ -27,7 +27,7 @@
 void bSplineMotionUCompute(PidMotion* pidMotion, PidMotionDefinition* motionDefinition) {
     BSplineCurve* curve = &(motionDefinition->curve);
 	PidComputationValues* computationValues = &(pidMotion->computationValues);
-    float pidTime = computationValues->pidTime;
+    float pidTime = computationValues->pidTimeInSecond;
     MotionInstruction* thetaInst = &(motionDefinition->inst[THETA]);
     float normalPosition = computeNormalPosition(thetaInst, pidTime);
 

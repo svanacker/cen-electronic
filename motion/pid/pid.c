@@ -80,8 +80,8 @@ void updateMotorsAndDetectedMotionType(PidMotion* pidMotion) {
         return;
     }
     // Here, we must recompute pid
-    float pidTime = getPidTimeInSecond();
-    pidMotion->computationValues.pidTime = pidTime;
+    pidMotion->computationValues.lastPidTimeInSecond = pidMotion->computationValues.pidTimeInSecond;
+    pidMotion->computationValues.pidTimeInSecond = getPidTimeInSecond();
 
     #ifdef _MSC_VER
         #include "pc/pidPc.h"

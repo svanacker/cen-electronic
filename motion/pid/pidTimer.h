@@ -5,13 +5,14 @@
 
 #include <stdbool.h>
 
-/**
- * Motors update frequency in number of interruption cycles.
- * For example, if base frequency is 31250, and PID_UPDATE_MOTORS_FRQ = 400
- * we have a pid frequency of 78,125 Hz
- */
-#define PID_UPDATE_MOTORS_TIME_DIVISER             208
-#define PID_UPDATE_MOTORS_FREQUENCY_HERTZ          (float) ((float) TIME_DIVIDER_1_HERTZ / (float) PID_UPDATE_MOTORS_TIME_DIVISER)
+// We try to raise as often we could, but we launch real Pid only every 312 cycle
+#define PID_BASE_DIVISER                           1
+
+// The frequency that we would like
+#define PID_UPDATE_MOTORS_FREQUENCY_HERZ         100
+
+// The diviser that it implies
+#define PID_UPDATE_MOTOR_TIMER_INTERVAL          (TIME_DIVIDER_1_HERTZ / PID_UPDATE_MOTORS_FREQUENCY_HERZ)
 
 /**
  * Random Code to be sure there is no conflict with other TIMER Code.

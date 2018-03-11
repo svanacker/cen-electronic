@@ -17,7 +17,7 @@ void simulateCurrentPositionReachIfNeeded(PidMotion* pidMotion, PidMotionDefinit
 		MotionInstruction* thetaInst = &(motionDefinition->inst[THETA]);
 		MotionInstruction* alphaInst = &(motionDefinition->inst[ALPHA]);
 
-		float pidTime = pidMotion->computationValues.pidTime;
+		float pidTime = pidMotion->computationValues.pidTimeInSecond;
 
 		float normalThetaPosition = computeNormalPosition(thetaInst, pidTime);
 		float normalAlphaPosition = computeNormalPosition(alphaInst, pidTime);

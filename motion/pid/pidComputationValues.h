@@ -22,8 +22,10 @@ typedef struct PidComputationValues {
     // determine the distance between normal trajectory tangent line
     // and real trajectory tangent line (=> X Axis)
     float thetaXAxisError;
-    // store the current pid time
-    float pidTime;
+    // store the last pid time (in second)
+    float lastPidTimeInSecond;
+    // store the current pid time (in second))
+    float pidTimeInSecond;
     /** Store all values indexed by INSTRUCTION_TYPE */
     PidComputationInstructionValues values[INSTRUCTION_TYPE_COUNT];
 

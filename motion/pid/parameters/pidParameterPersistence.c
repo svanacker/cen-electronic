@@ -14,13 +14,13 @@ static float PID_PARAMETERS_EEPROM_DEFAULT_VALUES[EEPROM_PID_PARAMETERS_VALUE_CO
     // PID_TYPE_NONE
     0.0f, 0.0f, 0.0f, 0.0f,
     // PID_TYPE_GO_INDEX
-    5.0f, 0.0f, 51.2f, 0.0f,
+    3.0f, 0.0f, 25.6f, 0.0f,
     // PID_TYPE_ROTATE_INDEX
-    5.0f, 0.0f, 51.2f, 0.0f,
+    3.0f, 0.0f, 25.6f, 0.0f,
     // PID_TYPE_FINAL_APPROACH
-    5.0f, 0.0f, 51.2f, 0.0f,
+    3.0f, 0.0f, 25.6f, 0.0f,
     // PID_TYPE_MAINTAIN_POSITION_INDEX
-    12.8f, 0.0f, 128.0f, 0.0f,
+    5.0f, 0.0f, 51.2f, 0.0f,
     // PID_TYPE_ADJUST
     1.0f, 0.0f, 1.0f, 0.0f
 };
