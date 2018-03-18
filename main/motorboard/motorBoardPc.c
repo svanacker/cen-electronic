@@ -87,19 +87,28 @@
 #include "../../device/motion/simple/motionDevice.h"
 #include "../../device/motion/simple/motionDeviceInterface.h"
 
-
 #include "../../device/motion/simulation/motionSimulationDevice.h"
 #include "../../device/motion/simulation/motionSimulationDeviceInterface.h"
+
+// PWM
+#include "../../device/motor/pwmMotorDevice.h"
+#include "../../device/motor/pwmMotorDeviceInterface.h"
+
+// PC
+#include "../../device/pc/pcDeviceInterface.h"
+#include "../../device/pc/pcDevice.h"
 
 // SYSTEM
 #include "../../device/system/systemDevice.h"
 #include "../../device/system/systemDeviceInterface.h"
 
+// TEST
 #include "../../device/test/testDevice.h"
 #include "../../device/test/testDeviceInterface.h"
 
-#include "../../device/motor/pwmMotorDevice.h"
-#include "../../device/motor/pwmMotorDeviceInterface.h"
+// TOF
+#include "../../device/tof/tofDevice.h"
+#include "../../device/tof/tofDeviceInterface.h"
 
 #include "../../drivers/driverStreamListener.h"
 #include "../../drivers/driverList.h"
@@ -310,6 +319,7 @@ void runMotorBoardPC(bool singleMode) {
 	addLocalDevice(getExtendedMotionDeviceInterface(), getExtendedMotionDeviceDescriptor(&pidMotion));
 	addLocalDevice(getMotionSimulationDeviceInterface(), getMotionSimulationDeviceDescriptor());
 	addLocalDevice(getRobotKinematicsDeviceInterface(), getRobotKinematicsDeviceDescriptor(&eeprom));
+    addLocalDevice(getPcDeviceInterface(), getPcDeviceDescriptor(getOutputStream(&consoleInputBuffer)));
 
     initDevices();
 

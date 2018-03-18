@@ -32,6 +32,9 @@
 // We manage a precision for the PID of 1 digits
 #define PID_VALUE_DIGIT_PRECISION       1
 
+// We manage a precision for the U / NormalU of 1 digits
+#define U_DIGIT_PRECISION               1
+
 /**
  * Enable or disable a PID.
  * @param pidIndex the index of which pid we must change (between 0 and PID_INDEX_COUNT)

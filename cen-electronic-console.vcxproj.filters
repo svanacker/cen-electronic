@@ -805,6 +805,27 @@
     <Filter Include="Header Files\common\i2c\pc">
       <UniqueIdentifier>{a6e3ee03-59b8-4ff4-aa77-1af1e60757eb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\device\tof">
+      <UniqueIdentifier>{0a73a669-daf4-44cd-a174-40de2e01bbef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\device\tof">
+      <UniqueIdentifier>{1560c880-7c77-469a-b2a5-15d5f24f7b07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\drivers\tof">
+      <UniqueIdentifier>{ae5f63fd-f48a-43f5-8088-35d6c89fa0f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\drivers\tof\vl53l0x">
+      <UniqueIdentifier>{496b2459-d816-439b-970b-f9a537681c83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\drivers\tof">
+      <UniqueIdentifier>{d3b70f0b-61eb-4018-92d7-ebee315721dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\drivers\tof\vl53l0x">
+      <UniqueIdentifier>{ca67e1aa-3a60-41e7-8481-674792ea0881}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\drivers\tof\vl53l0x\pc">
+      <UniqueIdentifier>{b94642d5-5bd6-4080-b016-ffdf17572363}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -1676,6 +1697,42 @@
     </ClCompile>
     <ClCompile Include="common\eeprom\eepromType.c">
       <Filter>Source Files\common\eeprom</Filter>
+    </ClCompile>
+    <ClCompile Include="device\tof\tofDevice.c">
+      <Filter>Source Files\device\tof</Filter>
+    </ClCompile>
+    <ClCompile Include="device\tof\tofDeviceInterface.c">
+      <Filter>Source Files\device\tof</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\tof\vl53l0x\vl53l0x_api.c">
+      <Filter>Source Files\drivers\tof\vl53l0x</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\tof\vl53l0x\vl53l0x_api_calibration.c">
+      <Filter>Source Files\drivers\tof\vl53l0x</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\tof\vl53l0x\vl53l0x_api_core.c">
+      <Filter>Source Files\drivers\tof\vl53l0x</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\tof\vl53l0x\vl53l0x_api_ranging.c">
+      <Filter>Source Files\drivers\tof\vl53l0x</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\tof\vl53l0x\vl53l0x_api_strings.c">
+      <Filter>Source Files\drivers\tof\vl53l0x</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\tof\vl53l0x\vl53l0x_platform.c">
+      <Filter>Source Files\drivers\tof\vl53l0x</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\tof\vl53l0x\vl53l0x_platform_log.c">
+      <Filter>Source Files\drivers\tof\vl53l0x</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\tof\tof.c">
+      <Filter>Source Files\drivers\tof</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\tof\vl53l0x\pc\vl53l0x_platform_pc.c">
+      <Filter>Source Files\drivers\tof\vl53l0x\pc</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\tof\vl53l0x\vl53l0x_platform_common.c">
+      <Filter>Source Files\drivers\tof\vl53l0x</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2593,6 +2650,54 @@
     </ClInclude>
     <ClInclude Include="motion\pid\pidComputationInstructionValuesDebug.h">
       <Filter>Header Files\motion\pid</Filter>
+    </ClInclude>
+    <ClInclude Include="device\tof\tofDevice.h">
+      <Filter>Header Files\device\tof</Filter>
+    </ClInclude>
+    <ClInclude Include="device\tof\tofDeviceInterface.h">
+      <Filter>Header Files\device\tof</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\tof\vl53l0x\vl53l0x_api.h">
+      <Filter>Header Files\drivers\tof\vl53l0x</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\tof\vl53l0x\vl53l0x_api_calibration.h">
+      <Filter>Header Files\drivers\tof\vl53l0x</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\tof\vl53l0x\vl53l0x_api_core.h">
+      <Filter>Header Files\drivers\tof\vl53l0x</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\tof\vl53l0x\vl53l0x_api_ranging.h">
+      <Filter>Header Files\drivers\tof\vl53l0x</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\tof\vl53l0x\vl53l0x_api_strings.h">
+      <Filter>Header Files\drivers\tof\vl53l0x</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\tof\vl53l0x\vl53l0x_def.h">
+      <Filter>Header Files\drivers\tof\vl53l0x</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\tof\vl53l0x\vl53l0x_device.h">
+      <Filter>Header Files\drivers\tof\vl53l0x</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\tof\vl53l0x\vl53l0x_i2c_platform.h">
+      <Filter>Header Files\drivers\tof\vl53l0x</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\tof\vl53l0x\vl53l0x_interrupt_threshold_settings.h">
+      <Filter>Header Files\drivers\tof\vl53l0x</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\tof\vl53l0x\vl53l0x_platform.h">
+      <Filter>Header Files\drivers\tof\vl53l0x</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\tof\vl53l0x\vl53l0x_platform_log.h">
+      <Filter>Header Files\drivers\tof\vl53l0x</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\tof\vl53l0x\vl53l0x_tuning.h">
+      <Filter>Header Files\drivers\tof\vl53l0x</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\tof\vl53l0x\vl53l0x_types.h">
+      <Filter>Header Files\drivers\tof\vl53l0x</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\tof\tof.h">
+      <Filter>Header Files\drivers\tof</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

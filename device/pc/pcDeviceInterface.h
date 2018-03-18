@@ -7,6 +7,9 @@
 /** Command to see the list of Pipe. */
 #define COMMAND_PIPE_LIST           'p'
 
+/** Command to load some commands from a file. */
+#define COMMAND_LOAD_COMMAND_FILE 'L'
+
 /**
 * Get the pc device interface.
 * @return a pointer on the system device Interface.

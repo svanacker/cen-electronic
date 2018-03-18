@@ -21,7 +21,8 @@ int devicePidGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fil
             setResultFloatHex4(2, "s (mm / sec^2)");
         }
         return commandLengthValueForMode(mode, 2, 9);
-    } else if (commandHeader == COMMAND_SET_MOTION_PARAMETERS) {
+    }
+    else if (commandHeader == COMMAND_SET_MOTION_PARAMETERS) {
         if (fillDeviceArgumentList) {
             setFunction("set Motion Parameter", 5, 0);
             setArgumentUnsignedHex2(0, "motionType");
@@ -63,49 +64,136 @@ int devicePidGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fil
             setArgumentFloatHex4(8, "mI (milli)");
         }
         return commandLengthValueForMode(mode, 22, 0);
-    // PERSISTENCE
-    } else if (commandHeader == COMMAND_LOAD_PID_PARAMETERS_DEFAULT_VALUES) {
+        // PERSISTENCE
+    }
+    else if (commandHeader == COMMAND_LOAD_PID_PARAMETERS_DEFAULT_VALUES) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("load Pid Default Values");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    } else if (commandHeader == COMMAND_SAVE_PID_PARAMETERS) {
+    }
+    else if (commandHeader == COMMAND_SAVE_PID_PARAMETERS) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("save PID Parameters To Eeprom");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    // DEUG / TRAJECTORY
-    } else if (commandHeader == COMMAND_GET_COMPUTATION_VALUES_DATA_PID) {
+        // DEBUG / TRAJECTORY
+    }
+    else if (commandHeader == COMMAND_GET_COMPUTATION_VALUES_DATA_PID) {
         if (fillDeviceArgumentList) {
-            setFunction("send Debug Data Pid", 1, 17);
-            
+            // Argument : Type / Index : 7 octets
+            setFunction("Get Computation Values Data Pid", 3, 25);
             setArgumentUnsignedHex2(0, "instructionType");
-
+            setArgumentSeparator(1);
+            setArgumentUnsignedHex4(2, "index");
+            // Instruction Type => 3 octets
             setResultUnsignedHex2(0, "instructionType");
-            setResultSeparator(1);             
+            setResultSeparator(1);
+            // Pid Time => 5 octets
             setResultFloatHex4(2, "pidTime (milliSec)");
-            setResultSeparator(3);             
-            setResultFloatHex4(4, "normal Position (mm)");
+            setResultSeparator(3);
+            // Speed => 10 octets
+            setResultFloatHex4(4, "normal Speed (mm / s)");
             setResultSeparator(5);
-            setResultFloatHex4(6, "position (mm)");
+            setResultFloatHex4(6, "Real Speed (mm / s)");
             setResultSeparator(7);
-            setResultFloatHex4(8, "error (mm)");
+            // Acceleration => 10 octets
+            setResultFloatHex4(8, "normal Acceleration (mm / s)");
             setResultSeparator(9);
-            setResultFloatHex4(10, "u");
+            setResultFloatHex4(10, "Real Acceleration (mm / s)");
             setResultSeparator(11);
-            setResultFloatHex4(12, "endMotion integralTime");
+            // Position => 14 octets
+            setResultFloatHex6(12, "normal Position (mm)");
+            setResultSeparator(13);
+            setResultFloatHex6(14, "position (mm)");
+            setResultSeparator(15);
+            // Errors => 15 octets
+            setResultFloatHex4(16, "error (mm)");
+            setResultSeparator(17);
+            setResultFloatHex4(18, "Int Error (mm * s)");
+            setResultSeparator(19);
+            setResultFloatHex4(20, "Deriv Error (mm / s)");
+            setResultSeparator(21);
+            // Errors with factor => 15 octets
+            /*
+            setResultFloatHex4(22, "PExE (mm)");
+            setResultSeparator(23);
+            setResultFloatHex4(24, "IExI (mm * s)");
+            setResultSeparator(25);
+            setResultFloatHex4(26, "DExE (mm / s)");
+            setResultSeparator(27);
+            */
+            // U / Normal U => 9 octets
+            setResultFloatHex4(22, "normal U");
+            setResultSeparator(23);
+            setResultFloatHex4(24, "u");
+            // Computation : end of motion
+            /*
+            setResultBool(12, "endMotion integralTime");
             setResultSeparator(13);
             setResultFloatHex4(14, "endMotion absDelta Position Integral");
             setResultSeparator(15);
             setResultFloatHex4(16, "endMotion Integral");
+            */
         }
-        return commandLengthValueForMode(mode, 2, 42);
+        return commandLengthValueForMode(mode, 7, 66);
+    }
+    else if (commandHeader == COMMAND_CLEAR_COMPUTATION_VALUES_DATA_PID) {
+        if (fillDeviceArgumentList) {
+            setFunction("Clear Computation Values Data PID", 1, 0);
+            setArgumentUnsignedHex2(0, "instructionType");
+        }
+        return commandLengthValueForMode(mode, 2, 0);
+    }
+    else if (commandHeader == COMMAND_SET_COMPUTATION_VALUES_DATA_PID) {
+        if (fillDeviceArgumentList) {
+            setFunction("Set Computation Values Data PID", 25, 0);
+
+            // InstructionType / Index => 3 octets
+            setArgumentUnsignedHex2(0, "instructionType");
+            setArgumentSeparator(1);
+
+            // Pid Time => 5 octets
+            setArgumentFloatHex4(2, "pidTime (milliSec)");
+            setArgumentSeparator(3);
+
+            // Speed => 10 octets
+            setArgumentFloatHex4(4, "normal Speed (mm / s)");
+            setArgumentSeparator(5);
+            setArgumentFloatHex4(6, "Real Speed (mm / s)");
+            setArgumentSeparator(7);
+
+            // Acceleration => 10 octets
+            setArgumentFloatHex4(8, "normal Acceleration (mm / s)");
+            setArgumentSeparator(9);
+            setArgumentFloatHex4(10, "Real Acceleration (mm / s)");
+            setArgumentSeparator(11);
+
+            // Position => 14 octets
+            setArgumentFloatHex6(12, "normal Position (mm)");
+            setArgumentSeparator(13);
+            setArgumentFloatHex6(14, "position (mm)");
+            setArgumentSeparator(15);
+
+            // Errors => 15 octets
+            setArgumentFloatHex4(16, "error (mm)");
+            setArgumentSeparator(17);
+            setArgumentFloatHex4(18, "Int Error (mm * s)");
+            setArgumentSeparator(19);
+            setArgumentFloatHex4(20, "Deriv Error (mm / s)");
+            setArgumentSeparator(21);
+
+            // U / Normal U => 9 octets
+            setArgumentFloatHex4(22, "normal U");
+            setArgumentSeparator(23);
+            setArgumentFloatHex4(24, "u");
+        }
+        return commandLengthValueForMode(mode, 66, 0);
     } else if (commandHeader == COMMAND_GET_MOTION_DEFINITION_TRAJECTORY) {
         if (fillDeviceArgumentList) {    
             setFunction("get Motion Parameter", 1, 25);
-            
             setArgumentUnsignedHex2(0, "idx");
-            
+            // Result
             setResultUnsignedHex2(0, "idx");
             setResultSeparator(1);
             setResultFloatHex4(2, "a (mm / sec^2)");

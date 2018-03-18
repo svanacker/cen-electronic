@@ -129,6 +129,9 @@
 /** To check if an object is in front of the robot */
 #define SONAR_DEVICE_HEADER                        '<'
 
+/** Time of flight device. */
+#define TOF_DEVICE_HEADER                          '['
+
 /** TODO */
 #define ROBOT_SONAR_DETECTOR_DEVICE_HEADER         '#'
 

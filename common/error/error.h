@@ -216,4 +216,7 @@ void clearLastError();
 #define ROBOT_KINEMATICS_NO_EEPROM                                        0x6000
 #define ROBOT_KINEMATICS_EEPROM_NOT_INITIALIZED                           0x6001
 
+// PC
+#define PC_FILE_NOT_FOUND                                                 0x7000
+
 #endif

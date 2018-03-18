@@ -260,6 +260,10 @@
         <itemPath>../../../device/timer/timerDevice.h</itemPath>
         <itemPath>../../../device/timer/timerDeviceInterface.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f3" displayName="device.tof" projectFiles="true">
+        <itemPath>../../../device/tof/tofDevice.h</itemPath>
+        <itemPath>../../../device/tof/tofDeviceInterface.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="drivers" displayName="drivers" projectFiles="true">
         <itemPath>../../../drivers/driverStreamListener.h</itemPath>
         <itemPath>../../../drivers/driver.h</itemPath>
@@ -292,6 +296,24 @@
                      displayName="drivers.sensor.temperature"
                      projectFiles="true">
         <itemPath>../../../drivers/sensor/temperature/LM75A.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f2" displayName="drivers.tof" projectFiles="true">
+        <itemPath>../../../drivers/tof/tof.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f1" displayName="drivers.tof.vl53l0x" projectFiles="true">
+        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_api.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_api_calibration.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_api_core.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_api_ranging.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_api_strings.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_def.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_device.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_i2c_platform.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_interrupt_threshold_settings.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_platform.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_platform_log.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_tuning.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_types.h</itemPath>
       </logicalFolder>
       <logicalFolder name="main" displayName="main" projectFiles="true">
         <itemPath>../motorBoard32.h</itemPath>
@@ -666,6 +688,10 @@
         <itemPath>../../../device/timer/timerDevice.c</itemPath>
         <itemPath>../../../device/timer/timerDeviceInterface.c</itemPath>
       </logicalFolder>
+      <logicalFolder name="f2" displayName="device.tof" projectFiles="true">
+        <itemPath>../../../device/tof/tofDevice.c</itemPath>
+        <itemPath>../../../device/tof/tofDeviceInterface.c</itemPath>
+      </logicalFolder>
       <logicalFolder name="drivers" displayName="drivers" projectFiles="true">
         <itemPath>../../../drivers/driverStreamListener.c</itemPath>
         <itemPath>../../../drivers/driver.c</itemPath>
@@ -697,6 +723,20 @@
                      displayName="drivers.sensor.temperature"
                      projectFiles="true">
         <itemPath>../../../drivers/sensor/temperature/LM75A.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f3" displayName="drivers.tof" projectFiles="true">
+        <itemPath>../../../drivers/tof/tof.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f1" displayName="drivers.tof.vl53vl0x" projectFiles="true">
+        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_api_core.c</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_api_ranging.c</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_api_strings.c</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_platform.c</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_platform_log.c</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/32/vl53l0x_platform_pic32.c</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_api.c</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_api_calibration.c</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_platform_common.c</itemPath>
       </logicalFolder>
       <logicalFolder name="lib" displayName="lib" projectFiles="true">
       </logicalFolder>

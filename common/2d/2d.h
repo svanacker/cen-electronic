@@ -13,6 +13,7 @@ typedef struct Point {
 
 // We store (not for compute) a precision of position to the millimeter
 #define POSITION_DIGIT_MM_PRECISION      0
+
 /**
  * Structures to define the position with angle.
  */

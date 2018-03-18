@@ -82,8 +82,8 @@ typedef struct DeviceArgument {
     char* name;
 } DeviceArgument;
 
-#define MAX_ARGUMENTS     25
-#define MAX_RETURNS     25
+#define MAX_ARGUMENTS     40
+#define MAX_RETURNS       40
 
 /**
 * Define the result of deviceGetRawDataHeaderFunction if the
@@ -176,8 +176,11 @@ typedef struct DeviceMethodMetaData {
 /** (used only for string aggregates values) */
 #define DEVICE_ARG_UNSIGNED_HEX_12     24
 
-/** Unsigned float with Digit 0. */
+/** Unsigned float with hex length = 4. */
 #define DEVICE_ARG_UNSIGNED_FLOAT_HEX_4   25  
+
+/** Unsigned float with hex length = 4. */
+#define DEVICE_ARG_UNSIGNED_FLOAT_HEX_6   26  
 
 // ARGUMENT LIST
 
@@ -267,6 +270,10 @@ void setArgumentFixedCharArray(int index, char* name);
 * Set the argument of the deviceArgumentList with index for name.
 */
 void setArgumentFloatHex4(int index, char* name);
+/**
+* Set the argument of the deviceArgumentList with index for name.
+*/
+void setArgumentFloatHex6(int index, char* name);
 
 /**
 * Set argument with index to a separator ("-")
@@ -314,6 +321,11 @@ void setResultFixedCharArray(int index, char* name);
 *  Set the result of the deviceMethodMetaData with index for name
 */
 void setResultFloatHex4(int index, char* name);
+
+/**
+*  Set the result of the deviceMethodMetaData with index for name
+*/
+void setResultFloatHex6(int index, char* name);
 
 /**
 * Set result with index to a separator ("-")

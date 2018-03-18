@@ -1,5 +1,6 @@
 #include <stdbool.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 #include "pcDevice.h"
 #include "pcDeviceInterface.h"
@@ -26,6 +27,9 @@
 #include "../../device/deviceUsage.h"
 #include "../../device/transmitMode.h"
 
+/** The stream in which we will write the content of a file */
+static OutputStream* commandOutputStream;
+
 void devicePcInit(void) {
 }
 
@@ -42,6 +46,22 @@ void devicePcHandleRawData(char header, InputStream* inputStream, OutputStream* 
         ackCommand(outputStream, PC_DEVICE_HEADER, COMMAND_PIPE_LIST);
         // TODO : PipeList
     }
+    else if (header == COMMAND_LOAD_COMMAND_FILE) {
+        // data
+        ackCommand(outputStream, PC_DEVICE_HEADER, COMMAND_LOAD_COMMAND_FILE);
+        int c;
+        FILE *file;
+        file = fopen("C:/dev/git/svanacker/cen-electronic-data/command.txt", "r");
+        if (file != NULL) {
+            while ((c = getc(file)) != EOF) {
+                append(commandOutputStream, c);
+            }
+            fclose(file);
+        }
+        else {
+            writeError(PC_FILE_NOT_FOUND);
+        }
+    }
 }
 
 static DeviceDescriptor descriptor = {
@@ -51,6 +71,7 @@ static DeviceDescriptor descriptor = {
     .deviceHandleRawData = &devicePcHandleRawData,
 };
 
-DeviceDescriptor* getPcDeviceDescriptor(void) {
+DeviceDescriptor* getPcDeviceDescriptor(OutputStream* outputStream) {
+    commandOutputStream = outputStream;
     return &descriptor;
 }

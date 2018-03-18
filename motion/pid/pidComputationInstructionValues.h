@@ -23,7 +23,7 @@ typedef struct PidComputationInstructionValues {
     /** The history of pid Type */
     enum PidType pidTypeHistory[PID_HISTORY_ITEM_COUNT];
     
-    // POSITION / SPEED
+    // POSITION / SPEED / ACCELERATION
     /** Normal position. */
     float normalPosition;
     /** current position values. */
@@ -33,12 +33,19 @@ typedef struct PidComputationInstructionValues {
     /** Old Position values. */
     float oldPosition;
     
-    /** Normal Speed*/
+    /** Normal Speed. */
     float normalSpeed;
     /** Speed. */
     float currentSpeed;
-    /** History of speed */
+    /** History of speed. */
     float speedHistory[PID_HISTORY_ITEM_COUNT];
+
+    /** Normal Acceleration. */
+    float normalAcceleration;
+    /** Current Acceleration .*/
+    float currentAcceleration;
+    /** History of Acceleration. */
+    float accelerationHistory[PID_HISTORY_ITEM_COUNT];
     
     // ERRORS
     /** Stores the previous error */

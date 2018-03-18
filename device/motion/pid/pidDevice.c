@@ -55,7 +55,8 @@ void devicePidHandleRawData(char commandHeader, InputStream* inputStream, Output
         appendSeparator(outputStream);
         appendHexFloat4(outputStream, motionParameter->speed, 0);
 
-    } else if (commandHeader == COMMAND_SET_MOTION_PARAMETERS) {
+    }
+    else if (commandHeader == COMMAND_SET_MOTION_PARAMETERS) {
         ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_SET_MOTION_PARAMETERS);
         enum MotionParameterType motionParameterType = (enum MotionParameterType) readHex2(inputStream);
         checkIsSeparator(inputStream);
@@ -85,7 +86,7 @@ void devicePidHandleRawData(char commandHeader, InputStream* inputStream, Output
         appendHexFloat4(outputStream, localPidParameter->d, PID_VALUE_DIGIT_PRECISION);
         appendSeparator(outputStream);
         appendHexFloat4(outputStream, localPidParameter->maxIntegral, PID_VALUE_DIGIT_PRECISION);
-    // PID PARAMETERS
+        // PID PARAMETERS
     }
     else if (commandHeader == COMMAND_GET_PID_PARAMETERS) {
         // send acknowledgement
@@ -121,21 +122,24 @@ void devicePidHandleRawData(char commandHeader, InputStream* inputStream, Output
 
         if (pidIndex >= 0 && pidIndex < PID_TYPE_COUNT) {
             setPidParameter(pidMotion, pidIndex, p, i, d, maxI);
-        } else {
+        }
+        else {
             // All Values
             if (pidIndex == -1) {
                 unsigned int pidIndex2;
                 for (pidIndex2 = 0; pidIndex2 < PID_TYPE_COUNT; pidIndex2++) {
                     setPidParameter(pidMotion, pidIndex2, p, i, d, maxI);
                 }
-            } else {
+            }
+            else {
                 writeError(PID_INDEX_INCORRECT);
             }
         }
         ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_SET_PID_PARAMETERS);
 
-    // PERSISTENCE
-    } else if (commandHeader == COMMAND_LOAD_PID_PARAMETERS_DEFAULT_VALUES) {
+        // PERSISTENCE
+    }
+    else if (commandHeader == COMMAND_LOAD_PID_PARAMETERS_DEFAULT_VALUES) {
         ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_LOAD_PID_PARAMETERS_DEFAULT_VALUES);
 
         // Load Motion Parameters (speed / acceleration)
@@ -143,13 +147,13 @@ void devicePidHandleRawData(char commandHeader, InputStream* inputStream, Output
 
         // Load Pid Parameters default Values (and erase previous values)
         loadPidParameters(pidMotion, true);
-    } else if (commandHeader == COMMAND_SAVE_PID_PARAMETERS) {
+    }
+    else if (commandHeader == COMMAND_SAVE_PID_PARAMETERS) {
         ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_SAVE_PID_PARAMETERS);
         savePidParameters(pidMotion);
     }
     // TRAJECTORY
-    // pg01-1001-000020-005678-4000-2000-5000-8000
-    else if (commandHeader ==  COMMAND_GET_COMPUTATION_VALUES_DATA_PID) {
+    else if (commandHeader == COMMAND_GET_COMPUTATION_VALUES_DATA_PID) {
         enum InstructionType instructionType = readHex2(inputStream);
 
         PidComputationValues* computationValues = &(pidMotion->computationValues);
@@ -162,21 +166,36 @@ void devicePidHandleRawData(char commandHeader, InputStream* inputStream, Output
         appendHex2(outputStream, instructionType);
         appendSeparator(outputStream);
 
-        // pidType
+        // pid Time
         appendHexFloat4(outputStream, computationValues->pidTimeInSecond, PID_TIME_SECOND_DIGIT_PRECISION);
         appendSeparator(outputStream);
 
-        // normalPosition
-        appendHexFloat4(outputStream, computationInstructionValues->normalPosition, POSITION_DIGIT_MM_PRECISION);
+        // normalSpeed
+        appendHexFloat4(outputStream, computationInstructionValues->normalSpeed, SPEED_MM_BY_SEC_DIGIT_PRECISION);
+        appendSeparator(outputStream);
+        appendHexFloat4(outputStream, computationInstructionValues->currentSpeed, SPEED_MM_BY_SEC_DIGIT_PRECISION);
         appendSeparator(outputStream);
 
-        // position
-        appendHexFloat4(outputStream, computationInstructionValues->currentPosition, POSITION_DIGIT_MM_PRECISION);
+        // normal Acceleration
+        appendHexFloat4(outputStream, computationInstructionValues->normalAcceleration, ACCELERATION_MM_BY_SEC_2_DIGIT_PRECISION);
+        appendSeparator(outputStream);
+        appendHexFloat4(outputStream, computationInstructionValues->currentAcceleration, ACCELERATION_MM_BY_SEC_2_DIGIT_PRECISION);
+        appendSeparator(outputStream);
+
+        // normalPosition
+        appendHexFloat6(outputStream, computationInstructionValues->normalPosition, POSITION_DIGIT_MM_PRECISION);
+        appendSeparator(outputStream);
+        appendHexFloat6(outputStream, computationInstructionValues->currentPosition, POSITION_DIGIT_MM_PRECISION);
         appendSeparator(outputStream);
 
         // error
-        appendHexFloat4(outputStream, computationInstructionValues->error, POSITION_DIGIT_MM_PRECISION);
+        appendHexFloat4(outputStream, computationInstructionValues->error, PID_VALUE_DIGIT_PRECISION);
         appendSeparator(outputStream);
+        appendHexFloat4(outputStream, computationInstructionValues->integralError, PID_VALUE_DIGIT_PRECISION);
+        appendSeparator(outputStream);
+        appendHexFloat4(outputStream, computationInstructionValues->derivativeError, PID_VALUE_DIGIT_PRECISION);
+        appendSeparator(outputStream);
+
 
         // u
         appendHexFloat4(outputStream, computationInstructionValues->u, PID_VALUE_DIGIT_PRECISION);
@@ -193,11 +212,66 @@ void devicePidHandleRawData(char commandHeader, InputStream* inputStream, Output
         appendHex4(outputStream, (int) motionEnd->absUIntegral);
         */
     }
-    else if (commandHeader == COMMAND_GET_MOTION_DEFINITION_TRAJECTORY) {
-        enum InstructionType instructionType = (enum InstructionType) readHex2(inputStream);
+    else if (commandHeader == COMMAND_CLEAR_COMPUTATION_VALUES_DATA_PID) {
+        // InstructionType
+        enum InstructionType instructionType = readHex2(inputStream);
 
+        PidComputationValues* computationValues = &(pidMotion->computationValues);
+        PidComputationInstructionValues* computationInstructionValues = &(computationValues->values[instructionType]);
+        clearPidComputationValues(computationValues);
+    }
+    else if (commandHeader == COMMAND_SET_COMPUTATION_VALUES_DATA_PID) {
+        // send acknowledgement
+        ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_SET_COMPUTATION_VALUES_DATA_PID);
+
+        // InstructionType
+        enum InstructionType instructionType = readHex2(inputStream);
+        checkIsSeparator(inputStream);
+        PidComputationValues* computationValues = &(pidMotion->computationValues);
+        PidComputationInstructionValues* computationInstructionValues = &(computationValues->values[instructionType]);
+
+        // PidTime
+        float pidTime = readHexFloat4(inputStream, PID_TIME_SECOND_DIGIT_PRECISION);
+        checkIsSeparator(inputStream);
+
+        // Speed
+        computationInstructionValues->normalSpeed = readHexFloat4(inputStream, SPEED_MM_BY_SEC_DIGIT_PRECISION);
+        checkIsSeparator(inputStream);
+        float realSpeed = readHexFloat4(inputStream, SPEED_MM_BY_SEC_DIGIT_PRECISION);
+        checkIsSeparator(inputStream);
+
+        // Acceleration
+        computationInstructionValues->normalAcceleration = readHexFloat4(inputStream, ACCELERATION_MM_BY_SEC_2_DIGIT_PRECISION);
+        checkIsSeparator(inputStream);
+        float realAcceleration = readHexFloat4(inputStream, ACCELERATION_MM_BY_SEC_2_DIGIT_PRECISION);
+        checkIsSeparator(inputStream);
+
+        // Position
+        float normalPosition = readHexFloat6(inputStream, POSITION_DIGIT_MM_PRECISION);
+        checkIsSeparator(inputStream);
+        float realPosition = readHexFloat6(inputStream, POSITION_DIGIT_MM_PRECISION);
+        checkIsSeparator(inputStream);
+
+        // Errors
+        float error = readHexFloat4(inputStream, PID_VALUE_DIGIT_PRECISION);
+        checkIsSeparator(inputStream);
+        float integralError = readHexFloat4(inputStream, PID_VALUE_DIGIT_PRECISION);
+        checkIsSeparator(inputStream);
+        float derivativeError = readHexFloat4(inputStream, PID_VALUE_DIGIT_PRECISION);
+        checkIsSeparator(inputStream);
+
+        // U / Normal U
+        float normalU = readHexFloat4(inputStream, U_DIGIT_PRECISION);
+        checkIsSeparator(inputStream);
+        float u = readHexFloat4(inputStream, U_DIGIT_PRECISION);
+
+        storePidComputationInstructionValueHistory(computationInstructionValues, pidTime);
+    }
+    else if (commandHeader == COMMAND_GET_MOTION_DEFINITION_TRAJECTORY) {
         // send acknowledgement
         ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_GET_MOTION_DEFINITION_TRAJECTORY);
+
+        enum InstructionType instructionType = (enum InstructionType) readHex2(inputStream);
 
 		PidMotionDefinition* motionDefinition = pidMotionGetCurrentMotionDefinition(pidMotion);
         // TODO : Manage if motionDefinition is NULL

@@ -9,6 +9,10 @@
 
 // HANDLING FUNCTION
 
+#define SPEED_MM_BY_SEC_DIGIT_PRECISION              0
+#define ACCELERATION_MM_BY_SEC_2_DIGIT_PRECISION       0
+
+
 /**
  * Handle function so the robot is aware of asking.
  */

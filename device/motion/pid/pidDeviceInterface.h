@@ -48,6 +48,16 @@
 */
 #define COMMAND_GET_COMPUTATION_VALUES_DATA_PID     'g'
 
+/**
+* Clear the history of computation Values.
+*/
+#define COMMAND_CLEAR_COMPUTATION_VALUES_DATA_PID   'H'
+
+/**
+* This is interesting to be able to replay a set of data and check behaviour or new behaviour with new parameters.
+*/
+#define COMMAND_SET_COMPUTATION_VALUES_DATA_PID     'G'
+
 // END DETECTION PARAMETER
 
 /**

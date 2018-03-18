@@ -36,6 +36,7 @@
                      projectFiles="true">
         <itemPath>../../../common/eeprom/eeprom.h</itemPath>
         <itemPath>../../../common/eeprom/eepromAreas.h</itemPath>
+        <itemPath>../../../common/eeprom/eepromType.h</itemPath>
       </logicalFolder>
       <logicalFolder name="common.error"
                      displayName="common.error"
@@ -368,6 +369,21 @@
                      projectFiles="true">
         <itemPath>../../../drivers/test/testDriver.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f1" displayName="drivers.tof.VL53L0X" projectFiles="true">
+        <itemPath>../../../drivers/tof/VL53L0X/vl53l0x_api.h</itemPath>
+        <itemPath>../../../drivers/tof/VL53L0X/vl53l0x_api_calibration.h</itemPath>
+        <itemPath>../../../drivers/tof/VL53L0X/vl53l0x_api_core.h</itemPath>
+        <itemPath>../../../drivers/tof/VL53L0X/vl53l0x_api_ranging.h</itemPath>
+        <itemPath>../../../drivers/tof/VL53L0X/vl53l0x_api_strings.h</itemPath>
+        <itemPath>../../../drivers/tof/VL53L0X/vl53l0x_def.h</itemPath>
+        <itemPath>../../../drivers/tof/VL53L0X/vl53l0x_device.h</itemPath>
+        <itemPath>../../../drivers/tof/VL53L0X/vl53l0x_interrupt_threshold_settings.h</itemPath>
+        <itemPath>../../../drivers/tof/VL53L0X/vl53l0x_tuning.h</itemPath>
+        <itemPath>../../../drivers/tof/VL53L0X/vl53l0x_i2c_platform.h</itemPath>
+        <itemPath>../../../drivers/tof/VL53L0X/vl53l0x_platform.h</itemPath>
+        <itemPath>../../../drivers/tof/VL53L0X/vl53l0x_platform_log.h</itemPath>
+        <itemPath>../../../drivers/tof/VL53L0X/vl53l0x_types.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="main" displayName="main" projectFiles="true">
         <itemPath>../../meca2/mechanicalBoard2.h</itemPath>
         <itemPath>../../airconditioning/airConditioningMain.h</itemPath>
@@ -508,6 +524,7 @@
                      displayName="common.eeprom"
                      projectFiles="true">
         <itemPath>../../../common/eeprom/eeprom.c</itemPath>
+        <itemPath>../../../common/eeprom/eepromType.c</itemPath>
       </logicalFolder>
       <logicalFolder name="common.error"
                      displayName="common.error"
@@ -850,6 +867,21 @@
                      displayName="drivers.test"
                      projectFiles="true">
         <itemPath>../../../drivers/test/testDriver.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f1" displayName="drivers.tof.vl53l0x" projectFiles="true">
+        <itemPath>../../../drivers/tof/VL53L0X/vl53l0x_api.c</itemPath>
+        <itemPath>../../../drivers/tof/VL53L0X/vl53l0x_api_calibration.c</itemPath>
+        <itemPath>../../../drivers/tof/VL53L0X/vl53l0x_api_core.c</itemPath>
+        <itemPath>../../../drivers/tof/VL53L0X/vl53l0x_api_ranging.c</itemPath>
+        <itemPath>../../../drivers/tof/VL53L0X/vl53l0x_api_strings.c</itemPath>
+        <itemPath>../../../drivers/tof/VL53L0X/vl53l0x_platform.c</itemPath>
+        <itemPath>../../../drivers/tof/VL53L0X/vl53l0x_platform_log.c</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_platform_common.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f2"
+                     displayName="drivers.tof.vl53l0x.32"
+                     projectFiles="true">
+        <itemPath>../../../drivers/tof/vl53l0x/32/vl53l0x_platform_pic32.c</itemPath>
       </logicalFolder>
       <logicalFolder name="main" displayName="main" projectFiles="true">
         <itemPath>../mainBoard32.c</itemPath>

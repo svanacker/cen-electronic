@@ -134,6 +134,10 @@
 #include "../../device/timer/timerDevice.h"
 #include "../../device/timer/timerDeviceInterface.h"
 
+// TIME OF FLIGHT
+#include "../../device/tof/tofDevice.h"
+#include "../../device/tof/tofDeviceInterface.h"
+
 // 2018
 #include "../../robot/2018/launcherDevice2018.h"
 #include "../../robot/2018/launcherDeviceInterface2018.h"
@@ -435,6 +439,8 @@ void runMainBoardPC(bool connectToRobotManagerMode) {
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
     addLocalDevice(getLogDeviceInterface(), getLogDeviceDescriptor());
     addLocalDevice(getLCDDeviceInterface(), getLCDDeviceDescriptor());
+    addLocalDevice(getTofDeviceInterface(), getTofDeviceDescriptor(NULL));
+
     addLocalDevice(getTemperatureSensorDeviceInterface(), getTemperatureSensorDeviceDescriptor(&temperature));
     addLocalDevice(getNavigationDeviceInterface(), getNavigationDeviceDescriptor());
 

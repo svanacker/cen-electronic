@@ -15,6 +15,9 @@ void clearPidComputationInstructionValues(PidComputationInstructionValues* pidCo
     pidComputationInstructionValues->normalSpeed = 0;
     pidComputationInstructionValues->currentSpeed = 0;
 
+    pidComputationInstructionValues->normalAcceleration = 0;
+    pidComputationInstructionValues->currentAcceleration = 0;
+
     // ERRORS
     pidComputationInstructionValues->previousError = 0;
     pidComputationInstructionValues->error = 0;
@@ -38,6 +41,9 @@ void clearPidComputationInstructionValues(PidComputationInstructionValues* pidCo
         
         // SPEED
         pidComputationInstructionValues->speedHistory[i] = 0;
+
+        // ACCELERATION
+        pidComputationInstructionValues->accelerationHistory[i] = 0;
         
         // ERRORS
         pidComputationInstructionValues->errorHistory[i] = 0;
@@ -63,6 +69,9 @@ void storePidComputationInstructionValueHistory(PidComputationInstructionValues*
 
     // SPEED
     pidComputationInstructionValues->speedHistory[i] = pidComputationInstructionValues->currentSpeed;
+
+    // ACCELERATION
+    pidComputationInstructionValues->accelerationHistory[i] = pidComputationInstructionValues->currentAcceleration;
 
     // ERRORS
     pidComputationInstructionValues->errorHistory[i] = pidComputationInstructionValues->error;
