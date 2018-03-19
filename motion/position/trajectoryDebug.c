@@ -68,8 +68,8 @@ void printDebugPosition(OutputStream* outputStream) {
 	appendDecfTableData(outputStream, radToDeg(position->orientation), TRAJECTORY_ANGLE_DEC_COLUMN_LENGTH);
 	appendDecfTableData(outputStream, radToDeg(position->initialOrientation), TRAJECTORY_ANGLE_INIT_DEC_COLUMN_LENGTH);
 
-	appendHexFloat4TableData(outputStream, point->x, POSITION_DIGIT_MM_PRECISION, TRAJECTORY_X_HEX_COLUMN_LENGTH);
-    appendHexFloat4TableData(outputStream, point->y, POSITION_DIGIT_MM_PRECISION, TRAJECTORY_Y_HEX_COLUMN_LENGTH);
+	appendHexFloat6TableData(outputStream, point->x, POSITION_DIGIT_MM_PRECISION, TRAJECTORY_X_HEX_COLUMN_LENGTH);
+    appendHexFloat6TableData(outputStream, point->y, POSITION_DIGIT_MM_PRECISION, TRAJECTORY_Y_HEX_COLUMN_LENGTH);
 
 	appendEndOfTableColumn(outputStream, 0);
 
@@ -109,8 +109,8 @@ void printDebugCoderHistory(OutputStream* outputStream) {
 	appendDecfTableData(outputStream, trajectoryInfo->lastRight, TRAJECTORY_LAST_RIGHT_COLUMN_LENGTH);
 	appendDecfTableData(outputStream, radToDeg(trajectoryInfo->lastAngle), TRAJECTORY_LAST_ANGLE_COLUMN_LENGTH);
 
-	appendHex4TableData(outputStream, getCoderValue(CODER_LEFT), TRAJECTORY_LEFT_HEX_COLUMN_LENGTH);
-	appendHex4TableData(outputStream, getCoderValue(CODER_RIGHT), TRAJECTORY_RIGHT_HEX_COLUMN_LENGTH);
+	appendHex6TableData(outputStream, getCoderValue(CODER_LEFT), TRAJECTORY_LEFT_HEX_COLUMN_LENGTH);
+	appendHex6TableData(outputStream, getCoderValue(CODER_RIGHT), TRAJECTORY_RIGHT_HEX_COLUMN_LENGTH);
 
 	appendEndOfTableColumn(outputStream, TRAJECTORY_LAST_COLUMN_LENGTH);
 

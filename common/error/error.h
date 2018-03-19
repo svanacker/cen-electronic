@@ -181,6 +181,8 @@ void clearLastError();
 #define MOTION_BSPLINE_LIST_FULL                                          0x3803
 #define MOTION_BSPLINE_LIST_EMPTY                                         0x3804
 
+#define MOTION_BSPLINE_DISTANCE_MUST_BE_POSITIVE                          0x3880
+
 #define MOTION_PARAMETERS_PERSISTENCE_NO_EEPROM                           0x3900
 #define MOTION_PARAMETERS_PERSISTENCE_EEPROM_NOT_INITIALIZED              0x3901
 

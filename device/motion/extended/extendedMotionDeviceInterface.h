@@ -4,6 +4,14 @@
 #include "../../../device/deviceInterface.h"
 #include "../../../device/deviceConstants.h"
 
+#define BSPLINE_MOTION_DISTANCE_FACTOR_DIGIT      0
+
+// DIGIT FACTOR
+
+#define BSPLINE_MOTION_SPEED_FACTOR_DIGIT                 1
+#define BSPLINE_MOTION_ACCELERATION_FACTOR_DIGIT          1
+
+
 // COMMAND
 
 /** Define the header used to follow a spline with relative coordinates. */

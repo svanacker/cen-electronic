@@ -27,9 +27,9 @@
 bool trajectoryDriverSetAbsolutePosition(float x, float y, float degree) {
     OutputStream* outputStream = getDriverRequestOutputStream();
     append(outputStream, COMMAND_TRAJECTORY_SET_ABSOLUTE_POSITION);
-    appendHexFloat4(outputStream, x, POSITION_DIGIT_MM_PRECISION);
+    appendHexFloat6(outputStream, x, POSITION_DIGIT_MM_PRECISION);
     appendSeparator(outputStream);
-    appendHexFloat4(outputStream, y, POSITION_DIGIT_MM_PRECISION);
+    appendHexFloat6(outputStream, y, POSITION_DIGIT_MM_PRECISION);
     appendSeparator(outputStream);
     appendHexFloat4(outputStream, degree, ANGLE_DIGIT_DEGREE_PRECISION);
 
@@ -47,9 +47,9 @@ bool trajectoryDriverUpdateRobotPosition() {
 
     bool result = transmitFromDriverRequestBuffer();
     if (result) {
-        float x = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
+        float x = readHexFloat6(inputStream, POSITION_DIGIT_MM_PRECISION);
         readHex(inputStream);
-        float y = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
+        float y = readHexFloat6(inputStream, POSITION_DIGIT_MM_PRECISION);
         readHex(inputStream);
         float angle = readHexFloat4(inputStream, ANGLE_DIGIT_DEGREE_PRECISION);
 

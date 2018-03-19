@@ -178,6 +178,14 @@ void appendHex8(OutputStream* outputStream, signed long value);
 // Hex - Float
 
 /**
+* Append a float value into hexadecimal value (2 chars).
+* @param outputStream the pointer on outputStream (POO simulation)
+* @param value the float value
+* @param digitPrecision how many digit we would like to have
+*/
+void appendHexFloat2(OutputStream* outputStream, float value, unsigned int digitPrecision);
+
+/**
  * Append a float value into hexadecimal value (4 chars).
  * @param outputStream the pointer on outputStream (POO simulation)
  * @param value the float value

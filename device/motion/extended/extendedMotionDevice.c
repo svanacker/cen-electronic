@@ -64,10 +64,10 @@ void deviceExtendedMotionHandleRawData(char commandHeader,
     if (commandHeader == COMMAND_MOTION_SPLINE_RELATIVE || commandHeader == COMMAND_MOTION_SPLINE_ABSOLUTE) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, commandHeader);
 
-        float x = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
+        float x = readHexFloat6(inputStream, POSITION_DIGIT_MM_PRECISION);
         checkIsSeparator(inputStream);
 
-        float y = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
+        float y = readHexFloat6(inputStream, POSITION_DIGIT_MM_PRECISION);
         checkIsSeparator(inputStream);
 
         float angleInDegree = readHexFloat4(inputStream, ANGLE_DIGIT_DEGREE_PRECISION);
@@ -75,15 +75,17 @@ void deviceExtendedMotionHandleRawData(char commandHeader,
         checkIsSeparator(inputStream);
 
         // the distance can be negative, so the robot go back instead of go forward
-        float distance1 = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
+        float distance1 = readHexFloat4(inputStream, BSPLINE_MOTION_DISTANCE_FACTOR_DIGIT);
         checkIsSeparator(inputStream);
     
         // the distance can be negative, so the robot go back instead of go forward
-        float distance2 = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
-
+        float distance2 = readHexFloat4(inputStream, BSPLINE_MOTION_DISTANCE_FACTOR_DIGIT);
         checkIsSeparator(inputStream);
-        float accelerationFactor = readHexFloat4(inputStream, 3);
-        float speedFactor = readHexFloat4(inputStream, 3);
+
+        // Factors
+        float accelerationFactor = readHexFloat2(inputStream, BSPLINE_MOTION_ACCELERATION_FACTOR_DIGIT);
+        checkIsSeparator(inputStream);
+        float speedFactor = readHexFloat2(inputStream, BSPLINE_MOTION_SPEED_FACTOR_DIGIT);
 
         // if distance = 0, the system computes the optimum distance
         // we use relative
@@ -111,8 +113,8 @@ void deviceExtendedMotionHandleRawData(char commandHeader,
         gotoSpline(pidMotion,
                 -400.0f, 0.0f,
                 0.0f,
-                100.0f, 100.0f,
-                MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL,
+                -100.0f, -100.0f,
+                -MOTION_ACCELERATION_FACTOR_NORMAL, -MOTION_SPEED_FACTOR_NORMAL,
                 true,
                 notificationOutputStream);
     }

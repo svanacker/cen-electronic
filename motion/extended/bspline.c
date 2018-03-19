@@ -1,5 +1,7 @@
 #include <math.h>
 
+#include "../../common/error/error.h"
+
 #include "bspline.h"
 #include "bsplineDebug.h"
 
@@ -147,6 +149,10 @@ float computeTimeWithInterpolation(BSplinePointData* beforePointData,
 }
 
 float computeBSplineTimeAtDistance(BSplineCurve* bSplineCurve, float distance) {
+    if (isFloatNegative(distance)) {
+        writeError(MOTION_BSPLINE_DISTANCE_MUST_BE_POSITIVE);
+        return 1.0f;
+    }
     float length = bSplineCurve->curveLength;
     if (!floatEqualsZero(length)) {
         return distance / length;

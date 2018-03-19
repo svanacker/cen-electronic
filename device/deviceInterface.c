@@ -45,6 +45,7 @@ int getLengthOfType(int parameterType) {
         case DEVICE_ARG_UNSIGNED_HEX_9 : return 9;
         case DEVICE_ARG_UNSIGNED_HEX_10 : return 10;
         case DEVICE_ARG_UNSIGNED_HEX_12 : return 12;
+        case DEVICE_ARG_UNSIGNED_FLOAT_HEX_2: return 2;
         case DEVICE_ARG_UNSIGNED_FLOAT_HEX_4: return 4;
         case DEVICE_ARG_UNSIGNED_FLOAT_HEX_6: return 6;
     }
@@ -98,6 +99,11 @@ void setArgumentUnsignedHex6(int index, char* name) {
 }
 
 // Float
+
+void setArgumentFloatHex2(int index, char* name) {
+    deviceMethodMetaData.arguments[index].type = DEVICE_ARG_UNSIGNED_FLOAT_HEX_2;
+    deviceMethodMetaData.arguments[index].name = name;
+}
 
 void setArgumentFloatHex4(int index, char* name) {
     deviceMethodMetaData.arguments[index].type = DEVICE_ARG_UNSIGNED_FLOAT_HEX_4;
@@ -162,6 +168,11 @@ void setResultFixedCharArray(int index, char* name) {
 }
 
 // Float
+
+void setResultFloatHex2(int index, char* name) {
+    deviceMethodMetaData.results[index].type = DEVICE_ARG_UNSIGNED_FLOAT_HEX_2;
+    deviceMethodMetaData.results[index].name = name;
+}
 
 void setResultFloatHex4(int index, char* name) {
     deviceMethodMetaData.results[index].type = DEVICE_ARG_UNSIGNED_FLOAT_HEX_4;

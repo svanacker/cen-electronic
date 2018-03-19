@@ -8,11 +8,11 @@
 /**
  * Do a bspline curve using relative coordinates (x, y, angle)
  */
-bool motionDriverBSplineRelative(float x, float y, float angle, float dist0, float dist1, int accelerationFactor, int speedFactor);
+bool motionDriverBSplineRelative(float x, float y, float angle, float dist0, float dist1, float accelerationFactor, float speedFactor);
 
 /**
  * Do a bspline curve using absolute coordinates (x, y, angle)
  */
-bool motionDriverBSplineAbsolute(float x, float y, float angle, float dist0, float dist1, int accelerationFactor, int speedFactor);
+bool motionDriverBSplineAbsolute(float x, float y, float angle, float dist0, float dist1, float accelerationFactor, float speedFactor);
 
 #endif

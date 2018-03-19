@@ -106,6 +106,11 @@ bool floatEquals(float value1, float value2);
 bool floatEqualsZero(float value);
 
 /**
+ * Returns true if the float is negative !
+ */
+bool isFloatNegative(float value);
+
+/**
  * Do the modulo of a value between -PI and PI.
  * @param value the value to convert
  * @return the modulo of a value between -PI and PI

@@ -37,9 +37,9 @@ bool isTrajectoryDeviceOk(void) {
 
 void notifyAbsolutePositionWithoutHeader(OutputStream* outputStream) {
     Position* p = getPosition();
-    appendHexFloat4(outputStream, p->pos.x, POSITION_DIGIT_MM_PRECISION);
+    appendHexFloat6(outputStream, p->pos.x, POSITION_DIGIT_MM_PRECISION);
     appendSeparator(outputStream);
-    appendHexFloat4(outputStream, p->pos.y, POSITION_DIGIT_MM_PRECISION);
+    appendHexFloat6(outputStream, p->pos.y, POSITION_DIGIT_MM_PRECISION);
     appendSeparator(outputStream);
     appendHexFloat4(outputStream, radToDeg(p->orientation), ANGLE_DIGIT_DEGREE_PRECISION);
 }
@@ -82,17 +82,9 @@ void deviceTrajectoryHandleRawData(char header,
 
         OutputStream* debugOutputStream = getDebugOutputStreamLogger();
 
-        appendStringAndDecf(debugOutputStream, "newX=", newX);
-        appendStringAndDecf(debugOutputStream, ",newY=", newY);
-        appendStringAndDecf(debugOutputStream, ",newAngle=", newAngle);
-
         float fX = (float) newX;
         float fY = (float) newY;
-        float fAngle = radToDeg(newAngle);
-
-        appendStringAndDecf(debugOutputStream, "fX=", fX);
-        appendStringAndDecf(debugOutputStream, ",fY=", fY);
-        appendStringAndDecf(debugOutputStream, ",fAngle=", fAngle);
+        float fAngle = degToRad(newAngle);
 
         setPosition(fX, fY, fAngle);
     }

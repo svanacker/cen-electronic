@@ -184,7 +184,7 @@ bool executeTargetActions() {
 void motionGoLocation(Location* location, 
                     float angle,
                     float controlPointDistance1, float controlPointDistance2,
-                    int accelerationFactor, int speedFactor ) {
+                    float accelerationFactor, float speedFactor ) {
 
     #ifdef DEBUG_STRATEGY_HANDLER
         appendString(getDebugOutputStreamLogger(), "motionGoLocation:goto:");    
@@ -312,7 +312,7 @@ void motionFollowPath(PathData* pathData, bool reversed) {
 
     // cast to unsigned, negative signed char send 00
     motionDriverBSplineAbsolute(location->x, location->y, angle, cp1, cp2,
-        (int) pathData->accelerationFactor, (int) pathData->speedFactor);
+        pathData->accelerationFactor, pathData->speedFactor);
 
     // Simulate as if the robot goes to the position with a small error
     #ifdef SIMULATE_ROBOT

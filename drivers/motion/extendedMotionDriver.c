@@ -20,44 +20,46 @@
 
 #include "../../common/2d/2d.h"
 
-bool motionDriverBSplineRelative(float x, float y, float angle, float dist0, float dist1, int accelerationFactor, int speedFactor) {
+bool motionDriverBSplineRelative(float x, float y, float angle, float dist0, float dist1, float accelerationFactor, float speedFactor) {
     OutputStream* outputStream = getDriverRequestOutputStream();
     append(outputStream, MOTION_DEVICE_HEADER);
     append(outputStream, COMMAND_MOTION_SPLINE_RELATIVE);
-    appendHexFloat4(outputStream, x, POSITION_DIGIT_MM_PRECISION);
+    appendHexFloat6(outputStream, x, POSITION_DIGIT_MM_PRECISION);
     appendSeparator(outputStream);
-    appendHexFloat4(outputStream, y, POSITION_DIGIT_MM_PRECISION);
+    appendHexFloat6(outputStream, y, POSITION_DIGIT_MM_PRECISION);
     appendSeparator(outputStream);
     appendHexFloat4(outputStream, angle, ANGLE_DIGIT_DEGREE_PRECISION);
     appendSeparator(outputStream);
-    appendHexFloat4(outputStream, dist0, POSITION_DIGIT_MM_PRECISION);
+    appendHexFloat4(outputStream, dist0, BSPLINE_MOTION_DISTANCE_FACTOR_DIGIT);
     appendSeparator(outputStream);
-    appendHexFloat4(outputStream, dist1, POSITION_DIGIT_MM_PRECISION);
+    appendHexFloat4(outputStream, dist1, BSPLINE_MOTION_DISTANCE_FACTOR_DIGIT);
     appendSeparator(outputStream);
-    appendHex(outputStream, (char) accelerationFactor);
-    appendHex(outputStream, (char) speedFactor);
+    appendHexFloat2(outputStream, accelerationFactor, BSPLINE_MOTION_ACCELERATION_FACTOR_DIGIT);
+    appendSeparator(outputStream);
+    appendHexFloat2(outputStream, speedFactor, BSPLINE_MOTION_SPEED_FACTOR_DIGIT);
 
     bool result = transmitFromDriverRequestBuffer();
 
     return result;
 }
 
-bool motionDriverBSplineAbsolute(float x, float y, float angle, float dist0, float dist1, int accelerationFactor, int speedFactor) {
+bool motionDriverBSplineAbsolute(float x, float y, float angle, float dist0, float dist1, float accelerationFactor, float speedFactor) {
     OutputStream* outputStream = getDriverRequestOutputStream();
     append(outputStream, MOTION_DEVICE_HEADER);
     append(outputStream, COMMAND_MOTION_SPLINE_ABSOLUTE);
-    appendHexFloat4(outputStream, x, POSITION_DIGIT_MM_PRECISION);
+    appendHexFloat6(outputStream, x, POSITION_DIGIT_MM_PRECISION);
     appendSeparator(outputStream);
-    appendHexFloat4(outputStream, y, POSITION_DIGIT_MM_PRECISION);
+    appendHexFloat6(outputStream, y, POSITION_DIGIT_MM_PRECISION);
     appendSeparator(outputStream);
     appendHexFloat4(outputStream, angle, ANGLE_DIGIT_DEGREE_PRECISION);
     appendSeparator(outputStream);
-    appendHexFloat4(outputStream, dist0, POSITION_DIGIT_MM_PRECISION);
+    appendHexFloat4(outputStream, dist0, BSPLINE_MOTION_DISTANCE_FACTOR_DIGIT);
     appendSeparator(outputStream);
-    appendHexFloat4(outputStream, dist1, POSITION_DIGIT_MM_PRECISION);
+    appendHexFloat4(outputStream, dist1, BSPLINE_MOTION_DISTANCE_FACTOR_DIGIT);
     appendSeparator(outputStream);
-    appendHex(outputStream, (char)accelerationFactor);
-    appendHex(outputStream, (char)speedFactor);
+    appendHexFloat2(outputStream, accelerationFactor, BSPLINE_MOTION_ACCELERATION_FACTOR_DIGIT);
+    appendSeparator(outputStream);
+    appendHexFloat2(outputStream, speedFactor, BSPLINE_MOTION_SPEED_FACTOR_DIGIT);
 
     bool result = transmitFromDriverRequestBuffer();
 

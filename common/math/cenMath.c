@@ -1,4 +1,5 @@
 #include <math.h>
+#include <float.h>
 
 #include "cenMath.h"
 
@@ -14,6 +15,10 @@ bool floatEquals(float value1, float value2) {
 // TODO => Replace by unity
 bool floatEqualsZero(float value1) {
     return (value1 >= -0.00001f && value1 <= 0.00001f);
+}
+
+bool isFloatNegative(float value) {
+    return value <= -0.00001f;
 }
 
 long absLong(signed long value) {

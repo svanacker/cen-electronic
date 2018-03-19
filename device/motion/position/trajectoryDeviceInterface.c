@@ -7,11 +7,11 @@
 #include "../../../device/deviceConstants.h"
 
 #define GET_ABS_POS_STRING             "get Absolute Position"
-#define GET_DEBUG_ABS_POS_STRING     "get Debug Absolute Position"
+#define GET_DEBUG_ABS_POS_STRING       "get Debug Absolute Position"
 #define SET_ABS_POS_STRING             "set Absolute Position"
 #define ANGLE_1_10_DEG                 "angle (deci degree)"
-#define X_MM                         "x (mm)"
-#define Y_MM                         "y (mm)"
+#define X_MM                           "x (microMM)"
+#define Y_MM                           "y (microMM)"
 
 const char* getTrajectoryDeviceName(void) {
     return "Trajectory";
@@ -21,13 +21,13 @@ int trajectoryGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fi
     if (commandHeader == COMMAND_TRAJECTORY_GET_ABSOLUTE_POSITION) {
         if (fillDeviceArgumentList) {
             setFunction(GET_ABS_POS_STRING, 0, 5);
-            setResultUnsignedHex4(0, X_MM);
+            setResultFloatHex6(0, X_MM);
             setResultSeparator(1);
-            setResultUnsignedHex4(2, Y_MM);
+            setResultFloatHex6(2, Y_MM);
             setResultSeparator(3);
             setResultUnsignedHex4(4, ANGLE_1_10_DEG);
         }
-        return commandLengthValueForMode(mode, 0, 14);
+        return commandLengthValueForMode(mode, 0, 18);
     } else if (commandHeader == COMMAND_TRAJECTORY_DEBUG_GET_ABSOLUTE_POSITION) {
         // Same return in case of input / output
         if (fillDeviceArgumentList) {
@@ -44,13 +44,13 @@ int trajectoryGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fi
 	} else if (commandHeader == COMMAND_TRAJECTORY_SET_ABSOLUTE_POSITION) {
         if (fillDeviceArgumentList) {
             setFunction(SET_ABS_POS_STRING, 5, 0);
-            setArgumentUnsignedHex4(0, X_MM);
+            setArgumentFloatHex6(0, X_MM);
             setArgumentSeparator(1);
-            setArgumentUnsignedHex4(2, Y_MM);
+            setArgumentFloatHex6(2, Y_MM);
             setArgumentSeparator(3);
             setArgumentUnsignedHex4(4, ANGLE_1_10_DEG);
         }
-        return commandLengthValueForMode(mode, 14, 0);
+        return commandLengthValueForMode(mode, 18, 0);
     }
     return DEVICE_HEADER_NOT_HANDLED;
 }

@@ -17,12 +17,12 @@
 /**
 * Write in debug coders history value.
 */
-#define COMMAND_TRAJECTORY_DEBUG_CODERS					'D'
+#define COMMAND_TRAJECTORY_DEBUG_CODERS					    'D'
 
 /**
 * Defines the header used to set the absolute position.
 */
-#define COMMAND_TRAJECTORY_SET_ABSOLUTE_POSITION            'w'
+#define COMMAND_TRAJECTORY_SET_ABSOLUTE_POSITION            'W'
 
 /**
 * Interface for Device

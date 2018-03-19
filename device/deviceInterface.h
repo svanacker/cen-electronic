@@ -176,11 +176,14 @@ typedef struct DeviceMethodMetaData {
 /** (used only for string aggregates values) */
 #define DEVICE_ARG_UNSIGNED_HEX_12     24
 
-/** Unsigned float with hex length = 4. */
-#define DEVICE_ARG_UNSIGNED_FLOAT_HEX_4   25  
+/** Unsigned float with hex length = 2. */
+#define DEVICE_ARG_UNSIGNED_FLOAT_HEX_2   25 
 
 /** Unsigned float with hex length = 4. */
-#define DEVICE_ARG_UNSIGNED_FLOAT_HEX_6   26  
+#define DEVICE_ARG_UNSIGNED_FLOAT_HEX_4   26  
+
+/** Unsigned float with hex length = 4. */
+#define DEVICE_ARG_UNSIGNED_FLOAT_HEX_6   27  
 
 // ARGUMENT LIST
 
@@ -265,6 +268,10 @@ void setArgumentUnsignedHex6(int index, char* name);
  * Set the argument of the deviceArgumentList with index for name.
  */
 void setArgumentFixedCharArray(int index, char* name);
+/**
+* Set the argument of the deviceArgumentList with index for name.
+*/
+void setArgumentFloatHex2(int index, char* name);
 
 /**
 * Set the argument of the deviceArgumentList with index for name.
@@ -316,6 +323,11 @@ void setResultUnsignedHex6(int index, char* name);
 *  Set the result of the deviceMethodMetaData with index for name
 */
 void setResultFixedCharArray(int index, char* name);
+
+/**
+*  Set the result of the deviceMethodMetaData with index for name
+*/
+void setResultFloatHex2(int index, char* name);
 
 /**
 *  Set the result of the deviceMethodMetaData with index for name

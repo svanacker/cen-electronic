@@ -74,7 +74,7 @@ void motionFollowPath(PathData* pathData, bool reversed);
 void motionGoLocation(Location* location, 
                     float angle,
                     float controlPointDistance1, float controlPointDistance2,
-                    int accelerationFactor, int speedFactor);
+                    float accelerationFactor, float speedFactor);
 
 
 #endif

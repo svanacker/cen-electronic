@@ -330,9 +330,6 @@ void runMotorBoardPC(bool singleMode) {
 
     setDebugI2cEnabled(false);
 
-    float value = 0.0f;
-    appendDecf(&consoleOutputStream, 0.0f / value);
-
     while (1) {
         motorBoardWaitForInstruction();
     }
