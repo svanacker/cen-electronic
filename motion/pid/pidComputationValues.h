@@ -13,15 +13,13 @@
 typedef struct PidComputationValues {
     // The current motion Type
     enum DetectedMotionType detectedMotionType;
-    // ONLY ONE VALUE AT A TIME
-    // theta error (distance for normal trajectory, and along Y axis for Spline Curve)
-    float thetaError;
+    // theta error for bSpline
+    float bSplineThetaError;
     // angle error
-    float alphaError;
-    // theta error (only for Curve implementation)
+    float bSplineAlphaError;
     // determine the distance between normal trajectory tangent line
-    // and real trajectory tangent line (=> X Axis)
-    float thetaXAxisError;
+    // and real trajectory tangent line
+    float bSplineThetaXAxisError;
     // store the last pid time (in second)
     float lastPidTimeInSecond;
     // store the current pid time (in second))

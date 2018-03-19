@@ -9,6 +9,7 @@
       </logicalFolder>
       <logicalFolder name="common.2d" displayName="common.2d" projectFiles="true">
         <itemPath>../../../common/2d/2d.h</itemPath>
+        <itemPath>../../../common/2d/2dDebug.h</itemPath>
       </logicalFolder>
       <logicalFolder name="common.clock"
                      displayName="common.clock"
@@ -436,6 +437,7 @@
                    projectFiles="true">
       <logicalFolder name="common.2d" displayName="common.2d" projectFiles="true">
         <itemPath>../../../common/2d/2d.c</itemPath>
+        <itemPath>../../../common/2d/2dDebug.c</itemPath>
       </logicalFolder>
       <logicalFolder name="common.clock"
                      displayName="common.clock"

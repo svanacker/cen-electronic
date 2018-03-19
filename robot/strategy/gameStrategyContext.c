@@ -2,6 +2,8 @@
 
 #include "gameStrategyContext.h"
 
+#include "../../common/2d/2dDebug.h"
+
 #include "../../navigation/locationList.h"
 
 #include "../../common/io/outputStream.h"

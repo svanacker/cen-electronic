@@ -12,11 +12,17 @@
 /** Define the header used to follow a spline with relative coordinates. */
 #define COMMAND_MOTION_SPLINE_ABSOLUTE         'S'
 
-/** Define the header used to follow a spline test. */
-#define COMMAND_MOTION_SPLINE_TEST_LEFT        '{'
+/** Define the header used to follow a spline which is a simple forward */
+#define COMMAND_MOTION_SPLINE_TEST_FORWARD     'f'
 
-/** Define the header used to follow a spline test. */
-#define COMMAND_MOTION_SPLINE_TEST_RIGHT       '}'
+/** Define the header used to follow a spline which is a simple backward */
+#define COMMAND_MOTION_SPLINE_TEST_BACKWARD    'b'
+
+/** Define the header used to follow a spline test to the left. */
+#define COMMAND_MOTION_SPLINE_TEST_LEFT        'l'
+
+/** Define the header used to follow a spline test to the right. */
+#define COMMAND_MOTION_SPLINE_TEST_RIGHT       'r'
 
 /**
 * Interface for Device

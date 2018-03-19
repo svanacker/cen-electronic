@@ -31,8 +31,8 @@ void initPathData(PathData* pathData,
                      float controlPointDistance2,
                      float angle1,
                      float angle2,
-                     unsigned char accelerationFactor,
-                     unsigned char speedFactor) {
+                     float accelerationFactor,
+                     float speedFactor) {
     pathData->location1 = location1;
     pathData->location2 = location2;
     pathData->controlPointDistance1 = controlPointDistance1;
@@ -99,8 +99,8 @@ void printPath(OutputStream* outputStream, PathData* pathData) {
     appendStringAndDecf(outputStream, ", angle1=", getAngle1Path(pathData));
     appendStringAndDecf(outputStream, ", angle2=", getAngle2Path(pathData));
 
-    appendStringAndDec(outputStream, ", accFactor=", pathData->accelerationFactor);
-    appendStringAndDec(outputStream, ", speedFactor=", pathData->speedFactor);
+    appendStringAndDecf(outputStream, ", accFactor=", pathData->accelerationFactor);
+    appendStringAndDecf(outputStream, ", speedFactor=", pathData->speedFactor);
     appendString(outputStream, ", mustGoBackward=");
     appendBoolAsString(outputStream, pathData->mustGoBackward);
 

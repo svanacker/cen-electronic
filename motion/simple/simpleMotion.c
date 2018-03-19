@@ -98,7 +98,7 @@ void rightDegree(PidMotion* pidMotion, float angleDegree, float a, float speed, 
 
 void leftOneWheelDegree(PidMotion* pidMotion, float angleDegree, float a, float speed, OutputStream* notificationOutputStream) {
     // We multiply by 2, because, only one wheel rotates
-    float angleRadius = angleDegree * PI_DIVIDE_180 * 2.0f;
+    float angleRadius = degToRad(angleDegree) * 2.0f;
     RobotKinematics* robotKinematics = getRobotKinematics();
     float leftWheelLengthForOnePulse = getCoderLeftWheelLengthForOnePulse(robotKinematics);
     float wheelsDistanceFromCenter = getCoderWheelsDistanceFromCenter(robotKinematics);
@@ -109,7 +109,7 @@ void leftOneWheelDegree(PidMotion* pidMotion, float angleDegree, float a, float 
 
 void rightOneWheelDegree(PidMotion* pidMotion, float angleDegree, float a, float speed, OutputStream* notificationOutputStream) {
     // We multiply by 2, because, only one wheel rotates
-    float angleRadius = angleDegree * PI_DIVIDE_180 * 2.0f;
+    float angleRadius = degToRad(angleDegree) * 2.0f;
     RobotKinematics* robotKinematics = getRobotKinematics();
     float rightWheelLengthForOnePulse = getCoderRightWheelLengthForOnePulse(robotKinematics);
     float wheelsDistanceFromCenter = getCoderWheelsDistanceFromCenter(robotKinematics);

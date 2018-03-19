@@ -76,6 +76,7 @@ int32_t VL53L0X_trace_config(char *filename, uint32_t modules, uint32_t level, u
 
     return STATUS;
     */
+    return 0;
     // TODO SVA
 }
 

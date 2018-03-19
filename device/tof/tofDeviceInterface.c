@@ -5,7 +5,7 @@
 #include "../../device/deviceInterface.h"
 #include "../../device/deviceConstants.h"
 
-const char* deviceTofGetName() {
+const char* deviceTofGetName(void) {
     return "tof";
 }
 

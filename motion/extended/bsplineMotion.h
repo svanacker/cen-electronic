@@ -10,26 +10,19 @@
 
 // SPEED FACTOR
 
-#define    MOTION_SPEED_FACTOR_MAX                15
-#define    MOTION_SPEED_FACTOR_HIGH               10
-#define    MOTION_SPEED_FACTOR_NORMAL            7
-#define    MOTION_SPEED_FACTOR_LOW                4
-#define    MOTION_SPEED_FACTOR_MIN                1
+#define    MOTION_SPEED_FACTOR_MAX                1.5f
+#define    MOTION_SPEED_FACTOR_HIGH               1.0f
+#define    MOTION_SPEED_FACTOR_NORMAL             0.5f
+#define    MOTION_SPEED_FACTOR_LOW                0.25f
+#define    MOTION_SPEED_FACTOR_MIN                0.1f
 
 // ACCELERATION FACTOR
 
-#define    MOTION_ACCELERATION_FACTOR_MAX        15
-#define    MOTION_ACCELERATION_FACTOR_HIGH        10
-#define    MOTION_ACCELERATION_FACTOR_NORMAL    7
-#define    MOTION_ACCELERATION_FACTOR_LOW        4
-#define    MOTION_ACCELERATION_FACTOR_MIN        1
-
-void updateSimpleSplineWithDistance(BSplineCurve* spline, 
-									float destX, float destY,
-                                    float destAngle,
-                                    float distance1, float distance2,
-                                    unsigned char accelerationFactor, unsigned char speedFactor,
-                                    bool relative);
+#define    MOTION_ACCELERATION_FACTOR_MAX         1.5f
+#define    MOTION_ACCELERATION_FACTOR_HIGH        1.0f
+#define    MOTION_ACCELERATION_FACTOR_NORMAL      0.5f
+#define    MOTION_ACCELERATION_FACTOR_LOW         0.25f
+#define    MOTION_ACCELERATION_FACTOR_MIN         0.1f
 
 /**
  * Go from the relative destination to the initial Position of the robot
@@ -42,22 +35,16 @@ void updateSimpleSplineWithDistance(BSplineCurve* spline,
  * @param controlPointDistance2 the distance of P2->P3. If egal to 0.0f, the 
  * system determines the best distance to avoid too huge curve
  */
-void gotoSimpleSpline(PidMotion* pidMotion,
+void gotoSpline(PidMotion* pidMotion,
 					  float relativeDestX,
                       float relativeDestY,
                       float relativeDestAngle,
                       float controlPointDistance1,
                       float controlPointDistance2,
-                      unsigned int accelerationFactor,
-                      unsigned int speedFactor,
+                      float accelerationFactor,
+                      float speedFactor,
                       bool relative,
                       OutputStream* notificationOutputStream
                     );
-
-/**
-* Go to a spline with indication of maxDerivative which indicates how the curve is huge
-*/
-void gotoSpline(PidMotion* pidMotion);
-
 
 #endif

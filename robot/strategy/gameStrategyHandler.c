@@ -360,12 +360,8 @@ bool handleCurrentTrajectory() {
     return true;
 }
 
-float degreesToRad(float ddegrees) {
-    return ddegrees * PI_DIVIDE_180;
-}
-
 void computePoint(Point* ref, Point* cp, float distance, float angle) {
-    float a = degreesToRad(angle);
+    float a = degToRad(angle);
     float dca = cosf(a) * distance;
     float dsa = sinf(a) * distance;
     cp->x = ref->x + dca;

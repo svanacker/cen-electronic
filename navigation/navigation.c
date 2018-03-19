@@ -55,8 +55,8 @@ PathData* addNavigationPath(
             float controlPointDistance2,
             float angle1,
             float angle2,
-            unsigned char accelerationFactor,
-            unsigned char speedFactor) {
+            float accelerationFactor,
+            float speedFactor) {
     PathData* pathData = addPath(navigation.paths);
     initPathData(pathData, location1, location2, cost, controlPointDistance1, controlPointDistance2, angle1, angle2, accelerationFactor, speedFactor);
     return pathData;

@@ -6,6 +6,8 @@
 
 #include "../../../common/commons.h"
 
+#include "../../../common/2d/2d.h"
+
 #include "../../../common/io/inputStream.h"
 #include "../../../common/io/outputStream.h"
 #include "../../../common/io/printWriter.h"
@@ -39,7 +41,7 @@ void notifyAbsolutePositionWithoutHeader(OutputStream* outputStream) {
     appendSeparator(outputStream);
     appendHexFloat4(outputStream, p->pos.y, POSITION_DIGIT_MM_PRECISION);
     appendSeparator(outputStream);
-    appendHexFloat4(outputStream, p->orientation / PI_DIVIDE_180, ANGLE_DIGIT_DEGREE_PRECISION);
+    appendHexFloat4(outputStream, radToDeg(p->orientation), ANGLE_DIGIT_DEGREE_PRECISION);
 }
 
 void deviceTrajectoryHandleRawData(char header,
@@ -70,23 +72,23 @@ void deviceTrajectoryHandleRawData(char header,
 		printDebugCoderHistory(debugOutputStream);
 	}
     else if (header == COMMAND_TRAJECTORY_SET_ABSOLUTE_POSITION) {
-        long newX = readHex4(inputStream);
-        inputStream->readChar(inputStream);
-        long newY = readHex4(inputStream);
-        inputStream->readChar(inputStream);
-        long newAngle = readHex4(inputStream);
+        float newX = readHexFloat6(inputStream, POSITION_DIGIT_MM_PRECISION);
+        checkIsSeparator(inputStream);
+        float newY = readHexFloat6(inputStream, POSITION_DIGIT_MM_PRECISION);
+        checkIsSeparator(inputStream);
+        float newAngle = readHexFloat4(inputStream, ANGLE_DIGIT_DEGREE_PRECISION);
 
         ackCommand(outputStream, TRAJECTORY_DEVICE_HEADER, COMMAND_TRAJECTORY_SET_ABSOLUTE_POSITION);
 
         OutputStream* debugOutputStream = getDebugOutputStreamLogger();
 
-        appendStringAndDec(debugOutputStream, "newX=", newX);
-        appendStringAndDec(debugOutputStream, ",newY=", newY);
-        appendStringAndDec(debugOutputStream, ",newAngle=", newAngle);
+        appendStringAndDecf(debugOutputStream, "newX=", newX);
+        appendStringAndDecf(debugOutputStream, ",newY=", newY);
+        appendStringAndDecf(debugOutputStream, ",newAngle=", newAngle);
 
         float fX = (float) newX;
         float fY = (float) newY;
-        float fAngle = PI_DIVIDE_180 * (float) newAngle;
+        float fAngle = radToDeg(newAngle);
 
         appendStringAndDecf(debugOutputStream, "fX=", fX);
         appendStringAndDecf(debugOutputStream, ",fY=", fY);

@@ -1734,6 +1734,9 @@
     <ClCompile Include="drivers\tof\vl53l0x\vl53l0x_platform_common.c">
       <Filter>Source Files\drivers\tof\vl53l0x</Filter>
     </ClCompile>
+    <ClCompile Include="common\2d\2dDebug.c">
+      <Filter>Source Files\common\2d</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -2698,6 +2701,9 @@
     </ClInclude>
     <ClInclude Include="drivers\tof\tof.h">
       <Filter>Header Files\drivers\tof</Filter>
+    </ClInclude>
+    <ClInclude Include="common\2d\2dDebug.h">
+      <Filter>Header Files\common\2d</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

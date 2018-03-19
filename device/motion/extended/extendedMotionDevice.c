@@ -70,8 +70,8 @@ void deviceExtendedMotionHandleRawData(char commandHeader,
         float y = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
         checkIsSeparator(inputStream);
 
-        float angle = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
-        angle = angle * PI_DIVIDE_180;
+        float angleInDegree = readHexFloat4(inputStream, ANGLE_DIGIT_DEGREE_PRECISION);
+        float angleRadian = degToRad(angleInDegree);
         checkIsSeparator(inputStream);
 
         // the distance can be negative, so the robot go back instead of go forward
@@ -82,19 +82,39 @@ void deviceExtendedMotionHandleRawData(char commandHeader,
         float distance2 = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
 
         checkIsSeparator(inputStream);
-        int accelerationFactor = readHex(inputStream);
-        int speedFactor = readHex(inputStream);
+        float accelerationFactor = readHexFloat4(inputStream, 3);
+        float speedFactor = readHexFloat4(inputStream, 3);
 
         // if distance = 0, the system computes the optimum distance
         // we use relative
-        gotoSimpleSpline(pidMotion,
+        gotoSpline(pidMotion,
 						x, y,
-                        angle, 
+                        angleRadian,
                         distance1, distance2, 
                         accelerationFactor, speedFactor,
                         commandHeader == COMMAND_MOTION_SPLINE_RELATIVE,
 					    notificationOutputStream
                         );
+    }
+    else if (commandHeader == COMMAND_MOTION_SPLINE_TEST_FORWARD) {
+        ackCommand(outputStream, MOTION_DEVICE_HEADER, commandHeader);
+        gotoSpline(pidMotion,
+                 400.0f, 0.0f,
+                 0.0f,
+                 100.0f, 100.0f,
+                MOTION_ACCELERATION_FACTOR_LOW, MOTION_SPEED_FACTOR_LOW,
+                 true,
+                notificationOutputStream);
+    }
+    else if (commandHeader == COMMAND_MOTION_SPLINE_TEST_BACKWARD) {
+        ackCommand(outputStream, MOTION_DEVICE_HEADER, commandHeader);
+        gotoSpline(pidMotion,
+                400.0f, 0.0f,
+                0.0f,
+                100.0f, 100.0f,
+                MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL,
+                true,
+                notificationOutputStream);
     }
     else if (commandHeader == COMMAND_MOTION_SPLINE_TEST_LEFT || commandHeader == COMMAND_MOTION_SPLINE_TEST_RIGHT) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, commandHeader);
@@ -102,7 +122,7 @@ void deviceExtendedMotionHandleRawData(char commandHeader,
         if (commandHeader == COMMAND_MOTION_SPLINE_TEST_RIGHT) {
             sign = -sign;
         }
-        gotoSimpleSpline(pidMotion,
+        gotoSpline(pidMotion,
 						 400.0f, sign * 400.0f,
                          sign * 0.75f * PI,
                          200.0f, 200.0f,

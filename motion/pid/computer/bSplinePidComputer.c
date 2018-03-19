@@ -1,4 +1,5 @@
 #include <math.h>
+#include <stdbool.h>
 
 #include "bSplinePidComputer.h"
 
@@ -24,12 +25,53 @@
 
 #include "../../../robot/kinematics/robotKinematics.h"
 
+/**
+ * Compute the Alpha part of the PID
+ */
+float bSplineMotionUComputeAlphaError(PidComputationInstructionValues* alphaValues, float normalAlpha, float realAlpha, bool backward) {
+    // backward management
+    if (backward) {
+        realAlpha += PI;
+    }
+    float alphaErrorInRadian = (normalAlpha - realAlpha);
+    // restriction to [-PI, PI]
+    alphaErrorInRadian = mod2PI(alphaErrorInRadian);
+
+    // Convert angleError into pulse equivalent
+    RobotKinematics* robotKinematics = getRobotKinematics();
+
+    // Convert the alpha error into a "distance" equivalence
+    // TODO : To review
+    return rotationInRadiansToRealDistanceForLeftWheel(robotKinematics, alphaErrorInRadian);
+}
+
+float bSplineMotionUComputeThetaError(PidComputationInstructionValues* alphaValues,
+                                      float distanceBetweenRealAndNormalPoint,
+                                      float angleBetweenRealAndNormalOrientation,
+                                      float normalAlpha, 
+                                      bool backward) {
+    if (backward) {
+        angleBetweenRealAndNormalOrientation += PI;
+    }
+    float alphaAndThetaDiff = angleBetweenRealAndNormalOrientation - normalAlpha;
+
+    // restriction to [-PI, PI]
+    alphaAndThetaDiff = mod2PI(alphaAndThetaDiff);
+
+    float cosAlphaAndThetaDiff = cosf(alphaAndThetaDiff);
+    float result = distanceBetweenRealAndNormalPoint * cosAlphaAndThetaDiff;
+    
+    return result;
+}
+
 void bSplineMotionUCompute(PidMotion* pidMotion, PidMotionDefinition* motionDefinition) {
     BSplineCurve* curve = &(motionDefinition->curve);
 	PidComputationValues* computationValues = &(pidMotion->computationValues);
     float pidTime = computationValues->pidTimeInSecond;
-    MotionInstruction* thetaInst = &(motionDefinition->inst[THETA]);
-    float normalPosition = computeNormalPosition(thetaInst, pidTime);
+
+    // Distance
+    MotionInstruction* thetaInstruction = &(motionDefinition->inst[THETA]);
+    float normalPosition = computeNormalPosition(thetaInstruction, pidTime);
 
     // Computes the time of the bSpline in [0.00, 1.00]
     float bSplineTime = computeBSplineTimeAtDistance(curve, normalPosition);
@@ -38,71 +80,47 @@ void bSplineMotionUCompute(PidMotion* pidMotion, PidMotionDefinition* motionDefi
 
     // Computes the normal Point where the robot must be
     computeBSplinePoint(curve, bSplineTime, &normalPoint);
-    // Convert normalPoint into mm space
-    RobotKinematics* robotKinematics = getRobotKinematics();
-    // TODO : It could be interesting to distinguish left / right value if there is a delta != 0.0f at coder wheel diameter
-    float coderWheelAverageLength = getCoderAverageWheelLengthForOnePulse(robotKinematics);
-
-    normalPoint.x = normalPoint.x * coderWheelAverageLength;
-    normalPoint.y = normalPoint.y * coderWheelAverageLength;
 
     Position* robotPosition = getPosition();
     Point robotPoint = robotPosition->pos;
 
-    // GET PID
-    PidParameter* pidParameter = getPidParameterByPidType(pidMotion, PID_TYPE_GO_INDEX);
+    // GET PID to use
+    PidParameter* thetaPidParameter = getPidParameterByPidType(pidMotion, PID_TYPE_GO_INDEX);
+    PidParameter* alphaPidParameter = getPidParameterByPidType(pidMotion, PID_TYPE_MAINTAIN_POSITION_INDEX);
 
-    // ALPHA
-    PidComputationInstructionValues* alphaValues = &(computationValues->values[ALPHA]);    
-
+    // ALPHA CORRECTION
+    PidComputationInstructionValues* alphaValues = &(computationValues->values[ALPHA]);
     float normalAlpha = computeBSplineOrientationWithDerivative(curve, bSplineTime);
     float realAlpha = robotPosition->orientation;
-    
-    // backward management
-    if (curve->backward) {
-        realAlpha += PI;
-    }
-
-    float alphaError = (normalAlpha - realAlpha);
-    // restriction to [-PI, PI]
-    alphaError = mod2PI(alphaError);
-
-    // Convert angleError into pulse equivalent
-    float coderWheelsDistanceFromCenter = getCoderWheelsDistanceFromCenter(robotKinematics);
-    float alphaPulseError = (-coderWheelsDistanceFromCenter * alphaError) / coderWheelAverageLength;
+    float alphaError = bSplineMotionUComputeAlphaError(alphaValues, normalAlpha, realAlpha, curve->backward);
+    // TODO : To check : not really true if the curve is strong !!
+    float alphaNormalSpeed = 0.0f;
+    // alphaValues->u = computePidCorrection(alphaValues, alphaPidParameter, alphaNormalSpeed, alphaError);
+    alphaValues->u = 0.0f;
 
     // THETA
     PidComputationInstructionValues* thetaValues = &(computationValues->values[THETA]);
+    // This value is always positive (distance), so we must know if the robot is in front of or in back of this distance
+    float distanceRealAndNormalPoint = distanceBetweenPoints(&robotPoint, &normalPoint);
+    // Angle between the robot and the point where it should be
+    float angleRealAndNormalOrientation = angleOfVector(&robotPoint, &normalPoint);
+    // Computes the real thetaError by managing different angles
+    float thetaError = bSplineMotionUComputeThetaError(thetaValues, distanceRealAndNormalPoint, angleRealAndNormalOrientation, normalAlpha, curve->backward);
+    float thetaNormalSpeed = computeNormalSpeed(thetaInstruction, pidTime);
+    thetaValues->u = computePidCorrection(thetaValues, thetaPidParameter, thetaNormalSpeed, thetaError);
+    PidComputationInstructionValues* thetaComputationInstructionValues = &(computationValues->values[THETA]);
+    thetaComputationInstructionValues->error = thetaError;
+    thetaComputationInstructionValues->normalSpeed = thetaNormalSpeed;
+    storePidComputationInstructionValueHistory(thetaComputationInstructionValues, pidTime);
 
-    // thetaError must be in Pulse and not in MM
-    float thetaError = distanceBetweenPoints(&robotPoint, &normalPoint) / coderWheelAverageLength;
-    float thetaAngle = angleOfVector(&robotPoint, &normalPoint);
-    if (curve->backward) {
-        thetaAngle += PI;
-    }
-    float alphaAndThetaDiff = thetaAngle - normalAlpha;
-
-    // restriction to [-PI, PI]
-    alphaAndThetaDiff = mod2PI(alphaAndThetaDiff);
-
-    float cosAlphaAndThetaDiff = cosf(alphaAndThetaDiff);
-    float thetaErrorWithCos = thetaError * cosAlphaAndThetaDiff;
-    
-    float normalSpeed = computeNormalSpeed(thetaInst, pidTime);
-    float thetaU = computePidCorrection(thetaValues, pidParameter, normalSpeed, thetaErrorWithCos);
-
-    thetaValues->u = thetaU;
-
-    // ALPHA CORRECTION
+    // ALPHA/THETA CORRECTION
     // TODO : Introduce Parameters stored in Eeprom !
+    /* TODO 
     alphaPulseError *= 5.0f;
     float alphaCorrection = -0.00050f * normalSpeed * thetaError * (alphaAndThetaDiff);
     // float alphaCorrection = 0.0f;
     alphaPulseError += alphaCorrection;
-    float alphaU = computePidCorrection(alphaValues, pidParameter, 0, alphaPulseError);
-
-    alphaValues->u = alphaU;
-    
+    */
     // LOG
     // OutputStream* out = getDebugOutputStreamLogger();
     

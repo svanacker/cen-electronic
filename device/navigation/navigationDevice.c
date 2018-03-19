@@ -13,6 +13,8 @@
 
 #include "../../device/device.h"
 
+#include "../../motion/motion.h"
+
 #include "../../navigation/navigation.h"
 #include "../../navigation/location.h"
 #include "../../navigation/locationListDebug.h"
@@ -155,9 +157,9 @@ void deviceNavigationHandleRawData(char commandHeader, InputStream* inputStream,
         appendSeparator(outputStream);
         appendHexFloat4(outputStream, pathData->angle2, ANGLE_DIGIT_DEGREE_PRECISION);
         appendSeparator(outputStream);
-        appendHex2(outputStream, pathData->accelerationFactor);
+        appendHexFloat4(outputStream, pathData->accelerationFactor, ACCELERATION_MM_BY_SEC_2_DIGIT_PRECISION);
         appendSeparator(outputStream);
-        appendHex2(outputStream, pathData->speedFactor);
+        appendHexFloat4(outputStream, pathData->speedFactor, SPEED_MM_BY_SEC_DIGIT_PRECISION);
         appendSeparator(outputStream);
         appendBool(outputStream, pathData->mustGoBackward);
     }
@@ -210,9 +212,9 @@ void deviceNavigationHandleRawData(char commandHeader, InputStream* inputStream,
         checkIsSeparator(inputStream);
         pathData->angle2 = readHexFloat4(inputStream, ANGLE_DIGIT_DEGREE_PRECISION);
         checkIsSeparator(inputStream);
-        pathData->accelerationFactor = readHex2(inputStream);
+        pathData->accelerationFactor = readHexFloat4(inputStream, ACCELERATION_MM_BY_SEC_2_DIGIT_PRECISION);
         checkIsSeparator(inputStream);
-        pathData->speedFactor = readHex2(inputStream);
+        pathData->speedFactor = readHexFloat4(inputStream, SPEED_MM_BY_SEC_DIGIT_PRECISION);
         checkIsSeparator(inputStream);
         pathData->mustGoBackward = readBool(inputStream);
     }

@@ -1,5 +1,7 @@
 #include "pidConstants.h"
 
+#include <math.h>
+
 #include "pidMotion.h"
 
 #include "../position/coderErrorComputer.h"
@@ -7,15 +9,18 @@
 void changePidTypeIfFinalApproach(PidMotion* pidMotion, PidMotionDefinition* motionDefinition) {
     float pidTime = pidMotion->computationValues.pidTimeInSecond;
 
-    computeErrorsWithNextPositionUsingCoders(pidMotion, motionDefinition);
     PidComputationValues* computationValues = &(pidMotion->computationValues);
 
     // Theta and Alpha Error are only used compared to the next position as
     // we only use it to change the PID Type for final Approach
-    float thetaError = computationValues->thetaError;
-    float alphaError = computationValues->alphaError;
     MotionInstruction* thetaInst = &(motionDefinition->inst[THETA]);
     MotionInstruction* alphaInst = &(motionDefinition->inst[ALPHA]);
+    
+    PidComputationInstructionValues* thetaValues = &(computationValues->values[THETA]);
+    PidComputationInstructionValues* alphaValues = &(computationValues->values[ALPHA]);
+    
+    float thetaError = fabs(thetaInst->nextPosition - thetaValues->currentPosition);
+    float alphaError = fabs(alphaInst->nextPosition - alphaValues->currentPosition);
 
     // Change PID type for final Approach
     if ((thetaError < ERROR_FOR_STRONG_PID) && (pidTime > thetaInst->t3 + TIME_PERIOD_AFTER_END_FOR_STRONG_PID)

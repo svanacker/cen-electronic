@@ -39,13 +39,13 @@ void pathListTest(void) {
     initLocation(&locationE, "E", 0, 0);
 
     pathDataAB = addPath(&pathList);
-    initPathData(pathDataAB, &locationA, &locationB, 0, 0, 0, 0, 0, 0, 0);
+    initPathData(pathDataAB, &locationA, &locationB, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
 
     pathDataAC = addPath(&pathList);
-    initPathData(pathDataAC, &locationA, &locationC, 0, 0, 0, 0, 0, 0, 0);
+    initPathData(pathDataAC, &locationA, &locationC, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
 
     pathDataBD = addPath(&pathList);
-    initPathData(pathDataBD, &locationB, &locationD, 0, 0, 0, 0, 0, 0, 0);
+    initPathData(pathDataBD, &locationB, &locationD, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
 
     // getPath
     tmpPathData = getPath(&pathList, 2);

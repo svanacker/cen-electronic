@@ -46,17 +46,3 @@ void computeCurrentPositionUsingCoders(PidMotion* pidMotion) {
     alphaCurrentValues->currentPosition = alpha;
 }
 
-void computeErrorsWithNextPositionUsingCoders(PidMotion* pidMotion, PidMotionDefinition* motionDefinition) {
-    MotionInstruction* thetaInst = &(motionDefinition->inst[THETA]);
-    MotionInstruction* alphaInst = &(motionDefinition->inst[ALPHA]);
-
-    PidComputationValues* computationValues = &(pidMotion->computationValues);
-    PidComputationInstructionValues* thetaCurrentValues = &(computationValues->values[THETA]);
-    PidComputationInstructionValues* alphaCurrentValues = &(computationValues->values[ALPHA]);
-
-    // Compute the difference between next position and real position
-    // In fact, we store thetaError and alphaError with nextPosition just to know if the error is small
-    // enough to consider that we are in final approach !
-    computationValues->thetaError = fabsf(thetaInst->nextPosition - thetaCurrentValues->currentPosition);
-    computationValues->alphaError = fabsf(alphaInst->nextPosition - alphaCurrentValues->currentPosition);
-}

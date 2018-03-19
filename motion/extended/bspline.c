@@ -5,13 +5,6 @@
 
 #include "bsplineMotion.h"
 
-// For debug
-#include "../../common/2d/2d.h"
-#include "../../common/io/outputStream.h"
-#include "../../common/io/printWriter.h"
-#include "../../common/log/logger.h"
-#include "../../common/log/logLevel.h"
-
 void initBSplineCurveData(BSplinePointData* pointData, float x, float y) {
     pointData->time = 0.0f;
     pointData->length = 0.0f;
@@ -155,6 +148,7 @@ float computeBSplineTimeAtDistance(BSplineCurve* bSplineCurve, float distance) {
     if (length != 0.0f) {
         return distance / length;
     }
+    // TODO : Check if we must return 1.0f
     return 1.0f;
 }
 

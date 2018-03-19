@@ -1,7 +1,6 @@
 #include <math.h>
 
 #include "2d.h"
-#include "../../common/io/printWriter.h"
 #include "../../common/math/cenMath.h"
 
 float distanceBetweenPoints(Point* p0, Point* p1) {
@@ -41,17 +40,3 @@ void scale(Point *point, float factor) {
     point->y /= factor;
 }
 
-// PRINT Functions
-
-void printPoint(OutputStream* outputStream, Point* point, const char* unit) {
-    appendStringAndDecf(outputStream, "x=", point->x);
-    appendString(outputStream, unit);
-    appendStringAndDecf(outputStream, ", y=", point->y);
-    appendString(outputStream, unit);
-    println(outputStream);
-}
-
-void appendStringAndAngleInDeg(OutputStream* outputStream, const char* valueName, float angleInRadians) {
-    appendStringAndDecf(outputStream, valueName, angleInRadians / PI_DIVIDE_180);
-    appendString(outputStream, " deg");
-}

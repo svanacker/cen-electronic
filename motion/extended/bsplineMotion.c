@@ -37,39 +37,18 @@ void updateSimpleSplineWithDistance(BSplineCurve* curve,
 									float destX, float destY, 
                                     float destAngle, 
                                     float distance1, float distance2, 
-                                    unsigned char accelerationFactor, unsigned char speedFactor,
+                                    float accelerationFactor, float speedFactor,
                                     bool relative) {
-
-    /*
-    OutputStream* outputStream = getDebugOutputStreamLogger();
-    appendStringAndDecf(outputStream, "destX=", destX);
-    appendStringAndDecf(outputStream, ",destY=", destY);
-    appendStringAndDecf(outputStream, ",destAngle=", destAngle);
-    appendStringAndDecf(outputStream, ",dist1=", distance1);
-    appendStringAndDecf(outputStream, ",dist2=", distance2);
-    */    
 
     // If the distance of the control point is negative, we considerer that we go
     // back
     bool backward = distance1 < 0.0f;
-
-    RobotKinematics* robotKinematics = getRobotKinematics();
-    float wheelAverageLength = getCoderAverageWheelLengthForOnePulse(robotKinematics);
-    
-    /*
-    appendString(outputStream, ",rel=");
-    appendbool(outputStream, relative);
-    appendString(outputStream, ",backward=");
-    appendbool(outputStream, backward);
-    */    
 
     Position* position = getPosition();
     // scale coordinates
     float x = position->pos.x;
     float y = position->pos.y;
     float a = position->orientation;
-    float xScaled = x / wheelAverageLength;
-    float yScaled = y / wheelAverageLength;
 
     // For P0-P1
     float c1 = cosf(a);
@@ -87,7 +66,7 @@ void updateSimpleSplineWithDistance(BSplineCurve* curve,
 
     // Update the bspline curve
     // P0
-    resetBSplineCurve(curve, xScaled, yScaled, backward);
+    resetBSplineCurve(curve, x, y, backward);
     curve->accelerationFactor = accelerationFactor;
     curve->speedFactor = speedFactor;
 
@@ -96,7 +75,6 @@ void updateSimpleSplineWithDistance(BSplineCurve* curve,
     // P1 along x axis
     point->x = (x + dca1);
     point->y = (y + dsa1);
-    scale(point, wheelAverageLength);
     
     if (relative) {    
 
@@ -125,10 +103,7 @@ void updateSimpleSplineWithDistance(BSplineCurve* curve,
         point->x = destX;
         point->y = destY;
     }
-    // Scale points
-    scale(&(curve->p2), wheelAverageLength);
-    scale(&(curve->p3), wheelAverageLength);
-
+    computeBSplineArcLength(curve, BSPLINE_TIME_INCREMENT);
     /*
     curve->p1->x = (x  +  distance1        * c) / WHEEL_AVERAGE_LENGTH;
     curve->p1->y = (y  +  distance1     * s) / WHEEL_AVERAGE_LENGTH,
@@ -142,36 +117,10 @@ void updateSimpleSplineWithDistance(BSplineCurve* curve,
 }
 
 /**
- * Goto a position from the current position, with a certain distance to do the angle
- */
-void gotoSimpleSpline(PidMotion* pidMotion,
-					  float destX, float destY,
-                      float destAngle, 
-                      float controlPointDistance1, float controlPointDistance2,
-                      unsigned int accelerationFactor, unsigned int speedFactor,
-                      bool relative,
-					  OutputStream* notificationOutputStream) {
-	PidMotionDefinition* motionDefinition = pidMotionGetNextToWritePidMotionDefinition(pidMotion);
-	motionDefinition->motionType = MOTION_TYPE_BSPLINE;
-	BSplineCurve* curve = &(motionDefinition->curve);
-	
-	updateSimpleSplineWithDistance(curve,
-									destX, destY,
-                                    destAngle,
-                                    controlPointDistance1, controlPointDistance2,
-                                    accelerationFactor, speedFactor,
-                                    relative);
-    OutputStream* outputStream = getDebugOutputStreamLogger();
-    println(outputStream);
-
-    gotoSpline(pidMotion);
-}
-
-/**
 * Computes the best speed for the bspline, and take into consideration the derivative value (to avoid a too big speed)
 */
 float computeBestSpeedForBSpline(BSplineCurve* curve, float speed) {
-    float result = (speed * curve->speedFactor) / MOTION_SPEED_FACTOR_MAX;
+    float result = (speed * curve->speedFactor) * MOTION_SPEED_FACTOR_MAX;
     
     return result;
 }
@@ -180,46 +129,44 @@ float computeBestSpeedForBSpline(BSplineCurve* curve, float speed) {
 * Computes the best acceleration for the bspline, and take into consideration the derivative value (to avoid a too big acceleration)
 */
 float computeBestAccelerationForBSpline(BSplineCurve* curve, float a) {
-    float result = (a * curve->accelerationFactor) / MOTION_ACCELERATION_FACTOR_MAX;
+    float result = (a * curve->accelerationFactor) * MOTION_ACCELERATION_FACTOR_MAX;
     return result;
 }
 
-/**
- * Goto a position using a spline.
- */
-void gotoSpline(PidMotion* pidMotion) {
-    // OutputStream* outputStream = getDebugOutputStreamLogger();
+void gotoSpline(PidMotion* pidMotion,
+					  float destX, float destY,
+                      float destAngle, 
+                      float controlPointDistance1, float controlPointDistance2,
+                      float accelerationFactor, float speedFactor,
+                      bool relative,
+					  OutputStream* notificationOutputStream) {
+    // Takes the new motion Definition to write
 	PidMotionDefinition* motionDefinition = pidMotionGetNextToWritePidMotionDefinition(pidMotion);
-
-	// TODO : If MotionDefinition is NULL ?
-
-    BSplineCurve* curve = &(motionDefinition->curve);
-    // RobotKinematics* robotKinematics = getRobotKinematics();
-
-    // Update trajectory before clearing coders
-    updateTrajectory();
-
-    updateTrajectoryAndClearCoders();
-
-    float curveLength = computeBSplineArcLength(curve, BSPLINE_TIME_INCREMENT);
+    motionDefinition->notificationOutputStream = notificationOutputStream;
+	motionDefinition->motionType = MOTION_TYPE_BSPLINE;
+	BSplineCurve* curve = &(motionDefinition->curve);
     
-    // debug
-    // writeBSpline(getDebugOutputStreamLogger(), curve);
-
-    // resets the time
-    clearPidTime();
+    updateSimpleSplineWithDistance(curve,
+									destX, destY,
+                                    destAngle,
+                                    controlPointDistance1, controlPointDistance2,
+                                    accelerationFactor, speedFactor,
+                                    relative);
+	
+    float nextPositionEquivalent = curve->curveLength;
 
     // determine the type of motion
-    enum MotionParameterType motionParameterType = getMotionParameterType(curveLength, curveLength);
-    // determine the pidType to execute motionType
-    // enum PidType pidType = getPidType(motionParameterType);
+    // TODO : Left and Right does not have the same speed
+    enum MotionParameterType motionParameterType = getMotionParameterType(nextPositionEquivalent, nextPositionEquivalent);
 
-    // do as if we follow a straight line
+    // do as if we follow a straight line for the speed / motion parameters
     MotionParameter* motionParameter = getMotionParameters(MOTION_PARAMETER_TYPE_FORWARD_OR_BACKWARD);
     float bestA = computeBestAccelerationForBSpline(curve, motionParameter->a);
     float bestSpeed = computeBestSpeedForBSpline(curve, motionParameter->speed);
 
-    setNextPosition(motionDefinition, THETA, motionParameterType, curveLength, bestA, bestSpeed);
+    setNextPosition(motionDefinition, THETA, motionParameterType, nextPositionEquivalent, bestA, bestSpeed);
+    
+    // Does nothing as we just use THETA in Spline Mode
     setNextPosition(motionDefinition, ALPHA, motionParameterType, 0.0f, motionParameter->a, motionParameter->speed);
 
 	motionDefinition->computeU = &bSplineMotionUCompute;

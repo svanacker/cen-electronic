@@ -9,11 +9,11 @@
 
 #define PI                     3.1415926535f
 
-#define _2_PI                  PI * 2.0f
+#define _2_PI                  (PI * 2.0f)
 
-#define PI_DIVIDE_BY_2         PI / 2.0f
-
-#define PI_DIVIDE_180          0.0174532925f
+/** To convert degree -> radian */
+#define PI_DIVIDE_180          (PI / 180.0f)
+#define _180_DIVIDE_PI         (180.0f / PI)
 
 #define DEG_90                90.0f
 #define DEG_180               180.0f
@@ -119,5 +119,17 @@ float mod2PI(float value);
  * @return the check sum
  */
 int stringChecksum(char* string);
+
+// ANGLE FUNCTIONS
+
+/**
+ * Convert an angle in radian into his value in degree.
+ */
+float radToDeg(float radians);
+
+/**
+ * Convert an angle in Degree into his value in radian.
+ */
+float degToRad(float degrees);
 
 #endif

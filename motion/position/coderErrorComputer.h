@@ -9,12 +9,4 @@
  */
 void computeCurrentPositionUsingCoders(PidMotion* pidMotion);
 
-/**
- * Compute errors using coders (and not absolute position).
- * This information is useful only to manage final Approach.
- * @param pidMotion all parameters about motion.
- * @param motionDefinition the current Motion Definition which is applied
- */
-void computeErrorsWithNextPositionUsingCoders(PidMotion* pidMotion, PidMotionDefinition* motionDefinition);
-
 #endif

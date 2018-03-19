@@ -9,9 +9,9 @@
 
 void clearPidComputationValues(PidComputationValues* pidComputationValues) {
     setDetectedMotionType(pidComputationValues, DETECTED_MOTION_TYPE_NO_POSITION_TO_REACH);
-    pidComputationValues->alphaError = 0.0f;
-    pidComputationValues->thetaError = 0.0f;
-    pidComputationValues->thetaXAxisError = 0.0f;
+    pidComputationValues->bSplineAlphaError = 0.0f;
+    pidComputationValues->bSplineThetaError = 0.0f;
+    pidComputationValues->bSplineThetaXAxisError = 0.0f;
     pidComputationValues->lastPidTimeInSecond = 0.0f;
     pidComputationValues->pidTimeInSecond = 0.0f;
     

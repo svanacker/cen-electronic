@@ -117,3 +117,12 @@ int stringChecksum(char* string) {
     }
     return result;
 }
+
+// Angle Functions
+float radToDeg(float radians) {
+    return radians * _180_DIVIDE_PI;
+}
+
+float degToRad(float degrees) {
+    return degrees * PI_DIVIDE_180;
+}

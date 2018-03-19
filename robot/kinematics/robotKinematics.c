@@ -166,21 +166,34 @@ float getCoderWheelDistanceMMBySecondsAtFullSpeed(RobotKinematics* robotKinemati
     return result;
 }
 
-float rotationInDegreeToRealDistanceForLeftWheel(RobotKinematics* robotKinematics, float angleDegree) {
-    float angleRadius = angleDegree * PI_DIVIDE_180;
+// -> Rotation in Radians
+
+inline float rotationInRadiansToRealDistanceForLeftWheel(RobotKinematics* robotKinematics, float angleRadius) {
+    // TODO : Manage the left / right wheel diameter correction
     float wheelsDistanceFromCenter = getCoderWheelsDistanceFromCenter(robotKinematics);
     float result = -(wheelsDistanceFromCenter * angleRadius) * getCoderLeftWheelFactor(robotKinematics);
-    
+
     return result;
 }
 
-float rotationInDegreeToRealDistanceForRightWheel(RobotKinematics* robotKinematics, float angleDegree) {
-    float angleRadius = angleDegree * PI_DIVIDE_180;
-    float rightWheelLengthForOnePulse = getCoderRightWheelLengthForOnePulse(robotKinematics);
+inline float rotationInRadiansToRealDistanceForRightWheel(RobotKinematics* robotKinematics, float angleRadius) {
+    // TODO : Manage the left / right wheel diameter correction
     float wheelsDistanceFromCenter = getCoderWheelsDistanceFromCenter(robotKinematics);
     float result = (wheelsDistanceFromCenter * angleRadius) * getCoderRightWheelFactor(robotKinematics);
-    
+
     return result;
+}
+
+// -> Rotation in Degrees
+
+float rotationInDegreeToRealDistanceForLeftWheel(RobotKinematics* robotKinematics, float angleDegree) {
+    float angleRadius = degToRad(angleDegree);
+    return rotationInRadiansToRealDistanceForLeftWheel(robotKinematics, angleRadius);
+}
+
+float rotationInDegreeToRealDistanceForRightWheel(RobotKinematics* robotKinematics, float angleDegree) {
+    float angleRadius = degToRad(angleDegree);
+    return rotationInRadiansToRealDistanceForRightWheel(robotKinematics, angleRadius);
 }
 
 // ROBOT PART

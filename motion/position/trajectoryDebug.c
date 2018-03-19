@@ -58,8 +58,8 @@ void printDebugPosition(OutputStream* outputStream) {
     appendHexFloat4TableData(outputStream, point->y, POSITION_DIGIT_MM_PRECISION, TRAJECTORY_Y_HEX_COLUMN_LENGTH);
 
 	// Angle / Last Angle
-	appendDecfTableData(outputStream, position->orientation / PI_DIVIDE_180, TRAJECTORY_ANGLE_DEC_COLUMN_LENGTH);
-	appendDecfTableData(outputStream, position->initialOrientation / PI_DIVIDE_180, TRAJECTORY_ANGLE_INIT_DEC_COLUMN_LENGTH);
+	appendDecfTableData(outputStream, radToDeg(position->orientation), TRAJECTORY_ANGLE_DEC_COLUMN_LENGTH);
+	appendDecfTableData(outputStream, radToDeg(position->initialOrientation), TRAJECTORY_ANGLE_INIT_DEC_COLUMN_LENGTH);
 
 	appendEndOfTableColumn(outputStream, 0);
 
@@ -97,7 +97,7 @@ void printDebugCoderHistory(OutputStream* outputStream) {
     TrajectoryInfo* trajectoryInfo = getTrajectory();
 	appendDecfTableData(outputStream, trajectoryInfo->lastLeft, TRAJECTORY_LAST_LEFT_COLUMN_LENGTH);
 	appendDecfTableData(outputStream, trajectoryInfo->lastRight, TRAJECTORY_LAST_RIGHT_COLUMN_LENGTH);
-	appendDecfTableData(outputStream, trajectoryInfo->lastAngle / PI_DIVIDE_180, TRAJECTORY_LAST_ANGLE_COLUMN_LENGTH);
+	appendDecfTableData(outputStream, radToDeg(trajectoryInfo->lastAngle), TRAJECTORY_LAST_ANGLE_COLUMN_LENGTH);
 	appendEndOfTableColumn(outputStream, TRAJECTORY_LAST_COLUMN_LENGTH);
 
 	// END OF TABLE

@@ -24,9 +24,9 @@ typedef struct PathData {
     /** angle2 (when at P3) in degree. */
     float angle2;
     /** TODO : Convert into enum AccelerationFactor factor (min = 1, max = 16). */
-    unsigned char accelerationFactor;
+    float accelerationFactor;
     /** Speed factor (min = 1, max = 16). */
-    unsigned char speedFactor;
+    float speedFactor;
     /** When reversed, the path must be done backward. */
     bool mustGoBackward;
 } PathData;
@@ -52,8 +52,8 @@ void initPathData(PathData* pathData,
                          float controlPointDistance2,
                          float angle1,
                          float angle2,
-                         unsigned char accelerationFactor,
-                         unsigned char speedFactor);
+                         float accelerationFactor,
+                         float speedFactor);
 
 /** 
  * Fills the data of an asymmetric path, a path on which 

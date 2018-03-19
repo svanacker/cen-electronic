@@ -144,6 +144,7 @@
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c" />
     <ClCompile Include="common\2d\2d.c" />
+    <ClCompile Include="common\2d\2dDebug.c" />
     <ClCompile Include="common\adc\adcutils.c" />
     <ClCompile Include="common\adc\pc\adcutilsPc.c" />
     <ClCompile Include="common\clock\clock.c" />
@@ -447,6 +448,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\2d\2d.h" />
+    <ClInclude Include="common\2d\2dDebug.h" />
     <ClInclude Include="common\clock\clock.h" />
     <ClInclude Include="common\cmd\commonCommand.h" />
     <ClInclude Include="common\commons.h" />

@@ -56,9 +56,9 @@ typedef struct BSplineCurve {
     // The length of the curve.
     float curveLength;
     // accelerationFactor
-    unsigned char accelerationFactor;
+    float accelerationFactor;
     // speedFactor
-    unsigned char speedFactor;
+    float speedFactor;
 } BSplineCurve;
 
 /**

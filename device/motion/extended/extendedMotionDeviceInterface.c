@@ -41,14 +41,29 @@ int deviceExtendedMotionGetInterface(char commandHeader, DeviceInterfaceMode mod
 			fillSplineParameters();
 		}
 		return commandLengthValueForMode(mode, 27, 0);
-	} // BSpline : test
+	} // BSpline : forward test
+	else if (commandHeader == COMMAND_MOTION_SPLINE_TEST_FORWARD) {
+		// Same INPUT/OUTPUT
+		if (fillDeviceArgumentList) {
+			setFunctionNoArgumentAndNoResult("bSpline Test Forward");
+		}
+		return commandLengthValueForMode(mode, 0, 0);
+	}
+    else if (commandHeader == COMMAND_MOTION_SPLINE_TEST_BACKWARD) {
+		// Same INPUT/OUTPUT
+		if (fillDeviceArgumentList) {
+			setFunctionNoArgumentAndNoResult("bSpline Test Backward");
+		}
+		return commandLengthValueForMode(mode, 0, 0);
+	}
+    // BSpline : left test
 	else if (commandHeader == COMMAND_MOTION_SPLINE_TEST_LEFT) {
 		// Same INPUT/OUTPUT
 		if (fillDeviceArgumentList) {
 			setFunctionNoArgumentAndNoResult("bSpline Test Left");
 		}
 		return commandLengthValueForMode(mode, 0, 0);
-	}
+	} // BSpline : right Test
 	else if (commandHeader == COMMAND_MOTION_SPLINE_TEST_RIGHT) {
 		// Same INPUT/OUTPUT
 		if (fillDeviceArgumentList) {

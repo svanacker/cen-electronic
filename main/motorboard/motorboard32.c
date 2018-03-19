@@ -129,6 +129,10 @@
 #include "../../device/motion/simple/motionDevice.h"
 #include "../../device/motion/simple/motionDeviceInterface.h"
 
+// Tof
+#include "../../device/tof/tofDevice.h"
+#include "../../device/tof/tofDeviceInterface.h"
+
 // Robot
 #include "../../robot/kinematics/robotKinematicsDevice.h"
 #include "../../robot/kinematics/robotKinematicsDeviceInterface.h"
@@ -254,6 +258,9 @@ void initDevicesDescriptor() {
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
     addLocalDevice(getTimerDeviceInterface(), getTimerDeviceDescriptor());
     addLocalDevice(getLogDeviceInterface(), getLogDeviceDescriptor());
+
+    
+    addLocalDevice(getTofDeviceInterface(), getTofDeviceDescriptor());
 
     initDevices();
 }
