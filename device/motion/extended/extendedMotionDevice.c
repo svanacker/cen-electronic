@@ -102,14 +102,14 @@ void deviceExtendedMotionHandleRawData(char commandHeader,
                  400.0f, 0.0f,
                  0.0f,
                  100.0f, 100.0f,
-                MOTION_ACCELERATION_FACTOR_LOW, MOTION_SPEED_FACTOR_LOW,
+                MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL,
                  true,
                 notificationOutputStream);
     }
     else if (commandHeader == COMMAND_MOTION_SPLINE_TEST_BACKWARD) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, commandHeader);
         gotoSpline(pidMotion,
-                400.0f, 0.0f,
+                -400.0f, 0.0f,
                 0.0f,
                 100.0f, 100.0f,
                 MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL,
@@ -126,6 +126,20 @@ void deviceExtendedMotionHandleRawData(char commandHeader,
 						 400.0f, sign * 400.0f,
                          sign * 0.75f * PI,
                          200.0f, 200.0f,
+                        MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL,
+                         true,
+					    notificationOutputStream);
+    }
+    else if (commandHeader == COMMAND_MOTION_SPLINE_TEST_FORWARD_LEFT_FORWARD || commandHeader == COMMAND_MOTION_SPLINE_TEST_FORWARD_RIGHT_FORWARD) {
+        ackCommand(outputStream, MOTION_DEVICE_HEADER, commandHeader);
+        float sign = 1.0f;
+        if (commandHeader == COMMAND_MOTION_SPLINE_TEST_FORWARD_RIGHT_FORWARD) {
+            sign = -sign;
+        }
+        gotoSpline(pidMotion,
+						 1200.0f, sign * 600.0f,
+                         0.0f,
+                         1000.0f, 1000.0f,
                         MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL,
                          true,
 					    notificationOutputStream);

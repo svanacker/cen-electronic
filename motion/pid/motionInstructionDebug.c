@@ -92,7 +92,6 @@ void printMotionInstructionTableTrajectory(OutputStream* outputStream, enum Inst
     printMotionInstructionTableTrajectoryHeader(outputStream, instructionType);
     float pidTime;
     unsigned int index = 0;
-    RobotKinematics* robotKinematics = getRobotKinematics();
     for (pidTime = 0.0f; pidTime < instruction->t3 + pidInterval; pidTime += pidInterval) {
         float pulseNormalAcceleration = computeNormalAcceleration(instruction, pidTime);
         float pulseNormalSpeed = computeNormalSpeed(instruction, pidTime);

@@ -19,10 +19,13 @@
 #define PID_DEBUG_DATA_INSTRUCTION_TYPE_COLUMN_LENGTH                     6
 
 #define PID_DEBUG_DATA_PID_TIME_COLUMN_LENGTH                             6
-#define PID_DEBUG_DATA_PID_TYPE_COLUMN_LENGTH                             6
+#define PID_DEBUG_DATA_PID_TYPE_COLUMN_LENGTH                             8
 
 #define PID_DEBUG_DATA_NORMAL_SPEED_COLUMN_LENGTH                         7
 #define PID_DEBUG_DATA_SPEED_COLUMN_LENGTH                                9
+
+#define PID_DEBUG_DATA_NORMAL_ACCELERATION_COLUMN_LENGTH                  7
+#define PID_DEBUG_DATA_ACCELERATION_COLUMN_LENGTH                         9
 
 #define PID_DEBUG_DATA_NORMAL_POSITION_COLUMN_LENGTH                      8
 #define PID_DEBUG_DATA_POSITION_COLUMN_LENGTH                             9
@@ -57,6 +60,9 @@ void printDebugDataHeader(OutputStream* outputStream) {
 	appendStringHeader(outputStream, "Pid", PID_DEBUG_DATA_PID_TIME_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Pid", PID_DEBUG_DATA_PID_TYPE_COLUMN_LENGTH);
 
+    // -> Acceleration
+    appendStringHeader(outputStream, "Normal", PID_DEBUG_DATA_NORMAL_ACCELERATION_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Real", PID_DEBUG_DATA_ACCELERATION_COLUMN_LENGTH);
     // -> Speed
     appendStringHeader(outputStream, "Normal", PID_DEBUG_DATA_NORMAL_SPEED_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Real", PID_DEBUG_DATA_SPEED_COLUMN_LENGTH);
@@ -85,6 +91,9 @@ void printDebugDataHeader(OutputStream* outputStream) {
     appendStringHeader(outputStream, "Type", PID_DEBUG_DATA_INSTRUCTION_TYPE_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "Time", PID_DEBUG_DATA_PID_TIME_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Type", PID_DEBUG_DATA_PID_TYPE_COLUMN_LENGTH);
+    // -> Acceleration
+    appendStringHeader(outputStream, "Acc.", PID_DEBUG_DATA_NORMAL_ACCELERATION_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Acc.", PID_DEBUG_DATA_ACCELERATION_COLUMN_LENGTH);
     // -> Speed
     appendStringHeader(outputStream, "Speed", PID_DEBUG_DATA_NORMAL_SPEED_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Speed", PID_DEBUG_DATA_SPEED_COLUMN_LENGTH);
@@ -111,6 +120,9 @@ void printDebugDataHeader(OutputStream* outputStream) {
     appendStringHeader(outputStream, "", PID_DEBUG_DATA_INSTRUCTION_TYPE_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", PID_DEBUG_DATA_PID_TIME_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", PID_DEBUG_DATA_PID_TYPE_COLUMN_LENGTH);
+    // -> Speed
+    appendStringHeader(outputStream, "mm/s^2", PID_DEBUG_DATA_NORMAL_ACCELERATION_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "mm/s^2", PID_DEBUG_DATA_ACCELERATION_COLUMN_LENGTH);
     // -> Speed
     appendStringHeader(outputStream, "mm / s", PID_DEBUG_DATA_NORMAL_SPEED_COLUMN_LENGTH);
     appendStringHeader(outputStream, "mm / s", PID_DEBUG_DATA_SPEED_COLUMN_LENGTH);
@@ -159,6 +171,16 @@ void printDebugDataInstructionTypeLine(OutputStream* outputStream, PidMotion* pi
         enum PidType pidType = computationInstructionValues->pidTypeHistory[i];
         addPidTypeTableData(outputStream, pidType, PID_DEBUG_DATA_PID_TYPE_COLUMN_LENGTH);
 
+        // Normal Acceleration & Acceleration
+        if (pidMotionDefinition != NULL) {
+            float normalAcceleration = computeNormalAcceleration(&(pidMotionDefinition->inst[instructionType]), pidTime);
+            appendDecfTableData(outputStream, normalAcceleration, PID_DEBUG_DATA_NORMAL_ACCELERATION_COLUMN_LENGTH);
+        }
+        else {
+            appendStringTableData(outputStream, "-", PID_DEBUG_DATA_NORMAL_ACCELERATION_COLUMN_LENGTH);
+        }
+        appendDecfTableData(outputStream, computationInstructionValues->accelerationHistory[i], PID_DEBUG_DATA_ACCELERATION_COLUMN_LENGTH);
+        
         // Normal Speed & Speed
         if (pidMotionDefinition != NULL) {
             float normalSpeed = computeNormalSpeed(&(pidMotionDefinition->inst[instructionType]), pidTime);

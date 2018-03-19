@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <math.h>
 
 #include "printWriter.h"
 #include "outputStream.h"
@@ -268,6 +269,9 @@ int appendDec(OutputStream* stream, signed long value) {
 }
 
 int appendDecf(OutputStream* stream, float value) {
+    if (isnan(value)) {
+        return appendString(stream, "NAN");
+    }
     int result = 0;
     float decimalValue;
     long decimalValueLong;

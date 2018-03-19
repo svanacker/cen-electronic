@@ -178,6 +178,24 @@ float getCoderWheelDistanceMMBySecondsAtFullSpeed(RobotKinematics* robotKinemati
 
 /**
 * Convert for a rotation around center (both left and right wheel) the distance to do
+* for the left Wheel to reach an angle in radians
+* @param robotKinematics
+* @param angleRadians the rotation
+* @return the number of left pulse to do to accomplish the rotation
+*/
+float rotationInRadiansToRealDistanceForLeftWheel(RobotKinematics* robotKinematics, float angleRadians);
+
+/**
+* Convert for a rotation around center (both left and right wheel) the distance to do
+* for the right Wheel to reach an angle in radians
+* @param robotKinematics
+* @param angleRadians the angle for the rotation
+* @return the number of right pulse to do to accomplish the rotation
+*/
+float rotationInDegreeToRealDistanceForRightWheel(RobotKinematics* robotKinematics, float angleRadians);
+
+/**
+* Convert for a rotation around center (both left and right wheel) the distance to do
 * for the left Wheel to reach an angle in degree
 * @param robotKinematics
 * @param angleDegree the rotation

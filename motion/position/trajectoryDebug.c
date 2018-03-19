@@ -35,15 +35,25 @@ void printDebugPosition(OutputStream* outputStream) {
 	// HEADER
 	println(outputStream);
 	appendTableHeaderSeparatorLine(outputStream);
-	appendStringHeader(outputStream, "x (Dec) mm", TRAJECTORY_X_DEC_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "y (Dec) mm", TRAJECTORY_Y_DEC_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "x (Hex) mm", TRAJECTORY_X_HEX_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "y (Hex) mm", TRAJECTORY_Y_HEX_COLUMN_LENGTH);
-
-	appendStringHeader(outputStream, "angle (deg)", TRAJECTORY_ANGLE_DEC_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "angle init (deg)", TRAJECTORY_ANGLE_INIT_DEC_COLUMN_LENGTH);
-
+    
+    // First line header
+	appendStringHeader(outputStream, "x", TRAJECTORY_X_DEC_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "y", TRAJECTORY_Y_DEC_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "orientation", TRAJECTORY_ANGLE_DEC_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "initial Orien.", TRAJECTORY_ANGLE_INIT_DEC_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "x", TRAJECTORY_X_HEX_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "y", TRAJECTORY_Y_HEX_COLUMN_LENGTH);
 	appendEndOfTableColumn(outputStream, 0);
+    
+    // Second line header
+	appendStringHeader(outputStream, "(Dec) mm", TRAJECTORY_X_DEC_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "(Dec) mm", TRAJECTORY_Y_DEC_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "(Dec) (deg)", TRAJECTORY_ANGLE_DEC_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "(Dec) (deg)", TRAJECTORY_ANGLE_INIT_DEC_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "(Hex) mm", TRAJECTORY_X_HEX_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "(Hex) mm", TRAJECTORY_Y_HEX_COLUMN_LENGTH);
+	appendEndOfTableColumn(outputStream, 0);
+    
 	appendTableHeaderSeparatorLine(outputStream);
 
 	// VALUES
@@ -54,12 +64,12 @@ void printDebugPosition(OutputStream* outputStream) {
 	appendDecfTableData(outputStream, point->x, TRAJECTORY_X_DEC_COLUMN_LENGTH);
 	appendDecfTableData(outputStream, point->y, TRAJECTORY_Y_DEC_COLUMN_LENGTH);
 
-	appendHexFloat4TableData(outputStream, point->x, POSITION_DIGIT_MM_PRECISION, TRAJECTORY_X_HEX_COLUMN_LENGTH);
-    appendHexFloat4TableData(outputStream, point->y, POSITION_DIGIT_MM_PRECISION, TRAJECTORY_Y_HEX_COLUMN_LENGTH);
-
 	// Angle / Last Angle
 	appendDecfTableData(outputStream, radToDeg(position->orientation), TRAJECTORY_ANGLE_DEC_COLUMN_LENGTH);
 	appendDecfTableData(outputStream, radToDeg(position->initialOrientation), TRAJECTORY_ANGLE_INIT_DEC_COLUMN_LENGTH);
+
+	appendHexFloat4TableData(outputStream, point->x, POSITION_DIGIT_MM_PRECISION, TRAJECTORY_X_HEX_COLUMN_LENGTH);
+    appendHexFloat4TableData(outputStream, point->y, POSITION_DIGIT_MM_PRECISION, TRAJECTORY_Y_HEX_COLUMN_LENGTH);
 
 	appendEndOfTableColumn(outputStream, 0);
 
@@ -75,13 +85,15 @@ void printDebugCoderHistory(OutputStream* outputStream) {
 
 	appendStringHeader(outputStream, "left (Dec)", TRAJECTORY_LEFT_DEC_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "right (Dec)", TRAJECTORY_RIGHT_DEC_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "left (Hex)", TRAJECTORY_LEFT_HEX_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "right (Hex)", TRAJECTORY_RIGHT_HEX_COLUMN_LENGTH);
 
 	appendStringHeader(outputStream, "lastLeft (pulse)", TRAJECTORY_LAST_LEFT_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "lastRight (pulse)", TRAJECTORY_LAST_RIGHT_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "lastAngle (deg)", TRAJECTORY_LAST_ANGLE_COLUMN_LENGTH);
 
+    appendStringHeader(outputStream, "left (Hex)", TRAJECTORY_LEFT_HEX_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "right (Hex)", TRAJECTORY_RIGHT_HEX_COLUMN_LENGTH);
+
+    
 	appendEndOfTableColumn(outputStream, TRAJECTORY_LAST_COLUMN_LENGTH);
 	appendTableHeaderSeparatorLine(outputStream);
 
@@ -90,14 +102,16 @@ void printDebugCoderHistory(OutputStream* outputStream) {
 	appendDecTableData(outputStream, getCoderValue(CODER_LEFT), TRAJECTORY_LEFT_DEC_COLUMN_LENGTH);
 	appendDecTableData(outputStream, getCoderValue(CODER_RIGHT), TRAJECTORY_RIGHT_DEC_COLUMN_LENGTH);
 
-	appendHex4TableData(outputStream, getCoderValue(CODER_LEFT), TRAJECTORY_LEFT_HEX_COLUMN_LENGTH);
-	appendHex4TableData(outputStream, getCoderValue(CODER_RIGHT), TRAJECTORY_RIGHT_HEX_COLUMN_LENGTH);
 
 	// Last left / Right / Angle
     TrajectoryInfo* trajectoryInfo = getTrajectory();
 	appendDecfTableData(outputStream, trajectoryInfo->lastLeft, TRAJECTORY_LAST_LEFT_COLUMN_LENGTH);
 	appendDecfTableData(outputStream, trajectoryInfo->lastRight, TRAJECTORY_LAST_RIGHT_COLUMN_LENGTH);
 	appendDecfTableData(outputStream, radToDeg(trajectoryInfo->lastAngle), TRAJECTORY_LAST_ANGLE_COLUMN_LENGTH);
+
+	appendHex4TableData(outputStream, getCoderValue(CODER_LEFT), TRAJECTORY_LEFT_HEX_COLUMN_LENGTH);
+	appendHex4TableData(outputStream, getCoderValue(CODER_RIGHT), TRAJECTORY_RIGHT_HEX_COLUMN_LENGTH);
+
 	appendEndOfTableColumn(outputStream, TRAJECTORY_LAST_COLUMN_LENGTH);
 
 	// END OF TABLE

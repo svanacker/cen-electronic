@@ -28,7 +28,7 @@
 /**
  * Compute the Alpha part of the PID
  */
-float bSplineMotionUComputeAlphaError(PidComputationInstructionValues* alphaValues, float normalAlpha, float realAlpha, bool backward) {
+float bSplineMotionUComputeAlphaError(float normalAlpha, float realAlpha, bool backward) {
     // backward management
     if (backward) {
         realAlpha += PI;
@@ -42,11 +42,11 @@ float bSplineMotionUComputeAlphaError(PidComputationInstructionValues* alphaValu
 
     // Convert the alpha error into a "distance" equivalence
     // TODO : To review
-    return rotationInRadiansToRealDistanceForLeftWheel(robotKinematics, alphaErrorInRadian);
+    float result = rotationInRadiansToRealDistanceForLeftWheel(robotKinematics, alphaErrorInRadian);
+    return result;
 }
 
-float bSplineMotionUComputeThetaError(PidComputationInstructionValues* alphaValues,
-                                      float distanceBetweenRealAndNormalPoint,
+float bSplineMotionUComputeThetaError(float distanceBetweenRealAndNormalPoint,
                                       float angleBetweenRealAndNormalOrientation,
                                       float normalAlpha, 
                                       bool backward) {
@@ -92,11 +92,16 @@ void bSplineMotionUCompute(PidMotion* pidMotion, PidMotionDefinition* motionDefi
     PidComputationInstructionValues* alphaValues = &(computationValues->values[ALPHA]);
     float normalAlpha = computeBSplineOrientationWithDerivative(curve, bSplineTime);
     float realAlpha = robotPosition->orientation;
-    float alphaError = bSplineMotionUComputeAlphaError(alphaValues, normalAlpha, realAlpha, curve->backward);
+    float alphaError = bSplineMotionUComputeAlphaError(normalAlpha, realAlpha, curve->backward);
     // TODO : To check : not really true if the curve is strong !!
     float alphaNormalSpeed = 0.0f;
-    // alphaValues->u = computePidCorrection(alphaValues, alphaPidParameter, alphaNormalSpeed, alphaError);
-    alphaValues->u = 0.0f;
+    alphaValues->u = computePidCorrection(alphaValues, alphaPidParameter, alphaNormalSpeed, alphaError);
+    
+    PidComputationInstructionValues* alphaComputationInstructionValues = &(computationValues->values[ALPHA]);
+    alphaComputationInstructionValues->error = alphaError;
+    alphaComputationInstructionValues->normalSpeed = alphaNormalSpeed;
+    alphaComputationInstructionValues->normalPosition = normalAlpha;
+    storePidComputationInstructionValueHistory(alphaComputationInstructionValues, pidTime);
 
     // THETA
     PidComputationInstructionValues* thetaValues = &(computationValues->values[THETA]);
@@ -105,9 +110,10 @@ void bSplineMotionUCompute(PidMotion* pidMotion, PidMotionDefinition* motionDefi
     // Angle between the robot and the point where it should be
     float angleRealAndNormalOrientation = angleOfVector(&robotPoint, &normalPoint);
     // Computes the real thetaError by managing different angles
-    float thetaError = bSplineMotionUComputeThetaError(thetaValues, distanceRealAndNormalPoint, angleRealAndNormalOrientation, normalAlpha, curve->backward);
+    float thetaError = bSplineMotionUComputeThetaError(distanceRealAndNormalPoint, angleRealAndNormalOrientation, normalAlpha, curve->backward);
     float thetaNormalSpeed = computeNormalSpeed(thetaInstruction, pidTime);
     thetaValues->u = computePidCorrection(thetaValues, thetaPidParameter, thetaNormalSpeed, thetaError);
+    // For history
     PidComputationInstructionValues* thetaComputationInstructionValues = &(computationValues->values[THETA]);
     thetaComputationInstructionValues->error = thetaError;
     thetaComputationInstructionValues->normalSpeed = thetaNormalSpeed;

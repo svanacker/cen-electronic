@@ -2,6 +2,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <float.h>
 
 #include "../../common/clock/clock.h"
 #include "../../common/delay/cenDelay.h"
@@ -189,7 +190,6 @@ static PidMotionDefinition motionDefinitionArray[MOTOR_BOARD_PC_PID_MOTION_INSTR
 static bool singleModeActivated = true;
 
 void motorBoardWaitForInstruction(void) {
-
     // delaymSec(MOTOR_BOARD_PC_DELAY_CONSOLE_ANALYZE_MILLISECONDS);
 
     // Analyze data from the Console (Specific to PC)
@@ -224,6 +224,9 @@ void motorBoardWaitForInstruction(void) {
 }
 
 void runMotorBoardPC(bool singleMode) {
+    // We use it to be able to detect Nan in simulation mode, and to handle them before they appear in Microchip program
+    _controlfp(_EM_INEXACT, _MCW_EM);
+
     singleModeActivated = singleMode;
     setBoardName(MOTOR_BOARD_PC_NAME);
 	setConsoleSizeAndBuffer(CONSOLE_CHARS_WIDTH, CONSOLE_CHARS_HEIGHT, CONSOLE_BUFFER_WIDTH, CONSOLE_BUFFER_HEIGHT);
@@ -326,6 +329,10 @@ void runMotorBoardPC(bool singleMode) {
     startTimerList();
 
     setDebugI2cEnabled(false);
+
+    float value = 0.0f;
+    appendDecf(&consoleOutputStream, 0.0f / value);
+
     while (1) {
         motorBoardWaitForInstruction();
     }

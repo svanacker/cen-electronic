@@ -67,11 +67,11 @@ void storePidComputationInstructionValueHistory(PidComputationInstructionValues*
     // POSITION
     pidComputationInstructionValues->positionHistory[i] = pidComputationInstructionValues->currentPosition;
 
-    // SPEED
-    pidComputationInstructionValues->speedHistory[i] = pidComputationInstructionValues->currentSpeed;
-
     // ACCELERATION
     pidComputationInstructionValues->accelerationHistory[i] = pidComputationInstructionValues->currentAcceleration;
+
+    // SPEED
+    pidComputationInstructionValues->speedHistory[i] = pidComputationInstructionValues->currentSpeed;
 
     // ERRORS
     pidComputationInstructionValues->errorHistory[i] = pidComputationInstructionValues->error;

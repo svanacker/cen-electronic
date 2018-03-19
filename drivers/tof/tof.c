@@ -39,7 +39,7 @@ void appendVl53l0xString(OutputStream* outputStream, FixedVl53L0x* s) {
 
 bool tof_vl53l0x_begin(uint8_t i2c_addr, bool debug) {
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
-    int32_t status_int;
+    // int32_t status_int;
     int32_t init_done = 0;
 
     uint32_t refSpadCount;

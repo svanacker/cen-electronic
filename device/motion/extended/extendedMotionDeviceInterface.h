@@ -24,6 +24,12 @@
 /** Define the header used to follow a spline test to the right. */
 #define COMMAND_MOTION_SPLINE_TEST_RIGHT       'r'
 
+/** Define the header used to follow a spline test to the left. */
+#define COMMAND_MOTION_SPLINE_TEST_FORWARD_LEFT_FORWARD '}'
+
+/** Define the header used to follow a spline test to the right. */
+#define COMMAND_MOTION_SPLINE_TEST_FORWARD_RIGHT_FORWARD     '{'
+
 /**
 * Interface for Device
 */

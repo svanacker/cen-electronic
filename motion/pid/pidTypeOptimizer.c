@@ -19,8 +19,8 @@ void changePidTypeIfFinalApproach(PidMotion* pidMotion, PidMotionDefinition* mot
     PidComputationInstructionValues* thetaValues = &(computationValues->values[THETA]);
     PidComputationInstructionValues* alphaValues = &(computationValues->values[ALPHA]);
     
-    float thetaError = fabs(thetaInst->nextPosition - thetaValues->currentPosition);
-    float alphaError = fabs(alphaInst->nextPosition - alphaValues->currentPosition);
+    float thetaError = fabsf(thetaInst->nextPosition - thetaValues->currentPosition);
+    float alphaError = fabsf(alphaInst->nextPosition - alphaValues->currentPosition);
 
     // Change PID type for final Approach
     if ((thetaError < ERROR_FOR_STRONG_PID) && (pidTime > thetaInst->t3 + TIME_PERIOD_AFTER_END_FOR_STRONG_PID)

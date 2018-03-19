@@ -4,6 +4,7 @@
 #include "bsplineDebug.h"
 
 #include "bsplineMotion.h"
+#include "../../common/math/cenMath.h"
 
 void initBSplineCurveData(BSplinePointData* pointData, float x, float y) {
     pointData->time = 0.0f;
@@ -87,6 +88,8 @@ float computeBSplineOrientationWithDerivative(BSplineCurve* bSplineCurve, float 
 
     // note that the atan2 is atan2(y, x) and not atan2(x, y)
     float result = atan2f(diffY, diffX);
+    
+    // TODO : There is a big problem if diffY = 0 and diffX = 0 because it is undefined !
 
     // There is another method to compute the tangent of a bezier curve
     // see http://www.planetclegg.com/projects/WarpingTextToSplines.html
@@ -145,7 +148,7 @@ float computeTimeWithInterpolation(BSplinePointData* beforePointData,
 
 float computeBSplineTimeAtDistance(BSplineCurve* bSplineCurve, float distance) {
     float length = bSplineCurve->curveLength;
-    if (length != 0.0f) {
+    if (!floatEqualsZero(length)) {
         return distance / length;
     }
     // TODO : Check if we must return 1.0f

@@ -31,16 +31,26 @@ void computeCurrentPositionUsingCoders(PidMotion* pidMotion) {
     float alpha = computeAlpha(coderValueDistanceMMLeft, coderValueDistanceMMRight);
 
     // Compute the speed by using the delta between current and previous position / elapsedTime (if not equal to 0))
+    // And the acceleration by using the delta between current Speed and previous Speed
     float elapsedTimeInSecond = computationValues->pidTimeInSecond - computationValues->lastPidTimeInSecond;
     if (floatEqualsZero(elapsedTimeInSecond)) {
         thetaCurrentValues->currentSpeed = 0.0f;
         alphaCurrentValues->currentSpeed = 0.0f;        
+        thetaCurrentValues->currentAcceleration = 0.0f;
+        alphaCurrentValues->currentAcceleration = 0.0f;        
     }
     else {
+        float thetaPreviousSpeed = thetaCurrentValues->currentSpeed;
+        float alphaPreviousSpeed = alphaCurrentValues->currentSpeed;
+        
+         // Computes the speed
         thetaCurrentValues->currentSpeed = (theta - thetaCurrentValues->currentPosition) / elapsedTimeInSecond;
         alphaCurrentValues->currentSpeed = (alpha - alphaCurrentValues->currentPosition) / elapsedTimeInSecond;        
+        
+        // Computes the acceleration 
+        thetaCurrentValues->currentAcceleration = (thetaCurrentValues->currentSpeed - thetaPreviousSpeed) / elapsedTimeInSecond;
+        alphaCurrentValues->currentAcceleration = (alphaCurrentValues->currentSpeed - alphaPreviousSpeed) / elapsedTimeInSecond;
     }
-
     // Store the current Position
     thetaCurrentValues->currentPosition = theta;
     alphaCurrentValues->currentPosition = alpha;
