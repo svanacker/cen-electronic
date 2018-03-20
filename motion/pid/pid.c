@@ -23,6 +23,7 @@
 #include "pidDebug.h"
 #include "pidTimer.h"
 #include "detectedMotionType.h"
+#include "endDetection/blocked/motionBlockedDetection.h"
 #include "endDetection/shocked/motionShockedDetection.h"
 #include "endDetection/reached/motionReachedDetection.h"
 
@@ -120,8 +121,14 @@ void updateMotorsAndDetectedMotionType(PidMotion* pidMotion) {
         setDetectedMotionType(computationValues, DETECTED_MOTION_TYPE_POSITION_SHOCK_WHEELS);
         return;
     }
-    
-    // Detection if this is the end of the move
+
+    // Detection if this is the end of the move because we are blocked by something
+    if (isMotionBlocked(pidMotion, motionDefinition)) {
+        setDetectedMotionType(computationValues, DETECTED_MOTION_TYPE_POSITION_BLOCKED_WHEELS);
+        return;
+    }
+
+    // Detection if this is the end of the move because we have reached the target
     if (isMotionReached(pidMotion, motionDefinition)) {
         setDetectedMotionType(computationValues, DETECTED_MOTION_TYPE_POSITION_REACHED);
         return;

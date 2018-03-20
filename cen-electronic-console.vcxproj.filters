@@ -1755,6 +1755,9 @@
     <ClCompile Include="motion\pid\endDetection\reached\motionReachedDetection.c">
       <Filter>Source Files\motion\pid\endDetection\reached</Filter>
     </ClCompile>
+    <ClCompile Include="motion\pid\endDetection\blocked\motionBlockedDetection.c">
+      <Filter>Source Files\motion\pid\endDetection\blocked</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -2722,6 +2725,9 @@
     </ClInclude>
     <ClInclude Include="motion\pid\endDetection\shocked\motionShockedDetection.h">
       <Filter>Header Files\motion\pid\endDetection\shocked</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\endDetection\blocked\motionBlockedDetection.h">
+      <Filter>Header Files\motion\pid\endDetection\blocked</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

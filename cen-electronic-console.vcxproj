@@ -340,6 +340,7 @@
     <ClCompile Include="motion\pid\computer\pidComputer.c" />
     <ClCompile Include="motion\pid\computer\simplePidComputer.c" />
     <ClCompile Include="motion\pid\detectedMotionType.c" />
+    <ClCompile Include="motion\pid\endDetection\blocked\motionBlockedDetection.c" />
     <ClCompile Include="motion\pid\endDetection\motionEndDetectionDebug.c" />
     <ClCompile Include="motion\pid\endDetection\reached\motionReachedDetection.c" />
     <ClCompile Include="motion\pid\endDetection\shocked\motionShockedDetection.c" />
@@ -656,6 +657,7 @@
     <ClInclude Include="motion\pid\computer\pidComputer.h" />
     <ClInclude Include="motion\pid\computer\simplePidComputer.h" />
     <ClInclude Include="motion\pid\detectedMotionType.h" />
+    <ClInclude Include="motion\pid\endDetection\blocked\motionBlockedDetection.h" />
     <ClInclude Include="motion\pid\endDetection\motionEndDetectionDebug.h" />
     <ClInclude Include="motion\pid\endDetection\motionEndDetectionParameter.h" />
     <ClInclude Include="motion\pid\endDetection\reached\motionReachedDetection.h" />

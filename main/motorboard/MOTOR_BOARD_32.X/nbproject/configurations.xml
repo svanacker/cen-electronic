@@ -372,6 +372,11 @@
         <itemPath>../../../motion/pid/endDetection/motionEndDetectionParameter.h</itemPath>
         <itemPath>../../../motion/pid/endDetection/motionEndDetectionDebug.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f6"
+                     displayName="motion.pid.endDetection.blocked"
+                     projectFiles="true">
+        <itemPath>../../../motion/pid/endDetection/blocked/motionBlockedDetection.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="f5"
                      displayName="motion.pid.endDetection.reached"
                      projectFiles="true">
@@ -804,6 +809,11 @@
                      displayName="motion.pid.endDetection"
                      projectFiles="true">
         <itemPath>../../../motion/pid/endDetection/motionEndDetectionDebug.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f6"
+                     displayName="motion.pid.endDetection.blocked"
+                     projectFiles="true">
+        <itemPath>../../../motion/pid/endDetection/blocked/motionBlockedDetection.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f5"
                      displayName="motion.pid.endDetection.reached"
