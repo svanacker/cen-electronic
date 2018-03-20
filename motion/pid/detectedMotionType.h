@@ -18,12 +18,15 @@ enum DetectedMotionType {
     
     /** The robot reach the position. */
     DETECTED_MOTION_TYPE_POSITION_REACHED = 3,
+
+    /** The robot seems to get a shock. */
+    DETECTED_MOTION_TYPE_POSITION_SHOCK_WHEELS = 4,
     
     /** The robot seems to have his wheels blocked. */
-    DETECTED_MOTION_TYPE_POSITION_BLOCKED_WHEELS = 4,
+    DETECTED_MOTION_TYPE_POSITION_BLOCKED_WHEELS = 5,
     
     /** The robot will hurt something (detection by RobotDetector). */
-    DETECTED_MOTION_TYPE_POSITION_OBSTACLE = 5
+    DETECTED_MOTION_TYPE_POSITION_OBSTACLE = 6
 };
 
 unsigned int appendDetectedMotionTypeAsString(OutputStream* outputStream, enum DetectedMotionType detectedMotionType);

@@ -101,10 +101,12 @@ void handleInstructionAndMotion(PidMotion* pidMotion) {
         switchToNextMotionDefinitionIfAny(pidMotion, currentMotionDefinition);
     } else if (motionType == DETECTED_MOTION_TYPE_POSITION_BLOCKED_WHEELS) {
         notifyFailed(outputStream);
+        stopPosition(pidMotion, false, outputStream);
         switchToNextMotionDefinitionIfAny(pidMotion, currentMotionDefinition);
     } else if (motionType == DETECTED_MOTION_TYPE_POSITION_OBSTACLE) {
         notifyObstacle(outputStream);
         stopPosition(pidMotion, true, outputStream);
+        switchToNextMotionDefinitionIfAny(pidMotion, currentMotionDefinition);
     }
 	if (outputStream != NULL) {
 		outputStream->flush(outputStream);

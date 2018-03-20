@@ -64,69 +64,39 @@ void notifyPosition(void) {
 
 }
 
-void internalDebugNotify(char* notifyString) {
-    OutputStream* outputStream = getDebugOutputStreamLogger();
-    appendString(outputStream, "Motion ");
-    appendString(outputStream, notifyString);
-    appendString(outputStream, "t=");
-    appendDecf(outputStream, getPidTimeInSecond());
-    appendString(outputStream, ")\n");
+void internalNotify(OutputStream* outputStream, char statusHeader, char* notifyString) {
+    if (outputStream == NULL) {
+        return;
+    }
+    append(outputStream, MOTION_DEVICE_HEADER);
+    append(outputStream, statusHeader);
+
+    // send position
+    appendSeparator(outputStream);
+    notifyAbsolutePositionWithoutHeader(outputStream);
+
+    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+    appendString(debugOutputStream, "Motion ");
+    appendString(debugOutputStream, notifyString);
+    appendString(debugOutputStream, "t=");
+    appendDecf(debugOutputStream, getPidTimeInSecond());
+    appendString(debugOutputStream, ")\n");
 }
 
 void notifyReached(OutputStream* outputStream) {
-	if (outputStream == NULL) {
-		return;
-	}
-    append(outputStream, MOTION_DEVICE_HEADER);
-    append(outputStream, NOTIFY_MOTION_STATUS_REACHED);
-
-    // send position
-    appendSeparator(outputStream);
-    notifyAbsolutePositionWithoutHeader(outputStream);
-
-    // internalDebugNotify("reached");
+    internalNotify(outputStream, NOTIFY_MOTION_STATUS_REACHED, "reached");
 }
 
 void notifyFailed(OutputStream* outputStream) {
-	if (outputStream == NULL) {
-		return;
-	}
-    append(outputStream, MOTION_DEVICE_HEADER);
-    append(outputStream, NOTIFY_MOTION_STATUS_FAILED);
-
-    // send position
-    appendSeparator(outputStream);
-    notifyAbsolutePositionWithoutHeader(outputStream);
-
-    // internalDebugNotify("failed");
+    internalNotify(outputStream, NOTIFY_MOTION_STATUS_FAILED, "failed");
 }
 
 void notifyMoving(OutputStream* outputStream) {
-	if (outputStream == NULL) {
-		return;
-	}
-    append(outputStream, MOTION_DEVICE_HEADER);
-    append(outputStream, NOTIFY_MOTION_STATUS_MOVING);
-
-    // send position
-    appendSeparator(outputStream);
-    notifyAbsolutePositionWithoutHeader(outputStream);
-
-    internalDebugNotify("moving");
+    internalNotify(outputStream, NOTIFY_MOTION_STATUS_MOVING, "moving");
 }
 
 void notifyObstacle(OutputStream* outputStream) {
-	if (outputStream == NULL) {
-		return;
-	}
-    append(outputStream, MOTION_DEVICE_HEADER);
-    append(outputStream, NOTIFY_MOTION_STATUS_OBSTACLE);
-
-    // send position
-    appendSeparator(outputStream);
-    notifyAbsolutePositionWithoutHeader(outputStream);
-
-    internalDebugNotify("obstacle");
+    internalNotify(outputStream, NOTIFY_MOTION_STATUS_OBSTACLE, "obstacle");
 }
 
 

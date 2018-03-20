@@ -23,110 +23,6 @@
 
 
 /**
- * Aggregates the value by doing the integral of the speed, and the integral of the U
- * private function
- */
-void updateAggregateValues(MotionEndInfo* endMotion) {
-    /*
-    endMotion->absSpeedIntegral = 0;
-    endMotion->absUIntegral = 0;
-    int index = endMotion->writeIndex;
-    int i;
-    for (i = index + 1; i < index + MAX_HISTORY_COUNT; i++) {
-        endMotion->absSpeedIntegral += endMotion->absSpeedIntegralHistory[i % MAX_HISTORY_COUNT];
-        endMotion->absUIntegral += endMotion->absUIntegralHistory[i % MAX_HISTORY_COUNT];
-    }
-    */
-}
-
-/**
- * @private
- * @param computationValues
- * @param instructionType
- * @param endMotion
- * @param parameter
- * @param time
- */
-void updateEndMotionData(PidComputationValues* computationValues, 
-	                     enum InstructionType instructionType,
-	                     MotionEndInfo* endMotion,
-	                     MotionEndDetectionParameter* parameter,
-	                     unsigned int time) {
-    /*
-    PidCurrentValues* pidCurrentValues = &(computationValues->values[instructionType].currentValues);
-
-    // Do not analyze it during startup time
-    if (time < parameter->noAnalysisAtStartupTime) {
-        // Store it for next pid loop and return
-        pidCurrentValues->oldPosition = pidCurrentValues->currentPosition;
-        return;
-    }
-    // We launch analysis only each timeRangeAnalysis (reason why there is modulo)
-    if ((time % parameter->timeRangeAnalysis) == 0) {
-        endMotion->integralTime++;
-        // the current array value is full
-        if ((endMotion->integralTime % MAX_HISTORY_COUNT) == 0) {
-            // get the next Index
-            endMotion->writeIndex = (endMotion->writeIndex + 1) % MAX_HISTORY_COUNT;
-        }
-        float absU = fabsf(pidCurrentValues->u);
-        float absDeltaPosition = fabsf(pidCurrentValues->currentPosition - pidCurrentValues->oldPosition);
-
-        endMotion->absUIntegralHistory[endMotion->writeIndex] = absU;
-        endMotion->absSpeedIntegralHistory[endMotion->writeIndex] = absDeltaPosition;
-
-        // To compute for next iteration
-        pidCurrentValues->oldPosition = pidCurrentValues->currentPosition;
-
-        // Update aggregate Values
-        updateAggregateValues(endMotion);
-    }
-    */
-}
-
-/**
- * Detect if we are at the end of the motion. End of motion means that 
- * the integral of 
- * @private
- * @param instructionType
- * @param endMotion
- * @param parameter
- * @return 
- */
-bool isEndOfMotion(enum InstructionType instructionType, MotionEndInfo* endMotion, MotionEndDetectionParameter* parameter) {
-    
-    if (endMotion->integralTime < parameter->timeRangeAnalysisInSecond) {
-        return false;
-    }
-    if (endMotion->absSpeedIntegral < (parameter->absDeltaPositionIntegralFactorThreshold * parameter->timeRangeAnalysisInSecond * MAX_HISTORY_COUNT)) {
-        return true;
-    }
-    return false;
-}
-
-/**
- * @private
- * @param motionDefinition
- * @param instructionType
- * @param endMotion
- * @param parameter
- * @return 
- */
-bool isMotionInstructionIsBlocked(PidMotionDefinition* motionDefinition, enum InstructionType instructionType, MotionEndInfo* endMotion, MotionEndDetectionParameter* parameter) {
-    if (endMotion->integralTime < parameter->timeRangeAnalysisInSecond) {
-        return false;
-    }
-    MotionInstruction* localInst = &(motionDefinition->inst[instructionType]);
-    float normalU = getNormalU(localInst->speed);
-    float value = parameter->maxUIntegralConstantThreshold + normalU * parameter->maxUIntegralFactorThreshold;
-    float maxUIntegral = fabsf(value * parameter->timeRangeAnalysisInSecond);
-    if (endMotion->absUIntegral > maxUIntegral) {
-        return true;
-    }
-    return false;
-}
-
-/**
  * Detects a shock by analyzing a window of time and check if there is a high acceleration (shock on a short time are often responsible of a high acceleration / deceleration)
  */
 bool detectShockByAcceleration(MotionInstruction* motionInstruction, PidComputationInstructionValues* currentValues) {
@@ -137,7 +33,7 @@ bool detectShockByAcceleration(MotionInstruction* motionInstruction, PidComputat
     RobotKinematics* robotKinematics = getRobotKinematics();
     // Avoid to detect too low acceleration
     float maxAcceleration = getRobotAccelerationMaxMillimeterBySecondSquare(robotKinematics);
-    if (baseAcceleration * 10 < maxAcceleration) {
+    if (fabsf(baseAcceleration * 10) < maxAcceleration) {
         return false;
     }
 
@@ -171,6 +67,10 @@ void detectIfRobotIsBlocked(PidMotion* pidMotion, PidMotionDefinition* motionDef
     bool thetaShocked = detectShockByAcceleration(thetaMotionInstruction, thetaCurrentValues);
     bool alphaShocked = detectShockByAcceleration(alphaMotionInstruction, alphaCurrentValues);
 
+    if (thetaShocked || alphaShocked) {
+        setDetectedMotionType(computationValues, DETECTED_MOTION_TYPE_POSITION_BLOCKED_WHEELS);
+        return;
+    }
     /*
     MotionEndDetectionParameter* endDetectionParameter = getMotionEndDetectionParameter(pidMotion);
         
