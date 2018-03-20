@@ -53,7 +53,6 @@ void devicePidDebugHandleRawData(char commandHeader, InputStream* inputStream, O
         ackCommand(outputStream, PID_DEBUG_DEVICE_HEADER, COMMAND_END_MOTION_DEBUG);
         OutputStream* debugOutputStream = getDebugOutputStreamLogger();
         printMotionEndDetectionParameter(debugOutputStream, &(pidMotion->globalParameters.motionEndDetectionParameter));
-        printMotionEndInfos(debugOutputStream, pidMotion);
     }
 	else if (commandHeader == COMMAND_DEBUG_DATA_PID_CONSOLE) {
 		ackCommand(outputStream, PID_DEBUG_DEVICE_HEADER, COMMAND_DEBUG_DATA_PID_CONSOLE);

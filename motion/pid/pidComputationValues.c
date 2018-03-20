@@ -2,7 +2,6 @@
 #include "pidComputationInstructionValues.h"
 
 #include "detectedMotionType.h"
-#include "endDetection/motionEndDetection.h"
 
 #include "../../common/io/outputStream.h"
 #include "../../common/log/logger.h"

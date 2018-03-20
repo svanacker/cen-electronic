@@ -28,7 +28,8 @@
 #include "../../../motion/pid/pidComputationValues.h"
 #include "../../../motion/pid/motionInstruction.h"
 #include "../../../motion/pid/pidComputationInstructionValues.h"
-#include "../../../motion/pid/endDetection/motionEndDetection.h"
+#include "../../../motion/pid/endDetection/reached/motionReachedDetection.h"
+#include "../../../motion/pid/endDetection/shocked/motionShockedDetection.h"
 #include "../../../motion/pid/parameters/pidParameterPersistence.h"
 
 static PidMotion* pidMotion;

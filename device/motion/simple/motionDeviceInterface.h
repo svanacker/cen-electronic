@@ -53,8 +53,11 @@
 /** Argument for the status of the robot when position reached. */
 #define NOTIFY_MOTION_STATUS_REACHED           'R'
 
-/** Argument for the status of the robot when robot failed to reach. */
-#define NOTIFY_MOTION_STATUS_FAILED            'e'
+/** Argument for the status of the robot when robot was blocked when reaching the position. */
+#define NOTIFY_MOTION_STATUS_BLOCKED           'k'
+
+/** Argument for the status of the robot when robot was shocked when reaching the position. */
+#define NOTIFY_MOTION_STATUS_SHOCKED           'S'
 
 /** Argument for the status of the robot when there is an obstacle. */
 #define NOTIFY_MOTION_STATUS_OBSTACLE          'o'

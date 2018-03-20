@@ -21,9 +21,10 @@
 #include "parameters/pidParameter.h"
 #include "parameters/pidParameterPersistence.h"
 #include "pidDebug.h"
-#include "endDetection/motionEndDetection.h"
 #include "pidTimer.h"
 #include "detectedMotionType.h"
+#include "endDetection/shocked/motionShockedDetection.h"
+#include "endDetection/reached/motionReachedDetection.h"
 
 #include "../../device/motor/pwmMotor.h"
 
@@ -115,5 +116,14 @@ void updateMotorsAndDetectedMotionType(PidMotion* pidMotion) {
     }
     
     // Detection if the robot is blocked or not, and update the DetectedMotionType
-    detectIfRobotIsBlocked(pidMotion, motionDefinition);
+    if (detectIfRobotIsShocked(pidMotion, motionDefinition)) {
+        setDetectedMotionType(computationValues, DETECTED_MOTION_TYPE_POSITION_SHOCK_WHEELS);
+        return;
+    }
+    
+    // Detection if this is the end of the move
+    if (isMotionReached(pidMotion, motionDefinition)) {
+        setDetectedMotionType(computationValues, DETECTED_MOTION_TYPE_POSITION_REACHED);
+        return;
+    }
 }

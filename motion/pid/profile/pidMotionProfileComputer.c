@@ -5,7 +5,6 @@
 #include "../computer/pidComputer.h"
 #include "../computer/simplePidComputer.h"
 #include "../profile/pidMotionProfileComputer.h"
-#include "../endDetection/motionEndDetection.h"
 
 #include "../../../common/commons.h"
 #include "../../../common/error/error.h"

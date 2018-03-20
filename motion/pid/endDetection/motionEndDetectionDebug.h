@@ -9,13 +9,4 @@
 // PARAMETERS
 void printMotionEndDetectionParameter(OutputStream* outputStream, MotionEndDetectionParameter* parameter);
 
-// COMPUTATION VALUES
-
-/**
- * Show a table with all parameters and current motion End Infos
- * @param outputStream
- * @param pidMotion
- */
-void printMotionEndInfos(OutputStream* outputStream, PidMotion* pidMotion);
-
 #endif

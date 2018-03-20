@@ -124,9 +124,15 @@ int deviceMotionGetInterface(char commandHeader, DeviceInterfaceMode mode, bool 
             }
             return 14;
         }
-        else if (commandHeader == NOTIFY_MOTION_STATUS_FAILED) {
+        else if (commandHeader == NOTIFY_MOTION_STATUS_BLOCKED) {
             if (fillDeviceArgumentList) {
-                fillNotifyResults("notify Failed");
+                fillNotifyResults("notify Blocked");
+            }
+            return 14;
+        }
+        else if (commandHeader == NOTIFY_MOTION_STATUS_SHOCKED) {
+            if (fillDeviceArgumentList) {
+                fillNotifyResults("notify Shocked");
             }
             return 14;
         }

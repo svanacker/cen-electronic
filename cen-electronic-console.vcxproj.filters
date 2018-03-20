@@ -826,6 +826,24 @@
     <Filter Include="Source Files\drivers\tof\vl53l0x\pc">
       <UniqueIdentifier>{b94642d5-5bd6-4080-b016-ffdf17572363}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\motion\pid\endDetection\blocked">
+      <UniqueIdentifier>{e183f2f8-161a-45c0-aab4-b5570c5da88e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\motion\pid\endDetection\reached">
+      <UniqueIdentifier>{abb41b2c-bb62-4eb7-ad5b-865b829e0766}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\motion\pid\endDetection\shocked">
+      <UniqueIdentifier>{7e2f2a2c-b12e-47cc-a11f-25f957bb16b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\motion\pid\endDetection\shocked">
+      <UniqueIdentifier>{604bab5a-a9f2-4f01-9dc1-26057d8a3f8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\motion\pid\endDetection\blocked">
+      <UniqueIdentifier>{47cd1e88-b87b-42a2-bb42-e0c4f79ef9b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\motion\pid\endDetection\reached">
+      <UniqueIdentifier>{7f28523b-bee2-4263-bc21-af5c2ebcf02b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -1383,9 +1401,6 @@
     <ClCompile Include="motion\pid\profile\profileType.c">
       <Filter>Source Files\motion\pid\profile</Filter>
     </ClCompile>
-    <ClCompile Include="motion\pid\endDetection\motionEndDetection.c">
-      <Filter>Source Files\motion\pid\endDetection</Filter>
-    </ClCompile>
     <ClCompile Include="motion\simple\simpleMotion.c">
       <Filter>Source Files\motion\simple</Filter>
     </ClCompile>
@@ -1623,9 +1638,6 @@
     <ClCompile Include="motion\pid\detectedMotionType.c">
       <Filter>Source Files\motion\pid</Filter>
     </ClCompile>
-    <ClCompile Include="motion\pid\endDetection\motionEndInfo.c">
-      <Filter>Source Files\motion\pid\endDetection</Filter>
-    </ClCompile>
     <ClCompile Include="robot\kinematics\robotKinematicsDebug.c">
       <Filter>Source Files\robot\kinematics</Filter>
     </ClCompile>
@@ -1736,6 +1748,12 @@
     </ClCompile>
     <ClCompile Include="common\2d\2dDebug.c">
       <Filter>Source Files\common\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\pid\endDetection\shocked\motionShockedDetection.c">
+      <Filter>Source Files\motion\pid\endDetection\shocked</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\pid\endDetection\reached\motionReachedDetection.c">
+      <Filter>Source Files\motion\pid\endDetection\reached</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2354,9 +2372,6 @@
     <ClInclude Include="motion\parameters\motionParameterType.h">
       <Filter>Header Files\motion\parameters</Filter>
     </ClInclude>
-    <ClInclude Include="motion\pid\endDetection\motionEndDetection.h">
-      <Filter>Header Files\motion\pid\endDetection</Filter>
-    </ClInclude>
     <ClInclude Include="motion\pid\endDetection\motionEndDetectionParameter.h">
       <Filter>Header Files\motion\pid\endDetection</Filter>
     </ClInclude>
@@ -2540,9 +2555,6 @@
     <ClInclude Include="motion\pid\pidConstants.h">
       <Filter>Header Files\motion\pid</Filter>
     </ClInclude>
-    <ClInclude Include="motion\pid\endDetection\motionEndInfo.h">
-      <Filter>Header Files\motion\pid\endDetection</Filter>
-    </ClInclude>
     <ClInclude Include="motion\extended\bsplineCSVExport.h">
       <Filter>Header Files\motion\extended</Filter>
     </ClInclude>
@@ -2704,6 +2716,12 @@
     </ClInclude>
     <ClInclude Include="common\2d\2dDebug.h">
       <Filter>Header Files\common\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\endDetection\reached\motionReachedDetection.h">
+      <Filter>Header Files\motion\pid\endDetection\reached</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\endDetection\shocked\motionShockedDetection.h">
+      <Filter>Header Files\motion\pid\endDetection\shocked</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

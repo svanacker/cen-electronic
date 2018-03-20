@@ -5,8 +5,6 @@
 #include "detectedMotionType.h"
 #include "instructionType.h"
 
-#include "endDetection/motionEndInfo.h"
-
 /**
  * All current values about the current motion in progress.
  */

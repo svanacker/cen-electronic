@@ -10,19 +10,19 @@
 
 void squareCalibrationRotationLeft(PidMotion* pidMotion, bool inverse, OutputStream* notificationOutputStream) {
     if (inverse) {
-        rightSimpleDegreeAndWait(pidMotion, DEG_90, notificationOutputStream);
+        rightSimpleDegree(pidMotion, DEG_90, notificationOutputStream);
     }
     else {
-        leftSimpleDegreeAndWait(pidMotion, DEG_90, notificationOutputStream);
+        leftSimpleDegree(pidMotion, DEG_90, notificationOutputStream);
     }
 }
 
 void squareCalibrationRotationRight(PidMotion* pidMotion, bool inverse, OutputStream* notificationOutputStream) {
     if (inverse) {
-        leftSimpleDegreeAndWait(pidMotion, DEG_90, notificationOutputStream);
+        leftSimpleDegree(pidMotion, DEG_90, notificationOutputStream);
     }
     else {
-        rightSimpleDegreeAndWait(pidMotion, DEG_90, notificationOutputStream);
+        rightSimpleDegree(pidMotion, DEG_90, notificationOutputStream);
     }
 }
 void squareCalibrationLine(PidMotion* pidMotion, float x, float y, float angle, bool inverse, OutputStream* notificationOutputStream) {
@@ -33,7 +33,6 @@ void squareCalibrationLine(PidMotion* pidMotion, float x, float y, float angle, 
     else {
         gotoSpline(pidMotion, x, y, angle, cp, cp, MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL, false, notificationOutputStream);
     }
-    handleAndWaitFreeMotion(pidMotion);
 }
 
 void squareCalibration(PidMotion* pidMotion, unsigned char type, float lengthInMM, OutputStream* notificationOutputStream) {
@@ -41,6 +40,9 @@ void squareCalibration(PidMotion* pidMotion, unsigned char type, float lengthInM
     float lengthInMM2 = lengthInMM / 2.0f;
 
     bool inverse = (type == 0);
+    
+    // Active the Motion Mode + to add several motion
+    setMotionModeAdd(pidMotion);
 
     // turn on right
     squareCalibrationRotationRight(pidMotion, inverse, notificationOutputStream);

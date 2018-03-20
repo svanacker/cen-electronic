@@ -22,7 +22,7 @@ DeviceDescriptor* getMotionDeviceDescriptor(PidMotion* pidMotionParam);
 /**
  * Notify the main Board that the motorBoard has reached the asked position.
  * @param outputStream the outputStream to notify the main Board
- * kXXXX-YYYY-AAAA-00 (00 = status for REACHED)
+ * MrXXXXXX-YYYYYY-AAAA
  * XXXX for the position along Y Axis in mm
  * YYYY for the position along Y Axis in mm
  * AAAA for the position in 1/10 deg
@@ -31,28 +31,47 @@ DeviceDescriptor* getMotionDeviceDescriptor(PidMotion* pidMotionParam);
 void notifyReached(OutputStream* outputStream);
 
 /**
+* Notify the main Board that the motorBoard has failed to reach the asked position
+* It sends a message like this
+* MSXXXXXX-YYYYYY-AAAA
+* XXXXXX for the position along Y Axis in mm
+* YYYYYY for the position along Y Axis in mm
+* AAAA for the position in 1/10 deg
+* @param outputStream the outputStream to notify the main Board
+*/
+void notifyShocked(OutputStream* outputStream);
+
+/**
  * Notify the main Board that the motorBoard has failed to reach the asked position
  * It sends a message like this
- * kXXXX-YYYY-AAAA-01 (01 = status for FAILED)
- * XXXX for the position along Y Axis in mm
- * YYYY for the position along Y Axis in mm
+ * MkXXXXXX-YYYYYY-AAAA
+ * XXXXXX for the position along Y Axis in mm
+ * YYYYYY for the position along Y Axis in mm
  * AAAA for the position in 1/10 deg
  * @param outputStream the outputStream to notify the main Board
  */
-void notifyFailed(OutputStream* outputStream);
+void notifyBlocked(OutputStream* outputStream);
 
 /**
  * Notify the main Board that the motorBoard is moving.
  * It sends a message like this
- * kXXXX-YYYY-AAAA-02 (01 = status for MOVING)
- * XXXX for the position along Y Axis in mm
- * YYYY for the position along Y Axis in mm
+ * MmXXXXXX-YYYYYY-AAAA
+ * XXXXXX for the position along Y Axis in mm
+ * YYYYYY for the position along Y Axis in mm
  * AAAA for the position in 1/10 deg
  * @param outputStream the outputStream to notify the main Board
  */
 void notifyMoving(OutputStream* outputStream);
 
-// TODO
+/**
+* Notify the main Board that the motorBoard has stopped because a board has set that there is an obstable.
+* It sends a message like this
+* MoXXXXXX-YYYYYY-AAAA
+* XXXXXX for the position along Y Axis in mm
+* YYYYYY for the position along Y Axis in mm
+* AAAA for the position in 1/10 deg
+* @param outputStream the outputStream to notify the main Board
+*/
 void notifyObstacle(OutputStream* outputStream);
 
 #endif

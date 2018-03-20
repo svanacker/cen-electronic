@@ -87,8 +87,12 @@ void notifyReached(OutputStream* outputStream) {
     internalNotify(outputStream, NOTIFY_MOTION_STATUS_REACHED, "reached");
 }
 
-void notifyFailed(OutputStream* outputStream) {
-    internalNotify(outputStream, NOTIFY_MOTION_STATUS_FAILED, "failed");
+void notifyBlocked(OutputStream* outputStream) {
+    internalNotify(outputStream, NOTIFY_MOTION_STATUS_BLOCKED, "blocked");
+}
+
+void notifyShocked(OutputStream* outputStream) {
+    internalNotify(outputStream, NOTIFY_MOTION_STATUS_SHOCKED, "shocked");
 }
 
 void notifyMoving(OutputStream* outputStream) {
@@ -167,8 +171,7 @@ void deviceMotionHandleRawData(char commandHeader,
         checkIsSeparator(inputStream);
         float length = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
         squareCalibration(pidMotion, type, length, notificationOutputStream);
-    }        // PARAMETERS
-
+    }
 	// MODE
 	else if (commandHeader == COMMAND_MOTION_MODE_ADD) {
 		ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_MODE_ADD);
