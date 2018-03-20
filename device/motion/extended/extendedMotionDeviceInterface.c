@@ -74,18 +74,33 @@ int deviceExtendedMotionGetInterface(char commandHeader, DeviceInterfaceMode mod
 		}
 		return commandLengthValueForMode(mode, 0, 0);
 	}
-    // BSpline : left test (long forward)
+    // BSpline : forward->left->forward test
 	else if (commandHeader == COMMAND_MOTION_SPLINE_TEST_FORWARD_LEFT_FORWARD) {
 		// Same INPUT/OUTPUT
 		if (fillDeviceArgumentList) {
 			setFunctionNoArgumentAndNoResult("bSpline Test Forward->Left->Forward ");
 		}
 		return commandLengthValueForMode(mode, 0, 0);
-	} // BSpline : right Test
+	} // BSpline : forward->right->forward test
 	else if (commandHeader == COMMAND_MOTION_SPLINE_TEST_FORWARD_RIGHT_FORWARD) {
 		// Same INPUT/OUTPUT
 		if (fillDeviceArgumentList) {
 			setFunctionNoArgumentAndNoResult("bSpline Test Forward->Right->Forward");
+		}
+		return commandLengthValueForMode(mode, 0, 0);
+	}
+    // BSpline : backward->left->backward test
+	else if (commandHeader == COMMAND_MOTION_SPLINE_TEST_BACKWARD_LEFT_BACKWARD) {
+		// Same INPUT/OUTPUT
+		if (fillDeviceArgumentList) {
+			setFunctionNoArgumentAndNoResult("bSpline Test Backward->Left->Backward ");
+		}
+		return commandLengthValueForMode(mode, 0, 0);
+	} // BSpline : backward->right->backward test
+	else if (commandHeader == COMMAND_MOTION_SPLINE_TEST_BACKWARD_RIGHT_BACKWARD) {
+		// Same INPUT/OUTPUT
+		if (fillDeviceArgumentList) {
+			setFunctionNoArgumentAndNoResult("bSpline Test Backward->Right->Backward");
 		}
 		return commandLengthValueForMode(mode, 0, 0);
 	}

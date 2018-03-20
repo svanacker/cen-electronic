@@ -61,7 +61,7 @@ float bSplineMotionUComputeAlphaError(PidMotion* pidMotion, PidMotionDefinition*
     // TODO : To check : not really true if the curve is strong !!
     float alphaNormalSpeed = 0.0f;
     alphaValues->u = computePidCorrection(alphaValues, alphaPidParameter, alphaNormalSpeed, alphaError);
-    alphaValues->u = 0.0f;
+    // alphaValues->u = 0.0f;
     PidComputationInstructionValues* alphaComputationInstructionValues = &(computationValues->values[ALPHA]);
     alphaComputationInstructionValues->error = alphaError;
     alphaComputationInstructionValues->normalSpeed = alphaNormalSpeed;

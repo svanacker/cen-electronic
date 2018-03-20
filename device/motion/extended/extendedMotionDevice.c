@@ -146,6 +146,20 @@ void deviceExtendedMotionHandleRawData(char commandHeader,
                          true,
 					    notificationOutputStream);
     }
+    else if (commandHeader == COMMAND_MOTION_SPLINE_TEST_BACKWARD_LEFT_BACKWARD || commandHeader == COMMAND_MOTION_SPLINE_TEST_BACKWARD_RIGHT_BACKWARD) {
+        ackCommand(outputStream, MOTION_DEVICE_HEADER, commandHeader);
+        float sign = 1.0f;
+        if (commandHeader == COMMAND_MOTION_SPLINE_TEST_BACKWARD_LEFT_BACKWARD) {
+            sign = -sign;
+        }
+        gotoSpline(pidMotion,
+						 -1200.0f, -sign * 600.0f,
+                         0.0f,
+                         -1000.0f, -1000.0f,
+                        -MOTION_ACCELERATION_FACTOR_NORMAL, -MOTION_SPEED_FACTOR_NORMAL,
+                         true,
+					    notificationOutputStream);
+    }
  }
 
 static DeviceDescriptor descriptor = {

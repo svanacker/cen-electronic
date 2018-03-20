@@ -14,6 +14,7 @@
 #include "../../../common/log/logger.h"
 #include "../../../common/log/logLevel.h"
 
+#include "../../parameters/motionParameter.h"
 #include "../detectedMotionType.h"
 #include "../pidComputationValues.h"
 #include "../computer/pidComputer.h"
@@ -125,17 +126,58 @@ bool isMotionInstructionIsBlocked(PidMotionDefinition* motionDefinition, enum In
     return false;
 }
 
+/**
+ * Detects a shock by analyzing a window of time and check if there is a high acceleration (shock on a short time are often responsible of a high acceleration / deceleration)
+ */
+bool detectShockByAcceleration(MotionInstruction* motionInstruction, PidComputationInstructionValues* currentValues) {
+    enum MotionParameterType motionParameterType = motionInstruction->motionParameterType;
+    float baseAcceleration = motionInstruction->a;
+    float accelerationThreshold = fabsf(baseAcceleration * 5.0f);
+
+    RobotKinematics* robotKinematics = getRobotKinematics();
+    // Avoid to detect too low acceleration
+    float maxAcceleration = getRobotAccelerationMaxMillimeterBySecondSquare(robotKinematics);
+    if (baseAcceleration * 10 < maxAcceleration) {
+        return false;
+    }
+
+    unsigned windowElementCount = 5;
+    unsigned int startIndex = 0;
+    startIndex = currentValues->historyWriteIndex - windowElementCount;
+    if (startIndex < 0) {
+        startIndex = 0;
+    }
+    unsigned int index = 0;
+    unsigned int aboveThresholdCount = 0;
+    for (index = startIndex; index < currentValues->historyWriteIndex - 1; index++) {
+        if (fabsf(currentValues->accelerationHistory[index]) > accelerationThreshold) {
+            aboveThresholdCount++;
+        }
+    }
+    if (2 * aboveThresholdCount > windowElementCount) {
+        return true;
+    }
+    return false;
+}
+
 void detectIfRobotIsBlocked(PidMotion* pidMotion, PidMotionDefinition* motionDefinition) {
-    /*
-    MotionEndDetectionParameter* endDetectionParameter = getMotionEndDetectionParameter(pidMotion);
-        
     PidComputationValues* computationValues = &(pidMotion->computationValues);
     PidComputationInstructionValues* thetaCurrentValues = &(computationValues->values[THETA]);
     PidComputationInstructionValues* alphaCurrentValues = &(computationValues->values[ALPHA]);
+
+    MotionInstruction* thetaMotionInstruction = &(motionDefinition->inst[THETA]);
+    MotionInstruction* alphaMotionInstruction = &(motionDefinition->inst[ALPHA]);
+
+    bool thetaShocked = detectShockByAcceleration(thetaMotionInstruction, thetaCurrentValues);
+    bool alphaShocked = detectShockByAcceleration(alphaMotionInstruction, alphaCurrentValues);
+
+    /*
+    MotionEndDetectionParameter* endDetectionParameter = getMotionEndDetectionParameter(pidMotion);
         
+
+    thetaCurrentValues->accelerationHistory[i]
     MotionEndInfo* thetaEndMotion = &(computationValues->values[THETA].motionEnd);
     MotionEndInfo* alphaEndMotion = &(computationValues->values[ALPHA].motionEnd);
-
     thetaCurrentValues->currentSpeed = thetaCurrentValues->currentPosition - thetaCurrentValues->oldPosition;
     alphaCurrentValues->currentSpeed = alphaCurrentValues->currentPosition - alphaCurrentValues->oldPosition;
 
