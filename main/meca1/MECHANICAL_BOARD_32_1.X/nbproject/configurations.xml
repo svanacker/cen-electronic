@@ -29,6 +29,7 @@
                      displayName="common.eeprom"
                      projectFiles="true">
         <itemPath>../../../common/eeprom/eeprom.h</itemPath>
+        <itemPath>../../../common/eeprom/eepromType.h</itemPath>
       </logicalFolder>
       <logicalFolder name="common.error"
                      displayName="common.error"
@@ -247,7 +248,7 @@
                      displayName="common.eeprom"
                      projectFiles="true">
         <itemPath>../../../common/eeprom/eeprom.c</itemPath>
-        <itemPath>../../../drivers/eeprom/24c512.c</itemPath>
+        <itemPath>../../../common/eeprom/eepromType.c</itemPath>
       </logicalFolder>
       <logicalFolder name="common.error"
                      displayName="common.error"
@@ -445,6 +446,9 @@
                      projectFiles="true">
         <itemPath>../../../drivers/dispatcher/driverDataDispatcher.c</itemPath>
         <itemPath>../../../drivers/dispatcher/driverDataDispatcherList.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f1" displayName="drivers.eeprom" projectFiles="true">
+        <itemPath>../../../drivers/eeprom/24c512.c</itemPath>
       </logicalFolder>
       <logicalFolder name="main" displayName="main" projectFiles="true">
         <itemPath>../mechanicalMainBoard32_1.c</itemPath>
