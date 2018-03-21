@@ -8,7 +8,7 @@
 #include "../motionInstruction.h"
 #include "../pidMotion.h"
 
-#define ACCELERATION_TOO_HIGH_THRESHOLD_FACTOR    5.0f
+#define ACCELERATION_TOO_HIGH_THRESHOLD_FACTOR    8.0f
 #define SPEED_TOO_LOW_THRESHOLD_FACTOR            5.0f
 #define U_TOO_HIGH_THRESHOLD_FACTOR               5.0f
 

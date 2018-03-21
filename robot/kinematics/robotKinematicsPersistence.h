@@ -25,10 +25,10 @@
 // -> CODER WHEEL
 
 /** Average coder wheel diameter (mm). */
-#define KINEMATICS_CODER_WHEEL_AVERAGE_DIAMETER_MM_DEFAULT_VALUE                       30.405f
+#define KINEMATICS_CODER_WHEEL_AVERAGE_DIAMETER_MM_DEFAULT_VALUE                       31.410f
 
 // To compensate difference between Coder Wheels Diameter (mm)
-#define KINEMATICS_CODER_WHEEL_AVERAGE_DELTA_DIAMETER_MM_DEFAULT_VALUE                     0.0f            
+#define KINEMATICS_CODER_WHEEL_AVERAGE_DELTA_DIAMETER_MM_DEFAULT_VALUE                  0.096f            
 
 /** Default wheels distance (mm)). */
 #define KINEMATICS_CODER_WHEEL_DISTANCE_BETWEEN_WHEELS_MM_DEFAULT_VALUE                 283.00f

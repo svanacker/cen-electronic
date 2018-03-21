@@ -25,9 +25,7 @@
  * Detects a shock by analyzing a window of time and check if there is a high acceleration (shock on a short time are often responsible of a high acceleration / deceleration)
  */
 bool detectShockByAcceleration(MotionInstruction* motionInstruction, PidComputationInstructionValues* currentValues) {
-    return currentValues->status.absAccelerationTooHighThanExpected;
-    /*
-    unsigned windowElementCount = 5;
+    unsigned windowElementCount = 6;
     unsigned int startIndex = 0;
     startIndex = currentValues->historyWriteIndex - windowElementCount;
     if (startIndex < 0) {
@@ -41,11 +39,10 @@ bool detectShockByAcceleration(MotionInstruction* motionInstruction, PidComputat
         }
     }
     // If more than 50% have the status higher than expected
-    if (2 * aboveThresholdCount > windowElementCount) {
+    if (aboveThresholdCount >= 3) {
         return true;
     }
     return false;
-    */
 }
 
 bool detectIfRobotIsShocked(PidMotion* pidMotion, PidMotionDefinition* motionDefinition) {

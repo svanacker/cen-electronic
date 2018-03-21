@@ -98,6 +98,7 @@ void handleInstructionAndMotion(PidMotion* pidMotion) {
         // don't do anything, wait
     } else if (motionType == DETECTED_MOTION_TYPE_POSITION_REACHED) {
         notifyReached(outputStream);
+        stopPosition(pidMotion, false, outputStream);
         switchToNextMotionDefinitionIfAny(pidMotion, currentMotionDefinition);
     }
     else if (motionType == DETECTED_MOTION_TYPE_POSITION_SHOCK_WHEELS) {
