@@ -24,16 +24,37 @@
 /**
  * @private
  */
-bool isMotionInstructionBlocked(PidMotion* pidMotion, MotionInstruction* motionInstruction) {
-	return false;
+bool isMotionInstructionBlocked(MotionInstruction* motionInstruction, PidComputationInstructionValues* currentValues) {
+    unsigned windowElementCount = 10;
+    unsigned int startIndex = 0;
+    startIndex = currentValues->historyWriteIndex - windowElementCount;
+    if (startIndex < 0) {
+        startIndex = 0;
+    }
+    unsigned int index = 0;
+    unsigned int aboveThresholdCount = 0;
+    for (index = startIndex; index < currentValues->historyWriteIndex - 1; index++) {
+        if (currentValues->statusHistory[index].absUTooHighThanExpected) {
+            aboveThresholdCount++;
+        }
+    }
+    // If more than 50% have the status higher than expected
+    if (2 * aboveThresholdCount > windowElementCount) {
+        return true;
+    }
+    return false;
 }
 
 bool isMotionBlocked(PidMotion* pidMotion, PidMotionDefinition* motionDefinition) {
+    PidComputationValues* computationValues = &(pidMotion->computationValues);
+    PidComputationInstructionValues* thetaCurrentValues = &(computationValues->values[THETA]);
+    PidComputationInstructionValues* alphaCurrentValues = &(computationValues->values[ALPHA]);
+    
     MotionInstruction* thetaMotionInstruction = &(motionDefinition->inst[THETA]);
     MotionInstruction* alphaMotionInstruction = &(motionDefinition->inst[ALPHA]);
-    
-    bool isThetaBlocked = isMotionInstructionBlocked(pidMotion, thetaMotionInstruction);
-    bool isAlphaBlocked = isMotionInstructionBlocked(pidMotion, alphaMotionInstruction);
+
+    bool isThetaBlocked = isMotionInstructionBlocked(thetaMotionInstruction, thetaCurrentValues);
+    bool isAlphaBlocked = isMotionInstructionBlocked(alphaMotionInstruction, alphaCurrentValues);
     
     return (isAlphaBlocked || isThetaBlocked);
 }

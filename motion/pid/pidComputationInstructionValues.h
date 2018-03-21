@@ -2,6 +2,7 @@
 #define PID_COMPUTATION_INSTRUCTION_VALUES_H
 
 #include "pidConstants.h"
+#include "endDetection/motionEndDetection.h"
 
 /**
  * Defines a struct which stores :
@@ -67,10 +68,18 @@ typedef struct PidComputationInstructionValues {
     float integralErrorHistory[PID_HISTORY_ITEM_COUNT];
 
     // U
-    /** U (voltage) values. */
+    /** The normal U at the current Speed if no pid correction */
+    float normalU;
+    /** U (voltage) applied values. */
     float u;
     /** History of U */
     float uHistory[PID_HISTORY_ITEM_COUNT];
+
+    /** Status register for motion end detection. */
+    MotionEndDetectionStatusRegister status;
+    /** History of Status */
+    MotionEndDetectionStatusRegister statusHistory[PID_HISTORY_ITEM_COUNT];
+
 } PidComputationInstructionValues;
 
 /**

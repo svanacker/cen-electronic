@@ -25,7 +25,13 @@ void clearPidComputationInstructionValues(PidComputationInstructionValues* pidCo
     pidComputationInstructionValues->integralError = 0;
 
     // U
+    pidComputationInstructionValues->normalU = 0;
     pidComputationInstructionValues->u = 0;
+
+    // Status
+    pidComputationInstructionValues->statusHistory->absAccelerationTooHighThanExpected = false;
+    pidComputationInstructionValues->statusHistory->absSpeedTooLowThanExpected = false;
+    pidComputationInstructionValues->statusHistory->absUTooHighThanExpected = false;
 
     // Clear the history
     unsigned int i;
@@ -52,6 +58,11 @@ void clearPidComputationInstructionValues(PidComputationInstructionValues* pidCo
         
         // U
         pidComputationInstructionValues->uHistory[i] = 0;
+
+        // Status
+        pidComputationInstructionValues->statusHistory[i].absAccelerationTooHighThanExpected = false;
+        pidComputationInstructionValues->statusHistory[i].absSpeedTooLowThanExpected = false;
+        pidComputationInstructionValues->statusHistory[i].absUTooHighThanExpected = false;
     }
 }
 
@@ -80,6 +91,11 @@ void storePidComputationInstructionValueHistory(PidComputationInstructionValues*
 
     // U
     pidComputationInstructionValues->uHistory[i] = pidComputationInstructionValues->u;
+
+    // Status
+    pidComputationInstructionValues->statusHistory[i].absAccelerationTooHighThanExpected = pidComputationInstructionValues->status.absAccelerationTooHighThanExpected;
+    pidComputationInstructionValues->statusHistory[i].absSpeedTooLowThanExpected = pidComputationInstructionValues->status.absSpeedTooLowThanExpected;
+    pidComputationInstructionValues->statusHistory[i].absUTooHighThanExpected = pidComputationInstructionValues->status.absUTooHighThanExpected;
 
     // For next time
     pidComputationInstructionValues->historyWriteIndex++;

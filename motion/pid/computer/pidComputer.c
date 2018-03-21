@@ -138,12 +138,13 @@ float computePidCorrection(PidComputationInstructionValues* values,
 
     // Corresponds to the normal speed which must be added if we would like to 
     // go to the desired speed
-    float result = getNormalU(normalSpeed);
+    values->normalU = getNormalU(normalSpeed);
 
     // Computes PID
-    result += (values->error * pidParameter->p
-        + values->integralError * pidParameter->i
-        + values->derivativeError * pidParameter->d);
+    float result = values->normalU +
+                   + (values->error * pidParameter->p)
+                   + (values->integralError * pidParameter->i)
+                   + (values->derivativeError * pidParameter->d);
 
     return result;
 }

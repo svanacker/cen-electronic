@@ -128,13 +128,10 @@ int devicePidGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fil
             setResultSeparator(23);
             setResultFloatHex4(24, "u");
             // Computation : end of motion
-            /*
-            setResultBool(12, "endMotion integralTime");
-            setResultSeparator(13);
-            setResultFloatHex4(14, "endMotion absDelta Position Integral");
-            setResultSeparator(15);
-            setResultFloatHex4(16, "endMotion Integral");
-            */
+            // TODO : Add Bool value
+            // setResultBool(25, "abs Acceleration Too High Than Expected");
+            // setResultBool(26, "abs Speed Too Low Than Expected");
+            // setResultBool(27, "abs U Too High Than Expected");
         }
         return commandLengthValueForMode(mode, 7, 66);
     }

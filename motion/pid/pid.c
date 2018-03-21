@@ -26,6 +26,7 @@
 #include "endDetection/blocked/motionBlockedDetection.h"
 #include "endDetection/shocked/motionShockedDetection.h"
 #include "endDetection/reached/motionReachedDetection.h"
+#include "endDetection/motionEndDetectionStatusUpdater.h"
 
 #include "../../device/motor/pwmMotor.h"
 
@@ -116,12 +117,13 @@ void updateMotorsAndDetectedMotionType(PidMotion* pidMotion) {
         return;
     }
     
+    updateEndDetectionStatusRegister(pidMotion, motionDefinition);
+
     // Detection if the robot is blocked or not, and update the DetectedMotionType
     if (detectIfRobotIsShocked(pidMotion, motionDefinition)) {
         setDetectedMotionType(computationValues, DETECTED_MOTION_TYPE_POSITION_SHOCK_WHEELS);
         return;
     }
-
     // Detection if this is the end of the move because we are blocked by something
     if (isMotionBlocked(pidMotion, motionDefinition)) {
         setDetectedMotionType(computationValues, DETECTED_MOTION_TYPE_POSITION_BLOCKED_WHEELS);

@@ -197,21 +197,15 @@ void devicePidHandleRawData(char commandHeader, InputStream* inputStream, Output
         appendHexFloat4(outputStream, computationInstructionValues->derivativeError, PID_VALUE_DIGIT_PRECISION);
         appendSeparator(outputStream);
 
-
         // u
         appendHexFloat4(outputStream, computationInstructionValues->u, PID_VALUE_DIGIT_PRECISION);
         appendSeparator(outputStream);
 
         // Motion End
-        // TODO : Compute End Motion Computation
-        /*
-        MotionEndInfo* motionEnd = &(computationValues->values[instructionType].motionEnd);
-        appendHex4(outputStream, motionEnd->integralTime);
-        appendSeparator(outputStream);
-        appendHex4(outputStream, (int) motionEnd->absSpeedIntegral);
-        appendSeparator(outputStream);
-        appendHex4(outputStream, (int) motionEnd->absUIntegral);
-        */
+        // TODO 
+        // appendBool(outputStream, computationInstructionValues->status.absAccelerationTooHighThanExpected);
+        // appendBool(outputStream, computationInstructionValues->status.absSpeedTooLowThanExpected);
+        // appendBool(outputStream, computationInstructionValues->status.absUTooHighThanExpected);
     }
     else if (commandHeader == COMMAND_CLEAR_COMPUTATION_VALUES_DATA_PID) {
         // InstructionType

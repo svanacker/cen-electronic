@@ -58,3 +58,37 @@ void printMotionEndDetectionParameter(OutputStream* outputStream, MotionEndDetec
 
     appendTableHeaderSeparatorLine(outputStream);
 }
+
+unsigned int appendMotionEndDetectionStatusRegister(OutputStream* outputStream, MotionEndDetectionStatusRegister motionEndDetectionStatusRegister) {
+    if (motionEndDetectionStatusRegister.absAccelerationTooHighThanExpected) {
+        append(outputStream, 'A');
+    }
+    else {
+        appendSeparator(outputStream);
+    }
+    if (motionEndDetectionStatusRegister.absSpeedTooLowThanExpected) {
+        append(outputStream, 'S');
+    }
+    else {
+        appendSeparator(outputStream);
+    }
+    if (motionEndDetectionStatusRegister.absUTooHighThanExpected) {
+        append(outputStream, 'U');
+    }
+    else {
+        appendSeparator(outputStream);
+    }
+    // Length of written chars
+    return 3;
+}
+
+// For Table Data
+
+unsigned int appendMotionEndDetectionStatusRegisterTableData(OutputStream* outputStream, 
+                                                             MotionEndDetectionStatusRegister motionEndDetectionStatusRegister,
+                                                             unsigned int columnSize) {
+    appendTableSeparator(outputStream);
+    appendSpace(outputStream);
+    unsigned int length = appendMotionEndDetectionStatusRegister(outputStream, motionEndDetectionStatusRegister);
+    return length + appendSpaces(outputStream, columnSize - length) + 2;
+}
