@@ -16,16 +16,26 @@
 #include "../../../../common/io/outputStream.h"
 #include "../../../../common/io/printWriter.h"
 
-#define VL53L0X_DEBUG    true
+// #define VL53L0X_DEBUG    0
 
 // PRIMITIVES
 
 int32_t VL53L0X_write_multi(uint8_t deviceAddress, uint8_t index, uint8_t  *pdata, int32_t count) {
-    I2cBusConnection* i2cConnection = getI2cBusConnectionBySlaveAddress(deviceAddress);
+    I2cBusConnection* i2cBusConnection = getI2cBusConnectionBySlaveAddress(0x52);
+    I2cBus* i2cBus = i2cBusConnection->i2cBus;
     
-    portableMasterStartI2C(i2cConnection);
+    portableMasterWaitSendI2C(i2cBusConnection);
+    // Wait till Start sequence is completed
+    WaitI2C(i2cBus);
     
-    portableMasterWriteI2C(i2cConnection, index);
+    portableMasterStartI2C(i2cBusConnection);
+    WaitI2C(i2cBus);
+    
+    portableMasterWriteI2C(i2cBusConnection, 0x52);
+    WaitI2C(i2cBus);
+    
+    portableMasterWriteI2C(i2cBusConnection, index);
+    WaitI2C(i2cBus);
     
 #ifdef VL53L0X_DEBUG
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
@@ -37,8 +47,8 @@ int32_t VL53L0X_write_multi(uint8_t deviceAddress, uint8_t index, uint8_t  *pdat
 #endif
     
     while(count--) {
-        portableMasterWriteI2C(i2cConnection, pdata[0]);
-        
+        portableMasterWriteI2C(i2cBusConnection, pdata[0]);
+        WaitI2C(i2cBus);
 #ifdef VL53L0X_DEBUG
     appendString(debugOutputStream, "0x ");
     appendHex2(debugOutputStream, pdata[0]);
@@ -50,18 +60,39 @@ int32_t VL53L0X_write_multi(uint8_t deviceAddress, uint8_t index, uint8_t  *pdat
     println(debugOutputStream);
 #endif
     
-    portableMasterStopI2C(i2cConnection);
+    portableMasterStopI2C(i2cBusConnection);
+    WaitI2C(i2cBus);
     
     return VL53L0X_ERROR_NONE;
 }
 
 int32_t VL53L0X_read_multi(uint8_t deviceAddress,  uint8_t index, uint8_t  *pdata, int32_t count) {
-    I2cBusConnection* i2cConnection = getI2cBusConnectionBySlaveAddress(deviceAddress);
+    I2cBusConnection* i2cBusConnection = getI2cBusConnectionBySlaveAddress(0x52);
+    I2cBus* i2cBus = i2cBusConnection->i2cBus;
     
-    portableMasterStartI2C(i2cConnection);
-    portableMasterWriteI2C(i2cConnection, index);
-    portableMasterStopI2C(i2cConnection);
+    portableMasterWaitSendI2C(i2cBusConnection);
     
+    portableMasterStartI2C(i2cBusConnection);
+    WaitI2C(i2cBus);
+    
+    portableMasterWriteI2C(i2cBusConnection, 0x52);
+    WaitI2C(i2cBus);
+    
+    // Write the "index" from which we want to read
+    portableMasterWriteI2C(i2cBusConnection, index);
+    WaitI2C(i2cBus);
+
+    /*
+    portableMasterStopI2C(i2cBusConnection);
+    WaitI2C(i2cBus);
+    */
+    
+    portableMasterStartI2C(i2cBusConnection);
+    WaitI2C(i2cBus);
+    // Enter in "read" mode
+    portableMasterWriteI2C(i2cBusConnection, 0x53);
+    WaitI2C(i2cBus);
+
     // TODO : SVA Wire.requestFrom(deviceAddress, (byte)count);
 #ifdef VL53L0X_DEBUG
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
@@ -73,7 +104,15 @@ int32_t VL53L0X_read_multi(uint8_t deviceAddress,  uint8_t index, uint8_t  *pdat
 #endif
 
   while (count--) {
-    pdata[0] = portableMasterReadI2C(i2cConnection);
+    pdata[0] = portableMasterReadI2C(i2cBusConnection);
+    // Ack
+    if (count > 0) {
+        portableMasterAckI2C(i2cBusConnection);
+    }
+    else {
+        portableMasterNackI2C(i2cBusConnection);
+    }
+    WaitI2C(i2cBus);
 #ifdef VL53L0X_DEBUG
     appendString(debugOutputStream, "0x ");
     appendHex2(debugOutputStream, pdata[0]);
@@ -84,6 +123,9 @@ int32_t VL53L0X_read_multi(uint8_t deviceAddress,  uint8_t index, uint8_t  *pdat
 #ifdef VL53L0X_DEBUG
      println(debugOutputStream);
 #endif
+//    portableMasterStopI2C(i2cBusConnection);
+//    WaitI2C(i2cBus);
+     
   return VL53L0X_ERROR_NONE;
 }
 

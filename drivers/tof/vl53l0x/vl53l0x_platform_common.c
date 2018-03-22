@@ -14,8 +14,6 @@
 #include "../../../common/io/outputStream.h"
 #include "../../../common/io/printWriter.h"
 
-#define VL53L0X_DEBUG    true
-
 // WRITE
 
 int32_t VL53L0X_write_byte(uint8_t deviceAddress,  uint8_t index, uint8_t   data) {

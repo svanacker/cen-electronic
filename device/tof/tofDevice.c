@@ -39,6 +39,8 @@ bool isTofDeviceOk(void) {
 void deviceTofHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     if (commandHeader == COMMAND_TOF_GET_DISTANCE) {
         ackCommand(outputStream, TOF_DEVICE_HEADER, COMMAND_TOF_GET_DISTANCE);
+        VL53L0X_RangingMeasurementData_t data;
+        getSingleRangingMeasurement(&data, true);
         appendHex4(outputStream, 0);
     }
 }

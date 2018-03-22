@@ -200,10 +200,10 @@ void _writeEeprom24C512Block (Eeprom* eeprom_, unsigned long index, unsigned int
  * @private
  */
 void _readEeprom24C512Block(Eeprom* eeprom_, unsigned long index, unsigned int length, Buffer* buffer){
-   I2cBusConnection* i2cBusConnection = _24c512GetI2cBusConnection(eeprom_);
-   I2cBus* i2cBus = i2cBusConnection->i2cBus;
+    I2cBusConnection* i2cBusConnection = _24c512GetI2cBusConnection(eeprom_);
+    I2cBus* i2cBus = i2cBusConnection->i2cBus;
 
-   portableMasterWaitSendI2C(i2cBusConnection);
+    portableMasterWaitSendI2C(i2cBusConnection);
 
     portableMasterWaitSendI2C(i2cBusConnection);
     portableMasterStartI2C(i2cBusConnection);

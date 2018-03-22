@@ -29,10 +29,10 @@ void appendVl53l0xString(OutputStream* outputStream, FixedVl53L0x* s) {
     char* sPointer = (char*)s;
     for (i = 0; i < VL53L0X_MAX_STRING_LENGTH; i++) {
         char c = *sPointer;
-        append(outputStream, c);
         if (c == 0) {
             return;
         }
+        append(outputStream, c);
         sPointer++;
     }
 }
@@ -48,7 +48,7 @@ bool tof_vl53l0x_begin(uint8_t i2c_addr, bool debug) {
     uint8_t PhaseCal;
 
     // Initialize Comms
-    tofDevice.I2cDevAddr = i2c_addr;
+    tofDevice.I2cDevAddr = 0x29;
     tofDevice.comms_type = 1;
     tofDevice.comms_speed_khz = 100;
 
@@ -162,4 +162,29 @@ bool tof_vl53l0x_begin(uint8_t i2c_addr, bool debug) {
 
         return false;
     }
+}
+
+VL53L0X_Error getSingleRangingMeasurement( VL53L0X_RangingMeasurementData_t *RangingMeasurementData, bool debug) {
+    VL53L0X_Error   Status = VL53L0X_ERROR_NONE;
+    FixPoint1616_t  LimitCheckCurrent;
+    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+    if( Status == VL53L0X_ERROR_NONE ) {
+        if (debug) {
+            appendString(debugOutputStream, "sVL53L0X: PerformSingleRangingMeasurement\n");
+        }
+        Status = VL53L0X_PerformSingleRangingMeasurement(&tofDevice, RangingMeasurementData );
+
+        if( debug ) {
+            VL53L0X_GetLimitCheckCurrent(&tofDevice, VL53L0X_CHECKENABLE_RANGE_IGNORE_THRESHOLD, &LimitCheckCurrent );
+
+          	appendString(debugOutputStream, "RANGE IGNORE THRESHOLD: ");
+          	appendDecf(debugOutputStream, LimitCheckCurrent / 65536.0f );
+            println(debugOutputStream);
+          	appendString(debugOutputStream, "Measured distance: ");
+            appendDecf(debugOutputStream, RangingMeasurementData->RangeMilliMeter);
+            println(debugOutputStream);
+        }
+    }
+
+    return Status;
 }
