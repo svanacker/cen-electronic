@@ -65,6 +65,9 @@
 /** Argument for the status of the robot when position is in progress. */
 #define NOTIFY_MOTION_STATUS_MOVING            'm'
 
+/** Argument for the status of the robot when position was not reached inside the timeout. */
+#define NOTIFY_MOTION_STATUS_FAILED            'f'
+
 /** Obstacle : stop the current Motion and maintain Position. */
 #define COMMAND_MOTION_OBSTACLE                '|'
 

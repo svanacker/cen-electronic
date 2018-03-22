@@ -142,6 +142,12 @@ int deviceMotionGetInterface(char commandHeader, DeviceInterfaceMode mode, bool 
             }
             return 14;
         }
+        else if (commandHeader == NOTIFY_MOTION_STATUS_FAILED) {
+            if (fillDeviceArgumentList) {
+                fillNotifyResults("notify Failed");
+            }
+            return 14;
+        }
         else if (commandHeader == NOTIFY_MOTION_STATUS_MOVING) {
             if (fillDeviceArgumentList) {
                 fillNotifyResults("notify Moving");

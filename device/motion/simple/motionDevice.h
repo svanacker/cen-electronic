@@ -74,5 +74,17 @@ void notifyMoving(OutputStream* outputStream);
 */
 void notifyObstacle(OutputStream* outputStream);
 
+/**
+* Notify the main Board that the motorBoard has stopped because a board has 
+* set that it does not reach the position before a timeout.
+* It sends a message like this
+* MoXXXXXX-YYYYYY-AAAA
+* XXXXXX for the position along Y Axis in mm
+* YYYYYY for the position along Y Axis in mm
+* AAAA for the position in 1/10 deg
+* @param outputStream the outputStream to notify the main Board
+*/
+void notifyFailed(OutputStream* outputStream);
+
 #endif
 

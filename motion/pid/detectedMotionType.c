@@ -26,6 +26,9 @@ unsigned int appendDetectedMotionTypeAsString(OutputStream* outputStream, enum D
 	else if (detectedMotionType == DETECTED_MOTION_TYPE_POSITION_OBSTACLE) {
 		return appendString(outputStream, "OBSTACLE");
 	}
+    else if (detectedMotionType == DETECTED_MOTION_TYPE_POSITION_FAILED) {
+		return appendString(outputStream, "FAILED");
+	}
 	else {
 		append(outputStream, '?');
 		return 1;

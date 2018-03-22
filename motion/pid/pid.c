@@ -24,8 +24,9 @@
 #include "pidTimer.h"
 #include "detectedMotionType.h"
 #include "endDetection/blocked/motionBlockedDetection.h"
-#include "endDetection/shocked/motionShockedDetection.h"
+#include "endDetection/failed/motionFailedDetection.h"
 #include "endDetection/reached/motionReachedDetection.h"
+#include "endDetection/shocked/motionShockedDetection.h"
 #include "endDetection/motionEndDetectionStatusUpdater.h"
 
 #include "../../device/motor/pwmMotor.h"
@@ -133,6 +134,12 @@ void updateMotorsAndDetectedMotionType(PidMotion* pidMotion) {
     // Detection if this is the end of the move because we have reached the target
     if (isMotionReached(pidMotion, motionDefinition)) {
         setDetectedMotionType(computationValues, DETECTED_MOTION_TYPE_POSITION_REACHED);
+        return;
+    }
+    
+    // Detection if this is the end of the move because we have failed to reach the target (timeout)
+    if (isMotionFailed(pidMotion, motionDefinition)) {
+        setDetectedMotionType(computationValues, DETECTED_MOTION_TYPE_POSITION_FAILED);
         return;
     }
 }

@@ -103,6 +103,9 @@ void notifyObstacle(OutputStream* outputStream) {
     internalNotify(outputStream, NOTIFY_MOTION_STATUS_OBSTACLE, "obstacle");
 }
 
+void notifyFailed(OutputStream* outputStream) {
+    internalNotify(outputStream, NOTIFY_MOTION_STATUS_FAILED, "failed");
+}
 
 void deviceMotionHandleRawData(char commandHeader,
         InputStream* inputStream,

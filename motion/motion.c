@@ -114,6 +114,11 @@ void handleInstructionAndMotion(PidMotion* pidMotion) {
         stopPosition(pidMotion, true, outputStream);
         switchToNextMotionDefinitionIfAny(pidMotion, currentMotionDefinition);
     }
+    else if (motionType == DETECTED_MOTION_TYPE_POSITION_FAILED) {
+        notifyFailed(outputStream);
+        stopPosition(pidMotion, false, outputStream);
+        switchToNextMotionDefinitionIfAny(pidMotion, currentMotionDefinition);
+    }
 	if (outputStream != NULL) {
 		outputStream->flush(outputStream);
 	}

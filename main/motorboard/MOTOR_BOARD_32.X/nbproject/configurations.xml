@@ -378,6 +378,11 @@
                      projectFiles="true">
         <itemPath>../../../motion/pid/endDetection/blocked/motionBlockedDetection.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f7"
+                     displayName="motion.pid.endDetection.failed"
+                     projectFiles="true">
+        <itemPath>../../../motion/pid/endDetection/failed/motionFailedDetection.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="f5"
                      displayName="motion.pid.endDetection.reached"
                      projectFiles="true">
@@ -816,6 +821,11 @@
                      displayName="motion.pid.endDetection.blocked"
                      projectFiles="true">
         <itemPath>../../../motion/pid/endDetection/blocked/motionBlockedDetection.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f7"
+                     displayName="motion.pid.endDetection.failed"
+                     projectFiles="true">
+        <itemPath>../../../motion/pid/endDetection/failed/motionFailedDetection.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f5"
                      displayName="motion.pid.endDetection.reached"
