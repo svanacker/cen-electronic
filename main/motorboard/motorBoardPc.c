@@ -10,6 +10,7 @@
 #include "../../common/eeprom/memoryEeprom.h"
 #include "../../common/error/error.h"
 #include "../../common/i2c/i2cCommon.h"
+#include "../../common/i2c/i2cConstants.h"
 #include "../../common/i2c/i2cBusList.h"
 #include "../../common/i2c/i2cBusConnectionList.h"
 #include "../../common/i2c/pc/i2cCommonPc.h"
@@ -176,9 +177,15 @@ static Battery battery;
 static Clock clock;
 
 // I2C
+// -> Motor To Main
 static I2cBus* motorI2cBus;
 static I2cBusConnection* motorI2cBusConnection;
 static I2cBusConnectionPc motorI2cBusConnectionPc;
+
+// -> Motor To Tof
+static I2cBus* tofI2cBus;
+static I2cBusConnection* tofI2cBusConnection;
+static I2cBusConnectionPc tofI2cBusConnectionPc;
 
 // Devices
 static Device deviceListArray[MOTOR_BOARD_PC_DEVICE_LIST_LENGTH];
@@ -256,10 +263,12 @@ void runMotorBoardPC(bool singleMode) {
     initDriverDataDispatcherList((DriverDataDispatcher(*)[]) &driverDataDispatcherListArray, MOTOR_BOARD_PC_DATA_DISPATCHER_LIST_LENGTH);
     addLocalDriverDataDispatcher();
 
+    // I2c Bus List & Connection List
+    initI2cBusList((I2cBus(*)[]) &i2cBusListArray, MOTOR_BOARD_PC_I2C_BUS_LIST_LENGTH);
+    initI2cBusConnectionList((I2cBusConnection(*)[]) &i2cBusConnectionListArray, MOTOR_BOARD_PC_I2C_BUS_CONNECTION_LIST_LENGTH);
+
     if (!singleModeActivated) {
-		// I2c
-		initI2cBusList((I2cBus(*)[]) &i2cBusListArray, MOTOR_BOARD_PC_I2C_BUS_LIST_LENGTH);
-        initI2cBusConnectionList((I2cBusConnection(*)[]) &i2cBusConnectionListArray, MOTOR_BOARD_PC_I2C_BUS_CONNECTION_LIST_LENGTH);
+        // Motor
         motorI2cBus = addI2cBus(I2C_BUS_TYPE_SLAVE, I2C_BUS_PORT_1);
         
         motorI2cBusConnection = addI2cBusConnection(motorI2cBus, MOTOR_BOARD_PC_I2C_ADDRESS, false);
@@ -276,6 +285,7 @@ void runMotorBoardPC(bool singleMode) {
             MOTOR_BOARD_PC_OUT_BUFFER_LENGTH,
             motorI2cBusConnection
         );
+
         // I2C Debug
         initI2CDebugBuffers(&i2cSlaveDebugInputBuffer,
             (char(*)[]) &i2cSlaveDebugInputBufferArray,
@@ -283,7 +293,17 @@ void runMotorBoardPC(bool singleMode) {
             &i2cSlaveDebugOutputBuffer,
             (char(*)[]) &i2cSlaveDebugOutputBufferArray,
             MOTOR_BOARD_PC_I2C_DEBUG_SLAVE_OUT_BUFFER_LENGTH);
-	}
+    }
+
+    // TOF I2C : Always even in Single Mode as it handles as "Master"
+    tofI2cBus = addI2cBus(I2C_BUS_TYPE_MASTER, I2C_BUS_PORT_4);
+    tofI2cBusConnection = addI2cBusConnection(tofI2cBus, VL530X_ADDRESS_0, false);
+    initI2cBusConnectionPc(tofI2cBusConnection,
+        tofI2cBus,
+        &tofI2cBusConnectionPc,
+        VL530X_ADDRESS_0,
+        NULL,
+        NULL);
 
     // Eeprom
     // initEepromPc(&eeprom, "MOTOR_BOARD_PC_EEPROM");
@@ -323,6 +343,7 @@ void runMotorBoardPC(bool singleMode) {
 	addLocalDevice(getMotionSimulationDeviceInterface(), getMotionSimulationDeviceDescriptor());
 	addLocalDevice(getRobotKinematicsDeviceInterface(), getRobotKinematicsDeviceDescriptor(&eeprom));
     addLocalDevice(getPcDeviceInterface(), getPcDeviceDescriptor(getOutputStream(&consoleInputBuffer)));
+    addLocalDevice(getTofDeviceInterface(), getTofDeviceDescriptor(tofI2cBusConnection));
 
     initDevices();
 

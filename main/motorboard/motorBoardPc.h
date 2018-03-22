@@ -31,9 +31,11 @@ void runMotorBoardPC(bool singleMode);
 #define MOTOR_BOARD_PC_MEMORY_EEPROM_LENGTH           0x500
 
 // I2cBus
-#define MOTOR_BOARD_PC_PIPE_I2C_SLAVE_NAME    L"\\\\.\\pipe\\motorBoardPipe"
+#define MOTOR_BOARD_PC_PIPE_I2C_SLAVE_NAME         L"\\\\.\\pipe\\motorBoardPipe"
+#define MOTOR_BOARD_PC_PIPE_I2C_TOF_MASTER_NAME    L"\\\\.\\pipe\\tofMainPipe"
+#define MOTOR_BOARD_PC_PIPE_I2C_TOF_SLAVE_NAME    L"\\\\.\\pipe\\tofSlavePipe"
 
-#define MOTOR_BOARD_PC_I2C_BUS_LIST_LENGTH                  1
+#define MOTOR_BOARD_PC_I2C_BUS_LIST_LENGTH                  2
 #define MOTOR_BOARD_PC_I2C_BUS_CONNECTION_LIST_LENGTH       2
 
 #define MOTOR_BOARD_PC_I2C_DEBUG_SLAVE_OUT_BUFFER_LENGTH 150
@@ -51,7 +53,7 @@ void runMotorBoardPC(bool singleMode);
 #define MOTOR_BOARD_PC_OUT_BUFFER_LENGTH               150
 
 // DEVICES
-#define MOTOR_BOARD_PC_DEVICE_LIST_LENGTH              20
+#define MOTOR_BOARD_PC_DEVICE_LIST_LENGTH              25
 
 // TIMERS
 #define MOTOR_BOARD_PC_TIMER_LENGTH                    3

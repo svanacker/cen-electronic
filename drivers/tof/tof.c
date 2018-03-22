@@ -15,9 +15,9 @@
 
 /** Store the latest status of the VL53L0X */
 static VL53L0X_Error     tofStatus = VL53L0X_ERROR_NONE; ///< indicates whether or not the sensor has encountered an error
-VL53L0X_Dev_t            tofDevice;
-VL53L0X_Version_t        tofVersion;
-VL53L0X_DeviceInfo_t     tofDeviceInfo;
+static VL53L0X_Dev_t            tofDevice;
+static VL53L0X_Version_t        tofVersion;
+static VL53L0X_DeviceInfo_t     tofDeviceInfo;
 
 typedef char FixedVl53L0x [VL53L0X_MAX_STRING_LENGTH];
 

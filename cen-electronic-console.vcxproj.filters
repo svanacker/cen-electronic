@@ -844,6 +844,12 @@
     <Filter Include="Header Files\motion\pid\endDetection\reached">
       <UniqueIdentifier>{7f28523b-bee2-4263-bc21-af5c2ebcf02b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\motion\pid\endDetection\failed">
+      <UniqueIdentifier>{76f6fc4e-7559-4244-ab7f-e24b6ad5c517}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\motion\pid\endDetection\failed">
+      <UniqueIdentifier>{dc19c318-4ff0-4927-b9e3-839cba57e562}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -1760,6 +1766,9 @@
     </ClCompile>
     <ClCompile Include="motion\pid\endDetection\motionEndDetectionStatusUpdater.c">
       <Filter>Source Files\motion\pid\endDetection</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\pid\endDetection\failed\motionFailedDetection.c">
+      <Filter>Source Files\motion\pid\endDetection\failed</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2737,6 +2746,9 @@
     </ClInclude>
     <ClInclude Include="motion\pid\endDetection\motionEndDetectionStatusUpdater.h">
       <Filter>Header Files\motion\pid\endDetection</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\endDetection\failed\motionFailedDetection.h">
+      <Filter>Header Files\motion\pid\endDetection\failed</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

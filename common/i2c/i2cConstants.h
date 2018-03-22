@@ -12,6 +12,9 @@
  */
 #define I2C_SLAVE_FAKE_WRITE     0x00
 
+// VL530X
+#define VL530X_ADDRESS_0        0x29
+
 // GPIO14 : Conflict with PCF8574
 
 #define GPIO14_ADDRESS_0        0x40

@@ -10,7 +10,7 @@
  * @param debug
  * @return 
  */
-bool tofBegin(uint8_t i2c_addr, bool debug);
+bool tof_vl53l0x_begin(uint8_t i2c_addr, bool debug);
 
 /**
  * Change the address of the current Time of Flight

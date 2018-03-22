@@ -163,6 +163,7 @@ static I2cBusConnection* mainBoardI2cBusConnection;
 static I2cBus* masterI2cBus;
 static I2cBusConnection* eepromI2cBusConnection;
 static I2cBusConnection* clockI2cBusConnection;
+static I2cBusConnection* tofI2cBusConnection;
 
 // Eeprom
 static Eeprom eeprom_;
@@ -260,7 +261,7 @@ void initDevicesDescriptor() {
     addLocalDevice(getLogDeviceInterface(), getLogDeviceDescriptor());
 
     
-    addLocalDevice(getTofDeviceInterface(), getTofDeviceDescriptor());
+    addLocalDevice(getTofDeviceInterface(), getTofDeviceDescriptor(tofI2cBusConnection));
 
     initDevices();
 }
@@ -359,6 +360,9 @@ int runMotorBoard() {
     
     // EEPROM : If we use Software Eeprom
     initEepromMemory(&eeprom_, &memoryEepromArray, MOTOR_BOARD_MEMORY_EEPROM_LENGTH);
+    
+    // TOF
+    tofI2cBusConnection = addI2cBusConnection(masterI2cBus, VL530X_ADDRESS_0, true);
 
     // Clock
     // -> Clock

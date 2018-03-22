@@ -17,12 +17,14 @@
 
 #include "../../common/i2c/i2cBusConnectionList.h"
 
+#include "../../drivers/tof/tof.h"
+
 static I2cBusConnection* tofDeviceI2cBusConnection;
 
 // DEVICE INTERFACE
 
 void deviceTofInit(void) {
-
+    tof_vl53l0x_begin(tofDeviceI2cBusConnection->i2cAddress, true);
 }
 
 void deviceTofShutDown(void) {

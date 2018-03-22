@@ -32,8 +32,20 @@ void initI2cBusConnectionPc(I2cBusConnection* i2cBusConnection, I2cBus* i2cBus, 
 
     i2cBusConnection->object = i2cBusConnectionPc;
     i2cBusConnectionPc->i2cPipeMasterName = i2cPipeMasterName;
-    i2cBusConnectionPc->i2cPipeSlaveName = i2cPipeSlaveName;
-    i2cBusConnectionPc->masterToSlaveHandle = initServerPipe(i2cPipeMasterName);
+
+    if (i2cPipeMasterName != NULL) {
+        i2cBusConnectionPc->masterToSlaveHandle = initServerPipe(i2cPipeMasterName);
+    }
+    else {
+        // TODO : Write Error
+    }
 //    delaymSec(500);
-    i2cBusConnectionPc->slaveToMasterHandle = initClientPipe(i2cPipeSlaveName);
+
+    i2cBusConnectionPc->i2cPipeSlaveName = i2cPipeSlaveName;
+    if (i2cPipeSlaveName != NULL) {
+        i2cBusConnectionPc->slaveToMasterHandle = initClientPipe(i2cPipeSlaveName);
+    }
+    else {
+        // TODO : Write Error
+    }
 }
