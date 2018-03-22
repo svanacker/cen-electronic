@@ -22,7 +22,8 @@
 #include "../../pid.h"
 
 #define SHOCKED_DETECTION_ACCELERATION_WINDOW_COUNT 5
-#define SHOCKED_DETECTION_ACCELERATION_THRESHOLD    20000.0f
+#define SHOCKED_DETECTION_ACCELERATION_MAX_FOR_ONE_VALUE_THRESHOLD    10000.0f
+#define SHOCKED_DETECTION_ACCELERATION_THRESHOLD                      20000.0f
 
 /**
  * Detects a shock by analyzing a window of time and check if there is a high acceleration (shock on a short time are often responsible of a high acceleration / deceleration)
@@ -37,7 +38,14 @@ bool detectShockByAcceleration(MotionInstruction* motionInstruction, PidComputat
     unsigned int index = 0;
     float absAccelerationHistoryIntegral = 0.0f;
     for (index = startIndex; index < currentValues->historyWriteIndex - 1; index++) {
-        absAccelerationHistoryIntegral += fabsf(currentValues->accelerationHistory[index]);
+        float absAccelerationHistory = fabsf(currentValues->accelerationHistory[index]);
+        // Avoid that a single value could be more than the global threshold
+        if (absAccelerationHistory > SHOCKED_DETECTION_ACCELERATION_MAX_FOR_ONE_VALUE_THRESHOLD) {
+            absAccelerationHistoryIntegral += SHOCKED_DETECTION_ACCELERATION_MAX_FOR_ONE_VALUE_THRESHOLD;
+        }
+        else {
+            absAccelerationHistoryIntegral += absAccelerationHistory;
+        }
     }
     if (absAccelerationHistoryIntegral >= SHOCKED_DETECTION_ACCELERATION_THRESHOLD) {
         return true;
