@@ -21,25 +21,25 @@
 #include "../../pidConstants.h"
 #include "../../pid.h"
 
+#define SHOCKED_DETECTION_ACCELERATION_WINDOW_COUNT 5
+#define SHOCKED_DETECTION_ACCELERATION_THRESHOLD    20000.0f
+
 /**
  * Detects a shock by analyzing a window of time and check if there is a high acceleration (shock on a short time are often responsible of a high acceleration / deceleration)
  */
 bool detectShockByAcceleration(MotionInstruction* motionInstruction, PidComputationInstructionValues* currentValues) {
-    unsigned windowElementCount = 6;
+    unsigned windowElementCount = SHOCKED_DETECTION_ACCELERATION_WINDOW_COUNT;
     unsigned int startIndex = 0;
     startIndex = currentValues->historyWriteIndex - windowElementCount;
     if (startIndex < 0) {
         startIndex = 0;
     }
     unsigned int index = 0;
-    unsigned int aboveThresholdCount = 0;
+    float absAccelerationHistoryIntegral = 0.0f;
     for (index = startIndex; index < currentValues->historyWriteIndex - 1; index++) {
-        if (currentValues->statusHistory[index].absAccelerationTooHighThanExpected) {
-            aboveThresholdCount++;
-        }
+        absAccelerationHistoryIntegral += fabsf(currentValues->accelerationHistory[index]);
     }
-    // If more than 50% have the status higher than expected
-    if (aboveThresholdCount >= 3) {
+    if (absAccelerationHistoryIntegral >= SHOCKED_DETECTION_ACCELERATION_THRESHOLD) {
         return true;
     }
     return false;
