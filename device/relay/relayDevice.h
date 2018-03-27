@@ -3,9 +3,11 @@
 
 #include "../../device/deviceDescriptor.h"
 
+#include "../../drivers/relay/relay.h"
+
 /**
  * The descriptor for the relay device.
  */
-DeviceDescriptor* getRelayDeviceDescriptor();
+DeviceDescriptor* getRelayDeviceDescriptor(Relay* relay);
 
 #endif

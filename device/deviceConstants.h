@@ -18,6 +18,8 @@
 
 #define LOG_DEVICE_HEADER                          'G'
 
+#define IO_DEVICE_HEADER                           'g'
+
 // 'h' for Help
 #define SYSTEM_DEBUG_DEVICE_HEADER                 'h'
 

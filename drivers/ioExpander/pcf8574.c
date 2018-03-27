@@ -1,5 +1,7 @@
 #include "pcf8574.h"
 
+#include <stdbool.h>
+
 #include "../../common/delay/cenDelay.h"
 
 #include "../../common/i2c/i2cCommon.h"
@@ -9,6 +11,12 @@
 
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
+
+#include "ioExpander.h"
+
+#define PCF8574_IO_COUNT     8
+
+// BASE FUNCTION
 
 unsigned char internalGetAddress(I2cBusConnection* i2cBusConnection, unsigned char addr, unsigned char devAddr) {
     unsigned char result;
@@ -79,4 +87,35 @@ void testPCF8574(I2cBusConnection* i2cBusConnection, OutputStream* outputStream)
     data = readPCF8574(i2cBusConnection, 0x40, 1, 0xFF);
     appendHex2(outputStream, data);
     delaymSec(500);
+}
+
+// IO EXPANDER "Class"
+
+I2cBusConnection* getIOExpanderBusConnection(IOExpander* ioExpander) {
+    return (I2cBusConnection*) ioExpander->object;
+}
+
+bool ioExpanderPCF8574Init(IOExpander* ioExpander) {
+    return true;
+}
+
+bool ioExpanderPCF8574ReadValue(IOExpander* ioExpander, int index) {
+    I2cBusConnection* i2cBusConnection = getIOExpanderBusConnection(ioExpander);
+    // TODO : To Change !
+    readPCF8574(i2cBusConnection, 0x40, 0x00, 0xFF);
+}
+
+void ioExpanderPCF8574WriteValue(IOExpander* ioExpander, int index, bool value) {
+    I2cBusConnection* i2cBusConnection = getIOExpanderBusConnection(ioExpander);
+    // TODO : To Change !
+    writePCF8574(i2cBusConnection, 0x40, 0x00, 0xFF, 0x00);
+}
+
+void initIOExpanderPCF8574(IOExpander* ioExpander, I2cBusConnection* i2cBusConnection) {
+    initIOExpander(ioExpander,
+                   &ioExpanderPCF8574Init,
+                   &ioExpanderPCF8574ReadValue,
+                   &ioExpanderPCF8574WriteValue,
+                   PCF8574_IO_COUNT,
+                   (int*) i2cBusConnection);
 }

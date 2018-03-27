@@ -5,22 +5,33 @@
 #include "../../device/deviceInterface.h"
 #include "../../device/deviceConstants.h"
 
-const char* deviceRelayGetName() {
+const char* deviceRelayGetName(void) {
     return "relay";
 }
 
-unsigned int deviceRelayGetSotwareRevision() {
-    return 1;
-}
-
 int deviceRelayGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
-    if (commandHeader == COMMAND_SET_RELAY) {
+    if (commandHeader == COMMAND_WRITE_RELAY) {
         if (fillDeviceArgumentList) {
-            setFunction("setRelay", 2, 0);
-            setArgumentUnsignedHex2(0, "RelayIdx");
-            setArgumentUnsignedChar1(1, "Value");
+            setFunction("write Relay", 3, 0);
+            setArgumentUnsignedHex2(0, "Relay Index");
+            setArgumentSeparator(1);
+            setArgumentUnsignedChar1(2, "Value");
         }
-        return commandLengthValueForMode(mode, 3, 0);
+        return commandLengthValueForMode(mode, 4, 0);
+    }
+    else if (commandHeader == COMMAND_READ_RELAY) {
+        if (fillDeviceArgumentList) {
+            setFunction("read Relay", 1, 1);
+            setArgumentUnsignedHex2(0, "Relay Index");
+            setResultUnsignedChar1(0, "Value");
+        }
+        return commandLengthValueForMode(mode, 2, 1);
+    }
+    else if (commandHeader == COMMAND_RELAY_DEBUG) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("Debug Relay");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
     }
     return DEVICE_HEADER_NOT_HANDLED;
 }
@@ -31,6 +42,6 @@ static DeviceInterface deviceInterface = {
     .deviceGetInterface = &deviceRelayGetInterface
 };
 
-DeviceInterface* getRelayDeviceInterface() {
+DeviceInterface* getRelayDeviceInterface(void) {
     return &deviceInterface;
 }

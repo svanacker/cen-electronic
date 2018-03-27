@@ -1,6 +1,5 @@
 #include <stdbool.h>
-
-#include <p30Fxxxx.h>
+#include <stdlib.h>
 
 #include "relayDevice.h"
 #include "relayDeviceInterface.h"
@@ -8,6 +7,8 @@
 #include "../../common/commons.h"
 
 #include "../../common/cmd/commonCommand.h"
+
+#include "../../common/error/error.h"
 
 #include "../../common/io/inputStream.h"
 #include "../../common/io/outputStream.h"
@@ -18,33 +19,48 @@
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
 
-void deviceRelayInit() {
-    
+#include "../../device/device.h"
+
+#include "../../drivers/relay/relay.h"
+#include "../../drivers/relay/relayDebug.h"
+
+static Relay* relay;
+
+void deviceRelayInit(void) {
+    if (relay == NULL) {
+        writeError(RELAY_NULL);
+        return;
+    }
+    relay->relayInit(relay);
 }
 
-void deviceRelayShutDown() {
+void deviceRelayShutDown(void) {
 }
 
-bool deviceRelayIsOk() {
+bool deviceRelayIsOk(void) {
     return true;
 }
 
-void deviceRelayHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream) {
-    if (commandHeader == COMMAND_SET_RELAY) {
+void deviceRelayHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
+    if (commandHeader == COMMAND_WRITE_RELAY) {
+        ackCommand(outputStream, IO_DEVICE_HEADER, COMMAND_WRITE_RELAY);
         int relayIndex = readHex2(inputStream);
-        unsigned char value = inputStream->readChar(inputStream);
-        
-        if (relayIndex == 0) {
-            LATDbits.LATD8 = value;
-        }
-        else if (relayIndex == 1) {
-            LATDbits.LATD9 = value;
-        }
-        appendAck(outputStream);
-        append(outputStream, COMMAND_SET_RELAY);
+        checkIsSeparator(inputStream);
+        bool value = readBool(inputStream);
+        relay->relayWriteValue(relay, relayIndex, value);
+    }
+    else if (commandHeader == COMMAND_READ_RELAY) {
+        ackCommand(outputStream, IO_DEVICE_HEADER, COMMAND_READ_RELAY);
+        int relayIndex = readHex2(inputStream);
+        bool value = relay->relayReadValue(relay, relayIndex);
+        appendDec(outputStream, value);
+    }
+    else if (commandHeader == COMMAND_RELAY_DEBUG) {
+        ackCommand(outputStream, IO_DEVICE_HEADER, COMMAND_RELAY_DEBUG);
+        OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+        printRelayStatesTable(debugOutputStream, relay);
     }
 }
-
 
 static DeviceDescriptor descriptor = {
     .deviceInit = &deviceRelayInit,
@@ -53,6 +69,7 @@ static DeviceDescriptor descriptor = {
     .deviceHandleRawData = &deviceRelayHandleRawData,
 };
 
-DeviceDescriptor* getRelayDeviceDescriptor() {
+DeviceDescriptor* getRelayDeviceDescriptor(Relay* relayParam) {
+    relay = relayParam;
     return &descriptor;
 }

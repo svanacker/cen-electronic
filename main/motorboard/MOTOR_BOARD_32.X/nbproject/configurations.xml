@@ -193,6 +193,8 @@
         <itemPath>../../../device/i2c/slave/i2cSlaveDebugDevice.h</itemPath>
         <itemPath>../../../device/i2c/slave/i2cSlaveDebugDeviceInterface.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f9" displayName="device.io" projectFiles="true">
+      </logicalFolder>
       <logicalFolder name="device.log" displayName="device.log" projectFiles="true">
         <itemPath>../../../device/log/logDevice.h</itemPath>
         <itemPath>../../../device/log/logDeviceInterface.h</itemPath>
@@ -231,6 +233,10 @@
         <itemPath>../../../device/motor/pwmMotorDevice.h</itemPath>
         <itemPath>../../../device/motor/pwmMotorDeviceInterface.h</itemPath>
         <itemPath>../../../device/motor/pwmMotor.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f10" displayName="device.relay" projectFiles="true">
+        <itemPath>../../../device/relay/relayDevice.h</itemPath>
+        <itemPath>../../../device/relay/relayDeviceInterface.h</itemPath>
       </logicalFolder>
       <logicalFolder name="device.sensor.temperature"
                      displayName="device.sensor.temperature"
@@ -288,10 +294,20 @@
                      projectFiles="true">
         <itemPath>../../../drivers/eeprom/24c512.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f8" displayName="drivers.ioExpander" projectFiles="true">
+        <itemPath>../../../drivers/ioExpander/ioExpander.h</itemPath>
+        <itemPath>../../../drivers/ioExpander/ioExpanderDebug.h</itemPath>
+        <itemPath>../../../drivers/ioExpander/pcf8574.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="drivers.motor"
                      displayName="drivers.motor"
                      projectFiles="true">
         <itemPath>../../../drivers/motor/motorDriver.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f11" displayName="drivers.relay" projectFiles="true">
+        <itemPath>../../../drivers/relay/relay.h</itemPath>
+        <itemPath>../../../drivers/relay/relayDebug.h</itemPath>
+        <itemPath>../../../drivers/relay/rly08.h</itemPath>
       </logicalFolder>
       <logicalFolder name="drivers.sensor.temperature"
                      displayName="drivers.sensor.temperature"
@@ -680,6 +696,10 @@
         <itemPath>../../../device/motor/pwmMotorDeviceInterface.c</itemPath>
         <itemPath>../../../device/motor/pwmMotor.c</itemPath>
       </logicalFolder>
+      <logicalFolder name="f9" displayName="device.relay" projectFiles="true">
+        <itemPath>../../../device/relay/relayDevice.c</itemPath>
+        <itemPath>../../../device/relay/relayDeviceInterface.c</itemPath>
+      </logicalFolder>
       <logicalFolder name="device.sensor.temperature"
                      displayName="device.sensor.temperature"
                      projectFiles="true">
@@ -739,6 +759,16 @@
                      displayName="drivers.file.eeprom"
                      projectFiles="true">
         <itemPath>../../../drivers/file/eeprom/eepromFile.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f8" displayName="drivers.ioExpander" projectFiles="true">
+        <itemPath>../../../drivers/ioExpander/ioExpander.c</itemPath>
+        <itemPath>../../../drivers/ioExpander/ioExpanderDebug.c</itemPath>
+        <itemPath>../../../drivers/ioExpander/pcf8574.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f10" displayName="drivers.relay" projectFiles="true">
+        <itemPath>../../../drivers/relay/relay.c</itemPath>
+        <itemPath>../../../drivers/relay/relayDebug.c</itemPath>
+        <itemPath>../../../drivers/relay/rly08.c</itemPath>
       </logicalFolder>
       <logicalFolder name="drivers.sensor.temperature"
                      displayName="drivers.sensor.temperature"

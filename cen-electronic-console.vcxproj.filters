@@ -850,6 +850,42 @@
     <Filter Include="Source Files\motion\pid\endDetection\failed">
       <UniqueIdentifier>{dc19c318-4ff0-4927-b9e3-839cba57e562}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\device\relay">
+      <UniqueIdentifier>{784c49cc-ae2a-42f3-ad1d-1d29c7950ef2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\device\relay">
+      <UniqueIdentifier>{dbe32e60-74e6-4a64-af63-7a18e7360609}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\drivers\relay">
+      <UniqueIdentifier>{ed559381-0e56-41a4-b979-7f66072f516c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\drivers\relay\pc">
+      <UniqueIdentifier>{1c5e57a9-662a-47ed-bec1-d01b75a5ceab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\drivers\relay">
+      <UniqueIdentifier>{a35d568c-3223-4c7a-b973-b5cf286e7850}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\drivers\relay\pc">
+      <UniqueIdentifier>{7121f2c1-01a0-4fd3-9fa6-0bdf042780e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\device\ioExpander">
+      <UniqueIdentifier>{476d533a-f4e0-4e77-9cc0-10a16bfd7a19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\device\ioExpander">
+      <UniqueIdentifier>{34362c70-3259-4e99-8def-0c3a89cc6997}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\drivers\ioExpander">
+      <UniqueIdentifier>{9bdfb1a5-6904-4959-963b-de1dff13f45e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\drivers\ioExpander\pc">
+      <UniqueIdentifier>{58b0fa5f-5739-49f2-8777-43ab3e0ffdf1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\drivers\ioExpander">
+      <UniqueIdentifier>{1d2db7a1-3a2c-452b-b9da-431db80426fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\drivers\ioExpander\pc">
+      <UniqueIdentifier>{f2b3caba-6703-4048-8b32-f42c2295537f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -1769,6 +1805,36 @@
     </ClCompile>
     <ClCompile Include="motion\pid\endDetection\failed\motionFailedDetection.c">
       <Filter>Source Files\motion\pid\endDetection\failed</Filter>
+    </ClCompile>
+    <ClCompile Include="device\relay\relayDevice.c">
+      <Filter>Source Files\device\relay</Filter>
+    </ClCompile>
+    <ClCompile Include="device\relay\relayDeviceInterface.c">
+      <Filter>Source Files\device\relay</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\relay\pc\relayPc.c">
+      <Filter>Source Files\drivers\relay\pc</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\relay\relay.c">
+      <Filter>Source Files\drivers\relay</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\relay\relayDebug.c">
+      <Filter>Source Files\drivers\relay</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\ioExpander\ioExpander.c">
+      <Filter>Source Files\drivers\ioExpander</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\ioExpander\ioExpanderDebug.c">
+      <Filter>Source Files\drivers\ioExpander</Filter>
+    </ClCompile>
+    <ClCompile Include="device\ioExpander\ioExpanderDevice.c">
+      <Filter>Source Files\device\ioExpander</Filter>
+    </ClCompile>
+    <ClCompile Include="device\ioExpander\ioExpanderDeviceInterface.c">
+      <Filter>Source Files\device\ioExpander</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\ioExpander\pc\ioExpanderPc.c">
+      <Filter>Source Files\drivers\ioExpander\pc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2749,6 +2815,36 @@
     </ClInclude>
     <ClInclude Include="motion\pid\endDetection\failed\motionFailedDetection.h">
       <Filter>Header Files\motion\pid\endDetection\failed</Filter>
+    </ClInclude>
+    <ClInclude Include="device\relay\relayDevice.h">
+      <Filter>Header Files\device\relay</Filter>
+    </ClInclude>
+    <ClInclude Include="device\relay\relayDeviceInterface.h">
+      <Filter>Header Files\device\relay</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\relay\pc\relayPc.h">
+      <Filter>Header Files\drivers\relay\pc</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\relay\relay.h">
+      <Filter>Header Files\drivers\relay</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\relay\relayDebug.h">
+      <Filter>Header Files\drivers\relay</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\io\ioExpander.h">
+      <Filter>Header Files\drivers\ioExpander</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\io\ioExpanderDebug.h">
+      <Filter>Header Files\drivers\ioExpander</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\io\pc\ioExpanderPc.h">
+      <Filter>Header Files\drivers\ioExpander\pc</Filter>
+    </ClInclude>
+    <ClInclude Include="device\ioExpander\ioExpanderDevice.h">
+      <Filter>Header Files\device\ioExpander</Filter>
+    </ClInclude>
+    <ClInclude Include="device\ioExpander\ioExpanderDeviceInterface.h">
+      <Filter>Header Files\device\ioExpander</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

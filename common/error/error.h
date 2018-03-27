@@ -98,6 +98,9 @@ void clearLastError();
 #define PWM_NOT_AVAILABLE                                                 0x0400
 #define PWM_VALUE_MUST_BE_POSITIVE                                        0x0401
 
+// PWM
+#define RELAY_NULL                                                        0x0480
+
 // OTHERS COMMON ERRORS
 #define UNIMPLETEMENTED_EXCEPTION                                         0x0500
 

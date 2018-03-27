@@ -65,6 +65,10 @@
 #include "../../device/eeprom/eepromDevice.h"
 #include "../../device/eeprom/eepromDeviceInterface.h"
 
+// IO EXPANDER
+#include "../../device/ioExpander/ioExpanderDevice.h"
+#include "../../device/ioExpander/ioExpanderDeviceInterface.h"
+
 // FILE
 #include "../../device/file/fileDevice.h"
 #include "../../device/file/fileDeviceInterface.h"
@@ -139,8 +143,14 @@
 
 // Drivers
 #include "../../drivers/clock/softClock.h"
-#include "../../drivers/eeprom/24c512.h"
 #include "../../drivers/clock/PCF8563.h"
+
+// -> IO EXPANDER)
+#include "../../drivers/ioExpander/ioExpander.h"
+#include "../../drivers/ioExpander/ioExpanderDebug.h"
+#include "../../drivers/ioExpander/pcf8574.h"
+
+#include "../../drivers/eeprom/24c512.h"
 
 #include "../../drivers/motor/motorDriver.h"
 
@@ -164,15 +174,19 @@ static I2cBus* masterI2cBus;
 static I2cBusConnection* eepromI2cBusConnection;
 static I2cBusConnection* clockI2cBusConnection;
 static I2cBusConnection* tofI2cBusConnection;
+static I2cBusConnection* ioExpanderBusConnection;
 
 // Eeprom
 static Eeprom eeprom_;
-
 // Memory Eeprom
 static char memoryEepromArray[MOTOR_BOARD_MEMORY_EEPROM_LENGTH];
 
 // Clock
 static Clock clock;
+
+// IO Expander
+static IOExpander ioExpander;
+static int ioExpanderValue;
 
 // SERIAL
 static SerialLink serialLinkListArray[MOTOR_BOARD_SERIAL_LINK_LIST_LENGTH];
@@ -360,6 +374,10 @@ int runMotorBoard() {
     
     // EEPROM : If we use Software Eeprom
     initEepromMemory(&eeprom_, &memoryEepromArray, MOTOR_BOARD_MEMORY_EEPROM_LENGTH);
+    
+    // IO Expander
+    ioExpanderBusConnection = addI2cBusConnection(masterI2cBus, PCF8574_ADDRESS_0, true);
+    initIOExpanderPCF8574(&ioExpander, ioExpanderBusConnection);
     
     // TOF
     tofI2cBusConnection = addI2cBusConnection(masterI2cBus, VL530X_ADDRESS_0, true);

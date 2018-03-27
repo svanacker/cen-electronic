@@ -58,9 +58,17 @@
 #include "../../device/eeprom/eepromDevice.h"
 #include "../../device/eeprom/eepromDeviceInterface.h"
 
+// IO
+#include "../../device/ioExpander/ioExpanderDevice.h"
+#include "../../device/ioExpander/ioExpanderDeviceInterface.h"
+
 // LOG
 #include "../../device/log/logDevice.h"
 #include "../../device/log/logDeviceInterface.h"
+
+// RELAY
+#include "../../device/relay/relayDevice.h"
+#include "../../device/relay/relayDeviceInterface.h"
 
 // TIMERS
 #include "../../device/timer/timerDevice.h"
@@ -114,12 +122,21 @@
 
 #include "../../drivers/driverStreamListener.h"
 #include "../../drivers/driverList.h"
-#include "../../drivers/dispatcher/driverDataDispatcherList.h"
-#include "../../drivers/dispatcher/localDriverDataDispatcher.h"
-#include "../../drivers/test/testDriver.h"
 
 #include "../../drivers/battery/battery.h"
 #include "../../drivers/clock/softClock.h"
+
+#include "../../drivers/dispatcher/driverDataDispatcherList.h"
+#include "../../drivers/dispatcher/localDriverDataDispatcher.h"
+
+#include "../../drivers/ioExpander/ioExpander.h"
+#include "../../drivers/ioExpander/pc/ioExpanderPc.h"
+
+#include "../../drivers/relay/relay.h"
+#include "../../drivers/relay/pc/relayPc.h"
+
+#include "../../drivers/test/testDriver.h"
+
 
 #include "../../motion/motion.h"
 #include "../../motion/pid/pidMotion.h"
@@ -181,6 +198,14 @@ static Clock clock;
 static I2cBus* motorI2cBus;
 static I2cBusConnection* motorI2cBusConnection;
 static I2cBusConnectionPc motorI2cBusConnectionPc;
+
+// IOExpander
+static IOExpander ioExpander;
+static int ioExpanderValue;
+
+// Relay
+static Relay relay;
+static int relayValue;
 
 // -> Motor To Tof
 static I2cBus* tofI2cBus;
@@ -344,6 +369,14 @@ void runMotorBoardPC(bool singleMode) {
 	addLocalDevice(getRobotKinematicsDeviceInterface(), getRobotKinematicsDeviceDescriptor(&eeprom));
     addLocalDevice(getPcDeviceInterface(), getPcDeviceDescriptor(getOutputStream(&consoleInputBuffer)));
     addLocalDevice(getTofDeviceInterface(), getTofDeviceDescriptor(tofI2cBusConnection));
+
+    //  IO Expander
+    initIOExpanderPc(&ioExpander, &ioExpanderValue);
+    addLocalDevice(getIOExpanderDeviceInterface(), getIOExpanderDeviceDescriptor(&ioExpander));
+
+    // Relay
+    initRelayPc(&relay, &relayValue);
+    addLocalDevice(getRelayDeviceInterface(), getRelayDeviceDescriptor(&relay));
 
     initDevices();
 
