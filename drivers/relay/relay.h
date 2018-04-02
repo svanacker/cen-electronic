@@ -16,12 +16,12 @@ typedef bool relayInitFunction(Relay* relay);
 * Read if the relay is on or off for the specified relayIndex.
 * @return relayIndex the value of the relay
 */
-typedef bool relayReadValueFunction(Relay* relay, int relayIndex);
+typedef bool relayReadValueFunction(Relay* relay, unsigned int relayIndex);
 
 /**
 * Write a fake value to replace the switch configuration.
 */
-typedef void relayWriteValueFunction(Relay* relay, int relayIndex, bool value);
+typedef void relayWriteValueFunction(Relay* relay, unsigned int relayIndex, bool value);
 
 /**
 * Defines the contract for switch robot configuration.

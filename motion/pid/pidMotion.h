@@ -3,12 +3,14 @@
 
 #include <stdbool.h>
 
+#include "../../common/eeprom/eeprom.h"
+#include "../../common/motor/dualHBridgeMotor.h"
+
 #include "pidMotionType.h"
 #include "pidMotionDefinitionState.h"
 #include "parameters/pidGlobalParameters.h"
 #include "pidComputationValues.h"
 #include "motionInstruction.h"
-#include "../../common/eeprom/eeprom.h"
 #include "../extended/bspline.h"
 
 struct PidMotion;
@@ -61,6 +63,8 @@ struct PidMotion {
 	PidMotionDefinition(*motionDefinitions)[];
     // All current values (must be reset after each new move) => CHANGE EVERY TIME COMPUTATION
     PidComputationValues computationValues;
+    // The HBridge
+    DualHBridgeMotor* dualHBridgeMotor;
 	// For persistence
 	Eeprom* pidPersistenceEeprom;
 };
@@ -177,11 +181,16 @@ MotionEndDetectionParameter* getMotionEndDetectionParameter(PidMotion* pidMotion
 /**
  * Initializes the Pid Motion global structure.
  * @param pidMotion the pointer to the structure to initialize
+ * @param dualHBridgeMotor the pointer on the structure used to drive the dual motor
  * @param eepromParam the param to the eeprom
  * @param array the array with all motion definition
  * @param length the length of the array with motion definitions
  */
-void initPidMotion(PidMotion* pidMotion, Eeprom* eepromParam, PidMotionDefinition(*array)[], unsigned int length);
+void initPidMotion(PidMotion* pidMotion, 
+                   DualHBridgeMotor* dualHBridgeMotor,
+                   Eeprom* eepromParam,
+                   PidMotionDefinition(*array)[],
+                   unsigned int length);
 
 #endif
 

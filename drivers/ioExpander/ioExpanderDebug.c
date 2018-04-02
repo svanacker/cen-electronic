@@ -27,7 +27,7 @@ void printIOExpanderStatesTable(OutputStream* outputStream, IOExpander* ioExpand
     printIOExpanderDebugTableHeader(outputStream);
     unsigned int ioIndex;
     for (ioIndex = 0; ioIndex < ioExpander->count; ioIndex++) {
-        bool value = ioExpander->ioExpanderReadValue(ioExpander, ioIndex);
+        bool value = ioExpander->ioExpanderReadSingleValue(ioExpander, ioIndex);
 
         appendDecTableData(outputStream, ioIndex, IO_EXPANDER_INDEX_COLUMN_LENGTH);
         appendBoolTableData(outputStream, value, IO_EXPANDER_VALUE_COLUMN_LENGTH);

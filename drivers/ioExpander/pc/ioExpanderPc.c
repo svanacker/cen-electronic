@@ -8,13 +8,27 @@ bool ioExpanderPcInit(IOExpander* ioExpander) {
     return true;
 }
 
-bool ioExpanderPcReadValue(IOExpander* ioExpander, int ioIndex) {
+// ALL BITS
+
+unsigned char ioExpanderPcReadValue(IOExpander* ioExpander) {
+    unsigned int value = *(ioExpander->object);
+    return (unsigned char) (value);
+}
+
+void ioExpanderPcWriteValue(IOExpander* ioExpander, unsigned char value) {
+    int valueToStore = (unsigned int) value;
+    *(ioExpander->object) = valueToStore;
+}
+
+// SINGLE BIT
+
+bool ioExpanderPcReadSingleValue(IOExpander* ioExpander, unsigned int ioIndex) {
     unsigned int maskValue = 1 << ioIndex;
     unsigned value = *(ioExpander->object);
     return (value & maskValue);
 }
 
-void ioExpanderPcWriteValue(IOExpander* ioExpander, int ioIndex, bool value) {
+void ioExpanderPcWriteSingleValue(IOExpander* ioExpander, unsigned int ioIndex, bool value) {
     if (value) {
         // Set the bit
         *(ioExpander->object) |= (1UL << ioIndex);
@@ -26,5 +40,12 @@ void ioExpanderPcWriteValue(IOExpander* ioExpander, int ioIndex, bool value) {
 }
 
 void initIOExpanderPc(IOExpander* ioExpander, int* ioExpanderValue) {
-    initIOExpander(ioExpander, &ioExpanderPcInit, &ioExpanderPcReadValue, &ioExpanderPcWriteValue, IO_EXPANDER_BIT_COUNT, ioExpanderValue);
+    initIOExpander(ioExpander, 
+                   &ioExpanderPcInit,
+                   &ioExpanderPcReadValue,
+                   &ioExpanderPcWriteValue,
+                   &ioExpanderPcReadSingleValue,
+                   &ioExpanderPcWriteSingleValue,
+                   IO_EXPANDER_BIT_COUNT,
+                   ioExpanderValue);
 }

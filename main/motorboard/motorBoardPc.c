@@ -26,6 +26,8 @@
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
 #include "../../common/log/pc/consoleLogHandler.h"
+#include "../../common/motor/dualHBridgeMotor.h"
+#include "../../common/motor/pc/dualHBridgeMotorPc.h"
 #include "../../common/serial/serial.h"
 #include "../../common/serial/serialLink.h"
 #include "../../common/serial/serialLinkList.h"
@@ -150,6 +152,9 @@ static LogHandlerList logHandlerListArray[MOTOR_BOARD_PC_LOG_HANDLER_LIST_LENGTH
 
 // Dispatchers
 static DriverDataDispatcher driverDataDispatcherListArray[MOTOR_BOARD_PC_DATA_DISPATCHER_LIST_LENGTH];
+
+// PWM Motor
+static DualHBridgeMotor dualHBridgeMotor;
 
 // SERIAL
 static SerialLink serialLinkListArray[MOTOR_BOARD_PC_SERIAL_LINK_LIST_LENGTH];
@@ -334,6 +339,8 @@ void runMotorBoardPC(bool singleMode) {
     // initEepromPc(&eeprom, "MOTOR_BOARD_PC_EEPROM");
     initEepromMemory(&eeprom, (char(*)[]) &memoryEepromArray, MOTOR_BOARD_PC_MEMORY_EEPROM_LENGTH);
 
+    // HBridge Motor Pw
+    initDualHBridgeMotorPc(&dualHBridgeMotor);
 
     // Battery
     initBattery(&battery, getBatteryVoltage);
@@ -342,7 +349,7 @@ void runMotorBoardPC(bool singleMode) {
     initSoftClock(&clock);
 
 	// Pid Motion
-	initPidMotion(&pidMotion, &eeprom, (PidMotionDefinition(*)[]) &motionDefinitionArray, MOTOR_BOARD_PC_PID_MOTION_INSTRUCTION_COUNT);
+	initPidMotion(&pidMotion, &dualHBridgeMotor, &eeprom, (PidMotionDefinition(*)[]) &motionDefinitionArray, MOTOR_BOARD_PC_PID_MOTION_INSTRUCTION_COUNT);
 
     // Devices
     initDeviceList((Device(*)[]) &deviceListArray, MOTOR_BOARD_PC_DEVICE_LIST_LENGTH);
@@ -360,7 +367,7 @@ void runMotorBoardPC(bool singleMode) {
 
     addLocalDevice(getPidDeviceInterface(), getPidDeviceDescriptor(&pidMotion));
     addLocalDevice(getPidDebugDeviceInterface(), getPidDebugDeviceDescriptor(&pidMotion));
-    addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());
+    addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor(&dualHBridgeMotor));
     addLocalDevice(getCodersDeviceInterface(), getCodersDeviceDescriptor());
     addLocalDevice(getTrajectoryDeviceInterface(), getTrajectoryDeviceDescriptor());
     addLocalDevice(getMotionDeviceInterface(), getMotionDeviceDescriptor(&pidMotion));

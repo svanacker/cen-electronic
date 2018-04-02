@@ -23,6 +23,9 @@
 // 'h' for Help
 #define SYSTEM_DEBUG_DEVICE_HEADER                 'h'
 
+// 'H' for Color Sensor
+#define COLOR_SENSOR_DEVICE_HEADER                 'H'
+
 /** Command to debug the I2C Master. */
 #define I2C_MASTER_DEBUG_DEVICE_HEADER             'I'
 

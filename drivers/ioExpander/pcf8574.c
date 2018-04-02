@@ -1,6 +1,7 @@
 #include "pcf8574.h"
 
 #include <stdbool.h>
+#include <stdlib.h>
 
 #include "../../common/delay/cenDelay.h"
 
@@ -14,7 +15,7 @@
 
 #include "ioExpander.h"
 
-#define PCF8574_IO_COUNT     8
+#define PCF8574_IO_COUNT     ((unsigned int) 8)
 
 // BASE FUNCTION
 
@@ -99,23 +100,42 @@ bool ioExpanderPCF8574Init(IOExpander* ioExpander) {
     return true;
 }
 
-bool ioExpanderPCF8574ReadValue(IOExpander* ioExpander, int index) {
+// SINGLE BITS
+
+unsigned char ioExpanderPCF8574ReadValue(IOExpander* ioExpander) {
     I2cBusConnection* i2cBusConnection = getIOExpanderBusConnection(ioExpander);
     // TODO : To Change !
-    readPCF8574(i2cBusConnection, 0x40, 0x00, 0xFF);
+    return readPCF8574(i2cBusConnection, 0x40, 0x00, 0xFF);
 }
 
-void ioExpanderPCF8574WriteValue(IOExpander* ioExpander, int index, bool value) {
+void ioExpanderPCF8574WriteValue(IOExpander* ioExpander, unsigned char value) {
+    I2cBusConnection* i2cBusConnection = getIOExpanderBusConnection(ioExpander);
+    // TODO : To Change !
+    writePCF8574(i2cBusConnection, 0x40, 0x00, 0xFF, 0x00);
+}
+
+// ALL BITS
+
+bool ioExpanderPCF8574ReadSingleValue(IOExpander* ioExpander, unsigned int index) {
+    I2cBusConnection* i2cBusConnection = getIOExpanderBusConnection(ioExpander);
+    // TODO : To Change !
+    return readPCF8574(i2cBusConnection, 0x40, 0x00, 0xFF);
+}
+
+void ioExpanderPCF8574WriteSingleValue(IOExpander* ioExpander, unsigned int index, bool value) {
     I2cBusConnection* i2cBusConnection = getIOExpanderBusConnection(ioExpander);
     // TODO : To Change !
     writePCF8574(i2cBusConnection, 0x40, 0x00, 0xFF, 0x00);
 }
 
 void initIOExpanderPCF8574(IOExpander* ioExpander, I2cBusConnection* i2cBusConnection) {
+    int* object = (int*) i2cBusConnection;
     initIOExpander(ioExpander,
                    &ioExpanderPCF8574Init,
                    &ioExpanderPCF8574ReadValue,
                    &ioExpanderPCF8574WriteValue,
-                   PCF8574_IO_COUNT,
-                   (int*) i2cBusConnection);
+                   &ioExpanderPCF8574ReadSingleValue,
+                   &ioExpanderPCF8574WriteSingleValue,
+                   8,
+                   NULL);
 }

@@ -29,8 +29,6 @@
 #include "endDetection/shocked/motionShockedDetection.h"
 #include "endDetection/motionEndDetectionStatusUpdater.h"
 
-#include "../../device/motor/pwmMotor.h"
-
 #include "../position/coders.h"
 #include "../position/coderErrorComputer.h"
 
@@ -109,7 +107,8 @@ void updateMotorsAndDetectedMotionType(PidMotion* pidMotion) {
     PidComputationInstructionValues* alphaValues = &(computationValues->values[ALPHA]);
     float leftMotorSpeed = computeLeft(thetaValues->u, alphaValues->u);
     float rightMotorSpeed = computeRight(thetaValues->u, alphaValues->u);
-    setMotorSpeeds((int)leftMotorSpeed, (int) rightMotorSpeed);
+    DualHBridgeMotor* dualHBridgeMotor = pidMotion->dualHBridgeMotor;
+    dualHBridgeMotor->dualHBridgeMotorWriteValue(dualHBridgeMotor, (signed int)leftMotorSpeed, (signed int) rightMotorSpeed);
 
     // If we maintain the position, we consider that we must do not check the end of motion (next paragraph)
     MotionInstruction* thetaInst = &(motionDefinition->inst[THETA]);

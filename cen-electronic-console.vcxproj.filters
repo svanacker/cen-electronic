@@ -205,9 +205,6 @@
     <Filter Include="Source Files\common\pwm\motor">
       <UniqueIdentifier>{fe295f6e-270e-4521-b4be-2546e3ea3b79}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\common\pwm\motor\pc">
-      <UniqueIdentifier>{00e28c9d-b79c-490b-856f-2c4c1d6026fa}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\drivers\motor">
       <UniqueIdentifier>{72ccd5f9-832e-48db-b751-24f399a3e32f}</UniqueIdentifier>
     </Filter>
@@ -886,6 +883,36 @@
     <Filter Include="Header Files\drivers\ioExpander\pc">
       <UniqueIdentifier>{f2b3caba-6703-4048-8b32-f42c2295537f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\device\color">
+      <UniqueIdentifier>{d6e2baa3-2a9d-41b2-a535-5a08e737bbb1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\drivers\color">
+      <UniqueIdentifier>{8421c79b-7d17-4b25-9e8e-6336791a49a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\drivers\colorSensor">
+      <UniqueIdentifier>{4f5db135-2194-4876-bfe4-92893c5a7ea8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\common\color">
+      <UniqueIdentifier>{01a04ec1-ea4a-4d7d-92a9-e62c49d844c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\drivers\color\pc">
+      <UniqueIdentifier>{581e80d9-32d8-4089-ae8c-80dfa3ce3184}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\drivers\colorSensor\pc">
+      <UniqueIdentifier>{dd7a3bc2-acee-4489-9caf-eb2030b45df4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\common\motor">
+      <UniqueIdentifier>{834fd210-2325-49a3-85f2-b0cd01a8e6ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\common\motor\pc">
+      <UniqueIdentifier>{2d25fd7f-68ad-4f2f-9ceb-1c8348ccdbbd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\common\motor">
+      <UniqueIdentifier>{12861c3f-3058-4e33-a819-a5c787637b0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\common\motor\pc">
+      <UniqueIdentifier>{ff05c34f-4fb8-42f7-8e7e-d07d98cfc45e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -1053,23 +1080,11 @@
     <ClCompile Include="common\io\pc\consoleOutputStream.c">
       <Filter>Source Files\common\io\pc</Filter>
     </ClCompile>
-    <ClCompile Include="device\motor\pwmMotor.c">
-      <Filter>Source Files\device\motor</Filter>
-    </ClCompile>
     <ClCompile Include="device\motor\pwmMotorDevice.c">
       <Filter>Source Files\device\motor</Filter>
     </ClCompile>
     <ClCompile Include="device\motor\pwmMotorDeviceInterface.c">
       <Filter>Source Files\device\motor</Filter>
-    </ClCompile>
-    <ClCompile Include="common\pwm\motor\pc\dualHBridgeMotorPc.c">
-      <Filter>Source Files\common\pwm\motor\pc</Filter>
-    </ClCompile>
-    <ClCompile Include="common\pwm\motor\motorPwm.c">
-      <Filter>Source Files\common\pwm\motor</Filter>
-    </ClCompile>
-    <ClCompile Include="drivers\motor\motorDriver.c">
-      <Filter>Source Files\drivers\motor</Filter>
     </ClCompile>
     <ClCompile Include="robot\strategy\gameStrategy.c">
       <Filter>Source Files\robot\strategy</Filter>
@@ -1836,6 +1851,27 @@
     <ClCompile Include="drivers\ioExpander\pc\ioExpanderPc.c">
       <Filter>Source Files\drivers\ioExpander\pc</Filter>
     </ClCompile>
+    <ClCompile Include="device\color\colorDevice.c">
+      <Filter>Source Files\device\color</Filter>
+    </ClCompile>
+    <ClCompile Include="device\color\colorDeviceInterface.c">
+      <Filter>Source Files\device\color</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\colorSensor\colorSensor.c">
+      <Filter>Source Files\drivers\color</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\colorSensor\colorSensorDebug.c">
+      <Filter>Source Files\drivers\color</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\colorSensor\pc\colorSensorPc.c">
+      <Filter>Source Files\drivers\color\pc</Filter>
+    </ClCompile>
+    <ClCompile Include="common\motor\pc\dualHBridgeMotorPc.c">
+      <Filter>Source Files\common\motor\pc</Filter>
+    </ClCompile>
+    <ClCompile Include="common\motor\dualHBridgeMotor.c">
+      <Filter>Source Files\common\motor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -2030,9 +2066,6 @@
     <ClInclude Include="common\io\pc\consoleOutputStream.h">
       <Filter>Header Files\common\io\pc</Filter>
     </ClInclude>
-    <ClInclude Include="device\motor\pwmMotor.h">
-      <Filter>Header Files\device\motor</Filter>
-    </ClInclude>
     <ClInclude Include="device\motor\pwmMotorDevice.h">
       <Filter>Header Files\device\motor</Filter>
     </ClInclude>
@@ -2041,12 +2074,6 @@
     </ClInclude>
     <ClInclude Include="common\pwm\motor\dualHBridgeMotorPwm.h">
       <Filter>Header Files\common\pwm\motor</Filter>
-    </ClInclude>
-    <ClInclude Include="common\pwm\motor\motorPwm.h">
-      <Filter>Header Files\common\pwm\motor</Filter>
-    </ClInclude>
-    <ClInclude Include="drivers\motor\motorDriver.h">
-      <Filter>Header Files\drivers\motor</Filter>
     </ClInclude>
     <ClInclude Include="robot\strategy\gameStrategy.h">
       <Filter>Header Files\robot\strategy</Filter>
@@ -2845,6 +2872,21 @@
     </ClInclude>
     <ClInclude Include="device\ioExpander\ioExpanderDeviceInterface.h">
       <Filter>Header Files\device\ioExpander</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\colorSensor\colorSensor.h">
+      <Filter>Header Files\drivers\colorSensor</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\colorSensor\colorSensorDebug.h">
+      <Filter>Header Files\drivers\colorSensor</Filter>
+    </ClInclude>
+    <ClInclude Include="common\color\color.h">
+      <Filter>Header Files\common\color</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\colorSensor\pc\colorSensorPc.h">
+      <Filter>Header Files\drivers\colorSensor\pc</Filter>
+    </ClInclude>
+    <ClInclude Include="common\motor\pc\dualHBridgeMotorPc.h">
+      <Filter>Header Files\common\motor\pc</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

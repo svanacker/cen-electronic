@@ -197,12 +197,12 @@
     <ClCompile Include="common\math\hexUtils.c" />
     <ClCompile Include="common\math\pc\randomPc.c" />
     <ClCompile Include="common\math\random.c" />
+    <ClCompile Include="common\motor\dualHBridgeMotor.c" />
+    <ClCompile Include="common\motor\pc\dualHBridgeMotorPc.c" />
     <ClCompile Include="common\pc\pipe\pipeClientHelper.c" />
     <ClCompile Include="common\pc\pipe\pipeServerHelper.c" />
     <ClCompile Include="common\pc\process\processHelper.c" />
     <ClCompile Include="common\pc\thread\threadHelper.c" />
-    <ClCompile Include="common\pwm\motor\motorPwm.c" />
-    <ClCompile Include="common\pwm\motor\pc\dualHBridgeMotorPc.c" />
     <ClCompile Include="common\pwm\servo\pc\servoPwmPc.c" />
     <ClCompile Include="common\pwm\servo\servoPwm.c" />
     <ClCompile Include="common\pwm\servo\servoPwmDebug.c" />
@@ -226,6 +226,8 @@
     <ClCompile Include="device\beacon\beaconReceiverDeviceInterface.c" />
     <ClCompile Include="device\clock\clockDevice.c" />
     <ClCompile Include="device\clock\clockDeviceInterface.c" />
+    <ClCompile Include="device\color\colorDevice.c" />
+    <ClCompile Include="device\color\colorDeviceInterface.c" />
     <ClCompile Include="device\device.c" />
     <ClCompile Include="device\deviceDebug.c" />
     <ClCompile Include="device\deviceDescriptor.c" />
@@ -263,7 +265,6 @@
     <ClCompile Include="device\motion\simple\motionDeviceInterface.c" />
     <ClCompile Include="device\motion\simulation\motionSimulationDevice.c" />
     <ClCompile Include="device\motion\simulation\motionSimulationDeviceInterface.c" />
-    <ClCompile Include="device\motor\pwmMotor.c" />
     <ClCompile Include="device\motor\pwmMotorDevice.c" />
     <ClCompile Include="device\motor\pwmMotorDeviceInterface.c" />
     <ClCompile Include="device\navigation\navigationDevice.c" />
@@ -294,6 +295,9 @@
     <ClCompile Include="drivers\beacon\beaconReceiverDriver.c" />
     <ClCompile Include="drivers\clock\pc\pcClock.c" />
     <ClCompile Include="drivers\clock\softClock.c" />
+    <ClCompile Include="drivers\colorSensor\colorSensor.c" />
+    <ClCompile Include="drivers\colorSensor\colorSensorDebug.c" />
+    <ClCompile Include="drivers\colorSensor\pc\colorSensorPc.c" />
     <ClCompile Include="drivers\dispatcher\dataDispatcherDeviceDriver.c" />
     <ClCompile Include="drivers\dispatcher\driverDataDispatcher.c" />
     <ClCompile Include="drivers\dispatcher\driverDataDispatcherDebug.c" />
@@ -314,7 +318,6 @@
     <ClCompile Include="drivers\motion\extendedMotionDriver.c" />
     <ClCompile Include="drivers\motion\motionDriver.c" />
     <ClCompile Include="drivers\motion\trajectoryDriver.c" />
-    <ClCompile Include="drivers\motor\motorDriver.c" />
     <ClCompile Include="drivers\relay\pc\relayPc.c" />
     <ClCompile Include="drivers\relay\relay.c" />
     <ClCompile Include="drivers\relay\relayDebug.c" />
@@ -464,6 +467,7 @@
     <ClInclude Include="common\2d\2dDebug.h" />
     <ClInclude Include="common\clock\clock.h" />
     <ClInclude Include="common\cmd\commonCommand.h" />
+    <ClInclude Include="common\color\color.h" />
     <ClInclude Include="common\commons.h" />
     <ClInclude Include="common\delay\cenDelay.h" />
     <ClInclude Include="common\delay\pc\cenDelayPc.h" />
@@ -520,12 +524,12 @@
     <ClInclude Include="common\math\cenMath.h" />
     <ClInclude Include="common\math\hexUtils.h" />
     <ClInclude Include="common\math\random.h" />
+    <ClInclude Include="common\motor\pc\dualHBridgeMotorPc.h" />
     <ClInclude Include="common\pc\pipe\pipeClientHelper.h" />
     <ClInclude Include="common\pc\pipe\pipeServerHelper.h" />
     <ClInclude Include="common\pc\process\processHelper.h" />
     <ClInclude Include="common\pc\thread\threadHelper.h" />
     <ClInclude Include="common\pwm\motor\dualHBridgeMotorPwm.h" />
-    <ClInclude Include="common\pwm\motor\motorPwm.h" />
     <ClInclude Include="common\pwm\servo\servoPwm.h" />
     <ClInclude Include="common\pwm\servo\servoPwmDebug.h" />
     <ClInclude Include="common\sensor\temperature\temperature.h" />
@@ -589,7 +593,6 @@
     <ClInclude Include="device\motion\simple\motionDeviceInterface.h" />
     <ClInclude Include="device\motion\simulation\motionSimulationDevice.h" />
     <ClInclude Include="device\motion\simulation\motionSimulationDeviceInterface.h" />
-    <ClInclude Include="device\motor\pwmMotor.h" />
     <ClInclude Include="device\motor\pwmMotorDevice.h" />
     <ClInclude Include="device\motor\pwmMotorDeviceInterface.h" />
     <ClInclude Include="device\navigation\navigationDevice.h" />
@@ -620,6 +623,9 @@
     <ClInclude Include="drivers\beacon\beaconReceiverDriver.h" />
     <ClInclude Include="drivers\clock\pc\pcClock.h" />
     <ClInclude Include="drivers\clock\softClock.h" />
+    <ClInclude Include="drivers\colorSensor\colorSensor.h" />
+    <ClInclude Include="drivers\colorSensor\colorSensorDebug.h" />
+    <ClInclude Include="drivers\colorSensor\pc\colorSensorPc.h" />
     <ClInclude Include="drivers\dispatcher\dataDispatcherDeviceDriver.h" />
     <ClInclude Include="drivers\dispatcher\driverDataDispatcher.h" />
     <ClInclude Include="drivers\dispatcher\driverDataDispatcherDebug.h" />
@@ -639,7 +645,6 @@
     <ClInclude Include="drivers\motion\extendedMotionDriver.h" />
     <ClInclude Include="drivers\motion\motionDriver.h" />
     <ClInclude Include="drivers\motion\trajectoryDriver.h" />
-    <ClInclude Include="drivers\motor\motorDriver.h" />
     <ClInclude Include="drivers\relay\pc\relayPc.h" />
     <ClInclude Include="drivers\relay\relay.h" />
     <ClInclude Include="drivers\relay\relayDebug.h" />

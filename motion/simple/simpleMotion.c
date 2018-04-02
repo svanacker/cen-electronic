@@ -4,6 +4,7 @@
 #include "../../common/io/OutputStream.h"
 #include "../../common/log/logger.h"
 #include "../../common/math/cenMath.h"
+#include "../../common/motor/dualHBridgeMotor.h"
 
 #include "../parameters/motionParameterType.h"
 #include "../parameters/motionParameter.h"
@@ -16,8 +17,6 @@
 
 #include "../position/coders.h"
 #include "../position/trajectory.h"
-
-#include "../../device/motor/pwmMotor.h"
 
 #include "../../robot/kinematics/robotKinematics.h"
 
@@ -57,7 +56,8 @@ void stopPosition(PidMotion* pidMotion, bool maintainPositionValue, OutputStream
     // Avoid that the robot considered he will remain the initial speed for next move (it is stopped).
     clearInitialSpeeds(pidMotion);
 
-    stopMotors();
+    DualHBridgeMotor* dualHBridgeMotor = pidMotion->dualHBridgeMotor;
+    stopMotors(dualHBridgeMotor);
 }
 
 void maintainPosition(PidMotion* pidMotion, OutputStream* notificationOutputStream) {

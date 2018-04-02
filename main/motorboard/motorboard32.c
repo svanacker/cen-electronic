@@ -17,6 +17,8 @@
 
 #include "../../common/setup/32/picSetup32.h"
 
+#include "../../common/color/color.h"
+
 #include "../../common/delay/cenDelay.h"
 
 #include "../../common/i2c/i2cCommon.h"
@@ -36,6 +38,7 @@
 #include "../../common/io/printWriter.h"
 
 #include "../../common/pwm/pwmPic.h"
+#include "../../common/pwm/motor/dualHBridgeMotorPwm.h"
 
 #include "../../common/serial/serial.h"
 #include "../../common/serial/serialLink.h"
@@ -57,6 +60,10 @@
 
 // -> Devices
 
+// Color Sensor
+#include "../../device/color/colorDevice.h"
+#include "../../device/color/colorDeviceInterface.h"
+
 // Clock
 #include "../../device/clock/clockDevice.h"
 #include "../../device/clock/clockDeviceInterface.h"
@@ -77,6 +84,10 @@
 #include "../../device/test/testDevice.h"
 #include "../../device/test/testDeviceInterface.h"
 
+// Relay
+#include "../../device/relay/relayDevice.h"
+#include "../../device/relay/relayDeviceInterface.h"
+
 // Serial
 #include "../../device/serial/serialDebugDevice.h"
 #include "../../device/serial/serialDebugDeviceInterface.h"
@@ -92,6 +103,10 @@
 // Log
 #include "../../device/log/logDevice.h"
 #include "../../device/log/logDeviceInterface.h"
+
+// IO Expander
+#include "../../device/ioExpander/ioExpanderDevice.h"
+#include "../../device/ioExpander/ioExpanderDeviceInterface.h"
 
 // I2C
 #include "../../device/i2c/i2cCommonDebugDevice.h"
@@ -152,8 +167,6 @@
 
 #include "../../drivers/eeprom/24c512.h"
 
-#include "../../drivers/motor/motorDriver.h"
-
 // Direct implementation
 #include "../../motion/motion.h"
 #include "../../motion/simple/simpleMotion.h"
@@ -162,6 +175,7 @@
 
 // #include "../../test/mathTest.h"
 #include "../../test/motion/bspline/bsplinetest.h"
+#include "relay/rly08.h"
 
 // I2C
 static I2cBus i2cBusListArray[MOTOR_BOARD_I2C_BUS_LIST_LENGTH];
@@ -175,11 +189,16 @@ static I2cBusConnection* eepromI2cBusConnection;
 static I2cBusConnection* clockI2cBusConnection;
 static I2cBusConnection* tofI2cBusConnection;
 static I2cBusConnection* ioExpanderBusConnection;
+static I2cBusConnection* relayBusConnection;
 
 // Eeprom
 static Eeprom eeprom_;
 // Memory Eeprom
 static char memoryEepromArray[MOTOR_BOARD_MEMORY_EEPROM_LENGTH];
+
+// Color
+static ColorSensor colorSensor;
+static Color colorValue;
 
 // Clock
 static Clock clock;
@@ -187,6 +206,12 @@ static Clock clock;
 // IO Expander
 static IOExpander ioExpander;
 static int ioExpanderValue;
+
+// MOTOR (for pidMotion)
+static DualHBridgeMotor motors;
+
+// RELAY
+static Relay relay;
 
 // SERIAL
 static SerialLink serialLinkListArray[MOTOR_BOARD_SERIAL_LINK_LIST_LENGTH];
@@ -260,7 +285,7 @@ void initDevicesDescriptor() {
     addLocalDevice(getRobotKinematicsDeviceInterface(), getRobotKinematicsDeviceDescriptor(&eeprom_));
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom_));
 
-    addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());
+    addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor(&motors));
     addLocalDevice(getCodersDeviceInterface(), getCodersDeviceDescriptor());
     addLocalDevice(getPidDeviceInterface(), getPidDeviceDescriptor(&pidMotion));
     addLocalDevice(getPidDebugDeviceInterface(), getPidDebugDeviceDescriptor(&pidMotion));
@@ -273,9 +298,10 @@ void initDevicesDescriptor() {
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
     addLocalDevice(getTimerDeviceInterface(), getTimerDeviceDescriptor());
     addLocalDevice(getLogDeviceInterface(), getLogDeviceDescriptor());
-
-    
     addLocalDevice(getTofDeviceInterface(), getTofDeviceDescriptor(tofI2cBusConnection));
+    addLocalDevice(getRelayDeviceInterface(), getRelayDeviceDescriptor(&relay));
+    addLocalDevice(getIOExpanderDeviceInterface(), getIOExpanderDeviceDescriptor(&ioExpander));
+    addLocalDevice(getColorSensorDeviceInterface(), getColorSensorDeviceDescriptor(&colorSensor));
 
     initDevices();
 }
@@ -378,6 +404,10 @@ int runMotorBoard() {
     // IO Expander
     ioExpanderBusConnection = addI2cBusConnection(masterI2cBus, PCF8574_ADDRESS_0, true);
     initIOExpanderPCF8574(&ioExpander, ioExpanderBusConnection);
+
+    // Relay
+    relayBusConnection = addI2cBusConnection(masterI2cBus, RLY08_ADDRESS_0, true);
+    initRelayRLY08(&relay, relayBusConnection);
     
     // TOF
     tofI2cBusConnection = addI2cBusConnection(masterI2cBus, VL530X_ADDRESS_0, true);
@@ -386,9 +416,12 @@ int runMotorBoard() {
     // -> Clock
     clockI2cBusConnection = addI2cBusConnection(masterI2cBus, PCF8563_WRITE_ADDRESS, true);
     initClockPCF8563(&clock, clockI2cBusConnection);
+    
+    // MOTOR
+    initDualHBridgeMotorPWM(&motors);
 
     // PidMotion
-    initPidMotion(&pidMotion, &eeprom_, (PidMotionDefinition(*)[]) &motionDefinitionArray, MOTOR_BOARD_PID_MOTION_INSTRUCTION_COUNT);
+    initPidMotion(&pidMotion, &motors, &eeprom_, (PidMotionDefinition(*)[]) &motionDefinitionArray, MOTOR_BOARD_PID_MOTION_INSTRUCTION_COUNT);
 
     // initSoftClock(&clock);
 

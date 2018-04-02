@@ -99,7 +99,7 @@ float getUFactorAtFullSpeed(bool rotation) {
         return 0.0f;
     }
     // We calculate the ratio to apply for PWM !
-    float result = (float) MAX_PWM / coderWheelDistanceMMBySeconds;
+    float result = (float) DUAL_HBRIDGE_MOTOR_PWM_MAX / coderWheelDistanceMMBySeconds;
     return result;
 }
 

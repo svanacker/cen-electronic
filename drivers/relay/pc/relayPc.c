@@ -8,13 +8,13 @@ bool relayPcInit(Relay* relay) {
     return true;
 }
 
-bool relayPcReadValue(Relay* relay, int relayIndex) {
+bool relayPcReadValue(Relay* relay, unsigned int relayIndex) {
     unsigned int maskValue = 1 << relayIndex;
     unsigned value = *(relay->object);
     return (value & maskValue);
 }
 
-void relayPcWriteValue(Relay* relay, int relayIndex, bool value) {
+void relayPcWriteValue(Relay* relay, unsigned int relayIndex, bool value) {
     if (value) {
         // Set the bit
         *(relay->object) |= (1UL << relayIndex);

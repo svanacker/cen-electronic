@@ -192,7 +192,11 @@ MotionEndDetectionParameter* getMotionEndDetectionParameter(PidMotion* pidMotion
 
 // INIT
 
-void initPidMotion(PidMotion* pidMotion, Eeprom* _eeprom, PidMotionDefinition(*array)[], unsigned int length) {
+void initPidMotion(PidMotion* pidMotion, 
+                   DualHBridgeMotor* dualHBridgeMotor,
+                   Eeprom* _eeprom,
+                   PidMotionDefinition(*array)[],
+                   unsigned int length) {
 	if (!checkPidMotionNotNull(pidMotion)) {
 		return;
 	}
@@ -200,6 +204,7 @@ void initPidMotion(PidMotion* pidMotion, Eeprom* _eeprom, PidMotionDefinition(*a
         writeError(EEPROM_NULL);
         return;
     }
+    pidMotion->dualHBridgeMotor = dualHBridgeMotor;
 	pidMotion->motionDefinitions = array;
 	pidMotion->motionLength = length;
 	pidMotion->pidPersistenceEeprom = _eeprom;

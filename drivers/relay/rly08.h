@@ -50,6 +50,9 @@
 /** The name of the Device */
 #define RLY08_DEVICE_NAME "RLY08"
 
+/** How many relay on the RLY08. */
+#define RLY08_RELAY_COUNT  8
+
 /**
 * Initialize the driver.
 */
@@ -110,6 +113,6 @@ unsigned int getRLY08SoftwareRevision(I2cBusConnection* i2cBusConnection);
 /**
 * Initializes the relay object to drive the RLY08 from Devantech.
 */
-void initRelayRly08(Relay* relay, I2cBusConnection* i2cBusConnection);
+void initRelayRLY08(Relay* relay, I2cBusConnection* i2cBusConnection);
  
 #endif

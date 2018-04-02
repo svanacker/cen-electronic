@@ -170,7 +170,7 @@ void testSystemDeviceUsage(void) {
     addLocalDevice(getLogDeviceInterface(), NULL);
     addLocalDevice(getMotionDeviceInterface(), NULL);
     addLocalDevice(getMotionSimulationDeviceInterface(), NULL);
-    addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor());
+    addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor(NULL));
     addLocalDevice(getNavigationDeviceInterface(), NULL);
     addLocalDevice(getPidDeviceInterface(), NULL);
     addLocalDevice(getRobotConfigDeviceInterface(), NULL);

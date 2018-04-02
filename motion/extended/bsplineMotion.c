@@ -26,8 +26,6 @@
 #include "../position/coders.h"
 #include "../position/trajectory.h"
 
-#include "../../device/motor/pwmMotor.h"
-
 #include "../../robot/kinematics/robotKinematics.h"
 
 /**

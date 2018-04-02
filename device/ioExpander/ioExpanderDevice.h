@@ -3,9 +3,11 @@
 
 #include "../../device/deviceDescriptor.h"
 
+#include "../../drivers/ioExpander/ioExpander.h"
+
 /**
  * The descriptor for the IO Expander device (typical device : PCF8574).
  */
-DeviceDescriptor* getIOExpanderDeviceDescriptor(void);
+DeviceDescriptor* getIOExpanderDeviceDescriptor(IOExpander* ioExpanderParam);
 
 #endif

@@ -125,6 +125,10 @@ unsigned int getRLY08SoftwareRevision(I2cBusConnection* i2cBusConnection) {
 
 // DEVICE INTERFACE
 
+I2cBusConnection* getRLY08I2cBusConnection(Relay* relay) {
+    return (I2cBusConnection*) (relay->object);
+}
+
 void initRLY08(I2cBusConnection* i2cBusConnection) {
     // We need to send command to initialize the relay, but it does not taken
     getRLY08SoftwareRevision(i2cBusConnection);
@@ -139,7 +143,28 @@ bool isRLY08DeviceOk(I2cBusConnection* i2cBusConnection) {
     return getRLY08SoftwareRevision(i2cBusConnection) < 255;
 }
 
+// RELAY Implementation
 
-void initRelayRly08(Relay* relay, I2cBusConnection* busConnection) {
-    // TODO : initRelay(relay, busConnection);
+bool relayRLY08Init(Relay* relay) {
+    I2cBusConnection* i2cBusConnection = getRLY08I2cBusConnection(relay);
+    initRLY08(i2cBusConnection);
+}
+
+bool relayRLY08ReadValue(Relay* relay, unsigned int relayIndex) {
+    return true;
+}
+
+void relayRLY08WriteValue(Relay* relay, unsigned int relayIndex, bool value) {
+    I2cBusConnection* i2cBusConnection = getRLY08I2cBusConnection(relay);
+    
+    setRelayState(i2cBusConnection, relayIndex, value);
+}
+
+void initRelayRLY08(Relay* relay, I2cBusConnection* busConnection) {
+    initRelay(relay,
+              relayRLY08Init,
+              relayRLY08ReadValue,
+              relayRLY08WriteValue,
+              RLY08_RELAY_COUNT,
+            (int*) busConnection);
 }

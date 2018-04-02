@@ -22,7 +22,7 @@ int deviceIOExpanderGetInterface(char commandHeader, DeviceInterfaceMode mode, b
     if (commandHeader == COMMAND_IO_EXPANDER_WRITE_VALUE) {
         if (fillDeviceArgumentList) {
             setFunction("Write Value", 1, 0);
-            setArgumentUnsignedHex2(2, "Value");
+            setArgumentUnsignedHex2(0, "Value");
         }
         return commandLengthValueForMode(mode, 2, 0);
     }
@@ -36,7 +36,7 @@ int deviceIOExpanderGetInterface(char commandHeader, DeviceInterfaceMode mode, b
     }
     else if (commandHeader == COMMAND_IO_EXPANDER_READ_VALUE) {
         if (fillDeviceArgumentList) {
-            setFunction("Read Value", 1, 1);
+            setFunction("Read Value", 0, 1);
             setResultUnsignedHex2(0, "Value");
         }
         return commandLengthValueForMode(mode, 0, 2);

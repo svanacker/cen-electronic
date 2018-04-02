@@ -19,6 +19,9 @@
       <logicalFolder name="common.cmd" displayName="common.cmd" projectFiles="true">
         <itemPath>../../../common/cmd/commonCommand.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f12" displayName="common.color" projectFiles="true">
+        <itemPath>../../../common/color/color.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="common.delay"
                      displayName="common.delay"
                      projectFiles="true">
@@ -166,6 +169,10 @@
         <itemPath>../../../device/clock/clockDevice.h</itemPath>
         <itemPath>../../../device/clock/clockDeviceInterface.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f14" displayName="device.color" projectFiles="true">
+        <itemPath>../../../device/color/colorDevice.h</itemPath>
+        <itemPath>../../../device/color/colorDeviceInterface.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="device.dispatcher"
                      displayName="device.dispatcher"
                      projectFiles="true">
@@ -194,6 +201,10 @@
         <itemPath>../../../device/i2c/slave/i2cSlaveDebugDeviceInterface.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f9" displayName="device.io" projectFiles="true">
+      </logicalFolder>
+      <logicalFolder name="f15" displayName="device.ioExpander" projectFiles="true">
+        <itemPath>../../../device/ioExpander/ioExpanderDevice.h</itemPath>
+        <itemPath>../../../device/ioExpander/ioExpanderDeviceInterface.h</itemPath>
       </logicalFolder>
       <logicalFolder name="device.log" displayName="device.log" projectFiles="true">
         <itemPath>../../../device/log/logDevice.h</itemPath>
@@ -232,7 +243,6 @@
                      projectFiles="true">
         <itemPath>../../../device/motor/pwmMotorDevice.h</itemPath>
         <itemPath>../../../device/motor/pwmMotorDeviceInterface.h</itemPath>
-        <itemPath>../../../device/motor/pwmMotor.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f10" displayName="device.relay" projectFiles="true">
         <itemPath>../../../device/relay/relayDevice.h</itemPath>
@@ -282,6 +292,11 @@
         <itemPath>../../../drivers/clock/softClock.h</itemPath>
         <itemPath>../../../drivers/clock/PCF8563.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f13" displayName="drivers.colorSensor" projectFiles="true">
+        <itemPath>../../../drivers/colorSensor/colorSensor.h</itemPath>
+        <itemPath>../../../drivers/colorSensor/colorSensorDebug.h</itemPath>
+        <itemPath>../../../drivers/colorSensor/tcs34725.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="drivers.dispatcher"
                      displayName="drivers.dispatcher"
                      projectFiles="true">
@@ -298,11 +313,6 @@
         <itemPath>../../../drivers/ioExpander/ioExpander.h</itemPath>
         <itemPath>../../../drivers/ioExpander/ioExpanderDebug.h</itemPath>
         <itemPath>../../../drivers/ioExpander/pcf8574.h</itemPath>
-      </logicalFolder>
-      <logicalFolder name="drivers.motor"
-                     displayName="drivers.motor"
-                     projectFiles="true">
-        <itemPath>../../../drivers/motor/motorDriver.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f11" displayName="drivers.relay" projectFiles="true">
         <itemPath>../../../drivers/relay/relay.h</itemPath>
@@ -562,6 +572,9 @@
         <itemPath>../../../common/math/hexUtils.c</itemPath>
         <itemPath>../../../common/math/bcdUtils.c</itemPath>
       </logicalFolder>
+      <logicalFolder name="f14" displayName="common.motor" projectFiles="true">
+        <itemPath>../../../common/motor/dualHBridgeMotor.c</itemPath>
+      </logicalFolder>
       <logicalFolder name="common.pwm.32"
                      displayName="common.pwm.32"
                      projectFiles="true">
@@ -570,12 +583,10 @@
       <logicalFolder name="common.pwm.motor"
                      displayName="common.pwm.motor"
                      projectFiles="true">
-        <itemPath>../../../common/pwm/motor/motorPwm.c</itemPath>
       </logicalFolder>
       <logicalFolder name="common.pwm.motor.32"
                      displayName="common.pwm.motor.32"
                      projectFiles="true">
-        <itemPath>../../../common/pwm/motor/32/motorPwm32.c</itemPath>
         <itemPath>../../../common/pwm/motor/32/dualHBridgeMotorPwm32.c</itemPath>
       </logicalFolder>
       <logicalFolder name="common.sensor.temperature"
@@ -630,6 +641,10 @@
         <itemPath>../../../device/clock/clockDevice.c</itemPath>
         <itemPath>../../../device/clock/clockDeviceInterface.c</itemPath>
       </logicalFolder>
+      <logicalFolder name="f11" displayName="device.color" projectFiles="true">
+        <itemPath>../../../device/color/colorDevice.c</itemPath>
+        <itemPath>../../../device/color/colorDeviceInterface.c</itemPath>
+      </logicalFolder>
       <logicalFolder name="device.dispatcher"
                      displayName="device.dispatcher"
                      projectFiles="true">
@@ -656,6 +671,10 @@
                      projectFiles="true">
         <itemPath>../../../device/i2c/slave/i2cSlaveDebugDevice.c</itemPath>
         <itemPath>../../../device/i2c/slave/i2cSlaveDebugDeviceInterface.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f13" displayName="device.ioExpander" projectFiles="true">
+        <itemPath>../../../device/ioExpander/ioExpanderDevice.c</itemPath>
+        <itemPath>../../../device/ioExpander/ioExpanderDeviceInterface.c</itemPath>
       </logicalFolder>
       <logicalFolder name="device.log" displayName="device.log" projectFiles="true">
         <itemPath>../../../device/log/logDevice.c</itemPath>
@@ -694,7 +713,6 @@
                      projectFiles="true">
         <itemPath>../../../device/motor/pwmMotorDevice.c</itemPath>
         <itemPath>../../../device/motor/pwmMotorDeviceInterface.c</itemPath>
-        <itemPath>../../../device/motor/pwmMotor.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f9" displayName="device.relay" projectFiles="true">
         <itemPath>../../../device/relay/relayDevice.c</itemPath>
@@ -743,6 +761,11 @@
                      projectFiles="true">
         <itemPath>../../../drivers/clock/softClock.c</itemPath>
         <itemPath>../../../drivers/clock/PCF8563.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f12" displayName="drivers.color" projectFiles="true">
+        <itemPath>../../../drivers/colorSensor/colorSensor.c</itemPath>
+        <itemPath>../../../drivers/colorSensor/colorSensorDebug.c</itemPath>
+        <itemPath>../../../drivers/colorSensor/tcs34725.c</itemPath>
       </logicalFolder>
       <logicalFolder name="drivers.dispatcher"
                      displayName="drivers.dispatcher"
