@@ -28,7 +28,8 @@ Tcs34725* colorSensorTcs34725GetTcs34725(ColorSensor* colorSensor) {
  * ColorSensor Implementation (POO)
  */
 bool colorSensorTcs34725Init(ColorSensor* colorSensor) {
-    return true;
+    Tcs34725* tcs34725 = colorSensorTcs34725GetTcs34725(colorSensor);
+    return tcs34725_begin(tcs34725);
 }
 
 /**

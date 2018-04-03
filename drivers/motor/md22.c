@@ -41,6 +41,8 @@ unsigned char readMD22(I2cBusConnection* i2cBusConnection, unsigned char reg) {
     // send the register
     portableMasterWriteI2C(i2cBusConnection, i2cBusConnection->i2cAddress);
     WaitI2C(i2cBus);
+    
+    // TODO : Find if we must stop or not (seems that it's not used in other device, and it's often a problem)
     portableMasterStopI2C(i2cBusConnection);
     WaitI2C(i2cBus);
     portableMasterStartI2C(i2cBusConnection);
@@ -112,10 +114,15 @@ bool initMD22(I2cBusConnection* i2cBusConnection) {
     unsigned char softwareRevision = getMD22Version(i2cBusConnection);
     // Sets data mode 1 (speeds between -128 and 127)
     writeMD22Command(i2cBusConnection, MD22_MODE_REGISTER, MD22_MODE_1);
+    delaymSec(10);
+    writeMD22Command(i2cBusConnection, MD22_MODE_REGISTER, MD22_MODE_1);
+    delaymSec(10);
     // Sets acceleration to max
     writeMD22Command(i2cBusConnection, MD22_ACCELERATION_REGISTER, MD22_MODE_ACCELERATION_MAX);
+    delaymSec(10);
     // Set Motor Speed to 0 for both motors
     setMD22MotorSpeeds(i2cBusConnection, 0, 0);
+    delaymSec(10);
 
     return softwareRevision != 0xFF;
 }

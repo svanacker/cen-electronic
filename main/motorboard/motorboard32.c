@@ -306,26 +306,26 @@ void initDevicesDescriptor() {
 
     // I2C_4
     addLocalDevice(getI2cMasterDebugDeviceInterface(), getI2cMasterDebugDeviceDescriptor(mainBoardI2cBusConnection));
-    addLocalDevice(getRobotKinematicsDeviceInterface(), getRobotKinematicsDeviceDescriptor(&eeprom_));
-    addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom_));
+    // addLocalDevice(getRobotKinematicsDeviceInterface(), getRobotKinematicsDeviceDescriptor(&eeprom_));
+    // addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom_));
 
-    addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor(&motors));
+    // addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor(&motors));
     addLocalDevice(getMD22DeviceInterface(), getMD22DeviceDescriptor(&md22));
     addLocalDevice(getCodersDeviceInterface(), getCodersDeviceDescriptor());
-    addLocalDevice(getPidDeviceInterface(), getPidDeviceDescriptor(&pidMotion));
-    addLocalDevice(getPidDebugDeviceInterface(), getPidDebugDeviceDescriptor(&pidMotion));
-    addLocalDevice(getExtendedMotionDeviceInterface(), getExtendedMotionDeviceDescriptor(&pidMotion));
-    addLocalDevice(getMotionDeviceInterface(), getMotionDeviceDescriptor(&pidMotion));
+    // addLocalDevice(getPidDeviceInterface(), getPidDeviceDescriptor(&pidMotion));
+    // addLocalDevice(getPidDebugDeviceInterface(), getPidDebugDeviceDescriptor(&pidMotion));
+    // addLocalDevice(getExtendedMotionDeviceInterface(), getExtendedMotionDeviceDescriptor(&pidMotion));
+    // addLocalDevice(getMotionDeviceInterface(), getMotionDeviceDescriptor(&pidMotion));
     addLocalDevice(getTrajectoryDeviceInterface(), getTrajectoryDeviceDescriptor());
     addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
     addLocalDevice(getSerialDebugDeviceInterface(), getSerialDebugDeviceDescriptor());
     addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
-    addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
+    // addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
     addLocalDevice(getTimerDeviceInterface(), getTimerDeviceDescriptor());
     addLocalDevice(getLogDeviceInterface(), getLogDeviceDescriptor());
-    addLocalDevice(getTofDeviceInterface(), getTofDeviceDescriptor(tofI2cBusConnection));
-    addLocalDevice(getRelayDeviceInterface(), getRelayDeviceDescriptor(&relay));
-    addLocalDevice(getIOExpanderDeviceInterface(), getIOExpanderDeviceDescriptor(&ioExpander));
+    // addLocalDevice(getTofDeviceInterface(), getTofDeviceDescriptor(tofI2cBusConnection));
+    // addLocalDevice(getRelayDeviceInterface(), getRelayDeviceDescriptor(&relay));
+    // addLocalDevice(getIOExpanderDeviceInterface(), getIOExpanderDeviceDescriptor(&ioExpander));
     addLocalDevice(getColorSensorDeviceInterface(), getColorSensorDeviceDescriptor(&colorSensor));
 
     initDevices();
@@ -423,22 +423,25 @@ int runMotorBoard() {
     // eepromI2cBusConnection = addI2cBusConnection(masterI2cBus, ST24C512_ADDRESS_0, true);
     // init24C512Eeprom(&eeprom_, eepromI2cBusConnection);
     
-    // COLOR
-    colorBusConnection = addI2cBusConnection(masterI2cBus, TCS34725_ADDRESS, true);
-    initTcs34725Struct(&tcs34725, colorBusConnection);
-    initColorSensorTcs34725(&colorSensor, &colorValue, &tcs34725);
-    
+    /*
     // EEPROM : If we use Software Eeprom
     initEepromMemory(&eeprom_, &memoryEepromArray, MOTOR_BOARD_MEMORY_EEPROM_LENGTH);
     
     // IO Expander
     ioExpanderBusConnection = addI2cBusConnection(masterI2cBus, PCF8574_ADDRESS_0, true);
     initIOExpanderPCF8574(&ioExpander, ioExpanderBusConnection);
+    */
 
     // Motor
     md22BusConnection = addI2cBusConnection(masterI2cBus, MD22_ADDRESS_0, true);
-    initMD22(md22BusConnection);
+    initDualHBridgeMotorMD22(&md22, md22BusConnection);
 
+    // COLOR
+    colorBusConnection = addI2cBusConnection(masterI2cBus, TCS34725_ADDRESS, true);
+    initTcs34725Struct(&tcs34725, colorBusConnection);
+    initColorSensorTcs34725(&colorSensor, &colorValue, &tcs34725);
+
+    /*
     // Relay
     relayBusConnection = addI2cBusConnection(masterI2cBus, RLY08_ADDRESS_0, true);
     initRelayRLY08(&relay, relayBusConnection);
@@ -454,11 +457,10 @@ int runMotorBoard() {
     // MOTOR (PWM for Motion)
     initDualHBridgeMotorPWM(&motors);
 
-    // MD22 (for 2018 Edition)
-    initDualHBridgeMotorMD22(&md22, md22BusConnection);
     
     // PidMotion
     initPidMotion(&pidMotion, &motors, &eeprom_, (PidMotionDefinition(*)[]) &motionDefinitionArray, MOTOR_BOARD_PID_MOTION_INSTRUCTION_COUNT);
+    */
 
     // initSoftClock(&clock);
 

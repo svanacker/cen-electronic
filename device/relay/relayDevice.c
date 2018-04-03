@@ -43,20 +43,20 @@ bool deviceRelayIsOk(void) {
 
 void deviceRelayHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     if (commandHeader == COMMAND_WRITE_RELAY) {
-        ackCommand(outputStream, IO_DEVICE_HEADER, COMMAND_WRITE_RELAY);
+        ackCommand(outputStream, RELAY_DEVICE_HEADER, COMMAND_WRITE_RELAY);
         int relayIndex = readHex2(inputStream);
         checkIsSeparator(inputStream);
         bool value = readBool(inputStream);
         relay->relayWriteValue(relay, relayIndex, value);
     }
     else if (commandHeader == COMMAND_READ_RELAY) {
-        ackCommand(outputStream, IO_DEVICE_HEADER, COMMAND_READ_RELAY);
+        ackCommand(outputStream, RELAY_DEVICE_HEADER, COMMAND_READ_RELAY);
         int relayIndex = readHex2(inputStream);
         bool value = relay->relayReadValue(relay, relayIndex);
         appendDec(outputStream, value);
     }
     else if (commandHeader == COMMAND_RELAY_DEBUG) {
-        ackCommand(outputStream, IO_DEVICE_HEADER, COMMAND_RELAY_DEBUG);
+        ackCommand(outputStream, RELAY_DEVICE_HEADER, COMMAND_RELAY_DEBUG);
         OutputStream* debugOutputStream = getDebugOutputStreamLogger();
         printRelayStatesTable(debugOutputStream, relay);
     }

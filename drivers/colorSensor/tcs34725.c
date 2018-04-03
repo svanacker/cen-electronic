@@ -5,26 +5,40 @@
 #include "../../common/i2c/i2cBusConnectionList.h"
 #include "../../common/i2c/master/i2cMaster.h"
 
+#include "../../common/log/logger.h"
+#include "../../common/log/logLevel.h"
+
+#include "../../common/io/printWriter.h"
+
 #include "tcs34725.h"
+#include "logger.h"
 
 void initTcs34725Struct(Tcs34725* tcs34725, I2cBusConnection* i2cBusConnection) {
     tcs34725->i2cBusConnection = i2cBusConnection;
     tcs34725->integrationTime = TCS34725_INTEGRATIONTIME_2_4MS;
     tcs34725->gain = TCS34725_GAIN_1X;
-    tcs34725->tcs34725Initialised = false;
+    tcs34725->initialized = false;
 }
 
 /**
  * @private
  * Writes a register and an 8 bit value over I2C
  */
-void tcs34725_write8(I2cBusConnection* i2cBusConnection, uint8_t reg, uint32_t value) {
+void tcs34725_write8(I2cBusConnection* i2cBusConnection, uint8_t reg, uint8_t value) {
+    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+    appendString(debugOutputStream, "write8\n");
+    
     I2cBus* i2cBus = i2cBusConnection->i2cBus;
+    
+    portableMasterWaitSendI2C(i2cBusConnection);
+    WaitI2C(i2cBus);
     portableMasterStartI2C(i2cBusConnection);
     WaitI2C(i2cBus);
     portableMasterWriteI2C(i2cBusConnection, TCS34725_ADDRESS);
     WaitI2C(i2cBus);
     portableMasterWriteI2C(i2cBusConnection, TCS34725_COMMAND_BIT | reg);
+    WaitI2C(i2cBus);
+    portableMasterWriteI2C(i2cBusConnection, value);
     WaitI2C(i2cBus);
     portableMasterStopI2C(i2cBusConnection);
 }
@@ -34,22 +48,64 @@ void tcs34725_write8(I2cBusConnection* i2cBusConnection, uint8_t reg, uint32_t v
  * Reads an 8 bit value over I2C
  */
 uint8_t tcs34725_read8(I2cBusConnection* i2cBusConnection, uint8_t reg) {
+    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+    appendString(debugOutputStream, "Read8\n");
+    
+    appendString(debugOutputStream, "reg : ");
+    appendHex2(debugOutputStream, reg);
+    println(debugOutputStream);
+    
     I2cBus* i2cBus = i2cBusConnection->i2cBus;
+    portableMasterWaitSendI2C(i2cBusConnection);
+    WaitI2C(i2cBus);
+    delaymSec(3);
     portableMasterStartI2C(i2cBusConnection);
     WaitI2C(i2cBus);
+    delaymSec(3);
+
+    appendString(debugOutputStream, "TCS34725_ADDRESS : ");
+    appendHex2(debugOutputStream, TCS34725_ADDRESS);
+    println(debugOutputStream);
+
     portableMasterWriteI2C(i2cBusConnection, TCS34725_ADDRESS);
     WaitI2C(i2cBus);
+    delaymSec(3);
+
+    appendString(debugOutputStream, "TCS34725_COMMAND_BIT | reg : ");
+    appendHex2(debugOutputStream, TCS34725_COMMAND_BIT | reg);
+    println(debugOutputStream);
+
     portableMasterWriteI2C(i2cBusConnection, TCS34725_COMMAND_BIT | reg);
     WaitI2C(i2cBus);
-    portableMasterStopI2C(i2cBusConnection);
+    delaymSec(3);
     
+    portableMasterStopI2C(i2cBusConnection);
     WaitI2C(i2cBus);
+    delaymSec(3);
+
+    portableMasterStartI2C(i2cBusConnection);
+    WaitI2C(i2cBus);
+    delaymSec(3);
+
+    // Read
+    appendString(debugOutputStream, "TCS34725_ADDRESS | 0x01 : ");
+    appendHex2(debugOutputStream, TCS34725_ADDRESS | 0x01);
+    println(debugOutputStream);
+
+    /*
+    portableMasterWriteI2C(i2cBusConnection, TCS34725_COMMAND_BIT | reg);
+    WaitI2C(i2cBus);
+    */
+    
     portableMasterWriteI2C(i2cBusConnection, TCS34725_ADDRESS | 0x01);
+    WaitI2C(i2cBus);
+    delaymSec(3);
 
     uint8_t x = portableMasterReadI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
-    portableMasterNackI2C(i2cBusConnection);
 
+    WaitI2C(i2cBus);
+    delaymSec(3);
+    portableMasterStopI2C(i2cBusConnection);
     return x;
 }
 
@@ -58,37 +114,22 @@ uint8_t tcs34725_read8(I2cBusConnection* i2cBusConnection, uint8_t reg) {
  * Reads a 16 bit values over I2C
  */
 uint16_t tcs34725_read16(I2cBusConnection* i2cBusConnection, uint8_t reg) {
-    uint16_t x;
-    uint16_t t;
+    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+    appendString(debugOutputStream, "read16\n");
 
-    I2cBus* i2cBus = i2cBusConnection->i2cBus;
-    portableMasterStartI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
-    portableMasterWriteI2C(i2cBusConnection, TCS34725_ADDRESS);
-    WaitI2C(i2cBus);
-    portableMasterWriteI2C(i2cBusConnection, TCS34725_COMMAND_BIT | reg);
-    WaitI2C(i2cBus);
-    portableMasterStopI2C(i2cBusConnection);
-
-    t = portableMasterReadI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
-    portableMasterAckI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
-
-    x = portableMasterReadI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
-    portableMasterNackI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
-
-    x <<= 8;
-    x |= t;
-    return x;
+	uint8_t low = tcs34725_read8(i2cBusConnection, reg);
+	uint8_t high = tcs34725_read8(i2cBusConnection, ++reg);
+	
+	return (high << 8) | low;
 }
 
 /**
  * Enables the device.
  */
 void tcs34725_enable(I2cBusConnection* i2cBusConnection) {
+    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+    appendString(debugOutputStream, "Enable\n");
+
     tcs34725_write8(i2cBusConnection, TCS34725_ENABLE, TCS34725_ENABLE_PON);
     delaymSec(3);
     tcs34725_write8(i2cBusConnection, TCS34725_ENABLE, TCS34725_ENABLE_PON | TCS34725_ENABLE_AEN);
@@ -98,6 +139,9 @@ void tcs34725_enable(I2cBusConnection* i2cBusConnection) {
  * Disables the device (putting it in lower power sleep mode).
  */
 void tcs34725_disable(I2cBusConnection* i2cBusConnection) {
+    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+    appendString(debugOutputStream, "Disable\n");
+
     // Turn the device off to save power
     uint8_t reg;
     reg = tcs34725_read8(i2cBusConnection, TCS34725_ENABLE);
@@ -108,13 +152,22 @@ void tcs34725_disable(I2cBusConnection* i2cBusConnection) {
  * Initializes I2C and configures the sensor (call this function before doing anything else)
  */
 bool tcs34725_begin(Tcs34725* tcs34725) {
+    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+    appendString(debugOutputStream, "begin\n");
+
+    // delaymSec(100);
     I2cBusConnection* i2cBusConnection = tcs34725->i2cBusConnection;
     // Make sure we're actually connected
     uint8_t x = tcs34725_read8(i2cBusConnection, TCS34725_ID);
+    
+    appendString(debugOutputStream, "Tcs34725_Id : ");
+    appendHex2(debugOutputStream, x);
+    println(debugOutputStream);
+    
     if ((x != 0x44) && (x != 0x10)) {
         return false;
     }
-    tcs34725->tcs34725Initialised  = true;
+    tcs34725->initialized = true;
 
     // Set default integration time and gain
     tcs34725_setIntegrationTime(tcs34725, tcs34725->integrationTime);
@@ -129,25 +182,31 @@ bool tcs34725_begin(Tcs34725* tcs34725) {
 /**
  * Sets the integration time for the TC34725
  */
-void tcs34725_setIntegrationTime(Tcs34725* tcs34725, tcs34725IntegrationTime_t it) {
+void tcs34725_setIntegrationTime(Tcs34725* tcs34725, tcs34725IntegrationTime_t integrationTime) {
+    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+    appendString(debugOutputStream, "tcs34725_setIntegrationTime\n");
+
     I2cBusConnection* i2cBusConnection = tcs34725->i2cBusConnection;
-    if (!tcs34725->tcs34725Initialised) {
+    if (!tcs34725->initialized) {
         tcs34725_begin(tcs34725);
     }
 
     // Update the timing register
-    tcs34725_write8(i2cBusConnection, TCS34725_ATIME, it);
+    tcs34725_write8(i2cBusConnection, TCS34725_ATIME, integrationTime);
 
     // Update value placeholders
-    tcs34725->integrationTime = it;
+    tcs34725->integrationTime = integrationTime;
 }
 
 /**
  * Adjusts the gain on the TCS34725 (adjusts the sensitivity to light)
  */
 void tcs34725_setGain(Tcs34725* tcs34725, tcs34725Gain_t gain) {
+    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+    appendString(debugOutputStream, "tcs34725_setGain\n");
+
     I2cBusConnection* i2cBusConnection = tcs34725->i2cBusConnection;
-    if (!tcs34725->tcs34725Initialised) {
+    if (!tcs34725->initialized) {
         tcs34725_begin(tcs34725);
     }
     // Update the timing register
@@ -161,8 +220,11 @@ void tcs34725_setGain(Tcs34725* tcs34725, tcs34725Gain_t gain) {
  * Reads the raw red, green, blue and clear channel values
  */
 void tcs34725_getRawData(Tcs34725* tcs34725, uint16_t *r, uint16_t *g, uint16_t *b, uint16_t *c) {
+    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+    appendString(debugOutputStream, "tcs34725_getRawData\n");
+    
     I2cBusConnection* i2cBusConnection = tcs34725->i2cBusConnection;
-    if (!tcs34725->tcs34725Initialised) {
+    if (!tcs34725->initialized) {
         tcs34725_begin(tcs34725);
     }
 
@@ -195,6 +257,9 @@ void tcs34725_getRawData(Tcs34725* tcs34725, uint16_t *r, uint16_t *g, uint16_t 
 }
 
 void tcs34725_setInterrupt(Tcs34725* tcs34725, bool i) {
+    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+    appendString(debugOutputStream, "tcs34725_setInterrupt\n");
+    
     I2cBusConnection* i2cBusConnection = tcs34725->i2cBusConnection;
     uint8_t r = tcs34725_read8(i2cBusConnection, TCS34725_ENABLE);
     if (i) {
@@ -206,6 +271,9 @@ void tcs34725_setInterrupt(Tcs34725* tcs34725, bool i) {
 }
 
 void tcs34725_clearInterrupt(Tcs34725* tcs34725) {
+    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+    appendString(debugOutputStream, "tcs34725_clearInterrupt\n");
+    
     I2cBusConnection* i2cBusConnection = tcs34725->i2cBusConnection;
     I2cBus* i2cBus = i2cBusConnection->i2cBus;
 
@@ -219,6 +287,9 @@ void tcs34725_clearInterrupt(Tcs34725* tcs34725) {
 }
 
 void tcs34725_setIntLimits(Tcs34725* tcs34725, uint16_t low, uint16_t high) {
+    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+    appendString(debugOutputStream, "tcs34725_setIntLimits\n");
+    
     I2cBusConnection* i2cBusConnection = tcs34725->i2cBusConnection;
     tcs34725_write8(i2cBusConnection, 0x04, low & 0xFF);
     tcs34725_write8(i2cBusConnection, 0x05, low >> 8);
