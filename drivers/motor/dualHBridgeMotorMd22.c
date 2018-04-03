@@ -2,6 +2,9 @@
 #include "i2cCommon.h"
 #include "md22.h"
 
+#include "../../common/log/logger.h"
+#include "../../common/log/logLevel.h"
+
 #include <stdbool.h>
 
 /**
@@ -43,6 +46,17 @@ signed int dualHBridgeMotorReadValueMD22(DualHBridgeMotor* dualHBridgeMotor, uns
 
 /**
  * DualHBridgeMotor function implementation.
+ * @param DualHBridgeMotor
+ * @param motorIndex
+ * @return 
+ */
+unsigned char dualHBridgeMotorGetSoftwareRevisionMD22(DualHBridgeMotor* dualHBridgeMotor) {
+    I2cBusConnection* i2cBusConnection = getDualHBridgeMotorMD22I2cBusConnection(dualHBridgeMotor);
+    return getMD22Version(i2cBusConnection);
+}
+
+/**
+ * DualHBridgeMotor function implementation.
  * @param dualHBridgeMotor
  * @param hBridgeSpeed1
  * @param hBridgeSpeed2
@@ -50,6 +64,8 @@ signed int dualHBridgeMotorReadValueMD22(DualHBridgeMotor* dualHBridgeMotor, uns
 void dualHBridgeMotorWriteValueMD22(DualHBridgeMotor* dualHBridgeMotor, signed int hBridgeSpeed1, signed int hBridgeSpeed2) {
     I2cBusConnection* i2cBusConnection = getDualHBridgeMotorMD22I2cBusConnection(dualHBridgeMotor);
     setMD22MotorSpeeds(i2cBusConnection, hBridgeSpeed1, hBridgeSpeed2);
+    dualHBridgeMotor->motorSpeed1 = hBridgeSpeed1;
+    dualHBridgeMotor->motorSpeed2 = hBridgeSpeed2;
 }
 
 void initDualHBridgeMotorMD22(DualHBridgeMotor* dualHBridgeMotor, I2cBusConnection* i2cBusConnection) {
@@ -57,5 +73,6 @@ void initDualHBridgeMotorMD22(DualHBridgeMotor* dualHBridgeMotor, I2cBusConnecti
                     dualHBridgeMotorInitMD22,
                     dualHBridgeMotorReadValueMD22,
                     dualHBridgeMotorWriteValueMD22,
+                    dualHBridgeMotorGetSoftwareRevisionMD22,
                     (int*) i2cBusConnection);
 }

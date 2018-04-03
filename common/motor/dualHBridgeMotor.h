@@ -21,6 +21,11 @@ typedef bool dualHBridgeMotorInitFunction(DualHBridgeMotor* dualHBridgeMotor);
 typedef signed int dualHBridgeMotorReadValueFunction(DualHBridgeMotor* dualHBridgeMotor, unsigned int motorIndex);
 
 /**
+* Get the software revision of the dualHBrige Motor.
+*/
+typedef unsigned char dualHBridgeMotorGetSoftwareRevisionFunction(DualHBridgeMotor* dualHBridgeMotor);
+
+/**
  * For a dual HBridge, manage 4 pwms (either 4 pwms in 30F, or 2 pwms and 2 pin directions on PIC32).
  * @param hBridgeSpeed1 between -255 and + 255
  * @param hBridgeSpeed2 between -255 and + 255
@@ -37,6 +42,8 @@ struct DualHBridgeMotor {
     dualHBridgeMotorReadValueFunction* dualHBridgeMotorReadValue;
     /** The function which can be used to change the value of each dualHBridge motor. */
     dualHBridgeMotorWriteValueFunction* dualHBridgeMotorWriteValue;
+    /** The function which could be used to get the software revision. */
+    dualHBridgeMotorGetSoftwareRevisionFunction* dualHBridgeMotorGetSoftwareRevision;
     /** To store the value of the motorSpeed1 (do not modify it without calling public methods) */
     signed int motorSpeed1;
     /** To store the value of the motorSpeed2 (do not modify it without calling public methods) */
@@ -54,6 +61,7 @@ void initDualHBridge(DualHBridgeMotor* dualHBridgeMotors,
                dualHBridgeMotorInitFunction* dualHBridgeMotorInit,
                dualHBridgeMotorReadValueFunction* dualHBridgeMotorReadValue,
                dualHBridgeMotorWriteValueFunction* dualHBridgeMotorWriteValue,
+               dualHBridgeMotorGetSoftwareRevisionFunction* dualHBridgeMotorGetSoftwareRevision,
                int* object);
 
 /** 

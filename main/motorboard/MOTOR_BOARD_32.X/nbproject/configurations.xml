@@ -297,6 +297,8 @@
         <itemPath>../../../drivers/colorSensor/colorSensor.h</itemPath>
         <itemPath>../../../drivers/colorSensor/colorSensorDebug.h</itemPath>
         <itemPath>../../../drivers/colorSensor/tcs34725.h</itemPath>
+        <itemPath>../../../drivers/colorSensor/colorSensorTcs34725.h</itemPath>
+        <itemPath>../../../drivers/colorSensor/tcs34725Computation.h</itemPath>
       </logicalFolder>
       <logicalFolder name="drivers.dispatcher"
                      displayName="drivers.dispatcher"
@@ -314,10 +316,11 @@
         <itemPath>../../../drivers/ioExpander/ioExpander.h</itemPath>
         <itemPath>../../../drivers/ioExpander/ioExpanderDebug.h</itemPath>
         <itemPath>../../../drivers/ioExpander/pcf8574.h</itemPath>
+        <itemPath>../../../drivers/ioExpander/ioExpanderPcf8574.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f16" displayName="drivers.motor" projectFiles="true">
-        <itemPath>../../../drivers/motor/md22.h</itemPath>
         <itemPath>../../../drivers/motor/dualHBridgeMotorMd22.h</itemPath>
+        <itemPath>../../../drivers/motor/md22.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f11" displayName="drivers.relay" projectFiles="true">
         <itemPath>../../../drivers/relay/relay.h</itemPath>
@@ -585,10 +588,6 @@
                      projectFiles="true">
         <itemPath>../../../common/pwm/32/pwmPic32.c</itemPath>
       </logicalFolder>
-      <logicalFolder name="common.pwm.motor"
-                     displayName="common.pwm.motor"
-                     projectFiles="true">
-      </logicalFolder>
       <logicalFolder name="common.pwm.motor.32"
                      displayName="common.pwm.motor.32"
                      projectFiles="true">
@@ -773,6 +772,8 @@
         <itemPath>../../../drivers/colorSensor/colorSensor.c</itemPath>
         <itemPath>../../../drivers/colorSensor/colorSensorDebug.c</itemPath>
         <itemPath>../../../drivers/colorSensor/tcs34725.c</itemPath>
+        <itemPath>../../../drivers/colorSensor/colorSensorTcs34725.c</itemPath>
+        <itemPath>../../../drivers/colorSensor/tcs34725Computation.c</itemPath>
       </logicalFolder>
       <logicalFolder name="drivers.dispatcher"
                      displayName="drivers.dispatcher"
@@ -794,10 +795,11 @@
         <itemPath>../../../drivers/ioExpander/ioExpander.c</itemPath>
         <itemPath>../../../drivers/ioExpander/ioExpanderDebug.c</itemPath>
         <itemPath>../../../drivers/ioExpander/pcf8574.c</itemPath>
+        <itemPath>../../../drivers/ioExpander/ioExpanderPcf8574.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f15" displayName="drivers.motor" projectFiles="true">
-        <itemPath>../../../drivers/motor/md22.c</itemPath>
         <itemPath>../../../drivers/motor/dualHBridgeMotorMd22.c</itemPath>
+        <itemPath>../../../drivers/motor/md22.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f10" displayName="drivers.relay" projectFiles="true">
         <itemPath>../../../drivers/relay/relay.c</itemPath>

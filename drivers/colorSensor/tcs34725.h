@@ -2,8 +2,9 @@
 #define TCS_34725_H
 
 #include <stdint.h>
+#include <stdbool.h>
 
-#define TCS34725_ADDRESS          (0x29)
+#include "../../common/i2c/i2cBusConnectionList.h"
 
 #define TCS34725_COMMAND_BIT      (0x80)
 
@@ -54,45 +55,51 @@
 #define TCS34725_BDATAL           (0x1A)    /* Blue channel data */
 #define TCS34725_BDATAH           (0x1B)
 
-typedef enum
-{
-  TCS34725_INTEGRATIONTIME_2_4MS  = 0xFF,   /**<  2.4ms - 1 cycle    - Max Count: 1024  */
-  TCS34725_INTEGRATIONTIME_24MS   = 0xF6,   /**<  24ms  - 10 cycles  - Max Count: 10240 */
-  TCS34725_INTEGRATIONTIME_50MS   = 0xEB,   /**<  50ms  - 20 cycles  - Max Count: 20480 */
-  TCS34725_INTEGRATIONTIME_101MS  = 0xD5,   /**<  101ms - 42 cycles  - Max Count: 43008 */
-  TCS34725_INTEGRATIONTIME_154MS  = 0xC0,   /**<  154ms - 64 cycles  - Max Count: 65535 */
-  TCS34725_INTEGRATIONTIME_700MS  = 0x00    /**<  700ms - 256 cycles - Max Count: 65535 */
+typedef enum {
+    TCS34725_INTEGRATIONTIME_2_4MS = 0xFF, /**<  2.4ms - 1 cycle    - Max Count: 1024  */
+    TCS34725_INTEGRATIONTIME_24MS = 0xF6, /**<  24ms  - 10 cycles  - Max Count: 10240 */
+    TCS34725_INTEGRATIONTIME_50MS = 0xEB, /**<  50ms  - 20 cycles  - Max Count: 20480 */
+    TCS34725_INTEGRATIONTIME_101MS = 0xD5, /**<  101ms - 42 cycles  - Max Count: 43008 */
+    TCS34725_INTEGRATIONTIME_154MS = 0xC0, /**<  154ms - 64 cycles  - Max Count: 65535 */
+    TCS34725_INTEGRATIONTIME_700MS = 0x00 /**<  700ms - 256 cycles - Max Count: 65535 */
 }
 tcs34725IntegrationTime_t;
 
-typedef enum
-{
-  TCS34725_GAIN_1X                = 0x00,   // <  No gain
-  TCS34725_GAIN_4X                = 0x01,   // <  4x gain
-  TCS34725_GAIN_16X               = 0x02,   // <  16x gain
-  TCS34725_GAIN_60X               = 0x03    // <  60x gain
+typedef enum {
+    TCS34725_GAIN_1X = 0x00, // <  No gain
+    TCS34725_GAIN_4X = 0x01, // <  4x gain
+    TCS34725_GAIN_16X = 0x02, // <  16x gain
+    TCS34725_GAIN_60X = 0x03 // <  60x gain
 }
 tcs34725Gain_t;
 
-/*
- public:
-  Adafruit_TCS34725(tcs34725IntegrationTime_t = TCS34725_INTEGRATIONTIME_2_4MS, tcs34725Gain_t = TCS34725_GAIN_1X);
-*/  
-  bool tcs34725_begin(void);
-  void tcs34725_setIntegrationTime(tcs34725IntegrationTime_t it);
-  void tcs34725_setGain(tcs34725Gain_t gain);
-  void tcs34725_getRawData(uint16_t *r, uint16_t *g, uint16_t *b, uint16_t *c);
-  uint16_t tcs34725_calculateColorTemperature(uint16_t r, uint16_t g, uint16_t b);
-  uint16_t tcs34725_calculateLux(uint16_t r, uint16_t g, uint16_t b);
-  void tcs34725_write8 (uint8_t reg, uint32_t value);
-  uint8_t tcs34725_read8 (uint8_t reg);
-  uint16_t tcs34725_read16 (uint8_t reg);
-  void tcs34725_setInterrupt(bool flag);
-  void tcs34725_clearInterrupt(void);
-  void tcs34725_setIntLimits(uint16_t l, uint16_t h);
-  void tcs34725_enable(void);
-  
-  void tcs34725_disable(void);
-// };
+/**
+ * Encapsulate all informations
+ */
+typedef struct Tcs34725 {
+    I2cBusConnection*           i2cBusConnection;
+    tcs34725IntegrationTime_t   integrationTime;
+    tcs34725Gain_t              gain;
+    bool                        tcs34725Initialised;
+} Tcs34725;
+
+bool tcs34725_begin(Tcs34725* tcs34725);
+void tcs34725_setIntegrationTime(Tcs34725* tcs34725, tcs34725IntegrationTime_t it);
+void tcs34725_setGain(Tcs34725* tcs34725, tcs34725Gain_t gain);
+void tcs34725_getRawData(Tcs34725* tcs34725, uint16_t *r, uint16_t *g, uint16_t *b, uint16_t *c);
+
+void tcs34725_setInterrupt(Tcs34725* tcs34725, bool flag);
+void tcs34725_clearInterrupt(Tcs34725* tcs34725);
+void tcs34725_setIntLimits(Tcs34725* tcs34725, uint16_t l, uint16_t h);
+
+void tcs34725_enable(I2cBusConnection* i2cBusConnection);
+void tcs34725_disable(I2cBusConnection* i2cBusConnection);
+
+/**
+ * Init the Tcs34725 structure.
+ * @param tcs34725
+ * @param i2cBusConnection
+ */
+void initTcs34725Struct(Tcs34725* tcs34725, I2cBusConnection* i2cBusConnection);
 
 #endif

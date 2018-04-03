@@ -4,6 +4,20 @@
 #include "../../common/i2c/i2cBusConnectionList.h"
 
 /**
+ * 
+ * @param i2cBusConnection
+ * @return 
+ */
+bool initMD22(I2cBusConnection* i2cBusConnection);
+
+/**
+ * Returns the software revision of MD22.
+ * @param i2cBusConnection
+ * @return 
+ */
+unsigned char getMD22Version(I2cBusConnection* i2cBusConnection);
+
+/**
 * Stops the motors
 */
 void stopMD22Motors(I2cBusConnection* i2cBusConnection);

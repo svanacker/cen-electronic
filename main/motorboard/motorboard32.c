@@ -164,12 +164,20 @@
 #include "../../drivers/clock/softClock.h"
 #include "../../drivers/clock/PCF8563.h"
 
+#include "../../drivers/colorSensor/tcs34725.h"
+
 // -> IO EXPANDER)
 #include "../../drivers/ioExpander/ioExpander.h"
 #include "../../drivers/ioExpander/ioExpanderDebug.h"
+#include "../../drivers/ioExpander/ioExpanderPcf8574.h"
 #include "../../drivers/ioExpander/pcf8574.h"
 
+// -> EEPROM
 #include "../../drivers/eeprom/24c512.h"
+
+// -> MOTOR
+#include "../../drivers/motor/dualHBridgeMotorMd22.h"
+#include "../../drivers/motor/md22.h"
 
 // Direct implementation
 #include "../../motion/motion.h"
@@ -179,8 +187,13 @@
 
 // #include "../../test/mathTest.h"
 #include "../../test/motion/bspline/bsplinetest.h"
+
+// RELAY
 #include "relay/rly08.h"
+
+// MOTOR
 #include "dualHBridgeMotorMd22.h"
+#include "colorSensor/colorSensorTcs34725.h"
 
 // I2C
 static I2cBus i2cBusListArray[MOTOR_BOARD_I2C_BUS_LIST_LENGTH];
@@ -196,6 +209,7 @@ static I2cBusConnection* tofI2cBusConnection;
 static I2cBusConnection* ioExpanderBusConnection;
 static I2cBusConnection* relayBusConnection;
 static I2cBusConnection* md22BusConnection;
+static I2cBusConnection* colorBusConnection;
 
 // Eeprom
 static Eeprom eeprom_;
@@ -204,6 +218,7 @@ static char memoryEepromArray[MOTOR_BOARD_MEMORY_EEPROM_LENGTH];
 
 // Color
 static ColorSensor colorSensor;
+static Tcs34725 tcs34725;
 static Color colorValue;
 
 // Clock
@@ -407,6 +422,11 @@ int runMotorBoard() {
     // EEPROM : If Eeprom is installed
     // eepromI2cBusConnection = addI2cBusConnection(masterI2cBus, ST24C512_ADDRESS_0, true);
     // init24C512Eeprom(&eeprom_, eepromI2cBusConnection);
+    
+    // COLOR
+    colorBusConnection = addI2cBusConnection(masterI2cBus, TCS34725_ADDRESS, true);
+    initTcs34725Struct(&tcs34725, colorBusConnection);
+    initColorSensorTcs34725(&colorSensor, &colorValue, &tcs34725);
     
     // EEPROM : If we use Software Eeprom
     initEepromMemory(&eeprom_, &memoryEepromArray, MOTOR_BOARD_MEMORY_EEPROM_LENGTH);

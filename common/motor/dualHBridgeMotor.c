@@ -4,10 +4,12 @@ void initDualHBridge(DualHBridgeMotor* dualHBridgeMotor,
     dualHBridgeMotorInitFunction* dualHBridgeMotorInit,
     dualHBridgeMotorReadValueFunction* dualHBridgeMotorReadValue,
     dualHBridgeMotorWriteValueFunction* dualHBridgeMotorWriteValue,
+    dualHBridgeMotorGetSoftwareRevisionFunction* dualHBridgeMotorGetSoftwareRevision,    
     int* object) {
     dualHBridgeMotor->dualHBridgeMotorInit = dualHBridgeMotorInit;
     dualHBridgeMotor->dualHBridgeMotorReadValue = dualHBridgeMotorReadValue;
     dualHBridgeMotor->dualHBridgeMotorWriteValue = dualHBridgeMotorWriteValue;
+    dualHBridgeMotor->dualHBridgeMotorGetSoftwareRevision = dualHBridgeMotorGetSoftwareRevision;
     dualHBridgeMotor->object = object;
 }
 

@@ -7,6 +7,8 @@
 #include "../../common/motor/dualHBridgeMotor.h"
 #include "../../common/i2c/i2cBusConnectionList.h"
 
+I2cBusConnection* getDualHBridgeMotorMD22I2cBusConnection(DualHBridgeMotor* dualHBridgeMotor);
+
 /**
  * Init the MD22 according to DualHBridgeMotor interface
  */

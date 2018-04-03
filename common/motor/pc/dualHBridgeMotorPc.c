@@ -32,6 +32,14 @@ void dualHBridgeMotorWriteValuePc(DualHBridgeMotor* dualHBridgeMotor, signed int
 * DualHBridgeMotor implementation (POO)
 * @private
 */
+unsigned char dualHBridgeMotorGetSoftwareRevisionPc(DualHBridgeMotor* dualHBridgeMotor) {
+    return 1;
+}
+
+/**
+* DualHBridgeMotor implementation (POO)
+* @private
+*/
 bool dualHBridgeMotorInitPc(DualHBridgeMotor* dualHBridgeMotor) {
     dualHBridgeMotorWriteValuePc(dualHBridgeMotor, 0, 0);
     return true;
@@ -42,5 +50,6 @@ void initDualHBridgeMotorPc(DualHBridgeMotor* dualHBridgeMotor) {
                     &dualHBridgeMotorInitPc,
                     &dualHBridgeMotorReadValuePc,
                     &dualHBridgeMotorWriteValuePc,
+                    &dualHBridgeMotorGetSoftwareRevisionPc,
                     NULL);
 }

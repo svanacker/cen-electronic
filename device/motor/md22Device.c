@@ -15,6 +15,8 @@
 #include "../../common/log/logLevel.h"
 
 #include "../../device/device.h"
+#include "../../common/i2c/i2cCommon.h"
+#include "../../drivers/motor/dualHBridgeMotorMd22.h"
 
 // The underlying dual HBridge structure pointer
 static DualHBridgeMotor* dualHBridgeMotorMD22;
@@ -38,20 +40,25 @@ void deviceMD22HandleRawData(char commandHeader, InputStream* inputStream, Outpu
     if (commandHeader == COMMAND_MD22_MOVE) {
         signed int left = readSignedHex2(inputStream);
         signed int right = readSignedHex2(inputStream);
-        ackCommand(outputStream, MOTOR_DEVICE_HEADER, COMMAND_MD22_MOVE);
+        ackCommand(outputStream, MD22_DEVICE_HEADER, COMMAND_MD22_MOVE);
         dualHBridgeMotorMD22->dualHBridgeMotorWriteValue(dualHBridgeMotorMD22, left * 2, right * 2);
     }
     else if (commandHeader == COMMAND_MD22_READ_VALUE) {
-        ackCommand(outputStream, MOTOR_DEVICE_HEADER, COMMAND_MD22_READ_VALUE);
+        ackCommand(outputStream, MD22_DEVICE_HEADER, COMMAND_MD22_READ_VALUE);
         signed int left = dualHBridgeMotorMD22->dualHBridgeMotorReadValue(dualHBridgeMotorMD22, HBRIDGE_1);
         signed int right = dualHBridgeMotorMD22->dualHBridgeMotorReadValue(dualHBridgeMotorMD22, HBRIDGE_2);
         appendHex2(outputStream, left / 2);
         appendHex2(outputStream, right / 2);
     }
     else if (commandHeader == COMMAND_MD22_STOP) {
-        ackCommand(outputStream, MOTOR_DEVICE_HEADER, COMMAND_MD22_STOP);
+        ackCommand(outputStream, MD22_DEVICE_HEADER, COMMAND_MD22_STOP);
 
         stopMotors(dualHBridgeMotorMD22);
+    }
+    else if (commandHeader == COMMAND_MD22_SOFTWARE_REVISION) {
+        ackCommand(outputStream, MD22_DEVICE_HEADER, COMMAND_MD22_SOFTWARE_REVISION);
+        unsigned softwareRevision = dualHBridgeMotorMD22->dualHBridgeMotorGetSoftwareRevision(dualHBridgeMotorMD22);
+        appendHex2(outputStream, softwareRevision);
     }
 }
 

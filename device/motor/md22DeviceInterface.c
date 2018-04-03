@@ -30,7 +30,14 @@ int deviceMD22GetInterface(char header, DeviceInterfaceMode mode, bool fillDevic
             setFunctionNoArgumentAndNoResult("stopMotor");
         }
         return commandLengthValueForMode(mode, 0, 0);
+    } else if (header == COMMAND_MD22_SOFTWARE_REVISION) {
+        if (fillDeviceArgumentList) {
+            setFunction("Software revision", 0, 1);
+            setResultUnsignedHex2(0, "Software revision");
+        }
+        return commandLengthValueForMode(mode, 0, 2);
     }
+
     return DEVICE_HEADER_NOT_HANDLED;
 }
 

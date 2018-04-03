@@ -117,10 +117,19 @@ signed int dualHBridgeMotorReadValuePwm32(DualHBridgeMotor* dualHBridgeMotor, un
     return 0;
 }
 
+/**
+* DualHBridgeMotor implementation (POO)
+* @private
+*/
+unsigned char dualHBridgeMotorGetSoftwareRevisionPwm32(DualHBridgeMotor* dualHBridgeMotor) {
+    return 1;
+}
+
 void initDualHBridgeMotorPWM(DualHBridgeMotor* dualHBridgeMotor) {
     initDualHBridge(dualHBridgeMotor,
                     &initPwmForMotor,
                     &dualHBridgeMotorReadValuePwm32,
                     &pwmDualHBridgeMotor,
+                    &dualHBridgeMotorGetSoftwareRevisionPwm32,
                     NULL);
 }

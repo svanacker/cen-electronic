@@ -15,6 +15,11 @@
 #define COMMAND_MD22_READ_VALUE   'r'
 
 /**
+ * Defines the header to get the version of the software on MD22
+ */
+#define COMMAND_MD22_SOFTWARE_REVISION   'v'
+
+/**
 * Defines the header to stop the motors.
 */
 #define COMMAND_MD22_STOP         'c'

@@ -1,15 +1,14 @@
+#ifndef PCF8574_H
+#define PCF8574_H
+
 /**
  * Encapsulates the PCF8574
  * @author svanacker
  * @version 06/05/2007
  */
-#ifndef PCF8574_H
-#define PCF8574_H
 
 #include "../../common/io/outputStream.h"
 #include "../../common/i2c/i2cCommon.h"
-
-#include "ioExpander.h"
 
 // base control address for PCF8574
 #define PCF8574_BASE_ADDRESS 0x40
@@ -47,12 +46,5 @@ unsigned char readPCF8574(I2cBusConnection* i2cConnection, unsigned char addr, u
 * Test functions for PCF.
 */
 void testPCF8574(I2cBusConnection* i2cConnection, OutputStream* outputStream);
-
-/**
- * Init the PCF8574 by wrapping it into a specific Structure to handle it
- * transparently
- * @param ioExpander
- */
-void initIOExpanderPCF8574(IOExpander* ioExpander, I2cBusConnection* i2cConnection);
 
 #endif

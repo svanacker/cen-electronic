@@ -28,6 +28,8 @@ struct ColorSensor {
     colorSensorInitFunction* colorSensorInit;
     /** The function which must be used to read the value of the color Sensor */
     colorSensorReadValueFunction* colorSensorReadValue;
+    /** The color value object (result of last read) */
+    Color* color;
     /** pointer on other object (useful for I2C Connection for example) .*/
     int* object;
 };
@@ -38,6 +40,7 @@ struct ColorSensor {
 void initColorSensor(ColorSensor* colorSensor, 
                colorSensorInitFunction* colorSensorInit,
                colorSensorReadValueFunction* colorSensorReadValue,
+               Color* color,
                int* object);
 
 #endif
