@@ -12,12 +12,14 @@ const char* deviceColorSensorGetName(void) {
 int deviceColorSensorGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     if (commandHeader == COMMAND_COLOR_SENSOR_READ) {
         if (fillDeviceArgumentList) {
-            setFunction("read Color Sensor", 1, 1);
+            setFunction("read Color Sensor", 0, 5);
             setResultUnsignedHex2(0, "R");
-            setResultUnsignedHex2(1, "G");
-            setResultUnsignedHex2(2, "B");
+            setResultSeparator(1);
+            setResultUnsignedHex2(2, "G");
+            setResultSeparator(3);
+            setResultUnsignedHex2(4, "B");
         }
-        return commandLengthValueForMode(mode, 2, 1);
+        return commandLengthValueForMode(mode, 0, 8);
     }
     else if (commandHeader == COMMAND_COLOR_SENSOR_DEBUG) {
         if (fillDeviceArgumentList) {

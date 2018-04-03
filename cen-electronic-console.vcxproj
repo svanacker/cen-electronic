@@ -265,6 +265,8 @@
     <ClCompile Include="device\motion\simple\motionDeviceInterface.c" />
     <ClCompile Include="device\motion\simulation\motionSimulationDevice.c" />
     <ClCompile Include="device\motion\simulation\motionSimulationDeviceInterface.c" />
+    <ClCompile Include="device\motor\md22Device.c" />
+    <ClCompile Include="device\motor\md22DeviceInterface.c" />
     <ClCompile Include="device\motor\pwmMotorDevice.c" />
     <ClCompile Include="device\motor\pwmMotorDeviceInterface.c" />
     <ClCompile Include="device\navigation\navigationDevice.c" />
@@ -593,6 +595,8 @@
     <ClInclude Include="device\motion\simple\motionDeviceInterface.h" />
     <ClInclude Include="device\motion\simulation\motionSimulationDevice.h" />
     <ClInclude Include="device\motion\simulation\motionSimulationDeviceInterface.h" />
+    <ClInclude Include="device\motor\md22Device.h" />
+    <ClInclude Include="device\motor\md22DeviceInterface.h" />
     <ClInclude Include="device\motor\pwmMotorDevice.h" />
     <ClInclude Include="device\motor\pwmMotorDeviceInterface.h" />
     <ClInclude Include="device\navigation\navigationDevice.h" />

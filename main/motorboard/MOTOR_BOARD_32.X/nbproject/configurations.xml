@@ -105,7 +105,6 @@
                      displayName="common.pwm.motor"
                      projectFiles="true">
         <itemPath>../../../common/pwm/motor/dualHBridgeMotorPwm.h</itemPath>
-        <itemPath>../../../common/pwm/motor/motorPwm.h</itemPath>
       </logicalFolder>
       <logicalFolder name="common.sensor.temperature"
                      displayName="common.sensor.temperature"
@@ -243,6 +242,8 @@
                      projectFiles="true">
         <itemPath>../../../device/motor/pwmMotorDevice.h</itemPath>
         <itemPath>../../../device/motor/pwmMotorDeviceInterface.h</itemPath>
+        <itemPath>../../../device/motor/md22Device.h</itemPath>
+        <itemPath>../../../device/motor/md22DeviceInterface.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f10" displayName="device.relay" projectFiles="true">
         <itemPath>../../../device/relay/relayDevice.h</itemPath>
@@ -313,6 +314,10 @@
         <itemPath>../../../drivers/ioExpander/ioExpander.h</itemPath>
         <itemPath>../../../drivers/ioExpander/ioExpanderDebug.h</itemPath>
         <itemPath>../../../drivers/ioExpander/pcf8574.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f16" displayName="drivers.motor" projectFiles="true">
+        <itemPath>../../../drivers/motor/md22.h</itemPath>
+        <itemPath>../../../drivers/motor/dualHBridgeMotorMd22.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f11" displayName="drivers.relay" projectFiles="true">
         <itemPath>../../../drivers/relay/relay.h</itemPath>
@@ -713,6 +718,8 @@
                      projectFiles="true">
         <itemPath>../../../device/motor/pwmMotorDevice.c</itemPath>
         <itemPath>../../../device/motor/pwmMotorDeviceInterface.c</itemPath>
+        <itemPath>../../../device/motor/md22Device.c</itemPath>
+        <itemPath>../../../device/motor/md22DeviceInterface.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f9" displayName="device.relay" projectFiles="true">
         <itemPath>../../../device/relay/relayDevice.c</itemPath>
@@ -787,6 +794,10 @@
         <itemPath>../../../drivers/ioExpander/ioExpander.c</itemPath>
         <itemPath>../../../drivers/ioExpander/ioExpanderDebug.c</itemPath>
         <itemPath>../../../drivers/ioExpander/pcf8574.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f15" displayName="drivers.motor" projectFiles="true">
+        <itemPath>../../../drivers/motor/md22.c</itemPath>
+        <itemPath>../../../drivers/motor/dualHBridgeMotorMd22.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f10" displayName="drivers.relay" projectFiles="true">
         <itemPath>../../../drivers/relay/relay.c</itemPath>

@@ -18,7 +18,7 @@ typedef bool dualHBridgeMotorInitFunction(DualHBridgeMotor* dualHBridgeMotor);
 /**
 * Read the value of the DualHBridge.
 */
-typedef signed int dualHBridgeMotorReadValueFunction(DualHBridgeMotor* DualHBridgeMotor, unsigned int motorIndex);
+typedef signed int dualHBridgeMotorReadValueFunction(DualHBridgeMotor* dualHBridgeMotor, unsigned int motorIndex);
 
 /**
  * For a dual HBridge, manage 4 pwms (either 4 pwms in 30F, or 2 pwms and 2 pin directions on PIC32).

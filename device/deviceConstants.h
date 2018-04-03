@@ -23,17 +23,14 @@
 // 'h' for Help
 #define SYSTEM_DEBUG_DEVICE_HEADER                 'h'
 
-// 'H' for Color Sensor
-#define COLOR_SENSOR_DEVICE_HEADER                 'H'
+// 'H' for HBridge
+#define MD22_DEVICE_HEADER                         'H'
 
 /** Command to debug the I2C Master. */
 #define I2C_MASTER_DEBUG_DEVICE_HEADER             'I'
 
 /** Command to debug the I2C Slave. */
 #define I2C_SLAVE_DEBUG_DEVICE_HEADER              'i'
-
-/** Command to debug the I2C (Master or Slave). */
-#define I2C_COMMON_DEBUG_DEVICE_HEADER             'Q'
 
 /** Command to debug the dispatchers. */
 #define DATA_DISPATCHER_DEVICE_HEADER              'j'
@@ -81,6 +78,10 @@
 /** Command to ping */
 #define COMMAND_PING_DISPATCHER_INDEX              'Q'
 
+/** Command to debug the I2C (Master or Slave). */
+// TODO : Conflct !!
+#define I2C_COMMON_DEBUG_DEVICE_HEADER             'Q'
+
 /** To access to each pin of the PIC */
 #define PIN_DEVICE_HEADER                          'q'
 
@@ -126,7 +127,7 @@
 #define NOT_TOO_USE_2                               'Z'
 
 /** To access to the strategy (list of points, targets...) */
-#define STRATEGY_DEVICE_HEADER                     'Y'
+#define STRATEGY_DEVICE_HEADER                      'Y'
 
 /** To send the signal of start Match */
 #define START_MATCH_DEVICE_HEADER                   '!'
@@ -136,6 +137,8 @@
 
 /** Time of flight device. */
 #define TOF_DEVICE_HEADER                          '['
+
+#define COLOR_SENSOR_DEVICE_HEADER                 '*'
 
 /** TODO */
 #define ROBOT_SONAR_DETECTOR_DEVICE_HEADER         '#'

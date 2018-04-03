@@ -1,6 +1,5 @@
 #include "dualHBridgeMotor.h"
 
-
 void initDualHBridge(DualHBridgeMotor* dualHBridgeMotor,
     dualHBridgeMotorInitFunction* dualHBridgeMotorInit,
     dualHBridgeMotorReadValueFunction* dualHBridgeMotorReadValue,

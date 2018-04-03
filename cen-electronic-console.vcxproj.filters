@@ -1872,6 +1872,12 @@
     <ClCompile Include="common\motor\dualHBridgeMotor.c">
       <Filter>Source Files\common\motor</Filter>
     </ClCompile>
+    <ClCompile Include="device\motor\md22Device.c">
+      <Filter>Source Files\device\motor</Filter>
+    </ClCompile>
+    <ClCompile Include="device\motor\md22DeviceInterface.c">
+      <Filter>Source Files\device\motor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -2887,6 +2893,12 @@
     </ClInclude>
     <ClInclude Include="common\motor\pc\dualHBridgeMotorPc.h">
       <Filter>Header Files\common\motor\pc</Filter>
+    </ClInclude>
+    <ClInclude Include="device\motor\md22Device.h">
+      <Filter>Header Files\device\motor</Filter>
+    </ClInclude>
+    <ClInclude Include="device\motor\md22DeviceInterface.h">
+      <Filter>Header Files\device\motor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

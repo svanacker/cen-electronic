@@ -129,7 +129,6 @@ void ioExpanderPCF8574WriteSingleValue(IOExpander* ioExpander, unsigned int inde
 }
 
 void initIOExpanderPCF8574(IOExpander* ioExpander, I2cBusConnection* i2cBusConnection) {
-    int* object = (int*) i2cBusConnection;
     initIOExpander(ioExpander,
                    &ioExpanderPCF8574Init,
                    &ioExpanderPCF8574ReadValue,
@@ -137,5 +136,5 @@ void initIOExpanderPCF8574(IOExpander* ioExpander, I2cBusConnection* i2cBusConne
                    &ioExpanderPCF8574ReadSingleValue,
                    &ioExpanderPCF8574WriteSingleValue,
                    8,
-                   NULL);
+                   (int*) i2cBusConnection);
 }

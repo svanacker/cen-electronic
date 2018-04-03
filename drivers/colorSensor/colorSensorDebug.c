@@ -27,11 +27,10 @@ void printColorSensorDebugTableHeader(OutputStream* outputStream) {
 
 void printColorSensorTable(OutputStream* outputStream, ColorSensor* colorSensor) {
     printColorSensorDebugTableHeader(outputStream);
-    // TODO : Manage
-    Color color;
-    appendDecTableData(outputStream, color.R, COLOR_SENSOR_R_COLUMN_LENGTH);
-    appendDecTableData(outputStream, color.G, COLOR_SENSOR_R_COLUMN_LENGTH);
-    appendDecTableData(outputStream, color.B, COLOR_SENSOR_R_COLUMN_LENGTH);
+    Color* color = colorSensor->colorSensorReadValue(colorSensor);
+    appendDecTableData(outputStream, color->R, COLOR_SENSOR_R_COLUMN_LENGTH);
+    appendDecTableData(outputStream, color->G, COLOR_SENSOR_R_COLUMN_LENGTH);
+    appendDecTableData(outputStream, color->B, COLOR_SENSOR_R_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, COLOR_SENSOR_LAST_COLUMN);
 
     appendTableHeaderSeparatorLine(outputStream);

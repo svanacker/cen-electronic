@@ -120,9 +120,13 @@
 #include "../../device/i2c/slave/i2cSlaveDebugDevice.h"
 #include "../../device/i2c/slave/i2cSlaveDebugDeviceInterface.h"
 
-// Motors
+// Motors (PWM)
 #include "../../device/motor/pwmMotorDevice.h"
 #include "../../device/motor/pwmMotorDeviceInterface.h"
+
+// Motors (MD22)
+#include "../../device/motor/md22Device.h"
+#include "../../device/motor/md22DeviceInterface.h"
 
 // PID
 #include "../../motion/pid/pid.h"
@@ -176,6 +180,7 @@
 // #include "../../test/mathTest.h"
 #include "../../test/motion/bspline/bsplinetest.h"
 #include "relay/rly08.h"
+#include "dualHBridgeMotorMd22.h"
 
 // I2C
 static I2cBus i2cBusListArray[MOTOR_BOARD_I2C_BUS_LIST_LENGTH];
@@ -190,6 +195,7 @@ static I2cBusConnection* clockI2cBusConnection;
 static I2cBusConnection* tofI2cBusConnection;
 static I2cBusConnection* ioExpanderBusConnection;
 static I2cBusConnection* relayBusConnection;
+static I2cBusConnection* md22BusConnection;
 
 // Eeprom
 static Eeprom eeprom_;
@@ -209,6 +215,9 @@ static int ioExpanderValue;
 
 // MOTOR (for pidMotion)
 static DualHBridgeMotor motors;
+
+// MOTOR (for MD22)
+static DualHBridgeMotor md22;
 
 // RELAY
 static Relay relay;
@@ -286,6 +295,7 @@ void initDevicesDescriptor() {
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom_));
 
     addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor(&motors));
+    addLocalDevice(getMD22DeviceInterface(), getMD22DeviceDescriptor(&md22));
     addLocalDevice(getCodersDeviceInterface(), getCodersDeviceDescriptor());
     addLocalDevice(getPidDeviceInterface(), getPidDeviceDescriptor(&pidMotion));
     addLocalDevice(getPidDebugDeviceInterface(), getPidDebugDeviceDescriptor(&pidMotion));
@@ -405,6 +415,10 @@ int runMotorBoard() {
     ioExpanderBusConnection = addI2cBusConnection(masterI2cBus, PCF8574_ADDRESS_0, true);
     initIOExpanderPCF8574(&ioExpander, ioExpanderBusConnection);
 
+    // Motor
+    md22BusConnection = addI2cBusConnection(masterI2cBus, MD22_ADDRESS_0, true);
+    initMD22(md22BusConnection);
+
     // Relay
     relayBusConnection = addI2cBusConnection(masterI2cBus, RLY08_ADDRESS_0, true);
     initRelayRLY08(&relay, relayBusConnection);
@@ -417,9 +431,12 @@ int runMotorBoard() {
     clockI2cBusConnection = addI2cBusConnection(masterI2cBus, PCF8563_WRITE_ADDRESS, true);
     initClockPCF8563(&clock, clockI2cBusConnection);
     
-    // MOTOR
+    // MOTOR (PWM for Motion)
     initDualHBridgeMotorPWM(&motors);
 
+    // MD22 (for 2018 Edition)
+    initDualHBridgeMotorMD22(&md22, md22BusConnection);
+    
     // PidMotion
     initPidMotion(&pidMotion, &motors, &eeprom_, (PidMotionDefinition(*)[]) &motionDefinitionArray, MOTOR_BOARD_PID_MOTION_INSTRUCTION_COUNT);
 

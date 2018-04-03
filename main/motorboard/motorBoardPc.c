@@ -56,6 +56,10 @@
 #include "../../device/clock/clockDevice.h"
 #include "../../device/clock/clockDeviceInterface.h"
 
+// COLOR
+#include "../../device/color/colorDevice.h"
+#include "../../device/color/colorDeviceInterface.h"
+
 // EEPROM
 #include "../../device/eeprom/eepromDevice.h"
 #include "../../device/eeprom/eepromDeviceInterface.h"
@@ -106,6 +110,10 @@
 #include "../../device/motor/pwmMotorDevice.h"
 #include "../../device/motor/pwmMotorDeviceInterface.h"
 
+// MD22
+#include "../../device/motor/md22Device.h"
+#include "../../device/motor/md22DeviceInterface.h"
+
 // PC
 #include "../../device/pc/pcDeviceInterface.h"
 #include "../../device/pc/pcDevice.h"
@@ -126,7 +134,11 @@
 #include "../../drivers/driverList.h"
 
 #include "../../drivers/battery/battery.h"
+
 #include "../../drivers/clock/softClock.h"
+
+#include "../../drivers/colorSensor/colorSensor.h"
+#include "../../drivers/colorSensor/pc/colorSensorPc.h"
 
 #include "../../drivers/dispatcher/driverDataDispatcherList.h"
 #include "../../drivers/dispatcher/localDriverDataDispatcher.h"
@@ -153,8 +165,11 @@ static LogHandlerList logHandlerListArray[MOTOR_BOARD_PC_LOG_HANDLER_LIST_LENGTH
 // Dispatchers
 static DriverDataDispatcher driverDataDispatcherListArray[MOTOR_BOARD_PC_DATA_DISPATCHER_LIST_LENGTH];
 
-// PWM Motor
+// PWM Fake Motor
 static DualHBridgeMotor dualHBridgeMotor;
+
+// MD22 Fake Motor
+static DualHBridgeMotor md22;
 
 // SERIAL
 static SerialLink serialLinkListArray[MOTOR_BOARD_PC_SERIAL_LINK_LIST_LENGTH];
@@ -197,6 +212,10 @@ static Battery battery;
 
 // Clock
 static Clock clock;
+
+// Color
+static Color colorValue;
+static ColorSensor colorSensor;
 
 // I2C
 // -> Motor To Main
@@ -339,8 +358,11 @@ void runMotorBoardPC(bool singleMode) {
     // initEepromPc(&eeprom, "MOTOR_BOARD_PC_EEPROM");
     initEepromMemory(&eeprom, (char(*)[]) &memoryEepromArray, MOTOR_BOARD_PC_MEMORY_EEPROM_LENGTH);
 
-    // HBridge Motor Pw
+    // HBridge Fake Motor Pwm
     initDualHBridgeMotorPc(&dualHBridgeMotor);
+
+    // HBridge Fake Motor MD22
+    initDualHBridgeMotorPc(&md22);
 
     // Battery
     initBattery(&battery, getBatteryVoltage);
@@ -368,6 +390,7 @@ void runMotorBoardPC(bool singleMode) {
     addLocalDevice(getPidDeviceInterface(), getPidDeviceDescriptor(&pidMotion));
     addLocalDevice(getPidDebugDeviceInterface(), getPidDebugDeviceDescriptor(&pidMotion));
     addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor(&dualHBridgeMotor));
+    addLocalDevice(getMD22DeviceInterface(), getMD22DeviceDescriptor(&md22));
     addLocalDevice(getCodersDeviceInterface(), getCodersDeviceDescriptor());
     addLocalDevice(getTrajectoryDeviceInterface(), getTrajectoryDeviceDescriptor());
     addLocalDevice(getMotionDeviceInterface(), getMotionDeviceDescriptor(&pidMotion));
@@ -376,6 +399,10 @@ void runMotorBoardPC(bool singleMode) {
 	addLocalDevice(getRobotKinematicsDeviceInterface(), getRobotKinematicsDeviceDescriptor(&eeprom));
     addLocalDevice(getPcDeviceInterface(), getPcDeviceDescriptor(getOutputStream(&consoleInputBuffer)));
     addLocalDevice(getTofDeviceInterface(), getTofDeviceDescriptor(tofI2cBusConnection));
+
+    // COLOR
+    initColorSensorPc(&colorSensor, &colorValue);
+    addLocalDevice(getColorSensorDeviceInterface(), getColorSensorDeviceDescriptor(&colorSensor));
 
     //  IO Expander
     initIOExpanderPc(&ioExpander, &ioExpanderValue);
