@@ -17,7 +17,7 @@
 void runMechanicalBoard1PC(bool singleMode);
 
 /** Define the I2C address used by mechanical Board 1 PC. */
-#define MECHANICAL_BOARD_1_PC_I2C_ADDRESS     0x52
+#define MECHANICAL_BOARD_1_PC_I2C_ADDRESS     0x92
 
 // Dispatchers
 

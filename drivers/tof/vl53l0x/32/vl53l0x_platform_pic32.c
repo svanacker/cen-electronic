@@ -21,7 +21,7 @@
 // PRIMITIVES
 
 int32_t VL53L0X_write_multi(uint8_t deviceAddress, uint8_t index, uint8_t  *pdata, int32_t count) {
-    I2cBusConnection* i2cBusConnection = getI2cBusConnectionBySlaveAddress(0x52);
+    I2cBusConnection* i2cBusConnection = getI2cBusConnectionBySlaveAddress(deviceAddress << 1);
     I2cBus* i2cBus = i2cBusConnection->i2cBus;
     
     portableMasterWaitSendI2C(i2cBusConnection);
@@ -31,7 +31,8 @@ int32_t VL53L0X_write_multi(uint8_t deviceAddress, uint8_t index, uint8_t  *pdat
     portableMasterStartI2C(i2cBusConnection);
     WaitI2C(i2cBus);
     
-    portableMasterWriteI2C(i2cBusConnection, 0x52);
+    // I2C PICs adress use 8 bits and not 7 bits
+    portableMasterWriteI2C(i2cBusConnection, deviceAddress << 1);
     WaitI2C(i2cBus);
     
     portableMasterWriteI2C(i2cBusConnection, index);
@@ -67,7 +68,7 @@ int32_t VL53L0X_write_multi(uint8_t deviceAddress, uint8_t index, uint8_t  *pdat
 }
 
 int32_t VL53L0X_read_multi(uint8_t deviceAddress,  uint8_t index, uint8_t  *pdata, int32_t count) {
-    I2cBusConnection* i2cBusConnection = getI2cBusConnectionBySlaveAddress(0x52);
+    I2cBusConnection* i2cBusConnection = getI2cBusConnectionBySlaveAddress(deviceAddress << 1);
     I2cBus* i2cBus = i2cBusConnection->i2cBus;
     
     portableMasterWaitSendI2C(i2cBusConnection);
@@ -75,7 +76,7 @@ int32_t VL53L0X_read_multi(uint8_t deviceAddress,  uint8_t index, uint8_t  *pdat
     portableMasterStartI2C(i2cBusConnection);
     WaitI2C(i2cBus);
     
-    portableMasterWriteI2C(i2cBusConnection, 0x52);
+    portableMasterWriteI2C(i2cBusConnection, deviceAddress << 1);
     WaitI2C(i2cBus);
     
     // Write the "index" from which we want to read
@@ -90,7 +91,7 @@ int32_t VL53L0X_read_multi(uint8_t deviceAddress,  uint8_t index, uint8_t  *pdat
     portableMasterStartI2C(i2cBusConnection);
     WaitI2C(i2cBus);
     // Enter in "read" mode
-    portableMasterWriteI2C(i2cBusConnection, 0x53);
+    portableMasterWriteI2C(i2cBusConnection, (deviceAddress << 1) | 1);
     WaitI2C(i2cBus);
 
     // TODO : SVA Wire.requestFrom(deviceAddress, (byte)count);

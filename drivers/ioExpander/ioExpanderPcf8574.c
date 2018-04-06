@@ -9,6 +9,7 @@
 #include "../../common/log/logLevel.h"
 
 #include "ioExpander.h"
+#include "pcf8574.h"
 
 #define PCF8574_IO_COUNT     ((unsigned int) 8)
 
@@ -16,36 +17,48 @@ I2cBusConnection* getIOExpanderBusConnection(IOExpander* ioExpander) {
     return (I2cBusConnection*) ioExpander->object;
 }
 
+// Forward declatation
+unsigned char ioExpanderPCF8574ReadValue(IOExpander* ioExpander);
+
 bool ioExpanderPCF8574Init(IOExpander* ioExpander) {
-    return true;
+    I2cBusConnection* i2cBusConnection = getIOExpanderBusConnection(ioExpander);
+    ioExpander->value = ioExpanderPCF8574ReadValue(ioExpander);
+    return isPCF8574Present(i2cBusConnection);
 }
 
 // SINGLE BITS
 
 unsigned char ioExpanderPCF8574ReadValue(IOExpander* ioExpander) {
     I2cBusConnection* i2cBusConnection = getIOExpanderBusConnection(ioExpander);
-    // TODO : To Change !
-    return readPCF8574(i2cBusConnection, 0x40, 0x00, 0xFF);
+    unsigned char result = readPCF8574(i2cBusConnection);
+    ioExpander->value = result;
+    return result;
 }
 
 void ioExpanderPCF8574WriteValue(IOExpander* ioExpander, unsigned char value) {
     I2cBusConnection* i2cBusConnection = getIOExpanderBusConnection(ioExpander);
-    // TODO : To Change !
-    writePCF8574(i2cBusConnection, 0x40, 0x00, 0xFF, 0x00);
+    writePCF8574(i2cBusConnection, value);
+    ioExpander->value = value;
 }
 
 // ALL BITS
 
 bool ioExpanderPCF8574ReadSingleValue(IOExpander* ioExpander, unsigned int index) {
-    I2cBusConnection* i2cBusConnection = getIOExpanderBusConnection(ioExpander);
-    // TODO : To Change !
-    return readPCF8574(i2cBusConnection, 0x40, 0x00, 0xFF);
+    unsigned value = ioExpanderPCF8574ReadValue(ioExpander);
+    return (bool) (value & (1 << index));
 }
 
 void ioExpanderPCF8574WriteSingleValue(IOExpander* ioExpander, unsigned int index, bool value) {
-    I2cBusConnection* i2cBusConnection = getIOExpanderBusConnection(ioExpander);
-    // TODO : To Change !
-    writePCF8574(i2cBusConnection, 0x40, 0x00, 0xFF, 0x00);
+    unsigned char valueToWrite;
+    if (value) {
+        // Set the specified bit, but keeping other value
+        valueToWrite = (1 << index) | (ioExpander->value);
+    }
+    else {
+        // Set the specified bit, reverts bits, and do an AND operation
+        valueToWrite = (~(1UL << index)) & (ioExpander->value);
+    }
+    ioExpanderPCF8574WriteValue(ioExpander, valueToWrite);  
 }
 
 void initIOExpanderPCF8574(IOExpander* ioExpander, I2cBusConnection* i2cBusConnection) {

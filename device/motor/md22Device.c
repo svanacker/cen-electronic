@@ -41,14 +41,14 @@ void deviceMD22HandleRawData(char commandHeader, InputStream* inputStream, Outpu
         signed int left = readSignedHex2(inputStream);
         signed int right = readSignedHex2(inputStream);
         ackCommand(outputStream, MD22_DEVICE_HEADER, COMMAND_MD22_MOVE);
-        dualHBridgeMotorMD22->dualHBridgeMotorWriteValue(dualHBridgeMotorMD22, left * 2, right * 2);
+        dualHBridgeMotorMD22->dualHBridgeMotorWriteValue(dualHBridgeMotorMD22, left, right);
     }
     else if (commandHeader == COMMAND_MD22_READ_VALUE) {
         ackCommand(outputStream, MD22_DEVICE_HEADER, COMMAND_MD22_READ_VALUE);
         signed int left = dualHBridgeMotorMD22->dualHBridgeMotorReadValue(dualHBridgeMotorMD22, HBRIDGE_1);
         signed int right = dualHBridgeMotorMD22->dualHBridgeMotorReadValue(dualHBridgeMotorMD22, HBRIDGE_2);
-        appendHex2(outputStream, left / 2);
-        appendHex2(outputStream, right / 2);
+        appendHex2(outputStream, left);
+        appendHex2(outputStream, right);
     }
     else if (commandHeader == COMMAND_MD22_STOP) {
         ackCommand(outputStream, MD22_DEVICE_HEADER, COMMAND_MD22_STOP);

@@ -54,6 +54,8 @@ struct IOExpander {
     ioExpanderWriteSingleValueFunction* ioExpanderWriteSingleValue;
     /** How many IO are managed .*/
     unsigned int count;
+    /** Last value (must not be handled by external systems) */
+    unsigned value;
     /** pointer on other object (useful for I2C Connection for example) .*/
     int* object;
 };

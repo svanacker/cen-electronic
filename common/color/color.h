@@ -5,9 +5,9 @@
 * Define a Color structure.
 */
 typedef struct Color {
-    char R;
-    char G;
-    char B;
+    unsigned int R;
+    unsigned int G;
+    unsigned int B;
 } Color;
 
 #endif

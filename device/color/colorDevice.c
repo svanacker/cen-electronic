@@ -45,11 +45,11 @@ void deviceColorSensorHandleRawData(char commandHeader, InputStream* inputStream
     if (commandHeader == COMMAND_COLOR_SENSOR_READ) {
         ackCommand(outputStream, COLOR_SENSOR_DEVICE_HEADER, COMMAND_COLOR_SENSOR_READ);
         Color* color = colorSensor->colorSensorReadValue(colorSensor);
-        appendHex2(outputStream, color->R);
+        appendHex4(outputStream, color->R);
         appendSeparator(outputStream);
-        appendHex2(outputStream, color->G);
+        appendHex4(outputStream, color->G);
         appendSeparator(outputStream);
-        appendHex2(outputStream, color->B);
+        appendHex4(outputStream, color->B);
     }
     else if (commandHeader == COMMAND_COLOR_SENSOR_DEBUG) {
         ackCommand(outputStream, COLOR_SENSOR_DEVICE_HEADER, COMMAND_COLOR_SENSOR_DEBUG);

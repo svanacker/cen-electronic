@@ -24,7 +24,7 @@ static I2cBusConnection* tofDeviceI2cBusConnection;
 // DEVICE INTERFACE
 
 void deviceTofInit(void) {
-    tof_vl53l0x_begin(tofDeviceI2cBusConnection->i2cAddress, true);
+    tof_vl53l0x_begin(tofDeviceI2cBusConnection->i2cAddress >> 1, true);
 }
 
 void deviceTofShutDown(void) {
@@ -41,7 +41,7 @@ void deviceTofHandleRawData(char commandHeader, InputStream* inputStream, Output
         ackCommand(outputStream, TOF_DEVICE_HEADER, COMMAND_TOF_GET_DISTANCE);
         VL53L0X_RangingMeasurementData_t data;
         getSingleRangingMeasurement(&data, true);
-        appendHex4(outputStream, 0);
+        appendHex4(outputStream, data.RangeMilliMeter);
     }
 }
 

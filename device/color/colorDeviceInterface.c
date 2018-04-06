@@ -13,13 +13,13 @@ int deviceColorSensorGetInterface(char commandHeader, DeviceInterfaceMode mode, 
     if (commandHeader == COMMAND_COLOR_SENSOR_READ) {
         if (fillDeviceArgumentList) {
             setFunction("read Color Sensor", 0, 5);
-            setResultUnsignedHex2(0, "R");
+            setResultUnsignedHex4(0, "R");
             setResultSeparator(1);
-            setResultUnsignedHex2(2, "G");
+            setResultUnsignedHex4(2, "G");
             setResultSeparator(3);
-            setResultUnsignedHex2(4, "B");
+            setResultUnsignedHex4(4, "B");
         }
-        return commandLengthValueForMode(mode, 0, 8);
+        return commandLengthValueForMode(mode, 0, 14);
     }
     else if (commandHeader == COMMAND_COLOR_SENSOR_DEBUG) {
         if (fillDeviceArgumentList) {

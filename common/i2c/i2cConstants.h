@@ -14,6 +14,12 @@
 
 // VL530X
 #define VL530X_ADDRESS_0        0x52
+#define VL530X_ADDRESS_1        0x54
+#define VL530X_ADDRESS_2        0x56
+#define VL530X_ADDRESS_3        0x58
+#define VL530X_ADDRESS_4        0x5A
+#define VL530X_ADDRESS_5        0x5C
+#define VL530X_ADDRESS_6        0x5E
 
 // GPIO14 : Conflict with PCF8574
 
@@ -74,7 +80,10 @@
 #define    RLY08_ADDRESS_7            0x7E
 
 // LM75A TEMPERATURE SENSOR
-#define LM75A_ADDRESS                0x90
+#define LM75A_ADDRESS                 0x90
+
+// FOCUS ROBOTIC ADDRESS : 0x92 -> 0x9E
+
 
 // EEPROM 24C16
 #define ST24C16_ADDRESS_0             0xA0
