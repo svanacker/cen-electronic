@@ -1,14 +1,14 @@
 #ifndef TOF_DEVICE_H
 #define TOF_DEVICE_H
 
-#include "../../common/i2c/i2cBusConnectionList.h"
+#include "../../drivers/tof/tofList.h"
 
 #include "../../device/deviceDescriptor.h"
 
 /**
-* Returns the deviceDescriptor of the Time of Flight (TOF) Detector.
+* Returns the deviceDescriptor on a list of Time of Flight (TOF) Sensors.
 */
-DeviceDescriptor* getTofDeviceDescriptor(I2cBusConnection* i2cBusConnection);
+DeviceDescriptor* getTofDeviceDescriptor(TofSensorList* tofSensorList);
 
 #endif
 

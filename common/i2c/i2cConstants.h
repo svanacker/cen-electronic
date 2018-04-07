@@ -83,6 +83,8 @@
 #define LM75A_ADDRESS                 0x90
 
 // FOCUS ROBOTIC ADDRESS : 0x92 -> 0x9E
+/** Define the I2C address used by motorBoard. */
+#define MOTOR_BOARD_I2C_ADDRESS       0x94
 
 
 // EEPROM 24C16

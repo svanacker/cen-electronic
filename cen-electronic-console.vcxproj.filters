@@ -913,6 +913,12 @@
     <Filter Include="Header Files\common\motor\pc">
       <UniqueIdentifier>{ff05c34f-4fb8-42f7-8e7e-d07d98cfc45e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\drivers\tof\pc">
+      <UniqueIdentifier>{77ae8aa0-e1db-4184-a448-d74b2ef6d8b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\drivers\tof\pc">
+      <UniqueIdentifier>{68c7c17e-81d4-420b-bfe4-21c3aa17c52e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -1877,6 +1883,18 @@
     </ClCompile>
     <ClCompile Include="device\motor\md22DeviceInterface.c">
       <Filter>Source Files\device\motor</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\tof\tofList.c">
+      <Filter>Source Files\drivers\tof</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\tof\pc\tofPc.c">
+      <Filter>Source Files\drivers\tof\pc</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\tof\tofDebug.c">
+      <Filter>Source Files\drivers\tof</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\tof\pc\tofListPc.c">
+      <Filter>Source Files\drivers\tof\pc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2899,6 +2917,18 @@
     </ClInclude>
     <ClInclude Include="device\motor\md22DeviceInterface.h">
       <Filter>Header Files\device\motor</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\tof\tofList.h">
+      <Filter>Header Files\drivers\tof</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\tof\pc\tofPc.h">
+      <Filter>Header Files\drivers\tof\pc</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\tof\tofDebug.h">
+      <Filter>Header Files\drivers\tof</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\tof\pc\tofListPc.h">
+      <Filter>Header Files\drivers\tof\pc</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

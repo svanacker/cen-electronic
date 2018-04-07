@@ -1,7 +1,7 @@
-#include <stdbool.h>
-
 #include "tofDevice.h"
 #include "tofDeviceInterface.h"
+
+#include <stdbool.h>
 
 #include "../../common/delay/cenDelay.h"
 
@@ -18,13 +18,15 @@
 #include "../../common/i2c/i2cBusConnectionList.h"
 
 #include "../../drivers/tof/tof.h"
+#include "../../drivers/tof/tofList.h"
+#include "../../drivers/tof/tofDebug.h"
 
-static I2cBusConnection* tofDeviceI2cBusConnection;
+static TofSensorList* tofSensorList;
 
 // DEVICE INTERFACE
 
 void deviceTofInit(void) {
-    tof_vl53l0x_begin(tofDeviceI2cBusConnection->i2cAddress >> 1, true);
+    // MUST ALREADY HAVE BEEN INIT BY THE CONSTRUCTOR of tofList
 }
 
 void deviceTofShutDown(void) {
@@ -39,9 +41,16 @@ bool isTofDeviceOk(void) {
 void deviceTofHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     if (commandHeader == COMMAND_TOF_GET_DISTANCE) {
         ackCommand(outputStream, TOF_DEVICE_HEADER, COMMAND_TOF_GET_DISTANCE);
-        VL53L0X_RangingMeasurementData_t data;
-        getSingleRangingMeasurement(&data, true);
-        appendHex4(outputStream, data.RangeMilliMeter);
+            unsigned char tofIndex = readHex2(inputStream);
+        TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, tofIndex);
+        unsigned int distanceMM = tofSensor->tofGetDistanceMM(tofSensor);
+        
+        appendHex4(outputStream, distanceMM);
+    }
+    else if (commandHeader == COMMAND_TOF_DEBUG) {
+        ackCommand(outputStream, TOF_DEVICE_HEADER, COMMAND_TOF_DEBUG);
+        OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+        tofSensorList->tofSensorListDebugTable(debugOutputStream, tofSensorList);
     }
 }
 
@@ -52,7 +61,7 @@ static DeviceDescriptor descriptor = {
     .deviceHandleRawData = &deviceTofHandleRawData,
 };
 
-DeviceDescriptor* getTofDeviceDescriptor(I2cBusConnection* i2cBusConnection) {
-    tofDeviceI2cBusConnection = i2cBusConnection;
+DeviceDescriptor* getTofDeviceDescriptor(TofSensorList* tofSensorListParam) {
+    tofSensorList = tofSensorListParam;
     return &descriptor;
 }

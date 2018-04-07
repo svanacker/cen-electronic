@@ -2,42 +2,44 @@
 #define TOF_H
 
 #include <stdbool.h>
-#include "vl53l0x/vl53l0x_def.h"
+
+// Forward declaration
+typedef struct TofSensor TofSensor;
 
 /**
- * Start the use of the Time Of Flight
- * @param i2c_addr
- * @param debug
- * @return 
+ * Type of function to initialize the Tof Sensor.
+ * We need an ioExpander so that we could select the right tof Sensor
  */
-bool tof_vl53l0x_begin(uint8_t i2c_addr, bool debug);
+typedef bool tofSensorInitFunction(TofSensor* TofSensor);
 
 /**
- * Change the address of the current Time of Flight
- * @param newAddr
- * @return 
+ * Define the function which must be used to get the distance 
  */
-bool tofSetAddress(uint8_t newAddr);
+typedef unsigned int tofSensorGetDistanceMMFunction(TofSensor* TofSensor);
 
 /**
- * Get the status of the time of Flight Sensor
- * @return 
- */
-VL53L0X_Error tofGetStatus();
+* Defines the contract For one Tof Sensor.
+*/
+struct TofSensor {
+    /** The function which must be used to init the tof Sensor */
+    tofSensorInitFunction* tofSensorInit;
+    /** The function which must be used to read the distance */
+    tofSensorGetDistanceMMFunction* tofGetDistanceMM;
+    /** Stored the value of the last call */
+    unsigned int lastDistanceMM;
+    /** Stored the threshold for which we would like that it raises a notification. */
+    unsigned thresholdDistanceMM;
+    /** pointer on other object (useful for I2C Connection for example) .*/
+    int* object;
+};
 
 /**
- * Do a single ranging Measurement
- * @param pRangingMeasurementData the pointer with information to measure
- * @param debug if we want to debug or not
- * @return 
+ * Init a Tof Sensor
  */
-VL53L0X_Error getSingleRangingMeasurement(VL53L0X_RangingMeasurementData_t* pRangingMeasurementData, bool debug);
-
-/**
- * Show the data of the measurement
- * @param pRangingMeasurementData
- */
-void printRangeStatus(VL53L0X_RangingMeasurementData_t* pRangingMeasurementData);
-
+void initTofSensor(TofSensor* tofSensor, 
+                    tofSensorInitFunction* tofSensorInit,
+                    tofSensorGetDistanceMMFunction* tofGetDistanceMM,
+                    unsigned int thresholdDistanceMM,
+                    int* object);
 
 #endif

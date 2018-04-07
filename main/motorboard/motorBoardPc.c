@@ -151,6 +151,10 @@
 
 #include "../../drivers/test/testDriver.h"
 
+#include "../../drivers/tof/tof.h"
+#include "../../drivers/tof/tofList.h"
+#include "../../drivers/tof/pc/tofPc.h"
+#include "../../drivers/tof/pc/tofListPc.h"
 
 #include "../../motion/motion.h"
 #include "../../motion/pid/pidMotion.h"
@@ -232,9 +236,13 @@ static Relay relay;
 static int relayValue;
 
 // -> Motor To Tof
+/*
 static I2cBus* tofI2cBus;
 static I2cBusConnection* tofI2cBusConnection;
 static I2cBusConnectionPc tofI2cBusConnectionPc;
+*/
+static TofSensorList tofSensorList;
+static TofSensor tofSensorArray[MOTOR_BOARD_PC_TOF_SENSOR_LENGTH];
 
 // Devices
 static Device deviceListArray[MOTOR_BOARD_PC_DEVICE_LIST_LENGTH];
@@ -344,16 +352,9 @@ void runMotorBoardPC(bool singleMode) {
             MOTOR_BOARD_PC_I2C_DEBUG_SLAVE_OUT_BUFFER_LENGTH);
     }
 
-    // TOF I2C : Always even in Single Mode as it handles as "Master"
-    tofI2cBus = addI2cBus(I2C_BUS_TYPE_MASTER, I2C_BUS_PORT_4);
-    tofI2cBusConnection = addI2cBusConnection(tofI2cBus, VL530X_ADDRESS_0, false);
-    initI2cBusConnectionPc(tofI2cBusConnection,
-        tofI2cBus,
-        &tofI2cBusConnectionPc,
-        VL530X_ADDRESS_0,
-        NULL,
-        NULL);
-
+    // TOF
+    initTofSensorListPc(&tofSensorList, (TofSensor(*)[]) &tofSensorArray, MOTOR_BOARD_PC_TOF_SENSOR_LENGTH);
+    
     // Eeprom
     // initEepromPc(&eeprom, "MOTOR_BOARD_PC_EEPROM");
     initEepromMemory(&eeprom, (char(*)[]) &memoryEepromArray, MOTOR_BOARD_PC_MEMORY_EEPROM_LENGTH);
@@ -398,7 +399,7 @@ void runMotorBoardPC(bool singleMode) {
 	addLocalDevice(getMotionSimulationDeviceInterface(), getMotionSimulationDeviceDescriptor());
 	addLocalDevice(getRobotKinematicsDeviceInterface(), getRobotKinematicsDeviceDescriptor(&eeprom));
     addLocalDevice(getPcDeviceInterface(), getPcDeviceDescriptor(getOutputStream(&consoleInputBuffer)));
-    addLocalDevice(getTofDeviceInterface(), getTofDeviceDescriptor(tofI2cBusConnection));
+    addLocalDevice(getTofDeviceInterface(), getTofDeviceDescriptor(&tofSensorList));
 
     // COLOR
     initColorSensorPc(&colorSensor, &colorValue);

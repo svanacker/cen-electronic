@@ -162,6 +162,9 @@ void clearLastError();
 
 #define TOO_MUCH_DRIVERS                                                  0x2300
 
+#define TOF_SENSOR_LIST_NOT_INITIALIZED                                   0x2400
+#define TOF_SENSOR_LIST_ILLEGAL_INDEX                                     0x2401
+#define TOO_MUCH_TOF_SENSOR				                                  0x2402
 
 // PID
 

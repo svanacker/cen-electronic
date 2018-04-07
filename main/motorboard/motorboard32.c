@@ -195,6 +195,10 @@
 #include "dualHBridgeMotorMd22.h"
 #include "colorSensor/colorSensorTcs34725.h"
 
+// TOF
+#include "tof/vl53l0x/tof_vl53l0x.h"
+#include "tof/vl53l0x/tofList_vl53l0x.h"
+
 // I2C
 static I2cBus i2cBusListArray[MOTOR_BOARD_I2C_BUS_LIST_LENGTH];
 static I2cBusConnection i2cBusConnectionListArray[MOTOR_BOARD_I2C_BUS_CONNECTION_LIST_LENGTH];
@@ -220,6 +224,11 @@ static char memoryEepromArray[MOTOR_BOARD_MEMORY_EEPROM_LENGTH];
 static ColorSensor colorSensor;
 static Tcs34725 tcs34725;
 static Color colorValue;
+
+// Tof
+static TofSensorList tofSensorList;
+static TofSensor tofSensorArray[MOTOR_BOARD_TOF_SENSOR_LENGTH];
+static TofSensorVL53L0X tofSensorVL53L0XArray[MOTOR_BOARD_TOF_SENSOR_LENGTH];
 
 // Clock
 static Clock clock;
@@ -326,7 +335,7 @@ void initDevicesDescriptor() {
     addLocalDevice(getRelayDeviceInterface(), getRelayDeviceDescriptor(&relay));
     addLocalDevice(getIOExpanderDeviceInterface(), getIOExpanderDeviceDescriptor(&ioExpander));
     // addLocalDevice(getColorSensorDeviceInterface(), getColorSensorDeviceDescriptor(&colorSensor));
-    addLocalDevice(getTofDeviceInterface(), getTofDeviceDescriptor(tofI2cBusConnection));
+    addLocalDevice(getTofDeviceInterface(), getTofDeviceDescriptor(&tofSensorList));
 
     initDevices();
 }
@@ -442,7 +451,12 @@ int runMotorBoard() {
     */
     
     // TOF
-    tofI2cBusConnection = addI2cBusConnection(masterI2cBus, VL530X_ADDRESS_0, true);
+    initTofSensorListVL53L0X(&tofSensorList,
+                             (TofSensor(*)[]) &tofSensorArray,
+                             (TofSensorVL53L0X(*)[]) &tofSensorVL53L0XArray,
+                              MOTOR_BOARD_TOF_SENSOR_LENGTH,
+                              masterI2cBus,
+                              &ioExpander);
 
     // Relay
     relayBusConnection = addI2cBusConnection(masterI2cBus, RLY08_ADDRESS_0, true);

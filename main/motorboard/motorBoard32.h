@@ -2,6 +2,7 @@
 #define MOTOR_BOARD_H
 
 #include "../../common/io/buffer.h"
+#include "../../common/i2c/i2cConstants.h"
 
 #define MOTOR_BOARD_PIC_NAME "MOTOR BOARD 32"
 
@@ -13,9 +14,6 @@
 
 #define MOTOR_BOARD_I2C_BUS_LIST_LENGTH                    2
 #define MOTOR_BOARD_I2C_BUS_CONNECTION_LIST_LENGTH         10
-
-/** Define the I2C address used by motorBoard. */
-#define MOTOR_BOARD_I2C_ADDRESS     0x54
 
 #define MOTOR_BOARD_I2C_DEBUG_MASTER_IN_BUFFER_LENGTH      200
 #define MOTOR_BOARD_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH     200
@@ -42,6 +40,9 @@
 
 // DEVICES
 #define MOTOR_BOARD_DEVICE_LIST_LENGTH   25
+
+// TOFS
+#define MOTOR_BOARD_TOF_SENSOR_LENGTH    3
 
 // TIMERS
 #define MOTOR_BOARD_TIMER_LENGTH         3
