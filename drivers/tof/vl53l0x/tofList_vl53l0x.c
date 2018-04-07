@@ -22,8 +22,11 @@ void initTofSensorListVL53L0X(TofSensorList* tofSensorList,
                               unsigned int size,
                               I2cBus* i2cBus,
                               IOExpander* ioExpander) {
-    // Clear to shut all VL53L0X
-    ioExpander->ioExpanderWriteValue(ioExpander, 0x00);
+    // Clear to shut all VL53L0X (max 6)
+    unsigned int initialValue = ioExpander->ioExpanderReadValue(ioExpander);
+    
+    // Keep the most significant bits (used for something else)
+    ioExpander->ioExpanderWriteValue(ioExpander, initialValue & 0b11000000);
     delaymSec(1);
     
     initTofSensorList(tofSensorList, tofSensorArray, size, &printTofSensorTableVL53L0X);

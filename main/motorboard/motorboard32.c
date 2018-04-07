@@ -196,8 +196,12 @@
 #include "colorSensor/colorSensorTcs34725.h"
 
 // TOF
-#include "tof/vl53l0x/tof_vl53l0x.h"
-#include "tof/vl53l0x/tofList_vl53l0x.h"
+#include "../../drivers/tof/vl53l0x/tof_vl53l0x.h"
+#include "../../drivers/tof/vl53l0x/tofList_vl53l0x.h"
+
+// 2018
+#include "../../robot/2018/launcherDevice2018.h"
+#include "../../robot/2018/launcherDeviceInterface2018.h"
 
 // I2C
 static I2cBus i2cBusListArray[MOTOR_BOARD_I2C_BUS_LIST_LENGTH];
@@ -291,6 +295,9 @@ bool currentTimeChanged;
 static PidMotion pidMotion;
 static PidMotionDefinition motionDefinitionArray[MOTOR_BOARD_PID_MOTION_INSTRUCTION_COUNT];
 
+// 2018 Specific
+static Launcher2018 launcher2018;
+
 Buffer* getI2CSlaveOutputBuffer() {
     return &i2cSlaveOutputBuffer;
 }
@@ -336,6 +343,9 @@ void initDevicesDescriptor() {
     addLocalDevice(getIOExpanderDeviceInterface(), getIOExpanderDeviceDescriptor(&ioExpander));
     // addLocalDevice(getColorSensorDeviceInterface(), getColorSensorDeviceDescriptor(&colorSensor));
     addLocalDevice(getTofDeviceInterface(), getTofDeviceDescriptor(&tofSensorList));
+    
+    // 2018 Specific
+    addLocalDevice(getLauncher2018DeviceInterface(), getLauncher2018DeviceDescriptor(&launcher2018));
 
     initDevices();
 }
@@ -469,12 +479,19 @@ int runMotorBoard() {
     
     // MOTOR (PWM for Motion)
     initDualHBridgeMotorPWM(&motors);
-
     
     // PidMotion
-    initPidMotion(&pidMotion, &motors, &eeprom_, (PidMotionDefinition(*)[]) &motionDefinitionArray, MOTOR_BOARD_PID_MOTION_INSTRUCTION_COUNT);
+    initPidMotion(&pidMotion,
+                  &motors,
+                  &eeprom_,
+                  &tofSensorList,
+                  (PidMotionDefinition(*)[]) &motionDefinitionArray,
+                  MOTOR_BOARD_PID_MOTION_INSTRUCTION_COUNT);
 
     // initSoftClock(&clock);
+    
+    // 2018
+    initLauncher2018(&launcher2018, &ioExpander, &relay);
 
     // init the devices
     initDevicesDescriptor();

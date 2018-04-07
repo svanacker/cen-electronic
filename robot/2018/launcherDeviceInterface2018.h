@@ -5,19 +5,14 @@
 #include "../../device/deviceConstants.h"
 
 /**
- * Launch one ball.
+ * Prepare the launch of one ball
  */
-#define LAUNCHER_BALL_COMMAND          'w'
-
- /**
- * Index of the left launcher.
- */
-#define LAUNCHER_LEFT_COMMAND          0x01
+#define LAUNCHER_PREPARE_BALL_COMMAND  'p'
 
 /**
- * Index of the right launcher.
+ * Send the ball
  */
-#define LAUNCHER_RIGHT_COMMAND         0x02
+#define LAUNCHER_SEND_BALL_COMMAND     's'
 
 /**
  * Get the device interface for launcher 2018.

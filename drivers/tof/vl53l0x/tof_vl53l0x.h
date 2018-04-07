@@ -25,6 +25,13 @@ struct TofSensorVL53L0X {
 };
 
 /**
+ * Extract the TofSensorVL53L0X from the TofSensor structure.
+ * @param tofSensor
+ * @return 
+ */
+TofSensorVL53L0X* getTofSensorVL53L0X(TofSensor* tofSensor);
+
+/**
  * Start the use of the Time Of Flight
  * @param debug
  * @return 

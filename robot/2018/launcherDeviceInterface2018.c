@@ -10,9 +10,16 @@ const char* deviceLauncher2018GetName(void) {
 }
 
 int deviceLauncher2018GetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
-    if (commandHeader == LAUNCHER_BALL_COMMAND) {
+    if (commandHeader == LAUNCHER_PREPARE_BALL_COMMAND) {
         if (fillDeviceArgumentList) {
-            setFunction("sendBall", 1, 0);
+            setFunction("prepare Ball", 1, 0);
+            setArgumentUnsignedHex2(0, "launcher Index");
+        }
+        return commandLengthValueForMode(mode, 2, 0);
+    }
+    else if (commandHeader == LAUNCHER_SEND_BALL_COMMAND) {
+        if (fillDeviceArgumentList) {
+            setFunction("Send Ball", 1, 0);
             setArgumentUnsignedHex2(0, "launcher Index");
         }
         return commandLengthValueForMode(mode, 2, 0);

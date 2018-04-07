@@ -421,6 +421,11 @@
                      projectFiles="true">
         <itemPath>../../../motion/pid/endDetection/failed/motionFailedDetection.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f17"
+                     displayName="motion.pid.endDetection.obstacle"
+                     projectFiles="true">
+        <itemPath>../../../motion/pid/endDetection/obstacle/motionObstacleDetection.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="f5"
                      displayName="motion.pid.endDetection.reached"
                      projectFiles="true">
@@ -475,7 +480,10 @@
                      projectFiles="true">
         <itemPath>../../../motion/simulation/motionSimulation.h</itemPath>
       </logicalFolder>
-      <logicalFolder name="f17" displayName="New Folder 17" projectFiles="true">
+      <logicalFolder name="f18" displayName="robot.2018" projectFiles="true">
+        <itemPath>../../../robot/2018/launcherDevice2018.h</itemPath>
+        <itemPath>../../../robot/2018/launcherDeviceInterface2018.h</itemPath>
+        <itemPath>../../../robot/2018/launcherDriver2018.h</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.kinematics"
                      displayName="robot.kinematics"
@@ -903,6 +911,11 @@
                      projectFiles="true">
         <itemPath>../../../motion/pid/endDetection/failed/motionFailedDetection.c</itemPath>
       </logicalFolder>
+      <logicalFolder name="f16"
+                     displayName="motion.pid.endDetection.obstacle"
+                     projectFiles="true">
+        <itemPath>../../../motion/pid/endDetection/obstacle/motionObstacleDetection.c</itemPath>
+      </logicalFolder>
       <logicalFolder name="f5"
                      displayName="motion.pid.endDetection.reached"
                      projectFiles="true">
@@ -944,6 +957,11 @@
                      projectFiles="true">
         <itemPath>../../../motion/simple/motionCalibration.c</itemPath>
         <itemPath>../../../motion/simple/simpleMotion.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f17" displayName="robot.2018" projectFiles="true">
+        <itemPath>../../../robot/2018/launcherDevice2018.c</itemPath>
+        <itemPath>../../../robot/2018/launcherDeviceInterface2018.c</itemPath>
+        <itemPath>../../../robot/2018/launcherDriver2018.c</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.kinematics"
                      displayName="robot.kinematics"

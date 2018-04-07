@@ -7,7 +7,7 @@
 #include "../../drivers/driverList.h"
 #include "../../drivers/driverTransmitter.h"
 
-
+/*
 bool launcherDriver2018(int index) {
     OutputStream* outputStream = getDriverRequestOutputStream();
     append(outputStream, LAUNCHER_2018_DEVICE_HEADER);
@@ -18,3 +18,4 @@ bool launcherDriver2018(int index) {
 
     return result;
 }
+*/
