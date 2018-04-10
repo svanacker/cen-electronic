@@ -17,11 +17,16 @@
 #include "../../common/log/logLevel.h"
 
 #include "../../device/device.h"
+#include "../../device/deviceDescriptor.h"
 
 #include "../../drivers/ioExpander/ioExpander.h"
+#include "../../drivers/ioExpander/ioExpanderList.h"
 #include "../../drivers/ioExpander/ioExpanderDebug.h"
 
-static IOExpander* ioExpander;
+// FORWARD DECLARATION
+IOExpanderList* getIOExpanderListFromDeviceDescriptor(DeviceDescriptor* deviceDescriptor);
+
+static DeviceDescriptor descriptor;
 
 void deviceIOExpanderInit(void) {
     
@@ -34,27 +39,56 @@ bool deviceIOExpanderIsOk(void) {
     return true;
 }
 
+/**
+ * @private
+ */
+IOExpander* readIOExpanderFromInputStream(InputStream* inputStream) {
+    unsigned int ioExpanderIndex = readHex2(inputStream);
+
+    IOExpanderList* ioExpanderList = getIOExpanderListFromDeviceDescriptor(&descriptor);
+
+    IOExpander* ioExpander = getIOExpanderByIndex(ioExpanderList, ioExpanderIndex);
+
+    return ioExpander;
+}
+
+
 void deviceIOExpanderHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     // ALL BITS
     if (commandHeader == COMMAND_IO_EXPANDER_READ_VALUE) {
         ackCommand(outputStream, IO_DEVICE_HEADER, COMMAND_IO_EXPANDER_READ_VALUE);
+        IOExpander* ioExpander = readIOExpanderFromInputStream(inputStream);
+
         unsigned char value = ioExpander->ioExpanderReadValue(ioExpander);
         appendHex2(outputStream, value);
     }
     else if (commandHeader == COMMAND_IO_EXPANDER_WRITE_VALUE) {
         ackCommand(outputStream, IO_DEVICE_HEADER, COMMAND_IO_EXPANDER_WRITE_VALUE);
+        IOExpander* ioExpander = readIOExpanderFromInputStream(inputStream);
+        checkIsSeparator(inputStream);
         unsigned char newValue = readHex2(inputStream);
+
         ioExpander->ioExpanderWriteValue(ioExpander, newValue);
     }
     // SINGLE BIT
     else if (commandHeader == COMMAND_IO_EXPANDER_READ_SINGLE_BIT) {
         ackCommand(outputStream, IO_DEVICE_HEADER, COMMAND_IO_EXPANDER_READ_SINGLE_BIT);
+
+        IOExpander* ioExpander = readIOExpanderFromInputStream(inputStream);
+
+        checkIsSeparator(inputStream);
+
         unsigned int ioIndex = readHex2(inputStream);
         bool value = ioExpander->ioExpanderReadSingleValue(ioExpander, ioIndex);
         appendHex(outputStream, (unsigned char) value);
     }
     else if (commandHeader == COMMAND_IO_EXPANDER_WRITE_SINGLE_BIT) {
         ackCommand(outputStream, IO_DEVICE_HEADER, COMMAND_IO_EXPANDER_WRITE_SINGLE_BIT);
+
+        IOExpander* ioExpander = readIOExpanderFromInputStream(inputStream);
+
+        checkIsSeparator(inputStream);
+
         unsigned int ioIndex = readHex2(inputStream);
         checkIsSeparator(inputStream);
         bool newValue = (bool) readHex(inputStream);
@@ -64,18 +98,25 @@ void deviceIOExpanderHandleRawData(char commandHeader, InputStream* inputStream,
     else if (commandHeader == COMMAND_IO_EXPANDER_DEBUG) {
         ackCommand(outputStream, IO_DEVICE_HEADER, COMMAND_IO_EXPANDER_DEBUG);
         OutputStream* debugOutputStream = getDebugOutputStreamLogger();
-        printIOExpanderStatesTable(debugOutputStream, ioExpander);
+
+        IOExpanderList* ioExpanderList = getIOExpanderListFromDeviceDescriptor(&descriptor);
+
+        printIOExpanderStatesTable(debugOutputStream, ioExpanderList);
     }
 }
 
-static DeviceDescriptor descriptor = {
-    .deviceInit = &deviceIOExpanderInit,
-    .deviceShutDown = &deviceIOExpanderShutDown,
-    .deviceIsOk = &deviceIOExpanderIsOk,
-    .deviceHandleRawData = &deviceIOExpanderHandleRawData,
-};
+IOExpanderList* getIOExpanderListFromDeviceDescriptor(DeviceDescriptor* deviceDescriptor) {
+    return (IOExpanderList*)deviceDescriptor->object;
+}
 
-DeviceDescriptor* getIOExpanderDeviceDescriptor(IOExpander* ioExpanderParam) {
-    ioExpander = ioExpanderParam;
+
+DeviceDescriptor* getIOExpanderDeviceDescriptor(IOExpanderList* ioExpanderList) {
+    initDeviceDescriptor(&descriptor,
+        &deviceIOExpanderInit,
+        &deviceIOExpanderShutDown,
+        &deviceIOExpanderIsOk,
+        &deviceIOExpanderHandleRawData,
+        (int*) ioExpanderList);
+
     return &descriptor;
 }

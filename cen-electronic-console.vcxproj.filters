@@ -919,6 +919,12 @@
     <Filter Include="Header Files\drivers\tof\pc">
       <UniqueIdentifier>{68c7c17e-81d4-420b-bfe4-21c3aa17c52e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\motion\pid\endDetection\obstacle">
+      <UniqueIdentifier>{3b7e5d0f-3d72-428b-b6fb-ca6c7f02a17d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\motion\pid\endDetection\obstacle">
+      <UniqueIdentifier>{15b15e47-2fb7-4706-86b9-94064d697b2d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -1895,6 +1901,12 @@
     </ClCompile>
     <ClCompile Include="drivers\tof\pc\tofListPc.c">
       <Filter>Source Files\drivers\tof\pc</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\pid\endDetection\obstacle\motionObstacleDetection.c">
+      <Filter>Source Files\motion\pid\endDetection\obstacle</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\ioExpander\ioExpanderList.c">
+      <Filter>Source Files\drivers\ioExpander</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2882,9 +2894,6 @@
     <ClInclude Include="drivers\relay\relayDebug.h">
       <Filter>Header Files\drivers\relay</Filter>
     </ClInclude>
-    <ClInclude Include="drivers\io\ioExpander.h">
-      <Filter>Header Files\drivers\ioExpander</Filter>
-    </ClInclude>
     <ClInclude Include="drivers\io\ioExpanderDebug.h">
       <Filter>Header Files\drivers\ioExpander</Filter>
     </ClInclude>
@@ -2929,6 +2938,15 @@
     </ClInclude>
     <ClInclude Include="drivers\tof\pc\tofListPc.h">
       <Filter>Header Files\drivers\tof\pc</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\endDetection\obstacle\motionObstacleDetection.h">
+      <Filter>Header Files\motion\pid\endDetection\obstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\ioExpander\ioExpanderList.h">
+      <Filter>Header Files\drivers\ioExpander</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\ioExpander\ioExpander.h">
+      <Filter>Header Files\drivers\ioExpander</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

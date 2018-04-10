@@ -169,6 +169,7 @@
 // -> IO EXPANDER)
 #include "../../drivers/ioExpander/ioExpander.h"
 #include "../../drivers/ioExpander/ioExpanderDebug.h"
+#include "../../drivers/ioExpander/ioExpanderList.h"
 #include "../../drivers/ioExpander/ioExpanderPcf8574.h"
 #include "../../drivers/ioExpander/pcf8574.h"
 
@@ -231,15 +232,15 @@ static Color colorValue;
 
 // Tof
 static TofSensorList tofSensorList;
-static TofSensor tofSensorArray[MOTOR_BOARD_TOF_SENSOR_LENGTH];
-static TofSensorVL53L0X tofSensorVL53L0XArray[MOTOR_BOARD_TOF_SENSOR_LENGTH];
+static TofSensor tofSensorArray[MOTOR_BOARD_TOF_SENSOR_LIST_LENGTH];
+static TofSensorVL53L0X tofSensorVL53L0XArray[MOTOR_BOARD_TOF_SENSOR_LIST_LENGTH];
 
 // Clock
 static Clock clock;
 
 // IO Expander
-static IOExpander ioExpander;
-static int ioExpanderValue;
+static IOExpanderList ioExpanderList;
+static IOExpander ioExpanderArray[MOTOR_BOARD_IO_EXPANDER_LIST_LENGTH];
 
 // MOTOR (for pidMotion)
 static DualHBridgeMotor motors;
@@ -340,7 +341,7 @@ void initDevicesDescriptor() {
     addLocalDevice(getTimerDeviceInterface(), getTimerDeviceDescriptor());
     addLocalDevice(getLogDeviceInterface(), getLogDeviceDescriptor());
     addLocalDevice(getRelayDeviceInterface(), getRelayDeviceDescriptor(&relay));
-    addLocalDevice(getIOExpanderDeviceInterface(), getIOExpanderDeviceDescriptor(&ioExpander));
+    addLocalDevice(getIOExpanderDeviceInterface(), getIOExpanderDeviceDescriptor(&ioExpanderList));
     // addLocalDevice(getColorSensorDeviceInterface(), getColorSensorDeviceDescriptor(&colorSensor));
     addLocalDevice(getTofDeviceInterface(), getTofDeviceDescriptor(&tofSensorList));
     
@@ -447,7 +448,9 @@ int runMotorBoard() {
     
     // IO Expander
     ioExpanderBusConnection = addI2cBusConnection(masterI2cBus, PCF8574_ADDRESS_0, true);
-    initIOExpanderPCF8574(&ioExpander, ioExpanderBusConnection);
+    initIOExpanderList(&ioExpanderList, (IOExpander(*)[]) &ioExpanderArray, MOTOR_BOARD_IO_EXPANDER_LIST_LENGTH);
+    IOExpander* tofIoExpander = getIOExpanderByIndex(&ioExpanderList, 0);
+    initIOExpanderPCF8574(tofIoExpander, ioExpanderBusConnection);
 
     // Motor
     md22BusConnection = addI2cBusConnection(masterI2cBus, MD22_ADDRESS_0, true);
@@ -464,9 +467,9 @@ int runMotorBoard() {
     initTofSensorListVL53L0X(&tofSensorList,
                              (TofSensor(*)[]) &tofSensorArray,
                              (TofSensorVL53L0X(*)[]) &tofSensorVL53L0XArray,
-                              MOTOR_BOARD_TOF_SENSOR_LENGTH,
+                              MOTOR_BOARD_TOF_SENSOR_LIST_LENGTH,
                               masterI2cBus,
-                              &ioExpander);
+                              tofIoExpander);
 
     // Relay
     relayBusConnection = addI2cBusConnection(masterI2cBus, RLY08_ADDRESS_0, true);
@@ -491,7 +494,7 @@ int runMotorBoard() {
     // initSoftClock(&clock);
     
     // 2018
-    initLauncher2018(&launcher2018, &ioExpander, &relay);
+    initLauncher2018(&launcher2018, tofIoExpander, &relay);
 
     // init the devices
     initDevicesDescriptor();

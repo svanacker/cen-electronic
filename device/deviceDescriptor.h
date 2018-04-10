@@ -52,7 +52,19 @@ typedef struct DeviceDescriptor {
     deviceIsOkFunction *deviceIsOk;
     /** A callback on the Function to handle the string data which are given (Ex : Mw2010 to Move the both motors). */
     deviceHandleRawDataFunction *deviceHandleRawData;
+    /** A generic pointer to store parameter single object pointer or structure to manipulate some external objects. */
+    int* object;
 } DeviceDescriptor;
+
+/**
+ * Initializes a device descriptor with all data needed.
+ */
+void initDeviceDescriptor(DeviceDescriptor* deviceDescriptor, 
+                        deviceInitFunction *deviceInit,
+                        deviceShutDownFunction *deviceShutDown,
+                        deviceIsOkFunction *deviceIsOk,
+                        deviceHandleRawDataFunction *deviceHandleRawData,
+                        int* object);
 
 /**
  * Returns true if the device descriptor was initialized properly
@@ -60,5 +72,6 @@ typedef struct DeviceDescriptor {
  * @return 
  */
 bool isDeviceDescriptorInitializedProperly(DeviceDescriptor* deviceDescriptor);
+
 
 #endif

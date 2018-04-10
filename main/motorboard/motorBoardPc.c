@@ -144,6 +144,7 @@
 #include "../../drivers/dispatcher/localDriverDataDispatcher.h"
 
 #include "../../drivers/ioExpander/ioExpander.h"
+#include "../../drivers/ioExpander/ioExpanderList.h"
 #include "../../drivers/ioExpander/pc/ioExpanderPc.h"
 
 #include "../../drivers/relay/relay.h"
@@ -228,8 +229,10 @@ static I2cBusConnection* motorI2cBusConnection;
 static I2cBusConnectionPc motorI2cBusConnectionPc;
 
 // IOExpander
-static IOExpander ioExpander;
-static int ioExpanderValue;
+static IOExpanderList ioExpanderList;
+static IOExpander ioExpanderArray[MOTOR_BOARD_PC_IO_EXPANDER_LIST_LENGTH];
+static int ioExpanderValue0;
+static int ioExpanderValue1;
 
 // Relay
 static Relay relay;
@@ -242,7 +245,7 @@ static I2cBusConnection* tofI2cBusConnection;
 static I2cBusConnectionPc tofI2cBusConnectionPc;
 */
 static TofSensorList tofSensorList;
-static TofSensor tofSensorArray[MOTOR_BOARD_PC_TOF_SENSOR_LENGTH];
+static TofSensor tofSensorArray[MOTOR_BOARD_PC_TOF_SENSOR_LIST_LENGTH];
 
 // Devices
 static Device deviceListArray[MOTOR_BOARD_PC_DEVICE_LIST_LENGTH];
@@ -353,7 +356,10 @@ void runMotorBoardPC(bool singleMode) {
     }
 
     // TOF
-    initTofSensorListPc(&tofSensorList, (TofSensor(*)[]) &tofSensorArray, MOTOR_BOARD_PC_TOF_SENSOR_LENGTH);
+    initTofSensorListPc(&tofSensorList, (TofSensor(*)[]) &tofSensorArray, MOTOR_BOARD_PC_TOF_SENSOR_LIST_LENGTH);
+
+    // IO Expander
+    initIOExpanderList(&ioExpanderList, (IOExpander(*)[]) &ioExpanderArray, MOTOR_BOARD_PC_IO_EXPANDER_LIST_LENGTH);
     
     // Eeprom
     // initEepromPc(&eeprom, "MOTOR_BOARD_PC_EEPROM");
@@ -372,7 +378,12 @@ void runMotorBoardPC(bool singleMode) {
     initSoftClock(&clock);
 
 	// Pid Motion
-	initPidMotion(&pidMotion, &dualHBridgeMotor, &eeprom, (PidMotionDefinition(*)[]) &motionDefinitionArray, MOTOR_BOARD_PC_PID_MOTION_INSTRUCTION_COUNT);
+	initPidMotion(&pidMotion, 
+                  &dualHBridgeMotor,
+                  &eeprom,
+                  &tofSensorList,
+                 (PidMotionDefinition(*)[]) &motionDefinitionArray,
+                  MOTOR_BOARD_PC_PID_MOTION_INSTRUCTION_COUNT);
 
     // Devices
     initDeviceList((Device(*)[]) &deviceListArray, MOTOR_BOARD_PC_DEVICE_LIST_LENGTH);
@@ -406,8 +417,9 @@ void runMotorBoardPC(bool singleMode) {
     addLocalDevice(getColorSensorDeviceInterface(), getColorSensorDeviceDescriptor(&colorSensor));
 
     //  IO Expander
-    initIOExpanderPc(&ioExpander, &ioExpanderValue);
-    addLocalDevice(getIOExpanderDeviceInterface(), getIOExpanderDeviceDescriptor(&ioExpander));
+    initIOExpanderPc(getIOExpanderByIndex(&ioExpanderList, 0), &ioExpanderValue0);
+    initIOExpanderPc(getIOExpanderByIndex(&ioExpanderList, 1), &ioExpanderValue1);
+    addLocalDevice(getIOExpanderDeviceInterface(), getIOExpanderDeviceDescriptor(&ioExpanderList));
 
     // Relay
     initRelayPc(&relay, &relayValue);

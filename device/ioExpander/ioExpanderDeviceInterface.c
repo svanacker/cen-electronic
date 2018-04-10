@@ -12,34 +12,42 @@ const char* deviceIOExpanderGetName(void) {
 int deviceIOExpanderGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     if (commandHeader == COMMAND_IO_EXPANDER_WRITE_SINGLE_BIT) {
         if (fillDeviceArgumentList) {
-            setFunction("Write Single Bit", 3, 0);
-            setArgumentUnsignedHex2(0, "IO Index");
+            setFunction("Write Single Bit", 5, 0);
+            setArgumentUnsignedHex2(0, "IO Expander Index");
             setArgumentSeparator(1);
-            setArgumentUnsignedChar1(2, "Value (bool)");
+            setArgumentUnsignedHex2(2, "IO Index");
+            setArgumentSeparator(3);
+            setArgumentUnsignedChar1(4, "Value (bool)");
         }
-        return commandLengthValueForMode(mode, 4, 0);
+        return commandLengthValueForMode(mode, 7, 0);
     }
     if (commandHeader == COMMAND_IO_EXPANDER_WRITE_VALUE) {
         if (fillDeviceArgumentList) {
-            setFunction("Write Value", 1, 0);
-            setArgumentUnsignedHex2(0, "Value");
+            setFunction("Write Value", 3, 0);
+            setArgumentUnsignedHex2(0, "IO Expander Index");
+            setArgumentSeparator(1);
+            setArgumentUnsignedHex2(2, "Value");
         }
-        return commandLengthValueForMode(mode, 2, 0);
+        return commandLengthValueForMode(mode, 5, 0);
     }
     else if (commandHeader == COMMAND_IO_EXPANDER_READ_SINGLE_BIT) {
         if (fillDeviceArgumentList) {
-            setFunction("Read Single Bit", 1, 1);
-            setArgumentUnsignedHex2(0, "IO Index");
+            setFunction("Read Single Bit", 3, 1);
+            setArgumentUnsignedHex2(0, "IO Expander Index");
+            setArgumentSeparator(1);
+            setArgumentUnsignedHex2(2, "IO Index");
+
             setResultUnsignedChar1(0, "Value (bool)");
         }
-        return commandLengthValueForMode(mode, 2, 1);
+        return commandLengthValueForMode(mode, 5, 1);
     }
     else if (commandHeader == COMMAND_IO_EXPANDER_READ_VALUE) {
         if (fillDeviceArgumentList) {
-            setFunction("Read Value", 0, 1);
+            setFunction("Read Value", 1, 1);
+            setArgumentUnsignedHex2(0, "IO Expander Index");
             setResultUnsignedHex2(0, "Value");
         }
-        return commandLengthValueForMode(mode, 0, 2);
+        return commandLengthValueForMode(mode, 2, 2);
     }
     else if (commandHeader == COMMAND_IO_EXPANDER_DEBUG) {
         if (fillDeviceArgumentList) {

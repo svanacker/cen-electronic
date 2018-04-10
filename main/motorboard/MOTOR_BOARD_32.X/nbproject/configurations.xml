@@ -317,6 +317,7 @@
         <itemPath>../../../drivers/ioExpander/ioExpanderDebug.h</itemPath>
         <itemPath>../../../drivers/ioExpander/pcf8574.h</itemPath>
         <itemPath>../../../drivers/ioExpander/ioExpanderPcf8574.h</itemPath>
+        <itemPath>../../../drivers/ioExpander/ioExpanderList.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f16" displayName="drivers.motor" projectFiles="true">
         <itemPath>../../../drivers/motor/dualHBridgeMotorMd22.h</itemPath>
@@ -810,6 +811,7 @@
         <itemPath>../../../drivers/ioExpander/ioExpanderDebug.c</itemPath>
         <itemPath>../../../drivers/ioExpander/pcf8574.c</itemPath>
         <itemPath>../../../drivers/ioExpander/ioExpanderPcf8574.c</itemPath>
+        <itemPath>../../../drivers/ioExpander/ioExpanderList.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f15" displayName="drivers.motor" projectFiles="true">
         <itemPath>../../../drivers/motor/dualHBridgeMotorMd22.c</itemPath>

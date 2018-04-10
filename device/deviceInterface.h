@@ -191,7 +191,7 @@ typedef struct DeviceMethodMetaData {
 * Singleton of DeviceInterfaceMetaData.
 * @return the singleton of DeviceInterfaceMetaData
 */
-DeviceMethodMetaData* getDeviceMethodMetaData();
+DeviceMethodMetaData* getDeviceMethodMetaData(void);
 
 /**
  * Returns the length of the type when we mashall it as string.

@@ -23,7 +23,7 @@
 #include "../../drivers/relay/relay.h"
 
 #include "../../main/meca1/mechanicalBoard1.h"
-#include "ioExpander/ioExpander.h"
+#include "../../drivers/ioExpander/ioExpander.h"
 
 static Launcher2018* launcher2018;
 

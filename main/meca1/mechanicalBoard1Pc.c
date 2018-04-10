@@ -257,7 +257,7 @@ void runMechanicalBoard1PC(bool singleMode) {
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
 
     // 2018
-    addLocalDevice(getLauncher2018DeviceInterface(), getLauncher2018DeviceDescriptor());
+    // addLocalDevice(getLauncher2018DeviceInterface(), getLauncher2018DeviceDescriptor(&ioExpander));
 
     initDevices();
 

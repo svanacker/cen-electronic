@@ -32,6 +32,14 @@ void appendStringHeader(OutputStream* outputStream, char* s, int totalLength) {
 	appendSpaces(outputStream, totalLength - length);
 }
 
+void appendStringAndDecHeader(OutputStream* outputStream, char* s, int value, int totalLength) {
+    appendTableSeparator(outputStream);
+    appendSpace(outputStream);
+    unsigned int length = appendString(outputStream, s);
+    length += appendDec(outputStream, value);
+    appendSpaces(outputStream, totalLength - length);
+}
+
 void appendEndOfTableColumn(OutputStream* outputStream, int columnSize) {
 	appendSpaces(outputStream, columnSize);
 	appendTableSeparator(outputStream);

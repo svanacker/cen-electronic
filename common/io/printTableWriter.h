@@ -36,6 +36,14 @@ void appendTableHeaderSeparatorLine(OutputStream* outputStream);
  */
 void appendStringHeader(OutputStream* outputStream, char* s, int columnSize);
 
+/**
+* Append an header composed by a string and a decimal value followed by '|' character.
+* @param outputStream the pointer on outputStream (POO simulation)
+* @param s string the header
+* @param value the value after the string
+*/
+void appendStringAndDecHeader(OutputStream* outputStream, char* s, int value, int columnSize);
+
 void appendEndOfTableColumn(OutputStream* outputStream, int columnSize);
 
 // DATA

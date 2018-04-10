@@ -3,7 +3,7 @@
 /** Singleton */
 static DeviceMethodMetaData deviceMethodMetaData;
 
-DeviceMethodMetaData* getDeviceMethodMetaData() {
+DeviceMethodMetaData* getDeviceMethodMetaData(void) {
     return &deviceMethodMetaData;
 }
 

@@ -314,6 +314,7 @@
     <ClCompile Include="drivers\file\eeprom\eepromFile.c" />
     <ClCompile Include="drivers\ioExpander\ioExpander.c" />
     <ClCompile Include="drivers\ioExpander\ioExpanderDebug.c" />
+    <ClCompile Include="drivers\ioExpander\ioExpanderList.c" />
     <ClCompile Include="drivers\ioExpander\pc\ioExpanderPc.c" />
     <ClCompile Include="drivers\lcd\lcd.c" />
     <ClCompile Include="drivers\lcd\pc\lcdProvider_Pc.c" />
@@ -363,6 +364,7 @@
     <ClCompile Include="motion\pid\endDetection\failed\motionFailedDetection.c" />
     <ClCompile Include="motion\pid\endDetection\motionEndDetectionDebug.c" />
     <ClCompile Include="motion\pid\endDetection\motionEndDetectionStatusUpdater.c" />
+    <ClCompile Include="motion\pid\endDetection\obstacle\motionObstacleDetection.c" />
     <ClCompile Include="motion\pid\endDetection\reached\motionReachedDetection.c" />
     <ClCompile Include="motion\pid\endDetection\shocked\motionShockedDetection.c" />
     <ClCompile Include="motion\pid\instructionType.c" />
@@ -646,7 +648,8 @@
     <ClInclude Include="drivers\driverStreamListener.h" />
     <ClInclude Include="drivers\driverTransmitter.h" />
     <ClInclude Include="drivers\file\eeprom\eepromFile.h" />
-    <ClInclude Include="drivers\io\ioExpander.h" />
+    <ClInclude Include="drivers\ioExpander\ioExpander.h" />
+    <ClInclude Include="drivers\ioExpander\ioExpanderList.h" />
     <ClInclude Include="drivers\io\ioExpanderDebug.h" />
     <ClInclude Include="drivers\io\pc\ioExpanderPc.h" />
     <ClInclude Include="drivers\lcd\lcd.h" />
@@ -702,6 +705,7 @@
     <ClInclude Include="motion\pid\endDetection\motionEndDetectionDebug.h" />
     <ClInclude Include="motion\pid\endDetection\motionEndDetectionParameter.h" />
     <ClInclude Include="motion\pid\endDetection\motionEndDetectionStatusUpdater.h" />
+    <ClInclude Include="motion\pid\endDetection\obstacle\motionObstacleDetection.h" />
     <ClInclude Include="motion\pid\endDetection\reached\motionReachedDetection.h" />
     <ClInclude Include="motion\pid\endDetection\shocked\motionShockedDetection.h" />
     <ClInclude Include="motion\pid\instructionType.h" />
