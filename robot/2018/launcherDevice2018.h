@@ -1,6 +1,8 @@
 #ifndef LAUNCHER_DEVICE_2018_H
 #define LAUNCHER_DEVICE_2018_H
 
+#include "../../common/motor/dualHBridgeMotor.h"
+
 #include "../../device/device.h"
 
 #include "../../drivers/relay/relay.h"
@@ -37,6 +39,8 @@ struct Launcher2018{
     IOExpander* ioExpander;
     /** To launch balls */
     Relay* relay;
+    /** The MD22 */
+    DualHBridgeMotor* dualHBridgeMotor;
 };
 
 void launch2018(int launcherIndex, bool prepare);
@@ -54,6 +58,7 @@ DeviceDescriptor* getLauncher2018DeviceDescriptor(Launcher2018* launcher2018);
  */
 void initLauncher2018(Launcher2018* launcher2018,
                       IOExpander* ioExpander,
-                      Relay* relay);
+                      Relay* relay,
+                      DualHBridgeMotor* dualHBridgeMotor);
 
 #endif

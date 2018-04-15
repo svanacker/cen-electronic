@@ -258,6 +258,7 @@
       <logicalFolder name="f2" displayName="robot.2018" projectFiles="true">
         <itemPath>../../../robot/2018/launcherDevice2018.h</itemPath>
         <itemPath>../../../robot/2018/launcherDeviceInterface2018.h</itemPath>
+        <itemPath>../../../robot/2018/distributor2018.h</itemPath>
       </logicalFolder>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
@@ -521,6 +522,7 @@
       <logicalFolder name="f3" displayName="robot.2018" projectFiles="true">
         <itemPath>../../../robot/2018/launcherDevice2018.c</itemPath>
         <itemPath>../../../robot/2018/launcherDeviceInterface2018.c</itemPath>
+        <itemPath>../../../robot/2018/distributor2018.c</itemPath>
       </logicalFolder>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"

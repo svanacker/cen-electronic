@@ -385,6 +385,9 @@ void runMotorBoardPC(bool singleMode) {
                  (PidMotionDefinition(*)[]) &motionDefinitionArray,
                   MOTOR_BOARD_PC_PID_MOTION_INSTRUCTION_COUNT);
 
+    // Relay
+    initRelayPc(&relay, &relayValue);
+
     // Devices
     initDeviceList((Device(*)[]) &deviceListArray, MOTOR_BOARD_PC_DEVICE_LIST_LENGTH);
     addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
@@ -422,7 +425,6 @@ void runMotorBoardPC(bool singleMode) {
     addLocalDevice(getIOExpanderDeviceInterface(), getIOExpanderDeviceDescriptor(&ioExpanderList));
 
     // Relay
-    initRelayPc(&relay, &relayValue);
     addLocalDevice(getRelayDeviceInterface(), getRelayDeviceDescriptor(&relay));
 
     initDevices();

@@ -298,7 +298,7 @@ int main(void) {
     initRelayRLY08(&relay, relayBusConnection);
     
     // 2018
-    initLauncher2018(&launcher2018, launcherIoExpander, &relay);
+    initLauncher2018(&launcher2018, launcherIoExpander, &relay, &md22);
 
     // init the devices
     initDevicesDescriptor();

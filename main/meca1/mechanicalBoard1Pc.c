@@ -22,6 +22,8 @@
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
 #include "../../common/log/pc/consoleLogHandler.h"
+#include "../../common/motor/dualHBridgeMotor.h"
+#include "../../common/motor/pc/dualHBridgeMotorPc.h"
 #include "../../common/serial/serial.h"
 #include "../../common/serial/serialLink.h"
 #include "../../common/serial/serialLinkList.h"
@@ -50,9 +52,21 @@
 #include "../../device/eeprom/eepromDevice.h"
 #include "../../device/eeprom/eepromDeviceInterface.h"
 
+// IO
+#include "../../device/ioExpander/ioExpanderDevice.h"
+#include "../../device/ioExpander/ioExpanderDeviceInterface.h"
+
+// MD22
+#include "../../device/motor/md22Device.h"
+#include "../../device/motor/md22DeviceInterface.h"
+
 // LOG
 #include "../../device/log/logDevice.h"
 #include "../../device/log/logDeviceInterface.h"
+
+// RELAY
+#include "../../device/relay/relayDevice.h"
+#include "../../device/relay/relayDeviceInterface.h"
 
 // TIMERS
 #include "../../device/timer/timerDevice.h"
@@ -79,10 +93,19 @@
 #include "../../drivers/test/testDriver.h"
 
 #include "../../drivers/battery/battery.h"
+
 #include "../../drivers/clock/softClock.h"
 
+#include "../../drivers/ioExpander/ioExpander.h"
+#include "../../drivers/ioExpander/ioExpanderList.h"
+#include "../../drivers/ioExpander/pc/ioExpanderPc.h"
+
 #include "../../motion/motion.h"
+
 #include "../../motion/pid/pidMotion.h"
+
+#include "../../drivers/relay/relay.h"
+#include "../../drivers/relay/pc/relayPc.h"
 
 #include "../../common/pc/process/processHelper.h"
 
@@ -135,10 +158,25 @@ static Battery battery;
 // Clock
 static Clock clock;
 
+// IOExpander
+static IOExpanderList ioExpanderList;
+static IOExpander ioExpanderArray[MECHANICAL_BOARD_1_PC_IO_EXPANDER_LIST_LENGTH];
+static int ioExpanderValue0;
+
 // I2C
 static I2cBus* mechanical1I2cBus;
 static I2cBusConnection* mechanical1I2cBusConnection;
 static I2cBusConnectionPc mechanical1I2cBusConnectionPc;
+
+// MD22 Fake Motor
+static DualHBridgeMotor md22;
+
+// Relay
+static Relay relay;
+static int relayValue;
+
+// 2018 Specific
+static Launcher2018 launcher2018;
 
 // Devices
 static Device deviceListArray[MECHANICAL_BOARD_1_PC_DEVICE_LIST_LENGTH];
@@ -244,6 +282,19 @@ void runMechanicalBoard1PC(bool singleMode) {
     // Clock
     initSoftClock(&clock);
 
+    // HBridge Fake Motor MD22
+    initDualHBridgeMotorPc(&md22);
+
+    // 2018
+    //  IO Expander
+    initIOExpanderList(&ioExpanderList, (IOExpander(*)[]) &ioExpanderArray, MECHANICAL_BOARD_1_PC_IO_EXPANDER_LIST_LENGTH);
+    initIOExpanderPc(getIOExpanderByIndex(&ioExpanderList, MECHANICAL_BOARD_1_PC_IO_EXPANDER_LAUNCHER_INDEX), &ioExpanderValue0);
+    IOExpander* launcherIoExpander = getIOExpanderByIndex(&ioExpanderList, MECHANICAL_BOARD_1_PC_IO_EXPANDER_LAUNCHER_INDEX);
+    initLauncher2018(&launcher2018, launcherIoExpander, &relay, &md22);
+ 
+    // Relay
+    initRelayPc(&relay, &relayValue);
+
     // Devices
     initDeviceList((Device(*)[]) &deviceListArray, MECHANICAL_BOARD_1_PC_DEVICE_LIST_LENGTH);
     addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
@@ -257,7 +308,10 @@ void runMechanicalBoard1PC(bool singleMode) {
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
 
     // 2018
-    // addLocalDevice(getLauncher2018DeviceInterface(), getLauncher2018DeviceDescriptor(&ioExpander));
+    addLocalDevice(getIOExpanderDeviceInterface(), getIOExpanderDeviceDescriptor(&ioExpanderList));
+    addLocalDevice(getRelayDeviceInterface(), getRelayDeviceDescriptor(&relay));
+    addLocalDevice(getMD22DeviceInterface(), getMD22DeviceDescriptor(&md22));
+    addLocalDevice(getLauncher2018DeviceInterface(), getLauncher2018DeviceDescriptor(&launcher2018));
 
     initDevices();
 

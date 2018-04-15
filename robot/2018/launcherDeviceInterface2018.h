@@ -31,6 +31,20 @@
  */
 #define LAUNCHER_LIGHT_ON_SERVO_MOVE   'l'
 
+// DISTRIBUTOR
+
+/**
+ * Launch a clean Ball by rotating of 45° to the Launcher
+ */
+#define LAUNCHER_DISTRIBUTOR_NEXT_CLEAN_BALL    'n'
+
+/**
+ * 1. Prepare the launcher
+ * 2. Rotate the distributor which lead to load the ball in the launcher
+ * 3. Send the ball
+ */
+#define LAUNCHER_SEQUENCE_CLEAN_BALL           'N'
+
 /**
  * Get the device interface for launcher 2018.
  */

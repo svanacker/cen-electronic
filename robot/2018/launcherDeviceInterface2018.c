@@ -10,6 +10,7 @@ const char* deviceLauncher2018GetName(void) {
 }
 
 int deviceLauncher2018GetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
+    // LAUNCHER
     if (commandHeader == LAUNCHER_PREPARE_BALL_COMMAND) {
         if (fillDeviceArgumentList) {
             setFunction("prepare Ball", 1, 0);
@@ -24,10 +25,26 @@ int deviceLauncher2018GetInterface(char commandHeader, DeviceInterfaceMode mode,
         }
         return commandLengthValueForMode(mode, 2, 0);
     }
+    // LIGHT / BEE
     else if (commandHeader == LAUNCHER_LIGHT_ON_SERVO_MOVE) {
         if (fillDeviceArgumentList) {
             setFunction("Switch Light / Bee", 1, 0);
             setArgumentUnsignedHex2(0, "Left (00) / Right (01) / Bee (02)");
+        }
+        return commandLengthValueForMode(mode, 2, 0);
+    }
+    // DISTRIBUTOR
+    else if (commandHeader == LAUNCHER_DISTRIBUTOR_NEXT_CLEAN_BALL) {
+        if (fillDeviceArgumentList) {
+            setFunction("Next Clean Ball", 1, 0);
+            setArgumentUnsignedHex2(0, "Left (00) / Right (01)");
+        }
+        return commandLengthValueForMode(mode, 2, 0);
+    }
+    else if (commandHeader == LAUNCHER_SEQUENCE_CLEAN_BALL) {
+        if (fillDeviceArgumentList) {
+            setFunction("Sequence Clean Ball", 1, 0);
+            setArgumentUnsignedHex2(0, "Left (00) / Right (01)");
         }
         return commandLengthValueForMode(mode, 2, 0);
     }

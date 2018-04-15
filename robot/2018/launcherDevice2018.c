@@ -99,6 +99,17 @@ void launch2018(int launcherIndex, bool prepare) {
     }
 }
 
+void distributor2018CleanNext(int launcherIndex) {
+    signed int motorSpeed = 10;
+    if (launcherIndex == LAUNCHER_RIGHT_INDEX) {
+        motorSpeed *= -1;
+    }
+
+    setMotorSpeeds(launcher2018->dualHBridgeMotor, motorSpeed, 0);
+    delaymSec(100);
+    setMotorSpeeds(launcher2018->dualHBridgeMotor, 0, 0);
+}
+
 void deviceLauncher2018Init(void) {
 
 }
@@ -112,6 +123,7 @@ bool deviceLauncher2018IsOk(void) {
 }
 
 void deviceLauncher2018HandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
+    // Launcher
     if (commandHeader == LAUNCHER_PREPARE_BALL_COMMAND) {
         int launcherIndex = readHex2(inputStream);
         launch2018(launcherIndex, true);
@@ -122,10 +134,24 @@ void deviceLauncher2018HandleRawData(char commandHeader, InputStream* inputStrea
         launch2018(launcherIndex, false);
         ackCommand(outputStream, LAUNCHER_2018_DEVICE_HEADER, LAUNCHER_SEND_BALL_COMMAND);
     }
+    // Light / Bee
     else if (commandHeader == LAUNCHER_LIGHT_ON_SERVO_MOVE) {
         int launcherIndex = readHex2(inputStream);
         lightOn2018(launcherIndex);
         ackCommand(outputStream, LAUNCHER_2018_DEVICE_HEADER, LAUNCHER_LIGHT_ON_SERVO_MOVE);
+    }
+    // Distributor
+    else if (commandHeader == LAUNCHER_DISTRIBUTOR_NEXT_CLEAN_BALL) {
+        int launcherIndex = readHex2(inputStream);
+        distributor2018CleanNext(launcherIndex);
+        ackCommand(outputStream, LAUNCHER_2018_DEVICE_HEADER, LAUNCHER_DISTRIBUTOR_NEXT_CLEAN_BALL);
+    }
+    else if (commandHeader == LAUNCHER_SEQUENCE_CLEAN_BALL) {
+        int launcherIndex = readHex2(inputStream);
+        launch2018(launcherIndex, true);
+        distributor2018CleanNext(launcherIndex);
+        launch2018(launcherIndex, false);
+        ackCommand(outputStream, LAUNCHER_2018_DEVICE_HEADER, LAUNCHER_SEQUENCE_CLEAN_BALL);
     }
 }
 
@@ -144,7 +170,9 @@ DeviceDescriptor* getLauncher2018DeviceDescriptor(Launcher2018* launcher2018Para
 
 void initLauncher2018(Launcher2018* launcher2018,
                       IOExpander* ioExpander,
-                      Relay* relay) {
+                      Relay* relay,
+                      DualHBridgeMotor* dualHBridgeMotor) {
     launcher2018->ioExpander = ioExpander;
     launcher2018->relay = relay;
+    launcher2018->dualHBridgeMotor = dualHBridgeMotor;
 }
