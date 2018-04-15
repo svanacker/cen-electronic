@@ -32,21 +32,28 @@ void lightOn2018(int launcherIndex) {
     unsigned int servoOffPosition = LAUNCHER_LIGHT_LEFT_SERVO_OFF_POSITION;
     unsigned int servoOnPosition = LAUNCHER_LIGHT_LEFT_SERVO_ON_POSITION;
     unsigned int speed = PWM_SERVO_SPEED_MAX;
+    unsigned int delay = 75;
     
     if (launcherIndex == LAUNCHER_RIGHT_INDEX) {
         servoIndex = LAUNCHER_LIGHT_RIGHT_SERVO_INDEX;
         servoOffPosition = LAUNCHER_LIGHT_RIGHT_SERVO_OFF_POSITION;
         servoOnPosition = LAUNCHER_LIGHT_RIGHT_SERVO_ON_POSITION;
     }
+    else if (launcherIndex == LAUNCHER_BEE_INDEX) {
+        servoIndex = LAUNCHER_BEE_SERVO_INDEX;
+        servoOffPosition = LAUNCHER_BEE_SERVO_OFF_POSITION;
+        servoOnPosition = LAUNCHER_BEE_SERVO_ON_POSITION;
+        delay = 200;
+    }
     
     // TODO : Check this !
     ServoList* servoList = _getServoList();
     servoList->useTimer = false;
     
-    pwmServo(servoIndex, 1, servoOnPosition);
+    pwmServo(servoIndex, speed, servoOnPosition);
     // TODO : Check it because it's really longer than 50 ms
-    delaymSec(75);
-    pwmServo(servoIndex, 1, servoOffPosition);
+    delaymSec(delay);
+    pwmServo(servoIndex, speed, servoOffPosition);
 }
 
 void launch2018(int launcherIndex, bool prepare) {
@@ -55,6 +62,7 @@ void launch2018(int launcherIndex, bool prepare) {
     
     unsigned int relayIndex = LAUNCHER_LEFT_RELAY_INDEX;
     unsigned int ioExpanderIndex = LAUNCHER_LEFT_IO_EXPANDER_INDEX;
+    int maxIteration = 100;
     
     if (launcherIndex == LAUNCHER_RIGHT_INDEX) {
         relayIndex = LAUNCHER_RIGHT_RELAY_INDEX;
@@ -66,7 +74,11 @@ void launch2018(int launcherIndex, bool prepare) {
         relay->relayWriteValue(relay, relayIndex, true);
         // We wait that the contact is done -> ioExpander goes to ground (0)
         while (ioExpander->ioExpanderReadSingleValue(ioExpander, ioExpanderIndex)) {
-            delaymSec(50);
+            maxIteration--;
+            if (maxIteration <= 0) {
+                break;
+            }
+            delaymSec(10);
         }
         // Change the motor state
         relay->relayWriteValue(relay, relayIndex, false);        
@@ -76,7 +88,11 @@ void launch2018(int launcherIndex, bool prepare) {
         relay->relayWriteValue(relay, relayIndex, true);
         // We wait that the contact is left -> ioExpander goes to +5V
         while (!ioExpander->ioExpanderReadSingleValue(ioExpander, ioExpanderIndex)) {
-            delaymSec(50);
+            maxIteration--;
+            if (maxIteration <= 0) {
+                break;
+            }
+            delaymSec(10);
         }
         // Change the motor state
         relay->relayWriteValue(relay, relayIndex, false);    

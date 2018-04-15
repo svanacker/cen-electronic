@@ -23,6 +23,11 @@
 #define LAUNCHER_LIGHT_LEFT_SERVO_OFF_POSITION   1500
 #define LAUNCHER_LIGHT_LEFT_SERVO_ON_POSITION    800
 
+// For Bee
+#define LAUNCHER_BEE_SERVO_INDEX                 5 
+#define LAUNCHER_BEE_SERVO_OFF_POSITION          1500
+#define LAUNCHER_BEE_SERVO_ON_POSITION           2500
+
 // Forward declaration
 typedef struct Launcher2018 Launcher2018;
 

@@ -24,7 +24,7 @@ int _convPwmServo(int microSeconds) {
 
     duty = PWM_TIMER_FOR_SERVO * (long) microSeconds;
     duty = duty / PWM_DUTY_CYCLE_FOR_SERVO;
-    duty = PWM_TIMER_FOR_SERVO-duty;
+    duty = PWM_TIMER_FOR_SERVO - duty;
     return (int) duty;
 }
 
@@ -44,31 +44,31 @@ int _confServoToPwm(int value) {
 // INIT
 
 void __internalPwmForServoHardware(int posInit) {
-    OpenOC1( OC_ON | OC_TIMER_MODE16 | OC_TIMER2_SRC | OC_PWM_FAULT_PIN_DISABLE , 0,0 );
-    OpenOC2( OC_ON | OC_TIMER_MODE16 | OC_TIMER2_SRC | OC_PWM_FAULT_PIN_DISABLE , 0,0 );
-    OpenOC5( OC_ON | OC_TIMER_MODE16 | OC_TIMER2_SRC | OC_PWM_FAULT_PIN_DISABLE , 0,0 );
+    OpenOC1(OC_ON | OC_TIMER_MODE16 | OC_TIMER2_SRC | OC_PWM_FAULT_PIN_DISABLE, 0, 0);
+    OpenOC2(OC_ON | OC_TIMER_MODE16 | OC_TIMER2_SRC | OC_PWM_FAULT_PIN_DISABLE, 0, 0);
+    OpenOC5(OC_ON | OC_TIMER_MODE16 | OC_TIMER2_SRC | OC_PWM_FAULT_PIN_DISABLE, 0, 0);
 
-        OpenTimer2(T2_ON|T2_PS_1_64 | T2_SOURCE_INT, PWM_TIMER_FOR_SERVO);
+    OpenTimer2(T2_ON | T2_PS_1_64 | T2_SOURCE_INT, PWM_TIMER_FOR_SERVO);
 
-        OC1RS = _convPwmServo(posInit);
-        OC2RS = _convPwmServo(posInit);
-        OC5RS = _convPwmServo(posInit);
+    OC1RS = _convPwmServo(posInit);
+    OC2RS = _convPwmServo(posInit);
+    OC5RS = _convPwmServo(posInit);
 }
 
-void __internalPwmServo(int pwmIndex, int dutyms){
+void __internalPwmServo(int pwmIndex, int dutyms) {
 
-    switch (pwmIndex){
+    switch (pwmIndex) {
         case 1:
         {
             OC1RS = _convPwmServo(dutyms);
             break;
         }
-        case 2: 
+        case 2:
         {
             OC2RS = _convPwmServo(dutyms);
             break;
         }
-        case 3: 
+        case 3:
         {
             OC3RS = _convPwmServo(dutyms);
             break;

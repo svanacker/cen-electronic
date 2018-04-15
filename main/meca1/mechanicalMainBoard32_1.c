@@ -182,6 +182,7 @@ void initDevicesDescriptor() {
     addLocalDevice(getSerialDebugDeviceInterface(), getSerialDebugDeviceDescriptor());
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
     addLocalDevice(getTimerDeviceInterface(), getTimerDeviceDescriptor());
+    addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom_));
     
     // 2018 Specific
     addLocalDevice(getRelayDeviceInterface(), getRelayDeviceDescriptor(&relay));

@@ -8,7 +8,7 @@
 // Sense are seen with an observer behind the robot (he see the LCD Panel)
 #define LAUNCHER_LEFT_INDEX          0
 #define LAUNCHER_RIGHT_INDEX         1
-
+#define LAUNCHER_BEE_INDEX           2
 
 // BALL LAUNCHER
 

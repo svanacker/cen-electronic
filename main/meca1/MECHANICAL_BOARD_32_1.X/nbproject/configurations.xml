@@ -165,6 +165,10 @@
                      projectFiles="true">
         <itemPath>../../../device/dispatcher/deviceDataDispatcher.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f7" displayName="device.eeprom" projectFiles="true">
+        <itemPath>../../../device/eeprom/eepromDevice.h</itemPath>
+        <itemPath>../../../device/eeprom/eepromDeviceInterface.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="f6" displayName="device.ioExpander" projectFiles="true">
         <itemPath>../../../device/ioExpander/ioExpanderDevice.h</itemPath>
         <itemPath>../../../device/ioExpander/ioExpanderDeviceInterface.h</itemPath>
@@ -421,6 +425,10 @@
                      displayName="device.dispatcher"
                      projectFiles="true">
         <itemPath>../../../device/dispatcher/deviceDataDispatcher.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f8" displayName="device.eeprom" projectFiles="true">
+        <itemPath>../../../device/eeprom/eepromDevice.c</itemPath>
+        <itemPath>../../../device/eeprom/eepromDeviceInterface.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f6" displayName="device.ioExpander" projectFiles="true">
         <itemPath>../../../device/ioExpander/ioExpanderDevice.c</itemPath>
