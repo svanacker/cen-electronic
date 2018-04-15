@@ -84,10 +84,10 @@ void initPwmForServo (int dutyms);
 
 /**
 * do a pwm on a pwmIndex between 1 and 4
-* @param dutyms duration of pwm to 1 typical value between
+* @param targetPosition duration of pwm to 1 typical value between
 * PWM_SERVO_LEFT_POSITION and PWM_SERVO_RIGHT_POSITION 
 */
-void pwmServo(int pwmIndex, unsigned int speed, int dutyms);
+void pwmServo(int pwmIndex, unsigned int speed, int targetPosition);
 
 /**
 * do a pwm on all pwm

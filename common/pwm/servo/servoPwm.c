@@ -43,6 +43,9 @@ ServoList* _getServoList() {
  * The interrupt timer.
  */
 void interruptServoTimerCallbackFunc(Timer* timer) {
+    if (!servoList.useTimer) {
+        return;
+    }
     int i;
     for (i = 0; i < PWM_COUNT; i++) {
         Servo* servo = getServo(i);
@@ -110,16 +113,16 @@ bool checkServoIndex(int servoIndex, char* errorString) {
 
 // PUBLIC WRITE FUNCTIONS
 
-void pwmServo(int servoIndex, unsigned int speed, int dutyms) {
+void pwmServo(int servoIndex, unsigned int speed, int targetPosition) {
     if (!checkServoIndex(servoIndex, "=> pwmServo")) {
         return;
     }
     Servo* servo = getServo(servoIndex - 1);
     servo->speed = speed;
-    servo->targetPosition = dutyms;
+    servo->targetPosition = targetPosition;
     // By default, we update the value immediately, if we want some speed, we need a timer !
     if (!servoList.useTimer) {
-        __internalPwmServo(servoIndex, (dutyms));
+        __internalPwmServo(servoIndex, (targetPosition));
     }
 }
 

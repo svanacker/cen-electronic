@@ -27,6 +27,28 @@
 
 static Launcher2018* launcher2018;
 
+void lightOn2018(int launcherIndex) {
+    unsigned int servoIndex = LAUNCHER_LIGHT_LEFT_SERVO_INDEX;
+    unsigned int servoOffPosition = LAUNCHER_LIGHT_LEFT_SERVO_OFF_POSITION;
+    unsigned int servoOnPosition = LAUNCHER_LIGHT_LEFT_SERVO_ON_POSITION;
+    unsigned int speed = PWM_SERVO_SPEED_MAX;
+    
+    if (launcherIndex == LAUNCHER_RIGHT_INDEX) {
+        servoIndex = LAUNCHER_LIGHT_RIGHT_SERVO_INDEX;
+        servoOffPosition = LAUNCHER_LIGHT_RIGHT_SERVO_OFF_POSITION;
+        servoOnPosition = LAUNCHER_LIGHT_RIGHT_SERVO_ON_POSITION;
+    }
+    
+    // TODO : Check this !
+    ServoList* servoList = _getServoList();
+    servoList->useTimer = false;
+    
+    pwmServo(servoIndex, 1, servoOnPosition);
+    // TODO : Check it because it's really longer than 50 ms
+    delaymSec(75);
+    pwmServo(servoIndex, 1, servoOffPosition);
+}
+
 void launch2018(int launcherIndex, bool prepare) {
     Relay* relay = launcher2018->relay;
     IOExpander* ioExpander = launcher2018->ioExpander;
@@ -83,6 +105,11 @@ void deviceLauncher2018HandleRawData(char commandHeader, InputStream* inputStrea
         int launcherIndex = readHex2(inputStream);
         launch2018(launcherIndex, false);
         ackCommand(outputStream, LAUNCHER_2018_DEVICE_HEADER, LAUNCHER_SEND_BALL_COMMAND);
+    }
+    else if (commandHeader == LAUNCHER_LIGHT_ON_SERVO_MOVE) {
+        int launcherIndex = readHex2(inputStream);
+        lightOn2018(launcherIndex);
+        ackCommand(outputStream, LAUNCHER_2018_DEVICE_HEADER, LAUNCHER_LIGHT_ON_SERVO_MOVE);
     }
 }
 

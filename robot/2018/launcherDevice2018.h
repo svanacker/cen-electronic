@@ -6,16 +6,22 @@
 #include "../../drivers/relay/relay.h"
 #include "../../drivers/ioExpander/ioExpander.h"
 
-#define LAUNCHER_LEFT_INDEX          0
-#define LAUNCHER_RIGHT_INDEX         1
-
 // To activate Relay
-#define LAUNCHER_LEFT_RELAY_INDEX         1
-#define LAUNCHER_RIGHT_RELAY_INDEX        2
+#define LAUNCHER_RIGHT_RELAY_INDEX               1
+#define LAUNCHER_LEFT_RELAY_INDEX                2
 
 // To Read IoExapnder
-#define LAUNCHER_LEFT_IO_EXPANDER_INDEX   7
-#define LAUNCHER_RIGHT_IO_EXPANDER_INDEX  6
+#define LAUNCHER_RIGHT_IO_EXPANDER_INDEX         0
+#define LAUNCHER_LEFT_IO_EXPANDER_INDEX          1
+
+// To Light On
+#define LAUNCHER_LIGHT_RIGHT_SERVO_INDEX         1
+#define LAUNCHER_LIGHT_RIGHT_SERVO_OFF_POSITION  1500
+#define LAUNCHER_LIGHT_RIGHT_SERVO_ON_POSITION   2200
+
+#define LAUNCHER_LIGHT_LEFT_SERVO_INDEX          2
+#define LAUNCHER_LIGHT_LEFT_SERVO_OFF_POSITION   1500
+#define LAUNCHER_LIGHT_LEFT_SERVO_ON_POSITION    800
 
 // Forward declaration
 typedef struct Launcher2018 Launcher2018;

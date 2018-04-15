@@ -13,14 +13,21 @@ int deviceLauncher2018GetInterface(char commandHeader, DeviceInterfaceMode mode,
     if (commandHeader == LAUNCHER_PREPARE_BALL_COMMAND) {
         if (fillDeviceArgumentList) {
             setFunction("prepare Ball", 1, 0);
-            setArgumentUnsignedHex2(0, "launcher Index");
+            setArgumentUnsignedHex2(0, "Left (00) / Right (01)");
         }
         return commandLengthValueForMode(mode, 2, 0);
     }
     else if (commandHeader == LAUNCHER_SEND_BALL_COMMAND) {
         if (fillDeviceArgumentList) {
             setFunction("Send Ball", 1, 0);
-            setArgumentUnsignedHex2(0, "launcher Index");
+            setArgumentUnsignedHex2(0, "Left (00) / Right (01)");
+        }
+        return commandLengthValueForMode(mode, 2, 0);
+    }
+    else if (commandHeader == LAUNCHER_LIGHT_ON_SERVO_MOVE) {
+        if (fillDeviceArgumentList) {
+            setFunction("Switch Light", 1, 0);
+            setArgumentUnsignedHex2(0, "Left (00) / Right (01)");
         }
         return commandLengthValueForMode(mode, 2, 0);
     }
