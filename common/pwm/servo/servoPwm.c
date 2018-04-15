@@ -70,15 +70,16 @@ void interruptServoTimerCallbackFunc(Timer* timer) {
 
 // PUBLIC INTERFACCE
 
-void initPwmForServo(int posInit) {
+void initPwmForServo(unsigned int servoToActivateMask, int posInit) {
     if (servoList.initialized) {
         return;
     }
-    __internalPwmForServoHardware(posInit);
+    __internalPwmForServoHardware(servoToActivateMask, posInit);
     // Init servo structure
     int i;
     for (i = 0; i < PWM_COUNT; i++) {
         Servo* servo = getServo(i);
+        servo->enabled = servoToActivateMask & (1 << i);
         servo->speed = PWM_SERVO_SPEED_MAX;
         servo->currentPosition = posInit;
         servo->targetPosition = posInit;
@@ -118,6 +119,9 @@ void pwmServo(int servoIndex, unsigned int speed, int targetPosition) {
         return;
     }
     Servo* servo = getServo(servoIndex - 1);
+    if (!servo->enabled) {
+        return;
+    }
     servo->speed = speed;
     servo->targetPosition = targetPosition;
     // By default, we update the value immediately, if we want some speed, we need a timer !

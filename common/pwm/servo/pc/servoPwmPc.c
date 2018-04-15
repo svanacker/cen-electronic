@@ -2,7 +2,7 @@
 
 // INIT
 
-void __internalPwmForServoHardware(int posInit) {
+void __internalPwmForServoHardware(unsigned int servoEnabledMask, int posInit) {
     // TODO
 }
 

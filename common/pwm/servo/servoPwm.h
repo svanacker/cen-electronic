@@ -9,6 +9,8 @@
 * Defines the structure to manages Servos.
 */
 typedef struct Servo {
+    /** If we use it, in PIC, some PWM use UART, so we don't activate them always */
+    bool enabled;
     /** The speed to reach the final position. */
     unsigned int speed;
     /** The current position. */
@@ -28,6 +30,15 @@ typedef struct ServoList {
     /** Use Timer, if false, update immediately the value of the servo ! .*/
     bool useTimer;
 } ServoList;
+
+#define PWM_SERVO_ENABLED_MASK_SERVO_1     0b00001
+#define PWM_SERVO_ENABLED_MASK_SERVO_2     0b00010
+#define PWM_SERVO_ENABLED_MASK_SERVO_3     0b00100
+#define PWM_SERVO_ENABLED_MASK_SERVO_4     0b01000
+#define PWM_SERVO_ENABLED_MASK_SERVO_5     0b10000
+
+#define PWM_SERVO_ENABLED_MASK_SERVO_ALL   0b11111
+#define PWM_SERVO_ENABLED_MASK_SERVO_1_2_5 0b10011
 
 /**
 * Middle position for a servo
@@ -63,7 +74,8 @@ ServoList* _getServoList();
  * (Ex : 30F / 32)
  * @param posInit the initial position of all servos.
  */
-void __internalPwmForServoHardware(int posInit);
+void __internalPwmForServoHardware(unsigned int servoEnabledMask, 
+                                   int posInit);
 
 /**
  * "Protected" method which must not be used directly by users.
@@ -78,7 +90,7 @@ void __internalPwmServo(int pwmIndex, int dutyms);
 * Use TIMER2
 * @param posInt : Duty start cycle from 0 to 20000
 */
-void initPwmForServo (int dutyms);
+void initPwmForServo (unsigned int servoToActivateMask, int dutyms);
 
 // INTERFACE
 

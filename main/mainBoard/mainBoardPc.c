@@ -28,6 +28,8 @@
 #include "../../common/log/logLevel.h"
 #include "../../common/log/pc/consoleLogHandler.h"
 
+#include "../../common/pwm/servo/servoPwm.h"
+
 #include "../../common/serial/serial.h"
 #include "../../common/serial/serialLink.h"
 #include "../../common/serial/serialLinkList.h"
@@ -432,7 +434,7 @@ void runMainBoardPC(bool connectToRobotManagerMode) {
     addLocalDevice(getI2cCommonDebugDeviceInterface(), getI2cCommonDebugDeviceDescriptor());
 	addLocalDevice(getI2cMasterDebugDeviceInterface(), getI2cMasterDebugDeviceDescriptor());
     addLocalDevice(getDataDispatcherDeviceInterface(), getDataDispatcherDeviceDescriptor());
-    addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor());
+    addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor(PWM_SERVO_ENABLED_MASK_SERVO_1_2_5));
     addLocalDevice(getTimerDeviceInterface(), getTimerDeviceDescriptor());
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
     // addLocalDevice(getFileDeviceInterface(), getFileDeviceDescriptor());

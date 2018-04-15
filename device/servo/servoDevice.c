@@ -22,8 +22,11 @@
 #include "../../device/device.h"
 #include "../../device/deviceConstants.h"
 
+/** To know the list of servo that we would like to activate */
+static unsigned int servoEnabledMask;
+
 void deviceServoInit(void) {
-    initPwmForServo(PWM_SERVO_MIDDLE_POSITION);
+    initPwmForServo(servoEnabledMask, PWM_SERVO_MIDDLE_POSITION);
 }
 
 void deviceServoShutDown(void) {
@@ -108,6 +111,7 @@ static DeviceDescriptor descriptor = {
     .deviceHandleRawData = &deviceServoHandleRawData,
 };
 
-DeviceDescriptor* getServoDeviceDescriptor(void) {
+DeviceDescriptor* getServoDeviceDescriptor(unsigned int servoEnabledMaskParam) {
+    servoEnabledMask = servoEnabledMaskParam;
     return &descriptor;
 }

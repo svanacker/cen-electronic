@@ -6,6 +6,6 @@
 /**
  * The descriptor for the servo device.
  */
-DeviceDescriptor* getServoDeviceDescriptor(void);
+DeviceDescriptor* getServoDeviceDescriptor(unsigned int servoEnabledMaskParam);
 
 #endif

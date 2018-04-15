@@ -13,6 +13,9 @@
 
 // PRIVATE
 
+// forward declaration
+void __internalPwmServo(int pwmIndex, int dutyms);
+
 /**
  * @private.
  * convert a duration in microseconds into integer value which must be applied in pwm.
@@ -43,16 +46,43 @@ int _confServoToPwm(int value) {
 
 // INIT
 
-void __internalPwmForServoHardware(int posInit) {
-    OpenOC1(OC_ON | OC_TIMER_MODE16 | OC_TIMER2_SRC | OC_PWM_FAULT_PIN_DISABLE, 0, 0);
-    OpenOC2(OC_ON | OC_TIMER_MODE16 | OC_TIMER2_SRC | OC_PWM_FAULT_PIN_DISABLE, 0, 0);
-    OpenOC5(OC_ON | OC_TIMER_MODE16 | OC_TIMER2_SRC | OC_PWM_FAULT_PIN_DISABLE, 0, 0);
+void __internalInitPwmServo(int servoIndex) {
+    if (servoIndex == 1) {
+        OpenOC1(OC_ON | OC_TIMER_MODE16 | OC_TIMER2_SRC | OC_PWM_FAULT_PIN_DISABLE, 0, 0);
+    }
+    else if (servoIndex == 2) {
+        OpenOC2(OC_ON | OC_TIMER_MODE16 | OC_TIMER2_SRC | OC_PWM_FAULT_PIN_DISABLE, 0, 0);
+    }
+    else if (servoIndex == 3) {
+        OpenOC3(OC_ON | OC_TIMER_MODE16 | OC_TIMER2_SRC | OC_PWM_FAULT_PIN_DISABLE, 0, 0);
+    }
+    else if (servoIndex == 4) {
+        OpenOC4(OC_ON | OC_TIMER_MODE16 | OC_TIMER2_SRC | OC_PWM_FAULT_PIN_DISABLE, 0, 0);
+    }
+    else if (servoIndex == 5) {
+        OpenOC5(OC_ON | OC_TIMER_MODE16 | OC_TIMER2_SRC | OC_PWM_FAULT_PIN_DISABLE, 0, 0);
+    }
+}
 
+void __internalPwmForServoHardware(unsigned int servoEnabledMask, 
+                                   int posInit) {
+    if (servoEnabledMask == 0) {
+        return;
+    }
+    unsigned int i;
+    for (i = 0; i < PWM_COUNT; i++) {
+        if ((1 << i) & servoEnabledMask) {
+            __internalInitPwmServo(i + 1);
+        }
+    }
+
+    // Launch the relating timer
     OpenTimer2(T2_ON | T2_PS_1_64 | T2_SOURCE_INT, PWM_TIMER_FOR_SERVO);
 
-    OC1RS = _convPwmServo(posInit);
-    OC2RS = _convPwmServo(posInit);
-    OC5RS = _convPwmServo(posInit);
+    unsigned int servoIndex;
+    for (servoIndex = 1; servoIndex <= 5; servoIndex++) {
+        __internalPwmServo(servoIndex, posInit);
+    }
 }
 
 void __internalPwmServo(int pwmIndex, int dutyms) {

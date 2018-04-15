@@ -177,7 +177,7 @@ void initDevicesDescriptor() {
     initDeviceList(&deviceListArray, MECA_BOARD_32_1_DEVICE_LENGTH);
     addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
     addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
-    addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor());
+    addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor(PWM_SERVO_ENABLED_MASK_SERVO_ALL));
 
     addLocalDevice(getSerialDebugDeviceInterface(), getSerialDebugDeviceDescriptor());
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
