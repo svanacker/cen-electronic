@@ -87,4 +87,3 @@ int getDeviceCount(void);
 void initDevices(void);
 
 #endif
-

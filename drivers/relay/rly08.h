@@ -4,8 +4,6 @@
 #include "relay.h"
 #include "../../common/i2c/i2cBusConnectionList.h"
 
-#include "../device.h"
-
 #define ALL_RELAY_ON 100
 #define RELAY_1_ON 101
 #define RELAY_2_ON 102

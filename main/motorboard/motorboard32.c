@@ -190,7 +190,7 @@
 #include "../../test/motion/bspline/bsplinetest.h"
 
 // RELAY
-#include "relay/rly08.h"
+#include "../../drivers/relay/rly08.h"
 
 // MOTOR
 #include "dualHBridgeMotorMd22.h"

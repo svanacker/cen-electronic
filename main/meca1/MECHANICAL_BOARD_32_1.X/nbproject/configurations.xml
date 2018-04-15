@@ -165,11 +165,19 @@
                      projectFiles="true">
         <itemPath>../../../device/dispatcher/deviceDataDispatcher.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f6" displayName="device.ioExpander" projectFiles="true">
+        <itemPath>../../../device/ioExpander/ioExpanderDevice.h</itemPath>
+        <itemPath>../../../device/ioExpander/ioExpanderDeviceInterface.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="device.motor"
                      displayName="device.motor"
                      projectFiles="true">
         <itemPath>../../../device/motor/pwmMotorDevice.h</itemPath>
         <itemPath>../../../device/motor/pwmMotorDeviceInterface.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f4" displayName="device.relay" projectFiles="true">
+        <itemPath>../../../device/relay/relayDevice.h</itemPath>
+        <itemPath>../../../device/relay/relayDeviceInterface.h</itemPath>
       </logicalFolder>
       <logicalFolder name="device.serial"
                      displayName="device.serial"
@@ -219,6 +227,18 @@
                      displayName="drivers.eeprom"
                      projectFiles="true">
         <itemPath>../../../drivers/eeprom/24c512.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f5" displayName="drivers.ioExpander" projectFiles="true">
+        <itemPath>../../../drivers/ioExpander/ioExpander.h</itemPath>
+        <itemPath>../../../drivers/ioExpander/ioExpanderDebug.h</itemPath>
+        <itemPath>../../../drivers/ioExpander/ioExpanderList.h</itemPath>
+        <itemPath>../../../drivers/ioExpander/ioExpanderPcf8574.h</itemPath>
+        <itemPath>../../../drivers/ioExpander/pcf8574.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f3" displayName="drivers.relay" projectFiles="true">
+        <itemPath>../../../drivers/relay/relay.h</itemPath>
+        <itemPath>../../../drivers/relay/relayDebug.h</itemPath>
+        <itemPath>../../../drivers/relay/rly08.h</itemPath>
       </logicalFolder>
       <logicalFolder name="main" displayName="main" projectFiles="true">
         <itemPath>../mechanicalBoard32_1.h</itemPath>
@@ -402,11 +422,19 @@
                      projectFiles="true">
         <itemPath>../../../device/dispatcher/deviceDataDispatcher.c</itemPath>
       </logicalFolder>
+      <logicalFolder name="f6" displayName="device.ioExpander" projectFiles="true">
+        <itemPath>../../../device/ioExpander/ioExpanderDevice.c</itemPath>
+        <itemPath>../../../device/ioExpander/ioExpanderDeviceInterface.c</itemPath>
+      </logicalFolder>
       <logicalFolder name="device.motor"
                      displayName="device.motor"
                      projectFiles="true">
         <itemPath>../../../device/motor/pwmMotorDevice.c</itemPath>
         <itemPath>../../../device/motor/pwmMotorDeviceInterface.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f5" displayName="device.relay" projectFiles="true">
+        <itemPath>../../../device/relay/relayDevice.c</itemPath>
+        <itemPath>../../../device/relay/relayDeviceInterface.c</itemPath>
       </logicalFolder>
       <logicalFolder name="device.serial"
                      displayName="device.serial"
@@ -454,6 +482,18 @@
       </logicalFolder>
       <logicalFolder name="f1" displayName="drivers.eeprom" projectFiles="true">
         <itemPath>../../../drivers/eeprom/24c512.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f7" displayName="drivers.ioExpander" projectFiles="true">
+        <itemPath>../../../drivers/ioExpander/ioExpander.c</itemPath>
+        <itemPath>../../../drivers/ioExpander/ioExpanderDebug.c</itemPath>
+        <itemPath>../../../drivers/ioExpander/ioExpanderList.c</itemPath>
+        <itemPath>../../../drivers/ioExpander/ioExpanderPcf8574.c</itemPath>
+        <itemPath>../../../drivers/ioExpander/pcf8574.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f4" displayName="drivers.relay" projectFiles="true">
+        <itemPath>../../../drivers/relay/relay.c</itemPath>
+        <itemPath>../../../drivers/relay/relayDebug.c</itemPath>
+        <itemPath>../../../drivers/relay/rly08.c</itemPath>
       </logicalFolder>
       <logicalFolder name="main" displayName="main" projectFiles="true">
         <itemPath>../mechanicalMainBoard32_1.c</itemPath>

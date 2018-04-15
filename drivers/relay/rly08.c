@@ -7,8 +7,6 @@
 
 #include "rly08.h"
 
-#include "../device.h"
-
 // address for RLY08 (read)
 #define readAddr RLY08_DEFAULT_ADDRESS + 1
 

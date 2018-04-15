@@ -42,39 +42,62 @@
 #include "../../device/deviceList.h"
 #include "../../device/dispatcher/deviceDataDispatcher.h"
 
-// -> Devices
-// Clock
+// DEVICES
+// -> Clock
 #include "../../device/clock/clockDevice.h"
 #include "../../device/clock/clockDeviceInterface.h"
 
-// EEPROM
+// -> Eeprom
 #include "../../device/eeprom/eepromDevice.h"
 #include "../../device/eeprom/eepromDeviceInterface.h"
 
-// Servo
+// IO Expander
+#include "../../device/ioExpander/ioExpanderDevice.h"
+#include "../../device/ioExpander/ioExpanderDeviceInterface.h"
+
+// -> Servo
 #include "../../device/servo/servoDevice.h"
 #include "../../device/servo/servoDeviceInterface.h"
 
-// System
+// -> System
 #include "../../device/system/systemDevice.h"
 #include "../../device/system/systemDeviceInterface.h"
 
-// Test
+// -> Test
 #include "../../device/test/testDevice.h"
 #include "../../device/test/testDeviceInterface.h"
 
-// Serial
+// -> Serial
 #include "../../device/serial/serialDebugDevice.h"
 #include "../../device/serial/serialDebugDeviceInterface.h"
 
-// Timer
+// -> Relay
+#include "../../device/relay/relayDevice.h"
+#include "../../device/relay/relayDeviceInterface.h"
+
+// -> Timer
 #include "../../device/timer/timerDevice.h"
 #include "../../device/timer/timerDeviceInterface.h"
 
-// Drivers
+// -> 2018
+#include "../../robot/2018/launcherDevice2018.h"
+#include "../../robot/2018/launcherDeviceInterface2018.h"
+
+// DRIVERS
 #include "../../drivers/driverStreamListener.h"
+
+// Eeprom
 #include "../../drivers/eeprom/24c512.h"
 
+// -> IO Expander
+#include "../../drivers/ioExpander/ioExpander.h"
+#include "../../drivers/ioExpander/ioExpanderDebug.h"
+#include "../../drivers/ioExpander/ioExpanderList.h"
+#include "../../drivers/ioExpander/ioExpanderPcf8574.h"
+#include "../../drivers/ioExpander/pcf8574.h"
+
+// -> Relay
+#include "../../drivers/relay/rly08.h"
 
 /**
 * Device list.
@@ -117,9 +140,9 @@ static Buffer i2cSlaveOutputBuffer;
 static StreamLink i2cSlaveStreamLink;
 
 // I2C Debug
-static char i2cMasterDebugOutputBufferArray[MECA_BOARD_32_I2C_DEBUG_MASTER_IN_BUFFER_LENGTH];
+static char i2cMasterDebugOutputBufferArray[MECA_BOARD_32_1_I2C_DEBUG_MASTER_IN_BUFFER_LENGTH];
 static Buffer i2cMasterDebugOutputBuffer;
-static char i2cMasterDebugInputBufferArray[MECA_BOARD_32_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH];
+static char i2cMasterDebugInputBufferArray[MECA_BOARD_32_1_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH];
 static Buffer i2cMasterDebugInputBuffer;
 
 // Timers
@@ -131,12 +154,24 @@ static Device deviceListArray[MECA_BOARD_32_1_DEVICE_LENGTH];
 // Master I2C Bus
 static I2cBus* masterI2cBus;
 static I2cBusConnection* eepromI2cBusConnection;
+static I2cBusConnection* relayBusConnection;
+static I2cBusConnection* ioExpanderBusConnection;
+
+// Clock
+static Clock clock;
+
+// IO Expander
+static IOExpanderList ioExpanderList;
+static IOExpander ioExpanderArray[MECA_BOARD_32_1_IO_EXPANDER_LIST_LENGTH];
 
 // Eeprom
 static Eeprom eeprom_;
 
-// Clock
-static Clock clock;
+// Relay
+static Relay relay;
+
+// 2018 Specific
+static Launcher2018 launcher2018;
 
 void initDevicesDescriptor() {
     initDeviceList(&deviceListArray, MECA_BOARD_32_1_DEVICE_LENGTH);
@@ -147,6 +182,11 @@ void initDevicesDescriptor() {
     addLocalDevice(getSerialDebugDeviceInterface(), getSerialDebugDeviceDescriptor());
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
     addLocalDevice(getTimerDeviceInterface(), getTimerDeviceDescriptor());
+    
+    // 2018 Specific
+    addLocalDevice(getRelayDeviceInterface(), getRelayDeviceDescriptor(&relay));
+    addLocalDevice(getIOExpanderDeviceInterface(), getIOExpanderDeviceDescriptor(&ioExpanderList));
+    addLocalDevice(getLauncher2018DeviceInterface(), getLauncher2018DeviceDescriptor(&launcher2018));
 
     initDevices();
 }
@@ -210,22 +250,36 @@ int main(void) {
     // Debug of I2C : Only if there is problems
     initI2CDebugBuffers(&i2cMasterDebugInputBuffer,
         (char(*)[]) &i2cMasterDebugInputBufferArray,
-        MECA_BOARD_32_I2C_DEBUG_MASTER_IN_BUFFER_LENGTH,
+        MECA_BOARD_32_1_I2C_DEBUG_MASTER_IN_BUFFER_LENGTH,
         &i2cMasterDebugOutputBuffer,
         (char(*)[]) &i2cMasterDebugOutputBufferArray,
-        MECA_BOARD_32_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH);
+        MECA_BOARD_32_1_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH);
 
     setDebugI2cEnabled(false);
 
-    // Eeprom
-    masterI2cBus = addI2cBus(I2C_BUS_TYPE_MASTER, MECA_BOARD_32_1_I2C_MASTER_PORT);
-    i2cMasterInitialize(masterI2cBus);
-    eepromI2cBusConnection = addI2cBusConnection(masterI2cBus, ST24C512_ADDRESS_0, true);
-    
-    init24C512Eeprom(&eeprom_, eepromI2cBusConnection);
-
     // Clock
     initSoftClock(&clock);
+    
+    // I2C Master
+    masterI2cBus = addI2cBus(I2C_BUS_TYPE_MASTER, MECA_BOARD_32_1_I2C_MASTER_PORT);
+    i2cMasterInitialize(masterI2cBus);
+
+    // Eeprom
+    eepromI2cBusConnection = addI2cBusConnection(masterI2cBus, ST24C512_ADDRESS_0, true);
+    init24C512Eeprom(&eeprom_, eepromI2cBusConnection);
+    
+    // IO Expander
+    ioExpanderBusConnection = addI2cBusConnection(masterI2cBus, PCF8574_ADDRESS_1, true);
+    initIOExpanderList(&ioExpanderList, (IOExpander(*)[]) &ioExpanderArray, MECA_BOARD_32_1_IO_EXPANDER_LIST_LENGTH);
+    IOExpander* launcherIoExpander = getIOExpanderByIndex(&ioExpanderList, MECA_BOARD_32_1_IO_EXPANDER_LAUNCHER_INDEX);
+    initIOExpanderPCF8574(launcherIoExpander, ioExpanderBusConnection);
+
+    // Relay
+    relayBusConnection = addI2cBusConnection(masterI2cBus, RLY08_ADDRESS_0, true);
+    initRelayRLY08(&relay, relayBusConnection);
+    
+    // 2018
+    initLauncher2018(&launcher2018, launcherIoExpander, &relay);
 
     // init the devices
     initDevicesDescriptor();
