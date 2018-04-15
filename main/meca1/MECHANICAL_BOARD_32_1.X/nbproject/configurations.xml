@@ -88,6 +88,9 @@
         <itemPath>../../../common/math/cenMath.h</itemPath>
         <itemPath>../../../common/math/hexUtils.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f1" displayName="common.motor" projectFiles="true">
+        <itemPath>../../../common/motor/dualHBridgeMotor.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="common.pwm" displayName="common.pwm" projectFiles="true">
         <itemPath>../../../common/pwm/pwmPic.h</itemPath>
       </logicalFolder>
@@ -95,7 +98,6 @@
                      displayName="common.pwm.motor"
                      projectFiles="true">
         <itemPath>../../../common/pwm/motor/dualHBridgeMotorPwm.h</itemPath>
-        <itemPath>../../../common/pwm/motor/motorPwm.h</itemPath>
       </logicalFolder>
       <logicalFolder name="common.pwm.servo"
                      displayName="common.pwm.servo"
@@ -168,7 +170,6 @@
                      projectFiles="true">
         <itemPath>../../../device/motor/pwmMotorDevice.h</itemPath>
         <itemPath>../../../device/motor/pwmMotorDeviceInterface.h</itemPath>
-        <itemPath>../../../device/motor/pwmMotor.h</itemPath>
       </logicalFolder>
       <logicalFolder name="device.serial"
                      displayName="device.serial"
@@ -223,6 +224,10 @@
         <itemPath>../mechanicalBoard32_1.h</itemPath>
       </logicalFolder>
       <logicalFolder name="robot" displayName="robot" projectFiles="true">
+      </logicalFolder>
+      <logicalFolder name="f2" displayName="robot.2018" projectFiles="true">
+        <itemPath>../../../robot/2018/launcherDevice2018.h</itemPath>
+        <itemPath>../../../robot/2018/launcherDeviceInterface2018.h</itemPath>
       </logicalFolder>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
@@ -315,6 +320,9 @@
         <itemPath>../../../common/math/cenMath.c</itemPath>
         <itemPath>../../../common/math/hexUtils.c</itemPath>
       </logicalFolder>
+      <logicalFolder name="f2" displayName="common.motor" projectFiles="true">
+        <itemPath>../../../common/motor/dualHBridgeMotor.c</itemPath>
+      </logicalFolder>
       <logicalFolder name="common.pwm" displayName="common.pwm" projectFiles="true">
       </logicalFolder>
       <logicalFolder name="common.pwm.32"
@@ -325,13 +333,11 @@
       <logicalFolder name="common.pwm.motor"
                      displayName="common.pwm.motor"
                      projectFiles="true">
-        <itemPath>../../../common/pwm/motor/motorPwm.c</itemPath>
       </logicalFolder>
       <logicalFolder name="common.pwm.motor.32"
                      displayName="common.pwm.motor.32"
                      projectFiles="true">
         <itemPath>../../../common/pwm/motor/32/dualHBridgeMotorPwm32.c</itemPath>
-        <itemPath>../../../common/pwm/motor/32/motorPwm32.c</itemPath>
       </logicalFolder>
       <logicalFolder name="common.pwm.servo"
                      displayName="common.pwm.servo"
@@ -401,7 +407,6 @@
                      projectFiles="true">
         <itemPath>../../../device/motor/pwmMotorDevice.c</itemPath>
         <itemPath>../../../device/motor/pwmMotorDeviceInterface.c</itemPath>
-        <itemPath>../../../device/motor/pwmMotor.c</itemPath>
       </logicalFolder>
       <logicalFolder name="device.serial"
                      displayName="device.serial"
@@ -452,6 +457,10 @@
       </logicalFolder>
       <logicalFolder name="main" displayName="main" projectFiles="true">
         <itemPath>../mechanicalMainBoard32_1.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f3" displayName="robot.2018" projectFiles="true">
+        <itemPath>../../../robot/2018/launcherDevice2018.c</itemPath>
+        <itemPath>../../../robot/2018/launcherDeviceInterface2018.c</itemPath>
       </logicalFolder>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
@@ -513,7 +522,7 @@
         <targetDevice>PIC32MX795F512H</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>ICD3PlatformTool</platformTool>
+        <platformTool>ICD4Tool</platformTool>
         <languageToolchain>XC32</languageToolchain>
         <languageToolchainVersion>2.05</languageToolchainVersion>
         <platform>3</platform>

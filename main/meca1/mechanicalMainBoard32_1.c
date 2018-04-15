@@ -9,6 +9,11 @@
 #include "../../common/delay/cenDelay.h"
 
 #include "../../common/i2c/i2cCommon.h"
+#include "../../common/i2c/i2cConstants.h"
+
+#include "../../common/i2c/i2cBusList.h"
+#include "../../common/i2c/i2cBusConnectionList.h"
+
 #include "../../common/i2c/slave/i2cSlave.h"
 #include "../../common/i2c/slave/i2cSlaveSetup.h"
 #include "../../common/i2c/slave/i2cSlaveLink.h"
@@ -76,6 +81,13 @@
 */
 static DeviceList devices;
 
+// SERIAL
+static SerialLink serialLinkListArray[MECA_BOARD_32_1_SERIAL_LINK_LIST_LENGTH];
+
+// I2C
+static I2cBus i2cBusListArray[MECA_BOARD_32_1_I2C_BUS_LIST_LENGTH];
+static I2cBusConnection i2cBusConnectionListArray[MECA_BOARD_32_1_I2C_BUS_CONNECTION_LIST_LENGTH];
+
 // serial STANDARD
 static char standardInputBufferArray[MECA_BOARD_32_1_STANDARD_INPUT_BUFFER_LENGTH];
 static Buffer standardInputBuffer;
@@ -96,13 +108,13 @@ static StreamLink debugSerialStreamLink;
 static LogHandler logHandlerListArray[MECA_BOARD_32_1_LOG_HANDLER_LIST_LENGTH];
 
 // i2c Link
-static I2cBus mechanicalBoard1I2cBus;
-static I2cBusConnection mechanicalBoard1I2cBusConnection;
+static I2cBus* mechanicalBoard1SlaveI2cBus;
+static I2cBusConnection* mechanicalBoard1SlaveI2cBusConnection;
 static char i2cSlaveInputBufferArray[MECA_BOARD_32_1_I2C_INPUT_BUFFER_LENGTH];
 static Buffer i2cSlaveInputBuffer;
 static char i2cSlaveOutputBufferArray[MECA_BOARD_32_1_I2C_OUTPUT_BUFFER_LENGTH];
 static Buffer i2cSlaveOutputBuffer;
-static StreamLink i2cSerialStreamLink;
+static StreamLink i2cSlaveStreamLink;
 
 // I2C Debug
 static char i2cMasterDebugOutputBufferArray[MECA_BOARD_32_I2C_DEBUG_MASTER_IN_BUFFER_LENGTH];
@@ -116,11 +128,9 @@ static Timer timerListArray[MECA_BOARD_32_1_TIMER_LENGTH];
 // Devices
 static Device deviceListArray[MECA_BOARD_32_1_DEVICE_LENGTH];
 
-// I2C Bus
-static I2cBus mainBoardI2cBus;
-static I2cBusConnection mainBoardI2cBusConnection;
-static I2cBus eepromI2cBus;
-static I2cBusConnection eepromI2cBusConnection;
+// Master I2C Bus
+static I2cBus* masterI2cBus;
+static I2cBusConnection* eepromI2cBusConnection;
 
 // Eeprom
 static Eeprom eeprom_;
@@ -149,6 +159,9 @@ int main(void) {
 
     // enable interrupts
     INTEnableInterrupts();
+    
+    // Init the serial List
+    initSerialLinkList(&serialLinkListArray, MECA_BOARD_32_1_SERIAL_LINK_LIST_LENGTH);
 
     // Open Standard Serial Link
     openSerialLink(&standardSerialStreamLink,
@@ -175,20 +188,24 @@ int main(void) {
     appendCRLF(getDebugOutputStreamLogger());
 
     initTimerList((Timer(*)[]) &timerListArray, MECA_BOARD_32_1_TIMER_LENGTH);
-    startTimerList();
 
-    initI2cBus(&mechanicalBoard1I2cBus, I2C_BUS_TYPE_SLAVE, I2C_BUS_PORT_1);
-    initI2cBusConnection(&mechanicalBoard1I2cBusConnection, &mechanicalBoard1I2cBus, MECA_BOARD_32_1_I2C_ADDRESS);
-
-    openSlaveI2cStreamLink(&i2cSerialStreamLink,
-                            &i2cSlaveInputBuffer,
-                            &i2cSlaveInputBufferArray,
-                            MECA_BOARD_32_1_I2C_INPUT_BUFFER_LENGTH,
-                            &i2cSlaveOutputBuffer,
-                            &i2cSlaveOutputBufferArray,
-                            MECA_BOARD_32_1_I2C_OUTPUT_BUFFER_LENGTH,
-                            &mechanicalBoard1I2cBusConnection
-                        );
+    // I2c
+	initI2cBusList((I2cBus(*)[]) &i2cBusListArray, MECA_BOARD_32_1_I2C_BUS_LIST_LENGTH);
+	initI2cBusConnectionList((I2cBusConnection(*)[]) &i2cBusConnectionListArray, MECA_BOARD_32_1_I2C_BUS_CONNECTION_LIST_LENGTH);
+    
+    // I2C Slave (to connect with MainBoard32)
+    mechanicalBoard1SlaveI2cBus = addI2cBus(I2C_BUS_TYPE_SLAVE, I2C_BUS_PORT_1);
+    mechanicalBoard1SlaveI2cBusConnection = addI2cBusConnection(mechanicalBoard1SlaveI2cBus, MECHANICAL_BOARD_1_I2C_ADDRESS, true);
+    openSlaveI2cStreamLink(&i2cSlaveStreamLink,
+            &i2cSlaveInputBuffer,
+            &i2cSlaveInputBufferArray,
+            MECA_BOARD_32_1_I2C_INPUT_BUFFER_LENGTH,
+            &i2cSlaveOutputBuffer,
+            &i2cSlaveOutputBufferArray,
+            MECA_BOARD_32_1_I2C_OUTPUT_BUFFER_LENGTH,
+            // NULL, 
+            mechanicalBoard1SlaveI2cBusConnection
+            );
 
     // Debug of I2C : Only if there is problems
     initI2CDebugBuffers(&i2cMasterDebugInputBuffer,
@@ -201,16 +218,20 @@ int main(void) {
     setDebugI2cEnabled(false);
 
     // Eeprom
-    initI2cBus(&eepromI2cBus, I2C_BUS_TYPE_MASTER, MECA_BOARD_32_I2C_MASTER_PORT);
-    i2cMasterInitialize(&eepromI2cBus);
-    initI2cBusConnection(&eepromI2cBusConnection, &eepromI2cBus, /* TODO */ 0);
-    init24C512Eeprom(&eeprom_, &eepromI2cBusConnection);
+    masterI2cBus = addI2cBus(I2C_BUS_TYPE_MASTER, MECA_BOARD_32_1_I2C_MASTER_PORT);
+    i2cMasterInitialize(masterI2cBus);
+    eepromI2cBusConnection = addI2cBusConnection(masterI2cBus, ST24C512_ADDRESS_0, true);
+    
+    init24C512Eeprom(&eeprom_, eepromI2cBusConnection);
 
     // Clock
     initSoftClock(&clock);
 
     // init the devices
     initDevicesDescriptor();
+    
+    // Init the timers management
+    startTimerList();
 
     while (1) {
 
