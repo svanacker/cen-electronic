@@ -55,6 +55,10 @@
 #include "../../device/ioExpander/ioExpanderDevice.h"
 #include "../../device/ioExpander/ioExpanderDeviceInterface.h"
 
+// -> Motors (MD22)
+#include "../../device/motor/md22Device.h"
+#include "../../device/motor/md22DeviceInterface.h"
+
 // -> Servo
 #include "../../device/servo/servoDevice.h"
 #include "../../device/servo/servoDeviceInterface.h"
@@ -95,6 +99,10 @@
 #include "../../drivers/ioExpander/ioExpanderList.h"
 #include "../../drivers/ioExpander/ioExpanderPcf8574.h"
 #include "../../drivers/ioExpander/pcf8574.h"
+
+// -> MOTOR
+#include "../../drivers/motor/dualHBridgeMotorMd22.h"
+#include "../../drivers/motor/md22.h"
 
 // -> Relay
 #include "../../drivers/relay/rly08.h"
@@ -145,6 +153,9 @@ static Buffer i2cMasterDebugOutputBuffer;
 static char i2cMasterDebugInputBufferArray[MECA_BOARD_32_1_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH];
 static Buffer i2cMasterDebugInputBuffer;
 
+// MOTOR (for MD22)
+static DualHBridgeMotor md22;
+
 // Timers
 static Timer timerListArray[MECA_BOARD_32_1_TIMER_LENGTH];
 
@@ -156,6 +167,7 @@ static I2cBus* masterI2cBus;
 static I2cBusConnection* eepromI2cBusConnection;
 static I2cBusConnection* relayBusConnection;
 static I2cBusConnection* ioExpanderBusConnection;
+static I2cBusConnection* md22BusConnection;
 
 // Clock
 static Clock clock;
@@ -188,6 +200,7 @@ void initDevicesDescriptor() {
     addLocalDevice(getRelayDeviceInterface(), getRelayDeviceDescriptor(&relay));
     addLocalDevice(getIOExpanderDeviceInterface(), getIOExpanderDeviceDescriptor(&ioExpanderList));
     addLocalDevice(getLauncher2018DeviceInterface(), getLauncher2018DeviceDescriptor(&launcher2018));
+    addLocalDevice(getMD22DeviceInterface(), getMD22DeviceDescriptor(&md22));
 
     initDevices();
 }
@@ -274,6 +287,11 @@ int main(void) {
     initIOExpanderList(&ioExpanderList, (IOExpander(*)[]) &ioExpanderArray, MECA_BOARD_32_1_IO_EXPANDER_LIST_LENGTH);
     IOExpander* launcherIoExpander = getIOExpanderByIndex(&ioExpanderList, MECA_BOARD_32_1_IO_EXPANDER_LAUNCHER_INDEX);
     initIOExpanderPCF8574(launcherIoExpander, ioExpanderBusConnection);
+    
+    // Motor
+    md22BusConnection = addI2cBusConnection(masterI2cBus, MD22_ADDRESS_0, true);
+    initDualHBridgeMotorMD22(&md22, md22BusConnection);
+
 
     // Relay
     relayBusConnection = addI2cBusConnection(masterI2cBus, RLY08_ADDRESS_0, true);

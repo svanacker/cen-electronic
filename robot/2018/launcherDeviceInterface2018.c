@@ -26,8 +26,8 @@ int deviceLauncher2018GetInterface(char commandHeader, DeviceInterfaceMode mode,
     }
     else if (commandHeader == LAUNCHER_LIGHT_ON_SERVO_MOVE) {
         if (fillDeviceArgumentList) {
-            setFunction("Switch Light", 1, 0);
-            setArgumentUnsignedHex2(0, "Left (00) / Right (01)");
+            setFunction("Switch Light / Bee", 1, 0);
+            setArgumentUnsignedHex2(0, "Left (00) / Right (01) / Bee (02)");
         }
         return commandLengthValueForMode(mode, 2, 0);
     }

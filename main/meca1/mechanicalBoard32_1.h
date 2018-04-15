@@ -29,7 +29,7 @@
 #define MECA_BOARD_32_1_TIMER_LENGTH        5
 
 // DEVICE
-#define MECA_BOARD_32_1_DEVICE_LENGTH       10
+#define MECA_BOARD_32_1_DEVICE_LENGTH       12
 
 // UART
 // How serial many ports are available on MECA_BOARD_32_1

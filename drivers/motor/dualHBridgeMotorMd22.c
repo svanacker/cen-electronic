@@ -1,6 +1,7 @@
 #include "dualHBridgeMotorMd22.h"
-#include "i2cCommon.h"
 #include "md22.h"
+
+#include "../../common/i2c/i2cCommon.h"
 
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
@@ -63,7 +64,7 @@ unsigned char dualHBridgeMotorGetSoftwareRevisionMD22(DualHBridgeMotor* dualHBri
  */
 void dualHBridgeMotorWriteValueMD22(DualHBridgeMotor* dualHBridgeMotor, signed int hBridgeSpeed1, signed int hBridgeSpeed2) {
     I2cBusConnection* i2cBusConnection = getDualHBridgeMotorMD22I2cBusConnection(dualHBridgeMotor);
-    setMD22MotorSpeeds(i2cBusConnection, hBridgeSpeed1, hBridgeSpeed2);
+    setMD22MotorSpeeds(i2cBusConnection, hBridgeSpeed1 + MD22_OFFSET_VALUE, hBridgeSpeed2 + MD22_OFFSET_VALUE);
     dualHBridgeMotor->motorSpeed1 = hBridgeSpeed1;
     dualHBridgeMotor->motorSpeed2 = hBridgeSpeed2;
 }

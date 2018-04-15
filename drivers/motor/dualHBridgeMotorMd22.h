@@ -1,6 +1,9 @@
 #ifndef DUAL_HBRIDGE_MOTOR_MD22_H
 #define DUAL_HBRIDGE_MOTOR_MD22_H
 
+// Value in MD22 is at 0x00 at full reverse speed, 0x80 is stopping value, 0xFF is full forward speed
+#define MD22_OFFSET_VALUE       0x80
+
 /**
  * Implementation of DualHBridgeMotor "Interface" for MD22.
  */

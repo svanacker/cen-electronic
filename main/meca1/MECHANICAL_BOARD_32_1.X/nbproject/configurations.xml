@@ -178,6 +178,8 @@
                      projectFiles="true">
         <itemPath>../../../device/motor/pwmMotorDevice.h</itemPath>
         <itemPath>../../../device/motor/pwmMotorDeviceInterface.h</itemPath>
+        <itemPath>../../../device/motor/md22Device.h</itemPath>
+        <itemPath>../../../device/motor/md22DeviceInterface.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f4" displayName="device.relay" projectFiles="true">
         <itemPath>../../../device/relay/relayDevice.h</itemPath>
@@ -238,6 +240,10 @@
         <itemPath>../../../drivers/ioExpander/ioExpanderList.h</itemPath>
         <itemPath>../../../drivers/ioExpander/ioExpanderPcf8574.h</itemPath>
         <itemPath>../../../drivers/ioExpander/pcf8574.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f8" displayName="drivers.motor" projectFiles="true">
+        <itemPath>../../../drivers/motor/dualHBridgeMotorMd22.h</itemPath>
+        <itemPath>../../../drivers/motor/md22.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f3" displayName="drivers.relay" projectFiles="true">
         <itemPath>../../../drivers/relay/relay.h</itemPath>
@@ -439,6 +445,8 @@
                      projectFiles="true">
         <itemPath>../../../device/motor/pwmMotorDevice.c</itemPath>
         <itemPath>../../../device/motor/pwmMotorDeviceInterface.c</itemPath>
+        <itemPath>../../../device/motor/md22Device.c</itemPath>
+        <itemPath>../../../device/motor/md22DeviceInterface.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f5" displayName="device.relay" projectFiles="true">
         <itemPath>../../../device/relay/relayDevice.c</itemPath>
@@ -497,6 +505,10 @@
         <itemPath>../../../drivers/ioExpander/ioExpanderList.c</itemPath>
         <itemPath>../../../drivers/ioExpander/ioExpanderPcf8574.c</itemPath>
         <itemPath>../../../drivers/ioExpander/pcf8574.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f9" displayName="drivers.motor" projectFiles="true">
+        <itemPath>../../../drivers/motor/dualHBridgeMotorMd22.c</itemPath>
+        <itemPath>../../../drivers/motor/md22.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f4" displayName="drivers.relay" projectFiles="true">
         <itemPath>../../../drivers/relay/relay.c</itemPath>
