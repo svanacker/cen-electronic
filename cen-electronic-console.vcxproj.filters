@@ -1671,9 +1671,6 @@
     <ClCompile Include="robot\2018\launcherDeviceInterface2018.c">
       <Filter>Source Files\robot\2018</Filter>
     </ClCompile>
-    <ClCompile Include="robot\2018\launcherDriver2018.c">
-      <Filter>Source Files\robot\2018</Filter>
-    </ClCompile>
     <ClCompile Include="device\pc\pcDeviceInterface.c">
       <Filter>Source Files\device\pc</Filter>
     </ClCompile>
@@ -1907,6 +1904,9 @@
     </ClCompile>
     <ClCompile Include="drivers\ioExpander\ioExpanderList.c">
       <Filter>Source Files\drivers\ioExpander</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2018\launcherClient2018.c">
+      <Filter>Source Files\robot\2018</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2720,9 +2720,6 @@
     <ClInclude Include="robot\2018\launcherDeviceInterface2018.h">
       <Filter>Header Files\robot\2018</Filter>
     </ClInclude>
-    <ClInclude Include="robot\2018\launcherDriver2018.h">
-      <Filter>Header Files\robot\2018</Filter>
-    </ClInclude>
     <ClInclude Include="common\i2c\i2cBusConnectionList.h">
       <Filter>Header Files\common\i2c</Filter>
     </ClInclude>
@@ -2947,6 +2944,9 @@
     </ClInclude>
     <ClInclude Include="drivers\ioExpander\ioExpander.h">
       <Filter>Header Files\drivers\ioExpander</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2018\launcherClient2018.h">
+      <Filter>Header Files\robot\2018</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

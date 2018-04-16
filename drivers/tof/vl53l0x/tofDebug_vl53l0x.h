@@ -3,7 +3,9 @@
 
 #include "../tofList.h"
 
-#include "../../common/io/outputStream.h"
+#include <stdint.h>
+
+#include "../../../common/io/outputStream.h"
 
 /**
  * Print a list of tof Sensor VL53L0X.

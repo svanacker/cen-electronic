@@ -213,6 +213,10 @@
         <itemPath>../../../device/timer/timerDevice.h</itemPath>
         <itemPath>../../../device/timer/timerDeviceInterface.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f11" displayName="device.tof" projectFiles="true">
+        <itemPath>../../../device/tof/tofDevice.h</itemPath>
+        <itemPath>../../../device/tof/tofDeviceInterface.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="drivers" displayName="drivers" projectFiles="true">
         <itemPath>../../../drivers/driverStreamListener.h</itemPath>
         <itemPath>../../../drivers/driver.h</itemPath>
@@ -249,6 +253,29 @@
         <itemPath>../../../drivers/relay/relay.h</itemPath>
         <itemPath>../../../drivers/relay/relayDebug.h</itemPath>
         <itemPath>../../../drivers/relay/rly08.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f10" displayName="drivers.tof" projectFiles="true">
+        <itemPath>../../../drivers/tof/tof.h</itemPath>
+        <itemPath>../../../drivers/tof/tofDebug.h</itemPath>
+        <itemPath>../../../drivers/tof/tofList.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f9" displayName="drivers.tof.vl530x" projectFiles="true">
+        <itemPath>../../../drivers/tof/vl53l0x/tofDebug_vl53l0x.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/tofList_vl53l0x.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/tof_vl53l0x.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_api.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_api_calibration.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_api_core.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_api_ranging.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_api_strings.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_def.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_device.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_i2c_platform.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_interrupt_threshold_settings.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_platform.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_platform_log.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_tuning.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_types.h</itemPath>
       </logicalFolder>
       <logicalFolder name="main" displayName="main" projectFiles="true">
         <itemPath>../mechanicalBoard32_1.h</itemPath>
@@ -481,6 +508,10 @@
         <itemPath>../../../device/timer/timerDevice.c</itemPath>
         <itemPath>../../../device/timer/timerDeviceInterface.c</itemPath>
       </logicalFolder>
+      <logicalFolder name="f12" displayName="device.tof" projectFiles="true">
+        <itemPath>../../../device/tof/tofDevice.c</itemPath>
+        <itemPath>../../../device/tof/tofDeviceInterface.c</itemPath>
+      </logicalFolder>
       <logicalFolder name="drivers" displayName="drivers" projectFiles="true">
         <itemPath>../../../drivers/driverStreamListener.c</itemPath>
         <itemPath>../../../drivers/driver.c</itemPath>
@@ -515,6 +546,29 @@
         <itemPath>../../../drivers/relay/relay.c</itemPath>
         <itemPath>../../../drivers/relay/relayDebug.c</itemPath>
         <itemPath>../../../drivers/relay/rly08.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f10" displayName="drivers.tof" projectFiles="true">
+        <itemPath>../../../drivers/tof/tof.c</itemPath>
+        <itemPath>../../../drivers/tof/tofDebug.c</itemPath>
+        <itemPath>../../../drivers/tof/tofList.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f11" displayName="drivers.tof.vl530x" projectFiles="true">
+        <itemPath>../../../drivers/tof/vl53l0x/tofDebug_vl53l0x.c</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/tofList_vl53l0x.c</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/tof_vl53l0x.c</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_api.c</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_api_calibration.c</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_api_core.c</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_api_ranging.c</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_api_strings.c</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_platform.c</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_platform_common.c</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_platform_log.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f13"
+                     displayName="drivers.tof.vl530x.32"
+                     projectFiles="true">
+        <itemPath>../../../drivers/tof/vl53l0x/32/vl53l0x_platform_pic32.c</itemPath>
       </logicalFolder>
       <logicalFolder name="main" displayName="main" projectFiles="true">
         <itemPath>../mechanicalMainBoard32_1.c</itemPath>
@@ -735,7 +789,7 @@
       <C32Global>
         <property key="common-include-directories" value=""/>
         <property key="gp-relative-option" value=""/>
-        <property key="legacy-libc" value="true"/>
+        <property key="legacy-libc" value="false"/>
         <property key="mdtcm" value=""/>
         <property key="mitcm" value=""/>
         <property key="mstacktcm" value="false"/>
@@ -821,6 +875,88 @@
         <property key="programoptions.uselvpprogramming" value="false"/>
         <property key="voltagevalue" value="3.25"/>
       </ICD3PlatformTool>
+      <ICD4Tool>
+        <property key="ADC 1" value="true"/>
+        <property key="AutoSelectMemRanges" value="auto"/>
+        <property key="CAN1" value="true"/>
+        <property key="CAN2" value="true"/>
+        <property key="CHANGE NOTICE" value="true"/>
+        <property key="COMPARATOR" value="true"/>
+        <property key="DMA" value="true"/>
+        <property key="ETHERNET CONTROLLER" value="true"/>
+        <property key="Freeze All Other Peripherals" value="true"/>
+        <property key="I2C1" value="true"/>
+        <property key="I2C3" value="true"/>
+        <property key="I2C4" value="true"/>
+        <property key="I2C5" value="true"/>
+        <property key="INPUT CAPTURE 1" value="true"/>
+        <property key="INPUT CAPTURE 2" value="true"/>
+        <property key="INPUT CAPTURE 3" value="true"/>
+        <property key="INPUT CAPTURE 4" value="true"/>
+        <property key="INPUT CAPTURE 5" value="true"/>
+        <property key="INTERRUPT CONTROL" value="true"/>
+        <property key="OUTPUT COMPARE 1" value="true"/>
+        <property key="OUTPUT COMPARE 2" value="true"/>
+        <property key="OUTPUT COMPARE 3" value="true"/>
+        <property key="OUTPUT COMPARE 4" value="true"/>
+        <property key="OUTPUT COMPARE 5" value="true"/>
+        <property key="PARALLEL MASTER/SLAVE PORT" value="true"/>
+        <property key="REAL TIME CLOCK" value="true"/>
+        <property key="SPI 2" value="true"/>
+        <property key="SPI 3" value="true"/>
+        <property key="SPI 4" value="true"/>
+        <property key="SecureSegment.SegmentProgramming" value="FullChipProgramming"/>
+        <property key="TIMER1" value="true"/>
+        <property key="TIMER2" value="true"/>
+        <property key="TIMER3" value="true"/>
+        <property key="TIMER4" value="true"/>
+        <property key="TIMER5" value="true"/>
+        <property key="ToolFirmwareFilePath"
+                  value="Press to browse for a specific firmware version"/>
+        <property key="ToolFirmwareOption.UseLatestFirmware" value="true"/>
+        <property key="UART1" value="true"/>
+        <property key="UART2" value="true"/>
+        <property key="UART3" value="true"/>
+        <property key="UART4" value="true"/>
+        <property key="UART5" value="true"/>
+        <property key="UART6" value="true"/>
+        <property key="USB" value="true"/>
+        <property key="debugoptions.useswbreakpoints" value="false"/>
+        <property key="hwtoolclock.frcindebug" value="false"/>
+        <property key="memories.aux" value="false"/>
+        <property key="memories.bootflash" value="true"/>
+        <property key="memories.configurationmemory" value="true"/>
+        <property key="memories.configurationmemory2" value="true"/>
+        <property key="memories.dataflash" value="true"/>
+        <property key="memories.eeprom" value="true"/>
+        <property key="memories.exclude.configurationmemory" value="false"/>
+        <property key="memories.flashdata" value="true"/>
+        <property key="memories.id" value="true"/>
+        <property key="memories.instruction.ram.ranges"
+                  value="${memories.instruction.ram.ranges}"/>
+        <property key="memories.programmemory" value="true"/>
+        <property key="memories.programmemory.ranges" value="1d000000-1d07ffff"/>
+        <property key="poweroptions.powerenable" value="false"/>
+        <property key="programoptions.donoteraseauxmem" value="false"/>
+        <property key="programoptions.eraseb4program" value="true"/>
+        <property key="programoptions.ledbrightness" value="5"/>
+        <property key="programoptions.pgcconfig" value="pull down"/>
+        <property key="programoptions.pgcresistor.value" value="4.7"/>
+        <property key="programoptions.pgdconfig" value="pull down"/>
+        <property key="programoptions.pgdresistor.value" value="4.7"/>
+        <property key="programoptions.pgmentry.voltage" value="low"/>
+        <property key="programoptions.pgmspeed" value="Med"/>
+        <property key="programoptions.preservedataflash" value="false"/>
+        <property key="programoptions.preserveeeprom" value="false"/>
+        <property key="programoptions.preserveeeprom.ranges" value=""/>
+        <property key="programoptions.preserveprogram.ranges" value=""/>
+        <property key="programoptions.preserveprogramrange" value="false"/>
+        <property key="programoptions.preserveuserid" value="false"/>
+        <property key="programoptions.programcalmem" value="false"/>
+        <property key="programoptions.programuserotp" value="false"/>
+        <property key="programoptions.testmodeentrymethod" value="VDDFirst"/>
+        <property key="voltagevalue" value="3.25"/>
+      </ICD4Tool>
     </conf>
   </confs>
 </configurationDescriptor>

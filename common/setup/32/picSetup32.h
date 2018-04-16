@@ -2,6 +2,7 @@
 #define PIC_32F_SETUP_H
 
 #define _SUPPRESS_PLIB_WARNING
+#define _DISABLE_OPENADC10_CONFIGPORT_WARNING
 #include <plib.h>
 
 // Oscillator Selection Bit

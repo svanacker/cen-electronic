@@ -403,9 +403,9 @@
     <ClCompile Include="navigation\pathList.c" />
     <ClCompile Include="navigation\pathListDebug.c" />
     <ClCompile Include="remote\clock\remoteClock.c" />
+    <ClCompile Include="robot\2018\launcherClient2018.c" />
     <ClCompile Include="robot\2018\launcherDevice2018.c" />
     <ClCompile Include="robot\2018\launcherDeviceInterface2018.c" />
-    <ClCompile Include="robot\2018\launcherDriver2018.c" />
     <ClCompile Include="robot\2018\strategy2018.c" />
     <ClCompile Include="robot\2018\strategy2018Utils.c" />
     <ClCompile Include="robot\config\pc\robotConfigPc.c" />
@@ -747,9 +747,9 @@
     <ClInclude Include="navigation\pathListDebug.h" />
     <ClInclude Include="remote\clock\remoteClock.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="robot\2018\launcherClient2018.h" />
     <ClInclude Include="robot\2018\launcherDevice2018.h" />
     <ClInclude Include="robot\2018\launcherDeviceInterface2018.h" />
-    <ClInclude Include="robot\2018\launcherDriver2018.h" />
     <ClInclude Include="robot\2018\strategy2018.h" />
     <ClInclude Include="robot\2018\strategy2018Utils.h" />
     <ClInclude Include="robot\config\pc\robotConfigPc.h" />

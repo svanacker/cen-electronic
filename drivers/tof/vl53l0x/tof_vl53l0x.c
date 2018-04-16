@@ -11,6 +11,8 @@
 
 #include "../../../common/delay/cenDelay.h"
 
+#include "../../../common/i2c/i2cConstants.h"
+
 #include "../../../common/io/outputStream.h"
 #include "../../../common/io/printWriter.h"
 
@@ -173,8 +175,10 @@ bool tofSetAddress(TofSensorVL53L0X* tofSensorVL53L0X, I2cBusConnection* newI2cB
     VL53L0X_Dev_t* tofDevice = &(tofSensorVL53L0X->device);
 
     uint8_t newAddress = newI2cBusConnection->i2cAddress;
-    tofSensorVL53L0X->status = VL53L0X_SetDeviceAddress(tofDevice, newAddress);
-    delaymSec(10);
+    if (newAddress != VL530X_ADDRESS_0) {
+        tofSensorVL53L0X->status = VL53L0X_SetDeviceAddress(tofDevice, newAddress);
+        delaymSec(10);
+    }
 
     if (tofSensorVL53L0X->status == VL53L0X_ERROR_NONE) {
         tofDevice->I2cDevAddr = newAddress;

@@ -23,10 +23,13 @@
 #define MECA_BOARD_32_1_I2C_MASTER_PORT                 I2C_BUS_PORT_4
 
 // LOGS
-#define MECA_BOARD_32_1_LOG_HANDLER_LIST_LENGTH   2
+#define MECA_BOARD_32_1_LOG_HANDLER_LIST_LENGTH                2
 
 // TIMER
-#define MECA_BOARD_32_1_TIMER_LENGTH        5
+#define MECA_BOARD_32_1_TIMER_LENGTH                           5
+
+// TOF
+#define MECA_BOARD_32_1_TOF_SENSOR_LIST_LENGTH                 1
 
 // DEVICE
 #define MECA_BOARD_32_1_DEVICE_LENGTH       12

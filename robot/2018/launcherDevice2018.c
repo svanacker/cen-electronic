@@ -78,7 +78,7 @@ void launch2018(int launcherIndex, bool prepare) {
             if (maxIteration <= 0) {
                 break;
             }
-            delaymSec(10);
+            delaymSec(5);
         }
         // Change the motor state
         relay->relayWriteValue(relay, relayIndex, false);        
@@ -92,7 +92,7 @@ void launch2018(int launcherIndex, bool prepare) {
             if (maxIteration <= 0) {
                 break;
             }
-            delaymSec(10);
+            delaymSec(5);
         }
         // Change the motor state
         relay->relayWriteValue(relay, relayIndex, false);    
@@ -100,13 +100,31 @@ void launch2018(int launcherIndex, bool prepare) {
 }
 
 void distributor2018CleanNext(int launcherIndex) {
-    signed int motorSpeed = 10;
+    signed int motorSpeed = -20;
     if (launcherIndex == LAUNCHER_RIGHT_INDEX) {
         motorSpeed *= -1;
     }
-
+    unsigned int threshold = 12;
+    TofSensorList* tofSensorList = launcher2018->tofSensorList;
+    TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, 0);
+    
     setMotorSpeeds(launcher2018->dualHBridgeMotor, motorSpeed, 0);
-    delaymSec(100);
+    // Avoid to stay blocked if we are already on a target
+    unsigned int distance = tofSensorGetDistanceVL53L0XMM(tofSensor);
+    while (true) {
+        distance = tofSensorGetDistanceVL53L0XMM(tofSensor);
+        if (distance >= threshold) {
+            break;
+        }
+    }
+    delaymSec(50);
+    // Check if we must stop
+    while (true) {
+        distance = tofSensorGetDistanceVL53L0XMM(tofSensor);
+        if (distance <= threshold) {
+            break;
+        }
+    }
     setMotorSpeeds(launcher2018->dualHBridgeMotor, 0, 0);
 }
 
@@ -171,8 +189,10 @@ DeviceDescriptor* getLauncher2018DeviceDescriptor(Launcher2018* launcher2018Para
 void initLauncher2018(Launcher2018* launcher2018,
                       IOExpander* ioExpander,
                       Relay* relay,
-                      DualHBridgeMotor* dualHBridgeMotor) {
+                      DualHBridgeMotor* dualHBridgeMotor,
+                      TofSensorList* tofSensorList) {
     launcher2018->ioExpander = ioExpander;
     launcher2018->relay = relay;
     launcher2018->dualHBridgeMotor = dualHBridgeMotor;
+    launcher2018->tofSensorList = tofSensorList;
 }

@@ -7,12 +7,13 @@
 
 #include "../../drivers/relay/relay.h"
 #include "../../drivers/ioExpander/ioExpander.h"
+#include "../../drivers/tof/tofList.h"
 
 // To activate Relay
 #define LAUNCHER_RIGHT_RELAY_INDEX               1
 #define LAUNCHER_LEFT_RELAY_INDEX                2
 
-// To Read IoExapnder
+// To Read IoExpander
 #define LAUNCHER_RIGHT_IO_EXPANDER_INDEX         0
 #define LAUNCHER_LEFT_IO_EXPANDER_INDEX          1
 
@@ -41,6 +42,8 @@ struct Launcher2018{
     Relay* relay;
     /** The MD22 */
     DualHBridgeMotor* dualHBridgeMotor;
+    /** The tof Sensor List */
+    TofSensorList* tofSensorList;
 };
 
 void launch2018(int launcherIndex, bool prepare);
@@ -59,6 +62,7 @@ DeviceDescriptor* getLauncher2018DeviceDescriptor(Launcher2018* launcher2018);
 void initLauncher2018(Launcher2018* launcher2018,
                       IOExpander* ioExpander,
                       Relay* relay,
-                      DualHBridgeMotor* dualHBridgeMotor);
+                      DualHBridgeMotor* dualHBridgeMotor,
+                      TofSensorList* tofSensorList);
 
 #endif

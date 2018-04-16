@@ -1,6 +1,7 @@
 #define _SUPPRESS_PLIB_WARNING
 #include <peripheral/i2c.h>
 #include <stdlib.h>
+#include <stdint.h>
 
 #include "mechanicalBoard32_1.h"
 
@@ -83,6 +84,10 @@
 #include "../../device/timer/timerDevice.h"
 #include "../../device/timer/timerDeviceInterface.h"
 
+// Tof
+#include "../../device/tof/tofDevice.h"
+#include "../../device/tof/tofDeviceInterface.h"
+
 // -> 2018
 #include "../../robot/2018/launcherDevice2018.h"
 #include "../../robot/2018/launcherDeviceInterface2018.h"
@@ -106,6 +111,10 @@
 
 // -> Relay
 #include "../../drivers/relay/rly08.h"
+
+// TOF
+#include "../../drivers/tof/vl53l0x/tof_vl53l0x.h"
+#include "../../drivers/tof/vl53l0x/tofList_vl53l0x.h"
 
 /**
 * Device list.
@@ -182,6 +191,11 @@ static Eeprom eeprom_;
 // Relay
 static Relay relay;
 
+// TOF
+static TofSensorList tofSensorList;
+static TofSensor tofSensorArray[MECA_BOARD_32_1_TOF_SENSOR_LIST_LENGTH];
+static TofSensorVL53L0X tofSensorVL53L0XArray[MECA_BOARD_32_1_TOF_SENSOR_LIST_LENGTH];
+
 // 2018 Specific
 static Launcher2018 launcher2018;
 
@@ -201,6 +215,8 @@ void initDevicesDescriptor() {
     addLocalDevice(getIOExpanderDeviceInterface(), getIOExpanderDeviceDescriptor(&ioExpanderList));
     addLocalDevice(getLauncher2018DeviceInterface(), getLauncher2018DeviceDescriptor(&launcher2018));
     addLocalDevice(getMD22DeviceInterface(), getMD22DeviceDescriptor(&md22));
+    
+    addLocalDevice(getTofDeviceInterface(), getTofDeviceDescriptor(&tofSensorList));
 
     initDevices();
 }
@@ -292,13 +308,20 @@ int main(void) {
     md22BusConnection = addI2cBusConnection(masterI2cBus, MD22_ADDRESS_0, true);
     initDualHBridgeMotorMD22(&md22, md22BusConnection);
 
-
     // Relay
     relayBusConnection = addI2cBusConnection(masterI2cBus, RLY08_ADDRESS_0, true);
     initRelayRLY08(&relay, relayBusConnection);
+
+    // TOF
+    initTofSensorListVL53L0X(&tofSensorList,
+                             (TofSensor(*)[]) &tofSensorArray,
+                             (TofSensorVL53L0X(*)[]) &tofSensorVL53L0XArray,
+                              MECA_BOARD_32_1_TOF_SENSOR_LIST_LENGTH,
+                              masterI2cBus,
+                              launcherIoExpander);
     
     // 2018
-    initLauncher2018(&launcher2018, launcherIoExpander, &relay, &md22);
+    initLauncher2018(&launcher2018, launcherIoExpander, &relay, &md22, &tofSensorList);
 
     // init the devices
     initDevicesDescriptor();
