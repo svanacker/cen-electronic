@@ -100,7 +100,6 @@
       <logicalFolder name="common.pwm.motor"
                      displayName="common.pwm.motor"
                      projectFiles="true">
-        <itemPath>../../../common/pwm/motor/motorPwm.h</itemPath>
       </logicalFolder>
       <logicalFolder name="common.pwm.servo"
                      displayName="common.pwm.servo"
@@ -203,6 +202,10 @@
         <itemPath>../../../device/i2c/master/i2cMasterDebugDevice.h</itemPath>
         <itemPath>../../../device/i2c/master/i2cMasterDebugDeviceInterface.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f3" displayName="device.ioExpander" projectFiles="true">
+        <itemPath>../../../device/ioExpander/ioExpanderDevice.h</itemPath>
+        <itemPath>../../../device/ioExpander/ioExpanderDeviceInterface.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="device.lcd" displayName="device.lcd" projectFiles="true">
         <itemPath>../../../device/lcd/lcdDevice.h</itemPath>
         <itemPath>../../../device/lcd/lcdDeviceInterface.h</itemPath>
@@ -286,6 +289,10 @@
         <itemPath>../../../device/timer/timerDevice.h</itemPath>
         <itemPath>../../../device/timer/timerDeviceInterface.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f2" displayName="device.tof" projectFiles="true">
+        <itemPath>../../../device/tof/tofDevice.h</itemPath>
+        <itemPath>../../../device/tof/tofDeviceInterface.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="drivers" displayName="drivers" projectFiles="true">
         <itemPath>../../../drivers/driverList.h</itemPath>
         <itemPath>../../../drivers/driverStreamListener.h</itemPath>
@@ -318,8 +325,12 @@
                      projectFiles="true">
         <itemPath>../../../drivers/eeprom/24c512.h</itemPath>
       </logicalFolder>
-      <logicalFolder name="drivers.io" displayName="drivers.io" projectFiles="true">
-        <itemPath>../../../drivers/io/pcf8574.h</itemPath>
+      <logicalFolder name="f4" displayName="drivers.ioExpander" projectFiles="true">
+        <itemPath>../../../drivers/ioExpander/ioExpander.h</itemPath>
+        <itemPath>../../../drivers/ioExpander/ioExpanderDebug.h</itemPath>
+        <itemPath>../../../drivers/ioExpander/ioExpanderList.h</itemPath>
+        <itemPath>../../../drivers/ioExpander/ioExpanderPcf8574.h</itemPath>
+        <itemPath>../../../drivers/ioExpander/pcf8574.h</itemPath>
       </logicalFolder>
       <logicalFolder name="drivers.lcd" displayName="drivers.lcd" projectFiles="true">
         <itemPath>../../../drivers/lcd/lcd.h</itemPath>
@@ -335,8 +346,6 @@
       <logicalFolder name="drivers.motor"
                      displayName="drivers.motor"
                      projectFiles="true">
-        <itemPath>../../../drivers/motor/motorDriver.h</itemPath>
-        <itemPath>../../../drivers/motor/md22.h</itemPath>
       </logicalFolder>
       <logicalFolder name="drivers.sensor.temperature"
                      displayName="drivers.sensor.temperature"
@@ -370,6 +379,11 @@
                      projectFiles="true">
         <itemPath>../../../drivers/test/testDriver.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f5" displayName="drivers.tof" projectFiles="true">
+        <itemPath>../../../drivers/tof/tof.h</itemPath>
+        <itemPath>../../../drivers/tof/tofDebug.h</itemPath>
+        <itemPath>../../../drivers/tof/tofList.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="f1" displayName="drivers.tof.VL53L0X" projectFiles="true">
         <itemPath>../../../drivers/tof/VL53L0X/vl53l0x_api.h</itemPath>
         <itemPath>../../../drivers/tof/VL53L0X/vl53l0x_api_calibration.h</itemPath>
@@ -384,6 +398,9 @@
         <itemPath>../../../drivers/tof/VL53L0X/vl53l0x_platform.h</itemPath>
         <itemPath>../../../drivers/tof/VL53L0X/vl53l0x_platform_log.h</itemPath>
         <itemPath>../../../drivers/tof/VL53L0X/vl53l0x_types.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/tofDebug_vl53l0x.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/tofList_vl53l0x.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/tof_vl53l0x.h</itemPath>
       </logicalFolder>
       <logicalFolder name="main" displayName="main" projectFiles="true">
         <itemPath>../../meca2/mechanicalBoard2.h</itemPath>
@@ -421,6 +438,9 @@
       <logicalFolder name="robot.2018" displayName="robot.2018" projectFiles="true">
         <itemPath>../../../robot/2018/strategy2018.h</itemPath>
         <itemPath>../../../robot/2018/strategy2018Utils.h</itemPath>
+        <itemPath>../../../robot/2018/distributor2018.h</itemPath>
+        <itemPath>../../../robot/2018/launcherDeviceInterface2018.h</itemPath>
+        <itemPath>../../../robot/2018/launcherClient2018.h</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.config"
                      displayName="robot.config"
@@ -600,12 +620,10 @@
       <logicalFolder name="common.pwm.motor"
                      displayName="common.pwm.motor"
                      projectFiles="true">
-        <itemPath>../../../common/pwm/motor/motorPwm.c</itemPath>
       </logicalFolder>
       <logicalFolder name="common.pwm.motor.32"
                      displayName="common.pwm.motor.32"
                      projectFiles="true">
-        <itemPath>../../../common/pwm/motor/32/motorPwm32.c</itemPath>
       </logicalFolder>
       <logicalFolder name="common.pwm.servo"
                      displayName="common.pwm.servo"
@@ -715,6 +733,10 @@
         <itemPath>../../../device/i2c/master/i2cMasterDebugDevice.c</itemPath>
         <itemPath>../../../device/i2c/master/i2cMasterDebugDeviceInterface.c</itemPath>
       </logicalFolder>
+      <logicalFolder name="f4" displayName="device.ioExpander" projectFiles="true">
+        <itemPath>../../../device/ioExpander/ioExpanderDevice.c</itemPath>
+        <itemPath>../../../device/ioExpander/ioExpanderDeviceInterface.c</itemPath>
+      </logicalFolder>
       <logicalFolder name="device.lcd" displayName="device.lcd" projectFiles="true">
         <itemPath>../../../device/lcd/lcdDevice.c</itemPath>
         <itemPath>../../../device/lcd/lcdDeviceInterface.c</itemPath>
@@ -792,6 +814,10 @@
         <itemPath>../../../device/timer/timerDevice.c</itemPath>
         <itemPath>../../../device/timer/timerDeviceInterface.c</itemPath>
       </logicalFolder>
+      <logicalFolder name="f3" displayName="device.tof" projectFiles="true">
+        <itemPath>../../../device/tof/tofDevice.c</itemPath>
+        <itemPath>../../../device/tof/tofDeviceInterface.c</itemPath>
+      </logicalFolder>
       <logicalFolder name="drivers" displayName="drivers" projectFiles="true">
         <itemPath>../../../drivers/driver.c</itemPath>
         <itemPath>../../../drivers/driverList.c</itemPath>
@@ -825,7 +851,13 @@
         <itemPath>../../../drivers/eeprom/24c512.c</itemPath>
       </logicalFolder>
       <logicalFolder name="drivers.io" displayName="drivers.io" projectFiles="true">
-        <itemPath>../../../drivers/io/pcf8574.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f5" displayName="drivers.ioExpander" projectFiles="true">
+        <itemPath>../../../drivers/ioExpander/ioExpander.c</itemPath>
+        <itemPath>../../../drivers/ioExpander/ioExpanderDebug.c</itemPath>
+        <itemPath>../../../drivers/ioExpander/ioExpanderList.c</itemPath>
+        <itemPath>../../../drivers/ioExpander/ioExpanderPcf8574.c</itemPath>
+        <itemPath>../../../drivers/ioExpander/pcf8574.c</itemPath>
       </logicalFolder>
       <logicalFolder name="drivers.lcd" displayName="drivers.lcd" projectFiles="true">
         <itemPath>../../../drivers/lcd/lcd.c</itemPath>
@@ -842,8 +874,6 @@
       <logicalFolder name="drivers.motor"
                      displayName="drivers.motor"
                      projectFiles="true">
-        <itemPath>../../../drivers/motor/motorDriver.c</itemPath>
-        <itemPath>../../../drivers/motor/md22.c</itemPath>
       </logicalFolder>
       <logicalFolder name="drivers.sensor.temperature"
                      displayName="drivers.sensor.temperature"
@@ -870,6 +900,11 @@
                      projectFiles="true">
         <itemPath>../../../drivers/test/testDriver.c</itemPath>
       </logicalFolder>
+      <logicalFolder name="f6" displayName="drivers.tof" projectFiles="true">
+        <itemPath>../../../drivers/tof/tof.c</itemPath>
+        <itemPath>../../../drivers/tof/tofDebug.c</itemPath>
+        <itemPath>../../../drivers/tof/tofList.c</itemPath>
+      </logicalFolder>
       <logicalFolder name="f1" displayName="drivers.tof.vl53l0x" projectFiles="true">
         <itemPath>../../../drivers/tof/VL53L0X/vl53l0x_api.c</itemPath>
         <itemPath>../../../drivers/tof/VL53L0X/vl53l0x_api_calibration.c</itemPath>
@@ -879,6 +914,9 @@
         <itemPath>../../../drivers/tof/VL53L0X/vl53l0x_platform.c</itemPath>
         <itemPath>../../../drivers/tof/VL53L0X/vl53l0x_platform_log.c</itemPath>
         <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_platform_common.c</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/tofDebug_vl53l0x.c</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/tofList_vl53l0x.c</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/tof_vl53l0x.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f2"
                      displayName="drivers.tof.vl53l0x.32"
@@ -909,6 +947,9 @@
       <logicalFolder name="robot.2018" displayName="robot.2018" projectFiles="true">
         <itemPath>../../../robot/2018/strategy2018.c</itemPath>
         <itemPath>../../../robot/2018/strategy2018Utils.c</itemPath>
+        <itemPath>../../../robot/2018/distributor2018.c</itemPath>
+        <itemPath>../../../robot/2018/launcherDeviceInterface2018.c</itemPath>
+        <itemPath>../../../robot/2018/launcherClient2018.c</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.config"
                      displayName="robot.config"

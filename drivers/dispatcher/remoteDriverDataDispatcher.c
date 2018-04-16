@@ -46,8 +46,9 @@ void remoteDriverDataDispatcherTransmit(DriverDataDispatcher* dispatcher,
         // limit data reception to 1
         dataReceived += copyInputToOutputStream(dispatcherInputStream, responseOutputStream, NULL, 1);
         counter++;
+        delaymSec(1);
 
-        if (counter > 10000) {
+        if (counter > 1000) {
             appendString (getErrorOutputStreamLogger(), "Dispatcher:");
             appendString(getErrorOutputStreamLogger(), dispatcher->name);
             appendString(getErrorOutputStreamLogger(), "Time out:");

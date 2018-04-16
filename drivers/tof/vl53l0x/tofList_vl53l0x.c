@@ -9,6 +9,8 @@
 #include "../tof.h"
 #include "../tofList.h"
 
+#include "../../common/delay/cenDelay.h"
+
 #include "../../../common/i2c/i2cBusConnectionList.h"
 #include "../../../common/i2c/i2cConstants.h"
 

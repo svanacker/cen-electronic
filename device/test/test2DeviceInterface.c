@@ -6,7 +6,7 @@
 #include "../../device/deviceConstants.h"
 
 const char* deviceTest2GetName(void) {
-    return "test2";
+    return "test 2";
 }
 
 int deviceTest2GetInterface(char commandHeader, int mode, bool fillDeviceArgumentList) {

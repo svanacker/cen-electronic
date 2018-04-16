@@ -108,13 +108,17 @@
 #include "../../device/test/testDevice.h"
 #include "../../device/test/testDeviceInterface.h"
 
-// TEST
+// TEST 2
 #include "../../device/test/test2Device.h"
 #include "../../device/test/test2DeviceInterface.h"
 
 // TIMER
 #include "../../device/timer/timerDevice.h"
 #include "../../device/timer/timerDeviceInterface.h"
+
+// Tof
+#include "../../device/tof/tofDevice.h"
+#include "../../device/tof/tofDeviceInterface.h"
 
 // SENSOR->TEMPERATURE
 #include "../../device/sensor/temperature/temperatureSensorDevice.h"
@@ -131,6 +135,10 @@
 
 // Motor
 #include "../../device/motor/pwmMotorDeviceInterface.h"
+
+// TOF
+#include "../../drivers/tof/vl53l0x/tof_vl53l0x.h"
+#include "../../drivers/tof/vl53l0x/tofList_vl53l0x.h"
 
 // Motion
 #include "../../device/motion/pid/pidDeviceInterface.h"
@@ -156,17 +164,37 @@
 #include "../../device/beacon/beaconReceiverDeviceInterface.h"
 
 // Drivers
+// -> Clock
 #include "../../drivers/clock/PCF8563.h"
+
+// -> Eeprom
 #include "../../drivers/eeprom/24c512.h"
-#include "../../drivers/io/pcf8574.h"
-#include "../../drivers/clock/PCF8563.h"
+
+// -> IO EXPANDER
+#include "../../drivers/ioExpander/ioExpander.h"
+#include "../../drivers/ioExpander/ioExpanderDebug.h"
+#include "../../drivers/ioExpander/ioExpanderList.h"
+#include "../../drivers/ioExpander/ioExpanderPcf8574.h"
+#include "../../drivers/ioExpander/pcf8574.h"
+
+// -> Test
 #include "../../drivers/test/testDriver.h"
+
+// -> System
 #include "../../drivers/system/systemDriver.h"
+
+// -> Motion Driver
 #include "../../drivers/motion/motionDriver.h"
+
 #include "../../drivers/motion/trajectoryDriver.h"
+
 #include "../../drivers/motor/md22.h"
+
 #include "../../drivers/driverTransmitter.h"
+
+// -> Temperature
 #include "../../drivers/sensor/temperature/LM75A.h"
+
 #include "../../drivers/strategy/strategyDriver.h"
 
 // Robot
@@ -200,6 +228,8 @@
 #include "../../robot/robot.h"
 
 #include "../../drivers/sonar/srf02.h"
+#include "servoPwm.h"
+#include "launcherDeviceInterface2018.h"
 
 // I2C => PORT 1 (for All Peripherical, including Eeprom / Clock / Temperatur)
 static I2cBus i2cBusListArray[MAIN_BOARD_I2C_BUS_LIST_LENGTH];
@@ -214,12 +244,22 @@ static I2cBusConnection* eepromI2cBusConnection;
 static Clock clock;
 static I2cBusConnection* clockI2cBusConnection;
 
+// IO Expander
+static IOExpanderList ioExpanderList;
+static IOExpander ioExpanderArray[MAIN_BOARD_IO_EXPANDER_LIST_LENGTH];
+static I2cBusConnection* tofIoExpanderBusConnection;
+
 // TEMPERATURE
 static Temperature temperature;
 static I2cBusConnection* temperatureI2cBusConnection;
 
 // StartMatch
 static StartMatch startMatch;
+
+// TOF
+static TofSensorList tofSensorList;
+static TofSensor tofSensorArray[MAIN_BOARD_TOF_SENSOR_LIST_LENGTH];
+static TofSensorVL53L0X tofSensorVL53L0XArray[MAIN_BOARD_TOF_SENSOR_LIST_LENGTH];
 
 // SERIAL
 static SerialLink serialLinkListArray[MAIN_BOARD_SERIAL_LINK_LIST_LENGTH];
@@ -240,6 +280,14 @@ static Buffer motorOutputBuffer;
 static OutputStream motorOutputStream;
 static StreamLink motorSerialStreamLink;
 
+// serial link Meca1
+static char meca1InputBufferArray[MAIN_BOARD_MECA_1_INPUT_BUFFER_LENGTH];
+static Buffer meca1InputBuffer;
+static char meca1OutputBufferArray[MAIN_BOARD_MECA_1_OUTPUT_BUFFER_LENGTH];
+static Buffer meca1OutputBuffer;
+static OutputStream meca1OutputStream;
+static StreamLink meca1SerialStreamLink;
+
 // serial link PC
 static char pcInputBufferArray[MAIN_BOARD_PC_INPUT_BUFFER_LENGTH];
 static Buffer pcInputBuffer;
@@ -247,16 +295,6 @@ static char pcOutputBufferArray[MAIN_BOARD_PC_OUTPUT_BUFFER_LENGTH];
 static Buffer pcOutputBuffer;
 static OutputStream pcOutputStream;
 static StreamLink pcSerialStreamLink;
-
-// serial Link MechanicalBoard
-/*
-static char mechanicalBoard2InputBufferArray[MAIN_BOARD_MECA2_INPUT_BUFFER_LENGTH];
-static Buffer mechanicalBoard2InputBuffer;
-static char mechanicalBoard2OutputBufferArray[MAIN_BOARD_MECA2_OUTPUT_BUFFER_LENGTH];
-static Buffer mechanicalBoard2OutputBuffer;
-static OutputStream mechanicalBoard2OutputStream;
-static StreamLink mechanicalBoard2SerialStreamLink;
-*/
 
 // DRIVERS
 static Buffer driverRequestBuffer;
@@ -271,7 +309,6 @@ static char i2cMasterDebugInputBufferArray[MAIN_BOARD_I2C_DEBUG_MASTER_IN_BUFFER
 static Buffer i2cMasterDebugInputBuffer;
 
 // DISPATCHER I2C
-
 static DriverDataDispatcher driverDataDispatcherListArray[MAIN_BOARD_DRIVER_DATA_DISPATCHER_LIST_LENGTH];
 
 // i2c->Motor
@@ -281,28 +318,12 @@ static Buffer motorBoardI2cInputBuffer;
 static InputStream motorBoardI2cInputStream;
 static OutputStream motorBoardI2cOutputStream;
 
-// i2c->Air Conditioning
-/*
-static I2cBusConnection* airConditioningI2cBusConnection;
-static char airConditioningBoardInputBufferArray[MAIN_BOARD_LINK_TO_MECA_BOARD_2_BUFFER_LENGTH];
-static Buffer airConditioningBoardInputBuffer;
-static InputStream airConditioningBoardInputStream;
-static OutputStream airConditioningBoardOutputStream;
-*/
-
-// i2c->Mechanical 2
-static I2cBusConnection* mechanicalBoard2I2cBusConnection;
-static char mechanical2BoardInputBufferArray[MAIN_BOARD_LINK_TO_MECA_BOARD_2_BUFFER_LENGTH];
-static Buffer mechanical2BoardInputBuffer;
-static InputStream mechanical2BoardInputStream;
-static OutputStream mechanical2BoardOutputStream;
-
-// DISPATCHER UART
-// uart->Motor
-// static char motorBoardUartInputBufferArray[MAIN_BOARD_UART_INPUT_DRIVER_DATA_DISPATCHER_BUFFER_LENGTH];
-// static Buffer motorBoardUartInputBuffer;
-// static InputStream motorBoardUartInputStream;
-// static OutputStream motorBoardUartOutputStream;
+// i2c->Mechanical 1
+static I2cBusConnection* mechanicalBoard1I2cBusConnection;
+static char mechanical1BoardInputBufferArray[MAIN_BOARD_LINK_TO_MECA_BOARD_1_BUFFER_LENGTH];
+static Buffer mechanical1BoardInputBuffer;
+static InputStream mechanical1BoardInputStream;
+static OutputStream mechanical1BoardOutputStream;
 
 // Robot Configuration
 static RobotConfig robotConfig;
@@ -319,10 +340,8 @@ static Device deviceListArray[MAIN_BOARD_DEVICE_LENGTH];
 // Timers
 static Timer timerListArray[MAIN_BOARD_TIMER_LENGTH];
 
-static long counter;
-static int instructionIndex;
-
 /**
+ * TODO : Rename Driver into ClientDriver
  * @private
  */
 void initMainBoardDriversDescriptor() {
@@ -359,66 +378,39 @@ void addLocalDevices(void) {
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
     addLocalDevice(getTemperatureSensorDeviceInterface(), getTemperatureSensorDeviceDescriptor(&temperature));
     addLocalDevice(getADCDeviceInterface(), getADCDeviceDescriptor());
-    addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor());
-
-    addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
-
-    /*
-    addLocalDevice(getSonarDeviceInterface(), getSonarDeviceDescriptor(i2cBus));
-    addLocalDevice(getRobotSonarDetectorDeviceInterface(), getRobotSonarDetectorDeviceDescriptor(i2cBus));
-    */
+    addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor(PWM_SERVO_ENABLED_MASK_SERVO_1_2_5));
+    
+    addLocalDevice(getTofDeviceInterface(), getTofDeviceDescriptor(&tofSensorList));
 }
 
 /**
  * @private
  */
 void addMotorRemoteDevices(void) {
-
     // Motor Board->I2C
-    addI2cRemoteDevice(getTestDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
+    /* addI2cRemoteDevice(getTestDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
     addI2cRemoteDevice(getMotorDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
     addI2cRemoteDevice(getCodersDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
     addI2cRemoteDevice(getPidDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
     addI2cRemoteDevice(getTrajectoryDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
-    addI2cRemoteDevice(getMotionDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
-
-    /*
+    addI2cRemoteDevice(getMotionDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS); */
+    
     // MOTOR BOARD -> UART
-    // addUartRemoteDevice(getTestDeviceInterface(), SERIAL_PORT_MOTOR);
+    addUartRemoteDevice(getTestDeviceInterface(), MAIN_BOARD_SERIAL_PORT_MOTOR);
     addUartRemoteDevice(getMotorDeviceInterface(), MAIN_BOARD_SERIAL_PORT_MOTOR);
     addUartRemoteDevice(getCodersDeviceInterface(), MAIN_BOARD_SERIAL_PORT_MOTOR);
-    addUartRemoteDevice(getPIDDeviceInterface(), MAIN_BOARD_SERIAL_PORT_MOTOR);
+    addUartRemoteDevice(getPidDeviceInterface(), MAIN_BOARD_SERIAL_PORT_MOTOR);
     addUartRemoteDevice(getTrajectoryDeviceInterface(), MAIN_BOARD_SERIAL_PORT_MOTOR);
     addUartRemoteDevice(getMotionDeviceInterface(), MAIN_BOARD_SERIAL_PORT_MOTOR);
     addUartRemoteDevice(getRobotKinematicsDeviceInterface(), MAIN_BOARD_SERIAL_PORT_MOTOR);
-    */
 }
 
 /**
  * @private. 
  */
-void addMeca2RemoteDevices(void) {
-    // Mechanical Board 2->I2C
-    // Device* armDevice = addI2cRemoteDevice(getArm2012DeviceInterface(), MECHANICAL_BOARD_2_I2C_ADDRESS);
-    // Device* infraredDetectorDevice = addI2cRemoteDevice(getRobotInfraredDetectorDeviceInterface(), MECHANICAL_BOARD_2_I2C_ADDRESS);
-    // addI2cRemoteDevice(getServoDeviceInterface(), MECHANICAL_BOARD_2_I2C_ADDRESS);
-    // addUartRemoteDevice(getRobotInfraredDetectorDeviceInterface(), SERIAL_PORT_MECA2);
-}
-
-/**
- * @private.
- */
-void addStrategyBoardDevices(void) {
-    // Strategy Board->I2C
-    // addI2cRemoteDevice(getStrategyDeviceInterface(), STRATEGY_BOARD_I2C_ADDRESS);
-}
-
-/**
- * @private.
- */
-void addBeaconBoardReceiverBoardDevices(void) {
-    // Beacon Receiver Board->I2C
-    // addI2cRemoteDevice(getBeaconReceiverDeviceInterface(), BEACON_RECEIVER_I2C_ADDRESS);
+void addMeca1RemoteDevices(void) {
+    // Mechanical Board 1->UART
+    addUartRemoteDevice(getLauncher2018DeviceInterface(), MAIN_BOARD_SERIAL_PORT_MECA_1);
 }
 
 /**
@@ -440,10 +432,7 @@ void initMainBoardDevicesDescriptor() {
 
     addLocalDevices();
     addMotorRemoteDevices();
-
-    // addMeca2RemoteDevices();
-    // addStrategyBoardDevices();
-    // addBeaconBoardReceiverBoardDevices();
+    addMeca1RemoteDevices();
 
     // Init the devices
     initDevices();
@@ -460,6 +449,7 @@ void initMainBoardDriverDataDispatcherList(void) {
 
     // I2C
 
+    // -> MOTOR
     addI2CDriverDataDispatcher("MOTOR_BOARD_I2C_DISPATCHER",
         &motorBoardI2cInputBuffer, 
         (char(*)[]) &motorBoardI2cInputBufferArray,
@@ -469,15 +459,15 @@ void initMainBoardDriverDataDispatcherList(void) {
         motorI2cBusConnection
         );
 
-    // Stream for Mechanical Board 2
+    // MECHANICAL 1
     addI2CDriverDataDispatcher(
-            "MECHANICAL_BOARD_2_DISPATCHER",
-            &mechanical2BoardInputBuffer,
-            &mechanical2BoardInputBufferArray,
-            MAIN_BOARD_LINK_TO_MECA_BOARD_2_BUFFER_LENGTH,
-            &mechanical2BoardOutputStream,
-            &mechanical2BoardInputStream,
-            mechanicalBoard2I2cBusConnection);
+            "MECHANICAL_BOARD_1_DISPATCHER",
+            &mechanical1BoardInputBuffer,
+            &mechanical1BoardInputBufferArray,
+            MAIN_BOARD_LINK_TO_MECA_BOARD_1_BUFFER_LENGTH,
+            &mechanical1BoardOutputStream,
+            &mechanical1BoardInputStream,
+            mechanicalBoard1I2cBusConnection);
 
     // SERIAL
 
@@ -487,26 +477,14 @@ void initMainBoardDriverDataDispatcherList(void) {
         "MOTOR_BOARD_UART_DISPATCHER",
         MAIN_BOARD_SERIAL_PORT_MOTOR);
 
-    // Uart Stream for mechanicalBoard
-    /*
+    // Uart Stream for mechanicalBoard 1
     addUartDriverDataDispatcher(
-        &mechanicalBoard2SerialStreamLink,
-        "MECA2_UART_DISPATCHER",
-        SERIAL_PORT_MECA2);
-    */
-    /*
-    // Stream for Air Conditioning
-    addI2CDriverDataDispatcher(
-            "AIR_CONDITIONING_DISPATCHER",
-            &airConditioningBoardInputBuffer,
-            &airConditioningBoardInputBufferArray,
-            MAIN_BOARD_LINK_TO_AIR_CONDITIONING_BOARD_BUFFER_LENGTH,
-            &airConditioningBoardOutputStream,
-            &airConditioningBoardInputStream,
-            i2cBusConnection);
-    */
+        &meca1SerialStreamLink,
+        "MECA_1_UART_DISPATCHER",
+        MAIN_BOARD_SERIAL_PORT_MECA_1);
 }
 
+/*
 void doInstruction() {
     int currentTime = getCurrentTimeInSecond();
 
@@ -521,6 +499,7 @@ void doInstruction() {
         motionDriverForward(600.0f);
     }
 }
+*/
 
 bool mainBoardWaitForInstruction(StartMatch* startMatchParam) {
     // Listen instruction from pcStream->Devices
@@ -597,15 +576,13 @@ int main(void) {
                    DEFAULT_SERIAL_SPEED);
 
     // Open the serial Link for the Mechanical Board
-    /*
-    openSerialLink(&mechanicalBoard2SerialStreamLink,
-                   "SERIAL_MECA_2", 
-                   &mechanicalBoard2InputBuffer, &mechanicalBoard2InputBufferArray, MAIN_BOARD_MECA2_INPUT_BUFFER_LENGTH,
-                   &mechanicalBoard2OutputBuffer, &mechanicalBoard2OutputBufferArray, MAIN_BOARD_MECA2_OUTPUT_BUFFER_LENGTH,
-                   &mechanicalBoard2OutputStream,
-                   SERIAL_PORT_MECA2,
+    openSerialLink(&meca1SerialStreamLink,
+                   "SERIAL_MECA_1", 
+                   &meca1InputBuffer, &meca1InputBufferArray, MAIN_BOARD_MECA_1_INPUT_BUFFER_LENGTH,
+                   &meca1OutputBuffer, &meca1OutputBufferArray, MAIN_BOARD_MECA_1_OUTPUT_BUFFER_LENGTH,
+                   &meca1OutputStream,
+                   MAIN_BOARD_SERIAL_PORT_MECA_1,
                    DEFAULT_SERIAL_SPEED);
-    */
 
     // MAIN I2C
     initI2cBusList((I2cBus(*)[]) &i2cBusListArray, MAIN_BOARD_I2C_BUS_LIST_LENGTH);
@@ -614,7 +591,7 @@ int main(void) {
     i2cBus = addI2cBus(I2C_BUS_TYPE_MASTER, I2C_BUS_PORT_1);
     i2cMasterInitialize(i2cBus);
     motorI2cBusConnection = addI2cBusConnection(i2cBus, MOTOR_BOARD_I2C_ADDRESS, true);
-    mechanicalBoard2I2cBusConnection = addI2cBusConnection(i2cBus, MECHANICAL_BOARD_2_I2C_ADDRESS, true);
+    mechanicalBoard1I2cBusConnection = addI2cBusConnection(i2cBus, MECHANICAL_BOARD_2_I2C_ADDRESS, true);
 
     // I2C Debug
     initI2CDebugBuffers(&i2cMasterDebugInputBuffer,
@@ -635,6 +612,21 @@ int main(void) {
     temperatureI2cBusConnection = addI2cBusConnection(i2cBus, LM75A_ADDRESS, true);
     initTemperatureLM75A(&temperature, temperatureI2cBusConnection);
 
+    // IO Expander
+    tofIoExpanderBusConnection = addI2cBusConnection(i2cBus, PCF8574_ADDRESS_0, true);
+    initIOExpanderList(&ioExpanderList, (IOExpander(*)[]) &ioExpanderArray, MOTOR_BOARD_IO_EXPANDER_LIST_LENGTH);
+    IOExpander* tofIoExpander = getIOExpanderByIndex(&ioExpanderList, 0);
+    initIOExpanderPCF8574(tofIoExpander, tofIoExpanderBusConnection);
+    
+    // TOF
+    initTofSensorListVL53L0X(&tofSensorList,
+                             (TofSensor(*)[]) &tofSensorArray,
+                             (TofSensorVL53L0X(*)[]) &tofSensorVL53L0XArray,
+                              MAIN_BOARD_TOF_SENSOR_LIST_LENGTH,
+                              i2cBus,
+                              tofIoExpander);
+
+    
     // TIMERS
     initTimerList(&timerListArray, MAIN_BOARD_TIMER_LENGTH);
 
@@ -643,15 +635,17 @@ int main(void) {
     initMainBoardDriversDescriptor();
     initMainBoardDriverDataDispatcherList();
 
-
     // Start interruptions
     startTimerList();
 
     loopUntilStart(&startMatch);
 
-    counter = 1;
-
-    // clearBuffer(&mechanicalBoard1InputBuffer);
+    clearBuffer(&motorInputBuffer);
+    // Send a clear Buffer to the remote board to avoid to keep bad data in the link when rebooting
+    append(&motorOutputStream, HEADER_CLEAR_INPUT_STREAM);
+    clearBuffer(&meca1InputBuffer);
+    // Send a clear Buffer to the remote board to avoid to keep bad data in the link when rebooting
+    append(&meca1OutputStream, HEADER_CLEAR_INPUT_STREAM);
 
     // enableNotificationRobotInfraredDetector(DETECTOR_GROUP_TYPE_FORWARD);
 

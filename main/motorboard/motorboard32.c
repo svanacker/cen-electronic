@@ -166,7 +166,7 @@
 
 #include "../../drivers/colorSensor/tcs34725.h"
 
-// -> IO EXPANDER)
+// -> IO EXPANDER
 #include "../../drivers/ioExpander/ioExpander.h"
 #include "../../drivers/ioExpander/ioExpanderDebug.h"
 #include "../../drivers/ioExpander/ioExpanderList.h"

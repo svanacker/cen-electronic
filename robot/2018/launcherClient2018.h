@@ -1,5 +1,5 @@
-#ifndef LAUNCHER_DRIVER_2018_H
-#define LAUNCHER_DRIVER_2018_H
+#ifndef LAUNCHER_CLIENT_2018_H
+#define LAUNCHER_CLIENT_2018_H
 
 #include <stdbool.h>
 

@@ -1,9 +1,6 @@
 #ifndef MECHANICAL_BOARD_1_H
 #define MECHANICAL_BOARD_1_H
 
-/** Define the I2C address used by motorBoard. */
-#define MECHANICAL_BOARD_1_I2C_ADDRESS     0x52
-
 #define MECA_BOARD_1_INPUT_BUFFER_LENGTH         20
 #define MECA_BOARD_1_OUTPUT_BUFFER_LENGTH         20
 

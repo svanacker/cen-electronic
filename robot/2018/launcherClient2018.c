@@ -1,4 +1,4 @@
-#include "launcherDriver2018.h"
+#include "launcherClient2018.h"
 #include "launcherDeviceInterface2018.h"
 
 #include "../../common/commons.h"
@@ -8,7 +8,7 @@
 #include "../../drivers/driverTransmitter.h"
 
 /*
-bool launcherDriver2018(int index) {
+bool launcherClient2018(int index) {
     OutputStream* outputStream = getDriverRequestOutputStream();
     append(outputStream, LAUNCHER_2018_DEVICE_HEADER);
     append(outputStream, LAUNCHER_BALL_COMMAND);

@@ -9,6 +9,8 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
+#include "../../../common/delay/cenDelay.h"
+
 #include "../../../common/io/outputStream.h"
 #include "../../../common/io/printWriter.h"
 

@@ -37,9 +37,10 @@ bool initDevice(const Device* device) {
             appendDec(logStream, getLastError());
             append(logStream, ')');
         }
-        println(logStream);
         deviceDescriptor->initErrorCode = getLastError();
     }
+    // TODO : Manage when REMOTE ...
+    println(logStream);
 
     return result;
 }
