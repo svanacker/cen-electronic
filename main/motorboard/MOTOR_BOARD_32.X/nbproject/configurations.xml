@@ -168,10 +168,6 @@
         <itemPath>../../../device/clock/clockDevice.h</itemPath>
         <itemPath>../../../device/clock/clockDeviceInterface.h</itemPath>
       </logicalFolder>
-      <logicalFolder name="f14" displayName="device.color" projectFiles="true">
-        <itemPath>../../../device/color/colorDevice.h</itemPath>
-        <itemPath>../../../device/color/colorDeviceInterface.h</itemPath>
-      </logicalFolder>
       <logicalFolder name="device.dispatcher"
                      displayName="device.dispatcher"
                      projectFiles="true">
@@ -198,12 +194,6 @@
                      projectFiles="true">
         <itemPath>../../../device/i2c/slave/i2cSlaveDebugDevice.h</itemPath>
         <itemPath>../../../device/i2c/slave/i2cSlaveDebugDeviceInterface.h</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f9" displayName="device.io" projectFiles="true">
-      </logicalFolder>
-      <logicalFolder name="f15" displayName="device.ioExpander" projectFiles="true">
-        <itemPath>../../../device/ioExpander/ioExpanderDevice.h</itemPath>
-        <itemPath>../../../device/ioExpander/ioExpanderDeviceInterface.h</itemPath>
       </logicalFolder>
       <logicalFolder name="device.log" displayName="device.log" projectFiles="true">
         <itemPath>../../../device/log/logDevice.h</itemPath>
@@ -242,19 +232,6 @@
                      projectFiles="true">
         <itemPath>../../../device/motor/pwmMotorDevice.h</itemPath>
         <itemPath>../../../device/motor/pwmMotorDeviceInterface.h</itemPath>
-        <itemPath>../../../device/motor/md22Device.h</itemPath>
-        <itemPath>../../../device/motor/md22DeviceInterface.h</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f10" displayName="device.relay" projectFiles="true">
-        <itemPath>../../../device/relay/relayDevice.h</itemPath>
-        <itemPath>../../../device/relay/relayDeviceInterface.h</itemPath>
-      </logicalFolder>
-      <logicalFolder name="device.sensor.temperature"
-                     displayName="device.sensor.temperature"
-                     projectFiles="true">
-        <itemPath>../../../device/sensor/temperature/temperatureSensor.h</itemPath>
-        <itemPath>../../../device/sensor/temperature/temperatureSensorDevice.h</itemPath>
-        <itemPath>../../../device/sensor/temperature/temperatureSensorDeviceInterface.h</itemPath>
       </logicalFolder>
       <logicalFolder name="device.serial"
                      displayName="device.serial"
@@ -278,10 +255,6 @@
         <itemPath>../../../device/timer/timerDevice.h</itemPath>
         <itemPath>../../../device/timer/timerDeviceInterface.h</itemPath>
       </logicalFolder>
-      <logicalFolder name="f3" displayName="device.tof" projectFiles="true">
-        <itemPath>../../../device/tof/tofDevice.h</itemPath>
-        <itemPath>../../../device/tof/tofDeviceInterface.h</itemPath>
-      </logicalFolder>
       <logicalFolder name="drivers" displayName="drivers" projectFiles="true">
         <itemPath>../../../drivers/driverStreamListener.h</itemPath>
         <itemPath>../../../drivers/driver.h</itemPath>
@@ -292,13 +265,6 @@
                      projectFiles="true">
         <itemPath>../../../drivers/clock/softClock.h</itemPath>
         <itemPath>../../../drivers/clock/PCF8563.h</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f13" displayName="drivers.colorSensor" projectFiles="true">
-        <itemPath>../../../drivers/colorSensor/colorSensor.h</itemPath>
-        <itemPath>../../../drivers/colorSensor/colorSensorDebug.h</itemPath>
-        <itemPath>../../../drivers/colorSensor/tcs34725.h</itemPath>
-        <itemPath>../../../drivers/colorSensor/colorSensorTcs34725.h</itemPath>
-        <itemPath>../../../drivers/colorSensor/tcs34725Computation.h</itemPath>
       </logicalFolder>
       <logicalFolder name="drivers.dispatcher"
                      displayName="drivers.dispatcher"
@@ -312,48 +278,9 @@
                      projectFiles="true">
         <itemPath>../../../drivers/eeprom/24c512.h</itemPath>
       </logicalFolder>
-      <logicalFolder name="f8" displayName="drivers.ioExpander" projectFiles="true">
-        <itemPath>../../../drivers/ioExpander/ioExpander.h</itemPath>
-        <itemPath>../../../drivers/ioExpander/ioExpanderDebug.h</itemPath>
-        <itemPath>../../../drivers/ioExpander/pcf8574.h</itemPath>
-        <itemPath>../../../drivers/ioExpander/ioExpanderPcf8574.h</itemPath>
-        <itemPath>../../../drivers/ioExpander/ioExpanderList.h</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f16" displayName="drivers.motor" projectFiles="true">
-        <itemPath>../../../drivers/motor/dualHBridgeMotorMd22.h</itemPath>
-        <itemPath>../../../drivers/motor/md22.h</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f11" displayName="drivers.relay" projectFiles="true">
-        <itemPath>../../../drivers/relay/relay.h</itemPath>
-        <itemPath>../../../drivers/relay/relayDebug.h</itemPath>
-        <itemPath>../../../drivers/relay/rly08.h</itemPath>
-      </logicalFolder>
-      <logicalFolder name="drivers.sensor.temperature"
-                     displayName="drivers.sensor.temperature"
-                     projectFiles="true">
-        <itemPath>../../../drivers/sensor/temperature/LM75A.h</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f2" displayName="drivers.tof" projectFiles="true">
+      <logicalFolder name="f1" displayName="drivers.tof" projectFiles="true">
         <itemPath>../../../drivers/tof/tof.h</itemPath>
         <itemPath>../../../drivers/tof/tofList.h</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f1" displayName="drivers.tof.vl53l0x" projectFiles="true">
-        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_api.h</itemPath>
-        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_api_calibration.h</itemPath>
-        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_api_core.h</itemPath>
-        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_api_ranging.h</itemPath>
-        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_api_strings.h</itemPath>
-        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_def.h</itemPath>
-        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_device.h</itemPath>
-        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_i2c_platform.h</itemPath>
-        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_interrupt_threshold_settings.h</itemPath>
-        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_platform.h</itemPath>
-        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_platform_log.h</itemPath>
-        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_tuning.h</itemPath>
-        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_types.h</itemPath>
-        <itemPath>../../../drivers/tof/vl53l0x/tof_vl53l0x.h</itemPath>
-        <itemPath>../../../drivers/tof/vl53l0x/tofList_vl53l0x.h</itemPath>
-        <itemPath>../../../drivers/tof/vl53l0x/tofDebug_vl53l0x.h</itemPath>
       </logicalFolder>
       <logicalFolder name="main" displayName="main" projectFiles="true">
         <itemPath>../motorBoard32.h</itemPath>
@@ -480,11 +407,6 @@
                      displayName="motion.simulation"
                      projectFiles="true">
         <itemPath>../../../motion/simulation/motionSimulation.h</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f18" displayName="robot.2018" projectFiles="true">
-        <itemPath>../../../robot/2018/launcherDevice2018.h</itemPath>
-        <itemPath>../../../robot/2018/launcherDeviceInterface2018.h</itemPath>
-        <itemPath>../../../robot/2018/launcherDriver2018.h</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.kinematics"
                      displayName="robot.kinematics"
@@ -660,10 +582,6 @@
         <itemPath>../../../device/clock/clockDevice.c</itemPath>
         <itemPath>../../../device/clock/clockDeviceInterface.c</itemPath>
       </logicalFolder>
-      <logicalFolder name="f11" displayName="device.color" projectFiles="true">
-        <itemPath>../../../device/color/colorDevice.c</itemPath>
-        <itemPath>../../../device/color/colorDeviceInterface.c</itemPath>
-      </logicalFolder>
       <logicalFolder name="device.dispatcher"
                      displayName="device.dispatcher"
                      projectFiles="true">
@@ -690,10 +608,6 @@
                      projectFiles="true">
         <itemPath>../../../device/i2c/slave/i2cSlaveDebugDevice.c</itemPath>
         <itemPath>../../../device/i2c/slave/i2cSlaveDebugDeviceInterface.c</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f13" displayName="device.ioExpander" projectFiles="true">
-        <itemPath>../../../device/ioExpander/ioExpanderDevice.c</itemPath>
-        <itemPath>../../../device/ioExpander/ioExpanderDeviceInterface.c</itemPath>
       </logicalFolder>
       <logicalFolder name="device.log" displayName="device.log" projectFiles="true">
         <itemPath>../../../device/log/logDevice.c</itemPath>
@@ -732,19 +646,6 @@
                      projectFiles="true">
         <itemPath>../../../device/motor/pwmMotorDevice.c</itemPath>
         <itemPath>../../../device/motor/pwmMotorDeviceInterface.c</itemPath>
-        <itemPath>../../../device/motor/md22Device.c</itemPath>
-        <itemPath>../../../device/motor/md22DeviceInterface.c</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f9" displayName="device.relay" projectFiles="true">
-        <itemPath>../../../device/relay/relayDevice.c</itemPath>
-        <itemPath>../../../device/relay/relayDeviceInterface.c</itemPath>
-      </logicalFolder>
-      <logicalFolder name="device.sensor.temperature"
-                     displayName="device.sensor.temperature"
-                     projectFiles="true">
-        <itemPath>../../../device/sensor/temperature/temperatureSensor.c</itemPath>
-        <itemPath>../../../device/sensor/temperature/temperatureSensorDevice.c</itemPath>
-        <itemPath>../../../device/sensor/temperature/temperatureSensorDeviceInterface.c</itemPath>
       </logicalFolder>
       <logicalFolder name="device.serial"
                      displayName="device.serial"
@@ -768,10 +669,6 @@
         <itemPath>../../../device/timer/timerDevice.c</itemPath>
         <itemPath>../../../device/timer/timerDeviceInterface.c</itemPath>
       </logicalFolder>
-      <logicalFolder name="f2" displayName="device.tof" projectFiles="true">
-        <itemPath>../../../device/tof/tofDevice.c</itemPath>
-        <itemPath>../../../device/tof/tofDeviceInterface.c</itemPath>
-      </logicalFolder>
       <logicalFolder name="drivers" displayName="drivers" projectFiles="true">
         <itemPath>../../../drivers/driverStreamListener.c</itemPath>
         <itemPath>../../../drivers/driver.c</itemPath>
@@ -782,13 +679,6 @@
                      projectFiles="true">
         <itemPath>../../../drivers/clock/softClock.c</itemPath>
         <itemPath>../../../drivers/clock/PCF8563.c</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f12" displayName="drivers.color" projectFiles="true">
-        <itemPath>../../../drivers/colorSensor/colorSensor.c</itemPath>
-        <itemPath>../../../drivers/colorSensor/colorSensorDebug.c</itemPath>
-        <itemPath>../../../drivers/colorSensor/tcs34725.c</itemPath>
-        <itemPath>../../../drivers/colorSensor/colorSensorTcs34725.c</itemPath>
-        <itemPath>../../../drivers/colorSensor/tcs34725Computation.c</itemPath>
       </logicalFolder>
       <logicalFolder name="drivers.dispatcher"
                      displayName="drivers.dispatcher"
@@ -806,44 +696,9 @@
                      projectFiles="true">
         <itemPath>../../../drivers/file/eeprom/eepromFile.c</itemPath>
       </logicalFolder>
-      <logicalFolder name="f8" displayName="drivers.ioExpander" projectFiles="true">
-        <itemPath>../../../drivers/ioExpander/ioExpander.c</itemPath>
-        <itemPath>../../../drivers/ioExpander/ioExpanderDebug.c</itemPath>
-        <itemPath>../../../drivers/ioExpander/pcf8574.c</itemPath>
-        <itemPath>../../../drivers/ioExpander/ioExpanderPcf8574.c</itemPath>
-        <itemPath>../../../drivers/ioExpander/ioExpanderList.c</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f15" displayName="drivers.motor" projectFiles="true">
-        <itemPath>../../../drivers/motor/dualHBridgeMotorMd22.c</itemPath>
-        <itemPath>../../../drivers/motor/md22.c</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f10" displayName="drivers.relay" projectFiles="true">
-        <itemPath>../../../drivers/relay/relay.c</itemPath>
-        <itemPath>../../../drivers/relay/relayDebug.c</itemPath>
-        <itemPath>../../../drivers/relay/rly08.c</itemPath>
-      </logicalFolder>
-      <logicalFolder name="drivers.sensor.temperature"
-                     displayName="drivers.sensor.temperature"
-                     projectFiles="true">
-        <itemPath>../../../drivers/sensor/temperature/LM75A.c</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f3" displayName="drivers.tof" projectFiles="true">
+      <logicalFolder name="f1" displayName="drivers.tof" projectFiles="true">
         <itemPath>../../../drivers/tof/tof.c</itemPath>
         <itemPath>../../../drivers/tof/tofList.c</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f1" displayName="drivers.tof.vl53vl0x" projectFiles="true">
-        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_api_core.c</itemPath>
-        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_api_ranging.c</itemPath>
-        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_api_strings.c</itemPath>
-        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_platform.c</itemPath>
-        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_platform_log.c</itemPath>
-        <itemPath>../../../drivers/tof/vl53l0x/32/vl53l0x_platform_pic32.c</itemPath>
-        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_api.c</itemPath>
-        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_api_calibration.c</itemPath>
-        <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_platform_common.c</itemPath>
-        <itemPath>../../../drivers/tof/vl53l0x/tof_vl53l0x.c</itemPath>
-        <itemPath>../../../drivers/tof/vl53l0x/tofList_vl53l0x.c</itemPath>
-        <itemPath>../../../drivers/tof/vl53l0x/tofDebug_vl53l0x.c</itemPath>
       </logicalFolder>
       <logicalFolder name="lib" displayName="lib" projectFiles="true">
       </logicalFolder>
@@ -959,11 +814,6 @@
                      projectFiles="true">
         <itemPath>../../../motion/simple/motionCalibration.c</itemPath>
         <itemPath>../../../motion/simple/simpleMotion.c</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f17" displayName="robot.2018" projectFiles="true">
-        <itemPath>../../../robot/2018/launcherDevice2018.c</itemPath>
-        <itemPath>../../../robot/2018/launcherDeviceInterface2018.c</itemPath>
-        <itemPath>../../../robot/2018/launcherDriver2018.c</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.kinematics"
                      displayName="robot.kinematics"

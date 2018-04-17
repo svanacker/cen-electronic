@@ -33,6 +33,9 @@ bool detectIfRobotHasObstacle(PidMotion* pidMotion, PidMotionDefinition* motionD
     }
     */
     TofSensorList* tofSensorList = pidMotion->tofSensorList;
+    if (tofSensorList == NULL) {
+        return false;
+    }
     
     unsigned int index;
     for (index = 0; index < tofSensorList->size; index++) {

@@ -60,10 +60,6 @@
 
 // -> Devices
 
-// Color Sensor
-#include "../../device/color/colorDevice.h"
-#include "../../device/color/colorDeviceInterface.h"
-
 // Clock
 #include "../../device/clock/clockDevice.h"
 #include "../../device/clock/clockDeviceInterface.h"
@@ -72,10 +68,6 @@
 #include "../../device/eeprom/eepromDevice.h"
 #include "../../device/eeprom/eepromDeviceInterface.h"
 
-// IO EXPANDER
-#include "../../device/ioExpander/ioExpanderDevice.h"
-#include "../../device/ioExpander/ioExpanderDeviceInterface.h"
-
 // FILE
 #include "../../device/file/fileDevice.h"
 #include "../../device/file/fileDeviceInterface.h"
@@ -83,10 +75,6 @@
 // Test
 #include "../../device/test/testDevice.h"
 #include "../../device/test/testDeviceInterface.h"
-
-// Relay
-#include "../../device/relay/relayDevice.h"
-#include "../../device/relay/relayDeviceInterface.h"
 
 // Serial
 #include "../../device/serial/serialDebugDevice.h"
@@ -104,10 +92,6 @@
 #include "../../device/log/logDevice.h"
 #include "../../device/log/logDeviceInterface.h"
 
-// IO Expander
-#include "../../device/ioExpander/ioExpanderDevice.h"
-#include "../../device/ioExpander/ioExpanderDeviceInterface.h"
-
 // I2C
 #include "../../device/i2c/i2cCommonDebugDevice.h"
 #include "../../device/i2c/i2cCommonDebugDeviceInterface.h"
@@ -123,10 +107,6 @@
 // Motors (PWM)
 #include "../../device/motor/pwmMotorDevice.h"
 #include "../../device/motor/pwmMotorDeviceInterface.h"
-
-// Motors (MD22)
-#include "../../device/motor/md22Device.h"
-#include "../../device/motor/md22DeviceInterface.h"
 
 // PID
 #include "../../motion/pid/pid.h"
@@ -152,10 +132,6 @@
 #include "../../device/motion/simple/motionDevice.h"
 #include "../../device/motion/simple/motionDeviceInterface.h"
 
-// Tof
-#include "../../device/tof/tofDevice.h"
-#include "../../device/tof/tofDeviceInterface.h"
-
 // Robot
 #include "../../robot/kinematics/robotKinematicsDevice.h"
 #include "../../robot/kinematics/robotKinematicsDeviceInterface.h"
@@ -164,21 +140,11 @@
 #include "../../drivers/clock/softClock.h"
 #include "../../drivers/clock/PCF8563.h"
 
-#include "../../drivers/colorSensor/tcs34725.h"
-
-// -> IO EXPANDER
-#include "../../drivers/ioExpander/ioExpander.h"
-#include "../../drivers/ioExpander/ioExpanderDebug.h"
-#include "../../drivers/ioExpander/ioExpanderList.h"
-#include "../../drivers/ioExpander/ioExpanderPcf8574.h"
-#include "../../drivers/ioExpander/pcf8574.h"
-
 // -> EEPROM
 #include "../../drivers/eeprom/24c512.h"
 
 // -> MOTOR
 #include "../../drivers/motor/dualHBridgeMotorMd22.h"
-#include "../../drivers/motor/md22.h"
 
 // Direct implementation
 #include "../../motion/motion.h"
@@ -188,17 +154,6 @@
 
 // #include "../../test/mathTest.h"
 #include "../../test/motion/bspline/bsplinetest.h"
-
-// RELAY
-#include "../../drivers/relay/rly08.h"
-
-// MOTOR
-#include "dualHBridgeMotorMd22.h"
-#include "colorSensor/colorSensorTcs34725.h"
-
-// TOF
-#include "../../drivers/tof/vl53l0x/tof_vl53l0x.h"
-#include "../../drivers/tof/vl53l0x/tofList_vl53l0x.h"
 
 // 2018
 #include "../../robot/2018/launcherDevice2018.h"
@@ -214,42 +169,17 @@ static I2cBusConnection* mainBoardI2cBusConnection;
 static I2cBus* masterI2cBus;
 static I2cBusConnection* eepromI2cBusConnection;
 static I2cBusConnection* clockI2cBusConnection;
-static I2cBusConnection* tofI2cBusConnection;
-static I2cBusConnection* ioExpanderBusConnection;
-static I2cBusConnection* relayBusConnection;
-static I2cBusConnection* md22BusConnection;
-static I2cBusConnection* colorBusConnection;
 
 // Eeprom
 static Eeprom eeprom_;
 // Memory Eeprom
 static char memoryEepromArray[MOTOR_BOARD_MEMORY_EEPROM_LENGTH];
 
-// Color
-static ColorSensor colorSensor;
-static Tcs34725 tcs34725;
-static Color colorValue;
-
-// Tof
-static TofSensorList tofSensorList;
-static TofSensor tofSensorArray[MOTOR_BOARD_TOF_SENSOR_LIST_LENGTH];
-static TofSensorVL53L0X tofSensorVL53L0XArray[MOTOR_BOARD_TOF_SENSOR_LIST_LENGTH];
-
 // Clock
 static Clock clock;
 
-// IO Expander
-static IOExpanderList ioExpanderList;
-static IOExpander ioExpanderArray[MOTOR_BOARD_IO_EXPANDER_LIST_LENGTH];
-
 // MOTOR (for pidMotion)
 static DualHBridgeMotor motors;
-
-// MOTOR (for MD22)
-static DualHBridgeMotor md22;
-
-// RELAY
-static Relay relay;
 
 // SERIAL
 static SerialLink serialLinkListArray[MOTOR_BOARD_SERIAL_LINK_LIST_LENGTH];
@@ -296,9 +226,6 @@ bool currentTimeChanged;
 static PidMotion pidMotion;
 static PidMotionDefinition motionDefinitionArray[MOTOR_BOARD_PID_MOTION_INSTRUCTION_COUNT];
 
-// 2018 Specific
-static Launcher2018 launcher2018;
-
 Buffer* getI2CSlaveOutputBuffer() {
     return &i2cSlaveOutputBuffer;
 }
@@ -327,7 +254,6 @@ void initDevicesDescriptor() {
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom_));
 
     addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor(&motors));
-    addLocalDevice(getMD22DeviceInterface(), getMD22DeviceDescriptor(&md22));
     addLocalDevice(getCodersDeviceInterface(), getCodersDeviceDescriptor());
     addLocalDevice(getPidDeviceInterface(), getPidDeviceDescriptor(&pidMotion));
     addLocalDevice(getPidDebugDeviceInterface(), getPidDebugDeviceDescriptor(&pidMotion));
@@ -340,14 +266,6 @@ void initDevicesDescriptor() {
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
     addLocalDevice(getTimerDeviceInterface(), getTimerDeviceDescriptor());
     addLocalDevice(getLogDeviceInterface(), getLogDeviceDescriptor());
-    addLocalDevice(getRelayDeviceInterface(), getRelayDeviceDescriptor(&relay));
-    addLocalDevice(getIOExpanderDeviceInterface(), getIOExpanderDeviceDescriptor(&ioExpanderList));
-    // addLocalDevice(getColorSensorDeviceInterface(), getColorSensorDeviceDescriptor(&colorSensor));
-    addLocalDevice(getTofDeviceInterface(), getTofDeviceDescriptor(&tofSensorList));
-    
-    // 2018 Specific
-    addLocalDevice(getLauncher2018DeviceInterface(), getLauncher2018DeviceDescriptor(&launcher2018));
-
     initDevices();
 }
 
@@ -446,35 +364,6 @@ int runMotorBoard() {
     // EEPROM : If we use Software Eeprom
     initEepromMemory(&eeprom_, &memoryEepromArray, MOTOR_BOARD_MEMORY_EEPROM_LENGTH);
     
-    // IO Expander
-    ioExpanderBusConnection = addI2cBusConnection(masterI2cBus, PCF8574_ADDRESS_0, true);
-    initIOExpanderList(&ioExpanderList, (IOExpander(*)[]) &ioExpanderArray, MOTOR_BOARD_IO_EXPANDER_LIST_LENGTH);
-    IOExpander* tofIoExpander = getIOExpanderByIndex(&ioExpanderList, 0);
-    initIOExpanderPCF8574(tofIoExpander, ioExpanderBusConnection);
-
-    // Motor
-    md22BusConnection = addI2cBusConnection(masterI2cBus, MD22_ADDRESS_0, true);
-    initDualHBridgeMotorMD22(&md22, md22BusConnection);
-
-    // COLOR
-    /*
-    colorBusConnection = addI2cBusConnection(masterI2cBus, TCS34725_ADDRESS, true);
-    initTcs34725Struct(&tcs34725, colorBusConnection);
-    initColorSensorTcs34725(&colorSensor, &colorValue, &tcs34725);
-    */
-    
-    // TOF
-    initTofSensorListVL53L0X(&tofSensorList,
-                             (TofSensor(*)[]) &tofSensorArray,
-                             (TofSensorVL53L0X(*)[]) &tofSensorVL53L0XArray,
-                              MOTOR_BOARD_TOF_SENSOR_LIST_LENGTH,
-                              masterI2cBus,
-                              tofIoExpander);
-
-    // Relay
-    relayBusConnection = addI2cBusConnection(masterI2cBus, RLY08_ADDRESS_0, true);
-    initRelayRLY08(&relay, relayBusConnection);
- 
     // Clock
     // -> Clock
     clockI2cBusConnection = addI2cBusConnection(masterI2cBus, PCF8563_WRITE_ADDRESS, true);
@@ -487,14 +376,11 @@ int runMotorBoard() {
     initPidMotion(&pidMotion,
                   &motors,
                   &eeprom_,
-                  &tofSensorList,
+                  NULL,
                   (PidMotionDefinition(*)[]) &motionDefinitionArray,
                   MOTOR_BOARD_PID_MOTION_INSTRUCTION_COUNT);
 
     // initSoftClock(&clock);
-    
-    // 2018
-    initLauncher2018(&launcher2018, tofIoExpander, &relay);
 
     // init the devices
     initDevicesDescriptor();

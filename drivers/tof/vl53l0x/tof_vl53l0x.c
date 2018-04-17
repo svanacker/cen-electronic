@@ -291,7 +291,7 @@ bool tofSensorInitVL53L0X(TofSensor* tofSensor) {
 }
 
 /**
- * Tof POO Implementation for PC
+ * Tof POO Implementation for VL53L0X
  * @private
  */
 unsigned int tofSensorGetDistanceVL53L0XMM(TofSensor* tofSensor) {

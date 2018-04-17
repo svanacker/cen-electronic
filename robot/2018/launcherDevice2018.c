@@ -110,9 +110,9 @@ void distributor2018CleanNext(int launcherIndex) {
     
     setMotorSpeeds(launcher2018->dualHBridgeMotor, motorSpeed, 0);
     // Avoid to stay blocked if we are already on a target
-    unsigned int distance = tofSensorGetDistanceVL53L0XMM(tofSensor);
+    unsigned int distance = tofSensor->tofGetDistanceMM(tofSensor);
     while (true) {
-        distance = tofSensorGetDistanceVL53L0XMM(tofSensor);
+        distance = tofSensor->tofGetDistanceMM(tofSensor);
         if (distance >= threshold) {
             break;
         }
@@ -120,7 +120,7 @@ void distributor2018CleanNext(int launcherIndex) {
     delaymSec(50);
     // Check if we must stop
     while (true) {
-        distance = tofSensorGetDistanceVL53L0XMM(tofSensor);
+        distance = tofSensor->tofGetDistanceMM(tofSensor);
         if (distance <= threshold) {
             break;
         }
