@@ -158,6 +158,7 @@
 #include "../../drivers/sensor/temperature/pc/temperaturePc.h"
 
 // Robot
+#include "../../robot/match/endMatch.h"
 #include "../../robot/match/startMatch.h"
 #include "../../robot/match/startMatchDevice.h"
 #include "../../robot/match/startMatchDeviceInterface.h"
@@ -249,8 +250,9 @@ static Buffer consoleOutputBuffer;
 static Device deviceListArray[MAIN_BOARD_PC_DEVICE_LIST_LENGTH];
 static Device* testDevice;
 
-// StartMatch
+// Match Management
 static StartMatch startMatch;
+static EndMatch endMatch;
 
 static bool connectToRobotManager = false;
 
@@ -446,8 +448,9 @@ void runMainBoardPC(bool connectToRobotManagerMode) {
     addLocalDevice(getTemperatureSensorDeviceInterface(), getTemperatureSensorDeviceDescriptor(&temperature));
     addLocalDevice(getNavigationDeviceInterface(), getNavigationDeviceDescriptor());
 
-    initStartMatch(&startMatch, isMatchStartedPc, mainBoardPcWaitForInstruction, &eeprom);
-    addLocalDevice(getStartMatchDeviceInterface(), getStartMatchDeviceDescriptor(&startMatch, &robotConfig));
+    initEndMatch(&endMatch, &robotConfig, MATCH_DURATION);
+    initStartMatch(&startMatch, &robotConfig, &endMatch, isMatchStartedPc, mainBoardPcWaitForInstruction, &eeprom);
+    addLocalDevice(getStartMatchDeviceInterface(), getStartMatchDeviceDescriptor(&startMatch));
  
     // MOTOR BOARD
     addI2cRemoteDevice(getBatteryDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);

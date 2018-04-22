@@ -25,7 +25,7 @@
 * @param startMatch the startMatch structure with all information needed.
 * @return a device descriptor on startMatch Device
 */
-DeviceDescriptor* getStartMatchDeviceDescriptor(StartMatch* startMatch, RobotConfig* robotConfigParam);
+DeviceDescriptor* getStartMatchDeviceDescriptor(StartMatch* startMatch);
 
 /**
 * Show the message to indicate that we wait for the match.

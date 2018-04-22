@@ -1908,6 +1908,9 @@
     <ClCompile Include="robot\2018\launcherClient2018.c">
       <Filter>Source Files\robot\2018</Filter>
     </ClCompile>
+    <ClCompile Include="robot\match\endMatch.c">
+      <Filter>Source Files\robot\match</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -2947,6 +2950,9 @@
     </ClInclude>
     <ClInclude Include="robot\2018\launcherClient2018.h">
       <Filter>Header Files\robot\2018</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\match\endMatch.h">
+      <Filter>Header Files\robot\match</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

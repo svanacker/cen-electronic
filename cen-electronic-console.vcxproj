@@ -420,6 +420,7 @@
     <ClCompile Include="robot\kinematics\robotKinematicsDevice.c" />
     <ClCompile Include="robot\kinematics\robotKinematicsDeviceInterface.c" />
     <ClCompile Include="robot\kinematics\robotKinematicsPersistence.c" />
+    <ClCompile Include="robot\match\endMatch.c" />
     <ClCompile Include="robot\match\endMatchDetectorDevice.c" />
     <ClCompile Include="robot\match\endMatchDetectorDeviceInterface.c" />
     <ClCompile Include="robot\match\pc\startMatchDetectorPc.c" />
@@ -764,6 +765,7 @@
     <ClInclude Include="robot\kinematics\robotKinematicsDevice.h" />
     <ClInclude Include="robot\kinematics\robotKinematicsDeviceInterface.h" />
     <ClInclude Include="robot\kinematics\robotKinematicsPersistence.h" />
+    <ClInclude Include="robot\match\endMatch.h" />
     <ClInclude Include="robot\match\endMatchDetectorDevice.h" />
     <ClInclude Include="robot\match\endMatchDetectorDeviceInterface.h" />
     <ClInclude Include="robot\match\pc\startMatchDetectorPc.h" />

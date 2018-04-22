@@ -1,5 +1,7 @@
 #include <stdlib.h>
 
+#include "endMatch.h"
+
 #include "endMatchDetectorDevice.h"
 #include "endMatchDetectorDeviceInterface.h"
 
@@ -20,81 +22,12 @@
 #include "../../robot/config/robotConfig.h"
 #include "../../robot/config/robotConfigDevice.h"
 
-static RobotConfig* robotConfig;
-
-static bool matchStarted = false;
-
-/** Current Time In Second. */
-static int currentTimeInSecond = 0;
-
-/** Flag to know if the robot must stop at the end of the match. */
-static bool doNotEnd = false;
-
-/** The timer struct to detect the end of the match. */
-static Timer* endMatchDetectorDeviceTimer;
-
-// SPECIFIC PART
-
-void endMatchDetectorCallbackFunc(Timer* timer) {
-    if (matchStarted) {
-        if (currentTimeInSecond > 0) {
-            currentTimeInSecond++;
-        }
-    }
-}
-
-/**
-* As there is a problem during init to load the config.
-* We send it after
-*/
-void initEndMatchConfig(void) {
-    doNotEnd = isConfigSet(robotConfig, CONFIG_DO_NOT_END);
-}
-
-void markStartMatch(void) {
-    initEndMatchConfig();
-    matchStarted = true;
-    currentTimeInSecond = 0;
-}
-
-void resetStartMatch(void) {
-    matchStarted = false;
-    currentTimeInSecond = 0;
-}
-
-void showEnd(OutputStream* outputStream) {
-    appendString(outputStream, "End of match");
-}
-
-int getCurrentTimeInSecond(void) {
-    return currentTimeInSecond;
-}
-
-bool isEnd(void) {
-    if (doNotEnd) {
-        return false;
-    }
-    if (!matchStarted) {
-        appendString(getErrorOutputStreamLogger(), "You must call startMatch before");
-    }
-    bool result = currentTimeInSecond >= MATCH_DURATION;
-    
-    if (result) {    
-        // If END
-        // TODO : Provide a callback in the Interface and not in the endMatchDetectorDevice !
-        // armDriver2012Up(0);
-    }
-    return result;
-}
+/** The struct to detect the end of the match. */
+static EndMatch* endMatch;
 
 // COMMON PART
 
 void initEndMatchDetector(void) {
-    endMatchDetectorDeviceTimer = addTimer(END_MATCH_DETECTOR_TIMER_CODE,
-                                            TIME_DIVIDER_1_HERTZ,
-                                            endMatchDetectorCallbackFunc,
-                                            "END MATCH TIMER",
-											NULL);
 }
 
 void stopEndMatchDetector(void) {
@@ -108,7 +41,7 @@ bool isEndMatchDetectorDeviceOk(void) {
 void deviceEndMatchDetectorHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     if (commandHeader == COMMAND_GET_TIME_LEFT) {
         ackCommand(outputStream, END_MATCH_DETECTOR_DEVICE_HEADER, COMMAND_GET_TIME_LEFT);
-        appendHex2(outputStream, MATCH_DURATION - currentTimeInSecond);
+        appendHex2(outputStream, MATCH_DURATION - endMatch->currentTimeInSecond);
     }
 }
 
@@ -119,7 +52,7 @@ static DeviceDescriptor endMatchDetectorDevice = {
     .deviceHandleRawData = &deviceEndMatchDetectorHandleRawData,
 };
 
-DeviceDescriptor* getEndMatchDetectorDeviceDescriptor(RobotConfig* robotConfigParam) {
-    robotConfig = robotConfigParam;
+DeviceDescriptor* getEndMatchDetectorDeviceDescriptor(EndMatch* endMatchParam) {
+    endMatch = endMatchParam;
     return &endMatchDetectorDevice;
 }

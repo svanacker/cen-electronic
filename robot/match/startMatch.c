@@ -1,7 +1,10 @@
 #include "startMatch.h"
-#include "endMatchDetectorDevice.h"
+#include "endMatch.h"
 
 #include <stdbool.h>
+#include "../../common/2d/2d.h"
+
+#include "../../common/eeprom/eeprom.h"
 #include "../../common/eeprom/eepromAreas.h"
 
 #include "../../common/log/logHandler.h"
@@ -14,37 +17,38 @@
 #define EEPROM_START_MATCH_ROBOT_POSITION_BLOCK_SIZE      20
 
 void setSimulateStartedMatch(StartMatch* startMatch, bool value) {
+    EndMatch* endMatch = startMatch->endMatch;
     startMatch->simulateStartedMatch = value;
     if (startMatch->simulateStartedMatch) {
-        markStartMatch();
+        markStartMatch(endMatch);
     }
     else {
-        resetStartMatch();
+        resetStartMatch(endMatch);
     }
 }
 
-int getStartMatchDetectorEepromGetOffset(enum TeamColor teamColor) {
-    int result = EEPROM_START_MATCH_START_INDEX + teamColor * EEPROM_START_MATCH_ROBOT_POSITION_BLOCK_SIZE;
+unsigned long getStartMatchDetectorEepromGetOffset(enum TeamColor teamColor) {
+    unsigned long result = EEPROM_START_MATCH_START_INDEX + teamColor * EEPROM_START_MATCH_ROBOT_POSITION_BLOCK_SIZE;
     return result;
 }
 
 void fillStartMatchPositionForColor(StartMatch* startMatch, RobotPosition* robotPosition, enum TeamColor teamColor) {
-    int globalOffset = getStartMatchDetectorEepromGetOffset(teamColor);
+    unsigned long globalOffset = getStartMatchDetectorEepromGetOffset(teamColor);
     Eeprom* startMatchEeprom = startMatch->startMatchEeprom;
-    int x = eepromReadInt(startMatchEeprom, globalOffset + EEPROM_START_MATCH_ROBOT_POSITION_X_OFFSET);
-    int y = eepromReadInt(startMatchEeprom, globalOffset + EEPROM_START_MATCH_ROBOT_POSITION_Y_OFFSET);
-    int angleDeciDeg = eepromReadInt(startMatchEeprom, globalOffset + EEPROM_START_MATCH_ROBOT_POSITION_ANGLE_OFFSET);
+    float x = eepromReadUnsignedFloat(startMatchEeprom, globalOffset + EEPROM_START_MATCH_ROBOT_POSITION_X_OFFSET, POSITION_DIGIT_MM_PRECISION);
+    float y = eepromReadUnsignedFloat(startMatchEeprom, globalOffset + EEPROM_START_MATCH_ROBOT_POSITION_Y_OFFSET, POSITION_DIGIT_MM_PRECISION);
+    float angleDegree = eepromReadUnsignedFloat(startMatchEeprom, globalOffset + EEPROM_START_MATCH_ROBOT_POSITION_ANGLE_OFFSET, ANGLE_DIGIT_DEGREE_PRECISION);
     robotPosition->x = x;
     robotPosition->y = y;
-    robotPosition->angleDeciDeg = angleDeciDeg;
+    robotPosition->angleDegree = angleDegree;
 }
 
 void saveMatchPositionForColor(StartMatch* startMatch, RobotPosition* robotPosition, enum TeamColor teamColor) {
     int globalOffset = getStartMatchDetectorEepromGetOffset(teamColor);
     Eeprom* startMatchEeprom = startMatch->startMatchEeprom;
-    eepromWriteInt(startMatchEeprom, globalOffset + EEPROM_START_MATCH_ROBOT_POSITION_X_OFFSET, robotPosition->x);
-    eepromWriteInt(startMatchEeprom, globalOffset + EEPROM_START_MATCH_ROBOT_POSITION_Y_OFFSET, robotPosition->y);
-    eepromWriteInt(startMatchEeprom, globalOffset + EEPROM_START_MATCH_ROBOT_POSITION_ANGLE_OFFSET, robotPosition->angleDeciDeg);
+    eepromWriteUnsignedFloat(startMatchEeprom, globalOffset + EEPROM_START_MATCH_ROBOT_POSITION_X_OFFSET, robotPosition->x, POSITION_DIGIT_MM_PRECISION);
+    eepromWriteUnsignedFloat(startMatchEeprom, globalOffset + EEPROM_START_MATCH_ROBOT_POSITION_Y_OFFSET, robotPosition->y, POSITION_DIGIT_MM_PRECISION);
+    eepromWriteUnsignedFloat(startMatchEeprom, globalOffset + EEPROM_START_MATCH_ROBOT_POSITION_ANGLE_OFFSET, robotPosition->angleDegree, ANGLE_DIGIT_DEGREE_PRECISION);
 }
 
 
@@ -71,9 +75,13 @@ bool isStarted(StartMatch* startMatch) {
 }
 
 void initStartMatch(StartMatch* startMatch,
-                            IsMatchStartedFunction* isMatchStartedFunctionParam,
-                            LoopUntilStartHandleFunction* loopUntilStartHandleFunction,
-                            Eeprom* startMatchEeprom) {
+                    RobotConfig* robotConfig,
+                    EndMatch* endMatch,
+                    IsMatchStartedFunction* isMatchStartedFunctionParam,
+                    LoopUntilStartHandleFunction* loopUntilStartHandleFunction,
+                    Eeprom* startMatchEeprom) {
+    startMatch->robotConfig = robotConfig;
+    startMatch->endMatch = endMatch;
     startMatch->isMatchStartedFunction = isMatchStartedFunctionParam;
     startMatch->loopUntilStartHandleFunction = loopUntilStartHandleFunction;
     startMatch->startMatchEeprom = startMatchEeprom;

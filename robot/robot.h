@@ -11,11 +11,11 @@
  */
 typedef struct RobotPosition {
     // x in millimeter
-    int x;
+    float x;
     // y in millimeter
-    int y;
+    float y;
     // angle in decidegree
-    int angleDeciDeg;
+    float angleDegree;
 } RobotPosition;
 
 /** 

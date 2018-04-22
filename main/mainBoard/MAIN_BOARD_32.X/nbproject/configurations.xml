@@ -468,6 +468,7 @@
         <itemPath>../../../robot/match/strategy.h</itemPath>
         <itemPath>../../../robot/match/teamColor.h</itemPath>
         <itemPath>../../../robot/match/startMatch.h</itemPath>
+        <itemPath>../../../robot/match/endMatch.h</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.match.32"
                      displayName="robot.match.32"
@@ -977,6 +978,7 @@
         <itemPath>../../../robot/match/strategy.c</itemPath>
         <itemPath>../../../robot/match/teamColor.c</itemPath>
         <itemPath>../../../robot/match/startMatch.c</itemPath>
+        <itemPath>../../../robot/match/endMatch.c</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.match.32"
                      displayName="robot.match.32"

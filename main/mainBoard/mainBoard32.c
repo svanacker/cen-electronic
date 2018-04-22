@@ -206,6 +206,7 @@
 #include "../../robot/kinematics/robotKinematicsDeviceInterface.h"
 
 #include "../../robot/match/startMatch.h"
+#include "../../robot/match/endMatch.h"
 #include "../../robot/match/32/startMatchDetector32.h"
 #include "../../robot/match/startMatchDevice.h"
 #include "../../robot/match/startMatchDeviceInterface.h"
@@ -255,6 +256,7 @@ static I2cBusConnection* temperatureI2cBusConnection;
 
 // StartMatch
 static StartMatch startMatch;
+static EndMatch endMatch;
 
 // TOF
 static TofSensorList tofSensorList;
@@ -371,9 +373,10 @@ void addLocalDevices(void) {
     addLocalDevice(getLCDDeviceInterface(), getLCDDeviceDescriptor());
     addLocalDevice(getRobotConfigDeviceInterface(), getRobotConfigDeviceDescriptor(&robotConfig));
 
-    initStartMatch(&startMatch, isMatchStarted32, mainBoardWaitForInstruction, &eeprom);
-    addLocalDevice(getStartMatchDeviceInterface(), getStartMatchDeviceDescriptor(&startMatch, &robotConfig));
-    addLocalDevice(getEndMatchDetectorDeviceInterface(), getEndMatchDetectorDeviceDescriptor(&robotConfig));
+    initEndMatch(&endMatch, &robotConfig, MATCH_DURATION);
+    initStartMatch(&startMatch, &robotConfig, &endMatch, isMatchStarted32, mainBoardWaitForInstruction, &eeprom);
+    addLocalDevice(getStartMatchDeviceInterface(), getStartMatchDeviceDescriptor(&startMatch));
+    addLocalDevice(getEndMatchDetectorDeviceInterface(), getEndMatchDetectorDeviceDescriptor(&endMatch));
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
     addLocalDevice(getTemperatureSensorDeviceInterface(), getTemperatureSensorDeviceDescriptor(&temperature));
@@ -614,7 +617,7 @@ int main(void) {
 
     // IO Expander
     tofIoExpanderBusConnection = addI2cBusConnection(i2cBus, PCF8574_ADDRESS_0, true);
-    initIOExpanderList(&ioExpanderList, (IOExpander(*)[]) &ioExpanderArray, MOTOR_BOARD_IO_EXPANDER_LIST_LENGTH);
+    initIOExpanderList(&ioExpanderList, (IOExpander(*)[]) &ioExpanderArray, MAIN_BOARD_IO_EXPANDER_LIST_LENGTH);
     IOExpander* tofIoExpander = getIOExpanderByIndex(&ioExpanderList, 0);
     initIOExpanderPCF8574(tofIoExpander, tofIoExpanderBusConnection);
     

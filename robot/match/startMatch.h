@@ -3,6 +3,8 @@
 
 #include <stdbool.h>
 
+#include "endMatch.h"
+
 #include "../../common/eeprom/eeprom.h"
 
 #include "../robot.h"
@@ -30,6 +32,8 @@ typedef bool IsMatchStartedFunction(StartMatch* startMatch);
  * Define the Structure which stores all informations needed for StartMatch.
  */
 struct StartMatch {
+    /** To get the configuration. */
+    RobotConfig* robotConfig;
     /** The function which must be used to know if the match is started or not. */
     IsMatchStartedFunction* isMatchStartedFunction;
     /** The function which must be called when the robot wait for start (to be able to continue to manage instruction */
@@ -38,6 +42,8 @@ struct StartMatch {
     Eeprom* startMatchEeprom;
     /** If we simulate the Start Match or not. */
     bool simulateStartedMatch;
+    /** Pointer on the endMatch management */
+    EndMatch* endMatch;
 };
 
 /**
@@ -46,6 +52,8 @@ struct StartMatch {
  * @param isMatchStartedFunctionParam the real function which must be used to detect the start of the match.
  */
 void initStartMatch(StartMatch* startMatch,
+                    RobotConfig* robotConfig,
+                    EndMatch* endMatch,
                     IsMatchStartedFunction* isMatchStartedFunctionParam,
                     LoopUntilStartHandleFunction* loopUntilStartHandleFunction,
                     Eeprom* startMatchEeprom);

@@ -28,7 +28,6 @@
 #include "../../robot/config/robotConfigDevice.h"
 
 static StartMatch* startMatch;
-static RobotConfig* robotConfig;
 
 void initStartMatchDevice(void) {
 
@@ -45,7 +44,7 @@ bool isStartMatchDeviceOk(void) {
 void notifyWaitingStart(OutputStream* pcOutputStream) {
     appendString(pcOutputStream, NOTIFY_TO_PC_RESET);
     appendString(getAlwaysOutputStreamLogger(), "CFG:");
-    appendBinary16(getAlwaysOutputStreamLogger(), getConfigValue(robotConfig), 4);
+    appendBinary16(getAlwaysOutputStreamLogger(), getConfigValue(startMatch->robotConfig), 4);
     println(getAlwaysOutputStreamLogger());
     appendString(getAlwaysOutputStreamLogger(), "Waiting start:");
 }
@@ -81,11 +80,11 @@ void deviceStartMatchDetectorHandleRawData(char commandHeader, InputStream* inpu
     
         appendHex2(outputStream, teamColor);
         appendSeparator(outputStream);
-        appendHex4(outputStream, robotPositionForColor.x);
+        appendHexFloat4(outputStream, robotPositionForColor.x, POSITION_DIGIT_MM_PRECISION);
         appendSeparator(outputStream);
-        appendHex4(outputStream, robotPositionForColor.y);
+        appendHexFloat4(outputStream, robotPositionForColor.y, POSITION_DIGIT_MM_PRECISION);
         appendSeparator(outputStream);
-        appendHex4(outputStream, robotPositionForColor.angleDeciDeg);
+        appendHexFloat4(outputStream, robotPositionForColor.angleDegree, ANGLE_DIGIT_DEGREE_PRECISION);
     }
     else if (commandHeader == COMMAND_START_MATCH_SET_INITIAL_POSITION) {
         ackCommand(outputStream, START_MATCH_DEVICE_HEADER, COMMAND_START_MATCH_SET_INITIAL_POSITION);
@@ -94,13 +93,13 @@ void deviceStartMatchDetectorHandleRawData(char commandHeader, InputStream* inpu
 
         RobotPosition robotPositionForColor;
         checkIsSeparator(inputStream);
-        robotPositionForColor.x = readHex4(inputStream);
+        robotPositionForColor.x = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
 
         checkIsSeparator(inputStream);
-        robotPositionForColor.y = readHex4(inputStream);
+        robotPositionForColor.y = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
 
         checkIsSeparator(inputStream);
-        robotPositionForColor.angleDeciDeg = readHex4(inputStream);
+        robotPositionForColor.angleDegree = readHexFloat4(inputStream, ANGLE_DIGIT_DEGREE_PRECISION);
     
         saveMatchPositionForColor(startMatch, &robotPositionForColor, teamColor);
     }
@@ -114,8 +113,7 @@ DeviceDescriptor startMatchDetectorDevice = {
     .deviceHandleRawData = &deviceStartMatchDetectorHandleRawData,
 };
 
-DeviceDescriptor* getStartMatchDeviceDescriptor(StartMatch* startMatchParam, RobotConfig* robotConfigParam) {
+DeviceDescriptor* getStartMatchDeviceDescriptor(StartMatch* startMatchParam) {
     startMatch = startMatchParam;
-    robotConfig = robotConfigParam;
     return &startMatchDetectorDevice;
 }
