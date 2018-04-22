@@ -4,6 +4,7 @@
 #include "../../common/commons.h"
 
 #include "startMatch.h"
+#include "startMatchPersistence.h"
 #include "startMatchDevice.h"
 #include "startMatchDeviceInterface.h"
 #include "endMatchDetectorDevice.h"
@@ -23,7 +24,6 @@
 #include "../../device/device.h"
 
 #include "../../drivers/strategy/strategyDriver.h"
-
 
 #include "../../robot/config/robotConfigDevice.h"
 
@@ -76,7 +76,7 @@ void deviceStartMatchDetectorHandleRawData(char commandHeader, InputStream* inpu
         ackCommand(outputStream, START_MATCH_DEVICE_HEADER, COMMAND_START_MATCH_GET_INITIAL_POSITION);
         enum TeamColor teamColor = (enum TeamColor) readHex2(inputStream);
         RobotPosition robotPositionForColor;
-        fillStartMatchPositionForColor(startMatch, &robotPositionForColor, teamColor);
+        loadStartMatchPositionForColor(startMatch, &robotPositionForColor, teamColor);
     
         appendHex2(outputStream, teamColor);
         appendSeparator(outputStream);

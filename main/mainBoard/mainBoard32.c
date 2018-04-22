@@ -146,6 +146,10 @@
 #include "../../device/motion/position/trajectoryDeviceInterface.h"
 #include "../../device/motion/simple/motionDeviceInterface.h"
 
+// Relay
+#include "../../device/relay/relayDevice.h"
+#include "../../device/relay/relayDeviceInterface.h"
+
 // Sonar
 #include "../../device/sonar/sonarDevice.h"
 #include "../../device/sonar/sonarDeviceInterface.h"
@@ -176,6 +180,8 @@
 #include "../../drivers/ioExpander/ioExpanderList.h"
 #include "../../drivers/ioExpander/ioExpanderPcf8574.h"
 #include "../../drivers/ioExpander/pcf8574.h"
+
+#include "../../drivers/relay/rly08.h"
 
 // -> Test
 #include "../../drivers/test/testDriver.h"
@@ -339,6 +345,10 @@ static LogHandler logHandlerListArray[MAIN_BOARD_LOG_HANDLER_LIST_LENGTH];
 // Devices
 static Device deviceListArray[MAIN_BOARD_DEVICE_LENGTH];
 
+// Relay
+static Relay relay;
+static I2cBusConnection* relayBusConnection;
+
 // Timers
 static Timer timerListArray[MAIN_BOARD_TIMER_LENGTH];
 
@@ -382,6 +392,8 @@ void addLocalDevices(void) {
     addLocalDevice(getTemperatureSensorDeviceInterface(), getTemperatureSensorDeviceDescriptor(&temperature));
     addLocalDevice(getADCDeviceInterface(), getADCDeviceDescriptor());
     addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor(PWM_SERVO_ENABLED_MASK_SERVO_1_2_5));
+
+    addLocalDevice(getRelayDeviceInterface(), getRelayDeviceDescriptor(&relay));
     
     addLocalDevice(getTofDeviceInterface(), getTofDeviceDescriptor(&tofSensorList));
 }
@@ -608,9 +620,11 @@ int main(void) {
     // -> Eeproms
     eepromI2cBusConnection = addI2cBusConnection(i2cBus, ST24C512_ADDRESS_0, true);
     init24C512Eeprom(&eeprom, eepromI2cBusConnection);
+    
     // -> Clock
     clockI2cBusConnection = addI2cBusConnection(i2cBus, PCF8563_WRITE_ADDRESS, true);
     initClockPCF8563(&clock, clockI2cBusConnection);
+    
     // -> Temperature
     temperatureI2cBusConnection = addI2cBusConnection(i2cBus, LM75A_ADDRESS, true);
     initTemperatureLM75A(&temperature, temperatureI2cBusConnection);
@@ -620,6 +634,10 @@ int main(void) {
     initIOExpanderList(&ioExpanderList, (IOExpander(*)[]) &ioExpanderArray, MAIN_BOARD_IO_EXPANDER_LIST_LENGTH);
     IOExpander* tofIoExpander = getIOExpanderByIndex(&ioExpanderList, 0);
     initIOExpanderPCF8574(tofIoExpander, tofIoExpanderBusConnection);
+    
+    // Relay
+    relayBusConnection = addI2cBusConnection(i2cBus, RLY08_ADDRESS_0, true);
+    initRelayRLY08(&relay, relayBusConnection);
     
     // TOF
     initTofSensorListVL53L0X(&tofSensorList,

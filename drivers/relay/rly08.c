@@ -146,6 +146,7 @@ bool isRLY08DeviceOk(I2cBusConnection* i2cBusConnection) {
 bool relayRLY08Init(Relay* relay) {
     I2cBusConnection* i2cBusConnection = getRLY08I2cBusConnection(relay);
     initRLY08(i2cBusConnection);
+    return true;
 }
 
 bool relayRLY08ReadValue(Relay* relay, unsigned int relayIndex) {

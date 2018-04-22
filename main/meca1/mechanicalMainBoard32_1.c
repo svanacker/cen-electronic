@@ -164,6 +164,8 @@ static Buffer i2cMasterDebugInputBuffer;
 
 // MOTOR (for MD22)
 static DualHBridgeMotor md22;
+static bool manualSwitchLeft;
+static bool manualSwitchRight;
 
 // Timers
 static Timer timerListArray[MECA_BOARD_32_1_TIMER_LENGTH];
@@ -219,6 +221,27 @@ void initDevicesDescriptor() {
     addLocalDevice(getTofDeviceInterface(), getTofDeviceDescriptor(&tofSensorList));
 
     initDevices();
+}
+
+void handleGrabber(void) {
+    IOExpander* ioExpander = getIOExpanderByIndex(&ioExpanderList, MECA_BOARD_32_1_IO_EXPANDER_LAUNCHER_INDEX);
+    bool newManualSwitchLeft = ioExpander->ioExpanderReadSingleValue(ioExpander, DISTRIBUTOR_ROTATE_LEFT_IO_EXPANDER_INDEX);
+    bool newManualSwitchRight = ioExpander->ioExpanderReadSingleValue(ioExpander, DISTRIBUTOR_ROTATE_RIGHT_IO_EXPANDER_INDEX);
+    if (newManualSwitchLeft) {
+        setMotorSpeeds(&md22, LAUNCHER_2018_DEFAULT_SPEED, 0);
+    }
+    if (newManualSwitchRight) {
+        setMotorSpeeds(&md22, -LAUNCHER_2018_DEFAULT_SPEED, 0);
+    }
+    else {
+        // Stop Motors only if we have a change to avoid to stop Motors because of the continuous call to this method
+        if ((manualSwitchLeft !=  newManualSwitchLeft) || (manualSwitchRight != newManualSwitchRight)) {
+            stopMotors(&md22);
+        }
+    }
+    manualSwitchLeft = newManualSwitchLeft;
+    manualSwitchRight = newManualSwitchRight;
+    
 }
 
 int main(void) {
@@ -351,6 +374,9 @@ int main(void) {
                                 &debugOutputStream,
                                 &filterRemoveCRLF,
                                 NULL);
+        
+        // HANDLE IO Expander
+        // handleGrabber();
     }
     return (0);
 }

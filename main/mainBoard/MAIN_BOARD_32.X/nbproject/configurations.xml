@@ -240,6 +240,10 @@
                      projectFiles="true">
         <itemPath>../../../device/motor/pwmMotorDeviceInterface.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f6" displayName="device.relay" projectFiles="true">
+        <itemPath>../../../device/relay/relayDevice.h</itemPath>
+        <itemPath>../../../device/relay/relayDeviceInterface.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="device.sensor.temperature"
                      displayName="device.sensor.temperature"
                      projectFiles="true">
@@ -346,6 +350,11 @@
       <logicalFolder name="drivers.motor"
                      displayName="drivers.motor"
                      projectFiles="true">
+      </logicalFolder>
+      <logicalFolder name="f7" displayName="drivers.relay" projectFiles="true">
+        <itemPath>../../../drivers/relay/relay.h</itemPath>
+        <itemPath>../../../drivers/relay/relayDebug.h</itemPath>
+        <itemPath>../../../drivers/relay/rly08.h</itemPath>
       </logicalFolder>
       <logicalFolder name="drivers.sensor.temperature"
                      displayName="drivers.sensor.temperature"
@@ -469,6 +478,7 @@
         <itemPath>../../../robot/match/teamColor.h</itemPath>
         <itemPath>../../../robot/match/startMatch.h</itemPath>
         <itemPath>../../../robot/match/endMatch.h</itemPath>
+        <itemPath>../../../robot/match/startMatchPersistence.h</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.match.32"
                      displayName="robot.match.32"
@@ -767,6 +777,10 @@
                      projectFiles="true">
         <itemPath>../../../device/motor/pwmMotorDeviceInterface.c</itemPath>
       </logicalFolder>
+      <logicalFolder name="f7" displayName="device.relay" projectFiles="true">
+        <itemPath>../../../device/relay/relayDevice.c</itemPath>
+        <itemPath>../../../device/relay/relayDeviceInterface.c</itemPath>
+      </logicalFolder>
       <logicalFolder name="device.sensor.temperature"
                      displayName="device.sensor.temperature"
                      projectFiles="true">
@@ -876,6 +890,11 @@
                      displayName="drivers.motor"
                      projectFiles="true">
       </logicalFolder>
+      <logicalFolder name="f8" displayName="drivers.relay" projectFiles="true">
+        <itemPath>../../../drivers/relay/relay.c</itemPath>
+        <itemPath>../../../drivers/relay/relayDebug.c</itemPath>
+        <itemPath>../../../drivers/relay/rly08.c</itemPath>
+      </logicalFolder>
       <logicalFolder name="drivers.sensor.temperature"
                      displayName="drivers.sensor.temperature"
                      projectFiles="true">
@@ -979,6 +998,7 @@
         <itemPath>../../../robot/match/teamColor.c</itemPath>
         <itemPath>../../../robot/match/startMatch.c</itemPath>
         <itemPath>../../../robot/match/endMatch.c</itemPath>
+        <itemPath>../../../robot/match/startMatchPersistence.c</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.match.32"
                      displayName="robot.match.32"

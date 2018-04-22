@@ -3,9 +3,9 @@
 
 #include <stdbool.h>
 
-#include "endMatch.h"
-
 #include "../../common/eeprom/eeprom.h"
+
+#include "endMatch.h"
 
 #include "../robot.h"
 #include "teamColor.h"
@@ -70,17 +70,5 @@ void loopUntilStart(StartMatch* startMatch);
 * @return true if the match is started, false else.
 */
 bool isStarted(StartMatch* startMatch);
-
-/**
- * Fill the Robot Position structure with the initial position when having teamColor set.
- * @param robotPosition (IN) the structure to fill
- * @param teamColor the color for which we want the initial Position.
- */
-void fillStartMatchPositionForColor(StartMatch* startMatch, RobotPosition* robotPosition, enum TeamColor teamColor);
-
-/** 
- * Save into the Eeprom the startMatch position for a specific color.
- */
-void saveMatchPositionForColor(StartMatch* startMatch, RobotPosition* robotPosition, enum TeamColor teamColor);
 
 #endif

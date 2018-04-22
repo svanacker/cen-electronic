@@ -32,18 +32,19 @@ void lightOn2018(int launcherIndex) {
     unsigned int servoOffPosition = LAUNCHER_LIGHT_LEFT_SERVO_OFF_POSITION;
     unsigned int servoOnPosition = LAUNCHER_LIGHT_LEFT_SERVO_ON_POSITION;
     unsigned int speed = PWM_SERVO_SPEED_MAX;
-    unsigned int delay = 75;
+    unsigned int delay = LAUNCHER_LIGHT_LEFT_SERVO_DELAY;
     
     if (launcherIndex == LAUNCHER_RIGHT_INDEX) {
         servoIndex = LAUNCHER_LIGHT_RIGHT_SERVO_INDEX;
         servoOffPosition = LAUNCHER_LIGHT_RIGHT_SERVO_OFF_POSITION;
         servoOnPosition = LAUNCHER_LIGHT_RIGHT_SERVO_ON_POSITION;
+        delay = LAUNCHER_LIGHT_RIGHT_SERVO_DELAY;
     }
     else if (launcherIndex == LAUNCHER_BEE_INDEX) {
-        servoIndex = LAUNCHER_BEE_SERVO_INDEX;
-        servoOffPosition = LAUNCHER_BEE_SERVO_OFF_POSITION;
-        servoOnPosition = LAUNCHER_BEE_SERVO_ON_POSITION;
-        delay = 200;
+        servoIndex = LAUNCHER_DIRTY_EJECTOR_SERVO_INDEX;
+        servoOffPosition = LAUNCHER_DIRTY_EJECTOR_SERVO_OFF_POSITION;
+        servoOnPosition = LAUNCHER_DIRTY_EJECTOR_SERVO_ON_POSITION;
+        delay = LAUNCHER_DIRTY_EJECTOR_SERVO_DELAY;
     }
     
     // TODO : Check this !
@@ -100,7 +101,7 @@ void launch2018(int launcherIndex, bool prepare) {
 }
 
 void distributor2018CleanNext(int launcherIndex) {
-    signed int motorSpeed = -20;
+    signed int motorSpeed = -LAUNCHER_2018_DEFAULT_SPEED;
     if (launcherIndex == LAUNCHER_RIGHT_INDEX) {
         motorSpeed *= -1;
     }

@@ -427,6 +427,7 @@
     <ClCompile Include="robot\match\startMatch.c" />
     <ClCompile Include="robot\match\startMatchDevice.c" />
     <ClCompile Include="robot\match\startMatchDeviceInterface.c" />
+    <ClCompile Include="robot\match\startMatchPersistence.c" />
     <ClCompile Include="robot\match\strategy.c" />
     <ClCompile Include="robot\match\teamColor.c" />
     <ClCompile Include="robot\opponent\opponentRobot.c" />
@@ -772,6 +773,7 @@
     <ClInclude Include="robot\match\startMatch.h" />
     <ClInclude Include="robot\match\startMatchDetector.h" />
     <ClInclude Include="robot\match\startMatchDeviceInterface.h" />
+    <ClInclude Include="robot\match\startMatchPersistence.h" />
     <ClInclude Include="robot\match\strategy.h" />
     <ClInclude Include="robot\match\teamColor.h" />
     <ClInclude Include="robot\opponent\opponentRobot.h" />
