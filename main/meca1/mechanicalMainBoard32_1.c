@@ -227,10 +227,10 @@ void handleGrabber(void) {
     IOExpander* ioExpander = getIOExpanderByIndex(&ioExpanderList, MECA_BOARD_32_1_IO_EXPANDER_LAUNCHER_INDEX);
     bool newManualSwitchLeft = ioExpander->ioExpanderReadSingleValue(ioExpander, DISTRIBUTOR_ROTATE_LEFT_IO_EXPANDER_INDEX);
     bool newManualSwitchRight = ioExpander->ioExpanderReadSingleValue(ioExpander, DISTRIBUTOR_ROTATE_RIGHT_IO_EXPANDER_INDEX);
-    if (newManualSwitchLeft) {
+    if (newManualSwitchLeft == 0) {
         setMotorSpeeds(&md22, LAUNCHER_2018_DEFAULT_SPEED, 0);
     }
-    if (newManualSwitchRight) {
+    if (newManualSwitchRight == 0) {
         setMotorSpeeds(&md22, -LAUNCHER_2018_DEFAULT_SPEED, 0);
     }
     else {
@@ -376,7 +376,7 @@ int main(void) {
                                 NULL);
         
         // HANDLE IO Expander
-        // handleGrabber();
+        handleGrabber();
     }
     return (0);
 }
