@@ -25,23 +25,29 @@ int deviceLauncher2018GetInterface(char commandHeader, DeviceInterfaceMode mode,
         }
         return commandLengthValueForMode(mode, 2, 0);
     }
-    // LIGHT / BEE
-    else if (commandHeader == LAUNCHER_LIGHT_ON_SERVO_MOVE) {
+    // LIGHT
+    else if (commandHeader == LAUNCHER_LIGHT_ON_SERVO_MOVE_COMMAND) {
         if (fillDeviceArgumentList) {
-            setFunction("Switch Light / Bee", 1, 0);
-            setArgumentUnsignedHex2(0, "Left (00) / Right (01) / Bee (02)");
-        }
-        return commandLengthValueForMode(mode, 2, 0);
-    }
-    // DISTRIBUTOR
-    else if (commandHeader == LAUNCHER_DISTRIBUTOR_NEXT_CLEAN_BALL) {
-        if (fillDeviceArgumentList) {
-            setFunction("Next Clean Ball", 1, 0);
+            setFunction("Switch Light", 1, 0);
             setArgumentUnsignedHex2(0, "Left (00) / Right (01)");
         }
         return commandLengthValueForMode(mode, 2, 0);
     }
-    else if (commandHeader == LAUNCHER_SEQUENCE_CLEAN_BALL) {
+    // DISTRIBUTOR
+    else if (commandHeader == DISTRIBUTOR_EJECT_DIRTY_BALL_COMMAND) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("Distributor Eject Dirty Ball");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }
+    else if (commandHeader == DISTRIBUTOR_NEXT_BALL_COMMAND) {
+        if (fillDeviceArgumentList) {
+            setFunction("Distributor Next Clean Ball", 1, 0);
+            setArgumentUnsignedHex2(0, "Left (00) / Right (01)");
+        }
+        return commandLengthValueForMode(mode, 2, 0);
+    }
+    else if (commandHeader == LAUNCHER_SEQUENCE_CLEAN_BALL_COMMAND) {
         if (fillDeviceArgumentList) {
             setFunction("Sequence Clean Ball", 1, 0);
             setArgumentUnsignedHex2(0, "Left (00) / Right (01)");

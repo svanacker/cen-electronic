@@ -2,27 +2,25 @@
 #define TIMER_CONSTANTS_H
 
 /** The index of timer used. */
-#define CODER_TIMER_INDEX 1
+#define CODERS_TIMER_CODE                              1
 
 /**
 * Defines the index for the timer to check if robot has detect something.
 */
-#define ROBOT_DETECTOR_TIMER_INDEX 3
+#define ROBOT_DETECTOR_TIMER_CODE                     3
 
 // Timer Index for Robot infrared
-#define ROBOT_INFRARED_DETECTOR_TIMER_INDEX            15
+#define ROBOT_INFRARED_DETECTOR_TIMER_CODE            15
 
-/** The index of the timer (used to update value of servo). */
-#define SERVO_TIMER_INDEX   10
+/** The code of the timer (used to update value of servo). */
+#define SERVO_TIMER_CODE                               10
 
-#define STRATEGY_DRIVER_TIMER_INDEX  25
+#define STRATEGY_DRIVER_TIMER_CODE                    25
 
-#define TIMER_SOFT_CLOCK_CODE           96
+#define TIMER_SOFT_CLOCK_CODE                          96
 
-#define CODERS_TIMER_INDEX  99
+#define ROBOT_SONAR_DETECTOR_TIMER_CODE               123
 
-#define ROBOT_SONAR_DETECTOR_TIMER_INDEX 123
-
-#define DEMO_TIMER_INDEX    124
+#define DEMO_TIMER_CODE                               124
 
 #endif

@@ -63,7 +63,7 @@ void forceRobotNextStepIfNecessary() {
  * Initialize the strategy Driver and a timer used to send next Step in case of problem.
  */
 void initStrategyDriver() {
-    addTimer(STRATEGY_DRIVER_TIMER_INDEX, TIME_DIVIDER_1_5_HERTZ, &strategyDriverTimerCallback, "STRATEGY", NULL);
+    addTimer(STRATEGY_DRIVER_TIMER_CODE, TIME_DIVIDER_1_5_HERTZ, &strategyDriverTimerCallback, "STRATEGY", NULL);
 }
 
 void robotNextStep() {

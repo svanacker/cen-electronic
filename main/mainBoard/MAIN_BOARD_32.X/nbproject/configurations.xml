@@ -4,6 +4,9 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <logicalFolder name="f8" displayName="client.robot.2018" projectFiles="true">
+        <itemPath>../../../client/robot/2018/launcherClient2018.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="common" displayName="common" projectFiles="true">
         <itemPath>../../../common/commons.h</itemPath>
       </logicalFolder>
@@ -449,7 +452,6 @@
         <itemPath>../../../robot/2018/strategy2018Utils.h</itemPath>
         <itemPath>../../../robot/2018/distributor2018.h</itemPath>
         <itemPath>../../../robot/2018/launcherDeviceInterface2018.h</itemPath>
-        <itemPath>../../../robot/2018/launcherClient2018.h</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.config"
                      displayName="robot.config"
@@ -531,6 +533,9 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <logicalFolder name="f9" displayName="client.robot.2018" projectFiles="true">
+        <itemPath>../../../client/robot/2018/launcherClient2018.c</itemPath>
+      </logicalFolder>
       <logicalFolder name="common.2d" displayName="common.2d" projectFiles="true">
         <itemPath>../../../common/2d/2d.c</itemPath>
         <itemPath>../../../common/2d/2dDebug.c</itemPath>
@@ -969,7 +974,6 @@
         <itemPath>../../../robot/2018/strategy2018Utils.c</itemPath>
         <itemPath>../../../robot/2018/distributor2018.c</itemPath>
         <itemPath>../../../robot/2018/launcherDeviceInterface2018.c</itemPath>
-        <itemPath>../../../robot/2018/launcherClient2018.c</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.config"
                      displayName="robot.config"

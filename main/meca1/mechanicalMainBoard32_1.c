@@ -350,7 +350,7 @@ int main(void) {
     initDevicesDescriptor();
     
     // Init the timers management
-    startTimerList();
+    startTimerList(true);
 
     while (1) {
 

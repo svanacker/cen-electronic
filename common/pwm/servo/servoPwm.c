@@ -88,7 +88,7 @@ void initPwmForServo(unsigned int servoToActivateMask, int posInit) {
     // Init the timer for servo
     // and add the timer to the list, so that the interrupt function will
     // update at a certain frequency the position of the servo
-    addTimer(SERVO_TIMER_INDEX,
+    addTimer(SERVO_TIMER_CODE,
                             TIME_DIVIDER_50_HERTZ,
                             &interruptServoTimerCallbackFunc,
                             "SERVO", 

@@ -3,6 +3,8 @@
 
 #include "cenTimer.h"
 
+#include <stdbool.h>
+
 /**
  * The struct defining a list of timer.
  */
@@ -56,19 +58,19 @@ Timer* getTimerByCode(int timerCode);
  * Get the count of timer.
  * @return timer count.
  */
-int getTimerCount();
+int getTimerCount(void);
 
 /**
  * Starts the timer to handle software interruption.
  * startTimerList() must be called when all registerInterrupt call are done.
  */
-void startTimerList();
+void startTimerList(bool enabledAll);
 
 /**
  * Returns the unique Timer List (singleton).
  * @return a pointer on TimerList struct.
  */
-TimerList* getTimerList();
+TimerList* getTimerList(void);
 
 /**
  * TODO : See to remove it

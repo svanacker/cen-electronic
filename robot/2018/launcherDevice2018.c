@@ -27,6 +27,8 @@
 
 static Launcher2018* launcher2018;
 
+// LIGHT
+
 void lightOn2018(int launcherIndex) {
     unsigned int servoIndex = LAUNCHER_LIGHT_LEFT_SERVO_INDEX;
     unsigned int servoOffPosition = LAUNCHER_LIGHT_LEFT_SERVO_OFF_POSITION;
@@ -40,12 +42,6 @@ void lightOn2018(int launcherIndex) {
         servoOnPosition = LAUNCHER_LIGHT_RIGHT_SERVO_ON_POSITION;
         delay = LAUNCHER_LIGHT_RIGHT_SERVO_DELAY;
     }
-    else if (launcherIndex == LAUNCHER_BEE_INDEX) {
-        servoIndex = LAUNCHER_DIRTY_EJECTOR_SERVO_INDEX;
-        servoOffPosition = LAUNCHER_DIRTY_EJECTOR_SERVO_OFF_POSITION;
-        servoOnPosition = LAUNCHER_DIRTY_EJECTOR_SERVO_ON_POSITION;
-        delay = LAUNCHER_DIRTY_EJECTOR_SERVO_DELAY;
-    }
     
     // TODO : Check this !
     ServoList* servoList = _getServoList();
@@ -56,6 +52,8 @@ void lightOn2018(int launcherIndex) {
     delaymSec(delay);
     pwmServo(servoIndex, speed, servoOffPosition);
 }
+
+// LAUNCH
 
 void launch2018(int launcherIndex, bool prepare) {
     Relay* relay = launcher2018->relay;
@@ -100,6 +98,8 @@ void launch2018(int launcherIndex, bool prepare) {
     }
 }
 
+// DISTRIBUTOR
+
 void distributor2018CleanNext(int launcherIndex) {
     signed int motorSpeed = -LAUNCHER_2018_DEFAULT_SPEED;
     if (launcherIndex == LAUNCHER_RIGHT_INDEX) {
@@ -129,6 +129,17 @@ void distributor2018CleanNext(int launcherIndex) {
     setMotorSpeeds(launcher2018->dualHBridgeMotor, 0, 0);
 }
 
+void distributor2018EjectDirty(void) {
+    // TODO : Check this !
+    ServoList* servoList = _getServoList();
+    servoList->useTimer = false;
+
+    pwmServo(LAUNCHER_DIRTY_EJECTOR_SERVO_INDEX, 0xFF, LAUNCHER_DIRTY_EJECTOR_SERVO_ON_POSITION);
+    // TODO : Check it because it's really longer than 50 ms
+    delaymSec(LAUNCHER_DIRTY_EJECTOR_SERVO_DELAY);
+    pwmServo(LAUNCHER_DIRTY_EJECTOR_SERVO_INDEX, 0xFF, LAUNCHER_DIRTY_EJECTOR_SERVO_OFF_POSITION);
+}
+
 void deviceLauncher2018Init(void) {
 
 }
@@ -154,23 +165,23 @@ void deviceLauncher2018HandleRawData(char commandHeader, InputStream* inputStrea
         ackCommand(outputStream, LAUNCHER_2018_DEVICE_HEADER, LAUNCHER_SEND_BALL_COMMAND);
     }
     // Light / Bee
-    else if (commandHeader == LAUNCHER_LIGHT_ON_SERVO_MOVE) {
+    else if (commandHeader == LAUNCHER_LIGHT_ON_SERVO_MOVE_COMMAND) {
         int launcherIndex = readHex2(inputStream);
         lightOn2018(launcherIndex);
-        ackCommand(outputStream, LAUNCHER_2018_DEVICE_HEADER, LAUNCHER_LIGHT_ON_SERVO_MOVE);
+        ackCommand(outputStream, LAUNCHER_2018_DEVICE_HEADER, LAUNCHER_LIGHT_ON_SERVO_MOVE_COMMAND);
     }
     // Distributor
-    else if (commandHeader == LAUNCHER_DISTRIBUTOR_NEXT_CLEAN_BALL) {
+    else if (commandHeader == DISTRIBUTOR_NEXT_BALL_COMMAND) {
         int launcherIndex = readHex2(inputStream);
         distributor2018CleanNext(launcherIndex);
-        ackCommand(outputStream, LAUNCHER_2018_DEVICE_HEADER, LAUNCHER_DISTRIBUTOR_NEXT_CLEAN_BALL);
+        ackCommand(outputStream, LAUNCHER_2018_DEVICE_HEADER, DISTRIBUTOR_NEXT_BALL_COMMAND);
     }
-    else if (commandHeader == LAUNCHER_SEQUENCE_CLEAN_BALL) {
+    else if (commandHeader == LAUNCHER_SEQUENCE_CLEAN_BALL_COMMAND) {
         int launcherIndex = readHex2(inputStream);
         launch2018(launcherIndex, true);
         distributor2018CleanNext(launcherIndex);
         launch2018(launcherIndex, false);
-        ackCommand(outputStream, LAUNCHER_2018_DEVICE_HEADER, LAUNCHER_SEQUENCE_CLEAN_BALL);
+        ackCommand(outputStream, LAUNCHER_2018_DEVICE_HEADER, LAUNCHER_SEQUENCE_CLEAN_BALL_COMMAND);
     }
 }
 

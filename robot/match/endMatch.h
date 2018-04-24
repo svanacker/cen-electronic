@@ -27,8 +27,6 @@ struct EndMatch {
     RobotConfig* robotConfig;
     /** The match duration. */
     int matchDurationInSecond;
-    /** To know if the match is started or not. */
-    bool matchStarted;
     /** Current Time In Second. */
     int currentTimeInSecond;
     /** Avoid that it does not take any instruction at the end. */
@@ -55,7 +53,7 @@ void resetStartMatch(EndMatch* endMatch);
 /**
  * Show to an output Stream the result of the match
 */
-void showEnd(OutputStream* outputStream);
+void showEnd(EndMatch* endMatch, OutputStream* outputStream);
 
 /**
  * Returns how much time was passed

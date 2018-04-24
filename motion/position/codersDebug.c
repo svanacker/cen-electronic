@@ -133,7 +133,7 @@ bool acquireNextCoderSample() {
 void debugGetWheelCallback(Timer* timer) {
     // If we don't need to acquire anymore
     if (!acquireNextCoderSample()) {
-        Timer* timer = getTimerByCode(CODERS_TIMER_INDEX);
+        Timer* timer = getTimerByCode(CODERS_TIMER_CODE);
         // we disable the timer
         if (timer == NULL) {
             timer->enabled = false;
@@ -143,7 +143,7 @@ void debugGetWheelCallback(Timer* timer) {
 
 void enableCoderSampleRecording(unsigned int sampleCountParam, unsigned int samplingRateMilliSeconds) {
     clearCoderHistoryDebug();
-    Timer* timer = getTimerByCode(CODERS_TIMER_INDEX);
+    Timer* timer = getTimerByCode(CODERS_TIMER_CODE);
     if (sampleCountParam < CODER_DEBUG_HISTORY_COUNT) {
         coderDataHistory.sampleToAcquire = sampleCountParam;
     }
@@ -152,7 +152,7 @@ void enableCoderSampleRecording(unsigned int sampleCountParam, unsigned int samp
     }
     unsigned long timeDiviser = TIME_DIVIDER_1000_HERTZ * samplingRateMilliSeconds;
     if (timer == NULL) {
-        timer = addTimer(CODERS_TIMER_INDEX, timeDiviser, &debugGetWheelCallback, "CODERS TIMER", NULL);
+        timer = addTimer(CODERS_TIMER_CODE, timeDiviser, &debugGetWheelCallback, "CODERS TIMER", NULL);
     }
     else {
         timer->timeDiviser = timeDiviser;

@@ -143,6 +143,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c" />
+    <ClCompile Include="client\robot\2018\launcherClient2018.c" />
     <ClCompile Include="common\2d\2d.c" />
     <ClCompile Include="common\2d\2dDebug.c" />
     <ClCompile Include="common\adc\adcutils.c" />
@@ -403,7 +404,6 @@
     <ClCompile Include="navigation\pathList.c" />
     <ClCompile Include="navigation\pathListDebug.c" />
     <ClCompile Include="remote\clock\remoteClock.c" />
-    <ClCompile Include="robot\2018\launcherClient2018.c" />
     <ClCompile Include="robot\2018\launcherDevice2018.c" />
     <ClCompile Include="robot\2018\launcherDeviceInterface2018.c" />
     <ClCompile Include="robot\2018\strategy2018.c" />
@@ -473,6 +473,7 @@
     <ClCompile Include="test\unity\unity.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="client\robot\2018\launcherClient2018.h" />
     <ClInclude Include="common\2d\2d.h" />
     <ClInclude Include="common\2d\2dDebug.h" />
     <ClInclude Include="common\clock\clock.h" />

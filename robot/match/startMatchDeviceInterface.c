@@ -46,13 +46,13 @@ int deviceStartMatchGetInterface(char commandHeader, DeviceInterfaceMode mode, b
     else if (commandHeader == COMMAND_START_MATCH_SET_INITIAL_POSITION) {
         if (fillDeviceArgumentList) {
             setFunction("setInitialPosition", 7, 0);
-            setArgumentUnsignedHex2(0, "side");
+            setArgumentUnsignedHex2(0, "side (00=Green, 01=Orange)");
             setArgumentSeparator(1);
-            setArgumentUnsignedHex4(2, "x (mm)");
+            setArgumentFloatHex4(2, "x (mm)");
             setArgumentSeparator(3);
-            setArgumentUnsignedHex4(4, "y (mm)");
+            setArgumentFloatHex4(4, "y (mm)");
             setArgumentSeparator(5);
-            setArgumentUnsignedHex4(6, "angle (mm)");
+            setArgumentFloatHex4(6, "angle (mm)");
         }
         return commandLengthValueForMode(mode, 17, 0);
     }

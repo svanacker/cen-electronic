@@ -46,6 +46,7 @@
 #include "../../common/serial/serialLinkList.h"
 
 #include "../../common/timer/cenTimer.h"
+#include "../../common/timer/timerConstants.h"
 #include "../../common/timer/timerList.h"
 
 #include "../../common/system/system.h"
@@ -657,9 +658,8 @@ int main(void) {
     initMainBoardDriverDataDispatcherList();
 
     // Start interruptions
-    startTimerList();
-
-    loopUntilStart(&startMatch);
+    startTimerList(false);
+    getTimerByCode(SERVO_TIMER_CODE)->enabled = true;
 
     clearBuffer(&motorInputBuffer);
     // Send a clear Buffer to the remote board to avoid to keep bad data in the link when rebooting
@@ -677,7 +677,7 @@ int main(void) {
         }
     }
 
-    showEnd(getAlwaysOutputStreamLogger());
+    showEnd(&endMatch, getAlwaysOutputStreamLogger());
 
     while (1) {
         // Avoid reboot even at end

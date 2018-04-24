@@ -96,16 +96,18 @@ int getTimerCount() {
     return timerList.size;
 }
 
-void startTimerList() {
+void startTimerList(bool enabledAll) {
     _initTimers();
+    if (enabledAll) {
     int i;
-    for (i = 0; i < timerList.size; i++) {
-        Timer* timer = getTimerByIndex(i);
-		if (timer == NULL) {
-			writeError(TIMER_NULL);
-			return;
-		}
-        startTimer(timer);
+        for (i = 0; i < timerList.size; i++) {
+            Timer* timer = getTimerByIndex(i);
+		    if (timer == NULL) {
+			    writeError(TIMER_NULL);
+			    return;
+		    }
+            startTimer(timer);
+        }
     }
 }
 

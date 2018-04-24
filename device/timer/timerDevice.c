@@ -46,7 +46,7 @@ void interruptDemoTimerCallbackFunc(Timer* timer) {
 }
 
 Timer* addTimerDemo(void) {
-    Timer* result = addTimer(DEMO_TIMER_INDEX,
+    Timer* result = addTimer(DEMO_TIMER_CODE,
              TIME_DIVIDER_1_HERTZ,
              &interruptDemoTimerCallbackFunc,
              "DEMO",
@@ -126,7 +126,7 @@ void deviceTimerHandleRawData(char commandHeader, InputStream* inputStream, Outp
     }
     // Demo
     else if (commandHeader == COMMAND_TIMER_DEMO) {
-        Timer* timer = getTimerByCode(DEMO_TIMER_INDEX);
+        Timer* timer = getTimerByCode(DEMO_TIMER_CODE);
         if (timer == NULL) {
             timer = addTimerDemo();
         }

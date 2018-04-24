@@ -57,7 +57,26 @@ struct Launcher2018{
     TofSensorList* tofSensorList;
 };
 
+/**
+ * Set the light on for a specified direction (LEFT / RIGHT)
+ */
+void lightOn2018(int launcherIndex);
+
+/**
+ * Launch a ball
+ * @param launcherIndex (LEFT / RIGHT)
+ */
 void launch2018(int launcherIndex, bool prepare);
+
+/**
+ * Rotate the distributor on 1/8 until the distributor rotation is ok.
+ */
+void distributor2018CleanNext(int launcherIndex);
+
+/**
+ * Eject the ball which is not on the right color if any
+ */
+void distributor2018EjectDirty(void);
 
 /**
  * The descriptor for the launcher 2018 device.

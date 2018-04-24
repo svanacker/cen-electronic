@@ -386,7 +386,7 @@ int runMotorBoard() {
     initDevicesDescriptor();
 
     // Init the timers management
-    startTimerList();
+    startTimerList(true);
 
     while (1) {
         waitForInstruction();

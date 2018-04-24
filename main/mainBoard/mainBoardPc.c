@@ -36,6 +36,8 @@
 
 #include "../../common/system/system.h"
 
+#include "../../common/timer/cenTimer.h"
+#include "../../common/timer/timerConstants.h"
 #include "../../common/timer/timerList.h"
 
 #include "../../common/pc/process/processHelper.h"
@@ -159,6 +161,9 @@
 
 // Robot
 #include "../../robot/match/endMatch.h"
+#include "../../robot/match/endMatch.h"
+#include "../../robot/match/endMatchDetectorDevice.h"
+#include "../../robot/match/endMatchDetectorDeviceInterface.h"
 #include "../../robot/match/startMatch.h"
 #include "../../robot/match/startMatchDevice.h"
 #include "../../robot/match/startMatchDeviceInterface.h"
@@ -451,7 +456,8 @@ void runMainBoardPC(bool connectToRobotManagerMode) {
     initEndMatch(&endMatch, &robotConfig, MATCH_DURATION);
     initStartMatch(&startMatch, &robotConfig, &endMatch, isMatchStartedPc, mainBoardPcWaitForInstruction, &eeprom);
     addLocalDevice(getStartMatchDeviceInterface(), getStartMatchDeviceDescriptor(&startMatch));
- 
+    addLocalDevice(getEndMatchDetectorDeviceInterface(), getEndMatchDetectorDeviceDescriptor(&endMatch));
+
     // MOTOR BOARD
     addI2cRemoteDevice(getBatteryDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
     // addI2cRemoteDevice(getEepromDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
@@ -468,7 +474,8 @@ void runMainBoardPC(bool connectToRobotManagerMode) {
 
     initDevices();
 
-	startTimerList();
+    startTimerList(false);
+    getTimerByCode(SERVO_TIMER_CODE)->enabled = true;
 
     delaymSec(100);
 

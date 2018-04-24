@@ -317,7 +317,7 @@ void runMechanicalBoard1PC(bool singleMode) {
 
     initDevices();
 
-    startTimerList();
+    startTimerList(true);
 
     setDebugI2cEnabled(false);
     while (1) {

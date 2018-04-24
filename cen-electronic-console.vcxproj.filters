@@ -925,6 +925,24 @@
     <Filter Include="Header Files\motion\pid\endDetection\obstacle">
       <UniqueIdentifier>{15b15e47-2fb7-4706-86b9-94064d697b2d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\client">
+      <UniqueIdentifier>{a68b25e5-a338-405e-8215-576906c47524}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\client\robot">
+      <UniqueIdentifier>{c200ea00-50eb-4eb0-98b6-d95814925268}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\client\robot\2018">
+      <UniqueIdentifier>{714051eb-b2cc-4ab4-8349-4bd7376992b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\client">
+      <UniqueIdentifier>{09505eeb-7ec0-42b8-944e-4a342c93ad32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\client\robot">
+      <UniqueIdentifier>{7704b1c0-81ce-4fb9-a9da-de09e0f57fc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\client\robot\2018">
+      <UniqueIdentifier>{9f874a81-ffbf-4e49-bbf8-8ad811950d32}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -1905,14 +1923,14 @@
     <ClCompile Include="drivers\ioExpander\ioExpanderList.c">
       <Filter>Source Files\drivers\ioExpander</Filter>
     </ClCompile>
-    <ClCompile Include="robot\2018\launcherClient2018.c">
-      <Filter>Source Files\robot\2018</Filter>
-    </ClCompile>
     <ClCompile Include="robot\match\endMatch.c">
       <Filter>Source Files\robot\match</Filter>
     </ClCompile>
     <ClCompile Include="robot\match\startMatchPersistence.c">
       <Filter>Source Files\robot\match</Filter>
+    </ClCompile>
+    <ClCompile Include="client\robot\2018\launcherClient2018.c">
+      <Filter>Source Files\client\robot\2018</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2959,6 +2977,9 @@
     </ClInclude>
     <ClInclude Include="robot\match\startMatchPersistence.h">
       <Filter>Header Files\robot\match</Filter>
+    </ClInclude>
+    <ClInclude Include="client\robot\2018\launcherClient2018.h">
+      <Filter>Header Files\client\robot\2018</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

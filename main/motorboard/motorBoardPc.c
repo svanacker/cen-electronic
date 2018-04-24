@@ -429,7 +429,7 @@ void runMotorBoardPC(bool singleMode) {
 
     initDevices();
 
-    startTimerList();
+    startTimerList(true);
 
     setDebugI2cEnabled(false);
 

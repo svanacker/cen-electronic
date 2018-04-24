@@ -150,7 +150,7 @@ bool notifyObstacle(I2cBusConnection* i2cBusConnection) {
 
 void deviceRobotSonarDetectorInit() {
     // Timer for detector
-    addTimer(ROBOT_SONAR_DETECTOR_TIMER_INDEX,
+    addTimer(ROBOT_SONAR_DETECTOR_TIMER_CODE,
             TIME_DIVIDER_16_HERTZ,
             deviceRobotSonarDetectorCallbackFunc, "ROBOT SONAR DETECTOR TIMER", NULL);
     // useSonar = isConfigSet(CONFIG_USE_LASER_MASK);
