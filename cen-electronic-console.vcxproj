@@ -149,6 +149,7 @@
     <ClCompile Include="common\adc\adcutils.c" />
     <ClCompile Include="common\adc\pc\adcutilsPc.c" />
     <ClCompile Include="common\clock\clock.c" />
+    <ClCompile Include="common\color\color.c" />
     <ClCompile Include="common\delay\pc\cenDelayPc.c" />
     <ClCompile Include="common\eeprom\eeprom.c" />
     <ClCompile Include="common\eeprom\eepromAreas.c" />
@@ -404,6 +405,7 @@
     <ClCompile Include="navigation\pathList.c" />
     <ClCompile Include="navigation\pathListDebug.c" />
     <ClCompile Include="remote\clock\remoteClock.c" />
+    <ClCompile Include="robot\2018\distributor2018.c" />
     <ClCompile Include="robot\2018\launcherDevice2018.c" />
     <ClCompile Include="robot\2018\launcherDeviceInterface2018.c" />
     <ClCompile Include="robot\2018\strategy2018.c" />
@@ -564,6 +566,8 @@
     <ClInclude Include="device\beacon\beaconReceiverDeviceInterface.h" />
     <ClInclude Include="device\clock\clockDevice.h" />
     <ClInclude Include="device\clock\clockDeviceInterface.h" />
+    <ClInclude Include="device\color\colorDevice.h" />
+    <ClInclude Include="device\color\colorDeviceInterface.h" />
     <ClInclude Include="device\device.h" />
     <ClInclude Include="device\deviceConstants.h" />
     <ClInclude Include="device\deviceDebug.h" />
@@ -750,6 +754,7 @@
     <ClInclude Include="navigation\pathListDebug.h" />
     <ClInclude Include="remote\clock\remoteClock.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="robot\2018\distributor2018.h" />
     <ClInclude Include="robot\2018\launcherClient2018.h" />
     <ClInclude Include="robot\2018\launcherDevice2018.h" />
     <ClInclude Include="robot\2018\launcherDeviceInterface2018.h" />

@@ -943,6 +943,12 @@
     <Filter Include="Header Files\client\robot\2018">
       <UniqueIdentifier>{9f874a81-ffbf-4e49-bbf8-8ad811950d32}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\device\color">
+      <UniqueIdentifier>{ffcfbadc-d2d1-491c-aae2-f54eda726788}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\common\color">
+      <UniqueIdentifier>{a1afc61e-213e-4ce5-aadc-9d60a5ae66f0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -1931,6 +1937,12 @@
     </ClCompile>
     <ClCompile Include="client\robot\2018\launcherClient2018.c">
       <Filter>Source Files\client\robot\2018</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2018\distributor2018.c">
+      <Filter>Source Files\robot\2018</Filter>
+    </ClCompile>
+    <ClCompile Include="common\color\color.c">
+      <Filter>Source Files\common\color</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2980,6 +2992,15 @@
     </ClInclude>
     <ClInclude Include="client\robot\2018\launcherClient2018.h">
       <Filter>Header Files\client\robot\2018</Filter>
+    </ClInclude>
+    <ClInclude Include="device\color\colorDevice.h">
+      <Filter>Header Files\device\color</Filter>
+    </ClInclude>
+    <ClInclude Include="device\color\colorDeviceInterface.h">
+      <Filter>Header Files\device\color</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2018\distributor2018.h">
+      <Filter>Header Files\robot\2018</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

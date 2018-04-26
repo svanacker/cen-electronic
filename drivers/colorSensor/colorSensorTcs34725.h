@@ -10,6 +10,9 @@
  * @param colorSensor
  * @param pColor
  */
-void initColorSensorTcs34725(ColorSensor* colorSensor, Color* color, Tcs34725* tcs34725);
+void initColorSensorTcs34725(ColorSensor* colorSensor,
+                             Color* color,
+                             colorSensorFindColorTypeFunction* colorSensorFindColorType,
+                             Tcs34725* tcs34725);
 
 #endif

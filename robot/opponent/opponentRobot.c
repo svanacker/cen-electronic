@@ -44,6 +44,6 @@ void updateOpponentRobotIfNecessary() {
     mustAskLastOpponentRobotPosition = false;
 
     // Update the opponent Robot Position by asking beaconReceiver
-    updateOpponentRobotPosition(&lastOpponentRobotPosition);
+    // updateOpponentRobotPosition(&lastOpponentRobotPosition);
 }
 

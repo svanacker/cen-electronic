@@ -8,6 +8,6 @@
  * @param colorSensor the pointer (simulates POO)
  * @param pColor pointer on an color Structure value to store the value which is used to store the value
  */
-void initColorSensorPc(ColorSensor* colorSensor, Color* pColor);
+void initColorSensorPc(ColorSensor* colorSensor, Color* pColor, colorSensorFindColorTypeFunction* colorSensorFindColorType);
 
 #endif

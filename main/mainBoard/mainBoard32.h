@@ -20,7 +20,7 @@
 
 // I2C
 
-#define MAIN_BOARD_I2C_BUS_LIST_LENGTH                    1
+#define MAIN_BOARD_I2C_BUS_LIST_LENGTH                    2
 #define MAIN_BOARD_I2C_BUS_CONNECTION_LIST_LENGTH         20
 
 // LOGS
@@ -78,7 +78,7 @@
 #define MAIN_BOARD_IO_EXPANDER_LIST_LENGTH   1
 
 // TOFS
-#define MAIN_BOARD_TOF_SENSOR_LIST_LENGTH    3
+#define MAIN_BOARD_TOF_SENSOR_LIST_LENGTH    6
 
 bool mainBoardWaitForInstruction(StartMatch* startMatch);
 

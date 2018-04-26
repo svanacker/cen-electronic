@@ -51,10 +51,24 @@ void deviceColorSensorHandleRawData(char commandHeader, InputStream* inputStream
         appendSeparator(outputStream);
         appendHex4(outputStream, color->B);
     }
+    else if (commandHeader == COMMAND_COLOR_SENSOR_READ_TYPE) {
+        ackCommand(outputStream, COLOR_SENSOR_DEVICE_HEADER, COMMAND_COLOR_SENSOR_READ_TYPE);
+        enum ColorType colorType = colorSensor->colorSensorFindColorType(colorSensor);
+        appendHex2(outputStream, colorType);
+    }
     else if (commandHeader == COMMAND_COLOR_SENSOR_DEBUG) {
         ackCommand(outputStream, COLOR_SENSOR_DEVICE_HEADER, COMMAND_COLOR_SENSOR_DEBUG);
         OutputStream* debugOutputStream = getDebugOutputStreamLogger();
         printColorSensorTable(debugOutputStream, colorSensor);
+    }
+    /** Only for PC */
+    else if (commandHeader == COMMAND_COLOR_SENSOR_WRITE) {
+        ackCommand(outputStream, COLOR_SENSOR_DEVICE_HEADER, COMMAND_COLOR_SENSOR_WRITE);
+        colorSensor->color->R = readHex4(inputStream);
+        checkIsSeparator(inputStream);
+        colorSensor->color->G = readHex4(inputStream);
+        checkIsSeparator(inputStream);
+        colorSensor->color->B = readHex4(inputStream);
     }
 }
 

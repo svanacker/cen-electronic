@@ -49,10 +49,14 @@ Color* colorSensorTcs34725ReadValue(ColorSensor* colorSensor) {
     return color;
 }
 
-void initColorSensorTcs34725(ColorSensor* colorSensor, Color* color, Tcs34725* tcs34725) {
+void initColorSensorTcs34725(ColorSensor* colorSensor,
+                             Color* color,
+                             colorSensorFindColorTypeFunction* colorSensorFindColorType,
+                             Tcs34725* tcs34725) {
     initColorSensor(colorSensor, 
                     &colorSensorTcs34725Init,
-                    &colorSensorTcs34725ReadValue,
+                    &colorSensorTcs34725ReadValue,       
+                    colorSensorFindColorType,
                     color,
                     (int*) tcs34725);
 }

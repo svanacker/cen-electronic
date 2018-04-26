@@ -164,6 +164,8 @@
 
 #include "../../main/mainBoard/mainBoardPc.h"
 
+#include "../../robot/2018/distributor2018.h"
+
 // Logs
 static LogHandlerList logHandlerListArray[MOTOR_BOARD_PC_LOG_HANDLER_LIST_LENGTH];
 
@@ -416,7 +418,7 @@ void runMotorBoardPC(bool singleMode) {
     addLocalDevice(getTofDeviceInterface(), getTofDeviceDescriptor(&tofSensorList));
 
     // COLOR
-    initColorSensorPc(&colorSensor, &colorValue);
+    initColorSensorPc(&colorSensor, &colorValue, &colorSensorFindColorType2018);
     addLocalDevice(getColorSensorDeviceInterface(), getColorSensorDeviceDescriptor(&colorSensor));
 
     //  IO Expander

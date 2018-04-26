@@ -40,6 +40,7 @@
 #include "../../common/math/cenMath.h"
 
 #include "../../common/pwm/pwmPic.h"
+#include "../../common/pwm/servo/servoPwm.h"
 
 #include "../../common/serial/serial.h"
 #include "../../common/serial/serialLink.h"
@@ -72,6 +73,10 @@
 // CLOCK
 #include "../../device/clock/clockDevice.h"
 #include "../../device/clock/clockDeviceInterface.h"
+
+// COLOR
+#include "../../device/color/colorDevice.h"
+#include "../../device/color/colorDeviceInterface.h"
 
 // DATA DISPATCHER
 #include "../../device/dispatcher/dataDispatcherDevice.h"
@@ -172,6 +177,10 @@
 // -> Clock
 #include "../../drivers/clock/PCF8563.h"
 
+// -> Color
+#include "../../drivers/colorSensor/tcs34725.h"
+#include "../../drivers/colorSensor/colorSensorTcs34725.h"
+
 // -> Eeprom
 #include "../../drivers/eeprom/24c512.h"
 
@@ -234,15 +243,16 @@
 #include "../../motion/simple/simpleMotion.h"
 
 #include "../../robot/robot.h"
+#include "../../robot/2018/distributor2018.h"
+#include "../../robot/2018/launcherDevice2018.h"
+#include "../../robot/2018/launcherDeviceInterface2018.h"
 
-#include "../../drivers/sonar/srf02.h"
-#include "servoPwm.h"
-#include "launcherDeviceInterface2018.h"
 
 // I2C => PORT 1 (for All Peripherical, including Eeprom / Clock / Temperatur)
 static I2cBus i2cBusListArray[MAIN_BOARD_I2C_BUS_LIST_LENGTH];
 static I2cBusConnection i2cBusConnectionListArray[MAIN_BOARD_I2C_BUS_CONNECTION_LIST_LENGTH];
 static I2cBus* i2cBus;
+static I2cBus* i2cBus4;
 
 // EEPROM
 static Eeprom eeprom;
@@ -251,6 +261,12 @@ static I2cBusConnection* eepromI2cBusConnection;
 // CLOCK
 static Clock clock;
 static I2cBusConnection* clockI2cBusConnection;
+
+// COLOR
+static ColorSensor colorSensor;
+static Tcs34725 tcs34725;
+static Color colorValue;
+static I2cBusConnection* colorBusConnection;
 
 // IO Expander
 static IOExpanderList ioExpanderList;
@@ -395,7 +411,7 @@ void addLocalDevices(void) {
     addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor(PWM_SERVO_ENABLED_MASK_SERVO_1_2_5));
 
     addLocalDevice(getRelayDeviceInterface(), getRelayDeviceDescriptor(&relay));
-    
+    addLocalDevice(getColorSensorDeviceInterface(), getColorSensorDeviceDescriptor(&colorSensor));
     addLocalDevice(getTofDeviceInterface(), getTofDeviceDescriptor(&tofSensorList));
 }
 
@@ -604,11 +620,16 @@ int main(void) {
     initI2cBusList((I2cBus(*)[]) &i2cBusListArray, MAIN_BOARD_I2C_BUS_LIST_LENGTH);
 	initI2cBusConnectionList((I2cBusConnection(*)[]) &i2cBusConnectionListArray, MAIN_BOARD_I2C_BUS_CONNECTION_LIST_LENGTH);
 
+    // MAIN I2C BUS
     i2cBus = addI2cBus(I2C_BUS_TYPE_MASTER, I2C_BUS_PORT_1);
     i2cMasterInitialize(i2cBus);
     motorI2cBusConnection = addI2cBusConnection(i2cBus, MOTOR_BOARD_I2C_ADDRESS, true);
     mechanicalBoard1I2cBusConnection = addI2cBusConnection(i2cBus, MECHANICAL_BOARD_2_I2C_ADDRESS, true);
 
+    // ALTERNATIVE I2C BUS
+    i2cBus4 = addI2cBus(I2C_BUS_TYPE_MASTER, I2C_BUS_PORT_4);
+    i2cMasterInitialize(i2cBus4);
+    
     // I2C Debug
     initI2CDebugBuffers(&i2cMasterDebugInputBuffer,
                         &i2cMasterDebugInputBufferArray,
@@ -625,7 +646,7 @@ int main(void) {
     // -> Clock
     clockI2cBusConnection = addI2cBusConnection(i2cBus, PCF8563_WRITE_ADDRESS, true);
     initClockPCF8563(&clock, clockI2cBusConnection);
-    
+
     // -> Temperature
     temperatureI2cBusConnection = addI2cBusConnection(i2cBus, LM75A_ADDRESS, true);
     initTemperatureLM75A(&temperature, temperatureI2cBusConnection);
@@ -636,8 +657,8 @@ int main(void) {
     IOExpander* tofIoExpander = getIOExpanderByIndex(&ioExpanderList, 0);
     initIOExpanderPCF8574(tofIoExpander, tofIoExpanderBusConnection);
     
-    // Relay
-    relayBusConnection = addI2cBusConnection(i2cBus, RLY08_ADDRESS_0, true);
+    // Relay is on PORT 4
+    relayBusConnection = addI2cBusConnection(i2cBus4, RLY08_ADDRESS_0, true);
     initRelayRLY08(&relay, relayBusConnection);
     
     // TOF
@@ -648,6 +669,12 @@ int main(void) {
                               i2cBus,
                               tofIoExpander);
 
+        
+    // -> Color : IMPORTANT !!! : Initialize COLOR after TOF because they share the same address
+    // And not the same bus, but it uses "getI2cBusConnectionBySlaveAddress" ... which does not distinguish the bus ...
+    colorBusConnection = addI2cBusConnection(i2cBus4, TCS34725_ADDRESS, true);
+    initTcs34725Struct(&tcs34725, colorBusConnection);
+    initColorSensorTcs34725(&colorSensor, &colorValue, &colorSensorFindColorType2018, &tcs34725);
     
     // TIMERS
     initTimerList(&timerListArray, MAIN_BOARD_TIMER_LENGTH);
