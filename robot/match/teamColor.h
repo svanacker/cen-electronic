@@ -4,9 +4,9 @@
 /** Define the color for the team. */
 enum TeamColor {
     /** 2018 Orange Color. */
-    COLOR_ORANGE = 0,
+    TEAM_COLOR_ORANGE = 0,
     /** 2018 Green Color. */
-    COLOR_GREEN = 1
+    TEAM_COLOR_GREEN = 1
 };
 
 /** 

@@ -84,10 +84,10 @@ void deviceStrategyHandleRawData(char commandHeader, InputStream* inputStream, O
 
         initStrategy2018(strategyIndex);
         if (c & CONFIG_COLOR_GREEN_MASK) {
-            setColor(COLOR_GREEN);
+            setColor(TEAM_COLOR_GREEN);
         }
         else {
-            setColor(COLOR_ORANGE);
+            setColor(TEAM_COLOR_ORANGE);
         }
 
     }

@@ -149,4 +149,6 @@
 
 #define LAUNCHER_2018_DEVICE_HEADER                '_'
 
+#define STRATEGY_2018_DEVICE_HEADER                'o'
+
 #endif

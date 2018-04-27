@@ -1,6 +1,8 @@
 #ifndef LAUNCHER_DEVICE_2018_H
 #define LAUNCHER_DEVICE_2018_H
 
+#include "../../common/color/color.h"
+
 #include "../../common/motor/dualHBridgeMotor.h"
 
 #include "../../device/device.h"
@@ -40,7 +42,9 @@
 #define DISTRIBUTOR_ROTATE_LEFT_IO_EXPANDER_INDEX      3
 #define DISTRIBUTOR_ROTATE_RIGHT_IO_EXPANDER_INDEX     4
 
-#define LAUNCHER_2018_DEFAULT_SPEED                    40
+#define DISTRIBUTOR_TOF_DISTANCE_THRESHOLD             35
+
+#define LAUNCHER_2018_DEFAULT_SPEED                    60
 
 // Forward declaration
 typedef struct Launcher2018 Launcher2018;
@@ -55,6 +59,8 @@ struct Launcher2018{
     DualHBridgeMotor* dualHBridgeMotor;
     /** The tof Sensor List */
     TofSensorList* tofSensorList;
+    /** Color Type*/
+    enum ColorType* colorType;
 };
 
 /**

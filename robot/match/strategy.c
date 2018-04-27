@@ -13,10 +13,10 @@ static enum TeamColor teamColor;
 
 void loadMatchSideAndUpdateRobotPosition(RobotConfig* robotConfig) {
     if (isConfigSet(robotConfig, CONFIG_COLOR_GREEN_MASK)) {
-        teamColor = COLOR_GREEN;
+        teamColor = TEAM_COLOR_GREEN;
     }
     else {
-        teamColor = COLOR_ORANGE;
+        teamColor = TEAM_COLOR_ORANGE;
     }
     // TODO : Write on LCD
     // writeStringCR(getMatchSideAsString());

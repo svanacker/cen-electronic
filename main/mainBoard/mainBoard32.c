@@ -226,6 +226,7 @@
 #include "../../robot/match/32/startMatchDetector32.h"
 #include "../../robot/match/startMatchDevice.h"
 #include "../../robot/match/startMatchDeviceInterface.h"
+#include "../../robot/match/teamColor.h"
 #include "../../robot/match/endMatchDetectorDevice.h"
 #include "../../robot/match/endMatchDetectorDeviceInterface.h"
 
@@ -247,6 +248,8 @@
 #include "../../robot/2018/launcherDevice2018.h"
 #include "../../robot/2018/launcherDeviceInterface2018.h"
 
+#include "../../robot/2018/strategyDevice2018.h"
+#include "../../robot/2018/strategyDeviceInterface2018.h"
 
 // I2C => PORT 1 (for All Peripherical, including Eeprom / Clock / Temperatur)
 static I2cBus i2cBusListArray[MAIN_BOARD_I2C_BUS_LIST_LENGTH];
@@ -369,6 +372,9 @@ static I2cBusConnection* relayBusConnection;
 // Timers
 static Timer timerListArray[MAIN_BOARD_TIMER_LENGTH];
 
+// 2018
+static Distributor distributor;
+
 /**
  * TODO : Rename Driver into ClientDriver
  * @private
@@ -413,6 +419,7 @@ void addLocalDevices(void) {
     addLocalDevice(getRelayDeviceInterface(), getRelayDeviceDescriptor(&relay));
     addLocalDevice(getColorSensorDeviceInterface(), getColorSensorDeviceDescriptor(&colorSensor));
     addLocalDevice(getTofDeviceInterface(), getTofDeviceDescriptor(&tofSensorList));
+    addLocalDevice(getStrategy2018DeviceInterface(), getStrategy2018DeviceDescriptor(&distributor));
 }
 
 /**
@@ -675,6 +682,9 @@ int main(void) {
     colorBusConnection = addI2cBusConnection(i2cBus4, TCS34725_ADDRESS, true);
     initTcs34725Struct(&tcs34725, colorBusConnection);
     initColorSensorTcs34725(&colorSensor, &colorValue, &colorSensorFindColorType2018, &tcs34725);
+    
+    // TODO : Dynamically change it
+    initDistributor(&distributor, TEAM_COLOR_GREEN, &colorSensor);
     
     // TIMERS
     initTimerList(&timerListArray, MAIN_BOARD_TIMER_LENGTH);

@@ -285,7 +285,6 @@
       <logicalFolder name="f2" displayName="robot.2018" projectFiles="true">
         <itemPath>../../../robot/2018/launcherDevice2018.h</itemPath>
         <itemPath>../../../robot/2018/launcherDeviceInterface2018.h</itemPath>
-        <itemPath>../../../robot/2018/distributor2018.h</itemPath>
       </logicalFolder>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
@@ -301,6 +300,9 @@
         <itemPath>../../../common/clock/clock.c</itemPath>
       </logicalFolder>
       <logicalFolder name="common.cmd" displayName="common.cmd" projectFiles="true">
+      </logicalFolder>
+      <logicalFolder name="f14" displayName="common.color" projectFiles="true">
+        <itemPath>../../../common/color/color.c</itemPath>
       </logicalFolder>
       <logicalFolder name="common.delay"
                      displayName="common.delay"
@@ -576,7 +578,6 @@
       <logicalFolder name="f3" displayName="robot.2018" projectFiles="true">
         <itemPath>../../../robot/2018/launcherDevice2018.c</itemPath>
         <itemPath>../../../robot/2018/launcherDeviceInterface2018.c</itemPath>
-        <itemPath>../../../robot/2018/distributor2018.c</itemPath>
       </logicalFolder>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"

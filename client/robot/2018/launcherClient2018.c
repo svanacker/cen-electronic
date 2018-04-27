@@ -37,11 +37,11 @@ bool clientLaunch2018(int launcherIndex, bool prepare) {
     return result;
 }
 
-bool clientDistributor2018CleanNext(int launcherIndex) {
+bool clientDistributor2018CleanNext(int direction) {
     OutputStream* outputStream = getDriverRequestOutputStream();
     append(outputStream, LAUNCHER_2018_DEVICE_HEADER);
-    append(outputStream, DISTRIBUTOR_NEXT_BALL_COMMAND);
-    appendHex2(outputStream, launcherIndex);
+    append(outputStream, DISTRIBUTOR_LOAD_NEXT_BALL_COMMAND);
+    appendHex2(outputStream, direction);
 
     bool result = transmitFromDriverRequestBuffer();
 

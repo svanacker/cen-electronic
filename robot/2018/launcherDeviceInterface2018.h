@@ -39,14 +39,28 @@
 /**
  * Launch a clean Ball by rotating of 45° to the Launcher
  */
-#define DISTRIBUTOR_NEXT_BALL_COMMAND             'n'
+#define DISTRIBUTOR_LOAD_NEXT_BALL_COMMAND         'n'
 
  /**
  * 1. Prepare the launcher
  * 2. Rotate the distributor which lead to load the ball in the launcher
  * 3. Send the ball
  */
-#define LAUNCHER_SEQUENCE_CLEAN_BALL_COMMAND      'N'
+#define LAUNCHER_LOAD_AND_SEND_BALL_COMMAND      'N'
+
+ /**
+  * Do 8x the same sequence
+  * 1. Prepare the launcher
+  * 2. Rotate the distributor which lead to load the ball in the launcher
+  * 3. Send the ball
+  */
+#define LAUNCHER_LOAD_AND_SEND_UNICOLOR_BALL_LIST         'U'
+
+/**
+ * Load 8 mixed balls
+ * @return 
+ */
+#define LAUNCHER_LOAD_AND_SEND_MIXED_BALL_LIST            'M'
 
 /**
  * Eject a a dirty Ball.

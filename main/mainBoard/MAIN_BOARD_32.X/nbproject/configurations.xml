@@ -25,6 +25,10 @@
       <logicalFolder name="common.cmd" displayName="common.cmd" projectFiles="true">
         <itemPath>../../../common/cmd/commonCommand.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f11" displayName="common.color" projectFiles="true">
+        <itemPath>../../../common/color/color.h</itemPath>
+        <itemPath>../../../common/color/colorDebug.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="common.delay"
                      displayName="common.delay"
                      projectFiles="true">
@@ -440,6 +444,8 @@
         <itemPath>../../../robot/2018/strategy2018Utils.h</itemPath>
         <itemPath>../../../robot/2018/distributor2018.h</itemPath>
         <itemPath>../../../robot/2018/launcherDeviceInterface2018.h</itemPath>
+        <itemPath>../../../robot/2018/strategyDevice2018.h</itemPath>
+        <itemPath>../../../robot/2018/strategyDeviceInterface2018.h</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.config"
                      displayName="robot.config"
@@ -538,6 +544,7 @@
       </logicalFolder>
       <logicalFolder name="f12" displayName="common.color" projectFiles="true">
         <itemPath>../../../common/color/color.c</itemPath>
+        <itemPath>../../../common/color/colorDebug.c</itemPath>
       </logicalFolder>
       <logicalFolder name="common.delay"
                      displayName="common.delay"
@@ -946,6 +953,8 @@
         <itemPath>../../../navigation/locationListDebug.c</itemPath>
         <itemPath>../../../navigation/pathListDebug.c</itemPath>
       </logicalFolder>
+      <logicalFolder name="f13" displayName="New Folder 13" projectFiles="true">
+      </logicalFolder>
       <logicalFolder name="robot" displayName="robot" projectFiles="true">
         <itemPath>../../../robot/robot.c</itemPath>
       </logicalFolder>
@@ -954,6 +963,8 @@
         <itemPath>../../../robot/2018/strategy2018Utils.c</itemPath>
         <itemPath>../../../robot/2018/distributor2018.c</itemPath>
         <itemPath>../../../robot/2018/launcherDeviceInterface2018.c</itemPath>
+        <itemPath>../../../robot/2018/strategyDevice2018.c</itemPath>
+        <itemPath>../../../robot/2018/strategyDeviceInterface2018.c</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.config"
                      displayName="robot.config"

@@ -150,6 +150,7 @@
     <ClCompile Include="common\adc\pc\adcutilsPc.c" />
     <ClCompile Include="common\clock\clock.c" />
     <ClCompile Include="common\color\color.c" />
+    <ClCompile Include="common\color\colorDebug.c" />
     <ClCompile Include="common\delay\pc\cenDelayPc.c" />
     <ClCompile Include="common\eeprom\eeprom.c" />
     <ClCompile Include="common\eeprom\eepromAreas.c" />
@@ -410,6 +411,8 @@
     <ClCompile Include="robot\2018\launcherDeviceInterface2018.c" />
     <ClCompile Include="robot\2018\strategy2018.c" />
     <ClCompile Include="robot\2018\strategy2018Utils.c" />
+    <ClCompile Include="robot\2018\strategyDevice2018.c" />
+    <ClCompile Include="robot\2018\strategyDeviceInterface2018.c" />
     <ClCompile Include="robot\config\pc\robotConfigPc.c" />
     <ClCompile Include="robot\config\robotConfig.c" />
     <ClCompile Include="robot\config\robotConfigDebug.c" />
@@ -481,6 +484,7 @@
     <ClInclude Include="common\clock\clock.h" />
     <ClInclude Include="common\cmd\commonCommand.h" />
     <ClInclude Include="common\color\color.h" />
+    <ClInclude Include="common\color\colorDebug.h" />
     <ClInclude Include="common\commons.h" />
     <ClInclude Include="common\delay\cenDelay.h" />
     <ClInclude Include="common\delay\pc\cenDelayPc.h" />
@@ -760,6 +764,8 @@
     <ClInclude Include="robot\2018\launcherDeviceInterface2018.h" />
     <ClInclude Include="robot\2018\strategy2018.h" />
     <ClInclude Include="robot\2018\strategy2018Utils.h" />
+    <ClInclude Include="robot\2018\strategyDevice2018.h" />
+    <ClInclude Include="robot\2018\strategyDeviceInterface2018.h" />
     <ClInclude Include="robot\config\pc\robotConfigPc.h" />
     <ClInclude Include="robot\config\robotConfig.h" />
     <ClInclude Include="robot\config\robotConfigDebug.h" />

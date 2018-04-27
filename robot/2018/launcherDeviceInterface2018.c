@@ -40,16 +40,31 @@ int deviceLauncher2018GetInterface(char commandHeader, DeviceInterfaceMode mode,
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
-    else if (commandHeader == DISTRIBUTOR_NEXT_BALL_COMMAND) {
+    else if (commandHeader == DISTRIBUTOR_LOAD_NEXT_BALL_COMMAND) {
         if (fillDeviceArgumentList) {
-            setFunction("Distributor Next Clean Ball", 1, 0);
+            setFunction("Load Next Ball", 1, 0);
+            setArgumentUnsignedHex2(0, "Load Direction : Left (00) / Right (01)");
+        }
+        return commandLengthValueForMode(mode, 2, 0);
+    }
+    // 1 ball right Color
+    else if (commandHeader == LAUNCHER_LOAD_AND_SEND_BALL_COMMAND) {
+        if (fillDeviceArgumentList) {
+            setFunction("Load and send ball", 1, 0);
+            setArgumentUnsignedHex2(0, "Load Direction : Left (00) / Right (01)");
+        }
+        return commandLengthValueForMode(mode, 2, 0);
+    }
+    else if (commandHeader == LAUNCHER_LOAD_AND_SEND_UNICOLOR_BALL_LIST) {
+        if (fillDeviceArgumentList) {
+            setFunction("Load and send unicolor Ball List", 1, 0);
             setArgumentUnsignedHex2(0, "Left (00) / Right (01)");
         }
         return commandLengthValueForMode(mode, 2, 0);
     }
-    else if (commandHeader == LAUNCHER_SEQUENCE_CLEAN_BALL_COMMAND) {
+    else if (commandHeader == LAUNCHER_LOAD_AND_SEND_MIXED_BALL_LIST) {
         if (fillDeviceArgumentList) {
-            setFunction("Sequence Clean Ball", 1, 0);
+            setFunction("Load and send mixed Ball List", 1, 0);
             setArgumentUnsignedHex2(0, "Left (00) / Right (01)");
         }
         return commandLengthValueForMode(mode, 2, 0);

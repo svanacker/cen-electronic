@@ -1944,6 +1944,15 @@
     <ClCompile Include="common\color\color.c">
       <Filter>Source Files\common\color</Filter>
     </ClCompile>
+    <ClCompile Include="robot\2018\strategyDevice2018.c">
+      <Filter>Source Files\robot\2018</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2018\strategyDeviceInterface2018.c">
+      <Filter>Source Files\robot\2018</Filter>
+    </ClCompile>
+    <ClCompile Include="common\color\colorDebug.c">
+      <Filter>Source Files\common\color</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -3001,6 +3010,15 @@
     </ClInclude>
     <ClInclude Include="robot\2018\distributor2018.h">
       <Filter>Header Files\robot\2018</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2018\strategyDevice2018.h">
+      <Filter>Header Files\robot\2018</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2018\strategyDeviceInterface2018.h">
+      <Filter>Header Files\robot\2018</Filter>
+    </ClInclude>
+    <ClInclude Include="common\color\colorDebug.h">
+      <Filter>Header Files\common\color</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

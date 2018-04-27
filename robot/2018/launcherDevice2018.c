@@ -105,7 +105,7 @@ void distributor2018CleanNext(int launcherIndex) {
     if (launcherIndex == LAUNCHER_RIGHT_INDEX) {
         motorSpeed *= -1;
     }
-    unsigned int threshold = 12;
+    unsigned int threshold = DISTRIBUTOR_TOF_DISTANCE_THRESHOLD;
     TofSensorList* tofSensorList = launcher2018->tofSensorList;
     TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, 0);
     
@@ -171,18 +171,50 @@ void deviceLauncher2018HandleRawData(char commandHeader, InputStream* inputStrea
         ackCommand(outputStream, LAUNCHER_2018_DEVICE_HEADER, LAUNCHER_LIGHT_ON_SERVO_MOVE_COMMAND);
     }
     // Distributor
-    else if (commandHeader == DISTRIBUTOR_NEXT_BALL_COMMAND) {
+    else if (commandHeader == DISTRIBUTOR_LOAD_NEXT_BALL_COMMAND) {
         int launcherIndex = readHex2(inputStream);
         distributor2018CleanNext(launcherIndex);
-        ackCommand(outputStream, LAUNCHER_2018_DEVICE_HEADER, DISTRIBUTOR_NEXT_BALL_COMMAND);
+        ackCommand(outputStream, LAUNCHER_2018_DEVICE_HEADER, DISTRIBUTOR_LOAD_NEXT_BALL_COMMAND);
     }
-    else if (commandHeader == LAUNCHER_SEQUENCE_CLEAN_BALL_COMMAND) {
+    else if (commandHeader == DISTRIBUTOR_EJECT_DIRTY_BALL_COMMAND) {
+        distributor2018EjectDirty();
+        ackCommand(outputStream, LAUNCHER_2018_DEVICE_HEADER, DISTRIBUTOR_EJECT_DIRTY_BALL_COMMAND);
+    }
+    // Just one right color ball
+    else if (commandHeader == LAUNCHER_LOAD_AND_SEND_BALL_COMMAND) {
         int launcherIndex = readHex2(inputStream);
         launch2018(launcherIndex, true);
         distributor2018CleanNext(launcherIndex);
         launch2018(launcherIndex, false);
-        ackCommand(outputStream, LAUNCHER_2018_DEVICE_HEADER, LAUNCHER_SEQUENCE_CLEAN_BALL_COMMAND);
+        ackCommand(outputStream, LAUNCHER_2018_DEVICE_HEADER, LAUNCHER_LOAD_AND_SEND_BALL_COMMAND);
     }
+    else if (commandHeader == LAUNCHER_LOAD_AND_SEND_UNICOLOR_BALL_LIST) {
+        int launcherIndex = readHex2(inputStream);
+        unsigned int i;
+        for (i = 0; i < 8; i++) {
+            launch2018(launcherIndex, true);
+            distributor2018CleanNext(launcherIndex);
+            launch2018(launcherIndex, false);
+        }
+        ackCommand(outputStream, LAUNCHER_2018_DEVICE_HEADER, LAUNCHER_LOAD_AND_SEND_UNICOLOR_BALL_LIST);
+    }
+    else if (commandHeader == LAUNCHER_LOAD_AND_SEND_MIXED_BALL_LIST) {
+        int launcherIndex = readHex2(inputStream);
+        unsigned int i;
+        // Invert the sens because we load in the other sense
+        if (launcherIndex == 0) {
+            launcherIndex = 1;
+        }
+        else {
+            launcherIndex = 0;
+        } 
+            
+        for (i = 0; i < 8; i++) {
+            distributor2018CleanNext(launcherIndex);
+        }
+        ackCommand(outputStream, LAUNCHER_2018_DEVICE_HEADER, LAUNCHER_LOAD_AND_SEND_MIXED_BALL_LIST);
+    }
+
 }
 
 static DeviceDescriptor descriptor = {

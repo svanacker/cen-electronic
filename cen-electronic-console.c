@@ -4,6 +4,8 @@
 
 #include <windows.h>
 
+#include "common/delay/cenDelay.h"
+
 #include "main/mainBoard/mainBoardPc.h"
 #include "main/motorBoard/motorBoardPc.h"
 #include "main/meca1/mechanicalBoard1Pc.h"
@@ -55,24 +57,30 @@ int main(int argumentCount, char* arguments[])
         runProcess(applicationNameAsChar, mechanical1OptionCommand);
 
         // And After the main Board
-        runMainBoardPC(false);
+        runMainBoardPC(false, false);
+
+        delaymSec(10);
     }
     else {
         char* boardName = arguments[1];
         if (strcmp(boardName, MAIN_BOARD_PC_NAME) == 0) {
             bool robotManager = false;
+            bool singleMode = false;
             if (argumentCount > 2) {
                 char* mainBoardRunMode = arguments[2];
                 robotManager = (strcmp(mainBoardRunMode, MAIN_BOARD_PC_ROBOT_MANAGER) == 0);
+                singleMode = (strcmp(mainBoardRunMode, MOTOR_BOARD_PC_RUN_SINGLE) == 0);
 
+                /*
                 char motorBoardOptionCommand[255];
                 strcpy_s(motorBoardOptionCommand, _countof(motorBoardOptionCommand), MOTOR_BOARD_PC_NAME);
                 strcat_s(motorBoardOptionCommand, _countof(motorBoardOptionCommand), " ");
                 strcat_s(motorBoardOptionCommand, _countof(motorBoardOptionCommand), MOTOR_BOARD_PC_RUN_STANDARD);
                 runProcess(applicationNameAsChar, motorBoardOptionCommand);
+                */
             }
             // In all cases
-            runMainBoardPC(robotManager);
+            runMainBoardPC(robotManager, singleMode);
         }
         else if (strcmp(boardName, MOTOR_BOARD_PC_NAME) == 0) {
             bool singleMode = false;

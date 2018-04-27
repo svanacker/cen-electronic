@@ -18,7 +18,9 @@ Color* colorSensorPcReadValue(ColorSensor* colorSensor) {
     return colorSensor->color;
 }
 
-void initColorSensorPc(ColorSensor* colorSensor, Color* pColor, colorSensorFindColorTypeFunction* colorSensorFindColorType) {
+void initColorSensorPc(ColorSensor* colorSensor, 
+                       Color* pColor,
+                       colorSensorFindColorTypeFunction* colorSensorFindColorType) {
     initColorSensor(colorSensor, 
                     &colorSensorPcInit,
                     &colorSensorPcReadValue,

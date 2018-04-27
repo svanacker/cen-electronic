@@ -146,6 +146,9 @@
 #include "../../robot/2018/launcherDevice2018.h"
 #include "../../robot/2018/launcherDeviceInterface2018.h"
 
+#include "../../robot/2018/strategyDevice2018.h"
+#include "../../robot/2018/strategyDeviceInterface2018.h"
+
 // Drivers
 #include "../../drivers/driverStreamListener.h"
 #include "../../drivers/clock/pc/pcClock.h"
@@ -259,6 +262,9 @@ static Device* testDevice;
 static StartMatch startMatch;
 static EndMatch endMatch;
 
+// 2018
+static Distributor distributor;
+
 static bool connectToRobotManager = false;
 
 void mainBoardDeviceHandleNotification(const Device* device, const char commandHeader, InputStream* inputStream) {
@@ -272,13 +278,13 @@ void mainBoardDeviceHandleNotification(const Device* device, const char commandH
 }
 
 bool mainBoardPcWaitForInstruction(StartMatch* startMatch) {
-	/*
+    /*
     while (handleNotificationFromDispatcherList(TRANSMIT_I2C)) {
         // loop for all notification
         // notification handler must avoid to directly information in notification callback
         // and never to the call back device
     }
-	*/
+    */
 
     // delaymSec(MAIN_BOARD_PC_DELAY_CONSOLE_ANALYZE_MILLISECONDS);
 
@@ -313,10 +319,10 @@ bool mainBoardPcWaitForInstruction(StartMatch* startMatch) {
     return true;
 }
 
-void runMainBoardPC(bool connectToRobotManagerMode) {
+void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
     connectToRobotManager = connectToRobotManagerMode;
     setBoardName(MAIN_BOARD_PC_NAME);
-	setConsoleSizeAndBuffer(CONSOLE_CHARS_WIDTH, CONSOLE_CHARS_HEIGHT, CONSOLE_BUFFER_WIDTH, CONSOLE_BUFFER_HEIGHT);
+    setConsoleSizeAndBuffer(CONSOLE_CHARS_WIDTH, CONSOLE_CHARS_HEIGHT, CONSOLE_BUFFER_WIDTH, CONSOLE_BUFFER_HEIGHT);
     moveConsole(0, 0, HALF_SCREEN_WIDTH, CONSOLE_HEIGHT);
 
     // We use http://patorjk.com/software/taag/#p=testall&v=2&f=Acrobatic&t=MOTOR%20BOARD%20PC
@@ -332,7 +338,7 @@ void runMainBoardPC(bool connectToRobotManagerMode) {
     initConsoleOutputStream(&consoleOutputStream);
     addConsoleLogHandler(LOG_LEVEL_DEBUG, LOG_HANDLER_CATEGORY_ALL_MASK);
 
-	initSerialLinkList((SerialLink(*)[]) &serialLinkListArray, MAIN_BOARD_PC_SERIAL_LINK_LIST_LENGTH);
+    initSerialLinkList((SerialLink(*)[]) &serialLinkListArray, MAIN_BOARD_PC_SERIAL_LINK_LIST_LENGTH);
 
     initTimerList((Timer(*)[]) &timerListArray, MAIN_BOARD_PC_TIMER_LENGTH);
 
@@ -343,50 +349,52 @@ void runMainBoardPC(bool connectToRobotManagerMode) {
     initDriverDataDispatcherList((DriverDataDispatcher(*)[]) &driverDataDispatcherListArray, MAIN_BOARD_PC_DATA_DISPATCHER_LIST_LENGTH);
     addLocalDriverDataDispatcher();
 
-	// I2c
-	initI2cBusList((I2cBus(*)[]) &i2cBusListArray, MAIN_BOARD_I2C_BUS_LIST_LENGTH);
-    mainI2cBus = addI2cBus(I2C_BUS_TYPE_MASTER, I2C_BUS_PORT_1);
-    
-	initI2cBusConnectionList((I2cBusConnection(*)[]) &i2cBusConnectionListArray, MAIN_BOARD_I2C_BUS_CONNECTION_LIST_LENGTH);
+    // I2c
+    if (!singleMode) {
+        initI2cBusList((I2cBus(*)[]) &i2cBusListArray, MAIN_BOARD_I2C_BUS_LIST_LENGTH);
+        mainI2cBus = addI2cBus(I2C_BUS_TYPE_MASTER, I2C_BUS_PORT_1);
 
-    motorBoardI2cBusConnection = addI2cBusConnection(mainI2cBus, MOTOR_BOARD_PC_I2C_ADDRESS, false);
-    initI2cBusConnectionPc(motorBoardI2cBusConnection, 
-                            mainI2cBus,
-                            &motorBoardI2cBusConnectionPc, 
-                            MOTOR_BOARD_PC_I2C_ADDRESS, 
-                            MAIN_BOARD_TO_MOTOR_BOARD_PC_PIPE_I2C_MASTER_NAME, 
-                            MOTOR_BOARD_PC_PIPE_I2C_SLAVE_NAME);
+        initI2cBusConnectionList((I2cBusConnection(*)[]) &i2cBusConnectionListArray, MAIN_BOARD_I2C_BUS_CONNECTION_LIST_LENGTH);
 
-    meca1BoardI2cBusConnection = addI2cBusConnection(mainI2cBus, MECHANICAL_BOARD_1_PC_I2C_ADDRESS, false);
-    initI2cBusConnectionPc(meca1BoardI2cBusConnection,
-                           mainI2cBus,
-                           &meca1BoardI2cBusConnectionPc,
-                           MECHANICAL_BOARD_1_PC_I2C_ADDRESS,
-                           MAIN_BOARD_TO_MECA1_BOARD_PC_PIPE_I2C_MASTER_NAME, 
-                           MECHANICAL_BOARD_1_PC_PIPE_I2C_SLAVE_NAME);
+        motorBoardI2cBusConnection = addI2cBusConnection(mainI2cBus, MOTOR_BOARD_PC_I2C_ADDRESS, false);
+        initI2cBusConnectionPc(motorBoardI2cBusConnection,
+            mainI2cBus,
+            &motorBoardI2cBusConnectionPc,
+            MOTOR_BOARD_PC_I2C_ADDRESS,
+            MAIN_BOARD_TO_MOTOR_BOARD_PC_PIPE_I2C_MASTER_NAME,
+            MOTOR_BOARD_PC_PIPE_I2C_SLAVE_NAME);
 
-    addI2CDriverDataDispatcher("MOTOR_BOARD_DISPATCHER",
-        &motorBoardInputBuffer,
-        (char(*)[]) &motorBoardInputBufferArray,
-        MAIN_BOARD_PC_DATA_MOTOR_BOARD_DISPATCHER_BUFFER_LENGTH,
-        &motorBoardOutputStream,
-        &motorBoardInputStream,
-        motorBoardI2cBusConnection
-    );
+        meca1BoardI2cBusConnection = addI2cBusConnection(mainI2cBus, MECHANICAL_BOARD_1_PC_I2C_ADDRESS, false);
+        initI2cBusConnectionPc(meca1BoardI2cBusConnection,
+            mainI2cBus,
+            &meca1BoardI2cBusConnectionPc,
+            MECHANICAL_BOARD_1_PC_I2C_ADDRESS,
+            MAIN_BOARD_TO_MECA1_BOARD_PC_PIPE_I2C_MASTER_NAME,
+            MECHANICAL_BOARD_1_PC_PIPE_I2C_SLAVE_NAME);
 
-    addI2CDriverDataDispatcher("MECA1_BOARD_DISPATCHER",
-        &meca1BoardInputBuffer,
-        (char(*)[]) &meca1BoardInputBufferArray,
-        MAIN_BOARD_PC_DATA_MECA1_BOARD_DISPATCHER_BUFFER_LENGTH,
-        &meca1BoardOutputStream,
-        &meca1BoardInputStream,
-        meca1BoardI2cBusConnection
-    );
+        addI2CDriverDataDispatcher("MOTOR_BOARD_DISPATCHER",
+            &motorBoardInputBuffer,
+            (char(*)[]) &motorBoardInputBufferArray,
+            MAIN_BOARD_PC_DATA_MOTOR_BOARD_DISPATCHER_BUFFER_LENGTH,
+            &motorBoardOutputStream,
+            &motorBoardInputStream,
+            motorBoardI2cBusConnection
+        );
+
+        addI2CDriverDataDispatcher("MECA1_BOARD_DISPATCHER",
+            &meca1BoardInputBuffer,
+            (char(*)[]) &meca1BoardInputBufferArray,
+            MAIN_BOARD_PC_DATA_MECA1_BOARD_DISPATCHER_BUFFER_LENGTH,
+            &meca1BoardOutputStream,
+            &meca1BoardInputStream,
+            meca1BoardI2cBusConnection
+        );
+    }
 
     if (connectToRobotManager) {
         // Open the serial Link between RobotManager (C# Project) and the MainBoardPc
         openSerialLink(&robotManagerSerialStreamLink,
-			"SERIAL_PC",
+            "SERIAL_PC",
             &robotManagerInputBuffer,
             (char(*)[]) &robotManagerInputBufferArray,
             ROBOT_MANAGER_INPUT_BUFFER_LENGTH,
@@ -421,7 +429,7 @@ void runMainBoardPC(bool connectToRobotManagerMode) {
 
     // Init the drivers
     initDrivers(&driverRequestBuffer, (char(*)[]) &driverRequestBufferArray, MAIN_BOARD_PC_REQUEST_DRIVER_BUFFER_LENGTH,
-                &driverResponseBuffer, (char(*)[]) &driverResponseBufferArray, MAIN_BOARD_PC_RESPONSE_DRIVER_BUFFER_LENGTH);
+        &driverResponseBuffer, (char(*)[]) &driverResponseBufferArray, MAIN_BOARD_PC_RESPONSE_DRIVER_BUFFER_LENGTH);
 
     // Get test driver for debug purpose
     addDriver(testDriverGetDescriptor(), TRANSMIT_LOCAL);
@@ -439,7 +447,7 @@ void runMainBoardPC(bool connectToRobotManagerMode) {
     addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
     addLocalDevice(getRobotConfigDeviceInterface(), getRobotConfigDeviceDescriptor(&robotConfig));
     addLocalDevice(getI2cCommonDebugDeviceInterface(), getI2cCommonDebugDeviceDescriptor());
-	addLocalDevice(getI2cMasterDebugDeviceInterface(), getI2cMasterDebugDeviceDescriptor());
+    addLocalDevice(getI2cMasterDebugDeviceInterface(), getI2cMasterDebugDeviceDescriptor());
     addLocalDevice(getDataDispatcherDeviceInterface(), getDataDispatcherDeviceDescriptor());
     addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor(PWM_SERVO_ENABLED_MASK_SERVO_1_2_5));
     addLocalDevice(getTimerDeviceInterface(), getTimerDeviceDescriptor());
@@ -457,21 +465,23 @@ void runMainBoardPC(bool connectToRobotManagerMode) {
     initStartMatch(&startMatch, &robotConfig, &endMatch, isMatchStartedPc, mainBoardPcWaitForInstruction, &eeprom);
     addLocalDevice(getStartMatchDeviceInterface(), getStartMatchDeviceDescriptor(&startMatch));
     addLocalDevice(getEndMatchDetectorDeviceInterface(), getEndMatchDetectorDeviceDescriptor(&endMatch));
+    addLocalDevice(getStrategy2018DeviceInterface(), getStrategy2018DeviceDescriptor(&distributor));
 
-    // MOTOR BOARD
-    addI2cRemoteDevice(getBatteryDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
-    // addI2cRemoteDevice(getEepromDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
-    addI2cRemoteDevice(getPidDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
-    addI2cRemoteDevice(getMotorDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
-    addI2cRemoteDevice(getCodersDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
-    addI2cRemoteDevice(getTrajectoryDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
-    addI2cRemoteDevice(getMotionDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
-    addI2cRemoteDevice(getRobotKinematicsDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
-    addI2cRemoteDevice(getMotionSimulationDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
+    if (!singleMode) {
+        // MOTOR BOARD
+        addI2cRemoteDevice(getBatteryDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
+        // addI2cRemoteDevice(getEepromDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
+        addI2cRemoteDevice(getPidDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
+        addI2cRemoteDevice(getMotorDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
+        addI2cRemoteDevice(getCodersDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
+        addI2cRemoteDevice(getTrajectoryDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
+        addI2cRemoteDevice(getMotionDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
+        addI2cRemoteDevice(getRobotKinematicsDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
+        addI2cRemoteDevice(getMotionSimulationDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
 
-    // MECHANICAL BOARD 1
-    addI2cRemoteDevice(getLauncher2018DeviceInterface(), MECHANICAL_BOARD_1_PC_I2C_ADDRESS);
-
+        // MECHANICAL BOARD 1
+        addI2cRemoteDevice(getLauncher2018DeviceInterface(), MECHANICAL_BOARD_1_PC_I2C_ADDRESS);
+    }
     initDevices();
 
     startTimerList(false);
@@ -481,7 +491,7 @@ void runMainBoardPC(bool connectToRobotManagerMode) {
 
     setDebugI2cEnabled(false);
 
-	/*
+    /*
     // Ping
     if (!pingDriverDataDispatcherList()) {
         printf("PING PROBLEM !");
@@ -498,7 +508,7 @@ void runMainBoardPC(bool connectToRobotManagerMode) {
     // testDriverIntensive(100);
 
     startTimerList();
-	*/
+    */
     while (1) {
         mainBoardPcWaitForInstruction(&startMatch);
     }

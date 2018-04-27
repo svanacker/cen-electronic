@@ -53,6 +53,6 @@
  * Start Point to emulate the main Board PC.
  * @param connectToRobotManagerMode if true, wait for a Pipe given by the RobotManager Program.
  */
-void runMainBoardPC(bool connectToRobotManagerMode);
+void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode);
 
 #endif

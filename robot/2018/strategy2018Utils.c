@@ -29,7 +29,7 @@
 // COLOR MANAGEMENT
 
 bool isGreen() {
-    return getStrategyContext()->color == COLOR_GREEN;
+    return getStrategyContext()->color == TEAM_COLOR_GREEN;
 }
 
 /**
