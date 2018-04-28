@@ -42,18 +42,20 @@ int deviceLauncher2018GetInterface(char commandHeader, DeviceInterfaceMode mode,
     }
     else if (commandHeader == DISTRIBUTOR_LOAD_NEXT_BALL_COMMAND) {
         if (fillDeviceArgumentList) {
-            setFunction("Load Next Ball", 1, 0);
+            setFunction("Load Next Ball", 1, 1);
+            setResultUnsignedHex2(0, "stop distance");
             setArgumentUnsignedHex2(0, "Load Direction : Left (00) / Right (01)");
         }
-        return commandLengthValueForMode(mode, 2, 0);
+        return commandLengthValueForMode(mode, 2, 2);
     }
     // 1 ball right Color
     else if (commandHeader == LAUNCHER_LOAD_AND_SEND_BALL_COMMAND) {
         if (fillDeviceArgumentList) {
             setFunction("Load and send ball", 1, 0);
+            setResultUnsignedHex2(0, "stop distance");
             setArgumentUnsignedHex2(0, "Load Direction : Left (00) / Right (01)");
         }
-        return commandLengthValueForMode(mode, 2, 0);
+        return commandLengthValueForMode(mode, 2, 2);
     }
     else if (commandHeader == LAUNCHER_LOAD_AND_SEND_UNICOLOR_BALL_LIST) {
         if (fillDeviceArgumentList) {

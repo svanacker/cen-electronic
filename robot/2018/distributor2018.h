@@ -45,6 +45,12 @@ struct Distributor {
     unsigned int squareIndex;
     /** The launcher square Content*/
     enum DistributorSquareContent launcherContent;
+    /** How many ball was loaded in the distributor */
+    unsigned int loadedBallCount;
+    /** How many balls are sent */
+    unsigned int sentBallCount;
+    /** How many points we have done via the launcher .*/
+    unsigned int score;
 };
 
 // COLOR DETECTION
@@ -65,13 +71,22 @@ struct Distributor {
 #define DISTRIBUTOR_2018_ORANGE_B_LOW_THRESHOLD          0
 #define DISTRIBUTOR_2018_ORANGE_B_HIGH_THRESHOLD        12
 
+/**
+ * Init the distributor.
+ */
 void initDistributor(Distributor* distributor, enum TeamColor teamColor, ColorSensor* colorSensor);
 
 /**
- * Update the state of the distributor after turning right
+ * Update the state of the distributor when we do a rotation clock wise (Point of view = Behind Robot)
  * @param distributor
  */
-void updateDistributorStateWhenTurnRight(Distributor* distributor);
+void updateDistributorStateClockWise(Distributor* distributor);
+
+/**
+ * Update the state of the distributor when we do a rotation anticlock wise (Point of view = Behind Robot)
+ * @param distributor
+ */
+void updateDistributorStateAntiClockWise(Distributor* distributor);
 
 /**
  * Implementation of a color detection for 2018
@@ -90,20 +105,9 @@ void loadUnicolorDistributor(Distributor* distributor);
  */
 void loadMixedColorPhase1Distributor(Distributor* distributor);
 
-// DEBUG
-
 /**
- * Print the distributor square content
- * @param outputStream
- * @param squareContent
+ * Interceptor to compute the score and update Distributor State
  */
-void printDistributorSquareContent(OutputStream* outputStream, enum DistributorSquareContent squareContent);
-
-/**
- * Print the content of the distributor
- * @param outputStream
- * @param distributor
- */
-void printDistributor2018(OutputStream* outputStream, Distributor* distributor);
+void sendBallAndCountScore(Distributor* distributor, unsigned int launcherIndex);
 
 #endif

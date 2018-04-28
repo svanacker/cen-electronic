@@ -1,4 +1,5 @@
 #include "distributor2018.h"
+#include "distributorDebug2018.h"
 
 #include "../../common/color/color.h"
 
@@ -11,6 +12,7 @@
 #include "../../common/log/logLevel.h"
 
 #include "../../client/robot/2018/launcherClient2018.h"
+#include "../../robot/2018/score2018.h"
 #include "../../robot/2018/launcherDeviceInterface2018.h"
 
 #include "../../drivers/colorSensor/colorSensor.h"
@@ -50,6 +52,10 @@ enum ColorType colorSensorFindColorType2018(ColorSensor* colorSensor) {
 void initDistributor(Distributor* distributor, enum TeamColor teamColor, ColorSensor* colorSensor) {
     distributor->teamColor = teamColor;
     distributor->colorSensor = colorSensor;
+    distributor->score = 0;
+    distributor->loadedBallCount = 0;
+    distributor->sentBallCount = 0;
+    cleanDistributor(distributor);
 }
 
 void cleanDistributor(Distributor* distributor) {
@@ -60,65 +66,13 @@ void cleanDistributor(Distributor* distributor) {
     }
 }
 
-void printDistributorSquareContent(OutputStream* outputStream, enum DistributorSquareContent squareContent) {
-    if (squareContent == SQUARE_CONTENT_EMPTY) {
-        append(outputStream, 'O');        
-    }
-    else if (squareContent == SQUARE_CONTENT_COLOR_UNKNOWN) {
-        append(outputStream, '?');
-    }
-    else if (squareContent == SQUARE_CONTENT_DIRTY) {
-        append(outputStream, 'H');
-    }
-    else if (squareContent == SQUARE_CONTENT_OK) {
-        append(outputStream, 'X');
-    }
-}
-
-/**
- * Print the content of the distributor
- * @param outputStream
- * @param distributor
- */
-void printDistributor2018(OutputStream* outputStream, Distributor* distributor) {
-    // First line
-    println(outputStream);
-    appendString(outputStream, "  ");
-    printDistributorSquareContent(outputStream, distributor->squares[0]);
-    println(outputStream);
-
-    // Second line
-    appendString(outputStream, " ");
-    printDistributorSquareContent(outputStream, distributor->squares[7]);
-    appendString(outputStream, " ");
-    printDistributorSquareContent(outputStream, distributor->squares[1]);
-    println(outputStream);
-
-    // Third line
-    printDistributorSquareContent(outputStream, distributor->squares[6]);
-    appendString(outputStream, "   ");
-    printDistributorSquareContent(outputStream, distributor->squares[2]);
-    println(outputStream);
-
-    // Line 4
-    appendString(outputStream, " ");
-    printDistributorSquareContent(outputStream, distributor->squares[5]);
-    appendString(outputStream, " ");
-    printDistributorSquareContent(outputStream, distributor->squares[3]);
-    println(outputStream);
-
-    // Last line
-    appendString(outputStream, "  ");
-    printDistributorSquareContent(outputStream, distributor->squares[4]);
-    println(outputStream);
-    
-    // Launcher square content
-    appendString(outputStream, "Launcher:");
-    printDistributorSquareContent(outputStream, distributor->launcherContent);
-    println(outputStream);
-}
-
-void updateDistributorStateWhenTurnRight(Distributor* distributor) {
+/** Distributor Index (from Behind Robot and not in Front of) */
+//                                             [0]
+//                                           [1] [7]
+//  => Blocked by Item to avoid ejection <= [2]   [6]
+//                                           [3] [5] => RIGHT EJECTOR
+//                                             [4]
+void updateDistributorStateClockWise(Distributor* distributor) {
     // If we have something just in the square before the hole for the launcher
     if (distributor->squares[6] != SQUARE_CONTENT_EMPTY) {
         // The launcher will take the content of the square
@@ -135,13 +89,36 @@ void updateDistributorStateWhenTurnRight(Distributor* distributor) {
     distributor->squares[4] = distributor->squares[5];
 }
 
+/** Distributor Index (from Behind Robot and not in Front of) */
+//                     [0]
+//                   [1] [7]
+//                  [2]   [6] => Blocked by Item to avoid ejection
+// LEFT EJECTOR <=   [3] [5]
+//                     [4]]
+
+void updateDistributorStateAntiClockWise(Distributor* distributor) {
+    // If we have something just in the square before the hole for the launcher
+    if (distributor->squares[2] != SQUARE_CONTENT_EMPTY) {
+        // The launcher will take the content of the square
+        distributor->launcherContent = distributor->squares[2];
+    }
+    // In all cases, squares becomes empty when turning to the left
+    distributor->squares[3] = SQUARE_CONTENT_EMPTY;
+    distributor->squares[2] = distributor->squares[1];
+    distributor->squares[1] = distributor->squares[0];
+    distributor->squares[0] = distributor->squares[7];
+    distributor->squares[7] = distributor->squares[6];
+    distributor->squares[6] = distributor->squares[5];
+    distributor->squares[5] = distributor->squares[4];
+    distributor->squares[4] = distributor->squares[3];
+}
+
 void loadUnicolorDistributor(Distributor* distributor) {
     unsigned int i;
     
     // Clean to avoid problem when we do lots of trial
     cleanDistributor(distributor);
     
-    unsigned int ballHandledCount = 0;
     ColorSensor* colorSensor = distributor->colorSensor;
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
     if (distributor->teamColor == TEAM_COLOR_GREEN) {
@@ -159,7 +136,7 @@ void loadUnicolorDistributor(Distributor* distributor) {
             clientDistributor2018CleanNext(LAUNCHER_LEFT_INDEX);
             
             // Update the internal representation of the distributor
-            updateDistributorStateWhenTurnRight(distributor);
+            updateDistributorStateClockWise(distributor);
             
             // Determine the color
             if (colorSensor->colorSensorFindColorType(colorSensor) == COLOR_TYPE_GREEN) {
@@ -170,12 +147,10 @@ void loadUnicolorDistributor(Distributor* distributor) {
             printDistributor2018(debugOutputStream, distributor);
             
             if (distributor->launcherContent == SQUARE_CONTENT_OK) {
-                clientLaunch2018(LAUNCHER_RIGHT_INDEX, false);
-                distributor->launcherContent = SQUARE_CONTENT_EMPTY;
-                ballHandledCount++;
+                sendBallAndCountScore(distributor, LAUNCHER_RIGHT_INDEX);
             }
             // delaymSec(300);
-            if (ballHandledCount >= 8) {
+            if (distributor->sentBallCount >= POINT_2018_DISTRIBUTOR_UNICOLOR_BALL_COUNT) {
                 break;
             }
         }
@@ -184,4 +159,11 @@ void loadUnicolorDistributor(Distributor* distributor) {
 
 void loadMixedDistributor(Distributor* distributor) {
    
+}
+
+void sendBallAndCountScore(Distributor* distributor, unsigned int launcherIndex) {
+    clientLaunch2018(LAUNCHER_RIGHT_INDEX, false);
+    distributor->launcherContent = SQUARE_CONTENT_EMPTY;
+    distributor->loadedBallCount++;
+    distributor->score += POINT_2018_CLEAN_BALL;
 }

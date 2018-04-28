@@ -762,6 +762,7 @@
     <ClInclude Include="robot\2018\launcherClient2018.h" />
     <ClInclude Include="robot\2018\launcherDevice2018.h" />
     <ClInclude Include="robot\2018\launcherDeviceInterface2018.h" />
+    <ClInclude Include="robot\2018\score2018.h" />
     <ClInclude Include="robot\2018\strategy2018.h" />
     <ClInclude Include="robot\2018\strategy2018Utils.h" />
     <ClInclude Include="robot\2018\strategyDevice2018.h" />

@@ -93,10 +93,10 @@ void deviceStrategyHandleRawData(char commandHeader, InputStream* inputStream, O
     }
     // Print Gameboard
     else if (commandHeader == COMMAND_STRATEGY_PRINT_GAME_BOARD) {
-        OutputStream* debugOutputStream = getAlwaysOutputStreamLogger();
+        // OutputStream* debugOutputStream = getAlwaysOutputStreamLogger();
         ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_STRATEGY_PRINT_GAME_BOARD);
 
-        printGameboard(debugOutputStream);
+        // printGameboard(debugOutputStream);
     }
 	// List Strategies
 	else if (commandHeader == COMMAND_STRATEGY_LIST) {
@@ -106,9 +106,9 @@ void deviceStrategyHandleRawData(char commandHeader, InputStream* inputStream, O
 	}
 	// Specific Strategy
 	else if (commandHeader == COMMAND_STRATEGY_ITEM) {
-		int strategyIndex = readHex2(inputStream);
-		GameStrategy* gameStrategy = getGameStrategy(strategyIndex);
-		OutputStream* debugOutputStream = getAlwaysOutputStreamLogger();
+		// int strategyIndex = readHex2(inputStream);
+		// GameStrategy* gameStrategy = getGameStrategy(strategyIndex);
+		// OutputStream* debugOutputStream = getAlwaysOutputStreamLogger();
 		ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_STRATEGY_ITEM);
 		// TODO printGameStrategy(debugOutputStream, gameStrategy);
 	}
@@ -170,6 +170,12 @@ void deviceStrategyHandleRawData(char commandHeader, InputStream* inputStream, O
             handleCollision();
         }
         */
+    }
+    // SCORE
+    else if (commandHeader == COMMAND_STRATEGY_GET_GLOBAL_SCORE) {
+        ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_STRATEGY_GET_GLOBAL_SCORE);
+        GameStrategyContext* context = getStrategyContext();
+        appendHex4(outputStream, context->score);
     }
 }
 

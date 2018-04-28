@@ -3020,6 +3020,9 @@
     <ClInclude Include="common\color\colorDebug.h">
       <Filter>Header Files\common\color</Filter>
     </ClInclude>
+    <ClInclude Include="robot\2018\score2018.h">
+      <Filter>Header Files\robot\2018</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="cen-electronic-console.rc">

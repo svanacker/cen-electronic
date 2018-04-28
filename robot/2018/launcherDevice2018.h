@@ -42,9 +42,11 @@
 #define DISTRIBUTOR_ROTATE_LEFT_IO_EXPANDER_INDEX      3
 #define DISTRIBUTOR_ROTATE_RIGHT_IO_EXPANDER_INDEX     4
 
-#define DISTRIBUTOR_TOF_DISTANCE_THRESHOLD             35
+#define DISTRIBUTOR_TOF_DISTANCE_LEFT_THRESHOLD             20
+#define DISTRIBUTOR_TOF_DISTANCE_RIGHT_THRESHOLD            20
 
-#define LAUNCHER_2018_DEFAULT_SPEED                    60
+#define LAUNCHER_2018_DEFAULT_SPEED                         40
+#define LAUNCHER_2018_DEFAULT_SPEED                         40
 
 // Forward declaration
 typedef struct Launcher2018 Launcher2018;
@@ -76,8 +78,9 @@ void launch2018(int launcherIndex, bool prepare);
 
 /**
  * Rotate the distributor on 1/8 until the distributor rotation is ok.
+ * Returns the distance to the signal
  */
-void distributor2018CleanNext(int launcherIndex);
+unsigned int distributor2018CleanNext(int launcherIndex);
 
 /**
  * Eject the ball which is not on the right color if any

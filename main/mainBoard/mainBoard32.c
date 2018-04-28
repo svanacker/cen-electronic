@@ -405,6 +405,7 @@ void addLocalDevices(void) {
     // LOCAL
     addLocalDevice(getLCDDeviceInterface(), getLCDDeviceDescriptor());
     addLocalDevice(getRobotConfigDeviceInterface(), getRobotConfigDeviceDescriptor(&robotConfig));
+    addLocalDevice(getStrategyDeviceInterface(), getStrategyDeviceDescriptor());
 
     initEndMatch(&endMatch, &robotConfig, MATCH_DURATION);
     initStartMatch(&startMatch, &robotConfig, &endMatch, isMatchStarted32, mainBoardWaitForInstruction, &eeprom);

@@ -2,6 +2,7 @@
 
 #include "strategyDeviceInterface2018.h"
 #include "distributor2018.h"
+#include "distributorDebug2018.h"
 
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
@@ -22,12 +23,18 @@ bool deviceStrategy2018IsOk(void) {
 }
 
 void deviceStrategy2018HandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
-    if (commandHeader == STRATEGY_2018_DISTRIBUTOR_DEBUG_COMMAND) {
+    if (commandHeader == STRATEGY_2018_GET_SCORE) {
         OutputStream* debugOutputStream = getDebugOutputStreamLogger();
-        printDistributor2018(debugOutputStream, distributor);
-        ackCommand(outputStream, STRATEGY_2018_DEVICE_HEADER, STRATEGY_2018_DISTRIBUTOR_DEBUG_COMMAND);
+        printDistributor2018Score(debugOutputStream, distributor);
+        ackCommand(outputStream, STRATEGY_2018_DEVICE_HEADER, STRATEGY_2018_GET_SCORE);
     }
-    if (commandHeader == STRATEGY_2018_READ_BALL_COLOR_TYPE) {
+    else if (commandHeader == STRATEGY_2018_DISTRIBUTOR_DEBUG_COMMAND) {
+        OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+        ackCommand(outputStream, STRATEGY_2018_DEVICE_HEADER, STRATEGY_2018_DISTRIBUTOR_DEBUG_COMMAND);
+        appendHex2(outputStream, distributor->score);
+        printDistributor2018(debugOutputStream, distributor);
+    }
+    else if (commandHeader == STRATEGY_2018_READ_BALL_COLOR_TYPE) {
         OutputStream* debugOutputStream = getDebugOutputStreamLogger();
         ColorSensor* colorSensor = distributor->colorSensor;
         enum ColorType colorType = colorSensorFindColorType2018(colorSensor);

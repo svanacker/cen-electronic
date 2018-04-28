@@ -65,7 +65,7 @@
 /**
  * Eject a a dirty Ball.
  */
-#define DISTRIBUTOR_EJECT_DIRTY_BALL_COMMAND      'e'
+#define DISTRIBUTOR_EJECT_DIRTY_BALL_COMMAND              'e'
 
 /**
  * Get the device interface for launcher 2018.

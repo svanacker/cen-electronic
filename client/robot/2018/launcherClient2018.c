@@ -1,7 +1,11 @@
 #include "launcherClient2018.h"
 
 #include "../../../common/commons.h"
+
+#include "../../../common/io/outputStream.h"
+#include "../../../common/io/inputStream.h"
 #include "../../../common/io/printWriter.h"
+#include "../../../common/io/reader.h"
 
 #include "../../../device/deviceConstants.h"
 
@@ -39,11 +43,16 @@ bool clientLaunch2018(int launcherIndex, bool prepare) {
 
 bool clientDistributor2018CleanNext(int direction) {
     OutputStream* outputStream = getDriverRequestOutputStream();
+    InputStream* inputStream = getDriverResponseInputStream();
+
     append(outputStream, LAUNCHER_2018_DEVICE_HEADER);
     append(outputStream, DISTRIBUTOR_LOAD_NEXT_BALL_COMMAND);
     appendHex2(outputStream, direction);
 
     bool result = transmitFromDriverRequestBuffer();
+
+    // Read the distance of detection, but we don't care about
+    readHex2(inputStream);
 
     return result;
 }

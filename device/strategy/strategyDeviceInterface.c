@@ -93,6 +93,15 @@ int deviceStrategyGetInterface(char commandHeader, DeviceInterfaceMode mode, boo
         }
         return commandLengthValueForMode(mode, 17, 0);
     }    
+    // Get the global score
+    else if (commandHeader == COMMAND_STRATEGY_GET_GLOBAL_SCORE) {
+        // same input/output
+        if (fillDeviceArgumentList) {
+            setFunction("Get Global Score", 0, 1);
+            setResultUnsignedHex4(0, "score");
+        }
+        return commandLengthValueForMode(mode, 0, 4);
+    }
     return DEVICE_HEADER_NOT_HANDLED;
 }
 

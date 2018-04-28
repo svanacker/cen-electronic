@@ -50,6 +50,8 @@ typedef struct GameStrategyContext {
     unsigned char strategyIndex;
     /** Max target to handle. */
     unsigned char maxTargetToHandle;
+    /** Score*/
+    unsigned int score;
 } GameStrategyContext;
 
 /**

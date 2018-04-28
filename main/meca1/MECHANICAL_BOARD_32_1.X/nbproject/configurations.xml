@@ -285,6 +285,7 @@
       <logicalFolder name="f2" displayName="robot.2018" projectFiles="true">
         <itemPath>../../../robot/2018/launcherDevice2018.h</itemPath>
         <itemPath>../../../robot/2018/launcherDeviceInterface2018.h</itemPath>
+        <itemPath>../../../robot/2018/score2018.h</itemPath>
       </logicalFolder>
     </logicalFolder>
     <logicalFolder name="LinkerScript"

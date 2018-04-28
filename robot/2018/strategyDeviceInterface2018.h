@@ -13,6 +13,8 @@
 #define STRATEGY_2018_MIXED_COLOR_PHASE_1_COMMAND            'm'
 #define STRATEGY_2018_MIXED_COLOR_PHASE_2_COMMAND            'M'
 
+#define STRATEGY_2018_GET_SCORE                              's'
+
 /**
  * Get the device interface for strategy 2018.
  */

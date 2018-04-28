@@ -16,7 +16,14 @@ int deviceStrategy2018GetInterface(char commandHeader, DeviceInterfaceMode mode,
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
-    if (commandHeader == STRATEGY_2018_READ_BALL_COLOR_TYPE) {
+    else if (commandHeader == STRATEGY_2018_GET_SCORE) {
+        if (fillDeviceArgumentList) {
+            setFunction("Strategy 2018 Distributor Debug", 0, 1);
+            setResultUnsignedHex2(0, "score");
+        }
+        return commandLengthValueForMode(mode, 0, 2);
+    }
+    else if (commandHeader == STRATEGY_2018_READ_BALL_COLOR_TYPE) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Strategy 2018 Read Color Type");;
         }

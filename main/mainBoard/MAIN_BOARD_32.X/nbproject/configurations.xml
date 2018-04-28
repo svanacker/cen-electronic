@@ -446,6 +446,8 @@
         <itemPath>../../../robot/2018/launcherDeviceInterface2018.h</itemPath>
         <itemPath>../../../robot/2018/strategyDevice2018.h</itemPath>
         <itemPath>../../../robot/2018/strategyDeviceInterface2018.h</itemPath>
+        <itemPath>../../../robot/2018/score2018.h</itemPath>
+        <itemPath>../../../robot/2018/distributorDebug2018.h</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.config"
                      displayName="robot.config"
@@ -805,6 +807,7 @@
                      displayName="device.strategy"
                      projectFiles="true">
         <itemPath>../../../device/strategy/strategyDeviceInterface.c</itemPath>
+        <itemPath>../../../device/strategy/strategyDevice.c</itemPath>
       </logicalFolder>
       <logicalFolder name="device.system"
                      displayName="device.system"
@@ -953,8 +956,6 @@
         <itemPath>../../../navigation/locationListDebug.c</itemPath>
         <itemPath>../../../navigation/pathListDebug.c</itemPath>
       </logicalFolder>
-      <logicalFolder name="f13" displayName="New Folder 13" projectFiles="true">
-      </logicalFolder>
       <logicalFolder name="robot" displayName="robot" projectFiles="true">
         <itemPath>../../../robot/robot.c</itemPath>
       </logicalFolder>
@@ -965,6 +966,7 @@
         <itemPath>../../../robot/2018/launcherDeviceInterface2018.c</itemPath>
         <itemPath>../../../robot/2018/strategyDevice2018.c</itemPath>
         <itemPath>../../../robot/2018/strategyDeviceInterface2018.c</itemPath>
+        <itemPath>../../../robot/2018/distributorDebug2018.c</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.config"
                      displayName="robot.config"

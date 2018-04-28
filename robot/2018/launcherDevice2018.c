@@ -100,12 +100,13 @@ void launch2018(int launcherIndex, bool prepare) {
 
 // DISTRIBUTOR
 
-void distributor2018CleanNext(int launcherIndex) {
+unsigned int distributor2018CleanNext(int launcherIndex) {
     signed int motorSpeed = -LAUNCHER_2018_DEFAULT_SPEED;
+    unsigned int threshold = DISTRIBUTOR_TOF_DISTANCE_LEFT_THRESHOLD;
     if (launcherIndex == LAUNCHER_RIGHT_INDEX) {
+        threshold = DISTRIBUTOR_TOF_DISTANCE_RIGHT_THRESHOLD;
         motorSpeed *= -1;
     }
-    unsigned int threshold = DISTRIBUTOR_TOF_DISTANCE_THRESHOLD;
     TofSensorList* tofSensorList = launcher2018->tofSensorList;
     TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, 0);
     
@@ -122,11 +123,13 @@ void distributor2018CleanNext(int launcherIndex) {
     // Check if we must stop
     while (true) {
         distance = tofSensor->tofGetDistanceMM(tofSensor);
-        if (distance <= threshold) {
+        if (distance != 0 && distance <= threshold) {
             break;
         }
     }
     setMotorSpeeds(launcher2018->dualHBridgeMotor, 0, 0);
+    
+    return distance;
 }
 
 void distributor2018EjectDirty(void) {
@@ -173,8 +176,9 @@ void deviceLauncher2018HandleRawData(char commandHeader, InputStream* inputStrea
     // Distributor
     else if (commandHeader == DISTRIBUTOR_LOAD_NEXT_BALL_COMMAND) {
         int launcherIndex = readHex2(inputStream);
-        distributor2018CleanNext(launcherIndex);
+        unsigned int distance = distributor2018CleanNext(launcherIndex);
         ackCommand(outputStream, LAUNCHER_2018_DEVICE_HEADER, DISTRIBUTOR_LOAD_NEXT_BALL_COMMAND);
+        appendHex2(outputStream, distance);
     }
     else if (commandHeader == DISTRIBUTOR_EJECT_DIRTY_BALL_COMMAND) {
         distributor2018EjectDirty();
@@ -184,9 +188,10 @@ void deviceLauncher2018HandleRawData(char commandHeader, InputStream* inputStrea
     else if (commandHeader == LAUNCHER_LOAD_AND_SEND_BALL_COMMAND) {
         int launcherIndex = readHex2(inputStream);
         launch2018(launcherIndex, true);
-        distributor2018CleanNext(launcherIndex);
+        unsigned int distance = distributor2018CleanNext(launcherIndex);
         launch2018(launcherIndex, false);
         ackCommand(outputStream, LAUNCHER_2018_DEVICE_HEADER, LAUNCHER_LOAD_AND_SEND_BALL_COMMAND);
+        appendHex2(outputStream, distance);
     }
     else if (commandHeader == LAUNCHER_LOAD_AND_SEND_UNICOLOR_BALL_LIST) {
         int launcherIndex = readHex2(inputStream);
