@@ -279,8 +279,6 @@
         <itemPath>../../../drivers/eeprom/24c512.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f1" displayName="drivers.tof" projectFiles="true">
-        <itemPath>../../../drivers/tof/tof.h</itemPath>
-        <itemPath>../../../drivers/tof/tofList.h</itemPath>
       </logicalFolder>
       <logicalFolder name="main" displayName="main" projectFiles="true">
         <itemPath>../motorBoard32.h</itemPath>
@@ -695,10 +693,6 @@
                      displayName="drivers.file.eeprom"
                      projectFiles="true">
         <itemPath>../../../drivers/file/eeprom/eepromFile.c</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f1" displayName="drivers.tof" projectFiles="true">
-        <itemPath>../../../drivers/tof/tof.c</itemPath>
-        <itemPath>../../../drivers/tof/tofList.c</itemPath>
       </logicalFolder>
       <logicalFolder name="lib" displayName="lib" projectFiles="true">
       </logicalFolder>

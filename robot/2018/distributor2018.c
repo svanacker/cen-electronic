@@ -49,6 +49,14 @@ enum ColorType colorSensorFindColorType2018(ColorSensor* colorSensor) {
     return COLOR_TYPE_UNKNOWN;
 }
 
+void cleanDistributor(Distributor* distributor) {
+    distributor->launcherContent = SQUARE_CONTENT_EMPTY;
+    unsigned int i;
+    for (i = 0; i < 8; i++) {
+        distributor->squares[i] = SQUARE_CONTENT_EMPTY;
+    }
+}
+
 void initDistributor(Distributor* distributor, enum TeamColor teamColor, ColorSensor* colorSensor) {
     distributor->teamColor = teamColor;
     distributor->colorSensor = colorSensor;
@@ -58,13 +66,6 @@ void initDistributor(Distributor* distributor, enum TeamColor teamColor, ColorSe
     cleanDistributor(distributor);
 }
 
-void cleanDistributor(Distributor* distributor) {
-    distributor->launcherContent = SQUARE_CONTENT_EMPTY;
-    unsigned int i;
-    for (i = 0; i < 8; i++) {
-        distributor->squares[i] = SQUARE_CONTENT_EMPTY;
-    }
-}
 
 /** Distributor Index (from Behind Robot and not in Front of) */
 //                                             [0]

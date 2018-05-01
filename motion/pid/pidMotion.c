@@ -195,7 +195,6 @@ MotionEndDetectionParameter* getMotionEndDetectionParameter(PidMotion* pidMotion
 void initPidMotion(PidMotion* pidMotion, 
                    DualHBridgeMotor* dualHBridgeMotor,
                    Eeprom* _eeprom,
-                   TofSensorList* tofSensorList,
                    PidMotionDefinition(*array)[],
                    unsigned int length) {
 	if (!checkPidMotionNotNull(pidMotion)) {
@@ -209,7 +208,6 @@ void initPidMotion(PidMotion* pidMotion,
 	pidMotion->motionDefinitions = array;
 	pidMotion->motionLength = length;
 	pidMotion->pidPersistenceEeprom = _eeprom;
-    pidMotion->tofSensorList = tofSensorList;
 
 	// We load the values from the eeprom, but we don't load default values unless the eeprom is a memory type
 	loadPidParameters(pidMotion, _eeprom->eepromType == EEPROM_TYPE_MEMORY);
@@ -222,9 +220,9 @@ void initPidMotion(PidMotion* pidMotion,
     else {
         loadPidParameters(pidMotion, false);
     }
-
-
-	RobotKinematics* robotKinematics = getRobotKinematics();
+    // Load the kinematics by calling the singleton
+	getRobotKinematics();
+    
 	initPidTimer();
 }
 

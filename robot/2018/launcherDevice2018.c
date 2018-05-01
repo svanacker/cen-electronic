@@ -102,15 +102,27 @@ void launch2018(int launcherIndex, bool prepare) {
 
 unsigned int distributor2018CleanNext(int launcherIndex) {
     signed int motorSpeed = -LAUNCHER_2018_DEFAULT_SPEED;
-    unsigned int threshold = DISTRIBUTOR_TOF_DISTANCE_LEFT_THRESHOLD;
+    signed int motorLowSpeed = -LAUNCHER_2018_LOW_SPEED;
+    signed int motorVeryLowSpeed = -LAUNCHER_2018_VERY_LOW_SPEED;
+
+    unsigned int threshold = DISTRIBUTOR_TOF_DISTANCE_THRESHOLD;
+    unsigned int lowThreshold = DISTRIBUTOR_TOF_DISTANCE_LOW_THRESHOLD;
+    unsigned int veryLowThreshold = DISTRIBUTOR_TOF_DISTANCE_LOW_THRESHOLD;
+
+     signed int currentSpeed;
+
     if (launcherIndex == LAUNCHER_RIGHT_INDEX) {
-        threshold = DISTRIBUTOR_TOF_DISTANCE_RIGHT_THRESHOLD;
         motorSpeed *= -1;
+        motorLowSpeed *= -1;
+        motorVeryLowSpeed *= -1;
     }
+
     TofSensorList* tofSensorList = launcher2018->tofSensorList;
     TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, 0);
     
-    setMotorSpeeds(launcher2018->dualHBridgeMotor, motorSpeed, 0);
+    currentSpeed = motorSpeed;
+    setMotorSpeeds(launcher2018->dualHBridgeMotor, currentSpeed, 0);
+    
     // Avoid to stay blocked if we are already on a target
     unsigned int distance = tofSensor->tofGetDistanceMM(tofSensor);
     while (true) {
@@ -123,8 +135,21 @@ unsigned int distributor2018CleanNext(int launcherIndex) {
     // Check if we must stop
     while (true) {
         distance = tofSensor->tofGetDistanceMM(tofSensor);
-        if (distance != 0 && distance <= threshold) {
-            break;
+        if (distance != 0) {
+            // Reached !
+            if (distance <= threshold) {
+                break;
+            }
+            // Low mode
+            else if (currentSpeed != motorLowSpeed && distance <= lowThreshold) {
+                currentSpeed = motorLowSpeed;
+                setMotorSpeeds(launcher2018->dualHBridgeMotor, currentSpeed, 0);
+            }
+            // Very Low mode
+            else if (currentSpeed != motorLowSpeed && currentSpeed != motorVeryLowSpeed && distance <= veryLowThreshold) {
+                currentSpeed = motorVeryLowSpeed;
+                setMotorSpeeds(launcher2018->dualHBridgeMotor, currentSpeed, 0);
+            }
         }
     }
     setMotorSpeeds(launcher2018->dualHBridgeMotor, 0, 0);

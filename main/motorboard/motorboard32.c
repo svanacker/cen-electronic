@@ -339,7 +339,6 @@ int runMotorBoard() {
             &i2cSlaveOutputBuffer,
             &i2cSlaveOutputBufferArray,
             MOTOR_BOARD_OUT_BUFFER_LENGTH,
-            // NULL, 
             mainBoardI2cBusConnection
             );
 
@@ -376,7 +375,6 @@ int runMotorBoard() {
     initPidMotion(&pidMotion,
                   &motors,
                   &eeprom_,
-                  NULL,
                   (PidMotionDefinition(*)[]) &motionDefinitionArray,
                   MOTOR_BOARD_PID_MOTION_INSTRUCTION_COUNT);
 

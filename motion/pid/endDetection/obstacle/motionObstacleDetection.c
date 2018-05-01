@@ -23,15 +23,8 @@
 static unsigned detectionCount;
 
 bool detectIfRobotHasObstacle(PidMotion* pidMotion, PidMotionDefinition* motionDefinition) {
-    // return false;
+    return false;
     /*
-    float pidTime = pidMotion->computationValues.pidTimeInSecond;
-    unsigned int pidTimeInteger = (unsigned int) pidTime;
-    float minusTime = pidTime - (float) pidTimeInteger;
-    if (minusTime > 0.2f) {
-        return false;
-    }
-    */
     TofSensorList* tofSensorList = pidMotion->tofSensorList;
     if (tofSensorList == NULL) {
         return false;
@@ -63,7 +56,7 @@ bool detectIfRobotHasObstacle(PidMotion* pidMotion, PidMotionDefinition* motionD
         }
 
     }
-    
+    */
     return false;
 }
 

@@ -69,8 +69,6 @@ struct PidMotion {
     DualHBridgeMotor* dualHBridgeMotor;
 	// For persistence
 	Eeprom* pidPersistenceEeprom;
-    // For obstacle
-    TofSensorList* tofSensorList;
 };
 
 
@@ -187,14 +185,12 @@ MotionEndDetectionParameter* getMotionEndDetectionParameter(PidMotion* pidMotion
  * @param pidMotion the pointer to the structure to initialize
  * @param dualHBridgeMotor the pointer on the structure used to drive the dual motor
  * @param eepromParam the param to the eeprom
- * @param tofSensorList the list of tof Sensor
  * @param array the array with all motion definition
  * @param length the length of the array with motion definitions
  */
 void initPidMotion(PidMotion* pidMotion, 
                    DualHBridgeMotor* dualHBridgeMotor,
                    Eeprom* eepromParam,
-                   TofSensorList* tofSensorList,
                    PidMotionDefinition(*array)[],
                    unsigned int length);
 

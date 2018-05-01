@@ -42,11 +42,14 @@
 #define DISTRIBUTOR_ROTATE_LEFT_IO_EXPANDER_INDEX      3
 #define DISTRIBUTOR_ROTATE_RIGHT_IO_EXPANDER_INDEX     4
 
-#define DISTRIBUTOR_TOF_DISTANCE_LEFT_THRESHOLD             20
-#define DISTRIBUTOR_TOF_DISTANCE_RIGHT_THRESHOLD            20
+#define DISTRIBUTOR_TOF_DISTANCE_LOW_THRESHOLD              60
+#define DISTRIBUTOR_TOF_DISTANCE_VERY_LOW_THRESHOLD         40
+#define DISTRIBUTOR_TOF_DISTANCE_THRESHOLD                  16
 
-#define LAUNCHER_2018_DEFAULT_SPEED                         40
-#define LAUNCHER_2018_DEFAULT_SPEED                         40
+
+#define LAUNCHER_2018_DEFAULT_SPEED                         60
+#define LAUNCHER_2018_LOW_SPEED                             20
+#define LAUNCHER_2018_VERY_LOW_SPEED                        10
 
 // Forward declaration
 typedef struct Launcher2018 Launcher2018;

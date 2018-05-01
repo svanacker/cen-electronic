@@ -1953,6 +1953,9 @@
     <ClCompile Include="common\color\colorDebug.c">
       <Filter>Source Files\common\color</Filter>
     </ClCompile>
+    <ClCompile Include="robot\2018\distributorDebug2018.c">
+      <Filter>Source Files\robot\2018</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">

@@ -383,7 +383,6 @@ void runMotorBoardPC(bool singleMode) {
 	initPidMotion(&pidMotion, 
                   &dualHBridgeMotor,
                   &eeprom,
-                  &tofSensorList,
                  (PidMotionDefinition(*)[]) &motionDefinitionArray,
                   MOTOR_BOARD_PC_PID_MOTION_INSTRUCTION_COUNT);
 

@@ -407,6 +407,7 @@
     <ClCompile Include="navigation\pathListDebug.c" />
     <ClCompile Include="remote\clock\remoteClock.c" />
     <ClCompile Include="robot\2018\distributor2018.c" />
+    <ClCompile Include="robot\2018\distributorDebug2018.c" />
     <ClCompile Include="robot\2018\launcherDevice2018.c" />
     <ClCompile Include="robot\2018\launcherDeviceInterface2018.c" />
     <ClCompile Include="robot\2018\strategy2018.c" />
