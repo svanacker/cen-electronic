@@ -18,7 +18,7 @@
 #include "../../common/timer/cenTimer.h"
 #include "../../common/timer/timerList.h"
 
-#include "../../drivers/motion/motionDriver.h"
+#include "../../client/motion/simple/clientMotion.h"
 
 #include "../../motion/extended/bspline.h"
 #include "../../motion/extended/bsplineList.h"
@@ -29,8 +29,8 @@
 #include "../../navigation/path.h"
 #include "../../navigation/pathList.h"
 
-#include "../../drivers/motion/extendedMotionDriver.h"
-#include "../../drivers/motion/motionDriver.h"
+#include "../../client/motion/extended/clientExtendedMotion.h"
+#include "../../client/motion/simple/clientMotion.h"
 
 #include "../../robot/strategy/gameTargetList.h"
 #include "../../robot/2012/strategy2012Utils.h"
@@ -192,7 +192,7 @@ void motionGoLocation(Location* location,
     #endif
 
     angle = changeAngleForColor(angle);
-    motionDriverBSplineAbsolute(location->x, location->y,
+    clientExtendedMotionBSplineAbsolute(location->x, location->y,
                                 angle,
                                 controlPointDistance1, controlPointDistance2,
                                 accelerationFactor, speedFactor);
@@ -311,7 +311,7 @@ void motionFollowPath(PathData* pathData, bool reversed) {
     #endif
 
     // cast to unsigned, negative signed char send 00
-    motionDriverBSplineAbsolute(location->x, location->y, angle, cp1, cp2,
+    clientExtendedMotionBSplineAbsolute(location->x, location->y, angle, cp1, cp2,
         pathData->accelerationFactor, pathData->speedFactor);
 
     // Simulate as if the robot goes to the position with a small error

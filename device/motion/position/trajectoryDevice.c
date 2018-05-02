@@ -88,6 +88,24 @@ void deviceTrajectoryHandleRawData(char header,
 
         setPosition(fX, fY, fAngle);
     }
+    // Adjust Angle / X / Y
+    else if (header == COMMAND_TRAJECTORY_ADJUST_ANGLE_TO_CLOSEST) {
+        checkIsSeparator(inputStream);
+        bool done = adjustAngle(TRAJECTORY_DEVICE_ADJUST_ANGLE_THRESHOLD );
+        appendBool(outputStream, done);
+    }
+    else if (header == COMMAND_TRAJECTORY_ADJUST_X) {
+        float newX = readHexFloat6(inputStream, COMMAND_TRAJECTORY_ADJUST_X);
+        checkIsSeparator(inputStream);
+        bool done = adjustXPosition(newX, TRAJECTORY_DEVICE_ADJUST_DISTANCE_THRESHOLD);
+        appendBool(outputStream, done);
+    }
+    else if (header == COMMAND_TRAJECTORY_ADJUST_Y) {
+        float newY = readHexFloat6(inputStream, COMMAND_TRAJECTORY_ADJUST_Y);
+        checkIsSeparator(inputStream);
+        bool done = adjustXPosition(newY, TRAJECTORY_DEVICE_ADJUST_DISTANCE_THRESHOLD);
+        appendBool(outputStream, done);
+    }
 }
 
 static DeviceDescriptor descriptor = {

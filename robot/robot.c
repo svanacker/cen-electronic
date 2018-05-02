@@ -2,6 +2,8 @@
 
 #include <stdbool.h>
 
+#include "../client/motion/position/clientTrajectory.h"
+
 #include "../common/commons.h"
 #include "../common/2d/2d.h"
 #include "../common/delay/cenDelay.h"
@@ -19,8 +21,8 @@
 #include "../drivers/driver.h"
 #include "../drivers/driverList.h"
 
-#include "../drivers/motion/motionDriver.h"
-#include "../drivers/motion/trajectoryDriver.h"
+#include "../client/motion/simple/clientMotion.h"
+
 #include "../drivers/strategy/strategyDriver.h"
 
 #include "../drivers/dispatcher/driverDataDispatcher.h"

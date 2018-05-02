@@ -70,6 +70,37 @@ void setPosition(float x, float y, float orientation) {
     trajectory.lastAngle = 0.0f;
 }
 
+bool adjustXPosition(float x, float thresholdDistance) {
+    // We exclude the adjustment if we are too far (to avoid to introduce more error than we need)
+    if (trajectory.position.pos.x < x - thresholdDistance || trajectory.position.pos.x > x + thresholdDistance) {
+        return false;
+    }
+    trajectory.position.pos.x = x;
+    trajectory.position.orientation = 0.0f;
+    return true;
+}
+
+bool adjustYPosition(float y, float thresholdDistance) {
+    // We exclude the adjustment if we are too far (to avoid to introduce more error than we need)
+    if (trajectory.position.pos.x < y - thresholdDistance || trajectory.position.pos.y > y + thresholdDistance) {
+        return false;
+    }
+    trajectory.position.pos.y = y;
+    trajectory.position.orientation = 0.0f;
+    return true;
+}
+
+bool adjustAngle(float thresholdAngle) {
+    float quadranRadian = -PI;
+    for (quadranRadian = -_2_PI; quadranRadian < _2_PI; quadranRadian += PI / 2) {
+        if (trajectory.position.orientation > quadranRadian -thresholdAngle && trajectory.position.orientation < quadranRadian + thresholdAngle) {
+            trajectory.position.orientation = quadranRadian;
+            return true;
+        }
+    }
+    return false;
+}
+
 Position* getPosition(void) {
     return &trajectory.position;
 }

@@ -5,6 +5,8 @@
 #include <windows.h>
 #include <stdbool.h>
 
+#include "../../client/clock/clientClock.h"
+
 #include "../../common/clock/clock.h"
 #include "../../common/delay/cenDelay.h"
 #include "../../common/eeprom/pc/eepromPc.h"
@@ -171,8 +173,6 @@
 #include "../../robot/match/startMatchDevice.h"
 #include "../../robot/match/startMatchDeviceInterface.h"
 #include "../../robot/match/pc/startMatchDetectorPc.h"
-
-#include "../../remote/clock/remoteClock.h"
 
 #include "../../main/motorBoard/motorBoardPc.h"
 #include "../../main/meca1/mechanicalBoard1Pc.h"

@@ -1,10 +1,11 @@
 #include "strategy.h"
 #include "teamColor.h"
 
+#include "../../client/motion/position/clientTrajectory.h"
+
 #include "../../robot/config/robotConfig.h"
 #include "../../robot/config/robotConfigDevice.h"
 
-#include "../../drivers/motion/trajectoryDriver.h"
 
 /**
 * The side for the match.

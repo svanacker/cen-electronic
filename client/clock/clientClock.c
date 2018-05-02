@@ -1,4 +1,4 @@
-#include "remoteClock.h"
+#include "clientClock.h"
 
 #include <stdbool.h>
 
@@ -13,7 +13,7 @@
 #include "../../drivers/driverList.h"
 #include "../../drivers/driverTransmitter.h"
 
-bool getRemoteClockData(ClockData* clockData) {
+bool clientClockGetClockData(ClockData* clockData) {
     OutputStream* outputStream = getDriverRequestOutputStream();
     InputStream* resultStream = getDriverResponseInputStream();
     append(outputStream, CLOCK_DEVICE_HEADER);
@@ -41,7 +41,7 @@ bool getRemoteClockData(ClockData* clockData) {
     return result;
 }
 
-bool writeHourRemoteClockData(ClockData* clockData, int dispatcherIndex) {
+bool clientClockWriteHourRemoteClockData(ClockData* clockData, int dispatcherIndex) {
     OutputStream* outputStream = getDriverRequestOutputStream();
     InputStream* resultStream = getDriverResponseInputStream();
 
@@ -60,7 +60,7 @@ bool writeHourRemoteClockData(ClockData* clockData, int dispatcherIndex) {
     return result;
 }
 
-bool writeDateRemoteClockData(ClockData* clockData, int dispatcherIndex) {
+bool clientClockWriteDateRemoteClockData(ClockData* clockData, int dispatcherIndex) {
     OutputStream* outputStream = getDriverRequestOutputStream();
     InputStream* resultStream = getDriverResponseInputStream();
 

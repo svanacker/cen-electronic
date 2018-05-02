@@ -25,6 +25,25 @@
 #define COMMAND_TRAJECTORY_SET_ABSOLUTE_POSITION            'W'
 
 /**
+ * Set the angle to the closest value.
+ * Ex : 0, 90, 180, 270 (in radians) ... 
+*/
+#define COMMAND_TRAJECTORY_ADJUST_ANGLE_TO_CLOSEST          't'
+
+/**
+ * Adjust X, but does not change Y.
+ * @return 
+ */
+#define COMMAND_TRAJECTORY_ADJUST_X                         'x'
+
+/**
+ * Adjust Y, but does not change Y, set the angle to the closest value
+ * Ex : 0, 90, 180, 270 ... 
+ * @return 
+ */
+#define COMMAND_TRAJECTORY_ADJUST_Y                         'y'
+
+/**
 * Interface for Device
 */
 DeviceInterface* getTrajectoryDeviceInterface();

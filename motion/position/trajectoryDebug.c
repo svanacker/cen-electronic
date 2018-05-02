@@ -40,7 +40,7 @@ void printDebugPosition(OutputStream* outputStream) {
 	appendStringHeader(outputStream, "x", TRAJECTORY_X_DEC_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "y", TRAJECTORY_Y_DEC_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "orientation", TRAJECTORY_ANGLE_DEC_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "initial Orien.", TRAJECTORY_ANGLE_INIT_DEC_COLUMN_LENGTH);
+	appendStringHeader(outputStream, ".", TRAJECTORY_ANGLE_INIT_DEC_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "x", TRAJECTORY_X_HEX_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "y", TRAJECTORY_Y_HEX_COLUMN_LENGTH);
 	appendEndOfTableColumn(outputStream, 0);

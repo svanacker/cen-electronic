@@ -1,0 +1,63 @@
+En relatif pour aller à l'interrupteur
+Remettre l'orientation du départ
+// X = 160 mm, Y = 225mm, Angle = 270 degree
+nW0000A0-0000E1-0A8C
+
+// X3 = 160, Y = 1225, Angle = 270, speed Factor = 5 
+XS0000A0-0004C9-0A8C-FFF0-FFF0-02-01
+
+// Pour repartir du distributeur
+nW0000A0-0004C9-0A8C
+
+// Pour aller de l'interrupteur au distributeur
+// X3 = 848mm, Y = 195, Distance P0-P1 = 600mm, Distance P2-P3 = 400, Angle = -60 => 300
+XS000350-0000C3-0BB8-0258-0190-02-01
+
+// Pour repartir du distributeur
+nW000350-0000C3-0BB8
+
+// Pour aller déclencher l'abeille depuis le distributeur
+// X3 = 1800mm, Y = 225, Angle = 180 car on va pas y arriver en 1 seul mouvement
+// XS000708-0000E1-0000-FB80-FE00-01-01 : Obsolete
+// TODO : On passe trop pres de la bordure
+
+// Pour aller se recaler sur la bordure en Y
+// X3 = 1700 mm, Y=154
+XS0006A4-00009A-0384-FB00-FE00-01-01
+
+// Pour indiquer où on est réellement (on est recalé en Y !)
+nW0006A4-00009A-0384
+
+// Puis on va taper l'abeille à !!
+// X3 = 1920 mm (pour être sûr), Y3 = 200 mm, angle = 0
+XS000780-0000C8-0000-0050-0010-01-01
+
+// Pour repartir de l'abeille
+nW00076C-0000C8-0000
+
+// Puis on va au niveau du point devant le distributeur mixte
+// X3 = 1500 mm, Y = 2300 mm, angle = 120 à la fin, point de controle : 300 mm, 100 mm pour la dernière phase
+XS0005DC-0008FC-0000-FD00-FF80-02-01
+// TODO : passer moins pres de la zone de dépose d'eau usée, et se reculer un peu +
+
+// Pour repartir du point devant le distributeur mixte
+nW0005DC-0008FC-0000
+
+// Puis on va sur le distributeur
+// X3 = 1805, Y3 = 2380, angle = 30 deg, 
+XS00070D-00094C-012C-0080-0080-02-01
+
+// Pour se recaler depuis le distributeur
+nW00070D-00094C-012C
+
+// On va ensuite sur le point devant le bac d'eau sale
+X3 = 1450 mm, Y3 = 1750mm, angle = 0
+XS0005AA-0006D6-0000-FE00-FF80-02-01
+
+// Pour se recaler par rapport à ce point
+nW0005AA-0006D6-0000
+
+// On va ensuite sur la zone de dépose
+X3 = 1750 mm, Y3 = 1750mm, angle = 0
+XS0006D6-0006D6-0000-0080-0080-02-01
+

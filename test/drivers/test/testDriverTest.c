@@ -31,7 +31,7 @@
 #include "../../../drivers/dispatcher/localDriverDataDispatcher.h"
 #include "../../../drivers/test/testDriver.h"
 
-#include "../../../remote/clock/remoteClock.h"
+#include "../../../client/clock/clientClock.h"
 
 // Logs
 #define TEST_DRIVER_TEST_LOG_HANDLER_LIST_LENGTH 2
@@ -89,7 +89,7 @@ void test_testDriverGetValue(void) {
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
 
     ClockData clockData;
-    getRemoteClockData(&clockData);
+    clientClockGetClockData(&clockData);
 
     // Get the real time
     time_t rawtime;

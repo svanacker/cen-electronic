@@ -169,18 +169,6 @@
     <Filter Include="Source Files\common\clock">
       <UniqueIdentifier>{3d2d2e40-ab11-4e88-b212-0a6c1272b261}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\remote">
-      <UniqueIdentifier>{1d82cdb1-9f26-4fb5-a197-d8e83e36de04}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\remote\clock">
-      <UniqueIdentifier>{657fdcd1-95eb-419b-8f27-254cf948cdf8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\remote">
-      <UniqueIdentifier>{9e9e3253-8743-4aa0-9148-6bedc5e8715b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\remote\clock">
-      <UniqueIdentifier>{aee073aa-6f5c-4824-82b4-f85fa2de888f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\common\log\pc">
       <UniqueIdentifier>{2495cb05-29f6-4741-89fb-ecff409437ec}</UniqueIdentifier>
     </Filter>
@@ -238,9 +226,6 @@
     <Filter Include="Source Files\navigation">
       <UniqueIdentifier>{811ecb78-8ec5-49ef-a87e-7700afaad2e3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\drivers\motion">
-      <UniqueIdentifier>{c0a0f766-89f4-4205-ab26-61fa990d2378}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\motion">
       <UniqueIdentifier>{edfad24b-fe78-4d52-a8f0-791312880aab}</UniqueIdentifier>
     </Filter>
@@ -297,9 +282,6 @@
     </Filter>
     <Filter Include="Source Files\common\timer\pc">
       <UniqueIdentifier>{fcb27a30-5a85-4e15-8acd-bd70176eac26}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\drivers\motion">
-      <UniqueIdentifier>{fd4d0176-9b98-4780-a692-94f128133fb0}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\common\pwm">
       <UniqueIdentifier>{ae35acef-dd6e-48f0-b0e0-4f4b74957170}</UniqueIdentifier>
@@ -949,6 +931,36 @@
     <Filter Include="Source Files\common\color">
       <UniqueIdentifier>{a1afc61e-213e-4ce5-aadc-9d60a5ae66f0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\client\clock">
+      <UniqueIdentifier>{aee073aa-6f5c-4824-82b4-f85fa2de888f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\client\clock">
+      <UniqueIdentifier>{84f1e8c7-1766-4aa8-b6a8-fec1e658197f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\client\motion">
+      <UniqueIdentifier>{32a0cf1e-3527-46aa-80bb-148139e4b720}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\client\motion\position">
+      <UniqueIdentifier>{35e5720e-c82a-4073-9250-2a1552a0659a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\client\motion\extended">
+      <UniqueIdentifier>{ceebb643-5b04-409d-9be7-381c1b913cc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\client\motion">
+      <UniqueIdentifier>{0c239deb-edfd-4512-ac85-7f83947a00a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\client\motion\extended">
+      <UniqueIdentifier>{1f1b8580-70b1-4421-840c-cc110cbbf13e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\client\motion\position">
+      <UniqueIdentifier>{75a90290-5d37-4cb1-b7a5-006a61dba0ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\client\motion\simple">
+      <UniqueIdentifier>{45290b8f-1eff-49a2-b1cd-32cf961847af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\client\motion\simple">
+      <UniqueIdentifier>{dc9231a5-a06e-4aee-bb44-4598a06eca8d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -1107,9 +1119,6 @@
     <ClCompile Include="common\clock\clock.c">
       <Filter>Source Files\common\clock</Filter>
     </ClCompile>
-    <ClCompile Include="remote\clock\remoteClock.c">
-      <Filter>Source Files\remote\clock</Filter>
-    </ClCompile>
     <ClCompile Include="common\log\pc\consoleLogHandler.c">
       <Filter>Source Files\common\log\pc</Filter>
     </ClCompile>
@@ -1244,12 +1253,6 @@
     </ClCompile>
     <ClCompile Include="common\timer\pc\timerSetupPc.c">
       <Filter>Source Files\common\timer\pc</Filter>
-    </ClCompile>
-    <ClCompile Include="drivers\motion\motionDriver.c">
-      <Filter>Source Files\drivers\motion</Filter>
-    </ClCompile>
-    <ClCompile Include="drivers\motion\trajectoryDriver.c">
-      <Filter>Source Files\drivers\motion</Filter>
     </ClCompile>
     <ClCompile Include="common\pwm\servo\servoPwm.c">
       <Filter>Source Files\common\pwm\servo</Filter>
@@ -1653,9 +1656,6 @@
     <ClCompile Include="device\motion\extended\extendedMotionDevice.c">
       <Filter>Source Files\device\motion\extended</Filter>
     </ClCompile>
-    <ClCompile Include="drivers\motion\extendedMotionDriver.c">
-      <Filter>Source Files\drivers\motion</Filter>
-    </ClCompile>
     <ClCompile Include="common\io\printTableWriter.c">
       <Filter>Source Files\common\io</Filter>
     </ClCompile>
@@ -1956,6 +1956,18 @@
     <ClCompile Include="robot\2018\distributorDebug2018.c">
       <Filter>Source Files\robot\2018</Filter>
     </ClCompile>
+    <ClCompile Include="client\clock\clientClock.c">
+      <Filter>Source Files\client\clock</Filter>
+    </ClCompile>
+    <ClCompile Include="client\motion\extended\clientExtendedMotion.c">
+      <Filter>Source Files\client\motion\extended</Filter>
+    </ClCompile>
+    <ClCompile Include="client\motion\position\clientTrajectory.c">
+      <Filter>Source Files\client\motion\position</Filter>
+    </ClCompile>
+    <ClCompile Include="client\motion\simple\clientMotion.c">
+      <Filter>Source Files\client\motion\simple</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -2141,9 +2153,6 @@
     <ClInclude Include="common\clock\clock.h">
       <Filter>Header Files\common\clock</Filter>
     </ClInclude>
-    <ClInclude Include="remote\clock\remoteClock.h">
-      <Filter>Header Files\remote\clock</Filter>
-    </ClInclude>
     <ClInclude Include="common\log\pc\consoleLogHandler.h">
       <Filter>Header Files\common\log\pc</Filter>
     </ClInclude>
@@ -2224,12 +2233,6 @@
     </ClInclude>
     <ClInclude Include="navigation\pathList.h">
       <Filter>Header Files\navigation</Filter>
-    </ClInclude>
-    <ClInclude Include="drivers\motion\motionDriver.h">
-      <Filter>Header Files\drivers\motion</Filter>
-    </ClInclude>
-    <ClInclude Include="drivers\motion\trajectoryDriver.h">
-      <Filter>Header Files\drivers\motion</Filter>
     </ClInclude>
     <ClInclude Include="motion\extended\bspline.h">
       <Filter>Header Files\motion\extended</Filter>
@@ -2723,9 +2726,6 @@
     <ClInclude Include="device\motion\extended\extendedMotionDeviceInterface.h">
       <Filter>Header Files\device\motion\extended</Filter>
     </ClInclude>
-    <ClInclude Include="drivers\motion\extendedMotionDriver.h">
-      <Filter>Header Files\drivers\motion</Filter>
-    </ClInclude>
     <ClInclude Include="common\io\printTableWriter.h">
       <Filter>Header Files\common\io</Filter>
     </ClInclude>
@@ -3025,6 +3025,15 @@
     </ClInclude>
     <ClInclude Include="robot\2018\score2018.h">
       <Filter>Header Files\robot\2018</Filter>
+    </ClInclude>
+    <ClInclude Include="client\motion\position\clientTrajectory.h">
+      <Filter>Header Files\client\motion\position</Filter>
+    </ClInclude>
+    <ClInclude Include="client\motion\extended\clientExtendedMotion.h">
+      <Filter>Header Files\client\motion\extended</Filter>
+    </ClInclude>
+    <ClInclude Include="client\motion\simple\clientMotion.h">
+      <Filter>Header Files\client\motion\simple</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

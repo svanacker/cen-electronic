@@ -1,26 +1,26 @@
-#include "motionDriver.h"
+#include "clientMotion.h"
 
-#include "../../common/2d/2d.h"
-#include "../../common/commons.h"
+#include "../../../common/2d/2d.h"
+#include "../../../common/commons.h"
 
-#include "../../common/io/buffer.h"
-#include "../../common/io/ioUtils.h"
-#include "../../common/io/inputStream.h"
-#include "../../common/io/outputStream.h"
-#include "../../common/io/printWriter.h"
-#include "../../common/io/reader.h"
+#include "../../../common/io/buffer.h"
+#include "../../../common/io/ioUtils.h"
+#include "../../../common/io/inputStream.h"
+#include "../../../common/io/outputStream.h"
+#include "../../../common/io/printWriter.h"
+#include "../../../common/io/reader.h"
 
-#include "../../common/log/logger.h"
-#include "../../common/log/logHandler.h"
+#include "../../../common/log/logger.h"
+#include "../../../common/log/logHandler.h"
 
-#include "../../motion/parameters/motionParameter.h"
+#include "../../../motion/parameters/motionParameter.h"
 
-#include "../../device/motion/simple/motionDeviceInterface.h"
-#include "../../device/motion/pid/pidDeviceInterface.h"
+#include "../../../device/motion/simple/motionDeviceInterface.h"
+#include "../../../device/motion/pid/pidDeviceInterface.h"
 
-#include "../../drivers/driver.h"
-#include "../../drivers/driverList.h"
-#include "../../drivers/driverTransmitter.h"
+#include "../../../drivers/driver.h"
+#include "../../../drivers/driverList.h"
+#include "../../../drivers/driverTransmitter.h"
 
 static bool readyForNextMotion = false;
 

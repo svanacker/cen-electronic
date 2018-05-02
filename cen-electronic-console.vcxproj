@@ -143,6 +143,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c" />
+    <ClCompile Include="client\clock\clientClock.c" />
+    <ClCompile Include="client\motion\extended\clientExtendedMotion.c" />
+    <ClCompile Include="client\motion\position\clientTrajectory.c" />
+    <ClCompile Include="client\motion\simple\clientMotion.c" />
     <ClCompile Include="client\robot\2018\launcherClient2018.c" />
     <ClCompile Include="common\2d\2d.c" />
     <ClCompile Include="common\2d\2dDebug.c" />
@@ -321,9 +325,6 @@
     <ClCompile Include="drivers\ioExpander\pc\ioExpanderPc.c" />
     <ClCompile Include="drivers\lcd\lcd.c" />
     <ClCompile Include="drivers\lcd\pc\lcdProvider_Pc.c" />
-    <ClCompile Include="drivers\motion\extendedMotionDriver.c" />
-    <ClCompile Include="drivers\motion\motionDriver.c" />
-    <ClCompile Include="drivers\motion\trajectoryDriver.c" />
     <ClCompile Include="drivers\relay\pc\relayPc.c" />
     <ClCompile Include="drivers\relay\relay.c" />
     <ClCompile Include="drivers\relay\relayDebug.c" />
@@ -405,7 +406,6 @@
     <ClCompile Include="navigation\path.c" />
     <ClCompile Include="navigation\pathList.c" />
     <ClCompile Include="navigation\pathListDebug.c" />
-    <ClCompile Include="remote\clock\remoteClock.c" />
     <ClCompile Include="robot\2018\distributor2018.c" />
     <ClCompile Include="robot\2018\distributorDebug2018.c" />
     <ClCompile Include="robot\2018\launcherDevice2018.c" />
@@ -479,6 +479,9 @@
     <ClCompile Include="test\unity\unity.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="client\motion\extended\clientExtendedMotion.h" />
+    <ClInclude Include="client\motion\position\clientTrajectory.h" />
+    <ClInclude Include="client\motion\simple\clientMotion.h" />
     <ClInclude Include="client\robot\2018\launcherClient2018.h" />
     <ClInclude Include="common\2d\2d.h" />
     <ClInclude Include="common\2d\2dDebug.h" />
@@ -665,9 +668,6 @@
     <ClInclude Include="drivers\io\ioExpanderDebug.h" />
     <ClInclude Include="drivers\io\pc\ioExpanderPc.h" />
     <ClInclude Include="drivers\lcd\lcd.h" />
-    <ClInclude Include="drivers\motion\extendedMotionDriver.h" />
-    <ClInclude Include="drivers\motion\motionDriver.h" />
-    <ClInclude Include="drivers\motion\trajectoryDriver.h" />
     <ClInclude Include="drivers\relay\pc\relayPc.h" />
     <ClInclude Include="drivers\relay\relay.h" />
     <ClInclude Include="drivers\relay\relayDebug.h" />
@@ -757,7 +757,6 @@
     <ClInclude Include="navigation\path.h" />
     <ClInclude Include="navigation\pathList.h" />
     <ClInclude Include="navigation\pathListDebug.h" />
-    <ClInclude Include="remote\clock\remoteClock.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="robot\2018\distributor2018.h" />
     <ClInclude Include="robot\2018\launcherClient2018.h" />

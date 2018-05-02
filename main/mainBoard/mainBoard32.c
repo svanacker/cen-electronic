@@ -200,9 +200,8 @@
 #include "../../drivers/system/systemDriver.h"
 
 // -> Motion Driver
-#include "../../drivers/motion/motionDriver.h"
-
-#include "../../drivers/motion/trajectoryDriver.h"
+#include "../../client/motion/simple/clientMotion.h"
+#include "../../client/motion/position/clientTrajectory.h"
 
 #include "../../drivers/motor/md22.h"
 

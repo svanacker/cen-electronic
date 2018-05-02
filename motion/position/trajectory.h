@@ -52,6 +52,27 @@ Position* getPosition(void);
 void setPosition(float x, float y, float orientation);
 
 /**
+ * Adjust the X Position, with a threshold to avoid that if we are blocked, we increase the error instead
+ * to decrease them.
+ */
+bool adjustXPosition(float x, float thresholdDistance);
+
+/**
+ * Adjust the Y Position,  with a threshold to avoid that if we are blocked, we increase the error instead
+ * to decrease them.
+ * @param y
+ */
+bool adjustYPosition(float y, float thresholdDistance);
+
+/**
+ * Adjust the angle with a threshold to avoid that if we are blocked, we increase the error instead
+ * to decrease them.
+ * We do not provide the angle but we consider that we use always a value close to
+ * 0 / 90 / 180 / 270 degree
+ */
+bool adjustAngle(float thresholdAngle);
+
+/**
  * Update the information for the trajectory.
  * Please note that the trajectory can differed from the reality
  * because of threshold

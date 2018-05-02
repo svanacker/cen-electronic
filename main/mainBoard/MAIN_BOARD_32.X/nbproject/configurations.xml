@@ -4,6 +4,21 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <logicalFolder name="f13"
+                     displayName="client.motion.extended"
+                     projectFiles="true">
+        <itemPath>../../../client/motion/extended/clientExtendedMotion.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f12"
+                     displayName="client.motion.position"
+                     projectFiles="true">
+        <itemPath>../../../client/motion/position/clientTrajectory.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f14"
+                     displayName="client.motion.simple"
+                     projectFiles="true">
+        <itemPath>../../../client/motion/simple/clientMotion.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="f8" displayName="client.robot.2018" projectFiles="true">
         <itemPath>../../../client/robot/2018/launcherClient2018.h</itemPath>
       </logicalFolder>
@@ -347,17 +362,6 @@
         <itemPath>../../../drivers/lcd/lcd.h</itemPath>
         <itemPath>../../../drivers/lcd/lcdHd44780.h</itemPath>
       </logicalFolder>
-      <logicalFolder name="drivers.motion"
-                     displayName="drivers.motion"
-                     projectFiles="true">
-        <itemPath>../../../drivers/motion/motionDriver.h</itemPath>
-        <itemPath>../../../drivers/motion/trajectoryDriver.h</itemPath>
-        <itemPath>../../../drivers/motion/extendedMotionDriver.h</itemPath>
-      </logicalFolder>
-      <logicalFolder name="drivers.motor"
-                     displayName="drivers.motor"
-                     projectFiles="true">
-      </logicalFolder>
       <logicalFolder name="f7" displayName="drivers.relay" projectFiles="true">
         <itemPath>../../../drivers/relay/relay.h</itemPath>
         <itemPath>../../../drivers/relay/relayDebug.h</itemPath>
@@ -524,6 +528,21 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <logicalFolder name="f14"
+                     displayName="client.motion.extended"
+                     projectFiles="true">
+        <itemPath>../../../client/motion/extended/clientExtendedMotion.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f13"
+                     displayName="client.motion.position"
+                     projectFiles="true">
+        <itemPath>../../../client/motion/position/clientTrajectory.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f15"
+                     displayName="client.motion.simple"
+                     projectFiles="true">
+        <itemPath>../../../client/motion/simple/clientMotion.c</itemPath>
+      </logicalFolder>
       <logicalFolder name="f9" displayName="client.robot.2018" projectFiles="true">
         <itemPath>../../../client/robot/2018/launcherClient2018.c</itemPath>
       </logicalFolder>
@@ -882,9 +901,6 @@
       <logicalFolder name="drivers.motion"
                      displayName="drivers.motion"
                      projectFiles="true">
-        <itemPath>../../../drivers/motion/motionDriver.c</itemPath>
-        <itemPath>../../../drivers/motion/trajectoryDriver.c</itemPath>
-        <itemPath>../../../drivers/motion/extendedMotionDriver.c</itemPath>
       </logicalFolder>
       <logicalFolder name="drivers.motor"
                      displayName="drivers.motor"

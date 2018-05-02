@@ -3,7 +3,16 @@
 
 #include "../../../common/io/outputStream.h"
 
+#include "../../../common/math/cenMath.h"
+
 #include "../../../device/deviceDescriptor.h"
+
+// ADJUST VALUE
+
+#define TRAJECTORY_DEVICE_ADJUST_DISTANCE_THRESHOLD    20.0f
+
+// 3 degree max
+#define TRAJECTORY_DEVICE_ADJUST_ANGLE_THRESHOLD       ((PI / 180.0f) * 3.0f)
 
 // DEVICE INTERFACE
 
