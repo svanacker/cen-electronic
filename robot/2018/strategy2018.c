@@ -58,6 +58,7 @@ static Location* beeLocation;
 static Location* switchLocation;
 static Location* garbageReleaseLocation;
 
+// Building points
 static Location* buildingAreaLocation;
 static Location* buildingLeft1Location;
 static Location* buildingLeft2Location;
@@ -132,6 +133,7 @@ void initLocations2018(void) {
     switchLocation = addNavigationLocation(SWITCH, SWITCH_X, SWITCH_Y);
     garbageReleaseLocation = addNavigationLocation(GARBAGE, GARBAGE_RELEASE_POINT_X, GARBAGE_RELEASE_POINT_Y);
 
+    /*
     buildingAreaLocation = addNavigationLocation(BUILDING_AREA, BUILDING_AREA_X, BUILDING_AREA_Y);
     buildingLeft1Location = addNavigationLocation(BUILDING_LEFT_1, BUILDING_LEFT_1_X, BUILDING_LEFT_1_Y);
     buildingLeft2Location = addNavigationLocation(BUILDING_LEFT_2, BUILDING_LEFT_2_X, BUILDING_LEFT_2_Y);
@@ -141,15 +143,17 @@ void initLocations2018(void) {
 
     buildingRight1Location = addNavigationLocation(BUILDING_RIGHT_1, BUILDING_RIGHT_1_X, BUILDING_RIGHT_1_Y);
     buildingRight2Location = addNavigationLocation(BUILDING_RIGHT_2, BUILDING_RIGHT_2_X, BUILDING_RIGHT_2_Y);
+    */
 }
 
 void initPaths2018(int index) {
+    /*
     startAreaToDistributor1FrontPath = addNavigationPath(startAreaLocation, distributor1FrontLocation, STARTAREA_TO_DISTRIBUTOR_1_COST, 0x10, 0x10, ANGLE_45, -ANGLE_60, STARTAREA_TO_DISTRIBUTOR_1_ACCELERATION_FACTOR, STARTAREA_TO_DISTRIBUTOR_1_SPEED_FACTOR);
     greenDistributor1ToBeePath = addNavigationPath(distributor1FrontLocation, beeLocation, DISTRIBUTOR_1_TO_BEE_COST, 0x80, 0x10, -ANGLE_60, 0, DISTRIBUTOR_1_TO_BEE__ACCELERATION_FACTOR, DISTRIBUTOR_1_TO_BEE_SPEED_FACTOR);
     beeToGreenDistributor2Path = addNavigationPath(beeLocation, distributor2FrontLocation, BEE_TO_DISTRIBUTOR_2_COST, 0x37, 0x96, 0, ANGLE_30, BEE_TO_DISTRIBUTOR_2__ACCELERATION_FACTOR, BEE_TO_DISTRIBUTOR_2_SPEED_FACTOR);
     beeToGreenBuildingAreaPath = addNavigationPath(beeLocation, buildingAreaLocation, BEE_TO_BUILDING_AREA_COST, 0x10, 0x60, 0, ANGLE_30, BEE_TO_BUILDING_AREA_ACCELERATION_FACTOR, BEE_TO_BUILDING_AREA_SPEED_FACTOR);
     greenBuildingAreaToSwitch1Path = addNavigationPath(buildingAreaLocation, switchLocation, BUILDING_AREA_TO_SWITCH_COST, 0x10, 0x20, ANGLE_30, 0, BUILDING_AREA_TO_SWITCH_ACCELERATION_FACTOR, BUILDING_AREA_TO_SWITCH_SPEED_FACTOR);
-
+    */
     // switch1ToGreenDistributor2Path = addNavigationPath(switchLocation, distributor2FrontLocation, SWITCH_TO_DISTRIBUTOR_2_ACCELERATION_FACTOR, 0x20, 0x80, 0, ANGLE_30);
     /*
     PathData* greenDistributor2ToGarbageAreaFrontPath;

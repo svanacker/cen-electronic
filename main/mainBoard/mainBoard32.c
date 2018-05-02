@@ -704,9 +704,9 @@ int main(void) {
     clearBuffer(&meca1InputBuffer);
     // Send a clear Buffer to the remote board to avoid to keep bad data in the link when rebooting
     append(&meca1OutputStream, HEADER_CLEAR_INPUT_STREAM);
-
-    // enableNotificationRobotInfraredDetector(DETECTOR_GROUP_TYPE_FORWARD);
-
+    
+    // Wait until the match start
+    loopUntilStart(&startMatch);
 
     while (1) {
         if (!mainBoardWaitForInstruction(&startMatch)) {
