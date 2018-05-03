@@ -26,7 +26,7 @@ char pointPrint(int column, int line, int x, int y, char c) {
     return CHAR_NO_DRAW;
 }
 
-char circlePrint(int column, int line, int x, int y, int radius, char c) {
+char filledCirclePrint(int column, int line, int x, int y, int radius, char c) {
     int xColumn = convertXToColumn(x);
     int yLine = convertYToLine(y);
     if ((column - xColumn) * (column - xColumn) + (line - yLine) * (line - yLine) <= radius * radius) {
@@ -35,11 +35,31 @@ char circlePrint(int column, int line, int x, int y, int radius, char c) {
     return CHAR_NO_DRAW;
 }
 
-char rectanglePrint(int column, int line, int x, int y, int width, int height, char c) {
+// RECTANGLE
+
+char filledRectanglePrint(int column, int line, int x, int y, int width, int height, char c) {
     int xColumn = convertXToColumn(x);
     int yLine = convertYToLine(y);
     if (abs(column - xColumn) <= width && abs(line - yLine) <= height) {
         return c;
+    }
+    return CHAR_NO_DRAW;
+}
+
+char emptyRectanglePrint(int column, int line, int x, int y, int width, int height, char verticalChar, char horizontalChar) {
+    int x1Column = convertXToColumn(x);
+    int y1Line = convertYToLine(y);
+    int x2Column = convertXToColumn(x + width);
+    int y2Line = convertYToLine(y + height);
+
+    // Verticall Left and Right line
+    // Be careful, 1 & 2 must be inverted because char are written to the bottom (inverse as coordinates)
+    if ((column == x1Column || column == x2Column) && y2Line <= line && line <= y1Line ) {
+        return verticalChar;
+    }
+    // Horizontal Bottom & Top Line
+    if ((line == y1Line || line == y2Line) && x1Column <= column && column <= x2Column) {
+        return horizontalChar;
     }
     return CHAR_NO_DRAW;
 }

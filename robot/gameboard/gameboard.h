@@ -9,6 +9,8 @@
 #include "../../common/io/outputStream.h"
 
 #define CHAR_NO_DRAW                ' '
+#define CHAR_VERTICAL               '|'
+#define CHAR_HORIZONTAL             '-'
 
 #define GAMEBOARD_COLUMN_COUNT             80
 #define GAMEBOARD_LINE_COUNT               60

@@ -12,19 +12,30 @@ int convertXToColumn(int x);
  */
 int convertYToLine(int y);
 
+// POINTS
+
 /**
  * Print Function to draw a point with a c char. 
  */
 char pointPrint(int column, int line, int x, int y, char c);
 
+// CIRCLE
+
 /** 
  * Circle with radius draw function.
  */
-char circlePrint(int column, int line, int x, int y, int radius, char c);
+char filledCirclePrint(int column, int line, int x, int y, int radius, char c);
+
+// RECTANGLE
 
 /**
- * Rectangle draw function
+ * Filled Rectangle draw function.
  */
-char rectanglePrint(int column, int line, int x, int y, int width, int height, char c);
+char filledRectanglePrint(int column, int line, int x, int y, int width, int height, char c);
+
+/**
+* Empty Rectangle draw function.
+*/
+char emptyRectanglePrint(int column, int line, int x, int y, int width, int height, char verticalChar, char horizontalChar);
 
 #endif
