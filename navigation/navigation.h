@@ -31,28 +31,27 @@ struct Navigation {
 /**
  * Initialize the navigation system.
  */
-void initNavigation(LocationList* locationList, PathList* pathList, BitList* outgoingPaths, BitList* availablePaths);
+void initNavigation(Navigation* navigation, LocationList* locationList, PathList* pathList, BitList* outgoingPaths, BitList* availablePaths);
 
 /**
- * Returns the navigation (singleton) location List.
+ * Returns the navigation location List field.
  */
-LocationList* getNavigationLocationList();
+LocationList* getNavigationLocationList(Navigation* navigation);
 
 /**
- * Returns the navigation (singleton) path list.
+ * Returns the navigation path List field
  */
-PathList* getNavigationPathList();
-
+PathList* getNavigationPathList(Navigation* navigation);
 
 /**
  * Add the location to the navigation graph.
  */
-Location* addNavigationLocation(char* name, float x, float y);
+Location* addNavigationLocation(Navigation* navigation, char* name, float x, float y);
 
 /**
  * Add the path to the navigation graph.
  */
-PathData* addNavigationPath(
+PathData* addNavigationPath(Navigation* navigation,
     Location* location1,
     Location* location2,
     float cost,
@@ -69,10 +68,10 @@ PathData* addNavigationPath(
  * @param end endPoint
  * @return the cost to reach the best Path
  */
-float computeBestPath(Location* start,
+float computeBestPath(Navigation* navigation, 
+                             Location* start,
                              Location* end);
 
-void printNavigationContext(OutputStream* outputStream);
 
 // PATH AVAILABILITY
 
@@ -81,13 +80,13 @@ void printNavigationContext(OutputStream* outputStream);
  * @param index the index of the path
  * @param value the availability of the path
  */
-void setPathAvailability(int index, bool value);
+void setPathAvailability(Navigation* navigation, int index, bool value);
 
-bool getPathAvailability(int index);
+bool getPathAvailability(Navigation* navigation, int index);
 
 /**
  * Reset the status of availability of all paths to Available.
  */
-void resetAllPathsAsAvailable();
+void resetAllPathsAsAvailable(Navigation* navigation);
 
 #endif

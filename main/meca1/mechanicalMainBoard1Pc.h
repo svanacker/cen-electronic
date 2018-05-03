@@ -3,6 +3,8 @@
 
 #include <stdbool.h>
 
+#include "mechanicalMainBoard1Common.h"
+
 #define MECHANICAL_BOARD_1_PC_NAME           "mechanicalBoard1Pc"
 #define MECHANICAL_BOARD_1_PC_RUN_SINGLE     "single"
 #define MECHANICAL_BOARD_1_PC_RUN_STANDARD   "standard"
@@ -15,9 +17,6 @@
 * Start Point to emulate the mechanical Board 1 PC.
 */
 void runMechanicalBoard1PC(bool singleMode);
-
-/** Define the I2C address used by mechanical Board 1 PC. */
-#define MECHANICAL_BOARD_1_PC_I2C_ADDRESS     0x92
 
 // Dispatchers
 

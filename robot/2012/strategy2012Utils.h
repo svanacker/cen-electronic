@@ -3,6 +3,7 @@
 
 #include <stdbool.h>
 
+#include "../../navigation/navigation.h"
 #include "../../navigation/path.h"
 
 bool isGreen();
@@ -10,9 +11,9 @@ bool isGreen();
 /**
  * Change the location for color.
  */
-void changeLocationsForColor();
+void changeLocationsForColor(Navigation* navigation);
 
-void changePathsForColor();
+void changePathsForColor(Navigation* navigation);
 
 float changeAngleForColor(float angle);
 

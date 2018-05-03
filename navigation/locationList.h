@@ -48,12 +48,12 @@ void clearLocationTmpInfo(LocationList* locationList);
  * Clear the previous information of each location of the list.
  * @param locationList the pointer on the struct (POO Programming)
  */
-void clearPrevious(LocationList* locationList);
+// void clearPrevious(LocationList* locationList);
 
 /**
  * Add all location to the list.
  */
-void addLocationList(LocationList* targetLocationList, LocationList* sourceLocationList);
+// void addLocationList(LocationList* targetLocationList, LocationList* sourceLocationList);
 
 /**
  * Returns if the list is empty.
@@ -131,23 +131,5 @@ unsigned int getLocationCount(LocationList* locationList);
  * @return NULL if the locationList is empty, the nearest location (distance) from the locationList.
  */
 Location* getNearestLocation(LocationList* locationList, float x, float y);
-
-// DEBUG
-
-/**
-* Print the list of location as table.
-* @param outputStream the stream to show information
-* @param locationList the pointer on the struct (POO Programming)
-*/
-void printLocationListTable(OutputStream* outputStream, LocationList* locationList);
-
-/**
- * TODO:
- */
-void printLocationLinkedPath(OutputStream* outputStream, Location* startPoint);
-
-// TESTS DATA
-
-void addLocationListTestsData(LocationList* locationList);
 
 #endif

@@ -1,4 +1,4 @@
-﻿#include "mechanicalBoard1Pc.h"
+﻿#include "mechanicalMainBoard1Pc.h"
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -249,7 +249,7 @@ void runMechanicalBoard1PC(bool singleMode) {
 		mechanical1I2cBus = addI2cBus(I2C_BUS_TYPE_SLAVE, I2C_BUS_PORT_1);
 
         initI2cBusConnectionList((I2cBusConnection(*)[]) &i2cBusConnectionListArray, MECHANICAL_BOARD_1_PC_I2C_BUS_CONNECTION_LIST_LENGTH);
-        mechanical1I2cBusConnection = addI2cBusConnection(mechanical1I2cBus, MECHANICAL_BOARD_1_PC_I2C_ADDRESS, false);
+        mechanical1I2cBusConnection = addI2cBusConnection(mechanical1I2cBus, MECHANICAL_BOARD_1_I2C_ADDRESS, false);
         mechanical1I2cBusConnection->i2cBus = mechanical1I2cBus;
         mechanical1I2cBusConnectionPc.i2cPipeMasterName = MAIN_BOARD_TO_MECA1_BOARD_PC_PIPE_I2C_MASTER_NAME;
         mechanical1I2cBusConnectionPc.i2cPipeSlaveName = MECHANICAL_BOARD_1_PC_PIPE_I2C_SLAVE_NAME;

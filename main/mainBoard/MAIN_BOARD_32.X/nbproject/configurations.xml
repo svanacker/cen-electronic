@@ -218,6 +218,10 @@
         <itemPath>../../../device/eeprom/eepromDevice.h</itemPath>
         <itemPath>../../../device/eeprom/eepromDeviceInterface.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f15" displayName="device.gameboard" projectFiles="true">
+        <itemPath>../../../device/gameboard/gameboardDevice.h</itemPath>
+        <itemPath>../../../device/gameboard/gameboardDeviceInterface.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="device.i2c" displayName="device.i2c" projectFiles="true">
         <itemPath>../../../device/i2c/i2cCommonDebugDevice.h</itemPath>
         <itemPath>../../../device/i2c/i2cCommonDebugDeviceInterface.h</itemPath>
@@ -410,14 +414,17 @@
         <itemPath>../../../drivers/tof/vl53l0x/tofList_vl53l0x.h</itemPath>
         <itemPath>../../../drivers/tof/vl53l0x/tof_vl53l0x.h</itemPath>
       </logicalFolder>
-      <logicalFolder name="main" displayName="main" projectFiles="true">
-        <itemPath>../../meca2/mechanicalBoard2.h</itemPath>
-        <itemPath>../../airconditioning/airConditioningMain.h</itemPath>
-        <itemPath>../../meca1/mechanicalBoard1.h</itemPath>
+      <logicalFolder name="main" displayName="main.mainboard" projectFiles="true">
         <itemPath>../mainBoard32.h</itemPath>
+        <itemPath>../mainBoard2018.h</itemPath>
+        <itemPath>../mainBoardCommon.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f17" displayName="main.meca1" projectFiles="true">
+        <itemPath>../../meca1/mechanicalMainBoard1Common.h</itemPath>
+        <itemPath>../../meca1/mechanicalMainBoard32_1.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f16" displayName="main.motorboard" projectFiles="true">
         <itemPath>../../motorboard/motorBoard32.h</itemPath>
-        <itemPath>../../strategy/strategyMain.h</itemPath>
-        <itemPath>../../beaconReceiver/beaconReceiverBoard.h</itemPath>
       </logicalFolder>
       <logicalFolder name="motion.extended"
                      displayName="motion.extended"
@@ -439,6 +446,7 @@
         <itemPath>../../../navigation/pathList.h</itemPath>
         <itemPath>../../../navigation/locationListDebug.h</itemPath>
         <itemPath>../../../navigation/pathListDebug.h</itemPath>
+        <itemPath>../../../navigation/navigationDebug.h</itemPath>
       </logicalFolder>
       <logicalFolder name="robot" displayName="robot" projectFiles="true">
         <itemPath>../../../robot/robot.h</itemPath>
@@ -465,6 +473,11 @@
                      displayName="robot.config.32"
                      projectFiles="true">
         <itemPath>../../../robot/config/32/robotConfigPic32.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f18" displayName="robot.gameboard" projectFiles="true">
+        <itemPath>../../../robot/gameboard/gameboard.h</itemPath>
+        <itemPath>../../../robot/gameboard/gameboardElement.h</itemPath>
+        <itemPath>../../../robot/gameboard/gameboardElementList.h</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.kinematics"
                      displayName="robot.kinematics"
@@ -756,6 +769,10 @@
         <itemPath>../../../device/eeprom/eepromDevice.c</itemPath>
         <itemPath>../../../device/eeprom/eepromDeviceInterface.c</itemPath>
       </logicalFolder>
+      <logicalFolder name="f16" displayName="device.gameboard" projectFiles="true">
+        <itemPath>../../../device/gameboard/gameboardDevice.c</itemPath>
+        <itemPath>../../../device/gameboard/gameboardDeviceInterface.c</itemPath>
+      </logicalFolder>
       <logicalFolder name="device.i2c" displayName="device.i2c" projectFiles="true">
         <itemPath>../../../device/i2c/i2cCommonDebugDevice.c</itemPath>
         <itemPath>../../../device/i2c/i2cCommonDebugDeviceInterface.c</itemPath>
@@ -902,10 +919,6 @@
                      displayName="drivers.motion"
                      projectFiles="true">
       </logicalFolder>
-      <logicalFolder name="drivers.motor"
-                     displayName="drivers.motor"
-                     projectFiles="true">
-      </logicalFolder>
       <logicalFolder name="f8" displayName="drivers.relay" projectFiles="true">
         <itemPath>../../../drivers/relay/relay.c</itemPath>
         <itemPath>../../../drivers/relay/relayDebug.c</itemPath>
@@ -954,8 +967,10 @@
                      projectFiles="true">
         <itemPath>../../../drivers/tof/vl53l0x/32/vl53l0x_platform_pic32.c</itemPath>
       </logicalFolder>
-      <logicalFolder name="main" displayName="main" projectFiles="true">
+      <logicalFolder name="main" displayName="main.mainboard" projectFiles="true">
         <itemPath>../mainBoard32.c</itemPath>
+        <itemPath>../mainBoard2018.c</itemPath>
+        <itemPath>../mainBoardCommon.c</itemPath>
       </logicalFolder>
       <logicalFolder name="motion.extended"
                      displayName="motion.extended"
@@ -971,6 +986,7 @@
         <itemPath>../../../navigation/pathList.c</itemPath>
         <itemPath>../../../navigation/locationListDebug.c</itemPath>
         <itemPath>../../../navigation/pathListDebug.c</itemPath>
+        <itemPath>../../../navigation/navigationDebug.c</itemPath>
       </logicalFolder>
       <logicalFolder name="robot" displayName="robot" projectFiles="true">
         <itemPath>../../../robot/robot.c</itemPath>
@@ -996,6 +1012,11 @@
                      displayName="robot.config.32"
                      projectFiles="true">
         <itemPath>../../../robot/config/32/robotConfigPic32.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f17" displayName="robot.gameboard" projectFiles="true">
+        <itemPath>../../../robot/gameboard/gameboard.c</itemPath>
+        <itemPath>../../../robot/gameboard/gameboardElement.c</itemPath>
+        <itemPath>../../../robot/gameboard/gameboardElementList.c</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.kinematics"
                      displayName="robot.kinematics"

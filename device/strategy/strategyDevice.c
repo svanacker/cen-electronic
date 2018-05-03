@@ -27,16 +27,20 @@
 #include "../../robot/gameboard/gameboard.h"
 #include "../../robot/strategy/gameStrategy.h"
 #include "../../robot/strategy/gameStrategyList.h"
+#include "../../robot/strategy/gameStrategyListDebug.h"
 #include "../../robot/strategy/gameStrategyItem.h"
 
 #include "../../robot/2018/strategy2018.h"
 #include "../../robot/2018/strategy2018Utils.h"
 #include "../../robot/config/robotConfig.h"
 
+// Forward declaration
+GameStrategyContext* getStrategyDeviceGameStrategyContext(void);
+
 // DEVICE INTERFACE
 
 void initStrategy(void) {
-    
+    initStrategy2018(getStrategyDeviceGameStrategyContext(), 0);
 }
 
 void stopStrategy(void) {
@@ -55,17 +59,17 @@ void deviceStrategyHandleRawData(char commandHeader, InputStream* inputStream, O
         checkIsSeparator(inputStream);
         float y = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
 
-        GameStrategyContext* context = getStrategyContext();
+        GameStrategyContext* context = getStrategyDeviceGameStrategyContext();
 
-        context->opponentRobotPosition.x = x;
-        if (isGreen()) {
-            context->opponentRobotPosition.y = y;
+        context->opponentRobotPosition->x = x;
+        if (isGreen(context)) {
+            context->opponentRobotPosition->y = y;
         }
         else {
             // Opponent Robot position is relative to violet !
-            context->opponentRobotPosition.y = GAMEBOARD_HEIGHT - y;
+            context->opponentRobotPosition->y = GAMEBOARD_HEIGHT - y;
         }
-        updatePathsAvailability();
+        updatePathsAvailability(context);
 
         ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_STRATEGY_SET_OPPONENT_ROBOT_POSITION);
     }
@@ -74,7 +78,7 @@ void deviceStrategyHandleRawData(char commandHeader, InputStream* inputStream, O
         int c = readHex4(inputStream);
         ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_STRATEGY_SET_CONFIG);
 
-        GameStrategyContext* context = getStrategyContext();
+        GameStrategyContext* context = getStrategyDeviceGameStrategyContext();
         
         // TODO : Provide non specific function
         int strategyIndex = (c & CONFIG_STRATEGY_MASK);
@@ -82,21 +86,13 @@ void deviceStrategyHandleRawData(char commandHeader, InputStream* inputStream, O
         appendStringAndDec(getInfoOutputStreamLogger(), "setStrategy:", strategyIndex);
         println(getInfoOutputStreamLogger());
 
-        initStrategy2018(strategyIndex);
+        initStrategy2018(context, strategyIndex);
         if (c & CONFIG_COLOR_GREEN_MASK) {
-            setColor(TEAM_COLOR_GREEN);
+            setColor(context, TEAM_COLOR_GREEN);
         }
         else {
-            setColor(TEAM_COLOR_ORANGE);
+            setColor(context, TEAM_COLOR_ORANGE);
         }
-
-    }
-    // Print Gameboard
-    else if (commandHeader == COMMAND_STRATEGY_PRINT_GAME_BOARD) {
-        // OutputStream* debugOutputStream = getAlwaysOutputStreamLogger();
-        ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_STRATEGY_PRINT_GAME_BOARD);
-
-        // printGameboard(debugOutputStream);
     }
 	// List Strategies
 	else if (commandHeader == COMMAND_STRATEGY_LIST) {
@@ -112,33 +108,19 @@ void deviceStrategyHandleRawData(char commandHeader, InputStream* inputStream, O
 		ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_STRATEGY_ITEM);
 		// TODO printGameStrategy(debugOutputStream, gameStrategy);
 	}
-    // LocationList
-    else if (commandHeader == COMMAND_LOCATION_LIST) {
-        OutputStream* debugOutputStream = getAlwaysOutputStreamLogger();
-        ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_LOCATION_LIST);
-        LocationList* locationList = getNavigationLocationList();
-        printLocationListTable(debugOutputStream, locationList);
-    }
-    // PathList
-    else if (commandHeader == COMMAND_PATH_LIST) {
-        OutputStream* debugOutputStream = getAlwaysOutputStreamLogger();
-        ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_PATH_LIST);
-        PathList* pathList = getNavigationPathList();
-        printPathListTable(debugOutputStream, pathList);
-    }
     // next step
     else if (commandHeader == COMMAND_STRATEGY_NEXT_STEP) {
-        GameStrategyContext* context = getStrategyContext();
+        GameStrategyContext* context = getStrategyDeviceGameStrategyContext();
         // response
         ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_STRATEGY_NEXT_STEP);
         // output arguments : we have only last information !
         appendHex2(outputStream, context->hasMoreNextSteps);
 
         // do the job synchronously to avoid problems of notification
-        context->hasMoreNextSteps = nextStep();
+        context->hasMoreNextSteps = nextStep(context);
     }
     else if (commandHeader == COMMAND_STRATEGY_SET_ROBOT_POSITION) {
-        GameStrategyContext* context = getStrategyContext();
+        GameStrategyContext* context = getStrategyDeviceGameStrategyContext();
         // output before any notification !!
         ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_STRATEGY_SET_ROBOT_POSITION);
         
@@ -147,11 +129,11 @@ void deviceStrategyHandleRawData(char commandHeader, InputStream* inputStream, O
         // separator
         checkIsSeparator(inputStream);
         // x
-        context->robotPosition.x = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
+        context->robotPosition->x = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
         // separator
         checkIsSeparator(inputStream);
         // y
-        context->robotPosition.y = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
+        context->robotPosition->y = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
         // separator
         checkIsSeparator(inputStream);
         // angle in ddeg
@@ -159,8 +141,8 @@ void deviceStrategyHandleRawData(char commandHeader, InputStream* inputStream, O
 
         OutputStream* debugOutputStream = getInfoOutputStreamLogger();
         appendStringAndDec(debugOutputStream, "\nStrategySetRobotPosition:status=", status);
-        appendStringAndDecf(debugOutputStream, ", x=", context->robotPosition.x);
-        appendStringAndDecf(debugOutputStream, ", y=", context->robotPosition.y);
+        appendStringAndDecf(debugOutputStream, ", x=", context->robotPosition->x);
+        appendStringAndDecf(debugOutputStream, ", y=", context->robotPosition->y);
         appendStringAndDecf(debugOutputStream, ", angle=", context->robotAngle);
         println(debugOutputStream);
     
@@ -174,7 +156,7 @@ void deviceStrategyHandleRawData(char commandHeader, InputStream* inputStream, O
     // SCORE
     else if (commandHeader == COMMAND_STRATEGY_GET_GLOBAL_SCORE) {
         ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_STRATEGY_GET_GLOBAL_SCORE);
-        GameStrategyContext* context = getStrategyContext();
+        GameStrategyContext* context = getStrategyDeviceGameStrategyContext();
         appendHex4(outputStream, context->score);
     }
 }
@@ -186,6 +168,14 @@ static DeviceDescriptor descriptor = {
     .deviceHandleRawData = &deviceStrategyHandleRawData,
 };
 
-DeviceDescriptor* getStrategyDeviceDescriptor() {
+DeviceDescriptor* getStrategyDeviceDescriptor(GameStrategyContext* gameStrategyContext) {
+    descriptor.object = (int*) gameStrategyContext;
     return &descriptor;
+}
+
+/**
+* @private.
+*/
+GameStrategyContext* getStrategyDeviceGameStrategyContext(void) {
+    return (GameStrategyContext*)(descriptor.object);
 }

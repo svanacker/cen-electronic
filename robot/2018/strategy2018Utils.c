@@ -28,18 +28,19 @@
 
 // COLOR MANAGEMENT
 
-bool isGreen() {
-    return getStrategyContext()->color == TEAM_COLOR_GREEN;
+bool isGreen(GameStrategyContext* gameStrategyContext) {
+    return gameStrategyContext->color == TEAM_COLOR_GREEN;
 }
 
 /**
  * Change the location for color.
  */
-void changeLocationsForColor() {
-    if (isGreen()) {
+void changeLocationsForColor(GameStrategyContext* gameStrategyContext) {
+    if (isGreen(gameStrategyContext)) {
         return;
     }
-    LocationList* locationList = getNavigationLocationList();
+    Navigation* navigation = gameStrategyContext->navigation;
+    LocationList* locationList = getNavigationLocationList(navigation);
     unsigned int i;
     unsigned int size = locationList->size;
     for (i = 0; i < size; i++) {
@@ -48,8 +49,8 @@ void changeLocationsForColor() {
     }
 }
 
-float changeAngleForColor(float angle) {
-    if (isGreen()) {
+float changeAngleForColor(GameStrategyContext* gameStrategyContext, float angle) {
+    if (isGreen(gameStrategyContext)) {
         return angle;
     } else {
         return -angle;

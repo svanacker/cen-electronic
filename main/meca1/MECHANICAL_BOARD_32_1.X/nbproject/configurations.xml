@@ -277,8 +277,9 @@
         <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_tuning.h</itemPath>
         <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_types.h</itemPath>
       </logicalFolder>
-      <logicalFolder name="main" displayName="main" projectFiles="true">
-        <itemPath>../mechanicalBoard32_1.h</itemPath>
+      <logicalFolder name="main" displayName="main.meca1" projectFiles="true">
+        <itemPath>../mechanicalMainBoard1Common.h</itemPath>
+        <itemPath>../mechanicalMainBoard32_1.h</itemPath>
       </logicalFolder>
       <logicalFolder name="robot" displayName="robot" projectFiles="true">
       </logicalFolder>
@@ -573,7 +574,7 @@
                      projectFiles="true">
         <itemPath>../../../drivers/tof/vl53l0x/32/vl53l0x_platform_pic32.c</itemPath>
       </logicalFolder>
-      <logicalFolder name="main" displayName="main" projectFiles="true">
+      <logicalFolder name="main" displayName="main.meca1" projectFiles="true">
         <itemPath>../mechanicalMainBoard32_1.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f3" displayName="robot.2018" projectFiles="true">

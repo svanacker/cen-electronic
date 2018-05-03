@@ -7,15 +7,18 @@
 /**
 * Defines the index for the timer to check if robot has detect something.
 */
-#define ROBOT_DETECTOR_TIMER_CODE                     3
-
-// Timer Index for Robot infrared
-#define ROBOT_INFRARED_DETECTOR_TIMER_CODE            15
+#define ROBOT_DETECTOR_TIMER_CODE                       3
 
 /** The code of the timer (used to update value of servo). */
 #define SERVO_TIMER_CODE                               10
 
-#define STRATEGY_DRIVER_TIMER_CODE                    25
+// Timer Index for Robot infrared
+#define ROBOT_INFRARED_DETECTOR_TIMER_CODE             15
+
+/** The index of the timer (used to manage path availability). */
+#define STRATEGY_TIMER_INDEX                           18
+
+#define STRATEGY_DRIVER_TIMER_CODE                     25
 
 #define TIMER_SOFT_CLOCK_CODE                          96
 

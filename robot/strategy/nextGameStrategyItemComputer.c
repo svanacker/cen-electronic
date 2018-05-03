@@ -25,6 +25,7 @@
 void computeBestNextTarget(GameStrategyContext* strategyContext) {
 
     GameStrategy* gameStrategy = strategyContext->gameStrategy;
+    Navigation* navigation = strategyContext->navigation;
     // float elapsedMatchTime = strategyContext->elapsedMatchTime;
     Location* currentLocation = strategyContext->nearestLocation;
 
@@ -48,7 +49,7 @@ void computeBestNextTarget(GameStrategyContext* strategyContext) {
         for (actionIndex = 0; actionIndex < targetActionCount; actionIndex++) {
             GameTargetAction* targetAction = getGameTargetAction(actionList, actionIndex);
             Location* startLocation = targetAction->startLocation;
-            float distanceCost = computeBestPath(currentLocation, startLocation);
+            float distanceCost = computeBestPath(navigation, currentLocation, startLocation);
             
             // LOG costs
             //printLocationList(getInfoOutputStreamLogger(), "Result=", &(strategyContext->currentTrajectory));
@@ -81,7 +82,7 @@ void computeBestNextTarget(GameStrategyContext* strategyContext) {
     GameTargetAction* targetAction = strategyContext->currentTargetAction;
     if (targetAction != NULL) {
         Location* startLocation = targetAction->startLocation;
-        computeBestPath(currentLocation, startLocation);
+        computeBestPath(navigation, currentLocation, startLocation);
         // TODO : printLocationLinkedPath(getInfoOutputStreamLogger(), "Result=", &(strategyContext->currentTrajectory));
     }
 

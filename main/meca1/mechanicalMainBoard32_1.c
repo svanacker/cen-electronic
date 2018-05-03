@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 
-#include "mechanicalBoard32_1.h"
+#include "mechanicalMainBoard32_1.h"
 
 #include "../../common/setup/32/picSetup32.h"
 

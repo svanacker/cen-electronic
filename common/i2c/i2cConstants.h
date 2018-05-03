@@ -84,7 +84,7 @@
 
 // FOCUS ROBOTIC ADDRESS : 0x92 -> 0x9E
 /** Define the I2C address used by motorBoard. */
-#define MOTOR_BOARD_I2C_ADDRESS       0x94
+#define MOTOR_BOARD_I2C_ADDRESS         0x94
 #define MECHANICAL_BOARD_1_I2C_ADDRESS  0x96
 
 

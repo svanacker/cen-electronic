@@ -3,17 +3,20 @@
 
 #include <stdbool.h>
 
+#include "../../navigation/navigation.h"
 #include "../../navigation/path.h"
 
-bool isGreen();
+#include "../strategy/gameStrategyContext.h"
+
+bool isGreen(GameStrategyContext* gameStrategyContext);
 
 /**
  * Change the location for color.
  */
-void changeLocationsForColor();
+void changeLocationsForColor(GameStrategyContext* gameStrategyContext);
 
-void changePathsForColor(void);
+void changePathsForColor(GameStrategyContext* gameStrategyContext);
 
-float changeAngleForColor(float angle);
+float changeAngleForColor(GameStrategyContext* gameStrategyContext, float angle);
 
 #endif

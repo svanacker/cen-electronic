@@ -961,6 +961,12 @@
     <Filter Include="Header Files\client\motion\simple">
       <UniqueIdentifier>{dc9231a5-a06e-4aee-bb44-4598a06eca8d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\device\gameboard">
+      <UniqueIdentifier>{1d7f8653-eb58-49b6-9338-0703e25f5d8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\device\gameboard">
+      <UniqueIdentifier>{25a80922-256d-44d7-b3e9-6afa1b47d070}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -1686,9 +1692,6 @@
     <ClCompile Include="robot\2018\strategy2018Utils.c">
       <Filter>Source Files\robot\2018</Filter>
     </ClCompile>
-    <ClCompile Include="main\meca1\mechanicalBoard1Pc.c">
-      <Filter>Source Files\main\meca1</Filter>
-    </ClCompile>
     <ClCompile Include="robot\2018\launcherDevice2018.c">
       <Filter>Source Files\robot\2018</Filter>
     </ClCompile>
@@ -1967,6 +1970,30 @@
     </ClCompile>
     <ClCompile Include="client\motion\simple\clientMotion.c">
       <Filter>Source Files\client\motion\simple</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2018\gameBoardElement2018.c">
+      <Filter>Source Files\robot\2018</Filter>
+    </ClCompile>
+    <ClCompile Include="navigation\navigationDebug.c">
+      <Filter>Source Files\navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\gameboard\gameboardElementList.c">
+      <Filter>Source Files\robot\gameboard</Filter>
+    </ClCompile>
+    <ClCompile Include="device\gameboard\gameboardDevice.c">
+      <Filter>Source Files\device\gameboard</Filter>
+    </ClCompile>
+    <ClCompile Include="device\gameboard\gameboardDeviceInterface.c">
+      <Filter>Source Files\device\gameboard</Filter>
+    </ClCompile>
+    <ClCompile Include="main\mainBoard\mainBoard2018.c">
+      <Filter>Source Files\main\mainBoard</Filter>
+    </ClCompile>
+    <ClCompile Include="main\meca1\mechanicalMainBoard1Pc.c">
+      <Filter>Source Files\main\meca1</Filter>
+    </ClCompile>
+    <ClCompile Include="main\mainBoard\mainBoardCommon.c">
+      <Filter>Source Files\main\mainBoard</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2759,9 +2786,6 @@
     <ClInclude Include="robot\2018\strategy2018Utils.h">
       <Filter>Header Files\robot\2018</Filter>
     </ClInclude>
-    <ClInclude Include="main\meca1\mechanicalBoard1Pc.h">
-      <Filter>Header Files\main\meca1</Filter>
-    </ClInclude>
     <ClInclude Include="robot\2018\launcherDevice2018.h">
       <Filter>Header Files\robot\2018</Filter>
     </ClInclude>
@@ -3034,6 +3058,36 @@
     </ClInclude>
     <ClInclude Include="client\motion\simple\clientMotion.h">
       <Filter>Header Files\client\motion\simple</Filter>
+    </ClInclude>
+    <ClInclude Include="navigation\navigationDebug.h">
+      <Filter>Header Files\navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2018\gameBoardElement2018.h">
+      <Filter>Header Files\robot\2018</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\gameboard\gameboardElementList.h">
+      <Filter>Header Files\robot\gameboard</Filter>
+    </ClInclude>
+    <ClInclude Include="device\gameboard\gameboardDevice.h">
+      <Filter>Header Files\device\gameboard</Filter>
+    </ClInclude>
+    <ClInclude Include="device\gameboard\gameboardDeviceInterface.h">
+      <Filter>Header Files\device\gameboard</Filter>
+    </ClInclude>
+    <ClInclude Include="main\mainBoard\mainBoard2018.h">
+      <Filter>Header Files\main\mainBoard</Filter>
+    </ClInclude>
+    <ClInclude Include="main\meca1\mechanicalMainBoard1Common.h">
+      <Filter>Header Files\main\meca1</Filter>
+    </ClInclude>
+    <ClInclude Include="main\motorboard\motorBoardCommon.h">
+      <Filter>Header Files\main\motorboard</Filter>
+    </ClInclude>
+    <ClInclude Include="main\meca1\mechanicalMainBoard1Pc.h">
+      <Filter>Header Files\main\meca1</Filter>
+    </ClInclude>
+    <ClInclude Include="main\mainBoard\mainBoardCommon.h">
+      <Filter>Header Files\main\mainBoard</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

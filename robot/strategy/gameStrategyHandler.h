@@ -29,22 +29,22 @@
 
 // Init
 
-void initStrategyHandler();
+void initStrategyHandler(GameStrategyContext* gmeStrategyContext);
 
 /**
  * Choose the rigth strategy.
  */
-void setStrategy(int strategyIndex);
+void setStrategy(GameStrategyContext* gmeStrategyContext, int strategyIndex);
 
 /**
  * Returns the strategy context used by the handler.
  */
-GameStrategyContext* getStrategyContext();
+GameStrategyContext* getStrategyContext(GameStrategyContext* gmeStrategyContext);
 
 /**
  * Do the next step in the strategy. Returns false if nothing was done.
  */
-bool nextStep();
+bool nextStep(GameStrategyContext* gmeStrategyContext);
 
 // OBSTACLE
 
@@ -52,21 +52,21 @@ bool nextStep();
  * Update all paths / opponent Robot Position to mark them as unavailable if the robot is on
  * this path !
  */
-void updatePathsAvailability();
+void updatePathsAvailability(GameStrategyContext* gmeStrategyContext);
 
 /**
  * Handle a collision detection.
  */
-void handleCollision();
+void handleCollision(GameStrategyContext* gmeStrategyContext);
 
 // MOTION
 
-void rotateAbsolute(float angle);
+void rotateAbsolute(GameStrategyContext* gameStrategyContext, float angle);
 
 /**
  * Ask to follow a path.
  */
-void motionFollowPath(PathData* pathData, bool reversed);
+void motionFollowPath(GameStrategyContext* gmeStrategyContext, PathData* pathData, bool reversed);
 
 /**
  * Ask the robot to go to a location but without path (useful for actionItem).

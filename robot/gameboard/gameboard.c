@@ -2,6 +2,7 @@
 
 #include "gameboard.h"
 #include "gameboardElement.h"
+#include "gameboardElementList.h"
 #include "../../robot/2012/gameboardElement2012.h"
 
 
@@ -12,6 +13,18 @@
 
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
+
+// Initialization
+
+void initGameBoard(GameBoard* gameBoard,
+                    GameBoardElementList* gameBoardElementList,
+                    GameBoardElement(*gameBoardElementListArray)[],
+                    unsigned char gameBoardElementListSize,
+                    GameStrategyContext* gameStrategyContext) {
+    gameBoard->gameBoardElementList = gameBoardElementList;
+    initGameBoardElementList(gameBoardElementList, gameBoardElementListArray, gameBoardElementListSize);
+    gameBoard->gameStrategyContext = gameStrategyContext;
+}
 
 char drawPoint(int column, int line, Point* p, char value) {
     if (p->x == 0 && p->y == 0) {
@@ -30,29 +43,23 @@ char drawPoint(int column, int line, Point* p, char value) {
 
 // OPPONENT
 
-char drawOpponent(int column, int line) {
-    GameStrategyContext* context = getStrategyContext();
-    Point* opponent = &(context->opponentRobotPosition);
+char drawOpponent(Point* opponent, int column, int line) {
     return drawPoint(column, line, opponent, 'H');
 }
 
-char drawLastObstacle(int column, int line) {
-    GameStrategyContext* context = getStrategyContext();
-    Point* opponent = &(context->lastObstaclePosition);
-    return drawPoint(column, line, opponent, 'L');
+char drawLastObstacle(Point* obstacle, int column, int line) {
+    return drawPoint(column, line, obstacle, 'L');
 }
 
 // ROBOT
 
-char drawRobot(int column, int line) {
-    GameStrategyContext* context = getStrategyContext();
-    Point* opponent = &(context->robotPosition);
-    return drawPoint(column, line, opponent, 'R');
+char drawRobot(Point* robotPosition, int column, int line) {
+    return drawPoint(column, line, robotPosition, 'R');
 }
 
 // GAMEBOARD
 
-char gameboardPrint(int* element, int column, int line) {
+char gameboardBorderPrint(int* element, int column, int line) {
     if (column == 0 || column == GAMEBOARD_COLUMN_COUNT - 1) {
         return '|';
     }
@@ -77,35 +84,49 @@ char gameTargetPrint(int* element, int column, int line) {
     return pointPrint(column, line, (int) location->x, (int)location->y, c);
 }
 
-char printAllElements(int* element, int column, int line) {
+char printAllElements(GameBoard* gameBoard, int* element, int column, int line) {
+    GameStrategyContext* gameStrategyContext = gameBoard->gameStrategyContext;
     // Robot
-    char result = drawRobot(column, line);
+    char result = drawRobot(gameStrategyContext->robotPosition, column, line);
     if (result != CHAR_NO_DRAW) {
         return result;
     }
 
     // Last Obstacle
-    result = drawLastObstacle(column, line);
+    result = drawLastObstacle(gameStrategyContext->lastObstaclePosition, column, line);
     if (result != CHAR_NO_DRAW) {
         return result;
     }
 
     // Opponent
-    result = drawOpponent(column, line);
+    result = drawOpponent(gameStrategyContext->opponentRobotPosition, column, line);
     if (result != CHAR_NO_DRAW) {
         return result;
     }
 
-    // Gameboard
-    result = gameboardPrint(element, column, line);
+    // Borders
+    result = gameboardBorderPrint(element, column, line);
     if (result != CHAR_NO_DRAW) {
         return result;
+    }
+
+    // Elements
+    GameBoardElementList* gameBoardElementList = gameBoard->gameBoardElementList;
+    int i;
+    unsigned char size = gameBoardElementList->size;
+    for (i = 0; i < size; i++) {
+        GameBoardElement* gameBoardElement = getGameBoardElement(gameBoardElementList, i);
+
+        GameboardPrintFunction* printFunction = gameBoardElement->printFunction;
+        result = printFunction((int*)gameBoardElement, column, line);
+        if (result != CHAR_NO_DRAW) {
+            return result;
+        }
     }
 
     // Targets
-    int i;
     GameTargetList* gameTargetList = getGameTargetList();
-    unsigned char size = gameTargetList->size;
+    size = gameTargetList->size;
     for (i = 0; i < size; i++) {
         GameTarget* gameTarget = gameTargetList->targets[i];
 
@@ -118,18 +139,16 @@ char printAllElements(int* element, int column, int line) {
     return result; 
 }
 
-void printGameboard(OutputStream* outputStream) {
+void printGameboard(GameBoard* gameBoard,  OutputStream* outputStream) {
     println(outputStream);
     int line;
     int column;
 	for (line = 0; line < GAMEBOARD_LINE_COUNT; line++) {
 		for (column = 0; column < GAMEBOARD_COLUMN_COUNT; column++) {
-			char c = printAllElements(NULL, column, line);
+			char c = printAllElements(gameBoard, NULL, column, line);
 			append(outputStream, c);
 		}
-		if (GAMEBOARD_COLUMN_COUNT < 80) {
-			append(outputStream, '\n');
-		}
+        append(outputStream, '\n');
     }
 }
 

@@ -45,10 +45,5 @@ GameStrategy* getGameStrategy(int index);
  */
 int getGameStrategyCount(void);
 
-/**
- * Print the game strategy list, and for each the detail of strategy game
- */
-void printGameStrategyTableList(OutputStream* outputStream);
-
 #endif
 

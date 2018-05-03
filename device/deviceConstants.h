@@ -69,6 +69,8 @@
  */
 #define NAVIGATION_DEVICE_HEADER                   'N'
 
+#define STRATEGY_2018_DEVICE_HEADER                'o'
+
 /** To set PID values */
 #define PID_DEVICE_HEADER                          'p'
 
@@ -120,14 +122,17 @@
 
 #define EXTENDED_MOTION_DEVICE_HEADER			   'X'
 
+/** To access to the game board */
+#define GAME_BOARD_DEVICE_HEADER                   'y'
+
+/** To access to the strategy (list of points, targets...) */
+#define STRATEGY_DEVICE_HEADER                      'Y'
+
 /** Reserved to clear buffer. */
 #define NOT_TOO_USE_1                               'z'
 
 /** Reserved to clear deeply the buffer. */
 #define NOT_TOO_USE_2                               'Z'
-
-/** To access to the strategy (list of points, targets...) */
-#define STRATEGY_DEVICE_HEADER                      'Y'
 
 /** To send the signal of start Match */
 #define START_MATCH_DEVICE_HEADER                   '!'
@@ -149,6 +154,5 @@
 
 #define LAUNCHER_2018_DEVICE_HEADER                '_'
 
-#define STRATEGY_2018_DEVICE_HEADER                'o'
 
 #endif

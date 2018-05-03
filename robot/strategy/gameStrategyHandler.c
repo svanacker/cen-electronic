@@ -35,36 +35,26 @@
 #include "../../robot/strategy/gameTargetList.h"
 #include "../../robot/2012/strategy2012Utils.h"
 
-// Strategy Context
-static GameStrategyContext strategyContext;
-
-// Strategy timer
-static Timer* strategyTimer;
-
-/** The index of the timer (used to manage path availability). */
-#define STRATEGY_TIMER_INDEX 18
-
-GameStrategyContext* getStrategyContext() {
-    return &strategyContext;
-}
-
 #define ANGLE_180 1800
 #define ANGLE_360 3600
 
 void strategyTimerCallback(Timer* timer) {
-    if (strategyTimer->time > strategyContext.timeSinceLastCollision + RESET_OBSTACLE_COLLISION_TIME_SECOND) {
+    GameStrategyContext* strategyContext = (GameStrategyContext*) timer->object;
+    Navigation* navigation = strategyContext->navigation;
+    if (timer->time > strategyContext->timeSinceLastCollision + RESET_OBSTACLE_COLLISION_TIME_SECOND) {
         #ifdef DEBUG_OPPONENT_ROBOT
             OutputStream* logStream = getInfoOutputStreamLogger();
             appendString(logStream, "resetAllPathsAsAvailable\n");
         #endif
-        resetAllPathsAsAvailable();
+        
+        resetAllPathsAsAvailable(navigation);
         // remove the last Obstacle position
-        strategyContext.lastObstaclePosition.x = 0;
-        strategyContext.lastObstaclePosition.y = 0;
+        strategyContext->lastObstaclePosition->x = 0;
+        strategyContext->lastObstaclePosition->y = 0;
     }
 }
 
-void initStrategyHandler() {
+void initStrategyHandler(GameStrategyContext* gmeStrategyContext) {
     // strategyTimer = addTimer(STRATEGY_TIMER_INDEX, TIME_DIVIDER_1_HERTZ, &strategyTimerCallback, "GAME_STRATEGY");
 }
 
@@ -72,53 +62,53 @@ void initStrategyHandler() {
  * Clears the current path and actions.
  * Useful when we want to cancel a target or go out from a target.
  */
-void clearCurrentTarget() {
-    clearLocationList(&(strategyContext.currentTrajectory));
-    strategyContext.currentTarget = NULL;
-    strategyContext.currentTargetAction = NULL;
+void clearCurrentTarget(GameStrategyContext* gameStrategyContext) {
+    clearLocationList(gameStrategyContext->currentTrajectory);
+    gameStrategyContext->currentTarget = NULL;
+    gameStrategyContext->currentTargetAction = NULL;
 }
 
 /**
  * @private
  */
-void findNextTarget() {
+void findNextTarget(GameStrategyContext* gameStrategyContext) {
     appendString(getDebugOutputStreamLogger(), "findNextTarget\n");
-
+    Navigation* navigation = gameStrategyContext->navigation;
     unsigned int targetHandledCount = getTargetHandledCount();
-    if (targetHandledCount >= strategyContext.maxTargetToHandle) {
-        clearCurrentTarget();
+    if (targetHandledCount >= gameStrategyContext->maxTargetToHandle) {
+        clearCurrentTarget(gameStrategyContext);
         appendStringAndDec(getDebugOutputStreamLogger(), "Reach Max Target To Handle:", targetHandledCount);
         println(getDebugOutputStreamLogger());
         return;
     }
 
     // global points
-    LocationList* navigationLocationList = getNavigationLocationList();
+    LocationList* navigationLocationList = getNavigationLocationList(navigation);
 
-    Point* robotPosition = &(strategyContext.robotPosition);
+    Point* robotPosition = gameStrategyContext->robotPosition;
     // Find nearest location
-    strategyContext.nearestLocation = getNearestLocation(navigationLocationList, robotPosition->x, robotPosition->y);
+    gameStrategyContext->nearestLocation = getNearestLocation(navigationLocationList, robotPosition->x, robotPosition->y);
 
     #ifdef DEBUG_STRATEGY_HANDLER
         appendString(getDebugOutputStreamLogger(), "\tNearest Location:");    
-        printLocation(getDebugOutputStreamLogger(), strategyContext.nearestLocation);
+        printLocation(getDebugOutputStreamLogger(), gameStrategyContext->nearestLocation);
         appendString(getDebugOutputStreamLogger(), "\tcomputeBestNextTargetAction:\n");    
     #endif
 
     // Find best Target, store LocationList in the context in currentTrajectory
-    computeBestNextTarget(&strategyContext);
+    computeBestNextTarget(gameStrategyContext);
 
     #ifdef DEBUG_STRATEGY_HANDLER
         appendString(getDebugOutputStreamLogger(), "\t\tbestTarget:");
-        if (strategyContext.currentTarget != NULL) {
-            printGameTarget(getDebugOutputStreamLogger(), strategyContext.currentTarget, false);
+        if (gameStrategyContext->currentTarget != NULL) {
+            printGameTarget(getDebugOutputStreamLogger(), gameStrategyContext->currentTarget, false);
         }
         else {
             appendString(getDebugOutputStreamLogger(), "NULL\n");
         }
         appendString(getDebugOutputStreamLogger(), "\t\tbestTargetAction:");
-        if (strategyContext.currentTargetAction != NULL) {
-            printGameTargetAction(getDebugOutputStreamLogger(), strategyContext.currentTargetAction, false);
+        if (gameStrategyContext->currentTargetAction != NULL) {
+            printGameTargetAction(getDebugOutputStreamLogger(), gameStrategyContext->currentTargetAction, false);
         }
         else {
             appendString(getDebugOutputStreamLogger(), "NULL\n");
@@ -126,38 +116,38 @@ void findNextTarget() {
     #endif
 }
 
-void markTargetAsHandled() {
+void markTargetAsHandled(GameStrategyContext* gameStrategyContext) {
     // mark the target as unavailable
-    strategyContext.currentTarget->status = TARGET_HANDLED;
+    gameStrategyContext->currentTarget->status = TARGET_HANDLED;
     // reset current Target
-    strategyContext.currentTarget = NULL;
-    strategyContext.currentTargetAction = NULL;
+    gameStrategyContext->currentTarget = NULL;
+    gameStrategyContext->currentTargetAction = NULL;
     incTargetHandledCount();
 }
 
-void markTargetInUse() {
+void markTargetInUse(GameStrategyContext* gameStrategyContext) {
     // mark the target as being used
-    strategyContext.currentTarget->status = TARGET_INUSE;
+    gameStrategyContext->currentTarget->status = TARGET_INUSE;
 }
 
 /**
  * Execute the target actions, and return true if there is a an action called, false else
  * @private
  */
-bool executeTargetActions() {
+bool executeTargetActions(GameStrategyContext* gameStrategyContext) {
     #ifdef DEBUG_STRATEGY_HANDLER
         appendString(getDebugOutputStreamLogger(), "executeTargetActions\n");
     #endif
 
-    markTargetInUse();
+    markTargetInUse(gameStrategyContext);
 
-    GameTargetAction* targetAction = strategyContext.currentTargetAction;
+    GameTargetAction* targetAction = gameStrategyContext->currentTargetAction;
     GameTargetActionItemList* actionItemList = targetAction->actionItemList;
     if (actionItemList == NULL) {
         #ifdef DEBUG_STRATEGY_HANDLER
             appendString(getDebugOutputStreamLogger(), "-> no actions for this target\n");
         #endif
-        markTargetAsHandled();
+        markTargetAsHandled(gameStrategyContext);
         return false;
     }
 
@@ -174,7 +164,7 @@ bool executeTargetActions() {
         return true;
     }
     else {
-        markTargetAsHandled();
+        markTargetAsHandled(gameStrategyContext);
         // we do nothing
         return false;
     }
@@ -213,10 +203,9 @@ float mod360(float value) {
     return value;
 }
 
-void rotateAbsolute(float angle) {
+void rotateAbsolute(GameStrategyContext* gameStrategyContext, float angle) {
     angle = changeAngleForColor(angle);
-    GameStrategyContext* strategyContext = getStrategyContext();
-    float robotAngle = strategyContext->robotAngle;
+    float robotAngle = gameStrategyContext->robotAngle;
     float diff = mod360(angle - robotAngle);
     /*
     if (abs(diff) < ANGLE_ROTATION_MIN) {
@@ -244,7 +233,7 @@ void rotateAbsolute(float angle) {
     #endif
 }
 
-bool motionRotateToFollowPath(PathData* pathData, bool reversed) {
+bool motionRotateToFollowPath(GameStrategyContext* gmeStrategyContext, PathData* pathData, bool reversed) {
     float angle;
     if (reversed) {
         if (pathData->mustGoBackward) {
@@ -256,7 +245,7 @@ bool motionRotateToFollowPath(PathData* pathData, bool reversed) {
         angle = getAngle1Path(pathData);
     }
 
-    float diff = mod360(angle - strategyContext.robotAngle);
+    float diff = mod360(angle - gmeStrategyContext->robotAngle);
     if (fabs(diff) < ANGLE_ROTATION_MIN) {
         return false;
     }
@@ -280,7 +269,7 @@ bool motionRotateToFollowPath(PathData* pathData, bool reversed) {
     return true;
 }
 
-void motionFollowPath(PathData* pathData, bool reversed) {
+void motionFollowPath(GameStrategyContext* gmeStrategyContext, PathData* pathData, bool reversed) {
     Location* location;
     float angle;
     float cp1;
@@ -326,12 +315,12 @@ void motionFollowPath(PathData* pathData, bool reversed) {
 * Handle the trajectory and return true if we go to a location, false else.
 * @private
 */
-bool handleCurrentTrajectory() {
+bool handleCurrentTrajectory(GameStrategyContext* gameStrategyContext) {
     #ifdef DEBUG_STRATEGY_HANDLER
         appendString(getDebugOutputStreamLogger(), "handleCurrentTrajectory\n");    
     #endif
 
-    LocationList* currentTrajectory = &(strategyContext.currentTrajectory);
+    LocationList* currentTrajectory = gameStrategyContext->currentTrajectory;
 
     #ifdef DEBUG_STRATEGY_HANDLER
         // printLocationList(getDebugOutputStreamLogger(), "currentTrajectory:", currentTrajectory);    
@@ -350,11 +339,12 @@ bool handleCurrentTrajectory() {
     Location* start = getLocation(currentTrajectory, 0);
     Location* end = getLocation(currentTrajectory, 1);
     bool reversed;
-    PathData* pathData = getPathOfLocations(getNavigationPathList(), start, end, &reversed);
+    Navigation* navigation = gameStrategyContext->navigation;
+    PathData* pathData = getPathOfLocations(getNavigationPathList(navigation), start, end, &reversed);
 
     // Follows the path
-    if (!motionRotateToFollowPath(pathData, reversed)) {
-        motionFollowPath(pathData, reversed);
+    if (!motionRotateToFollowPath(gameStrategyContext, pathData, reversed)) {
+        motionFollowPath(gameStrategyContext, pathData, reversed);
         removeFirstLocation(currentTrajectory);
     }
     return true;
@@ -389,7 +379,7 @@ float cpToDistance(float distance) {
  * Loop on a pathData, to know if the path has an intersection with the opponentRobotPosition.
  * @private
  */
-bool isPathAvailable(PathData* pathData, BSplineCurve* curve) {
+bool isPathAvailable(GameStrategyContext* gameStrategyContext, PathData* pathData, BSplineCurve* curve) {
     // TODO : Fix why curve must be handled
     if (curve == NULL) {
         return true;
@@ -409,8 +399,8 @@ bool isPathAvailable(PathData* pathData, BSplineCurve* curve) {
 
     int i;
     Point p;
-    Point* opponentRobotPosition = &(strategyContext.opponentRobotPosition);
-    Point* lastObstaclePosition = &(strategyContext.lastObstaclePosition);
+    Point* opponentRobotPosition = gameStrategyContext->opponentRobotPosition;
+    Point* lastObstaclePosition = gameStrategyContext->lastObstaclePosition;
     bool opponentPresent = isValidLocation(opponentRobotPosition);
     bool obstaclePresent = isValidLocation(lastObstaclePosition);
     for (i = 0; i < 10; i++) {
@@ -427,9 +417,9 @@ bool isPathAvailable(PathData* pathData, BSplineCurve* curve) {
     return true;
 }
 
-bool mustComputePaths() {
-    Point* opponentRobotPosition = &(strategyContext.opponentRobotPosition);
-    Point* lastObstaclePosition = &(strategyContext.lastObstaclePosition);
+bool mustComputePaths(GameStrategyContext* gameStrategyContext) {
+    Point* opponentRobotPosition = gameStrategyContext->opponentRobotPosition;
+    Point* lastObstaclePosition = gameStrategyContext->lastObstaclePosition;
     bool opponentPresent = isValidLocation(opponentRobotPosition);
     bool obstaclePresent = isValidLocation(lastObstaclePosition);
 
@@ -440,18 +430,19 @@ bool mustComputePaths() {
     // All paths will be marked as unavailable, but the robot will try the path even (cost is only more huge)
 }
 
-void updatePathsAvailability() {
+void updatePathsAvailability(GameStrategyContext* gameStrategyContext) {
     #ifdef DEBUG_OPPONENT_ROBOT
         OutputStream* logStream = getInfoOutputStreamLogger();
         appendString(logStream, "\nUpdating available paths");
     //    printGameStrategyContext(logStream, getStrategyContext());
     #endif
 
-    bool computePath = mustComputePaths();
+    bool computePath = mustComputePaths(gameStrategyContext);
     if (!computePath) {
         appendString(logStream, "\nDon't compute Path !");
     }    
-    PathList* paths = getNavigationPathList();
+    Navigation* navigation = gameStrategyContext->navigation;
+    PathList* paths = getNavigationPathList(navigation);
     unsigned int i;
     for (i = 0; i < paths->size; i++) {
         PathData* pathData = getPath(paths, i);
@@ -459,9 +450,9 @@ void updatePathsAvailability() {
         bool available = true;
         // Don't do the compute if it's not necessary
         if (computePath) {    
-            available = isPathAvailable(pathData, NULL);
+            available = isPathAvailable(gameStrategyContext, pathData, NULL);
         }
-        setPathAvailability(i, available);
+        setPathAvailability(navigation, i, available);
     }
 
     #ifdef DEBUG_OPPONENT_ROBOT
@@ -469,7 +460,7 @@ void updatePathsAvailability() {
         unsigned int k;
         for (k = 0; k < paths->size; k++) {
             PathData* pathData = getPath(paths, k);
-            if (!getPathAvailability(k)) {
+            if (!getPathAvailability(navigation, k)) {
                 appendString(logStream, "\n");
                 appendString(logStream, pathData->location1->name);
                 appendString(logStream, "->");
@@ -481,31 +472,32 @@ void updatePathsAvailability() {
     #endif
 }
 
-void setLastObstaclePosition() {
-    Point* robotPosition = &(strategyContext.robotPosition);
-    Point* lastObstaclePosition = &(strategyContext.lastObstaclePosition);
-    float angle = strategyContext.robotAngle;
+void setLastObstaclePosition(GameStrategyContext* gameStrategyContext) {
+    Point* robotPosition = gameStrategyContext->robotPosition;
+    Point* lastObstaclePosition = gameStrategyContext->lastObstaclePosition;
+    float angle = gameStrategyContext->robotAngle;
     computePoint(robotPosition, lastObstaclePosition, DISTANCE_OBSTACLE, angle);
 }
 
-void handleCollision() {
+void handleCollision(GameStrategyContext* gameStrategyContext) {
+    Timer* strategyTimer = gameStrategyContext->strategyTimer;
     // Mark the timer.
     if (strategyTimer != NULL) {
-        strategyContext.timeSinceLastCollision = (float) strategyTimer->time;
+        gameStrategyContext->timeSinceLastCollision = (float) strategyTimer->time;
     }
     #ifdef DEBUG_STRATEGY_HANDLER
-        appendStringAndDecf(getDebugOutputStreamLogger(), "\nCollision at time:", strategyContext.timeSinceLastCollision);    
+        appendStringAndDecf(getDebugOutputStreamLogger(), "\nCollision at time:", gameStrategyContext->timeSinceLastCollision);
         appendString(getDebugOutputStreamLogger(), "\nhandleCollision");    
     #endif
     
     // Clears the current path and actions
-    clearCurrentTarget();
+    clearCurrentTarget(gameStrategyContext);
 
-    setLastObstaclePosition();
-    updatePathsAvailability();
+    setLastObstaclePosition(gameStrategyContext);
+    updatePathsAvailability(gameStrategyContext);
 }
 
-bool nextStep() {
+bool nextStep(GameStrategyContext* gameStrategyContext) {
     unsigned int counter = 0;
     #ifdef DEBUG_STRATEGY_HANDLER
         appendString(getDebugOutputStreamLogger(), "nextStep\n");    
@@ -516,16 +508,16 @@ bool nextStep() {
             appendStringAndDec(getDebugOutputStreamLogger(), "nextStep=>", counter);    
             println(getDebugOutputStreamLogger());
         #endif
-        GameTargetAction* targetAction = strategyContext.currentTargetAction;
+        GameTargetAction* targetAction = gameStrategyContext->currentTargetAction;
     
-        if (getLocationCount(&(strategyContext.currentTrajectory)) != 0) {
-            if (!handleCurrentTrajectory()) {
+        if (getLocationCount(gameStrategyContext->currentTrajectory) != 0) {
+            if (!handleCurrentTrajectory(gameStrategyContext)) {
                 continue;
             }
             return true;
         }
         else if (targetAction != NULL) {
-            if (!executeTargetActions()) {
+            if (!executeTargetActions(gameStrategyContext)) {
                 // we will return on a different condition.
                 continue;
             }
@@ -533,23 +525,23 @@ bool nextStep() {
         }
         else if (targetAction == NULL) {
             // no target, search a new one
-            findNextTarget();
-            if (strategyContext.currentTarget == NULL) {
+            findNextTarget(gameStrategyContext);
+            if (gameStrategyContext->currentTarget == NULL) {
                 #ifdef DEBUG_STRATEGY_HANDLER
                     appendString(getDebugOutputStreamLogger(), "no more targets -> stopping");
                 #endif
-                clearCurrentTarget();
+                clearCurrentTarget(gameStrategyContext);
                 return false;
             }
             // Next target created a new current trajectory
-            if (getLocationCount(&(strategyContext.currentTrajectory)) != 0) {
-                if (!handleCurrentTrajectory()) {
+            if (getLocationCount(gameStrategyContext->currentTrajectory) != 0) {
+                if (!handleCurrentTrajectory(gameStrategyContext)) {
                     continue;
                 }
                 return true;
             }
         } else {
-            if (!executeTargetActions()) {
+            if (!executeTargetActions(gameStrategyContext)) {
                 // we will return on a different condition.
                 continue;
             }

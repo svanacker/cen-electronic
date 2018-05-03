@@ -5,9 +5,25 @@
 #include "../../common/2d/2dDebug.h"
 
 #include "../../navigation/locationList.h"
+#include "../../navigation/locationListDebug.h"
 
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
+
+#include "../../common/timer/cenTimer.h"
+
+void initGameStrategyContext(GameStrategyContext* gameStrategyContext,
+    Navigation* navigation,
+    Timer* strategyTimer,
+    Point* robotPosition,
+    Point* opponentRobotPosition,
+    Point* lastObstaclePosition) {
+    gameStrategyContext->navigation = navigation;
+    gameStrategyContext->strategyTimer = strategyTimer;
+    gameStrategyContext->robotPosition = robotPosition;
+    gameStrategyContext->opponentRobotPosition = opponentRobotPosition;
+    gameStrategyContext->lastObstaclePosition = lastObstaclePosition;
+}
 
 void printGameStrategyContext(OutputStream* outputStream, GameStrategyContext* context) {
     appendString(outputStream, "GameStrategyContext\n");
@@ -27,7 +43,7 @@ void printGameStrategyContext(OutputStream* outputStream, GameStrategyContext* c
     
     // Robot Position
     appendString(outputStream, "\trobotPosition=");
-    printPoint(outputStream, &(context->robotPosition), "");
+    printPoint(outputStream, context->robotPosition, "");
     appendStringAndDecf(outputStream, "\n\trobotAngle (degree)=", context->robotAngle);
 
     // nearestLocation
@@ -42,11 +58,11 @@ void printGameStrategyContext(OutputStream* outputStream, GameStrategyContext* c
     appendStringAndDecf(outputStream, "\ntimeSinceLastCollision=", context->timeSinceLastCollision);
     // Robot Position
     appendString(outputStream, "\n\topponentRobotPosition=");
-    printPoint(outputStream, &(context->opponentRobotPosition), "");
+    printPoint(outputStream, context->opponentRobotPosition, "");
 
     // Obstacle Position
     appendString(outputStream, "\n\tlastObstaclePosition=");
-    printPoint(outputStream, &(context->lastObstaclePosition), "");
+    printPoint(outputStream, context->lastObstaclePosition, "");
 
     // current Target
     appendString(outputStream, "\n\tcurrentTarget=");
@@ -59,7 +75,7 @@ void printGameStrategyContext(OutputStream* outputStream, GameStrategyContext* c
 
     // currentTrajectory
     if (&(context->currentTrajectory) != NULL) {
-        printLocationListTable(outputStream, &(context->currentTrajectory));
+        printLocationListTable(outputStream, context->currentTrajectory);
     }
     else {
         appendString(outputStream, "\n\tcurrentTrajectory=NULL");

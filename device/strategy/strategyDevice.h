@@ -3,9 +3,11 @@
 
 #include "../../device/deviceDescriptor.h"
 
+#include "../../robot/strategy/gameStrategyContext.h"
+
 /**
 * Returns a descriptor on the device for strategy.
 */
-DeviceDescriptor* getStrategyDeviceDescriptor();
+DeviceDescriptor* getStrategyDeviceDescriptor(GameStrategyContext* gameStrategyContext);
 
 #endif

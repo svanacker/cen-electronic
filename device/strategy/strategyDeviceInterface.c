@@ -31,14 +31,6 @@ int deviceStrategyGetInterface(char commandHeader, DeviceInterfaceMode mode, boo
         }
         return commandLengthValueForMode(mode, 4, 0);
     }
-    // Print Gameboard
-    else if (commandHeader == COMMAND_STRATEGY_PRINT_GAME_BOARD) {
-        // same input/output
-        if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("printGameBoard");
-        }
-        return commandLengthValueForMode(mode, 0, 0);
-    }
 	// Print Strategy List
 	else if (commandHeader == COMMAND_STRATEGY_LIST) {
 		// same input/output

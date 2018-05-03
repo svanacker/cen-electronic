@@ -86,6 +86,10 @@
 #include "../../device/eeprom/eepromDevice.h"
 #include "../../device/eeprom/eepromDeviceInterface.h"
 
+// GAMEBOARD
+#include "../../device/gameboard/gameboardDevice.h"
+#include "../../device/gameboard/gameboardDeviceInterface.h"
+
 // SERIAL
 #include "../../device/serial/serialDebugDevice.h"
 #include "../../device/serial/serialDebugDeviceInterface.h"
@@ -218,6 +222,9 @@
 #include "../../robot/config/robotConfigDeviceInterface.h"
 #include "../../robot/config/32/robotConfigPic32.h"
 
+#include "../../robot/gameboard/gameboard.h"
+#include "../../robot/gameboard/gameboardElementList.h"
+
 #include "../../robot/kinematics/robotKinematicsDeviceInterface.h"
 
 #include "../../robot/match/startMatch.h"
@@ -235,20 +242,21 @@
 #include "../../robot/opponent/robotSonarDetectorDeviceInterface.h"
 #include "../../robot/opponent/opponentRobot.h"
 
-// Other boards interface
-#include "../../main/motorBoard/motorBoard32.h"
-#include "../../main/meca2/mechanicalBoard2.h"
-#include "../../main/airconditioning/airConditioningMain.h"
-
 #include "../../motion/simple/simpleMotion.h"
 
+#include "../../navigation/navigation.h"
+
 #include "../../robot/robot.h"
+#include "../../robot/gameboard/gameboard.h"
+
+// 2018
 #include "../../robot/2018/distributor2018.h"
 #include "../../robot/2018/launcherDevice2018.h"
 #include "../../robot/2018/launcherDeviceInterface2018.h"
 
 #include "../../robot/2018/strategyDevice2018.h"
 #include "../../robot/2018/strategyDeviceInterface2018.h"
+#include "mainBoard2018.h"
 
 // I2C => PORT 1 (for All Peripherical, including Eeprom / Clock / Temperatur)
 static I2cBus i2cBusListArray[MAIN_BOARD_I2C_BUS_LIST_LENGTH];
@@ -374,6 +382,10 @@ static Timer timerListArray[MAIN_BOARD_TIMER_LENGTH];
 // 2018
 static Distributor distributor;
 
+static GameStrategyContext* gameStrategyContext;
+static Navigation* navigation;
+static GameBoard* gameBoard;
+
 /**
  * TODO : Rename Driver into ClientDriver
  * @private
@@ -404,10 +416,8 @@ void addLocalDevices(void) {
     // LOCAL
     addLocalDevice(getLCDDeviceInterface(), getLCDDeviceDescriptor());
     addLocalDevice(getRobotConfigDeviceInterface(), getRobotConfigDeviceDescriptor(&robotConfig));
-    addLocalDevice(getStrategyDeviceInterface(), getStrategyDeviceDescriptor());
+    addLocalDevice(getStrategyDeviceInterface(), getStrategyDeviceDescriptor(gameStrategyContext));
 
-    initEndMatch(&endMatch, &robotConfig, MATCH_DURATION);
-    initStartMatch(&startMatch, &robotConfig, &endMatch, isMatchStarted32, mainBoardWaitForInstruction, &eeprom);
     addLocalDevice(getStartMatchDeviceInterface(), getStartMatchDeviceDescriptor(&startMatch));
     addLocalDevice(getEndMatchDetectorDeviceInterface(), getEndMatchDetectorDeviceDescriptor(&endMatch));
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
@@ -419,6 +429,9 @@ void addLocalDevices(void) {
     addLocalDevice(getRelayDeviceInterface(), getRelayDeviceDescriptor(&relay));
     addLocalDevice(getColorSensorDeviceInterface(), getColorSensorDeviceDescriptor(&colorSensor));
     addLocalDevice(getTofDeviceInterface(), getTofDeviceDescriptor(&tofSensorList));
+    addLocalDevice(getGameboardDeviceInterface(), getGameboardDeviceDescriptor(gameBoard));
+
+    // 2018 specific
     addLocalDevice(getStrategy2018DeviceInterface(), getStrategy2018DeviceDescriptor(&distributor));
 }
 
@@ -631,7 +644,7 @@ int main(void) {
     i2cBus = addI2cBus(I2C_BUS_TYPE_MASTER, I2C_BUS_PORT_1);
     i2cMasterInitialize(i2cBus);
     motorI2cBusConnection = addI2cBusConnection(i2cBus, MOTOR_BOARD_I2C_ADDRESS, true);
-    mechanicalBoard1I2cBusConnection = addI2cBusConnection(i2cBus, MECHANICAL_BOARD_2_I2C_ADDRESS, true);
+    mechanicalBoard1I2cBusConnection = addI2cBusConnection(i2cBus, MECHANICAL_BOARD_1_I2C_ADDRESS, true);
 
     // ALTERNATIVE I2C BUS
     i2cBus4 = addI2cBus(I2C_BUS_TYPE_MASTER, I2C_BUS_PORT_4);
@@ -683,8 +696,16 @@ int main(void) {
     initTcs34725Struct(&tcs34725, colorBusConnection);
     initColorSensorTcs34725(&colorSensor, &colorValue, &colorSensorFindColorType2018, &tcs34725);
     
+    initEndMatch(&endMatch, &robotConfig, MATCH_DURATION);
+    initStartMatch(&startMatch, &robotConfig, &endMatch, isMatchStarted32, mainBoardWaitForInstruction, &eeprom);
+    
+    // 2018
     // TODO : Dynamically change it
     initDistributor(&distributor, TEAM_COLOR_GREEN, &colorSensor);
+    
+    navigation = initNavigation2018();
+    gameStrategyContext = initGameStrategyContext2018();
+    gameBoard = initGameBoard2018(gameStrategyContext);
     
     // TIMERS
     initTimerList(&timerListArray, MAIN_BOARD_TIMER_LENGTH);

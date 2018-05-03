@@ -3,6 +3,7 @@
 #include "navigation.h"
 #include "location.h"
 #include "locationList.h"
+#include "locationListDebug.h"
 #include "path.h"
 #include "pathList.h"
 #include "pathListDebug.h"
@@ -17,37 +18,34 @@
 
 // #define NAVIGATION_DEBUG
 
-/** The object with all information. */
-static Navigation navigation;
-
-void initNavigation(LocationList* locationList, PathList* pathList, BitList* outgoingPaths, BitList* availablePaths) {
-    navigation.locationList = locationList;
-    navigation.paths = pathList;
-    navigation.outgoingPaths = outgoingPaths;
-    navigation.availablePaths = availablePaths;
+void initNavigation(Navigation* navigation, LocationList* locationList, PathList* pathList, BitList* outgoingPaths, BitList* availablePaths) {
+    navigation->locationList = locationList;
+    navigation->paths = pathList;
+    navigation->outgoingPaths = outgoingPaths;
+    navigation->availablePaths = availablePaths;
     
     // Init
-    clearLocationList(navigation.locationList);
-    clearPathList(navigation.paths);
-    clearBitList(navigation.outgoingPaths, false);
-    clearBitList(navigation.availablePaths, true);
+    clearLocationList(navigation->locationList);
+    clearPathList(navigation->paths);
+    clearBitList(navigation->outgoingPaths, false);
+    clearBitList(navigation->availablePaths, true);
 }
 
-LocationList* getNavigationLocationList(void) {
-    return navigation.locationList;
+LocationList* getNavigationLocationList(Navigation* navigation) {
+    return navigation->locationList;
 }
 
-PathList* getNavigationPathList(void) {
-    return navigation.paths;
+PathList* getNavigationPathList(Navigation* navigation) {
+    return navigation->paths;
 }
 
-Location* addNavigationLocation(char* name, float x, float y) {
-    LocationList* locationList = navigation.locationList;
+Location* addNavigationLocation(Navigation* navigation, char* name, float x, float y) {
+    LocationList* locationList = navigation->locationList;
     Location* result = addNamedLocation(locationList, name, x, y);
     return result;
 }
 
-PathData* addNavigationPath(
+PathData* addNavigationPath(Navigation* navigation,
             Location* location1,
             Location* location2,
             float cost,
@@ -57,17 +55,17 @@ PathData* addNavigationPath(
             float angle2,
             float accelerationFactor,
             float speedFactor) {
-    PathData* pathData = addPath(navigation.paths);
+    PathData* pathData = addPath(navigation->paths);
     initPathData(pathData, location1, location2, cost, controlPointDistance1, controlPointDistance2, angle1, angle2, accelerationFactor, speedFactor);
     return pathData;
 }
 
-void updateOutgoingPaths(Location* location) {
-    clearBitList(navigation.outgoingPaths, false);
+void updateOutgoingPaths(Navigation* navigation, Location* location) {
+    clearBitList(navigation->outgoingPaths, false);
     int i;
-    int pathSize = getPathCount(navigation.paths);
+    int pathSize = getPathCount(navigation->paths);
     for (i = 0; i < pathSize; i++) {
-        PathData* pathData = getPath(navigation.paths, i);
+        PathData* pathData = getPath(navigation->paths, i);
 
         // For example : location = "A", check if path contains("A") : "AB" contains "A", but "DE" not
         bool pathContainsLocationBool = pathContainsLocation(pathData, location);
@@ -81,9 +79,9 @@ void updateOutgoingPaths(Location* location) {
         Location* otherEnd = getOtherEnd(pathData, location);
 
         // Ex : handledLocationList = {EF, GH} and other End = B
-        bool handledLocationListContainsLocation = containsLocation(navigation.locationList, otherEnd, true);
+        bool handledLocationListContainsLocation = containsLocation(navigation->locationList, otherEnd, true);
         if (!handledLocationListContainsLocation) {
-            setBit(navigation.outgoingPaths, i, true);
+            setBit(navigation->outgoingPaths, i, true);
         }
     }
 }
@@ -109,14 +107,14 @@ void setCost(Location* location, float cost) {
  * @private
  * Search the nearest node in terms of cost
  */
-Location* extractMinCostLocation(void) {
+Location* extractMinCostLocation(Navigation* navigation) {
     // Search the nearest node in terms of cost
     Location* result = NULL;
     float minCost = MAX_COST;
-    int size = navigation.locationList->size;
+    int size = navigation->locationList->size;
     int i;
     for (i = 0; i < size; i++) {
-        Location* location = getLocation(navigation.locationList, i);
+        Location* location = getLocation(navigation->locationList, i);
         // we only manage only unhandled location point
         if (location->tmpHandled) {
             continue;
@@ -142,7 +140,7 @@ Location* extractMinCostLocation(void) {
     return result;
 }
 
-float computeBestPath(Location* start, Location* end) {
+float computeBestPath(Navigation* navigation, Location* start, Location* end) {
     float result = 0;
 
     // not necessary because handledLocationList elements are removed from unhandled to handled.
@@ -150,7 +148,7 @@ float computeBestPath(Location* start, Location* end) {
     // unhandledLocationList.set = true;    
     // handledLocationList.set = true;
 
-    clearLocationTmpInfo(navigation.locationList);
+    clearLocationTmpInfo(navigation->locationList);
     Location* location1;
 
     start->tmpCost = 0;
@@ -158,14 +156,14 @@ float computeBestPath(Location* start, Location* end) {
         printLocation(getInfoOutputStreamLogger(), start);
     #endif
 
-    unsigned int size = navigation.locationList->size;
+    unsigned int size = navigation->locationList->size;
     unsigned int i = 0;
     for (i = 0; i < size; i++) {
         // search the nearest node of the nodeList
         #ifdef NAVIGATION_DEBUG
             appendString(getInfoOutputStreamLogger(), "extractMinCostLocation\n");
         #endif
-        location1 = extractMinCostLocation();
+        location1 = extractMinCostLocation(navigation);
 
         #ifdef NAVIGATION_DEBUG
             appendString(getInfoOutputStreamLogger(), "bestLocation=");
@@ -173,10 +171,10 @@ float computeBestPath(Location* start, Location* end) {
         #endif
 
         // List of path going to the node (location)
-        updateOutgoingPaths(location1);
+        updateOutgoingPaths(navigation, location1);
 
         unsigned int i;
-        unsigned int size = navigation.paths->size;
+        unsigned int size = navigation->paths->size;
 
         #ifdef NAVIGATION_DEBUG
             printLocationList(getInfoOutputStreamLogger(), "locations=", &locationList);
@@ -185,18 +183,18 @@ float computeBestPath(Location* start, Location* end) {
 
         // loop on all outgoingPath
         for (i = 0; i < size; i++) {
-            bool outgoing = getBit(navigation.outgoingPaths, i);
+            bool outgoing = getBit(navigation->outgoingPaths, i);
             if (!outgoing) {
                 continue;
             }
 
             // Do not use paths that are not available
-            bool available = getPathAvailability(i);
+            bool available = getPathAvailability(navigation, i);
             if (!available) {
                 continue;
             }
 
-            PathData* pathData = getPath(navigation.paths, i);
+            PathData* pathData = getPath(navigation->paths, i);
             Location* location2 = getOtherEnd(pathData, location1);
             float costLocation1 = getCost(location1);
             float costLocation2 = getCost(location2);
@@ -230,20 +228,15 @@ float computeBestPath(Location* start, Location* end) {
     return result;
 }
 
-void printNavigationContext(OutputStream* outputStream) {
-    printLocationListTable(outputStream, navigation.locationList);
-    printPathList(outputStream, "paths:", navigation.paths);
+void setPathAvailability(Navigation* navigation, int index, bool value) {
+    setBit(navigation->availablePaths, index, value);
 }
 
-void setPathAvailability(int index, bool value) {
-    setBit(navigation.availablePaths, index, value);
+void resetAllPathsAsAvailable(Navigation* navigation) {
+    clearBitList(navigation->availablePaths, true);
 }
 
-void resetAllPathsAsAvailable(void) {
-    clearBitList(navigation.availablePaths, true);
-}
-
-bool getPathAvailability(int index) {
-    bool result = getBit(navigation.availablePaths, index);
+bool getPathAvailability(Navigation* navigation, int index) {
+    bool result = getBit(navigation->availablePaths, index);
     return result;
 }

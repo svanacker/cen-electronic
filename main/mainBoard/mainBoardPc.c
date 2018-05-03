@@ -12,6 +12,7 @@
 #include "../../common/eeprom/pc/eepromPc.h"
 #include "../../common/error/error.h"
 #include "../../common/i2c/i2cCommon.h"
+#include "../../common/i2c/i2cConstants.h"
 #include "../../common/i2c/i2cBusList.h"
 #include "../../common/i2c/i2cBusConnectionList.h"
 #include "../../common/i2c/i2cDebug.h"
@@ -70,7 +71,7 @@
 
 // MAIN
 #include "../../main/motorboard/motorBoardPc.h"
-#include "../../main/meca1/mechanicalBoard1Pc.h"
+#include "../../main/meca1/mechanicalMainBoard1Pc.h"
 
 // CONFIG
 #include "../../robot/config/pc/robotConfigPc.h"
@@ -91,6 +92,10 @@
 // ADC
 #include "../../device/adc/adcDevice.h"
 #include "../../device/adc/adcDeviceInterface.h"
+
+// GAMEBOARD
+#include "../../device/gameboard/gameboardDevice.h"
+#include "../../device/gameboard/gameboardDeviceInterface.h"
 
 // LCD
 #include "../../device/lcd/lcdDevice.h"
@@ -144,13 +149,6 @@
 #include "../../device/tof/tofDevice.h"
 #include "../../device/tof/tofDeviceInterface.h"
 
-// 2018
-#include "../../robot/2018/launcherDevice2018.h"
-#include "../../robot/2018/launcherDeviceInterface2018.h"
-
-#include "../../robot/2018/strategyDevice2018.h"
-#include "../../robot/2018/strategyDeviceInterface2018.h"
-
 // Drivers
 #include "../../drivers/driverStreamListener.h"
 #include "../../drivers/clock/pc/pcClock.h"
@@ -175,7 +173,14 @@
 #include "../../robot/match/pc/startMatchDetectorPc.h"
 
 #include "../../main/motorBoard/motorBoardPc.h"
-#include "../../main/meca1/mechanicalBoard1Pc.h"
+#include "../../main/meca1/mechanicalMainBoard1Pc.h"
+
+// 2018
+#include "../../main/mainBoard/mainBoard2018.h"
+#include "../../robot/2018/launcherDeviceInterface2018.h"
+#include "../../robot/2018/strategyDeviceInterface2018.h"
+#include "../../robot/2018/strategyDevice2018.h"
+#include "../../robot/2018/distributor2018.h"
 
 // Logs
 static LogHandler logHandlerListArray[MAIN_BOARD_PC_LOG_HANDLER_LIST_LENGTH];
@@ -262,8 +267,11 @@ static Device* testDevice;
 static StartMatch startMatch;
 static EndMatch endMatch;
 
-// 2018
-static Distributor distributor;
+// Navigation
+static GameStrategyContext* gameStrategyContext;
+static GameBoard* gameBoard;
+static Navigation* navigation;
+static Distributor* distributor;
 
 static bool connectToRobotManager = false;
 
@@ -319,6 +327,40 @@ bool mainBoardPcWaitForInstruction(StartMatch* startMatch) {
     return true;
 }
 
+void initMainBoardLocalDevices(void) {
+    // LOCAL BOARD
+    addLocalDevice(getADCDeviceInterface(), getADCDeviceDescriptor());
+    addLocalDevice(getStrategyDeviceInterface(), getStrategyDeviceDescriptor(gameStrategyContext));
+    addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
+    addLocalDevice(getRobotConfigDeviceInterface(), getRobotConfigDeviceDescriptor(&robotConfig));
+    addLocalDevice(getI2cCommonDebugDeviceInterface(), getI2cCommonDebugDeviceDescriptor());
+    addLocalDevice(getI2cMasterDebugDeviceInterface(), getI2cMasterDebugDeviceDescriptor());
+    addLocalDevice(getDataDispatcherDeviceInterface(), getDataDispatcherDeviceDescriptor());
+    addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor(PWM_SERVO_ENABLED_MASK_SERVO_1_2_5));
+    addLocalDevice(getTimerDeviceInterface(), getTimerDeviceDescriptor());
+    addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
+    // addLocalDevice(getFileDeviceInterface(), getFileDeviceDescriptor());
+    addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
+    addLocalDevice(getLogDeviceInterface(), getLogDeviceDescriptor());
+    addLocalDevice(getLCDDeviceInterface(), getLCDDeviceDescriptor());
+    addLocalDevice(getTofDeviceInterface(), getTofDeviceDescriptor(NULL));
+
+    addLocalDevice(getTemperatureSensorDeviceInterface(), getTemperatureSensorDeviceDescriptor(&temperature));
+    addLocalDevice(getNavigationDeviceInterface(), getNavigationDeviceDescriptor(navigation));
+
+    addLocalDevice(getStartMatchDeviceInterface(), getStartMatchDeviceDescriptor(&startMatch));
+    addLocalDevice(getEndMatchDetectorDeviceInterface(), getEndMatchDetectorDeviceDescriptor(&endMatch));
+
+    // TODO
+    // addLocalDevice(getRelayDeviceInterface(), getRelayDeviceDescriptor(&relay));
+    // addLocalDevice(getColorSensorDeviceInterface(), getColorSensorDeviceDescriptor(&colorSensor));
+    // addLocalDevice(getTofDeviceInterface(), getTofDeviceDescriptor(&tofSensorList));
+    addLocalDevice(getGameboardDeviceInterface(), getGameboardDeviceDescriptor(gameBoard));
+
+    // 2018 specific
+    addLocalDevice(getStrategy2018DeviceInterface(), getStrategy2018DeviceDescriptor(distributor));
+}
+
 void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
     connectToRobotManager = connectToRobotManagerMode;
     setBoardName(MAIN_BOARD_PC_NAME);
@@ -364,11 +406,11 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
             MAIN_BOARD_TO_MOTOR_BOARD_PC_PIPE_I2C_MASTER_NAME,
             MOTOR_BOARD_PC_PIPE_I2C_SLAVE_NAME);
 
-        meca1BoardI2cBusConnection = addI2cBusConnection(mainI2cBus, MECHANICAL_BOARD_1_PC_I2C_ADDRESS, false);
+        meca1BoardI2cBusConnection = addI2cBusConnection(mainI2cBus, MECHANICAL_BOARD_1_I2C_ADDRESS, false);
         initI2cBusConnectionPc(meca1BoardI2cBusConnection,
             mainI2cBus,
             &meca1BoardI2cBusConnectionPc,
-            MECHANICAL_BOARD_1_PC_I2C_ADDRESS,
+            MECHANICAL_BOARD_1_I2C_ADDRESS,
             MAIN_BOARD_TO_MECA1_BOARD_PC_PIPE_I2C_MASTER_NAME,
             MECHANICAL_BOARD_1_PC_PIPE_I2C_SLAVE_NAME);
 
@@ -427,6 +469,10 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
         (char(*)[]) &i2cMasterDebugOutputBufferArray,
         MAIN_BOARD_PC_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH);
 
+    navigation = initNavigation2018();
+    gameStrategyContext = initGameStrategyContext2018();
+    gameBoard = initGameBoard2018(gameStrategyContext);
+
     // Init the drivers
     initDrivers(&driverRequestBuffer, (char(*)[]) &driverRequestBufferArray, MAIN_BOARD_PC_REQUEST_DRIVER_BUFFER_LENGTH,
         &driverResponseBuffer, (char(*)[]) &driverResponseBufferArray, MAIN_BOARD_PC_RESPONSE_DRIVER_BUFFER_LENGTH);
@@ -441,46 +487,25 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
     testDevice = addI2cRemoteDevice(getTestDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
     testDevice->deviceHandleNotification = mainBoardDeviceHandleNotification;
 
-    // LOCAL BOARD
-    addLocalDevice(getADCDeviceInterface(), getADCDeviceDescriptor());
-    addLocalDevice(getStrategyDeviceInterface(), getStrategyDeviceDescriptor());
-    addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
-    addLocalDevice(getRobotConfigDeviceInterface(), getRobotConfigDeviceDescriptor(&robotConfig));
-    addLocalDevice(getI2cCommonDebugDeviceInterface(), getI2cCommonDebugDeviceDescriptor());
-    addLocalDevice(getI2cMasterDebugDeviceInterface(), getI2cMasterDebugDeviceDescriptor());
-    addLocalDevice(getDataDispatcherDeviceInterface(), getDataDispatcherDeviceDescriptor());
-    addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor(PWM_SERVO_ENABLED_MASK_SERVO_1_2_5));
-    addLocalDevice(getTimerDeviceInterface(), getTimerDeviceDescriptor());
-    addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
-    // addLocalDevice(getFileDeviceInterface(), getFileDeviceDescriptor());
-    addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
-    addLocalDevice(getLogDeviceInterface(), getLogDeviceDescriptor());
-    addLocalDevice(getLCDDeviceInterface(), getLCDDeviceDescriptor());
-    addLocalDevice(getTofDeviceInterface(), getTofDeviceDescriptor(NULL));
-
-    addLocalDevice(getTemperatureSensorDeviceInterface(), getTemperatureSensorDeviceDescriptor(&temperature));
-    addLocalDevice(getNavigationDeviceInterface(), getNavigationDeviceDescriptor());
-
     initEndMatch(&endMatch, &robotConfig, MATCH_DURATION);
     initStartMatch(&startMatch, &robotConfig, &endMatch, isMatchStartedPc, mainBoardPcWaitForInstruction, &eeprom);
-    addLocalDevice(getStartMatchDeviceInterface(), getStartMatchDeviceDescriptor(&startMatch));
-    addLocalDevice(getEndMatchDetectorDeviceInterface(), getEndMatchDetectorDeviceDescriptor(&endMatch));
-    addLocalDevice(getStrategy2018DeviceInterface(), getStrategy2018DeviceDescriptor(&distributor));
+
+    initMainBoardLocalDevices();
 
     if (!singleMode) {
         // MOTOR BOARD
-        addI2cRemoteDevice(getBatteryDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
+        addI2cRemoteDevice(getBatteryDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
         // addI2cRemoteDevice(getEepromDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
-        addI2cRemoteDevice(getPidDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
-        addI2cRemoteDevice(getMotorDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
-        addI2cRemoteDevice(getCodersDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
-        addI2cRemoteDevice(getTrajectoryDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
-        addI2cRemoteDevice(getMotionDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
-        addI2cRemoteDevice(getRobotKinematicsDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
-        addI2cRemoteDevice(getMotionSimulationDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
+        addI2cRemoteDevice(getPidDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
+        addI2cRemoteDevice(getMotorDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
+        addI2cRemoteDevice(getCodersDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
+        addI2cRemoteDevice(getTrajectoryDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
+        addI2cRemoteDevice(getMotionDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
+        addI2cRemoteDevice(getRobotKinematicsDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
+        addI2cRemoteDevice(getMotionSimulationDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
 
         // MECHANICAL BOARD 1
-        addI2cRemoteDevice(getLauncher2018DeviceInterface(), MECHANICAL_BOARD_1_PC_I2C_ADDRESS);
+        addI2cRemoteDevice(getLauncher2018DeviceInterface(), MECHANICAL_BOARD_1_I2C_ADDRESS);
     }
     initDevices();
 
