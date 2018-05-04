@@ -63,17 +63,15 @@ struct GameStrategyContext {
     Timer* strategyTimer;
 };
 
+/**
+ * Initializes the Game Strategy Context.
+ */
 void initGameStrategyContext(GameStrategyContext* gameStrategyContext,
                              Navigation* navigation,
                              Timer* strategyTimer,
                              Point* robotPosition,
                              Point* opponentRobotPosition,
                              Point* lastObstaclePosition);
-
-/**
- * Print the context of the game Strategy.
- */
-void printGameStrategyContext(OutputStream* outputStream, GameStrategyContext* context);
 
 #endif
 

@@ -2004,6 +2004,9 @@
     <ClCompile Include="robot\strategy\gameTargetActionListDebug.c">
       <Filter>Source Files\robot\strategy</Filter>
     </ClCompile>
+    <ClCompile Include="robot\strategy\gameStrategyContextDebug.c">
+      <Filter>Source Files\robot\strategy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -3105,6 +3108,9 @@
       <Filter>Header Files\robot\strategy</Filter>
     </ClInclude>
     <ClInclude Include="robot\strategy\gameTargetActionListDebug.h">
+      <Filter>Header Files\robot\strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\strategy\gameStrategyContextDebug.h">
       <Filter>Header Files\robot\strategy</Filter>
     </ClInclude>
   </ItemGroup>

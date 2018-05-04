@@ -1,6 +1,8 @@
 #ifndef TEAM_COLOR_H
 #define TEAM_COLOR_H
 
+#include "../../common/io/outputStream.h"
+
 /** Define the color for the team. */
 enum TeamColor {
     /** 2018 Orange Color. */
@@ -10,8 +12,13 @@ enum TeamColor {
 };
 
 /** 
- * Returns the color of the team.
+ * Append the color of the team color to an outputStream.
  */
-char* getTeamColorAsString(enum TeamColor teamColor);
+unsigned int appendTeamColorAsString(OutputStream* outputStream, enum TeamColor teamColor);
+
+/**
+ * Add a table data with the team color.
+ */
+unsigned int addTeamColorTableData(OutputStream* outputStream, enum TeamColor teamColor, int columnSize);
 
 #endif

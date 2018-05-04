@@ -31,6 +31,13 @@ int deviceStrategyGetInterface(char commandHeader, DeviceInterfaceMode mode, boo
         }
         return commandLengthValueForMode(mode, 4, 0);
     }
+    // Debug
+    else if (commandHeader == COMMAND_STRATEGY_DEBUG) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("Debug");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }
 	// Print Strategy List
 	else if (commandHeader == COMMAND_STRATEGY_LIST) {
 		// same input/output

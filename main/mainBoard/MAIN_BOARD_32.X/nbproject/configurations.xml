@@ -525,6 +525,7 @@
         <itemPath>../../../robot/strategy/nextGameStrategyItemComputer.h</itemPath>
         <itemPath>../../../robot/strategy/gameStrategyListDebug.h</itemPath>
         <itemPath>../../../robot/strategy/gameStrategyDebug.h</itemPath>
+        <itemPath>../../../robot/strategy/gameStrategyContextDebug.h</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.strategy.factor"
                      displayName="robot.strategy.factor"
@@ -1065,6 +1066,7 @@
         <itemPath>../../../robot/strategy/nextGameStrategyItemComputer.c</itemPath>
         <itemPath>../../../robot/strategy/gameStrategyListDebug.c</itemPath>
         <itemPath>../../../robot/strategy/gameStrategyDebug.c</itemPath>
+        <itemPath>../../../robot/strategy/gameStrategyContextDebug.c</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.strategy.factor"
                      displayName="robot.strategy.factor"

@@ -24,6 +24,7 @@
 
 #include "../../robot/strategy/gameStrategyHandler.h"
 #include "../../robot/strategy/gameStrategyContext.h"
+#include "../../robot/strategy/gameStrategyContextDebug.h"
 
 #include "../../robot/gameboard/gameboard.h"
 #include "../../robot/strategy/gameStrategy.h"
@@ -95,9 +96,16 @@ void deviceStrategyHandleRawData(char commandHeader, InputStream* inputStream, O
             setColor(context, TEAM_COLOR_ORANGE);
         }
     }
+    // Debug
+    else if (commandHeader == COMMAND_STRATEGY_DEBUG) {
+        ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_STRATEGY_DEBUG);
+        OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+        GameStrategyContext* context = getStrategyDeviceGameStrategyContext();
+        printGameStrategyContext(debugOutputStream, context);
+    }
 	// List Strategies
 	else if (commandHeader == COMMAND_STRATEGY_LIST) {
-		OutputStream* debugOutputStream = getAlwaysOutputStreamLogger();
+		OutputStream* debugOutputStream = getDebugOutputStreamLogger();
 		ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_STRATEGY_LIST);
         printGameStrategyTableList(debugOutputStream);
 	}

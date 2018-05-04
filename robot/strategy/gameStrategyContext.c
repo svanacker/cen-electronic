@@ -2,17 +2,8 @@
 
 #include "gameStrategyContext.h"
 
-#include "../../common/2d/2dDebug.h"
-
-#include "../../common/io/outputStream.h"
-#include "../../common/io/printWriter.h"
-
 #include "../../common/timer/cenTimer.h"
 
-#include "../../navigation/locationList.h"
-#include "../../navigation/locationListDebug.h"
-
-#include "gameTargetListDebug.h"
 
 void initGameStrategyContext(GameStrategyContext* gameStrategyContext,
     Navigation* navigation,
@@ -25,69 +16,4 @@ void initGameStrategyContext(GameStrategyContext* gameStrategyContext,
     gameStrategyContext->robotPosition = robotPosition;
     gameStrategyContext->opponentRobotPosition = opponentRobotPosition;
     gameStrategyContext->lastObstaclePosition = lastObstaclePosition;
-}
-
-void printGameStrategyContext(OutputStream* outputStream, GameStrategyContext* context) {
-    appendString(outputStream, "GameStrategyContext\n");
-    appendString(outputStream, "\tstrategy.name=");
-
-    // gameStrategy
-    if (context->gameStrategy != NULL) {
-        appendString(outputStream, context->gameStrategy->name);
-    }
-    else {
-        appendString(outputStream, "NULL");
-    }
-
-    // elapsedMatchTime
-    appendStringAndDecf(outputStream, "\n\telapsedMatchTime=", context->elapsedMatchTime);
-    println(outputStream);
-    
-    // Robot Position
-    appendString(outputStream, "\trobotPosition=");
-    printPoint(outputStream, context->robotPosition, "");
-    appendStringAndDecf(outputStream, "\n\trobotAngle (degree)=", context->robotAngle);
-
-    // nearestLocation
-    appendString(outputStream, "\n\tnearestLocation=");
-    if (context->nearestLocation != NULL) {
-        printLocation(outputStream, context->nearestLocation);
-    }
-    else {
-        appendString(outputStream, "NULL");
-    }
-
-    appendStringAndDecf(outputStream, "\ntimeSinceLastCollision=", context->timeSinceLastCollision);
-    // Robot Position
-    appendString(outputStream, "\n\topponentRobotPosition=");
-    printPoint(outputStream, context->opponentRobotPosition, "");
-
-    // Obstacle Position
-    appendString(outputStream, "\n\tlastObstaclePosition=");
-    printPoint(outputStream, context->lastObstaclePosition, "");
-
-    // current Target
-    appendString(outputStream, "\n\tcurrentTarget=");
-    if (context->currentTarget != NULL) {
-        // TODO printGameTargetTable(outputStream, context->currentTarget, false);
-    }
-    else {
-        appendString(outputStream, "NULL");
-    }
-
-    // currentTrajectory
-    if (&(context->currentTrajectory) != NULL) {
-        printLocationListTable(outputStream, context->currentTrajectory);
-    }
-    else {
-        appendString(outputStream, "\n\tcurrentTrajectory=NULL");
-    }
-    appendStringAndDec(outputStream, "\n\tteamColor=", context->color);
-    appendStringAndDec(outputStream, "\n\tstrategyIndex=", context->strategyIndex);
-    appendStringAndDec(outputStream, "\n\tmaxTargetToHandle=", context->maxTargetToHandle);
-
-//    appendStringAndDec(outputStream, "\n\tmustDoNextStep=", context->mustDoNextStep);
-    appendStringAndDec(outputStream, "\n\thasMoreNextSteps=", context->hasMoreNextSteps);
-
-    println(outputStream);
 }

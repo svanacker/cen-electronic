@@ -5,6 +5,8 @@
 
 #define COMMAND_STRATEGY_SET_CONFIG                        'c'
 
+#define COMMAND_STRATEGY_DEBUG                             'd'
+
 /** Returns the global score */
 #define COMMAND_STRATEGY_GET_GLOBAL_SCORE                  'M'
 
