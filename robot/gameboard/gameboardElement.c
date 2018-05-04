@@ -5,13 +5,13 @@
 #include "gameboard.h"
 
 int convertXToColumn(int x) {
-    float scale = (float) GAMEBOARD_COLUMN_COUNT / GAMEBOARD_WIDTH;
-    return (int)( (float) x * scale);
+    float scale = (float) (GAMEBOARD_COLUMN_COUNT / GAMEBOARD_WIDTH);
+    return (int) (x * scale);
 }
 
 int convertYToLine(int y) {
-    float scale = (float) GAMEBOARD_LINE_COUNT / GAMEBOARD_HEIGHT;
-    return (int)( (float) (GAMEBOARD_HEIGHT - y) * scale);
+    float scale = (float) (GAMEBOARD_LINE_COUNT / GAMEBOARD_HEIGHT);
+    return (int) ((GAMEBOARD_HEIGHT - y) * scale);
 }
 
 

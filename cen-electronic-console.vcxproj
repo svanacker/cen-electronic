@@ -426,6 +426,7 @@
     <ClCompile Include="robot\config\robotConfigDevice.c" />
     <ClCompile Include="robot\config\robotConfigDeviceInterface.c" />
     <ClCompile Include="robot\gameboard\gameboard.c" />
+    <ClCompile Include="robot\gameboard\gameboardBSplinePrint.c" />
     <ClCompile Include="robot\gameboard\gameboardElement.c" />
     <ClCompile Include="robot\gameboard\gameboardElementList.c" />
     <ClCompile Include="robot\kinematics\robotKinematics.c" />
@@ -788,6 +789,7 @@
     <ClInclude Include="robot\config\robotConfigDevice.h" />
     <ClInclude Include="robot\config\robotConfigDeviceInterface.h" />
     <ClInclude Include="robot\gameboard\gameboard.h" />
+    <ClInclude Include="robot\gameboard\gameboardBSplinePrint.h" />
     <ClInclude Include="robot\gameboard\gameboardElement.h" />
     <ClInclude Include="robot\gameboard\gameboardElementList.h" />
     <ClInclude Include="robot\kinematics\robotKinematics.h" />

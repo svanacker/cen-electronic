@@ -1995,6 +1995,9 @@
     <ClCompile Include="main\mainBoard\mainBoardCommon.c">
       <Filter>Source Files\main\mainBoard</Filter>
     </ClCompile>
+    <ClCompile Include="robot\gameboard\gameboardBSplinePrint.c">
+      <Filter>Source Files\robot\gameboard</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -3088,6 +3091,9 @@
     </ClInclude>
     <ClInclude Include="main\mainBoard\mainBoardCommon.h">
       <Filter>Header Files\main\mainBoard</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\gameboard\gameboardBSplinePrint.h">
+      <Filter>Header Files\robot\gameboard</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

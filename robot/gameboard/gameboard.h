@@ -18,6 +18,9 @@
 #define GAMEBOARD_WIDTH               2000.0f
 #define GAMEBOARD_HEIGHT              3000.0f
 
+#define GAMEBOARD_WIDTH_INTEGER          2000
+#define GAMEBOARD_HEIGHT_INTEGER         3000
+
 #define GAMEBOARD_MIDDLE_WIDTH        (GAMEBOARD_WIDTH / 2.0f)    
 #define GAMEBOARD_MIDDLE_HEIGHT       (GAMEBOARD_HEIGHT / 2.0f)
 

@@ -60,10 +60,10 @@ char drawRobot(Point* robotPosition, int column, int line) {
 // GAMEBOARD
 
 char gameboardBorderPrint(int* element, int column, int line) {
-    if (column == 0 || column == GAMEBOARD_COLUMN_COUNT - 1) {
+    if (column == 0 || column == GAMEBOARD_COLUMN_COUNT) {
         return '|';
     }
-    else if (line == 0 || line == GAMEBOARD_LINE_COUNT - 1) {
+    else if (line == 0 || line == GAMEBOARD_LINE_COUNT) {
         return '-';
     }
     return CHAR_NO_DRAW;
@@ -104,12 +104,6 @@ char printAllElements(GameBoard* gameBoard, int* element, int column, int line) 
         return result;
     }
 
-    // Borders
-    result = gameboardBorderPrint(element, column, line);
-    if (result != CHAR_NO_DRAW) {
-        return result;
-    }
-
     // Elements
     GameBoardElementList* gameBoardElementList = gameBoard->gameBoardElementList;
     int i;
@@ -136,6 +130,12 @@ char printAllElements(GameBoard* gameBoard, int* element, int column, int line) 
         }    
     }
 
+    // Borders (At the end if no other thing was printed)
+    result = gameboardBorderPrint(element, column, line);
+    if (result != CHAR_NO_DRAW) {
+        return result;
+    }
+
     return result; 
 }
 
@@ -143,8 +143,8 @@ void printGameboard(GameBoard* gameBoard,  OutputStream* outputStream) {
     println(outputStream);
     int line;
     int column;
-	for (line = 0; line < GAMEBOARD_LINE_COUNT; line++) {
-		for (column = 0; column < GAMEBOARD_COLUMN_COUNT; column++) {
+	for (line = 0; line <= GAMEBOARD_LINE_COUNT; line++) {
+		for (column = 0; column <= GAMEBOARD_COLUMN_COUNT; column++) {
 			char c = printAllElements(gameBoard, NULL, column, line);
 			append(outputStream, c);
 		}
