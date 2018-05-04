@@ -42,7 +42,7 @@ void initPathData(PathData* pathData,
     pathData->cost = cost;
     pathData->accelerationFactor = accelerationFactor;
     pathData->speedFactor = speedFactor;
-    pathData->mustGoBackward = false;
+    pathData->mustGoBackward = controlPointDistance1 < 0;
 }
 
 void initAsymmetricPathData(

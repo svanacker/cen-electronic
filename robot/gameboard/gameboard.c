@@ -1,10 +1,13 @@
 #include <stdlib.h>
-
+#include <math.h>
 #include "gameboard.h"
 #include "gameboardElement.h"
 #include "gameboardElementList.h"
+#include "gameboardBSplinePrint.h"
 #include "../../robot/2012/gameboardElement2012.h"
 
+#include "../../motion/extended/bspline.h"
+#include "../../motion/extended/bsplineMotion.h"
 
 #include "../../robot/strategy/gameTarget.h"
 #include "../../robot/strategy/gameTargetList.h"
@@ -14,64 +17,46 @@
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
 
+
 // Initialization
 
 void initGameBoard(GameBoard* gameBoard,
+                   BSplineCurve* gameBoardSplineCurve,
                     GameBoardElementList* gameBoardElementList,
                     GameBoardElement(*gameBoardElementListArray)[],
                     unsigned char gameBoardElementListSize,
                     GameStrategyContext* gameStrategyContext) {
     gameBoard->gameBoardElementList = gameBoardElementList;
+    gameBoard->gameBoardCurve = gameBoardSplineCurve;
     initGameBoardElementList(gameBoardElementList, gameBoardElementListArray, gameBoardElementListSize);
     gameBoard->gameStrategyContext = gameStrategyContext;
 }
 
-char drawPoint(int column, int line, Point* p, char value) {
-    if (p->x == 0 && p->y == 0) {
-        return CHAR_NO_DRAW;
-    }
-    
-    int xColumn = convertXToColumn((int) p->x);
-    int yLine = convertYToLine((int) p->y);
-
-    if (line == yLine && column == xColumn) {
-        return value;
-    }
-
-    return CHAR_NO_DRAW;
-}
-
 // OPPONENT
 
-char drawOpponent(Point* opponent, int column, int line) {
-    return drawPoint(column, line, opponent, 'H');
+void drawOpponent(GameBoard* gameBoard, Point* opponent) {
+    drawPoint(gameBoard, opponent, 'H');
 }
 
-char drawLastObstacle(Point* obstacle, int column, int line) {
-    return drawPoint(column, line, obstacle, 'L');
+void drawLastObstacle(GameBoard* gameBoard, Point* obstacle) {
+    drawPoint(gameBoard, obstacle, 'L');
 }
 
 // ROBOT
 
-char drawRobot(Point* robotPosition, int column, int line) {
-    return drawPoint(column, line, robotPosition, 'R');
+void drawRobot(GameBoard* gameBoard, Point* robotPosition) {
+    drawPoint(gameBoard, robotPosition, 'R');
 }
 
 // GAMEBOARD
 
-char gameboardBorderPrint(int* element, int column, int line) {
-    if (column == 0 || column == GAMEBOARD_COLUMN_COUNT) {
-        return '|';
-    }
-    else if (line == 0 || line == GAMEBOARD_LINE_COUNT) {
-        return '-';
-    }
-    return CHAR_NO_DRAW;
+void gameboardBorderPrint(GameBoard* gameBoard, int* element) {
+    drawRectangle(gameBoard, 0.0f, 0.0f, GAMEBOARD_WIDTH, GAMEBOARD_HEIGHT, '|', '-');
 }
 
 // TARGET
 
-char gameTargetPrint(int* element, int column, int line) {
+void gameTargetPrint(GameBoard* gameBoard, int* element) {
     GameTarget* target = (GameTarget*) element;
     Location* location = target->location;
     char c;
@@ -81,42 +66,46 @@ char gameTargetPrint(int* element, int column, int line) {
     else {
         c = 'O';
     }
-    return pointPrint(column, line, (int) location->x, (int)location->y, c);
+    drawPointCoordinates(gameBoard, location->x, location->y, c);
 }
 
-char printAllElements(GameBoard* gameBoard, int* element, int column, int line) {
+void gamePathPrint(GameBoard* gameBoard, int* element) {
+    PathData* pathData = (PathData*)element;
+    Location* location1 = pathData->location1;
+    Location* location2 = pathData->location2;
+    parameterBSplineWithDistanceAndAngle(gameBoard->gameBoardCurve, location1->x, location1->y, pathData->angle1,
+                                                          location2->x, location2->y, pathData->angle2,
+                                                          pathData->controlPointDistance1, pathData->controlPointDistance2, 
+                                                          MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL,
+                                                          false);
+
+    bSplinePrint(gameBoard, gameBoard->gameBoardCurve, '*');
+}
+
+void fillGameBoardCharElements(GameBoard* gameBoard, int* element) {
     GameStrategyContext* gameStrategyContext = gameBoard->gameStrategyContext;
 
-    // Robot
-    char result = drawRobot(gameStrategyContext->robotPosition, column, line);
-    if (result != CHAR_NO_DRAW) {
-        return result;
-    }
+    // Borders (At the beginning so it could be override by other chars)
+    gameboardBorderPrint(gameBoard, element);
 
-    // Last Obstacle
-    result = drawLastObstacle(gameStrategyContext->lastObstaclePosition, column, line);
-    if (result != CHAR_NO_DRAW) {
-        return result;
-    }
-
-    // Opponent
-    result = drawOpponent(gameStrategyContext->opponentRobotPosition, column, line);
-    if (result != CHAR_NO_DRAW) {
-        return result;
+    // Paths
+    Navigation* navigation = gameStrategyContext->navigation;
+    PathList* pathList = getNavigationPathList(navigation);
+    unsigned char size = pathList->size;
+    unsigned int i;
+    for (i = 0; i < size; i++) {
+        PathData* pathData = getPath(pathList, i);
+        gamePathPrint(gameBoard, (int*)pathData);
     }
 
     // Elements
     GameBoardElementList* gameBoardElementList = gameBoard->gameBoardElementList;
-    int i;
-    unsigned char size = gameBoardElementList->size;
+    size = gameBoardElementList->size;
     for (i = 0; i < size; i++) {
         GameBoardElement* gameBoardElement = getGameBoardElement(gameBoardElementList, i);
 
         GameboardPrintFunction* printFunction = gameBoardElement->printFunction;
-        result = printFunction((int*)gameBoardElement, column, line);
-        if (result != CHAR_NO_DRAW) {
-            return result;
-        }
+        printFunction(gameBoard, (int*)gameBoardElement);
     }
 
     // Targets
@@ -125,37 +114,37 @@ char printAllElements(GameBoard* gameBoard, int* element, int column, int line) 
     for (i = 0; i < size; i++) {
         GameTarget* gameTarget = gameTargetList->targets[i];
 
-        result = gameTargetPrint((int*) gameTarget, column, line);
-        if (result != CHAR_NO_DRAW) {
-            return result;
-        }    
+        gameTargetPrint(gameBoard, (int*) gameTarget);
     }
 
-    // Borders (At the end if no other thing was printed)
-    result = gameboardBorderPrint(element, column, line);
-    if (result != CHAR_NO_DRAW) {
-        return result;
-    }
+    // Robot
+    drawRobot(gameBoard, gameStrategyContext->robotPosition);
 
-    return result; 
+    // Last Obstacle
+    drawLastObstacle(gameBoard, gameStrategyContext->lastObstaclePosition);
+
+    // Opponent
+    drawOpponent(gameBoard, gameStrategyContext->opponentRobotPosition);
 }
 
 void printGameboard(GameBoard* gameBoard,  OutputStream* outputStream) {
     println(outputStream);
-    int line;
-    int column;
-	for (line = 0; line <= GAMEBOARD_LINE_COUNT; line++) {
-		for (column = 0; column <= GAMEBOARD_COLUMN_COUNT; column++) {
-			char c = printAllElements(gameBoard, NULL, column, line);
-			append(outputStream, c);
-		}
+    // Fill All Chars
+    fillGameBoardCharElements(gameBoard, NULL);
+    // Print Gameboard
+    unsigned int line;
+    unsigned int column;
+    for (line = 0; line <= GAMEBOARD_LINE_COUNT; line++) {
+        for (column = 0; column <= GAMEBOARD_COLUMN_COUNT; column++) {
+            append(outputStream, gameBoard->pixels[column][line]);
+        }
         append(outputStream, '\n');
     }
 }
 
 // POINT
 
-char robotPositionPrint(int* element, int column, int line) {
+void robotPositionPrint(GameBoard* gameBoard, int* element) {
     Point* point = (Point*) element;
-    return pointPrint(column, line, (int)point->x, (int) point->y, 'X');
+    drawPoint(gameBoard, point, 'X');
 }

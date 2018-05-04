@@ -1,41 +1,42 @@
 #ifndef GAMEBOARD_ELEMENT_H
 #define GAMEBOARD_ELEMENT_H
 
-/**
- * Convert X into print coordinates
- * @param x (mm)
- */
-int convertXToColumn(int x);
+#include "../../common/2d/2d.h"
+
+#include "gameboard.h"
+
+// BASE FUNCTIONS
 
 /**
- * Convert Y into print coordinates
+ * Set a pixel on a gameboard at a coordinates.
  */
-int convertYToLine(int y);
+void setGameBoardPixel(GameBoard* gameBoard, float x, float y, char c);
 
 // POINTS
 
 /**
  * Print Function to draw a point with a c char. 
  */
-char pointPrint(int column, int line, int x, int y, char c);
+void drawPointCoordinates(GameBoard* gameBoard, float x, float y, char c);
+
+void drawPoint(GameBoard* gameBoard, Point* p, char value);
+
+// LINE
+
+void drawLine(GameBoard* gameBoard, float x1, float y1, float x2, float y2, char value);
 
 // CIRCLE
 
 /** 
  * Circle with radius draw function.
  */
-char filledCirclePrint(int column, int line, int x, int y, int radius, char c);
+void drawCircle(GameBoard* gameBoard, float x, float y, float radius, char c);
 
 // RECTANGLE
 
 /**
- * Filled Rectangle draw function.
- */
-char filledRectanglePrint(int column, int line, int x, int y, int width, int height, char c);
-
-/**
 * Empty Rectangle draw function.
 */
-char emptyRectanglePrint(int column, int line, int x, int y, int width, int height, char verticalChar, char horizontalChar);
+void drawRectangle(GameBoard* gameBoard, float x, float y, float width, float height, char verticalChar, char horizontalChar);
 
 #endif

@@ -1,12 +1,13 @@
 #ifndef GAMEBOARD_H
 #define GAMEBOARD_H
 
-#include "gameboardElement.h"
-#include "gameboardElementList.h"
-
-#include "../strategy/gameStrategyContext.h"
-
-#include "../../common/io/outputStream.h"
+// Forward declaration
+struct GameBoard;
+typedef struct GameBoard GameBoard;
+struct GameBoardElementList;
+struct GameBoardElement;
+typedef struct GameBoardElementList GameBoardElementList;
+typedef struct GameBoardElement GameBoardElement;
 
 #define CHAR_NO_DRAW                ' '
 #define CHAR_VERTICAL               '|'
@@ -24,8 +25,35 @@
 #define GAMEBOARD_MIDDLE_WIDTH        (GAMEBOARD_WIDTH / 2.0f)    
 #define GAMEBOARD_MIDDLE_HEIGHT       (GAMEBOARD_HEIGHT / 2.0f)
 
-struct GameBoard;
-typedef struct GameBoard GameBoard;
+/**
+* Type of function which must be called to draw an element of the gameboard.
+*/
+typedef void GameboardPrintFunction(GameBoard* gameBoard, int* element);
+
+/**
+* Structure to store the gameboard element;
+*/
+struct GameBoardElement {
+    /** The function which will be used to be print. */
+    GameboardPrintFunction* printFunction;
+};
+
+/**
+* Structure to store the list of Game Board elements which are not "targets"
+*/
+struct GameBoardElementList {
+    /* An array of pointer on element pointer. */
+    GameBoardElement(*elements)[];
+    /** the size of the list. */
+    unsigned char size;
+    /** the max size of the list. */
+    unsigned char maxSize;
+};
+
+#include "../../motion/extended/bspline.h"
+#include "../strategy/gameStrategyContext.h"
+
+#include "../../common/io/outputStream.h"
 
 /**
  * Gameboard.
@@ -33,6 +61,10 @@ typedef struct GameBoard GameBoard;
 typedef struct GameBoard {
     // List of elements to draw
     GameBoardElementList* gameBoardElementList;
+    // To be able to draw curve !
+    BSplineCurve* gameBoardCurve;
+    // pixels of the gameboard
+    char pixels[GAMEBOARD_COLUMN_COUNT + 1][GAMEBOARD_LINE_COUNT + 1];
     // All informations about the strategy
     GameStrategyContext* gameStrategyContext;
 } GameBoard;
@@ -41,6 +73,7 @@ typedef struct GameBoard {
  * Init the gameboard with all informations
  */
 void initGameBoard(GameBoard* gameBoard,
+                   BSplineCurve* gameBoardCurve,
                    GameBoardElementList* gameBoardElementList, 
                    GameBoardElement(*gameBoardElementListArray)[],
                    unsigned char gameBoardElementListSize,

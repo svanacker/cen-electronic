@@ -479,6 +479,7 @@
         <itemPath>../../../robot/gameboard/gameboard.h</itemPath>
         <itemPath>../../../robot/gameboard/gameboardElement.h</itemPath>
         <itemPath>../../../robot/gameboard/gameboardElementList.h</itemPath>
+        <itemPath>../../../robot/gameboard/gameboardBSplinePrint.h</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.kinematics"
                      displayName="robot.kinematics"
@@ -1019,6 +1020,7 @@
         <itemPath>../../../robot/gameboard/gameboard.c</itemPath>
         <itemPath>../../../robot/gameboard/gameboardElement.c</itemPath>
         <itemPath>../../../robot/gameboard/gameboardElementList.c</itemPath>
+        <itemPath>../../../robot/gameboard/gameboardBSplinePrint.c</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.kinematics"
                      displayName="robot.kinematics"

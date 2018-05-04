@@ -49,6 +49,7 @@ static unsigned int availablePathBitArray[STRATEGY_2018_BIT_LIST_NAVIGATION_ARRA
 
 // 2018 -> Robot
 static GameBoard gameBoard;
+static BSplineCurve gameBoardCurve;
 static GameBoardElementList gameBoardElementList;
 static GameBoardElement gameBoardElementListArray[MAIN_BOARD_2018_GAME_BOARD_PRINT_ELEMENT_ARRAY_LENGTH];
 
@@ -73,6 +74,7 @@ GameStrategyContext* initGameStrategyContext2018(void) {
 
 GameBoard* initGameBoard2018(GameStrategyContext* gameStrategyContext) {
     initGameBoard(&gameBoard,
+        &gameBoardCurve,
         &gameBoardElementList,
         (GameBoardElement(*)[]) &gameBoardElementListArray,
         MAIN_BOARD_2018_GAME_BOARD_PRINT_ELEMENT_ARRAY_LENGTH,

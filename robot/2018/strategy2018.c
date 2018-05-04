@@ -140,6 +140,7 @@ void initLocations2018(GameStrategyContext* gameStrategyContext) {
 
 void initPaths2018(GameStrategyContext* gameStrategyContext, int index) {
     Navigation* navigation = gameStrategyContext->navigation;
+    /*
     startArea_to_switch_Path = addNavigationPath(navigation,
                                                  startAreaLocation, 
                                                  switchLocation,
@@ -150,7 +151,6 @@ void initPaths2018(GameStrategyContext* gameStrategyContext, int index) {
                                                  SWITCH_ANGLE,
                                                  STARTAREA_TO_SWITCH_ACCELERATION_FACTOR,
                                                  STARTAREA_TO_SWITCH_SPEED_FACTOR);
-        
     switch_to_distributor1_Path = addNavigationPath(navigation,
                                                     switchLocation,
                                                     distributor1Location,
@@ -183,7 +183,6 @@ void initPaths2018(GameStrategyContext* gameStrategyContext, int index) {
                                                              BEE_ANGLE,
                                                              BEE_BORDER_ALIGN_Y_TO_BEE_ACCELERATION_FACTOR,
                                                              BEE_BORDER_ALIGN_Y_TO_BEE_SPEED_FACTOR);
-
     bee_to_distributor2Front_Path = addNavigationPath(navigation,
                                                              beeLocation,
                                                              distributor2FrontLocation,
@@ -194,7 +193,7 @@ void initPaths2018(GameStrategyContext* gameStrategyContext, int index) {
                                                              DISTRIBUTOR_2_FRONT_ANGLE,
                                                              BEE_TO_DISTRIBUTOR_2_FRONT_ACCELERATION_FACTOR,
                                                              BEE_TO_DISTRIBUTOR_2_FRONT_SPEED_FACTOR);
-
+                                                             
     distributor2Front_to_distributor2_Path = addNavigationPath(navigation,
                                                              distributor2FrontLocation,
                                                              distributor2Location,
@@ -205,7 +204,7 @@ void initPaths2018(GameStrategyContext* gameStrategyContext, int index) {
                                                              DISTRIBUTOR_2_ANGLE,
                                                              DISTRIBUTOR_2_FRONT_TO_DISTRIBUTOR_2_ACCELERATION_FACTOR,
                                                              DISTRIBUTOR_2_FRONT_TO_DISTRIBUTOR_2_SPEED_FACTOR);
-
+                                                             
      distributor2_to_garbageFront_Path = addNavigationPath(navigation,
                                                              distributor2Location,
                                                              garbageFrontLocation,
@@ -216,7 +215,8 @@ void initPaths2018(GameStrategyContext* gameStrategyContext, int index) {
                                                              GARGAGE_FRONT_POINT_ANGLE,
                                                              DISTRIBUTOR_2_TO_GARBAGE_FRONT_ACCELERATION_FACTOR,
                                                              DISTRIBUTOR_2_TO_GARBAGE_FRONT_SPEED_FACTOR);
-
+                                                             */
+                                                             
      garbageFront_to_garbageRelease_Path = addNavigationPath(navigation,
                                                              garbageFrontLocation,
                                                              garbageReleaseLocation,
