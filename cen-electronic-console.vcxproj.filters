@@ -1998,6 +1998,12 @@
     <ClCompile Include="robot\gameboard\gameboardBSplinePrint.c">
       <Filter>Source Files\robot\gameboard</Filter>
     </ClCompile>
+    <ClCompile Include="robot\strategy\gameTargetListDebug.c">
+      <Filter>Source Files\robot\strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\strategy\gameTargetActionListDebug.c">
+      <Filter>Source Files\robot\strategy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -3094,6 +3100,12 @@
     </ClInclude>
     <ClInclude Include="robot\gameboard\gameboardBSplinePrint.h">
       <Filter>Header Files\robot\gameboard</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\strategy\gameTargetListDebug.h">
+      <Filter>Header Files\robot\strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\strategy\gameTargetActionListDebug.h">
+      <Filter>Header Files\robot\strategy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

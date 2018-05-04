@@ -31,7 +31,7 @@
  /**
  * Defines the header to list all location.
  */
-#define COMMAND_NAVIGATION_LOCATION_LIST        'd'
+#define COMMAND_NAVIGATION_LOCATION_LIST_DEBUG        'd'
 
 /**
  * Add some test data (to avoid to fill them manually).
@@ -63,7 +63,7 @@
 /**
 * Defines the header to list all paths.
 */
-#define COMMAND_NAVIGATION_PATH_LIST     'D'
+#define COMMAND_NAVIGATION_PATH_LIST_DEBUG     'D'
 
 /**
 * Add some test data (to avoid to fill them manually).

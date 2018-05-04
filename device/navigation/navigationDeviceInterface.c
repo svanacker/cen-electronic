@@ -38,7 +38,7 @@ int deviceNavigationGetInterface(char commandHeader, DeviceInterfaceMode mode, b
         }
         return commandLengthValueForMode(mode, 18, 0);
     }
-	else if (commandHeader == COMMAND_NAVIGATION_LOCATION_LIST) {
+	else if (commandHeader == COMMAND_NAVIGATION_LOCATION_LIST_DEBUG) {
 		if (fillDeviceArgumentList) {
 			setFunctionNoArgumentAndNoResult("Location List");
 		}
@@ -109,7 +109,7 @@ int deviceNavigationGetInterface(char commandHeader, DeviceInterfaceMode mode, b
         }
         return commandLengthValueForMode(mode, 50, 0);
     }
-	else if (commandHeader == COMMAND_NAVIGATION_PATH_LIST) {
+	else if (commandHeader == COMMAND_NAVIGATION_PATH_LIST_DEBUG) {
 		if (fillDeviceArgumentList) {
 			setFunctionNoArgumentAndNoResult("PathList");
 		}

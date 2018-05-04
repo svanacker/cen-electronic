@@ -86,6 +86,7 @@ char gameTargetPrint(int* element, int column, int line) {
 
 char printAllElements(GameBoard* gameBoard, int* element, int column, int line) {
     GameStrategyContext* gameStrategyContext = gameBoard->gameStrategyContext;
+
     // Robot
     char result = drawRobot(gameStrategyContext->robotPosition, column, line);
     if (result != CHAR_NO_DRAW) {

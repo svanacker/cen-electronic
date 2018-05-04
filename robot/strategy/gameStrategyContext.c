@@ -4,13 +4,15 @@
 
 #include "../../common/2d/2dDebug.h"
 
-#include "../../navigation/locationList.h"
-#include "../../navigation/locationListDebug.h"
-
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
 
 #include "../../common/timer/cenTimer.h"
+
+#include "../../navigation/locationList.h"
+#include "../../navigation/locationListDebug.h"
+
+#include "gameTargetListDebug.h"
 
 void initGameStrategyContext(GameStrategyContext* gameStrategyContext,
     Navigation* navigation,
@@ -67,7 +69,7 @@ void printGameStrategyContext(OutputStream* outputStream, GameStrategyContext* c
     // current Target
     appendString(outputStream, "\n\tcurrentTarget=");
     if (context->currentTarget != NULL) {
-        printGameTarget(outputStream, context->currentTarget, false);
+        // TODO printGameTargetTable(outputStream, context->currentTarget, false);
     }
     else {
         appendString(outputStream, "NULL");

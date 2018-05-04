@@ -18,6 +18,7 @@
 
 #include "../../navigation/navigation.h"
 #include "../../navigation/locationList.h"
+#include "../../navigation/locationListDebug.h"
 #include "../../navigation/pathList.h"
 #include "../../navigation/pathListDebug.h"
 

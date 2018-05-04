@@ -101,7 +101,7 @@ void findNextTarget(GameStrategyContext* gameStrategyContext) {
     #ifdef DEBUG_STRATEGY_HANDLER
         appendString(getDebugOutputStreamLogger(), "\t\tbestTarget:");
         if (gameStrategyContext->currentTarget != NULL) {
-            printGameTarget(getDebugOutputStreamLogger(), gameStrategyContext->currentTarget, false);
+            // TODO : printGameTargetTable(getDebugOutputStreamLogger(), gameStrategyContext->currentTarget, false);
         }
         else {
             appendString(getDebugOutputStreamLogger(), "NULL\n");
@@ -350,8 +350,11 @@ bool handleCurrentTrajectory(GameStrategyContext* gameStrategyContext) {
     return true;
 }
 
-void computePoint(Point* ref, Point* cp, float distance, float angle) {
-    float a = degToRad(angle);
+/**
+ * TODO : Really needed ????
+ */
+void computePoint(Point* ref, Point* cp, float distance, float angleDegree) {
+    float a = degToRad(angleDegree);
     float dca = cosf(a) * distance;
     float dsa = sinf(a) * distance;
     cp->x = ref->x + dca;

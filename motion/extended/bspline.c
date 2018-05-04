@@ -162,3 +162,67 @@ float computeBSplineTimeAtDistance(BSplineCurve* bSplineCurve, float distance) {
 }
 
 
+void parameterBSplineWithDistanceAndAngle(BSplineCurve* curve,
+    float sourceX, float sourceY, float sourceAngleRadian,
+    float destX, float destY, float destAngleRadian,
+    float distance1, float distance2,
+    float accelerationFactor, float speedFactor,
+    bool relative) {
+
+    // If the distance of the control point is negative, we considerer that we go
+    // back
+    bool backward = distance1 < 0.0f;
+
+    // For P0-P1
+    float c1 = cosf(sourceAngleRadian);
+    float s1 = sinf(sourceAngleRadian);
+
+    float dca1 = (distance1 * c1);
+    float dsa1 = (distance1 * s1);
+
+    // For P2-P3
+    float c2 = cosf(destAngleRadian);
+    float s2 = sinf(destAngleRadian);
+
+    float dca2 = (distance2 * c2);
+    float dsa2 = (distance2 * s2);
+
+    // Update the bspline curve
+    // P0
+    resetBSplineCurve(curve, sourceX, sourceY, backward);
+    curve->accelerationFactor = accelerationFactor;
+    curve->speedFactor = speedFactor;
+
+    // P1
+    Point* point = &(curve->p1);
+    // P1 along x axis
+    point->x = (sourceX + dca1);
+    point->y = (sourceY + dsa1);
+
+    if (relative) {
+
+        // P2
+        point = &(curve->p2);
+        rotate(point, sourceAngleRadian, (destX - dca2), (destY - dsa2));
+        point->x += sourceX;
+        point->y += sourceY;
+
+        // P3
+        point = &(curve->p3);
+        rotate(point, sourceAngleRadian, (destX), (destY));
+        point->x += sourceX;
+        point->y += sourceY;
+    }
+    else {
+        // P2
+        point = &(curve->p2);
+        point->x = (destX - dca2);
+        point->y = (destY - dsa2);
+
+        // P3
+        point = &(curve->p3);
+        point->x = destX;
+        point->y = destY;
+    }
+    computeBSplineArcLength(curve, BSPLINE_TIME_INCREMENT);
+}

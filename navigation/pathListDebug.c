@@ -12,19 +12,19 @@
 
 #include "../common/error/error.h"
 
-#define PATH_LIST_NAME_1_COLUMN_LENGTH                       11
-#define PATH_LIST_NAME_2_COLUMN_LENGTH                       11
-#define PATH_LIST_NAME_HEX_1_COLUMN_LENGTH                   12
-#define PATH_LIST_NAME_HEX_2_COLUMN_LENGTH                   12
-#define PATH_LIST_COST_COLUMN_LENGTH                         5
-#define PATH_LIST_CP1_COLUMN_LENGTH                          5
-#define PATH_LIST_CP2_COLUMN_LENGTH                          5
+#define PATH_LIST_NAME_1_COLUMN_LENGTH                       7
+#define PATH_LIST_NAME_2_COLUMN_LENGTH                       7
+#define PATH_LIST_NAME_HEX_1_COLUMN_LENGTH                   9
+#define PATH_LIST_NAME_HEX_2_COLUMN_LENGTH                   9
+#define PATH_LIST_COST_COLUMN_LENGTH                         7
+#define PATH_LIST_CP1_COLUMN_LENGTH                          7
+#define PATH_LIST_CP2_COLUMN_LENGTH                          7
 #define PATH_LIST_ANGLE_1_COLUMN_LENGTH                      6
 #define PATH_LIST_ANGLE_2_COLUMN_LENGTH                      6
-#define PATH_LIST_ACCELERATION_FACTOR_COLUMN_LENGTH          4
+#define PATH_LIST_ACCELERATION_FACTOR_COLUMN_LENGTH          6
 #define PATH_LIST_SPEED_FACTOR_COLUMN_LENGTH                 6
 #define PATH_LIST_GO_BACK_COLUMN_LENGTH                      5
-#define PATH_LIST_LAST_COLUMN_LENGTH                         1
+#define PATH_LIST_LAST_COLUMN_LENGTH                         0
 
 /**
 * Private.
@@ -33,10 +33,11 @@ void printPathListHeader(OutputStream* outputStream) {
 	println(outputStream);
 	// Table Header
 	appendTableHeaderSeparatorLine(outputStream);
-	appendStringHeader(outputStream, "location 1", PATH_LIST_NAME_1_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "location 2", PATH_LIST_NAME_2_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "loc 1 Hex", PATH_LIST_NAME_HEX_1_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "loc 2 Hex", PATH_LIST_NAME_HEX_2_COLUMN_LENGTH);
+    // Header Line 1
+    appendStringHeader(outputStream, "loc. 1", PATH_LIST_NAME_1_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "loc. 2", PATH_LIST_NAME_2_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "loc. 1", PATH_LIST_NAME_HEX_1_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "loc. 2", PATH_LIST_NAME_HEX_2_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "cost", PATH_LIST_COST_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "cp 1", PATH_LIST_CP1_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "cp 2", PATH_LIST_CP2_COLUMN_LENGTH);
@@ -46,16 +47,31 @@ void printPathListHeader(OutputStream* outputStream) {
 	appendStringHeader(outputStream, "Acc", PATH_LIST_ACCELERATION_FACTOR_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "Speed", PATH_LIST_SPEED_FACTOR_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "Back", PATH_LIST_GO_BACK_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, PATH_LIST_LAST_COLUMN_LENGTH);
+    // Header Line 2
+    appendStringHeader(outputStream, "", PATH_LIST_NAME_1_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "", PATH_LIST_NAME_2_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Hex", PATH_LIST_NAME_HEX_1_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Hex", PATH_LIST_NAME_HEX_2_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "", PATH_LIST_COST_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "", PATH_LIST_CP1_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "", PATH_LIST_CP2_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "", PATH_LIST_ANGLE_1_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "", PATH_LIST_ANGLE_2_COLUMN_LENGTH);
+
+    appendStringHeader(outputStream, "", PATH_LIST_ACCELERATION_FACTOR_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "", PATH_LIST_SPEED_FACTOR_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "", PATH_LIST_GO_BACK_COLUMN_LENGTH);
 
 	appendEndOfTableColumn(outputStream, PATH_LIST_LAST_COLUMN_LENGTH);
 	appendTableHeaderSeparatorLine(outputStream);
 }
 
 void printPathTable(OutputStream* outputStream, PathData* pathData) {
-	appendStringTableData(outputStream, pathData->location1->name, PATH_LIST_NAME_1_COLUMN_LENGTH);
-	appendStringTableData(outputStream, pathData->location2->name, PATH_LIST_NAME_2_COLUMN_LENGTH);
-	appendStringTableData(outputStream, pathData->location1->name, PATH_LIST_NAME_HEX_1_COLUMN_LENGTH);
-	appendStringTableData(outputStream, pathData->location2->name, PATH_LIST_NAME_HEX_2_COLUMN_LENGTH);
+    appendFixedCharArrayTableData(outputStream, &(pathData->location1->name), PATH_LIST_NAME_1_COLUMN_LENGTH);
+    appendFixedCharArrayTableData(outputStream, &(pathData->location2->name), PATH_LIST_NAME_2_COLUMN_LENGTH);
+    appendHexFixedCharArrayTableData(outputStream, &(pathData->location1->name), PATH_LIST_NAME_HEX_1_COLUMN_LENGTH);
+    appendHexFixedCharArrayTableData(outputStream, &(pathData->location2->name), PATH_LIST_NAME_HEX_2_COLUMN_LENGTH);
 	appendDecfTableData(outputStream, pathData->cost, PATH_LIST_COST_COLUMN_LENGTH);
 	appendDecfTableData(outputStream, pathData->controlPointDistance1, PATH_LIST_CP1_COLUMN_LENGTH);
 	appendDecfTableData(outputStream, pathData->controlPointDistance2, PATH_LIST_CP2_COLUMN_LENGTH);

@@ -48,6 +48,8 @@ bool nextStep(GameStrategyContext* gmeStrategyContext);
 
 // OBSTACLE
 
+void computePoint(Point* ref, Point* cp, float distance, float angle);
+
 /**
  * Update all paths / opponent Robot Position to mark them as unavailable if the robot is on
  * this path !

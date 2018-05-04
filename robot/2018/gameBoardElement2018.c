@@ -1,39 +1,49 @@
 #include <stdlib.h>
 
 #include "gameboardElement2018.h"
+#include "strategy2018.h"
+
+#include "../../common/math/cenMath.h"
+
+#include "../../motion/extended/bspline.h"
 
 #include "../../navigation/navigation.h"
 
 #include "../../robot/gameboard/gameboard.h"
 #include "../../robot/gameboard/gameboardElement.h"
 #include "../../robot/gameboard/gameboardElementList.h"
+#include "../../robot/gameboard/gameboardBSplinePrint.h"
+
+#include "../../robot/strategy/gameStrategyHandler.h"
+
+static BSplineCurve curve;
 
 // START AREA
 
 char startAreaGreenPrint(int* element, int column, int line) {
-    return emptyRectanglePrint(column, line, 0, 0, START_AREA_2018_WIDTH, START_AREA_2018_HEIGHT, CHAR_VERTICAL, CHAR_HORIZONTAL);
+    return emptyRectanglePrint(column, line, 0, 0, GAME_BOARD_START_AREA_2018_WIDTH, GAME_BOARD_START_AREA_2018_HEIGHT, CHAR_VERTICAL, CHAR_HORIZONTAL);
 }
 
 char startAreaOrangePrint(int* element, int column, int line) {
-    return emptyRectanglePrint(column, line, 0, START_AREA_2018_ORANGE_Y, START_AREA_2018_WIDTH, START_AREA_2018_HEIGHT, CHAR_VERTICAL, CHAR_HORIZONTAL);
+    return emptyRectanglePrint(column, line, 0, GAME_BOARD_START_AREA_2018_ORANGE_Y, GAME_BOARD_START_AREA_2018_WIDTH, GAME_BOARD_START_AREA_2018_HEIGHT, CHAR_VERTICAL, CHAR_HORIZONTAL);
 }
 
 // GARBAGE
 char garbageGreenPrint(int* element, int column, int line) {
-    return emptyRectanglePrint(column, line, GARBAGE_2018_X, GARBAGE_2018_GREEN_Y, GARBAGE_2018_WIDTH, GARBAGE_2018_HEIGHT, CHAR_VERTICAL, CHAR_HORIZONTAL);
+    return emptyRectanglePrint(column, line, GAME_BOARD_GARBAGE_2018_X, GAME_BOARD_GARBAGE_2018_GREEN_Y, GAME_BOARD_GARBAGE_2018_WIDTH, GAME_BOARD_GARBAGE_2018_HEIGHT, CHAR_VERTICAL, CHAR_HORIZONTAL);
 }
 
 char garbageOrangePrint(int* element, int column, int line) {
-    return emptyRectanglePrint(column, line, GARBAGE_2018_X, GARBAGE_2018_ORANGE_Y, GARBAGE_2018_WIDTH, GARBAGE_2018_HEIGHT, CHAR_VERTICAL, CHAR_HORIZONTAL);
+    return emptyRectanglePrint(column, line, GAME_BOARD_GARBAGE_2018_X, GAME_BOARD_GARBAGE_2018_ORANGE_Y, GAME_BOARD_GARBAGE_2018_WIDTH, GAME_BOARD_GARBAGE_2018_HEIGHT, CHAR_VERTICAL, CHAR_HORIZONTAL);
 }
 
 // SWITCH
 char switchGreenPrint(int* element, int column, int line) {
-    return pointPrint(column, line, SWITCH_2018_X, SWITCH_GREEN_2018_Y, 'S');
+    return pointPrint(column, line, GAME_BOARD_SWITCH_2018_X, GAME_BOARD_SWITCH_GREEN_2018_Y, 'S');
 }
 
 char switchOrangePrint(int* element, int column, int line) {
-    return pointPrint(column, line, SWITCH_2018_X, SWITCH_ORANGE_2018_Y, 'S');
+    return pointPrint(column, line, GAME_BOARD_SWITCH_2018_X, GAME_BOARD_SWITCH_ORANGE_2018_Y, 'S');
 }
 
 // CUBES
@@ -43,63 +53,63 @@ char cubeSetPrintAtLocation(int* element, int column, int line, int x, int y) {
     if (result != CHAR_NO_DRAW) {
         return result;
     }
-    result = pointPrint(column, line, x, y + CUBE_HEIGHT, '@');
+    result = pointPrint(column, line, x, y + GAME_BOARD_CUBE_HEIGHT, '@');
     if (result != CHAR_NO_DRAW) {
         return result;
     }
-    result = pointPrint(column, line, x + CUBE_WIDTH, y, '@');
+    result = pointPrint(column, line, x + GAME_BOARD_CUBE_WIDTH, y, '@');
     if (result != CHAR_NO_DRAW) {
         return result;
     }
-    result = pointPrint(column, line, x, y - CUBE_HEIGHT, '@');
+    result = pointPrint(column, line, x, y - GAME_BOARD_CUBE_HEIGHT, '@');
     if (result != CHAR_NO_DRAW) {
         return result;
     }
-    result = pointPrint(column, line, x - CUBE_WIDTH, y, '@');
+    result = pointPrint(column, line, x - GAME_BOARD_CUBE_WIDTH, y, '@');
     return result;
 }
 
 char cubeSetLeft1(int* element, int column, int line) {
-    return cubeSetPrintAtLocation(element, column, line, CUBE_LEFT_X, CUBE_LEFT_Y1);
+    return cubeSetPrintAtLocation(element, column, line, GAME_BOARD_CUBE_LEFT_X, GAME_BOARD_CUBE_LEFT_Y1);
 }
 
 char cubeSetLeft2(int* element, int column, int line) {
-    return cubeSetPrintAtLocation(element, column, line, CUBE_LEFT_X, CUBE_LEFT_Y2);
+    return cubeSetPrintAtLocation(element, column, line, GAME_BOARD_CUBE_LEFT_X, GAME_BOARD_CUBE_LEFT_Y2);
 }
 
 char cubeSetMiddle1(int* element, int column, int line) {
-    return cubeSetPrintAtLocation(element, column, line, CUBE_MIDDLE_X, CUBE_MIDDLE_Y1);
+    return cubeSetPrintAtLocation(element, column, line, GAME_BOARD_CUBE_MIDDLE_X, GAME_BOARD_CUBE_MIDDLE_Y1);
 }
 
 char cubeSetMiddle2(int* element, int column, int line) {
-    return cubeSetPrintAtLocation(element, column, line, CUBE_MIDDLE_X, CUBE_MIDDLE_Y2);
+    return cubeSetPrintAtLocation(element, column, line, GAME_BOARD_CUBE_MIDDLE_X, GAME_BOARD_CUBE_MIDDLE_Y2);
 }
 
 char cubeSetRight1(int* element, int column, int line) {
-    return cubeSetPrintAtLocation(element, column, line, CUBE_RIGHT_X, CUBE_RIGHT_Y1);
+    return cubeSetPrintAtLocation(element, column, line, GAME_BOARD_CUBE_RIGHT_X, GAME_BOARD_CUBE_RIGHT_Y1);
 }
 
 char cubeSetRight2(int* element, int column, int line) {
-    return cubeSetPrintAtLocation(element, column, line, CUBE_RIGHT_X, CUBE_RIGHT_Y2);
+    return cubeSetPrintAtLocation(element, column, line, GAME_BOARD_CUBE_RIGHT_X, GAME_BOARD_CUBE_RIGHT_Y2);
 }
 
 
 // BUILDING_AREA
 char buildingAreaGreenPrint(int* element, int column, int line) {
-    return emptyRectanglePrint(column, line, 0, BUILDING_GREEN_AREA_Y, BUILDING_AREA_WIDTH, BUILDING_AREA_HEIGHT, CHAR_VERTICAL, CHAR_HORIZONTAL);
+    return emptyRectanglePrint(column, line, 0, GAME_BOARD_BUILDING_GREEN_AREA_Y, GAME_BOARD_BUILDING_AREA_WIDTH, GAME_BOARD_BUILDING_AREA_HEIGHT, CHAR_VERTICAL, CHAR_HORIZONTAL);
 }
 
 char buildingAreaOrangePrint(int* element, int column, int line) {
-    return emptyRectanglePrint(column, line, 0, BUILDING_ORANGE_AREA_Y, BUILDING_AREA_WIDTH, BUILDING_AREA_HEIGHT, CHAR_VERTICAL, CHAR_HORIZONTAL);
+    return emptyRectanglePrint(column, line, 0, GAME_BOARD_BUILDING_ORANGE_AREA_Y, GAME_BOARD_BUILDING_AREA_WIDTH, GAME_BOARD_BUILDING_AREA_HEIGHT, CHAR_VERTICAL, CHAR_HORIZONTAL);
 }
 
 // BEE
 char beeLaunchingAreaGreenPrint(int* element, int column, int line) {
-    return pointPrint(column, line, BEE_LAUNCHING_AREA_X, BEE_LAUNCHING_GREEN_AREA_Y, 'B');
+    return pointPrint(column, line, GAME_BOARD_BEE_LAUNCHING_AREA_X, GAME_BOARD_BEE_LAUNCHING_GREEN_AREA_Y, 'B');
 }
 
 char beeLaunchingAreaOrangePrint(int* element, int column, int line) {
-    return pointPrint(column, line, BEE_LAUNCHING_AREA_X, BEE_LAUNCHING_ORANGE_AREA_Y, 'B');
+    return pointPrint(column, line, GAME_BOARD_BEE_LAUNCHING_AREA_X, GAME_BOARD_BEE_LAUNCHING_ORANGE_AREA_Y, 'B');
 }
 
 // DISTRIBUTOR 1
@@ -118,6 +128,12 @@ char distributor1OrangePrint(int* element, int column, int line) {
 char distributor2OrangePrint(int* element, int column, int line) {
     return pointPrint(column, line, GAME_BOARD_DISTRIBUTOR_2_X, GAME_BOARD_DISTRIBUTOR_2_ORANGE_Y, 'D');
 }
+
+// PATH
+char path1RangePrint(int* element, int column, int line) {
+    return bSplinePrint(column, line, &curve, '*');
+}
+
 
 // 2018 ELEMENTS
 
@@ -155,4 +171,18 @@ void addGameBoardElements2018(GameBoardElementList* gameBoardElementList) {
     addGameBoardElement(gameBoardElementList, &distributor2GreenPrint);
     addGameBoardElement(gameBoardElementList, &distributor1OrangePrint);
     addGameBoardElement(gameBoardElementList, &distributor2OrangePrint);
+
+
+    // BSpline Example
+    initFirstTimeBSplineCurve(&curve);
+    parameterBSplineWithDistanceAndAngle(&curve, SWITCH_X, SWITCH_Y, -PI / 2.0f,
+                                                 DISTRIBUTOR_1_X, DISTRIBUTOR_1_Y, degToRad(DISTRIBUTOR_1_ANGLE / 10), 
+                                                 SWITCH_TO_DISTRIBUTOR_1_CP1, SWITCH_TO_DISTRIBUTOR_1_CP2, 
+                                                 SWITCH_TO_DISTRIBUTOR_1_ACCELERATION_FACTOR, SWITCH_TO_DISTRIBUTOR_1_SPEED_FACTOR,
+                                                 false);
+  
+    addGameBoardElement(gameBoardElementList, &path1RangePrint);
+
+
+
 }

@@ -31,15 +31,24 @@
 void printLocationListHeader(OutputStream* outputStream) {
 	println(outputStream);
 	// Table Header
+    // Line Header 1
 	appendTableHeaderSeparatorLine(outputStream);
 	appendStringHeader(outputStream, "name", LOCATION_LIST_LOCATION_NAME_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "name (hex)", LOCATION_LIST_LOCATION_NAME_HEX_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "x (mm)", LOCATION_LIST_LOCATION_X_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "y (mm)", LOCATION_LIST_LOCATION_Y_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "xHex (mm)", LOCATION_LIST_LOCATION_X_HEXA_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "xHex (mm)", LOCATION_LIST_LOCATION_Y_HEXA_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "name", LOCATION_LIST_LOCATION_NAME_HEX_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "x", LOCATION_LIST_LOCATION_X_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "y", LOCATION_LIST_LOCATION_Y_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "x Hex", LOCATION_LIST_LOCATION_X_HEXA_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "x Hex", LOCATION_LIST_LOCATION_Y_HEXA_COLUMN_LENGTH);
 	appendEndOfTableColumn(outputStream, LOCATION_LIST_LOCATION_LAST_COLUMN_LENGTH);
-	appendTableHeaderSeparatorLine(outputStream);
+    // Line Header 2
+    appendStringHeader(outputStream, "", LOCATION_LIST_LOCATION_NAME_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "(hex)", LOCATION_LIST_LOCATION_NAME_HEX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "", LOCATION_LIST_LOCATION_X_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "", LOCATION_LIST_LOCATION_Y_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "(mm)", LOCATION_LIST_LOCATION_X_HEXA_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "(mm)", LOCATION_LIST_LOCATION_Y_HEXA_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, LOCATION_LIST_LOCATION_LAST_COLUMN_LENGTH);
+    appendTableHeaderSeparatorLine(outputStream);
 }
 
 void printLocationTable(OutputStream* outputStream, Location* location) {

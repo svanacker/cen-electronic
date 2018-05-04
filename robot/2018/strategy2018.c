@@ -66,20 +66,15 @@ PathData* distributor2Front_to_distributor2_Path;
 PathData* distributor2_to_garbageFront_Path;
 PathData* garbageFront_to_garbageRelease_Path;
 
-/*
-PathData* startAreaToDistributor1FrontPath;
-PathData* greenDistributor1ToBeePath;
-PathData* beeToGreenDistributor2Path;
-PathData* beeToGreenBuildingAreaPath;
-PathData* greenBuildingAreaToSwitch1Path;
-PathData* switch1ToGreenDistributor2Path;
-PathData* greenDistributor2ToGarbageAreaFrontPath;
-PathData* garbageAreaFrontPathTo;
-*/
 // ------------------------------------------------------- TARGETS -----------------------------------------------------------------------
 
 // Targets List
-// static GameTarget distributor1GameTarget;
+static GameTarget switchTarget;
+static GameTarget distributor1GameTarget;
+static GameTarget beeTarget;
+static GameTarget distributor2GameTarget;
+static GameTarget garbageTarget;
+// TODO : static GameTarget unloadDistributor2GameTarget;
 
 // ------------------------------------------------------- TARGETS ACTIONS ---------------------------------------------------------------
 
@@ -141,17 +136,6 @@ void initLocations2018(GameStrategyContext* gameStrategyContext) {
     garbageFrontLocation = addNavigationLocation(navigation, GARBAGE_FRONT, GARBAGE_FRONT_POINT_X, GARBAGE_FRONT_POINT_Y);
     garbageReleaseLocation = addNavigationLocation(navigation, GARBAGE_RELEASE, GARBAGE_RELEASE_POINT_X, GARBAGE_RELEASE_POINT_Y);
 
-    /*
-    buildingAreaLocation = addNavigationLocation(BUILDING_AREA, BUILDING_AREA_X, BUILDING_AREA_Y);
-    buildingLeft1Location = addNavigationLocation(BUILDING_LEFT_1, BUILDING_LEFT_1_X, BUILDING_LEFT_1_Y);
-    buildingLeft2Location = addNavigationLocation(BUILDING_LEFT_2, BUILDING_LEFT_2_X, BUILDING_LEFT_2_Y);
-
-    buildingMiddle1Location = addNavigationLocation(BUILDING_MIDDLE_1, BUILDING_MIDDLE_1_X, BUILDING_MIDDLE_1_Y);
-    buildingMiddle2Location = addNavigationLocation(BUILDING_MIDDLE_2, BUILDING_MIDDLE_2_X, BUILDING_MIDDLE_2_Y);
-
-    buildingRight1Location = addNavigationLocation(BUILDING_RIGHT_1, BUILDING_RIGHT_1_X, BUILDING_RIGHT_1_Y);
-    buildingRight2Location = addNavigationLocation(BUILDING_RIGHT_2, BUILDING_RIGHT_2_X, BUILDING_RIGHT_2_Y);
-    */
 }
 
 void initPaths2018(GameStrategyContext* gameStrategyContext, int index) {
@@ -243,26 +227,20 @@ void initPaths2018(GameStrategyContext* gameStrategyContext, int index) {
                                                              GARGAGE_RELEASE_POINT_ANGLE,
                                                              GARBAGE_FRONT_TO_GARBAGE_RELEASE_ACCELERATION_FACTOR,
                                                              GARBAGE_FRONT_TO_GARBAGE_RELEASE_SPEED_FACTOR);
-
-    /*
-    startAreaToDistributor1FrontPath = addNavigationPath(startAreaLocation, distributor1FrontLocation, STARTAREA_TO_DISTRIBUTOR_1_COST, 0x10, 0x10, ANGLE_45, -ANGLE_60, STARTAREA_TO_DISTRIBUTOR_1_ACCELERATION_FACTOR, STARTAREA_TO_DISTRIBUTOR_1_SPEED_FACTOR);
-    greenDistributor1ToBeePath = addNavigationPath(distributor1FrontLocation, beeLocation, DISTRIBUTOR_1_TO_BEE_COST, 0x80, 0x10, -ANGLE_60, 0, DISTRIBUTOR_1_TO_BEE__ACCELERATION_FACTOR, DISTRIBUTOR_1_TO_BEE_SPEED_FACTOR);
-    beeToGreenDistributor2Path = addNavigationPath(beeLocation, distributor2FrontLocation, BEE_TO_DISTRIBUTOR_2_COST, 0x37, 0x96, 0, ANGLE_30, BEE_TO_DISTRIBUTOR_2__ACCELERATION_FACTOR, BEE_TO_DISTRIBUTOR_2_SPEED_FACTOR);
-    beeToGreenBuildingAreaPath = addNavigationPath(beeLocation, buildingAreaLocation, BEE_TO_BUILDING_AREA_COST, 0x10, 0x60, 0, ANGLE_30, BEE_TO_BUILDING_AREA_ACCELERATION_FACTOR, BEE_TO_BUILDING_AREA_SPEED_FACTOR);
-    greenBuildingAreaToSwitch1Path = addNavigationPath(buildingAreaLocation, switchLocation, BUILDING_AREA_TO_SWITCH_COST, 0x10, 0x20, ANGLE_30, 0, BUILDING_AREA_TO_SWITCH_ACCELERATION_FACTOR, BUILDING_AREA_TO_SWITCH_SPEED_FACTOR);
-    */
-    // switch1ToGreenDistributor2Path = addNavigationPath(switchLocation, distributor2FrontLocation, SWITCH_TO_DISTRIBUTOR_2_ACCELERATION_FACTOR, 0x20, 0x80, 0, ANGLE_30);
-    /*
-    PathData* greenDistributor2ToGarbageAreaFrontPath;
-    PathData* garbageAreaFrontPathTo;
-    */
 }
 
 void initTargets2018(GameStrategyContext* gameStrategyContext) {
 	clearGameTargets();
+
+    addGameTarget(&switchTarget, "SWITCH_TARGET", POINT_2018_PANEL_ON_POINT, switchLocation);
+    addGameTarget(&distributor1GameTarget, "DIST_1", POINT_2018_DISTRIBUTOR_UNICOLOR_COMPLETE_POINT, distributor1Location);
+    addGameTarget(&beeTarget, "BEE", POINT_2018_BEE_DESTROYED_POINT, beeLocation);
+    addGameTarget(&distributor2GameTarget, "DIST_2_LOAD", POINT_2018_DISTRIBUTOR_UNLOADED_POINT, distributor2Location);
+    addGameTarget(&garbageTarget, "GARBAGE_RELEASE", POINT_2018_GARBAGE_RELEASE_POINT, garbageReleaseLocation);
 }
 
 void initTargetActions2018(GameStrategyContext* gameStrategyContext) {
+
 }
 
 void initTargetActionsItems2018(GameStrategyContext* gameStrategyContext) {

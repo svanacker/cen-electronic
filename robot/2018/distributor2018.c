@@ -166,5 +166,5 @@ void sendBallAndCountScore(Distributor* distributor, unsigned int launcherIndex)
     clientLaunch2018(LAUNCHER_RIGHT_INDEX, false);
     distributor->launcherContent = SQUARE_CONTENT_EMPTY;
     distributor->loadedBallCount++;
-    distributor->score += POINT_2018_CLEAN_BALL;
+    distributor->score += POINT_2018_CLEAN_BALL_POINT;
 }

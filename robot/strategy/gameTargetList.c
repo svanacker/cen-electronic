@@ -69,17 +69,3 @@ bool containsAvailableTarget() {
     }
     return false;
 }
-
-// DEBUG
-
-void printGameTargetList(OutputStream* outputStream) {
-    int i;
-    int size = targets.size;
-    println(outputStream);    
-    appendStringAndDec(outputStream, "targetHandledCount:", targets.targetHandledCount);
-    println(outputStream);
-    for (i = 0; i < size; i++) {
-        GameTarget* target = targets.targets[i];
-        printGameTarget(outputStream, target, true);
-    }
-}

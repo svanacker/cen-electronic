@@ -48,12 +48,3 @@ GameTargetAction* getGameTargetAction(GameTargetActionList* targetActionList, in
 int getGameTargetActionCount(GameTargetActionList* targetActionList) {
     return targetActionList->size;
 }
-
-void printGameTargetActionList(OutputStream* outputStream, GameTargetActionList* targetActionList) {
-    int i;
-    int size = targetActionList->size;
-    for (i = 0; i < size; i++) {
-        GameTargetAction* targetAction = targetActionList->actions[i];
-        printGameTargetAction(outputStream, targetAction, true);
-    }
-}

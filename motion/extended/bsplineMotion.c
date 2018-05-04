@@ -38,80 +38,13 @@ void updateSimpleSplineWithDistance(BSplineCurve* curve,
                                     float accelerationFactor, float speedFactor,
                                     bool relative) {
 
-    // If the distance of the control point is negative, we considerer that we go
-    // back
-    bool backward = distance1 < 0.0f;
-
     Position* position = getPosition();
-    // scale coordinates
-    float x = position->pos.x;
-    float y = position->pos.y;
-    float a = position->orientation;
 
-    // For P0-P1
-    float c1 = cosf(a);
-    float s1 = sinf(a);
-
-    float dca1 = (distance1 * c1);
-    float dsa1 = (distance1 * s1);
-
-    // For P2-P3
-    float c2 = cosf(destAngle);
-    float s2 = sinf(destAngle);
-
-    float dca2 = (distance2 * c2);
-    float dsa2 = (distance2 * s2);
-
-    // Update the bspline curve
-    // P0
-    resetBSplineCurve(curve, x, y, backward);
-    curve->accelerationFactor = accelerationFactor;
-    curve->speedFactor = speedFactor;
-
-    // P1
-    Point* point = &(curve->p1);
-    // P1 along x axis
-    point->x = (x + dca1);
-    point->y = (y + dsa1);
-    
-    if (relative) {    
-
-        // P2
-        point = &(curve->p2);
-        //rotate(point, a, (destX - x - dca2), (destY - y - dsa2));
-        rotate(point, a, (destX - dca2), (destY - dsa2));
-        point->x += x;
-        point->y += y;
-
-        // P3
-        point = &(curve->p3);
-        //rotate(point, a, (destX - x), (destY - y));
-        rotate(point, a, (destX), (destY));
-        point->x += x;
-        point->y += y;
-    }
-    else {
-        // P2
-        point = &(curve->p2);
-        point->x = (destX - dca2);
-        point->y = (destY - dsa2);
-
-        // P3
-        point = &(curve->p3);
-        point->x = destX;
-        point->y = destY;
-    }
-    computeBSplineArcLength(curve, BSPLINE_TIME_INCREMENT);
-    /*
-    curve->p1->x = (x  +  distance1        * c) / WHEEL_AVERAGE_LENGTH;
-    curve->p1->y = (y  +  distance1     * s) / WHEEL_AVERAGE_LENGTH,
-    
-    curve->p2->x = (x + (destX - dca2)  * c - (destY - dsa2)  * s) / WHEEL_AVERAGE_LENGTH;
-    curve->p2->y = (y + (destX - dca2)  * s + (destY - dsa2)  * c) / WHEEL_AVERAGE_LENGTH;
-    
-    curve->p3->x = (x +    destX        * c -      destY      * s) / WHEEL_AVERAGE_LENGTH;
-    curve->p3->y = (y +    destX         * s +      destY       * c) / WHEEL_AVERAGE_LENGTH;
-    */
+    parameterBSplineWithDistanceAndAngle(curve, position->pos.x, position->pos.y, position->orientation,
+                                                destX, destY, destAngle,
+                                                distance1, distance2,
+                                                accelerationFactor, speedFactor,
+                                                relative);
 }
 
 /**

@@ -4,9 +4,6 @@
 #include "gameTargetAction.h"
 #include "gameTargetActionItemList.h"
 
-#include "../../common/io/outputStream.h"
-#include "../../common/io/printWriter.h"
-
 #include "../../navigation/LocationList.h"
 #include "../../navigation/path.h"
 
@@ -51,9 +48,5 @@ GameTargetAction* getGameTargetAction(GameTargetActionList* list, int index);
  */
 int getGameTargetActionCount(GameTargetActionList* list);
 
-/**
- * Print the game target action list, and for each the detail of target action
- */
-void printGameTargetActionList(OutputStream* outputStream, GameTargetActionList* list);
 
 #endif

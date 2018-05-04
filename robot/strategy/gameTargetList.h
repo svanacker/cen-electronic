@@ -63,13 +63,5 @@ int getGameTargetCount();
  */
 bool containsAvailableTarget();
 
-// DEBUG
-
-/**
- * Print the game target list, and for each the detail of target.
- */
-void printGameTargetList(OutputStream* outputStream);
-
-
 #endif
 
