@@ -32,6 +32,9 @@
       <logicalFolder name="common.adc" displayName="common.adc" projectFiles="true">
         <itemPath>../../../common/adc/adcutils.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f19" displayName="common.ascii" projectFiles="true">
+        <itemPath>../../../common/ascii/asciiUtils.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="common.clock"
                      displayName="common.clock"
                      projectFiles="true">
@@ -568,6 +571,9 @@
                      displayName="common.adc.32"
                      projectFiles="true">
         <itemPath>../../../common/adc/32/adcutils32.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f18" displayName="common.ascii" projectFiles="true">
+        <itemPath>../../../common/ascii/asciiUtils.c</itemPath>
       </logicalFolder>
       <logicalFolder name="common.clock"
                      displayName="common.clock"

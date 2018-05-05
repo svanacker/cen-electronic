@@ -30,6 +30,9 @@ typedef struct GameTargetActionItemList {
  */
 void clearTargetActionItemList(GameTargetActionItemList* targetActionItemList);
 
+// RANDOM ACCESS
+GameTargetActionItem* getGameTargetActionItem(GameTargetActionItemList* targetActionItemList, int index);
+
 // ITERATOR
 
 /**

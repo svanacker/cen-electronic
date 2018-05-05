@@ -86,7 +86,6 @@ void drawRobot(GameBoard* gameBoard, Point* robotPosition, float angle) {
     char slashChar = transformSlashChar(angle);
     char horizontalChar = transformHorizontalChar(angle);
     char antiSlashChar = transformAntiSlashChar(angle);
-    float epsilonAngle = PI / 100.0f;
 
     // Right horizontal Line
     drawLine(gameBoard, rightFrontX, rightFrontY, rightMiddleX, rightMiddleY, horizontalChar);

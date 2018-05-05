@@ -21,8 +21,9 @@
 #include "../../navigation/pathListDebug.h"
 #include "../../navigation/navigation.h"
 
-#include "../../robot/gameboard/gameBoard.h"
+#include "../../client/robot/2018/launcherClient2018.h"
 
+#include "../../robot/gameboard/gameBoard.h"
 
 #include "../../robot/strategy/gameStrategy.h"
 #include "../../robot/strategy/gameStrategyHandler.h"
@@ -80,11 +81,15 @@ static GameTarget garbageTarget;
 
 // ------------------------------------------------------- TARGETS ACTIONS ---------------------------------------------------------------
 
-// static GameTargetAction distributor1TakeTargetAction;
+static GameTargetAction switchTargetAction;
 
-// ------------------------------------------------------- TARGETS ACTIONS ITEMS --------------------------------------------------------
+// ------------------------------------------------------- TARGETS ACTIONS ITEM LIST --------------------------------------------------------
 
-// static GameTargetActionItemList distributor1TakeTargetActionItemList;
+static GameTargetActionItemList switchTargetActionItemList;
+
+// ------------------------------------------------------- TARGET ACTION ITEM LIST ---------------------------------------------------
+
+static GameTargetActionItem switchTargetActionItem;
 
 // ------------------------------------------------------- STRATEGIES ----------------------------------------------------------------
 
@@ -247,10 +252,18 @@ void initTargets2018(GameStrategyContext* gameStrategyContext) {
 }
 
 void initTargetActions2018(GameStrategyContext* gameStrategyContext) {
+    addTargetAction(&(switchTarget.actionList), &switchTargetAction, switchLocation, switchLocation, ACTION_SWITCH_TIME_TO_ACHIEVE, NULL, &switchTargetActionItemList);
+}
 
+// 
+
+void switch2018On() {
+    // TODO : Take the right color
+    clientLightOn2018(0x00);
 }
 
 void initTargetActionsItems2018(GameStrategyContext* gameStrategyContext) {
+    addTargetActionItem(&switchTargetActionItemList, &switchTargetActionItem, &switch2018On, "SWITCH ON");
 }
 
 /**
