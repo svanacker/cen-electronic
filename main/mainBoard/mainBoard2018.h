@@ -21,7 +21,7 @@
 
 Navigation* initNavigation2018(void);
 
-GameStrategyContext* initGameStrategyContext2018(void);
+GameStrategyContext* initGameStrategyContext2018(RobotConfig* robotConfig);
 
 GameBoard* initGameBoard2018(GameStrategyContext* gameStrategyContext);
 

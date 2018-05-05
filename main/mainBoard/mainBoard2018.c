@@ -65,8 +65,8 @@ Navigation* initNavigation2018(void) {
     return &navigation;
 }
 
-GameStrategyContext* initGameStrategyContext2018(void) {
-    initGameStrategyContext(&gameStrategyContext, &navigation, &strategyTimer, &robotPosition, &opponentRobotPosition, &lastObstaclePosition);
+GameStrategyContext* initGameStrategyContext2018(RobotConfig* robotConfig) {
+    initGameStrategyContext(&gameStrategyContext, robotConfig, &navigation, &strategyTimer, &robotPosition, &opponentRobotPosition, &lastObstaclePosition);
     // TODO : Fill GameStrategy Context
 
     return &gameStrategyContext;

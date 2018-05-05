@@ -8,37 +8,13 @@
 #include "../../common/io/printWriter.h"
 #include "../../common/io/printTableWriter.h"
 
-#define TARGET_LIST_INDEX_COLUMN_LENGTH              8
-#define TARGET_LIST_NAME_COLUMN_LENGTH              12
-#define TARGET_LIST_POINT_X_COLUMN_LENGTH           12
-#define TARGET_LIST_POINT_Y_COLUMN_LENGTH           12
+#define TARGET_LIST_INDEX_COLUMN_LENGTH              6
+#define TARGET_LIST_NAME_COLUMN_LENGTH              15
+#define TARGET_LIST_POINT_X_COLUMN_LENGTH           8
+#define TARGET_LIST_POINT_Y_COLUMN_LENGTH           8
 #define TARGET_LIST_POTENTIAL_GAIN_COLUMN_LENGTH    10
 #define TARGET_LIST_STATUS_COLUMN_LENGTH            10
 #define TARGET_LIST_LAST_COLUMN_LENGTH              10
-
-/**
- * @private
- */
-unsigned int appendGameTargetStatusAsString(OutputStream* outputStream, enum GameTargetStatus gameTargetStatus) {
-    switch (gameTargetStatus) {
-        case TARGET_AVAILABLE: return appendString(outputStream, "AVAILABLE");
-        case TARGET_HANDLED: return appendString(outputStream, "HANDLED");
-        case TARGET_INUSE: return appendString(outputStream, "IN USE");
-    }
-    appendString(outputStream, "?");
-
-    return 1;
-}
-
-/**
- * @private
- */
-unsigned int addGameTargetStatusTableData(OutputStream* outputStream, enum GameTargetStatus gameTargetStatus, int columnSize) {
-    appendTableSeparator(outputStream);
-    appendSpace(outputStream);
-    unsigned int length = appendGameTargetStatusAsString(outputStream, gameTargetStatus);
-    return length + appendSpaces(outputStream, columnSize - length) + 2;
-}
 
 /**
  * @private
@@ -47,23 +23,37 @@ void printGameTargetListHeader(OutputStream* outputStream) {
     println(outputStream);
     // Table Header
     appendTableHeaderSeparatorLine(outputStream);
+    // Ligne 1
     appendStringHeader(outputStream, "index", TARGET_LIST_INDEX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "name", TARGET_LIST_NAME_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "x (mm)", TARGET_LIST_POINT_X_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "y (mm)", TARGET_LIST_POINT_Y_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "potentialGain", TARGET_LIST_POTENTIAL_GAIN_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "x", TARGET_LIST_POINT_X_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "y", TARGET_LIST_POINT_Y_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "potential", TARGET_LIST_POTENTIAL_GAIN_COLUMN_LENGTH);
     appendStringHeader(outputStream, "status", TARGET_LIST_STATUS_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, TARGET_LIST_LAST_COLUMN_LENGTH);
+    // Ligne 2
+    appendStringHeader(outputStream, "", TARGET_LIST_INDEX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "", TARGET_LIST_NAME_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "(mm)", TARGET_LIST_POINT_X_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "(mm)", TARGET_LIST_POINT_Y_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Gain", TARGET_LIST_POTENTIAL_GAIN_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "", TARGET_LIST_STATUS_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, TARGET_LIST_LAST_COLUMN_LENGTH);
+
     appendTableHeaderSeparatorLine(outputStream);
 }
 
 /**
  * @private
  */
-void printGameTargetLine(OutputStream* outputStream, GameTarget* target, bool includeItems) {
+void printGameTargetLine(OutputStream* outputStream, unsigned int index, GameTarget* target, bool includeItems) {
+    appendDecTableData(outputStream, index, TARGET_LIST_INDEX_COLUMN_LENGTH);
     appendStringTableData(outputStream, target->name, TARGET_LIST_NAME_COLUMN_LENGTH);
+    appendDecfTableData(outputStream, target->location->x, TARGET_LIST_POINT_X_COLUMN_LENGTH);
+    appendDecfTableData(outputStream, target->location->y, TARGET_LIST_POINT_Y_COLUMN_LENGTH);
     appendDecfTableData(outputStream, target->potentialGain, TARGET_LIST_POTENTIAL_GAIN_COLUMN_LENGTH);
     addGameTargetStatusTableData(outputStream, target->status, TARGET_LIST_STATUS_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, TARGET_LIST_LAST_COLUMN_LENGTH);
     /*
     if (includeItems) {
         printGameTargetActionList(outputStream, &(target->actionList));
@@ -72,16 +62,16 @@ void printGameTargetLine(OutputStream* outputStream, GameTarget* target, bool in
 }
 
 void printGameTargetListTable(GameTargetList* gameTargetList, OutputStream* outputStream) {
-    int i;
+    unsigned int i;
     
-    int size = gameTargetList->size;
+    unsigned int size = gameTargetList->size;
     println(outputStream);
     appendStringAndDec(outputStream, "targetHandledCount:", gameTargetList->targetHandledCount);
     println(outputStream);
     printGameTargetListHeader(outputStream);
     for (i = 0; i < size; i++) {
         GameTarget* target = gameTargetList->targets[i];
-        printGameTargetLine(outputStream, target, true);
+        printGameTargetLine(outputStream, i, target, true);
     }
     appendTableHeaderSeparatorLine(outputStream);
 }

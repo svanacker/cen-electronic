@@ -376,11 +376,6 @@
                      projectFiles="true">
         <itemPath>../../../drivers/sensor/temperature/LM75A.h</itemPath>
       </logicalFolder>
-      <logicalFolder name="drivers.strategy"
-                     displayName="drivers.strategy"
-                     projectFiles="true">
-        <itemPath>../../../drivers/strategy/strategyDriver.h</itemPath>
-      </logicalFolder>
       <logicalFolder name="drivers.system"
                      displayName="drivers.system"
                      projectFiles="true">
@@ -935,7 +930,6 @@
       <logicalFolder name="drivers.strategy"
                      displayName="drivers.strategy"
                      projectFiles="true">
-        <itemPath>../../../drivers/strategy/strategyDriver.c</itemPath>
       </logicalFolder>
       <logicalFolder name="drivers.system"
                      displayName="drivers.system"

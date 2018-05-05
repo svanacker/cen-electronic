@@ -77,7 +77,7 @@ void printGameStrategyContextTableHeader(OutputStream* outputStream) {
 }
 
 void printGameStrategyContext(OutputStream* outputStream, GameStrategyContext* context) {
-    appendString(outputStream, "GameStrategyContext\n");
+    appendString(outputStream, "\nGameStrategyContext:");
     printGameStrategyContextTableHeader(outputStream);
 
     // GameStrategy->name
@@ -93,7 +93,7 @@ void printGameStrategyContext(OutputStream* outputStream, GameStrategyContext* c
 
     // StrategyIndex
     appendStringTableData(outputStream, "strategyIndex", GAME_STRATEGY_CONTEXT_KEY_COLUMN_LENGTH);
-    appendDecfTableData(outputStream, context->strategyIndex, GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
+    appendDecTableData(outputStream, context->strategyIndex, GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
     appendStringTableData(outputStream, "-", GAME_STRATEGY_CONTEXT_UNIT_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, GAME_STRATEGY_CONTEXT_LAST_COLUMN);
 
@@ -107,6 +107,12 @@ void printGameStrategyContext(OutputStream* outputStream, GameStrategyContext* c
     appendStringTableData(outputStream, "elapsedMatchTime", GAME_STRATEGY_CONTEXT_KEY_COLUMN_LENGTH);
     appendDecfTableData(outputStream, context->elapsedMatchTime, GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
     appendStringTableData(outputStream, "seconds", GAME_STRATEGY_CONTEXT_UNIT_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, GAME_STRATEGY_CONTEXT_LAST_COLUMN);
+
+    // global Score
+    appendStringTableData(outputStream, "Global Score", GAME_STRATEGY_CONTEXT_KEY_COLUMN_LENGTH);
+    appendDecTableData(outputStream, context->score, GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
+    appendStringTableData(outputStream, "points", GAME_STRATEGY_CONTEXT_UNIT_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, GAME_STRATEGY_CONTEXT_LAST_COLUMN);
 
     // Robot Position

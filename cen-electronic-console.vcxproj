@@ -331,7 +331,6 @@
     <ClCompile Include="drivers\relay\relay.c" />
     <ClCompile Include="drivers\relay\relayDebug.c" />
     <ClCompile Include="drivers\sensor\temperature\pc\temperaturePc.c" />
-    <ClCompile Include="drivers\strategy\strategyDriver.c" />
     <ClCompile Include="drivers\test\testDriver.c" />
     <ClCompile Include="drivers\tof\pc\tofListPc.c" />
     <ClCompile Include="drivers\tof\pc\tofPc.c" />
@@ -444,7 +443,6 @@
     <ClCompile Include="robot\match\startMatchPersistence.c" />
     <ClCompile Include="robot\match\strategy.c" />
     <ClCompile Include="robot\match\teamColor.c" />
-    <ClCompile Include="robot\opponent\opponentRobot.c" />
     <ClCompile Include="robot\robot.c" />
     <ClCompile Include="robot\strategy\factor\composedGainFactor.c" />
     <ClCompile Include="robot\strategy\factor\distanceGainFactor.c" />
@@ -466,6 +464,7 @@
     <ClCompile Include="robot\strategy\gameTargetActionListDebug.c" />
     <ClCompile Include="robot\strategy\gameTargetList.c" />
     <ClCompile Include="robot\strategy\gameTargetListDebug.c" />
+    <ClCompile Include="robot\strategy\gameTargetStatus.c" />
     <ClCompile Include="robot\strategy\nextGameStrategyItemComputer.c" />
     <ClCompile Include="test\allTests.c" />
     <ClCompile Include="test\common\2d\2dTest.c" />
@@ -685,7 +684,6 @@
     <ClInclude Include="drivers\relay\relay.h" />
     <ClInclude Include="drivers\relay\relayDebug.h" />
     <ClInclude Include="drivers\sensor\temperature\pc\temperaturePc.h" />
-    <ClInclude Include="drivers\strategy\strategyDriver.h" />
     <ClInclude Include="drivers\test\testDriver.h" />
     <ClInclude Include="drivers\tof\pc\tofListPc.h" />
     <ClInclude Include="drivers\tof\pc\tofPc.h" />
@@ -810,7 +808,6 @@
     <ClInclude Include="robot\match\startMatchPersistence.h" />
     <ClInclude Include="robot\match\strategy.h" />
     <ClInclude Include="robot\match\teamColor.h" />
-    <ClInclude Include="robot\opponent\opponentRobot.h" />
     <ClInclude Include="robot\robot.h" />
     <ClInclude Include="robot\robotConstants.h" />
     <ClInclude Include="robot\strategy\factor\composedGainFactor.h" />

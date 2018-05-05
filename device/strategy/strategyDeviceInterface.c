@@ -14,43 +14,44 @@ const char* getStrategyDeviceName(void) {
 
 int deviceStrategyGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     // Robot opponent position
-    if (commandHeader == COMMAND_STRATEGY_SET_OPPONENT_ROBOT_POSITION) {
+    if (commandHeader == COMMAND_STRATEGY_GET_OPPONENT_ROBOT_POSITION) {
         if (fillDeviceArgumentList) {
-            setFunction("setOpponentRobotPos", 3, 0);
+            setFunction("get Opponent Robot Position", 0, 3);
+            setResultUnsignedHex4(0, "x (mm)");
+            setResultSeparator(1);
+            setResultUnsignedHex4(2, "y (mm)");
+        }
+        return commandLengthValueForMode(mode, 0, 9);
+    }
+    else if (commandHeader == COMMAND_STRATEGY_SET_OPPONENT_ROBOT_POSITION) {
+        if (fillDeviceArgumentList) {
+            setFunction("set Opponent Robot Position", 3, 0);
             setArgumentUnsignedHex4(0, "x (mm)");
             setArgumentSeparator(1);
             setArgumentUnsignedHex4(2, "y (mm)");
         }
         return commandLengthValueForMode(mode, 9, 0);
     }
-    // Config
-    else if (commandHeader == COMMAND_STRATEGY_SET_CONFIG) {
-        if (fillDeviceArgumentList) {
-            setFunction("setConfig", 1, 0);
-            setArgumentUnsignedHex4(0, "config");
-        }
-        return commandLengthValueForMode(mode, 4, 0);
-    }
     // Debug
     else if (commandHeader == COMMAND_STRATEGY_DEBUG) {
         if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("Debug");
+            setFunctionNoArgumentAndNoResult("Strategy Context Debug");
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
 	// Print Strategy List
-	else if (commandHeader == COMMAND_STRATEGY_LIST) {
+	else if (commandHeader == COMMAND_STRATEGY_LIST_DEBUG) {
 		// same input/output
 		if (fillDeviceArgumentList) {
-			setFunctionNoArgumentAndNoResult("strategyList");
+			setFunctionNoArgumentAndNoResult("Strategy List Debug");
 		}
 		return commandLengthValueForMode(mode, 0, 0);
 	}
 	// Print Strategy Item
-	else if (commandHeader == COMMAND_STRATEGY_ITEM) {
+	else if (commandHeader == COMMAND_STRATEGY_ITEM_DEBUG) {
 		if (fillDeviceArgumentList) {
-			setFunction("strategyItem", 1, 0);
-			setArgumentUnsignedHex2(0, "index");
+			setFunction("Strategy Item Debug", 1, 0);
+			setArgumentUnsignedHex2(0, "strategyIndex");
 		}
 		return commandLengthValueForMode(mode, 2, 0);
 	}
@@ -62,19 +63,28 @@ int deviceStrategyGetInterface(char commandHeader, DeviceInterfaceMode mode, boo
         }
         return commandLengthValueForMode(mode, 0, 2);
     }
-    // Notify position
+    // Robot position
+    else if (commandHeader == COMMAND_STRATEGY_GET_ROBOT_POSITION) {
+        if (fillDeviceArgumentList) {
+            setFunction("strategy Get Robot Position", 0, 5);
+            setResultUnsignedHex4(0, "x(mm)");
+            setResultSeparator(1);
+            setResultUnsignedHex4(2, "y(mm)");
+            setResultSeparator(3);
+            setResultUnsignedHex4(4, "ang(1/10)deg");
+        }
+        return commandLengthValueForMode(mode, 0, 14);
+    }
     else if (commandHeader == COMMAND_STRATEGY_SET_ROBOT_POSITION) {
         if (fillDeviceArgumentList) {
-            setFunction("strategySetRobotPosition", 7, 0);
-            setArgumentUnsignedHex2(0, "status");
+            setFunction("strategy Set Robot Position", 5, 0);
+            setArgumentUnsignedHex4(0, "x(mm)");
             setArgumentSeparator(1);
-            setArgumentUnsignedHex4(2, "x(mm)");
+            setArgumentUnsignedHex4(2, "y(mm)");
             setArgumentSeparator(3);
-            setArgumentUnsignedHex4(4, "y(mm)");
-            setArgumentSeparator(5);
-            setArgumentUnsignedHex4(6, "ang(1/10)deg");
+            setArgumentUnsignedHex4(4, "ang(1/10)deg");
         }
-        return commandLengthValueForMode(mode, 17, 0);
+        return commandLengthValueForMode(mode, 14, 0);
     }    
     // Get the global score
     else if (commandHeader == COMMAND_STRATEGY_GET_GLOBAL_SCORE) {
@@ -84,6 +94,13 @@ int deviceStrategyGetInterface(char commandHeader, DeviceInterfaceMode mode, boo
             setResultUnsignedHex4(0, "score");
         }
         return commandLengthValueForMode(mode, 0, 4);
+    }
+    else if (commandHeader == COMMAND_TARGET_LIST_DEBUG) {
+        // same input/output
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("targetList");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
     }
     return DEVICE_HEADER_NOT_HANDLED;
 }

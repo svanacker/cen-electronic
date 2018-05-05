@@ -10,5 +10,7 @@
 
 // DEBUG
 
+void printGameStrategyTable(OutputStream* outputStream, GameStrategy* gameStrategy);
+
 #endif
 

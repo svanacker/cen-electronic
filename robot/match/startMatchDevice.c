@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 #include "../../common/commons.h"
+#include "../../common/2d/2d.h"
 
 #include "startMatch.h"
 #include "startMatchPersistence.h"
@@ -22,8 +23,6 @@
 #include "../../common/log/logger.h"
 
 #include "../../device/device.h"
-
-#include "../../drivers/strategy/strategyDriver.h"
 
 #include "../../robot/config/robotConfigDevice.h"
 
@@ -69,7 +68,7 @@ void deviceStartMatchDetectorHandleRawData(char commandHeader, InputStream* inpu
     }
 
     else if (commandHeader == COMMAND_STEP_BY_STEP) {
-        robotNextStep();
+        // TODO robotNextStep();
         ackCommand(outputStream, START_MATCH_DEVICE_HEADER, COMMAND_STEP_BY_STEP);
     }
     else if (commandHeader == COMMAND_START_MATCH_GET_INITIAL_POSITION) {

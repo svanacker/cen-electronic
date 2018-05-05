@@ -256,23 +256,11 @@
     <Filter Include="Header Files\robot\match">
       <UniqueIdentifier>{75879dc0-d007-4057-8d01-7a5bf7be02dd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\robot\opponent">
-      <UniqueIdentifier>{5a35e0f3-711c-43f6-a726-600424a615ae}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\robot\opponent">
-      <UniqueIdentifier>{90a83f0a-63dc-461b-83a1-e12a00c2e0b4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\robot\config">
       <UniqueIdentifier>{f0e265e0-4019-4d67-8a03-a95cb92013b9}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\robot\config">
       <UniqueIdentifier>{7e270b38-8ffe-4b11-b51a-9559fb5c417c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\drivers\strategy">
-      <UniqueIdentifier>{6675e0f0-6bc0-4d22-bc0a-4141ae7af695}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\drivers\strategy">
-      <UniqueIdentifier>{a367ba48-bb5b-4c44-bf68-c837042e793b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\common\timer">
       <UniqueIdentifier>{e4ff30c5-0411-4d10-b6ef-6d7abbbc5898}</UniqueIdentifier>
@@ -1245,9 +1233,6 @@
     <ClCompile Include="common\math\bitList.c">
       <Filter>Source Files\common\math</Filter>
     </ClCompile>
-    <ClCompile Include="drivers\strategy\strategyDriver.c">
-      <Filter>Source Files\drivers\strategy</Filter>
-    </ClCompile>
     <ClCompile Include="common\timer\cenTimer.c">
       <Filter>Source Files\common\timer</Filter>
     </ClCompile>
@@ -1268,9 +1253,6 @@
     </ClCompile>
     <ClCompile Include="common\pwm\servo\pc\servoPwmPc.c">
       <Filter>Source Files\common\pwm\servo\pc</Filter>
-    </ClCompile>
-    <ClCompile Include="robot\opponent\opponentRobot.c">
-      <Filter>Source Files\robot\opponent</Filter>
     </ClCompile>
     <ClCompile Include="device\beacon\beaconReceiverDeviceInterface.c">
       <Filter>Source Files\device\beacon</Filter>
@@ -2007,6 +1989,9 @@
     <ClCompile Include="robot\strategy\gameStrategyContextDebug.c">
       <Filter>Source Files\robot\strategy</Filter>
     </ClCompile>
+    <ClCompile Include="robot\strategy\gameTargetStatus.c">
+      <Filter>Source Files\robot\strategy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -2324,9 +2309,6 @@
     <ClInclude Include="common\math\bitList.h">
       <Filter>Header Files\common\math</Filter>
     </ClInclude>
-    <ClInclude Include="drivers\strategy\strategyDriver.h">
-      <Filter>Header Files\drivers\strategy</Filter>
-    </ClInclude>
     <ClInclude Include="common\timer\cenTimer.h">
       <Filter>Source Files\common\timer</Filter>
     </ClInclude>
@@ -2347,9 +2329,6 @@
     </ClInclude>
     <ClInclude Include="common\pwm\servo\servoPwmDebug.h">
       <Filter>Header Files\common\pwm\servo</Filter>
-    </ClInclude>
-    <ClInclude Include="robot\opponent\opponentRobot.h">
-      <Filter>Header Files\robot\opponent</Filter>
     </ClInclude>
     <ClInclude Include="drivers\beacon\beaconReceiverDriver.h">
       <Filter>Header Files\drivers\beacon</Filter>

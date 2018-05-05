@@ -23,8 +23,6 @@
 
 #include "../client/motion/simple/clientMotion.h"
 
-#include "../drivers/strategy/strategyDriver.h"
-
 #include "../drivers/dispatcher/driverDataDispatcher.h"
 #include "../drivers/dispatcher/driverDataDispatcherList.h"
 

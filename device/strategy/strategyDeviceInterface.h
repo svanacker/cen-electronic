@@ -3,28 +3,36 @@
 
 #include "../../device/deviceInterface.h"
 
-#define COMMAND_STRATEGY_SET_CONFIG                        'c'
-
-#define COMMAND_STRATEGY_DEBUG                             'd'
-
 /** Returns the global score */
 #define COMMAND_STRATEGY_GET_GLOBAL_SCORE                  'M'
-
-#define COMMAND_LOCATION_LIST							   'L'
-
-#define COMMAND_PATH_LIST							       'P'
 
 /** ask the robot to go to the next step. */    
 #define COMMAND_STRATEGY_NEXT_STEP                         'n'
 
-#define COMMAND_STRATEGY_SET_OPPONENT_ROBOT_POSITION       'o'
+// Opponent Position
 
-/** Set the strategy the current position of the robot. */
-#define COMMAND_STRATEGY_SET_ROBOT_POSITION                'r'
+#define COMMAND_STRATEGY_GET_OPPONENT_ROBOT_POSITION       'o'
 
-#define COMMAND_STRATEGY_LIST							   'S'
+#define COMMAND_STRATEGY_SET_OPPONENT_ROBOT_POSITION       'O'
 
-#define COMMAND_STRATEGY_ITEM							   's'
+// Robot Position
+#define COMMAND_STRATEGY_GET_ROBOT_POSITION                'r'
+
+#define COMMAND_STRATEGY_SET_ROBOT_POSITION                'R'
+
+// DEBUG
+
+/** Debug the strategy context. */
+#define COMMAND_STRATEGY_DEBUG                             'd'
+
+/** Debug the list of strategies. */
+#define COMMAND_STRATEGY_LIST_DEBUG						   'S'
+
+/** Debug a specific strategy Item. */
+#define COMMAND_STRATEGY_ITEM_DEBUG						   's'
+
+/** Debug the list of target (but not linked to any Strategy. */
+#define COMMAND_TARGET_LIST_DEBUG                          'T'
 
 /**
 * Interface for Device

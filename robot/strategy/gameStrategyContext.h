@@ -14,6 +14,8 @@
 #include "../../navigation/location.h"
 #include "../../navigation/locationList.h"
 
+#include "../../robot/config/robotConfig.h"
+
 // Forward declaration
 struct GameStrategyContext;
 typedef struct GameStrategyContext GameStrategyContext;
@@ -22,6 +24,9 @@ typedef struct GameStrategyContext GameStrategyContext;
  * Encapsulates the context of the strategy.
  */
 struct GameStrategyContext {
+    /** Configuration of the robot. */
+    RobotConfig* robotConfig;
+    /** Navigation object with the list of loation, paths ...*/
     Navigation* navigation;
     /** Time in seconds since last collision. */
     float timeSinceLastCollision;
@@ -67,6 +72,7 @@ struct GameStrategyContext {
  * Initializes the Game Strategy Context.
  */
 void initGameStrategyContext(GameStrategyContext* gameStrategyContext,
+                             RobotConfig* robotConfig,
                              Navigation* navigation,
                              Timer* strategyTimer,
                              Point* robotPosition,
