@@ -1992,6 +1992,9 @@
     <ClCompile Include="robot\match\endMatchDebug.c">
       <Filter>Source Files\robot\match</Filter>
     </ClCompile>
+    <ClCompile Include="robot\match\startMatchDebug.c">
+      <Filter>Source Files\robot\match</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -3084,6 +3087,9 @@
       <Filter>Header Files\common\pc\file</Filter>
     </ClInclude>
     <ClInclude Include="robot\match\endMatchDebug.h">
+      <Filter>Header Files\robot\match</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\match\startMatchDebug.h">
       <Filter>Header Files\robot\match</Filter>
     </ClInclude>
   </ItemGroup>

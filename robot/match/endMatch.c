@@ -1,6 +1,7 @@
 #include "endMatch.h"
 
 #include <stdlib.h>
+#include <stdint.h>
 
 #include "../../common/timer/cenTimer.h"
 #include "../../common/timer/timerList.h"
@@ -41,6 +42,18 @@ void markStartMatch(EndMatch* endMatch) {
 void resetStartMatch(EndMatch* endMatch) {
     endMatch->endMatchDetectorDeviceTimer->enabled = false;
     endMatch->currentTimeInSecond = 0;
+}
+
+unsigned int matchEndGetRemainingTime(EndMatch* endMatch) {
+    if (endMatch->doNotEnd) {
+        return INT32_MAX;
+    }
+    if (isMatchFinished(endMatch)) {
+        return 0;
+    }
+    else {
+        return endMatch->matchDurationInSecond - endMatch->currentTimeInSecond;
+    }
 }
 
 void showEndAndScore(EndMatch* endMatch, OutputStream* outputStream) {

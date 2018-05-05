@@ -10,7 +10,7 @@
 /** Mask for the strategy : 0b 0000 0111 */
 #define CONFIG_STRATEGY_MASK           0x0007
 
-/** The robot does not end (useful for test) : 0b 0000 1000 */
+/** The robot does wait for the start (useful for test & to keep the hook on the robot) : 0b 0000 1000 */
 #define CONFIG_DONT_WAIT_FOR_START     0x0008
 
 /** The robot does not end (useful for test) : 0b 0000 1000 */

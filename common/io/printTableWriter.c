@@ -90,6 +90,13 @@ unsigned int appendBoolTableData(OutputStream* outputStream, const bool value, i
 	return length + appendSpaces(outputStream, columnSize - length) + 2;
 }
 
+unsigned int appendBoolAsStringTableData(OutputStream* outputStream, const bool value, int columnSize) {
+    appendTableSeparator(outputStream);
+    appendSpace(outputStream);
+    int length = appendBoolAsString(outputStream, value);
+    return length + appendSpaces(outputStream, columnSize - length) + 2;
+}
+
 unsigned int appendHex2TableData(OutputStream* outputStream, char value, int columnSize) {
 	appendTableSeparator(outputStream);
 	appendSpace(outputStream);

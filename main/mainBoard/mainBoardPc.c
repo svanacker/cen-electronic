@@ -518,6 +518,9 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
 
     setDebugI2cEnabled(false);
 
+    // Wait until the match start
+    loopUntilStart(&startMatch);
+
     while (1) {
         mainBoardPcWaitForInstruction(&startMatch);
         // Show the end of the match

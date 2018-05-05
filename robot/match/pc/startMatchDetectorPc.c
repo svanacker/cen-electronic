@@ -4,7 +4,14 @@
 #include <stdbool.h>
 #include <stdio.h>
 
+#include "../../../common/delay/cenDelay.h"
+
 #include "../../../common/error/error.h"
+
+#include "../../../common/io/outputStream.h"
+#include "../../../common/io/printWriter.h"
+
+#include "../../../common/log/logger.h"
 
 #include "../../../common/pc/file/fileUtils.h"
 
@@ -13,7 +20,10 @@ void startMatchPc(void) {
 }
 
 bool isMatchStartedPc(StartMatch* startMatch) {
-    FILE * filePointer;
+    // Delay to avoid that it is always looping on reading the file
+    delaymSec(100);
+
+    FILE* filePointer;
 
     filePointer = fopen(START_MATCH_DETECTOR_PC_FILE_NAME, "r");
 
@@ -21,10 +31,20 @@ bool isMatchStartedPc(StartMatch* startMatch) {
 
     if (fileLength != START_MATCH_DETECTOR_PC_FILE_LENGTH) {
         writeError(ROBOT_START_MATCH_DETECTOR_PC_FILE_LENGTH_ERROR);
+        
+        OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+        appendString(debugOutputStream, "fileLength=");
+        appendDec(debugOutputStream, fileLength);
+        println(debugOutputStream);
+
+        fclose(filePointer);
         return false;
     }
 
-    bool result = fgetc(filePointer) == '1';
+    // '1' == 5V like on PICS, where there is a pull Up
+    bool result = fgetc(filePointer) == '0';
+
+    fclose(filePointer);
 
     return result;
 }

@@ -91,11 +91,18 @@ unsigned int appendDecTableData(OutputStream* outputStream, const int value, int
 unsigned int appendDecfTableData(OutputStream* outputStream, const float value, int columnSize);
 
 /**
-* Add a Boolean table data to the outputStream with | and space arround
+* Add a Boolean table (short => 0/1) data to the outputStream with | and space arround
 * @param value the value to append (boolean)
 * @param columnSize the size of the column (for alignment)
 */
 unsigned int appendBoolTableData(OutputStream* outputStream, const bool value, int columnSize);
+
+/**
+ * Add a Boolean table data (true / false) to the outputStream with | and space arround
+* @param value the value to append (boolean)
+* @param columnSize the size of the column (for alignment)
+ */
+unsigned int appendBoolAsStringTableData(OutputStream* outputStream, const bool value, int columnSize);
 
 /**
 * Add an hexadecimal table data to the outputStream with | and space arround

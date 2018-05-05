@@ -5,6 +5,7 @@
 #include "../../common/2d/2d.h"
 
 #include "startMatch.h"
+#include "startMatchDebug.h"
 #include "startMatchDevice.h"
 #include "startMatchDeviceInterface.h"
 #include "endMatchDetectorDevice.h"
@@ -25,7 +26,8 @@
 
 #include "../../robot/config/robotConfigDevice.h"
 
-static StartMatch* startMatch;
+// Forward declaration
+StartMatch* getStartMatchDetectorStartMatchObject(void);
 
 void initStartMatchDevice(void) {
 
@@ -39,7 +41,7 @@ bool isStartMatchDeviceOk(void) {
     return true;
 }
 
-void notifyWaitingStart(OutputStream* pcOutputStream) {
+void notifyWaitingStart(StartMatch* startMatch, OutputStream* pcOutputStream) {
     appendString(pcOutputStream, NOTIFY_TO_PC_RESET);
     appendString(getAlwaysOutputStreamLogger(), "CFG:");
     appendBinary16(getAlwaysOutputStreamLogger(), getConfigValue(startMatch->robotConfig), 4);
@@ -47,7 +49,7 @@ void notifyWaitingStart(OutputStream* pcOutputStream) {
     appendString(getAlwaysOutputStreamLogger(), "Waiting start:");
 }
 
-void notifyStarted(OutputStream* pcOutputStream) {
+void notifyStarted(StartMatch* startMatch, OutputStream* pcOutputStream) {
     // Notify the pc that the match started
     appendString(pcOutputStream, NOTIFY_TO_PC_START);
     appendStringCRLF(getAlwaysOutputStreamLogger(), "Go !");
@@ -55,15 +57,16 @@ void notifyStarted(OutputStream* pcOutputStream) {
 
 void deviceStartMatchDetectorHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     if (commandHeader == COMMAND_MATCH_IS_STARTED) {
-        int value = isStarted(startMatch);
+        StartMatch* startMatch = getStartMatchDetectorStartMatchObject();
+        int value = isMatchStarted(startMatch);
         ackCommand(outputStream, START_MATCH_DEVICE_HEADER, COMMAND_MATCH_IS_STARTED);
         appendHex2(outputStream, value);
     }
-    if (commandHeader == COMMAND_MATCH_SET_STARTED) {
-        int value = readHex2(inputStream);
-        setSimulateStartedMatch(startMatch, value);
-
-        ackCommand(outputStream, START_MATCH_DEVICE_HEADER, COMMAND_MATCH_SET_STARTED);
+    else if (commandHeader == COMMAND_START_MATCH_DEBUG) {
+        StartMatch* startMatch = getStartMatchDetectorStartMatchObject();
+        ackCommand(outputStream, START_MATCH_DEVICE_HEADER, COMMAND_START_MATCH_DEBUG);
+        OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+        printStartMatchTable(debugOutputStream, startMatch);
     }
 }
 
@@ -74,7 +77,11 @@ DeviceDescriptor startMatchDetectorDevice = {
     .deviceHandleRawData = &deviceStartMatchDetectorHandleRawData,
 };
 
+StartMatch* getStartMatchDetectorStartMatchObject(void) {
+    return (StartMatch*)startMatchDetectorDevice.object;
+}
+
 DeviceDescriptor* getStartMatchDeviceDescriptor(StartMatch* startMatchParam) {
-    startMatch = startMatchParam;
+    startMatchDetectorDevice.object = (int*) startMatchParam;
     return &startMatchDetectorDevice;
 }

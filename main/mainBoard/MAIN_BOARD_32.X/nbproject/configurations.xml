@@ -489,6 +489,7 @@
         <itemPath>../../../robot/match/startMatch.h</itemPath>
         <itemPath>../../../robot/match/endMatch.h</itemPath>
         <itemPath>../../../robot/match/endMatchDebug.h</itemPath>
+        <itemPath>../../../robot/match/startMatchDebug.h</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.match.32"
                      displayName="robot.match.32"
@@ -1025,6 +1026,7 @@
         <itemPath>../../../robot/match/startMatch.c</itemPath>
         <itemPath>../../../robot/match/endMatch.c</itemPath>
         <itemPath>../../../robot/match/endMatchDebug.c</itemPath>
+        <itemPath>../../../robot/match/startMatchDebug.c</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.match.32"
                      displayName="robot.match.32"

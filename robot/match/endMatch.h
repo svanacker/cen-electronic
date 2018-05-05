@@ -72,6 +72,11 @@ bool showEndAndScoreIfNeeded(EndMatch* endMatch, OutputStream* outputStream);
 int getCurrentTimeInSecond(EndMatch* endMatch);
 
 /**
+ * Returns how much time in seconds are remaining
+ */
+unsigned int matchEndGetRemainingTime(EndMatch* endMatch);
+
+/**
  * Return true if this is the end of the match.
  */
 bool isMatchFinished(EndMatch* endMatch);

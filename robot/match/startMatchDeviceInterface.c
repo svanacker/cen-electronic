@@ -1,5 +1,7 @@
 #include "startMatchDeviceInterface.h"
 
+#include "startMatch.h"
+
 #include "../../device/device.h"
 #include "../../device/deviceInterface.h"
 #include "../../device/deviceConstants.h"
@@ -11,17 +13,16 @@ const char* getStartMatchDeviceName(void) {
 int deviceStartMatchGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     if (commandHeader == COMMAND_MATCH_IS_STARTED) {
         if (fillDeviceArgumentList) {
-            setFunction("isStarted", 0, 1);
+            setFunction("is Started", 0, 1);
             setResultUnsignedHex2(0, "value");
         }
         return commandLengthValueForMode(mode, 0, 2);
     }
-    else if (commandHeader == COMMAND_MATCH_SET_STARTED) {
+    else if (commandHeader == COMMAND_START_MATCH_DEBUG) {
         if (fillDeviceArgumentList) {
-            setFunction("setStarted", 1, 0);
-            setArgumentUnsignedHex2(0, "value");
+            setFunctionNoArgumentAndNoResult("Start Match Debug");
         }
-        return commandLengthValueForMode(mode, 2, 0);
+        return commandLengthValueForMode(mode, 0, 0);
     }
     return DEVICE_HEADER_NOT_HANDLED;
 }

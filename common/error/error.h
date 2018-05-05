@@ -235,8 +235,11 @@ void clearLastError();
 #define ROBOT_GAMEBOARD_ELEMENT_LIST_OUT_OF_BOUNDS                        0x6103
 
 #define ROBOT_START_MATCH_DETECTOR_PC_FILE_LENGTH_ERROR                   0x6200
+#define ROBOT_START_MATCH_DETECTOR_PC_NULL                                0x6201
+
 #define ROBOT_CONFIG_MUST_BE_0_OR_1_CHAR_ERROR                            0x6300
 #define ROBOT_CONFIG_MUST_BE_SPACE_CHAR_ERROR                             0x6301
+#define ROBOT_CONFIG_FILE_LENGTH_ERROR                                    0x6302
 
 // PC
 #define PC_FILE_NOT_FOUND                                                 0x7000

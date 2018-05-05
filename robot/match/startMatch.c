@@ -2,7 +2,10 @@
 #include "endMatch.h"
 
 #include <stdbool.h>
+
 #include "../../common/2d/2d.h"
+
+#include "../../common/error/error.h"
 
 #include "../../common/eeprom/eeprom.h"
 #include "../../common/eeprom/eepromAreas.h"
@@ -10,33 +13,27 @@
 #include "../../common/log/logHandler.h"
 #include "../../common/log/logger.h"
 
-void setSimulateStartedMatch(StartMatch* startMatch, bool value) {
-    EndMatch* endMatch = startMatch->endMatch;
-    startMatch->simulateStartedMatch = value;
-    if (startMatch->simulateStartedMatch) {
-        markStartMatch(endMatch);
-    }
-    else {
-        resetStartMatch(endMatch);
-    }
-}
-
 void loopUntilStart(StartMatch* startMatch) {
     if (startMatch == NULL) {
+        writeError(ROBOT_START_MATCH_DETECTOR_PC_NULL);
         return;
     }
-    appendString(getAlwaysOutputStreamLogger(), "WAIT FOR START ...");
-    while (!startMatch->isMatchStartedFunction(startMatch)) {
-        startMatch->loopUntilStartHandleFunction(startMatch);
+    if (startMatch->waitForStart) {
+        appendString(getAlwaysOutputStreamLogger(), "WAIT FOR START ...");
+        while (!startMatch->isMatchStartedFunction(startMatch)) {
+            startMatch->loopUntilStartHandleFunction(startMatch);
+        }
+        appendString(getAlwaysOutputStreamLogger(), "OK !\n");
+        markStartMatch(startMatch->endMatch);
     }
-    appendString(getAlwaysOutputStreamLogger(), "OK\n");
+    else {
+        appendString(getAlwaysOutputStreamLogger(), "STARTED !\n");
+    }
 }
 
-bool isStarted(StartMatch* startMatch) {
-    if (startMatch->simulateStartedMatch) {
-        return true;
-    }
+bool isMatchStarted(StartMatch* startMatch) {
     if (startMatch == NULL) {
+        writeError(ROBOT_START_MATCH_DETECTOR_PC_NULL);
         return false;
     }
     bool result = startMatch->isMatchStartedFunction(startMatch);
@@ -52,5 +49,6 @@ void initStartMatch(StartMatch* startMatch,
     startMatch->endMatch = endMatch;
     startMatch->isMatchStartedFunction = isMatchStartedFunctionParam;
     startMatch->loopUntilStartHandleFunction = loopUntilStartHandleFunction;
+    startMatch->waitForStart = !isConfigSet(robotConfig, CONFIG_DONT_WAIT_FOR_START);
 }
 

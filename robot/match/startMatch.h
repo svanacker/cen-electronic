@@ -37,10 +37,10 @@ struct StartMatch {
     IsMatchStartedFunction* isMatchStartedFunction;
     /** The function which must be called when the robot wait for start (to be able to continue to manage instruction */
     LoopUntilStartHandleFunction* loopUntilStartHandleFunction;
-    /** If we simulate the Start Match or not. */
-    bool simulateStartedMatch;
     /** Pointer on the endMatch management */
     EndMatch* endMatch;
+    /** Don't wait for start */
+    bool waitForStart;
 };
 
 /**
@@ -54,8 +54,6 @@ void initStartMatch(StartMatch* startMatch,
                     IsMatchStartedFunction* isMatchStartedFunctionParam,
                     LoopUntilStartHandleFunction* loopUntilStartHandleFunction);
 
-void setSimulateStartedMatch(StartMatch* startMatch, bool value);
-
 /**
 * Wait before start, but call the function given in argument.
 */
@@ -65,6 +63,6 @@ void loopUntilStart(StartMatch* startMatch);
 * Test if the match is started or not.
 * @return true if the match is started, false else.
 */
-bool isStarted(StartMatch* startMatch);
+bool isMatchStarted(StartMatch* startMatch);
 
 #endif

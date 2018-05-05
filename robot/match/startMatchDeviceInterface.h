@@ -12,11 +12,11 @@
     #define START_DETECTOR_PIN      PORTFbits.RF6
 #endif
 
-/** Defines if the match is started or not. */
-#define COMMAND_MATCH_IS_STARTED 'r'
+/** To Debug the device. */
+#define COMMAND_START_MATCH_DEBUG                 'd'
 
-/** Simulates that the match is started ! */
-#define COMMAND_MATCH_SET_STARTED 'w'
+/** Defines if the match is started or not. */
+#define COMMAND_MATCH_IS_STARTED                  'r'
 
 // Notifications
 
@@ -24,11 +24,11 @@
 #define NOTIFY_TO_PC_RESET      "xXyY"
 
 /** Define the message sent to the PC to PIC reset. */
-#define NOTIFY_TO_PC_START "s"
+#define NOTIFY_TO_PC_START                        "s"
 
 /**
  * The interface for the device StartMatchDetectorDevice.
  */
-DeviceInterface* getStartMatchDeviceInterface();
+DeviceInterface* getStartMatchDeviceInterface(void);
 
 #endif

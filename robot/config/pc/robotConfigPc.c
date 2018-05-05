@@ -40,13 +40,14 @@ void robotConfigPcCheckSpace(FILE * filePointer) {
  * @private
  */
 unsigned int _robotConfigPcReadInt(RobotConfig* robotConfig) {
-    FILE * filePointer;
+    FILE* filePointer;
 
     filePointer = fopen(ROBOT_CONFIG_PC_FILE_NAME, "r");
     unsigned long fileLength = readFileLength(filePointer);
 
     if (fileLength != ROBOT_CONFIG_PC_FILE_LENGTH) {
-        writeError(ROBOT_START_MATCH_DETECTOR_PC_FILE_LENGTH_ERROR);
+        writeError(ROBOT_CONFIG_FILE_LENGTH_ERROR);
+        fclose(filePointer);
         return false;
     }
     
