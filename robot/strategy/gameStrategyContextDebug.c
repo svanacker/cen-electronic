@@ -10,7 +10,7 @@
 
 #include "../../navigation/locationListDebug.h"
 
-#include "../../robot/match/teamColor.h"
+#include "../../robot/strategy/teamColor.h"
 
 #include "gameTargetListDebug.h"
 

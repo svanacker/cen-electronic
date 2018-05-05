@@ -496,12 +496,6 @@
     <Filter Include="Source Files\drivers\file\eeprom">
       <UniqueIdentifier>{f821f4f0-fb1c-4c7b-ad46-08e7f2e3fa0b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\device\file">
-      <UniqueIdentifier>{e3f9663a-a347-407f-8546-95ab98bb5006}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\device\file">
-      <UniqueIdentifier>{59e30a54-3c41-4153-9152-0dc2b9f0cdec}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\drivers\file">
       <UniqueIdentifier>{323d1e1d-0c7e-462b-8c8e-65ab0f495b27}</UniqueIdentifier>
     </Filter>
@@ -955,6 +949,12 @@
     <Filter Include="Source Files\device\gameboard">
       <UniqueIdentifier>{25a80922-256d-44d7-b3e9-6afa1b47d070}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\common\pc\file">
+      <UniqueIdentifier>{84de08bb-e602-49b7-859f-38492bfa06a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\common\pc\file">
+      <UniqueIdentifier>{64724bd8-495d-42fe-8a87-945eb1b6e9aa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -1213,12 +1213,6 @@
       <Filter>Source Files\robot\match</Filter>
     </ClCompile>
     <ClCompile Include="robot\match\endMatchDetectorDeviceInterface.c">
-      <Filter>Source Files\robot\match</Filter>
-    </ClCompile>
-    <ClCompile Include="robot\match\strategy.c">
-      <Filter>Source Files\robot\match</Filter>
-    </ClCompile>
-    <ClCompile Include="robot\match\teamColor.c">
       <Filter>Source Files\robot\match</Filter>
     </ClCompile>
     <ClCompile Include="robot\robot.c">
@@ -1917,9 +1911,6 @@
     <ClCompile Include="robot\match\endMatch.c">
       <Filter>Source Files\robot\match</Filter>
     </ClCompile>
-    <ClCompile Include="robot\match\startMatchPersistence.c">
-      <Filter>Source Files\robot\match</Filter>
-    </ClCompile>
     <ClCompile Include="client\robot\2018\launcherClient2018.c">
       <Filter>Source Files\client\robot\2018</Filter>
     </ClCompile>
@@ -1991,6 +1982,15 @@
     </ClCompile>
     <ClCompile Include="robot\strategy\gameTargetStatus.c">
       <Filter>Source Files\robot\strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\strategy\teamColor.c">
+      <Filter>Source Files\robot\strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="common\pc\file\fileUtils.c">
+      <Filter>Source Files\common\pc\file</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\match\endMatchDebug.c">
+      <Filter>Source Files\robot\match</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2285,12 +2285,6 @@
     <ClInclude Include="robot\match\endMatchDetectorDeviceInterface.h">
       <Filter>Header Files\robot\match</Filter>
     </ClInclude>
-    <ClInclude Include="robot\match\strategy.h">
-      <Filter>Header Files\robot\match</Filter>
-    </ClInclude>
-    <ClInclude Include="robot\match\teamColor.h">
-      <Filter>Header Files\robot\match</Filter>
-    </ClInclude>
     <ClInclude Include="robot\robot.h">
       <Filter>Header Files\robot</Filter>
     </ClInclude>
@@ -2530,12 +2524,6 @@
     </ClInclude>
     <ClInclude Include="motion\pid\profileType.h">
       <Filter>Header Files\motion\pid</Filter>
-    </ClInclude>
-    <ClInclude Include="device\file\fileDevice.h">
-      <Filter>Header Files\device\file</Filter>
-    </ClInclude>
-    <ClInclude Include="device\file\fileDeviceInterface.h">
-      <Filter>Header Files\device\file</Filter>
     </ClInclude>
     <ClInclude Include="drivers\file\eeprom\eepromFile.h">
       <Filter>Header Files\drivers\file\eeprom</Filter>
@@ -3014,9 +3002,6 @@
     <ClInclude Include="robot\match\endMatch.h">
       <Filter>Header Files\robot\match</Filter>
     </ClInclude>
-    <ClInclude Include="robot\match\startMatchPersistence.h">
-      <Filter>Header Files\robot\match</Filter>
-    </ClInclude>
     <ClInclude Include="client\robot\2018\launcherClient2018.h">
       <Filter>Header Files\client\robot\2018</Filter>
     </ClInclude>
@@ -3091,6 +3076,15 @@
     </ClInclude>
     <ClInclude Include="robot\strategy\gameStrategyContextDebug.h">
       <Filter>Header Files\robot\strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\strategy\teamColor.h">
+      <Filter>Header Files\robot\strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="common\pc\file\fileUtils.h">
+      <Filter>Header Files\common\pc\file</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\match\endMatchDebug.h">
+      <Filter>Header Files\robot\match</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -206,6 +206,7 @@
     <ClCompile Include="common\math\random.c" />
     <ClCompile Include="common\motor\dualHBridgeMotor.c" />
     <ClCompile Include="common\motor\pc\dualHBridgeMotorPc.c" />
+    <ClCompile Include="common\pc\file\fileUtils.c" />
     <ClCompile Include="common\pc\pipe\pipeClientHelper.c" />
     <ClCompile Include="common\pc\pipe\pipeServerHelper.c" />
     <ClCompile Include="common\pc\process\processHelper.c" />
@@ -434,15 +435,13 @@
     <ClCompile Include="robot\kinematics\robotKinematicsDeviceInterface.c" />
     <ClCompile Include="robot\kinematics\robotKinematicsPersistence.c" />
     <ClCompile Include="robot\match\endMatch.c" />
+    <ClCompile Include="robot\match\endMatchDebug.c" />
     <ClCompile Include="robot\match\endMatchDetectorDevice.c" />
     <ClCompile Include="robot\match\endMatchDetectorDeviceInterface.c" />
     <ClCompile Include="robot\match\pc\startMatchDetectorPc.c" />
     <ClCompile Include="robot\match\startMatch.c" />
     <ClCompile Include="robot\match\startMatchDevice.c" />
     <ClCompile Include="robot\match\startMatchDeviceInterface.c" />
-    <ClCompile Include="robot\match\startMatchPersistence.c" />
-    <ClCompile Include="robot\match\strategy.c" />
-    <ClCompile Include="robot\match\teamColor.c" />
     <ClCompile Include="robot\robot.c" />
     <ClCompile Include="robot\strategy\factor\composedGainFactor.c" />
     <ClCompile Include="robot\strategy\factor\distanceGainFactor.c" />
@@ -466,6 +465,7 @@
     <ClCompile Include="robot\strategy\gameTargetListDebug.c" />
     <ClCompile Include="robot\strategy\gameTargetStatus.c" />
     <ClCompile Include="robot\strategy\nextGameStrategyItemComputer.c" />
+    <ClCompile Include="robot\strategy\teamColor.c" />
     <ClCompile Include="test\allTests.c" />
     <ClCompile Include="test\common\2d\2dTest.c" />
     <ClCompile Include="test\common\eeprom\memoryEepromTest.c" />
@@ -556,6 +556,7 @@
     <ClInclude Include="common\math\hexUtils.h" />
     <ClInclude Include="common\math\random.h" />
     <ClInclude Include="common\motor\pc\dualHBridgeMotorPc.h" />
+    <ClInclude Include="common\pc\file\fileUtils.h" />
     <ClInclude Include="common\pc\pipe\pipeClientHelper.h" />
     <ClInclude Include="common\pc\pipe\pipeServerHelper.h" />
     <ClInclude Include="common\pc\process\processHelper.h" />
@@ -598,8 +599,6 @@
     <ClInclude Include="device\dispatcher\deviceDataDispatcher.h" />
     <ClInclude Include="device\eeprom\eepromDevice.h" />
     <ClInclude Include="device\eeprom\eepromDeviceInterface.h" />
-    <ClInclude Include="device\file\fileDevice.h" />
-    <ClInclude Include="device\file\fileDeviceInterface.h" />
     <ClInclude Include="device\gameboard\gameboardDevice.h" />
     <ClInclude Include="device\gameboard\gameboardDeviceInterface.h" />
     <ClInclude Include="device\i2c\i2cCommonDebugDevice.h" />
@@ -799,15 +798,13 @@
     <ClInclude Include="robot\kinematics\robotKinematicsDeviceInterface.h" />
     <ClInclude Include="robot\kinematics\robotKinematicsPersistence.h" />
     <ClInclude Include="robot\match\endMatch.h" />
+    <ClInclude Include="robot\match\endMatchDebug.h" />
     <ClInclude Include="robot\match\endMatchDetectorDevice.h" />
     <ClInclude Include="robot\match\endMatchDetectorDeviceInterface.h" />
     <ClInclude Include="robot\match\pc\startMatchDetectorPc.h" />
     <ClInclude Include="robot\match\startMatch.h" />
     <ClInclude Include="robot\match\startMatchDetector.h" />
     <ClInclude Include="robot\match\startMatchDeviceInterface.h" />
-    <ClInclude Include="robot\match\startMatchPersistence.h" />
-    <ClInclude Include="robot\match\strategy.h" />
-    <ClInclude Include="robot\match\teamColor.h" />
     <ClInclude Include="robot\robot.h" />
     <ClInclude Include="robot\robotConstants.h" />
     <ClInclude Include="robot\strategy\factor\composedGainFactor.h" />
@@ -833,6 +830,7 @@
     <ClInclude Include="robot\strategy\gameTargetListDebug.h" />
     <ClInclude Include="robot\strategy\gameTargetStatus.h" />
     <ClInclude Include="robot\strategy\nextGameStrategyItemComputer.h" />
+    <ClInclude Include="robot\strategy\teamColor.h" />
     <ClInclude Include="test\allTests.h" />
     <ClInclude Include="test\common\2d\2dTest.h" />
     <ClInclude Include="test\common\eeprom\memoryEepromTest.h" />

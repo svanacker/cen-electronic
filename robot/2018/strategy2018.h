@@ -5,7 +5,7 @@
 
 #include "../../robot/strategy/gameStrategyContext.h"
 #include "../../robot/strategy/gameTarget.h"
-#include "../../robot/match/teamColor.h"
+#include "../../robot/strategy/teamColor.h"
 
 #include "../../motion/simple/simpleMotion.h"
 #include "../../motion/extended/bsplineMotion.h"
@@ -127,16 +127,11 @@
 /**
 * Init all elements for 2018.
 */
-void initStrategy2018(GameStrategyContext* gmeStrategyContext, int strategyIndex);
-
-/**
-* Print
-*/
-void printStrategyAllDatas(GameStrategyContext* gmeStrategyContext, OutputStream* outputStream);
+void initStrategy2018(GameStrategyContext* gmeStrategyContext);
 
 /**
 * Define the color and update strategy.
 */
-void setColor(GameStrategyContext* gmeStrategyContext, enum TeamColor color);
+void setColor2018(GameStrategyContext* gmeStrategyContext, enum TeamColor color);
 
 #endif

@@ -1,8 +1,14 @@
 #include <stdlib.h>
 
 #include "gameStrategyContext.h"
+#include "teamColor.h"
 
 #include "../../common/timer/cenTimer.h"
+
+#include "../../common/log/logger.h"
+
+#include "../../common/io/outputStream.h"
+#include "../../common/io/printWriter.h"
 
 /**
  * @private
@@ -12,18 +18,6 @@ void initGameStrategyIndex(GameStrategyContext* gameStrategyContext) {
     unsigned int configValue = robotConfig->robotConfigReadInt(robotConfig);
     int strategyIndex = (configValue & CONFIG_STRATEGY_MASK);
     gameStrategyContext->strategyIndex = strategyIndex;
-}
-
-void initGameStrategyColor(GameStrategyContext* gameStrategyContext) {
-    RobotConfig* robotConfig = gameStrategyContext->robotConfig;
-    unsigned int configValue = robotConfig->robotConfigReadInt(robotConfig);
-
-    if (configValue & CONFIG_COLOR_GREEN_MASK) {
-        setColor(gameStrategyContext, TEAM_COLOR_GREEN);
-    }
-    else {
-        setColor(gameStrategyContext, TEAM_COLOR_ORANGE);
-    }
 }
 
 void initGameStrategyContext(GameStrategyContext* gameStrategyContext,
@@ -41,6 +35,10 @@ void initGameStrategyContext(GameStrategyContext* gameStrategyContext,
     gameStrategyContext->lastObstaclePosition = lastObstaclePosition;
     // Complex init
     initGameStrategyIndex(gameStrategyContext);
+}
 
-
+void showGameStrategyContextTeamColor(GameStrategyContext* gameStrategyContext) {
+    OutputStream* outputStream = getAlwaysOutputStreamLogger();
+    appendTeamColorAsString(outputStream, gameStrategyContext->color);
+    println(outputStream);
 }

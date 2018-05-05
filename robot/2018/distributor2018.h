@@ -10,7 +10,7 @@
 
 #include "distributor2018.h"
 
-#include "../../robot/match/teamColor.h"
+#include "../../robot/strategy/teamColor.h"
 
 /**
  * Determine the type of content in the distributor

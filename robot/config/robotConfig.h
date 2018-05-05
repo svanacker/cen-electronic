@@ -17,13 +17,7 @@
 #define CONFIG_DO_NOT_END              0x0010
 
 /** Use Sonar during the match : 0b00100000 */
-// #define CONFIG_USE_SONAR_MASK          0x0020
-
-/** Send instruction to the robot to use test : 0b 0001 0000 */
-#define CONFIG_ROLLING_TEST_MASK       0x0020
-
-// 0b 0100 0000
-#define CONFIG_DONT_USE_BEACON_MASK    0x0040
+#define CONFIG_USE_SONAR_MASK          0x0020
 
 /** Indicates we have the color green if set. */
 // 0b 1000 0000
@@ -106,12 +100,5 @@ unsigned int getConfigValue(RobotConfig* robotConfig);
 * Returns if the specified configMask is set or not
 */
 bool isConfigSet(RobotConfig* robotConfig, unsigned int configMask);
-
-/**
-* Return for a configIndex given in parameter the string representation of the configuration
-* @param configIndex the index for the config
-*/
-char* getConfigBitString(RobotConfig* robotConfig, unsigned char configIndex);
-
 
 #endif

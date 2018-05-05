@@ -46,7 +46,6 @@ void clearLastError();
 
 #define IO_PIN_INDEX_ERROR                                                0x0110
 
-
 #define IO_READER_READ_FILTERED_CHAR                                      0x0120
 #define IO_READER_CHECK_CHAR_PROBLEM                                      0x0130
 #define IO_READER_NOT_BOOL_VALUE                                          0x0131
@@ -234,6 +233,10 @@ void clearLastError();
 #define ROBOT_GAMEBOARD_ELEMENT_LIST_NOT_INITIALIZED                      0x6101
 #define ROBOT_GAMEBOARD_TOO_MUCH_ELEMENTS                                 0x6102           
 #define ROBOT_GAMEBOARD_ELEMENT_LIST_OUT_OF_BOUNDS                        0x6103
+
+#define ROBOT_START_MATCH_DETECTOR_PC_FILE_LENGTH_ERROR                   0x6200
+#define ROBOT_CONFIG_MUST_BE_0_OR_1_CHAR_ERROR                            0x6300
+#define ROBOT_CONFIG_MUST_BE_SPACE_CHAR_ERROR                             0x6301
 
 // PC
 #define PC_FILE_NOT_FOUND                                                 0x7000

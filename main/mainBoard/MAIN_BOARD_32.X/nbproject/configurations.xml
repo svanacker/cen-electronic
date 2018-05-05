@@ -486,11 +486,9 @@
         <itemPath>../../../robot/match/endMatchDetectorDeviceInterface.h</itemPath>
         <itemPath>../../../robot/match/startMatchDevice.h</itemPath>
         <itemPath>../../../robot/match/startMatchDeviceInterface.h</itemPath>
-        <itemPath>../../../robot/match/strategy.h</itemPath>
-        <itemPath>../../../robot/match/teamColor.h</itemPath>
         <itemPath>../../../robot/match/startMatch.h</itemPath>
         <itemPath>../../../robot/match/endMatch.h</itemPath>
-        <itemPath>../../../robot/match/startMatchPersistence.h</itemPath>
+        <itemPath>../../../robot/match/endMatchDebug.h</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.match.32"
                      displayName="robot.match.32"
@@ -500,7 +498,6 @@
       <logicalFolder name="robot.opponent"
                      displayName="robot.opponent"
                      projectFiles="true">
-        <itemPath>../../../robot/opponent/opponentRobot.h</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.strategy"
                      displayName="robot.strategy"
@@ -521,6 +518,8 @@
         <itemPath>../../../robot/strategy/gameStrategyListDebug.h</itemPath>
         <itemPath>../../../robot/strategy/gameStrategyDebug.h</itemPath>
         <itemPath>../../../robot/strategy/gameStrategyContextDebug.h</itemPath>
+        <itemPath>../../../robot/strategy/teamColor.h</itemPath>
+        <itemPath>../../../robot/strategy/gameTargetListDebug.h</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.strategy.factor"
                      displayName="robot.strategy.factor"
@@ -927,10 +926,6 @@
                      projectFiles="true">
         <itemPath>../../../drivers/sensor/temperature/LM75A.c</itemPath>
       </logicalFolder>
-      <logicalFolder name="drivers.strategy"
-                     displayName="drivers.strategy"
-                     projectFiles="true">
-      </logicalFolder>
       <logicalFolder name="drivers.system"
                      displayName="drivers.system"
                      projectFiles="true">
@@ -1027,11 +1022,9 @@
         <itemPath>../../../robot/match/endMatchDetectorDeviceInterface.c</itemPath>
         <itemPath>../../../robot/match/startMatchDevice.c</itemPath>
         <itemPath>../../../robot/match/startMatchDeviceInterface.c</itemPath>
-        <itemPath>../../../robot/match/strategy.c</itemPath>
-        <itemPath>../../../robot/match/teamColor.c</itemPath>
         <itemPath>../../../robot/match/startMatch.c</itemPath>
         <itemPath>../../../robot/match/endMatch.c</itemPath>
-        <itemPath>../../../robot/match/startMatchPersistence.c</itemPath>
+        <itemPath>../../../robot/match/endMatchDebug.c</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.match.32"
                      displayName="robot.match.32"
@@ -1041,7 +1034,6 @@
       <logicalFolder name="robot.opponent"
                      displayName="robot.opponent"
                      projectFiles="true">
-        <itemPath>../../../robot/opponent/opponentRobot.c</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.strategy"
                      displayName="robot.strategy"
@@ -1061,6 +1053,9 @@
         <itemPath>../../../robot/strategy/gameStrategyListDebug.c</itemPath>
         <itemPath>../../../robot/strategy/gameStrategyDebug.c</itemPath>
         <itemPath>../../../robot/strategy/gameStrategyContextDebug.c</itemPath>
+        <itemPath>../../../robot/strategy/gameTargetListDebug.c</itemPath>
+        <itemPath>../../../robot/strategy/teamColor.c</itemPath>
+        <itemPath>../../../robot/strategy/gameTargetStatus.c</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.strategy.factor"
                      displayName="robot.strategy.factor"

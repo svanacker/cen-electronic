@@ -33,3 +33,4 @@ GameStrategyItem* getStrategyItem(GameStrategy* gameStrategy, int index) {
 int getStrategyItemCount(GameStrategy* gameStrategy) {
     return gameStrategy->size;
 }
+

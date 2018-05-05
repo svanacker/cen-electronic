@@ -8,7 +8,7 @@
 #include "gameTarget.h"
 #include "gameTargetAction.h"
 
-#include "../../robot/match/teamColor.h"
+#include "teamColor.h"
 
 #include "../../navigation/navigation.h"
 #include "../../navigation/location.h"
@@ -78,6 +78,12 @@ void initGameStrategyContext(GameStrategyContext* gameStrategyContext,
                              Point* robotPosition,
                              Point* opponentRobotPosition,
                              Point* lastObstaclePosition);
+
+
+/**
+ * Show on all Debug (specifically LCD) which color was chosen.
+ */
+void showGameStrategyContextTeamColor(GameStrategyContext* gameStrategyContext);
 
 #endif
 

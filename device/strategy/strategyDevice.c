@@ -44,7 +44,6 @@ GameStrategyContext* getStrategyDeviceGameStrategyContext(void);
 // DEVICE INTERFACE
 
 void initStrategy(void) {
-    initStrategy2018(getStrategyDeviceGameStrategyContext(), 0);
 }
 
 void stopStrategy(void) {

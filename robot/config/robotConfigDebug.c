@@ -36,13 +36,14 @@ void printRobotTableConfig(OutputStream* outputStream, RobotConfig* robotConfig)
 	appendDecTableData(outputStream, configValue & CONFIG_STRATEGY_MASK, ROBOT_CONFIG_VALUE_COLUMN_LENGTH);
 	appendEndOfTableColumn(outputStream, ROBOT_CONFIG_LAST_COLUMN);
 
+    appendTableHeaderSeparatorLine(outputStream);
+
+    // Start Match / End Match
 	// Wait For Start
 	appendStringTableData(outputStream, "Don't wait For Start", ROBOT_CONFIG_KEY_COLUMN_LENGTH);
 	appendBinary16TableData(outputStream, CONFIG_DONT_WAIT_FOR_START, 4, ROBOT_CONFIG_MASK_COLUMN_LENGTH);
 	appendBoolTableData(outputStream, configValue & CONFIG_DONT_WAIT_FOR_START, ROBOT_CONFIG_VALUE_COLUMN_LENGTH);
 	appendEndOfTableColumn(outputStream, ROBOT_CONFIG_LAST_COLUMN);
-
-	appendTableHeaderSeparatorLine(outputStream);
 
 	// Do not end
 	appendStringTableData(outputStream, "Do not end", ROBOT_CONFIG_KEY_COLUMN_LENGTH);
@@ -50,17 +51,15 @@ void printRobotTableConfig(OutputStream* outputStream, RobotConfig* robotConfig)
 	appendBoolTableData(outputStream, configValue & CONFIG_DO_NOT_END, ROBOT_CONFIG_VALUE_COLUMN_LENGTH);
 	appendEndOfTableColumn(outputStream, ROBOT_CONFIG_LAST_COLUMN);
 
-	// rolling test
-	appendStringTableData(outputStream, "Rolling Test", ROBOT_CONFIG_KEY_COLUMN_LENGTH);
-	appendBinary16TableData(outputStream, CONFIG_ROLLING_TEST_MASK, 4, ROBOT_CONFIG_MASK_COLUMN_LENGTH);
-	appendBoolTableData(outputStream, configValue & CONFIG_ROLLING_TEST_MASK, ROBOT_CONFIG_VALUE_COLUMN_LENGTH);
+    appendTableHeaderSeparatorLine(outputStream);
+
+	// Sonar Mask
+	appendStringTableData(outputStream, "Sonar On", ROBOT_CONFIG_KEY_COLUMN_LENGTH);
+	appendBinary16TableData(outputStream, CONFIG_USE_SONAR_MASK, 4, ROBOT_CONFIG_MASK_COLUMN_LENGTH);
+	appendBoolTableData(outputStream, configValue & CONFIG_USE_SONAR_MASK, ROBOT_CONFIG_VALUE_COLUMN_LENGTH);
 	appendEndOfTableColumn(outputStream, ROBOT_CONFIG_LAST_COLUMN);
 
-	// Don't use Beacon
-	appendStringTableData(outputStream, "Don't use Beacon", ROBOT_CONFIG_KEY_COLUMN_LENGTH);
-	appendBinary16TableData(outputStream, CONFIG_DONT_USE_BEACON_MASK, 4, ROBOT_CONFIG_MASK_COLUMN_LENGTH);
-	appendBoolTableData(outputStream, configValue & CONFIG_DONT_USE_BEACON_MASK, ROBOT_CONFIG_VALUE_COLUMN_LENGTH);
-	appendEndOfTableColumn(outputStream, ROBOT_CONFIG_LAST_COLUMN);
+    appendTableHeaderSeparatorLine(outputStream);
 
 	// Green color
 	appendStringTableData(outputStream, "Green Color", ROBOT_CONFIG_KEY_COLUMN_LENGTH);

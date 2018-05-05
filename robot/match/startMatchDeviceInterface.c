@@ -23,53 +23,6 @@ int deviceStartMatchGetInterface(char commandHeader, DeviceInterfaceMode mode, b
         }
         return commandLengthValueForMode(mode, 2, 0);
     }
-    if (commandHeader == COMMAND_STEP_BY_STEP) {
-        if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("stepByStep");
-        }
-        return commandLengthValueForMode(mode, 0, 0);
-    }
-    else if (commandHeader == COMMAND_START_MATCH_GET_INITIAL_POSITION) {
-        if (fillDeviceArgumentList) {
-            setFunction("getInitialPosition", 1, 7);
-            setArgumentUnsignedHex2(0, "side (00=Green, 01=Orange)");
-            setResultUnsignedHex2(0, "side (00=Green, 01=Orange)");
-            setResultSeparator(1);
-            setResultUnsignedHex4(2, "x (mm)");
-            setResultSeparator(3);
-            setResultUnsignedHex4(4, "y (mm)");
-            setResultSeparator(5);
-            setResultUnsignedHex4(6, "angle (mm)");
-        }
-        return commandLengthValueForMode(mode, 2, 17);
-    }
-    else if (commandHeader == COMMAND_START_MATCH_SET_INITIAL_POSITION) {
-        if (fillDeviceArgumentList) {
-            setFunction("setInitialPosition", 7, 0);
-            setArgumentUnsignedHex2(0, "side (00=Green, 01=Orange)");
-            setArgumentSeparator(1);
-            setArgumentFloatHex4(2, "x (mm)");
-            setArgumentSeparator(3);
-            setArgumentFloatHex4(4, "y (mm)");
-            setArgumentSeparator(5);
-            setArgumentFloatHex4(6, "angle (mm)");
-        }
-        return commandLengthValueForMode(mode, 17, 0);
-    }
-
-    /*
-    if (mode == DEVICE_MODE_OUTPUT) {
-            if (header == COMMAND_NOTIFY_MATCH_STARTED) {
-                    if (fillDeviceArgumentList) {
-                            deviceArgumentList->functionName = "notifyMatchStarted";
-                            deviceArgumentList->size = 1;
-                            deviceArgumentList->args[0].type = DEVICE_ARG_UNSIGNED_CHAR_3;
-                            deviceArgumentList->args[0].name = "XyY";
-                    }
-                    return commandLengthValueForMode(mode, 0, 0);
-            }
-    }
-     */
     return DEVICE_HEADER_NOT_HANDLED;
 }
 

@@ -214,8 +214,6 @@
 // -> Temperature
 #include "../../drivers/sensor/temperature/LM75A.h"
 
-#include "../../drivers/strategy/strategyDriver.h"
-
 // Robot
 #include "../../robot/config/robotConfig.h"
 #include "../../robot/config/robotConfigDevice.h"
@@ -232,7 +230,6 @@
 #include "../../robot/match/32/startMatchDetector32.h"
 #include "../../robot/match/startMatchDevice.h"
 #include "../../robot/match/startMatchDeviceInterface.h"
-#include "../../robot/match/teamColor.h"
 #include "../../robot/match/endMatchDetectorDevice.h"
 #include "../../robot/match/endMatchDetectorDeviceInterface.h"
 
@@ -240,7 +237,8 @@
 #include "../../robot/opponent/robotInfraredDetectorDriver.h"
 #include "../../robot/opponent/robotSonarDetectorDevice.h"
 #include "../../robot/opponent/robotSonarDetectorDeviceInterface.h"
-#include "../../robot/opponent/opponentRobot.h"
+
+#include "../../robot/strategy/teamColor.h"
 
 #include "../../motion/simple/simpleMotion.h"
 
@@ -536,23 +534,6 @@ void initMainBoardDriverDataDispatcherList(void) {
         MAIN_BOARD_SERIAL_PORT_MECA_1);
 }
 
-/*
-void doInstruction() {
-    int currentTime = getCurrentTimeInSecond();
-
-    if (instructionIndex == 0 && currentTime > 1) {
-        motionDriverForward(600.0f);
-        instructionIndex++;
-    }
-    else if (instructionIndex == 1 && currentTime > 10) {
-        motionDriverLeft(1800.0f);
-    }
-    else if (instructionIndex == 2 && currentTime > 20) {
-        motionDriverForward(600.0f);
-    }
-}
-*/
-
 bool mainBoardWaitForInstruction(StartMatch* startMatchParam) {
     // Listen instruction from pcStream->Devices
     handleStreamInstruction(
@@ -697,15 +678,13 @@ int main(void) {
     initColorSensorTcs34725(&colorSensor, &colorValue, &colorSensorFindColorType2018, &tcs34725);
     
     initEndMatch(&endMatch, &robotConfig, MATCH_DURATION);
-    initStartMatch(&startMatch, &robotConfig, &endMatch, isMatchStarted32, mainBoardWaitForInstruction, &eeprom);
+    initStartMatch(&startMatch, &robotConfig, &endMatch, isMatchStarted32, mainBoardWaitForInstruction);
     
     // 2018
-    // TODO : Dynamically change it
-    initDistributor(&distributor, TEAM_COLOR_GREEN, &colorSensor);
-    
     navigation = initNavigation2018();
-    gameStrategyContext = initGameStrategyContext2018();
+    gameStrategyContext = initGameStrategyContext2018(&robotConfig);
     gameBoard = initGameBoard2018(gameStrategyContext);
+    initDistributor(&distributor, gameStrategyContext->color, &colorSensor);
     
     // TIMERS
     initTimerList(&timerListArray, MAIN_BOARD_TIMER_LENGTH);
@@ -718,6 +697,7 @@ int main(void) {
     // Start interruptions
     startTimerList(false);
     getTimerByCode(SERVO_TIMER_CODE)->enabled = true;
+    getTimerByCode(END_MATCH_DETECTOR_TIMER_CODE)->enabled = true;
 
     clearBuffer(&motorInputBuffer);
     // Send a clear Buffer to the remote board to avoid to keep bad data in the link when rebooting
@@ -733,9 +713,10 @@ int main(void) {
         if (!mainBoardWaitForInstruction(&startMatch)) {
             break;
         }
+        
+        // Show the end of the match
+        showEndAndScoreIfNeeded(&endMatch, getAlwaysOutputStreamLogger());
     }
-
-    showEnd(&endMatch, getAlwaysOutputStreamLogger());
 
     while (1) {
         // Avoid reboot even at end

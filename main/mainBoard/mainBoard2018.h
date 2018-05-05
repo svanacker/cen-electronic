@@ -8,7 +8,7 @@
 #include "../../drivers/colorSensor/colorSensor.h"
 
 #include "../../robot/strategy/gameStrategyContext.h"
-#include "../../robot/match/teamColor.h"
+#include "../../robot/strategy/teamColor.h"
 
 #include "../../robot/gameboard/gameboard.h"
 

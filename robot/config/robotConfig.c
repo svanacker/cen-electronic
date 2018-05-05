@@ -22,11 +22,3 @@ unsigned int getConfigValue(RobotConfig* robotConfig) {
     return robotConfig->robotConfigReadInt(robotConfig);;
 }
 
-char* getConfigBitString(RobotConfig* robotConfig, unsigned char configIndex) {
-    switch (configIndex) {
-        case CONFIG_DONT_USE_BEACON_MASK: return "DontUseBeacon";
-        case CONFIG_ROLLING_TEST_MASK: return "RollingTest";
-        case CONFIG_COLOR_GREEN_MASK: return "Green";
-        default: return "?";
-    }
-}

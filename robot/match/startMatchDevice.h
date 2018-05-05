@@ -9,7 +9,6 @@
 #include <stdbool.h>
 
 #include "startMatch.h"
-#include "teamColor.h"
 
 #include "../../common/eeprom/eeprom.h"
 #include "../../common/io/outputStream.h"

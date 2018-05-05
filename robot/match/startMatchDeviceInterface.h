@@ -18,15 +18,6 @@
 /** Simulates that the match is started ! */
 #define COMMAND_MATCH_SET_STARTED 'w'
 
-/** Gets the initial position for both sides .*/
-#define COMMAND_START_MATCH_GET_INITIAL_POSITION 'p'
-
-/** Sets the initial position for both sides. */
-#define COMMAND_START_MATCH_SET_INITIAL_POSITION 'P'
-
-/** Define the message used to work in step by step mode. */
-#define COMMAND_STEP_BY_STEP     'o'
-
 // Notifications
 
 /** Define the message sent to the PC to indicates start. */

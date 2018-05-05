@@ -487,8 +487,9 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
     testDevice = addI2cRemoteDevice(getTestDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);
     testDevice->deviceHandleNotification = mainBoardDeviceHandleNotification;
 
+    // Start Match
     initEndMatch(&endMatch, &robotConfig, MATCH_DURATION);
-    initStartMatch(&startMatch, &robotConfig, &endMatch, isMatchStartedPc, mainBoardPcWaitForInstruction, &eeprom);
+    initStartMatch(&startMatch, &robotConfig, &endMatch, isMatchStartedPc, mainBoardPcWaitForInstruction);
 
     initMainBoardLocalDevices();
 
@@ -511,31 +512,15 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
 
     startTimerList(false);
     getTimerByCode(SERVO_TIMER_CODE)->enabled = true;
+    getTimerByCode(END_MATCH_DETECTOR_TIMER_CODE)->enabled = true;
 
     delaymSec(100);
 
     setDebugI2cEnabled(false);
 
-    /*
-    // Ping
-    if (!pingDriverDataDispatcherList()) {
-        printf("PING PROBLEM !");
-    }
-
-    // Set Clock for Motor Board !
-
-    // Read Clock
-    ClockData* clockData = clock.readClock(&clock);
-    // TODO : Change Dispatcher Index ...
-    writeDateRemoteClockData(clockData, 0x01);
-    writeHourRemoteClockData(clockData, 0x01);
-
-    // testDriverIntensive(100);
-
-    startTimerList();
-    */
     while (1) {
         mainBoardPcWaitForInstruction(&startMatch);
+        // Show the end of the match
+        showEndAndScoreIfNeeded(&endMatch, getAlwaysOutputStreamLogger());
     }
-    // TODO : ShowEnd
 }

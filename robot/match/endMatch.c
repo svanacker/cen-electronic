@@ -43,20 +43,38 @@ void resetStartMatch(EndMatch* endMatch) {
     endMatch->currentTimeInSecond = 0;
 }
 
-void showEnd(EndMatch* endMatch, OutputStream* outputStream) {
-    appendString(outputStream, "End of match");
+void showEndAndScore(EndMatch* endMatch, OutputStream* outputStream) {
+    appendString(outputStream, "End : Score = ");
+    appendDec(outputStream, endMatch->scoreToShow);
+    appendString(outputStream, " pts\n");
+}
+
+bool showEndAndScoreIfNeeded(EndMatch* endMatch, OutputStream* outputStream) {
+    // Only show if the match is finished
+    if (!isMatchFinished(endMatch)) {
+        return false;
+    }
+    // Do not show x times the end of the match
+    if (endMatch->endOfMatchNotified) {
+        return false;
+    }
+
+    showEndAndScore(endMatch, outputStream);
+    endMatch->endOfMatchNotified = true;
+
+    return true;
 }
 
 int getCurrentTimeInSecond(EndMatch* endMatch) {
     return endMatch->currentTimeInSecond;
 }
 
-bool isEnd(EndMatch* endMatch) {
+bool isMatchFinished(EndMatch* endMatch) {
     if (endMatch->doNotEnd) {
         return false;
     }
     if (!endMatch->endMatchDetectorDeviceTimer->enabled) {
-        appendString(getErrorOutputStreamLogger(), "You must call startMatch before");
+        appendString(getErrorOutputStreamLogger(), "You must enable end Match Timer before\n");
     }
     bool result = endMatch->currentTimeInSecond >= endMatch->matchDurationInSecond;
 

@@ -18,7 +18,7 @@
 #include "../../drivers/colorSensor/colorSensor.h"
 #include "../../drivers/colorSensor/colorSensorDebug.h"
 
-#include "../../robot/match/teamColor.h"
+#include "../../robot/strategy/teamColor.h"
 
 
 enum ColorType colorSensorFindColorType2018(ColorSensor* colorSensor) {

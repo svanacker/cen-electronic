@@ -8,7 +8,6 @@
 #include "endMatch.h"
 
 #include "../robot.h"
-#include "teamColor.h"
 
 // forward declaration
 struct StartMatch;
@@ -38,8 +37,6 @@ struct StartMatch {
     IsMatchStartedFunction* isMatchStartedFunction;
     /** The function which must be called when the robot wait for start (to be able to continue to manage instruction */
     LoopUntilStartHandleFunction* loopUntilStartHandleFunction;
-    /** The Eeprom which store information for persistence. */
-    Eeprom* startMatchEeprom;
     /** If we simulate the Start Match or not. */
     bool simulateStartedMatch;
     /** Pointer on the endMatch management */
@@ -55,8 +52,7 @@ void initStartMatch(StartMatch* startMatch,
                     RobotConfig* robotConfig,
                     EndMatch* endMatch,
                     IsMatchStartedFunction* isMatchStartedFunctionParam,
-                    LoopUntilStartHandleFunction* loopUntilStartHandleFunction,
-                    Eeprom* startMatchEeprom);
+                    LoopUntilStartHandleFunction* loopUntilStartHandleFunction);
 
 void setSimulateStartedMatch(StartMatch* startMatch, bool value);
 

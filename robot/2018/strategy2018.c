@@ -94,15 +94,20 @@ static GameStrategy strategy1;
 
 // ------------------------------------------------------- INITIALIZATION ------------------------------------------------------------
 
-void setColor(GameStrategyContext* gameStrategyContext, enum TeamColor color) {
-	appendStringAndDec(getInfoOutputStreamLogger(), "setColor:", color);
-	println(getInfoOutputStreamLogger());
+void initColorAndStartPosition2018(GameStrategyContext* gameStrategyContext) {
+    RobotConfig* robotConfig = gameStrategyContext->robotConfig;
+    unsigned int configValue = robotConfig->robotConfigReadInt(robotConfig);
 
-    gameStrategyContext->color = color;
-	// changeLocationsForColor();
+    if (configValue & CONFIG_COLOR_GREEN_MASK) {
+        gameStrategyContext->color = TEAM_COLOR_GREEN;
+    }
+    else {
+        gameStrategyContext->color = TEAM_COLOR_ORANGE;
+    }
 	float angle = ANGLE_180;
     gameStrategyContext->robotPosition->x = START_AREA_X;
     gameStrategyContext->robotPosition->y = START_AREA_Y;
+
     // Symetry
 	if (!isGreen(gameStrategyContext)) {
 		angle = -angle;
@@ -110,8 +115,6 @@ void setColor(GameStrategyContext* gameStrategyContext, enum TeamColor color) {
 	}
 
     gameStrategyContext->robotAngle = angle;
-
-	printStrategyAllDatas(gameStrategyContext, getInfoOutputStreamLogger());
 }
 
 void initLocations2018(GameStrategyContext* gameStrategyContext) {
@@ -254,28 +257,28 @@ void initStrategies2018(GameStrategyContext* gameStrategyContext) {
 	addGameStrategy(&strategy1, "S1");
 }
 
-void initStrategiesItems2018(GameStrategyContext* gameStrategyContext, int strategyIndex) {
+void initStrategiesItems2018(GameStrategyContext* gameStrategyContext) {
+    // We only load the item relative to the strategy Index chosen
 //	addGameStrategyItem(&strategy1, &distributor1StrategyItem, );
 }
 
-void initStrategy2018(GameStrategyContext* gameStrategyContext, int strategyIndex) {
+void initStrategy2018(GameStrategyContext* gameStrategyContext) {
+    initColorAndStartPosition2018(gameStrategyContext);
+    showGameStrategyContextTeamColor(gameStrategyContext);
 
 	initLocations2018(gameStrategyContext);
-	initPaths2018(gameStrategyContext, strategyIndex);
+	initPaths2018(gameStrategyContext, gameStrategyContext->strategyIndex);
 
 	initTargets2018(gameStrategyContext);
 	initTargetActions2018(gameStrategyContext);
 	initTargetActionsItems2018(gameStrategyContext);
 
 	initStrategies2018(gameStrategyContext);
-	initStrategiesItems2018(gameStrategyContext, strategyIndex);
+	initStrategiesItems2018(gameStrategyContext);
 
 	GameStrategy* strategy = getGameStrategy(0);
     gameStrategyContext->gameStrategy = strategy;
     gameStrategyContext->maxTargetToHandle = getGameTargetList()->size;
-
-	//OutputStream* debugOutputStream = getInfoOutputStreamLogger();
-	//printStrategyAllDatas(debugOutputStream);
 
 	// opponent
 	Point* p = gameStrategyContext->opponentRobotPosition;
@@ -290,15 +293,4 @@ void initStrategy2018(GameStrategyContext* gameStrategyContext, int strategyInde
     gameStrategyContext->hasMoreNextSteps = true;
 
 	// reinitialize the game board to change elements / targets ...
-}
-
-void printStrategyAllDatas(GameStrategyContext* gameStrategyContext, OutputStream* outputStream) {
-    // Navigation* navigation = gameStrategyContext->navigation;
-    /*
-	printLocationListTable(outputStream, navigation->locationList);
-	printPathListTable(outputStream, navigation->paths);
-	printGameTargetList(outputStream);
-	printGameStrategyTableList(outputStream);
-	printGameStrategyContext(outputStream, gameStrategyContext);
-    */
 }

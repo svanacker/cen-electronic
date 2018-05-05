@@ -39,6 +39,6 @@
 /**
 * Interface for Device.
 */
-DeviceInterface* getFileDeviceInterface();
+DeviceInterface* getFileDeviceInterface(void);
 
 #endif

@@ -33,6 +33,10 @@ struct EndMatch {
     bool doNotEnd;
     /** The timer struct to detect the end of the match. */
     Timer* endMatchDetectorDeviceTimer;
+    /** If we have shown that the match was ended. */
+    bool endOfMatchNotified;
+    /** The score which must be shown. */
+    unsigned int scoreToShow;
 };
 
 /**
@@ -51,9 +55,16 @@ void markStartMatch(EndMatch* endMatch);
 void resetStartMatch(EndMatch* endMatch);
 
 /**
- * Show to an output Stream the result of the match
+* Show to an output Stream the result of the match.
+* @return true if we have shown the end of the match
 */
-void showEnd(EndMatch* endMatch, OutputStream* outputStream);
+void showEndAndScore(EndMatch* endMatch, OutputStream* outputStream);
+
+/**
+ * Show to an output Stream the result of the match, but only if needed (if endMatch is not finished and not already shown)
+ * @return true if we have shown the end of the match
+*/
+bool showEndAndScoreIfNeeded(EndMatch* endMatch, OutputStream* outputStream);
 
 /**
  * Returns how much time was passed
@@ -63,6 +74,6 @@ int getCurrentTimeInSecond(EndMatch* endMatch);
 /**
  * Return true if this is the end of the match.
  */
-bool isEnd(EndMatch* endMatch);
+bool isMatchFinished(EndMatch* endMatch);
 
 #endif

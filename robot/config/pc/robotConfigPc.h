@@ -3,6 +3,9 @@
 
 #include "../robotConfig.h"
 
+#define ROBOT_CONFIG_PC_FILE_NAME                      "robotConfigPc.txt"
+#define ROBOT_CONFIG_PC_FILE_LENGTH                                     18
+
 /**
  * Initialize a type of robotConfig for Windows
  * @param robotConfig a pointer of RobotConfig type.

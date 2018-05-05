@@ -7,6 +7,6 @@
 * Returns a descriptor on the File device.
 * @return a pointer on the deviceDescriptor (which does the job with the hardware)
 */
-DeviceDescriptor* getFileDeviceDescriptor();
+DeviceDescriptor* getFileDeviceDescriptor(void);
 
 #endif

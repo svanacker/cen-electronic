@@ -47,12 +47,10 @@ void initStartMatch(StartMatch* startMatch,
                     RobotConfig* robotConfig,
                     EndMatch* endMatch,
                     IsMatchStartedFunction* isMatchStartedFunctionParam,
-                    LoopUntilStartHandleFunction* loopUntilStartHandleFunction,
-                    Eeprom* startMatchEeprom) {
+                    LoopUntilStartHandleFunction* loopUntilStartHandleFunction) {
     startMatch->robotConfig = robotConfig;
     startMatch->endMatch = endMatch;
     startMatch->isMatchStartedFunction = isMatchStartedFunctionParam;
     startMatch->loopUntilStartHandleFunction = loopUntilStartHandleFunction;
-    startMatch->startMatchEeprom = startMatchEeprom;
 }
 
