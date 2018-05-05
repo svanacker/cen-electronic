@@ -9,6 +9,8 @@
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
 
+#include "../../common/math/cenMath.h"
+
 #include "../../motion/motion.h"
 #include "../../motion/simple/simpleMotion.h"
 #include "../../motion/extended/bsplineMotion.h"
@@ -104,17 +106,17 @@ void initColorAndStartPosition2018(GameStrategyContext* gameStrategyContext) {
     else {
         gameStrategyContext->color = TEAM_COLOR_ORANGE;
     }
-	float angle = ANGLE_180;
+    float angleDeciDegree = ANGLE_DECI_DEG_270;
     gameStrategyContext->robotPosition->x = START_AREA_X;
     gameStrategyContext->robotPosition->y = START_AREA_Y;
 
     // Symetry
 	if (!isGreen(gameStrategyContext)) {
-		angle = -angle;
+        angleDeciDegree = ANGLE_DECI_DEG_90;
         gameStrategyContext->robotPosition->y = GAMEBOARD_HEIGHT - gameStrategyContext->robotPosition->y;
 	}
 
-    gameStrategyContext->robotAngle = angle;
+    gameStrategyContext->robotAngleRadian = deciDegreeToRad(angleDeciDegree);
 }
 
 void initLocations2018(GameStrategyContext* gameStrategyContext) {
@@ -226,8 +228,8 @@ void initPaths2018(GameStrategyContext* gameStrategyContext, int index) {
                                                              DEFAULT_NAVIGATION_COST,
                                                              GARBAGE_FRONT_TO_GARBAGE_RELEASE_CP1,
                                                              GARBAGE_FRONT_TO_GARBAGE_RELEASE_CP2,
-                                                             GARGAGE_FRONT_POINT_ANGLE,
-                                                             GARGAGE_RELEASE_POINT_ANGLE,
+                                                             deciDegreeToRad(GARGAGE_FRONT_POINT_ANGLE),
+                                                             deciDegreeToRad(GARGAGE_RELEASE_POINT_ANGLE),
                                                              GARBAGE_FRONT_TO_GARBAGE_RELEASE_ACCELERATION_FACTOR,
                                                              GARBAGE_FRONT_TO_GARBAGE_RELEASE_SPEED_FACTOR);
 }

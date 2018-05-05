@@ -118,6 +118,13 @@ bool isFloatNegative(float value);
 float mod2PI(float value);
 
 /**
+* Do the modulo of a value between 0 and PI.
+* @param value the value to convert
+* @return the modulo of a value between 0 and PI
+*/
+float modPI(float value);
+
+/**
  * TODO : NOT TESTED
  * Simple check sum.
  * @param string the value to have the check sum
@@ -136,5 +143,10 @@ float radToDeg(float radians);
  * Convert an angle in Degree into his value in radian.
  */
 float degToRad(float degrees);
+
+/**
+* Convert an angle in Deci Degree into his value in radian.
+*/
+float deciDegreeToRad(float deciDegrees);
 
 #endif

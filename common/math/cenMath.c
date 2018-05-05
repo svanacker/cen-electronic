@@ -114,6 +114,25 @@ float mod2PI(float value) {
     return result;
 }
 
+float modPI(float value) {
+    float result = value;
+    if (result < -PI) {
+        // We use a while loop, because it's very rare that value is less than -2PI,
+        // and we avoid modulo !
+        do {
+            result += PI;
+        } while (result < -PI);
+    }
+    else if (result > PI) {
+        // We use a while loop, because it's very rare that value is less than -2PI,
+        // and we avoid modulo !
+        do {
+            result -= PI;
+        } while (result > PI);
+    }
+    return result;
+}
+
 // TODO : Better checksum algorithm
 int stringChecksum(char* string) {
     int result = 0;
@@ -130,4 +149,8 @@ float radToDeg(float radians) {
 
 float degToRad(float degrees) {
     return degrees * PI_DIVIDE_180;
+}
+
+float deciDegreeToRad(float deciDegrees) {
+    return (deciDegrees / 10.0f) * PI_DIVIDE_180;
 }

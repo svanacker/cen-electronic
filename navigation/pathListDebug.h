@@ -6,11 +6,6 @@
 #include "pathList.h"
 
 /**
- * Print the list of path.
- */
-void printPathList(OutputStream* outputStream, char* pathListName, PathList* pathList);
-
-/**
 * Print the list of path as table.
 */
 void printPathListTable(OutputStream* outputStream, PathList* pathList);

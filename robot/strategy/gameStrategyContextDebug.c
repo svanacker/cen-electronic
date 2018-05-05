@@ -8,6 +8,8 @@
 #include "../../common/io/printTableWriter.h"
 #include "../../common/io/printWriter.h"
 
+#include "../../common/math/cenMath.h"
+
 #include "../../navigation/locationListDebug.h"
 
 #include "../../robot/strategy/teamColor.h"
@@ -121,7 +123,7 @@ void printGameStrategyContext(OutputStream* outputStream, GameStrategyContext* c
     printGameStrategyContextPoint(outputStream, context->robotPosition, "robotPosition", "robotPosition.x", "robotPosition.y");
     // -> Angle
     appendStringTableData(outputStream, "robotPosition.angle", GAME_STRATEGY_CONTEXT_KEY_COLUMN_LENGTH);
-    appendDecfTableData(outputStream, context->robotAngle, GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
+    appendDecfTableData(outputStream, radToDeg(context->robotAngleRadian), GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
     appendStringTableData(outputStream, "Degree", GAME_STRATEGY_CONTEXT_UNIT_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, GAME_STRATEGY_CONTEXT_LAST_COLUMN);
     appendTableHeaderSeparatorLine(outputStream);

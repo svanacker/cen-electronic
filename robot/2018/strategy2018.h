@@ -15,59 +15,59 @@
 #define STRATEGY_2018_BIT_LIST_NAVIGATION_ARRAY_LENGTH             30
 
 // Angles
-#define     ANGLE_0             0x0000
-#define     ANGLE_30            0x012C
-#define     ANGLE_45            0x01C2
-#define     ANGLE_60            0x0258
-#define     ANGLE_90            0x0384
-#define     ANGLE_180           0x0708
-#define     ANGLE_300           0x0BB8
-#define     ANGLE_270           0x0A8C
+#define     ANGLE_DECI_DEG_0             0x0000
+#define     ANGLE_DECI_DEG_30            0x012C
+#define     ANGLE_DECI_DEG_45            0x01C2
+#define     ANGLE_DECI_DEG_60            0x0258
+#define     ANGLE_DECI_DEG_90            0x0384
+#define     ANGLE_DECI_DEG_180           0x0708
+#define     ANGLE_DECI_DEG_300           0x0BB8
+#define     ANGLE_DECI_DEG_270           0x0A8C
 
 #define START_AREA                     "STA"
 #define START_AREA_X                    160
 #define START_AREA_Y                    225
-#define START_AREA_ANGLE                ANGLE_270
+#define START_AREA_ANGLE                ANGLE_DECI_DEG_270
 
 #define SWITCH                         "SW"
 #define SWITCH_X                        START_AREA_X
 #define SWITCH_Y                        1130
-#define SWITCH_ANGLE                   ANGLE_270
+#define SWITCH_ANGLE                   ANGLE_DECI_DEG_270
 
 #define DISTRIBUTOR_1                  "D_1"
 #define DISTRIBUTOR_1_X                 800
 #define DISTRIBUTOR_1_Y                 170
-#define DISTRIBUTOR_1_ANGLE             ANGLE_300
+#define DISTRIBUTOR_1_ANGLE             ANGLE_DECI_DEG_300
 
 #define BEE_BORDER_Y_ALIGN              "B_Y"
 #define BEE_BORDER_Y_ALIGN_X            1700
 #define BEE_BORDER_Y_ALIGN_Y            154
-#define BEE_BORDER_Y_ALIGN_ANGLE        ANGLE_90
+#define BEE_BORDER_Y_ALIGN_ANGLE        ANGLE_DECI_DEG_90
 
 #define BEE                             "B"
 #define BEE_X                           1920
 #define BEE_Y                           200
-#define BEE_ANGLE                       ANGLE_0
+#define BEE_ANGLE                       ANGLE_DECI_DEG_0
 
 #define DISTRIBUTOR_2_FRONT             "D2_F"
 #define DISTRIBUTOR_2_FRONT_X           1500
 #define DISTRIBUTOR_2_FRONT_Y           2300
-#define DISTRIBUTOR_2_FRONT_ANGLE       ANGLE_0
+#define DISTRIBUTOR_2_FRONT_ANGLE       ANGLE_DECI_DEG_0
 
 #define DISTRIBUTOR_2                  "D2"
 #define DISTRIBUTOR_2_X                 1900
 #define DISTRIBUTOR_2_Y                 2380
-#define DISTRIBUTOR_2_ANGLE             ANGLE_30
+#define DISTRIBUTOR_2_ANGLE             ANGLE_DECI_DEG_30
 
 #define GARBAGE_FRONT                  "GF"
 #define GARBAGE_FRONT_POINT_X          1450
 #define GARBAGE_FRONT_POINT_Y          1750
-#define GARGAGE_FRONT_POINT_ANGLE     ANGLE_0
+#define GARGAGE_FRONT_POINT_ANGLE     ANGLE_DECI_DEG_0
 
 #define GARBAGE_RELEASE                "G"
 #define GARBAGE_RELEASE_POINT_X         1700
 #define GARBAGE_RELEASE_POINT_Y         1750
-#define GARGAGE_RELEASE_POINT_ANGLE     ANGLE_0
+#define GARGAGE_RELEASE_POINT_ANGLE     ANGLE_DECI_DEG_0
 
 // Costs
 #define DEFAULT_NAVIGATION_COST         400

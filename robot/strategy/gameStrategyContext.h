@@ -36,8 +36,8 @@ struct GameStrategyContext {
     float elapsedMatchTime;
     /** Position of robot. */
     Point* robotPosition;
-    /** Angle of the robot in degrees. */
-    float robotAngle;
+    /** Angle of the robot in radians. */
+    float robotAngleRadian;
     /** The nearestLocation of the robot. */
     Location* nearestLocation;
     // Opponent Robot.

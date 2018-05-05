@@ -955,6 +955,12 @@
     <Filter Include="Source Files\common\pc\file">
       <UniqueIdentifier>{64724bd8-495d-42fe-8a87-945eb1b6e9aa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\common\ascii">
+      <UniqueIdentifier>{bcca315c-9c0b-4c82-9490-8059fc620040}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\common\ascii">
+      <UniqueIdentifier>{359dab5d-dc80-4e3f-afa4-c62c8b0fe2dd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -1994,6 +2000,9 @@
     </ClCompile>
     <ClCompile Include="robot\match\startMatchDebug.c">
       <Filter>Source Files\robot\match</Filter>
+    </ClCompile>
+    <ClCompile Include="common\ascii\asciiUtils.c">
+      <Filter>Source Files\common\ascii</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -3091,6 +3100,9 @@
     </ClInclude>
     <ClInclude Include="robot\match\startMatchDebug.h">
       <Filter>Header Files\robot\match</Filter>
+    </ClInclude>
+    <ClInclude Include="common\ascii\asciiUtils.h">
+      <Filter>Header Files\common\ascii</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

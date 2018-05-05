@@ -12,6 +12,8 @@
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
 
+#include "../../common/math/cenMath.h"
+
 #include "../../device/device.h"
 #include "../../device/deviceConstants.h"
 #include "../../device/motion/simple/motionDeviceInterface.h"
@@ -124,7 +126,7 @@ void deviceStrategyHandleRawData(char commandHeader, InputStream* inputStream, O
         // separator
         appendSeparator(outputStream);
         // angle in decideg
-        appendHexFloat4(outputStream, context->robotAngle, ANGLE_DIGIT_DEGREE_PRECISION);
+        appendHexFloat4(outputStream, radToDeg(context->robotAngleRadian), ANGLE_DIGIT_DEGREE_PRECISION);
     }
     else if (commandHeader == COMMAND_STRATEGY_SET_ROBOT_POSITION) {
         GameStrategyContext* context = getStrategyDeviceGameStrategyContext();
@@ -138,7 +140,7 @@ void deviceStrategyHandleRawData(char commandHeader, InputStream* inputStream, O
         // separator
         checkIsSeparator(inputStream);
         // angle in decideg
-        context->robotAngle = readHexFloat4(inputStream, ANGLE_DIGIT_DEGREE_PRECISION);
+        context->robotAngleRadian = radToDeg(readHexFloat4(inputStream, ANGLE_DIGIT_DEGREE_PRECISION));
     }
     // SCORE
     else if (commandHeader == COMMAND_STRATEGY_GET_GLOBAL_SCORE) {

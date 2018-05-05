@@ -8,5 +8,5 @@
 
 void printNavigationContext(Navigation* navigation, OutputStream* outputStream) {
     printLocationListTable(outputStream, navigation->locationList);
-    printPathList(outputStream, "paths:", navigation->paths);
+    printPathListTable(outputStream, "paths:", navigation->paths);
 }

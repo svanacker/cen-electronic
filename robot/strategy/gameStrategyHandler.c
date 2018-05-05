@@ -35,7 +35,7 @@
 #include "../../robot/strategy/gameTargetList.h"
 #include "../../robot/2012/strategy2012Utils.h"
 
-#define ANGLE_180 1800
+#define ANGLE_DECI_DEG_180 1800
 #define ANGLE_360 3600
 
 void strategyTimerCallback(Timer* timer) {
@@ -195,23 +195,22 @@ void motionGoLocation(Location* location,
 }
 
 float mod360(float value) {
-    if (value < - ANGLE_180) {
+    if (value < - ANGLE_DECI_DEG_180) {
         return (value + ANGLE_360);
-    } else if (value >= ANGLE_180) {
+    } else if (value >= ANGLE_DECI_DEG_180) {
         return (value - ANGLE_360);
     }
     return value;
 }
 
 void rotateAbsolute(GameStrategyContext* gameStrategyContext, float angle) {
+    /* TODO
     angle = changeAngleForColor(angle);
-    float robotAngle = gameStrategyContext->robotAngle;
+    float robotAngle = gameStrategyContext->robotAngleRadian;
     float diff = mod360(angle - robotAngle);
-    /*
     if (abs(diff) < ANGLE_ROTATION_MIN) {
         return;
     }
-    */
 
     #ifdef DEBUG_STRATEGY_HANDLER
         appendStringAndDecf(getDebugOutputStreamLogger(), "rotateAbsolute:angle:", diff);    
@@ -231,15 +230,17 @@ void rotateAbsolute(GameStrategyContext* gameStrategyContext, float angle) {
     #ifdef SIMULATE_ROBOT
         strategyContext->robotAngle += diff;
     #endif
+    */
 }
 
 bool motionRotateToFollowPath(GameStrategyContext* gmeStrategyContext, PathData* pathData, bool reversed) {
+    /*
     float angle;
     if (reversed) {
         if (pathData->mustGoBackward) {
             angle = getAngle2Path(pathData);
         } else {
-            angle = mod360(ANGLE_180 + getAngle2Path(pathData));
+            angle = mod360(ANGLE_DECI_DEG_180 + getAngle2Path(pathData));
         }
     } else {
         angle = getAngle1Path(pathData);
@@ -266,10 +267,13 @@ bool motionRotateToFollowPath(GameStrategyContext* gmeStrategyContext, PathData*
         strategyContext.robotAngle += diff;
     #endif
 
+    */
+
     return true;
 }
 
 void motionFollowPath(GameStrategyContext* gmeStrategyContext, PathData* pathData, bool reversed) {
+    /*
     Location* location;
     float angle;
     float cp1;
@@ -283,7 +287,7 @@ void motionFollowPath(GameStrategyContext* gmeStrategyContext, PathData* pathDat
             cp2 = -pathData->controlPointDistance1;
         } else {
             // reverse the trajectory symmetrically
-            angle = mod360(ANGLE_180 + getAngle1Path(pathData));
+            angle = mod360(ANGLE_DECI_DEG_180 + getAngle1Path(pathData));
             cp1 = pathData->controlPointDistance2;
             cp2 = pathData->controlPointDistance1;
         }
@@ -309,6 +313,7 @@ void motionFollowPath(GameStrategyContext* gmeStrategyContext, PathData* pathDat
         strategyContext.robotPosition.y = location->y + 1;
         strategyContext.robotAngle = angle;
     #endif
+    */
 }
 
 /**
@@ -353,10 +358,9 @@ bool handleCurrentTrajectory(GameStrategyContext* gameStrategyContext) {
 /**
  * TODO : Really needed ????
  */
-void computePoint(Point* ref, Point* cp, float distance, float angleDegree) {
-    float a = degToRad(angleDegree);
-    float dca = cosf(a) * distance;
-    float dsa = sinf(a) * distance;
+void computePoint(Point* ref, Point* cp, float distance, float angleRadian) {
+    float dca = cosf(angleRadian) * distance;
+    float dsa = sinf(angleRadian) * distance;
     cp->x = ref->x + dca;
     cp->y = ref->y + dsa;
 }
@@ -383,6 +387,7 @@ float cpToDistance(float distance) {
  * @private
  */
 bool isPathAvailable(GameStrategyContext* gameStrategyContext, PathData* pathData, BSplineCurve* curve) {
+    /*
     // TODO : Fix why curve must be handled
     if (curve == NULL) {
         return true;
@@ -418,6 +423,8 @@ bool isPathAvailable(GameStrategyContext* gameStrategyContext, PathData* pathDat
         }
     }
     return true;
+    */
+    return false;
 }
 
 bool mustComputePaths(GameStrategyContext* gameStrategyContext) {
@@ -478,8 +485,8 @@ void updatePathsAvailability(GameStrategyContext* gameStrategyContext) {
 void setLastObstaclePosition(GameStrategyContext* gameStrategyContext) {
     Point* robotPosition = gameStrategyContext->robotPosition;
     Point* lastObstaclePosition = gameStrategyContext->lastObstaclePosition;
-    float angle = gameStrategyContext->robotAngle;
-    computePoint(robotPosition, lastObstaclePosition, DISTANCE_OBSTACLE, angle);
+    float angleRadian = gameStrategyContext->robotAngleRadian;
+    computePoint(robotPosition, lastObstaclePosition, DISTANCE_OBSTACLE, angleRadian);
 }
 
 void handleCollision(GameStrategyContext* gameStrategyContext) {

@@ -47,8 +47,8 @@ PathData* addFilledPath(PathList* pathList,
 						float cost, 
 						float controlPointDistance1, 
                         float controlPointDistance2, 
-						float angle1, 
-                        float angle2, 
+						float angleRadian1, 
+                        float angleRadian2,
 						unsigned char accelerationFactor, unsigned char speedFactor,
 						bool mustGoBackward) {
 	PathData* result = addPath(pathList);
@@ -62,8 +62,8 @@ PathData* addFilledPath(PathList* pathList,
 	result->cost = cost;
 	result->controlPointDistance1 = controlPointDistance1;
 	result->controlPointDistance2 = controlPointDistance2;
-	result->angle1 = angle1;
-	result->angle2 = angle2;
+	result->angleRadian1 = angleRadian1;
+	result->angleRadian2 = angleRadian2;
 	result->accelerationFactor = accelerationFactor;
 	result->speedFactor = speedFactor;
 	result->mustGoBackward = mustGoBackward;

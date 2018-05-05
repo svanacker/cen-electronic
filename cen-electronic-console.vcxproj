@@ -152,6 +152,7 @@
     <ClCompile Include="common\2d\2dDebug.c" />
     <ClCompile Include="common\adc\adcutils.c" />
     <ClCompile Include="common\adc\pc\adcutilsPc.c" />
+    <ClCompile Include="common\ascii\asciiUtils.c" />
     <ClCompile Include="common\clock\clock.c" />
     <ClCompile Include="common\color\color.c" />
     <ClCompile Include="common\color\colorDebug.c" />
@@ -496,6 +497,7 @@
     <ClInclude Include="client\robot\2018\launcherClient2018.h" />
     <ClInclude Include="common\2d\2d.h" />
     <ClInclude Include="common\2d\2dDebug.h" />
+    <ClInclude Include="common\ascii\asciiUtils.h" />
     <ClInclude Include="common\clock\clock.h" />
     <ClInclude Include="common\cmd\commonCommand.h" />
     <ClInclude Include="common\color\color.h" />

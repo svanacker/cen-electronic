@@ -1,5 +1,10 @@
 #include <stdlib.h>
 #include <math.h>
+
+#include "../../common/ascii/asciiUtils.h"
+
+#include "../../common/math/cenMath.h"
+
 #include "gameboard.h"
 #include "gameboardElement.h"
 #include "gameboardElementList.h"
@@ -44,8 +49,57 @@ void drawLastObstacle(GameBoard* gameBoard, Point* obstacle) {
 
 // ROBOT
 
-void drawRobot(GameBoard* gameBoard, Point* robotPosition) {
+void drawRobot(GameBoard* gameBoard, Point* robotPosition, float angle) {
+    float x = robotPosition->x;
+    float y = robotPosition->y;
+
+    // Draw the central point
     drawPoint(gameBoard, robotPosition, 'R');
+    float radius = 150.0f;
+
+    // Right Front Point
+    float rightFrontX = x + radius * cosf(angle - (3.0f * PI / 8.0f));
+    float rightFrontY = y + radius * sinf(angle - (3.0f * PI / 8.0f));
+
+    // Right Middle Point
+    float rightMiddleX = x + radius * cosf(angle - (5.0f * PI / 8.0f));
+    float rightMiddleY = y + radius * sinf(angle - (5.0f * PI / 8.0f));
+
+    // Right Bottom Point
+    float rightBottomX = x + radius * cosf(angle - (7.0f * PI / 8.0f));
+    float rightBottomY = y + radius * sinf(angle - (7.0f * PI / 8.0f));
+
+    // Left Bottom Point
+    float leftBottomX = x + radius * cosf(angle + (7.0f * PI / 8.0f));
+    float leftBottomY = y + radius * sinf(angle + (7.0f * PI / 8.0f));
+
+    // Left Middle Point
+    float leftMiddleX = x + radius * cosf(angle + (5.0f * PI / 8.0f));
+    float leftMiddleY = y + radius * sinf(angle + (5.0f * PI / 8.0f));
+
+    // Left Front Point
+    float leftFrontX = x + radius * cosf(angle + (3.0f * PI / 8.0f));
+    float leftFrontY = y + radius * sinf(angle + (3.0f * PI / 8.0f));
+
+    // set of chars if angle = PI / 2
+    char verticalChar = transformVerticalChar(angle);
+    char slashChar = transformSlashChar(angle);
+    char horizontalChar = transformHorizontalChar(angle);
+    char antiSlashChar = transformAntiSlashChar(angle);
+    float epsilonAngle = PI / 100.0f;
+
+    // Right horizontal Line
+    drawLine(gameBoard, rightFrontX, rightFrontY, rightMiddleX, rightMiddleY, horizontalChar);
+    // Right 45 deg line
+    drawLine(gameBoard, rightMiddleX, rightMiddleY, rightBottomX, rightBottomY, antiSlashChar);
+    // vertical Bottom Line
+    drawLine(gameBoard, rightBottomX, rightBottomY, leftBottomX, leftBottomY, verticalChar);
+    // Left 45 deg line
+    drawLine(gameBoard, leftBottomX, leftBottomY, leftMiddleX, leftMiddleY, slashChar);
+    // Left horizontal Line
+    drawLine(gameBoard, leftMiddleX, leftMiddleY, leftFrontX, leftFrontY, horizontalChar);
+    // Front vertical line
+    drawLine(gameBoard, leftFrontX, leftFrontY, rightFrontX, rightFrontY, verticalChar);
 }
 
 // GAMEBOARD
@@ -73,8 +127,8 @@ void gamePathPrint(GameBoard* gameBoard, int* element) {
     PathData* pathData = (PathData*)element;
     Location* location1 = pathData->location1;
     Location* location2 = pathData->location2;
-    parameterBSplineWithDistanceAndAngle(gameBoard->gameBoardCurve, location1->x, location1->y, pathData->angle1,
-                                                          location2->x, location2->y, pathData->angle2,
+    parameterBSplineWithDistanceAndAngle(gameBoard->gameBoardCurve, location1->x, location1->y, pathData->angleRadian1,
+                                                          location2->x, location2->y, pathData->angleRadian2,
                                                           pathData->controlPointDistance1, pathData->controlPointDistance2, 
                                                           MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL,
                                                           false);
@@ -118,7 +172,7 @@ void fillGameBoardCharElements(GameBoard* gameBoard, int* element) {
     }
 
     // Robot
-    drawRobot(gameBoard, gameStrategyContext->robotPosition);
+    drawRobot(gameBoard, gameStrategyContext->robotPosition, gameStrategyContext->robotAngleRadian);
 
     // Last Obstacle
     drawLastObstacle(gameBoard, gameStrategyContext->lastObstaclePosition);

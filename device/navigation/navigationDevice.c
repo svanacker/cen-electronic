@@ -5,11 +5,15 @@
 #include "navigationDeviceInterface.h"
 
 #include "../../common/2d/2d.h"
+
 #include "../../common/error/error.h"
+
 #include "../../common/io/printWriter.h"
 #include "../../common/io/reader.h"
 
 #include "../../common/log/logger.h"
+
+#include "../../common/math/cenMath.h"
 
 #include "../../device/device.h"
 
@@ -139,9 +143,9 @@ void deviceNavigationHandleRawData(char commandHeader, InputStream* inputStream,
         appendSeparator(outputStream);
         appendHexFloat4(outputStream, pathData->controlPointDistance2, POSITION_DIGIT_MM_PRECISION);
         appendSeparator(outputStream);
-        appendHexFloat4(outputStream, pathData->angle1, ANGLE_DIGIT_DEGREE_PRECISION);
+        appendHexFloat4(outputStream, radToDeg(pathData->angleRadian1), ANGLE_DIGIT_DEGREE_PRECISION);
         appendSeparator(outputStream);
-        appendHexFloat4(outputStream, pathData->angle2, ANGLE_DIGIT_DEGREE_PRECISION);
+        appendHexFloat4(outputStream, radToDeg(pathData->angleRadian2), ANGLE_DIGIT_DEGREE_PRECISION);
         appendSeparator(outputStream);
         appendHexFloat4(outputStream, pathData->accelerationFactor, ACCELERATION_MM_BY_SEC_2_DIGIT_PRECISION);
         appendSeparator(outputStream);
@@ -196,9 +200,9 @@ void deviceNavigationHandleRawData(char commandHeader, InputStream* inputStream,
         checkIsSeparator(inputStream);
         pathData->controlPointDistance2 = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
         checkIsSeparator(inputStream);
-        pathData->angle1 = readHexFloat4(inputStream, ANGLE_DIGIT_DEGREE_PRECISION);
+        pathData->angleRadian1 = degToRad(readHexFloat4(inputStream, ANGLE_DIGIT_DEGREE_PRECISION));
         checkIsSeparator(inputStream);
-        pathData->angle2 = readHexFloat4(inputStream, ANGLE_DIGIT_DEGREE_PRECISION);
+        pathData->angleRadian2 = degToRad(readHexFloat4(inputStream, ANGLE_DIGIT_DEGREE_PRECISION));
         checkIsSeparator(inputStream);
         pathData->accelerationFactor = readHexFloat4(inputStream, ACCELERATION_MM_BY_SEC_2_DIGIT_PRECISION);
         checkIsSeparator(inputStream);
