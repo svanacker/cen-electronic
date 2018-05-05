@@ -15,10 +15,10 @@
 // Timer Index for Robot infrared
 #define ROBOT_INFRARED_DETECTOR_TIMER_CODE             15
 
-/** The index of the timer (used to manage path availability). */
-#define STRATEGY_TIMER_INDEX                           18
-
-#define STRATEGY_DRIVER_TIMER_CODE                     25
+/**
+* Defines the index for the timer which detects end of the match.
+*/
+#define END_MATCH_DETECTOR_TIMER_CODE     20
 
 #define TIMER_SOFT_CLOCK_CODE                          96
 

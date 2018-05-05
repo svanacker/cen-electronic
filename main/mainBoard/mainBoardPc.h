@@ -47,7 +47,7 @@
 #define MAIN_BOARD_PC_DEVICE_LIST_LENGTH                        30
 
 // Timers
-#define MAIN_BOARD_PC_TIMER_LENGTH                              2
+#define MAIN_BOARD_PC_TIMER_LENGTH                              5
 
 
 /**

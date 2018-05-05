@@ -470,7 +470,7 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
         MAIN_BOARD_PC_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH);
 
     navigation = initNavigation2018();
-    gameStrategyContext = initGameStrategyContext2018(&robotConfig);
+    gameStrategyContext = initGameStrategyContext2018(&robotConfig, &endMatch);
     gameBoard = initGameBoard2018(gameStrategyContext);
 
     // Init the drivers

@@ -12,6 +12,8 @@
 
 #include "../../robot/gameboard/gameboard.h"
 
+#include "../../robot/match/endMatch.h"
+
 /**
  * This unit is done to isolate specific Functions to 2018 Editions & common to PC and PIC Implementation
  */
@@ -21,7 +23,7 @@
 
 Navigation* initNavigation2018(void);
 
-GameStrategyContext* initGameStrategyContext2018(RobotConfig* robotConfig);
+GameStrategyContext* initGameStrategyContext2018(RobotConfig* robotConfig, EndMatch* endMatch);
 
 GameBoard* initGameBoard2018(GameStrategyContext* gameStrategyContext);
 

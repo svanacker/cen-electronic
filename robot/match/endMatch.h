@@ -15,11 +15,6 @@ typedef struct EndMatch EndMatch;
 #define MATCH_DURATION                    95
 
 /**
-* Defines the index for the timer which detects end of the match.
-*/
-#define END_MATCH_DETECTOR_TIMER_CODE     20
-
-/**
  * All elements to manage the end of the match
  */
 struct EndMatch {

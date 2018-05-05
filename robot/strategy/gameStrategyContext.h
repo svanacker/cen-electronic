@@ -15,10 +15,14 @@
 #include "../../navigation/locationList.h"
 
 #include "../../robot/config/robotConfig.h"
+#include "../../robot/match/endMatch.h"
 
 // Forward declaration
 struct GameStrategyContext;
 typedef struct GameStrategyContext GameStrategyContext;
+
+// Index if no Strategy
+#define NO_STRATEGY_INDEX     -1
 
 /**
  * Encapsulates the context of the strategy.
@@ -32,8 +36,6 @@ struct GameStrategyContext {
     float timeSinceLastCollision;
     /** The chosen gameStrategy. */
     GameStrategy* gameStrategy;
-    /** The elapsedMatchTime in seconds .*/
-    float elapsedMatchTime;
     /** Position of robot. */
     Point* robotPosition;
     /** Angle of the robot in radians. */
@@ -58,14 +60,14 @@ struct GameStrategyContext {
 //    bool mustDoNextStep;
     /** Step status. */
     bool hasMoreNextSteps;
-    /** Strategy index. */
-    unsigned char strategyIndex;
+    /** Strategy index. If strategy = -1 => NO_STRATEGY */
+    signed int strategyIndex;
     /** Max target to handle. */
     unsigned char maxTargetToHandle;
     /** Score*/
     unsigned int score;
-    // Strategy timer
-    Timer* strategyTimer;
+    // End Match to avoid to do thing without timer
+    EndMatch* endMatch;
 };
 
 /**
@@ -74,7 +76,7 @@ struct GameStrategyContext {
 void initGameStrategyContext(GameStrategyContext* gameStrategyContext,
                              RobotConfig* robotConfig,
                              Navigation* navigation,
-                             Timer* strategyTimer,
+                             EndMatch* endMatch,
                              Point* robotPosition,
                              Point* opponentRobotPosition,
                              Point* lastObstaclePosition);

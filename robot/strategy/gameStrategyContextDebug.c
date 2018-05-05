@@ -105,9 +105,9 @@ void printGameStrategyContext(OutputStream* outputStream, GameStrategyContext* c
     appendStringTableData(outputStream, "-", GAME_STRATEGY_CONTEXT_UNIT_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, GAME_STRATEGY_CONTEXT_LAST_COLUMN);
 
-    // elapsedMatchTime
-    appendStringTableData(outputStream, "elapsedMatchTime", GAME_STRATEGY_CONTEXT_KEY_COLUMN_LENGTH);
-    appendDecfTableData(outputStream, context->elapsedMatchTime, GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
+    // remainingTime
+    appendStringTableData(outputStream, "endMatch->remainingTime", GAME_STRATEGY_CONTEXT_KEY_COLUMN_LENGTH);
+    appendDecTableData(outputStream, matchEndGetRemainingTime(context->endMatch), GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
     appendStringTableData(outputStream, "seconds", GAME_STRATEGY_CONTEXT_UNIT_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, GAME_STRATEGY_CONTEXT_LAST_COLUMN);
 
@@ -134,10 +134,6 @@ void printGameStrategyContext(OutputStream* outputStream, GameStrategyContext* c
 
     // Obstacle Position
     printGameStrategyContextPoint(outputStream, context->lastObstaclePosition, "lastObstaclePosition", "lastObstaclePosition.x", "lastObstaclePosition.y");
-    appendTableHeaderSeparatorLine(outputStream);
-
-    // nearestLocation
-    printGameStrategyContextLocation(outputStream, context->nearestLocation, "nearestLocation", "nearestLocation.x", "nearestLocation.y", "nearestLocation.name");
 
     // timeSinceLastCollision
     appendStringTableData(outputStream, "Time Since Last Collision", GAME_STRATEGY_CONTEXT_KEY_COLUMN_LENGTH);
@@ -145,15 +141,20 @@ void printGameStrategyContext(OutputStream* outputStream, GameStrategyContext* c
     appendStringTableData(outputStream, "seconds", GAME_STRATEGY_CONTEXT_UNIT_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, GAME_STRATEGY_CONTEXT_LAST_COLUMN);
 
+    appendTableHeaderSeparatorLine(outputStream);
+
+    // nearestLocation
+    printGameStrategyContextLocation(outputStream, context->nearestLocation, "nearestLocation", "nearestLocation.x", "nearestLocation.y", "nearestLocation.name");
+
     // Max target to Handle
     appendStringTableData(outputStream, "maxTargetToHandle", GAME_STRATEGY_CONTEXT_KEY_COLUMN_LENGTH);
-    appendDecfTableData(outputStream, context->maxTargetToHandle, GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
+    appendDecTableData(outputStream, context->maxTargetToHandle, GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
     appendStringTableData(outputStream, "-", GAME_STRATEGY_CONTEXT_UNIT_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, GAME_STRATEGY_CONTEXT_LAST_COLUMN);
 
     // hasMoreNextSteps
     appendStringTableData(outputStream, "hasMoreNextSteps", GAME_STRATEGY_CONTEXT_KEY_COLUMN_LENGTH);
-    appendDecfTableData(outputStream, context->hasMoreNextSteps, GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
+    appendBoolAsStringTableData(outputStream, context->hasMoreNextSteps, GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
     appendStringTableData(outputStream, "-", GAME_STRATEGY_CONTEXT_UNIT_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, GAME_STRATEGY_CONTEXT_LAST_COLUMN);
 

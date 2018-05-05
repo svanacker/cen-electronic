@@ -2,6 +2,9 @@
 
 #include "../../common/i2c/i2cConstants.h"
 
+#include "../../common/timer/timerConstants.h"
+#include "../../common/timer/timerList.h"
+
 #include "../../device/deviceList.h"
 
 #include "../../main/meca1/mechanicalMainBoard1Common.h"
@@ -29,7 +32,6 @@ static Distributor distributor;
 
 // 2018 -> GameStrategyContext
 static GameStrategyContext gameStrategyContext;
-static Timer strategyTimer;
 static Point robotPosition;
 static Point opponentRobotPosition;
 static Point lastObstaclePosition;
@@ -65,8 +67,8 @@ Navigation* initNavigation2018(void) {
     return &navigation;
 }
 
-GameStrategyContext* initGameStrategyContext2018(RobotConfig* robotConfig) {
-    initGameStrategyContext(&gameStrategyContext, robotConfig, &navigation, &strategyTimer, &robotPosition, &opponentRobotPosition, &lastObstaclePosition);
+GameStrategyContext* initGameStrategyContext2018(RobotConfig* robotConfig, EndMatch* endMatch) {
+    initGameStrategyContext(&gameStrategyContext, robotConfig, &navigation, endMatch, &robotPosition, &opponentRobotPosition, &lastObstaclePosition);
     initStrategy2018(&gameStrategyContext);
 
     return &gameStrategyContext;

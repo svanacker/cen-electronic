@@ -490,6 +490,7 @@ void setLastObstaclePosition(GameStrategyContext* gameStrategyContext) {
 }
 
 void handleCollision(GameStrategyContext* gameStrategyContext) {
+    /*
     Timer* strategyTimer = gameStrategyContext->strategyTimer;
     // Mark the timer.
     if (strategyTimer != NULL) {
@@ -505,6 +506,7 @@ void handleCollision(GameStrategyContext* gameStrategyContext) {
 
     setLastObstaclePosition(gameStrategyContext);
     updatePathsAvailability(gameStrategyContext);
+    */
 }
 
 bool nextStep(GameStrategyContext* gameStrategyContext) {
