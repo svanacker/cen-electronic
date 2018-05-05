@@ -25,7 +25,7 @@ void initGameStrategyIndex(GameStrategyContext* gameStrategyContext) {
         gameStrategyContext->strategyIndex = NO_STRATEGY_INDEX;
     }
     else {
-        gameStrategyContext->strategyIndex = strategyMask - 1;
+        gameStrategyContext->strategyIndex = strategyMask;
     }
 }
 

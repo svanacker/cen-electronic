@@ -97,9 +97,14 @@ void deviceStrategyHandleRawData(char commandHeader, InputStream* inputStream, O
 	// Specific Strategy
 	else if (commandHeader == COMMAND_STRATEGY_ITEM_DEBUG) {
 		int strategyIndex = readHex2(inputStream);
-		GameStrategy* gameStrategy = getGameStrategy(strategyIndex);
-		OutputStream* debugOutputStream = getDebugOutputStreamLogger();
-		ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_STRATEGY_ITEM_DEBUG);
+        ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_STRATEGY_ITEM_DEBUG);
+        OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+        if (strategyIndex == 0) {
+            appendString(debugOutputStream, "Strategy 0 => NO STRATEGY");
+            return;
+        }
+        // Index are 0-based
+		GameStrategy* gameStrategy = getGameStrategy(strategyIndex - 1);
         printGameStrategyTable(debugOutputStream, gameStrategy);
 	}
     // next step
@@ -140,7 +145,7 @@ void deviceStrategyHandleRawData(char commandHeader, InputStream* inputStream, O
         // separator
         checkIsSeparator(inputStream);
         // angle in decideg
-        context->robotAngleRadian = radToDeg(readHexFloat4(inputStream, ANGLE_DIGIT_DEGREE_PRECISION));
+        context->robotAngleRadian = degToRad(readHexFloat4(inputStream, ANGLE_DIGIT_DEGREE_PRECISION));
     }
     // SCORE
     else if (commandHeader == COMMAND_STRATEGY_GET_GLOBAL_SCORE) {

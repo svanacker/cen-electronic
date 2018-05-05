@@ -22,7 +22,9 @@ struct GameStrategyContext;
 typedef struct GameStrategyContext GameStrategyContext;
 
 // Index if no Strategy
-#define NO_STRATEGY_INDEX     -1
+#define NO_STRATEGY_INDEX      0
+#define STRATEGY_1_INDEX       1
+#define STRATEGY_2_INDEX       2
 
 /**
  * Encapsulates the context of the strategy.

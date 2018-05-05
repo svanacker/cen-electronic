@@ -90,9 +90,11 @@ static GameTarget garbageTarget;
 
 // strategies
 static GameStrategy strategy1;
+static GameStrategy strategy2;
 
 // strategies Items
-// static GameStrategyItem distributor1StrategyItem;
+static GameStrategyItem switchStrategyItem;
+static GameStrategyItem distributor1StrategyItem;
 
 // ------------------------------------------------------- INITIALIZATION ------------------------------------------------------------
 
@@ -257,11 +259,24 @@ void initTargetActionsItems2018(GameStrategyContext* gameStrategyContext) {
 void initStrategies2018(GameStrategyContext* gameStrategyContext) {
 	clearGameStrategies();
 	addGameStrategy(&strategy1, "S1");
+    addGameStrategy(&strategy2, "S2");
 }
 
-void initStrategiesItems2018(GameStrategyContext* gameStrategyContext) {
+GameStrategy* initStrategiesItems2018(GameStrategyContext* gameStrategyContext) {
     // We only load the item relative to the strategy Index chosen
-//	addGameStrategyItem(&strategy1, &distributor1StrategyItem, );
+    if (gameStrategyContext->strategyIndex == NO_STRATEGY_INDEX) {
+        return NULL;
+    }
+    if (gameStrategyContext->strategyIndex == STRATEGY_1_INDEX) {
+        addGameStrategyItem(&strategy1, &switchStrategyItem, &switchTarget);
+        return &strategy1;
+    }
+    if (gameStrategyContext->strategyIndex == STRATEGY_2_INDEX) {
+        addGameStrategyItem(&strategy2, &switchStrategyItem, &switchTarget);
+        addGameStrategyItem(&strategy2, &distributor1StrategyItem, &distributor1GameTarget);
+        return &strategy2;
+    }
+    return NULL;
 }
 
 void initStrategy2018(GameStrategyContext* gameStrategyContext) {
@@ -276,9 +291,9 @@ void initStrategy2018(GameStrategyContext* gameStrategyContext) {
 	initTargetActionsItems2018(gameStrategyContext);
 
 	initStrategies2018(gameStrategyContext);
-	initStrategiesItems2018(gameStrategyContext);
+	
 
-	GameStrategy* strategy = getGameStrategy(0);
+	GameStrategy* strategy = initStrategiesItems2018(gameStrategyContext);
     gameStrategyContext->gameStrategy = strategy;
     gameStrategyContext->maxTargetToHandle = getGameTargetList()->size;
 

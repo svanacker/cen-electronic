@@ -7,7 +7,7 @@
 #include "../../common/io/printWriter.h"
 
 /** The max limit of strategy count. */
-#define MAX_STRATEGY         1
+#define MAX_STRATEGY         20
 
 /**
  * The struct defining a list of strategies.

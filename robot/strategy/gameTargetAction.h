@@ -32,6 +32,13 @@ typedef struct GameTargetAction {
  */
 void clearTargetAction(GameTargetAction* targetAction);
 
+void initGameTargetAction(GameTargetAction* targetAction, 
+                          Location* startLocation,
+                          Location* endLocation,
+                          float timeToAchieve,
+                          GameTargetActionItemList* actionItemList,
+                          PathData* pathData);
+
 /**
  * Print the detail of the target action.
  */

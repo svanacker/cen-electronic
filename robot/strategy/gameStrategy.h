@@ -8,7 +8,7 @@
 
 #include "../../common/io/outputStream.h"
 
-#define MAX_STRATEGY_ITEM         7
+#define MAX_STRATEGY_ITEM         10
 
 /**
  * Encapsulates the strategy.
