@@ -8,6 +8,8 @@
 #include "../common/io/outputStream.h"
 #include "../common/io/printWriter.h"
 
+#include "../client/motion/extended/clientExtendedMotion.h"
+
 /*
 float getAngle1Path(PathData* pathData) {
     float angle1 = pathData->angle1;
@@ -56,7 +58,7 @@ void initAsymmetricPathData(
                      unsigned char accelerationFactor,
                      unsigned char speedFactor) {
     initPathData(pathData, location1, location2, cost, controlPointDistance1, controlPointDistance2, angle1, angle2, accelerationFactor, speedFactor);
-    pathData->mustGoBackward = true;
+    pathData->mustGoBackward = controlPointDistance1 < 0;
 }
 
 
@@ -72,4 +74,13 @@ Location* getOtherEnd(PathData* pathData, Location* location) {
         return pathData->location1;
     }
     return NULL;
+}
+
+bool moveAlongPath(PathData* pathData, float accelerationFactor, float speedFactor) {
+    float destX = pathData->location2->x;
+    float destY = pathData->location2->y;
+    float destAngleRadian = pathData->angleRadian2;
+    float dist1 = pathData->controlPointDistance1;
+    float dist2 = pathData->controlPointDistance2;
+    return clientExtendedMotionBSplineAbsolute(destX, destY, destAngleRadian, dist1, dist2, accelerationFactor, speedFactor);
 }

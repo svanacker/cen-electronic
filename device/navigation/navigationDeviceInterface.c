@@ -109,6 +109,13 @@ int deviceNavigationGetInterface(char commandHeader, DeviceInterfaceMode mode, b
         }
         return commandLengthValueForMode(mode, 50, 0);
     }
+    else if (commandHeader == COMMAND_NAVIGATION_PATH_GO) {
+        if (fillDeviceArgumentList) {
+            setFunction("Path Go !", 1, 0);
+            setArgumentUnsignedHex2(0, "path Index");
+        }
+        return commandLengthValueForMode(mode, 2, 0);
+    }
 	else if (commandHeader == COMMAND_NAVIGATION_PATH_LIST_DEBUG) {
 		if (fillDeviceArgumentList) {
 			setFunctionNoArgumentAndNoResult("PathList");

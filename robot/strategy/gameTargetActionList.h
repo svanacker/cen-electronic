@@ -48,5 +48,4 @@ GameTargetAction* getGameTargetAction(GameTargetActionList* list, int index);
  */
 int getGameTargetActionCount(GameTargetActionList* list);
 
-
 #endif

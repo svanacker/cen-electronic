@@ -46,6 +46,11 @@
 #define COMMAND_NAVIGATION_PATH_COUNT        'C'
 
 /**
+ * Do the path considering the robot is at the location1. If not, it will raise some problem
+ */
+#define COMMAND_NAVIGATION_PATH_GO           'G'
+
+/**
 * Defines the header to get information about a specific path.
 */
 #define COMMAND_NAVIGATION_GET_PATH          'R'

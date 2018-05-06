@@ -9,12 +9,3 @@
 #include "../../common/io/printTableWriter.h"
 
 #include "../../navigation/path.h"
-
-void printGameTargetActionList(OutputStream* outputStream, GameTargetActionList* targetActionList) {
-    int i;
-    int size = targetActionList->size;
-    for (i = 0; i < size; i++) {
-        GameTargetAction* targetAction = targetActionList->actions[i];
-        printGameTargetAction(outputStream, targetAction, true);
-    }
-}

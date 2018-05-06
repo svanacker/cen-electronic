@@ -147,6 +147,21 @@ void deviceStrategyHandleRawData(char commandHeader, InputStream* inputStream, O
         // angle in decideg
         context->robotAngleRadian = degToRad(readHexFloat4(inputStream, ANGLE_DIGIT_DEGREE_PRECISION));
     }
+    else if (commandHeader == COMMAND_TARGET_ACTION_DO_ALL_ITEMS) {
+        GameStrategyContext* context = getStrategyDeviceGameStrategyContext();
+        ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_TARGET_ACTION_DO_ALL_ITEMS);
+        // target Index
+        unsigned char targetIndex = readHex2(inputStream);
+        GameTarget* gameTarget = getGameTarget(targetIndex);
+        // separator
+        checkIsSeparator(inputStream);
+        // target Action
+        unsigned char targetActionIndex = readHex2(inputStream);
+        GameTargetAction* gameTargetAction = getGameTargetAction(&(gameTarget->actionList), targetActionIndex);
+
+        doGameTargetAction(gameTargetAction, (int*)context);
+    }
+    
     // SCORE
     else if (commandHeader == COMMAND_STRATEGY_GET_GLOBAL_SCORE) {
         ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_STRATEGY_GET_GLOBAL_SCORE);

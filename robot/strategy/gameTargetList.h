@@ -13,7 +13,7 @@
 /**
  * Tre struct defining a list of targets.
  */
-typedef struct {
+typedef struct GameTargetList {
     /** An array of pointer on target. */
     GameTarget* targets[MAX_TARGET];
     /** Number of target handled count. */

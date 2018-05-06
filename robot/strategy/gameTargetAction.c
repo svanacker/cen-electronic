@@ -29,14 +29,17 @@ void initGameTargetAction(GameTargetAction* targetAction,
     targetAction->pathData = pathData;
 }
 
-void printGameTargetAction(OutputStream* outputStream, GameTargetAction* targetAction, bool includeItems) {
-    appendString(outputStream, "\taction:");
-    appendKeyAndName(outputStream, "startLocation=", targetAction->startLocation->name);
-    appendKeyAndName(outputStream, ", end=", targetAction->endLocation->name);
-    appendStringAndDecf(outputStream, ", timeToAchieve=", targetAction->timeToAchieve);
-    println(outputStream);
-    GameTargetActionItemList* actionItemList = targetAction->actionItemList;
-    if (actionItemList != NULL && includeItems) {
-        printGameTargetActionItemList(outputStream, actionItemList);
+bool doGameTargetAction(GameTargetAction* targetAction, int* context) {
+    GameTargetActionItemList* itemList = targetAction->actionItemList;
+    unsigned int actionItemSize = itemList->size;
+    unsigned char i;
+    for (i = 0; i < actionItemSize; i++) {
+        GameTargetActionItem* actionItem = getGameTargetActionItem(itemList, i);
+        // Launch the action Item
+        if (!doGameTargetActionItem(actionItem, context)) {
+            // If there is a problem, we do not do further action
+            return false;
+        }
     }
+    return true;
 }

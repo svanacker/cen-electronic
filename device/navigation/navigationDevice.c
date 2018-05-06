@@ -18,6 +18,7 @@
 #include "../../device/device.h"
 
 #include "../../motion/motion.h"
+#include "../../motion/extended/bsplineMotion.h"
 
 #include "../../navigation/navigation.h"
 #include "../../navigation/location.h"
@@ -209,6 +210,14 @@ void deviceNavigationHandleRawData(char commandHeader, InputStream* inputStream,
         pathData->speedFactor = readHexFloat4(inputStream, SPEED_MM_BY_SEC_DIGIT_PRECISION);
         checkIsSeparator(inputStream);
         pathData->mustGoBackward = readBool(inputStream);
+    }
+    else if (commandHeader == COMMAND_NAVIGATION_PATH_GO) {
+        ackCommand(outputStream, NAVIGATION_DEVICE_HEADER, COMMAND_NAVIGATION_PATH_GO);
+        unsigned int pathIndex = readHex2(inputStream);
+        Navigation* navigation = getNavigationDeviceNavigationObject();
+        PathList* pathList = getNavigationPathList(navigation);
+        PathData* pathData = getPath(pathList, pathIndex);
+        moveAlongPath(pathData, MOTION_ACCELERATION_FACTOR_MIN, MOTION_SPEED_FACTOR_MIN);
     }
 	else if (commandHeader == COMMAND_NAVIGATION_PATH_LIST_DEBUG) {
 		ackCommand(outputStream, NAVIGATION_DEVICE_HEADER, COMMAND_NAVIGATION_PATH_LIST_DEBUG);

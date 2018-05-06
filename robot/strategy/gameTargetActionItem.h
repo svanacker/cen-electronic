@@ -1,12 +1,6 @@
 #ifndef GAME_TARGET_ACTION_ITEM_H
 #define GAME_TARGET_ACTION_ITEM_H
 
-// forward declaration
-struct GameTargetActionItem;
-typedef struct GameTargetActionItem GameTargetActionItem;
-
-// #include "gameStrategyContext.h"
-
 #include "../../common/commons.h"
 
 #include "../../common/2d/2d.h"
@@ -15,19 +9,19 @@ typedef struct GameTargetActionItem GameTargetActionItem;
 #include "../../navigation/path.h"
 
 /**
- * Define the function which must be called.
- */
-typedef void GameTargetActionFunction();
+* Define the function which must be called.
+*/
+typedef bool GameTargetActionFunction(int* context);
 
 /**
  * Encapsulates the target action item.
  */
-struct GameTargetActionItem {
+typedef struct GameTargetActionItem {
     /** Name of the action Item */
     char* name;
     /** Function which will be called. */
     GameTargetActionFunction* actionItemFunction;
-};
+} GameTargetActionItem;
 
 /**
  * Clear the game target action item.

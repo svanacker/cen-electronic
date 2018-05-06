@@ -63,14 +63,13 @@ void targetActionItemListResetIterator(GameTargetActionItemList* targetActionIte
     targetActionItemList->iteratorIndex = 0;
 }
 
+// DOING
 
-// DEBUG
-
-void printGameTargetActionItemList(OutputStream* outputStream, GameTargetActionItemList* targetItems) {
-    int i;
-    int size = targetItems->size;
-    for (i = 0; i < size; i++) {
-        GameTargetActionItem* targetActionItem = targetItems->items[i];
-        printGameTargetActionItem(outputStream, targetActionItem);
+bool doGameTargetActionItem(GameTargetActionItem* gameTargetActionItem, int* context) {
+    if (gameTargetActionItem->actionItemFunction == NULL) {
+        writeError(TOO_MUCH_TARGET_ACTION_ITEM_FUNCTION_NULL);
+        return false;
     }
+    GameTargetActionFunction* doFunction = gameTargetActionItem->actionItemFunction;
+    return doFunction(context);
 }

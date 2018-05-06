@@ -4,6 +4,8 @@
 
 #include "../../../common/commons.h"
 
+#include "../../../common/math/cenMath.h"
+
 #include "../../../common/io/buffer.h"
 #include "../../../common/io/ioUtils.h"
 #include "../../../common/io/inputStream.h"
@@ -22,13 +24,13 @@
 
 bool clientExtendedMotionBSplineRelative(float x, float y, float angle, float dist0, float dist1, float accelerationFactor, float speedFactor) {
     OutputStream* outputStream = getDriverRequestOutputStream();
-    append(outputStream, MOTION_DEVICE_HEADER);
+    append(outputStream, EXTENDED_MOTION_DEVICE_HEADER);
     append(outputStream, COMMAND_MOTION_SPLINE_RELATIVE);
     appendHexFloat6(outputStream, x, POSITION_DIGIT_MM_PRECISION);
     appendSeparator(outputStream);
     appendHexFloat6(outputStream, y, POSITION_DIGIT_MM_PRECISION);
     appendSeparator(outputStream);
-    appendHexFloat4(outputStream, angle, ANGLE_DIGIT_DEGREE_PRECISION);
+    appendHexFloat4(outputStream, radToDeg(angle), ANGLE_DIGIT_DEGREE_PRECISION);
     appendSeparator(outputStream);
     appendHexFloat4(outputStream, dist0, BSPLINE_MOTION_DISTANCE_FACTOR_DIGIT);
     appendSeparator(outputStream);
@@ -43,15 +45,15 @@ bool clientExtendedMotionBSplineRelative(float x, float y, float angle, float di
     return result;
 }
 
-bool clientExtendedMotionBSplineAbsolute(float x, float y, float angle, float dist0, float dist1, float accelerationFactor, float speedFactor) {
+bool clientExtendedMotionBSplineAbsolute(float x, float y, float angleRadian, float dist0, float dist1, float accelerationFactor, float speedFactor) {
     OutputStream* outputStream = getDriverRequestOutputStream();
-    append(outputStream, MOTION_DEVICE_HEADER);
+    append(outputStream, EXTENDED_MOTION_DEVICE_HEADER);
     append(outputStream, COMMAND_MOTION_SPLINE_ABSOLUTE);
     appendHexFloat6(outputStream, x, POSITION_DIGIT_MM_PRECISION);
     appendSeparator(outputStream);
     appendHexFloat6(outputStream, y, POSITION_DIGIT_MM_PRECISION);
     appendSeparator(outputStream);
-    appendHexFloat4(outputStream, angle, ANGLE_DIGIT_DEGREE_PRECISION);
+    appendHexFloat4(outputStream, radToDeg(angleRadian), ANGLE_DIGIT_DEGREE_PRECISION);
     appendSeparator(outputStream);
     appendHexFloat4(outputStream, dist0, BSPLINE_MOTION_DISTANCE_FACTOR_DIGIT);
     appendSeparator(outputStream);

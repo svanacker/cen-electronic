@@ -74,4 +74,9 @@ bool pathContainsLocation(PathData* pathData, Location* location);
 */
 Location* getOtherEnd(PathData* pathData, Location* location);
 
+/**
+ * Ask the robot to move from the location1 (he must be very near, if not we will have some unpredictable result) to location2 with right angle1 / angle2
+ */
+bool moveAlongPath(PathData* pathData, float accelerationFactor, float speedFactor);
+
 #endif

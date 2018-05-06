@@ -3,6 +3,8 @@
 #include "strategy2018.h"
 #include "strategy2018Utils.h"
 
+#include "../../common/error/error.h"
+
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
 
@@ -33,6 +35,8 @@
 #include "../../robot/strategy/gameTargetAction.h"
 #include "../../robot/strategy/gameTargetActionItem.h"
 #include "../../robot/strategy/gameTargetActionList.h"
+
+#include "../../robot/2018/launcherDeviceInterface2018.h"
 
 // ------------------------------------------------------- NAVIGATIONS ----------------------------------------------------------------
 
@@ -152,25 +156,25 @@ void initLocations2018(GameStrategyContext* gameStrategyContext) {
 
 void initPaths2018(GameStrategyContext* gameStrategyContext, int index) {
     Navigation* navigation = gameStrategyContext->navigation;
-    /*
     startArea_to_switch_Path = addNavigationPath(navigation,
                                                  startAreaLocation, 
                                                  switchLocation,
                                                  DEFAULT_NAVIGATION_COST,
                                                  STARTAREA_TO_SWITCH_CP1, 
                                                  STARTAREA_TO_SWITCH_CP2,
-                                                 START_AREA_ANGLE,
-                                                 SWITCH_ANGLE,
+                                                 deciDegreeToRad(START_AREA_ANGLE_DECI_DEG),
+                                                 deciDegreeToRad(SWITCH_ANGLE_DECI_DEG),
                                                  STARTAREA_TO_SWITCH_ACCELERATION_FACTOR,
                                                  STARTAREA_TO_SWITCH_SPEED_FACTOR);
+    /*
     switch_to_distributor1_Path = addNavigationPath(navigation,
                                                     switchLocation,
                                                     distributor1Location,
                                                     DEFAULT_NAVIGATION_COST,
                                                     SWITCH_TO_DISTRIBUTOR_1_CP1, 
                                                     SWITCH_TO_DISTRIBUTOR_1_CP2,
-                                                    SWITCH_ANGLE,
-                                                    DISTRIBUTOR_1_ANGLE,
+                                                    deciDegreeToRad(SWITCH_ANGLE_DECI_DEG),
+                                                    deciDegreeToRad(DISTRIBUTOR_1_ANGLE_DECI_DEG),
                                                     SWITCH_TO_DISTRIBUTOR_1_ACCELERATION_FACTOR,
                                                     SWITCH_TO_DISTRIBUTOR_1_SPEED_FACTOR);
 
@@ -180,8 +184,8 @@ void initPaths2018(GameStrategyContext* gameStrategyContext, int index) {
                                                              DEFAULT_NAVIGATION_COST,
                                                              DISTRIBUTOR_1_TO_BEE_BORDER_ALIGN_Y_CP1,
                                                              DISTRIBUTOR_1_TO_BEE_BORDER_ALIGN_Y_CP2,
-                                                             DISTRIBUTOR_1_ANGLE,
-                                                             BEE_BORDER_Y_ALIGN_ANGLE,
+                                                             deciDegreeToRad(DISTRIBUTOR_1_ANGLE_DECI_DEG),
+                                                             deciDegreeToRad(BEE_BORDER_Y_ALIGN_ANGLE_DECI_DEG),
                                                              DISTRIBUTOR_1_TO_BEE_BORDER_ALIGN_Y_COST_ACCELERATION_FACTOR,
                                                              DISTRIBUTOR_1_TO_BEE_BORDER_ALIGN_Y_COST_SPEED_FACTOR);
 
@@ -191,8 +195,8 @@ void initPaths2018(GameStrategyContext* gameStrategyContext, int index) {
                                                              DEFAULT_NAVIGATION_COST,
                                                              BEE_BORDER_ALIGN_Y_TO_BEE_CP1,
                                                              BEE_BORDER_ALIGN_Y_TO_BEE_CP2,
-                                                             BEE_BORDER_Y_ALIGN_ANGLE,
-                                                             BEE_ANGLE,
+                                                             deciDegreeToRad(BEE_BORDER_Y_ALIGN_ANGLE_DECI_DEG),
+                                                             deciDegreeToRad(BEE_ANGLE_DECI_DEG),
                                                              BEE_BORDER_ALIGN_Y_TO_BEE_ACCELERATION_FACTOR,
                                                              BEE_BORDER_ALIGN_Y_TO_BEE_SPEED_FACTOR);
     bee_to_distributor2Front_Path = addNavigationPath(navigation,
@@ -201,8 +205,8 @@ void initPaths2018(GameStrategyContext* gameStrategyContext, int index) {
                                                              DEFAULT_NAVIGATION_COST,
                                                              BEE_TO_DISTRIBUTOR_2_FRONT_CP1,
                                                              BEE_TO_DISTRIBUTOR_2_FRONT_CP2,
-                                                             BEE_ANGLE,
-                                                             DISTRIBUTOR_2_FRONT_ANGLE,
+                                                             deciDegreeToRad(BEE_ANGLE_DECI_DEG),
+                                                             deciDegreeToRad(DISTRIBUTOR_2_FRONT_ANGLE_DECI_DEG),
                                                              BEE_TO_DISTRIBUTOR_2_FRONT_ACCELERATION_FACTOR,
                                                              BEE_TO_DISTRIBUTOR_2_FRONT_SPEED_FACTOR);
                                                              
@@ -212,8 +216,8 @@ void initPaths2018(GameStrategyContext* gameStrategyContext, int index) {
                                                              DEFAULT_NAVIGATION_COST,
                                                              DISTRIBUTOR_2_FRONT_TO_DISTRIBUTOR_2_CP1,
                                                              DISTRIBUTOR_2_FRONT_TO_DISTRIBUTOR_2_CP2,
-                                                             DISTRIBUTOR_2_FRONT_ANGLE,
-                                                             DISTRIBUTOR_2_ANGLE,
+                                                             deciDegreeToRad(DISTRIBUTOR_2_FRONT_ANGLE_DECI_DEG),
+                                                             deciDegreeToRad(DISTRIBUTOR_2_ANGLE_DECI_DEG),
                                                              DISTRIBUTOR_2_FRONT_TO_DISTRIBUTOR_2_ACCELERATION_FACTOR,
                                                              DISTRIBUTOR_2_FRONT_TO_DISTRIBUTOR_2_SPEED_FACTOR);
                                                              
@@ -223,11 +227,10 @@ void initPaths2018(GameStrategyContext* gameStrategyContext, int index) {
                                                              DEFAULT_NAVIGATION_COST,
                                                              DISTRIBUTOR_2_TO_GARBAGE_FRONT_CP1,
                                                              DISTRIBUTOR_2_TO_GARBAGE_FRONT_CP2,
-                                                             DISTRIBUTOR_2_ANGLE,
-                                                             GARGAGE_FRONT_POINT_ANGLE,
+                                                             deciDegreeToRad(DISTRIBUTOR_2_ANGLE_DECI_DEG),
+                                                             deciDegreeToRad(GARGAGE_FRONT_POINT_ANGLE_DECI_DEG),
                                                              DISTRIBUTOR_2_TO_GARBAGE_FRONT_ACCELERATION_FACTOR,
                                                              DISTRIBUTOR_2_TO_GARBAGE_FRONT_SPEED_FACTOR);
-                                                             */
                                                              
      garbageFront_to_garbageRelease_Path = addNavigationPath(navigation,
                                                              garbageFrontLocation,
@@ -235,10 +238,11 @@ void initPaths2018(GameStrategyContext* gameStrategyContext, int index) {
                                                              DEFAULT_NAVIGATION_COST,
                                                              GARBAGE_FRONT_TO_GARBAGE_RELEASE_CP1,
                                                              GARBAGE_FRONT_TO_GARBAGE_RELEASE_CP2,
-                                                             deciDegreeToRad(GARGAGE_FRONT_POINT_ANGLE),
-                                                             deciDegreeToRad(GARGAGE_RELEASE_POINT_ANGLE),
+                                                             deciDegreeToRad(GARGAGE_FRONT_POINT_ANGLE_DECI_DEG),
+                                                             deciDegreeToRad(GARGAGE_RELEASE_POINT_ANGLE_DECI_DEG),
                                                              GARBAGE_FRONT_TO_GARBAGE_RELEASE_ACCELERATION_FACTOR,
                                                              GARBAGE_FRONT_TO_GARBAGE_RELEASE_SPEED_FACTOR);
+                                                             */
 }
 
 void initTargets2018(GameStrategyContext* gameStrategyContext) {
@@ -257,9 +261,23 @@ void initTargetActions2018(GameStrategyContext* gameStrategyContext) {
 
 // 
 
-void switch2018On() {
-    // TODO : Take the right color
-    clientLightOn2018(0x00);
+enum TeamColor getStrategy2018TeamColor(int* context) {
+    GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
+    enum TeamColor teamColor = gameStrategyContext->color;
+
+    return teamColor;
+}
+
+bool switch2018On(int* context) {
+    enum TeamColor teamColor = getStrategy2018TeamColor(context);
+    if (teamColor == TEAM_COLOR_GREEN) {
+        return clientLightOn2018(LAUNCHER_RIGHT_INDEX);
+    }
+    else if (teamColor == TEAM_COLOR_ORANGE) {
+        return clientLightOn2018(LAUNCHER_LEFT_INDEX);
+    }
+    writeError(WRONG_COLOR);
+    return false;
 }
 
 void initTargetActionsItems2018(GameStrategyContext* gameStrategyContext) {

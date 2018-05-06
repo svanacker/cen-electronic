@@ -10,14 +10,10 @@
 
 #include "../../navigation/location.h"
 
-// forward declaration
-struct GameTarget;
-typedef struct GameTarget GameTarget;
-
 /**
  * Encapsulates the target for a game.
  */
-struct GameTarget {
+typedef struct GameTarget {
     // Returns the name of the target.
     char* name;
     // Returns the gain when reaching a such target.
@@ -30,7 +26,7 @@ struct GameTarget {
     Location* location;
     /** The actionList for this target. */
     GameTargetActionList actionList;
-};
+} GameTarget;
 
 /**
  * Clear the game Target and actionList if any.

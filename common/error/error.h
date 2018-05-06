@@ -224,6 +224,9 @@ void clearLastError();
 #define TOO_MUCH_ACTION                                                   0x5060
 #define TOO_MUCH_TARGET_ACTION                                            0x5070
 #define TOO_MUCH_TARGET_ACTION_ITEM                                       0x5080
+#define TOO_MUCH_TARGET_ACTION_ITEM_FUNCTION_NULL                         0x5081
+
+#define WRONG_COLOR                                                       0x5100
 
 // ROBOT
 #define ROBOT_KINEMATICS_NO_EEPROM                                        0x6000

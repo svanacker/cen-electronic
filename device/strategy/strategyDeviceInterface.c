@@ -32,29 +32,6 @@ int deviceStrategyGetInterface(char commandHeader, DeviceInterfaceMode mode, boo
         }
         return commandLengthValueForMode(mode, 9, 0);
     }
-    // Debug
-    else if (commandHeader == COMMAND_STRATEGY_DEBUG) {
-        if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("Strategy Context Debug");
-        }
-        return commandLengthValueForMode(mode, 0, 0);
-    }
-	// Print Strategy List
-	else if (commandHeader == COMMAND_STRATEGY_LIST_DEBUG) {
-		// same input/output
-		if (fillDeviceArgumentList) {
-			setFunctionNoArgumentAndNoResult("Strategy List Debug");
-		}
-		return commandLengthValueForMode(mode, 0, 0);
-	}
-	// Print Strategy Item
-	else if (commandHeader == COMMAND_STRATEGY_ITEM_DEBUG) {
-		if (fillDeviceArgumentList) {
-			setFunction("Strategy Item Debug", 1, 0);
-			setArgumentUnsignedHex2(0, "strategyIndex");
-		}
-		return commandLengthValueForMode(mode, 2, 0);
-	}
     // Next step
     else if (commandHeader == COMMAND_STRATEGY_NEXT_STEP) {
         if (fillDeviceArgumentList) {
@@ -62,6 +39,17 @@ int deviceStrategyGetInterface(char commandHeader, DeviceInterfaceMode mode, boo
             setResultUnsignedHex2(0, "status");
         }
         return commandLengthValueForMode(mode, 0, 2);
+    }
+    // Do All Action Items
+    else if (commandHeader == COMMAND_TARGET_ACTION_DO_ALL_ITEMS) {
+        if (fillDeviceArgumentList) {
+            setFunction("do All Actions Items of a Target", 3, 0);
+            setArgumentUnsignedHex2(0, "Target Index");
+            setArgumentSeparator(1);
+            setArgumentUnsignedHex2(2, "Action Index");
+
+        }
+        return commandLengthValueForMode(mode, 5, 0);
     }
     // Robot position
     else if (commandHeader == COMMAND_STRATEGY_GET_ROBOT_POSITION) {
@@ -94,6 +82,29 @@ int deviceStrategyGetInterface(char commandHeader, DeviceInterfaceMode mode, boo
             setResultUnsignedHex4(0, "score");
         }
         return commandLengthValueForMode(mode, 0, 4);
+    }
+    // Debug
+    else if (commandHeader == COMMAND_STRATEGY_DEBUG) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("Strategy Context Debug");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }
+    // Print Strategy List
+    else if (commandHeader == COMMAND_STRATEGY_LIST_DEBUG) {
+        // same input/output
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("Strategy List Debug");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }
+    // Print Strategy Item
+    else if (commandHeader == COMMAND_STRATEGY_ITEM_DEBUG) {
+        if (fillDeviceArgumentList) {
+            setFunction("Strategy Item Debug", 1, 0);
+            setArgumentUnsignedHex2(0, "strategyIndex");
+        }
+        return commandLengthValueForMode(mode, 2, 0);
     }
     else if (commandHeader == COMMAND_TARGET_LIST_DEBUG) {
         // same input/output

@@ -20,6 +20,10 @@
 
 #define COMMAND_STRATEGY_SET_ROBOT_POSITION                'R'
 
+// ELEMENTARY ACTION
+
+#define COMMAND_TARGET_ACTION_DO_ALL_ITEMS                 'I'
+
 // DEBUG
 
 /** Debug the strategy context. */

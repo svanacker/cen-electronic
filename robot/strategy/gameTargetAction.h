@@ -1,7 +1,6 @@
 #ifndef GAME_TARGET_ACTION_H
 #define GAME_TARGET_ACTION_H
 
-// #include "gameTarget.h"
 #include "gameTargetActionItemList.h"
 
 #include "../../common/commons.h"
@@ -28,10 +27,8 @@ typedef struct GameTargetAction {
 } GameTargetAction;
 
 /**
- * Clear the targetAction and the items if any.
+ * Initializes the structure.
  */
-void clearTargetAction(GameTargetAction* targetAction);
-
 void initGameTargetAction(GameTargetAction* targetAction, 
                           Location* startLocation,
                           Location* endLocation,
@@ -40,10 +37,14 @@ void initGameTargetAction(GameTargetAction* targetAction,
                           PathData* pathData);
 
 /**
- * Print the detail of the target action.
- */
-void printGameTargetAction(OutputStream* outputStream, GameTargetAction* targetAction, bool includeItems);
+* Clear the targetAction and the items if any.
+*/
+void clearTargetAction(GameTargetAction* targetAction);
 
+/**
+ * Used for test but not in real situation, just to debug if action could be done easily
+ * @return true if all items were done successfully, false if there at least one problem
+ */
+bool doGameTargetAction(GameTargetAction* targetAction, int* context);
 
 #endif
-

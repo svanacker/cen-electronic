@@ -1,6 +1,7 @@
 #ifndef GAME_TARGET_ACTION_ITEM_LIST_H
 #define GAME_TARGET_ACTION_ITEM_LIST_H
 
+
 #include "gameTargetActionItem.h"
 
 #include "../../common/commons.h"
@@ -29,9 +30,6 @@ typedef struct GameTargetActionItemList {
  * Clear the target action item list, and all items.
  */
 void clearTargetActionItemList(GameTargetActionItemList* targetActionItemList);
-
-// RANDOM ACCESS
-GameTargetActionItem* getGameTargetActionItem(GameTargetActionItemList* targetActionItemList, int index);
 
 // ITERATOR
 
@@ -63,17 +61,21 @@ void addTargetActionItem(GameTargetActionItemList* targetActionItemList,
 /**
  * Get the target action item at index.
  */
-GameTargetActionItem* getGameTargetItemAction(GameTargetActionItemList* list, int index);
+GameTargetActionItem* getGameTargetActionItem(GameTargetActionItemList* targetActionItemList, int index);
 
 /**
  * Get the count of target action item.
  */
 int getGameTargetActionItemCount(GameTargetActionItemList* list);
 
+// DO ACTIONS
+
+// #include "gameStrategyContext.h"
+
 /**
- * Print the detail of the all target action items.
+ * Call the real method by passing a context and the object to do
  */
-void printGameTargetActionItemList(OutputStream* outputStream, GameTargetActionItemList* targetActionItemList);
+bool doGameTargetActionItem(GameTargetActionItem* gameTargetActionItem, int* gameStrategyContext);
 
 
 #endif

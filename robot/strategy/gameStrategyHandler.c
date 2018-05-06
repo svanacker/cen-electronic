@@ -35,27 +35,7 @@
 #include "../../robot/strategy/gameTargetList.h"
 #include "../../robot/2012/strategy2012Utils.h"
 
-#define ANGLE_DECI_DEG_180 1800
-#define ANGLE_360 3600
-
-void strategyTimerCallback(Timer* timer) {
-    GameStrategyContext* strategyContext = (GameStrategyContext*) timer->object;
-    Navigation* navigation = strategyContext->navigation;
-    if (timer->time > strategyContext->timeSinceLastCollision + RESET_OBSTACLE_COLLISION_TIME_SECOND) {
-        #ifdef DEBUG_OPPONENT_ROBOT
-            OutputStream* logStream = getInfoOutputStreamLogger();
-            appendString(logStream, "resetAllPathsAsAvailable\n");
-        #endif
-        
-        resetAllPathsAsAvailable(navigation);
-        // remove the last Obstacle position
-        strategyContext->lastObstaclePosition->x = 0;
-        strategyContext->lastObstaclePosition->y = 0;
-    }
-}
-
 void initStrategyHandler(GameStrategyContext* gmeStrategyContext) {
-    // strategyTimer = addTimer(STRATEGY_TIMER_INDEX, TIME_DIVIDER_1_HERTZ, &strategyTimerCallback, "GAME_STRATEGY");
 }
 
 /**
@@ -72,13 +52,10 @@ void clearCurrentTarget(GameStrategyContext* gameStrategyContext) {
  * @private
  */
 void findNextTarget(GameStrategyContext* gameStrategyContext) {
-    appendString(getDebugOutputStreamLogger(), "findNextTarget\n");
     Navigation* navigation = gameStrategyContext->navigation;
     unsigned int targetHandledCount = getTargetHandledCount();
     if (targetHandledCount >= gameStrategyContext->maxTargetToHandle) {
         clearCurrentTarget(gameStrategyContext);
-        appendStringAndDec(getDebugOutputStreamLogger(), "Reach Max Target To Handle:", targetHandledCount);
-        println(getDebugOutputStreamLogger());
         return;
     }
 
@@ -89,31 +66,8 @@ void findNextTarget(GameStrategyContext* gameStrategyContext) {
     // Find nearest location
     gameStrategyContext->nearestLocation = getNearestLocation(navigationLocationList, robotPosition->x, robotPosition->y);
 
-    #ifdef DEBUG_STRATEGY_HANDLER
-        appendString(getDebugOutputStreamLogger(), "\tNearest Location:");    
-        printLocation(getDebugOutputStreamLogger(), gameStrategyContext->nearestLocation);
-        appendString(getDebugOutputStreamLogger(), "\tcomputeBestNextTargetAction:\n");    
-    #endif
-
     // Find best Target, store LocationList in the context in currentTrajectory
     computeBestNextTarget(gameStrategyContext);
-
-    #ifdef DEBUG_STRATEGY_HANDLER
-        appendString(getDebugOutputStreamLogger(), "\t\tbestTarget:");
-        if (gameStrategyContext->currentTarget != NULL) {
-            // TODO : printGameTargetTable(getDebugOutputStreamLogger(), gameStrategyContext->currentTarget, false);
-        }
-        else {
-            appendString(getDebugOutputStreamLogger(), "NULL\n");
-        }
-        appendString(getDebugOutputStreamLogger(), "\t\tbestTargetAction:");
-        if (gameStrategyContext->currentTargetAction != NULL) {
-            printGameTargetAction(getDebugOutputStreamLogger(), gameStrategyContext->currentTargetAction, false);
-        }
-        else {
-            appendString(getDebugOutputStreamLogger(), "NULL\n");
-        }
-    #endif
 }
 
 void markTargetAsHandled(GameStrategyContext* gameStrategyContext) {
@@ -135,18 +89,11 @@ void markTargetInUse(GameStrategyContext* gameStrategyContext) {
  * @private
  */
 bool executeTargetActions(GameStrategyContext* gameStrategyContext) {
-    #ifdef DEBUG_STRATEGY_HANDLER
-        appendString(getDebugOutputStreamLogger(), "executeTargetActions\n");
-    #endif
-
     markTargetInUse(gameStrategyContext);
 
     GameTargetAction* targetAction = gameStrategyContext->currentTargetAction;
     GameTargetActionItemList* actionItemList = targetAction->actionItemList;
     if (actionItemList == NULL) {
-        #ifdef DEBUG_STRATEGY_HANDLER
-            appendString(getDebugOutputStreamLogger(), "-> no actions for this target\n");
-        #endif
         markTargetAsHandled(gameStrategyContext);
         return false;
     }
@@ -155,17 +102,13 @@ bool executeTargetActions(GameStrategyContext* gameStrategyContext) {
     if (actionItemList != NULL && targetActionItemListHasNext(actionItemList)) {
         GameTargetActionItem* actionItem = targetActionItemListNext(actionItemList);
 
-        #ifdef DEBUG_STRATEGY_HANDLER
-            printGameTargetActionItem(getDebugOutputStreamLogger(), actionItem);
-        #endif
-
         // Do the action item
-        actionItem->actionItemFunction();
+        actionItem->actionItemFunction((int*) gameStrategyContext);
         return true;
     }
     else {
         markTargetAsHandled(gameStrategyContext);
-        // we do nothing
+        // we do nothing more
         return false;
     }
     return true;
@@ -175,12 +118,6 @@ void motionGoLocation(Location* location,
                     float angle,
                     float controlPointDistance1, float controlPointDistance2,
                     float accelerationFactor, float speedFactor ) {
-
-    #ifdef DEBUG_STRATEGY_HANDLER
-        appendString(getDebugOutputStreamLogger(), "motionGoLocation:goto:");    
-        printLocation(getDebugOutputStreamLogger(), location);
-    #endif
-
     angle = changeAngleForColor(angle);
     clientExtendedMotionBSplineAbsolute(location->x, location->y,
                                 angle,
@@ -194,6 +131,7 @@ void motionGoLocation(Location* location,
     #endif
 }
 
+/*
 float mod360(float value) {
     if (value < - ANGLE_DECI_DEG_180) {
         return (value + ANGLE_360);
@@ -202,6 +140,7 @@ float mod360(float value) {
     }
     return value;
 }
+*/
 
 void rotateAbsolute(GameStrategyContext* gameStrategyContext, float angle) {
     /* TODO
@@ -321,21 +260,9 @@ void motionFollowPath(GameStrategyContext* gmeStrategyContext, PathData* pathDat
 * @private
 */
 bool handleCurrentTrajectory(GameStrategyContext* gameStrategyContext) {
-    #ifdef DEBUG_STRATEGY_HANDLER
-        appendString(getDebugOutputStreamLogger(), "handleCurrentTrajectory\n");    
-    #endif
-
     LocationList* currentTrajectory = gameStrategyContext->currentTrajectory;
 
-    #ifdef DEBUG_STRATEGY_HANDLER
-        // printLocationList(getDebugOutputStreamLogger(), "currentTrajectory:", currentTrajectory);    
-    #endif
-
     if (currentTrajectory == NULL || currentTrajectory->size < 2) {
-        #ifdef DEBUG_STRATEGY_HANDLER
-            appendString(getDebugOutputStreamLogger(), "no more locations to reach\n");    
-        #endif
-
         // no more locations to reach
         clearLocationList(currentTrajectory);
         return false;
@@ -511,15 +438,8 @@ void handleCollision(GameStrategyContext* gameStrategyContext) {
 
 bool nextStep(GameStrategyContext* gameStrategyContext) {
     unsigned int counter = 0;
-    #ifdef DEBUG_STRATEGY_HANDLER
-        appendString(getDebugOutputStreamLogger(), "nextStep\n");    
-    #endif
     while (1) {
         counter++;
-        #ifdef DEBUG_STRATEGY_HANDLER
-            appendStringAndDec(getDebugOutputStreamLogger(), "nextStep=>", counter);    
-            println(getDebugOutputStreamLogger());
-        #endif
         GameTargetAction* targetAction = gameStrategyContext->currentTargetAction;
     
         if (getLocationCount(gameStrategyContext->currentTrajectory) != 0) {
@@ -539,9 +459,6 @@ bool nextStep(GameStrategyContext* gameStrategyContext) {
             // no target, search a new one
             findNextTarget(gameStrategyContext);
             if (gameStrategyContext->currentTarget == NULL) {
-                #ifdef DEBUG_STRATEGY_HANDLER
-                    appendString(getDebugOutputStreamLogger(), "no more targets -> stopping");
-                #endif
                 clearCurrentTarget(gameStrategyContext);
                 return false;
             }
@@ -562,5 +479,4 @@ bool nextStep(GameStrategyContext* gameStrategyContext) {
     }
     return true;
 }
-
 

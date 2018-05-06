@@ -37,7 +37,7 @@ void printGameStrategyItemListHeader(OutputStream* outputStream) {
 	// Table Header
 	appendTableHeaderSeparatorLine(outputStream);
     // Line 1
-	appendStringHeader(outputStream, "name", GAME_STRATEGY_ITEM_LIST_TARGET_NAME_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "name", GAME_STRATEGY_ITEM_LIST_TARGET_NAME_COLUMN_LENGTH);
     appendStringHeader(outputStream, "gain", GAME_STRATEGY_ITEM_LIST_TARGET_GAIN_COLUMN_LENGTH);
     appendStringHeader(outputStream, "potential", GAME_STRATEGY_ITEM_LIST_TARGET_POTENTIAL_GAIN_COLUMN_LENGTH);
     appendStringHeader(outputStream, "status", GAME_STRATEGY_ITEM_LIST_TARGET_STATUS_COLUMN_LENGTH);
