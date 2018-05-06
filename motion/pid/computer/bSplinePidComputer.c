@@ -66,19 +66,9 @@ float bSplineMotionComputeAlphaAndThetaDiff(Point* robotPoint, Point* normalPoin
  * @private
  * Compute the Alpha part of the PID
  */
-float bSplineMotionUComputeAlphaError(PidMotion* pidMotion, PidMotionDefinition* motionDefinition, Position* robotPosition, float bSplineTime) {
-    // The PID Parameters used must be strong to keep the angle => We use PID_TYPE_MAINTAIN_POSITION_INDEX
-    PidParameter* alphaPidParameter = getPidParameterByPidType(pidMotion, PID_TYPE_MAINTAIN_POSITION_INDEX);
-    BSplineCurve* curve = &(motionDefinition->curve);
-    PidComputationValues* computationValues = &(pidMotion->computationValues);
-    float pidTime = computationValues->pidTimeInSecond;
-
+float bSplineMotionUComputeAlphaError(PidMotion* pidMotion, Position* robotPosition, float normalAlpha, float alphaAndThetaDiff, float distanceRealAndNormalPoint) {
     // Real Alpha
     float realAlpha = robotPosition->orientation;
-
-    // Normal Alpha
-    float normalAlpha = bSplineMotionGetNormalAlpha(curve, bSplineTime);
-
     // Error
     float alphaErrorInRadian = (normalAlpha - realAlpha);
     // restriction to [-PI, PI]
@@ -89,19 +79,29 @@ float bSplineMotionUComputeAlphaError(PidMotion* pidMotion, PidMotionDefinition*
 
     // Convert the alpha error into a "distance" equivalence
     // TODO : To review
-    float alphaError = rotationInRadiansToRealDistanceForLeftWheel(robotKinematics, alphaErrorInRadian);
+    float alphaDistanceEquivalentError = rotationInRadiansToRealDistanceForLeftWheel(robotKinematics, alphaErrorInRadian);
+    
+    // But it's not finished, because even if alphaError is equal to 0, and "theta" is OK, the risk is too
+    // Follow a "parallel" curve to the right One
+    // So we try to compute a complementary distance equivalent to the distance between this "parallel curve" (the normal curve)
+    // and the robot curve
+    // alphaDistanceEquivalentError -= sinf(alphaAndThetaDiff) * distanceRealAndNormalPoint;  
 
+    PidComputationValues* computationValues = &(pidMotion->computationValues);
     PidComputationInstructionValues* alphaValues = &(computationValues->values[ALPHA]);
 
     // TODO : To check : not really true if the curve is strong !!
     float alphaNormalSpeed = 0.0f;
-    alphaValues->u = computePidCorrection(alphaValues, alphaPidParameter, alphaNormalSpeed, alphaError);
+    // The PID Parameters used must be strong to keep the angle => We use PID_TYPE_MAINTAIN_POSITION_INDEX
+    PidParameter* alphaPidParameter = getPidParameterByPidType(pidMotion, PID_TYPE_MAINTAIN_POSITION_INDEX);
+    alphaValues->u = computePidCorrection(alphaValues, alphaPidParameter, alphaNormalSpeed, alphaDistanceEquivalentError);
     
     // For History
     PidComputationInstructionValues* alphaComputationInstructionValues = &(computationValues->values[ALPHA]);
-    alphaComputationInstructionValues->error = alphaError;
+    alphaComputationInstructionValues->error = alphaDistanceEquivalentError;
     alphaComputationInstructionValues->normalSpeed = alphaNormalSpeed;
     alphaComputationInstructionValues->normalPosition = normalAlpha;
+    float pidTime = computationValues->pidTimeInSecond;
     storePidComputationInstructionValueHistory(alphaComputationInstructionValues, pidTime);
 
     return normalAlpha;
@@ -195,17 +195,8 @@ void bSplineMotionUCompute(PidMotion* pidMotion, PidMotionDefinition* motionDefi
 
     // ALPHA CORRECTION
     float realAlpha = robotPosition->orientation;
-    normalAlpha = bSplineMotionUComputeAlphaError(pidMotion, motionDefinition, robotPosition, bSplineTime);
+    normalAlpha = bSplineMotionUComputeAlphaError(pidMotion, robotPosition, normalAlpha, alphaAndThetaDiff, distanceRealAndNormalPoint);
 
     // THETA
     float thetaError = bSplineMotionUComputeThetaError(pidMotion, motionDefinition, robotPosition, bSplineTime, normalAlpha);
-
-    // ALPHA/THETA CORRECTION
-    // TODO : Introduce Parameters stored in Eeprom !
-    /* TODO 
-    alphaPulseError *= 5.0f;
-    float alphaCorrection = -0.00050f * normalSpeed * thetaError * (alphaAndThetaDiff);
-    // float alphaCorrection = 0.0f;
-    alphaPulseError += alphaCorrection;
-    */
 }
