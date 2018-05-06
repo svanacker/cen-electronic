@@ -94,10 +94,6 @@
 #include "../../device/serial/serialDebugDevice.h"
 #include "../../device/serial/serialDebugDeviceInterface.h"
 
-// TIMER
-#include "../../device/timer/timerDevice.h"
-#include "../../device/timer/timerDeviceInterface.h"
-
 // SYSTEM
 #include "../../device/system/systemDevice.h"
 #include "../../device/system/systemDeviceInterface.h"

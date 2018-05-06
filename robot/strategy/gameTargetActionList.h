@@ -4,7 +4,7 @@
 #include "gameTargetAction.h"
 #include "gameTargetActionItemList.h"
 
-#include "../../navigation/LocationList.h"
+#include "../../navigation/locationList.h"
 #include "../../navigation/path.h"
 
 /** The max limit of target action count. */

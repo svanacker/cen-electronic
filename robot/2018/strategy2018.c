@@ -19,7 +19,7 @@
 #include "../../navigation/pathListDebug.h"
 #include "../../navigation/navigation.h"
 
-#include "../../robot/gameboard/gameBoard.h"
+#include "../../robot/gameboard/gameboard.h"
 
 
 #include "../../robot/strategy/gameStrategy.h"

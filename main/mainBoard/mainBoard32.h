@@ -3,7 +3,7 @@
 
 #include "../../common/io/outputStream.h"
 
-#include "../../main/motorBoard/motorBoard32.h"
+#include "../../main/motorboard/motorBoard32.h"
 #include "../../main/meca1/mechanicalMainBoard32_1.h"
 
 #include "../../robot/match/startMatch.h"

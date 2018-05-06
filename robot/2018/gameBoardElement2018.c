@@ -1,6 +1,6 @@
 #include <stdlib.h>
 
-#include "gameboardElement2018.h"
+#include "gameBoardElement2018.h"
 #include "strategy2018.h"
 
 #include "../../common/math/cenMath.h"
