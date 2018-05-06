@@ -27,6 +27,24 @@
 
 /**
  * @private
+ * @param curve
+ * @param bSplineTime
+ * @return 
+ */
+float bSplineMotionGetNormalAlpha(BSplineCurve* curve, float bSplineTime) {
+    // Normal Alpha
+    float normalAlpha = computeBSplineOrientationWithDerivative(curve, bSplineTime);
+    // backward management
+    if (curve->backward) {
+        normalAlpha += PI;
+        normalAlpha = mod2PI(normalAlpha);
+    }
+    
+    return normalAlpha;
+}
+
+/**
+ * @private
  * Compute the Alpha part of the PID
  */
 float bSplineMotionUComputeAlphaError(PidMotion* pidMotion, PidMotionDefinition* motionDefinition, Position* robotPosition, float bSplineTime) {
@@ -40,12 +58,7 @@ float bSplineMotionUComputeAlphaError(PidMotion* pidMotion, PidMotionDefinition*
     float realAlpha = robotPosition->orientation;
 
     // Normal Alpha
-    float normalAlpha = computeBSplineOrientationWithDerivative(curve, bSplineTime);
-    // backward management
-    if (curve->backward) {
-        normalAlpha += PI;
-        normalAlpha = mod2PI(normalAlpha);
-    }
+    float normalAlpha = bSplineMotionGetNormalAlpha(curve, bSplineTime);
 
     // Error
     float alphaErrorInRadian = (normalAlpha - realAlpha);
@@ -158,13 +171,12 @@ void bSplineMotionUCompute(PidMotion* pidMotion, PidMotionDefinition* motionDefi
 
     Position* robotPosition = getPosition();
 
-    // THETA
-    float thetaError = bSplineMotionUComputeThetaError(pidMotion, motionDefinition, robotPosition, bSplineTime, normalAlpha);
-
     // ALPHA CORRECTION
     float realAlpha = robotPosition->orientation;
     float normalAlpha = bSplineMotionUComputeAlphaError(pidMotion, motionDefinition, robotPosition, bSplineTime);
 
+    // THETA
+    float thetaError = bSplineMotionUComputeThetaError(pidMotion, motionDefinition, robotPosition, bSplineTime, normalAlpha);
 
     // ALPHA/THETA CORRECTION
     // TODO : Introduce Parameters stored in Eeprom !
