@@ -22,7 +22,7 @@ typedef struct Device Device;
 * @param commandHeader header the command header which is called
 * @param inputStream the inputStream to get data from the client
 */
-typedef void deviceHandleNotificationFunction(const Device* device, 
+typedef void DeviceHandleNotificationFunction(const Device* device, 
                                                  const char commandHeader,
                                                   InputStream* inputStream);
 
@@ -49,7 +49,7 @@ struct Device {
     /** The real implementation of the device. */
     DeviceDescriptor* descriptor;
     /** The device callback function when Slave want to transmit something asynchronously to the master. */
-    deviceHandleNotificationFunction* deviceHandleNotification;
+    DeviceHandleNotificationFunction* deviceHandleNotification;
 };
 
 

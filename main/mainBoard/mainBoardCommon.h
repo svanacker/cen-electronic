@@ -1,4 +1,15 @@
 #ifndef MAIN_BOARD_COMMON_H
 #define MAIN_BOARD_COMMON_H
 
+// DEVICE
+
+#define MAIN_BOARD_DEVICE_LENGTH            35
+#define MAIN_BOARD_TIMER_LENGTH             5
+
+// IO EXPANDER
+#define MAIN_BOARD_IO_EXPANDER_LIST_LENGTH   1
+
+// TOFS
+#define MAIN_BOARD_TOF_SENSOR_LIST_LENGTH    6
+
 #endif

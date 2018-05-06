@@ -273,6 +273,10 @@
                      projectFiles="true">
         <itemPath>../../../device/motor/pwmMotorDeviceInterface.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f20" displayName="device.navigation" projectFiles="true">
+        <itemPath>../../../device/navigation/navigationDevice.h</itemPath>
+        <itemPath>../../../device/navigation/navigationDeviceInterface.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="f6" displayName="device.relay" projectFiles="true">
         <itemPath>../../../device/relay/relayDevice.h</itemPath>
         <itemPath>../../../device/relay/relayDeviceInterface.h</itemPath>
@@ -799,6 +803,11 @@
         <itemPath>../../../device/log/logDevice.c</itemPath>
         <itemPath>../../../device/log/logDeviceInterface.c</itemPath>
       </logicalFolder>
+      <logicalFolder name="f19"
+                     displayName="device.motion.extended"
+                     projectFiles="true">
+        <itemPath>../../../device/motion/extended/extendedMotionDeviceInterface.c</itemPath>
+      </logicalFolder>
       <logicalFolder name="device.motion.pid"
                      displayName="device.motion.pid"
                      projectFiles="true">
@@ -819,6 +828,10 @@
                      displayName="device.motor"
                      projectFiles="true">
         <itemPath>../../../device/motor/pwmMotorDeviceInterface.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f20" displayName="device.navigation" projectFiles="true">
+        <itemPath>../../../device/navigation/navigationDevice.c</itemPath>
+        <itemPath>../../../device/navigation/navigationDeviceInterface.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f7" displayName="device.relay" projectFiles="true">
         <itemPath>../../../device/relay/relayDevice.c</itemPath>

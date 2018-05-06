@@ -57,7 +57,7 @@ bool handleNotificationFromDispatcher(DriverDataDispatcher* dispatcher) {
         bufferReadChar(inputBuffer);
         bufferReadChar(inputBuffer);
 
-        deviceHandleNotificationFunction* notificationFunction = device->deviceHandleNotification;
+        DeviceHandleNotificationFunction* notificationFunction = device->deviceHandleNotification;
 
         if (notificationFunction != NULL) {
             // do the callback

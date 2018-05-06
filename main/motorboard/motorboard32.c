@@ -270,6 +270,12 @@ void initDevicesDescriptor() {
 }
 
 void waitForInstruction() {
+    while (handleNotificationFromDispatcherList(TRANSMIT_UART)) {
+        // loop for all notification
+        // notification handler must avoid to directly information in notification callback
+        // and never to the call back device
+    }
+    
     // I2C Stream
     handleStreamInstruction(&i2cSlaveInputBuffer, &i2cSlaveOutputBuffer, NULL, &filterRemoveCRLF, NULL);
 

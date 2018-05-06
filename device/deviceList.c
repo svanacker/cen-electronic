@@ -66,12 +66,19 @@ Device* addDevice(DeviceInterface* deviceInterface,
     }
 }
 
-Device* addI2cRemoteDevice(DeviceInterface* interface, unsigned char i2cAddress) {
-    return addDevice(interface, NULL, TRANSMIT_I2C, i2cAddress, NULL);
+Device* addI2cRemoteDevice(DeviceInterface* deviceInterface, unsigned char i2cAddress) {
+    return addDevice(deviceInterface, NULL, TRANSMIT_I2C, i2cAddress, NULL);
 }
 
-Device* addUartRemoteDevice(DeviceInterface* interface, unsigned char serialIndex) {
-    return addDevice(interface, NULL, TRANSMIT_UART, serialIndex, NULL);
+Device* addUartRemoteDevice(DeviceInterface* deviceInterface, unsigned char serialIndex) {
+    return addDevice(deviceInterface, NULL, TRANSMIT_UART, serialIndex, NULL);
+}
+
+Device* addUartRemoteDeviceWithNotification(DeviceInterface* deviceInterface, unsigned char serialIndex, DeviceHandleNotificationFunction* notificationFunction) {
+    Device* result = addDevice(deviceInterface, NULL, TRANSMIT_UART, serialIndex, NULL);
+    result->deviceHandleNotification = notificationFunction;
+    
+    return result;
 }
 
 Device* addZigbeeRemoteDevice(DeviceInterface* interface, char* addressString) {

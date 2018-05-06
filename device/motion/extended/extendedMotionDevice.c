@@ -62,7 +62,7 @@ void deviceExtendedMotionHandleRawData(char commandHeader,
         OutputStream* notificationOutputStream) {
 	// -> bspline
     if (commandHeader == COMMAND_MOTION_SPLINE_RELATIVE || commandHeader == COMMAND_MOTION_SPLINE_ABSOLUTE) {
-        ackCommand(outputStream, MOTION_DEVICE_HEADER, commandHeader);
+        ackCommand(outputStream, EXTENDED_MOTION_DEVICE_HEADER, commandHeader);
 
         float x = readHexFloat6(inputStream, POSITION_DIGIT_MM_PRECISION);
         checkIsSeparator(inputStream);
@@ -99,7 +99,7 @@ void deviceExtendedMotionHandleRawData(char commandHeader,
                         );
     }
     else if (commandHeader == COMMAND_MOTION_SPLINE_TEST_FORWARD) {
-        ackCommand(outputStream, MOTION_DEVICE_HEADER, commandHeader);
+        ackCommand(outputStream, EXTENDED_MOTION_DEVICE_HEADER, commandHeader);
         gotoSpline(pidMotion,
                  400.0f, 0.0f,
                  0.0f,
@@ -109,7 +109,7 @@ void deviceExtendedMotionHandleRawData(char commandHeader,
                 notificationOutputStream);
     }
     else if (commandHeader == COMMAND_MOTION_SPLINE_TEST_BACKWARD) {
-        ackCommand(outputStream, MOTION_DEVICE_HEADER, commandHeader);
+        ackCommand(outputStream, EXTENDED_MOTION_DEVICE_HEADER, commandHeader);
         gotoSpline(pidMotion,
                 -400.0f, 0.0f,
                 0.0f,
@@ -119,7 +119,7 @@ void deviceExtendedMotionHandleRawData(char commandHeader,
                 notificationOutputStream);
     }
     else if (commandHeader == COMMAND_MOTION_SPLINE_TEST_LEFT || commandHeader == COMMAND_MOTION_SPLINE_TEST_RIGHT) {
-        ackCommand(outputStream, MOTION_DEVICE_HEADER, commandHeader);
+        ackCommand(outputStream, EXTENDED_MOTION_DEVICE_HEADER, commandHeader);
         float sign = 1.0f;
         if (commandHeader == COMMAND_MOTION_SPLINE_TEST_RIGHT) {
             sign = -sign;
@@ -133,7 +133,7 @@ void deviceExtendedMotionHandleRawData(char commandHeader,
 					    notificationOutputStream);
     }
     else if (commandHeader == COMMAND_MOTION_SPLINE_TEST_FORWARD_LEFT_FORWARD || commandHeader == COMMAND_MOTION_SPLINE_TEST_FORWARD_RIGHT_FORWARD) {
-        ackCommand(outputStream, MOTION_DEVICE_HEADER, commandHeader);
+        ackCommand(outputStream, EXTENDED_MOTION_DEVICE_HEADER, commandHeader);
         float sign = 1.0f;
         if (commandHeader == COMMAND_MOTION_SPLINE_TEST_FORWARD_RIGHT_FORWARD) {
             sign = -sign;
@@ -147,7 +147,7 @@ void deviceExtendedMotionHandleRawData(char commandHeader,
 					    notificationOutputStream);
     }
     else if (commandHeader == COMMAND_MOTION_SPLINE_TEST_BACKWARD_LEFT_BACKWARD || commandHeader == COMMAND_MOTION_SPLINE_TEST_BACKWARD_RIGHT_BACKWARD) {
-        ackCommand(outputStream, MOTION_DEVICE_HEADER, commandHeader);
+        ackCommand(outputStream, EXTENDED_MOTION_DEVICE_HEADER, commandHeader);
         float sign = 1.0f;
         if (commandHeader == COMMAND_MOTION_SPLINE_TEST_BACKWARD_LEFT_BACKWARD) {
             sign = -sign;

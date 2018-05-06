@@ -62,17 +62,6 @@
 #define MAIN_BOARD_REQUEST_DRIVER_BUFFER_LENGTH                 50
 #define MAIN_BOARD_RESPONSE_DRIVER_BUFFER_LENGTH                50
 
-// DEVICE
-
-#define MAIN_BOARD_DEVICE_LENGTH            30
-#define MAIN_BOARD_TIMER_LENGTH             5
-
-// IO EXPANDER
-#define MAIN_BOARD_IO_EXPANDER_LIST_LENGTH   1
-
-// TOFS
-#define MAIN_BOARD_TOF_SENSOR_LIST_LENGTH    6
-
 bool mainBoardWaitForInstruction(StartMatch* startMatch);
 
 #endif

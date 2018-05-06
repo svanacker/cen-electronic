@@ -60,7 +60,7 @@ void deviceTrajectoryHandleRawData(char header,
 
         updateTrajectoryWithNoThreshold();
 
-        OutputStream* debugOutputStream = getAlwaysOutputStreamLogger();
+        OutputStream* debugOutputStream = getDebugOutputStreamLogger();
         printDebugPosition(debugOutputStream);
     }
 	else if (header == COMMAND_TRAJECTORY_DEBUG_CODERS) {
@@ -68,7 +68,7 @@ void deviceTrajectoryHandleRawData(char header,
 
 		updateTrajectoryWithNoThreshold();
 
-		OutputStream* debugOutputStream = getAlwaysOutputStreamLogger();
+		OutputStream* debugOutputStream = getDebugOutputStreamLogger();
 		printDebugCoderHistory(debugOutputStream);
 	}
     else if (header == COMMAND_TRAJECTORY_SET_ABSOLUTE_POSITION) {
@@ -80,12 +80,11 @@ void deviceTrajectoryHandleRawData(char header,
 
         ackCommand(outputStream, TRAJECTORY_DEVICE_HEADER, COMMAND_TRAJECTORY_SET_ABSOLUTE_POSITION);
 
-        OutputStream* debugOutputStream = getDebugOutputStreamLogger();
-
         float fX = (float) newX;
         float fY = (float) newY;
         float fAngle = degToRad(newAngle);
 
+        // We must ensure are not in 
         setPosition(fX, fY, fAngle);
     }
     // Adjust Angle / X / Y

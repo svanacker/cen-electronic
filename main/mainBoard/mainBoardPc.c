@@ -109,8 +109,14 @@
 #include "../../device/motion/pid/pidDeviceInterface.h"
 #include "../../device/motion/position/codersDeviceInterface.h"
 #include "../../device/motion/position/trajectoryDeviceInterface.h"
+
+// MOTION->Simple
 #include "../../device/motion/simple/motionDeviceInterface.h"
+
 #include "../../device/motion/simulation/motionSimulationDeviceInterface.h"
+
+// MOTION->Extended
+#include "../../device/motion/extended/extendedMotionDeviceInterface.h"
 
 // NAVIGATION
 #include "../../device/navigation/navigationDevice.h"
@@ -286,13 +292,11 @@ void mainBoardDeviceHandleNotification(const Device* device, const char commandH
 }
 
 bool mainBoardPcWaitForInstruction(StartMatch* startMatch) {
-    /*
     while (handleNotificationFromDispatcherList(TRANSMIT_I2C)) {
         // loop for all notification
         // notification handler must avoid to directly information in notification callback
         // and never to the call back device
     }
-    */
 
     // delaymSec(MAIN_BOARD_PC_DELAY_CONSOLE_ANALYZE_MILLISECONDS);
 
@@ -502,6 +506,7 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
         addI2cRemoteDevice(getCodersDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
         addI2cRemoteDevice(getTrajectoryDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
         addI2cRemoteDevice(getMotionDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
+        addI2cRemoteDevice(getExtendedMotionDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
         addI2cRemoteDevice(getRobotKinematicsDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
         addI2cRemoteDevice(getMotionSimulationDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
 

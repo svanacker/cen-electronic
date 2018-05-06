@@ -14,6 +14,8 @@
 #include "../../../common/log/logger.h"
 #include "../../../common/log/logHandler.h"
 
+#include "../../../common/math/cenMath.h"
+
 #include "../../../device/deviceConstants.h"
 #include "../../../device/motion/position/trajectoryDeviceInterface.h"
 
@@ -25,7 +27,7 @@
 
 // SET TRAJECTORY
 
-bool clientTrajectorySetAbsolutePosition(float x, float y, float degree) {
+bool clientTrajectorySetAbsolutePosition(float x, float y, float radian) {
     OutputStream* outputStream = getDriverRequestOutputStream();
     
     append(outputStream, TRAJECTORY_DEVICE_HEADER);
@@ -34,7 +36,7 @@ bool clientTrajectorySetAbsolutePosition(float x, float y, float degree) {
     appendSeparator(outputStream);
     appendHexFloat6(outputStream, y, POSITION_DIGIT_MM_PRECISION);
     appendSeparator(outputStream);
-    appendHexFloat4(outputStream, degree, ANGLE_DIGIT_DEGREE_PRECISION);
+    appendHexFloat4(outputStream, radToDeg(radian), ANGLE_DIGIT_DEGREE_PRECISION);
 
     bool result = transmitFromDriverRequestBuffer();
 
@@ -55,7 +57,7 @@ bool clientTrajectoryUpdateRobotPosition() {
         readHex(inputStream);
         float y = readHexFloat6(inputStream, POSITION_DIGIT_MM_PRECISION);
         readHex(inputStream);
-        float angle = readHexFloat4(inputStream, ANGLE_DIGIT_DEGREE_PRECISION);
+        float angle = degToRad(readHexFloat4(inputStream, ANGLE_DIGIT_DEGREE_PRECISION));
 
         updateRobotPosition(x, y, angle);
         return result;

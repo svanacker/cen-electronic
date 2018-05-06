@@ -19,11 +19,11 @@ void loopUntilStart(StartMatch* startMatch) {
         return;
     }
     if (startMatch->waitForStart) {
-        appendString(getAlwaysOutputStreamLogger(), "WAIT FOR START ...");
+        appendString(getAlwaysOutputStreamLogger(), "WAIT START...");
         while (!startMatch->isMatchStartedFunction(startMatch)) {
             startMatch->loopUntilStartHandleFunction(startMatch);
         }
-        appendString(getAlwaysOutputStreamLogger(), "OK !\n");
+        appendString(getAlwaysOutputStreamLogger(), "OK\n");
         markStartMatch(startMatch->endMatch);
     }
     else {

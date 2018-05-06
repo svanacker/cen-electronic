@@ -48,6 +48,7 @@ void initGameStrategyContext(GameStrategyContext* gameStrategyContext,
 
 void showGameStrategyContextTeamColor(GameStrategyContext* gameStrategyContext) {
     OutputStream* outputStream = getAlwaysOutputStreamLogger();
+    appendString(outputStream, "COLOR : ");
     appendTeamColorAsString(outputStream, gameStrategyContext->color);
     println(outputStream);
 }

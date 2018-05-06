@@ -40,8 +40,8 @@ bool deviceTimerIsOk(void) {
  * The interrupt demo timer.
  */
 void interruptDemoTimerCallbackFunc(Timer* timer) {
-    appendStringAndDec(getAlwaysOutputStreamLogger(), "counter=", demoCounter);
-    appendCRLF(getAlwaysOutputStreamLogger());
+    appendStringAndDec(getDebugOutputStreamLogger(), "counter=", demoCounter);
+    appendCRLF(getDebugOutputStreamLogger());
     demoCounter++;
 }
 

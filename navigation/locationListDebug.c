@@ -38,7 +38,7 @@ void printLocationListHeader(OutputStream* outputStream) {
 	appendStringHeader(outputStream, "x", LOCATION_LIST_LOCATION_X_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "y", LOCATION_LIST_LOCATION_Y_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "x Hex", LOCATION_LIST_LOCATION_X_HEXA_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "x Hex", LOCATION_LIST_LOCATION_Y_HEXA_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "y Hex", LOCATION_LIST_LOCATION_Y_HEXA_COLUMN_LENGTH);
 	appendEndOfTableColumn(outputStream, LOCATION_LIST_LOCATION_LAST_COLUMN_LENGTH);
     // Line Header 2
     appendStringHeader(outputStream, "", LOCATION_LIST_LOCATION_NAME_COLUMN_LENGTH);

@@ -7,7 +7,14 @@
 #include <math.h>
 
 #include "mainBoard32.h"
+#include "mainBoardCommon.h"
 
+// CLIENT
+// -> Motion Driver
+#include "../../client/motion/simple/clientMotion.h"
+#include "../../client/motion/position/clientTrajectory.h"
+
+// COMMON
 #include "../../common/delay/cenDelay.h"
 
 #include "../../common/eeprom/eeprom.h"
@@ -90,18 +97,6 @@
 #include "../../device/gameboard/gameboardDevice.h"
 #include "../../device/gameboard/gameboardDeviceInterface.h"
 
-// SERIAL
-#include "../../device/serial/serialDebugDevice.h"
-#include "../../device/serial/serialDebugDeviceInterface.h"
-
-// TIMER
-#include "../../device/timer/timerDevice.h"
-#include "../../device/timer/timerDeviceInterface.h"
-
-// SYSTEM
-#include "../../device/system/systemDevice.h"
-#include "../../device/system/systemDeviceInterface.h"
-
 // LOG
 #include "../../device/log/logDevice.h"
 #include "../../device/log/logDeviceInterface.h"
@@ -114,6 +109,22 @@
 #include "../../device/i2c/master/i2cMasterDebugDevice.h"
 #include "../../device/i2c/master/i2cMasterDebugDeviceInterface.h"
 
+// LCD
+#include "../../device/lcd/lcdDevice.h"
+#include "../../device/lcd/lcdDeviceInterface.h"
+
+// SERIAL
+#include "../../device/serial/serialDebugDevice.h"
+#include "../../device/serial/serialDebugDeviceInterface.h"
+
+// SERVO
+#include "../../device/servo/servoDevice.h"
+#include "../../device/servo/servoDeviceInterface.h"
+
+// SYSTEM
+#include "../../device/system/systemDevice.h"
+#include "../../device/system/systemDeviceInterface.h"
+
 // TEST
 #include "../../device/test/testDevice.h"
 #include "../../device/test/testDeviceInterface.h"
@@ -121,6 +132,10 @@
 // TEST 2
 #include "../../device/test/test2Device.h"
 #include "../../device/test/test2DeviceInterface.h"
+
+// TEMPERATURE
+#include "../../device/sensor/temperature/temperatureSensorDevice.h"
+#include "../../device/sensor/temperature/temperatureSensorDeviceInterface.h"
 
 // TIMER
 #include "../../device/timer/timerDevice.h"
@@ -130,31 +145,19 @@
 #include "../../device/tof/tofDevice.h"
 #include "../../device/tof/tofDeviceInterface.h"
 
-// SENSOR->TEMPERATURE
-#include "../../device/sensor/temperature/temperatureSensorDevice.h"
-#include "../../device/sensor/temperature/temperatureSensorDeviceInterface.h"
-
-// SERVO
-#include "../../device/servo/servoDevice.h"
-#include "../../device/servo/servoDeviceInterface.h"
-
-// LCD
-#include "../../drivers/lcd/lcd.h"
-#include "../../device/lcd/lcdDevice.h"
-#include "../../device/lcd/lcdDeviceInterface.h"
-
 // Motor
 #include "../../device/motor/pwmMotorDeviceInterface.h"
-
-// TOF
-#include "../../drivers/tof/vl53l0x/tof_vl53l0x.h"
-#include "../../drivers/tof/vl53l0x/tofList_vl53l0x.h"
 
 // Motion
 #include "../../device/motion/pid/pidDeviceInterface.h"
 #include "../../device/motion/position/codersDeviceInterface.h"
 #include "../../device/motion/position/trajectoryDeviceInterface.h"
 #include "../../device/motion/simple/motionDeviceInterface.h"
+#include "../../device/motion/extended/extendedMotionDeviceInterface.h"
+
+// Navigation
+#include "../../device/navigation/navigationDevice.h"
+#include "../../device/navigation/navigationDeviceInterface.h"
 
 // Relay
 #include "../../device/relay/relayDevice.h"
@@ -171,12 +174,6 @@
 #include "../../device/adc/adcDevice.h"
 #include "../../device/adc/adcDeviceInterface.h"
 
-// Air conditioning
-#include "../../device/airconditioning/airConditioningDeviceInterface.h"
-
-// Beacon Receiver
-#include "../../device/beacon/beaconReceiverDeviceInterface.h"
-
 // Drivers
 // -> Clock
 #include "../../drivers/clock/PCF8563.h"
@@ -184,6 +181,9 @@
 // -> Color
 #include "../../drivers/colorSensor/tcs34725.h"
 #include "../../drivers/colorSensor/colorSensorTcs34725.h"
+
+// DRIVER TRANSMITTER
+#include "../../drivers/driverTransmitter.h"
 
 // -> Eeprom
 #include "../../drivers/eeprom/24c512.h"
@@ -195,24 +195,33 @@
 #include "../../drivers/ioExpander/ioExpanderPcf8574.h"
 #include "../../drivers/ioExpander/pcf8574.h"
 
-#include "../../drivers/relay/rly08.h"
+// LCD
+#include "../../drivers/lcd/lcd.h"
 
-// -> Test
-#include "../../drivers/test/testDriver.h"
+// MOTOR
+#include "../../drivers/motor/md22.h"
+
+// RELAY
+#include "../../drivers/relay/rly08.h"
 
 // -> System
 #include "../../drivers/system/systemDriver.h"
 
-// -> Motion Driver
-#include "../../client/motion/simple/clientMotion.h"
-#include "../../client/motion/position/clientTrajectory.h"
-
-#include "../../drivers/motor/md22.h"
-
-#include "../../drivers/driverTransmitter.h"
-
 // -> Temperature
 #include "../../drivers/sensor/temperature/LM75A.h"
+
+// -> Test
+#include "../../drivers/test/testDriver.h"
+
+// TOF
+#include "../../drivers/tof/vl53l0x/tof_vl53l0x.h"
+#include "../../drivers/tof/vl53l0x/tofList_vl53l0x.h"
+
+// MOTION
+#include "../../motion/simple/simpleMotion.h"
+
+// NAVIGATION
+#include "../../navigation/navigation.h"
 
 // Robot
 #include "../../robot/config/robotConfig.h"
@@ -240,10 +249,6 @@
 
 #include "../../robot/strategy/teamColor.h"
 
-#include "../../motion/simple/simpleMotion.h"
-
-#include "../../navigation/navigation.h"
-
 #include "../../robot/robot.h"
 #include "../../robot/gameboard/gameboard.h"
 
@@ -254,6 +259,7 @@
 
 #include "../../robot/2018/strategyDevice2018.h"
 #include "../../robot/2018/strategyDeviceInterface2018.h"
+
 #include "mainBoard2018.h"
 
 // I2C => PORT 1 (for All Peripherical, including Eeprom / Clock / Temperatur)
@@ -384,6 +390,40 @@ static GameStrategyContext* gameStrategyContext;
 static Navigation* navigation;
 static GameBoard* gameBoard;
 
+void readNewPosition(InputStream* inputStream) {
+    
+}
+
+void mainBoardDeviceHandleMotionDeviceNotification(const Device* device, const char commandHeader, InputStream* inputStream) {
+    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+    appendString(debugOutputStream, "Notification ! commandHeader=");
+    append(debugOutputStream, commandHeader);
+    appendCRLF(debugOutputStream);
+    if (device->deviceInterface->deviceHeader == MOTION_DEVICE_HEADER) {
+        if (
+                commandHeader == NOTIFY_MOTION_STATUS_FAILED
+                || commandHeader == NOTIFY_MOTION_STATUS_MOVING
+                || commandHeader == NOTIFY_MOTION_STATUS_OBSTACLE
+                || commandHeader == NOTIFY_MOTION_STATUS_REACHED
+                || commandHeader == NOTIFY_MOTION_STATUS_BLOCKED) {
+            // To See what was transmitted
+            /*
+            while (inputStream->availableData(inputStream)) {
+                append(debugOutputStream, inputStream->readChar(inputStream));
+            }
+            */
+            float x = readHexFloat6(inputStream, POSITION_DIGIT_MM_PRECISION);
+            checkIsSeparator(inputStream);
+            float y = readHexFloat6(inputStream, POSITION_DIGIT_MM_PRECISION);
+            checkIsSeparator(inputStream);
+            float angleDegree = readHexFloat4(inputStream, ANGLE_DIGIT_DEGREE_PRECISION);
+            gameStrategyContext->robotPosition->x = x;
+            gameStrategyContext->robotPosition->y = y;
+            gameStrategyContext->robotAngleRadian = degToRad(angleDegree);
+        }
+    }
+}
+
 /**
  * TODO : Rename Driver into ClientDriver
  * @private
@@ -430,6 +470,7 @@ void addLocalDevices(void) {
     addLocalDevice(getGameboardDeviceInterface(), getGameboardDeviceDescriptor(gameBoard));
 
     // 2018 specific
+    addLocalDevice(getNavigationDeviceInterface(), getNavigationDeviceDescriptor(navigation));
     addLocalDevice(getStrategy2018DeviceInterface(), getStrategy2018DeviceDescriptor(&distributor));
 }
 
@@ -451,7 +492,8 @@ void addMotorRemoteDevices(void) {
     addUartRemoteDevice(getCodersDeviceInterface(), MAIN_BOARD_SERIAL_PORT_MOTOR);
     addUartRemoteDevice(getPidDeviceInterface(), MAIN_BOARD_SERIAL_PORT_MOTOR);
     addUartRemoteDevice(getTrajectoryDeviceInterface(), MAIN_BOARD_SERIAL_PORT_MOTOR);
-    addUartRemoteDevice(getMotionDeviceInterface(), MAIN_BOARD_SERIAL_PORT_MOTOR);
+    addUartRemoteDeviceWithNotification(getMotionDeviceInterface(), MAIN_BOARD_SERIAL_PORT_MOTOR, &mainBoardDeviceHandleMotionDeviceNotification);
+    addUartRemoteDevice(getExtendedMotionDeviceInterface(), MAIN_BOARD_SERIAL_PORT_MOTOR);
     addUartRemoteDevice(getRobotKinematicsDeviceInterface(), MAIN_BOARD_SERIAL_PORT_MOTOR);
 }
 
@@ -535,6 +577,13 @@ void initMainBoardDriverDataDispatcherList(void) {
 }
 
 bool mainBoardWaitForInstruction(StartMatch* startMatchParam) {
+    // Handle Notification
+    while (handleNotificationFromDispatcherList(TRANSMIT_UART)) {
+        // loop for all notification
+        // notification handler must avoid to directly information in notification callback
+        // and never to the call back device
+    }
+        
     // Listen instruction from pcStream->Devices
     handleStreamInstruction(
             &pcInputBuffer,
@@ -676,6 +725,9 @@ int main(void) {
     colorBusConnection = addI2cBusConnection(i2cBus4, TCS34725_ADDRESS, true);
     initTcs34725Struct(&tcs34725, colorBusConnection);
     initColorSensorTcs34725(&colorSensor, &colorValue, &colorSensorFindColorType2018, &tcs34725);
+
+    // TIMERS
+    initTimerList(&timerListArray, MAIN_BOARD_TIMER_LENGTH);
     
     initEndMatch(&endMatch, &robotConfig, MATCH_DURATION);
     initStartMatch(&startMatch, &robotConfig, &endMatch, isMatchStarted32, mainBoardWaitForInstruction);
@@ -685,9 +737,6 @@ int main(void) {
     gameStrategyContext = initGameStrategyContext2018(&robotConfig, &endMatch);
     gameBoard = initGameBoard2018(gameStrategyContext);
     initDistributor(&distributor, gameStrategyContext->color, &colorSensor);
-    
-    // TIMERS
-    initTimerList(&timerListArray, MAIN_BOARD_TIMER_LENGTH);
 
     // DEVICES, DRIVERS, DISPATCHERS
     initMainBoardDevicesDescriptor();

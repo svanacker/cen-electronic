@@ -93,6 +93,9 @@ unsigned int appendFixedCharArray(OutputStream* outputStream, FixedCharArray* s)
     char* sPointer = (char*)s;
     for (i = 0; i < FIXED_CHAR_ARRAY_LENGTH; i++) {
         char c = *sPointer;
+        if (c == 0) {
+            c = ' ';
+        }
         append(outputStream, c);
         sPointer++;
     }

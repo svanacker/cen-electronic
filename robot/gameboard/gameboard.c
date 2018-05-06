@@ -135,6 +135,16 @@ void gamePathPrint(GameBoard* gameBoard, int* element) {
     bSplinePrint(gameBoard, gameBoard->gameBoardCurve, '*');
 }
 
+void clearGameBoardPixels(GameBoard* gameBoard) {
+    unsigned int line;
+    unsigned int column;
+    for (line = 0; line <= GAMEBOARD_LINE_COUNT; line++) {
+        for (column = 0; column <= GAMEBOARD_COLUMN_COUNT; column++) {
+            gameBoard->pixels[column][line] = CHAR_NO_DRAW;
+        }
+    }
+}
+
 void fillGameBoardCharElements(GameBoard* gameBoard, int* element) {
     GameStrategyContext* gameStrategyContext = gameBoard->gameStrategyContext;
 
@@ -182,6 +192,7 @@ void fillGameBoardCharElements(GameBoard* gameBoard, int* element) {
 
 void printGameboard(GameBoard* gameBoard,  OutputStream* outputStream) {
     println(outputStream);
+    clearGameBoardPixels(gameBoard);
     // Fill All Chars
     fillGameBoardCharElements(gameBoard, NULL);
     // Print Gameboard

@@ -7,9 +7,9 @@
  * Calls the Remote Trajectory Device to update the remote position (for example : MotorBoard)
  * @param x the target position in x
  * @param y the target position in y
- * @param deciDegree the target position in deciDegree
+ * @param radian the target position in deciDegree
  */
-bool clientTrajectorySetAbsolutePosition(float x, float y, float deciDegree);
+bool clientTrajectorySetAbsolutePosition(float x, float y, float radian);
 
 /**
  * Update the Robot Position of current Device (Ex : MainBoard) from the Remote Device (for example : MotorBoard)

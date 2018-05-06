@@ -72,7 +72,6 @@ void internalNotify(OutputStream* outputStream, char statusHeader, char* notifyS
     append(outputStream, statusHeader);
 
     // send position
-    appendSeparator(outputStream);
     notifyAbsolutePositionWithoutHeader(outputStream);
 
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();

@@ -12,9 +12,9 @@ const char* deviceMotionGetName(void) {
 
 void fillNotifyResults(char* notificationName) {
     setNotification(notificationName, 5);
-    setArgumentUnsignedHex4(0, "x(mm)");
+    setArgumentUnsignedHex6(0, "x(mm)");
     setArgumentSeparator(1);
-    setArgumentUnsignedHex4(2, "y(mm)");
+    setArgumentUnsignedHex6(2, "y(mm)");
     setArgumentSeparator(3);
     setArgumentUnsignedHex4(4, "ang(1/10)deg");
 }
@@ -122,37 +122,37 @@ int deviceMotionGetInterface(char commandHeader, DeviceInterfaceMode mode, bool 
             if (fillDeviceArgumentList) {
                 fillNotifyResults("notify Reached");
             }
-            return 14;
+            return 18;
         }
         else if (commandHeader == NOTIFY_MOTION_STATUS_BLOCKED) {
             if (fillDeviceArgumentList) {
                 fillNotifyResults("notify Blocked");
             }
-            return 14;
+            return 18;
         }
         else if (commandHeader == NOTIFY_MOTION_STATUS_SHOCKED) {
             if (fillDeviceArgumentList) {
                 fillNotifyResults("notify Shocked");
             }
-            return 14;
+            return 18;
         }
         else if (commandHeader == NOTIFY_MOTION_STATUS_OBSTACLE) {
             if (fillDeviceArgumentList) {
                 fillNotifyResults("notify Obstacle");
             }
-            return 14;
+            return 18;
         }
         else if (commandHeader == NOTIFY_MOTION_STATUS_FAILED) {
             if (fillDeviceArgumentList) {
                 fillNotifyResults("notify Failed");
             }
-            return 14;
+            return 18;
         }
         else if (commandHeader == NOTIFY_MOTION_STATUS_MOVING) {
             if (fillDeviceArgumentList) {
                 fillNotifyResults("notify Moving");
             }
-            return 14;
+            return 18;
         }
     }
     return DEVICE_HEADER_NOT_HANDLED;

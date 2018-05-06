@@ -117,7 +117,7 @@ float readHexFloat6(InputStream* inputStream, unsigned int digitPrecision);
  * Read an array of chars from an inputStream (chars are encoded as hex).
  * @param s a pointer on a fixed char array
  */
-void readHexFixedCharArray(InputStream* inputStream, const FixedCharArray* s);
+void readHexFixedCharArray(InputStream* inputStream, FixedCharArray* s);
 
 // CHECK METHODS 
 // 1) isXXX returns if the condition is ok, and return a BOO

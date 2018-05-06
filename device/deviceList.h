@@ -61,6 +61,14 @@ Device* addI2cRemoteDevice(DeviceInterface* deviceInterface, unsigned char i2cAd
 Device* addUartRemoteDevice(DeviceInterface* deviceInterface, unsigned char serialIndex);
 
 /**
+ * Add a remote Device accessible via the uart with notification.
+ * @param deviceInterface the interface to describe the remote interface for device
+ * @param serialIndex the index of the serial
+ * @return a pointer on the Device accessible by UART
+ */
+Device* addUartRemoteDeviceWithNotification(DeviceInterface* deviceInterface, unsigned char serialIndex, DeviceHandleNotificationFunction* notificationFunction);
+
+/**
  * @deprecated we don't use zigbee anymore
  * Add a remote Device accessible via the zigbee bus.
  * @param interface1 the interface to describe the remote interface for device

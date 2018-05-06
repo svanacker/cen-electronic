@@ -31,7 +31,7 @@
 
 #define SWITCH                                                    "SW"
 #define SWITCH_X                                          START_AREA_X
-#define SWITCH_Y                                                  1130
+#define SWITCH_Y                                                  1225
 #define SWITCH_ANGLE_DECI_DEG                       ANGLE_DECI_DEG_270
 
 #define DISTRIBUTOR_1                                            "D_1"

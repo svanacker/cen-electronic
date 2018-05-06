@@ -94,7 +94,7 @@ void deviceNavigationHandleRawData(char commandHeader, InputStream* inputStream,
 		ackCommand(outputStream, NAVIGATION_DEVICE_HEADER, COMMAND_NAVIGATION_LOCATION_LIST_DEBUG);
         Navigation* navigation = getNavigationDeviceNavigationObject();
 		LocationList* locationList = getNavigationLocationList(navigation);
-		printLocationListTable(getAlwaysOutputStreamLogger(), locationList);
+		printLocationListTable(getDebugOutputStreamLogger(), locationList);
 	}
 	else if (commandHeader == COMMAND_NAVIGATION_LOCATION_ADD_TESTS_DATA) {
 		ackCommand(outputStream, NAVIGATION_DEVICE_HEADER, COMMAND_NAVIGATION_LOCATION_ADD_TESTS_DATA);
@@ -223,7 +223,7 @@ void deviceNavigationHandleRawData(char commandHeader, InputStream* inputStream,
 		ackCommand(outputStream, NAVIGATION_DEVICE_HEADER, COMMAND_NAVIGATION_PATH_LIST_DEBUG);
         Navigation* navigation = getNavigationDeviceNavigationObject();
 		PathList* pathList = getNavigationPathList(navigation);
-		printPathListTable(getAlwaysOutputStreamLogger(), pathList);
+		printPathListTable(getDebugOutputStreamLogger(), pathList);
 	}
 	else if (commandHeader == COMMAND_NAVIGATION_PATH_LIST_ADD_TESTS_DATA) {
 		ackCommand(outputStream, NAVIGATION_DEVICE_HEADER, COMMAND_NAVIGATION_PATH_LIST_ADD_TESTS_DATA);

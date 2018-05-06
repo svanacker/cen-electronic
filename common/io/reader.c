@@ -148,7 +148,7 @@ float readHexFloat6(InputStream* inputStream, unsigned int digitPrecision) {
     return result;
 }
 
-void readHexFixedCharArray(InputStream* inputStream, const FixedCharArray* s) {
+void readHexFixedCharArray(InputStream* inputStream, FixedCharArray* s) {
     int i;
     char* sPointer = (char*) s;
     for (i = 0; i < FIXED_CHAR_ARRAY_LENGTH; i++) {

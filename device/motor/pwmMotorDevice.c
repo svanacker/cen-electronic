@@ -58,7 +58,7 @@ void devicePwmMotorHandleRawData(char commandHeader, InputStream* inputStream, O
     }
     else if (commandHeader == COMMAND_SMALL_TEST_MOTOR) {
         ackCommand(outputStream, MOTOR_DEVICE_HEADER, COMMAND_SMALL_TEST_MOTOR);
-        appendString(getAlwaysOutputStreamLogger(), "Both Forward\n");
+        appendString(getDebugOutputStreamLogger(), "Both Forward\n");
         // Left forward
         dualHBridgeMotorPwm->dualHBridgeMotorWriteValue(dualHBridgeMotorPwm, 50, 50);
         delaymSec(2000);
@@ -67,32 +67,32 @@ void devicePwmMotorHandleRawData(char commandHeader, InputStream* inputStream, O
     else if (commandHeader == COMMAND_NORMAL_TEST_MOTOR) {
         ackCommand(outputStream, MOTOR_DEVICE_HEADER, COMMAND_NORMAL_TEST_MOTOR);
 
-        appendString(getAlwaysOutputStreamLogger(), "Left Forward\n");
+        appendString(getDebugOutputStreamLogger(), "Left Forward\n");
         // Left forward
         setMotorSpeeds(dualHBridgeMotorPwm, 50, 0);
         delaymSec(2000);
 
-        appendString(getAlwaysOutputStreamLogger(), "Right Forward\n");
+        appendString(getDebugOutputStreamLogger(), "Right Forward\n");
         // Right forward
         setMotorSpeeds(dualHBridgeMotorPwm, 0, 50);
         delaymSec(2000);
 
-        appendString(getAlwaysOutputStreamLogger(), "Left Backward\n");
+        appendString(getDebugOutputStreamLogger(), "Left Backward\n");
         // Left backward
         setMotorSpeeds(dualHBridgeMotorPwm, -50, 0);
         delaymSec(2000);
 
-        appendString(getAlwaysOutputStreamLogger(), "Right Forward\n");
+        appendString(getDebugOutputStreamLogger(), "Right Forward\n");
         // Right backward
         setMotorSpeeds(dualHBridgeMotorPwm, 0, -50);
         delaymSec(2000);
 
-        appendString(getAlwaysOutputStreamLogger(), "Both Forward\n");
+        appendString(getDebugOutputStreamLogger(), "Both Forward\n");
         // Both forward
         setMotorSpeeds(dualHBridgeMotorPwm, 50, 50);
         delaymSec(2000);
 
-        appendString(getAlwaysOutputStreamLogger(), "Both Backward\n");
+        appendString(getDebugOutputStreamLogger(), "Both Backward\n");
         // Both backward
         setMotorSpeeds(dualHBridgeMotorPwm, -50, -50);
         delaymSec(2000);
