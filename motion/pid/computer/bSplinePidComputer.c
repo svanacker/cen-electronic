@@ -181,10 +181,21 @@ void bSplineMotionUCompute(PidMotion* pidMotion, PidMotionDefinition* motionDefi
     float bSplineTime = computeBSplineTimeAtDistance(curve, normalDistance);
 
     Position* robotPosition = getPosition();
+    
+    Point* robotPoint = &(robotPosition->pos);
+    // SOME PRELIMINARY COMPUTATION
+    float normalAlpha = bSplineMotionGetNormalAlpha(curve, bSplineTime);
+    Point normalPoint;
+    // Computes the normal Point where the robot must be
+    computeBSplinePoint(curve, bSplineTime, &normalPoint);
+    // Compute a kind of "angle" between normal Point and robot Point
+    float alphaAndThetaDiff = bSplineMotionComputeAlphaAndThetaDiff(robotPoint, &normalPoint, normalAlpha);
+    // This value is always positive (distance), so we must know if the robot is in front of or in back of this distance
+    float distanceRealAndNormalPoint = distanceBetweenPoints(robotPoint, &normalPoint);
 
     // ALPHA CORRECTION
     float realAlpha = robotPosition->orientation;
-    float normalAlpha = bSplineMotionUComputeAlphaError(pidMotion, motionDefinition, robotPosition, bSplineTime);
+    normalAlpha = bSplineMotionUComputeAlphaError(pidMotion, motionDefinition, robotPosition, bSplineTime);
 
     // THETA
     float thetaError = bSplineMotionUComputeThetaError(pidMotion, motionDefinition, robotPosition, bSplineTime, normalAlpha);
