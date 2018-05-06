@@ -43,6 +43,25 @@ float bSplineMotionGetNormalAlpha(BSplineCurve* curve, float bSplineTime) {
     return normalAlpha;
 }
 
+float bSplineMotionComputeAlphaAndThetaDiff(Point* robotPoint, Point* normalPoint, float normalAlpha) {
+    // Angle between the robot and the point where it should be
+    float angleRealAndNormalOrientation = angleOfVector(robotPoint, normalPoint);
+    // Computes the real thetaError by managing different angles
+
+    /* TODO : Check if necessary
+    if (curve->backward) {
+        angleRealAndNormalOrientation += PI;
+    }
+    */
+    float alphaAndThetaDiff = angleRealAndNormalOrientation - normalAlpha;
+
+    // restriction to [-PI, PI]
+    alphaAndThetaDiff = mod2PI(alphaAndThetaDiff);
+
+    return alphaAndThetaDiff;
+}
+
+
 /**
  * @private
  * Compute the Alpha part of the PID
@@ -123,16 +142,8 @@ float bSplineMotionUComputeThetaError(PidMotion* pidMotion,
     Point robotPoint = robotPosition->pos;
     // This value is always positive (distance), so we must know if the robot is in front of or in back of this distance
     float distanceRealAndNormalPoint = distanceBetweenPoints(&robotPoint, &normalPoint);
-    // Angle between the robot and the point where it should be
-    float angleRealAndNormalOrientation = angleOfVector(&robotPoint, &normalPoint);
-    // Computes the real thetaError by managing different angles
 
-    /* TODO : Check if necessary
-    if (curve->backward) {
-        angleRealAndNormalOrientation += PI;
-    }
-    */
-    float alphaAndThetaDiff = angleRealAndNormalOrientation - normalAlpha;
+    float alphaAndThetaDiff = bSplineMotionComputeAlphaAndThetaDiff(&robotPoint, &normalPoint, normalAlpha);
 
     // restriction to [-PI, PI]
     alphaAndThetaDiff = mod2PI(alphaAndThetaDiff);
