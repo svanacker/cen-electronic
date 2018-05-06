@@ -35,7 +35,7 @@
 #define SWITCH_ANGLE_DECI_DEG                       ANGLE_DECI_DEG_270
 
 #define DISTRIBUTOR_1                                            "D_1"
-#define DISTRIBUTOR_1_X                                            800
+#define DISTRIBUTOR_1_X                                            850
 #define DISTRIBUTOR_1_Y                                            170
 #define DISTRIBUTOR_1_ANGLE_DECI_DEG                ANGLE_DECI_DEG_300
 

@@ -133,27 +133,38 @@ void initColorAndStartPosition2018(GameStrategyContext* gameStrategyContext) {
     gameStrategyContext->robotAngleRadian = angleRadian;
 }
 
+Location* addNavigationWithColors(enum TeamColor teamColor, Navigation* navigation, char* name, float x, float y) {
+    LocationList* locationList = navigation->locationList;
+    if (teamColor == TEAM_COLOR_ORANGE) {
+        y = GAMEBOARD_HEIGHT - y;
+    }
+    Location* result = addNamedLocation(locationList, name, x, y);
+    return result;
+}
+
+
 void initLocations2018(GameStrategyContext* gameStrategyContext) {
     Navigation* navigation = gameStrategyContext->navigation;
-    startAreaLocation = addNavigationLocation(navigation, START_AREA, START_AREA_X, START_AREA_Y);
+    enum TeamColor teamColor = gameStrategyContext->color;
+    startAreaLocation = addNavigationWithColors(teamColor, navigation, START_AREA, START_AREA_X, START_AREA_Y);
 
     // Switch
-    switchLocation = addNavigationLocation(navigation, SWITCH, SWITCH_X, SWITCH_Y);
+    switchLocation = addNavigationWithColors(teamColor, navigation, SWITCH, SWITCH_X, SWITCH_Y);
 
     // Distributor 1
-    distributor1Location = addNavigationLocation(navigation, DISTRIBUTOR_1, DISTRIBUTOR_1_X, DISTRIBUTOR_1_Y);
+    distributor1Location = addNavigationWithColors(teamColor, navigation, DISTRIBUTOR_1, DISTRIBUTOR_1_X, DISTRIBUTOR_1_Y);
 
     // Bee
-    beeBorderAlignYLocation = addNavigationLocation(navigation, BEE_BORDER_Y_ALIGN, BEE_BORDER_Y_ALIGN_X, BEE_BORDER_Y_ALIGN_Y);
-    beeLocation = addNavigationLocation(navigation, BEE, BEE_X, BEE_Y);
+    beeBorderAlignYLocation = addNavigationWithColors(teamColor, navigation, BEE_BORDER_Y_ALIGN, BEE_BORDER_Y_ALIGN_X, BEE_BORDER_Y_ALIGN_Y);
+    beeLocation = addNavigationWithColors(teamColor, navigation, BEE, BEE_X, BEE_Y);
 
     // Distributor 2
-    distributor2FrontLocation = addNavigationLocation(navigation, DISTRIBUTOR_2_FRONT, DISTRIBUTOR_2_FRONT_X, DISTRIBUTOR_2_FRONT_Y);
-    distributor2Location = addNavigationLocation(navigation, DISTRIBUTOR_2, DISTRIBUTOR_2_X, DISTRIBUTOR_2_Y);
+    distributor2FrontLocation = addNavigationWithColors(teamColor, navigation, DISTRIBUTOR_2_FRONT, DISTRIBUTOR_2_FRONT_X, DISTRIBUTOR_2_FRONT_Y);
+    distributor2Location = addNavigationWithColors(teamColor, navigation, DISTRIBUTOR_2, DISTRIBUTOR_2_X, DISTRIBUTOR_2_Y);
 
     // Garbage
-    garbageFrontLocation = addNavigationLocation(navigation, GARBAGE_FRONT, GARBAGE_FRONT_POINT_X, GARBAGE_FRONT_POINT_Y);
-    garbageReleaseLocation = addNavigationLocation(navigation, GARBAGE_RELEASE, GARBAGE_RELEASE_POINT_X, GARBAGE_RELEASE_POINT_Y);
+    garbageFrontLocation = addNavigationWithColors(teamColor, navigation, GARBAGE_FRONT, GARBAGE_FRONT_POINT_X, GARBAGE_FRONT_POINT_Y);
+    garbageReleaseLocation = addNavigationWithColors(teamColor, navigation, GARBAGE_RELEASE, GARBAGE_RELEASE_POINT_X, GARBAGE_RELEASE_POINT_Y);
 }
 
 float getAccelerationFactor(RobotConfig* robotConfig) {
@@ -184,15 +195,41 @@ float getSpeedFactor(RobotConfig* robotConfig) {
     return MOTION_SPEED_FACTOR_HIGH;
 }
 
+// PATHS
+
+PathData* addNavigationPathWithColor(
+    enum TeamColor teamColor,
+    Navigation* navigation,
+    Location* location1,
+    Location* location2,
+    float cost,
+    float controlPointDistance1,
+    float controlPointDistance2,
+    float angle1,
+    float angle2,
+    float accelerationFactor,
+    float speedFactor) {
+    PathData* pathData = addPath(navigation->paths);
+
+    if (teamColor == TEAM_COLOR_ORANGE) {
+        angle1 = mod2PI(-angle1);
+        angle2 = mod2PI(-angle2);
+    }
+
+    initPathData(pathData, location1, location2, cost, controlPointDistance1, controlPointDistance2, angle1, angle2, accelerationFactor, speedFactor);
+    return pathData;
+}
+
 void initPaths2018(GameStrategyContext* gameStrategyContext, int index) {
     Navigation* navigation = gameStrategyContext->navigation;
     
     RobotConfig* robotConfig = gameStrategyContext->robotConfig;
+    enum TeamColor teamColor = gameStrategyContext->color;
     float aFactor = getAccelerationFactor(robotConfig);
     float speedFactor = getSpeedFactor(robotConfig);
     
-    
-    startArea_to_switch_Path = addNavigationPath(navigation,
+    startArea_to_switch_Path = addNavigationPathWithColor(teamColor,
+                                                 navigation,
                                                  startAreaLocation, 
                                                  switchLocation,
                                                  DEFAULT_NAVIGATION_COST,
@@ -202,7 +239,6 @@ void initPaths2018(GameStrategyContext* gameStrategyContext, int index) {
                                                  deciDegreeToRad(SWITCH_ANGLE_DECI_DEG),
                                                  aFactor * STARTAREA_TO_SWITCH_ACCELERATION_FACTOR,
                                                  speedFactor * STARTAREA_TO_SWITCH_SPEED_FACTOR);
-    /*
     switch_to_distributor1_Path = addNavigationPath(navigation,
                                                     switchLocation,
                                                     distributor1Location,
@@ -222,8 +258,8 @@ void initPaths2018(GameStrategyContext* gameStrategyContext, int index) {
                                                              DISTRIBUTOR_1_TO_BEE_BORDER_ALIGN_Y_CP2,
                                                              deciDegreeToRad(DISTRIBUTOR_1_ANGLE_DECI_DEG),
                                                              deciDegreeToRad(BEE_BORDER_Y_ALIGN_ANGLE_DECI_DEG),
-                                                             DISTRIBUTOR_1_TO_BEE_BORDER_ALIGN_Y_COST_ACCELERATION_FACTOR,
-                                                             DISTRIBUTOR_1_TO_BEE_BORDER_ALIGN_Y_COST_SPEED_FACTOR);
+                                                             aFactor * DISTRIBUTOR_1_TO_BEE_BORDER_ALIGN_Y_COST_ACCELERATION_FACTOR,
+                                                             speedFactor * DISTRIBUTOR_1_TO_BEE_BORDER_ALIGN_Y_COST_SPEED_FACTOR);
 
     beeBorderAlignY_to_bee_Path = addNavigationPath(navigation,
                                                              beeBorderAlignYLocation,
@@ -233,8 +269,8 @@ void initPaths2018(GameStrategyContext* gameStrategyContext, int index) {
                                                              BEE_BORDER_ALIGN_Y_TO_BEE_CP2,
                                                              deciDegreeToRad(BEE_BORDER_Y_ALIGN_ANGLE_DECI_DEG),
                                                              deciDegreeToRad(BEE_ANGLE_DECI_DEG),
-                                                             BEE_BORDER_ALIGN_Y_TO_BEE_ACCELERATION_FACTOR,
-                                                             BEE_BORDER_ALIGN_Y_TO_BEE_SPEED_FACTOR);
+                                                             aFactor * BEE_BORDER_ALIGN_Y_TO_BEE_ACCELERATION_FACTOR,
+                                                             speedFactor * BEE_BORDER_ALIGN_Y_TO_BEE_SPEED_FACTOR);
     bee_to_distributor2Front_Path = addNavigationPath(navigation,
                                                              beeLocation,
                                                              distributor2FrontLocation,
@@ -243,8 +279,8 @@ void initPaths2018(GameStrategyContext* gameStrategyContext, int index) {
                                                              BEE_TO_DISTRIBUTOR_2_FRONT_CP2,
                                                              deciDegreeToRad(BEE_ANGLE_DECI_DEG),
                                                              deciDegreeToRad(DISTRIBUTOR_2_FRONT_ANGLE_DECI_DEG),
-                                                             BEE_TO_DISTRIBUTOR_2_FRONT_ACCELERATION_FACTOR,
-                                                             BEE_TO_DISTRIBUTOR_2_FRONT_SPEED_FACTOR);
+                                                             aFactor * BEE_TO_DISTRIBUTOR_2_FRONT_ACCELERATION_FACTOR,
+                                                             speedFactor * BEE_TO_DISTRIBUTOR_2_FRONT_SPEED_FACTOR);
                                                              
     distributor2Front_to_distributor2_Path = addNavigationPath(navigation,
                                                              distributor2FrontLocation,
@@ -254,8 +290,8 @@ void initPaths2018(GameStrategyContext* gameStrategyContext, int index) {
                                                              DISTRIBUTOR_2_FRONT_TO_DISTRIBUTOR_2_CP2,
                                                              deciDegreeToRad(DISTRIBUTOR_2_FRONT_ANGLE_DECI_DEG),
                                                              deciDegreeToRad(DISTRIBUTOR_2_ANGLE_DECI_DEG),
-                                                             DISTRIBUTOR_2_FRONT_TO_DISTRIBUTOR_2_ACCELERATION_FACTOR,
-                                                             DISTRIBUTOR_2_FRONT_TO_DISTRIBUTOR_2_SPEED_FACTOR);
+                                                             aFactor * DISTRIBUTOR_2_FRONT_TO_DISTRIBUTOR_2_ACCELERATION_FACTOR,
+                                                             speedFactor * DISTRIBUTOR_2_FRONT_TO_DISTRIBUTOR_2_SPEED_FACTOR);
                                                              
      distributor2_to_garbageFront_Path = addNavigationPath(navigation,
                                                              distributor2Location,
@@ -265,8 +301,8 @@ void initPaths2018(GameStrategyContext* gameStrategyContext, int index) {
                                                              DISTRIBUTOR_2_TO_GARBAGE_FRONT_CP2,
                                                              deciDegreeToRad(DISTRIBUTOR_2_ANGLE_DECI_DEG),
                                                              deciDegreeToRad(GARGAGE_FRONT_POINT_ANGLE_DECI_DEG),
-                                                             DISTRIBUTOR_2_TO_GARBAGE_FRONT_ACCELERATION_FACTOR,
-                                                             DISTRIBUTOR_2_TO_GARBAGE_FRONT_SPEED_FACTOR);
+                                                             aFactor * DISTRIBUTOR_2_TO_GARBAGE_FRONT_ACCELERATION_FACTOR,
+                                                             speedFactor * DISTRIBUTOR_2_TO_GARBAGE_FRONT_SPEED_FACTOR);
                                                              
      garbageFront_to_garbageRelease_Path = addNavigationPath(navigation,
                                                              garbageFrontLocation,
@@ -278,7 +314,6 @@ void initPaths2018(GameStrategyContext* gameStrategyContext, int index) {
                                                              deciDegreeToRad(GARGAGE_RELEASE_POINT_ANGLE_DECI_DEG),
                                                              GARBAGE_FRONT_TO_GARBAGE_RELEASE_ACCELERATION_FACTOR,
                                                              GARBAGE_FRONT_TO_GARBAGE_RELEASE_SPEED_FACTOR);
-                                                             */
 }
 
 void initTargets2018(GameStrategyContext* gameStrategyContext) {
