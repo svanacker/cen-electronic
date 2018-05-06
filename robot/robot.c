@@ -31,6 +31,8 @@
 
 #include "../main/motorboard/motorBoard32.h"
 
+// TODO : To Remove ??
+
 // ROBOT POSITION
 // x / y
 static float robotPositionX;

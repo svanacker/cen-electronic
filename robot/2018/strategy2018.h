@@ -79,8 +79,8 @@
 #define STARTAREA_TO_SWITCH_COST                                      DEFAULT_NAVIGATION_COST
 #define STARTAREA_TO_SWITCH_CP1                                       -100.0f
 #define STARTAREA_TO_SWITCH_CP2                                       -100.0f
-#define STARTAREA_TO_SWITCH_SPEED_FACTOR                              MOTION_SPEED_FACTOR_MIN
-#define STARTAREA_TO_SWITCH_ACCELERATION_FACTOR                       MOTION_ACCELERATION_FACTOR_MIN
+#define STARTAREA_TO_SWITCH_SPEED_FACTOR                              MOTION_SPEED_FACTOR_NORMAL
+#define STARTAREA_TO_SWITCH_ACCELERATION_FACTOR                       MOTION_ACCELERATION_FACTOR_NORMAL
 
 #define SWITCH_TO_DISTRIBUTOR_1_COST                                  DEFAULT_NAVIGATION_COST
 #define SWITCH_TO_DISTRIBUTOR_1_CP1                                   600.0f

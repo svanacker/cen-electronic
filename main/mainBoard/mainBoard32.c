@@ -248,6 +248,7 @@
 #include "../../robot/opponent/robotSonarDetectorDeviceInterface.h"
 
 #include "../../robot/strategy/teamColor.h"
+#include "../../robot/strategy/gameStrategyHandler.h"
 
 #include "../../robot/robot.h"
 #include "../../robot/gameboard/gameboard.h"
@@ -754,6 +755,9 @@ int main(void) {
     clearBuffer(&meca1InputBuffer);
     // Send a clear Buffer to the remote board to avoid to keep bad data in the link when rebooting
     append(&meca1OutputStream, HEADER_CLEAR_INPUT_STREAM);
+      
+    // Update this on the MOTOR BOARD to be synchronized !
+    updateMotorBoardRobotPosition(gameStrategyContext);
     
     // Wait until the match start
     loopUntilStart(&startMatch);

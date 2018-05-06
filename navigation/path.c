@@ -76,11 +76,11 @@ Location* getOtherEnd(PathData* pathData, Location* location) {
     return NULL;
 }
 
-bool moveAlongPath(PathData* pathData, float accelerationFactor, float speedFactor) {
+bool moveAlongPath(PathData* pathData) {
     float destX = pathData->location2->x;
     float destY = pathData->location2->y;
     float destAngleRadian = pathData->angleRadian2;
     float dist1 = pathData->controlPointDistance1;
     float dist2 = pathData->controlPointDistance2;
-    return clientExtendedMotionBSplineAbsolute(destX, destY, destAngleRadian, dist1, dist2, accelerationFactor, speedFactor);
+    return clientExtendedMotionBSplineAbsolute(destX, destY, destAngleRadian, dist1, dist2, pathData->accelerationFactor, pathData->speedFactor);
 }

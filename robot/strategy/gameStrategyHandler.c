@@ -31,11 +31,18 @@
 
 #include "../../client/motion/extended/clientExtendedMotion.h"
 #include "../../client/motion/simple/clientMotion.h"
+#include "../../client/motion/position/clientTrajectory.h"
 
 #include "../../robot/strategy/gameTargetList.h"
-#include "../../robot/2012/strategy2012Utils.h"
+#include "../../robot/2018/strategy2018Utils.h"
+#include "../../robot/robot.h"
 
-void initStrategyHandler(GameStrategyContext* gmeStrategyContext) {
+void initStrategyHandler(GameStrategyContext* gameStrategyContext) {
+}
+
+bool updateMotorBoardRobotPosition(GameStrategyContext* gameStrategyContext) {
+    Point* robotPosition = gameStrategyContext->robotPosition;
+    return clientTrajectorySetAbsolutePosition(robotPosition->x, robotPosition->y, gameStrategyContext->robotAngleRadian);
 }
 
 /**
@@ -118,6 +125,7 @@ void motionGoLocation(Location* location,
                     float angle,
                     float controlPointDistance1, float controlPointDistance2,
                     float accelerationFactor, float speedFactor ) {
+    /*
     angle = changeAngleForColor(angle);
     clientExtendedMotionBSplineAbsolute(location->x, location->y,
                                 angle,
@@ -129,6 +137,7 @@ void motionGoLocation(Location* location,
         strategyContext.robotPosition.x = location->x + 1;
         strategyContext.robotPosition.y = location->y + 1;
     #endif
+    */
 }
 
 /*

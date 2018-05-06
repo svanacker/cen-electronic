@@ -217,7 +217,7 @@ void deviceNavigationHandleRawData(char commandHeader, InputStream* inputStream,
         Navigation* navigation = getNavigationDeviceNavigationObject();
         PathList* pathList = getNavigationPathList(navigation);
         PathData* pathData = getPath(pathList, pathIndex);
-        moveAlongPath(pathData, MOTION_ACCELERATION_FACTOR_MIN, MOTION_SPEED_FACTOR_MIN);
+        moveAlongPath(pathData);
     }
 	else if (commandHeader == COMMAND_NAVIGATION_PATH_LIST_DEBUG) {
 		ackCommand(outputStream, NAVIGATION_DEVICE_HEADER, COMMAND_NAVIGATION_PATH_LIST_DEBUG);

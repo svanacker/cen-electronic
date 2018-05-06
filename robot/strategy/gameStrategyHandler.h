@@ -78,6 +78,10 @@ void motionGoLocation(Location* location,
                     float controlPointDistance1, float controlPointDistance2,
                     float accelerationFactor, float speedFactor);
 
+/**
+ * Update the Motor Board Robot Position (needed at start).
+ */
+bool updateMotorBoardRobotPosition(GameStrategyContext* gameStrategyContext);
 
 #endif
 

@@ -21,4 +21,3 @@ bool isConfigSet(RobotConfig* robotConfig, unsigned int configMask) {
 unsigned int getConfigValue(RobotConfig* robotConfig) {
     return robotConfig->robotConfigReadInt(robotConfig);;
 }
-

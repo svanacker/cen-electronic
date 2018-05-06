@@ -89,5 +89,6 @@ void initGameStrategyContext(GameStrategyContext* gameStrategyContext,
  */
 void showGameStrategyContextTeamColor(GameStrategyContext* gameStrategyContext);
 
+
 #endif
 

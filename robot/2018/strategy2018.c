@@ -24,6 +24,9 @@
 #include "../../navigation/navigation.h"
 
 #include "../../client/robot/2018/launcherClient2018.h"
+#include "../../client/motion/position/clientTrajectory.h"
+
+#include "../../robot/config/robotConfig.h"
 
 #include "../../robot/gameboard/gameBoard.h"
 
@@ -126,8 +129,8 @@ void initColorAndStartPosition2018(GameStrategyContext* gameStrategyContext) {
         angleDeciDegree = ANGLE_DECI_DEG_90;
         gameStrategyContext->robotPosition->y = GAMEBOARD_HEIGHT - gameStrategyContext->robotPosition->y;
 	}
-
-    gameStrategyContext->robotAngleRadian = deciDegreeToRad(angleDeciDegree);
+    float angleRadian = deciDegreeToRad(angleDeciDegree);
+    gameStrategyContext->robotAngleRadian = angleRadian;
 }
 
 void initLocations2018(GameStrategyContext* gameStrategyContext) {
@@ -151,11 +154,44 @@ void initLocations2018(GameStrategyContext* gameStrategyContext) {
     // Garbage
     garbageFrontLocation = addNavigationLocation(navigation, GARBAGE_FRONT, GARBAGE_FRONT_POINT_X, GARBAGE_FRONT_POINT_Y);
     garbageReleaseLocation = addNavigationLocation(navigation, GARBAGE_RELEASE, GARBAGE_RELEASE_POINT_X, GARBAGE_RELEASE_POINT_Y);
+}
 
+float getAccelerationFactor(RobotConfig* robotConfig) {
+    if (isConfigSet(robotConfig, CONFIG_SPEED_LOW_MASK)) {
+        return MOTION_ACCELERATION_FACTOR_NORMAL;
+    }
+    if (isConfigSet(robotConfig, CONFIG_SPEED_VERY_LOW_MASK)) {
+        return MOTION_ACCELERATION_FACTOR_LOW;
+    }
+    if (isConfigSet(robotConfig, CONFIG_SPEED_ULTRA_LOW_MASK)) {
+        return MOTION_ACCELERATION_FACTOR_MIN;
+    }
+    // default is MOTION_SPEED_FACTOR_HIGH
+    return MOTION_ACCELERATION_FACTOR_HIGH;
+}
+
+float getSpeedFactor(RobotConfig* robotConfig) {
+    if (isConfigSet(robotConfig, CONFIG_SPEED_LOW_MASK)) {
+        return MOTION_SPEED_FACTOR_NORMAL;
+    }
+    if (isConfigSet(robotConfig, CONFIG_SPEED_VERY_LOW_MASK)) {
+        return MOTION_SPEED_FACTOR_LOW;
+    }
+    if (isConfigSet(robotConfig, CONFIG_SPEED_ULTRA_LOW_MASK)) {
+        return MOTION_SPEED_FACTOR_MIN;
+    }
+    // default is MOTION_SPEED_FACTOR_HIGH
+    return MOTION_SPEED_FACTOR_HIGH;
 }
 
 void initPaths2018(GameStrategyContext* gameStrategyContext, int index) {
     Navigation* navigation = gameStrategyContext->navigation;
+    
+    RobotConfig* robotConfig = gameStrategyContext->robotConfig;
+    float aFactor = getAccelerationFactor(robotConfig);
+    float speedFactor = getSpeedFactor(robotConfig);
+    
+    
     startArea_to_switch_Path = addNavigationPath(navigation,
                                                  startAreaLocation, 
                                                  switchLocation,
@@ -164,8 +200,8 @@ void initPaths2018(GameStrategyContext* gameStrategyContext, int index) {
                                                  STARTAREA_TO_SWITCH_CP2,
                                                  deciDegreeToRad(START_AREA_ANGLE_DECI_DEG),
                                                  deciDegreeToRad(SWITCH_ANGLE_DECI_DEG),
-                                                 STARTAREA_TO_SWITCH_ACCELERATION_FACTOR,
-                                                 STARTAREA_TO_SWITCH_SPEED_FACTOR);
+                                                 aFactor * STARTAREA_TO_SWITCH_ACCELERATION_FACTOR,
+                                                 speedFactor * STARTAREA_TO_SWITCH_SPEED_FACTOR);
     /*
     switch_to_distributor1_Path = addNavigationPath(navigation,
                                                     switchLocation,
@@ -175,8 +211,8 @@ void initPaths2018(GameStrategyContext* gameStrategyContext, int index) {
                                                     SWITCH_TO_DISTRIBUTOR_1_CP2,
                                                     deciDegreeToRad(SWITCH_ANGLE_DECI_DEG),
                                                     deciDegreeToRad(DISTRIBUTOR_1_ANGLE_DECI_DEG),
-                                                    SWITCH_TO_DISTRIBUTOR_1_ACCELERATION_FACTOR,
-                                                    SWITCH_TO_DISTRIBUTOR_1_SPEED_FACTOR);
+                                                    aFactor * SWITCH_TO_DISTRIBUTOR_1_ACCELERATION_FACTOR,
+                                                    speedFactor * SWITCH_TO_DISTRIBUTOR_1_SPEED_FACTOR);
 
     distributor1_to_beeBorderAlignY_Path = addNavigationPath(navigation,
                                                              distributor1Location,
