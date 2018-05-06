@@ -9,7 +9,7 @@
 #include "gameboardElement.h"
 #include "gameboardElementList.h"
 #include "gameboardBSplinePrint.h"
-#include "../../robot/2012/gameboardElement2012.h"
+#include "../../robot/2012/gameBoardElement2012.h"
 
 #include "../../motion/extended/bspline.h"
 #include "../../motion/extended/bsplineMotion.h"

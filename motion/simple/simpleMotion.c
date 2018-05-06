@@ -1,7 +1,7 @@
 #include "simpleMotion.h"
 #include "../motion.h"
 
-#include "../../common/io/OutputStream.h"
+#include "../../common/io/outputStream.h"
 #include "../../common/log/logger.h"
 #include "../../common/math/cenMath.h"
 #include "../../common/motor/dualHBridgeMotor.h"
