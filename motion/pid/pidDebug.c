@@ -7,7 +7,7 @@
 #include "pidTypeDebug.h"
 #include "pidMotion.h"
 #include "pidMotionDefinitionState.h"
-#include "computer\pidComputer.h"
+#include "computer/pidComputer.h"
 #include "../parameters/motionParameterTypeDebug.h"
 #include "../extended/bsplineDebug.h"
 
