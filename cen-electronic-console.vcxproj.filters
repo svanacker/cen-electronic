@@ -2004,6 +2004,9 @@
     <ClCompile Include="common\ascii\asciiUtils.c">
       <Filter>Source Files\common\ascii</Filter>
     </ClCompile>
+    <ClCompile Include="motion\position\trajectoryTypeDebug.c">
+      <Filter>Source Files\motion\position</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -3103,6 +3106,9 @@
     </ClInclude>
     <ClInclude Include="common\ascii\asciiUtils.h">
       <Filter>Header Files\common\ascii</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\position\trajectoryTypeDebug.h">
+      <Filter>Header Files\motion\position</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

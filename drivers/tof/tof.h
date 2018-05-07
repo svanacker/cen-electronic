@@ -52,4 +52,6 @@ void initTofSensor(TofSensor* tofSensor,
 
 bool tofComputeDetectedPointIfAny(TofSensor* tofSensor, Point* pointOfView, float pointOfViewAngleRadian, Point* pointToUpdateIfAny);
 
+bool isTofSensorBackwardOriented(TofSensor* tofSensor);
+
 #endif

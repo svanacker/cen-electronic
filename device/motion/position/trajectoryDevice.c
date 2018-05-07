@@ -140,6 +140,7 @@ bool trajectoryNotifyIfEnabledAndTreshold(OutputStream* notificationOutputStream
     }
     float distanceSinceLastNotification = getDistanceBetweenLastNotificationAndCurrentRobotPosition();
     float absoluteAngleRadianSinceLastNotification = getAbsoluteAngleRadianBetweenLastNotificationAndCurrentRobotPosition();
+    
     if (distanceSinceLastNotification > trajectory->thresholdDistance
         || absoluteAngleRadianSinceLastNotification > trajectory->thresholdAngleRadian) {
         /*
@@ -152,8 +153,12 @@ bool trajectoryNotifyIfEnabledAndTreshold(OutputStream* notificationOutputStream
         Position* p = getPosition();
         append(notificationOutputStream, TRAJECTORY_DEVICE_HEADER);
         append(notificationOutputStream, NOTIFY_TRAJECTORY_CHANGED);
+        // XXXXXX-YYYYYY-AAAA
         notifyAbsolutePositionWithoutHeader(notificationOutputStream);
-
+        // We must add "Trajectory Type"
+        enum TrajectoryType trajectoryType = computeTrajectoryType(distanceSinceLastNotification, absoluteAngleRadianSinceLastNotification);
+        appendSeparator(notificationOutputStream);
+        appendHex2(notificationOutputStream, trajectoryType);
         clearLastNotificationData();
         return true;
     }

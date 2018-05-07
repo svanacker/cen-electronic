@@ -19,6 +19,8 @@
 #include "../../robot/config/robotConfig.h"
 #include "../../robot/match/endMatch.h"
 
+#include "../../motion/position/trajectoryType.h"
+
 // Forward declaration
 struct GameStrategyContext;
 typedef struct GameStrategyContext GameStrategyContext;
@@ -75,7 +77,7 @@ struct GameStrategyContext {
     /** TofSensorList tof Sensor List */
     TofSensorList* tofSensorList;
     /** Indicates if the robot is moving (to know if we must stop the robot */
-    bool robotMoving;
+    enum TrajectoryType trajectoryType;
 };
 
 /**

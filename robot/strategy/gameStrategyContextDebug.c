@@ -10,6 +10,8 @@
 
 #include "../../common/math/cenMath.h"
 
+#include "../../motion/position/trajectoryTypeDebug.h"
+
 #include "../../navigation/locationListDebug.h"
 
 #include "../../robot/strategy/teamColor.h"
@@ -127,6 +129,12 @@ void printGameStrategyContext(OutputStream* outputStream, GameStrategyContext* c
     appendDecfTableData(outputStream, radToDeg(context->robotAngleRadian), GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
     appendStringTableData(outputStream, "Degree", GAME_STRATEGY_CONTEXT_UNIT_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, GAME_STRATEGY_CONTEXT_LAST_COLUMN);
+    // -> Trajectory Type
+    appendStringTableData(outputStream, "trajectoryType", GAME_STRATEGY_CONTEXT_KEY_COLUMN_LENGTH);
+    addTrajectoryTypeTableData(outputStream, context->trajectoryType, GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
+    appendStringTableData(outputStream, "", GAME_STRATEGY_CONTEXT_UNIT_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, GAME_STRATEGY_CONTEXT_LAST_COLUMN);
+
     appendTableHeaderSeparatorLine(outputStream);
 
     // Robot Position

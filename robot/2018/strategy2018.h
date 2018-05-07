@@ -41,6 +41,9 @@
 #define FRONT_MIDDLE_SENSOR_DISTANCE_THRESHOLD  800
 #define FRONT_LEFT_SENSOR_DISTANCE_THRESHOLD    600
 
+// MIN TRESHOLD : Do not detect too close of TOF (physically impossible because 
+// TOF are at the center of the robot !)
+#define SENSOR_DISTANCE_MIN_TRESHOLD            100
 
 // Angles
 #define     ANGLE_DECI_DEG_0             0x0000

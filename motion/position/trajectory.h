@@ -108,7 +108,9 @@ void updateTrajectoryWithNoThreshold(void);
  */
 void updateTrajectoryAndClearCoders(void);
 
-// NOTIFICATION
+// NOTIFICATION & TRAJECTORY_TYPE
+
+enum TrajectoryType computeTrajectoryType(float distanceSinceLastNotification, float angleRadianSinceLastNotification);
 
 float getDistanceBetweenLastNotificationAndCurrentRobotPosition(void);
 

@@ -10,6 +10,8 @@
 
 #include "../../common/log/logger.h"
 
+#include "../../common/math/cenMath.h"
+
 void initTofSensor(TofSensor* tofSensor, 
                     tofSensorInitFunction* tofSensorInit,
                     tofSensorGetDistanceMMFunction* tofGetDistanceMM,
@@ -38,4 +40,9 @@ bool tofComputeDetectedPointIfAny(TofSensor* tofSensor, Point* pointOfView, floa
     computeDirectionPoint(pointOfView, pointToUpdateIfAny, (float) distance, pointOfViewAngleRadian + tofSensor->orientationRadian);
     
     return true;
+}
+
+bool isTofSensorBackwardOriented(TofSensor* tofSensor) {
+    return (tofSensor->orientationRadian > (PI / 2.0f) || 
+            tofSensor->orientationRadian < (-PI / 2.0f));
 }

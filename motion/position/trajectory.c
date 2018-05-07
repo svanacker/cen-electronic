@@ -4,6 +4,7 @@
 #include <stdbool.h>
 
 #include "trajectory.h"
+#include "trajectoryType.h"
 
 #include "../../common/2d/2d.h"
 
@@ -170,7 +171,7 @@ bool absoluteUpdateFromCoders(signed long left, signed long right, bool useThres
     float meanOrientation = (orientation + relativePositionOrientation) / 2.0f;
 
     if (debug) {
-        debugTrajectoryVariables("dw=", dw, ", orientationi=", orientation);
+        debugTrajectoryVariables("dw=", dw, ", orientation=", orientation);
         debugTrajectoryVariables("angle=", angle, ",meanOrientation=", meanOrientation);
     }
 
@@ -223,6 +224,30 @@ void updateTrajectoryAndClearCoders() {
 }
 
 // NOTIFICATION
+
+enum TrajectoryType computeTrajectoryType(float distanceSinceLastNotification, float angleRadianSinceLastNotification) {
+    if (distanceSinceLastNotification < trajectory.thresholdDistance) {
+        if (angleRadianSinceLastNotification < trajectory.thresholdAngleRadian) {
+            return TRAJECTORY_TYPE_NONE;
+        }
+        // More near from a rotation even if the robot has moved
+        return TRAJECTORY_TYPE_ROTATION;
+    }
+    else {
+        Point* previousPoint = &(trajectory.lastNotificationPosition.pos);
+        Point* currentPoint = &(trajectory.position.pos);
+
+        float angleOfVectorRadian = angleOfVector(previousPoint, currentPoint);
+        
+        float orientation = trajectory.position.orientation;
+        float orientationMod2PI = mod2PI(orientation - angleOfVectorRadian);
+        // We are "more" in a back trajectoty type if we are in this quadran
+        if (fabsf(orientationMod2PI) > PI / 2) {
+            return TRAJECTORY_TYPE_BACKWARD;
+        }
+        return TRAJECTORY_TYPE_FORWARD;
+    }
+}
 
 float getDistanceBetweenLastNotificationAndCurrentRobotPosition(void) {
     Point* lastNotificationPoint = &(trajectory.lastNotificationPosition.pos);

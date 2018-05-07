@@ -401,6 +401,7 @@
     <ClCompile Include="motion\position\mockCoder\mockCoders.c" />
     <ClCompile Include="motion\position\trajectory.c" />
     <ClCompile Include="motion\position\trajectoryDebug.c" />
+    <ClCompile Include="motion\position\trajectoryTypeDebug.c" />
     <ClCompile Include="motion\simple\motionCalibration.c" />
     <ClCompile Include="motion\simple\simpleMotion.c" />
     <ClCompile Include="motion\simulation\motionSimulation.c" />
@@ -765,6 +766,7 @@
     <ClInclude Include="motion\position\codersDebug.h" />
     <ClInclude Include="motion\position\trajectory.h" />
     <ClInclude Include="motion\position\trajectoryDebug.h" />
+    <ClInclude Include="motion\position\trajectoryTypeDebug.h" />
     <ClInclude Include="motion\simple\motionCalibration.h" />
     <ClInclude Include="motion\simple\simpleMotion.h" />
     <ClInclude Include="navigation\location.h" />

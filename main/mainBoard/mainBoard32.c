@@ -254,6 +254,7 @@
 #include "../../robot/gameboard/gameboard.h"
 
 // 2018
+#include "../../robot/2018/strategy2018.h"
 #include "../../robot/2018/distributor2018.h"
 #include "../../robot/2018/launcherDevice2018.h"
 #include "../../robot/2018/launcherDeviceInterface2018.h"
@@ -391,7 +392,7 @@ void mainBoardDeviceHandleMotionDeviceNotification(const Device* device, const c
                 || commandHeader == NOTIFY_MOTION_STATUS_REACHED
                 || commandHeader == NOTIFY_MOTION_STATUS_BLOCKED) {
             updateNewPositionFromNotification(inputStream);
-            gameStrategyContext->robotMoving = false;
+            gameStrategyContext->trajectoryType = TRAJECTORY_TYPE_NONE;
         }
     }
 }
@@ -400,7 +401,9 @@ void mainBoardDeviceHandleTrajectoryDeviceNotification(const Device* device, con
     if (device->deviceInterface->deviceHeader == TRAJECTORY_DEVICE_HEADER) {
         if (commandHeader == NOTIFY_TRAJECTORY_CHANGED) {
             updateNewPositionFromNotification(inputStream);
-            gameStrategyContext->robotMoving = true;
+            checkIsSeparator(inputStream);
+            enum TrajectoryType trajectoryType = readHex2(inputStream);
+            gameStrategyContext->trajectoryType = trajectoryType;
         }
     }
 }
@@ -520,12 +523,28 @@ void handleTofSensorList() {
         return;
     }
     unsigned int index;
+    enum TrajectoryType trajectoryType = gameStrategyContext->trajectoryType;
+    if (trajectoryType == TRAJECTORY_TYPE_NONE || trajectoryType == TRAJECTORY_TYPE_ROTATION) {
+        return;
+    }
     for (index = 0; index < tofSensorList.size; index++) {
         TofSensor* tofSensor = getTofSensorByIndex(&tofSensorList, index);
         
+        bool tofBackward = isTofSensorBackwardOriented(tofSensor);
+        
+        // Don't manage Backward TofSensor if we go forward
+        if (tofBackward && trajectoryType == TRAJECTORY_TYPE_FORWARD) {
+            continue;
+        }
+        
+        // Don't manage Forward TofSensor if we go backward
+        if (!tofBackward && trajectoryType == TRAJECTORY_TYPE_BACKWARD) {
+            continue;
+        }
+        
         // TO DO : Manage if we must use Back Sonar or Front Sonar !
         unsigned int distance = tofSensor->tofGetDistanceMM(tofSensor);
-        if (distance == 0) {
+        if (distance <= SENSOR_DISTANCE_MIN_TRESHOLD) {
             continue;
         }
         // DetectedPoint if any
@@ -537,14 +556,13 @@ void handleTofSensorList() {
         if (!detected) {
             continue;
         }
-        if (gameStrategyContext->robotMoving) {
-            // We must know if it's in the gameboard
-            if (isPointInTheCollisionArea(gameBoard, &detectedPoint)) {
-                OutputStream* debugOutputStream = getDebugOutputStreamLogger();
-                printPoint(debugOutputStream, &detectedPoint, "mm");
-                motionDriverStop();
-                gameStrategyContext->robotMoving = false;
-            }
+        // We must know if it's in the gameboard
+        if (isPointInTheCollisionArea(gameBoard, &detectedPoint)) {
+            OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+            printPoint(debugOutputStream, &detectedPoint, "mm");
+            motionDriverStop();
+            // Block the notification system !
+            gameStrategyContext->trajectoryType = TRAJECTORY_TYPE_NONE;
         }
     }
 }

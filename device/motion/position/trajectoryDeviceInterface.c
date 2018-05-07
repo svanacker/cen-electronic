@@ -92,14 +92,16 @@ int trajectoryGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fi
     if (DEVICE_MODE_NOTIFY == mode) {
         if (commandHeader == NOTIFY_TRAJECTORY_CHANGED) {
             if (fillDeviceArgumentList) {
-                setNotification("Trajectory Changed", 5);
+                setNotification("Trajectory Changed", 7);
                 setArgumentUnsignedHex6(0, "x(mm)");
                 setArgumentSeparator(1);
                 setArgumentUnsignedHex6(2, "y(mm)");
                 setArgumentSeparator(3);
                 setArgumentUnsignedHex4(4, "ang(1/10)deg");
+                setArgumentSeparator(5);
+                setArgumentUnsignedHex2(6, "Trajectory Type");
             }
-            return 18;
+            return 20;
         }
     }
     return DEVICE_HEADER_NOT_HANDLED;

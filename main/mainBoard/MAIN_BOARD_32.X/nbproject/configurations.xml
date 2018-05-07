@@ -435,6 +435,10 @@
         <itemPath>../../../motion/extended/bspline.h</itemPath>
         <itemPath>../../../motion/extended/bsplineDebug.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f21" displayName="motion.position" projectFiles="true">
+        <itemPath>../../../motion/position/trajectoryType.h</itemPath>
+        <itemPath>../../../motion/position/trajectoryTypeDebug.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="motion.simple"
                      displayName="motion.simple"
                      projectFiles="true">
@@ -989,6 +993,9 @@
                      projectFiles="true">
         <itemPath>../../../motion/extended/bspline.c</itemPath>
         <itemPath>../../../motion/extended/bsplineDebug.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f21" displayName="motion.position" projectFiles="true">
+        <itemPath>../../../motion/position/trajectoryTypeDebug.c</itemPath>
       </logicalFolder>
       <logicalFolder name="navigation" displayName="navigation" projectFiles="true">
         <itemPath>../../../navigation/location.c</itemPath>
