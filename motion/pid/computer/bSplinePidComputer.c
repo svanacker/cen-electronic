@@ -66,7 +66,7 @@ float bSplineMotionComputeAlphaAndThetaDiff(Point* robotPoint, Point* normalPoin
  * @private
  * Compute the Alpha part of the PID
  */
-float bSplineMotionUComputeAlphaError(PidMotion* pidMotion, Position* robotPosition, float normalAlpha, float alphaAndThetaDiff, float distanceRealAndNormalPoint) {
+float bSplineMotionUComputeAlphaError(PidMotion* pidMotion, BSplineCurve* curve, Position* robotPosition, float normalAlpha, float alphaAndThetaDiff, float distanceRealAndNormalPoint) {
     // Real Alpha
     float realAlpha = robotPosition->orientation;
     // Error
@@ -85,8 +85,13 @@ float bSplineMotionUComputeAlphaError(PidMotion* pidMotion, Position* robotPosit
     // Follow a "parallel" curve to the right One
     // So we try to compute a complementary distance equivalent to the distance between this "parallel curve" (the normal curve)
     // and the robot curve
-    // alphaDistanceEquivalentError -= sinf(alphaAndThetaDiff) * distanceRealAndNormalPoint;  
-
+    float additionalError = -(sinf(alphaAndThetaDiff) * distanceRealAndNormalPoint);
+    if (curve->backward) {
+        alphaDistanceEquivalentError -= additionalError;  
+    }
+    else {
+        alphaDistanceEquivalentError += additionalError;  
+    }
     PidComputationValues* computationValues = &(pidMotion->computationValues);
     PidComputationInstructionValues* alphaValues = &(computationValues->values[ALPHA]);
 
@@ -181,9 +186,8 @@ void bSplineMotionUCompute(PidMotion* pidMotion, PidMotionDefinition* motionDefi
     float distanceRealAndNormalPoint = distanceBetweenPoints(robotPoint, &normalPoint);
 
     // ALPHA CORRECTION
-    float realAlpha = robotPosition->orientation;
-    normalAlpha = bSplineMotionUComputeAlphaError(pidMotion, robotPosition, normalAlpha, alphaAndThetaDiff, distanceRealAndNormalPoint);
+    normalAlpha = bSplineMotionUComputeAlphaError(pidMotion, curve, robotPosition, normalAlpha, alphaAndThetaDiff, distanceRealAndNormalPoint);
 
     // THETA
-    float thetaError = bSplineMotionUComputeThetaError(pidMotion, motionDefinition, alphaAndThetaDiff, distanceRealAndNormalPoint);
+    bSplineMotionUComputeThetaError(pidMotion, motionDefinition, alphaAndThetaDiff, distanceRealAndNormalPoint);
 }

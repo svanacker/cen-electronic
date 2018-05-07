@@ -146,7 +146,22 @@ void deviceStrategyHandleRawData(char commandHeader, InputStream* inputStream, O
         checkIsSeparator(inputStream);
         // angle in decideg
         context->robotAngleRadian = degToRad(readHexFloat4(inputStream, ANGLE_DIGIT_DEGREE_PRECISION));
+        // Must call the motor Board to synchronized the both positions !
+        updateMotorBoardRobotPosition(context);
     }
+    else if (commandHeader == COMMAND_STRATEGY_SET_ROBOT_POSITION_AS_FIRST_LOCATION_OF_PATH_INDEX) {
+        GameStrategyContext* context = getStrategyDeviceGameStrategyContext();
+        ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_STRATEGY_SET_ROBOT_POSITION_AS_FIRST_LOCATION_OF_PATH_INDEX);
+        unsigned pathIndex = readHex2(inputStream);
+        PathData* path = getPath(context->navigation->paths, pathIndex);
+        Location* location1 = path->location1;
+        context->robotPosition->x = location1->x;
+        context->robotPosition->y = location1->y;
+        context->robotAngleRadian = path->angleRadian1;
+        // Must call the motor Board to synchronized the both positions !
+        updateMotorBoardRobotPosition(context);
+    }
+    // DO ALL TARGET ACTION ITEM OF AN ACTION
     else if (commandHeader == COMMAND_TARGET_ACTION_DO_ALL_ITEMS) {
         GameStrategyContext* context = getStrategyDeviceGameStrategyContext();
         ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_TARGET_ACTION_DO_ALL_ITEMS);

@@ -83,9 +83,12 @@ void updateRobotPosition(float x, float y, float angle) {
 }
 
 void printRobotPosition(OutputStream* outputStream) {
-    appendStringAndDecf(outputStream, "\nRobotPositionX=", robotPositionX);
-    appendStringAndDecf(outputStream, "\nRobotPositionY=", robotPositionY);
-    appendStringAndDecf(outputStream, "\nRobotAngle=", robotAngle);
+    println(outputStream);
+    appendStringAndDecf(outputStream, "RobotPositionX=", robotPositionX);
+    println(outputStream);
+    appendStringAndDecf(outputStream, "RobotPositionY=", robotPositionY);
+    println(outputStream);
+    appendStringAndDecf(outputStream, "RobotAngle=", robotAngle);
     println(outputStream);
 }
 

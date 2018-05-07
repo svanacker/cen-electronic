@@ -11,7 +11,7 @@ nW0000A0-0004C9-0A8C
 
 // Pour aller de l'interrupteur au distributeur
 // X3 = 848mm, Y = 195, Distance P0-P1 = 600mm, Distance P2-P3 = 400, Angle = -60 => 300
-XS000350-0000C3-0BB8-0258-0190-02-01
+XS000350-0000C3-0BB8-0258-0190-05-05
 
 // Pour repartir du distributeur
 nW000350-0000C3-0BB8

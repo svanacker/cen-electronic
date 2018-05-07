@@ -77,7 +77,7 @@ void deviceADCHandleRawData(char commandHeader, InputStream* inputStream, Output
             }
             unsigned int value = readAdc(adcIndex);
             appendStringAndDec(debugOutputStream, "value=", value);
-            appendString(debugOutputStream, " mV\n");
+            appendStringLN(debugOutputStream, " mV");
         }
     }
     else if (commandHeader == COMMAND_GET_ADC_ALL_VALUES) {

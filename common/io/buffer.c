@@ -310,10 +310,12 @@ void printDebugBuffer(OutputStream* outputStream, Buffer* buffer) {
         return;    
     }
     if (buffer == NULL) {
-        appendString(outputStream, "\nBuffer is NULL !\n");
+        println(outputStream);
+        appendStringLN(outputStream, "Buffer is NULL !");
         return;
     }
-    appendString(outputStream, "\nBuffer:");
+    println(outputStream);
+    appendString(outputStream, "Buffer:");
 
     if (buffer->name != NULL) {
         appendKeyAndName(outputStream, "name=", buffer->name);

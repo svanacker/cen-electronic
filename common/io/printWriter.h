@@ -73,6 +73,8 @@ unsigned int appendSpaces(OutputStream* outputStream, int count);
  */
 unsigned int appendString(OutputStream* outputStream, const char* s);
 
+unsigned int appendStringLN(OutputStream* outputStream, const char* s);
+
 /**
  * Append a char array with a specific length.
  * @param outputStream the pointer on outputStream (POO simulation)

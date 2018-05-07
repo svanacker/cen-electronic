@@ -73,7 +73,15 @@ int deviceStrategyGetInterface(char commandHeader, DeviceInterfaceMode mode, boo
             setArgumentUnsignedHex4(4, "ang(1/10)deg");
         }
         return commandLengthValueForMode(mode, 14, 0);
-    }    
+    }
+    else if (commandHeader == COMMAND_STRATEGY_SET_ROBOT_POSITION_AS_FIRST_LOCATION_OF_PATH_INDEX) {
+        if (fillDeviceArgumentList) {
+            setFunction("Set Robot Pos/Ang as Path[index]->loc1", 1, 0);
+            setArgumentUnsignedHex2(0, "Path Index");
+
+        }
+        return commandLengthValueForMode(mode, 2, 0);
+    }
     // Get the global score
     else if (commandHeader == COMMAND_STRATEGY_GET_GLOBAL_SCORE) {
         // same input/output

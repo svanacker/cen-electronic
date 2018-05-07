@@ -10,16 +10,16 @@
 
 // SPEED FACTOR
 
-#define    MOTION_SPEED_FACTOR_MAX                1.5f
-#define    MOTION_SPEED_FACTOR_HIGH               1.0f
+#define    MOTION_SPEED_FACTOR_MAX                1.0f
+#define    MOTION_SPEED_FACTOR_HIGH               0.75f
 #define    MOTION_SPEED_FACTOR_NORMAL             0.5f
 #define    MOTION_SPEED_FACTOR_LOW                0.25f
 #define    MOTION_SPEED_FACTOR_MIN                0.1f
 
 // ACCELERATION FACTOR
 
-#define    MOTION_ACCELERATION_FACTOR_MAX         1.5f
-#define    MOTION_ACCELERATION_FACTOR_HIGH        1.0f
+#define    MOTION_ACCELERATION_FACTOR_MAX         1.0f
+#define    MOTION_ACCELERATION_FACTOR_HIGH        0.75f
 #define    MOTION_ACCELERATION_FACTOR_NORMAL      0.5f
 #define    MOTION_ACCELERATION_FACTOR_LOW         0.25f
 #define    MOTION_ACCELERATION_FACTOR_MIN         0.1f

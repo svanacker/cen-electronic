@@ -77,6 +77,13 @@ unsigned int appendString(OutputStream* outputStream, const char* s) {
 	return result;
 }
 
+unsigned int appendStringLN(OutputStream* outputStream, const char* s) {
+    unsigned result = appendString(outputStream, s);
+    result += println(outputStream);
+
+    return result;
+}
+
 unsigned int appendHexFixedCharArray(OutputStream* outputStream, FixedCharArray* s) {
 	unsigned int i;
 	char* sPointer = (char*)s;
@@ -126,6 +133,9 @@ unsigned int appendCRLF(OutputStream* outputStream) {
 }
 
 unsigned int println(OutputStream* outputStream) {
+    #ifdef USE_CR
+        return appendCRLF(outputStream);
+    #endif
     return appendLF(outputStream);
 }
 

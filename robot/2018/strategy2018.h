@@ -35,18 +35,18 @@
 #define SWITCH_ANGLE_DECI_DEG                       ANGLE_DECI_DEG_270
 
 #define DISTRIBUTOR_1                                            "D_1"
-#define DISTRIBUTOR_1_X                                            850
-#define DISTRIBUTOR_1_Y                                            170
+#define DISTRIBUTOR_1_X                                            830
+#define DISTRIBUTOR_1_Y                                            210
 #define DISTRIBUTOR_1_ANGLE_DECI_DEG                ANGLE_DECI_DEG_300
 
 #define BEE_BORDER_Y_ALIGN                                       "B_Y"
-#define BEE_BORDER_Y_ALIGN_X                                      1700
+#define BEE_BORDER_Y_ALIGN_X                                      1600
 #define BEE_BORDER_Y_ALIGN_Y                                       154
 #define BEE_BORDER_Y_ALIGN_ANGLE_DECI_DEG            ANGLE_DECI_DEG_90
 
 #define BEE                                                        "B"
-#define BEE_X                                                     1920
-#define BEE_Y                                                      200
+#define BEE_X                                                     1925
+#define BEE_Y                                                      250
 #define BEE_ANGLE_DECI_DEG                            ANGLE_DECI_DEG_0
 
 #define DISTRIBUTOR_2_FRONT                                     "D2_F"
@@ -55,8 +55,8 @@
 #define DISTRIBUTOR_2_FRONT_ANGLE_DECI_DEG            ANGLE_DECI_DEG_0
 
 #define DISTRIBUTOR_2                                             "D2"
-#define DISTRIBUTOR_2_X                                           1900
-#define DISTRIBUTOR_2_Y                                           2380
+#define DISTRIBUTOR_2_X                                           1810
+#define DISTRIBUTOR_2_Y                                           2420
 #define DISTRIBUTOR_2_ANGLE_DECI_DEG                 ANGLE_DECI_DEG_30
 
 #define GARBAGE_FRONT                                             "GF"
@@ -89,7 +89,7 @@
 #define SWITCH_TO_DISTRIBUTOR_1_ACCELERATION_FACTOR                   MOTION_ACCELERATION_FACTOR_NORMAL
 
 #define DISTRIBUTOR_1_TO_BEE_BORDER_ALIGN_Y_COST                      DEFAULT_NAVIGATION_COST
-#define DISTRIBUTOR_1_TO_BEE_BORDER_ALIGN_Y_CP1                       -1152.0f
+#define DISTRIBUTOR_1_TO_BEE_BORDER_ALIGN_Y_CP1                       -1000.0f
 #define DISTRIBUTOR_1_TO_BEE_BORDER_ALIGN_Y_CP2                       -512.0f
 #define DISTRIBUTOR_1_TO_BEE_BORDER_ALIGN_Y_COST_SPEED_FACTOR         MOTION_SPEED_FACTOR_NORMAL
 #define DISTRIBUTOR_1_TO_BEE_BORDER_ALIGN_Y_COST_ACCELERATION_FACTOR  MOTION_ACCELERATION_FACTOR_NORMAL
@@ -97,8 +97,8 @@
 #define BEE_BORDER_ALIGN_Y_TO_BEE_COST                                DEFAULT_NAVIGATION_COST
 #define BEE_BORDER_ALIGN_Y_TO_BEE_CP1                                 80.0f
 #define BEE_BORDER_ALIGN_Y_TO_BEE_CP2                                 16.0f
-#define BEE_BORDER_ALIGN_Y_TO_BEE_SPEED_FACTOR                        MOTION_SPEED_FACTOR_NORMAL
-#define BEE_BORDER_ALIGN_Y_TO_BEE_ACCELERATION_FACTOR                 MOTION_ACCELERATION_FACTOR_NORMAL
+#define BEE_BORDER_ALIGN_Y_TO_BEE_SPEED_FACTOR                        MOTION_SPEED_FACTOR_LOW
+#define BEE_BORDER_ALIGN_Y_TO_BEE_ACCELERATION_FACTOR                 MOTION_ACCELERATION_FACTOR_LOW
 
 #define BEE_TO_DISTRIBUTOR_2_FRONT_COST                               DEFAULT_NAVIGATION_COST
 #define BEE_TO_DISTRIBUTOR_2_FRONT_CP1                                -768.0f

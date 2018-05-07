@@ -79,7 +79,8 @@ void printGameStrategyContextTableHeader(OutputStream* outputStream) {
 }
 
 void printGameStrategyContext(OutputStream* outputStream, GameStrategyContext* context) {
-    appendString(outputStream, "\nGameStrategyContext:");
+    println(outputStream);
+    appendString(outputStream, "GameStrategyContext:");
     printGameStrategyContextTableHeader(outputStream);
 
     // GameStrategy->name

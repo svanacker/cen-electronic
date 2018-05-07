@@ -379,13 +379,15 @@ bool mustComputePaths(GameStrategyContext* gameStrategyContext) {
 void updatePathsAvailability(GameStrategyContext* gameStrategyContext) {
     #ifdef DEBUG_OPPONENT_ROBOT
         OutputStream* logStream = getInfoOutputStreamLogger();
-        appendString(logStream, "\nUpdating available paths");
+        println(logStream);
+        appendString(logStream, "Updating available paths");
     //    printGameStrategyContext(logStream, getStrategyContext());
     #endif
 
     bool computePath = mustComputePaths(gameStrategyContext);
     if (!computePath) {
-        appendString(logStream, "\nDon't compute Path !");
+        println(logStream);
+        appendString(logStream, "Don't compute Path !");
     }    
     Navigation* navigation = gameStrategyContext->navigation;
     PathList* paths = getNavigationPathList(navigation);
@@ -407,14 +409,14 @@ void updatePathsAvailability(GameStrategyContext* gameStrategyContext) {
         for (k = 0; k < paths->size; k++) {
             PathData* pathData = getPath(paths, k);
             if (!getPathAvailability(navigation, k)) {
-                appendString(logStream, "\n");
+                println(logStream);
                 appendString(logStream, pathData->location1->name);
                 appendString(logStream, "->");
                 appendString(logStream, pathData->location2->name);
                 appendString(logStream, ": UNAVAILABLE");        
             }
         }
-        appendString(logStream, "\n");
+        println(logStream);
     #endif
 }
 

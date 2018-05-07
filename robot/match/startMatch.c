@@ -23,11 +23,13 @@ void loopUntilStart(StartMatch* startMatch) {
         while (!startMatch->isMatchStartedFunction(startMatch)) {
             startMatch->loopUntilStartHandleFunction(startMatch);
         }
-        appendString(getAlwaysOutputStreamLogger(), "OK\n");
+        appendString(getAlwaysOutputStreamLogger(), "OK");
+        println(getAlwaysOutputStreamLogger());
         markStartMatch(startMatch->endMatch);
     }
     else {
-        appendString(getAlwaysOutputStreamLogger(), "STARTED !\n");
+        appendString(getAlwaysOutputStreamLogger(), "STARTED !");
+        println(getAlwaysOutputStreamLogger());
     }
 }
 

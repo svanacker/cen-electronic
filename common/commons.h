@@ -58,6 +58,9 @@
 /** Clear Screnn. */
 #define CLS 12
 
+/** Define or not if we add LF and CR */
+#define USE_CR         true
+
 //// Classical values
 
 #define DECIMAL_SEPARATOR '.'

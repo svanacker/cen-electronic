@@ -202,7 +202,7 @@ void printGameboard(GameBoard* gameBoard,  OutputStream* outputStream) {
         for (column = 0; column <= GAMEBOARD_COLUMN_COUNT; column++) {
             append(outputStream, gameBoard->pixels[column][line]);
         }
-        append(outputStream, '\n');
+        println(outputStream);
     }
 }
 

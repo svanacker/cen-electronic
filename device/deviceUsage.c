@@ -125,7 +125,7 @@ bool printMethodOrNotificationMetaData(OutputStream* outputStream, DeviceInterfa
         if (argumentLength != realArgumentLength) {
             writeError(DEVICE_INTERFACE_PROBLEM);
             result = false;
-            appendString(outputStream, "Arguments Definition ERROR !!!!!!\n");
+            appendStringLN(outputStream, "Arguments Definition ERROR !!!!!!");
             println(outputStream);
             appendStringAndDec(outputStream, "argumentCount=", argumentCount);
             println(outputStream);

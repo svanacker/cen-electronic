@@ -53,7 +53,8 @@ void writeBSpline(OutputStream* outputStream, BSplineCurve* bSplineCurve) {
 	writeBSplineDefinitionRow(outputStream, 0, bSplineCurve);
 
 	// Using constant time
-	appendString(outputStream, "\nConst time:\n");
+    println(outputStream);
+	appendStringLN(outputStream, "Const time:");
 	writeBSplineHeader(outputStream);
 	float t;
 	BSplinePointData splinePointData;

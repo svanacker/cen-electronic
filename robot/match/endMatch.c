@@ -59,7 +59,7 @@ unsigned int matchEndGetRemainingTime(EndMatch* endMatch) {
 void showEndAndScore(EndMatch* endMatch, OutputStream* outputStream) {
     appendString(outputStream, "End : Score = ");
     appendDec(outputStream, endMatch->scoreToShow);
-    appendString(outputStream, " pts\n");
+    appendStringLN(outputStream, " pts");
 }
 
 bool showEndAndScoreIfNeeded(EndMatch* endMatch, OutputStream* outputStream) {
@@ -87,7 +87,7 @@ bool isMatchFinished(EndMatch* endMatch) {
         return false;
     }
     if (!endMatch->endMatchDetectorDeviceTimer->enabled) {
-        appendString(getErrorOutputStreamLogger(), "You must enable end Match Timer before\n");
+        appendStringLN(getErrorOutputStreamLogger(), "You must enable end Match Timer before");
     }
     bool result = endMatch->currentTimeInSecond >= endMatch->matchDurationInSecond;
 

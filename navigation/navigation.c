@@ -161,7 +161,7 @@ float computeBestPath(Navigation* navigation, Location* start, Location* end) {
     for (i = 0; i < size; i++) {
         // search the nearest node of the nodeList
         #ifdef NAVIGATION_DEBUG
-            appendString(getInfoOutputStreamLogger(), "extractMinCostLocation\n");
+            appendStringLN(getInfoOutputStreamLogger(), "extractMinCostLocation");
         #endif
         location1 = extractMinCostLocation(navigation);
 

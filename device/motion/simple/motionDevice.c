@@ -79,7 +79,7 @@ void internalNotify(OutputStream* outputStream, char statusHeader, char* notifyS
     appendString(debugOutputStream, notifyString);
     appendString(debugOutputStream, "t=");
     appendDecf(debugOutputStream, getPidTimeInSecond());
-    appendString(debugOutputStream, ")\n");
+    appendStringLN(debugOutputStream, ")");
 }
 
 void notifyReached(OutputStream* outputStream) {
