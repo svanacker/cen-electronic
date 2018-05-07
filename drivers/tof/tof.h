@@ -3,6 +3,8 @@
 
 #include <stdbool.h>
 
+#include "../../common/2d/2d.h"
+
 // Forward declaration
 typedef struct TofSensor TofSensor;
 
@@ -28,8 +30,11 @@ struct TofSensor {
     /** Stored the value of the last call */
     unsigned int lastDistanceMM;
     /** Stored the threshold for which we would like that it raises a notification. */
-    unsigned thresholdDistanceMM;
+    unsigned int thresholdDistanceMM;
     /** pointer on other object (useful for I2C Connection for example) .*/
+    /** Store the angle in radian of the sensor compared to the robot. We use the same coordinates than for Robot. */
+    float orientationRadian;
+    /** Generic pointer for context use */
     int* object;
 };
 
@@ -40,6 +45,11 @@ void initTofSensor(TofSensor* tofSensor,
                     tofSensorInitFunction* tofSensorInit,
                     tofSensorGetDistanceMMFunction* tofGetDistanceMM,
                     unsigned int thresholdDistanceMM,
+                    float orientationRadian,
                     int* object);
+
+// UTILS FUNCTION
+
+bool tofComputeDetectedPointIfAny(TofSensor* tofSensor, Point* pointOfView, float pointOfViewAngleRadian, Point* pointToUpdateIfAny);
 
 #endif

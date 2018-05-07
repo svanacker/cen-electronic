@@ -13,6 +13,8 @@
 
 #include "../../common/math/cenMath.h"
 
+#include "../../drivers/tof/tofList.h"
+
 #include "../../motion/motion.h"
 #include "../../motion/simple/simpleMotion.h"
 #include "../../motion/extended/bsplineMotion.h"
@@ -107,6 +109,46 @@ static GameStrategy strategy2;
 // strategies Items
 static GameStrategyItem switchStrategyItem;
 static GameStrategyItem distributor1StrategyItem;
+
+static TofSensor* backRightSensor0;
+static TofSensor* backMiddleSensor1;
+static TofSensor* backLeftSensor2;
+
+static TofSensor* frontRightSensor3;
+static TofSensor* frontMiddleSensor4;
+static TofSensor* frontLeftSensor5;
+
+
+// TOF MANAGEMENT
+
+void setTofListOrientationAngle2018(TofSensorList* tofSensorList) {
+    backRightSensor0 = getTofSensorByIndex(tofSensorList, BACK_RIGHT_SENSOR_INDEX);
+    backMiddleSensor1 = getTofSensorByIndex(tofSensorList, BACK_MIDDLE_SENSOR_INDEX);
+    backLeftSensor2 = getTofSensorByIndex(tofSensorList, BACK_LEFT_SENSOR_INDEX);
+
+    frontRightSensor3 = getTofSensorByIndex(tofSensorList, FRONT_RIGHT_SENSOR_INDEX);
+    frontMiddleSensor4 = getTofSensorByIndex(tofSensorList, FRONT_MIDDLE_SENSOR_INDEX);
+    frontLeftSensor5 = getTofSensorByIndex(tofSensorList, FRONT_LEFT_SENSOR_INDEX);    
+    
+    // Orientation
+    backRightSensor0->orientationRadian = degToRad(BACK_RIGHT_SENSOR_ANGLE_DEGREE);
+    backMiddleSensor1->orientationRadian = degToRad(BACK_MIDDLE_SENSOR_ANGLE_DEGREE);
+    backLeftSensor2->orientationRadian = degToRad(BACK_LEFT_SENSOR_ANGLE_DEGREE);
+
+    frontRightSensor3->orientationRadian = degToRad(FRONT_RIGHT_SENSOR_ANGLE_DEGREE);
+    frontMiddleSensor4->orientationRadian = degToRad(FRONT_MIDDLE_SENSOR_ANGLE_DEGREE);
+    frontLeftSensor5->orientationRadian = degToRad(FRONT_LEFT_SENSOR_ANGLE_DEGREE);
+
+    // Threshold
+    backRightSensor0->thresholdDistanceMM = BACK_RIGHT_SENSOR_DISTANCE_THRESHOLD;
+    backMiddleSensor1->thresholdDistanceMM = BACK_MIDDLE_SENSOR_DISTANCE_THRESHOLD;
+    backLeftSensor2->thresholdDistanceMM = BACK_LEFT_SENSOR_DISTANCE_THRESHOLD;
+
+    frontRightSensor3->thresholdDistanceMM = FRONT_RIGHT_SENSOR_DISTANCE_THRESHOLD;
+    frontMiddleSensor4->thresholdDistanceMM = FRONT_MIDDLE_SENSOR_DISTANCE_THRESHOLD;
+    frontLeftSensor5->thresholdDistanceMM = FRONT_LEFT_SENSOR_DISTANCE_THRESHOLD;
+
+}
 
 // ------------------------------------------------------- INITIALIZATION ------------------------------------------------------------
 
@@ -383,6 +425,7 @@ GameStrategy* initStrategiesItems2018(GameStrategyContext* gameStrategyContext) 
 
 void initStrategy2018(GameStrategyContext* gameStrategyContext) {
     initColorAndStartPosition2018(gameStrategyContext);
+    setTofListOrientationAngle2018(gameStrategyContext->tofSensorList);
     showGameStrategyContextTeamColor(gameStrategyContext);
 
 	initLocations2018(gameStrategyContext);

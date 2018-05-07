@@ -3,6 +3,8 @@
 
 #include <stdbool.h>
 
+#include "../../common/2d/2d.h"
+
 #include "../../common/io/outputStream.h"
 
 #include "tof.h"
@@ -13,7 +15,7 @@ typedef struct TofSensorList TofSensorList;
 /**
  * Define the specific function which must be used to debug the tofSensorList.
  */
-typedef void tofSensorListDebugTableFunction(OutputStream* outputStream, TofSensorList* tofSensorList);
+typedef void tofSensorListDebugTableFunction(OutputStream* outputStream, TofSensorList* tofSensorList, Point* pointOfView, float pointOfViewAngleRadian);
 
 /**
  * The struct defining a list of Tof Sensors.

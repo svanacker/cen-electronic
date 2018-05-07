@@ -10,6 +10,8 @@
 
 #include "teamColor.h"
 
+#include "../../drivers/tof/tofList.h"
+
 #include "../../navigation/navigation.h"
 #include "../../navigation/location.h"
 #include "../../navigation/locationList.h"
@@ -70,6 +72,8 @@ struct GameStrategyContext {
     unsigned int score;
     // End Match to avoid to do thing without timer
     EndMatch* endMatch;
+    /** TofSensorList tof Sensor List */
+    TofSensorList* tofSensorList;
 };
 
 /**
@@ -79,6 +83,7 @@ void initGameStrategyContext(GameStrategyContext* gameStrategyContext,
                              RobotConfig* robotConfig,
                              Navigation* navigation,
                              EndMatch* endMatch,
+                             TofSensorList* tofSensorList,
                              Point* robotPosition,
                              Point* opponentRobotPosition,
                              Point* lastObstaclePosition);

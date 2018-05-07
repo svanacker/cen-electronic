@@ -32,6 +32,12 @@ int deviceStrategyGetInterface(char commandHeader, DeviceInterfaceMode mode, boo
         }
         return commandLengthValueForMode(mode, 9, 0);
     }
+    else if (commandHeader == COMMAND_STRATEGY_SHOW_TOF_LIST_WITH_PROJECTION) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("Show Tof List With Projection");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }
     // Next step
     else if (commandHeader == COMMAND_STRATEGY_NEXT_STEP) {
         if (fillDeviceArgumentList) {

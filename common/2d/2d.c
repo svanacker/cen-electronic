@@ -40,3 +40,9 @@ void scale(Point *point, float factor) {
     point->y /= factor;
 }
 
+void computeDirectionPoint(Point* ref, Point* cp, float distance, float angleRadian) {
+    float dca = cosf(angleRadian) * distance;
+    float dsa = sinf(angleRadian) * distance;
+    cp->x = ref->x + dca;
+    cp->y = ref->y + dsa;
+}

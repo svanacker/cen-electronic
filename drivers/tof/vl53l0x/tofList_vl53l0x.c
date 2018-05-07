@@ -57,7 +57,7 @@ void initTofSensorListVL53L0X(TofSensorList* tofSensorList,
         }
         
         // Initialize the VL53L0X, but with the default address
-        initTofSensorVL53L0X(tofSensor, tofSensorVL53L0X, initialTofBusConnection, 0);
+        initTofSensorVL53L0X(tofSensor, tofSensorVL53L0X, initialTofBusConnection, 0, 0.0f);
         
         unsigned char tofBusAddress = VL530X_ADDRESS_0;
         if (size > 1) {

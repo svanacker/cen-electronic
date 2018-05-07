@@ -12,6 +12,8 @@
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
 
+#include "../../drivers/tof/tofList.h"
+
 /**
  * @private
  */
@@ -33,12 +35,14 @@ void initGameStrategyContext(GameStrategyContext* gameStrategyContext,
     RobotConfig* robotConfig,
     Navigation* navigation,
     EndMatch* endMatch,
+    TofSensorList* tofSensorList,
     Point* robotPosition,
     Point* opponentRobotPosition,
     Point* lastObstaclePosition) {
     gameStrategyContext->navigation = navigation;
     gameStrategyContext->robotConfig = robotConfig;
     gameStrategyContext->endMatch = endMatch;
+    gameStrategyContext->tofSensorList = tofSensorList;
     gameStrategyContext->robotPosition = robotPosition;
     gameStrategyContext->opponentRobotPosition = opponentRobotPosition;
     gameStrategyContext->lastObstaclePosition = lastObstaclePosition;

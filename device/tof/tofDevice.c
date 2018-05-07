@@ -2,6 +2,7 @@
 #include "tofDeviceInterface.h"
 
 #include <stdbool.h>
+#include <stdlib.h>
 
 #include "../../common/delay/cenDelay.h"
 
@@ -21,7 +22,8 @@
 #include "../../drivers/tof/tofList.h"
 #include "../../drivers/tof/tofDebug.h"
 
-static TofSensorList* tofSensorList;
+// Forward declaration
+TofSensorList* getTofDeviceTofSensorList(void);
 
 // DEVICE INTERFACE
 
@@ -41,7 +43,8 @@ bool isTofDeviceOk(void) {
 void deviceTofHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     if (commandHeader == COMMAND_TOF_GET_DISTANCE) {
         ackCommand(outputStream, TOF_DEVICE_HEADER, COMMAND_TOF_GET_DISTANCE);
-            unsigned char tofIndex = readHex2(inputStream);
+        unsigned char tofIndex = readHex2(inputStream);
+        TofSensorList* tofSensorList = getTofDeviceTofSensorList();
         TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, tofIndex);
         unsigned int distanceMM = tofSensor->tofGetDistanceMM(tofSensor);
         
@@ -49,8 +52,11 @@ void deviceTofHandleRawData(char commandHeader, InputStream* inputStream, Output
     }
     else if (commandHeader == COMMAND_TOF_DEBUG) {
         ackCommand(outputStream, TOF_DEVICE_HEADER, COMMAND_TOF_DEBUG);
+        TofSensorList* tofSensorList = getTofDeviceTofSensorList();
         OutputStream* debugOutputStream = getDebugOutputStreamLogger();
-        tofSensorList->tofSensorListDebugTable(debugOutputStream, tofSensorList);
+        // On this device, we dont't have access to the Point of View
+        // See StrategyDevice to have it !
+        tofSensorList->tofSensorListDebugTable(debugOutputStream, tofSensorList, NULL, 0.0f);
     }
 }
 
@@ -61,7 +67,11 @@ static DeviceDescriptor descriptor = {
     .deviceHandleRawData = &deviceTofHandleRawData,
 };
 
+TofSensorList* getTofDeviceTofSensorList(void) {
+    return (TofSensorList*) descriptor.object;
+}
+
 DeviceDescriptor* getTofDeviceDescriptor(TofSensorList* tofSensorListParam) {
-    tofSensorList = tofSensorListParam;
+    descriptor.object = (int*)tofSensorListParam;
     return &descriptor;
 }

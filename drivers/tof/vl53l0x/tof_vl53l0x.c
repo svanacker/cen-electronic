@@ -304,6 +304,9 @@ unsigned int tofSensorGetDistanceVL53L0XMM(TofSensor* tofSensor) {
     getContinousRangingMeasurement(tofSensorVL53L0X, false);
 
     VL53L0X_RangingMeasurementData_t* data = &(tofSensorVL53L0X->rangingMeasurementData);
+    
+    // Store the last Value
+    tofSensor->lastDistanceMM = data->RangeMilliMeter;
 
     return data->RangeMilliMeter;
 }
@@ -311,12 +314,14 @@ unsigned int tofSensorGetDistanceVL53L0XMM(TofSensor* tofSensor) {
 void initTofSensorVL53L0X(TofSensor* tofSensor,
         TofSensorVL53L0X* tofSensorVL53L0X,
         I2cBusConnection* i2cBusConnection,
-        unsigned int thresholdDistanceMM) {
+        unsigned int thresholdDistanceMM,
+        float orientationRadian) {
     tofSensorVL53L0X->i2cBusConnection = i2cBusConnection;
     initTofSensor(tofSensor,
             &tofSensorInitVL53L0X,
             &tofSensorGetDistanceVL53L0XMM,
             thresholdDistanceMM,
+            orientationRadian,
             (int*) tofSensorVL53L0X);
 
 }

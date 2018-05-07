@@ -7,6 +7,9 @@
       <logicalFolder name="common" displayName="common" projectFiles="true">
         <itemPath>../../../common/commons.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f12" displayName="common.2d" projectFiles="true">
+        <itemPath>../../../common/2d/2d.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="common.clock"
                      displayName="common.clock"
                      projectFiles="true">
@@ -296,6 +299,9 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <logicalFolder name="f15" displayName="common.2d" projectFiles="true">
+        <itemPath>../../../common/2d/2d.c</itemPath>
+      </logicalFolder>
       <logicalFolder name="common.clock"
                      displayName="common.clock"
                      projectFiles="true">

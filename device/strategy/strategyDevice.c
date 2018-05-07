@@ -81,6 +81,15 @@ void deviceStrategyHandleRawData(char commandHeader, InputStream* inputStream, O
 
         ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_STRATEGY_SET_OPPONENT_ROBOT_POSITION);
     }
+    else if (commandHeader == COMMAND_STRATEGY_SHOW_TOF_LIST_WITH_PROJECTION) {
+        ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_STRATEGY_SHOW_TOF_LIST_WITH_PROJECTION);
+        OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+        GameStrategyContext* context = getStrategyDeviceGameStrategyContext();
+        TofSensorList* tofSensorList = context->tofSensorList;
+        Point* robotPosition = context->robotPosition;
+        float robotAngleRadian = context->robotAngleRadian;
+        tofSensorList->tofSensorListDebugTable(debugOutputStream, tofSensorList, robotPosition, robotAngleRadian);
+    }
     // Debug
     else if (commandHeader == COMMAND_STRATEGY_DEBUG) {
         ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_STRATEGY_DEBUG);

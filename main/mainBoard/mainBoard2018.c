@@ -67,8 +67,8 @@ Navigation* initNavigation2018(void) {
     return &navigation;
 }
 
-GameStrategyContext* initGameStrategyContext2018(RobotConfig* robotConfig, EndMatch* endMatch) {
-    initGameStrategyContext(&gameStrategyContext, robotConfig, &navigation, endMatch, &robotPosition, &opponentRobotPosition, &lastObstaclePosition);
+GameStrategyContext* initGameStrategyContext2018(RobotConfig* robotConfig, EndMatch* endMatch, TofSensorList* tofSensorList) {
+    initGameStrategyContext(&gameStrategyContext, robotConfig, &navigation, endMatch, tofSensorList, &robotPosition, &opponentRobotPosition, &lastObstaclePosition);
     initStrategy2018(&gameStrategyContext);
 
     return &gameStrategyContext;

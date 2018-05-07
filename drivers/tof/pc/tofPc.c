@@ -22,10 +22,12 @@ unsigned int tofSensorGetDistanceMMPc(TofSensor* TofSensor) {
 }
 
 void initTofSensorPc(TofSensor* tofSensor, 
-                    unsigned int thresholdDistanceMM) {
+                    unsigned int thresholdDistanceMM,
+                    float orientationRadian) {
     initTofSensor(tofSensor, 
                  &tofSensorInitPc, 
                  &tofSensorGetDistanceMMPc,
                  thresholdDistanceMM,
+                 orientationRadian,
                  NULL);
 }

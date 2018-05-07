@@ -8,6 +8,6 @@
 /**
  * Print a list of tof Sensor.
  */
-void printTofSensorTable(OutputStream* outputStream, TofSensorList* tofSensorList);
+void printTofSensorTable(OutputStream* outputStream, TofSensorList* tofSensorList, Point* pointOfView, float pointOfViewAngleRadian);
 
 #endif

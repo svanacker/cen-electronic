@@ -735,7 +735,7 @@ int main(void) {
     
     // 2018
     navigation = initNavigation2018();
-    gameStrategyContext = initGameStrategyContext2018(&robotConfig, &endMatch);
+    gameStrategyContext = initGameStrategyContext2018(&robotConfig, &endMatch, &tofSensorList);
     gameBoard = initGameBoard2018(gameStrategyContext);
     initDistributor(&distributor, gameStrategyContext->color, &colorSensor);
 

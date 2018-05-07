@@ -69,4 +69,9 @@ void scale(Point *point, float factor);
 */
 void rotate(Point* resultPoint, float angleInRadians, float x, float y);
 
+/**
+ * Do the projection of a point along a distance and an angle
+ */
+void computeDirectionPoint(Point* ref, Point* cp, float distance, float angleRadian);
+
 #endif

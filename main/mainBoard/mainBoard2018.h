@@ -6,6 +6,7 @@
 #include "../../navigation/navigation.h"
 
 #include "../../drivers/colorSensor/colorSensor.h"
+#include "../../drivers/tof/tofList.h"
 
 #include "../../robot/strategy/gameStrategyContext.h"
 #include "../../robot/strategy/teamColor.h"
@@ -23,7 +24,7 @@
 
 Navigation* initNavigation2018(void);
 
-GameStrategyContext* initGameStrategyContext2018(RobotConfig* robotConfig, EndMatch* endMatch);
+GameStrategyContext* initGameStrategyContext2018(RobotConfig* robotConfig, EndMatch* endMatch, TofSensorList* tofSensorList);
 
 GameBoard* initGameBoard2018(GameStrategyContext* gameStrategyContext);
 

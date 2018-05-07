@@ -291,16 +291,6 @@ bool handleCurrentTrajectory(GameStrategyContext* gameStrategyContext) {
     return true;
 }
 
-/**
- * TODO : Really needed ????
- */
-void computePoint(Point* ref, Point* cp, float distance, float angleRadian) {
-    float dca = cosf(angleRadian) * distance;
-    float dsa = sinf(angleRadian) * distance;
-    cp->x = ref->x + dca;
-    cp->y = ref->y + dsa;
-}
-
 bool isColliding(Point* path, Point* obstacle) {
     float d = distanceBetweenPoints(path, obstacle);
     bool result = (d < DISTANCE_OPPONENT_TO_PATH);
@@ -424,7 +414,7 @@ void setLastObstaclePosition(GameStrategyContext* gameStrategyContext) {
     Point* robotPosition = gameStrategyContext->robotPosition;
     Point* lastObstaclePosition = gameStrategyContext->lastObstaclePosition;
     float angleRadian = gameStrategyContext->robotAngleRadian;
-    computePoint(robotPosition, lastObstaclePosition, DISTANCE_OBSTACLE, angleRadian);
+    computeDirectionPoint(robotPosition, lastObstaclePosition, DISTANCE_OBSTACLE, angleRadian);
 }
 
 void handleCollision(GameStrategyContext* gameStrategyContext) {
