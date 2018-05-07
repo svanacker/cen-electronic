@@ -262,6 +262,7 @@
 #include "../../robot/2018/strategyDeviceInterface2018.h"
 
 #include "mainBoard2018.h"
+#include "2dDebug.h"
 
 // I2C => PORT 1 (for All Peripherical, including Eeprom / Clock / Temperatur)
 static I2cBus i2cBusListArray[MAIN_BOARD_I2C_BUS_LIST_LENGTH];
@@ -342,29 +343,8 @@ static char driverRequestBufferArray[MAIN_BOARD_REQUEST_DRIVER_BUFFER_LENGTH];
 static Buffer driverResponseBuffer;
 static char driverResponseBufferArray[MAIN_BOARD_RESPONSE_DRIVER_BUFFER_LENGTH];
 
-// DEBUG I2C
-static char i2cMasterDebugOutputBufferArray[MAIN_BOARD_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH];
-static Buffer i2cMasterDebugOutputBuffer;
-static char i2cMasterDebugInputBufferArray[MAIN_BOARD_I2C_DEBUG_MASTER_IN_BUFFER_LENGTH];
-static Buffer i2cMasterDebugInputBuffer;
-
 // DISPATCHER I2C
 static DriverDataDispatcher driverDataDispatcherListArray[MAIN_BOARD_DRIVER_DATA_DISPATCHER_LIST_LENGTH];
-
-// i2c->Motor
-static I2cBusConnection* motorI2cBusConnection;
-static char motorBoardI2cInputBufferArray[MAIN_BOARD_I2C_INPUT_DRIVER_DATA_DISPATCHER_BUFFER_LENGTH];
-static Buffer motorBoardI2cInputBuffer;
-static InputStream motorBoardI2cInputStream;
-static OutputStream motorBoardI2cOutputStream;
-
-// i2c->Mechanical 1
-static I2cBusConnection* mechanicalBoard1I2cBusConnection;
-static char mechanical1BoardInputBufferArray[MAIN_BOARD_LINK_TO_MECA_BOARD_1_BUFFER_LENGTH];
-static Buffer mechanical1BoardInputBuffer;
-static InputStream mechanical1BoardInputStream;
-static OutputStream mechanical1BoardOutputStream;
-
 // Robot Configuration
 static RobotConfig robotConfig;
 
@@ -403,10 +383,6 @@ void updateNewPositionFromNotification(InputStream* inputStream) {
 }
 
 void mainBoardDeviceHandleMotionDeviceNotification(const Device* device, const char commandHeader, InputStream* inputStream) {
-    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
-    appendString(debugOutputStream, "Motion Device ! h=");
-    append(debugOutputStream, commandHeader);
-    println(debugOutputStream);
     if (device->deviceInterface->deviceHeader == MOTION_DEVICE_HEADER) {
         if (
                 commandHeader == NOTIFY_MOTION_STATUS_FAILED
@@ -414,31 +390,17 @@ void mainBoardDeviceHandleMotionDeviceNotification(const Device* device, const c
                 || commandHeader == NOTIFY_MOTION_STATUS_OBSTACLE
                 || commandHeader == NOTIFY_MOTION_STATUS_REACHED
                 || commandHeader == NOTIFY_MOTION_STATUS_BLOCKED) {
-            // To See what was transmitted
-            /*
-            while (inputStream->availableData(inputStream)) {
-                append(debugOutputStream, inputStream->readChar(inputStream));
-            }
-            */
             updateNewPositionFromNotification(inputStream);
+            gameStrategyContext->robotMoving = false;
         }
     }
 }
 
 void mainBoardDeviceHandleTrajectoryDeviceNotification(const Device* device, const char commandHeader, InputStream* inputStream) {
-    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
-    appendString(debugOutputStream, "Trajectory Device ! h=");
-    append(debugOutputStream, commandHeader);
-    println(debugOutputStream);
     if (device->deviceInterface->deviceHeader == TRAJECTORY_DEVICE_HEADER) {
         if (commandHeader == NOTIFY_TRAJECTORY_CHANGED) {
-            /*
-            // To See what was transmitted
-            while (inputStream->availableData(inputStream)) {
-                append(debugOutputStream, inputStream->readChar(inputStream));
-            }
-            */
             updateNewPositionFromNotification(inputStream);
+            gameStrategyContext->robotMoving = true;
         }
     }
 }
@@ -497,14 +459,6 @@ void addLocalDevices(void) {
  * @private
  */
 void addMotorRemoteDevices(void) {
-    // Motor Board->I2C
-    /* addI2cRemoteDevice(getTestDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
-    addI2cRemoteDevice(getMotorDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
-    addI2cRemoteDevice(getCodersDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
-    addI2cRemoteDevice(getPidDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
-    addI2cRemoteDevice(getTrajectoryDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
-    addI2cRemoteDevice(getMotionDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS); */
-    
     // MOTOR BOARD -> UART
     addUartRemoteDevice(getTestDeviceInterface(), MAIN_BOARD_SERIAL_PORT_MOTOR);
     addUartRemoteDevice(getMotorDeviceInterface(), MAIN_BOARD_SERIAL_PORT_MOTOR);
@@ -525,17 +479,6 @@ void addMeca1RemoteDevices(void) {
 }
 
 /**
- * @private.
- */
-void initNotifications(void) {
-    // Manage the callback notification
-    // trajectoryDevice->deviceHandleCallbackRawData = &mainBoardCallbackRawData;
-    // testDevice.deviceHandleCallbackRawData = &mainBoardCallbackRawData;
-    // motionDevice->deviceHandleCallbackRawData = &mainBoardCallbackRawData;
-    // infraredDetectorDevice->deviceHandleCallbackRawData = &mainBoardCallbackRawData;
-}
-
-/**
  * @private
  */
 void initMainBoardDevicesDescriptor() {
@@ -547,8 +490,6 @@ void initMainBoardDevicesDescriptor() {
 
     // Init the devices
     initDevices();
-
-    initNotifications();  
 }
 
 void initMainBoardDriverDataDispatcherList(void) {
@@ -557,28 +498,6 @@ void initMainBoardDriverDataDispatcherList(void) {
 
     // Configure data dispatcher
     addLocalDriverDataDispatcher();
-
-    // I2C
-
-    // -> MOTOR
-    addI2CDriverDataDispatcher("MOTOR_BOARD_I2C_DISPATCHER",
-        &motorBoardI2cInputBuffer, 
-        (char(*)[]) &motorBoardI2cInputBufferArray,
-        MAIN_BOARD_I2C_INPUT_DRIVER_DATA_DISPATCHER_BUFFER_LENGTH,
-        &motorBoardI2cOutputStream,
-        &motorBoardI2cInputStream,
-        motorI2cBusConnection
-        );
-
-    // MECHANICAL 1
-    addI2CDriverDataDispatcher(
-            "MECHANICAL_BOARD_1_DISPATCHER",
-            &mechanical1BoardInputBuffer,
-            &mechanical1BoardInputBufferArray,
-            MAIN_BOARD_LINK_TO_MECA_BOARD_1_BUFFER_LENGTH,
-            &mechanical1BoardOutputStream,
-            &mechanical1BoardInputStream,
-            mechanicalBoard1I2cBusConnection);
 
     // SERIAL
 
@@ -593,6 +512,41 @@ void initMainBoardDriverDataDispatcherList(void) {
         &meca1SerialStreamLink,
         "MECA_1_UART_DISPATCHER",
         MAIN_BOARD_SERIAL_PORT_MECA_1);
+}
+
+void handleTofSensorList() {
+    // We only lookup if the match is started !
+    if (!isMatchStarted32(&startMatch)) {
+        return;
+    }
+    unsigned int index;
+    for (index = 0; index < tofSensorList.size; index++) {
+        TofSensor* tofSensor = getTofSensorByIndex(&tofSensorList, index);
+        
+        // TO DO : Manage if we must use Back Sonar or Front Sonar !
+        unsigned int distance = tofSensor->tofGetDistanceMM(tofSensor);
+        if (distance == 0) {
+            continue;
+        }
+        // DetectedPoint if any
+        Point detectedPoint;
+        Point* pointOfView = gameStrategyContext->robotPosition;
+        float pointOfViewAngleRadian = gameStrategyContext->robotAngleRadian;
+        bool detected = tofComputeDetectedPointIfAny(tofSensor, pointOfView, pointOfViewAngleRadian, &detectedPoint);
+        
+        if (!detected) {
+            continue;
+        }
+        if (gameStrategyContext->robotMoving) {
+            // We must know if it's in the gameboard
+            if (isPointInTheCollisionArea(gameBoard, &detectedPoint)) {
+                OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+                printPoint(debugOutputStream, &detectedPoint, "mm");
+                motionDriverStop();
+                gameStrategyContext->robotMoving = false;
+            }
+        }
+    }
 }
 
 bool mainBoardWaitForInstruction(StartMatch* startMatchParam) {
@@ -618,6 +572,8 @@ bool mainBoardWaitForInstruction(StartMatch* startMatchParam) {
             &debugOutputStream,
             &filterRemoveCRLF,
             NULL);
+    
+    handleTofSensorList();
 
     return true;
 }
@@ -692,21 +648,10 @@ int main(void) {
     // MAIN I2C BUS
     i2cBus = addI2cBus(I2C_BUS_TYPE_MASTER, I2C_BUS_PORT_1);
     i2cMasterInitialize(i2cBus);
-    motorI2cBusConnection = addI2cBusConnection(i2cBus, MOTOR_BOARD_I2C_ADDRESS, true);
-    mechanicalBoard1I2cBusConnection = addI2cBusConnection(i2cBus, MECHANICAL_BOARD_1_I2C_ADDRESS, true);
 
     // ALTERNATIVE I2C BUS
     i2cBus4 = addI2cBus(I2C_BUS_TYPE_MASTER, I2C_BUS_PORT_4);
     i2cMasterInitialize(i2cBus4);
-    
-    // I2C Debug
-    initI2CDebugBuffers(&i2cMasterDebugInputBuffer,
-                        &i2cMasterDebugInputBufferArray,
-                        MAIN_BOARD_I2C_DEBUG_MASTER_IN_BUFFER_LENGTH,
-                        &i2cMasterDebugOutputBuffer,
-                        &i2cMasterDebugOutputBufferArray,
-                        MAIN_BOARD_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH);
-    setDebugI2cEnabled(false);
 
     // -> Eeproms
     eepromI2cBusConnection = addI2cBusConnection(i2cBus, ST24C512_ADDRESS_0, true);
@@ -767,12 +712,19 @@ int main(void) {
     getTimerByCode(SERVO_TIMER_CODE)->enabled = true;
     getTimerByCode(END_MATCH_DETECTOR_TIMER_CODE)->enabled = true;
 
+    // MOTOR BOARD
     clearBuffer(&motorInputBuffer);
     // Send a clear Buffer to the remote board to avoid to keep bad data in the link when rebooting
     append(&motorOutputStream, HEADER_CLEAR_INPUT_STREAM);
+    append(&motorOutputStream, HEADER_WRITE_CONTENT_AND_DEEP_CLEAR_BUFFER);
+    motorOutputStream.flush(&motorOutputStream);
+    
+    // MECA 1
     clearBuffer(&meca1InputBuffer);
     // Send a clear Buffer to the remote board to avoid to keep bad data in the link when rebooting
     append(&meca1OutputStream, HEADER_CLEAR_INPUT_STREAM);
+    append(&meca1OutputStream, HEADER_WRITE_CONTENT_AND_DEEP_CLEAR_BUFFER);
+    motorOutputStream.flush(&meca1OutputStream);
       
     // Update this on the MOTOR BOARD to be synchronized !
     updateMotorBoardRobotPosition(gameStrategyContext);

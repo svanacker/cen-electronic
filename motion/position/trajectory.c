@@ -55,6 +55,9 @@ TrajectoryInfo* getTrajectory(void) {
 
 void initializeTrajectory(void) {
     clearTrajectory();
+    trajectory.notifyChange = TRAJECTORY_THRESHOLD_NOTIFY_DEFAULT_VALUE;
+    trajectory.thresholdDistance = TRAJECTORY_THRESHOLD_DISTANCE_MM_DEFAULT_VALUE;
+    trajectory.thresholdAngleRadian = TRAJECTORY_THRESHOLD_ANGLE_RADIAN_DEFAULT_VALUE;
 }
 
 void clearLastNotificationData(void) {

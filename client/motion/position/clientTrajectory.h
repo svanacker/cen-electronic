@@ -23,4 +23,10 @@ bool clientTrajectoryAdjustXPosition(float x);
 
 bool clientTrajectoryAdjustYPosition(float y);
 
+// NOTIFICATION
+
+bool clientTrajectoryNotifySetEnabled(bool enabled);
+
+bool clientTrajectoryNotifySetThreshold(float notifyDistanceThreshold, float notifyAngleRadianThreshold);
+
 #endif

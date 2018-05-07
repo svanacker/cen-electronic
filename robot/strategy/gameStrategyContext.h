@@ -74,6 +74,8 @@ struct GameStrategyContext {
     EndMatch* endMatch;
     /** TofSensorList tof Sensor List */
     TofSensorList* tofSensorList;
+    /** Indicates if the robot is moving (to know if we must stop the robot */
+    bool robotMoving;
 };
 
 /**

@@ -84,4 +84,8 @@ void initGameBoard(GameBoard* gameBoard,
  */
 void printGameboard(GameBoard* gameBoard, OutputStream* outputStream);
 
+// COLLISION DETECTION
+
+bool isPointInTheCollisionArea(GameBoard* gameBoard, Point* collisionPoint);
+
 #endif

@@ -142,11 +142,13 @@ bool trajectoryNotifyIfEnabledAndTreshold(OutputStream* notificationOutputStream
     float absoluteAngleRadianSinceLastNotification = getAbsoluteAngleRadianBetweenLastNotificationAndCurrentRobotPosition();
     if (distanceSinceLastNotification > trajectory->thresholdDistance
         || absoluteAngleRadianSinceLastNotification > trajectory->thresholdAngleRadian) {
+        /*
         OutputStream* debugOutputStream = getDebugOutputStreamLogger();
         appendStringAndDecf(debugOutputStream, "distanceSinceLastNotification:", distanceSinceLastNotification);
         println(debugOutputStream);
         appendStringAndDecf(debugOutputStream, "absoluteAngleRadianSinceLastNotification:", distanceSinceLastNotification);
         println(debugOutputStream);
+        */
         Position* p = getPosition();
         append(notificationOutputStream, TRAJECTORY_DEVICE_HEADER);
         append(notificationOutputStream, NOTIFY_TRAJECTORY_CHANGED);

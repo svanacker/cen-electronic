@@ -6,6 +6,12 @@
 
 #include "../../device/device.h"
 
+#define TRAJECTORY_THRESHOLD_NOTIFY_DEFAULT_VALUE               true
+// 5 cm of threshold
+#define TRAJECTORY_THRESHOLD_DISTANCE_MM_DEFAULT_VALUE         50.0f
+// About 10 degree
+#define TRAJECTORY_THRESHOLD_ANGLE_RADIAN_DEFAULT_VALUE    0.174533f
+
 /**
  * Structure to store all informations linked to the follow of trajectory.
  */

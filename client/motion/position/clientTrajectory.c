@@ -110,3 +110,28 @@ bool clientTrajectoryAdjustYPosition(float y) {
     
     return result;
 }
+
+// Notification management
+bool clientTrajectoryNotifySetEnabled(bool enabled) {
+    OutputStream* outputStream = getDriverRequestOutputStream();
+
+    append(outputStream, TRAJECTORY_DEVICE_HEADER);
+    if (enabled) {
+        append(outputStream, COMMAND_TRAJECTORY_NOTIFY_ON);
+    }
+    else {
+        append(outputStream, COMMAND_TRAJECTORY_NOTIFY_OFF);
+    }
+    return transmitFromDriverRequestBuffer();
+}
+
+bool clientTrajectoryNotifySetThreshold(float notifyDistanceThreshold, float notifyAngleRadianThreshold) {
+    OutputStream* outputStream = getDriverRequestOutputStream();
+
+    append(outputStream, TRAJECTORY_DEVICE_HEADER);
+    append(outputStream, COMMAND_TRAJECTORY_NOTIFY_SET_PARAMETERS);
+    appendHexFloat4(outputStream, notifyDistanceThreshold, POSITION_DIGIT_MM_PRECISION);
+    appendSeparator(outputStream);
+    appendHexFloat4(outputStream, radToDeg(notifyAngleRadianThreshold), ANGLE_DIGIT_DEGREE_PRECISION);
+    return transmitFromDriverRequestBuffer();
+}
