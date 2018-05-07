@@ -127,6 +127,37 @@ void deviceTrajectoryHandleRawData(char header,
     }
 }
 
+// NOTIFICATION
+
+bool trajectoryNotifyIfEnabledAndTreshold(OutputStream* notificationOutputStream) {
+    TrajectoryInfo* trajectory = getTrajectory();
+    if (!trajectory->notifyChange) {
+        return false;
+    }
+    // We do not accept if threshold are too small to avoid to saturate the link
+    if (trajectory->thresholdDistance < 5.0f || trajectory->thresholdAngleRadian < 0.02f) {
+        return false;
+    }
+    float distanceSinceLastNotification = getDistanceBetweenLastNotificationAndCurrentRobotPosition();
+    float absoluteAngleRadianSinceLastNotification = getAbsoluteAngleRadianBetweenLastNotificationAndCurrentRobotPosition();
+    if (distanceSinceLastNotification > trajectory->thresholdDistance
+        || absoluteAngleRadianSinceLastNotification > trajectory->thresholdAngleRadian) {
+        OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+        appendStringAndDecf(debugOutputStream, "distanceSinceLastNotification:", distanceSinceLastNotification);
+        println(debugOutputStream);
+        appendStringAndDecf(debugOutputStream, "absoluteAngleRadianSinceLastNotification:", distanceSinceLastNotification);
+        println(debugOutputStream);
+        Position* p = getPosition();
+        append(notificationOutputStream, TRAJECTORY_DEVICE_HEADER);
+        append(notificationOutputStream, NOTIFY_TRAJECTORY_CHANGED);
+        notifyAbsolutePositionWithoutHeader(notificationOutputStream);
+
+        clearLastNotificationData();
+        return true;
+    }
+    return false;
+}
+
 static DeviceDescriptor descriptor = {
     .deviceInit = &initializeTrajectory,
     .deviceShutDown = &stopTrajectoryDevice,

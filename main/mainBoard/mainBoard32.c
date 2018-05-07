@@ -391,15 +391,22 @@ static GameStrategyContext* gameStrategyContext;
 static Navigation* navigation;
 static GameBoard* gameBoard;
 
-void readNewPosition(InputStream* inputStream) {
-    
+void updateNewPositionFromNotification(InputStream* inputStream) {
+    float x = readHexFloat6(inputStream, POSITION_DIGIT_MM_PRECISION);
+    checkIsSeparator(inputStream);
+    float y = readHexFloat6(inputStream, POSITION_DIGIT_MM_PRECISION);
+    checkIsSeparator(inputStream);
+    float angleDegree = readHexFloat4(inputStream, ANGLE_DIGIT_DEGREE_PRECISION);
+    gameStrategyContext->robotPosition->x = x;
+    gameStrategyContext->robotPosition->y = y;
+    gameStrategyContext->robotAngleRadian = degToRad(angleDegree);
 }
 
 void mainBoardDeviceHandleMotionDeviceNotification(const Device* device, const char commandHeader, InputStream* inputStream) {
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
-    appendString(debugOutputStream, "Notification ! commandHeader=");
+    appendString(debugOutputStream, "Motion Device ! h=");
     append(debugOutputStream, commandHeader);
-    appendCRLF(debugOutputStream);
+    println(debugOutputStream);
     if (device->deviceInterface->deviceHeader == MOTION_DEVICE_HEADER) {
         if (
                 commandHeader == NOTIFY_MOTION_STATUS_FAILED
@@ -413,14 +420,25 @@ void mainBoardDeviceHandleMotionDeviceNotification(const Device* device, const c
                 append(debugOutputStream, inputStream->readChar(inputStream));
             }
             */
-            float x = readHexFloat6(inputStream, POSITION_DIGIT_MM_PRECISION);
-            checkIsSeparator(inputStream);
-            float y = readHexFloat6(inputStream, POSITION_DIGIT_MM_PRECISION);
-            checkIsSeparator(inputStream);
-            float angleDegree = readHexFloat4(inputStream, ANGLE_DIGIT_DEGREE_PRECISION);
-            gameStrategyContext->robotPosition->x = x;
-            gameStrategyContext->robotPosition->y = y;
-            gameStrategyContext->robotAngleRadian = degToRad(angleDegree);
+            updateNewPositionFromNotification(inputStream);
+        }
+    }
+}
+
+void mainBoardDeviceHandleTrajectoryDeviceNotification(const Device* device, const char commandHeader, InputStream* inputStream) {
+    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+    appendString(debugOutputStream, "Trajectory Device ! h=");
+    append(debugOutputStream, commandHeader);
+    println(debugOutputStream);
+    if (device->deviceInterface->deviceHeader == TRAJECTORY_DEVICE_HEADER) {
+        if (commandHeader == NOTIFY_TRAJECTORY_CHANGED) {
+            /*
+            // To See what was transmitted
+            while (inputStream->availableData(inputStream)) {
+                append(debugOutputStream, inputStream->readChar(inputStream));
+            }
+            */
+            updateNewPositionFromNotification(inputStream);
         }
     }
 }
@@ -492,7 +510,7 @@ void addMotorRemoteDevices(void) {
     addUartRemoteDevice(getMotorDeviceInterface(), MAIN_BOARD_SERIAL_PORT_MOTOR);
     addUartRemoteDevice(getCodersDeviceInterface(), MAIN_BOARD_SERIAL_PORT_MOTOR);
     addUartRemoteDevice(getPidDeviceInterface(), MAIN_BOARD_SERIAL_PORT_MOTOR);
-    addUartRemoteDevice(getTrajectoryDeviceInterface(), MAIN_BOARD_SERIAL_PORT_MOTOR);
+    addUartRemoteDeviceWithNotification(getTrajectoryDeviceInterface(), MAIN_BOARD_SERIAL_PORT_MOTOR, &mainBoardDeviceHandleTrajectoryDeviceNotification);
     addUartRemoteDeviceWithNotification(getMotionDeviceInterface(), MAIN_BOARD_SERIAL_PORT_MOTOR, &mainBoardDeviceHandleMotionDeviceNotification);
     addUartRemoteDevice(getExtendedMotionDeviceInterface(), MAIN_BOARD_SERIAL_PORT_MOTOR);
     addUartRemoteDevice(getRobotKinematicsDeviceInterface(), MAIN_BOARD_SERIAL_PORT_MOTOR);

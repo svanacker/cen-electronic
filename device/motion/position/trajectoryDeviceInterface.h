@@ -60,6 +60,11 @@
  */
 #define COMMAND_TRAJECTORY_ADJUST_Y                         'y'
 
+// NOTIFICATION
+
+/** Notification to indicates to the client of the MOTOR_BOARD that the trajectory has changed enough (Threshold) to notify the move. */
+#define NOTIFY_TRAJECTORY_CHANGED                           'm'
+
 /**
 * Interface for Device
 */

@@ -287,6 +287,9 @@ void waitForInstruction() {
 
     // Manage Motion
     handleInstructionAndMotion(&pidMotion);
+    
+    // Notify if needed
+    trajectoryNotifyIfEnabledAndTreshold(&standardOutputStream);
 }
 
 int runMotorBoard() {

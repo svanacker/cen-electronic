@@ -1,9 +1,10 @@
 #ifndef TRAJECTORY_H
 #define TRAJECTORY_H
 
-#include "../../device/device.h"
 #include "../../common/2d/2d.h"
 #include "../../common/io/outputStream.h"
+
+#include "../../device/device.h"
 
 /**
  * Structure to store all informations linked to the follow of trajectory.
@@ -100,5 +101,13 @@ void updateTrajectoryWithNoThreshold(void);
  * lost of information, and clear Coders.
  */
 void updateTrajectoryAndClearCoders(void);
+
+// NOTIFICATION
+
+float getDistanceBetweenLastNotificationAndCurrentRobotPosition(void);
+
+float getAbsoluteAngleRadianBetweenLastNotificationAndCurrentRobotPosition(void);
+
+void clearLastNotificationData(void);
 
 #endif

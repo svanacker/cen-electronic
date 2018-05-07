@@ -66,7 +66,7 @@ int trajectoryGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fi
         }
         return commandLengthValueForMode(mode, 6, 1);
     }
-    // NOTIFY SYSTEM
+    // NOTIFY PARAMETERS
     else if (commandHeader == COMMAND_TRAJECTORY_NOTIFY_OFF) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Notify Off");
@@ -87,6 +87,20 @@ int trajectoryGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fi
             setArgumentFloatHex4(2, "Angle (deciDegree)");
         }
         return commandLengthValueForMode(mode, 9, 0);
+    }
+    // NOTIFICATION
+    if (DEVICE_MODE_NOTIFY == mode) {
+        if (commandHeader == NOTIFY_TRAJECTORY_CHANGED) {
+            if (fillDeviceArgumentList) {
+                setNotification("Trajectory Changed", 5);
+                setArgumentUnsignedHex6(0, "x(mm)");
+                setArgumentSeparator(1);
+                setArgumentUnsignedHex6(2, "y(mm)");
+                setArgumentSeparator(3);
+                setArgumentUnsignedHex4(4, "ang(1/10)deg");
+            }
+            return 18;
+        }
     }
     return DEVICE_HEADER_NOT_HANDLED;
 }

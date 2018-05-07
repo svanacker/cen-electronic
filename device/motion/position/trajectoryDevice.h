@@ -26,4 +26,9 @@ DeviceDescriptor* getTrajectoryDeviceDescriptor(void);
 */
 void notifyAbsolutePositionWithoutHeader(OutputStream* outputStream);
 
+// NOTIFICATION
+
+bool trajectoryNotifyIfEnabledAndTreshold(OutputStream* notificationOutputStream);
+
+
 #endif

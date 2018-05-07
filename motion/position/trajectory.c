@@ -15,6 +15,9 @@
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
 
+// TO REMOVE
+#include "../../device/deviceConstants.h"
+
 #include "../../motion/position/coders.h"
 #include "../../motion/pid/pid.h"
 #include "../../robot/kinematics/robotKinematics.h"
@@ -54,17 +57,20 @@ void initializeTrajectory(void) {
     clearTrajectory();
 }
 
+void clearLastNotificationData(void) {
+    // Last notification value (egal to the position to avoid continuous "notification")
+    trajectory.lastNotificationPosition.pos.x = trajectory.position.pos.x;
+    trajectory.lastNotificationPosition.pos.y = trajectory.position.pos.y;
+    trajectory.lastNotificationPosition.orientation = trajectory.position.orientation;
+    // No meaning for initialOrientation for lastNotification
+}
 
 void clearTrajectory(void) {
     setPosition(0.0f, 0.0f, 0.0f);
     trajectory.lastLeft = 0.0f;
     trajectory.lastRight = 0.0f;
     trajectory.lastAngle = 0.0f;
-    // Last notification value (egal to the position to avoid "notification")
-    trajectory.lastNotificationPosition.pos.x = trajectory.position.pos.x;
-    trajectory.lastNotificationPosition.pos.y = trajectory.position.pos.y;
-    trajectory.lastNotificationPosition.orientation = trajectory.position.orientation;
-    // No meaning for initialOrientation for lastNotification
+    clearLastNotificationData();
 }
 
 void setPosition(float x, float y, float orientation) {
@@ -213,3 +219,18 @@ void updateTrajectoryAndClearCoders() {
     trajectory.lastRight = 0;
 }
 
+// NOTIFICATION
+
+float getDistanceBetweenLastNotificationAndCurrentRobotPosition(void) {
+    Point* lastNotificationPoint = &(trajectory.lastNotificationPosition.pos);
+    Point* currentPosition = &(trajectory.position.pos);
+    
+    return distanceBetweenPoints(lastNotificationPoint, currentPosition);
+}
+
+float getAbsoluteAngleRadianBetweenLastNotificationAndCurrentRobotPosition(void) {
+    float lastAngle = trajectory.position.orientation;
+    float lastNotificationAngle = trajectory.lastNotificationPosition.orientation;
+    
+    return fabsf(lastAngle - lastNotificationAngle);
+}
