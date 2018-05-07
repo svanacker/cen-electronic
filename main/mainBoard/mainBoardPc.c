@@ -166,6 +166,12 @@
 #include "../../drivers/dispatcher/i2cDriverDataDispatcher.h"
 #include "../../drivers/file/eeprom/eepromFile.h"
 #include "../../drivers/test/testDriver.h"
+
+#include "../../drivers/tof/tof.h"
+#include "../../drivers/tof/tofList.h"
+#include "../../drivers/tof/pc/tofPc.h"
+#include "../../drivers/tof/pc/tofListPc.h"
+
 #include "../../drivers/sensor/temperature/pc/temperaturePc.h"
 
 // Robot
@@ -279,6 +285,10 @@ static GameBoard* gameBoard;
 static Navigation* navigation;
 static Distributor* distributor;
 
+// TOF
+static TofSensorList tofSensorList;
+static TofSensor tofSensorArray[MOTOR_BOARD_PC_TOF_SENSOR_LIST_LENGTH];
+
 static bool connectToRobotManager = false;
 
 void mainBoardDeviceHandleNotification(const Device* device, const char commandHeader, InputStream* inputStream) {
@@ -347,7 +357,7 @@ void initMainBoardLocalDevices(void) {
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
     addLocalDevice(getLogDeviceInterface(), getLogDeviceDescriptor());
     addLocalDevice(getLCDDeviceInterface(), getLCDDeviceDescriptor());
-    addLocalDevice(getTofDeviceInterface(), getTofDeviceDescriptor(NULL));
+    addLocalDevice(getTofDeviceInterface(), getTofDeviceDescriptor(&tofSensorList));
 
     addLocalDevice(getTemperatureSensorDeviceInterface(), getTemperatureSensorDeviceDescriptor(&temperature));
     addLocalDevice(getNavigationDeviceInterface(), getNavigationDeviceDescriptor(navigation));
@@ -473,8 +483,12 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
         (char(*)[]) &i2cMasterDebugOutputBufferArray,
         MAIN_BOARD_PC_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH);
 
+
+    // TOF
+    initTofSensorListPc(&tofSensorList, (TofSensor(*)[]) &tofSensorArray, MOTOR_BOARD_PC_TOF_SENSOR_LIST_LENGTH);
+
     navigation = initNavigation2018();
-    gameStrategyContext = initGameStrategyContext2018(&robotConfig, &endMatch);
+    gameStrategyContext = initGameStrategyContext2018(&robotConfig, &endMatch, &tofSensorList);
     gameBoard = initGameBoard2018(gameStrategyContext);
 
     // Init the drivers

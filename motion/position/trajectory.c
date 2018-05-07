@@ -60,6 +60,11 @@ void clearTrajectory(void) {
     trajectory.lastLeft = 0.0f;
     trajectory.lastRight = 0.0f;
     trajectory.lastAngle = 0.0f;
+    // Last notification value (egal to the position to avoid "notification")
+    trajectory.lastNotificationPosition.pos.x = trajectory.position.pos.x;
+    trajectory.lastNotificationPosition.pos.y = trajectory.position.pos.y;
+    trajectory.lastNotificationPosition.orientation = trajectory.position.orientation;
+    // No meaning for initialOrientation for lastNotification
 }
 
 void setPosition(float x, float y, float orientation) {

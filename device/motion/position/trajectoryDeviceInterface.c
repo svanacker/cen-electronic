@@ -66,7 +66,28 @@ int trajectoryGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fi
         }
         return commandLengthValueForMode(mode, 6, 1);
     }
-    
+    // NOTIFY SYSTEM
+    else if (commandHeader == COMMAND_TRAJECTORY_NOTIFY_OFF) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("Notify Off");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }
+    else if (commandHeader == COMMAND_TRAJECTORY_NOTIFY_ON) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("Notify On");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }
+    else if (commandHeader == COMMAND_TRAJECTORY_NOTIFY_SET_PARAMETERS) {
+        if (fillDeviceArgumentList) {
+            setFunction("Notify Set Param", 3, 0);  
+            setArgumentFloatHex4(0, "Dist (mm)");
+            setArgumentSeparator(1);
+            setArgumentFloatHex4(2, "Angle (deciDegree)");
+        }
+        return commandLengthValueForMode(mode, 9, 0);
+    }
     return DEVICE_HEADER_NOT_HANDLED;
 }
 

@@ -9,6 +9,7 @@
  * Structure to store all informations linked to the follow of trajectory.
  */
 typedef struct {
+    /** The current position with angle and initial Orientation */
     Position position;
     // Last left coder value
     float lastLeft;
@@ -16,6 +17,15 @@ typedef struct {
     float lastRight;
     // Last angle
     float lastAngle;
+    // NOTIFY CHANGE SYSTEM
+    /** If we activate the notification on trajectory change */
+    bool notifyChange;
+    /** The last notified current Position with angle and initial Orientation*/
+    Position lastNotificationPosition;
+    /** The threshold in terms of distance (mm) to notify the new position */
+    float thresholdDistance;
+    /** The threshold in terms of angle (radian) to notify the new position */
+    float thresholdAngleRadian;
 } TrajectoryInfo;
 
 /**

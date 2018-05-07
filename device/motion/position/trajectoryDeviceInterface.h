@@ -20,6 +20,23 @@
 #define COMMAND_TRAJECTORY_DEBUG_CODERS					    'D'
 
 /**
+ * Command to disable the notification system.
+ */
+#define COMMAND_TRAJECTORY_NOTIFY_OFF                       'n'
+
+/**
+ * Command to enable the notification system.
+ */
+#define COMMAND_TRAJECTORY_NOTIFY_ON                        'N'
+
+/**
+ * Command to set the parameters of the notification
+ * System.
+ * @return 
+ */
+#define COMMAND_TRAJECTORY_NOTIFY_SET_PARAMETERS            'P'
+
+/**
 * Defines the header used to set the absolute position.
 */
 #define COMMAND_TRAJECTORY_SET_ABSOLUTE_POSITION            'W'

@@ -53,7 +53,6 @@ void deviceTrajectoryHandleRawData(char header,
 
         updateTrajectoryWithNoThreshold();
         notifyAbsolutePositionWithoutHeader(outputStream);
-
     }
     else if (header == COMMAND_TRAJECTORY_DEBUG_GET_ABSOLUTE_POSITION) {
         ackCommand(outputStream, TRAJECTORY_DEVICE_HEADER, COMMAND_TRAJECTORY_DEBUG_GET_ABSOLUTE_POSITION);
@@ -89,21 +88,42 @@ void deviceTrajectoryHandleRawData(char header,
     }
     // Adjust Angle / X / Y
     else if (header == COMMAND_TRAJECTORY_ADJUST_ANGLE_TO_CLOSEST) {
+        ackCommand(outputStream, TRAJECTORY_DEVICE_HEADER, COMMAND_TRAJECTORY_ADJUST_ANGLE_TO_CLOSEST);
         checkIsSeparator(inputStream);
         bool done = adjustAngle(TRAJECTORY_DEVICE_ADJUST_ANGLE_THRESHOLD );
         appendBool(outputStream, done);
     }
     else if (header == COMMAND_TRAJECTORY_ADJUST_X) {
+        ackCommand(outputStream, TRAJECTORY_DEVICE_HEADER, COMMAND_TRAJECTORY_ADJUST_X);
         float newX = readHexFloat6(inputStream, COMMAND_TRAJECTORY_ADJUST_X);
         checkIsSeparator(inputStream);
         bool done = adjustXPosition(newX, TRAJECTORY_DEVICE_ADJUST_DISTANCE_THRESHOLD);
         appendBool(outputStream, done);
     }
     else if (header == COMMAND_TRAJECTORY_ADJUST_Y) {
+        ackCommand(outputStream, TRAJECTORY_DEVICE_HEADER, COMMAND_TRAJECTORY_ADJUST_Y);       
         float newY = readHexFloat6(inputStream, COMMAND_TRAJECTORY_ADJUST_Y);
         checkIsSeparator(inputStream);
         bool done = adjustXPosition(newY, TRAJECTORY_DEVICE_ADJUST_DISTANCE_THRESHOLD);
         appendBool(outputStream, done);
+    }
+    // NOTIFY SYSTEM
+    else if (header == COMMAND_TRAJECTORY_NOTIFY_OFF) {
+        ackCommand(outputStream, TRAJECTORY_DEVICE_HEADER, COMMAND_TRAJECTORY_NOTIFY_OFF);       
+        TrajectoryInfo* trajectory = getTrajectory();
+        trajectory->notifyChange = false;
+    }
+    else if (header == COMMAND_TRAJECTORY_NOTIFY_ON) {
+        ackCommand(outputStream, TRAJECTORY_DEVICE_HEADER, COMMAND_TRAJECTORY_NOTIFY_ON);       
+        TrajectoryInfo* trajectory = getTrajectory();
+        trajectory->notifyChange = true;
+    }
+    else if (header == COMMAND_TRAJECTORY_NOTIFY_SET_PARAMETERS) {
+        ackCommand(outputStream, TRAJECTORY_DEVICE_HEADER, COMMAND_TRAJECTORY_NOTIFY_SET_PARAMETERS);       
+        TrajectoryInfo* trajectory = getTrajectory();
+        trajectory->thresholdDistance = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
+        checkIsSeparator(inputStream);
+        trajectory->thresholdAngleRadian = degToRad(readHexFloat4(inputStream, ANGLE_DIGIT_DEGREE_PRECISION));
     }
 }
 

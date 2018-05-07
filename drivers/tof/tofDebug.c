@@ -6,9 +6,10 @@
 #include "../../common/io/printWriter.h"
 #include "../../common/io/printTableWriter.h"
 
+#include "../../common/math/cenMath.h"
+
 #include "tof.h"
 #include "tofList.h"
-#include "cenMath.h"
 
 #define TOF_SENSOR_INDEX_COLUMN_LENGTH		              10
 #define TOF_SENSOR_VALUE_THRESHOLD_COLUMN_LENGTH          10
@@ -58,7 +59,7 @@ void printTofSensorTable(OutputStream* outputStream, TofSensorList* tofSensorLis
         unsigned int distance = tofSensor->tofGetDistanceMM(tofSensor);
 
         appendDecTableData(outputStream, index, TOF_SENSOR_INDEX_COLUMN_LENGTH);
-        appendDecfTableData(outputStream, tofSensor->thresholdDistanceMM, TOF_SENSOR_VALUE_THRESHOLD_COLUMN_LENGTH);
+        appendDecTableData(outputStream, tofSensor->thresholdDistanceMM, TOF_SENSOR_VALUE_THRESHOLD_COLUMN_LENGTH);
         appendDecfTableData(outputStream, radToDeg(tofSensor->orientationRadian), TOF_SENSOR_VALUE_ORIENTATION_COLUMN_LENGTH);
         
         // Distance
