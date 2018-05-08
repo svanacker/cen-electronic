@@ -289,7 +289,8 @@ void motorBoardWaitForInstruction(void) {
             NULL);
     }
 
-    handleInstructionAndMotion(&pidMotion);
+    // TODO : FIX
+    handleInstructionAndMotion(&pidMotion, NULL);
 }
 
 void runMotorBoardPC(bool singleMode) {

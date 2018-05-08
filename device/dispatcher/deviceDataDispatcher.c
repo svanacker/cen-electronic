@@ -36,13 +36,13 @@ const Device* deviceDataDispatcherFindDevice(const char deviceHeader, const char
             continue;
         }
 
-        int deviceDataLength = interface->deviceGetInterface(commandHeader, mode, false);
-        if (deviceDataLength == DEVICE_HEADER_NOT_HANDLED) {
+        int expectedDeviceDataLength = interface->deviceGetInterface(commandHeader, mode, false);
+        if (expectedDeviceDataLength == DEVICE_HEADER_NOT_HANDLED) {
             continue;
         }
         // if dataLength in the buffer has more data than
         // deviceDataLength = data - 2 (2 = size of device header + size of command header)
-        if (dataLength >= deviceDataLength - DEVICE_AND_COMMAND_HEADER_LENGTH) {
+        if (dataLength >= expectedDeviceDataLength - DEVICE_AND_COMMAND_HEADER_LENGTH) {
             return result;
         }
         else {

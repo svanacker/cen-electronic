@@ -38,9 +38,9 @@ bool isTrajectoryDeviceOk(void) {
 
 void notifyAbsolutePositionWithoutHeader(OutputStream* outputStream) {
     Position* p = getPosition();
-    appendHexFloat6(outputStream, p->pos.x, POSITION_DIGIT_MM_PRECISION);
+    appendHexFloat4(outputStream, p->pos.x, POSITION_DIGIT_MM_PRECISION);
     appendSeparator(outputStream);
-    appendHexFloat6(outputStream, p->pos.y, POSITION_DIGIT_MM_PRECISION);
+    appendHexFloat4(outputStream, p->pos.y, POSITION_DIGIT_MM_PRECISION);
     appendSeparator(outputStream);
     appendHexFloat4(outputStream, radToDeg(p->orientation), ANGLE_DIGIT_DEGREE_PRECISION);
 }
@@ -158,8 +158,9 @@ bool trajectoryNotifyIfEnabledAndTreshold(OutputStream* notificationOutputStream
         notifyAbsolutePositionWithoutHeader(notificationOutputStream);
         // We must add "Trajectory Type"
         enum TrajectoryType trajectoryType = computeTrajectoryType(distanceSinceLastNotification, absoluteAngleRadianSinceLastNotification);
+        // "-X" where X is the type of Trajectory
         appendSeparator(notificationOutputStream);
-        appendHex2(notificationOutputStream, trajectoryType);
+        appendHex(notificationOutputStream, trajectoryType);
         clearLastNotificationData();
         return true;
     }

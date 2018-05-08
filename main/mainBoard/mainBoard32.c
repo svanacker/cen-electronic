@@ -374,9 +374,9 @@ static Navigation* navigation;
 static GameBoard* gameBoard;
 
 void updateNewPositionFromNotification(InputStream* inputStream) {
-    float x = readHexFloat6(inputStream, POSITION_DIGIT_MM_PRECISION);
+    float x = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
     checkIsSeparator(inputStream);
-    float y = readHexFloat6(inputStream, POSITION_DIGIT_MM_PRECISION);
+    float y = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
     checkIsSeparator(inputStream);
     float angleDegree = readHexFloat4(inputStream, ANGLE_DIGIT_DEGREE_PRECISION);
     gameStrategyContext->robotPosition->x = x;
@@ -403,7 +403,7 @@ void mainBoardDeviceHandleTrajectoryDeviceNotification(const Device* device, con
         if (commandHeader == NOTIFY_TRAJECTORY_CHANGED) {
             updateNewPositionFromNotification(inputStream);
             checkIsSeparator(inputStream);
-            enum TrajectoryType trajectoryType = readHex2(inputStream);
+            enum TrajectoryType trajectoryType = readHex(inputStream);
             gameStrategyContext->trajectoryType = trajectoryType;
         }
     }

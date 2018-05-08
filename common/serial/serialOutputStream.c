@@ -6,6 +6,8 @@
 #include "../../common/io/inputStream.h"
 #include "../../common/io/outputStream.h"
 
+#include "../../common/delay/cenDelay.h"
+
 #include "../../common/serial/serial.h"
 #include "../../common/serial/serialLink.h"
 
@@ -35,6 +37,8 @@ void closeOutputStreamSerial1(OutputStream* outputStream) {
 
 void writeChar1(OutputStream* outputStream, char c) {
     serialPutc(SERIAL_PORT_1, c);
+    // Just to avoid to saturate other UART link (some chars are missing)
+    delaymSec(1);
 }
 
 void initSerialOutputStream1(OutputStream* outputStream) {

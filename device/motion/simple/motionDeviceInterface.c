@@ -6,15 +6,17 @@
 #include "../../../device/deviceInterface.h"
 #include "../../../device/deviceConstants.h"
 
+#define MOTION_DEVICE_NOTIFY_LENGTH   14
+
 const char* deviceMotionGetName(void) {
     return "motion";
 }
 
 void fillNotifyResults(char* notificationName) {
     setNotification(notificationName, 5);
-    setArgumentUnsignedHex6(0, "x(mm)");
+    setArgumentUnsignedHex4(0, "x(mm)");
     setArgumentSeparator(1);
-    setArgumentUnsignedHex6(2, "y(mm)");
+    setArgumentUnsignedHex4(2, "y(mm)");
     setArgumentSeparator(3);
     setArgumentUnsignedHex4(4, "ang(1/10)deg");
 }
@@ -122,37 +124,37 @@ int deviceMotionGetInterface(char commandHeader, DeviceInterfaceMode mode, bool 
             if (fillDeviceArgumentList) {
                 fillNotifyResults("notify Reached");
             }
-            return 18;
+            return MOTION_DEVICE_NOTIFY_LENGTH;
         }
         else if (commandHeader == NOTIFY_MOTION_STATUS_BLOCKED) {
             if (fillDeviceArgumentList) {
                 fillNotifyResults("notify Blocked");
             }
-            return 18;
+            return MOTION_DEVICE_NOTIFY_LENGTH;
         }
         else if (commandHeader == NOTIFY_MOTION_STATUS_SHOCKED) {
             if (fillDeviceArgumentList) {
                 fillNotifyResults("notify Shocked");
             }
-            return 18;
+            return MOTION_DEVICE_NOTIFY_LENGTH;
         }
         else if (commandHeader == NOTIFY_MOTION_STATUS_OBSTACLE) {
             if (fillDeviceArgumentList) {
                 fillNotifyResults("notify Obstacle");
             }
-            return 18;
+            return MOTION_DEVICE_NOTIFY_LENGTH;
         }
         else if (commandHeader == NOTIFY_MOTION_STATUS_FAILED) {
             if (fillDeviceArgumentList) {
                 fillNotifyResults("notify Failed");
             }
-            return 18;
+            return MOTION_DEVICE_NOTIFY_LENGTH;
         }
         else if (commandHeader == NOTIFY_MOTION_STATUS_MOVING) {
             if (fillDeviceArgumentList) {
                 fillNotifyResults("notify Moving");
             }
-            return 18;
+            return MOTION_DEVICE_NOTIFY_LENGTH;
         }
     }
     return DEVICE_HEADER_NOT_HANDLED;
