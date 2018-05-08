@@ -19,6 +19,7 @@
 #include "../../../common/math/cenMath.h"
 
 #include "../../../motion/position/trajectory.h"
+#include "../../../motion/position/trajectoryType.h"
 #include "../../../motion/position/trajectoryDebug.h"
 
 // Device Interface

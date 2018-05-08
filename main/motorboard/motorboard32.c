@@ -200,9 +200,16 @@ static Buffer debugOutputBuffer;
 static OutputStream debugOutputStream;
 static StreamLink debugSerialStreamLink;
 
+// serial NOTIFY
+static char notifyInputBufferArray[MOTOR_BOARD_IN_BUFFER_LENGTH];
+static Buffer notifyInputBuffer;
+static char notifyOutputBufferArray[MOTOR_BOARD_OUT_BUFFER_LENGTH];
+static Buffer notifyOutputBuffer;
+static OutputStream notifyOutputStream;
+static StreamLink notifySerialStreamLink;
+
 // logs
 static LogHandler logHandlerListArray[MOTOR_BOARD_LOG_HANDLER_LIST_LENGTH];
-
 
 // i2c Link
 static char i2cSlaveInputBufferArray[MOTOR_BOARD_IN_BUFFER_LENGTH];
@@ -285,11 +292,14 @@ void waitForInstruction() {
     // DEBUG UART Stream
     handleStreamInstruction(&debugInputBuffer, &debugOutputBuffer, &debugOutputStream, &filterRemoveCRLF, NULL);
 
+    // NOTIFY UART
+    handleStreamInstruction(&notifyInputBuffer, &notifyOutputBuffer, &notifyOutputStream, &filterRemoveCRLF, NULL);
+    
     // Manage Motion
-    handleInstructionAndMotion(&pidMotion);
+    handleInstructionAndMotion(&pidMotion, &notifyOutputStream);
     
     // Notify if needed
-    trajectoryNotifyIfEnabledAndTreshold(&standardOutputStream);
+    trajectoryNotifyIfEnabledAndTreshold(&notifyOutputStream);
 }
 
 int runMotorBoard() {
@@ -325,6 +335,19 @@ int runMotorBoard() {
             MOTOR_BOARD_OUT_BUFFER_LENGTH,
             &debugOutputStream,
             MOTOR_BOARD_SERIAL_PORT_DEBUG,
+            DEFAULT_SERIAL_SPEED);
+    
+    // Notification
+        openSerialLink(&notifySerialStreamLink,
+            "SERIAL_NOTIFY",
+            &notifyInputBuffer,
+            &notifyInputBufferArray,
+            MOTOR_BOARD_IN_BUFFER_LENGTH,
+            &notifyOutputBuffer,
+            &notifyOutputBufferArray,
+            MOTOR_BOARD_OUT_BUFFER_LENGTH,
+            &notifyOutputStream,
+            MOTOR_BOARD_SERIAL_PORT_NOTIFICATION,
             DEFAULT_SERIAL_SPEED);
 
     // Init the logs

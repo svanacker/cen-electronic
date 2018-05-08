@@ -46,7 +46,7 @@ void switchToNextMotionDefinitionIfAny(PidMotion* pidMotion, PidMotionDefinition
     }
 }
 
-void handleInstructionAndMotion(PidMotion* pidMotion) {
+void handleInstructionAndMotion(PidMotion* pidMotion, OutputStream* notificationOutputStream) {
     updateCoders();
     updateTrajectory();
 
@@ -81,14 +81,6 @@ void handleInstructionAndMotion(PidMotion* pidMotion) {
     updateMotorsAndDetectedMotionType(pidMotion);
     enum DetectedMotionType motionType = pidMotion->computationValues.detectedMotionType;
 
-    OutputStream* outputStream = NULL;
-	if (currentMotionDefinition != NULL) {
-		outputStream = currentMotionDefinition->notificationOutputStream;
-	}
-	else {
-		writeError(MOTION_DEFINITION_NO_CURRENT_DEFINITION);
-	}
-
     if (motionType == DETECTED_MOTION_TYPE_NO_POSITION_TO_REACH) {
         // don't do anything
     }
@@ -98,36 +90,36 @@ void handleInstructionAndMotion(PidMotion* pidMotion) {
         // Notification is done at "TrajectoryDevice" and not in Motion
         // notifyMovingIfEnabledAndThresholdReached(outputStream);
     } else if (motionType == DETECTED_MOTION_TYPE_POSITION_REACHED) {
-        notifyReached(outputStream);
-        stopPosition(pidMotion, false, outputStream);
+        notifyReached(notificationOutputStream);
+        stopPosition(pidMotion, false, notificationOutputStream);
         switchToNextMotionDefinitionIfAny(pidMotion, currentMotionDefinition);
     }
     else if (motionType == DETECTED_MOTION_TYPE_POSITION_SHOCK_WHEELS) {
-        notifyShocked(outputStream);
-        stopPosition(pidMotion, false, outputStream);
+        notifyShocked(notificationOutputStream);
+        stopPosition(pidMotion, false, notificationOutputStream);
         switchToNextMotionDefinitionIfAny(pidMotion, currentMotionDefinition);
     } else if (motionType == DETECTED_MOTION_TYPE_POSITION_BLOCKED_WHEELS) {
-        notifyBlocked(outputStream);
-        stopPosition(pidMotion, false, outputStream);
+        notifyBlocked(notificationOutputStream);
+        stopPosition(pidMotion, false, notificationOutputStream);
         switchToNextMotionDefinitionIfAny(pidMotion, currentMotionDefinition);
     } else if (motionType == DETECTED_MOTION_TYPE_POSITION_OBSTACLE) {
-        notifyObstacle(outputStream);
-        stopPosition(pidMotion, true, outputStream);
+        notifyObstacle(notificationOutputStream);
+        stopPosition(pidMotion, true, notificationOutputStream);
         switchToNextMotionDefinitionIfAny(pidMotion, currentMotionDefinition);
     }
     else if (motionType == DETECTED_MOTION_TYPE_POSITION_FAILED) {
-        notifyFailed(outputStream);
-        stopPosition(pidMotion, false, outputStream);
+        notifyFailed(notificationOutputStream);
+        stopPosition(pidMotion, false, notificationOutputStream);
         switchToNextMotionDefinitionIfAny(pidMotion, currentMotionDefinition);
     }
-	if (outputStream != NULL) {
-		outputStream->flush(outputStream);
+	if (notificationOutputStream != NULL) {
+		notificationOutputStream->flush(notificationOutputStream);
 	}
 }
 
-void handleAndWaitFreeMotion(PidMotion* pidMotion) {
+void handleAndWaitFreeMotion(PidMotion* pidMotion, OutputStream* notificationOutputStream) {
     while (true) {
-        handleInstructionAndMotion(pidMotion);
+        handleInstructionAndMotion(pidMotion, notificationOutputStream);
         enum DetectedMotionType motionType = pidMotion->computationValues.detectedMotionType; 
         // POSITION_BLOCKED_WHEELS is not necessary because we block the position after
         if (motionType == DETECTED_MOTION_TYPE_NO_POSITION_TO_REACH 
@@ -141,11 +133,11 @@ void handleAndWaitFreeMotion(PidMotion* pidMotion) {
     }
 }
 
-void handleAndWaitMSec(PidMotion* pidMotion, unsigned long delayMs) {
+void handleAndWaitMSec(PidMotion* pidMotion, OutputStream* notificationOutputStream, unsigned long delayMs) {
     unsigned long DELAY = 10;
     unsigned long counter;
     for (counter = 0; counter < delayMs; counter += DELAY) {
         delaymSec(DELAY);
-        handleInstructionAndMotion(pidMotion);
+        handleInstructionAndMotion(pidMotion, notificationOutputStream);
     }
 }

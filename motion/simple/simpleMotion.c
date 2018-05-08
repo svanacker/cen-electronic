@@ -160,20 +160,20 @@ void rightOneWheelSimpleDegree(PidMotion* pidMotion, float angleDegree, OutputSt
 
 void forwardSimpleMMAndWait(PidMotion* pidMotion, float distanceInMM, OutputStream* notificationOutputStream) {
     forwardSimpleMM(pidMotion, distanceInMM, notificationOutputStream);
-    handleAndWaitFreeMotion(pidMotion);
+    handleAndWaitFreeMotion(pidMotion, notificationOutputStream);
 }
 
 void backwardSimpleMMAndWait(PidMotion* pidMotion, float distanceInMM, OutputStream* notificationOutputStream) {
     backwardSimpleMM(pidMotion, distanceInMM, notificationOutputStream);
-    handleAndWaitFreeMotion(pidMotion);
+    handleAndWaitFreeMotion(pidMotion, notificationOutputStream);
 }
 
 void leftSimpleDegreeAndWait(PidMotion* pidMotion, float angleDegree, OutputStream* notificationOutputStream) {
     leftSimpleDegree(pidMotion, angleDegree, notificationOutputStream);
-    handleAndWaitFreeMotion(pidMotion);
+    handleAndWaitFreeMotion(pidMotion, notificationOutputStream);
 }
 
 void rightSimpleDegreeAndWait(PidMotion* pidMotion, float angleDegree, OutputStream* notificationOutputStream) {
     rightSimpleDegree(pidMotion, angleDegree, notificationOutputStream);
-    handleAndWaitFreeMotion(pidMotion);
+    handleAndWaitFreeMotion(pidMotion, notificationOutputStream);
 }

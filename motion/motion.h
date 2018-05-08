@@ -16,18 +16,18 @@
 /**
  * Handle function so the robot is aware of asking.
  */
-void handleInstructionAndMotion(PidMotion* pidMotion);
+void handleInstructionAndMotion(PidMotion* pidMotion, OutputStream* notificationOutputStream);
 
 /**
  * Wait after the end of a position, or a position which is maintained.
  */
-void handleAndWaitFreeMotion(PidMotion* pidMotion);
+void handleAndWaitFreeMotion(PidMotion* pidMotion, OutputStream* notificationOutputStream);
 
 /**
  * Handle and wait after a delay of milliseconds.
  * TODO : breaks if there is another instruction ???
  */
-void handleAndWaitMSec(PidMotion* pidMotion, unsigned long delayMs);
+void handleAndWaitMSec(PidMotion* pidMotion, OutputStream* notificationOutputStream, unsigned long delayMs);
 
 
 

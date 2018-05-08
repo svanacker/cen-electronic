@@ -29,6 +29,9 @@
 // The port for which we debug (we can send instruction too)
 #define MOTOR_BOARD_SERIAL_PORT_DEBUG       SERIAL_PORT_2
 
+// The port to send notification (too avoid conflicts)
+#define MOTOR_BOARD_SERIAL_PORT_NOTIFICATION SERIAL_PORT_5
+
 // EEPROM
 #define MOTOR_BOARD_MEMORY_EEPROM_LENGTH    0x0500
 
