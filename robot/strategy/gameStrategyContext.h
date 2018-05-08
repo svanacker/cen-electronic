@@ -99,7 +99,7 @@ void initGameStrategyContext(GameStrategyContext* gameStrategyContext,
 /**
  * Show on all Debug (specifically LCD) which color was chosen.
  */
-void showGameStrategyContextTeamColor(GameStrategyContext* gameStrategyContext);
+void showGameStrategyContextTeamColorAndStrategy(GameStrategyContext* gameStrategyContext);
 
 
 #endif

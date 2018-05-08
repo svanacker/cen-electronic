@@ -53,12 +53,18 @@ void printRobotTableConfig(OutputStream* outputStream, RobotConfig* robotConfig)
 
     appendTableHeaderSeparatorLine(outputStream);
 
-	// Sonar Mask
-	appendStringTableData(outputStream, "Sonar On", ROBOT_CONFIG_KEY_COLUMN_LENGTH);
-	appendBinary16TableData(outputStream, CONFIG_USE_SONAR_MASK, 4, ROBOT_CONFIG_MASK_COLUMN_LENGTH);
-	appendBoolTableData(outputStream, configValue & CONFIG_USE_SONAR_MASK, ROBOT_CONFIG_VALUE_COLUMN_LENGTH);
+	// Sonar FAR
+	appendStringTableData(outputStream, "Sonar FAR", ROBOT_CONFIG_KEY_COLUMN_LENGTH);
+	appendBinary16TableData(outputStream, CONFIG_SONAR_FAR_MASK, 4, ROBOT_CONFIG_MASK_COLUMN_LENGTH);
+	appendBoolTableData(outputStream, configValue & CONFIG_SONAR_FAR_MASK, ROBOT_CONFIG_VALUE_COLUMN_LENGTH);
 	appendEndOfTableColumn(outputStream, ROBOT_CONFIG_LAST_COLUMN);
 
+    // Sonar NEAR
+	appendStringTableData(outputStream, "Sonar NEAR", ROBOT_CONFIG_KEY_COLUMN_LENGTH);
+	appendBinary16TableData(outputStream, CONFIG_SONAR_NEAR_MASK, 4, ROBOT_CONFIG_MASK_COLUMN_LENGTH);
+	appendBoolTableData(outputStream, configValue & CONFIG_SONAR_NEAR_MASK, ROBOT_CONFIG_VALUE_COLUMN_LENGTH);
+	appendEndOfTableColumn(outputStream, ROBOT_CONFIG_LAST_COLUMN);
+    
     appendTableHeaderSeparatorLine(outputStream);
 
 	// Green color

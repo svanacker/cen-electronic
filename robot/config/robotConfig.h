@@ -16,8 +16,11 @@
 /** The robot does not end (useful for test) : 0b 0000 1000 */
 #define CONFIG_DO_NOT_END              0x0010
 
-/** Use Sonar during the match : 0b00100000 */
-#define CONFIG_USE_SONAR_MASK          0x0020
+/** Use Sonar with very long detection distance during the match : 0b00100000 */
+#define CONFIG_SONAR_FAR_MASK          0x0020
+
+/** Use sonar with near detection distance : 0b0100 0000*/
+#define CONFIG_SONAR_NEAR_MASK         0x0040
 
 /** Indicates we have the color green if set. */
 // 0b 1000 0000

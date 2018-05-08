@@ -30,6 +30,6 @@
 #define FRONT_MIDDLE_SENSOR_DISTANCE_THRESHOLD  800
 #define FRONT_LEFT_SENSOR_DISTANCE_THRESHOLD    600
 
-void setTofListOrientationAngle2018(TofSensorList* tofSensorList);
+void setTofListOrientationAngle2018(TofSensorList* tofSensorList, float distanceFactor);
 
 #endif

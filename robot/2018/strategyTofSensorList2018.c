@@ -6,7 +6,7 @@
 
 // TOF MANAGEMENT
 
-void setTofListOrientationAngle2018(TofSensorList* tofSensorList) {
+void setTofListOrientationAngle2018(TofSensorList* tofSensorList, float distanceFactor) {
     TofSensor* backRightSensor0 = getTofSensorByIndex(tofSensorList, BACK_RIGHT_SENSOR_INDEX);
     TofSensor* backMiddleSensor1 = getTofSensorByIndex(tofSensorList, BACK_MIDDLE_SENSOR_INDEX);
     TofSensor* backLeftSensor2 = getTofSensorByIndex(tofSensorList, BACK_LEFT_SENSOR_INDEX);
@@ -25,12 +25,11 @@ void setTofListOrientationAngle2018(TofSensorList* tofSensorList) {
     frontLeftSensor5->orientationRadian = degToRad(FRONT_LEFT_SENSOR_ANGLE_DEGREE);
 
     // Threshold
-    backRightSensor0->thresholdDistanceMM = BACK_RIGHT_SENSOR_DISTANCE_THRESHOLD;
-    backMiddleSensor1->thresholdDistanceMM = BACK_MIDDLE_SENSOR_DISTANCE_THRESHOLD;
-    backLeftSensor2->thresholdDistanceMM = BACK_LEFT_SENSOR_DISTANCE_THRESHOLD;
+    backRightSensor0->thresholdDistanceMM = distanceFactor * BACK_RIGHT_SENSOR_DISTANCE_THRESHOLD;
+    backMiddleSensor1->thresholdDistanceMM = distanceFactor * BACK_MIDDLE_SENSOR_DISTANCE_THRESHOLD;
+    backLeftSensor2->thresholdDistanceMM = distanceFactor * BACK_LEFT_SENSOR_DISTANCE_THRESHOLD;
 
-    frontRightSensor3->thresholdDistanceMM = FRONT_RIGHT_SENSOR_DISTANCE_THRESHOLD;
-    frontMiddleSensor4->thresholdDistanceMM = FRONT_MIDDLE_SENSOR_DISTANCE_THRESHOLD;
-    frontLeftSensor5->thresholdDistanceMM = FRONT_LEFT_SENSOR_DISTANCE_THRESHOLD;
-
+    frontRightSensor3->thresholdDistanceMM = distanceFactor * FRONT_RIGHT_SENSOR_DISTANCE_THRESHOLD;
+    frontMiddleSensor4->thresholdDistanceMM = distanceFactor * FRONT_MIDDLE_SENSOR_DISTANCE_THRESHOLD;
+    frontLeftSensor5->thresholdDistanceMM = distanceFactor * FRONT_LEFT_SENSOR_DISTANCE_THRESHOLD;
 }

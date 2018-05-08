@@ -50,9 +50,13 @@ void initGameStrategyContext(GameStrategyContext* gameStrategyContext,
     initGameStrategyIndex(gameStrategyContext);
 }
 
-void showGameStrategyContextTeamColor(GameStrategyContext* gameStrategyContext) {
+void showGameStrategyContextTeamColorAndStrategy(GameStrategyContext* gameStrategyContext) {
     OutputStream* outputStream = getAlwaysOutputStreamLogger();
-    appendString(outputStream, "COLOR : ");
+    // COLOR
+    appendString(outputStream, "COLOR:");
     appendTeamColorAsString(outputStream, gameStrategyContext->color);
+    // STRATEGY
+    appendString(outputStream, ", STG:");
+    appendDec(outputStream, gameStrategyContext->strategyIndex);    
     println(outputStream);
 }

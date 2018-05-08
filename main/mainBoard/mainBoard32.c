@@ -264,6 +264,7 @@
 
 #include "mainBoard2018.h"
 #include "2dDebug.h"
+#include "strategyConfig2018.h"
 
 // I2C => PORT 1 (for All Peripherical, including Eeprom / Clock / Temperatur)
 static I2cBus i2cBusListArray[MAIN_BOARD_I2C_BUS_LIST_LENGTH];
@@ -522,6 +523,10 @@ void handleTofSensorList() {
     if (!isMatchStarted32(&startMatch)) {
         return;
     }
+    // If Sonar is disabled, we don't check it !
+    if (!isSonarActivated(&robotConfig)) {
+        return;
+    }
     unsigned int index;
     enum TrajectoryType trajectoryType = gameStrategyContext->trajectoryType;
     if (trajectoryType == TRAJECTORY_TYPE_NONE || trajectoryType == TRAJECTORY_TYPE_ROTATION) {
@@ -558,8 +563,11 @@ void handleTofSensorList() {
         }
         // We must know if it's in the gameboard
         if (isPointInTheCollisionArea(gameBoard, &detectedPoint)) {
-            OutputStream* debugOutputStream = getDebugOutputStreamLogger();
-            printPoint(debugOutputStream, &detectedPoint, "mm");
+            OutputStream* alwaysOutputStream = getAlwaysOutputStreamLogger();
+            println(alwaysOutputStream);
+            appendStringLN(alwaysOutputStream, "Robot ! :");
+            printPoint(alwaysOutputStream, &detectedPoint, "");
+            println(alwaysOutputStream);
             motionDriverStop();
             // Block the notification system !
             gameStrategyContext->trajectoryType = TRAJECTORY_TYPE_NONE;
@@ -743,6 +751,9 @@ int main(void) {
     append(&meca1OutputStream, HEADER_CLEAR_INPUT_STREAM);
     append(&meca1OutputStream, HEADER_WRITE_CONTENT_AND_DEEP_CLEAR_BUFFER);
     motorOutputStream.flush(&meca1OutputStream);
+    
+    // To let the MOTOR BOARD clearing the cache
+    delaymSec(200);
       
     // Update this on the MOTOR BOARD to be synchronized !
     updateMotorBoardRobotPosition(gameStrategyContext);
