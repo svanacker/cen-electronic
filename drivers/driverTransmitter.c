@@ -72,11 +72,26 @@ bool transmitFromDriverRequestBuffer() {
             NULL);
 
     // We need ack
-    checkIsAck(inputStream);
+    result = checkIsAck(inputStream);
+    if (!result) {
+        // The buffer is corrupted, but we would like to avoid further problem
+        clearInputStream(inputStream);
+        return false;
+    }
     // Device header answer with the same header as the request
     checkIsChar(inputStream, deviceHeader);
+    if (!result) {
+        // The buffer is corrupted, but we would like to avoid further problem
+        clearInputStream(inputStream);
+        return false;
+    }
     // Command header answer with the same header as the request
     checkIsChar(inputStream, commandHeader);
+    if (!result) {
+        // The buffer is corrupted, but we would like to avoid further problem
+        clearInputStream(inputStream);
+        return false;
+    }
 
     return result;
 }

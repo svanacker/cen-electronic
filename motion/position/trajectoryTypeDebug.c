@@ -3,6 +3,7 @@
 
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
+#include "../../common/io/printTableWriter.h"
 
 unsigned int appendTrajectoryTypeAsString(OutputStream* outputStream, enum TrajectoryType trajectoryType) {
     switch (trajectoryType) {

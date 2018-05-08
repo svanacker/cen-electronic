@@ -131,7 +131,7 @@ void loadUnicolorDistributor(Distributor* distributor) {
             appendDec(debugOutputStream, i);
             println(debugOutputStream);
             // In all cases, prepare the launcher even if it's empty, because it does not take time unless if it is needed
-            clientLaunch2018(LAUNCHER_RIGHT_INDEX, true);
+            clientLaunch2018(LAUNCHER_RIGHT_INDEX, LAUNCHER_PREPARE_ON);
             
             // Rotate the distributor 
             clientDistributor2018CleanNext(LAUNCHER_LEFT_INDEX);
@@ -151,7 +151,7 @@ void loadUnicolorDistributor(Distributor* distributor) {
                 sendBallAndCountScore(distributor, LAUNCHER_RIGHT_INDEX);
             }
             // delaymSec(300);
-            if (distributor->sentBallCount >= POINT_2018_DISTRIBUTOR_UNICOLOR_BALL_COUNT) {
+            if (distributor->sentBallCount >= SCORE_POINT_2018_DISTRIBUTOR_UNICOLOR_BALL_COUNT) {
                 break;
             }
         }
@@ -163,8 +163,8 @@ void loadMixedDistributor(Distributor* distributor) {
 }
 
 void sendBallAndCountScore(Distributor* distributor, unsigned int launcherIndex) {
-    clientLaunch2018(LAUNCHER_RIGHT_INDEX, false);
+    clientLaunch2018(LAUNCHER_RIGHT_INDEX, LAUNCHER_LAUNCH);
     distributor->launcherContent = SQUARE_CONTENT_EMPTY;
     distributor->loadedBallCount++;
-    distributor->score += POINT_2018_CLEAN_BALL_POINT;
+    distributor->score += SCORE_POINT_2018_CLEAN_BALL_POINT;
 }

@@ -2,6 +2,7 @@
 #define STRATEGY_2018_H
 
 #include "score2018.h"
+#include "strategyTofSensorList2018.h"
 
 #include "../../robot/strategy/gameStrategyContext.h"
 #include "../../robot/strategy/gameTarget.h"
@@ -13,33 +14,6 @@
 #define STRATEGY_2018_NAVIGATION_LOCATION_LIST_ARRAY_LENGTH        30
 #define STRATEGY_2018_NAVIGATION_PATH_LIST_ARRAY_LENGTH            30
 #define STRATEGY_2018_BIT_LIST_NAVIGATION_ARRAY_LENGTH             30
-
-// TOF MANAGEMENT
-#define BACK_RIGHT_SENSOR_INDEX          0
-#define BACK_MIDDLE_SENSOR_INDEX         1
-#define BACK_LEFT_SENSOR_INDEX           2
-
-#define FRONT_RIGHT_SENSOR_INDEX         3
-#define FRONT_MIDDLE_SENSOR_INDEX        4
-#define FRONT_LEFT_SENSOR_INDEX          5
-
-// ORIENTATION
-#define BACK_RIGHT_SENSOR_ANGLE_DEGREE   -160.0f
-#define BACK_MIDDLE_SENSOR_ANGLE_DEGREE  -180.0f
-#define BACK_LEFT_SENSOR_ANGLE_DEGREE   -200.0f
-
-#define FRONT_RIGHT_SENSOR_ANGLE_DEGREE   -20.0f
-#define FRONT_MIDDLE_SENSOR_ANGLE_DEGREE  0.0f
-#define FRONT_LEFT_SENSOR_ANGLE_DEGREE   20.0f
-
-// THRESHOLD
-#define BACK_RIGHT_SENSOR_DISTANCE_THRESHOLD    600
-#define BACK_MIDDLE_SENSOR_DISTANCE_THRESHOLD   800
-#define BACK_LEFT_SENSOR_DISTANCE_THRESHOLD     600
-
-#define FRONT_RIGHT_SENSOR_DISTANCE_THRESHOLD   600
-#define FRONT_MIDDLE_SENSOR_DISTANCE_THRESHOLD  800
-#define FRONT_LEFT_SENSOR_DISTANCE_THRESHOLD    600
 
 // MIN TRESHOLD : Do not detect too close of TOF (physically impossible because 
 // TOF are at the center of the robot !)
@@ -78,6 +52,10 @@
 #define BEE                                                        "B"
 #define BEE_X                                                     1925
 #define BEE_Y                                                      250
+// We stop before to do an "action" of move !
+#define BEE_FRONT_X                                         BEE_X - 25
+#define BEE_FRONT_Y                                              BEE_Y
+
 #define BEE_ANGLE_DECI_DEG                            ANGLE_DECI_DEG_0
 
 #define DISTRIBUTOR_2_FRONT                                     "D2_F"
@@ -154,10 +132,6 @@
 #define GARBAGE_FRONT_TO_GARBAGE_RELEASE_CP2                          128.0f
 #define GARBAGE_FRONT_TO_GARBAGE_RELEASE_SPEED_FACTOR                 MOTION_SPEED_FACTOR_NORMAL
 #define GARBAGE_FRONT_TO_GARBAGE_RELEASE_ACCELERATION_FACTOR          MOTION_ACCELERATION_FACTOR_NORMAL
-
-// ACTIONS
-#define ACTION_SWITCH_TIME_TO_ACHIEVE                                 2.0f
-
 /**
 * Init all elements for 2018.
 */

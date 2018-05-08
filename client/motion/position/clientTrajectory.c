@@ -61,7 +61,6 @@ bool clientTrajectoryUpdateRobotPosition() {
 
         updateRobotPosition(x, y, angle);
         return result;
-
     }
     return false;
 }

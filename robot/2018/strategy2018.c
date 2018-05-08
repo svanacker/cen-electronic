@@ -1,6 +1,9 @@
 #include <stdlib.h>
 
 #include "strategy2018.h"
+#include "strategyConfig2018.h"
+#include "strategyAction2018.h"
+#include "strategyTofSensorList2018.h"
 #include "strategy2018Utils.h"
 
 #include "../../common/error/error.h"
@@ -82,73 +85,59 @@ PathData* garbageFront_to_garbageRelease_Path;
 
 // Targets List
 static GameTarget switchTarget;
-static GameTarget distributor1GameTarget;
+static GameTarget distributor1Target;
 static GameTarget beeTarget;
-static GameTarget distributor2GameTarget;
+static GameTarget distributor2Target;
 static GameTarget garbageTarget;
 // TODO : static GameTarget unloadDistributor2GameTarget;
 
 // ------------------------------------------------------- TARGETS ACTIONS ---------------------------------------------------------------
 
 static GameTargetAction switchTargetAction;
+static GameTargetAction beeTargetAction;
+static GameTargetAction distributor1TargetAction;
+static GameTargetAction distributor2TargetAction;
 
 // ------------------------------------------------------- TARGETS ACTIONS ITEM LIST --------------------------------------------------------
 
 static GameTargetActionItemList switchTargetActionItemList;
+static GameTargetActionItemList distributor1TargetActionItemList;
+static GameTargetActionItemList beeTargetActionItemList;
+static GameTargetActionItemList distributor2TargetActionItemList;
+
 
 // ------------------------------------------------------- TARGET ACTION ITEM LIST ---------------------------------------------------
 
 static GameTargetActionItem switchTargetActionItem;
+static GameTargetActionItem distributor1TargetActionItem;
+static GameTargetActionItem beeTargetActionItem;
+static GameTargetActionItem distributor2TargetActionItem;
 
 // ------------------------------------------------------- STRATEGIES ----------------------------------------------------------------
 
 // strategies
+// Strategy 0 = Homologation  => No Strategy
+// Only Switch
 static GameStrategy strategy1;
+// Switch + Distributor 1
 static GameStrategy strategy2;
+
+// Switch + Distributor 1 + Bee
+static GameStrategy strategy3;
+
+// Switch + Distributor 1 + Bee + Distributor 2
+static GameStrategy strategy4;
+
+// Switch + Bee
+static GameStrategy strategy5;
+
+// ------------------------------------------------------- STRATEGY ITEM -------------------------------------------------------------
 
 // strategies Items
 static GameStrategyItem switchStrategyItem;
 static GameStrategyItem distributor1StrategyItem;
-
-static TofSensor* backRightSensor0;
-static TofSensor* backMiddleSensor1;
-static TofSensor* backLeftSensor2;
-
-static TofSensor* frontRightSensor3;
-static TofSensor* frontMiddleSensor4;
-static TofSensor* frontLeftSensor5;
-
-
-// TOF MANAGEMENT
-
-void setTofListOrientationAngle2018(TofSensorList* tofSensorList) {
-    backRightSensor0 = getTofSensorByIndex(tofSensorList, BACK_RIGHT_SENSOR_INDEX);
-    backMiddleSensor1 = getTofSensorByIndex(tofSensorList, BACK_MIDDLE_SENSOR_INDEX);
-    backLeftSensor2 = getTofSensorByIndex(tofSensorList, BACK_LEFT_SENSOR_INDEX);
-
-    frontRightSensor3 = getTofSensorByIndex(tofSensorList, FRONT_RIGHT_SENSOR_INDEX);
-    frontMiddleSensor4 = getTofSensorByIndex(tofSensorList, FRONT_MIDDLE_SENSOR_INDEX);
-    frontLeftSensor5 = getTofSensorByIndex(tofSensorList, FRONT_LEFT_SENSOR_INDEX);    
-    
-    // Orientation
-    backRightSensor0->orientationRadian = degToRad(BACK_RIGHT_SENSOR_ANGLE_DEGREE);
-    backMiddleSensor1->orientationRadian = degToRad(BACK_MIDDLE_SENSOR_ANGLE_DEGREE);
-    backLeftSensor2->orientationRadian = degToRad(BACK_LEFT_SENSOR_ANGLE_DEGREE);
-
-    frontRightSensor3->orientationRadian = degToRad(FRONT_RIGHT_SENSOR_ANGLE_DEGREE);
-    frontMiddleSensor4->orientationRadian = degToRad(FRONT_MIDDLE_SENSOR_ANGLE_DEGREE);
-    frontLeftSensor5->orientationRadian = degToRad(FRONT_LEFT_SENSOR_ANGLE_DEGREE);
-
-    // Threshold
-    backRightSensor0->thresholdDistanceMM = BACK_RIGHT_SENSOR_DISTANCE_THRESHOLD;
-    backMiddleSensor1->thresholdDistanceMM = BACK_MIDDLE_SENSOR_DISTANCE_THRESHOLD;
-    backLeftSensor2->thresholdDistanceMM = BACK_LEFT_SENSOR_DISTANCE_THRESHOLD;
-
-    frontRightSensor3->thresholdDistanceMM = FRONT_RIGHT_SENSOR_DISTANCE_THRESHOLD;
-    frontMiddleSensor4->thresholdDistanceMM = FRONT_MIDDLE_SENSOR_DISTANCE_THRESHOLD;
-    frontLeftSensor5->thresholdDistanceMM = FRONT_LEFT_SENSOR_DISTANCE_THRESHOLD;
-
-}
+static GameStrategyItem beeStrategyItem;
+static GameStrategyItem distributor2StrategyItem;
 
 // ------------------------------------------------------- INITIALIZATION ------------------------------------------------------------
 
@@ -198,7 +187,7 @@ void initLocations2018(GameStrategyContext* gameStrategyContext) {
 
     // Bee
     beeBorderAlignYLocation = addNavigationWithColors(teamColor, navigation, BEE_BORDER_Y_ALIGN, BEE_BORDER_Y_ALIGN_X, BEE_BORDER_Y_ALIGN_Y);
-    beeLocation = addNavigationWithColors(teamColor, navigation, BEE, BEE_X, BEE_Y);
+    beeLocation = addNavigationWithColors(teamColor, navigation, BEE, BEE_FRONT_X, BEE_FRONT_Y);
 
     // Distributor 2
     distributor2FrontLocation = addNavigationWithColors(teamColor, navigation, DISTRIBUTOR_2_FRONT, DISTRIBUTOR_2_FRONT_X, DISTRIBUTOR_2_FRONT_Y);
@@ -207,34 +196,6 @@ void initLocations2018(GameStrategyContext* gameStrategyContext) {
     // Garbage
     garbageFrontLocation = addNavigationWithColors(teamColor, navigation, GARBAGE_FRONT, GARBAGE_FRONT_POINT_X, GARBAGE_FRONT_POINT_Y);
     garbageReleaseLocation = addNavigationWithColors(teamColor, navigation, GARBAGE_RELEASE, GARBAGE_RELEASE_POINT_X, GARBAGE_RELEASE_POINT_Y);
-}
-
-float getAccelerationFactor(RobotConfig* robotConfig) {
-    if (isConfigSet(robotConfig, CONFIG_SPEED_LOW_MASK)) {
-        return MOTION_ACCELERATION_FACTOR_NORMAL;
-    }
-    if (isConfigSet(robotConfig, CONFIG_SPEED_VERY_LOW_MASK)) {
-        return MOTION_ACCELERATION_FACTOR_LOW;
-    }
-    if (isConfigSet(robotConfig, CONFIG_SPEED_ULTRA_LOW_MASK)) {
-        return MOTION_ACCELERATION_FACTOR_MIN;
-    }
-    // default is MOTION_SPEED_FACTOR_HIGH
-    return MOTION_ACCELERATION_FACTOR_HIGH;
-}
-
-float getSpeedFactor(RobotConfig* robotConfig) {
-    if (isConfigSet(robotConfig, CONFIG_SPEED_LOW_MASK)) {
-        return MOTION_SPEED_FACTOR_NORMAL;
-    }
-    if (isConfigSet(robotConfig, CONFIG_SPEED_VERY_LOW_MASK)) {
-        return MOTION_SPEED_FACTOR_LOW;
-    }
-    if (isConfigSet(robotConfig, CONFIG_SPEED_ULTRA_LOW_MASK)) {
-        return MOTION_SPEED_FACTOR_MIN;
-    }
-    // default is MOTION_SPEED_FACTOR_HIGH
-    return MOTION_SPEED_FACTOR_HIGH;
 }
 
 // PATHS
@@ -281,7 +242,8 @@ void initPaths2018(GameStrategyContext* gameStrategyContext, int index) {
                                                  deciDegreeToRad(SWITCH_ANGLE_DECI_DEG),
                                                  aFactor * STARTAREA_TO_SWITCH_ACCELERATION_FACTOR,
                                                  speedFactor * STARTAREA_TO_SWITCH_SPEED_FACTOR);
-    switch_to_distributor1_Path = addNavigationPath(navigation,
+    switch_to_distributor1_Path = addNavigationPathWithColor(teamColor,
+                                                    navigation,
                                                     switchLocation,
                                                     distributor1Location,
                                                     DEFAULT_NAVIGATION_COST,
@@ -292,7 +254,8 @@ void initPaths2018(GameStrategyContext* gameStrategyContext, int index) {
                                                     aFactor * SWITCH_TO_DISTRIBUTOR_1_ACCELERATION_FACTOR,
                                                     speedFactor * SWITCH_TO_DISTRIBUTOR_1_SPEED_FACTOR);
 
-    distributor1_to_beeBorderAlignY_Path = addNavigationPath(navigation,
+    distributor1_to_beeBorderAlignY_Path = addNavigationPathWithColor(teamColor,
+                                                             navigation,
                                                              distributor1Location,
                                                              beeBorderAlignYLocation,
                                                              DEFAULT_NAVIGATION_COST,
@@ -303,7 +266,8 @@ void initPaths2018(GameStrategyContext* gameStrategyContext, int index) {
                                                              aFactor * DISTRIBUTOR_1_TO_BEE_BORDER_ALIGN_Y_COST_ACCELERATION_FACTOR,
                                                              speedFactor * DISTRIBUTOR_1_TO_BEE_BORDER_ALIGN_Y_COST_SPEED_FACTOR);
 
-    beeBorderAlignY_to_bee_Path = addNavigationPath(navigation,
+    beeBorderAlignY_to_bee_Path = addNavigationPathWithColor(teamColor,
+                                                             navigation,
                                                              beeBorderAlignYLocation,
                                                              beeLocation,
                                                              DEFAULT_NAVIGATION_COST,
@@ -313,7 +277,8 @@ void initPaths2018(GameStrategyContext* gameStrategyContext, int index) {
                                                              deciDegreeToRad(BEE_ANGLE_DECI_DEG),
                                                              aFactor * BEE_BORDER_ALIGN_Y_TO_BEE_ACCELERATION_FACTOR,
                                                              speedFactor * BEE_BORDER_ALIGN_Y_TO_BEE_SPEED_FACTOR);
-    bee_to_distributor2Front_Path = addNavigationPath(navigation,
+    bee_to_distributor2Front_Path = addNavigationPathWithColor(teamColor,
+                                                             navigation,
                                                              beeLocation,
                                                              distributor2FrontLocation,
                                                              DEFAULT_NAVIGATION_COST,
@@ -324,7 +289,8 @@ void initPaths2018(GameStrategyContext* gameStrategyContext, int index) {
                                                              aFactor * BEE_TO_DISTRIBUTOR_2_FRONT_ACCELERATION_FACTOR,
                                                              speedFactor * BEE_TO_DISTRIBUTOR_2_FRONT_SPEED_FACTOR);
                                                              
-    distributor2Front_to_distributor2_Path = addNavigationPath(navigation,
+    distributor2Front_to_distributor2_Path = addNavigationPathWithColor(teamColor,
+                                                             navigation,
                                                              distributor2FrontLocation,
                                                              distributor2Location,
                                                              DEFAULT_NAVIGATION_COST,
@@ -335,7 +301,8 @@ void initPaths2018(GameStrategyContext* gameStrategyContext, int index) {
                                                              aFactor * DISTRIBUTOR_2_FRONT_TO_DISTRIBUTOR_2_ACCELERATION_FACTOR,
                                                              speedFactor * DISTRIBUTOR_2_FRONT_TO_DISTRIBUTOR_2_SPEED_FACTOR);
                                                              
-     distributor2_to_garbageFront_Path = addNavigationPath(navigation,
+     distributor2_to_garbageFront_Path = addNavigationPathWithColor(teamColor,
+                                                             navigation,
                                                              distributor2Location,
                                                              garbageFrontLocation,
                                                              DEFAULT_NAVIGATION_COST,
@@ -346,7 +313,8 @@ void initPaths2018(GameStrategyContext* gameStrategyContext, int index) {
                                                              aFactor * DISTRIBUTOR_2_TO_GARBAGE_FRONT_ACCELERATION_FACTOR,
                                                              speedFactor * DISTRIBUTOR_2_TO_GARBAGE_FRONT_SPEED_FACTOR);
                                                              
-     garbageFront_to_garbageRelease_Path = addNavigationPath(navigation,
+     garbageFront_to_garbageRelease_Path = addNavigationPathWithColor(teamColor,
+                                                             navigation,
                                                              garbageFrontLocation,
                                                              garbageReleaseLocation,
                                                              DEFAULT_NAVIGATION_COST,
@@ -361,40 +329,29 @@ void initPaths2018(GameStrategyContext* gameStrategyContext, int index) {
 void initTargets2018(GameStrategyContext* gameStrategyContext) {
 	clearGameTargets();
 
-    addGameTarget(&switchTarget, "SWITCH_TARGET", POINT_2018_PANEL_ON_POINT, switchLocation);
-    addGameTarget(&distributor1GameTarget, "DIST_1", POINT_2018_DISTRIBUTOR_UNICOLOR_COMPLETE_POINT, distributor1Location);
-    addGameTarget(&beeTarget, "BEE", POINT_2018_BEE_DESTROYED_POINT, beeLocation);
-    addGameTarget(&distributor2GameTarget, "DIST_2_LOAD", POINT_2018_DISTRIBUTOR_UNLOADED_POINT, distributor2Location);
-    addGameTarget(&garbageTarget, "GARBAGE_RELEASE", POINT_2018_GARBAGE_RELEASE_POINT, garbageReleaseLocation);
+    addGameTarget(&switchTarget, "SWITCH_TARGET", SCORE_POINT_2018_PANEL_ON_POINT, switchLocation);
+    addGameTarget(&distributor1Target, "DIST_1", SCORE_POINT_2018_DISTRIBUTOR_UNICOLOR_COMPLETE_POINT, distributor1Location);
+    addGameTarget(&beeTarget, "BEE", SCORE_POINT_2018_BEE_DESTROYED_POINT, beeLocation);
+    addGameTarget(&distributor2Target, "DIST_2_LOAD", SCORE_POINT_2018_DISTRIBUTOR_UNLOADED_POINT, distributor2Location);
+    addGameTarget(&garbageTarget, "GARBAGE_RELEASE", SCORE_POINT_2018_GARBAGE_RELEASE_POINT, garbageReleaseLocation);
 }
 
 void initTargetActions2018(GameStrategyContext* gameStrategyContext) {
+    // SWITCH
     addTargetAction(&(switchTarget.actionList), &switchTargetAction, switchLocation, switchLocation, ACTION_SWITCH_TIME_TO_ACHIEVE, NULL, &switchTargetActionItemList);
-}
-
-// 
-
-enum TeamColor getStrategy2018TeamColor(int* context) {
-    GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
-    enum TeamColor teamColor = gameStrategyContext->color;
-
-    return teamColor;
-}
-
-bool switch2018On(int* context) {
-    enum TeamColor teamColor = getStrategy2018TeamColor(context);
-    if (teamColor == TEAM_COLOR_GREEN) {
-        return clientLightOn2018(LAUNCHER_RIGHT_INDEX);
-    }
-    else if (teamColor == TEAM_COLOR_ORANGE) {
-        return clientLightOn2018(LAUNCHER_LEFT_INDEX);
-    }
-    writeError(WRONG_COLOR);
-    return false;
+    // DISTRIBUTOR 1
+    addTargetAction(&(distributor1Target.actionList), &distributor1TargetAction, distributor1Location, distributor1Location, ACTION_DISTRIBUTOR_1_TIME_TO_ACHIEVE, NULL, &distributor1TargetActionItemList);
+    // BEE
+    addTargetAction(&(beeTarget.actionList), &beeTargetAction, beeLocation, beeLocation, ACTION_BEE_TIME_TO_ACHIEVE, NULL, &beeTargetActionItemList);
+    // DISTRIBUTOR 2
+    addTargetAction(&(distributor2Target.actionList), &distributor2TargetAction, distributor2Location, distributor2Location, ACTION_DISTRIBUTOR_2_TIME_TO_ACHIEVE, NULL, &distributor2TargetActionItemList);
 }
 
 void initTargetActionsItems2018(GameStrategyContext* gameStrategyContext) {
     addTargetActionItem(&switchTargetActionItemList, &switchTargetActionItem, &switch2018On, "SWITCH ON");
+    addTargetActionItem(&distributor1TargetActionItemList, &distributor1TargetActionItem, &distributor1_2018, "DIST_1");
+    addTargetActionItem(&beeTargetActionItemList, &beeTargetActionItem, &bee2018, "BEE");
+    addTargetActionItem(&distributor2TargetActionItemList, &distributor2TargetActionItem, &distributor2_2018, "DIST_2");
 }
 
 /**
@@ -402,8 +359,11 @@ void initTargetActionsItems2018(GameStrategyContext* gameStrategyContext) {
 */
 void initStrategies2018(GameStrategyContext* gameStrategyContext) {
 	clearGameStrategies();
-	addGameStrategy(&strategy1, "S1");
-    addGameStrategy(&strategy2, "S2");
+	addGameStrategy(&strategy1, "SWITCH");
+    addGameStrategy(&strategy2, "SW_DIST");
+    addGameStrategy(&strategy3, "SW_DIST_BEE");
+    addGameStrategy(&strategy4, "SW_DIST_BEE_DIST");
+    addGameStrategy(&strategy5, "SW_BEE");
 }
 
 GameStrategy* initStrategiesItems2018(GameStrategyContext* gameStrategyContext) {
@@ -411,14 +371,32 @@ GameStrategy* initStrategiesItems2018(GameStrategyContext* gameStrategyContext) 
     if (gameStrategyContext->strategyIndex == NO_STRATEGY_INDEX) {
         return NULL;
     }
-    if (gameStrategyContext->strategyIndex == STRATEGY_1_INDEX) {
+    if (gameStrategyContext->strategyIndex == STRATEGY_1_SWITCH_INDEX) {
         addGameStrategyItem(&strategy1, &switchStrategyItem, &switchTarget);
         return &strategy1;
     }
-    if (gameStrategyContext->strategyIndex == STRATEGY_2_INDEX) {
+    if (gameStrategyContext->strategyIndex == STRATEGY_2_SWITCH_DIST_INDEX) {
         addGameStrategyItem(&strategy2, &switchStrategyItem, &switchTarget);
-        addGameStrategyItem(&strategy2, &distributor1StrategyItem, &distributor1GameTarget);
+        addGameStrategyItem(&strategy2, &distributor1StrategyItem, &distributor1Target);
         return &strategy2;
+    }
+    if (gameStrategyContext->strategyIndex == STRATEGY_3_SWITCH_DIST_BEE_INDEX) {
+        addGameStrategyItem(&strategy3, &switchStrategyItem, &switchTarget);
+        addGameStrategyItem(&strategy3, &distributor1StrategyItem, &distributor1Target);
+        addGameStrategyItem(&strategy3, &beeStrategyItem, &beeTarget);
+        return &strategy3;
+    }
+    if (gameStrategyContext->strategyIndex == STRATEGY_4_SWITCH_DIST_BEE_DIST_INDEX) {
+        addGameStrategyItem(&strategy4, &switchStrategyItem, &switchTarget);
+        addGameStrategyItem(&strategy4, &distributor1StrategyItem, &distributor1Target);
+        addGameStrategyItem(&strategy4, &beeStrategyItem, &beeTarget);
+        addGameStrategyItem(&strategy4, &distributor2StrategyItem, &distributor2Target);
+        return &strategy4;
+    }
+    if (gameStrategyContext->strategyIndex == STRATEGY_5_SWITCH_BEE_INDEX) {
+        addGameStrategyItem(&strategy5, &switchStrategyItem, &switchTarget);
+        addGameStrategyItem(&strategy5, &beeStrategyItem, &beeTarget);
+        return &strategy5;
     }
     return NULL;
 }

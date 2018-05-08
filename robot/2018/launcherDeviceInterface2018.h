@@ -13,6 +13,9 @@
 #define LAUNCHER_LEFT_INDEX          0
 #define LAUNCHER_RIGHT_INDEX         1
 
+#define LAUNCHER_PREPARE_ON         true
+#define LAUNCHER_LAUNCH             false
+
 // BALL LAUNCHER
 
 /**

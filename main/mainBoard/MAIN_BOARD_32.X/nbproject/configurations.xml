@@ -467,6 +467,9 @@
         <itemPath>../../../robot/2018/score2018.h</itemPath>
         <itemPath>../../../robot/2018/distributorDebug2018.h</itemPath>
         <itemPath>../../../robot/2018/gameBoardElement2018.h</itemPath>
+        <itemPath>../../../robot/2018/strategyTofSensorList2018.h</itemPath>
+        <itemPath>../../../robot/2018/strategyConfig2018.h</itemPath>
+        <itemPath>../../../robot/2018/strategyAction2018.h</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.config"
                      displayName="robot.config"
@@ -1019,6 +1022,9 @@
         <itemPath>../../../robot/2018/strategyDeviceInterface2018.c</itemPath>
         <itemPath>../../../robot/2018/distributorDebug2018.c</itemPath>
         <itemPath>../../../robot/2018/gameBoardElement2018.c</itemPath>
+        <itemPath>../../../robot/2018/strategyTofSensorList2018.c</itemPath>
+        <itemPath>../../../robot/2018/strategyConfig2018.c</itemPath>
+        <itemPath>../../../robot/2018/strategyAction2018.c</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.config"
                      displayName="robot.config"

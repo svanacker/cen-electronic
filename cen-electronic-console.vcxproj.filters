@@ -2007,6 +2007,15 @@
     <ClCompile Include="motion\position\trajectoryTypeDebug.c">
       <Filter>Source Files\motion\position</Filter>
     </ClCompile>
+    <ClCompile Include="robot\2018\strategyTofSensorList2018.c">
+      <Filter>Source Files\robot\2018</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2018\strategyConfig2018.c">
+      <Filter>Source Files\robot\2018</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2018\strategyAction2018.c">
+      <Filter>Source Files\robot\2018</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -3011,9 +3020,6 @@
     <ClInclude Include="drivers\ioExpander\ioExpander.h">
       <Filter>Header Files\drivers\ioExpander</Filter>
     </ClInclude>
-    <ClInclude Include="robot\2018\launcherClient2018.h">
-      <Filter>Header Files\robot\2018</Filter>
-    </ClInclude>
     <ClInclude Include="robot\match\endMatch.h">
       <Filter>Header Files\robot\match</Filter>
     </ClInclude>
@@ -3109,6 +3115,15 @@
     </ClInclude>
     <ClInclude Include="motion\position\trajectoryTypeDebug.h">
       <Filter>Header Files\motion\position</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2018\strategyTofSensorList2018.h">
+      <Filter>Header Files\robot\2018</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2018\strategyConfig2018.h">
+      <Filter>Header Files\robot\2018</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2018\strategyAction2018.h">
+      <Filter>Header Files\robot\2018</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
