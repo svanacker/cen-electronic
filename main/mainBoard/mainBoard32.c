@@ -331,13 +331,13 @@ static Buffer meca1OutputBuffer;
 static OutputStream meca1OutputStream;
 static StreamLink meca1SerialStreamLink;
 
-// serial link PC
-static char pcInputBufferArray[MAIN_BOARD_PC_INPUT_BUFFER_LENGTH];
-static Buffer pcInputBuffer;
-static char pcOutputBufferArray[MAIN_BOARD_PC_OUTPUT_BUFFER_LENGTH];
-static Buffer pcOutputBuffer;
-static OutputStream pcOutputStream;
-static StreamLink pcSerialStreamLink;
+// serial link Motor Notification
+static char motorNotifyInputBufferArray[MAIN_BOARD_MOTOR_NOTIFY_INPUT_BUFFER_LENGTH];
+static Buffer motorNotifyInputBuffer;
+static char pcOutputBufferArray[MAIN_BOARD_MOTOR_NOTIFY_OUTPUT_BUFFER_LENGTH];
+static Buffer motorNotifyOutputBuffer;
+static OutputStream motorNotifyOutputStream;
+static StreamLink motorNotifySerialStreamLink;
 
 // DRIVERS
 static Buffer driverRequestBuffer;
@@ -516,6 +516,13 @@ void initMainBoardDriverDataDispatcherList(void) {
         &meca1SerialStreamLink,
         "MECA_1_UART_DISPATCHER",
         MAIN_BOARD_SERIAL_PORT_MECA_1);
+    
+    // Uart Stream for motorBoard Notification
+    addUartDriverDataDispatcher(
+        &motorNotifySerialStreamLink,
+        "MOTOR_BOARD_NOTIFY_UART_DISPATCHER",
+        MAIN_BOARD_SERIAL_PORT_MOTOR_NOTIFY);
+    
 }
 
 void handleTofSensorList() {
@@ -565,7 +572,7 @@ void handleTofSensorList() {
         if (isPointInTheCollisionArea(gameBoard, &detectedPoint)) {
             OutputStream* alwaysOutputStream = getAlwaysOutputStreamLogger();
             println(alwaysOutputStream);
-            appendStringLN(alwaysOutputStream, "Robot ! :");
+            appendString(alwaysOutputStream, "Robot ! :");
             printPoint(alwaysOutputStream, &detectedPoint, "");
             println(alwaysOutputStream);
             motionDriverStop();
@@ -585,9 +592,9 @@ bool mainBoardWaitForInstruction(StartMatch* startMatchParam) {
         
     // Listen instruction from pcStream->Devices
     handleStreamInstruction(
-            &pcInputBuffer,
-            &pcOutputBuffer,
-            &pcOutputStream,
+            &motorNotifyInputBuffer,
+            &motorNotifyOutputBuffer,
+            &motorNotifyOutputStream,
             &filterRemoveCRLF,
             NULL);
 
@@ -596,6 +603,14 @@ bool mainBoardWaitForInstruction(StartMatch* startMatchParam) {
             &debugInputBuffer,
             &debugOutputBuffer,
             &debugOutputStream,
+            &filterRemoveCRLF,
+            NULL);
+    
+    // List instruction / notification from motorNotify
+    handleStreamInstruction(
+            &motorNotifyInputBuffer,
+            &motorNotifyOutputBuffer,
+            &motorNotifyOutputStream,
             &filterRemoveCRLF,
             NULL);
     
@@ -626,12 +641,12 @@ int main(void) {
     initSerialLinkList(&serialLinkListArray, MAIN_BOARD_SERIAL_LINK_LIST_LENGTH);
 
     // Open the serial Link for the PC : No Log, only instruction
-    openSerialLink(&pcSerialStreamLink,
-                   "SERIAL_PC", 
-                    &pcInputBuffer, &pcInputBufferArray, MAIN_BOARD_PC_INPUT_BUFFER_LENGTH,
-                    &pcOutputBuffer, &pcOutputBufferArray, MAIN_BOARD_PC_OUTPUT_BUFFER_LENGTH,
-                    &pcOutputStream,
-                    MAIN_BOARD_SERIAL_PORT_PC,
+    openSerialLink(&motorNotifySerialStreamLink,
+                   "MOTOR_NOTIFY", 
+                    &motorNotifyInputBuffer, &motorNotifyInputBufferArray, MAIN_BOARD_MOTOR_NOTIFY_INPUT_BUFFER_LENGTH,
+                    &motorNotifyOutputBuffer, &pcOutputBufferArray, MAIN_BOARD_MOTOR_NOTIFY_OUTPUT_BUFFER_LENGTH,
+                    &motorNotifyOutputStream,
+                    MAIN_BOARD_SERIAL_PORT_MOTOR_NOTIFY,
                     DEFAULT_SERIAL_SPEED);
 
     // Open the serial Link for debug and LOG !
@@ -739,11 +754,19 @@ int main(void) {
     getTimerByCode(END_MATCH_DETECTOR_TIMER_CODE)->enabled = true;
 
     // MOTOR BOARD
+    // UART Device
     clearBuffer(&motorInputBuffer);
     // Send a clear Buffer to the remote board to avoid to keep bad data in the link when rebooting
     append(&motorOutputStream, HEADER_CLEAR_INPUT_STREAM);
     append(&motorOutputStream, HEADER_WRITE_CONTENT_AND_DEEP_CLEAR_BUFFER);
     motorOutputStream.flush(&motorOutputStream);
+    
+    // UART Notification
+    clearBuffer(&motorNotifyInputBuffer);
+    // Send a clear Buffer to the remote board to avoid to keep bad data in the link when rebooting
+    append(&motorNotifyOutputStream, HEADER_CLEAR_INPUT_STREAM);
+    append(&motorNotifyOutputStream, HEADER_WRITE_CONTENT_AND_DEEP_CLEAR_BUFFER);
+    motorNotifyOutputStream.flush(&motorNotifyOutputStream);
     
     // MECA 1
     clearBuffer(&meca1InputBuffer);
