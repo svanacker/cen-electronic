@@ -72,7 +72,7 @@ void internalNotify(OutputStream* outputStream, char statusHeader, char* notifyS
     append(outputStream, statusHeader);
 
     // send position
-    notifyAbsolutePositionWithoutHeader(outputStream);
+    notifyAbsolutePositionWithoutHeader(outputStream, true);
 
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
     appendString(debugOutputStream, "Motion ");

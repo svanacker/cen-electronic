@@ -93,8 +93,7 @@ int getDriverDataDispatcherCount() {
     return dispatcherList.size;
 }
 
-bool handleNotificationFromDispatcherList(TransmitMode transmitMode) {
-    bool result = false;
+bool handleNotificationFromDispatcherList(TransmitMode transmitMode, int address) {
     int size = dispatcherList.size;
     int i;
     for (i = 0; i < size; i++) {
@@ -102,9 +101,12 @@ bool handleNotificationFromDispatcherList(TransmitMode transmitMode) {
         if (dispatcher->transmitMode != transmitMode) {
             continue;
         }
+        if (dispatcher->address != address) {
+            continue;
+        }
         if (handleNotificationFromDispatcher(dispatcher)) {
-            result = true;
+            return true;
         }
     }
-    return result;
+    return false;
 }

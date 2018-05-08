@@ -57,7 +57,7 @@
 #define NOTIFY_MOTION_STATUS_BLOCKED           'k'
 
 /** Argument for the status of the robot when robot was shocked when reaching the position. */
-#define NOTIFY_MOTION_STATUS_SHOCKED           'S'
+#define NOTIFY_MOTION_STATUS_SHOCKED           'H'
 
 /** Argument for the status of the robot when there is an obstacle. */
 #define NOTIFY_MOTION_STATUS_OBSTACLE          'o'

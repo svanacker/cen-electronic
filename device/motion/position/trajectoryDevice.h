@@ -24,7 +24,7 @@ DeviceDescriptor* getTrajectoryDeviceDescriptor(void);
 /**
 * Notify the absolute position without the header.
 */
-void notifyAbsolutePositionWithoutHeader(OutputStream* outputStream);
+void notifyAbsolutePositionWithoutHeader(OutputStream* outputStream, bool fakeData);
 
 // NOTIFICATION
 

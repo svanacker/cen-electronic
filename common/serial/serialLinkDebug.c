@@ -32,17 +32,17 @@ void printSerialLinkDebugHeader(OutputStream* outputStream) {
     appendEndOfTableColumn(outputStream, SERIAL_LINK_DEBUG_LAST_COLUMN_LENGTH);
     // Second Header Line
     appendStringHeader(outputStream, "idx", SERIAL_LINK_IDX_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "port", SERIAL_LINK_PORT_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "name", SERIAL_LINK_NAME_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "speed", SERIAL_LINK_SPEED_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "", SERIAL_LINK_PORT_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "", SERIAL_LINK_NAME_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "", SERIAL_LINK_SPEED_COLUMN_LENGTH);
     appendStringHeader(outputStream, "available", SERIAL_LINK_INPUT_BUFFER_AVAILABLE_CHAR_COUNT_COLUMN_LENGTH);
     appendStringHeader(outputStream, "available", SERIAL_LINK_OUTPUT_BUFFER_AVAILABLE_CHAR_COUNT_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, SERIAL_LINK_DEBUG_LAST_COLUMN_LENGTH);
     // Third Header Line
-    appendStringHeader(outputStream, "idx", SERIAL_LINK_IDX_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "port", SERIAL_LINK_PORT_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "name", SERIAL_LINK_NAME_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "speed", SERIAL_LINK_SPEED_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "", SERIAL_LINK_IDX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "", SERIAL_LINK_PORT_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "", SERIAL_LINK_NAME_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "", SERIAL_LINK_SPEED_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Char Count", SERIAL_LINK_INPUT_BUFFER_AVAILABLE_CHAR_COUNT_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Char Count", SERIAL_LINK_OUTPUT_BUFFER_AVAILABLE_CHAR_COUNT_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, SERIAL_LINK_DEBUG_LAST_COLUMN_LENGTH);

@@ -21,13 +21,13 @@ int trajectoryGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fi
     if (commandHeader == COMMAND_TRAJECTORY_GET_ABSOLUTE_POSITION) {
         if (fillDeviceArgumentList) {
             setFunction(GET_ABS_POS_STRING, 0, 5);
-            setResultFloatHex6(0, X_MM);
+            setResultFloatHex4(0, X_MM);
             setResultSeparator(1);
-            setResultFloatHex6(2, Y_MM);
+            setResultFloatHex4(2, Y_MM);
             setResultSeparator(3);
             setResultUnsignedHex4(4, ANGLE_1_10_DEG);
         }
-        return commandLengthValueForMode(mode, 0, 18);
+        return commandLengthValueForMode(mode, 0, 14);
     } else if (commandHeader == COMMAND_TRAJECTORY_DEBUG_GET_ABSOLUTE_POSITION) {
         // Same return in case of input / output
         if (fillDeviceArgumentList) {

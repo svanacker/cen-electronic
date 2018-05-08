@@ -153,6 +153,9 @@ void clearLastError();
 #define DISPATCHERS_LIST_ILLEGAL_INDEX                                    0x2121
 #define DISPATCHER_PING_MUST_BE_HANDLE_IN_DRIVER_STREAM_LISTENER          0x2122
 
+#define NOTIFICATION_BAD_DEVICE                                           0x2130
+#define NOTIFICATION_BAD_DEVICE_COMMAND_HANDLER_NOT_HANDLE                0x2131
+
 // DRIVER
 
 #define DRIVER_STREAM_LISTENER_INPUT_BUFFER_NULL                          0x2200

@@ -17,6 +17,8 @@
 // COMMON
 #include "../../common/delay/cenDelay.h"
 
+#include "../../common/error/error.h"
+
 #include "../../common/eeprom/eeprom.h"
 
 #include "../../common/i2c/i2cCommon.h"
@@ -334,7 +336,7 @@ static StreamLink meca1SerialStreamLink;
 // serial link Motor Notification
 static char motorNotifyInputBufferArray[MAIN_BOARD_MOTOR_NOTIFY_INPUT_BUFFER_LENGTH];
 static Buffer motorNotifyInputBuffer;
-static char pcOutputBufferArray[MAIN_BOARD_MOTOR_NOTIFY_OUTPUT_BUFFER_LENGTH];
+static char motorNotifyOutputBufferArray[MAIN_BOARD_MOTOR_NOTIFY_OUTPUT_BUFFER_LENGTH];
 static Buffer motorNotifyOutputBuffer;
 static OutputStream motorNotifyOutputStream;
 static StreamLink motorNotifySerialStreamLink;
@@ -379,6 +381,7 @@ void updateNewPositionFromNotification(InputStream* inputStream) {
     float y = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
     checkIsSeparator(inputStream);
     float angleDegree = readHexFloat4(inputStream, ANGLE_DIGIT_DEGREE_PRECISION);
+    
     gameStrategyContext->robotPosition->x = x;
     gameStrategyContext->robotPosition->y = y;
     gameStrategyContext->robotAngleRadian = degToRad(angleDegree);
@@ -391,10 +394,24 @@ void mainBoardDeviceHandleMotionDeviceNotification(const Device* device, const c
                 || commandHeader == NOTIFY_MOTION_STATUS_MOVING
                 || commandHeader == NOTIFY_MOTION_STATUS_OBSTACLE
                 || commandHeader == NOTIFY_MOTION_STATUS_REACHED
-                || commandHeader == NOTIFY_MOTION_STATUS_BLOCKED) {
+                || commandHeader == NOTIFY_MOTION_STATUS_BLOCKED
+                || commandHeader == NOTIFY_MOTION_STATUS_SHOCKED) {
             updateNewPositionFromNotification(inputStream);
+            // FAKE DATA To Align with TrajectoryDevice
+            checkIsSeparator(inputStream);
+            checkIsChar(inputStream, 'F');
+
             gameStrategyContext->trajectoryType = TRAJECTORY_TYPE_NONE;
         }
+        else {
+            writeError(NOTIFICATION_BAD_DEVICE_COMMAND_HANDLER_NOT_HANDLE);
+            appendString(getAlwaysOutputStreamLogger(), "header");
+            append(getAlwaysOutputStreamLogger(), commandHeader);
+            println(getAlwaysOutputStreamLogger());
+        }
+    }
+    else {
+        writeError(NOTIFICATION_BAD_DEVICE);
     }
 }
 
@@ -406,6 +423,15 @@ void mainBoardDeviceHandleTrajectoryDeviceNotification(const Device* device, con
             enum TrajectoryType trajectoryType = readHex(inputStream);
             gameStrategyContext->trajectoryType = trajectoryType;
         }
+        else {
+            writeError(NOTIFICATION_BAD_DEVICE_COMMAND_HANDLER_NOT_HANDLE);
+            appendString(getAlwaysOutputStreamLogger(), "header");
+            append(getAlwaysOutputStreamLogger(), commandHeader);
+            println(getAlwaysOutputStreamLogger());
+        }
+    }
+    else {
+        writeError(NOTIFICATION_BAD_DEVICE);
     }
 }
 
@@ -584,20 +610,11 @@ void handleTofSensorList() {
 
 bool mainBoardWaitForInstruction(StartMatch* startMatchParam) {
     // Handle Notification
-    while (handleNotificationFromDispatcherList(TRANSMIT_UART)) {
+    handleNotificationFromDispatcherList(TRANSMIT_UART, MAIN_BOARD_SERIAL_PORT_MOTOR_NOTIFY);
         // loop for all notification
         // notification handler must avoid to directly information in notification callback
         // and never to the call back device
-    }
-        
-    // Listen instruction from pcStream->Devices
-    handleStreamInstruction(
-            &motorNotifyInputBuffer,
-            &motorNotifyOutputBuffer,
-            &motorNotifyOutputStream,
-            &filterRemoveCRLF,
-            NULL);
-
+    
     // Listen instruction from debugStream->Devices
     handleStreamInstruction(
             &debugInputBuffer,
@@ -605,15 +622,7 @@ bool mainBoardWaitForInstruction(StartMatch* startMatchParam) {
             &debugOutputStream,
             &filterRemoveCRLF,
             NULL);
-    
-    // List instruction / notification from motorNotify
-    handleStreamInstruction(
-            &motorNotifyInputBuffer,
-            &motorNotifyOutputBuffer,
-            &motorNotifyOutputStream,
-            &filterRemoveCRLF,
-            NULL);
-    
+
     handleTofSensorList();
 
     return true;
@@ -644,7 +653,7 @@ int main(void) {
     openSerialLink(&motorNotifySerialStreamLink,
                    "MOTOR_NOTIFY", 
                     &motorNotifyInputBuffer, &motorNotifyInputBufferArray, MAIN_BOARD_MOTOR_NOTIFY_INPUT_BUFFER_LENGTH,
-                    &motorNotifyOutputBuffer, &pcOutputBufferArray, MAIN_BOARD_MOTOR_NOTIFY_OUTPUT_BUFFER_LENGTH,
+                    &motorNotifyOutputBuffer, &motorNotifyOutputBufferArray, MAIN_BOARD_MOTOR_NOTIFY_OUTPUT_BUFFER_LENGTH,
                     &motorNotifyOutputStream,
                     MAIN_BOARD_SERIAL_PORT_MOTOR_NOTIFY,
                     DEFAULT_SERIAL_SPEED);

@@ -36,13 +36,18 @@ bool isTrajectoryDeviceOk(void) {
     return true;
 }
 
-void notifyAbsolutePositionWithoutHeader(OutputStream* outputStream) {
+void notifyAbsolutePositionWithoutHeader(OutputStream* outputStream, bool fakeData) {
     Position* p = getPosition();
     appendHexFloat4(outputStream, p->pos.x, POSITION_DIGIT_MM_PRECISION);
     appendSeparator(outputStream);
     appendHexFloat4(outputStream, p->pos.y, POSITION_DIGIT_MM_PRECISION);
     appendSeparator(outputStream);
     appendHexFloat4(outputStream, radToDeg(p->orientation), ANGLE_DIGIT_DEGREE_PRECISION);
+    if (fakeData) {
+        // Fake data To Align Notification Size
+        appendSeparator(outputStream);
+        appendHex(outputStream, 0x0F);
+    }
 }
 
 void deviceTrajectoryHandleRawData(char header,
@@ -53,7 +58,7 @@ void deviceTrajectoryHandleRawData(char header,
         ackCommand(outputStream, TRAJECTORY_DEVICE_HEADER, COMMAND_TRAJECTORY_GET_ABSOLUTE_POSITION);
 
         updateTrajectoryWithNoThreshold();
-        notifyAbsolutePositionWithoutHeader(outputStream);
+        notifyAbsolutePositionWithoutHeader(outputStream, false);
     }
     else if (header == COMMAND_TRAJECTORY_DEBUG_GET_ABSOLUTE_POSITION) {
         ackCommand(outputStream, TRAJECTORY_DEVICE_HEADER, COMMAND_TRAJECTORY_DEBUG_GET_ABSOLUTE_POSITION);
@@ -155,7 +160,7 @@ bool trajectoryNotifyIfEnabledAndTreshold(OutputStream* notificationOutputStream
         append(notificationOutputStream, TRAJECTORY_DEVICE_HEADER);
         append(notificationOutputStream, NOTIFY_TRAJECTORY_CHANGED);
         // XXXXXX-YYYYYY-AAAA
-        notifyAbsolutePositionWithoutHeader(notificationOutputStream);
+        notifyAbsolutePositionWithoutHeader(notificationOutputStream, false);
         // We must add "Trajectory Type"
         enum TrajectoryType trajectoryType = computeTrajectoryType(distanceSinceLastNotification, absoluteAngleRadianSinceLastNotification);
         // "-X" where X is the type of Trajectory

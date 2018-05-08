@@ -104,7 +104,7 @@ void handleInstructionAndMotion(PidMotion* pidMotion, OutputStream* notification
         switchToNextMotionDefinitionIfAny(pidMotion, currentMotionDefinition);
     } else if (motionType == DETECTED_MOTION_TYPE_POSITION_OBSTACLE) {
         notifyObstacle(notificationOutputStream);
-        stopPosition(pidMotion, true, notificationOutputStream);
+        stopPosition(pidMotion, false, notificationOutputStream);
         switchToNextMotionDefinitionIfAny(pidMotion, currentMotionDefinition);
     }
     else if (motionType == DETECTED_MOTION_TYPE_POSITION_FAILED) {

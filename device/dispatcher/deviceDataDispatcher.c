@@ -41,8 +41,8 @@ const Device* deviceDataDispatcherFindDevice(const char deviceHeader, const char
             continue;
         }
         // if dataLength in the buffer has more data than
-        // deviceDataLength = data - 2 (2 = size of device header + size of command header)
-        if (dataLength >= expectedDeviceDataLength - DEVICE_AND_COMMAND_HEADER_LENGTH) {
+        // deviceDataLength = data + 2 (2 = size of device header + size of command header)
+        if (dataLength >= expectedDeviceDataLength + DEVICE_AND_COMMAND_HEADER_LENGTH) {
             return result;
         }
         else {

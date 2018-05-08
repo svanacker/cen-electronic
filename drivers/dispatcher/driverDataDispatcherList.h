@@ -80,7 +80,7 @@ int getDriverDataDispatcherCount(void);
  * @param transmitMode the transmitMode for the filter (we do not manage "LOCAL_TRANSMIT")
  * @return true if data notification was handled
  */
-bool handleNotificationFromDispatcherList(TransmitMode transmitMode);
+bool handleNotificationFromDispatcherList(TransmitMode transmitMode, int address);
 
 
 #endif

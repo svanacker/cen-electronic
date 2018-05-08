@@ -6,19 +6,21 @@
 #include "../../../device/deviceInterface.h"
 #include "../../../device/deviceConstants.h"
 
-#define MOTION_DEVICE_NOTIFY_LENGTH   14
+#define MOTION_DEVICE_NOTIFY_LENGTH   16
 
 const char* deviceMotionGetName(void) {
     return "motion";
 }
 
 void fillNotifyResults(char* notificationName) {
-    setNotification(notificationName, 5);
+    setNotification(notificationName, 7);
     setArgumentUnsignedHex4(0, "x(mm)");
     setArgumentSeparator(1);
     setArgumentUnsignedHex4(2, "y(mm)");
     setArgumentSeparator(3);
     setArgumentUnsignedHex4(4, "ang(1/10)deg");
+    setArgumentSeparator(5);
+    setArgumentUnsignedChar1(6, "Fake data to debug :(");
 }
 
 int deviceMotionGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
