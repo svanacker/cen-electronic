@@ -1,6 +1,7 @@
 #ifndef LOG_LEVEL_H
-
 #define LOG_LEVEL_H
+
+#include "../../common/io/outputStream.h"
 
 // Define the type of LOG_LEVEL (to avoid to manipulate int and avoid type error)
 enum LogLevel {
@@ -29,5 +30,7 @@ enum LogLevel {
  * @return the string representation of the level
  */
 char* getLevelAsString(enum LogLevel level);
+
+void appendLevelAsString(OutputStream* outputStream, enum LogLevel logLevel);
 
 #endif

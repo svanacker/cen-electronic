@@ -93,11 +93,29 @@ void printRobotTableConfig(OutputStream* outputStream, RobotConfig* robotConfig)
 	appendBoolTableData(outputStream, configValue & CONFIG_SPEED_ULTRA_LOW_MASK, ROBOT_CONFIG_VALUE_COLUMN_LENGTH);
 	appendEndOfTableColumn(outputStream, ROBOT_CONFIG_LAST_COLUMN);
 
+	appendTableHeaderSeparatorLine(outputStream);
+
+    // Undefined Conf
+	appendStringTableData(outputStream, "Undefined Conf", ROBOT_CONFIG_KEY_COLUMN_LENGTH);
+	appendBinary16TableData(outputStream, CONFIG_UNDEFINED_1_MASK, 4, ROBOT_CONFIG_MASK_COLUMN_LENGTH);
+	appendBoolTableData(outputStream, configValue & CONFIG_UNDEFINED_1_MASK, ROBOT_CONFIG_VALUE_COLUMN_LENGTH);
+	appendEndOfTableColumn(outputStream, ROBOT_CONFIG_LAST_COLUMN);
+
+	appendTableHeaderSeparatorLine(outputStream);
+
+    // Debug Config
+	appendStringTableData(outputStream, "Log Level Debug", ROBOT_CONFIG_KEY_COLUMN_LENGTH);
+	appendBinary16TableData(outputStream, CONFIG_DEBUG, 4, ROBOT_CONFIG_MASK_COLUMN_LENGTH);
+	appendBoolTableData(outputStream, configValue & CONFIG_DEBUG, ROBOT_CONFIG_VALUE_COLUMN_LENGTH);
+	appendEndOfTableColumn(outputStream, ROBOT_CONFIG_LAST_COLUMN);
+    
+	appendTableHeaderSeparatorLine(outputStream);
+    
 	// LCD Backlight
 	appendStringTableData(outputStream, "LCD BackLight", ROBOT_CONFIG_KEY_COLUMN_LENGTH);
 	appendBinary16TableData(outputStream, CONFIG_LCD_MASK, 4, ROBOT_CONFIG_MASK_COLUMN_LENGTH);
 	appendBoolTableData(outputStream, configValue & CONFIG_LCD_MASK, ROBOT_CONFIG_VALUE_COLUMN_LENGTH);
 	appendEndOfTableColumn(outputStream, ROBOT_CONFIG_LAST_COLUMN);
-
+    
 	appendTableHeaderSeparatorLine(outputStream);
 }

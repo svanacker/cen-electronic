@@ -1,5 +1,9 @@
 #include "logLevel.h"
 
+#include "../../common/io/outputStream.h"
+#include "../../common/io/printWriter.h"
+
+
 char* getLevelAsString(enum LogLevel level) {
     switch (level) {
         case LOG_LEVEL_TRACE: return "TRACE(0)";
@@ -10,4 +14,9 @@ char* getLevelAsString(enum LogLevel level) {
         case LOG_LEVEL_ALWAYS: return "ALWAYS(5)";
     }
     return "?";
+}
+
+
+void appendLevelAsString(OutputStream* outputStream, enum LogLevel logLevel) {
+    appendString(outputStream, getLevelAsString(logLevel));
 }

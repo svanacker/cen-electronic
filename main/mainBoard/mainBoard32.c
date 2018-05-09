@@ -112,6 +112,10 @@
 #include "../../device/i2c/master/i2cMasterDebugDevice.h"
 #include "../../device/i2c/master/i2cMasterDebugDeviceInterface.h"
 
+// IO EXPANDER
+#include "../../device/ioExpander/ioExpanderDevice.h"
+#include "../../device/ioExpander/ioExpanderDeviceInterface.h"
+
 // LCD
 #include "../../device/lcd/lcdDevice.h"
 #include "../../device/lcd/lcdDeviceInterface.h"
@@ -486,6 +490,8 @@ void addLocalDevices(void) {
     addLocalDevice(getColorSensorDeviceInterface(), getColorSensorDeviceDescriptor(&colorSensor));
     addLocalDevice(getTofDeviceInterface(), getTofDeviceDescriptor(&tofSensorList));
     addLocalDevice(getGameboardDeviceInterface(), getGameboardDeviceDescriptor(gameBoard));
+    
+    addLocalDevice(getIOExpanderDeviceInterface(), getIOExpanderDeviceDescriptor(&ioExpanderList));
 
     // 2018 specific
     addLocalDevice(getNavigationDeviceInterface(), getNavigationDeviceDescriptor(navigation));
@@ -653,7 +659,7 @@ int main(void) {
     setRobotMustStop(false);
 
     // LOG Global Configuration
-    initLogs(LOG_LEVEL_DEBUG, &logHandlerListArray, MAIN_BOARD_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
+    initLogs(LOG_LEVEL_INFO, &logHandlerListArray, MAIN_BOARD_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
 
     // LCD (LCD via Parallel interface)
     initLCDOutputStream(&lcdOutputStream);
@@ -661,12 +667,6 @@ int main(void) {
 
     // CONFIG
     initRobotConfigPic32(&robotConfig);
-    
-    // Increase the Log Level to INFO
-    Logger* logger = getLoggerInstance();
-    if (isConfigSet(&robotConfig, CONFIG_DEBUG)) {
-        logger->globalLogLevel = LOG_LEVEL_INFO;
-    }
 
     // Backlight the LCD is needed
     setBacklight(isConfigSet(&robotConfig, CONFIG_LCD_MASK));
@@ -698,6 +698,15 @@ int main(void) {
     // LOG the BoardName
     appendString(getAlwaysOutputStreamLogger(), getBoardName());
     println(getAlwaysOutputStreamLogger());
+    
+    // Increase the Log Level to INFO
+    Logger* logger = getLoggerInstance();
+    if (isConfigSet(&robotConfig, CONFIG_DEBUG)) {
+        logger->globalLogLevel = LOG_LEVEL_DEBUG;
+    }
+    appendString(getInfoOutputStreamLogger(), "GLOBAL LEVEL : ");
+    appendLevelAsString(getInfoOutputStreamLogger(), logger->globalLogLevel);
+    println(getInfoOutputStreamLogger());
     
     // Open the serial Link for the Motor Board
     openSerialLink(&motorSerialStreamLink,
@@ -768,7 +777,7 @@ int main(void) {
                              (TofSensorVL53L0X(*)[]) &tofSensorVL53L0XArray,
                               // Size
                               MAIN_BOARD_TOF_SENSOR_LIST_LENGTH,
-                              i2cBus4,
+                              i2cBus,
                               // IO Expander, if null, we will not be able to
                               // Manage several tof
                               tofIoExpander,
