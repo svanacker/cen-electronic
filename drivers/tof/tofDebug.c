@@ -12,6 +12,8 @@
 #include "tofList.h"
 
 #define TOF_SENSOR_INDEX_COLUMN_LENGTH		              10
+#define TOF_SENSOR_ENABLE_COLUMN_LENGTH                    7
+#define TOF_SENSOR_CHANGE_ADRESS_COLUMN_LENGTH             7
 #define TOF_SENSOR_VALUE_THRESHOLD_COLUMN_LENGTH          10
 #define TOF_SENSOR_VALUE_ORIENTATION_COLUMN_LENGTH        10
 
@@ -30,6 +32,8 @@ void printTofSensorDebugTableHeader(OutputStream* outputStream) {
     appendTableHeaderSeparatorLine(outputStream);
     // First header line
     appendStringHeader(outputStream, "Index", TOF_SENSOR_INDEX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Enable", TOF_SENSOR_ENABLE_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Change", TOF_SENSOR_CHANGE_ADRESS_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Threshold", TOF_SENSOR_VALUE_THRESHOLD_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Orient.", TOF_SENSOR_VALUE_ORIENTATION_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Dist (mm)", TOF_SENSOR_VALUE_DEC_COLUMN_LENGTH);
@@ -39,6 +43,8 @@ void printTofSensorDebugTableHeader(OutputStream* outputStream) {
     appendEndOfTableColumn(outputStream, TOF_SENSOR_LAST_COLUMN);
     // Second header line
     appendStringHeader(outputStream, "Index", TOF_SENSOR_INDEX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "", TOF_SENSOR_ENABLE_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Address", TOF_SENSOR_CHANGE_ADRESS_COLUMN_LENGTH);
     appendStringHeader(outputStream, "(mm)", TOF_SENSOR_VALUE_THRESHOLD_COLUMN_LENGTH);
     appendStringHeader(outputStream, "(degree)", TOF_SENSOR_VALUE_ORIENTATION_COLUMN_LENGTH);
     appendStringHeader(outputStream, "(Dec) mm", TOF_SENSOR_VALUE_DEC_COLUMN_LENGTH);
@@ -59,6 +65,8 @@ void printTofSensorTable(OutputStream* outputStream, TofSensorList* tofSensorLis
         unsigned int distance = tofSensor->tofGetDistanceMM(tofSensor);
 
         appendDecTableData(outputStream, index, TOF_SENSOR_INDEX_COLUMN_LENGTH);
+        appendBoolAsStringTableData(outputStream, tofSensor->enabled, TOF_SENSOR_ENABLE_COLUMN_LENGTH);
+        appendBoolAsStringTableData(outputStream, tofSensor->changeAddress, TOF_SENSOR_CHANGE_ADRESS_COLUMN_LENGTH);
         appendDecTableData(outputStream, tofSensor->thresholdDistanceMM, TOF_SENSOR_VALUE_THRESHOLD_COLUMN_LENGTH);
         appendDecfTableData(outputStream, radToDeg(tofSensor->orientationRadian), TOF_SENSOR_VALUE_ORIENTATION_COLUMN_LENGTH);
         

@@ -58,7 +58,7 @@ void deviceColorSensorHandleRawData(char commandHeader, InputStream* inputStream
     }
     else if (commandHeader == COMMAND_COLOR_SENSOR_DEBUG) {
         ackCommand(outputStream, COLOR_SENSOR_DEVICE_HEADER, COMMAND_COLOR_SENSOR_DEBUG);
-        OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+        OutputStream* debugOutputStream = getInfoOutputStreamLogger();
         printColorSensorTable(debugOutputStream, colorSensor);
     }
     /** Only for PC */

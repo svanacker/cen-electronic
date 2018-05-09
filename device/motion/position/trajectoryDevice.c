@@ -65,7 +65,7 @@ void deviceTrajectoryHandleRawData(char header,
 
         updateTrajectoryWithNoThreshold();
 
-        OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+        OutputStream* debugOutputStream = getInfoOutputStreamLogger();
         printDebugPosition(debugOutputStream);
     }
 	else if (header == COMMAND_TRAJECTORY_DEBUG_CODERS) {
@@ -73,7 +73,7 @@ void deviceTrajectoryHandleRawData(char header,
 
 		updateTrajectoryWithNoThreshold();
 
-		OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+		OutputStream* debugOutputStream = getInfoOutputStreamLogger();
 		printDebugCoderHistory(debugOutputStream);
 	}
     else if (header == COMMAND_TRAJECTORY_SET_ABSOLUTE_POSITION) {
@@ -149,13 +149,6 @@ bool trajectoryNotifyIfEnabledAndTreshold(OutputStream* notificationOutputStream
     
     if (distanceSinceLastNotification > trajectory->thresholdDistance
         || absoluteAngleRadianSinceLastNotification > trajectory->thresholdAngleRadian) {
-        /*
-        OutputStream* debugOutputStream = getDebugOutputStreamLogger();
-        appendStringAndDecf(debugOutputStream, "distanceSinceLastNotification:", distanceSinceLastNotification);
-        println(debugOutputStream);
-        appendStringAndDecf(debugOutputStream, "absoluteAngleRadianSinceLastNotification:", distanceSinceLastNotification);
-        println(debugOutputStream);
-        */
         Position* p = getPosition();
         append(notificationOutputStream, TRAJECTORY_DEVICE_HEADER);
         append(notificationOutputStream, NOTIFY_TRAJECTORY_CHANGED);

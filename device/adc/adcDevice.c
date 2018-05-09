@@ -70,7 +70,7 @@ void deviceADCHandleRawData(char commandHeader, InputStream* inputStream, Output
         unsigned char delayPeriodBetweenSample = readHex2(inputStream);
 
         int i; 
-        OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+        OutputStream* debugOutputStream = getInfoOutputStreamLogger();
         for (i = 1; i <= sampleCount; i++) {
             if (i > 0) {
                 delaymSec(100 * delayPeriodBetweenSample);
@@ -92,7 +92,7 @@ void deviceADCHandleRawData(char commandHeader, InputStream* inputStream, Output
     }
     else if (commandHeader == COMMAND_GET_ADC_LIST) {
         ackCommand(outputStream, ADC_DEVICE_HEADER, COMMAND_GET_ADC_LIST);
-        OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+        OutputStream* debugOutputStream = getInfoOutputStreamLogger();
         printAdcList(debugOutputStream);
     }
 }

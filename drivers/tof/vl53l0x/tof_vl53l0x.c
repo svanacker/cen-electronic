@@ -106,16 +106,14 @@ bool tof_vl53l0x_begin(TofSensorVL53L0X* tofSensorVL53L0X, bool debug) {
         tofSensorVL53L0X->status = VL53L0X_PerformRefSpadManagement(tofDevice, &refSpadCount, &isApertureSpads);
 
         if (debug) {
-            appendString(debugOutputStream, "refSpadCount = ");
-            appendDec(debugOutputStream, refSpadCount);
-            appendString(debugOutputStream, ", isApertureSpads = ");
-            appendDec(debugOutputStream, isApertureSpads);
+            appendStringAndDec(debugOutputStream, "refSpadCount = ", refSpadCount);
+            appendStringAndDec(debugOutputStream, ", isApertureSpads = ", isApertureSpads);
         }
     }
 
     if (tofSensorVL53L0X->status == VL53L0X_ERROR_NONE) {
         if (debug) {
-            appendString(debugOutputStream, "VL53L0X: PerformRefCalibration\n");
+            appendStringLN(debugOutputStream, "VL53L0X: PerformRefCalibration");
         }
 
         // Device Initialization
@@ -125,7 +123,7 @@ bool tof_vl53l0x_begin(TofSensorVL53L0X* tofSensorVL53L0X, bool debug) {
     if (tofSensorVL53L0X->status == VL53L0X_ERROR_NONE) {
         // no need to do this when we use VL53L0X_PerformSingleRangingMeasurement
         if (debug) {
-            appendString(debugOutputStream, "VL53L0X: SetDeviceMode\n");
+            appendStringLN(debugOutputStream, "VL53L0X: SetDeviceMode");
         }
         
         // In Single
@@ -162,8 +160,9 @@ bool tof_vl53l0x_begin(TofSensorVL53L0X* tofSensorVL53L0X, bool debug) {
         return true;
     } else {
         if (debug) {
-            appendString(debugOutputStream, "VL53L0X Error: ");
-            appendDec(debugOutputStream, tofSensorVL53L0X->status);
+            OutputStream* errorOutputStream = getErrorOutputStreamLogger(); 
+            appendString(errorOutputStream, "VL53L0X Error: ");
+            appendDec(errorOutputStream, tofSensorVL53L0X->status);
         }
 
         return false;
@@ -177,7 +176,7 @@ bool tofSetAddress(TofSensorVL53L0X* tofSensorVL53L0X, I2cBusConnection* newI2cB
     uint8_t newAddress = newI2cBusConnection->i2cAddress;
     if (newAddress != VL530X_ADDRESS_0) {
         tofSensorVL53L0X->status = VL53L0X_SetDeviceAddress(tofDevice, newAddress);
-        delaymSec(10);
+        delaymSec(30);
     }
 
     if (tofSensorVL53L0X->status == VL53L0X_ERROR_NONE) {

@@ -15,6 +15,9 @@
 #include "tof_vl53l0x.h"
 
 #define TOF_SENSOR_VL53L0X_INDEX_COLUMN_LENGTH		          10
+#define TOF_SENSOR_VL53L0X_ENABLE_COLUMN_LENGTH                7
+#define TOF_SENSOR_VL53L0X_CHANGE_ADRESS_COLUMN_LENGTH         7
+
 #define TOF_SENSOR_VL53L0X_I2C_ADDRESS_COLUMN_LENGTH          10
 #define TOF_SENSOR_VL53L0X_STATUS_COLUMN_LENGTH               10
 #define TOF_SENSOR_VL53L0X_VALUE_THRESHOLD_COLUMN_LENGTH      10
@@ -33,6 +36,8 @@ void printTofSensorDebugTableHeaderVL53L0X(OutputStream* outputStream) {
     appendTableHeaderSeparatorLine(outputStream);
     // First line
     appendStringHeader(outputStream, "Index", TOF_SENSOR_VL53L0X_INDEX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Enable", TOF_SENSOR_VL53L0X_ENABLE_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Change", TOF_SENSOR_VL53L0X_CHANGE_ADRESS_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Dev/I2C", TOF_SENSOR_VL53L0X_I2C_ADDRESS_COLUMN_LENGTH);
     appendStringHeader(outputStream, "I2C Bus", TOF_SENSOR_VL53L0X_I2C_ADDRESS_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Status", TOF_SENSOR_VL53L0X_STATUS_COLUMN_LENGTH);
@@ -46,6 +51,8 @@ void printTofSensorDebugTableHeaderVL53L0X(OutputStream* outputStream) {
 
     // Second header line
     appendStringHeader(outputStream, "Index", TOF_SENSOR_VL53L0X_INDEX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "", TOF_SENSOR_VL53L0X_ENABLE_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Address", TOF_SENSOR_VL53L0X_CHANGE_ADRESS_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Addr", TOF_SENSOR_VL53L0X_I2C_ADDRESS_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Addr", TOF_SENSOR_VL53L0X_I2C_ADDRESS_COLUMN_LENGTH);
     appendStringHeader(outputStream, "(mm)", TOF_SENSOR_VL53L0X_VALUE_THRESHOLD_COLUMN_LENGTH);
@@ -61,13 +68,19 @@ void printTofSensorDebugTableHeaderVL53L0X(OutputStream* outputStream) {
 }
 
 void printTofSensorTableVL53L0X(OutputStream* outputStream, TofSensorList* tofSensorList, Point* pointOfView, float pointOfViewAngleRadian) {
+    appendStringAndDecLN(outputStream, "TofSensorList:size=", tofSensorList->size);
+    
     printTofSensorDebugTableHeaderVL53L0X(outputStream);
     unsigned int index;
     for (index = 0; index < tofSensorList->size; index++) {
         // Tof Configuration Properties
         appendDecTableData(outputStream, index, TOF_SENSOR_VL53L0X_INDEX_COLUMN_LENGTH);
+        
 
         TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, index);
+        appendBoolAsStringTableData(outputStream, tofSensor->enabled, TOF_SENSOR_VL53L0X_ENABLE_COLUMN_LENGTH);
+        appendBoolAsStringTableData(outputStream, tofSensor->changeAddress, TOF_SENSOR_VL53L0X_CHANGE_ADRESS_COLUMN_LENGTH);
+
         unsigned int distance = tofSensor->tofGetDistanceMM(tofSensor);
         
         TofSensorVL53L0X* tofSensorVL53L0X = getTofSensorVL53L0X(tofSensor);

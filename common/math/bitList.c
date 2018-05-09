@@ -34,8 +34,8 @@ void setBit(BitList* bitList, unsigned char index, bool value) {
         appendStringAndDec(getInfoOutputStreamLogger(), ", value=", value);
     #endif
     if (index > bitList->size) {
-        appendStringAndDec(getDebugOutputStreamLogger(), ", index=", index);
-        appendStringAndDec(getDebugOutputStreamLogger(), ", size=", bitList->size);
+        appendStringAndDec(getWarningOutputStreamLogger(), ", index=", index);
+        appendStringAndDec(getWarningOutputStreamLogger(), ", size=", bitList->size);
         writeError(BIT_LIST_ARRAY_OUT_OF_BOUNDS);
         return;
     }

@@ -292,17 +292,17 @@ static TofSensor tofSensorArray[MOTOR_BOARD_PC_TOF_SENSOR_LIST_LENGTH];
 static bool connectToRobotManager = false;
 
 void mainBoardDeviceHandleNotification(const Device* device, const char commandHeader, InputStream* inputStream) {
-    appendString(getDebugOutputStreamLogger(), "Notification ! commandHeader=");
-    append(getDebugOutputStreamLogger(), commandHeader);
-    appendCRLF(getDebugOutputStreamLogger());
+    OutputStream* logStream = getDebugOutputStreamLogger();
+    appendString(logStream, "Notification ! commandHeader=");
+    append(logStream, commandHeader);
     if (commandHeader == NOTIFY_TEST) {
         unsigned char value = readHex2(inputStream);
-        appendStringAndDec(getDebugOutputStreamLogger(), "value=", value);
+        appendStringAndDec(logStream, ", value=", value);
     }
 }
 
 bool mainBoardPcWaitForInstruction(StartMatch* startMatch) {
-    while (handleNotificationFromDispatcherList(TRANSMIT_I2C)) {
+    while (handleNotificationFromDispatcherList(TRANSMIT_I2C, MOTOR_BOARD_I2C_ADDRESS)) {
         // loop for all notification
         // notification handler must avoid to directly information in notification callback
         // and never to the call back device

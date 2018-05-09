@@ -152,6 +152,7 @@ float mod360(float value) {
 */
 
 void rotateAbsolute(GameStrategyContext* gameStrategyContext, float angle) {
+    // OutputStream* logStream = getDebugOutputStreamLogger();
     /* TODO
     angle = changeAngleForColor(angle);
     float robotAngle = gameStrategyContext->robotAngleRadian;
@@ -161,8 +162,8 @@ void rotateAbsolute(GameStrategyContext* gameStrategyContext, float angle) {
     }
 
     #ifdef DEBUG_STRATEGY_HANDLER
-        appendStringAndDecf(getDebugOutputStreamLogger(), "rotateAbsolute:angle:", diff);    
-        appendString(getDebugOutputStreamLogger(), " deg\n");
+        appendStringAndDecf(logStream, "rotateAbsolute:angle:", diff);    
+        appendString(logStream, " deg\n");
     #endif
     if (diff == 0) {
         // instruction with 0 does not notify position.
@@ -200,8 +201,8 @@ bool motionRotateToFollowPath(GameStrategyContext* gmeStrategyContext, PathData*
     }
 
     #ifdef DEBUG_STRATEGY_HANDLER
-        appendStringAndDecf(getDebugOutputStreamLogger(), "motionRotateToFollowPath:angle:", diff);    
-        appendString(getDebugOutputStreamLogger(), " degree\n");
+        appendStringAndDecf(logStream, "motionRotateToFollowPath:angle:", diff);    
+        appendString(logStream, " degree\n");
     #endif
 
     if (diff > 0) {
@@ -247,8 +248,8 @@ void motionFollowPath(GameStrategyContext* gmeStrategyContext, PathData* pathDat
     }
 
     #ifdef DEBUG_STRATEGY_HANDLER
-        appendString(getDebugOutputStreamLogger(), "motionFollowPath:goto:");    
-        printLocation(getDebugOutputStreamLogger(), location);
+        appendString(logStream, "motionFollowPath:goto:");    
+        printLocation(logStream, location);
     #endif
 
     // cast to unsigned, negative signed char send 00
@@ -418,6 +419,7 @@ void setLastObstaclePosition(GameStrategyContext* gameStrategyContext) {
 }
 
 void handleCollision(GameStrategyContext* gameStrategyContext) {
+    // OutputStream* logStream = getDebugOutputStreamLogger();
     /*
     Timer* strategyTimer = gameStrategyContext->strategyTimer;
     // Mark the timer.
@@ -425,8 +427,8 @@ void handleCollision(GameStrategyContext* gameStrategyContext) {
         gameStrategyContext->timeSinceLastCollision = (float) strategyTimer->time;
     }
     #ifdef DEBUG_STRATEGY_HANDLER
-        appendStringAndDecf(getDebugOutputStreamLogger(), "\nCollision at time:", gameStrategyContext->timeSinceLastCollision);
-        appendString(getDebugOutputStreamLogger(), "\nhandleCollision");    
+        appendStringAndDecf(logStream, "\nCollision at time:", gameStrategyContext->timeSinceLastCollision);
+        appendString(logStream "\nhandleCollision");    
     #endif
     
     // Clears the current path and actions

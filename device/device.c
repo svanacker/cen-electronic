@@ -18,7 +18,7 @@ bool initDevice(const Device* device) {
     DeviceInterface* deviceInterface = device->deviceInterface;
 
     const char* deviceName = deviceInterface->deviceGetName();
-    OutputStream* logStream = getDebugOutputStreamLogger();
+    OutputStream* logStream = getInfoOutputStreamLogger();
 
     unsigned length = appendString(logStream, deviceName);
     appendSpaces(logStream, 18 - length);

@@ -18,14 +18,14 @@
 #include "../../../../common/io/binaryPrintWriter.h"
 
 void i2cMasterInitialize(I2cBus* i2cBus) {
-    OutputStream* outputStream = getDebugOutputStreamLogger();
+    OutputStream* outputStream = getWarningOutputStreamLogger();
     appendString(outputStream, "Initializing I2C ...");
 
     // Avoid more than one initialization
     if (i2cBus->initialized) {
         printI2cBus(outputStream, i2cBus);
         appendCRLF(outputStream);
-        appendString(getDebugOutputStreamLogger(), "\n!!! ALREADY INITIALIZED !!!\n");
+        appendString(getErrorOutputStreamLogger(), "\n!!! ALREADY INITIALIZED !!!\n");
         return;
     }
     i2cBus->initialized = true;

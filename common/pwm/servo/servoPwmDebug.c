@@ -87,18 +87,18 @@ void printServoList(OutputStream* outputStream) {
 // TEST FUNCTIONS
 
 void testAllPwmServos() {
-    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+    OutputStream* infoOutputStream = getInfoOutputStreamLogger();
     int servoIndex;
 
     for (servoIndex = 1; servoIndex <= PWM_COUNT; servoIndex++) {
         pwmServo(servoIndex, PWM_SERVO_SPEED_MAX, PWM_SERVO_MIDDLE_POSITION);
-        appendString(debugOutputStream, "Servo : ");
-        appendDec(debugOutputStream, servoIndex);
+        appendString(infoOutputStream, "Servo : ");
+        appendDec(infoOutputStream, servoIndex);
         delaymSec(500);
         pwmServo(servoIndex, PWM_SERVO_SPEED_MAX, PWM_SERVO_LEFT_POSITION);
         delaymSec(500);
         pwmServo(servoIndex, PWM_SERVO_SPEED_MAX, PWM_SERVO_RIGHT_POSITION);
         delaymSec(2000);
-        appendCRLF(debugOutputStream);
+        appendCRLF(infoOutputStream);
     }
 }

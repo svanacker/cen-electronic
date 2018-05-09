@@ -97,7 +97,7 @@ void deviceIOExpanderHandleRawData(char commandHeader, InputStream* inputStream,
     // DEBUG
     else if (commandHeader == COMMAND_IO_EXPANDER_DEBUG) {
         ackCommand(outputStream, IO_DEVICE_HEADER, COMMAND_IO_EXPANDER_DEBUG);
-        OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+        OutputStream* debugOutputStream = getInfoOutputStreamLogger();
 
         IOExpanderList* ioExpanderList = getIOExpanderListFromDeviceDescriptor(&descriptor);
 

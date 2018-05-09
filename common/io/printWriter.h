@@ -246,6 +246,8 @@ void appendStringAndDecf(OutputStream* outputStream, const char* s, float value)
  */
 void appendStringAndDec(OutputStream* outputStream, const char* s, long value);
 
+void appendStringAndDecLN(OutputStream* outputStream, const char* s, long value);
+
 /**
 * Append a string followed by a bool value.
 * @param outputStream the pointer on outputStream (POO simulation)

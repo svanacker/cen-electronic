@@ -42,7 +42,7 @@ void deviceCodersHandleRawData(char commandHeader, InputStream* inputStream, Out
     } else if (commandHeader == COMMAND_DEBUG_GET_WHEEL_POSITION) {
         ackCommand(outputStream, CODERS_DEVICE_HEADER, COMMAND_DEBUG_GET_WHEEL_POSITION);
 
-        OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+        OutputStream* debugOutputStream = getInfoOutputStreamLogger();
         updateTrajectory();
 
 		printCurrentCoderTable(debugOutputStream);
@@ -55,7 +55,7 @@ void deviceCodersHandleRawData(char commandHeader, InputStream* inputStream, Out
 	}
      else if (commandHeader == COMMAND_DEBUG_PRINT_SAMPLE_WHEEL_POSITION) {
          ackCommand(outputStream, CODERS_DEVICE_HEADER, COMMAND_DEBUG_PRINT_SAMPLE_WHEEL_POSITION);
-         OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+         OutputStream* debugOutputStream = getInfoOutputStreamLogger();
          printSampleCoderHistory(debugOutputStream);
      }
 	else if (commandHeader == COMMAND_CLEAR_CODERS) {

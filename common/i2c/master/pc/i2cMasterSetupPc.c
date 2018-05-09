@@ -28,10 +28,10 @@ if (i2cMasterBusPc == NULL) {
     }
     // Avoid more than one initialization
     if (i2cMasterBusPc->masterPipeHandle != NULL) {
-        appendString(getDebugOutputStreamLogger(), "I2C PC Master (Pipe) already initialized\n");
+        appendString(getWarningOutputStreamLogger(), "I2C PC Master (Pipe) already initialized\n");
         return;
     }
-    appendString(getDebugOutputStreamLogger(), "I2C Master Initialize\r\n");
+    appendString(getWarningOutputStreamLogger(), "I2C Master Initialize\r\n");
     i2cMasterBusPc->masterPipeHandle = initServerPipe(i2cPipeMasterName);
     delaymSec(200);
     i2cMasterBusPc->slavePipeHandle = initClientPipe(i2cPipeSlaveName);

@@ -15,14 +15,7 @@
  */
 bool isEepromAreaInitialized(Eeprom* eeprom_, unsigned long initiazedAreaIndex) {
     unsigned int marker = eepromReadInt(eeprom_, initiazedAreaIndex);
-    /*
-    appendString(getDebugOutputStreamLogger(), "marker=");
-    appendDec(getDebugOutputStreamLogger(), marker);
-    appendCRLF(getDebugOutputStreamLogger());
-    */
-    bool result = (marker == EEPROM_AREA_IS_INITIALIZED_MARKER);
-    
-    return result;
+    return (marker == EEPROM_AREA_IS_INITIALIZED_MARKER);
 }
 
 void initEepromArea(Eeprom* eeprom_, unsigned long initiazedAreaIndex) {

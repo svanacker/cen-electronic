@@ -359,6 +359,12 @@ void appendStringAndDec(OutputStream* stream, const char* s, long value) {
     appendDec(stream, value);
 }
 
+void appendStringAndDecLN(OutputStream* stream, const char* s, long value) {
+    appendString(stream, s);
+    appendDec(stream, value);
+    println(stream);
+}
+
 void appendStringAndBool(OutputStream* outputStream, const char* s, bool value) {
 	appendString(outputStream, s);
 	appendBool(outputStream, value);

@@ -45,7 +45,7 @@ void deviceEndMatchDetectorHandleRawData(char commandHeader, InputStream* inputS
     if (commandHeader == COMMAND_END_MATCH_DETECTOR_DEBUG) {
         ackCommand(outputStream, END_MATCH_DETECTOR_DEVICE_HEADER, COMMAND_END_MATCH_DETECTOR_DEBUG);
         EndMatch* endMatch = getEndMatchDetectorEndMatchObject();
-        OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+        OutputStream* debugOutputStream = getInfoOutputStreamLogger();
         printEndOfMatchTable(debugOutputStream, endMatch);
     }
     else if (commandHeader == COMMAND_SHOW_MATCH_ENDED) {

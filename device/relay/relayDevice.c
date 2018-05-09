@@ -57,7 +57,7 @@ void deviceRelayHandleRawData(char commandHeader, InputStream* inputStream, Outp
     }
     else if (commandHeader == COMMAND_RELAY_DEBUG) {
         ackCommand(outputStream, RELAY_DEVICE_HEADER, COMMAND_RELAY_DEBUG);
-        OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+        OutputStream* debugOutputStream = getInfoOutputStreamLogger();
         printRelayStatesTable(debugOutputStream, relay);
     }
 }

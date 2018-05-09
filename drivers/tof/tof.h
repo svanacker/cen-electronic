@@ -23,6 +23,10 @@ typedef unsigned int tofSensorGetDistanceMMFunction(TofSensor* TofSensor);
 * Defines the contract For one Tof Sensor.
 */
 struct TofSensor {
+    /** If we enabled it. If disable, we do not try to initialize it .*/
+    bool enabled;
+    /** If we must change the address of the TOF at startup .*/
+    bool changeAddress;
     /** The function which must be used to init the tof Sensor */
     tofSensorInitFunction* tofSensorInit;
     /** The function which must be used to read the distance */

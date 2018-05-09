@@ -24,21 +24,21 @@ bool deviceStrategy2018IsOk(void) {
 
 void deviceStrategy2018HandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     if (commandHeader == STRATEGY_2018_GET_SCORE) {
-        OutputStream* debugOutputStream = getDebugOutputStreamLogger();
-        printDistributor2018Score(debugOutputStream, distributor);
+        OutputStream* infoOutputStream = getInfoOutputStreamLogger();
+        printDistributor2018Score(infoOutputStream, distributor);
         ackCommand(outputStream, STRATEGY_2018_DEVICE_HEADER, STRATEGY_2018_GET_SCORE);
     }
     else if (commandHeader == STRATEGY_2018_DISTRIBUTOR_DEBUG_COMMAND) {
-        OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+        OutputStream* infoOutputStream = getInfoOutputStreamLogger();
         ackCommand(outputStream, STRATEGY_2018_DEVICE_HEADER, STRATEGY_2018_DISTRIBUTOR_DEBUG_COMMAND);
         appendHex2(outputStream, distributor->score);
-        printDistributor2018(debugOutputStream, distributor);
+        printDistributor2018(infoOutputStream, distributor);
     }
     else if (commandHeader == STRATEGY_2018_READ_BALL_COLOR_TYPE) {
-        OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+        OutputStream* infoOutputStream = getInfoOutputStreamLogger();
         ColorSensor* colorSensor = distributor->colorSensor;
         enum ColorType colorType = colorSensorFindColorType2018(colorSensor);
-        printColorType(debugOutputStream, colorType);
+        printColorType(infoOutputStream, colorType);
         ackCommand(outputStream, STRATEGY_2018_DEVICE_HEADER, STRATEGY_2018_READ_BALL_COLOR_TYPE);
     }
     else if (commandHeader == STRATEGY_2018_UNICOLOR_COMMAND) {

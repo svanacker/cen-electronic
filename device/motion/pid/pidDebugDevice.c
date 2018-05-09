@@ -45,18 +45,18 @@ void devicePidDebugHandleRawData(char commandHeader, InputStream* inputStream, O
     if (commandHeader == COMMAND_MOTION_PARAMETERS_DEBUG) {
 		// send acknowledge
 		ackCommand(outputStream, PID_DEBUG_DEVICE_HEADER, COMMAND_MOTION_PARAMETERS_DEBUG);
-		OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+		OutputStream* debugOutputStream = getInfoOutputStreamLogger();
 		printMotionParameterList(debugOutputStream);
 	}
     // PID DEBUG
     else if (commandHeader == COMMAND_END_MOTION_DEBUG) {
         ackCommand(outputStream, PID_DEBUG_DEVICE_HEADER, COMMAND_END_MOTION_DEBUG);
-        OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+        OutputStream* debugOutputStream = getInfoOutputStreamLogger();
         printMotionEndDetectionParameter(debugOutputStream, &(pidMotion->globalParameters.motionEndDetectionParameter));
     }
 	else if (commandHeader == COMMAND_DEBUG_DATA_PID_CONSOLE) {
 		ackCommand(outputStream, PID_DEBUG_DEVICE_HEADER, COMMAND_DEBUG_DATA_PID_CONSOLE);
-		OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+		OutputStream* debugOutputStream = getInfoOutputStreamLogger();
 		printPidDataDebugTable(debugOutputStream, pidMotion);
 	}
     else if (commandHeader == COMMAND_PID_TRAJECTORY_TABLE) {
@@ -66,7 +66,7 @@ void devicePidDebugHandleRawData(char commandHeader, InputStream* inputStream, O
         if (pidTimeInterval < 0.005f) {
             pidTimeInterval = 0.005f;
         }
-		OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+		OutputStream* debugOutputStream = getInfoOutputStreamLogger();
         PidMotionDefinition* motionDefinition = pidMotionGetCurrentMotionDefinition(pidMotion);
         if (motionDefinition != NULL) {
 		    printMotionInstructionTableTrajectory(debugOutputStream, THETA, &(motionDefinition->inst[THETA]), pidTimeInterval);
@@ -79,12 +79,12 @@ void devicePidDebugHandleRawData(char commandHeader, InputStream* inputStream, O
 	}
 	else if (commandHeader == COMMAND_PID_MOTION_INSTRUCTION_TABLE) {
 		ackCommand(outputStream, PID_DEBUG_DEVICE_HEADER, COMMAND_PID_MOTION_INSTRUCTION_TABLE);
-		OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+		OutputStream* debugOutputStream = getInfoOutputStreamLogger();
 		printMotionInstructionTable(debugOutputStream, pidMotion);
 	}
 	else if (commandHeader == COMMAND_DEBUG_PID_PARAMETERS) {
 		ackCommand(outputStream, PID_DEBUG_DEVICE_HEADER, COMMAND_DEBUG_PID_PARAMETERS);
-		OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+		OutputStream* debugOutputStream = getInfoOutputStreamLogger();
 		printAllPidParametersTable(debugOutputStream, pidMotion);
 	}
 }

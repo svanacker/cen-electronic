@@ -44,9 +44,9 @@
 // 0b 0000 1000 0000 0000
 #define CONFIG_UNDEFINED_1_MASK        0x0800
 
-/** Config Undefined 2. */
+/** Config Used to activate more Debug . */
 // 0b 0001 0000 0000 0000
-#define CONFIG_UNDEFINED_2_MASK        0x1000
+#define CONFIG_DEBUG                   0x1000
 
 // LCD - BACKLIGHT
 

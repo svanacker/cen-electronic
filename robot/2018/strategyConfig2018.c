@@ -38,11 +38,15 @@ bool isSonarActivated(RobotConfig* robotConfig) {
 
 float getSonarDistanceCheckFactor(RobotConfig* robotConfig) {
     if (isConfigSet(robotConfig, CONFIG_SONAR_FAR_MASK)) {
+        // Both Far & Near means average
+        if (isConfigSet(robotConfig, CONFIG_SONAR_NEAR_MASK)) {
+            return 0.75f;
+        }
         return 1.0f;
     }
     else if (isConfigSet(robotConfig, CONFIG_SONAR_NEAR_MASK)) {
-        return 0.5f;
+        return 0.50f;
     }
     // To avoid to detect something !
-    return 5.0f;
+    return 8.0f;
 }

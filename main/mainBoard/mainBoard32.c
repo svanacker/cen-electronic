@@ -251,6 +251,7 @@
 
 #include "../../robot/strategy/teamColor.h"
 #include "../../robot/strategy/gameStrategyHandler.h"
+#include "../../robot/strategy/gameTargetList.h"
 
 #include "../../robot/robot.h"
 #include "../../robot/gameboard/gameboard.h"
@@ -402,6 +403,10 @@ void mainBoardDeviceHandleMotionDeviceNotification(const Device* device, const c
             checkIsChar(inputStream, 'F');
 
             gameStrategyContext->trajectoryType = TRAJECTORY_TYPE_NONE;
+            // To know if we have reached the target
+            if (commandHeader == NOTIFY_MOTION_STATUS_REACHED) {
+                gameStrategyContext->instructionCounter++;
+            }
         }
         else {
             writeError(NOTIFICATION_BAD_DEVICE_COMMAND_HANDLER_NOT_HANDLE);
@@ -596,14 +601,15 @@ void handleTofSensorList() {
         }
         // We must know if it's in the gameboard
         if (isPointInTheCollisionArea(gameBoard, &detectedPoint)) {
+            // motionDriverStop();
+            motionDriverCancel();
+            // Then we notify !
             OutputStream* alwaysOutputStream = getAlwaysOutputStreamLogger();
             println(alwaysOutputStream);
             appendStringAndDec(alwaysOutputStream, "Tof:", index);
             appendString(alwaysOutputStream, ",");
             printPoint(alwaysOutputStream, &detectedPoint, "");
             println(alwaysOutputStream);
-            // motionDriverStop();
-            motionDriverCancel();
             // Block the notification system !
             gameStrategyContext->trajectoryType = TRAJECTORY_TYPE_NONE;
             break;
@@ -637,6 +643,22 @@ bool mainBoardWaitForInstruction(StartMatch* startMatchParam) {
             NULL);
 
     handleTofSensorList();
+    
+    // FOR Simple HOMOLOGATION
+    if (gameStrategyContext->strategyIndex == STRATEGY_1_SWITCH_INDEX) {
+        if (gameStrategyContext->instructionCounter == 1) { 
+            gameStrategyContext->instructionCounter++;
+            PathList* pathList = getNavigationPathList(navigation);
+            PathData* pathData = getPath(pathList, 0);
+            moveAlongPath(pathData);
+        }
+        if (gameStrategyContext->instructionCounter == 3) {
+            gameStrategyContext->instructionCounter++;
+            GameTarget* gameTarget = getGameTarget(0);
+            GameTargetAction* gameTargetAction = getGameTargetAction(&(gameTarget->actionList), 0);
+            doGameTargetAction(gameTargetAction, (int*)gameStrategyContext);
+        }
+    }
 
     return true;
 }
@@ -654,6 +676,12 @@ int main(void) {
 
     // CONFIG
     initRobotConfigPic32(&robotConfig);
+    
+    // Increase the Log Level to INFO
+    Logger* logger = getLoggerInstance();
+    if (isConfigSet(&robotConfig, CONFIG_DEBUG)) {
+        logger->globalLogLevel = LOG_LEVEL_INFO;
+    }
 
     // Backlight the LCD is needed
     setBacklight(isConfigSet(&robotConfig, CONFIG_LCD_MASK));
@@ -717,41 +745,65 @@ int main(void) {
     i2cMasterInitialize(i2cBus4);
 
     // -> Eeproms
+    appendString(getDebugOutputStreamLogger(), "EEPROM ...");
     eepromI2cBusConnection = addI2cBusConnection(i2cBus, ST24C512_ADDRESS_0, true);
     init24C512Eeprom(&eeprom, eepromI2cBusConnection);
+    appendStringLN(getDebugOutputStreamLogger(), "OK");
     
     // -> Clock
+    appendString(getDebugOutputStreamLogger(), "CLOCK ...");
     clockI2cBusConnection = addI2cBusConnection(i2cBus, PCF8563_WRITE_ADDRESS, true);
     initClockPCF8563(&clock, clockI2cBusConnection);
+    appendStringLN(getDebugOutputStreamLogger(), "OK");
 
     // -> Temperature
+    appendString(getDebugOutputStreamLogger(), "TEMPERATURE ...");
     temperatureI2cBusConnection = addI2cBusConnection(i2cBus, LM75A_ADDRESS, true);
     initTemperatureLM75A(&temperature, temperatureI2cBusConnection);
+    appendStringLN(getDebugOutputStreamLogger(), "OK");
 
     // IO Expander
+    appendString(getDebugOutputStreamLogger(), "PCF ...");
     tofIoExpanderBusConnection = addI2cBusConnection(i2cBus, PCF8574_ADDRESS_0, true);
     initIOExpanderList(&ioExpanderList, (IOExpander(*)[]) &ioExpanderArray, MAIN_BOARD_IO_EXPANDER_LIST_LENGTH);
     IOExpander* tofIoExpander = getIOExpanderByIndex(&ioExpanderList, 0);
     initIOExpanderPCF8574(tofIoExpander, tofIoExpanderBusConnection);
+    appendStringLN(getDebugOutputStreamLogger(), "OK");
     
-    // Relay is on PORT 4
+    // Relay is on PORT 4 => ONLY FOR TEST
+    appendString(getDebugOutputStreamLogger(), "RELAY ...");
     relayBusConnection = addI2cBusConnection(i2cBus4, RLY08_ADDRESS_0, true);
     initRelayRLY08(&relay, relayBusConnection);
+    appendStringLN(getDebugOutputStreamLogger(), "OK");
     
     // TOF
+    appendStringLN(getDebugOutputStreamLogger(), "TOF ...");
     initTofSensorListVL53L0X(&tofSensorList,
                              (TofSensor(*)[]) &tofSensorArray,
                              (TofSensorVL53L0X(*)[]) &tofSensorVL53L0XArray,
+                              i2cBus4,
+                              // Size
                               MAIN_BOARD_TOF_SENSOR_LIST_LENGTH,
-                              i2cBus,
-                              tofIoExpander);
+                              // IO Expander, if null, we will not be able to
+                              // Manage several tof
+                              tofIoExpander,
+                              // debug
+                              true,
+                              // enabledAllSensors
+                              true,
+                              // changeAddressAllSensors
+                              true
+            );
+    appendStringLN(getDebugOutputStreamLogger(), "OK");
 
         
     // -> Color : IMPORTANT !!! : Initialize COLOR after TOF because they share the same address
     // And not the same bus, but it uses "getI2cBusConnectionBySlaveAddress" ... which does not distinguish the bus ...
+    appendStringLN(getDebugOutputStreamLogger(), "COLOR ...");
     colorBusConnection = addI2cBusConnection(i2cBus4, TCS34725_ADDRESS, true);
     initTcs34725Struct(&tcs34725, colorBusConnection);
     initColorSensorTcs34725(&colorSensor, &colorValue, &colorSensorFindColorType2018, &tcs34725);
+    appendStringLN(getDebugOutputStreamLogger(), "OK");
 
     // TIMERS
     initTimerList(&timerListArray, MAIN_BOARD_TIMER_LENGTH);
@@ -806,6 +858,9 @@ int main(void) {
     // Wait until the match start
     loopUntilStart(&startMatch);
 
+    // Just after, we could increment the counter
+    gameStrategyContext->instructionCounter = 1;
+    
     while (1) {
         if (!mainBoardWaitForInstruction(&startMatch)) {
             break;

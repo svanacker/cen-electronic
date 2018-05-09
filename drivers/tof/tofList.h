@@ -25,6 +25,8 @@ struct TofSensorList {
     TofSensor(*tofSensorArray)[];
     /** the size of the list. */
     unsigned int size;
+    /** If Debug Mode is activated .*/
+    bool debug;
     /** For Debug purpose */
     tofSensorListDebugTableFunction* tofSensorListDebugTable;
 };
@@ -37,6 +39,9 @@ struct TofSensorList {
 void initTofSensorList(TofSensorList* tofSensorList,
                        TofSensor(*tofSensorArray)[],
                        unsigned int tofSensorListSize,
+                       bool debug,
+                       bool enabledAllSensors,
+                       bool changeAddressAllSensors,
                        tofSensorListDebugTableFunction* tofSensorListDebugTable
 );
 

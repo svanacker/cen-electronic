@@ -126,8 +126,9 @@ void handleAndWaitFreeMotion(PidMotion* pidMotion, OutputStream* notificationOut
          || motionType == DETECTED_MOTION_TYPE_POSITION_TO_MAINTAIN
          || motionType == DETECTED_MOTION_TYPE_POSITION_OBSTACLE) {
             // if (value == NO_POSITION_TO_REACH || value == POSITION_OBSTACLE) {
-            appendString(getDebugOutputStreamLogger(), "handleAndWaitFreeMotion->break=");
-            appendDec(getDebugOutputStreamLogger(), motionType);
+            OutputStream* logStream = getDebugOutputStreamLogger();
+            appendString(logStream, "handleAndWaitFreeMotion->break=");
+            appendDec(logStream, motionType);
             break;
         }
     }

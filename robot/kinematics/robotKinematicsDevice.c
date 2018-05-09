@@ -49,7 +49,7 @@ void deviceRobotKinematicsHandleRawData(char commandHeader, InputStream* inputSt
     else if (commandHeader == COMMAND_KINEMATICS_LIST_DEBUG) {
         ackCommand(outputStream, KINEMATICS_HEADER, COMMAND_KINEMATICS_LIST_DEBUG);
         RobotKinematics* robotKinematics = getRobotKinematics();
-        printRobotKinematicsTable(getDebugOutputStreamLogger(), robotKinematics);
+        printRobotKinematicsTable(getInfoOutputStreamLogger(), robotKinematics);
     }
     // READ ALL
     // TODO : Split between CODER PART / MOTOR PART / ROBOT PART

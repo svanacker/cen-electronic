@@ -83,7 +83,7 @@ void deviceStrategyHandleRawData(char commandHeader, InputStream* inputStream, O
     }
     else if (commandHeader == COMMAND_STRATEGY_SHOW_TOF_LIST_WITH_PROJECTION) {
         ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_STRATEGY_SHOW_TOF_LIST_WITH_PROJECTION);
-        OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+        OutputStream* debugOutputStream = getInfoOutputStreamLogger();
         GameStrategyContext* context = getStrategyDeviceGameStrategyContext();
         TofSensorList* tofSensorList = context->tofSensorList;
         Point* robotPosition = context->robotPosition;
@@ -93,13 +93,13 @@ void deviceStrategyHandleRawData(char commandHeader, InputStream* inputStream, O
     // Debug
     else if (commandHeader == COMMAND_STRATEGY_DEBUG) {
         ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_STRATEGY_DEBUG);
-        OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+        OutputStream* debugOutputStream = getInfoOutputStreamLogger();
         GameStrategyContext* context = getStrategyDeviceGameStrategyContext();
         printGameStrategyContext(debugOutputStream, context);
     }
 	// List Strategies
 	else if (commandHeader == COMMAND_STRATEGY_LIST_DEBUG) {
-		OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+		OutputStream* debugOutputStream = getInfoOutputStreamLogger();
 		ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_STRATEGY_LIST_DEBUG);
         printGameStrategyTableList(debugOutputStream);
 	}
@@ -107,7 +107,7 @@ void deviceStrategyHandleRawData(char commandHeader, InputStream* inputStream, O
 	else if (commandHeader == COMMAND_STRATEGY_ITEM_DEBUG) {
 		int strategyIndex = readHex2(inputStream);
         ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_STRATEGY_ITEM_DEBUG);
-        OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+        OutputStream* debugOutputStream = getInfoOutputStreamLogger();
         if (strategyIndex == 0) {
             appendString(debugOutputStream, "Strategy 0 => NO STRATEGY");
             return;
@@ -195,7 +195,7 @@ void deviceStrategyHandleRawData(char commandHeader, InputStream* inputStream, O
     // TARGET LIST
     else if (commandHeader == COMMAND_TARGET_LIST_DEBUG) {
         ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_TARGET_LIST_DEBUG);
-        OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+        OutputStream* debugOutputStream = getInfoOutputStreamLogger();
         GameTargetList* gameTargetList = getGameTargetList();
         printGameTargetListTable(gameTargetList, debugOutputStream);
     }

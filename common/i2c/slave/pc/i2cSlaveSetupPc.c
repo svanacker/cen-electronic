@@ -32,9 +32,10 @@ void i2cSlaveInitialize(I2cBusConnection* i2cBusConnection) {
         writeError(I2C_BUS_CONNECTION_OBJECT_NULL);
     }
 
-    appendString(getDebugOutputStreamLogger(), "I2C Slave Write Address=");
-    appendHex2(getDebugOutputStreamLogger(), i2cBusConnection->i2cAddress);
-    appendCRLF(getDebugOutputStreamLogger());
+    OutputStream* logOutputStream = getInfoOutputStreamLogger();
+    appendString(logOutputStream, "I2C Slave Write Address=");
+    appendHex2(logOutputStream, i2cBusConnection->i2cAddress);
+    appendCRLF(logOutputStream);
 
     i2cBusConnectionPc->masterToSlaveHandle = initClientPipe(i2cBusConnectionPc->i2cPipeMasterName);
     i2cBusConnectionPc->slaveToMasterHandle = initServerPipe(i2cBusConnectionPc->i2cPipeSlaveName);
