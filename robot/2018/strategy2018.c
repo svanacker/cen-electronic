@@ -136,6 +136,7 @@ static GameStrategy strategy5;
 // strategies Items
 static GameStrategyItem switchStrategyItem;
 static GameStrategyItem distributor1StrategyItem;
+static GameStrategyItem borderStrategyItem;
 static GameStrategyItem beeStrategyItem;
 static GameStrategyItem distributor2StrategyItem;
 

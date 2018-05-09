@@ -7,7 +7,7 @@
 
 #define INSTRUCTION_COUNTER_MATCH_STARTED                 1
 
-#define INSTRUCTION_COUNTER_START_TO_SWITCH_MOVE_ASKED   2
+#define INSTRUCTION_COUNTER_START_TO_SWITCH_MOVE_ASKED    2
 
 #define INSTRUCTION_COUNTER_SWITCH_REACHED                3
 
@@ -19,12 +19,18 @@
 
 #define INSTRUCTION_COUNTER_DIST_1_TO_BORDER_1_ASKED      7
 
-#define INSTRUCTION_COUNTER__BORDER_1_REACHED             8
+#define INSTRUCTION_COUNTER_BORDER_1_REACHED             8
 
 #define INSTRUCTION_COUNTER_BORDER_1_TO_BEE_ASKED         9
 
 #define INSTRUCTION_COUNTER_BEE_REACHED                  10
 
-void handleNextInstruction(GameStrategyContext* gameStrategyContext);
+void initInstructionCounter(GameStrategyContext* gameStrategyContext);
+
+void startInstructionCounter(GameStrategyContext* gameStrategyContext);
+
+void handleNotificationInstructionCounter(GameStrategyContext* gameStrategyContext);
+
+void handleNextInstructionCounter(GameStrategyContext* gameStrategyContext);
 
 #endif

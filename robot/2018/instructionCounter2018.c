@@ -5,11 +5,27 @@
 #include "../../robot/strategy/gameStrategyContext.h"
 #include "../../robot/strategy/gameTargetList.h"
 
-void handleNotification(GameStrategyContext* gameStrategyContext) {
-    // TODO
+void initInstructionCounter(GameStrategyContext* gameStrategyContext) {
+    gameStrategyContext->instructionCounter = INSTRUCTION_COUNTER_MATCH_WAIT_FOR_START; 
 }
 
-void handleNextInstruction(GameStrategyContext* gameStrategyContext) {
+void startInstructionCounter(GameStrategyContext* gameStrategyContext) {
+     gameStrategyContext->instructionCounter = INSTRUCTION_COUNTER_MATCH_STARTED;
+}
+
+void handleNotificationInstructionCounter(GameStrategyContext* gameStrategyContext) {
+    if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_START_TO_SWITCH_MOVE_ASKED) {
+        gameStrategyContext->instructionCounter = INSTRUCTION_COUNTER_SWITCH_REACHED;
+    }
+    if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_SWITCH_TO_DIST_1_ASKED) {
+        gameStrategyContext->instructionCounter = INSTRUCTION_COUNTER_DIST_1_REACHED;
+    }
+    if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_DIST_1_TO_BORDER_1_ASKED) {
+        gameStrategyContext->instructionCounter = INSTRUCTION_COUNTER_BORDER_1_REACHED;
+    }
+}
+
+void handleNextInstructionCounter(GameStrategyContext* gameStrategyContext) {
     Navigation* navigation = gameStrategyContext->navigation;    
     // FOR Simple HOMOLOGATION
         
@@ -22,7 +38,7 @@ void handleNextInstruction(GameStrategyContext* gameStrategyContext) {
             moveAlongPath(pathData);
         }
         // SWITCH -> ACTION
-        if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_SWITCH_REACHED) {
+        else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_SWITCH_REACHED) {
             GameTarget* gameTarget = getGameTarget(0);
             GameTargetAction* gameTargetAction = getGameTargetAction(&(gameTarget->actionList), 0);
             doGameTargetAction(gameTargetAction, (int*)gameStrategyContext);

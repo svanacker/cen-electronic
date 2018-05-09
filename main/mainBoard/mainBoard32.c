@@ -411,7 +411,7 @@ void mainBoardDeviceHandleMotionDeviceNotification(const Device* device, const c
             gameStrategyContext->trajectoryType = TRAJECTORY_TYPE_NONE;
             // To know if we have reached the target
             if (commandHeader == NOTIFY_MOTION_STATUS_REACHED) {
-                gameStrategyContext->instructionCounter++;
+                handleNotificationInstructionCounter(gameStrategyContext);
             }
         }
         else {
@@ -654,6 +654,9 @@ bool mainBoardWaitForInstruction(StartMatch* startMatchParam) {
             NULL);
 
     handleTofSensorList();
+    
+    handleNextInstructionCounter(gameStrategyContext);
+    
     return true;
 }
 
@@ -870,11 +873,13 @@ int main(void) {
     // Update this on the MOTOR BOARD to be synchronized !
     updateMotorBoardRobotPosition(gameStrategyContext);
     
+    initInstructionCounter(gameStrategyContext);
+    
     // Wait until the match start
     loopUntilStart(&startMatch);
 
     // Just after, we could increment the counter
-    gameStrategyContext->instructionCounter = 1;
+    startInstructionCounter(gameStrategyContext);
     
     while (1) {
         if (!mainBoardWaitForInstruction(&startMatch)) {
