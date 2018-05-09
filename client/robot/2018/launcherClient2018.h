@@ -5,6 +5,8 @@
 
 #include "../../../common/commons.h"
 
+bool clientGlobalTest(void);
+
 /**
 * @Client
 * Set the light on for a specified direction (LEFT / RIGHT)

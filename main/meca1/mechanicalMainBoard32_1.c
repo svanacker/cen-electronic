@@ -341,7 +341,10 @@ int main(void) {
                              (TofSensorVL53L0X(*)[]) &tofSensorVL53L0XArray,
                               MECA_BOARD_32_1_TOF_SENSOR_LIST_LENGTH,
                               masterI2cBus,
-                              launcherIoExpander);
+                              launcherIoExpander,
+                              true,
+                              true,
+                              true);
     
     // 2018
     initLauncher2018(&launcher2018, launcherIoExpander, &relay, &md22, &tofSensorList);

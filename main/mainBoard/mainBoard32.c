@@ -13,6 +13,7 @@
 // -> Motion Driver
 #include "../../client/motion/simple/clientMotion.h"
 #include "../../client/motion/position/clientTrajectory.h"
+#include "../../client/robot/2018/launcherClient2018.h"
 
 // COMMON
 #include "../../common/delay/cenDelay.h"
@@ -264,6 +265,7 @@
 
 #include "../../robot/2018/strategyDevice2018.h"
 #include "../../robot/2018/strategyDeviceInterface2018.h"
+#include "../../robot/2018/instructionCounter2018.h"
 
 #include "mainBoard2018.h"
 #include "2dDebug.h"
@@ -643,23 +645,6 @@ bool mainBoardWaitForInstruction(StartMatch* startMatchParam) {
             NULL);
 
     handleTofSensorList();
-    
-    // FOR Simple HOMOLOGATION
-    if (gameStrategyContext->strategyIndex == STRATEGY_1_SWITCH_INDEX) {
-        if (gameStrategyContext->instructionCounter == 1) { 
-            gameStrategyContext->instructionCounter++;
-            PathList* pathList = getNavigationPathList(navigation);
-            PathData* pathData = getPath(pathList, 0);
-            moveAlongPath(pathData);
-        }
-        if (gameStrategyContext->instructionCounter == 3) {
-            gameStrategyContext->instructionCounter++;
-            GameTarget* gameTarget = getGameTarget(0);
-            GameTargetAction* gameTargetAction = getGameTargetAction(&(gameTarget->actionList), 0);
-            doGameTargetAction(gameTargetAction, (int*)gameStrategyContext);
-        }
-    }
-
     return true;
 }
 
@@ -781,9 +766,9 @@ int main(void) {
     initTofSensorListVL53L0X(&tofSensorList,
                              (TofSensor(*)[]) &tofSensorArray,
                              (TofSensorVL53L0X(*)[]) &tofSensorVL53L0XArray,
-                              i2cBus4,
                               // Size
                               MAIN_BOARD_TOF_SENSOR_LIST_LENGTH,
+                              i2cBus4,
                               // IO Expander, if null, we will not be able to
                               // Manage several tof
                               tofIoExpander,

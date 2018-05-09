@@ -416,6 +416,7 @@
     <ClCompile Include="robot\2018\distributor2018.c" />
     <ClCompile Include="robot\2018\distributorDebug2018.c" />
     <ClCompile Include="robot\2018\gameBoardElement2018.c" />
+    <ClCompile Include="robot\2018\instructionCounter2018.c" />
     <ClCompile Include="robot\2018\launcherDevice2018.c" />
     <ClCompile Include="robot\2018\launcherDeviceInterface2018.c" />
     <ClCompile Include="robot\2018\strategy2018.c" />
@@ -783,6 +784,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="robot\2018\distributor2018.h" />
     <ClInclude Include="robot\2018\gameBoardElement2018.h" />
+    <ClInclude Include="robot\2018\instructionCounter2018.h" />
     <ClInclude Include="robot\2018\launcherDevice2018.h" />
     <ClInclude Include="robot\2018\launcherDeviceInterface2018.h" />
     <ClInclude Include="robot\2018\score2018.h" />

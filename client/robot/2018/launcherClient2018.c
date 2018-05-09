@@ -7,12 +7,64 @@
 #include "../../../common/io/printWriter.h"
 #include "../../../common/io/reader.h"
 
+#include "../../../common/delay/cenDelay.h"
+
 #include "../../../device/deviceConstants.h"
 
 #include "../../../drivers/driverList.h"
 #include "../../../drivers/driverTransmitter.h"
 
 #include "../../../robot/2018/launcherDeviceInterface2018.h"
+
+bool clientGlobalTest(void) {
+    // LEFT TEST
+    bool result = clientLightOn2018(LAUNCHER_LEFT_INDEX);
+    if (!result) {
+        return false;
+    }
+    delaymSec(1000);
+    result = clientDistributor2018CleanNext(LAUNCHER_LEFT_INDEX);
+    if (!result) {
+        return false;
+    }
+    delaymSec(1000);
+    result = clientLaunch2018(LAUNCHER_LEFT_INDEX, LAUNCHER_PREPARE_ON);
+    if (!result) {
+        return false;
+    }
+    delaymSec(1000);
+    result = clientLaunch2018(LAUNCHER_LEFT_INDEX, LAUNCHER_LAUNCH);
+    if (!result) {
+        return false;
+    }
+    delaymSec(1000);
+
+    // RIGHT TEST
+    result = clientLightOn2018(LAUNCHER_RIGHT_INDEX);
+    if (!result) {
+        return false;
+    }
+    delaymSec(1000);
+    result = clientDistributor2018CleanNext(LAUNCHER_RIGHT_INDEX);
+    if (!result) {
+        return false;
+    }
+    delaymSec(1000);
+    result = clientLaunch2018(LAUNCHER_RIGHT_INDEX, LAUNCHER_PREPARE_ON);
+    if (!result) {
+        return false;
+    }
+    delaymSec(1000);
+    result = clientLaunch2018(LAUNCHER_RIGHT_INDEX, LAUNCHER_LAUNCH);
+    if (!result) {
+        return false;
+    }
+    delaymSec(1000);
+
+    // EJECTOR
+    result = clientDistributor2018EjectDirty();
+    return result;
+}
 
 bool clientLightOn2018(int launcherIndex) {
     OutputStream* outputStream = getDriverRequestOutputStream();

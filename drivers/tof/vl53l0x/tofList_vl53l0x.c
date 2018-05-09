@@ -18,8 +18,8 @@
 #include "../../../common/io/outputStream.h"
 #include "../../../common/io/printWriter.h"
 
-#include "../../common/log/logLevel.h"
-#include "../../common/log/logger.h"
+#include "../../../common/log/logLevel.h"
+#include "../../../common/log/logger.h"
 
 #include "../../../drivers/ioExpander/ioExpander.h"
 

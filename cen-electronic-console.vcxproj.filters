@@ -2016,6 +2016,9 @@
     <ClCompile Include="robot\2018\strategyAction2018.c">
       <Filter>Source Files\robot\2018</Filter>
     </ClCompile>
+    <ClCompile Include="robot\2018\instructionCounter2018.c">
+      <Filter>Source Files\robot\2018</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -3123,6 +3126,9 @@
       <Filter>Header Files\robot\2018</Filter>
     </ClInclude>
     <ClInclude Include="robot\2018\strategyAction2018.h">
+      <Filter>Header Files\robot\2018</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2018\instructionCounter2018.h">
       <Filter>Header Files\robot\2018</Filter>
     </ClInclude>
   </ItemGroup>

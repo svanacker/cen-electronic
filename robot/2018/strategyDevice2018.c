@@ -23,7 +23,7 @@ bool deviceStrategy2018IsOk(void) {
 }
 
 void deviceStrategy2018HandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
-    if (commandHeader == STRATEGY_2018_GET_SCORE) {
+if (commandHeader == STRATEGY_2018_GET_SCORE) {
         OutputStream* infoOutputStream = getInfoOutputStreamLogger();
         printDistributor2018Score(infoOutputStream, distributor);
         ackCommand(outputStream, STRATEGY_2018_DEVICE_HEADER, STRATEGY_2018_GET_SCORE);

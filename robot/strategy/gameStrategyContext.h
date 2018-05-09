@@ -32,7 +32,7 @@ typedef struct GameStrategyContext GameStrategyContext;
 #define STRATEGY_3_SWITCH_DIST_BEE_INDEX                                         3
 #define STRATEGY_4_SWITCH_DIST_BEE_DIST_INDEX                                    4
 #define STRATEGY_5_SWITCH_BEE_INDEX                                              5
-
+#define STRATEGY_7_CHECK_IF_ROBOT_OK                                             7
 /**
  * Encapsulates the context of the strategy.
  */
