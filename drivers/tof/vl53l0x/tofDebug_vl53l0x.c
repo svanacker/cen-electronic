@@ -73,11 +73,15 @@ void printTofSensorTableVL53L0X(OutputStream* outputStream, TofSensorList* tofSe
     printTofSensorDebugTableHeaderVL53L0X(outputStream);
     unsigned int index;
     for (index = 0; index < tofSensorList->size; index++) {
-        // Tof Configuration Properties
-        appendDecTableData(outputStream, index, TOF_SENSOR_VL53L0X_INDEX_COLUMN_LENGTH);
-        
-
         TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, index);
+        
+        if (!tofSensor->enabled) {
+            continue;
+        }
+
+        // Tof Configuration Properties
+        appendDecTableData(outputStream, index, TOF_SENSOR_VL53L0X_INDEX_COLUMN_LENGTH);      
+
         appendBoolAsStringTableData(outputStream, tofSensor->enabled, TOF_SENSOR_VL53L0X_ENABLE_COLUMN_LENGTH);
         appendBoolAsStringTableData(outputStream, tofSensor->changeAddress, TOF_SENSOR_VL53L0X_CHANGE_ADRESS_COLUMN_LENGTH);
 
@@ -86,13 +90,17 @@ void printTofSensorTableVL53L0X(OutputStream* outputStream, TofSensorList* tofSe
         TofSensorVL53L0X* tofSensorVL53L0X = getTofSensorVL53L0X(tofSensor);
         VL53L0X_Dev_t* tofDevice = &(tofSensorVL53L0X->device);
         uint8_t i2cAddress = tofDevice->I2cDevAddr;
-        
-        I2cBusConnection* i2cBusConnection = tofSensorVL53L0X->i2cBusConnection;
-        
-        appendHex2TableData(outputStream, i2cAddress, TOF_SENSOR_VL53L0X_I2C_ADDRESS_COLUMN_LENGTH);
-        unsigned char i2cBusConnectionAddress = i2cBusConnection->i2cAddress;
 
-        appendHex2TableData(outputStream, i2cBusConnectionAddress, TOF_SENSOR_VL53L0X_I2C_ADDRESS_COLUMN_LENGTH);
+        appendHex2TableData(outputStream, i2cAddress, TOF_SENSOR_VL53L0X_I2C_ADDRESS_COLUMN_LENGTH);
+        
+        I2cBusConnection* i2cBusConnection = tofSensorVL53L0X->i2cBusConnection;        
+        if (i2cBusConnection != NULL) {
+            unsigned char i2cBusConnectionAddress = i2cBusConnection->i2cAddress;
+            appendHex2TableData(outputStream, i2cBusConnectionAddress, TOF_SENSOR_VL53L0X_I2C_ADDRESS_COLUMN_LENGTH);
+        }
+        else {
+            appendStringTableData(outputStream, "Bus NULL", TOF_SENSOR_VL53L0X_I2C_ADDRESS_COLUMN_LENGTH);
+        }
         
         uint8_t status = tofSensorVL53L0X->status;
         appendHex2TableData(outputStream, status, TOF_SENSOR_VL53L0X_STATUS_COLUMN_LENGTH);

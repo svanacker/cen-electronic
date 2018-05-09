@@ -152,7 +152,7 @@ bool tof_vl53l0x_begin(TofSensorVL53L0X* tofSensorVL53L0X, bool debug) {
     
     // If in Continuous Mode
     if(tofSensorVL53L0X->status == VL53L0X_ERROR_NONE) {
-		appendString(debugOutputStream, "Call of VL53L0X_StartMeasurement\n");
+		appendString(debugOutputStream, "Call of VL53L0X_StartMeasurement ...");
 		tofSensorVL53L0X->status = VL53L0X_StartMeasurement(tofDevice);
     }
 

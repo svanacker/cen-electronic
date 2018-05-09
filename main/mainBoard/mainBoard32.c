@@ -580,6 +580,9 @@ void handleTofSensorList() {
     }
     for (index = 0; index < tofSensorList.size; index++) {
         TofSensor* tofSensor = getTofSensorByIndex(&tofSensorList, index);
+        if (!tofSensor->enabled) {
+            continue;
+        }
         
         bool tofBackward = isTofSensorBackwardOriented(tofSensor);
         
@@ -771,6 +774,24 @@ int main(void) {
     appendStringLN(getDebugOutputStreamLogger(), "OK");
     
     // TOF
+    if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > 0) {
+        tofSensorArray[0].enabled = true;        
+    }
+    if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > 1) {
+        tofSensorArray[1].enabled = true;        
+    }
+    if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > 2) {
+        tofSensorArray[2].enabled = true;        
+    }
+    if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > 3) {
+        tofSensorArray[3].enabled = true;        
+    }
+    if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > 4) {
+        tofSensorArray[4].enabled = true;        
+    }    
+    if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > 5) {
+        tofSensorArray[5].enabled = true;        
+    }
     appendStringLN(getDebugOutputStreamLogger(), "TOF ...");
     initTofSensorListVL53L0X(&tofSensorList,
                              (TofSensor(*)[]) &tofSensorArray,
@@ -784,9 +805,9 @@ int main(void) {
                               // debug
                               true,
                               // enabledAllSensors
-                              true,
+                              false,
                               // changeAddressAllSensors
-                              true
+            true
             );
     appendStringLN(getDebugOutputStreamLogger(), "OK");
 

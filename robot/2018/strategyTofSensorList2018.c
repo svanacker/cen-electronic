@@ -46,7 +46,7 @@ void setTofListOrientationAngle2018(TofSensorList* tofSensorList, float distance
     
     // Tof Sensor 5
     if (tofSensorListSize > FRONT_LEFT_SENSOR_INDEX) {
-        TofSensor* frontLeftSensor5 = getTofSensorByIndex(tofSensorList, FRONT_LEFT_SENSOR_ANGLE_DEGREE);
+        TofSensor* frontLeftSensor5 = getTofSensorByIndex(tofSensorList, FRONT_LEFT_SENSOR_INDEX);
         frontLeftSensor5->orientationRadian = degToRad(FRONT_LEFT_SENSOR_ANGLE_DEGREE);
         frontLeftSensor5->thresholdDistanceMM = FRONT_TOF_TO_FRONT_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * FRONT_LEFT_SENSOR_DISTANCE_THRESHOLD);
     }

@@ -48,6 +48,7 @@ TofSensor* getTofSensorByIndex(TofSensorList* tofSensorList, unsigned int index)
     }
 	if (index < 0 || index >= tofSensorList->size) {
 		writeError(TOF_SENSOR_LIST_ILLEGAL_INDEX);
+        appendStringAndDecLN(getErrorOutputStreamLogger(), "Index = ", index);
 		return NULL;
 	}
 	TofSensor* result = (TofSensor*)tofSensorList->tofSensorArray;
