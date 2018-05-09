@@ -598,28 +598,41 @@ void handleTofSensorList() {
         if (isPointInTheCollisionArea(gameBoard, &detectedPoint)) {
             OutputStream* alwaysOutputStream = getAlwaysOutputStreamLogger();
             println(alwaysOutputStream);
-            appendString(alwaysOutputStream, "Robot ! :");
+            appendStringAndDec(alwaysOutputStream, "Tof:", index);
+            appendString(alwaysOutputStream, ",");
             printPoint(alwaysOutputStream, &detectedPoint, "");
             println(alwaysOutputStream);
-            motionDriverStop();
+            // motionDriverStop();
+            motionDriverCancel();
             // Block the notification system !
             gameStrategyContext->trajectoryType = TRAJECTORY_TYPE_NONE;
+            break;
         }
     }
 }
 
 bool mainBoardWaitForInstruction(StartMatch* startMatchParam) {
     // Handle Notification
-    handleNotificationFromDispatcherList(TRANSMIT_UART, MAIN_BOARD_SERIAL_PORT_MOTOR_NOTIFY);
-        // loop for all notification
-        // notification handler must avoid to directly information in notification callback
-        // and never to the call back device
+    while (handleNotificationFromDispatcherList(TRANSMIT_UART, MAIN_BOARD_SERIAL_PORT_MOTOR_NOTIFY)) {
+        
+    }
+    // loop for all notification
+    // notification handler must avoid to directly information in notification callback
+    // and never to the call back device
     
     // Listen instruction from debugStream->Devices
     handleStreamInstruction(
             &debugInputBuffer,
             &debugOutputBuffer,
             &debugOutputStream,
+            &filterRemoveCRLF,
+            NULL);
+    
+    // Listen instruction from motorNotifyStream->Devices
+    handleStreamInstruction(
+            &motorNotifyInputBuffer,
+            &motorNotifyOutputBuffer,
+            &motorNotifyOutputStream,
             &filterRemoveCRLF,
             NULL);
 

@@ -38,7 +38,7 @@ void closeOutputStreamSerial1(OutputStream* outputStream) {
 void writeChar1(OutputStream* outputStream, char c) {
     serialPutc(SERIAL_PORT_1, c);
     // Just to avoid to saturate other UART link (some chars are missing)
-    delaymSec(1);
+    // delaymSec(1);
 }
 
 void initSerialOutputStream1(OutputStream* outputStream) {

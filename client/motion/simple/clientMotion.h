@@ -91,6 +91,8 @@ bool motionDriverOneWheelRight(float rightDegree);
 */
 bool motionDriverStop();
 
+bool motionDriverCancel();
+
 /**
 * Ask to stop the motors (with position maintain)
 * @return true if the driver answer

@@ -136,6 +136,17 @@ bool motionDriverStop() {
     return result;
 }
 
+bool motionDriverCancel() {
+    OutputStream* outputStream = getDriverRequestOutputStream();
+    append(outputStream, MOTION_DEVICE_HEADER);
+    append(outputStream, COMMAND_MOTION_CANCEL_ALL);
+
+    bool result = transmitFromDriverRequestBuffer();
+
+    return result;
+}
+
+
 // OBSTACLE
 
 bool motionDriverObstacle() {
