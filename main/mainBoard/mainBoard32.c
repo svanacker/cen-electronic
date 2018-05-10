@@ -613,6 +613,15 @@ bool mainBoardWaitForInstruction(StartMatch* startMatchParam) {
             &motorNotifyOutputStream,
             &filterRemoveCRLF_255,
             NULL);
+    
+    
+    if (getBufferElementsCount(&motorNotifyInputBuffer) > 0) {
+        int c = bufferGetCharAtIndex(&motorNotifyInputBuffer, 0);
+        if (c == 'ÿ') {
+            bufferReadChar(&motorNotifyInputBuffer);
+        }
+    }
+    
     handleTofSensorList(gameStrategyContext, &startMatch, &tofSensorList, gameBoard);
     
     handleNextInstructionCounter(gameStrategyContext);
