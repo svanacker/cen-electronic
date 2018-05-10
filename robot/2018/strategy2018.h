@@ -31,7 +31,7 @@
 
 #define START_AREA                                                "STA"
 #define START_AREA_X                                               160
-#define START_AREA_Y                                               225
+#define START_AREA_Y                                               185
 #define START_AREA_ANGLE_DECI_DEG                   ANGLE_DECI_DEG_270
 
 #define SWITCH                                                    "SW"

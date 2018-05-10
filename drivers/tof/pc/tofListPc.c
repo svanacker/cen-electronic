@@ -13,6 +13,6 @@ void initTofSensorListPc(TofSensorList* tofSensorList, TofSensor(*tofSensorArray
     unsigned int tofIndex;
     for (tofIndex = 0; tofIndex < size; tofIndex++) {
         TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, tofIndex);
-        initTofSensorPc(tofSensor, 0);
+        initTofSensorPc(tofSensor, 0, 0.0f);
     }
 }

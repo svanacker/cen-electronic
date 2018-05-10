@@ -5,10 +5,13 @@
 
 #include "../common/commons.h"
 
+#include "../common/2d/2d.h"
+
 #include "../common/io/outputStream.h"
 #include "../common/io/printWriter.h"
 
 #include "../client/motion/extended/clientExtendedMotion.h"
+
 
 /*
 float getAngle1Path(PathData* pathData) {
@@ -81,6 +84,29 @@ bool moveAlongPath(PathData* pathData) {
     float destY = pathData->location2->y;
     float destAngleRadian = pathData->angleRadian2;
     float dist1 = pathData->controlPointDistance1;
+    float dist2 = pathData->controlPointDistance2;
+    return clientExtendedMotionBSplineAbsolute(destX, destY, destAngleRadian, dist1, dist2, pathData->accelerationFactor, pathData->speedFactor);
+}
+
+bool restartFromPositionToGoToPath(PathData* pathData, Point* robotPosition) {
+    float destX = pathData->location2->x;
+    float destY = pathData->location2->y;
+    float destAngleRadian = pathData->angleRadian2;
+
+    Point locationPoint;
+    locationPoint.x = pathData->location1->x;
+    locationPoint.y = pathData->location1->y;
+
+    float distanceSinceDeparture = distanceBetweenPoints(&locationPoint, robotPosition);
+
+    float dist1 = pathData->controlPointDistance1;
+    if (dist1 < 0.0f) {        
+        dist1 = pathData->controlPointDistance1 - distanceSinceDeparture;
+        if (dist1 >= 0.0f) {
+            // Minimum to do a good trajectory : TO BE CHECKED
+            dist1 = -50.0f;
+        }
+    }
     float dist2 = pathData->controlPointDistance2;
     return clientExtendedMotionBSplineAbsolute(destX, destY, destAngleRadian, dist1, dist2, pathData->accelerationFactor, pathData->speedFactor);
 }

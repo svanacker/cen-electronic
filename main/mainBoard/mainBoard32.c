@@ -410,9 +410,7 @@ void mainBoardDeviceHandleMotionDeviceNotification(const Device* device, const c
 
             gameStrategyContext->trajectoryType = TRAJECTORY_TYPE_NONE;
             // To know if we have reached the target
-            if (commandHeader == NOTIFY_MOTION_STATUS_REACHED) {
-                handleNotificationInstructionCounter(gameStrategyContext);
-            }
+            handleNotificationInstructionCounter(gameStrategyContext, commandHeader);
         }
         else {
             writeError(NOTIFICATION_BAD_DEVICE_COMMAND_HANDLER_NOT_HANDLE);
@@ -564,69 +562,6 @@ void initMainBoardDriverDataDispatcherList(void) {
     
 }
 
-void handleTofSensorList() {
-    // We only lookup if the match is started !
-    if (!isMatchStarted32(&startMatch)) {
-        return;
-    }
-    // If Sonar is disabled, we don't check it !
-    if (!isSonarActivated(&robotConfig)) {
-        return;
-    }
-    unsigned int index;
-    enum TrajectoryType trajectoryType = gameStrategyContext->trajectoryType;
-    if (trajectoryType == TRAJECTORY_TYPE_NONE || trajectoryType == TRAJECTORY_TYPE_ROTATION) {
-        return;
-    }
-    for (index = 0; index < tofSensorList.size; index++) {
-        TofSensor* tofSensor = getTofSensorByIndex(&tofSensorList, index);
-        if (!tofSensor->enabled) {
-            continue;
-        }
-        
-        bool tofBackward = isTofSensorBackwardOriented(tofSensor);
-        
-        // Don't manage Backward TofSensor if we go forward
-        if (tofBackward && trajectoryType == TRAJECTORY_TYPE_FORWARD) {
-            continue;
-        }
-        
-        // Don't manage Forward TofSensor if we go backward
-        if (!tofBackward && trajectoryType == TRAJECTORY_TYPE_BACKWARD) {
-            continue;
-        }
-        
-        // TO DO : Manage if we must use Back Sonar or Front Sonar !
-        unsigned int distance = tofSensor->tofGetDistanceMM(tofSensor);
-        if (distance <= SENSOR_DISTANCE_MIN_TRESHOLD) {
-            continue;
-        }
-        // DetectedPoint if any
-        Point detectedPoint;
-        Point* pointOfView = gameStrategyContext->robotPosition;
-        float pointOfViewAngleRadian = gameStrategyContext->robotAngleRadian;
-        bool detected = tofComputeDetectedPointIfAny(tofSensor, pointOfView, pointOfViewAngleRadian, &detectedPoint);
-        
-        if (!detected) {
-            continue;
-        }
-        // We must know if it's in the gameboard
-        if (isPointInTheCollisionArea(gameBoard, &detectedPoint)) {
-            // motionDriverStop();
-            motionDriverCancel();
-            // Then we notify !
-            OutputStream* alwaysOutputStream = getAlwaysOutputStreamLogger();
-            println(alwaysOutputStream);
-            appendStringAndDec(alwaysOutputStream, "Tof:", index);
-            appendString(alwaysOutputStream, ",");
-            printPoint(alwaysOutputStream, &detectedPoint, "");
-            println(alwaysOutputStream);
-            // Block the notification system !
-            gameStrategyContext->trajectoryType = TRAJECTORY_TYPE_NONE;
-            break;
-        }
-    }
-}
 
 bool mainBoardWaitForInstruction(StartMatch* startMatchParam) {
     // Handle Notification
@@ -653,7 +588,7 @@ bool mainBoardWaitForInstruction(StartMatch* startMatchParam) {
             &filterRemoveCRLF,
             NULL);
 
-    handleTofSensorList();
+    handleTofSensorList(gameStrategyContext, &startMatch, &tofSensorList, gameBoard);
     
     handleNextInstructionCounter(gameStrategyContext);
     

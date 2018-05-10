@@ -3,6 +3,10 @@
 
 #include "../../drivers/tof/tofList.h"
 
+#include "../../robot/gameboard/gameboard.h"
+#include "../../robot/match/startMatch.h"
+#include "../../robot/strategy/gameStrategyContext.h"
+
 // TOF MANAGEMENT
 #define BACK_RIGHT_SENSOR_INDEX          0
 #define BACK_MIDDLE_SENSOR_INDEX         1
@@ -32,6 +36,17 @@
 #define FRONT_MIDDLE_SENSOR_DISTANCE_THRESHOLD  400
 #define FRONT_LEFT_SENSOR_DISTANCE_THRESHOLD    300
 
+/**
+ * INIT
+ * @param tofSensorList
+ * @param distanceFactor
+ */
 void setTofListOrientationAngle2018(TofSensorList* tofSensorList, float distanceFactor);
+
+/**
+ * TOF MANAGEMENT
+ * @param gameStrategyContext
+ */
+void handleTofSensorList(GameStrategyContext* gameStrategyContext, StartMatch* startMatch, TofSensorList* tofSensorList, GameBoard* gameBoard);
 
 #endif

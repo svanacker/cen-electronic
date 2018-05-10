@@ -1,6 +1,8 @@
 #ifndef SCORE_2018_H
 #define SCORE_2018_H
 
+#define SCORE_POINT_2018_NO_POINT                               0
+
 // Unicolor Distributor
 #define SCORE_POINT_2018_DISTRIBUTOR_UNLOADED_POINT             10
 #define SCORE_POINT_2018_CLEAN_BALL_POINT                        5

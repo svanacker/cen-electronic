@@ -6,6 +6,7 @@
 #include "../tof.h"
 
 void initTofSensorPc(TofSensor* tofSensor,
-                     unsigned int thresholdDistanceMM);
+                     unsigned int thresholdDistanceMM,
+                     float orientationRadian);
 
 #endif

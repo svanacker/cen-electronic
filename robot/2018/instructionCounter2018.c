@@ -1,6 +1,12 @@
 #include "instructionCounter2018.h"
 
+#include <stdbool.h>
+
+#include "../../common/2d/2d.h"
+
 #include "../../client/robot/2018/launcherClient2018.h"
+
+#include "score2018.h"
 
 #include "../../robot/strategy/gameStrategyContext.h"
 #include "../../robot/strategy/gameTargetList.h"
@@ -13,7 +19,31 @@ void startInstructionCounter(GameStrategyContext* gameStrategyContext) {
      gameStrategyContext->instructionCounter = INSTRUCTION_COUNTER_MATCH_STARTED;
 }
 
-void handleNotificationInstructionCounter(GameStrategyContext* gameStrategyContext) {
+void handleObstacle(GameStrategyContext* gameStrategyContext) {
+    // TODO :()
+}
+
+bool isTrajectoryReached(GameStrategyContext* gameStrategyContext, unsigned commandHeader, Point* destinationPoint) {
+    
+    if (commandHeader == NOTIFY_MOTION_STATUS_REACHED) {
+        return true;
+    }
+    if (commandHeader == NOTIFY_MOTION_STATUS_FAILED
+                || commandHeader == NOTIFY_MOTION_STATUS_MOVING
+                || commandHeader == NOTIFY_MOTION_STATUS_OBSTACLE
+                || commandHeader == NOTIFY_MOTION_STATUS_BLOCKED
+                || commandHeader == NOTIFY_MOTION_STATUS_SHOCKED) {    
+     
+        Point* robotPosition = gameStrategyContext->robotPosition;
+        float error = distanceBetweenPoints(destinationPoint, robotPosition);
+        if (error < TRAJECTORY_REACHED_TRESHOLD) {
+            return true;
+        }
+    }
+    return false;
+}
+
+void handleNotificationInstructionCounter(GameStrategyContext* gameStrategyContext, unsigned commandHeader) {
     if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_START_TO_SWITCH_MOVE_ASKED) {
         gameStrategyContext->instructionCounter = INSTRUCTION_COUNTER_SWITCH_REACHED;
     }
@@ -39,9 +69,14 @@ void handleNextInstructionCounter(GameStrategyContext* gameStrategyContext) {
         }
         // SWITCH -> ACTION
         else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_SWITCH_REACHED) {
+            gameStrategyContext->score += SCORE_POINT_2018_OUTSIDE_START_AREA;
+            gameStrategyContext->score += SCORE_POINT_2018_BEE_INSTALLED_POINT;
+            gameStrategyContext->score += SCORE_POINT_2018_PANEL_INSTALLED_POINT;
             GameTarget* gameTarget = getGameTarget(0);
             GameTargetAction* gameTargetAction = getGameTargetAction(&(gameTarget->actionList), 0);
-            doGameTargetAction(gameTargetAction, (int*)gameStrategyContext);
+            if (doGameTargetAction(gameTargetAction, (int*)gameStrategyContext)) {
+                gameStrategyContext->score += SCORE_POINT_2018_PANEL_ON_POINT;
+            }
             gameStrategyContext->instructionCounter = INSTRUCTION_COUNTER_SWITCH_TO_DIST_1_ASKED;
         }
         // SWITCH -> DISTRIBUTOR_1
@@ -50,11 +85,13 @@ void handleNextInstructionCounter(GameStrategyContext* gameStrategyContext) {
             PathData* pathData = getPath(pathList, 1);
             moveAlongPath(pathData);
         }
-        // DISTRIBUTOR_1 -> ACTOINS
+        // DISTRIBUTOR_1 -> ACTIONS
         else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_DIST_1_REACHED) {
             GameTarget* gameTarget = getGameTarget(1);
             GameTargetAction* gameTargetAction = getGameTargetAction(&(gameTarget->actionList), 0);
-            doGameTargetAction(gameTargetAction, (int*)gameStrategyContext);
+            if (doGameTargetAction(gameTargetAction, (int*)gameStrategyContext)) {
+                gameStrategyContext->score += SCORE_POINT_2018_DISTRIBUTOR_UNICOLOR_COMPLETE_POINT;
+            }
             gameStrategyContext->instructionCounter = INSTRUCTION_COUNTER_DIST_1_TO_BORDER_1_ASKED;            
         }
         else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_DIST_1_TO_BORDER_1_ASKED) {

@@ -86,6 +86,7 @@ PathData* garbageFront_to_garbageRelease_Path;
 // Targets List
 static GameTarget switchTarget;
 static GameTarget distributor1Target;
+static GameTarget borderTarget;
 static GameTarget beeTarget;
 static GameTarget distributor2Target;
 static GameTarget garbageTarget;
@@ -94,14 +95,16 @@ static GameTarget garbageTarget;
 // ------------------------------------------------------- TARGETS ACTIONS ---------------------------------------------------------------
 
 static GameTargetAction switchTargetAction;
-static GameTargetAction beeTargetAction;
+static GameTargetAction borderTargetAction;
 static GameTargetAction distributor1TargetAction;
+static GameTargetAction beeTargetAction;
 static GameTargetAction distributor2TargetAction;
 
 // ------------------------------------------------------- TARGETS ACTIONS ITEM LIST --------------------------------------------------------
 
 static GameTargetActionItemList switchTargetActionItemList;
 static GameTargetActionItemList distributor1TargetActionItemList;
+static GameTargetActionItemList borderTargetActionItemList;
 static GameTargetActionItemList beeTargetActionItemList;
 static GameTargetActionItemList distributor2TargetActionItemList;
 
@@ -110,7 +113,8 @@ static GameTargetActionItemList distributor2TargetActionItemList;
 
 static GameTargetActionItem switchTargetActionItem;
 static GameTargetActionItem distributor1TargetActionItem;
-static GameTargetActionItem beeTargetActionItem;
+// No static GameTargetActionItem borderTargetActionItem;
+// No static GameTargetActionItem beeTargetActionItem;
 static GameTargetActionItem distributor2TargetActionItem;
 
 // ------------------------------------------------------- STRATEGIES ----------------------------------------------------------------
@@ -138,7 +142,7 @@ static GameStrategyItem switchStrategyItem;
 static GameStrategyItem distributor1StrategyItem;
 static GameStrategyItem borderStrategyItem;
 static GameStrategyItem beeStrategyItem;
-static GameStrategyItem distributor2StrategyItem;
+// static GameStrategyItem distributor2StrategyItem;
 
 // ------------------------------------------------------- INITIALIZATION ------------------------------------------------------------
 
@@ -186,9 +190,11 @@ void initLocations2018(GameStrategyContext* gameStrategyContext) {
     // Distributor 1
     distributor1Location = addNavigationWithColors(teamColor, navigation, DISTRIBUTOR_1, DISTRIBUTOR_1_X, DISTRIBUTOR_1_Y);
 
-    // Bee
+    // Bee Border
     beeBorderAlignYLocation = addNavigationWithColors(teamColor, navigation, BEE_BORDER_Y_ALIGN, BEE_BORDER_Y_ALIGN_X, BEE_BORDER_Y_ALIGN_Y);
-    beeLocation = addNavigationWithColors(teamColor, navigation, BEE, BEE_FRONT_X, BEE_FRONT_Y);
+    
+    // Bee
+    beeLocation = addNavigationWithColors(teamColor, navigation, BEE, BEE_X, BEE_Y);
 
     // Distributor 2
     distributor2FrontLocation = addNavigationWithColors(teamColor, navigation, DISTRIBUTOR_2_FRONT, DISTRIBUTOR_2_FRONT_X, DISTRIBUTOR_2_FRONT_Y);
@@ -332,6 +338,7 @@ void initTargets2018(GameStrategyContext* gameStrategyContext) {
 
     addGameTarget(&switchTarget, "SWITCH_TARGET", SCORE_POINT_2018_PANEL_ON_POINT, switchLocation);
     addGameTarget(&distributor1Target, "DIST_1", SCORE_POINT_2018_DISTRIBUTOR_UNICOLOR_COMPLETE_POINT, distributor1Location);
+    addGameTarget(&borderTarget, "BORDER", SCORE_POINT_2018_NO_POINT, beeBorderAlignYLocation);
     addGameTarget(&beeTarget, "BEE", SCORE_POINT_2018_BEE_DESTROYED_POINT, beeLocation);
     addGameTarget(&distributor2Target, "DIST_2_LOAD", SCORE_POINT_2018_DISTRIBUTOR_UNLOADED_POINT, distributor2Location);
     addGameTarget(&garbageTarget, "GARBAGE_RELEASE", SCORE_POINT_2018_GARBAGE_RELEASE_POINT, garbageReleaseLocation);
@@ -342,6 +349,8 @@ void initTargetActions2018(GameStrategyContext* gameStrategyContext) {
     addTargetAction(&(switchTarget.actionList), &switchTargetAction, switchLocation, switchLocation, ACTION_SWITCH_TIME_TO_ACHIEVE, NULL, &switchTargetActionItemList);
     // DISTRIBUTOR 1
     addTargetAction(&(distributor1Target.actionList), &distributor1TargetAction, distributor1Location, distributor1Location, ACTION_DISTRIBUTOR_1_TIME_TO_ACHIEVE, NULL, &distributor1TargetActionItemList);
+    // BORDER
+    addTargetAction(&(borderTarget.actionList), &borderTargetAction, beeBorderAlignYLocation, beeBorderAlignYLocation, ACTION_TIME_NO_ACTION, NULL, &borderTargetActionItemList);
     // BEE
     addTargetAction(&(beeTarget.actionList), &beeTargetAction, beeLocation, beeLocation, ACTION_BEE_TIME_TO_ACHIEVE, NULL, &beeTargetActionItemList);
     // DISTRIBUTOR 2
@@ -351,7 +360,7 @@ void initTargetActions2018(GameStrategyContext* gameStrategyContext) {
 void initTargetActionsItems2018(GameStrategyContext* gameStrategyContext) {
     addTargetActionItem(&switchTargetActionItemList, &switchTargetActionItem, &switch2018On, "SWITCH ON");
     addTargetActionItem(&distributor1TargetActionItemList, &distributor1TargetActionItem, &distributor1_2018, "DIST_1");
-    addTargetActionItem(&beeTargetActionItemList, &beeTargetActionItem, &bee2018, "BEE");
+//    addTargetActionItem(&beeTargetActionItemList, &beeTargetActionItem, &bee2018, "BEE");
     addTargetActionItem(&distributor2TargetActionItemList, &distributor2TargetActionItem, &distributor2_2018, "DIST_2");
 }
 
@@ -384,9 +393,11 @@ GameStrategy* initStrategiesItems2018(GameStrategyContext* gameStrategyContext) 
     if (gameStrategyContext->strategyIndex == STRATEGY_3_SWITCH_DIST_BEE_INDEX) {
         addGameStrategyItem(&strategy3, &switchStrategyItem, &switchTarget);
         addGameStrategyItem(&strategy3, &distributor1StrategyItem, &distributor1Target);
+        addGameStrategyItem(&strategy3, &borderStrategyItem, &borderTarget);
         addGameStrategyItem(&strategy3, &beeStrategyItem, &beeTarget);
         return &strategy3;
     }
+    /*
     if (gameStrategyContext->strategyIndex == STRATEGY_4_SWITCH_DIST_BEE_DIST_INDEX) {
         addGameStrategyItem(&strategy4, &switchStrategyItem, &switchTarget);
         addGameStrategyItem(&strategy4, &distributor1StrategyItem, &distributor1Target);
@@ -399,6 +410,7 @@ GameStrategy* initStrategiesItems2018(GameStrategyContext* gameStrategyContext) 
         addGameStrategyItem(&strategy5, &beeStrategyItem, &beeTarget);
         return &strategy5;
     }
+    */
     return NULL;
 }
 

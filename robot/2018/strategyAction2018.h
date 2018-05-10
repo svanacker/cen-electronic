@@ -4,6 +4,9 @@
 #include <stdbool.h>
 
 // ACTION TIME TO ACHIEVE
+
+#define ACTION_TIME_NO_ACTION                                         0.0f
+
 #define ACTION_SWITCH_TIME_TO_ACHIEVE                                 5.0f
 
 #define ACTION_DISTRIBUTOR_1_TIME_TO_ACHIEVE                          30.0f
