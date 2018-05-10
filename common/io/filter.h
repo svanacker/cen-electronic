@@ -26,5 +26,7 @@ bool filterBinaryToValueChar(char c, char* output);
  */
 bool filterRemoveCRLF(char c, char* output);
 
+bool filterRemoveCRLF_255(char c, char* output);
+
 #endif
 

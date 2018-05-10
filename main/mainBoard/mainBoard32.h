@@ -65,4 +65,6 @@
 
 bool mainBoardWaitForInstruction(StartMatch* startMatch);
 
+void clearMotorAndMotorNotifyBuffer();
+
 #endif

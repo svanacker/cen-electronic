@@ -45,6 +45,10 @@
 
 // TODO
 
+char* appendInstructionCounterAsString(unsigned int instructionCounter);
+
+void setNewInstructionCounter(GameStrategyContext* gameStrategyContext, unsigned int newInstructionCounter);
+
 void initInstructionCounter(GameStrategyContext* gameStrategyContext);
 
 void startInstructionCounter(GameStrategyContext* gameStrategyContext);

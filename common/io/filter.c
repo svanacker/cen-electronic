@@ -52,3 +52,11 @@ bool filterRemoveCRLF(char c, char* output) {
     }
     return true;
 }
+
+bool filterRemoveCRLF_255(char c, char* output) {
+    *output = c;
+    if (c == CR || c == LF || c == 255) {
+        return false;
+    }
+    return true;
+}

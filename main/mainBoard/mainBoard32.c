@@ -394,6 +394,23 @@ void updateNewPositionFromNotification(InputStream* inputStream) {
     gameStrategyContext->robotAngleRadian = degToRad(angleDegree);
 }
 
+void clearMotorAndMotorNotifyBuffer(void) {
+    clearBuffer(&motorInputBuffer);
+    // Send a clear Buffer to the remote board to avoid to keep bad data in the link when rebooting
+    append(&motorOutputStream, HEADER_CLEAR_INPUT_STREAM);
+    // append(&motorOutputStream, HEADER_WRITE_CONTENT_AND_DEEP_CLEAR_BUFFER);
+    motorOutputStream.flush(&motorOutputStream);
+    
+    // UART Notification
+    clearBuffer(&motorNotifyInputBuffer);
+    // Send a clear Buffer to the remote board to avoid to keep bad data in the link when rebooting
+    append(&motorNotifyOutputStream, HEADER_CLEAR_INPUT_STREAM);
+    // append(&motorNotifyOutputStream, HEADER_WRITE_CONTENT_AND_DEEP_CLEAR_BUFFER);
+    motorNotifyOutputStream.flush(&motorNotifyOutputStream);
+    
+    delaymSec(100);
+}
+
 void mainBoardDeviceHandleMotionDeviceNotification(const Device* device, const char commandHeader, InputStream* inputStream) {
     if (device->deviceInterface->deviceHeader == MOTION_DEVICE_HEADER) {
         if (
@@ -407,7 +424,7 @@ void mainBoardDeviceHandleMotionDeviceNotification(const Device* device, const c
             // FAKE DATA To Align with TrajectoryDevice
             checkIsSeparator(inputStream);
             checkIsChar(inputStream, 'F');
-
+            
             gameStrategyContext->trajectoryType = TRAJECTORY_TYPE_NONE;
             // To know if we have reached the target
             handleNotificationInstructionCounter(gameStrategyContext, commandHeader);
@@ -577,7 +594,7 @@ bool mainBoardWaitForInstruction(StartMatch* startMatchParam) {
             &debugInputBuffer,
             &debugOutputBuffer,
             &debugOutputStream,
-            &filterRemoveCRLF,
+            &filterRemoveCRLF_255,
             NULL);
     
     // Listen instruction from motorNotifyStream->Devices
@@ -585,7 +602,7 @@ bool mainBoardWaitForInstruction(StartMatch* startMatchParam) {
             &motorNotifyInputBuffer,
             &motorNotifyOutputBuffer,
             &motorNotifyOutputStream,
-            &filterRemoveCRLF,
+            &filterRemoveCRLF_255,
             NULL);
 
     handleTofSensorList(gameStrategyContext, &startMatch, &tofSensorList, gameBoard);
@@ -788,22 +805,7 @@ int main(void) {
     append(&motorOutputStream, HEADER_WRITE_CONTENT_AND_DEEP_CLEAR_BUFFER);
     motorOutputStream.flush(&motorOutputStream);
     
-    // UART Notification
-    clearBuffer(&motorNotifyInputBuffer);
-    // Send a clear Buffer to the remote board to avoid to keep bad data in the link when rebooting
-    append(&motorNotifyOutputStream, HEADER_CLEAR_INPUT_STREAM);
-    append(&motorNotifyOutputStream, HEADER_WRITE_CONTENT_AND_DEEP_CLEAR_BUFFER);
-    motorNotifyOutputStream.flush(&motorNotifyOutputStream);
-    
-    // MECA 1
-    clearBuffer(&meca1InputBuffer);
-    // Send a clear Buffer to the remote board to avoid to keep bad data in the link when rebooting
-    append(&meca1OutputStream, HEADER_CLEAR_INPUT_STREAM);
-    append(&meca1OutputStream, HEADER_WRITE_CONTENT_AND_DEEP_CLEAR_BUFFER);
-    motorOutputStream.flush(&meca1OutputStream);
-    
-    // To let the MOTOR BOARD clearing the cache
-    delaymSec(200);
+    clearMotorAndMotorNotifyBuffer();
       
     // Update this on the MOTOR BOARD to be synchronized !
     updateMotorBoardRobotPosition(gameStrategyContext);
