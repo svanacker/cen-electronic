@@ -11,7 +11,7 @@
 #include "distributor2018.h"
 
 #include "../../robot/strategy/teamColor.h"
-
+#include "../../robot/strategy/teamColor.h"
 /**
  * Determine the type of content in the distributor
  */
@@ -93,11 +93,18 @@ void updateDistributorStateAntiClockWise(Distributor* distributor);
  */
 enum ColorType colorSensorFindColorType2018(ColorSensor* colorSensor);
 
+// UNICOLOR
+
 /**
- * Load and send all balls of an unicolor distributor.
+ * Load and send all balls of an unicolor distributor with a system of color check
  * @param distributor
  */
-void loadUnicolorDistributor(Distributor* distributor);
+void loadUnicolorDistributorWithColorCheck(Distributor* distributor);
+
+/**
+ * Load the ball of the distributor but very easily, next to the launcher
+ */
+void loadUnicolorDistributorSimple(enum TeamColor teamColor);
 
 /**
  * Load all balls of the distributor, but do not send them.

@@ -58,7 +58,7 @@ void startInstructionCounter(GameStrategyContext* gameStrategyContext) {
 }
 
 void handleObstacle(GameStrategyContext* gameStrategyContext) {
-    // TODO :()
+    
 }
 
 bool isTrajectoryReached(GameStrategyContext* gameStrategyContext, unsigned commandHeader, Point* destinationPoint) {
@@ -146,21 +146,8 @@ void handleNextInstructionCounter(GameStrategyContext* gameStrategyContext) {
         
         // DISTRIBUTOR_1 -> ACTIONS
         else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_DIST_1_REACHED) {
-            if (gameStrategyContext->color == TEAM_COLOR_ORANGE) {
-                clientDistributor2018LoadAndSendUnicolorBallList(0);
-            }
-            else {
-                clientDistributor2018LoadAndSendUnicolorBallList(1);
-            }
-            delaymSec(2500);
-            gameStrategyContext->score += SCORE_POINT_2018_DISTRIBUTOR_UNICOLOR_COMPLETE_POINT;
-            /*
-            GameTarget* gameTarget = getGameTarget(1);
-            GameTargetAction* gameTargetAction = getGameTargetAction(&(gameTarget->actionList), 0);
-            if (doGameTargetAction(gameTargetAction, (int*)gameStrategyContext)) {
-                gameStrategyContext->score += SCORE_POINT_2018_DISTRIBUTOR_UNICOLOR_COMPLETE_POINT;
-            }
-            */
+            loadUnicolorDistributorSimple(gameStrategyContext->color);
+            gameStrategyContext->score += SCORE_POINT_2018_DISTRIBUTOR_UNICOLOR_6_BALLS;
             setNewInstructionCounter(gameStrategyContext, INSTRUCTION_COUNTER_DIST_1_TO_BORDER_1_TO_REQUEST);    
             return;
         }

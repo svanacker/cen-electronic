@@ -114,7 +114,35 @@ void updateDistributorStateAntiClockWise(Distributor* distributor) {
     distributor->squares[4] = distributor->squares[3];
 }
 
-void loadUnicolorDistributor(Distributor* distributor) {
+void loadUnicolorDistributorSimple(enum TeamColor teamColor) {
+    unsigned int i;
+    if (teamColor == TEAM_COLOR_GREEN) {
+        for (i = 0; i < 10; i++) {
+            // In all cases, prepare the launcher even if it's empty, because it does not take time unless if it is needed
+            clientLaunch2018(LAUNCHER_LEFT_INDEX, LAUNCHER_PREPARE_ON);
+            
+            // Rotate the distributor 
+            clientDistributor2018CleanNext(LAUNCHER_RIGHT_INDEX);
+
+            // Send the ball
+            clientLaunch2018(LAUNCHER_LEFT_INDEX, LAUNCHER_LAUNCH);
+        }
+    }
+    else if (teamColor == TEAM_COLOR_ORANGE) {
+        for (i = 0; i < 10; i++) {
+            // In all cases, prepare the launcher even if it's empty, because it does not take time unless if it is needed
+            clientLaunch2018(LAUNCHER_RIGHT_INDEX, LAUNCHER_PREPARE_ON);
+            
+            // Rotate the distributor 
+            clientDistributor2018CleanNext(LAUNCHER_LEFT_INDEX);
+
+            // Send the ball
+            clientLaunch2018(LAUNCHER_RIGHT_INDEX, LAUNCHER_LAUNCH);
+        }
+    }
+}
+
+void loadUnicolorDistributorWithColorCheck(Distributor* distributor) {
     unsigned int i;
     
     // Clean to avoid problem when we do lots of trial

@@ -42,7 +42,7 @@ if (commandHeader == STRATEGY_2018_GET_SCORE) {
         ackCommand(outputStream, STRATEGY_2018_DEVICE_HEADER, STRATEGY_2018_READ_BALL_COLOR_TYPE);
     }
     else if (commandHeader == STRATEGY_2018_UNICOLOR_COMMAND) {
-        loadUnicolorDistributor(distributor);
+        loadUnicolorDistributorWithColorCheck(distributor);
         ackCommand(outputStream, STRATEGY_2018_DEVICE_HEADER, STRATEGY_2018_UNICOLOR_COMMAND);
     }
 }
