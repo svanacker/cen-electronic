@@ -17,6 +17,7 @@
 #include "../../common/log/logHandler.h"
 #include "../../common/log/loggerDebug.h"
 
+#include "../../drivers/driverList.h"
 #include "../../drivers/dispatcher/driverDataDispatcherList.h"
 #include "../../drivers/dispatcher/driverDataDispatcherDebug.h"
 
@@ -37,9 +38,19 @@ bool deviceDataDispatcherIsOk(void) {
 void deviceDataDispatcherHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     // Dispatcher List
     if (header == COMMAND_DISPATCHER_LIST) {
-        ackCommand(outputStream, SYSTEM_DEBUG_DEVICE_HEADER, COMMAND_DISPATCHER_LIST);
+        ackCommand(outputStream, DISPATCHER_COMMAND_HEADER, COMMAND_DISPATCHER_LIST);
         DriverDataDispatcherList* dispatcherList = getDispatcherList();
         printDriverDataDispatcherList(getInfoOutputStreamLogger(), dispatcherList);         
+    }
+    else if (header == COMMAND_DISPATCHER_DEBUG_DRIVER_REQUEST_BUFFER) {
+        ackCommand(outputStream, DISPATCHER_COMMAND_HEADER, COMMAND_DISPATCHER_DEBUG_DRIVER_REQUEST_BUFFER);
+        Buffer* driverRequestBuffer = getDriverRequestBuffer();
+        printDebugBuffer (getInfoOutputStreamLogger(), driverRequestBuffer);         
+    }
+    else if (header == COMMAND_DISPATCHER_DEBUG_DRIVER_RESPONSE_BUFFER) {
+        ackCommand(outputStream, DISPATCHER_COMMAND_HEADER, COMMAND_DISPATCHER_DEBUG_DRIVER_RESPONSE_BUFFER);
+        Buffer* driverResponseBuffer = getDriverResponseBuffer();
+        printDebugBuffer (getInfoOutputStreamLogger(), driverResponseBuffer);         
     }
     else if (header == COMMAND_PING_DISPATCHER_INDEX) {
         // Handle directly by DriverStreamListener => Throw an error

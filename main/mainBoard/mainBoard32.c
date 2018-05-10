@@ -393,8 +393,10 @@ void updateNewPositionFromNotification(InputStream* inputStream) {
     gameStrategyContext->robotPosition->y = y;
     gameStrategyContext->robotAngleRadian = degToRad(angleDegree);
     
+    /*
     printPoint(getDebugOutputStreamLogger(), gameStrategyContext->robotPosition, "");
     println(getDebugOutputStreamLogger());
+    */
 }
 
 void clearMotorAndMotorNotifyBuffer(void) {
@@ -430,7 +432,9 @@ void mainBoardDeviceHandleMotionDeviceNotification(const Device* device, const c
             
             gameStrategyContext->trajectoryType = TRAJECTORY_TYPE_NONE;
             // To know if we have reached the target
+            /*
             appendStringLN(getDebugOutputStreamLogger(), "M:");
+            */
             handleNotificationInstructionCounter(gameStrategyContext, commandHeader);
         }
         else {
@@ -451,8 +455,10 @@ void mainBoardDeviceHandleTrajectoryDeviceNotification(const Device* device, con
   
     if (device->deviceInterface->deviceHeader == TRAJECTORY_DEVICE_HEADER) {
         if (commandHeader == NOTIFY_TRAJECTORY_CHANGED) {
+            /*
             append(getDebugOutputStreamLogger(), commandHeader);
             println(getDebugOutputStreamLogger());
+            */
             updateNewPositionFromNotification(inputStream);
             checkIsSeparator(inputStream);
             enum TrajectoryType trajectoryType = readHex(inputStream);

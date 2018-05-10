@@ -23,6 +23,7 @@
 #include "../../../drivers/driverTransmitter.h"
 
 bool clientExtendedMotionBSplineRelative(float x, float y, float angle, float dist0, float dist1, float accelerationFactor, float speedFactor) {
+    appendStringLN(getDebugOutputStreamLogger(), "clientExtendedMotionBSplineRelative");
     OutputStream* outputStream = getDriverRequestOutputStream();
     append(outputStream, EXTENDED_MOTION_DEVICE_HEADER);
     append(outputStream, COMMAND_MOTION_SPLINE_RELATIVE);
@@ -46,6 +47,7 @@ bool clientExtendedMotionBSplineRelative(float x, float y, float angle, float di
 }
 
 bool clientExtendedMotionBSplineAbsolute(float x, float y, float angleRadian, float dist0, float dist1, float accelerationFactor, float speedFactor) {
+    appendStringLN(getDebugOutputStreamLogger(), "clientExtendedMotionBSplineAbsolute");
     OutputStream* outputStream = getDriverRequestOutputStream();
     append(outputStream, EXTENDED_MOTION_DEVICE_HEADER);
     append(outputStream, COMMAND_MOTION_SPLINE_ABSOLUTE);

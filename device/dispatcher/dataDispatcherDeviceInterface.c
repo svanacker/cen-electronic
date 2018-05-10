@@ -14,6 +14,20 @@ int deviceDataDispatcherGetInterface(char commandHeader, DeviceInterfaceMode mod
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
+    if (commandHeader == COMMAND_DISPATCHER_DEBUG_DRIVER_REQUEST_BUFFER) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("Debug Driver Request Buffer");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+        
+    }
+    if (commandHeader == COMMAND_DISPATCHER_DEBUG_DRIVER_RESPONSE_BUFFER) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("Debug Driver Response Buffer");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+        
+    }
     else if (commandHeader == COMMAND_PING_DISPATCHER_INDEX) {
         if (fillDeviceArgumentList) {
             setFunction("PingDispatcherIndex", 1, 1);

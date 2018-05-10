@@ -12,7 +12,7 @@
  */
 static DriverDescriptorList drivers;
 
-// I/O for all drivers
+// I/O for all drivers because we only bufferized what will be transmitted
 static Buffer* driverRequestBuffer;
 static Buffer* driverResponseBuffer;
 
@@ -41,8 +41,8 @@ void initDrivers(Buffer *aDriverRequestBuffer, char (*driverRequestBufferArray)[
     driverRequestBuffer = aDriverRequestBuffer;
     driverResponseBuffer = aDriverResponseBuffer;
 
-    initBuffer(driverRequestBuffer, driverRequestBufferArray, requestLength, "DRV_REQ_BUF", "");
-    initBuffer(driverResponseBuffer, driverResponseBufferArray, responseLength, "DRV_RES_BUF", "");
+    initBuffer(driverRequestBuffer, driverRequestBufferArray, requestLength, "DRIVER_REQUEST_BUFFER", "");
+    initBuffer(driverResponseBuffer, driverResponseBufferArray, responseLength, "DRIVER_RESPONSE_BUFFER", "");
 
     int size = drivers.size;
     int i;

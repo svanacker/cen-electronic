@@ -3,6 +3,9 @@
 
 #include "../../device/deviceInterface.h"
 
+#define COMMAND_DISPATCHER_DEBUG_DRIVER_REQUEST_BUFFER   'o'
+#define COMMAND_DISPATCHER_DEBUG_DRIVER_RESPONSE_BUFFER  'i'
+
 /** Command to see the list of dispatcher. */
 #define COMMAND_DISPATCHER_LIST          'L'
 

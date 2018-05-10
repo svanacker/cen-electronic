@@ -19,12 +19,13 @@ char* appendInstructionCounterAsString(unsigned int instructionCounter) {
     switch (instructionCounter) {
         case INSTRUCTION_COUNTER_MATCH_WAIT_FOR_START : return "WAIT_FOR_START";
         case INSTRUCTION_COUNTER_MATCH_STARTED : return "MATCH STARTED";
-        case INSTRUCTION_COUNTER_START_TO_SWITCH_MOVE_ASKED : return "START_TO_SWITCH_MOVE_ASKED";
+        case INSTRUCTION_COUNTER_START_TO_SWITCH_MOVE_REQUESTED : return "START_TO_SWITCH_MOVE_REQUESTED";
         case INSTRUCTION_COUNTER_SWITCH_REACHED : return "SWITCH_REACHED";
         case INSTRUCTION_COUNTER_SWITCH_ON : return "SWICH_ON";
-        case INSTRUCTION_COUNTER_SWITCH_TO_DIST_1_ASKED : return "SWITCH_TO_DIST_1_ASKED";
+        case INSTRUCTION_COUNTER_SWITCH_TO_DIST_1_TO_REQUEST : return "SWITCH_TO_DIST_1_TO_REQUEST";
+        case INSTRUCTION_COUNTER_SWITCH_TO_DIST_1_REQUESTED : return "INSTRUCTION_COUNTER_SWITCH_TO_DIST_1_REQUESTED";
         case INSTRUCTION_COUNTER_DIST_1_REACHED : return "DIST_1_REACHED";
-        case INSTRUCTION_COUNTER_DIST_1_TO_BORDER_1_ASKED : return "DIST_1_TO_BORDER_1_ASKED";
+        case INSTRUCTION_COUNTER_DIST_1_TO_BORDER_1_TO_REQUEST : return "DIST_1_TO_BORDER_1_TO_REQUEST";
         case INSTRUCTION_COUNTER_BORDER_1_REACHED : return "BORDER_1_REACHED";
         case INSTRUCTION_COUNTER_BORDER_1_TO_BEE_ASKED : return "BORDER_1_TO_BEE_ASKED";
         case INSTRUCTION_COUNTER_BEE_REACHED : return "BEE_REACHED";
@@ -37,7 +38,7 @@ void setNewInstructionCounter(GameStrategyContext* gameStrategyContext, unsigned
     appendString(logOutputStream, "TRANSITION:");
     char* s = appendInstructionCounterAsString(gameStrategyContext->instructionCounter);
     appendString(logOutputStream, s);
-    appendString(logOutputStream, " TO ");
+    appendString(logOutputStream, "    =>    ");
     s = appendInstructionCounterAsString(newInstructionCounter);
     appendString(logOutputStream, s);
     println(logOutputStream);
@@ -80,13 +81,13 @@ bool isTrajectoryReached(GameStrategyContext* gameStrategyContext, unsigned comm
 
 
 void handleNotificationInstructionCounter(GameStrategyContext* gameStrategyContext, unsigned commandHeader) {
-    if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_START_TO_SWITCH_MOVE_ASKED) {
+    if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_START_TO_SWITCH_MOVE_REQUESTED) {
         setNewInstructionCounter(gameStrategyContext, INSTRUCTION_COUNTER_SWITCH_REACHED);
     }
-    if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_SWITCH_TO_DIST_1_ASKED) {
+    if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_SWITCH_TO_DIST_1_REQUESTED) {
         setNewInstructionCounter(gameStrategyContext, INSTRUCTION_COUNTER_DIST_1_REACHED);
     }
-    if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_DIST_1_TO_BORDER_1_ASKED) {
+    if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_DIST_1_TO_BORDER_1_REQUESTED) {
         setNewInstructionCounter(gameStrategyContext, INSTRUCTION_COUNTER_BORDER_1_REACHED);
     }
 }
@@ -98,7 +99,7 @@ void handleNextInstructionCounter(GameStrategyContext* gameStrategyContext) {
     if (gameStrategyContext->strategyIndex >= STRATEGY_1_SWITCH_INDEX && gameStrategyContext->strategyIndex <= STRATEGY_3_SWITCH_DIST_BEE_INDEX) {
         // STARTED -> SWITCH
         if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_MATCH_STARTED) { 
-            setNewInstructionCounter(gameStrategyContext, INSTRUCTION_COUNTER_START_TO_SWITCH_MOVE_ASKED);
+            setNewInstructionCounter(gameStrategyContext, INSTRUCTION_COUNTER_START_TO_SWITCH_MOVE_REQUESTED);
             PathList* pathList = getNavigationPathList(navigation);
             PathData* pathData = getPath(pathList, 0);
             moveAlongPath(pathData);
@@ -114,20 +115,27 @@ void handleNextInstructionCounter(GameStrategyContext* gameStrategyContext) {
             if (doGameTargetAction(gameTargetAction, (int*)gameStrategyContext)) {
                 gameStrategyContext->score += SCORE_POINT_2018_PANEL_ON_POINT;
             }
-            clearMotorAndMotorNotifyBuffer();
-            setNewInstructionCounter(gameStrategyContext, INSTRUCTION_COUNTER_SWITCH_TO_DIST_1_ASKED);
+            setNewInstructionCounter(gameStrategyContext, INSTRUCTION_COUNTER_SWITCH_TO_DIST_1_TO_REQUEST);
             return;
         }
-        // ---------------------- AVOID TO GO MORE ! ---------------------------
+        
+        
+        
+        
+        // ---------------------- STRAGEGY 2 ---------------------------
         if (gameStrategyContext->strategyIndex < STRATEGY_2_SWITCH_DIST_INDEX) {
             return;
         }
         // SWITCH -> DISTRIBUTOR_1
-        else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_SWITCH_TO_DIST_1_ASKED) {
+        else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_SWITCH_TO_DIST_1_TO_REQUEST) {
+            setNewInstructionCounter(gameStrategyContext, INSTRUCTION_COUNTER_SWITCH_TO_DIST_1_REQUESTED);
             PathList* pathList = getNavigationPathList(navigation);
             PathData* pathData = getPath(pathList, 1);
             moveAlongPath(pathData);
             return;
+        }
+        else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_SWITCH_TO_DIST_1_REQUESTED) {
+            // WAIT FOR THE NOTIFICATION
         }
         // DISTRIBUTOR_1 -> ACTIONS
         else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_DIST_1_REACHED) {
@@ -136,14 +144,21 @@ void handleNextInstructionCounter(GameStrategyContext* gameStrategyContext) {
             if (doGameTargetAction(gameTargetAction, (int*)gameStrategyContext)) {
                 gameStrategyContext->score += SCORE_POINT_2018_DISTRIBUTOR_UNICOLOR_COMPLETE_POINT;
             }
-            setNewInstructionCounter(gameStrategyContext, INSTRUCTION_COUNTER_DIST_1_TO_BORDER_1_ASKED);    
+            setNewInstructionCounter(gameStrategyContext, INSTRUCTION_COUNTER_DIST_1_TO_BORDER_1_TO_REQUEST);    
             return;
         }
-        // ---------------------- AVOID TO GO MORE ! ---------------------------
+        else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_SWITCH_TO_DIST_1_REQUESTED) {
+            // WAIT FOR THE NOTIFICATION
+        }
+        
+        
+        
+        
+        // ---------------------- STRATEGY 3 ---------------------------
         if (gameStrategyContext->strategyIndex < STRATEGY_3_SWITCH_DIST_BEE_INDEX) {
             return;
         }
-        else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_DIST_1_TO_BORDER_1_ASKED) {
+        else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_DIST_1_TO_BORDER_1_TO_REQUEST) {
             // gameStrategyContext->instructionCounter++;
             // TODO : Add A game Target !!
             /*
