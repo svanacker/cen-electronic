@@ -80,6 +80,8 @@ Location* getOtherEnd(PathData* pathData, Location* location);
  */
 bool moveAlongPath(PathData* pathData);
 
+bool restartFromPositionToGoToPath(PathData* pathData, Point* robotPosition);
+
 /**
  * When we are too far from the locationPoinnt, we must use this method to
  * create a new BSpline to move

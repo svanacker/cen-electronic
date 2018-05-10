@@ -1,39 +1,81 @@
 #include "instructionCounter2018.h"
+#include "score2018.h"
+#include "distributor2018.h"
 
 #include <stdbool.h>
 
-#include "../../common/2d/2d.h"
-
-#include "../../common/delay/cenDelay.h"
-
 #include "../../client/robot/2018/launcherClient2018.h"
 
+#include "../../common/2d/2d.h"
+#include "../../common/delay/cenDelay.h"
 #include "../../common/log/logger.h"
 
-#include "score2018.h"
+#include "../../navigation/pathList.h"
 
 #include "../../robot/strategy/gameStrategyContext.h"
 #include "../../robot/strategy/gameTargetList.h"
 
 #include "../../main/mainBoard/mainBoard32.h"
 
+static unsigned int errorRetry = 0;
+
 char* appendInstructionCounterAsString(unsigned int instructionCounter) {
     switch (instructionCounter) {
+        // MATCH
         case INSTRUCTION_COUNTER_MATCH_WAIT_FOR_START : return "WAIT_FOR_START";
-        case INSTRUCTION_COUNTER_MATCH_STARTED : return "MATCH STARTED";
+        // -> SWITCH
+        case INSTRUCTION_COUNTER_START_TO_SWITCH_MOVE_TO_REQUEST : return "START_TO_SWITCH_MOVE_TO_REQUEST";
         case INSTRUCTION_COUNTER_START_TO_SWITCH_MOVE_REQUESTED : return "START_TO_SWITCH_MOVE_REQUESTED";
         case INSTRUCTION_COUNTER_SWITCH_REACHED : return "SWITCH_REACHED";
-        case INSTRUCTION_COUNTER_SWITCH_ON : return "SWICH_ON";
+        // -> DIST_1
         case INSTRUCTION_COUNTER_SWITCH_TO_DIST_1_TO_REQUEST : return "SWITCH_TO_DIST_1_TO_REQUEST";
-        case INSTRUCTION_COUNTER_SWITCH_TO_DIST_1_REQUESTED : return "INSTRUCTION_COUNTER_SWITCH_TO_DIST_1_REQUESTED";
+        case INSTRUCTION_COUNTER_SWITCH_TO_DIST_1_REQUESTED : return "SWITCH_TO_DIST_1_REQUESTED";
         case INSTRUCTION_COUNTER_DIST_1_REACHED : return "DIST_1_REACHED";
+        // -> BORDER_1
         case INSTRUCTION_COUNTER_DIST_1_TO_BORDER_1_TO_REQUEST : return "DIST_1_TO_BORDER_1_TO_REQUEST";
+        case INSTRUCTION_COUNTER_DIST_1_TO_BORDER_1_REQUESTED : return "DIST_1_TO_BORDER_1_REQUESTED"; 
         case INSTRUCTION_COUNTER_BORDER_1_REACHED : return "BORDER_1_REACHED";
-        case INSTRUCTION_COUNTER_BORDER_1_TO_BEE_REQUESTED : return "BORDER_1_TO_BEE_ASKED";
+        // -> BEE
+        case INSTRUCTION_COUNTER_BORDER_1_TO_BEE_TO_REQUEST : return "BORDER_1_TO_BEE_TO_REQUEST";
+        case INSTRUCTION_COUNTER_BORDER_1_TO_BEE_REQUESTED : return "BORDER_1_TO_BEE_REQUESTED";
         case INSTRUCTION_COUNTER_BEE_REACHED : return "BEE_REACHED";
+        // -> DIST_2_FRONT
+        case INSTRUCTION_COUNTER_BEE_TO_DIST_2_FRONT_TO_REQUEST : return "BEE_TO_DIST_2_FRONT_TO_REQUEST";
+        case INSTRUCTION_COUNTER_BEE_TO_DIST_2_FRONT_REQUESTED : return "BEE_TO_DIST_2_FRONT_REQUESTED";
+        case INSTRUCTION_COUNTER_DIST_2_FRONT_REACHED : return "BEE_TO_DIST_2_FRONT_REACHED";
+        // -> DIST_2
+        case INSTRUCTION_COUNTER_DIST_2_FRONT_TO_DIST_2_TO_REQUEST : return "DIST_2_FRONT_TO_DIST_2_TO_REQUEST";
+        case INSTRUCTION_COUNTER_DIST_2_FRONT_TO_DIST_2_REQUESTED : return "DIST_2_FRONT_TO_DIST_2_REQUESTED";
+        case INSTRUCTION_COUNTER_DIST_2_REACHED : return "DIST_2_REACHED";
+        // -> GARBAGE FRONT RELEASE
+        case INSTRUCTION_COUNTER_DIST_2_TO_GARBAGE_RELEASE_FRONT_TO_REQUEST : return "DIST_2_TO_GARBAGE_RELEASE_FRONT_TO_REQUEST";
+        case INSTRUCTION_COUNTER_DIST_2_TO_GARBAGE_RELEASE_FRONT_REQUESTED : return "DIST_2_TO_GARBAGE_RELEASE_FRONT_REQUESTED";
+        case INSTRUCTION_COUNTER_GARBAGE_FRONT_RELEASE_REACHED : return "GARBAGE_FRONT RELEASE_REACHED";
+         // -> GARBAGE RELEASE
+        case INSTRUCTION_COUNTER_GARBAGE_FRONT_TO_GARBAGE_RELEASE_TO_REQUEST : return "GARBAGE_FRONT_TO_GARBAGE_RELEASE_TO_REQUEST";
+        case INSTRUCTION_COUNTER_GARBAGE_FRONT_TO_GARBAGE_RELEASE_REQUESTED : return "GARBAGE_FRONT_TO_GARBAGE_RELEASE_REQUESTED";
+        case INSTRUCTION_COUNTER_GARBAGE_RELEASE_REACHED : return "GARBAGE_RELEASE_REACHED";
+        // GARBAGE RELEASE
+        
+        case INSTRUCTION_COUNTER_END_MATCH : return "END_MATCH";
     }
     return "UNKNOWN INSTRUCTION COUNTER";
 }
+
+/**
+ * @private
+ * @param gameStrategyContext
+ * @param pathIndex
+ * @return 
+ */
+PathData* getPathData(GameStrategyContext* gameStrategyContext, unsigned int pathIndex) {
+    Navigation* navigation = gameStrategyContext->navigation;
+    PathList* pathList = getNavigationPathList(navigation);
+    PathData* pathData = getPath(pathList, pathIndex);
+    
+    return pathData;
+}
+
 
 void setNewInstructionCounter(GameStrategyContext* gameStrategyContext, unsigned int newInstructionCounter) {
     OutputStream* logOutputStream = getInfoOutputStreamLogger();
@@ -54,14 +96,21 @@ void initInstructionCounter(GameStrategyContext* gameStrategyContext) {
 }
 
 void startInstructionCounter(GameStrategyContext* gameStrategyContext) {
-     setNewInstructionCounter(gameStrategyContext, INSTRUCTION_COUNTER_MATCH_STARTED);
+     setNewInstructionCounter(gameStrategyContext, INSTRUCTION_COUNTER_SWITCH_TO_DIST_1_TO_REQUEST);
 }
 
 void handleObstacle(GameStrategyContext* gameStrategyContext) {
-    
+    // TODO :(
 }
 
-bool isTrajectoryReached(GameStrategyContext* gameStrategyContext, unsigned commandHeader, Point* destinationPoint) {
+/**
+ * @private
+ * @param gameStrategyContext
+ * @param commandHeader
+ * @param pathIndex
+ * @return 
+ */
+bool isTrajectoryReached(GameStrategyContext* gameStrategyContext, unsigned commandHeader, unsigned int pathIndex) {
     
     if (commandHeader == NOTIFY_MOTION_STATUS_REACHED) {
         return true;
@@ -70,43 +119,73 @@ bool isTrajectoryReached(GameStrategyContext* gameStrategyContext, unsigned comm
                 || commandHeader == NOTIFY_MOTION_STATUS_MOVING
                 || commandHeader == NOTIFY_MOTION_STATUS_OBSTACLE
                 || commandHeader == NOTIFY_MOTION_STATUS_BLOCKED
-                || commandHeader == NOTIFY_MOTION_STATUS_SHOCKED) {    
-     
-        Point* robotPosition = gameStrategyContext->robotPosition;
-        float error = distanceBetweenPoints(destinationPoint, robotPosition);
-        if (error < TRAJECTORY_REACHED_TRESHOLD) {
-            return true;
-        }
+                || commandHeader == NOTIFY_MOTION_STATUS_SHOCKED) {
+        return false;
     }
     return false;
 }
 
+void gotoNextInstructionOrTryToFinishCurrentInstruction(GameStrategyContext* gameStrategyContext,
+                                                        unsigned char commandHeader,
+                                                        unsigned int pathIndex,
+                                                        unsigned int nextInstructionCounter) {
+    if (!isTrajectoryReached(gameStrategyContext, commandHeader, pathIndex)) {
+        if (errorRetry < 3) {
+            errorRetry++;
+            delaymSec(500);
+            Point* robotPosition = gameStrategyContext->robotPosition;
+
+            PathData* pathData = getPathData(gameStrategyContext, pathIndex);
+            restartFromPositionToGoToPath(pathData, robotPosition);
+        }
+    }
+    else {
+        setNewInstructionCounter(gameStrategyContext, nextInstructionCounter);
+    }
+}
 
 void handleNotificationInstructionCounter(GameStrategyContext* gameStrategyContext, unsigned commandHeader) {
     if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_START_TO_SWITCH_MOVE_REQUESTED) {
-        setNewInstructionCounter(gameStrategyContext, INSTRUCTION_COUNTER_SWITCH_REACHED);
+        gotoNextInstructionOrTryToFinishCurrentInstruction(gameStrategyContext, commandHeader, 0, INSTRUCTION_COUNTER_SWITCH_REACHED);
     }
+    
     if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_SWITCH_TO_DIST_1_REQUESTED) {
-        setNewInstructionCounter(gameStrategyContext, INSTRUCTION_COUNTER_DIST_1_REACHED);
+        gotoNextInstructionOrTryToFinishCurrentInstruction(gameStrategyContext, commandHeader, 1, INSTRUCTION_COUNTER_DIST_1_REACHED);
     }
-    if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_DIST_1_TO_BORDER_1_REQUESTED) {
-        setNewInstructionCounter(gameStrategyContext, INSTRUCTION_COUNTER_BORDER_1_REACHED);
+    
+    else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_DIST_1_TO_BORDER_1_REQUESTED) {
+        gotoNextInstructionOrTryToFinishCurrentInstruction(gameStrategyContext, commandHeader, 2, INSTRUCTION_COUNTER_BORDER_1_REACHED);
     }
-    if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_BORDER_1_TO_BEE_REQUESTED) {
-        setNewInstructionCounter(gameStrategyContext, INSTRUCTION_COUNTER_BEE_REACHED);
+
+    else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_BORDER_1_TO_BEE_REQUESTED) {
+        gotoNextInstructionOrTryToFinishCurrentInstruction(gameStrategyContext, commandHeader, 3, INSTRUCTION_COUNTER_BEE_REACHED);
+    }
+
+    else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_BEE_TO_DIST_2_FRONT_REQUESTED) {
+        gotoNextInstructionOrTryToFinishCurrentInstruction(gameStrategyContext, commandHeader, 4, INSTRUCTION_COUNTER_DIST_2_FRONT_REACHED);        
+    }
+
+    else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_DIST_2_FRONT_TO_DIST_2_REQUESTED) {
+        gotoNextInstructionOrTryToFinishCurrentInstruction(gameStrategyContext, commandHeader, 5, INSTRUCTION_COUNTER_DIST_2_REACHED);        
+    }
+    
+    else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_DIST_2_TO_GARBAGE_RELEASE_FRONT_REQUESTED) {
+        gotoNextInstructionOrTryToFinishCurrentInstruction(gameStrategyContext, commandHeader, 6, INSTRUCTION_COUNTER_GARBAGE_RELEASE_REACHED);        
+    }
+    
+    else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_GARBAGE_FRONT_TO_GARBAGE_RELEASE_TO_REQUEST) {
+        gotoNextInstructionOrTryToFinishCurrentInstruction(gameStrategyContext, commandHeader, 7, INSTRUCTION_COUNTER_GARBAGE_RELEASE_REACHED);        
     }
 }
 
 void handleNextInstructionCounter(GameStrategyContext* gameStrategyContext) {
-    Navigation* navigation = gameStrategyContext->navigation;    
     // FOR Simple HOMOLOGATION
         
-    if (gameStrategyContext->strategyIndex >= STRATEGY_1_SWITCH_INDEX && gameStrategyContext->strategyIndex <= STRATEGY_3_SWITCH_DIST_BEE_INDEX) {
+    if (gameStrategyContext->strategyIndex >= STRATEGY_1_SWITCH_INDEX && gameStrategyContext->strategyIndex <= STRATEGY_4_SWITCH_DIST_BEE_DIST_INDEX) {
         // STARTED -> SWITCH
-        if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_MATCH_STARTED) { 
+        if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_START_TO_SWITCH_MOVE_TO_REQUEST) { 
             setNewInstructionCounter(gameStrategyContext, INSTRUCTION_COUNTER_START_TO_SWITCH_MOVE_REQUESTED);
-            PathList* pathList = getNavigationPathList(navigation);
-            PathData* pathData = getPath(pathList, 0);
+            PathData* pathData = getPathData(gameStrategyContext, 0);
             moveAlongPath(pathData);
             return;
         }
@@ -134,8 +213,7 @@ void handleNextInstructionCounter(GameStrategyContext* gameStrategyContext) {
         // SWITCH -> DISTRIBUTOR_1
         else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_SWITCH_TO_DIST_1_TO_REQUEST) {
             setNewInstructionCounter(gameStrategyContext, INSTRUCTION_COUNTER_SWITCH_TO_DIST_1_REQUESTED);
-            PathList* pathList = getNavigationPathList(navigation);
-            PathData* pathData = getPath(pathList, 1);
+            PathData* pathData = getPathData(gameStrategyContext, 1);
             moveAlongPath(pathData);
             return;
         }
@@ -161,8 +239,7 @@ void handleNextInstructionCounter(GameStrategyContext* gameStrategyContext) {
         }
         else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_DIST_1_TO_BORDER_1_TO_REQUEST) {
             setNewInstructionCounter(gameStrategyContext, INSTRUCTION_COUNTER_DIST_1_TO_BORDER_1_REQUESTED);
-            PathList* pathList = getNavigationPathList(navigation);
-            PathData* pathData = getPath(pathList, 2);
+            PathData* pathData = getPathData(gameStrategyContext, 2);
             moveAlongPath(pathData);
             return;
         }
@@ -175,17 +252,78 @@ void handleNextInstructionCounter(GameStrategyContext* gameStrategyContext) {
             setNewInstructionCounter(gameStrategyContext, INSTRUCTION_COUNTER_BORDER_1_TO_BEE_TO_REQUEST);
         }
         else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_BORDER_1_TO_BEE_TO_REQUEST) {
-            setNewInstructionCounter(gameStrategyContext, INSTRUCTION_COUNTER_BORDER_1_TO_BEE_REQUESTED);
-            PathList* pathList = getNavigationPathList(navigation);
-            PathData* pathData = getPath(pathList, 3);
+            setNewInstructionCounter(gameStrategyContext, INSTRUCTION_COUNTER_BORDER_1_TO_BEE_REQUESTED);            
+            PathData* pathData = getPathData(gameStrategyContext, 3);
             moveAlongPath(pathData);
             return;
         }
         else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_BORDER_1_TO_BEE_REQUESTED) {
-            // Wait
+            // Wait For notification
         }
         else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_BEE_REACHED) {
             gameStrategyContext->score += SCORE_POINT_2018_BEE_DESTROYED_POINT;
+            setNewInstructionCounter(gameStrategyContext, INSTRUCTION_COUNTER_BEE_TO_DIST_2_FRONT_TO_REQUEST);
+        }
+    
+    // ---------------------- STRATEGY 4 ---------------------------
+        if (gameStrategyContext->strategyIndex < STRATEGY_4_SWITCH_DIST_BEE_DIST_INDEX) {
+            return;
+        }
+        // BEE -> DIST_FRONT_2
+        else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_BEE_TO_DIST_2_FRONT_TO_REQUEST) {
+            setNewInstructionCounter(gameStrategyContext, INSTRUCTION_COUNTER_BEE_TO_DIST_2_FRONT_REQUESTED);
+            PathData* pathData = getPathData(gameStrategyContext, 4);
+            moveAlongPath(pathData);
+            return;
+        }
+        else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_BEE_TO_DIST_2_FRONT_REQUESTED) {
+            // wait for notification
+        }
+        else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_DIST_2_FRONT_REACHED) {
+            setNewInstructionCounter(gameStrategyContext, INSTRUCTION_COUNTER_DIST_2_FRONT_TO_DIST_2_TO_REQUEST);
+        }
+        
+        // DIST_FRONT_2 -> DIST_2
+        else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_DIST_2_FRONT_TO_DIST_2_TO_REQUEST) {
+            setNewInstructionCounter(gameStrategyContext, INSTRUCTION_COUNTER_DIST_2_FRONT_TO_DIST_2_REQUESTED);
+            PathData* pathData = getPathData(gameStrategyContext, 5);
+            moveAlongPath(pathData);
+            return;
+        }
+        else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_DIST_2_FRONT_TO_DIST_2_REQUESTED) {
+            // wait for notification
+        }
+        else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_DIST_2_REACHED) {
+            gameStrategyContext->score += SCORE_POINT_2018_DISTRIBUTOR_UNLOADED_POINT;
+            setNewInstructionCounter(gameStrategyContext, INSTRUCTION_COUNTER_DIST_2_TO_GARBAGE_RELEASE_FRONT_TO_REQUEST);
+        }
+        
+        // DIST_2 -> GARBAGE RELEASE FRONT
+        else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_DIST_2_TO_GARBAGE_RELEASE_FRONT_TO_REQUEST) {
+            setNewInstructionCounter(gameStrategyContext, INSTRUCTION_COUNTER_DIST_2_TO_GARBAGE_RELEASE_FRONT_REQUESTED);
+            PathData* pathData = getPathData(gameStrategyContext, 6);
+            moveAlongPath(pathData);
+            return;
+        }
+        else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_DIST_2_TO_GARBAGE_RELEASE_FRONT_REQUESTED) {
+            // wait for notification
+        }
+        else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_GARBAGE_FRONT_RELEASE_REACHED) {
+            setNewInstructionCounter(gameStrategyContext, INSTRUCTION_COUNTER_GARBAGE_FRONT_TO_GARBAGE_RELEASE_TO_REQUEST);
+        }
+        
+                // DIST_2 -> GARBAGE RELEASE FRONT
+        else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_GARBAGE_FRONT_TO_GARBAGE_RELEASE_TO_REQUEST) {
+            setNewInstructionCounter(gameStrategyContext, INSTRUCTION_COUNTER_GARBAGE_FRONT_TO_GARBAGE_RELEASE_REQUESTED);
+            PathData* pathData = getPathData(gameStrategyContext, 7);
+            moveAlongPath(pathData);
+            return;
+        }
+        else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_GARBAGE_FRONT_TO_GARBAGE_RELEASE_REQUESTED) {
+            // wait for notification
+        }
+        else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_GARBAGE_RELEASE_REACHED) {
+            // TODO : Release Balls
             setNewInstructionCounter(gameStrategyContext, INSTRUCTION_COUNTER_END_MATCH);
         }
     }

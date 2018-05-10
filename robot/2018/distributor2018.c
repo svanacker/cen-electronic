@@ -116,29 +116,22 @@ void updateDistributorStateAntiClockWise(Distributor* distributor) {
 
 void loadUnicolorDistributorSimple(enum TeamColor teamColor) {
     unsigned int i;
+    unsigned direction = 0;
     if (teamColor == TEAM_COLOR_GREEN) {
-        for (i = 0; i < 10; i++) {
-            // In all cases, prepare the launcher even if it's empty, because it does not take time unless if it is needed
-            clientLaunch2018(LAUNCHER_LEFT_INDEX, LAUNCHER_PREPARE_ON);
-            
-            // Rotate the distributor 
-            clientDistributor2018CleanNext(LAUNCHER_RIGHT_INDEX);
-
-            // Send the ball
-            clientLaunch2018(LAUNCHER_LEFT_INDEX, LAUNCHER_LAUNCH);
-        }
+        direction = LAUNCHER_RIGHT_INDEX;
     }
-    else if (teamColor == TEAM_COLOR_ORANGE) {
-        for (i = 0; i < 10; i++) {
-            // In all cases, prepare the launcher even if it's empty, because it does not take time unless if it is needed
-            clientLaunch2018(LAUNCHER_RIGHT_INDEX, LAUNCHER_PREPARE_ON);
-            
-            // Rotate the distributor 
-            clientDistributor2018CleanNext(LAUNCHER_LEFT_INDEX);
+    else {
+        direction = LAUNCHER_LEFT_INDEX; 
+    }        
+    for (i = 0; i < 10; i++) {
+        // In all cases, prepare the launcher even if it's empty, because it does not take time unless if it is needed
+        clientLaunch2018(direction, LAUNCHER_PREPARE_ON);
 
-            // Send the ball
-            clientLaunch2018(LAUNCHER_RIGHT_INDEX, LAUNCHER_LAUNCH);
-        }
+        // Rotate the distributor 
+        clientDistributor2018CleanNext(direction);
+
+        // Send the ball
+        clientLaunch2018(direction, LAUNCHER_LAUNCH);
     }
 }
 
