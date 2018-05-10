@@ -7,6 +7,8 @@
 #include "../../common/timer/timerList.h"
 #include "../../common/timer/timerConstants.h"
 
+#include "../../drivers/lcd/lcd.h"
+
 #include "../../common/log/logger.h"
 
 #include "../../common/io/outputStream.h"
@@ -57,6 +59,7 @@ unsigned int matchEndGetRemainingTime(EndMatch* endMatch) {
 }
 
 void showEndAndScore(EndMatch* endMatch, OutputStream* outputStream) {
+    clearScreen();
     appendString(outputStream, "End : Score = ");
     appendDec(outputStream, endMatch->scoreToShow);
     appendStringLN(outputStream, " pts");

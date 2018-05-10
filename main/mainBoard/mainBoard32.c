@@ -830,12 +830,11 @@ int main(void) {
         if (!mainBoardWaitForInstruction(&startMatch)) {
             break;
         }
-        
-        // Show the end of the match
-        clearScreen();
+        // After each instruction => Export the score to endMatch Device
         endMatch.scoreToShow = gameStrategyContext->score;
-        showEndAndScoreIfNeeded(&endMatch, getAlwaysOutputStreamLogger());
-        break;
+        if (showEndAndScoreIfNeeded(&endMatch, getAlwaysOutputStreamLogger())) {
+            break;
+        }
     }
 
     while (1) {
