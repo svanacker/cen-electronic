@@ -4,6 +4,8 @@
 
 #include "../../common/2d/2d.h"
 
+#include "../../common/delay/cenDelay.h"
+
 #include "../../client/robot/2018/launcherClient2018.h"
 
 #include "../../common/log/logger.h"
@@ -27,7 +29,7 @@ char* appendInstructionCounterAsString(unsigned int instructionCounter) {
         case INSTRUCTION_COUNTER_DIST_1_REACHED : return "DIST_1_REACHED";
         case INSTRUCTION_COUNTER_DIST_1_TO_BORDER_1_TO_REQUEST : return "DIST_1_TO_BORDER_1_TO_REQUEST";
         case INSTRUCTION_COUNTER_BORDER_1_REACHED : return "BORDER_1_REACHED";
-        case INSTRUCTION_COUNTER_BORDER_1_TO_BEE_ASKED : return "BORDER_1_TO_BEE_ASKED";
+        case INSTRUCTION_COUNTER_BORDER_1_TO_BEE_REQUESTED : return "BORDER_1_TO_BEE_ASKED";
         case INSTRUCTION_COUNTER_BEE_REACHED : return "BEE_REACHED";
     }
     return "UNKNOWN INSTRUCTION COUNTER";
@@ -90,6 +92,9 @@ void handleNotificationInstructionCounter(GameStrategyContext* gameStrategyConte
     if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_DIST_1_TO_BORDER_1_REQUESTED) {
         setNewInstructionCounter(gameStrategyContext, INSTRUCTION_COUNTER_BORDER_1_REACHED);
     }
+    if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_BORDER_1_TO_BEE_REQUESTED) {
+        setNewInstructionCounter(gameStrategyContext, INSTRUCTION_COUNTER_BEE_REACHED);
+    }
 }
 
 void handleNextInstructionCounter(GameStrategyContext* gameStrategyContext) {
@@ -134,24 +139,33 @@ void handleNextInstructionCounter(GameStrategyContext* gameStrategyContext) {
             moveAlongPath(pathData);
             return;
         }
+        
         else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_SWITCH_TO_DIST_1_REQUESTED) {
             // WAIT FOR THE NOTIFICATION
         }
+        
         // DISTRIBUTOR_1 -> ACTIONS
         else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_DIST_1_REACHED) {
+            if (gameStrategyContext->color == TEAM_COLOR_ORANGE) {
+                clientDistributor2018LoadAndSendUnicolorBallList(0);
+            }
+            else {
+                clientDistributor2018LoadAndSendUnicolorBallList(1);
+            }
+            delaymSec(2500);
+            gameStrategyContext->score += SCORE_POINT_2018_DISTRIBUTOR_UNICOLOR_COMPLETE_POINT;
+            /*
             GameTarget* gameTarget = getGameTarget(1);
             GameTargetAction* gameTargetAction = getGameTargetAction(&(gameTarget->actionList), 0);
             if (doGameTargetAction(gameTargetAction, (int*)gameStrategyContext)) {
                 gameStrategyContext->score += SCORE_POINT_2018_DISTRIBUTOR_UNICOLOR_COMPLETE_POINT;
             }
+            */
             setNewInstructionCounter(gameStrategyContext, INSTRUCTION_COUNTER_DIST_1_TO_BORDER_1_TO_REQUEST);    
             return;
         }
-        else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_SWITCH_TO_DIST_1_REQUESTED) {
-            // WAIT FOR THE NOTIFICATION
-        }
-        
-        
+
+
         
         
         // ---------------------- STRATEGY 3 ---------------------------
@@ -159,15 +173,36 @@ void handleNextInstructionCounter(GameStrategyContext* gameStrategyContext) {
             return;
         }
         else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_DIST_1_TO_BORDER_1_TO_REQUEST) {
-            // gameStrategyContext->instructionCounter++;
-            // TODO : Add A game Target !!
-            /*
-            GameTarget* gameTarget = getGameTarget(2);
-            GameTargetAction* gameTargetAction = getGameTargetAction(&(gameTarget->actionList), 0);
-            doGameTargetAction(gameTargetAction, (int*)gameStrategyContext);
-            */
+            setNewInstructionCounter(gameStrategyContext, INSTRUCTION_COUNTER_DIST_1_TO_BORDER_1_REQUESTED);
+            PathList* pathList = getNavigationPathList(navigation);
+            PathData* pathData = getPath(pathList, 2);
+            moveAlongPath(pathData);
+            return;
+        }
+        else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_DIST_1_TO_BORDER_1_REQUESTED) {
+            // wait for notification
+        }
+        
+        // GO ON BEE
+        else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_BORDER_1_REACHED) {
+            setNewInstructionCounter(gameStrategyContext, INSTRUCTION_COUNTER_BORDER_1_TO_BEE_TO_REQUEST);
+        }
+        else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_BORDER_1_TO_BEE_TO_REQUEST) {
+            setNewInstructionCounter(gameStrategyContext, INSTRUCTION_COUNTER_BORDER_1_TO_BEE_REQUESTED);
+            PathList* pathList = getNavigationPathList(navigation);
+            PathData* pathData = getPath(pathList, 3);
+            moveAlongPath(pathData);
+            return;
+        }
+        else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_BORDER_1_TO_BEE_REQUESTED) {
+            // Wait
+        }
+        else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_BEE_REACHED) {
+            gameStrategyContext->score += SCORE_POINT_2018_BEE_DESTROYED_POINT;
+            setNewInstructionCounter(gameStrategyContext, INSTRUCTION_COUNTER_END_MATCH);
         }
     }
+    
     // For Simple CHECK
     if (gameStrategyContext->strategyIndex == STRATEGY_7_CHECK_IF_ROBOT_OK) {
         if (gameStrategyContext->instructionCounter == 1) {

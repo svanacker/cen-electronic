@@ -31,5 +31,7 @@ bool clientDistributor2018CleanNext(int launcherIndex);
 */
 bool clientDistributor2018EjectDirty(void);
 
+bool clientDistributor2018LoadAndSendUnicolorBallList(int direction);
+
 
 #endif

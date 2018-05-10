@@ -118,3 +118,15 @@ bool clientDistributor2018EjectDirty(void) {
 
     return result;
 }
+
+bool clientDistributor2018LoadAndSendUnicolorBallList(int direction) {
+    OutputStream* outputStream = getDriverRequestOutputStream();
+    append(outputStream, LAUNCHER_2018_DEVICE_HEADER);
+    append(outputStream, LAUNCHER_LOAD_AND_SEND_UNICOLOR_BALL_LIST);
+    
+    appendHex2(outputStream, direction);
+    
+    bool result = transmitFromDriverRequestBuffer();
+
+    return result;
+}

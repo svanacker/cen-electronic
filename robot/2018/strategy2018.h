@@ -31,7 +31,7 @@
 
 #define START_AREA                                                "STA"
 #define START_AREA_X                                               160
-#define START_AREA_Y                                               585
+#define START_AREA_Y                                               185
 #define START_AREA_ANGLE_DECI_DEG                   ANGLE_DECI_DEG_270
 
 #define SWITCH                                                    "SW"
@@ -50,7 +50,7 @@
 #define BEE_BORDER_Y_ALIGN_ANGLE_DECI_DEG            ANGLE_DECI_DEG_90
 
 #define BEE                                                        "B"
-#define BEE_X                                                     1925
+#define BEE_X                                                     1950
 #define BEE_Y                                                      250
 // We stop before to do an "action" of move !
 #define BEE_FRONT_X                                         BEE_X - 25
