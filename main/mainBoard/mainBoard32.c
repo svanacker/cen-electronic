@@ -833,6 +833,9 @@ int main(void) {
     // Update this on the MOTOR BOARD to be synchronized !
     updateMotorBoardRobotPosition(gameStrategyContext);
     
+    // Maintain the position to avoid that the robot move
+    motionDriverMaintainPosition();
+    
     initInstructionCounter(gameStrategyContext);
     
     // Wait until the match start
