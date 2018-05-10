@@ -392,6 +392,9 @@ void updateNewPositionFromNotification(InputStream* inputStream) {
     gameStrategyContext->robotPosition->x = x;
     gameStrategyContext->robotPosition->y = y;
     gameStrategyContext->robotAngleRadian = degToRad(angleDegree);
+    
+    printPoint(getDebugOutputStreamLogger(), gameStrategyContext->robotPosition, "");
+    println(getDebugOutputStreamLogger());
 }
 
 void clearMotorAndMotorNotifyBuffer(void) {
@@ -427,6 +430,7 @@ void mainBoardDeviceHandleMotionDeviceNotification(const Device* device, const c
             
             gameStrategyContext->trajectoryType = TRAJECTORY_TYPE_NONE;
             // To know if we have reached the target
+            appendStringLN(getDebugOutputStreamLogger(), "M:");
             handleNotificationInstructionCounter(gameStrategyContext, commandHeader);
         }
         else {
@@ -442,8 +446,13 @@ void mainBoardDeviceHandleMotionDeviceNotification(const Device* device, const c
 }
 
 void mainBoardDeviceHandleTrajectoryDeviceNotification(const Device* device, const char commandHeader, InputStream* inputStream) {
+    append(getDebugOutputStreamLogger(), device->deviceInterface->deviceHeader);
+    println(getDebugOutputStreamLogger());
+  
     if (device->deviceInterface->deviceHeader == TRAJECTORY_DEVICE_HEADER) {
         if (commandHeader == NOTIFY_TRAJECTORY_CHANGED) {
+            append(getDebugOutputStreamLogger(), commandHeader);
+            println(getDebugOutputStreamLogger());
             updateNewPositionFromNotification(inputStream);
             checkIsSeparator(inputStream);
             enum TrajectoryType trajectoryType = readHex(inputStream);
@@ -604,7 +613,6 @@ bool mainBoardWaitForInstruction(StartMatch* startMatchParam) {
             &motorNotifyOutputStream,
             &filterRemoveCRLF_255,
             NULL);
-
     handleTofSensorList(gameStrategyContext, &startMatch, &tofSensorList, gameBoard);
     
     handleNextInstructionCounter(gameStrategyContext);
@@ -824,7 +832,10 @@ int main(void) {
         }
         
         // Show the end of the match
+        clearScreen();
+        endMatch.scoreToShow = gameStrategyContext->score;
         showEndAndScoreIfNeeded(&endMatch, getAlwaysOutputStreamLogger());
+        break;
     }
 
     while (1) {

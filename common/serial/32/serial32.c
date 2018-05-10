@@ -4,6 +4,8 @@
 
 #include "../serial.h"
 
+#include "../../../common/delay/cenDelay.h"
+
 #include "../../../common/log/logger.h"
 #include "../../../common/log/logLevel.h"
 
@@ -56,7 +58,7 @@ void serialPutc(enum SerialPort serialPort, char c) {
     while (!UARTTransmitterIsReady(uart)) {
     
     }
-    
+    // delaymSec(1);
     UARTSendDataByte(uart, c);
 
     while (!UARTTransmissionHasCompleted(uart)) {

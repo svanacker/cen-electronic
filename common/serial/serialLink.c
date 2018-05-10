@@ -19,10 +19,10 @@ SerialLink* openSerialLink(
         const char* serialName, 
         Buffer* inputBuffer,
         char (*inputBufferArray)[],
-        unsigned char inputBufferLength,
+        unsigned int inputBufferLength,
         Buffer* outputBuffer,
         char (*outputBufferArray)[],
-        unsigned char outputBufferLength,
+        unsigned int outputBufferLength,
         OutputStream* outputStream,
         enum SerialPort serialPort,
         long speed) {

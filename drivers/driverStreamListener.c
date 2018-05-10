@@ -113,6 +113,12 @@ bool handleStreamInstruction(Buffer* inputBuffer,
 
         // Get the header
         unsigned char deviceHeader = bufferGetCharAtIndex(inputBuffer, DEVICE_HEADER_INDEX);
+        
+        // Remove 0xFF (Appears in MOTOR_NOTIFY_STREAM in 2018)
+        if (deviceHeader == 0xFF) {
+            bufferReadChar(inputBuffer);
+            return false;
+        }
 
         // Manage the dispatcher specifier (3 chars : Ex J01 before real command ...)
         unsigned char specifyDispatcherLength = 0;

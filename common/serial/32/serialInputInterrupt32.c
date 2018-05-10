@@ -22,7 +22,10 @@ void handleUartInterrupt(UART_MODULE uart, Buffer* buffer) {
     // Is this an RX interrupt?
     if (INTGetFlag(INT_SOURCE_UART_RX(uart))) {
         char c = UARTGetDataByte(uart);
-        bufferWriteChar(buffer, c);
+        // BUG2018 
+        if (c != 0xFF) {
+            bufferWriteChar(buffer, c);
+        }
         // Clear the RX interrupt Flag
         INTClearFlag(INT_SOURCE_UART_RX(uart));
     }
