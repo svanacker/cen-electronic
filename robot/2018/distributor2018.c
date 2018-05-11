@@ -115,6 +115,7 @@ void updateDistributorStateAntiClockWise(Distributor* distributor) {
 }
 
 void loadUnicolorDistributorSimple(enum TeamColor teamColor) {
+    appendString(getDebugOutputStreamLogger(), "loadUnicolorDistributorSimple");
     unsigned int i;
     unsigned direction = 0;
     if (teamColor == TEAM_COLOR_GREEN) {
@@ -180,6 +181,7 @@ void loadUnicolorDistributorWithColorCheck(Distributor* distributor) {
 }
 
 void loadMixedDistributor(enum TeamColor teamColor) {
+    appendString(getDebugOutputStreamLogger(), "loadMixedDistributor");
     unsigned int i;
     // Load -> color device
     for (i = 0; i < 4; i++) {
@@ -196,6 +198,7 @@ void loadMixedDistributor(enum TeamColor teamColor) {
 }
 
 void ejectMixedDistributor(enum TeamColor teamColor) {
+    appendString(getDebugOutputStreamLogger(), "ejectMixedDistributor");
     unsigned int i;
 
     if (teamColor == TEAM_COLOR_GREEN) {
