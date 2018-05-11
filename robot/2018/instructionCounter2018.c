@@ -170,7 +170,7 @@ void handleNotificationInstructionCounter(GameStrategyContext* gameStrategyConte
     else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_DIST_2_TO_GARBAGE_RELEASE_FRONT_REQUESTED) {
         gotoNextInstructionOrTryToFinishCurrentInstruction(gameStrategyContext, commandHeader, 6, INSTRUCTION_COUNTER_GARBAGE_FRONT_RELEASE_REACHED);        
     }    
-    else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_GARBAGE_FRONT_TO_GARBAGE_RELEASE_TO_REQUEST) {
+    else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_GARBAGE_FRONT_TO_GARBAGE_RELEASE_REQUESTED) {
         gotoNextInstructionOrTryToFinishCurrentInstruction(gameStrategyContext, commandHeader, 7, INSTRUCTION_COUNTER_GARBAGE_RELEASE_REACHED);        
     }
 }
