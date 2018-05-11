@@ -106,6 +106,10 @@ void loadUnicolorDistributorWithColorCheck(Distributor* distributor);
  */
 void loadUnicolorDistributorSimple(enum TeamColor teamColor);
 
+void loadMixedDistributor(enum TeamColor teamColor);
+
+void ejectMixedDistributor(enum TeamColor teamColor);
+
 /**
  * Load all balls of the distributor, but do not send them.
  * @param distributor

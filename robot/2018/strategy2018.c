@@ -327,7 +327,7 @@ void initPaths2018(GameStrategyContext* gameStrategyContext, int index) {
                                                              DEFAULT_NAVIGATION_COST,
                                                              GARBAGE_FRONT_TO_GARBAGE_RELEASE_CP1,
                                                              GARBAGE_FRONT_TO_GARBAGE_RELEASE_CP2,
-                                                             deciDegreeToRad(GARGAGE_FRONT_POINT_ANGLE_DECI_DEG),
+                                                             deciDegreeToRad(GARGAGE_RELEASE_POINT_ANGLE_DECI_DEG),
                                                              deciDegreeToRad(GARGAGE_RELEASE_POINT_ANGLE_DECI_DEG),
                                                              GARBAGE_FRONT_TO_GARBAGE_RELEASE_ACCELERATION_FACTOR,
                                                              GARBAGE_FRONT_TO_GARBAGE_RELEASE_SPEED_FACTOR);

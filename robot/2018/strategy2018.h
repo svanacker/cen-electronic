@@ -50,11 +50,11 @@
 #define BEE_BORDER_Y_ALIGN_ANGLE_DECI_DEG            ANGLE_DECI_DEG_90
 
 #define BEE                                                        "B"
-#define BEE_X                                                     1950
+#define BEE_X                                                     1925
 #define BEE_Y                                                      250
 // We stop before to do an "action" of move !
-#define BEE_FRONT_X                                         BEE_X - 25
-#define BEE_FRONT_Y                                              BEE_Y
+// #define BEE_FRONT_X                                         BEE_X - 25
+// #define BEE_FRONT_Y                                              BEE_Y
 
 #define BEE_ANGLE_DECI_DEG                            ANGLE_DECI_DEG_0
 

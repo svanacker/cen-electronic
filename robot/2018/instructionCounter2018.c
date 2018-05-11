@@ -17,8 +17,6 @@
 
 #include "../../main/mainBoard/mainBoard32.h"
 
-static unsigned int errorRetry = 0;
-
 char* appendInstructionCounterAsString(unsigned int instructionCounter) {
     switch (instructionCounter) {
         // MATCH
@@ -170,9 +168,8 @@ void handleNotificationInstructionCounter(GameStrategyContext* gameStrategyConte
     }
     
     else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_DIST_2_TO_GARBAGE_RELEASE_FRONT_REQUESTED) {
-        gotoNextInstructionOrTryToFinishCurrentInstruction(gameStrategyContext, commandHeader, 6, INSTRUCTION_COUNTER_GARBAGE_RELEASE_REACHED);        
-    }
-    
+        gotoNextInstructionOrTryToFinishCurrentInstruction(gameStrategyContext, commandHeader, 6, INSTRUCTION_COUNTER_GARBAGE_FRONT_RELEASE_REACHED);        
+    }    
     else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_GARBAGE_FRONT_TO_GARBAGE_RELEASE_TO_REQUEST) {
         gotoNextInstructionOrTryToFinishCurrentInstruction(gameStrategyContext, commandHeader, 7, INSTRUCTION_COUNTER_GARBAGE_RELEASE_REACHED);        
     }
@@ -294,6 +291,7 @@ void handleNextInstructionCounter(GameStrategyContext* gameStrategyContext) {
             // wait for notification
         }
         else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_DIST_2_REACHED) {
+            loadMixedDistributor(gameStrategyContext->color);
             gameStrategyContext->score += SCORE_POINT_2018_DISTRIBUTOR_UNLOADED_POINT;
             setNewInstructionCounter(gameStrategyContext, INSTRUCTION_COUNTER_DIST_2_TO_GARBAGE_RELEASE_FRONT_TO_REQUEST);
         }
@@ -323,7 +321,8 @@ void handleNextInstructionCounter(GameStrategyContext* gameStrategyContext) {
             // wait for notification
         }
         else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_GARBAGE_RELEASE_REACHED) {
-            // TODO : Release Balls
+            ejectMixedDistributor(gameStrategyContext->color);
+            gameStrategyContext->score += SCORE_POINT_2018_DISTRIBUTOR_MIXEDCOLOR_BALL_COUNT * 2;
             setNewInstructionCounter(gameStrategyContext, INSTRUCTION_COUNTER_END_MATCH);
         }
     }

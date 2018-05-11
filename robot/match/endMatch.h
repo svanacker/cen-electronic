@@ -12,7 +12,7 @@ typedef struct EndMatch EndMatch;
 #include "../../robot/config/robotConfig.h"
 
 /** We take 10 seconds to be sure that it will be ok . */
-#define MATCH_DURATION                    90
+#define MATCH_DURATION                    95
 
 /**
  * All elements to manage the end of the match
