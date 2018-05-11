@@ -19,10 +19,10 @@
 void openSlaveI2cStreamLink(StreamLink* i2cStreamLink,
         Buffer* inputBuffer,
         char (*inputBufferArray)[],
-        unsigned char inputBufferLength,
+        unsigned int inputBufferLength,
         Buffer* outputBuffer,
         char (*outputBufferArray)[],
-        unsigned char outputBufferLength,
+        unsigned int outputBufferLength,
         I2cBusConnection* i2cBusConnection) {
     initBuffer(inputBuffer, inputBufferArray, inputBufferLength, BUFFER_NAME_I2C_SLAVE, "IN");
     initBuffer(outputBuffer, outputBufferArray, outputBufferLength, BUFFER_NAME_I2C_SLAVE, "OUT");

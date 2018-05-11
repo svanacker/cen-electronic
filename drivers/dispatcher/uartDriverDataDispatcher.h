@@ -9,7 +9,7 @@
 #include "driverDataDispatcher.h"
 #include "driverDataDispatcherList.h"
 
-#define UART_DRIVER_DATA_DISPATCHER_BUFFER_LENGTH        40
+#define UART_DRIVER_DATA_DISPATCHER_BUFFER_LENGTH        4000
 
 /**
 * Add the uart driver data dispatcher to the list

@@ -36,8 +36,8 @@ int getDriverCount() {
     return drivers.size;
 }
 
-void initDrivers(Buffer *aDriverRequestBuffer, char (*driverRequestBufferArray)[] , unsigned char requestLength,
-                 Buffer *aDriverResponseBuffer, char (*driverResponseBufferArray)[] , unsigned char responseLength) {
+void initDrivers(Buffer *aDriverRequestBuffer, char (*driverRequestBufferArray)[] , unsigned int requestLength,
+                 Buffer *aDriverResponseBuffer, char (*driverResponseBufferArray)[] , unsigned int responseLength) {
     driverRequestBuffer = aDriverRequestBuffer;
     driverResponseBuffer = aDriverResponseBuffer;
 

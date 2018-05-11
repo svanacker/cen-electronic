@@ -36,10 +36,10 @@
 #define MOTOR_BOARD_MEMORY_EEPROM_LENGTH    0x0500
 
 /** Maximal length for In Buffer length. */
-#define MOTOR_BOARD_IN_BUFFER_LENGTH     200
+#define MOTOR_BOARD_IN_BUFFER_LENGTH     2000
 
 /** Maximal length for Out Buffer length. */
-#define MOTOR_BOARD_OUT_BUFFER_LENGTH    200
+#define MOTOR_BOARD_OUT_BUFFER_LENGTH    2000
 
 // DEVICES
 #define MOTOR_BOARD_DEVICE_LIST_LENGTH   25
