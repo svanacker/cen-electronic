@@ -14,6 +14,7 @@
 
 #include "../common/error/error.h"
 
+#define PATH_LIST_INDEX_COLUMN_LENGTH                        4
 #define PATH_LIST_NAME_1_COLUMN_LENGTH                       7
 #define PATH_LIST_NAME_2_COLUMN_LENGTH                       7
 #define PATH_LIST_NAME_HEX_1_COLUMN_LENGTH                   9
@@ -36,6 +37,7 @@ void printPathListHeader(OutputStream* outputStream) {
 	// Table Header
 	appendTableHeaderSeparatorLine(outputStream);
     // Header Line 1
+    appendStringHeader(outputStream, "Idx", PATH_LIST_INDEX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "loc. 1", PATH_LIST_NAME_1_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "loc. 2", PATH_LIST_NAME_2_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "loc. 1", PATH_LIST_NAME_HEX_1_COLUMN_LENGTH);
@@ -50,7 +52,9 @@ void printPathListHeader(OutputStream* outputStream) {
 	appendStringHeader(outputStream, "Speed", PATH_LIST_SPEED_FACTOR_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "Back", PATH_LIST_GO_BACK_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, PATH_LIST_LAST_COLUMN_LENGTH);
+
     // Header Line 2
+    appendStringHeader(outputStream, "", PATH_LIST_INDEX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", PATH_LIST_NAME_1_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", PATH_LIST_NAME_2_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Hex", PATH_LIST_NAME_HEX_1_COLUMN_LENGTH);
@@ -69,7 +73,8 @@ void printPathListHeader(OutputStream* outputStream) {
 	appendTableHeaderSeparatorLine(outputStream);
 }
 
-void printPathTable(OutputStream* outputStream, PathData* pathData) {
+void printPathTable(OutputStream* outputStream, PathData* pathData, unsigned int index) {
+	appendDecTableData(outputStream, index, PATH_LIST_INDEX_COLUMN_LENGTH);
     appendFixedCharArrayTableData(outputStream, &(pathData->location1->name), PATH_LIST_NAME_1_COLUMN_LENGTH);
     appendFixedCharArrayTableData(outputStream, &(pathData->location2->name), PATH_LIST_NAME_2_COLUMN_LENGTH);
     appendHexFixedCharArrayTableData(outputStream, &(pathData->location1->name), PATH_LIST_NAME_HEX_1_COLUMN_LENGTH);
@@ -91,7 +96,7 @@ void printPathListTable(OutputStream* outputStream, PathList* pathList) {
 	int i;
 	for (i = 0; i < size; i++) {
 		PathData* pathData = getPath(pathList, i);
-		printPathTable(outputStream, pathData);
+		printPathTable(outputStream, pathData, i);
 	}
 	appendTableHeaderSeparatorLine(outputStream);
 }

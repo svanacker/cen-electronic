@@ -96,7 +96,7 @@ void initInstructionCounter(GameStrategyContext* gameStrategyContext) {
 }
 
 void startInstructionCounter(GameStrategyContext* gameStrategyContext) {
-     setNewInstructionCounter(gameStrategyContext, INSTRUCTION_COUNTER_SWITCH_TO_DIST_1_TO_REQUEST);
+     setNewInstructionCounter(gameStrategyContext, INSTRUCTION_COUNTER_START_TO_SWITCH_MOVE_TO_REQUEST);
 }
 
 void handleObstacle(GameStrategyContext* gameStrategyContext) {
@@ -130,12 +130,12 @@ void gotoNextInstructionOrTryToFinishCurrentInstruction(GameStrategyContext* gam
                                                         unsigned int pathIndex,
                                                         unsigned int nextInstructionCounter) {
     if (!isTrajectoryReached(gameStrategyContext, commandHeader, pathIndex)) {
-        if (errorRetry < 3) {
-            errorRetry++;
+        PathData* pathData = getPathData(gameStrategyContext, pathIndex);
+        if (!pathData->retried) {
+            pathData->retried = true;
             delaymSec(500);
             Point* robotPosition = gameStrategyContext->robotPosition;
 
-            PathData* pathData = getPathData(gameStrategyContext, pathIndex);
             restartFromPositionToGoToPath(pathData, robotPosition);
         }
     }
@@ -312,7 +312,7 @@ void handleNextInstructionCounter(GameStrategyContext* gameStrategyContext) {
             setNewInstructionCounter(gameStrategyContext, INSTRUCTION_COUNTER_GARBAGE_FRONT_TO_GARBAGE_RELEASE_TO_REQUEST);
         }
         
-                // DIST_2 -> GARBAGE RELEASE FRONT
+        // GARBAGE RELEASE FRONT -> GARBAGE RELEASE
         else if (gameStrategyContext->instructionCounter == INSTRUCTION_COUNTER_GARBAGE_FRONT_TO_GARBAGE_RELEASE_TO_REQUEST) {
             setNewInstructionCounter(gameStrategyContext, INSTRUCTION_COUNTER_GARBAGE_FRONT_TO_GARBAGE_RELEASE_REQUESTED);
             PathData* pathData = getPathData(gameStrategyContext, 7);

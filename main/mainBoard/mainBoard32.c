@@ -450,8 +450,8 @@ void mainBoardDeviceHandleMotionDeviceNotification(const Device* device, const c
 }
 
 void mainBoardDeviceHandleTrajectoryDeviceNotification(const Device* device, const char commandHeader, InputStream* inputStream) {
-    append(getDebugOutputStreamLogger(), device->deviceInterface->deviceHeader);
-    println(getDebugOutputStreamLogger());
+    // append(getDebugOutputStreamLogger(), device->deviceInterface->deviceHeader);
+    // println(getDebugOutputStreamLogger());
   
     if (device->deviceInterface->deviceHeader == TRAJECTORY_DEVICE_HEADER) {
         if (commandHeader == NOTIFY_TRAJECTORY_CHANGED) {

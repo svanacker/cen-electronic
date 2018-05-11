@@ -123,7 +123,7 @@ void loadUnicolorDistributorSimple(enum TeamColor teamColor) {
     else {
         direction = LAUNCHER_LEFT_INDEX; 
     }        
-    for (i = 0; i < 10; i++) {
+    for (i = 0; i < 8; i++) {
         // In all cases, prepare the launcher even if it's empty, because it does not take time unless if it is needed
         clientLaunch2018(direction, LAUNCHER_PREPARE_ON);
 
@@ -145,7 +145,7 @@ void loadUnicolorDistributorWithColorCheck(Distributor* distributor) {
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
     if (distributor->teamColor == TEAM_COLOR_GREEN) {
         // Load -> color device
-        for (i = 0; i < 20; i++) {
+        for (i = 0; i < 8; i++) {
             println(debugOutputStream);
             println(debugOutputStream);
             appendString(debugOutputStream, "iteration : ");
@@ -179,9 +179,41 @@ void loadUnicolorDistributorWithColorCheck(Distributor* distributor) {
     }
 }
 
-void loadMixedDistributor(Distributor* distributor) {
-   
+void loadMixedDistributor(enum TeamColor teamColor) {
+    unsigned int i;
+    // Load -> color device
+    for (i = 0; i < 4; i++) {
+
+        if (teamColor == TEAM_COLOR_GREEN) {
+            // Rotate the distributor 
+            clientDistributor2018CleanNext(LAUNCHER_LEFT_INDEX);
+        }
+        else if (teamColor == TEAM_COLOR_ORANGE) {
+            // Rotate the distributor 
+            clientDistributor2018CleanNext(LAUNCHER_RIGHT_INDEX);
+        }
+    }
 }
+
+void ejectMixedDistributor(enum TeamColor teamColor) {
+    unsigned int i;
+
+    if (teamColor == TEAM_COLOR_GREEN) {
+        for (i = 0; i < 8; i++) {
+            clientDistributor2018EjectDirty();
+            // Rotate the distributor in other direction
+            clientDistributor2018CleanNext(LAUNCHER_LEFT_INDEX);
+        }
+    }
+    else if (teamColor == TEAM_COLOR_ORANGE) {
+        for (i = 0; i < 8; i++) {
+            clientDistributor2018EjectDirty();
+            // Rotate the distributor in other direction
+            clientDistributor2018CleanNext(LAUNCHER_RIGHT_INDEX);
+        }
+    }
+}
+
 
 void sendBallAndCountScore(Distributor* distributor, unsigned int launcherIndex) {
     clientLaunch2018(LAUNCHER_RIGHT_INDEX, LAUNCHER_LAUNCH);

@@ -30,6 +30,8 @@ typedef struct PathData {
     float speedFactor;
     /** When reversed, the path must be done backward. */
     bool mustGoBackward;
+    /** 2018 => retried*/
+    bool retried;
 } PathData;
 
 /**
