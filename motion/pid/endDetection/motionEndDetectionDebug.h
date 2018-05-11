@@ -5,7 +5,7 @@
 #include "../pidMotion.h"
 #include "../parameters/pidParameter.h"
 #include "motionEndDetection.h"
-#include "motionEndDetectionParameter.h"
+#include "parameters/motionEndDetectionParameter.h"
 
 /**
  * Print a table with all end Motion Detection Parameter

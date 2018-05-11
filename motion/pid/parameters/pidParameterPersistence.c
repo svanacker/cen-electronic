@@ -4,7 +4,7 @@
 
 #include "../pid.h"
 #include "../parameters/pidParameter.h"
-
+#include "../endDetection/parameters/motionEndDetectionParameterPersistence.h"
 #include "../../../common/commons.h"
 #include "../../../common/eeprom/eeprom.h"
 #include "../../../common/eeprom/eepromAreas.h"
@@ -134,23 +134,9 @@ void loadPidParameters(PidMotion* pidMotion, bool loadDefaultValues) {
         localPidParameter->enabled = true;
     }
     
-    // Load Motion End Detection Parameter
+    // Load Motion End Detection Parameter : detail Phase And Aggregation Phase
     MotionEndDetectionParameter* motionEndDetectionParameter = &(pidMotion->globalParameters.motionEndDetectionParameter);
-    if (loadDefaultValues) {
-        motionEndDetectionParameter->absDeltaPositionIntegralFactorThreshold = ABS_DELTA_POSITION_INTEGRAL_FACTOR_THRESHOLD_DEFAULT_VALUE;
-        motionEndDetectionParameter->maxUIntegralFactorThreshold = MAX_U_INTEGRAL_FACTOR_THRESHOLD_DEFAULT_VALUE;
-        motionEndDetectionParameter->maxUIntegralConstantThreshold = MAX_U_INTEGRAL_CONSTANT_THRESHOLD_DEFAULT_VALUE;
-        motionEndDetectionParameter->noAnalysisAtStartupTimeInSecond = BLOCKING_OR_REACH_SKIP_DETECTION_DELAY_DEFAULT_VALUE;
-        motionEndDetectionParameter->timeRangeAnalysisInSecond = BLOCKING_OR_REACH_DETECTION_DELAY_DEFAULT_VALUE;
-    }
-    else {
-        Eeprom* _eeprom = pidMotion->pidPersistenceEeprom;
-        motionEndDetectionParameter->absDeltaPositionIntegralFactorThreshold = eepromReadUnsignedFloat(_eeprom, EEPROM_PID_PARAMETERS_END_DETECTION_START_INDEX, MOTION_END_DETECTION_PARAMETER_DIGIT);
-        motionEndDetectionParameter->maxUIntegralFactorThreshold = eepromReadUnsignedFloat(_eeprom, EEPROM_PID_PARAMETERS_END_DETECTION_START_INDEX + 4, MOTION_END_DETECTION_PARAMETER_DIGIT);
-        motionEndDetectionParameter->maxUIntegralConstantThreshold = eepromReadUnsignedFloat(_eeprom, EEPROM_PID_PARAMETERS_END_DETECTION_START_INDEX + 8, MOTION_END_DETECTION_PARAMETER_DIGIT);
-        motionEndDetectionParameter->noAnalysisAtStartupTimeInSecond = eepromReadUnsignedFloat(_eeprom, EEPROM_PID_PARAMETERS_END_DETECTION_START_INDEX + 12, MOTION_END_DETECTION_PARAMETER_DIGIT);
-        motionEndDetectionParameter->timeRangeAnalysisInSecond = eepromReadUnsignedFloat(_eeprom, EEPROM_PID_PARAMETERS_END_DETECTION_START_INDEX + 16, MOTION_END_DETECTION_PARAMETER_DIGIT);
-    }
+    loadMotionEndDetectionParameters(motionEndDetectionParameter, pidMotion->pidPersistenceEeprom, loadDefaultValues);
 }
 
 void savePidParameters(PidMotion* pidMotion) {
@@ -171,12 +157,6 @@ void savePidParameters(PidMotion* pidMotion) {
         internalSavePidParameter(pidMotion, pidIndex, PID_PARAMETERS_EEPROM_INDEX_MI, localPidParameter->maxIntegral);
     }
     
-    // Store Motion End Detection Parameter
-    Eeprom* _eeprom = pidMotion->pidPersistenceEeprom;
     MotionEndDetectionParameter* motionEndDetectionParameter = &(pidMotion->globalParameters.motionEndDetectionParameter);
-    eepromWriteUnsignedFloat(_eeprom, EEPROM_PID_PARAMETERS_END_DETECTION_START_INDEX, motionEndDetectionParameter->absDeltaPositionIntegralFactorThreshold, MOTION_END_DETECTION_PARAMETER_DIGIT);
-    eepromWriteUnsignedFloat(_eeprom, EEPROM_PID_PARAMETERS_END_DETECTION_START_INDEX + 4, motionEndDetectionParameter->maxUIntegralFactorThreshold, MOTION_END_DETECTION_PARAMETER_DIGIT);
-    eepromWriteUnsignedFloat(_eeprom, EEPROM_PID_PARAMETERS_END_DETECTION_START_INDEX + 8, motionEndDetectionParameter->maxUIntegralConstantThreshold, MOTION_END_DETECTION_PARAMETER_DIGIT);
-    eepromWriteUnsignedFloat(_eeprom, EEPROM_PID_PARAMETERS_END_DETECTION_START_INDEX + 12, motionEndDetectionParameter->noAnalysisAtStartupTimeInSecond, MOTION_END_DETECTION_PARAMETER_DIGIT);
-    eepromWriteUnsignedFloat(_eeprom, EEPROM_PID_PARAMETERS_END_DETECTION_START_INDEX + 16, motionEndDetectionParameter->timeRangeAnalysisInSecond, MOTION_END_DETECTION_PARAMETER_DIGIT);
+    saveMotionEndDetectionParameters(motionEndDetectionParameter, pidMotion->pidPersistenceEeprom);
 }

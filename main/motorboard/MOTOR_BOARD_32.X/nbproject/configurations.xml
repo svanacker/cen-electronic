@@ -333,7 +333,6 @@
       <logicalFolder name="motion.pid.endDetection"
                      displayName="motion.pid.endDetection"
                      projectFiles="true">
-        <itemPath>../../../motion/pid/endDetection/motionEndDetectionParameter.h</itemPath>
         <itemPath>../../../motion/pid/endDetection/motionEndDetectionDebug.h</itemPath>
         <itemPath>../../../motion/pid/endDetection/motionEndDetection.h</itemPath>
       </logicalFolder>
@@ -351,6 +350,12 @@
                      displayName="motion.pid.endDetection.obstacle"
                      projectFiles="true">
         <itemPath>../../../motion/pid/endDetection/obstacle/motionObstacleDetection.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f2"
+                     displayName="motion.pid.endDetection.parameters"
+                     projectFiles="true">
+        <itemPath>../../../motion/pid/endDetection/parameters/motionEndDetectionParameter.h</itemPath>
+        <itemPath>../../../motion/pid/endDetection/parameters/motionEndDetectionParameterPersistence.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f5"
                      displayName="motion.pid.endDetection.reached"
@@ -768,6 +773,12 @@
                      displayName="motion.pid.endDetection.obstacle"
                      projectFiles="true">
         <itemPath>../../../motion/pid/endDetection/obstacle/motionObstacleDetection.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f1"
+                     displayName="motion.pid.endDetection.parameters"
+                     projectFiles="true">
+        <itemPath>../../../motion/pid/endDetection/parameters/motionEndDetectionParameter.c</itemPath>
+        <itemPath>../../../motion/pid/endDetection/parameters/motionEndDetectionParameterPersistence.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f5"
                      displayName="motion.pid.endDetection.reached"

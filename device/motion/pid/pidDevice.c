@@ -306,8 +306,38 @@ void devicePidHandleRawData(char commandHeader, InputStream* inputStream, Output
         appendHex(outputStream, localInst->initialPidType);
     }   
     // End Detection Parameter
-    else if (commandHeader == COMMAND_GET_END_DETECTION_PARAMETER) {
-        ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_GET_END_DETECTION_PARAMETER);
+    // -> DETAIL
+    else if (commandHeader == COMMAND_GET_END_DETECTION_PARAMETER_DETAIL) {
+        ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_GET_END_DETECTION_PARAMETER_DETAIL);
+        MotionEndDetectionParameter* motionEndDetectionParameter = getMotionEndDetectionParameter(pidMotion);
+        appendHexFloat4(outputStream, motionEndDetectionParameter->accelerationTooHighTresholdFactor, MOTION_END_DETECTION_PARAMETER_DIGIT);
+        appendSeparator(outputStream);
+        appendHexFloat4(outputStream, motionEndDetectionParameter->speedTooLowThresholdFactor, MOTION_END_DETECTION_PARAMETER_DIGIT);
+        appendSeparator(outputStream);
+        appendHexFloat4(outputStream, motionEndDetectionParameter->uTooHighTresholdFactor, MOTION_END_DETECTION_PARAMETER_DIGIT);
+        appendSeparator(outputStream);
+        appendHexFloat4(outputStream, motionEndDetectionParameter->speedMinThreshold, MOTION_END_DETECTION_PARAMETER_DIGIT);
+        appendSeparator(outputStream);
+        appendHexFloat4(outputStream, motionEndDetectionParameter->uMinThresholdValue, MOTION_END_DETECTION_PARAMETER_DIGIT);
+    }
+    else if (commandHeader == COMMAND_SET_END_DETECTION_PARAMETER_DETAIL) {
+        ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_GET_END_DETECTION_PARAMETER_DETAIL);
+
+        MotionEndDetectionParameter* motionEndDetectionParameter = getMotionEndDetectionParameter(pidMotion);
+
+        motionEndDetectionParameter->accelerationTooHighTresholdFactor = readHexFloat4(inputStream, MOTION_END_DETECTION_PARAMETER_DIGIT);
+        checkIsSeparator(inputStream);
+        motionEndDetectionParameter->speedTooLowThresholdFactor = readHexFloat4(inputStream, MOTION_END_DETECTION_PARAMETER_DIGIT);
+        checkIsSeparator(inputStream);
+        motionEndDetectionParameter->uTooHighTresholdFactor = readHexFloat4(inputStream, MOTION_END_DETECTION_PARAMETER_DIGIT);
+        checkIsSeparator(inputStream);
+        motionEndDetectionParameter->speedMinThreshold = readHexFloat4(inputStream, MOTION_END_DETECTION_PARAMETER_DIGIT);
+        checkIsSeparator(inputStream);
+        motionEndDetectionParameter->uMinThresholdValue = readHexFloat4(inputStream, MOTION_END_DETECTION_PARAMETER_DIGIT);
+    }    
+    // -> AGGREGATION
+    else if (commandHeader == COMMAND_GET_END_DETECTION_PARAMETER_AGGREGATION) {
+        ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_GET_END_DETECTION_PARAMETER_AGGREGATION);
 
         MotionEndDetectionParameter* motionEndDetectionParameter = getMotionEndDetectionParameter(pidMotion);
         appendHexFloat4(outputStream, motionEndDetectionParameter->absDeltaPositionIntegralFactorThreshold, MOTION_END_DETECTION_PARAMETER_DIGIT);
@@ -320,8 +350,8 @@ void devicePidHandleRawData(char commandHeader, InputStream* inputStream, Output
         appendSeparator(outputStream);
         appendHexFloat4(outputStream, motionEndDetectionParameter->noAnalysisAtStartupTimeInSecond, MOTION_END_DETECTION_PARAMETER_DIGIT);
     }
-    else if (commandHeader == COMMAND_SET_END_DETECTION_PARAMETER) {
-        ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_GET_END_DETECTION_PARAMETER);
+    else if (commandHeader == COMMAND_SET_END_DETECTION_PARAMETER_AGGREGATION) {
+        ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_GET_END_DETECTION_PARAMETER_AGGREGATION);
 
         MotionEndDetectionParameter* motionEndDetectionParameter = getMotionEndDetectionParameter(pidMotion);
 

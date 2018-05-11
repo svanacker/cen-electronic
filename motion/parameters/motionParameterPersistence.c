@@ -18,7 +18,7 @@
 
 
 // EEPROM values
-static float DEFAULT_EEPROM_VALUES[MOTION_PARAMETERS_VALUES_COUNT] = {
+static float MOTION_PARAMETERS_DEFAULT_EEPROM_VALUES[MOTION_PARAMETERS_VALUES_COUNT] = {
     DEFAULT_FORWARD_ACCELERATION,                    DEFAULT_FORWARD_SPEED,
     DEFAULT_ROTATION_ACCELERATION,                   DEFAULT_ROTATION_SPEED,
     DEFAULT_ROTATION_ONE_WHEEL_ACCELERATION,         DEFAULT_ROTATION_ONE_WHEEL_SPEED,
@@ -33,7 +33,7 @@ float internalLoadMotionParameterItem(Eeprom* motionParameterEeprom, unsigned lo
     bool motionEepromAreaIsInitialized = isEepromAreaInitialized(motionParameterEeprom, EEPROM_MOTION_PARAMETERS_AREA_MARKER_INDEX);
     float result;
     if (loadDefaultValues) {
-        result = DEFAULT_EEPROM_VALUES[index];
+        result = MOTION_PARAMETERS_DEFAULT_EEPROM_VALUES[index];
     }
     else {
         if (!motionEepromAreaIsInitialized) {

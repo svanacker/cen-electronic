@@ -5,7 +5,7 @@
 
 #include "../pidConstants.h"
 #include "../pidType.h"
-#include "../endDetection/motionEndDetectionParameter.h"
+#include "../endDetection/parameters/motionEndDetectionParameter.h"
 
 /**
  * All parameters about pid motion. Don't changed by PidMotion. Are normally constants

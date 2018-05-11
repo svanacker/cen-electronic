@@ -374,6 +374,8 @@
     <ClCompile Include="motion\pid\endDetection\motionEndDetectionDebug.c" />
     <ClCompile Include="motion\pid\endDetection\motionEndDetectionStatusUpdater.c" />
     <ClCompile Include="motion\pid\endDetection\obstacle\motionObstacleDetection.c" />
+    <ClCompile Include="motion\pid\endDetection\parameters\motionEndDetectionParameter.c" />
+    <ClCompile Include="motion\pid\endDetection\parameters\motionEndDetectionParameterPersistence.c" />
     <ClCompile Include="motion\pid\endDetection\reached\motionReachedDetection.c" />
     <ClCompile Include="motion\pid\endDetection\shocked\motionShockedDetection.c" />
     <ClCompile Include="motion\pid\instructionType.c" />
@@ -737,9 +739,10 @@
     <ClInclude Include="motion\pid\endDetection\failed\motionFailedDetection.h" />
     <ClInclude Include="motion\pid\endDetection\motionEndDetection.h" />
     <ClInclude Include="motion\pid\endDetection\motionEndDetectionDebug.h" />
-    <ClInclude Include="motion\pid\endDetection\motionEndDetectionParameter.h" />
     <ClInclude Include="motion\pid\endDetection\motionEndDetectionStatusUpdater.h" />
     <ClInclude Include="motion\pid\endDetection\obstacle\motionObstacleDetection.h" />
+    <ClInclude Include="motion\pid\endDetection\parameters\motionEndDetectionParameter.h" />
+    <ClInclude Include="motion\pid\endDetection\parameters\motionEndDetectionParameterPersistence.h" />
     <ClInclude Include="motion\pid\endDetection\reached\motionReachedDetection.h" />
     <ClInclude Include="motion\pid\endDetection\shocked\motionShockedDetection.h" />
     <ClInclude Include="motion\pid\instructionType.h" />

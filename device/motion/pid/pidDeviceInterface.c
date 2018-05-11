@@ -220,9 +220,42 @@ int devicePidGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fil
         return commandLengthValueForMode(mode, 2, 53);    
     }
     // END DETECTION
-    else if (commandHeader == COMMAND_SET_END_DETECTION_PARAMETER) {
+    // -> DETAIL PHASE
+    else if (commandHeader == COMMAND_SET_END_DETECTION_PARAMETER_DETAIL) {
         if (fillDeviceArgumentList) {
-            setFunction("set End Detection Parameter", 9, 0);
+            setFunction("set End Detection Detail Parameter", 9, 0);
+            setArgumentFloatHex4(0, "accelerationTooHighTresholdFactor");
+            setArgumentSeparator(1);
+            setArgumentFloatHex4(2, "speedTooLowThresholdFactor");
+            setArgumentSeparator(3);
+            setArgumentFloatHex4(4, "uTooHighTresholdFactor");
+            setArgumentSeparator(5);
+            setArgumentFloatHex4(6, "speedMinThreshold");
+            setArgumentSeparator(7);
+            setArgumentFloatHex4(8, "uMinThresholdValue");
+        }
+        return commandLengthValueForMode(mode, 24, 0);
+    }
+    else if (commandHeader == COMMAND_GET_END_DETECTION_PARAMETER_DETAIL) {
+        if (fillDeviceArgumentList) {
+            setFunction("get End Detection Detail Parameter", 0, 9);
+            setResultFloatHex4(0, "accelerationTooHighTresholdFactor");
+            setResultSeparator(1);
+            setResultFloatHex4(2, "speedTooLowThresholdFactor");
+            setResultSeparator(3);
+            setResultFloatHex4(4, "uTooHighTresholdFactor");
+            setResultSeparator(5);
+            setResultFloatHex4(6, "speedMinThreshold");
+            setResultSeparator(7);
+            setResultFloatHex4(8, "uMinThresholdValue");
+        }
+        return commandLengthValueForMode(mode, 0, 24);
+    }
+    
+    // -> AGGREGATION_PHASE
+    else if (commandHeader == COMMAND_SET_END_DETECTION_PARAMETER_AGGREGATION) {
+        if (fillDeviceArgumentList) {
+            setFunction("set End Detection Aggregation Parameter", 9, 0);
             setArgumentFloatHex4(0, "absDeltaPositionIntegralFactorThreshold");
             setArgumentSeparator(1);
             setArgumentFloatHex4(2, "maxUIntegralFactorThreshold");
@@ -235,9 +268,9 @@ int devicePidGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fil
         }
         return commandLengthValueForMode(mode, 24, 0);
     }
-    else if (commandHeader == COMMAND_GET_END_DETECTION_PARAMETER) {
+    else if (commandHeader == COMMAND_GET_END_DETECTION_PARAMETER_AGGREGATION) {
         if (fillDeviceArgumentList) {
-            setFunction("get End Detection Parameter", 0, 9);
+            setFunction("get End Detection Aggregation Parameter", 0, 9);
             setResultFloatHex4(0, "absDeltaPositionIntegralFactorThreshold");
             setResultSeparator(1);
             setResultFloatHex4(2, "maxUIntegralFactorThreshold");

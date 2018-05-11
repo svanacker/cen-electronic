@@ -6,7 +6,7 @@
 #include "../../../../common/commons.h"
 
 #include "../../pidMotion.h"
-#include "../motionEndDetectionParameter.h"
+#include "../parameters/motionEndDetectionParameter.h"
 #include "../../instructionType.h"
 
 /**

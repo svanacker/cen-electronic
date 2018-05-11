@@ -961,6 +961,12 @@
     <Filter Include="Header Files\common\ascii">
       <UniqueIdentifier>{359dab5d-dc80-4e3f-afa4-c62c8b0fe2dd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\motion\pid\endDetection\parameters">
+      <UniqueIdentifier>{d13f8b02-df48-4829-b537-d67f34dd7003}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\motion\pid\endDetection\parameters">
+      <UniqueIdentifier>{15e8cc0c-8bce-4bbb-8d36-c0b9fe60c2ea}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -2019,6 +2025,12 @@
     <ClCompile Include="robot\2018\instructionCounter2018.c">
       <Filter>Source Files\robot\2018</Filter>
     </ClCompile>
+    <ClCompile Include="motion\pid\endDetection\parameters\motionEndDetectionParameter.c">
+      <Filter>Source Files\motion\pid\endDetection\parameters</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\pid\endDetection\parameters\motionEndDetectionParameterPersistence.c">
+      <Filter>Source Files\motion\pid\endDetection\parameters</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -2600,9 +2612,6 @@
     <ClInclude Include="motion\parameters\motionParameterType.h">
       <Filter>Header Files\motion\parameters</Filter>
     </ClInclude>
-    <ClInclude Include="motion\pid\endDetection\motionEndDetectionParameter.h">
-      <Filter>Header Files\motion\pid\endDetection</Filter>
-    </ClInclude>
     <ClInclude Include="motion\pid\parameters\pidGlobalParameters.h">
       <Filter>Header Files\motion\pid\parameters</Filter>
     </ClInclude>
@@ -3130,6 +3139,12 @@
     </ClInclude>
     <ClInclude Include="robot\2018\instructionCounter2018.h">
       <Filter>Header Files\robot\2018</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\endDetection\parameters\motionEndDetectionParameter.h">
+      <Filter>Header Files\motion\pid\endDetection\parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\pid\endDetection\parameters\motionEndDetectionParameterPersistence.h">
+      <Filter>Header Files\motion\pid\endDetection\parameters</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

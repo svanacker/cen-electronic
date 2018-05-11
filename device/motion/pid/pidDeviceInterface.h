@@ -60,15 +60,19 @@
 
 // END DETECTION PARAMETER
 
+#define COMMAND_GET_END_DETECTION_PARAMETER_DETAIL  'u'
+
+#define COMMAND_SET_END_DETECTION_PARAMETER_DETAIL  'U'
+
 /**
 * Get the Detection Motion Parameter.
 */
-#define COMMAND_GET_END_DETECTION_PARAMETER         'e'
+#define COMMAND_GET_END_DETECTION_PARAMETER_AGGREGATION         'e'
 
 /**
 * Change end Detection Motion Parameter.
 */
-#define COMMAND_SET_END_DETECTION_PARAMETER         'E'
+#define COMMAND_SET_END_DETECTION_PARAMETER_AGGREGATION         'E'
 
 /**
 * Get the PID device interface.

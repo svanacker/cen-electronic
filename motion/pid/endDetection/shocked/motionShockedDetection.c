@@ -23,7 +23,7 @@
 
 #define SHOCKED_DETECTION_ACCELERATION_WINDOW_COUNT 5
 #define SHOCKED_DETECTION_ACCELERATION_MAX_FOR_ONE_VALUE_THRESHOLD    10000.0f
-#define SHOCKED_DETECTION_ACCELERATION_THRESHOLD                      20000.0f
+#define SHOCKED_DETECTION_ACCELERATION_THRESHOLD                      30000.0f
 
 /**
  * Detects a shock by analyzing a window of time and check if there is a high acceleration (shock on a short time are often responsible of a high acceleration / deceleration)

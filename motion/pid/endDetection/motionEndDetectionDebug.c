@@ -4,7 +4,7 @@
 #include "../../../common/io/outputStream.h"
 #include "../../../common/io/printWriter.h"
 #include "../../../common/io/printTableWriter.h"
-#include "motionEndDetectionParameter.h"
+#include "parameters/motionEndDetectionParameter.h"
 #include "../instructionType.h"
 
 #define MOTION_END_DETECTION_PARAMETERS_KEY_COLUMN_LENGTH        45
@@ -28,33 +28,30 @@ void printMotionEndDetectionParameterHeader(OutputStream* outputStream) {
 	appendTableHeaderSeparatorLine(outputStream);
 }
 
+void printMotionEndDetectionParameterLine(OutputStream* outputStream, char* keyName, float value) {
+	appendStringTableData(outputStream, keyName, MOTION_END_DETECTION_PARAMETERS_KEY_COLUMN_LENGTH);
+	appendHexFloat4TableData(outputStream, value, MOTION_END_DETECTION_PARAMETER_DIGIT, MOTION_END_DETECTION_PARAMETERS_DEC_VALUE_COLUMN_LENGTH);
+	appendDecfTableData(outputStream, value, MOTION_END_DETECTION_PARAMETERS_HEX_VALUE_COLUMN_LENGTH);
+	appendEndOfTableColumn(outputStream, MOTION_END_DETECTION_PARAMETERS_LAST_COLUMN_LENGTH);        
+}
+
 void printMotionEndDetectionParameter(OutputStream* outputStream, MotionEndDetectionParameter* parameter) {
     printMotionEndDetectionParameterHeader(outputStream);
 
-	appendStringTableData(outputStream, "Abs Delta Position Integral Factor Threshold", MOTION_END_DETECTION_PARAMETERS_KEY_COLUMN_LENGTH);
-	appendHexFloat4TableData(outputStream, parameter->absDeltaPositionIntegralFactorThreshold, MOTION_END_DETECTION_PARAMETER_DIGIT, MOTION_END_DETECTION_PARAMETERS_DEC_VALUE_COLUMN_LENGTH);
-	appendDecfTableData(outputStream, parameter->absDeltaPositionIntegralFactorThreshold, MOTION_END_DETECTION_PARAMETERS_HEX_VALUE_COLUMN_LENGTH);
-	appendEndOfTableColumn(outputStream, MOTION_END_DETECTION_PARAMETERS_LAST_COLUMN_LENGTH);    
-
-	appendStringTableData(outputStream, "Max U Integral Factor Threshold", MOTION_END_DETECTION_PARAMETERS_KEY_COLUMN_LENGTH);
-    appendHexFloat4TableData(outputStream, parameter->maxUIntegralFactorThreshold, MOTION_END_DETECTION_PARAMETER_DIGIT, MOTION_END_DETECTION_PARAMETERS_DEC_VALUE_COLUMN_LENGTH);
-	appendDecfTableData(outputStream, parameter->maxUIntegralFactorThreshold, MOTION_END_DETECTION_PARAMETERS_HEX_VALUE_COLUMN_LENGTH);
-	appendEndOfTableColumn(outputStream, MOTION_END_DETECTION_PARAMETERS_LAST_COLUMN_LENGTH);    
-
-    appendStringTableData(outputStream, "Max U Integral Constant Threshold", MOTION_END_DETECTION_PARAMETERS_KEY_COLUMN_LENGTH);
-    appendHexFloat4TableData(outputStream, parameter->maxUIntegralConstantThreshold, MOTION_END_DETECTION_PARAMETER_DIGIT, MOTION_END_DETECTION_PARAMETERS_DEC_VALUE_COLUMN_LENGTH);
-	appendDecfTableData(outputStream, parameter->maxUIntegralConstantThreshold, MOTION_END_DETECTION_PARAMETERS_HEX_VALUE_COLUMN_LENGTH);
-	appendEndOfTableColumn(outputStream, MOTION_END_DETECTION_PARAMETERS_LAST_COLUMN_LENGTH);    
-
-    appendStringTableData(outputStream, "Time Range Analysis", MOTION_END_DETECTION_PARAMETERS_KEY_COLUMN_LENGTH);
-	appendHexFloat4TableData(outputStream, parameter->timeRangeAnalysisInSecond, MOTION_END_DETECTION_PARAMETER_DIGIT, MOTION_END_DETECTION_PARAMETERS_DEC_VALUE_COLUMN_LENGTH);
-	appendDecfTableData(outputStream, parameter->timeRangeAnalysisInSecond, MOTION_END_DETECTION_PARAMETERS_HEX_VALUE_COLUMN_LENGTH);
-	appendEndOfTableColumn(outputStream, MOTION_END_DETECTION_PARAMETERS_LAST_COLUMN_LENGTH);
-
-    appendStringTableData(outputStream, "No Analysis At Startup Range Time", MOTION_END_DETECTION_PARAMETERS_KEY_COLUMN_LENGTH);
-    appendHexFloat4TableData(outputStream, parameter->noAnalysisAtStartupTimeInSecond, MOTION_END_DETECTION_PARAMETER_DIGIT, MOTION_END_DETECTION_PARAMETERS_DEC_VALUE_COLUMN_LENGTH);
-	appendDecfTableData(outputStream, parameter->noAnalysisAtStartupTimeInSecond, MOTION_END_DETECTION_PARAMETERS_HEX_VALUE_COLUMN_LENGTH);
-	appendEndOfTableColumn(outputStream, MOTION_END_DETECTION_PARAMETERS_LAST_COLUMN_LENGTH); 
+    // DETAIL PHASE
+    printMotionEndDetectionParameterLine(outputStream, "Acceleration Too High Threshold Factor", parameter->accelerationTooHighTresholdFactor);
+    printMotionEndDetectionParameterLine(outputStream, "Speed Too low Threshold Factor", parameter->speedTooLowThresholdFactor);
+    printMotionEndDetectionParameterLine(outputStream, "U Too High Threshold Factor", parameter->uTooHighTresholdFactor);
+    printMotionEndDetectionParameterLine(outputStream, "Speed min Threshold Factor", parameter->speedMinThreshold);
+    printMotionEndDetectionParameterLine(outputStream, "U Min Threshold Value", parameter->uMinThresholdValue);
+    appendTableHeaderSeparatorLine(outputStream);
+    
+    // AGGREGATION PHASE
+    printMotionEndDetectionParameterLine(outputStream, "Abs Delta Position Integral Factor Threshold", parameter->absDeltaPositionIntegralFactorThreshold);
+    printMotionEndDetectionParameterLine(outputStream, "Max U Integral Factor Threshold", parameter->maxUIntegralFactorThreshold);
+    printMotionEndDetectionParameterLine(outputStream, "Max U Integral Constant Threshold", parameter->maxUIntegralConstantThreshold);
+    printMotionEndDetectionParameterLine(outputStream, "Time Range Analysis", parameter->timeRangeAnalysisInSecond);
+    printMotionEndDetectionParameterLine(outputStream, "No Analysis At Startup Range Time", parameter->noAnalysisAtStartupTimeInSecond);
 
     appendTableHeaderSeparatorLine(outputStream);
 }
