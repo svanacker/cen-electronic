@@ -18,15 +18,17 @@
 #include "../../common/pwm/pwmPic.h"
 #include "../../common/pwm/servo/servoPwm.h"
 #include "../../common/pwm/servo/servoPwmDebug.h"
+#include "../../common/pwm/servo/servoList.h"
 
 #include "../../device/device.h"
 #include "../../device/deviceConstants.h"
 
-/** To know the list of servo that we would like to activate */
-static unsigned int servoEnabledMask;
+// forward declaration
+ServoList* getServoDeviceServoList(void);
+
 
 void deviceServoInit(void) {
-    initPwmForServo(servoEnabledMask, PWM_SERVO_MIDDLE_POSITION);
+    // initPwmForServo(servoEnabledMask, PWM_SERVO_MIDDLE_POSITION);
 }
 
 void deviceServoShutDown(void) {
@@ -47,13 +49,15 @@ void deviceServoHandleRawData(char commandHeader, InputStream* inputStream, Outp
         if (servoIndex > 0 && servoIndex <= PWM_COUNT) {
             pwmServo(servoIndex, servoSpeed, servoValue);
         } else {
-            pwmServoAll(servoSpeed, servoValue);
+            ServoList* servoList = getServoDeviceServoList();
+            pwmServoAll(servoList, servoSpeed, servoValue);
         }
         ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_WRITE);
     }
     else if (commandHeader == SERVO_COMMAND_WRITE_COMPACT) {
         int servoValue = readHex4(inputStream);
-        pwmServoAll(PWM_SERVO_SPEED_MAX, servoValue);
+        ServoList* servoList = getServoDeviceServoList();
+        pwmServoAll(servoList, PWM_SERVO_SPEED_MAX, servoValue);
         ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_WRITE_COMPACT);
     }
     // READ COMMANDS
@@ -95,11 +99,13 @@ void deviceServoHandleRawData(char commandHeader, InputStream* inputStream, Outp
     }
     // DEBUG COMMANDS
     else if (commandHeader == SERVO_COMMAND_TEST) {
-        testAllPwmServos();
+        ServoList* servoList = getServoDeviceServoList();
+        testAllPwmServos(servoList);
         ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_TEST);
     }
     else if (commandHeader == SERVO_COMMAND_DEBUG) {
-        printServoList(getInfoOutputStreamLogger());
+        ServoList* servoList = getServoDeviceServoList();
+        printServoList(servoList, getInfoOutputStreamLogger());
         ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_DEBUG);
     }
 }
@@ -111,7 +117,14 @@ static DeviceDescriptor descriptor = {
     .deviceHandleRawData = &deviceServoHandleRawData,
 };
 
-DeviceDescriptor* getServoDeviceDescriptor(unsigned int servoEnabledMaskParam) {
-    servoEnabledMask = servoEnabledMaskParam;
+/**
+ * @private
+ */
+ServoList* getServoDeviceServoList(void) {
+    return (ServoList*) descriptor.object;
+}
+
+DeviceDescriptor* getServoDeviceDescriptor(ServoList* servoList) {
+    descriptor.object = (int*) servoList;
     return &descriptor;
 }

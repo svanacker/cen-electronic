@@ -13,6 +13,15 @@
 
 // PRIVATE
 
+/**
+* do a pwm on a specific servo
+* @param targetPosition duration of pwm to 1 typical value between
+* PWM_SERVO_LEFT_POSITION and PWM_SERVO_RIGHT_POSITION 
+*/
+void servoPwm32(Servo* servo, unsigned int speed, unsigned int targetPosition);
+
+
+
 // forward declaration
 void __internalPwmServo(int pwmIndex, int dutyms);
 
@@ -22,7 +31,7 @@ void __internalPwmServo(int pwmIndex, int dutyms);
  * @param microSeconds value in microSeconds
  * @return the value which must be applied in pwm.
  */
-int _convPwmServo(int microSeconds) {
+int _convPwmServo(unsigned int microSeconds) {
     long duty;
 
     duty = PWM_TIMER_FOR_SERVO * (long) microSeconds;
@@ -46,7 +55,8 @@ int _confServoToPwm(int value) {
 
 // INIT
 
-void __internalInitPwmServo(int servoIndex) {
+void servoInit32(Servo* servo) {
+    unsigned int servoIndex = servo->servoIndex;
     if (servoIndex == 1) {
         OpenOC1(OC_ON | OC_TIMER_MODE16 | OC_TIMER2_SRC | OC_PWM_FAULT_PIN_DISABLE, 0, 0);
     }
@@ -85,33 +95,44 @@ void __internalPwmForServoHardware(unsigned int servoEnabledMask,
     }
 }
 
-void __internalPwmServo(int pwmIndex, int dutyms) {
-
-    switch (pwmIndex) {
+/**
+ * Implementation of the servoPwmFunction
+ * @param pwmIndex
+ * @param dutyms
+ */
+void servoPwm32(Servo* servo, unsigned speed, unsigned targetPosition) {
+    unsigned int servoIndex = servo->servoIndex;
+    switch (servoIndex) {
         case 1:
         {
-            OC1RS = _convPwmServo(dutyms);
+            OC1RS = _convPwmServo(targetPosition);
             break;
         }
         case 2:
         {
-            OC2RS = _convPwmServo(dutyms);
+            OC2RS = _convPwmServo(targetPosition);
             break;
         }
         case 3:
         {
-            OC3RS = _convPwmServo(dutyms);
+            OC3RS = _convPwmServo(targetPosition);
             break;
         }
         case 4:
         {
-            OC4RS = _convPwmServo(dutyms);
+            OC4RS = _convPwmServo(targetPosition);
             break;
         }
         case 5:
         {
-            OC5RS = _convPwmServo(dutyms);
+            OC5RS = _convPwmServo(targetPosition);
             break;
         }
     }
 }
+
+// INIT
+void initServoPwm32(Servo* servo) {
+    initServo(servo, &servoInit32, &servoPwm32);
+}
+

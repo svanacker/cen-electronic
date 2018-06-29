@@ -6,30 +6,30 @@
 
 float getAccelerationFactor(RobotConfig* robotConfig) {
     if (isConfigSet(robotConfig, CONFIG_SPEED_LOW_MASK)) {
-        return MOTION_ACCELERATION_FACTOR_NORMAL;
+        return MOTION_ACCELERATION_FACTOR_HIGH;
     }
     if (isConfigSet(robotConfig, CONFIG_SPEED_VERY_LOW_MASK)) {
-        return MOTION_ACCELERATION_FACTOR_LOW;
+        return MOTION_ACCELERATION_FACTOR_NORMAL;
     }
     if (isConfigSet(robotConfig, CONFIG_SPEED_ULTRA_LOW_MASK)) {
-        return MOTION_ACCELERATION_FACTOR_MIN;
+        return MOTION_ACCELERATION_FACTOR_LOW;
     }
     // default is MOTION_SPEED_FACTOR_HIGH
-    return MOTION_ACCELERATION_FACTOR_HIGH;
+    return MOTION_ACCELERATION_FACTOR_MAX;
 }
 
 float getSpeedFactor(RobotConfig* robotConfig) {
     if (isConfigSet(robotConfig, CONFIG_SPEED_LOW_MASK)) {
-        return MOTION_SPEED_FACTOR_NORMAL;
+        return MOTION_SPEED_FACTOR_HIGH;
     }
     if (isConfigSet(robotConfig, CONFIG_SPEED_VERY_LOW_MASK)) {
-        return MOTION_SPEED_FACTOR_LOW;
+        return MOTION_SPEED_FACTOR_NORMAL;
     }
     if (isConfigSet(robotConfig, CONFIG_SPEED_ULTRA_LOW_MASK)) {
-        return MOTION_SPEED_FACTOR_MIN;
+        return MOTION_SPEED_FACTOR_LOW;
     }
     // default is MOTION_SPEED_FACTOR_HIGH
-    return MOTION_SPEED_FACTOR_HIGH;
+    return MOTION_SPEED_FACTOR_MAX;
 }
 
 bool isSonarActivated(RobotConfig* robotConfig) {

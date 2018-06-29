@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 #include "servoPwm.h"
+#include "servoList.h"
 #include "../pwmPic.h"
 
 #include "../../../common/delay/cenDelay.h"
@@ -17,38 +18,29 @@
 #include "../../../common/timer/cenTimer.h"
 #include "../../../common/timer/timerConstants.h"
 #include "../../../common/timer/timerList.h"
+#include "servoList.h"
 
 #define SERVO_SPEED_TIMER_FACTOR 3
 
-/**
- * The servos.
- */
-static ServoList servoList;
-
-/**
- * Private.
- */
-Servo* getServo(int index) {
-    return &(servoList.servos[index]);
-}
-
-/**
- * Only for debug.
- */
-ServoList* _getServoList() {
-    return &servoList;
+// INIT
+void initServo(Servo* servo, 
+               ServoInitFunction* servoInitFunction,
+               ServoPwmFunction* servoPwmFunction) {
+    servo->servoInit = servoInitFunction;
+    servo->servoPwm = servoPwmFunction;
 }
 
 /**
  * The interrupt timer.
  */
 void interruptServoTimerCallbackFunc(Timer* timer) {
-    if (!servoList.useTimer) {
+    ServoList* servoList = (ServoList*) timer->object;
+    if (!servoList->useTimer) {
         return;
     }
     int i;
     for (i = 0; i < PWM_COUNT; i++) {
-        Servo* servo = getServo(i);
+        Servo* servo = getServo(servoList, i);
         if (servo->currentPosition == servo->targetPosition) {
             continue;
         }
@@ -64,21 +56,21 @@ void interruptServoTimerCallbackFunc(Timer* timer) {
                 servo->currentPosition = servo->targetPosition;
             }
         }
-        __internalPwmServo(i + 1, servo->currentPosition);
+        servo->servoPwm(servo, servo->currentPosition);
     }
 }
 
 // PUBLIC INTERFACCE
 
-void initPwmForServo(unsigned int servoToActivateMask, int posInit) {
-    if (servoList.initialized) {
+void initPwmForServo(ServoList* servoList, unsigned int servoToActivateMask, int posInit) {
+    if (servoList->initialized) {
         return;
     }
     __internalPwmForServoHardware(servoToActivateMask, posInit);
     // Init servo structure
     int i;
     for (i = 0; i < PWM_COUNT; i++) {
-        Servo* servo = getServo(i);
+        Servo* servo = getServo(servoList, i);
         servo->enabled = servoToActivateMask & (1 << i);
         servo->speed = PWM_SERVO_SPEED_MAX;
         servo->currentPosition = posInit;
@@ -93,8 +85,8 @@ void initPwmForServo(unsigned int servoToActivateMask, int posInit) {
                             &interruptServoTimerCallbackFunc,
                             "SERVO", 
 							NULL);
-    servoList.initialized = true;
-    servoList.useTimer = true;
+    servoList->initialized = true;
+    servoList->useTimer = true;
 }
 
 /**
@@ -103,9 +95,9 @@ void initPwmForServo(unsigned int servoToActivateMask, int posInit) {
  * @param errorString the error string if there is a problem
  * @return true if servoIndex is ok, false else
  */
-bool checkServoIndex(int servoIndex, char* errorString) {
-    if (servoIndex == 0 || servoIndex > PWM_COUNT) {
-        writeError(ILLEGAL_ARGUMENT_EXCEPTION);
+bool checkServoIndex(ServoList* servoList, int servoIndex, char* errorString) {
+    if (servoIndex == 0 || servoIndex >= servoList->maxSize) {
+        writeError(SERVO_LIST_OUT_OF_BOUNDS);
         appendString(getErrorOutputStreamLogger(), errorString);
         return false;
     }
@@ -114,28 +106,22 @@ bool checkServoIndex(int servoIndex, char* errorString) {
 
 // PUBLIC WRITE FUNCTIONS
 
-void pwmServo(int servoIndex, unsigned int speed, int targetPosition) {
-    if (!checkServoIndex(servoIndex, "=> pwmServo")) {
+void pwmServo(ServoList* servoList, int servoIndex, unsigned int speed, int targetPosition) {
+    if (!checkServoIndex(servoList, servoIndex, "=> pwmServo")) {
         return;
     }
-    Servo* servo = getServo(servoIndex - 1);
+    Servo* servo = getServo(servoList, servoIndex - 1);
     if (!servo->enabled) {
         return;
     }
     servo->speed = speed;
     servo->targetPosition = targetPosition;
     // By default, we update the value immediately, if we want some speed, we need a timer !
-    if (!servoList.useTimer) {
+    if (!servoList->useTimer) {
         __internalPwmServo(servoIndex, (targetPosition));
     }
 }
 
-void pwmServoAll(unsigned int speed, int dutyms) {
-    int i;
-    for (i = 1; i <= PWM_COUNT; i++) {
-        pwmServo(i, speed, dutyms);
-    }
-}
 
 // READ FUNCTIONS
 

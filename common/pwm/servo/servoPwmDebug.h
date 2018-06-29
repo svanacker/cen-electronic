@@ -2,6 +2,7 @@
 #define SERVO_PWM_DEBUG_H
 
 #include "servoPwm.h"
+#include "servoList.h"
 
 #include "../../../common/io/outputStream.h"
 
@@ -17,11 +18,11 @@ void printServo(OutputStream* outputStream, Servo* servo, int index);
 * Print the Servo List loaded in the system.
 * @param outputStream the stream in which we write information.
 */
-void printServoList(OutputStream* outputStream);
+void printServoList(ServoList* servoList, OutputStream* outputStream);
 
 /**
  * Debug function to be sure that Pwm Servos are ok !
  */
-void testAllPwmServos();
+void testAllPwmServos(ServoList* servoList);
 
 #endif

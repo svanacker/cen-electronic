@@ -1,5 +1,6 @@
 #include "servoPwmDebug.h"
 #include "servoPwm.h"
+#include "servoList.h"
 
 #include "../../../common/delay/cenDelay.h"
 
@@ -71,13 +72,12 @@ void printServo(OutputStream* outputStream, Servo* servo, int index) {
 }
 
 
-void printServoList(OutputStream* outputStream) {
+void printServoList(ServoList* servoList, OutputStream* outputStream) {
 	println(outputStream);
 	printServoListHeader(outputStream);
-    ServoList* servoList = _getServoList();
     int i;
     for (i = 0; i < PWM_COUNT; i++) {
-        Servo* servo = &(servoList->servos[i]);
+        Servo* servo = getServo(servoList, i + 1);
 
         printServo(outputStream, servo, i);
     }
@@ -86,7 +86,7 @@ void printServoList(OutputStream* outputStream) {
 
 // TEST FUNCTIONS
 
-void testAllPwmServos() {
+void testAllPwmServos(ServoList* servoList) {
     OutputStream* infoOutputStream = getInfoOutputStreamLogger();
     int servoIndex;
 

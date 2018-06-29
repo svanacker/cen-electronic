@@ -131,6 +131,10 @@
                      projectFiles="true">
         <itemPath>../../../common/pwm/servo/servoPwm.h</itemPath>
         <itemPath>../../../common/pwm/servo/servoPwmDebug.h</itemPath>
+        <itemPath>../../../common/pwm/servo/servoList.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f22" displayName="common.pwm.servo.32" projectFiles="true">
+        <itemPath>../../../common/pwm/servo/32/servoPwm32.h</itemPath>
       </logicalFolder>
       <logicalFolder name="common.sensor.temperature"
                      displayName="common.sensor.temperature"
@@ -689,11 +693,11 @@
                      projectFiles="true">
         <itemPath>../../../common/pwm/servo/servoPwm.c</itemPath>
         <itemPath>../../../common/pwm/servo/servoPwmDebug.c</itemPath>
+        <itemPath>../../../common/pwm/servo/servoList.c</itemPath>
       </logicalFolder>
       <logicalFolder name="common.pwm.servo.32"
                      displayName="common.pwm.servo.32"
                      projectFiles="true">
-        <itemPath>../../../common/pwm/servo/32/servoPwm32.c</itemPath>
       </logicalFolder>
       <logicalFolder name="common.sensor.temperature"
                      displayName="common.sensor.temperature"
@@ -1101,6 +1105,7 @@
         <itemPath>../../../robot/strategy/factor/opponentRobotGainFactor.c</itemPath>
         <itemPath>../../../robot/strategy/factor/timeGainFactor.c</itemPath>
       </logicalFolder>
+      <itemPath>../../../common/pwm/servo/32/servoPwm32.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

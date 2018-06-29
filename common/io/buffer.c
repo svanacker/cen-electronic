@@ -158,16 +158,17 @@ bool isBufferEmpty(const Buffer* buffer) {
 
 bool isBufferEqualsToString(const Buffer* buffer, char* s) {
     int i = 0;
-    while (*s != '\0') {
+    char c  = *s;
+    while (c != '\0') {
         if (getBufferElementsCount(buffer) <= i) {
             return false;
         }
-        char c = bufferGetCharAtIndex(buffer, i);
-        char sChar = *s;
-        if (c != sChar) {
+        char cBuffer = bufferGetCharAtIndex(buffer, i);
+        if (cBuffer != c) {
             return false;
         }
-        *s++;
+        s++;
+        c = *s;
         i++;
     }
     if (getBufferElementsCount(buffer) != i) {

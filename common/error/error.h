@@ -64,6 +64,10 @@ void clearLastError();
 #define SERIAL_LINK_LIST_TOO_MUCH_LINKS                                   0x0191
 #define SERIAL_LINK_LIST_OUT_OF_BOUNDS                                    0x0192
 
+// SERVO
+#define SERVO_LIST_NOT_INITIALIZED                                        0x01A0
+#define SERVO_LIST_TOO_MUCH_LOG_HANDLERS                                  0x01A1
+#define SERVO_LIST_OUT_OF_BOUNDS                                          0x01A2
 
 // TIMER
 #define TIMERS_LIST_NOT_INITIALIZED                                       0x0200
