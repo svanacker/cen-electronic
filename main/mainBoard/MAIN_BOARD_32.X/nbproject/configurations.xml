@@ -1212,7 +1212,7 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>ICD4Tool</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>2.05</languageToolchainVersion>
+        <languageToolchainVersion>2.10</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
@@ -1251,7 +1251,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="..;..\..\..\..\..\..\..\devtools\Microchip\MPLAB C32 Suite\pic32-libs\include\peripheral;..\..\..\common;..\..\..\common\2d;..\..\..\common\adc;..\..\..\common\clock;..\..\..\common\cmd;..\..\..\common\delay;..\..\..\common\delay\32;..\..\..\common\eeprom;..\..\..\common\error;..\..\..\common\i2c;..\..\..\common\i2c\32;..\..\..\common\i2c\master;..\..\..\common\io;..\..\..\common\log;..\..\..\common\math;..\..\..\common\pwm;..\..\..\common\pwm\motor;..\..\..\common\pwm\servo;..\..\..\common\sensor\temperature;..\..\..\common\serial;..\..\..\common\serial\32;..\..\..\common\setup\32;..\..\..\common\string;..\..\..\common\system;..\..\..\common\timer;..\..\..\device;..\..\..\device\adc;..\..\..\device\airconditioning;..\..\..\device\beacon;..\..\..\device\clock;..\..\..\device\dispatcher;..\..\..\device\eeprom;..\..\..\device\i2c;..\..\..\device\i2c\master;..\..\..\device\lcd;..\..\..\device\log;..\..\..\device\motion\extended;..\..\..\device\motion\pid;..\..\..\device\motion\position;..\..\..\device\motion\simple;..\..\..\device\motor;..\..\..\device\sensor\temperature;..\..\..\device\serial;..\..\..\device\servo;..\..\..\device\sonar;..\..\..\device\strategy;..\..\..\device\system;..\..\..\device\test;..\..\..\device\timer;..\..\..\drivers;..\..\..\drivers\beacon;..\..\..\drivers\clock;..\..\..\drivers\dispatcher;..\..\..\drivers\eeprom;..\..\..\drivers\io;..\..\..\drivers\lcd;..\..\..\drivers\motion;..\..\..\drivers\motor;..\..\..\drivers\sensor\temperature;..\..\..\drivers\sharp;..\..\..\drivers\sonar;..\..\..\drivers\strategy;..\..\..\drivers\system;..\..\..\drivers\test;..\..\..\motion\extended;..\..\..\motion\simple;..\..\..\navigation;..\..\..\robot;..\..\..\robot\2018;..\..\..\robot\config;..\..\..\robot\config\32;..\..\..\robot\kinematics;..\..\..\robot\match;..\..\..\robot\match\32;..\..\..\robot\opponent;..\..\..\robot\strategy;..\..\..\robot\strategy\factor;..\..\airconditioning;..\..\beaconReceiver;..\..\meca1;..\..\meca2;..\..\motorboard;..\..\strategy;D:\DEV\C\MPLAB_C32\pic32-libs\include\peripheral;.;C:\Program Files (x86)\Microchip\xc32\v2.05\pic32mx\include"/>
+                  value="..;..\..\..\..\..\..\..\devtools\Microchip\MPLAB C32 Suite\pic32-libs\include\peripheral;..\..\..\common;..\..\..\common\2d;..\..\..\common\adc;..\..\..\common\clock;..\..\..\common\cmd;..\..\..\common\delay;..\..\..\common\delay\32;..\..\..\common\eeprom;..\..\..\common\error;..\..\..\common\i2c;..\..\..\common\i2c\32;..\..\..\common\i2c\master;..\..\..\common\io;..\..\..\common\log;..\..\..\common\math;..\..\..\common\pwm;..\..\..\common\pwm\motor;..\..\..\common\pwm\servo;..\..\..\common\sensor\temperature;..\..\..\common\serial;..\..\..\common\serial\32;..\..\..\common\setup\32;..\..\..\common\string;..\..\..\common\system;..\..\..\common\timer;..\..\..\device;..\..\..\device\adc;..\..\..\device\airconditioning;..\..\..\device\beacon;..\..\..\device\clock;..\..\..\device\dispatcher;..\..\..\device\eeprom;..\..\..\device\i2c;..\..\..\device\i2c\master;..\..\..\device\lcd;..\..\..\device\log;..\..\..\device\motion\extended;..\..\..\device\motion\pid;..\..\..\device\motion\position;..\..\..\device\motion\simple;..\..\..\device\motor;..\..\..\device\sensor\temperature;..\..\..\device\serial;..\..\..\device\servo;..\..\..\device\sonar;..\..\..\device\strategy;..\..\..\device\system;..\..\..\device\test;..\..\..\device\timer;..\..\..\drivers;..\..\..\drivers\beacon;..\..\..\drivers\clock;..\..\..\drivers\dispatcher;..\..\..\drivers\eeprom;..\..\..\drivers\io;..\..\..\drivers\lcd;..\..\..\drivers\motion;..\..\..\drivers\motor;..\..\..\drivers\sensor\temperature;..\..\..\drivers\sharp;..\..\..\drivers\sonar;..\..\..\drivers\strategy;..\..\..\drivers\system;..\..\..\drivers\test;..\..\..\motion\extended;..\..\..\motion\simple;..\..\..\navigation;..\..\..\robot;..\..\..\robot\2018;..\..\..\robot\config;..\..\..\robot\config\32;..\..\..\robot\kinematics;..\..\..\robot\match;..\..\..\robot\match\32;..\..\..\robot\opponent;..\..\..\robot\strategy;..\..\..\robot\strategy\factor;..\..\airconditioning;..\..\beaconReceiver;..\..\meca1;..\..\meca2;..\..\motorboard;..\..\strategy;D:\DEV\C\MPLAB_C32\pic32-libs\include\peripheral;.;C:\Program Files (x86)\Microchip\xc32\v2.10\pic32mx\include"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="false"/>
@@ -1295,6 +1295,7 @@
       </C32-AS>
       <C32-LD>
         <property key="additional-options-use-response-files" value="false"/>
+        <property key="additional-options-write-sla" value="false"/>
         <property key="allocate-dinit" value="false"/>
         <property key="code-dinit" value="false"/>
         <property key="ebase-addr" value=""/>
@@ -1313,7 +1314,7 @@
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-cross-reference-file" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
-        <property key="heap-size" value=""/>
+        <property key="heap-size" value="2048"/>
         <property key="input-libraries" value=""/>
         <property key="kseg-length" value=""/>
         <property key="kseg-origin" value=""/>
@@ -1328,7 +1329,7 @@
         <property key="report-memory-usage" value="false"/>
         <property key="serial-length" value=""/>
         <property key="serial-origin" value=""/>
-        <property key="stack-size" value=""/>
+        <property key="stack-size" value="2048"/>
         <property key="symbol-stripping" value=""/>
         <property key="trace-symbols" value=""/>
         <property key="warn-section-align" value="false"/>
@@ -1451,6 +1452,89 @@
         <property key="programoptions.uselvpprogramming" value="false"/>
         <property key="voltagevalue" value="3.25"/>
       </ICD3PlatformTool>
+      <ICD4Tool>
+        <property key="ADC 1" value="true"/>
+        <property key="AutoSelectMemRanges" value="auto"/>
+        <property key="CAN1" value="true"/>
+        <property key="CAN2" value="true"/>
+        <property key="CHANGE NOTICE" value="true"/>
+        <property key="COMPARATOR" value="true"/>
+        <property key="DMA" value="true"/>
+        <property key="ETHERNET CONTROLLER" value="true"/>
+        <property key="Freeze All Other Peripherals" value="true"/>
+        <property key="I2C1" value="true"/>
+        <property key="I2C3" value="true"/>
+        <property key="I2C4" value="true"/>
+        <property key="I2C5" value="true"/>
+        <property key="INPUT CAPTURE 1" value="true"/>
+        <property key="INPUT CAPTURE 2" value="true"/>
+        <property key="INPUT CAPTURE 3" value="true"/>
+        <property key="INPUT CAPTURE 4" value="true"/>
+        <property key="INPUT CAPTURE 5" value="true"/>
+        <property key="INTERRUPT CONTROL" value="true"/>
+        <property key="OUTPUT COMPARE 1" value="true"/>
+        <property key="OUTPUT COMPARE 2" value="true"/>
+        <property key="OUTPUT COMPARE 3" value="true"/>
+        <property key="OUTPUT COMPARE 4" value="true"/>
+        <property key="OUTPUT COMPARE 5" value="true"/>
+        <property key="PARALLEL MASTER/SLAVE PORT" value="true"/>
+        <property key="REAL TIME CLOCK" value="true"/>
+        <property key="SPI 2" value="true"/>
+        <property key="SPI 3" value="true"/>
+        <property key="SPI 4" value="true"/>
+        <property key="SecureSegment.SegmentProgramming" value="FullChipProgramming"/>
+        <property key="TIMER1" value="true"/>
+        <property key="TIMER2" value="true"/>
+        <property key="TIMER3" value="true"/>
+        <property key="TIMER4" value="true"/>
+        <property key="TIMER5" value="true"/>
+        <property key="ToolFirmwareFilePath"
+                  value="Press to browse for a specific firmware version"/>
+        <property key="ToolFirmwareOption.UpdateOptions"
+                  value="ToolFirmwareOption.UseLatest"/>
+        <property key="UART1" value="true"/>
+        <property key="UART2" value="true"/>
+        <property key="UART3" value="true"/>
+        <property key="UART4" value="true"/>
+        <property key="UART5" value="true"/>
+        <property key="UART6" value="true"/>
+        <property key="USB" value="true"/>
+        <property key="debugoptions.useswbreakpoints" value="false"/>
+        <property key="hwtoolclock.frcindebug" value="false"/>
+        <property key="memories.aux" value="false"/>
+        <property key="memories.bootflash" value="true"/>
+        <property key="memories.configurationmemory" value="true"/>
+        <property key="memories.configurationmemory2" value="true"/>
+        <property key="memories.dataflash" value="true"/>
+        <property key="memories.eeprom" value="true"/>
+        <property key="memories.exclude.configurationmemory" value="true"/>
+        <property key="memories.flashdata" value="true"/>
+        <property key="memories.id" value="true"/>
+        <property key="memories.instruction.ram.ranges"
+                  value="${memories.instruction.ram.ranges}"/>
+        <property key="memories.programmemory" value="true"/>
+        <property key="memories.programmemory.ranges" value="1d000000-1d07ffff"/>
+        <property key="poweroptions.powerenable" value="false"/>
+        <property key="programoptions.donoteraseauxmem" value="false"/>
+        <property key="programoptions.eraseb4program" value="true"/>
+        <property key="programoptions.ledbrightness" value="5"/>
+        <property key="programoptions.pgcconfig" value="pull down"/>
+        <property key="programoptions.pgcresistor.value" value="4.7"/>
+        <property key="programoptions.pgdconfig" value="pull down"/>
+        <property key="programoptions.pgdresistor.value" value="4.7"/>
+        <property key="programoptions.pgmentry.voltage" value="low"/>
+        <property key="programoptions.pgmspeed" value="Med"/>
+        <property key="programoptions.preservedataflash" value="false"/>
+        <property key="programoptions.preserveeeprom" value="false"/>
+        <property key="programoptions.preserveeeprom.ranges" value=""/>
+        <property key="programoptions.preserveprogram.ranges" value=""/>
+        <property key="programoptions.preserveprogramrange" value="false"/>
+        <property key="programoptions.preserveuserid" value="false"/>
+        <property key="programoptions.programcalmem" value="false"/>
+        <property key="programoptions.programuserotp" value="false"/>
+        <property key="programoptions.testmodeentrymethod" value="VDDFirst"/>
+        <property key="voltagevalue" value="3.25"/>
+      </ICD4Tool>
     </conf>
   </confs>
 </configurationDescriptor>
