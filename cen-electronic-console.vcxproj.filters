@@ -967,6 +967,12 @@
     <Filter Include="Source Files\motion\pid\endDetection\parameters">
       <UniqueIdentifier>{15e8cc0c-8bce-4bbb-8d36-c0b9fe60c2ea}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\robot\2019">
+      <UniqueIdentifier>{ac99dc4d-4786-4d4b-9e0b-d58285479a4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\robot\2019">
+      <UniqueIdentifier>{8e9eeb68-f51e-4601-b099-cf4ef7f6546b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -1971,9 +1977,6 @@
     <ClCompile Include="device\gameboard\gameboardDeviceInterface.c">
       <Filter>Source Files\device\gameboard</Filter>
     </ClCompile>
-    <ClCompile Include="main\mainBoard\mainBoard2018.c">
-      <Filter>Source Files\main\mainBoard</Filter>
-    </ClCompile>
     <ClCompile Include="main\meca1\mechanicalMainBoard1Pc.c">
       <Filter>Source Files\main\meca1</Filter>
     </ClCompile>
@@ -2030,6 +2033,15 @@
     </ClCompile>
     <ClCompile Include="motion\pid\endDetection\parameters\motionEndDetectionParameterPersistence.c">
       <Filter>Source Files\motion\pid\endDetection\parameters</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2019\gameBoardElement2019.c">
+      <Filter>Source Files\robot\2019</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2018\mainBoard2018.c">
+      <Filter>Source Files\robot\2018</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2019\mainBoard2019.c">
+      <Filter>Source Files\robot\2019</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -3083,9 +3095,6 @@
     <ClInclude Include="device\gameboard\gameboardDeviceInterface.h">
       <Filter>Header Files\device\gameboard</Filter>
     </ClInclude>
-    <ClInclude Include="main\mainBoard\mainBoard2018.h">
-      <Filter>Header Files\main\mainBoard</Filter>
-    </ClInclude>
     <ClInclude Include="main\meca1\mechanicalMainBoard1Common.h">
       <Filter>Header Files\main\meca1</Filter>
     </ClInclude>
@@ -3145,6 +3154,21 @@
     </ClInclude>
     <ClInclude Include="motion\pid\endDetection\parameters\motionEndDetectionParameterPersistence.h">
       <Filter>Header Files\motion\pid\endDetection\parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2018\teamColor2018.h">
+      <Filter>Header Files\robot\2018</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\score2019.h">
+      <Filter>Header Files\robot\2019</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\gameBoardElement2019.h">
+      <Filter>Header Files\robot\2019</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2018\mainBoard2018.h">
+      <Filter>Header Files\robot\2018</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\mainBoard2019.h">
+      <Filter>Header Files\robot\2019</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

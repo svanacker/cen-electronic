@@ -14,6 +14,7 @@
 #include "../../client/robot/2018/launcherClient2018.h"
 #include "../../robot/2018/score2018.h"
 #include "../../robot/2018/launcherDeviceInterface2018.h"
+#include "../../robot/2018/teamColor2018.h"
 
 #include "../../drivers/colorSensor/colorSensor.h"
 #include "../../drivers/colorSensor/colorSensorDebug.h"
@@ -118,7 +119,7 @@ void loadUnicolorDistributorSimple(enum TeamColor teamColor) {
     appendString(getDebugOutputStreamLogger(), "loadUnicolorDistributorSimple");
     unsigned int i;
     unsigned direction = 0;
-    if (teamColor == TEAM_COLOR_GREEN) {
+    if (teamColor == TEAM_COLOR_2018_GREEN) {
         direction = LAUNCHER_RIGHT_INDEX;
     }
     else {
@@ -144,7 +145,7 @@ void loadUnicolorDistributorWithColorCheck(Distributor* distributor) {
     
     ColorSensor* colorSensor = distributor->colorSensor;
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
-    if (distributor->teamColor == TEAM_COLOR_GREEN) {
+    if (distributor->teamColor == TEAM_COLOR_2018_GREEN) {
         // Load -> color device
         for (i = 0; i < 8; i++) {
             println(debugOutputStream);
@@ -186,11 +187,11 @@ void loadMixedDistributor(enum TeamColor teamColor) {
     // Load -> color device
     for (i = 0; i < 4; i++) {
 
-        if (teamColor == TEAM_COLOR_GREEN) {
+        if (teamColor == TEAM_COLOR_2018_GREEN) {
             // Rotate the distributor 
             clientDistributor2018CleanNext(LAUNCHER_LEFT_INDEX);
         }
-        else if (teamColor == TEAM_COLOR_ORANGE) {
+        else if (teamColor == TEAM_COLOR_2018_ORANGE) {
             // Rotate the distributor 
             clientDistributor2018CleanNext(LAUNCHER_RIGHT_INDEX);
         }
@@ -201,14 +202,14 @@ void ejectMixedDistributor(enum TeamColor teamColor) {
     appendString(getDebugOutputStreamLogger(), "ejectMixedDistributor");
     unsigned int i;
 
-    if (teamColor == TEAM_COLOR_GREEN) {
+    if (teamColor == TEAM_COLOR_2018_GREEN) {
         for (i = 0; i < 8; i++) {
             clientDistributor2018EjectDirty();
             // Rotate the distributor in other direction
             clientDistributor2018CleanNext(LAUNCHER_LEFT_INDEX);
         }
     }
-    else if (teamColor == TEAM_COLOR_ORANGE) {
+    else if (teamColor == TEAM_COLOR_2018_ORANGE) {
         for (i = 0; i < 8; i++) {
             clientDistributor2018EjectDirty();
             // Rotate the distributor in other direction

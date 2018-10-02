@@ -45,6 +45,7 @@
 #include "../../robot/strategy/gameTargetActionList.h"
 
 #include "../../robot/2018/launcherDeviceInterface2018.h"
+#include "../../robot/2018/teamColor2018.h"
 
 // ------------------------------------------------------- NAVIGATIONS ----------------------------------------------------------------
 
@@ -151,10 +152,10 @@ void initColorAndStartPosition2018(GameStrategyContext* gameStrategyContext) {
     unsigned int configValue = robotConfig->robotConfigReadInt(robotConfig);
 
     if (configValue & CONFIG_COLOR_GREEN_MASK) {
-        gameStrategyContext->color = TEAM_COLOR_GREEN;
+        gameStrategyContext->color = TEAM_COLOR_2018_GREEN;
     }
     else {
-        gameStrategyContext->color = TEAM_COLOR_ORANGE;
+        gameStrategyContext->color = TEAM_COLOR_2018_ORANGE;
     }
     float angleDeciDegree = ANGLE_DECI_DEG_270;
     gameStrategyContext->robotPosition->x = START_AREA_X;
@@ -171,7 +172,7 @@ void initColorAndStartPosition2018(GameStrategyContext* gameStrategyContext) {
 
 Location* addNavigationWithColors(enum TeamColor teamColor, Navigation* navigation, char* name, float x, float y) {
     LocationList* locationList = navigation->locationList;
-    if (teamColor == TEAM_COLOR_ORANGE) {
+    if (teamColor == TEAM_COLOR_2018_ORANGE) {
         y = GAMEBOARD_HEIGHT - y;
     }
     Location* result = addNamedLocation(locationList, name, x, y);
@@ -221,7 +222,7 @@ PathData* addNavigationPathWithColor(
     float speedFactor) {
     PathData* pathData = addPath(navigation->paths);
 
-    if (teamColor == TEAM_COLOR_ORANGE) {
+    if (teamColor == TEAM_COLOR_2018_ORANGE) {
         angle1 = mod2PI(-angle1);
         angle2 = mod2PI(-angle2);
     }

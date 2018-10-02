@@ -1,7 +1,7 @@
 #ifndef MAIN_BOARD_2018_H
 #define MAIN_BOARD_2018_H
 
-#include "../meca1/mechanicalMainBoard1Common.h"
+#include "../../main/meca1/mechanicalMainBoard1Common.h"
 
 #include "../../navigation/navigation.h"
 

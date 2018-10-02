@@ -1,6 +1,7 @@
 #include "strategyAction2018.h"
 #include "launcherDeviceInterface2018.h"
 #include "strategy2018.h"
+#include "teamColor2018.h"
 
 #include "../../client/motion/extended/clientExtendedMotion.h"
 #include "../../client/robot/2018/launcherClient2018.h"
@@ -27,10 +28,10 @@ enum TeamColor getStrategy2018TeamColor(int* context) {
 
 bool switch2018On(int* context) {
     enum TeamColor teamColor = getStrategy2018TeamColor(context);
-    if (teamColor == TEAM_COLOR_GREEN) {
+    if (teamColor == TEAM_COLOR_2018_GREEN) {
         return clientLightOn2018(LAUNCHER_RIGHT_INDEX);
     }
-    else if (teamColor == TEAM_COLOR_ORANGE) {
+    else if (teamColor == TEAM_COLOR_2018_ORANGE) {
         return clientLightOn2018(LAUNCHER_LEFT_INDEX);
     }
     writeError(WRONG_COLOR);
@@ -41,10 +42,10 @@ bool switch2018On(int* context) {
 
 bool distributor1_2018(int* context) {
     enum TeamColor teamColor = getStrategy2018TeamColor(context);
-    if (teamColor == TEAM_COLOR_GREEN) {
+    if (teamColor == TEAM_COLOR_2018_GREEN) {
         return false;
     }
-    else if (teamColor == TEAM_COLOR_ORANGE) {
+    else if (teamColor == TEAM_COLOR_2018_ORANGE) {
         return false;
     }
     writeError(WRONG_COLOR);
@@ -63,10 +64,10 @@ bool garbageRelease_2018(int* context) {
 
 bool bee2018(int* context) {
     enum TeamColor teamColor = getStrategy2018TeamColor(context);
-    if (teamColor == TEAM_COLOR_GREEN) {
+    if (teamColor == TEAM_COLOR_2018_GREEN) {
         return clientExtendedMotionBSplineAbsolute(BEE_X, BEE_Y, BEE_ANGLE_DECI_DEG, 1.0f, 1.0f, MOTION_ACCELERATION_FACTOR_HIGH, MOTION_SPEED_FACTOR_HIGH);
     }
-    else if (teamColor == TEAM_COLOR_ORANGE) {
+    else if (teamColor == TEAM_COLOR_2018_ORANGE) {
         return clientExtendedMotionBSplineAbsolute(BEE_X, GAMEBOARD_HEIGHT - BEE_Y, BEE_ANGLE_DECI_DEG, 1.0f, 1.0f, MOTION_ACCELERATION_FACTOR_HIGH, MOTION_SPEED_FACTOR_HIGH);
     }
     writeError(WRONG_COLOR);

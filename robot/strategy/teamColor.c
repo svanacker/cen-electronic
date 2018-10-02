@@ -6,8 +6,8 @@
 
 unsigned int appendTeamColorAsString(OutputStream* outputStream, enum TeamColor teamColor) {
     switch (teamColor) {
-        case TEAM_COLOR_ORANGE: return appendString(outputStream, "ORANGE");
-        case TEAM_COLOR_GREEN: return appendString(outputStream, "GREEN");
+        case TEAM_COLOR_VIOLET: return appendString(outputStream, "VIOLET");
+        case TEAM_COLOR_YELLOW: return appendString(outputStream, "YELLOW");
         default: return appendString(outputStream, "SIDE ?");
     }
 }

@@ -2,6 +2,7 @@
 
 #include "strategy2018Utils.h"
 #include "strategy2018.h"
+#include "teamColor2018.h"
 
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
@@ -29,7 +30,7 @@
 // COLOR MANAGEMENT
 
 bool isGreen(GameStrategyContext* gameStrategyContext) {
-    return gameStrategyContext->color == TEAM_COLOR_GREEN;
+    return gameStrategyContext->color == TEAM_COLOR_2018_GREEN;
 }
 
 /**

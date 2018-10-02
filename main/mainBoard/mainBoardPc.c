@@ -188,11 +188,15 @@
 #include "../../main/meca1/mechanicalMainBoard1Pc.h"
 
 // 2018
-#include "../../main/mainBoard/mainBoard2018.h"
+#include "../../robot/2018/mainBoard2018.h"
 #include "../../robot/2018/launcherDeviceInterface2018.h"
 #include "../../robot/2018/strategyDeviceInterface2018.h"
 #include "../../robot/2018/strategyDevice2018.h"
 #include "../../robot/2018/distributor2018.h"
+
+// 2019
+#include "../../robot/2019/mainBoard2019.h"
+
 
 // Logs
 static LogHandler logHandlerListArray[MAIN_BOARD_PC_LOG_HANDLER_LIST_LENGTH];
@@ -313,6 +317,9 @@ bool mainBoardPcWaitForInstruction(StartMatch* startMatch) {
     // Fill Console Buffer
     while (consoleInputStream.availableData(&consoleInputStream)) {
         unsigned char c = consoleInputStream.readChar(&consoleInputStream);
+        if (c == 0) {
+            continue;
+        }
         consoleInputBuffer.outputStream.writeChar(&(consoleInputBuffer.outputStream), c);
         if (c == 13) {
             appendCRLF(&consoleOutputStream);
@@ -489,7 +496,8 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
 
     navigation = initNavigation2018();
     gameStrategyContext = initGameStrategyContext2018(&robotConfig, &endMatch, &tofSensorList);
-    gameBoard = initGameBoard2018(gameStrategyContext);
+    // gameBoard = initGameBoard2018(gameStrategyContext);
+    gameBoard = initGameBoard2019(gameStrategyContext);
 
     // Init the drivers
     initDrivers(&driverRequestBuffer, (char(*)[]) &driverRequestBufferArray, MAIN_BOARD_PC_REQUEST_DRIVER_BUFFER_LENGTH,
