@@ -271,6 +271,10 @@
 #include "../../robot/2018/strategyDeviceInterface2018.h"
 #include "../../robot/2018/instructionCounter2018.h"
 
+// 2019
+#include "../../robot/2019/mainBoard2019.h"
+#include "../../robot/2019/gameBoardElement2019.h"
+
 #include "mainBoard2018.h"
 #include "2dDebug.h"
 #include "strategyConfig2018.h"
@@ -804,10 +808,10 @@ int main(void) {
     initEndMatch(&endMatch, &robotConfig, MATCH_DURATION);
     initStartMatch(&startMatch, &robotConfig, &endMatch, isMatchStarted32, mainBoardWaitForInstruction);
     
-    // 2018
-    navigation = initNavigation2018();
-    gameStrategyContext = initGameStrategyContext2018(&robotConfig, &endMatch, &tofSensorList);
-    gameBoard = initGameBoard2018(gameStrategyContext);
+    // 2019
+    navigation = initNavigation2019();
+    gameStrategyContext = initGameStrategyContext2019(&robotConfig, &endMatch, &tofSensorList);
+    gameBoard = initGameBoard2019(gameStrategyContext);
     initDistributor(&distributor, gameStrategyContext->color, &colorSensor);
 
     // DEVICES, DRIVERS, DISPATCHERS

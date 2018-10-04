@@ -418,7 +418,6 @@
       </logicalFolder>
       <logicalFolder name="main" displayName="main.mainboard" projectFiles="true">
         <itemPath>../mainBoard32.h</itemPath>
-        <itemPath>../mainBoard2018.h</itemPath>
         <itemPath>../mainBoardCommon.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f17" displayName="main.meca1" projectFiles="true">
@@ -471,6 +470,11 @@
         <itemPath>../../../robot/2018/strategyConfig2018.h</itemPath>
         <itemPath>../../../robot/2018/strategyAction2018.h</itemPath>
         <itemPath>../../../robot/2018/instructionCounter2018.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f22" displayName="robot.2019" projectFiles="true">
+        <itemPath>../../../robot/2019/gameBoardElement2019.h</itemPath>
+        <itemPath>../../../robot/2019/mainBoard2019.h</itemPath>
+        <itemPath>../../../robot/2019/score2019.h</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.config"
                      displayName="robot.config"
@@ -989,7 +993,6 @@
       </logicalFolder>
       <logicalFolder name="main" displayName="main.mainboard" projectFiles="true">
         <itemPath>../mainBoard32.c</itemPath>
-        <itemPath>../mainBoard2018.c</itemPath>
         <itemPath>../mainBoardCommon.c</itemPath>
       </logicalFolder>
       <logicalFolder name="motion.extended"
@@ -1027,6 +1030,10 @@
         <itemPath>../../../robot/2018/strategyConfig2018.c</itemPath>
         <itemPath>../../../robot/2018/strategyAction2018.c</itemPath>
         <itemPath>../../../robot/2018/instructionCounter2018.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f22" displayName="robot.2019" projectFiles="true">
+        <itemPath>../../../robot/2019/gameBoardElement2019.c</itemPath>
+        <itemPath>../../../robot/2019/mainBoard2019.c</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.config"
                      displayName="robot.config"
