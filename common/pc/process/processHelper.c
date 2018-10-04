@@ -56,7 +56,7 @@ void moveConsole(int left, int top, int width, int height)
 
 void setConsoleSizeAndBuffer(int width, int height, int bufferWidth, int bufferHeight) {
 	COORD coord;
-	HWND console = GetConsoleWindow();
+	// HWND consoleHandle = GetConsoleWindow();
 	coord.X = bufferWidth;
 	coord.Y = bufferHeight;
 
@@ -66,7 +66,21 @@ void setConsoleSizeAndBuffer(int width, int height, int bufferWidth, int bufferH
 	Rect.Bottom = height - 1;
 	Rect.Right = width - 1;
 
-	HANDLE Handle = GetStdHandle(STD_OUTPUT_HANDLE);      // Get Handle 
-	SetConsoleScreenBufferSize(Handle, coord);            // Set Buffer Size 
-	SetConsoleWindowInfo(Handle, TRUE, &Rect);            // Set Window Size 
+	HANDLE standardOutputHandle = GetStdHandle(STD_OUTPUT_HANDLE);      // Get Handle 
+	SetConsoleScreenBufferSize(standardOutputHandle, coord);            // Set Buffer Size 
+	SetConsoleWindowInfo(standardOutputHandle, TRUE, &Rect);            // Set Window Size 
+
+    // To Manage Color
+    CONSOLE_SCREEN_BUFFER_INFOEX consoleScreenBufferInfoEx;
+    consoleScreenBufferInfoEx.cbSize = sizeof(consoleScreenBufferInfoEx);
+    GetConsoleScreenBufferInfoEx(standardOutputHandle, &consoleScreenBufferInfoEx);
+
+    // Article on RGB Management : https://stackoverflow.com/questions/17348086/c-set-console-text-color-to-rgb-value?rq=1
+
+    consoleScreenBufferInfoEx.ColorTable[0] = RGB(0, 0, 0);            // BLACK
+    consoleScreenBufferInfoEx.ColorTable[1] = RGB(255, 255, 255);      // WHITE
+    consoleScreenBufferInfoEx.ColorTable[2] = RGB(255, 0, 0);          // RED
+    consoleScreenBufferInfoEx.ColorTable[3] = RGB(0, 255, 0);          // GREEN
+    consoleScreenBufferInfoEx.ColorTable[4] = RGB(255, 255, 0);        // YELLOW
+    SetConsoleScreenBufferInfoEx(standardOutputHandle, &consoleScreenBufferInfoEx);
 }

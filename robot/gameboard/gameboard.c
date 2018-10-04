@@ -22,6 +22,10 @@
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
 
+#ifdef _MSC_VER
+#include <Windows.h>
+#endif
+
 
 // Initialization
 
@@ -45,6 +49,14 @@ void drawOpponent(GameBoard* gameBoard, Point* opponent) {
 
 void drawLastObstacle(GameBoard* gameBoard, Point* obstacle) {
     drawPoint(gameBoard, obstacle, 'L');
+}
+
+// COLOR MANAGEMENT
+void setGameBoardCurrentColor(GameBoard* gameBoard, char currentColorPaletIndex) {
+    // ONLY ON WINDOW
+#ifdef _MSC_VER
+    gameBoard->currentColorPaletIndex = currentColorPaletIndex;
+#endif
 }
 
 // ROBOT
@@ -200,7 +212,16 @@ void printGameboard(GameBoard* gameBoard,  OutputStream* outputStream) {
     unsigned int column;
     for (line = 0; line <= GAMEBOARD_LINE_COUNT; line++) {
         for (column = 0; column <= GAMEBOARD_COLUMN_COUNT; column++) {
-            append(outputStream, gameBoard->pixels[column][line]);
+            char pixelChar = gameBoard->pixels[column][line];
+#ifdef _MSC_VER            
+            char colorPalet = gameBoard->colors[column][line];
+            if (colorPalet == 0) {
+                colorPalet = 1;
+            }
+            HANDLE standardOutputHandle = GetStdHandle(STD_OUTPUT_HANDLE);      // Get Handle 
+            SetConsoleTextAttribute(standardOutputHandle, colorPalet);
+#endif
+            append(outputStream, pixelChar);
         }
         println(outputStream);
     }

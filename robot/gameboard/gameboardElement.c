@@ -39,6 +39,9 @@ void setGameBoardPixel(GameBoard* gameBoard, float x, float y, char c) {
     unsigned char column = convertXToColumn(x);
     unsigned char line = convertYToLine(y);
     gameBoard->pixels[column][line] = c;
+#ifdef _MSC_VER    
+    gameBoard->colors[column][line] = gameBoard->currentColorPaletIndex;
+#endif
 }
 
 void setGameBoardArray(GameBoard* gameBoard, int column, int line, char c) {

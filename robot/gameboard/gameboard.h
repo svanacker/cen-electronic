@@ -65,6 +65,15 @@ typedef struct GameBoard {
     BSplineCurve* gameBoardCurve;
     // pixels of the gameboard
     char pixels[GAMEBOARD_COLUMN_COUNT + 1][GAMEBOARD_LINE_COUNT + 1];
+
+// Color are only manage on Windows !
+#ifdef _MSC_VER
+    // colors (foreground and background) of the gameboard
+    char colors[GAMEBOARD_COLUMN_COUNT + 1][GAMEBOARD_LINE_COUNT + 1];
+    // Current color so that we could use the primitive easily
+    char currentColorPaletIndex;
+#endif
+
     // All informations about the strategy
     GameStrategyContext* gameStrategyContext;
 } GameBoard;
@@ -78,6 +87,11 @@ void initGameBoard(GameBoard* gameBoard,
                    GameBoardElement(*gameBoardElementListArray)[],
                    unsigned char gameBoardElementListSize,
                    GameStrategyContext* gameStrategyContext);
+
+/**
+ * Define the color palet index to use, but it could have only effect on Windows, because RX/TX does not support Colors :)
+ */
+void setGameBoardCurrentColor(GameBoard* gameBoard, char currentColorPaletIndex);
 
 /**
  * Print the gameboard in the serial console.
