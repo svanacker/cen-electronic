@@ -3,6 +3,8 @@
     <type>com.microchip.mplab.nbide.embedded.makeproject</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/make-project/1">
+            <name>MAIN_BOARD_BIG_ROBOT_32</name>
+            <name>MAIN_BOARD_SMALL_ROBOT_32</name>
             <name>MAIN_BOARD_32</name>
             <creation-uuid>e09307d1-6995-41bd-9cd6-fe26d1066d78</creation-uuid>
             <make-project-type>0</make-project-type>

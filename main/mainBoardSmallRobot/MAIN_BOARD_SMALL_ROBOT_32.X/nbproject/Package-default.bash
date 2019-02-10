@@ -10,9 +10,9 @@ CND_CONF=default
 CND_DISTDIR=dist
 TMPDIR=build/${CND_CONF}/${IMAGE_TYPE}/tmp-packaging
 TMPDIRNAME=tmp-packaging
-OUTPUT_PATH=dist/${CND_CONF}/${IMAGE_TYPE}/MAIN_BOARD_32.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
-OUTPUT_BASENAME=MAIN_BOARD_32.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
-PACKAGE_TOP_DIR=mainboard32.x/
+OUTPUT_PATH=dist/${CND_CONF}/${IMAGE_TYPE}/MAIN_BOARD_SMALL_ROBOT_32.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+OUTPUT_BASENAME=MAIN_BOARD_SMALL_ROBOT_32.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+PACKAGE_TOP_DIR=mainboardsmallrobot32.x/
 
 # Functions
 function checkReturnCode
@@ -57,15 +57,15 @@ mkdir -p ${TMPDIR}
 
 # Copy files and create directories and links
 cd "${TOP}"
-makeDirectory ${TMPDIR}/mainboard32.x/bin
+makeDirectory ${TMPDIR}/mainboardsmallrobot32.x/bin
 copyFileToTmpDir "${OUTPUT_PATH}" "${TMPDIR}/${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}" 0755
 
 
 # Generate tar file
 cd "${TOP}"
-rm -f ${CND_DISTDIR}/${CND_CONF}/package/mainboard32.x.tar
+rm -f ${CND_DISTDIR}/${CND_CONF}/package/mainboardsmallrobot32.x.tar
 cd ${TMPDIR}
-tar -vcf ../../../../${CND_DISTDIR}/${CND_CONF}/package/mainboard32.x.tar *
+tar -vcf ../../../../${CND_DISTDIR}/${CND_CONF}/package/mainboardsmallrobot32.x.tar *
 checkReturnCode
 
 # Cleanup

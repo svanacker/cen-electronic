@@ -417,8 +417,9 @@
         <itemPath>../../../drivers/tof/vl53l0x/tof_vl53l0x.h</itemPath>
       </logicalFolder>
       <logicalFolder name="main" displayName="main.mainboard" projectFiles="true">
-        <itemPath>../mainBoard32.h</itemPath>
-        <itemPath>../mainBoardCommon.h</itemPath>
+        <itemPath>../../mainBoard/mainBoard32.h</itemPath>
+        <itemPath>../../mainBoard/mainBoardCommon.h</itemPath>
+        <itemPath>../../mainBoard/mainBoardPc.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f17" displayName="main.meca1" projectFiles="true">
         <itemPath>../../meca1/mechanicalMainBoard1Common.h</itemPath>
@@ -992,8 +993,8 @@
         <itemPath>../../../drivers/tof/vl53l0x/32/vl53l0x_platform_pic32.c</itemPath>
       </logicalFolder>
       <logicalFolder name="main" displayName="main.mainboard" projectFiles="true">
-        <itemPath>../mainBoard32.c</itemPath>
-        <itemPath>../mainBoardCommon.c</itemPath>
+        <itemPath>../../mainBoard/mainBoard32.c</itemPath>
+        <itemPath>../../mainBoard/mainBoardCommon.c</itemPath>
       </logicalFolder>
       <logicalFolder name="motion.extended"
                      displayName="motion.extended"
