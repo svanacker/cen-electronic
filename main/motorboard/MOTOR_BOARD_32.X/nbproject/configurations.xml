@@ -921,11 +921,11 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>ICD4Tool</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>2.10</languageToolchainVersion>
+        <languageToolchainVersion>2.15</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="PIC32MX_DFP" vendor="Microchip" version="1.0.23"/>
+        <pack name="PIC32MX_DFP" vendor="Microchip" version="1.0.25"/>
       </packs>
       <compileType>
         <linkerTool>

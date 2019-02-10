@@ -12,6 +12,60 @@
             <asminc-extensions/>
             <sourceEncoding>ISO-8859-1</sourceEncoding>
             <make-dep-projects/>
+            <sourceRootList>
+                <sourceRootElem>..</sourceRootElem>
+                <sourceRootElem>..\..\..\common\serial</sourceRootElem>
+                <sourceRootElem>..\..\..\common\pwm\servo</sourceRootElem>
+                <sourceRootElem>..\..\..\device</sourceRootElem>
+                <sourceRootElem>..\..\..\common\i2c\master\32</sourceRootElem>
+                <sourceRootElem>..\..\..\device\system</sourceRootElem>
+                <sourceRootElem>..\..\..\device\timer</sourceRootElem>
+                <sourceRootElem>..\..\..\common</sourceRootElem>
+                <sourceRootElem>..\..\..\common\io</sourceRootElem>
+                <sourceRootElem>../../..</sourceRootElem>
+                <sourceRootElem>..\..\..\common\timer</sourceRootElem>
+                <sourceRootElem>..\..\..\drivers\clock</sourceRootElem>
+                <sourceRootElem>..\..\..\device\clock</sourceRootElem>
+                <sourceRootElem>..\..\..\common\pwm</sourceRootElem>
+                <sourceRootElem>..\..\..\device\dispatcher</sourceRootElem>
+                <sourceRootElem>..\..\..\common\log</sourceRootElem>
+                <sourceRootElem>..\..\..\common\pwm\motor\32</sourceRootElem>
+                <sourceRootElem>..\..\..\common\i2c\32</sourceRootElem>
+                <sourceRootElem>..\..\..\common\pwm\motor</sourceRootElem>
+                <sourceRootElem>..\..\..\common\delay\32</sourceRootElem>
+                <sourceRootElem>..\..\..\common\i2c\master</sourceRootElem>
+                <sourceRootElem>..\..\..\common\cmd</sourceRootElem>
+                <sourceRootElem>..\..\..\drivers\dispatcher</sourceRootElem>
+                <sourceRootElem>..\..\..\common\error</sourceRootElem>
+                <sourceRootElem>..\..\..\common\setup\32</sourceRootElem>
+                <sourceRootElem>..\..\..\drivers\eeprom</sourceRootElem>
+                <sourceRootElem>..\..\..\device\serial</sourceRootElem>
+                <sourceRootElem>..\..\..\common\i2c\slave</sourceRootElem>
+                <sourceRootElem>..\..\..\common\system</sourceRootElem>
+                <sourceRootElem>..\..\..\device\servo</sourceRootElem>
+                <sourceRootElem>..\..\..\common\pwm\servo\32</sourceRootElem>
+                <sourceRootElem>..\..\..\common\serial\32</sourceRootElem>
+                <sourceRootElem>..\..\..\device\test</sourceRootElem>
+                <sourceRootElem>..\..\..\common\pwm\32</sourceRootElem>
+                <sourceRootElem>..\..\..\drivers</sourceRootElem>
+                <sourceRootElem>..\..\..\device\motor</sourceRootElem>
+                <sourceRootElem>..\..\..\common\clock</sourceRootElem>
+                <sourceRootElem>..\..\..\common\eeprom</sourceRootElem>
+                <sourceRootElem>..\..\..\common\math</sourceRootElem>
+                <sourceRootElem>..\..\..\common\i2c\slave\32</sourceRootElem>
+                <sourceRootElem>..\..\..\common\i2c</sourceRootElem>
+                <sourceRootElem>..\..\..\common\timer\32</sourceRootElem>
+                <sourceRootElem>..\..\..\common\delay</sourceRootElem>
+            </sourceRootList>
+            <confList>
+                <confElem>
+                    <name>default</name>
+                    <type>2</type>
+                </confElem>
+            </confList>
+            <formatting>
+                <project-formatting-style>false</project-formatting-style>
+            </formatting>
         </data>
     </configuration>
 </project>
