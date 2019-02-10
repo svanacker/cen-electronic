@@ -3,7 +3,6 @@
 #include "strategy2018.h"
 #include "strategyConfig2018.h"
 #include "strategyAction2018.h"
-#include "strategyTofSensorList2018.h"
 #include "strategy2018Utils.h"
 
 #include "../../common/error/error.h"
@@ -29,6 +28,7 @@
 #include "../../navigation/navigation.h"
 
 #include "../../client/robot/2018/launcherClient2018.h"
+
 #include "../../client/motion/position/clientTrajectory.h"
 
 #include "../../robot/config/robotConfig.h"
@@ -43,6 +43,8 @@
 #include "../../robot/strategy/gameTargetAction.h"
 #include "../../robot/strategy/gameTargetActionItem.h"
 #include "../../robot/strategy/gameTargetActionList.h"
+
+#include "../../robot/tof/strategyTofSensorList.h"
 
 #include "../../robot/2018/launcherDeviceInterface2018.h"
 #include "../../robot/2018/teamColor2018.h"
@@ -418,7 +420,7 @@ GameStrategy* initStrategiesItems2018(GameStrategyContext* gameStrategyContext) 
 void initStrategy2018(GameStrategyContext* gameStrategyContext) {
     initColorAndStartPosition2018(gameStrategyContext);
     float tofDistanceFactor = getSonarDistanceCheckFactor(gameStrategyContext->robotConfig);
-    setTofListOrientationAngle2018(gameStrategyContext->tofSensorList, tofDistanceFactor);
+    setTofListOrientationAngle(gameStrategyContext->tofSensorList, tofDistanceFactor);
     showGameStrategyContextTeamColorAndStrategy(gameStrategyContext);
 
 	initLocations2018(gameStrategyContext);

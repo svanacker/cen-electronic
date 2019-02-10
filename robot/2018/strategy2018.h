@@ -2,7 +2,6 @@
 #define STRATEGY_2018_H
 
 #include "score2018.h"
-#include "strategyTofSensorList2018.h"
 
 #include "../../robot/strategy/gameStrategyContext.h"
 #include "../../robot/strategy/gameTarget.h"
@@ -14,10 +13,6 @@
 #define STRATEGY_2018_NAVIGATION_LOCATION_LIST_ARRAY_LENGTH        30
 #define STRATEGY_2018_NAVIGATION_PATH_LIST_ARRAY_LENGTH            30
 #define STRATEGY_2018_BIT_LIST_NAVIGATION_ARRAY_LENGTH             30
-
-// MIN TRESHOLD : Do not detect too close of TOF (physically impossible because 
-// TOF are at the center of the robot !)
-#define SENSOR_DISTANCE_MIN_TRESHOLD            100
 
 // Angles
 #define     ANGLE_DECI_DEG_0             0x0000
@@ -135,7 +130,7 @@
 /**
 * Init all elements for 2018.
 */
-void initStrategy2018(GameStrategyContext* gmeStrategyContext);
+void initStrategy2018(GameStrategyContext* gameStrategyContext);
 
 /**
 * Define the color and update strategy.

@@ -7,8 +7,6 @@ float getAccelerationFactor(RobotConfig* robotConfig);
 
 float getSpeedFactor(RobotConfig* robotConfig);
 
-bool isSonarActivated(RobotConfig* robotConfig);
-
 float getSonarDistanceCheckFactor(RobotConfig* robotConfig);
 
 #endif

@@ -7,11 +7,12 @@
 struct EndMatch;
 typedef struct EndMatch EndMatch;
 
+#include "../../common/io/outputStream.h"
 #include "../../common/timer/cenTimer.h"
 
 #include "../../robot/config/robotConfig.h"
 
-/** We take 10 seconds to be sure that it will be ok . */
+/** We take 5 seconds to be sure that it will be ok . */
 #define MATCH_DURATION                    95
 
 /**

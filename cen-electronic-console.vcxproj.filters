@@ -973,6 +973,12 @@
     <Filter Include="Source Files\robot\2019">
       <UniqueIdentifier>{8e9eeb68-f51e-4601-b099-cf4ef7f6546b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\robot\tof">
+      <UniqueIdentifier>{10b751a6-9f5a-456e-8607-08ef6536e15a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\robot\tof">
+      <UniqueIdentifier>{ad837bf4-431e-4957-956a-f3737634ad05}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -1980,9 +1986,6 @@
     <ClCompile Include="main\meca1\mechanicalMainBoard1Pc.c">
       <Filter>Source Files\main\meca1</Filter>
     </ClCompile>
-    <ClCompile Include="main\mainBoard\mainBoardCommon.c">
-      <Filter>Source Files\main\mainBoard</Filter>
-    </ClCompile>
     <ClCompile Include="robot\gameboard\gameboardBSplinePrint.c">
       <Filter>Source Files\robot\gameboard</Filter>
     </ClCompile>
@@ -2016,9 +2019,6 @@
     <ClCompile Include="motion\position\trajectoryTypeDebug.c">
       <Filter>Source Files\motion\position</Filter>
     </ClCompile>
-    <ClCompile Include="robot\2018\strategyTofSensorList2018.c">
-      <Filter>Source Files\robot\2018</Filter>
-    </ClCompile>
     <ClCompile Include="robot\2018\strategyConfig2018.c">
       <Filter>Source Files\robot\2018</Filter>
     </ClCompile>
@@ -2042,6 +2042,9 @@
     </ClCompile>
     <ClCompile Include="robot\2019\mainBoard2019.c">
       <Filter>Source Files\robot\2019</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\tof\strategyTofSensorList.c">
+      <Filter>Source Files\robot\tof</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -3169,6 +3172,9 @@
     </ClInclude>
     <ClInclude Include="robot\2019\mainBoard2019.h">
       <Filter>Header Files\robot\2019</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\tof\strategyTofSensorList.h">
+      <Filter>Header Files\robot\tof</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

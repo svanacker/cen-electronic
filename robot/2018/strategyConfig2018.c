@@ -32,10 +32,6 @@ float getSpeedFactor(RobotConfig* robotConfig) {
     return MOTION_SPEED_FACTOR_HIGH;
 }
 
-bool isSonarActivated(RobotConfig* robotConfig) {
-    return isConfigSet(robotConfig, CONFIG_SONAR_FAR_MASK | CONFIG_SONAR_NEAR_MASK);
-}
-
 float getSonarDistanceCheckFactor(RobotConfig* robotConfig) {
     if (isConfigSet(robotConfig, CONFIG_SONAR_FAR_MASK)) {
         // Both Far & Near means average
@@ -47,6 +43,6 @@ float getSonarDistanceCheckFactor(RobotConfig* robotConfig) {
     else if (isConfigSet(robotConfig, CONFIG_SONAR_NEAR_MASK)) {
         return 0.50f;
     }
-    // To avoid to detect something !
+    // To avoid to detect something too far !
     return 8.0f;
 }

@@ -1,5 +1,5 @@
-#ifndef STRATEGY_TOF_SENSOR_LIST_2018_H
-#define STRATEGY_TOF_SENSOR_LIST_2018_H
+#ifndef STRATEGY_TOF_SENSOR_LIST_H
+#define STRATEGY_TOF_SENSOR_LIST_H
 
 #include "../../drivers/tof/tofList.h"
 
@@ -36,12 +36,16 @@
 #define FRONT_MIDDLE_SENSOR_DISTANCE_THRESHOLD  400
 #define FRONT_LEFT_SENSOR_DISTANCE_THRESHOLD    300
 
+// MIN TRESHOLD : Do not detect too close of TOF (physically impossible because 
+// TOF are at the center of the robot !)
+#define SENSOR_DISTANCE_MIN_TRESHOLD            100
+
 /**
  * INIT
  * @param tofSensorList
  * @param distanceFactor
  */
-void setTofListOrientationAngle2018(TofSensorList* tofSensorList, float distanceFactor);
+void setTofListOrientationAngle(TofSensorList* tofSensorList, float distanceFactor);
 
 /**
  * TOF MANAGEMENT

@@ -104,4 +104,6 @@ unsigned int getConfigValue(RobotConfig* robotConfig);
 */
 bool isConfigSet(RobotConfig* robotConfig, unsigned int configMask);
 
+bool isSonarActivated(RobotConfig* robotConfig);
+
 #endif

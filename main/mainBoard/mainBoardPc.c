@@ -515,7 +515,7 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
 
     // Start Match
     initEndMatch(&endMatch, &robotConfig, MATCH_DURATION);
-    initStartMatch(&startMatch, &robotConfig, &endMatch, isMatchStartedPc, mainBoardPcWaitForInstruction);
+    initStartMatch(&startMatch, &robotConfig, &endMatch, isMatchStartedPc, mainBoardPcWaitForInstruction, mainBoardPcWaitForInstruction);
 
     initMainBoardLocalDevices();
 

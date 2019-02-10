@@ -348,7 +348,6 @@
     <ClCompile Include="drivers\tof\vl53l0x\vl53l0x_platform.c" />
     <ClCompile Include="drivers\tof\vl53l0x\vl53l0x_platform_common.c" />
     <ClCompile Include="drivers\tof\vl53l0x\vl53l0x_platform_log.c" />
-    <ClCompile Include="main\mainBoard\mainBoardCommon.c" />
     <ClCompile Include="main\mainBoard\mainBoardPc.c" />
     <ClCompile Include="main\meca1\mechanicalMainBoard1Pc.c" />
     <ClCompile Include="main\motorboard\motorBoardPc.c" />
@@ -427,7 +426,6 @@
     <ClCompile Include="robot\2018\strategyConfig2018.c" />
     <ClCompile Include="robot\2018\strategyDevice2018.c" />
     <ClCompile Include="robot\2018\strategyDeviceInterface2018.c" />
-    <ClCompile Include="robot\2018\strategyTofSensorList2018.c" />
     <ClCompile Include="robot\2019\gameBoardElement2019.c" />
     <ClCompile Include="robot\2019\mainBoard2019.c" />
     <ClCompile Include="robot\config\pc\robotConfigPc.c" />
@@ -477,6 +475,7 @@
     <ClCompile Include="robot\strategy\gameTargetStatus.c" />
     <ClCompile Include="robot\strategy\nextGameStrategyItemComputer.c" />
     <ClCompile Include="robot\strategy\teamColor.c" />
+    <ClCompile Include="robot\tof\strategyTofSensorList.c" />
     <ClCompile Include="test\allTests.c" />
     <ClCompile Include="test\common\2d\2dTest.c" />
     <ClCompile Include="test\common\eeprom\memoryEepromTest.c" />
@@ -853,6 +852,7 @@
     <ClInclude Include="robot\strategy\gameTargetStatus.h" />
     <ClInclude Include="robot\strategy\nextGameStrategyItemComputer.h" />
     <ClInclude Include="robot\strategy\teamColor.h" />
+    <ClInclude Include="robot\tof\strategyTofSensorList.h" />
     <ClInclude Include="test\allTests.h" />
     <ClInclude Include="test\common\2d\2dTest.h" />
     <ClInclude Include="test\common\eeprom\memoryEepromTest.h" />

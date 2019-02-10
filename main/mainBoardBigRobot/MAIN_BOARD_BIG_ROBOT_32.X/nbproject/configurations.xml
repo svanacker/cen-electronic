@@ -420,6 +420,12 @@
         <itemPath>../../mainBoard/mainBoard32.h</itemPath>
         <itemPath>../../mainBoard/mainBoardCommon.h</itemPath>
         <itemPath>../../mainBoard/mainBoardPc.h</itemPath>
+        <itemPath>../../mainBoard/mainBoardCommonLcd.h</itemPath>
+        <itemPath>../../mainBoard/mainBoardCommonMatch.h</itemPath>
+        <itemPath>../../mainBoard/mainBoardCommonMeca1.h</itemPath>
+        <itemPath>../../mainBoard/mainBoardCommonMotor.h</itemPath>
+        <itemPath>../../mainBoard/mainBoardCommonStrategy.h</itemPath>
+        <itemPath>../../mainBoard/mainBoardCommonTof.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f17" displayName="main.meca1" projectFiles="true">
         <itemPath>../../meca1/mechanicalMainBoard1Common.h</itemPath>
@@ -467,7 +473,6 @@
         <itemPath>../../../robot/2018/score2018.h</itemPath>
         <itemPath>../../../robot/2018/distributorDebug2018.h</itemPath>
         <itemPath>../../../robot/2018/gameBoardElement2018.h</itemPath>
-        <itemPath>../../../robot/2018/strategyTofSensorList2018.h</itemPath>
         <itemPath>../../../robot/2018/strategyConfig2018.h</itemPath>
         <itemPath>../../../robot/2018/strategyAction2018.h</itemPath>
         <itemPath>../../../robot/2018/instructionCounter2018.h</itemPath>
@@ -550,6 +555,9 @@
         <itemPath>../../../robot/strategy/factor/gainFactor.h</itemPath>
         <itemPath>../../../robot/strategy/factor/opponentRobotGainFactor.h</itemPath>
         <itemPath>../../../robot/strategy/factor/timeGainFactor.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f23" displayName="robot.tof" projectFiles="true">
+        <itemPath>../../../robot/tof/strategyTofSensorList.h</itemPath>
       </logicalFolder>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
@@ -995,6 +1003,12 @@
       <logicalFolder name="main" displayName="main.mainboard" projectFiles="true">
         <itemPath>../../mainBoard/mainBoard32.c</itemPath>
         <itemPath>../../mainBoard/mainBoardCommon.c</itemPath>
+        <itemPath>../../mainBoard/mainBoardCommonLcd.c</itemPath>
+        <itemPath>../../mainBoard/mainBoardCommonMatch.c</itemPath>
+        <itemPath>../../mainBoard/mainBoardCommonMeca1.c</itemPath>
+        <itemPath>../../mainBoard/mainBoardCommonMotor.c</itemPath>
+        <itemPath>../../mainBoard/mainBoardCommonStrategy.c</itemPath>
+        <itemPath>../../mainBoard/mainBoardCommonTof.c</itemPath>
       </logicalFolder>
       <logicalFolder name="motion.extended"
                      displayName="motion.extended"
@@ -1027,7 +1041,6 @@
         <itemPath>../../../robot/2018/strategyDeviceInterface2018.c</itemPath>
         <itemPath>../../../robot/2018/distributorDebug2018.c</itemPath>
         <itemPath>../../../robot/2018/gameBoardElement2018.c</itemPath>
-        <itemPath>../../../robot/2018/strategyTofSensorList2018.c</itemPath>
         <itemPath>../../../robot/2018/strategyConfig2018.c</itemPath>
         <itemPath>../../../robot/2018/strategyAction2018.c</itemPath>
         <itemPath>../../../robot/2018/instructionCounter2018.c</itemPath>
@@ -1108,6 +1121,9 @@
         <itemPath>../../../robot/strategy/factor/distanceGainFactor.c</itemPath>
         <itemPath>../../../robot/strategy/factor/opponentRobotGainFactor.c</itemPath>
         <itemPath>../../../robot/strategy/factor/timeGainFactor.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f23" displayName="robot.tof" projectFiles="true">
+        <itemPath>../../../robot/tof/strategyTofSensorList.c</itemPath>
       </logicalFolder>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"

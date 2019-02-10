@@ -46,11 +46,13 @@ void initStartMatch(StartMatch* startMatch,
                     RobotConfig* robotConfig,
                     EndMatch* endMatch,
                     IsMatchStartedFunction* isMatchStartedFunctionParam,
-                    LoopUntilStartHandleFunction* loopUntilStartHandleFunction) {
+                    LoopUntilStartHandleFunction* loopUntilStartHandleFunction,
+                    MatchHandleInstructionFunction* matchHandleInstructionFunction) {
     startMatch->robotConfig = robotConfig;
     startMatch->endMatch = endMatch;
     startMatch->isMatchStartedFunction = isMatchStartedFunctionParam;
     startMatch->loopUntilStartHandleFunction = loopUntilStartHandleFunction;
+    startMatch->matchHandleInstructionFunction = matchHandleInstructionFunction;
     startMatch->waitForStart = !isConfigSet(robotConfig, CONFIG_DONT_WAIT_FOR_START);
 }
 

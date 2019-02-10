@@ -1,4 +1,4 @@
-#include "strategyTofSensorList2018.h"
+#include "strategyTofSensorList.h"
 
 #include "../../client/motion/simple/clientMotion.h"
 
@@ -17,13 +17,9 @@
 #include "../../robot/match/startMatch.h"
 #include "../../robot/strategy/gameStrategyContext.h"
 
-#include "strategy2018.h"
-#include "strategyConfig2018.h"
-#include "instructionCounter2018.h"
-
 // TOF MANAGEMENT
 
-void setTofListOrientationAngle2018(TofSensorList* tofSensorList, float distanceFactor) {
+void setTofListOrientationAngle(TofSensorList* tofSensorList, float distanceFactor) {
     unsigned int tofSensorListSize = getTofSensorListSize(tofSensorList);
     
     // Tof Sensor 0
@@ -132,7 +128,7 @@ void handleTofSensorList(GameStrategyContext* gameStrategyContext, StartMatch* s
             // Block the notification system !
             gameStrategyContext->trajectoryType = TRAJECTORY_TYPE_NONE;
             
-            handleObstacle(gameStrategyContext);
+            // TODO 2018 : handleObstacle(gameStrategyContext);
             break;
         }
     }
