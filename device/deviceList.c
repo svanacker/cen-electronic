@@ -10,7 +10,7 @@
 #include "../common/error/error.h"
 
 #include "../common/io/outputStream.h"
-
+#include "../common/io/printWriter.h"
 #include "../common/log/logger.h"
 #include "../common/log/logLevel.h"
 
@@ -112,6 +112,8 @@ int getDeviceCount() {
 }
 
 void initDevices() {
+    OutputStream* logStream = getInfoOutputStreamLogger();
+    appendStringCRLF(logStream, "Init Devices ...");
     int size = deviceList.size;
     int i;
     for (i = 0; i < size; i++) {

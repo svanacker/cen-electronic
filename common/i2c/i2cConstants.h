@@ -12,6 +12,9 @@
  */
 #define I2C_SLAVE_FAKE_WRITE     0x00
 
+// ALL I2C DEVICE
+#define I2C_GENERAL_ADDRESS     0x00
+
 // VL530X
 #define VL530X_ADDRESS_0        0x52
 #define VL530X_ADDRESS_1        0x54
@@ -67,6 +70,7 @@
 #define PCF8574A_ADDRESS_6        0x7C
 #define PCF8574A_ADDRESS_7        0x7E
 
+
 // RLY08
 
 // Warning : Conflict with PCF8574AP !!
@@ -78,6 +82,17 @@
 #define    RLY08_ADDRESS_5            0x7A
 #define    RLY08_ADDRESS_6            0x7C
 #define    RLY08_ADDRESS_7            0x7E
+
+
+// PCA9685
+#define PCA9685_ADDRESS_0             0x80
+#define PCA9685_ADDRESS_1             0x82
+#define PCA9685_ADDRESS_2             0x84
+#define PCA9685_ADDRESS_3             0x86
+#define PCA9685_ADDRESS_4             0x88
+#define PCA9685_ADDRESS_5             0x8A
+#define PCA9685_ADDRESS_6             0x8C
+#define PCA9685_ADDRESS_7             0x8E
 
 // LM75A TEMPERATURE SENSOR
 #define LM75A_ADDRESS                 0x90

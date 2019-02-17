@@ -153,6 +153,7 @@ void mainBoardCommonMotorNotifyOpenSerialLink(void) {
 void mainBoardCommonMotorMainEndInit(void) {
         // MOTOR BOARD
     // UART Device
+    /*
     clearBuffer(&motorInputBuffer);
     // Send a clear Buffer to the remote board to avoid to keep bad data in the link when rebooting
     append(&motorOutputStream, HEADER_CLEAR_INPUT_STREAM);
@@ -160,7 +161,7 @@ void mainBoardCommonMotorMainEndInit(void) {
     motorOutputStream.flush(&motorOutputStream);
     
     clearMotorAndMotorNotifyBuffer();
-    
+    */
     // Maintain the position to avoid that the robot move
-    motionDriverMaintainPosition();
+    // motionDriverMaintainPosition();
 }

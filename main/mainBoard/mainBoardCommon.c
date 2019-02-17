@@ -314,24 +314,21 @@ void mainBoardCommonInitCommonDrivers(void) {
     eepromI2cBusConnection = addI2cBusConnection(i2cBus, ST24C512_ADDRESS_0, true);
     init24C512Eeprom(&eeprom, eepromI2cBusConnection);
     appendStringLN(getDebugOutputStreamLogger(), "OK");
-    
     // -> Clock
     appendString(getDebugOutputStreamLogger(), "CLOCK ...");
     clockI2cBusConnection = addI2cBusConnection(i2cBus, PCF8563_WRITE_ADDRESS, true);
     initClockPCF8563(&clock, clockI2cBusConnection);
     appendStringLN(getDebugOutputStreamLogger(), "OK");
-
     // -> Temperature
     appendString(getDebugOutputStreamLogger(), "TEMPERATURE ...");
     temperatureI2cBusConnection = addI2cBusConnection(i2cBus, LM75A_ADDRESS, true);
     initTemperatureLM75A(&temperature, temperatureI2cBusConnection);
     appendStringLN(getDebugOutputStreamLogger(), "OK");
     
-    
     // Start interruptions
     startTimerList(false);
-    getTimerByCode(SERVO_TIMER_CODE)->enabled = true;
-    getTimerByCode(END_MATCH_DETECTOR_TIMER_CODE)->enabled = true;
+    // getTimerByCode(SERVO_TIMER_CODE)->enabled = true;
+    // getTimerByCode(END_MATCH_DETECTOR_TIMER_CODE)->enabled = true;
 }
 
 void mainBoardCommonHandleStreamInstruction(void) {
@@ -347,7 +344,6 @@ void mainBoardCommonHandleStreamInstruction(void) {
 void mainBoardCommonMainInit(RobotConfig* robotConfig) {
     // LOG the BoardName
     appendStringCRLF(getAlwaysOutputStreamLogger(), getBoardName());
-    
     // Increase the Log Level to DEBUG if the config bit are set
     Logger* logger = getLoggerInstance();
     if (isConfigSet(robotConfig, CONFIG_DEBUG)) {

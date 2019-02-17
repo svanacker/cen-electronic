@@ -7,6 +7,11 @@
 #include "../../robot/config/32/robotConfigPic32.h"
 #include "../../robot/match/32/startMatchDetector32.h"
 
+#include "../../common/delay/cenDelay.h"
+#include "../../common/io/printWriter.h"
+#include "../../common/log/logger.h"
+
+
 #include "../../common/system/system.h"
 #include "../../device/deviceList.h"
 
@@ -18,6 +23,11 @@
 #include "mainBoardCommonMotor.h"
 #include "mainBoardCommonStrategy.h"
 #include "mainBoardCommonTof.h"
+
+#include "../../drivers/pwm/pca9685.h"
+#include "../../common/i2c/i2cCommon.h"
+#include "../../common/i2c/i2cBusConnectionList.h"
+#include "printTableWriter.h"
 
 // Robot Configuration
 static RobotConfig robotConfig;
@@ -32,7 +42,7 @@ void initMainBoardDevicesDescriptor() {
     mainBoardCommonLcdAddDevices();
     mainBoardCommonMotorAddDevices(MAIN_BOARD_SERIAL_PORT_MOTOR);
     mainBoardCommonStrategyAddDevices(MAIN_BOARD_SERIAL_PORT_MOTOR);
-    mainBoardCommonTofAddDevices();
+    // mainBoardCommonTofAddDevices();
     mainBoardCommonMeca1AddDevices();
 
     // Call the init on each devices
@@ -43,7 +53,7 @@ void initMainBoardDriverDataDispatcherList(void) {
     mainBoardCommonInitDriverDataDispatcherList();
  
     mainBoardCommonMotorAddDispatcher();    
-    mainBoardCommonMeca1AddDispatcher();
+    // mainBoardCommonMeca1AddDispatcher();
 }
 
 bool mainBoardWaitForInstruction(StartMatch* startMatchParam) {
@@ -67,7 +77,7 @@ bool loopUnWaitForInstruction(StartMatch* startMatchParam) {
  * @return 
  */
 void mainBoardMainPhase1(void) {
-    setBoardName("MAIN BOARD SMALL ROBOT 32");
+    setBoardName("MAIN SMALL ROBOT 32");
     setRobotMustStop(false);
  
     // CONFIG
@@ -93,12 +103,11 @@ void mainBoardMainPhase2(void) {
     // OTHER SERIAL LINKS
     mainBoardCommonMotorNotifyOpenSerialLink();
     mainBoardCommonMotorOpenSerialLink();
-    
+   
     mainBoardCommonInitBusList();
     mainBoardCommonInitTimerList();
-    
     mainBoardCommonInitCommonDrivers();
-    mainBoardCommonTofInitDrivers(mainBoardCommonGetMainI2cBus());
+    // mainBoardCommonTofInitDrivers(mainBoardCommonGetMainI2cBus());
     mainBoardCommonMatchMainInitDrivers(&robotConfig, isMatchStarted32, mainBoardWaitForInstruction, loopUnWaitForInstruction);
     mainBoardCommonStrategyMainInitDrivers(&robotConfig);
 }
@@ -108,13 +117,30 @@ void mainBoardMainPhase3(void) {
     initMainBoardDriverDataDispatcherList();
 
     mainBoardCommonMotorMainEndInit();
-    mainBoardCommonStrategyMainEndInit();
+    // mainBoardCommonStrategyMainEndInit();
 }
 
 int main(void) {
     mainBoardMainPhase1();
     mainBoardMainPhase2();
     mainBoardMainPhase3();
+
+    // OutputStream* debugOutputStream = getInfoOutputStreamLogger();
+    appendStringCRLF(getInfoOutputStreamLogger(), "PWM START");
+    I2cBus* i2cBus = getI2cBusByIndex(0);
+    I2cBusConnection* pca9685BusConnection = addI2cBusConnection(i2cBus, 0x80, true);
+    pca9685_init(pca9685BusConnection);
+    // int pwmIndex;
+
+    /*
+    appendStringCRLF(debugOutputStream, "SET PWM");
+    for (pwmIndex = 0; pwmIndex < 16; pwmIndex++) {
+        pca9685_setPWM(pca9685BusConnection, pwmIndex, 0, 1200);
+        appendDec(debugOutputStream, pwmIndex);
+        appendCRLF(debugOutputStream);
+        delaymSec(100);
+    }
+    */
     
     mainBoardCommonStrategyMainLoop();
 

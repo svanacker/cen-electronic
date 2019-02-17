@@ -142,7 +142,13 @@ unsigned int appendBinary16TableData(OutputStream* outputStream, unsigned int va
 	appendTableSeparator(outputStream);
 	appendSpace(outputStream);
 	int length = appendBinary16(outputStream, value, groupBy);
-	// length of hex6 = 6
+	return appendSpaces(outputStream, columnSize - length) + 3;
+}
+
+unsigned int appendBinary8TableData(OutputStream* outputStream, unsigned int value, unsigned int groupBy, int columnSize) {
+	appendTableSeparator(outputStream);
+	appendSpace(outputStream);
+	int length = appendBinary8(outputStream, value, groupBy);
 	return appendSpaces(outputStream, columnSize - length) + 3;
 }
 

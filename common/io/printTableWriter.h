@@ -144,6 +144,13 @@ unsigned int appendHexFloat6TableData(OutputStream* outputStream, float value, u
 * @param value the value to append (in binary) and group by xxxx chars
 * @param columnSize the size of the column (for alignment)
 */
+unsigned int appendBinary8TableData(OutputStream* outputStream, unsigned int value, unsigned int groupBy, int columnSize);
+
+/**
+* Add an binary table data to the outputStream with | and space arround
+* @param value the value to append (in binary) and group by xxxx chars
+* @param columnSize the size of the column (for alignment)
+*/
 unsigned int appendBinary16TableData(OutputStream* outputStream, unsigned int value, unsigned int groupBy, int columnSize);
 
 #endif
