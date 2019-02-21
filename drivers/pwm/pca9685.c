@@ -61,6 +61,7 @@ void pca9685_debugMainRegisterList(OutputStream* outputStream, I2cBusConnection*
     pca9685_debugMainRegister(outputStream, i2cBusConnection, PCA9685_MODE1, "MODE1");
     pca9685_debugMainRegister(outputStream, i2cBusConnection, PCA9685_PRESCALE, "PRESCALER");
     // BUG WITH MODE 2 READ : pca9685_debugMainRegister(outputStream, i2cBusConnection, PCA9685_MODE2, "MODE2");
+    // pca9685_debugMainRegister(outputStream, i2cBusConnection, PCA9685_MODE2, "MODE2");
     pca9685_debugMainRegister(outputStream, i2cBusConnection, PCA9685_SUBADR1, "SUBADR1");
     pca9685_debugMainRegister(outputStream, i2cBusConnection, PCA9685_SUBADR2, "SUBADR2");
     pca9685_debugMainRegister(outputStream, i2cBusConnection, PCA9685_SUBADR3, "SUBADR3");
@@ -73,12 +74,10 @@ void pca9685_debugMainRegisterList(OutputStream* outputStream, I2cBusConnection*
     pca9685_debugMainRegister(outputStream, i2cBusConnection, LED0_OFF_H, "LED0_OFF_H");    
 
     // LED 1
-    /*
     pca9685_debugMainRegister(outputStream, i2cBusConnection, LED0_ON_L + 4, "LED1_ON_L");
     pca9685_debugMainRegister(outputStream, i2cBusConnection, LED0_ON_H + 4, "LED1_ON_H");
     pca9685_debugMainRegister(outputStream, i2cBusConnection, LED0_OFF_L + 4, "LED1_OFF_L");
     pca9685_debugMainRegister(outputStream, i2cBusConnection, LED0_OFF_H + 4, "LED1_OFF_H");    
-    */
     appendTableHeaderSeparatorLine(outputStream);
 }
 
@@ -91,13 +90,28 @@ void pca9685_init(I2cBusConnection* i2cBusConnection) {
 
     // set a default frequency
     pca9685_setPWMFreq(i2cBusConnection, 50);
+
+    // pca9685_write8(i2cBusConnection, PCA9685_MODE1, PCA9685_MODE1_MASK_ALLCALL);
+    // delaymSec(10);
+    int i;
     
-    // No Sleep anymore
-    pca9685_write8(i2cBusConnection, PCA9685_MODE1, PCA9685_MODE1_MASK_ALLCALL);
+    for (i = 200; i < 400; i += 50) {
+        delaymSec(10);
+        pca9685_setPWM(i2cBusConnection, 1, 0, i);
+        delaymSec(1000);
+        pca9685_debugMainRegisterList(debugOutputStream, i2cBusConnection);
+    }
     
-    pca9685_setPWM(i2cBusConnection, 0, 0, 1500);
+    /*
+    int i;
+    for (i = 1000; i < 2000; i++) {
+        pca9685_setPWM(i2cBusConnection, 0, 500, i);
+        delaymSec(10);
+    }
     delaymSec(1000);
-    pca9685_setPWM(i2cBusConnection, 1, 1200, 0);
+    */
+    
+    //pca9685_setPWM(i2cBusConnection, 1, 1000, 2200);
     
     pca9685_debugMainRegisterList(debugOutputStream, i2cBusConnection);
 }
@@ -133,29 +147,21 @@ void pca9685_setPWMFreq(I2cBusConnection* i2cBusConnection, float frequency) {
     prescaleval -= 1;
 
     // unsigned char prescale = floor(prescaleval + 0.5);
-    unsigned char prescale = 135;
-    
-    unsigned char oldmode = pca9685_read8(i2cBusConnection, PCA9685_MODE1);
-    unsigned char newmode = (oldmode & 0b11111111) | PCA9685_MODE1_MASK_SLEEP; // sleep !
+    unsigned char prescale = 121;
  
-    pca9685_write8(i2cBusConnection, PCA9685_MODE1, newmode);                  // go to sleep
-
-    newmode = pca9685_read8(i2cBusConnection, PCA9685_MODE1);
-
-    pca9685_write8(i2cBusConnection, PCA9685_PRESCALE, prescale);            // set the prescaler
-    // pca9685_write8(i2cBusConnection, PCA9685_MODE1, oldmode);                // back to old mode
+    // Frequency could only be change if sleep
+    pca9685_write8(i2cBusConnection, PCA9685_MODE1, PCA9685_MODE1_MASK_ALLCALL | PCA9685_MODE1_MASK_SLEEP);
     delaymSec(5);
-    // pca9685_write8(i2cBusConnection, PCA9685_MODE1, oldmode | PCA9685_MODE1_MASK_AUTO_INC); //  This sets the MODE1 register to turn on auto increment.
-
-    // pca9685_write8(i2cBusConnection, PCA9685_MODE1, (oldmode & (~PCA9685_MODE1_MASK_SLEEP)));// Stop sleep
+    pca9685_write8(i2cBusConnection, PCA9685_PRESCALE, prescale);            // set the prescaler
+    delaymSec(5);
+    // Stop sleeping
+    pca9685_write8(i2cBusConnection, PCA9685_MODE1, PCA9685_MODE1_MASK_ALLCALL | PCA9685_MODE1_MASK_AUTO_INC);
 }
 
 void pca9685_setPWM(I2cBusConnection* i2cBusConnection, unsigned char pwmIndex, unsigned int on, unsigned int off) {
     I2cBus* i2cBus = i2cBusConnection->i2cBus;
 
     portableMasterWaitSendI2C(i2cBusConnection);
-    // Wait till Start sequence is completed
-    WaitI2C(i2cBus);
 
     portableMasterStartI2C(i2cBusConnection);
     WaitI2C(i2cBus);
@@ -179,6 +185,17 @@ void pca9685_setPWM(I2cBusConnection* i2cBusConnection, unsigned char pwmIndex, 
 
     portableMasterStopI2C(i2cBusConnection);
     WaitI2C(i2cBus);
+    
+    /*
+    pca9685_write8(i2cBusConnection, LED0_ON_L + 4 * pwmIndex, on);
+    delaymSec(10);
+    pca9685_write8(i2cBusConnection, LED0_ON_H + 4 * pwmIndex, on >> 8);
+    delaymSec(10);
+    pca9685_write8(i2cBusConnection, LED0_OFF_L + 4 * pwmIndex, off);
+    delaymSec(10);
+    pca9685_write8(i2cBusConnection, LED0_OFF_H + 4 * pwmIndex, off >> 8);    
+    delaymSec(10);
+     * */
 }
 
 void pca9685_setPin(I2cBusConnection* i2cBusConnection, unsigned char pwmIndex, unsigned int value, bool invert) {
@@ -261,7 +278,9 @@ unsigned char pca9685_read8(I2cBusConnection* i2cBusConnection, unsigned char re
     result = portableMasterReadI2C(i2cBusConnection);
     WaitI2C(i2cBus);
     
-    // portableMasterNackI2C(i2cBusConnection);
+    // portableMasterAckI2C(i2cBusConnection);
+    portableMasterNackI2C(i2cBusConnection);
+    WaitI2C(i2cBus);
     portableMasterStopI2C(i2cBusConnection);
 
     return result;
