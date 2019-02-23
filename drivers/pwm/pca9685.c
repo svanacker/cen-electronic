@@ -95,12 +95,12 @@ void pca9685_init(I2cBusConnection* i2cBusConnection) {
     // delaymSec(10);
     int i;
     
-    for (i = 200; i < 400; i += 50) {
+    for (i = 100; i < 500; i += 20) {
         delaymSec(10);
         pca9685_setPWM(i2cBusConnection, 1, 0, i);
-        delaymSec(1000);
-        pca9685_debugMainRegisterList(debugOutputStream, i2cBusConnection);
+        delaymSec(100);
     }
+    pca9685_debugMainRegisterList(debugOutputStream, i2cBusConnection);
     
     /*
     int i;
@@ -258,6 +258,7 @@ unsigned char pca9685_read8(I2cBusConnection* i2cBusConnection, unsigned char re
     
     // Start
     portableMasterStartI2C(i2cBusConnection);
+    WaitI2C(i2cBus);
 
     // Address
     portableMasterWriteI2C(i2cBusConnection, i2cBusConnection->i2cAddress);

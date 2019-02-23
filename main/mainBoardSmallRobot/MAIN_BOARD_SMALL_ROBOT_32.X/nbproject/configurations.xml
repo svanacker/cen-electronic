@@ -331,6 +331,11 @@
         <itemPath>../../../drivers/driverTransmitter.h</itemPath>
         <itemPath>../../../drivers/driver.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f24"
+                     displayName="drivers.accelerometer"
+                     projectFiles="true">
+        <itemPath>../../../drivers/accelerometer/adxl345.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="drivers.clock"
                      displayName="drivers.clock"
                      projectFiles="true">
@@ -910,6 +915,11 @@
         <itemPath>../../../drivers/driverList.c</itemPath>
         <itemPath>../../../drivers/driverStreamListener.c</itemPath>
         <itemPath>../../../drivers/driverTransmitter.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f25"
+                     displayName="drivers.accelerometer"
+                     projectFiles="true">
+        <itemPath>../../../drivers/accelerometer/adxl345.c</itemPath>
       </logicalFolder>
       <logicalFolder name="drivers.clock"
                      displayName="drivers.clock"

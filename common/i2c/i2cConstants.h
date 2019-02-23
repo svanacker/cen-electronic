@@ -15,6 +15,9 @@
 // ALL I2C DEVICE
 #define I2C_GENERAL_ADDRESS     0x00
 
+// ACCELEROMETER ADXL345        
+#define ADXL345_ADDRESS         0x3A
+
 // VL530X
 #define VL530X_ADDRESS_0        0x52
 #define VL530X_ADDRESS_1        0x54
@@ -111,6 +114,7 @@
 #define ST24C16_ADDRESS_4             0XA4
 #define ST24C16_ADDRESS_5             0XA5
 #define ST24C16_ADDRESS_6             0xA6
+#define ADXL345_ALT_ADDRESS           0xA6
 #define ST24C16_ADDRESS_7             0XA7
 
 // EEPROM 24C512

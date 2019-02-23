@@ -103,6 +103,9 @@ void clearLastError();
 // COLOR
 #define COLOR_SENSOR_NULL                                                 0x04A0
 
+// ACCELEROMETER
+#define ACCELEROMETER_SENSOR_SETUP_PROBLEM                                0x04B0
+
 // OTHERS COMMON ERRORS
 #define UNIMPLETEMENTED_EXCEPTION                                         0x0500
 
