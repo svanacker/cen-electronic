@@ -137,6 +137,9 @@ void mainBoardCommonInitDrivers(void);
  */
 void mainBoardCommonHandleStreamInstruction(void);
 
+// TODO : Move it to Accelerometer Common
+void mainBoardCommonHandleAccelerometer(void);
+
 // INIT - DRIVERS
 
 void mainBoardCommonInitCommonDrivers(void);

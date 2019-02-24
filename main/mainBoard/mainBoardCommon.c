@@ -68,6 +68,10 @@
 #include "../../drivers/dispatcher/localDriverDataDispatcher.h"
 #include "../../drivers/dispatcher/uartDriverDataDispatcher.h"
 
+// ACCELEROMETER
+#include "../../device/accelerometer/accelerometerDevice.h"
+#include "../../device/accelerometer/accelerometerDeviceInterface.h"
+
 // CLOCK
 #include "../../device/clock/clockDevice.h"
 #include "../../device/clock/clockDeviceInterface.h"
@@ -124,6 +128,9 @@
 #include "../../device/adc/adcDeviceInterface.h"
 
 // Drivers
+// -> Accelerometer
+#include "../../drivers/accelerometer/adxl345.h"
+
 // -> Clock
 #include "../../drivers/clock/PCF8563.h"
 
@@ -156,6 +163,10 @@ static I2cBus i2cBusListArray[MAIN_BOARD_I2C_BUS_LIST_LENGTH];
 static I2cBusConnection i2cBusConnectionListArray[MAIN_BOARD_I2C_BUS_CONNECTION_LIST_LENGTH];
 static I2cBus* i2cBus;
 static I2cBus* i2cBus4;
+
+// ACCELEROMETER
+static Accelerometer accelerometer;
+static AccelerometerData accelerometerData;
 
 // EEPROM
 static Eeprom eeprom;
@@ -283,6 +294,9 @@ void mainBoardCommonAddDevices(RobotConfig* robotConfig) {
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
     addLocalDevice(getTemperatureSensorDeviceInterface(), getTemperatureSensorDeviceDescriptor(&temperature));
     addLocalDevice(getADCDeviceInterface(), getADCDeviceDescriptor());
+    
+    // ACCELEROMETER
+    addLocalDevice(getAccelerometerDeviceInterface(), getAccelerometerDeviceDescriptor(&accelerometer));
 
     // ROBOT CONFIG
     addLocalDevice(getRobotConfigDeviceInterface(), getRobotConfigDeviceDescriptor(robotConfig));
@@ -325,6 +339,18 @@ void mainBoardCommonInitCommonDrivers(void) {
     initTemperatureLM75A(&temperature, temperatureI2cBusConnection);
     appendStringLN(getDebugOutputStreamLogger(), "OK");
     
+    // -> Accelerometer
+    appendString(getDebugOutputStreamLogger(), "ACCELEROMETER ...");
+    I2cBusConnection* adxl345BusConnection = addI2cBusConnection(i2cBus, ADXL345_ALT_ADDRESS, true);
+    initADXL345AsAccelerometer(&accelerometer, &accelerometerData, adxl345BusConnection);
+    adxl345_setupInterruptOnSingleTapOnInt1(&accelerometer,
+                                            8000,
+                                            2,
+                                            TAP_AXES_ALL_ENABLE,
+                                            ADXL345_RATE_400HZ,
+                                            ADXL345_RANGE_16G);
+    appendStringLN(getDebugOutputStreamLogger(), "OK");
+    
     // Start interruptions
     startTimerList(false);
     // getTimerByCode(SERVO_TIMER_CODE)->enabled = true;
@@ -339,6 +365,13 @@ void mainBoardCommonHandleStreamInstruction(void) {
             &debugOutputStream,
             &filterRemoveCRLF_255,
             NULL); 
+}
+
+void mainBoardCommonHandleAccelerometer(void) {
+    bool intRaised = adxl345_wasIntRaised(&accelerometer);
+    if (intRaised) {
+        appendStringLN(getDebugOutputStreamLogger(), "SHOCKED !");
+    }
 }
 
 void mainBoardCommonMainInit(RobotConfig* robotConfig) {

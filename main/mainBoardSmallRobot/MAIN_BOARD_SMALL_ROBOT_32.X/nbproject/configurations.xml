@@ -129,6 +129,11 @@
         <itemPath>../../../common/pwm/servo/servoPwm.h</itemPath>
         <itemPath>../../../common/pwm/servo/servoPwmDebug.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f26"
+                     displayName="common.sensor.accelerometer"
+                     projectFiles="true">
+        <itemPath>../../../common/sensor/accelerometer/accelerometer.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="common.sensor.temperature"
                      displayName="common.sensor.temperature"
                      projectFiles="true">
@@ -184,6 +189,12 @@
         <itemPath>../../../device/deviceDebug.h</itemPath>
         <itemPath>../../../device/deviceConstants.h</itemPath>
         <itemPath>../../../device/transmitMode.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f25"
+                     displayName="device.accelerometer"
+                     projectFiles="true">
+        <itemPath>../../../device/accelerometer/accelerometerDevice.h</itemPath>
+        <itemPath>../../../device/accelerometer/accelerometerDeviceInterface.h</itemPath>
       </logicalFolder>
       <logicalFolder name="device.adc" displayName="device.adc" projectFiles="true">
         <itemPath>../../../device/adc/adcDeviceInterface.h</itemPath>
@@ -335,6 +346,8 @@
                      displayName="drivers.accelerometer"
                      projectFiles="true">
         <itemPath>../../../drivers/accelerometer/adxl345.h</itemPath>
+        <itemPath>../../../drivers/accelerometer/adxl345Register.h</itemPath>
+        <itemPath>../../../drivers/accelerometer/adxl345Debug.h</itemPath>
       </logicalFolder>
       <logicalFolder name="drivers.clock"
                      displayName="drivers.clock"
@@ -713,6 +726,11 @@
                      projectFiles="true">
         <itemPath>../../../common/pwm/servo/32/servoPwm32.c</itemPath>
       </logicalFolder>
+      <logicalFolder name="f27"
+                     displayName="common.sensor.accelerometer"
+                     projectFiles="true">
+        <itemPath>../../../common/sensor/accelerometer/accelerometer.c</itemPath>
+      </logicalFolder>
       <logicalFolder name="common.sensor.temperature"
                      displayName="common.sensor.temperature"
                      projectFiles="true">
@@ -763,6 +781,12 @@
         <itemPath>../../../device/deviceInterface.c</itemPath>
         <itemPath>../../../device/deviceDebug.c</itemPath>
         <itemPath>../../../device/transmitMode.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f26"
+                     displayName="device.accelerometer"
+                     projectFiles="true">
+        <itemPath>../../../device/accelerometer/accelerometerDevice.c</itemPath>
+        <itemPath>../../../device/accelerometer/accelerometerDeviceInterface.c</itemPath>
       </logicalFolder>
       <logicalFolder name="device.adc" displayName="device.adc" projectFiles="true">
         <itemPath>../../../device/adc/adcDeviceInterface.c</itemPath>
@@ -920,6 +944,7 @@
                      displayName="drivers.accelerometer"
                      projectFiles="true">
         <itemPath>../../../drivers/accelerometer/adxl345.c</itemPath>
+        <itemPath>../../../drivers/accelerometer/adxl345Debug.c</itemPath>
       </logicalFolder>
       <logicalFolder name="drivers.clock"
                      displayName="drivers.clock"

@@ -1,8 +1,13 @@
 #ifndef ADXL435_H
 #define ADXL435_H
 
+#include <stdlib.h>
+#include <stdbool.h>
+
 #include "../../common/i2c/i2cBusConnectionList.h"
 #include "../../common/io/outputStream.h"
+
+#include "../../common/sensor/accelerometer/accelerometer.h"
 
 // Data Rate
 #define ADXL345_RATE_3200HZ   0x0F    // 3200 Hz
@@ -37,50 +42,12 @@
 #define TAP_AXES_Y_ENABLE                       0b00000010
 #define TAP_AXES_Z_ENABLE                       0b00000001
 
-/**
- * Universal accelerometer Value
- */
-typedef struct AccelerometerData {
-    // To know if we are in 2G, 4G, 8G or 16G sensibility
-    unsigned char rangeMask;
-    unsigned char xRawLowValue;
-    unsigned char yRawLowValue;
-    unsigned char zRawLowValue;
-    unsigned char xRawHighValue;
-    unsigned char yRawHighValue;
-    unsigned char zRawHighValue;   
-    
-    int xRawValue;
-    int yRawValue;
-    int zRawValue;
-    // Value in milliG
-    float milligXValue;
-    float milligYValue;
-    float milligZValue;
-} AccelerometerData;
-
-// DEBUG PART
-
-/**
- * Debug the main register list of the ADX1345 (but not the data).
- * @param outputStream
- * @param i2cBusConnection
- */
-void adxl345_debugMainRegisterList(OutputStream* outputStream, I2cBusConnection* i2cBusConnection);
-
-/**
- * Read then debug the Data value stored in AccelerometerData
- * @param outputStream
- * @param i2cBusConnection
- * @param accelerometerData
- */
-void adxl345_debugValueRegisterList(OutputStream* outputStream, I2cBusConnection* i2cBusConnection, AccelerometerData* accelerometerData);
 
 // SETUP FUNCTIONS
 
 /**
  * Setup the adxl345 to raise an interrupt on INT 1 for a single TAP detection
- * @param i2cBusConnection the connection to the I2C
+ * @param accelerometer the POO instance
  * @param thresholdTap      : 62,5 mg / LSB for 16G
  * @param thresholdDuration : 625 µs / LSB
  * @param tapAxesMap        : use X AND/OR, Y AND/OR Z
@@ -88,16 +55,43 @@ void adxl345_debugValueRegisterList(OutputStream* outputStream, I2cBusConnection
  * @param rangeMask         : ADXL345_RANGE_2G / ADXL345_RANGE_4G / ADXL345_RANGE_8G / ADXL345_RANGE_16G
  * @param accelerometerData : the pointer on the structure containing the data
  */
-void adxl345_setupInterruptOnSingleTapOnInt1(I2cBusConnection* i2cBusConnection, 
-                                       unsigned char thresholdTap,
-                                       unsigned char thresholdDuration,
+void adxl345_setupInterruptOnSingleTapOnInt1(Accelerometer* accelerometer, 
+                                       unsigned int thresholdMilliG,
+                                       unsigned int thresholdDurationMilliSec,
                                        unsigned char tapAxesMap,
                                        unsigned char rate,
-                                       unsigned char rangeMask,
-                                       AccelerometerData* accelerometerData);
+                                       unsigned char rangeMask);
 
+unsigned int adxl345_getThresholdInMilliG(Accelerometer* accelerometer);
+
+/**
+ * Set the threshold in milliG. You MUST configure the dataFormat before !
+ * @param thresholdInMilliG
+ * @param accelerometer
+ */
+void adxl345_setThresholdInMilliG(Accelerometer* accelerometer, unsigned int thresholdInMilliG);
+
+void adxl345_setDurationInMilliSec(Accelerometer* accelerometer, unsigned int durationInMilliG);
+
+/**
+ * Return if the Interruption was raised.
+ * @param accelerometer
+ */
+bool adxl345_wasIntRaised(Accelerometer* accelerometer);
+
+/**
+ * Setup the Offset on each direction.
+ * @param i2cBusConnection
+ * @param offsetX
+ * @param offsetY
+ * @param offsetZ
+ */
 void adxl345_setupOffset(I2cBusConnection* i2cBusConnection, unsigned char offsetX, unsigned char offsetY, unsigned char offsetZ);
 
+/**
+ * Clear all values of offset.
+ * @param i2cBusConnection
+ */
 void adxl345_clearOffset(I2cBusConnection* i2cBusConnection);
 
 // PRIMITIVE FUNCTIONS
@@ -106,15 +100,29 @@ void adxl345_write8(I2cBusConnection* i2cBusConnection, unsigned char reg, unsig
 
 unsigned char adxl345_read8(I2cBusConnection* i2cBusConnection, unsigned char reg);
 
-// HIGH LEVEL Functions
+// ACCELEROMETER INTERFACE
 
-unsigned char adx345_readSampleCount(I2cBusConnection* i2cBusConnection);
+/**
+ * Read the amount of Sample Count available.
+ * @param accelerometer pointer on object (POO)
+ * @return 
+ */
+unsigned int adxl345_readSampleCount(Accelerometer* accelerometer);
 
 /**
  * Read the value of the accelerometer and store it in the data.
- * @param i2cBusConnection
- * @param accelerometerData
+ * @param accelerometer pointer on object (POO)
  */
-void adxl345_readAccelerometerData(I2cBusConnection* i2cBusConnection, AccelerometerData* accelerometerData);
+void adxl345_readAccelerometerData(Accelerometer* accelerometer);
+
+/**
+ * Init the ADXL345 as an Accelerometer.
+ * @param accelerometer the pointer on the structure with POO Callback
+ * @param accelerometerData the structure to store the accelerometer Data
+ * @param i2cBusConnection the i2c bus connection to reach the ADXL345
+ */
+void initADXL345AsAccelerometer(Accelerometer* accelerometer, 
+                                AccelerometerData* accelerometerData,
+                                I2cBusConnection* i2cBusConnection);
 
 #endif

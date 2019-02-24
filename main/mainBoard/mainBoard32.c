@@ -26,6 +26,7 @@
 
 #include "../../drivers/pwm/pca9685.h"
 #include "../../drivers/accelerometer/adxl345.h"
+#include "../../drivers/accelerometer/adxl345Debug.h"
 #include "../../common/i2c/i2cCommon.h"
 #include "../../common/i2c/i2cBusConnectionList.h"
 #include "printTableWriter.h"
@@ -62,6 +63,7 @@ bool mainBoardWaitForInstruction(StartMatch* startMatchParam) {
     // notification handler must avoid to handle directly information in notification callback
     // and never to the call back device
     mainBoardCommonHandleStreamInstruction();
+    mainBoardCommonHandleAccelerometer();
     mainBoardCommonMotorHandleStreamInstruction();
     mainBoardCommonStrategyHandleStreamInstruction();
     
@@ -131,35 +133,17 @@ int main(void) {
     I2cBus* i2cBus = getI2cBusByIndex(0);
     I2cBusConnection* pca9685BusConnection = addI2cBusConnection(i2cBus, 0x80, true);
     pca9685_init(pca9685BusConnection);
-    */
-    
-    I2cBus* i2cBus = getI2cBusByIndex(0);
-    // I2cBusConnection* adxl345BusConnection = addI2cBusConnection(i2cBus, ADXL345_ADDRESS, true);
-    I2cBusConnection* adxl345BusConnection = addI2cBusConnection(i2cBus, ADXL345_ALT_ADDRESS, true);
-    adxl345_debugMainRegisterList(getInfoOutputStreamLogger(), adxl345BusConnection);
-    
-    AccelerometerData accelerometerData;
-    adxl345_setupInterruptOnSingleTapOnInt1(adxl345BusConnection,
-                                            0,
-                                            0,
-                                            TAP_AXES_ALL_ENABLE,
-                                            // ADXL345_RATE_100HZ,
-                                            ADXL345_RATE_0_20HZ,
-                                            ADXL345_RANGE_2G,
-                                            &accelerometerData);
-    
-    adxl345_debugMainRegisterList(getInfoOutputStreamLogger(), adxl345BusConnection);
     
     while (1) {
         delaymSec(10);
-        adxl345_debugValueRegisterList(getInfoOutputStreamLogger(), adxl345BusConnection, &accelerometerData);
-        /*
+        // adxl345_debugValueRegisterList(getInfoOutputStreamLogger(), adxl345BusConnection, &accelerometerData);
+        // adxl345_debugValueRegisterListIfShock(getInfoOutputStreamLogger(), adxl345BusConnection, &accelerometerData);
         unsigned int sampleCount = adx345_readSampleCount(adxl345BusConnection);
         if (sampleCount > 0) {
             adxl345_debugMainRegisterList(getInfoOutputStreamLogger(), adxl345BusConnection);
         }
-         */
     }
+    */
     
     mainBoardCommonStrategyMainLoop();
 
