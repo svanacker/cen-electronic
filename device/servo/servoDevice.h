@@ -3,9 +3,11 @@
 
 #include "../../device/deviceDescriptor.h"
 
+#include "../../common/pwm/servo/servoList.h"
+
 /**
  * The descriptor for the servo device.
  */
-DeviceDescriptor* getServoDeviceDescriptor(unsigned int servoEnabledMaskParam);
+DeviceDescriptor* getServoDeviceDescriptor(ServoList* servoList);
 
 #endif

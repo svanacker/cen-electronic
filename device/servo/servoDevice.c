@@ -22,8 +22,8 @@
 #include "../../device/device.h"
 #include "../../device/deviceConstants.h"
 
-/** To know the list of servo that we would like to activate */
-static unsigned int servoEnabledMask;
+// forward declaration
+ServoList* getServoDeviceServoList(void);
 
 void deviceServoInit(void) {
     initPwmForServo(servoEnabledMask, PWM_SERVO_MIDDLE_POSITION);
@@ -39,15 +39,16 @@ bool deviceServoIsOk(void) {
 void deviceServoHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     // WRITE COMMANDS
     if (commandHeader == SERVO_COMMAND_WRITE) {
+        ServoList* servoList = getServoDeviceServoList;
         int servoIndex = readHex2(inputStream);
         checkIsSeparator(inputStream);
         int servoSpeed = readHex2(inputStream);
         checkIsSeparator(inputStream);
         int servoValue = readHex4(inputStream);
         if (servoIndex > 0 && servoIndex <= PWM_COUNT) {
-            pwmServo(servoIndex, servoSpeed, servoValue);
+            pwmServo(servoList, servoIndex, servoSpeed, servoValue);
         } else {
-            pwmServoAll(servoSpeed, servoValue);
+            pwmServoAll(servoList, servoSpeed, servoValue);
         }
         ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_WRITE);
     }
@@ -60,9 +61,10 @@ void deviceServoHandleRawData(char commandHeader, InputStream* inputStream, Outp
     else if (commandHeader == SERVO_COMMAND_READ) {
         ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_READ);
         int servoIndex = readHex2(inputStream);
-        int speed = pwmServoReadSpeed(servoIndex);
-        int currentPosition = pwmServoReadCurrentPosition(servoIndex);
-        int targetPosition = pwmServoReadTargetPosition(servoIndex);
+        ServoList* servoList = getServoDeviceServoList;
+        int speed = pwmServoReadSpeed(servoList, servoIndex);
+        int currentPosition = pwmServoReadCurrentPosition(servoList, servoIndex);
+        int targetPosition = pwmServoReadTargetPosition(servoList, servoIndex);
 
         appendHex2(outputStream, servoIndex);
         appendSeparator(outputStream);
@@ -111,7 +113,14 @@ static DeviceDescriptor descriptor = {
     .deviceHandleRawData = &deviceServoHandleRawData,
 };
 
-DeviceDescriptor* getServoDeviceDescriptor(unsigned int servoEnabledMaskParam) {
-    servoEnabledMask = servoEnabledMaskParam;
+/**
+ * @private
+ */
+ServoList* getServoDeviceServoList(void) {
+    return (ServoList*) descriptor.object;
+}
+
+DeviceDescriptor* getServoDeviceDescriptor(ServoList* servoList) {
+    descriptor.object = (int*) servoList;
     return &descriptor;
 }

@@ -14,7 +14,7 @@
 // PRIVATE
 
 // forward declaration
-void __internalPwmServo(int pwmIndex, int dutyms);
+void __internalPwmServo(Servo* servo, int dutyms);
 
 /**
  * @private.
@@ -85,9 +85,9 @@ void __internalPwmForServoHardware(unsigned int servoEnabledMask,
     }
 }
 
-void __internalPwmServo(int pwmIndex, int dutyms) {
+void __internalPwmServo(Servo* servo, int dutyms) {
 
-    switch (pwmIndex) {
+    switch (servo->index) {
         case 1:
         {
             OC1RS = _convPwmServo(dutyms);

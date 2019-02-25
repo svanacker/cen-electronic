@@ -5,10 +5,30 @@
 
 #include "../pwmPic.h"
 
+struct Servo;
+typedef struct Servo Servo;
+
+
+// SERVO CALL BACK FUNCTION
+
+/**
+ * Function raised when we initialize a servo.
+ */
+typedef void ServoInitFunction(Servo* servo);
+
+/**
+ * Set pwm to the Servo.
+ * @param dutyms : typical value is 1500, and 90° amplitude is done between
+ * 1000 & 2000
+ */
+typedef void ServoInternalPwmFunction(Servo* servo, unsigned int dutyms);
+
 /**
 * Defines the structure to manages Servos.
 */
-typedef struct Servo {
+struct Servo {
+    /** The index of the servo (first Servo start to 1) */
+    unsigned int servoIndex;
     /** If we use it, in PIC, some PWM use UART, so we don't activate them always */
     bool enabled;
     /** The speed to reach the final position. */
@@ -17,116 +37,66 @@ typedef struct Servo {
     unsigned int currentPosition;
     /** The target position. */
     unsigned int targetPosition;
-} Servo;
+    /** The function which must be called at first init. */
+    ServoInitFunction* initFunction;
+    /** The function to apply the pwm : must NOT be called outside the framework. */
+    ServoInternalPwmFunction* internalPwmFunction;
+    /** Back pointer to the servoList (untyped to avoid circular reference) */
+    int* servoList;
+};
 
-/**
-* Tre struct defining a list of servo.
-*/
-typedef struct ServoList {
-    /** To know if the servo List is already initialized. */
-    bool initialized;
-    /** The array of servos. */
-    Servo servos[PWM_COUNT];
-    /** Use Timer, if false, update immediately the value of the servo ! .*/
-    bool useTimer;
-} ServoList;
-
-#define PWM_SERVO_ENABLED_MASK_SERVO_1     0b00001
-#define PWM_SERVO_ENABLED_MASK_SERVO_2     0b00010
-#define PWM_SERVO_ENABLED_MASK_SERVO_3     0b00100
-#define PWM_SERVO_ENABLED_MASK_SERVO_4     0b01000
-#define PWM_SERVO_ENABLED_MASK_SERVO_5     0b10000
-
-#define PWM_SERVO_ENABLED_MASK_SERVO_ALL   0b11111
-#define PWM_SERVO_ENABLED_MASK_SERVO_1_2_5 0b10011
+// POSITION
 
 /**
 * Middle position for a servo
 */
-// FOR MD22 RC MODE
-#define PWM_SERVO_MIDDLE_POSITION 1480
+#define PWM_SERVO_MIDDLE_POSITION        1500
 
 /**
 * Left position (around 45° / middle position).
 */
-#define PWM_SERVO_LEFT_POSITION 1000
+#define PWM_SERVO_LEFT_POSITION          1000
 
 /**
 * Right position (around 45° / middle position).
 */
-#define PWM_SERVO_RIGHT_POSITION 2000
+#define PWM_SERVO_RIGHT_POSITION         2000
 
-#define PWM_SERVO_SPEED_MIN 1
+// SPEED
 
-#define PWM_SERVO_SPEED_MAX 255
+#define PWM_SERVO_SPEED_MIN                 1
 
-// --- SERVO MODE ---
-
-/**
- * @private.
- */
-ServoList* _getServoList();
-
-// ABSTRACT METHOD
-
-/**
- * Abstract method which must be defined by a hardware implementation
- * (Ex : 30F / 32)
- * @param posInit the initial position of all servos.
- */
-void __internalPwmForServoHardware(unsigned int servoEnabledMask, 
-                                   int posInit);
-
-/**
- * "Protected" method which must not be used directly by users.
- */
-void __internalPwmServo(int pwmIndex, int dutyms);
-
-// INIT
-
-/**
-* initPwm for a 50 Hz operation with a position
-* Initialize the cycle of OC1 and OC2 to 20ms
-* Use TIMER2
-* @param posInt : Duty start cycle from 0 to 20000
-*/
-void initPwmForServo (unsigned int servoToActivateMask, int dutyms);
+#define PWM_SERVO_SPEED_MAX               255
 
 // INTERFACE
 
 /**
-* do a pwm on a pwmIndex between 1 and 4
+* Do a pwm servo on a specified servo
+* @param speed the speed to reach the targetPosition
 * @param targetPosition duration of pwm to 1 typical value between
 * PWM_SERVO_LEFT_POSITION and PWM_SERVO_RIGHT_POSITION 
 */
-void pwmServo(int pwmIndex, unsigned int speed, int targetPosition);
-
-/**
-* do a pwm on all pwm
-* @param dutyms duration of pwm to 1 typical value between
-* PWM_SERVO_LEFT_POSITION and PWM_SERVO_RIGHT_POSITION 
-*/
-void pwmServoAll(unsigned int speed, int dutyms);
+void pwmServo(Servo* servo, unsigned int speed, int targetPosition);
 
 /**
  * Returns the speed used to reach the position.
  * @param servoIndex the servo index that we want to get
  * @param -1 if servoIndex is not correct, speed value if ok
  */
-unsigned int pwmServoReadSpeed(int servoIndex);
+unsigned int pwmServoReadSpeed(Servo* servo);
 
 /**
  * Returns the current position used to reach the current position.
  * @param servoIndex the servo index that we want to get the current position
  * @param -1 if servoIndex is not correct, current position if ok
  */
-unsigned int pwmServoReadCurrentPosition(int servoIndex);
+unsigned int pwmServoReadCurrentPosition(Servo* servo);
 
 /**
  * Returns the current position used to reach the target position.
  * @param servoIndex the servo index that we want to get the target position
  * @param -1 if servoIndex is not correct, current position if ok
  */
-unsigned int pwmServoReadTargetPosition(int servoIndex);
+unsigned int pwmServoReadTargetPosition(Servo* servo);
 
 #endif

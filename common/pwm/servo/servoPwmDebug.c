@@ -1,5 +1,6 @@
 #include "servoPwmDebug.h"
 #include "servoPwm.h"
+#include "servoList.h"
 
 #include "../../../common/delay/cenDelay.h"
 
@@ -58,8 +59,8 @@ void printServoListHeader(OutputStream* outputStream) {
 	appendTableHeaderSeparatorLine(outputStream);
 }
 
-void printServo(OutputStream* outputStream, Servo* servo, int index) {
-	appendDecTableData(outputStream, index, SERVO_PWM_DEBUG_SPEED_COLUMN_LENGTH);
+void printServo(OutputStream* outputStream, Servo* servo) {
+	appendDecTableData(outputStream, servo->servoIndex, SERVO_PWM_DEBUG_INDEX_COLUMN_LENGTH);
 	appendBoolTableData(outputStream, servo->enabled, SERVO_PWM_DEBUG_ENABLED_COLUMN_LENGTH);
 	appendDecTableData(outputStream, servo->speed, SERVO_PWM_DEBUG_SPEED_COLUMN_LENGTH);
 	appendDecTableData(outputStream, servo->currentPosition, SERVO_PWM_DEBUG_CURRENT_POSITION_DEC_COLUMN_LENGTH);
@@ -71,33 +72,33 @@ void printServo(OutputStream* outputStream, Servo* servo, int index) {
 }
 
 
-void printServoList(OutputStream* outputStream) {
+void printServoList(OutputStream* outputStream, ServoList* servoList) {
 	println(outputStream);
 	printServoListHeader(outputStream);
-    ServoList* servoList = _getServoList();
     int i;
-    for (i = 0; i < PWM_COUNT; i++) {
-        Servo* servo = &(servoList->servos[i]);
+    for (i = 1; i <= PWM_COUNT; i++) {
+        Servo* servo = getServo(servoList, i);
 
-        printServo(outputStream, servo, i);
+        printServo(outputStream, servo);
     }
 	appendTableHeaderSeparatorLine(outputStream);
 }
 
 // TEST FUNCTIONS
 
-void testAllPwmServos() {
+void testAllPwmServos(ServoList* servoList) {
     OutputStream* infoOutputStream = getInfoOutputStreamLogger();
     int servoIndex;
 
     for (servoIndex = 1; servoIndex <= PWM_COUNT; servoIndex++) {
-        pwmServo(servoIndex, PWM_SERVO_SPEED_MAX, PWM_SERVO_MIDDLE_POSITION);
+        Servo* servo = getServo(servoList, servoIndex);
+        pwmServo(servo, PWM_SERVO_SPEED_MAX, PWM_SERVO_MIDDLE_POSITION);
         appendString(infoOutputStream, "Servo : ");
-        appendDec(infoOutputStream, servoIndex);
+        appendDec(infoOutputStream, servo->servoIndex);
         delaymSec(500);
-        pwmServo(servoIndex, PWM_SERVO_SPEED_MAX, PWM_SERVO_LEFT_POSITION);
+        pwmServo(servo, PWM_SERVO_SPEED_MAX, PWM_SERVO_LEFT_POSITION);
         delaymSec(500);
-        pwmServo(servoIndex, PWM_SERVO_SPEED_MAX, PWM_SERVO_RIGHT_POSITION);
+        pwmServo(servo, PWM_SERVO_SPEED_MAX, PWM_SERVO_RIGHT_POSITION);
         delaymSec(2000);
         appendCRLF(infoOutputStream);
     }

@@ -128,6 +128,10 @@
                      projectFiles="true">
         <itemPath>../../../common/pwm/servo/servoPwm.h</itemPath>
         <itemPath>../../../common/pwm/servo/servoPwmDebug.h</itemPath>
+        <itemPath>../../../common/pwm/servo/servoList.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f27" displayName="common.pwm.servo.32" projectFiles="true">
+        <itemPath>../../../common/pwm/servo/32/servoPwm32.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f26"
                      displayName="common.sensor.accelerometer"
@@ -481,20 +485,6 @@
       <logicalFolder name="robot" displayName="robot" projectFiles="true">
         <itemPath>../../../robot/robot.h</itemPath>
       </logicalFolder>
-      <logicalFolder name="robot.2018" displayName="robot.2018" projectFiles="true">
-        <itemPath>../../../robot/2018/strategy2018.h</itemPath>
-        <itemPath>../../../robot/2018/strategy2018Utils.h</itemPath>
-        <itemPath>../../../robot/2018/distributor2018.h</itemPath>
-        <itemPath>../../../robot/2018/launcherDeviceInterface2018.h</itemPath>
-        <itemPath>../../../robot/2018/strategyDevice2018.h</itemPath>
-        <itemPath>../../../robot/2018/strategyDeviceInterface2018.h</itemPath>
-        <itemPath>../../../robot/2018/score2018.h</itemPath>
-        <itemPath>../../../robot/2018/distributorDebug2018.h</itemPath>
-        <itemPath>../../../robot/2018/gameBoardElement2018.h</itemPath>
-        <itemPath>../../../robot/2018/strategyConfig2018.h</itemPath>
-        <itemPath>../../../robot/2018/strategyAction2018.h</itemPath>
-        <itemPath>../../../robot/2018/instructionCounter2018.h</itemPath>
-      </logicalFolder>
       <logicalFolder name="f22" displayName="robot.2019" projectFiles="true">
         <itemPath>../../../robot/2019/gameBoardElement2019.h</itemPath>
         <itemPath>../../../robot/2019/mainBoard2019.h</itemPath>
@@ -720,6 +710,7 @@
                      projectFiles="true">
         <itemPath>../../../common/pwm/servo/servoPwm.c</itemPath>
         <itemPath>../../../common/pwm/servo/servoPwmDebug.c</itemPath>
+        <itemPath>../../../common/pwm/servo/servoList.c</itemPath>
       </logicalFolder>
       <logicalFolder name="common.pwm.servo.32"
                      displayName="common.pwm.servo.32"
@@ -1069,19 +1060,6 @@
       </logicalFolder>
       <logicalFolder name="robot" displayName="robot" projectFiles="true">
         <itemPath>../../../robot/robot.c</itemPath>
-      </logicalFolder>
-      <logicalFolder name="robot.2018" displayName="robot.2018" projectFiles="true">
-        <itemPath>../../../robot/2018/strategy2018.c</itemPath>
-        <itemPath>../../../robot/2018/strategy2018Utils.c</itemPath>
-        <itemPath>../../../robot/2018/distributor2018.c</itemPath>
-        <itemPath>../../../robot/2018/launcherDeviceInterface2018.c</itemPath>
-        <itemPath>../../../robot/2018/strategyDevice2018.c</itemPath>
-        <itemPath>../../../robot/2018/strategyDeviceInterface2018.c</itemPath>
-        <itemPath>../../../robot/2018/distributorDebug2018.c</itemPath>
-        <itemPath>../../../robot/2018/gameBoardElement2018.c</itemPath>
-        <itemPath>../../../robot/2018/strategyConfig2018.c</itemPath>
-        <itemPath>../../../robot/2018/strategyAction2018.c</itemPath>
-        <itemPath>../../../robot/2018/instructionCounter2018.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f22" displayName="robot.2019" projectFiles="true">
         <itemPath>../../../robot/2019/gameBoardElement2019.c</itemPath>
