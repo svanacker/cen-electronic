@@ -44,13 +44,13 @@ void lightOn2018(int launcherIndex) {
     }
     
     // TODO : Check this !
-    ServoList* servoList = _getServoList();
-    servoList->useTimer = false;
+    // ServoList* servoList = _getServoList();
+    /// servoList->useTimer = false;
     
-    pwmServo(servoIndex, speed, servoOnPosition);
+    // pwmServo(servoIndex, speed, servoOnPosition);
     // TODO : Check it because it's really longer than 50 ms
-    delaymSec(delay);
-    pwmServo(servoIndex, speed, servoOffPosition);
+    // delaymSec(delay);
+    // pwmServo(servoIndex, speed, servoOffPosition);
 }
 
 // LAUNCH
@@ -158,6 +158,7 @@ unsigned int distributor2018CleanNext(int launcherIndex) {
 }
 
 void distributor2018EjectDirty(void) {
+    /*
     // TODO : Check this !
     ServoList* servoList = _getServoList();
     servoList->useTimer = false;
@@ -166,6 +167,7 @@ void distributor2018EjectDirty(void) {
     // TODO : Check it because it's really longer than 50 ms
     delaymSec(LAUNCHER_DIRTY_EJECTOR_SERVO_DELAY);
     pwmServo(LAUNCHER_DIRTY_EJECTOR_SERVO_INDEX, 0xFF, LAUNCHER_DIRTY_EJECTOR_SERVO_OFF_POSITION);
+    */
 }
 
 void deviceLauncher2018Init(void) {

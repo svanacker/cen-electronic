@@ -13,7 +13,10 @@
 // DEVICE
 
 #define MAIN_BOARD_DEVICE_LENGTH                                       40
-#define MAIN_BOARD_TIMER_LENGTH                                         5
+#define MAIN_BOARD_TIMER_LIST_LENGTH                                    5
+
+// SERVO 
+#define MAIN_BOARD_SERVO_LIST_LENGTH                                   21
 
 // IO EXPANDER
 #define MAIN_BOARD_IO_EXPANDER_LIST_LENGTH                              1

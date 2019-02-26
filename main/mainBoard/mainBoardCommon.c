@@ -216,8 +216,12 @@ static Device deviceListArray[MAIN_BOARD_DEVICE_LENGTH];
 // static Relay relay;
 // static I2cBusConnection* relayBusConnection;
 
+// Servos
+static ServoList servoList;
+static Servo servoListArray[MAIN_BOARD_SERVO_LIST_LENGTH];
+
 // Timers
-static Timer timerListArray[MAIN_BOARD_TIMER_LENGTH];
+static Timer timerListArray[MAIN_BOARD_TIMER_LIST_LENGTH];
 
 // LOG LIST
 
@@ -266,10 +270,16 @@ I2cBus* mainBoardCommonGetMainI2cBus(void) {
     return i2cBus;
 }
 
+// SERVO LIST
+
+void mainBoardCommonInitServoList(void) {
+    initServoList(&servoList, &servoListArray, MAIN_BOARD_SERVO_LIST_LENGTH);
+}
+
 // TIMER LIST
 
 void mainBoardCommonInitTimerList(void) {
-    initTimerList(&timerListArray, MAIN_BOARD_TIMER_LENGTH);
+    initTimerList(&timerListArray, MAIN_BOARD_TIMER_LIST_LENGTH);
 }
 
 // DEVICES
@@ -289,7 +299,7 @@ void mainBoardCommonAddDevices(RobotConfig* robotConfig) {
     addLocalDevice(getI2cMasterDebugDeviceInterface(), getI2cMasterDebugDeviceDescriptor());
     
     // COMMON DEVICES
-    addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor(PWM_SERVO_ENABLED_MASK_SERVO_1_2_5));
+    // addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor(PWM_SERVO_ENABLED_MASK_SERVO_1_2_5));
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
     addLocalDevice(getTemperatureSensorDeviceInterface(), getTemperatureSensorDeviceDescriptor(&temperature));

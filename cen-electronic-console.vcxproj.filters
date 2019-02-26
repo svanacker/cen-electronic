@@ -2046,6 +2046,9 @@
     <ClCompile Include="robot\tof\strategyTofSensorList.c">
       <Filter>Source Files\robot\tof</Filter>
     </ClCompile>
+    <ClCompile Include="common\pwm\servo\servoList.c">
+      <Filter>Source Files\common\pwm\servo</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -3175,6 +3178,9 @@
     </ClInclude>
     <ClInclude Include="robot\tof\strategyTofSensorList.h">
       <Filter>Header Files\robot\tof</Filter>
+    </ClInclude>
+    <ClInclude Include="common\pwm\servo\servoList.h">
+      <Filter>Header Files\common\pwm\servo</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

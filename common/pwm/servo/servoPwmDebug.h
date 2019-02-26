@@ -11,7 +11,7 @@
  * @param outputStream the stream in which we print debug values for the specified servo.
  * @param servo the pointer on the servo
  */
-void printServo(OutputStream* outputStream, Servo* servo);
+void printServo(OutputStream* outputStream, Servo* servo, unsigned int servoIndex);
 
 /**
 * Print the Servo List loaded in the system.
@@ -24,5 +24,11 @@ void printServoList(OutputStream* outputStream, ServoList* servoList);
  * Debug function to be sure that Pwm Servos are ok !
  */
 void testAllPwmServos(ServoList* servoList);
+
+// SERVO TYPE
+
+unsigned int appendServoTypeAsString(OutputStream* outputStream, enum ServoType servoType);
+
+unsigned int addServoTypeTableData(OutputStream* outputStream, enum ServoType servoType, int columnSize);
 
 #endif

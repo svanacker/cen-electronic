@@ -24,11 +24,31 @@ typedef void ServoInitFunction(Servo* servo);
 typedef void ServoInternalPwmFunction(Servo* servo, unsigned int dutyms);
 
 /**
+ * Determine the type of servo.
+ */
+enum ServoType {
+    /** The pwm is managed internally by the microcontroller */
+    SERVO_TYPE_INTERNAL_PWM,
+    /** The PCA_8695. */
+    SERVO_TYPE_PCA_8695,
+    /** Devantech SD21. */
+    SERVO_TYPE_SD_21,
+    /** PC (simulation). */
+    SERVO_TYPE_PC
+};
+
+/**
 * Defines the structure to manages Servos.
 */
 struct Servo {
-    /** The index of the servo (first Servo start to 1) */
-    unsigned int servoIndex;
+    /** The type of servo. */
+    enum ServoType servoType;
+    /**
+     * The internal index of the servo linked to the hardware. As several
+     * servo could use different type of servo (PCA8695, internal PWM).
+     * Ex : 3 for the pin 3 of the PCA8695 or the pin 3
+     */
+    unsigned int internalServoIndex;
     /** If we use it, in PIC, some PWM use UART, so we don't activate them always */
     bool enabled;
     /** The speed to reach the final position. */
@@ -44,6 +64,8 @@ struct Servo {
     /** Back pointer to the servoList (untyped to avoid circular reference) */
     int* servoList;
 };
+
+
 
 // POSITION
 

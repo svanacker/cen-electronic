@@ -11,10 +11,9 @@
 /** For 50 Hz operation. */
 #define PWM_DUTY_CYCLE_FOR_SERVO 20000
 
-// PRIVATE
+#define SERVO32_PWM_COUNT          5
 
-// forward declaration
-void __internalPwmServo(Servo* servo, int dutyms);
+// PRIVATE
 
 /**
  * @private.
@@ -79,15 +78,17 @@ void __internalPwmForServoHardware(unsigned int servoEnabledMask,
     // Launch the relating timer
     OpenTimer2(T2_ON | T2_PS_1_64 | T2_SOURCE_INT, PWM_TIMER_FOR_SERVO);
 
+    /*
     unsigned int servoIndex;
-    for (servoIndex = 1; servoIndex <= 5; servoIndex++) {
+    for (servoIndex = 1; servoIndex <= SERVO32_PWM_COUNT; servoIndex++) {
         __internalPwmServo(servoIndex, posInit);
     }
+    */
 }
 
 void __internalPwmServo(Servo* servo, int dutyms) {
 
-    switch (servo->index) {
+    switch (servo->internalServoIndex) {
         case 1:
         {
             OC1RS = _convPwmServo(dutyms);

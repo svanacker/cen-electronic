@@ -46,10 +46,14 @@
 // Devices
 #define MAIN_BOARD_PC_DEVICE_LIST_LENGTH                        30
 
-#define MAIN_BOARD_PC_TOF_SENSOR_LIST_LENGTH                    6
+#define MAIN_BOARD_PC_TOF_SENSOR_LIST_LENGTH                     6
+
+// Servos
+#define MAIN_BOARD_PC_SERVO_LIST_LENGTH                         21
 
 // Timers
-#define MAIN_BOARD_PC_TIMER_LENGTH                              5
+#define MAIN_BOARD_PC_TIMER_LIST_LENGTH                          5
+
 
 
 /**

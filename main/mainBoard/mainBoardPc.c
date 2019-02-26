@@ -262,8 +262,12 @@ static Buffer i2cMasterDebugOutputBuffer;
 static char i2cMasterDebugInputBufferArray[MAIN_BOARD_PC_I2C_DEBUG_MASTER_IN_BUFFER_LENGTH];
 static Buffer i2cMasterDebugInputBuffer;
 
+// ServoList
+static ServoList servoList;
+static Servo servoListArray[MAIN_BOARD_PC_SERVO_LIST_LENGTH];
+
 // Timers
-static Timer timerListArray[MAIN_BOARD_PC_TIMER_LENGTH];
+static Timer timerListArray[MAIN_BOARD_PC_TIMER_LIST_LENGTH];
 
 // ConsoleOutputStream
 static InputStream consoleInputStream;
@@ -357,7 +361,7 @@ void initMainBoardLocalDevices(void) {
     addLocalDevice(getI2cCommonDebugDeviceInterface(), getI2cCommonDebugDeviceDescriptor());
     addLocalDevice(getI2cMasterDebugDeviceInterface(), getI2cMasterDebugDeviceDescriptor());
     addLocalDevice(getDataDispatcherDeviceInterface(), getDataDispatcherDeviceDescriptor());
-    addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor(PWM_SERVO_ENABLED_MASK_SERVO_1_2_5));
+    addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor(&servoList));
     addLocalDevice(getTimerDeviceInterface(), getTimerDeviceDescriptor());
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
     // addLocalDevice(getFileDeviceInterface(), getFileDeviceDescriptor());
@@ -403,7 +407,8 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
 
     initSerialLinkList((SerialLink(*)[]) &serialLinkListArray, MAIN_BOARD_PC_SERIAL_LINK_LIST_LENGTH);
 
-    initTimerList((Timer(*)[]) &timerListArray, MAIN_BOARD_PC_TIMER_LENGTH);
+    initTimerList((Timer(*)[]) &timerListArray, MAIN_BOARD_PC_TIMER_LIST_LENGTH);
+    initServoList(&servoList, (Servo(*)[]) &servoListArray, MAIN_BOARD_PC_SERVO_LIST_LENGTH);
 
     initBuffer(&consoleInputBuffer, (char(*)[]) &consoleInputBufferArray, MAIN_BOARD_PC_CONSOLE_INPUT_BUFFER_LENGTH, "inputConsoleBuffer", "IN");
     initBuffer(&consoleOutputBuffer, (char(*)[]) &consoleOutputBufferArray, MAIN_BOARD_PC_CONSOLE_OUTPUT_BUFFER_LENGTH, "outputConsoleBuffer", "IN");
@@ -538,7 +543,10 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
     initDevices();
 
     startTimerList(false);
-    getTimerByCode(SERVO_TIMER_CODE)->enabled = true;
+    Timer* servoTimer = getTimerByCode(SERVO_TIMER_CODE);
+    if (servoTimer != NULL) {
+        servoTimer->enabled = true;
+    }
     getTimerByCode(END_MATCH_DETECTOR_TIMER_CODE)->enabled = true;
 
     delaymSec(100);

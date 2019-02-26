@@ -19,12 +19,15 @@
 #include "../../../common/timer/timerConstants.h"
 #include "../../../common/timer/timerList.h"
 
-#define SERVO_SPEED_TIMER_FACTOR 3
 
+/**
+ * Return a pointer on servoList from the servo.
+ * @param servo
+ * @return 
+ */
 ServoList* getServoList(Servo* servo) {
     return (ServoList*) servo->servoList;
 }
-
 
 // PUBLIC WRITE FUNCTIONS
 
@@ -37,14 +40,7 @@ void pwmServo(Servo* servo, unsigned int speed, int targetPosition) {
     // By default, we update the value immediately, if we want some speed, we need a timer !
     ServoList* servoList = getServoList(servo);
     if (!servoList->useTimer) {
-        servo->setFunction(servo, targetPosition);
-    }
-}
-
-void pwmServoAll(unsigned int speed, int dutyms) {
-    int i;
-    for (i = 1; i <= PWM_COUNT; i++) {
-        pwmServo(i, speed, dutyms);
+        servo->internalPwmFunction(servo, targetPosition);
     }
 }
 

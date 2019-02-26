@@ -9,6 +9,12 @@
 #include <stdlib.h>
 
 /**
+ * This means that each time callback, the factor is to increment or decrement.
+ * between PWM_SERVO_LEFT_POSITION and PWM_SERVO_RIGHT_POSITION
+ */
+#define SERVO_SPEED_TIMER_FACTOR               3
+
+/**
  * The interrupt timer.
  */
 void interruptServoTimerCallbackFunc(Timer* timer) {
@@ -16,8 +22,9 @@ void interruptServoTimerCallbackFunc(Timer* timer) {
     if (!servoList->useTimer) {
         return;
     }
-    int i;
-    for (i = 0; i < PWM_COUNT; i++) {
+    unsigned int i;
+    unsigned size = servoList->size;
+    for (i = 0; i < size; i++) {
         Servo* servo = getServo(servoList, i);
         if (servo->currentPosition == servo->targetPosition) {
             continue;
@@ -88,7 +95,7 @@ void initPwmForServo(unsigned int servoToActivateMask, int posInit) {
 }
 */
 
-Servo* getServo(ServoList* servoList, int servoIndex) {
+Servo* getServo(ServoList* servoList, unsigned int servoIndex) {
     if (servoList == NULL || servoList->maxSize == 0) {
         writeError(SERVO_LIST_NOT_INITIALIZED);
         return NULL;

@@ -33,6 +33,9 @@
 // Command header to do the test program
 #define SERVO_COMMAND_TEST                          'T'
 
+// SERVO INDEX
+#define SERVO_ALL_INDEX                             0xFF
+
 /**
 * Interface for Servo Device.
 */
