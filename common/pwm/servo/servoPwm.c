@@ -29,6 +29,25 @@ ServoList* getServoList(Servo* servo) {
     return (ServoList*) servo->servoList;
 }
 
+// INIT FUNCTIONS
+
+void initServo(Servo* servo,
+        enum ServoType servoType,
+        unsigned int internalServoIndex,
+        char* name,
+        ServoInitFunction* initFunction,
+        ServoInternalPwmFunction* internalPwmFunction) {
+    servo->servoType = servoType;
+    servo->internalServoIndex = internalServoIndex;
+    servo->name = name;
+    servo->enabled = true;
+    servo->targetPosition = PWM_SERVO_MIDDLE_POSITION;
+    servo->currentPosition = PWM_SERVO_MIDDLE_POSITION;
+    servo->speed = PWM_SERVO_SPEED_MAX;
+    servo->initFunction = initFunction;
+    servo->internalPwmFunction = internalPwmFunction;
+}
+
 // PUBLIC WRITE FUNCTIONS
 
 void pwmServo(Servo* servo, unsigned int speed, int targetPosition) {

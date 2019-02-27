@@ -33,7 +33,13 @@ void initServoList(ServoList* servoList, Servo(*servoArray)[], unsigned int serv
  * @param servoList the list of servo
  * @param servo the servo to add to the list
  */
-void addServo(ServoList* servoList, Servo* servo);
+Servo* addServo(ServoList* servoList,
+    enum ServoType servoType,
+    unsigned int internalServoIndex,
+    char* name,
+    ServoInitFunction* initFunction,
+    ServoInternalPwmFunction* internalPwmFunction
+);
 
 /**
  * Get a servo object at the specified index.
@@ -42,6 +48,12 @@ void addServo(ServoList* servoList, Servo* servo);
  * @return 
  */
 Servo* getServo(ServoList* servoList, unsigned int servoIndex);
+
+/**
+ * Returns the amount of servo which is configured.
+ * @param servoList the list of servo
+ */
+unsigned int getServoCount(ServoList* servoList);
 
 // UTILS FUNCTION
 

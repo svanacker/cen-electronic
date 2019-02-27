@@ -61,6 +61,13 @@ void deviceServoHandleRawData(char commandHeader, InputStream* inputStream, Outp
         ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_WRITE_COMPACT);
     }
     // READ COMMANDS
+    else if (commandHeader == SERVO_COMMAND_GET_COUNT) {
+        ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_GET_COUNT);
+        ServoList* servoList = getServoDeviceServoList();
+        unsigned int servoCount = getServoCount(servoList);
+        appendHex2(outputStream, servoCount);
+
+    }
     else if (commandHeader == SERVO_COMMAND_READ) {
         ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_READ);
         int servoIndex = readHex2(inputStream);

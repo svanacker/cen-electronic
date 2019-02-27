@@ -66,8 +66,10 @@ void clearLastError();
 
 // SERVO
 #define SERVO_LIST_NOT_INITIALIZED                                        0x01A0
-#define SERVO_LIST_TOO_MUCH_LOG_HANDLERS                                  0x01A1
+#define SERVO_LIST_TOO_MUCH_SERVOS                                        0x01A1
 #define SERVO_LIST_OUT_OF_BOUNDS                                          0x01A2
+#define SERVO_LIST_SERVO_NULL                                             0x01A3
+#define SERVO_LIST_SERVO_NOT_INITIALIZED                                  0x01A4
 
 // TIMER
 #define TIMERS_LIST_NOT_INITIALIZED                                       0x0200

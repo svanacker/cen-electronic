@@ -27,6 +27,8 @@ typedef void ServoInternalPwmFunction(Servo* servo, unsigned int dutyms);
  * Determine the type of servo.
  */
 enum ServoType {
+    /** Undefined (often because not initialized properly !) */
+    SERVO_TYPE_UNKNOWN,
     /** The pwm is managed internally by the microcontroller */
     SERVO_TYPE_INTERNAL_PWM,
     /** The PCA_8695. */
@@ -49,6 +51,10 @@ struct Servo {
      * Ex : 3 for the pin 3 of the PCA8695 or the pin 3
      */
     unsigned int internalServoIndex;
+    /**
+    * Name of the servo so that we can easily understand the target of the servo.
+    */
+    char* name;
     /** If we use it, in PIC, some PWM use UART, so we don't activate them always */
     bool enabled;
     /** The speed to reach the final position. */
@@ -89,6 +95,15 @@ struct Servo {
 #define PWM_SERVO_SPEED_MIN                 1
 
 #define PWM_SERVO_SPEED_MAX               255
+
+// INIT
+
+void initServo(Servo* servo, 
+                enum ServoType servoType,
+                unsigned int internalServoIndex,
+                char* name,
+                ServoInitFunction* initFunction,
+                ServoInternalPwmFunction* internalPwmFunction);
 
 // INTERFACE
 

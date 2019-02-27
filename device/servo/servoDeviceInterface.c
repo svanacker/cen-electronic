@@ -30,6 +30,14 @@ int deviceServoGetInterface(char commandHeader, DeviceInterfaceMode mode, bool f
         return commandLengthValueForMode(mode, 4, 0);
     }
     // READ_FUNCTIONS
+    else if (commandHeader == SERVO_COMMAND_GET_COUNT) {
+        if (fillDeviceArgumentList) {
+            setFunction("servoCount", 0, 1);
+            setResultUnsignedHex2(0, "ServoCount");
+
+        }
+        return commandLengthValueForMode(mode, 0, 2);
+    }
     else if (commandHeader == SERVO_COMMAND_READ) {
         if (fillDeviceArgumentList) {
             setFunction("servoRead", 1, 7);

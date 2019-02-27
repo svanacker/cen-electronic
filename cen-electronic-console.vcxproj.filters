@@ -979,6 +979,9 @@
     <Filter Include="Header Files\robot\tof">
       <UniqueIdentifier>{ad837bf4-431e-4957-956a-f3737634ad05}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\common\pwm\servo\pc">
+      <UniqueIdentifier>{a54c6746-822c-43d5-8e7f-78e80742d4d8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -2048,6 +2051,9 @@
     </ClCompile>
     <ClCompile Include="common\pwm\servo\servoList.c">
       <Filter>Source Files\common\pwm\servo</Filter>
+    </ClCompile>
+    <ClCompile Include="common\pwm\servo\pc\servoListPc.c">
+      <Filter>Source Files\common\pwm\servo\pc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -3181,6 +3187,12 @@
     </ClInclude>
     <ClInclude Include="common\pwm\servo\servoList.h">
       <Filter>Header Files\common\pwm\servo</Filter>
+    </ClInclude>
+    <ClInclude Include="common\pwm\servo\pc\servoPwmPc.h">
+      <Filter>Header Files\common\pwm\servo\pc</Filter>
+    </ClInclude>
+    <ClInclude Include="common\pwm\servo\pc\servoListPc.h">
+      <Filter>Header Files\common\pwm\servo\pc</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

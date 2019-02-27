@@ -32,6 +32,8 @@
 #include "../../common/log/pc/consoleLogHandler.h"
 
 #include "../../common/pwm/servo/servoPwm.h"
+#include "../../common/pwm/servo/servoList.h"
+#include "../../common/pwm/servo/pc/servoListPc.h"
 
 #include "../../common/serial/serial.h"
 #include "../../common/serial/serialLink.h"
@@ -408,7 +410,7 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
     initSerialLinkList((SerialLink(*)[]) &serialLinkListArray, MAIN_BOARD_PC_SERIAL_LINK_LIST_LENGTH);
 
     initTimerList((Timer(*)[]) &timerListArray, MAIN_BOARD_PC_TIMER_LIST_LENGTH);
-    initServoList(&servoList, (Servo(*)[]) &servoListArray, MAIN_BOARD_PC_SERVO_LIST_LENGTH);
+    initServoListPc(&servoList, (Servo(*)[]) &servoListArray, MAIN_BOARD_PC_SERVO_LIST_LENGTH);
 
     initBuffer(&consoleInputBuffer, (char(*)[]) &consoleInputBufferArray, MAIN_BOARD_PC_CONSOLE_INPUT_BUFFER_LENGTH, "inputConsoleBuffer", "IN");
     initBuffer(&consoleOutputBuffer, (char(*)[]) &consoleOutputBufferArray, MAIN_BOARD_PC_CONSOLE_OUTPUT_BUFFER_LENGTH, "outputConsoleBuffer", "IN");

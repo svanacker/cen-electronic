@@ -64,6 +64,7 @@ void initServoList(ServoList* servoList,
         servo->servoInit(servo, servo->currentPosition);
     }
     */
+
     
     // Init the timer for servo
     // and add the timer to the list, so that the interrupt function will
@@ -75,6 +76,39 @@ void initServoList(ServoList* servoList,
 							(int*) servoList);
     servoList->initialized = true;
     servoList->useTimer = true;
+}
+
+Servo* addServo(ServoList* servoList,
+    enum ServoType servoType,
+    unsigned int internalServoIndex,
+    char* name,
+    ServoInitFunction* initFunction,
+    ServoInternalPwmFunction* internalPwmFunction
+    ) {
+    if (servoList->maxSize == 0) {
+        writeError(SERVO_LIST_NOT_INITIALIZED);
+        return NULL;
+    }
+    unsigned char size = servoList->size;
+
+    if (size < servoList->maxSize) {
+        Servo* result = getServo(servoList, size);
+        if (result == NULL) {
+            writeError(SERVO_LIST_SERVO_NULL);
+            return NULL;
+        }
+        initServo(result, servoType, internalServoIndex, name, initFunction, internalPwmFunction);
+        servoList->size++;
+        return result;
+    }
+    else {
+        writeError(SERVO_LIST_TOO_MUCH_SERVOS);
+        return NULL;
+    }
+}
+
+unsigned int getServoCount(ServoList* servoList) {
+    return servoList->size;
 }
 
 /*

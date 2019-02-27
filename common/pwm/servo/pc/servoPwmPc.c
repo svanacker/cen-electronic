@@ -1,13 +1,15 @@
+#include "servoPwmPc.h"
+
 #include "../servoPwm.h"
 
-// INIT
 
-void __internalPwmForServoHardware(unsigned int servoEnabledMask, int posInit) {
-    // TODO
+void servoInitPc(Servo* servo) {
+    // NO NEED TO INIT
 }
 
 // IMPLEMENTATION
 
-void __internalPwmServo(int pwmIndex, int dutyms) {
-    // TODO
+void servoInternalPwmPc(Servo* servo, unsigned int dutyms) {
+    // NO ACTION TO DO
 }
+

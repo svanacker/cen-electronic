@@ -13,6 +13,9 @@
 
 // READ FUNCTIONS
 
+// Command header to know the amount of Servo drivers
+#define SERVO_COMMAND_GET_COUNT                     'n'
+
 // Command header to read the speed, current Position, targetPosition of a servo with the specified index
 #define SERVO_COMMAND_READ                          'r'
 
