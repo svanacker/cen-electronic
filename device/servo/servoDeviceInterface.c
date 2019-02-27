@@ -24,7 +24,7 @@ int deviceServoGetInterface(char commandHeader, DeviceInterfaceMode mode, bool f
     }
     else if (commandHeader == SERVO_COMMAND_WRITE_COMPACT) {
         if (fillDeviceArgumentList) {
-            setFunction("updateServoCompact", 1, 0);
+            setFunction("updateAllServoCompact", 1, 0);
             setArgumentUnsignedHex4(0, "value");
         }
         return commandLengthValueForMode(mode, 4, 0);

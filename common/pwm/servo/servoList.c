@@ -51,20 +51,6 @@ void initServoList(ServoList* servoList,
                    ) {
     servoList->servos = servos;
     servoList->maxSize = servoListSize;
-    /*
-    unsigned int i;
-    for (i = 0; i < servoListSize; i++) {
-        Servo* servo = getServo(servoList, i);
-        servo->servoIndex = i + 1;
-        // Enable only if this is define in the mask
-        servo->enabled = (1 << i) & servoListInitServoMask;
-        servo->speed = PWM_SERVO_SPEED_MAX;
-        servo->currentPosition = 1500;
-        servo->targetPosition = servo->currentPosition;
-        servo->servoInit(servo, servo->currentPosition);
-    }
-    */
-
     
     // Init the timer for servo
     // and add the timer to the list, so that the interrupt function will
@@ -85,6 +71,10 @@ Servo* addServo(ServoList* servoList,
     ServoInitFunction* initFunction,
     ServoInternalPwmFunction* internalPwmFunction
     ) {
+    if (servoList == NULL) {
+        writeError(SERVO_LIST_NULL);
+        return NULL;
+    }
     if (servoList->maxSize == 0) {
         writeError(SERVO_LIST_NOT_INITIALIZED);
         return NULL;
@@ -98,6 +88,7 @@ Servo* addServo(ServoList* servoList,
             return NULL;
         }
         initServo(result, servoType, internalServoIndex, name, initFunction, internalPwmFunction);
+        result->servoList = (int*)servoList;
         servoList->size++;
         return result;
     }
@@ -110,24 +101,6 @@ Servo* addServo(ServoList* servoList,
 unsigned int getServoCount(ServoList* servoList) {
     return servoList->size;
 }
-
-/*
-void initPwmForServo(unsigned int servoToActivateMask, int posInit) {
-    if (servoList.initialized) {
-        return;
-    }
-    __internalPwmForServoHardware(servoToActivateMask, posInit);
-    // Init servo structure
-    int i;
-    for (i = 0; i < PWM_COUNT; i++) {
-        Servo* servo = getServo(i);
-        servo->enabled = servoToActivateMask & (1 << i);
-        servo->speed = PWM_SERVO_SPEED_MAX;
-        servo->currentPosition = posInit;
-        servo->targetPosition = posInit;
-    }
-}
-*/
 
 Servo* getServo(ServoList* servoList, unsigned int servoIndex) {
     if (servoList == NULL || servoList->maxSize == 0) {
@@ -148,10 +121,9 @@ Servo* getServo(ServoList* servoList, unsigned int servoIndex) {
 
 // UTILS FUNCTION
 
-
 void pwmServoAll(ServoList* servoList, unsigned int speed, unsigned int targetPosition) {
-    int i;
-    for (i = 1; i <= PWM_COUNT; i++) {
+    unsigned int i;
+    for (i = 0; i < servoList->maxSize; i++) {
         Servo* servo = getServo(servoList, i);
         pwmServo(servo, speed, targetPosition);
     }

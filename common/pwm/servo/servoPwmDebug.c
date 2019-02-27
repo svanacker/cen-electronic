@@ -11,9 +11,9 @@
 #include "../../../common/io/printWriter.h"
 #include "../../../common/io/printTableWriter.h"
 
-#define SERVO_PWM_DEBUG_INDEX_COLUMN_LENGTH                      5
+#define SERVO_PWM_DEBUG_INDEX_COLUMN_LENGTH                      4
 #define SERVO_PWM_DEBUG_NAME_COLUMN_LENGTH                       10
-#define SERVO_PWM_DEBUG_INTERNAL_INDEX_COLUMN_LENGTH             7
+#define SERVO_PWM_DEBUG_INTERNAL_INDEX_COLUMN_LENGTH             10
 #define SERVO_PWM_DEBUG_TYPE_COLUMN_LENGTH                       7
 #define SERVO_PWM_DEBUG_ENABLED_COLUMN_LENGTH                    8
 #define SERVO_PWM_DEBUG_SPEED_COLUMN_LENGTH                      7
@@ -32,7 +32,7 @@ void printServoListHeader(OutputStream* outputStream) {
 	appendTableHeaderSeparatorLine(outputStream);
 	appendStringHeader(outputStream, "Idx", SERVO_PWM_DEBUG_INDEX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Name", SERVO_PWM_DEBUG_NAME_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "Int.", SERVO_PWM_DEBUG_INTERNAL_INDEX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Internal", SERVO_PWM_DEBUG_INTERNAL_INDEX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "type", SERVO_PWM_DEBUG_TYPE_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "enabled", SERVO_PWM_DEBUG_ENABLED_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "speed", SERVO_PWM_DEBUG_SPEED_COLUMN_LENGTH);
@@ -72,9 +72,10 @@ void printServoListHeader(OutputStream* outputStream) {
 }
 
 void printServo(OutputStream* outputStream, Servo* servo, unsigned int servoIndex) {
-    appendDecTableData(outputStream, servoIndex, SERVO_PWM_DEBUG_INTERNAL_INDEX_COLUMN_LENGTH);
+    appendDecTableData(outputStream, servoIndex, SERVO_PWM_DEBUG_INDEX_COLUMN_LENGTH);
     appendStringTableData(outputStream, servo->name, SERVO_PWM_DEBUG_NAME_COLUMN_LENGTH);
     appendDecTableData(outputStream, servo->internalServoIndex, SERVO_PWM_DEBUG_INTERNAL_INDEX_COLUMN_LENGTH);
+    addServoTypeTableData(outputStream, servo->servoType, SERVO_PWM_DEBUG_TYPE_COLUMN_LENGTH);
 	appendBoolTableData(outputStream, servo->enabled, SERVO_PWM_DEBUG_ENABLED_COLUMN_LENGTH);
 	appendDecTableData(outputStream, servo->speed, SERVO_PWM_DEBUG_SPEED_COLUMN_LENGTH);
 	appendDecTableData(outputStream, servo->currentPosition, SERVO_PWM_DEBUG_CURRENT_POSITION_DEC_COLUMN_LENGTH);
