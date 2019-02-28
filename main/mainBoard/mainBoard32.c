@@ -63,7 +63,7 @@ bool mainBoardWaitForInstruction(StartMatch* startMatchParam) {
     // notification handler must avoid to handle directly information in notification callback
     // and never to the call back device
     mainBoardCommonHandleStreamInstruction();
-    mainBoardCommonHandleAccelerometer();
+    // mainBoardCommonHandleAccelerometer();
     mainBoardCommonMotorHandleStreamInstruction();
     mainBoardCommonStrategyHandleStreamInstruction();
     

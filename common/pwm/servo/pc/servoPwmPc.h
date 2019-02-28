@@ -7,6 +7,8 @@
 
 void servoInitPc(Servo* servo);
 
+void servoUpdateConfigPc(Servo* servo);
+
 void servoInternalPwmPc(Servo* servo, unsigned int dutyms);
 
 #endif

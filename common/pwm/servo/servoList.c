@@ -69,6 +69,7 @@ Servo* addServo(ServoList* servoList,
     unsigned int internalServoIndex,
     char* name,
     ServoInitFunction* initFunction,
+    ServoUpdateConfigFunction* updateConfigFunction,
     ServoInternalPwmFunction* internalPwmFunction
     ) {
     if (servoList == NULL) {
@@ -87,7 +88,13 @@ Servo* addServo(ServoList* servoList,
             writeError(SERVO_LIST_SERVO_NULL);
             return NULL;
         }
-        initServo(result, servoType, internalServoIndex, name, initFunction, internalPwmFunction);
+        initServo(result,
+                  servoType,
+                  internalServoIndex,
+                  name,
+                  initFunction,
+                  updateConfigFunction,
+                  internalPwmFunction);
         result->servoList = (int*)servoList;
         servoList->size++;
         return result;

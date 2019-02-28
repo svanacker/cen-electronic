@@ -38,6 +38,7 @@ Servo* addServo(ServoList* servoList,
     unsigned int internalServoIndex,
     char* name,
     ServoInitFunction* initFunction,
+    ServoUpdateConfigFunction* updateConfigFunction,
     ServoInternalPwmFunction* internalPwmFunction
 );
 

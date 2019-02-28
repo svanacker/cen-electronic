@@ -17,6 +17,11 @@ typedef struct Servo Servo;
 typedef void ServoInitFunction(Servo* servo);
 
 /**
+ * Function raised when we change the change a parameter of config (like enabled)
+ */
+typedef void ServoUpdateConfigFunction(Servo* servo);
+
+/**
  * Set pwm to the Servo.
  * @param dutyms : typical value is 1500, and 90° amplitude is done between
  * 1000 & 2000
@@ -41,6 +46,8 @@ enum ServoType {
 
 /**
 * Defines the structure to manages Servos.
+ * Be careful to NOT change any record of this struct after Initialization 
+ * to avoid some hazardous problem !!
 */
 struct Servo {
     /** The type of servo. */
@@ -55,7 +62,8 @@ struct Servo {
     * Name of the servo so that we can easily understand the target of the servo.
     */
     char* name;
-    /** If we use it, in PIC, some PWM use UART, so we don't activate them always */
+    /** If we use it, in PIC, some PWM use UART, so we don't activate them always
+     * This property must NOT be used  */
     bool enabled;
     /** The speed to reach the final position. */
     unsigned int speed;
@@ -65,6 +73,11 @@ struct Servo {
     unsigned int targetPosition;
     /** The function which must be called at first init. */
     ServoInitFunction* initFunction;
+    /** 
+     * The function which must be called back when we change the configuration
+     * of the servo (like by enabled).
+     */
+    ServoUpdateConfigFunction* updateConfigFunction;
     /** The function to apply the pwm : must NOT be called outside the framework. */
     ServoInternalPwmFunction* internalPwmFunction;
     /** Back pointer to the servoList (untyped to avoid circular reference) */
@@ -103,6 +116,7 @@ void initServo(Servo* servo,
                 unsigned int internalServoIndex,
                 char* name,
                 ServoInitFunction* initFunction,
+                ServoUpdateConfigFunction* updateConfigFunction,
                 ServoInternalPwmFunction* internalPwmFunction);
 
 // INTERFACE
@@ -113,7 +127,14 @@ void initServo(Servo* servo,
 * @param targetPosition duration of pwm to 1 typical value between
 * PWM_SERVO_LEFT_POSITION and PWM_SERVO_RIGHT_POSITION 
 */
-void pwmServo(Servo* servo, unsigned int speed, int targetPosition);
+void pwmServo(Servo* servo, unsigned int newSpeed, int newTargetPosition);
+
+/**
+ * Change the enabled property by a new value.
+ * @param servo
+ * @param enabled
+ */
+void pwmSetEnabled(Servo* servo, bool enabled);
 
 /**
  * Returns the speed used to reach the position.

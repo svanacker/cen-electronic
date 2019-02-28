@@ -132,6 +132,7 @@
       </logicalFolder>
       <logicalFolder name="f27" displayName="common.pwm.servo.32" projectFiles="true">
         <itemPath>../../../common/pwm/servo/32/servoPwm32.h</itemPath>
+        <itemPath>../../../common/pwm/servo/32/servoList32.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f26"
                      displayName="common.sensor.accelerometer"
@@ -716,6 +717,7 @@
                      displayName="common.pwm.servo.32"
                      projectFiles="true">
         <itemPath>../../../common/pwm/servo/32/servoPwm32.c</itemPath>
+        <itemPath>../../../common/pwm/servo/32/servoList32.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f27"
                      displayName="common.sensor.accelerometer"

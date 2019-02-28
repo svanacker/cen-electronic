@@ -1,4 +1,5 @@
 #include <p32xxxx.h>
+#include "servoPwm32.h"
 #include "../servoPwm.h"
 
 #define _SUPPRESS_PLIB_WARNING
@@ -45,49 +46,65 @@ int _confServoToPwm(int value) {
 
 // INIT
 
-void __internalInitPwmServo(int servoIndex) {
-    if (servoIndex == 1) {
-        OpenOC1(OC_ON | OC_TIMER_MODE16 | OC_TIMER2_SRC | OC_PWM_FAULT_PIN_DISABLE, 0, 0);
-    }
-    else if (servoIndex == 2) {
-        OpenOC2(OC_ON | OC_TIMER_MODE16 | OC_TIMER2_SRC | OC_PWM_FAULT_PIN_DISABLE, 0, 0);
-    }
-    else if (servoIndex == 3) {
-        OpenOC3(OC_ON | OC_TIMER_MODE16 | OC_TIMER2_SRC | OC_PWM_FAULT_PIN_DISABLE, 0, 0);
-    }
-    else if (servoIndex == 4) {
-        OpenOC4(OC_ON | OC_TIMER_MODE16 | OC_TIMER2_SRC | OC_PWM_FAULT_PIN_DISABLE, 0, 0);
-    }
-    else if (servoIndex == 5) {
-        OpenOC5(OC_ON | OC_TIMER_MODE16 | OC_TIMER2_SRC | OC_PWM_FAULT_PIN_DISABLE, 0, 0);
-    }
+void _internalInitPwmServo32(Servo* servo) {
+    // Launch the relating timer, it is done for each servo, 
+    // but it doesn't matter because it's just config bits !
+    // TODO : If No Servo is activated, we could optimize and disable the Time 
+    OpenTimer2(T2_ON | T2_PS_1_64 | T2_SOURCE_INT, PWM_TIMER_FOR_SERVO);
 }
 
-void __internalPwmForServoHardware(unsigned int servoEnabledMask, 
-                                   int posInit) {
-    if (servoEnabledMask == 0) {
-        return;
-    }
-    unsigned int i;
-    for (i = 0; i < PWM_COUNT; i++) {
-        if ((1 << i) & servoEnabledMask) {
-            __internalInitPwmServo(i + 1);
+void _internalUpdateConfigServo32(Servo* servo) {
+    unsigned int internalServoIndex = servo->internalServoIndex;
+    unsigned int enabled = servo->enabled;
+    if (internalServoIndex == 1) {
+        if (enabled) {
+            OpenOC1(OC_ON | OC_TIMER_MODE16 | OC_TIMER2_SRC | OC_PWM_FAULT_PIN_DISABLE, 0, 0);
+        }
+        else {
+            CloseOC1();
         }
     }
-
-    // Launch the relating timer
-    OpenTimer2(T2_ON | T2_PS_1_64 | T2_SOURCE_INT, PWM_TIMER_FOR_SERVO);
-
-    /*
-    unsigned int servoIndex;
-    for (servoIndex = 1; servoIndex <= SERVO32_PWM_COUNT; servoIndex++) {
-        __internalPwmServo(servoIndex, posInit);
+    else if (internalServoIndex == 2) {
+        if (enabled) {
+            OpenOC2(OC_ON | OC_TIMER_MODE16 | OC_TIMER2_SRC | OC_PWM_FAULT_PIN_DISABLE, 0, 0);
+        }
+        else {
+            CloseOC2();
+        }
     }
-    */
+    else if (internalServoIndex == 3) {
+        if (enabled) {
+            OpenOC3(OC_ON | OC_TIMER_MODE16 | OC_TIMER2_SRC | OC_PWM_FAULT_PIN_DISABLE, 0, 0);
+        }
+        else {
+            CloseOC3();
+        }
+    }
+    else if (internalServoIndex == 4) {
+        if (enabled) {
+            OpenOC4(OC_ON | OC_TIMER_MODE16 | OC_TIMER2_SRC | OC_PWM_FAULT_PIN_DISABLE, 0, 0);
+        }
+        else {
+            CloseOC4();
+        }
+    }
+    else if (internalServoIndex == 5) {
+        if (enabled) {
+            OpenOC5(OC_ON | OC_TIMER_MODE16 | OC_TIMER2_SRC | OC_PWM_FAULT_PIN_DISABLE, 0, 0);
+        }
+        else {
+            CloseOC5();
+        }
+    } 
 }
 
-void __internalPwmServo(Servo* servo, int dutyms) {
-
+/**
+ * @private
+ * Implementation of ServoInternalPwmFunction
+ * @param servo
+ * @param dutyms
+ */
+void _servoInternalPwm32 (Servo* servo, unsigned int dutyms) {
     switch (servo->internalServoIndex) {
         case 1:
         {

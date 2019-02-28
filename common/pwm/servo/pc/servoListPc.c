@@ -9,6 +9,10 @@
 
 #define SERVO_NAME_PC_STRING_LENGTH   15
 
+Servo* addServoPc(ServoList* servoList, unsigned internalIndex, char* servoName) {
+    return addServo(servoList, SERVO_TYPE_PC, internalIndex, servoName, servoInitPc, servoUpdateConfigPc, servoInternalPwmPc);
+}
+
 void initServoListPc(ServoList* servoList, Servo(*servoArray)[], unsigned int servoListSize) {
     initServoList(servoList, servoArray, servoListSize);
     unsigned int i;
@@ -16,6 +20,6 @@ void initServoListPc(ServoList* servoList, Servo(*servoArray)[], unsigned int se
         char* servoName = (char*)malloc(SERVO_NAME_PC_STRING_LENGTH * sizeof(char));;
         snprintf(servoName, SERVO_NAME_PC_STRING_LENGTH, "PC ");
         snprintf(servoName + strlen(servoName), SERVO_NAME_PC_STRING_LENGTH, "%d", i);
-        addServo(servoList, SERVO_TYPE_PC, i, servoName, servoInitPc, servoInternalPwmPc);
+        addServoPc(servoList, i, servoName);
     }
 }

@@ -36,6 +36,7 @@ void initServo(Servo* servo,
         unsigned int internalServoIndex,
         char* name,
         ServoInitFunction* initFunction,
+        ServoUpdateConfigFunction* updateConfigFunction,
         ServoInternalPwmFunction* internalPwmFunction) {
     servo->servoType = servoType;
     servo->internalServoIndex = internalServoIndex;
@@ -45,7 +46,13 @@ void initServo(Servo* servo,
     servo->currentPosition = PWM_SERVO_MIDDLE_POSITION;
     servo->speed = PWM_SERVO_SPEED_MAX;
     servo->initFunction = initFunction;
+    servo->updateConfigFunction = updateConfigFunction;
     servo->internalPwmFunction = internalPwmFunction;
+    // Launch complete sequence to finish the initialization of the servo
+    // value
+    servo->initFunction(servo);
+    servo->updateConfigFunction(servo);
+    servo->internalPwmFunction(servo, servo->currentPosition);
 }
 
 // PUBLIC WRITE FUNCTIONS
@@ -68,6 +75,14 @@ void pwmServo(Servo* servo, unsigned int speed, int targetPosition) {
     }
     if (!servoList->useTimer) {
         servo->internalPwmFunction(servo, targetPosition);
+    }
+}
+
+void pwmSetEnabled(Servo* servo, bool enabled) {
+    servo->enabled = enabled;
+    if (servo->enabled != enabled) {
+        servo->enabled = enabled;
+        servo->updateConfigFunction(servo);
     }
 }
 

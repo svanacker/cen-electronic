@@ -154,6 +154,7 @@
 #include "../../robot/config/robotConfigDevice.h"
 #include "../../robot/config/robotConfigDeviceInterface.h"
 #include "../../robot/config/32/robotConfigPic32.h"
+#include "32/servoList32.h"
 
 
 // COMMON TO ALL MAIN BOARD
@@ -166,7 +167,7 @@ static I2cBus* i2cBus4;
 
 // ACCELEROMETER
 static Accelerometer accelerometer;
-static AccelerometerData accelerometerData;
+// static AccelerometerData accelerometerData;
 
 // EEPROM
 static Eeprom eeprom;
@@ -274,8 +275,8 @@ I2cBus* mainBoardCommonGetMainI2cBus(void) {
 
 void mainBoardCommonInitServoList(void) {
     initServoList(&servoList, &servoListArray, MAIN_BOARD_SERVO_LIST_LENGTH);
+    addServos_1_2_5(&servoList, "PWM 1", "PWM 2", "PWM 5");
 }
-
 // TIMER LIST
 
 void mainBoardCommonInitTimerList(void) {
@@ -299,14 +300,14 @@ void mainBoardCommonAddDevices(RobotConfig* robotConfig) {
     addLocalDevice(getI2cMasterDebugDeviceInterface(), getI2cMasterDebugDeviceDescriptor());
     
     // COMMON DEVICES
-    // addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor(PWM_SERVO_ENABLED_MASK_SERVO_1_2_5));
+    addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor(&servoList));
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
     addLocalDevice(getTemperatureSensorDeviceInterface(), getTemperatureSensorDeviceDescriptor(&temperature));
     addLocalDevice(getADCDeviceInterface(), getADCDeviceDescriptor());
     
     // ACCELEROMETER
-    addLocalDevice(getAccelerometerDeviceInterface(), getAccelerometerDeviceDescriptor(&accelerometer));
+    // addLocalDevice(getAccelerometerDeviceInterface(), getAccelerometerDeviceDescriptor(&accelerometer));
 
     // ROBOT CONFIG
     addLocalDevice(getRobotConfigDeviceInterface(), getRobotConfigDeviceDescriptor(robotConfig));
@@ -349,7 +350,12 @@ void mainBoardCommonInitCommonDrivers(void) {
     initTemperatureLM75A(&temperature, temperatureI2cBusConnection);
     appendStringLN(getDebugOutputStreamLogger(), "OK");
     
+    // -> Servo
+    initServoList(&servoList, (Servo(*)[]) &servoListArray, MAIN_BOARD_SERVO_LIST_LENGTH);
+    addServos_1_2_5(&servoList, "PWM 1", "PWM 2", "PWM 5");
+    
     // -> Accelerometer
+    /*
     appendString(getDebugOutputStreamLogger(), "ACCELEROMETER ...");
     I2cBusConnection* adxl345BusConnection = addI2cBusConnection(i2cBus, ADXL345_ALT_ADDRESS, true);
     initADXL345AsAccelerometer(&accelerometer, &accelerometerData, adxl345BusConnection);
@@ -360,10 +366,11 @@ void mainBoardCommonInitCommonDrivers(void) {
                                             ADXL345_RATE_400HZ,
                                             ADXL345_RANGE_16G);
     appendStringLN(getDebugOutputStreamLogger(), "OK");
+    */
     
     // Start interruptions
     startTimerList(false);
-    // getTimerByCode(SERVO_TIMER_CODE)->enabled = true;
+    getTimerByCode(SERVO_TIMER_CODE)->enabled = true;
     // getTimerByCode(END_MATCH_DETECTOR_TIMER_CODE)->enabled = true;
 }
 
