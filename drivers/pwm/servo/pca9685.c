@@ -22,22 +22,20 @@ void pca9685_init(I2cBusConnection* i2cBusConnection) {
     pca9685_reset(i2cBusConnection);
     
     OutputStream* debugOutputStream = getInfoOutputStreamLogger();
-    pca9685_debugMainRegisterList(debugOutputStream, i2cBusConnection);
 
     // set a default frequency
     pca9685_setPWMFreq(i2cBusConnection, 50);
 
-    // pca9685_write8(i2cBusConnection, PCA9685_MODE1, PCA9685_MODE1_MASK_ALLCALL);
-    // delaymSec(10);
+    pca9685_debugMainRegisterList(debugOutputStream, i2cBusConnection);
+
+    /*
     int i;
-    
     for (i = 100; i < 500; i += 20) {
-        delaymSec(10);
         pca9685_setPWM(i2cBusConnection, 1, 0, i);
         delaymSec(100);
     }
     pca9685_debugMainRegisterList(debugOutputStream, i2cBusConnection);
-    
+*/
     /*
     int i;
     for (i = 1000; i < 2000; i++) {
@@ -49,7 +47,7 @@ void pca9685_init(I2cBusConnection* i2cBusConnection) {
     
     //pca9685_setPWM(i2cBusConnection, 1, 1000, 2200);
     
-    pca9685_debugMainRegisterList(debugOutputStream, i2cBusConnection);
+    // pca9685_debugMainRegisterList(debugOutputStream, i2cBusConnection);
 }
 
 void pca9685_reset(I2cBusConnection* i2cBusConnection) {
@@ -135,6 +133,12 @@ void pca9685_setPWM(I2cBusConnection* i2cBusConnection, unsigned char pwmIndex, 
 }
 
 void pca9685_setPin(I2cBusConnection* i2cBusConnection, unsigned char pwmIndex, unsigned int value, bool invert) {
+    /*
+    OutputStream* debugOutputStream = getInfoOutputStreamLogger();
+    appendStringLN(debugOutputStream, "pca9685_setPin !");
+    appendStringAndDecLN(debugOutputStream, "pwmIndex=", pwmIndex);
+    appendStringAndDecLN(debugOutputStream, "value=", value);
+    */
     // Clamp value between 0 and 4095 inclusive.
     value = minInt(value, 4095);
     if (invert) {

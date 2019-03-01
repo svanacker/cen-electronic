@@ -135,17 +135,17 @@ int main(void) {
     mainBoardMainPhase3();
     
     // PCA9685
-    /*
     ServoList* servoList = mainBoardCommonGetServoList();
     I2cBus* i2cBus = mainBoardCommonGetMainI2cBus();
     I2cBusConnection* servoI2cBusConnection = addI2cBusConnection(i2cBus, PCA9685_ADDRESS_0, true);
     addServoAllPca9685(servoList, servoI2cBusConnection);
-*/
+
+    /*
     appendStringCRLF(getInfoOutputStreamLogger(), "PWM START");
     I2cBus* i2cBus = getI2cBusByIndex(0);
     I2cBusConnection* pca9685BusConnection = addI2cBusConnection(i2cBus, 0x80, true);
     pca9685_init(pca9685BusConnection);
- 
+    */
  /*   
     while (1) {
         delaymSec(10);

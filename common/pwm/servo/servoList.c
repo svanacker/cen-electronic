@@ -35,7 +35,13 @@ void interruptServoTimerCallbackFunc(Timer* timer) {
                 servo->currentPosition = servo->targetPosition;
             }
         } else if (servo->currentPosition > servo->targetPosition) {
-            servo->currentPosition -= servo->speed * SERVO_SPEED_TIMER_FACTOR;
+            // Avoid to have negative value
+            if (servo->currentPosition > servo->speed * SERVO_SPEED_TIMER_FACTOR) {
+                servo->currentPosition -= servo->speed * SERVO_SPEED_TIMER_FACTOR;
+            }
+            else {
+                servo->currentPosition = 0;
+            }
             // Limit
             if (servo->currentPosition < servo->targetPosition) {
                 servo->currentPosition = servo->targetPosition;

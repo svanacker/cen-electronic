@@ -26,9 +26,18 @@ void _internalUpdateConfigServo9685(Servo* servo) {
     // TODO
 }
 
+unsigned int servoPwmPca9685DutyMsToValue(unsigned int dutyms) {
+    // Frequency is 50 Hz for Servo => 20 ms
+    // dutyms is between 1000 and 2000 µs (or between 1ms and 2ms)
+    // 1ms in dutyms is 4096 / 20, 2ms in dutyms is 4096 / 10
+    // So for a resolution of 4096 bits
+    return (4096 * dutyms / (20 * 1000));
+}
+
 void _InternalPwm9685 (Servo* servo, unsigned int dutyms) {
     I2cBusConnection* i2cBusConnection = getServoI2CBusConnection(servo);
-    pca9685_setPin(i2cBusConnection, servo->internalServoIndex, servo->currentPosition, false);
+    unsigned int value = servoPwmPca9685DutyMsToValue(servo->currentPosition);
+    pca9685_setPin(i2cBusConnection, servo->internalServoIndex, value, false);
 }
 
 Servo* addServoPca9685(ServoList* servoList,
