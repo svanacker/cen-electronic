@@ -393,8 +393,10 @@
         <itemPath>../../../drivers/lcd/lcd.h</itemPath>
         <itemPath>../../../drivers/lcd/lcdHd44780.h</itemPath>
       </logicalFolder>
-      <logicalFolder name="f23" displayName="drivers.pwm" projectFiles="true">
-        <itemPath>../../../drivers/pwm/pca9685.h</itemPath>
+      <logicalFolder name="f23" displayName="drivers.pwm.servo" projectFiles="true">
+        <itemPath>../../../drivers/pwm/servo/pca9685.h</itemPath>
+        <itemPath>../../../drivers/pwm/servo/servoPwmPca9685.h</itemPath>
+        <itemPath>../../../drivers/pwm/servo/pca9685Debug.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f7" displayName="drivers.relay" projectFiles="true">
         <itemPath>../../../drivers/relay/relay.h</itemPath>
@@ -985,8 +987,10 @@
                      displayName="drivers.motion"
                      projectFiles="true">
       </logicalFolder>
-      <logicalFolder name="f24" displayName="drivers.pwm" projectFiles="true">
-        <itemPath>../../../drivers/pwm/pca9685.c</itemPath>
+      <logicalFolder name="f24" displayName="drivers.pwm.servo" projectFiles="true">
+        <itemPath>../../../drivers/pwm/servo/pca9685.c</itemPath>
+        <itemPath>../../../drivers/pwm/servo/servoPwmPca9685.c</itemPath>
+        <itemPath>../../../drivers/pwm/servo/pca9685Debug.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f8" displayName="drivers.relay" projectFiles="true">
         <itemPath>../../../drivers/relay/relay.c</itemPath>

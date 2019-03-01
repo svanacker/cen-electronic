@@ -14,9 +14,9 @@
 #define SERVO_PWM_DEBUG_INDEX_COLUMN_LENGTH                      4
 #define SERVO_PWM_DEBUG_NAME_COLUMN_LENGTH                       10
 #define SERVO_PWM_DEBUG_INTERNAL_INDEX_COLUMN_LENGTH             9
-#define SERVO_PWM_DEBUG_TYPE_COLUMN_LENGTH                       8
+#define SERVO_PWM_DEBUG_TYPE_COLUMN_LENGTH                       10
 #define SERVO_PWM_DEBUG_ENABLED_COLUMN_LENGTH                    8
-#define SERVO_PWM_DEBUG_SPEED_COLUMN_LENGTH                      6
+#define SERVO_PWM_DEBUG_SPEED_COLUMN_LENGTH                      12
 #define SERVO_PWM_DEBUG_CURRENT_POSITION_DEC_COLUMN_LENGTH       10
 #define SERVO_PWM_DEBUG_CURRENT_POSITION_HEX_COLUMN_LENGTH       10
 #define SERVO_PWM_DEBUG_TARGET_POSITION_DEC_COLUMN_LENGTH        10
@@ -48,7 +48,7 @@ void printServoListHeader(OutputStream* outputStream) {
     appendStringHeader(outputStream, "Idx", SERVO_PWM_DEBUG_INTERNAL_INDEX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", SERVO_PWM_DEBUG_TYPE_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "", SERVO_PWM_DEBUG_ENABLED_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "", SERVO_PWM_DEBUG_SPEED_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "(Delta ms /", SERVO_PWM_DEBUG_SPEED_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "Position", SERVO_PWM_DEBUG_CURRENT_POSITION_DEC_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "Position", SERVO_PWM_DEBUG_CURRENT_POSITION_HEX_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "Position", SERVO_PWM_DEBUG_TARGET_POSITION_DEC_COLUMN_LENGTH);
@@ -61,9 +61,9 @@ void printServoListHeader(OutputStream* outputStream) {
     appendStringHeader(outputStream, "", SERVO_PWM_DEBUG_INTERNAL_INDEX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", SERVO_PWM_DEBUG_TYPE_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "", SERVO_PWM_DEBUG_ENABLED_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "", SERVO_PWM_DEBUG_SPEED_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "deltaT)", SERVO_PWM_DEBUG_SPEED_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "(Dec)", SERVO_PWM_DEBUG_CURRENT_POSITION_DEC_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "(Hex))", SERVO_PWM_DEBUG_CURRENT_POSITION_HEX_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "(Hex)", SERVO_PWM_DEBUG_CURRENT_POSITION_HEX_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "(Dec)", SERVO_PWM_DEBUG_TARGET_POSITION_DEC_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "(Hex)", SERVO_PWM_DEBUG_TARGET_POSITION_HEX_COLUMN_LENGTH);
 	appendEndOfTableColumn(outputStream, SERVO_PWM_DEBUG_LAST_COLUMN_LENGTH);
@@ -76,7 +76,7 @@ void printServo(OutputStream* outputStream, Servo* servo, unsigned int servoInde
     appendStringTableData(outputStream, servo->name, SERVO_PWM_DEBUG_NAME_COLUMN_LENGTH);
     appendDecTableData(outputStream, servo->internalServoIndex, SERVO_PWM_DEBUG_INTERNAL_INDEX_COLUMN_LENGTH);
     addServoTypeTableData(outputStream, servo->servoType, SERVO_PWM_DEBUG_TYPE_COLUMN_LENGTH);
-	appendBoolTableData(outputStream, servo->enabled, SERVO_PWM_DEBUG_ENABLED_COLUMN_LENGTH);
+	appendBoolAsStringTableData(outputStream, servo->enabled, SERVO_PWM_DEBUG_ENABLED_COLUMN_LENGTH);
 	appendDecTableData(outputStream, servo->speed, SERVO_PWM_DEBUG_SPEED_COLUMN_LENGTH);
 	appendDecTableData(outputStream, servo->currentPosition, SERVO_PWM_DEBUG_CURRENT_POSITION_DEC_COLUMN_LENGTH);
 	appendHex4TableData(outputStream, servo->currentPosition, SERVO_PWM_DEBUG_CURRENT_POSITION_HEX_COLUMN_LENGTH);
@@ -109,7 +109,7 @@ unsigned int appendServoTypeAsString(OutputStream* outputStream, enum ServoType 
         return appendString(outputStream, "INTERNAL");
     }
     else if (servoType == SERVO_TYPE_PCA_8695) {
-        return appendString(outputStream, "HARD");
+        return appendString(outputStream, "PCA_8695");
     }
     else if (servoType == SERVO_TYPE_SD_21) {
 		return appendString(outputStream, "SD21");

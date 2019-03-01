@@ -8,8 +8,31 @@
 struct Servo;
 typedef struct Servo Servo;
 
+/**
+ * Determine the type of servo.
+ */
+enum ServoType {
+    /** Undefined (often because not initialized properly !) */
+    SERVO_TYPE_UNKNOWN,
+    /** The pwm is managed internally by the microcontroller */
+    SERVO_TYPE_INTERNAL_PWM,
+    /** The PCA_8695. */
+    SERVO_TYPE_PCA_8695,
+    /** Devantech SD21. */
+    SERVO_TYPE_SD_21,
+    /** PC (simulation). */
+    SERVO_TYPE_PC
+};
 
 // SERVO CALL BACK FUNCTION
+
+/**
+ * Function raised when we initialize the first type of servo.
+ * A list of servo could be composed by several types of servo, and for specific
+ * Servo Type, we must initialize something at the beginning.
+ * The servo List and the kind of servoType
+ */
+typedef void ServoTypeInitFunction(enum ServoType servoType, int* object);
 
 /**
  * Function raised when we initialize a servo.
@@ -27,22 +50,6 @@ typedef void ServoUpdateConfigFunction(Servo* servo);
  * 1000 & 2000
  */
 typedef void ServoInternalPwmFunction(Servo* servo, unsigned int dutyms);
-
-/**
- * Determine the type of servo.
- */
-enum ServoType {
-    /** Undefined (often because not initialized properly !) */
-    SERVO_TYPE_UNKNOWN,
-    /** The pwm is managed internally by the microcontroller */
-    SERVO_TYPE_INTERNAL_PWM,
-    /** The PCA_8695. */
-    SERVO_TYPE_PCA_8695,
-    /** Devantech SD21. */
-    SERVO_TYPE_SD_21,
-    /** PC (simulation). */
-    SERVO_TYPE_PC
-};
 
 /**
 * Defines the structure to manages Servos.
@@ -71,6 +78,8 @@ struct Servo {
     unsigned int currentPosition;
     /** The target position. */
     unsigned int targetPosition;
+    /** The function which must be used when a new type is added. */
+    ServoTypeInitFunction* typeInitFunction;
     /** The function which must be called at first init. */
     ServoInitFunction* initFunction;
     /** 
@@ -82,6 +91,8 @@ struct Servo {
     ServoInternalPwmFunction* internalPwmFunction;
     /** Back pointer to the servoList (untyped to avoid circular reference) */
     int* servoList;
+    /** Pointer to a specific object (for example I2cBusConnection */
+    int* object;
 };
 
 
@@ -115,9 +126,11 @@ void initServo(Servo* servo,
                 enum ServoType servoType,
                 unsigned int internalServoIndex,
                 char* name,
+                ServoTypeInitFunction* typeInitFunction,
                 ServoInitFunction* initFunction,
                 ServoUpdateConfigFunction* updateConfigFunction,
-                ServoInternalPwmFunction* internalPwmFunction);
+                ServoInternalPwmFunction* internalPwmFunction,
+                int* object);
 
 // INTERFACE
 
@@ -134,7 +147,7 @@ void pwmServo(Servo* servo, unsigned int newSpeed, int newTargetPosition);
  * @param servo
  * @param enabled
  */
-void pwmSetEnabled(Servo* servo, bool enabled);
+void pwmServoSetEnabled(Servo* servo, bool enabled);
 
 /**
  * Returns the speed used to reach the position.

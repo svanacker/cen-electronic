@@ -224,6 +224,10 @@ static Servo servoListArray[MAIN_BOARD_SERVO_LIST_LENGTH];
 // Timers
 static Timer timerListArray[MAIN_BOARD_TIMER_LIST_LENGTH];
 
+ServoList* mainBoardCommonGetServoList(void) {
+    return &servoList;
+}
+
 // LOG LIST
 
 void mainBoardCommonInitLogs(void) {

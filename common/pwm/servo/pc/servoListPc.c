@@ -2,6 +2,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 #include "servoPwmPc.h"
 
@@ -10,7 +11,15 @@
 #define SERVO_NAME_PC_STRING_LENGTH   15
 
 Servo* addServoPc(ServoList* servoList, unsigned internalIndex, char* servoName) {
-    return addServo(servoList, SERVO_TYPE_PC, internalIndex, servoName, servoInitPc, servoUpdateConfigPc, servoInternalPwmPc);
+    return addServo(servoList,
+                    SERVO_TYPE_PC,
+                    internalIndex,
+                    servoName,
+                    servoTypeInitPc,
+                    servoInitPc,
+                    servoUpdateConfigPc,
+                    servoInternalPwmPc,
+                    NULL);
 }
 
 void initServoListPc(ServoList* servoList, Servo(*servoArray)[], unsigned int servoListSize) {

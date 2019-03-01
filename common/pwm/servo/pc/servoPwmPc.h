@@ -5,6 +5,8 @@
 
 // SERVO CALL BACK IMPLEMENTATION
 
+void servoTypeInitPc(enum ServoType servoType, int* object);
+
 void servoInitPc(Servo* servo);
 
 void servoUpdateConfigPc(Servo* servo);

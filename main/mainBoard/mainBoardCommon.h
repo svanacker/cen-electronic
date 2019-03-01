@@ -10,6 +10,8 @@
 
 #include "../../robot/config/robotConfig.h"
 
+#include "../../common/pwm/servo/servoList.h"
+
 // DEVICE
 
 #define MAIN_BOARD_DEVICE_LENGTH                                       40
@@ -70,6 +72,9 @@
 
 #define MAIN_BOARD_REQUEST_DRIVER_BUFFER_LENGTH                      2000
 #define MAIN_BOARD_RESPONSE_DRIVER_BUFFER_LENGTH                     2000
+
+// SERVO LIST
+ServoList* mainBoardCommonGetServoList(void);
 
 // LOG LIST
 

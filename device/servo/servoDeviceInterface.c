@@ -29,6 +29,22 @@ int deviceServoGetInterface(char commandHeader, DeviceInterfaceMode mode, bool f
         }
         return commandLengthValueForMode(mode, 4, 0);
     }
+    else if (commandHeader == SERVO_COMMAND_ENABLE_DISABLE) {
+        if (fillDeviceArgumentList) {
+            setFunction("enable/disab. Servo", 3, 0);
+            setArgumentUnsignedHex2(0, "ServoIdx");
+            setArgumentSeparator(1);
+            setArgumentUnsignedChar1(2, "enabl.(1) / dis.(0)");
+        }
+        return commandLengthValueForMode(mode, 4, 0);
+    }
+    else if (commandHeader == SERVO_COMMAND_ENABLE_DISABLE_ALL) {
+        if (fillDeviceArgumentList) {
+            setFunction("enable/disab. All Servo", 1, 0);
+            setArgumentUnsignedChar1(0, "enabl.(1) / dis.(0)");
+        }
+        return commandLengthValueForMode(mode, 1, 0);
+    }
     // READ_FUNCTIONS
     else if (commandHeader == SERVO_COMMAND_GET_COUNT) {
         if (fillDeviceArgumentList) {
@@ -40,18 +56,20 @@ int deviceServoGetInterface(char commandHeader, DeviceInterfaceMode mode, bool f
     }
     else if (commandHeader == SERVO_COMMAND_READ) {
         if (fillDeviceArgumentList) {
-            setFunction("servoRead", 1, 7);
+            setFunction("servoRead", 1, 9);
             setArgumentUnsignedHex2(0, "ServoIdx");
             setResultUnsignedHex2(0, "ServoIdx");
             setResultSeparator(1);
-            setResultUnsignedHex2(2, "Speed");
+            setResultUnsignedChar1(2, "Enabled (1) / Dis.(0)");
             setResultSeparator(3);
-            setResultUnsignedHex4(4, "Current Position");
+            setResultUnsignedHex2(4, "Speed");
             setResultSeparator(5);
-            setResultUnsignedHex4(6, "Target Position");
+            setResultUnsignedHex4(6, "Current Position");
+            setResultSeparator(7);
+            setResultUnsignedHex4(8, "Target Position");
 
         }
-        return commandLengthValueForMode(mode, 2, 15);
+        return commandLengthValueForMode(mode, 2, 17);
     }
     else if (commandHeader == SERVO_COMMAND_READ_SPEED) {
         if (fillDeviceArgumentList) {

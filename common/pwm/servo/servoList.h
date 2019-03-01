@@ -29,6 +29,14 @@ typedef struct ServoList {
 void initServoList(ServoList* servoList, Servo(*servoArray)[], unsigned int servoListSize);
 
 /**
+ * Returns if the servo List contains already a servo with the same type.
+ * @param servoList
+ * @param servoType
+ * @return 
+ */
+bool servoListContainsServoType(ServoList* servoList, enum ServoType servoType);
+
+/**
  * Add a servo to the list.
  * @param servoList the list of servo
  * @param servo the servo to add to the list
@@ -37,9 +45,11 @@ Servo* addServo(ServoList* servoList,
     enum ServoType servoType,
     unsigned int internalServoIndex,
     char* name,
+    ServoTypeInitFunction* typeInitFunction,
     ServoInitFunction* initFunction,
     ServoUpdateConfigFunction* updateConfigFunction,
-    ServoInternalPwmFunction* internalPwmFunction
+    ServoInternalPwmFunction* internalPwmFunction,
+    int* object
 );
 
 /**
@@ -66,5 +76,10 @@ unsigned int getServoCount(ServoList* servoList);
 * PWM_SERVO_LEFT_POSITION and PWM_SERVO_RIGHT_POSITION 
 */
 void pwmServoAll(ServoList* servoList, unsigned int speed, unsigned int targetPosition);
+
+/**
+ * Enable or Disable all servo at the same time.
+ */
+void servoEnableAll(ServoList* servoList, bool enabled);
 
 #endif

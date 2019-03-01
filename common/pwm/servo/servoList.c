@@ -64,13 +64,26 @@ void initServoList(ServoList* servoList,
     servoList->useTimer = true;
 }
 
+bool servoListContainsServoType(ServoList* servoList, enum ServoType servoType) {
+    unsigned int i;
+    for (i = 0; i < servoList->maxSize; i++) {
+        Servo* servo = getServo(servoList, i);
+        if (servo->servoType == servoType) {
+            return true;
+        }
+    }
+    return false;
+}
+
 Servo* addServo(ServoList* servoList,
     enum ServoType servoType,
     unsigned int internalServoIndex,
     char* name,
+    ServoTypeInitFunction* typeInitFunction,
     ServoInitFunction* initFunction,
     ServoUpdateConfigFunction* updateConfigFunction,
-    ServoInternalPwmFunction* internalPwmFunction
+    ServoInternalPwmFunction* internalPwmFunction,
+    int* object
     ) {
     if (servoList == NULL) {
         writeError(SERVO_LIST_NULL);
@@ -88,13 +101,19 @@ Servo* addServo(ServoList* servoList,
             writeError(SERVO_LIST_SERVO_NULL);
             return NULL;
         }
+        // If we add a new type of servo, we initializes the "class" of servo
+        if (!servoListContainsServoType(servoList, servoType)) {
+            typeInitFunction(servoType, object);
+        }
         initServo(result,
                   servoType,
                   internalServoIndex,
                   name,
+                  typeInitFunction,
                   initFunction,
                   updateConfigFunction,
-                  internalPwmFunction);
+                  internalPwmFunction,
+                  object);
         result->servoList = (int*)servoList;
         servoList->size++;
         return result;
@@ -133,5 +152,13 @@ void pwmServoAll(ServoList* servoList, unsigned int speed, unsigned int targetPo
     for (i = 0; i < servoList->maxSize; i++) {
         Servo* servo = getServo(servoList, i);
         pwmServo(servo, speed, targetPosition);
+    }
+}
+
+void servoEnableAll(ServoList* servoList, bool enabled) {
+    unsigned int i;
+    for (i = 0; i < servoList->maxSize; i++) {
+        Servo* servo = getServo(servoList, i);
+        pwmServoSetEnabled(servo, enabled);
     }
 }

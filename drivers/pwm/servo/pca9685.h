@@ -4,8 +4,6 @@
 #include "../../common/i2c/i2cConstants.h"
 #include "../../common/i2c/i2cCommon.h"
 
-#include "../../common/io/outputStream.h"
-
 #include <stdbool.h>
 
 // https://www.nxp.com/docs/en/data-sheet/PCA9685.pdf
@@ -73,13 +71,5 @@ void pca9685_write8(I2cBusConnection* i2cBusConnection, unsigned char reg, unsig
 
 unsigned char pca9685_read8(I2cBusConnection* i2cBusConnection, unsigned char reg);
 
-/**
- * Test of all pwm.
- */
-void pca9685_test(I2cBusConnection* i2cBusConnection);
-
-// DEBUG
-
-void pca9685_debugMainRegisterList(OutputStream* outputStream, I2cBusConnection* i2cBusConnection);
 
 #endif

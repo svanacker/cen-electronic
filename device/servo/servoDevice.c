@@ -60,6 +60,27 @@ void deviceServoHandleRawData(char commandHeader, InputStream* inputStream, Outp
         pwmServoAll(servoList, PWM_SERVO_SPEED_MAX, servoValue);
         ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_WRITE_COMPACT);
     }
+    // ENABLE / DISABLE
+    if (commandHeader == SERVO_COMMAND_ENABLE_DISABLE) {
+        ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_ENABLE_DISABLE);
+        ServoList* servoList = getServoDeviceServoList();
+        unsigned int servoIndex = readHex2(inputStream);
+        checkIsSeparator(inputStream);
+        bool enabled = readBool(inputStream);
+        if (servoIndex == SERVO_ALL_INDEX) {
+            servoEnableAll(servoList, enabled);
+        }
+        else {
+            Servo* servo = getServo(servoList, servoIndex);
+            pwmServoSetEnabled(servo, enabled);
+        }
+    }
+    else if (commandHeader == SERVO_COMMAND_ENABLE_DISABLE_ALL) {
+        ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_ENABLE_DISABLE_ALL);
+        ServoList* servoList = getServoDeviceServoList();
+        bool enabled = readBool(inputStream);
+        servoEnableAll(servoList, enabled);
+    }
     // READ COMMANDS
     else if (commandHeader == SERVO_COMMAND_GET_COUNT) {
         ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_GET_COUNT);

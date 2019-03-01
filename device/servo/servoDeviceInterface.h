@@ -30,6 +30,12 @@
 
 // DEBUG FUNCTIONS
 
+/** Enable a specific servo. */
+#define SERVO_COMMAND_ENABLE_DISABLE                'e'
+
+/** Enable or disable all servos . */
+#define SERVO_COMMAND_ENABLE_DISABLE_ALL            'E'
+
 // Command header to debug the servo list
 #define SERVO_COMMAND_DEBUG                         'd'
 

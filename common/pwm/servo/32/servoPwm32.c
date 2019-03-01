@@ -44,13 +44,16 @@ int _confServoToPwm(int value) {
     return (int) result;
 }
 
-// INIT
+// FIRST INIT (for all pwm)
+
+void _internalTypeInitPwmServo32(enum ServoType servoType, int* object) {
+    OpenTimer2(T2_ON | T2_PS_1_64 | T2_SOURCE_INT, PWM_TIMER_FOR_SERVO);
+}
+
+// INIT (for each pwm)
 
 void _internalInitPwmServo32(Servo* servo) {
-    // Launch the relating timer, it is done for each servo, 
-    // but it doesn't matter because it's just config bits !
-    // TODO : If No Servo is activated, we could optimize and disable the Time 
-    OpenTimer2(T2_ON | T2_PS_1_64 | T2_SOURCE_INT, PWM_TIMER_FOR_SERVO);
+    // Nothing to do
 }
 
 void _internalUpdateConfigServo32(Servo* servo) {

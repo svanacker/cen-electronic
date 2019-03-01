@@ -4,14 +4,18 @@
 #include "../servoList.h"
 #include "../servoPwm.h"
 
+#include <stdlib.h>
+
 Servo* addServo32(ServoList* servoList, unsigned int internalServoIndex, char* servoName) {
     return addServo(servoList,
               SERVO_TYPE_INTERNAL_PWM,
               internalServoIndex,
               servoName,
+              _internalTypeInitPwmServo32,
               _internalInitPwmServo32,
               _internalUpdateConfigServo32,
-              _servoInternalPwm32);
+              _servoInternalPwm32,
+            NULL);
 }
 
 /**
