@@ -492,6 +492,8 @@
         <itemPath>../../../robot/2019/gameBoardElement2019.h</itemPath>
         <itemPath>../../../robot/2019/mainBoard2019.h</itemPath>
         <itemPath>../../../robot/2019/score2019.h</itemPath>
+        <itemPath>../../../robot/2019/forkDeviceInterface2019.h</itemPath>
+        <itemPath>../../../robot/2019/forkDevice2019.h</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.config"
                      displayName="robot.config"
@@ -1070,6 +1072,8 @@
       <logicalFolder name="f22" displayName="robot.2019" projectFiles="true">
         <itemPath>../../../robot/2019/gameBoardElement2019.c</itemPath>
         <itemPath>../../../robot/2019/mainBoard2019.c</itemPath>
+        <itemPath>../../../robot/2019/forkDevice2019.c</itemPath>
+        <itemPath>../../../robot/2019/forkDeviceInterface2019.c</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.config"
                      displayName="robot.config"

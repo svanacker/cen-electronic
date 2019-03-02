@@ -191,14 +191,15 @@
 
 // 2018
 #include "../../robot/2018/mainBoard2018.h"
-#include "../../robot/2018/launcherDeviceInterface2018.h"
+// #include "../../robot/2018/launcherDeviceInterface2018.h"
 #include "../../robot/2018/strategyDeviceInterface2018.h"
 #include "../../robot/2018/strategyDevice2018.h"
 #include "../../robot/2018/distributor2018.h"
 
 // 2019
 #include "../../robot/2019/mainBoard2019.h"
-
+#include "../../robot/2019/forkDeviceInterface2019.h"
+#include "../../robot/2019/forkDevice2019.h"
 
 // Logs
 static LogHandler logHandlerListArray[MAIN_BOARD_PC_LOG_HANDLER_LIST_LENGTH];
@@ -386,6 +387,7 @@ void initMainBoardLocalDevices(void) {
 
     // 2018 specific
     addLocalDevice(getStrategy2018DeviceInterface(), getStrategy2018DeviceDescriptor(distributor));
+    addLocalDevice(getFork2019DeviceInterface(), getFork2019DeviceDescriptor(&servoList));
 }
 
 void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
@@ -540,7 +542,8 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
         addI2cRemoteDevice(getMotionSimulationDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
 
         // MECHANICAL BOARD 1
-        addI2cRemoteDevice(getLauncher2018DeviceInterface(), MECHANICAL_BOARD_1_I2C_ADDRESS);
+        // addI2cRemoteDevice(getLauncher2018DeviceInterface(), MECHANICAL_BOARD_1_I2C_ADDRESS);
+
     }
     initDevices();
 

@@ -154,6 +154,8 @@
 
 #define LAUNCHER_2018_DEVICE_HEADER                '_'
 
+#define FORK_2019_DEVICE_HEADER                    '_'
+
 #define ACCELEROMETER_DEVICE_HEADER                '&'
 
 #endif
