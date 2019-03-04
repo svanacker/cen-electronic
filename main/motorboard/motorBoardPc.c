@@ -418,8 +418,8 @@ void runMotorBoardPC(bool singleMode) {
     addLocalDevice(getTofDeviceInterface(), getTofDeviceDescriptor(&tofSensorList));
 
     // COLOR
-    initColorSensorPc(&colorSensor, &colorValue, &colorSensorFindColorType2018);
-    addLocalDevice(getColorSensorDeviceInterface(), getColorSensorDeviceDescriptor(&colorSensor));
+    // initColorSensorPc(&colorSensor, &colorValue, &colorSensorFindColorType2018);
+    // addLocalDevice(getColorSensorDeviceInterface(), getColorSensorDeviceDescriptor(&colorSensor));
 
     //  IO Expander
     initIOExpanderPc(getIOExpanderByIndex(&ioExpanderList, 0), &ioExpanderValue0);

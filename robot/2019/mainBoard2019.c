@@ -17,14 +17,9 @@
 
 #include "../../robot/strategy/gameStrategyContext.h"
 
-// 2018
-
-#include "../../robot/2018/distributor2018.h"
-#include "../../robot/2018/strategy2018.h"
-#include "../../robot/2018/strategyDevice2018.h"
-#include "../../robot/2018/strategyDeviceInterface2018.h"
-
 // 2019
+#include "../../robot/2019/distributor2019.h"
+#include "../../robot/2019/strategy2019.h"
 #include "../../robot/2019/gameBoardElement2019.h"
 
 // 2019 -> GameStrategyContext
@@ -36,15 +31,15 @@ static Point lastObstaclePosition;
 // 2019 -> Navigation
 static Navigation navigation;
 static LocationList locationList;
-static Location locationListArray[STRATEGY_2018_NAVIGATION_LOCATION_LIST_ARRAY_LENGTH];
+static Location locationListArray[STRATEGY_2019_NAVIGATION_LOCATION_LIST_ARRAY_LENGTH];
 
 static PathList pathList;
-static PathData pathListArray[STRATEGY_2018_NAVIGATION_PATH_LIST_ARRAY_LENGTH];
+static PathData pathListArray[STRATEGY_2019_NAVIGATION_PATH_LIST_ARRAY_LENGTH];
 
 static BitList outgoingPathBitList;
-static unsigned int outgoingPathBitArray[STRATEGY_2018_BIT_LIST_NAVIGATION_ARRAY_LENGTH];
+static unsigned int outgoingPathBitArray[STRATEGY_2019_BIT_LIST_NAVIGATION_ARRAY_LENGTH];
 static BitList availablePathBitList;
-static unsigned int availablePathBitArray[STRATEGY_2018_BIT_LIST_NAVIGATION_ARRAY_LENGTH];
+static unsigned int availablePathBitArray[STRATEGY_2019_BIT_LIST_NAVIGATION_ARRAY_LENGTH];
 
 // 2019 -> Robot
 static GameBoard gameBoard;
@@ -54,10 +49,10 @@ static GameBoardElement gameBoardElementListArray[MAIN_BOARD_2019_GAME_BOARD_PRI
 
 Navigation* initNavigation2019(void) {
     // Navigation
-    initLocationList(&locationList, (Location(*)[]) &locationListArray, STRATEGY_2018_BIT_LIST_NAVIGATION_ARRAY_LENGTH);
-    initPathList(&pathList, (PathData(*)[]) &pathListArray, STRATEGY_2018_NAVIGATION_PATH_LIST_ARRAY_LENGTH);
-    initBitList(&outgoingPathBitList, (unsigned int(*)[]) &outgoingPathBitArray, STRATEGY_2018_BIT_LIST_NAVIGATION_ARRAY_LENGTH);
-    initBitList(&availablePathBitList, (unsigned int(*)[]) &availablePathBitArray, STRATEGY_2018_BIT_LIST_NAVIGATION_ARRAY_LENGTH);
+    initLocationList(&locationList, (Location(*)[]) &locationListArray, STRATEGY_2019_BIT_LIST_NAVIGATION_ARRAY_LENGTH);
+    initPathList(&pathList, (PathData(*)[]) &pathListArray, STRATEGY_2019_NAVIGATION_PATH_LIST_ARRAY_LENGTH);
+    initBitList(&outgoingPathBitList, (unsigned int(*)[]) &outgoingPathBitArray, STRATEGY_2019_BIT_LIST_NAVIGATION_ARRAY_LENGTH);
+    initBitList(&availablePathBitList, (unsigned int(*)[]) &availablePathBitArray, STRATEGY_2019_BIT_LIST_NAVIGATION_ARRAY_LENGTH);
 
     initNavigation(&navigation, &locationList, &pathList, &outgoingPathBitList, &availablePathBitList);
 
@@ -66,7 +61,7 @@ Navigation* initNavigation2019(void) {
 
 GameStrategyContext* initGameStrategyContext2019(RobotConfig* robotConfig, EndMatch* endMatch, TofSensorList* tofSensorList) {
     initGameStrategyContext(&gameStrategyContext, robotConfig, &navigation, endMatch, tofSensorList, &robotPosition, &opponentRobotPosition, &lastObstaclePosition);
-    // initStrategy2018(&gameStrategyContext);
+    // initStrategy2019(&gameStrategyContext);
 
     return &gameStrategyContext;
 }

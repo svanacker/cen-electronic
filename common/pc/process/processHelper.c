@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <Wincon.h>
+#include "../../../common/color/color.h"
 
 /**
  * Convert char array to wide char array
@@ -77,10 +78,14 @@ void setConsoleSizeAndBuffer(int width, int height, int bufferWidth, int bufferH
 
     // Article on RGB Management : https://stackoverflow.com/questions/17348086/c-set-console-text-color-to-rgb-value?rq=1
 
-    consoleScreenBufferInfoEx.ColorTable[0] = RGB(0, 0, 0);            // BLACK
-    consoleScreenBufferInfoEx.ColorTable[1] = RGB(255, 255, 255);      // WHITE
-    consoleScreenBufferInfoEx.ColorTable[2] = RGB(255, 0, 0);          // RED
-    consoleScreenBufferInfoEx.ColorTable[3] = RGB(0, 255, 0);          // GREEN
-    consoleScreenBufferInfoEx.ColorTable[4] = RGB(255, 255, 0);        // YELLOW
+    consoleScreenBufferInfoEx.ColorTable[CONSOLE_COLOR_BLACK] = RGB(0, 0, 0);
+    consoleScreenBufferInfoEx.ColorTable[CONSOLE_COLOR_WHITE] = RGB(255, 255, 255);
+    consoleScreenBufferInfoEx.ColorTable[CONSOLE_COLOR_RED] = RGB(255, 0, 0);
+    consoleScreenBufferInfoEx.ColorTable[CONSOLE_COLOR_GREEN] = RGB(0, 255, 0);
+    consoleScreenBufferInfoEx.ColorTable[CONSOLE_COLOR_BLUE] = RGB(0, 0, 255);
+    consoleScreenBufferInfoEx.ColorTable[CONSOLE_COLOR_YELLOW] = RGB(255, 255, 0);
+    consoleScreenBufferInfoEx.ColorTable[CONSOLE_COLOR_CYAN] = RGB(0, 255, 255);
+    consoleScreenBufferInfoEx.ColorTable[CONSOLE_COLOR_MAGENTA] = RGB(255, 0, 255);
+    consoleScreenBufferInfoEx.ColorTable[CONSOLE_COLOR_GRAY] = RGB(128, 128, 128);
     SetConsoleScreenBufferInfoEx(standardOutputHandle, &consoleScreenBufferInfoEx);
 }

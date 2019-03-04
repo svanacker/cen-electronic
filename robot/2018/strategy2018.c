@@ -153,7 +153,7 @@ void initColorAndStartPosition2018(GameStrategyContext* gameStrategyContext) {
     RobotConfig* robotConfig = gameStrategyContext->robotConfig;
     unsigned int configValue = robotConfig->robotConfigReadInt(robotConfig);
 
-    if (configValue & CONFIG_COLOR_GREEN_MASK) {
+    if (configValue & CONFIG_COLOR_YELLOW_MASK) {
         gameStrategyContext->color = TEAM_COLOR_2018_GREEN;
     }
     else {

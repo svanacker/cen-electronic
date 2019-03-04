@@ -69,8 +69,8 @@ void printRobotTableConfig(OutputStream* outputStream, RobotConfig* robotConfig)
 
 	// Green color
 	appendStringTableData(outputStream, "Green Color", ROBOT_CONFIG_KEY_COLUMN_LENGTH);
-	appendBinary16TableData(outputStream, CONFIG_COLOR_GREEN_MASK, 4, ROBOT_CONFIG_MASK_COLUMN_LENGTH);
-	appendBoolTableData(outputStream, configValue & CONFIG_COLOR_GREEN_MASK, ROBOT_CONFIG_VALUE_COLUMN_LENGTH);
+	appendBinary16TableData(outputStream, CONFIG_COLOR_YELLOW_MASK, 4, ROBOT_CONFIG_MASK_COLUMN_LENGTH);
+	appendBoolTableData(outputStream, configValue & CONFIG_COLOR_YELLOW_MASK, ROBOT_CONFIG_VALUE_COLUMN_LENGTH);
 	appendEndOfTableColumn(outputStream, ROBOT_CONFIG_LAST_COLUMN);
 
 	appendTableHeaderSeparatorLine(outputStream);

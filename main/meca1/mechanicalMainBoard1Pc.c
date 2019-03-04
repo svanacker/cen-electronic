@@ -82,10 +82,6 @@
 #include "../../device/motor/pwmMotorDevice.h"
 #include "../../device/motor/pwmMotorDeviceInterface.h"
 
-// 2018
-#include "../../robot/2018/launcherDevice2018.h"
-#include "../../robot/2018/launcherDeviceInterface2018.h"
-
 #include "../../drivers/driverStreamListener.h"
 #include "../../drivers/driverList.h"
 #include "../../drivers/dispatcher/driverDataDispatcherList.h"
@@ -174,9 +170,6 @@ static DualHBridgeMotor md22;
 // Relay
 static Relay relay;
 static int relayValue;
-
-// 2018 Specific
-static Launcher2018 launcher2018;
 
 // Devices
 static Device deviceListArray[MECHANICAL_BOARD_1_PC_DEVICE_LIST_LENGTH];
@@ -292,7 +285,7 @@ void runMechanicalBoard1PC(bool singleMode) {
     IOExpander* launcherIoExpander = getIOExpanderByIndex(&ioExpanderList, MECHANICAL_BOARD_1_PC_IO_EXPANDER_LAUNCHER_INDEX);
 
     // TODO : Add tof !
-    initLauncher2018(&launcher2018, launcherIoExpander, &relay, &md22, NULL);
+    // initLauncher2018(&launcher2018, launcherIoExpander, &relay, &md22, NULL);
  
     // Relay
     initRelayPc(&relay, &relayValue);
@@ -313,7 +306,6 @@ void runMechanicalBoard1PC(bool singleMode) {
     addLocalDevice(getIOExpanderDeviceInterface(), getIOExpanderDeviceDescriptor(&ioExpanderList));
     addLocalDevice(getRelayDeviceInterface(), getRelayDeviceDescriptor(&relay));
     addLocalDevice(getMD22DeviceInterface(), getMD22DeviceDescriptor(&md22));
-    addLocalDevice(getLauncher2018DeviceInterface(), getLauncher2018DeviceDescriptor(&launcher2018));
 
     initDevices();
 

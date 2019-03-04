@@ -62,6 +62,7 @@ void setGameBoardCurrentColor(GameBoard* gameBoard, char currentColorPaletIndex)
 // ROBOT
 
 void drawRobot(GameBoard* gameBoard, Point* robotPosition, float angle) {
+    setGameBoardCurrentColor(gameBoard, 7);
     float x = robotPosition->x;
     float y = robotPosition->y;
 
@@ -111,6 +112,7 @@ void drawRobot(GameBoard* gameBoard, Point* robotPosition, float angle) {
     drawLine(gameBoard, leftMiddleX, leftMiddleY, leftFrontX, leftFrontY, horizontalChar);
     // Front vertical line
     drawLine(gameBoard, leftFrontX, leftFrontY, rightFrontX, rightFrontY, verticalChar);
+    setGameBoardCurrentColor(gameBoard, 0);
 }
 
 // GAMEBOARD

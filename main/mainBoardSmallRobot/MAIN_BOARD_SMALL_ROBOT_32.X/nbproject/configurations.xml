@@ -494,6 +494,12 @@
         <itemPath>../../../robot/2019/score2019.h</itemPath>
         <itemPath>../../../robot/2019/forkDeviceInterface2019.h</itemPath>
         <itemPath>../../../robot/2019/forkDevice2019.h</itemPath>
+        <itemPath>../../../robot/2019/distributor2019.h</itemPath>
+        <itemPath>../../../robot/2019/distributorDebug2019.h</itemPath>
+        <itemPath>../../../robot/2019/strategy2019.h</itemPath>
+        <itemPath>../../../robot/2019/strategy2019Utils.h</itemPath>
+        <itemPath>../../../robot/2019/strategyConfig2019.h</itemPath>
+        <itemPath>../../../robot/2019/teamColor2019.h</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.config"
                      displayName="robot.config"
@@ -1074,6 +1080,11 @@
         <itemPath>../../../robot/2019/mainBoard2019.c</itemPath>
         <itemPath>../../../robot/2019/forkDevice2019.c</itemPath>
         <itemPath>../../../robot/2019/forkDeviceInterface2019.c</itemPath>
+        <itemPath>../../../robot/2019/distributor2019.c</itemPath>
+        <itemPath>../../../robot/2019/distributorDebug2019.c</itemPath>
+        <itemPath>../../../robot/2019/strategy2019.c</itemPath>
+        <itemPath>../../../robot/2019/strategy2019Utils.c</itemPath>
+        <itemPath>../../../robot/2019/strategyConfig2019.c</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.config"
                      displayName="robot.config"

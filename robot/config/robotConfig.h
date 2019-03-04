@@ -22,9 +22,9 @@
 /** Use sonar with near detection distance : 0b0100 0000*/
 #define CONFIG_SONAR_NEAR_MASK         0x0040
 
-/** Indicates we have the color green if set. */
+/** Indicates we have the color yellow if set. */
 // 0b 1000 0000
-#define CONFIG_COLOR_GREEN_MASK         0x0080
+#define CONFIG_COLOR_YELLOW_MASK       0x0080
 
 // --- 8 HIGH CONFIG BITS ---
 

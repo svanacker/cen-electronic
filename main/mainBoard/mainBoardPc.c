@@ -189,12 +189,12 @@
 #include "../../main/motorBoard/motorBoardPc.h"
 #include "../../main/meca1/mechanicalMainBoard1Pc.h"
 
-// 2018
-#include "../../robot/2018/mainBoard2018.h"
+// 2019
+// #include "../../robot/2019/mainBoard2019.h"
 // #include "../../robot/2018/launcherDeviceInterface2018.h"
-#include "../../robot/2018/strategyDeviceInterface2018.h"
-#include "../../robot/2018/strategyDevice2018.h"
-#include "../../robot/2018/distributor2018.h"
+// #include "../../robot/2019/strategyDeviceInterface2018.h"
+// #include "../../robot/2019/strategyDevice2018.h"
+// #include "../../robot/2019/distributor2019.h"
 
 // 2019
 #include "../../robot/2019/mainBoard2019.h"
@@ -294,7 +294,6 @@ static EndMatch endMatch;
 static GameStrategyContext* gameStrategyContext;
 static GameBoard* gameBoard;
 static Navigation* navigation;
-static Distributor* distributor;
 
 // TOF
 static TofSensorList tofSensorList;
@@ -385,8 +384,8 @@ void initMainBoardLocalDevices(void) {
     // addLocalDevice(getTofDeviceInterface(), getTofDeviceDescriptor(&tofSensorList));
     addLocalDevice(getGameboardDeviceInterface(), getGameboardDeviceDescriptor(gameBoard));
 
-    // 2018 specific
-    addLocalDevice(getStrategy2018DeviceInterface(), getStrategy2018DeviceDescriptor(distributor));
+    // 2019 specific
+//    addLocalDevice(getStrategy2018DeviceInterface(), getStrategy2018DeviceDescriptor(distributor));
     addLocalDevice(getFork2019DeviceInterface(), getFork2019DeviceDescriptor(&servoList));
 }
 
@@ -503,8 +502,8 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
     // TOF
     initTofSensorListPc(&tofSensorList, (TofSensor(*)[]) &tofSensorArray, MOTOR_BOARD_PC_TOF_SENSOR_LIST_LENGTH);
 
-    navigation = initNavigation2018();
-    gameStrategyContext = initGameStrategyContext2018(&robotConfig, &endMatch, &tofSensorList);
+    navigation = initNavigation2019();
+    gameStrategyContext = initGameStrategyContext2019(&robotConfig, &endMatch, &tofSensorList);
     // gameBoard = initGameBoard2018(gameStrategyContext);
     gameBoard = initGameBoard2019(gameStrategyContext);
 

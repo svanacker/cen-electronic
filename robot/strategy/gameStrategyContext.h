@@ -27,12 +27,10 @@ typedef struct GameStrategyContext GameStrategyContext;
 
 // Index if no Strategy
 #define NO_STRATEGY_INDEX                                                        0
-#define STRATEGY_1_SWITCH_INDEX                                                  1
-#define STRATEGY_2_SWITCH_DIST_INDEX                                             2
-#define STRATEGY_3_SWITCH_DIST_BEE_INDEX                                         3
-#define STRATEGY_4_SWITCH_DIST_BEE_DIST_INDEX                                    4
-#define STRATEGY_5_SWITCH_BEE_INDEX                                              5
-#define STRATEGY_7_CHECK_IF_ROBOT_OK                                             7
+#define STRATEGY_1_SIMPLE_PUCK                                                   1
+#define STRATEGY_2_ACCELERATOR                                                   2
+#define STRATEGY_3_ACCELERATOR_GOLDENIUM                                         3
+
 /**
  * Encapsulates the context of the strategy.
  */
