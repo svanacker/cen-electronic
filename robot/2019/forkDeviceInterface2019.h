@@ -44,6 +44,24 @@
 // Debug
 #define COMMAND_2019_FORK_DEBUG                   'D'
 
+// PUSH
+// Push is on                              
+#define COMMAND_2019_FORK_PUSH_ON                 'P'
+
+// Push is off
+#define COMMAND_2019_FORK_PUSH_OFF                'p'
+
+// INIT
+#define COMMAND_2019_FORK_INIT                    'i'
+
+// TAKE
+#define COMMAND_2019_FORK_TAKE                    't'
+
+// RELEASE
+#define COMMAND_2019_FORK_RELEASE                 'r'
+
+
+
 /**
  * Get the device interface for Fork 2019.
  */

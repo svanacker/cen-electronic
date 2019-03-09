@@ -35,6 +35,8 @@
 
 // SMALL ROBOT PART
 #include "../../drivers/pwm/servo/servoPwmPca9685.h"
+#include "../../robot/2019/forkDeviceInterface2019.h"
+#include "../../robot/2019/forkDevice2019.h"
 
 // Robot Configuration
 static RobotConfig robotConfig;
@@ -139,6 +141,8 @@ int main(void) {
     I2cBus* i2cBus = mainBoardCommonGetMainI2cBus();
     I2cBusConnection* servoI2cBusConnection = addI2cBusConnection(i2cBus, PCA9685_ADDRESS_0, true);
     addServoAllPca9685(servoList, servoI2cBusConnection);
+    
+    addLocalDevice(getFork2019DeviceInterface(), getFork2019DeviceDescriptor(servoList));
 
     /*
     appendStringCRLF(getInfoOutputStreamLogger(), "PWM START");

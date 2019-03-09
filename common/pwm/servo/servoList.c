@@ -5,6 +5,7 @@
 
 #include "../../../common/timer/timerConstants.h"
 #include "../../../common/timer/timerList.h"
+#include "logger.h"
 
 #include <stdlib.h>
 
@@ -140,6 +141,9 @@ Servo* getServo(ServoList* servoList, unsigned int servoIndex) {
         return NULL;
     }
     if (servoIndex < 0 || servoIndex >= servoList->maxSize) {
+        OutputStream* debugOutputStream = getErrorOutputStreamLogger();
+        appendStringAndDecLN(debugOutputStream, "maxSize=", servoList->maxSize);
+        appendStringAndDecLN(debugOutputStream, "servoIndex=", servoIndex);
         writeError(SERVO_LIST_OUT_OF_BOUNDS);
         return NULL;
     }
