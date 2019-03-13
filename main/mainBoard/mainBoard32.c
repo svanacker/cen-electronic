@@ -51,7 +51,7 @@ void initMainBoardDevicesDescriptor() {
     mainBoardCommonLcdAddDevices();
     mainBoardCommonMotorAddDevices(MAIN_BOARD_SERIAL_PORT_MOTOR);
     mainBoardCommonStrategyAddDevices(MAIN_BOARD_SERIAL_PORT_MOTOR);
-    // mainBoardCommonTofAddDevices();
+    mainBoardCommonTofAddDevices();
     mainBoardCommonMeca1AddDevices();
 
     // Call the init on each devices
@@ -118,7 +118,7 @@ void mainBoardMainPhase2(void) {
     mainBoardCommonInitTimerList();
     mainBoardCommonInitCommonDrivers();
     
-    // mainBoardCommonTofInitDrivers(mainBoardCommonGetMainI2cBus());
+    mainBoardCommonTofInitDrivers(mainBoardCommonGetMainI2cBus());
     mainBoardCommonMatchMainInitDrivers(&robotConfig, isMatchStarted32, mainBoardWaitForInstruction, loopUnWaitForInstruction);
     mainBoardCommonStrategyMainInitDrivers(&robotConfig);
 }
@@ -142,7 +142,8 @@ int main(void) {
     I2cBusConnection* servoI2cBusConnection = addI2cBusConnection(i2cBus, PCA9685_ADDRESS_0, true);
     addServoAllPca9685(servoList, servoI2cBusConnection);
     
-    addLocalDevice(getFork2019DeviceInterface(), getFork2019DeviceDescriptor(servoList));
+    TofSensorList* tofSensorList = mainBoardCommonTofGetTofSensorList();
+    addLocalDevice(getFork2019DeviceInterface(), getFork2019DeviceDescriptor(servoList, tofSensorList));
 
     /*
     appendStringCRLF(getInfoOutputStreamLogger(), "PWM START");

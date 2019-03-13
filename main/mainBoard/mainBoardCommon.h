@@ -24,7 +24,7 @@
 #define MAIN_BOARD_IO_EXPANDER_LIST_LENGTH                              1
 
 // TOFS
-#define MAIN_BOARD_TOF_SENSOR_LIST_LENGTH                               6
+#define MAIN_BOARD_TOF_SENSOR_LIST_LENGTH                               1
 
 // UART
 #define MAIN_BOARD_SERIAL_LINK_LIST_LENGTH                              4

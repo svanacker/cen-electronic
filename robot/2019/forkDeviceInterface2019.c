@@ -86,7 +86,14 @@ int deviceFork2019GetInterface(char commandHeader, DeviceInterfaceMode mode, boo
             setFunctionNoArgumentAndNoResult("Release");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }    
+    }
+    // SCAN
+    else if (commandHeader == COMMAND_2019_FORK_SCAN) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("Scan");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }  
     return DEVICE_HEADER_NOT_HANDLED;
 }
 

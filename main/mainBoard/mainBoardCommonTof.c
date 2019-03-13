@@ -84,13 +84,14 @@ void mainBoardCommonTofInitDrivers(I2cBus* i2cBus) {
                               i2cBus,
                               // IO Expander, if null, we will not be able to
                               // Manage several tof
-                              tofIoExpander,
+                              // tofIoExpander,
+            NULL,
                               // debug
                               true,
                               // enabledAllSensors
                               false,
                               // changeAddressAllSensors
-            true
+            false
             );
     appendStringLN(getDebugOutputStreamLogger(), "OK");
     

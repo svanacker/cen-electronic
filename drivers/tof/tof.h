@@ -17,7 +17,7 @@ typedef bool tofSensorInitFunction(TofSensor* TofSensor);
 /**
  * Define the function which must be used to get the distance 
  */
-typedef unsigned int tofSensorGetDistanceMMFunction(TofSensor* TofSensor);
+typedef unsigned int tofSensorGetDistanceMMFunction(TofSensor* tofSensor);
 
 /**
 * Defines the contract For one Tof Sensor.

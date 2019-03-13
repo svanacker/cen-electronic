@@ -60,6 +60,8 @@
 // RELEASE
 #define COMMAND_2019_FORK_RELEASE                 'r'
 
+// SCAN
+#define COMMAND_2019_FORK_SCAN                    'S'
 
 
 /**
