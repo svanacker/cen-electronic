@@ -1,4 +1,4 @@
-#include "adcDeviceInterface.h"
+#include "accelerometerDeviceInterface.h"
 
 #include "../../device/device.h"
 #include "../../device/deviceInterface.h"

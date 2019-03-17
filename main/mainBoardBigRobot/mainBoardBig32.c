@@ -16,13 +16,13 @@
 #include "../../device/deviceList.h"
 
 // COMMON PART
-#include "mainBoardCommon.h"
-#include "mainBoardCommonLcd.h"
-#include "mainBoardCommonMatch.h"
-#include "mainBoardCommonMeca1.h"
-#include "mainBoardCommonMotor.h"
-#include "mainBoardCommonStrategy.h"
-#include "mainBoardCommonTof.h"
+#include "../../main/mainBoard/mainBoardCommon.h"
+#include "../../main/mainBoard/mainBoardCommonLcd.h"
+#include "../../main/mainBoard/mainBoardCommonMatch.h"
+#include "../../main/mainBoard/mainBoardCommonMeca1.h"
+#include "../../main/mainBoard/mainBoardCommonMotor.h"
+#include "../../main/mainBoard/mainBoardCommonStrategy.h"
+#include "../../main/mainBoard/mainBoardCommonTof.h"
 
 #include "../../drivers/pwm/servo/servoPwmPca9685.h"
 #include "../../drivers/pwm/servo/pca9685.h"
@@ -87,11 +87,11 @@ bool loopUnWaitForInstruction(StartMatch* startMatchParam) {
  * @return 
  */
 void mainBoardMainPhase1(void) {
-    setBoardName("MAIN SMALL ROBOT 32");
+    setBoardName("MAIN BIG ROBOT 32");
     setRobotMustStop(false);
  
     // CONFIG
-    initRobotConfigPic32(&robotConfig);
+    initRobotConfigPic32(&robotConfig, ROBOT_TYPE_BIG);
     
     // BASE LOGS
     mainBoardCommonInitLogs();

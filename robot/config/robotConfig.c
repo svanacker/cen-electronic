@@ -7,7 +7,9 @@
 #include "../../common/io/printWriter.h"
 
 void initRobotConfig(RobotConfig* robotConfig,
+                     enum RobotType robotType, 
                 robotConfigReadIntFunction* robotConfigReadInt, robotConfigWriteIntFunction* robotConfigWriteInt){
+    robotConfig->robotType = robotType;
     robotConfig->robotConfigReadInt = robotConfigReadInt;
     robotConfig->robotConfigWriteInt = robotConfigWriteInt;
 }

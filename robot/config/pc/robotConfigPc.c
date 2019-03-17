@@ -91,6 +91,6 @@ void _robotConfigPcWriteInt(RobotConfig* robotConfig, unsigned int value) {
     // TODO
 }
 
-void initRobotConfigPc(RobotConfig* robotConfig) {
-    initRobotConfig(robotConfig, _robotConfigPcReadInt, _robotConfigPcWriteInt);
+void initRobotConfigPc(RobotConfig* robotConfig, enum RobotType robotType) {
+    initRobotConfig(robotConfig, robotType, _robotConfigPcReadInt, _robotConfigPcWriteInt);
 }

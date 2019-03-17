@@ -124,6 +124,7 @@ void initColorAndStartPosition2019(GameStrategyContext* gameStrategyContext) {
     RobotConfig* robotConfig = gameStrategyContext->robotConfig;
     unsigned int configValue = robotConfig->robotConfigReadInt(robotConfig);
 
+    // Configure the color so that we could use isViolet after, could NOT be used before !
     if (configValue & CONFIG_COLOR_YELLOW_MASK) {
         gameStrategyContext->color = TEAM_COLOR_2019_YELLOW;
     }
@@ -131,12 +132,18 @@ void initColorAndStartPosition2019(GameStrategyContext* gameStrategyContext) {
         gameStrategyContext->color = TEAM_COLOR_2019_VIOLET;
     }
     float angleDeciDegree = ANGLE_DECI_DEG_90;
-    gameStrategyContext->robotPosition->x = BIG_ROBOT_START_AREA_X;
-    gameStrategyContext->robotPosition->y = BIG_ROBOT_START_AREA_Y;
-
+    enum RobotType robotType = robotConfig->robotType;
+    if (robotType == ROBOT_TYPE_BIG) {
+        gameStrategyContext->robotPosition->x = BIG_ROBOT_START_AREA_X;
+        gameStrategyContext->robotPosition->y = BIG_ROBOT_START_AREA_Y;
+    }
+    else if (robotType == ROBOT_TYPE_SMALL) {
+        gameStrategyContext->robotPosition->x = SMALL_ROBOT_START_AREA_X;
+        gameStrategyContext->robotPosition->y = SMALL_ROBOT_START_AREA_Y;
+    }
     // Symetry
-	if (!isViolet(gameStrategyContext)) {
-        angleDeciDegree = ANGLE_DECI_DEG_90;
+	if (isViolet(gameStrategyContext)) {
+        angleDeciDegree = -ANGLE_DECI_DEG_90;
         gameStrategyContext->robotPosition->y = GAMEBOARD_HEIGHT - gameStrategyContext->robotPosition->y;
 	}
     float angleRadian = deciDegreeToRad(angleDeciDegree);
@@ -152,19 +159,25 @@ Location* addNavigationWithColors(enum TeamColor teamColor, Navigation* navigati
     return result;
 }
 
-
 void initLocations2019(GameStrategyContext* gameStrategyContext) {
     Navigation* navigation = gameStrategyContext->navigation;
     enum TeamColor teamColor = gameStrategyContext->color;
-    bigRobotStartAreaLocation = addNavigationWithColors(teamColor, navigation, BIG_ROBOT_START_AREA, BIG_ROBOT_START_AREA_X, BIG_ROBOT_START_AREA_Y);
-    smallRobotStartAreaLocation = addNavigationWithColors(teamColor, navigation, SMALL_ROBOT_START_AREA, SMALL_ROBOT_START_AREA_X, SMALL_ROBOT_START_AREA_Y);
-    acceleratorFrontLocation = addNavigationWithColors(teamColor, navigation, ACCELERATOR_FRONT, ACCELERATOR_FRONT_X, ACCELERATOR_FRONT_Y);
-    acceleratorDropLocation = addNavigationWithColors(teamColor, navigation, ACCELERATOR_DROP, ACCELERATOR_DROP_X, ACCELERATOR_DROP_Y);
-    goldeniumFrontLocation = addNavigationWithColors(teamColor, navigation, GOLDENIUM_FRONT, GOLDENIUM_FRONT_X, GOLDENIUM_FRONT_Y);
-    weighingMachineFrontLocation = addNavigationWithColors(teamColor, navigation, WEIGHING_MACHINE_FRONT, WEIGHING_MACHINE_X, WEIGHING_MACHINE_Y);
-    bigDistributorLine1FrontLocation = addNavigationWithColors(teamColor, navigation, BIG_DISTRIBUTOR_LINE_1, BIG_DISTRIBUTOR_LINE_1_X, BIG_DISTRIBUTOR_LINE_1_Y);
-    bigDistributorLine2FrontLocation = addNavigationWithColors(teamColor, navigation, BIG_DISTRIBUTOR_LINE_2, BIG_DISTRIBUTOR_LINE_2_X, BIG_DISTRIBUTOR_LINE_2_Y);
-    bigDistributorLine3FrontLocation = addNavigationWithColors(teamColor, navigation, BIG_DISTRIBUTOR_LINE_3, BIG_DISTRIBUTOR_LINE_3_X, BIG_DISTRIBUTOR_LINE_3_Y);
+    RobotConfig* robotConfig = gameStrategyContext->robotConfig;
+    enum RobotType robotType = robotConfig->robotType;
+
+    if (robotType == ROBOT_TYPE_BIG) {
+        bigRobotStartAreaLocation = addNavigationWithColors(teamColor, navigation, BIG_ROBOT_START_AREA, BIG_ROBOT_START_AREA_X, BIG_ROBOT_START_AREA_Y);
+        acceleratorDropLocation = addNavigationWithColors(teamColor, navigation, ACCELERATOR_DROP, ACCELERATOR_DROP_X, ACCELERATOR_DROP_Y);
+        bigDistributorLine1FrontLocation = addNavigationWithColors(teamColor, navigation, BIG_DISTRIBUTOR_LINE_1, BIG_DISTRIBUTOR_LINE_1_X, BIG_DISTRIBUTOR_LINE_1_Y);
+        bigDistributorLine2FrontLocation = addNavigationWithColors(teamColor, navigation, BIG_DISTRIBUTOR_LINE_2, BIG_DISTRIBUTOR_LINE_2_X, BIG_DISTRIBUTOR_LINE_2_Y);
+        bigDistributorLine3FrontLocation = addNavigationWithColors(teamColor, navigation, BIG_DISTRIBUTOR_LINE_3, BIG_DISTRIBUTOR_LINE_3_X, BIG_DISTRIBUTOR_LINE_3_Y);
+    }
+    else {
+        smallRobotStartAreaLocation = addNavigationWithColors(teamColor, navigation, SMALL_ROBOT_START_AREA, SMALL_ROBOT_START_AREA_X, SMALL_ROBOT_START_AREA_Y);
+        acceleratorFrontLocation = addNavigationWithColors(teamColor, navigation, ACCELERATOR_FRONT, ACCELERATOR_FRONT_X, ACCELERATOR_FRONT_Y);
+        goldeniumFrontLocation = addNavigationWithColors(teamColor, navigation, GOLDENIUM_FRONT, GOLDENIUM_FRONT_X, GOLDENIUM_FRONT_Y);
+        weighingMachineFrontLocation = addNavigationWithColors(teamColor, navigation, WEIGHING_MACHINE_FRONT, WEIGHING_MACHINE_X, WEIGHING_MACHINE_Y);
+    }
 }
 
 // PATHS
@@ -200,43 +213,47 @@ void initPaths2019(GameStrategyContext* gameStrategyContext, int index) {
     float aFactor = getAccelerationFactor(robotConfig);
     float speedFactor = getSpeedFactor(robotConfig);
 
-    // -> Small Robot
-    smallRobotStartArea_to_accelerator_Path = addNavigationPathWithColor(teamColor,
-                                                 navigation,
-                                                 smallRobotStartAreaLocation, 
-                                                 acceleratorFrontLocation,
-                                                 SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_COST,
-                                                 SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_CP1, 
-                                                 SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_CP2,
-                                                 deciDegreeToRad(SMALL_ROBOT_START_AREA_ANGLE_DECI_DEG),
-                                                 deciDegreeToRad(ACCELERATOR_FRONT_DECI_DEG),
-                                                 aFactor * SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_ACCELERATION_FACTOR,
-                                                 speedFactor * SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_SPEED_FACTOR);
+    enum RobotType robotType = robotConfig->robotType;
 
-    acceleratorFront_to_goldeniumFront_Path = addNavigationPathWithColor(teamColor,
-                                                navigation,
-                                                acceleratorFrontLocation,
-                                                goldeniumFrontLocation,
-                                                ACCELERATOR_TO_GOLDENIUM_COST,
-                                                ACCELERATOR_TO_GOLDENIUM_CP1,
-                                                ACCELERATOR_TO_GOLDENIUM_CP2,
-                                                deciDegreeToRad(ACCELERATOR_FRONT_DECI_DEG),
-                                                deciDegreeToRad(GOLDENIUM_FRONT_ANGLE_DECI_DEG),
-                                                aFactor * GOLDENIUM_TO_WEIGHING_MACHINE_ACCELERATION_FACTOR,
-                                                speedFactor * GOLDENIUM_TO_WEIGHING_MACHINE_SPEED_FACTOR);
+    if (robotType == ROBOT_TYPE_SMALL) {
+        // -> Small Robot
+        smallRobotStartArea_to_accelerator_Path = addNavigationPathWithColor(teamColor,
+                                                     navigation,
+                                                     smallRobotStartAreaLocation, 
+                                                     acceleratorFrontLocation,
+                                                     SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_COST,
+                                                     SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_CP1, 
+                                                     SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_CP2,
+                                                     deciDegreeToRad(SMALL_ROBOT_START_AREA_ANGLE_DECI_DEG),
+                                                     deciDegreeToRad(ACCELERATOR_FRONT_DECI_DEG),
+                                                     aFactor * SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_ACCELERATION_FACTOR,
+                                                     speedFactor * SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_SPEED_FACTOR);
 
-    goldeniumFront_to_weighingMachineFront_Path = addNavigationPathWithColor(teamColor,
-                                                navigation,
-                                                goldeniumFrontLocation,
-                                                weighingMachineFrontLocation,
-                                                GOLDENIUM_TO_WEIGHING_MACHINE_COST,
-                                                GOLDENIUM_TO_WEIGHING_MACHINE_CP1,
-                                                GOLDENIUM_TO_WEIGHING_MACHINE_CP2,
-                                                deciDegreeToRad(GOLDENIUM_FRONT_ANGLE_DECI_DEG),
-                                                deciDegreeToRad(WEIGHING_MACHINE_ANGLE_DECI_DEG),
-                                                aFactor * GOLDENIUM_TO_WEIGHING_MACHINE_ACCELERATION_FACTOR,
-                                                speedFactor * GOLDENIUM_TO_WEIGHING_MACHINE_SPEED_FACTOR);
+        acceleratorFront_to_goldeniumFront_Path = addNavigationPathWithColor(teamColor,
+                                                    navigation,
+                                                    acceleratorFrontLocation,
+                                                    goldeniumFrontLocation,
+                                                    ACCELERATOR_TO_GOLDENIUM_COST,
+                                                    ACCELERATOR_TO_GOLDENIUM_CP1,
+                                                    ACCELERATOR_TO_GOLDENIUM_CP2,
+                                                    deciDegreeToRad(ACCELERATOR_FRONT_DECI_DEG),
+                                                    deciDegreeToRad(GOLDENIUM_FRONT_ANGLE_DECI_DEG),
+                                                    aFactor * GOLDENIUM_TO_WEIGHING_MACHINE_ACCELERATION_FACTOR,
+                                                    speedFactor * GOLDENIUM_TO_WEIGHING_MACHINE_SPEED_FACTOR);
 
+        goldeniumFront_to_weighingMachineFront_Path = addNavigationPathWithColor(teamColor,
+                                                    navigation,
+                                                    goldeniumFrontLocation,
+                                                    weighingMachineFrontLocation,
+                                                    GOLDENIUM_TO_WEIGHING_MACHINE_COST,
+                                                    GOLDENIUM_TO_WEIGHING_MACHINE_CP1,
+                                                    GOLDENIUM_TO_WEIGHING_MACHINE_CP2,
+                                                    deciDegreeToRad(GOLDENIUM_FRONT_ANGLE_DECI_DEG),
+                                                    deciDegreeToRad(WEIGHING_MACHINE_ANGLE_DECI_DEG),
+                                                    aFactor * GOLDENIUM_TO_WEIGHING_MACHINE_ACCELERATION_FACTOR,
+                                                    speedFactor * GOLDENIUM_TO_WEIGHING_MACHINE_SPEED_FACTOR);
+    }
+    else if (robotType == ROBOT_TYPE_BIG) {
     // Big Robot
     bigRobotStartArea_to_bigDistributorLine1Front = addNavigationPathWithColor(teamColor,
                                                 navigation,
@@ -310,7 +327,7 @@ void initPaths2019(GameStrategyContext* gameStrategyContext, int index) {
                                                 deciDegreeToRad(ACCELERATOR_DROP_DECI_DEG),
                                                 aFactor * BIGDISTRIBUTOR_LINE3_FRONT_TO_ACCELERATOR_DROP_ACCELERATION_FACTOR,
                                                 speedFactor * BIGDISTRIBUTOR_LINE3_FRONT_TO_ACCELERATOR_DROP_SPEED_FACTOR);
-
+    }
 }
 
 void initTargets2019(GameStrategyContext* gameStrategyContext) {

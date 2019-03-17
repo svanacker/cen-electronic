@@ -15,6 +15,7 @@
 #include "../../motion/extended/bspline.h"
 #include "../../motion/extended/bsplineMotion.h"
 
+#include "../../robot/config/robotConfig.h"
 #include "../../robot/strategy/gameTarget.h"
 #include "../../robot/strategy/gameTargetList.h"
 #include "../../robot/strategy/gameStrategyContext.h"
@@ -68,8 +69,16 @@ void drawRobot(GameBoard* gameBoard, Point* robotPosition, float angle) {
     float x = robotPosition->x;
     float y = robotPosition->y;
 
+    GameStrategyContext* strategyContext = gameBoard->gameStrategyContext;
+    RobotConfig* robotConfig = strategyContext->robotConfig;
+    enum RobotType robotType = robotConfig->robotType;
     // Draw the central point
-    drawPoint(gameBoard, robotPosition, 'R');
+    if (robotType == ROBOT_TYPE_BIG) {
+        drawPoint(gameBoard, robotPosition, 'B');
+    }
+    else if (robotType == ROBOT_TYPE_SMALL) {
+        drawPoint(gameBoard, robotPosition, 'S');
+    }
     float radius = 150.0f;
 
     // Right Front Point

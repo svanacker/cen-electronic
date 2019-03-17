@@ -19,22 +19,10 @@ typedef struct RobotPosition {
 } RobotPosition;
 
 /**
- * Define a type of color which was detected.
- */
-enum RobotType {
-    // The big robot authorized for Eurobot
-    ROBOT_TYPE_BIG,
-    // The Small robot authorized for Eurobot
-    ROBOT_TYPE_SMALL
-};
-
-/**
  * Structure to store the information about the robot
  * @return 
  */
 typedef struct Robot {
-    // The type of the robot
-    enum RobotType robotType;
     // The position of the robot
     RobotPosition* robotPosition;
 } Robot;
@@ -43,12 +31,10 @@ typedef struct Robot {
  * Constructor.
  * Initialize the structure with the robot.
  * @param robot
- * @param robotType
  * @param robotPosition
  */
-void initRobot(Robot* robot, enum RobotType robotType, RobotPosition* robotPosition);
+void initRobot(Robot* robot, RobotPosition* robotPosition);
     
-
 /** 
  * Defines some information needed by MainBoard about the status of the Robot.
  * Very precise information about the position of the robot is handled by the trajectory handler

@@ -10,6 +10,6 @@
  * Initialize a type of robotConfig for Windows
  * @param robotConfig a pointer of RobotConfig type.
  */
-void initRobotConfigPc(RobotConfig* robotConfig);
+void initRobotConfigPc(RobotConfig* robotConfig, enum RobotType robotType);
 
 #endif

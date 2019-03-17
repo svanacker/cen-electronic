@@ -478,7 +478,8 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
     }
 
     // CONFIG
-    initRobotConfigPc(&robotConfig);
+    // initRobotConfigPc(&robotConfig, ROBOT_TYPE_BIG);
+    initRobotConfigPc(&robotConfig, ROBOT_TYPE_SMALL);
 
     // EEPROM
     initEepromPc(&eeprom, "MAIN_BOARD_EEPROM");

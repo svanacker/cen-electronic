@@ -1,6 +1,6 @@
 #include "robotDebug.h"
 
-#include "robot.h"
+#include "../robot/config/robotConfig.h"
 
 #include "../common/io/outputStream.h"
 #include "../common/io/printWriter.h"

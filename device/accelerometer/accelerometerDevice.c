@@ -12,8 +12,9 @@
 #include "../../common/log/logLevel.h"
 #include "../../common/log/logHandler.h"
 
+#include "../../common/sensor/accelerometer/accelerometer.h"
+
 #include "../device.h"
-#include "sensor/accelerometer/accelerometer.h"
 
 // Forward declaration
 Accelerometer* getAccelerometerDeviceAccelerometer(void);

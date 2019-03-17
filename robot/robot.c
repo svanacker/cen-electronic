@@ -32,8 +32,7 @@
 #include "../main/motorboard/motorBoard32.h"
 
 // Constructor
-void initRobot(Robot* robot, enum RobotType robotType, RobotPosition* robotPosition) {
-    robot->robotType = robotType;
+void initRobot(Robot* robot, RobotPosition* robotPosition) {
     robot->robotPosition = robotPosition;
 }
 

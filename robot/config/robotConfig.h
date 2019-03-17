@@ -5,6 +5,16 @@
 
 #include "../../common/io/outputStream.h"
 
+/**
+ * Define a type of color which was detected.
+ */
+enum RobotType {
+    // The big robot authorized for Eurobot
+    ROBOT_TYPE_BIG,
+    // The Small robot authorized for Eurobot
+    ROBOT_TYPE_SMALL
+};
+
 // --- 8 LOW CONFIG BITS ---
 
 /** Mask for the strategy : 0b 0000 0111 */
@@ -78,6 +88,8 @@ typedef void robotConfigWriteIntFunction(RobotConfig* robotConfig, unsigned int 
  * Defines the contract for switch robot configuration.
  */
 struct RobotConfig {
+    // The type of the robot
+    enum RobotType robotType;
     /** The function which must be used to read the robot configuration */
     robotConfigReadIntFunction* robotConfigReadInt;
     /** The function which can be used if we change the config. */
@@ -91,7 +103,9 @@ struct RobotConfig {
  * @param robotConfigReadIntFunction the pointer on the real function which read an int.
  */
 void initRobotConfig(RobotConfig* robotConfig,
-                robotConfigReadIntFunction* robotConfigReadInt, robotConfigWriteIntFunction* robotConfigWriteInt);
+                     enum RobotType robotType, 
+                     robotConfigReadIntFunction* robotConfigReadInt,
+                     robotConfigWriteIntFunction* robotConfigWriteInt);
 
 /**
 * Reads the raw config Value.
