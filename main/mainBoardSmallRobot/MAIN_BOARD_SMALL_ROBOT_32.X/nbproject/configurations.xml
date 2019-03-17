@@ -487,6 +487,7 @@
       </logicalFolder>
       <logicalFolder name="robot" displayName="robot" projectFiles="true">
         <itemPath>../../../robot/robot.h</itemPath>
+        <itemPath>../../../robot/robotDebug.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f22" displayName="robot.2019" projectFiles="true">
         <itemPath>../../../robot/2019/gameBoardElement2019.h</itemPath>
@@ -1074,6 +1075,7 @@
       </logicalFolder>
       <logicalFolder name="robot" displayName="robot" projectFiles="true">
         <itemPath>../../../robot/robot.c</itemPath>
+        <itemPath>../../../robot/robotDebug.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f22" displayName="robot.2019" projectFiles="true">
         <itemPath>../../../robot/2019/gameBoardElement2019.c</itemPath>
@@ -1182,7 +1184,6 @@
     <Elem>..\..\..\drivers\motion</Elem>
     <Elem>..\..\airconditioning</Elem>
     <Elem>..\..\..\drivers\clock</Elem>
-    <Elem>..\..\..\robot\strategy</Elem>
     <Elem>..\..\..\common\adc\32</Elem>
     <Elem>..\..\..\common\pwm</Elem>
     <Elem>..\..\..\device\motion\position</Elem>

@@ -4,6 +4,7 @@
 #include "../../common/ascii/asciiUtils.h"
 
 #include "../../common/math/cenMath.h"
+#include "../../common/error/error.h"
 
 #include "gameboard.h"
 #include "gameboardElement.h"
@@ -26,7 +27,6 @@
 #include <Windows.h>
 #endif
 
-
 // Initialization
 
 void initGameBoard(GameBoard* gameBoard,
@@ -35,6 +35,8 @@ void initGameBoard(GameBoard* gameBoard,
                     GameBoardElement(*gameBoardElementListArray)[],
                     unsigned char gameBoardElementListSize,
                     GameStrategyContext* gameStrategyContext) {
+    gameBoard->showLocation = true;
+    gameBoard->showPath = true;
     gameBoard->gameBoardElementList = gameBoardElementList;
     gameBoard->gameBoardCurve = gameBoardSplineCurve;
     initGameBoardElementList(gameBoardElementList, gameBoardElementListArray, gameBoardElementListSize);
@@ -136,17 +138,23 @@ void gameTargetPrint(GameBoard* gameBoard, int* element) {
     drawPointCoordinates(gameBoard, location->x, location->y, c);
 }
 
-void gamePathPrint(GameBoard* gameBoard, int* element) {
+void gamePathPrint(GameBoard* gameBoard, int* element, char c) {
     PathData* pathData = (PathData*)element;
+    if (pathData == NULL) {
+        writeError(PATH_NULL);
+        return;
+    }
     Location* location1 = pathData->location1;
     Location* location2 = pathData->location2;
-    parameterBSplineWithDistanceAndAngle(gameBoard->gameBoardCurve, location1->x, location1->y, pathData->angleRadian1,
+    BSplineCurve* bSplineCurve = gameBoard->gameBoardCurve;
+
+    parameterBSplineWithDistanceAndAngle(bSplineCurve, location1->x, location1->y, pathData->angleRadian1,
                                                           location2->x, location2->y, pathData->angleRadian2,
                                                           pathData->controlPointDistance1, pathData->controlPointDistance2, 
                                                           MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL,
                                                           false);
 
-    bSplinePrint(gameBoard, gameBoard->gameBoardCurve, '*');
+    bSplinePrint(gameBoard, bSplineCurve, c);
 }
 
 void clearGameBoardPixels(GameBoard* gameBoard) {
@@ -165,20 +173,37 @@ void fillGameBoardCharElements(GameBoard* gameBoard, int* element) {
     // Borders (At the beginning so it could be override by other chars)
     gameboardBorderPrint(gameBoard, element);
 
+    // Locations
+    if (gameBoard->showLocation) {
+        Navigation* navigation = gameStrategyContext->navigation;
+        LocationList* locationList = getNavigationLocationList(navigation);
+        unsigned int locationSize = locationList->size;
+        unsigned int i;
+        for (i = 0; i < locationSize; i++) {
+            Location* location = getLocation(locationList, i);
+            drawString(gameBoard, location->x, location->y, location->name);
+        }
+    }
+
     // Paths
-    Navigation* navigation = gameStrategyContext->navigation;
-    PathList* pathList = getNavigationPathList(navigation);
-    unsigned char size = pathList->size;
-    unsigned int i;
-    for (i = 0; i < size; i++) {
-        PathData* pathData = getPath(pathList, i);
-        gamePathPrint(gameBoard, (int*)pathData);
+    if (gameBoard->showPath) {
+        Navigation* navigation = gameStrategyContext->navigation;
+        PathList* pathList = getNavigationPathList(navigation);
+        unsigned int pathSize = pathList->size;
+        unsigned int i;
+        for (i = 0; i < pathSize; i++) {
+            PathData* pathData = getPath(pathList, i);
+            // We try to use the alphabet to avoid that path could not be easily read
+            char c = (char) ((i % 26) + 97);
+            gamePathPrint(gameBoard, (int*)pathData, c);
+        }
     }
 
     // Elements
     GameBoardElementList* gameBoardElementList = gameBoard->gameBoardElementList;
-    size = gameBoardElementList->size;
-    for (i = 0; i < size; i++) {
+    unsigned int elementSize = gameBoardElementList->size;
+    unsigned int i;
+    for (i = 0; i < elementSize; i++) {
         GameBoardElement* gameBoardElement = getGameBoardElement(gameBoardElementList, i);
 
         GameboardPrintFunction* printFunction = gameBoardElement->printFunction;
@@ -187,8 +212,8 @@ void fillGameBoardCharElements(GameBoard* gameBoard, int* element) {
 
     // Targets
     GameTargetList* gameTargetList = getGameTargetList();
-    size = gameTargetList->size;
-    for (i = 0; i < size; i++) {
+    unsigned int targetSize = gameTargetList->size;
+    for (i = 0; i < targetSize; i++) {
         GameTarget* gameTarget = gameTargetList->targets[i];
 
         gameTargetPrint(gameBoard, (int*) gameTarget);

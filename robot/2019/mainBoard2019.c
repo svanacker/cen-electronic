@@ -61,12 +61,13 @@ Navigation* initNavigation2019(void) {
 
 GameStrategyContext* initGameStrategyContext2019(RobotConfig* robotConfig, EndMatch* endMatch, TofSensorList* tofSensorList) {
     initGameStrategyContext(&gameStrategyContext, robotConfig, &navigation, endMatch, tofSensorList, &robotPosition, &opponentRobotPosition, &lastObstaclePosition);
-    // initStrategy2019(&gameStrategyContext);
+    initStrategy2019(&gameStrategyContext);
 
     return &gameStrategyContext;
 }
 
 GameBoard* initGameBoard2019(GameStrategyContext* gameStrategyContext) {
+    initFirstTimeBSplineCurve(&gameBoardCurve);
     initGameBoard(&gameBoard,
         &gameBoardCurve,
         &gameBoardElementList,

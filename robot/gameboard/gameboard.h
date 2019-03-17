@@ -1,6 +1,8 @@
 #ifndef GAMEBOARD_H
 #define GAMEBOARD_H
 
+#include <stdlib.h>
+
 // Forward declaration
 struct GameBoard;
 typedef struct GameBoard GameBoard;
@@ -65,6 +67,10 @@ typedef struct GameBoard {
     BSplineCurve* gameBoardCurve;
     // pixels of the gameboard
     char pixels[GAMEBOARD_COLUMN_COUNT + 1][GAMEBOARD_LINE_COUNT + 1];
+    // Show Location
+    bool showLocation;
+    // Show Path
+    bool showPath;
 
 // Color are only manage on Windows !
 #ifdef _MSC_VER

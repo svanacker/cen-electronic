@@ -22,6 +22,20 @@ int deviceGameBoardGetInterface(char commandHeader, DeviceInterfaceMode mode, bo
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
+    else if (commandHeader == COMMAND_GAME_BOARD_SHOW_LOCATION) {
+        if (fillDeviceArgumentList) {
+            setFunction("showLocation", 1, 0);
+            setArgumentUnsignedChar1(0, "off(0) / on (1)");
+        }
+        return commandLengthValueForMode(mode, 1, 0);
+    }
+    else if (commandHeader == COMMAND_GAME_BOARD_SHOW_PATH) {
+        if (fillDeviceArgumentList) {
+            setFunction("showPath", 1, 0);
+            setArgumentUnsignedChar1(0, "off(0) / on (1)");
+        }
+        return commandLengthValueForMode(mode, 1, 0);
+    }
     return DEVICE_HEADER_NOT_HANDLED;
 }
 

@@ -386,7 +386,7 @@ void initMainBoardLocalDevices(void) {
 
     // 2019 specific
 //    addLocalDevice(getStrategy2018DeviceInterface(), getStrategy2018DeviceDescriptor(distributor));
-    addLocalDevice(getFork2019DeviceInterface(), getFork2019DeviceDescriptor(&servoList));
+    addLocalDevice(getFork2019DeviceInterface(), getFork2019DeviceDescriptor(&servoList, NULL));
 }
 
 void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
@@ -504,7 +504,6 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
 
     navigation = initNavigation2019();
     gameStrategyContext = initGameStrategyContext2019(&robotConfig, &endMatch, &tofSensorList);
-    // gameBoard = initGameBoard2018(gameStrategyContext);
     gameBoard = initGameBoard2019(gameStrategyContext);
 
     // Init the drivers

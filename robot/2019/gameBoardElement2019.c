@@ -1,7 +1,7 @@
 #include <stdlib.h>
 
 #include "gameBoardElement2019.h"
-// #include "strategy2019.h"
+#include "strategy2019.h"
 
 #include "../../common/math/cenMath.h"
 #include "../../common/color/color.h"
@@ -134,7 +134,6 @@ void goldeniumPrint(GameBoard* gameBoard, int* element) {
     setGameBoardCurrentColor(gameBoard, CONSOLE_COLOR_BLACK);
 }
 
-
 void addGameBoardElements2019(GameBoardElementList* gameBoardElementList) {
     // Periodic Table
     addGameBoardElement(gameBoardElementList, &periodicTableRediumPrint);
@@ -157,4 +156,5 @@ void addGameBoardElements2019(GameBoardElementList* gameBoardElementList) {
     // puckPeriodicTablePrint
     addGameBoardElement(gameBoardElementList, &puckPeriodicTablePrint);
     addGameBoardElement(gameBoardElementList, &goldeniumPrint);
+
 }

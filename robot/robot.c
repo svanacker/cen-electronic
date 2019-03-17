@@ -31,6 +31,12 @@
 
 #include "../main/motorboard/motorBoard32.h"
 
+// Constructor
+void initRobot(Robot* robot, enum RobotType robotType, RobotPosition* robotPosition) {
+    robot->robotType = robotType;
+    robot->robotPosition = robotPosition;
+}
+
 // TODO : To Remove ??
 
 // ROBOT POSITION

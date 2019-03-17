@@ -12,6 +12,9 @@
  */
 void setGameBoardPixel(GameBoard* gameBoard, float x, float y, char c);
 
+// TEXT
+void drawString(GameBoard* gameBoard, float x, float y, char* s);
+
 // POINTS
 
 /**

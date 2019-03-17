@@ -2028,6 +2028,9 @@
     <ClCompile Include="robot\2019\strategyConfig2019.c">
       <Filter>Source Files\robot\2019</Filter>
     </ClCompile>
+    <ClCompile Include="robot\robotDebug.c">
+      <Filter>Source Files\robot</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -3142,6 +3145,9 @@
     </ClInclude>
     <ClInclude Include="robot\2019\strategyConfig2019.h">
       <Filter>Header Files\robot\2019</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\robotDebug.h">
+      <Filter>Header Files\robot</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

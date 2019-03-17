@@ -228,12 +228,14 @@ void clearLastError();
 #define LOCATION_LIST_INDEX_OUT_OF_BOUNDS                                 0x5043
 #define LOCATION_SOURCE_TARGET_EQUAL                                      0x5044
 #define LOCATION_DOES_NOT_EXIST                                           0x5045
+#define LOCATION_NULL                                                     0x5046
 
 
 #define TOO_MUCH_PATHS                                                    0x5050
 #define PATH_LIST_NULL                                                    0x5051
 #define PATH_LIST_NOT_INITIALIZED                                         0x5052
 #define PATH_LIST_INDEX_OUT_OF_BOUNDS                                     0x5053
+#define PATH_NULL                                                         0x5054
 
 #define TOO_MUCH_ACTION                                                   0x5060
 #define TOO_MUCH_TARGET_ACTION                                            0x5070

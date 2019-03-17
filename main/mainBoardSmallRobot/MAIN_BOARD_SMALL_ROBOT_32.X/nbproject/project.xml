@@ -26,7 +26,6 @@
                 <sourceRootElem>..\..\..\drivers\motion</sourceRootElem>
                 <sourceRootElem>..\..\airconditioning</sourceRootElem>
                 <sourceRootElem>..\..\..\drivers\clock</sourceRootElem>
-                <sourceRootElem>..\..\..\robot\strategy</sourceRootElem>
                 <sourceRootElem>..\..\..\common\adc\32</sourceRootElem>
                 <sourceRootElem>..\..\..\common\pwm</sourceRootElem>
                 <sourceRootElem>..\..\..\device\motion\position</sourceRootElem>

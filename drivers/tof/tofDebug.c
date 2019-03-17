@@ -17,11 +17,11 @@
 #define TOF_SENSOR_VALUE_THRESHOLD_COLUMN_LENGTH          10
 #define TOF_SENSOR_VALUE_ORIENTATION_COLUMN_LENGTH        10
 
-#define TOF_SENSOR_VALUE_DEC_COLUMN_LENGTH                20
+#define TOF_SENSOR_VALUE_DEC_COLUMN_LENGTH                10
 #define TOF_SENSOR_VALUE_OBJECT_X_COLUMN_LENGTH           10
 #define TOF_SENSOR_VALUE_OBJECT_Y_COLUMN_LENGTH           10
 
-#define TOF_SENSOR_VALUE_HEX_COLUMN_LENGTH                20
+#define TOF_SENSOR_VALUE_HEX_COLUMN_LENGTH                10
 #define TOF_SENSOR_LAST_COLUMN		                      10
 
 /**
@@ -37,7 +37,7 @@ void printTofSensorDebugTableHeader(OutputStream* outputStream) {
     appendStringHeader(outputStream, "Threshold", TOF_SENSOR_VALUE_THRESHOLD_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Orient.", TOF_SENSOR_VALUE_ORIENTATION_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Dist (mm)", TOF_SENSOR_VALUE_DEC_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "Dist (mm) / Hex", TOF_SENSOR_VALUE_HEX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Dist (mm)", TOF_SENSOR_VALUE_HEX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Detected", TOF_SENSOR_VALUE_OBJECT_X_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Detected", TOF_SENSOR_VALUE_OBJECT_Y_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, TOF_SENSOR_LAST_COLUMN);
@@ -49,8 +49,8 @@ void printTofSensorDebugTableHeader(OutputStream* outputStream) {
     appendStringHeader(outputStream, "(degree)", TOF_SENSOR_VALUE_ORIENTATION_COLUMN_LENGTH);
     appendStringHeader(outputStream, "(Dec) mm", TOF_SENSOR_VALUE_DEC_COLUMN_LENGTH);
     appendStringHeader(outputStream, "(Hex) mm", TOF_SENSOR_VALUE_HEX_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "(mm)", TOF_SENSOR_VALUE_OBJECT_X_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "(mm)", TOF_SENSOR_VALUE_OBJECT_Y_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "X (mm)", TOF_SENSOR_VALUE_OBJECT_X_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Y (mm)", TOF_SENSOR_VALUE_OBJECT_Y_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, TOF_SENSOR_LAST_COLUMN);
     
     appendTableHeaderSeparatorLine(outputStream);

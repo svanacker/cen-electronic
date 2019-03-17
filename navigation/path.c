@@ -7,6 +7,8 @@
 
 #include "../common/2d/2d.h"
 
+#include "../common/error/error.h"
+
 #include "../common/io/outputStream.h"
 #include "../common/io/printWriter.h"
 
@@ -37,6 +39,14 @@ void initPathData(PathData* pathData,
                      float angleRadian2,
                      float accelerationFactor,
                      float speedFactor) {
+    if (pathData == NULL) {
+        writeError(PATH_NULL);
+        return;
+    }
+    if (location1 == NULL || location2 == NULL) {
+        writeError(LOCATION_NULL);
+        return;
+    }
     pathData->location1 = location1;
     pathData->location2 = location2;
     pathData->controlPointDistance1 = controlPointDistance1;
