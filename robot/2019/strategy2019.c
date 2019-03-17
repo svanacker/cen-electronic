@@ -82,41 +82,44 @@ PathData* goldeniumFront_to_weighingMachineFront_Path;
 
 // Targets List
 static GameTarget acceleratorTarget;
-static GameTarget goldeniumTarget;
+static GameTarget goldeniumTakeTarget;
+static GameTarget goldeniumDropTarget;
 
 // ------------------------------------------------------- TARGETS ACTIONS ---------------------------------------------------------------
 
 static GameTargetAction acceleratorTargetAction;
-static GameTargetAction goldeniumTargetAction;
+static GameTargetAction goldeniumTakeTargetAction;
+static GameTargetAction goldeniumDropTargetAction;
 
 // ------------------------------------------------------- TARGETS ACTIONS ITEM LIST --------------------------------------------------------
 
 static GameTargetActionItemList acceleratorTargetActionItemList;
-static GameTargetActionItemList goldeniumTargetActionItemList;
-
+static GameTargetActionItemList goldeniumTakeTargetActionItemList;
+static GameTargetActionItemList goldeniumDropTargetActionItemList;
 
 // ------------------------------------------------------- TARGET ACTION ITEM LIST ---------------------------------------------------
 
 static GameTargetActionItem acceleratorTargetActionItem;
-static GameTargetActionItem goldeniumTargetActionItem;
+static GameTargetActionItem goldeniumTakeTargetActionItem;
+static GameTargetActionItem goldeniumDropTargetActionItem;
 
 // ------------------------------------------------------- STRATEGIES ----------------------------------------------------------------
 
 // strategies
 // Strategy 0 = Homologation  => No Strategy
-// Only Switch
+// Puck
 static GameStrategy strategy1;
-// Switch + Distributor 1
+// Accelerator only
 static GameStrategy strategy2;
+// Accelerator + Goldenium (take + drop)
+static GameStrategy strategy3;
 
 // ------------------------------------------------------- STRATEGY ITEM -------------------------------------------------------------
 
 // strategies Items
-static GameStrategyItem switchStrategyItem;
-static GameStrategyItem distributor1StrategyItem;
-static GameStrategyItem borderStrategyItem;
-static GameStrategyItem beeStrategyItem;
-// static GameStrategyItem distributor2StrategyItem;
+static GameStrategyItem acceleratorStrategyItem;
+static GameStrategyItem takeGoldeniumStrategyItem;
+static GameStrategyItem dropGoldeniumStrategyItem;
 
 // ------------------------------------------------------- INITIALIZATION ------------------------------------------------------------
 
@@ -333,16 +336,44 @@ void initPaths2019(GameStrategyContext* gameStrategyContext, int index) {
 void initTargets2019(GameStrategyContext* gameStrategyContext) {
 	clearGameTargets();
 
-    // addGameTarget(&switchTarget, "SWITCH_TARGET", SCORE_POINT_2018_PANEL_ON_POINT, switchLocation);
+    RobotConfig* robotConfig = gameStrategyContext->robotConfig;
+    enum RobotType robotType = robotConfig->robotType;
+    if (robotType == ROBOT_TYPE_BIG) {
+        // TODO
+    }
+    else if (robotType == ROBOT_TYPE_SMALL) {
+        addGameTarget(&acceleratorTarget, "ACC_TARGET", SCORE_POINT_2019_LAUNCH_BLUIUM_IN_ACCELERATOR, acceleratorFrontLocation);
+        addGameTarget(&goldeniumTakeTarget, "GOLD_TAKE_TARGET", SCORE_POINT_2019_EXTRACT_GOLDENIUM, goldeniumFrontLocation);
+        addGameTarget(&goldeniumDropTarget, "GOLD_DROP_TARGET", SCORE_POINT_2019_WEIGHING_MACHINE_GOLDENIUM, weighingMachineFrontLocation);
+    }
 }
 
 void initTargetActions2019(GameStrategyContext* gameStrategyContext) {
-    // SWITCH
-    // addTargetAction(&(switchTarget.actionList), &switchTargetAction, switchLocation, switchLocation, ACTION_SWITCH_TIME_TO_ACHIEVE, NULL, &switchTargetActionItemList);
+    // ACCELERATOR TARGET
+    addTargetAction(&(acceleratorTarget.actionList), &acceleratorTargetAction, acceleratorFrontLocation, acceleratorFrontLocation, ACCELERATOR_ACTION_TIME_TO_ACHIEVE, NULL, &acceleratorTargetActionItemList);
+    // GOLDENIUM TAKE TARGET
+    addTargetAction(&(goldeniumTakeTarget.actionList), &goldeniumTakeTargetAction, goldeniumFrontLocation, goldeniumFrontLocation, GOLDENIUM_TAKE_TIME_TO_ACHIEVE, NULL, &goldeniumTakeTargetActionItemList);
+    // GOLDENIUM DROP TARGET
+    addTargetAction(&(goldeniumDropTarget.actionList), &goldeniumDropTargetAction, weighingMachineFrontLocation, weighingMachineFrontLocation, GOLDENIUM_DROP_TIME_TO_ACHIEVE, NULL, &goldeniumDropTargetActionItemList);
+}
+
+bool acceleratorArmOn(int* context) {
+    // TODO
+    return true;
+}
+
+bool goldeniumTake(int* context) {
+    return true;
+}
+
+bool goldeniumDrop(int* context) {
+    return true;
 }
 
 void initTargetActionsItems2019(GameStrategyContext* gameStrategyContext) {
-    // addTargetActionItem(&switchTargetActionItemList, &switchTargetActionItem, &switch2018On, "SWITCH ON");
+    addTargetActionItem(&acceleratorTargetActionItemList, &acceleratorTargetActionItem, &acceleratorArmOn, "ACC ARM ON");
+    addTargetActionItem(&goldeniumTakeTargetActionItemList, &goldeniumTakeTargetActionItem, &goldeniumTake, "GOLD TAKE");
+    addTargetActionItem(&goldeniumDropTargetActionItemList, &goldeniumDropTargetActionItem, &goldeniumDrop, "GOLD DROP");
 }
 
 /**
@@ -350,21 +381,30 @@ void initTargetActionsItems2019(GameStrategyContext* gameStrategyContext) {
 */
 void initStrategies2019(GameStrategyContext* gameStrategyContext) {
 	clearGameStrategies();
-	addGameStrategy(&strategy1, "ACCELERATOR");
+	addGameStrategy(&strategy1, "SIMPLE PUCK");
+    addGameStrategy(&strategy2, "ACCELERATOR");
+    addGameStrategy(&strategy3, "ACC / TAKE GOLD / DROP GOLD");
 }
 
 GameStrategy* initStrategiesItems2019(GameStrategyContext* gameStrategyContext) {
     // We only load the item relative to the strategy Index chosen
-    if (gameStrategyContext->strategyIndex == NO_STRATEGY_INDEX) {
+    unsigned int strategyIndex = gameStrategyContext->strategyIndex;
+    if (strategyIndex == NO_STRATEGY_INDEX) {
         return NULL;
     }
-    if (gameStrategyContext->strategyIndex == STRATEGY_1_SIMPLE_PUCK) {
-        // addGameStrategyItem(&strategy1, &switchStrategyItem, &switchTarget);
+    else if (strategyIndex == STRATEGY_1_SIMPLE_PUCK) {
+        // TODO
         return &strategy1;
     }
-    if (gameStrategyContext->strategyIndex == STRATEGY_2_ACCELERATOR) {
-        addGameStrategyItem(&strategy2, &switchStrategyItem, &acceleratorTarget);
+    else if (strategyIndex == STRATEGY_2_ACCELERATOR) {
+        addGameStrategyItem(&strategy2, &acceleratorStrategyItem, &acceleratorTarget);
         return &strategy2;
+    }
+    else if (strategyIndex == STRATEGY_3_ACCELERATOR_GOLDENIUM) {
+        addGameStrategyItem(&strategy3, &acceleratorStrategyItem, &acceleratorTarget);
+        addGameStrategyItem(&strategy3, &takeGoldeniumStrategyItem, &goldeniumTakeTarget);
+        addGameStrategyItem(&strategy3, &dropGoldeniumStrategyItem, &goldeniumDropTarget);
+        return &strategy3;
     }
     return NULL;
 }

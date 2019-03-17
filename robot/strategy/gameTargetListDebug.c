@@ -9,7 +9,7 @@
 #include "../../common/io/printTableWriter.h"
 
 #define TARGET_LIST_INDEX_COLUMN_LENGTH              6
-#define TARGET_LIST_NAME_COLUMN_LENGTH              15
+#define TARGET_LIST_NAME_COLUMN_LENGTH              25
 #define TARGET_LIST_POINT_X_COLUMN_LENGTH           8
 #define TARGET_LIST_POINT_Y_COLUMN_LENGTH           8
 #define TARGET_LIST_POTENTIAL_GAIN_COLUMN_LENGTH    10
