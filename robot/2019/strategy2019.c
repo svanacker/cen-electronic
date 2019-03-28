@@ -28,7 +28,7 @@
 
 #include "../../robot/config/robotConfig.h"
 
-#include "../../robot/gameboard/gameBoard.h"
+#include "../../robot/gameboard/gameboard.h"
 
 #include "../../robot/strategy/gameStrategy.h"
 #include "../../robot/strategy/gameStrategyHandler.h"

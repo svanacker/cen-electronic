@@ -97,6 +97,12 @@
 #define PCA9685_ADDRESS_6             0x8C
 #define PCA9685_ADDRESS_7             0x8E
 
+// INA3221
+#define INA3221_ADDRESS_0                   0x80    //A0->GND
+#define INA3221_ADDRESS_1                   0x82    //A0->Vs
+#define INA3221_ADDRESS_2                   0x84    //A0->SDA
+#define INA3221_ADDRESS_3                   0x86    //A0->SCL
+
 // LM75A TEMPERATURE SENSOR
 #define LM75A_ADDRESS                 0x90
 

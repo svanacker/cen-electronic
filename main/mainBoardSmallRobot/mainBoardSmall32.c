@@ -142,6 +142,8 @@ int main(void) {
     I2cBusConnection* servoI2cBusConnection = addI2cBusConnection(i2cBus, PCA9685_ADDRESS_0, true);
     addServoAllPca9685(servoList, servoI2cBusConnection);
     
+    
+    
     TofSensorList* tofSensorList = mainBoardCommonTofGetTofSensorList();
     addLocalDevice(getFork2019DeviceInterface(), getFork2019DeviceDescriptor(servoList, tofSensorList));
 

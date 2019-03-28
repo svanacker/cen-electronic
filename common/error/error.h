@@ -98,6 +98,9 @@ void clearLastError();
 // TEMPERATURE
 #define TEMPERATURE_NULL                                                  0x02B0
 
+// CURRENT
+#define CURRENT_NULL                                                      0x02C0
+
 // BIT LIST
 #define BIT_LIST_ARRAY_OUT_OF_BOUNDS                                      0x0300
 

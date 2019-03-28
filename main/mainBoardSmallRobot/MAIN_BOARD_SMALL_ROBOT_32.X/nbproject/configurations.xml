@@ -139,6 +139,11 @@
                      projectFiles="true">
         <itemPath>../../../common/sensor/accelerometer/accelerometer.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f30"
+                     displayName="common.sensor.current"
+                     projectFiles="true">
+        <itemPath>../../../common/sensor/current/current.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="common.sensor.temperature"
                      displayName="common.sensor.temperature"
                      projectFiles="true">
@@ -294,6 +299,13 @@
         <itemPath>../../../device/relay/relayDevice.h</itemPath>
         <itemPath>../../../device/relay/relayDeviceInterface.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f29"
+                     displayName="device.sensor.current"
+                     projectFiles="true">
+        <itemPath>../../../device/sensor/current/currentSensor.h</itemPath>
+        <itemPath>../../../device/sensor/current/currentSensorDevice.h</itemPath>
+        <itemPath>../../../device/sensor/current/currentSensorDeviceInterface.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="device.sensor.temperature"
                      displayName="device.sensor.temperature"
                      projectFiles="true">
@@ -402,6 +414,11 @@
         <itemPath>../../../drivers/relay/relay.h</itemPath>
         <itemPath>../../../drivers/relay/relayDebug.h</itemPath>
         <itemPath>../../../drivers/relay/rly08.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f31"
+                     displayName="drivers.sensor.current"
+                     projectFiles="true">
+        <itemPath>../../../drivers/sensor/current/INA3221.h</itemPath>
       </logicalFolder>
       <logicalFolder name="drivers.sensor.temperature"
                      displayName="drivers.sensor.temperature"
@@ -739,6 +756,11 @@
                      projectFiles="true">
         <itemPath>../../../common/sensor/accelerometer/accelerometer.c</itemPath>
       </logicalFolder>
+      <logicalFolder name="f30"
+                     displayName="common.sensor.current"
+                     projectFiles="true">
+        <itemPath>../../../common/sensor/current/current.c</itemPath>
+      </logicalFolder>
       <logicalFolder name="common.sensor.temperature"
                      displayName="common.sensor.temperature"
                      projectFiles="true">
@@ -895,6 +917,13 @@
         <itemPath>../../../device/relay/relayDevice.c</itemPath>
         <itemPath>../../../device/relay/relayDeviceInterface.c</itemPath>
       </logicalFolder>
+      <logicalFolder name="f29"
+                     displayName="device.sensor.current"
+                     projectFiles="true">
+        <itemPath>../../../device/sensor/current/currentSensor.c</itemPath>
+        <itemPath>../../../device/sensor/current/currentSensorDevice.c</itemPath>
+        <itemPath>../../../device/sensor/current/currentSensorDeviceInterface.c</itemPath>
+      </logicalFolder>
       <logicalFolder name="device.sensor.temperature"
                      displayName="device.sensor.temperature"
                      projectFiles="true">
@@ -1009,6 +1038,11 @@
         <itemPath>../../../drivers/relay/relay.c</itemPath>
         <itemPath>../../../drivers/relay/relayDebug.c</itemPath>
         <itemPath>../../../drivers/relay/rly08.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f31"
+                     displayName="drivers.sensor.current"
+                     projectFiles="true">
+        <itemPath>../../../drivers/sensor/current/INA3221.c</itemPath>
       </logicalFolder>
       <logicalFolder name="drivers.sensor.temperature"
                      displayName="drivers.sensor.temperature"

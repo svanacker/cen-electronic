@@ -6,6 +6,8 @@
 
 #define ROBOT_CONFIG_DEVICE_HEADER                 'c'
 
+#define CURRENT_SENSOR_DEVICE_HEADER                      'C'
+
 #define ADC_DEVICE_HEADER                          'd'
 
 #define END_MATCH_DETECTOR_DEVICE_HEADER           'e'
