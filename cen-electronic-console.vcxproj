@@ -216,6 +216,7 @@
     <ClCompile Include="common\pwm\servo\servoList.c" />
     <ClCompile Include="common\pwm\servo\servoPwm.c" />
     <ClCompile Include="common\pwm\servo\servoPwmDebug.c" />
+    <ClCompile Include="common\sensor\current\current.c" />
     <ClCompile Include="common\sensor\temperature\temperature.c" />
     <ClCompile Include="common\serial\pc\serialInputInterruptPc.c" />
     <ClCompile Include="common\serial\pc\serialPc.c" />
@@ -287,6 +288,9 @@
     <ClCompile Include="device\pc\pcDeviceInterface.c" />
     <ClCompile Include="device\relay\relayDevice.c" />
     <ClCompile Include="device\relay\relayDeviceInterface.c" />
+    <ClCompile Include="device\sensor\current\currentSensor.c" />
+    <ClCompile Include="device\sensor\current\currentSensorDevice.c" />
+    <ClCompile Include="device\sensor\current\currentSensorDeviceInterface.c" />
     <ClCompile Include="device\sensor\temperature\temperatureSensor.c" />
     <ClCompile Include="device\sensor\temperature\temperatureSensorDevice.c" />
     <ClCompile Include="device\sensor\temperature\temperatureSensorDeviceInterface.c" />
@@ -333,6 +337,7 @@
     <ClCompile Include="drivers\relay\pc\relayPc.c" />
     <ClCompile Include="drivers\relay\relay.c" />
     <ClCompile Include="drivers\relay\relayDebug.c" />
+    <ClCompile Include="drivers\sensor\current\pc\currentPc.c" />
     <ClCompile Include="drivers\sensor\temperature\pc\temperaturePc.c" />
     <ClCompile Include="drivers\test\testDriver.c" />
     <ClCompile Include="drivers\tof\pc\tofListPc.c" />
@@ -573,6 +578,7 @@
     <ClInclude Include="common\pwm\servo\servoList.h" />
     <ClInclude Include="common\pwm\servo\servoPwm.h" />
     <ClInclude Include="common\pwm\servo\servoPwmDebug.h" />
+    <ClInclude Include="common\sensor\current\current.h" />
     <ClInclude Include="common\sensor\temperature\temperature.h" />
     <ClInclude Include="common\serial\pc\serialPc.h" />
     <ClInclude Include="common\serial\serial.h" />
@@ -646,6 +652,9 @@
     <ClInclude Include="device\pc\pcDeviceInterface.h" />
     <ClInclude Include="device\relay\relayDevice.h" />
     <ClInclude Include="device\relay\relayDeviceInterface.h" />
+    <ClInclude Include="device\sensor\current\currentSensor.h" />
+    <ClInclude Include="device\sensor\current\currentSensorDevice.h" />
+    <ClInclude Include="device\sensor\current\currentSensorDeviceInterface.h" />
     <ClInclude Include="device\sensor\temperature\temperatureSensor.h" />
     <ClInclude Include="device\sensor\temperature\temperatureSensorDevice.h" />
     <ClInclude Include="device\sensor\temperature\temperatureSensorDeviceInterface.h" />
@@ -691,6 +700,7 @@
     <ClInclude Include="drivers\relay\pc\relayPc.h" />
     <ClInclude Include="drivers\relay\relay.h" />
     <ClInclude Include="drivers\relay\relayDebug.h" />
+    <ClInclude Include="drivers\sensor\current\pc\currentPc.h" />
     <ClInclude Include="drivers\sensor\temperature\pc\temperaturePc.h" />
     <ClInclude Include="drivers\test\testDriver.h" />
     <ClInclude Include="drivers\tof\pc\tofListPc.h" />

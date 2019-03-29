@@ -419,6 +419,7 @@
                      displayName="drivers.sensor.current"
                      projectFiles="true">
         <itemPath>../../../drivers/sensor/current/INA3221.h</itemPath>
+        <itemPath>../../../drivers/sensor/current/INA219.h</itemPath>
       </logicalFolder>
       <logicalFolder name="drivers.sensor.temperature"
                      displayName="drivers.sensor.temperature"
@@ -1043,6 +1044,7 @@
                      displayName="drivers.sensor.current"
                      projectFiles="true">
         <itemPath>../../../drivers/sensor/current/INA3221.c</itemPath>
+        <itemPath>../../../drivers/sensor/current/INA219.c</itemPath>
       </logicalFolder>
       <logicalFolder name="drivers.sensor.temperature"
                      displayName="drivers.sensor.temperature"

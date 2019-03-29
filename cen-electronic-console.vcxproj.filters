@@ -976,6 +976,30 @@
     <Filter Include="Header Files\common\pwm\servo\pc">
       <UniqueIdentifier>{a54c6746-822c-43d5-8e7f-78e80742d4d8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\drivers\sensor\current">
+      <UniqueIdentifier>{bafb188b-df53-4f46-9214-100a120e68d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\drivers\sensor\current">
+      <UniqueIdentifier>{0d54f9d8-5864-47c5-ad3a-1915be68ba5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\drivers\sensor\current\pc">
+      <UniqueIdentifier>{bd6964b9-40c3-40d5-b691-97099a72b71a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\drivers\sensor\current\pc">
+      <UniqueIdentifier>{a6743ab5-0214-448d-8069-1163ed5dee54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\device\sensor\current">
+      <UniqueIdentifier>{66643160-936e-4cb2-850d-2345131177eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\device\sensor\current">
+      <UniqueIdentifier>{7c4a43d4-e7b1-45b0-abcb-9abe1241a597}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\common\sensor\current">
+      <UniqueIdentifier>{aa28be95-11be-4955-8e67-7e80f01cee17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\common\sensor\current">
+      <UniqueIdentifier>{e4d7f5f4-de3e-4f2e-9734-e88237ba050d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -2030,6 +2054,21 @@
     </ClCompile>
     <ClCompile Include="robot\robotDebug.c">
       <Filter>Source Files\robot</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\sensor\current\pc\currentPc.c">
+      <Filter>Source Files\drivers\sensor\current\pc</Filter>
+    </ClCompile>
+    <ClCompile Include="device\sensor\current\currentSensor.c">
+      <Filter>Source Files\device\sensor\current</Filter>
+    </ClCompile>
+    <ClCompile Include="device\sensor\current\currentSensorDevice.c">
+      <Filter>Source Files\device\sensor\current</Filter>
+    </ClCompile>
+    <ClCompile Include="device\sensor\current\currentSensorDeviceInterface.c">
+      <Filter>Source Files\device\sensor\current</Filter>
+    </ClCompile>
+    <ClCompile Include="common\sensor\current\current.c">
+      <Filter>Source Files\common\sensor\current</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -3148,6 +3187,21 @@
     </ClInclude>
     <ClInclude Include="common\serial\serialLinkDebug.h">
       <Filter>Header Files\common\serial</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\sensor\current\pc\currentPc.h">
+      <Filter>Header Files\drivers\sensor\current\pc</Filter>
+    </ClInclude>
+    <ClInclude Include="device\sensor\current\currentSensor.h">
+      <Filter>Header Files\device\sensor\current</Filter>
+    </ClInclude>
+    <ClInclude Include="device\sensor\current\currentSensorDevice.h">
+      <Filter>Header Files\device\sensor\current</Filter>
+    </ClInclude>
+    <ClInclude Include="device\sensor\current\currentSensorDeviceInterface.h">
+      <Filter>Header Files\device\sensor\current</Filter>
+    </ClInclude>
+    <ClInclude Include="common\sensor\current\current.h">
+      <Filter>Header Files\common\sensor\current</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

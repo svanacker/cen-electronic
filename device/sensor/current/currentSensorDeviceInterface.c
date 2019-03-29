@@ -13,7 +13,7 @@ const char* getCurrentSensorDeviceName(void) {
 int deviceCurrentSensorGetInterface(char header, DeviceInterfaceMode mode, bool fillDeviceArgumentList){
     if (header == COMMAND_READ_CURRENT_SENSOR ) {
         if (fillDeviceArgumentList) {
-            setFunction("Current Sensor Read", 0, 2);
+            setFunction("Current Sensor Read", 0, 1);
             setResultUnsignedHex4(0, "CURRENT");
         }
         return commandLengthValueForMode(mode, 0, 4);

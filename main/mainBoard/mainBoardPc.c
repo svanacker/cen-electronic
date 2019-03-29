@@ -95,6 +95,10 @@
 #include "../../device/adc/adcDevice.h"
 #include "../../device/adc/adcDeviceInterface.h"
 
+// CURRENT
+#include "../../device/sensor/current/currentSensorDevice.h"
+#include "../../device/sensor/current/currentSensorDeviceInterface.h"
+
 // GAMEBOARD
 #include "../../device/gameboard/gameboardDevice.h"
 #include "../../device/gameboard/gameboardDeviceInterface.h"
@@ -168,6 +172,8 @@
 #include "../../drivers/dispatcher/i2cDriverDataDispatcher.h"
 #include "../../drivers/file/eeprom/eepromFile.h"
 #include "../../drivers/test/testDriver.h"
+
+#include "../../drivers/sensor/current/pc/currentPc.h"
 
 #include "../../drivers/tof/tof.h"
 #include "../../drivers/tof/tofList.h"
@@ -243,6 +249,9 @@ static Buffer driverRequestBuffer;
 static char driverRequestBufferArray[MAIN_BOARD_PC_REQUEST_DRIVER_BUFFER_LENGTH];
 static Buffer driverResponseBuffer;
 static char driverResponseBufferArray[MAIN_BOARD_PC_RESPONSE_DRIVER_BUFFER_LENGTH];
+
+// Current Sensor
+static Current current;
 
 // Eeprom
 static Eeprom eeprom;
@@ -372,6 +381,7 @@ void initMainBoardLocalDevices(void) {
     addLocalDevice(getLCDDeviceInterface(), getLCDDeviceDescriptor());
     addLocalDevice(getTofDeviceInterface(), getTofDeviceDescriptor(&tofSensorList));
 
+    addLocalDevice(getCurrentSensorDeviceInterface(), getCurrentSensorDeviceDescriptor(&current));
     addLocalDevice(getTemperatureSensorDeviceInterface(), getTemperatureSensorDeviceDescriptor(&temperature));
     addLocalDevice(getNavigationDeviceInterface(), getNavigationDeviceDescriptor(navigation));
 
@@ -487,6 +497,9 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
 
     // Clock
     initPcClock(&clock);
+
+    // Sensor
+    initCurrentPc(&current);
 
     // Temperature
     initTemperaturePc(&temperature);
