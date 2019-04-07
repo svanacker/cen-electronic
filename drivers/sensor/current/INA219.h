@@ -31,24 +31,29 @@
 // Bit 7 - 10 : TODO
 
 // Bit 3-6 :  SADC Shunt ADC Resolution/Averaging
+#define INA219_ADC_MODE_9_BIT                                         0b00000000
+#define INA219_ADC_MODE_10_BIT                                        0b00001000
+#define INA219_ADC_MODE_11_BIT                                        0b00010000
+#define INA219_ADC_MODE_12_BIT                                        0b00011000
+#define INA219_ADC_MODE_SAMPLE_2                                      0b01001000
+#define INA219_ADC_MODE_SAMPLE_4                                      0b01010000
+#define INA219_ADC_MODE_SAMPLE_8                                      0b01011000
+#define INA219_ADC_MODE_SAMPLE_16                                     0b01100000
+#define INA219_ADC_MODE_SAMPLE_32                                     0b01101000
+#define INA219_ADC_MODE_SAMPLE_64                                     0b01110000
+#define INA219_ADC_MODE_SAMPLE_128                                    0b01111000
+
 
 // Bit 0-2 : Operating Mode
-#define INA219_CONFIGURATION_POWER_DOWN                                   0x0000
-#define INA219_CONFIGURATION_SHUNT_VOLTAGE_TRIGGERED                      0x0001
-#define INA219_CONFIGURATION_BUS_VOLTAGE_TRIGGERED                        0x0002
-#define INA219_CONFIGURATION_SHUNT_AND_BUS_VOLTAGE_TRIGGERED              0x0003
+#define INA219_CONFIGURATION_POWER_DOWN                               0b00000000
+#define INA219_CONFIGURATION_SHUNT_VOLTAGE_TRIGGERED                  0b00000001
+#define INA219_CONFIGURATION_BUS_VOLTAGE_TRIGGERED                    0b00000010
+#define INA219_CONFIGURATION_SHUNT_AND_BUS_VOLTAGE_TRIGGERED          0b00000011
 
-#define INA219_CONFIGURATION_ADC_OFF                                      0x0004
-#define INA219_CONFIGURATION_SHUNT_VOLTAGE_CONTINUOUS                     0x0005
-#define INA219_CONFIGURATION_BUS_VOLTAGE_CONTINOUS                        0x0006
-#define INA219_CONFIGURATION_SHUNT_AND_BUS_CONTINUOUS                     0x0007
-
-
-
-
-
-
-
+#define INA219_CONFIGURATION_ADC_OFF                                  0b00000100
+#define INA219_CONFIGURATION_SHUNT_VOLTAGE_CONTINUOUS                 0b00000101
+#define INA219_CONFIGURATION_BUS_VOLTAGE_CONTINOUS                    0b00000110
+#define INA219_CONFIGURATION_SHUNT_AND_BUS_CONTINUOUS                 0b00000111
 
 
 /**
@@ -57,5 +62,11 @@
  * @param i2cBusConnection a pointer on the i2cBusConnection
  */
 void initCurrentINA219(Current* current, I2cBusConnection* i2cBusConnection);
+
+// PRIMITIVE FUNCTIONS
+
+void ina219_write16(I2cBusConnection* i2cBusConnection, unsigned char reg, unsigned int data);
+
+int ina219_read16(I2cBusConnection* i2cBusConnection, unsigned char reg);
 
 #endif

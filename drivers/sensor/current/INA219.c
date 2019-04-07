@@ -16,15 +16,42 @@ I2cBusConnection* _INA219_getI2cBusConnection(Current* current) {
     return result;
 }
 
-int _INA219_readSensorValue(Current* current) {
-    return 0;
-    /*TODO 
-    I2cBusConnection* i2cBusConnection = _INA3221_getI2cBusConnection(current);
+void _INA219_initSensor(Current* current) {
+    I2cBusConnection* i2cBusConnection = _INA219_getI2cBusConnection(current);
+    ina219_write16(i2cBusConnection, INA219_CONFIGURATION_REGISTER,
+                                     INA219_CONFIGURATION_GAIN_RANGE_40_MV |
+                                     INA219_ADC_MODE_9_BIT |
+                                     INA219_CONFIGURATION_SHUNT_VOLTAGE_CONTINUOUS);
+}
+
+void ina219_write16(I2cBusConnection* i2cBusConnection, unsigned char reg, unsigned int data) {
+    I2cBus* i2cBus = i2cBusConnection->i2cBus;
+    //I2C START 
+    portableMasterStartI2C(i2cBusConnection);
+    WaitI2C(i2cBus);
+    //I2C ADDRESS SELECT Write
+    portableMasterWriteI2C(i2cBusConnection, i2cBusConnection->i2cAddress);
+    WaitI2C(i2cBus);
+    //I2C REGISTER SELECT
+    portableMasterWriteI2C(i2cBusConnection, reg);
+    WaitI2C(i2cBus);
+    // I2C VALUE : MSB
+    portableMasterWriteI2C(i2cBusConnection, (unsigned char) ((data & 0xFF00) >> 8));
+    WaitI2C(i2cBus);
+    // I2C VALUE : LSB
+    portableMasterWriteI2C(i2cBusConnection, (unsigned char) (data & 0xFF));
+    WaitI2C(i2cBus);
+    
+    portableMasterStopI2C(i2cBusConnection);
+    WaitI2C(i2cBus);
+}
+
+unsigned int ina219_read16(I2cBusConnection* i2cBusConnection, unsigned char reg) {
     I2cBus* i2cBus = i2cBusConnection->i2cBus;
 
-    int result = 0;
-    char msbValue = 0;
-    char lsbValue = 0;
+    unsigned int result = 0;
+    unsigned char msbValue = 0;
+    unsigned char lsbValue = 0;
 
     //I2C START 
     portableMasterStartI2C(i2cBusConnection);
@@ -33,7 +60,7 @@ int _INA219_readSensorValue(Current* current) {
     portableMasterWriteI2C(i2cBusConnection, i2cBusConnection->i2cAddress);
     WaitI2C(i2cBus);
     //I2C REGISTER SELECT
-    portableMasterWriteI2C(i2cBusConnection, INA3221_CHANNEL1_SHUNT_VOLTAGE);
+    portableMasterWriteI2C(i2cBusConnection, reg);
     WaitI2C(i2cBus);
 
     // Restart in read mode
@@ -60,17 +87,15 @@ int _INA219_readSensorValue(Current* current) {
     portableMasterStopI2C(i2cBusConnection);
     WaitI2C(i2cBus);
 
-    if (msbValue & 0x80) {
-        //courant negatif
-        result = 0x1234;
-    } else {
-        //courant positif
-        result = ((((msbValue << 8) + lsbValue) >> 3) * INA3221_DELTA) / INA3221_SHUNT;
-    }
+    result = (msbValue << 8) | lsbValue; 
 
-    //result en mA
     return result;
-    */
+}
+
+int _INA219_readSensorValue(Current* current) {
+    I2cBusConnection* i2cBusConnection = _INA219_getI2cBusConnection(current);
+
+    return 0;
 }
 
 void _INA219_writeAlertLimit(Current* current, int currentSensorValue) {
