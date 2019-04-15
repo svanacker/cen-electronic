@@ -67,6 +67,6 @@ void initCurrentINA219(Current* current, I2cBusConnection* i2cBusConnection);
 
 void ina219_write16(I2cBusConnection* i2cBusConnection, unsigned char reg, unsigned int data);
 
-int ina219_read16(I2cBusConnection* i2cBusConnection, unsigned char reg);
+unsigned int ina219_read16(I2cBusConnection* i2cBusConnection, unsigned char reg);
 
 #endif

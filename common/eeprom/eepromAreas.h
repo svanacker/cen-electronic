@@ -22,8 +22,8 @@
 #define EEPROM_MOTION_PARAMETERS_START_INDEX                              0x0282
 
 // KINETICS
-#define EEPROM_KINETICS_AREA_MARKER_INDEX                                 0x0380
-#define EEPROM_KINETICS_START_INDEX                                       0x0382
+#define EEPROM_KINEMATICS_AREA_MARKER_INDEX                               0x0380
+#define EEPROM_KINEMATICS_START_INDEX                                     0x0382
 
 // START MATCH
 #define EEPROM_START_MATCH_AREA_MARKER_INDEX                              0x0400

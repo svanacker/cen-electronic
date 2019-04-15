@@ -16,6 +16,8 @@
 
 #include "../../drivers/driver.h"
 
+#include "../../robot/config/robotConfig.h"
+
 #include "../../robot/kinematics/robotKinematics.h"
 #include "../../robot/kinematics/robotKinematicsDebug.h"
 
@@ -122,6 +124,13 @@ void deviceRobotKinematicsHandleRawData(char commandHeader, InputStream* inputSt
         RobotKinematics* robotKinematics = getRobotKinematics();
         float value = readHexFloat6(inputStream, ROBOT_KINEMATICS_DEFAULT_DIGIT_PRECISION);
         robotKinematics->motorWheelRotationBySecondAtFullSpeed = value;
+    }
+    // ROBOT TYPE
+    else if (commandHeader == COMMAND_SET_ROBOT_TYPE) {
+        ackCommand(outputStream, KINEMATICS_HEADER, COMMAND_SET_ROBOT_TYPE);
+        RobotKinematics* robotKinematics = getRobotKinematics();
+        enum RobotType robotType = readHex2(inputStream);
+        robotKinematics->robotType = robotType;
     }
     // TODO : END OF MOTOR PART + ROBOT PART
 }

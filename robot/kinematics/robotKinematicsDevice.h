@@ -5,6 +5,8 @@
 
 #include "../../device/device.h"
 
+#include "../../robot/config/robotConfig.h"
+
 /**
 * Returns a descriptor on the kinematics Information.
 * @return the descriptor of the device.

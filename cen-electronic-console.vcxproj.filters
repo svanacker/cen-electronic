@@ -2052,9 +2052,6 @@
     <ClCompile Include="robot\2019\strategyConfig2019.c">
       <Filter>Source Files\robot\2019</Filter>
     </ClCompile>
-    <ClCompile Include="robot\robotDebug.c">
-      <Filter>Source Files\robot</Filter>
-    </ClCompile>
     <ClCompile Include="drivers\sensor\current\pc\currentPc.c">
       <Filter>Source Files\drivers\sensor\current\pc</Filter>
     </ClCompile>
@@ -2069,6 +2066,9 @@
     </ClCompile>
     <ClCompile Include="common\sensor\current\current.c">
       <Filter>Source Files\common\sensor\current</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\robotTypeDebug.c">
+      <Filter>Source Files\robot</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -3179,9 +3179,6 @@
     <ClInclude Include="robot\2019\strategyConfig2019.h">
       <Filter>Header Files\robot\2019</Filter>
     </ClInclude>
-    <ClInclude Include="robot\robotDebug.h">
-      <Filter>Header Files\robot</Filter>
-    </ClInclude>
     <ClInclude Include="common\serial\serialLinkList.h">
       <Filter>Header Files\common\serial</Filter>
     </ClInclude>
@@ -3202,6 +3199,12 @@
     </ClInclude>
     <ClInclude Include="common\sensor\current\current.h">
       <Filter>Header Files\common\sensor\current</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\robotType.h">
+      <Filter>Header Files\robot</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\robotTypeDebug.h">
+      <Filter>Header Files\robot</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

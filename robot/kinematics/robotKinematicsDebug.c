@@ -37,6 +37,15 @@ void printRobotKinematicsComputedValuesTableHeader(OutputStream* outputStream) {
 
 void printRobotKinematicsTable(OutputStream* outputStream, RobotKinematics* robotKinematics) {
     printRobotKinematicsStoredValuesTableHeader(outputStream);
+    // ROBOT TYPE
+	appendStringTableData(outputStream, "Robot Type", ROBOT_KINEMATICS_KEY_COLUMN_LENGTH);
+	appendHex2TableData(outputStream, getKinematicsRobotType(robotKinematics), ROBOT_KINEMATICS_HEX_VALUE_COLUMN_LENGTH);
+	addRobotTypeTableData(outputStream, getKinematicsRobotType(robotKinematics), ROBOT_KINEMATICS_VALUE_COLUMN_LENGTH);
+	appendStringTableData(outputStream, "N/A", ROBOT_KINEMATICS_UNIT_COLUMN_LENGTH);
+	appendEndOfTableColumn(outputStream, ROBOT_KINEMATICS_LAST_COLUMN);
+ 
+    appendTableHeaderSeparatorLine(outputStream);
+    
     // CODER VALUE
 	appendStringTableData(outputStream, "Coder Wheel Average Diameter", ROBOT_KINEMATICS_KEY_COLUMN_LENGTH);
 	appendHexFloat6TableData(outputStream, getCoderWheelAverageDiameterMM(robotKinematics), ROBOT_KINEMATICS_DEFAULT_DIGIT_PRECISION, ROBOT_KINEMATICS_HEX_VALUE_COLUMN_LENGTH);
@@ -107,7 +116,7 @@ void printRobotKinematicsTable(OutputStream* outputStream, RobotKinematics* robo
     appendTableHeaderSeparatorLine(outputStream);
 
     // COMPUTE VALUE
-    printRobotKinematicsStoredValuesTableHeader(outputStream);
+    printRobotKinematicsComputedValuesTableHeader(outputStream);
     // -> Speed / Acceleration
     appendStringTableData(outputStream, "Computed : Robot Speed Max", ROBOT_KINEMATICS_KEY_COLUMN_LENGTH);
     appendDecfTableData(outputStream, getRobotSpeedMaxMillimeterBySecond(robotKinematics), ROBOT_KINEMATICS_VALUE_COLUMN_LENGTH);

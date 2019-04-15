@@ -413,6 +413,10 @@
                      projectFiles="true">
         <itemPath>../../../motion/simulation/motionSimulation.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f3" displayName="robot" projectFiles="true">
+        <itemPath>../../../robot/robotType.h</itemPath>
+        <itemPath>../../../robot/robotTypeDebug.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="robot.kinematics"
                      displayName="robot.kinematics"
                      projectFiles="true">
@@ -822,6 +826,9 @@
                      projectFiles="true">
         <itemPath>../../../motion/simple/motionCalibration.c</itemPath>
         <itemPath>../../../motion/simple/simpleMotion.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f2" displayName="robot" projectFiles="true">
+        <itemPath>../../../robot/robotTypeDebug.c</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.kinematics"
                      displayName="robot.kinematics"

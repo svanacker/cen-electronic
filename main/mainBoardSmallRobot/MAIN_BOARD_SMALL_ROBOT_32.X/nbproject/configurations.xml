@@ -510,7 +510,8 @@
       </logicalFolder>
       <logicalFolder name="robot" displayName="robot" projectFiles="true">
         <itemPath>../../../robot/robot.h</itemPath>
-        <itemPath>../../../robot/robotDebug.h</itemPath>
+        <itemPath>../../../robot/robotType.h</itemPath>
+        <itemPath>../../../robot/robotTypeDebug.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f22" displayName="robot.2019" projectFiles="true">
         <itemPath>../../../robot/2019/gameBoardElement2019.h</itemPath>
@@ -1121,7 +1122,7 @@
       </logicalFolder>
       <logicalFolder name="robot" displayName="robot" projectFiles="true">
         <itemPath>../../../robot/robot.c</itemPath>
-        <itemPath>../../../robot/robotDebug.c</itemPath>
+        <itemPath>../../../robot/robotTypeDebug.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f22" displayName="robot.2019" projectFiles="true">
         <itemPath>../../../robot/2019/gameBoardElement2019.c</itemPath>

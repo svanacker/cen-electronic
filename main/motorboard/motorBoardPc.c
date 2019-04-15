@@ -413,7 +413,6 @@ void runMotorBoardPC(bool singleMode) {
     addLocalDevice(getMotionDeviceInterface(), getMotionDeviceDescriptor(&pidMotion));
 	addLocalDevice(getExtendedMotionDeviceInterface(), getExtendedMotionDeviceDescriptor(&pidMotion));
 	addLocalDevice(getMotionSimulationDeviceInterface(), getMotionSimulationDeviceDescriptor());
-	addLocalDevice(getRobotKinematicsDeviceInterface(), getRobotKinematicsDeviceDescriptor(&eeprom));
     addLocalDevice(getPcDeviceInterface(), getPcDeviceDescriptor(getOutputStream(&consoleInputBuffer)));
     addLocalDevice(getTofDeviceInterface(), getTofDeviceDescriptor(&tofSensorList));
 

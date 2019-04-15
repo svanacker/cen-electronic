@@ -13,6 +13,16 @@ RobotKinematics* getRobotKinematics(void) {
     return &robotKinematicsInstance;
 }
 
+// ROBOT TYPE
+
+enum RobotType getKinematicsRobotType(RobotKinematics* robotKinematics) {
+    return robotKinematics->robotType;
+}
+
+void setKinematicsRobotType(RobotKinematics* robotKinematics, enum RobotType robotType) {
+    robotKinematics->robotType = robotType;
+}
+
 // WHEEL CODER VALUES
 
 float getCoderWheelAverageDiameterMM(RobotKinematics* robotKinematics) {

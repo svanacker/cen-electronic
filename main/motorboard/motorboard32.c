@@ -155,9 +155,8 @@
 // #include "../../test/mathTest.h"
 #include "../../test/motion/bspline/bsplinetest.h"
 
-// 2018
-#include "../../robot/2018/launcherDevice2018.h"
-#include "../../robot/2018/launcherDeviceInterface2018.h"
+#include "../../robot/robotType.h"
+#include "../../robot/robotTypeDebug.h"
 
 // I2C
 static I2cBus i2cBusListArray[MOTOR_BOARD_I2C_BUS_LIST_LENGTH];
@@ -310,6 +309,7 @@ int runMotorBoard() {
     INTEnableInterrupts();
 
     setBoardName(MOTOR_BOARD_PIC_NAME);
+    
 
     initSerialLinkList(&serialLinkListArray, MOTOR_BOARD_SERIAL_LINK_LIST_LENGTH);
 
@@ -390,10 +390,10 @@ int runMotorBoard() {
     
     // EEPROM : If Eeprom is installed
     eepromI2cBusConnection = addI2cBusConnection(masterI2cBus, ST24C512_ADDRESS_0, true);
-    // init24C512Eeprom(&eeprom_, eepromI2cBusConnection);
+    init24C512Eeprom(&eeprom_, eepromI2cBusConnection);
     
     // EEPROM : If we use Software Eeprom
-    initEepromMemory(&eeprom_, &memoryEepromArray, MOTOR_BOARD_MEMORY_EEPROM_LENGTH);
+    // initEepromMemory(&eeprom_, &memoryEepromArray, MOTOR_BOARD_MEMORY_EEPROM_LENGTH);
     
     // Clock
     // -> Clock

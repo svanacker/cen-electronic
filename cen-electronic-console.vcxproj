@@ -452,7 +452,7 @@
     <ClCompile Include="robot\match\startMatchDevice.c" />
     <ClCompile Include="robot\match\startMatchDeviceInterface.c" />
     <ClCompile Include="robot\robot.c" />
-    <ClCompile Include="robot\robotDebug.c" />
+    <ClCompile Include="robot\robotTypeDebug.c" />
     <ClCompile Include="robot\strategy\factor\composedGainFactor.c" />
     <ClCompile Include="robot\strategy\factor\distanceGainFactor.c" />
     <ClCompile Include="robot\strategy\factor\opponentRobotGainFactor.c" />
@@ -829,7 +829,8 @@
     <ClInclude Include="robot\match\startMatchDeviceInterface.h" />
     <ClInclude Include="robot\robot.h" />
     <ClInclude Include="robot\robotConstants.h" />
-    <ClInclude Include="robot\robotDebug.h" />
+    <ClInclude Include="robot\robotType.h" />
+    <ClInclude Include="robot\robotTypeDebug.h" />
     <ClInclude Include="robot\strategy\factor\composedGainFactor.h" />
     <ClInclude Include="robot\strategy\factor\distanceGainFactor.h" />
     <ClInclude Include="robot\strategy\factor\gainFactor.h" />

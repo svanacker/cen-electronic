@@ -22,6 +22,8 @@
 #define COMMAND_SET_MOTOR_DISTANCE_BETWEEN_WHEELS_MM               'H'
 #define COMMAND_SET_MOTOR_WHEEL_ROTATION_BY_SECONDS_AT_FULL_SPEED  'R'
 
+#define COMMAND_SET_ROBOT_TYPE                                     'T'
+
 /**
 * Interface for Device "RobotKinematics"
 */

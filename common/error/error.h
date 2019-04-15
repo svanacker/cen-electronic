@@ -251,6 +251,8 @@ void clearLastError();
 #define ROBOT_KINEMATICS_NO_EEPROM                                        0x6000
 #define ROBOT_KINEMATICS_EEPROM_NOT_INITIALIZED                           0x6001
 
+#define ROBOT_TYPE_UNKNOWN_ERROR                                          0x6010
+
 #define ROBOT_GAMEBOARD_ELEMENT_LIST_NULL                                 0x6100
 #define ROBOT_GAMEBOARD_ELEMENT_LIST_NOT_INITIALIZED                      0x6101
 #define ROBOT_GAMEBOARD_TOO_MUCH_ELEMENTS                                 0x6102           

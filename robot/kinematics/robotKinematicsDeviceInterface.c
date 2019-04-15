@@ -100,6 +100,13 @@ int deviceRobotKinematicsGetInterface(char commandHeader, DeviceInterfaceMode mo
         }
         return commandLengthValueForMode(mode, 6, 0);
     }
+    else if (commandHeader == COMMAND_SET_ROBOT_TYPE) {
+        if (fillDeviceArgumentList) {
+            setFunction("set RobotType", 1, 0);
+            setArgumentUnsignedHex2(0, "BIG (1), SMALL(2)");
+        }
+        return commandLengthValueForMode(mode, 2, 0);
+    }
     return DEVICE_HEADER_NOT_HANDLED;
 }
 

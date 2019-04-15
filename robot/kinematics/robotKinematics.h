@@ -3,6 +3,8 @@
 
 #include "../../common/eeprom/eeprom.h"
 
+#include "../../robot/robotType.h"
+
 #define ROBOT_KINEMATICS_DEFAULT_DIGIT_PRECISION                3
 #define ROBOT_KINEMATICS_WEIGHT_DIGIT_PRECISION                 0
 
@@ -38,6 +40,8 @@ typedef struct RobotKinematics {
 
     // ROBOT Constant Parameter
     float robotWeightGrams;
+    // ROBOT type
+    enum RobotType robotType;
 } RobotKinematics;
 
 /** 
@@ -45,6 +49,12 @@ typedef struct RobotKinematics {
  * @return Robot Kinematics information
  */
 RobotKinematics* getRobotKinematics(void);
+
+// ROBOT TYPE
+
+enum RobotType getKinematicsRobotType(RobotKinematics* robotKinematics);
+
+void setKinematicsRobotType(RobotKinematics* robotKinematics, enum RobotType robotType);
 
 // CODER VALUE
 

@@ -6,6 +6,7 @@
 
 #define MOTOR_BOARD_PIC_NAME "MOTOR BOARD 32"
 
+
 // LOGS
 
 #define MOTOR_BOARD_LOG_HANDLER_LIST_LENGTH                1

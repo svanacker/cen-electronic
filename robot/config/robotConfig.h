@@ -3,17 +3,9 @@
 
 #include <stdbool.h>
 
-#include "../../common/io/outputStream.h"
+#include "../../robot/robotType.h"
 
-/**
- * Define a type of color which was detected.
- */
-enum RobotType {
-    // The big robot authorized for Eurobot
-    ROBOT_TYPE_BIG,
-    // The Small robot authorized for Eurobot
-    ROBOT_TYPE_SMALL
-};
+#include "../../common/io/outputStream.h"
 
 // --- 8 LOW CONFIG BITS ---
 
