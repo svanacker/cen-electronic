@@ -142,6 +142,7 @@ void devicePidHandleRawData(char commandHeader, InputStream* inputStream, Output
     }
     else if (commandHeader == COMMAND_LOAD_PID_PARAMETERS_DEFAULT_VALUES) {
         ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_LOAD_PID_PARAMETERS_DEFAULT_VALUES);
+        // TODO : Separate Motion Parameter from pid Parameters
 
         // Load Motion Parameters (speed / acceleration)
         loadMotionParameters(pidMotion->pidPersistenceEeprom, true);
@@ -151,6 +152,8 @@ void devicePidHandleRawData(char commandHeader, InputStream* inputStream, Output
     }
     else if (commandHeader == COMMAND_SAVE_PID_PARAMETERS) {
         ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_SAVE_PID_PARAMETERS);
+        // TODO : Separate Motion Parameter from pid Parameters
+        saveMotionParameters(pidMotion->pidPersistenceEeprom);
         savePidParameters(pidMotion);
     }
     // TRAJECTORY
