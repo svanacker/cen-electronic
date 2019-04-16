@@ -25,21 +25,43 @@ static float MOTION_PARAMETERS_DEFAULT_EEPROM_VALUES[MOTION_PARAMETERS_VALUES_CO
     DEFAULT_ROTATION_MAINTAIN_POSITION_ACCELERATION, DEFAULT_ROTATION_MAINTAIN_POSITION_SPEED
 };
 
-float internalLoadMotionParameterItem(Eeprom* motionParameterEeprom, unsigned long index, unsigned int digitPrecision, bool loadDefaultValues) {
-    if (motionParameterEeprom == NULL) {
+// CHECK
+
+/**
+ * Check if the eeprom is initialized
+ * @param _eeprom the eeprom object structure
+ * @return 
+ */
+bool internalMotionParametersCheckIfEepromIsNotNull(Eeprom* _eeprom) {
+    if (_eeprom == NULL) {
         writeError(MOTION_PARAMETERS_PERSISTENCE_NO_EEPROM);
-        return 0;
+        return false;
     }
-    bool motionEepromAreaIsInitialized = isEepromAreaInitialized(motionParameterEeprom, EEPROM_MOTION_PARAMETERS_AREA_MARKER_INDEX);
+    return true;
+}
+
+/**
+ * Check if the eeprom is initialized with the right marker (to be sure that
+ * the eeprom is really ok, and not return always the same values)
+ * @param _eeprom the eeprom object structure
+ * @return 
+ */
+bool internalMotionParametersCheckIfEepromIsInitialized(Eeprom* _eeprom) {
+    bool motionParametersEepromAreaIsInitialized = isEepromAreaInitialized(_eeprom, EEPROM_MOTION_PARAMETERS_AREA_MARKER_INDEX);
+    if (!motionParametersEepromAreaIsInitialized) {
+        writeError(MOTION_PARAMETERS_PERSISTENCE_EEPROM_NOT_INITIALIZED);
+        return false;
+    }
+    return true;
+}
+
+float internalLoadMotionParameterItem(Eeprom* motionParameterEeprom, unsigned long index, unsigned int digitPrecision, bool loadDefaultValues) {
+    // Check of eeprom (not null, initialized) are done by caller
     float result;
     if (loadDefaultValues) {
         result = MOTION_PARAMETERS_DEFAULT_EEPROM_VALUES[index];
     }
     else {
-        if (!motionEepromAreaIsInitialized) {
-            writeError(MOTION_PARAMETERS_PERSISTENCE_EEPROM_NOT_INITIALIZED);
-            return 0;
-        }
         unsigned long dataIndex = EEPROM_MOTION_PARAMETERS_START_INDEX + index * MOTION_PARAMETER_DATA_SIZE;
         result = eepromReadUnsignedFloat(motionParameterEeprom, dataIndex, digitPrecision);
     }
@@ -47,12 +69,7 @@ float internalLoadMotionParameterItem(Eeprom* motionParameterEeprom, unsigned lo
 }
 
 void internalSaveMotionParameterItem(Eeprom* motionParameterEeprom, unsigned long index, float value, unsigned int digitPrecision) {
-    if (motionParameterEeprom == NULL) {
-        writeError(MOTION_PARAMETERS_PERSISTENCE_NO_EEPROM);
-        return;
-    }
-    initEepromArea(motionParameterEeprom, EEPROM_MOTION_PARAMETERS_AREA_MARKER_INDEX);
-
+    // Check of eeprom (not null, initialized) are done by caller
     unsigned long dataIndex = EEPROM_MOTION_PARAMETERS_START_INDEX + index * MOTION_PARAMETER_DATA_SIZE;
     eepromWriteUnsignedFloat(motionParameterEeprom, dataIndex, value, digitPrecision);
 }
@@ -75,6 +92,14 @@ void internalSaveMotionParameter(Eeprom* motionParameterEeprom, enum MotionParam
 // Interface Implementation
 
 void loadMotionParameters(Eeprom* motionParameterEeprom, bool loadDefaultValues) {    
+    if (!loadDefaultValues) {
+        if (!internalMotionParametersCheckIfEepromIsNotNull(motionParameterEeprom)) {
+            return;
+        }
+        if (!internalMotionParametersCheckIfEepromIsInitialized(motionParameterEeprom)) {
+            return;
+        }
+    }
     enum MotionParameterType motionType;
     for (motionType = 0; motionType < MOTION_PARAMETERS_COUNT; motionType++) {
         internalLoadMotionParameter(motionParameterEeprom, motionType, loadDefaultValues);
@@ -82,7 +107,14 @@ void loadMotionParameters(Eeprom* motionParameterEeprom, bool loadDefaultValues)
 }
 
 void saveMotionParameters(Eeprom* motionParameterEeprom) {
+    if (!internalMotionParametersCheckIfEepromIsNotNull(motionParameterEeprom)) {
+        return;
+    }
+
+    // Mark the Eeprom Area
     initEepromArea(motionParameterEeprom, EEPROM_MOTION_PARAMETERS_AREA_MARKER_INDEX);
+
+    // initializes all values
     enum MotionParameterType motionType;
     for (motionType = 0; motionType < MOTION_PARAMETERS_COUNT; motionType++) {
         internalSaveMotionParameter(motionParameterEeprom, motionType);

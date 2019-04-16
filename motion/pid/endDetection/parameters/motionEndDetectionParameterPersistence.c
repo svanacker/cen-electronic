@@ -39,40 +39,64 @@ static float MOTION_END_DETECTION_PARAMETERS_DEFAULT_EEPROM_VALUES[MOTION_END_DE
     BLOCKING_OR_REACH_DETECTION_DELAY_DEFAULT_VALUE,
     BLOCKING_OR_REACH_SKIP_DETECTION_DELAY_DEFAULT_VALUE};
 
-float internalLoadMotionEndDetectionParameterItem(Eeprom* motionParameterEeprom, unsigned long index, unsigned int digitPrecision, bool loadDefaultValues) {
-    if (motionParameterEeprom == NULL) {
-        // We use the same "MARKER AREA" than for MotionParameterPersistence
-        writeError(MOTION_PARAMETERS_PERSISTENCE_NO_EEPROM);
-        return 0;
+// CHECK
+
+/**
+ * Check if the eeprom is initialized
+ * @param _eeprom the eeprom object structure
+ * @return 
+ */
+bool internalMotionEndDetectionParametersCheckIfEepromIsNotNull(Eeprom* _eeprom) {
+    if (_eeprom == NULL) {
+        writeError(MOTION_END_DETECTION_PARAMETERS_PERSISTENCE_NO_EEPROM);
+        return false;
     }
-    bool motionEepromAreaIsInitialized = isEepromAreaInitialized(motionParameterEeprom, EEPROM_MOTION_PARAMETERS_AREA_MARKER_INDEX);
+    return true;
+}
+
+/**
+ * Check if the eeprom is initialized with the right marker (to be sure that
+ * the eeprom is really ok, and not return always the same values)
+ * @param _eeprom the eeprom object structure
+ * @return 
+ */
+bool internalMotionEndDetectionParametersCheckIfEepromIsInitialized(Eeprom* _eeprom) {
+    bool motionParametersEepromAreaIsInitialized = isEepromAreaInitialized(_eeprom, EEPROM_MOTION_END_DETECTION_PARAMETERS_AREA_MARKER_INDEX);
+    if (!motionParametersEepromAreaIsInitialized) {
+        writeError(MOTION_END_DETECTION_PARAMETERS_PERSISTENCE_EEPROM_NOT_INITIALIZED);
+        return false;
+    }
+    return true;
+}
+
+float internalLoadMotionEndDetectionParameterItem(Eeprom* motionEndDetectionParametersEeprom, unsigned long index, unsigned int digitPrecision, bool loadDefaultValues) {
     float result;
     if (loadDefaultValues) {
         result = MOTION_END_DETECTION_PARAMETERS_DEFAULT_EEPROM_VALUES[index];
     }
     else {
-        if (!motionEepromAreaIsInitialized) {
-            writeError(MOTION_PARAMETERS_PERSISTENCE_EEPROM_NOT_INITIALIZED);
-            return 0;
-        }
-        unsigned long dataIndex = EEPROM_PID_PARAMETERS_END_DETECTION_START_INDEX + index * MOTION_END_DETECTION_PARAMETER_DATA_SIZE;
-        result = eepromReadUnsignedFloat(motionParameterEeprom, dataIndex, digitPrecision);
+        unsigned long dataIndex = EEPROM_MOTION_END_DETECTION_PARAMETERS_START_INDEX + index * MOTION_END_DETECTION_PARAMETER_DATA_SIZE;
+        result = eepromReadUnsignedFloat(motionEndDetectionParametersEeprom, dataIndex, digitPrecision);
     }
     return result;
 }
 
 void internalSaveMotionEndDetectionParameterItem(Eeprom* motionEndDetectionParametersEeprom, unsigned long index, float value, unsigned int digitPrecision) {
-    if (motionEndDetectionParametersEeprom == NULL) {
-        writeError(MOTION_PARAMETERS_PERSISTENCE_NO_EEPROM);
-        return;
-    }
-    initEepromArea(motionEndDetectionParametersEeprom, EEPROM_MOTION_PARAMETERS_AREA_MARKER_INDEX);
-
-    unsigned long dataIndex = EEPROM_PID_PARAMETERS_END_DETECTION_START_INDEX + index * MOTION_END_DETECTION_PARAMETER_DATA_SIZE;
+    // All check about Eeprom are done by caller
+    unsigned long dataIndex = EEPROM_MOTION_END_DETECTION_PARAMETERS_START_INDEX + index * MOTION_END_DETECTION_PARAMETER_DATA_SIZE;
     eepromWriteUnsignedFloat(motionEndDetectionParametersEeprom, dataIndex, value, digitPrecision);
 }
 
 void loadMotionEndDetectionParameters(MotionEndDetectionParameter* motionEndDetectionParameter, Eeprom* motionEndDetectionParametersEeprom, bool loadDefaultValues) {
+    if (!loadDefaultValues) {
+        if (!internalMotionEndDetectionParametersCheckIfEepromIsNotNull(motionEndDetectionParametersEeprom)) {
+            return;
+        }
+        if (!internalMotionEndDetectionParametersCheckIfEepromIsInitialized(motionEndDetectionParametersEeprom)) {
+            return;
+        }
+    }
+
     // DETAIL VALUES
     motionEndDetectionParameter->accelerationTooHighTresholdFactor = internalLoadMotionEndDetectionParameterItem(motionEndDetectionParametersEeprom, MOTION_END_DETECTION_ACCELERATION_TOO_HIGH_THRESHOLD_INDEX, MOTION_END_DETECTION_PARAMETERS_DIGIT_PRECISION, loadDefaultValues);
     motionEndDetectionParameter->speedTooLowThresholdFactor = internalLoadMotionEndDetectionParameterItem(motionEndDetectionParametersEeprom, MOTION_END_DETECTION_SPEED_TOO_LOW_THRESHOLD_INDEX, MOTION_END_DETECTION_PARAMETERS_DIGIT_PRECISION, loadDefaultValues);
@@ -90,6 +114,12 @@ void loadMotionEndDetectionParameters(MotionEndDetectionParameter* motionEndDete
 
 void saveMotionEndDetectionParameters(MotionEndDetectionParameter* motionEndDetectionParameter,
                                       Eeprom* motionEndDetectionParametersEeprom) {
+    if (!internalMotionEndDetectionParametersCheckIfEepromIsNotNull(motionEndDetectionParametersEeprom)) {
+        return;
+    }
+    // Initializes the AREA to declare the Eeprom Area Initialized
+    initEepromArea(motionEndDetectionParametersEeprom, EEPROM_MOTION_END_DETECTION_PARAMETERS_AREA_MARKER_INDEX);
+
     // DETAIL PHASE
     internalSaveMotionEndDetectionParameterItem(motionEndDetectionParametersEeprom,
                                     MOTION_END_DETECTION_ACCELERATION_TOO_HIGH_THRESHOLD_INDEX,
