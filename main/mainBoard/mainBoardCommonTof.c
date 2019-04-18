@@ -62,23 +62,18 @@ void mainBoardCommonTofInitDrivers(I2cBus* i2cBus) {
     }
     if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > 1) {
         tofSensorArray[1].enabled = true; 
-        tofSensorArray[1].name = "FRONT MID";
     }
     if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > 2) {
         tofSensorArray[2].enabled = true;        
-        tofSensorArray[2].name = "FRONT LEFT";
     }
     if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > 3) {
         tofSensorArray[3].enabled = true;
-        tofSensorArray[3].name = "BACK RIGHT";
     }
     if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > 4) {
         tofSensorArray[4].enabled = true;        
-        tofSensorArray[3].name = "BACK MIDDLE";
     }    
     if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > 5) {
         tofSensorArray[5].enabled = true;
-        tofSensorArray[3].name = "BACK LEFT";        
     }
     appendStringLN(getDebugOutputStreamLogger(), "TOF ...");
     initTofSensorListVL53L0X(&tofSensorList,

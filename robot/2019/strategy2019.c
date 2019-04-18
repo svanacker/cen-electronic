@@ -134,22 +134,24 @@ void initColorAndStartPosition2019(GameStrategyContext* gameStrategyContext) {
     else {
         gameStrategyContext->color = TEAM_COLOR_2019_VIOLET;
     }
-    float angleDeciDegree = ANGLE_DECI_DEG_90;
+    float angleDeciDegree = 0;
     enum RobotType robotType = robotConfig->robotType;
     if (robotType == ROBOT_TYPE_BIG) {
         gameStrategyContext->robotPosition->x = BIG_ROBOT_START_AREA_X;
         gameStrategyContext->robotPosition->y = BIG_ROBOT_START_AREA_Y;
+        angleDeciDegree = BIG_ROBOT_START_AREA_ANGLE_DECI_DEG;
     }
     else if (robotType == ROBOT_TYPE_SMALL) {
         gameStrategyContext->robotPosition->x = SMALL_ROBOT_START_AREA_X;
         gameStrategyContext->robotPosition->y = SMALL_ROBOT_START_AREA_Y;
+        angleDeciDegree = SMALL_ROBOT_START_AREA_ANGLE_DECI_DEG;
     }
     // Symetry
 	if (isViolet(gameStrategyContext)) {
-        angleDeciDegree = -ANGLE_DECI_DEG_90;
+        angleDeciDegree += (float) ANGLE_DECI_DEG_180;
         gameStrategyContext->robotPosition->y = GAMEBOARD_HEIGHT - gameStrategyContext->robotPosition->y;
 	}
-    float angleRadian = deciDegreeToRad(angleDeciDegree);
+    float angleRadian = mod2PI(deciDegreeToRad(angleDeciDegree));
     gameStrategyContext->robotAngleRadian = angleRadian;
 }
 

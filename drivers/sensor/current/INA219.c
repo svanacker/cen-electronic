@@ -93,7 +93,7 @@ unsigned int ina219_read16(I2cBusConnection* i2cBusConnection, unsigned char reg
 }
 
 int _INA219_readSensorValue(Current* current) {
-    I2cBusConnection* i2cBusConnection = _INA219_getI2cBusConnection(current);
+//    I2cBusConnection* i2cBusConnection = _INA219_getI2cBusConnection(current);
 
     return 0;
 }

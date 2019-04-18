@@ -25,13 +25,13 @@
 #define     ANGLE_DECI_DEG_270           0x0A8C
 
 #define BIG_ROBOT_START_AREA                                                "BSTA"
-#define BIG_ROBOT_START_AREA_X                                                 750
-#define BIG_ROBOT_START_AREA_Y                                                 160
-#define BIG_ROBOT_START_AREA_ANGLE_DECI_DEG                      ANGLE_DECI_DEG_90
+#define BIG_ROBOT_START_AREA_X                                                 800
+#define BIG_ROBOT_START_AREA_Y                                                 152
+#define BIG_ROBOT_START_AREA_ANGLE_DECI_DEG                                      0
 
 #define SMALL_ROBOT_START_AREA                                              "SSTA"
-#define SMALL_ROBOT_START_AREA_X                                               450
-#define SMALL_ROBOT_START_AREA_Y                                               160
+#define SMALL_ROBOT_START_AREA_X                                               600
+#define SMALL_ROBOT_START_AREA_Y                                               370
 #define SMALL_ROBOT_START_AREA_ANGLE_DECI_DEG                    ANGLE_DECI_DEG_90
 
 // Accelerator

@@ -44,6 +44,7 @@ void printTofSensorDebugTableHeader(OutputStream* outputStream) {
     appendStringHeader(outputStream, "Detected", TOF_SENSOR_VALUE_OBJECT_X_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Detected", TOF_SENSOR_VALUE_OBJECT_Y_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, TOF_SENSOR_LAST_COLUMN);
+    
     // Second header line
     appendStringHeader(outputStream, "", TOF_SENSOR_INDEX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", TOF_SENSOR_NAME_COLUMN_LENGTH);
@@ -56,6 +57,7 @@ void printTofSensorDebugTableHeader(OutputStream* outputStream) {
     appendStringHeader(outputStream, "X", TOF_SENSOR_VALUE_OBJECT_X_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Y", TOF_SENSOR_VALUE_OBJECT_Y_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, TOF_SENSOR_LAST_COLUMN);
+    
     // Third header line
     appendStringHeader(outputStream, "", TOF_SENSOR_INDEX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", TOF_SENSOR_NAME_COLUMN_LENGTH);

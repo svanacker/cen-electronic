@@ -8,13 +8,14 @@
 #include "../../robot/strategy/gameStrategyContext.h"
 
 // TOF MANAGEMENT
-#define BACK_RIGHT_SENSOR_INDEX          0
-#define BACK_MIDDLE_SENSOR_INDEX         1
-#define BACK_LEFT_SENSOR_INDEX           2
 
-#define FRONT_RIGHT_SENSOR_INDEX         3
-#define FRONT_MIDDLE_SENSOR_INDEX        4
-#define FRONT_LEFT_SENSOR_INDEX          5
+#define FRONT_RIGHT_SENSOR_INDEX         0
+#define FRONT_MIDDLE_SENSOR_INDEX        1
+#define FRONT_LEFT_SENSOR_INDEX          2
+
+#define BACK_RIGHT_SENSOR_INDEX          3
+#define BACK_MIDDLE_SENSOR_INDEX         4
+#define BACK_LEFT_SENSOR_INDEX           5
 
 // ORIENTATION
 #define BACK_RIGHT_SENSOR_ANGLE_DEGREE   -160.0f

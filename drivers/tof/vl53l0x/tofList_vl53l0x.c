@@ -90,6 +90,7 @@ void initTofSensorListVL53L0X(TofSensorList* tofSensorList,
 
         // Get the specific structure in the provide array
         TofSensorVL53L0X* tofSensorVL53L0X = (TofSensorVL53L0X*) tofSensorVL53L0XArray;
+
         // Shift to the right pointer address
         tofSensorVL53L0X += tofIndex;
 
