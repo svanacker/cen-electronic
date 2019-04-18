@@ -128,7 +128,7 @@ void mainBoardMainPhase3(void) {
     initMainBoardDriverDataDispatcherList();
 
     mainBoardCommonMotorMainEndInit();
-    // mainBoardCommonStrategyMainEndInit();
+    mainBoardCommonStrategyMainEndInit();
 }
 
 int main(void) {

@@ -337,7 +337,7 @@ void mainBoardCommonAddDevices(RobotConfig* robotConfig) {
  * TODO : Rename Driver into ClientDriver
  * @private
  */
-void initMainBoardDriversDescriptor() {
+void initMainBoardClientDriversBuffer() {
     // Init the drivers
     initDrivers(&driverRequestBuffer, &driverRequestBufferArray, MAIN_BOARD_REQUEST_DRIVER_BUFFER_LENGTH,
                 &driverResponseBuffer, &driverResponseBufferArray, MAIN_BOARD_RESPONSE_DRIVER_BUFFER_LENGTH);
@@ -348,6 +348,8 @@ void initMainBoardDriversDescriptor() {
 
 void mainBoardCommonInitDriverDataDispatcherList(void) {
     initDriverDataDispatcherList(&driverDataDispatcherListArray, MAIN_BOARD_DRIVER_DATA_DISPATCHER_LIST_LENGTH);
+    
+    initMainBoardClientDriversBuffer();
     
     // Configure data dispatcher
     addLocalDriverDataDispatcher();
