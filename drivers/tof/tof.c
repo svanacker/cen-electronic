@@ -15,11 +15,13 @@
 void initTofSensor(TofSensor* tofSensor, 
                     tofSensorInitFunction* tofSensorInit,
                     tofSensorGetDistanceMMFunction* tofGetDistanceMM,
+                    char* name,
                     unsigned int thresholdDistanceMM,
                     float orientationRadian,
                     int* object) {
     tofSensor->tofSensorInit = tofSensorInit;
     tofSensor->tofGetDistanceMM = tofGetDistanceMM;
+    tofSensor->name = name;
     tofSensor->lastDistanceMM = 0;
     tofSensor->thresholdDistanceMM = thresholdDistanceMM;
     tofSensor->orientationRadian = orientationRadian;

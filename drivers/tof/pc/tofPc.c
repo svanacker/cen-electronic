@@ -22,11 +22,13 @@ unsigned int tofSensorGetDistanceMMPc(TofSensor* TofSensor) {
 }
 
 void initTofSensorPc(TofSensor* tofSensor, 
+                    char* name,
                     unsigned int thresholdDistanceMM,
                     float orientationRadian) {
     initTofSensor(tofSensor, 
                  &tofSensorInitPc, 
                  &tofSensorGetDistanceMMPc,
+                 name,
                  thresholdDistanceMM,
                  orientationRadian,
                  NULL);

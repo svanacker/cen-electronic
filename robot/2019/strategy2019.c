@@ -412,7 +412,7 @@ GameStrategy* initStrategiesItems2019(GameStrategyContext* gameStrategyContext) 
 void initStrategy2019(GameStrategyContext* gameStrategyContext) {
     initColorAndStartPosition2019(gameStrategyContext);
     float tofDistanceFactor = getSonarDistanceCheckFactor(gameStrategyContext->robotConfig);
-    setTofListOrientationAngle(gameStrategyContext->tofSensorList, tofDistanceFactor);
+    setTofListNameAndOrientationAngle(gameStrategyContext->tofSensorList, tofDistanceFactor);
     showGameStrategyContextTeamColorAndStrategy(gameStrategyContext);
 
 	initLocations2019(gameStrategyContext);

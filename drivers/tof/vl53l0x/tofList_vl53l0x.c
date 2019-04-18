@@ -104,7 +104,7 @@ void initTofSensorListVL53L0X(TofSensorList* tofSensorList,
 
         appendString(debugOutputStream, "    INIT VL53");        
         // Initialize the VL53L0X, but with the default address
-        initTofSensorVL53L0X(tofSensor, tofSensorVL53L0X, initialTofBusConnection, 0, 0.0f);
+        initTofSensorVL53L0X(tofSensor, tofSensorVL53L0X, initialTofBusConnection, "", 0, 0.0f);
         appendStringLN(debugOutputStream, "OK");
         unsigned char tofBusAddress = VL530X_ADDRESS_0;
         if (tofSensor->changeAddress) {

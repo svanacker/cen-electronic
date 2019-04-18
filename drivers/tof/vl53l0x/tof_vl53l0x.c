@@ -313,12 +313,14 @@ unsigned int tofSensorGetDistanceVL53L0XMM(TofSensor* tofSensor) {
 void initTofSensorVL53L0X(TofSensor* tofSensor,
         TofSensorVL53L0X* tofSensorVL53L0X,
         I2cBusConnection* i2cBusConnection,
+        char* name,
         unsigned int thresholdDistanceMM,
         float orientationRadian) {
     tofSensorVL53L0X->i2cBusConnection = i2cBusConnection;
     initTofSensor(tofSensor,
             &tofSensorInitVL53L0X,
             &tofSensorGetDistanceVL53L0XMM,
+            name,
             thresholdDistanceMM,
             orientationRadian,
             (int*) tofSensorVL53L0X);

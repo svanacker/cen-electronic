@@ -5,6 +5,9 @@
 #include "../../common/io/printTableWriter.h"
 #include "../../common/math/cenMath.h"
 
+#include "../robotType.h"
+#include "../robotTypeDebug.h"
+
 #define ROBOT_KINEMATICS_KEY_COLUMN_LENGTH        65
 #define ROBOT_KINEMATICS_HEX_VALUE_COLUMN_LENGTH  10
 #define ROBOT_KINEMATICS_VALUE_COLUMN_LENGTH      10

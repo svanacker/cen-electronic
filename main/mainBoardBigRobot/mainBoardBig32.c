@@ -3,7 +3,7 @@
 // SPECIFIC TO PIC
 #include "../../common/setup/32/picSetup32.h"
 #include <plib.h>
-#include "mainBoard32.h"
+#include "mainBoardBig32.h"
 #include "../../robot/config/32/robotConfigPic32.h"
 #include "../../robot/match/32/startMatchDetector32.h"
 

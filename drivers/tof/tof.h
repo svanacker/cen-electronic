@@ -23,6 +23,8 @@ typedef unsigned int tofSensorGetDistanceMMFunction(TofSensor* tofSensor);
 * Defines the contract For one Tof Sensor.
 */
 struct TofSensor {
+    /** An name for the sensor. */
+    char* name;
     /** If we enabled it. If disable, we do not try to initialize it .*/
     bool enabled;
     /** If we must change the address of the TOF at startup .*/
@@ -48,6 +50,7 @@ struct TofSensor {
 void initTofSensor(TofSensor* tofSensor, 
                     tofSensorInitFunction* tofSensorInit,
                     tofSensorGetDistanceMMFunction* tofGetDistanceMM,
+                    char* name,
                     unsigned int thresholdDistanceMM,
                     float orientationRadian,
                     int* object);

@@ -45,7 +45,7 @@
  * @param tofSensorList
  * @param distanceFactor
  */
-void setTofListOrientationAngle(TofSensorList* tofSensorList, float distanceFactor);
+void setTofListNameAndOrientationAngle(TofSensorList* tofSensorList, float distanceFactor);
 
 /**
  * TOF MANAGEMENT

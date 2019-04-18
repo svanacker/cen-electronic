@@ -131,6 +131,21 @@
                      projectFiles="true">
         <itemPath>../../../common/pwm/servo/servoPwm.h</itemPath>
         <itemPath>../../../common/pwm/servo/servoPwmDebug.h</itemPath>
+        <itemPath>../../../common/pwm/servo/servoList.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f29" displayName="common.pwm.servo.32" projectFiles="true">
+        <itemPath>../../../common/pwm/servo/32/servoList32.h</itemPath>
+        <itemPath>../../../common/pwm/servo/32/servoPwm32.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f27"
+                     displayName="common.sensor.accelerometer"
+                     projectFiles="true">
+        <itemPath>../../../common/sensor/accelerometer/accelerometer.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f26"
+                     displayName="common.sensor.current"
+                     projectFiles="true">
+        <itemPath>../../../common/sensor/current/current.h</itemPath>
       </logicalFolder>
       <logicalFolder name="common.sensor.temperature"
                      displayName="common.sensor.temperature"
@@ -281,6 +296,13 @@
         <itemPath>../../../device/relay/relayDevice.h</itemPath>
         <itemPath>../../../device/relay/relayDeviceInterface.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f30"
+                     displayName="device.sensor.current"
+                     projectFiles="true">
+        <itemPath>../../../device/sensor/current/currentSensor.h</itemPath>
+        <itemPath>../../../device/sensor/current/currentSensorDevice.h</itemPath>
+        <itemPath>../../../device/sensor/current/currentSensorDeviceInterface.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="device.sensor.temperature"
                      displayName="device.sensor.temperature"
                      projectFiles="true">
@@ -373,10 +395,29 @@
         <itemPath>../../../drivers/lcd/lcd.h</itemPath>
         <itemPath>../../../drivers/lcd/lcdHd44780.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f25" displayName="drivers.pwm.servo" projectFiles="true">
+        <itemPath>../../../drivers/pwm/servo/pca9685.h</itemPath>
+        <itemPath>../../../drivers/pwm/servo/pca9685Debug.h</itemPath>
+        <itemPath>../../../drivers/pwm/servo/servoPwmPca9685.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="f7" displayName="drivers.relay" projectFiles="true">
         <itemPath>../../../drivers/relay/relay.h</itemPath>
         <itemPath>../../../drivers/relay/relayDebug.h</itemPath>
         <itemPath>../../../drivers/relay/rly08.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f31"
+                     displayName="drivers.sensor.accelerometer"
+                     projectFiles="true">
+        <itemPath>../../../drivers/accelerometer/adxl345.h</itemPath>
+        <itemPath>../../../drivers/accelerometer/adxl345Debug.h</itemPath>
+        <itemPath>../../../drivers/accelerometer/adxl345Register.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f28"
+                     displayName="drivers.sensor.current"
+                     projectFiles="true">
+        <itemPath>../../../drivers/sensor/current/INA219.h</itemPath>
+        <itemPath>../../../drivers/sensor/current/INA219Debug.h</itemPath>
+        <itemPath>../../../drivers/sensor/current/INA3221.h</itemPath>
       </logicalFolder>
       <logicalFolder name="drivers.sensor.temperature"
                      displayName="drivers.sensor.temperature"
@@ -417,7 +458,6 @@
         <itemPath>../../../drivers/tof/vl53l0x/tof_vl53l0x.h</itemPath>
       </logicalFolder>
       <logicalFolder name="main" displayName="main.mainboard" projectFiles="true">
-        <itemPath>../../mainBoard/mainBoard32.h</itemPath>
         <itemPath>../../mainBoard/mainBoardCommon.h</itemPath>
         <itemPath>../../mainBoard/mainBoardPc.h</itemPath>
         <itemPath>../../mainBoard/mainBoardCommonLcd.h</itemPath>
@@ -426,6 +466,11 @@
         <itemPath>../../mainBoard/mainBoardCommonMotor.h</itemPath>
         <itemPath>../../mainBoard/mainBoardCommonStrategy.h</itemPath>
         <itemPath>../../mainBoard/mainBoardCommonTof.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f24"
+                     displayName="main.mainBoardBigRobot"
+                     projectFiles="true">
+        <itemPath>../mainBoardBig32.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f17" displayName="main.meca1" projectFiles="true">
         <itemPath>../../meca1/mechanicalMainBoard1Common.h</itemPath>
@@ -462,25 +507,21 @@
       </logicalFolder>
       <logicalFolder name="robot" displayName="robot" projectFiles="true">
         <itemPath>../../../robot/robot.h</itemPath>
-      </logicalFolder>
-      <logicalFolder name="robot.2018" displayName="robot.2018" projectFiles="true">
-        <itemPath>../../../robot/2018/strategy2018.h</itemPath>
-        <itemPath>../../../robot/2018/strategy2018Utils.h</itemPath>
-        <itemPath>../../../robot/2018/distributor2018.h</itemPath>
-        <itemPath>../../../robot/2018/launcherDeviceInterface2018.h</itemPath>
-        <itemPath>../../../robot/2018/strategyDevice2018.h</itemPath>
-        <itemPath>../../../robot/2018/strategyDeviceInterface2018.h</itemPath>
-        <itemPath>../../../robot/2018/score2018.h</itemPath>
-        <itemPath>../../../robot/2018/distributorDebug2018.h</itemPath>
-        <itemPath>../../../robot/2018/gameBoardElement2018.h</itemPath>
-        <itemPath>../../../robot/2018/strategyConfig2018.h</itemPath>
-        <itemPath>../../../robot/2018/strategyAction2018.h</itemPath>
-        <itemPath>../../../robot/2018/instructionCounter2018.h</itemPath>
+        <itemPath>../../../robot/robotType.h</itemPath>
+        <itemPath>../../../robot/robotTypeDebug.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f22" displayName="robot.2019" projectFiles="true">
         <itemPath>../../../robot/2019/gameBoardElement2019.h</itemPath>
         <itemPath>../../../robot/2019/mainBoard2019.h</itemPath>
         <itemPath>../../../robot/2019/score2019.h</itemPath>
+        <itemPath>../../../robot/2019/distributor2019.h</itemPath>
+        <itemPath>../../../robot/2019/distributorDebug2019.h</itemPath>
+        <itemPath>../../../robot/2019/forkDevice2019.h</itemPath>
+        <itemPath>../../../robot/2019/forkDeviceInterface2019.h</itemPath>
+        <itemPath>../../../robot/2019/strategy2019.h</itemPath>
+        <itemPath>../../../robot/2019/strategy2019Utils.h</itemPath>
+        <itemPath>../../../robot/2019/strategyConfig2019.h</itemPath>
+        <itemPath>../../../robot/2019/teamColor2019.h</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.config"
                      displayName="robot.config"
@@ -702,11 +743,23 @@
                      projectFiles="true">
         <itemPath>../../../common/pwm/servo/servoPwm.c</itemPath>
         <itemPath>../../../common/pwm/servo/servoPwmDebug.c</itemPath>
+        <itemPath>../../../common/pwm/servo/servoList.c</itemPath>
       </logicalFolder>
       <logicalFolder name="common.pwm.servo.32"
                      displayName="common.pwm.servo.32"
                      projectFiles="true">
         <itemPath>../../../common/pwm/servo/32/servoPwm32.c</itemPath>
+        <itemPath>../../../common/pwm/servo/32/servoList32.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f28"
+                     displayName="common.sensor.accelerometer"
+                     projectFiles="true">
+        <itemPath>../../../common/sensor/accelerometer/accelerometer.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f27"
+                     displayName="common.sensor.current"
+                     projectFiles="true">
+        <itemPath>../../../common/sensor/current/current.c</itemPath>
       </logicalFolder>
       <logicalFolder name="common.sensor.temperature"
                      displayName="common.sensor.temperature"
@@ -858,6 +911,13 @@
         <itemPath>../../../device/relay/relayDevice.c</itemPath>
         <itemPath>../../../device/relay/relayDeviceInterface.c</itemPath>
       </logicalFolder>
+      <logicalFolder name="f30"
+                     displayName="device.sensor.current"
+                     projectFiles="true">
+        <itemPath>../../../device/sensor/current/currentSensor.c</itemPath>
+        <itemPath>../../../device/sensor/current/currentSensorDevice.c</itemPath>
+        <itemPath>../../../device/sensor/current/currentSensorDeviceInterface.c</itemPath>
+      </logicalFolder>
       <logicalFolder name="device.sensor.temperature"
                      displayName="device.sensor.temperature"
                      projectFiles="true">
@@ -957,10 +1017,28 @@
                      displayName="drivers.motion"
                      projectFiles="true">
       </logicalFolder>
+      <logicalFolder name="f25" displayName="drivers.pwm.servo" projectFiles="true">
+        <itemPath>../../../drivers/pwm/servo/pca9685.c</itemPath>
+        <itemPath>../../../drivers/pwm/servo/pca9685Debug.c</itemPath>
+        <itemPath>../../../drivers/pwm/servo/servoPwmPca9685.c</itemPath>
+      </logicalFolder>
       <logicalFolder name="f8" displayName="drivers.relay" projectFiles="true">
         <itemPath>../../../drivers/relay/relay.c</itemPath>
         <itemPath>../../../drivers/relay/relayDebug.c</itemPath>
         <itemPath>../../../drivers/relay/rly08.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f29"
+                     displayName="drivers.sensor.accelerometer"
+                     projectFiles="true">
+        <itemPath>../../../drivers/accelerometer/adxl345.c</itemPath>
+        <itemPath>../../../drivers/accelerometer/adxl345Debug.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f26"
+                     displayName="drivers.sensor.current"
+                     projectFiles="true">
+        <itemPath>../../../drivers/sensor/current/INA219.c</itemPath>
+        <itemPath>../../../drivers/sensor/current/INA219Debug.c</itemPath>
+        <itemPath>../../../drivers/sensor/current/INA3221.c</itemPath>
       </logicalFolder>
       <logicalFolder name="drivers.sensor.temperature"
                      displayName="drivers.sensor.temperature"
@@ -1001,7 +1079,6 @@
         <itemPath>../../../drivers/tof/vl53l0x/32/vl53l0x_platform_pic32.c</itemPath>
       </logicalFolder>
       <logicalFolder name="main" displayName="main.mainboard" projectFiles="true">
-        <itemPath>../../mainBoard/mainBoard32.c</itemPath>
         <itemPath>../../mainBoard/mainBoardCommon.c</itemPath>
         <itemPath>../../mainBoard/mainBoardCommonLcd.c</itemPath>
         <itemPath>../../mainBoard/mainBoardCommonMatch.c</itemPath>
@@ -1009,6 +1086,11 @@
         <itemPath>../../mainBoard/mainBoardCommonMotor.c</itemPath>
         <itemPath>../../mainBoard/mainBoardCommonStrategy.c</itemPath>
         <itemPath>../../mainBoard/mainBoardCommonTof.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f24"
+                     displayName="main.mainBoardBigRobot"
+                     projectFiles="true">
+        <itemPath>../mainBoardBig32.c</itemPath>
       </logicalFolder>
       <logicalFolder name="motion.extended"
                      displayName="motion.extended"
@@ -1031,23 +1113,18 @@
       </logicalFolder>
       <logicalFolder name="robot" displayName="robot" projectFiles="true">
         <itemPath>../../../robot/robot.c</itemPath>
-      </logicalFolder>
-      <logicalFolder name="robot.2018" displayName="robot.2018" projectFiles="true">
-        <itemPath>../../../robot/2018/strategy2018.c</itemPath>
-        <itemPath>../../../robot/2018/strategy2018Utils.c</itemPath>
-        <itemPath>../../../robot/2018/distributor2018.c</itemPath>
-        <itemPath>../../../robot/2018/launcherDeviceInterface2018.c</itemPath>
-        <itemPath>../../../robot/2018/strategyDevice2018.c</itemPath>
-        <itemPath>../../../robot/2018/strategyDeviceInterface2018.c</itemPath>
-        <itemPath>../../../robot/2018/distributorDebug2018.c</itemPath>
-        <itemPath>../../../robot/2018/gameBoardElement2018.c</itemPath>
-        <itemPath>../../../robot/2018/strategyConfig2018.c</itemPath>
-        <itemPath>../../../robot/2018/strategyAction2018.c</itemPath>
-        <itemPath>../../../robot/2018/instructionCounter2018.c</itemPath>
+        <itemPath>../../../robot/robotTypeDebug.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f22" displayName="robot.2019" projectFiles="true">
         <itemPath>../../../robot/2019/gameBoardElement2019.c</itemPath>
         <itemPath>../../../robot/2019/mainBoard2019.c</itemPath>
+        <itemPath>../../../robot/2019/distributor2019.c</itemPath>
+        <itemPath>../../../robot/2019/distributorDebug2019.c</itemPath>
+        <itemPath>../../../robot/2019/forkDevice2019.c</itemPath>
+        <itemPath>../../../robot/2019/forkDeviceInterface2019.c</itemPath>
+        <itemPath>../../../robot/2019/strategy2019.c</itemPath>
+        <itemPath>../../../robot/2019/strategy2019Utils.c</itemPath>
+        <itemPath>../../../robot/2019/strategyConfig2019.c</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.config"
                      displayName="robot.config"
@@ -1145,7 +1222,6 @@
     <Elem>..\..\..\drivers\motion</Elem>
     <Elem>..\..\airconditioning</Elem>
     <Elem>..\..\..\drivers\clock</Elem>
-    <Elem>..\..\..\robot\strategy</Elem>
     <Elem>..\..\..\common\adc\32</Elem>
     <Elem>..\..\..\common\pwm</Elem>
     <Elem>..\..\..\device\motion\position</Elem>
@@ -1240,7 +1316,7 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="PIC32MX_DFP" vendor="Microchip" version="1.0.25"/>
+        <pack name="PIC32MX_DFP" vendor="Microchip" version="1.0.28"/>
       </packs>
       <compileType>
         <linkerTool>
