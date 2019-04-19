@@ -56,10 +56,6 @@
 #include "../../device/ioExpander/ioExpanderDevice.h"
 #include "../../device/ioExpander/ioExpanderDeviceInterface.h"
 
-// -> Motors (MD22)
-#include "../../device/motor/md22Device.h"
-#include "../../device/motor/md22DeviceInterface.h"
-
 // -> Servo
 #include "../../device/servo/servoDevice.h"
 #include "../../device/servo/servoDeviceInterface.h"
@@ -88,12 +84,15 @@
 #include "../../device/tof/tofDevice.h"
 #include "../../device/tof/tofDeviceInterface.h"
 
-// -> 2018
-#include "../../robot/2018/launcherDevice2018.h"
-#include "../../robot/2018/launcherDeviceInterface2018.h"
+// -> 2019
+#include "../../robot/2019/forkDevice2019.h"
+#include "../../robot/2019/forkDeviceInterface2019.h"
 
 // DRIVERS
 #include "../../drivers/driverStreamListener.h"
+#include "../../drivers/tof/tof.h"
+#include "../../drivers/tof/tofList.h"
+#include "../../drivers/tof/vl53l0x/tof_vl53l0x.h"
 
 // Eeprom
 #include "../../drivers/eeprom/24c512.h"
@@ -104,17 +103,6 @@
 #include "../../drivers/ioExpander/ioExpanderList.h"
 #include "../../drivers/ioExpander/ioExpanderPcf8574.h"
 #include "../../drivers/ioExpander/pcf8574.h"
-
-// -> MOTOR
-#include "../../drivers/motor/dualHBridgeMotorMd22.h"
-#include "../../drivers/motor/md22.h"
-
-// -> Relay
-#include "../../drivers/relay/rly08.h"
-
-// TOF
-#include "../../drivers/tof/vl53l0x/tof_vl53l0x.h"
-#include "../../drivers/tof/vl53l0x/tofList_vl53l0x.h"
 
 /**
 * Device list.
@@ -162,10 +150,9 @@ static Buffer i2cMasterDebugOutputBuffer;
 static char i2cMasterDebugInputBufferArray[MECA_BOARD_32_1_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH];
 static Buffer i2cMasterDebugInputBuffer;
 
-// MOTOR (for MD22)
-static DualHBridgeMotor md22;
-static bool manualSwitchLeft;
-static bool manualSwitchRight;
+// Servos
+static ServoList servoList;
+static Servo servoListArray[MECA_BOARD_32_1_SERVO_LIST_LENGTH];
 
 // Timers
 static Timer timerListArray[MECA_BOARD_32_1_TIMER_LENGTH];
@@ -190,59 +177,33 @@ static IOExpander ioExpanderArray[MECA_BOARD_32_1_IO_EXPANDER_LIST_LENGTH];
 // Eeprom
 static Eeprom eeprom_;
 
-// Relay
-static Relay relay;
-
 // TOF
 static TofSensorList tofSensorList;
 static TofSensor tofSensorArray[MECA_BOARD_32_1_TOF_SENSOR_LIST_LENGTH];
 static TofSensorVL53L0X tofSensorVL53L0XArray[MECA_BOARD_32_1_TOF_SENSOR_LIST_LENGTH];
 
-// 2018 Specific
-static Launcher2018 launcher2018;
+void mechanicalMainBoardCommonInitServoList(void) {
+    initServoList(&servoList, &servoListArray, MECA_BOARD_32_1_SERVO_LIST_LENGTH);
+    addServos_1_2_3_4_5(&servoList, "PWM 1", "PWM 2", "PWM 3", "PWM 4", "PWM 5");
+}
 
 void initDevicesDescriptor() {
     initDeviceList(&deviceListArray, MECA_BOARD_32_1_DEVICE_LENGTH);
     addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
     addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
-    addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor(PWM_SERVO_ENABLED_MASK_SERVO_ALL));
+    addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor(&servoList));
 
     addLocalDevice(getSerialDebugDeviceInterface(), getSerialDebugDeviceDescriptor());
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
     addLocalDevice(getTimerDeviceInterface(), getTimerDeviceDescriptor());
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom_));
     
-    // 2018 Specific
-    addLocalDevice(getRelayDeviceInterface(), getRelayDeviceDescriptor(&relay));
     addLocalDevice(getIOExpanderDeviceInterface(), getIOExpanderDeviceDescriptor(&ioExpanderList));
-    addLocalDevice(getLauncher2018DeviceInterface(), getLauncher2018DeviceDescriptor(&launcher2018));
-    addLocalDevice(getMD22DeviceInterface(), getMD22DeviceDescriptor(&md22));
-    
     addLocalDevice(getTofDeviceInterface(), getTofDeviceDescriptor(&tofSensorList));
 
     initDevices();
 }
 
-void handleGrabber(void) {
-    IOExpander* ioExpander = getIOExpanderByIndex(&ioExpanderList, MECA_BOARD_32_1_IO_EXPANDER_LAUNCHER_INDEX);
-    bool newManualSwitchLeft = ioExpander->ioExpanderReadSingleValue(ioExpander, DISTRIBUTOR_ROTATE_LEFT_IO_EXPANDER_INDEX);
-    bool newManualSwitchRight = ioExpander->ioExpanderReadSingleValue(ioExpander, DISTRIBUTOR_ROTATE_RIGHT_IO_EXPANDER_INDEX);
-    if (newManualSwitchLeft == 0) {
-        setMotorSpeeds(&md22, LAUNCHER_2018_DEFAULT_SPEED, 0);
-    }
-    if (newManualSwitchRight == 0) {
-        setMotorSpeeds(&md22, -LAUNCHER_2018_DEFAULT_SPEED, 0);
-    }
-    else {
-        // Stop Motors only if we have a change to avoid to stop Motors because of the continuous call to this method
-        if ((manualSwitchLeft !=  newManualSwitchLeft) || (manualSwitchRight != newManualSwitchRight)) {
-            stopMotors(&md22);
-        }
-    }
-    manualSwitchLeft = newManualSwitchLeft;
-    manualSwitchRight = newManualSwitchRight;
-    
-}
 
 int main(void) {
     setBoardName(MECA_BOARD_32_1_NAME);
@@ -327,14 +288,6 @@ int main(void) {
     IOExpander* launcherIoExpander = getIOExpanderByIndex(&ioExpanderList, MECA_BOARD_32_1_IO_EXPANDER_LAUNCHER_INDEX);
     initIOExpanderPCF8574(launcherIoExpander, ioExpanderBusConnection);
     
-    // Motor
-    md22BusConnection = addI2cBusConnection(masterI2cBus, MD22_ADDRESS_0, true);
-    initDualHBridgeMotorMD22(&md22, md22BusConnection);
-
-    // Relay
-    relayBusConnection = addI2cBusConnection(masterI2cBus, RLY08_ADDRESS_0, true);
-    initRelayRLY08(&relay, relayBusConnection);
-
     // TOF
     initTofSensorListVL53L0X(&tofSensorList,
                              (TofSensor(*)[]) &tofSensorArray,
@@ -345,9 +298,6 @@ int main(void) {
                               true,
                               true,
                               true);
-    
-    // 2018
-    initLauncher2018(&launcher2018, launcherIoExpander, &relay, &md22, &tofSensorList);
 
     // init the devices
     initDevicesDescriptor();
@@ -377,9 +327,6 @@ int main(void) {
                                 &debugOutputStream,
                                 &filterRemoveCRLF,
                                 NULL);
-        
-        // HANDLE IO Expander
-        handleGrabber();
     }
     return (0);
 }

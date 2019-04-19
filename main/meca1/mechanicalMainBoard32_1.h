@@ -25,6 +25,9 @@
 // LOGS
 #define MECA_BOARD_32_1_LOG_HANDLER_LIST_LENGTH                2
 
+// SERVO
+#define MECA_BOARD_32_1_SERVO_LIST_LENGTH                      5
+
 // TIMER
 #define MECA_BOARD_32_1_TIMER_LENGTH                           5
 

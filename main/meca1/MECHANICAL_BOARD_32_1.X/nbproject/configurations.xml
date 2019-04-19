@@ -107,6 +107,11 @@
                      projectFiles="true">
         <itemPath>../../../common/pwm/servo/servoPwm.h</itemPath>
         <itemPath>../../../common/pwm/servo/servoPwmDebug.h</itemPath>
+        <itemPath>../../../common/pwm/servo/servoList.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f13" displayName="common.pwm.servo.32" projectFiles="true">
+        <itemPath>../../../common/pwm/servo/32/servoList32.h</itemPath>
+        <itemPath>../../../common/pwm/servo/32/servoPwm32.h</itemPath>
       </logicalFolder>
       <logicalFolder name="common.serial"
                      displayName="common.serial"
@@ -286,10 +291,10 @@
       </logicalFolder>
       <logicalFolder name="robot" displayName="robot" projectFiles="true">
       </logicalFolder>
-      <logicalFolder name="f2" displayName="robot.2018" projectFiles="true">
-        <itemPath>../../../robot/2018/launcherDevice2018.h</itemPath>
-        <itemPath>../../../robot/2018/launcherDeviceInterface2018.h</itemPath>
-        <itemPath>../../../robot/2018/score2018.h</itemPath>
+      <logicalFolder name="f2" displayName="robot.2019" projectFiles="true">
+        <itemPath>../../../robot/2019/forkDevice2019.h</itemPath>
+        <itemPath>../../../robot/2019/forkDeviceInterface2019.h</itemPath>
+        <itemPath>../../../robot/2019/score2019.h</itemPath>
       </logicalFolder>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
@@ -412,11 +417,13 @@
                      projectFiles="true">
         <itemPath>../../../common/pwm/servo/servoPwm.c</itemPath>
         <itemPath>../../../common/pwm/servo/servoPwmDebug.c</itemPath>
+        <itemPath>../../../common/pwm/servo/servoList.c</itemPath>
       </logicalFolder>
       <logicalFolder name="common.pwm.servo.32"
                      displayName="common.pwm.servo.32"
                      projectFiles="true">
         <itemPath>../../../common/pwm/servo/32/servoPwm32.c</itemPath>
+        <itemPath>../../../common/pwm/servo/32/servoList32.c</itemPath>
       </logicalFolder>
       <logicalFolder name="common.serial"
                      displayName="common.serial"
@@ -583,9 +590,9 @@
       <logicalFolder name="main" displayName="main.meca1" projectFiles="true">
         <itemPath>../mechanicalMainBoard32_1.c</itemPath>
       </logicalFolder>
-      <logicalFolder name="f3" displayName="robot.2018" projectFiles="true">
-        <itemPath>../../../robot/2018/launcherDevice2018.c</itemPath>
-        <itemPath>../../../robot/2018/launcherDeviceInterface2018.c</itemPath>
+      <logicalFolder name="f3" displayName="robot.2019" projectFiles="true">
+        <itemPath>../../../robot/2019/forkDevice2019.c</itemPath>
+        <itemPath>../../../robot/2019/forkDeviceInterface2019.c</itemPath>
       </logicalFolder>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
