@@ -169,7 +169,7 @@ void mainBoardCommonStrategyMainInitDrivers(RobotConfig* robotConfig) {
 }
 
 void mainBoardCommonStrategyMainEndInit(void) {      
-    // Update this on the MOTOR BOARD to be synchronized !
+    // Update this on the MOTOR BOARD to synchronize the position !
     updateMotorBoardRobotPosition(gameStrategyContext);
     
     // initInstructionCounter(gameStrategyContext); -> 2018
@@ -191,7 +191,7 @@ void mainBoardCommonStrategyMainLoop(void) {
     StartMatch* startMatch = mainBoardCommonMatchGetStartMatch();
     EndMatch* endMatch = mainBoardCommonMatchGetEndMatch();
 
-    while (1) {
+    while (true) {
         if (!startMatch->matchHandleInstructionFunction(startMatch)) {
             break;
         }

@@ -12,6 +12,8 @@
 
 #include "../../common/math/cenMath.h"
 
+#include "../../common/pwm/servo/servoList.h"
+
 #include "../../drivers/tof/tofList.h"
 
 #include "../../motion/motion.h"
@@ -45,6 +47,7 @@
 #include "../../robot/2019/strategy2019Utils.h"
 #include "../../robot/2019/strategyConfig2019.h"
 
+#include "../../robot/2019/forkDevice2019.h"
 
 // ------------------------------------------------------- NAVIGATIONS ----------------------------------------------------------------
 
@@ -378,20 +381,69 @@ void initTargetActions2019(GameStrategyContext* gameStrategyContext) {
 }
 
 bool acceleratorArmOn(int* context) {
+    GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
+
+    if (isViolet(gameStrategyContext)) {
+        // Right Arm
+        arm2019On(2);
+        
+    }
+    else {
+        // Left Arm
+        arm2019On(1);
+    }
+    // TODO
+    return true;
+}
+
+bool acceleratorArmOff(int* context) {
+    GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
+
+    if (isViolet(gameStrategyContext)) {
+        // Right Arm
+        arm2019Off(2);
+        
+    }
+    else {
+        // Left Arm
+        arm2019Off(1);
+    }
     // TODO
     return true;
 }
 
 bool goldeniumTake(int* context) {
+    GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
+
+    moveElevatorDoublePuck();
+
+    if (isViolet(gameStrategyContext)) {
+        forkScanFromLeftToRight();
+        moveForkDoublePuck(2);
+    }
+    else {
+        forkScanFromRightToLeft();
+        moveForkDoublePuck(1);
+    }
+    
+    moveElevatorUp();
+    
     return true;
 }
 
 bool goldeniumDrop(int* context) {
+    GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
+    if (isViolet(gameStrategyContext)) {
+        moveForkPushOff(2);
+    }
+    else {
+        moveForkPushOff(1);
+    }
     return true;
 }
 
 void initTargetActionsItems2019(GameStrategyContext* gameStrategyContext) {
-    addTargetActionItem(&acceleratorTargetActionItemList, &acceleratorTargetActionItem, &acceleratorArmOn, "ACC ARM ON");
+    addTargetActionItem(&acceleratorTargetActionItemList, &acceleratorTargetActionItem, &acceleratorArmOff, "ACC ARM ON");
     addTargetActionItem(&goldeniumTakeTargetActionItemList, &goldeniumTakeTargetActionItem, &goldeniumTake, "GOLD TAKE");
     addTargetActionItem(&goldeniumDropTargetActionItemList, &goldeniumDropTargetActionItem, &goldeniumDrop, "GOLD DROP");
 }

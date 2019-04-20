@@ -40,6 +40,16 @@ bool deviceFork2019IsOk(void) {
     return true;
 }
 
+/**
+ * @private
+ * @param leftRight
+ * @param leftServoIndex
+ * @param rightServoIndex
+ * @param leftSpeed
+ * @param rightSpeed
+ * @param leftPosition
+ * @param rightPosition
+ */
 void moveServo(
                unsigned int leftRight,
                unsigned int leftServoIndex,
@@ -109,7 +119,7 @@ void moveForkPushOn(unsigned int leftRight) {
             FORK_2019_SERVO_PUSH_LEFT_ON_SERVO_VALUE, FORK_2019_SERVO_PUSH_RIGHT_ON_SERVO_VALUE);
 }
 
-void forkScan() {
+void forkScanFromRightToLeft(void) {
     Servo* servo = getServo(servoList, FORK_2019_SCAN_SERVO_INDEX);
     pwmServo(servo, FORK_2019_SCAN_SPEED_FACTOR, FORK_2019_SCAN_RIGHT_SERVO_VALUE);
     delaymSec(500);
@@ -124,6 +134,39 @@ void forkScan() {
         }
         delaymSec(10);
     }
+}
+
+void forkScanFromLeftToRight(void) {
+    Servo* servo = getServo(servoList, FORK_2019_SCAN_SERVO_INDEX);
+    pwmServo(servo, FORK_2019_SCAN_SPEED_FACTOR, FORK_2019_SCAN_LEFT_SERVO_VALUE);
+    delaymSec(500);
+    unsigned int i;
+    for (i = FORK_2019_SCAN_LEFT_SERVO_VALUE; i < FORK_2019_SCAN_LEFT_SERVO_VALUE; i-= 10) {
+        pwmServo(servo, FORK_2019_SCAN_SPEED_FACTOR, i);
+        TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, 0);
+        unsigned int distance = tofSensor->tofGetDistanceMM(tofSensor);
+        if (distance > 0 && distance < 16) {
+            appendStringAndDecLN(getDebugOutputStreamLogger(), "distance=", distance);
+            break;
+        }
+        delaymSec(10);
+    }
+}
+
+// ARM On for Small Robot
+void arm2019On(unsigned int leftRight) {
+    moveServo(leftRight,
+        FORK_2019_LEFT_ARM_SERVO_INDEX, FORK_2019_RIGHT_ARM_SERVO_INDEX,
+        FORK_2019_LEFT_ARM_SPEED_FACTOR, FORK_2019_RIGHT_ARM_SPEED_FACTOR,
+        FORK_2019_LEFT_ARM_SERVO_ON, FORK_2019_RIGHT_ARM_SERVO_ON);
+}
+
+// ARM Off for Small Robot
+void arm2019Off(unsigned int leftRight) {
+    moveServo(leftRight,
+        FORK_2019_LEFT_ARM_SERVO_INDEX, FORK_2019_RIGHT_ARM_SERVO_INDEX,
+        FORK_2019_LEFT_ARM_SPEED_FACTOR, FORK_2019_RIGHT_ARM_SPEED_FACTOR,
+        FORK_2019_LEFT_ARM_SERVO_OFF, FORK_2019_RIGHT_ARM_SERVO_OFF);
 }
 
 void deviceFork2019HandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
@@ -230,7 +273,18 @@ void deviceFork2019HandleRawData(char commandHeader, InputStream* inputStream, O
     }
     else if (commandHeader == COMMAND_2019_FORK_SCAN) {
         ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_FORK_SCAN);
-        forkScan();
+        forkScanFromLeftToRight();
+    }
+    // ARM ON & OFF
+    else if (commandHeader == COMMAND_2019_ARM_ON) {
+        ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_ARM_ON);
+        unsigned int servoIndex = readHex(inputStream);
+        arm2019On(servoIndex);
+    }
+    else if (commandHeader == COMMAND_2019_ARM_OFF) {
+        ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_ARM_OFF);
+        unsigned int servoIndex = readHex(inputStream);
+        arm2019Off(servoIndex);
     }
 }
 

@@ -19,6 +19,7 @@
 
 #define COMMAND_2019_ELEVATOR_RIGHT                'R'
 
+
 // GLOBAL
 
 // Used to move the both Fork
@@ -62,6 +63,13 @@
 
 // SCAN
 #define COMMAND_2019_FORK_SCAN                    'S'
+
+
+// ARM ON
+#define COMMAND_2019_ARM_ON                       '_'
+
+// ARM OFF
+#define COMMAND_2019_ARM_OFF                      '|'
 
 
 /**

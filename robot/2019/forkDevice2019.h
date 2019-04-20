@@ -57,11 +57,60 @@
 #define FORK_2019_SERVO_PUSH_RIGHT_OFF_SERVO_VALUE                        0x05DC
 #define FORK_2019_SERVO_PUSH_RIGHT_ON_SERVO_VALUE                         0x0300
 
+// Small Robot : Arm Left (for Goldenium)
+#define FORK_2019_LEFT_ARM_SPEED_FACTOR                                     0xFF
+#define FORK_2019_LEFT_ARM_SERVO_INDEX                                         0
+#define FORK_2019_LEFT_ARM_SERVO_ON                                       0x0180
+#define FORK_2019_LEFT_ARM_SERVO_OFF                                      0x05DC
+
+// Small Robot : Arm Right (for Goldenium)
+#define FORK_2019_RIGHT_ARM_SPEED_FACTOR                                    0xFF
+#define FORK_2019_RIGHT_ARM_SERVO_INDEX                                        1
+#define FORK_2019_RIGHT_ARM_SERVO_ON                                      0x0A38
+#define FORK_2019_RIGHT_ARM_SERVO_OFF                                     0x05DC
 
 /**
  * The descriptor for the Fork 2019 device.
  */
 DeviceDescriptor* getFork2019DeviceDescriptor(ServoList* servoList,
                                               TofSensorList* tofSensorListParam);
+
+// ELEVATOR
+
+void moveElevatorBottom(void);
+
+void moveElevatorUp(void);
+
+void moveElevatorDoublePuck(void);
+
+// FORK
+
+void moveForkBack(unsigned int leftRight);
+
+void moveForkSimplePuck(unsigned int leftRight);
+
+void moveForkDoublePuck(unsigned int leftRight);
+
+void moveForkPushOff(unsigned int leftRight);
+
+void moveForkPushOn(unsigned int leftRight);
+
+// FORK SCAN
+
+void forkScanFromLeftToRight(void);
+
+void forkScanFromRightToLeft(void);
+
+// ARM (SMALL ROBOT)
+
+/**
+* @param leftRight Both Arm = 0x00, Left Arm = 0x01, Right Arm = 0x02
+*/
+void arm2019On(unsigned int leftRight);
+
+/**
+* @param leftRight Both Arm = 0x00, Left Arm = 0x01, Right Arm = 0x02
+*/
+void arm2019Off(unsigned int leftRight);
 
 #endif
