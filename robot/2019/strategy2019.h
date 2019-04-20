@@ -34,29 +34,36 @@
 #define SMALL_ROBOT_START_AREA_Y                                               370
 #define SMALL_ROBOT_START_AREA_ANGLE_DECI_DEG                    ANGLE_DECI_DEG_90
 
-// Accelerator
+// Accelerator (SMALL ROBOT)
 #define ACCELERATOR_FRONT                                                     "ACC"
 #define ACCELERATOR_FRONT_X                                                     200
 #define ACCELERATOR_FRONT_Y                                                    1700
 #define ACCELERATOR_FRONT_DECI_DEG                                ANGLE_DECI_DEG_90
 
-// Accelerator Drop Zone
+// Accelerator Drop Zone (BIG ROBOT)
 #define ACCELERATOR_DROP                                                     "DROP"
 #define ACCELERATOR_DROP_X                                                     160
 #define ACCELERATOR_DROP_Y                                                    2000
 #define ACCELERATOR_DROP_DECI_DEG                               ANGLE_DECI_DEG_180
 
-// Goldenium
+// Goldenium (SMALL ROBOT)
 #define GOLDENIUM_FRONT                                                     "GOLD"
-#define GOLDENIUM_FRONT_X                                                     180
-#define GOLDENIUM_FRONT_Y                                                    2225
+#define GOLDENIUM_FRONT_X                                                     130
+#define GOLDENIUM_FRONT_Y                                                    2275
 #define GOLDENIUM_FRONT_ANGLE_DECI_DEG                         ANGLE_DECI_DEG_180
 
+// Weighing Machine FRONT
+#define WEIGHING_MACHINE_FRONT                                              "WFM"
+#define WEIGHING_MACHINE_FRONT_X                                            1200
+#define WEIGHING_MACHINE_FRONT_Y                                            1300
+#define WEIGHING_MACHINE_FRONT_ANGLE_DECI_DEG                   ANGLE_DECI_DEG_0
+
 // Weighing Machine
-#define WEIGHING_MACHINE_FRONT                                                "WM"
-#define WEIGHING_MACHINE_X                                                    1500
-#define WEIGHING_MACHINE_Y                                                    1350
-#define WEIGHING_MACHINE_ANGLE_DECI_DEG                           ANGLE_DECI_DEG_0
+#define WEIGHING_MACHINE_DROP                                              "WDM"
+#define WEIGHING_MACHINE_DROP_X                                            1500
+#define WEIGHING_MACHINE_DROP_Y                                            1300
+#define WEIGHING_MACHINE_DROP_ANGLE_DECI_DEG                   ANGLE_DECI_DEG_0
+
 
 // BIG DISTRIBUTOR
 #define BIG_DISTRIBUTOR_LINE_1                                              "BDL1"
@@ -89,16 +96,23 @@
 #define SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_ACCELERATION_FACTOR           MOTION_ACCELERATION_FACTOR_NORMAL
 
 #define ACCELERATOR_TO_GOLDENIUM_COST                                      DEFAULT_NAVIGATION_COST
-#define ACCELERATOR_TO_GOLDENIUM_CP1                                       100.0f
-#define ACCELERATOR_TO_GOLDENIUM_CP2                                       100.0f
+#define ACCELERATOR_TO_GOLDENIUM_CP1                                       50.0f
+#define ACCELERATOR_TO_GOLDENIUM_CP2                                       300.0f
 #define ACCELERATOR_TO_GOLDENIUM_SPEED_FACTOR                              MOTION_SPEED_FACTOR_NORMAL
 #define ACCELERATOR_TO_GOLDENIUM_ACCELERATION_FACTOR                       MOTION_ACCELERATION_FACTOR_NORMAL
 
-#define GOLDENIUM_TO_WEIGHING_MACHINE_COST                                 DEFAULT_NAVIGATION_COST
-#define GOLDENIUM_TO_WEIGHING_MACHINE_CP1                                  100.0f
-#define GOLDENIUM_TO_WEIGHING_MACHINE_CP2                                  100.0f
-#define GOLDENIUM_TO_WEIGHING_MACHINE_SPEED_FACTOR                         MOTION_SPEED_FACTOR_NORMAL
-#define GOLDENIUM_TO_WEIGHING_MACHINE_ACCELERATION_FACTOR                  MOTION_ACCELERATION_FACTOR_NORMAL
+// For SMALL ROBOT
+#define GOLDENIUM_TO_WEIGHING_MACHINE_FRONT_COST                           DEFAULT_NAVIGATION_COST
+#define GOLDENIUM_TO_WEIGHING_MACHINE_FRONT_CP1                            -400.0f
+#define GOLDENIUM_TO_WEIGHING_MACHINE_FRONT_CP2                            -200.0f
+#define GOLDENIUM_TO_WEIGHING_MACHINE_FRONT_SPEED_FACTOR                   MOTION_SPEED_FACTOR_NORMAL
+#define GOLDENIUM_TO_WEIGHING_MACHINE_FRONT_ACCELERATION_FACTOR            MOTION_ACCELERATION_FACTOR_NORMAL
+
+#define WEIGHING_MACHINE_FRONT_TO_WEIGHING_MACHINE_DROP_COST                DEFAULT_NAVIGATION_COST
+#define WEIGHING_MACHINE_FRONT_TO_WEIGHING_MACHINE_DROP_CP1                 100.0f
+#define WEIGHING_MACHINE_FRONT_TO_WEIGHING_MACHINE_DROP_CP2                 100.0f
+#define WEIGHING_MACHINE_FRONT_TO_WEIGHING_MACHINE_DROP_SPEED_FACTOR        MOTION_SPEED_FACTOR_NORMAL
+#define WEIGHING_MACHINE_FRONT_TO_WEIGHING_MACHINE_DROP_ACCELERATION_FACTOR MOTION_ACCELERATION_FACTOR_NORMAL
 
 // -> Big Robot
 #define BIG_ROBOT_STARTAREA_TO_BIGDISTRIBUTOR_LINE1_FRONT_COST             DEFAULT_NAVIGATION_COST

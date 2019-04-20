@@ -56,6 +56,7 @@ static Location* acceleratorFrontLocation;
 static Location* acceleratorDropLocation;
 static Location* goldeniumFrontLocation;
 static Location* weighingMachineFrontLocation;
+static Location* weighingMachineDropLocation;
 static Location* bigDistributorLine1FrontLocation;
 static Location* bigDistributorLine2FrontLocation;
 static Location* bigDistributorLine3FrontLocation;
@@ -75,6 +76,7 @@ PathData* bigDistributorLine3Front_to_acceleratorDrop;
 PathData* smallRobotStartArea_to_accelerator_Path;
 PathData* acceleratorFront_to_goldeniumFront_Path;
 PathData* goldeniumFront_to_weighingMachineFront_Path;
+PathData* weighingMachineFront_to_weighingMachineDrop_Path;
 
 
 
@@ -181,7 +183,8 @@ void initLocations2019(GameStrategyContext* gameStrategyContext) {
         smallRobotStartAreaLocation = addNavigationWithColors(teamColor, navigation, SMALL_ROBOT_START_AREA, SMALL_ROBOT_START_AREA_X, SMALL_ROBOT_START_AREA_Y);
         acceleratorFrontLocation = addNavigationWithColors(teamColor, navigation, ACCELERATOR_FRONT, ACCELERATOR_FRONT_X, ACCELERATOR_FRONT_Y);
         goldeniumFrontLocation = addNavigationWithColors(teamColor, navigation, GOLDENIUM_FRONT, GOLDENIUM_FRONT_X, GOLDENIUM_FRONT_Y);
-        weighingMachineFrontLocation = addNavigationWithColors(teamColor, navigation, WEIGHING_MACHINE_FRONT, WEIGHING_MACHINE_X, WEIGHING_MACHINE_Y);
+        weighingMachineFrontLocation = addNavigationWithColors(teamColor, navigation, WEIGHING_MACHINE_FRONT, WEIGHING_MACHINE_FRONT_X, WEIGHING_MACHINE_FRONT_Y);
+        weighingMachineDropLocation = addNavigationWithColors(teamColor, navigation, WEIGHING_MACHINE_DROP, WEIGHING_MACHINE_DROP_X, WEIGHING_MACHINE_DROP_Y);
     }
     else {
         writeError(ROBOT_TYPE_UNKNOWN_ERROR);
@@ -246,20 +249,32 @@ void initPaths2019(GameStrategyContext* gameStrategyContext, int index) {
                                                     ACCELERATOR_TO_GOLDENIUM_CP2,
                                                     deciDegreeToRad(ACCELERATOR_FRONT_DECI_DEG),
                                                     deciDegreeToRad(GOLDENIUM_FRONT_ANGLE_DECI_DEG),
-                                                    aFactor * GOLDENIUM_TO_WEIGHING_MACHINE_ACCELERATION_FACTOR,
-                                                    speedFactor * GOLDENIUM_TO_WEIGHING_MACHINE_SPEED_FACTOR);
+                                                    aFactor * ACCELERATOR_TO_GOLDENIUM_ACCELERATION_FACTOR,
+                                                    speedFactor * ACCELERATOR_TO_GOLDENIUM_SPEED_FACTOR);
 
         goldeniumFront_to_weighingMachineFront_Path = addNavigationPathWithColor(teamColor,
                                                     navigation,
                                                     goldeniumFrontLocation,
                                                     weighingMachineFrontLocation,
-                                                    GOLDENIUM_TO_WEIGHING_MACHINE_COST,
-                                                    GOLDENIUM_TO_WEIGHING_MACHINE_CP1,
-                                                    GOLDENIUM_TO_WEIGHING_MACHINE_CP2,
+                                                    GOLDENIUM_TO_WEIGHING_MACHINE_FRONT_COST,
+                                                    GOLDENIUM_TO_WEIGHING_MACHINE_FRONT_CP1,
+                                                    GOLDENIUM_TO_WEIGHING_MACHINE_FRONT_CP2,
                                                     deciDegreeToRad(GOLDENIUM_FRONT_ANGLE_DECI_DEG),
-                                                    deciDegreeToRad(WEIGHING_MACHINE_ANGLE_DECI_DEG),
-                                                    aFactor * GOLDENIUM_TO_WEIGHING_MACHINE_ACCELERATION_FACTOR,
-                                                    speedFactor * GOLDENIUM_TO_WEIGHING_MACHINE_SPEED_FACTOR);
+                                                    deciDegreeToRad(WEIGHING_MACHINE_FRONT_ANGLE_DECI_DEG),
+                                                    aFactor * GOLDENIUM_TO_WEIGHING_MACHINE_FRONT_ACCELERATION_FACTOR,
+                                                    speedFactor * GOLDENIUM_TO_WEIGHING_MACHINE_FRONT_SPEED_FACTOR);
+
+        weighingMachineFront_to_weighingMachineDrop_Path = addNavigationPathWithColor(teamColor,
+                                                    navigation,
+                                                    weighingMachineFrontLocation,
+                                                    weighingMachineDropLocation,
+                                                    WEIGHING_MACHINE_FRONT_TO_WEIGHING_MACHINE_DROP_COST,
+                                                    WEIGHING_MACHINE_FRONT_TO_WEIGHING_MACHINE_DROP_CP1,
+                                                    WEIGHING_MACHINE_FRONT_TO_WEIGHING_MACHINE_DROP_CP2,
+                                                    deciDegreeToRad(WEIGHING_MACHINE_FRONT_ANGLE_DECI_DEG),
+                                                    deciDegreeToRad(WEIGHING_MACHINE_DROP_ANGLE_DECI_DEG),
+                                                    aFactor * WEIGHING_MACHINE_FRONT_TO_WEIGHING_MACHINE_DROP_ACCELERATION_FACTOR,
+                                                    speedFactor * WEIGHING_MACHINE_FRONT_TO_WEIGHING_MACHINE_DROP_SPEED_FACTOR);
     }
     else if (robotType == ROBOT_TYPE_BIG) {
     // Big Robot
