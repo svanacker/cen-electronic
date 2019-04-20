@@ -36,8 +36,8 @@
 
 // Accelerator
 #define ACCELERATOR_FRONT                                                     "ACC"
-#define ACCELERATOR_FRONT_X                                                     160
-#define ACCELERATOR_FRONT_Y                                                    1800
+#define ACCELERATOR_FRONT_X                                                     200
+#define ACCELERATOR_FRONT_Y                                                    1700
 #define ACCELERATOR_FRONT_DECI_DEG                                ANGLE_DECI_DEG_90
 
 // Accelerator Drop Zone
@@ -83,8 +83,8 @@
 // -> Small Robot
 
 #define SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_COST                          DEFAULT_NAVIGATION_COST
-#define SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_CP1                           100.0f
-#define SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_CP2                           100.0f
+#define SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_CP1                           300.0f
+#define SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_CP2                           500.0f
 #define SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_SPEED_FACTOR                  MOTION_SPEED_FACTOR_NORMAL
 #define SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_ACCELERATION_FACTOR           MOTION_ACCELERATION_FACTOR_NORMAL
 

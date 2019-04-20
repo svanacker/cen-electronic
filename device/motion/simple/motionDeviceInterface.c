@@ -45,14 +45,30 @@ int deviceMotionGetInterface(char commandHeader, DeviceInterfaceMode mode, bool 
             setArgumentUnsignedHex4(0, "leftAngle (DeciDeg)");
         }
         return commandLengthValueForMode(mode, 4, 0);
-    }// turn right in degree
+    }// turn left by demi Quadrant
+    else if (commandHeader == COMMAND_MOTION_LEFT_DEMI_QUADRANT) {
+        if (fillDeviceArgumentList) {
+            setFunction("rotation Left (step of 45°)", 1, 0);
+            setArgumentUnsignedHex2(0, "Demi Quadrant count");
+        }
+        return commandLengthValueForMode(mode, 2, 0);
+    }
+    // turn right in degree
     else if (commandHeader == COMMAND_MOTION_RIGHT_IN_DECI_DEGREE) {
         if (fillDeviceArgumentList) {
             setFunction("rotation Right", 1, 0);
             setArgumentUnsignedHex4(0, "rightAngle (DeciDeg)");
         }
         return commandLengthValueForMode(mode, 4, 0);
-    }// ONLY ONE WHEEL
+    }
+    else if (commandHeader == COMMAND_MOTION_RIGHT_DEMI_QUADRANT) {
+        if (fillDeviceArgumentList) {
+            setFunction("rotation Right (step of 45°)", 1, 0);
+            setArgumentUnsignedHex2(0, "Demi Quadrant count");
+        }
+        return commandLengthValueForMode(mode, 2, 0);
+    }
+    // ONLY ONE WHEEL
         // turn left (only right in degree
     else if (commandHeader == COMMAND_MOTION_LEFT_ONE_WHEEL_IN_DECI_DEGREE) {
         if (fillDeviceArgumentList) {

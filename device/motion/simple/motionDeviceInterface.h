@@ -21,8 +21,14 @@
 /** Turn to the left in degree. */
 #define COMMAND_MOTION_LEFT_IN_DECI_DEGREE    'l'
 
+/** Rotation to the left by demi quadrant (45°) quadrant */
+#define COMMAND_MOTION_LEFT_DEMI_QUADRANT     'L'
+
 /** Turn to the right in degree. */
 #define COMMAND_MOTION_RIGHT_IN_DECI_DEGREE   'r'
+
+/** Rotation to the left by demi quadrant (45°) quadrant */
+#define COMMAND_MOTION_RIGHT_DEMI_QUADRANT     'R'
 
 /** Turn to the left in degree, but without turning right wheel. */
 #define COMMAND_MOTION_RIGHT_ONE_WHEEL_IN_DECI_DEGREE '('

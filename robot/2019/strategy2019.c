@@ -177,11 +177,14 @@ void initLocations2019(GameStrategyContext* gameStrategyContext) {
         bigDistributorLine2FrontLocation = addNavigationWithColors(teamColor, navigation, BIG_DISTRIBUTOR_LINE_2, BIG_DISTRIBUTOR_LINE_2_X, BIG_DISTRIBUTOR_LINE_2_Y);
         bigDistributorLine3FrontLocation = addNavigationWithColors(teamColor, navigation, BIG_DISTRIBUTOR_LINE_3, BIG_DISTRIBUTOR_LINE_3_X, BIG_DISTRIBUTOR_LINE_3_Y);
     }
-    else {
+    else if (robotType == ROBOT_TYPE_SMALL) {
         smallRobotStartAreaLocation = addNavigationWithColors(teamColor, navigation, SMALL_ROBOT_START_AREA, SMALL_ROBOT_START_AREA_X, SMALL_ROBOT_START_AREA_Y);
         acceleratorFrontLocation = addNavigationWithColors(teamColor, navigation, ACCELERATOR_FRONT, ACCELERATOR_FRONT_X, ACCELERATOR_FRONT_Y);
         goldeniumFrontLocation = addNavigationWithColors(teamColor, navigation, GOLDENIUM_FRONT, GOLDENIUM_FRONT_X, GOLDENIUM_FRONT_Y);
         weighingMachineFrontLocation = addNavigationWithColors(teamColor, navigation, WEIGHING_MACHINE_FRONT, WEIGHING_MACHINE_X, WEIGHING_MACHINE_Y);
+    }
+    else {
+        writeError(ROBOT_TYPE_UNKNOWN_ERROR);
     }
 }
 

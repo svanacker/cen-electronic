@@ -122,27 +122,43 @@ void deviceMotionHandleRawData(char commandHeader,
 
         float distanceMM = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
         backwardSimpleMM(pidMotion, distanceMM, notificationOutputStream);
-    }        // ROTATION
-        // -> left
+    }
+    // ROTATION
+    // -> left
     else if (commandHeader == COMMAND_MOTION_LEFT_IN_DECI_DEGREE) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_LEFT_IN_DECI_DEGREE);
 
         float leftDegree = readHexFloat4(inputStream, ANGLE_DIGIT_DEGREE_PRECISION);
         leftSimpleDegree(pidMotion, leftDegree, notificationOutputStream);
-    }        // -> right
+    }
+    else if (commandHeader == COMMAND_MOTION_LEFT_DEMI_QUADRANT) {
+        ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_LEFT_DEMI_QUADRANT);
+
+        unsigned int demiQuadrantCount = readHex2(inputStream);
+        leftSimpleDegree(pidMotion, demiQuadrantCount * 45.0f, notificationOutputStream);
+    }
+    // -> right
     else if (commandHeader == COMMAND_MOTION_RIGHT_IN_DECI_DEGREE) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_RIGHT_IN_DECI_DEGREE);
 
         float rightDegree = readHexFloat4(inputStream, ANGLE_DIGIT_DEGREE_PRECISION);
         rightSimpleDegree(pidMotion, rightDegree, notificationOutputStream);
-    }        // ONE WHEEL
-        // -> left
+    }
+    else if (commandHeader == COMMAND_MOTION_RIGHT_DEMI_QUADRANT) {
+        ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_RIGHT_DEMI_QUADRANT);
+
+        unsigned int demiQuadrantCount = readHex2(inputStream);
+        rightSimpleDegree(pidMotion, demiQuadrantCount * 45.0f, notificationOutputStream);
+    }
+    // ONE WHEEL
+    // -> left
     else if (commandHeader == COMMAND_MOTION_LEFT_ONE_WHEEL_IN_DECI_DEGREE) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_LEFT_ONE_WHEEL_IN_DECI_DEGREE);
 
         float leftDegree = readHexFloat4(inputStream, ANGLE_DIGIT_DEGREE_PRECISION);
         leftOneWheelSimpleDegree(pidMotion, leftDegree, notificationOutputStream);
-    }        // -> right
+    }
+    // -> right
     else if (commandHeader == COMMAND_MOTION_RIGHT_ONE_WHEEL_IN_DECI_DEGREE) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_RIGHT_ONE_WHEEL_IN_DECI_DEGREE);
 
