@@ -53,13 +53,21 @@
 
 // ------------------------------------------------------ LOCATIONS --------------------------------------------------------------------
 // -> General Points
-static Location* bigRobotStartAreaLocation;
+
+// -> Small Robot
 static Location* smallRobotStartAreaLocation;
 static Location* acceleratorFrontLocation;
-static Location* acceleratorDropLocation;
 static Location* goldeniumFrontLocation;
 static Location* weighingMachineFrontLocation;
 static Location* weighingMachineDropLocation;
+
+// Big Robot
+static Location* bigRobotStartAreaLocation;
+static Location* chaosFrontLocation;
+static Location* rediumDropZoneLocation;
+static Location* keyPoint1Location;
+static Location* keyPoint2Location;
+static Location* acceleratorDropLocation;
 static Location* bigDistributorLine1FrontLocation;
 static Location* bigDistributorLine2FrontLocation;
 static Location* bigDistributorLine3FrontLocation;
@@ -69,11 +77,20 @@ static Location* bigDistributorLine3FrontLocation;
 
 // Big Robot
 PathData* bigRobotStartArea_to_bigDistributorLine1Front;
-PathData* bigDistributorLine1Front_to_acceleratorDrop;
-PathData* acceleratorDropLocation_to_bigDistributorLine2Front;
-PathData* bigDistributorLine2Front_to_acceleratorDrop;
-PathData* acceleratorDropLocation_to_bigDistributorLine3Front;
-PathData* bigDistributorLine3Front_to_acceleratorDrop;
+PathData* bigRobotStartArea_to_chaosZoneFront;
+PathData* chaosZoneFront_to_rediumDropZone;
+PathData* rediumDropZone_to_keyPoint1;
+PathData* rediumDropZone_to_keyPoint2;
+PathData* keyPoint2_to_bigDistributorLine1Front;
+
+// Big Distributor & Keypoint1
+PathData* bigDistributorLine1Front_to_keyPoint1;
+PathData* keyPoint1_to_acceleratorDrop;
+PathData* acceleratorDrop_to_keyPoint1;
+PathData* keyPoint1_to_bigDistributorLine2Front;
+PathData* bigDistributorLine2Front_to_keyPoint1;
+PathData* keyPoint1_to_bigDistributorLine3Front;
+PathData* bigDistributorLine3Front_to_keyPoint1;
 
 // Small Robot
 PathData* smallRobotStartArea_to_accelerator_Path;
@@ -177,7 +194,11 @@ void initLocations2019(GameStrategyContext* gameStrategyContext) {
 
     if (robotType == ROBOT_TYPE_BIG) {
         bigRobotStartAreaLocation = addNavigationWithColors(teamColor, navigation, BIG_ROBOT_START_AREA, BIG_ROBOT_START_AREA_X, BIG_ROBOT_START_AREA_Y);
+        chaosFrontLocation = addNavigationWithColors(teamColor, navigation, CHAOS_ZONE_FRONT, CHAOS_ZONE_FRONT_X, CHAOS_ZONE_FRONT_Y);
+        rediumDropZoneLocation = addNavigationWithColors(teamColor, navigation, REDIUM_DROP_ZONE, REDIUM_DROP_ZONE_X, REDIUM_DROP_ZONE_Y);
         acceleratorDropLocation = addNavigationWithColors(teamColor, navigation, ACCELERATOR_DROP, ACCELERATOR_DROP_X, ACCELERATOR_DROP_Y);
+        keyPoint1Location = addNavigationWithColors(teamColor, navigation, KEY_POINT_1, KEY_POINT_1_X, KEY_POINT_1_Y);
+        keyPoint2Location = addNavigationWithColors(teamColor, navigation, KEY_POINT_2, KEY_POINT_2_X, KEY_POINT_2_Y);
         bigDistributorLine1FrontLocation = addNavigationWithColors(teamColor, navigation, BIG_DISTRIBUTOR_LINE_1, BIG_DISTRIBUTOR_LINE_1_X, BIG_DISTRIBUTOR_LINE_1_Y);
         bigDistributorLine2FrontLocation = addNavigationWithColors(teamColor, navigation, BIG_DISTRIBUTOR_LINE_2, BIG_DISTRIBUTOR_LINE_2_X, BIG_DISTRIBUTOR_LINE_2_Y);
         bigDistributorLine3FrontLocation = addNavigationWithColors(teamColor, navigation, BIG_DISTRIBUTOR_LINE_3, BIG_DISTRIBUTOR_LINE_3_X, BIG_DISTRIBUTOR_LINE_3_Y);
@@ -280,79 +301,164 @@ void initPaths2019(GameStrategyContext* gameStrategyContext, int index) {
                                                     speedFactor * WEIGHING_MACHINE_FRONT_TO_WEIGHING_MACHINE_DROP_SPEED_FACTOR);
     }
     else if (robotType == ROBOT_TYPE_BIG) {
-    // Big Robot
-    bigRobotStartArea_to_bigDistributorLine1Front = addNavigationPathWithColor(teamColor,
+        // Big Robot
+        bigRobotStartArea_to_bigDistributorLine1Front = addNavigationPathWithColor(teamColor,
                                                 navigation,
                                                 bigRobotStartAreaLocation,
                                                 bigDistributorLine1FrontLocation,
-                                                BIG_ROBOT_STARTAREA_TO_BIGDISTRIBUTOR_LINE1_FRONT_COST,
-                                                BIG_ROBOT_STARTAREA_TO_BIGDISTRIBUTOR_LINE1_FRONT_CP1,
-                                                BIG_ROBOT_STARTAREA_TO_BIGDISTRIBUTOR_LINE1_FRONT_CP2,
+                                                BIG_ROBOT_STARTAREA_TO_BIGDISTRIBUTOR_LINE_1_FRONT_COST,
+                                                BIG_ROBOT_STARTAREA_TO_BIGDISTRIBUTOR_LINE_1_FRONT_CP1,
+                                                BIG_ROBOT_STARTAREA_TO_BIGDISTRIBUTOR_LINE_1_FRONT_CP2,
                                                 deciDegreeToRad(BIG_ROBOT_START_AREA_ANGLE_DECI_DEG),
                                                 deciDegreeToRad(BIG_DISTRIBUTOR_LINE_1_ANGLE_DECI_DEG),
-                                                aFactor * BIG_ROBOT_STARTAREA_TO_BIGDISTRIBUTOR_LINE1_FRONT_ACCELERATION_FACTOR,
-                                                speedFactor * BIG_ROBOT_STARTAREA_TO_BIGDISTRIBUTOR_LINE1_FRONT_SPEED_FACTOR);
+                                                aFactor * BIG_ROBOT_STARTAREA_TO_BIGDISTRIBUTOR_LINE_1_FRONT_ACCELERATION_FACTOR,
+                                                speedFactor * BIG_ROBOT_STARTAREA_TO_BIGDISTRIBUTOR_LINE_1_FRONT_SPEED_FACTOR);
 
-    bigDistributorLine1Front_to_acceleratorDrop = addNavigationPathWithColor(teamColor,
+        bigRobotStartArea_to_chaosZoneFront = addNavigationPathWithColor(teamColor,
+                                                navigation,
+                                                bigRobotStartAreaLocation,
+                                                chaosFrontLocation,
+                                                BIG_ROBOT_STARTAREA_TO_CHAOS_ZONE_FRONT_COST,
+                                                BIG_ROBOT_STARTAREA_TO_CHAOS_ZONE_FRONT_CP1,
+                                                BIG_ROBOT_STARTAREA_TO_CHAOS_ZONE_FRONT_CP2,
+                                                deciDegreeToRad(BIG_ROBOT_START_AREA_ANGLE_DECI_DEG),
+                                                deciDegreeToRad(CHAOS_ZONE_FRONT_ANGLE_DECI_DEG),
+                                                aFactor * BIG_ROBOT_STARTAREA_TO_CHAOS_ZONE_FRONT_ACCELERATION_FACTOR,
+                                                speedFactor * BIG_ROBOT_STARTAREA_TO_CHAOS_ZONE_FRONT_SPEED_FACTOR);
+
+        chaosZoneFront_to_rediumDropZone = addNavigationPathWithColor(teamColor,
+                                                navigation,
+                                                chaosFrontLocation,
+                                                rediumDropZoneLocation,
+                                                CHAOS_ZONE_FRONT_TO_REDIUM_DROP_ZONE_COST,
+                                                CHAOS_ZONE_FRONT_TO_REDIUM_DROP_ZONE_CP1,
+                                                CHAOS_ZONE_FRONT_TO_REDIUM_DROP_ZONE_CP2,
+                                                deciDegreeToRad(CHAOS_ZONE_FRONT_ANGLE_DECI_DEG),
+                                                deciDegreeToRad(REDIUM_DROP_ZONE_ANGLE_DECI_DEG),
+                                                aFactor * CHAOS_ZONE_FRONT_TO_REDIUM_DROP_ZONE_ACCELERATION_FACTOR,
+                                                speedFactor * CHAOS_ZONE_FRONT_TO_REDIUM_DROP_ZONE_SPEED_FACTOR);
+
+        rediumDropZone_to_keyPoint1 = addNavigationPathWithColor(teamColor,
+                                                navigation,
+                                                rediumDropZoneLocation,
+                                                keyPoint1Location,
+                                                REDIUM_DROP_ZONE_TO_KEY_POINT_1_COST,
+                                                REDIUM_DROP_ZONE_TO_KEY_POINT_1_CP1,
+                                                REDIUM_DROP_ZONE_TO_KEY_POINT_1_CP2,
+                                                deciDegreeToRad(REDIUM_DROP_ZONE_ANGLE_DECI_DEG),
+                                                deciDegreeToRad(KEY_POINT_1_ANGLE_DECI_DEG),
+                                                aFactor * REDIUM_DROP_ZONE_TO_KEY_POINT_1_ACCELERATION_FACTOR,
+                                                speedFactor * REDIUM_DROP_ZONE_TO_KEY_POINT_1_SPEED_FACTOR);
+
+        rediumDropZone_to_keyPoint2 = addNavigationPathWithColor(teamColor,
+                                                navigation,
+                                                rediumDropZoneLocation,
+                                                keyPoint2Location,
+                                                REDIUM_DROP_ZONE_TO_KEY_POINT_2_COST,
+                                                REDIUM_DROP_ZONE_TO_KEY_POINT_2_CP1,
+                                                REDIUM_DROP_ZONE_TO_KEY_POINT_2_CP2,
+                                                deciDegreeToRad(REDIUM_DROP_ZONE_ANGLE_DECI_DEG),
+                                                deciDegreeToRad(KEY_POINT_2_ANGLE_DECI_DEG),
+                                                aFactor * REDIUM_DROP_ZONE_TO_KEY_POINT_2_ACCELERATION_FACTOR,
+                                                speedFactor * REDIUM_DROP_ZONE_TO_KEY_POINT_2_SPEED_FACTOR);
+        
+    keyPoint2_to_bigDistributorLine1Front = addNavigationPathWithColor(teamColor,
+                                                navigation,
+                                                keyPoint2Location,
+                                                bigDistributorLine2FrontLocation,
+                                                KEY_POINT_2_TO_BIGDISTRIBUTOR_LINE_1_FRONT_COST,
+                                                KEY_POINT_2_TO_BIGDISTRIBUTOR_LINE_1_FRONT_CP1,
+                                                KEY_POINT_2_TO_BIGDISTRIBUTOR_LINE_1_FRONT_CP2,
+                                                deciDegreeToRad(KEY_POINT_1_ANGLE_DECI_DEG),
+                                                deciDegreeToRad(BIG_DISTRIBUTOR_LINE_1_ANGLE_DECI_DEG),
+                                                aFactor * KEY_POINT_2_TO_BIGDISTRIBUTOR_LINE_1_FRONT_ACCELERATION_FACTOR,
+                                                speedFactor * KEY_POINT_2_TO_BIGDISTRIBUTOR_LINE_1_FRONT_SPEED_FACTOR);
+
+        
+        bigDistributorLine1Front_to_keyPoint1 = addNavigationPathWithColor(teamColor,
                                                 navigation,
                                                 bigDistributorLine1FrontLocation,
-                                                acceleratorDropLocation,
-                                                BIGDISTRIBUTOR_LINE1_FRONT_TO_ACCELERATOR_DROP_COST,
-                                                BIGDISTRIBUTOR_LINE1_FRONT_TO_ACCELERATOR_DROP_CP1,
-                                                BIGDISTRIBUTOR_LINE1_FRONT_TO_ACCELERATOR_DROP_CP2,
+                                                keyPoint1Location,
+                                                BIGDISTRIBUTOR_LINE1_FRONT_TO_KEY_POINT_1_COST,
+                                                BIGDISTRIBUTOR_LINE1_FRONT_TO_KEY_POINT_1_CP1,
+                                                BIGDISTRIBUTOR_LINE1_FRONT_TO_KEY_POINT_1_CP2,
                                                 deciDegreeToRad(BIG_DISTRIBUTOR_LINE_1_ANGLE_DECI_DEG),
+                                                deciDegreeToRad(KEY_POINT_1_ANGLE_DECI_DEG),
+                                                aFactor * BIGDISTRIBUTOR_LINE1_FRONT_TO_KEY_POINT_1_ACCELERATION_FACTOR,
+                                                speedFactor * BIGDISTRIBUTOR_LINE1_FRONT_TO_KEY_POINT_1_SPEED_FACTOR);
+
+        keyPoint1_to_acceleratorDrop = addNavigationPathWithColor(teamColor,
+                                                navigation,
+                                                keyPoint1Location,
+                                                acceleratorDropLocation,
+                                                KEY_POINT_1_TO_ACCELERATOR_DROP_COST,
+                                                KEY_POINT_1_TO_ACCELERATOR_DROP_CP1,
+                                                KEY_POINT_1_TO_ACCELERATOR_DROP_CP2,
+                                                deciDegreeToRad(KEY_POINT_1_ANGLE_DECI_DEG),
                                                 deciDegreeToRad(ACCELERATOR_DROP_DECI_DEG),
-                                                aFactor * BIGDISTRIBUTOR_LINE1_FRONT_TO_ACCELERATOR_DROP_ACCELERATION_FACTOR,
-                                                speedFactor * BIGDISTRIBUTOR_LINE1_FRONT_TO_ACCELERATOR_DROP_SPEED_FACTOR);
-
-
-    acceleratorDropLocation_to_bigDistributorLine2Front = addNavigationPathWithColor(teamColor,
+                                                aFactor * KEY_POINT_1_TO_ACCELERATOR_DROP_ACCELERATION_FACTOR,
+                                                speedFactor * KEY_POINT_1_TO_ACCELERATOR_DROP_SPEED_FACTOR);
+    
+        acceleratorDrop_to_keyPoint1 = addNavigationPathWithColor(teamColor,
                                                 navigation,
                                                 acceleratorDropLocation,
-                                                bigDistributorLine2FrontLocation,
-                                                ACCELERATOR_DROP_TO_BIGDISTRIBUTOR_LINE2_FRONT_COST,
-                                                ACCELERATOR_DROP_TO_BIGDISTRIBUTOR_LINE2_FRONT_CP1,
-                                                ACCELERATOR_DROP_TO_BIGDISTRIBUTOR_LINE2_FRONT_CP2,
+                                                keyPoint1Location,
+                                                ACCELERATOR_DROP_TO_KEY_POINT_1_COST,
+                                                ACCELERATOR_DROP_TO_KEY_POINT_1_CP1,
+                                                ACCELERATOR_DROP_TO_KEY_POINT_1_CP2,
                                                 deciDegreeToRad(ACCELERATOR_DROP_DECI_DEG),
+                                                deciDegreeToRad(KEY_POINT_1_ANGLE_DECI_DEG),
+                                                aFactor * ACCELERATOR_DROP_TO_KEY_POINT_1_ACCELERATION_FACTOR,
+                                                speedFactor * ACCELERATOR_DROP_TO_KEY_POINT_1_SPEED_FACTOR);
+    
+
+        keyPoint1_to_bigDistributorLine2Front = addNavigationPathWithColor(teamColor,
+                                                navigation,
+                                                keyPoint1Location,
+                                                bigDistributorLine2FrontLocation,
+                                                KEY_POINT_1_TO_BIGDISTRIBUTOR_LINE_2_FRONT_COST,
+                                                KEY_POINT_1_TO_BIGDISTRIBUTOR_LINE_2_FRONT_CP1,
+                                                KEY_POINT_1_TO_BIGDISTRIBUTOR_LINE_2_FRONT_CP2,
+                                                deciDegreeToRad(KEY_POINT_1_ANGLE_DECI_DEG),
                                                 deciDegreeToRad(BIG_DISTRIBUTOR_LINE_2_ANGLE_DECI_DEG),
-                                                aFactor * ACCELERATOR_DROP_TO_BIGDISTRIBUTOR_LINE2_FRONT_ACCELERATION_FACTOR,
-                                                speedFactor * ACCELERATOR_DROP_TO_BIGDISTRIBUTOR_LINE2_FRONT_SPEED_FACTOR);
+                                                aFactor * KEY_POINT_1_TO_BIGDISTRIBUTOR_LINE_2_FRONT_ACCELERATION_FACTOR,
+                                                speedFactor * KEY_POINT_1_TO_BIGDISTRIBUTOR_LINE_2_FRONT_SPEED_FACTOR);
 
-    bigDistributorLine2Front_to_acceleratorDrop = addNavigationPathWithColor(teamColor,
+        bigDistributorLine2Front_to_keyPoint1 = addNavigationPathWithColor(teamColor,
                                                 navigation,
                                                 bigDistributorLine2FrontLocation,
-                                                acceleratorDropLocation,
-                                                BIGDISTRIBUTOR_LINE2_FRONT_TO_ACCELERATOR_DROP_COST,
-                                                BIGDISTRIBUTOR_LINE2_FRONT_TO_ACCELERATOR_DROP_CP1,
-                                                BIGDISTRIBUTOR_LINE2_FRONT_TO_ACCELERATOR_DROP_CP2,
+                                                keyPoint1Location,
+                                                BIGDISTRIBUTOR_LINE2_FRONT_TO_KEY_POINT_1_COST,
+                                                BIGDISTRIBUTOR_LINE2_FRONT_TO_KEY_POINT_1_CP1,
+                                                BIGDISTRIBUTOR_LINE2_FRONT_TO_KEY_POINT_1_CP2,
                                                 deciDegreeToRad(BIG_DISTRIBUTOR_LINE_2_ANGLE_DECI_DEG),
-                                                deciDegreeToRad(ACCELERATOR_DROP_DECI_DEG),
-                                                aFactor * BIGDISTRIBUTOR_LINE2_FRONT_TO_ACCELERATOR_DROP_ACCELERATION_FACTOR,
-                                                speedFactor * BIGDISTRIBUTOR_LINE2_FRONT_TO_ACCELERATOR_DROP_SPEED_FACTOR);
-
-    acceleratorDropLocation_to_bigDistributorLine3Front = addNavigationPathWithColor(teamColor,
+                                                deciDegreeToRad(KEY_POINT_1_ANGLE_DECI_DEG),
+                                                aFactor * BIGDISTRIBUTOR_LINE2_FRONT_TO_KEY_POINT_1_ACCELERATION_FACTOR,
+                                                speedFactor * BIGDISTRIBUTOR_LINE2_FRONT_TO_KEY_POINT_1_SPEED_FACTOR);
+    
+        keyPoint1_to_bigDistributorLine3Front = addNavigationPathWithColor(teamColor,
                                                 navigation,
-                                                acceleratorDropLocation,
-                                                bigDistributorLine2FrontLocation,
-                                                ACCELERATOR_DROP_TO_BIGDISTRIBUTOR_LINE3_FRONT_COST,
-                                                ACCELERATOR_DROP_TO_BIGDISTRIBUTOR_LINE3_FRONT_CP1,
-                                                ACCELERATOR_DROP_TO_BIGDISTRIBUTOR_LINE3_FRONT_CP2,
-                                                deciDegreeToRad(ACCELERATOR_DROP_DECI_DEG),
+                                                keyPoint1Location,
+                                                bigDistributorLine3FrontLocation,
+                                                KEY_POINT_1_TO_BIGDISTRIBUTOR_LINE_3_FRONT_COST,
+                                                KEY_POINT_1_TO_BIGDISTRIBUTOR_LINE_3_FRONT_CP1,
+                                                KEY_POINT_1_TO_BIGDISTRIBUTOR_LINE_3_FRONT_CP2,
+                                                deciDegreeToRad(KEY_POINT_1_ANGLE_DECI_DEG),
                                                 deciDegreeToRad(BIG_DISTRIBUTOR_LINE_3_ANGLE_DECI_DEG),
-                                                aFactor * ACCELERATOR_DROP_TO_BIGDISTRIBUTOR_LINE3_FRONT_ACCELERATION_FACTOR,
-                                                speedFactor * ACCELERATOR_DROP_TO_BIGDISTRIBUTOR_LINE3_FRONT_SPEED_FACTOR);
+                                                aFactor * KEY_POINT_1_TO_BIGDISTRIBUTOR_LINE_3_FRONT_ACCELERATION_FACTOR,
+                                                speedFactor * KEY_POINT_1_TO_BIGDISTRIBUTOR_LINE_3_FRONT_SPEED_FACTOR);
 
-    bigDistributorLine3Front_to_acceleratorDrop = addNavigationPathWithColor(teamColor,
+        bigDistributorLine3Front_to_keyPoint1 = addNavigationPathWithColor(teamColor,
                                                 navigation,
                                                 bigDistributorLine3FrontLocation,
-                                                acceleratorDropLocation,
-                                                BIGDISTRIBUTOR_LINE3_FRONT_TO_ACCELERATOR_DROP_COST,
-                                                BIGDISTRIBUTOR_LINE3_FRONT_TO_ACCELERATOR_DROP_CP1,
-                                                BIGDISTRIBUTOR_LINE3_FRONT_TO_ACCELERATOR_DROP_CP2,
+                                                keyPoint1Location,
+                                                BIGDISTRIBUTOR_LINE_3_FRONT_TO_KEY_POINT_1_COST,
+                                                BIGDISTRIBUTOR_LINE_3_FRONT_TO_KEY_POINT_1_CP1,
+                                                BIGDISTRIBUTOR_LINE_3_FRONT_TO_KEY_POINT_1_CP2,
                                                 deciDegreeToRad(BIG_DISTRIBUTOR_LINE_3_ANGLE_DECI_DEG),
-                                                deciDegreeToRad(ACCELERATOR_DROP_DECI_DEG),
-                                                aFactor * BIGDISTRIBUTOR_LINE3_FRONT_TO_ACCELERATOR_DROP_ACCELERATION_FACTOR,
-                                                speedFactor * BIGDISTRIBUTOR_LINE3_FRONT_TO_ACCELERATOR_DROP_SPEED_FACTOR);
+                                                deciDegreeToRad(KEY_POINT_1_ANGLE_DECI_DEG),
+                                                aFactor * BIGDISTRIBUTOR_LINE_3_FRONT_TO_KEY_POINT_1_ACCELERATION_FACTOR,
+                                                speedFactor * BIGDISTRIBUTOR_LINE_3_FRONT_TO_KEY_POINT_1_SPEED_FACTOR);
     }
 }
 
