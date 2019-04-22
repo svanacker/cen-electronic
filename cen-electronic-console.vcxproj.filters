@@ -2079,6 +2079,9 @@
     <ClCompile Include="navigation\locationListComputer.c">
       <Filter>Source Files\navigation</Filter>
     </ClCompile>
+    <ClCompile Include="robot\strategy\gameStrategyHandlerUtils.c">
+      <Filter>Source Files\robot\strategy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -3226,6 +3229,9 @@
     </ClInclude>
     <ClInclude Include="navigation\locationListComputer.h">
       <Filter>Header Files\navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\strategy\gameStrategyHandlerUtils.h">
+      <Filter>Header Files\robot\strategy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

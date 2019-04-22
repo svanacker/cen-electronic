@@ -44,42 +44,5 @@ GameTarget* findNextTarget(GameStrategyContext* gameStrategyContext);
  */
 bool nextStep(GameStrategyContext* gmeStrategyContext);
 
-// OBSTACLE
-
-void computePoint(Point* ref, Point* cp, float distance, float angle);
-
-/**
- * Update all paths / opponent Robot Position to mark them as unavailable if the robot is on
- * this path !
- */
-void updatePathsAvailability(GameStrategyContext* gmeStrategyContext);
-
-/**
- * Handle a collision detection.
- */
-void handleCollision(GameStrategyContext* gmeStrategyContext);
-
-// MOTION
-
-void rotateAbsolute(GameStrategyContext* gameStrategyContext, float angle);
-
-/**
- * Ask to follow a path.
- */
-void motionFollowPath(GameStrategyContext* gmeStrategyContext, PathData* pathData, bool reversed);
-
-/**
- * Ask the robot to go to a location but without path (useful for actionItem).
- */
-void motionGoLocation(Location* location, 
-                    float angle,
-                    float controlPointDistance1, float controlPointDistance2,
-                    float accelerationFactor, float speedFactor);
-
-/**
- * Update the Motor Board Robot Position (needed at start).
- */
-bool updateMotorBoardRobotPosition(GameStrategyContext* gameStrategyContext);
-
 #endif
 

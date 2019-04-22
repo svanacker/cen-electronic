@@ -25,6 +25,7 @@
 #include "../../navigation/pathListDebug.h"
 
 #include "../../robot/strategy/gameStrategyHandler.h"
+#include "../../robot/strategy/gameStrategyHandlerUtils.h"
 #include "../../robot/strategy/gameStrategyContext.h"
 #include "../../robot/strategy/gameStrategyContextDebug.h"
 

@@ -14,6 +14,8 @@
 #include "location.h"
 #include "pathList.h"
 #include "path.h"
+#include "outgoingPathList.h"
+#include "outgoingPath.h"
 
 #include "../common/io/outputStream.h"
 #include "../common/io/printWriter.h"
