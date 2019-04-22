@@ -25,8 +25,6 @@ struct Location {
     /** Temporary information needed by path finding algorithm. */
     float tmpCost;
     /** Temporary information needed by path finding algorithm. */
-    Location* tmpPreviousLocation;
-    /** Temporary information needed by path finding algorithm. */
     bool tmpHandled;
     /**Result information with the next location to follow the path */
     Location* resultNextLocation;

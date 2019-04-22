@@ -84,14 +84,18 @@ float computeBestPath(Navigation* navigation, Location* start, Location* end) {
             if (cost < costLocation2) {
                 // Set the node absolute cost
                 setTmpCost(location2, cost);
-                location2->tmpPreviousLocation = location1;
                 location1->resultNextLocation = location2;
+            }
+            else {
+                location1->resultNextLocation = NULL;
             }
         }
     }
     // store best cost
     result = getTmpCost(end);
     location1 = end;
+
+    cutLocationLinkedList(start, end);
 
     return result;
 }

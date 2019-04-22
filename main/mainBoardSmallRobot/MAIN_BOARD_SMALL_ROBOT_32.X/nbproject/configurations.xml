@@ -595,6 +595,7 @@
         <itemPath>../../../robot/strategy/teamColor.h</itemPath>
         <itemPath>../../../robot/strategy/gameTargetListDebug.h</itemPath>
         <itemPath>../../../robot/strategy/gameStrategyHandlerUtils.h</itemPath>
+        <itemPath>../../../robot/strategy/gameTargetActionItemDebug.h</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.strategy.factor"
                      displayName="robot.strategy.factor"
@@ -1208,6 +1209,7 @@
         <itemPath>../../../robot/strategy/teamColor.c</itemPath>
         <itemPath>../../../robot/strategy/gameTargetStatus.c</itemPath>
         <itemPath>../../../robot/strategy/gameStrategyHandlerUtils.c</itemPath>
+        <itemPath>../../../robot/strategy/gameTargetActionItemDebug.c</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.strategy.factor"
                      displayName="robot.strategy.factor"

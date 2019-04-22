@@ -8,7 +8,7 @@
 #include "../common/io/outputStream.h"
 
 /**
- * Tre struct defining a list of locations.
+ * The struct defining a list of locations.
  */
 typedef struct {
     /** An array of pointer on locations. */

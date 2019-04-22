@@ -51,7 +51,6 @@ void copyLocation(Location* sourceLocation, Location* targetLocation) {
     copyFixedCharArray(&(sourceLocation->name), &(targetLocation->name));
     targetLocation->tmpCost = sourceLocation->tmpCost;
     targetLocation->tmpHandled = sourceLocation->tmpHandled;
-    targetLocation->tmpPreviousLocation = sourceLocation->tmpPreviousLocation;
     targetLocation->resultNextLocation = sourceLocation->resultNextLocation;
     targetLocation->x = sourceLocation->x;
     targetLocation->y = sourceLocation->y;
@@ -64,7 +63,6 @@ void initLocation(Location* location, char* name, float x, float y) {
     location->y = y;
     location->tmpCost = NO_COMPUTED_COST;
     location->tmpHandled = false;
-    location->tmpPreviousLocation = NULL;
     location->resultNextLocation = NULL;
 }
 
@@ -162,7 +160,6 @@ void clearLocationTmpInfo(LocationList* locationList) {
     for (i = 0; i < size; i++) {
         Location* location = getLocation(locationList, i);
         location->tmpCost = NO_COMPUTED_COST;
-        location->tmpPreviousLocation = NULL;
         location->resultNextLocation = NULL;
         location->tmpHandled = false;
     }

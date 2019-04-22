@@ -65,3 +65,15 @@ Location* extractMinCostLocation(LocationList* locationList) {
     result->tmpHandled = true;
     return result;
 }
+
+void cutLocationLinkedList(Location* location, Location* endLocation) {
+    unsigned int result = 0;
+    Location* currentLocation = location;
+
+    while (currentLocation != NULL) {
+        if (currentLocation == endLocation) {
+            currentLocation->resultNextLocation = NULL;
+        }
+        currentLocation = currentLocation->resultNextLocation;
+    }
+}

@@ -2082,6 +2082,9 @@
     <ClCompile Include="robot\strategy\gameStrategyHandlerUtils.c">
       <Filter>Source Files\robot\strategy</Filter>
     </ClCompile>
+    <ClCompile Include="robot\strategy\gameTargetActionItemDebug.c">
+      <Filter>Source Files\robot\strategy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -3231,6 +3234,9 @@
       <Filter>Header Files\navigation</Filter>
     </ClInclude>
     <ClInclude Include="robot\strategy\gameStrategyHandlerUtils.h">
+      <Filter>Header Files\robot\strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\strategy\gameTargetActionItemDebug.h">
       <Filter>Header Files\robot\strategy</Filter>
     </ClInclude>
   </ItemGroup>

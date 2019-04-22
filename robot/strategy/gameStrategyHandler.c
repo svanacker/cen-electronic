@@ -43,15 +43,8 @@
 void initStrategyHandler(GameStrategyContext* gameStrategyContext) {
 }
 
-GameTarget* findNextTarget(GameStrategyContext* gameStrategyContext) {
+void updateNearestLocation(GameStrategyContext* gameStrategyContext) {
     Navigation* navigation = gameStrategyContext->navigation;
-    unsigned int targetHandledCount = getTargetHandledCount();
-    if (targetHandledCount >= gameStrategyContext->maxTargetToHandle) {
-        clearCurrentTarget(gameStrategyContext);
-        return NULL;
-    }
-
-    // global points
     LocationList* navigationLocationList = getNavigationLocationList(navigation);
 
     Point* robotPosition = gameStrategyContext->robotPosition;
@@ -61,6 +54,17 @@ GameTarget* findNextTarget(GameStrategyContext* gameStrategyContext) {
     float x = robotPosition->x;
     float y = robotPosition->y;
     gameStrategyContext->nearestLocation = getNearestLocation(navigationLocationList, x, y);
+}
+
+GameTarget* findNextTarget(GameStrategyContext* gameStrategyContext) {
+    Navigation* navigation = gameStrategyContext->navigation;
+    unsigned int targetHandledCount = getTargetHandledCount();
+    if (targetHandledCount >= gameStrategyContext->maxTargetToHandle) {
+        clearCurrentTarget(gameStrategyContext);
+        return NULL;
+    }
+
+    updateNearestLocation(gameStrategyContext);
 
     // Find best Target, store LocationList in the context in currentTrajectory
     GameTarget* result = computeBestNextTarget(gameStrategyContext);
@@ -69,18 +73,60 @@ GameTarget* findNextTarget(GameStrategyContext* gameStrategyContext) {
     return result;
 }
 
+bool executeTargetActionItemListForPhasis(GameStrategyContext* gameStrategyContext, GameTargetActionItemList* actionItemList, enum ActionItemPhasis phasis) {
+    bool result = false;
+    unsigned int actionItemIndex;
+    for (actionItemIndex = 0; actionItemIndex < actionItemList->size; actionItemIndex++) {
+        GameTargetActionItem* actionItem = getGameTargetActionItem(actionItemList, actionItemIndex);
+        if (actionItem->phasis != phasis) {
+            continue;
+        }
+
+        // Do the action item
+        actionItem->actionItemFunction((int*)gameStrategyContext);
+        result = true;
+    }
+    return result;
+}
+
 bool executeTargetActions(GameStrategyContext* gameStrategyContext) {
+    GameTarget* currentTarget = gameStrategyContext->currentTarget;
+    if (currentTarget == NULL) {
+        return false;
+    }
+    GameTargetActionList* actionList = &(currentTarget->actionList);
+    unsigned int actionIndex;
+    // For All Action
+    for (actionIndex = 0; actionIndex < actionList->size; actionIndex++) {
+        GameTargetAction* action = getGameTargetAction(actionList, actionIndex);
+
+        // Do the action related to the start of Location
+        GameTargetActionItemList* actionItemList = action->actionItemList;
+        if (action->startLocation == gameStrategyContext->nearestLocation) {
+            if (executeTargetActionItemListForPhasis(gameStrategyContext, actionItemList, ACTION_ITEM_PHASIS_START_LOCATION)) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+/*
+bool executeTargetActions(GameStrategyContext* gameStrategyContext) {
+    // In progress on the target
     markTargetInUse(gameStrategyContext);
 
     GameTargetAction* targetAction = gameStrategyContext->currentTargetAction;
+    // If no action Item List is defined
     GameTargetActionItemList* actionItemList = targetAction->actionItemList;
     if (actionItemList == NULL) {
+        // We consider that the target was handled
         markTargetAsHandled(gameStrategyContext);
         return false;
     }
 
-    // There is actionItem in progress
-    if (actionItemList != NULL && targetActionItemListHasNext(actionItemList)) {
+    // There is an actionItem in progress
+    if (targetActionItemListHasNext(actionItemList)) {
         GameTargetActionItem* actionItem = targetActionItemListNext(actionItemList);
 
         // Do the action item
@@ -94,76 +140,61 @@ bool executeTargetActions(GameStrategyContext* gameStrategyContext) {
     }
     return true;
 }
+*/
 
 /**
 * Handle the trajectory and return true if we go to a location, false else.
 * @private
 */
-bool handleCurrentTrajectory(GameStrategyContext* gameStrategyContext) {
-    LocationList* currentTrajectory = gameStrategyContext->currentTrajectory;
+bool handleTrajectoryToActionStart(GameStrategyContext* gameStrategyContext) {
+    GameTarget* currentTarget = gameStrategyContext->currentTarget;
+    if (currentTarget == NULL) {
+        return false;
+    }
+    Navigation* navigation = gameStrategyContext->navigation;
 
-    if (currentTrajectory == NULL || currentTrajectory->size < 2) {
-        // no more locations to reach
-        clearLocationList(currentTrajectory);
+    Location* start = gameStrategyContext->nearestLocation;
+    // If the point is the same than the startLocation of the target Actions, we escape
+    if (start == currentTarget->startLocation) {
+        return false;
+    }
+    // Take the next location to follow
+    Location* end = start->resultNextLocation;
+    // If the point is the same than the startLocation of the target Actions, we escape
+    if (end == NULL || end == currentTarget->startLocation) {
         return false;
     }
 
-    Location* start = getLocation(currentTrajectory, 0);
-    Location* end = getLocation(currentTrajectory, 1);
     bool reversed;
-    Navigation* navigation = gameStrategyContext->navigation;
-    PathData* pathData = getPathOfLocations(getNavigationPathList(navigation), start, end, &reversed);
+    PathList* pathList = getNavigationPathList(navigation);
+    PathData* pathData = getPathOfLocations(pathList, start, end, &reversed);
 
-    // Follows the path
+    // Check if to follow the path, we need to do first a rotation (to avoid problem on bSpline)
     if (!motionRotateToFollowPath(gameStrategyContext, pathData, reversed)) {
+        // If this is not the case, we ask to follow the path
         motionFollowPath(gameStrategyContext, pathData, reversed);
-        removeFirstLocation(currentTrajectory);
     }
     return true;
 }
 
 bool nextStep(GameStrategyContext* gameStrategyContext) {
-    unsigned int counter = 0;
-    while (true) {
-        counter++;
-        GameTargetAction* targetAction = gameStrategyContext->currentTargetAction;
-    
-        // If there is some locations
-        if (getLocationCount(gameStrategyContext->currentTrajectory) != 0) {
-            if (!handleCurrentTrajectory(gameStrategyContext)) {
-                continue;
-            }
-            return true;
-        }
-        else if (targetAction != NULL) {
-            if (!executeTargetActions(gameStrategyContext)) {
-                // we will return on a different condition.
-                continue;
-            }
-            return true;
-        }
-        else if (targetAction == NULL) {
-            // no target, search a new one
-            gameStrategyContext->currentTarget = findNextTarget(gameStrategyContext);
-            if (gameStrategyContext->currentTarget == NULL) {
-                clearCurrentTarget(gameStrategyContext);
-                return false;
-            }
-            // Next target created a new current trajectory
-            if (getLocationCount(gameStrategyContext->currentTrajectory) != 0) {
-                if (!handleCurrentTrajectory(gameStrategyContext)) {
-                    continue;
-                }
-                return true;
-            }
-        } else {
-            if (!executeTargetActions(gameStrategyContext)) {
-                // we will return on a different condition.
-                continue;
-            }
-            return true;
-        }
+    // The start point is the nearest point of the robot
+    // TODO : Restrict the nearest Point to the list of the trajectory to reach the target and not all locations ?
+    updateNearestLocation(gameStrategyContext);
+
+    // Launch command to follow the trajectory until the action location start
+    if (handleTrajectoryToActionStart(gameStrategyContext)) {
+        // We do not do anything, we wait that the robot reach his target
+        return true;
     }
-    return true;
+
+    // Launch command to do the list of action Items
+
+    // Launch command to execute the actions
+    if (executeTargetActions(gameStrategyContext)) {
+        return true;
+    }
+
+    return false;
 }
 

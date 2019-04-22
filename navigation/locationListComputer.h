@@ -24,5 +24,11 @@ Location* extractMinCostLocation(LocationList* locationList);
  */
 float getTmpCost(Location* location);
 
+/**
+ * In lots of situation, the linked list of location does not end after the end Location, and it could raises some problem, so 
+ * cutLocationLinkedList(A->D->E->F, E) => A->D->E
+ */
+void cutLocationLinkedList(Location* location, Location* endLocation);
+
 #endif
 

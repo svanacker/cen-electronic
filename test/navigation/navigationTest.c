@@ -138,7 +138,7 @@ void checkNavigationPathFinding1(void) {
     // The shortest distance in this example is 487 (A-E-J)
     TEST_ASSERT_EQUAL(487, actual);
 
-    // TEST IF WE GO TO J !
+    // TEST IF WE GO FROM A TO E TO J !
     tmpLocation = locationA->resultNextLocation;
     TEST_ASSERT_EQUAL(locationE, tmpLocation);
 

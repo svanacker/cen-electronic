@@ -67,8 +67,6 @@ struct GameStrategyContext {
     GameTarget* currentTarget;
     /** current Target Action. */
     GameTargetAction* currentTargetAction;
-    /** TODO : Remove and Use Linked Pointer with current Point : Previously current trajectory of the robot. */
-    LocationList* currentTrajectory;
     /** Color. */
     enum TeamColor color;
     /** Go to next Step. */

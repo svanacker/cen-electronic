@@ -26,7 +26,6 @@
 #define LOCATION_LIST_LOCATION_Y_HEXA_COLUMN_LENGTH          8
 #define LOCATION_LIST_LOCATION_TMP_COST_COLUMN_LENGTH        8
 #define LOCATION_LIST_LOCATION_NEXT_COLUMN_LENGTH            8
-#define LOCATION_LIST_LOCATION_PREVIOUS_COLUMN_LENGTH        8
 
 #define LOCATION_LIST_LOCATION_LAST_COLUMN_LENGTH            0
 
@@ -47,7 +46,6 @@ void printLocationListHeader(OutputStream* outputStream) {
 	appendStringHeader(outputStream, "y Hex", LOCATION_LIST_LOCATION_Y_HEXA_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Tmp", LOCATION_LIST_LOCATION_TMP_COST_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Next", LOCATION_LIST_LOCATION_NEXT_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "Prev.", LOCATION_LIST_LOCATION_PREVIOUS_COLUMN_LENGTH);
 
     appendEndOfTableColumn(outputStream, LOCATION_LIST_LOCATION_LAST_COLUMN_LENGTH);
     // Line Header 2
@@ -60,7 +58,6 @@ void printLocationListHeader(OutputStream* outputStream) {
     appendStringHeader(outputStream, "(mm)", LOCATION_LIST_LOCATION_Y_HEXA_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Cost", LOCATION_LIST_LOCATION_TMP_COST_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Loc", LOCATION_LIST_LOCATION_NEXT_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "Loc", LOCATION_LIST_LOCATION_PREVIOUS_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, LOCATION_LIST_LOCATION_LAST_COLUMN_LENGTH);
     appendTableHeaderSeparatorLine(outputStream);
 }
@@ -89,15 +86,6 @@ void printLocationTable(OutputStream* outputStream, Location* location, unsigned
     else {
         appendStringTableData(outputStream, "NULL", LOCATION_LIST_LOCATION_NEXT_COLUMN_LENGTH);
     }
-
-    // Previous
-    if (location->tmpPreviousLocation != NULL && location->tmpPreviousLocation->name != NULL) {
-        appendFixedCharArrayTableData(outputStream, &(location->tmpPreviousLocation->name), LOCATION_LIST_LOCATION_PREVIOUS_COLUMN_LENGTH);
-    }
-    else {
-        appendStringTableData(outputStream, "NULL", LOCATION_LIST_LOCATION_PREVIOUS_COLUMN_LENGTH);
-    }
-
 	appendEndOfTableColumn(outputStream, LOCATION_LIST_LOCATION_LAST_COLUMN_LENGTH);
 }
 

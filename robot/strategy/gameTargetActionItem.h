@@ -14,6 +14,16 @@
 typedef bool GameTargetActionFunction(int* context);
 
 /**
+ * Define if the action Item was done or not.
+ */
+enum ActionItemStatus {
+    // The item action was not done
+    ACTION_ITEM_STATUS_FREE = 1,
+    // The item action was done
+    ACTION_ITEM_STATUS_DONE = 2,
+};
+
+/**
  * Define when the action must be done (before the move or when reaching 
  * the target).
  */
@@ -30,10 +40,10 @@ enum ActionItemPhasis {
 typedef struct GameTargetActionItem {
     /** Name of the action Item */
     char* name;
-    /** The time To Achieve this action in seconds. */
-    // float timeToAchieve;
     /** The phasis for which the action must be done. */
     enum ActionItemPhasis phasis;
+    /** The statut if the action item was done or not. */
+    enum ActionItemStatus status;
     /** Function which will be called. */
     GameTargetActionFunction* actionItemFunction;
 } GameTargetActionItem;
@@ -42,12 +52,6 @@ typedef struct GameTargetActionItem {
  * Clear the game target action item.
  */
 void clearGameTargetActionItem(GameTargetActionItem* targetActionItem);
-
-/**
- * Print the detail of the target action item.
- */
-void printGameTargetActionItem(OutputStream* outputStream, GameTargetActionItem* targetActionItem);
-
 
 #endif
 

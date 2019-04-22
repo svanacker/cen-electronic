@@ -47,7 +47,6 @@ bool updateMotorBoardRobotPosition(GameStrategyContext* gameStrategyContext) {
 }
 
 void clearCurrentTarget(GameStrategyContext* gameStrategyContext) {
-    clearLocationList(gameStrategyContext->currentTrajectory);
     gameStrategyContext->currentTarget = NULL;
     gameStrategyContext->currentTargetAction = NULL;
 }
