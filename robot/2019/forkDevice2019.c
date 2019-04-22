@@ -73,6 +73,11 @@ void moveElevatorBottom(void) {
     pwmServo(servo, FORK_2019_ELEVATOR_SPEED_FACTOR, FORK_2019_ELEVATOR_BOTTOM_SERVO_VALUE);
 }
 
+void moveElevatorInitPosition(void) {
+    Servo* servo = getServo(servoList, FORK_2019_ELEVATOR_SERVO_INDEX);
+    pwmServo(servo, FORK_2019_ELEVATOR_SPEED_FACTOR, FORK_2019_ELEVATOR_INIT_POSITION_SERVO_VALUE);
+}
+
 void moveElevatorUp(void) {
     Servo* servo = getServo(servoList, FORK_2019_ELEVATOR_SERVO_INDEX);
     pwmServo(servo, FORK_2019_ELEVATOR_SPEED_FACTOR, FORK_2019_ELEVATOR_UP_SERVO_VALUE);
@@ -179,6 +184,11 @@ void deviceFork2019HandleRawData(char commandHeader, InputStream* inputStream, O
     // -> Middle for Double Puck Position
     else if (commandHeader == COMMAND_2019_ELEVATOR_DOUBLE_PUCK_POSITION) {
         ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_ELEVATOR_DOUBLE_PUCK_POSITION);
+        moveElevatorDoublePuck();
+    }
+    // -> Init Position
+    else if (commandHeader == COMMAND_2019_ELEVATOR_INIT_POSITION) {
+        ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_ELEVATOR_INIT_POSITION);
         moveElevatorDoublePuck();
     }
     // -> Up

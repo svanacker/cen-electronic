@@ -24,10 +24,10 @@ void initGameStrategyIndex(GameStrategyContext* gameStrategyContext) {
     // Mask = 0b001 => Strategy 1, but we use 0 based array => 0
     unsigned int strategyMask = (configValue & CONFIG_STRATEGY_MASK);
     if (strategyMask == 0) {
-        gameStrategyContext->strategyIndex = NO_STRATEGY_INDEX;
+        gameStrategyContext->strategyId = NO_STRATEGY_INDEX;
     }
     else {
-        gameStrategyContext->strategyIndex = strategyMask;
+        gameStrategyContext->strategyId = strategyMask;
     }
 }
 
@@ -57,6 +57,6 @@ void showGameStrategyContextTeamColorAndStrategy(GameStrategyContext* gameStrate
     appendTeamColorAsString(outputStream, gameStrategyContext->color);
     // STRATEGY
     appendString(outputStream, ", STG:");
-    appendDec(outputStream, gameStrategyContext->strategyIndex);    
+    appendDec(outputStream, gameStrategyContext->strategyId);    
     println(outputStream);
 }

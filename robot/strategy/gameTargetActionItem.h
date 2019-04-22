@@ -14,11 +14,26 @@
 typedef bool GameTargetActionFunction(int* context);
 
 /**
+ * Define when the action must be done (before the move or when reaching 
+ * the target).
+ */
+enum ActionItemPhasis {
+    // This action must be done before reaching the target
+    ACTION_ITEM_PHASIS_START_LOCATION = 1,
+    // The action must be done when the target is reached
+    ACTION_ITEM_PHASIS_END_LOCATION = 2,
+};
+
+/**
  * Encapsulates the target action item.
  */
 typedef struct GameTargetActionItem {
     /** Name of the action Item */
     char* name;
+    /** The time To Achieve this action in seconds. */
+    // float timeToAchieve;
+    /** The phasis for which the action must be done. */
+    enum ActionItemPhasis phasis;
     /** Function which will be called. */
     GameTargetActionFunction* actionItemFunction;
 } GameTargetActionItem;

@@ -23,6 +23,12 @@ int deviceFork2019GetInterface(char commandHeader, DeviceInterfaceMode mode, boo
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
+    else if (commandHeader == COMMAND_2019_ELEVATOR_INIT_POSITION) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("Elevator Init Position");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }
     else if (commandHeader == COMMAND_2019_ELEVATOR_UP) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Elevator Up");

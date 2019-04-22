@@ -18,7 +18,7 @@ typedef struct GameTargetAction {
     Location* startLocation;
     // Returns the location of the target Action.
     Location* endLocation;
-    // Time to achieve (in second)
+    // Time to achieve (in second) all Actions (excluding time to move)
     float timeToAchieve;
     // Reference to GameTargetActionListItem, can be NULL
     GameTargetActionItemList* actionItemList;

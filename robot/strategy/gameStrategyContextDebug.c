@@ -97,8 +97,8 @@ void printGameStrategyContext(OutputStream* outputStream, GameStrategyContext* c
     appendEndOfTableColumn(outputStream, GAME_STRATEGY_CONTEXT_LAST_COLUMN);
 
     // StrategyIndex
-    appendStringTableData(outputStream, "strategyIndex", GAME_STRATEGY_CONTEXT_KEY_COLUMN_LENGTH);
-    appendDecTableData(outputStream, context->strategyIndex, GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
+    appendStringTableData(outputStream, "strategyId", GAME_STRATEGY_CONTEXT_KEY_COLUMN_LENGTH);
+    appendDecTableData(outputStream, context->strategyId, GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
     appendStringTableData(outputStream, "-", GAME_STRATEGY_CONTEXT_UNIT_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, GAME_STRATEGY_CONTEXT_LAST_COLUMN);
 

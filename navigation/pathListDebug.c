@@ -60,10 +60,10 @@ void printPathListHeader(OutputStream* outputStream) {
     appendStringHeader(outputStream, "Hex", PATH_LIST_NAME_HEX_1_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Hex", PATH_LIST_NAME_HEX_2_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", PATH_LIST_COST_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "", PATH_LIST_CP1_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "", PATH_LIST_CP2_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "", PATH_LIST_ANGLE_1_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "", PATH_LIST_ANGLE_2_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "(mm)", PATH_LIST_CP1_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "(mm)", PATH_LIST_CP2_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "(deg)", PATH_LIST_ANGLE_1_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "(deg)", PATH_LIST_ANGLE_2_COLUMN_LENGTH);
 
     appendStringHeader(outputStream, "", PATH_LIST_ACCELERATION_FACTOR_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", PATH_LIST_SPEED_FACTOR_COLUMN_LENGTH);
@@ -75,10 +75,36 @@ void printPathListHeader(OutputStream* outputStream) {
 
 void printPathTable(OutputStream* outputStream, PathData* pathData, unsigned int index) {
 	appendDecTableData(outputStream, index, PATH_LIST_INDEX_COLUMN_LENGTH);
-    appendFixedCharArrayTableData(outputStream, &(pathData->location1->name), PATH_LIST_NAME_1_COLUMN_LENGTH);
-    appendFixedCharArrayTableData(outputStream, &(pathData->location2->name), PATH_LIST_NAME_2_COLUMN_LENGTH);
-    appendHexFixedCharArrayTableData(outputStream, &(pathData->location1->name), PATH_LIST_NAME_HEX_1_COLUMN_LENGTH);
-    appendHexFixedCharArrayTableData(outputStream, &(pathData->location2->name), PATH_LIST_NAME_HEX_2_COLUMN_LENGTH);
+    Location* location1 = pathData->location1;
+    Location* location2 = pathData->location2;
+
+    // Location Name
+    if (location1 != NULL) {
+        appendFixedCharArrayTableData(outputStream, &(pathData->location1->name), PATH_LIST_NAME_1_COLUMN_LENGTH);
+    }
+    else {
+        appendStringTableData(outputStream, "", PATH_LIST_NAME_1_COLUMN_LENGTH);
+    }
+    if (location2 != NULL) {
+        appendFixedCharArrayTableData(outputStream, &(pathData->location2->name), PATH_LIST_NAME_2_COLUMN_LENGTH);
+    }
+    else {
+        appendStringTableData(outputStream, "", PATH_LIST_NAME_2_COLUMN_LENGTH);
+    }
+
+    // Location Name in Hex
+    if (location1 != NULL) {
+        appendHexFixedCharArrayTableData(outputStream, &(pathData->location1->name), PATH_LIST_NAME_HEX_1_COLUMN_LENGTH);
+    }
+    else {
+        appendStringTableData(outputStream, "", PATH_LIST_NAME_HEX_1_COLUMN_LENGTH);
+    }
+    if (location2 != NULL) {
+        appendHexFixedCharArrayTableData(outputStream, &(pathData->location2->name), PATH_LIST_NAME_HEX_2_COLUMN_LENGTH);
+    }
+    else {
+        appendStringTableData(outputStream, "", PATH_LIST_NAME_HEX_2_COLUMN_LENGTH);
+    }
 	appendDecfTableData(outputStream, pathData->cost, PATH_LIST_COST_COLUMN_LENGTH);
 	appendDecfTableData(outputStream, pathData->controlPointDistance1, PATH_LIST_CP1_COLUMN_LENGTH);
 	appendDecfTableData(outputStream, pathData->controlPointDistance2, PATH_LIST_CP2_COLUMN_LENGTH);
@@ -97,6 +123,9 @@ void printPathListTable(OutputStream* outputStream, PathList* pathList) {
 	for (i = 0; i < size; i++) {
 		PathData* pathData = getPath(pathList, i);
 		printPathTable(outputStream, pathData, i);
+        if (i % 5 == 4) {
+            appendTableHeaderSeparatorLine(outputStream);
+        }
 	}
 	appendTableHeaderSeparatorLine(outputStream);
 }

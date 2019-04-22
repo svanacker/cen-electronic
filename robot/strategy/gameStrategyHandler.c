@@ -55,26 +55,25 @@ void clearCurrentTarget(GameStrategyContext* gameStrategyContext) {
     gameStrategyContext->currentTargetAction = NULL;
 }
 
-/**
- * @private
- */
-void findNextTarget(GameStrategyContext* gameStrategyContext) {
+GameTarget* findNextTarget(GameStrategyContext* gameStrategyContext) {
     Navigation* navigation = gameStrategyContext->navigation;
     unsigned int targetHandledCount = getTargetHandledCount();
     if (targetHandledCount >= gameStrategyContext->maxTargetToHandle) {
         clearCurrentTarget(gameStrategyContext);
-        return;
+        return NULL;
     }
 
     // global points
     LocationList* navigationLocationList = getNavigationLocationList(navigation);
 
     Point* robotPosition = gameStrategyContext->robotPosition;
+
     // Find nearest location
+    // TODO : Nearest Location in time of flight might not be the best => Replace by the time to reach it !
     gameStrategyContext->nearestLocation = getNearestLocation(navigationLocationList, robotPosition->x, robotPosition->y);
 
     // Find best Target, store LocationList in the context in currentTrajectory
-    computeBestNextTarget(gameStrategyContext);
+    return computeBestNextTarget(gameStrategyContext);
 }
 
 void markTargetAsHandled(GameStrategyContext* gameStrategyContext) {
@@ -441,10 +440,11 @@ void handleCollision(GameStrategyContext* gameStrategyContext) {
 
 bool nextStep(GameStrategyContext* gameStrategyContext) {
     unsigned int counter = 0;
-    while (1) {
+    while (true) {
         counter++;
         GameTargetAction* targetAction = gameStrategyContext->currentTargetAction;
     
+        // If there is some locations
         if (getLocationCount(gameStrategyContext->currentTrajectory) != 0) {
             if (!handleCurrentTrajectory(gameStrategyContext)) {
                 continue;
@@ -460,7 +460,7 @@ bool nextStep(GameStrategyContext* gameStrategyContext) {
         }
         else if (targetAction == NULL) {
             // no target, search a new one
-            findNextTarget(gameStrategyContext);
+            gameStrategyContext->currentTarget = findNextTarget(gameStrategyContext);
             if (gameStrategyContext->currentTarget == NULL) {
                 clearCurrentTarget(gameStrategyContext);
                 return false;

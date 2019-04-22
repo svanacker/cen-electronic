@@ -36,11 +36,14 @@
 /** Debug the list of strategies. */
 #define COMMAND_STRATEGY_LIST_DEBUG						   'S'
 
-/** Debug a specific strategy Item. */
-#define COMMAND_STRATEGY_ITEM_DEBUG						   's'
+/** Debug the current strategy (other strategies are not loaded). */
+#define COMMAND_CURRENT_STRATEGY_ITEM_LIST_DEBUG	       's'
 
 /** Debug the list of target (but not linked to any Strategy. */
 #define COMMAND_TARGET_LIST_DEBUG                          'T'
+
+/** Get the next target. */
+#define COMMAND_TARGET_NEXT                                't'
 
 /**
 * Interface for Device

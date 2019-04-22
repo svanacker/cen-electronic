@@ -88,4 +88,7 @@ void setConsoleSizeAndBuffer(int width, int height, int bufferWidth, int bufferH
     consoleScreenBufferInfoEx.ColorTable[CONSOLE_COLOR_MAGENTA] = RGB(255, 0, 255);
     consoleScreenBufferInfoEx.ColorTable[CONSOLE_COLOR_GRAY] = RGB(128, 128, 128);
     SetConsoleScreenBufferInfoEx(standardOutputHandle, &consoleScreenBufferInfoEx);
+
+    SetConsoleTextAttribute(standardOutputHandle, CONSOLE_COLOR_WHITE);
+
 }

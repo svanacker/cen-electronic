@@ -29,17 +29,15 @@
 
 // Init
 
+/**
+ * Init the Game Strategy Context.
+*/
 void initStrategyHandler(GameStrategyContext* gmeStrategyContext);
 
 /**
- * Choose the rigth strategy.
- */
-void setStrategy(GameStrategyContext* gmeStrategyContext, int strategyIndex);
-
-/**
- * Returns the strategy context used by the handler.
- */
-GameStrategyContext* getStrategyContext(GameStrategyContext* gmeStrategyContext);
+* Returns the next target to reach by computing the next target to reach.
+*/
+GameTarget* findNextTarget(GameStrategyContext* gameStrategyContext);
 
 /**
  * Do the next step in the strategy. Returns false if nothing was done.

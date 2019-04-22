@@ -8,6 +8,8 @@
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
 
+// LIST MANAGEMENT
+
 void clearTargetActionItemList(GameTargetActionItemList* targetActionItemList) {
     int i;
     int size = targetActionItemList->size;
@@ -22,12 +24,16 @@ void clearTargetActionItemList(GameTargetActionItemList* targetActionItemList) {
 void addTargetActionItem(GameTargetActionItemList* targetActionItemList,
                      GameTargetActionItem* targetActionItem,
                      GameTargetActionFunction* actionItemFunction,
-                     char* name
+                     char* name,
+//                      float timeToAchieve,
+                     enum ActionItemPhasis phasis
 ) {
     unsigned char size = targetActionItemList->size;
     if (size < MAX_TARGET_ACTION_ITEM) {
         targetActionItem->actionItemFunction = actionItemFunction;
         targetActionItem->name = name;
+//      targetActionItem->timeToAchieve = timeToAchieve;
+        targetActionItem->phasis = phasis;
         targetActionItemList->items[size] = targetActionItem;
         targetActionItemList->size++;
     }

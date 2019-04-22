@@ -26,10 +26,18 @@ struct GameStrategyContext;
 typedef struct GameStrategyContext GameStrategyContext;
 
 // Index if no Strategy
-#define NO_STRATEGY_INDEX                                                        0
-#define STRATEGY_1_SIMPLE_PUCK                                                   1
-#define STRATEGY_2_ACCELERATOR                                                   2
-#define STRATEGY_3_ACCELERATOR_GOLDENIUM                                         3
+#define NO_STRATEGY_INDEX                                                      0
+
+// SMALL ROBOT STRATEGY
+#define SMALL_ROBOT_STRATEGY_1_ACCELERATOR                                     1
+#define SMALL_ROBOT_STRATEGY_2_ACCELERATOR_TAKE_GOLDENIUM                      2
+#define SMALL_ROBOT_STRATEGY_3_ACCELERATOR_TAKE_DROP_GOLDENIUM                 3
+
+// BIG ROBOT STRATEGY
+#define BIG_ROBOT_STRATEGY_1_CHAOS                                             1
+#define BIG_ROBOT_STRATEGY_2_BIG_DISTRIBUTOR_LINE_1                            2
+#define BIG_ROBOT_STRATEGY_3_BIG_DISTRIBUTOR_LINE_1_2_3                        3
+#define BIG_ROBOT_STRATEGY_4_CHAOS_BIG_DISTRIBUTOR_LINE_1_2_3                  4
 
 /**
  * Encapsulates the context of the strategy.
@@ -67,8 +75,8 @@ struct GameStrategyContext {
 //    bool mustDoNextStep;
     /** Step status. */
     bool hasMoreNextSteps;
-    /** Strategy index. If strategy = -1 => NO_STRATEGY */
-    signed int strategyIndex;
+    /** Strategy Id. If strategy = 0 => NO_STRATEGY. Be careful, strategy Id <> strategy Index in strategy List */
+    signed int strategyId;
     /** Max target to handle. */
     unsigned char maxTargetToHandle;
     /** Score*/
@@ -94,6 +102,8 @@ void initGameStrategyContext(GameStrategyContext* gameStrategyContext,
                              Point* robotPosition,
                              Point* opponentRobotPosition,
                              Point* lastObstaclePosition);
+
+
 
 
 /**

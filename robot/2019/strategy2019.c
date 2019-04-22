@@ -106,35 +106,87 @@ PathData* weighingMachineFront_to_weighingMachineDrop_Path;
 static GameTarget acceleratorTarget;
 static GameTarget goldeniumTakeTarget;
 static GameTarget goldeniumDropTarget;
+static GameTarget chaosTarget;
+static GameTarget bigDistributorLine1Target;
+static GameTarget bigDistributorLine2Target;
+static GameTarget bigDistributorLine3Target;
 
 // ------------------------------------------------------- TARGETS ACTIONS ---------------------------------------------------------------
 
 static GameTargetAction acceleratorTargetAction;
+
 static GameTargetAction goldeniumTakeTargetAction;
 static GameTargetAction goldeniumDropTargetAction;
 
+static GameTargetAction chaosTakeTargetAction;
+static GameTargetAction chaosDropTargetAction;
+
+static GameTargetAction bigDistributorLine1TakeTargetAction;
+static GameTargetAction bigDistributorLine1DropTargetAction;
+
+static GameTargetAction bigDistributorLine2TakeTargetAction;
+static GameTargetAction bigDistributorLine2DropTargetAction;
+
+static GameTargetAction bigDistributorLine3TakeTargetAction;
+static GameTargetAction bigDistributorLine3DropTargetAction;
+
 // ------------------------------------------------------- TARGETS ACTIONS ITEM LIST --------------------------------------------------------
 
+// Small Robot
 static GameTargetActionItemList acceleratorTargetActionItemList;
+
 static GameTargetActionItemList goldeniumTakeTargetActionItemList;
 static GameTargetActionItemList goldeniumDropTargetActionItemList;
 
+// Big Robot
+static GameTargetActionItemList chaosTakeTargetActionItemList;
+static GameTargetActionItemList chaosDropTargetActionItemList;
+
+static GameTargetActionItemList bigDistributorLine1TakeTargetActionItemList;
+static GameTargetActionItemList bigDistributorLine1DropTargetActionItemList;
+
+static GameTargetActionItemList bigDistributorLine2TakeTargetActionItemList;
+static GameTargetActionItemList bigDistributorLine2DropTargetActionItemList;
+
+static GameTargetActionItemList bigDistributorLine3TakeTargetActionItemList;
+static GameTargetActionItemList bigDistributorLine3DropTargetActionItemList;
+
 // ------------------------------------------------------- TARGET ACTION ITEM LIST ---------------------------------------------------
 
+// Small Robot
 static GameTargetActionItem acceleratorTargetActionItem;
+
+static GameTargetActionItem goldeniumPrepareTakeTargetActionItem;
 static GameTargetActionItem goldeniumTakeTargetActionItem;
+
+// Big Robot
+static GameTargetActionItem goldeniumPrepareDropTargetActionItem;
 static GameTargetActionItem goldeniumDropTargetActionItem;
+
+static GameTargetActionItem bigDistributorLine1PrepareTargetActionItem;
+static GameTargetActionItem bigDistributorLine1TargetActionItem;
+
+static GameTargetActionItem bigDistributorLine2PrepareTargetActionItem;
+static GameTargetActionItem bigDistributorLine2TargetActionItem;
+
+static GameTargetActionItem bigDistributorLine3PrepareTargetActionItem;
+static GameTargetActionItem bigDistributorLine3TargetActionItem;
 
 // ------------------------------------------------------- STRATEGIES ----------------------------------------------------------------
 
 // strategies
 // Strategy 0 = Homologation  => No Strategy
-// Puck
-static GameStrategy strategy1;
-// Accelerator only
-static GameStrategy strategy2;
-// Accelerator + Goldenium (take + drop)
-static GameStrategy strategy3;
+
+// SMALL ROBOT
+static GameStrategy smallRobotStrategy1Accelerator;
+static GameStrategy smallRobotStrategy2AcceleratorTakeGoldenium;
+static GameStrategy smallRobotStrategy3AcceleratorTakeDropGoldenium;
+
+// BIG ROBOT
+static GameStrategy bigRobotStrategy1Chaos;
+static GameStrategy bigRobotStrategy2BigDistributorLine1;
+static GameStrategy bigRobotStrategy3BigDistributorLine123;
+static GameStrategy bigRobotStrategy4ChaosBigDistributorLine123;
 
 // ------------------------------------------------------- STRATEGY ITEM -------------------------------------------------------------
 
@@ -142,6 +194,11 @@ static GameStrategy strategy3;
 static GameStrategyItem acceleratorStrategyItem;
 static GameStrategyItem takeGoldeniumStrategyItem;
 static GameStrategyItem dropGoldeniumStrategyItem;
+
+static GameStrategyItem chaosStrategyItem;
+static GameStrategyItem bigDistributorLine1StrategyItem;
+static GameStrategyItem bigDistributorLine2StrategyItem;
+static GameStrategyItem bigDistributorLine3StrategyItem;
 
 // ------------------------------------------------------- INITIALIZATION ------------------------------------------------------------
 
@@ -240,7 +297,7 @@ PathData* addNavigationPathWithColor(
     return pathData;
 }
 
-void initPaths2019(GameStrategyContext* gameStrategyContext, int index) {
+void initPaths2019(GameStrategyContext* gameStrategyContext) {
     Navigation* navigation = gameStrategyContext->navigation;
     
     RobotConfig* robotConfig = gameStrategyContext->robotConfig;
@@ -468,7 +525,10 @@ void initTargets2019(GameStrategyContext* gameStrategyContext) {
     RobotConfig* robotConfig = gameStrategyContext->robotConfig;
     enum RobotType robotType = robotConfig->robotType;
     if (robotType == ROBOT_TYPE_BIG) {
-        // TODO
+        addGameTarget(&acceleratorTarget, "CHAOS_TARGET", SCORE_POINT_2019_CHAOS_5_PUNK, chaosFrontLocation);
+        addGameTarget(&bigDistributorLine1Target, "BIG DIST 1", SCORE_POINT_2019_ADD_ATOM_ACCELERATOR * 2, bigDistributorLine1FrontLocation);
+        addGameTarget(&bigDistributorLine2Target, "BIG DIST 2", SCORE_POINT_2019_ADD_ATOM_ACCELERATOR * 2, bigDistributorLine2FrontLocation);
+        addGameTarget(&bigDistributorLine3Target, "BIG DIST 3", SCORE_POINT_2019_ADD_ATOM_ACCELERATOR * 2, bigDistributorLine3FrontLocation);
     }
     else if (robotType == ROBOT_TYPE_SMALL) {
         addGameTarget(&acceleratorTarget, "ACC_TARGET", SCORE_POINT_2019_LAUNCH_BLUIUM_IN_ACCELERATOR, acceleratorFrontLocation);
@@ -478,12 +538,32 @@ void initTargets2019(GameStrategyContext* gameStrategyContext) {
 }
 
 void initTargetActions2019(GameStrategyContext* gameStrategyContext) {
-    // ACCELERATOR TARGET
-    addTargetAction(&(acceleratorTarget.actionList), &acceleratorTargetAction, acceleratorFrontLocation, acceleratorFrontLocation, ACCELERATOR_ACTION_TIME_TO_ACHIEVE, NULL, &acceleratorTargetActionItemList);
-    // GOLDENIUM TAKE TARGET
-    addTargetAction(&(goldeniumTakeTarget.actionList), &goldeniumTakeTargetAction, goldeniumFrontLocation, goldeniumFrontLocation, GOLDENIUM_TAKE_TIME_TO_ACHIEVE, NULL, &goldeniumTakeTargetActionItemList);
-    // GOLDENIUM DROP TARGET
-    addTargetAction(&(goldeniumDropTarget.actionList), &goldeniumDropTargetAction, weighingMachineFrontLocation, weighingMachineFrontLocation, GOLDENIUM_DROP_TIME_TO_ACHIEVE, NULL, &goldeniumDropTargetActionItemList);
+    RobotConfig* robotConfig = gameStrategyContext->robotConfig;
+    if (robotConfig->robotType == ROBOT_TYPE_SMALL) {
+        // ACCELERATOR TARGET
+        addTargetAction(&(acceleratorTarget.actionList), &acceleratorTargetAction, acceleratorFrontLocation, acceleratorFrontLocation, ACCELERATOR_ACTION_TIME_TO_ACHIEVE, NULL, &acceleratorTargetActionItemList);
+        // GOLDENIUM TAKE TARGET
+        addTargetAction(&(goldeniumTakeTarget.actionList), &goldeniumTakeTargetAction, goldeniumFrontLocation, goldeniumFrontLocation, GOLDENIUM_TAKE_TIME_TO_ACHIEVE, NULL, &goldeniumTakeTargetActionItemList);
+        // GOLDENIUM DROP TARGET
+        addTargetAction(&(goldeniumDropTarget.actionList), &goldeniumDropTargetAction, weighingMachineFrontLocation, weighingMachineFrontLocation, GOLDENIUM_DROP_TIME_TO_ACHIEVE, NULL, &goldeniumDropTargetActionItemList);
+    }
+    else if (robotConfig->robotType == ROBOT_TYPE_BIG) {
+        // CHAOS
+        addTargetAction(&(chaosTarget.actionList), &chaosTakeTargetAction, chaosFrontLocation, chaosFrontLocation, CHAOS_TAKE_TIME_TO_ACHIEVE, NULL, &chaosTakeTargetActionItemList);
+        addTargetAction(&(chaosTarget.actionList), &chaosDropTargetAction, chaosFrontLocation, chaosFrontLocation, CHAOS_DROP_TIME_TO_ACHIEVE, NULL, &chaosDropTargetActionItemList);
+        
+        // BIG DISTRIBUTOR LINE 1
+        addTargetAction(&(bigDistributorLine1Target.actionList), &bigDistributorLine1TakeTargetAction, bigDistributorLine1FrontLocation, bigDistributorLine1FrontLocation, BIG_DISTRIBUTOR_LINE_1_TAKE_TIME_TO_ACHIEVE, NULL, &bigDistributorLine1TakeTargetActionItemList);
+        addTargetAction(&(bigDistributorLine1Target.actionList), &bigDistributorLine1DropTargetAction, acceleratorDropLocation, acceleratorDropLocation, BIG_DISTRIBUTOR_LINE_1_DROP_TIME_TO_ACHIEVE, NULL, &bigDistributorLine1DropTargetActionItemList);
+
+        // BIG DISTRIBUTOR LINE 2
+        addTargetAction(&(bigDistributorLine2Target.actionList), &bigDistributorLine2TakeTargetAction, bigDistributorLine2FrontLocation, bigDistributorLine2FrontLocation, BIG_DISTRIBUTOR_LINE_2_TAKE_TIME_TO_ACHIEVE, NULL, &bigDistributorLine2TakeTargetActionItemList);
+        addTargetAction(&(bigDistributorLine2Target.actionList), &bigDistributorLine2DropTargetAction, acceleratorDropLocation, acceleratorDropLocation, BIG_DISTRIBUTOR_LINE_2_DROP_TIME_TO_ACHIEVE, NULL, &bigDistributorLine2DropTargetActionItemList);
+
+        // BIG DISTRIBUTOR LINE 3
+        addTargetAction(&(bigDistributorLine3Target.actionList), &bigDistributorLine3TakeTargetAction, bigDistributorLine3FrontLocation, bigDistributorLine3FrontLocation, BIG_DISTRIBUTOR_LINE_3_TAKE_TIME_TO_ACHIEVE, NULL, &bigDistributorLine3TakeTargetActionItemList);
+        addTargetAction(&(bigDistributorLine3Target.actionList), &bigDistributorLine3DropTargetAction, acceleratorDropLocation, acceleratorDropLocation, BIG_DISTRIBUTOR_LINE_3_DROP_TIME_TO_ACHIEVE, NULL, &bigDistributorLine3DropTargetActionItemList);
+    }
 }
 
 bool acceleratorArmOn(int* context) {
@@ -518,10 +598,13 @@ bool acceleratorArmOff(int* context) {
     return true;
 }
 
+bool goldeniumPrepareTake(int* context) {
+    moveElevatorDoublePuck();
+    return true;
+}
+
 bool goldeniumTake(int* context) {
     GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
-
-    moveElevatorDoublePuck();
 
     if (isViolet(gameStrategyContext)) {
         forkScanFromLeftToRight();
@@ -548,10 +631,41 @@ bool goldeniumDrop(int* context) {
     return true;
 }
 
+bool bigDistributorLinePrepare(int* context) {
+    // TODO
+    return true;
+}
+
+bool bigDistributorLineTake(int* context) {
+    // TODO
+    return true;
+}
+
+
 void initTargetActionsItems2019(GameStrategyContext* gameStrategyContext) {
-    addTargetActionItem(&acceleratorTargetActionItemList, &acceleratorTargetActionItem, &acceleratorArmOff, "ACC ARM ON");
-    addTargetActionItem(&goldeniumTakeTargetActionItemList, &goldeniumTakeTargetActionItem, &goldeniumTake, "GOLD TAKE");
-    addTargetActionItem(&goldeniumDropTargetActionItemList, &goldeniumDropTargetActionItem, &goldeniumDrop, "GOLD DROP");
+    addTargetActionItem(&acceleratorTargetActionItemList, &acceleratorTargetActionItem, &acceleratorArmOn, "ACC ARM ON", ACTION_ITEM_PHASIS_END_LOCATION);
+    
+    // Goldenium Take
+    addTargetActionItem(&goldeniumTakeTargetActionItemList, &goldeniumPrepareTakeTargetActionItem, &goldeniumPrepareTake, "PREP GOLD TAKE", ACTION_ITEM_PHASIS_START_LOCATION);
+    addTargetActionItem(&goldeniumTakeTargetActionItemList, &goldeniumTakeTargetActionItem, &goldeniumTake, "GOLD TAKE", ACTION_ITEM_PHASIS_END_LOCATION);
+   
+    // Goldenium Drop
+    addTargetActionItem(&goldeniumDropTargetActionItemList, &goldeniumPrepareDropTargetActionItem, &goldeniumDrop, "PREP GOLD DROP", ACTION_ITEM_PHASIS_START_LOCATION);
+    addTargetActionItem(&goldeniumDropTargetActionItemList, &goldeniumDropTargetActionItem, &goldeniumDrop, "GOLD DROP", ACTION_ITEM_PHASIS_END_LOCATION);
+    
+    // Chaos : No specific action to do
+    
+    // Big Distributor 1 Line 1
+    addTargetActionItem(&bigDistributorLine1TakeTargetActionItemList, &bigDistributorLine1PrepareTargetActionItem, &bigDistributorLinePrepare, "PREP DIST 1", ACTION_ITEM_PHASIS_START_LOCATION);
+    addTargetActionItem(&bigDistributorLine1DropTargetActionItemList, &bigDistributorLine1TargetActionItem, &bigDistributorLineTake, "TAKE DIST 1", ACTION_ITEM_PHASIS_END_LOCATION);
+
+    // Big Distributor 1 Line 2
+    addTargetActionItem(&bigDistributorLine2TakeTargetActionItemList, &bigDistributorLine2PrepareTargetActionItem, &bigDistributorLinePrepare, "PREP DIST 2", ACTION_ITEM_PHASIS_START_LOCATION);
+    addTargetActionItem(&bigDistributorLine2DropTargetActionItemList, &bigDistributorLine2TargetActionItem, &bigDistributorLineTake, "TAKE DIST 2", ACTION_ITEM_PHASIS_END_LOCATION);
+
+    // Big Distributor 1 Line 3
+    addTargetActionItem(&bigDistributorLine3TakeTargetActionItemList, &bigDistributorLine3PrepareTargetActionItem, &bigDistributorLinePrepare, "PREP DIST 3", ACTION_ITEM_PHASIS_START_LOCATION);
+    addTargetActionItem(&bigDistributorLine3DropTargetActionItemList, &bigDistributorLine3TargetActionItem, &bigDistributorLineTake, "TAKE DIST 3", ACTION_ITEM_PHASIS_END_LOCATION);
 }
 
 /**
@@ -559,30 +673,73 @@ void initTargetActionsItems2019(GameStrategyContext* gameStrategyContext) {
 */
 void initStrategies2019(GameStrategyContext* gameStrategyContext) {
 	clearGameStrategies();
-	addGameStrategy(&strategy1, "SIMPLE PUCK");
-    addGameStrategy(&strategy2, "ACCELERATOR");
-    addGameStrategy(&strategy3, "ACC / TAKE GOLD / DROP GOLD");
+    RobotConfig* robotConfig = gameStrategyContext->robotConfig;
+    enum RobotType robotType = robotConfig->robotType;
+
+    if (robotType == ROBOT_TYPE_SMALL) {
+        addGameStrategy(&smallRobotStrategy1Accelerator, SMALL_ROBOT_STRATEGY_1_ACCELERATOR,  "ACCELERATOR");
+        addGameStrategy(&smallRobotStrategy2AcceleratorTakeGoldenium, SMALL_ROBOT_STRATEGY_2_ACCELERATOR_TAKE_GOLDENIUM, "ACC / TAKE GOLD");
+        addGameStrategy(&smallRobotStrategy3AcceleratorTakeDropGoldenium, SMALL_ROBOT_STRATEGY_3_ACCELERATOR_TAKE_DROP_GOLDENIUM, "ACC / TAKE DROP GOLD");
+    }
+    else if (robotType == ROBOT_TYPE_BIG) {
+        addGameStrategy(&bigRobotStrategy1Chaos, BIG_ROBOT_STRATEGY_1_CHAOS, "CHAOS");
+        addGameStrategy(&bigRobotStrategy2BigDistributorLine1, BIG_ROBOT_STRATEGY_2_BIG_DISTRIBUTOR_LINE_1, "DIST 1");
+        addGameStrategy(&bigRobotStrategy3BigDistributorLine123, BIG_ROBOT_STRATEGY_3_BIG_DISTRIBUTOR_LINE_1_2_3, "DIST 123");
+        addGameStrategy(&bigRobotStrategy4ChaosBigDistributorLine123, BIG_ROBOT_STRATEGY_4_CHAOS_BIG_DISTRIBUTOR_LINE_1_2_3, "CHAOS / DIST 123");
+        
+    }
 }
 
 GameStrategy* initStrategiesItems2019(GameStrategyContext* gameStrategyContext) {
     // We only load the item relative to the strategy Index chosen
-    unsigned int strategyIndex = gameStrategyContext->strategyIndex;
-    if (strategyIndex == NO_STRATEGY_INDEX) {
+    unsigned int strategyId = gameStrategyContext->strategyId;
+
+    if (strategyId == NO_STRATEGY_INDEX) {
         return NULL;
     }
-    else if (strategyIndex == STRATEGY_1_SIMPLE_PUCK) {
-        // TODO
-        return &strategy1;
+    RobotConfig* robotConfig = gameStrategyContext->robotConfig;
+    enum RobotType robotType = robotConfig->robotType;
+    
+    if (robotType == ROBOT_TYPE_SMALL) {
+        if (strategyId == SMALL_ROBOT_STRATEGY_1_ACCELERATOR) {
+            addGameStrategyItem(&smallRobotStrategy1Accelerator, &acceleratorStrategyItem, &acceleratorTarget);
+            return &smallRobotStrategy1Accelerator;
+        }
+        else if (strategyId == SMALL_ROBOT_STRATEGY_2_ACCELERATOR_TAKE_GOLDENIUM) {
+            addGameStrategyItem(&smallRobotStrategy2AcceleratorTakeGoldenium, &acceleratorStrategyItem, &acceleratorTarget);
+            addGameStrategyItem(&smallRobotStrategy2AcceleratorTakeGoldenium, &takeGoldeniumStrategyItem, &goldeniumTakeTarget);
+            return &smallRobotStrategy2AcceleratorTakeGoldenium;
+        }
+        else if (strategyId == SMALL_ROBOT_STRATEGY_3_ACCELERATOR_TAKE_DROP_GOLDENIUM) {
+            addGameStrategyItem(&smallRobotStrategy3AcceleratorTakeDropGoldenium, &acceleratorStrategyItem, &acceleratorTarget);
+            addGameStrategyItem(&smallRobotStrategy3AcceleratorTakeDropGoldenium, &takeGoldeniumStrategyItem, &goldeniumTakeTarget);
+            addGameStrategyItem(&smallRobotStrategy3AcceleratorTakeDropGoldenium, &dropGoldeniumStrategyItem, &goldeniumDropTarget);
+            return &smallRobotStrategy3AcceleratorTakeDropGoldenium;
+        }
     }
-    else if (strategyIndex == STRATEGY_2_ACCELERATOR) {
-        addGameStrategyItem(&strategy2, &acceleratorStrategyItem, &acceleratorTarget);
-        return &strategy2;
-    }
-    else if (strategyIndex == STRATEGY_3_ACCELERATOR_GOLDENIUM) {
-        addGameStrategyItem(&strategy3, &acceleratorStrategyItem, &acceleratorTarget);
-        addGameStrategyItem(&strategy3, &takeGoldeniumStrategyItem, &goldeniumTakeTarget);
-        addGameStrategyItem(&strategy3, &dropGoldeniumStrategyItem, &goldeniumDropTarget);
-        return &strategy3;
+    else if (robotType == ROBOT_TYPE_BIG) {
+        if (strategyId == BIG_ROBOT_STRATEGY_1_CHAOS) {
+            addGameStrategyItem(&bigRobotStrategy1Chaos, &chaosStrategyItem, &chaosTarget);
+            return &bigRobotStrategy1Chaos;
+        }
+        else if (strategyId == BIG_ROBOT_STRATEGY_2_BIG_DISTRIBUTOR_LINE_1) {
+            addGameStrategyItem(&bigRobotStrategy2BigDistributorLine1, &bigDistributorLine1StrategyItem, &bigDistributorLine1Target);
+            return &bigRobotStrategy2BigDistributorLine1;
+        }
+        else if (strategyId == BIG_ROBOT_STRATEGY_3_BIG_DISTRIBUTOR_LINE_1_2_3) {
+            addGameStrategyItem(&bigRobotStrategy3BigDistributorLine123, &bigDistributorLine1StrategyItem, &bigDistributorLine1Target);
+            addGameStrategyItem(&bigRobotStrategy3BigDistributorLine123, &bigDistributorLine2StrategyItem, &bigDistributorLine2Target);
+            addGameStrategyItem(&bigRobotStrategy3BigDistributorLine123, &bigDistributorLine3StrategyItem, &bigDistributorLine3Target);
+            return &bigRobotStrategy3BigDistributorLine123;
+        }
+        else if (strategyId == BIG_ROBOT_STRATEGY_4_CHAOS_BIG_DISTRIBUTOR_LINE_1_2_3) {
+            addGameStrategyItem(&bigRobotStrategy1Chaos, &chaosStrategyItem, &chaosTarget);
+            addGameStrategyItem(&bigRobotStrategy3BigDistributorLine123, &bigDistributorLine1StrategyItem, &bigDistributorLine1Target);
+            addGameStrategyItem(&bigRobotStrategy3BigDistributorLine123, &bigDistributorLine2StrategyItem, &bigDistributorLine2Target);
+            addGameStrategyItem(&bigRobotStrategy3BigDistributorLine123, &bigDistributorLine3StrategyItem, &bigDistributorLine3Target);
+            return &bigRobotStrategy3BigDistributorLine123;
+        }
+        
     }
     return NULL;
 }
@@ -594,7 +751,7 @@ void initStrategy2019(GameStrategyContext* gameStrategyContext) {
     showGameStrategyContextTeamColorAndStrategy(gameStrategyContext);
 
 	initLocations2019(gameStrategyContext);
-	initPaths2019(gameStrategyContext, gameStrategyContext->strategyIndex);
+	initPaths2019(gameStrategyContext);
 
 	initTargets2019(gameStrategyContext);
 	initTargetActions2019(gameStrategyContext);

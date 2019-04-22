@@ -25,9 +25,10 @@ void clearGameStrategies() {
     strategies.size = 0;
 }
 
-void addGameStrategy(GameStrategy* strategy, char* strategyName) {
+void addGameStrategy(GameStrategy* strategy, unsigned int strategyId, char* strategyName) {
     unsigned char size = strategies.size;
     if (size < MAX_STRATEGY) {
+        strategy->strategyId = strategyId,
         strategy->name = strategyName;
         strategies.strategies[size] = strategy;
         strategies.size++;

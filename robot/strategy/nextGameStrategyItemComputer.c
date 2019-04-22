@@ -22,23 +22,23 @@
 #include "../../navigation/locationList.h"
 #include "../../navigation/location.h"
 
-void computeBestNextTarget(GameStrategyContext* strategyContext) {
-
+GameTarget* computeBestNextTarget(GameStrategyContext* strategyContext) {
+    GameTarget* result = NULL;
     GameStrategy* gameStrategy = strategyContext->gameStrategy;
     Navigation* navigation = strategyContext->navigation;
-    // float elapsedMatchTime = strategyContext->elapsedMatchTime;
     Location* currentLocation = strategyContext->nearestLocation;
 
-    // Opponent opponent = RobotUtils.getRobotAttribute(Opponent.class, servicesProvider);
-    float maxGain = 0.0f;
+    float maxOpportunityFactor = 0.0f;
     // Loop on potential target
     int strategyItemIndex;
     int gameStrategyItemCount = getStrategyItemCount(gameStrategy);
+
+    // Loop every StrategyItem with Target
     for (strategyItemIndex = 0; strategyItemIndex < gameStrategyItemCount; strategyItemIndex++) {
         GameStrategyItem* strategyItem = getStrategyItem(gameStrategy, strategyItemIndex);
         
         GameTarget* target = strategyItem->target;
-    
+        // Don't handle it if not available
         if (target->status != TARGET_AVAILABLE) {
             continue;
         }
@@ -46,52 +46,53 @@ void computeBestNextTarget(GameStrategyContext* strategyContext) {
         int actionIndex;
         GameTargetActionList* actionList = &(target->actionList);
         int targetActionCount = getGameTargetActionCount(actionList);
+
+        // To avoid DIVIDE_BY_ZERO Error, we consider that the base cost is 1.0f
+        float cost = 1.0f;  
+
+        // For every Action of the target, compute the cost
         for (actionIndex = 0; actionIndex < targetActionCount; actionIndex++) {
+
             GameTargetAction* targetAction = getGameTargetAction(actionList, actionIndex);
             Location* startLocation = targetAction->startLocation;
-            float distanceCost = computeBestPath(navigation, currentLocation, startLocation);
-            
-            // LOG costs
-            //printLocationList(getInfoOutputStreamLogger(), "Result=", &(strategyContext->currentTrajectory));
+            Location* endLocation = targetAction->endLocation;
 
-            // float gain = 0.0f; //targetGain(target, action, distance, elapsedMatchTime, 0.0, 0.0);
-            // log(gainData, target, gain);
+            // First, we compute the cost to go to the beginning of the start Location of the first action
+            if (actionIndex == 0) {
+                cost += computeBestPath(navigation, strategyContext->nearestLocation, startLocation);
+            }
 
-            #ifdef NEXT_GAME_STRATEGY_ITEM_COMPUTER_DEBUG
-                OutputStream outputStream = getInfoOutputStreamLogger();
-                appendKeyAndName(outputStream, "start->location:", currentLocation->name);
-                appendKeyAndName(outputStream, ", end->location:", startLocation->name);
-                appendKeyAndName(outputStream, ", target:", target->name);
-                appendStringAndDec(outputStream, ", distanceCost=", distanceCost);
-                println(outputStream);
-            #endif
+            // Add the cost of each moving to do the action
+            cost += computeBestPath(navigation, startLocation, endLocation);
 
-            if (distanceCost >= MAX_COST) {
+            // Add the equivalent of timeToAchieve with cost (could vary because the speed / acceleration factor could be change)
+            // TODO : Manage the equivalence factor : 1 second = equivalent of going a cost of 500.0f
+            cost += 500.0f * targetAction->timeToAchieve;
+
+            if (cost >= MAX_COST) {
                 continue;
             }
-            float gain = 1000.0f / distanceCost;
-            if (gain > maxGain) {
-                maxGain = gain;
-                strategyContext->currentTargetAction = targetAction;
-                strategyContext->currentTarget = target;
-            }
         }
+        // The opportunity is the gain divide by the cost
+        target->currentComputedOpportunityFactor = target->gain / cost;
+
+        // Find the max opportunity
+        if (target->currentComputedOpportunityFactor > maxOpportunityFactor) {
+            maxOpportunityFactor = target->currentComputedOpportunityFactor;
+            result = target;
+        }
+
+        return result;
     }
 
     // updates the trajectory to fit to the best target
+    /*
     GameTargetAction* targetAction = strategyContext->currentTargetAction;
     if (targetAction != NULL) {
         Location* startLocation = targetAction->startLocation;
-        computeBestPath(navigation, currentLocation, startLocation);
+        result = computeBestPath(navigation, currentLocation, startLocation);
         // TODO : printLocationLinkedPath(getInfoOutputStreamLogger(), "Result=", &(strategyContext->currentTrajectory));
     }
-
-    #ifdef NEXT_GAME_STRATEGY_ITEM_COMPUTER_DEBUG
-        if (strategyContext->targetAction != NULL) {
-            OutputStream outputStream = getInfoOutputStreamLogger();
-            appendStringAndDecf(outputStream, "cost=", maxGain);
-            printGameTarget(outputStream, bestTarget, false);
-            printLocationList(outputStream, ", currentTrajectory:", &(strategyContext->currentTrajectory));
-        }
-    #endif
+    */
+    return result;
 }

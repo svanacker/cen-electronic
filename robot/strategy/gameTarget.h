@@ -20,6 +20,8 @@ typedef struct GameTarget {
     float potentialGain;
 	// Returns the real gain that we actually have
 	float gain;
+    // Returns the current estimation (by calling computeBestNextTarget before)
+    float currentComputedOpportunityFactor;
     // availability status of the target
     enum GameTargetStatus status;    
     // Returns the position of the target on the gameboard

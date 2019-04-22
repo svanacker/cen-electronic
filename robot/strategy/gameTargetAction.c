@@ -9,7 +9,7 @@
 void clearTargetAction(GameTargetAction* targetAction) {
     targetAction->startLocation = NULL;
     targetAction->endLocation = NULL;
-    targetAction->timeToAchieve = 0;
+    targetAction->timeToAchieve = 0.0f;
     targetAction->pathData = NULL;
     if (targetAction->actionItemList != NULL) {
         clearTargetActionItemList(targetAction->actionItemList);

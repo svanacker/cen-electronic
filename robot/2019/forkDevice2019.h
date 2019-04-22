@@ -32,6 +32,7 @@
 // Elevator Servo Value
 #define FORK_2019_ELEVATOR_SPEED_FACTOR                                     0xFF
 #define FORK_2019_ELEVATOR_BOTTOM_SERVO_VALUE                             0x0B00
+#define FORK_2019_ELEVATOR_INIT_POSITION_SERVO_VALUE                      0x05DC
 #define FORK_2019_ELEVATOR_DOUBLE_PUCK_SERVO_VALUE                        0x0500
 #define FORK_2019_ELEVATOR_UP_SERVO_VALUE                                 0x0200
 

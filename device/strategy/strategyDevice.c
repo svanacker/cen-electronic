@@ -35,6 +35,7 @@
 #include "../../robot/strategy/gameStrategyListDebug.h"
 #include "../../robot/strategy/gameStrategyItem.h"
 #include "../../robot/strategy/gameTargetListDebug.h"
+#include "../../robot/strategy/gameStrategyHandler.h"
 
 #include "../../robot/2019/strategy2019.h"
 #include "../../robot/config/robotConfig.h"
@@ -103,16 +104,16 @@ void deviceStrategyHandleRawData(char commandHeader, InputStream* inputStream, O
         printGameStrategyTableList(debugOutputStream);
 	}
 	// Specific Strategy
-	else if (commandHeader == COMMAND_STRATEGY_ITEM_DEBUG) {
-		int strategyIndex = readHex2(inputStream);
-        ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_STRATEGY_ITEM_DEBUG);
+	else if (commandHeader == COMMAND_CURRENT_STRATEGY_ITEM_LIST_DEBUG) {
+        ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_CURRENT_STRATEGY_ITEM_LIST_DEBUG);
+        GameStrategyContext* context = getStrategyDeviceGameStrategyContext();
+        GameStrategy* gameStrategy = context->gameStrategy;
         OutputStream* debugOutputStream = getInfoOutputStreamLogger();
-        if (strategyIndex == 0) {
+        if (gameStrategy == NULL) {
             appendString(debugOutputStream, "Strategy 0 => NO STRATEGY");
             return;
         }
         // Index are 0-based
-		GameStrategy* gameStrategy = getGameStrategy(strategyIndex - 1);
         printGameStrategyTable(debugOutputStream, gameStrategy);
 	}
     // next step
@@ -191,12 +192,24 @@ void deviceStrategyHandleRawData(char commandHeader, InputStream* inputStream, O
         GameStrategyContext* context = getStrategyDeviceGameStrategyContext();
         appendHex4(outputStream, context->score);
     }
-    // TARGET LIST
+    // TARGET 
     else if (commandHeader == COMMAND_TARGET_LIST_DEBUG) {
         ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_TARGET_LIST_DEBUG);
         OutputStream* debugOutputStream = getInfoOutputStreamLogger();
         GameTargetList* gameTargetList = getGameTargetList();
         printGameTargetListTable(gameTargetList, debugOutputStream);
+    }
+    else if (commandHeader == COMMAND_TARGET_NEXT) {
+        ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_TARGET_NEXT);
+        GameStrategyContext* context = getStrategyDeviceGameStrategyContext();
+        GameTarget* gameTarget = findNextTarget(context);
+        OutputStream* debugOutputStream = getInfoOutputStreamLogger();
+        if (gameTarget != NULL) {
+            appendString(debugOutputStream, gameTarget->name);
+        }
+        else {
+            appendString(debugOutputStream, "TARGET IS NULL !");
+        }
     }
 }
 

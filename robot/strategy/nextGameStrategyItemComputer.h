@@ -14,6 +14,6 @@
 /**
  * Computes the next targetAction depending on the game strategy Context.
  */
-void computeBestNextTarget(GameStrategyContext* strategyContext);
+GameTarget* computeBestNextTarget(GameStrategyContext* strategyContext);
 
 #endif

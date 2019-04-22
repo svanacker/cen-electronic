@@ -55,7 +55,9 @@ void targetActionItemListResetIterator(GameTargetActionItemList* targetActionIte
 void addTargetActionItem(GameTargetActionItemList* targetActionItemList,
                      GameTargetActionItem* targetActionItem,
                      GameTargetActionFunction* function,
-                     char* name
+                     char* name,
+//                    float timeToAchieve,
+                     enum ActionItemPhasis phasis
 );
 
 /**

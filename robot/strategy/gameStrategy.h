@@ -14,6 +14,8 @@
  * Encapsulates the strategy.
  */
 typedef struct GameStrategy {
+    /** Id of the strategy. */
+    unsigned int strategyId;
     /** Name of the strategy. */
     char* name;
     /** Elements of strategy. */

@@ -33,7 +33,7 @@ void clearGameStrategies();
  * Add a strategy to the list.
  * @param strategy the strategy to add to the list
  */
-void addGameStrategy(GameStrategy* strategy, char* name);
+void addGameStrategy(GameStrategy* strategy, unsigned int strategyId, char* name);
 
 /**
  * Get the strategy at index.
