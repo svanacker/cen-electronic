@@ -525,15 +525,15 @@ void initTargets2019(GameStrategyContext* gameStrategyContext) {
     RobotConfig* robotConfig = gameStrategyContext->robotConfig;
     enum RobotType robotType = robotConfig->robotType;
     if (robotType == ROBOT_TYPE_BIG) {
-        addGameTarget(&acceleratorTarget, "CHAOS_TARGET", SCORE_POINT_2019_CHAOS_5_PUNK, chaosFrontLocation);
-        addGameTarget(&bigDistributorLine1Target, "BIG DIST 1", SCORE_POINT_2019_ADD_ATOM_ACCELERATOR * 2, bigDistributorLine1FrontLocation);
-        addGameTarget(&bigDistributorLine2Target, "BIG DIST 2", SCORE_POINT_2019_ADD_ATOM_ACCELERATOR * 2, bigDistributorLine2FrontLocation);
-        addGameTarget(&bigDistributorLine3Target, "BIG DIST 3", SCORE_POINT_2019_ADD_ATOM_ACCELERATOR * 2, bigDistributorLine3FrontLocation);
+        addGameTarget(&chaosTarget, "CHAOS_TARGET", SCORE_POINT_2019_CHAOS_5_PUNK, chaosFrontLocation, rediumDropZoneLocation);
+        addGameTarget(&bigDistributorLine1Target, "BIG DIST 1", SCORE_POINT_2019_ADD_ATOM_ACCELERATOR * 2, bigDistributorLine1FrontLocation, acceleratorDropLocation);
+        addGameTarget(&bigDistributorLine2Target, "BIG DIST 2", SCORE_POINT_2019_ADD_ATOM_ACCELERATOR * 2, bigDistributorLine2FrontLocation, acceleratorDropLocation);
+        addGameTarget(&bigDistributorLine3Target, "BIG DIST 3", SCORE_POINT_2019_ADD_ATOM_ACCELERATOR * 2, bigDistributorLine3FrontLocation, acceleratorDropLocation);
     }
     else if (robotType == ROBOT_TYPE_SMALL) {
-        addGameTarget(&acceleratorTarget, "ACC_TARGET", SCORE_POINT_2019_LAUNCH_BLUIUM_IN_ACCELERATOR, acceleratorFrontLocation);
-        addGameTarget(&goldeniumTakeTarget, "GOLD_TAKE_TARGET", SCORE_POINT_2019_EXTRACT_GOLDENIUM, goldeniumFrontLocation);
-        addGameTarget(&goldeniumDropTarget, "GOLD_DROP_TARGET", SCORE_POINT_2019_WEIGHING_MACHINE_GOLDENIUM, weighingMachineFrontLocation);
+        addGameTarget(&acceleratorTarget, "ACC_TARGET", SCORE_POINT_2019_LAUNCH_BLUIUM_IN_ACCELERATOR, acceleratorFrontLocation, acceleratorFrontLocation);
+        addGameTarget(&goldeniumTakeTarget, "GOLD_TAKE_TARGET", SCORE_POINT_2019_EXTRACT_GOLDENIUM, goldeniumFrontLocation, goldeniumFrontLocation);
+        addGameTarget(&goldeniumDropTarget, "GOLD_DROP_TARGET", SCORE_POINT_2019_WEIGHING_MACHINE_GOLDENIUM, weighingMachineFrontLocation, weighingMachineFrontLocation);
     }
 }
 
@@ -733,11 +733,11 @@ GameStrategy* initStrategiesItems2019(GameStrategyContext* gameStrategyContext) 
             return &bigRobotStrategy3BigDistributorLine123;
         }
         else if (strategyId == BIG_ROBOT_STRATEGY_4_CHAOS_BIG_DISTRIBUTOR_LINE_1_2_3) {
-            addGameStrategyItem(&bigRobotStrategy1Chaos, &chaosStrategyItem, &chaosTarget);
-            addGameStrategyItem(&bigRobotStrategy3BigDistributorLine123, &bigDistributorLine1StrategyItem, &bigDistributorLine1Target);
-            addGameStrategyItem(&bigRobotStrategy3BigDistributorLine123, &bigDistributorLine2StrategyItem, &bigDistributorLine2Target);
-            addGameStrategyItem(&bigRobotStrategy3BigDistributorLine123, &bigDistributorLine3StrategyItem, &bigDistributorLine3Target);
-            return &bigRobotStrategy3BigDistributorLine123;
+            addGameStrategyItem(&bigRobotStrategy4ChaosBigDistributorLine123, &chaosStrategyItem, &chaosTarget);
+            addGameStrategyItem(&bigRobotStrategy4ChaosBigDistributorLine123, &bigDistributorLine1StrategyItem, &bigDistributorLine1Target);
+            addGameStrategyItem(&bigRobotStrategy4ChaosBigDistributorLine123, &bigDistributorLine2StrategyItem, &bigDistributorLine2Target);
+            addGameStrategyItem(&bigRobotStrategy4ChaosBigDistributorLine123, &bigDistributorLine3StrategyItem, &bigDistributorLine3Target);
+            return &bigRobotStrategy4ChaosBigDistributorLine123;
         }
         
     }

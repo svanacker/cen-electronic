@@ -228,6 +228,7 @@ void clearLastError();
 #define TOO_MUCH_STRATEGIES                                               0x5010
 #define TOO_MUCH_STRATEGY_ITEMS                                           0x5020
 #define TOO_MUCH_TARGETS                                                  0x5030
+#define TARGET_IS_NULL                                                    0x5031
 
 #define TOO_MUCH_LOCATIONS                                                0x5040
 #define LOCATION_LIST_NULL                                                0x5041

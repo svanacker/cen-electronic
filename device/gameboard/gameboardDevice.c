@@ -54,6 +54,12 @@ void deviceGameboardHandleRawData(char commandHeader, InputStream* inputStream, 
         GameBoard* gameBoard = getGameboardDeviceGameBoard();
         gameBoard->showPath = showPath;
     }
+    else if (commandHeader == COMMAND_GAME_BOARD_SHOW_OUTGOING_PATH) {
+        ackCommand(outputStream, GAME_BOARD_DEVICE_HEADER, COMMAND_GAME_BOARD_SHOW_OUTGOING_PATH);
+        bool showOutgoingPath = readBool(inputStream);
+        GameBoard* gameBoard = getGameboardDeviceGameBoard();
+        gameBoard->showOutgoingPath = showOutgoingPath;
+    }
 }
 
 static DeviceDescriptor descriptor = {

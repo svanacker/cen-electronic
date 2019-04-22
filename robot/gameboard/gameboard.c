@@ -15,6 +15,10 @@
 #include "../../motion/extended/bspline.h"
 #include "../../motion/extended/bsplineMotion.h"
 
+#include "../../navigation/navigation.h"
+#include "../../navigation/locationListComputer.h"
+#include "../../navigation/navigationComputer.h"
+
 #include "../../robot/config/robotConfig.h"
 #include "../../robot/strategy/gameTarget.h"
 #include "../../robot/strategy/gameTargetList.h"
@@ -38,6 +42,7 @@ void initGameBoard(GameBoard* gameBoard,
                     GameStrategyContext* gameStrategyContext) {
     gameBoard->showLocation = true;
     gameBoard->showPath = true;
+    gameBoard->showOutgoingPath = false;
     gameBoard->gameBoardElementList = gameBoardElementList;
     gameBoard->gameBoardCurve = gameBoardSplineCurve;
     initGameBoardElementList(gameBoardElementList, gameBoardElementListArray, gameBoardElementListSize);
@@ -136,7 +141,14 @@ void gameboardBorderPrint(GameBoard* gameBoard, int* element) {
 
 void gameTargetPrint(GameBoard* gameBoard, int* element) {
     GameTarget* target = (GameTarget*) element;
-    Location* location = target->location;
+
+    // Start Location
+    Location* startLocation = target->startLocation;
+    drawPointCoordinates(gameBoard, startLocation->x, startLocation->y, 'x');
+
+    // End Location
+    Location* endLocation = target->endLocation;
+
     char c;
     if (target->status == TARGET_AVAILABLE) {
         c = 'X';
@@ -144,7 +156,7 @@ void gameTargetPrint(GameBoard* gameBoard, int* element) {
     else {
         c = 'O';
     }
-    drawPointCoordinates(gameBoard, location->x, location->y, c);
+    drawPointCoordinates(gameBoard, endLocation->x, endLocation->y, c);
 }
 
 void gamePathPrint(GameBoard* gameBoard, int* element, char c) {
@@ -204,6 +216,23 @@ void fillGameBoardCharElements(GameBoard* gameBoard, int* element) {
             PathData* pathData = getPath(pathList, i);
             // We try to use the alphabet to avoid that path could not be easily read
             char c = (char) ((i % 26) + 97);
+            gamePathPrint(gameBoard, (int*)pathData, c);
+        }
+    }
+
+    // Outgoing Paths
+    if (gameBoard->showOutgoingPath) {
+        Navigation* navigation = gameStrategyContext->navigation;
+        Location* nearestLocation = getNearestLocation(navigation->locationList, gameStrategyContext->robotPosition->x, gameStrategyContext->robotPosition->y);
+        updateOutgoingPaths(navigation, nearestLocation);
+        OutgoingPathList* outgoingPathList = navigation->tmpOutgoingPaths;
+        unsigned int outgoingPathSize = outgoingPathList->size;
+        unsigned int i;
+        for (i = 0; i < outgoingPathSize; i++) {
+            OutgoingPathData* outgoingPathData = getOutgoingPath(outgoingPathList, i);
+            PathData* pathData = outgoingPathData->pathData;
+            // We try to use the alphabet to avoid that path could not be easily read
+            char c = (char)((i % 26) + 97);
             gamePathPrint(gameBoard, (int*)pathData, c);
         }
     }

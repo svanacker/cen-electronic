@@ -507,6 +507,7 @@
         <itemPath>../../../navigation/navigationComputer.h</itemPath>
         <itemPath>../../../navigation/outgoingPath.h</itemPath>
         <itemPath>../../../navigation/outgoingPathList.h</itemPath>
+        <itemPath>../../../navigation/locationListComputer.h</itemPath>
       </logicalFolder>
       <logicalFolder name="robot" displayName="robot" projectFiles="true">
         <itemPath>../../../robot/robot.h</itemPath>
@@ -1115,6 +1116,7 @@
         <itemPath>../../../navigation/navigationDebug.c</itemPath>
         <itemPath>../../../navigation/navigationComputer.c</itemPath>
         <itemPath>../../../navigation/outgoingPathList.c</itemPath>
+        <itemPath>../../../navigation/locationListComputer.c</itemPath>
       </logicalFolder>
       <logicalFolder name="robot" displayName="robot" projectFiles="true">
         <itemPath>../../../robot/robot.c</itemPath>

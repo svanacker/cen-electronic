@@ -19,7 +19,7 @@
 #include "gameTargetListDebug.h"
 
 #define GAME_STRATEGY_CONTEXT_KEY_COLUMN_LENGTH     30
-#define GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH   15
+#define GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH   25
 #define GAME_STRATEGY_CONTEXT_UNIT_COLUMN_LENGTH    10
 #define GAME_STRATEGY_CONTEXT_LAST_COLUMN            0
 
@@ -155,6 +155,20 @@ void printGameStrategyContext(OutputStream* outputStream, GameStrategyContext* c
     // nearestLocation
     printGameStrategyContextLocation(outputStream, context->nearestLocation, "nearestLocation", "nearestLocation.x", "nearestLocation.y", "nearestLocation.name");
 
+    // Next Location
+    appendStringTableData(outputStream, "nearestLocation->next", GAME_STRATEGY_CONTEXT_KEY_COLUMN_LENGTH);
+    if (context->nearestLocation != NULL) {
+        appendTableSeparator(outputStream);
+        appendSpace(outputStream);
+        unsigned int charCount = appendLocationLinkedPath(outputStream, context->nearestLocation);
+        appendSpaces(outputStream, GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH - charCount);
+    }
+    else {
+        appendStringTableData(outputStream, "NULL", GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
+    }
+    appendStringTableData(outputStream, "-", GAME_STRATEGY_CONTEXT_UNIT_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, GAME_STRATEGY_CONTEXT_LAST_COLUMN);
+
     // Max target to Handle
     appendStringTableData(outputStream, "maxTargetToHandle", GAME_STRATEGY_CONTEXT_KEY_COLUMN_LENGTH);
     appendDecTableData(outputStream, context->maxTargetToHandle, GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
@@ -173,28 +187,32 @@ void printGameStrategyContext(OutputStream* outputStream, GameStrategyContext* c
     appendStringTableData(outputStream, "-", GAME_STRATEGY_CONTEXT_UNIT_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, GAME_STRATEGY_CONTEXT_LAST_COLUMN);
 
-    
+    // currentTarget->startLocation
+    appendStringTableData(outputStream, "currentTarget->startLocation", GAME_STRATEGY_CONTEXT_KEY_COLUMN_LENGTH);
+    GameTarget* currentTarget = context->currentTarget;
+    if (currentTarget != NULL && currentTarget->startLocation != NULL) {
+        appendStringTableData(outputStream, currentTarget->startLocation->name, GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
+    }
+    else {
+        appendStringTableData(outputStream, "NULL", GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
+    }
+    appendStringTableData(outputStream, "-", GAME_STRATEGY_CONTEXT_UNIT_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, GAME_STRATEGY_CONTEXT_LAST_COLUMN);
+
+    // currentTarget->endLocation
+    appendStringTableData(outputStream, "currentTarget->endLocation", GAME_STRATEGY_CONTEXT_KEY_COLUMN_LENGTH);
+    if (currentTarget != NULL && currentTarget->endLocation != NULL) {
+        appendStringTableData(outputStream, currentTarget->endLocation->name, GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
+    }
+    else {
+        appendStringTableData(outputStream, "NULL", GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
+    }
+    appendStringTableData(outputStream, "-", GAME_STRATEGY_CONTEXT_UNIT_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, GAME_STRATEGY_CONTEXT_LAST_COLUMN);
+
     appendTableHeaderSeparatorLine(outputStream);
+
     println(outputStream);
 
-    // current Target
-    /*
-    appendString(outputStream, "\n\tcurrentTarget=");
-    if (context->currentTarget != NULL) {
-    // TODO printGameTargetTable(outputStream, context->currentTarget, false);
-    }
-    else {
-    appendString(outputStream, "NULL");
-    }
-    */
-
     // currentTrajectory
-    /*
-    if (context->currentTrajectory != NULL) {
-        printLocationListTable(outputStream, context->currentTrajectory);
-    }
-    else {
-        appendString(outputStream, "\n\tcurrentTrajectory=NULL");
-    }
-    */
 }

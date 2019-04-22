@@ -37,7 +37,7 @@
 #define SMALL_ROBOT_START_AREA_ANGLE_DECI_DEG                    ANGLE_DECI_DEG_90
 
 // Accelerator (SMALL ROBOT)
-#define ACCELERATOR_FRONT                                                     "ACC"
+#define ACCELERATOR_FRONT                                                     "ACCE"
 #define ACCELERATOR_FRONT_X                                                     200
 #define ACCELERATOR_FRONT_Y                                                    1700
 #define ACCELERATOR_FRONT_DECI_DEG                                ANGLE_DECI_DEG_90
@@ -55,37 +55,37 @@
 #define GOLDENIUM_FRONT_ANGLE_DECI_DEG                         ANGLE_DECI_DEG_180
 
 // Weighing Machine FRONT
-#define WEIGHING_MACHINE_FRONT                                              "WFM"
+#define WEIGHING_MACHINE_FRONT                                              "WMF"
 #define WEIGHING_MACHINE_FRONT_X                                            1200
 #define WEIGHING_MACHINE_FRONT_Y                                            1300
 #define WEIGHING_MACHINE_FRONT_ANGLE_DECI_DEG                   ANGLE_DECI_DEG_0
 
 // Weighing Machine DROP
-#define WEIGHING_MACHINE_DROP                                              "WDM"
+#define WEIGHING_MACHINE_DROP                                              "WMD"
 #define WEIGHING_MACHINE_DROP_X                                            1500
 #define WEIGHING_MACHINE_DROP_Y                                            1300
 #define WEIGHING_MACHINE_DROP_ANGLE_DECI_DEG                   ANGLE_DECI_DEG_0
 
 // Chaos Zone Front
-#define CHAOS_ZONE_FRONT                                                   "CZF"
+#define CHAOS_ZONE_FRONT                                                   "CZFR"
 #define CHAOS_ZONE_FRONT_X                                                  1250
 #define CHAOS_ZONE_FRONT_Y                                                  1200
 #define CHAOS_ZONE_FRONT_ANGLE_DECI_DEG                       ANGLE_DECI_DEG_225
 
 // Redium Drop Zone
-#define REDIUM_DROP_ZONE                                                   "RDZ"
+#define REDIUM_DROP_ZONE                                                   "RDRZ"
 #define REDIUM_DROP_ZONE_X                                                   550
 #define REDIUM_DROP_ZONE_Y                                                   350
 #define REDIUM_DROP_ZONE_ANGLE_DECI_DEG                       ANGLE_DECI_DEG_225
 
 
 // Key Point to be able to go from BigDistributor to Accelerator Drop Zone
-#define KEY_POINT_1                                                        "KP1"
+#define KEY_POINT_1                                                        "KEP1"
 #define KEY_POINT_1_X                                                       800
 #define KEY_POINT_1_Y                                                       1500
 #define KEY_POINT_1_ANGLE_DECI_DEG                            ANGLE_DECI_DEG_180
 
-#define KEY_POINT_2                                                        "KP2"
+#define KEY_POINT_2                                                        "KEP2"
 #define KEY_POINT_2_X                                                        800
 #define KEY_POINT_2_Y                                                        600
 #define KEY_POINT_2_ANGLE_DECI_DEG                              ANGLE_DECI_DEG_0
@@ -101,7 +101,7 @@
 #define BIG_DISTRIBUTOR_LINE_2_Y                  BIG_DISTRIBUTOR_LINE_1_Y + 200
 #define BIG_DISTRIBUTOR_LINE_2_ANGLE_DECI_DEG                   ANGLE_DECI_DEG_0
 
-#define BIG_DISTRIBUTOR_LINE_3                                            "BDL2"
+#define BIG_DISTRIBUTOR_LINE_3                                            "BDL3"
 #define BIG_DISTRIBUTOR_LINE_3_X                        BIG_DISTRIBUTOR_LINE_1_X
 #define BIG_DISTRIBUTOR_LINE_3_Y                  BIG_DISTRIBUTOR_LINE_2_Y + 200
 #define BIG_DISTRIBUTOR_LINE_3_ANGLE_DECI_DEG                   ANGLE_DECI_DEG_0

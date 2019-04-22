@@ -37,9 +37,4 @@ struct Location {
  */
 bool locationEquals(Location* location1, Location* location2);
 
-/**
- * Print the location on the outputStream.
- */
-void printLocation(OutputStream* outputStream, Location* location);
-
 #endif

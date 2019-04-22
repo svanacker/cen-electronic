@@ -167,8 +167,10 @@ void deviceStrategyHandleRawData(char commandHeader, InputStream* inputStream, O
         context->robotPosition->x = location1->x;
         context->robotPosition->y = location1->y;
         context->robotAngleRadian = path->angleRadian1;
+#ifndef _MSC_VER
         // Must call the motor Board to synchronized the both positions !
         updateMotorBoardRobotPosition(context);
+#endif // !_MSC_VER
     }
     // DO ALL TARGET ACTION ITEM OF AN ACTION
     else if (commandHeader == COMMAND_TARGET_ACTION_DO_ALL_ITEMS) {
@@ -210,6 +212,17 @@ void deviceStrategyHandleRawData(char commandHeader, InputStream* inputStream, O
         else {
             appendString(debugOutputStream, "TARGET IS NULL !");
         }
+    }
+    else if (commandHeader == COMMAND_TARGET_SET_STATUS) {
+        ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_TARGET_SET_STATUS);
+        // target Index
+        unsigned char targetIndex = readHex2(inputStream);
+        GameTarget* gameTarget = getGameTarget(targetIndex);
+        // separator
+        checkIsSeparator(inputStream);
+        // target Status
+        enum GameTargetStatus targetStatus = (enum GameTargetStatus) readHex(inputStream);
+        gameTarget->status = targetStatus;
     }
 }
 

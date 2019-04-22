@@ -84,7 +84,6 @@ int deviceStrategyGetInterface(char commandHeader, DeviceInterfaceMode mode, boo
         if (fillDeviceArgumentList) {
             setFunction("Set Robot Pos/Ang as Path[index]->loc1", 1, 0);
             setArgumentUnsignedHex2(0, "Path Index");
-
         }
         return commandLengthValueForMode(mode, 2, 0);
     }
@@ -131,6 +130,15 @@ int deviceStrategyGetInterface(char commandHeader, DeviceInterfaceMode mode, boo
             setFunctionNoArgumentAndNoResult("target Next");
         }
         return commandLengthValueForMode(mode, 0, 0);
+    }
+    else if (commandHeader == COMMAND_TARGET_SET_STATUS) {
+        if (fillDeviceArgumentList) {
+            setFunction("target Set Status", 3, 0);
+            setArgumentUnsignedHex2(0, "Target Index");
+            setArgumentSeparator(1);
+            setArgumentUnsignedChar1(2, "Status");
+        }
+        return commandLengthValueForMode(mode, 4, 0);
     }
     return DEVICE_HEADER_NOT_HANDLED;
 }

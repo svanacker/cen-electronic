@@ -19,8 +19,8 @@ void printLocationListTable(OutputStream* outputStream, LocationList* locationLi
 void addLocationListTestsData(LocationList* locationList);
 
 /**
-* TODO:
+* Append the list of Name of location linked with next pointer (until the point is null).
 */
-void printLocationLinkedPath(OutputStream* outputStream, Location* startPoint);
+unsigned int appendLocationLinkedPath(OutputStream* outputStream, Location* startPoint);
 
 #endif

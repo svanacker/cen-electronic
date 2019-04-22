@@ -45,6 +45,9 @@
 /** Get the next target. */
 #define COMMAND_TARGET_NEXT                                't'
 
+/** Change the status of a specific Target. */
+#define COMMAND_TARGET_SET_STATUS                          'U'
+
 /**
 * Interface for Device
 */

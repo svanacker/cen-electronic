@@ -10,6 +10,9 @@
 
 #define TARGET_LIST_INDEX_COLUMN_LENGTH                      6
 #define TARGET_LIST_NAME_COLUMN_LENGTH                      25
+#define TARGET_LIST_LOCATION_START_NAME_COLUMN_LENGTH        7
+#define TARGET_LIST_LOCATION_END_NAME_COLUMN_LENGTH          7
+
 #define TARGET_LIST_POINT_X_COLUMN_LENGTH                    8
 #define TARGET_LIST_POINT_Y_COLUMN_LENGTH                    8
 #define TARGET_LIST_POTENTIAL_GAIN_COLUMN_LENGTH             8
@@ -28,8 +31,8 @@ void printGameTargetListHeader(OutputStream* outputStream) {
     // Line 1
     appendStringHeader(outputStream, "index", TARGET_LIST_INDEX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "name", TARGET_LIST_NAME_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "x", TARGET_LIST_POINT_X_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "y", TARGET_LIST_POINT_Y_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "loc", TARGET_LIST_LOCATION_START_NAME_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "loc", TARGET_LIST_LOCATION_END_NAME_COLUMN_LENGTH);
     appendStringHeader(outputStream, "potent.", TARGET_LIST_POTENTIAL_GAIN_COLUMN_LENGTH);
     appendStringHeader(outputStream, "status", TARGET_LIST_STATUS_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Computed. ", TARGET_LIST_COMPUTED_OPPORTUNITY_FACTOR_LENGTH);
@@ -38,8 +41,8 @@ void printGameTargetListHeader(OutputStream* outputStream) {
     // Line 2
     appendStringHeader(outputStream, "", TARGET_LIST_INDEX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", TARGET_LIST_NAME_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "(mm)", TARGET_LIST_POINT_X_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "(mm)", TARGET_LIST_POINT_Y_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "start", TARGET_LIST_LOCATION_START_NAME_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "end", TARGET_LIST_LOCATION_END_NAME_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Gain", TARGET_LIST_POTENTIAL_GAIN_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", TARGET_LIST_STATUS_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Opport.", TARGET_LIST_COMPUTED_OPPORTUNITY_FACTOR_LENGTH);
@@ -48,8 +51,8 @@ void printGameTargetListHeader(OutputStream* outputStream) {
     // Line 3
     appendStringHeader(outputStream, "", TARGET_LIST_INDEX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", TARGET_LIST_NAME_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "", TARGET_LIST_POINT_X_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "", TARGET_LIST_POINT_Y_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "loc", TARGET_LIST_LOCATION_START_NAME_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "loc", TARGET_LIST_LOCATION_END_NAME_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", TARGET_LIST_POTENTIAL_GAIN_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", TARGET_LIST_STATUS_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Factor", TARGET_LIST_COMPUTED_OPPORTUNITY_FACTOR_LENGTH);
@@ -65,19 +68,26 @@ void printGameTargetListHeader(OutputStream* outputStream) {
 void printGameTargetLine(OutputStream* outputStream, unsigned int index, GameTarget* target, bool includeItems) {
     appendDecTableData(outputStream, index, TARGET_LIST_INDEX_COLUMN_LENGTH);
     appendStringTableData(outputStream, target->name, TARGET_LIST_NAME_COLUMN_LENGTH);
-    appendDecfTableData(outputStream, target->location->x, TARGET_LIST_POINT_X_COLUMN_LENGTH);
-    appendDecfTableData(outputStream, target->location->y, TARGET_LIST_POINT_Y_COLUMN_LENGTH);
+    // Start Location
+    if (target->startLocation != NULL) {
+        appendFixedCharArrayTableData(outputStream, &(target->startLocation->name), TARGET_LIST_LOCATION_START_NAME_COLUMN_LENGTH);
+    }
+    else {
+        appendStringTableData(outputStream, "NULL", TARGET_LIST_LOCATION_START_NAME_COLUMN_LENGTH);
+    }
+    // End location
+    if (target->endLocation != NULL) {
+        appendFixedCharArrayTableData(outputStream, &(target->endLocation->name), TARGET_LIST_LOCATION_END_NAME_COLUMN_LENGTH);
+    }
+    else {
+        appendStringTableData(outputStream, "NULL", TARGET_LIST_LOCATION_END_NAME_COLUMN_LENGTH);
+    }
     appendDecfTableData(outputStream, target->potentialGain, TARGET_LIST_POTENTIAL_GAIN_COLUMN_LENGTH);
 
     addGameTargetStatusTableData(outputStream, target->status, TARGET_LIST_STATUS_COLUMN_LENGTH);
     appendDecfTableData(outputStream, target->currentComputedOpportunityFactor, TARGET_LIST_COMPUTED_OPPORTUNITY_FACTOR_LENGTH);
 
     appendEndOfTableColumn(outputStream, TARGET_LIST_LAST_COLUMN_LENGTH);
-    /*
-    if (includeItems) {
-        printGameTargetActionList(outputStream, &(target->actionList));
-    }
-    */
 }
 
 void printGameTargetListTable(GameTargetList* gameTargetList, OutputStream* outputStream) {

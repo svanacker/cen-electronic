@@ -9,6 +9,8 @@
 
 #define COMMAND_GAME_BOARD_SHOW_PATH                  'P'
 
+#define COMMAND_GAME_BOARD_SHOW_OUTGOING_PATH         'O'
+
 /**
 * Interface for Device
 */

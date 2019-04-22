@@ -12,6 +12,8 @@
 
 #include "../../common/commons.h"
 
+#include "../../common/error/error.h"
+
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
 
@@ -27,6 +29,7 @@ GameTarget* computeBestNextTarget(GameStrategyContext* strategyContext) {
     GameTarget* result = NULL;
     GameStrategy* gameStrategy = strategyContext->gameStrategy;
     Navigation* navigation = strategyContext->navigation;
+    Location* currentLocation = strategyContext->nearestLocation;
 
     float maxOpportunityFactor = -1.0f;
     // Loop on potential target
@@ -38,6 +41,10 @@ GameTarget* computeBestNextTarget(GameStrategyContext* strategyContext) {
         GameStrategyItem* strategyItem = getStrategyItem(gameStrategy, strategyItemIndex);
         
         GameTarget* target = strategyItem->target;
+        if (target == NULL) {
+            writeError(TARGET_IS_NULL);
+            continue;
+        }
         // Don't handle it if not available
         if (target->status != TARGET_AVAILABLE) {
             continue;
@@ -81,18 +88,13 @@ GameTarget* computeBestNextTarget(GameStrategyContext* strategyContext) {
             maxOpportunityFactor = target->currentComputedOpportunityFactor;
             result = target;
         }
-
-        return result;
     }
 
     // updates the trajectory to fit to the best target
-    /*
-    GameTargetAction* targetAction = strategyContext->currentTargetAction;
-    if (targetAction != NULL) {
-        Location* startLocation = targetAction->startLocation;
-        result = computeBestPath(navigation, currentLocation, startLocation);
-        // TODO : printLocationLinkedPath(getInfoOutputStreamLogger(), "Result=", &(strategyContext->currentTrajectory));
+    if (result != NULL) {
+        Location* startLocation = result->startLocation;
+        // Recompute the best Path (could be erased by previous compute)
+        computeBestPath(navigation, currentLocation, startLocation);
     }
-    */
     return result;
 }

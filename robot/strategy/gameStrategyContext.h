@@ -87,7 +87,7 @@ struct GameStrategyContext {
     TofSensorList* tofSensorList;
     /** Indicates if the robot is moving (to know if we must stop the robot */
     enum TrajectoryType trajectoryType;
-    /** dummy Counter*/
+    /** dummy Counter */
     unsigned instructionCounter;
 };
 

@@ -25,7 +25,9 @@
 
 #include "../../navigation/location.h"
 #include "../../navigation/locationList.h"
+#include "../../navigation/locationListComputer.h"
 #include "../../navigation/navigation.h"
+#include "../../navigation/navigationComputer.h"
 #include "../../navigation/path.h"
 #include "../../navigation/pathList.h"
 
@@ -69,11 +71,16 @@ GameTarget* findNextTarget(GameStrategyContext* gameStrategyContext) {
     Point* robotPosition = gameStrategyContext->robotPosition;
 
     // Find nearest location
-    // TODO : Nearest Location in time of flight might not be the best => Replace by the time to reach it !
-    gameStrategyContext->nearestLocation = getNearestLocation(navigationLocationList, robotPosition->x, robotPosition->y);
+    // The robot could not be exactly at the location, so we search the closest location
+    float x = robotPosition->x;
+    float y = robotPosition->y;
+    gameStrategyContext->nearestLocation = getNearestLocation(navigationLocationList, x, y);
 
     // Find best Target, store LocationList in the context in currentTrajectory
-    return computeBestNextTarget(gameStrategyContext);
+    GameTarget* result = computeBestNextTarget(gameStrategyContext);
+    gameStrategyContext->currentTarget = result;
+
+    return result;
 }
 
 void markTargetAsHandled(GameStrategyContext* gameStrategyContext) {
@@ -298,14 +305,8 @@ bool isColliding(Point* path, Point* obstacle) {
 }
 
 bool isValidLocation(Point* p) {
+    // TODO : To Check
     return (p->x !=0) && (p->y != 0);
-}
-
-/**
- * Control point distance to mm.
- */
-float cpToDistance(float distance) {
-    return (distance * 10.0f);
 }
 
 /**

@@ -134,27 +134,6 @@ bool containsLocation(LocationList* locationList, Location* locationToFind, bool
     return false;
 }
 
-Location* getNearestLocation(LocationList* locationList, float x, float y) {
-    Location* result = NULL;
-    int i;
-    int size = locationList->size;
-    float min = MAX_COST;
-
-    for (i = 0; i < size; i++) {
-        Location* location = getLocation(locationList, i);
-        // We can have hole because of "remove"
-        if (location == NULL) {
-            continue;
-        }
-        float distance = distanceBetweenPoints2(location->x, location->y, x, y);
-        if (distance < min) {
-            min = distance;
-            result = location;
-        }
-    }
-    return result;
-}
-
 void removeFirstLocation(LocationList* locationList) {
     // TODO : Implementation is not Optimized ! Use linked list ?
     int size = locationList->size;
@@ -177,7 +156,6 @@ unsigned int getLocationCount(LocationList* locationList) {
 
 // CLEAR
 
-
 void clearLocationTmpInfo(LocationList* locationList) {
     unsigned int i;
     unsigned int size = locationList->size;
@@ -185,6 +163,7 @@ void clearLocationTmpInfo(LocationList* locationList) {
         Location* location = getLocation(locationList, i);
         location->tmpCost = NO_COMPUTED_COST;
         location->tmpPreviousLocation = NULL;
+        location->resultNextLocation = NULL;
         location->tmpHandled = false;
     }
 }

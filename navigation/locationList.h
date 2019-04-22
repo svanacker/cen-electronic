@@ -45,17 +45,6 @@ void clearLocationList(LocationList* locationList);
 void clearLocationTmpInfo(LocationList* locationList);
 
 /**
- * Clear the previous information of each location of the list.
- * @param locationList the pointer on the struct (POO Programming)
- */
-// void clearPrevious(LocationList* locationList);
-
-/**
- * Add all location to the list.
- */
-// void addLocationList(LocationList* targetLocationList, LocationList* sourceLocationList);
-
-/**
  * Returns if the list is empty.
  * @param locationList the pointer on the struct (POO Programming)
  */
@@ -79,13 +68,6 @@ Location* addLocation(LocationList* locationList, FixedCharArray* s, float x, fl
  * @param target the target location
  */
 void copyLocation(Location* sourceLocation, Location* targetLocation);
-
-/**
- * Remove a location to the list.
- * @param locationList the list in which we remove
- * @param locationToRemove the location to remove
- */
-void removeLocation(LocationList* locationList, Location* locationToRemove);
 
 /**
  * Remove first location of the list.
@@ -122,14 +104,5 @@ bool containsLocation(LocationList* locationList, Location* location, bool handl
  * @return the count of locations
  */
 unsigned int getLocationCount(LocationList* locationList);
-
-/**
- * Returns the nearest location of the locationList, by comparing them with x and y.
- * @param locationList the pointer on the struct (POO Programming)
- * @param x the x value to compare with each location Point
- * @param y the y value to compare with each location Point
- * @return NULL if the locationList is empty, the nearest location (distance) from the locationList.
- */
-Location* getNearestLocation(LocationList* locationList, float x, float y);
 
 #endif

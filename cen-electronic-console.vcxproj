@@ -413,6 +413,7 @@
     <ClCompile Include="motion\simulation\motionSimulation.c" />
     <ClCompile Include="navigation\location.c" />
     <ClCompile Include="navigation\locationList.c" />
+    <ClCompile Include="navigation\locationListComputer.c" />
     <ClCompile Include="navigation\locationListDebug.c" />
     <ClCompile Include="navigation\navigation.c" />
     <ClCompile Include="navigation\navigationComputer.c" />
@@ -788,6 +789,7 @@
     <ClInclude Include="motion\simple\simpleMotion.h" />
     <ClInclude Include="navigation\location.h" />
     <ClInclude Include="navigation\locationList.h" />
+    <ClInclude Include="navigation\locationListComputer.h" />
     <ClInclude Include="navigation\locationListDebug.h" />
     <ClInclude Include="navigation\navigation.h" />
     <ClInclude Include="navigation\navigationComputer.h" />

@@ -71,6 +71,8 @@ typedef struct GameBoard {
     bool showLocation;
     // Show Path
     bool showPath;
+    // show Outgoing Path
+    bool showOutgoingPath;
 
 // Color are only manage on Windows !
 #ifdef _MSC_VER

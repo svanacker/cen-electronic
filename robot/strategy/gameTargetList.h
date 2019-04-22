@@ -46,7 +46,7 @@ unsigned char getTargetHandledCount();
  * Add a target to the list.
  * @param target the target to add to the list
  */
-void addGameTarget(GameTarget* target, char* name, float gain, Location* location);
+void addGameTarget(GameTarget* target, char* name, float gain, Location* startLocation, Location* endLocation);
 
 /**
  * Get the target at index.

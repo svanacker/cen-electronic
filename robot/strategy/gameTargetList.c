@@ -35,13 +35,18 @@ unsigned char getTargetHandledCount() {
     return targets.targetHandledCount;
 }
 
-void addGameTarget(GameTarget* target, char* targetName, float potentialGain, Location* location) {
+void addGameTarget(GameTarget* target, char* targetName, float potentialGain, Location* startLocation, Location* endLocation) {
     unsigned char size = targets.size;
     if (size < MAX_TARGET) {
+        if (target == NULL) {
+            writeError(TARGET_IS_NULL);
+            return;
+        }
         target->name = targetName;
         target->status = TARGET_AVAILABLE;
         target->potentialGain = potentialGain;
-        target->location = location;
+        target->startLocation = startLocation;
+        target->endLocation = endLocation;
         targets.targets[size] = target;
         targets.size++;
     }

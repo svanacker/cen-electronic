@@ -24,8 +24,10 @@ typedef struct GameTarget {
     float currentComputedOpportunityFactor;
     // availability status of the target
     enum GameTargetStatus status;    
-    // Returns the position of the target on the gameboard
-    Location* location;
+    // Returns the start Location (for the beginning of actions) 
+    Location* startLocation;
+    // Returns the end Location (for the end of actions)
+    Location* endLocation;
     /** The actionList for this target. */
     GameTargetActionList actionList;
 } GameTarget;

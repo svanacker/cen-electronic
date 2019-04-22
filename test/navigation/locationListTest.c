@@ -1,6 +1,7 @@
 #include "locationListTest.h"
 
 #include "../../navigation/locationList.h"
+#include "../../navigation/locationListComputer.h"
 #include "../../navigation/location.h"
 
 #include "../../test/unity/unity.h"
