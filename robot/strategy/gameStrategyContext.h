@@ -45,7 +45,7 @@ typedef struct GameStrategyContext GameStrategyContext;
 struct GameStrategyContext {
     /** Configuration of the robot. */
     RobotConfig* robotConfig;
-    /** Navigation object with the list of loation, paths ...*/
+    /** Navigation object with the list of location, paths ...*/
     Navigation* navigation;
     /** Time in seconds since last collision. */
     float timeSinceLastCollision;

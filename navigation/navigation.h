@@ -6,6 +6,8 @@
 #include "location.h"
 #include "pathList.h"
 #include "path.h"
+#include "outgoingPathList.h"
+#include "outgoingPath.h"
 
 struct Navigation;
 typedef struct Navigation Navigation;
@@ -18,8 +20,8 @@ struct Navigation {
     LocationList* locationList;
     // All Paths
     PathList* paths;
-    // Outgoing Paths
-    BitList* outgoingPaths;
+    // Outgoing Paths (tmp variable because associated to a computed Location)
+    OutgoingPathList* tmpOutgoingPaths;
     // Available Paths
     BitList* availablePaths;
 };
@@ -30,8 +32,12 @@ struct Navigation {
 
 /**
  * Initialize the navigation system.
+ * @param navigation the wrapper object
+ * @param locationList the list of location
+ * @param pathList the list of Path with information on how to join them (often via a bSplineCurve)
+ * @param tmpOutgoingPaths a temporary object used to compute temporary for a specific Location, the list of outgoing Paths
  */
-void initNavigation(Navigation* navigation, LocationList* locationList, PathList* pathList, BitList* outgoingPaths, BitList* availablePaths);
+void initNavigation(Navigation* navigation, LocationList* locationList, PathList* pathList, OutgoingPathList* tmpOutgoingPaths, BitList* availablePaths);
 
 /**
  * Returns the navigation location List field.
@@ -62,15 +68,6 @@ PathData* addNavigationPath(Navigation* navigation,
     float accelerationFactor,
     float speedFactor);
 
-/**
- * Computes the path.
- * @param start startPoint the start point will have a linked pointer on the next point to reach recursively to the end point
- * @param end endPoint
- * @return the cost to reach the best Path
- */
-float computeBestPath(Navigation* navigation, 
-                             Location* start,
-                             Location* end);
 
 
 // PATH AVAILABILITY

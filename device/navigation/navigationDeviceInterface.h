@@ -46,9 +46,14 @@
 #define COMMAND_NAVIGATION_PATH_COUNT        'C'
 
 /**
- * Do the path considering the robot is at the location1. If not, it will raise some problem
+ * Do the path considering the robot is at the location1. If the robot is not at the position or very closed, it will raise some problem
  */
 #define COMMAND_NAVIGATION_PATH_GO           'G'
+
+/**
+* Do a table with the list of location, compute the outgoing Paths for each locations, and show it
+*/
+#define COMMAND_NAVIGATION_LOCATION_LIST_AND_OUTGOING_PATHS    'O'
 
 /**
 * Defines the header to get information about a specific path.

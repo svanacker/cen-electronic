@@ -19,6 +19,7 @@
 #include "../../common/log/logLevel.h"
 
 #include "../../navigation/navigation.h"
+#include "../../navigation/navigationComputer.h"
 #include "../../navigation/locationList.h"
 #include "../../navigation/location.h"
 
@@ -26,9 +27,8 @@ GameTarget* computeBestNextTarget(GameStrategyContext* strategyContext) {
     GameTarget* result = NULL;
     GameStrategy* gameStrategy = strategyContext->gameStrategy;
     Navigation* navigation = strategyContext->navigation;
-    Location* currentLocation = strategyContext->nearestLocation;
 
-    float maxOpportunityFactor = 0.0f;
+    float maxOpportunityFactor = -1.0f;
     // Loop on potential target
     int strategyItemIndex;
     int gameStrategyItemCount = getStrategyItemCount(gameStrategy);
@@ -74,7 +74,7 @@ GameTarget* computeBestNextTarget(GameStrategyContext* strategyContext) {
             }
         }
         // The opportunity is the gain divide by the cost
-        target->currentComputedOpportunityFactor = target->gain / cost;
+        target->currentComputedOpportunityFactor = 1000.0f * (target->potentialGain / cost);
 
         // Find the max opportunity
         if (target->currentComputedOpportunityFactor > maxOpportunityFactor) {

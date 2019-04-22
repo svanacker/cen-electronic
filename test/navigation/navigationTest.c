@@ -9,7 +9,10 @@
 #include "../../navigation/locationList.h"
 #include "../../navigation/path.h"
 #include "../../navigation/pathList.h"
+#include "../../navigation/outgoingPath.h"
+#include "../../navigation/outgoingPathList.h"
 #include "../../navigation/navigation.h"
+#include "../../navigation/navigationComputer.h"
 
 #include "../../common/string/cenString.h"
 
@@ -76,8 +79,9 @@ static Location locationListArray[NAVIGATION_LOCATION_LIST_TEST_ARRAY_LENGTH];
 static PathList pathList;
 static PathData pathListArray[NAVIGATION_PATH_LIST_TEST_ARRAY_LENGTH];
 
-static BitList outgoingPathBitList;
-static unsigned int outgoingPathBitArray[BIT_LIST_NAVIGATION_TEST_ARRAY_LENGTH];
+static OutgoingPathList tmpOutgoingPathList;
+static OutgoingPathData tmpOutgoingPathListArray[BIT_LIST_NAVIGATION_TEST_ARRAY_LENGTH];
+
 static BitList availablePathBitList;
 static unsigned int availablePathBitArray[BIT_LIST_NAVIGATION_TEST_ARRAY_LENGTH];
 
@@ -94,10 +98,10 @@ void navigationTestSuite(void) {
 void initNavigationTest(void) {
     initLocationList(&locationList, (Location(*)[]) &locationListArray, NAVIGATION_LOCATION_LIST_TEST_ARRAY_LENGTH);
     initPathList(&pathList, (PathData(*)[]) &pathListArray, NAVIGATION_PATH_LIST_TEST_ARRAY_LENGTH);
-    initBitList(&outgoingPathBitList, (unsigned int(*)[]) &outgoingPathBitArray, BIT_LIST_NAVIGATION_TEST_ARRAY_LENGTH);
+    initOutgoingPathList(&tmpOutgoingPathList, (OutgoingPathData(*)[]) &tmpOutgoingPathListArray, BIT_LIST_NAVIGATION_TEST_ARRAY_LENGTH);
     initBitList(&availablePathBitList, (unsigned int(*)[]) &availablePathBitArray, BIT_LIST_NAVIGATION_TEST_ARRAY_LENGTH);
 
-    initNavigation(&navigation, &locationList, &pathList, &outgoingPathBitList, &availablePathBitList);
+    initNavigation(&navigation, &locationList, &pathList, &tmpOutgoingPathList, &availablePathBitList);
 }
 
 void checkNavigationPathFinding1(void) {

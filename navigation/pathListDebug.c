@@ -132,8 +132,6 @@ void printPathListTable(OutputStream* outputStream, PathList* pathList) {
 
 // TESTS DATA
 
-// Tests Data
-
 void addPathListTestsData(PathList* pathList, LocationList* locationList) {
 	addFilledPath(pathList, locationList, "STAR", "OBJ1", 10, 20, 30, 15, 25, 2, 2, false);
 	addFilledPath(pathList, locationList, "OBJ1", "OBJ2", 15, 10, 15, 10, 20, 3, 2, false);

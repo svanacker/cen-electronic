@@ -5,6 +5,9 @@
 
 #include "../common/io/outputStream.h"
 
-void printNavigationContext(Navigation* navigation, OutputStream* outputStream);
+/**
+* Print the list of outgoing Path for each location.
+*/
+void printNavigationDebugLocationAndOutgoingPathListTable(OutputStream* outputStream, Navigation* navigation);
 
 #endif

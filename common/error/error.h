@@ -249,6 +249,12 @@ void clearLastError();
 #define TOO_MUCH_TARGET_ACTION_ITEM                                       0x5080
 #define TOO_MUCH_TARGET_ACTION_ITEM_FUNCTION_NULL                         0x5081
 
+#define TOO_MUCH_OUTGOING_PATHS                                           0x5090
+#define OUTGOING_PATH_LIST_NULL                                           0x5091
+#define OUTGOING_PATH_LIST_NOT_INITIALIZED                                0x5092
+#define OUTGOING_PATH_LIST_INDEX_OUT_OF_BOUNDS                            0x5093
+#define OUTGOING_PATH_NULL                                                0x5094
+
 #define WRONG_COLOR                                                       0x5100
 
 // ROBOT

@@ -2070,6 +2070,12 @@
     <ClCompile Include="robot\robotTypeDebug.c">
       <Filter>Source Files\robot</Filter>
     </ClCompile>
+    <ClCompile Include="navigation\navigationComputer.c">
+      <Filter>Source Files\navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="navigation\outgoingPathList.c">
+      <Filter>Source Files\navigation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -3205,6 +3211,15 @@
     </ClInclude>
     <ClInclude Include="robot\robotTypeDebug.h">
       <Filter>Header Files\robot</Filter>
+    </ClInclude>
+    <ClInclude Include="navigation\navigationComputer.h">
+      <Filter>Header Files\navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="navigation\outgoingPath.h">
+      <Filter>Header Files\navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="navigation\outgoingPathList.h">
+      <Filter>Header Files\navigation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

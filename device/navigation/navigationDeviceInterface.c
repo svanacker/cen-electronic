@@ -128,6 +128,12 @@ int deviceNavigationGetInterface(char commandHeader, DeviceInterfaceMode mode, b
 		}
 		return commandLengthValueForMode(mode, 0, 0);
 	}
+    else if (commandHeader == COMMAND_NAVIGATION_LOCATION_LIST_AND_OUTGOING_PATHS) {
+    if (fillDeviceArgumentList) {
+        setFunctionNoArgumentAndNoResult("Location List And Outgoing Paths");
+    }
+    return commandLengthValueForMode(mode, 0, 0);
+    }
     return DEVICE_HEADER_NOT_HANDLED;
 }
 

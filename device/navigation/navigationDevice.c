@@ -21,6 +21,8 @@
 #include "../../motion/extended/bsplineMotion.h"
 
 #include "../../navigation/navigation.h"
+#include "../../navigation/navigationDebug.h"
+#include "../../navigation/navigationComputer.h"
 #include "../../navigation/location.h"
 #include "../../navigation/locationListDebug.h"
 #include "../../navigation/path.h"
@@ -232,6 +234,11 @@ void deviceNavigationHandleRawData(char commandHeader, InputStream* inputStream,
 		PathList* pathList = getNavigationPathList(navigation);
 		addPathListTestsData(pathList, locationList);
 	}
+    else if (commandHeader == COMMAND_NAVIGATION_LOCATION_LIST_AND_OUTGOING_PATHS) {
+        ackCommand(outputStream, NAVIGATION_DEVICE_HEADER, COMMAND_NAVIGATION_LOCATION_LIST_AND_OUTGOING_PATHS);
+        Navigation* navigation = getNavigationDeviceNavigationObject();
+        printNavigationDebugLocationAndOutgoingPathListTable(getInfoOutputStreamLogger(), navigation);
+    }
 }
 
 static DeviceDescriptor descriptor = {

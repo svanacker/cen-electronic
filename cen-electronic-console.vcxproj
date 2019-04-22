@@ -415,7 +415,9 @@
     <ClCompile Include="navigation\locationList.c" />
     <ClCompile Include="navigation\locationListDebug.c" />
     <ClCompile Include="navigation\navigation.c" />
+    <ClCompile Include="navigation\navigationComputer.c" />
     <ClCompile Include="navigation\navigationDebug.c" />
+    <ClCompile Include="navigation\outgoingPathList.c" />
     <ClCompile Include="navigation\path.c" />
     <ClCompile Include="navigation\pathList.c" />
     <ClCompile Include="navigation\pathListDebug.c" />
@@ -788,7 +790,10 @@
     <ClInclude Include="navigation\locationList.h" />
     <ClInclude Include="navigation\locationListDebug.h" />
     <ClInclude Include="navigation\navigation.h" />
+    <ClInclude Include="navigation\navigationComputer.h" />
     <ClInclude Include="navigation\navigationDebug.h" />
+    <ClInclude Include="navigation\outgoingPath.h" />
+    <ClInclude Include="navigation\outgoingPathList.h" />
     <ClInclude Include="navigation\path.h" />
     <ClInclude Include="navigation\pathList.h" />
     <ClInclude Include="navigation\pathListDebug.h" />

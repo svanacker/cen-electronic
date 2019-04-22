@@ -36,8 +36,10 @@ static Location locationListArray[STRATEGY_2019_NAVIGATION_LOCATION_LIST_ARRAY_L
 static PathList pathList;
 static PathData pathListArray[STRATEGY_2019_NAVIGATION_PATH_LIST_ARRAY_LENGTH];
 
-static BitList outgoingPathBitList;
-static unsigned int outgoingPathBitArray[STRATEGY_2019_BIT_LIST_NAVIGATION_ARRAY_LENGTH];
+// Temporary Objects
+static OutgoingPathList tmpOutgoingPathList;
+static unsigned int tmpOutgoingPathListtArray[STRATEGY_2019_NAVIGATION_PATH_LIST_ARRAY_LENGTH];
+
 static BitList availablePathBitList;
 static unsigned int availablePathBitArray[STRATEGY_2019_BIT_LIST_NAVIGATION_ARRAY_LENGTH];
 
@@ -51,10 +53,10 @@ Navigation* initNavigation2019(void) {
     // Navigation
     initLocationList(&locationList, (Location(*)[]) &locationListArray, STRATEGY_2019_BIT_LIST_NAVIGATION_ARRAY_LENGTH);
     initPathList(&pathList, (PathData(*)[]) &pathListArray, STRATEGY_2019_NAVIGATION_PATH_LIST_ARRAY_LENGTH);
-    initBitList(&outgoingPathBitList, (unsigned int(*)[]) &outgoingPathBitArray, STRATEGY_2019_BIT_LIST_NAVIGATION_ARRAY_LENGTH);
+    initOutgoingPathList(&tmpOutgoingPathList, (OutgoingPathData(*)[]) &tmpOutgoingPathListtArray, STRATEGY_2019_NAVIGATION_PATH_LIST_ARRAY_LENGTH);
     initBitList(&availablePathBitList, (unsigned int(*)[]) &availablePathBitArray, STRATEGY_2019_BIT_LIST_NAVIGATION_ARRAY_LENGTH);
 
-    initNavigation(&navigation, &locationList, &pathList, &outgoingPathBitList, &availablePathBitList);
+    initNavigation(&navigation, &locationList, &pathList, &tmpOutgoingPathList, &availablePathBitList);
 
     return &navigation;
 }
