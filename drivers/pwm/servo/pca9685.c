@@ -1,13 +1,15 @@
 #include "pca9685.h"
 #include "pca9685Debug.h"
-#include "i2cMaster.h"
-#include "cenMath.h"
-#include "cenDelay.h"
 
-#include "../../common/log/logger.h"
-#include "../../common/io/outputStream.h"
-#include "../../common/io/printWriter.h"
-#include "../../common/io/printTableWriter.h"
+#include "../../../common/math/cenMath.h"
+#include "../../../common/delay/cenDelay.h"
+
+#include "../../../common/i2c/master/i2cMaster.h"
+
+#include "../../../common/log/logger.h"
+#include "../../../common/io/outputStream.h"
+#include "../../../common/io/printWriter.h"
+#include "../../../common/io/printTableWriter.h"
 
 #include <math.h>
 

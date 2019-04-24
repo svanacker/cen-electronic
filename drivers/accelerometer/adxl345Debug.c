@@ -12,7 +12,7 @@
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
 #include "../../common/io/printTableWriter.h"
-#include "sensor/accelerometer/accelerometer.h"
+#include "../../common/sensor/accelerometer/accelerometer.h"
 
 // DEBUG CONFIG / REGISTERS
 

@@ -3,7 +3,7 @@
 
 #include "mainBoardCommon.h"
 
-#include "../../io/inputStream.h"
+#include "../../common/io/inputStream.h"
 
 #include "../../device/device.h"
 

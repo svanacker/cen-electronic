@@ -294,6 +294,13 @@
         <itemPath>../../../../device/relay/relayDevice.h</itemPath>
         <itemPath>../../../../device/relay/relayDeviceInterface.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f29"
+                     displayName="device.sensor.current"
+                     projectFiles="true">
+        <itemPath>../../../../device/sensor/current/currentSensorDevice.h</itemPath>
+        <itemPath>../../../../device/sensor/current/currentSensor.h</itemPath>
+        <itemPath>../../../../device/sensor/current/currentSensorDeviceInterface.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="device.sensor.temperature"
                      displayName="device.sensor.temperature"
                      projectFiles="true">
@@ -488,10 +495,15 @@
         <itemPath>../../../../navigation/locationListDebug.h</itemPath>
         <itemPath>../../../../navigation/pathListDebug.h</itemPath>
         <itemPath>../../../../navigation/navigationDebug.h</itemPath>
+        <itemPath>../../../../navigation/outgoingPath.h</itemPath>
+        <itemPath>../../../../navigation/outgoingPathList.h</itemPath>
+        <itemPath>../../../../navigation/locationListComputer.h</itemPath>
+        <itemPath>../../../../navigation/navigationComputer.h</itemPath>
       </logicalFolder>
       <logicalFolder name="robot" displayName="robot" projectFiles="true">
         <itemPath>../../../../robot/robot.h</itemPath>
-        <itemPath>../../../../robot/robotDebug.h</itemPath>
+        <itemPath>../../../../robot/robotTypeDebug.h</itemPath>
+        <itemPath>../../../../robot/robotType.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f22" displayName="robot.2019" projectFiles="true">
         <itemPath>../../../../robot/2019/gameBoardElement2019.h</itemPath>
@@ -570,6 +582,8 @@
         <itemPath>../../../../robot/strategy/gameStrategyContextDebug.h</itemPath>
         <itemPath>../../../../robot/strategy/teamColor.h</itemPath>
         <itemPath>../../../../robot/strategy/gameTargetListDebug.h</itemPath>
+        <itemPath>../../../../robot/strategy/gameStrategyHandlerUtils.h</itemPath>
+        <itemPath>../../../../robot/strategy/gameTargetActionItemDebug.h</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.strategy.factor"
                      displayName="robot.strategy.factor"
@@ -895,6 +909,13 @@
         <itemPath>../../../../device/relay/relayDevice.c</itemPath>
         <itemPath>../../../../device/relay/relayDeviceInterface.c</itemPath>
       </logicalFolder>
+      <logicalFolder name="f29"
+                     displayName="device.sensor.current"
+                     projectFiles="true">
+        <itemPath>../../../../device/sensor/current/currentSensor.c</itemPath>
+        <itemPath>../../../../device/sensor/current/currentSensorDevice.c</itemPath>
+        <itemPath>../../../../device/sensor/current/currentSensorDeviceInterface.c</itemPath>
+      </logicalFolder>
       <logicalFolder name="device.sensor.temperature"
                      displayName="device.sensor.temperature"
                      projectFiles="true">
@@ -1049,7 +1070,6 @@
         <itemPath>../../../../drivers/tof/vl53l0x/32/vl53l0x_platform_pic32.c</itemPath>
       </logicalFolder>
       <logicalFolder name="main" displayName="main.mainboard" projectFiles="true">
-        <itemPath>../../../mainBoard/mainBoard32.c</itemPath>
         <itemPath>../../../mainBoard/mainBoardCommon.c</itemPath>
         <itemPath>../../../mainBoard/mainBoardCommonMotor.c</itemPath>
         <itemPath>../../../mainBoard/mainBoardCommonLcd.c</itemPath>
@@ -1081,10 +1101,13 @@
         <itemPath>../../../../navigation/locationListDebug.c</itemPath>
         <itemPath>../../../../navigation/pathListDebug.c</itemPath>
         <itemPath>../../../../navigation/navigationDebug.c</itemPath>
+        <itemPath>../../../../navigation/outgoingPathList.c</itemPath>
+        <itemPath>../../../../navigation/locationListComputer.c</itemPath>
+        <itemPath>../../../../navigation/navigationComputer.c</itemPath>
       </logicalFolder>
       <logicalFolder name="robot" displayName="robot" projectFiles="true">
         <itemPath>../../../../robot/robot.c</itemPath>
-        <itemPath>../../../../robot/robotDebug.c</itemPath>
+        <itemPath>../../../../robot/robotTypeDebug.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f22" displayName="robot.2019" projectFiles="true">
         <itemPath>../../../../robot/2019/gameBoardElement2019.c</itemPath>
@@ -1161,6 +1184,8 @@
         <itemPath>../../../../robot/strategy/gameTargetListDebug.c</itemPath>
         <itemPath>../../../../robot/strategy/teamColor.c</itemPath>
         <itemPath>../../../../robot/strategy/gameTargetStatus.c</itemPath>
+        <itemPath>../../../../robot/strategy/gameStrategyHandlerUtils.c</itemPath>
+        <itemPath>../../../../robot/strategy/gameTargetActionItemDebug.c</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.strategy.factor"
                      displayName="robot.strategy.factor"
@@ -1267,6 +1292,9 @@
     <Elem>..\..\..\drivers\sharp</Elem>
     <Elem>..\..\motorboard</Elem>
     <Elem>..\..\..\robot\config\32</Elem>
+    <Elem>../../../../robot</Elem>
+    <Elem>../../../../navigation</Elem>
+    <Elem>../../../../device/sensor/current</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>

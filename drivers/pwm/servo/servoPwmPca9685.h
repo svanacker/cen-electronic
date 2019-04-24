@@ -3,7 +3,8 @@
 
 #include "../../../common/pwm/servo/servoPwm.h"
 #include "../../../common/pwm/servo/servoList.h"
-#include "i2cCommon.h"
+#include "../../../common/i2c/i2cConstants.h"
+#include "../../../common/i2c/i2cBusConnectionList.h"
 
 /**
  * Add a servo of the type PCA9685

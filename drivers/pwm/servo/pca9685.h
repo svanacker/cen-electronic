@@ -1,8 +1,8 @@
 #ifndef PCA9685_H
 #define PCA9685_H
 
-#include "../../common/i2c/i2cConstants.h"
-#include "../../common/i2c/i2cCommon.h"
+#include "../../../common/i2c/i2cConstants.h"
+#include "../../../common/i2c/i2cCommon.h"
 
 #include <stdbool.h>
 

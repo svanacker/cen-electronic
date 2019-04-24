@@ -1,10 +1,10 @@
 #include "pca9685Debug.h"
 #include "pca9685.h"
 
-#include "../../common/log/logger.h"
-#include "../../common/io/outputStream.h"
-#include "../../common/io/printWriter.h"
-#include "../../common/io/printTableWriter.h"
+#include "../../../common/log/logger.h"
+#include "../../../common/io/outputStream.h"
+#include "../../../common/io/printWriter.h"
+#include "../../../common/io/printTableWriter.h"
 
 // DEBUG
 

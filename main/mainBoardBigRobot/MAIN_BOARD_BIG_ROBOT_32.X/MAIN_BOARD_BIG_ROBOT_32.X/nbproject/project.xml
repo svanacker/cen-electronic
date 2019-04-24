@@ -101,6 +101,9 @@
                 <sourceRootElem>..\..\..\drivers\sharp</sourceRootElem>
                 <sourceRootElem>..\..\motorboard</sourceRootElem>
                 <sourceRootElem>..\..\..\robot\config\32</sourceRootElem>
+                <sourceRootElem>../../../../robot</sourceRootElem>
+                <sourceRootElem>../../../../navigation</sourceRootElem>
+                <sourceRootElem>../../../../device/sensor/current</sourceRootElem>
             </sourceRootList>
             <confList>
                 <confElem>

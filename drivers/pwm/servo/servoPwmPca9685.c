@@ -5,8 +5,9 @@
 
 #include "../../../common/pwm/servo/servoPwm.h"
 #include "../../../common/pwm/servo/servoList.h"
-#include "i2cCommon.h"
-#include "32/servoPwm32.h"
+#include "../../../common/i2c/i2cCommon.h"
+#include "../../../common/i2c/i2cBusConnectionList.h"
+#include "../../../common/pwm/servo/32/servoPwm32.h"
 
 I2cBusConnection* getServoI2CBusConnection(Servo* servo) {
     int* object = servo->object;

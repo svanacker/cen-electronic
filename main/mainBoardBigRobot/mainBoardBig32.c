@@ -31,7 +31,7 @@
 #include "../../common/i2c/i2cCommon.h"
 #include "../../common/i2c/i2cConstants.h"
 #include "../../common/i2c/i2cBusConnectionList.h"
-#include "printTableWriter.h"
+#include "../../common/io/printTableWriter.h"
 
 // SMALL ROBOT PART
 #include "../../drivers/pwm/servo/servoPwmPca9685.h"

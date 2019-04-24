@@ -165,8 +165,8 @@
 #include "../../robot/config/robotConfigDevice.h"
 #include "../../robot/config/robotConfigDeviceInterface.h"
 #include "../../robot/config/32/robotConfigPic32.h"
-#include "32/servoList32.h"
-
+#include "../../common/pwm/servo/32/servoPwm32.h"
+#include "../../common/pwm/servo/32/servoList32.h"
 
 // COMMON TO ALL MAIN BOARD
 
@@ -371,11 +371,13 @@ void mainBoardCommonInitCommonDrivers(void) {
     temperatureI2cBusConnection = addI2cBusConnection(i2cBus, LM75A_ADDRESS, true);
     initTemperatureLM75A(&temperature, temperatureI2cBusConnection);
     appendStringLN(getDebugOutputStreamLogger(), "OK");
+    /*
     //--> Current
     appendString(getDebugOutputStreamLogger(), "CURRENT...");
     currentI2CBusConnection = addI2cBusConnection(i2cBus, INA3221_ADDRESS_1, true);
     initCurrentINA3221(&current, currentI2CBusConnection);
     appendStringLN(getDebugOutputStreamLogger(), "OK");    
+    */
     
     // -> Servo
     initServoList(&servoList, (Servo(*)[]) &servoListArray, MAIN_BOARD_SERVO_LIST_LENGTH);

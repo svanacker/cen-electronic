@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+#include "tcs34725.h"
+
 #include "../../common/delay/cenDelay.h"
 #include "../../common/i2c/i2cBusConnectionList.h"
 #include "../../common/i2c/master/i2cMaster.h"
@@ -9,9 +11,6 @@
 #include "../../common/log/logLevel.h"
 
 #include "../../common/io/printWriter.h"
-
-#include "tcs34725.h"
-#include "logger.h"
 
 // #define TCS34725_DEBUG     true
 
