@@ -11,6 +11,17 @@
 #include "../../navigation/location.h"
 
 
+/**
+ * Define if the action was done or not.
+ */
+enum ActionStatus {
+    // The action is TODO
+    ACTION_STATUS_TODO = 1,
+    // The action was done (go on the location && actionItems done)
+    ACTION_STATUS_DONE = 2,
+    // The action is on error
+    ACTION_STATUS_ERROR = 3
+};
 
 /**
  * Encapsulates the target action.
@@ -22,6 +33,8 @@ typedef struct GameTargetAction {
     Location* endLocation;
     // Time to achieve (in second) all Actions (excluding time to move)
     float timeToAchieve;
+    // Status
+    enum ActionStatus status;
     // Reference to GameTargetActionListItem, can be NULL
     GameTargetActionItemList* actionItemList;
     /** Path (can be NULL) used to check if the target Action Item is available. */

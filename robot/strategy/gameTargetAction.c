@@ -11,6 +11,7 @@ void clearTargetAction(GameTargetAction* targetAction) {
     targetAction->endLocation = NULL;
     targetAction->timeToAchieve = 0.0f;
     targetAction->pathData = NULL;
+    targetAction->status = ACTION_STATUS_TODO;
     if (targetAction->actionItemList != NULL) {
         clearTargetActionItemList(targetAction->actionItemList);
     }
@@ -25,6 +26,7 @@ void initGameTargetAction(GameTargetAction* targetAction,
     targetAction->startLocation = startLocation;
     targetAction->endLocation = endLocation;
     targetAction->timeToAchieve = timeToAchieve;
+    targetAction->status = ACTION_STATUS_TODO;
     targetAction->actionItemList = actionItemList;
     targetAction->pathData = pathData;
 }

@@ -6,8 +6,9 @@
 #include "../common/string/cenString.h"
 #include "../common/io/outputStream.h"
 
-#define MAX_COST             20000.0f
-#define NO_COMPUTED_COST    -1
+#define MAX_COST                                20000.0f
+#define NO_COMPUTED_COST                           -1.0f
+#define MAX_DISTANCE_NEAREST_LOCATION             100.0f
 
 struct Location;
 typedef struct Location Location;

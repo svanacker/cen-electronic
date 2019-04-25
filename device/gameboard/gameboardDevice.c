@@ -42,23 +42,38 @@ void deviceGameboardHandleRawData(char commandHeader, InputStream* inputStream, 
         GameBoard* gameBoard = getGameboardDeviceGameBoard();
         printGameboard(gameBoard, debugOutputStream);
     }
+    // Show/Hide Location
     else if (commandHeader == COMMAND_GAME_BOARD_SHOW_LOCATION) {
         ackCommand(outputStream, GAME_BOARD_DEVICE_HEADER, COMMAND_GAME_BOARD_SHOW_LOCATION);
-        bool showLocation = readBool(inputStream);
         GameBoard* gameBoard = getGameboardDeviceGameBoard();
-        gameBoard->showLocation = showLocation;
+        gameBoard->showLocation = true;
     }
+    else if (commandHeader == COMMAND_GAME_BOARD_HIDE_LOCATION) {
+        ackCommand(outputStream, GAME_BOARD_DEVICE_HEADER, COMMAND_GAME_BOARD_HIDE_LOCATION);
+        GameBoard* gameBoard = getGameboardDeviceGameBoard();
+        gameBoard->showLocation = false;
+    }
+    // Show/Hide Path
     else if (commandHeader == COMMAND_GAME_BOARD_SHOW_PATH) {
         ackCommand(outputStream, GAME_BOARD_DEVICE_HEADER, COMMAND_GAME_BOARD_SHOW_PATH);
-        bool showPath = readBool(inputStream);
         GameBoard* gameBoard = getGameboardDeviceGameBoard();
-        gameBoard->showPath = showPath;
+        gameBoard->showPath = true;
     }
+    else if (commandHeader == COMMAND_GAME_BOARD_HIDE_PATH) {
+        ackCommand(outputStream, GAME_BOARD_DEVICE_HEADER, COMMAND_GAME_BOARD_HIDE_PATH);
+        GameBoard* gameBoard = getGameboardDeviceGameBoard();
+        gameBoard->showPath = false;
+    }
+    // Show/Hide Outgoing Path
     else if (commandHeader == COMMAND_GAME_BOARD_SHOW_OUTGOING_PATH) {
         ackCommand(outputStream, GAME_BOARD_DEVICE_HEADER, COMMAND_GAME_BOARD_SHOW_OUTGOING_PATH);
-        bool showOutgoingPath = readBool(inputStream);
         GameBoard* gameBoard = getGameboardDeviceGameBoard();
-        gameBoard->showOutgoingPath = showOutgoingPath;
+        gameBoard->showOutgoingPath = true;
+    }
+    else if (commandHeader == COMMAND_GAME_BOARD_HIDE_OUTGOING_PATH) {
+        ackCommand(outputStream, GAME_BOARD_DEVICE_HEADER, COMMAND_GAME_BOARD_HIDE_OUTGOING_PATH);
+        GameBoard* gameBoard = getGameboardDeviceGameBoard();
+        gameBoard->showOutgoingPath = false;
     }
 }
 

@@ -1,16 +1,17 @@
 #include <stdlib.h>
 #include <math.h>
 
-#include "../../common/ascii/asciiUtils.h"
-
-#include "../../common/math/cenMath.h"
-#include "../../common/error/error.h"
-
 #include "gameboard.h"
 #include "gameboardElement.h"
 #include "gameboardElementList.h"
 #include "gameboardBSplinePrint.h"
-#include "../../robot/2012/gameBoardElement2012.h"
+
+#include "../../common/ascii/asciiUtils.h"
+
+#include "../../common/math/cenMath.h"
+#include "../../common/error/error.h"
+#include "../../common/io/outputStream.h"
+#include "../../common/io/printWriter.h"
 
 #include "../../motion/extended/bspline.h"
 #include "../../motion/extended/bsplineMotion.h"
@@ -24,9 +25,8 @@
 #include "../../robot/strategy/gameTargetList.h"
 #include "../../robot/strategy/gameStrategyContext.h"
 #include "../../robot/strategy/gameStrategyHandler.h"
+#include "../../robot/strategy/gameStrategyHandlerUtils.h"
 
-#include "../../common/io/outputStream.h"
-#include "../../common/io/printWriter.h"
 
 #ifdef _MSC_VER
 #include <Windows.h>
@@ -223,7 +223,8 @@ void fillGameBoardCharElements(GameBoard* gameBoard, int* element) {
     // Outgoing Paths
     if (gameBoard->showOutgoingPath) {
         Navigation* navigation = gameStrategyContext->navigation;
-        Location* nearestLocation = getNearestLocation(navigation->locationList, gameStrategyContext->robotPosition->x, gameStrategyContext->robotPosition->y);
+
+        Location* nearestLocation = getNearestLocationFromGameStrategyContext(gameStrategyContext);
         updateOutgoingPaths(navigation, nearestLocation);
         OutgoingPathList* outgoingPathList = navigation->tmpOutgoingPaths;
         unsigned int outgoingPathSize = outgoingPathList->size;

@@ -12,6 +12,8 @@
 */
 #define RESET_OBSTACLE_COLLISION_TIME_SECOND        5
 
+Location* getNearestLocationFromGameStrategyContext(GameStrategyContext* gameStrategyContext);
+
 /**
  * Clears the current path and actions.
  * Useful when we want to cancel a target or go out from a target.

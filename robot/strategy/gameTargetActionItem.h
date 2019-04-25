@@ -18,7 +18,7 @@ typedef bool GameTargetActionFunction(int* context);
  */
 enum ActionItemStatus {
     // The item action was not done
-    ACTION_ITEM_STATUS_FREE = 1,
+    ACTION_ITEM_STATUS_TODO = 1,
     // The item action was done
     ACTION_ITEM_STATUS_DONE = 2,
 };

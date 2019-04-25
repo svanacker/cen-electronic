@@ -22,26 +22,44 @@ int deviceGameBoardGetInterface(char commandHeader, DeviceInterfaceMode mode, bo
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
+    // Show/Hide Location
     else if (commandHeader == COMMAND_GAME_BOARD_SHOW_LOCATION) {
         if (fillDeviceArgumentList) {
-            setFunction("showLocation", 1, 0);
-            setArgumentUnsignedChar1(0, "off(0) / on (1)");
+            setFunctionNoArgumentAndNoResult("Show Location");
         }
-        return commandLengthValueForMode(mode, 1, 0);
+        return commandLengthValueForMode(mode, 0, 0);
     }
+    else if (commandHeader == COMMAND_GAME_BOARD_HIDE_LOCATION) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("Hide Location");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }
+    // Show/Hide Path
     else if (commandHeader == COMMAND_GAME_BOARD_SHOW_PATH) {
         if (fillDeviceArgumentList) {
-            setFunction("showPath", 1, 0);
-            setArgumentUnsignedChar1(0, "off(0) / on (1)");
+            setFunctionNoArgumentAndNoResult("show Path");
         }
-        return commandLengthValueForMode(mode, 1, 0);
+        return commandLengthValueForMode(mode, 0, 0);
     }
+    else if (commandHeader == COMMAND_GAME_BOARD_HIDE_PATH) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("Hide Path");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }
+    // Show/Hide Outgoing Path
     else if (commandHeader == COMMAND_GAME_BOARD_SHOW_OUTGOING_PATH) {
         if (fillDeviceArgumentList) {
-            setFunction("showOutgoingPath", 1, 0);
-            setArgumentUnsignedChar1(0, "off(0) / on (1)");
+            setFunctionNoArgumentAndNoResult("Show OutgoingPath");
         }
-        return commandLengthValueForMode(mode, 1, 0);
+        return commandLengthValueForMode(mode, 0, 0);
+    }
+    else if (commandHeader == COMMAND_GAME_BOARD_HIDE_OUTGOING_PATH) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("Hide OutgoingPath");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
     }
     return DEVICE_HEADER_NOT_HANDLED;
 }

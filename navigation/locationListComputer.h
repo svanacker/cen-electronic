@@ -11,7 +11,7 @@
  * @param y the y value to compare with each location Point
  * @return NULL if the locationList is empty, the nearest location (distance) from the locationList.
  */
-Location* getNearestLocation(LocationList* locationList, float x, float y);
+Location* getNearestLocation(LocationList* locationList, float x, float y, float maxDistance);
 
 /**
  * Extract in the list the location with the min cost (tmp value). 
@@ -20,7 +20,7 @@ Location* getNearestLocation(LocationList* locationList, float x, float y);
 Location* extractMinCostLocation(LocationList* locationList);
 
 /**
- * TODO
+ * Extract the tmp Cost in Location (used to find the best path)
  */
 float getTmpCost(Location* location);
 

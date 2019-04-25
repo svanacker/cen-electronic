@@ -10,8 +10,8 @@
 // ActionItemStatus
 
 unsigned int appendActionItemStatusAsString(OutputStream* outputStream, enum ActionItemStatus actionItemStatus) {
-    if (actionItemStatus == ACTION_ITEM_STATUS_FREE) {
-        return appendString(outputStream, "FREE");
+    if (actionItemStatus == ACTION_ITEM_STATUS_TODO) {
+        return appendString(outputStream, "TODO");
     }
     else if (actionItemStatus == ACTION_ITEM_STATUS_DONE) {
         return appendString(outputStream, "DONE");

@@ -4,11 +4,11 @@
 
 #include <stdlib.h>
 
-Location* getNearestLocation(LocationList* locationList, float x, float y) {
+Location* getNearestLocation(LocationList* locationList, float x, float y, float maxDistance) {
     Location* result = NULL;
     int i;
     int size = locationList->size;
-    float min = MAX_COST;
+    float min = maxDistance;
 
     for (i = 0; i < size; i++) {
         Location* location = getLocation(locationList, i);
@@ -17,7 +17,10 @@ Location* getNearestLocation(LocationList* locationList, float x, float y) {
             continue;
         }
         float distance = distanceBetweenPoints2(location->x, location->y, x, y);
-        if (distance < min) {
+        // We only keep points which are :
+        // * not too far
+        // * only update the point if the distance is shortest
+        if (distance <= maxDistance) {
             min = distance;
             result = location;
         }

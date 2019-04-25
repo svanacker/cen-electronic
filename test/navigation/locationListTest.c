@@ -57,6 +57,6 @@ void locationListTest(void) {
     TEST_ASSERT_FALSE(actual);
 
     // getNearestLocation
-    tmpLocation = getNearestLocation(&locationList, -120, 180);
+    tmpLocation = getNearestLocation(&locationList, -120.0f, 180.0f, 100.0f);
     TEST_ASSERT_EQUAL(locationD, tmpLocation);
 }

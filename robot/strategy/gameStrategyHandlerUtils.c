@@ -46,6 +46,19 @@ bool updateMotorBoardRobotPosition(GameStrategyContext* gameStrategyContext) {
     return clientTrajectorySetAbsolutePosition(robotPosition->x, robotPosition->y, gameStrategyContext->robotAngleRadian);
 }
 
+Location* getNearestLocationFromGameStrategyContext(GameStrategyContext* gameStrategyContext) {
+    Navigation* navigation = gameStrategyContext->navigation;
+    LocationList* navigationLocationList = getNavigationLocationList(navigation);
+
+    Point* robotPosition = gameStrategyContext->robotPosition;
+
+    // Find nearest location
+    // The robot could not be exactly at the location, so we search the closest location
+    float x = robotPosition->x;
+    float y = robotPosition->y;
+    return getNearestLocation(navigationLocationList, x, y, MAX_DISTANCE_NEAREST_LOCATION);
+}
+
 void clearCurrentTarget(GameStrategyContext* gameStrategyContext) {
     gameStrategyContext->currentTarget = NULL;
     gameStrategyContext->currentTargetAction = NULL;

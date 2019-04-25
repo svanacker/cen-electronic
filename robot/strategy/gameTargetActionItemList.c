@@ -34,7 +34,7 @@ void addTargetActionItem(GameTargetActionItemList* targetActionItemList,
         targetActionItem->name = name;
 //      targetActionItem->timeToAchieve = timeToAchieve;
         targetActionItem->phasis = phasis;
-        targetActionItem->status = ACTION_ITEM_STATUS_FREE;
+        targetActionItem->status = ACTION_ITEM_STATUS_TODO;
         targetActionItemList->items[size] = targetActionItem;
         targetActionItemList->size++;
     }
