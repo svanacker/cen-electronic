@@ -20,8 +20,6 @@
 typedef struct GameTargetActionItemList {
     /** An array of pointer on target action items. */
     GameTargetActionItem* items[MAX_TARGET_ACTION_ITEM];
-    /** Next index for iterator. */
-    int iteratorIndex;
     /** the size of the list. */
     unsigned char size;
 } GameTargetActionItemList;
@@ -31,23 +29,6 @@ typedef struct GameTargetActionItemList {
  */
 void clearTargetActionItemList(GameTargetActionItemList* targetActionItemList);
 
-// ITERATOR
-
-/**
- * Returns if the iterator has next value.
- */
-bool targetActionItemListHasNext(GameTargetActionItemList* targetActionItemList);
-
-/**
- * Returns the next value of iterator, NULL if no more.
- */
-GameTargetActionItem* targetActionItemListNext(GameTargetActionItemList* targetActionItemList);
-
-/**
- * Restart the new iterator.
- */
-void targetActionItemListResetIterator(GameTargetActionItemList* targetActionItemList);
-
 /**
  * Add an action item to the target.
  * @param targetActionItem the target item to add to the list
@@ -55,9 +36,8 @@ void targetActionItemListResetIterator(GameTargetActionItemList* targetActionIte
 void addTargetActionItem(GameTargetActionItemList* targetActionItemList,
                      GameTargetActionItem* targetActionItem,
                      GameTargetActionFunction* function,
-                     char* name,
+                     char* name
 //                    float timeToAchieve,
-                     enum ActionItemPhasis phasis
 );
 
 /**
@@ -71,8 +51,6 @@ GameTargetActionItem* getGameTargetActionItem(GameTargetActionItemList* targetAc
 int getGameTargetActionItemCount(GameTargetActionItemList* list);
 
 // DO ACTIONS
-
-// #include "gameStrategyContext.h"
 
 /**
  * Call the real method by passing a context and the object to do

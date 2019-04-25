@@ -8,7 +8,8 @@ unsigned int appendGameTargetStatusAsString(OutputStream* outputStream, enum Gam
     switch (gameTargetStatus) {
         case TARGET_AVAILABLE: return appendString(outputStream, "AVAIL.");
         case TARGET_HANDLED: return appendString(outputStream, "HANDLED");
-        case TARGET_INUSE: return appendString(outputStream, "IN USE");
+        case TARGET_STARTING_POINT_REACHED: return appendString(outputStream, "ST P R");
+        case TARGET_MISSED: return appendString(outputStream, "MISSED");
     }
     appendString(outputStream, "?");
 

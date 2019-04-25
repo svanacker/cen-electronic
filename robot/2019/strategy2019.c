@@ -122,12 +122,15 @@ static GameTargetAction chaosTakeTargetAction;
 static GameTargetAction chaosDropTargetAction;
 
 static GameTargetAction bigDistributorLine1TakeTargetAction;
+static GameTargetAction bigDistributorLine1MoveTargetAction;
 static GameTargetAction bigDistributorLine1DropTargetAction;
 
 static GameTargetAction bigDistributorLine2TakeTargetAction;
+static GameTargetAction bigDistributorLine2MoveTargetAction;
 static GameTargetAction bigDistributorLine2DropTargetAction;
 
 static GameTargetAction bigDistributorLine3TakeTargetAction;
+static GameTargetAction bigDistributorLine3MoveTargetAction;
 static GameTargetAction bigDistributorLine3DropTargetAction;
 
 // ------------------------------------------------------- TARGETS ACTIONS ITEM LIST --------------------------------------------------------
@@ -140,7 +143,6 @@ static GameTargetActionItemList goldeniumDropTargetActionItemList;
 
 // Big Robot
 static GameTargetActionItemList chaosTakeTargetActionItemList;
-static GameTargetActionItemList chaosDropTargetActionItemList;
 
 static GameTargetActionItemList bigDistributorLine1TakeTargetActionItemList;
 static GameTargetActionItemList bigDistributorLine1DropTargetActionItemList;
@@ -541,28 +543,31 @@ void initTargetActions2019(GameStrategyContext* gameStrategyContext) {
     RobotConfig* robotConfig = gameStrategyContext->robotConfig;
     if (robotConfig->robotType == ROBOT_TYPE_SMALL) {
         // ACCELERATOR TARGET
-        addTargetAction(&(acceleratorTarget.actionList), &acceleratorTargetAction, acceleratorFrontLocation, acceleratorFrontLocation, ACCELERATOR_ACTION_TIME_TO_ACHIEVE, NULL, &acceleratorTargetActionItemList);
+        addTargetDropAction(&(acceleratorTarget.actionList), &acceleratorTargetAction, acceleratorFrontLocation, ACCELERATOR_ACTION_TIME_TO_ACHIEVE, &acceleratorTargetActionItemList);
         // GOLDENIUM TAKE TARGET
-        addTargetAction(&(goldeniumTakeTarget.actionList), &goldeniumTakeTargetAction, goldeniumFrontLocation, goldeniumFrontLocation, GOLDENIUM_TAKE_TIME_TO_ACHIEVE, NULL, &goldeniumTakeTargetActionItemList);
+        addTargetHandlingAction(&(goldeniumTakeTarget.actionList), &goldeniumTakeTargetAction, goldeniumFrontLocation, GOLDENIUM_TAKE_TIME_TO_ACHIEVE, &goldeniumTakeTargetActionItemList);
         // GOLDENIUM DROP TARGET
-        addTargetAction(&(goldeniumDropTarget.actionList), &goldeniumDropTargetAction, weighingMachineFrontLocation, weighingMachineFrontLocation, GOLDENIUM_DROP_TIME_TO_ACHIEVE, NULL, &goldeniumDropTargetActionItemList);
+        addTargetDropAction(&(goldeniumDropTarget.actionList), &goldeniumDropTargetAction, weighingMachineFrontLocation, GOLDENIUM_DROP_TIME_TO_ACHIEVE, &goldeniumDropTargetActionItemList);
     }
     else if (robotConfig->robotType == ROBOT_TYPE_BIG) {
         // CHAOS
-        addTargetAction(&(chaosTarget.actionList), &chaosTakeTargetAction, chaosFrontLocation, chaosFrontLocation, CHAOS_TAKE_TIME_TO_ACHIEVE, NULL, &chaosTakeTargetActionItemList);
-        addTargetAction(&(chaosTarget.actionList), &chaosDropTargetAction, chaosFrontLocation, chaosFrontLocation, CHAOS_DROP_TIME_TO_ACHIEVE, NULL, &chaosDropTargetActionItemList);
+        addTargetPrepareAction(&(chaosTarget.actionList), &chaosTakeTargetAction, chaosFrontLocation, CHAOS_TAKE_TIME_TO_ACHIEVE, &chaosTakeTargetActionItemList);
+        addTargetMoveAction(&(chaosTarget.actionList), &chaosDropTargetAction, chaosFrontLocation, rediumDropZoneLocation, CHAOS_DROP_TIME_TO_ACHIEVE);
         
         // BIG DISTRIBUTOR LINE 1
-        addTargetAction(&(bigDistributorLine1Target.actionList), &bigDistributorLine1TakeTargetAction, bigDistributorLine1FrontLocation, bigDistributorLine1FrontLocation, BIG_DISTRIBUTOR_LINE_1_TAKE_TIME_TO_ACHIEVE, NULL, &bigDistributorLine1TakeTargetActionItemList);
-        addTargetAction(&(bigDistributorLine1Target.actionList), &bigDistributorLine1DropTargetAction, acceleratorDropLocation, acceleratorDropLocation, BIG_DISTRIBUTOR_LINE_1_DROP_TIME_TO_ACHIEVE, NULL, &bigDistributorLine1DropTargetActionItemList);
+        addTargetHandlingAction(&(bigDistributorLine1Target.actionList), &bigDistributorLine1TakeTargetAction, bigDistributorLine1FrontLocation, BIG_DISTRIBUTOR_LINE_1_TAKE_TIME_TO_ACHIEVE, &bigDistributorLine1TakeTargetActionItemList);
+        addTargetMoveAction(&(bigDistributorLine1Target.actionList), &bigDistributorLine1MoveTargetAction, bigDistributorLine1FrontLocation, acceleratorDropLocation, BIG_DISTRIBUTOR_LINE_1_MOVE_TIME_TO_ACHIEVE);
+        addTargetDropAction(&(bigDistributorLine1Target.actionList), &bigDistributorLine1DropTargetAction, acceleratorDropLocation, BIG_DISTRIBUTOR_LINE_1_DROP_TIME_TO_ACHIEVE, &bigDistributorLine1DropTargetActionItemList);
 
         // BIG DISTRIBUTOR LINE 2
-        addTargetAction(&(bigDistributorLine2Target.actionList), &bigDistributorLine2TakeTargetAction, bigDistributorLine2FrontLocation, bigDistributorLine2FrontLocation, BIG_DISTRIBUTOR_LINE_2_TAKE_TIME_TO_ACHIEVE, NULL, &bigDistributorLine2TakeTargetActionItemList);
-        addTargetAction(&(bigDistributorLine2Target.actionList), &bigDistributorLine2DropTargetAction, acceleratorDropLocation, acceleratorDropLocation, BIG_DISTRIBUTOR_LINE_2_DROP_TIME_TO_ACHIEVE, NULL, &bigDistributorLine2DropTargetActionItemList);
+        addTargetHandlingAction(&(bigDistributorLine2Target.actionList), &bigDistributorLine2TakeTargetAction, bigDistributorLine2FrontLocation, BIG_DISTRIBUTOR_LINE_2_TAKE_TIME_TO_ACHIEVE, &bigDistributorLine2TakeTargetActionItemList);
+        addTargetMoveAction(&(bigDistributorLine2Target.actionList), &bigDistributorLine2MoveTargetAction, bigDistributorLine2FrontLocation, acceleratorDropLocation, BIG_DISTRIBUTOR_LINE_2_MOVE_TIME_TO_ACHIEVE);
+        addTargetDropAction(&(bigDistributorLine2Target.actionList), &bigDistributorLine2DropTargetAction, acceleratorDropLocation, BIG_DISTRIBUTOR_LINE_2_DROP_TIME_TO_ACHIEVE, &bigDistributorLine2DropTargetActionItemList);
 
         // BIG DISTRIBUTOR LINE 3
-        addTargetAction(&(bigDistributorLine3Target.actionList), &bigDistributorLine3TakeTargetAction, bigDistributorLine3FrontLocation, bigDistributorLine3FrontLocation, BIG_DISTRIBUTOR_LINE_3_TAKE_TIME_TO_ACHIEVE, NULL, &bigDistributorLine3TakeTargetActionItemList);
-        addTargetAction(&(bigDistributorLine3Target.actionList), &bigDistributorLine3DropTargetAction, acceleratorDropLocation, acceleratorDropLocation, BIG_DISTRIBUTOR_LINE_3_DROP_TIME_TO_ACHIEVE, NULL, &bigDistributorLine3DropTargetActionItemList);
+        addTargetHandlingAction(&(bigDistributorLine3Target.actionList), &bigDistributorLine3TakeTargetAction, bigDistributorLine3FrontLocation, BIG_DISTRIBUTOR_LINE_3_TAKE_TIME_TO_ACHIEVE, &bigDistributorLine3TakeTargetActionItemList);
+        addTargetMoveAction(&(bigDistributorLine3Target.actionList), &bigDistributorLine3MoveTargetAction, bigDistributorLine2FrontLocation, acceleratorDropLocation, BIG_DISTRIBUTOR_LINE_3_MOVE_TIME_TO_ACHIEVE);
+        addTargetDropAction(&(bigDistributorLine3Target.actionList), &bigDistributorLine3DropTargetAction, acceleratorDropLocation, BIG_DISTRIBUTOR_LINE_3_DROP_TIME_TO_ACHIEVE, &bigDistributorLine3DropTargetActionItemList);
     }
 }
 
@@ -643,29 +648,29 @@ bool bigDistributorLineTake(int* context) {
 
 
 void initTargetActionsItems2019(GameStrategyContext* gameStrategyContext) {
-    addTargetActionItem(&acceleratorTargetActionItemList, &acceleratorTargetActionItem, &acceleratorArmOn, "ACC ARM ON", ACTION_ITEM_PHASIS_END_LOCATION);
+    addTargetActionItem(&acceleratorTargetActionItemList, &acceleratorTargetActionItem, &acceleratorArmOn, "ACC ARM ON");
     
     // Goldenium Take
-    addTargetActionItem(&goldeniumTakeTargetActionItemList, &goldeniumPrepareTakeTargetActionItem, &goldeniumPrepareTake, "PREP GOLD TAKE", ACTION_ITEM_PHASIS_START_LOCATION);
-    addTargetActionItem(&goldeniumTakeTargetActionItemList, &goldeniumTakeTargetActionItem, &goldeniumTake, "GOLD TAKE", ACTION_ITEM_PHASIS_END_LOCATION);
+    addTargetActionItem(&goldeniumTakeTargetActionItemList, &goldeniumPrepareTakeTargetActionItem, &goldeniumPrepareTake, "PREP GOLD TAKE");
+    addTargetActionItem(&goldeniumTakeTargetActionItemList, &goldeniumTakeTargetActionItem, &goldeniumTake, "GOLD TAKE");
    
     // Goldenium Drop
-    addTargetActionItem(&goldeniumDropTargetActionItemList, &goldeniumPrepareDropTargetActionItem, &goldeniumDrop, "PREP GOLD DROP", ACTION_ITEM_PHASIS_START_LOCATION);
-    addTargetActionItem(&goldeniumDropTargetActionItemList, &goldeniumDropTargetActionItem, &goldeniumDrop, "GOLD DROP", ACTION_ITEM_PHASIS_END_LOCATION);
+    addTargetActionItem(&goldeniumDropTargetActionItemList, &goldeniumPrepareDropTargetActionItem, &goldeniumDrop, "PREP GOLD DROP");
+    addTargetActionItem(&goldeniumDropTargetActionItemList, &goldeniumDropTargetActionItem, &goldeniumDrop, "GOLD DROP");
     
     // Chaos : No specific action to do
     
     // Big Distributor 1 Line 1
-    addTargetActionItem(&bigDistributorLine1TakeTargetActionItemList, &bigDistributorLine1PrepareTargetActionItem, &bigDistributorLinePrepare, "PREP DIST 1", ACTION_ITEM_PHASIS_START_LOCATION);
-    addTargetActionItem(&bigDistributorLine1DropTargetActionItemList, &bigDistributorLine1TargetActionItem, &bigDistributorLineTake, "TAKE DIST 1", ACTION_ITEM_PHASIS_END_LOCATION);
+    addTargetActionItem(&bigDistributorLine1TakeTargetActionItemList, &bigDistributorLine1PrepareTargetActionItem, &bigDistributorLinePrepare, "PREP DIST 1");
+    addTargetActionItem(&bigDistributorLine1DropTargetActionItemList, &bigDistributorLine1TargetActionItem, &bigDistributorLineTake, "TAKE DIST 1");
 
     // Big Distributor 1 Line 2
-    addTargetActionItem(&bigDistributorLine2TakeTargetActionItemList, &bigDistributorLine2PrepareTargetActionItem, &bigDistributorLinePrepare, "PREP DIST 2", ACTION_ITEM_PHASIS_START_LOCATION);
-    addTargetActionItem(&bigDistributorLine2DropTargetActionItemList, &bigDistributorLine2TargetActionItem, &bigDistributorLineTake, "TAKE DIST 2", ACTION_ITEM_PHASIS_END_LOCATION);
+    addTargetActionItem(&bigDistributorLine2TakeTargetActionItemList, &bigDistributorLine2PrepareTargetActionItem, &bigDistributorLinePrepare, "PREP DIST 2");
+    addTargetActionItem(&bigDistributorLine2DropTargetActionItemList, &bigDistributorLine2TargetActionItem, &bigDistributorLineTake, "TAKE DIST 2");
 
     // Big Distributor 1 Line 3
-    addTargetActionItem(&bigDistributorLine3TakeTargetActionItemList, &bigDistributorLine3PrepareTargetActionItem, &bigDistributorLinePrepare, "PREP DIST 3", ACTION_ITEM_PHASIS_START_LOCATION);
-    addTargetActionItem(&bigDistributorLine3DropTargetActionItemList, &bigDistributorLine3TargetActionItem, &bigDistributorLineTake, "TAKE DIST 3", ACTION_ITEM_PHASIS_END_LOCATION);
+    addTargetActionItem(&bigDistributorLine3TakeTargetActionItemList, &bigDistributorLine3PrepareTargetActionItem, &bigDistributorLinePrepare, "PREP DIST 3");
+    addTargetActionItem(&bigDistributorLine3DropTargetActionItemList, &bigDistributorLine3TargetActionItem, &bigDistributorLineTake, "TAKE DIST 3");
 }
 
 /**

@@ -5,6 +5,12 @@
 
 #include "../../common/io/outputStream.h"
 
+// Action Type
+
+unsigned int appendActionTypeAsString(OutputStream* outputStream, enum ActionType actionType);
+
+unsigned int appendActionTypeTableData(OutputStream* outputStream, enum ActionType actionType, int columnSize);
+
 // ActionStatus
 
 unsigned int appendActionStatusAsString(OutputStream* outputStream, enum ActionStatus actionStatus);

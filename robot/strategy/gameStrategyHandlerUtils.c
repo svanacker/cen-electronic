@@ -83,7 +83,7 @@ void markTargetInUse(GameStrategyContext* gameStrategyContext) {
         return;
     }
     // mark the target as being used
-    currentTarget->status = TARGET_INUSE;
+    // currentTarget->status = TARGET_INUSE;
 }
 
 void motionGoLocation(Location* location,

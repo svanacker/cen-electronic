@@ -24,16 +24,14 @@ void clearTargetActionItemList(GameTargetActionItemList* targetActionItemList) {
 void addTargetActionItem(GameTargetActionItemList* targetActionItemList,
                      GameTargetActionItem* targetActionItem,
                      GameTargetActionFunction* actionItemFunction,
-                     char* name,
+                     char* name
 //                      float timeToAchieve,
-                     enum ActionItemPhasis phasis
 ) {
     unsigned char size = targetActionItemList->size;
     if (size < MAX_TARGET_ACTION_ITEM) {
         targetActionItem->actionItemFunction = actionItemFunction;
         targetActionItem->name = name;
 //      targetActionItem->timeToAchieve = timeToAchieve;
-        targetActionItem->phasis = phasis;
         targetActionItem->status = ACTION_ITEM_STATUS_TODO;
         targetActionItemList->items[size] = targetActionItem;
         targetActionItemList->size++;
@@ -47,27 +45,21 @@ GameTargetActionItem* getGameTargetActionItem(GameTargetActionItemList* targetAc
     return targetActionItemList->items[index];
 }
 
+unsigned int getGameTargetActionItemTodoCount(GameTargetActionItemList* targetActionItemList) {
+    unsigned int result = 0;
+    int i;
+    int size = targetActionItemList->size;
+    for (i = 0; i < size; i++) {
+        GameTargetActionItem* targetActionItem = targetActionItemList->items[i];
+        if (targetActionItem->status == ACTION_ITEM_STATUS_TODO) {
+            result++;
+        }
+    }
+    return result;
+}
+
 int getGameTargetActionItemCount(GameTargetActionItemList* targetActionItemList) {
     return targetActionItemList->size;
-}
-
-// ITERATOR
-
-bool targetActionItemListHasNext(GameTargetActionItemList* targetActionItemList) {
-    return (targetActionItemList->iteratorIndex < targetActionItemList->size);
-}
-
-GameTargetActionItem* targetActionItemListNext(GameTargetActionItemList* targetActionItemList) {
-    if (targetActionItemList->iteratorIndex < targetActionItemList->size) {
-        GameTargetActionItem* result = targetActionItemList->items[targetActionItemList->iteratorIndex];
-        targetActionItemList->iteratorIndex++;
-        return result;
-    }
-    return NULL;
-}
-
-void targetActionItemListResetIterator(GameTargetActionItemList* targetActionItemList) {
-    targetActionItemList->iteratorIndex = 0;
 }
 
 // DOING
@@ -78,5 +70,14 @@ bool doGameTargetActionItem(GameTargetActionItem* gameTargetActionItem, int* con
         return false;
     }
     GameTargetActionFunction* doFunction = gameTargetActionItem->actionItemFunction;
-    return doFunction(context);
+
+
+    bool succeed = doFunction(context);
+    if (succeed) {
+        gameTargetActionItem->status = ACTION_ITEM_STATUS_DONE;
+    }
+    else {
+        gameTargetActionItem->status = ACTION_ITEM_STATUS_ERROR;
+    }
+    return succeed;
 }

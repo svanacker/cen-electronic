@@ -9,12 +9,12 @@
 enum GameTargetStatus {
     /** The target is Available. */
     TARGET_AVAILABLE = 0,
-    
+    /** We read the starting point of the target .*/
+    TARGET_STARTING_POINT_REACHED = 1,
     /** The target is Handled. */
-    TARGET_HANDLED = 1,
-    
-    /** The target is in use. */
-    TARGET_INUSE = 2
+    TARGET_HANDLED = 2,
+    /** The target is missed. */
+    TARGET_MISSED = 3
 };
 
 unsigned int appendGameTargetStatusAsString(OutputStream* outputStream, enum GameTargetStatus gameTargetStatus);

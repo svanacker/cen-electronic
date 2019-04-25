@@ -24,13 +24,13 @@
 
 #define GAME_STRATEGY_ITEM_LIST_TARGET_STATUS_COLUMN_LENGTH                      6
 // ACTION COLUMNS
+#define GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_TYPE_NAME_COLUMN_LENGTH            6
 #define GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_START_LOCATION_NAME_COLUMN_LENGTH  7
 #define GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_END_LOCATION_NAME_COLUMN_LENGTH    7
 #define GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_STATUS_COLUMN_LENGTH               6
 #define GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_TIME_TO_ACHIEVE_COLUMN_LENGTH      7
 // ACTION LIST ITEMS : TODO
 #define GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_ITEM_NAME_COLUMN_LENGTH           12
-#define GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_ITEM_PHASIS_COLUMN_LENGTH          7
 #define GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_ITEM_STATUS_COLUMN_LENGTH          7
 
 // END
@@ -49,12 +49,12 @@ void printGameStrategyItemListHeader(OutputStream* outputStream) {
     appendStringHeader(outputStream, "Pot.", GAME_STRATEGY_ITEM_LIST_TARGET_POTENTIAL_GAIN_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Opport.", GAME_STRATEGY_ITEM_LIST_TARGET_OPPORTUNITY_FACTOR_COLUMN_LENGTH);
     appendStringHeader(outputStream, "status", GAME_STRATEGY_ITEM_LIST_TARGET_STATUS_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Action", GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_TYPE_NAME_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Action", GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_START_LOCATION_NAME_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Action", GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_END_LOCATION_NAME_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Action", GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_STATUS_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Action", GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_TIME_TO_ACHIEVE_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Action", GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_ITEM_NAME_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "Action", GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_ITEM_PHASIS_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Action", GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_ITEM_STATUS_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, GAME_STRATEGY_ITEM_LIST_LAST_COLUMN_LENGTH);
 
@@ -64,12 +64,12 @@ void printGameStrategyItemListHeader(OutputStream* outputStream) {
     appendStringHeader(outputStream, "gain", GAME_STRATEGY_ITEM_LIST_TARGET_POTENTIAL_GAIN_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Factor", GAME_STRATEGY_ITEM_LIST_TARGET_OPPORTUNITY_FACTOR_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", GAME_STRATEGY_ITEM_LIST_TARGET_STATUS_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Type", GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_TYPE_NAME_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Start", GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_START_LOCATION_NAME_COLUMN_LENGTH);
     appendStringHeader(outputStream, "End", GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_END_LOCATION_NAME_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Status", GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_STATUS_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Time to", GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_TIME_TO_ACHIEVE_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Item", GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_ITEM_NAME_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "Item", GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_ITEM_PHASIS_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Item", GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_ITEM_STATUS_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, GAME_STRATEGY_ITEM_LIST_LAST_COLUMN_LENGTH);
 
@@ -79,12 +79,12 @@ void printGameStrategyItemListHeader(OutputStream* outputStream) {
     appendStringHeader(outputStream, "", GAME_STRATEGY_ITEM_LIST_TARGET_POTENTIAL_GAIN_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", GAME_STRATEGY_ITEM_LIST_TARGET_OPPORTUNITY_FACTOR_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", GAME_STRATEGY_ITEM_LIST_TARGET_STATUS_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "", GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_TYPE_NAME_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_START_LOCATION_NAME_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_END_LOCATION_NAME_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_STATUS_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Achieve", GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_TIME_TO_ACHIEVE_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Name", GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_ITEM_NAME_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "Phasis", GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_ITEM_PHASIS_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Status", GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_ITEM_STATUS_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, GAME_STRATEGY_ITEM_LIST_LAST_COLUMN_LENGTH);
 
@@ -103,13 +103,13 @@ void printGameStrategyItemTable(OutputStream* outputStream, GameStrategyItem* st
     appendDecfTableData(outputStream, target->currentComputedOpportunityFactor, GAME_STRATEGY_ITEM_LIST_TARGET_OPPORTUNITY_FACTOR_COLUMN_LENGTH);
     addGameTargetStatusTableData(outputStream, target->status, GAME_STRATEGY_ITEM_LIST_TARGET_STATUS_COLUMN_LENGTH);
     // ACTIONS
+    appendStringTableData(outputStream, "", GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_TYPE_NAME_COLUMN_LENGTH);
     appendStringTableData(outputStream, "", GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_START_LOCATION_NAME_COLUMN_LENGTH);
     appendStringTableData(outputStream, "", GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_END_LOCATION_NAME_COLUMN_LENGTH);
     appendStringTableData(outputStream, "", GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_STATUS_COLUMN_LENGTH);
     appendStringTableData(outputStream, "", GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_TIME_TO_ACHIEVE_COLUMN_LENGTH);
     // ITEMS
     appendStringTableData(outputStream, "", GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_ITEM_NAME_COLUMN_LENGTH);
-    appendStringTableData(outputStream, "", GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_ITEM_PHASIS_COLUMN_LENGTH);
     appendStringTableData(outputStream, "", GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_ITEM_STATUS_COLUMN_LENGTH);
 
     // END
@@ -128,6 +128,7 @@ void printGameTargetActionTable(OutputStream* outputStream, GameTargetAction* ga
     appendStringTableData(outputStream, "-", GAME_STRATEGY_ITEM_LIST_TARGET_STATUS_COLUMN_LENGTH);
 
     // ACTIONS
+    appendActionTypeTableData(outputStream, gameTargetAction->type, GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_TYPE_NAME_COLUMN_LENGTH);
     appendStringTableData(outputStream, gameTargetAction->startLocation->name, GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_START_LOCATION_NAME_COLUMN_LENGTH);
     appendStringTableData(outputStream, gameTargetAction->endLocation->name, GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_END_LOCATION_NAME_COLUMN_LENGTH);
     appendActionStatusTableData(outputStream, gameTargetAction->status, GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_STATUS_COLUMN_LENGTH);
@@ -135,7 +136,6 @@ void printGameTargetActionTable(OutputStream* outputStream, GameTargetAction* ga
 
     // ITEMS
     appendStringTableData(outputStream, "", GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_ITEM_NAME_COLUMN_LENGTH);
-    appendStringTableData(outputStream, "", GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_ITEM_PHASIS_COLUMN_LENGTH);
     appendStringTableData(outputStream, "", GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_ITEM_STATUS_COLUMN_LENGTH);
 
     // END
@@ -154,6 +154,7 @@ void printGameTargetActionItemTable(OutputStream* outputStream, GameTargetAction
     appendStringTableData(outputStream, "-", GAME_STRATEGY_ITEM_LIST_TARGET_STATUS_COLUMN_LENGTH);
 
     // ACTIONS
+    appendStringTableData(outputStream, "", GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_TYPE_NAME_COLUMN_LENGTH);
     appendStringTableData(outputStream, "-", GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_START_LOCATION_NAME_COLUMN_LENGTH);
     appendStringTableData(outputStream, "-", GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_END_LOCATION_NAME_COLUMN_LENGTH);
     appendStringTableData(outputStream, "-", GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_STATUS_COLUMN_LENGTH);
@@ -161,7 +162,6 @@ void printGameTargetActionItemTable(OutputStream* outputStream, GameTargetAction
 
     // ITEMS
     appendStringTableData(outputStream, gameTargetActionItem->name, GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_ITEM_NAME_COLUMN_LENGTH);
-    appendActionItemPhasisTableData(outputStream, gameTargetActionItem->phasis, GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_ITEM_PHASIS_COLUMN_LENGTH);
     appendActionItemStatusTableData(outputStream, gameTargetActionItem->status, GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_ITEM_STATUS_COLUMN_LENGTH);
 
     // END
@@ -188,6 +188,9 @@ void printGameStrategyTable(OutputStream* outputStream, GameStrategy* gameStrate
             printGameTargetActionTable(outputStream, targetAction);
             // For Each Action Item
             GameTargetActionItemList* itemList = targetAction->actionItemList;
+            if (itemList == NULL) {
+                continue;
+            }
             unsigned int actionItemSize = itemList->size;
             for (k = 0; k < actionItemSize; k++) {
                 GameTargetActionItem* actionItem = getGameTargetActionItem(itemList, k);

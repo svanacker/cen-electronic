@@ -37,5 +37,10 @@ typedef struct GameTarget {
  */
 void clearGameTarget(GameTarget* target);
 
+/**
+* Update the status of the target. 
+*/
+void updateTargetStatus(GameTarget* target);
+
 #endif
 

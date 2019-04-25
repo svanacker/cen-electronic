@@ -3,7 +3,8 @@
 
 #include "gameStrategyHandler.h"
 #include "gameStrategyHandlerUtils.h"
-
+#include "gameTargetActionList.h"
+#include "gameTargetAction.h"
 #include "gameStrategyContext.h"
 
 #include "nextGameStrategyItemComputer.h"
@@ -65,8 +66,8 @@ GameTarget* findNextTarget(GameStrategyContext* gameStrategyContext) {
     return result;
 }
 
-bool executeTargetActionItemListForPhasis(GameStrategyContext* gameStrategyContext, GameTargetActionItemList* actionItemList, enum ActionItemPhasis phasis) {
-    bool result = false;
+bool executeTargetActionItemList(GameStrategyContext* gameStrategyContext, GameTargetActionItemList* actionItemList) {
+    bool result = true;
     unsigned int actionItemIndex;
     // Loop on all action Items to do
     for (actionItemIndex = 0; actionItemIndex < actionItemList->size; actionItemIndex++) {
@@ -76,81 +77,58 @@ bool executeTargetActionItemListForPhasis(GameStrategyContext* gameStrategyConte
             continue;
         }
 
-        // We only do the action Item at the right phasis (end or start) of action
-        if (actionItem->phasis != phasis) {
-            continue;
+        // Do the action item, and track if there will be an error
+        if (!doGameTargetActionItem(actionItem, (int*)gameStrategyContext)) {
+            result = false;
         }
-
-        // Do the action item
-        actionItem->actionItemFunction((int*)gameStrategyContext);
-        actionItem->status = ACTION_ITEM_STATUS_DONE;
-        result = true;
     }
     return result;
 }
 
-bool executeTargetActions(GameStrategyContext* gameStrategyContext) {
+/**
+* Handle the different types of actions : moving / preparing, handling / dropping
+* @private
+*/
+bool handleActions(GameStrategyContext* gameStrategyContext) {
     GameTarget* currentTarget = gameStrategyContext->currentTarget;
     if (currentTarget == NULL) {
         return false;
     }
     GameTargetActionList* actionList = &(currentTarget->actionList);
-    unsigned int actionIndex;
+    GameTargetAction* targetAction = getNextGameTargetActionTodo(actionList);
 
-    // For All Actions
-    for (actionIndex = 0; actionIndex < actionList->size; actionIndex++) {
-        GameTargetAction* action = getGameTargetAction(actionList, actionIndex);
-
-        // Do the action related to the start of Location
-        GameTargetActionItemList* actionItemList = action->actionItemList;
-        if (action->startLocation == gameStrategyContext->nearestLocation) {
-            if (executeTargetActionItemListForPhasis(gameStrategyContext, actionItemList, ACTION_ITEM_PHASIS_START_LOCATION)) {
-                return true;
-            }
-        }
-
-        // Do the action related to the end of Location
-        if (action->endLocation == gameStrategyContext->nearestLocation) {
-            if (executeTargetActionItemListForPhasis(gameStrategyContext, actionItemList, ACTION_ITEM_PHASIS_END_LOCATION)) {
-                return true;
-            }
-        }
-    }
-    return false;
-}
-
-/**
-* Handle the trajectory of the robot to go from Action[0].startLocation -> Action[1].endLocation
-* @private
-*/
-bool handleTrajectoryActions(GameStrategyContext* gameStrategyContext) {
-    GameTarget* currentTarget = gameStrategyContext->currentTarget;
-    if (currentTarget == NULL) {
+    if (targetAction == NULL) {
         return false;
     }
-    Navigation* navigation = gameStrategyContext->navigation;
+    enum ActionType actionType = targetAction->type;
 
-    Location* robotLocation = gameStrategyContext->nearestLocation;
-    // If the point of the robot is the same than the startLocation of the target Actions, we do not do anything
-    if (robotLocation == currentTarget->startLocation) {
-        return false;
-    }
-    // Take the next location to follow
-    Location* end = robotLocation->resultNextLocation;
-    // If the point is the same than the startLocation of the target Actions, we escape
-    if (end == NULL || end == currentTarget->startLocation) {
-        return false;
-    }
-
-    bool reversed;
-    PathList* pathList = getNavigationPathList(navigation);
-    PathData* pathData = getPathOfLocations(pathList, robotLocation, end, &reversed);
-
-    // Check if to follow the path, we need to do first a rotation (to avoid problem on bSpline)
-    if (!motionRotateToFollowPath(gameStrategyContext, pathData, reversed)) {
-        // If this is not the case, we ask to follow the path
+    // If the action is to move from startLocation to endLocation
+    // Move action has no gameTargetActionItemList
+    if (actionType == ACTION_TYPE_MOVE) {
+        Navigation* navigation = gameStrategyContext->navigation;
+        PathList* pathList = getNavigationPathList(navigation);
+        bool reversed;
+        PathData* pathData = getPathOfLocations(pathList, targetAction->startLocation, targetAction->endLocation, &reversed);
         motionFollowPath(gameStrategyContext, pathData, reversed);
+        // TODO : Must be done AFTER that the move has been done
+        targetAction->status = ACTION_STATUS_DONE;
     }
+    else {
+        GameTargetActionItemList* actionItemList = targetAction->actionItemList;
+        if (executeTargetActionItemList(gameStrategyContext, actionItemList)) {
+            // All Items of the actions were done successfully
+            targetAction->status = ACTION_STATUS_DONE;
+        }
+        else {
+            // We mark the action in error
+            targetAction->status = ACTION_STATUS_ERROR;
+        }
+    }
+
+    // Update the status of the target from the status of each actions
+    updateTargetStatus(currentTarget);
+
+
     return true;
 }
 
@@ -163,17 +141,24 @@ bool handleTrajectoryToActionStart(GameStrategyContext* gameStrategyContext) {
     if (currentTarget == NULL) {
         return false;
     }
+    if (currentTarget->status != TARGET_AVAILABLE) {
+        return false;
+    }
     Navigation* navigation = gameStrategyContext->navigation;
 
     Location* robotLocation = gameStrategyContext->nearestLocation;
+
     // If the point of the robot is the same than the startLocation of the target Actions, we do not do anything
     if (robotLocation == currentTarget->startLocation) {
+        currentTarget->status = TARGET_STARTING_POINT_REACHED;
+
         return false;
     }
     // Take the next location to follow
     Location* end = robotLocation->resultNextLocation;
-    // If the point is the same than the startLocation of the target Actions, we escape
+    // If the point is the same than the startLocation of the target Actions, we escape too
     if (end == NULL || end == currentTarget->startLocation) {
+        currentTarget->status = TARGET_STARTING_POINT_REACHED;
         return false;
     }
 
@@ -200,47 +185,11 @@ bool nextStep(GameStrategyContext* gameStrategyContext) {
         return true;
     }
 
-    // Launch command to follow the different actions (and move if action->endLocation != action->startLocation
-    if (handleTrajectoryActions(gameStrategyContext)) {
+    // Launch command to follow the different actions (and move if action->endLocation != action->startLocation)
+    if (handleActions(gameStrategyContext)) {
         // We do not do anything, we wait that the robot reach his target
-        return true;
-    }
-
-    // Launch command to execute the actions
-    if (executeTargetActions(gameStrategyContext)) {
         return true;
     }
 
     return false;
 }
-
-/*
-bool executeTargetActions(GameStrategyContext* gameStrategyContext) {
-    // In progress on the target
-    markTargetInUse(gameStrategyContext);
-
-    GameTargetAction* targetAction = gameStrategyContext->currentTargetAction;
-    // If no action Item List is defined
-    GameTargetActionItemList* actionItemList = targetAction->actionItemList;
-    if (actionItemList == NULL) {
-        // We consider that the target was handled
-        markTargetAsHandled(gameStrategyContext);
-        return false;
-    }
-
-    // There is an actionItem in progress
-    if (targetActionItemListHasNext(actionItemList)) {
-        GameTargetActionItem* actionItem = targetActionItemListNext(actionItemList);
-
-        // Do the action item
-        actionItem->actionItemFunction((int*) gameStrategyContext);
-        return true;
-    }
-    else {
-        markTargetAsHandled(gameStrategyContext);
-        // we do nothing more
-        return false;
-    }
-    return true;
-}
-*/

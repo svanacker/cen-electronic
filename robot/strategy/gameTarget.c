@@ -1,3 +1,4 @@
+#include <stdbool.h>
 #include <stdlib.h>
 
 #include "gameTarget.h"
@@ -12,5 +13,29 @@ void clearGameTarget(GameTarget* target) {
     
     if (&(target->actionList) != NULL) {
         clearTargetActionList(&(target->actionList));
+    }
+}
+
+void updateTargetStatus(GameTarget* target) {
+    GameTargetActionList* list = &(target->actionList);
+    if (list == NULL) {
+        return;
+    }
+    unsigned int i;
+    unsigned int size = list->size;
+    bool allDone = true;
+    for (i = 0; i < size; i++) {
+        GameTargetAction* targetAction = list->actions[i];
+        if (targetAction->status == ACTION_STATUS_ERROR) {
+            target->status = TARGET_MISSED;
+            return;
+        }
+
+        if (targetAction->status != ACTION_STATUS_DONE) {
+            allDone = false;
+        }
+    }
+    if (allDone) {
+        target->status = TARGET_HANDLED;
     }
 }

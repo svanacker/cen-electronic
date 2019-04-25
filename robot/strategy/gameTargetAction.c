@@ -10,8 +10,8 @@ void clearTargetAction(GameTargetAction* targetAction) {
     targetAction->startLocation = NULL;
     targetAction->endLocation = NULL;
     targetAction->timeToAchieve = 0.0f;
-    targetAction->pathData = NULL;
     targetAction->status = ACTION_STATUS_TODO;
+    targetAction->type = ACTION_TYPE_UNDEFINED;
     if (targetAction->actionItemList != NULL) {
         clearTargetActionItemList(targetAction->actionItemList);
     }
@@ -20,15 +20,22 @@ void clearTargetAction(GameTargetAction* targetAction) {
 void initGameTargetAction(GameTargetAction* targetAction,
     Location* startLocation,
     Location* endLocation,
+    enum ActionType actionType,
     float timeToAchieve,
-    GameTargetActionItemList* actionItemList,
-    PathData* pathData) {
+    GameTargetActionItemList* actionItemList) {
     targetAction->startLocation = startLocation;
     targetAction->endLocation = endLocation;
-    targetAction->timeToAchieve = timeToAchieve;
     targetAction->status = ACTION_STATUS_TODO;
+    targetAction->type = actionType;
+    targetAction->timeToAchieve = timeToAchieve;
     targetAction->actionItemList = actionItemList;
-    targetAction->pathData = pathData;
+}
+
+bool targetActionNeedsMove(GameTargetAction* targetAction) {
+    if (targetAction == NULL) {
+        return false;
+    }
+    return targetAction->startLocation != targetAction->endLocation;
 }
 
 bool doGameTargetAction(GameTargetAction* targetAction, int* context) {
