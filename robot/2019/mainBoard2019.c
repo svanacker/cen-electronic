@@ -63,6 +63,9 @@ Navigation* initNavigation2019(void) {
 
 GameStrategyContext* initGameStrategyContext2019(RobotConfig* robotConfig, EndMatch* endMatch, TofSensorList* tofSensorList) {
     initGameStrategyContext(&gameStrategyContext, robotConfig, &navigation, endMatch, tofSensorList, &robotPosition, &opponentRobotPosition, &lastObstaclePosition);
+#ifdef MSC_VER
+    gameStrategyContext->simulateMove = true;
+#endif
     initStrategy2019(&gameStrategyContext);
 
     return &gameStrategyContext;

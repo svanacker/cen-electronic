@@ -16,11 +16,15 @@ Location* getNearestLocation(LocationList* locationList, float x, float y, float
         if (location == NULL) {
             continue;
         }
+        // Do not consider points which are too away
         float distance = distanceBetweenPoints2(location->x, location->y, x, y);
+        if (distance > maxDistance) {
+            continue;
+        }
         // We only keep points which are :
         // * not too far
         // * only update the point if the distance is shortest
-        if (distance <= maxDistance) {
+        if (distance <= min) {
             min = distance;
             result = location;
         }
@@ -70,7 +74,6 @@ Location* extractMinCostLocation(LocationList* locationList) {
 }
 
 void cutLocationLinkedList(Location* location, Location* endLocation) {
-    unsigned int result = 0;
     Location* currentLocation = location;
 
     while (currentLocation != NULL) {

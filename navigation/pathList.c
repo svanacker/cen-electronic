@@ -88,25 +88,18 @@ PathData* getPath(PathList* pathList, unsigned int index) {
     return result;
 }
 
-PathData* getPathOfLocations(PathList* pathList, Location* location1, Location* location2, bool* reversed) {
+PathData* getPathOfLocations(PathList* pathList, Location* location1, Location* location2) {
     unsigned int i;
     unsigned int size = pathList->size;
     for (i = 0; i < size; i++) {
         PathData* pathData = getPath(pathList, i);
         Location* pathLocation1 = pathData->location1;
         Location* pathLocation2 = pathData->location2;
-        // same order
+        // The path must be on the same order than the 2 locations
         if (locationEquals(pathLocation1, location1) && locationEquals(pathLocation2, location2)) {
-            *reversed = false;
-            return pathData;
-        }
-        // inverse order
-        if (locationEquals(pathLocation1, location2) && locationEquals(pathLocation2, location1)) {
-            *reversed = true;
             return pathData;
         }
     }
-    *reversed = false;
     return NULL;
 }
 

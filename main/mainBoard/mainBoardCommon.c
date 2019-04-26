@@ -197,7 +197,7 @@ static I2cBusConnection* temperatureI2cBusConnection;
 
 // CURRENT
 static Current current;
-static I2cBusConnection* currentI2CBusConnection;
+// static I2cBusConnection* currentI2CBusConnection;
 
 
 // SERIAL

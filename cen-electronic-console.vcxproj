@@ -461,11 +461,12 @@
     <ClCompile Include="robot\strategy\factor\opponentRobotGainFactor.c" />
     <ClCompile Include="robot\strategy\factor\timeGainFactor.c" />
     <ClCompile Include="robot\strategy\gameStrategy.c" />
+    <ClCompile Include="robot\strategy\gameStrategyCollisionHandler.c" />
     <ClCompile Include="robot\strategy\gameStrategyContext.c" />
     <ClCompile Include="robot\strategy\gameStrategyContextDebug.c" />
     <ClCompile Include="robot\strategy\gameStrategyDebug.c" />
     <ClCompile Include="robot\strategy\gameStrategyHandler.c" />
-    <ClCompile Include="robot\strategy\gameStrategyHandlerUtils.c" />
+    <ClCompile Include="robot\strategy\gameStrategyMotionHandler.c" />
     <ClCompile Include="robot\strategy\gameStrategyItem.c" />
     <ClCompile Include="robot\strategy\gameStrategyList.c" />
     <ClCompile Include="robot\strategy\gameStrategyListDebug.c" />
@@ -847,11 +848,12 @@
     <ClInclude Include="robot\strategy\factor\opponentRobotGainFactor.h" />
     <ClInclude Include="robot\strategy\factor\timeGainFactor.h" />
     <ClInclude Include="robot\strategy\gameStrategy.h" />
+    <ClInclude Include="robot\strategy\gameStrategyCollisionHandler.h" />
     <ClInclude Include="robot\strategy\gameStrategyContext.h" />
     <ClInclude Include="robot\strategy\gameStrategyContextDebug.h" />
     <ClInclude Include="robot\strategy\gameStrategyDebug.h" />
     <ClInclude Include="robot\strategy\gameStrategyHandler.h" />
-    <ClInclude Include="robot\strategy\gameStrategyHandlerUtils.h" />
+    <ClInclude Include="robot\strategy\gameStrategyMotionHandler.h" />
     <ClInclude Include="robot\strategy\gameStrategyItem.h" />
     <ClInclude Include="robot\strategy\gameStrategyList.h" />
     <ClInclude Include="robot\strategy\gameStrategyListDebug.h" />

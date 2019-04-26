@@ -34,6 +34,10 @@ typedef struct PathData {
     bool retried;
 } PathData;
 
+float getPathStartAngleRadian(PathData* pathData);
+
+float getPathEndAngleRadian(PathData* pathData);
+
 /**
  * Initializes the PathData structure with all informations.
  */
@@ -68,14 +72,6 @@ void initAsymmetricPathData(PathData* pathData,
  * @param pathData the path for which we try to find if one point contains the location passed in parameter
  */
 bool pathContainsLocation(PathData* pathData, Location* location);
-
-/**
-* Returns the opposite location on the path.
-* @param path (this) the path for which we want to find the opposite location
-* @param location the location for which we want to search the opposite
-* @return the opposite location on the path
-*/
-Location* getOtherEnd(PathData* pathData, Location* location);
 
 /**
  * Ask the robot to move from the location1 (he must be very near, if not we will have some unpredictable result) to location2 with right angle1 / angle2

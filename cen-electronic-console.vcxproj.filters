@@ -2079,13 +2079,16 @@
     <ClCompile Include="navigation\locationListComputer.c">
       <Filter>Source Files\navigation</Filter>
     </ClCompile>
-    <ClCompile Include="robot\strategy\gameStrategyHandlerUtils.c">
-      <Filter>Source Files\robot\strategy</Filter>
-    </ClCompile>
     <ClCompile Include="robot\strategy\gameTargetActionItemDebug.c">
       <Filter>Source Files\robot\strategy</Filter>
     </ClCompile>
     <ClCompile Include="robot\strategy\gameTargetActionDebug.c">
+      <Filter>Source Files\robot\strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\strategy\gameStrategyCollisionHandler.c">
+      <Filter>Source Files\robot\strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\strategy\gameStrategyMotionHandler.c">
       <Filter>Source Files\robot\strategy</Filter>
     </ClCompile>
   </ItemGroup>
@@ -3236,13 +3239,16 @@
     <ClInclude Include="navigation\locationListComputer.h">
       <Filter>Header Files\navigation</Filter>
     </ClInclude>
-    <ClInclude Include="robot\strategy\gameStrategyHandlerUtils.h">
-      <Filter>Header Files\robot\strategy</Filter>
-    </ClInclude>
     <ClInclude Include="robot\strategy\gameTargetActionItemDebug.h">
       <Filter>Header Files\robot\strategy</Filter>
     </ClInclude>
     <ClInclude Include="robot\strategy\gameTargetActionDebug.h">
+      <Filter>Header Files\robot\strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\strategy\gameStrategyCollisionHandler.h">
+      <Filter>Header Files\robot\strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\strategy\gameStrategyMotionHandler.h">
       <Filter>Header Files\robot\strategy</Filter>
     </ClInclude>
   </ItemGroup>

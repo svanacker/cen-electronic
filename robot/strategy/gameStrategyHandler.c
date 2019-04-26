@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 #include "gameStrategyHandler.h"
-#include "gameStrategyHandlerUtils.h"
+#include "gameStrategyMotionHandler.h"
 #include "gameTargetActionList.h"
 #include "gameTargetAction.h"
 #include "gameStrategyContext.h"
@@ -50,7 +50,6 @@ void updateNearestLocation(GameStrategyContext* gameStrategyContext) {
 }
 
 GameTarget* findNextTarget(GameStrategyContext* gameStrategyContext) {
-    Navigation* navigation = gameStrategyContext->navigation;
     unsigned int targetHandledCount = getTargetHandledCount();
     if (targetHandledCount >= gameStrategyContext->maxTargetToHandle) {
         clearCurrentTarget(gameStrategyContext);
@@ -107,9 +106,8 @@ bool handleActions(GameStrategyContext* gameStrategyContext) {
     if (actionType == ACTION_TYPE_MOVE) {
         Navigation* navigation = gameStrategyContext->navigation;
         PathList* pathList = getNavigationPathList(navigation);
-        bool reversed;
-        PathData* pathData = getPathOfLocations(pathList, targetAction->startLocation, targetAction->endLocation, &reversed);
-        motionFollowPath(gameStrategyContext, pathData, reversed);
+        PathData* pathData = getPathOfLocations(pathList, targetAction->startLocation, targetAction->endLocation);
+        motionFollowPath(gameStrategyContext, pathData);
         // TODO : Must be done AFTER that the move has been done
         targetAction->status = ACTION_STATUS_DONE;
     }
@@ -162,14 +160,13 @@ bool handleTrajectoryToActionStart(GameStrategyContext* gameStrategyContext) {
         return false;
     }
 
-    bool reversed;
     PathList* pathList = getNavigationPathList(navigation);
-    PathData* pathData = getPathOfLocations(pathList, robotLocation, end, &reversed);
+    PathData* pathData = getPathOfLocations(pathList, robotLocation, end);
 
     // Check if to follow the path, we need to do first a rotation (to avoid problem on bSpline)
-    if (!motionRotateToFollowPath(gameStrategyContext, pathData, reversed)) {
+    if (!motionRotateToFollowPath(gameStrategyContext, pathData)) {
         // If this is not the case, we ask to follow the path
-        motionFollowPath(gameStrategyContext, pathData, reversed);
+        motionFollowPath(gameStrategyContext, pathData);
     }
     return true;
 }

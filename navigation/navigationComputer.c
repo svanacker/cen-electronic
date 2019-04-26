@@ -9,21 +9,8 @@ void updateOutgoingPaths(Navigation* navigation, Location* location) {
     int pathSize = getPathCount(navigation->paths);
     for (i = 0; i < pathSize; i++) {
         PathData* pathData = getPath(navigation->paths, i);
-
-        // For example : location = "A", check if path contains("A") : "AB" contains "A", but "DE" not
-        bool pathContainsLocationBool = pathContainsLocation(pathData, location);
-
-        if (!pathContainsLocationBool) {
-            continue;
-        }
-
-        // Check if the locationList that we handle contains the other end
-        // Ex : path = "AB", location="A" => otherEnd = "B"
-        Location* otherEnd = getOtherEnd(pathData, location);
-
-        // Ex : handledLocationList = {EF, GH} and other End = B
-        bool handledLocationListContainsLocation = containsLocation(navigation->locationList, otherEnd, true);
-        if (!handledLocationListContainsLocation) {
+        // Check the path which start at location
+        if (pathData->location1 == location) {
             addOutgoingPath(navigation->tmpOutgoingPaths, pathData);
         }
     }
@@ -69,7 +56,7 @@ float computeBestPath(Navigation* navigation, Location* start, Location* end) {
 
             OutgoingPathData* outgoingPathData = getOutgoingPath(navigation->tmpOutgoingPaths, j);
             PathData* pathData = outgoingPathData->pathData;
-            Location* location2 = getOtherEnd(pathData, location1);
+            Location* location2 = pathData->location2;
             float costLocation1 = getTmpCost(location1);
             float costLocation2 = getTmpCost(location2);
 

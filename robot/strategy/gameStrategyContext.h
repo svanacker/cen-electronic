@@ -65,12 +65,8 @@ struct GameStrategyContext {
     bool opponentRobotMoved;
     /** current Target. */
     GameTarget* currentTarget;
-    /** current Target Action. */
-    GameTargetAction* currentTargetAction;
     /** Color. */
     enum TeamColor color;
-    /** Go to next Step. */
-//    bool mustDoNextStep;
     /** Step status. */
     bool hasMoreNextSteps;
     /** Strategy Id. If strategy = 0 => NO_STRATEGY. Be careful, strategy Id <> strategy Index in strategy List */
@@ -86,7 +82,9 @@ struct GameStrategyContext {
     /** Indicates if the robot is moving (to know if we must stop the robot */
     enum TrajectoryType trajectoryType;
     /** dummy Counter */
-    unsigned instructionCounter;
+    unsigned int instructionCounter;
+    /** Do we simulate move (useful for PC) .*/
+    bool simulateMove;
 };
 
 /**

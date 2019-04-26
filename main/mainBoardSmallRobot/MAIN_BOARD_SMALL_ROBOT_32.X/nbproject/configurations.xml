@@ -594,9 +594,10 @@
         <itemPath>../../../robot/strategy/gameStrategyContextDebug.h</itemPath>
         <itemPath>../../../robot/strategy/teamColor.h</itemPath>
         <itemPath>../../../robot/strategy/gameTargetListDebug.h</itemPath>
-        <itemPath>../../../robot/strategy/gameStrategyHandlerUtils.h</itemPath>
         <itemPath>../../../robot/strategy/gameTargetActionItemDebug.h</itemPath>
         <itemPath>../../../robot/strategy/gameTargetActionDebug.h</itemPath>
+        <itemPath>../../../robot/strategy/gameStrategyCollisionHandler.h</itemPath>
+        <itemPath>../../../robot/strategy/gameStrategyMotionHandler.h</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.strategy.factor"
                      displayName="robot.strategy.factor"
@@ -1209,9 +1210,10 @@
         <itemPath>../../../robot/strategy/gameTargetListDebug.c</itemPath>
         <itemPath>../../../robot/strategy/teamColor.c</itemPath>
         <itemPath>../../../robot/strategy/gameTargetStatus.c</itemPath>
-        <itemPath>../../../robot/strategy/gameStrategyHandlerUtils.c</itemPath>
         <itemPath>../../../robot/strategy/gameTargetActionItemDebug.c</itemPath>
         <itemPath>../../../robot/strategy/gameTargetActionDebug.c</itemPath>
+        <itemPath>../../../robot/strategy/gameStrategyCollisionHandler.c</itemPath>
+        <itemPath>../../../robot/strategy/gameStrategyMotionHandler.c</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.strategy.factor"
                      displayName="robot.strategy.factor"

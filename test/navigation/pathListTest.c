@@ -56,16 +56,9 @@ void pathListTest(void) {
     TEST_ASSERT_EQUAL(3, pathCount);
 
     // getPathOfLocations
-    bool reversed;
-    tmpPathData = getPathOfLocations(&pathList, &locationB, &locationE, &reversed);
+    tmpPathData = getPathOfLocations(&pathList, &locationB, &locationE);
     TEST_ASSERT_EQUAL(NULL, tmpPathData);
-    TEST_ASSERT_FALSE(reversed);
     
-    tmpPathData = getPathOfLocations(&pathList, &locationA, &locationC, &reversed);
+    tmpPathData = getPathOfLocations(&pathList, &locationA, &locationC);
     TEST_ASSERT_EQUAL(pathDataAC, tmpPathData);
-    TEST_ASSERT_FALSE(reversed);
-
-    tmpPathData = getPathOfLocations(&pathList, &locationB, &locationA, &reversed);
-    TEST_ASSERT_EQUAL(pathDataAB, tmpPathData);
-    TEST_ASSERT_TRUE(reversed);
 }

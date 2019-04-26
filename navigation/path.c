@@ -14,20 +14,13 @@
 
 #include "../client/motion/extended/clientExtendedMotion.h"
 
-
-/*
-float getAngle1Path(PathData* pathData) {
-    float angle1 = pathData->angle1;
-    float result = changeAngleForColor(angle1);
-    return result;
+float getPathStartAngleRadian(PathData* pathData) {
+    return pathData->angleRadian1;
 }
 
-float getAngle2Path(PathData* pathData) {
-    float angle2 = pathData->angle2;
-    float result = changeAngleForColor(angle2);
-    return result;
+float getPathEndAngleRadian(PathData* pathData) {
+    return pathData->angleRadian2;
 }
-*/
 
 void initPathData(PathData* pathData, 
                     Location* location1,
@@ -77,16 +70,6 @@ void initAsymmetricPathData(
 
 bool pathContainsLocation(PathData* pathData, Location* location) {
     return pathData->location1 == location || pathData->location2 == location;
-}
-
-Location* getOtherEnd(PathData* pathData, Location* location) {
-    if (pathData->location1 == location) {
-        return pathData->location2;
-    }
-    if (pathData->location2 == location) {
-        return pathData->location1;
-    }
-    return NULL;
 }
 
 bool moveAlongPath(PathData* pathData) {

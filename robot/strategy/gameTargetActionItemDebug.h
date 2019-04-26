@@ -11,23 +11,5 @@ unsigned int appendActionItemStatusAsString(OutputStream* outputStream, enum Act
 
 unsigned int appendActionItemStatusTableData(OutputStream* outputStream, enum ActionItemStatus actionItemStatus, int columnSize);
 
-// ActionItemPhasis
-
-/**
- * print the enum ActionItemPhasis as String
- * @param gameTargetList
- * @param outputStream
- */
-unsigned int appendActionItemPhasisAsString(OutputStream* outputStream, enum ActionItemPhasis actionItemPhasis);
-
-/**
- * Append ActionItemPhasis enum in a table
- * @param outputStream
- * @param actionItemPhasis
- * @param columnSize
- * @return
- */
-unsigned int appendActionItemPhasisTableData(OutputStream* outputStream, enum ActionItemPhasis actionItemPhasis, int columnSize);
-
 #endif
 
