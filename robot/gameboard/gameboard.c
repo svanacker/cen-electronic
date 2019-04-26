@@ -8,8 +8,11 @@
 
 #include "../../common/ascii/asciiUtils.h"
 
-#include "../../common/math/cenMath.h"
+#include "../../common/color/color.h"
+
 #include "../../common/error/error.h"
+
+#include "../../common/math/cenMath.h"
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
 
@@ -42,6 +45,7 @@ void initGameBoard(GameBoard* gameBoard,
                     GameStrategyContext* gameStrategyContext) {
     gameBoard->showLocation = true;
     gameBoard->showPath = true;
+    gameBoard->showUnavailablePath = true;
     gameBoard->showOutgoingPath = false;
     gameBoard->gameBoardElementList = gameBoardElementList;
     gameBoard->gameBoardCurve = gameBoardSplineCurve;
@@ -281,8 +285,8 @@ void printGameboard(GameBoard* gameBoard,  OutputStream* outputStream) {
             char pixelChar = gameBoard->pixels[column][line];
 #ifdef _MSC_VER            
             char colorPalet = gameBoard->colors[column][line];
-            if (colorPalet == 0) {
-                colorPalet = 1;
+            if (colorPalet == CONSOLE_COLOR_BLACK) {
+                colorPalet = CONSOLE_COLOR_WHITE;
             }
             HANDLE standardOutputHandle = GetStdHandle(STD_OUTPUT_HANDLE);      // Get Handle 
             SetConsoleTextAttribute(standardOutputHandle, colorPalet);

@@ -71,6 +71,8 @@ typedef struct GameBoard {
     bool showLocation;
     // Show Path
     bool showPath;
+    // Show unavailable Path
+    bool showUnavailablePath;
     // show Outgoing Path
     bool showOutgoingPath;
 

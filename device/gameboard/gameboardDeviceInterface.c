@@ -48,6 +48,19 @@ int deviceGameBoardGetInterface(char commandHeader, DeviceInterfaceMode mode, bo
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
+    // Show/Hide Unavailable Path
+    else if (commandHeader == COMMAND_GAME_BOARD_SHOW_UNAVAILABLE_PATH) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("show Unavailable Path");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }
+    else if (commandHeader == COMMAND_GAME_BOARD_HIDE_UNAVAILABLE_PATH) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("Hide Unavailable Path");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }
     // Show/Hide Outgoing Path
     else if (commandHeader == COMMAND_GAME_BOARD_SHOW_OUTGOING_PATH) {
         if (fillDeviceArgumentList) {

@@ -63,16 +63,19 @@ bool motionRotateToFollowPath(GameStrategyContext* gameStrategyContext, PathData
         return false;
     }
 
-    if (diff > 0.0f) {
-        motionDriverLeft((float) diff);
-    } else {
-        motionDriverRight((float)-diff);
-    }
 
     // Simulate as if the robot goes to the position with a small error to be sure
     // that we do not rely the navigation on just exact computation
     if (gameStrategyContext->simulateMove) {
         gameStrategyContext->robotAngleRadian += diff + 0.001f;
+    }
+    else {
+        if (diff > 0.0f) {
+            motionDriverLeft((float)diff);
+        }
+        else {
+            motionDriverRight((float)-diff);
+        }
     }
 
     return true;
@@ -85,14 +88,15 @@ void motionFollowPath(GameStrategyContext* gameStrategyContext, PathData* pathDa
     float cp1 = pathData->controlPointDistance1;
     float cp2 = pathData->controlPointDistance2;
 
-    clientExtendedMotionBSplineAbsolute(location->x, location->y, angle, cp1, cp2,
-        pathData->accelerationFactor, pathData->speedFactor);
-
     // Simulate as if the robot goes to the position with a small error to be sure that 
     // algorithm to find nearest position are ok
-    if (gameStrategyContext->simulateMove) {
+    if (!gameStrategyContext->simulateMove) {
         gameStrategyContext->robotPosition->x = location->x + 1.0f;
         gameStrategyContext->robotPosition->y = location->y + 1.0f;
         gameStrategyContext->robotAngleRadian = angle;
+    }
+    else {
+        clientExtendedMotionBSplineAbsolute(location->x, location->y, angle, cp1, cp2,
+            pathData->accelerationFactor, pathData->speedFactor);
     }
 }

@@ -244,6 +244,7 @@ void clearLastError();
 #define PATH_LIST_NOT_INITIALIZED                                         0x5052
 #define PATH_LIST_INDEX_OUT_OF_BOUNDS                                     0x5053
 #define PATH_NULL                                                         0x5054
+#define PATH_NOT_FOUND                                                    0x5055
 
 #define TOO_MUCH_ACTION                                                   0x5060
 #define TOO_MUCH_TARGET_ACTION                                            0x5070

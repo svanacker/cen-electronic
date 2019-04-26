@@ -13,6 +13,10 @@
 #define COMMAND_GAME_BOARD_SHOW_PATH                  'P'
 #define COMMAND_GAME_BOARD_HIDE_PATH                  'p'
 
+// Unaivalable Path
+#define COMMAND_GAME_BOARD_SHOW_UNAVAILABLE_PATH      'U'
+#define COMMAND_GAME_BOARD_HIDE_UNAVAILABLE_PATH      'u'
+
 // Outgoing Path
 #define COMMAND_GAME_BOARD_SHOW_OUTGOING_PATH         'O'
 #define COMMAND_GAME_BOARD_HIDE_OUTGOING_PATH         'o'

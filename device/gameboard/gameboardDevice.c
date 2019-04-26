@@ -64,6 +64,17 @@ void deviceGameboardHandleRawData(char commandHeader, InputStream* inputStream, 
         GameBoard* gameBoard = getGameboardDeviceGameBoard();
         gameBoard->showPath = false;
     }
+    // Show/Hide Unavailable Path
+    else if (commandHeader == COMMAND_GAME_BOARD_SHOW_UNAVAILABLE_PATH) {
+        ackCommand(outputStream, GAME_BOARD_DEVICE_HEADER, COMMAND_GAME_BOARD_SHOW_UNAVAILABLE_PATH);
+        GameBoard* gameBoard = getGameboardDeviceGameBoard();
+        gameBoard->showUnavailablePath = true;
+    }
+    else if (commandHeader == COMMAND_GAME_BOARD_HIDE_UNAVAILABLE_PATH) {
+        ackCommand(outputStream, GAME_BOARD_DEVICE_HEADER, COMMAND_GAME_BOARD_HIDE_UNAVAILABLE_PATH);
+        GameBoard* gameBoard = getGameboardDeviceGameBoard();
+        gameBoard->showUnavailablePath = false;
+    }
     // Show/Hide Outgoing Path
     else if (commandHeader == COMMAND_GAME_BOARD_SHOW_OUTGOING_PATH) {
         ackCommand(outputStream, GAME_BOARD_DEVICE_HEADER, COMMAND_GAME_BOARD_SHOW_OUTGOING_PATH);

@@ -44,7 +44,7 @@ bool isColliding(Point* path, Point* obstacle) {
 
 bool isValidLocation(Point* p) {
     // TODO : To Check
-    return (p->x != 0) && (p->y != 0);
+    return (!floatEqualsZero(p->x) && !floatEqualsZero(p->y));
 }
 
 /**
@@ -52,32 +52,33 @@ bool isValidLocation(Point* p) {
  * @private
  */
 bool isPathAvailable(GameStrategyContext* gameStrategyContext, PathData* pathData, BSplineCurve* curve) {
-    /*
-    // TODO : Fix why curve must be handled
     if (curve == NULL) {
         return true;
     }
-    Point* p0 = &(curve->p0);
-    p0->x = (float) pathData->location1->x;
-    p0->y = (float) pathData->location1->y;
-    Point* p3 = &(curve->p3);
-    p3->x = (float) pathData->location2->x;
-    p3->y = (float) pathData->location2->y;
-    float angle1 = getAngle1Path(pathData);
-    float angle2 = getAngle2Path(pathData);
-    float d1 = cpToDistance(pathData->controlPointDistance1);
-    float d2 = cpToDistance(-pathData->controlPointDistance2);
-    computePoint(p0, &(curve->p1), d1, angle1);
-    computePoint(p3, &(curve->p2), d2, angle2);
+    float angle1 = getPathStartAngleRadian(pathData);
+    float angle2 = getPathEndAngleRadian(pathData);
+    parameterBSplineWithDistanceAndAngle(curve,
+                                         pathData->location1->x,
+                                         pathData->location1->y,
+                                         angle1, 
+                                         pathData->location2->x,
+                                         pathData->location2->y,
+                                         angle2,
+                                         pathData->controlPointDistance1, 
+                                         pathData->controlPointDistance2,
+                                         curve->accelerationFactor,
+                                         curve->speedFactor,
+                                         false);
 
-    int i;
     Point p;
     Point* opponentRobotPosition = gameStrategyContext->opponentRobotPosition;
     Point* lastObstaclePosition = gameStrategyContext->lastObstaclePosition;
     bool opponentPresent = isValidLocation(opponentRobotPosition);
     bool obstaclePresent = isValidLocation(lastObstaclePosition);
-    for (i = 0; i < 10; i++) {
-        computeBSplinePoint(curve, 0.1f * i, &p);
+    float i;
+    // 20  Sample = 0.05f for Step
+    for (i = 0.0f; i < 1.0f; i += 0.05f) {
+        computeBSplinePoint(curve, i, &p);
         // checking opponent
         if (opponentPresent && isColliding(&p, opponentRobotPosition)) {
             return false;
@@ -88,8 +89,6 @@ bool isPathAvailable(GameStrategyContext* gameStrategyContext, PathData* pathDat
         }
     }
     return true;
-    */
-    return false;
 }
 
 bool mustComputePaths(GameStrategyContext* gameStrategyContext) {

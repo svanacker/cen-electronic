@@ -9,6 +9,8 @@
 
 #include "nextGameStrategyItemComputer.h"
 
+#include "../../common/error/error.h"
+
 #include "../../common/math/cenMath.h"
 
 #include "../../common/io/outputStream.h"
@@ -106,10 +108,17 @@ bool handleActions(GameStrategyContext* gameStrategyContext) {
     if (actionType == ACTION_TYPE_MOVE) {
         Navigation* navigation = gameStrategyContext->navigation;
         PathList* pathList = getNavigationPathList(navigation);
-        PathData* pathData = getPathOfLocations(pathList, targetAction->startLocation, targetAction->endLocation);
-        motionFollowPath(gameStrategyContext, pathData);
-        // TODO : Must be done AFTER that the move has been done
-        targetAction->status = ACTION_STATUS_DONE;
+        Location* startLocation = targetAction->startLocation;
+        Location* endLocation = targetAction->endLocation;
+        PathData* pathData = getPathOfLocations(pathList, startLocation, endLocation);
+        if (pathData == NULL) {
+            writeError(PATH_LIST_NULL);
+        }
+        else {
+            motionFollowPath(gameStrategyContext, pathData);
+            // TODO : Must be done AFTER that the move has been done
+            targetAction->status = ACTION_STATUS_DONE;
+        }
     }
     else {
         GameTargetActionItemList* actionItemList = targetAction->actionItemList;

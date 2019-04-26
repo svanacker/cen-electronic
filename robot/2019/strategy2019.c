@@ -122,14 +122,18 @@ static GameTargetAction chaosTakeTargetAction;
 static GameTargetAction chaosDropTargetAction;
 
 static GameTargetAction bigDistributorLine1TakeTargetAction;
-static GameTargetAction bigDistributorLine1MoveTargetAction;
+static GameTargetAction bigDistributorLine1MoveTargetAction1;
+static GameTargetAction bigDistributorLine1MoveTargetAction2;
 static GameTargetAction bigDistributorLine1DropTargetAction;
 
 static GameTargetAction bigDistributorLine2TakeTargetAction;
-static GameTargetAction bigDistributorLine2MoveTargetAction;
+static GameTargetAction bigDistributorLine2MoveTargetAction1;
+static GameTargetAction bigDistributorLine2MoveTargetAction2;
 static GameTargetAction bigDistributorLine2DropTargetAction;
 
 static GameTargetAction bigDistributorLine3TakeTargetAction;
+static GameTargetAction bigDistributorLine3MoveTargetAction1;
+static GameTargetAction bigDistributorLine3MoveTargetAction2;
 static GameTargetAction bigDistributorLine3MoveTargetAction;
 static GameTargetAction bigDistributorLine3DropTargetAction;
 
@@ -556,17 +560,20 @@ void initTargetActions2019(GameStrategyContext* gameStrategyContext) {
         
         // BIG DISTRIBUTOR LINE 1
         addTargetHandlingAction(&(bigDistributorLine1Target.actionList), &bigDistributorLine1TakeTargetAction, bigDistributorLine1FrontLocation, BIG_DISTRIBUTOR_LINE_1_TAKE_TIME_TO_ACHIEVE, &bigDistributorLine1TakeTargetActionItemList);
-        addTargetMoveAction(&(bigDistributorLine1Target.actionList), &bigDistributorLine1MoveTargetAction, bigDistributorLine1FrontLocation, acceleratorDropLocation, BIG_DISTRIBUTOR_LINE_1_MOVE_TIME_TO_ACHIEVE);
+        addTargetMoveAction(&(bigDistributorLine1Target.actionList), &bigDistributorLine1MoveTargetAction1, bigDistributorLine1FrontLocation, keyPoint1Location, BIG_DISTRIBUTOR_LINE_1_MOVE_TIME_TO_ACHIEVE);
+        addTargetMoveAction(&(bigDistributorLine1Target.actionList), &bigDistributorLine1MoveTargetAction2, keyPoint1Location, acceleratorDropLocation, BIG_DISTRIBUTOR_LINE_1_MOVE_TIME_TO_ACHIEVE);
         addTargetDropAction(&(bigDistributorLine1Target.actionList), &bigDistributorLine1DropTargetAction, acceleratorDropLocation, BIG_DISTRIBUTOR_LINE_1_DROP_TIME_TO_ACHIEVE, &bigDistributorLine1DropTargetActionItemList);
 
         // BIG DISTRIBUTOR LINE 2
         addTargetHandlingAction(&(bigDistributorLine2Target.actionList), &bigDistributorLine2TakeTargetAction, bigDistributorLine2FrontLocation, BIG_DISTRIBUTOR_LINE_2_TAKE_TIME_TO_ACHIEVE, &bigDistributorLine2TakeTargetActionItemList);
-        addTargetMoveAction(&(bigDistributorLine2Target.actionList), &bigDistributorLine2MoveTargetAction, bigDistributorLine2FrontLocation, acceleratorDropLocation, BIG_DISTRIBUTOR_LINE_2_MOVE_TIME_TO_ACHIEVE);
+        addTargetMoveAction(&(bigDistributorLine2Target.actionList), &bigDistributorLine2MoveTargetAction1, bigDistributorLine2FrontLocation, keyPoint1Location, BIG_DISTRIBUTOR_LINE_2_MOVE_TIME_TO_ACHIEVE);
+        addTargetMoveAction(&(bigDistributorLine2Target.actionList), &bigDistributorLine2MoveTargetAction2, keyPoint1Location, acceleratorDropLocation, BIG_DISTRIBUTOR_LINE_2_MOVE_TIME_TO_ACHIEVE);
         addTargetDropAction(&(bigDistributorLine2Target.actionList), &bigDistributorLine2DropTargetAction, acceleratorDropLocation, BIG_DISTRIBUTOR_LINE_2_DROP_TIME_TO_ACHIEVE, &bigDistributorLine2DropTargetActionItemList);
 
         // BIG DISTRIBUTOR LINE 3
         addTargetHandlingAction(&(bigDistributorLine3Target.actionList), &bigDistributorLine3TakeTargetAction, bigDistributorLine3FrontLocation, BIG_DISTRIBUTOR_LINE_3_TAKE_TIME_TO_ACHIEVE, &bigDistributorLine3TakeTargetActionItemList);
-        addTargetMoveAction(&(bigDistributorLine3Target.actionList), &bigDistributorLine3MoveTargetAction, bigDistributorLine2FrontLocation, acceleratorDropLocation, BIG_DISTRIBUTOR_LINE_3_MOVE_TIME_TO_ACHIEVE);
+        addTargetMoveAction(&(bigDistributorLine3Target.actionList), &bigDistributorLine3MoveTargetAction, bigDistributorLine2FrontLocation, keyPoint1Location, BIG_DISTRIBUTOR_LINE_3_MOVE_TIME_TO_ACHIEVE);
+        addTargetMoveAction(&(bigDistributorLine3Target.actionList), &bigDistributorLine3MoveTargetAction2, keyPoint1Location, acceleratorDropLocation, BIG_DISTRIBUTOR_LINE_2_MOVE_TIME_TO_ACHIEVE);
         addTargetDropAction(&(bigDistributorLine3Target.actionList), &bigDistributorLine3DropTargetAction, acceleratorDropLocation, BIG_DISTRIBUTOR_LINE_3_DROP_TIME_TO_ACHIEVE, &bigDistributorLine3DropTargetActionItemList);
     }
 }

@@ -30,8 +30,8 @@ typedef struct PathData {
     float speedFactor;
     /** When reversed, the path must be done backward. */
     bool mustGoBackward;
-    /** 2018 => retried*/
-    bool retried;
+    /** We add an additionnal cost when encouring a robot which decrease time after time to retest after several seconds */
+    float obstacleCost;
 } PathData;
 
 float getPathStartAngleRadian(PathData* pathData);
