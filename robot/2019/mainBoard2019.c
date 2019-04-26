@@ -27,6 +27,7 @@ static GameStrategyContext gameStrategyContext;
 static Point robotPosition;
 static Point opponentRobotPosition;
 static Point lastObstaclePosition;
+static Timer* obstacleTimer;
 
 // 2019 -> Navigation
 static Navigation navigation;
@@ -40,9 +41,6 @@ static PathData pathListArray[STRATEGY_2019_NAVIGATION_PATH_LIST_ARRAY_LENGTH];
 static OutgoingPathList tmpOutgoingPathList;
 static unsigned int tmpOutgoingPathListtArray[STRATEGY_2019_NAVIGATION_PATH_LIST_ARRAY_LENGTH];
 
-static BitList availablePathBitList;
-static unsigned int availablePathBitArray[STRATEGY_2019_BIT_LIST_NAVIGATION_ARRAY_LENGTH];
-
 // 2019 -> Robot
 static GameBoard gameBoard;
 static BSplineCurve gameBoardCurve;
@@ -51,18 +49,18 @@ static GameBoardElement gameBoardElementListArray[MAIN_BOARD_2019_GAME_BOARD_PRI
 
 Navigation* initNavigation2019(void) {
     // Navigation
-    initLocationList(&locationList, (Location(*)[]) &locationListArray, STRATEGY_2019_BIT_LIST_NAVIGATION_ARRAY_LENGTH);
+    initLocationList(&locationList, (Location(*)[]) &locationListArray, STRATEGY_2019_NAVIGATION_LOCATION_LIST_ARRAY_LENGTH);
     initPathList(&pathList, (PathData(*)[]) &pathListArray, STRATEGY_2019_NAVIGATION_PATH_LIST_ARRAY_LENGTH);
     initOutgoingPathList(&tmpOutgoingPathList, (OutgoingPathData(*)[]) &tmpOutgoingPathListtArray, STRATEGY_2019_NAVIGATION_PATH_LIST_ARRAY_LENGTH);
-    initBitList(&availablePathBitList, (unsigned int(*)[]) &availablePathBitArray, STRATEGY_2019_BIT_LIST_NAVIGATION_ARRAY_LENGTH);
 
-    initNavigation(&navigation, &locationList, &pathList, &tmpOutgoingPathList, &availablePathBitList);
+    initNavigation(&navigation, &locationList, &pathList, &tmpOutgoingPathList);
 
     return &navigation;
 }
 
 GameStrategyContext* initGameStrategyContext2019(RobotConfig* robotConfig, EndMatch* endMatch, TofSensorList* tofSensorList) {
     initGameStrategyContext(&gameStrategyContext, robotConfig, &navigation, endMatch, tofSensorList, &robotPosition, &opponentRobotPosition, &lastObstaclePosition);
+
 #ifdef MSC_VER
     gameStrategyContext->simulateMove = true;
 #endif

@@ -7,6 +7,8 @@
 #include "../common/io/outputStream.h"
 
 #define MAX_COST                                20000.0f
+#define COST_IF_OBSTACLE                        10000.0f
+#define COST_DECREASE_STEP                       1000.0f
 #define NO_COMPUTED_COST                           -1.0f
 #define MAX_DISTANCE_NEAREST_LOCATION             100.0f
 

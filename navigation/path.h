@@ -78,11 +78,15 @@ bool pathContainsLocation(PathData* pathData, Location* location);
  */
 bool moveAlongPath(PathData* pathData);
 
-bool restartFromPositionToGoToPath(PathData* pathData, Point* robotPosition);
+// OBSTACLE MANAGEMENT
+
+void updateObstacleCostIfObstacle(PathData* pathData);
+
+void decreaseObstacleCost(PathData* pathData);
 
 /**
- * When we are too far from the locationPoinnt, we must use this method to
- * create a new BSpline to move
+ * When we are too far from the locationPoint, we must use this method to
+ * create a new BSpline to go back for the PathData
  * @param pathData
  * @param robotPosition
  * @return 

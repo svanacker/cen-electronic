@@ -7,7 +7,7 @@
 /**
 * Defines the index for the timer to check if robot has detect something.
 */
-#define ROBOT_DETECTOR_TIMER_CODE                       3
+#define ROBOT_OBSTACLE_TIMER_CODE                      3
 
 /** The code of the timer (used to update value of servo). */
 #define SERVO_TIMER_CODE                               10

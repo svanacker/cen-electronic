@@ -22,8 +22,6 @@ struct Navigation {
     PathList* paths;
     // Outgoing Paths (tmp variable because associated to a computed Location)
     OutgoingPathList* tmpOutgoingPaths;
-    // Available Paths
-    BitList* availablePaths;
 };
 
 #define BIT_LIST_NAVIGATION_ARRAY_LENGTH    (MAX_PATH / BITS_COUNT_IN_UNSIGNED_INT) + 1
@@ -37,7 +35,7 @@ struct Navigation {
  * @param pathList the list of Path with information on how to join them (often via a bSplineCurve)
  * @param tmpOutgoingPaths a temporary object used to compute temporary for a specific Location, the list of outgoing Paths
  */
-void initNavigation(Navigation* navigation, LocationList* locationList, PathList* pathList, OutgoingPathList* tmpOutgoingPaths, BitList* availablePaths);
+void initNavigation(Navigation* navigation, LocationList* locationList, PathList* pathList, OutgoingPathList* tmpOutgoingPaths);
 
 /**
  * Returns the navigation location List field.
@@ -67,23 +65,5 @@ PathData* addNavigationPath(Navigation* navigation,
     float angle2,
     float accelerationFactor,
     float speedFactor);
-
-
-
-// PATH AVAILABILITY
-
-/** 
- * Sets the availability of the path at the specified index.
- * @param index the index of the path
- * @param value the availability of the path
- */
-void setPathAvailability(Navigation* navigation, int index, bool value);
-
-bool getPathAvailability(Navigation* navigation, int index);
-
-/**
- * Reset the status of availability of all paths to Available.
- */
-void resetAllPathsAsAvailable(Navigation* navigation);
 
 #endif

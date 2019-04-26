@@ -53,10 +53,6 @@ void updateNearestLocation(GameStrategyContext* gameStrategyContext) {
 
 GameTarget* findNextTarget(GameStrategyContext* gameStrategyContext) {
     unsigned int targetHandledCount = getTargetHandledCount();
-    if (targetHandledCount >= gameStrategyContext->maxTargetToHandle) {
-        clearCurrentTarget(gameStrategyContext);
-        return NULL;
-    }
 
     updateNearestLocation(gameStrategyContext);
 

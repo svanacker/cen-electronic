@@ -106,3 +106,14 @@ PathData* getPathOfLocations(PathList* pathList, Location* location1, Location* 
 unsigned int getPathCount(PathList* pathList) {
     return pathList->size;
 }
+
+// OBSTACLE MANAGEMENT
+
+void pathListDecreaseObstacleCost(PathList* pathList) {
+    unsigned int i;
+    unsigned int size = pathList->size;
+    for (i = 0; i < size; i++) {
+        PathData* pathData = getPath(pathList, i);
+        decreaseObstacleCost(pathData);
+    }
+}

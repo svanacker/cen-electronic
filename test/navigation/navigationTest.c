@@ -82,13 +82,9 @@ static PathData pathListArray[NAVIGATION_PATH_LIST_TEST_ARRAY_LENGTH];
 static OutgoingPathList tmpOutgoingPathList;
 static OutgoingPathData tmpOutgoingPathListArray[BIT_LIST_NAVIGATION_TEST_ARRAY_LENGTH];
 
-static BitList availablePathBitList;
-static unsigned int availablePathBitArray[BIT_LIST_NAVIGATION_TEST_ARRAY_LENGTH];
-
 // FORWARD DECLARATION
 void checkNavigationPathFinding1(void);
 void checkNavigationPathFinding2(void);
-void addStrategyPaths(void);
 
 void navigationTestSuite(void) {
     RUN_TEST(checkNavigationPathFinding1);
@@ -99,9 +95,8 @@ void initNavigationTest(void) {
     initLocationList(&locationList, (Location(*)[]) &locationListArray, NAVIGATION_LOCATION_LIST_TEST_ARRAY_LENGTH);
     initPathList(&pathList, (PathData(*)[]) &pathListArray, NAVIGATION_PATH_LIST_TEST_ARRAY_LENGTH);
     initOutgoingPathList(&tmpOutgoingPathList, (OutgoingPathData(*)[]) &tmpOutgoingPathListArray, BIT_LIST_NAVIGATION_TEST_ARRAY_LENGTH);
-    initBitList(&availablePathBitList, (unsigned int(*)[]) &availablePathBitArray, BIT_LIST_NAVIGATION_TEST_ARRAY_LENGTH);
 
-    initNavigation(&navigation, &locationList, &pathList, &tmpOutgoingPathList, &availablePathBitList);
+    initNavigation(&navigation, &locationList, &pathList, &tmpOutgoingPathList);
 }
 
 void checkNavigationPathFinding1(void) {

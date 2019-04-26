@@ -105,75 +105,17 @@ bool mustComputePaths(GameStrategyContext* gameStrategyContext) {
 }
 
 void updatePathsAvailability(GameStrategyContext* gameStrategyContext) {
-#ifdef DEBUG_OPPONENT_ROBOT
-    OutputStream* logStream = getInfoOutputStreamLogger();
-    println(logStream);
-    appendString(logStream, "Updating available paths");
-    //    printGameStrategyContext(logStream, getStrategyContext());
-#endif
-
     bool computePath = mustComputePaths(gameStrategyContext);
-    if (!computePath) {
-        println(logStream);
-        appendString(logStream, "Don't compute Path !");
-    }
     Navigation* navigation = gameStrategyContext->navigation;
     PathList* paths = getNavigationPathList(navigation);
     unsigned int i;
+    BSplineCurve curve;
     for (i = 0; i < paths->size; i++) {
         PathData* pathData = getPath(paths, i);
-        // by default, path is available
-        bool available = true;
-        // Don't do the compute if it's not necessary
         if (computePath) {
-            available = isPathAvailable(gameStrategyContext, pathData, NULL);
-        }
-        setPathAvailability(navigation, i, available);
-    }
-
-#ifdef DEBUG_OPPONENT_ROBOT
-    // LOG
-    unsigned int k;
-    for (k = 0; k < paths->size; k++) {
-        PathData* pathData = getPath(paths, k);
-        if (!getPathAvailability(navigation, k)) {
-            println(logStream);
-            appendString(logStream, pathData->location1->name);
-            appendString(logStream, "->");
-            appendString(logStream, pathData->location2->name);
-            appendString(logStream, ": UNAVAILABLE");
+            isPathAvailable(gameStrategyContext, pathData, &curve);
         }
     }
-    println(logStream);
-#endif
-}
-
-void setLastObstaclePosition(GameStrategyContext* gameStrategyContext) {
-    Point* robotPosition = gameStrategyContext->robotPosition;
-    Point* lastObstaclePosition = gameStrategyContext->lastObstaclePosition;
-    float angleRadian = gameStrategyContext->robotAngleRadian;
-    computeDirectionPoint(robotPosition, lastObstaclePosition, DISTANCE_OBSTACLE, angleRadian);
-}
-
-void handleCollision(GameStrategyContext* gameStrategyContext) {
-    // OutputStream* logStream = getDebugOutputStreamLogger();
-    /*
-    Timer* strategyTimer = gameStrategyContext->strategyTimer;
-    // Mark the timer.
-    if (strategyTimer != NULL) {
-        gameStrategyContext->timeSinceLastCollision = (float) strategyTimer->time;
-    }
-    #ifdef DEBUG_STRATEGY_HANDLER
-        appendStringAndDecf(logStream, "\nCollision at time:", gameStrategyContext->timeSinceLastCollision);
-        appendString(logStream "\nhandleCollision");
-    #endif
-
-    // Clears the current path and actions
-    clearCurrentTarget(gameStrategyContext);
-
-    setLastObstaclePosition(gameStrategyContext);
-    updatePathsAvailability(gameStrategyContext);
-    */
 }
 
 

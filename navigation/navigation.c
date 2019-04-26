@@ -18,17 +18,15 @@
 
 // #define NAVIGATION_DEBUG
 
-void initNavigation(Navigation* navigation, LocationList* locationList, PathList* pathList, OutgoingPathList* tmpOutgoingPaths, BitList* availablePaths) {
+void initNavigation(Navigation* navigation, LocationList* locationList, PathList* pathList, OutgoingPathList* tmpOutgoingPaths) {
     navigation->locationList = locationList;
     navigation->paths = pathList;
     navigation->tmpOutgoingPaths = tmpOutgoingPaths;
-    navigation->availablePaths = availablePaths;
     
     // Init
     clearLocationList(navigation->locationList);
     clearPathList(navigation->paths);
     clearOutgoingPathList(navigation->tmpOutgoingPaths);
-    clearBitList(navigation->availablePaths, true);
 }
 
 LocationList* getNavigationLocationList(Navigation* navigation) {
@@ -58,18 +56,4 @@ PathData* addNavigationPath(Navigation* navigation,
     PathData* pathData = addPath(navigation->paths);
     initPathData(pathData, location1, location2, cost, controlPointDistance1, controlPointDistance2, angle1, angle2, accelerationFactor, speedFactor);
     return pathData;
-}
-
-
-void setPathAvailability(Navigation* navigation, int index, bool value) {
-    setBit(navigation->availablePaths, index, value);
-}
-
-void resetAllPathsAsAvailable(Navigation* navigation) {
-    clearBitList(navigation->availablePaths, true);
-}
-
-bool getPathAvailability(Navigation* navigation, int index) {
-    bool result = getBit(navigation->availablePaths, index);
-    return result;
 }

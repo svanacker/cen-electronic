@@ -42,9 +42,9 @@ int deviceStrategyGetInterface(char commandHeader, DeviceInterfaceMode mode, boo
     else if (commandHeader == COMMAND_STRATEGY_NEXT_STEP) {
         if (fillDeviceArgumentList) {
             setFunction("nextStep", 0, 1);
-            setResultUnsignedHex2(0, "status");
+            setResultUnsignedChar1(0, "Step has produced actions");
         }
-        return commandLengthValueForMode(mode, 0, 2);
+        return commandLengthValueForMode(mode, 0, 1);
     }
     // Do All Action Items
     else if (commandHeader == COMMAND_TARGET_ACTION_DO_ALL_ITEMS) {

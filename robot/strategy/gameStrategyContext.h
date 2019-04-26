@@ -4,9 +4,12 @@
 #include "../../common/2d/2d.h"
 
 #include "../../common/timer/cenTimer.h"
+
 #include "gameStrategy.h"
 #include "gameTarget.h"
 #include "gameTargetAction.h"
+
+#include "../../common/timer/cenTimer.h"
 
 #include "teamColor.h"
 
@@ -61,18 +64,12 @@ struct GameStrategyContext {
     Point* opponentRobotPosition;
     // Obstacle position.
     Point* lastObstaclePosition;
-    /** Flag indicating that the opponent's position has changed. */
-    bool opponentRobotMoved;
     /** current Target. */
     GameTarget* currentTarget;
     /** Color. */
     enum TeamColor color;
-    /** Step status. */
-    bool hasMoreNextSteps;
     /** Strategy Id. If strategy = 0 => NO_STRATEGY. Be careful, strategy Id <> strategy Index in strategy List */
     signed int strategyId;
-    /** Max target to handle. */
-    unsigned char maxTargetToHandle;
     /** Score*/
     unsigned int score;
     // End Match to avoid to do thing without timer
@@ -81,10 +78,10 @@ struct GameStrategyContext {
     TofSensorList* tofSensorList;
     /** Indicates if the robot is moving (to know if we must stop the robot */
     enum TrajectoryType trajectoryType;
-    /** dummy Counter */
-    unsigned int instructionCounter;
     /** Do we simulate move (useful for PC) .*/
     bool simulateMove;
+    /** The timer used to decrease the obstacle Cost */
+    Timer* obstacleTimer;
 };
 
 /**

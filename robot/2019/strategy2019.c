@@ -134,7 +134,6 @@ static GameTargetAction bigDistributorLine2DropTargetAction;
 static GameTargetAction bigDistributorLine3TakeTargetAction;
 static GameTargetAction bigDistributorLine3MoveTargetAction1;
 static GameTargetAction bigDistributorLine3MoveTargetAction2;
-static GameTargetAction bigDistributorLine3MoveTargetAction;
 static GameTargetAction bigDistributorLine3DropTargetAction;
 
 // ------------------------------------------------------- TARGETS ACTIONS ITEM LIST --------------------------------------------------------
@@ -572,7 +571,7 @@ void initTargetActions2019(GameStrategyContext* gameStrategyContext) {
 
         // BIG DISTRIBUTOR LINE 3
         addTargetHandlingAction(&(bigDistributorLine3Target.actionList), &bigDistributorLine3TakeTargetAction, bigDistributorLine3FrontLocation, BIG_DISTRIBUTOR_LINE_3_TAKE_TIME_TO_ACHIEVE, &bigDistributorLine3TakeTargetActionItemList);
-        addTargetMoveAction(&(bigDistributorLine3Target.actionList), &bigDistributorLine3MoveTargetAction, bigDistributorLine2FrontLocation, keyPoint1Location, BIG_DISTRIBUTOR_LINE_3_MOVE_TIME_TO_ACHIEVE);
+        addTargetMoveAction(&(bigDistributorLine3Target.actionList), &bigDistributorLine3MoveTargetAction1, bigDistributorLine2FrontLocation, keyPoint1Location, BIG_DISTRIBUTOR_LINE_3_MOVE_TIME_TO_ACHIEVE);
         addTargetMoveAction(&(bigDistributorLine3Target.actionList), &bigDistributorLine3MoveTargetAction2, keyPoint1Location, acceleratorDropLocation, BIG_DISTRIBUTOR_LINE_2_MOVE_TIME_TO_ACHIEVE);
         addTargetDropAction(&(bigDistributorLine3Target.actionList), &bigDistributorLine3DropTargetAction, acceleratorDropLocation, BIG_DISTRIBUTOR_LINE_3_DROP_TIME_TO_ACHIEVE, &bigDistributorLine3DropTargetActionItemList);
     }
@@ -774,7 +773,6 @@ void initStrategy2019(GameStrategyContext* gameStrategyContext) {
 
 	GameStrategy* strategy = initStrategiesItems2019(gameStrategyContext);
     gameStrategyContext->gameStrategy = strategy;
-    gameStrategyContext->maxTargetToHandle = getGameTargetList()->size;
 
 	// opponent
 	Point* p = gameStrategyContext->opponentRobotPosition;
@@ -785,8 +783,6 @@ void initStrategy2019(GameStrategyContext* gameStrategyContext) {
 	p = gameStrategyContext->lastObstaclePosition;
 	p->x = 0;
 	p->y = 0;
-
-    gameStrategyContext->hasMoreNextSteps = true;
 
 	// reinitialize the game board to change elements / targets ...
 }

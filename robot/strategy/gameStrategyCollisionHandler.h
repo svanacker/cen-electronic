@@ -6,18 +6,11 @@
 
 // OBSTACLE
 
-void computePoint(Point* ref, Point* cp, float distance, float angle);
-
 /**
  * Update all paths / opponent Robot Position to mark them as unavailable if the robot is on
  * this path !
  */
 void updatePathsAvailability(GameStrategyContext* gmeStrategyContext);
-
-/**
- * Handle a collision detection.
- */
-void handleCollision(GameStrategyContext* gmeStrategyContext);
 
 
 #endif

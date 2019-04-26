@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <math.h>
 
 #include "path.h"
 #include "location.h"
@@ -50,6 +51,7 @@ void initPathData(PathData* pathData,
     pathData->accelerationFactor = accelerationFactor;
     pathData->speedFactor = speedFactor;
     pathData->mustGoBackward = controlPointDistance1 < 0;
+    pathData->obstacleCost = 0.0f;
 }
 
 void initAsymmetricPathData(
@@ -79,6 +81,14 @@ bool moveAlongPath(PathData* pathData) {
     float dist1 = pathData->controlPointDistance1;
     float dist2 = pathData->controlPointDistance2;
     return clientExtendedMotionBSplineAbsolute(destX, destY, destAngleRadian, dist1, dist2, pathData->accelerationFactor, pathData->speedFactor);
+}
+
+void updateObstacleCostIfObstacle(PathData* pathData) {
+    pathData->obstacleCost = COST_IF_OBSTACLE;
+}
+
+void decreaseObstacleCost(PathData* pathData) {
+    pathData->obstacleCost = fmaxf(pathData->obstacleCost - COST_DECREASE_STEP, 0.0f);
 }
 
 bool restartFromPositionToGoToPath(PathData* pathData, Point* robotPosition) {

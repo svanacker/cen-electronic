@@ -65,9 +65,8 @@ PathData* getPathOfLocations(PathList* pathList, Location* location1, Location* 
  */
 unsigned int getPathCount(PathList* pathList);
 
-/**
- * Clear the outgoing paths.
- */
-void resetOutgoingPathInfo(PathList* pathList);
+// OBSTACLE MANAGEMENT
+
+void pathListDecreaseObstacleCost(PathList* pathList);
 
 #endif

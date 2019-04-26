@@ -48,12 +48,6 @@ float computeBestPath(Navigation* navigation, Location* start, Location* end) {
         OutgoingPathList* tmpOutgoingPaths = navigation->tmpOutgoingPaths;
         unsigned int tmpOutgoingPathSize = tmpOutgoingPaths->size;
         for (j = 0; j < tmpOutgoingPathSize; j++) {
-            // Do not use paths that are not available
-            bool available = getPathAvailability(navigation, j);
-            if (!available) {
-                continue;
-            }
-
             OutgoingPathData* outgoingPathData = getOutgoingPath(navigation->tmpOutgoingPaths, j);
             PathData* pathData = outgoingPathData->pathData;
             Location* location2 = pathData->location2;
@@ -62,11 +56,7 @@ float computeBestPath(Navigation* navigation, Location* start, Location* end) {
 
             // getOtherEnd called the current fonction to fill path information
             // so we can use pathData without problem.
-            float cost = costLocation1 + pathData->cost;
-
-            if (!available) {
-                cost += COST_UNAVAILABLE_PATH;
-            }
+            float cost = costLocation1 + pathData->cost + pathData->obstacleCost;
 
             if (cost < costLocation2) {
                 // Set the node absolute cost

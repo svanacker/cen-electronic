@@ -31,6 +31,15 @@ void initGameStrategyIndex(GameStrategyContext* gameStrategyContext) {
     }
 }
 
+void obstacleTimerCallbackFunc(Timer* timer) {
+    GameStrategyContext* gameStrategyContext = (GameStrategyContext*) timer->object;
+    Navigation* navigation = gameStrategyContext->navigation;
+    PathList* pathList = navigation->paths;
+
+    pathListDecreaseObstacleCost(pathList);
+}
+
+
 void initGameStrategyContext(GameStrategyContext* gameStrategyContext,
     RobotConfig* robotConfig,
     Navigation* navigation,
@@ -46,6 +55,13 @@ void initGameStrategyContext(GameStrategyContext* gameStrategyContext,
     gameStrategyContext->robotPosition = robotPosition;
     gameStrategyContext->opponentRobotPosition = opponentRobotPosition;
     gameStrategyContext->lastObstaclePosition = lastObstaclePosition;
+    // Timer Init
+    Timer* obstacleTimer = addTimer(ROBOT_OBSTACLE_TIMER_CODE, TIME_DIVIDER_1_HERTZ, &obstacleTimerCallbackFunc, "OBSTACLE TIMER", (int*) gameStrategyContext);
+    gameStrategyContext->obstacleTimer = obstacleTimer;
+    if (obstacleTimer != NULL) {
+        obstacleTimer->callback = obstacleTimerCallbackFunc;
+    }
+
     // Complex init
     initGameStrategyIndex(gameStrategyContext);
 }

@@ -564,6 +564,7 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
     if (servoTimer != NULL) {
         servoTimer->enabled = true;
     }
+    getTimerByCode(ROBOT_OBSTACLE_TIMER_CODE)->enabled = true;
     getTimerByCode(END_MATCH_DETECTOR_TIMER_CODE)->enabled = true;
 
     delaymSec(100);

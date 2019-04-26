@@ -123,11 +123,10 @@ void deviceStrategyHandleRawData(char commandHeader, InputStream* inputStream, O
         GameStrategyContext* context = getStrategyDeviceGameStrategyContext();
         // response
         ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_STRATEGY_NEXT_STEP);
-        // output arguments : we have only last information !
-        appendHex2(outputStream, context->hasMoreNextSteps);
 
-        // do the job synchronously to avoid problems of notification
-        context->hasMoreNextSteps = nextStep(context);
+        // do the job synchronously for actions, and asynchronously for move (ask the MOTOR_BOARD)
+        bool hasDoneSomeAction = nextStep(context);
+        appendBool(outputStream, hasDoneSomeAction);
     }
     // ROBOT POSITION
     else if (commandHeader == COMMAND_STRATEGY_GET_ROBOT_POSITION) {
