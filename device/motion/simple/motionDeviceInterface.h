@@ -22,13 +22,13 @@
 #define COMMAND_MOTION_LEFT_IN_DECI_DEGREE    'l'
 
 /** Rotation to the left by demi quadrant (45°) quadrant */
-#define COMMAND_MOTION_LEFT_DEMI_QUADRANT     'L'
+#define COMMAND_MOTION_LEFT_DEMI_QUADRANT     '\\'
 
 /** Turn to the right in degree. */
 #define COMMAND_MOTION_RIGHT_IN_DECI_DEGREE   'r'
 
 /** Rotation to the left by demi quadrant (45°) quadrant */
-#define COMMAND_MOTION_RIGHT_DEMI_QUADRANT     'R'
+#define COMMAND_MOTION_RIGHT_DEMI_QUADRANT     '/'
 
 /** Turn to the left in degree, but without turning right wheel. */
 #define COMMAND_MOTION_RIGHT_ONE_WHEEL_IN_DECI_DEGREE '('
@@ -56,6 +56,9 @@
 
 // NOTIFICATION
 
+/** Command to generate a notification (for debug purpose) */
+#define COMMAND_MOTION_NOTIFY_FAKE             '!'
+
 /** Argument for the status of the robot when position reached. */
 #define NOTIFY_MOTION_STATUS_REACHED           'R'
 
@@ -72,7 +75,7 @@
 #define NOTIFY_MOTION_STATUS_MOVING            'm'
 
 /** Argument for the status of the robot when position was not reached inside the timeout. */
-#define NOTIFY_MOTION_STATUS_FAILED            'f'
+#define NOTIFY_MOTION_STATUS_FAILED            'e'
 
 /** Obstacle : stop the current Motion and maintain Position. */
 #define COMMAND_MOTION_OBSTACLE                '|'

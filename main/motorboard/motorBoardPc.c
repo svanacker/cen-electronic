@@ -276,6 +276,7 @@ void motorBoardWaitForInstruction(void) {
         &consoleInputBuffer,
         &consoleOutputBuffer,
         &consoleOutputStream,
+        &consoleOutputStream,
         &filterRemoveCRLF,
         NULL);
 
@@ -284,6 +285,7 @@ void motorBoardWaitForInstruction(void) {
         handleStreamInstruction(
             &i2cSlaveInputBuffer,
             &i2cSlaveOutputBuffer,
+            NULL,
             NULL,
             &filterRemoveCRLF,
             NULL);

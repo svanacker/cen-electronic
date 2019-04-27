@@ -66,6 +66,8 @@ bool transmitFromDriverRequestBuffer() {
             // Don't copy to an outputStream, because, we
             // want to read the content of responseBuffer
             NULL,
+            // TODO : Check why we don't provide any NotificationOutputStream
+            NULL,
             // No Input Filter
             NULL,
             // No Output Filter

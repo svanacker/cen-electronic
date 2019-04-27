@@ -10,6 +10,8 @@
 
 #include "../../common/error/error.h"
 
+#include "../../common/log/logger.h"
+
 #include "../../common/serial/serial.h"
 #include "../../common/serial/serialLink.h"
 
@@ -57,11 +59,27 @@ static OutputStream motorNotifyOutputStream;
 static StreamLink motorNotifySerialStreamLink;
 
 // FORWARD DECLARATION
-void mainBoardDeviceHandleMotionDeviceNotification(const Device* device, const char commandHeader, InputStream* inputStream);
+void mainBoardDeviceHandleTestDeviceNotification(const Device* device, const char commandHeader, InputStream* notificationInputStream) {
+    if (device->deviceInterface->deviceHeader == TEST_DEVICE_HEADER) {
+        if (commandHeader == NOTIFY_TEST) {
+            unsigned int value = readHex2(notificationInputStream);
+            appendStringAndDecLN(getDebugOutputStreamLogger(), "Notify Test ! Value=", value);
+        }
+        else {
+            writeError(NOTIFICATION_BAD_DEVICE_COMMAND_HANDLER_NOT_HANDLE);
+            appendString(getDebugOutputStreamLogger(), "header:");
+            append(getDebugOutputStreamLogger(), commandHeader);
+            println(getDebugOutputStreamLogger());
+        }
+    }
+    else {
+        writeError(NOTIFICATION_BAD_DEVICE);
+    }
+}
 
 void mainBoardCommonMotorAddDevices(unsigned char serialIndex) {
     // MOTOR BOARD -> UART
-    addUartRemoteDevice(getTestDeviceInterface(), serialIndex);
+    addUartRemoteDeviceWithNotification(getTestDeviceInterface(), serialIndex, &mainBoardDeviceHandleTestDeviceNotification);
     addUartRemoteDevice(getMotorDeviceInterface(), serialIndex);
     addUartRemoteDevice(getCodersDeviceInterface(), serialIndex);
     addUartRemoteDevice(getPidDeviceInterface(), serialIndex);
@@ -107,12 +125,18 @@ void mainBoardCommonMotorHandleStreamInstruction(void) {
     while (handleNotificationFromDispatcherList(TRANSMIT_UART, MAIN_BOARD_SERIAL_PORT_MOTOR_NOTIFY)) {
         
     }
+    
+    // Handle Notification
+    while (handleNotificationFromDispatcherList(TRANSMIT_UART, MAIN_BOARD_SERIAL_PORT_MOTOR)) {
+        
+    }
 
     // Listen instruction from motorNotifyStream->Devices
     handleStreamInstruction(
             &motorNotifyInputBuffer,
             &motorNotifyOutputBuffer,
             &motorNotifyOutputStream,
+            NULL,
             &filterRemoveCRLF_255,
             NULL);
     

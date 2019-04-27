@@ -8,6 +8,8 @@
 
 #include "../../common/string/cenString.h"
 
+#define CONSOLE_MAX_WIDTH                                               110
+
 // STRINGS
 
 /**

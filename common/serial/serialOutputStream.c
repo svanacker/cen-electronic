@@ -37,13 +37,12 @@ void closeOutputStreamSerial1(OutputStream* outputStream) {
 
 void writeChar1(OutputStream* outputStream, char c) {
     serialPutc(SERIAL_PORT_1, c);
-    // Just to avoid to saturate other UART link (some chars are missing)
-    // delaymSec(1);
 }
 
 void initSerialOutputStream1(OutputStream* outputStream) {
     outputStream->openOutputStream = openOutputStreamSerial1;
     outputStream->closeOutputStream = closeOutputStreamSerial1;
+    outputStream->address = SERIAL_PORT_1;
     outputStream->writeChar = writeChar1;
     outputStream->flush = flushSerial;
 }
@@ -69,6 +68,7 @@ void writeChar2(OutputStream* outputStream, char c) {
 void initSerialOutputStream2(OutputStream* outputStream) {
     outputStream->openOutputStream = openOutputStreamSerial2;
     outputStream->closeOutputStream = closeOutputStreamSerial2;
+    outputStream->address = SERIAL_PORT_2;
     outputStream->writeChar = writeChar2;
     outputStream->flush = flushSerial;
 }
@@ -94,6 +94,7 @@ void writeChar3(OutputStream* outputStream, char c) {
 void initSerialOutputStream3(OutputStream* outputStream) {
     outputStream->openOutputStream = openOutputStreamSerial3;
     outputStream->closeOutputStream = closeOutputStreamSerial3;
+    outputStream->address = SERIAL_PORT_3;
     outputStream->writeChar = writeChar3;
     outputStream->flush = flushSerial;
 }
@@ -119,6 +120,7 @@ void writeChar4(OutputStream* outputStream, char c) {
 void initSerialOutputStream4(OutputStream* outputStream) {
     outputStream->openOutputStream = openOutputStreamSerial4;
     outputStream->closeOutputStream = closeOutputStreamSerial4;
+    outputStream->address = SERIAL_PORT_4;
     outputStream->writeChar = writeChar4;
     outputStream->flush = flushSerial;
 }
@@ -144,6 +146,7 @@ void writeChar5(OutputStream* outputStream, char c) {
 void initSerialOutputStream5(OutputStream* outputStream) {
     outputStream->openOutputStream = openOutputStreamSerial5;
     outputStream->closeOutputStream = closeOutputStreamSerial5;
+    outputStream->address = SERIAL_PORT_5;
     outputStream->writeChar = writeChar5;
     outputStream->flush = flushSerial;
 }
@@ -169,6 +172,7 @@ void writeChar6(OutputStream* outputStream, char c) {
 void initSerialOutputStream6(OutputStream* outputStream) {
     outputStream->openOutputStream = openOutputStreamSerial6;
     outputStream->closeOutputStream = closeOutputStreamSerial6;
+    outputStream->address = SERIAL_PORT_6;
     outputStream->writeChar = writeChar6;
     outputStream->flush = flushSerial;
 }

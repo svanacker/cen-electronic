@@ -103,6 +103,7 @@
         <itemPath>../../../common/io/reader.h</itemPath>
         <itemPath>../../../common/io/nullOutputStream.h</itemPath>
         <itemPath>../../../common/io/printTableWriter.h</itemPath>
+        <itemPath>../../../common/io/bufferDebug.h</itemPath>
       </logicalFolder>
       <logicalFolder name="common.log" displayName="common.log" projectFiles="true">
         <itemPath>../../../common/log/logger.h</itemPath>
@@ -709,6 +710,7 @@
         <itemPath>../../../common/io/binaryWriter.c</itemPath>
         <itemPath>../../../common/io/nullOutputStream.c</itemPath>
         <itemPath>../../../common/io/printTableWriter.c</itemPath>
+        <itemPath>../../../common/io/bufferDebug.c</itemPath>
       </logicalFolder>
       <logicalFolder name="common.log" displayName="common.log" projectFiles="true">
         <itemPath>../../../common/log/logger.c</itemPath>

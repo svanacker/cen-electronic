@@ -136,6 +136,14 @@ int deviceMotionGetInterface(char commandHeader, DeviceInterfaceMode mode, bool 
 		}
 		return commandLengthValueForMode(mode, 0, 1);
 	}
+    else if (commandHeader == COMMAND_MOTION_NOTIFY_FAKE) {
+		if (fillDeviceArgumentList) {
+			setFunction("Generate fake Notification", 1, 0);
+            setArgumentUnsignedChar1(0, "Notif. type char");
+			setResultUnsignedChar1(0, "value");
+		}
+		return commandLengthValueForMode(mode, 1, 0);
+    }
 	// NOTIFICATION
     if (DEVICE_MODE_NOTIFY == mode) {
         if (commandHeader == NOTIFY_MOTION_STATUS_REACHED) {

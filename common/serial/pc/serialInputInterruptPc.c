@@ -9,6 +9,7 @@
 
 #include "../../../common/delay/cenDelay.h"
 #include "../../../common/io/buffer.h"
+#include "../../../common/io/bufferDebug.h"
 #include "../../../common/io/outputStream.h"
 #include "../../../common/io/printWriter.h"
 #include "../../../common/pc/pipe/pipeClientHelper.h"

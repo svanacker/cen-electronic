@@ -347,6 +347,7 @@ bool mainBoardPcWaitForInstruction(StartMatch* startMatch) {
         &consoleInputBuffer,
         &consoleOutputBuffer,
         &consoleOutputStream,
+        &consoleOutputStream,
         &filterRemoveCRLF,
         NULL);
 
@@ -355,6 +356,7 @@ bool mainBoardPcWaitForInstruction(StartMatch* startMatch) {
         handleStreamInstruction(
             &robotManagerInputBuffer,
             &robotManagerOutputBuffer,
+            &robotManagerOutputStream,
             &robotManagerOutputStream,
             &filterRemoveCRLF,
             NULL);

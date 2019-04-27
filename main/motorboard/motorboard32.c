@@ -283,22 +283,22 @@ void waitForInstruction() {
     }
     
     // I2C Stream
-    handleStreamInstruction(&i2cSlaveInputBuffer, &i2cSlaveOutputBuffer, NULL, &filterRemoveCRLF, NULL);
+    handleStreamInstruction(&i2cSlaveInputBuffer, &i2cSlaveOutputBuffer, NULL, &standardOutputStream, &filterRemoveCRLF, NULL);
 
     // STANDARD UART Stream
-    handleStreamInstruction(&standardInputBuffer, &standardOutputBuffer, &standardOutputStream, &filterRemoveCRLF, NULL);
+    handleStreamInstruction(&standardInputBuffer, &standardOutputBuffer, &standardOutputStream, &notifyOutputStream, &filterRemoveCRLF, NULL);
 
     // DEBUG UART Stream
-    handleStreamInstruction(&debugInputBuffer, &debugOutputBuffer, &debugOutputStream, &filterRemoveCRLF, NULL);
+    handleStreamInstruction(&debugInputBuffer, &debugOutputBuffer, &debugOutputStream, &notifyOutputStream, &filterRemoveCRLF, NULL);
 
-    // NOTIFY UART
-    handleStreamInstruction(&notifyInputBuffer, &notifyOutputBuffer, &notifyOutputStream, &filterRemoveCRLF, NULL);
+    // NOTIFY UART (MOTOR BOARD -> MAIN BOARD)
+    handleStreamInstruction(&notifyInputBuffer, &notifyOutputBuffer, &notifyOutputStream, &notifyOutputStream, &filterRemoveCRLF, NULL);
     
     // Manage Motion
-    handleInstructionAndMotion(&pidMotion, &notifyOutputStream);
+    handleInstructionAndMotion(&pidMotion, &standardOutputStream);
     
     // Notify if needed
-    trajectoryNotifyIfEnabledAndTreshold(&notifyOutputStream);
+    // trajectoryNotifyIfEnabledAndTreshold(&notifyOutputStream);
 }
 
 int runMotorBoard() {

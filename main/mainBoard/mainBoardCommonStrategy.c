@@ -141,6 +141,9 @@ void mainBoardDeviceHandleMotionDeviceNotification(const Device* device, const c
             checkIsChar(notificationInputStream, 'F');
             
             gameStrategyContext->trajectoryType = TRAJECTORY_TYPE_NONE;
+            
+            appendStringCRLF(getDebugOutputStreamLogger(), "Motion Device Notification !");
+
         }
         else {
             writeError(NOTIFICATION_BAD_DEVICE_COMMAND_HANDLER_NOT_HANDLE);

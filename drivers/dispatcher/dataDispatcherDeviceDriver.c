@@ -40,6 +40,8 @@ bool pingDriverDataDispatcher(unsigned char dispatcherIndex) {
         // Don't copy to an outputStream, because, we
         // want to read the content of responseBuffer
         NULL,
+        // TODO : TO CHECK : Don't provide the notificationOutputStream,
+        NULL,
         // No Input Filter
         NULL,
         // No Output Filter

@@ -24,6 +24,11 @@ bool deviceTestIsOk(void) {
 }
 
 void notifyTest(OutputStream* outputStream, unsigned char notifyArgument) {
+    OutputStream* debugOutputStream = getInfoOutputStreamLogger();
+    appendString(debugOutputStream, "Notification Output Stream Address : ");
+    appendDec(debugOutputStream, outputStream->address);
+    appendCRLF(debugOutputStream);
+ 
     append(outputStream, TEST_DEVICE_HEADER);
     append(outputStream, NOTIFY_TEST);
     appendHex2(outputStream, notifyArgument);
@@ -70,7 +75,7 @@ void deviceTestHandleRawData(char header, InputStream* inputStream, OutputStream
         unsigned char value = readHex2(inputStream);
         
         // TODO : Find the right OutputStream corresponding to the device : I2C / UART
-        notifyTest(outputStream, value);
+        notifyTest(notificationOutputStream, value);
     }
 }
 

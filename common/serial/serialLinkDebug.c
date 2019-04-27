@@ -4,6 +4,8 @@
 #include "serialLink.h"
 #include "serialLinkList.h"
 
+#include "../../common/io/buffer.h"
+#include "../../common/io/bufferDebug.h"
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
 #include "../../common/io/printTableWriter.h"

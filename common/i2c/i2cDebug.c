@@ -10,6 +10,7 @@
 #include "../../common/commons.h"
 
 #include "../../common/io/buffer.h"
+#include "../../common/io/bufferDebug.h"
 #include "../../common/io/printWriter.h"
 #include "../../common/io/printTableWriter.h"
 

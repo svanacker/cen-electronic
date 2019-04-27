@@ -8,6 +8,7 @@
 #include "../common/error/error.h"
 
 #include "../common/io/buffer.h"
+#include "../common/io/bufferDebug.h"
 #include "../common/io/filter.h"
 #include "../common/io/inputStream.h"
 #include "../common/io/ioUtils.h"
@@ -28,7 +29,7 @@
 
 /**
 * @private
-* Try to clear the buffer if it contains some 'z' char. Very usefull when we have made a mistake taping an instruction.
+* Try to clear the buffer if it contains some 'z' char. Very useful when we have made a mistake taping an instruction.
 * @return true if it was cleared (=> buffer will be cleared), false else
 */
 bool clearBufferIfNeeded(Buffer* inputBuffer) {
@@ -73,12 +74,13 @@ bool filterFirstNextChar(Buffer* inputBuffer,  filterCharFunction* inputFilterCh
 bool handleStreamInstruction(Buffer* inputBuffer,
                             Buffer* outputBuffer,
                             OutputStream* outputStream,
+                            OutputStream* notificationOutputStream,
                             filterCharFunction* inputFilterChar,
                             filterCharFunction* outputFilterChar) {
 
 	// We flush the ouputStream to handle notification from Device
-	if (outputStream != NULL) {
-		outputStream->flush(outputStream);
+	if (notificationOutputStream != NULL) {
+		notificationOutputStream->flush(notificationOutputStream);
 	}
 
     if (inputBuffer == NULL) {
@@ -178,7 +180,7 @@ bool handleStreamInstruction(Buffer* inputBuffer,
             bufferClearLastChars(inputBuffer, DEVICE_AND_COMMAND_HEADER_LENGTH);
 
             // Call to the device
-            deviceDescriptor->deviceHandleRawData(commandHeader, bufferedInputStream, bufferedOutputStream, outputStream);
+            deviceDescriptor->deviceHandleRawData(commandHeader, bufferedInputStream, bufferedOutputStream, notificationOutputStream);
 
         } // we forward the request through Remote Operation with Dispatcher
         else if (specifyDispatcherLength > 0 || transmitMode == TRANSMIT_I2C || transmitMode == TRANSMIT_UART || transmitMode == TRANSMIT_ZIGBEE) {

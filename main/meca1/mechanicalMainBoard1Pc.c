@@ -192,6 +192,7 @@ void mechanicalBoard1PcWaitForInstruction(void) {
         &consoleInputBuffer,
         &consoleOutputBuffer,
         &consoleOutputStream,
+        &consoleOutputStream,
         &filterRemoveCRLF,
         NULL);
 
@@ -200,6 +201,7 @@ void mechanicalBoard1PcWaitForInstruction(void) {
         handleStreamInstruction(
             &i2cSlaveInputBuffer,
             &i2cSlaveOutputBuffer,
+            NULL,
             NULL,
             &filterRemoveCRLF,
             NULL);

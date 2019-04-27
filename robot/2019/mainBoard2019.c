@@ -27,7 +27,6 @@ static GameStrategyContext gameStrategyContext;
 static Point robotPosition;
 static Point opponentRobotPosition;
 static Point lastObstaclePosition;
-static Timer* obstacleTimer;
 
 // 2019 -> Navigation
 static Navigation navigation;

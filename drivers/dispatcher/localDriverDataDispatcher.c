@@ -26,7 +26,7 @@ void _driverDataDispatcherTransmitLocal(DriverDataDispatcher* dispatcher,
                                      int dataToTransferCount,
                                      int dataToReceiveCount
     ) {
-    handleStreamInstruction(inputBuffer, outputBuffer, NULL, NULL, NULL);
+    handleStreamInstruction(inputBuffer, outputBuffer, NULL, NULL, NULL, NULL);
 }
 
 /**

@@ -2091,6 +2091,9 @@
     <ClCompile Include="robot\strategy\gameStrategyMotionHandler.c">
       <Filter>Source Files\robot\strategy</Filter>
     </ClCompile>
+    <ClCompile Include="common\io\bufferDebug.c">
+      <Filter>Source Files\common\io</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -3250,6 +3253,9 @@
     </ClInclude>
     <ClInclude Include="robot\strategy\gameStrategyMotionHandler.h">
       <Filter>Header Files\robot\strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="common\io\bufferDebug.h">
+      <Filter>Header Files\common\io</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

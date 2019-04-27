@@ -409,6 +409,7 @@ void mainBoardCommonHandleStreamInstruction(void) {
             &debugInputBuffer,
             &debugOutputBuffer,
             &debugOutputStream,
+            NULL,
             &filterRemoveCRLF_255,
             NULL); 
 }

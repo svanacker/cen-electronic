@@ -60,21 +60,22 @@ bool deviceMotionIsOk(void) {
     return true;
 }
 
-void notifyPosition(void) {
-
-}
-
-void internalNotify(OutputStream* outputStream, char statusHeader, char* notifyString) {
-    if (outputStream == NULL) {
+void internalNotify(OutputStream* notificationOutputStream, char statusHeader, char* notifyString) {
+    if (notificationOutputStream == NULL) {
         return;
     }
-    append(outputStream, MOTION_DEVICE_HEADER);
-    append(outputStream, statusHeader);
-
-    // send position
-    notifyAbsolutePositionWithoutHeader(outputStream, true);
-
+    append(notificationOutputStream, MOTION_DEVICE_HEADER);
+    append(notificationOutputStream, statusHeader);
+ 
     OutputStream* debugOutputStream = getInfoOutputStreamLogger();
+    appendString(debugOutputStream, "Notification Output Stream Address : ");
+    appendDec(debugOutputStream, notificationOutputStream->address);
+    appendCRLF(debugOutputStream);
+    
+    // send position
+    notifyAbsolutePositionWithoutHeader(notificationOutputStream, true);
+
+    
     appendString(debugOutputStream, "Motion ");
     appendString(debugOutputStream, notifyString);
     appendString(debugOutputStream, "t=");
@@ -203,6 +204,35 @@ void deviceMotionHandleRawData(char commandHeader,
 		ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_MODE_GET);
 		bool stacked = isStackMotionDefinitions(pidMotion);
 		appendBool(outputStream, stacked);
+	}
+    // NOTIFICATION GENERATION
+	else if (commandHeader == COMMAND_MOTION_NOTIFY_FAKE) {
+		ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_NOTIFY_FAKE);
+		char notificationTypeChar = readFilteredChar(inputStream);
+        if (notificationTypeChar == NOTIFY_MOTION_STATUS_BLOCKED) {
+            notifyBlocked(notificationOutputStream);
+        }
+        else if (notificationTypeChar == NOTIFY_MOTION_STATUS_FAILED) {
+            notifyFailed(notificationOutputStream);
+        }
+        else if (notificationTypeChar == NOTIFY_MOTION_STATUS_MOVING) {
+            notifyMoving(notificationOutputStream);
+        }
+        else if (notificationTypeChar == NOTIFY_MOTION_STATUS_OBSTACLE) {
+            notifyObstacle(notificationOutputStream);
+        }
+        else if (notificationTypeChar == NOTIFY_MOTION_STATUS_REACHED) {
+            notifyReached(notificationOutputStream);
+        }
+        else if (notificationTypeChar == NOTIFY_MOTION_STATUS_SHOCKED) {
+            notifyShocked(notificationOutputStream);
+        }
+        else {
+            OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+            appendString(debugOutputStream, "Unknown notification Type : ");
+            append(debugOutputStream, notificationTypeChar);
+            appendCRLF(debugOutputStream);
+        }
 	}
 }
 

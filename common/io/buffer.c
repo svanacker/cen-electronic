@@ -3,6 +3,7 @@
 #include <stdbool.h>
 
 #include "buffer.h"
+#include "bufferDebug.h"
 
 #include "inputStream.h"
 #include "outputStream.h"
@@ -15,10 +16,6 @@
 
 // BUFFER
 
-/**
- * Private Functions.
- * @returns true if there is a problem, false else
- */
 bool checkBufferNotNull(const Buffer* buffer) {
     if (buffer == NULL) {
         writeError(IO_BUFFER_NULL);
@@ -306,62 +303,3 @@ OutputStream* getOutputStream(Buffer* buffer) {
     return &(buffer->outputStream);
 }
 
-void printDebugBuffer(OutputStream* outputStream, Buffer* buffer) {
-    if (!checkBufferNotNull(buffer)) {
-        return;    
-    }
-    if (buffer == NULL) {
-        println(outputStream);
-        appendStringLN(outputStream, "Buffer is NULL !");
-        return;
-    }
-    println(outputStream);
-    appendString(outputStream, "Buffer:");
-
-    if (buffer->name != NULL) {
-        appendKeyAndName(outputStream, "name=", buffer->name);
-    }
-
-    if (buffer->type) {
-        appendKeyAndName(outputStream, ", type=", buffer->type);
-    }
-
-    appendStringAndDec(outputStream, ", length=", buffer->length);
-    appendStringAndDec(outputStream, ", writeIdx=", buffer->writeIndex);
-    appendStringAndDec(outputStream, ", readIdx=", buffer->readIndex);
-    appendCRLF(outputStream);
-    // FULL DUMP 
-    appendString(outputStream, "---START---");
-    appendCRLF(outputStream);
-    unsigned int i;
-    char* sPointer = (char*) buffer->s;
-    for (i = 0; i < buffer->length; i++) {
-        // Shift to the right cell index
-        char c = *sPointer;
-        if (c == 0) {
-            // To avoid [00] on Console
-            append(outputStream, '#');
-        }
-        else {
-            append(outputStream, c);
-        }
-        sPointer++;
-    }
-    appendCRLF(outputStream);
-    appendString(outputStream, "---END---");
-    appendCRLF(outputStream);
-
-    // LOGICAL COUNT
-    appendString(outputStream, "---FROM READ_INDEX TO WRITE_INDEX ---");
-    appendCRLF(outputStream);
-    for (i = 0; i < buffer->readIndex; i++) {
-        append(outputStream, ' ');
-    }
-    unsigned elementCount = getBufferElementsCount(buffer);
-    for (i = 0; i < elementCount; i++) {
-        char c = bufferGetCharAtIndex(buffer, i);
-        append(outputStream, c);
-    }
-    appendCRLF(outputStream);
-
-}

@@ -36,17 +36,17 @@ bool isTrajectoryDeviceOk(void) {
     return true;
 }
 
-void notifyAbsolutePositionWithoutHeader(OutputStream* outputStream, bool fakeData) {
+void notifyAbsolutePositionWithoutHeader(OutputStream* notificationOutputStream, bool fakeData) {
     Position* p = getPosition();
-    appendHexFloat4(outputStream, p->pos.x, POSITION_DIGIT_MM_PRECISION);
-    appendSeparator(outputStream);
-    appendHexFloat4(outputStream, p->pos.y, POSITION_DIGIT_MM_PRECISION);
-    appendSeparator(outputStream);
-    appendHexFloat4(outputStream, radToDeg(p->orientation), ANGLE_DIGIT_DEGREE_PRECISION);
+    appendHexFloat4(notificationOutputStream, p->pos.x, POSITION_DIGIT_MM_PRECISION);
+    appendSeparator(notificationOutputStream);
+    appendHexFloat4(notificationOutputStream, p->pos.y, POSITION_DIGIT_MM_PRECISION);
+    appendSeparator(notificationOutputStream);
+    appendHexFloat4(notificationOutputStream, radToDeg(p->orientation), ANGLE_DIGIT_DEGREE_PRECISION);
     if (fakeData) {
         // Fake data To Align Notification Size
-        appendSeparator(outputStream);
-        appendHex(outputStream, 0x0F);
+        appendSeparator(notificationOutputStream);
+        appendHex(notificationOutputStream, 0x0F);
     }
 }
 

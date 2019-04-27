@@ -36,6 +36,13 @@ typedef struct {
 } Buffer;
 
 /**
+ * Useful method to check if the buffer is not NULL (to prevent reset)
+ * @param buffer
+ * @return 
+ */
+bool checkBufferNotNull(const Buffer* buffer);
+
+/**
  * Init the buffer and give it the port.
  * @param buffer the pointer on the buffer (simulates object programming)
  * @param an array of char to store value into the buffer
@@ -175,12 +182,5 @@ InputStream* getInputStream(Buffer* buffer);
  */
 OutputStream* getOutputStream(Buffer* buffer);
 
-/**
- * Print the buffer in a debug mode, with all variables.
- * @param outputStream the output stream (often debug) where we writes some values
- * @param buffer the buffer (simulates object programming)
- * @throws IO_BUFFER_NULL if the pointer is NULL 
- */
-void printDebugBuffer(OutputStream* outputStream, Buffer* buffer);
 
 #endif

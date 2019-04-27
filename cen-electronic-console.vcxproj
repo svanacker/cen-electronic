@@ -180,6 +180,7 @@
     <ClCompile Include="common\io\binaryPrintWriter.c" />
     <ClCompile Include="common\io\binaryWriter.c" />
     <ClCompile Include="common\io\buffer.c" />
+    <ClCompile Include="common\io\bufferDebug.c" />
     <ClCompile Include="common\io\compositeOutputStream.c" />
     <ClCompile Include="common\io\filter.c" />
     <ClCompile Include="common\io\inputStream.c" />
@@ -547,6 +548,7 @@
     <ClInclude Include="common\io\binaryPrintWriter.h" />
     <ClInclude Include="common\io\binaryWriter.h" />
     <ClInclude Include="common\io\buffer.h" />
+    <ClInclude Include="common\io\bufferDebug.h" />
     <ClInclude Include="common\io\cenIO.h" />
     <ClInclude Include="common\io\compositeOutputStream.h" />
     <ClInclude Include="common\io\filter.h" />

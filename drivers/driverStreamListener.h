@@ -21,6 +21,7 @@
 bool handleStreamInstruction(Buffer* inputBuffer,
         Buffer* outputBuffer,
         OutputStream* outputStream,
+        OutputStream* outputNotificationStream,
         filterCharFunction* inputFilterChar,
         filterCharFunction* outputFilterChar
         );

@@ -45,13 +45,13 @@ typedef struct DeviceDescriptor {
      */
     unsigned int initErrorCode;
     /** A callback on the Function which must be used to initialized the device. */
-    deviceInitFunction *deviceInit;
+    deviceInitFunction* deviceInit;
     /** A callback on the Function which must be used to shutdown the device. */
-    deviceShutDownFunction *deviceShutDown;
+    deviceShutDownFunction* deviceShutDown;
     /** A callback on the Function which must be used to know if the device is ok (when it's used), can be called at every time, but at least after starting the device. */
-    deviceIsOkFunction *deviceIsOk;
+    deviceIsOkFunction* deviceIsOk;
     /** A callback on the Function to handle the string data which are given (Ex : Mw2010 to Move the both motors). */
-    deviceHandleRawDataFunction *deviceHandleRawData;
+    deviceHandleRawDataFunction* deviceHandleRawData;
     /** A generic pointer to store parameter single object pointer or structure to manipulate some external objects. */
     int* object;
 } DeviceDescriptor;
