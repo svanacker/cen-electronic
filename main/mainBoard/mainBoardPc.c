@@ -518,6 +518,8 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
 
     navigation = initNavigation2019();
     gameStrategyContext = initGameStrategyContext2019(&robotConfig, &endMatch, &tofSensorList);
+    // For PC, we simulate the move
+    gameStrategyContext->simulateMove = true;
     gameBoard = initGameBoard2019(gameStrategyContext);
 
     // Init the drivers

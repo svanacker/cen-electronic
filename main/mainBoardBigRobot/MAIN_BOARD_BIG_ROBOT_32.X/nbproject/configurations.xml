@@ -20,7 +20,6 @@
         <itemPath>../../../client/motion/simple/clientMotion.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f8" displayName="client.robot.2018" projectFiles="true">
-        <itemPath>../../../client/robot/2018/launcherClient2018.h</itemPath>
       </logicalFolder>
       <logicalFolder name="common" displayName="common" projectFiles="true">
         <itemPath>../../../common/commons.h</itemPath>
@@ -630,9 +629,6 @@
                      displayName="client.motion.simple"
                      projectFiles="true">
         <itemPath>../../../client/motion/simple/clientMotion.c</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f9" displayName="client.robot.2018" projectFiles="true">
-        <itemPath>../../../client/robot/2018/launcherClient2018.c</itemPath>
       </logicalFolder>
       <logicalFolder name="common.2d" displayName="common.2d" projectFiles="true">
         <itemPath>../../../common/2d/2d.c</itemPath>

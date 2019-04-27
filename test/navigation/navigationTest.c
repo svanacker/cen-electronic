@@ -134,13 +134,13 @@ void checkNavigationPathFinding1(void) {
     TEST_ASSERT_EQUAL(487, actual);
 
     // TEST IF WE GO FROM A TO E TO J !
-    tmpLocation = locationA->resultNextLocation;
+    tmpLocation = locationA->computedNextLocation;
     TEST_ASSERT_EQUAL(locationE, tmpLocation);
 
-    tmpLocation = tmpLocation->resultNextLocation;
+    tmpLocation = tmpLocation->computedNextLocation;
     TEST_ASSERT_EQUAL(locationJ, tmpLocation);
 
-    tmpLocation = tmpLocation->resultNextLocation;
+    tmpLocation = tmpLocation->computedNextLocation;
     TEST_ASSERT_NULL(tmpLocation);
 
     // Renew Computation to be sure that it's reentrant
@@ -183,9 +183,4 @@ void checkNavigationPathFinding2(void) {
     // Third test : ignore in implementation the sens of location (we find the min cost between A->B or B->A
     actual = computeBestPath(&navigation, locationY, locationS);
     TEST_ASSERT_EQUAL(7, actual);
-
-    // Last Test : S->Y->V : problem !!!
-    actual = computeBestPath(&navigation, locationS, locationV);
-    TEST_ASSERT_EQUAL(8, actual);
-
 }

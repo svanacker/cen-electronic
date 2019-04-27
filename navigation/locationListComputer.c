@@ -32,15 +32,11 @@ Location* getNearestLocation(LocationList* locationList, float x, float y, float
     return result;
 }
 
-
 /**
  * Returns the cost associated to location.
  */
-float getTmpCost(Location* location) {
-    if (location->tmpCost == NO_COMPUTED_COST) {
-        return MAX_COST;
-    }
-    return location->tmpCost;
+float getComputedCost(Location* location) {
+    return location->computedCost;
 }
 
 /**
@@ -57,19 +53,19 @@ Location* extractMinCostLocation(LocationList* locationList) {
     for (locationIndex = 0; locationIndex < size; locationIndex++) {
         Location* location = getLocation(locationList, locationIndex);
         // we only manage only unhandled location point
-        if (location->tmpHandled) {
+        if (location->computedHandled) {
             continue;
         }
 
         // get the cost
-        float cost = getTmpCost(location);
+        float cost = getComputedCost(location);
         if (cost <= minCost) {
             minCost = cost;
             result = location;
         }
     }
     // mark location as handled
-    result->tmpHandled = true;
+    result->computedHandled = true;
     return result;
 }
 
@@ -78,8 +74,8 @@ void cutLocationLinkedList(Location* location, Location* endLocation) {
 
     while (currentLocation != NULL) {
         if (currentLocation == endLocation) {
-            currentLocation->resultNextLocation = NULL;
+            currentLocation->computedNextLocation = NULL;
         }
-        currentLocation = currentLocation->resultNextLocation;
+        currentLocation = currentLocation->computedNextLocation;
     }
 }

@@ -147,12 +147,15 @@ static GameTargetActionItemList goldeniumDropTargetActionItemList;
 // Big Robot
 static GameTargetActionItemList chaosTakeTargetActionItemList;
 
+static GameTargetActionItemList bigDistributorLine1PrepareTargetActionItemList;
 static GameTargetActionItemList bigDistributorLine1TakeTargetActionItemList;
 static GameTargetActionItemList bigDistributorLine1DropTargetActionItemList;
 
+static GameTargetActionItemList bigDistributorLine2PrepareTargetActionItemList;
 static GameTargetActionItemList bigDistributorLine2TakeTargetActionItemList;
 static GameTargetActionItemList bigDistributorLine2DropTargetActionItemList;
 
+static GameTargetActionItemList bigDistributorLine3PrepareTargetActionItemList;
 static GameTargetActionItemList bigDistributorLine3TakeTargetActionItemList;
 static GameTargetActionItemList bigDistributorLine3DropTargetActionItemList;
 
@@ -169,13 +172,16 @@ static GameTargetActionItem goldeniumPrepareDropTargetActionItem;
 static GameTargetActionItem goldeniumDropTargetActionItem;
 
 static GameTargetActionItem bigDistributorLine1PrepareTargetActionItem;
-static GameTargetActionItem bigDistributorLine1TargetActionItem;
+static GameTargetActionItem bigDistributorLine1TakeTargetActionItem;
+static GameTargetActionItem bigDistributorLine1DropTargetActionItem;
 
 static GameTargetActionItem bigDistributorLine2PrepareTargetActionItem;
-static GameTargetActionItem bigDistributorLine2TargetActionItem;
+static GameTargetActionItem bigDistributorLine2TakeTargetActionItem;
+static GameTargetActionItem bigDistributorLine2DropTargetActionItem;
 
 static GameTargetActionItem bigDistributorLine3PrepareTargetActionItem;
-static GameTargetActionItem bigDistributorLine3TargetActionItem;
+static GameTargetActionItem bigDistributorLine3TakeTargetActionItem;
+static GameTargetActionItem bigDistributorLine3DropTargetActionItem;
 
 // ------------------------------------------------------- STRATEGIES ----------------------------------------------------------------
 
@@ -578,6 +584,8 @@ void initTargetActions2019(GameStrategyContext* gameStrategyContext) {
 }
 
 bool acceleratorArmOn(int* context) {
+    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+    appendStringCRLF(debugOutputStream, "Accelerator Arm On");
     GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
 
     if (isViolet(gameStrategyContext)) {
@@ -594,6 +602,8 @@ bool acceleratorArmOn(int* context) {
 }
 
 bool acceleratorArmOff(int* context) {
+    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+    appendStringCRLF(debugOutputStream, "Accelerator Arm Off");
     GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
 
     if (isViolet(gameStrategyContext)) {
@@ -610,11 +620,15 @@ bool acceleratorArmOff(int* context) {
 }
 
 bool goldeniumPrepareTake(int* context) {
+    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+    appendStringCRLF(debugOutputStream, "goldeniumPrepareTake");
     moveElevatorDoublePuck();
     return true;
 }
 
 bool goldeniumTake(int* context) {
+    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+    appendStringCRLF(debugOutputStream, "goldeniumTake");
     GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
 
     if (isViolet(gameStrategyContext)) {
@@ -632,6 +646,8 @@ bool goldeniumTake(int* context) {
 }
 
 bool goldeniumDrop(int* context) {
+    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+    appendStringCRLF(debugOutputStream, "goldeniumDrop");
     GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
     if (isViolet(gameStrategyContext)) {
         moveForkPushOff(2);
@@ -643,17 +659,29 @@ bool goldeniumDrop(int* context) {
 }
 
 bool bigDistributorLinePrepare(int* context) {
+    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+    appendStringCRLF(debugOutputStream, "bigDistributorLinePrepare");
     // TODO
     return true;
 }
 
 bool bigDistributorLineTake(int* context) {
+    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+    appendStringCRLF(debugOutputStream, "bigDistributorLineTake");
+    // TODO
+    return true;
+}
+
+bool acceleratorDrop(int* context) {
+    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+    appendStringCRLF(debugOutputStream, "acceleratorDrop");
     // TODO
     return true;
 }
 
 
 void initTargetActionsItems2019(GameStrategyContext* gameStrategyContext) {
+    // Accelerator
     addTargetActionItem(&acceleratorTargetActionItemList, &acceleratorTargetActionItem, &acceleratorArmOn, "ACC ARM ON");
     
     // Goldenium Take
@@ -667,16 +695,19 @@ void initTargetActionsItems2019(GameStrategyContext* gameStrategyContext) {
     // Chaos : No specific action to do
     
     // Big Distributor 1 Line 1
-    addTargetActionItem(&bigDistributorLine1TakeTargetActionItemList, &bigDistributorLine1PrepareTargetActionItem, &bigDistributorLinePrepare, "PREP DIST 1");
-    addTargetActionItem(&bigDistributorLine1DropTargetActionItemList, &bigDistributorLine1TargetActionItem, &bigDistributorLineTake, "TAKE DIST 1");
+    addTargetActionItem(&bigDistributorLine1PrepareTargetActionItemList, &bigDistributorLine1PrepareTargetActionItem, &bigDistributorLinePrepare, "PREP DIST 1");
+    addTargetActionItem(&bigDistributorLine1TakeTargetActionItemList, &bigDistributorLine1TakeTargetActionItem, &bigDistributorLineTake, "TAKE DIST 1");
+    addTargetActionItem(&bigDistributorLine1DropTargetActionItemList, &bigDistributorLine1DropTargetActionItem, &acceleratorDrop, "ACC DROP");
 
     // Big Distributor 1 Line 2
-    addTargetActionItem(&bigDistributorLine2TakeTargetActionItemList, &bigDistributorLine2PrepareTargetActionItem, &bigDistributorLinePrepare, "PREP DIST 2");
-    addTargetActionItem(&bigDistributorLine2DropTargetActionItemList, &bigDistributorLine2TargetActionItem, &bigDistributorLineTake, "TAKE DIST 2");
+    addTargetActionItem(&bigDistributorLine2PrepareTargetActionItemList, &bigDistributorLine2PrepareTargetActionItem, &bigDistributorLinePrepare, "PREP DIST 3");
+    addTargetActionItem(&bigDistributorLine2TakeTargetActionItemList, &bigDistributorLine2TakeTargetActionItem, &bigDistributorLineTake, "TAKE DIST 3");
+    addTargetActionItem(&bigDistributorLine2DropTargetActionItemList, &bigDistributorLine2DropTargetActionItem, &acceleratorDrop, "ACC DROP");
 
     // Big Distributor 1 Line 3
-    addTargetActionItem(&bigDistributorLine3TakeTargetActionItemList, &bigDistributorLine3PrepareTargetActionItem, &bigDistributorLinePrepare, "PREP DIST 3");
-    addTargetActionItem(&bigDistributorLine3DropTargetActionItemList, &bigDistributorLine3TargetActionItem, &bigDistributorLineTake, "TAKE DIST 3");
+    addTargetActionItem(&bigDistributorLine3PrepareTargetActionItemList, &bigDistributorLine3PrepareTargetActionItem, &bigDistributorLinePrepare, "PREP DIST 3");
+    addTargetActionItem(&bigDistributorLine3TakeTargetActionItemList, &bigDistributorLine3TakeTargetActionItem, &bigDistributorLineTake, "TAKE DIST 3");
+    addTargetActionItem(&bigDistributorLine3DropTargetActionItemList, &bigDistributorLine3DropTargetActionItem, &acceleratorDrop, "ACC DROP");
 }
 
 /**

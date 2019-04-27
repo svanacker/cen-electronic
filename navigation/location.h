@@ -25,12 +25,14 @@ struct Location {
     float x;
     /** The coordinates in y. */
     float y;
-    /** Temporary information needed by path finding algorithm. */
-    float tmpCost;
-    /** Temporary information needed by path finding algorithm. */
-    bool tmpHandled;
-    /**Result information with the next location to follow the path */
-    Location* resultNextLocation;
+    /** Temporary Computer information needed by path finding algorithm. */
+    float computedCost;
+    /** Temporary Computer information needed by path finding algorithm. */
+    bool computedHandled;
+    /** Result Computer information with the next location to follow the path. */
+    Location* computedNextLocation;
+    /** Result Computer information with the previous location to follow the path. */
+    Location* computedPreviousLocation;
 };
 
 /**

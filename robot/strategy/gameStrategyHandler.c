@@ -52,8 +52,6 @@ void updateNearestLocation(GameStrategyContext* gameStrategyContext) {
 }
 
 GameTarget* findNextTarget(GameStrategyContext* gameStrategyContext) {
-    unsigned int targetHandledCount = getTargetHandledCount();
-
     updateNearestLocation(gameStrategyContext);
 
     // Find best Target, store LocationList in the context in currentTrajectory
@@ -144,29 +142,28 @@ bool handleTrajectoryToActionStart(GameStrategyContext* gameStrategyContext) {
     if (currentTarget == NULL) {
         return false;
     }
+    // Only manage Target which are available
     if (currentTarget->status != TARGET_AVAILABLE) {
         return false;
     }
     Navigation* navigation = gameStrategyContext->navigation;
-
-    Location* robotLocation = gameStrategyContext->nearestLocation;
+    Location* startLocation = gameStrategyContext->nearestLocation;
 
     // If the point of the robot is the same than the startLocation of the target Actions, we do not do anything
-    if (robotLocation == currentTarget->startLocation) {
+    if (startLocation == currentTarget->startLocation) {
+        // We consider now that 
         currentTarget->status = TARGET_STARTING_POINT_REACHED;
-
         return false;
     }
     // Take the next location to follow
-    Location* end = robotLocation->resultNextLocation;
-    // If the point is the same than the startLocation of the target Actions, we escape too
-    if (end == NULL || end == currentTarget->startLocation) {
-        currentTarget->status = TARGET_STARTING_POINT_REACHED;
+    Location* endLocation = startLocation->computedNextLocation;
+    if (endLocation == NULL) {
+        currentTarget->status = TARGET_MISSED;
         return false;
     }
 
     PathList* pathList = getNavigationPathList(navigation);
-    PathData* pathData = getPathOfLocations(pathList, robotLocation, end);
+    PathData* pathData = getPathOfLocations(pathList, startLocation, endLocation);
 
     // Check if to follow the path, we need to do first a rotation (to avoid problem on bSpline)
     if (!motionRotateToFollowPath(gameStrategyContext, pathData)) {

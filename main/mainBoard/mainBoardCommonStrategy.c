@@ -79,7 +79,6 @@ void mainBoardCommonStrategyAddDevices(unsigned char serialIndex) {
     addLocalDevice(getGameboardDeviceInterface(), getGameboardDeviceDescriptor(gameBoard));
     addLocalDevice(getNavigationDeviceInterface(), getNavigationDeviceDescriptor(navigation));
     addUartRemoteDeviceWithNotification(getTrajectoryDeviceInterface(), serialIndex, &mainBoardDeviceHandleTrajectoryDeviceNotification);
-//    addLocalDevice(getStrategy2018DeviceInterface(), getStrategy2018DeviceDescriptor(&distributor));
 }
 
 void updateNewPositionFromNotification(InputStream* inputStream) {
@@ -100,7 +99,7 @@ void updateNewPositionFromNotification(InputStream* inputStream) {
 }
 
 
-void mainBoardDeviceHandleTrajectoryDeviceNotification(const Device* device, const char commandHeader, InputStream* inputStream) {
+void mainBoardDeviceHandleTrajectoryDeviceNotification(const Device* device, const char commandHeader, InputStream* notificationInputStream) {
     // append(getDebugOutputStreamLogger(), device->deviceInterface->deviceHeader);
     // println(getDebugOutputStreamLogger());
   
@@ -110,9 +109,9 @@ void mainBoardDeviceHandleTrajectoryDeviceNotification(const Device* device, con
             append(getDebugOutputStreamLogger(), commandHeader);
             println(getDebugOutputStreamLogger());
             */
-            updateNewPositionFromNotification(inputStream);
-            checkIsSeparator(inputStream);
-            enum TrajectoryType trajectoryType = readHex(inputStream);
+            updateNewPositionFromNotification(notificationInputStream);
+            checkIsSeparator(notificationInputStream);
+            enum TrajectoryType trajectoryType = readHex(notificationInputStream);
             gameStrategyContext->trajectoryType = trajectoryType;
         }
         else {
@@ -127,7 +126,7 @@ void mainBoardDeviceHandleTrajectoryDeviceNotification(const Device* device, con
     }
 }
 
-void mainBoardDeviceHandleMotionDeviceNotification(const Device* device, const char commandHeader, InputStream* inputStream) {
+void mainBoardDeviceHandleMotionDeviceNotification(const Device* device, const char commandHeader, InputStream* notificationInputStream) {
     if (device->deviceInterface->deviceHeader == MOTION_DEVICE_HEADER) {
         if (
                 commandHeader == NOTIFY_MOTION_STATUS_FAILED
@@ -136,17 +135,12 @@ void mainBoardDeviceHandleMotionDeviceNotification(const Device* device, const c
                 || commandHeader == NOTIFY_MOTION_STATUS_REACHED
                 || commandHeader == NOTIFY_MOTION_STATUS_BLOCKED
                 || commandHeader == NOTIFY_MOTION_STATUS_SHOCKED) {
-            updateNewPositionFromNotification(inputStream);
+            updateNewPositionFromNotification(notificationInputStream);
             // FAKE DATA To Align with TrajectoryDevice
-            checkIsSeparator(inputStream);
-            checkIsChar(inputStream, 'F');
+            checkIsSeparator(notificationInputStream);
+            checkIsChar(notificationInputStream, 'F');
             
             gameStrategyContext->trajectoryType = TRAJECTORY_TYPE_NONE;
-            // To know if we have reached the target
-            /*
-            appendStringLN(getDebugOutputStreamLogger(), "M:");
-            */
-            // handleNotificationInstructionCounter(gameStrategyContext, commandHeader); -> 2018
         }
         else {
             writeError(NOTIFICATION_BAD_DEVICE_COMMAND_HANDLER_NOT_HANDLE);
@@ -173,11 +167,6 @@ void mainBoardCommonStrategyMainInitDrivers(RobotConfig* robotConfig) {
 void mainBoardCommonStrategyMainEndInit(void) {      
     // Update this on the MOTOR BOARD to synchronize the position !
     updateMotorBoardRobotPosition(gameStrategyContext);
-    
-    // initInstructionCounter(gameStrategyContext); -> 2018
-
-    // Just after, we could increment the counter
-    // startInstructionCounter(gameStrategyContext); -> 2018
 }
 
 
@@ -186,7 +175,6 @@ void mainBoardCommonStrategyHandleStreamInstruction(void) {
     TofSensorList* tofSensorList = mainBoardCommonTofGetTofSensorList();
     
     handleTofSensorList(gameStrategyContext, startMatch, tofSensorList, gameBoard);
-//    handleNextInstructionCounter(gameStrategyContext); -> 2018
 }
 
 void mainBoardCommonStrategyMainLoop(void) {

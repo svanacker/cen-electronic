@@ -49,9 +49,10 @@ Location* getLocation(LocationList* locationList, unsigned int index) {
 
 void copyLocation(Location* sourceLocation, Location* targetLocation) {
     copyFixedCharArray(&(sourceLocation->name), &(targetLocation->name));
-    targetLocation->tmpCost = sourceLocation->tmpCost;
-    targetLocation->tmpHandled = sourceLocation->tmpHandled;
-    targetLocation->resultNextLocation = sourceLocation->resultNextLocation;
+    targetLocation->computedCost = sourceLocation->computedCost;
+    targetLocation->computedHandled = sourceLocation->computedHandled;
+    targetLocation->computedNextLocation = sourceLocation->computedNextLocation;
+    targetLocation->computedPreviousLocation = sourceLocation->computedPreviousLocation;
     targetLocation->x = sourceLocation->x;
     targetLocation->y = sourceLocation->y;
 }
@@ -61,9 +62,10 @@ void initLocation(Location* location, char* name, float x, float y) {
     stringToFixedCharArray(name, existingLocationName);
     location->x = x;
     location->y = y;
-    location->tmpCost = NO_COMPUTED_COST;
-    location->tmpHandled = false;
-    location->resultNextLocation = NULL;
+    location->computedCost = NO_COMPUTED_COST;
+    location->computedHandled = false;
+    location->computedNextLocation = NULL;
+    location->computedPreviousLocation = NULL;
 }
 
 Location* addNamedLocation(LocationList* locationList, char* name, float x, float y) {
@@ -122,7 +124,7 @@ bool containsLocation(LocationList* locationList, Location* locationToFind, bool
     int size = locationList->size;
     for (i = 0; i < size; i++) {
         Location* location = getLocation(locationList, i);
-        if (location->tmpHandled != handled) {
+        if (location->computedHandled != handled) {
             continue;
         }
         if (locationEquals(location, locationToFind)) {
@@ -152,15 +154,30 @@ unsigned int getLocationCount(LocationList* locationList) {
     return locationList->size;
 }
 
+unsigned int getLocationNotHandledCount(LocationList* locationList) {
+    unsigned int result = 0;
+    unsigned int i;
+    unsigned int size = locationList->size;
+    for (i = 0; i < size; i++) {
+        Location* location = getLocation(locationList, i);
+        if (location->computedHandled) {
+            result++;
+        }
+    }
+    return result;
+}
+
 // CLEAR
 
+// https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
 void clearLocationTmpInfo(LocationList* locationList) {
     unsigned int i;
     unsigned int size = locationList->size;
     for (i = 0; i < size; i++) {
         Location* location = getLocation(locationList, i);
-        location->tmpCost = NO_COMPUTED_COST;
-        location->resultNextLocation = NULL;
-        location->tmpHandled = false;
+        location->computedCost = MAX_COST;
+        location->computedNextLocation = NULL;
+        location->computedPreviousLocation = NULL;
+        location->computedHandled = false;
     }
 }

@@ -105,4 +105,9 @@ bool containsLocation(LocationList* locationList, Location* location, bool handl
  */
 unsigned int getLocationCount(LocationList* locationList);
 
+/**
+* Get how many location in the collection which are not already handled.
+*/
+unsigned int getLocationNotHandledCount(LocationList* locationList);
+
 #endif

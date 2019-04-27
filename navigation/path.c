@@ -88,7 +88,11 @@ void updateObstacleCostIfObstacle(PathData* pathData) {
 }
 
 void decreaseObstacleCost(PathData* pathData) {
-    pathData->obstacleCost = fmaxf(pathData->obstacleCost - COST_DECREASE_STEP, 0.0f);
+    if (pathData->obstacleCost > COST_DECREASE_STEP)
+        pathData->obstacleCost -= COST_DECREASE_STEP;
+    else {
+        pathData->obstacleCost = 0.0f;
+    }
 }
 
 bool restartFromPositionToGoToPath(PathData* pathData, Point* robotPosition) {

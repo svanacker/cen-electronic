@@ -31,7 +31,7 @@ void clearCurrentTarget(GameStrategyContext* gameStrategyContext);
 /**
  * Ask to follow a path.
  */
-void motionFollowPath(GameStrategyContext* gmeStrategyContext, PathData* pathData);
+bool motionFollowPath(GameStrategyContext* gmeStrategyContext, PathData* pathData);
 
 /**
 * Ask to do a small rotation to ensure that the robot will restart the next move with the right angle

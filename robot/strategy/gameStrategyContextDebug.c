@@ -85,6 +85,13 @@ void printGameStrategyContext(OutputStream* outputStream, GameStrategyContext* c
     appendString(outputStream, "GameStrategyContext:");
     printGameStrategyContextTableHeader(outputStream);
 
+    // Simulation Mode
+    appendStringTableData(outputStream, "simulation", GAME_STRATEGY_CONTEXT_KEY_COLUMN_LENGTH);
+    appendBoolAsStringTableData(outputStream, context->simulateMove, GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
+    appendStringTableData(outputStream, "-", GAME_STRATEGY_CONTEXT_UNIT_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, GAME_STRATEGY_CONTEXT_LAST_COLUMN);
+
+
     // GameStrategy->name
     appendStringTableData(outputStream, "Strategy->Name", GAME_STRATEGY_CONTEXT_KEY_COLUMN_LENGTH);
     if (context->gameStrategy != NULL) {

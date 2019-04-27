@@ -76,7 +76,7 @@ bool isPathAvailable(GameStrategyContext* gameStrategyContext, PathData* pathDat
     bool opponentPresent = isValidLocation(opponentRobotPosition);
     bool obstaclePresent = isValidLocation(lastObstaclePosition);
     float i;
-    // 20  Sample = 0.05f for Step
+    // 20 Samples = 0.05f for Step
     for (i = 0.0f; i < 1.0f; i += 0.05f) {
         computeBSplinePoint(curve, i, &p);
         // checking opponent

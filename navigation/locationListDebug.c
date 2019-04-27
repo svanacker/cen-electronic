@@ -77,11 +77,11 @@ void printLocationTable(OutputStream* outputStream, Location* location, unsigned
 	appendHexFloat4TableData(outputStream, location->x, POSITION_DIGIT_MM_PRECISION, LOCATION_LIST_LOCATION_X_HEXA_COLUMN_LENGTH);
     appendHexFloat4TableData(outputStream, location->y, POSITION_DIGIT_MM_PRECISION, LOCATION_LIST_LOCATION_Y_HEXA_COLUMN_LENGTH);
 
-    appendDecfTableData(outputStream, location->tmpCost, LOCATION_LIST_LOCATION_TMP_COST_COLUMN_LENGTH);
+    appendDecfTableData(outputStream, location->computedCost, LOCATION_LIST_LOCATION_TMP_COST_COLUMN_LENGTH);
 
     // Next
-    if (location->resultNextLocation != NULL && location->resultNextLocation->name != NULL) {
-        appendFixedCharArrayTableData(outputStream, &(location->resultNextLocation->name), LOCATION_LIST_LOCATION_NEXT_COLUMN_LENGTH);
+    if (location->computedNextLocation != NULL && location->computedNextLocation->name != NULL) {
+        appendFixedCharArrayTableData(outputStream, &(location->computedNextLocation->name), LOCATION_LIST_LOCATION_NEXT_COLUMN_LENGTH);
     }
     else {
         appendStringTableData(outputStream, "NULL", LOCATION_LIST_LOCATION_NEXT_COLUMN_LENGTH);
@@ -114,7 +114,7 @@ unsigned int appendLocationLinkedPath(OutputStream* outputStream, Location* star
         }
         // Write the name of the location
         result += appendFixedCharArray(outputStream, &(currentLocation->name));
-        currentLocation = currentLocation->resultNextLocation;
+        currentLocation = currentLocation->computedNextLocation;
     }
     return result;
 }

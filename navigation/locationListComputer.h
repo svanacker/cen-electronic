@@ -22,7 +22,7 @@ Location* extractMinCostLocation(LocationList* locationList);
 /**
  * Extract the tmp Cost in Location (used to find the best path)
  */
-float getTmpCost(Location* location);
+float getComputedCost(Location* location);
 
 /**
  * In lots of situation, the linked list of location does not end after the end Location, and it could raises some problem, so 

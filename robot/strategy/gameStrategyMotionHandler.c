@@ -7,6 +7,8 @@
 #include "gameStrategyContext.h"
 #include "nextGameStrategyItemComputer.h"
 
+#include "../../common/error/error.h"
+
 #include "../../common/math/cenMath.h"
 
 #include "../../common/io/outputStream.h"
@@ -56,6 +58,10 @@ void clearCurrentTarget(GameStrategyContext* gameStrategyContext) {
 }
 
 bool motionRotateToFollowPath(GameStrategyContext* gameStrategyContext, PathData* pathData) {
+    if (pathData == NULL) {
+        writeError(PATH_NULL);
+        return false;
+    }
     float angle = getPathStartAngleRadian(pathData);
 
     float diff = mod2PI(angle - gameStrategyContext->robotAngleRadian);
@@ -81,7 +87,18 @@ bool motionRotateToFollowPath(GameStrategyContext* gameStrategyContext, PathData
     return true;
 }
 
-void motionFollowPath(GameStrategyContext* gameStrategyContext, PathData* pathData) {
+bool motionFollowPath(GameStrategyContext* gameStrategyContext, PathData* pathData) {
+    if (pathData == NULL) {
+        writeError(PATH_NULL);
+        return false;
+    }
+    OutputStream* outputStream = getDebugOutputStreamLogger();
+    appendString(outputStream, "motionFollowPath:");
+    appendFixedCharArray(outputStream, &(pathData->location1)->name);
+    appendString(outputStream, "->");
+    appendFixedCharArray(outputStream, &(pathData->location2)->name);
+    appendCRLF(outputStream);
+
     Location* location = pathData->location2;
 
     float angle = getPathEndAngleRadian(pathData);
@@ -90,7 +107,7 @@ void motionFollowPath(GameStrategyContext* gameStrategyContext, PathData* pathDa
 
     // Simulate as if the robot goes to the position with a small error to be sure that 
     // algorithm to find nearest position are ok
-    if (!gameStrategyContext->simulateMove) {
+    if (gameStrategyContext->simulateMove) {
         gameStrategyContext->robotPosition->x = location->x + 1.0f;
         gameStrategyContext->robotPosition->y = location->y + 1.0f;
         gameStrategyContext->robotAngleRadian = angle;
@@ -99,4 +116,5 @@ void motionFollowPath(GameStrategyContext* gameStrategyContext, PathData* pathDa
         clientExtendedMotionBSplineAbsolute(location->x, location->y, angle, cp1, cp2,
             pathData->accelerationFactor, pathData->speedFactor);
     }
+    return true;
 }
