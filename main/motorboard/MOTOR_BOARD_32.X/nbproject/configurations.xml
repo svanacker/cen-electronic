@@ -286,6 +286,7 @@
       </logicalFolder>
       <logicalFolder name="motion" displayName="motion" projectFiles="true">
         <itemPath>../../../motion/motion.h</itemPath>
+        <itemPath>../../../motion/motionConstants.h</itemPath>
       </logicalFolder>
       <logicalFolder name="motion.extended"
                      displayName="motion.extended"
@@ -864,9 +865,7 @@
     <Elem>..\..\..\common\delay\32</Elem>
     <Elem>..\..\..\common\i2c\master</Elem>
     <Elem>..\..\..\common\cmd</Elem>
-    <Elem>..\..\..\motion\position</Elem>
     <Elem>..\..\..\common\error</Elem>
-    <Elem>..\..\..\motion\position\hctlCoder</Elem>
     <Elem>..\..\..\drivers\eeprom</Elem>
     <Elem>..\..\..\device\serial</Elem>
     <Elem>..\..\..\common\system</Elem>
@@ -874,7 +873,6 @@
     <Elem>..\..\..\common\sensor\temperature</Elem>
     <Elem>..\..\..\common\serial\32</Elem>
     <Elem>..\..\..\device\log</Elem>
-    <Elem>..\..\..\motion\simple</Elem>
     <Elem>..\..\..\device\i2c\master</Elem>
     <Elem>..\..\..\device\motion\extended</Elem>
     <Elem>..\..\..\drivers\motor</Elem>
@@ -889,7 +887,6 @@
     <Elem>..</Elem>
     <Elem>..\..\..\device\i2c</Elem>
     <Elem>..\..\..\device</Elem>
-    <Elem>..\..\..\motion\parameters</Elem>
     <Elem>..\..\..\common\io</Elem>
     <Elem>../../..</Elem>
     <Elem>..\..\..\motion</Elem>

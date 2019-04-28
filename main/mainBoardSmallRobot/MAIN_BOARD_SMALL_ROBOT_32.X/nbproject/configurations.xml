@@ -483,6 +483,9 @@
       <logicalFolder name="f16" displayName="main.motorboard" projectFiles="true">
         <itemPath>../../motorboard/motorBoard32.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f33" displayName="motion" projectFiles="true">
+        <itemPath>../../../motion/motionConstants.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="motion.extended"
                      displayName="motion.extended"
                      projectFiles="true">
@@ -512,6 +515,8 @@
         <itemPath>../../../navigation/outgoingPathList.h</itemPath>
         <itemPath>../../../navigation/locationListComputer.h</itemPath>
         <itemPath>../../../navigation/navigationComputer.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f32" displayName="New Folder 32" projectFiles="true">
       </logicalFolder>
       <logicalFolder name="robot" displayName="robot" projectFiles="true">
         <itemPath>../../../robot/robot.h</itemPath>
@@ -1276,7 +1281,6 @@
     <Elem>..\..\..\common\serial\32</Elem>
     <Elem>..\..\..\drivers\io</Elem>
     <Elem>..\..\..\device\log</Elem>
-    <Elem>..\..\..\motion\simple</Elem>
     <Elem>..\..\..\robot\opponent</Elem>
     <Elem>..\..\..\device\i2c\master</Elem>
     <Elem>..\..\..\device\motion\extended</Elem>

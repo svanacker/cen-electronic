@@ -82,6 +82,10 @@ struct GameStrategyContext {
     bool simulateMove;
     /** The timer used to decrease the obstacle Cost */
     Timer* obstacleTimer;
+    /**. Default acceleration Factor (comes from RobotConfig). */
+    float defaultAccelerationFactor;
+    /**. Default speed Factor (comes from RobotConfig). */
+    float defaultSpeedFactor;
 };
 
 /**

@@ -14,6 +14,8 @@
 
 #include "../../drivers/tof/tofList.h"
 
+#include "../../motion/motionConstants.h"
+
 /**
  * @private
  */
@@ -55,6 +57,11 @@ void initGameStrategyContext(GameStrategyContext* gameStrategyContext,
     gameStrategyContext->robotPosition = robotPosition;
     gameStrategyContext->opponentRobotPosition = opponentRobotPosition;
     gameStrategyContext->lastObstaclePosition = lastObstaclePosition;
+    // Config
+    gameStrategyContext->defaultAccelerationFactor = 1.0f;
+    gameStrategyContext->defaultSpeedFactor = 1.0f;
+
+
     // Timer Init
     Timer* obstacleTimer = addTimer(ROBOT_OBSTACLE_TIMER_CODE, TIME_DIVIDER_1_HERTZ, &obstacleTimerCallbackFunc, "OBSTACLE TIMER", (int*) gameStrategyContext);
     gameStrategyContext->obstacleTimer = obstacleTimer;

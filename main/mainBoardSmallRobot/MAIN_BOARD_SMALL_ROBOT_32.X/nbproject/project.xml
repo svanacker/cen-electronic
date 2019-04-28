@@ -54,7 +54,6 @@
                 <sourceRootElem>..\..\..\common\serial\32</sourceRootElem>
                 <sourceRootElem>..\..\..\drivers\io</sourceRootElem>
                 <sourceRootElem>..\..\..\device\log</sourceRootElem>
-                <sourceRootElem>..\..\..\motion\simple</sourceRootElem>
                 <sourceRootElem>..\..\..\robot\opponent</sourceRootElem>
                 <sourceRootElem>..\..\..\device\i2c\master</sourceRootElem>
                 <sourceRootElem>..\..\..\device\motion\extended</sourceRootElem>

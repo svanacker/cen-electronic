@@ -742,6 +742,7 @@
     <ClInclude Include="motion\extended\bsplineMotion.h" />
     <ClInclude Include="motion\extended\bsplinePersistence.h" />
     <ClInclude Include="motion\motion.h" />
+    <ClInclude Include="motion\motionConstants.h" />
     <ClInclude Include="motion\parameters\motionParameter.h" />
     <ClInclude Include="motion\parameters\motionParameterDebug.h" />
     <ClInclude Include="motion\parameters\motionParameterPersistence.h" />

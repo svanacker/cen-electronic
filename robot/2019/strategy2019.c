@@ -313,8 +313,8 @@ void initPaths2019(GameStrategyContext* gameStrategyContext) {
     
     RobotConfig* robotConfig = gameStrategyContext->robotConfig;
     enum TeamColor teamColor = gameStrategyContext->color;
-    float aFactor = getAccelerationFactor(robotConfig);
-    float speedFactor = getSpeedFactor(robotConfig);
+    float aFactor = gameStrategyContext->defaultAccelerationFactor;
+    float speedFactor = gameStrategyContext->defaultSpeedFactor;
 
     enum RobotType robotType = robotConfig->robotType;
 
@@ -791,6 +791,9 @@ void initStrategy2019(GameStrategyContext* gameStrategyContext) {
     float tofDistanceFactor = getSonarDistanceCheckFactor(gameStrategyContext->robotConfig);
     setTofListNameAndOrientationAngle(gameStrategyContext->tofSensorList, tofDistanceFactor);
     showGameStrategyContextTeamColorAndStrategy(gameStrategyContext);
+
+    gameStrategyContext->defaultAccelerationFactor = getAccelerationFactor(gameStrategyContext->robotConfig);
+    gameStrategyContext->defaultSpeedFactor = getSpeedFactor(gameStrategyContext->robotConfig);
 
 	initLocations2019(gameStrategyContext);
 	initPaths2019(gameStrategyContext);

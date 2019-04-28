@@ -1,35 +1,38 @@
 #include "strategyConfig2019.h"
 
+#include "../../common/error/error.h"
+
+#include "../../motion/motionConstants.h"
 #include "../../motion/extended/bsplineMotion.h"
 
 #include "../../robot/config/robotConfig.h"
 
+const float MOTION_ACCELERATION_FACTORS[8] = { MOTION_ACCELERATION_FACTOR_0, MOTION_ACCELERATION_FACTOR_1, MOTION_ACCELERATION_FACTOR_2, MOTION_ACCELERATION_FACTOR_3,
+                   MOTION_ACCELERATION_FACTOR_4, MOTION_ACCELERATION_FACTOR_5, MOTION_ACCELERATION_FACTOR_6, MOTION_ACCELERATION_FACTOR_7 };
+
+const float MOTION_SPEED_FACTORS[8] = { MOTION_SPEED_FACTOR_0, MOTION_SPEED_FACTOR_1, MOTION_SPEED_FACTOR_2, MOTION_SPEED_FACTOR_3,
+                   MOTION_SPEED_FACTOR_4, MOTION_SPEED_FACTOR_5, MOTION_SPEED_FACTOR_6, MOTION_SPEED_FACTOR_7 };
+
 float getAccelerationFactor(RobotConfig* robotConfig) {
-    if (isConfigSet(robotConfig, CONFIG_SPEED_LOW_MASK)) {
-        return MOTION_ACCELERATION_FACTOR_NORMAL;
+    unsigned int config = robotConfig->robotConfigReadInt(robotConfig);
+    unsigned int accelerationFactorIndex = (config & CONFIG_SPEED_MASK) >> CONFIG_SHIFT_BIT_VALUE;
+    if (accelerationFactorIndex >= 0 && accelerationFactorIndex <= 7) {
+        return MOTION_ACCELERATION_FACTORS[accelerationFactorIndex];
     }
-    if (isConfigSet(robotConfig, CONFIG_SPEED_VERY_LOW_MASK)) {
-        return MOTION_ACCELERATION_FACTOR_LOW;
-    }
-    if (isConfigSet(robotConfig, CONFIG_SPEED_ULTRA_LOW_MASK)) {
-        return MOTION_ACCELERATION_FACTOR_MIN;
-    }
-    // default is MOTION_SPEED_FACTOR_HIGH
-    return MOTION_ACCELERATION_FACTOR_HIGH;
+    writeError(ROBOT_CONFIG_ERROR);
+
+    return MOTION_ACCELERATION_FACTOR_0;
 }
 
 float getSpeedFactor(RobotConfig* robotConfig) {
-    if (isConfigSet(robotConfig, CONFIG_SPEED_LOW_MASK)) {
-        return MOTION_SPEED_FACTOR_NORMAL;
+    unsigned int config = robotConfig->robotConfigReadInt(robotConfig);
+    unsigned int speedFactorIndex = (config & CONFIG_SPEED_MASK) >> CONFIG_SHIFT_BIT_VALUE;
+    if (speedFactorIndex >= 0 && speedFactorIndex <= 7) {
+        return MOTION_SPEED_FACTORS[speedFactorIndex];
     }
-    if (isConfigSet(robotConfig, CONFIG_SPEED_VERY_LOW_MASK)) {
-        return MOTION_SPEED_FACTOR_LOW;
-    }
-    if (isConfigSet(robotConfig, CONFIG_SPEED_ULTRA_LOW_MASK)) {
-        return MOTION_SPEED_FACTOR_MIN;
-    }
-    // default is MOTION_SPEED_FACTOR_HIGH
-    return MOTION_SPEED_FACTOR_HIGH;
+    writeError(ROBOT_CONFIG_ERROR);
+
+    return MOTION_SPEED_FACTOR_0;
 }
 
 float getSonarDistanceCheckFactor(RobotConfig* robotConfig) {

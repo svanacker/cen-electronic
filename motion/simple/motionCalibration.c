@@ -1,8 +1,9 @@
 #include "motionCalibration.h"
 
-#include "../motion.h"
-#include "simpleMotion.h"
-#include "../extended/bsplineMotion.h"
+#include "../../motion/motion.h"
+#include "../../motion/motionConstants.h"
+#include "../../motion/simple/simpleMotion.h"
+#include "../../motion/extended/bsplineMotion.h"
 
 #include "../../common/math/cenMath.h"
 

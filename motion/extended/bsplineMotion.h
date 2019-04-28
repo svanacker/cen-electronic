@@ -8,22 +8,6 @@
 #include "../pid/pidMotion.h"
 #include "../extended/bspline.h"
 
-// SPEED FACTOR
-
-#define    MOTION_SPEED_FACTOR_MAX                1.0f
-#define    MOTION_SPEED_FACTOR_HIGH               0.75f
-#define    MOTION_SPEED_FACTOR_NORMAL             0.5f
-#define    MOTION_SPEED_FACTOR_LOW                0.25f
-#define    MOTION_SPEED_FACTOR_MIN                0.1f
-
-// ACCELERATION FACTOR
-
-#define    MOTION_ACCELERATION_FACTOR_MAX         1.0f
-#define    MOTION_ACCELERATION_FACTOR_HIGH        0.75f
-#define    MOTION_ACCELERATION_FACTOR_NORMAL      0.5f
-#define    MOTION_ACCELERATION_FACTOR_LOW         0.25f
-#define    MOTION_ACCELERATION_FACTOR_MIN         0.1f
-
 /**
  * Go from the relative destination to the initial Position of the robot
  * Computes the bezier Point so that the curve is not to huge

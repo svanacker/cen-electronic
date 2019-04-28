@@ -16,6 +16,8 @@
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
 
+#include "../../motion/motionConstants.h"
+
 #include "../../motion/extended/bspline.h"
 #include "../../motion/extended/bsplineMotion.h"
 

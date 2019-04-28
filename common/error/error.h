@@ -276,6 +276,7 @@ void clearLastError();
 #define ROBOT_CONFIG_MUST_BE_0_OR_1_CHAR_ERROR                            0x6300
 #define ROBOT_CONFIG_MUST_BE_SPACE_CHAR_ERROR                             0x6301
 #define ROBOT_CONFIG_FILE_LENGTH_ERROR                                    0x6302
+#define ROBOT_CONFIG_ERROR                                                0x6303
 
 // PC
 #define PC_FILE_NOT_FOUND                                                 0x7000

@@ -3257,6 +3257,9 @@
     <ClInclude Include="common\io\bufferDebug.h">
       <Filter>Header Files\common\io</Filter>
     </ClInclude>
+    <ClInclude Include="motion\motionConstants.h">
+      <Filter>Header Files\motion</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="cen-electronic-console.rc">

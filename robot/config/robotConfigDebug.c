@@ -38,6 +38,14 @@ void printRobotTableConfig(OutputStream* outputStream, RobotConfig* robotConfig)
 
     appendTableHeaderSeparatorLine(outputStream);
 
+    // Manual Mode
+    appendStringTableData(outputStream, "Strategy Manual Mode", ROBOT_CONFIG_KEY_COLUMN_LENGTH);
+    appendBinary16TableData(outputStream, CONFIG_STRATEGY_MANUAL_MODE, 4, ROBOT_CONFIG_MASK_COLUMN_LENGTH);
+    appendBoolTableData(outputStream, configValue & CONFIG_STRATEGY_MANUAL_MODE, ROBOT_CONFIG_VALUE_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, ROBOT_CONFIG_LAST_COLUMN);
+
+    appendTableHeaderSeparatorLine(outputStream);
+
     // Start Match / End Match
 	// Wait For Start
 	appendStringTableData(outputStream, "Don't wait For Start", ROBOT_CONFIG_KEY_COLUMN_LENGTH);
@@ -53,17 +61,11 @@ void printRobotTableConfig(OutputStream* outputStream, RobotConfig* robotConfig)
 
     appendTableHeaderSeparatorLine(outputStream);
 
-	// Sonar FAR
-	appendStringTableData(outputStream, "Sonar FAR", ROBOT_CONFIG_KEY_COLUMN_LENGTH);
-	appendBinary16TableData(outputStream, CONFIG_SONAR_FAR_MASK, 4, ROBOT_CONFIG_MASK_COLUMN_LENGTH);
-	appendBoolTableData(outputStream, configValue & CONFIG_SONAR_FAR_MASK, ROBOT_CONFIG_VALUE_COLUMN_LENGTH);
-	appendEndOfTableColumn(outputStream, ROBOT_CONFIG_LAST_COLUMN);
-
-    // Sonar NEAR
-	appendStringTableData(outputStream, "Sonar NEAR", ROBOT_CONFIG_KEY_COLUMN_LENGTH);
-	appendBinary16TableData(outputStream, CONFIG_SONAR_NEAR_MASK, 4, ROBOT_CONFIG_MASK_COLUMN_LENGTH);
-	appendBoolTableData(outputStream, configValue & CONFIG_SONAR_NEAR_MASK, ROBOT_CONFIG_VALUE_COLUMN_LENGTH);
-	appendEndOfTableColumn(outputStream, ROBOT_CONFIG_LAST_COLUMN);
+    // Debug Config
+    appendStringTableData(outputStream, "Log Level Debug", ROBOT_CONFIG_KEY_COLUMN_LENGTH);
+    appendBinary16TableData(outputStream, CONFIG_DEBUG, 4, ROBOT_CONFIG_MASK_COLUMN_LENGTH);
+    appendBoolTableData(outputStream, configValue & CONFIG_DEBUG, ROBOT_CONFIG_VALUE_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, ROBOT_CONFIG_LAST_COLUMN);
     
     appendTableHeaderSeparatorLine(outputStream);
 
@@ -74,41 +76,28 @@ void printRobotTableConfig(OutputStream* outputStream, RobotConfig* robotConfig)
 	appendEndOfTableColumn(outputStream, ROBOT_CONFIG_LAST_COLUMN);
 
 	appendTableHeaderSeparatorLine(outputStream);
+    appendTableHeaderSeparatorLine(outputStream);
 
-	// Low Speed
-	appendStringTableData(outputStream, "Low Speed", ROBOT_CONFIG_KEY_COLUMN_LENGTH);
-	appendBinary16TableData(outputStream, CONFIG_SPEED_LOW_MASK, 4, ROBOT_CONFIG_MASK_COLUMN_LENGTH);
-	appendBoolTableData(outputStream, configValue & CONFIG_SPEED_LOW_MASK, ROBOT_CONFIG_VALUE_COLUMN_LENGTH);
-	appendEndOfTableColumn(outputStream, ROBOT_CONFIG_LAST_COLUMN);
+	// Speed Mask
+    appendStringTableData(outputStream, "Speed Mask", ROBOT_CONFIG_KEY_COLUMN_LENGTH);
+    appendBinary16TableData(outputStream, CONFIG_SPEED_MASK, 4, ROBOT_CONFIG_MASK_COLUMN_LENGTH);
+    appendBoolTableData(outputStream, configValue & CONFIG_SPEED_MASK, ROBOT_CONFIG_VALUE_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, ROBOT_CONFIG_LAST_COLUMN);
 
-	// Very Low Speed
-	appendStringTableData(outputStream, "Very Low Speed", ROBOT_CONFIG_KEY_COLUMN_LENGTH);
-	appendBinary16TableData(outputStream, CONFIG_SPEED_VERY_LOW_MASK, 4, ROBOT_CONFIG_MASK_COLUMN_LENGTH);
-	appendBoolTableData(outputStream, configValue & CONFIG_SPEED_VERY_LOW_MASK, ROBOT_CONFIG_VALUE_COLUMN_LENGTH);
-	appendEndOfTableColumn(outputStream, ROBOT_CONFIG_LAST_COLUMN);
+    appendTableHeaderSeparatorLine(outputStream);
 
-	// Ultra Low Speed
-	appendStringTableData(outputStream, "Ultra Low Speed", ROBOT_CONFIG_KEY_COLUMN_LENGTH);
-	appendBinary16TableData(outputStream, CONFIG_SPEED_ULTRA_LOW_MASK, 4, ROBOT_CONFIG_MASK_COLUMN_LENGTH);
-	appendBoolTableData(outputStream, configValue & CONFIG_SPEED_ULTRA_LOW_MASK, ROBOT_CONFIG_VALUE_COLUMN_LENGTH);
-	appendEndOfTableColumn(outputStream, ROBOT_CONFIG_LAST_COLUMN);
+    // Sonar FAR
+    appendStringTableData(outputStream, "Sonar FAR", ROBOT_CONFIG_KEY_COLUMN_LENGTH);
+    appendBinary16TableData(outputStream, CONFIG_SONAR_FAR_MASK, 4, ROBOT_CONFIG_MASK_COLUMN_LENGTH);
+    appendBoolTableData(outputStream, configValue & CONFIG_SONAR_FAR_MASK, ROBOT_CONFIG_VALUE_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, ROBOT_CONFIG_LAST_COLUMN);
 
-	appendTableHeaderSeparatorLine(outputStream);
+    // Sonar NEAR
+    appendStringTableData(outputStream, "Sonar NEAR", ROBOT_CONFIG_KEY_COLUMN_LENGTH);
+    appendBinary16TableData(outputStream, CONFIG_SONAR_NEAR_MASK, 4, ROBOT_CONFIG_MASK_COLUMN_LENGTH);
+    appendBoolTableData(outputStream, configValue & CONFIG_SONAR_NEAR_MASK, ROBOT_CONFIG_VALUE_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, ROBOT_CONFIG_LAST_COLUMN);
 
-    // Undefined Conf
-	appendStringTableData(outputStream, "Undefined Conf", ROBOT_CONFIG_KEY_COLUMN_LENGTH);
-	appendBinary16TableData(outputStream, CONFIG_UNDEFINED_1_MASK, 4, ROBOT_CONFIG_MASK_COLUMN_LENGTH);
-	appendBoolTableData(outputStream, configValue & CONFIG_UNDEFINED_1_MASK, ROBOT_CONFIG_VALUE_COLUMN_LENGTH);
-	appendEndOfTableColumn(outputStream, ROBOT_CONFIG_LAST_COLUMN);
-
-	appendTableHeaderSeparatorLine(outputStream);
-
-    // Debug Config
-	appendStringTableData(outputStream, "Log Level Debug", ROBOT_CONFIG_KEY_COLUMN_LENGTH);
-	appendBinary16TableData(outputStream, CONFIG_DEBUG, 4, ROBOT_CONFIG_MASK_COLUMN_LENGTH);
-	appendBoolTableData(outputStream, configValue & CONFIG_DEBUG, ROBOT_CONFIG_VALUE_COLUMN_LENGTH);
-	appendEndOfTableColumn(outputStream, ROBOT_CONFIG_LAST_COLUMN);
-    
 	appendTableHeaderSeparatorLine(outputStream);
     
 	// LCD Backlight

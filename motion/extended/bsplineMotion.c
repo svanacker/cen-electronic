@@ -14,6 +14,7 @@
 #include "../parameters/motionParameter.h"
 #include "../parameters/motionParameterPersistence.h"
 
+#include "../motionConstants.h"
 #include "../extended/bsplineDebug.h"
 
 #include "../pid/pid.h"

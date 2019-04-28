@@ -1,12 +1,12 @@
 #include <math.h>
 
 #include "../../common/error/error.h"
-
-#include "bspline.h"
-#include "bsplineDebug.h"
-
-#include "bsplineMotion.h"
 #include "../../common/math/cenMath.h"
+
+#include "../../motion/extended/bspline.h"
+#include "../../motion/extended/bsplineDebug.h"
+#include "../../motion/extended/bsplineMotion.h"
+#include "../../motion/motionConstants.h"
 
 void initBSplineCurveData(BSplinePointData* pointData, float x, float y) {
     pointData->time = 0.0f;
@@ -35,8 +35,8 @@ void resetBSplineCurve(BSplineCurve* bSplineCurve,
 
     bSplineCurve->curveLength = 0.0f;
     
-    bSplineCurve->speedFactor = MOTION_SPEED_FACTOR_NORMAL;
-    bSplineCurve->accelerationFactor = MOTION_ACCELERATION_FACTOR_NORMAL;
+    bSplineCurve->speedFactor = MOTION_SPEED_FACTOR_0;
+    bSplineCurve->accelerationFactor = MOTION_ACCELERATION_FACTOR_0;
 
     bSplineCurve->backward = backward;
 }

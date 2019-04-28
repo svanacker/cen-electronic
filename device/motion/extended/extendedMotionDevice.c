@@ -27,6 +27,7 @@
 #include "../../../motion/parameters/motionParameterPersistence.h"
 
 #include "../../../motion/motion.h"
+#include "../../../motion/motionConstants.h"
 #include "../../../motion/extended/bsplineMotion.h"
 
 #include "../../../motion/pid/detectedMotionType.h"
@@ -104,7 +105,7 @@ void deviceExtendedMotionHandleRawData(unsigned char commandHeader,
                  400.0f, 0.0f,
                  0.0f,
                  100.0f, 100.0f,
-                MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL,
+                MOTION_ACCELERATION_FACTOR_0, MOTION_SPEED_FACTOR_NORMAL,
                  true,
                 notificationOutputStream);
     }

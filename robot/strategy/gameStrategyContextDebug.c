@@ -108,24 +108,43 @@ void printGameStrategyContext(OutputStream* outputStream, GameStrategyContext* c
     appendDecTableData(outputStream, context->strategyId, GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
     appendStringTableData(outputStream, "-", GAME_STRATEGY_CONTEXT_UNIT_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, GAME_STRATEGY_CONTEXT_LAST_COLUMN);
+    appendTableHeaderSeparatorLine(outputStream);
+
+    // Acceleration Factor
+    appendStringTableData(outputStream, "Default Acc. Factor", GAME_STRATEGY_CONTEXT_KEY_COLUMN_LENGTH);
+    appendDecfTableData(outputStream, context->defaultAccelerationFactor, GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
+    appendStringTableData(outputStream, "-", GAME_STRATEGY_CONTEXT_UNIT_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, GAME_STRATEGY_CONTEXT_LAST_COLUMN);
+    appendTableHeaderSeparatorLine(outputStream);
+
+    // Acceleration Factor
+    appendStringTableData(outputStream, "Default Speed Factor", GAME_STRATEGY_CONTEXT_KEY_COLUMN_LENGTH);
+    appendDecfTableData(outputStream, context->defaultSpeedFactor, GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
+    appendStringTableData(outputStream, "-", GAME_STRATEGY_CONTEXT_UNIT_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, GAME_STRATEGY_CONTEXT_LAST_COLUMN);
+    appendTableHeaderSeparatorLine(outputStream);
+
 
     // TeamColor
     appendStringTableData(outputStream, "color", GAME_STRATEGY_CONTEXT_KEY_COLUMN_LENGTH);
     addTeamColorTableData(outputStream, context->color, GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
     appendStringTableData(outputStream, "-", GAME_STRATEGY_CONTEXT_UNIT_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, GAME_STRATEGY_CONTEXT_LAST_COLUMN);
+    appendTableHeaderSeparatorLine(outputStream);
 
     // remainingTime
     appendStringTableData(outputStream, "endMatch->remainingTime", GAME_STRATEGY_CONTEXT_KEY_COLUMN_LENGTH);
     appendDecTableData(outputStream, matchEndGetRemainingTime(context->endMatch), GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
     appendStringTableData(outputStream, "seconds", GAME_STRATEGY_CONTEXT_UNIT_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, GAME_STRATEGY_CONTEXT_LAST_COLUMN);
+    appendTableHeaderSeparatorLine(outputStream);
 
     // global Score
     appendStringTableData(outputStream, "Global Score", GAME_STRATEGY_CONTEXT_KEY_COLUMN_LENGTH);
     appendDecTableData(outputStream, context->score, GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
     appendStringTableData(outputStream, "points", GAME_STRATEGY_CONTEXT_UNIT_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, GAME_STRATEGY_CONTEXT_LAST_COLUMN);
+    appendTableHeaderSeparatorLine(outputStream);
 
     // Robot Position
     appendTableHeaderSeparatorLine(outputStream);
