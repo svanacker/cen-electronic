@@ -10,13 +10,13 @@ void delayUs(void);
  * Sleeps during a multiple of 10 micro seconds.
  * @param value the value to sleep
  */
-void delay10us(char value);
+void delay10us(unsigned char value);
 
 /**
  * Sleeps during a multiple of 100 micro seconds.
  * @param value the value to sleep
  */
-void delay100us(char value);
+void delay100us(unsigned char value);
 
 /**
  * Sleeps during a multiple of one milli second.

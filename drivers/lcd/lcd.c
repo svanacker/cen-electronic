@@ -27,7 +27,7 @@ void closeOutputStreamLCD(OutputStream* outputStream) {
 /**
  *@private
  */
-void writeLCDStreamChar(OutputStream* outputStream, char c) {
+void writeLCDStreamChar(OutputStream* outputStream, unsigned char c) {
     writeLCDChar(c);
 }
 

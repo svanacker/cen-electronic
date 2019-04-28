@@ -27,13 +27,13 @@ bool isTemperatureSensorDeviceOk(void) {
     return true;
 }
 
-void deviceTemperatureSensorHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream){
+void deviceTemperatureSensorHandleRawData(unsigned char header, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream){
     if (header == COMMAND_READ_TEMPERATURE_SENSOR) {
         ackCommand(outputStream, TEMPERATURE_SENSOR_DEVICE_HEADER, COMMAND_READ_TEMPERATURE_SENSOR);
         unsigned char value = (unsigned char) temperature->readSensorValue(temperature);
         appendHex2(outputStream, value);
     } else if (header == COMMAND_SET_TEMPERATURE_SENSOR_ALERT) {
-        char temperatureSensorAlert = readHex2(inputStream);
+        unsigned char temperatureSensorAlert = readHex2(inputStream);
         ackCommand(outputStream, TEMPERATURE_SENSOR_DEVICE_HEADER, COMMAND_SET_TEMPERATURE_SENSOR_ALERT);
         temperature->writeAlertLimit(temperature, temperatureSensorAlert);
     }

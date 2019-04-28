@@ -74,7 +74,7 @@ unsigned int appendHexFixedCharArrayTableData(OutputStream* outputStream, FixedC
 * @param c the char to append
 * @param columnSize the size of the column (for alignment)
 */
-unsigned int appendCharTableData(OutputStream* outputStream, const char c, int columnSize);
+unsigned int appendCharTableData(OutputStream* outputStream, const unsigned char c, int columnSize);
 
 /**
 * Add a Decimal table data to the outputStream with | and space arround
@@ -109,7 +109,7 @@ unsigned int appendBoolAsStringTableData(OutputStream* outputStream, const bool 
 * @param value the value to append (in hexadecimal)
 * @param columnSize the size of the column (for alignment)
 */
-unsigned int appendHex2TableData(OutputStream* outputStream, char value, int columnSize);
+unsigned int appendHex2TableData(OutputStream* outputStream, unsigned char value, int columnSize);
 
 /**
 * Add an hexadecimal table data to the outputStream with | and space arround

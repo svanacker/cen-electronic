@@ -36,7 +36,7 @@ bool isMD22DeviceOk(void) {
     return true;
 }
 
-void deviceMD22HandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
+void deviceMD22HandleRawData(unsigned char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     if (commandHeader == COMMAND_MD22_MOVE) {
         signed int left = readSignedHex2(inputStream);
         signed int right = readSignedHex2(inputStream);

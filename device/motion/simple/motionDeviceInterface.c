@@ -23,7 +23,7 @@ void fillNotifyResults(char* notificationName) {
     setArgumentUnsignedChar1(6, "Fake data to debug :(");
 }
 
-int deviceMotionGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
+int deviceMotionGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     // forward MM
     if (commandHeader == COMMAND_MOTION_FORWARD_IN_MM) {
         if (fillDeviceArgumentList) {

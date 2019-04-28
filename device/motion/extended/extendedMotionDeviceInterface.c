@@ -29,7 +29,7 @@ void fillSplineParameters(void) {
     setArgumentFloatHex2(12, "acceleration Factor (deci)");
 }
 
-int deviceExtendedMotionGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
+int deviceExtendedMotionGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
 	// B-Spline with relative spline
 	if (commandHeader == COMMAND_MOTION_SPLINE_RELATIVE) {
 		if (fillDeviceArgumentList) {

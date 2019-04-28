@@ -17,7 +17,7 @@ const char* getTrajectoryDeviceName(void) {
     return "Trajectory";
 }
 
-int trajectoryGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
+int trajectoryGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     if (commandHeader == COMMAND_TRAJECTORY_GET_ABSOLUTE_POSITION) {
         if (fillDeviceArgumentList) {
             setFunction(GET_ABS_POS_STRING, 0, 5);

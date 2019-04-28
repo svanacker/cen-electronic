@@ -35,7 +35,7 @@ void closeOutputStreamSerial1(OutputStream* outputStream) {
     closeSerial(SERIAL_PORT_1);
 }
 
-void writeChar1(OutputStream* outputStream, char c) {
+void writeChar1(OutputStream* outputStream, unsigned char c) {
     serialPutc(SERIAL_PORT_1, c);
 }
 
@@ -61,7 +61,7 @@ void closeOutputStreamSerial2(OutputStream* outputStream) {
     closeSerial(SERIAL_PORT_2);
 }
 
-void writeChar2(OutputStream* outputStream, char c) {
+void writeChar2(OutputStream* outputStream, unsigned char c) {
     serialPutc(SERIAL_PORT_2, c);
 }
 
@@ -87,7 +87,7 @@ void closeOutputStreamSerial3(OutputStream* outputStream) {
     closeSerial(SERIAL_PORT_3);
 }
 
-void writeChar3(OutputStream* outputStream, char c) {
+void writeChar3(OutputStream* outputStream, unsigned char c) {
     serialPutc(SERIAL_PORT_3, c);
 }
 
@@ -113,7 +113,7 @@ void closeOutputStreamSerial4(OutputStream* outputStream) {
     closeSerial(SERIAL_PORT_4);
 }
 
-void writeChar4(OutputStream* outputStream, char c) {
+void writeChar4(OutputStream* outputStream, unsigned char c) {
     serialPutc(SERIAL_PORT_4, c);
 }
 
@@ -139,7 +139,7 @@ void closeOutputStreamSerial5(OutputStream* outputStream) {
     closeSerial(SERIAL_PORT_5);
 }
 
-void writeChar5(OutputStream* outputStream, char c) {
+void writeChar5(OutputStream* outputStream, unsigned char c) {
     serialPutc(SERIAL_PORT_5, c);
 }
 
@@ -165,7 +165,7 @@ void closeOutputStreamSerial6(OutputStream* outputStream) {
     closeSerial(SERIAL_PORT_6);
 }
 
-void writeChar6(OutputStream* outputStream, char c) {
+void writeChar6(OutputStream* outputStream, unsigned char c) {
     serialPutc(SERIAL_PORT_6, c);
 }
 

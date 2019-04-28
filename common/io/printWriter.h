@@ -17,7 +17,7 @@
  * @param outputStream the pointer on outputStream (POO simulation)
  * @param c the char to write
  */
-void append(OutputStream* outputStream, char c);
+void append(OutputStream* outputStream, unsigned char c);
 
 /**
  * Append a bool value (1 for true, 0 for false)
@@ -51,7 +51,7 @@ void appendSpace(OutputStream* outputStream);
 * @param c the char to repeat
 * @param count how many char we repeat
 */
-unsigned int appendRepeatedChars(OutputStream* outputStream, char c, int count);
+unsigned int appendRepeatedChars(OutputStream* outputStream, unsigned char c, int count);
 
 /**
 * Append by repeating '-' to the outputStream.
@@ -136,14 +136,14 @@ unsigned int printBuffer(OutputStream* outputStream, Buffer* buffer);
  * @param c the char value to write as hexadecimal
  * @return true if the char was appended, false else
  */
-bool appendHex(OutputStream* outputStream, char c);
+bool appendHex(OutputStream* outputStream, unsigned char c);
 
 /**
  * Send a char value into hexadecimal value (2 chars)
  * @param outputStream the pointer on outputStream (POO simulation)
  * @param value the value which must be sent
  */
-void appendHex2(OutputStream* outputStream, char value);
+void appendHex2(OutputStream* outputStream, unsigned char value);
 
 /**
  * Send an signed int into hexadecimal value (3 chars)

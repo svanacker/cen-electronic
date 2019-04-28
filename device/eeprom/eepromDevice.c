@@ -38,7 +38,7 @@ bool isEepromDeviceOk(void) {
     return true;
 }
 
-void deviceEepromHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
+void deviceEepromHandleRawData(unsigned char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     _deviceEepromCheckInitialized();
     if (commandHeader == COMMAND_RELOAD_EEPROM) {
         ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_RELOAD_EEPROM);
@@ -73,7 +73,7 @@ void deviceEepromHandleRawData(char commandHeader, InputStream* inputStream, Out
     else if (commandHeader == COMMAND_READ_BYTE_EEPROM) {
         ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_READ_BYTE_EEPROM);
         unsigned long address = readHex4(inputStream);
-        char value = eeprom_->eepromReadChar(eeprom_, address);
+        unsigned char value = eeprom_->eepromReadChar(eeprom_, address);
         appendHex2(outputStream, value);
     }
     else if (commandHeader == COMMAND_READ_INT_EEPROM) {
@@ -86,7 +86,7 @@ void deviceEepromHandleRawData(char commandHeader, InputStream* inputStream, Out
         ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_WRITE_BYTE_EEPROM);
         unsigned long address = readHex4(inputStream);
         checkIsSeparator(inputStream);
-        char data = readHex2(inputStream);
+        unsigned char data = readHex2(inputStream);
         eeprom_->eepromWriteChar(eeprom_, address, data);
     }
     else if (commandHeader == COMMAND_WRITE_INT_EEPROM) {
@@ -101,7 +101,7 @@ void deviceEepromHandleRawData(char commandHeader, InputStream* inputStream, Out
         unsigned long address = readHex4(inputStream);
         int index;
         for (index = 0; index < EEPROM_DEVICE_READ_BLOCK_LENGTH; index++) {
-            char value = eeprom_->eepromReadChar(eeprom_, address + index);
+            unsigned char value = eeprom_->eepromReadChar(eeprom_, address + index);
             if (index > 0) {
                 appendSeparator(outputStream);
             }
@@ -111,7 +111,7 @@ void deviceEepromHandleRawData(char commandHeader, InputStream* inputStream, Out
     else if (commandHeader == COMMAND_WRITE_BLOCK_EEPROM) {
         ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_WRITE_BLOCK_EEPROM);
         unsigned long address = readHex4(inputStream);
-        char data;
+        unsigned char data;
         int index;
         for (index = 0; index < EEPROM_DEVICE_WRITE_BLOCK_LENGTH; index++) {
             checkIsSeparator(inputStream);

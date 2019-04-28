@@ -59,10 +59,10 @@
  */
 void openSlaveI2cStreamLink(StreamLink* i2cStreamLink,
         Buffer* inputBuffer,
-        char (*inputBufferArray)[],
+        unsigned char (*inputBufferArray)[],
         unsigned int inputBufferLength,
         Buffer* outputBuffer,
-        char (*outputBufferArray)[],
+        unsigned char (*outputBufferArray)[],
         unsigned int outputBufferLength,
         I2cBusConnection* i2cBusConnection);
 

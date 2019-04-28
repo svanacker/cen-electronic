@@ -310,7 +310,7 @@ static TofSensor tofSensorArray[MOTOR_BOARD_PC_TOF_SENSOR_LIST_LENGTH];
 
 static bool connectToRobotManager = false;
 
-void mainBoardDeviceHandleNotification(const Device* device, const char commandHeader, InputStream* inputStream) {
+void mainBoardDeviceHandleNotification(const Device* device, const unsigned char commandHeader, InputStream* inputStream) {
     OutputStream* logStream = getDebugOutputStreamLogger();
     appendString(logStream, "Notification ! commandHeader=");
     append(logStream, commandHeader);
@@ -414,6 +414,7 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
     printf("| |\\/| | / _ \\  | ||  \\| |  |  _ \\| | | |/ _ \\ | |_) | | | |  | |_) | |    \r\n");
     printf("| |  | |/ ___ \\ | || |\\  |  | |_) | |_| / ___ \\|  _ <| |_| |  |  __/| |___ \r\n");
     printf("|_|  |_/_/   \\_|___|_| \\_|  |____/ \\___/_/   \\_|_| \\_|____/   |_|    \\____|\r\n");
+
 
     initLogs(LOG_LEVEL_DEBUG, (LogHandler(*)[]) &logHandlerListArray, MAIN_BOARD_PC_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
     initConsoleInputStream(&consoleInputStream);
@@ -577,6 +578,12 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
 
     // Wait until the match start
     loopUntilStart(&startMatch);
+
+    unsigned char c = 'ÿ';
+    appendBool(&consoleOutputStream, c == 255);
+    appendBool(&consoleOutputStream, c > 127);
+    appendBool(&consoleOutputStream, c < 0);
+    appendDec(&consoleOutputStream, c);
 
     while (1) {
         mainBoardPcWaitForInstruction(&startMatch);

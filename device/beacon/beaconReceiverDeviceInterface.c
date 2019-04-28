@@ -8,7 +8,7 @@ const char* beaconReceiverDeviceGetName(void) {
     return "beaconReceiver";
 }
 
-int beaconReceiverDeviceGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
+int beaconReceiverDeviceGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     // getOpponentRobotPos
     if (commandHeader == COMMAND_GET_OPPONENT_ROBOT_POSITION) {
         if (fillDeviceArgumentList) {

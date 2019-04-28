@@ -9,7 +9,7 @@ const char* deviceRelayGetName(void) {
     return "relay";
 }
 
-int deviceRelayGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
+int deviceRelayGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     if (commandHeader == COMMAND_WRITE_RELAY) {
         if (fillDeviceArgumentList) {
             setFunction("write Relay", 3, 0);

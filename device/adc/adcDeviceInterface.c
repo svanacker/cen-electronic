@@ -8,7 +8,7 @@ const char* getADCDeviceName(void) {
     return "ADC";
 }
 
-int deviceADCGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
+int deviceADCGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     if (commandHeader == COMMAND_GET_ADC_VALUE) {
         if (fillDeviceArgumentList) {
             setFunction("getADC", 1, 1);

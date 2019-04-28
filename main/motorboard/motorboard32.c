@@ -184,25 +184,25 @@ static DualHBridgeMotor motors;
 static SerialLink serialLinkListArray[MOTOR_BOARD_SERIAL_LINK_LIST_LENGTH];
 
 // serial INSTRUCTION
-static char standardInputBufferArray[MOTOR_BOARD_IN_BUFFER_LENGTH];
+static unsigned char standardInputBufferArray[MOTOR_BOARD_IN_BUFFER_LENGTH];
 static Buffer standardInputBuffer;
-static char standardOutputBufferArray[MOTOR_BOARD_OUT_BUFFER_LENGTH];
+static unsigned char standardOutputBufferArray[MOTOR_BOARD_OUT_BUFFER_LENGTH];
 static Buffer standardOutputBuffer;
 static OutputStream standardOutputStream;
 static StreamLink standardSerialStreamLink;
 
 // serial DEBUG 
-static char debugInputBufferArray[MOTOR_BOARD_IN_BUFFER_LENGTH];
+static unsigned char debugInputBufferArray[MOTOR_BOARD_IN_BUFFER_LENGTH];
 static Buffer debugInputBuffer;
-static char debugOutputBufferArray[MOTOR_BOARD_OUT_BUFFER_LENGTH];
+static unsigned char debugOutputBufferArray[MOTOR_BOARD_OUT_BUFFER_LENGTH];
 static Buffer debugOutputBuffer;
 static OutputStream debugOutputStream;
 static StreamLink debugSerialStreamLink;
 
 // serial NOTIFY
-static char notifyInputBufferArray[MOTOR_BOARD_IN_BUFFER_LENGTH];
+static unsigned char notifyInputBufferArray[MOTOR_BOARD_IN_BUFFER_LENGTH];
 static Buffer notifyInputBuffer;
-static char notifyOutputBufferArray[MOTOR_BOARD_OUT_BUFFER_LENGTH];
+static unsigned char notifyOutputBufferArray[MOTOR_BOARD_OUT_BUFFER_LENGTH];
 static Buffer notifyOutputBuffer;
 static OutputStream notifyOutputStream;
 static StreamLink notifySerialStreamLink;
@@ -211,16 +211,16 @@ static StreamLink notifySerialStreamLink;
 static LogHandler logHandlerListArray[MOTOR_BOARD_LOG_HANDLER_LIST_LENGTH];
 
 // i2c Link
-static char i2cSlaveInputBufferArray[MOTOR_BOARD_IN_BUFFER_LENGTH];
+static unsigned char i2cSlaveInputBufferArray[MOTOR_BOARD_IN_BUFFER_LENGTH];
 static Buffer i2cSlaveInputBuffer;
-static char i2cSlaveOutputBufferArray[MOTOR_BOARD_OUT_BUFFER_LENGTH];
+static unsigned char i2cSlaveOutputBufferArray[MOTOR_BOARD_OUT_BUFFER_LENGTH];
 static Buffer i2cSlaveOutputBuffer;
 static StreamLink i2cSlaveStreamLink;
 
 // I2C Debug
-static char i2cMasterDebugOutputBufferArray[MOTOR_BOARD_I2C_DEBUG_MASTER_IN_BUFFER_LENGTH];
+static unsigned char i2cMasterDebugOutputBufferArray[MOTOR_BOARD_I2C_DEBUG_MASTER_IN_BUFFER_LENGTH];
 static Buffer i2cMasterDebugOutputBuffer;
-static char i2cMasterDebugInputBufferArray[MOTOR_BOARD_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH];
+static unsigned char i2cMasterDebugInputBufferArray[MOTOR_BOARD_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH];
 static Buffer i2cMasterDebugInputBuffer;
 
 // Timers
@@ -376,10 +376,10 @@ int runMotorBoard() {
 
     // Debug of I2C : Only if there is problems
     initI2CDebugBuffers(&i2cMasterDebugInputBuffer,
-        (char(*)[]) &i2cMasterDebugInputBufferArray,
+        (unsigned char(*)[]) &i2cMasterDebugInputBufferArray,
         MOTOR_BOARD_I2C_DEBUG_MASTER_IN_BUFFER_LENGTH,
         &i2cMasterDebugOutputBuffer,
-        (char(*)[]) &i2cMasterDebugOutputBufferArray,
+        (unsigned char(*)[]) &i2cMasterDebugOutputBufferArray,
         MOTOR_BOARD_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH);
 
     setDebugI2cEnabled(false);

@@ -12,7 +12,7 @@
 * Add the zigbee driver data dispatcher to the list
 */
 void addZigbeeDriverDataDispatcher(DriverDataDispatcher* dispatcher,
-        char* dispatcherName,
+        const char* dispatcherName,
         InputStream* zigbeeInputStream,
         OutputStream* zigbeeOutputStream,
         char* addressString

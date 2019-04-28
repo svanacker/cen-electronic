@@ -40,7 +40,7 @@ I2cBusConnection* getI2cMasterDebugBusConnection(InputStream* inputStream) {
     return getI2cBusConnectionBySlaveAddress(slaveAddress);
 }
 
-void deviceI2cMasterDebugHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
+void deviceI2cMasterDebugHandleRawData(unsigned char header, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     // I2C Management
     if (header == COMMAND_I2C_MASTER_DEBUG_PRINT_BUFFER) {
         ackCommand(outputStream, I2C_MASTER_DEBUG_DEVICE_HEADER, COMMAND_I2C_MASTER_DEBUG_PRINT_BUFFER);
@@ -84,7 +84,7 @@ void deviceI2cMasterDebugHandleRawData(char header, InputStream* inputStream, Ou
     else if (header == COMMAND_I2C_MASTER_DEBUG_READ_CHAR_FROM_SLAVE) {
         ackCommand(outputStream, I2C_MASTER_DEBUG_DEVICE_HEADER, COMMAND_I2C_MASTER_DEBUG_READ_CHAR_FROM_SLAVE);
         I2cBusConnection* i2cBusConnection = getI2cMasterDebugBusConnection(inputStream);
-        char c = i2cMasterReadChar(i2cBusConnection);
+        unsigned char c = i2cMasterReadChar(i2cBusConnection);
         appendHex2(outputStream, c);
     }
 }

@@ -21,7 +21,7 @@
  * @param i2cConnection on I2c bus (Simulates POO Programming)
  * @return True if device exists on bus
  */
-char isPCF8574Present(I2cBusConnection* i2cConnection);
+unsigned char isPCF8574Present(I2cBusConnection* i2cConnection);
 
 /**
  * Set PCF8574 outputs (pins masked with dirs value).

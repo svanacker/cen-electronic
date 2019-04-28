@@ -7,7 +7,7 @@ const char* deviceI2cSlaveDebugGetName(void) {
     return "i2cSlaveDebug";
 }
 
-int deviceI2cSlaveDebugGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
+int deviceI2cSlaveDebugGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     if (commandHeader == COMMAND_I2C_DEBUG_SLAVE_DEBUG) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("i2cDebug");

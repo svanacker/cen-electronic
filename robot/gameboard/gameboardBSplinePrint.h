@@ -8,6 +8,6 @@
 /**
  * Draw a bSpline Point.
  */
-void bSplinePrint(GameBoard* gameBoard, BSplineCurve* bSplineCurve, char c);
+void bSplinePrint(GameBoard* gameBoard, BSplineCurve* bSplineCurve, unsigned char c);
 
 #endif

@@ -40,7 +40,7 @@ bool isTofDeviceOk(void) {
     return true;
 }
 
-void deviceTofHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
+void deviceTofHandleRawData(unsigned char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     if (commandHeader == COMMAND_TOF_GET_DISTANCE) {
         ackCommand(outputStream, TOF_DEVICE_HEADER, COMMAND_TOF_GET_DISTANCE);
         unsigned char tofIndex = readHex2(inputStream);

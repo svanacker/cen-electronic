@@ -44,8 +44,8 @@ bool handleNotificationFromDispatcher(DriverDataDispatcher* dispatcher) {
             return false;
         }
 
-        char deviceHeader = bufferGetCharAtIndex(inputBuffer, DEVICE_HEADER_INDEX);
-        char notifyHeader = bufferGetCharAtIndex(inputBuffer, NOTIFY_HEADER_INDEX);
+        unsigned char deviceHeader = bufferGetCharAtIndex(inputBuffer, DEVICE_HEADER_INDEX);
+        unsigned char notifyHeader = bufferGetCharAtIndex(inputBuffer, NOTIFY_HEADER_INDEX);
 
         // find the device corresponding to this header
         const Device* device = deviceDataDispatcherFindDevice(deviceHeader, notifyHeader, bufferSize, DEVICE_MODE_NOTIFY);

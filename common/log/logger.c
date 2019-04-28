@@ -21,7 +21,7 @@ void flushLog(OutputStream* outputStream) {
 /**
  * @private
  */
-void writeLogChar(OutputStream* outputStream, char c) {
+void writeLogChar(OutputStream* outputStream, unsigned char c) {
     // if the write Log Level is not enough grave to be logged in the global configuration
     if (logger.writeLogLevel < logger.globalLogLevel) {
         return;

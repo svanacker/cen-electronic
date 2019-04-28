@@ -17,12 +17,12 @@ void setCursorAtHome(void) {
 }
 
 /*
-void setCursorPosition (char position) {
+void setCursorPosition (unsigned char position) {
         hd44780_setCursorPosition (position);
 }
  */
 
-void setCursorRowAndColumn(char row, char column) {
+void setCursorRowAndColumn(unsigned char row, unsigned char column) {
     hd44780_setCursorRowAndColumn(row, column);
 }
 
@@ -82,17 +82,17 @@ void clearColumnCursor (void) {
         hd44780_clearColumnCursor();
 }
 
-void setTabulationSize (char tabulationSize) {
+void setTabulationSize (unsigned char tabulationSize) {
         hd44780_setTabulationSize(tabulationSize);
 }
  */
 
-void writeLCDChar(char c) {
+void writeLCDChar(unsigned char c) {
     hd44780_writeChar(c);
 }
 
 /*
-void sendCommand (char command) {
+void sendCommand (unsigned char command) {
         hd44780_sendCommand(command);
 }
  */

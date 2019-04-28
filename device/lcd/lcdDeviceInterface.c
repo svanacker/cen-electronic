@@ -8,7 +8,7 @@ const char* deviceLCDGetName(void) {
     return "LCD";
 }
 
-int deviceLCDGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
+int deviceLCDGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     if (commandHeader == COMMAND_LCD) {
         if (fillDeviceArgumentList) {
             setFunction("writeLCD", 1, 0);

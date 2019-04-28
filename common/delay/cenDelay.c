@@ -15,10 +15,10 @@
 void delayUs(void) {
 }
 
-void delay10us(char uSecond) {
+void delay10us(unsigned char uSecond) {
     unsigned int i;
 
-    while (uSecond != 0) {
+    while (uSecond > 0) {
         i = VALUE_FOR_10_MICRO_SECOND;
         while (i > 0) {
             Nop();
@@ -29,7 +29,7 @@ void delay10us(char uSecond) {
     }
 }
 
-void delay100us(char uSecond) {
+void delay100us(unsigned char uSecond) {
     unsigned int i;
 
     while (uSecond != 0) {

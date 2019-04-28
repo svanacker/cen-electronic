@@ -42,7 +42,7 @@ bool deviceSerialDebugIsOk(void) {
     return true;
 }
 
-void deviceSerialDebugHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
+void deviceSerialDebugHandleRawData(unsigned char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     // Serial Input Buffers
     if (commandHeader == COMMAND_SERIAL_DEBUG) {
         ackCommand(outputStream, SERIAL_DEBUG_DEVICE_HEADER, COMMAND_SERIAL_DEBUG);
@@ -66,7 +66,7 @@ void deviceSerialDebugHandleRawData(char commandHeader, InputStream* inputStream
         ackCommand(outputStream, SERIAL_DEBUG_DEVICE_HEADER, COMMAND_SERIAL_CHAR_OUTPUT);
         enum SerialPort serialPort = (enum SerialPort) readHex2(inputStream);
         checkIsSeparator(inputStream);
-        char c = readHex2(inputStream);
+        unsigned char c = readHex2(inputStream);
         SerialLink* serialLink = getSerialLinkBySerialPort(serialPort);
         StreamLink* streamLink = serialLink->streamLink;
         Buffer* outputBuffer = streamLink->outputBuffer;
@@ -84,7 +84,7 @@ void deviceSerialDebugHandleRawData(char commandHeader, InputStream* inputStream
         int i;
         for (i = 0; i < FIXED_CHAR_ARRAY_LENGTH; i++) {
             checkIsSeparator(inputStream);
-            char c = readHex2(inputStream);
+            unsigned char c = readHex2(inputStream);
             if (c != 0) {
                 append(bufferOutputStream, c);
                 copyInputToOutputStream(&(outputBuffer->inputStream), streamLink->outputStream, NULL, COPY_ALL);
@@ -96,7 +96,7 @@ void deviceSerialDebugHandleRawData(char commandHeader, InputStream* inputStream
         ackCommand(outputStream, SERIAL_DEBUG_DEVICE_HEADER, COMMAND_SERIAL_CHAR_INPUT);
         enum SerialPort serialPort = (enum SerialPort) readHex2(inputStream);
         checkIsSeparator(inputStream);
-        char c = readHex2(inputStream);
+        unsigned char c = readHex2(inputStream);
         SerialLink* serialLink = getSerialLinkBySerialPort(serialPort);
         StreamLink* streamLink = serialLink->streamLink;
         Buffer* inputBuffer = streamLink->inputBuffer;
@@ -113,7 +113,7 @@ void deviceSerialDebugHandleRawData(char commandHeader, InputStream* inputStream
         int i;
         for (i = 0; i < FIXED_CHAR_ARRAY_LENGTH; i++) {
             checkIsSeparator(inputStream);
-            char c = readHex2(inputStream);
+            unsigned char c = readHex2(inputStream);
             if (c != 0) {
                 append(bufferOutputStream, c);
             }

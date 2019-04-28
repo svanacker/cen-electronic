@@ -8,7 +8,7 @@ const char* getEepromDeviceName(void) {
     return "EEPROM";
 }
 
-int deviceEepromGetInterface(char header, DeviceInterfaceMode mode, bool fillDeviceArgumentList){
+int deviceEepromGetInterface(unsigned char header, DeviceInterfaceMode mode, bool fillDeviceArgumentList){
     if (header == COMMAND_DUMP_TO_FILE_EEPROM) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Dump Eeprom to File");

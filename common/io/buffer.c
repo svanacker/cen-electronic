@@ -48,7 +48,7 @@ void _closeBufferOutputStream(OutputStream* outputStream) {
  * @private
  * Definition of a function which is able to write a character.
  */
-void _bufferWriteChar(OutputStream* outputStream, char c) {
+void _bufferWriteChar(OutputStream* outputStream, unsigned char c) {
     Buffer* buffer = (Buffer*) outputStream->object;
 
     bufferWriteChar(buffer, c);
@@ -85,9 +85,9 @@ void _closeBufferInputStream(InputStream* inputStream) {
 /**
  * @private
  */
-char _bufferReadChar(InputStream* inputStream) {
+unsigned char _bufferReadChar(InputStream* inputStream) {
     Buffer* buffer = (Buffer*) inputStream->object;
-    char result = bufferReadChar(buffer);
+    unsigned char result = bufferReadChar(buffer);
     return result;
 }
 
@@ -105,7 +105,7 @@ bool _bufferAvailableData(InputStream* inputStream) {
 
 // BUFFER INTERFACE
 
-void initBuffer(Buffer* buffer, char (*s)[], unsigned int length, const char* name, const char* type) {
+void initBuffer(Buffer* buffer, unsigned char (*s)[], unsigned int length, const char* name, const char* type) {
     if (!checkBufferNotNull(buffer)) {
         return;    
     }
@@ -155,12 +155,12 @@ bool isBufferEmpty(const Buffer* buffer) {
 
 bool isBufferEqualsToString(const Buffer* buffer, char* s) {
     int i = 0;
-    char c  = *s;
+    unsigned char c  = *s;
     while (c != '\0') {
         if (getBufferElementsCount(buffer) <= i) {
             return false;
         }
-        char cBuffer = bufferGetCharAtIndex(buffer, i);
+        unsigned char cBuffer = bufferGetCharAtIndex(buffer, i);
         if (cBuffer != c) {
             return false;
         }
@@ -186,7 +186,7 @@ int getBufferCapacity(const Buffer* buffer) {
     return buffer->length - 1;
 }
 
-void bufferWriteChar(Buffer* buffer, char c) {
+void bufferWriteChar(Buffer* buffer, unsigned char c) {
 	bool isFull = isBufferFull(buffer);
     if (!isFull) {
         char* sPointer = (char*) buffer->s;
@@ -203,14 +203,14 @@ void bufferWriteChar(Buffer* buffer, char c) {
     }
 }
 
-char bufferReadChar(Buffer* buffer) {
+unsigned char bufferReadChar(Buffer* buffer) {
     bool isEmpty = isBufferEmpty(buffer);
     if (!isEmpty) {
-        // char result = buffer->s[buffer->readIndex];
-        char* sPointer = (char*) buffer->s;
+        // unsigned char result = buffer->s[buffer->readIndex];
+        unsigned char* sPointer = (unsigned char*) buffer->s;
         // Shift to the right cell index
         sPointer += buffer->readIndex;
-        char result = *sPointer;        
+        unsigned char result = *sPointer;        
 
         buffer->readIndex++;
         buffer->readIndex %= buffer->length;
@@ -222,13 +222,13 @@ char bufferReadChar(Buffer* buffer) {
     }
 }
 
-char bufferGetCharAtIndex(const Buffer* buffer, int charIndex) {
+unsigned char bufferGetCharAtIndex(const Buffer* buffer, int charIndex) {
     int size = getBufferElementsCount(buffer);
     if (charIndex < size) {
-        char* sPointer = (char*) buffer->s;
+        unsigned char* sPointer = (unsigned char*) buffer->s;
         // Shift to the right cell index
         sPointer += ((buffer->readIndex + charIndex) % buffer->length);
-        char result = *sPointer;
+        unsigned char result = *sPointer;
 
         return result;
     } else {
@@ -238,7 +238,7 @@ char bufferGetCharAtIndex(const Buffer* buffer, int charIndex) {
     return 0;
 }
 
-bool bufferWriteCharAtIndex(const Buffer* buffer, int charIndex, char c) {
+bool bufferWriteCharAtIndex(const Buffer* buffer, int charIndex, unsigned char c) {
     int size = getBufferElementsCount(buffer);
     if (charIndex < size) {
         char* sPointer = (char*) buffer->s;

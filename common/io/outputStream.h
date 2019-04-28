@@ -32,7 +32,7 @@ typedef void CloseOutputStreamFunction(OutputStream* outputStream);
  * @param outputStream the pointer on object (POO simulation)
  * @param c the char to write
  */
-typedef void WriteCharFunction(OutputStream* outputStream, char c);
+typedef void WriteCharFunction(OutputStream* outputStream, unsigned char c);
 
 /**
  * Flush the stream because char written via WriteCharFunction can be buffered.

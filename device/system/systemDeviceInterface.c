@@ -10,7 +10,7 @@ const char* deviceSystemGetName(void) {
     return "system";
 }
 
-int deviceSystemGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
+int deviceSystemGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     // BoardName
     if (commandHeader == COMMAND_BOARD_NAME) {
         if (fillDeviceArgumentList) {

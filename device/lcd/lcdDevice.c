@@ -20,7 +20,7 @@ bool deviceLCDIsOk(void) {
     return true;
 }
 
-void deviceLCDHandleRawData(char commandHeader,
+void deviceLCDHandleRawData(unsigned char commandHeader,
                             InputStream* inputStream,
                             OutputStream* outputStream, OutputStream* notificationOutputStream) {
     if (commandHeader == COMMAND_LCD) {

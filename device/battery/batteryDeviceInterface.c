@@ -8,7 +8,7 @@ const char* getBatteryDeviceName(void) {
     return "Battery";
 }
 
-int deviceBatteryGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList){
+int deviceBatteryGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList){
     if (commandHeader == COMMAND_READ_BATTERY ) {
         if (fillDeviceArgumentList) {
             setFunction("Battery Read", 0, 1);

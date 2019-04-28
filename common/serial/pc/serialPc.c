@@ -39,7 +39,7 @@ void closeSerial(enum SerialPorty serialPort) {
     CloseHandle(serialOutputPipeHandle1);
 }
 
-void serialPutc(enum SerialPorty serialPort, char c) {
+void serialPutc(enum SerialPorty serialPort, unsigned char c) {
     writeCharToPipe(serialOutputPipeHandle1, c);
 }
 

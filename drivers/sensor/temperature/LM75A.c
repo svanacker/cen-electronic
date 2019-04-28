@@ -22,8 +22,8 @@ int _LM75A_readSensorValue(Temperature* temperature) {
     I2cBus* i2cBus = i2cBusConnection->i2cBus;
 
     int result = 0;
-    char lm75aMsb = 0;
-    // char lm75aLsb;
+    unsigned char lm75aMsb = 0;
+    // unsigned char lm75aLsb;
 
     portableMasterStartI2C(i2cBusConnection);
     WaitI2C(i2cBus);

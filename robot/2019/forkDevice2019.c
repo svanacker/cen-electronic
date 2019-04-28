@@ -174,7 +174,7 @@ void arm2019Off(unsigned int leftRight) {
         FORK_2019_LEFT_ARM_SERVO_OFF, FORK_2019_RIGHT_ARM_SERVO_OFF);
 }
 
-void deviceFork2019HandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
+void deviceFork2019HandleRawData(unsigned char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     // ELEVATOR
     // -> Bottom
     if (commandHeader == COMMAND_2019_ELEVATOR_BOTTOM) {

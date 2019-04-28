@@ -117,17 +117,17 @@ static I2cBus i2cBusListArray[MECA_BOARD_32_1_I2C_BUS_LIST_LENGTH];
 static I2cBusConnection i2cBusConnectionListArray[MECA_BOARD_32_1_I2C_BUS_CONNECTION_LIST_LENGTH];
 
 // serial STANDARD
-static char standardInputBufferArray[MECA_BOARD_32_1_STANDARD_INPUT_BUFFER_LENGTH];
+static unsigned char standardInputBufferArray[MECA_BOARD_32_1_STANDARD_INPUT_BUFFER_LENGTH];
 static Buffer standardInputBuffer;
-static char standardOutputBufferArray[MECA_BOARD_32_1_STANDARD_OUTPUT_BUFFER_LENGTH];
+static unsigned char standardOutputBufferArray[MECA_BOARD_32_1_STANDARD_OUTPUT_BUFFER_LENGTH];
 static Buffer standardOutputBuffer;
 static OutputStream standardOutputStream;
 static StreamLink standardSerialStreamLink;
 
 // serial DEBUG 
-static char debugInputBufferArray[MECA_BOARD_32_1_DEBUG_INPUT_BUFFER_LENGTH];
+static unsigned char debugInputBufferArray[MECA_BOARD_32_1_DEBUG_INPUT_BUFFER_LENGTH];
 static Buffer debugInputBuffer;
-static char debugOutputBufferArray[MECA_BOARD_32_1_DEBUG_OUTPUT_BUFFER_LENGTH];
+static unsigned char debugOutputBufferArray[MECA_BOARD_32_1_DEBUG_OUTPUT_BUFFER_LENGTH];
 static Buffer debugOutputBuffer;
 static OutputStream debugOutputStream;
 static StreamLink debugSerialStreamLink;
@@ -138,16 +138,16 @@ static LogHandler logHandlerListArray[MECA_BOARD_32_1_LOG_HANDLER_LIST_LENGTH];
 // i2c Link
 static I2cBus* mechanicalBoard1SlaveI2cBus;
 static I2cBusConnection* mechanicalBoard1SlaveI2cBusConnection;
-static char i2cSlaveInputBufferArray[MECA_BOARD_32_1_I2C_INPUT_BUFFER_LENGTH];
+static unsigned char i2cSlaveInputBufferArray[MECA_BOARD_32_1_I2C_INPUT_BUFFER_LENGTH];
 static Buffer i2cSlaveInputBuffer;
-static char i2cSlaveOutputBufferArray[MECA_BOARD_32_1_I2C_OUTPUT_BUFFER_LENGTH];
+static unsigned char i2cSlaveOutputBufferArray[MECA_BOARD_32_1_I2C_OUTPUT_BUFFER_LENGTH];
 static Buffer i2cSlaveOutputBuffer;
 static StreamLink i2cSlaveStreamLink;
 
 // I2C Debug
-static char i2cMasterDebugOutputBufferArray[MECA_BOARD_32_1_I2C_DEBUG_MASTER_IN_BUFFER_LENGTH];
+static unsigned char i2cMasterDebugOutputBufferArray[MECA_BOARD_32_1_I2C_DEBUG_MASTER_IN_BUFFER_LENGTH];
 static Buffer i2cMasterDebugOutputBuffer;
-static char i2cMasterDebugInputBufferArray[MECA_BOARD_32_1_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH];
+static unsigned char i2cMasterDebugInputBufferArray[MECA_BOARD_32_1_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH];
 static Buffer i2cMasterDebugInputBuffer;
 
 // Servos
@@ -311,6 +311,7 @@ int main(void) {
         handleStreamInstruction(&i2cSlaveInputBuffer,
                                 &i2cSlaveOutputBuffer,
                                 NULL,
+                                NULL,
                                 &filterRemoveCRLF,
                                 NULL);
 
@@ -318,12 +319,14 @@ int main(void) {
         handleStreamInstruction(&standardInputBuffer,
                                 &standardOutputBuffer,
                                 &standardOutputStream,
+                                &standardOutputStream,
                                 &filterRemoveCRLF,
                                 NULL);
 
         // UART Stream
         handleStreamInstruction(&debugInputBuffer,
                                 &debugOutputBuffer,
+                                &debugOutputStream,
                                 &debugOutputStream,
                                 &filterRemoveCRLF,
                                 NULL);

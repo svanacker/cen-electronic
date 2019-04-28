@@ -10,7 +10,7 @@ void setCursorAtHome(void) {
     // TODO
 }
 
-void setCursorRowAndColumn(char row, char column) {
+void setCursorRowAndColumn(unsigned char row, unsigned char column) {
     // TODO
 }
 
@@ -43,7 +43,7 @@ void carriageReturnCursor(void) {
     setCursorAtHome();
 }
 
-void writeLCDChar(char c) {
+void writeLCDChar(unsigned char c) {
     putchar(c);
 }
 

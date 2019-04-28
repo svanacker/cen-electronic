@@ -30,7 +30,7 @@ bool deviceMotionSimulationIsOk(void) {
     return true;
 }
 
-void deviceMotionSimulationHandleRawData(char commandHeader,
+void deviceMotionSimulationHandleRawData(unsigned char commandHeader,
                                         InputStream* inputStream,
                                         OutputStream* outputStream,
                                         OutputStream* notificationOutputStream) {

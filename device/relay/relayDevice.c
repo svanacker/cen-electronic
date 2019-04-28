@@ -41,7 +41,7 @@ bool deviceRelayIsOk(void) {
     return true;
 }
 
-void deviceRelayHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
+void deviceRelayHandleRawData(unsigned char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     if (commandHeader == COMMAND_WRITE_RELAY) {
         ackCommand(outputStream, RELAY_DEVICE_HEADER, COMMAND_WRITE_RELAY);
         int relayIndex = readHex2(inputStream);

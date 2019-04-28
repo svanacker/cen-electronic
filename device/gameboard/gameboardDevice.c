@@ -34,7 +34,7 @@ bool isGameboardDeviceOk(void) {
     return true;
 }
 
-void deviceGameboardHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
+void deviceGameboardHandleRawData(unsigned char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
 	if (commandHeader == COMMAND_GAME_BOARD_PRINT) {
         OutputStream* debugOutputStream = getInfoOutputStreamLogger();
         ackCommand(outputStream, GAME_BOARD_DEVICE_HEADER, COMMAND_GAME_BOARD_PRINT);

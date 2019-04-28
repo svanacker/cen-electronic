@@ -10,8 +10,8 @@
 #define LCD_ROW_COUNT     4
 #define LCD_COLUMN_COUNT 20
 
-static char currentRow;
-static char currentColumn;
+static unsigned char currentRow;
+static unsigned char currentColumn;
 
 /**
  * Verifie et attend si l'afficheur a fini d'effectuer ses op�rations interne.
@@ -48,7 +48,7 @@ void busyFlag(void) {
     TRIS_D4_LCD = 0;
 }
 
-void hd44780_sendIniComLcd(char D7, char D6, char D5, char D4) {
+void hd44780_sendIniComLcd(unsigned char D7, unsigned char D6, unsigned char D5, unsigned char D4) {
     delay100us(5);
     E_LCD = 0;
     delay100us(5);
@@ -67,7 +67,7 @@ void hd44780_sendIniComLcd(char D7, char D6, char D5, char D4) {
     delay100us(5);
 }
 
-void hd44780_sendComLcd(char comLcd) {
+void hd44780_sendComLcd(unsigned char comLcd) {
     // Transfer du MSB pr�paration des signaux de commande
     delay100us(5);
     E_LCD = 0;
@@ -105,7 +105,7 @@ void hd44780_sendComLcd(char comLcd) {
     E_LCD = 0;
 }
 
-void hd44780_sendDataLcd(char DataLcd) {
+void hd44780_sendDataLcd(unsigned char DataLcd) {
     // Transfer du MSB pr�paration des signaux de commande
     delay100us(5);
     E_LCD = 0;
@@ -176,9 +176,9 @@ void hd44780_initLcd(void) {
     hd44780_setCursorAtHome();
 }
 
-void hd44780_writeString(char *text) {
-    char i;
-    char a;
+void hd44780_writeString(const char* text) {
+    unsigned char i;
+    unsigned char a;
 
     a = strlen(text);
 
@@ -188,9 +188,9 @@ void hd44780_writeString(char *text) {
     }
 }
 
-void hd44780_affTexteLcdXY(char *text, char column, char row) {
-    char i;
-    char a;
+void hd44780_affTexteLcdXY(const char* text, unsigned char column, unsigned char row) {
+    unsigned char i;
+    unsigned char a;
 
     hd44780_setCursorRowAndColumn(column, row);
 
@@ -217,11 +217,11 @@ void incLcdColumn() {
     }
 }
 
-void hd44780_setCursorRowAndColumn(char row, char column) {
+void hd44780_setCursorRowAndColumn(unsigned char row, unsigned char column) {
     currentRow = row;
     currentColumn = column;
 
-    char cursor;
+    unsigned char cursor;
     if (row == 0) {
         cursor = 0x80;
     }
@@ -273,7 +273,7 @@ void hd44780_clearScreen(void) {
     hd44780_sendComLcd(0b00000001);
 }
 
-void hd44780_writeChar(char c) {
+void hd44780_writeChar(unsigned char c) {
     hd44780_setCursorRowAndColumn(currentRow, currentColumn);
 
     // does not handle CR

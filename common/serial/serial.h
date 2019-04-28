@@ -54,6 +54,6 @@ void closeSerial(enum SerialPort serialPort);
  * @param serialPortIndex the serialPortIndex we want to use
  * @param c the character to send
  */
-void serialPutc(enum SerialPort serialPort, char c);
+void serialPutc(enum SerialPort serialPort, unsigned char c);
 
 #endif

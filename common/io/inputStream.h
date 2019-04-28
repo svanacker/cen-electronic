@@ -42,7 +42,7 @@ typedef void CloseInputStreamFunction(InputStream* inputStream);
  * Function which is able to get a character from the stream.
  * @param inputStream the pointer on object (POO simulation)
  */
-typedef char ReadCharFunction(InputStream* inputStream);
+typedef unsigned char ReadCharFunction(InputStream* inputStream);
 
 /**
  * Function which is able to return if there is character to read.

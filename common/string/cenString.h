@@ -6,7 +6,7 @@
 // Char / Strings typedef
 #define FIXED_CHAR_ARRAY_LENGTH         4
 // We reserve the last char as '\0' to be sure that we will not continue, if we use "string" routines
-typedef char FixedCharArray [FIXED_CHAR_ARRAY_LENGTH];
+typedef unsigned char FixedCharArray [FIXED_CHAR_ARRAY_LENGTH];
 
 bool fixedCharArrayEquals(FixedCharArray* fixedCharArray1, FixedCharArray* fixedCharArray2);
 

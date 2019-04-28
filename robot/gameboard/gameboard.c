@@ -115,10 +115,10 @@ void drawRobot(GameBoard* gameBoard, Point* robotPosition, float angle) {
     float leftFrontY = y + radius * sinf(angle + (3.0f * PI / 8.0f));
 
     // set of chars if angle = PI / 2
-    char verticalChar = transformVerticalChar(angle);
-    char slashChar = transformSlashChar(angle);
-    char horizontalChar = transformHorizontalChar(angle);
-    char antiSlashChar = transformAntiSlashChar(angle);
+    unsigned char verticalChar = transformVerticalChar(angle);
+    unsigned char slashChar = transformSlashChar(angle);
+    unsigned char horizontalChar = transformHorizontalChar(angle);
+    unsigned char antiSlashChar = transformAntiSlashChar(angle);
 
     // Right horizontal Line
     drawLine(gameBoard, rightFrontX, rightFrontY, rightMiddleX, rightMiddleY, horizontalChar);
@@ -153,7 +153,7 @@ void gameTargetPrint(GameBoard* gameBoard, int* element) {
     // End Location
     Location* endLocation = target->endLocation;
 
-    char c;
+    unsigned char c;
     if (target->status == TARGET_AVAILABLE) {
         c = 'X';
     }
@@ -163,7 +163,7 @@ void gameTargetPrint(GameBoard* gameBoard, int* element) {
     drawPointCoordinates(gameBoard, endLocation->x, endLocation->y, c);
 }
 
-void gamePathPrint(GameBoard* gameBoard, int* element, char c) {
+void gamePathPrint(GameBoard* gameBoard, int* element, unsigned char c) {
     PathData* pathData = (PathData*)element;
     if (pathData == NULL) {
         writeError(PATH_NULL);
@@ -219,7 +219,7 @@ void fillGameBoardCharElements(GameBoard* gameBoard, int* element) {
         for (i = 0; i < pathSize; i++) {
             PathData* pathData = getPath(pathList, i);
             // We try to use the alphabet to avoid that path could not be easily read
-            char c = (char) ((i % 26) + 97);
+            unsigned char c = (char) ((i % 26) + 97);
             gamePathPrint(gameBoard, (int*)pathData, c);
         }
     }
@@ -237,7 +237,7 @@ void fillGameBoardCharElements(GameBoard* gameBoard, int* element) {
             OutgoingPathData* outgoingPathData = getOutgoingPath(outgoingPathList, i);
             PathData* pathData = outgoingPathData->pathData;
             // We try to use the alphabet to avoid that path could not be easily read
-            char c = (char)((i % 26) + 97);
+            unsigned char c = (unsigned char)((i % 26) + 97);
             gamePathPrint(gameBoard, (int*)pathData, c);
         }
     }
@@ -282,9 +282,9 @@ void printGameboard(GameBoard* gameBoard,  OutputStream* outputStream) {
     unsigned int column;
     for (line = 0; line <= GAMEBOARD_LINE_COUNT; line++) {
         for (column = 0; column <= GAMEBOARD_COLUMN_COUNT; column++) {
-            char pixelChar = gameBoard->pixels[column][line];
+            unsigned char pixelChar = gameBoard->pixels[column][line];
 #ifdef _MSC_VER            
-            char colorPalet = gameBoard->colors[column][line];
+            unsigned char colorPalet = gameBoard->colors[column][line];
             if (colorPalet == CONSOLE_COLOR_BLACK) {
                 colorPalet = CONSOLE_COLOR_WHITE;
             }

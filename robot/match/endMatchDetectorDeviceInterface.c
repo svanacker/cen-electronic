@@ -12,7 +12,7 @@ unsigned int getEndMatchDetectorSoftwareRevision(void) {
     return 1;
 }
 
-int deviceEndMatchDetectorGetInterface(char header, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
+int deviceEndMatchDetectorGetInterface(unsigned char header, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     // DEBUG
     if (header == COMMAND_END_MATCH_DETECTOR_DEBUG) {
         if (fillDeviceArgumentList) {

@@ -67,10 +67,10 @@ StreamLink;
 void initStreamLink(StreamLink* streamLink,
         const char* streamName,
         Buffer* inputBuffer,
-        char (*inputBufferArrayPointer)[],
+        unsigned char (*inputBufferArrayPointer)[],
         unsigned int inputBufferLength,
         Buffer* outputBuffer,
-        char (*outputBufferArrayPointer)[],
+        unsigned char (*outputBufferArrayPointer)[],
         unsigned int outputBufferLength,
         OutputStream* outputStream,
         int param);

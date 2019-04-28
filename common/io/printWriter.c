@@ -13,7 +13,7 @@
 
 // STRINGS
 
-void append(OutputStream* outputStream, char c) {
+void append(OutputStream* outputStream, unsigned char c) {
     if (outputStream == NULL) {
         return;
     }
@@ -46,7 +46,7 @@ void appendSpace(OutputStream* outputStream) {
 	append(outputStream, ' ');
 }
 
-unsigned int appendRepeatedChars(OutputStream* outputStream, char c, int count) {
+unsigned int appendRepeatedChars(OutputStream* outputStream, unsigned char c, int count) {
     int i;
     for (i = 0; i < count; i++) {
         append(outputStream, c);
@@ -88,7 +88,7 @@ unsigned int appendHexFixedCharArray(OutputStream* outputStream, FixedCharArray*
 	unsigned int i;
 	char* sPointer = (char*)s;
 	for (i = 0; i < FIXED_CHAR_ARRAY_LENGTH; i++) {
-		char c = *sPointer;
+		unsigned char c = *sPointer;
 		appendHex2(outputStream, c);
 		sPointer++;
 	}
@@ -99,7 +99,7 @@ unsigned int appendFixedCharArray(OutputStream* outputStream, FixedCharArray* s)
     unsigned int i;
     char* sPointer = (char*)s;
     for (i = 0; i < FIXED_CHAR_ARRAY_LENGTH; i++) {
-        char c = *sPointer;
+        unsigned char c = *sPointer;
         if (c == 0) {
             c = ' ';
         }
@@ -149,7 +149,7 @@ unsigned int appendAck(OutputStream* outputStream) {
 unsigned int printBuffer(OutputStream* outputStream, Buffer* buffer) {
     unsigned int result = 0;
 	while(!isBufferEmpty(buffer)) {
-        char c = bufferReadChar(buffer);
+        unsigned char c = bufferReadChar(buffer);
         append(outputStream, c);
 		result++;
     }
@@ -158,7 +158,7 @@ unsigned int printBuffer(OutputStream* outputStream, Buffer* buffer) {
 
 // HEXADECIMAL
 
-unsigned char convertToHex(char c) {
+unsigned char convertToHex(unsigned char c) {
     // Value between 0 and 9
     if (c < 10) {
         return c + 48;
@@ -172,7 +172,7 @@ unsigned char convertToHex(char c) {
     return 0;
 }
 
-bool appendHex(OutputStream* outputStream, char c) {
+bool appendHex(OutputStream* outputStream, unsigned char c) {
     unsigned char hexChar = convertToHex(c);
     if (hexChar != 0) {
         append(outputStream, hexChar);
@@ -188,7 +188,7 @@ void internalAppendHex(OutputStream* outputStream, signed long value, int shiftM
     }
 }
 
-void appendHex2(OutputStream* outputStream, char value) {
+void appendHex2(OutputStream* outputStream, unsigned char value) {
     internalAppendHex(outputStream, value, 4);
 }
 
@@ -221,7 +221,7 @@ void appendHexFloat2(OutputStream* stream, float value, unsigned int digitPrecis
     for (i = 0; i < digitPrecision; i++) {
         valueWrite *= 10.0f;
     }
-    char truncatedValue = (char) valueWrite;
+    unsigned char truncatedValue = (unsigned char) valueWrite;
     appendHex2(stream, truncatedValue);
 }
 
@@ -261,7 +261,7 @@ void appendHexFloat8(OutputStream* stream, float value, unsigned int digitPrecis
 // DECIMAL CONVERSION
 
 int appendDec(OutputStream* stream, signed long value) {
-    char num[11]; // 2^31 plus sign
+    unsigned char num[11]; // 2^31 plus sign
     int pos = 0;
     int nchars = 0;
 
@@ -276,7 +276,7 @@ int appendDec(OutputStream* stream, signed long value) {
     }
 
     while (value != 0) {
-        char c = value % 10;
+        unsigned char c = value % 10;
         value = value / 10;
         num[pos++] = c + '0';
     }

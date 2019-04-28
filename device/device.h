@@ -23,7 +23,7 @@ typedef struct Device Device;
 * @param inputStream the inputStream to get data from the client
 */
 typedef void DeviceHandleNotificationFunction(const Device* device, 
-                                                 const char commandHeader,
+                                                 const unsigned char commandHeader,
                                                   InputStream* inputStream);
 
 /**
@@ -32,7 +32,7 @@ typedef void DeviceHandleNotificationFunction(const Device* device,
  * @param deviceHeader the char header for the Device (Ex : 'S' for System Device)
  * @param commandHeader the char header for the command specific to a Device (Ex : 'P' for Ping Command)
  */
-void ackCommand(OutputStream* deviceOutputStream, const char deviceHeader, const char commandHeader);
+void ackCommand(OutputStream* deviceOutputStream, const unsigned char deviceHeader, const unsigned char commandHeader);
 
 /**
 * Defines the structure used to describe a device.

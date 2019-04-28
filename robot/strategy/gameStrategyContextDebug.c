@@ -62,7 +62,7 @@ void printGameStrategyContextLocation(OutputStream* outputStream, Location* loca
         appendEndOfTableColumn(outputStream, GAME_STRATEGY_CONTEXT_LAST_COLUMN);
 
         appendStringTableData(outputStream, locationName, GAME_STRATEGY_CONTEXT_KEY_COLUMN_LENGTH);
-        appendStringTableData(outputStream, location->name, GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
+        appendFixedCharArrayTableData(outputStream, &(location->name), GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
         appendStringTableData(outputStream, "mm", GAME_STRATEGY_CONTEXT_UNIT_COLUMN_LENGTH);
         appendEndOfTableColumn(outputStream, GAME_STRATEGY_CONTEXT_LAST_COLUMN);
     }
@@ -180,7 +180,7 @@ void printGameStrategyContext(OutputStream* outputStream, GameStrategyContext* c
     appendStringTableData(outputStream, "currentTarget->startLocation", GAME_STRATEGY_CONTEXT_KEY_COLUMN_LENGTH);
     GameTarget* currentTarget = context->currentTarget;
     if (currentTarget != NULL && currentTarget->startLocation != NULL) {
-        appendStringTableData(outputStream, currentTarget->startLocation->name, GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
+        appendFixedCharArrayTableData(outputStream, &(currentTarget->startLocation->name), GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
     }
     else {
         appendStringTableData(outputStream, "NULL", GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
@@ -191,7 +191,7 @@ void printGameStrategyContext(OutputStream* outputStream, GameStrategyContext* c
     // currentTarget->endLocation
     appendStringTableData(outputStream, "currentTarget->endLocation", GAME_STRATEGY_CONTEXT_KEY_COLUMN_LENGTH);
     if (currentTarget != NULL && currentTarget->endLocation != NULL) {
-        appendStringTableData(outputStream, currentTarget->endLocation->name, GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
+        appendFixedCharArrayTableData(outputStream, &(currentTarget->endLocation->name), GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
     }
     else {
         appendStringTableData(outputStream, "NULL", GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);

@@ -31,10 +31,10 @@ void setDebugI2cEnabled(bool enabled) {
 }
 
 void initI2CDebugBuffers(Buffer* aDebugI2cInputBuffer,
-                         char (*debugI2cInputBufferArray)[],
+                         unsigned char (*debugI2cInputBufferArray)[],
                          unsigned int debugI2cInputBufferLength,
                          Buffer* aDebugI2cOutputBuffer,
-                         char (*debugI2cOutputBufferArray)[],
+                         unsigned char (*debugI2cOutputBufferArray)[],
                          unsigned int debugI2cOutputBufferLength
 ) {
     debugI2cInputBuffer = aDebugI2cInputBuffer;

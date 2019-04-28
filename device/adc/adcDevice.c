@@ -51,7 +51,7 @@ unsigned int readAdc(unsigned char adcIndex) {
     return value;
 }
 
-void deviceADCHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
+void deviceADCHandleRawData(unsigned char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     if (commandHeader == COMMAND_GET_ADC_VALUE) {
         ackCommand(outputStream, ADC_DEVICE_HEADER, COMMAND_GET_ADC_VALUE);
 

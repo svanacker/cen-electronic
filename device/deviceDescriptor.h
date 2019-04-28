@@ -31,7 +31,7 @@ typedef bool deviceIsOkFunction(void);
 * @param outputStream the output Stream where we can write some results, ack (with commandHeader)
 * @param notificationOutputStream the output Stream in which we will write, but probably later by a callback
 */
-typedef void deviceHandleRawDataFunction(char commandHeader,
+typedef void deviceHandleRawDataFunction(unsigned char commandHeader,
                                          InputStream* inputStream,
                                          OutputStream* outputStream,
                                          OutputStream* notificationOutputStream);

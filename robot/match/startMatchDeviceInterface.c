@@ -10,7 +10,7 @@ const char* getStartMatchDeviceName(void) {
     return "StartMatchDevice";
 }
 
-int deviceStartMatchGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
+int deviceStartMatchGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     if (commandHeader == COMMAND_MATCH_IS_STARTED) {
         if (fillDeviceArgumentList) {
             setFunction("is Started", 0, 1);

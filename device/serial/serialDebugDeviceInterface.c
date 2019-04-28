@@ -38,7 +38,7 @@ void serialDebugCharArrayFunctionArgument(char* functionName) {
 }
 
 
-int deviceSerialDebugGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
+int deviceSerialDebugGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     if (commandHeader == COMMAND_SERIAL_DEBUG) {
         if (fillDeviceArgumentList) {
             setFunction("serial Port Debug", 1, 0);

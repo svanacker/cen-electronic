@@ -27,9 +27,9 @@ typedef char FixedVl53L0x [VL53L0X_MAX_STRING_LENGTH];
  */
 void appendVl53l0xString(OutputStream* outputStream, FixedVl53L0x* s) {
     unsigned int i;
-    char* sPointer = (char*) s;
+    unsigned char* sPointer = (unsigned char*) s;
     for (i = 0; i < VL53L0X_MAX_STRING_LENGTH; i++) {
-        char c = *sPointer;
+        unsigned char c = *sPointer;
         if (c == 0) {
             return;
         }

@@ -29,7 +29,7 @@ void initDeviceCoders(void) {
     initCoders();
 }
 
-void deviceCodersHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
+void deviceCodersHandleRawData(unsigned char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     if (commandHeader == COMMAND_GET_WHEEL_POSITION) {
         ackCommand(outputStream, CODERS_DEVICE_HEADER, COMMAND_GET_WHEEL_POSITION);
         updateTrajectory();

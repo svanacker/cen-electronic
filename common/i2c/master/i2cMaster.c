@@ -23,7 +23,7 @@ void i2cMasterWriteBuffer(I2cBusConnection* i2cBusConnection, Buffer* buffer) {
     int count = getBufferElementsCount(buffer);
     int i;
     for (i = 0; i < count; i++) {
-        char c = bufferReadChar(buffer);
+        unsigned char c = bufferReadChar(buffer);
         portableMasterWriteI2C(i2cBusConnection, c);
         WaitI2C(i2cBus);
     }
@@ -99,7 +99,7 @@ unsigned char i2cMasterReadRegisterValue(I2cBusConnection* i2cBusConnection, uns
     portableMasterWriteI2C(i2cBusConnection, address | 0x01);
     WaitI2C(i2cBus);
     // read the data
-    char data = portableMasterReadI2C(i2cBusConnection);
+    unsigned char data = portableMasterReadI2C(i2cBusConnection);
     portableMasterStopI2C(i2cBusConnection);
     return data;
 }
@@ -118,12 +118,12 @@ void i2cMasterRegisterReadBuffer(I2cBusConnection* i2cBusConnection, unsigned ch
 
     int i;
     for (i = 0; i <(length-1) ; i++) {
-        char c = portableMasterReadI2C(i2cBusConnection);
+        unsigned char c = portableMasterReadI2C(i2cBusConnection);
         portableMasterAckI2C(i2cBusConnection);
         WaitI2C(i2cBus);
         bufferWriteChar(buffer, c);
     }
-    char c = portableMasterReadI2C(i2cBusConnection);
+    unsigned char c = portableMasterReadI2C(i2cBusConnection);
     portableMasterNackI2C(i2cBusConnection);
     WaitI2C(i2cBus);
     bufferWriteChar(buffer, c);
@@ -146,7 +146,7 @@ void i2cMasterReadBuffer(I2cBusConnection* i2cBusConnection, unsigned char lengt
 
     int i;
     for (i = 0; i <length ; i++) {
-        char c = portableMasterReadI2C(i2cBusConnection);
+        unsigned char c = portableMasterReadI2C(i2cBusConnection);
         portableMasterAckI2C(i2cBusConnection);
         WaitI2C(i2cBus);
         bufferWriteChar(buffer, c);

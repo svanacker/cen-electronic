@@ -21,13 +21,15 @@ static Buffer* serialInputBuffer6;
 void handleUartInterrupt(UART_MODULE uart, Buffer* buffer) {
     // Is this an RX interrupt?
     if (INTGetFlag(INT_SOURCE_UART_RX(uart))) {
-        char c = UARTGetDataByte(uart);
-        // BUG2018 
-        if (c != 0xFF) {
-            bufferWriteChar(buffer, c);
+        if (UARTReceivedDataIsAvailable(uart)) {
+            unsigned char c = UARTGetDataByte(uart);
+            // BUG2018, BUG2019 (255 / 254 value) when Motor Power is too strong
+            if (c != 'ÿ' && c != 'þ') {
+                bufferWriteChar(buffer, c);
+            }
+            // Clear the RX interrupt Flag
+            INTClearFlag(INT_SOURCE_UART_RX(uart));
         }
-        // Clear the RX interrupt Flag
-        INTClearFlag(INT_SOURCE_UART_RX(uart));
     }
     // We don't care about TX interrupt
     if ( INTGetFlag(INT_SOURCE_UART_TX(uart)) ) {

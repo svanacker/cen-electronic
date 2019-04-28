@@ -9,7 +9,7 @@ const char* deviceTest2GetName(void) {
     return "test 2";
 }
 
-int deviceTest2GetInterface(char commandHeader, int mode, bool fillDeviceArgumentList) {
+int deviceTest2GetInterface(unsigned char commandHeader, int mode, bool fillDeviceArgumentList) {
     if (commandHeader == COMMAND_TEST2) {
         if (fillDeviceArgumentList) {
             setFunction("test2", 2, 1);

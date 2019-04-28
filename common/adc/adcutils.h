@@ -8,7 +8,7 @@
 * @param channel the channel index between 0 and 11
 * @return the value in millivolt.
 */
-int getANX (char channel);
+int getANX (unsigned char channel);
 
 /**
  * Returns how many ANX are managed.

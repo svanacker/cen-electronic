@@ -56,7 +56,7 @@ bool deviceExtendedMotionIsOk(void) {
     return true;
 }
 
-void deviceExtendedMotionHandleRawData(char commandHeader,
+void deviceExtendedMotionHandleRawData(unsigned char commandHeader,
         InputStream* inputStream,
         OutputStream* outputStream,
         OutputStream* notificationOutputStream) {

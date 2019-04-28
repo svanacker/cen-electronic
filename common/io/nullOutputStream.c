@@ -14,7 +14,7 @@ void closeNullOutputStream(OutputStream* outputStream) {
 
 }
 
-void writeCharNullOutputStream(OutputStream* outputStream, char c) {
+void writeCharNullOutputStream(OutputStream* outputStream, unsigned char c) {
     
 }
 

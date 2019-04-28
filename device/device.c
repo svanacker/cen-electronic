@@ -52,7 +52,7 @@ void stopDevice(const Device* device) {
     }
 }
 
-void ackCommand(OutputStream* outputStream, const char deviceHeader, const char commandHeader) {
+void ackCommand(OutputStream* outputStream, const unsigned char deviceHeader, const unsigned char commandHeader) {
     appendAck(outputStream);
     append(outputStream, deviceHeader);
     append(outputStream, commandHeader);

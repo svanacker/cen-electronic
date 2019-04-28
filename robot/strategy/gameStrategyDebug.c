@@ -129,8 +129,8 @@ void printGameTargetActionTable(OutputStream* outputStream, GameTargetAction* ga
 
     // ACTIONS
     appendActionTypeTableData(outputStream, gameTargetAction->type, GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_TYPE_NAME_COLUMN_LENGTH);
-    appendStringTableData(outputStream, gameTargetAction->startLocation->name, GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_START_LOCATION_NAME_COLUMN_LENGTH);
-    appendStringTableData(outputStream, gameTargetAction->endLocation->name, GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_END_LOCATION_NAME_COLUMN_LENGTH);
+    appendFixedCharArrayTableData(outputStream, &(gameTargetAction->startLocation->name), GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_START_LOCATION_NAME_COLUMN_LENGTH);
+    appendFixedCharArrayTableData(outputStream, &(gameTargetAction->endLocation->name), GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_END_LOCATION_NAME_COLUMN_LENGTH);
     appendActionStatusTableData(outputStream, gameTargetAction->status, GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_STATUS_COLUMN_LENGTH);
     appendDecfTableData(outputStream, gameTargetAction->timeToAchieve, GAME_STRATEGY_ITEM_LIST_TARGET_ACTION_TIME_TO_ACHIEVE_COLUMN_LENGTH);
 

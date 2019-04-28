@@ -77,9 +77,9 @@ typedef int DeviceInterfaceMode;
 */
 typedef struct DeviceArgument {
     /** The type of argument (see below). */
-    char type;
+    unsigned char type;
     /** The name of argument. */
-    char* name;
+    const char* name;
 } DeviceArgument;
 
 #define MAX_ARGUMENTS     40
@@ -96,11 +96,11 @@ typedef struct DeviceArgument {
 */
 typedef struct DeviceMethodMetaData {
     /** The name of the function. */
-    char* functionName;
+    const char* functionName;
     /** An array of arguments */
     DeviceArgument arguments[MAX_ARGUMENTS];
     /** The size of argument Size. */
-    char argumentsSize;
+    unsigned char argumentsSize;
     /** An array of return arguments */
     DeviceArgument results[MAX_RETURNS];
     /** The size of returns Size. */
@@ -207,19 +207,19 @@ int getLengthOfType(int parameterType);
 * @param argumentsSize the number of arguments (NOT the length of the marshalled string !)
 * @param resultsSize the number of results (NOT the length of the marshalled string !)
 */
-void setFunction(char* functionName, int argumentsSize, int resultsSize);
+void setFunction(const char* functionName, int argumentsSize, int resultsSize);
 
 /**
  * Set the notification name and the size of all arguments.
  * Internally, use the same structure than the Function.
  */
-void setNotification(char* notificationName, int notificationArguments);
+void setNotification(const char* notificationName, int notificationArguments);
 
 /**
 * Set the function Name and the size of all argument to 0.
 * @param functionName the name of the function (as remote method name)
 */
-void setFunctionNoArgumentAndNoResult(char* functionName);
+void setFunctionNoArgumentAndNoResult(const char* functionName);
 
 /**
  * Returns depending on the input mode, the input length or the outputLength.
@@ -232,55 +232,55 @@ int commandLengthValueForMode(DeviceInterfaceMode mode, int inputResult, int out
 /**
 * Set the argument of the deviceArgumentList with index for type/name
 */
-void setArgument(int index, int type, char* name);
+void setArgument(int index, int type, const char* name);
 
 /**
 * Set the argument of the deviceArgumentList with index for name
 */
-void setArgumentUnsignedChar1(int index, char* name);
+void setArgumentUnsignedChar1(int index, const char* name);
 
 /**
 * Set the argument of the deviceArgumentList with index for name
 */
-void setArgumentUnsignedHex2(int index, char* name);
+void setArgumentUnsignedHex2(int index, const char* name);
 
 /**
 * Set the argument of the deviceArgumentList with index for name
 */
-void setArgumentSignedHex2(int index, char* name);
+void setArgumentSignedHex2(int index, const char* name);
 
 /**
 * Set the argument of the deviceArgumentList with index for name
 */
-void setArgumentUnsignedHex4(int index, char* name);
+void setArgumentUnsignedHex4(int index, const char* name);
 
 /**
 * Set the argument of the deviceArgumentList with index for name
 */
-void setArgumentSignedHex4(int index, char* name);
+void setArgumentSignedHex4(int index, const char* name);
 
 /**
 * Set the argument of the deviceArgumentList with index for name
 */
-void setArgumentUnsignedHex6(int index, char* name);
+void setArgumentUnsignedHex6(int index, const char* name);
 
 /**
  * Set the argument of the deviceArgumentList with index for name.
  */
-void setArgumentFixedCharArray(int index, char* name);
+void setArgumentFixedCharArray(int index, const char* name);
 /**
 * Set the argument of the deviceArgumentList with index for name.
 */
-void setArgumentFloatHex2(int index, char* name);
+void setArgumentFloatHex2(int index, const char* name);
 
 /**
 * Set the argument of the deviceArgumentList with index for name.
 */
-void setArgumentFloatHex4(int index, char* name);
+void setArgumentFloatHex4(int index, const char* name);
 /**
 * Set the argument of the deviceArgumentList with index for name.
 */
-void setArgumentFloatHex6(int index, char* name);
+void setArgumentFloatHex6(int index, const char* name);
 
 /**
 * Set argument with index to a separator ("-")
@@ -292,52 +292,52 @@ void setArgumentSeparator(int index);
 /**
 * Set the result of the deviceMethodMetaData with index for type/name
 */
-void setResult(int index, int type, char* name);
+void setResult(int index, int type, const char* name);
 
 /**
 * Set the argument of the deviceMethodMetaData with index for name
 */
-void setResultUnsignedChar1(int index, char* name);
+void setResultUnsignedChar1(int index, const char* name);
 
 /**
 * Set the result of the deviceMethodMetaData with index for name
 */
-void setResultUnsignedHex2(int index, char* name);
+void setResultUnsignedHex2(int index, const char* name);
 
 /**
 * Set the result of the deviceMethodMetaData with index for name
 */
-void setResultSignedHex2(int index, char* name);
+void setResultSignedHex2(int index, const char* name);
 
 /**
 * Set the result of the deviceMethodMetaData with index for name
 */
-void setResultUnsignedHex4(int index, char* name);
+void setResultUnsignedHex4(int index, const char* name);
 
 /**
 * Set the result of the deviceMethodMetaData with index for name
 */
-void setResultUnsignedHex6(int index, char* name);
+void setResultUnsignedHex6(int index, const char* name);
 
 /**
 *  Set the result of the deviceMethodMetaData with index for name
 */
-void setResultFixedCharArray(int index, char* name);
+void setResultFixedCharArray(int index, const char* name);
 
 /**
 *  Set the result of the deviceMethodMetaData with index for name
 */
-void setResultFloatHex2(int index, char* name);
+void setResultFloatHex2(int index, const char* name);
 
 /**
 *  Set the result of the deviceMethodMetaData with index for name
 */
-void setResultFloatHex4(int index, char* name);
+void setResultFloatHex4(int index, const char* name);
 
 /**
 *  Set the result of the deviceMethodMetaData with index for name
 */
-void setResultFloatHex6(int index, char* name);
+void setResultFloatHex6(int index, const char* name);
 
 /**
 * Set result with index to a separator ("-")
@@ -355,7 +355,7 @@ typedef const char* deviceGetNameFunction(void);
 * @param fillDeviceArgumentList if true, the function will update the argumentList
 * Returns a value >= 0 if the device handle this char, and -1, if it's not handled
 */
-typedef int deviceGetInterfaceFunction(char commandHeader,
+typedef int deviceGetInterfaceFunction(unsigned char commandHeader,
                                         DeviceInterfaceMode mode,
                                         bool fillDeviceArgumentList);
 
@@ -369,7 +369,7 @@ typedef struct DeviceInterface{
      * The header of the Device. Each device must have its own name.
      * @see https://github.com/svanacker/cen-electronic/wiki/Device-Header-List
      */
-    char deviceHeader;
+    unsigned char deviceHeader;
     /**
      * Gets the error Code during initialization, 0 if the device has no error.
      */

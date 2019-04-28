@@ -50,7 +50,7 @@ void notifyAbsolutePositionWithoutHeader(OutputStream* notificationOutputStream,
     }
 }
 
-void deviceTrajectoryHandleRawData(char header,
+void deviceTrajectoryHandleRawData(unsigned char header,
         InputStream* inputStream,
         OutputStream* outputStream,
         OutputStream* notificationOutputStream) {

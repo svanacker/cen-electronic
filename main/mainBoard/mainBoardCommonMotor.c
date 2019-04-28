@@ -42,24 +42,24 @@
 #include "../../client/motion/simple/clientMotion.h"
 
 // serial link Motor
-static char motorInputBufferArray[MAIN_BOARD_MOTOR_INPUT_BUFFER_LENGTH];
+static unsigned char motorInputBufferArray[MAIN_BOARD_MOTOR_INPUT_BUFFER_LENGTH];
 static Buffer motorInputBuffer;
-static char motorOutputBufferArray[MAIN_BOARD_MOTOR_OUTPUT_BUFFER_LENGTH];
+static unsigned char motorOutputBufferArray[MAIN_BOARD_MOTOR_OUTPUT_BUFFER_LENGTH];
 static Buffer motorOutputBuffer;
 static OutputStream motorOutputStream;
 static StreamLink motorSerialStreamLink;
 
 
 // serial link Motor Notification
-static char motorNotifyInputBufferArray[MAIN_BOARD_MOTOR_NOTIFY_INPUT_BUFFER_LENGTH];
+static unsigned char motorNotifyInputBufferArray[MAIN_BOARD_MOTOR_NOTIFY_INPUT_BUFFER_LENGTH];
 static Buffer motorNotifyInputBuffer;
-static char motorNotifyOutputBufferArray[MAIN_BOARD_MOTOR_NOTIFY_OUTPUT_BUFFER_LENGTH];
+static unsigned char motorNotifyOutputBufferArray[MAIN_BOARD_MOTOR_NOTIFY_OUTPUT_BUFFER_LENGTH];
 static Buffer motorNotifyOutputBuffer;
 static OutputStream motorNotifyOutputStream;
 static StreamLink motorNotifySerialStreamLink;
 
 // FORWARD DECLARATION
-void mainBoardDeviceHandleTestDeviceNotification(const Device* device, const char commandHeader, InputStream* notificationInputStream) {
+void mainBoardDeviceHandleTestDeviceNotification(const Device* device, const unsigned char commandHeader, InputStream* notificationInputStream) {
     if (device->deviceInterface->deviceHeader == TEST_DEVICE_HEADER) {
         if (commandHeader == NOTIFY_TEST) {
             unsigned int value = readHex2(notificationInputStream);

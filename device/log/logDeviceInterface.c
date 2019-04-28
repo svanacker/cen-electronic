@@ -8,7 +8,7 @@ const char* deviceLogGetName(void) {
     return "log";
 }
 
-int deviceLogGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
+int deviceLogGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     if (commandHeader == COMMAND_GET_LOG_COUNT) {
        if (fillDeviceArgumentList) {
             setFunction("getLogCount", 0, 1);

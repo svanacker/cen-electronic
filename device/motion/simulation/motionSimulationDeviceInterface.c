@@ -10,7 +10,7 @@ const char* deviceMotionSimulationGetName(void) {
     return "motionSimulation";
 }
 
-int deviceMotionSimulationGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
+int deviceMotionSimulationGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     if (commandHeader == COMMAND_MOTION_SIMULATION_GET) {
         if (fillDeviceArgumentList) {
             setFunction("getMotionSimulation", 0, 3);

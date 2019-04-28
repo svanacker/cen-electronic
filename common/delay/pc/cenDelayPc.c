@@ -42,7 +42,7 @@ void delayUs(void) {
     }
 }
 
-void delay10us(char value) {
+void delay10us(unsigned char value) {
     initPerformanceCounter();
     LARGE_INTEGER StartingTime;
 
@@ -55,7 +55,7 @@ void delay10us(char value) {
     }
 }
 
-void delay100us(char value) {
+void delay100us(unsigned char value) {
     initPerformanceCounter();
 
     LARGE_INTEGER StartingTime;

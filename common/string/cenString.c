@@ -20,8 +20,8 @@ bool fixedCharArrayEquals(FixedCharArray* fixedCharArray1, FixedCharArray* fixed
     char* cPointer2 = (char*)fixedCharArray2;
 
     for (i = 0; i < FIXED_CHAR_ARRAY_LENGTH; i++) {
-        char c1 = *cPointer1;
-        char c2 = *cPointer2;
+        unsigned char c1 = *cPointer1;
+        unsigned char c2 = *cPointer2;
         cPointer1++;
         cPointer2++;
 

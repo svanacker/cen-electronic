@@ -20,7 +20,7 @@
 */
 DriverDataDispatcher* addUartDriverDataDispatcher(
                             StreamLink* streamLink,
-                            char* dispatcherName,
+                            const char* dispatcherName,
                             unsigned int targetUartIndex);
 
 #endif

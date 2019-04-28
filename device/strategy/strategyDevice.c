@@ -58,7 +58,7 @@ bool isStrategyDeviceOk(void) {
     return true;
 }
 
-void deviceStrategyHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
+void deviceStrategyHandleRawData(unsigned char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     if (commandHeader == COMMAND_STRATEGY_GET_OPPONENT_ROBOT_POSITION) {
         ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_STRATEGY_GET_OPPONENT_ROBOT_POSITION);
         // data

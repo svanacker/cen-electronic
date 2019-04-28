@@ -25,6 +25,6 @@ void appendDoubleWord(OutputStream* outputStream, unsigned long value);
  * @param outputStream the outputStream in which we write the value
  * @param value the value that we want to write
  */
-void appendByte(OutputStream* outputStream, char value);
+void appendByte(OutputStream* outputStream, unsigned char value);
 
 #endif

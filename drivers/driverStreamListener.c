@@ -37,7 +37,7 @@ bool clearBufferIfNeeded(Buffer* inputBuffer) {
     int i;
     int inputBufferCount = getBufferElementsCount(inputBuffer);
     for (i = 0; i < inputBufferCount; i++) {
-        char bufferElement = bufferGetCharAtIndex(inputBuffer, i);
+        unsigned char bufferElement = bufferGetCharAtIndex(inputBuffer, i);
         if (bufferElement == HEADER_CLEAR_INPUT_STREAM) {
             deepClearBuffer(inputBuffer);
             return true;
@@ -59,7 +59,7 @@ bool clearBufferIfNeeded(Buffer* inputBuffer) {
 */
 bool filterFirstNextChar(Buffer* inputBuffer,  filterCharFunction* inputFilterChar) {
     // read the first char (but do not pop from the FIFO)
-    char deviceHeader = bufferGetCharAtIndex(inputBuffer, DEVICE_HEADER_INDEX);
+    unsigned char deviceHeader = bufferGetCharAtIndex(inputBuffer, DEVICE_HEADER_INDEX);
 
     if (inputFilterChar != NULL) {
         if (!inputFilterChar(deviceHeader, &deviceHeader)) {

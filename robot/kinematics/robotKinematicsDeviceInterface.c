@@ -7,7 +7,7 @@ const char* getKinematicsDeviceName(void) {
     return "Kinematics";
 }
 
-int deviceRobotKinematicsGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
+int deviceRobotKinematicsGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     if (commandHeader == COMMAND_KINEMATICS_LOAD_DEFAULT_VALUES) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("load Default Values");

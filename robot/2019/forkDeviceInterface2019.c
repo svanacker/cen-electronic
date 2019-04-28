@@ -9,7 +9,7 @@ const char* deviceFork2019GetName(void) {
     return "fork2019";
 }
 
-int deviceFork2019GetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
+int deviceFork2019GetInterface(unsigned char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     // ELEVATOR
     if (commandHeader == COMMAND_2019_ELEVATOR_BOTTOM) {
         if (fillDeviceArgumentList) {

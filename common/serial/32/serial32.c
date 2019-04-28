@@ -52,7 +52,7 @@ void closeSerial(enum SerialPort serialPort) {
     UARTEnable(uart, UART_DISABLE_FLAGS(UART_PERIPHERAL | UART_RX | UART_TX));
 }
 
-void serialPutc(enum SerialPort serialPort, char c) {
+void serialPutc(enum SerialPort serialPort, unsigned char c) {
     UART_MODULE uart = getUartModule(serialPort);
 
     while (!UARTTransmitterIsReady(uart)) {

@@ -40,7 +40,7 @@ bool devicePcIsOk(void) {
     return true;
 }
 
-void devicePcHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
+void devicePcHandleRawData(unsigned char header, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     if (header == COMMAND_PIPE_LIST) {
         // data
         ackCommand(outputStream, PC_DEVICE_HEADER, COMMAND_PIPE_LIST);

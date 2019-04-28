@@ -18,7 +18,7 @@ void mainBoardCommonMotorAddDevices(unsigned char serialIndex);
 /**
  * TODO
  */
-void mainBoardDeviceHandleMotionDeviceNotification(const Device* device, const char commandHeader, InputStream* inputStream);
+void mainBoardDeviceHandleMotionDeviceNotification(const Device* device, const unsigned char commandHeader, InputStream* inputStream);
 
 // DISPATCHER
 

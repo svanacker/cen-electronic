@@ -55,7 +55,7 @@ void notifyStarted(StartMatch* startMatch, OutputStream* pcOutputStream) {
     appendStringCRLF(getAlwaysOutputStreamLogger(), "Go !");
 }
 
-void deviceStartMatchDetectorHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
+void deviceStartMatchDetectorHandleRawData(unsigned char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     if (commandHeader == COMMAND_MATCH_IS_STARTED) {
         StartMatch* startMatch = getStartMatchDetectorStartMatchObject();
         int value = isMatchStarted(startMatch);

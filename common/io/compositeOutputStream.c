@@ -50,7 +50,7 @@ void _closeCompositeOutputStream(OutputStream* outputStream) {
     // don't do anything, only each leaf outputStream must be closed
 }
 
-void _compositeOutputStreamWriteChar(OutputStream* outputStream, char c) {
+void _compositeOutputStreamWriteChar(OutputStream* outputStream, unsigned char c) {
     int i;
     CompositeOutputStream* compositeOutputStream = getCompositeOutputStream(outputStream);
     int size = compositeOutputStream->size;

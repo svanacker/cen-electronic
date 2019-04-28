@@ -22,8 +22,8 @@ int _INA3221_readSensorValue(Current* current) {
     I2cBus* i2cBus = i2cBusConnection->i2cBus;   
     
     int result = 0;
-    char INA3221Msb = 0;
-    char INA3221Lsb = 0;
+    unsigned char INA3221Msb = 0;
+    unsigned char INA3221Lsb = 0;
 
     //I2C START 
     portableMasterStartI2C(i2cBusConnection);

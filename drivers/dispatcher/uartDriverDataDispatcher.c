@@ -28,7 +28,7 @@
 
 DriverDataDispatcher* addUartDriverDataDispatcher(
         StreamLink* streamLink,
-        char* dispatcherName,
+        const char* dispatcherName,
         unsigned int targetUartIndex) {
     Buffer* inputBuffer = streamLink->inputBuffer;
     InputStream* inputStream = getInputStream(inputBuffer);

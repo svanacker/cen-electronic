@@ -8,7 +8,7 @@
  * @param header the length of the header
  * @return -1 if we don't find any corresponding header, else the header length
  */
-unsigned int getWaitedDataLength(const char header);
+unsigned int getWaitedDataLength(const unsigned char header);
 
 /**
 * Find the device associated with the specified data header.
@@ -20,6 +20,6 @@ unsigned int getWaitedDataLength(const char header);
 * @return the descriptor of the handling device, NULL if no registered device 
 * can handle the data header
 */
-const Device* deviceDataDispatcherFindDevice(const char deviceHeader, const char commandHeader, const int dataLength, const DeviceInterfaceMode mode);
+const Device* deviceDataDispatcherFindDevice(const unsigned char deviceHeader, const unsigned char commandHeader, const int dataLength, const DeviceInterfaceMode mode);
 
 #endif

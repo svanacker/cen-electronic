@@ -35,7 +35,7 @@ bool isRobotConfigDeviceOk(void) {
     return true;
 }
 
-void deviceRobotConfigHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
+void deviceRobotConfigHandleRawData(unsigned char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     if (commandHeader == COMMAND_GET_CONFIG) {
         // can take a little time
         unsigned int config = getConfigValue(robotConfig);

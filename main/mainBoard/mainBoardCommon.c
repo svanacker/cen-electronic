@@ -204,9 +204,9 @@ static Current current;
 static SerialLink serialLinkListArray[MAIN_BOARD_SERIAL_LINK_LIST_LENGTH];
 
 // serial link DEBUG 
-static char debugInputBufferArray[MAIN_BOARD_DEBUG_INPUT_BUFFER_LENGTH];
+static unsigned char debugInputBufferArray[MAIN_BOARD_DEBUG_INPUT_BUFFER_LENGTH];
 static Buffer debugInputBuffer;
-static char debugOutputBufferArray[MAIN_BOARD_DEBUG_OUTPUT_BUFFER_LENGTH];
+static unsigned char debugOutputBufferArray[MAIN_BOARD_DEBUG_OUTPUT_BUFFER_LENGTH];
 static Buffer debugOutputBuffer;
 static OutputStream debugOutputStream;
 static StreamLink debugSerialStreamLink;
@@ -215,9 +215,9 @@ static StreamLink debugSerialStreamLink;
 
 // DRIVERS
 static Buffer driverRequestBuffer;
-static char driverRequestBufferArray[MAIN_BOARD_REQUEST_DRIVER_BUFFER_LENGTH];
+static unsigned char driverRequestBufferArray[MAIN_BOARD_REQUEST_DRIVER_BUFFER_LENGTH];
 static Buffer driverResponseBuffer;
-static char driverResponseBufferArray[MAIN_BOARD_RESPONSE_DRIVER_BUFFER_LENGTH];
+static unsigned char driverResponseBufferArray[MAIN_BOARD_RESPONSE_DRIVER_BUFFER_LENGTH];
 
 // DISPATCHER I2C
 static DriverDataDispatcher driverDataDispatcherListArray[MAIN_BOARD_DRIVER_DATA_DISPATCHER_LIST_LENGTH];

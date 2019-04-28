@@ -35,7 +35,7 @@ bool isBatteryDeviceOk(void) {
     return true;
 }
 
-void deviceBatteryHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
+void deviceBatteryHandleRawData(unsigned char header, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     _deviceBatteryCheckInitialized();
     if (header == COMMAND_READ_BATTERY) {
         ackCommand(outputStream, BATTERY_DEVICE_HEADER, COMMAND_READ_BATTERY);

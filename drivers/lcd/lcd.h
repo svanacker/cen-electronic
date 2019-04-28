@@ -25,14 +25,14 @@ void setCursorAtHome(void);
 * Set the cursor at the specified position (combinaison of row and line).
 * @param position 1 to 80 (Ex : 36 corresponds to the row 2 and the column 16 (1 * 20 + 16)
 */
-void setCursorPosition (char position);
+void setCursorPosition (unsigned char position);
 
 /**
 * Set the cursor at the specified row and column.
 * @param row row index between 1 and 4 = N° de la ligne de 1 à 4
 * @param column column index de 1 à 20
 */
-void setCursorRowAndColumn(char row, char column);
+void setCursorRowAndColumn(unsigned char row, unsigned char column);
 
 /**
 * Hide the cursor.
@@ -93,19 +93,19 @@ void clearColumnCursor (void);
 * Sets the size of a tabulation character (default value is 4).
 * @param tabulationSize size of tabulation (between 1 and 10)
 */
-void setTabulationSize (char tabulationSize);
+void setTabulationSize (unsigned char tabulationSize);
 
 /**
 * writes a character at the current position of the cursor.
 * @param c character to write on the LCD
 */
-void writeLCDChar (char c);
+void writeLCDChar (unsigned char c);
 
 /**
 * Send a command to the LCD.
 * @param command the command to send
 */
-void sendCommand (char command);
+void sendCommand (unsigned char command);
 
 // DEVICE INTERFACE
 

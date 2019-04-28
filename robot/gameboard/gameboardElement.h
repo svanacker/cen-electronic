@@ -10,36 +10,36 @@
 /**
  * Set a pixel on a gameboard at a coordinates.
  */
-void setGameBoardPixel(GameBoard* gameBoard, float x, float y, char c);
+void setGameBoardPixel(GameBoard* gameBoard, float x, float y, unsigned char c);
 
 // TEXT
-void drawString(GameBoard* gameBoard, float x, float y, char* s);
+void drawString(GameBoard* gameBoard, float x, float y, unsigned char* s);
 
 // POINTS
 
 /**
  * Print Function to draw a point with a c char. 
  */
-void drawPointCoordinates(GameBoard* gameBoard, float x, float y, char c);
+void drawPointCoordinates(GameBoard* gameBoard, float x, float y, unsigned char c);
 
-void drawPoint(GameBoard* gameBoard, Point* p, char value);
+void drawPoint(GameBoard* gameBoard, Point* p, unsigned char value);
 
 // LINE
 
-void drawLine(GameBoard* gameBoard, float x1, float y1, float x2, float y2, char value);
+void drawLine(GameBoard* gameBoard, float x1, float y1, float x2, float y2, unsigned char value);
 
 // CIRCLE
 
 /** 
  * Circle with radius draw function.
  */
-void drawCircle(GameBoard* gameBoard, float x, float y, float radius, char c);
+void drawCircle(GameBoard* gameBoard, float x, float y, float radius, unsigned char c);
 
 // RECTANGLE
 
 /**
 * Empty Rectangle draw function.
 */
-void drawRectangle(GameBoard* gameBoard, float x, float y, float width, float height, char verticalChar, char horizontalChar);
+void drawRectangle(GameBoard* gameBoard, float x, float y, float width, float height, unsigned char verticalChar, unsigned char horizontalChar);
 
 #endif

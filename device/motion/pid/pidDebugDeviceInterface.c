@@ -10,7 +10,7 @@ const char* getPidDebugDeviceName(void) {
     return "Pid Debug";
 }
 
-int devicePidDebugGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
+int devicePidDebugGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     // MOTION PARAMETERS DEBUG
     if (commandHeader == COMMAND_MOTION_PARAMETERS_DEBUG) {
 		if (fillDeviceArgumentList) {

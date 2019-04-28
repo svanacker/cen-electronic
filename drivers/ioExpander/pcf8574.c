@@ -17,10 +17,10 @@
 
 // BASE FUNCTION
 
-char isPCF8574Present(I2cBusConnection* i2cBusConnection) {
+unsigned char isPCF8574Present(I2cBusConnection* i2cBusConnection) {
     I2cBus* i2cBus = i2cBusConnection->i2cBus;
 
-    char result;
+    unsigned char result;
 
     portableMasterWaitSendI2C(i2cBusConnection);
     WaitI2C(i2cBus);

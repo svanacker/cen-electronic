@@ -7,7 +7,7 @@ const char* deviceI2cCommonDebugGetName(void) {
     return "i2cCommonDebug";
 }
 
-int deviceI2cCommonDebugGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
+int deviceI2cCommonDebugGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     if (commandHeader == COMMAND_I2C_COMMON_DEBUG_LIST_BUS) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("i2cDebugListBus");

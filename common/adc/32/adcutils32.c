@@ -51,8 +51,8 @@ void _initADC(){
     }
 }
 
-int getANX (char channel){
-    if (channel <= 0 || channel > getANXCount()) {
+int getANX (unsigned char channel){
+    if (channel == 0 || channel > getANXCount()) {
         writeError(ADC_BAD_INDEX);
         return 0;
     }

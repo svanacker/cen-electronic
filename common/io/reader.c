@@ -23,7 +23,7 @@
 // READ METHODS
 
 bool readBool(InputStream* inputStream) {
-    char c = inputStream->readChar(inputStream);
+    unsigned char c = inputStream->readChar(inputStream);
     if (c == '0') {
         return false;
     }
@@ -34,9 +34,9 @@ bool readBool(InputStream* inputStream) {
     return true;
 }
 
-char readFilteredChar(InputStream* inputStream) {
-    char b0 = inputStream->readChar(inputStream);
-    char result;
+unsigned char readFilteredChar(InputStream* inputStream) {
+    unsigned char b0 = inputStream->readChar(inputStream);
+    unsigned char result;
     if (filterBinaryToValueChar(b0, &result)) {
         return result;
     } else {
@@ -51,33 +51,33 @@ char readFilteredChar(InputStream* inputStream) {
     }
 }
 
-char readBinaryChar(InputStream* inputStream) {
-    char result = inputStream->readChar(inputStream);
+unsigned char readBinaryChar(InputStream* inputStream) {
+    unsigned char result = inputStream->readChar(inputStream);
     return result;
 }
 
 int readBinaryWord(InputStream* inputStream) {
-    char b0 = inputStream->readChar(inputStream);
-    char b1 = inputStream->readChar(inputStream);
+    unsigned char b0 = inputStream->readChar(inputStream);
+    unsigned char b1 = inputStream->readChar(inputStream);
     return (b0 << 8) | b1;
 }
 
 int readHex(InputStream* inputStream) {
-    char b0 = readFilteredChar(inputStream);
+    unsigned char b0 = readFilteredChar(inputStream);
     int result = hex2CharToInt(0, b0);
     return result;
 }
 
 int readHex2(InputStream* inputStream) {
-    char b0 = readFilteredChar(inputStream);
-    char b1 = readFilteredChar(inputStream);
+    unsigned char b0 = readFilteredChar(inputStream);
+    unsigned char b1 = readFilteredChar(inputStream);
     int result = hex2CharToInt(b0, b1);
     return result;
 }
 
 signed int readSignedHex2(InputStream* inputStream) {
-    char b0 = readFilteredChar(inputStream);
-    char b1 = readFilteredChar(inputStream);
+    unsigned char b0 = readFilteredChar(inputStream);
+    unsigned char b1 = readFilteredChar(inputStream);
     signed int result = hex2CharToInt(b0, b1);
     if (result > 0x7F) {
         result -= 0x100;
@@ -86,10 +86,10 @@ signed int readSignedHex2(InputStream* inputStream) {
 }
 
 long readHex4(InputStream* inputStream) {
-    char b0 = readFilteredChar(inputStream);
-    char b1 = readFilteredChar(inputStream);
-    char b2 = readFilteredChar(inputStream);
-    char b3 = readFilteredChar(inputStream);
+    unsigned char b0 = readFilteredChar(inputStream);
+    unsigned char b1 = readFilteredChar(inputStream);
+    unsigned char b2 = readFilteredChar(inputStream);
+    unsigned char b3 = readFilteredChar(inputStream);
     long result = hex4CharToLong(b0, b1, b2, b3);
     return result;
 }
@@ -103,12 +103,12 @@ signed long readSignedHex4(InputStream* inputStream) {
 }
 
 long readHex6(InputStream* inputStream) {
-    char b0 = readFilteredChar(inputStream);
-    char b1 = readFilteredChar(inputStream);
-    char b2 = readFilteredChar(inputStream);
-    char b3 = readFilteredChar(inputStream);
-    char b4 = readFilteredChar(inputStream);
-    char b5 = readFilteredChar(inputStream);
+    unsigned char b0 = readFilteredChar(inputStream);
+    unsigned char b1 = readFilteredChar(inputStream);
+    unsigned char b2 = readFilteredChar(inputStream);
+    unsigned char b3 = readFilteredChar(inputStream);
+    unsigned char b4 = readFilteredChar(inputStream);
+    unsigned char b5 = readFilteredChar(inputStream);
     long result = hex6CharToLong(b0, b1, b2, b3, b4, b5);
     return result;
 }
@@ -152,7 +152,7 @@ void readHexFixedCharArray(InputStream* inputStream, FixedCharArray* s) {
     int i;
     char* sPointer = (char*) s;
     for (i = 0; i < FIXED_CHAR_ARRAY_LENGTH; i++) {
-        char c = (char) readHex2(inputStream);
+        unsigned char c = (char) readHex2(inputStream);
         *sPointer = c;
         sPointer++;
     }
@@ -162,17 +162,17 @@ void readHexFixedCharArray(InputStream* inputStream, FixedCharArray* s) {
 // CHECK METHODS
 
 bool isAck(InputStream* inputStream) {
-    char ack = inputStream->readChar(inputStream);
+    unsigned char ack = inputStream->readChar(inputStream);
     return ack == COMMAND_ACK;
 }
 
-bool isChar(InputStream* inputStream, char expectedChar) {
-    char readChar = inputStream->readChar(inputStream);
+bool isChar(InputStream* inputStream, unsigned char expectedChar) {
+    unsigned char readChar = inputStream->readChar(inputStream);
     return readChar == expectedChar;
 }
 
 bool checkIsAck(InputStream* inputStream) {
-    char ack = inputStream->readChar(inputStream);
+    unsigned char ack = inputStream->readChar(inputStream);
     if (ack != COMMAND_ACK) {
         writeError(IO_READER_CHECK_CHAR_PROBLEM);
         OutputStream* outputStream = getErrorOutputStreamLogger();
@@ -184,8 +184,8 @@ bool checkIsAck(InputStream* inputStream) {
     return true;
 }
 
-bool checkIsChar(InputStream* inputStream, char expectedChar) {
-    char readChar = inputStream->readChar(inputStream);
+bool checkIsChar(InputStream* inputStream, unsigned char expectedChar) {
+    unsigned char readChar = inputStream->readChar(inputStream);
     if (expectedChar != readChar) {
         writeError(IO_READER_CHECK_CHAR_PROBLEM);
         OutputStream* outputStream = getErrorOutputStreamLogger();

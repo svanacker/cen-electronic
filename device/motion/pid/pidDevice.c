@@ -45,7 +45,7 @@ void stopPidDevice(void) {
 
 }
 
-void devicePidHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
+void devicePidHandleRawData(unsigned char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     // MOTION PARAMETERS
     if (commandHeader == COMMAND_GET_MOTION_PARAMETERS) {
         ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_GET_MOTION_PARAMETERS);

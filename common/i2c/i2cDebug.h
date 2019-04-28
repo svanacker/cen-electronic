@@ -39,10 +39,10 @@ void setDebugI2cEnabled(bool enabled);
  * @param debugI2cOutputBufferLength the length of the array of char used by the buffer to store I2C Output
  */
 void initI2CDebugBuffers(Buffer* aDebugI2cInputBuffer,
-                         char (*debugI2cInputBufferArray)[],
+                         unsigned char (*debugI2cInputBufferArray)[],
                          unsigned int debugI2cInputBufferLength,
                          Buffer* aDebugI2cOutputBuffer,
-                         char (*debugI2cOutputBufferArray)[],
+                         unsigned char (*debugI2cOutputBufferArray)[],
                          unsigned int debugI2cOutputBufferLength
 );
 

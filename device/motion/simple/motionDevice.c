@@ -107,7 +107,7 @@ void notifyFailed(OutputStream* outputStream) {
     internalNotify(outputStream, NOTIFY_MOTION_STATUS_FAILED, "failed");
 }
 
-void deviceMotionHandleRawData(char commandHeader,
+void deviceMotionHandleRawData(unsigned char commandHeader,
         InputStream* inputStream,
         OutputStream* outputStream,
         OutputStream* notificationOutputStream) {

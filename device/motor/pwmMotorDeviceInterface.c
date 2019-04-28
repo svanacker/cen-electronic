@@ -10,7 +10,7 @@ const char* getPwmMotorDeviceName(void) {
     return "PWM_MOTOR";
 }
 
-int deviceMotorGetInterface(char header, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
+int deviceMotorGetInterface(unsigned char header, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     if (header == COMMAND_MOVE_MOTOR) {
         if (fillDeviceArgumentList) {
             setFunction("runMotor", 2, 0);

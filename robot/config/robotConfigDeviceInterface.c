@@ -11,7 +11,7 @@ unsigned int getConfigSoftwareRevision(void) {
     return 1;
 }
 
-int deviceRobotConfigGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
+int deviceRobotConfigGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     if (commandHeader == COMMAND_GET_CONFIG) {
         if (fillDeviceArgumentList) {
             setFunction("getConfig", 0, 1);

@@ -23,14 +23,14 @@
  * @param inputStream the pointer on inputStream (POO simulation)
  * @return the char value of the inputStream
  */
-char readFilteredChar(InputStream* inputStream);
+unsigned char readFilteredChar(InputStream* inputStream);
 
 /**
  * Read a binary value as char of the inputStream without any filtering
  * @param inputStream the pointer on inputStream (POO simulation)
  * @return the value as char of the inputStream without any filtering
  */
-char readBinaryChar(InputStream* inputStream);
+unsigned char readBinaryChar(InputStream* inputStream);
 
 /**
  * Read 2 octets and convert it to int without any filtering.
@@ -137,7 +137,7 @@ bool isAck(InputStream* inputStream);
  * @param expectedChar the character that we want to check
  * @return true if the char is the right char, false else
  */
-bool isChar(InputStream* inputStream, char expectedChar);
+bool isChar(InputStream* inputStream, unsigned char expectedChar);
 
 /**
  * Check that the next char is a ack, and if not, write a DEBUG information
@@ -152,7 +152,7 @@ bool checkIsAck(InputStream* inputStream);
  * @param char expectedChar the character that we want to check
  * @return true if the data is the wanted char, false else
  */
-bool checkIsChar(InputStream* inputStream, char expectedChar);
+bool checkIsChar(InputStream* inputStream, unsigned char expectedChar);
 
 /**
  * Check that the next char is a separator

@@ -40,7 +40,7 @@ void stopPidDebugDevice(void) {
 
 }
 
-void devicePidDebugHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
+void devicePidDebugHandleRawData(unsigned char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
 	// MOTION PARAMETERS DEBUG
     if (commandHeader == COMMAND_MOTION_PARAMETERS_DEBUG) {
 		// send acknowledge

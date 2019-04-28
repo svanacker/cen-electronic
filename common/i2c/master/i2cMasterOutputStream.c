@@ -74,7 +74,7 @@ void _i2cMasterCloseOutputStream(OutputStream* outputStream) {
  * We don't write directly the char, because it's more efficient
  * to wait the end of data to send a array in i2c
  */
-void _writeCharI2C(OutputStream* outputStream, char c) {
+void _writeCharI2C(OutputStream* outputStream, unsigned char c) {
     Buffer* buffer = _i2cMasterGetOutputBuffer(outputStream);
 
     // Debug

@@ -10,7 +10,7 @@ const char* getPidDeviceName(void) {
     return "PID";
 }
 
-int devicePidGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
+int devicePidGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     // MOTION PARAMETERS
     if (commandHeader == COMMAND_GET_MOTION_PARAMETERS) {
         if (fillDeviceArgumentList) {

@@ -36,7 +36,7 @@ void printDebugBuffer(OutputStream* outputStream, Buffer* buffer) {
     char* sPointer = (char*) buffer->s;
     for (i = 0; i < buffer->length; i++) {
         // Shift to the right cell index
-        char c = *sPointer;
+        unsigned char c = *sPointer;
         if (c == 0) {
             // To avoid [00] on Console
             append(outputStream, '#');
@@ -62,7 +62,7 @@ void printDebugBuffer(OutputStream* outputStream, Buffer* buffer) {
     }
     unsigned elementCount = getBufferElementsCount(buffer);
     for (i = 0; i < elementCount; i++) {
-        char c = bufferGetCharAtIndex(buffer, i);
+        unsigned char c = bufferGetCharAtIndex(buffer, i);
         append(outputStream, c);
         // Multi line management
         if (i % CONSOLE_MAX_WIDTH == CONSOLE_MAX_WIDTH - 1) {

@@ -93,7 +93,7 @@ bool _i2cAvailableData(InputStream* inputStream) {
  * Be aware not to read before call to "availableDataFunction"
  * @private
  */
-char _readCharI2C(InputStream* inputStream) {
+unsigned char _readCharI2C(InputStream* inputStream) {
     Buffer* buffer = _i2cMasterInputStreamGetBuffer(inputStream);
     return bufferReadChar(buffer);
 }

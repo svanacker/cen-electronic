@@ -10,7 +10,7 @@ const char* getMD22MotorDeviceName(void) {
     return "MD22_MOTOR";
 }
 
-int deviceMD22GetInterface(char header, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
+int deviceMD22GetInterface(unsigned char header, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     if (header == COMMAND_MD22_MOVE) {
         if (fillDeviceArgumentList) {
             setFunction("runMotor", 2, 0);

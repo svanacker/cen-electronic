@@ -37,7 +37,7 @@ bool deviceServoIsOk(void) {
     return true;
 }
 
-void deviceServoHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
+void deviceServoHandleRawData(unsigned char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     // WRITE COMMANDS
     if (commandHeader == SERVO_COMMAND_WRITE) {
         ServoList* servoList = getServoDeviceServoList();

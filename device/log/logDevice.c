@@ -30,7 +30,7 @@ bool deviceLogIsOk(void) {
     return true;
 }
 
-void deviceLogHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
+void deviceLogHandleRawData(unsigned char header, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     if (header == COMMAND_GET_LOG_COUNT) {
         ackCommand(outputStream, LOG_DEVICE_HEADER, COMMAND_GET_LOG_COUNT);
         unsigned logCount = getLogHandlerCount(getLoggerInstance()->logHandlerList);

@@ -10,7 +10,7 @@ const char* deviceTimerGetName(void) {
     return "timer";
 }
 
-int deviceTimerGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
+int deviceTimerGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     if (commandHeader == COMMAND_TIMER_LIST) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("show Timer List");

@@ -9,7 +9,7 @@ const char* getAccelerometerDeviceName(void) {
     return "Accelerometer";
 }
 
-int deviceAccelerometerGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
+int deviceAccelerometerGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     if (commandHeader == COMMAND_ACCELEROMETER_GET_SAMPLE_COUNT) {
         if (fillDeviceArgumentList) {
             setFunction("getSampleCount", 0, 1);

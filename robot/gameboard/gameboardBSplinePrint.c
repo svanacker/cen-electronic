@@ -8,7 +8,7 @@
 /**
 * BSpline print function.
 */
-void bSplinePrint(GameBoard* gameBoard, BSplineCurve* bSplineCurve, char c) {
+void bSplinePrint(GameBoard* gameBoard, BSplineCurve* bSplineCurve, unsigned char c) {
     Point p;
     float t;
     for (t = 0.0f; t < 1.0f; t += 0.01f) {

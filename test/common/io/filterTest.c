@@ -127,3 +127,39 @@ void test_filterRemoveCRLF(void) {
     TEST_ASSERT_EQUAL(*outputPointer, CR);
 
 }
+
+void test_filterRemoveCRLF_255(void) {
+    char output;
+    char* outputPointer = &output;
+    bool actual;
+
+    // '\1' -> '\1'
+    actual = filterRemoveCRLF('\1', outputPointer);
+    TEST_ASSERT_TRUE(actual);
+    TEST_ASSERT_EQUAL(*outputPointer, '\1');
+
+    // 'a' -> 'a'
+    actual = filterRemoveCRLF('a', outputPointer);
+    TEST_ASSERT_TRUE(actual);
+    TEST_ASSERT_EQUAL(*outputPointer, 'a');
+
+    // LF -> LF but returns false
+    actual = filterRemoveCRLF(LF, outputPointer);
+    TEST_ASSERT_FALSE(actual);
+    TEST_ASSERT_EQUAL(*outputPointer, LF);
+
+    // CR -> CR but returns false
+    actual = filterRemoveCRLF(CR, outputPointer);
+    TEST_ASSERT_FALSE(actual);
+    TEST_ASSERT_EQUAL(*outputPointer, CR);
+
+    // "ÿ" = '\255'
+    actual = filterRemoveCRLF_255('ÿ', outputPointer);
+    TEST_ASSERT_FALSE(actual);
+    TEST_ASSERT_EQUAL(*outputPointer, 'ÿ');
+
+    // "ÿ" = '\255'
+    actual = filterRemoveCRLF_255('\255', outputPointer);
+    TEST_ASSERT_FALSE(actual);
+    TEST_ASSERT_EQUAL(*outputPointer, '\255');
+}

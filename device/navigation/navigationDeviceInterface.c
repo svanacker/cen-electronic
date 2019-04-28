@@ -8,7 +8,7 @@ const char* getNavigationDeviceName(void) {
     return "Navigation";
 }
 
-int deviceNavigationGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList){
+int deviceNavigationGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList){
     // Locations
     if (commandHeader == COMMAND_NAVIGATION_LOCATION_COUNT ) {
         if (fillDeviceArgumentList) {

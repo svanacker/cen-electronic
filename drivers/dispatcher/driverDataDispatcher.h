@@ -36,9 +36,9 @@ typedef struct DriverDataDispatcher {
     /** The corresponding Transmit mode */
     TransmitMode transmitMode;
     /** A name for debug. */
-    char* name;
+    const char* name;
     /** The address as char (for zigbee for example). */
-    char* addressString;
+    const char* addressString;
     /** The address (only for remote transmitMode). In case of addressString, address contains a checksum of addressString. */
     int address;
     /** inputStream (can be null). */

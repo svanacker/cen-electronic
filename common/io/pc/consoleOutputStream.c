@@ -15,7 +15,7 @@ void closeConsoleOutputStream(OutputStream* outputStream) {
 
 }
 
-void writeCharConsoleOutputStream(OutputStream* outputStream, char c) {
+void writeCharConsoleOutputStream(OutputStream* outputStream, unsigned char c) {
     putchar(c);
 }
 

@@ -12,7 +12,7 @@ const char* getStrategyDeviceName(void) {
     return "Strategy";
 }
 
-int deviceStrategyGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
+int deviceStrategyGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     // Robot opponent position
     if (commandHeader == COMMAND_STRATEGY_GET_OPPONENT_ROBOT_POSITION) {
         if (fillDeviceArgumentList) {

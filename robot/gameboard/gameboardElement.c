@@ -35,7 +35,7 @@ int convertYToLine(float y) {
 
 // BASE FUNCTIONS
 
-void setGameBoardPixel(GameBoard* gameBoard, float x, float y, char c) {
+void setGameBoardPixel(GameBoard* gameBoard, float x, float y, unsigned char c) {
     unsigned char column = convertXToColumn(x);
     unsigned char line = convertYToLine(y);
     gameBoard->pixels[column][line] = c;
@@ -44,13 +44,13 @@ void setGameBoardPixel(GameBoard* gameBoard, float x, float y, char c) {
 #endif
 }
 
-void setGameBoardArray(GameBoard* gameBoard, int column, int line, char c) {
+void setGameBoardArray(GameBoard* gameBoard, int column, int line, unsigned char c) {
     if (column >= 0 && column < GAMEBOARD_COLUMN_COUNT && line >= 0 && line < GAMEBOARD_LINE_COUNT)
     gameBoard->pixels[column][line] = c;
 }
 
 // TEXT
-void drawString(GameBoard* gameBoard, float x, float y, char* s) {
+void drawString(GameBoard* gameBoard, float x, float y, unsigned char* s) {
     unsigned int count = 2;
     unsigned char column = convertXToColumn(x);
     unsigned char line = convertYToLine(y);
@@ -63,17 +63,17 @@ void drawString(GameBoard* gameBoard, float x, float y, char* s) {
 
 // POINT
 
-void drawPoint(GameBoard* gameBoard, Point* p, char value) {
+void drawPoint(GameBoard* gameBoard, Point* p, unsigned char value) {
     setGameBoardPixel(gameBoard, p->x, p->y, value);
 }
 
-void drawPointCoordinates(GameBoard* gameBoard, float x, float y, char c) {
+void drawPointCoordinates(GameBoard* gameBoard, float x, float y, unsigned char c) {
     setGameBoardPixel(gameBoard, x, y, c);
 }
 
 // LINE
 
-void drawLine(GameBoard* gameBoard, float x1, float y1, float x2, float y2, char value) {
+void drawLine(GameBoard* gameBoard, float x1, float y1, float x2, float y2, unsigned char value) {
     float length = sqrtf((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
     float iteration = length / getXResolutionLength();
     if (getYResolutionLength() < getXResolutionLength()) {
@@ -94,7 +94,7 @@ void drawLine(GameBoard* gameBoard, float x1, float y1, float x2, float y2, char
 
 // CIRCLE
 
-void drawCircle(GameBoard* gameBoard, float x, float y, float radius, char c) {
+void drawCircle(GameBoard* gameBoard, float x, float y, float radius, unsigned char c) {
     float angle;
     for (angle = 0.0f; angle < PI * 2; angle += PI / 16) {
         float circleX = x + cosf(angle) * radius;
@@ -105,7 +105,7 @@ void drawCircle(GameBoard* gameBoard, float x, float y, float radius, char c) {
 
 // RECTANGLE
 
-void drawRectangle(GameBoard* gameBoard, float x, float y, float width, float height, char verticalChar, char horizontalChar) {
+void drawRectangle(GameBoard* gameBoard, float x, float y, float width, float height, unsigned char verticalChar, unsigned char horizontalChar) {
     // Horizontal Lines
     drawLine(gameBoard, x, y, x + width, y, horizontalChar);
     drawLine(gameBoard, x, y + height, x + width, y + height, horizontalChar);

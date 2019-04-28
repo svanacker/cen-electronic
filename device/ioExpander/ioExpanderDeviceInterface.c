@@ -9,7 +9,7 @@ const char* deviceIOExpanderGetName(void) {
     return "IO EXPANDER";
 }
 
-int deviceIOExpanderGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
+int deviceIOExpanderGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     if (commandHeader == COMMAND_IO_EXPANDER_WRITE_SINGLE_BIT) {
         if (fillDeviceArgumentList) {
             setFunction("Write Single Bit", 5, 0);

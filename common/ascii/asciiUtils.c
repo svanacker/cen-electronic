@@ -5,7 +5,7 @@
 #include "../../common/error/error.h"
 
 // Array of chars to do transformation
-static char LINE_CHARS_ASCII_ARRAY[4] = { '|', '\\', '-', '/' };
+static unsigned char LINE_CHARS_ASCII_ARRAY[4] = { '|', '\\', '-', '/' };
 
 /**
  * @private
@@ -23,22 +23,22 @@ unsigned int getQuadran(float angleInRadian) {
     return quadran;
 }
 
-char transformVerticalChar(float angleInRadian) {
+unsigned char transformVerticalChar(float angleInRadian) {
     unsigned int quadran = getQuadran(angleInRadian);
     return LINE_CHARS_ASCII_ARRAY[quadran];
 }
 
-char transformAntiSlashChar(float angleInRadian) {
+unsigned char transformAntiSlashChar(float angleInRadian) {
     unsigned int quadran = getQuadran(angleInRadian + 0.25f * PI);
     return LINE_CHARS_ASCII_ARRAY[quadran];
 }
 
-char transformHorizontalChar(float angleInRadian) {
+unsigned char transformHorizontalChar(float angleInRadian) {
     unsigned int quadran = getQuadran(angleInRadian + 0.5f * PI);
     return LINE_CHARS_ASCII_ARRAY[quadran];
 }
 
-char transformSlashChar(float angleInRadian) {
+unsigned char transformSlashChar(float angleInRadian) {
     unsigned int quadran = getQuadran(angleInRadian + 0.75f * PI);
     return LINE_CHARS_ASCII_ARRAY[quadran];
 }

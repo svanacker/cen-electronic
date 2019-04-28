@@ -97,7 +97,7 @@ unsigned int appendBoolAsStringTableData(OutputStream* outputStream, const bool 
     return length + appendSpaces(outputStream, columnSize - length) + 2;
 }
 
-unsigned int appendHex2TableData(OutputStream* outputStream, char value, int columnSize) {
+unsigned int appendHex2TableData(OutputStream* outputStream, unsigned char value, int columnSize) {
 	appendTableSeparator(outputStream);
 	appendSpace(outputStream);
 	appendHex2(outputStream, value);
@@ -152,7 +152,7 @@ unsigned int appendBinary8TableData(OutputStream* outputStream, unsigned int val
 	return appendSpaces(outputStream, columnSize - length) + 3;
 }
 
-unsigned int appendCharTableData(OutputStream* outputStream, const char c, int columnSize) {
+unsigned int appendCharTableData(OutputStream* outputStream, const unsigned char c, int columnSize) {
 	appendTableSeparator(outputStream);
 	appendSpace(outputStream);
 	append(outputStream, c);

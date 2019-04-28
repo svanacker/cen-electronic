@@ -9,7 +9,7 @@ const char* deviceColorSensorGetName(void) {
     return "COLOR SENSOR";
 }
 
-int deviceColorSensorGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
+int deviceColorSensorGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     if (commandHeader == COMMAND_COLOR_SENSOR_READ) {
         if (fillDeviceArgumentList) {
             setFunction("read Color Sensor", 0, 5);

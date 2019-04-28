@@ -22,7 +22,7 @@ typedef struct {
     /** A type if name are equals. */
 	const char* type;
     /** A pointer on an array of char. */
-    char (*s)[];
+    unsigned char (*s)[];
     /** The max length of the buffer. */
     unsigned int length;
     /** The pointer used to write Data (we write at the end). */
@@ -51,7 +51,7 @@ bool checkBufferNotNull(const Buffer* buffer);
  * @param type the type (as string) of the buffer (for debugging purpose). Often to distinguish IN or OUT buffer
  * @throws IO_BUFFER_NULL if the pointer is NULL
  */
-void initBuffer(Buffer* buffer, char (*s)[], unsigned int length, const char* name, const char* type);
+void initBuffer(Buffer* buffer, unsigned char (*s)[], unsigned int length, const char* name, const char* type);
 
 /**
  * Returns if a buffer is initialized or not.
@@ -135,7 +135,7 @@ int getBufferCapacity(const Buffer* buffer);
  * @throws IO_BUFFER_NULL if the pointer is NULL
  * @throws IO_BUFFER_EMPTY if not enough char in the buffer
  */
-char bufferReadChar(Buffer* buffer);
+unsigned char bufferReadChar(Buffer* buffer);
 
 /**
  * Get the char at the specified index, but DO NOT shift to this index (=> DO NOT REMOVE the char).
@@ -145,7 +145,7 @@ char bufferReadChar(Buffer* buffer);
  * @throws IO_BUFFER_NULL if the pointer is NULL
  * @throws IO_BUFFER_NOT_ENOUGH_DATA if not enough char in the buffer
  */
-char bufferGetCharAtIndex(const Buffer* buffer, int charIndex);
+unsigned char bufferGetCharAtIndex(const Buffer* buffer, int charIndex);
 
 /**
  * Append a character to the buffer (FIFO buffer).
@@ -154,7 +154,7 @@ char bufferGetCharAtIndex(const Buffer* buffer, int charIndex);
  * @throws IO_BUFFER_NULL if the pointer is NULL
  * @throws IO_BUFFER_FULL if not enough space
  */
-void bufferWriteChar(Buffer* buffer, char c);
+void bufferWriteChar(Buffer* buffer, unsigned char c);
 
 /**
  * @param buffer the buffer (simulates object programming).
@@ -164,7 +164,7 @@ void bufferWriteChar(Buffer* buffer, char c);
  * @throws IO_BUFFER_NULL if the pointer is NULL
  * @throws IO_BUFFER_ILLEGAL_INDEX_ACCESS if we try to access to an non existing char
  */
-bool bufferWriteCharAtIndex(const Buffer* buffer, int charIndex, char c);
+bool bufferWriteCharAtIndex(const Buffer* buffer, int charIndex, unsigned char c);
 
 /**
  * Get a compatible InputStream associated to the buffer.

@@ -14,7 +14,7 @@ const char* getGameboardDeviceName(void) {
     return "gameBoard";
 }
 
-int deviceGameBoardGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
+int deviceGameBoardGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     if (commandHeader == COMMAND_GAME_BOARD_PRINT) {
         // same input/output
         if (fillDeviceArgumentList) {

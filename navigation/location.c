@@ -1,5 +1,4 @@
 #include <stdlib.h>
-#include <string.h>
 
 #include "location.h"
 
@@ -11,5 +10,5 @@
 #include "location.h"
 
 bool locationEquals(Location* location1, Location* location2) {
-    return (strcmp(location1->name, location2->name) == 0);
+    return (location1 == location2);
 }

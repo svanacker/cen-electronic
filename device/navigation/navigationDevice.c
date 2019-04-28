@@ -43,7 +43,7 @@ bool isNavigationDeviceOk(void) {
     return true;
 }
 
-void deviceNavigationHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
+void deviceNavigationHandleRawData(unsigned char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     // Locations
     if (commandHeader == COMMAND_NAVIGATION_LOCATION_COUNT) {
         ackCommand(outputStream, NAVIGATION_DEVICE_HEADER, COMMAND_NAVIGATION_LOCATION_COUNT);

@@ -42,7 +42,7 @@ bool deviceSystemIsOk(void) {
     return true;
 }
 
-void deviceSystemHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
+void deviceSystemHandleRawData(unsigned char header, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     if (header == COMMAND_PING) {
         // data
         ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_PING);
@@ -75,7 +75,7 @@ void deviceSystemHandleRawData(char header, InputStream* inputStream, OutputStre
     }    
     else if (header == COMMAND_USAGE_SPECIFIC_DEVICE) {
          ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_USAGE_SPECIFIC_DEVICE);
-         char deviceHeader = readBinaryChar(inputStream);
+         unsigned char deviceHeader = readBinaryChar(inputStream);
          int size = getDeviceCount();
          int i;
          for (i = 0; i < size; i++) {

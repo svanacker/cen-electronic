@@ -131,14 +131,14 @@ void checkNavigationPathFinding1(void) {
     float actual = computeBestPath(&navigation, locationA, locationJ);
 
     // The shortest distance in this example is 487 (A-E-J)
-    TEST_ASSERT_EQUAL(487, actual);
+    TEST_ASSERT_EQUAL_FLOAT(487.0f, actual);
 
     // TEST IF WE GO FROM A TO E TO J !
     tmpLocation = locationA->computedNextLocation;
-    TEST_ASSERT_EQUAL(locationE, tmpLocation);
+    TEST_ASSERT_EQUAL_PTR(locationE, tmpLocation);
 
     tmpLocation = tmpLocation->computedNextLocation;
-    TEST_ASSERT_EQUAL(locationJ, tmpLocation);
+    TEST_ASSERT_EQUAL_PTR(locationJ, tmpLocation);
 
     tmpLocation = tmpLocation->computedNextLocation;
     TEST_ASSERT_NULL(tmpLocation);
@@ -154,27 +154,27 @@ void checkNavigationPathFinding2(void) {
     initNavigationTest();
 
     // locations
-    locationS = addNavigationLocation(&navigation, "S", 0, 0);
-    locationU = addNavigationLocation(&navigation, "U", 0, 0);
-    locationX = addNavigationLocation(&navigation, "X", 0, 0);
-    locationV = addNavigationLocation(&navigation, "V", 0, 0);
-    locationY = addNavigationLocation(&navigation, "Y", 0, 0);
+    locationS = addNavigationLocation(&navigation, "S", 0.0f, 0.0f);
+    locationU = addNavigationLocation(&navigation, "U", 0.0f, 0.0f);
+    locationX = addNavigationLocation(&navigation, "X", 0.0f, 0.0f);
+    locationV = addNavigationLocation(&navigation, "V", 0.0f, 0.0f);
+    locationY = addNavigationLocation(&navigation, "Y", 0.0f, 0.0f);
 
     // paths
-    pathSU = addNavigationPath(&navigation, locationS, locationU, 10, 0, 0, 0, 0, 0, 0);
-    pathUV = addNavigationPath(&navigation, locationU, locationV, 1, 0, 0, 0, 0, 0, 0);
-    pathVY = addNavigationPath(&navigation, locationV, locationY, 4, 0, 0, 0, 0, 0, 0);
-    pathYV = addNavigationPath(&navigation, locationY, locationV, 6, 0, 0, 0, 0, 0, 0);
-    pathXY = addNavigationPath(&navigation, locationX, locationY, 2, 0, 0, 0, 0, 0, 0);
-    pathXU = addNavigationPath(&navigation, locationX, locationU, 3, 0, 0, 0, 0, 0, 0);
-    pathUX = addNavigationPath(&navigation, locationU, locationX, 2, 0, 0, 0, 0, 0, 0);
-    pathSX = addNavigationPath(&navigation, locationS, locationX, 5, 0, 0, 0, 0, 0, 0);
-    pathXV = addNavigationPath(&navigation, locationX, locationV, 9, 0, 0, 0, 0, 0, 0);
-    pathYS = addNavigationPath(&navigation, locationY, locationS, 7, 0, 0, 0, 0, 0, 0);
+    pathSU = addNavigationPath(&navigation, locationS, locationU, 10.0f, 0, 0, 0, 0, 0, 0);
+    pathUV = addNavigationPath(&navigation, locationU, locationV, 1.0f, 0, 0, 0, 0, 0, 0);
+    pathVY = addNavigationPath(&navigation, locationV, locationY, 4.0f, 0, 0, 0, 0, 0, 0);
+    pathYV = addNavigationPath(&navigation, locationY, locationV, 6.0f, 0, 0, 0, 0, 0, 0);
+    pathXY = addNavigationPath(&navigation, locationX, locationY, 2.0f, 0, 0, 0, 0, 0, 0);
+    pathXU = addNavigationPath(&navigation, locationX, locationU, 3.0f, 0, 0, 0, 0, 0, 0);
+    pathUX = addNavigationPath(&navigation, locationU, locationX, 2.0f, 0, 0, 0, 0, 0, 0);
+    pathSX = addNavigationPath(&navigation, locationS, locationX, 5.0f, 0, 0, 0, 0, 0, 0);
+    pathXV = addNavigationPath(&navigation, locationX, locationV, 9.0f, 0, 0, 0, 0, 0, 0);
+    pathYS = addNavigationPath(&navigation, locationY, locationS, 7.0f, 0, 0, 0, 0, 0, 0);
 
     // First test
     float actual = computeBestPath(&navigation, locationS, locationS);
-    TEST_ASSERT_EQUAL(0, actual);
+    TEST_ASSERT_EQUAL_FLOAT(0.0f, actual);
 
     // Second test : ignore in implementation the sens of location (we find the min cost between A->B or B->A
     actual = computeBestPath(&navigation, locationS, locationY);
@@ -183,4 +183,5 @@ void checkNavigationPathFinding2(void) {
     // Third test : ignore in implementation the sens of location (we find the min cost between A->B or B->A
     actual = computeBestPath(&navigation, locationY, locationS);
     TEST_ASSERT_EQUAL(7, actual);
+    TEST_ASSERT_EQUAL_FLOAT(0.0f, actual);
 }

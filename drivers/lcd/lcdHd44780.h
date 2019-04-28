@@ -69,24 +69,24 @@ void hd44780_initLcd (void);
 /**
 * Envoie une commande à l'afficheur sur 8bits
 */
-void hd44780_sendComLcd (char value);
+void hd44780_sendComLcd (unsigned char value);
 
 
 /**
 * Envoie une commande à l'afficheur lors de l'initialisation sur 4bits
 */
-void hd44780_sendIniComLcd (char D7, char D6, char D5, char D4);
+void hd44780_sendIniComLcd (unsigned char D7, unsigned char D6, unsigned char D5, unsigned char D4);
 
 /**
 * Envoie une data à l'afficheur
 */
-void hd44780_sendDataLcd (char DataLcd );
+void hd44780_sendDataLcd (unsigned char DataLcd );
 
 /**
-* Affiche une chaine de texte
-* @param texte à transmettre
+* Show a string
+* @param text to send
 */
-void hd44780_writeString ( char *texte );
+void hd44780_writeString ( const char *text );
 
 /**
 * Affiche une chaine de texte
@@ -94,14 +94,14 @@ void hd44780_writeString ( char *texte );
 * @param colonne
 * @param ligne
 */
-void hd44780_affTexteLcdXY( char *texte, char colonneLcd,char ligneLcd );
+void hd44780_affTexteLcdXY( const char *text, unsigned char colonneLcd, unsigned char ligneLcd );
 
 /**
 * Set the cursor at the specified row and column.
 * @param row row index between 1 and 4 = N° de la ligne de 1 à 4
 * @param column column index de 1 à 20
 */
-void hd44780_setCursorRowAndColumn(char row, char column);
+void hd44780_setCursorRowAndColumn(unsigned char row, unsigned char column);
 
 /**
 * Hide the cursor.
@@ -137,6 +137,6 @@ void hd44780_clearScreen ( void );
 * Affiche un caractere à la position actuel du curseur et décal de 1 le curseur
 * @param Caractère à afficher
 */
-void hd44780_writeChar ( char carac );
+void hd44780_writeChar ( unsigned char carac );
 
 #endif

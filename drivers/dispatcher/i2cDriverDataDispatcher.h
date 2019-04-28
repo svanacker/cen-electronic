@@ -24,9 +24,9 @@
 * @return the created structure to store information about dispatcher
 */
 DriverDataDispatcher* addI2CDriverDataDispatcher(
-        char* dispatcherName,
+        const char* dispatcherName,
         Buffer* i2cMasterInputBuffer,
-        char (*i2cMasterInputBufferArray)[],
+        unsigned char (*i2cMasterInputBufferArray)[],
         unsigned char i2cMasterInputBufferLength,
         OutputStream* i2cMasterOutputStream,
         InputStream* i2cMasterInputStream,

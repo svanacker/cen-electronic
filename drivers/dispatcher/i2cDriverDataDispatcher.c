@@ -28,15 +28,15 @@
  */
 // temp buffer, shared by every i2cDriverDataDispatcher
 // useful only for copyInputToOutputStream !
-static char i2cTempBufferArray[I2C_DRIVER_DATA_DISPATCHER_BUFFER_LENGTH];
+static unsigned char i2cTempBufferArray[I2C_DRIVER_DATA_DISPATCHER_BUFFER_LENGTH];
 static Buffer i2cTempBuffer;
 static I2cMasterOutputStream i2cMasterOutputStream;
 static I2cMasterInputStream i2cMasterInputStream;
 
 DriverDataDispatcher* addI2CDriverDataDispatcher(
-        char* dispatcherName,
+        const char* dispatcherName,
         Buffer* i2cMasterInputBuffer,
-        char (*i2cMasterInputBufferArray)[],
+        unsigned char (*i2cMasterInputBufferArray)[],
         unsigned char i2cMasterInputBufferLength,
         OutputStream* outputStream,
         InputStream* inputStream,
@@ -44,11 +44,11 @@ DriverDataDispatcher* addI2CDriverDataDispatcher(
 
 
     // Init the output Stream : I2C Master -> I2C Slave(address)
-    initBuffer(&i2cTempBuffer, (char(*)[]) &i2cTempBufferArray, I2C_DRIVER_DATA_DISPATCHER_BUFFER_LENGTH, "I2C Master Output", "global");
+    initBuffer(&i2cTempBuffer, (unsigned char(*)[]) &i2cTempBufferArray, I2C_DRIVER_DATA_DISPATCHER_BUFFER_LENGTH, "I2C Master Output", "global");
     initMasterI2cOutputStream(&i2cMasterOutputStream, i2cBusConnection, outputStream, &i2cTempBuffer);
 
     // Init the input Stream : I2C Slave (address) -> I2C Master
-    initBuffer(i2cMasterInputBuffer, i2cMasterInputBufferArray, i2cMasterInputBufferLength, "I2C Master Input", dispatcherName);
+    initBuffer(i2cMasterInputBuffer, (unsigned char(*)[]) i2cMasterInputBufferArray, i2cMasterInputBufferLength, "I2C Master Input", dispatcherName);
     initMasterI2cInputStream(&i2cMasterInputStream, i2cBusConnection, i2cMasterInputBuffer, inputStream);
 
     // Clear previous data to avoid buffer from the other board provided by error at the initialization

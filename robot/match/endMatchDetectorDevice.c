@@ -40,7 +40,7 @@ bool isEndMatchDetectorDeviceOk(void) {
     return true;
 }
 
-void deviceEndMatchDetectorHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
+void deviceEndMatchDetectorHandleRawData(unsigned char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     // DEBUG
     if (commandHeader == COMMAND_END_MATCH_DETECTOR_DEBUG) {
         ackCommand(outputStream, END_MATCH_DETECTOR_DEVICE_HEADER, COMMAND_END_MATCH_DETECTOR_DEBUG);

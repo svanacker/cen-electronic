@@ -53,7 +53,7 @@ IOExpander* readIOExpanderFromInputStream(InputStream* inputStream) {
 }
 
 
-void deviceIOExpanderHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
+void deviceIOExpanderHandleRawData(unsigned char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     // ALL BITS
     if (commandHeader == COMMAND_IO_EXPANDER_READ_VALUE) {
         ackCommand(outputStream, IO_DEVICE_HEADER, COMMAND_IO_EXPANDER_READ_VALUE);

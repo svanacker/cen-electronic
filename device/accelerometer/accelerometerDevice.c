@@ -33,7 +33,7 @@ bool isAccelerometerDeviceOk ( void ) {
     return true;
 }
 
-void deviceAccelerometerHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
+void deviceAccelerometerHandleRawData(unsigned char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     // SAMPLE COUNT
     if (commandHeader == COMMAND_ACCELEROMETER_GET_SAMPLE_COUNT) {
         ackCommand(outputStream, ACCELEROMETER_DEVICE_HEADER, COMMAND_ACCELEROMETER_GET_SAMPLE_COUNT);

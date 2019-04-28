@@ -64,10 +64,10 @@ unsigned int printArgument(OutputStream* outputStream, DeviceArgument* deviceArg
 	appendStringTableData(outputStream, "", DEVICE_USAGE_IO_COLUMN_LENGTH);
 	appendStringTableData(outputStream, "", DEVICE_USAGE_IO_SIZE_COLUMN_LENGTH);
 
-    char* argumentName = deviceArgument->name;
+    const char* argumentName = deviceArgument->name;
 	appendStringTableData(outputStream, argumentName, DEVICE_USAGE_PARAM_NAME_COLUMN_LENGTH);
 
-    char type = deviceArgument->type;
+    unsigned char type = deviceArgument->type;
 
 	unsigned int result = getLengthOfType(type);
 	appendDecTableData(outputStream, result, DEVICE_USAGE_PARAM_SIZE_COLUMN_LENGTH);
@@ -87,7 +87,7 @@ unsigned int printArgument(OutputStream* outputStream, DeviceArgument* deviceArg
  * @private
  * @return true if it's ok, false if there is an error
  */
-bool printMethodOrNotificationMetaData(OutputStream* outputStream, DeviceInterface* deviceInterface, char commandHeader, char argumentLength, char resultLength, bool notification) {
+bool printMethodOrNotificationMetaData(OutputStream* outputStream, DeviceInterface* deviceInterface, unsigned char commandHeader, unsigned char argumentLength, unsigned char resultLength, bool notification) {
     bool result = true;
     if (argumentLength != DEVICE_HEADER_NOT_HANDLED) {
         DeviceMethodMetaData* deviceMethodMetaData = getDeviceMethodMetaData();
@@ -183,7 +183,7 @@ bool printMethodOrNotificationMetaData(OutputStream* outputStream, DeviceInterfa
 /**
  * @private
  */
-void printDeviceUsageLine(OutputStream* outputStream, char header, Device* device, bool showOnlyProblem) {
+void printDeviceUsageLine(OutputStream* outputStream, unsigned char header, Device* device, bool showOnlyProblem) {
     DeviceInterface* deviceInterface = device->deviceInterface;
 
     int argumentLength = deviceInterface->deviceGetInterface(header, DEVICE_MODE_INPUT, true);
@@ -209,7 +209,7 @@ void printDeviceHeader(OutputStream* outputStream, Device* device) {
 	println(outputStream);
 	appendTableHeaderSeparatorLine(outputStream);
 	int length = appendStringTableData(outputStream, deviceName, 0);
-	char deviceHeader = deviceInterface->deviceHeader;
+	unsigned char deviceHeader = deviceInterface->deviceHeader;
 	appendString(outputStream, " : ");
 	append(outputStream, deviceHeader);
 	appendSpaces(outputStream, PRINT_TABLE_WRITER_DEFAULT_PAGE_CHAR_WIDTH - length - 5);
@@ -232,7 +232,7 @@ void printDeviceHeader(OutputStream* outputStream, Device* device) {
 
 void printDeviceUsage(OutputStream* outputStream, Device* device, bool showOnlyProblem) {
 	printDeviceHeader(outputStream, device);
-    char header;
+    unsigned char header;
     // We start after special characters and use only ANSI chars
 	// We must search, because there is no list of header provided, we provide a char, and after this is catch (or not) by the device
     for (header = 32; header < 127; header++) {
@@ -255,7 +255,7 @@ void printDeviceListUsage(OutputStream* outputStream, bool showOnlyProblem) {
 /**
  * @private
  */
-void printDeviceNotificationLine(OutputStream* outputStream, char header, Device* device) {
+void printDeviceNotificationLine(OutputStream* outputStream, unsigned char header, Device* device) {
     DeviceInterface* deviceInterface = device->deviceInterface;
 
     int argumentLength = deviceInterface->deviceGetInterface(header, DEVICE_MODE_NOTIFY, true);
@@ -266,7 +266,7 @@ void printDeviceNotificationLine(OutputStream* outputStream, char header, Device
  * @private
  */
 void printDeviceNotification(OutputStream* outputStream, Device* device) {
-	char header;
+	unsigned char header;
 	// Not all Device have notification, so we check it before
 	for (header = 32; header < 127; header++) {
 		DeviceInterface* deviceInterface = device->deviceInterface;

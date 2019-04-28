@@ -14,9 +14,9 @@
 #include "../../drivers/dispatcher/uartDriverDataDispatcher.h"
 
 // serial link Meca1
-static char meca1InputBufferArray[MAIN_BOARD_MECA_1_INPUT_BUFFER_LENGTH];
+static unsigned char meca1InputBufferArray[MAIN_BOARD_MECA_1_INPUT_BUFFER_LENGTH];
 static Buffer meca1InputBuffer;
-static char meca1OutputBufferArray[MAIN_BOARD_MECA_1_OUTPUT_BUFFER_LENGTH];
+static unsigned char meca1OutputBufferArray[MAIN_BOARD_MECA_1_OUTPUT_BUFFER_LENGTH];
 static Buffer meca1OutputBuffer;
 static OutputStream meca1OutputStream;
 static StreamLink meca1SerialStreamLink;

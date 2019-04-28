@@ -72,7 +72,7 @@ static Navigation* navigation;
 static GameBoard* gameBoard;
 
 // Forward declaration
-void mainBoardDeviceHandleTrajectoryDeviceNotification(const Device* device, const char commandHeader, InputStream* inputStream);
+void mainBoardDeviceHandleTrajectoryDeviceNotification(const Device* device, const unsigned char commandHeader, InputStream* inputStream);
 
 void mainBoardCommonStrategyAddDevices(unsigned char serialIndex) {
     addLocalDevice(getStrategyDeviceInterface(), getStrategyDeviceDescriptor(gameStrategyContext));
@@ -99,7 +99,7 @@ void updateNewPositionFromNotification(InputStream* inputStream) {
 }
 
 
-void mainBoardDeviceHandleTrajectoryDeviceNotification(const Device* device, const char commandHeader, InputStream* notificationInputStream) {
+void mainBoardDeviceHandleTrajectoryDeviceNotification(const Device* device, const unsigned char commandHeader, InputStream* notificationInputStream) {
     // append(getDebugOutputStreamLogger(), device->deviceInterface->deviceHeader);
     // println(getDebugOutputStreamLogger());
   
@@ -126,7 +126,7 @@ void mainBoardDeviceHandleTrajectoryDeviceNotification(const Device* device, con
     }
 }
 
-void mainBoardDeviceHandleMotionDeviceNotification(const Device* device, const char commandHeader, InputStream* notificationInputStream) {
+void mainBoardDeviceHandleMotionDeviceNotification(const Device* device, const unsigned char commandHeader, InputStream* notificationInputStream) {
     if (device->deviceInterface->deviceHeader == MOTION_DEVICE_HEADER) {
         if (
                 commandHeader == NOTIFY_MOTION_STATUS_FAILED

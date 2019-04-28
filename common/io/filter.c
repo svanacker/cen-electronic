@@ -6,7 +6,7 @@
 
 // TRANFORMATION BINARY -> ASCII
 
-bool filterBinaryToValueChar(char c, char* output) {
+bool filterBinaryToValueChar(unsigned char c, unsigned char* output) {
     // Order by most cases !
     // c in ['0'..'9']
     if ((c >= 48) && (c <= 57)) {
@@ -45,7 +45,7 @@ bool filterBinaryToValueChar(char c, char* output) {
     return false;
 }
 
-bool filterRemoveCRLF(char c, char* output) {
+bool filterRemoveCRLF(unsigned char c, unsigned char* output) {
     *output = c;
     if (c == CR || c == LF) {
         return false;
@@ -53,7 +53,7 @@ bool filterRemoveCRLF(char c, char* output) {
     return true;
 }
 
-bool filterRemoveCRLF_255(char c, char* output) {
+bool filterRemoveCRLF_255(unsigned char c, unsigned char* output) {
     *output = c;
     if (c == CR || c == LF || c == 255) {
         return false;

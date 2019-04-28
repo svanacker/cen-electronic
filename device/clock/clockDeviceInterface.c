@@ -8,7 +8,7 @@ const char* getClockDeviceName(void) {
     return "Clock";
 }
 
-int deviceClockGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList){
+int deviceClockGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList){
     if (commandHeader == COMMAND_READ_CLOCK ) {
         if (fillDeviceArgumentList) {
             setFunction("Clock Read", 0, 11);

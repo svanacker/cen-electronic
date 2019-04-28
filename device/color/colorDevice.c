@@ -41,7 +41,7 @@ bool deviceColorSensorIsOk(void) {
     return true;
 }
 
-void deviceColorSensorHandleRawData(char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
+void deviceColorSensorHandleRawData(unsigned char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     if (commandHeader == COMMAND_COLOR_SENSOR_READ) {
         ackCommand(outputStream, COLOR_SENSOR_DEVICE_HEADER, COMMAND_COLOR_SENSOR_READ);
         Color* color = colorSensor->colorSensorReadValue(colorSensor);
