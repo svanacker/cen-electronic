@@ -78,7 +78,7 @@ void addOutputStream(CompositeOutputStream* compositeOutputStream, OutputStream*
         return;
     }
 
-    unsigned char size = compositeOutputStream->size;
+    unsigned int size = compositeOutputStream->size;
     if (size < compositeOutputStream->maxSize) {
         OutputStream** pointer = (OutputStream**)compositeOutputStream->streams;
         pointer += size;
@@ -97,7 +97,7 @@ int getCompositeOutputStreamChildrenCount(CompositeOutputStream* compositeOutput
     return compositeOutputStream->size;
 }
 
-void initCompositeOutputStream(CompositeOutputStream* compositeOutputStream, OutputStream*(*outputStreamArray)[], unsigned char outputStreamListSize) {
+void initCompositeOutputStream(CompositeOutputStream* compositeOutputStream, OutputStream*(*outputStreamArray)[], unsigned int outputStreamListSize) {
     OutputStream* outputStream = &(compositeOutputStream->outputStream);
     outputStream->openOutputStream = _openCompositeOutputStream;
     outputStream->closeOutputStream = _closeCompositeOutputStream;

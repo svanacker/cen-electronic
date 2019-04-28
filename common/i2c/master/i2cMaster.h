@@ -91,7 +91,7 @@ unsigned char i2cMasterReadChar(I2cBusConnection* i2cBusConnection);
  * @param length the number of data to read
  * @param Buffer* buffer the buffer
  */
-void i2cMasterRegisterReadBuffer(I2cBusConnection* i2cBusConnection, unsigned char registerValue, unsigned char length, Buffer* buffer);
+void i2cMasterRegisterReadBuffer(I2cBusConnection* i2cBusConnection, unsigned char registerValue, unsigned int length, Buffer* buffer);
 
 /**
  * Read the all values from the I2C device.
@@ -99,6 +99,6 @@ void i2cMasterRegisterReadBuffer(I2cBusConnection* i2cBusConnection, unsigned ch
  * @param length the number of data to read
  * @param Buffer* buffer the buffer
  */
-void i2cMasterReadBuffer(I2cBusConnection* i2cBusConnection, unsigned char length, Buffer* buffer);
+void i2cMasterReadBuffer(I2cBusConnection* i2cBusConnection, unsigned int length, Buffer* buffer);
 
 #endif

@@ -66,7 +66,7 @@ void drawLastObstacle(GameBoard* gameBoard, Point* obstacle) {
 }
 
 // COLOR MANAGEMENT
-void setGameBoardCurrentColor(GameBoard* gameBoard, char currentColorPaletIndex) {
+void setGameBoardCurrentColor(GameBoard* gameBoard, unsigned char currentColorPaletIndex) {
     // ONLY ON WINDOW
 #ifdef _MSC_VER
     gameBoard->currentColorPaletIndex = currentColorPaletIndex;

@@ -47,9 +47,9 @@ struct GameBoardElementList {
     /* An array of pointer on element pointer. */
     GameBoardElement(*elements)[];
     /** the size of the list. */
-    unsigned char size;
+    unsigned int size;
     /** the max size of the list. */
-    unsigned char maxSize;
+    unsigned int maxSize;
 };
 
 #include "../../motion/extended/bspline.h"
@@ -101,7 +101,7 @@ void initGameBoard(GameBoard* gameBoard,
 /**
  * Define the color palet index to use, but it could have only effect on Windows, because RX/TX does not support Colors :)
  */
-void setGameBoardCurrentColor(GameBoard* gameBoard, char currentColorPaletIndex);
+void setGameBoardCurrentColor(GameBoard* gameBoard, unsigned char currentColorPaletIndex);
 
 /**
  * Print the gameboard in the serial console.

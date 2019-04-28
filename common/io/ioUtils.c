@@ -29,6 +29,7 @@ unsigned int copyInputToOutputStream(InputStream* inputStream,
 
         // get the next char
         unsigned char c = inputStream->readChar(inputStream);
+        //BUG2019
         if (c == 0x00 || c == INCORRECT_DATA) {
             break;
         }

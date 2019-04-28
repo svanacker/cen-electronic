@@ -1,9 +1,12 @@
 #include "stdlib.h"
+#include "stdbool.h"
 
 #include "driverDataDispatcher.h"
 
 // Device
 #include "../../drivers/driver.h"
+
+#include "../../common/error/error.h"
 
 #include "../../common/delay/cenDelay.h"
 
@@ -19,7 +22,7 @@
  * @private
  * Transmit the buffer through Remote OutputStream and fill Response Buffer through InputStream
  */
-void remoteDriverDataDispatcherTransmit(DriverDataDispatcher* dispatcher,
+bool remoteDriverDataDispatcherTransmit(DriverDataDispatcher* dispatcher,
                                         Buffer* requestBuffer,
                                         Buffer* responseBuffer,
                                         int dataToTransferCount,
@@ -46,16 +49,18 @@ void remoteDriverDataDispatcherTransmit(DriverDataDispatcher* dispatcher,
         // limit data reception to 1
         dataReceived += copyInputToOutputStream(dispatcherInputStream, responseOutputStream, NULL, 1);
         counter++;
-        delaymSec(1);
+        delay100us(1);
 
         if (counter > 1000) {
+            writeError(DISPATCHER_LINK_ERROR);
             appendString (getErrorOutputStreamLogger(), "Dispatcher:");
             appendString(getErrorOutputStreamLogger(), dispatcher->name);
             appendString(getErrorOutputStreamLogger(), "Time out:");
             appendStringAndDec(getErrorOutputStreamLogger(), "Not enough Data :wanted=", dataToReceiveCount);
             appendStringAndDec(getErrorOutputStreamLogger(), ",received=", getBufferElementsCount(responseBuffer));
-            break;
+            return false;
         }
     }
+    return true;
     // printDebugBuffer(getOutputStreamLogger(ERROR), responseBuffer);
 }

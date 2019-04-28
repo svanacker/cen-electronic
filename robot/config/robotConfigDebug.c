@@ -79,9 +79,9 @@ void printRobotTableConfig(OutputStream* outputStream, RobotConfig* robotConfig)
     appendTableHeaderSeparatorLine(outputStream);
 
 	// Speed Mask
-    appendStringTableData(outputStream, "Speed Mask", ROBOT_CONFIG_KEY_COLUMN_LENGTH);
+    appendStringTableData(outputStream, "Speed Index", ROBOT_CONFIG_KEY_COLUMN_LENGTH);
     appendBinary16TableData(outputStream, CONFIG_SPEED_MASK, 4, ROBOT_CONFIG_MASK_COLUMN_LENGTH);
-    appendBoolTableData(outputStream, configValue & CONFIG_SPEED_MASK, ROBOT_CONFIG_VALUE_COLUMN_LENGTH);
+    appendDecTableData(outputStream, configValue & CONFIG_SPEED_MASK, ROBOT_CONFIG_VALUE_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, ROBOT_CONFIG_LAST_COLUMN);
 
     appendTableHeaderSeparatorLine(outputStream);

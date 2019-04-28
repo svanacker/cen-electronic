@@ -161,11 +161,13 @@ void clearLastError();
 #define NO_DISPATCHER_INPUT_BUFFER                                        0x2102
 #define DEVICE_NOT_FOUND                                                  0x2103
 
+
 #define DISPATCHER_NO_CALLBACK_FOR_NOTIFICATION                           0x2110
 #define TOO_MUCH_DRIVER_DATA_DISPATCHER                                   0x2111
 #define DISPATCHERS_LIST_NOT_INITIALIZED                                  0x2120
 #define DISPATCHERS_LIST_ILLEGAL_INDEX                                    0x2121
 #define DISPATCHER_PING_MUST_BE_HANDLE_IN_DRIVER_STREAM_LISTENER          0x2122
+#define DISPATCHER_LINK_ERROR                                             0x2123
 
 #define NOTIFICATION_BAD_DEVICE                                           0x2130
 #define NOTIFICATION_BAD_DEVICE_COMMAND_HANDLER_NOT_HANDLE                0x2131

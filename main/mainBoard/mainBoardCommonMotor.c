@@ -107,14 +107,12 @@ void clearMotorAndMotorNotifyBuffer(void) {
     clearBuffer(&motorInputBuffer);
     // Send a clear Buffer to the remote board to avoid to keep bad data in the link when rebooting
     append(&motorOutputStream, HEADER_CLEAR_INPUT_STREAM);
-    // append(&motorOutputStream, HEADER_WRITE_CONTENT_AND_DEEP_CLEAR_BUFFER);
     motorOutputStream.flush(&motorOutputStream);
     
     // UART Notification
     clearBuffer(&motorNotifyInputBuffer);
     // Send a clear Buffer to the remote board to avoid to keep bad data in the link when rebooting
     append(&motorNotifyOutputStream, HEADER_CLEAR_INPUT_STREAM);
-    // append(&motorNotifyOutputStream, HEADER_WRITE_CONTENT_AND_DEEP_CLEAR_BUFFER);
     motorNotifyOutputStream.flush(&motorNotifyOutputStream);
     
     delaymSec(100);
@@ -139,14 +137,6 @@ void mainBoardCommonMotorHandleStreamInstruction(void) {
             NULL,
             &filterRemoveCRLF_255,
             NULL);
-    
-    
-    if (getBufferElementsCount(&motorNotifyInputBuffer) > 0) {
-        int c = bufferGetCharAtIndex(&motorNotifyInputBuffer, 0);
-        if (c == 'ÿ') {
-            bufferReadChar(&motorNotifyInputBuffer);
-        }
-    }
 }
 
 void mainBoardCommonMotorOpenSerialLink(void) {

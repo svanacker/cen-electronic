@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdbool.h>
 
 #include "localDriverDataDispatcher.h"
 
@@ -20,13 +21,14 @@
 * @private
 * Transmit the buffer locally, call the device which write data out to the stream
 */
-void _driverDataDispatcherTransmitLocal(DriverDataDispatcher* dispatcher,
+bool _driverDataDispatcherTransmitLocal(DriverDataDispatcher* dispatcher,
                                      Buffer* inputBuffer,
                                      Buffer* outputBuffer,
                                      int dataToTransferCount,
                                      int dataToReceiveCount
     ) {
     handleStreamInstruction(inputBuffer, outputBuffer, NULL, NULL, NULL, NULL);
+    return true;
 }
 
 /**

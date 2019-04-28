@@ -12,9 +12,9 @@ typedef struct CompositeOutputStream {
     /** An array of pointer on outputStream pointer. */
     OutputStream*(*streams)[];
     /** the size of the list. */
-    unsigned char size;
+    unsigned int size;
     /** the max size of the list. */
-    unsigned char maxSize;
+    unsigned int maxSize;
 } CompositeOutputStream;
 
 /**
@@ -36,6 +36,6 @@ int getCompositeOutputStreamChildrenCount(CompositeOutputStream* compositeOutput
 * @param compositeOutputStream the composite stream to initialize
 
 */
-void initCompositeOutputStream(CompositeOutputStream* compositeOutputStream, OutputStream*(*outputStreamListArray)[], unsigned char outputStreamListSize);
+void initCompositeOutputStream(CompositeOutputStream* compositeOutputStream, OutputStream*(*outputStreamListArray)[], unsigned int outputStreamListSize);
 
 #endif

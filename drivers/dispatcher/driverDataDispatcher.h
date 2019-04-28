@@ -20,9 +20,9 @@ struct DriverDataDispatcher;
  * I2C / UART ...)
  * @param dataToTransferCount number of bytes which must be sent
  * @param dataToReceiveCount number of bytes which must be received
- * @return the response data containing the result of the invocation of the targetted device
+ * @return true if the transmitDataFunction was ok, false else
  */
-typedef void driverDataDispatcherTransmitDataFunction(struct DriverDataDispatcher* dispatcher,
+typedef bool driverDataDispatcherTransmitDataFunction(struct DriverDataDispatcher* dispatcher,
                                                         Buffer* requestBuffer,
                                                         Buffer* responseBuffer,
                                                         int dataToTransferCount,
