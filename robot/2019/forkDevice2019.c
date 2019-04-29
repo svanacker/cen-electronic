@@ -43,8 +43,14 @@ bool deviceFork2019IsOk(void) {
 
 void deviceFork2019HandleRawData(unsigned char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     // ELEVATOR
+    // -> Up/Down
+    if (commandHeader == COMMAND_2019_ELEVATOR_VALUE) {
+        ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_ELEVATOR_VALUE);
+        unsigned int servoValue = readHex4(inputStream);
+        moveElevatorAtValue(servoList, servoValue);
+    }
     // -> Bottom
-    if (commandHeader == COMMAND_2019_ELEVATOR_BOTTOM) {
+    else if (commandHeader == COMMAND_2019_ELEVATOR_BOTTOM) {
         ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_ELEVATOR_BOTTOM);
         moveElevatorBottom(servoList);
     }

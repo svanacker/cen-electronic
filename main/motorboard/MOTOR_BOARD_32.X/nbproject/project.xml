@@ -28,7 +28,9 @@
                 <sourceRootElem>..\..\..\common\delay\32</sourceRootElem>
                 <sourceRootElem>..\..\..\common\i2c\master</sourceRootElem>
                 <sourceRootElem>..\..\..\common\cmd</sourceRootElem>
+                <sourceRootElem>..\..\..\motion\position</sourceRootElem>
                 <sourceRootElem>..\..\..\common\error</sourceRootElem>
+                <sourceRootElem>..\..\..\motion\position\hctlCoder</sourceRootElem>
                 <sourceRootElem>..\..\..\drivers\eeprom</sourceRootElem>
                 <sourceRootElem>..\..\..\device\serial</sourceRootElem>
                 <sourceRootElem>..\..\..\common\system</sourceRootElem>
@@ -36,6 +38,7 @@
                 <sourceRootElem>..\..\..\common\sensor\temperature</sourceRootElem>
                 <sourceRootElem>..\..\..\common\serial\32</sourceRootElem>
                 <sourceRootElem>..\..\..\device\log</sourceRootElem>
+                <sourceRootElem>..\..\..\motion\simple</sourceRootElem>
                 <sourceRootElem>..\..\..\device\i2c\master</sourceRootElem>
                 <sourceRootElem>..\..\..\device\motion\extended</sourceRootElem>
                 <sourceRootElem>..\..\..\drivers\motor</sourceRootElem>
@@ -50,6 +53,7 @@
                 <sourceRootElem>..</sourceRootElem>
                 <sourceRootElem>..\..\..\device\i2c</sourceRootElem>
                 <sourceRootElem>..\..\..\device</sourceRootElem>
+                <sourceRootElem>..\..\..\motion\parameters</sourceRootElem>
                 <sourceRootElem>..\..\..\common\io</sourceRootElem>
                 <sourceRootElem>../../..</sourceRootElem>
                 <sourceRootElem>..\..\..\motion</sourceRootElem>

@@ -88,6 +88,8 @@
 
 // ELEVATOR
 
+void moveElevatorAtValue(ServoList* servoList, unsigned int value);
+
 void moveElevatorBottom(ServoList* servoList);
 
 void moveElevatorUp(ServoList* servoList);

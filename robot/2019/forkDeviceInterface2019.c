@@ -11,7 +11,14 @@ const char* deviceFork2019GetName(void) {
 
 int deviceFork2019GetInterface(unsigned char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     // ELEVATOR
-    if (commandHeader == COMMAND_2019_ELEVATOR_BOTTOM) {
+    if (commandHeader == COMMAND_2019_ELEVATOR_VALUE) {
+        if (fillDeviceArgumentList) {
+            setFunction("Elevator Up/Down", 1, 0);
+            setArgumentUnsignedHex4(0, "Servo Pos value");
+        }
+        return commandLengthValueForMode(mode, 4, 0);
+    }
+    else if (commandHeader == COMMAND_2019_ELEVATOR_BOTTOM) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Elevator Bottom");
         }

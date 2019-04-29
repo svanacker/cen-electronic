@@ -15,6 +15,8 @@
 // Elevator to get the puck distributor
 #define COMMAND_2019_ELEVATOR_INIT_POSITION        'I'
 
+#define COMMAND_2019_ELEVATOR_VALUE                'e'
+
 // Elevator at the up to release the pucks
 #define COMMAND_2019_ELEVATOR_UP                   'U'
 

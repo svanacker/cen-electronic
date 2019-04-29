@@ -1283,6 +1283,7 @@
     <Elem>..\..\..\common\serial\32</Elem>
     <Elem>..\..\..\drivers\io</Elem>
     <Elem>..\..\..\device\log</Elem>
+    <Elem>..\..\..\motion\simple</Elem>
     <Elem>..\..\..\robot\opponent</Elem>
     <Elem>..\..\..\device\i2c\master</Elem>
     <Elem>..\..\..\device\motion\extended</Elem>
