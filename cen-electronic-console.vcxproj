@@ -425,6 +425,7 @@
     <ClCompile Include="navigation\pathListDebug.c" />
     <ClCompile Include="robot\2019\distributor2019.c" />
     <ClCompile Include="robot\2019\distributorDebug2019.c" />
+    <ClCompile Include="robot\2019\fork2019.c" />
     <ClCompile Include="robot\2019\gameBoardElement2019.c" />
     <ClCompile Include="robot\2019\forkDevice2019.c" />
     <ClCompile Include="robot\2019\forkDeviceInterface2019.c" />
@@ -809,6 +810,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="robot\2019\distributor2019.h" />
     <ClInclude Include="robot\2019\distributorDebug2019.h" />
+    <ClInclude Include="robot\2019\fork2019.h" />
     <ClInclude Include="robot\2019\gameBoardElement2019.h" />
     <ClInclude Include="robot\2019\forkDevice2019.h" />
     <ClInclude Include="robot\2019\forkDeviceInterface2019.h" />

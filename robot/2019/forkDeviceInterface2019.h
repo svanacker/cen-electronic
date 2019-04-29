@@ -22,18 +22,6 @@
 
 #define COMMAND_2019_ELEVATOR_RIGHT                'R'
 
-
-// GLOBAL
-
-// Used to move the both Fork
-#define FORK_2019_LEFT_AND_RIGHT_INDEX            0x0
-
-// Used to move the left Fork only
-#define FORK_2019_LEFT_INDEX                      0x1
-
-// Used to move the right Fork only
-#define FORK_2019_RIGHT_INDEX                     0x2
-
 // FORK
 
 // Fork is retracted
@@ -59,7 +47,10 @@
 #define COMMAND_2019_FORK_INIT                    'i'
 
 // TAKE
-#define COMMAND_2019_FORK_TAKE                    't'
+#define COMMAND_2019_FORK_TAKE_SIMPLE_PUCK        't'
+
+#define COMMAND_2019_FORK_TAKE_GOLDENIUM          'g'
+
 
 // RELEASE
 #define COMMAND_2019_FORK_RELEASE                 'r'

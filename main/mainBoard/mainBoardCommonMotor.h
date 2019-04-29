@@ -50,6 +50,14 @@ void mainBoardCommonMotorMainEndInit(void);
 
 void mainBoardCommonMotorHandleStreamInstruction(void);
 
+// ERROR MANAGEMENT
+
+/**
+ * Clear the internal buffer, and send a clear instruction to the Motor Board
+ * too !
+ */
+void clearMotorAndMotorNotifyBuffer(void);
+
 
 #endif
 

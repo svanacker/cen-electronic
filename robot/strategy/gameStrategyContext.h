@@ -2,7 +2,7 @@
 #define GAME_STRATEGY_CONTEXT_H
 
 #include "../../common/2d/2d.h"
-
+#include "../../common/pwm/servo/servoList.h"
 #include "../../common/timer/cenTimer.h"
 
 #include "gameStrategy.h"
@@ -86,6 +86,8 @@ struct GameStrategyContext {
     float defaultAccelerationFactor;
     /**. Default speed Factor (comes from RobotConfig). */
     float defaultSpeedFactor;
+    /** The servo List. */
+    ServoList* servoList;
 };
 
 /**
@@ -98,7 +100,8 @@ void initGameStrategyContext(GameStrategyContext* gameStrategyContext,
                              TofSensorList* tofSensorList,
                              Point* robotPosition,
                              Point* opponentRobotPosition,
-                             Point* lastObstaclePosition);
+                             Point* lastObstaclePosition,
+                             ServoList* servoList);
 
 
 

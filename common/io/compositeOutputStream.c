@@ -22,12 +22,12 @@ CompositeOutputStream* getCompositeOutputStream(OutputStream* outputStream) {
 /**
  * @private
  */
-OutputStream* getChildOutputStream(CompositeOutputStream* compositeOutputStream, int index) {
+OutputStream* getChildOutputStream(CompositeOutputStream* compositeOutputStream, unsigned int index) {
     if (compositeOutputStream == NULL || compositeOutputStream->maxSize == 0) {
         writeError(COMPOSITE_OUTPUT_STREAM_NOT_INITIALIZED);
         return NULL;
     }
-    if (index < 0 || index >= compositeOutputStream->maxSize) {
+    if (index <= 0 || index >= compositeOutputStream->maxSize) {
         writeError(COMPOSITE_OUTPUT_STREAM_ILLEGAL_INDEX);
         return NULL;
     }

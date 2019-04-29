@@ -107,6 +107,7 @@ bool handleActions(GameStrategyContext* gameStrategyContext) {
         PathData* pathData = getPathOfLocations(pathList, startLocation, endLocation);
         if (pathData == NULL) {
             writeError(PATH_LIST_NULL);
+            return false;
         }
         else {
             motionFollowPath(gameStrategyContext, pathData);
@@ -148,6 +149,12 @@ bool handleTrajectoryToActionStart(GameStrategyContext* gameStrategyContext) {
     }
     Navigation* navigation = gameStrategyContext->navigation;
     Location* startLocation = gameStrategyContext->nearestLocation;
+
+    // Start Location could be null if the nearest Location was not found (because too far)
+    if (startLocation == NULL) {
+        // Go back to the previous point
+        return false;
+    }
 
     // If the point of the robot is the same than the startLocation of the target Actions, we do not do anything
     if (startLocation == currentTarget->startLocation) {

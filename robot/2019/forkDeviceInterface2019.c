@@ -17,6 +17,18 @@ int deviceFork2019GetInterface(unsigned char commandHeader, DeviceInterfaceMode 
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
+    else if (commandHeader == COMMAND_2019_ELEVATOR_LEFT) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("Elevator Left");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }
+    else if (commandHeader == COMMAND_2019_ELEVATOR_RIGHT) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("Elevator Right");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }
     else if (commandHeader == COMMAND_2019_ELEVATOR_DOUBLE_PUCK_POSITION) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Elevator Double Puck Pos.");
@@ -80,16 +92,22 @@ int deviceFork2019GetInterface(unsigned char commandHeader, DeviceInterfaceMode 
         return commandLengthValueForMode(mode, 0, 0);
     }    
     // TAKE
-    else if (commandHeader == COMMAND_2019_FORK_TAKE) {
+    else if (commandHeader == COMMAND_2019_FORK_TAKE_SIMPLE_PUCK) {
         if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("Take");
+            setFunctionNoArgumentAndNoResult("Take Simple Puck");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }    
+    else if (commandHeader == COMMAND_2019_FORK_TAKE_GOLDENIUM) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("Take Goldenium");
         }
         return commandLengthValueForMode(mode, 0, 0);
     }    
     // DROP
     else if (commandHeader == COMMAND_2019_FORK_RELEASE) {
         if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("Release");
+            setFunctionNoArgumentAndNoResult("Release Puck (Accelerator)");
         }
         return commandLengthValueForMode(mode, 0, 0);
     }

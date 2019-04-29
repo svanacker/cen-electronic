@@ -103,7 +103,18 @@ void mainBoardCommonMotorAddDispatcher(void) {
         MAIN_BOARD_SERIAL_PORT_MOTOR_NOTIFY);
 }
 
+// ERROR MANAGEMENT
+
+void mainBoardManageErrors(void) {
+    if (getLastError() == DISPATCHER_LINK_ERROR) {
+        clearMotorAndMotorNotifyBuffer();
+        clearLastError();
+    }
+}
+
 void clearMotorAndMotorNotifyBuffer(void) {
+    appendStringCRLF(getDebugOutputStreamLogger(), "clearMotorAndMotorNotifyBuffer !");
+            
     clearBuffer(&motorInputBuffer);
     // Send a clear Buffer to the remote board to avoid to keep bad data in the link when rebooting
     append(&motorOutputStream, HEADER_CLEAR_INPUT_STREAM);
@@ -137,6 +148,8 @@ void mainBoardCommonMotorHandleStreamInstruction(void) {
             NULL,
             &filterRemoveCRLF_255,
             NULL);
+    
+    mainBoardManageErrors();
 }
 
 void mainBoardCommonMotorOpenSerialLink(void) {

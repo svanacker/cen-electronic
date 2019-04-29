@@ -49,11 +49,13 @@ void initGameStrategyContext(GameStrategyContext* gameStrategyContext,
     TofSensorList* tofSensorList,
     Point* robotPosition,
     Point* opponentRobotPosition,
-    Point* lastObstaclePosition) {
+    Point* lastObstaclePosition,
+    ServoList* servoList) {
     gameStrategyContext->navigation = navigation;
     gameStrategyContext->robotConfig = robotConfig;
     gameStrategyContext->endMatch = endMatch;
     gameStrategyContext->tofSensorList = tofSensorList;
+    gameStrategyContext->servoList = servoList;
     gameStrategyContext->robotPosition = robotPosition;
     gameStrategyContext->opponentRobotPosition = opponentRobotPosition;
     gameStrategyContext->lastObstaclePosition = lastObstaclePosition;

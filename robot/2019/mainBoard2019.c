@@ -2,6 +2,11 @@
 
 #include "../../common/i2c/i2cConstants.h"
 
+#include "../../common/io/outputStream.h"
+#include "../../common/io/printWriter.h"
+
+#include "../../common/log/logger.h"
+
 #include "../../common/timer/timerConstants.h"
 #include "../../common/timer/timerList.h"
 
@@ -17,7 +22,10 @@
 
 #include "../../robot/strategy/gameStrategyContext.h"
 
+#include "../../main/mainBoard/mainBoardCommon.h"
+
 // 2019
+#include "../../robot/2019/fork2019.h"
 #include "../../robot/2019/distributor2019.h"
 #include "../../robot/2019/strategy2019.h"
 #include "../../robot/2019/gameBoardElement2019.h"
@@ -57,8 +65,8 @@ Navigation* initNavigation2019(void) {
     return &navigation;
 }
 
-GameStrategyContext* initGameStrategyContext2019(RobotConfig* robotConfig, EndMatch* endMatch, TofSensorList* tofSensorList) {
-    initGameStrategyContext(&gameStrategyContext, robotConfig, &navigation, endMatch, tofSensorList, &robotPosition, &opponentRobotPosition, &lastObstaclePosition);
+GameStrategyContext* initGameStrategyContext2019(RobotConfig* robotConfig, EndMatch* endMatch, TofSensorList* tofSensorList, ServoList* servoList) {
+    initGameStrategyContext(&gameStrategyContext, robotConfig, &navigation, endMatch, tofSensorList, &robotPosition, &opponentRobotPosition, &lastObstaclePosition, servoList);
     initStrategy2019(&gameStrategyContext);
 
     return &gameStrategyContext;
@@ -78,3 +86,12 @@ GameBoard* initGameBoard2019(GameStrategyContext* gameStrategyContext) {
     return &gameBoard;
 }
 
+void mainBoardCommonStrategyMainEndInit2019(GameStrategyContext* gameStrategyContext) {        
+    ServoList* servoList = gameStrategyContext->servoList;
+    
+    updateServoListName2019(servoList);
+    
+    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+    appendStringCRLF(debugOutputStream, "fork2019Init");
+    fork2019Init(servoList);
+}

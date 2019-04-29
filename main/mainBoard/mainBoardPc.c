@@ -520,7 +520,7 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
     initTofSensorListPc(&tofSensorList, (TofSensor(*)[]) &tofSensorArray, MOTOR_BOARD_PC_TOF_SENSOR_LIST_LENGTH);
 
     navigation = initNavigation2019();
-    gameStrategyContext = initGameStrategyContext2019(&robotConfig, &endMatch, &tofSensorList);
+    gameStrategyContext = initGameStrategyContext2019(&robotConfig, &endMatch, &tofSensorList, &servoList);
     // For PC, we simulate the move
     gameStrategyContext->simulateMove = true;
     gameBoard = initGameBoard2019(gameStrategyContext);
@@ -575,6 +575,8 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
     delaymSec(100);
 
     setDebugI2cEnabled(false);
+
+    mainBoardCommonStrategyMainEndInit2019(gameStrategyContext);
 
     // Wait until the match start
     loopUntilStart(&startMatch);

@@ -1,6 +1,7 @@
 #include <stdlib.h>
 
 #include "strategy2019.h"
+#include "fork2019.h"
 
 #include "../../common/error/error.h"
 
@@ -587,15 +588,14 @@ bool acceleratorArmOn(int* context) {
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
     appendStringCRLF(debugOutputStream, "Accelerator Arm On");
     GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
-
+    ServoList* servoList = gameStrategyContext->servoList;
     if (isViolet(gameStrategyContext)) {
         // Right Arm
-        arm2019On(2);
-        
+        arm2019On(servoList, FORK_2019_RIGHT_INDEX);
     }
     else {
         // Left Arm
-        arm2019On(1);
+        arm2019On(servoList, FORK_2019_LEFT_INDEX);
     }
     // TODO
     return true;
@@ -605,15 +605,15 @@ bool acceleratorArmOff(int* context) {
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
     appendStringCRLF(debugOutputStream, "Accelerator Arm Off");
     GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
-
+    ServoList* servoList = gameStrategyContext->servoList;
     if (isViolet(gameStrategyContext)) {
         // Right Arm
-        arm2019Off(2);
+        arm2019Off(servoList, FORK_2019_RIGHT_INDEX);
         
     }
     else {
         // Left Arm
-        arm2019Off(1);
+        arm2019Off(servoList, FORK_2019_LEFT_INDEX);
     }
     // TODO
     return true;
@@ -622,7 +622,9 @@ bool acceleratorArmOff(int* context) {
 bool goldeniumPrepareTake(int* context) {
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
     appendStringCRLF(debugOutputStream, "goldeniumPrepareTake");
-    moveElevatorDoublePuck();
+    GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
+    ServoList* servoList = gameStrategyContext->servoList;
+    moveElevatorDoublePuck(servoList);
     return true;
 }
 
@@ -630,17 +632,13 @@ bool goldeniumTake(int* context) {
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
     appendStringCRLF(debugOutputStream, "goldeniumTake");
     GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
-
+    ServoList* servoList = gameStrategyContext->servoList;
     if (isViolet(gameStrategyContext)) {
-        forkScanFromLeftToRight();
-        moveForkDoublePuck(2);
+        fork2019TakeGoldenium(servoList);
     }
     else {
-        forkScanFromRightToLeft();
-        moveForkDoublePuck(1);
+        fork2019TakeGoldenium(servoList);
     }
-    
-    moveElevatorUp();
     
     return true;
 }
@@ -649,11 +647,12 @@ bool goldeniumDrop(int* context) {
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
     appendStringCRLF(debugOutputStream, "goldeniumDrop");
     GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
+    ServoList* servoList = gameStrategyContext->servoList;
     if (isViolet(gameStrategyContext)) {
-        moveForkPushOff(2);
+        moveForkPushOff(servoList, FORK_2019_RIGHT_INDEX);
     }
     else {
-        moveForkPushOff(1);
+        moveForkPushOff(servoList, FORK_2019_LEFT_INDEX);
     }
     return true;
 }
@@ -661,21 +660,30 @@ bool goldeniumDrop(int* context) {
 bool bigDistributorLinePrepare(int* context) {
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
     appendStringCRLF(debugOutputStream, "bigDistributorLinePrepare");
-    // TODO
+    GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
+    ServoList* servoList = gameStrategyContext->servoList;
+    fork2019Init(servoList);
+
     return true;
 }
 
 bool bigDistributorLineTake(int* context) {
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
     appendStringCRLF(debugOutputStream, "bigDistributorLineTake");
-    // TODO
+    GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
+    ServoList* servoList = gameStrategyContext->servoList;
+    fork2019TakeSimplePuck(servoList);
+
     return true;
 }
 
 bool acceleratorDrop(int* context) {
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
     appendStringCRLF(debugOutputStream, "acceleratorDrop");
-    // TODO
+    GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
+    ServoList* servoList = gameStrategyContext->servoList;
+    fork2019Release(servoList);
+
     return true;
 }
 

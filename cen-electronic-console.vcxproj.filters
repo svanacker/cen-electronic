@@ -2094,6 +2094,9 @@
     <ClCompile Include="common\io\bufferDebug.c">
       <Filter>Source Files\common\io</Filter>
     </ClCompile>
+    <ClCompile Include="robot\2019\fork2019.c">
+      <Filter>Source Files\robot\2019</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -3259,6 +3262,9 @@
     </ClInclude>
     <ClInclude Include="motion\motionConstants.h">
       <Filter>Header Files\motion</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\fork2019.h">
+      <Filter>Header Files\robot\2019</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

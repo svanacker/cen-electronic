@@ -116,7 +116,7 @@ void i2cMasterRegisterReadBuffer(I2cBusConnection* i2cBusConnection, unsigned ch
 
     portableMasterWriteI2C(i2cBusConnection, address | 0x01);
 
-    int i;
+    unsigned int i;
     for (i = 0; i <(length-1) ; i++) {
         unsigned char c = portableMasterReadI2C(i2cBusConnection);
         portableMasterAckI2C(i2cBusConnection);

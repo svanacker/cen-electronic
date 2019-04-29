@@ -1,5 +1,6 @@
 #include "forkDevice2019.h"
 
+#include "fork2019.h"
 #include "forkDeviceInterface2019.h"
 
 #include <stdbool.h>
@@ -40,261 +41,103 @@ bool deviceFork2019IsOk(void) {
     return true;
 }
 
-/**
- * @private
- * @param leftRight
- * @param leftServoIndex
- * @param rightServoIndex
- * @param leftSpeed
- * @param rightSpeed
- * @param leftPosition
- * @param rightPosition
- */
-void moveServo(
-               unsigned int leftRight,
-               unsigned int leftServoIndex,
-               unsigned int rightServoIndex,
-               unsigned int leftSpeed,
-               unsigned int rightSpeed,
-               unsigned int leftPosition,
-               unsigned rightPosition) {
-    if (leftRight == FORK_2019_LEFT_AND_RIGHT_INDEX || leftRight == FORK_2019_LEFT_INDEX) {
-        Servo* servo = getServo(servoList, leftServoIndex);
-        pwmServo(servo, leftSpeed, leftPosition);
-    }
-    if (leftRight == FORK_2019_LEFT_AND_RIGHT_INDEX || leftRight == FORK_2019_RIGHT_INDEX) {
-        Servo* servo = getServo(servoList, rightServoIndex);
-        pwmServo(servo, rightSpeed, rightPosition);
-    }    
-}
-
-void moveElevatorBottom(void) {
-    Servo* servo = getServo(servoList, FORK_2019_ELEVATOR_SERVO_INDEX);
-    pwmServo(servo, FORK_2019_ELEVATOR_SPEED_FACTOR, FORK_2019_ELEVATOR_BOTTOM_SERVO_VALUE);
-}
-
-void moveElevatorInitPosition(void) {
-    Servo* servo = getServo(servoList, FORK_2019_ELEVATOR_SERVO_INDEX);
-    pwmServo(servo, FORK_2019_ELEVATOR_SPEED_FACTOR, FORK_2019_ELEVATOR_INIT_POSITION_SERVO_VALUE);
-}
-
-void moveElevatorUp(void) {
-    Servo* servo = getServo(servoList, FORK_2019_ELEVATOR_SERVO_INDEX);
-    pwmServo(servo, FORK_2019_ELEVATOR_SPEED_FACTOR, FORK_2019_ELEVATOR_UP_SERVO_VALUE);
-}
-
-void moveElevatorDoublePuck(void) {
-    Servo* servo = getServo(servoList, FORK_2019_ELEVATOR_SERVO_INDEX);
-    pwmServo(servo, FORK_2019_ELEVATOR_SPEED_FACTOR, FORK_2019_ELEVATOR_DOUBLE_PUCK_SERVO_VALUE);
-}
-
-
-void moveForkBack(unsigned int leftRight) {
-    moveServo(leftRight, 
-            FORK_2019_LEFT_SERVO_INDEX, FORK_2019_RIGHT_SERVO_INDEX,
-            FORK_2019_SERVO_LEFT_SPEED_FACTOR, FORK_2019_SERVO_RIGHT_SPEED_FACTOR,
-            FORK_2019_SERVO_LEFT_RETRACTED_SERVO_VALUE, FORK_2019_SERVO_RIGHT_RETRACTED_SERVO_VALUE);
-}
-
-void moveForkSimplePuck(unsigned int leftRight) {
-    moveServo(leftRight, 
-            FORK_2019_LEFT_SERVO_INDEX, FORK_2019_RIGHT_SERVO_INDEX,
-            FORK_2019_SERVO_LEFT_SPEED_FACTOR, FORK_2019_SERVO_RIGHT_SPEED_FACTOR,
-            FORK_2019_SERVO_LEFT_SIMPLE_PUCK_SERVO_VALUE, FORK_2019_SERVO_RIGHT_SIMPLE_PUCK_SERVO_VALUE);
-}
-
-void moveForkDoublePuck(unsigned int leftRight) {
-    moveServo(leftRight, 
-            FORK_2019_LEFT_SERVO_INDEX, FORK_2019_RIGHT_SERVO_INDEX,
-            FORK_2019_SERVO_LEFT_SPEED_FACTOR, FORK_2019_SERVO_RIGHT_SPEED_FACTOR,
-            FORK_2019_SERVO_LEFT_DOUBLE_PUCK_SERVO_VALUE, FORK_2019_SERVO_RIGHT_DOUBLE_PUCK_SERVO_VALUE);
-}
-
-void moveForkPushOff(unsigned int leftRight) {
-    moveServo(leftRight, 
-            FORK_2019_LEFT_SERVO_PUSH_INDEX, FORK_2019_RIGHT_SERVO_PUSH_INDEX,
-            FORK_2019_SERVO_PUSH_LEFT_SPEED_FACTOR, FORK_2019_SERVO_PUSH_LEFT_SPEED_FACTOR,
-            FORK_2019_SERVO_PUSH_LEFT_OFF_SERVO_VALUE, FORK_2019_SERVO_PUSH_RIGHT_OFF_SERVO_VALUE);
-}
-
-void moveForkPushOn(unsigned int leftRight) {
-    moveServo(leftRight, 
-            FORK_2019_LEFT_SERVO_PUSH_INDEX, FORK_2019_RIGHT_SERVO_PUSH_INDEX,
-            FORK_2019_SERVO_PUSH_LEFT_SPEED_FACTOR, FORK_2019_SERVO_PUSH_LEFT_SPEED_FACTOR,
-            FORK_2019_SERVO_PUSH_LEFT_ON_SERVO_VALUE, FORK_2019_SERVO_PUSH_RIGHT_ON_SERVO_VALUE);
-}
-
-void forkScanFromRightToLeft(void) {
-    Servo* servo = getServo(servoList, FORK_2019_SCAN_SERVO_INDEX);
-    pwmServo(servo, FORK_2019_SCAN_SPEED_FACTOR, FORK_2019_SCAN_RIGHT_SERVO_VALUE);
-    delaymSec(500);
-    unsigned int i;
-    for (i = FORK_2019_SCAN_RIGHT_SERVO_VALUE; i < FORK_2019_SCAN_LEFT_SERVO_VALUE; i+= 10) {
-        pwmServo(servo, FORK_2019_SCAN_SPEED_FACTOR, i);
-        TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, 0);
-        unsigned int distance = tofSensor->tofGetDistanceMM(tofSensor);
-        if (distance > 0 && distance < 16) {
-            appendStringAndDecLN(getDebugOutputStreamLogger(), "distance=", distance);
-            break;
-        }
-        delaymSec(10);
-    }
-}
-
-void forkScanFromLeftToRight(void) {
-    Servo* servo = getServo(servoList, FORK_2019_SCAN_SERVO_INDEX);
-    pwmServo(servo, FORK_2019_SCAN_SPEED_FACTOR, FORK_2019_SCAN_LEFT_SERVO_VALUE);
-    delaymSec(500);
-    unsigned int i;
-    for (i = FORK_2019_SCAN_LEFT_SERVO_VALUE; i < FORK_2019_SCAN_LEFT_SERVO_VALUE; i-= 10) {
-        pwmServo(servo, FORK_2019_SCAN_SPEED_FACTOR, i);
-        TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, 0);
-        unsigned int distance = tofSensor->tofGetDistanceMM(tofSensor);
-        if (distance > 0 && distance < 16) {
-            appendStringAndDecLN(getDebugOutputStreamLogger(), "distance=", distance);
-            break;
-        }
-        delaymSec(10);
-    }
-}
-
-// ARM On for Small Robot
-void arm2019On(unsigned int leftRight) {
-    moveServo(leftRight,
-        FORK_2019_LEFT_ARM_SERVO_INDEX, FORK_2019_RIGHT_ARM_SERVO_INDEX,
-        FORK_2019_LEFT_ARM_SPEED_FACTOR, FORK_2019_RIGHT_ARM_SPEED_FACTOR,
-        FORK_2019_LEFT_ARM_SERVO_ON, FORK_2019_RIGHT_ARM_SERVO_ON);
-}
-
-// ARM Off for Small Robot
-void arm2019Off(unsigned int leftRight) {
-    moveServo(leftRight,
-        FORK_2019_LEFT_ARM_SERVO_INDEX, FORK_2019_RIGHT_ARM_SERVO_INDEX,
-        FORK_2019_LEFT_ARM_SPEED_FACTOR, FORK_2019_RIGHT_ARM_SPEED_FACTOR,
-        FORK_2019_LEFT_ARM_SERVO_OFF, FORK_2019_RIGHT_ARM_SERVO_OFF);
-}
-
 void deviceFork2019HandleRawData(unsigned char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     // ELEVATOR
     // -> Bottom
     if (commandHeader == COMMAND_2019_ELEVATOR_BOTTOM) {
         ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_ELEVATOR_BOTTOM);
-        moveElevatorBottom();
+        moveElevatorBottom(servoList);
     }
     // -> Middle for Double Puck Position
     else if (commandHeader == COMMAND_2019_ELEVATOR_DOUBLE_PUCK_POSITION) {
         ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_ELEVATOR_DOUBLE_PUCK_POSITION);
-        moveElevatorDoublePuck();
+        moveElevatorDoublePuck(servoList);
     }
     // -> Init Position
     else if (commandHeader == COMMAND_2019_ELEVATOR_INIT_POSITION) {
         ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_ELEVATOR_INIT_POSITION);
-        moveElevatorDoublePuck();
+        moveElevatorDoublePuck(servoList);
     }
     // -> Up
     else if (commandHeader == COMMAND_2019_ELEVATOR_UP) {
         ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_ELEVATOR_UP);
-        moveElevatorUp();
+        moveElevatorUp(servoList);
+    }
+    // -> Left
+    else if (commandHeader == COMMAND_2019_ELEVATOR_LEFT) {
+        ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_ELEVATOR_LEFT);
+        moveElevatorLeft(servoList);
+    }
+    // -> Left
+    else if (commandHeader == COMMAND_2019_ELEVATOR_RIGHT) {
+        ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_ELEVATOR_RIGHT);
+        moveElevatorRight(servoList);
     }
     // Fork Back/Retracted
     else if (commandHeader == COMMAND_2019_FORK_BACK) {
         ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_FORK_BACK);
         unsigned int servoIndex = readHex(inputStream);
-        moveForkBack(servoIndex); 
+        moveForkBack(servoList, servoIndex); 
     }
     // Fork Single Puck
     else if (commandHeader == COMMAND_2019_FORK_SIMPLE_PUCK) {
         ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_FORK_SIMPLE_PUCK);
         unsigned int servoIndex = readHex(inputStream);
-        moveForkSimplePuck(servoIndex);
-
+        moveForkSimplePuck(servoList, servoIndex);
     }
     // Fork Double Puck
     else if (commandHeader == COMMAND_2019_FORK_DOUBLE_PUCK) {
         ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_FORK_DOUBLE_PUCK);
         unsigned int servoIndex = readHex(inputStream);
-        moveForkDoublePuck(servoIndex);
+        moveForkDoublePuck(servoList, servoIndex);
         
     }
     // Fork Push Off
     else if (commandHeader == COMMAND_2019_FORK_PUSH_OFF) {
         ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_FORK_PUSH_OFF);
         unsigned int servoIndex = readHex(inputStream);
-        moveForkPushOff(servoIndex);
+        moveForkPushOff(servoList, servoIndex);
     }
     // Fork Push On
     else if (commandHeader == COMMAND_2019_FORK_PUSH_ON) {
         ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_FORK_PUSH_ON);
         unsigned int servoIndex = readHex(inputStream);
-        moveForkPushOn(servoIndex);
+        moveForkPushOn(servoList, servoIndex);
     }
     // Init
     else if (commandHeader == COMMAND_2019_FORK_INIT) {
         ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_FORK_INIT);
-        // Left/Right Elevator
-        // TODO
-        
-        // Elevator
-        moveElevatorBottom();
-        
-        // Fork Push Off
-        moveForkPushOff(FORK_2019_LEFT_AND_RIGHT_INDEX);
-        
-        // Fork Retracted
-        moveForkBack(FORK_2019_LEFT_AND_RIGHT_INDEX);
+        fork2019Init(servoList);
     }
-    else if (commandHeader == COMMAND_2019_FORK_TAKE) {
-        ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_FORK_TAKE);
-     
-        // Elevator
-        moveElevatorBottom();
-        delaymSec(1000);
-        
-        // Fork Push Off
-        moveForkPushOff(FORK_2019_LEFT_AND_RIGHT_INDEX);
-        delaymSec(500);
-        
-        // Fork Single Puck
-        moveForkSimplePuck(FORK_2019_LEFT_AND_RIGHT_INDEX);
-        delaymSec(1000);
-        
-        // Elevator
-        moveElevatorUp();
-        delaymSec(1000);
+    // Take
+    else if (commandHeader == COMMAND_2019_FORK_TAKE_SIMPLE_PUCK) {
+        ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_FORK_TAKE_SIMPLE_PUCK);
+        fork2019TakeSimplePuck(servoList);
     }
+    else if (commandHeader == COMMAND_2019_FORK_TAKE_GOLDENIUM) {
+        ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_FORK_TAKE_GOLDENIUM);
+        fork2019TakeGoldenium(servoList);
+    }
+    // Release
     else if (commandHeader == COMMAND_2019_FORK_RELEASE) {
         ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_FORK_RELEASE);
-     
-        // Elevator
-        moveElevatorUp();
-        delaymSec(1000);
-        
-        // Fork Push On
-        moveForkPushOn(FORK_2019_LEFT_AND_RIGHT_INDEX);
-        delaymSec(500);
-        
-        // Fork 
-        moveForkBack(FORK_2019_LEFT_AND_RIGHT_INDEX);
-        delaymSec(1000);
-        
-        // Fork Push Off
-        moveForkPushOff(FORK_2019_LEFT_AND_RIGHT_INDEX);
-        delaymSec(500);
+        fork2019Release(servoList);
     }
+    // Scan
     else if (commandHeader == COMMAND_2019_FORK_SCAN) {
         ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_FORK_SCAN);
-        forkScanFromLeftToRight();
+        forkScanFromLeftToRight(servoList, tofSensorList);
     }
     // ARM ON & OFF
     else if (commandHeader == COMMAND_2019_ARM_ON) {
         ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_ARM_ON);
         unsigned int servoIndex = readHex(inputStream);
-        arm2019On(servoIndex);
+        arm2019On(servoList, servoIndex);
     }
     else if (commandHeader == COMMAND_2019_ARM_OFF) {
         ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_ARM_OFF);
         unsigned int servoIndex = readHex(inputStream);
-        arm2019Off(servoIndex);
+        arm2019Off(servoList, servoIndex);
     }
 }
 

@@ -162,14 +162,16 @@ void mainBoardCommonStrategyMainInitDrivers(RobotConfig* robotConfig) {
     navigation = initNavigation2019();
     EndMatch* endMatch = mainBoardCommonMatchGetEndMatch();
     TofSensorList* tofSensorList = mainBoardCommonTofGetTofSensorList();
+    ServoList* servoList = mainBoardCommonGetServoList();
 
-    gameStrategyContext = initGameStrategyContext2019(robotConfig, endMatch, tofSensorList);
+    gameStrategyContext = initGameStrategyContext2019(robotConfig, endMatch, tofSensorList, servoList);
     gameBoard = initGameBoard2019(gameStrategyContext);
 }
 
 void mainBoardCommonStrategyMainEndInit(void) {      
     // Update this on the MOTOR BOARD to synchronize the position !
     updateMotorBoardRobotPosition(gameStrategyContext);
+    mainBoardCommonStrategyMainEndInit2019(gameStrategyContext);
 }
 
 

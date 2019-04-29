@@ -87,7 +87,7 @@ unsigned int printArgument(OutputStream* outputStream, DeviceArgument* deviceArg
  * @private
  * @return true if it's ok, false if there is an error
  */
-bool printMethodOrNotificationMetaData(OutputStream* outputStream, DeviceInterface* deviceInterface, unsigned char commandHeader, unsigned char argumentLength, unsigned char resultLength, bool notification) {
+bool printMethodOrNotificationMetaData(OutputStream* outputStream, DeviceInterface* deviceInterface, unsigned char commandHeader, char argumentLength, char resultLength, bool notification) {
     bool result = true;
     if (argumentLength != DEVICE_HEADER_NOT_HANDLED) {
         DeviceMethodMetaData* deviceMethodMetaData = getDeviceMethodMetaData();
