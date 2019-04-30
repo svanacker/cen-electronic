@@ -362,6 +362,10 @@ bool mainBoardPcWaitForInstruction(StartMatch* startMatch) {
             NULL);
     }
 
+    if (gameStrategyContext->loopTargetAndActions) {
+        return nextTargetOrNextStep(gameStrategyContext);
+    }
+
     return true;
 }
 
@@ -491,8 +495,8 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
     }
 
     // CONFIG
-    initRobotConfigPc(&robotConfig, ROBOT_TYPE_BIG);
-    // initRobotConfigPc(&robotConfig, ROBOT_TYPE_SMALL);
+    // initRobotConfigPc(&robotConfig, ROBOT_TYPE_BIG);
+    initRobotConfigPc(&robotConfig, ROBOT_TYPE_SMALL);
 
     // EEPROM
     initEepromPc(&eeprom, "MAIN_BOARD_EEPROM");

@@ -90,7 +90,7 @@ bool handleActions(GameStrategyContext* gameStrategyContext) {
         return false;
     }
     GameTargetActionList* actionList = &(currentTarget->actionList);
-    GameTargetAction* targetAction = getNextGameTargetActionTodo(actionList);
+    GameTargetAction* targetAction = getNextGameTargetActionTodo(actionList, gameStrategyContext->nearestLocation);
 
     if (targetAction == NULL) {
         return false;
@@ -130,7 +130,6 @@ bool handleActions(GameStrategyContext* gameStrategyContext) {
     // Update the status of the target from the status of each actions
     updateTargetStatus(currentTarget);
 
-
     return true;
 }
 
@@ -166,6 +165,7 @@ bool handleTrajectoryToActionStart(GameStrategyContext* gameStrategyContext) {
     Location* endLocation = startLocation->computedNextLocation;
     if (endLocation == NULL) {
         currentTarget->status = TARGET_MISSED;
+        clearCurrentTarget(gameStrategyContext);
         return false;
     }
 
@@ -185,17 +185,35 @@ bool nextStep(GameStrategyContext* gameStrategyContext) {
     // TODO : Restrict the nearest Point to the list of the trajectory to reach the target and not all locations ?
     updateNearestLocation(gameStrategyContext);
 
-    // Launch command to follow the trajectory until the action location start
-    if (handleTrajectoryToActionStart(gameStrategyContext)) {
-        // We do not do anything, we wait that the robot reach his target
-        return true;
-    }
-
     // Launch command to follow the different actions (and move if action->endLocation != action->startLocation)
     if (handleActions(gameStrategyContext)) {
         // We do not do anything, we wait that the robot reach his target
         return true;
     }
 
+    // Launch command to follow the trajectory until the action location start
+    if (handleTrajectoryToActionStart(gameStrategyContext)) {
+        // We do not do anything, we wait that the robot reach his target
+        return true;
+    }
+
     return false;
+}
+
+/**
+ * Function which must be called by the main function to.
+ */
+bool nextTargetOrNextStep(GameStrategyContext* gameStrategyContext) {
+    enum TrajectoryType trajectoryType = gameStrategyContext->trajectoryType;
+    if (trajectoryType != TRAJECTORY_TYPE_NONE) {
+        return false;
+    }
+    // Always find a new target if no target is available
+    GameTarget* currentTarget = gameStrategyContext->currentTarget;
+    if (currentTarget == NULL || currentTarget->status == TARGET_HANDLED) {
+        clearCurrentTarget(gameStrategyContext);
+        findNextTarget(gameStrategyContext);
+    }
+
+    return nextStep(gameStrategyContext);
 }

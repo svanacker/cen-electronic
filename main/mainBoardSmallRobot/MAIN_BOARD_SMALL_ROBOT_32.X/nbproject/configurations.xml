@@ -516,8 +516,6 @@
         <itemPath>../../../navigation/locationListComputer.h</itemPath>
         <itemPath>../../../navigation/navigationComputer.h</itemPath>
       </logicalFolder>
-      <logicalFolder name="f32" displayName="New Folder 32" projectFiles="true">
-      </logicalFolder>
       <logicalFolder name="robot" displayName="robot" projectFiles="true">
         <itemPath>../../../robot/robot.h</itemPath>
         <itemPath>../../../robot/robotType.h</itemPath>

@@ -227,7 +227,9 @@
 #define BIGDISTRIBUTOR_LINE_3_FRONT_TO_KEY_POINT_1_ACCELERATION_FACTOR 1.0f
 
 // TIMING
-#define ACCELERATOR_ACTION_TIME_TO_ACHIEVE                                 0.0f
+#define ACCELERATOR_ARM_OFF_ACTION_TIME_TO_ACHIEVE                         0.0f
+#define ACCELERATOR_ARM_ON_ACTION_TIME_TO_ACHIEVE                          0.0f
+
 #define GOLDENIUM_TAKE_TIME_TO_ACHIEVE                                     3.0f
 #define GOLDENIUM_DROP_TIME_TO_ACHIEVE                                     3.0f
 

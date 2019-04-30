@@ -82,6 +82,7 @@ bool motionRotateToFollowPath(GameStrategyContext* gameStrategyContext, PathData
         else {
             motionDriverRight((float)-diff);
         }
+        gameStrategyContext->trajectoryType = TRAJECTORY_TYPE_ROTATION;
     }
 
     return true;
@@ -115,6 +116,12 @@ bool motionFollowPath(GameStrategyContext* gameStrategyContext, PathData* pathDa
     else {
         clientExtendedMotionBSplineAbsolute(location->x, location->y, angle, cp1, cp2,
             pathData->accelerationFactor, pathData->speedFactor);
+        if (cp1 < 0.0f) {
+            gameStrategyContext->trajectoryType = TRAJECTORY_TYPE_BACKWARD;
+        }
+        else {
+            gameStrategyContext->trajectoryType = TRAJECTORY_TYPE_FORWARD;
+        }
     }
     return true;
 }

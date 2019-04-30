@@ -62,7 +62,7 @@ void initGameStrategyContext(GameStrategyContext* gameStrategyContext,
     // Config
     gameStrategyContext->defaultAccelerationFactor = 1.0f;
     gameStrategyContext->defaultSpeedFactor = 1.0f;
-
+    gameStrategyContext->loopTargetAndActions = !isConfigSet(robotConfig, CONFIG_STRATEGY_MANUAL_MODE);
 
     // Timer Init
     Timer* obstacleTimer = addTimer(ROBOT_OBSTACLE_TIMER_CODE, TIME_DIVIDER_1_HERTZ, &obstacleTimerCallbackFunc, "OBSTACLE TIMER", (int*) gameStrategyContext);

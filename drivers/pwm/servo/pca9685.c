@@ -18,38 +18,11 @@
 // https://github.com/adafruit/Adafruit-PWM-Servo-Driver-Library/blob/master/Adafruit_PWMServoDriver.cpp
 // https://forum.mikroe.com/viewtopic.php?f=88&t=69437
 
-
-
 void pca9685_init(I2cBusConnection* i2cBusConnection) {
     pca9685_reset(i2cBusConnection);
     
-    OutputStream* debugOutputStream = getInfoOutputStreamLogger();
-
-    // set a default frequency
+    // set a default frequency : 50 Hz for a servo
     pca9685_setPWMFreq(i2cBusConnection, 50);
-
-    pca9685_debugMainRegisterList(debugOutputStream, i2cBusConnection);
-
-    /*
-    int i;
-    for (i = 100; i < 500; i += 20) {
-        pca9685_setPWM(i2cBusConnection, 1, 0, i);
-        delaymSec(100);
-    }
-    pca9685_debugMainRegisterList(debugOutputStream, i2cBusConnection);
-*/
-    /*
-    int i;
-    for (i = 1000; i < 2000; i++) {
-        pca9685_setPWM(i2cBusConnection, 0, 500, i);
-        delaymSec(10);
-    }
-    delaymSec(1000);
-    */
-    
-    //pca9685_setPWM(i2cBusConnection, 1, 1000, 2200);
-    
-    // pca9685_debugMainRegisterList(debugOutputStream, i2cBusConnection);
 }
 
 void pca9685_reset(I2cBusConnection* i2cBusConnection) {
@@ -121,26 +94,9 @@ void pca9685_setPWM(I2cBusConnection* i2cBusConnection, unsigned char pwmIndex, 
 
     portableMasterStopI2C(i2cBusConnection);
     WaitI2C(i2cBus);
-    
-    /*
-    pca9685_write8(i2cBusConnection, LED0_ON_L + 4 * pwmIndex, on);
-    delaymSec(10);
-    pca9685_write8(i2cBusConnection, LED0_ON_H + 4 * pwmIndex, on >> 8);
-    delaymSec(10);
-    pca9685_write8(i2cBusConnection, LED0_OFF_L + 4 * pwmIndex, off);
-    delaymSec(10);
-    pca9685_write8(i2cBusConnection, LED0_OFF_H + 4 * pwmIndex, off >> 8);    
-    delaymSec(10);
-     * */
 }
 
 void pca9685_setPin(I2cBusConnection* i2cBusConnection, unsigned char pwmIndex, unsigned int value, bool invert) {
-    /*
-    OutputStream* debugOutputStream = getInfoOutputStreamLogger();
-    appendStringLN(debugOutputStream, "pca9685_setPin !");
-    appendStringAndDecLN(debugOutputStream, "pwmIndex=", pwmIndex);
-    appendStringAndDecLN(debugOutputStream, "value=", value);
-    */
     // Clamp value between 0 and 4095 inclusive.
     value = minInt(value, 4095);
     if (invert) {
@@ -227,8 +183,4 @@ unsigned char pca9685_read8(I2cBusConnection* i2cBusConnection, unsigned char re
     portableMasterStopI2C(i2cBusConnection);
 
     return result;
-}
-
-void pca9685_test(I2cBusConnection* i2cBusConnection) {
-
 }

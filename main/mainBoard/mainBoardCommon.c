@@ -170,7 +170,7 @@
 
 // COMMON TO ALL MAIN BOARD
 
-// I2C => PORT 1 (for All Peripherical, including Eeprom / Clock / Temperatur)
+// I2C => PORT 1 (for All Peripherical, including Eeprom / Clock / Temperature)
 static I2cBus i2cBusListArray[MAIN_BOARD_I2C_BUS_LIST_LENGTH];
 static I2cBusConnection i2cBusConnectionListArray[MAIN_BOARD_I2C_BUS_CONNECTION_LIST_LENGTH];
 static I2cBus* i2cBus;

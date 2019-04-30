@@ -88,6 +88,8 @@ struct GameStrategyContext {
     float defaultSpeedFactor;
     /** The servo List. */
     ServoList* servoList;
+    /** If the game Strategy must automatically loop target and actions .*/
+    bool loopTargetAndActions;
 };
 
 /**

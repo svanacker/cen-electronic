@@ -44,5 +44,12 @@ GameTarget* findNextTarget(GameStrategyContext* gameStrategyContext);
  */
 bool nextStep(GameStrategyContext* gmeStrategyContext);
 
+// MAIN FUNCTION
+
+/**
+ * Function which must be called by the main function to continuously find a next target and after launch the step.
+ */
+bool nextTargetOrNextStep(GameStrategyContext* gameStrategyContext);
+
 #endif
 

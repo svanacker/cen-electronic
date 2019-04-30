@@ -114,7 +114,8 @@ static GameTarget bigDistributorLine3Target;
 
 // ------------------------------------------------------- TARGETS ACTIONS ---------------------------------------------------------------
 
-static GameTargetAction acceleratorTargetAction;
+static GameTargetAction acceleratorPrepareTargetAction;
+static GameTargetAction acceleratorDropTargetAction;
 
 static GameTargetAction goldeniumTakeTargetAction;
 static GameTargetAction goldeniumDropTargetAction;
@@ -140,7 +141,8 @@ static GameTargetAction bigDistributorLine3DropTargetAction;
 // ------------------------------------------------------- TARGETS ACTIONS ITEM LIST --------------------------------------------------------
 
 // Small Robot
-static GameTargetActionItemList acceleratorTargetActionItemList;
+static GameTargetActionItemList acceleratorPrepareTargetActionItemList;
+static GameTargetActionItemList acceleratorDropTargetActionItemList;
 
 static GameTargetActionItemList goldeniumTakeTargetActionItemList;
 static GameTargetActionItemList goldeniumDropTargetActionItemList;
@@ -163,15 +165,15 @@ static GameTargetActionItemList bigDistributorLine3DropTargetActionItemList;
 // ------------------------------------------------------- TARGET ACTION ITEM LIST ---------------------------------------------------
 
 // Small Robot
-static GameTargetActionItem acceleratorTargetActionItem;
+static GameTargetActionItem acceleratorPrepareTargetActionItem;
+static GameTargetActionItem acceleratorDropTargetActionItem;
 
 static GameTargetActionItem goldeniumPrepareTakeTargetActionItem;
 static GameTargetActionItem goldeniumTakeTargetActionItem;
 
-// Big Robot
-static GameTargetActionItem goldeniumPrepareDropTargetActionItem;
 static GameTargetActionItem goldeniumDropTargetActionItem;
 
+// Big Robot
 static GameTargetActionItem bigDistributorLine1PrepareTargetActionItem;
 static GameTargetActionItem bigDistributorLine1TakeTargetActionItem;
 static GameTargetActionItem bigDistributorLine1DropTargetActionItem;
@@ -536,16 +538,16 @@ void initTargets2019(GameStrategyContext* gameStrategyContext) {
 
     RobotConfig* robotConfig = gameStrategyContext->robotConfig;
     enum RobotType robotType = robotConfig->robotType;
-    if (robotType == ROBOT_TYPE_BIG) {
+    if (robotType == ROBOT_TYPE_SMALL) {
+        addGameTarget(&acceleratorTarget, "ACC_TARGET", SCORE_POINT_2019_LAUNCH_BLUIUM_IN_ACCELERATOR, acceleratorFrontLocation, acceleratorFrontLocation);
+        addGameTarget(&goldeniumTakeTarget, "GOLD_TAKE_TARGET", SCORE_POINT_2019_EXTRACT_GOLDENIUM, goldeniumFrontLocation, goldeniumFrontLocation);
+        addGameTarget(&goldeniumDropTarget, "GOLD_DROP_TARGET", SCORE_POINT_2019_WEIGHING_MACHINE_GOLDENIUM, weighingMachineDropLocation, weighingMachineDropLocation);
+    }
+    else if (robotType == ROBOT_TYPE_BIG) {
         addGameTarget(&chaosTarget, "CHAOS_TARGET", SCORE_POINT_2019_CHAOS_5_PUNK, chaosFrontLocation, rediumDropZoneLocation);
         addGameTarget(&bigDistributorLine1Target, "BIG DIST 1", SCORE_POINT_2019_ADD_ATOM_ACCELERATOR * 2, bigDistributorLine1FrontLocation, acceleratorDropLocation);
         addGameTarget(&bigDistributorLine2Target, "BIG DIST 2", SCORE_POINT_2019_ADD_ATOM_ACCELERATOR * 2, bigDistributorLine2FrontLocation, acceleratorDropLocation);
         addGameTarget(&bigDistributorLine3Target, "BIG DIST 3", SCORE_POINT_2019_ADD_ATOM_ACCELERATOR * 2, bigDistributorLine3FrontLocation, acceleratorDropLocation);
-    }
-    else if (robotType == ROBOT_TYPE_SMALL) {
-        addGameTarget(&acceleratorTarget, "ACC_TARGET", SCORE_POINT_2019_LAUNCH_BLUIUM_IN_ACCELERATOR, acceleratorFrontLocation, acceleratorFrontLocation);
-        addGameTarget(&goldeniumTakeTarget, "GOLD_TAKE_TARGET", SCORE_POINT_2019_EXTRACT_GOLDENIUM, goldeniumFrontLocation, goldeniumFrontLocation);
-        addGameTarget(&goldeniumDropTarget, "GOLD_DROP_TARGET", SCORE_POINT_2019_WEIGHING_MACHINE_GOLDENIUM, weighingMachineFrontLocation, weighingMachineFrontLocation);
     }
 }
 
@@ -553,11 +555,14 @@ void initTargetActions2019(GameStrategyContext* gameStrategyContext) {
     RobotConfig* robotConfig = gameStrategyContext->robotConfig;
     if (robotConfig->robotType == ROBOT_TYPE_SMALL) {
         // ACCELERATOR TARGET
-        addTargetDropAction(&(acceleratorTarget.actionList), &acceleratorTargetAction, acceleratorFrontLocation, ACCELERATOR_ACTION_TIME_TO_ACHIEVE, &acceleratorTargetActionItemList);
+        addTargetPrepareAction(&(acceleratorTarget.actionList), &acceleratorPrepareTargetAction, smallRobotStartAreaLocation, ACCELERATOR_ARM_ON_ACTION_TIME_TO_ACHIEVE, &acceleratorPrepareTargetActionItemList);
+        addTargetDropAction(&(acceleratorTarget.actionList), &acceleratorDropTargetAction, acceleratorFrontLocation, ACCELERATOR_ARM_OFF_ACTION_TIME_TO_ACHIEVE, &acceleratorDropTargetActionItemList);
+
         // GOLDENIUM TAKE TARGET
         addTargetHandlingAction(&(goldeniumTakeTarget.actionList), &goldeniumTakeTargetAction, goldeniumFrontLocation, GOLDENIUM_TAKE_TIME_TO_ACHIEVE, &goldeniumTakeTargetActionItemList);
+
         // GOLDENIUM DROP TARGET
-        addTargetDropAction(&(goldeniumDropTarget.actionList), &goldeniumDropTargetAction, weighingMachineFrontLocation, GOLDENIUM_DROP_TIME_TO_ACHIEVE, &goldeniumDropTargetActionItemList);
+        addTargetDropAction(&(goldeniumDropTarget.actionList), &goldeniumDropTargetAction, weighingMachineDropLocation, GOLDENIUM_DROP_TIME_TO_ACHIEVE, &goldeniumDropTargetActionItemList);
     }
     else if (robotConfig->robotType == ROBOT_TYPE_BIG) {
         // CHAOS
@@ -689,15 +694,15 @@ bool acceleratorDrop(int* context) {
 
 
 void initTargetActionsItems2019(GameStrategyContext* gameStrategyContext) {
-    // Accelerator
-    addTargetActionItem(&acceleratorTargetActionItemList, &acceleratorTargetActionItem, &acceleratorArmOn, "ACC ARM ON");
+    // Accelerator => We remove the arm when reaching the drop (drop is done by the move of the robot)
+    addTargetActionItem(&acceleratorPrepareTargetActionItemList, &acceleratorPrepareTargetActionItem, &acceleratorArmOn, "ACC ARM ON");
+    addTargetActionItem(&acceleratorDropTargetActionItemList, &acceleratorDropTargetActionItem, &acceleratorArmOff, "ACC ARM Off");
     
     // Goldenium Take
     addTargetActionItem(&goldeniumTakeTargetActionItemList, &goldeniumPrepareTakeTargetActionItem, &goldeniumPrepareTake, "PREP GOLD TAKE");
     addTargetActionItem(&goldeniumTakeTargetActionItemList, &goldeniumTakeTargetActionItem, &goldeniumTake, "GOLD TAKE");
    
     // Goldenium Drop
-    addTargetActionItem(&goldeniumDropTargetActionItemList, &goldeniumPrepareDropTargetActionItem, &goldeniumDrop, "PREP GOLD DROP");
     addTargetActionItem(&goldeniumDropTargetActionItemList, &goldeniumDropTargetActionItem, &goldeniumDrop, "GOLD DROP");
     
     // Chaos : No specific action to do

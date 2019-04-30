@@ -102,12 +102,12 @@ bool isAnyActionStartedOrDone(GameTargetActionList* list) {
     return false;
 }
 
-GameTargetAction* getNextGameTargetActionTodo(GameTargetActionList* targetActionList) {
+GameTargetAction* getNextGameTargetActionTodo(GameTargetActionList* targetActionList, Location* location) {
     int i;
     int size = targetActionList->size;
     for (i = 0; i < size; i++) {
         GameTargetAction* targetAction = targetActionList->actions[i];
-        if (targetAction->status == ACTION_STATUS_TODO) {
+        if (targetAction->status == ACTION_STATUS_TODO && targetAction->startLocation == location) {
             return targetAction;
         }
     }

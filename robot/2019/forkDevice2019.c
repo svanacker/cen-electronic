@@ -62,7 +62,7 @@ void deviceFork2019HandleRawData(unsigned char commandHeader, InputStream* input
     // -> Init Position
     else if (commandHeader == COMMAND_2019_ELEVATOR_INIT_POSITION) {
         ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_ELEVATOR_INIT_POSITION);
-        moveElevatorDoublePuck(servoList);
+        moveElevatorInitPosition(servoList);
     }
     // -> Up
     else if (commandHeader == COMMAND_2019_ELEVATOR_UP) {

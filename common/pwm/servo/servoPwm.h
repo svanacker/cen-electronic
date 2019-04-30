@@ -61,8 +61,8 @@ struct Servo {
     enum ServoType servoType;
     /**
      * The internal index of the servo linked to the hardware. As several
-     * servo could use different type of servo (PCA8695, internal PWM).
-     * Ex : 3 for the pin 3 of the PCA8695 or the pin 3
+     * servo could use different type of servo (PCA9685, internal PWM).
+     * Ex : 3 for the pin 3 of the PCA9685 or the pin 3
      */
     unsigned int internalServoIndex;
     /**

@@ -69,7 +69,7 @@ bool isAnyActionStartedOrDone(GameTargetActionList* list);
 /**
  * Return the next Game Target Action to do if any.
  */
-GameTargetAction* getNextGameTargetActionTodo(GameTargetActionList* targetActionList);
+GameTargetAction* getNextGameTargetActionTodo(GameTargetActionList* targetActionList, Location* location);
 
 /**
  * Get the count of target action.

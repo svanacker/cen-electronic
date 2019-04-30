@@ -28,7 +28,7 @@
 // The servo to scan (Elevator Left / Right))
 #define FORK_2019_SCAN_SERVO_INDEX                                             2
 
-// We will use PCA8695 for all and the first
+// We will use PCA9685 for all and the first
 #define FORK_2019_PCA9685_START_INDEX                                          3
 
 #define FORK_2019_ELEVATOR_SERVO_INDEX         FORK_2019_PCA9685_START_INDEX + 0
@@ -48,10 +48,10 @@
 
 // Elevator Servo Value
 #define FORK_2019_ELEVATOR_SPEED_FACTOR                                     0xFF
-#define FORK_2019_ELEVATOR_BOTTOM_SERVO_VALUE                             0x0900
+#define FORK_2019_ELEVATOR_BOTTOM_SERVO_VALUE                             0x09A0
 #define FORK_2019_ELEVATOR_INIT_POSITION_SERVO_VALUE                      0x05DC
-#define FORK_2019_ELEVATOR_DOUBLE_PUCK_SERVO_VALUE                        0x0500
-#define FORK_2019_ELEVATOR_UP_SERVO_VALUE                                 0x0400
+#define FORK_2019_ELEVATOR_DOUBLE_PUCK_SERVO_VALUE                        0x0460
+#define FORK_2019_ELEVATOR_UP_SERVO_VALUE                                 0x0280
 
 // Servo Fork Left
 #define FORK_2019_SERVO_LEFT_SPEED_FACTOR                                   0xFF
@@ -93,6 +93,8 @@ void moveElevatorAtValue(ServoList* servoList, unsigned int value);
 void moveElevatorBottom(ServoList* servoList);
 
 void moveElevatorUp(ServoList* servoList);
+
+void moveElevatorInitPosition(ServoList* servoList);
 
 void moveElevatorDoublePuck(ServoList* servoList);
 

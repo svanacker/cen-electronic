@@ -6,11 +6,6 @@
 
 #include <stdbool.h>
 
-/**
- * Test of all pwm.
- */
-void pca9685_test(I2cBusConnection* i2cBusConnection);
-
 // DEBUG
 
 void pca9685_debugMainRegisterList(OutputStream* outputStream, I2cBusConnection* i2cBusConnection);

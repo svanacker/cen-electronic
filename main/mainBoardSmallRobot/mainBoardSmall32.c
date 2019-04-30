@@ -73,7 +73,7 @@ bool mainBoardWaitForInstruction(StartMatch* startMatchParam) {
     // mainBoardCommonHandleAccelerometer();
     mainBoardCommonMotorHandleStreamInstruction();
     mainBoardCommonStrategyHandleStreamInstruction();
-    
+
     return true;
 }
 
@@ -117,7 +117,13 @@ void mainBoardMainPhase2(void) {
     mainBoardCommonInitBusList();
     mainBoardCommonInitTimerList();
     mainBoardCommonInitCommonDrivers();
-    
+
+    // ROBOT2019 : PCA9685
+    ServoList* servoList = mainBoardCommonGetServoList();
+    I2cBus* i2cBus = mainBoardCommonGetMainI2cBus();
+    I2cBusConnection* servoI2cBusConnection = addI2cBusConnection(i2cBus, PCA9685_ADDRESS_0, true);
+    addServoAllPca9685(servoList, servoI2cBusConnection);
+
     mainBoardCommonTofInitDrivers(mainBoardCommonGetMainI2cBus());
     mainBoardCommonMatchMainInitDrivers(&robotConfig, isMatchStarted32, mainBoardWaitForInstruction, loopUnWaitForInstruction);
     mainBoardCommonStrategyMainInitDrivers(&robotConfig);
@@ -136,23 +142,10 @@ int main(void) {
     mainBoardMainPhase2();
     mainBoardMainPhase3();
     
-    // PCA9685
-    ServoList* servoList = mainBoardCommonGetServoList();
-    I2cBus* i2cBus = mainBoardCommonGetMainI2cBus();
-    I2cBusConnection* servoI2cBusConnection = addI2cBusConnection(i2cBus, PCA9685_ADDRESS_0, true);
-    addServoAllPca9685(servoList, servoI2cBusConnection);
-    
-    
-    
     TofSensorList* tofSensorList = mainBoardCommonTofGetTofSensorList();
+    ServoList* servoList = mainBoardCommonGetServoList();
     addLocalDevice(getFork2019DeviceInterface(), getFork2019DeviceDescriptor(servoList, tofSensorList));
 
-    /*
-    appendStringCRLF(getInfoOutputStreamLogger(), "PWM START");
-    I2cBus* i2cBus = getI2cBusByIndex(0);
-    I2cBusConnection* pca9685BusConnection = addI2cBusConnection(i2cBus, 0x80, true);
-    pca9685_init(pca9685BusConnection);
-    */
  /*   
     while (1) {
         delaymSec(10);
