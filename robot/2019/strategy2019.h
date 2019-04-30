@@ -230,7 +230,10 @@
 #define ACCELERATOR_ARM_OFF_ACTION_TIME_TO_ACHIEVE                         0.0f
 #define ACCELERATOR_ARM_ON_ACTION_TIME_TO_ACHIEVE                          0.0f
 
+#define GOLDENIUM_PREPARE_TAKE_TIME_TO_ACHIEVE                             0.0f
 #define GOLDENIUM_TAKE_TIME_TO_ACHIEVE                                     3.0f
+
+#define GOLDENIUM_PREPARE_DROP_TIME_TO_ACHIEVE                             3.0f
 #define GOLDENIUM_DROP_TIME_TO_ACHIEVE                                     3.0f
 
 #define CHAOS_TAKE_TIME_TO_ACHIEVE                                         0.0f

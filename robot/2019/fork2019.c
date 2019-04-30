@@ -70,9 +70,9 @@ void moveElevatorUp(ServoList* servoList) {
     pwmServo(servo, FORK_2019_ELEVATOR_SPEED_FACTOR, FORK_2019_ELEVATOR_UP_SERVO_VALUE);
 }
 
-void moveElevatorDoublePuck(ServoList* servoList) {
+void moveElevatorGoldenium(ServoList* servoList) {
     Servo* servo = getServo(servoList, FORK_2019_ELEVATOR_SERVO_INDEX);
-    pwmServo(servo, FORK_2019_ELEVATOR_SPEED_FACTOR, FORK_2019_ELEVATOR_DOUBLE_PUCK_SERVO_VALUE);
+    pwmServo(servo, FORK_2019_ELEVATOR_SPEED_FACTOR, FORK_2019_ELEVATOR_GOLDENIUM_SERVO_VALUE);
 }
 
 void moveElevatorLeft(ServoList* servoList) {
@@ -175,45 +175,58 @@ bool fork2019TakeSimplePuck(ServoList* servoList) {
     moveForkPushOff(servoList, FORK_2019_LEFT_AND_RIGHT_INDEX);
 
     // Elevator
-    // TODO : Which Height
     moveElevatorBottom(servoList);
-    delaymSec(1000);
+    delaymSec(100);
     
     // TODO : Scan to do => Return false if the scan is KO
 
     // Fork Single Puck
     moveForkSimplePuck(servoList, FORK_2019_LEFT_AND_RIGHT_INDEX);
-    delaymSec(1000);
+    delaymSec(100);
 
     // Elevator Up to free the Puck
-    moveElevatorUp(servoList);
-    delaymSec(1000);
+    moveElevatorInitPosition(servoList);
+    delaymSec(100);
     
     return true;
 }
 
-bool fork2019TakeGoldenium(ServoList* servoList) {
-    // Fork Push Off
+bool fork2019PrepareTakeGoldenium(ServoList* servoList, unsigned int leftRight) {
+    // Fork Push Off for both !
     moveForkPushOff(servoList, FORK_2019_LEFT_AND_RIGHT_INDEX);
 
     // Elevator
-    moveElevatorBottom(servoList);
-    delaymSec(1000);
-    
+    moveElevatorGoldenium(servoList);
+
+    return true;
+}
+
+bool fork2019TakeGoldenium(ServoList* servoList, unsigned int leftRight) {
     // TODO : Scan to do => Return false if the scan is KO
 
     // Fork Single Puck
-    moveForkSimplePuck(servoList, FORK_2019_LEFT_AND_RIGHT_INDEX);
-    delaymSec(1000);
+    moveForkDoublePuck(servoList, leftRight);
+    delaymSec(100);
 
     // Elevator Up to free the Puck
     moveElevatorUp(servoList);
-    delaymSec(1000);
+    delaymSec(100);
     
     return true;
 }
 
-void fork2019Release(ServoList* servoList) {
+bool fork2019DropGoldenium(ServoList* servoList, unsigned int leftRight) {
+    // Push actionner
+    moveForkPushOn(servoList, leftRight);
+    
+    // Fork back to let the puck without support
+    moveForkBack(servoList, leftRight);
+
+    // Push Off
+    moveForkPushOn(servoList, leftRight);
+}
+
+bool fork2019AcceleratorDrop(ServoList* servoList) {
     // Elevator Up 
     moveElevatorUp(servoList);
     delaymSec(1000);
@@ -229,6 +242,8 @@ void fork2019Release(ServoList* servoList) {
     // Fork Push Off
     moveForkPushOff(servoList, FORK_2019_LEFT_AND_RIGHT_INDEX);
     delaymSec(500);
+
+    return true;
 }
 
 

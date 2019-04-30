@@ -10,7 +10,7 @@
 #define COMMAND_2019_ELEVATOR_BOTTOM               'B'
 
 // Elevator at the middle to get the double puck
-#define COMMAND_2019_ELEVATOR_DOUBLE_PUCK_POSITION 'D'
+#define COMMAND_2019_ELEVATOR_GOLDENIUM_POSITION   'G'
 
 // Elevator to get the puck distributor
 #define COMMAND_2019_ELEVATOR_INIT_POSITION        'I'
@@ -54,8 +54,8 @@
 #define COMMAND_2019_FORK_TAKE_GOLDENIUM          'g'
 
 
-// RELEASE
-#define COMMAND_2019_FORK_RELEASE                 'r'
+// ACCELERATOR DROP
+#define COMMAND_2019_FORK_ACCELERATOR_DROP        'r'
 
 // SCAN
 #define COMMAND_2019_FORK_SCAN                    'S'

@@ -117,7 +117,10 @@ static GameTarget bigDistributorLine3Target;
 static GameTargetAction acceleratorPrepareTargetAction;
 static GameTargetAction acceleratorDropTargetAction;
 
+static GameTargetAction goldeniumPrepareTakeTargetAction;
 static GameTargetAction goldeniumTakeTargetAction;
+
+static GameTargetAction goldeniumPrepareDropTargetAction;
 static GameTargetAction goldeniumDropTargetAction;
 
 static GameTargetAction chaosTakeTargetAction;
@@ -144,7 +147,12 @@ static GameTargetAction bigDistributorLine3DropTargetAction;
 static GameTargetActionItemList acceleratorPrepareTargetActionItemList;
 static GameTargetActionItemList acceleratorDropTargetActionItemList;
 
+// Take Goldenium
+static GameTargetActionItemList goldeniumPrepareTakeTargetActionItemList;
 static GameTargetActionItemList goldeniumTakeTargetActionItemList;
+
+// Drop Goldenium
+static GameTargetActionItemList goldeniumPrepareDropTargetActionItemList;
 static GameTargetActionItemList goldeniumDropTargetActionItemList;
 
 // Big Robot
@@ -171,6 +179,7 @@ static GameTargetActionItem acceleratorDropTargetActionItem;
 static GameTargetActionItem goldeniumPrepareTakeTargetActionItem;
 static GameTargetActionItem goldeniumTakeTargetActionItem;
 
+static GameTargetActionItem goldeniumPrepareDropTargetActionItem;
 static GameTargetActionItem goldeniumDropTargetActionItem;
 
 // Big Robot
@@ -559,9 +568,11 @@ void initTargetActions2019(GameStrategyContext* gameStrategyContext) {
         addTargetDropAction(&(acceleratorTarget.actionList), &acceleratorDropTargetAction, acceleratorFrontLocation, ACCELERATOR_ARM_OFF_ACTION_TIME_TO_ACHIEVE, &acceleratorDropTargetActionItemList);
 
         // GOLDENIUM TAKE TARGET
-        addTargetHandlingAction(&(goldeniumTakeTarget.actionList), &goldeniumTakeTargetAction, goldeniumFrontLocation, GOLDENIUM_TAKE_TIME_TO_ACHIEVE, &goldeniumTakeTargetActionItemList);
+        addTargetPrepareAction(&(goldeniumTakeTarget.actionList), &goldeniumPrepareTakeTargetAction, acceleratorFrontLocation, GOLDENIUM_PREPARE_TAKE_TIME_TO_ACHIEVE, &goldeniumPrepareTakeTargetActionItemList);
+        addTargetDropAction(&(goldeniumTakeTarget.actionList), &goldeniumTakeTargetAction, goldeniumFrontLocation, GOLDENIUM_TAKE_TIME_TO_ACHIEVE, &goldeniumTakeTargetActionItemList);
 
         // GOLDENIUM DROP TARGET
+        addTargetPrepareAction(&(goldeniumDropTarget.actionList), &goldeniumPrepareDropTargetAction, weighingMachineFrontLocation, GOLDENIUM_PREPARE_DROP_TIME_TO_ACHIEVE, &goldeniumPrepareDropTargetActionItemList);
         addTargetDropAction(&(goldeniumDropTarget.actionList), &goldeniumDropTargetAction, weighingMachineDropLocation, GOLDENIUM_DROP_TIME_TO_ACHIEVE, &goldeniumDropTargetActionItemList);
     }
     else if (robotConfig->robotType == ROBOT_TYPE_BIG) {
@@ -614,7 +625,6 @@ bool acceleratorArmOff(int* context) {
     if (isViolet(gameStrategyContext)) {
         // Right Arm
         arm2019Off(servoList, FORK_2019_RIGHT_INDEX);
-        
     }
     else {
         // Left Arm
@@ -629,7 +639,7 @@ bool goldeniumPrepareTake(int* context) {
     appendStringCRLF(debugOutputStream, "goldeniumPrepareTake");
     GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
     ServoList* servoList = gameStrategyContext->servoList;
-    moveElevatorDoublePuck(servoList);
+    moveElevatorGoldenium(servoList);
     return true;
 }
 
@@ -639,12 +649,23 @@ bool goldeniumTake(int* context) {
     GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
     ServoList* servoList = gameStrategyContext->servoList;
     if (isViolet(gameStrategyContext)) {
-        fork2019TakeGoldenium(servoList);
+        fork2019TakeGoldenium(servoList, FORK_2019_RIGHT_INDEX);
     }
     else {
-        fork2019TakeGoldenium(servoList);
+        fork2019TakeGoldenium(servoList, FORK_2019_LEFT_INDEX);
     }
     
+    return true;
+}
+
+bool goldeniumPrepareDrop(int* context) {
+    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+    appendStringCRLF(debugOutputStream, "goldeniumPrepareDrop");
+    GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
+    ServoList* servoList = gameStrategyContext->servoList;
+
+    // WHAT TO DO ?
+
     return true;
 }
 
@@ -654,10 +675,10 @@ bool goldeniumDrop(int* context) {
     GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
     ServoList* servoList = gameStrategyContext->servoList;
     if (isViolet(gameStrategyContext)) {
-        moveForkPushOff(servoList, FORK_2019_RIGHT_INDEX);
+        fork2019DropGoldenium(servoList, FORK_2019_RIGHT_INDEX);
     }
     else {
-        moveForkPushOff(servoList, FORK_2019_LEFT_INDEX);
+        fork2019DropGoldenium(servoList, FORK_2019_LEFT_INDEX);
     }
     return true;
 }
@@ -687,7 +708,7 @@ bool acceleratorDrop(int* context) {
     appendStringCRLF(debugOutputStream, "acceleratorDrop");
     GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
     ServoList* servoList = gameStrategyContext->servoList;
-    fork2019Release(servoList);
+    fork2019AcceleratorDrop(servoList);
 
     return true;
 }
@@ -699,10 +720,11 @@ void initTargetActionsItems2019(GameStrategyContext* gameStrategyContext) {
     addTargetActionItem(&acceleratorDropTargetActionItemList, &acceleratorDropTargetActionItem, &acceleratorArmOff, "ACC ARM Off");
     
     // Goldenium Take
-    addTargetActionItem(&goldeniumTakeTargetActionItemList, &goldeniumPrepareTakeTargetActionItem, &goldeniumPrepareTake, "PREP GOLD TAKE");
+    addTargetActionItem(&goldeniumPrepareTakeTargetActionItemList, &goldeniumPrepareTakeTargetActionItem, &goldeniumPrepareTake, "PREP GOLD TAKE");
     addTargetActionItem(&goldeniumTakeTargetActionItemList, &goldeniumTakeTargetActionItem, &goldeniumTake, "GOLD TAKE");
    
     // Goldenium Drop
+    addTargetActionItem(&goldeniumPrepareDropTargetActionItemList, &goldeniumPrepareDropTargetActionItem, &goldeniumPrepareDrop, "GOLD PREP DROP");
     addTargetActionItem(&goldeniumDropTargetActionItemList, &goldeniumDropTargetActionItem, &goldeniumDrop, "GOLD DROP");
     
     // Chaos : No specific action to do

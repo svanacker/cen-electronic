@@ -195,12 +195,7 @@
 #include "../../main/motorBoard/motorBoardPc.h"
 #include "../../main/meca1/mechanicalMainBoard1Pc.h"
 
-// 2019
-// #include "../../robot/2019/mainBoard2019.h"
-// #include "../../robot/2018/launcherDeviceInterface2018.h"
-// #include "../../robot/2019/strategyDeviceInterface2018.h"
-// #include "../../robot/2019/strategyDevice2018.h"
-// #include "../../robot/2019/distributor2019.h"
+#include "../../robot/strategy/gameStrategyHandler.h"
 
 // 2019
 #include "../../robot/2019/mainBoard2019.h"
@@ -362,8 +357,11 @@ bool mainBoardPcWaitForInstruction(StartMatch* startMatch) {
             NULL);
     }
 
-    if (gameStrategyContext->loopTargetAndActions) {
-        return nextTargetOrNextStep(gameStrategyContext);
+    // Protection againt the start before the match
+    if (startMatch->isMatchStartedFunction(startMatch)) {
+        if (gameStrategyContext->loopTargetAndActions) {
+            return nextTargetOrNextStep(gameStrategyContext);
+        }
     }
 
     return true;

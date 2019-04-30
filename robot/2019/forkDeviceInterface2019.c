@@ -36,9 +36,9 @@ int deviceFork2019GetInterface(unsigned char commandHeader, DeviceInterfaceMode 
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
-    else if (commandHeader == COMMAND_2019_ELEVATOR_DOUBLE_PUCK_POSITION) {
+    else if (commandHeader == COMMAND_2019_ELEVATOR_GOLDENIUM_POSITION) {
         if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("Elevator Double Puck Pos.");
+            setFunctionNoArgumentAndNoResult("Elevator Goldenium Pos.");
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
@@ -111,10 +111,10 @@ int deviceFork2019GetInterface(unsigned char commandHeader, DeviceInterfaceMode 
         }
         return commandLengthValueForMode(mode, 0, 0);
     }    
-    // DROP
-    else if (commandHeader == COMMAND_2019_FORK_RELEASE) {
+    // FORK ACCELERATOR DROP
+    else if (commandHeader == COMMAND_2019_FORK_ACCELERATOR_DROP) {
         if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("Release Puck (Accelerator)");
+            setFunctionNoArgumentAndNoResult("Accelerator Drop");
         }
         return commandLengthValueForMode(mode, 0, 0);
     }

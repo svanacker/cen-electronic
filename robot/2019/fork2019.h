@@ -50,7 +50,7 @@
 #define FORK_2019_ELEVATOR_SPEED_FACTOR                                     0xFF
 #define FORK_2019_ELEVATOR_BOTTOM_SERVO_VALUE                             0x09A0
 #define FORK_2019_ELEVATOR_INIT_POSITION_SERVO_VALUE                      0x05DC
-#define FORK_2019_ELEVATOR_DOUBLE_PUCK_SERVO_VALUE                        0x0460
+#define FORK_2019_ELEVATOR_GOLDENIUM_SERVO_VALUE                          0x0460
 #define FORK_2019_ELEVATOR_UP_SERVO_VALUE                                 0x0280
 
 // Servo Fork Left
@@ -96,7 +96,7 @@ void moveElevatorUp(ServoList* servoList);
 
 void moveElevatorInitPosition(ServoList* servoList);
 
-void moveElevatorDoublePuck(ServoList* servoList);
+void moveElevatorGoldenium(ServoList* servoList);
 
 void moveElevatorLeft(ServoList* servoList);
 
@@ -140,13 +140,18 @@ bool fork2019TakeSimplePuck(ServoList* servoList);
  * All actions to take a Goldenium.
  * @param servoList
  */
-bool fork2019TakeGoldenium(ServoList* servoList);
+bool fork2019TakeGoldenium(ServoList* servoList, unsigned int leftRight);
 
 /**
- * The actions to to release the Puck
+ * All actions to release a Goldenium.
+ */
+bool fork2019DropGoldenium(ServoList* servoList, unsigned int leftRight);
+
+/**
+ * The actions to to release the Puck in Accelerator
  * @param servoList
  */
-void fork2019Release(ServoList* servoList);
+bool fork2019AcceleratorDrop(ServoList* servoList);
 
 
 // ARM (SMALL ROBOT)

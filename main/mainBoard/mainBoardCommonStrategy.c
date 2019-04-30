@@ -191,8 +191,11 @@ void mainBoardCommonStrategyMainLoop(void) {
             break;
         }
 
-        if (gameStrategyContext->loopTargetAndActions) {
-            nextTargetOrNextStep(gameStrategyContext);
+        // Protection againt the start before the match
+        if (startMatch->isMatchStartedFunction(startMatch)) {
+            if (gameStrategyContext->loopTargetAndActions) {
+                nextTargetOrNextStep(gameStrategyContext);
+            }
         }
         // After each instruction => Export the score to endMatch Device
         endMatch->scoreToShow = gameStrategyContext->score;
