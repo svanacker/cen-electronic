@@ -814,6 +814,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="robot\2019\angle2019.h" />
     <ClInclude Include="robot\2019\bigRobotActions2019.h" />
+    <ClInclude Include="robot\2019\bigRobotLocation2019.h" />
     <ClInclude Include="robot\2019\bigRobotPath2019.h" />
     <ClInclude Include="robot\2019\bigRobotStrategy2019.h" />
     <ClInclude Include="robot\2019\distributor2019.h" />
@@ -827,6 +828,7 @@
     <ClInclude Include="robot\2019\path2019.h" />
     <ClInclude Include="robot\2019\score2019.h" />
     <ClInclude Include="robot\2019\smallRobotActions2019.h" />
+    <ClInclude Include="robot\2019\smallRobotLocation2019.h" />
     <ClInclude Include="robot\2019\smallRobotPath2019.h" />
     <ClInclude Include="robot\2019\smallRobotStrategy2019.h" />
     <ClInclude Include="robot\2019\strategy2019.h" />

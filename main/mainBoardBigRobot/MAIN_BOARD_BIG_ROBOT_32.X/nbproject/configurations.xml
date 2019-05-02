@@ -530,6 +530,16 @@
         <itemPath>../../../robot/2019/strategyConfig2019.h</itemPath>
         <itemPath>../../../robot/2019/teamColor2019.h</itemPath>
         <itemPath>../../../robot/2019/fork2019.h</itemPath>
+        <itemPath>../../../robot/2019/angle2019.h</itemPath>
+        <itemPath>../../../robot/2019/bigRobotActions2019.h</itemPath>
+        <itemPath>../../../robot/2019/bigRobotPath2019.h</itemPath>
+        <itemPath>../../../robot/2019/bigRobotStrategy2019.h</itemPath>
+        <itemPath>../../../robot/2019/location2019.h</itemPath>
+        <itemPath>../../../robot/2019/path2019.h</itemPath>
+        <itemPath>../../../robot/2019/smallRobotActions2019.h</itemPath>
+        <itemPath>../../../robot/2019/smallRobotPath2019.h</itemPath>
+        <itemPath>../../../robot/2019/smallRobotStrategy2019.h</itemPath>
+        <itemPath>../../../robot/2019/bigRobotLocation2019.h</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.config"
                      displayName="robot.config"
@@ -1139,6 +1149,10 @@
         <itemPath>../../../robot/2019/strategy2019Utils.c</itemPath>
         <itemPath>../../../robot/2019/strategyConfig2019.c</itemPath>
         <itemPath>../../../robot/2019/fork2019.c</itemPath>
+        <itemPath>../../../robot/2019/bigRobotActions2019.c</itemPath>
+        <itemPath>../../../robot/2019/bigRobotStrategy2019.c</itemPath>
+        <itemPath>../../../robot/2019/smallRobotActions2019.c</itemPath>
+        <itemPath>../../../robot/2019/smallRobotStrategy2019.c</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.config"
                      displayName="robot.config"

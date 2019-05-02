@@ -33,9 +33,4 @@ PathData* addNavigationPathWithColor(
     float accelerationFactor,
     float speedFactor);
 
-/**
-* Define the color and update strategy.
-*/
-void setColor2019(GameStrategyContext* gmeStrategyContext, enum TeamColor color);
-
 #endif

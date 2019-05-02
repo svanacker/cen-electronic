@@ -46,6 +46,7 @@
 
 #include "../../robot/2019/angle2019.h"
 #include "../../robot/2019/bigRobotActions2019.h"
+#include "../../robot/2019/bigRobotLocation2019.h"
 #include "../../robot/2019/bigRobotPath2019.h"
 #include "../../robot/2019/bigRobotStrategy2019.h"
 #include "../../robot/2019/forkDevice2019.h"
@@ -178,6 +179,7 @@ void initBigRobotLocations2019(GameStrategyContext* gameStrategyContext) {
     chaosFrontLocation = addLocationWithColors(teamColor, navigation, CHAOS_ZONE_FRONT, CHAOS_ZONE_FRONT_X, CHAOS_ZONE_FRONT_Y);
     rediumDropZoneLocation = addLocationWithColors(teamColor, navigation, REDIUM_DROP_ZONE, REDIUM_DROP_ZONE_X, REDIUM_DROP_ZONE_Y);
     acceleratorDropLocation = addLocationWithColors(teamColor, navigation, ACCELERATOR_DROP, ACCELERATOR_DROP_X, ACCELERATOR_DROP_Y);
+
     keyPoint1Location = addLocationWithColors(teamColor, navigation, KEY_POINT_1, KEY_POINT_1_X, KEY_POINT_1_Y);
     keyPoint2Location = addLocationWithColors(teamColor, navigation, KEY_POINT_2, KEY_POINT_2_X, KEY_POINT_2_Y);
     bigDistributorLine1FrontLocation = addLocationWithColors(teamColor, navigation, BIG_DISTRIBUTOR_LINE_1, BIG_DISTRIBUTOR_LINE_1_X, BIG_DISTRIBUTOR_LINE_1_Y);

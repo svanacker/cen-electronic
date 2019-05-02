@@ -53,6 +53,7 @@
 #include "../../robot/2019/strategy2019Utils.h"
 #include "../../robot/2019/strategyConfig2019.h"
 #include "../../robot/2019/smallRobotActions2019.h"
+#include "../../robot/2019/smallRobotLocation2019.h"
 #include "../../robot/2019/smallRobotPath2019.h"
 #include "../../robot/2019/smallRobotStrategy2019.h"
 
@@ -60,8 +61,8 @@
 
 // ------------------------------------------------------ LOCATIONS --------------------------------------------------------------------
 
-// static Location* bluiumRightLocation;
-// static Location* smallDistributorLine1FrontLocation;
+static Location* blueiumRightLocation;
+static Location* smallDistributorLine1Location;
 static Location* smallRobotStartAreaLocation;
 static Location* acceleratorFrontLocation;
 static Location* goldeniumFrontLocation;
@@ -75,17 +76,24 @@ PathData* smallRobotStartArea_to_accelerator_Path;
 PathData* acceleratorFront_to_goldeniumFront_Path;
 PathData* goldeniumFront_to_weighingMachineFront_Path;
 PathData* weighingMachineFront_to_weighingMachineDrop_Path;
-// Go back Home
-PathData* weighingMachineDrop_to_smallRobotStartArea_Path;
 
 PathData* weighingMachineDrop_to_bluiumRight_Path;
 PathData* bluiumRight_to_smallDistributor_Path;
+
+PathData* smallDistributor_to_bluiumRight_Path;
+PathData* bluiumRight_to_weighingMachineDrop_Path;
+
+
+// Go back Home
+PathData* weighingMachineDrop_to_smallRobotStartArea_Path;
+
 
 // ------------------------------------------------------- TARGET -------------------------------------------------------------------------
 
 static GameTarget acceleratorTarget;
 static GameTarget goldeniumTakeTarget;
 static GameTarget goldeniumDropTarget;
+static GameTarget smallDistributorLine1Target;
 
 // ------------------------------------------------------- TARGETS ACTIONS ---------------------------------------------------------------
 
@@ -111,6 +119,11 @@ static GameTargetActionItemList goldeniumTakeTargetActionItemList;
 // Drop Goldenium
 static GameTargetActionItemList goldeniumPrepareDropTargetActionItemList;
 static GameTargetActionItemList goldeniumDropTargetActionItemList;
+
+// Small Distributor Line 1
+static GameTargetActionItemList smallDistributorLine1PrepareTargetActionItemList;
+static GameTargetActionItemList smallDistributorLine1TakeTargetActionItemList;
+static GameTargetActionItemList smallDistributorLine1DropTargetActionItemList;
 
 // ------------------------------------------------------- TARGET ACTION ITEM LIST ---------------------------------------------------
 
@@ -151,6 +164,8 @@ void initSmallRobotLocations2019(GameStrategyContext* gameStrategyContext) {
     goldeniumFrontLocation = addLocationWithColors(teamColor, navigation, GOLDENIUM_FRONT, GOLDENIUM_FRONT_X, GOLDENIUM_FRONT_Y);
     weighingMachineFrontLocation = addLocationWithColors(teamColor, navigation, WEIGHING_MACHINE_FRONT, WEIGHING_MACHINE_FRONT_X, WEIGHING_MACHINE_FRONT_Y);
     weighingMachineDropLocation = addLocationWithColors(teamColor, navigation, WEIGHING_MACHINE_DROP, WEIGHING_MACHINE_DROP_X, WEIGHING_MACHINE_DROP_Y);
+    blueiumRightLocation = addLocationWithColors(teamColor, navigation, BLUEIUM_RIGHT, BLUEIUM_RIGHT_X, BLUEIUM_RIGHT_Y);
+    smallDistributorLine1Location = addLocationWithColors(teamColor, navigation, SMALL_DISTRIBUTOR_LINE_1, SMALL_DISTRIBUTOR_LINE_1_X, SMALL_DISTRIBUTOR_LINE_1_Y);
 }
 
 void initSmallRobotPaths2019(GameStrategyContext* gameStrategyContext) {
@@ -207,6 +222,59 @@ void initSmallRobotPaths2019(GameStrategyContext* gameStrategyContext) {
         deciDegreeToRad(WEIGHING_MACHINE_DROP_ANGLE_DECI_DEG),
         aFactor * WEIGHING_MACHINE_FRONT_TO_WEIGHING_MACHINE_DROP_ACCELERATION_FACTOR,
         speedFactor * WEIGHING_MACHINE_FRONT_TO_WEIGHING_MACHINE_DROP_SPEED_FACTOR);
+
+    // Weighing Machine -> Small Distributor 1
+
+    weighingMachineDrop_to_bluiumRight_Path = addNavigationPathWithColor(teamColor,
+        navigation,
+        weighingMachineDropLocation,
+        blueiumRightLocation,
+        WEIGHING_MACHINE_TO_BLUEIUM_RIGHT_COST,
+        WEIGHING_MACHINE_TO_BLUEIUM_RIGHT_CP1,
+        WEIGHING_MACHINE_TO_BLUEIUM_RIGHT_CP2,
+        deciDegreeToRad(WEIGHING_MACHINE_DROP_ANGLE_DECI_DEG),
+        deciDegreeToRad(BLUEIUM_RIGHT_ANGLE_FROM_DECI_DEG),
+        aFactor * WEIGHING_MACHINE_TO_BLUEIUM_RIGHT_ACCELERATION_FACTOR,
+        speedFactor * WEIGHING_MACHINE_TO_BLUEIUM_RIGHT_SPEED_FACTOR);
+
+
+    bluiumRight_to_smallDistributor_Path = addNavigationPathWithColor(teamColor,
+        navigation,
+        blueiumRightLocation,
+        smallDistributorLine1Location,
+        BLUEIUM_RIGHT_TO_SMALL_DISTRIBUTOR_LINE_1_COST,
+        BLUEIUM_RIGHT_TO_SMALL_DISTRIBUTOR_LINE_1_CP1,
+        BLUEIUM_RIGHT_TO_SMALL_DISTRIBUTOR_LINE_1_CP2,
+        deciDegreeToRad(BLUEIUM_RIGHT_ANGLE_TO_DECI_DEG),
+        deciDegreeToRad(SMALL_DISTRIBUTOR_LINE_1_ANGLE_DECI_DEG),
+        aFactor * BLUEIUM_RIGHT_TO_SMALL_DISTRIBUTOR_LINE_1_ACCELERATION_FACTOR,
+        speedFactor * BLUEIUM_RIGHT_TO_SMALL_DISTRIBUTOR_LINE_1_SPEED_FACTOR);
+
+    // Small Distributor 1 -> Weighing Machine
+    smallDistributor_to_bluiumRight_Path = addNavigationPathWithColor(teamColor,
+        navigation,
+        smallDistributorLine1Location,
+        blueiumRightLocation,
+        SMALL_DISTRIBUTOR_LINE_1_TO_BLUEIUM_RIGHT_COST,
+        SMALL_DISTRIBUTOR_LINE_1_TO_BLUEIUM_RIGHT_CP1,
+        SMALL_DISTRIBUTOR_LINE_1_TO_BLUEIUM_RIGHT_CP2,
+        deciDegreeToRad(BLUEIUM_RIGHT_ANGLE_TO_DECI_DEG),
+        deciDegreeToRad(SMALL_DISTRIBUTOR_LINE_1_ANGLE_DECI_DEG),
+        aFactor * SMALL_DISTRIBUTOR_LINE_1_TO_BLUEIUM_RIGHT_ACCELERATION_FACTOR,
+        speedFactor * SMALL_DISTRIBUTOR_LINE_1_TO_BLUEIUM_RIGHT_SPEED_FACTOR);
+
+    bluiumRight_to_weighingMachineDrop_Path = addNavigationPathWithColor(teamColor,
+        navigation,
+        blueiumRightLocation,
+        weighingMachineDropLocation,
+        BLUEIUM_RIGHT_TO_WEIGHING_MACHINE_COST,
+        BLUEIUM_RIGHT_TO_WEIGHING_MACHINE_CP1,
+        BLUEIUM_RIGHT_TO_WEIGHING_MACHINE_CP2,
+        deciDegreeToRad(BLUEIUM_RIGHT_ANGLE_FROM_DECI_DEG),
+        deciDegreeToRad(WEIGHING_MACHINE_DROP_ANGLE_DECI_DEG),
+        aFactor * BLUEIUM_RIGHT_TO_WEIGHING_MACHINE_ACCELERATION_FACTOR,
+        speedFactor * BLUEIUM_RIGHT_TO_WEIGHING_MACHINE_SPEED_FACTOR);
+
 }
 
 void initSmallRobotTargets2019(GameStrategyContext* gameStrategyContext) {
@@ -214,6 +282,7 @@ void initSmallRobotTargets2019(GameStrategyContext* gameStrategyContext) {
     addGameTarget(&acceleratorTarget, "ACC_TARGET", SCORE_POINT_2019_LAUNCH_BLUIUM_IN_ACCELERATOR, acceleratorFrontLocation, acceleratorFrontLocation);
     addGameTarget(&goldeniumTakeTarget, "GOLD_TAKE_TARGET", SCORE_POINT_2019_EXTRACT_GOLDENIUM, goldeniumFrontLocation, goldeniumFrontLocation);
     addGameTarget(&goldeniumDropTarget, "GOLD_DROP_TARGET", SCORE_POINT_2019_WEIGHING_MACHINE_GOLDENIUM, weighingMachineDropLocation, weighingMachineDropLocation);
+    addGameTarget(&smallDistributorLine1Target, "SMALL_DIST_1_TARGET", SCORE_POINT_2019_ADD_ATOM_ACCELERATOR, smallDistributorLine1Location, weighingMachineDropLocation);
 }
 
 void initSmallRobotTargetActions2019(GameStrategyContext* gameStrategyContext) {
@@ -228,6 +297,9 @@ void initSmallRobotTargetActions2019(GameStrategyContext* gameStrategyContext) {
     // GOLDENIUM DROP TARGET
     addTargetPrepareAction(&(goldeniumDropTarget.actionList), &goldeniumPrepareDropTargetAction, weighingMachineFrontLocation, GOLDENIUM_PREPARE_DROP_TIME_TO_ACHIEVE, &goldeniumPrepareDropTargetActionItemList);
     addTargetDropAction(&(goldeniumDropTarget.actionList), &goldeniumDropTargetAction, weighingMachineDropLocation, GOLDENIUM_DROP_TIME_TO_ACHIEVE, &goldeniumDropTargetActionItemList);
+
+    // SMALL DISTRIBUTOR LINE 1 TARGET
+    // TODO
 }
 
 void initSmallRobotTargetActionsItems2019(GameStrategyContext* gameStrategyContext) {
@@ -242,6 +314,8 @@ void initSmallRobotTargetActionsItems2019(GameStrategyContext* gameStrategyConte
     // Goldenium Drop
     addTargetActionItem(&goldeniumPrepareDropTargetActionItemList, &goldeniumPrepareDropTargetActionItem, &goldeniumPrepareDrop, "GOLD PREP DROP");
     addTargetActionItem(&goldeniumDropTargetActionItemList, &goldeniumDropTargetActionItem, &goldeniumDrop, "GOLD DROP");
+
+    // Small Distributor Line 1 Target
 }
 
 GameStrategy* initSmallRobotStrategiesItems2019(GameStrategyContext* gameStrategyContext) {

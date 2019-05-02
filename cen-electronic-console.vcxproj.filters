@@ -3305,6 +3305,12 @@
     <ClInclude Include="robot\2019\bigRobotActions2019.h">
       <Filter>Header Files\robot\2019</Filter>
     </ClInclude>
+    <ClInclude Include="robot\2019\bigRobotLocation2019.h">
+      <Filter>Header Files\robot\2019</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\smallRobotLocation2019.h">
+      <Filter>Header Files\robot\2019</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="cen-electronic-console.rc">

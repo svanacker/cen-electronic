@@ -543,6 +543,8 @@
         <itemPath>../../../robot/2019/smallRobotActions2019.h</itemPath>
         <itemPath>../../../robot/2019/smallRobotPath2019.h</itemPath>
         <itemPath>../../../robot/2019/smallRobotStrategy2019.h</itemPath>
+        <itemPath>../../../robot/2019/bigRobotLocation2019.h</itemPath>
+        <itemPath>../../../robot/2019/smallRobotLocation2019.h</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.config"
                      displayName="robot.config"

@@ -296,6 +296,7 @@
         <itemPath>../../../robot/2019/forkDevice2019.h</itemPath>
         <itemPath>../../../robot/2019/forkDeviceInterface2019.h</itemPath>
         <itemPath>../../../robot/2019/score2019.h</itemPath>
+        <itemPath>../../../robot/2019/fork2019.h</itemPath>
       </logicalFolder>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
@@ -595,6 +596,7 @@
       <logicalFolder name="f3" displayName="robot.2019" projectFiles="true">
         <itemPath>../../../robot/2019/forkDevice2019.c</itemPath>
         <itemPath>../../../robot/2019/forkDeviceInterface2019.c</itemPath>
+        <itemPath>../../../robot/2019/fork2019.c</itemPath>
       </logicalFolder>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"

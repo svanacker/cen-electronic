@@ -50,10 +50,13 @@
 #include "../../robot/2019/teamColor2019.h"
 #include "../../robot/2019/strategy2019Utils.h"
 #include "../../robot/2019/strategyConfig2019.h"
+#include "../../robot/2019/smallRobotLocation2019.h"
 #include "../../robot/2019/smallRobotPath2019.h"
-#include "../../robot/2019/bigRobotPath2019.h"
 #include "../../robot/2019/smallRobotStrategy2019.h"
+
+#include "../../robot/2019/bigRobotPath2019.h"
 #include "../../robot/2019/bigRobotStrategy2019.h"
+#include "../../robot/2019/bigRobotLocation2019.h"
 
 #include "../../robot/2019/forkDevice2019.h"
 
