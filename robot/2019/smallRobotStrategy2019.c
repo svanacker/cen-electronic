@@ -1,0 +1,278 @@
+#include "smallRobotStrategy2019.h"
+
+#include <stdlib.h>
+
+#include "strategy2019.h"
+#include "fork2019.h"
+
+#include "../../common/error/error.h"
+
+#include "../../common/io/outputStream.h"
+#include "../../common/io/printWriter.h"
+
+#include "../../common/log/logger.h"
+#include "../../common/log/logLevel.h"
+
+#include "../../common/math/cenMath.h"
+
+#include "../../common/pwm/servo/servoList.h"
+
+#include "../../drivers/tof/tofList.h"
+
+#include "../../motion/motion.h"
+#include "../../motion/simple/simpleMotion.h"
+#include "../../motion/extended/bsplineMotion.h"
+
+#include "../../navigation/locationList.h"
+#include "../../navigation/path.h"
+#include "../../navigation/pathList.h"
+#include "../../navigation/pathListDebug.h"
+#include "../../navigation/navigation.h"
+
+#include "../../client/motion/position/clientTrajectory.h"
+
+#include "../../robot/config/robotConfig.h"
+
+#include "../../robot/gameboard/gameboard.h"
+
+#include "../../robot/strategy/gameStrategy.h"
+#include "../../robot/strategy/gameStrategyHandler.h"
+#include "../../robot/strategy/gameStrategyList.h"
+#include "../../robot/strategy/gameTargetList.h"
+#include "../../robot/strategy/gameTarget.h"
+#include "../../robot/strategy/gameTargetAction.h"
+#include "../../robot/strategy/gameTargetActionItem.h"
+#include "../../robot/strategy/gameTargetActionList.h"
+
+#include "../../robot/tof/strategyTofSensorList.h"
+
+#include "../../robot/2019/angle2019.h"
+#include "../../robot/2019/location2019.h"
+#include "../../robot/2019/path2019.h"
+#include "../../robot/2019/teamColor2019.h"
+#include "../../robot/2019/strategy2019Utils.h"
+#include "../../robot/2019/strategyConfig2019.h"
+#include "../../robot/2019/smallRobotActions2019.h"
+#include "../../robot/2019/smallRobotPath2019.h"
+#include "../../robot/2019/smallRobotStrategy2019.h"
+
+#include "../../robot/2019/forkDevice2019.h"
+
+// ------------------------------------------------------ LOCATIONS --------------------------------------------------------------------
+
+// static Location* bluiumRightLocation;
+// static Location* smallDistributorLine1FrontLocation;
+static Location* smallRobotStartAreaLocation;
+static Location* acceleratorFrontLocation;
+static Location* goldeniumFrontLocation;
+static Location* weighingMachineFrontLocation;
+static Location* weighingMachineDropLocation;
+
+// ------------------------------------------------------- PATHS -------------------------------------------------------------------------
+
+// Small Robot
+PathData* smallRobotStartArea_to_accelerator_Path;
+PathData* acceleratorFront_to_goldeniumFront_Path;
+PathData* goldeniumFront_to_weighingMachineFront_Path;
+PathData* weighingMachineFront_to_weighingMachineDrop_Path;
+// Go back Home
+PathData* weighingMachineDrop_to_smallRobotStartArea_Path;
+
+PathData* weighingMachineDrop_to_bluiumRight_Path;
+PathData* bluiumRight_to_smallDistributor_Path;
+
+// ------------------------------------------------------- TARGET -------------------------------------------------------------------------
+
+static GameTarget acceleratorTarget;
+static GameTarget goldeniumTakeTarget;
+static GameTarget goldeniumDropTarget;
+
+// ------------------------------------------------------- TARGETS ACTIONS ---------------------------------------------------------------
+
+static GameTargetAction acceleratorPrepareTargetAction;
+static GameTargetAction acceleratorDropTargetAction;
+
+static GameTargetAction goldeniumPrepareTakeTargetAction;
+static GameTargetAction goldeniumTakeTargetAction;
+
+static GameTargetAction goldeniumPrepareDropTargetAction;
+static GameTargetAction goldeniumDropTargetAction;
+
+// ------------------------------------------------------- TARGETS ACTIONS ITEM LIST --------------------------------------------------------
+
+// Accelerator
+static GameTargetActionItemList acceleratorPrepareTargetActionItemList;
+static GameTargetActionItemList acceleratorDropTargetActionItemList;
+
+// Take Goldenium
+static GameTargetActionItemList goldeniumPrepareTakeTargetActionItemList;
+static GameTargetActionItemList goldeniumTakeTargetActionItemList;
+
+// Drop Goldenium
+static GameTargetActionItemList goldeniumPrepareDropTargetActionItemList;
+static GameTargetActionItemList goldeniumDropTargetActionItemList;
+
+// ------------------------------------------------------- TARGET ACTION ITEM LIST ---------------------------------------------------
+
+static GameTargetActionItem acceleratorPrepareTargetActionItem;
+static GameTargetActionItem acceleratorDropTargetActionItem;
+
+static GameTargetActionItem goldeniumPrepareTakeTargetActionItem;
+static GameTargetActionItem goldeniumTakeTargetActionItem;
+
+static GameTargetActionItem goldeniumPrepareDropTargetActionItem;
+static GameTargetActionItem goldeniumDropTargetActionItem;
+
+// ------------------------------------------------------- STRATEGIES ----------------------------------------------------------------
+
+// strategies
+// Strategy 0 = Homologation  => No Strategy
+
+// SMALL ROBOT
+static GameStrategy smallRobotStrategy1Accelerator;
+static GameStrategy smallRobotStrategy2AcceleratorTakeGoldenium;
+static GameStrategy smallRobotStrategy3AcceleratorTakeDropGoldenium;
+
+// ------------------------------------------------------- STRATEGY ITEM -------------------------------------------------------------
+
+// strategies Items
+static GameStrategyItem acceleratorStrategyItem;
+static GameStrategyItem takeGoldeniumStrategyItem;
+static GameStrategyItem dropGoldeniumStrategyItem;
+
+// ------------------------------------------------------- INITIALIZATION ------------------------------------------------------------
+
+void initSmallRobotLocations2019(GameStrategyContext* gameStrategyContext) {
+    Navigation* navigation = gameStrategyContext->navigation;
+    enum TeamColor teamColor = gameStrategyContext->color;
+
+    smallRobotStartAreaLocation = addLocationWithColors(teamColor, navigation, SMALL_ROBOT_START_AREA, SMALL_ROBOT_START_AREA_X, SMALL_ROBOT_START_AREA_Y);
+    acceleratorFrontLocation = addLocationWithColors(teamColor, navigation, ACCELERATOR_FRONT, ACCELERATOR_FRONT_X, ACCELERATOR_FRONT_Y);
+    goldeniumFrontLocation = addLocationWithColors(teamColor, navigation, GOLDENIUM_FRONT, GOLDENIUM_FRONT_X, GOLDENIUM_FRONT_Y);
+    weighingMachineFrontLocation = addLocationWithColors(teamColor, navigation, WEIGHING_MACHINE_FRONT, WEIGHING_MACHINE_FRONT_X, WEIGHING_MACHINE_FRONT_Y);
+    weighingMachineDropLocation = addLocationWithColors(teamColor, navigation, WEIGHING_MACHINE_DROP, WEIGHING_MACHINE_DROP_X, WEIGHING_MACHINE_DROP_Y);
+}
+
+void initSmallRobotPaths2019(GameStrategyContext* gameStrategyContext) {
+    Navigation* navigation = gameStrategyContext->navigation;
+    enum TeamColor teamColor = gameStrategyContext->color;
+    float aFactor = gameStrategyContext->defaultAccelerationFactor;
+    float speedFactor = gameStrategyContext->defaultSpeedFactor;
+
+    // -> Small Robot
+    smallRobotStartArea_to_accelerator_Path = addNavigationPathWithColor(teamColor,
+        navigation,
+        smallRobotStartAreaLocation,
+        acceleratorFrontLocation,
+        SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_COST,
+        SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_CP1,
+        SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_CP2,
+        deciDegreeToRad(SMALL_ROBOT_START_AREA_ANGLE_DECI_DEG),
+        deciDegreeToRad(ACCELERATOR_FRONT_DECI_DEG),
+        aFactor * SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_ACCELERATION_FACTOR,
+        speedFactor * SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_SPEED_FACTOR);
+
+    acceleratorFront_to_goldeniumFront_Path = addNavigationPathWithColor(teamColor,
+        navigation,
+        acceleratorFrontLocation,
+        goldeniumFrontLocation,
+        ACCELERATOR_TO_GOLDENIUM_COST,
+        ACCELERATOR_TO_GOLDENIUM_CP1,
+        ACCELERATOR_TO_GOLDENIUM_CP2,
+        deciDegreeToRad(ACCELERATOR_FRONT_DECI_DEG),
+        deciDegreeToRad(GOLDENIUM_FRONT_ANGLE_DECI_DEG),
+        aFactor * ACCELERATOR_TO_GOLDENIUM_ACCELERATION_FACTOR,
+        speedFactor * ACCELERATOR_TO_GOLDENIUM_SPEED_FACTOR);
+
+    goldeniumFront_to_weighingMachineFront_Path = addNavigationPathWithColor(teamColor,
+        navigation,
+        goldeniumFrontLocation,
+        weighingMachineFrontLocation,
+        GOLDENIUM_TO_WEIGHING_MACHINE_FRONT_COST,
+        GOLDENIUM_TO_WEIGHING_MACHINE_FRONT_CP1,
+        GOLDENIUM_TO_WEIGHING_MACHINE_FRONT_CP2,
+        deciDegreeToRad(GOLDENIUM_FRONT_ANGLE_DECI_DEG),
+        deciDegreeToRad(WEIGHING_MACHINE_FRONT_ANGLE_DECI_DEG),
+        aFactor * GOLDENIUM_TO_WEIGHING_MACHINE_FRONT_ACCELERATION_FACTOR,
+        speedFactor * GOLDENIUM_TO_WEIGHING_MACHINE_FRONT_SPEED_FACTOR);
+
+    weighingMachineFront_to_weighingMachineDrop_Path = addNavigationPathWithColor(teamColor,
+        navigation,
+        weighingMachineFrontLocation,
+        weighingMachineDropLocation,
+        WEIGHING_MACHINE_FRONT_TO_WEIGHING_MACHINE_DROP_COST,
+        WEIGHING_MACHINE_FRONT_TO_WEIGHING_MACHINE_DROP_CP1,
+        WEIGHING_MACHINE_FRONT_TO_WEIGHING_MACHINE_DROP_CP2,
+        deciDegreeToRad(WEIGHING_MACHINE_FRONT_ANGLE_DECI_DEG),
+        deciDegreeToRad(WEIGHING_MACHINE_DROP_ANGLE_DECI_DEG),
+        aFactor * WEIGHING_MACHINE_FRONT_TO_WEIGHING_MACHINE_DROP_ACCELERATION_FACTOR,
+        speedFactor * WEIGHING_MACHINE_FRONT_TO_WEIGHING_MACHINE_DROP_SPEED_FACTOR);
+}
+
+void initSmallRobotTargets2019(GameStrategyContext* gameStrategyContext) {
+    clearGameTargets();
+    addGameTarget(&acceleratorTarget, "ACC_TARGET", SCORE_POINT_2019_LAUNCH_BLUIUM_IN_ACCELERATOR, acceleratorFrontLocation, acceleratorFrontLocation);
+    addGameTarget(&goldeniumTakeTarget, "GOLD_TAKE_TARGET", SCORE_POINT_2019_EXTRACT_GOLDENIUM, goldeniumFrontLocation, goldeniumFrontLocation);
+    addGameTarget(&goldeniumDropTarget, "GOLD_DROP_TARGET", SCORE_POINT_2019_WEIGHING_MACHINE_GOLDENIUM, weighingMachineDropLocation, weighingMachineDropLocation);
+}
+
+void initSmallRobotTargetActions2019(GameStrategyContext* gameStrategyContext) {
+    // ACCELERATOR TARGET
+    addTargetPrepareAction(&(acceleratorTarget.actionList), &acceleratorPrepareTargetAction, smallRobotStartAreaLocation, ACCELERATOR_ARM_ON_ACTION_TIME_TO_ACHIEVE, &acceleratorPrepareTargetActionItemList);
+    addTargetDropAction(&(acceleratorTarget.actionList), &acceleratorDropTargetAction, acceleratorFrontLocation, ACCELERATOR_ARM_OFF_ACTION_TIME_TO_ACHIEVE, &acceleratorDropTargetActionItemList);
+
+    // GOLDENIUM TAKE TARGET
+    addTargetPrepareAction(&(goldeniumTakeTarget.actionList), &goldeniumPrepareTakeTargetAction, acceleratorFrontLocation, GOLDENIUM_PREPARE_TAKE_TIME_TO_ACHIEVE, &goldeniumPrepareTakeTargetActionItemList);
+    addTargetDropAction(&(goldeniumTakeTarget.actionList), &goldeniumTakeTargetAction, goldeniumFrontLocation, GOLDENIUM_TAKE_TIME_TO_ACHIEVE, &goldeniumTakeTargetActionItemList);
+
+    // GOLDENIUM DROP TARGET
+    addTargetPrepareAction(&(goldeniumDropTarget.actionList), &goldeniumPrepareDropTargetAction, weighingMachineFrontLocation, GOLDENIUM_PREPARE_DROP_TIME_TO_ACHIEVE, &goldeniumPrepareDropTargetActionItemList);
+    addTargetDropAction(&(goldeniumDropTarget.actionList), &goldeniumDropTargetAction, weighingMachineDropLocation, GOLDENIUM_DROP_TIME_TO_ACHIEVE, &goldeniumDropTargetActionItemList);
+}
+
+void initSmallRobotTargetActionsItems2019(GameStrategyContext* gameStrategyContext) {
+    // Accelerator => We remove the arm when reaching the drop (drop is done by the move of the robot)
+    addTargetActionItem(&acceleratorPrepareTargetActionItemList, &acceleratorPrepareTargetActionItem, &acceleratorArmOn, "ACC ARM ON");
+    addTargetActionItem(&acceleratorDropTargetActionItemList, &acceleratorDropTargetActionItem, &acceleratorArmOff, "ACC ARM Off");
+
+    // Goldenium Take
+    addTargetActionItem(&goldeniumPrepareTakeTargetActionItemList, &goldeniumPrepareTakeTargetActionItem, &goldeniumPrepareTake, "PREP GOLD TAKE");
+    addTargetActionItem(&goldeniumTakeTargetActionItemList, &goldeniumTakeTargetActionItem, &goldeniumTake, "GOLD TAKE");
+
+    // Goldenium Drop
+    addTargetActionItem(&goldeniumPrepareDropTargetActionItemList, &goldeniumPrepareDropTargetActionItem, &goldeniumPrepareDrop, "GOLD PREP DROP");
+    addTargetActionItem(&goldeniumDropTargetActionItemList, &goldeniumDropTargetActionItem, &goldeniumDrop, "GOLD DROP");
+}
+
+GameStrategy* initSmallRobotStrategiesItems2019(GameStrategyContext* gameStrategyContext) {
+    // We only load the item relative to the strategy Index chosen
+    unsigned int strategyId = gameStrategyContext->strategyId;
+
+    if (strategyId == NO_STRATEGY_INDEX) {
+        return NULL;
+    }
+    if (strategyId == SMALL_ROBOT_STRATEGY_1_ACCELERATOR) {
+        addGameStrategyItem(&smallRobotStrategy1Accelerator, &acceleratorStrategyItem, &acceleratorTarget);
+        return &smallRobotStrategy1Accelerator;
+    }
+    else if (strategyId == SMALL_ROBOT_STRATEGY_2_ACCELERATOR_TAKE_GOLDENIUM) {
+        addGameStrategyItem(&smallRobotStrategy2AcceleratorTakeGoldenium, &acceleratorStrategyItem, &acceleratorTarget);
+        addGameStrategyItem(&smallRobotStrategy2AcceleratorTakeGoldenium, &takeGoldeniumStrategyItem, &goldeniumTakeTarget);
+        return &smallRobotStrategy2AcceleratorTakeGoldenium;
+    }
+    else if (strategyId == SMALL_ROBOT_STRATEGY_3_ACCELERATOR_TAKE_DROP_GOLDENIUM) {
+        addGameStrategyItem(&smallRobotStrategy3AcceleratorTakeDropGoldenium, &acceleratorStrategyItem, &acceleratorTarget);
+        addGameStrategyItem(&smallRobotStrategy3AcceleratorTakeDropGoldenium, &takeGoldeniumStrategyItem, &goldeniumTakeTarget);
+        addGameStrategyItem(&smallRobotStrategy3AcceleratorTakeDropGoldenium, &dropGoldeniumStrategyItem, &goldeniumDropTarget);
+        return &smallRobotStrategy3AcceleratorTakeDropGoldenium;
+    }
+    return NULL;
+}
+
+void initSmallRobotStrategies2019(GameStrategyContext* gameStrategyContext) {
+    clearGameStrategies();
+
+    addGameStrategy(&smallRobotStrategy1Accelerator, SMALL_ROBOT_STRATEGY_1_ACCELERATOR, "ACCELERATOR");
+    addGameStrategy(&smallRobotStrategy2AcceleratorTakeGoldenium, SMALL_ROBOT_STRATEGY_2_ACCELERATOR_TAKE_GOLDENIUM, "ACC / TAKE GOLD");
+    addGameStrategy(&smallRobotStrategy3AcceleratorTakeDropGoldenium, SMALL_ROBOT_STRATEGY_3_ACCELERATOR_TAKE_DROP_GOLDENIUM, "ACC / TAKE DROP GOLD");
+}

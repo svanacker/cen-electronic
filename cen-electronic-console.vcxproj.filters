@@ -2097,6 +2097,18 @@
     <ClCompile Include="robot\2019\fork2019.c">
       <Filter>Source Files\robot\2019</Filter>
     </ClCompile>
+    <ClCompile Include="robot\2019\bigRobotStrategy2019.c">
+      <Filter>Source Files\robot\2019</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2019\smallRobotStrategy2019.c">
+      <Filter>Source Files\robot\2019</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2019\smallRobotActions2019.c">
+      <Filter>Source Files\robot\2019</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2019\bigRobotActions2019.c">
+      <Filter>Source Files\robot\2019</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -3264,6 +3276,33 @@
       <Filter>Header Files\motion</Filter>
     </ClInclude>
     <ClInclude Include="robot\2019\fork2019.h">
+      <Filter>Header Files\robot\2019</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\location2019.h">
+      <Filter>Header Files\robot\2019</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\path2019.h">
+      <Filter>Header Files\robot\2019</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\angle2019.h">
+      <Filter>Header Files\robot\2019</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\bigRobotPath2019.h">
+      <Filter>Header Files\robot\2019</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\smallRobotPath2019.h">
+      <Filter>Header Files\robot\2019</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\bigRobotStrategy2019.h">
+      <Filter>Header Files\robot\2019</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\smallRobotStrategy2019.h">
+      <Filter>Header Files\robot\2019</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\smallRobotActions2019.h">
+      <Filter>Header Files\robot\2019</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\bigRobotActions2019.h">
       <Filter>Header Files\robot\2019</Filter>
     </ClInclude>
   </ItemGroup>

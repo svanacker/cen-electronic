@@ -1,0 +1,34 @@
+#ifndef SMALL_ROBOT_PATH_2019_H
+#define SMALL_ROBOT_PATH_2019_H
+
+
+// Strategy 1 
+// -> Small Robot
+
+#define SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_COST                          1800.0f
+#define SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_CP1                           300.0f
+#define SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_CP2                           500.0f
+#define SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_SPEED_FACTOR                  1.0f
+#define SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_ACCELERATION_FACTOR           1.0f
+
+#define ACCELERATOR_TO_GOLDENIUM_COST                                      500.0f
+#define ACCELERATOR_TO_GOLDENIUM_CP1                                       50.0f
+#define ACCELERATOR_TO_GOLDENIUM_CP2                                       300.0f
+#define ACCELERATOR_TO_GOLDENIUM_SPEED_FACTOR                              0.5f
+#define ACCELERATOR_TO_GOLDENIUM_ACCELERATION_FACTOR                       0.5f
+
+#define GOLDENIUM_TO_WEIGHING_MACHINE_FRONT_COST                           1500.0f
+#define GOLDENIUM_TO_WEIGHING_MACHINE_FRONT_CP1                            -400.0f
+#define GOLDENIUM_TO_WEIGHING_MACHINE_FRONT_CP2                            -200.0f
+#define GOLDENIUM_TO_WEIGHING_MACHINE_FRONT_SPEED_FACTOR                   1.0f
+#define GOLDENIUM_TO_WEIGHING_MACHINE_FRONT_ACCELERATION_FACTOR            1.0f
+
+#define WEIGHING_MACHINE_FRONT_TO_WEIGHING_MACHINE_DROP_COST                200.0f
+#define WEIGHING_MACHINE_FRONT_TO_WEIGHING_MACHINE_DROP_CP1                 100.0f
+#define WEIGHING_MACHINE_FRONT_TO_WEIGHING_MACHINE_DROP_CP2                 100.0f
+#define WEIGHING_MACHINE_FRONT_TO_WEIGHING_MACHINE_DROP_SPEED_FACTOR        0.5f
+#define WEIGHING_MACHINE_FRONT_TO_WEIGHING_MACHINE_DROP_ACCELERATION_FACTOR 0.5f
+
+
+
+#endif
