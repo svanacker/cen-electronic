@@ -13,8 +13,6 @@
 #define STRATEGY_2019_NAVIGATION_LOCATION_LIST_ARRAY_LENGTH        30
 #define STRATEGY_2019_NAVIGATION_PATH_LIST_ARRAY_LENGTH            30
 
-
-
 /**
 * Init all elements for 2019.
 */

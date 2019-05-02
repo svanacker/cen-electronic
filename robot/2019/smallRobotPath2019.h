@@ -6,7 +6,7 @@
 // -> Small Robot
 
 #define SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_COST                          1800.0f
-#define SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_CP1                           300.0f
+#define SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_CP1                           800.0f
 #define SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_CP2                           500.0f
 #define SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_SPEED_FACTOR                  1.0f
 #define SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_ACCELERATION_FACTOR           1.0f

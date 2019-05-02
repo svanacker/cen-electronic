@@ -224,6 +224,8 @@ bool fork2019DropGoldenium(ServoList* servoList, unsigned int leftRight) {
 
     // Push Off
     moveForkPushOn(servoList, leftRight);
+    
+    return true;
 }
 
 bool fork2019AcceleratorDrop(ServoList* servoList) {

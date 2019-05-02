@@ -26,13 +26,13 @@
 // Goldenium (SMALL ROBOT)
 #define GOLDENIUM_FRONT                                                     "GOLD"
 #define GOLDENIUM_FRONT_X                                                     130
-#define GOLDENIUM_FRONT_Y                                                    2275
+#define GOLDENIUM_FRONT_Y                                                    2268
 #define GOLDENIUM_FRONT_ANGLE_DECI_DEG                         ANGLE_DECI_DEG_180
 
 // Weighing Machine FRONT
 #define WEIGHING_MACHINE_FRONT                                              "WMF"
 #define WEIGHING_MACHINE_FRONT_X                                            1200
-#define WEIGHING_MACHINE_FRONT_Y                                            1300
+#define WEIGHING_MACHINE_FRONT_Y                                            1200
 #define WEIGHING_MACHINE_FRONT_ANGLE_DECI_DEG                   ANGLE_DECI_DEG_0
 
 // Weighing Machine DROP
