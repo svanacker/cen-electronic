@@ -21,10 +21,7 @@
 #define MAIN_BOARD_SERVO_LIST_LENGTH                                   21
 
 // IO EXPANDER
-#define MAIN_BOARD_IO_EXPANDER_LIST_LENGTH                              1
-
-// TOFS
-#define MAIN_BOARD_TOF_SENSOR_LIST_LENGTH                               6
+#define MAIN_BOARD_IO_EXPANDER_LIST_LENGTH                              2
 
 // UART
 #define MAIN_BOARD_SERIAL_LINK_LIST_LENGTH                              4
@@ -146,7 +143,7 @@ void mainBoardCommonInitDrivers(void);
 void mainBoardCommonHandleStreamInstruction(void);
 
 // TODO : Move it to Accelerometer Common
-void mainBoardCommonHandleAccelerometer(void);
+// void mainBoardCommonHandleAccelerometer(void);
 
 // INIT - DRIVERS
 

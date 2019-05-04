@@ -7,6 +7,9 @@
 
 #include "../../drivers/tof/tofList.h"
 
+// TOFS
+#define MAIN_BOARD_TOF_SENSOR_LIST_LENGTH                               2
+
 /**
  * Device Tof Initialization of MAIN_BOARD.
  */
@@ -15,8 +18,11 @@ void mainBoardCommonTofAddDevices(void);
 /**
  * Main Part of MAIN_BOARD for Tof initialization (Driver).
  * @param i2cBus
+ * @param tofSensorCount how many tof we initialize (even we could handle more)
+ * Useful when we just want to initialize 2 tof like for Experience 2019 Main
+ * Program.
  */
-void mainBoardCommonTofInitDrivers(I2cBus* i2cBus);
+void mainBoardCommonTofInitDrivers(I2cBus* i2cBus, unsigned int tofSensorCount);
 
 /**
  * Returns the list of Tof Sensor.

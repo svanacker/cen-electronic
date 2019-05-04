@@ -16,6 +16,9 @@ unsigned int printRobotType(OutputStream* outputStream, enum RobotType robotType
     else if (robotType == ROBOT_TYPE_UNKNOWN) {
         return appendString(outputStream, "UNKNOWN");
 	}
+    else if (robotType == ROBOT_TYPE_EXPERIENCE_2019) {
+        return appendString(outputStream, "EXP 2019");
+	}
     else {
         return appendString(outputStream, "???");
 	}

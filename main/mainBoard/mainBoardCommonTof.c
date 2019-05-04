@@ -47,7 +47,7 @@ void mainBoardCommonTofAddDevices(void) {
     addLocalDevice(getIOExpanderDeviceInterface(), getIOExpanderDeviceDescriptor(&ioExpanderList));
 }
 
-void mainBoardCommonTofInitDrivers(I2cBus* i2cBus) {
+void mainBoardCommonTofInitDrivers(I2cBus* i2cBus, unsigned int tofSensorCount) {
     // IO Expander
     appendString(getDebugOutputStreamLogger(), "PCF ...");
     tofIoExpanderBusConnection = addI2cBusConnection(i2cBus, PCF8574_ADDRESS_0, true);

@@ -196,7 +196,7 @@ static Temperature temperature;
 static I2cBusConnection* temperatureI2cBusConnection;
 
 // CURRENT
-static Current current;
+// static Current current;
 // static I2cBusConnection* currentI2CBusConnection;
 
 
@@ -323,7 +323,7 @@ void mainBoardCommonAddDevices(RobotConfig* robotConfig) {
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
     addLocalDevice(getTemperatureSensorDeviceInterface(), getTemperatureSensorDeviceDescriptor(&temperature));
-    addLocalDevice(getCurrentSensorDeviceInterface(), getCurrentSensorDeviceDescriptor(&current));
+    // addLocalDevice(getCurrentSensorDeviceInterface(), getCurrentSensorDeviceDescriptor(&current));
     addLocalDevice(getADCDeviceInterface(), getADCDeviceDescriptor());
     
     // ACCELEROMETER
@@ -414,12 +414,14 @@ void mainBoardCommonHandleStreamInstruction(void) {
             NULL); 
 }
 
+/*
 void mainBoardCommonHandleAccelerometer(void) {
     bool intRaised = adxl345_wasIntRaised(&accelerometer);
     if (intRaised) {
         appendStringLN(getDebugOutputStreamLogger(), "SHOCKED !");
     }
 }
+*/
 
 void mainBoardCommonMainInit(RobotConfig* robotConfig) {
     // LOG the BoardName
