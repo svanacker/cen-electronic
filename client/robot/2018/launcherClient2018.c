@@ -9,6 +9,8 @@
 
 #include "../../../common/delay/cenDelay.h"
 
+#include "../../../common/timer/delayTimer.h"
+
 #include "../../../device/deviceConstants.h"
 
 #include "../../../drivers/driverList.h"
@@ -22,44 +24,44 @@ bool clientGlobalTest(void) {
     if (!result) {
         return false;
     }
-    delaymSec(1000);
+    timerDelayMilliSeconds(1000);
     result = clientDistributor2018CleanNext(LAUNCHER_LEFT_INDEX);
     if (!result) {
         return false;
     }
-    delaymSec(1000);
+    timerDelayMilliSeconds(1000);
     result = clientLaunch2018(LAUNCHER_LEFT_INDEX, LAUNCHER_PREPARE_ON);
     if (!result) {
         return false;
     }
-    delaymSec(1000);
+    timerDelayMilliSeconds(1000);
     result = clientLaunch2018(LAUNCHER_LEFT_INDEX, LAUNCHER_LAUNCH);
     if (!result) {
         return false;
     }
-    delaymSec(1000);
+    timerDelayMilliSeconds(1000);
 
     // RIGHT TEST
     result = clientLightOn2018(LAUNCHER_RIGHT_INDEX);
     if (!result) {
         return false;
     }
-    delaymSec(1000);
+    timerDelayMilliSeconds(1000);
     result = clientDistributor2018CleanNext(LAUNCHER_RIGHT_INDEX);
     if (!result) {
         return false;
     }
-    delaymSec(1000);
+    timerDelayMilliSeconds(1000);
     result = clientLaunch2018(LAUNCHER_RIGHT_INDEX, LAUNCHER_PREPARE_ON);
     if (!result) {
         return false;
     }
-    delaymSec(1000);
+    timerDelayMilliSeconds(1000);
     result = clientLaunch2018(LAUNCHER_RIGHT_INDEX, LAUNCHER_LAUNCH);
     if (!result) {
         return false;
     }
-    delaymSec(1000);
+    timerDelayMilliSeconds(1000);
 
     // EJECTOR
     result = clientDistributor2018EjectDirty();

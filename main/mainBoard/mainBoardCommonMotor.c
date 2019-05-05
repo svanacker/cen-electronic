@@ -15,6 +15,8 @@
 #include "../../common/serial/serial.h"
 #include "../../common/serial/serialLink.h"
 
+#include "../../common/timer/delayTimer.h"
+
 #include "../../device/deviceConstants.h"
 #include "../../device/deviceList.h"
 #include "../../device/transmitMode.h"
@@ -126,7 +128,7 @@ void clearMotorAndMotorNotifyBuffer(void) {
     append(&motorNotifyOutputStream, HEADER_CLEAR_INPUT_STREAM);
     motorNotifyOutputStream.flush(&motorNotifyOutputStream);
     
-    delaymSec(100);
+    timerDelayMilliSeconds(100);
 }
 
 void mainBoardCommonMotorHandleStreamInstruction(void) {

@@ -5,6 +5,7 @@
 #include "timerDeviceInterface.h"
 
 #include "../../common/delay/cenDelay.h"
+#include "../../common/timer/delayTimer.h"
 #include "../../common/timer/timerDebug.h"
 #include "../../common/timer/timerConstants.h"
 #include "../../common/timer/timerList.h"
@@ -137,6 +138,10 @@ void deviceTimerHandleRawData(unsigned char commandHeader, InputStream* inputStr
 			timer->enabled = enabled;
 		}
         ackCommand(outputStream, TIMER_DEVICE_HEADER, COMMAND_TIMER_DEMO);
+    } else if (commandHeader == COMMAND_TIMER_DELAY_WAIT) {
+        ackCommand(outputStream, TIMER_DEVICE_HEADER, COMMAND_TIMER_DELAY_WAIT);
+        unsigned int milliSeconds = readHex4(inputStream);
+        timerDelayMilliSeconds(milliSeconds);
     }
 }
 

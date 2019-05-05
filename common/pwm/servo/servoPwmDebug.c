@@ -11,6 +11,8 @@
 #include "../../../common/io/printWriter.h"
 #include "../../../common/io/printTableWriter.h"
 
+#include "../../../common/timer/delayTimer.h"
+
 #define SERVO_PWM_DEBUG_INDEX_DEC_COLUMN_LENGTH                  5
 #define SERVO_PWM_DEBUG_INDEX_HEX_COLUMN_LENGTH                  5
 #define SERVO_PWM_DEBUG_NAME_COLUMN_LENGTH                       15
@@ -160,11 +162,11 @@ void testAllPwmServos(ServoList* servoList) {
         pwmServo(servo, PWM_SERVO_SPEED_MAX, PWM_SERVO_MIDDLE_POSITION);
         appendString(infoOutputStream, "Servo : ");
         appendDec(infoOutputStream, servoIndex);
-        delaymSec(500);
+        timerDelayMilliSeconds(500);
         pwmServo(servo, PWM_SERVO_SPEED_MAX, PWM_SERVO_LEFT_POSITION);
-        delaymSec(500);
+        timerDelayMilliSeconds(500);
         pwmServo(servo, PWM_SERVO_SPEED_MAX, PWM_SERVO_RIGHT_POSITION);
-        delaymSec(2000);
+        timerDelayMilliSeconds(2000);
         appendCRLF(infoOutputStream);
     }
 }

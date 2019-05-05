@@ -133,7 +133,8 @@ void deviceFork2019HandleRawData(unsigned char commandHeader, InputStream* input
     // Scan
     else if (commandHeader == COMMAND_2019_FORK_SCAN) {
         ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_FORK_SCAN);
-        forkScanFromLeftToRight(servoList, tofSensorList);
+        unsigned int side = readHex(inputStream);
+        forkScan(servoList, tofSensorList, side);
     }
     // ARM ON & OFF
     else if (commandHeader == COMMAND_2019_ARM_ON) {

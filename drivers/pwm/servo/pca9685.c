@@ -11,6 +11,8 @@
 #include "../../../common/io/printWriter.h"
 #include "../../../common/io/printTableWriter.h"
 
+#include "../../common/timer/delayTimer.h"
+
 #include <math.h>
 
 
@@ -44,7 +46,7 @@ void pca9685_reset(I2cBusConnection* i2cBusConnection) {
     portableMasterStopI2C(i2cBusConnection);
     WaitI2C(i2cBus);
     
-    delaymSec(10);
+    timerDelayMilliSeconds(10);
 }
 
 // TODO : BUGGED !!

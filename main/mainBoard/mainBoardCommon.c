@@ -47,6 +47,7 @@
 #include "../../common/timer/cenTimer.h"
 #include "../../common/timer/timerConstants.h"
 #include "../../common/timer/timerList.h"
+#include "../../common/timer/delayTimer.h"
 
 #include "../../common/system/system.h"
 
@@ -300,6 +301,7 @@ void mainBoardCommonInitServoList(void) {
 
 void mainBoardCommonInitTimerList(void) {
     initTimerList(&timerListArray, MAIN_BOARD_TIMER_LIST_LENGTH);
+    initSystemDelayTimer();
 }
 
 // DEVICES

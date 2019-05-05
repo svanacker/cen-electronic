@@ -44,6 +44,7 @@
 #include "../../common/timer/cenTimer.h"
 #include "../../common/timer/timerConstants.h"
 #include "../../common/timer/timerList.h"
+#include "../../common/timer/delayTimer.h"
 
 #include "../../common/pc/process/processHelper.h"
 
@@ -426,6 +427,7 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
     initSerialLinkList((SerialLink(*)[]) &serialLinkListArray, MAIN_BOARD_PC_SERIAL_LINK_LIST_LENGTH);
 
     initTimerList((Timer(*)[]) &timerListArray, MAIN_BOARD_PC_TIMER_LIST_LENGTH);
+    initSystemDelayTimer();
     initServoListPc(&servoList, (Servo(*)[]) &servoListArray, MAIN_BOARD_PC_SERVO_LIST_LENGTH);
 
     initBuffer(&consoleInputBuffer, (char(*)[]) &consoleInputBufferArray, MAIN_BOARD_PC_CONSOLE_INPUT_BUFFER_LENGTH, "inputConsoleBuffer", "IN");

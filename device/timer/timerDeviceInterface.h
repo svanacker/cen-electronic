@@ -29,6 +29,9 @@
 /** Command to stop or start the Timer Demo (add it if it does not exist). */
 #define COMMAND_TIMER_DEMO             'D'
 
+/** Command to wait the timer delay (like the System Delay but based on timer. */
+#define COMMAND_TIMER_DELAY_WAIT       'W'
+
 /**
 * Get the timer device interface.
 * @return a pointer on the timer device Interface.

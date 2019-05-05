@@ -21,6 +21,9 @@
 #include "../../../common/log/logLevel.h"
 #include "../../../common/log/logger.h"
 
+#include "../../../common/timer/delayTimer.h"
+
+
 #include "../../../drivers/ioExpander/ioExpander.h"
 
 #include "../../../device/deviceConstants.h"
@@ -99,7 +102,7 @@ void initTofSensorListVL53L0X(TofSensorList* tofSensorList,
             appendStringAndDec(debugOutputStream, "  IO Expander Write:", tofIndex);
             ioExpander->ioExpanderWriteSingleValue(ioExpander, tofIndex, true);
             // Delay to let the hardware part of the Sensor VL53L0X
-            delaymSec(50);
+            timerDelayMilliSeconds(50);
             appendStringLN(debugOutputStream, " ... OK");
         }
 

@@ -110,8 +110,8 @@ void deviceSystemHandleRawData(unsigned char header, InputStream* inputStream, O
         printDeviceListNotification(getInfoOutputStreamLogger(), false);
     } else if (header == COMMAND_WAIT) {
         appendAck(outputStream);
-        int mSec = readHex4(inputStream);
-        delaymSec(mSec);
+        unsigned int milliSeconds = readHex4(inputStream);
+        delaymSec(milliSeconds);
         append(outputStream, SYSTEM_DEVICE_HEADER);
         append(outputStream, COMMAND_WAIT);
     } else if (header == COMMAND_BOARD_NAME) {

@@ -10,6 +10,8 @@
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
 
+#include "../../common/timer/delayTimer.h"
+
 #include "../../common/io/printWriter.h"
 
 // #define TCS34725_DEBUG     true
@@ -62,10 +64,8 @@ uint8_t tcs34725_read8(I2cBusConnection* i2cBusConnection, uint8_t reg) {
     I2cBus* i2cBus = i2cBusConnection->i2cBus;
     portableMasterWaitSendI2C(i2cBusConnection);
     WaitI2C(i2cBus);
-    // delaymSec(3);
     portableMasterStartI2C(i2cBusConnection);
     WaitI2C(i2cBus);
-    // delaymSec(3);
 
 #ifdef TCS34725_DEBUG
     appendString(debugOutputStream, "TCS34725_ADDRESS : ");
@@ -75,7 +75,6 @@ uint8_t tcs34725_read8(I2cBusConnection* i2cBusConnection, uint8_t reg) {
     
     portableMasterWriteI2C(i2cBusConnection, TCS34725_ADDRESS);
     WaitI2C(i2cBus);
-    // delaymSec(3);
 
 #ifdef TCS34725_DEBUG
     appendString(debugOutputStream, "TCS34725_COMMAND_BIT | reg : ");
@@ -85,15 +84,12 @@ uint8_t tcs34725_read8(I2cBusConnection* i2cBusConnection, uint8_t reg) {
     
     portableMasterWriteI2C(i2cBusConnection, TCS34725_COMMAND_BIT | reg);
     WaitI2C(i2cBus);
-    // delaymSec(3);
     
     portableMasterStopI2C(i2cBusConnection);
     WaitI2C(i2cBus);
-    // delaymSec(3);
 
     portableMasterStartI2C(i2cBusConnection);
     WaitI2C(i2cBus);
-    // delaymSec(3);
 
     // Read
 #ifdef TCS34725_DEBUG    
@@ -108,12 +104,10 @@ uint8_t tcs34725_read8(I2cBusConnection* i2cBusConnection, uint8_t reg) {
     
     portableMasterWriteI2C(i2cBusConnection, TCS34725_ADDRESS | 0x01);
     WaitI2C(i2cBus);
-    // delaymSec(3);
 
     uint8_t x = portableMasterReadI2C(i2cBusConnection);
 
     WaitI2C(i2cBus);
-    // delaymSec(3);
     portableMasterStopI2C(i2cBusConnection);
     return x;
 }
@@ -171,7 +165,6 @@ bool tcs34725_begin(Tcs34725* tcs34725) {
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
     appendString(debugOutputStream, "begin\n");
 #endif
-    // delaymSec(100);
     I2cBusConnection* i2cBusConnection = tcs34725->i2cBusConnection;
     // Make sure we're actually connected
     uint8_t x = tcs34725_read8(i2cBusConnection, TCS34725_ID);
@@ -259,22 +252,22 @@ void tcs34725_getRawData(Tcs34725* tcs34725, uint16_t *r, uint16_t *g, uint16_t 
     // Set a delay for the integration time
     switch (tcs34725->integrationTime) {
         case TCS34725_INTEGRATIONTIME_2_4MS:
-            delaymSec(3);
+            timerDelayMilliSeconds(3);
             break;
         case TCS34725_INTEGRATIONTIME_24MS:
-            delaymSec(24);
+            timerDelayMilliSeconds(24);
             break;
         case TCS34725_INTEGRATIONTIME_50MS:
-            delaymSec(50);
+            timerDelayMilliSeconds(50);
             break;
         case TCS34725_INTEGRATIONTIME_101MS:
-            delaymSec(101);
+            timerDelayMilliSeconds(101);
             break;
         case TCS34725_INTEGRATIONTIME_154MS:
-            delaymSec(154);
+            timerDelayMilliSeconds(154);
             break;
         case TCS34725_INTEGRATIONTIME_700MS:
-            delaymSec(700);
+            timerDelayMilliSeconds(700);
             break;
     }
 }

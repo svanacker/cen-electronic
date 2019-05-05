@@ -23,7 +23,6 @@
 #include "../../robot/strategy/gameStrategyContext.h"
 
 #include "../../main/mainBoard/mainBoardCommon.h"
-#include "../../main/mainBoard/mainBoardCommonTof.h"
 
 // 2019
 #include "../../robot/2019/fork2019.h"
@@ -96,6 +95,6 @@ void mainBoardCommonStrategyMainEndInit2019(GameStrategyContext* gameStrategyCon
     appendStringCRLF(debugOutputStream, "fork2019Init");
     fork2019Init(servoList);
     
-    TofSensorList* tofSensorList = mainBoardCommonTofGetTofSensorList();
+    TofSensorList* tofSensorList = gameStrategyContext->tofSensorList;;
     setForkTofListNameAndThreshold(tofSensorList);
 }

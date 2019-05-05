@@ -13,6 +13,8 @@
 #include "../../common/log/logLevel.h"
 #include "../../common/log/logHandler.h"
 
+#include "../../common/timer/delayTimer.h"
+
 #include "../device.h"
 
 #include "../../drivers/sharp/gp2d12.h"
@@ -73,7 +75,7 @@ void deviceADCHandleRawData(unsigned char commandHeader, InputStream* inputStrea
         OutputStream* debugOutputStream = getInfoOutputStreamLogger();
         for (i = 1; i <= sampleCount; i++) {
             if (i > 0) {
-                delaymSec(100 * delayPeriodBetweenSample);
+                timerDelayMilliSeconds(100 * delayPeriodBetweenSample);
             }
             unsigned int value = readAdc(adcIndex);
             appendStringAndDec(debugOutputStream, "value=", value);

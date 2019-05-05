@@ -2109,6 +2109,9 @@
     <ClCompile Include="robot\2019\bigRobotActions2019.c">
       <Filter>Source Files\robot\2019</Filter>
     </ClCompile>
+    <ClCompile Include="common\timer\delayTimer.c">
+      <Filter>Source Files\common\timer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -3310,6 +3313,9 @@
     </ClInclude>
     <ClInclude Include="robot\2019\smallRobotLocation2019.h">
       <Filter>Header Files\robot\2019</Filter>
+    </ClInclude>
+    <ClInclude Include="common\timer\delayTimer.h">
+      <Filter>Header Files\common\timer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -91,6 +91,14 @@ int deviceTimerGetInterface(unsigned char commandHeader, DeviceInterfaceMode mod
         }
         return commandLengthValueForMode(mode, 1, 0);
     }
+    // wait
+    else if (commandHeader == COMMAND_TIMER_DELAY_WAIT) {
+        if (fillDeviceArgumentList) {
+            setFunction("Timer Delay Wait", 1, 0);
+            setArgumentUnsignedHex4(0, "milli Seconds");                
+        }
+        return commandLengthValueForMode(mode, 4, 0);
+    }
     return DEVICE_HEADER_NOT_HANDLED;
 }
 

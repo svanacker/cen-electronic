@@ -121,9 +121,10 @@ int deviceFork2019GetInterface(unsigned char commandHeader, DeviceInterfaceMode 
     // SCAN
     else if (commandHeader == COMMAND_2019_FORK_SCAN) {
         if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("Scan");
+            setFunction("Fork Scan", 1, 0);
+            setArgumentUnsignedChar1(0, "scan Side (1=L, 2=R)");
         }
-        return commandLengthValueForMode(mode, 0, 0);
+        return commandLengthValueForMode(mode, 1, 0);
     }  
     // ARM ON & OFF
     else if (commandHeader == COMMAND_2019_ARM_ON) {

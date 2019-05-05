@@ -190,6 +190,7 @@
         <itemPath>../../../common/timer/timerDebug.h</itemPath>
         <itemPath>../../../common/timer/timerInterrupt.h</itemPath>
         <itemPath>../../../common/timer/timerSetup.h</itemPath>
+        <itemPath>../../../common/timer/delayTimer.h</itemPath>
       </logicalFolder>
       <logicalFolder name="device" displayName="device" projectFiles="true">
         <itemPath>../../../device/device.h</itemPath>
@@ -651,7 +652,6 @@
         <itemPath>../../../client/motion/simple/clientMotion.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f9" displayName="client.robot.2018" projectFiles="true">
-        <itemPath>../../../client/robot/2018/launcherClient2018.c</itemPath>
       </logicalFolder>
       <logicalFolder name="common.2d" displayName="common.2d" projectFiles="true">
         <itemPath>../../../common/2d/2d.c</itemPath>
@@ -824,6 +824,7 @@
         <itemPath>../../../common/timer/cenTimer.c</itemPath>
         <itemPath>../../../common/timer/timerList.c</itemPath>
         <itemPath>../../../common/timer/timerDebug.c</itemPath>
+        <itemPath>../../../common/timer/delayTimer.c</itemPath>
       </logicalFolder>
       <logicalFolder name="common.timer.32"
                      displayName="common.timer.32"

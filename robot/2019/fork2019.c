@@ -19,6 +19,8 @@
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
 
+#include "../../common/timer/delayTimer.h"
+
 #include "../../drivers/tof/tofList.h"
 
 /**
@@ -78,13 +80,13 @@ void moveElevatorGoldenium(ServoList* servoList) {
 void moveElevatorLeft(ServoList* servoList) {
     Servo* servo = getServo(servoList, FORK_2019_SCAN_SERVO_INDEX);
     pwmServo(servo, FORK_2019_SCAN_SPEED_FACTOR, FORK_2019_SCAN_LEFT_SERVO_VALUE);
-    delaymSec(500);
+    timerDelayMilliSeconds(500);
 }
 
 void moveElevatorRight(ServoList* servoList) {
     Servo* servo = getServo(servoList, FORK_2019_SCAN_SERVO_INDEX);
     pwmServo(servo, FORK_2019_SCAN_SPEED_FACTOR, FORK_2019_SCAN_RIGHT_SERVO_VALUE);
-    delaymSec(500);
+    timerDelayMilliSeconds(500);
 }
 
 
@@ -141,12 +143,24 @@ void setForkTofListNameAndThreshold(TofSensorList* tofSensorList) {
     }
 }
 
+void forkScan(ServoList* servoList, TofSensorList* tofSensorList, unsigned int leftRight) {
+    if (leftRight == FORK_2019_LEFT_INDEX) {
+        forkScanFromLeftToRight(servoList, tofSensorList);
+    }
+    else if (leftRight == FORK_2019_RIGHT_INDEX) {
+        forkScanFromRightToLeft(servoList, tofSensorList);
+    }
+    else {
+        // TODO : Raise an error
+    }
+}
+
 void forkScanFromRightToLeft(ServoList* servoList, TofSensorList* tofSensorList) {
     Servo* servo = getServo(servoList, FORK_2019_SCAN_SERVO_INDEX);
     moveElevatorRight(servoList);
 
     unsigned int i;
-    for (i = FORK_2019_SCAN_RIGHT_SERVO_VALUE; i < FORK_2019_SCAN_LEFT_SERVO_VALUE; i+= 10) {
+    for (i = FORK_2019_SCAN_RIGHT_SERVO_VALUE; i < FORK_2019_SCAN_LEFT_SERVO_VALUE; i+= FORK_2019_SCAN_SERVO_DELTA_SERVO_POSITION) {
         pwmServo(servo, FORK_2019_SCAN_SPEED_FACTOR, i);
         TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, FORK_2019_RIGHT_TOF_INDEX);
         unsigned int distance = tofSensor->tofGetDistanceMM(tofSensor);
@@ -154,16 +168,16 @@ void forkScanFromRightToLeft(ServoList* servoList, TofSensorList* tofSensorList)
             appendStringAndDecLN(getDebugOutputStreamLogger(), "distance=", distance);
             break;
         }
-        delaymSec(10);
+        timerDelayMilliSeconds(FORK_2019_SCAN_SERVO_DELTA_MILLISECONDS);
     }
 }
 
 void forkScanFromLeftToRight(ServoList* servoList, TofSensorList* tofSensorList) {
     Servo* servo = getServo(servoList, FORK_2019_SCAN_SERVO_INDEX);
-    pwmServo(servo, FORK_2019_SCAN_SPEED_FACTOR, FORK_2019_SCAN_LEFT_SERVO_VALUE);
-    delaymSec(500);
+    moveElevatorLeft(servoList);
+
     unsigned int i;
-    for (i = FORK_2019_SCAN_LEFT_SERVO_VALUE; i < FORK_2019_SCAN_LEFT_SERVO_VALUE; i-= 10) {
+    for (i = FORK_2019_SCAN_LEFT_SERVO_VALUE; i < FORK_2019_SCAN_LEFT_SERVO_VALUE; i-= FORK_2019_SCAN_SERVO_DELTA_SERVO_POSITION) {
         pwmServo(servo, FORK_2019_SCAN_SPEED_FACTOR, i);
         TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, FORK_2019_LEFT_TOF_INDEX);
         unsigned int distance = tofSensor->tofGetDistanceMM(tofSensor);
@@ -171,7 +185,7 @@ void forkScanFromLeftToRight(ServoList* servoList, TofSensorList* tofSensorList)
             appendStringAndDecLN(getDebugOutputStreamLogger(), "distance=", distance);
             break;
         }
-        delaymSec(10);
+        timerDelayMilliSeconds(FORK_2019_SCAN_SERVO_DELTA_MILLISECONDS);
     }
 }
 
@@ -194,17 +208,17 @@ bool fork2019TakeSimplePuck(ServoList* servoList) {
 
     // Elevator
     moveElevatorBottom(servoList);
-    delaymSec(100);
+    timerDelayMilliSeconds(100);
     
     // TODO : Scan to do => Return false if the scan is KO
 
     // Fork Single Puck
     moveForkSimplePuck(servoList, FORK_2019_LEFT_AND_RIGHT_INDEX);
-    delaymSec(100);
+    timerDelayMilliSeconds(500);
 
     // Elevator Up to free the Puck
     moveElevatorInitPosition(servoList);
-    delaymSec(100);
+    timerDelayMilliSeconds(500);
     
     return true;
 }
@@ -224,11 +238,11 @@ bool fork2019TakeGoldenium(ServoList* servoList, unsigned int leftRight) {
 
     // Fork Single Puck
     moveForkDoublePuck(servoList, leftRight);
-    delaymSec(100);
+    timerDelayMilliSeconds(100);
 
     // Elevator Up to free the Puck
     moveElevatorUp(servoList);
-    delaymSec(100);
+    timerDelayMilliSeconds(100);
     
     return true;
 }
@@ -249,19 +263,19 @@ bool fork2019DropGoldenium(ServoList* servoList, unsigned int leftRight) {
 bool fork2019AcceleratorDrop(ServoList* servoList) {
     // Elevator Up 
     moveElevatorUp(servoList);
-    delaymSec(1000);
+    timerDelayMilliSeconds(1000);
 
     // Fork Push On
     moveForkPushOn(servoList, FORK_2019_LEFT_AND_RIGHT_INDEX);
-    delaymSec(500);
+    timerDelayMilliSeconds(500);
 
     // Fork 
     moveForkBack(servoList, FORK_2019_LEFT_AND_RIGHT_INDEX);
-    delaymSec(1000);
+    timerDelayMilliSeconds(1000);
 
     // Fork Push Off
     moveForkPushOff(servoList, FORK_2019_LEFT_AND_RIGHT_INDEX);
-    delaymSec(500);
+    timerDelayMilliSeconds(500);
 
     return true;
 }

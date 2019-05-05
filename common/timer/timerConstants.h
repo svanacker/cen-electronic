@@ -1,8 +1,11 @@
 #ifndef TIMER_CONSTANTS_H
 #define TIMER_CONSTANTS_H
 
-/** The index of timer used. */
+/** The code of timer used for coders. */
 #define CODERS_TIMER_CODE                              1
+
+/** The code of the timer used for delay based on clock. */
+#define SYSTEM_TIMER_DELAY_CODE                        2
 
 /**
 * Defines the index for the timer to check if robot has detect something.
@@ -18,7 +21,7 @@
 /**
 * Defines the index for the timer which detects end of the match.
 */
-#define END_MATCH_DETECTOR_TIMER_CODE     20
+#define END_MATCH_DETECTOR_TIMER_CODE                  20
 
 #define TIMER_SOFT_CLOCK_CODE                          96
 

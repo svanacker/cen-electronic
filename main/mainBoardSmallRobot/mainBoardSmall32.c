@@ -148,7 +148,7 @@ int main(void) {
 
  /*   
     while (1) {
-        delaymSec(10);
+        timerDelayMilliSeconds(10);
         // adxl345_debugValueRegisterList(getInfoOutputStreamLogger(), adxl345BusConnection, &accelerometerData);
         // adxl345_debugValueRegisterListIfShock(getInfoOutputStreamLogger(), adxl345BusConnection, &accelerometerData);
         unsigned int sampleCount = adx345_readSampleCount(adxl345BusConnection);

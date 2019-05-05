@@ -18,6 +18,9 @@
 
 #include "../../../common/log/logger.h"
 
+#include "../../../common/timer/delayTimer.h"
+
+
 // Store the latest status of the VL53L0X
 // indicates whether or not the sensor has encountered an error
 typedef char FixedVl53L0x [VL53L0X_MAX_STRING_LENGTH];
@@ -176,7 +179,7 @@ bool tofSetAddress(TofSensorVL53L0X* tofSensorVL53L0X, I2cBusConnection* newI2cB
     uint8_t newAddress = newI2cBusConnection->i2cAddress;
     if (newAddress != VL530X_ADDRESS_0) {
         tofSensorVL53L0X->status = VL53L0X_SetDeviceAddress(tofDevice, newAddress);
-        delaymSec(30);
+        timerDelayMilliSeconds(30);
     }
 
     if (tofSensorVL53L0X->status == VL53L0X_ERROR_NONE) {
