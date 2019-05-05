@@ -43,14 +43,18 @@
 
 // Scan Servo Value
 #define FORK_2019_SCAN_SPEED_FACTOR                                         0xFF
-#define FORK_2019_SCAN_LEFT_SERVO_VALUE                                   0x0700
-#define FORK_2019_SCAN_RIGHT_SERVO_VALUE                                  0x0300
+// TODO : To change
+#define FORK_2019_SCAN_MIDDLE_SERVO_VALUE                                   1400
+#define FORK_2019_SCAN_LEFT_SERVO_VALUE                                     1800
+#define FORK_2019_SCAN_RIGHT_SERVO_VALUE                                    1100
 
 // Elevator Servo Value
 #define FORK_2019_ELEVATOR_SPEED_FACTOR                                     0xFF
+#define FORK_2019_ELEVATOR_DISTRIBUTOR_SCAN_SERVO_VALUE                   0x0800
 #define FORK_2019_ELEVATOR_BOTTOM_SERVO_VALUE                             0x09A0
 #define FORK_2019_ELEVATOR_INIT_POSITION_SERVO_VALUE                      0x05DC
 #define FORK_2019_ELEVATOR_GOLDENIUM_SERVO_VALUE                          0x0460
+#define FORK_2019_ELEVATOR_GOLDENIUM_SCAN_SERVO_VALUE                     0x0420
 #define FORK_2019_ELEVATOR_UP_SERVO_VALUE                                 0x0280
 
 // Servo Fork Left
@@ -90,10 +94,15 @@
 #define FORK_2019_RIGHT_TOF_INDEX                                              7
 
 // TOF THRESHOLD
-#define FORK_2019_LEFT_THRESHOLD                                              16
-#define FORK_2019_RIGHT_THRESHOLD                                             16
-#define FORK_2019_SCAN_SERVO_DELTA_SERVO_POSITION                             50
+#define FORK_2019_LEFT_THRESHOLD                                              35
+#define FORK_2019_RIGHT_THRESHOLD                                             35
+#define FORK_2019_SCAN_SERVO_DELTA_SERVO_POSITION                             30
 #define FORK_2019_SCAN_SERVO_DELTA_MILLISECONDS                               50
+#define FORK_2019_SCAN_MEASURE_COUNT                                           3
+#define FORK_2019_SCAN_MATCH_COUNT                                             2
+
+#define FORK_2019_SCAN_TIME_BETWEEN_MEASURE_MILLISECONDS                      10
+
 
 // ELEVATOR
 
@@ -101,13 +110,19 @@ void moveElevatorAtValue(ServoList* servoList, unsigned int value);
 
 void moveElevatorBottom(ServoList* servoList);
 
+void moveElevatorDistributorScan(ServoList* servoList);
+
 void moveElevatorUp(ServoList* servoList);
 
 void moveElevatorInitPosition(ServoList* servoList);
 
-void moveElevatorGoldenium(ServoList* servoList);
+void moveElevatorToScanGoldenium(ServoList* servoList);
+
+void moveElevatorToTakeGoldenium(ServoList* servoList);
 
 void moveElevatorLeft(ServoList* servoList);
+
+void moveElevatorMiddle(ServoList* servoList);
 
 void moveElevatorRight(ServoList* servoList);
 
@@ -129,11 +144,11 @@ void moveForkPushOn(ServoList* servoList, unsigned int leftRight);
 
 void setForkTofListNameAndThreshold(TofSensorList* tofSensorList);
 
-void forkScan(ServoList* servoList, TofSensorList* tofSensorList, unsigned int leftRight);
+bool forkScan(ServoList* servoList, TofSensorList* tofSensorList, unsigned int leftRight);
 
-void forkScanFromLeftToRight(ServoList* servoList, TofSensorList* tofSensorList);
+bool forkScanFromLeftToRight(ServoList* servoList, TofSensorList* tofSensorList);
 
-void forkScanFromRightToLeft(ServoList* servoList, TofSensorList* tofSensorList);
+bool forkScanFromRightToLeft(ServoList* servoList, TofSensorList* tofSensorList);
 
 // COMPLEX OPERATIONS
 
@@ -147,13 +162,15 @@ void fork2019Init(ServoList* servoList);
  * All actions to take a Simple Puck.
  * @param servoList
  */
-bool fork2019TakeSimplePuck(ServoList* servoList);
+bool fork2019TakeSimplePuck(ServoList* servoList, TofSensorList* tofSensorList);
+
+bool fork2019PrepareTakeGoldenium(ServoList* servoList, unsigned int leftRight);
 
 /**
  * All actions to take a Goldenium.
  * @param servoList
  */
-bool fork2019TakeGoldenium(ServoList* servoList, unsigned int leftRight);
+bool fork2019TakeGoldenium(ServoList* servoList, TofSensorList* tofSensorList, unsigned int leftRight);
 
 /**
  * All actions to release a Goldenium.

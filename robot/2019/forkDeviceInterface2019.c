@@ -20,37 +20,49 @@ int deviceFork2019GetInterface(unsigned char commandHeader, DeviceInterfaceMode 
     }
     else if (commandHeader == COMMAND_2019_ELEVATOR_BOTTOM) {
         if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("Elevator Bottom");
+            setFunctionNoArgumentAndNoResult("ELEVATOR Bottom");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }
+    else if (commandHeader == COMMAND_2019_ELEVATOR_DISTRIBUTOR_SCAN) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("ELEVATOR Dist Scan");
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
     else if (commandHeader == COMMAND_2019_ELEVATOR_LEFT) {
         if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("Elevator Left");
+            setFunctionNoArgumentAndNoResult("ELEVATOR Left");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }
+    else if (commandHeader == COMMAND_2019_ELEVATOR_MIDDLE) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("ELEVATOR Middle");
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
     else if (commandHeader == COMMAND_2019_ELEVATOR_RIGHT) {
         if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("Elevator Right");
+            setFunctionNoArgumentAndNoResult("ELEVATOR Right");
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
     else if (commandHeader == COMMAND_2019_ELEVATOR_GOLDENIUM_POSITION) {
         if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("Elevator Goldenium Pos.");
+            setFunctionNoArgumentAndNoResult("ELEVATOR Goldenium Pos.");
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
     else if (commandHeader == COMMAND_2019_ELEVATOR_INIT_POSITION) {
         if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("Elevator Init Position");
+            setFunctionNoArgumentAndNoResult("ELEVATOR Init Position");
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
     else if (commandHeader == COMMAND_2019_ELEVATOR_UP) {
         if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("Elevator Up");
+            setFunctionNoArgumentAndNoResult("ELEVATOR Up");
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
@@ -105,12 +117,26 @@ int deviceFork2019GetInterface(unsigned char commandHeader, DeviceInterfaceMode 
         }
         return commandLengthValueForMode(mode, 0, 0);
     }    
-    else if (commandHeader == COMMAND_2019_FORK_TAKE_GOLDENIUM) {
+    else if (commandHeader == COMMAND_2019_FORK_PREPARE_TAKE_GOLDENIUM) {
         if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("Take Goldenium");
+            setFunctionNoArgumentAndNoResult("Prep Take Gold.");
         }
         return commandLengthValueForMode(mode, 0, 0);
     }    
+    else if (commandHeader == COMMAND_2019_FORK_TAKE_GOLDENIUM) {
+        if (fillDeviceArgumentList) {
+            setFunction("Take Goldenium", 1, 1);
+            setArgumentUnsignedChar1(0, "Side (1=L, 2=R)");
+            setResultUnsignedChar1(0, "not found=0, found=1");
+        }
+        return commandLengthValueForMode(mode, 1, 1);
+    }    
+    else if (commandHeader == COMMAND_2019_FORK_DROP_GOLDENIUM) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("Drop Goldenium");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }  
     // FORK ACCELERATOR DROP
     else if (commandHeader == COMMAND_2019_FORK_ACCELERATOR_DROP) {
         if (fillDeviceArgumentList) {
@@ -121,10 +147,11 @@ int deviceFork2019GetInterface(unsigned char commandHeader, DeviceInterfaceMode 
     // SCAN
     else if (commandHeader == COMMAND_2019_FORK_SCAN) {
         if (fillDeviceArgumentList) {
-            setFunction("Fork Scan", 1, 0);
-            setArgumentUnsignedChar1(0, "scan Side (1=L, 2=R)");
+            setFunction("Fork Scan", 1, 1);
+            setArgumentUnsignedChar1(0, "scan Side (0=middle, 1=L, 2=R)");
+            setResultUnsignedChar1(0, "not found=0, found=1");
         }
-        return commandLengthValueForMode(mode, 1, 0);
+        return commandLengthValueForMode(mode, 1, 1);
     }  
     // ARM ON & OFF
     else if (commandHeader == COMMAND_2019_ARM_ON) {

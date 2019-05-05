@@ -52,7 +52,12 @@ bool goldeniumPrepareTake(int* context) {
     appendStringCRLF(debugOutputStream, "goldeniumPrepareTake");
     GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
     ServoList* servoList = gameStrategyContext->servoList;
-    moveElevatorGoldenium(servoList);
+    if (isViolet(gameStrategyContext)) {
+        fork2019PrepareTakeGoldenium(servoList, FORK_2019_RIGHT_INDEX);
+    }
+    else {
+        fork2019PrepareTakeGoldenium(servoList, FORK_2019_LEFT_INDEX);
+    }
     return true;
 }
 
@@ -61,11 +66,12 @@ bool goldeniumTake(int* context) {
     appendStringCRLF(debugOutputStream, "goldeniumTake");
     GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
     ServoList* servoList = gameStrategyContext->servoList;
+    TofSensorList* tofSensorList = gameStrategyContext->tofSensorList; 
     if (isViolet(gameStrategyContext)) {
-        fork2019TakeGoldenium(servoList, FORK_2019_RIGHT_INDEX);
+        fork2019TakeGoldenium(servoList, tofSensorList, FORK_2019_RIGHT_INDEX);
     }
     else {
-        fork2019TakeGoldenium(servoList, FORK_2019_LEFT_INDEX);
+        fork2019TakeGoldenium(servoList, tofSensorList, FORK_2019_LEFT_INDEX);
     }
 
     return true;

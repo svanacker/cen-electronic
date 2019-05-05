@@ -24,7 +24,8 @@ bool bigDistributorLineTake(int* context) {
     appendStringCRLF(debugOutputStream, "bigDistributorLineTake");
     GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
     ServoList* servoList = gameStrategyContext->servoList;
-    fork2019TakeSimplePuck(servoList);
+    TofSensorList* tofSensorList = gameStrategyContext->tofSensorList;
+    fork2019TakeSimplePuck(servoList, tofSensorList);
 
     return true;
 }

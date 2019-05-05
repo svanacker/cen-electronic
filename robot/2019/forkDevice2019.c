@@ -54,10 +54,14 @@ void deviceFork2019HandleRawData(unsigned char commandHeader, InputStream* input
         ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_ELEVATOR_BOTTOM);
         moveElevatorBottom(servoList);
     }
-    // -> Middle for Double Puck Position
+    else if (commandHeader == COMMAND_2019_ELEVATOR_DISTRIBUTOR_SCAN) {
+        ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_ELEVATOR_DISTRIBUTOR_SCAN);
+        moveElevatorDistributorScan(servoList);
+    }
+    // -> Position to take the Goldenium
     else if (commandHeader == COMMAND_2019_ELEVATOR_GOLDENIUM_POSITION) {
         ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_ELEVATOR_GOLDENIUM_POSITION);
-        moveElevatorGoldenium(servoList);
+        moveElevatorToTakeGoldenium(servoList);
     }
     // -> Init Position
     else if (commandHeader == COMMAND_2019_ELEVATOR_INIT_POSITION) {
@@ -74,7 +78,12 @@ void deviceFork2019HandleRawData(unsigned char commandHeader, InputStream* input
         ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_ELEVATOR_LEFT);
         moveElevatorLeft(servoList);
     }
-    // -> Left
+    // -> Middle
+    else if (commandHeader == COMMAND_2019_ELEVATOR_MIDDLE) {
+        ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_ELEVATOR_MIDDLE);
+        moveElevatorMiddle(servoList);
+    }
+    // -> Right
     else if (commandHeader == COMMAND_2019_ELEVATOR_RIGHT) {
         ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_ELEVATOR_RIGHT);
         moveElevatorRight(servoList);
@@ -118,12 +127,22 @@ void deviceFork2019HandleRawData(unsigned char commandHeader, InputStream* input
     // Take
     else if (commandHeader == COMMAND_2019_FORK_TAKE_SIMPLE_PUCK) {
         ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_FORK_TAKE_SIMPLE_PUCK);
-        fork2019TakeSimplePuck(servoList);
+        fork2019TakeSimplePuck(servoList, tofSensorList);
+    }
+    else if (commandHeader == COMMAND_2019_FORK_PREPARE_TAKE_GOLDENIUM) {
+        ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_FORK_PREPARE_TAKE_GOLDENIUM);
+        fork2019PrepareTakeGoldenium(servoList, FORK_2019_LEFT_AND_RIGHT_INDEX);
     }
     else if (commandHeader == COMMAND_2019_FORK_TAKE_GOLDENIUM) {
         ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_FORK_TAKE_GOLDENIUM);
         unsigned int side = readHex(inputStream);
-        fork2019TakeGoldenium(servoList, side);
+        bool scanOk = fork2019TakeGoldenium(servoList, tofSensorList, side);
+        appendBool(outputStream, scanOk);
+    }
+    else if (commandHeader == COMMAND_2019_FORK_DROP_GOLDENIUM) {
+        ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_FORK_DROP_GOLDENIUM);
+        unsigned int side = readHex(inputStream);
+        fork2019DropGoldenium(servoList, side);
     }
     // Fork Accelerator Drop
     else if (commandHeader == COMMAND_2019_FORK_ACCELERATOR_DROP) {
@@ -134,7 +153,8 @@ void deviceFork2019HandleRawData(unsigned char commandHeader, InputStream* input
     else if (commandHeader == COMMAND_2019_FORK_SCAN) {
         ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_FORK_SCAN);
         unsigned int side = readHex(inputStream);
-        forkScan(servoList, tofSensorList, side);
+        bool scanOk = forkScan(servoList, tofSensorList, side);
+        appendBool(outputStream, scanOk);
     }
     // ARM ON & OFF
     else if (commandHeader == COMMAND_2019_ARM_ON) {
