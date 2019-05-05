@@ -6,6 +6,8 @@
 
 #include "../../common/cmd/commonCommand.h"
 
+#include "../../common/error/error.h"
+
 #include "../../common/delay/cenDelay.h"
 
 #include "../../common/io/inputStream.h"
@@ -225,6 +227,10 @@ bool forkScanFromLeftToRight(ServoList* servoList, TofSensorList* tofSensorList)
         pwmServo(servo, FORK_2019_SCAN_SPEED_FACTOR, i);
         timerDelayMilliSeconds(FORK_2019_SCAN_SERVO_DELTA_MILLISECONDS);
         TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, FORK_2019_LEFT_TOF_INDEX);
+        if (tofSensor == NULL) {
+            writeError(TOF_SENSOR_NULL);
+            return false;
+        }
         if (internalForkScan(tofSensor)) {
             return true;
         }

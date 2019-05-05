@@ -428,6 +428,9 @@
     <ClCompile Include="robot\2019\bigRobotStrategy2019.c" />
     <ClCompile Include="robot\2019\distributor2019.c" />
     <ClCompile Include="robot\2019\distributorDebug2019.c" />
+    <ClCompile Include="robot\2019\electronLauncher2019.c" />
+    <ClCompile Include="robot\2019\electronLauncherDevice2019.c" />
+    <ClCompile Include="robot\2019\electronLauncherDeviceInterface2019.c" />
     <ClCompile Include="robot\2019\fork2019.c" />
     <ClCompile Include="robot\2019\gameBoardElement2019.c" />
     <ClCompile Include="robot\2019\forkDevice2019.c" />
@@ -821,6 +824,9 @@
     <ClInclude Include="robot\2019\bigRobotStrategy2019.h" />
     <ClInclude Include="robot\2019\distributor2019.h" />
     <ClInclude Include="robot\2019\distributorDebug2019.h" />
+    <ClInclude Include="robot\2019\electronLauncher2019.h" />
+    <ClInclude Include="robot\2019\electronLauncherDevice2019.h" />
+    <ClInclude Include="robot\2019\electronLauncherDeviceInterface2019.h" />
     <ClInclude Include="robot\2019\fork2019.h" />
     <ClInclude Include="robot\2019\gameBoardElement2019.h" />
     <ClInclude Include="robot\2019\forkDevice2019.h" />

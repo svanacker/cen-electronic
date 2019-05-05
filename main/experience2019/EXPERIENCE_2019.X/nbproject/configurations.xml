@@ -165,6 +165,7 @@
         <itemPath>../../../common/timer/timerDebug.h</itemPath>
         <itemPath>../../../common/timer/timerInterrupt.h</itemPath>
         <itemPath>../../../common/timer/timerSetup.h</itemPath>
+        <itemPath>../../../common/timer/delayTimer.h</itemPath>
       </logicalFolder>
       <logicalFolder name="device" displayName="device" projectFiles="true">
         <itemPath>../../../device/device.h</itemPath>
@@ -383,6 +384,11 @@
       <logicalFolder name="robot" displayName="robot" projectFiles="true">
         <itemPath>../../../robot/robotType.h</itemPath>
         <itemPath>../../../robot/robotTypeDebug.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f6" displayName="robot.2019" projectFiles="true">
+        <itemPath>../../../robot/2019/electronLauncher2019.h</itemPath>
+        <itemPath>../../../robot/2019/electronLauncherDevice2019.h</itemPath>
+        <itemPath>../../../robot/2019/electronLauncherDeviceInterface2019.h</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.config"
                      displayName="robot.config"
@@ -606,6 +612,7 @@
         <itemPath>../../../common/timer/cenTimer.c</itemPath>
         <itemPath>../../../common/timer/timerList.c</itemPath>
         <itemPath>../../../common/timer/timerDebug.c</itemPath>
+        <itemPath>../../../common/timer/delayTimer.c</itemPath>
       </logicalFolder>
       <logicalFolder name="common.timer.32"
                      displayName="common.timer.32"
@@ -813,6 +820,11 @@
       </logicalFolder>
       <logicalFolder name="f7" displayName="robot" projectFiles="true">
         <itemPath>../../../robot/robotTypeDebug.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f8" displayName="robot.2019" projectFiles="true">
+        <itemPath>../../../robot/2019/electronLauncher2019.c</itemPath>
+        <itemPath>../../../robot/2019/electronLauncherDevice2019.c</itemPath>
+        <itemPath>../../../robot/2019/electronLauncherDeviceInterface2019.c</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.config"
                      displayName="robot.config"

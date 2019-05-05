@@ -158,6 +158,8 @@
 
 #define FORK_2019_DEVICE_HEADER                    '_'
 
+#define ELECTRON_LAUNCHER_2019_DEVICE_HEADER       '.'
+
 #define ACCELEROMETER_DEVICE_HEADER                '&'
 
 #endif

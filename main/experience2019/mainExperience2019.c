@@ -31,9 +31,13 @@
 // 2019 Specific
 #include "../../drivers/tof/tofList.h"
 #include "../../drivers/tof/tof.h"
+#include "../../robot/2019/electronLauncher2019.h"
+#include "../../robot/2019/electronLauncherDevice2019.h"
+#include "../../robot/2019/electronLauncherDeviceInterface2019.h"
 
 // Robot Configuration
 static RobotConfig robotConfig;
+static ElectronLauncher2019 launcher;
 
 /**
  * @private
@@ -44,6 +48,10 @@ void initMainBoardDevicesDescriptor() {
     mainBoardCommonAddDevices(&robotConfig);
     mainBoardCommonLcdAddDevices();
     mainBoardCommonTofAddDevices();
+    
+    // 2019 specific
+    addLocalDevice(getElectronLauncher2019DeviceInterface(), getElectronLauncher2019DeviceDescriptor(&launcher));
+
 
     // Call the init on each devices
     initDevices();
@@ -86,6 +94,12 @@ void mainBoardMainPhase2(void) {
     mainBoardCommonInitCommonDrivers();
 
     mainBoardCommonTofInitDrivers(mainBoardCommonGetMainI2cBus(), MAIN_EXPERIENCE_2019_TOF_SENSOR_LIST_COUNT);
+    
+    // 2019 specific
+    initElectronLauncher2019(&launcher, 
+                             &robotConfig,
+                             mainBoardCommonGetServoList(),
+                             mainBoardCommonTofGetTofSensorList());
 }
 
 void mainBoardMainPhase3(void) {
@@ -98,54 +112,7 @@ int main(void) {
     mainBoardMainPhase2();
     mainBoardMainPhase3();
     
-    unsigned int tofIndex = 0;
-    if (isConfigSet(&robotConfig, CONFIG_COLOR_YELLOW_MASK)) {
-        appendStringCRLF(getAlwaysOutputStreamLogger(), "YELLOW->RIGHT");
-        tofIndex = 0;
-    }
-    else {
-        appendStringCRLF(getAlwaysOutputStreamLogger(), "VIOLET->LEFT");
-        tofIndex = 1;
-    }
-        
-    TofSensorList* tofSensorList = mainBoardCommonTofGetTofSensorList();
-    TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, tofIndex);
-    
-    bool robotPlaced = false;
-    bool robotMoved = false;
-
-    ServoList* servoList = mainBoardCommonGetServoList();
-    Servo* electronServo = getServo(servoList, 0);
-    Servo* experienceShowServo = getServo(servoList, 1);
-
     while (true) {
         mainBoardCommonHandleStreamInstruction();
-
-        unsigned int distanceMM = tofSensor->tofGetDistanceMM(tofSensor);
-        if (distanceMM > 450.0f && distanceMM < 600.0f) {
-            // We only notify one time
-            if (!robotPlaced) {
-                robotPlaced = true;
-                appendStringAndDecf(getAlwaysOutputStreamLogger(), "ROBOT OK : ", distanceMM);
-                appendStringCRLF(getAlwaysOutputStreamLogger(), " mm");
-            }
-        }
-        if (robotPlaced) {
-            // The action will be done only one time
-            if (distanceMM > 800.0f && !robotMoved) {
-                appendStringAndDecf(getAlwaysOutputStreamLogger(), "GO : ", distanceMM);
-                appendStringCRLF(getAlwaysOutputStreamLogger(), " mm");
-                robotMoved = true;
-                unsigned int tryCount = 0;
-                pwmServo(experienceShowServo, PWM_SERVO_SPEED_MAX, 800);
-                delaymSec(500);
-                for (tryCount = 0; tryCount < 5; tryCount++) {
-                    pwmServo(electronServo, PWM_SERVO_SPEED_MAX, 650);
-                    delaymSec(1000);
-                    pwmServo(electronServo, PWM_SERVO_SPEED_MAX, 1500);
-                    delaymSec(500);
-                }
-            }
-        }
     }
 }

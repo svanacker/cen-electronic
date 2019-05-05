@@ -202,6 +202,10 @@
 #include "../../robot/2019/mainBoard2019.h"
 #include "../../robot/2019/forkDeviceInterface2019.h"
 #include "../../robot/2019/forkDevice2019.h"
+#include "../../robot/2019/electronLauncher2019.h"
+#include "../../robot/2019/electronLauncherDevice2019.h"
+#include "../../robot/2019/electronLauncherDeviceInterface2019.h"
+
 
 // Logs
 static LogHandler logHandlerListArray[MAIN_BOARD_PC_LOG_HANDLER_LIST_LENGTH];
@@ -304,6 +308,9 @@ static Navigation* navigation;
 static TofSensorList tofSensorList;
 static TofSensor tofSensorArray[MOTOR_BOARD_PC_TOF_SENSOR_LIST_LENGTH];
 
+// 2019
+static ElectronLauncher2019 launcher;
+
 static bool connectToRobotManager = false;
 
 void mainBoardDeviceHandleNotification(const Device* device, const unsigned char commandHeader, InputStream* inputStream) {
@@ -401,7 +408,9 @@ void initMainBoardLocalDevices(void) {
 
     // 2019 specific
 //    addLocalDevice(getStrategy2018DeviceInterface(), getStrategy2018DeviceDescriptor(distributor));
-    addLocalDevice(getFork2019DeviceInterface(), getFork2019DeviceDescriptor(&servoList, NULL));
+    addLocalDevice(getFork2019DeviceInterface(), getFork2019DeviceDescriptor(&servoList, &tofSensorList));
+    addLocalDevice(getElectronLauncher2019DeviceInterface(), getElectronLauncher2019DeviceDescriptor(&launcher));
+
 }
 
 void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
@@ -546,6 +555,9 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
     // Start Match
     initEndMatch(&endMatch, &robotConfig, MATCH_DURATION);
     initStartMatch(&startMatch, &robotConfig, &endMatch, isMatchStartedPc, mainBoardPcWaitForInstruction, mainBoardPcWaitForInstruction);
+
+    // 2019 : Launcher
+    initElectronLauncher2019(&launcher, &robotConfig, &servoList, &tofSensorList);
 
     initMainBoardLocalDevices();
 

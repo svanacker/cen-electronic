@@ -25,6 +25,8 @@
 
 #define TIMER_SOFT_CLOCK_CODE                          96
 
+#define ELECTRON_LAUNCHER_2019_TIMER_CODE              99
+
 #define ROBOT_SONAR_DETECTOR_TIMER_CODE               123
 
 #define DEMO_TIMER_CODE                               124

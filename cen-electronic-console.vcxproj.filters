@@ -2112,6 +2112,15 @@
     <ClCompile Include="common\timer\delayTimer.c">
       <Filter>Source Files\common\timer</Filter>
     </ClCompile>
+    <ClCompile Include="robot\2019\electronLauncher2019.c">
+      <Filter>Source Files\robot\2019</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2019\electronLauncherDevice2019.c">
+      <Filter>Source Files\robot\2019</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2019\electronLauncherDeviceInterface2019.c">
+      <Filter>Source Files\robot\2019</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -3316,6 +3325,15 @@
     </ClInclude>
     <ClInclude Include="common\timer\delayTimer.h">
       <Filter>Header Files\common\timer</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\electronLauncher2019.h">
+      <Filter>Header Files\robot\2019</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\electronLauncherDevice2019.h">
+      <Filter>Header Files\robot\2019</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\electronLauncherDeviceInterface2019.h">
+      <Filter>Header Files\robot\2019</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
