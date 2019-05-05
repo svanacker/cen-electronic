@@ -75,6 +75,12 @@ void mainBoardCommonTofInitDrivers(I2cBus* i2cBus, unsigned int tofSensorCount) 
     if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > 5) {
         tofSensorArray[5].enabled = true;
     }
+    if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > 6) {
+        tofSensorArray[6].enabled = true;
+    }
+    if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > 7) {
+        tofSensorArray[7].enabled = true;
+    }
     appendStringLN(getDebugOutputStreamLogger(), "TOF ...");
     initTofSensorListVL53L0X(&tofSensorList,
                              (TofSensor(*)[]) &tofSensorArray,

@@ -177,7 +177,7 @@ static I2cBus* i2cBus;
 static I2cBus* i2cBus4;
 
 // ACCELEROMETER
-static Accelerometer accelerometer;
+// static Accelerometer accelerometer;
 // static AccelerometerData accelerometerData;
 
 // EEPROM

@@ -85,6 +85,15 @@
 #define FORK_2019_RIGHT_ARM_SERVO_ON                                      0x0A38
 #define FORK_2019_RIGHT_ARM_SERVO_OFF                                     0x05DC
 
+// TOF INDEX
+#define FORK_2019_LEFT_TOF_INDEX                                               6
+#define FORK_2019_RIGHT_TOF_INDEX                                              7
+
+// TOF THRESHOLD
+#define FORK_2019_LEFT_THRESHOLD                                              16
+#define FORK_2019_RIGHT_THRESHOLD                                             16
+
+
 
 // ELEVATOR
 
@@ -117,6 +126,8 @@ void moveForkPushOff(ServoList* servoList, unsigned int leftRight);
 void moveForkPushOn(ServoList* servoList, unsigned int leftRight);
 
 // FORK SCAN
+
+void setForkTofListNameAndThreshold(TofSensorList* tofSensorList);
 
 void forkScanFromLeftToRight(ServoList* servoList, TofSensorList* tofSensorList);
 

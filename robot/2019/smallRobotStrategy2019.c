@@ -121,10 +121,11 @@ static GameTargetActionItemList goldeniumPrepareDropTargetActionItemList;
 static GameTargetActionItemList goldeniumDropTargetActionItemList;
 
 // Small Distributor Line 1
+/*
 static GameTargetActionItemList smallDistributorLine1PrepareTargetActionItemList;
 static GameTargetActionItemList smallDistributorLine1TakeTargetActionItemList;
 static GameTargetActionItemList smallDistributorLine1DropTargetActionItemList;
-
+*/
 // ------------------------------------------------------- TARGET ACTION ITEM LIST ---------------------------------------------------
 
 static GameTargetActionItem acceleratorPrepareTargetActionItem;

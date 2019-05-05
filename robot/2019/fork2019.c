@@ -123,6 +123,24 @@ void moveForkPushOn(ServoList* servoList, unsigned int leftRight) {
             FORK_2019_SERVO_PUSH_LEFT_ON_SERVO_VALUE, FORK_2019_SERVO_PUSH_RIGHT_ON_SERVO_VALUE);
 }
 
+void setForkTofListNameAndThreshold(TofSensorList* tofSensorList) {
+    unsigned int tofSensorListSize = getTofSensorListSize(tofSensorList);
+
+    if (tofSensorListSize > FORK_2019_LEFT_TOF_INDEX) {
+        TofSensor* backMiddleSensor = getTofSensorByIndex(tofSensorList, FORK_2019_LEFT_TOF_INDEX);
+        backMiddleSensor->orientationRadian = 0.0f;
+        backMiddleSensor->thresholdDistanceMM = FORK_2019_LEFT_THRESHOLD;
+        backMiddleSensor->name = "FORK LEFT";
+    }
+    
+    if (tofSensorListSize > FORK_2019_RIGHT_TOF_INDEX) {
+        TofSensor* backRightSensor = getTofSensorByIndex(tofSensorList, FORK_2019_RIGHT_TOF_INDEX);
+        backRightSensor->orientationRadian = 0.0f;
+        backRightSensor->thresholdDistanceMM = FORK_2019_RIGHT_THRESHOLD;
+        backRightSensor->name = "FORK RIGHT";
+    }
+}
+
 void forkScanFromRightToLeft(ServoList* servoList, TofSensorList* tofSensorList) {
     Servo* servo = getServo(servoList, FORK_2019_SCAN_SERVO_INDEX);
     moveElevatorRight(servoList);
@@ -130,9 +148,9 @@ void forkScanFromRightToLeft(ServoList* servoList, TofSensorList* tofSensorList)
     unsigned int i;
     for (i = FORK_2019_SCAN_RIGHT_SERVO_VALUE; i < FORK_2019_SCAN_LEFT_SERVO_VALUE; i+= 10) {
         pwmServo(servo, FORK_2019_SCAN_SPEED_FACTOR, i);
-        TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, 0);
+        TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, FORK_2019_RIGHT_TOF_INDEX);
         unsigned int distance = tofSensor->tofGetDistanceMM(tofSensor);
-        if (distance > 0 && distance < 16) {
+        if (distance > 0 && distance < tofSensor->thresholdDistanceMM) {
             appendStringAndDecLN(getDebugOutputStreamLogger(), "distance=", distance);
             break;
         }
@@ -147,9 +165,9 @@ void forkScanFromLeftToRight(ServoList* servoList, TofSensorList* tofSensorList)
     unsigned int i;
     for (i = FORK_2019_SCAN_LEFT_SERVO_VALUE; i < FORK_2019_SCAN_LEFT_SERVO_VALUE; i-= 10) {
         pwmServo(servo, FORK_2019_SCAN_SPEED_FACTOR, i);
-        TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, 0);
+        TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, FORK_2019_LEFT_TOF_INDEX);
         unsigned int distance = tofSensor->tofGetDistanceMM(tofSensor);
-        if (distance > 0 && distance < 16) {
+        if (distance > 0 && distance < tofSensor->thresholdDistanceMM) {
             appendStringAndDecLN(getDebugOutputStreamLogger(), "distance=", distance);
             break;
         }
