@@ -86,7 +86,8 @@ void mainBoardCommonTofInitDrivers(I2cBus* i2cBus, unsigned int tofSensorCount) 
                              (TofSensor(*)[]) &tofSensorArray,
                              (TofSensorVL53L0X(*)[]) &tofSensorVL53L0XArray,
                               // Size
-                              MAIN_BOARD_TOF_SENSOR_LIST_LENGTH,
+                              tofSensorCount,
+                              // Bus
                               i2cBus,
                               // IO Expander, if null, we will not be able to
                               // Manage several tof

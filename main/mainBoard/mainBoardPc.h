@@ -52,7 +52,7 @@
 #define MAIN_BOARD_PC_SERVO_LIST_LENGTH                         21
 
 // Timers
-#define MAIN_BOARD_PC_TIMER_LIST_LENGTH                          5
+#define MAIN_BOARD_PC_TIMER_LIST_LENGTH                         10
 
 
 

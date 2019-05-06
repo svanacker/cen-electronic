@@ -288,4 +288,8 @@ void clearLastError();
 // PC
 #define PC_FILE_NOT_FOUND                                                 0x7000
 
+// SPECIFIC 2019
+#define ELECTRON_LAUNCHER_2019_NULL                                       0x7100
+
+
 #endif

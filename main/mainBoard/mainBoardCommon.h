@@ -15,7 +15,7 @@
 // DEVICE
 
 #define MAIN_BOARD_DEVICE_LENGTH                                       40
-#define MAIN_BOARD_TIMER_LIST_LENGTH                                    5
+#define MAIN_BOARD_TIMER_LIST_LENGTH                                   10
 
 // SERVO 
 #define MAIN_BOARD_SERVO_LIST_LENGTH                                   21

@@ -17,7 +17,7 @@
 #define ELECTRON_LAUNCHER_2019_ELECTRON_RELEASE_SERVO_VALUE                    650
 #define ELECTRON_LAUNCHER_2019_ELECTRON_LOCKED_SERVO_VALUE                    1500
 #define ELECTRON_LAUNCHER_2019_EXPERIENCE_INIT_VALUE                          1500
-#define ELECTRON_LAUNCHER_2019_EXPERIENCE_SHOW_VALUE                           800
+#define ELECTRON_LAUNCHER_2019_EXPERIENCE_SHOW_VALUE                          2500
 
 // DISTANCE
 #define ELECTRON_LAUNCHER_2019_ROBOT_PLACED_DISTANCE_MIN                        450
@@ -29,7 +29,7 @@
 #define ELECTRON_LAUNCHER_2019_THRESHOLD_COUNT                                   9
 
 // RELEASE TRY COUNT 
-#define ELECTRON_LAUNCHER_2019_RELEASE_TRY_COUNT                                1
+#define ELECTRON_LAUNCHER_2019_RELEASE_TRY_COUNT                                2
 
 /**
  * The struct defining the electron Launcher.

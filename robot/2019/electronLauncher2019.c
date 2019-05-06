@@ -26,7 +26,7 @@ void checkElectronLauncher2019RobotPlaced(ElectronLauncher2019* launcher) {
     if (tofSensor == NULL) {
         writeError(TOF_SENSOR_LIST_NOT_INITIALIZED);
         return;
-;    }
+    }
     unsigned int distanceMM = tofSensor->tofGetDistanceMM(tofSensor);
     if (distanceMM > ELECTRON_LAUNCHER_2019_ROBOT_PLACED_DISTANCE_MIN 
      && distanceMM < ELECTRON_LAUNCHER_2019_ROBOT_PLACED_DISTANCE_MAX) {
@@ -78,7 +78,7 @@ void electronLauncher2019Launch(ElectronLauncher2019* launcher) {
     launcher->robotMoved = true;
     unsigned int tryCount = 0;
     timerDelayMilliSeconds(500);
-    for (tryCount = 0; tryCount < 5; tryCount++) {
+    for (tryCount = 0; tryCount < ELECTRON_LAUNCHER_2019_RELEASE_TRY_COUNT; tryCount++) {
         pwmServo(electronServo, PWM_SERVO_SPEED_MAX, ELECTRON_LAUNCHER_2019_ELECTRON_RELEASE_SERVO_VALUE, true);
         pwmServo(electronServo, PWM_SERVO_SPEED_MAX, ELECTRON_LAUNCHER_2019_ELECTRON_LOCKED_SERVO_VALUE, true);
     }
@@ -92,12 +92,30 @@ void electronLauncher2019Show(ElectronLauncher2019* launcher) {
 }
 
 void electronLauncher2019Init(ElectronLauncher2019* launcher) {
-    appendStringCRLF(getAlwaysOutputStreamLogger(), " INIT");
+    appendStringCRLF(getDebugOutputStreamLogger(), "START INIT LAUNCHER");
+    if (launcher == NULL) {
+        writeError(ELECTRON_LAUNCHER_2019_NULL);
+        return;
+    }
     launcher->robotMoved = false;
     launcher->robotPlaced = false;
     ServoList* servoList = launcher->servoList;
+    if (servoList == NULL) {
+        writeError(SERVO_LIST_NOT_INITIALIZED);
+        return;
+    }
+
+    // Experience
+    Servo* electronServo = getServo(servoList, ELECTRON_LAUNCHER_2019_ELECTRON_SERVO_INDEX);
+    pwmServo(electronServo, PWM_SERVO_SPEED_MAX, ELECTRON_LAUNCHER_2019_ELECTRON_LOCKED_SERVO_VALUE, false);
+    electronServo->maxSpeedUnderLoad = MAX_SPEED_UNDER_LOAD__1_SECOND_60_DEG;
+    
+    // Experience
     Servo* experienceShowServo = getServo(servoList, ELECTRON_LAUNCHER_2019_EXPERIENCE_SHOW_SERVO_INDEX);
     pwmServo(experienceShowServo, PWM_SERVO_SPEED_MAX, ELECTRON_LAUNCHER_2019_EXPERIENCE_INIT_VALUE, false);
+    experienceShowServo->maxSpeedUnderLoad = MAX_SPEED_UNDER_LOAD__1_SECOND_60_DEG;
+
+    appendStringCRLF(getDebugOutputStreamLogger(), "END INIT LAUNCHER");
 }
 
 // TIMER INTERRUPT
@@ -136,12 +154,14 @@ void initElectronLauncher2019(ElectronLauncher2019* launcher,
     launcher->tofSensor = tofSensor;
     Timer* timer = getTimerByCode(ELECTRON_LAUNCHER_2019_TIMER_CODE);
     if (timer == NULL) {
-        addTimer(ELECTRON_LAUNCHER_2019_TIMER_CODE,
+        timer = addTimer(ELECTRON_LAUNCHER_2019_TIMER_CODE,
             TIME_DIVIDER_1_HERTZ,
             &electronLauncher2019CallbackFunc,
             "ELEC LAUNC 2019",
-            (int*)servoList);
+            (int*)launcher);
+        timer->enabled = true;
     }
+    electronLauncher2019Init(launcher);
 }
 
 

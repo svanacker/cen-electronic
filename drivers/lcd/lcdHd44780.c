@@ -13,6 +13,10 @@
 static unsigned char currentRow;
 static unsigned char currentColumn;
 
+#define LCD_DELAY_COMMAND_MICRO_SECOND     10
+#define LCD_DELAY_DATA_MICRO_SECOND       10
+
+
 /**
  * Verifie et attend si l'afficheur a fini d'effectuer ses op�rations interne.
  */
@@ -28,10 +32,10 @@ void busyFlag(void) {
     RS_LCD = 0;
     RW_LCD = 1;
 
-    delay100us(5);
+    delay10us(LCD_DELAY_COMMAND_MICRO_SECOND);
     E_LCD = 1;
 
-    delay100us(5);
+    delay10us(LCD_DELAY_COMMAND_MICRO_SECOND);
 
     E_LCD = 0;
     // Provoque des blocages en mode normal => supprim� par SV
@@ -40,7 +44,7 @@ void busyFlag(void) {
 
     E_LCD = 0;
 
-    /////////////adresse � enregistrer//////////////
+    /////////////adresse a enregistrer//////////////
 
     TRIS_D7_LCD = 0;
     TRIS_D6_LCD = 0;
@@ -49,33 +53,33 @@ void busyFlag(void) {
 }
 
 void hd44780_sendIniComLcd(unsigned char D7, unsigned char D6, unsigned char D5, unsigned char D4) {
-    delay100us(5);
+    delay10us(LCD_DELAY_COMMAND_MICRO_SECOND);
     E_LCD = 0;
-    delay100us(5);
+    delay10us(LCD_DELAY_COMMAND_MICRO_SECOND);
     RS_LCD = 0;
-    delay100us(5);
+    delay10us(LCD_DELAY_COMMAND_MICRO_SECOND);
     RW_LCD = 0;
-    delay100us(5);
+    delay10us(LCD_DELAY_COMMAND_MICRO_SECOND);
     D7_LCD = D7;
     D6_LCD = D6;
     D5_LCD = D5;
     D4_LCD = D4;
-    delay100us(5);
+    delay10us(LCD_DELAY_COMMAND_MICRO_SECOND);
     E_LCD = 1;
-    delay100us(5);
+    delay10us(LCD_DELAY_COMMAND_MICRO_SECOND);
     E_LCD = 0;
-    delay100us(5);
+    delay10us(LCD_DELAY_COMMAND_MICRO_SECOND);
 }
 
 void hd44780_sendComLcd(unsigned char comLcd) {
     // Transfer du MSB pr�paration des signaux de commande
-    delay100us(5);
+    delay10us(LCD_DELAY_COMMAND_MICRO_SECOND);
     E_LCD = 0;
-    delay100us(5);
+    delay10us(LCD_DELAY_COMMAND_MICRO_SECOND);
     RS_LCD = 0;
-    delay100us(5);
+    delay10us(LCD_DELAY_COMMAND_MICRO_SECOND);
     RW_LCD = 0;
-    delay100us(5);
+    delay10us(LCD_DELAY_COMMAND_MICRO_SECOND);
 
     // transfer des 4 bits de poid fort
     D7_LCD = (comLcd & 0b10000000) >> 7;
@@ -84,11 +88,11 @@ void hd44780_sendComLcd(unsigned char comLcd) {
     D4_LCD = (comLcd & 0b00010000) >> 4;
 
     //validation des 4 bits
-    delay100us(5);
+    delay10us(LCD_DELAY_COMMAND_MICRO_SECOND);
     E_LCD = 1;
-    delay100us(5);
+    delay10us(LCD_DELAY_COMMAND_MICRO_SECOND);
     E_LCD = 0;
-    delay100us(5);
+    delay10us(LCD_DELAY_COMMAND_MICRO_SECOND);
 
     // Transfer du LSB pr�paration des signaux de commande
 
@@ -99,21 +103,21 @@ void hd44780_sendComLcd(unsigned char comLcd) {
     D4_LCD = (comLcd & 0b00000001);
 
     //validation des 4 bits
-    delay100us(5);
+    delay10us(LCD_DELAY_COMMAND_MICRO_SECOND);
     E_LCD = 1;
-    delay100us(5);
+    delay10us(LCD_DELAY_COMMAND_MICRO_SECOND);
     E_LCD = 0;
 }
 
 void hd44780_sendDataLcd(unsigned char DataLcd) {
-    // Transfer du MSB pr�paration des signaux de commande
-    delay100us(5);
+    // Transfer du MSB preparation des signaux de commande
+    delay10us(LCD_DELAY_DATA_MICRO_SECOND);
     E_LCD = 0;
-    delay100us(5);
+    delay10us(LCD_DELAY_DATA_MICRO_SECOND);
     RS_LCD = 1;
-    delay100us(5);
+    delay10us(LCD_DELAY_DATA_MICRO_SECOND);
     RW_LCD = 0;
-    delay100us(5);
+    delay100us(LCD_DELAY_DATA_MICRO_SECOND);
 
     // transfer des 4 bits de poid fort
     D7_LCD = (DataLcd & 0b10000000) >> 7;
@@ -122,11 +126,11 @@ void hd44780_sendDataLcd(unsigned char DataLcd) {
     D4_LCD = (DataLcd & 0b00010000) >> 4;
 
     //validation des 4 bits
-    delay100us(5);
+    delay100us(LCD_DELAY_DATA_MICRO_SECOND);
     E_LCD = 1;
-    delay100us(5);
+    delay100us(LCD_DELAY_DATA_MICRO_SECOND);
     E_LCD = 0;
-    delay100us(5);
+    delay100us(LCD_DELAY_DATA_MICRO_SECOND);
 
     // Transfer du LSB pr�paration des signaux de commande
 
@@ -137,9 +141,9 @@ void hd44780_sendDataLcd(unsigned char DataLcd) {
     D4_LCD = (DataLcd & 0b00000001);
 
     //validation des 4 bits
-    delay100us(5);
+    delay10us(LCD_DELAY_DATA_MICRO_SECOND);
     E_LCD = 1;
-    delay100us(5);
+    delay10us(LCD_DELAY_DATA_MICRO_SECOND);
     E_LCD = 0;
 }
 
@@ -157,16 +161,16 @@ void hd44780_initLcd(void) {
     TRIS_D5_LCD = 0;
     TRIS_D4_LCD = 0;
 
-    delaymSec(5);
+    delay10us(LCD_DELAY_COMMAND_MICRO_SECOND);
     hd44780_sendIniComLcd(0, 0, 1, 1); //fonction set : 8bits
 
-    delaymSec(5);
+    delay10us(LCD_DELAY_COMMAND_MICRO_SECOND);
     hd44780_sendIniComLcd(0, 0, 1, 1); //fonction set : 8bits
 
-    delaymSec(5);
+    delay10us(LCD_DELAY_COMMAND_MICRO_SECOND);
     hd44780_sendIniComLcd(0, 0, 1, 1); //fonction set : 8bits
 
-    delaymSec(5);
+    delay10us(LCD_DELAY_COMMAND_MICRO_SECOND);
     hd44780_sendIniComLcd(0, 0, 1, 0); //fonction set : 4bits
     hd44780_sendComLcd(0b00101000); //fonction set : 4 bits  2lignes  5x8dots
     hd44780_sendComLcd(0b00001000); //display off  curs off  blinkin cursor off

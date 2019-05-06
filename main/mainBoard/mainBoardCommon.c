@@ -400,9 +400,7 @@ void mainBoardCommonInitCommonDrivers(void) {
     */
     
     // Start interruptions
-    startTimerList(false);
-    getTimerByCode(SERVO_TIMER_CODE)->enabled = true;
-    // getTimerByCode(END_MATCH_DETECTOR_TIMER_CODE)->enabled = true;
+    startTimerList(true);
 }
 
 void mainBoardCommonHandleStreamInstruction(void) {
