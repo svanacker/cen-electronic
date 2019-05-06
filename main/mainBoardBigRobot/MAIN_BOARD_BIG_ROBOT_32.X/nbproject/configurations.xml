@@ -192,6 +192,7 @@
         <itemPath>../../../common/timer/timerDebug.h</itemPath>
         <itemPath>../../../common/timer/timerInterrupt.h</itemPath>
         <itemPath>../../../common/timer/timerSetup.h</itemPath>
+        <itemPath>../../../common/timer/delayTimer.h</itemPath>
       </logicalFolder>
       <logicalFolder name="device" displayName="device" projectFiles="true">
         <itemPath>../../../device/device.h</itemPath>
@@ -816,6 +817,7 @@
         <itemPath>../../../common/timer/cenTimer.c</itemPath>
         <itemPath>../../../common/timer/timerList.c</itemPath>
         <itemPath>../../../common/timer/timerDebug.c</itemPath>
+        <itemPath>../../../common/timer/delayTimer.c</itemPath>
       </logicalFolder>
       <logicalFolder name="common.timer.32"
                      displayName="common.timer.32"

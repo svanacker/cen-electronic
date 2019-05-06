@@ -103,42 +103,48 @@
 
 #define FORK_2019_SCAN_TIME_BETWEEN_MEASURE_MILLISECONDS                      10
 
+// SPEED VALUE
+#define FORK_2019_ELEVATOR_MAX_SPEED_UNDER_LOAD              MAX_SPEED_UNDER_LOAD__1_SECOND_60_DEG
+#define FORK_2019_ELEVATOR_SCAN_MAX_SPEED_UNDER_LOAD         MAX_SPEED_UNDER_LOAD__1_SECOND_60_DEG
+#define FORK_2019_ELEVATOR_FORK_MAX_SPEED_UNDER_LOAD         MAX_SPEED_UNDER_LOAD__500_MS_60_DEG
+#define FORK_2019_ELEVATOR_FORK_PUSH_MAX_SPEED_UNDER_LOAD    MAX_SPEED_UNDER_LOAD__500_MS_60_DEG
+
 
 // ELEVATOR
 
-void moveElevatorAtValue(ServoList* servoList, unsigned int value);
+void moveElevatorAtValue(ServoList* servoList, unsigned int value, bool wait);
 
-void moveElevatorBottom(ServoList* servoList);
+void moveElevatorBottom(ServoList* servoList, bool wait);
 
-void moveElevatorDistributorScan(ServoList* servoList);
+void moveElevatorDistributorScan(ServoList* servoList, bool wait);
 
-void moveElevatorUp(ServoList* servoList);
+void moveElevatorUp(ServoList* servoList, bool wait);
 
-void moveElevatorInitPosition(ServoList* servoList);
+void moveElevatorInitPosition(ServoList* servoList, bool wait);
 
-void moveElevatorToScanGoldenium(ServoList* servoList);
+void moveElevatorToScanGoldenium(ServoList* servoList, bool wait);
 
-void moveElevatorToTakeGoldenium(ServoList* servoList);
+void moveElevatorToTakeGoldenium(ServoList* servoList, bool wait);
 
-void moveElevatorLeft(ServoList* servoList);
+void moveElevatorLeft(ServoList* servoList, bool wait);
 
-void moveElevatorMiddle(ServoList* servoList);
+void moveElevatorMiddle(ServoList* servoList, bool wait);
 
-void moveElevatorRight(ServoList* servoList);
+void moveElevatorRight(ServoList* servoList, bool wait);
 
 // FORK
 
-void moveForkBack(ServoList* servoList, unsigned int leftRight);
+void moveForkBack(ServoList* servoList, unsigned int leftRight, bool wait);
 
-void moveForkSimplePuck(ServoList* servoList, unsigned int leftRight);
+void moveForkSimplePuck(ServoList* servoList, unsigned int leftRight, bool wait);
 
-void moveForkDoublePuck(ServoList* servoList, unsigned int leftRight);
+void moveForkDoublePuck(ServoList* servoList, unsigned int leftRight, bool wait);
 
 // FORK PUSH (small device under the Fork to facilitate the release)
 
-void moveForkPushOff(ServoList* servoList, unsigned int leftRight);
+void moveForkPushOff(ServoList* servoList, unsigned int leftRight, bool wait);
 
-void moveForkPushOn(ServoList* servoList, unsigned int leftRight);
+void moveForkPushOn(ServoList* servoList, unsigned int leftRight, bool wait);
 
 // FORK SCAN
 
@@ -203,6 +209,6 @@ void arm2019Off(ServoList* servoList, unsigned int leftRight);
  * without reading the code
  * @param servoList
  */
-void updateServoListName2019(ServoList* servoList);
+void updateServoProperties2019(ServoList* servoList);
 
 #endif

@@ -10,12 +10,6 @@
 #include <stdlib.h>
 
 /**
- * This means that each time callback, the factor is to increment or decrement.
- * between PWM_SERVO_LEFT_POSITION and PWM_SERVO_RIGHT_POSITION
- */
-#define SERVO_SPEED_TIMER_FACTOR               3
-
-/**
  * The interrupt timer.
  */
 void interruptServoTimerCallbackFunc(Timer* timer) {
@@ -31,14 +25,14 @@ void interruptServoTimerCallbackFunc(Timer* timer) {
             continue;
         }
         if (servo->currentPosition < servo->targetPosition) {
-            servo->currentPosition += servo->speed * SERVO_SPEED_TIMER_FACTOR;
+            servo->currentPosition += servo->targetSpeed;
             if (servo->currentPosition > servo->targetPosition) {
                 servo->currentPosition = servo->targetPosition;
             }
         } else if (servo->currentPosition > servo->targetPosition) {
             // Avoid to have negative value
-            if (servo->currentPosition > servo->speed * SERVO_SPEED_TIMER_FACTOR) {
-                servo->currentPosition -= servo->speed * SERVO_SPEED_TIMER_FACTOR;
+            if (servo->currentPosition > servo->targetSpeed) {
+                servo->currentPosition -= servo->targetSpeed;
             }
             else {
                 servo->currentPosition = 0;
@@ -161,7 +155,7 @@ void pwmServoAll(ServoList* servoList, unsigned int speed, unsigned int targetPo
     unsigned int i;
     for (i = 0; i < servoList->maxSize; i++) {
         Servo* servo = getServo(servoList, i);
-        pwmServo(servo, speed, targetPosition);
+        pwmServo(servo, speed, targetPosition, false);
     }
 }
 

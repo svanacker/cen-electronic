@@ -41,28 +41,37 @@ void deviceServoHandleRawData(unsigned char commandHeader, InputStream* inputStr
     // WRITE COMMANDS
     if (commandHeader == SERVO_COMMAND_WRITE) {
         ServoList* servoList = getServoDeviceServoList();
-        int servoIndex = readHex2(inputStream);
+        unsigned int servoIndex = readHex2(inputStream);
         checkIsSeparator(inputStream);
-        int servoSpeed = readHex2(inputStream);
+        unsigned int servoSpeed = readHex2(inputStream);
         checkIsSeparator(inputStream);
-        int servoValue = readHex4(inputStream);
+        unsigned int servoValue = readHex4(inputStream);
         if (servoIndex == SERVO_ALL_INDEX) {
             pwmServoAll(servoList, servoSpeed, servoValue);
         } else {
             Servo* servo = getServo(servoList, servoIndex);
-            pwmServo(servo, servoSpeed, servoValue);
+            pwmServo(servo, servoSpeed, servoValue, false);
         }
         ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_WRITE);
     }
+    else if (commandHeader == SERVO_COMMAND_WRITE_MAX_SPEED_UNDER_LOAD) {
+        ServoList* servoList = getServoDeviceServoList();
+        unsigned int servoIndex = readHex2(inputStream);
+        checkIsSeparator(inputStream);
+        int servoMaxSpeedUnderLoad = readHex2(inputStream);
+        Servo* servo = getServo(servoList, servoIndex);
+        servo->maxSpeedUnderLoad = servoMaxSpeedUnderLoad;
+        ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_WRITE_MAX_SPEED_UNDER_LOAD);
+    }
     else if (commandHeader == SERVO_COMMAND_WRITE_COMPACT) {
-        int servoValue = readHex4(inputStream);
+        unsigned int servoValue = readHex4(inputStream);
         ServoList* servoList = getServoDeviceServoList();
         pwmServoAll(servoList, PWM_SERVO_SPEED_MAX, servoValue);
         ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_WRITE_COMPACT);
     }
     // ENABLE / DISABLE
-    if (commandHeader == SERVO_COMMAND_ENABLE_DISABLE) {
-        ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_ENABLE_DISABLE);
+    if (commandHeader == SERVO_COMMAND_WRITE_ENABLE_DISABLE) {
+        ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_WRITE_ENABLE_DISABLE);
         ServoList* servoList = getServoDeviceServoList();
         unsigned int servoIndex = readHex2(inputStream);
         checkIsSeparator(inputStream);
@@ -91,10 +100,10 @@ void deviceServoHandleRawData(unsigned char commandHeader, InputStream* inputStr
     }
     else if (commandHeader == SERVO_COMMAND_READ) {
         ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_READ);
-        int servoIndex = readHex2(inputStream);
+        unsigned int servoIndex = readHex2(inputStream);
         ServoList* servoList = getServoDeviceServoList();
         Servo* servo = getServo(servoList, servoIndex);
-        unsigned int speed = pwmServoReadSpeed(servo);
+        unsigned int speed = pwmServoReadTargetSpeed(servo);
         unsigned int currentPosition = pwmServoReadCurrentPosition(servo);
         unsigned int targetPosition = pwmServoReadTargetPosition(servo);
 
@@ -107,16 +116,25 @@ void deviceServoHandleRawData(unsigned char commandHeader, InputStream* inputStr
         appendHex4(outputStream, targetPosition);
     }
     else if (commandHeader == SERVO_COMMAND_READ_SPEED) {
-        int servoIndex = readHex2(inputStream);
+        unsigned int servoIndex = readHex2(inputStream);
         ServoList* servoList = getServoDeviceServoList();
         Servo* servo = getServo(servoList, servoIndex);
-        int speed = pwmServoReadSpeed(servo);
+        unsigned int speed = pwmServoReadTargetSpeed(servo);
 
         ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_READ_SPEED);
         appendHex2(outputStream, speed);
     }
+    else if (commandHeader == SERVO_COMMAND_READ_MAX_SPEED_UNDER_LOAD) {
+        unsigned int servoIndex = readHex2(inputStream);
+        ServoList* servoList = getServoDeviceServoList();
+        Servo* servo = getServo(servoList, servoIndex);
+        unsigned int maxSpeedUnderLoad = pwmServoReadMaxSpeedUnderLoad(servo);
+
+        ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_READ_MAX_SPEED_UNDER_LOAD);
+        appendHex2(outputStream, maxSpeedUnderLoad);
+    }
     else if (commandHeader == SERVO_COMMAND_READ_CURRENT_POSITION) {
-        int servoIndex = readHex2(inputStream);
+        unsigned int servoIndex = readHex2(inputStream);
         ServoList* servoList = getServoDeviceServoList();
         Servo* servo = getServo(servoList, servoIndex);
         int currentPosition = pwmServoReadCurrentPosition(servo);
@@ -125,7 +143,7 @@ void deviceServoHandleRawData(unsigned char commandHeader, InputStream* inputStr
         appendHex4(outputStream, currentPosition);
     }
     else if (commandHeader == SERVO_COMMAND_READ_TARGET_POSITION) {
-        int servoIndex = readHex2(inputStream);
+        unsigned int servoIndex = readHex2(inputStream);
         ServoList* servoList = getServoDeviceServoList();
         Servo* servo = getServo(servoList, servoIndex);
         int targetPosition = pwmServoReadTargetPosition(servo);
@@ -138,6 +156,18 @@ void deviceServoHandleRawData(unsigned char commandHeader, InputStream* inputStr
         ServoList* servoList = getServoDeviceServoList();
         testAllPwmServos(servoList);
         ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_TEST);
+    }
+    else if (commandHeader == SERVO_COMMAND_GET_TIME_TO_REACH_UNDER_LOAD) {
+        unsigned int servoIndex = readHex2(inputStream);
+        checkIsSeparator(inputStream);
+        unsigned int servoTargetPosition = readHex4(inputStream);
+
+        ServoList* servoList = getServoDeviceServoList();
+        Servo* servo = getServo(servoList, servoIndex);
+
+        unsigned int timeToReachUnderLoad = pwmServoComputeTimeMilliSecondsToReachTargetPosition(servo, servoTargetPosition);
+        ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_GET_TIME_TO_REACH_UNDER_LOAD);
+        appendHex4(outputStream, timeToReachUnderLoad);
     }
     else if (commandHeader == SERVO_COMMAND_DEBUG) {
         ServoList* servoList = getServoDeviceServoList();

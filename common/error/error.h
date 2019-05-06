@@ -70,8 +70,9 @@ void clearLastError();
 #define SERVO_LIST_OUT_OF_BOUNDS                                          0x01A2
 #define SERVO_LIST_SERVO_NULL                                             0x01A3
 #define SERVO_LIST_SERVO_NOT_INITIALIZED                                  0x01A4
-#define SERVO_SERVO_LIST_NULL                                             0x01A5
+#define SERVO_NULL                                                        0x01A5
 #define SERVO_LIST_NULL                                                   0x01A6
+#define SERVO_MAX_SPEED_UNDER_LOAD_UNDEFINED                              0x01A7
 
 // TIMER
 #define TIMERS_LIST_NOT_INITIALIZED                                       0x0200

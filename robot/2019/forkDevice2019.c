@@ -42,82 +42,83 @@ bool deviceFork2019IsOk(void) {
 }
 
 void deviceFork2019HandleRawData(unsigned char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
+    bool wait = true;
     // ELEVATOR
     // -> Up/Down
     if (commandHeader == COMMAND_2019_ELEVATOR_VALUE) {
         ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_ELEVATOR_VALUE);
         unsigned int servoValue = readHex4(inputStream);
-        moveElevatorAtValue(servoList, servoValue);
+        moveElevatorAtValue(servoList, servoValue, wait);
     }
     // -> Bottom
     else if (commandHeader == COMMAND_2019_ELEVATOR_BOTTOM) {
         ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_ELEVATOR_BOTTOM);
-        moveElevatorBottom(servoList);
+        moveElevatorBottom(servoList, wait);
     }
     else if (commandHeader == COMMAND_2019_ELEVATOR_DISTRIBUTOR_SCAN) {
         ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_ELEVATOR_DISTRIBUTOR_SCAN);
-        moveElevatorDistributorScan(servoList);
+        moveElevatorDistributorScan(servoList, wait);
     }
     // -> Position to take the Goldenium
     else if (commandHeader == COMMAND_2019_ELEVATOR_GOLDENIUM_POSITION) {
         ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_ELEVATOR_GOLDENIUM_POSITION);
-        moveElevatorToTakeGoldenium(servoList);
+        moveElevatorToTakeGoldenium(servoList, wait);
     }
     // -> Init Position
     else if (commandHeader == COMMAND_2019_ELEVATOR_INIT_POSITION) {
         ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_ELEVATOR_INIT_POSITION);
-        moveElevatorInitPosition(servoList);
+        moveElevatorInitPosition(servoList, wait);
     }
     // -> Up
     else if (commandHeader == COMMAND_2019_ELEVATOR_UP) {
         ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_ELEVATOR_UP);
-        moveElevatorUp(servoList);
+        moveElevatorUp(servoList, wait);
     }
     // -> Left
     else if (commandHeader == COMMAND_2019_ELEVATOR_LEFT) {
         ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_ELEVATOR_LEFT);
-        moveElevatorLeft(servoList);
+        moveElevatorLeft(servoList, wait);
     }
     // -> Middle
     else if (commandHeader == COMMAND_2019_ELEVATOR_MIDDLE) {
         ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_ELEVATOR_MIDDLE);
-        moveElevatorMiddle(servoList);
+        moveElevatorMiddle(servoList, wait);
     }
     // -> Right
     else if (commandHeader == COMMAND_2019_ELEVATOR_RIGHT) {
         ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_ELEVATOR_RIGHT);
-        moveElevatorRight(servoList);
+        moveElevatorRight(servoList, wait);
     }
     // Fork Back/Retracted
     else if (commandHeader == COMMAND_2019_FORK_BACK) {
         ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_FORK_BACK);
         unsigned int side = readHex(inputStream);
-        moveForkBack(servoList, side); 
+        moveForkBack(servoList, side, wait);
     }
     // Fork Single Puck
     else if (commandHeader == COMMAND_2019_FORK_SIMPLE_PUCK) {
         ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_FORK_SIMPLE_PUCK);
         unsigned int side = readHex(inputStream);
-        moveForkSimplePuck(servoList, side);
+        moveForkSimplePuck(servoList, side, wait);
     }
     // Fork Double Puck
     else if (commandHeader == COMMAND_2019_FORK_DOUBLE_PUCK) {
         ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_FORK_DOUBLE_PUCK);
         unsigned int side = readHex(inputStream);
-        moveForkDoublePuck(servoList, side);
+        moveForkDoublePuck(servoList, side, wait);
         
     }
     // Fork Push Off
     else if (commandHeader == COMMAND_2019_FORK_PUSH_OFF) {
         ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_FORK_PUSH_OFF);
         unsigned int side = readHex(inputStream);
-        moveForkPushOff(servoList, side);
+        moveForkPushOff(servoList, side, wait);
     }
     // Fork Push On
     else if (commandHeader == COMMAND_2019_FORK_PUSH_ON) {
         ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_FORK_PUSH_ON);
         unsigned int side = readHex(inputStream);
-        moveForkPushOn(servoList, side);
+        moveForkPushOn(servoList, side, wait);
     }
     // Init
     else if (commandHeader == COMMAND_2019_FORK_INIT) {

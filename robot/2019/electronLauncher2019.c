@@ -79,10 +79,8 @@ void electronLauncher2019Launch(ElectronLauncher2019* launcher) {
     unsigned int tryCount = 0;
     timerDelayMilliSeconds(500);
     for (tryCount = 0; tryCount < 5; tryCount++) {
-        pwmServo(electronServo, PWM_SERVO_SPEED_MAX, ELECTRON_LAUNCHER_2019_ELECTRON_RELEASE_SERVO_VALUE);
-        timerDelayMilliSeconds(1000);
-        pwmServo(electronServo, PWM_SERVO_SPEED_MAX, ELECTRON_LAUNCHER_2019_ELECTRON_LOCKED_SERVO_VALUE);
-        timerDelayMilliSeconds(500);
+        pwmServo(electronServo, PWM_SERVO_SPEED_MAX, ELECTRON_LAUNCHER_2019_ELECTRON_RELEASE_SERVO_VALUE, true);
+        pwmServo(electronServo, PWM_SERVO_SPEED_MAX, ELECTRON_LAUNCHER_2019_ELECTRON_LOCKED_SERVO_VALUE, true);
     }
 }
 
@@ -90,7 +88,7 @@ void electronLauncher2019Show(ElectronLauncher2019* launcher) {
     appendStringCRLF(getAlwaysOutputStreamLogger(), "SHOW : ");
     ServoList* servoList = launcher->servoList;
     Servo* experienceShowServo = getServo(servoList, ELECTRON_LAUNCHER_2019_EXPERIENCE_SHOW_SERVO_INDEX);
-    pwmServo(experienceShowServo, PWM_SERVO_SPEED_MAX, ELECTRON_LAUNCHER_2019_EXPERIENCE_SHOW_VALUE);
+    pwmServo(experienceShowServo, PWM_SERVO_SPEED_MAX, ELECTRON_LAUNCHER_2019_EXPERIENCE_SHOW_VALUE, false);
 }
 
 void electronLauncher2019Init(ElectronLauncher2019* launcher) {
@@ -99,7 +97,7 @@ void electronLauncher2019Init(ElectronLauncher2019* launcher) {
     launcher->robotPlaced = false;
     ServoList* servoList = launcher->servoList;
     Servo* experienceShowServo = getServo(servoList, ELECTRON_LAUNCHER_2019_EXPERIENCE_SHOW_SERVO_INDEX);
-    pwmServo(experienceShowServo, PWM_SERVO_SPEED_MAX, ELECTRON_LAUNCHER_2019_EXPERIENCE_INIT_VALUE);
+    pwmServo(experienceShowServo, PWM_SERVO_SPEED_MAX, ELECTRON_LAUNCHER_2019_EXPERIENCE_INIT_VALUE, false);
 }
 
 // TIMER INTERRUPT

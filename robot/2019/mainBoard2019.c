@@ -89,7 +89,7 @@ GameBoard* initGameBoard2019(GameStrategyContext* gameStrategyContext) {
 void mainBoardCommonStrategyMainEndInit2019(GameStrategyContext* gameStrategyContext) {        
     ServoList* servoList = gameStrategyContext->servoList;
     
-    updateServoListName2019(servoList);
+    updateServoProperties2019(servoList);
     
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
     appendStringCRLF(debugOutputStream, "fork2019Init");

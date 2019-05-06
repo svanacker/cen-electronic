@@ -118,7 +118,7 @@ void mainBoardMainPhase2(void) {
     mainBoardCommonInitTimerList();
     mainBoardCommonInitCommonDrivers();
     
-    mainBoardCommonTofInitDrivers(mainBoardCommonGetMainI2cBus());
+    mainBoardCommonTofInitDrivers(mainBoardCommonGetMainI2cBus(), MAIN_BOARD_TOF_SENSOR_LIST_LENGTH);
     mainBoardCommonMatchMainInitDrivers(&robotConfig, isMatchStarted32, mainBoardWaitForInstruction, loopUnWaitForInstruction);
     mainBoardCommonStrategyMainInitDrivers(&robotConfig);
 }

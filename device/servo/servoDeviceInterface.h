@@ -11,7 +11,16 @@
 // Command header for compact method (all servo), only value
 #define SERVO_COMMAND_WRITE_COMPACT                 'c'
 
+/** Enable a specific servo. */
+#define SERVO_COMMAND_WRITE_ENABLE_DISABLE                'e'
+
+// Command header to write the max speed under load
+#define SERVO_COMMAND_WRITE_MAX_SPEED_UNDER_LOAD    'M'
+
 // READ FUNCTIONS
+
+// Command header to get the max speed under load
+#define SERVO_COMMAND_READ_MAX_SPEED_UNDER_LOAD      'm'
 
 // Command header to know the amount of Servo drivers
 #define SERVO_COMMAND_GET_COUNT                     'n'
@@ -28,10 +37,8 @@
 // Command header to read the target Position of a servo with the specified index
 #define SERVO_COMMAND_READ_TARGET_POSITION          't'
 
-// DEBUG FUNCTIONS
 
-/** Enable a specific servo. */
-#define SERVO_COMMAND_ENABLE_DISABLE                'e'
+// DEBUG FUNCTIONS
 
 /** Enable or disable all servos . */
 #define SERVO_COMMAND_ENABLE_DISABLE_ALL            'E'
@@ -41,6 +48,9 @@
 
 // Command header to do the test program
 #define SERVO_COMMAND_TEST                          'T'
+
+// Command to get the time in milliSeconds to reach the current position to a specified target position
+#define SERVO_COMMAND_GET_TIME_TO_REACH_UNDER_LOAD  'L'
 
 // SERVO INDEX
 #define SERVO_ALL_INDEX                             0xFF

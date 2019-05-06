@@ -1,5 +1,6 @@
 #include <stdbool.h>
 #include <stdlib.h>
+#include <math.h>
 
 #include "servoPwm.h"
 #include "servoList.h"
@@ -18,6 +19,7 @@
 #include "../../../common/timer/cenTimer.h"
 #include "../../../common/timer/timerConstants.h"
 #include "../../../common/timer/timerList.h"
+#include "../../../common/timer/delayTimer.h"
 
 
 /**
@@ -46,7 +48,9 @@ void initServo(Servo* servo,
     servo->enabled = true;
     servo->targetPosition = PWM_SERVO_MIDDLE_POSITION;
     servo->currentPosition = PWM_SERVO_MIDDLE_POSITION;
-    servo->speed = PWM_SERVO_SPEED_MAX;
+    servo->targetSpeed = PWM_SERVO_SPEED_MAX;
+    // We initialize as if the servo was free (no load)
+    servo->maxSpeedUnderLoad = MG996R_MAX_SPEED_UNDER_LOAD__NO_LOAD;
     servo->typeInitFunction = typeInitFunction;
     servo->initFunction = initFunction;
     servo->updateConfigFunction = updateConfigFunction;
@@ -61,7 +65,7 @@ void initServo(Servo* servo,
 
 // PUBLIC WRITE FUNCTIONS
 
-void pwmServo(Servo* servo, unsigned int speed, int targetPosition) {
+void pwmServo(Servo* servo, unsigned int targetSpeed, int targetPosition, bool wait) {
     if (servo == NULL) {
         writeError(SERVO_LIST_SERVO_NULL);
         return; 
@@ -69,20 +73,28 @@ void pwmServo(Servo* servo, unsigned int speed, int targetPosition) {
     if (!servo->enabled) {
         return;
     }
-    servo->speed = speed;
+    servo->targetSpeed = targetSpeed;
     servo->targetPosition = targetPosition;
     // By default, we update the value immediately, if we want some speed, we need a timer !
     ServoList* servoList = getServoList(servo);
     if (servoList == NULL) {
-        writeError(SERVO_SERVO_LIST_NULL);
+        writeError(SERVO_LIST_NULL);
         return;
     }
     if (!servoList->useTimer) {
         servo->internalPwmFunction(servo, targetPosition);
     }
+    if (wait) {
+        unsigned delayMilliSeconds = pwmServoComputeTimeMilliSecondsToReachTargetPosition(servo, targetPosition);
+        timerDelayMilliSeconds(delayMilliSeconds);
+    }
 }
 
 void pwmServoSetEnabled(Servo* servo, bool enabled) {
+    if (servo == NULL) {
+        writeError(SERVO_LIST_SERVO_NULL);
+        return;
+    }
     servo->enabled = enabled;
     if (servo->enabled != enabled) {
         servo->enabled = enabled;
@@ -92,14 +104,52 @@ void pwmServoSetEnabled(Servo* servo, bool enabled) {
 
 // READ FUNCTIONS
 
-unsigned int pwmServoReadSpeed(Servo* servo) {
-    return servo->speed;
+unsigned int pwmServoReadTargetSpeed(Servo* servo) {
+    if (servo == NULL) {
+        writeError(SERVO_LIST_NULL);
+        return 0;
+    }
+    return servo->targetSpeed;
+}
+
+unsigned int pwmServoReadMaxSpeedUnderLoad(Servo* servo) {
+    if (servo == NULL) {
+        writeError(SERVO_LIST_NULL);
+        return 0;
+    }
+    return servo->maxSpeedUnderLoad;
 }
 
 unsigned int pwmServoReadCurrentPosition(Servo* servo) {
+    if (servo == NULL) {
+        writeError(SERVO_LIST_NULL);
+        return 0;
+    }
     return servo->currentPosition;
 }
 
 unsigned int pwmServoReadTargetPosition(Servo* servo) {
+    if (servo == NULL) {
+        writeError(SERVO_LIST_NULL);
+        return 0;
+    }
     return servo->targetPosition;
+}
+
+// COMPUTE
+
+unsigned int pwmServoComputeTimeMilliSecondsToReachTargetPosition(Servo* servo, unsigned int targetPosition) {
+    if (servo == NULL) {
+        writeError(SERVO_LIST_NULL);
+        return -1;
+    }
+    if (servo->maxSpeedUnderLoad == 0) {
+        writeError(SERVO_MAX_SPEED_UNDER_LOAD_UNDEFINED);
+        return 0;
+    }
+    unsigned int currentPosition = servo->currentPosition;
+    unsigned int diffPositionAbs = abs(targetPosition - currentPosition);
+
+    // 20 ms of cycle for a 50 Hz signal
+    return (20 * (diffPositionAbs / servo->maxSpeedUnderLoad));
 }

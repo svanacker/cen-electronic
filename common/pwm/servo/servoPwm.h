@@ -73,7 +73,9 @@ struct Servo {
      * This property must NOT be used  */
     bool enabled;
     /** The speed to reach the final position. */
-    unsigned int speed;
+    unsigned int targetSpeed;
+    /** The maximum speed under load (same unit than for speed field) */
+    unsigned int maxSpeedUnderLoad;
     /** The current position. */
     unsigned int currentPosition;
     /** The target position. */
@@ -120,6 +122,17 @@ struct Servo {
 
 #define PWM_SERVO_SPEED_MAX               255
 
+// MAX SPEED UNDER LOAD
+
+// The default value for a classical servo
+// at 4.8 volt, 0.20 second for 60 degree
+// When using a pwm width value of 1000 microS -> -45°, 2000 microS-> +45°, so it's about 600 microS of diff for 60 degree
+// Frequency is 50 Hz
+// (660 / 0.20) / 50 => about 60
+#define MG996R_MAX_SPEED_UNDER_LOAD__NO_LOAD       66
+#define MAX_SPEED_UNDER_LOAD__1_SECOND_60_DEG      11
+#define MAX_SPEED_UNDER_LOAD__500_MS_60_DEG        22
+
 // INIT
 
 void initServo(Servo* servo, 
@@ -139,8 +152,9 @@ void initServo(Servo* servo,
 * @param speed the speed to reach the targetPosition
 * @param targetPosition duration of pwm to 1 typical value between
 * PWM_SERVO_LEFT_POSITION and PWM_SERVO_RIGHT_POSITION 
+* @param wait indicates if we compute the needed time and we wait before going further
 */
-void pwmServo(Servo* servo, unsigned int newSpeed, int newTargetPosition);
+void pwmServo(Servo* servo, unsigned int newSpeed, int newTargetPosition, bool wait);
 
 /**
  * Change the enabled property by a new value.
@@ -152,22 +166,40 @@ void pwmServoSetEnabled(Servo* servo, bool enabled);
 /**
  * Returns the speed used to reach the position.
  * @param servoIndex the servo index that we want to get
- * @param -1 if servoIndex is not correct, speed value if ok
+ * @param 0 if servoIndex is not correct, speed value if ok
+ * @throw SERVO_NULL if servoIndex is not correct
  */
-unsigned int pwmServoReadSpeed(Servo* servo);
+unsigned int pwmServoReadTargetSpeed(Servo* servo);
+
+/**
+ * Returns the maximal speed estimated when under load, this is very useful to know the amount of time estimated
+ * to go from the current position to a target position.
+ * @param 0 if servoIndex is not correct, max Speed value under load if ok
+ * @throw SERVO_NULL if servoIndex is not correct
+ */
+unsigned int pwmServoReadMaxSpeedUnderLoad(Servo* servo);
 
 /**
  * Returns the current position used to reach the current position.
  * @param servoIndex the servo index that we want to get the current position
- * @param -1 if servoIndex is not correct, current position if ok
+ * @param 0 if servoIndex is not correct, current position if ok
+ * @throw SERVO_NULL if servoIndex is not correct
  */
 unsigned int pwmServoReadCurrentPosition(Servo* servo);
 
 /**
  * Returns the current position used to reach the target position.
  * @param servoIndex the servo index that we want to get the target position
- * @param -1 if servoIndex is not correct, current position if ok
+ * @param 0 if servoIndex is not correct, current position if ok
+ * @throw SERVO_NULL if servoIndex is not correct
  */
 unsigned int pwmServoReadTargetPosition(Servo* servo);
+
+// COMPUTATION
+
+/**
+* Returns how milli seconds should the servo to reach the new position under load
+*/
+unsigned int pwmServoComputeTimeMilliSecondsToReachTargetPosition(Servo* servo, unsigned int targetPosition);
 
 #endif

@@ -29,7 +29,16 @@ int deviceServoGetInterface(unsigned char commandHeader, DeviceInterfaceMode mod
         }
         return commandLengthValueForMode(mode, 4, 0);
     }
-    else if (commandHeader == SERVO_COMMAND_ENABLE_DISABLE) {
+    else if (commandHeader == SERVO_COMMAND_WRITE_MAX_SPEED_UNDER_LOAD) {
+        if (fillDeviceArgumentList) {
+            setFunction("update max Speed under load", 3, 0);
+            setArgumentUnsignedHex2(0, "ServoIdx");
+            setArgumentSeparator(1);
+            setArgumentUnsignedHex2(2, "value");
+        }
+        return commandLengthValueForMode(mode, 5, 0);
+    }
+    else if (commandHeader == SERVO_COMMAND_WRITE_ENABLE_DISABLE) {
         if (fillDeviceArgumentList) {
             setFunction("enable/disab. Servo", 3, 0);
             setArgumentUnsignedHex2(0, "ServoIdx");
@@ -79,6 +88,14 @@ int deviceServoGetInterface(unsigned char commandHeader, DeviceInterfaceMode mod
         }
         return commandLengthValueForMode(mode, 2, 2);
     }
+    else if (commandHeader == SERVO_COMMAND_READ_MAX_SPEED_UNDER_LOAD) {
+        if (fillDeviceArgumentList) {
+            setFunction("read max speed under load", 1, 1);
+            setArgumentUnsignedHex2(0, "ServoIdx");
+            setResultUnsignedHex2(0, "Max speed under load");
+        }
+        return commandLengthValueForMode(mode, 2, 2);
+    }
     else if (commandHeader == SERVO_COMMAND_READ_CURRENT_POSITION) {
         if (fillDeviceArgumentList) {
             setFunction("servoReadCurrentPosition", 1, 1);
@@ -102,12 +119,22 @@ int deviceServoGetInterface(unsigned char commandHeader, DeviceInterfaceMode mod
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
-    // DEBUG
     else if (commandHeader == SERVO_COMMAND_DEBUG) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("servoDebugAlls");
         }
         return commandLengthValueForMode(mode, 0, 0);
+    }
+    // COMPUTE
+    else if (commandHeader == SERVO_COMMAND_GET_TIME_TO_REACH_UNDER_LOAD) {
+        if (fillDeviceArgumentList) {
+            setFunction("get time to reach under load", 3, 1);
+            setArgumentUnsignedHex2(0, "ServoIdx");
+            setArgumentSeparator(1);
+            setArgumentUnsignedHex4(2, "Target Position");
+            setResultUnsignedHex4(0, "Time (milliSeconds)");
+        }
+        return commandLengthValueForMode(mode, 7, 4);
     }
     return DEVICE_HEADER_NOT_HANDLED;
 }
