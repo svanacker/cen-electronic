@@ -106,6 +106,10 @@ static GameTargetAction goldeniumTakeTargetAction;
 static GameTargetAction goldeniumPrepareDropTargetAction;
 static GameTargetAction goldeniumDropTargetAction;
 
+static GameTargetAction smallDistributorLine1PrepareTargetAction;
+static GameTargetAction smallDistributorLine1TakeTargetAction;
+static GameTargetAction smallDistributorLine1DropTargetAction;
+
 // ------------------------------------------------------- TARGETS ACTIONS ITEM LIST --------------------------------------------------------
 
 // Accelerator
@@ -121,11 +125,10 @@ static GameTargetActionItemList goldeniumPrepareDropTargetActionItemList;
 static GameTargetActionItemList goldeniumDropTargetActionItemList;
 
 // Small Distributor Line 1
-/*
 static GameTargetActionItemList smallDistributorLine1PrepareTargetActionItemList;
 static GameTargetActionItemList smallDistributorLine1TakeTargetActionItemList;
 static GameTargetActionItemList smallDistributorLine1DropTargetActionItemList;
-*/
+
 // ------------------------------------------------------- TARGET ACTION ITEM LIST ---------------------------------------------------
 
 static GameTargetActionItem acceleratorPrepareTargetActionItem;
@@ -137,6 +140,11 @@ static GameTargetActionItem goldeniumTakeTargetActionItem;
 static GameTargetActionItem goldeniumPrepareDropTargetActionItem;
 static GameTargetActionItem goldeniumDropTargetActionItem;
 
+// static GameTargetActionItem smallDistributorLine1PrepareTargetActionItem;
+// static GameTargetActionItem smallDistributorLine1TakeTargetActionItem;
+// static GameTargetActionItem smallDistributorLine1DropTargetActionItem;
+
+
 // ------------------------------------------------------- STRATEGIES ----------------------------------------------------------------
 
 // strategies
@@ -146,6 +154,7 @@ static GameTargetActionItem goldeniumDropTargetActionItem;
 static GameStrategy smallRobotStrategy1Accelerator;
 static GameStrategy smallRobotStrategy2AcceleratorTakeGoldenium;
 static GameStrategy smallRobotStrategy3AcceleratorTakeDropGoldenium;
+static GameStrategy smallRobotStrategy4AcceleratorTakeDropGoldeniumSmallDist;
 
 // ------------------------------------------------------- STRATEGY ITEM -------------------------------------------------------------
 
@@ -153,6 +162,7 @@ static GameStrategy smallRobotStrategy3AcceleratorTakeDropGoldenium;
 static GameStrategyItem acceleratorStrategyItem;
 static GameStrategyItem takeGoldeniumStrategyItem;
 static GameStrategyItem dropGoldeniumStrategyItem;
+static GameStrategyItem smallDistributorLine1StrategyItem;
 
 // ------------------------------------------------------- INITIALIZATION ------------------------------------------------------------
 
@@ -283,6 +293,7 @@ void initSmallRobotTargets2019(GameStrategyContext* gameStrategyContext) {
     addGameTarget(&acceleratorTarget, "ACC_TARGET", SCORE_POINT_2019_LAUNCH_BLUIUM_IN_ACCELERATOR, acceleratorFrontLocation, acceleratorFrontLocation);
     addGameTarget(&goldeniumTakeTarget, "GOLD_TAKE_TARGET", SCORE_POINT_2019_EXTRACT_GOLDENIUM, goldeniumFrontLocation, goldeniumFrontLocation);
     addGameTarget(&goldeniumDropTarget, "GOLD_DROP_TARGET", SCORE_POINT_2019_WEIGHING_MACHINE_GOLDENIUM, weighingMachineDropLocation, weighingMachineDropLocation);
+    // TODO : SCORE_POINT_2019_ADD_ATOM_ACCELERATOR is false
     addGameTarget(&smallDistributorLine1Target, "SMALL_DIST_1_TARGET", SCORE_POINT_2019_ADD_ATOM_ACCELERATOR, smallDistributorLine1Location, weighingMachineDropLocation);
 }
 
@@ -300,7 +311,9 @@ void initSmallRobotTargetActions2019(GameStrategyContext* gameStrategyContext) {
     addTargetDropAction(&(goldeniumDropTarget.actionList), &goldeniumDropTargetAction, weighingMachineDropLocation, GOLDENIUM_DROP_TIME_TO_ACHIEVE, &goldeniumDropTargetActionItemList);
 
     // SMALL DISTRIBUTOR LINE 1 TARGET
-    // TODO
+    addTargetPrepareAction(&(smallDistributorLine1Target.actionList), &smallDistributorLine1PrepareTargetAction, blueiumRightLocation, SMALL_DISTRIBUTOR_LINE_1_PREPARE_TIME_TO_ACHIEVE, &smallDistributorLine1PrepareTargetActionItemList);
+    addTargetHandlingAction(&(smallDistributorLine1Target.actionList), &smallDistributorLine1TakeTargetAction, smallDistributorLine1Location, SMALL_DISTRIBUTOR_LINE_1_TAKE_TIME_TO_ACHIEVE, &smallDistributorLine1TakeTargetActionItemList);
+    addTargetDropAction(&(smallDistributorLine1Target.actionList), &smallDistributorLine1DropTargetAction, weighingMachineDropLocation, SMALL_DISTRIBUTOR_LINE_1_DROP_TIME_TO_ACHIEVE, &smallDistributorLine1DropTargetActionItemList);
 }
 
 void initSmallRobotTargetActionsItems2019(GameStrategyContext* gameStrategyContext) {
@@ -317,6 +330,7 @@ void initSmallRobotTargetActionsItems2019(GameStrategyContext* gameStrategyConte
     addTargetActionItem(&goldeniumDropTargetActionItemList, &goldeniumDropTargetActionItem, &goldeniumDrop, "GOLD DROP");
 
     // Small Distributor Line 1 Target
+    // addTargetActionItem(&smallDistributorLine1PrepareTargetActionItemList, &smallDistributorLine1PrepareTargetActionItem, &small, "GOLD PREP DROP");
 }
 
 GameStrategy* initSmallRobotStrategiesItems2019(GameStrategyContext* gameStrategyContext) {
@@ -340,6 +354,13 @@ GameStrategy* initSmallRobotStrategiesItems2019(GameStrategyContext* gameStrateg
         addGameStrategyItem(&smallRobotStrategy3AcceleratorTakeDropGoldenium, &takeGoldeniumStrategyItem, &goldeniumTakeTarget);
         addGameStrategyItem(&smallRobotStrategy3AcceleratorTakeDropGoldenium, &dropGoldeniumStrategyItem, &goldeniumDropTarget);
         return &smallRobotStrategy3AcceleratorTakeDropGoldenium;
+    }
+    else if (strategyId == SMALL_ROBOT_STRATEGY_3_ACCELERATOR_TAKE_DROP_GOLDENIUM_SMALL_DIST) {
+        addGameStrategyItem(&smallRobotStrategy4AcceleratorTakeDropGoldeniumSmallDist, &acceleratorStrategyItem, &acceleratorTarget);
+        addGameStrategyItem(&smallRobotStrategy4AcceleratorTakeDropGoldeniumSmallDist, &takeGoldeniumStrategyItem, &goldeniumTakeTarget);
+        addGameStrategyItem(&smallRobotStrategy4AcceleratorTakeDropGoldeniumSmallDist, &dropGoldeniumStrategyItem, &goldeniumDropTarget);
+        addGameStrategyItem(&smallRobotStrategy4AcceleratorTakeDropGoldeniumSmallDist, &smallDistributorLine1StrategyItem, &smallDistributorLine1Target);
+        return &smallRobotStrategy4AcceleratorTakeDropGoldeniumSmallDist;
     }
     return NULL;
 }

@@ -16,6 +16,10 @@
 #define GOLDENIUM_PREPARE_DROP_TIME_TO_ACHIEVE                             3.0f
 #define GOLDENIUM_DROP_TIME_TO_ACHIEVE                                     3.0f
 
+#define SMALL_DISTRIBUTOR_LINE_1_PREPARE_TIME_TO_ACHIEVE                   0.0f
+#define SMALL_DISTRIBUTOR_LINE_1_TAKE_TIME_TO_ACHIEVE                      3.0f
+#define SMALL_DISTRIBUTOR_LINE_1_DROP_TIME_TO_ACHIEVE                      3.0f
+
 #define CHAOS_TAKE_TIME_TO_ACHIEVE                                         0.0f
 #define CHAOS_DROP_TIME_TO_ACHIEVE                                         0.0f
 

@@ -35,6 +35,7 @@ typedef struct GameStrategyContext GameStrategyContext;
 #define SMALL_ROBOT_STRATEGY_1_ACCELERATOR                                     1
 #define SMALL_ROBOT_STRATEGY_2_ACCELERATOR_TAKE_GOLDENIUM                      2
 #define SMALL_ROBOT_STRATEGY_3_ACCELERATOR_TAKE_DROP_GOLDENIUM                 3
+#define SMALL_ROBOT_STRATEGY_3_ACCELERATOR_TAKE_DROP_GOLDENIUM_SMALL_DIST      4
 
 // BIG ROBOT STRATEGY
 #define BIG_ROBOT_STRATEGY_1_CHAOS                                             1

@@ -26,6 +26,7 @@
 
 // 2019
 #include "../../robot/2019/fork2019.h"
+#include "../../robot/2019/forkScan2019.h"
 #include "../../robot/2019/distributor2019.h"
 #include "../../robot/2019/strategy2019.h"
 #include "../../robot/2019/gameBoardElement2019.h"

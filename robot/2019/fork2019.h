@@ -41,13 +41,6 @@
 #define FORK_2019_RIGHT_SERVO_PUSH_INDEX       FORK_2019_PCA9685_START_INDEX + 3
 #define FORK_2019_LEFT_SERVO_PUSH_INDEX       FORK_2019_PCA9685_START_INDEX + 12
 
-// Scan Servo Value
-#define FORK_2019_SCAN_SPEED_FACTOR                                         0xFF
-// TODO : To change
-#define FORK_2019_SCAN_MIDDLE_SERVO_VALUE                                   1400
-#define FORK_2019_SCAN_LEFT_SERVO_VALUE                                     1800
-#define FORK_2019_SCAN_RIGHT_SERVO_VALUE                                    1100
-
 // Elevator Servo Value
 #define FORK_2019_ELEVATOR_SPEED_FACTOR                                     0xFF
 #define FORK_2019_ELEVATOR_DISTRIBUTOR_SCAN_SERVO_VALUE                   0x0800
@@ -79,36 +72,23 @@
 #define FORK_2019_SERVO_PUSH_RIGHT_OFF_SERVO_VALUE                        0x05DC
 #define FORK_2019_SERVO_PUSH_RIGHT_ON_SERVO_VALUE                         0x0300
 
-// Small Robot : Arm Left (for Goldenium)
-#define FORK_2019_LEFT_ARM_SPEED_FACTOR                                     0xFF
-#define FORK_2019_LEFT_ARM_SERVO_ON                                       0x0180
-#define FORK_2019_LEFT_ARM_SERVO_OFF                                      0x05DC
-
-// Small Robot : Arm Right (for Goldenium)
-#define FORK_2019_RIGHT_ARM_SPEED_FACTOR                                    0xFF
-#define FORK_2019_RIGHT_ARM_SERVO_ON                                      0x0A38
-#define FORK_2019_RIGHT_ARM_SERVO_OFF                                     0x05DC
-
-// TOF INDEX
-#define FORK_2019_LEFT_TOF_INDEX                                               6
-#define FORK_2019_RIGHT_TOF_INDEX                                              7
-
-// TOF THRESHOLD
-#define FORK_2019_LEFT_THRESHOLD                                              35
-#define FORK_2019_RIGHT_THRESHOLD                                             35
-#define FORK_2019_SCAN_SERVO_DELTA_SERVO_POSITION                             30
-#define FORK_2019_SCAN_SERVO_DELTA_MILLISECONDS                               50
-#define FORK_2019_SCAN_MEASURE_COUNT                                           3
-#define FORK_2019_SCAN_MATCH_COUNT                                             2
-
-#define FORK_2019_SCAN_TIME_BETWEEN_MEASURE_MILLISECONDS                      10
-
 // SPEED VALUE
 #define FORK_2019_ELEVATOR_MAX_SPEED_UNDER_LOAD              MAX_SPEED_UNDER_LOAD__1_SECOND_60_DEG
 #define FORK_2019_ELEVATOR_SCAN_MAX_SPEED_UNDER_LOAD         MAX_SPEED_UNDER_LOAD__1_SECOND_60_DEG
 #define FORK_2019_ELEVATOR_FORK_MAX_SPEED_UNDER_LOAD         MAX_SPEED_UNDER_LOAD__500_MS_60_DEG
 #define FORK_2019_ELEVATOR_FORK_PUSH_MAX_SPEED_UNDER_LOAD    MAX_SPEED_UNDER_LOAD__500_MS_60_DEG
 
+// BASE FUNCTIONS
+
+void fork2019MoveServo(ServoList* servoList,
+        unsigned int leftRight,
+        unsigned int leftServoIndex,
+        unsigned int rightServoIndex,
+        unsigned int leftSpeed,
+        unsigned int rightSpeed,
+        unsigned int leftPosition,
+        unsigned rightPosition,
+        bool wait);
 
 // ELEVATOR
 
@@ -146,16 +126,6 @@ void moveForkPushOff(ServoList* servoList, unsigned int leftRight, bool wait);
 
 void moveForkPushOn(ServoList* servoList, unsigned int leftRight, bool wait);
 
-// FORK SCAN
-
-void setForkTofListNameAndThreshold(TofSensorList* tofSensorList);
-
-bool forkScan(ServoList* servoList, TofSensorList* tofSensorList, unsigned int leftRight);
-
-bool forkScanFromLeftToRight(ServoList* servoList, TofSensorList* tofSensorList);
-
-bool forkScanFromRightToLeft(ServoList* servoList, TofSensorList* tofSensorList);
-
 // COMPLEX OPERATIONS
 
 /**
@@ -170,37 +140,11 @@ void fork2019Init(ServoList* servoList);
  */
 bool fork2019TakeSimplePuck(ServoList* servoList, TofSensorList* tofSensorList);
 
-bool fork2019PrepareTakeGoldenium(ServoList* servoList, unsigned int leftRight);
-
-/**
- * All actions to take a Goldenium.
- * @param servoList
- */
-bool fork2019TakeGoldenium(ServoList* servoList, TofSensorList* tofSensorList, unsigned int leftRight);
-
-/**
- * All actions to release a Goldenium.
- */
-bool fork2019DropGoldenium(ServoList* servoList, unsigned int leftRight);
-
 /**
  * The actions to to release the Puck in Accelerator
  * @param servoList
  */
 bool fork2019AcceleratorDrop(ServoList* servoList);
-
-
-// ARM (SMALL ROBOT)
-
-/**
-* @param leftRight Both Arm = 0x00, Left Arm = 0x01, Right Arm = 0x02
-*/
-void arm2019On(ServoList* servoList, unsigned int leftRight);
-
-/**
-* @param leftRight Both Arm = 0x00, Left Arm = 0x01, Right Arm = 0x02
-*/
-void arm2019Off(ServoList* servoList, unsigned int leftRight);
 
 // SERVO NAME
 

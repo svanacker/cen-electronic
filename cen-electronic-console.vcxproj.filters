@@ -2121,6 +2121,15 @@
     <ClCompile Include="robot\2019\electronLauncherDeviceInterface2019.c">
       <Filter>Source Files\robot\2019</Filter>
     </ClCompile>
+    <ClCompile Include="robot\2019\arm2019.c">
+      <Filter>Source Files\robot\2019</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2019\forkGoldenium2019.c">
+      <Filter>Source Files\robot\2019</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2019\forkScan2019.c">
+      <Filter>Source Files\robot\2019</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -3333,6 +3342,15 @@
       <Filter>Header Files\robot\2019</Filter>
     </ClInclude>
     <ClInclude Include="robot\2019\electronLauncherDeviceInterface2019.h">
+      <Filter>Header Files\robot\2019</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\arm2019.h">
+      <Filter>Header Files\robot\2019</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\forkGoldenium2019.h">
+      <Filter>Header Files\robot\2019</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\forkScan2019.h">
       <Filter>Header Files\robot\2019</Filter>
     </ClInclude>
   </ItemGroup>

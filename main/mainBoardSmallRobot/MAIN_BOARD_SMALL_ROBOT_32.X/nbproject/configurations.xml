@@ -546,6 +546,9 @@
         <itemPath>../../../robot/2019/smallRobotStrategy2019.h</itemPath>
         <itemPath>../../../robot/2019/bigRobotLocation2019.h</itemPath>
         <itemPath>../../../robot/2019/smallRobotLocation2019.h</itemPath>
+        <itemPath>../../../robot/2019/arm2019.h</itemPath>
+        <itemPath>../../../robot/2019/forkGoldenium2019.h</itemPath>
+        <itemPath>../../../robot/2019/forkScan2019.h</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.config"
                      displayName="robot.config"
@@ -1168,6 +1171,9 @@
         <itemPath>../../../robot/2019/bigRobotStrategy2019.c</itemPath>
         <itemPath>../../../robot/2019/smallRobotActions2019.c</itemPath>
         <itemPath>../../../robot/2019/smallRobotStrategy2019.c</itemPath>
+        <itemPath>../../../robot/2019/arm2019.c</itemPath>
+        <itemPath>../../../robot/2019/forkGoldenium2019.c</itemPath>
+        <itemPath>../../../robot/2019/forkScan2019.c</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.config"
                      displayName="robot.config"

@@ -10,12 +10,14 @@
 #include "../../robot/strategy/gameStrategyContext.h"
 
 // 2019
+#include "../../robot/2019/arm2019.h"
 #include "../../robot/2019/fork2019.h"
+#include "../../robot/2019/forkGoldenium2019.h"
 #include "../../robot/2019/strategy2019Utils.h"
 
 bool acceleratorArmOn(int* context) {
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
-    appendStringCRLF(debugOutputStream, "Accelerator Arm On");
+    appendStringCRLF(debugOutputStream, "-> Accelerator Arm On");
     GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
     ServoList* servoList = gameStrategyContext->servoList;
     if (isViolet(gameStrategyContext)) {
@@ -32,7 +34,7 @@ bool acceleratorArmOn(int* context) {
 
 bool acceleratorArmOff(int* context) {
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
-    appendStringCRLF(debugOutputStream, "Accelerator Arm Off");
+    appendStringCRLF(debugOutputStream, "-> Accelerator Arm Off");
     GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
     ServoList* servoList = gameStrategyContext->servoList;
     if (isViolet(gameStrategyContext)) {
@@ -49,7 +51,7 @@ bool acceleratorArmOff(int* context) {
 
 bool goldeniumPrepareTake(int* context) {
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
-    appendStringCRLF(debugOutputStream, "goldeniumPrepareTake");
+    appendStringCRLF(debugOutputStream, "-> goldeniumPrepareTake");
     GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
     ServoList* servoList = gameStrategyContext->servoList;
     if (isViolet(gameStrategyContext)) {
@@ -63,7 +65,7 @@ bool goldeniumPrepareTake(int* context) {
 
 bool goldeniumTake(int* context) {
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
-    appendStringCRLF(debugOutputStream, "goldeniumTake");
+    appendStringCRLF(debugOutputStream, "-> goldeniumTake");
     GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
     ServoList* servoList = gameStrategyContext->servoList;
     TofSensorList* tofSensorList = gameStrategyContext->tofSensorList; 
@@ -78,9 +80,9 @@ bool goldeniumTake(int* context) {
 }
 
 bool goldeniumPrepareDrop(int* context) {
-    /*
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
-    appendStringCRLF(debugOutputStream, "goldeniumPrepareDrop");
+    appendStringCRLF(debugOutputStream, "-> goldeniumPrepareDrop");
+    /*
     GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
     ServoList* servoList = gameStrategyContext->servoList;
     */
@@ -92,7 +94,7 @@ bool goldeniumPrepareDrop(int* context) {
 
 bool goldeniumDrop(int* context) {
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
-    appendStringCRLF(debugOutputStream, "goldeniumDrop");
+    appendStringCRLF(debugOutputStream, "-> goldeniumDrop");
     GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
     ServoList* servoList = gameStrategyContext->servoList;
     if (isViolet(gameStrategyContext)) {
@@ -103,3 +105,40 @@ bool goldeniumDrop(int* context) {
     }
     return true;
 }
+
+
+bool smallDistributorLinePrepare(int* context) {
+    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+    appendStringCRLF(debugOutputStream, "-> smallDistributorLinePrepare");
+    GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
+    ServoList* servoList = gameStrategyContext->servoList;
+    fork2019Init(servoList);
+
+    return true;
+}
+
+bool smallDistributorLineTake(int* context) {
+    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+    appendStringCRLF(debugOutputStream, "-> smallDistributorLineTake");
+    GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
+    ServoList* servoList = gameStrategyContext->servoList;
+    TofSensorList* tofSensorList = gameStrategyContext->tofSensorList;
+    fork2019TakeSimplePuck(servoList, tofSensorList);
+
+    return true;
+}
+
+bool smallDistributorPrepareDrop(int* context) {
+    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+    appendStringCRLF(debugOutputStream, "-> smallDistributorPrepareDrop");
+    GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
+    ServoList* servoList = gameStrategyContext->servoList;
+    if (isViolet(gameStrategyContext)) {
+        fork2019DropGoldenium(servoList, FORK_2019_RIGHT_INDEX);
+    }
+    else {
+        fork2019DropGoldenium(servoList, FORK_2019_LEFT_INDEX);
+    }
+    return true;
+}
+

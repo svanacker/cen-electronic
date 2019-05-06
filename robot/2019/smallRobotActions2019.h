@@ -3,9 +3,13 @@
 
 #include <stdbool.h>
 
+// ACCELERATOR
+
 bool acceleratorArmOn(int* context);
 
 bool acceleratorArmOff(int* context);
+
+// GOLDENIUM
 
 bool goldeniumPrepareTake(int* context);
 
@@ -14,6 +18,14 @@ bool goldeniumTake(int* context);
 bool goldeniumPrepareDrop(int* context);
 
 bool goldeniumDrop(int* context);
+
+// SMALL DISTRIBUTOR
+
+bool smallDistributorLinePrepare(int* context);
+
+bool smallDistributorLineTake(int* context);
+
+bool smallDistributorLineDrop(int* context);
 
 #endif
 

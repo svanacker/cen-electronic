@@ -306,7 +306,7 @@ static Navigation* navigation;
 
 // TOF
 static TofSensorList tofSensorList;
-static TofSensor tofSensorArray[MOTOR_BOARD_PC_TOF_SENSOR_LIST_LENGTH];
+static TofSensor tofSensorArray[MAIN_BOARD_PC_TOF_SENSOR_LIST_LENGTH];
 
 // 2019
 static ElectronLauncher2019 launcher;
@@ -530,7 +530,7 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
 
 
     // TOF
-    initTofSensorListPc(&tofSensorList, (TofSensor(*)[]) &tofSensorArray, MOTOR_BOARD_PC_TOF_SENSOR_LIST_LENGTH);
+    initTofSensorListPc(&tofSensorList, (TofSensor(*)[]) &tofSensorArray, MAIN_BOARD_PC_TOF_SENSOR_LIST_LENGTH);
 
     navigation = initNavigation2019();
     gameStrategyContext = initGameStrategyContext2019(&robotConfig, &endMatch, &tofSensorList, &servoList);
@@ -596,12 +596,6 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
 
     // Wait until the match start
     loopUntilStart(&startMatch);
-
-    unsigned char c = 'ÿ';
-    appendBool(&consoleOutputStream, c == 255);
-    appendBool(&consoleOutputStream, c > 127);
-    appendBool(&consoleOutputStream, c < 0);
-    appendDec(&consoleOutputStream, c);
 
     while (1) {
         mainBoardPcWaitForInstruction(&startMatch);

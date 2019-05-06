@@ -11,7 +11,7 @@
 
 bool bigDistributorLinePrepare(int* context) {
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
-    appendStringCRLF(debugOutputStream, "bigDistributorLinePrepare");
+    appendStringCRLF(debugOutputStream, "-> bigDistributorLinePrepare");
     GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
     ServoList* servoList = gameStrategyContext->servoList;
     fork2019Init(servoList);
@@ -21,7 +21,7 @@ bool bigDistributorLinePrepare(int* context) {
 
 bool bigDistributorLineTake(int* context) {
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
-    appendStringCRLF(debugOutputStream, "bigDistributorLineTake");
+    appendStringCRLF(debugOutputStream, "-> bigDistributorLineTake");
     GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
     ServoList* servoList = gameStrategyContext->servoList;
     TofSensorList* tofSensorList = gameStrategyContext->tofSensorList;
@@ -32,7 +32,7 @@ bool bigDistributorLineTake(int* context) {
 
 bool acceleratorDrop(int* context) {
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
-    appendStringCRLF(debugOutputStream, "acceleratorDrop");
+    appendStringCRLF(debugOutputStream, "-> acceleratorDrop");
     GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
     ServoList* servoList = gameStrategyContext->servoList;
     fork2019AcceleratorDrop(servoList);

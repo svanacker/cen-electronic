@@ -424,6 +424,7 @@
     <ClCompile Include="navigation\path.c" />
     <ClCompile Include="navigation\pathList.c" />
     <ClCompile Include="navigation\pathListDebug.c" />
+    <ClCompile Include="robot\2019\arm2019.c" />
     <ClCompile Include="robot\2019\bigRobotActions2019.c" />
     <ClCompile Include="robot\2019\bigRobotStrategy2019.c" />
     <ClCompile Include="robot\2019\distributor2019.c" />
@@ -432,6 +433,8 @@
     <ClCompile Include="robot\2019\electronLauncherDevice2019.c" />
     <ClCompile Include="robot\2019\electronLauncherDeviceInterface2019.c" />
     <ClCompile Include="robot\2019\fork2019.c" />
+    <ClCompile Include="robot\2019\forkGoldenium2019.c" />
+    <ClCompile Include="robot\2019\forkScan2019.c" />
     <ClCompile Include="robot\2019\gameBoardElement2019.c" />
     <ClCompile Include="robot\2019\forkDevice2019.c" />
     <ClCompile Include="robot\2019\forkDeviceInterface2019.c" />
@@ -818,6 +821,7 @@
     <ClInclude Include="navigation\pathListDebug.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="robot\2019\angle2019.h" />
+    <ClInclude Include="robot\2019\arm2019.h" />
     <ClInclude Include="robot\2019\bigRobotActions2019.h" />
     <ClInclude Include="robot\2019\bigRobotLocation2019.h" />
     <ClInclude Include="robot\2019\bigRobotPath2019.h" />
@@ -828,6 +832,8 @@
     <ClInclude Include="robot\2019\electronLauncherDevice2019.h" />
     <ClInclude Include="robot\2019\electronLauncherDeviceInterface2019.h" />
     <ClInclude Include="robot\2019\fork2019.h" />
+    <ClInclude Include="robot\2019\forkGoldenium2019.h" />
+    <ClInclude Include="robot\2019\forkScan2019.h" />
     <ClInclude Include="robot\2019\gameBoardElement2019.h" />
     <ClInclude Include="robot\2019\forkDevice2019.h" />
     <ClInclude Include="robot\2019\forkDeviceInterface2019.h" />

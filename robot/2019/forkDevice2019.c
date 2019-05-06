@@ -1,6 +1,10 @@
 #include "forkDevice2019.h"
 
+#include "arm2019.h"
 #include "fork2019.h"
+#include "forkGoldenium2019.h"
+#include "forkScan2019.h"
+
 #include "forkDeviceInterface2019.h"
 
 #include <stdbool.h>
