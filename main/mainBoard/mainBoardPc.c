@@ -597,8 +597,12 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
     // Wait until the match start
     loopUntilStart(&startMatch);
 
-    while (1) {
+    while (true) {
         mainBoardPcWaitForInstruction(&startMatch);
+
+        // 2019 Actions for Experience
+        handleElectronLauncherActions(&launcher);
+
         // Show the end of the match
         showEndAndScoreIfNeeded(&endMatch, getAlwaysOutputStreamLogger());
     }

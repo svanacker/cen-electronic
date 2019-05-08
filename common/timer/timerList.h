@@ -9,6 +9,10 @@
  * The struct defining a list of timer.
  */
 typedef struct {
+    /** Is the timer List Interrupt started ! */
+    bool started;
+    /** Is the timer List already in an interruption (to avoid to use markTimer for example) */
+    bool working;
     /** An array of pointer on timer pointer. */
     Timer (*timers)[];
     /** the size of the list. */

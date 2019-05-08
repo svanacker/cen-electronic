@@ -7,14 +7,14 @@
 #include "lcdHd44780.h"
 #include "../../common/delay/cenDelay.h"
 
-#define LCD_ROW_COUNT     4
-#define LCD_COLUMN_COUNT 20
+#define LCD_ROW_COUNT                       4
+#define LCD_COLUMN_COUNT                   20
 
 static unsigned char currentRow;
 static unsigned char currentColumn;
 
-#define LCD_DELAY_COMMAND_MICRO_SECOND     10
-#define LCD_DELAY_DATA_MICRO_SECOND       10
+#define LCD_DELAY_COMMAND_MICRO_SECOND     50
+#define LCD_DELAY_DATA_MICRO_SECOND        10
 
 
 /**

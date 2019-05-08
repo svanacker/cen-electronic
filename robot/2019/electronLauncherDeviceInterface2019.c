@@ -38,7 +38,20 @@ int deviceElectronLauncher2019GetInterface(unsigned char commandHeader, DeviceIn
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
-
+    // SIMULATE ROBOT PLACED
+    else if (commandHeader == COMMAND_ELECTRON_LAUNCHER_2019_SIMULATE_ROBOT_PLACED) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("Simulate Robot Placed");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }
+    // SIMULATE ROBOT PLACED
+    else if (commandHeader == COMMAND_ELECTRON_LAUNCHER_2019_SIMULATE_ROBOT_PLACED_AND_MOVED) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("Simulate Robot Placed And Moved");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }
     return DEVICE_HEADER_NOT_HANDLED;
 }
 

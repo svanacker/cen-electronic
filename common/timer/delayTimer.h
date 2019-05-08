@@ -5,6 +5,9 @@
 #include <stdbool.h>
 
 /**
+ * WARNING : This method MUST NOT be used inside a method raised by an interruption itself.
+ * If we would like to do something frequently, use State Machine, and only use this method 
+ * inside the main method.
  * Do a delay of milli Seconds based on a system delay timer which tends 
  * to be more precise than the cenDelay.h which raises some problem when some 
  * interruptions are raised because it longers and leads to an anormal delay

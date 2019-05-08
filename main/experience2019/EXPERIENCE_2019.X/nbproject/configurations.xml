@@ -389,6 +389,7 @@
         <itemPath>../../../robot/2019/electronLauncher2019.h</itemPath>
         <itemPath>../../../robot/2019/electronLauncherDevice2019.h</itemPath>
         <itemPath>../../../robot/2019/electronLauncherDeviceInterface2019.h</itemPath>
+        <itemPath>../../../robot/2019/electronLauncher2019Debug.h</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.config"
                      displayName="robot.config"
@@ -825,6 +826,7 @@
         <itemPath>../../../robot/2019/electronLauncher2019.c</itemPath>
         <itemPath>../../../robot/2019/electronLauncherDevice2019.c</itemPath>
         <itemPath>../../../robot/2019/electronLauncherDeviceInterface2019.c</itemPath>
+        <itemPath>../../../robot/2019/electronLauncher2019Debug.c</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.config"
                      displayName="robot.config"

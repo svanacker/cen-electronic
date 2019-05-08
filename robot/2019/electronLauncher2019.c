@@ -1,4 +1,5 @@
 #include "electronLauncher2019.h"
+#include "electronLauncher2019Debug.h"
 
 #include "../../common/error/error.h"
 
@@ -9,17 +10,49 @@
 
 #include "../../common/log/logger.h"
 
-
 #include "../../common/timer/timerConstants.h"
 #include "../../common/timer/delayTimer.h"
 #include "../../common/timer/timerList.h"
 
 #include "../../robot/config/robotConfig.h"
 
+void updateElectronLauncherState(ElectronLauncher2019* launcher, enum ElectronLauncher2019State newState) {
+    if (launcher == NULL) {
+        writeError(ELECTRON_LAUNCHER_2019_NULL);
+        return;
+    }
+    if (launcher->state == newState) {
+        return;
+    }
+    else {
+        OutputStream* outputStream = getDebugOutputStreamLogger();
+        printElectronLauncherState(outputStream, launcher->state);
+        launcher->state = newState;
+        appendString(outputStream, "-->");
+        printElectronLauncherState(outputStream, launcher->state);
+        appendCRLF(outputStream);
+    }
+}
+
+
+// SIMULATION
+
+void electronLauncher2019SimulateRobotPlaced(ElectronLauncher2019* launcher) {
+    updateElectronLauncherState(launcher, LAUNCHER_STATE_ROBOT_PLACED);
+}
+
+void electronLauncher2019SimulateRobotPlacedAndMoved(ElectronLauncher2019* launcher) {
+    updateElectronLauncherState(launcher, LAUNCHER_STATE_ROBOT_MOVED);
+}
+
 // CHECKS
 
 void checkElectronLauncher2019RobotPlaced(ElectronLauncher2019* launcher) {
-    if (!launcher->robotPlaced) {
+    if (launcher == NULL) {
+        writeError(ELECTRON_LAUNCHER_2019_NULL);
+        return;
+    }
+    if (launcher->state != LAUNCHER_STATE_SEARCH_ROBOT_PLACED) {
         return;
     }
     TofSensor* tofSensor = launcher->tofSensor;
@@ -27,21 +60,23 @@ void checkElectronLauncher2019RobotPlaced(ElectronLauncher2019* launcher) {
         writeError(TOF_SENSOR_LIST_NOT_INITIALIZED);
         return;
     }
+    launcher->robotPlacedAnalysisCount++;
     unsigned int distanceMM = tofSensor->tofGetDistanceMM(tofSensor);
     if (distanceMM > ELECTRON_LAUNCHER_2019_ROBOT_PLACED_DISTANCE_MIN 
      && distanceMM < ELECTRON_LAUNCHER_2019_ROBOT_PLACED_DISTANCE_MAX) {
         // We only notify one time
-        launcher->robotPlaced = true;
-        appendStringAndDec(getAlwaysOutputStreamLogger(), "ROBOT OK : ", distanceMM);
+        appendStringAndDec(getAlwaysOutputStreamLogger(), "ROBOT PLACED:", distanceMM);
         appendStringCRLF(getAlwaysOutputStreamLogger(), " mm");
+        updateElectronLauncherState(launcher, LAUNCHER_STATE_ROBOT_PLACED);
     }
 }
 
 void checkElectronLauncher2019RobotMoved(ElectronLauncher2019* launcher) {
-    if (!launcher->robotPlaced) {
+    if (launcher == NULL) {
+        writeError(ELECTRON_LAUNCHER_2019_NULL);
         return;
     }
-    if (launcher->robotMoved) {
+    if (launcher->state != LAUNCHER_STATE_SEARCH_ROBOT_MOVED) {
         return;
     }
     TofSensor* tofSensor = launcher->tofSensor;
@@ -50,55 +85,80 @@ void checkElectronLauncher2019RobotMoved(ElectronLauncher2019* launcher) {
         return;
     }
     unsigned int i;
-    unsigned detectionCount = 0;
+    launcher->robotMovedDetectionCount = 0;
+    launcher->robotMovedAnalysisCount++;
+    unsigned int distanceMM = 0;
     for (i = 0; i < ELECTRON_LAUNCHER_2019_CHECK_COUNT; i++) {
-        unsigned int distanceMM = tofSensor->tofGetDistanceMM(tofSensor);
+        distanceMM = tofSensor->tofGetDistanceMM(tofSensor);
         timerDelayMilliSeconds(10);
         if (distanceMM > ELECTRON_LAUNCHER_2019_ROBOT_MOVED_DISTANCE_MIN) {
-            detectionCount++;
+            launcher->robotMovedDetectionCount++;
+            // Store how many Count the detect
+            if (launcher->robotMovedDetectionCount >= ELECTRON_LAUNCHER_2019_THRESHOLD_COUNT) {
+                appendStringAndDec(getAlwaysOutputStreamLogger(), "ROBOT MOVED:", distanceMM);
+                appendStringCRLF(getAlwaysOutputStreamLogger(), " mm");
+                updateElectronLauncherState(launcher, LAUNCHER_STATE_ROBOT_MOVED);
+                break;
+            }
         }
-    }
-    // Store how many Count the detect
-    launcher->robotMovedDetectionCount = detectionCount;
-    if (detectionCount > ELECTRON_LAUNCHER_2019_THRESHOLD_COUNT) {
-        // We only notify one time
-        launcher->robotMoved = true;
-        electronLauncher2019Launch(launcher);
     }
 }
 
+void checkElectronLauncher2019ToLaunch(ElectronLauncher2019* launcher) {
+    if (launcher == NULL) {
+        writeError(ELECTRON_LAUNCHER_2019_NULL);
+        return;
+    }
+    if (launcher->state != LAUNCHER_STATE_TO_LAUNCH) {
+        return;
+    }
+    // We show first, because in case of reboot (energy problem or other)
+    // we will gain the points
+    electronLauncher2019Show(launcher);
+    // Do the actions !
+    electronLauncher2019Launch(launcher);
+}
 
 // ACTIONS
 
 void electronLauncher2019Launch(ElectronLauncher2019* launcher) {
+    if (launcher == NULL) {
+        writeError(ELECTRON_LAUNCHER_2019_NULL);
+        return;
+    }
     ServoList* servoList = launcher->servoList;
     Servo* electronServo = getServo(servoList, ELECTRON_LAUNCHER_2019_ELECTRON_SERVO_INDEX);
-    appendStringAndDecf(getAlwaysOutputStreamLogger(), "LAUNCH : ", 0);
-    appendStringCRLF(getAlwaysOutputStreamLogger(), " mm");
-    launcher->robotMoved = true;
     unsigned int tryCount = 0;
-    timerDelayMilliSeconds(500);
     for (tryCount = 0; tryCount < ELECTRON_LAUNCHER_2019_RELEASE_TRY_COUNT; tryCount++) {
         pwmServo(electronServo, PWM_SERVO_SPEED_MAX, ELECTRON_LAUNCHER_2019_ELECTRON_RELEASE_SERVO_VALUE, true);
         pwmServo(electronServo, PWM_SERVO_SPEED_MAX, ELECTRON_LAUNCHER_2019_ELECTRON_LOCKED_SERVO_VALUE, true);
     }
+    updateElectronLauncherState(launcher, LAUNCHER_STATE_LAUNCHED);
 }
 
 void electronLauncher2019Show(ElectronLauncher2019* launcher) {
+    if (launcher == NULL) {
+        writeError(ELECTRON_LAUNCHER_2019_NULL);
+        return;
+    }
     appendStringCRLF(getAlwaysOutputStreamLogger(), "SHOW : ");
     ServoList* servoList = launcher->servoList;
     Servo* experienceShowServo = getServo(servoList, ELECTRON_LAUNCHER_2019_EXPERIENCE_SHOW_SERVO_INDEX);
     pwmServo(experienceShowServo, PWM_SERVO_SPEED_MAX, ELECTRON_LAUNCHER_2019_EXPERIENCE_SHOW_VALUE, false);
 }
 
-void electronLauncher2019Init(ElectronLauncher2019* launcher) {
-    appendStringCRLF(getDebugOutputStreamLogger(), "START INIT LAUNCHER");
+void electronLauncher2019Reset(ElectronLauncher2019* launcher) {
     if (launcher == NULL) {
         writeError(ELECTRON_LAUNCHER_2019_NULL);
         return;
     }
-    launcher->robotMoved = false;
-    launcher->robotPlaced = false;
+    if (launcher == NULL) {
+        writeError(ELECTRON_LAUNCHER_2019_NULL);
+        return;
+    }
+    launcher->robotPlacedAnalysisCount = 0;
+    launcher->robotMovedAnalysisCount = 0;
+    launcher->robotMovedDetectionCount = 0;
     ServoList* servoList = launcher->servoList;
     if (servoList == NULL) {
         writeError(SERVO_LIST_NOT_INITIALIZED);
@@ -107,15 +167,14 @@ void electronLauncher2019Init(ElectronLauncher2019* launcher) {
 
     // Experience
     Servo* electronServo = getServo(servoList, ELECTRON_LAUNCHER_2019_ELECTRON_SERVO_INDEX);
-    pwmServo(electronServo, PWM_SERVO_SPEED_MAX, ELECTRON_LAUNCHER_2019_ELECTRON_LOCKED_SERVO_VALUE, false);
+    pwmServo(electronServo, PWM_SERVO_SPEED_MAX, ELECTRON_LAUNCHER_2019_ELECTRON_LOCKED_SERVO_VALUE, true);
     electronServo->maxSpeedUnderLoad = MAX_SPEED_UNDER_LOAD__1_SECOND_60_DEG;
     
     // Experience
     Servo* experienceShowServo = getServo(servoList, ELECTRON_LAUNCHER_2019_EXPERIENCE_SHOW_SERVO_INDEX);
-    pwmServo(experienceShowServo, PWM_SERVO_SPEED_MAX, ELECTRON_LAUNCHER_2019_EXPERIENCE_INIT_VALUE, false);
+    pwmServo(experienceShowServo, PWM_SERVO_SPEED_MAX, ELECTRON_LAUNCHER_2019_EXPERIENCE_INIT_VALUE, true);
     experienceShowServo->maxSpeedUnderLoad = MAX_SPEED_UNDER_LOAD__1_SECOND_60_DEG;
-
-    appendStringCRLF(getDebugOutputStreamLogger(), "END INIT LAUNCHER");
+    updateElectronLauncherState(launcher, LAUNCHER_STATE_INITIALIZED);
 }
 
 // TIMER INTERRUPT
@@ -126,9 +185,11 @@ void electronLauncher2019Init(ElectronLauncher2019* launcher) {
  */
 void electronLauncher2019CallbackFunc(Timer* timer) {
     ElectronLauncher2019* launcher = (ElectronLauncher2019*)timer->object;
-
-    checkElectronLauncher2019RobotPlaced(launcher);
-    checkElectronLauncher2019RobotMoved(launcher);
+    if (launcher == NULL) {
+        writeError(ELECTRON_LAUNCHER_2019_NULL);
+        return;
+    }
+    launcher->doNextAction = true;
 }
 
 // INIT
@@ -140,8 +201,6 @@ void initElectronLauncher2019(ElectronLauncher2019* launcher,
     launcher->robotConfig = robotConfig;
     launcher->servoList = servoList;
     launcher->tofSensorList = tofSensorList;
-    launcher->robotMoved = false;
-    launcher->robotPlaced = false;
     if (isConfigSet(robotConfig, CONFIG_COLOR_YELLOW_MASK)) {
         appendStringCRLF(getAlwaysOutputStreamLogger(), "YELLOW->RIGHT");
         launcher->tofIndex = 0;
@@ -161,56 +220,37 @@ void initElectronLauncher2019(ElectronLauncher2019* launcher,
             (int*)launcher);
         timer->enabled = true;
     }
-    electronLauncher2019Init(launcher);
+    electronLauncher2019Reset(launcher);
 }
 
 
-// DEBUG
 
+// MAIN METHOD
 
-#define ELECTRON_LAUNCHER_2019_KEY_COLUMN_LENGTH     30
-#define ELECTRON_LAUNCHER_2019_VALUE_COLUMN_LENGTH   25
-#define ELECTRON_LAUNCHER_2019_UNIT_COLUMN_LENGTH    10
-#define ELECTRON_LAUNCHER_2019_LAST_COLUMN            0
+void handleElectronLauncherActions(ElectronLauncher2019* launcher) {
 
-void printElectronLauncher2019TableHeader(OutputStream* outputStream) {
-    println(outputStream);
+    if (!launcher->doNextAction) {
+        return;
+    }
 
-    // Table Header
-    appendTableHeaderSeparatorLine(outputStream);
-    appendStringHeader(outputStream, "Key", ELECTRON_LAUNCHER_2019_KEY_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "Value", ELECTRON_LAUNCHER_2019_VALUE_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "Unit", ELECTRON_LAUNCHER_2019_UNIT_COLUMN_LENGTH);
-    appendEndOfTableColumn(outputStream, ELECTRON_LAUNCHER_2019_LAST_COLUMN);
-    appendTableHeaderSeparatorLine(outputStream);
-}
+    if (launcher->state == LAUNCHER_STATE_INITIALIZED) {
+        updateElectronLauncherState(launcher, LAUNCHER_STATE_SEARCH_ROBOT_PLACED);
+        return;
+    }
+    if (launcher->state == LAUNCHER_STATE_ROBOT_PLACED) {
+        updateElectronLauncherState(launcher, LAUNCHER_STATE_SEARCH_ROBOT_MOVED);
+        return;
+    }
+    if (launcher->state == LAUNCHER_STATE_ROBOT_MOVED) {
+        updateElectronLauncherState(launcher, LAUNCHER_STATE_TO_LAUNCH);
+        return;
+    }
 
-void electronLauncher2019Debug(ElectronLauncher2019* launcher, OutputStream* outputStream) {
-    printElectronLauncher2019TableHeader(outputStream);
+    checkElectronLauncher2019RobotPlaced(launcher);
+    checkElectronLauncher2019RobotMoved(launcher);
+    checkElectronLauncher2019ToLaunch(launcher);
+    
+    // Avoid to do it in continous mode
+    launcher->doNextAction = false;
 
-    // Tof Index
-    appendStringTableData(outputStream, "Tof Index", ELECTRON_LAUNCHER_2019_KEY_COLUMN_LENGTH);
-    appendDecTableData(outputStream, launcher->tofIndex, ELECTRON_LAUNCHER_2019_VALUE_COLUMN_LENGTH);
-    appendStringTableData(outputStream, "-", ELECTRON_LAUNCHER_2019_UNIT_COLUMN_LENGTH);
-    appendEndOfTableColumn(outputStream, ELECTRON_LAUNCHER_2019_LAST_COLUMN);
-
-    // Robot Placed
-    appendStringTableData(outputStream, "Robot Placed", ELECTRON_LAUNCHER_2019_KEY_COLUMN_LENGTH);
-    appendBoolAsStringTableData(outputStream, launcher->robotPlaced, ELECTRON_LAUNCHER_2019_VALUE_COLUMN_LENGTH);
-    appendStringTableData(outputStream, "-", ELECTRON_LAUNCHER_2019_UNIT_COLUMN_LENGTH);
-    appendEndOfTableColumn(outputStream, ELECTRON_LAUNCHER_2019_LAST_COLUMN);
-
-    // Robot Moved
-    appendStringTableData(outputStream, "Robot Moved", ELECTRON_LAUNCHER_2019_KEY_COLUMN_LENGTH);
-    appendBoolAsStringTableData(outputStream, launcher->robotMoved, ELECTRON_LAUNCHER_2019_VALUE_COLUMN_LENGTH);
-    appendStringTableData(outputStream, "-", ELECTRON_LAUNCHER_2019_UNIT_COLUMN_LENGTH);
-    appendEndOfTableColumn(outputStream, ELECTRON_LAUNCHER_2019_LAST_COLUMN);
-
-    // robotMovedDetectionCount
-    appendStringTableData(outputStream, "RobotMovedDetectionCount", ELECTRON_LAUNCHER_2019_KEY_COLUMN_LENGTH);
-    appendDecTableData(outputStream, launcher->robotMovedDetectionCount, ELECTRON_LAUNCHER_2019_VALUE_COLUMN_LENGTH);
-    appendStringTableData(outputStream, "-", ELECTRON_LAUNCHER_2019_UNIT_COLUMN_LENGTH);
-    appendEndOfTableColumn(outputStream, ELECTRON_LAUNCHER_2019_LAST_COLUMN);
-
-    appendTableHeaderSeparatorLine(outputStream);
 }

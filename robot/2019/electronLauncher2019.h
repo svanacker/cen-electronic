@@ -20,21 +20,55 @@
 #define ELECTRON_LAUNCHER_2019_EXPERIENCE_SHOW_VALUE                          2500
 
 // DISTANCE
-#define ELECTRON_LAUNCHER_2019_ROBOT_PLACED_DISTANCE_MIN                        450
-#define ELECTRON_LAUNCHER_2019_ROBOT_PLACED_DISTANCE_MAX                        600
-#define ELECTRON_LAUNCHER_2019_ROBOT_MOVED_DISTANCE_MIN                         800
+#define ELECTRON_LAUNCHER_2019_ROBOT_PLACED_DISTANCE_MIN                        400
+#define ELECTRON_LAUNCHER_2019_ROBOT_PLACED_DISTANCE_MAX                        550
+#define ELECTRON_LAUNCHER_2019_ROBOT_MOVED_DISTANCE_MIN                         700
 
 // CHECK / THRESHOLD
-#define ELECTRON_LAUNCHER_2019_CHECK_COUNT                                      10
-#define ELECTRON_LAUNCHER_2019_THRESHOLD_COUNT                                   9
+#define ELECTRON_LAUNCHER_2019_CHECK_COUNT                                      5
+#define ELECTRON_LAUNCHER_2019_THRESHOLD_COUNT                                  3
 
 // RELEASE TRY COUNT 
 #define ELECTRON_LAUNCHER_2019_RELEASE_TRY_COUNT                                2
 
 /**
+ * Define the state of the Electron Launcher.
+ */
+enum ElectronLauncher2019State {
+    // Unknown (to avoid that we forget to init it by error)
+    LAUNCHER_STATE_UNKNOWN = 0,
+    // The Launcher is initialized
+    LAUNCHER_STATE_INITIALIZED = 1,
+
+    // PLACED
+    // We search if the robot is placed
+    LAUNCHER_STATE_SEARCH_ROBOT_PLACED = 2,
+    // The robot is placed
+    LAUNCHER_STATE_ROBOT_PLACED = 3,
+
+    // MOVED
+    // We search 
+    // We search if the robot is moved
+    LAUNCHER_STATE_SEARCH_ROBOT_MOVED = 4,
+    // The robot is moved
+    LAUNCHER_STATE_ROBOT_MOVED = 5,
+
+    // LAUNCH
+    // We must launch the launcher
+    LAUNCHER_STATE_TO_LAUNCH = 6,
+    // The launcher was launched
+    LAUNCHER_STATE_LAUNCHED = 7,
+};
+
+
+/**
  * The struct defining the electron Launcher.
  */
 typedef struct {
+    /** The state of the electron Launcher 2019 . */
+    enum ElectronLauncher2019State state;
+    /** If we must do the next action or not in the main Loop. */
+    bool doNextAction;
     /** The robot Config. */
     RobotConfig* robotConfig;
     /** The tof Index. */
@@ -45,10 +79,10 @@ typedef struct {
     ServoList* servoList;
     /** Tof List */
     TofSensorList* tofSensorList;
-    /** Is the Robot placed. */
-    bool robotPlaced;
-    /** Is the robot Moved. */
-    bool robotMoved;
+    /** How many analysis of Robot Placed was done (to detect if we do the check */
+    unsigned robotPlacedAnalysisCount;
+    /** How many analysis of Robot Placed was done (to detect if we do the check */
+    unsigned robotMovedAnalysisCount;
     /** How many times the robot Moved was found for the last check */
     unsigned int robotMovedDetectionCount;
 } ElectronLauncher2019;
@@ -61,21 +95,29 @@ void initElectronLauncher2019(ElectronLauncher2019* launcher,
                               ServoList* servoList,
                               TofSensorList* tofSensorList);
 
+/**
+* Main method which must be called in the main processing loop so that
+* we could manage the state and find actions to do.
+*/
+void handleElectronLauncherActions(ElectronLauncher2019* launcher);
+
+/**
+* Handle all Change of state to be able to debug the workflow.
+*/
+void updateElectronLauncherState(ElectronLauncher2019* launcher, enum ElectronLauncher2019State newState);
+
 // ACTIONS
 
 void electronLauncher2019Launch(ElectronLauncher2019* launcher);
 
 void electronLauncher2019Show(ElectronLauncher2019* launcher);
 
-void electronLauncher2019Init(ElectronLauncher2019* launcher);
+void electronLauncher2019Reset(ElectronLauncher2019* launcher);
 
-// DEBUG
+// SIMULATION
 
+void electronLauncher2019SimulateRobotPlaced(ElectronLauncher2019* launcher);
 
-/**
-* Debug the launcher
-*/
-void electronLauncher2019Debug(ElectronLauncher2019* launcher, OutputStream* outputStream);
-
+void electronLauncher2019SimulateRobotPlacedAndMoved(ElectronLauncher2019* launcher);
 
 #endif

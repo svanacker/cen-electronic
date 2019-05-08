@@ -47,6 +47,10 @@ unsigned long markTimer(Timer* timer) {
 		writeError(TIMER_NULL);
 		return 0L;
 	}
+    if (!timer->enabled) {
+        writeError(TIMER_MARK_WHEREAS_DISABLED);
+        return 0L;
+    }
     timer->markTime = timer->time;
     return timer->markTime;
 }

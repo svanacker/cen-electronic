@@ -52,7 +52,11 @@ void printTimer(OutputStream* outputStream, int index, Timer* timer) {
 }
 
 void printTimerList(OutputStream* outputStream, TimerList* timerList) {
-	printTimerListHeader(outputStream);
+    appendStringAndBool(outputStream, "timerList.enabled : ", timerList->started);
+    appendCRLF(outputStream);
+    appendStringAndBool(outputStream, "working : ", timerList->working);
+    appendCRLF(outputStream);
+    printTimerListHeader(outputStream);
     int i;
     for (i = 0; i < timerList->size; i++) {
         Timer* timer = (Timer*) timerList->timers;

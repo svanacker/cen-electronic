@@ -114,5 +114,7 @@ int main(void) {
     
     while (true) {
         mainBoardCommonHandleStreamInstruction();
+        
+        handleElectronLauncherActions(&launcher);
     }
 }

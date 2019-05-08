@@ -8,11 +8,20 @@
 #include "timerConstants.h"
 
 void timerDelayMilliSeconds(unsigned int delayMilliSeconds) {
+    TimerList* timerList = getTimerList();
+    // Avoid to be blocked
+    if (!timerList->started) {
+        return;
+    }
+    // TODO : If we use markTimer inside a timer interrupt, we will blocked by the while loop which will never exit
+
+    // Check That the delay Timer exists and is active
     Timer* timer = getTimerByCode(SYSTEM_TIMER_DELAY_CODE);
     if (timer == NULL) {
         writeError(TIMER_DELAY_NOT_FOUND);
         return;
     }
+    // If the timer is disabled, we will not be able to enter in the loop
     if (!timer->enabled) {
         writeError(TIMER_DELAY_DISABLED);
         return;

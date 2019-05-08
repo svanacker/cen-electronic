@@ -98,6 +98,7 @@ int getTimerCount() {
 
 void startTimerList(bool enabledAll) {
     _initTimers();
+    timerList.started = true;
     if (enabledAll) {
     int i;
         for (i = 0; i < timerList.size; i++) {
@@ -127,13 +128,15 @@ void stopTimerList() {
 * @private 
 */
 void _internalUpdateTimerListValues(int incrementSinceLastCall) {
+    timerList.working = true;
     if (timerList.size > 0) {
         int i = 0;
         for (i = 0; i < timerList.size; i++) {
             Timer* currentTimer = getTimerByIndex(i);
 			if (currentTimer == NULL) {
 				writeError(TIMER_NULL);
-				return;
+                timerList.working = false;
+                return;
 			}
             bool enabled = currentTimer->enabled;
             if (!enabled) {
@@ -163,4 +166,6 @@ void _internalUpdateTimerListValues(int incrementSinceLastCall) {
             }
         }
     }
+    timerList.working = false;
+
 }

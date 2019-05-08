@@ -1,6 +1,7 @@
 #include "electronLauncherDevice2019.h"
 
 #include "electronLauncher2019.h"
+#include "electronLauncher2019Debug.h"
 #include "electronLauncherDeviceInterface2019.h"
 
 #include <stdbool.h>
@@ -57,7 +58,17 @@ void deviceElectronLauncher2019HandleRawData(unsigned char commandHeader, InputS
     // INIT
     else if (commandHeader == COMMAND_ELECTRON_LAUNCHER_2019_INIT) {
         ackCommand(outputStream, ELECTRON_LAUNCHER_2019_DEVICE_HEADER, COMMAND_ELECTRON_LAUNCHER_2019_INIT);
-        electronLauncher2019Init(launcher);
+        electronLauncher2019Reset(launcher);
+    }
+    // SIMULATE ROBOT PLACED
+    else if (commandHeader == COMMAND_ELECTRON_LAUNCHER_2019_SIMULATE_ROBOT_PLACED) {
+        ackCommand(outputStream, ELECTRON_LAUNCHER_2019_DEVICE_HEADER, COMMAND_ELECTRON_LAUNCHER_2019_SIMULATE_ROBOT_PLACED);
+        electronLauncher2019SimulateRobotPlaced(launcher);
+    }
+    // SIMULATE ROBOT MOVED
+    else if (commandHeader == COMMAND_ELECTRON_LAUNCHER_2019_SIMULATE_ROBOT_PLACED_AND_MOVED) {
+        ackCommand(outputStream, ELECTRON_LAUNCHER_2019_DEVICE_HEADER, COMMAND_ELECTRON_LAUNCHER_2019_SIMULATE_ROBOT_PLACED_AND_MOVED);
+        electronLauncher2019SimulateRobotPlacedAndMoved(launcher);
     }
 }
 
