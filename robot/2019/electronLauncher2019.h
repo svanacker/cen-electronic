@@ -20,13 +20,15 @@
 #define ELECTRON_LAUNCHER_2019_EXPERIENCE_SHOW_VALUE                          2500
 
 // DISTANCE
-#define ELECTRON_LAUNCHER_2019_ROBOT_PLACED_DISTANCE_MIN                        400
-#define ELECTRON_LAUNCHER_2019_ROBOT_PLACED_DISTANCE_MAX                        550
-#define ELECTRON_LAUNCHER_2019_ROBOT_MOVED_DISTANCE_MIN                         700
+#define ELECTRON_LAUNCHER_2019_ROBOT_PLACED_DISTANCE_MIN                        450
+#define ELECTRON_LAUNCHER_2019_ROBOT_PLACED_DISTANCE_MAX                        600
+
+#define ELECTRON_LAUNCHER_2019_ROBOT_MOVED_DISTANCE_MIN                         650
+#define ELECTRON_LAUNCHER_2019_ROBOT_MOVED_DISTANCE_MAX                        10000
 
 // CHECK / THRESHOLD
-#define ELECTRON_LAUNCHER_2019_CHECK_COUNT                                      5
-#define ELECTRON_LAUNCHER_2019_THRESHOLD_COUNT                                  3
+// #define ELECTRON_LAUNCHER_2019_CHECK_COUNT                                      3
+#define ELECTRON_LAUNCHER_2019_THRESHOLD_COUNT                                  2
 
 // RELEASE TRY COUNT 
 #define ELECTRON_LAUNCHER_2019_RELEASE_TRY_COUNT                                2

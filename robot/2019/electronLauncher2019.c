@@ -84,22 +84,22 @@ void checkElectronLauncher2019RobotMoved(ElectronLauncher2019* launcher) {
         writeError(TOF_SENSOR_LIST_NOT_INITIALIZED);
         return;
     }
-    unsigned int i;
-    launcher->robotMovedDetectionCount = 0;
     launcher->robotMovedAnalysisCount++;
     unsigned int distanceMM = 0;
-    for (i = 0; i < ELECTRON_LAUNCHER_2019_CHECK_COUNT; i++) {
-        distanceMM = tofSensor->tofGetDistanceMM(tofSensor);
-        timerDelayMilliSeconds(10);
-        if (distanceMM > ELECTRON_LAUNCHER_2019_ROBOT_MOVED_DISTANCE_MIN) {
-            launcher->robotMovedDetectionCount++;
-            // Store how many Count the detect
-            if (launcher->robotMovedDetectionCount >= ELECTRON_LAUNCHER_2019_THRESHOLD_COUNT) {
-                appendStringAndDec(getAlwaysOutputStreamLogger(), "ROBOT MOVED:", distanceMM);
-                appendStringCRLF(getAlwaysOutputStreamLogger(), " mm");
-                updateElectronLauncherState(launcher, LAUNCHER_STATE_ROBOT_MOVED);
-                break;
-            }
+    distanceMM = tofSensor->tofGetDistanceMM(tofSensor);
+    if (distanceMM > ELECTRON_LAUNCHER_2019_ROBOT_MOVED_DISTANCE_MIN
+            && distanceMM < ELECTRON_LAUNCHER_2019_ROBOT_MOVED_DISTANCE_MAX) {
+        launcher->robotMovedDetectionCount++;
+        // Store how many Count the detect
+        if (launcher->robotMovedDetectionCount >= ELECTRON_LAUNCHER_2019_THRESHOLD_COUNT) {
+            appendStringAndDec(getAlwaysOutputStreamLogger(), "ROBOT MOVED:", distanceMM);
+            appendStringCRLF(getAlwaysOutputStreamLogger(), " mm");
+            updateElectronLauncherState(launcher, LAUNCHER_STATE_ROBOT_MOVED);
+        }
+    }
+    else {
+        if (launcher->robotMovedDetectionCount > 0) {
+            launcher->robotMovedDetectionCount--;
         }
     }
 }
@@ -245,6 +245,15 @@ void handleElectronLauncherActions(ElectronLauncher2019* launcher) {
         updateElectronLauncherState(launcher, LAUNCHER_STATE_TO_LAUNCH);
         return;
     }
+    // Show the distance
+    TofSensor* tofSensor = launcher->tofSensor;
+    if (tofSensor == NULL) {
+        writeError(TOF_SENSOR_LIST_NOT_INITIALIZED);
+        return;
+    }
+    unsigned distanceMM = tofSensor->tofGetDistanceMM(tofSensor);
+    appendStringAndDec(getAlwaysOutputStreamLogger(), "DIST=", distanceMM);
+    appendStringCRLF(getAlwaysOutputStreamLogger(), " mm");
 
     checkElectronLauncher2019RobotPlaced(launcher);
     checkElectronLauncher2019RobotMoved(launcher);

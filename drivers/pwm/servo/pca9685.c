@@ -25,6 +25,9 @@ void pca9685_init(I2cBusConnection* i2cBusConnection) {
     
     // set a default frequency : 50 Hz for a servo
     pca9685_setPWMFreq(i2cBusConnection, 50);
+    
+    OutputStream* debugOutputStream = getInfoOutputStreamLogger();
+    pca9685_debugMainRegisterList(debugOutputStream, i2cBusConnection);
 }
 
 void pca9685_reset(I2cBusConnection* i2cBusConnection) {

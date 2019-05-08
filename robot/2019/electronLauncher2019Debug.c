@@ -125,11 +125,12 @@ void electronLauncher2019Debug(ElectronLauncher2019* launcher, OutputStream* out
     appendEndOfTableColumn(outputStream, ELECTRON_LAUNCHER_2019_LAST_COLUMN);
 
     // robotMovedDetectionCount
+    /*
     appendStringTableData(outputStream, "RobotMovedDetectionCount - Check Count", ELECTRON_LAUNCHER_2019_KEY_COLUMN_LENGTH);
     appendDecTableData(outputStream, ELECTRON_LAUNCHER_2019_CHECK_COUNT, ELECTRON_LAUNCHER_2019_VALUE_COLUMN_LENGTH);
     appendStringTableData(outputStream, "-", ELECTRON_LAUNCHER_2019_UNIT_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, ELECTRON_LAUNCHER_2019_LAST_COLUMN);
-    
+    */
     appendStringTableData(outputStream, "RobotMovedDetectionCount - Threshold", ELECTRON_LAUNCHER_2019_KEY_COLUMN_LENGTH);
     appendDecTableData(outputStream, ELECTRON_LAUNCHER_2019_THRESHOLD_COUNT, ELECTRON_LAUNCHER_2019_VALUE_COLUMN_LENGTH);
     appendStringTableData(outputStream, "-", ELECTRON_LAUNCHER_2019_UNIT_COLUMN_LENGTH);
