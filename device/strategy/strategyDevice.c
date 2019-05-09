@@ -3,6 +3,8 @@
 #include "strategyDevice.h"
 #include "strategyDeviceInterface.h"
 
+#include "../../common/error/error.h"
+
 #include "../../common/io/printWriter.h"
 #include "../../common/io/reader.h"
 
@@ -11,6 +13,8 @@
 
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
+
+#include "../../common/timer/delayTimer.h"
 
 #include "../../common/math/cenMath.h"
 
@@ -91,6 +95,26 @@ void deviceStrategyHandleRawData(unsigned char commandHeader, InputStream* input
         Point* robotPosition = context->robotPosition;
         float robotAngleRadian = context->robotAngleRadian;
         tofSensorList->tofSensorListDebugTable(debugOutputStream, tofSensorList, robotPosition, robotAngleRadian);
+    }
+    else if (commandHeader == COMMAND_STRATEGY_SEARCH_IF_COLLIDING) {
+        ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_STRATEGY_SEARCH_IF_COLLIDING);
+        OutputStream* debugOutputStream = getInfoOutputStreamLogger();
+        GameStrategyContext* context = getStrategyDeviceGameStrategyContext();
+        TofSensorList* tofSensorList = context->tofSensorList;
+        unsigned int tofIndex = readHex2(inputStream);
+        TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, tofIndex);
+        unsigned int i;
+        for (i = 0; i < 100; i++) {
+            timerDelayMilliSeconds(100);
+            if (i % 10 == 0) {
+                appendCRLF(debugOutputStream);
+            }
+            tofSensor->tofGetDistanceMM(tofSensor);
+            bool detection = isTofDistanceUnderThreshold(tofSensor);
+            if (detection) {
+                append(debugOutputStream, '.');
+            }
+        }
     }
     // Debug
     else if (commandHeader == COMMAND_STRATEGY_DEBUG) {

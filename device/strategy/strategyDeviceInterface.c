@@ -38,6 +38,13 @@ int deviceStrategyGetInterface(unsigned char commandHeader, DeviceInterfaceMode 
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
+    else if (commandHeader == COMMAND_STRATEGY_SEARCH_IF_COLLIDING) {
+        if (fillDeviceArgumentList) {
+            setFunction("Search If Colliding for 10 secs", 1, 0);
+            setArgumentUnsignedHex2(0, "tofIndex, FF if we check all");
+        }
+        return commandLengthValueForMode(mode, 2, 0);
+    }
     // Next step
     else if (commandHeader == COMMAND_STRATEGY_NEXT_STEP) {
         if (fillDeviceArgumentList) {

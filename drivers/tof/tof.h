@@ -57,6 +57,14 @@ void initTofSensor(TofSensor* tofSensor,
 
 // UTILS FUNCTION
 
+/**
+ * Returns if the tof distance under the Threshold (which means that we detects
+ * something)
+ * @param tofSensor
+ * @return true if distance > 0 & <= threshold of TofSensor
+ */
+bool isTofDistanceUnderThreshold(TofSensor* tofSensor);
+
 bool tofComputeDetectedPointIfAny(TofSensor* tofSensor, Point* pointOfView, float pointOfViewAngleRadian, Point* pointToUpdateIfAny);
 
 bool isTofSensorBackwardOriented(TofSensor* tofSensor);

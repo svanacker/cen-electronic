@@ -29,12 +29,21 @@ void initTofSensor(TofSensor* tofSensor,
     tofSensor->tofSensorInit(tofSensor);
 }
 
+bool isTofDistanceUnderThreshold(TofSensor* tofSensor) {
+    unsigned int distance = tofSensor->lastDistanceMM;
+
+    // distance != 0 (means tof problem while measuring)
+    // distance <= threshold
+    return (distance != 0 && distance < tofSensor->thresholdDistanceMM);
+}
+
 bool tofComputeDetectedPointIfAny(TofSensor* tofSensor, Point* pointOfView, float pointOfViewAngleRadian, Point* pointToUpdateIfAny) {
     unsigned int distance = tofSensor->lastDistanceMM;
-    // If No Point of View
-    // Or distance = 0 (means tof problem)
-    // Or distance > threshold
-    if (pointOfView == NULL || distance == 0 || distance > tofSensor->thresholdDistanceMM) {
+    // If No Point of View is provided
+    if (pointOfView == NULL) {
+        return false;
+    }
+    if (!isTofDistanceUnderThreshold(tofSensor)) {
         // we do not provide any point
         return false;      
     }

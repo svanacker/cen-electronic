@@ -308,7 +308,7 @@ void robotPositionPrint(GameBoard* gameBoard, int* element) {
 
 bool isPointInTheCollisionArea(GameBoard* gameBoard, Point* collisionPoint) {
     // The robot could not be more close to the border than 150.0f
-    float windowLimit = 300.0f;
+    float windowLimit = 150.0f;
     if (collisionPoint->x <= windowLimit || collisionPoint->x >= GAMEBOARD_WIDTH - windowLimit) {
         return false;
     }

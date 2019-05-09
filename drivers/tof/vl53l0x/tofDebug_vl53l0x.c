@@ -10,24 +10,28 @@
 
 #include "../../../common/math/cenMath.h"
 
+#include "../../../robot/gameboard/gameboard.h"
+
 #include "../tof.h"
 #include "../tofList.h"
 #include "tof_vl53l0x.h"
 
-#define TOF_SENSOR_VL53L0X_INDEX_COLUMN_LENGTH		          6
-#define TOF_SENSOR_VL53L0X_NAME_COLUMN_LENGTH                  13
-#define TOF_SENSOR_VL53L0X_ENABLE_COLUMN_LENGTH                7
-#define TOF_SENSOR_VL53L0X_CHANGE_ADRESS_COLUMN_LENGTH         7
+#define TOF_SENSOR_VL53L0X_INDEX_COLUMN_LENGTH		                        6
+#define TOF_SENSOR_VL53L0X_NAME_COLUMN_LENGTH                               13
+#define TOF_SENSOR_VL53L0X_ENABLE_COLUMN_LENGTH                             7
+#define TOF_SENSOR_VL53L0X_CHANGE_ADRESS_COLUMN_LENGTH                      7
 
-#define TOF_SENSOR_VL53L0X_I2C_ADDRESS_COLUMN_LENGTH          6
-#define TOF_SENSOR_VL53L0X_STATUS_COLUMN_LENGTH               7
-#define TOF_SENSOR_VL53L0X_VALUE_THRESHOLD_COLUMN_LENGTH      10
-#define TOF_SENSOR_VL53L0X_VALUE_ORIENTATION_COLUMN_LENGTH    7
-#define TOF_SENSOR_VL53L0X_VALUE_DEC_COLUMN_LENGTH            7
-#define TOF_SENSOR_VL53L0X_VALUE_HEX_COLUMN_LENGTH            7
-#define TOF_SENSOR_VL53L0X_VALUE_OBJECT_X_COLUMN_LENGTH       7
-#define TOF_SENSOR_VL53L0X_VALUE_OBJECT_Y_COLUMN_LENGTH       7
-#define TOF_SENSOR_VL53L0X_LAST_COLUMN		                  0
+#define TOF_SENSOR_VL53L0X_I2C_ADDRESS_COLUMN_LENGTH                        6
+#define TOF_SENSOR_VL53L0X_STATUS_COLUMN_LENGTH                             7
+#define TOF_SENSOR_VL53L0X_VALUE_THRESHOLD_COLUMN_LENGTH                    5
+#define TOF_SENSOR_VL53L0X_VALUE_ORIENTATION_COLUMN_LENGTH                  7
+#define TOF_SENSOR_VL53L0X_VALUE_DEC_COLUMN_LENGTH                          7
+#define TOF_SENSOR_VL53L0X_VALUE_HEX_COLUMN_LENGTH                          7
+#define TOF_SENSOR_VL53L0X_VALUE_OBJECT_X_COLUMN_LENGTH                     7
+#define TOF_SENSOR_VL53L0X_VALUE_OBJECT_Y_COLUMN_LENGTH                     7
+#define TOF_SENSOR_VL53L0X_VALUE_OBJECT_IN_GAME_BOARD_COLUMN_LENGTH         5
+
+#define TOF_SENSOR_VL53L0X_LAST_COLUMN		                                0
 
 /**
 * Private.
@@ -42,12 +46,13 @@ void printTofSensorDebugTableHeaderVL53L0X(OutputStream* outputStream) {
     appendStringHeader(outputStream, "Change", TOF_SENSOR_VL53L0X_CHANGE_ADRESS_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Dev", TOF_SENSOR_VL53L0X_I2C_ADDRESS_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Status", TOF_SENSOR_VL53L0X_STATUS_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "Threshold", TOF_SENSOR_VL53L0X_VALUE_THRESHOLD_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Thres", TOF_SENSOR_VL53L0X_VALUE_THRESHOLD_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Orient.", TOF_SENSOR_VL53L0X_VALUE_ORIENTATION_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Dist", TOF_SENSOR_VL53L0X_VALUE_DEC_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Dist", TOF_SENSOR_VL53L0X_VALUE_HEX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Detect.", TOF_SENSOR_VL53L0X_VALUE_OBJECT_X_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Detect.", TOF_SENSOR_VL53L0X_VALUE_OBJECT_Y_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Detect.", TOF_SENSOR_VL53L0X_VALUE_OBJECT_IN_GAME_BOARD_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, TOF_SENSOR_VL53L0X_LAST_COLUMN);
 
     // Second header line
@@ -57,7 +62,7 @@ void printTofSensorDebugTableHeaderVL53L0X(OutputStream* outputStream) {
     appendStringHeader(outputStream, "Address", TOF_SENSOR_VL53L0X_CHANGE_ADRESS_COLUMN_LENGTH);
     appendStringHeader(outputStream, "I2C", TOF_SENSOR_VL53L0X_I2C_ADDRESS_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", TOF_SENSOR_VL53L0X_STATUS_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "(mm)", TOF_SENSOR_VL53L0X_VALUE_THRESHOLD_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "hold", TOF_SENSOR_VL53L0X_VALUE_THRESHOLD_COLUMN_LENGTH);
     appendStringHeader(outputStream, "(Deg)", TOF_SENSOR_VL53L0X_VALUE_ORIENTATION_COLUMN_LENGTH);
     appendStringHeader(outputStream, "(Dec)", TOF_SENSOR_VL53L0X_VALUE_DEC_COLUMN_LENGTH);
     appendStringHeader(outputStream, "(Hex)", TOF_SENSOR_VL53L0X_VALUE_HEX_COLUMN_LENGTH);
@@ -72,7 +77,7 @@ void printTofSensorDebugTableHeaderVL53L0X(OutputStream* outputStream) {
     appendStringHeader(outputStream, "", TOF_SENSOR_VL53L0X_CHANGE_ADRESS_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Addr", TOF_SENSOR_VL53L0X_I2C_ADDRESS_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", TOF_SENSOR_VL53L0X_STATUS_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "", TOF_SENSOR_VL53L0X_VALUE_THRESHOLD_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "(mm)", TOF_SENSOR_VL53L0X_VALUE_THRESHOLD_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", TOF_SENSOR_VL53L0X_VALUE_ORIENTATION_COLUMN_LENGTH);
     appendStringHeader(outputStream, "(mm)", TOF_SENSOR_VL53L0X_VALUE_DEC_COLUMN_LENGTH);
     appendStringHeader(outputStream, "(mm)", TOF_SENSOR_VL53L0X_VALUE_HEX_COLUMN_LENGTH);
@@ -146,12 +151,15 @@ void printTofSensorTableVL53L0X(OutputStream* outputStream, TofSensorList* tofSe
             bool detected = tofComputeDetectedPointIfAny(tofSensor, pointOfView, pointOfViewAngleRadian, &detectedPoint);
             // Distance to the point of View only if in the Threshold
             if (detected) {
-                appendDecfTableData(outputStream, detectedPoint.x, TOF_SENSOR_VL53L0X_VALUE_OBJECT_X_COLUMN_LENGTH);        
+                appendDecfTableData(outputStream, detectedPoint.x, TOF_SENSOR_VL53L0X_VALUE_OBJECT_X_COLUMN_LENGTH);
                 appendDecfTableData(outputStream, detectedPoint.y, TOF_SENSOR_VL53L0X_VALUE_OBJECT_Y_COLUMN_LENGTH);
+                bool isColliding = isPointInTheCollisionArea(NULL, &detectedPoint);
+                appendBoolAsStringTableData(outputStream, isColliding, TOF_SENSOR_VL53L0X_VALUE_OBJECT_IN_GAME_BOARD_COLUMN_LENGTH);
             }
             else {
-                appendStringTableData(outputStream, "-", TOF_SENSOR_VL53L0X_VALUE_OBJECT_X_COLUMN_LENGTH);        
+                appendStringTableData(outputStream, "-", TOF_SENSOR_VL53L0X_VALUE_OBJECT_X_COLUMN_LENGTH);
                 appendStringTableData(outputStream, "-", TOF_SENSOR_VL53L0X_VALUE_OBJECT_Y_COLUMN_LENGTH);        
+                appendStringTableData(outputStream, "-", TOF_SENSOR_VL53L0X_VALUE_OBJECT_IN_GAME_BOARD_COLUMN_LENGTH);        
             }
         }
         appendEndOfTableColumn(outputStream, TOF_SENSOR_VL53L0X_LAST_COLUMN);

@@ -557,7 +557,7 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
     initStartMatch(&startMatch, &robotConfig, &endMatch, isMatchStartedPc, mainBoardPcWaitForInstruction, mainBoardPcWaitForInstruction);
 
     // 2019 : Launcher
-    initElectronLauncher2019(&launcher, &robotConfig, &servoList, &tofSensorList);
+    // initElectronLauncher2019(&launcher, &robotConfig, &servoList, &tofSensorList);
 
     initMainBoardLocalDevices();
 

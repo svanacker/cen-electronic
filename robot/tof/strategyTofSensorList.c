@@ -99,17 +99,17 @@ void handleTofSensorList(GameStrategyContext* gameStrategyContext, StartMatch* s
             continue;
         }
         
-        // TO DO : Manage if we must use Back Sonar or Front Sonar !
         unsigned int distance = tofSensor->tofGetDistanceMM(tofSensor);
         if (distance <= SENSOR_DISTANCE_MIN_TRESHOLD) {
             continue;
         }
+
         // DetectedPoint if any
         Point detectedPoint;
         Point* pointOfView = gameStrategyContext->robotPosition;
         float pointOfViewAngleRadian = gameStrategyContext->robotAngleRadian;
         bool detected = tofComputeDetectedPointIfAny(tofSensor, pointOfView, pointOfViewAngleRadian, &detectedPoint);
-        
+
         if (!detected) {
             continue;
         }
