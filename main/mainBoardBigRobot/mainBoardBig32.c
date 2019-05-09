@@ -165,7 +165,7 @@ int main(void) {
     
     mainBoardCommonStrategyMainLoop();
 
-    while (1) {
+    while (true) {
         // Avoid reboot even at end
     }
 }

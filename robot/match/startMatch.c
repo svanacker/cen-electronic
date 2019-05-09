@@ -28,7 +28,7 @@ void loopUntilStart(StartMatch* startMatch) {
         markStartMatch(startMatch->endMatch);
     }
     else {
-        appendString(getAlwaysOutputStreamLogger(), "STARTED !");
+        appendString(getAlwaysOutputStreamLogger(), "GO !");
         println(getAlwaysOutputStreamLogger());
     }
 }

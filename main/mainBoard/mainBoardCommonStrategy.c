@@ -185,17 +185,17 @@ void mainBoardCommonStrategyHandleStreamInstruction(void) {
 void mainBoardCommonStrategyMainLoop(void) {
     StartMatch* startMatch = mainBoardCommonMatchGetStartMatch();
     EndMatch* endMatch = mainBoardCommonMatchGetEndMatch();
+    
+    mainBoardCommonMatchLoopUntilStart();
 
     while (true) {
         if (!startMatch->matchHandleInstructionFunction(startMatch)) {
             break;
         }
-
-        // Protection againt the start before the match
-        if (startMatch->isMatchStartedFunction(startMatch)) {
-            if (gameStrategyContext->loopTargetAndActions) {
-                nextTargetOrNextStep(gameStrategyContext);
-            }
+        
+        // Protection against the start before the match
+        if (gameStrategyContext->loopTargetAndActions) {
+            nextTargetOrNextStep(gameStrategyContext);
         }
         // After each instruction => Export the score to endMatch Device
         endMatch->scoreToShow = gameStrategyContext->score;
