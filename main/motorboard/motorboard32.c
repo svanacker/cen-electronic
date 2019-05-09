@@ -283,7 +283,7 @@ void waitForInstruction() {
     }
     
     // I2C Stream
-    handleStreamInstruction(&i2cSlaveInputBuffer, &i2cSlaveOutputBuffer, NULL, &standardOutputStream, &filterRemoveCRLF, NULL);
+    // handleStreamInstruction(&i2cSlaveInputBuffer, &i2cSlaveOutputBuffer, NULL, &standardOutputStream, &filterRemoveCRLF, NULL);
 
     // STANDARD UART Stream
     handleStreamInstruction(&standardInputBuffer, &standardOutputBuffer, &standardOutputStream, &notifyOutputStream, &filterRemoveCRLF, NULL);
@@ -297,8 +297,9 @@ void waitForInstruction() {
     // Manage Motion
     handleInstructionAndMotion(&pidMotion, &standardOutputStream);
     
-    // Notify if needed
-    // trajectoryNotifyIfEnabledAndTreshold(&notifyOutputStream);
+    // Notify the change of position (useful to know where we are when we detect an object with the tof
+    // We must know if we see an object inside the gameboard or outside
+    // trajectoryNotifyIfEnabledAndTreshold(&standardOutputStream);
 }
 
 int runMotorBoard() {

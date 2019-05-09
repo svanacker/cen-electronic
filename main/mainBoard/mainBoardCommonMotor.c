@@ -180,7 +180,7 @@ void mainBoardCommonMotorNotifyOpenSerialLink(void) {
  * Initialisation part in the Main Program of MAIN BOARD for the Motor Part.
  */
 void mainBoardCommonMotorMainEndInit(void) {
-    // clearMotorAndMotorNotifyBuffer();
+    clearMotorAndMotorNotifyBuffer();
     // Maintain the position to avoid that the robot move
     // motionDriverMaintainPosition();
 }
