@@ -34,7 +34,7 @@
 // I2C
 
 #define MAIN_BOARD_I2C_BUS_LIST_LENGTH                                  2
-#define MAIN_BOARD_I2C_BUS_CONNECTION_LIST_LENGTH                      20
+#define MAIN_BOARD_I2C_BUS_CONNECTION_LIST_LENGTH                      24
 
 // LOGS
 #define MAIN_BOARD_LOG_HANDLER_LIST_LENGTH                              2

@@ -98,7 +98,7 @@ void mainBoardCommonTofInitDrivers(I2cBus* i2cBus, I2cBus* i2cBus2, unsigned int
         tofSensorArray[8].enabled = true;
     }
     if (tofSensorCount > 9) {
-        tofSensorArray[9].enabled = true;
+        tofSensorArray[9].enabled = false;
     }
     if (tofSensorCount > 10) {
         tofSensorArray[10].enabled = true;
@@ -125,7 +125,7 @@ void mainBoardCommonTofInitDrivers(I2cBus* i2cBus, I2cBus* i2cBus2, unsigned int
                               // debug
                               true,
                               // enabledAllSensors
-                              true,
+                              false,
                               // changeAddressAllSensors
                               true
             );

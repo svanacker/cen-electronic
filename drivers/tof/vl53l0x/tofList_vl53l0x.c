@@ -51,7 +51,9 @@ void initIOExpanderForTofSensorList(IOExpander* ioExpander, unsigned int size) {
         appendString(debugOutputStream, "  IO EXPANDER WRITE VALUE : mask=");
 
         // Mask 
-        unsigned ioExpanderMask = 256 - (1 << size);
+        // unsigned ioExpanderMask = 256 - (1 << size);
+        // We put to 0 the value to reset all tofs
+        unsigned ioExpanderMask = 0;
         appendHex2(debugOutputStream, ioExpanderMask);
 
         // Written Value
@@ -107,18 +109,14 @@ void initTofSensorListVL53L0X(TofSensorList* tofSensorList,
             
             if (tofIndex < 8) {
                 ioExpander->ioExpanderWriteSingleValue(ioExpander, tofIndex, true);
-                if (optionalIOExpander != NULL) {
-                    optionalIOExpander->ioExpanderWriteValue(optionalIOExpander, 0x00);
-                }
             }
             else {
                 if (optionalIOExpander != NULL) {
                     optionalIOExpander->ioExpanderWriteSingleValue(optionalIOExpander, tofIndex % 8, true);
                 }
-                ioExpander->ioExpanderWriteValue(ioExpander, 0x00);
             }
             // Delay to let the hardware part of the Sensor VL53L0X
-            timerDelayMilliSeconds(30);
+            timerDelayMilliSeconds(50);
             appendStringLN(debugOutputStream, " ... OK");
         }
 
@@ -138,10 +136,5 @@ void initTofSensorListVL53L0X(TofSensorList* tofSensorList,
         appendStringLN(debugOutputStream, "...OK");
         
         appendStringAndDecLN(debugOutputStream, "  TOF SENSOR->END:", tofIndex);
-    }
-    // Reenable all IO Expander after the all Tofs have the right address
-    ioExpander->ioExpanderWriteValue(ioExpander, 0xFF);
-    if (optionalIOExpander != NULL) {
-        optionalIOExpander->ioExpanderWriteValue(optionalIOExpander, 0xFF);
     }
 }
