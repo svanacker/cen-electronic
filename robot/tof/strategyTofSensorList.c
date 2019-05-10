@@ -1,5 +1,6 @@
 #include "strategyTofSensorList.h"
 
+#include "../../client/motion/position/clientTrajectory.h"
 #include "../../client/motion/simple/clientMotion.h"
 
 #include "../../common/2d/2d.h"
@@ -13,80 +14,109 @@
 
 #include "../../drivers/tof/tofList.h"
 
+#include "../../robot/robot.h"
 #include "../../robot/gameboard/gameboard.h"
 #include "../../robot/match/startMatch.h"
 #include "../../robot/strategy/gameStrategyContext.h"
+#include "../../robot/strategy/gameStrategyMotionHandler.h"
 
 // TOF MANAGEMENT
 
 void setTofListNameAndOrientationAngle(TofSensorList* tofSensorList, float distanceFactor) {
     unsigned int tofSensorListSize = getTofSensorListSize(tofSensorList);
-    
+    // Be careful, the position must be defined with an angle of Robot of 0
+    // What means the Robot going along the X axis
     if (tofSensorListSize > BACK_RIGHT_SENSOR_INDEX) {
         TofSensor* backRightSensor = getTofSensorByIndex(tofSensorList, BACK_RIGHT_SENSOR_INDEX);
-        backRightSensor->orientationRadian = degToRad(BACK_RIGHT_SENSOR_ANGLE_DEGREE);
+        backRightSensor->angleFromRobotCenter = degToRad(BACK_RIGHT_SENSOR_ANGLE_DEGREE);
+        backRightSensor->distanceFromRobotCenter = 30.0f;
+        // Same value than angleFromRobotCenter because placed on a circle
+        backRightSensor->orientationRadian = backRightSensor->angleFromRobotCenter;
         backRightSensor->thresholdDistanceMM = BACK_TOF_TO_BACK_OF_ROBOT_DISTANCE + (unsigned int ) (distanceFactor * BACK_RIGHT_SENSOR_DISTANCE_THRESHOLD);
         backRightSensor->name = "BACK RIGHT";
     }
     
     if (tofSensorListSize > BACK_MIDDLE_SENSOR_INDEX) {
         TofSensor* backMiddleSensor = getTofSensorByIndex(tofSensorList, BACK_MIDDLE_SENSOR_INDEX);
-        backMiddleSensor->orientationRadian = degToRad(BACK_MIDDLE_SENSOR_ANGLE_DEGREE);
+        backMiddleSensor->angleFromRobotCenter = degToRad(BACK_MIDDLE_SENSOR_ANGLE_DEGREE);
+        backMiddleSensor->distanceFromRobotCenter = 30.0f;
+        // Same value than angleFromRobotCenter because placed on a circle
+        backMiddleSensor->orientationRadian = backMiddleSensor->angleFromRobotCenter;
         backMiddleSensor->thresholdDistanceMM = BACK_TOF_TO_BACK_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * BACK_MIDDLE_SENSOR_DISTANCE_THRESHOLD);
         backMiddleSensor->name = "BACK MIDDLE";
     }
 
     if (tofSensorListSize > BACK_LEFT_SENSOR_INDEX) {
         TofSensor* backLeftSensor = getTofSensorByIndex(tofSensorList, BACK_LEFT_SENSOR_INDEX);
-        backLeftSensor->orientationRadian = degToRad(BACK_LEFT_SENSOR_ANGLE_DEGREE);
+        backLeftSensor->angleFromRobotCenter = degToRad(BACK_LEFT_SENSOR_ANGLE_DEGREE);
+        backLeftSensor->distanceFromRobotCenter = 30.0f;
+        // Same value than angleFromRobotCenter because placed on a circle
+        backLeftSensor->orientationRadian = backLeftSensor->angleFromRobotCenter;
         backLeftSensor->thresholdDistanceMM = BACK_TOF_TO_BACK_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * BACK_LEFT_SENSOR_DISTANCE_THRESHOLD);
         backLeftSensor->name = "BACK LEFT";
     }
     // FRONT
     if (tofSensorListSize > FRONT_RIGHT_SENSOR_INDEX) {
         TofSensor* frontRightSensor = getTofSensorByIndex(tofSensorList, FRONT_RIGHT_SENSOR_INDEX); 
-        frontRightSensor->orientationRadian = degToRad(FRONT_RIGHT_SENSOR_ANGLE_DEGREE);
+        frontRightSensor->angleFromRobotCenter = degToRad(FRONT_RIGHT_SENSOR_ANGLE_DEGREE);
+        frontRightSensor->distanceFromRobotCenter = 30.0f;
+        // Same value than angleFromRobotCenter because placed on a circle
+        frontRightSensor->orientationRadian = frontRightSensor->angleFromRobotCenter;
         frontRightSensor->thresholdDistanceMM = FRONT_TOF_TO_FRONT_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * FRONT_RIGHT_SENSOR_DISTANCE_THRESHOLD);
         frontRightSensor->name = "FRONT RIGHT";
     }
     
     if (tofSensorListSize > FRONT_MIDDLE_SENSOR_INDEX) {
         TofSensor* frontMiddleSensor = getTofSensorByIndex(tofSensorList, FRONT_MIDDLE_SENSOR_INDEX);
-        frontMiddleSensor->orientationRadian = degToRad(FRONT_MIDDLE_SENSOR_ANGLE_DEGREE);
+        frontMiddleSensor->angleFromRobotCenter = degToRad(FRONT_MIDDLE_SENSOR_ANGLE_DEGREE);
+        frontMiddleSensor->distanceFromRobotCenter = 30.0f;
+        // Same value than angleFromRobotCenter because placed on a circle
+        frontMiddleSensor->orientationRadian = frontMiddleSensor->angleFromRobotCenter;
         frontMiddleSensor->thresholdDistanceMM = FRONT_TOF_TO_FRONT_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * FRONT_MIDDLE_SENSOR_DISTANCE_THRESHOLD);
         frontMiddleSensor->name = "FRONT MIDDLE";
     }
     
     if (tofSensorListSize > FRONT_LEFT_SENSOR_INDEX) {
         TofSensor* frontLeftSensor = getTofSensorByIndex(tofSensorList, FRONT_LEFT_SENSOR_INDEX);
-        frontLeftSensor->orientationRadian = degToRad(FRONT_LEFT_SENSOR_ANGLE_DEGREE);
+        frontLeftSensor->angleFromRobotCenter = degToRad(FRONT_LEFT_SENSOR_ANGLE_DEGREE);
+        frontLeftSensor->distanceFromRobotCenter = 30.0f;
+        // Same value than angleFromRobotCenter because placed on a circle
+        frontLeftSensor->orientationRadian = frontLeftSensor->angleFromRobotCenter;
         frontLeftSensor->thresholdDistanceMM = FRONT_TOF_TO_FRONT_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * FRONT_LEFT_SENSOR_DISTANCE_THRESHOLD);
         frontLeftSensor->name = "FRONT LEFT";
     }
     
     // SIDE
     if (tofSensorListSize > FRONT_SIDE_LEFT_SENSOR_INDEX) {
-        TofSensor* frontSideLeftSensor = getTofSensorByIndex(tofSensorList, FRONT_SIDE_LEFT_SENSOR_INDEX); 
+        TofSensor* frontSideLeftSensor = getTofSensorByIndex(tofSensorList, FRONT_SIDE_LEFT_SENSOR_INDEX);
+        frontSideLeftSensor->angleFromRobotCenter = degToRad(75.0f);
+        frontSideLeftSensor->distanceFromRobotCenter = 150.0f;
         frontSideLeftSensor->orientationRadian = degToRad(FRONT_SIDE_LEFT_SENSOR_ANGLE_DEGREE);
-        frontSideLeftSensor->thresholdDistanceMM = FRONT_TOF_TO_FRONT_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * FRONT_SIDE_LEFT_SENSOR_DISTANCE_THRESHOLD);
+        frontSideLeftSensor->thresholdDistanceMM = FRONT_SIDE_TOF_TO_FRONT_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * FRONT_SIDE_LEFT_SENSOR_DISTANCE_THRESHOLD);
         frontSideLeftSensor->name = "FRONT SIDE L";
     }
     if (tofSensorListSize > FRONT_SIDE_RIGHT_SENSOR_INDEX) {
         TofSensor* frontSideRightSensor = getTofSensorByIndex(tofSensorList, FRONT_SIDE_RIGHT_SENSOR_INDEX); 
+        frontSideRightSensor->angleFromRobotCenter = degToRad(-75.0f);
+        frontSideRightSensor->distanceFromRobotCenter = 150.0f;
         frontSideRightSensor->orientationRadian = degToRad(FRONT_SIDE_RIGHT_SENSOR_ANGLE_DEGREE);
-        frontSideRightSensor->thresholdDistanceMM = FRONT_TOF_TO_FRONT_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * FRONT_SIDE_RIGHT_SENSOR_DISTANCE_THRESHOLD);
+        frontSideRightSensor->thresholdDistanceMM = FRONT_SIDE_TOF_TO_FRONT_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * FRONT_SIDE_RIGHT_SENSOR_DISTANCE_THRESHOLD);
         frontSideRightSensor->name = "FRONT SIDE R";
     }
     if (tofSensorListSize > BACK_SIDE_LEFT_SENSOR_INDEX) {
         TofSensor* backSideLeftSensor = getTofSensorByIndex(tofSensorList, BACK_SIDE_LEFT_SENSOR_INDEX); 
+        backSideLeftSensor->angleFromRobotCenter = degToRad(105.0f);
+        backSideLeftSensor->distanceFromRobotCenter = 150.0f;
         backSideLeftSensor->orientationRadian = degToRad(BACK_SIDE_LEFT_SENSOR_ANGLE_DEGREE);
-        backSideLeftSensor->thresholdDistanceMM = BACK_TOF_TO_BACK_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * BACK_SIDE_LEFT_SENSOR_DISTANCE_THRESHOLD);
+        backSideLeftSensor->thresholdDistanceMM = FRONT_SIDE_TOF_TO_BACK_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * BACK_SIDE_LEFT_SENSOR_DISTANCE_THRESHOLD);
         backSideLeftSensor->name = "BACK SIDE L";
     }
    if (tofSensorListSize > BACK_SIDE_RIGHT_SENSOR_INDEX) {
         TofSensor* backSideRightSensor = getTofSensorByIndex(tofSensorList, BACK_SIDE_RIGHT_SENSOR_INDEX); 
+        backSideRightSensor->angleFromRobotCenter = degToRad(-105.0f);
+        backSideRightSensor->distanceFromRobotCenter = 150.0f;
         backSideRightSensor->orientationRadian = degToRad(BACK_SIDE_RIGHT_SENSOR_ANGLE_DEGREE);
-        backSideRightSensor->thresholdDistanceMM = BACK_TOF_TO_BACK_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * BACK_SIDE_RIGHT_SENSOR_DISTANCE_THRESHOLD);
+        backSideRightSensor->thresholdDistanceMM = FRONT_SIDE_TOF_TO_BACK_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * BACK_SIDE_RIGHT_SENSOR_DISTANCE_THRESHOLD);
         backSideRightSensor->name = "BACK SIDE R";
     }
 }
@@ -129,8 +159,7 @@ void handleTofSensorList(GameStrategyContext* gameStrategyContext, StartMatch* s
         if (distance <= SENSOR_DISTANCE_MIN_TRESHOLD) {
             continue;
         }
-
-        // DetectedPoint if any
+        // Recompute the real detected point
         Point detectedPoint;
         Point* pointOfView = gameStrategyContext->robotPosition;
         float pointOfViewAngleRadian = gameStrategyContext->robotAngleRadian;
@@ -139,6 +168,21 @@ void handleTofSensorList(GameStrategyContext* gameStrategyContext, StartMatch* s
         if (!detected) {
             continue;
         }
+        
+        // Update the position from the MOTOR BOARD. If we don't do it,
+        // The board keep the original value from the latest move
+        // TODO : Clarify the usage of Robot Position
+        RobotPosition robotPosition;
+        clientTrajectoryUpdateRobotPosition(&robotPosition);
+        gameStrategyContext->robotPosition->x = robotPosition.x;
+        gameStrategyContext->robotPosition->y = robotPosition.y;
+        gameStrategyContext->robotAngleRadian = robotPosition.angleRadian;
+        detected = tofComputeDetectedPointIfAny(tofSensor, pointOfView, pointOfViewAngleRadian, &detectedPoint);
+
+        if (!detected) {
+            continue;
+        }
+        
         
         // We must know if it's in the gameboard
         if (isPointInTheCollisionArea(gameBoard, &detectedPoint)) {
@@ -149,8 +193,16 @@ void handleTofSensorList(GameStrategyContext* gameStrategyContext, StartMatch* s
             println(alwaysOutputStream);
             appendStringAndDec(alwaysOutputStream, "Tof:", index);
             appendString(alwaysOutputStream, ",");
+            appendString(alwaysOutputStream, tofSensor->name);
+            appendCRLF(alwaysOutputStream);
+
+            // Print the position of the robot
+            appendStringCRLF(alwaysOutputStream, "Robot Position:");
+            printPoint(alwaysOutputStream, pointOfView, "");
+
+            // Print the detected Point 
+            appendStringCRLF(alwaysOutputStream, "Detected Point :");
             printPoint(alwaysOutputStream, &detectedPoint, "");
-            println(alwaysOutputStream);
             // Block the notification system !
             gameStrategyContext->trajectoryType = TRAJECTORY_TYPE_NONE;
             

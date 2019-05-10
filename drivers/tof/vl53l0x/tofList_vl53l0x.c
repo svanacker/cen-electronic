@@ -93,7 +93,9 @@ void initTofSensorListVL53L0X(TofSensorList* tofSensorList,
         }
         if (tofIndex == 8) {
             // VERY IMPORTANT : To avoid that this connection is found by getI2cBusConnectionBySlaveAddress
-            initialTofBusConnection->opened = false;
+            if (initialTofBusConnection != NULL) {
+                initialTofBusConnection->opened = false;
+            }
             initialTofBusConnection = addI2cBusConnection(optionalI2cBus, VL530X_ADDRESS_0, true);
         }
         // Get the abstract tof Sensor structure at the specified index
@@ -125,7 +127,7 @@ void initTofSensorListVL53L0X(TofSensorList* tofSensorList,
                 }
             }
             // Delay to let the hardware part of the Sensor VL53L0X
-            timerDelayMilliSeconds(50);
+            timerDelayMilliSeconds(10);
             appendStringLN(debugOutputStream, " ... OK");
         }
 

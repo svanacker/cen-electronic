@@ -44,7 +44,7 @@ bool clientTrajectorySetAbsolutePosition(float x, float y, float radian) {
 }
 
 // UPDATE TRAJECTORY DEVICE -> ROBOT POSITION
-bool clientTrajectoryUpdateRobotPosition() {
+bool clientTrajectoryUpdateRobotPosition(RobotPosition* robotPosition) {
     OutputStream* outputStream = getDriverRequestOutputStream();
     InputStream* inputStream = getDriverResponseInputStream();
 
@@ -53,13 +53,15 @@ bool clientTrajectoryUpdateRobotPosition() {
 
     bool result = transmitFromDriverRequestBuffer();
     if (result) {
-        float x = readHexFloat6(inputStream, POSITION_DIGIT_MM_PRECISION);
+        float x = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
         readHex(inputStream);
-        float y = readHexFloat6(inputStream, POSITION_DIGIT_MM_PRECISION);
+        float y = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
         readHex(inputStream);
         float angle = degToRad(readHexFloat4(inputStream, ANGLE_DIGIT_DEGREE_PRECISION));
-
-        updateRobotPosition(x, y, angle);
+        
+        robotPosition->angleRadian = angle;
+        robotPosition->x = x;
+        robotPosition->y = y;
         return result;
     }
     return false;

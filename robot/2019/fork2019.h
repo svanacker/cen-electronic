@@ -46,8 +46,8 @@
 #define FORK_2019_ELEVATOR_DISTRIBUTOR_SCAN_SERVO_VALUE                   0x0800
 #define FORK_2019_ELEVATOR_BOTTOM_SERVO_VALUE                             0x09A0
 #define FORK_2019_ELEVATOR_INIT_POSITION_SERVO_VALUE                      0x05DC
-#define FORK_2019_ELEVATOR_GOLDENIUM_SERVO_VALUE                          0x0460
-#define FORK_2019_ELEVATOR_GOLDENIUM_SCAN_SERVO_VALUE                     0x0420
+#define FORK_2019_ELEVATOR_GOLDENIUM_SERVO_VALUE                          0x0440
+#define FORK_2019_ELEVATOR_GOLDENIUM_SCAN_SERVO_VALUE                     0x0400
 #define FORK_2019_ELEVATOR_UP_SERVO_VALUE                                 0x0280
 
 // Servo Fork Left

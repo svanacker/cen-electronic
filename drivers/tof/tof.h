@@ -40,6 +40,10 @@ struct TofSensor {
     /** pointer on other object (useful for I2C Connection for example) .*/
     /** Store the angle in radian of the sensor compared to the robot. We use the same coordinates than for Robot. */
     float orientationRadian;
+    /** The distance between the Sensor compared and the center of the robot. */
+    float distanceFromRobotCenter;
+    /** The angle of the central point of the Sensor compared to the center of the robot (with X axis along the going point). */
+    float angleFromRobotCenter;
     /** Generic pointer for context use */
     int* object;
 };

@@ -88,7 +88,6 @@ bool loopUnWaitForInstruction(StartMatch* startMatchParam) {
  */
 void mainBoardMainPhase1(void) {
     setBoardName("MAIN SMALL ROBOT 32");
-    setRobotMustStop(false);
  
     // CONFIG
     initRobotConfigPic32(&robotConfig, ROBOT_TYPE_SMALL);

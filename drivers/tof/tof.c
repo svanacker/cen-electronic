@@ -47,8 +47,24 @@ bool tofComputeDetectedPointIfAny(TofSensor* tofSensor, Point* pointOfView, floa
         // we do not provide any point
         return false;      
     }
+    
+    // We compute the real point of the tofSensor by taking into account
+    // - The position (polar coordinates) of the tofSensor
+    // - The distance to the center of the Robot
+    Point pointOfTofAgainstCenterOfTheRobot;    
+    computeDirectionPoint(pointOfView,
+                          &pointOfTofAgainstCenterOfTheRobot,
+                          tofSensor->distanceFromRobotCenter,
+                          tofSensor->angleFromRobotCenter +
+                          pointOfViewAngleRadian);
+    
     // we compute the projection of the point along the point of view angle
-    computeDirectionPoint(pointOfView, pointToUpdateIfAny, (float) distance, pointOfViewAngleRadian + tofSensor->orientationRadian);
+    // But from the point of view of the tofSensor
+    computeDirectionPoint(&pointOfTofAgainstCenterOfTheRobot,
+                          pointToUpdateIfAny, 
+                          (float) distance,
+                           pointOfViewAngleRadian
+                         + tofSensor->orientationRadian);
     
     return true;
 }

@@ -35,6 +35,8 @@
 #include "../../common/log/logLevel.h"
 #include "../../common/log/pc/consoleLogHandler.h"
 
+#include "../../common/math/cenMath.h"
+
 #include "../../common/pwm/servo/servoPwm.h"
 #include "../../common/pwm/servo/servoList.h"
 #include "../../common/pwm/servo/pc/servoListPc.h"
@@ -214,6 +216,7 @@
 #include "../../robot/2019/electronLauncherDevice2019.h"
 #include "../../robot/2019/electronLauncherDeviceInterface2019.h"
 
+#include "../../robot/tof/strategyTofSensorList.h"
 
 // Logs
 static LogHandler logHandlerListArray[MAIN_BOARD_PC_LOG_HANDLER_LIST_LENGTH];
@@ -620,6 +623,13 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
 
     // Wait until the match start
     loopUntilStart(&startMatch);
+
+    Point pointOfView;
+    TofSensor tofSensor;
+    tofSensor.angleFromRobotCenter = (float) degToRad(FRONT_RIGHT_SENSOR_ANGLE_DEGREE);
+    tofSensor.distanceFromRobotCenter = 30.0f;
+    tofSensor.orientationRadian = tofSensor.angleFromRobotCenter;
+    
 
     while (true) {
         mainBoardPcWaitForInstruction(&startMatch);

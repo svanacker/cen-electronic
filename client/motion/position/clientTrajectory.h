@@ -1,6 +1,8 @@
 #ifndef CLIENT_TRAJECTORY_H
 #define CLIENT_TRAJECTORY_H
 
+#include "../../../robot/robot.h"
+
 #include <stdbool.h>
 
 /**
@@ -15,7 +17,7 @@ bool clientTrajectorySetAbsolutePosition(float x, float y, float radian);
  * Update the Robot Position of current Device (Ex : MainBoard) from the Remote Device (for example : MotorBoard)
  * Typically, the MotorBoard moves, and we need to know the real position.
  */
-bool clientTrajectoryUpdateRobotPosition(void);
+bool clientTrajectoryUpdateRobotPosition(RobotPosition* robotPosition);
 
 bool clientTrajectoryAdjustAngleToClosest(void);
 
