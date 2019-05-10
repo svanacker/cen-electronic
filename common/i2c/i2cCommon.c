@@ -1,6 +1,7 @@
 #include "i2cCommon.h"
 
 #include <stdlib.h>
+#include <stdbool.h>
 
 #include "i2cBusList.h"
 
@@ -70,6 +71,7 @@ void initI2cBusConnection(I2cBusConnection* i2cBusConnection, I2cBus* i2cBus, un
 
     i2cBusConnection->i2cBus = i2cBus;
     i2cBusConnection->i2cAddress = slaveAddress;
+    i2cBusConnection->opened = true;
 }
 
 void printI2cBus(OutputStream* outputStream, I2cBus* i2cBus) {

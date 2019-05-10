@@ -131,9 +131,10 @@ void printI2cBusList(OutputStream* outputStream) {
 // I2C BUS CONNECTION LIST
 
 #define I2C_BUS_CONNECTION_LIST_INDEX_COLUMN_LENGTH		     4
-#define I2C_BUS_CONNECTION_ADDRESS_COLUMN_LENGTH            32
-#define I2C_BUS_CONNECTION_LIST_BUS_TYPE_COLUMN_LENGTH      20
-#define I2C_BUS_CONNECTION_LIST_PORT_COLUMN_LENGTH          20
+#define I2C_BUS_CONNECTION_ADDRESS_COLUMN_LENGTH            20
+#define I2C_BUS_CONNECTION_LIST_OPENED_COLUMN_LENGTH        10
+#define I2C_BUS_CONNECTION_LIST_BUS_TYPE_COLUMN_LENGTH      12
+#define I2C_BUS_CONNECTION_LIST_PORT_COLUMN_LENGTH          12
 #define I2C_BUS_CONNECTION_LIST_LAST_COLUMN_LENGTH          29
 
 /**
@@ -143,12 +144,25 @@ void printI2cBusConnectionListTableHeader(OutputStream* outputStream) {
 	println(outputStream);
 
 	// Table Header
+    // First Line
 	appendTableHeaderSeparatorLine(outputStream);
 	appendStringHeader(outputStream, "Idx", I2C_BUS_CONNECTION_LIST_INDEX_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "Connection->slaveAddress (Hex)", I2C_BUS_CONNECTION_ADDRESS_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "bus->busType", I2C_BUS_CONNECTION_LIST_BUS_TYPE_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "bus->port", I2C_BUS_CONNECTION_LIST_PORT_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "Connection", I2C_BUS_CONNECTION_ADDRESS_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "Connection", I2C_BUS_CONNECTION_LIST_OPENED_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "bus", I2C_BUS_CONNECTION_LIST_BUS_TYPE_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "bus", I2C_BUS_CONNECTION_LIST_PORT_COLUMN_LENGTH);
 	appendEndOfTableColumn(outputStream, I2C_BUS_CONNECTION_LIST_LAST_COLUMN_LENGTH);
+
+    // First Line
+	appendTableHeaderSeparatorLine(outputStream);
+	appendStringHeader(outputStream, "Idx", I2C_BUS_CONNECTION_LIST_INDEX_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "slaveAddress (Hex)", I2C_BUS_CONNECTION_ADDRESS_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "opened", I2C_BUS_CONNECTION_LIST_OPENED_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "busType", I2C_BUS_CONNECTION_LIST_BUS_TYPE_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "port", I2C_BUS_CONNECTION_LIST_PORT_COLUMN_LENGTH);
+	appendEndOfTableColumn(outputStream, I2C_BUS_CONNECTION_LIST_LAST_COLUMN_LENGTH);
+
+
 	appendTableHeaderSeparatorLine(outputStream);
 }
 
@@ -164,6 +178,9 @@ void printI2cBusConnectionList(OutputStream* outputStream) {
 
 		// Address
         appendHex2TableData(outputStream, i2cBusConnection->i2cAddress, I2C_BUS_CONNECTION_ADDRESS_COLUMN_LENGTH);
+
+		// Opened
+        appendBoolAsStringTableData(outputStream, i2cBusConnection->opened, I2C_BUS_CONNECTION_LIST_OPENED_COLUMN_LENGTH);
 		
 		// Bus Type
 		const char* i2cBusTypeAsString = getI2cBusTypeAsString(i2cBus->busType);

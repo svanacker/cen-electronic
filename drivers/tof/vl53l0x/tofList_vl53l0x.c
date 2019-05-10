@@ -85,8 +85,17 @@ void initTofSensorListVL53L0X(TofSensorList* tofSensorList,
     initTofSensorList(tofSensorList, tofSensorArray, size, debug, enableAllSensors, changeAddressAllSensors, &printTofSensorTableVL53L0X);
 
     unsigned int tofIndex;
-    I2cBusConnection* initialTofBusConnection = addI2cBusConnection(i2cBus, VL530X_ADDRESS_0, true);
+    I2cBusConnection* initialTofBusConnection;
     for (tofIndex = 0; tofIndex < size; tofIndex++) {
+        if (tofIndex == 0) {
+            // Fake Connection to be able to change the address
+            initialTofBusConnection = addI2cBusConnection(i2cBus, VL530X_ADDRESS_0, true);
+        }
+        if (tofIndex == 8) {
+            // VERY IMPORTANT : To avoid that this connection is found by getI2cBusConnectionBySlaveAddress
+            initialTofBusConnection->opened = false;
+            initialTofBusConnection = addI2cBusConnection(optionalI2cBus, VL530X_ADDRESS_0, true);
+        }
         // Get the abstract tof Sensor structure at the specified index
         TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, tofIndex);
         
@@ -127,7 +136,7 @@ void initTofSensorListVL53L0X(TofSensorList* tofSensorList,
         unsigned char tofBusAddress = VL530X_ADDRESS_0;
         if (tofSensor->changeAddress) {
             // Change the address to avoid tof I2C Address collision
-            tofBusAddress = VL530X_ADDRESS_0 + ((tofIndex + 1 ) << 1);
+            tofBusAddress = VL530X_ADDRESS_0 + ((tofIndex + 1) << 1);
         }
         appendStringAndDec(debugOutputStream, "    CHANGE ADDRESS FROM ", VL530X_ADDRESS_0);
         appendStringAndDec(debugOutputStream, " TO ", tofBusAddress);

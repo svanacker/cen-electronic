@@ -124,7 +124,7 @@ void mainBoardMainPhase2(void) {
     I2cBusConnection* servoI2cBusConnection = addI2cBusConnection(i2cBus, PCA9685_ADDRESS_0, true);
     addServoAllPca9685(servoList, servoI2cBusConnection);
 
-    mainBoardCommonTofInitDrivers(mainBoardCommonGetMainI2cBus(), MAIN_BOARD_TOF_SENSOR_LIST_LENGTH);
+    mainBoardCommonTofInitDrivers(mainBoardCommonGetMainI2cBus(), mainBoardCommonGetAlternativeI2cBus(), MAIN_BOARD_TOF_SENSOR_LIST_LENGTH);
     mainBoardCommonMatchMainInitDrivers(&robotConfig, isMatchStarted32, mainBoardWaitForInstruction, loopUnWaitForInstruction);
     mainBoardCommonStrategyMainInitDrivers(&robotConfig);
 }

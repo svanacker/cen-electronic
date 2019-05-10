@@ -72,6 +72,9 @@ I2cBusConnection* getI2cBusConnectionBySlaveAddress(unsigned char slaveAddress) 
     int i;
     for (i = 0; i < size; i++) {
         I2cBusConnection* i2cBusConnection = getI2cBusConnectionByIndex(i);
+        if (!i2cBusConnection->opened) {
+            continue;
+        }
         if (i2cBusConnection->i2cAddress == slaveAddress) {
             return i2cBusConnection;
         }

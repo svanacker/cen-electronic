@@ -42,7 +42,7 @@ void setTofListNameAndOrientationAngle(TofSensorList* tofSensorList, float dista
         backLeftSensor->thresholdDistanceMM = BACK_TOF_TO_BACK_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * BACK_LEFT_SENSOR_DISTANCE_THRESHOLD);
         backLeftSensor->name = "BACK LEFT";
     }
-
+    // FRONT
     if (tofSensorListSize > FRONT_RIGHT_SENSOR_INDEX) {
         TofSensor* frontRightSensor = getTofSensorByIndex(tofSensorList, FRONT_RIGHT_SENSOR_INDEX); 
         frontRightSensor->orientationRadian = degToRad(FRONT_RIGHT_SENSOR_ANGLE_DEGREE);
@@ -62,6 +62,32 @@ void setTofListNameAndOrientationAngle(TofSensorList* tofSensorList, float dista
         frontLeftSensor->orientationRadian = degToRad(FRONT_LEFT_SENSOR_ANGLE_DEGREE);
         frontLeftSensor->thresholdDistanceMM = FRONT_TOF_TO_FRONT_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * FRONT_LEFT_SENSOR_DISTANCE_THRESHOLD);
         frontLeftSensor->name = "FRONT LEFT";
+    }
+    
+    // SIDE
+    if (tofSensorListSize > FRONT_SIDE_LEFT_SENSOR_INDEX) {
+        TofSensor* frontSideLeftSensor = getTofSensorByIndex(tofSensorList, FRONT_SIDE_LEFT_SENSOR_INDEX); 
+        frontSideLeftSensor->orientationRadian = degToRad(FRONT_SIDE_LEFT_SENSOR_ANGLE_DEGREE);
+        frontSideLeftSensor->thresholdDistanceMM = FRONT_TOF_TO_FRONT_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * FRONT_SIDE_LEFT_SENSOR_DISTANCE_THRESHOLD);
+        frontSideLeftSensor->name = "FRONT SIDE L";
+    }
+    if (tofSensorListSize > FRONT_SIDE_RIGHT_SENSOR_INDEX) {
+        TofSensor* frontSideRightSensor = getTofSensorByIndex(tofSensorList, FRONT_SIDE_RIGHT_SENSOR_INDEX); 
+        frontSideRightSensor->orientationRadian = degToRad(FRONT_SIDE_RIGHT_SENSOR_ANGLE_DEGREE);
+        frontSideRightSensor->thresholdDistanceMM = FRONT_TOF_TO_FRONT_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * FRONT_SIDE_RIGHT_SENSOR_DISTANCE_THRESHOLD);
+        frontSideRightSensor->name = "FRONT SIDE R";
+    }
+    if (tofSensorListSize > BACK_SIDE_LEFT_SENSOR_INDEX) {
+        TofSensor* backSideLeftSensor = getTofSensorByIndex(tofSensorList, BACK_SIDE_LEFT_SENSOR_INDEX); 
+        backSideLeftSensor->orientationRadian = degToRad(BACK_SIDE_LEFT_SENSOR_ANGLE_DEGREE);
+        backSideLeftSensor->thresholdDistanceMM = BACK_TOF_TO_BACK_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * BACK_SIDE_LEFT_SENSOR_DISTANCE_THRESHOLD);
+        backSideLeftSensor->name = "BACK SIDE L";
+    }
+   if (tofSensorListSize > BACK_SIDE_RIGHT_SENSOR_INDEX) {
+        TofSensor* backSideRightSensor = getTofSensorByIndex(tofSensorList, BACK_SIDE_RIGHT_SENSOR_INDEX); 
+        backSideRightSensor->orientationRadian = degToRad(BACK_SIDE_RIGHT_SENSOR_ANGLE_DEGREE);
+        backSideRightSensor->thresholdDistanceMM = BACK_TOF_TO_BACK_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * BACK_SIDE_RIGHT_SENSOR_DISTANCE_THRESHOLD);
+        backSideRightSensor->name = "BACK SIDE R";
     }
 }
     

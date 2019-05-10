@@ -18,15 +18,6 @@
 // ACCELEROMETER ADXL345        
 #define ADXL345_ADDRESS         0x3A
 
-// VL530X
-#define VL530X_ADDRESS_0        0x52
-#define VL530X_ADDRESS_1        0x54
-#define VL530X_ADDRESS_2        0x56
-#define VL530X_ADDRESS_3        0x58
-#define VL530X_ADDRESS_4        0x5A
-#define VL530X_ADDRESS_5        0x5C
-#define VL530X_ADDRESS_6        0x5E
-
 // GPIO14 : Conflict with PCF8574
 
 #define GPIO14_ADDRESS_0        0x40
@@ -60,6 +51,21 @@
 #define FREE_ADDRESS_5            0x5A
 #define FREE_ADDRESS_6            0x5C
 #define FREE_ADDRESS_7            0x5E
+
+
+// VL530X
+#define VL530X_ADDRESS_0        0x52
+#define VL530X_ADDRESS_1        0x54
+#define VL530X_ADDRESS_2        0x56
+#define VL530X_ADDRESS_3        0x58
+#define VL530X_ADDRESS_4        0x5A
+#define VL530X_ADDRESS_5        0x5C
+#define VL530X_ADDRESS_6        0x5E
+#define VL530X_ADDRESS_7        0x60
+#define VL530X_ADDRESS_8        0x62
+#define VL530X_ADDRESS_9        0x64
+#define VL530X_ADDRESS_10       0x66
+#define VL530X_ADDRESS_11       0x68
 
 // PCF8574A
 
