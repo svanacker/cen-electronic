@@ -291,6 +291,11 @@ I2cBus* mainBoardCommonGetMainI2cBus(void) {
     return i2cBus;
 }
 
+I2cBus* mainBoardCommonGetAlternativeI2cBus(void) {
+    return i2cBus4;
+}
+
+
 // SERVO LIST
 
 void mainBoardCommonInitServoList(void) {

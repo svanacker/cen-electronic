@@ -29,7 +29,7 @@
 #include "../../../device/deviceConstants.h"
 
 /**
- * Initializes the IO Expander (if Any
+ * Initializes the IO Expander (if Any)
  * @private
  * @param tofSensorList
  * @param ioExpander
@@ -69,15 +69,19 @@ void initTofSensorListVL53L0X(TofSensorList* tofSensorList,
                               TofSensorVL53L0X(*tofSensorVL53L0XArray)[],
                               unsigned int size,
                               I2cBus* i2cBus,
+                              I2cBus* optionalI2cBus,
                               IOExpander* ioExpander,
+                              IOExpander* optionalIOExpander,
                               bool debug,
                               bool enableAllSensors,
                               bool changeAddressAllSensors) {
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
     
-    initIOExpanderForTofSensorList(ioExpander, size);
+    initIOExpanderForTofSensorList(ioExpander, size % 8);
+    initIOExpanderForTofSensorList(optionalIOExpander, size % 8);
 
     initTofSensorList(tofSensorList, tofSensorArray, size, debug, enableAllSensors, changeAddressAllSensors, &printTofSensorTableVL53L0X);
+
     unsigned int tofIndex;
     I2cBusConnection* initialTofBusConnection = addI2cBusConnection(i2cBus, VL530X_ADDRESS_0, true);
     for (tofIndex = 0; tofIndex < size; tofIndex++) {
@@ -100,9 +104,21 @@ void initTofSensorListVL53L0X(TofSensorList* tofSensorList,
         if (ioExpander != NULL && tofSensor->changeAddress) {
             // Activate only a specific TOF
             appendStringAndDec(debugOutputStream, "  IO Expander Write:", tofIndex);
-            ioExpander->ioExpanderWriteSingleValue(ioExpander, tofIndex, true);
+            
+            if (tofIndex < 8) {
+                ioExpander->ioExpanderWriteSingleValue(ioExpander, tofIndex, true);
+                if (optionalIOExpander != NULL) {
+                    optionalIOExpander->ioExpanderWriteValue(optionalIOExpander, 0x00);
+                }
+            }
+            else {
+                if (optionalIOExpander != NULL) {
+                    optionalIOExpander->ioExpanderWriteSingleValue(optionalIOExpander, tofIndex % 8, true);
+                }
+                ioExpander->ioExpanderWriteValue(ioExpander, 0x00);
+            }
             // Delay to let the hardware part of the Sensor VL53L0X
-            timerDelayMilliSeconds(50);
+            timerDelayMilliSeconds(30);
             appendStringLN(debugOutputStream, " ... OK");
         }
 
@@ -113,14 +129,19 @@ void initTofSensorListVL53L0X(TofSensorList* tofSensorList,
         unsigned char tofBusAddress = VL530X_ADDRESS_0;
         if (tofSensor->changeAddress) {
             // Change the address to avoid tof I2C Address collision
-            tofBusAddress = VL530X_ADDRESS_0 + ((tofIndex + 1) << 1);
+            tofBusAddress = VL530X_ADDRESS_0 + ((tofIndex + 1 ) << 1);
         }
         appendStringAndDec(debugOutputStream, "    CHANGE ADDRESS FROM ", VL530X_ADDRESS_0);
         appendStringAndDec(debugOutputStream, " TO ", tofBusAddress);
-        I2cBusConnection* tofBusConnection = addI2cBusConnection(i2cBus, tofBusAddress, true);
+        I2cBusConnection* tofBusConnection = addI2cBusConnection(initialTofBusConnection->i2cBus, tofBusAddress, true);
         tofSetAddress(tofSensorVL53L0X, tofBusConnection);
         appendStringLN(debugOutputStream, "...OK");
         
         appendStringAndDecLN(debugOutputStream, "  TOF SENSOR->END:", tofIndex);
+    }
+    // Reenable all IO Expander after the all Tofs have the right address
+    ioExpander->ioExpanderWriteValue(ioExpander, 0xFF);
+    if (optionalIOExpander != NULL) {
+        optionalIOExpander->ioExpanderWriteValue(optionalIOExpander, 0xFF);
     }
 }

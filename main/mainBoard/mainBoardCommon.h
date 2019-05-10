@@ -88,9 +88,15 @@ void mainBoardCommonInitLogs(void);
 void mainBoardCommonInitBusList(void);
 
 /**
- * Returns the main I2C Bus used on 
+ * Returns the main I2C Bus used on the microcontroller (I2C 1)
  */
 I2cBus* mainBoardCommonGetMainI2cBus(void);
+
+/**
+ * Returns the other I2C Bus 
+ */
+I2cBus* mainBoardCommonGetAlternativeI2cBus(void);
+
 
 // SERIAL LIST
 

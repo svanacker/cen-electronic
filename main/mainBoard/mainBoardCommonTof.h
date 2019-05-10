@@ -22,7 +22,7 @@ void mainBoardCommonTofAddDevices(void);
  * Useful when we just want to initialize 2 tof like for Experience 2019 Main
  * Program.
  */
-void mainBoardCommonTofInitDrivers(I2cBus* i2cBus, unsigned int tofSensorCount);
+void mainBoardCommonTofInitDrivers(I2cBus* i2cBus, I2cBus* i2cBus2, unsigned int tofSensorCount);
 
 /**
  * Returns the list of Tof Sensor.

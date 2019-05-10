@@ -9,6 +9,7 @@
 #define IO_EXPANDER_IO_COUNT                      8
 
 #define IO_EXPANDER_INDEX_COLUMN_LENGTH		      15
+#define IO_EXPANDER_COUNT_COLUMN_LENGTH           10
 #define IO_EXPANDER_VALUE_COLUMN_LENGTH           5
 #define IO_EXPANDER_LAST_COLUMN		              0
 
@@ -21,6 +22,7 @@ void printIOExpanderDebugTableHeader(OutputStream* outputStream) {
 
     // First line
     appendStringHeader(outputStream, "IO Expander", IO_EXPANDER_INDEX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Count", IO_EXPANDER_COUNT_COLUMN_LENGTH);
 
     int ioIndex;
     for (ioIndex = IO_EXPANDER_IO_COUNT - 1; ioIndex >= 0; ioIndex--) {
@@ -30,6 +32,7 @@ void printIOExpanderDebugTableHeader(OutputStream* outputStream) {
 
     // Second line
     appendStringHeader(outputStream, "Index", IO_EXPANDER_INDEX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "", IO_EXPANDER_COUNT_COLUMN_LENGTH);
     for (ioIndex = IO_EXPANDER_IO_COUNT - 1; ioIndex >= 0; ioIndex--) {
         appendStringAndDecHeader(outputStream, "", ioIndex, IO_EXPANDER_VALUE_COLUMN_LENGTH);
     }
@@ -46,8 +49,10 @@ void printIOExpanderStatesTable(OutputStream* outputStream, IOExpanderList* ioEx
     unsigned int ioExpanderIndex;
     for (ioExpanderIndex = 0; ioExpanderIndex < ioExpanderList->size; ioExpanderIndex++) {
         appendDecTableData(outputStream, ioExpanderIndex, IO_EXPANDER_INDEX_COLUMN_LENGTH);
-
         IOExpander* ioExpander = getIOExpanderByIndex(ioExpanderList, ioExpanderIndex);
+
+        appendDecTableData(outputStream, ioExpander->count, IO_EXPANDER_COUNT_COLUMN_LENGTH);
+
         for (ioIndex = ioExpander->count - 1; ioIndex >= 0; ioIndex--) {
             bool value = ioExpander->ioExpanderReadSingleValue(ioExpander, ioIndex);
 

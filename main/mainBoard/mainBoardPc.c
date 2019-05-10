@@ -27,6 +27,10 @@
 #include "../../common/io/reader.h"
 #include "../../common/io/streamLink.h"
 
+#include "../../drivers/ioExpander/ioExpander.h"
+#include "../../drivers/ioExpander/ioExpanderList.h"
+#include "../../drivers/ioExpander/pc/ioExpanderPc.h"
+
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
 #include "../../common/log/pc/consoleLogHandler.h"
@@ -71,6 +75,10 @@
 // I2C -> Master
 #include "../../device/i2c/master/i2cMasterDebugDevice.h"
 #include "../../device/i2c/master/i2cMasterDebugDeviceInterface.h"
+
+// IO
+#include "../../device/ioExpander/ioExpanderDevice.h"
+#include "../../device/ioExpander/ioExpanderDeviceInterface.h"
 
 // MAIN
 #include "../../main/motorboard/motorBoardPc.h"
@@ -308,6 +316,12 @@ static Navigation* navigation;
 static TofSensorList tofSensorList;
 static TofSensor tofSensorArray[MAIN_BOARD_PC_TOF_SENSOR_LIST_LENGTH];
 
+// IOExpander
+static IOExpanderList ioExpanderList;
+static IOExpander ioExpanderArray[MOTOR_BOARD_PC_IO_EXPANDER_LIST_LENGTH];
+static int ioExpanderValue0;
+static int ioExpanderValue1;
+
 // 2019
 static ElectronLauncher2019 launcher;
 
@@ -392,6 +406,12 @@ void initMainBoardLocalDevices(void) {
     addLocalDevice(getLogDeviceInterface(), getLogDeviceDescriptor());
     addLocalDevice(getLCDDeviceInterface(), getLCDDeviceDescriptor());
     addLocalDevice(getTofDeviceInterface(), getTofDeviceDescriptor(&tofSensorList));
+
+
+    //  IO Expander
+    initIOExpanderPc(getIOExpanderByIndex(&ioExpanderList, 0), &ioExpanderValue0);
+    initIOExpanderPc(getIOExpanderByIndex(&ioExpanderList, 1), &ioExpanderValue1);
+    addLocalDevice(getIOExpanderDeviceInterface(), getIOExpanderDeviceDescriptor(&ioExpanderList));
 
     addLocalDevice(getCurrentSensorDeviceInterface(), getCurrentSensorDeviceDescriptor(&current));
     addLocalDevice(getTemperatureSensorDeviceInterface(), getTemperatureSensorDeviceDescriptor(&temperature));
@@ -531,6 +551,10 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
 
     // TOF
     initTofSensorListPc(&tofSensorList, (TofSensor(*)[]) &tofSensorArray, MAIN_BOARD_PC_TOF_SENSOR_LIST_LENGTH);
+
+    // IO Expander
+    initIOExpanderList(&ioExpanderList, (IOExpander(*)[]) &ioExpanderArray, MAIN_BOARD_PC_IO_EXPANDER_LIST_LENGTH);
+
 
     navigation = initNavigation2019();
     gameStrategyContext = initGameStrategyContext2019(&robotConfig, &endMatch, &tofSensorList, &servoList);

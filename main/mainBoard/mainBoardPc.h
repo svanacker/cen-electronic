@@ -47,6 +47,7 @@
 #define MAIN_BOARD_PC_DEVICE_LIST_LENGTH                        30
 
 #define MAIN_BOARD_PC_TOF_SENSOR_LIST_LENGTH                     8
+#define MAIN_BOARD_PC_IO_EXPANDER_LIST_LENGTH                    2
 
 // Servos
 #define MAIN_BOARD_PC_SERVO_LIST_LENGTH                         21

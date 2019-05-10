@@ -34,8 +34,10 @@
 // IO Expander
 static IOExpanderList ioExpanderList;
 static IOExpander* tofIoExpander;
+static IOExpander* lateralTofIoExpander;
 static IOExpander ioExpanderArray[MAIN_BOARD_IO_EXPANDER_LIST_LENGTH];
 static I2cBusConnection* tofIoExpanderBusConnection;
+static I2cBusConnection* lateralTofIoExpanderBusConnection;
 
 // TOF
 static TofSensorList tofSensorList;
@@ -47,13 +49,24 @@ void mainBoardCommonTofAddDevices(void) {
     addLocalDevice(getIOExpanderDeviceInterface(), getIOExpanderDeviceDescriptor(&ioExpanderList));
 }
 
-void mainBoardCommonTofInitDrivers(I2cBus* i2cBus, unsigned int tofSensorCount) {
-    // IO Expander
-    appendString(getDebugOutputStreamLogger(), "PCF ...");
-    tofIoExpanderBusConnection = addI2cBusConnection(i2cBus, PCF8574_ADDRESS_0, true);
+void mainBoardCommonTofInitDrivers(I2cBus* i2cBus, I2cBus* i2cBus2, unsigned int tofSensorCount) {
+    // IO Expander List
+    appendString(getDebugOutputStreamLogger(), "PCFs ...");
     initIOExpanderList(&ioExpanderList, (IOExpander(*)[]) &ioExpanderArray, MAIN_BOARD_IO_EXPANDER_LIST_LENGTH);
+    
+    // First Expander (Beacon + Fork)
     tofIoExpander = getIOExpanderByIndex(&ioExpanderList, 0);
+    tofIoExpanderBusConnection = addI2cBusConnection(i2cBus, PCF8574_ADDRESS_0, true);
     initIOExpanderPCF8574(tofIoExpander, tofIoExpanderBusConnection);
+    
+    // if (tofSensorCount > 8) {
+        // Second Expander (Lateral Tofs)
+        lateralTofIoExpander = getIOExpanderByIndex(&ioExpanderList, 1);
+        lateralTofIoExpanderBusConnection = addI2cBusConnection(i2cBus2, PCF8574_ADDRESS_0, true);
+        initIOExpanderPCF8574(lateralTofIoExpander, lateralTofIoExpanderBusConnection);
+    // }
+    
+    // End of IOExpanderList
     appendStringLN(getDebugOutputStreamLogger(), "OK");
         
     // TOF
@@ -81,6 +94,19 @@ void mainBoardCommonTofInitDrivers(I2cBus* i2cBus, unsigned int tofSensorCount) 
     if (tofSensorCount > 7) {
         tofSensorArray[7].enabled = true;
     }
+    if (tofSensorCount > 8) {
+        tofSensorArray[8].enabled = true;
+    }
+    if (tofSensorCount > 9) {
+        tofSensorArray[9].enabled = true;
+    }
+    if (tofSensorCount > 10) {
+        tofSensorArray[10].enabled = true;
+    }
+    if (tofSensorCount > 11) {
+        tofSensorArray[11].enabled = true;
+    }
+    
     appendStringLN(getDebugOutputStreamLogger(), "TOF ...");
     initTofSensorListVL53L0X(&tofSensorList,
                              (TofSensor(*)[]) &tofSensorArray,
@@ -89,9 +115,13 @@ void mainBoardCommonTofInitDrivers(I2cBus* i2cBus, unsigned int tofSensorCount) 
                               tofSensorCount,
                               // Bus
                               i2cBus,
+                              // Other Bus if we use more than 8 tofs
+                              i2cBus2,
                               // IO Expander, if null, we will not be able to
                               // Manage several tof
                               tofIoExpander,
+                              // Second IO Expander
+                              lateralTofIoExpander,            
                               // debug
                               true,
                               // enabledAllSensors
