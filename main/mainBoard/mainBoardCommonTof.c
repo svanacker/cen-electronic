@@ -101,10 +101,10 @@ void mainBoardCommonTofInitDrivers(I2cBus* i2cBus, I2cBus* i2cBus2, unsigned int
         tofSensorArray[9].enabled = true;
     }
     if (tofSensorCount > 10) {
-        tofSensorArray[10].enabled = false;
+        tofSensorArray[10].enabled = true;
     }
     if (tofSensorCount > 11) {
-        tofSensorArray[11].enabled = false;
+        tofSensorArray[11].enabled = true;
     }
     
     appendStringLN(getDebugOutputStreamLogger(), "TOF ...");

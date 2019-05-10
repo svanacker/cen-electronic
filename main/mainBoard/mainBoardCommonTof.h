@@ -8,7 +8,7 @@
 #include "../../drivers/tof/tofList.h"
 
 // TOFS
-#define MAIN_BOARD_TOF_SENSOR_LIST_LENGTH                                      9
+#define MAIN_BOARD_TOF_SENSOR_LIST_LENGTH                                     12
 
 /**
  * Device Tof Initialization of MAIN_BOARD.
