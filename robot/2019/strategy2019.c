@@ -85,7 +85,7 @@ void initColorAndStartPosition2019(GameStrategyContext* gameStrategyContext) {
     }
     // Symetry
 	if (isViolet(gameStrategyContext)) {
-        angleDeciDegree += (float) ANGLE_DECI_DEG_180;
+        angleDeciDegree = -angleDeciDegree;
         gameStrategyContext->robotPosition->y = GAMEBOARD_HEIGHT - gameStrategyContext->robotPosition->y;
 	}
     float angleRadian = mod2PI(deciDegreeToRad(angleDeciDegree));
