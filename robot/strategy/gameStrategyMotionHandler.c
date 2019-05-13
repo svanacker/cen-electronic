@@ -39,6 +39,9 @@
 #include "../../robot/strategy/gameTargetList.h"
 #include "../../robot/robot.h"
 
+/**
+ * @private / Callback
+ */
 void interruptGameStrategyMotionCallbackFunc(Timer* timer) {
     if (timer == NULL) {
         writeError(TIMER_NULL);
@@ -57,7 +60,7 @@ void interruptGameStrategyMotionCallbackFunc(Timer* timer) {
         return;
     }
     
-    gameStrategyContext->robotPositionToUpdateInterruptFlag;
+    gameStrategyContext->robotPositionToUpdateInterruptFlag = true;
 }
 
 void initGameStrategyMotionHandler(GameStrategyContext* gameStrategyContext) {
@@ -66,12 +69,32 @@ void initGameStrategyMotionHandler(GameStrategyContext* gameStrategyContext) {
                             &interruptGameStrategyMotionCallbackFunc,
                             "TIMER DELAY", 
 							(int*) gameStrategyContext);
+        timer->enabled = true;
 }
 
 
-bool updateMotorBoardRobotPosition(GameStrategyContext* gameStrategyContext) {
+bool updateRobotPositionFromMainBoardToMotorBoard(GameStrategyContext* gameStrategyContext) {
     Point* robotPosition = gameStrategyContext->robotPosition;
     return clientTrajectorySetAbsolutePosition(robotPosition->x, robotPosition->y, gameStrategyContext->robotAngleRadian);
+}
+
+void updateIfNeededRobotPositionFromMotorBoardToMainBoard(GameStrategyContext* gameStrategyContext) {
+    // To avoid to continously ask the position
+    if (!gameStrategyContext->robotPositionToUpdateInterruptFlag) {
+        return;
+    }
+    // Update the position from the MOTOR BOARD. If we don't do it,
+    // The board keep the original value from the latest move
+    // TODO : Clarify the usage of Robot Position
+    RobotPosition robotPosition;
+    clientTrajectoryUpdateRobotPosition(&robotPosition);
+    gameStrategyContext->robotPosition->x = robotPosition.x;
+    gameStrategyContext->robotPosition->y = robotPosition.y;
+    gameStrategyContext->robotAngleRadian = robotPosition.angleRadian;
+
+    // To avoid to continously ask the position, the flag will be changed by a frequent timer interruption
+    gameStrategyContext->robotPositionToUpdateInterruptFlag = false;
+
 }
 
 Location* getNearestLocationFromGameStrategyContext(GameStrategyContext* gameStrategyContext) {

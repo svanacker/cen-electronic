@@ -181,7 +181,7 @@ void deviceStrategyHandleRawData(unsigned char commandHeader, InputStream* input
         // angle in decideg
         context->robotAngleRadian = degToRad(readHexFloat4(inputStream, ANGLE_DIGIT_DEGREE_PRECISION));
         // Must call the motor Board to synchronized the both positions !
-        updateMotorBoardRobotPosition(context);
+        updateRobotPositionFromMainBoardToMotorBoard(context);
     }
     else if (commandHeader == COMMAND_STRATEGY_SET_ROBOT_POSITION_AS_FIRST_LOCATION_OF_PATH_INDEX) {
         GameStrategyContext* context = getStrategyDeviceGameStrategyContext();
@@ -194,7 +194,7 @@ void deviceStrategyHandleRawData(unsigned char commandHeader, InputStream* input
         context->robotAngleRadian = path->angleRadian1;
 #ifndef _MSC_VER
         // Must call the motor Board to synchronized the both positions !
-        updateMotorBoardRobotPosition(context);
+        updateRobotPositionFromMainBoardToMotorBoard(context);
 #endif // !_MSC_VER
     }
     // DO ALL TARGET ACTION ITEM OF AN ACTION

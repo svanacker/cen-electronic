@@ -18,7 +18,7 @@
 
 #include "gameTargetListDebug.h"
 
-#define GAME_STRATEGY_CONTEXT_KEY_COLUMN_LENGTH     30
+#define GAME_STRATEGY_CONTEXT_KEY_COLUMN_LENGTH     35
 #define GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH   25
 #define GAME_STRATEGY_CONTEXT_UNIT_COLUMN_LENGTH    10
 #define GAME_STRATEGY_CONTEXT_LAST_COLUMN            0
@@ -162,6 +162,11 @@ void printGameStrategyContext(OutputStream* outputStream, GameStrategyContext* c
     // -> Trajectory Type
     appendStringTableData(outputStream, "trajectoryType", GAME_STRATEGY_CONTEXT_KEY_COLUMN_LENGTH);
     addTrajectoryTypeTableData(outputStream, context->trajectoryType, GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
+    appendStringTableData(outputStream, "", GAME_STRATEGY_CONTEXT_UNIT_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, GAME_STRATEGY_CONTEXT_LAST_COLUMN);
+
+    appendStringTableData(outputStream, "Robot Position Update Int. Flag", GAME_STRATEGY_CONTEXT_KEY_COLUMN_LENGTH);
+    appendBoolAsStringTableData(outputStream, context->robotPositionToUpdateInterruptFlag, GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
     appendStringTableData(outputStream, "", GAME_STRATEGY_CONTEXT_UNIT_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, GAME_STRATEGY_CONTEXT_LAST_COLUMN);
 

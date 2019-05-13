@@ -170,16 +170,20 @@ void mainBoardCommonStrategyMainInitDrivers(RobotConfig* robotConfig) {
 
 void mainBoardCommonStrategyMainEndInit(void) {      
     // Update this on the MOTOR BOARD to synchronize the position !
-    updateMotorBoardRobotPosition(gameStrategyContext);
+    updateRobotPositionFromMainBoardToMotorBoard(gameStrategyContext);
     mainBoardCommonStrategyMainEndInit2019(gameStrategyContext);
 }
 
 
 void mainBoardCommonStrategyHandleStreamInstruction(void) {
     StartMatch* startMatch = mainBoardCommonMatchGetStartMatch();
+
+    // Tof / Collision management
     TofSensorList* tofSensorList = mainBoardCommonTofGetTofSensorList();
-    
     handleTofSensorList(gameStrategyContext, startMatch, tofSensorList, gameBoard);
+    
+    // Motion Management
+    updateRobotPositionFromMotorBoardToMainBoard(gameStrategyContext);
 }
 
 void mainBoardCommonStrategyMainLoop(void) {

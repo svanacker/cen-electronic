@@ -1,6 +1,7 @@
 #include <stdlib.h>
 
 #include "gameStrategyContext.h"
+#include "gameStrategyMotionHandler.h"
 #include "teamColor.h"
 
 #include "../../common/timer/cenTimer.h"
@@ -70,6 +71,9 @@ void initGameStrategyContext(GameStrategyContext* gameStrategyContext,
     if (obstacleTimer != NULL) {
         obstacleTimer->callback = obstacleTimerCallbackFunc;
     }
+
+    // Position Management
+    initGameStrategyMotionHandler(gameStrategyContext);
 
     // Complex init
     initGameStrategyIndex(gameStrategyContext);

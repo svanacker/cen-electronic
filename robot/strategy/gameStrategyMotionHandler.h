@@ -6,13 +6,23 @@
 
 #include "gameStrategyContext.h"
 
+/**
+* Initialize the motion part of the GameStrategyContext*.
+*/
+void initGameStrategyMotionHandler(GameStrategyContext* gameStrategyContext);
+
 // POSITION MANAGEMENT
 
 /**
- * Update the Motor Board Robot Position (needed at start).
+ * Update the Motor Board Robot Position (needed at start) to synchronize the position of the 2 Boards.
+ * Master Data is then owned by the Motor Board, and the Slave information is read by the Main Board from the Motor Board
  */
-bool updateMotorBoardRobotPosition(GameStrategyContext* gameStrategyContext);
+bool updateRobotPositionFromMainBoardToMotorBoard(GameStrategyContext* gameStrategyContext);
 
+/**
+* This method must be frequently called by the main Board to be sure to have the right position.
+*/
+void updateIfNeededRobotPositionFromMotorBoardToMainBoard(GameStrategyContext* gameStrategyContext);
 
 /**
 * Compute the nearest location in the path finding from the current position of the robot

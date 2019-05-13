@@ -207,6 +207,7 @@
 #include "../../main/meca1/mechanicalMainBoard1Pc.h"
 
 #include "../../robot/strategy/gameStrategyHandler.h"
+#include "../../robot/strategy/gameStrategyMotionHandler.h"
 
 // 2019
 #include "../../robot/2019/mainBoard2019.h"
@@ -626,6 +627,8 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
 
     while (true) {
         mainBoardPcWaitForInstruction(&startMatch);
+
+        updateIfNeededRobotPositionFromMotorBoardToMainBoard(gameStrategyContext);
 
         // 2019 Actions for Experience
         handleElectronLauncherActions(&launcher);

@@ -170,13 +170,9 @@ void handleTofSensorList(GameStrategyContext* gameStrategyContext, StartMatch* s
         }
         
         // Update the position from the MOTOR BOARD. If we don't do it,
-        // The board keep the original value from the latest move
+        // The board keep the original value from the latest move / notification or the latest callback
         // TODO : Clarify the usage of Robot Position
-        RobotPosition robotPosition;
-        clientTrajectoryUpdateRobotPosition(&robotPosition);
-        gameStrategyContext->robotPosition->x = robotPosition.x;
-        gameStrategyContext->robotPosition->y = robotPosition.y;
-        gameStrategyContext->robotAngleRadian = robotPosition.angleRadian;
+        updateIfNeededRobotPositionFromMotorBoardToMainBoard(gameStrategyContext);
         detected = tofComputeDetectedPointIfAny(tofSensor, pointOfView, pointOfViewAngleRadian, &detectedPoint);
 
         if (!detected) {
