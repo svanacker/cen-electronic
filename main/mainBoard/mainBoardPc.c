@@ -624,13 +624,6 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
     // Wait until the match start
     loopUntilStart(&startMatch);
 
-    Point pointOfView;
-    TofSensor tofSensor;
-    tofSensor.angleFromRobotCenter = (float) degToRad(FRONT_RIGHT_SENSOR_ANGLE_DEGREE);
-    tofSensor.distanceFromRobotCenter = 30.0f;
-    tofSensor.orientationRadian = tofSensor.angleFromRobotCenter;
-    
-
     while (true) {
         mainBoardPcWaitForInstruction(&startMatch);
 

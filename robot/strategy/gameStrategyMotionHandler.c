@@ -44,7 +44,7 @@ void interruptGameStrategyMotionCallbackFunc(Timer* timer) {
         writeError(TIMER_NULL);
         return;
     }
-    GameStrategyContext* gameStrategyContext = timer->object;
+    GameStrategyContext* gameStrategyContext = (GameStrategyContext*) timer->object;
     if (gameStrategyContext == NULL) {
         writeError(TIMER_OBJECT_NULL);
         return;
@@ -65,7 +65,7 @@ void initGameStrategyMotionHandler(GameStrategyContext* gameStrategyContext) {
                             TIME_DIVIDER_5_HERTZ,
                             &interruptGameStrategyMotionCallbackFunc,
                             "TIMER DELAY", 
-							gameStrategyContext);
+							(int*) gameStrategyContext);
 }
 
 
