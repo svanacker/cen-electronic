@@ -17,6 +17,10 @@
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
 
+#include "../../common/timer/cenTimer.h"
+#include "../../common/timer/timerList.h"
+#include "../../common/timer/timerConstants.h"
+
 #include "../../motion/extended/bspline.h"
 #include "../../motion/extended/bsplineList.h"
 
@@ -34,6 +38,36 @@
 
 #include "../../robot/strategy/gameTargetList.h"
 #include "../../robot/robot.h"
+
+void interruptGameStrategyMotionCallbackFunc(Timer* timer) {
+    if (timer == NULL) {
+        writeError(TIMER_NULL);
+        return;
+    }
+    GameStrategyContext* gameStrategyContext = timer->object;
+    if (gameStrategyContext == NULL) {
+        writeError(TIMER_OBJECT_NULL);
+        return;
+    }
+    
+    // We don't will ask the position to the motor Board if the robot is not 
+    // moving
+    enum TrajectoryType trajectoryType = gameStrategyContext->trajectoryType;
+    if (trajectoryType == TRAJECTORY_TYPE_NONE) {
+        return;
+    }
+    
+    gameStrategyContext->robotPositionToUpdateInterruptFlag;
+}
+
+void initGameStrategyMotionHandler(GameStrategyContext* gameStrategyContext) {
+        Timer* timer = addTimer(TIMER_STRATEGY_MOTION_HANDLER_UPDATE_ROBOT_POSITION,
+                            TIME_DIVIDER_5_HERTZ,
+                            &interruptGameStrategyMotionCallbackFunc,
+                            "TIMER DELAY", 
+							gameStrategyContext);
+}
+
 
 bool updateMotorBoardRobotPosition(GameStrategyContext* gameStrategyContext) {
     Point* robotPosition = gameStrategyContext->robotPosition;

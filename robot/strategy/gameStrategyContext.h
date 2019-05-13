@@ -91,6 +91,8 @@ struct GameStrategyContext {
     ServoList* servoList;
     /** If the game Strategy must automatically loop target and actions .*/
     bool loopTargetAndActions;
+    /** If we consider that we must update the position (by timer). */
+    bool robotPositionToUpdateInterruptFlag;
 };
 
 /**

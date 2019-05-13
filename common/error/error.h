@@ -84,6 +84,7 @@ void clearLastError();
 #define TIMER_DELAY_NOT_FOUND                                             0x0206
 #define TIMER_DELAY_DISABLED                                              0x0207
 #define TIMER_MARK_WHEREAS_DISABLED                                       0x0209
+#define TIMER_OBJECT_NULL                                                 0x0210
 
 // EEPROM
 #define EEPROM_NULL                                                       0x0280

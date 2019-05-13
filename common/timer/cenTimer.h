@@ -14,6 +14,11 @@
 #define TIME_DIVIDER_2_HERTZ                 (TIME_DIVIDER_1_HERTZ / 2)
 
 /**
+ * Define the timer divider to have a timer at 5 Hertz.
+ */
+#define TIME_DIVIDER_5_HERTZ                 (TIME_DIVIDER_1_HERTZ / 5)
+
+/**
  * Define the timer divider to have a timer at 10 Hertz.
  */
 #define TIME_DIVIDER_10_HERTZ                 (TIME_DIVIDER_1_HERTZ / 10)
