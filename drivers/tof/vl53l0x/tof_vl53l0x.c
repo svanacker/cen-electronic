@@ -89,6 +89,7 @@ bool tof_vl53l0x_begin(TofSensorVL53L0X* tofSensorVL53L0X, bool debug) {
             }
 
             tofSensorVL53L0X->status = VL53L0X_ERROR_NOT_SUPPORTED;
+            return false;
         }
     }
 
@@ -98,6 +99,9 @@ bool tof_vl53l0x_begin(TofSensorVL53L0X* tofSensorVL53L0X, bool debug) {
         }
 
         tofSensorVL53L0X->status = VL53L0X_StaticInit(tofDevice); // Device Initialization
+    }
+    else {
+        return false;
     }
 
     if (tofSensorVL53L0X->status == VL53L0X_ERROR_NONE) {
@@ -113,6 +117,9 @@ bool tof_vl53l0x_begin(TofSensorVL53L0X* tofSensorVL53L0X, bool debug) {
             appendStringAndDec(debugOutputStream, ", isApertureSpads = ", isApertureSpads);
         }
     }
+    else {
+        return false;
+    }
 
     if (tofSensorVL53L0X->status == VL53L0X_ERROR_NONE) {
         if (debug) {
@@ -121,6 +128,9 @@ bool tof_vl53l0x_begin(TofSensorVL53L0X* tofSensorVL53L0X, bool debug) {
 
         // Device Initialization
         tofSensorVL53L0X->status = VL53L0X_PerformRefCalibration(tofDevice, &VhvSettings, &PhaseCal);
+    }
+    else {
+        return false;
     }
 
     if (tofSensorVL53L0X->status == VL53L0X_ERROR_NONE) {
@@ -135,22 +145,37 @@ bool tof_vl53l0x_begin(TofSensorVL53L0X* tofSensorVL53L0X, bool debug) {
         // In continuous
         tofSensorVL53L0X->status = VL53L0X_SetDeviceMode(tofDevice, VL53L0X_DEVICEMODE_CONTINUOUS_RANGING);
     }
+    else {
+        return false;
+    }
 
     // Enable/Disable Sigma and Signal check
     if (tofSensorVL53L0X->status == VL53L0X_ERROR_NONE) {
         tofSensorVL53L0X->status = VL53L0X_SetLimitCheckEnable(tofDevice, VL53L0X_CHECKENABLE_SIGMA_FINAL_RANGE, 1);
     }
+    else {
+        return false;
+    }
 
     if (tofSensorVL53L0X->status == VL53L0X_ERROR_NONE) {
         tofSensorVL53L0X->status = VL53L0X_SetLimitCheckEnable(tofDevice, VL53L0X_CHECKENABLE_SIGNAL_RATE_FINAL_RANGE, 1);
+    }
+    else {
+        return false;
     }
 
     if (tofSensorVL53L0X->status == VL53L0X_ERROR_NONE) {
         tofSensorVL53L0X->status = VL53L0X_SetLimitCheckEnable(tofDevice, VL53L0X_CHECKENABLE_RANGE_IGNORE_THRESHOLD, 1);
     }
+    else {
+        return false;
+    }
 
     if (tofSensorVL53L0X->status == VL53L0X_ERROR_NONE) {
         tofSensorVL53L0X->status = VL53L0X_SetLimitCheckValue(tofDevice, VL53L0X_CHECKENABLE_RANGE_IGNORE_THRESHOLD, (FixPoint1616_t) (1.5 * 0.023 * 65536));
+    }
+    else {
+        return false;
     }
     
     // If in Continuous Mode
@@ -158,12 +183,15 @@ bool tof_vl53l0x_begin(TofSensorVL53L0X* tofSensorVL53L0X, bool debug) {
 		appendString(debugOutputStream, "Call of VL53L0X_StartMeasurement ...");
 		tofSensorVL53L0X->status = VL53L0X_StartMeasurement(tofDevice);
     }
+    else {
+        return false;
+    }
 
     if (tofSensorVL53L0X->status == VL53L0X_ERROR_NONE) {
         return true;
     } else {
         if (debug) {
-            OutputStream* errorOutputStream = getErrorOutputStreamLogger(); 
+            OutputStream* errorOutputStream = getDebugOutputStreamLogger(); 
             appendString(errorOutputStream, "VL53L0X Error: ");
             appendDec(errorOutputStream, tofSensorVL53L0X->status);
         }
@@ -288,8 +316,7 @@ TofSensorVL53L0X* getTofSensorVL53L0X(TofSensor* tofSensor) {
  */
 bool tofSensorInitVL53L0X(TofSensor* tofSensor) {
     TofSensorVL53L0X* tofSensorVL53L0X = getTofSensorVL53L0X(tofSensor);
-    tof_vl53l0x_begin(tofSensorVL53L0X, true);
-    return true;
+    return tof_vl53l0x_begin(tofSensorVL53L0X, true);
 }
 
 /**
@@ -313,14 +340,14 @@ unsigned int tofSensorGetDistanceVL53L0XMM(TofSensor* tofSensor) {
     return data->RangeMilliMeter;
 }
 
-void initTofSensorVL53L0X(TofSensor* tofSensor,
+bool initTofSensorVL53L0X(TofSensor* tofSensor,
         TofSensorVL53L0X* tofSensorVL53L0X,
         I2cBusConnection* i2cBusConnection,
         char* name,
         unsigned int thresholdDistanceMM,
         float orientationRadian) {
     tofSensorVL53L0X->i2cBusConnection = i2cBusConnection;
-    initTofSensor(tofSensor,
+    return initTofSensor(tofSensor,
             &tofSensorInitVL53L0X,
             &tofSensorGetDistanceVL53L0XMM,
             name,

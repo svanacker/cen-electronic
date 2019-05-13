@@ -51,7 +51,7 @@ struct TofSensor {
 /**
  * Init a Tof Sensor
  */
-void initTofSensor(TofSensor* tofSensor, 
+bool initTofSensor(TofSensor* tofSensor, 
                     tofSensorInitFunction* tofSensorInit,
                     tofSensorGetDistanceMMFunction* tofGetDistanceMM,
                     char* name,

@@ -12,7 +12,7 @@
 
 #include "../../common/math/cenMath.h"
 
-void initTofSensor(TofSensor* tofSensor, 
+bool initTofSensor(TofSensor* tofSensor, 
                     tofSensorInitFunction* tofSensorInit,
                     tofSensorGetDistanceMMFunction* tofGetDistanceMM,
                     char* name,
@@ -26,7 +26,7 @@ void initTofSensor(TofSensor* tofSensor,
     tofSensor->thresholdDistanceMM = thresholdDistanceMM;
     tofSensor->orientationRadian = orientationRadian;
     tofSensor->object = object;
-    tofSensor->tofSensorInit(tofSensor);
+    return tofSensor->tofSensorInit(tofSensor);
 }
 
 bool isTofDistanceUnderThreshold(TofSensor* tofSensor) {

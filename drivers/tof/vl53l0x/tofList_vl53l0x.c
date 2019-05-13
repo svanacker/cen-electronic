@@ -77,7 +77,6 @@ void initTofSensorListVL53L0X(TofSensorList* tofSensorList,
                               bool debug,
                               bool enableAllSensors,
                               bool changeAddressAllSensors) {
-    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
     
     initIOExpanderForTofSensorList(ioExpander, size % 8);
     initIOExpanderForTofSensorList(optionalIOExpander, size % 8);
@@ -103,10 +102,11 @@ void initTofSensorListVL53L0X(TofSensorList* tofSensorList,
         
         if (!tofSensor->enabled) {
             appendStringAndDecLN(getWarningOutputStreamLogger(), "TOF SENSOR DISABLED : ", tofIndex);
+            append(getAlwaysOutputStreamLogger(), '_');
             continue;
         }
         
-        appendStringAndDecLN(debugOutputStream, "  TOF SENSOR->START:", tofIndex);
+        appendStringAndDecLN(getDebugOutputStreamLogger(), "  TOF SENSOR->START:", tofIndex);
 
         // Get the specific structure in the provide array
         TofSensorVL53L0X* tofSensorVL53L0X = (TofSensorVL53L0X*) tofSensorVL53L0XArray;
@@ -116,7 +116,7 @@ void initTofSensorListVL53L0X(TofSensorList* tofSensorList,
 
         if (ioExpander != NULL && tofSensor->changeAddress) {
             // Activate only a specific TOF
-            appendStringAndDec(debugOutputStream, "  IO Expander Write:", tofIndex);
+            appendStringAndDec(getDebugOutputStreamLogger(), "  IO Expander Write:", tofIndex);
             
             if (tofIndex < 8) {
                 ioExpander->ioExpanderWriteSingleValue(ioExpander, tofIndex, true);
@@ -128,24 +128,38 @@ void initTofSensorListVL53L0X(TofSensorList* tofSensorList,
             }
             // Delay to let the hardware part of the Sensor VL53L0X
             timerDelayMilliSeconds(10);
-            appendStringLN(debugOutputStream, " ... OK");
+            appendStringLN(getDebugOutputStreamLogger(), " ... OK");
         }
 
-        appendString(debugOutputStream, "    INIT VL53");        
+        appendString(getDebugOutputStreamLogger(), "    INIT VL53");        
         // Initialize the VL53L0X, but with the default address
-        initTofSensorVL53L0X(tofSensor, tofSensorVL53L0X, initialTofBusConnection, "", 0, 0.0f);
-        appendStringLN(debugOutputStream, "OK");
+        bool successInit = initTofSensorVL53L0X(tofSensor, tofSensorVL53L0X, initialTofBusConnection, "", 0, 0.0f);
+        if (!successInit) {
+            append(getAlwaysOutputStreamLogger(), 'X');
+            continue;
+        }
+        
+        appendStringLN(getDebugOutputStreamLogger(), "OK");
         unsigned char tofBusAddress = VL530X_ADDRESS_0;
         if (tofSensor->changeAddress) {
             // Change the address to avoid tof I2C Address collision
             tofBusAddress = VL530X_ADDRESS_0 + ((tofIndex + 1) << 1);
         }
-        appendStringAndDec(debugOutputStream, "    CHANGE ADDRESS FROM ", VL530X_ADDRESS_0);
-        appendStringAndDec(debugOutputStream, " TO ", tofBusAddress);
+        appendStringAndDec(getDebugOutputStreamLogger(), "    CHANGE ADDRESS FROM ", VL530X_ADDRESS_0);
+        appendStringAndDec(getDebugOutputStreamLogger(), " TO ", tofBusAddress);
         I2cBusConnection* tofBusConnection = addI2cBusConnection(initialTofBusConnection->i2cBus, tofBusAddress, true);
-        tofSetAddress(tofSensorVL53L0X, tofBusConnection);
-        appendStringLN(debugOutputStream, "...OK");
+        bool succeedToChangeAddress = tofSetAddress(tofSensorVL53L0X, tofBusConnection);
+        if (succeedToChangeAddress) {
+            append(getAlwaysOutputStreamLogger(), '[');
+            appendStringLN(getDebugOutputStreamLogger(), "...OK");
+        }
+        else {
+            append(getAlwaysOutputStreamLogger(), 'X');
+            appendStringLN(getDebugOutputStreamLogger(), "...KO");
+        }
         
-        appendStringAndDecLN(debugOutputStream, "  TOF SENSOR->END:", tofIndex);
+        appendStringAndDecLN(getDebugOutputStreamLogger(), "  TOF SENSOR->END:", tofIndex);
+        
     }
+    appendCRLF(getAlwaysOutputStreamLogger());
 }
