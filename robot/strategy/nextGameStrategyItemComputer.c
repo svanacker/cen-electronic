@@ -28,6 +28,9 @@
 GameTarget* computeBestNextTarget(GameStrategyContext* strategyContext) {
     GameTarget* result = NULL;
     GameStrategy* gameStrategy = strategyContext->gameStrategy;
+    if (gameStrategy == NULL) {
+        return NULL;
+    }
     Navigation* navigation = strategyContext->navigation;
     Location* currentLocation = strategyContext->nearestLocation;
 

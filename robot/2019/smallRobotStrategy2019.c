@@ -362,6 +362,7 @@ GameStrategy* initSmallRobotStrategiesItems2019(GameStrategyContext* gameStrateg
         addGameStrategyItem(&smallRobotStrategy4AcceleratorTakeDropGoldeniumSmallDist, &smallDistributorLine1StrategyItem, &smallDistributorLine1Target);
         return &smallRobotStrategy4AcceleratorTakeDropGoldeniumSmallDist;
     }
+    writeError(STRATEGY_NOT_DEFINED);
     return NULL;
 }
 

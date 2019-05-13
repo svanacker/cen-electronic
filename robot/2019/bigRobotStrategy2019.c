@@ -434,6 +434,7 @@ GameStrategy* initBigRobotStrategiesItems2019(GameStrategyContext* gameStrategyC
         addGameStrategyItem(&bigRobotStrategy4ChaosBigDistributorLine123, &bigDistributorLine3StrategyItem, &bigDistributorLine3Target);
         return &bigRobotStrategy4ChaosBigDistributorLine123;
     }
+    writeError(STRATEGY_NOT_DEFINED);
     return NULL;
 }
 

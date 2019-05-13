@@ -235,6 +235,7 @@ void clearLastError();
 // Navigation
 #define TOO_MUCH_GAME_BOARD_ELEMENTS                                      0x5000
 #define TOO_MUCH_STRATEGIES                                               0x5010
+#define STRATEGY_NOT_DEFINED                                              0x5011
 #define TOO_MUCH_STRATEGY_ITEMS                                           0x5020
 #define TOO_MUCH_TARGETS                                                  0x5030
 #define TARGET_IS_NULL                                                    0x5031
