@@ -30,7 +30,18 @@ GameBoardElement* getGameBoardElement(GameBoardElementList* gameBoardElementList
     return result;
 }
 
-GameBoardElement* addGameBoardElement(GameBoardElementList* gameBoardElementList, GameboardPrintFunction* gameBoardPrintFunction) {
+bool reachableByOpponentAlways(GameBoard* gameBoard, int* element, float x, float y, float z) {
+    return true;
+}
+
+GameBoardElement* addReachableByOpponentRobotGameBoardElement(GameBoardElementList* gameBoardElementList, 
+                                                              GameboardPrintFunction* gameBoardPrintFunction) {
+    return addGameBoardElement(gameBoardElementList, gameBoardPrintFunction, reachableByOpponentAlways);
+}
+
+GameBoardElement* addGameBoardElement(GameBoardElementList* gameBoardElementList,
+                                      GameboardPrintFunction* gameBoardPrintFunction,
+                                      GameboardIsReachableByOpponentRobot* reachableByOpponentRobotFunction) {
     if (gameBoardElementList == NULL || gameBoardElementList->maxSize == 0) {
         writeError(ROBOT_GAMEBOARD_ELEMENT_LIST_NULL);
         return NULL;
@@ -40,6 +51,7 @@ GameBoardElement* addGameBoardElement(GameBoardElementList* gameBoardElementList
     if (size < gameBoardElementList->maxSize) {
         GameBoardElement* gameBoardElement = getGameBoardElement(gameBoardElementList, size);
         gameBoardElement->printFunction = gameBoardPrintFunction;
+        gameBoardElement->reachableByOpponentRobotFunction = reachableByOpponentRobotFunction;
         gameBoardElementList->size++;
         return gameBoardElement;
     }

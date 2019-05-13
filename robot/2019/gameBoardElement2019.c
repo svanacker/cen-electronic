@@ -136,25 +136,26 @@ void goldeniumPrint(GameBoard* gameBoard, int* element) {
 
 void addGameBoardElements2019(GameBoardElementList* gameBoardElementList) {
     // Periodic Table
-    addGameBoardElement(gameBoardElementList, &periodicTableRediumPrint);
-    addGameBoardElement(gameBoardElementList, &periodicTableGreeniumPrint);
-    addGameBoardElement(gameBoardElementList, &periodicTableBlueiumPrint);
+    addReachableByOpponentRobotGameBoardElement(gameBoardElementList, &periodicTableRediumPrint);
+    addReachableByOpponentRobotGameBoardElement(gameBoardElementList, &periodicTableGreeniumPrint);
+    addReachableByOpponentRobotGameBoardElement(gameBoardElementList, &periodicTableBlueiumPrint);
 
     // Chaos Area
-    addGameBoardElement(gameBoardElementList, &chaosAreaPrint);
+    addReachableByOpponentRobotGameBoardElement(gameBoardElementList, &chaosAreaPrint);
 
     // WeighingMachine
-    addGameBoardElement(gameBoardElementList, &weighingMachinePrint);
+    addReachableByOpponentRobotGameBoardElement(gameBoardElementList, &weighingMachinePrint);
 
     // Distributors
-    addGameBoardElement(gameBoardElementList, &bigDistributorPrint);
-    addGameBoardElement(gameBoardElementList, &smallDistributorPrint);
+    addReachableByOpponentRobotGameBoardElement(gameBoardElementList, &bigDistributorPrint);
+    addReachableByOpponentRobotGameBoardElement(gameBoardElementList, &smallDistributorPrint);
 
     // Accelerators
-    addGameBoardElement(gameBoardElementList, &acceleratorPrint);
+    addReachableByOpponentRobotGameBoardElement(gameBoardElementList, &acceleratorPrint);
 
     // puckPeriodicTablePrint
-    addGameBoardElement(gameBoardElementList, &puckPeriodicTablePrint);
-    addGameBoardElement(gameBoardElementList, &goldeniumPrint);
+    addReachableByOpponentRobotGameBoardElement(gameBoardElementList, &puckPeriodicTablePrint);
+    addReachableByOpponentRobotGameBoardElement(gameBoardElementList, &goldeniumPrint);
 
+    // Excluding zone
 }

@@ -183,7 +183,7 @@ void mainBoardCommonStrategyHandleStreamInstruction(void) {
     handleTofSensorList(gameStrategyContext, startMatch, tofSensorList, gameBoard);
     
     // Motion Management
-    updateRobotPositionFromMotorBoardToMainBoard(gameStrategyContext);
+    updateIfNeededRobotPositionFromMotorBoardToMainBoard(gameStrategyContext);
 }
 
 void mainBoardCommonStrategyMainLoop(void) {

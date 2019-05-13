@@ -2,6 +2,7 @@
 #define GAMEBOARD_H
 
 #include <stdlib.h>
+#include <stdbool.h>
 
 // Forward declaration
 struct GameBoard;
@@ -33,11 +34,21 @@ typedef struct GameBoardElement GameBoardElement;
 typedef void GameboardPrintFunction(GameBoard* gameBoard, int* element);
 
 /**
+* Type of function which must be called to know if the point is in the exclusion area.
+* This is important to avoid to detect something wrong
+* @param z is important because it could be possible that we detect something at the level of tof (between 35 / 39 cm), and not 
+* at the floor
+*/
+typedef bool GameboardIsReachableByOpponentRobot(GameBoard* gameBoard, int* element, float x, float y, float z);
+
+/**
 * Structure to store the gameboard element;
 */
 struct GameBoardElement {
     /** The function which will be used to be print. */
     GameboardPrintFunction* printFunction;
+    /** If we consider that this area is not reachable by the robot (so we do not stop if the Time Of Flight show a specific presence). */
+    GameboardIsReachableByOpponentRobot* reachableByOpponentRobotFunction;
 };
 
 /**
