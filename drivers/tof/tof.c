@@ -26,6 +26,9 @@ bool initTofSensor(TofSensor* tofSensor,
     tofSensor->thresholdDistanceMM = thresholdDistanceMM;
     tofSensor->orientationRadian = orientationRadian;
     tofSensor->object = object;
+    // TODO : VL53L0X value of beam angle : https://forum.pololu.com/t/vl53l0x-beam-width-angle/11483
+    // Be it could change for another tof
+    tofSensor->beamAngleRadian = degToRad(25.0f);
     return tofSensor->tofSensorInit(tofSensor);
 }
 
@@ -37,9 +40,43 @@ bool isTofDistanceUnderThreshold(TofSensor* tofSensor) {
     return (distance != 0 && distance < tofSensor->thresholdDistanceMM);
 }
 
+/**
+ * We compute the real point of the tofSensor by taking into account
+ * - The position (polar coordinates) of the tofSensor
+ * - The distance to the center of the Robot
+ */
+void tofComputeTofPointOfView(TofSensor* tofSensor, Point* robotCentralPoint, float robotOrientation, Point* resultPoint) {
+    // We compute the real point of the tofSensor by taking into account
+// - The position (polar coordinates) of the tofSensor
+// - The distance to the center of the Robot
+    computeDirectionPoint(robotCentralPoint,
+        resultPoint,
+        tofSensor->distanceFromRobotCenter,
+        robotOrientation + 
+        tofSensor->angleFromRobotCenter
+        );
+}
+
+void tofComputePoint(TofSensor* tofSensor,
+                     Point* tofPointOfView,
+                     float pointOfViewAngleRadian,
+                     float distance, 
+                     float coneAngle,
+                     Point* resultPoint) {
+    // we compute the projection of the point along the point of view angle
+    // But from the point of view of the tofSensor
+    computeDirectionPoint(tofPointOfView,
+        resultPoint,
+        (float)distance,
+        pointOfViewAngleRadian
+        + tofSensor->orientationRadian
+        + coneAngle);
+
+}
+
 bool tofComputeDetectedPointIfAny(TofSensor* tofSensor, Point* pointOfView, float pointOfViewAngleRadian, Point* pointToUpdateIfAny) {
     unsigned int distance = tofSensor->lastDistanceMM;
-    // If No Point of View is provided
+    // If No Point of View (Robot Position) is provided
     if (pointOfView == NULL) {
         return false;
     }
@@ -51,20 +88,19 @@ bool tofComputeDetectedPointIfAny(TofSensor* tofSensor, Point* pointOfView, floa
     // We compute the real point of the tofSensor by taking into account
     // - The position (polar coordinates) of the tofSensor
     // - The distance to the center of the Robot
-    Point pointOfTofAgainstCenterOfTheRobot;    
-    computeDirectionPoint(pointOfView,
-                          &pointOfTofAgainstCenterOfTheRobot,
-                          tofSensor->distanceFromRobotCenter,
-                          tofSensor->angleFromRobotCenter +
-                          pointOfViewAngleRadian);
+    Point tofPointOfView;    
+    tofComputeTofPointOfView(tofSensor, pointOfView, pointOfViewAngleRadian, &tofPointOfView);
     
     // we compute the projection of the point along the point of view angle
     // But from the point of view of the tofSensor
-    computeDirectionPoint(&pointOfTofAgainstCenterOfTheRobot,
-                          pointToUpdateIfAny, 
-                          (float) distance,
-                           pointOfViewAngleRadian
-                         + tofSensor->orientationRadian);
+    tofComputePoint(tofSensor,
+                            &tofPointOfView, 
+                            pointOfViewAngleRadian + tofSensor->orientationRadian,
+                            (float) distance,
+                            // We could not know the real angle of the tof in VL530X
+                            // In that case, we consider that the point is forward and has no coneAngle (0° and not between -15° and +15°)
+                            0.0f,
+                            pointToUpdateIfAny);
     
     return true;
 }

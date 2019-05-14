@@ -37,6 +37,8 @@ struct TofSensor {
     unsigned int lastDistanceMM;
     /** Stored the threshold for which we would like that it raises a notification. */
     unsigned int thresholdDistanceMM;
+    /** The beam angle of what he could detect. */
+    float beamAngleRadian;
     /** pointer on other object (useful for I2C Connection for example) .*/
     /** Store the angle in radian of the sensor compared to the robot. We use the same coordinates than for Robot. */
     float orientationRadian;
@@ -69,8 +71,31 @@ bool initTofSensor(TofSensor* tofSensor,
  */
 bool isTofDistanceUnderThreshold(TofSensor* tofSensor);
 
+/**
+ * We compute the real point of the tofSensor by taking into account
+ * - The point of view (robotCentralPoint) and his orientation
+ * - The position (polar coordinates) of the tofSensor
+ * - The distance to the center of the Robot
+ */
+void tofComputeTofPointOfView(TofSensor* tofSensor, Point* robotCentralPoint, float robotOrientation, Point* resultPoint);
+
+void tofComputePoint(TofSensor* tofSensor,
+    Point* tofPointOfView,
+    float pointOfViewAngleRadian,
+    float distance,
+    float coneAngle,
+    Point* resultPoint);
+
+/**
+ * Compute if a something is detected from the pointOfView (Robot->position and robot->angle) and if something is detected,
+ * them the point given in parameter will be updated.
+ * @return true if a something was detected
+ */
 bool tofComputeDetectedPointIfAny(TofSensor* tofSensor, Point* pointOfView, float pointOfViewAngleRadian, Point* pointToUpdateIfAny);
 
+/**
+ * 
+ */
 bool isTofSensorBackwardOriented(TofSensor* tofSensor);
 
 #endif

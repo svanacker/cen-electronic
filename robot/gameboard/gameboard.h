@@ -42,6 +42,21 @@ typedef void GameboardPrintFunction(GameBoard* gameBoard, int* element);
 typedef bool GameboardIsReachableByOpponentRobot(GameBoard* gameBoard, int* element, float x, float y, float z);
 
 /**
+ * Type of element to know if we must draw, or just manage it just for collision.
+ */
+enum GameBoardElementType {
+    /** Type undefined. */
+    GAME_BOARD_ELEMENT_UNKNOWN = 0,
+    /** The element is just a print and not must manage the reacheability. */
+    GAME_BOARD_ELEMENT_PRINT_ONLY = 1,
+    /** The element is just something used to manage the collision. */
+    GAME_BOARD_ELEMENT_REACHABLE_ONLY = 2,
+    /** The element could be drawn and is used to manage the collision. */
+    GAME_BOARD_ELEMENT_PRINT_AND_REACHABLE = 3
+};
+
+
+/**
 * Structure to store the gameboard element;
 */
 struct GameBoardElement {
@@ -78,15 +93,20 @@ typedef struct GameBoard {
     BSplineCurve* gameBoardCurve;
     // pixels of the gameboard
     char pixels[GAMEBOARD_COLUMN_COUNT + 1][GAMEBOARD_LINE_COUNT + 1];
-    // Show Location
+    // Show Location Name
     bool showLocation;
-    // Show Path
+    // Show Path Line
     bool showPath;
     // Show unavailable Path
     bool showUnavailablePath;
     // show Outgoing Path
     bool showOutgoingPath;
-
+    // Show Unreachable Area
+    bool showUnreachableArea;
+    // Show Robot
+    bool showRobot;
+    // Show Robot Cone with Angle
+    bool showRobotTofsCones;
 // Color are only manage on Windows !
 #ifdef _MSC_VER
     // colors (foreground and background) of the gameboard

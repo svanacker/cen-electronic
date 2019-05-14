@@ -29,7 +29,6 @@
 #define TOF_SENSOR_VL53L0X_VALUE_HEX_COLUMN_LENGTH                          7
 #define TOF_SENSOR_VL53L0X_VALUE_OBJECT_X_COLUMN_LENGTH                     7
 #define TOF_SENSOR_VL53L0X_VALUE_OBJECT_Y_COLUMN_LENGTH                     7
-#define TOF_SENSOR_VL53L0X_VALUE_OBJECT_IN_GAME_BOARD_COLUMN_LENGTH         5
 
 #define TOF_SENSOR_VL53L0X_LAST_COLUMN		                                0
 
@@ -52,7 +51,6 @@ void printTofSensorDebugTableHeaderVL53L0X(OutputStream* outputStream) {
     appendStringHeader(outputStream, "Dist", TOF_SENSOR_VL53L0X_VALUE_HEX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Detect.", TOF_SENSOR_VL53L0X_VALUE_OBJECT_X_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Detect.", TOF_SENSOR_VL53L0X_VALUE_OBJECT_Y_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "Detect.", TOF_SENSOR_VL53L0X_VALUE_OBJECT_IN_GAME_BOARD_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, TOF_SENSOR_VL53L0X_LAST_COLUMN);
 
     // Second header line
@@ -153,13 +151,10 @@ void printTofSensorTableVL53L0X(OutputStream* outputStream, TofSensorList* tofSe
             if (detected) {
                 appendDecfTableData(outputStream, detectedPoint.x, TOF_SENSOR_VL53L0X_VALUE_OBJECT_X_COLUMN_LENGTH);
                 appendDecfTableData(outputStream, detectedPoint.y, TOF_SENSOR_VL53L0X_VALUE_OBJECT_Y_COLUMN_LENGTH);
-                bool isColliding = isPointInTheCollisionArea(NULL, &detectedPoint);
-                appendBoolAsStringTableData(outputStream, isColliding, TOF_SENSOR_VL53L0X_VALUE_OBJECT_IN_GAME_BOARD_COLUMN_LENGTH);
             }
             else {
                 appendStringTableData(outputStream, "-", TOF_SENSOR_VL53L0X_VALUE_OBJECT_X_COLUMN_LENGTH);
                 appendStringTableData(outputStream, "-", TOF_SENSOR_VL53L0X_VALUE_OBJECT_Y_COLUMN_LENGTH);        
-                appendStringTableData(outputStream, "-", TOF_SENSOR_VL53L0X_VALUE_OBJECT_IN_GAME_BOARD_COLUMN_LENGTH);        
             }
         }
         appendEndOfTableColumn(outputStream, TOF_SENSOR_VL53L0X_LAST_COLUMN);

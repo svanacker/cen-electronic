@@ -49,6 +49,10 @@ void initGameBoard(GameBoard* gameBoard,
     gameBoard->showPath = true;
     gameBoard->showUnavailablePath = true;
     gameBoard->showOutgoingPath = false;
+    gameBoard->showUnreachableArea = true;
+    gameBoard->showRobot = true;
+    gameBoard->showRobotTofsCones = true;
+
     gameBoard->gameBoardElementList = gameBoardElementList;
     gameBoard->gameBoardCurve = gameBoardSplineCurve;
     initGameBoardElementList(gameBoardElementList, gameBoardElementListArray, gameBoardElementListSize);
@@ -137,6 +141,35 @@ void drawRobot(GameBoard* gameBoard, Point* robotPosition, float angle) {
     setGameBoardCurrentColor(gameBoard, 0);
 }
 
+void drawRobotTofsCones(GameBoard* gameBoard, Point* robotPosition, float angle, TofSensorList* tofSensorList) {
+    unsigned int index;
+    for (index = 0; index < tofSensorList->size; index++) {
+        TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, index);
+        if (!tofSensor->enabled) {
+            continue;
+        }
+
+        // Compute the tof Point of View
+        Point tofPointOfView;
+        tofComputeTofPointOfView(tofSensor, robotPosition, angle, &tofPointOfView);
+        
+        // We now do a variation of angle and a variation of distance to "paint" the tof cone angle
+        float angle = -tofSensor->beamAngleRadian / 2.0f;
+        float maxAngle = tofSensor->beamAngleRadian / 2.0f;
+        float stepAngle = tofSensor->beamAngleRadian / 10.0f;
+        float distance;
+        // step Distance about 5 cm
+        float stepDistance = 100.0f;
+        for (angle = 0.0f; angle < maxAngle; angle += stepAngle) {
+            for (distance = 0.0f; distance < tofSensor->thresholdDistanceMM; distance += stepDistance) {
+                Point p1;
+                tofComputePoint(tofSensor, &tofPointOfView, angle, distance, angle, &p1);
+                drawPointCoordinates(gameBoard, p1.x, p1.y, '[');
+            }
+        }
+    }
+}
+
 // GAMEBOARD
 
 void gameboardBorderPrint(GameBoard* gameBoard, int* element) {
@@ -221,7 +254,7 @@ void fillGameBoardCharElements(GameBoard* gameBoard, int* element) {
         for (i = 0; i < pathSize; i++) {
             PathData* pathData = getPath(pathList, i);
             // We try to use the alphabet to avoid that path could not be easily read
-            unsigned char c = (char) ((i % 26) + 97);
+            unsigned char c = (char)((i % 26) + 97);
             gamePathPrint(gameBoard, (int*)pathData, c);
         }
     }
@@ -261,11 +294,22 @@ void fillGameBoardCharElements(GameBoard* gameBoard, int* element) {
     for (i = 0; i < targetSize; i++) {
         GameTarget* gameTarget = gameTargetList->targets[i];
 
-        gameTargetPrint(gameBoard, (int*) gameTarget);
+        gameTargetPrint(gameBoard, (int*)gameTarget);
     }
 
     // Robot
-    drawRobot(gameBoard, gameStrategyContext->robotPosition, gameStrategyContext->robotAngleRadian);
+    if (gameBoard->showRobot) {
+        drawRobot(gameBoard, gameStrategyContext->robotPosition, gameStrategyContext->robotAngleRadian);
+    }
+
+    // Robot Tof Conte
+    if (gameBoard->showRobotTofsCones) {
+        // TODO
+        drawRobotTofsCones(gameBoard, 
+                           gameStrategyContext->robotPosition,
+                           gameStrategyContext->robotAngleRadian, 
+                           gameStrategyContext->tofSensorList);
+    }
 
     // Last Obstacle
     drawLastObstacle(gameBoard, gameStrategyContext->lastObstaclePosition);

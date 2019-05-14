@@ -93,7 +93,7 @@ void mainBoardMainPhase2(void) {
     mainBoardCommonInitTimerList();
     mainBoardCommonInitCommonDrivers();
 
-    mainBoardCommonTofInitDrivers(mainBoardCommonGetMainI2cBus(), MAIN_EXPERIENCE_2019_TOF_SENSOR_LIST_COUNT);
+    mainBoardCommonTofInitDrivers(mainBoardCommonGetMainI2cBus(), mainBoardCommonGetAlternativeI2cBus(), MAIN_EXPERIENCE_2019_TOF_SENSOR_LIST_COUNT);
     
     // 2019 specific
     initElectronLauncher2019(&launcher, 

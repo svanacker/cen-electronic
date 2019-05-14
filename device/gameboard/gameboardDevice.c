@@ -86,6 +86,39 @@ void deviceGameboardHandleRawData(unsigned char commandHeader, InputStream* inpu
         GameBoard* gameBoard = getGameboardDeviceGameBoard();
         gameBoard->showOutgoingPath = false;
     }
+    // Show/Hide Robot
+    else if (commandHeader == COMMAND_GAME_BOARD_SHOW_ROBOT) {
+        ackCommand(outputStream, GAME_BOARD_DEVICE_HEADER, COMMAND_GAME_BOARD_SHOW_ROBOT);
+        GameBoard* gameBoard = getGameboardDeviceGameBoard();
+        gameBoard->showRobot = true;
+    }
+    else if (commandHeader == COMMAND_GAME_BOARD_HIDE_ROBOT) {
+        ackCommand(outputStream, GAME_BOARD_DEVICE_HEADER, COMMAND_GAME_BOARD_HIDE_ROBOT);
+        GameBoard* gameBoard = getGameboardDeviceGameBoard();
+        gameBoard->showRobot = false;
+    }
+    // Show/Hide Robot Tof Cone
+    else if (commandHeader == COMMAND_GAME_BOARD_SHOW_ROBOT_TOF_CONE) {
+        ackCommand(outputStream, GAME_BOARD_DEVICE_HEADER, COMMAND_GAME_BOARD_SHOW_ROBOT_TOF_CONE);
+        GameBoard* gameBoard = getGameboardDeviceGameBoard();
+        gameBoard->showRobotTofsCones = true;
+    }
+    else if (commandHeader == COMMAND_GAME_BOARD_HIDE_ROBOT_TOF_CONE) {
+        ackCommand(outputStream, GAME_BOARD_DEVICE_HEADER, COMMAND_GAME_BOARD_HIDE_ROBOT_TOF_CONE);
+        GameBoard* gameBoard = getGameboardDeviceGameBoard();
+        gameBoard->showRobotTofsCones = false;
+    }
+    // Show/Hide Unreachable Area
+    else if (commandHeader == COMMAND_GAME_BOARD_HIDE_UNREACHABLE_AREA) {
+        ackCommand(outputStream, GAME_BOARD_DEVICE_HEADER, COMMAND_GAME_BOARD_HIDE_UNREACHABLE_AREA);
+        GameBoard* gameBoard = getGameboardDeviceGameBoard();
+        gameBoard->showUnreachableArea = true;
+    }
+    else if (commandHeader == COMMAND_GAME_BOARD_HIDE_UNREACHABLE_AREA) {
+        ackCommand(outputStream, GAME_BOARD_DEVICE_HEADER, COMMAND_GAME_BOARD_HIDE_UNREACHABLE_AREA);
+        GameBoard* gameBoard = getGameboardDeviceGameBoard();
+        gameBoard->showUnreachableArea = false;
+    }
 }
 
 static DeviceDescriptor descriptor = {

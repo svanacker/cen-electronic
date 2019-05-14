@@ -21,6 +21,18 @@
 #define COMMAND_GAME_BOARD_SHOW_OUTGOING_PATH         'O'
 #define COMMAND_GAME_BOARD_HIDE_OUTGOING_PATH         'o'
 
+// Show Robot
+#define COMMAND_GAME_BOARD_SHOW_ROBOT                 'R'
+#define COMMAND_GAME_BOARD_HIDE_ROBOT                 'r'
+
+// Show Robot Tof Cone with angle
+#define COMMAND_GAME_BOARD_SHOW_ROBOT_TOF_CONE        'T'
+#define COMMAND_GAME_BOARD_HIDE_ROBOT_TOF_CONE        't'
+
+// Show Unreachable Path
+#define COMMAND_GAME_BOARD_SHOW_UNREACHABLE_AREA      'U'
+#define COMMAND_GAME_BOARD_HIDE_UNREACHABLE_AREA      'u'
+
 /**
 * Interface for Device
 */

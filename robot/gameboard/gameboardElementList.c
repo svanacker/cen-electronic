@@ -34,6 +34,10 @@ bool reachableByOpponentAlways(GameBoard* gameBoard, int* element, float x, floa
     return true;
 }
 
+bool rectangleUnReachableByOpponentAlways(GameBoard* gameBoard, int* element, float x, float y, float width, float height) {
+    return false;
+}
+
 GameBoardElement* addReachableByOpponentRobotGameBoardElement(GameBoardElementList* gameBoardElementList, 
                                                               GameboardPrintFunction* gameBoardPrintFunction) {
     return addGameBoardElement(gameBoardElementList, gameBoardPrintFunction, reachableByOpponentAlways);

@@ -61,6 +61,32 @@ int deviceGameBoardGetInterface(unsigned char commandHeader, DeviceInterfaceMode
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
+    // Show/Hide Robot
+    else if (commandHeader == COMMAND_GAME_BOARD_SHOW_ROBOT) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("Show Robot");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }
+    else if (commandHeader == COMMAND_GAME_BOARD_HIDE_ROBOT) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("Hide Robot");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }
+    // Show/Hide Robot Cone
+    else if (commandHeader == COMMAND_GAME_BOARD_SHOW_ROBOT_TOF_CONE) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("Show Robot Tofs Cone");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }
+    else if (commandHeader == COMMAND_GAME_BOARD_HIDE_ROBOT_TOF_CONE) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("Hide Robot Tofs Cone");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }
     // Show/Hide Outgoing Path
     else if (commandHeader == COMMAND_GAME_BOARD_SHOW_OUTGOING_PATH) {
         if (fillDeviceArgumentList) {
@@ -74,6 +100,20 @@ int deviceGameBoardGetInterface(unsigned char commandHeader, DeviceInterfaceMode
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
+    // Show/Hide Unreachable Area
+    else if (commandHeader == COMMAND_GAME_BOARD_SHOW_UNREACHABLE_AREA) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("Show Unreachable Area");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }
+    else if (commandHeader == COMMAND_GAME_BOARD_HIDE_UNREACHABLE_AREA) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("Hide  Unreachable Area");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }
+    // Show/Hide Robot
     return DEVICE_HEADER_NOT_HANDLED;
 }
 
