@@ -290,7 +290,8 @@ void initSmallRobotPaths2019(GameStrategyContext* gameStrategyContext) {
 
 void initSmallRobotTargets2019(GameStrategyContext* gameStrategyContext) {
     clearGameTargets();
-    addGameTarget(&acceleratorTarget, "ACC_TARGET", SCORE_POINT_2019_LAUNCH_BLUIUM_IN_ACCELERATOR, acceleratorFrontLocation, acceleratorFrontLocation);
+    gameStrategyContext->endMatch->scoreToShow += SCORE_POINT_2019_EXPERIENCE_READY;
+    addGameTarget(&acceleratorTarget, "ACC_TARGET", SCORE_POINT_2019_EXPERIENCE_ACTIVATED_AND_OK + SCORE_POINT_2019_LAUNCH_BLUIUM_IN_ACCELERATOR, acceleratorFrontLocation, acceleratorFrontLocation);
     addGameTarget(&goldeniumTakeTarget, "GOLD_TAKE_TARGET", SCORE_POINT_2019_EXTRACT_GOLDENIUM, goldeniumFrontLocation, goldeniumFrontLocation);
     addGameTarget(&goldeniumDropTarget, "GOLD_DROP_TARGET", SCORE_POINT_2019_WEIGHING_MACHINE_GOLDENIUM, weighingMachineDropLocation, weighingMachineDropLocation);
     // TODO : SCORE_POINT_2019_ADD_ATOM_ACCELERATOR is false

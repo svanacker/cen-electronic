@@ -202,7 +202,6 @@ void mainBoardCommonStrategyMainLoop(void) {
             nextTargetOrNextStep(gameStrategyContext);
         }
         // After each instruction => Export the score to endMatch Device
-        endMatch->scoreToShow = gameStrategyContext->score;
         if (showEndAndScoreIfNeeded(endMatch, getAlwaysOutputStreamLogger())) {
             break;
         }

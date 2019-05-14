@@ -71,8 +71,6 @@ struct GameStrategyContext {
     enum TeamColor color;
     /** Strategy Id. If strategy = 0 => NO_STRATEGY. Be careful, strategy Id <> strategy Index in strategy List */
     signed int strategyId;
-    /** Score*/
-    unsigned int score;
     // End Match to avoid to do thing without timer
     EndMatch* endMatch;
     /** TofSensorList tof Sensor List */

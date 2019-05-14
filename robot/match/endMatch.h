@@ -51,6 +51,13 @@ void markStartMatch(EndMatch* endMatch);
 void resetStartMatch(EndMatch* endMatch);
 
 /**
+ * Show the remaining time (before clear the screen).
+ * @param endMatch
+ * @param outputStream
+ */
+void showRemainingTime(EndMatch* endMatch, OutputStream* outputStream);
+
+/**
 * Show to an output Stream the result of the match.
 * @return true if we have shown the end of the match
 */

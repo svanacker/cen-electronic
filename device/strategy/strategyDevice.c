@@ -217,7 +217,7 @@ void deviceStrategyHandleRawData(unsigned char commandHeader, InputStream* input
     else if (commandHeader == COMMAND_STRATEGY_GET_GLOBAL_SCORE) {
         ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_STRATEGY_GET_GLOBAL_SCORE);
         GameStrategyContext* context = getStrategyDeviceGameStrategyContext();
-        appendHex4(outputStream, context->score);
+        appendHex4(outputStream, context->endMatch->scoreToShow);
     }
     // TARGET 
     else if (commandHeader == COMMAND_TARGET_LIST_DEBUG) {

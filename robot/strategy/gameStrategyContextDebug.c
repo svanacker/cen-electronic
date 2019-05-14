@@ -145,7 +145,7 @@ void printGameStrategyContext(OutputStream* outputStream, GameStrategyContext* c
 
     // global Score
     appendStringTableData(outputStream, "Global Score", GAME_STRATEGY_CONTEXT_KEY_COLUMN_LENGTH);
-    appendDecTableData(outputStream, context->score, GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
+    appendDecTableData(outputStream, context->endMatch->scoreToShow, GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
     appendStringTableData(outputStream, "points", GAME_STRATEGY_CONTEXT_UNIT_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, GAME_STRATEGY_CONTEXT_LAST_COLUMN);
     appendTableHeaderSeparatorLine(outputStream);

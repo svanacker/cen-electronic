@@ -13,6 +13,7 @@
 
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
+#include "error.h"
 
 
 // SPECIFIC PART
@@ -37,11 +38,19 @@ void initEndMatch(EndMatch* endMatch, RobotConfig* robotConfig, unsigned int mat
 }
 
 void markStartMatch(EndMatch* endMatch) {
+    if (endMatch == NULL) {
+        writeError(ROBOT_END_MATCH_NULL);
+        return;
+    }
     endMatch->endMatchDetectorDeviceTimer->enabled = true;
     endMatch->currentTimeInSecond = 0;
 }
 
 void resetStartMatch(EndMatch* endMatch) {
+    if (endMatch == NULL) {
+        writeError(ROBOT_END_MATCH_NULL);
+        return;
+    }
     endMatch->endMatchDetectorDeviceTimer->enabled = false;
     endMatch->currentTimeInSecond = 0;
 }
@@ -56,6 +65,16 @@ unsigned int matchEndGetRemainingTime(EndMatch* endMatch) {
     else {
         return endMatch->matchDurationInSecond - endMatch->currentTimeInSecond;
     }
+}
+
+void showRemainingTime(EndMatch* endMatch, OutputStream* outputStream) {
+    if (isMatchFinished(endMatch)) {
+        return;
+    }
+    clearScreen();
+    appendString(outputStream, "Remain. Time:");
+    appendDec(outputStream, matchEndGetRemainingTime(endMatch));
+    appendStringLN(outputStream, " s");
 }
 
 void showEndAndScore(EndMatch* endMatch, OutputStream* outputStream) {

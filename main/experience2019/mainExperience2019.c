@@ -35,10 +35,16 @@
 #include "../../robot/2019/electronLauncherDevice2019.h"
 #include "../../robot/2019/electronLauncherDeviceInterface2019.h"
 
+#include "../../robot/match/endMatch.h"
+#include "../../robot/match/endMatchDebug.h"
+#include "../../robot/match/endMatchDetectorDevice.h"
+#include "../../robot/match/endMatchDetectorDeviceInterface.h"
+
+
 // Robot Configuration
 static RobotConfig robotConfig;
 static ElectronLauncher2019 launcher;
-
+static EndMatch endMatch;
 /**
  * @private
  */
@@ -51,7 +57,7 @@ void initMainBoardDevicesDescriptor() {
     
     // 2019 specific
     addLocalDevice(getElectronLauncher2019DeviceInterface(), getElectronLauncher2019DeviceDescriptor(&launcher));
-
+    addLocalDevice(getEndMatchDetectorDeviceInterface(), getEndMatchDetectorDeviceDescriptor(&endMatch));
 
     // Call the init on each devices
     initDevices();
@@ -96,10 +102,13 @@ void mainBoardMainPhase2(void) {
     mainBoardCommonTofInitDrivers(mainBoardCommonGetMainI2cBus(), mainBoardCommonGetAlternativeI2cBus(), MAIN_EXPERIENCE_2019_TOF_SENSOR_LIST_COUNT);
     
     // 2019 specific
-    initElectronLauncher2019(&launcher, 
+    initElectronLauncher2019(&launcher,
+                             &endMatch,
                              &robotConfig,
                              mainBoardCommonGetServoList(),
                              mainBoardCommonTofGetTofSensorList());
+    
+    initEndMatch(&endMatch, &robotConfig, MATCH_DURATION);
 }
 
 void mainBoardMainPhase3(void) {

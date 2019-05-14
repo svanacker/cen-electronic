@@ -44,6 +44,9 @@ unsigned int printElectronLauncherState(OutputStream* outputStream, enum Electro
     else if (state == LAUNCHER_STATE_LAUNCHED) {
         return appendString(outputStream, "LAUNCHED");
     }
+    else if (state == LAUNCHER_STATE_SHOW_REMAINING_TIME) {
+        return appendString(outputStream, "SHOW REMAINING TIME");
+    }
     else {
         return appendString(outputStream, "???");
     }

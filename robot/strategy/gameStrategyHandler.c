@@ -129,6 +129,10 @@ bool handleActions(GameStrategyContext* gameStrategyContext) {
 
     // Update the status of the target from the status of each actions
     updateTargetStatus(currentTarget);
+    if (currentTarget->status == TARGET_HANDLED) {
+        currentTarget->gain = currentTarget->potentialGain;
+        gameStrategyContext->endMatch->scoreToShow += (int) currentTarget->gain;
+    }
 
     return true;
 }

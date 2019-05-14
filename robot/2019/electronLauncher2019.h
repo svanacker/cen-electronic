@@ -7,6 +7,7 @@
 #include "../../drivers/tof/tofList.h"
 
 #include "../../robot/config/robotConfig.h"
+#include "../../robot/match/endMatch.h"
 
 // SERVO INDEX
 
@@ -60,6 +61,9 @@ enum ElectronLauncher2019State {
     LAUNCHER_STATE_TO_LAUNCH = 6,
     // The launcher was launched
     LAUNCHER_STATE_LAUNCHED = 7,
+    
+    // SHOW REMAINING TIME
+    LAUNCHER_STATE_SHOW_REMAINING_TIME = 8
 };
 
 
@@ -71,6 +75,8 @@ typedef struct {
     enum ElectronLauncher2019State state;
     /** If we must do the next action or not in the main Loop. */
     bool doNextAction;
+    /** The End Match object. */
+    EndMatch* endMatch;
     /** The robot Config. */
     RobotConfig* robotConfig;
     /** The tof Index. */
@@ -93,6 +99,7 @@ typedef struct {
 * Initialize the Electron Launcher 2019 and add a timer to check every 100 ms
 */
 void initElectronLauncher2019(ElectronLauncher2019* launcher,
+                              EndMatch* endMatch,
                               RobotConfig* robotConfig,
                               ServoList* servoList,
                               TofSensorList* tofSensorList);

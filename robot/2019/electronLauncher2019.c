@@ -16,6 +16,8 @@
 
 #include "../../robot/config/robotConfig.h"
 
+#include "../../robot/match/endMatch.h"
+
 void updateElectronLauncherState(ElectronLauncher2019* launcher, enum ElectronLauncher2019State newState) {
     if (launcher == NULL) {
         writeError(ELECTRON_LAUNCHER_2019_NULL);
@@ -119,6 +121,21 @@ void checkElectronLauncher2019ToLaunch(ElectronLauncher2019* launcher) {
     electronLauncher2019Launch(launcher);
 }
 
+void checkElectronLauncher2019ShowRemainingTime(ElectronLauncher2019* launcher) {
+    if (launcher == NULL) {
+        writeError(ELECTRON_LAUNCHER_2019_NULL);
+        return;
+    }
+    if (launcher->state != LAUNCHER_STATE_SHOW_REMAINING_TIME) {
+        return;
+    }
+    EndMatch* endMatch = launcher->endMatch;
+    if (endMatch == NULL) {
+        writeError(ROBOT_END_MATCH_NULL);
+    }
+    showRemainingTime(endMatch, getAlwaysOutputStreamLogger());
+}
+
 // ACTIONS
 
 void electronLauncher2019Launch(ElectronLauncher2019* launcher) {
@@ -134,6 +151,7 @@ void electronLauncher2019Launch(ElectronLauncher2019* launcher) {
         pwmServo(electronServo, PWM_SERVO_SPEED_MAX, ELECTRON_LAUNCHER_2019_ELECTRON_LOCKED_SERVO_VALUE, true);
     }
     updateElectronLauncherState(launcher, LAUNCHER_STATE_LAUNCHED);
+    markStartMatch(launcher->endMatch);
 }
 
 void electronLauncher2019Show(ElectronLauncher2019* launcher) {
@@ -195,9 +213,11 @@ void electronLauncher2019CallbackFunc(Timer* timer) {
 // INIT
 
 void initElectronLauncher2019(ElectronLauncher2019* launcher,
+    EndMatch* endMatch,
     RobotConfig* robotConfig,
     ServoList* servoList,
     TofSensorList* tofSensorList) {
+    launcher->endMatch = endMatch;
     launcher->robotConfig = robotConfig;
     launcher->servoList = servoList;
     launcher->tofSensorList = tofSensorList;
@@ -245,6 +265,10 @@ void handleElectronLauncherActions(ElectronLauncher2019* launcher) {
         updateElectronLauncherState(launcher, LAUNCHER_STATE_TO_LAUNCH);
         return;
     }
+    if (launcher->state == LAUNCHER_STATE_LAUNCHED) {
+        updateElectronLauncherState(launcher, LAUNCHER_STATE_SHOW_REMAINING_TIME);
+        return;
+    }
     // Show the distance
     TofSensor* tofSensor = launcher->tofSensor;
     if (tofSensor == NULL) {
@@ -258,6 +282,7 @@ void handleElectronLauncherActions(ElectronLauncher2019* launcher) {
     checkElectronLauncher2019RobotPlaced(launcher);
     checkElectronLauncher2019RobotMoved(launcher);
     checkElectronLauncher2019ToLaunch(launcher);
+    checkElectronLauncher2019ShowRemainingTime(launcher);
     
     // Avoid to do it in continous mode
     launcher->doNextAction = false;

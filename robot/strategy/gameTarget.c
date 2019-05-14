@@ -9,7 +9,7 @@
 void clearGameTarget(GameTarget* target) {
     target->name = "?";
     target->potentialGain = 0;
-    target->status = TARGET_HANDLED;
+    target->status = TARGET_AVAILABLE;
     
     if (&(target->actionList) != NULL) {
         clearTargetActionList(&(target->actionList));

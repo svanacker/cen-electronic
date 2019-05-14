@@ -282,6 +282,7 @@ void clearLastError();
 
 #define ROBOT_START_MATCH_DETECTOR_PC_FILE_LENGTH_ERROR                   0x6200
 #define ROBOT_START_MATCH_DETECTOR_PC_NULL                                0x6201
+#define ROBOT_END_MATCH_NULL                                              0x6202
 
 #define ROBOT_CONFIG_MUST_BE_0_OR_1_CHAR_ERROR                            0x6300
 #define ROBOT_CONFIG_MUST_BE_SPACE_CHAR_ERROR                             0x6301
