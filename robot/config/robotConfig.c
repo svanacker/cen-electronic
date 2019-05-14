@@ -25,5 +25,5 @@ unsigned int getConfigValue(RobotConfig* robotConfig) {
 }
 
 bool isSonarActivated(RobotConfig* robotConfig) {
-    return isConfigSet(robotConfig, CONFIG_SONAR_FAR_MASK | CONFIG_SONAR_NEAR_MASK);
+    return (getConfigValue(robotConfig) & CONFIG_SONAR_MASK) != 0;
 }

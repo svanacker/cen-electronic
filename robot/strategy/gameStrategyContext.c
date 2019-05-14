@@ -82,10 +82,18 @@ void initGameStrategyContext(GameStrategyContext* gameStrategyContext,
 void showGameStrategyContextTeamColorAndStrategy(GameStrategyContext* gameStrategyContext) {
     OutputStream* outputStream = getAlwaysOutputStreamLogger();
     // COLOR
-    appendString(outputStream, "COLOR:");
     appendTeamColorAsString(outputStream, gameStrategyContext->color);
     // STRATEGY
-    appendString(outputStream, ", STG:");
-    appendDec(outputStream, gameStrategyContext->strategyId);    
-    println(outputStream);
+    appendString(outputStream, ",STG:");
+    appendDec(outputStream, gameStrategyContext->strategyId);
+    // SPEED
+    appendString(outputStream, ",SPEED:");
+    RobotConfig* robotConfig = gameStrategyContext->robotConfig;
+    unsigned int speedIndex = (robotConfig->robotConfigReadInt(robotConfig) & CONFIG_SPEED_MASK) >> CONFIG_SPEED_SHIFT_BIT_VALUE;
+    appendDec(outputStream, speedIndex);
+    // TOF
+    unsigned int sonarIndex = (robotConfig->robotConfigReadInt(robotConfig) & CONFIG_SONAR_MASK) >> CONFIG_SONAR_SHIFT_BIT_VALUE;
+    appendString(outputStream, "TOF:");
+    appendDec(outputStream, sonarIndex);
+    appendSpace(outputStream);    
 }

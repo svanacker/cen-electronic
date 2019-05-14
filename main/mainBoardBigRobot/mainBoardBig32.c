@@ -117,9 +117,15 @@ void mainBoardMainPhase2(void) {
     mainBoardCommonInitTimerList();
     mainBoardCommonInitCommonDrivers();
     
-    mainBoardCommonTofInitDrivers(mainBoardCommonGetMainI2cBus(), mainBoardCommonGetAlternativeI2cBus(), MAIN_BOARD_TOF_SENSOR_LIST_LENGTH);
-    mainBoardCommonMatchMainInitDrivers(&robotConfig, isMatchStarted32, mainBoardWaitForInstruction, loopUnWaitForInstruction);
+    // Initialise the Strategy first so that we could show the color & stragegy
+    // index at a very early stage
     mainBoardCommonStrategyMainInitDrivers(&robotConfig);
+    unsigned int tofSensorCount = MAIN_BOARD_TOF_SENSOR_LIST_LENGTH; 
+    if (!isSonarActivated(&robotConfig)) {
+        tofSensorCount = 0; 
+    }
+    mainBoardCommonTofInitDrivers(mainBoardCommonGetMainI2cBus(), mainBoardCommonGetAlternativeI2cBus(), tofSensorCount);
+    mainBoardCommonMatchMainInitDrivers(&robotConfig, isMatchStarted32, mainBoardWaitForInstruction, loopUnWaitForInstruction);    
 }
 
 void mainBoardMainPhase3(void) {

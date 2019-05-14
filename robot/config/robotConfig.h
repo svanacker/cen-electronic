@@ -39,18 +39,17 @@
 // 0b 0000 0111  0000 0000
 #define CONFIG_SPEED_MASK              0x0700
 
-#define CONFIG_SHIFT_BIT_VALUE         8
+#define CONFIG_SPEED_SHIFT_BIT_VALUE         8
 
 
 // Sonar
 
-/** Use Sonar with very long detection distance during the match */
-// 0b 0000 1000  0000 0000
-#define CONFIG_SONAR_FAR_MASK          0x0800
+/** Sonar distance, 0x00 = disabled */
+// 0b 0001 1000  0000 0000
+#define CONFIG_SONAR_MASK              0x1800
 
-/** Use sonar with near detection distance */
-// 0b 0001 0000  0000 0000
-#define CONFIG_SONAR_NEAR_MASK         0x1000
+#define CONFIG_SONAR_SHIFT_BIT_VALUE       11
+
 
 // LCD - BACKLIGHT
 

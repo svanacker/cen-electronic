@@ -81,21 +81,15 @@ void printRobotTableConfig(OutputStream* outputStream, RobotConfig* robotConfig)
 	// Speed Mask
     appendStringTableData(outputStream, "Speed Index", ROBOT_CONFIG_KEY_COLUMN_LENGTH);
     appendBinary16TableData(outputStream, CONFIG_SPEED_MASK, 4, ROBOT_CONFIG_MASK_COLUMN_LENGTH);
-    appendDecTableData(outputStream, configValue & CONFIG_SPEED_MASK, ROBOT_CONFIG_VALUE_COLUMN_LENGTH);
+    appendDecTableData(outputStream, (configValue & CONFIG_SPEED_MASK) >> CONFIG_SPEED_SHIFT_BIT_VALUE, ROBOT_CONFIG_VALUE_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, ROBOT_CONFIG_LAST_COLUMN);
 
     appendTableHeaderSeparatorLine(outputStream);
 
     // Sonar FAR
-    appendStringTableData(outputStream, "Sonar FAR", ROBOT_CONFIG_KEY_COLUMN_LENGTH);
-    appendBinary16TableData(outputStream, CONFIG_SONAR_FAR_MASK, 4, ROBOT_CONFIG_MASK_COLUMN_LENGTH);
-    appendBoolTableData(outputStream, configValue & CONFIG_SONAR_FAR_MASK, ROBOT_CONFIG_VALUE_COLUMN_LENGTH);
-    appendEndOfTableColumn(outputStream, ROBOT_CONFIG_LAST_COLUMN);
-
-    // Sonar NEAR
-    appendStringTableData(outputStream, "Sonar NEAR", ROBOT_CONFIG_KEY_COLUMN_LENGTH);
-    appendBinary16TableData(outputStream, CONFIG_SONAR_NEAR_MASK, 4, ROBOT_CONFIG_MASK_COLUMN_LENGTH);
-    appendBoolTableData(outputStream, configValue & CONFIG_SONAR_NEAR_MASK, ROBOT_CONFIG_VALUE_COLUMN_LENGTH);
+    appendStringTableData(outputStream, "Sonar Mask", ROBOT_CONFIG_KEY_COLUMN_LENGTH);
+    appendBinary16TableData(outputStream, CONFIG_SONAR_MASK, 4, ROBOT_CONFIG_MASK_COLUMN_LENGTH);
+    appendDecTableData(outputStream, (configValue & CONFIG_SONAR_MASK) >> CONFIG_SONAR_SHIFT_BIT_VALUE, ROBOT_CONFIG_VALUE_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, ROBOT_CONFIG_LAST_COLUMN);
 
 	appendTableHeaderSeparatorLine(outputStream);

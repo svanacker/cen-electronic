@@ -59,12 +59,9 @@ void mainBoardCommonTofInitDrivers(I2cBus* i2cBus, I2cBus* i2cBus2, unsigned int
     tofIoExpanderBusConnection = addI2cBusConnection(i2cBus, PCF8574_ADDRESS_0, true);
     initIOExpanderPCF8574(tofIoExpander, tofIoExpanderBusConnection);
     
-    // if (tofSensorCount > 8) {
-        // Second Expander (Lateral Tofs)
-        lateralTofIoExpander = getIOExpanderByIndex(&ioExpanderList, 1);
-        lateralTofIoExpanderBusConnection = addI2cBusConnection(i2cBus2, PCF8574_ADDRESS_0, true);
-        initIOExpanderPCF8574(lateralTofIoExpander, lateralTofIoExpanderBusConnection);
-    // }
+    lateralTofIoExpander = getIOExpanderByIndex(&ioExpanderList, 1);
+    lateralTofIoExpanderBusConnection = addI2cBusConnection(i2cBus2, PCF8574_ADDRESS_0, true);
+    initIOExpanderPCF8574(lateralTofIoExpander, lateralTofIoExpanderBusConnection);
     
     // End of IOExpanderList
     appendStringLN(getDebugOutputStreamLogger(), "OK");

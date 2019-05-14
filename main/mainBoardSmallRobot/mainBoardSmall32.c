@@ -123,9 +123,15 @@ void mainBoardMainPhase2(void) {
     I2cBusConnection* servoI2cBusConnection = addI2cBusConnection(i2cBus, PCA9685_ADDRESS_0, true);
     addServoAllPca9685(servoList, servoI2cBusConnection);
 
-    mainBoardCommonTofInitDrivers(mainBoardCommonGetMainI2cBus(), mainBoardCommonGetAlternativeI2cBus(), MAIN_BOARD_TOF_SENSOR_LIST_LENGTH);
-    mainBoardCommonMatchMainInitDrivers(&robotConfig, isMatchStarted32, mainBoardWaitForInstruction, loopUnWaitForInstruction);
+    // Initialise the Strategy first so that we could show the color & stragegy
+    // index at a very early stage
     mainBoardCommonStrategyMainInitDrivers(&robotConfig);
+    unsigned int tofSensorCount = MAIN_BOARD_TOF_SENSOR_LIST_LENGTH; 
+    if (!isSonarActivated(&robotConfig)) {
+        tofSensorCount = 0; 
+    }
+    mainBoardCommonTofInitDrivers(mainBoardCommonGetMainI2cBus(), mainBoardCommonGetAlternativeI2cBus(), tofSensorCount);
+    mainBoardCommonMatchMainInitDrivers(&robotConfig, isMatchStarted32, mainBoardWaitForInstruction, loopUnWaitForInstruction);
 }
 
 void mainBoardMainPhase3(void) {
@@ -144,22 +150,10 @@ int main(void) {
     TofSensorList* tofSensorList = mainBoardCommonTofGetTofSensorList();
     ServoList* servoList = mainBoardCommonGetServoList();
     addLocalDevice(getFork2019DeviceInterface(), getFork2019DeviceDescriptor(servoList, tofSensorList));
-
- /*   
-    while (1) {
-        timerDelayMilliSeconds(10);
-        // adxl345_debugValueRegisterList(getInfoOutputStreamLogger(), adxl345BusConnection, &accelerometerData);
-        // adxl345_debugValueRegisterListIfShock(getInfoOutputStreamLogger(), adxl345BusConnection, &accelerometerData);
-        unsigned int sampleCount = adx345_readSampleCount(adxl345BusConnection);
-        if (sampleCount > 0) {
-            adxl345_debugMainRegisterList(getInfoOutputStreamLogger(), adxl345BusConnection);
-        }
-    }
-    */
-    
+   
     mainBoardCommonStrategyMainLoop();
 
-    while (1) {
+    while (true) {
         // Avoid reboot even at end
     }
 }
