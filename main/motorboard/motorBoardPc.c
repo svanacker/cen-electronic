@@ -230,24 +230,9 @@ static I2cBus* motorI2cBus;
 static I2cBusConnection* motorI2cBusConnection;
 static I2cBusConnectionPc motorI2cBusConnectionPc;
 
-// IOExpander
-static IOExpanderList ioExpanderList;
-static IOExpander ioExpanderArray[MOTOR_BOARD_PC_IO_EXPANDER_LIST_LENGTH];
-static int ioExpanderValue0;
-static int ioExpanderValue1;
-
 // Relay
 static Relay relay;
 static int relayValue;
-
-// -> Motor To Tof
-/*
-static I2cBus* tofI2cBus;
-static I2cBusConnection* tofI2cBusConnection;
-static I2cBusConnectionPc tofI2cBusConnectionPc;
-*/
-static TofSensorList tofSensorList;
-static TofSensor tofSensorArray[MOTOR_BOARD_PC_TOF_SENSOR_LIST_LENGTH];
 
 // Devices
 static Device deviceListArray[MOTOR_BOARD_PC_DEVICE_LIST_LENGTH];
@@ -359,12 +344,6 @@ void runMotorBoardPC(bool singleMode) {
             (char(*)[]) &i2cSlaveDebugOutputBufferArray,
             MOTOR_BOARD_PC_I2C_DEBUG_SLAVE_OUT_BUFFER_LENGTH);
     }
-
-    // TOF
-    initTofSensorListPc(&tofSensorList, (TofSensor(*)[]) &tofSensorArray, MOTOR_BOARD_PC_TOF_SENSOR_LIST_LENGTH);
-
-    // IO Expander
-    initIOExpanderList(&ioExpanderList, (IOExpander(*)[]) &ioExpanderArray, MOTOR_BOARD_PC_IO_EXPANDER_LIST_LENGTH);
     
     // Eeprom
     // initEepromPc(&eeprom, "MOTOR_BOARD_PC_EEPROM");
@@ -416,16 +395,12 @@ void runMotorBoardPC(bool singleMode) {
 	addLocalDevice(getExtendedMotionDeviceInterface(), getExtendedMotionDeviceDescriptor(&pidMotion));
 	addLocalDevice(getMotionSimulationDeviceInterface(), getMotionSimulationDeviceDescriptor());
     addLocalDevice(getPcDeviceInterface(), getPcDeviceDescriptor(getOutputStream(&consoleInputBuffer)));
-    addLocalDevice(getTofDeviceInterface(), getTofDeviceDescriptor(&tofSensorList));
 
     // COLOR
     // initColorSensorPc(&colorSensor, &colorValue, &colorSensorFindColorType2018);
     // addLocalDevice(getColorSensorDeviceInterface(), getColorSensorDeviceDescriptor(&colorSensor));
 
     //  IO Expander
-    initIOExpanderPc(getIOExpanderByIndex(&ioExpanderList, 0), &ioExpanderValue0);
-    initIOExpanderPc(getIOExpanderByIndex(&ioExpanderList, 1), &ioExpanderValue1);
-    addLocalDevice(getIOExpanderDeviceInterface(), getIOExpanderDeviceDescriptor(&ioExpanderList));
 
     // Relay
     addLocalDevice(getRelayDeviceInterface(), getRelayDeviceDescriptor(&relay));

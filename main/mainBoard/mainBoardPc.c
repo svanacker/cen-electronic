@@ -322,7 +322,7 @@ static TofSensor tofSensorArray[MAIN_BOARD_PC_TOF_SENSOR_LIST_LENGTH];
 
 // IOExpander
 static IOExpanderList ioExpanderList;
-static IOExpander ioExpanderArray[MOTOR_BOARD_PC_IO_EXPANDER_LIST_LENGTH];
+static IOExpander ioExpanderArray[MAIN_BOARD_PC_IO_EXPANDER_LIST_LENGTH];
 static int ioExpanderValue0;
 static int ioExpanderValue1;
 

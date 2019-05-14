@@ -55,10 +55,6 @@ void runMotorBoardPC(bool singleMode);
 // DEVICES
 #define MOTOR_BOARD_PC_DEVICE_LIST_LENGTH              25
 
-#define MOTOR_BOARD_PC_TOF_SENSOR_LIST_LENGTH          6
-
-#define MOTOR_BOARD_PC_IO_EXPANDER_LIST_LENGTH         2
-
 // TIMERS
 #define MOTOR_BOARD_PC_TIMER_LENGTH                    3
 

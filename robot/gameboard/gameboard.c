@@ -51,7 +51,7 @@ void initGameBoard(GameBoard* gameBoard,
     gameBoard->showOutgoingPath = false;
     gameBoard->showUnreachableArea = true;
     gameBoard->showRobot = true;
-    gameBoard->showRobotTofsCones = true;
+    gameBoard->showRobotTofsCones = false;
 
     gameBoard->gameBoardElementList = gameBoardElementList;
     gameBoard->gameBoardCurve = gameBoardSplineCurve;
@@ -141,7 +141,7 @@ void drawRobot(GameBoard* gameBoard, Point* robotPosition, float angle) {
     setGameBoardCurrentColor(gameBoard, 0);
 }
 
-void drawRobotTofsCones(GameBoard* gameBoard, Point* robotPosition, float angle, TofSensorList* tofSensorList) {
+void drawRobotTofsCones(GameBoard* gameBoard, Point* robotPosition, float robotAngle, TofSensorList* tofSensorList) {
     unsigned int index;
     for (index = 0; index < tofSensorList->size; index++) {
         TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, index);
@@ -151,20 +151,22 @@ void drawRobotTofsCones(GameBoard* gameBoard, Point* robotPosition, float angle,
 
         // Compute the tof Point of View
         Point tofPointOfView;
-        tofComputeTofPointOfView(tofSensor, robotPosition, angle, &tofPointOfView);
+        tofComputeTofPointOfView(tofSensor, robotPosition, robotAngle, &tofPointOfView);
         
         // We now do a variation of angle and a variation of distance to "paint" the tof cone angle
-        float angle = -tofSensor->beamAngleRadian / 2.0f;
+        float angle;
+        float minAngle = -tofSensor->beamAngleRadian / 2.0f;
         float maxAngle = tofSensor->beamAngleRadian / 2.0f;
         float stepAngle = tofSensor->beamAngleRadian / 10.0f;
         float distance;
         // step Distance about 5 cm
-        float stepDistance = 100.0f;
-        for (angle = 0.0f; angle < maxAngle; angle += stepAngle) {
+        float stepDistance = 50.0f;
+        for (angle = minAngle; angle < maxAngle; angle += stepAngle) {
             for (distance = 0.0f; distance < tofSensor->thresholdDistanceMM; distance += stepDistance) {
                 Point p1;
-                tofComputePoint(tofSensor, &tofPointOfView, angle, distance, angle, &p1);
-                drawPointCoordinates(gameBoard, p1.x, p1.y, '[');
+                tofComputePoint(tofSensor, &tofPointOfView, robotAngle, distance, angle, &p1);
+                unsigned char c = (unsigned char)((index% 26) + 48);
+                drawPointCoordinates(gameBoard, p1.x, p1.y, c);
             }
         }
     }
@@ -297,11 +299,6 @@ void fillGameBoardCharElements(GameBoard* gameBoard, int* element) {
         gameTargetPrint(gameBoard, (int*)gameTarget);
     }
 
-    // Robot
-    if (gameBoard->showRobot) {
-        drawRobot(gameBoard, gameStrategyContext->robotPosition, gameStrategyContext->robotAngleRadian);
-    }
-
     // Robot Tof Conte
     if (gameBoard->showRobotTofsCones) {
         // TODO
@@ -309,6 +306,11 @@ void fillGameBoardCharElements(GameBoard* gameBoard, int* element) {
                            gameStrategyContext->robotPosition,
                            gameStrategyContext->robotAngleRadian, 
                            gameStrategyContext->tofSensorList);
+    }
+
+    // Robot
+    if (gameBoard->showRobot) {
+        drawRobot(gameBoard, gameStrategyContext->robotPosition, gameStrategyContext->robotAngleRadian);
     }
 
     // Last Obstacle
