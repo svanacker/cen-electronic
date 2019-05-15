@@ -24,6 +24,18 @@ int deviceTofGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode,
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
+    else if (commandHeader == COMMAND_TOF_BEEP_ON) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("TOF Beep On");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }
+    else if (commandHeader == COMMAND_TOF_BEEP_OFF) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("TOF Beep Off");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }
     return DEVICE_HEADER_NOT_HANDLED;
 }
 

@@ -58,6 +58,16 @@ void deviceTofHandleRawData(unsigned char commandHeader, InputStream* inputStrea
         // See StrategyDevice to have it !
         tofSensorList->tofSensorListDebugTable(debugOutputStream, tofSensorList, NULL, 0.0f);
     }
+    else if (commandHeader == COMMAND_TOF_BEEP_ON) {
+        ackCommand(outputStream, TOF_DEVICE_HEADER, COMMAND_TOF_BEEP_ON);
+        TofSensorList* tofSensorList = getTofDeviceTofSensorList();
+        tofSensorListBeepOn(tofSensorList);
+    }
+    else if (commandHeader == COMMAND_TOF_BEEP_OFF) {
+        ackCommand(outputStream, TOF_DEVICE_HEADER, COMMAND_TOF_BEEP_OFF);
+        TofSensorList* tofSensorList = getTofDeviceTofSensorList();
+        tofSensorListBeepOn(tofSensorList);
+    }
 }
 
 static DeviceDescriptor descriptor = {

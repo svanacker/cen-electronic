@@ -63,6 +63,7 @@ void tofSensorListBeepOn(TofSensorList* tofSensorList) {
     IOExpander* beepIoExpander = tofSensorList->beepIoExpander;
     if (beepIoExpander == NULL) {
         writeError(IO_EXPANDER_NULL);
+        return;
     }
     
     beepIoExpander->ioExpanderWriteSingleValue(beepIoExpander, 7, true);        
@@ -72,6 +73,7 @@ void tofSensorListBeepOff(TofSensorList* tofSensorList) {
     IOExpander* beepIoExpander = tofSensorList->beepIoExpander;
     if (beepIoExpander == NULL) {
         writeError(IO_EXPANDER_NULL);
+        return;
     }
     
     beepIoExpander->ioExpanderWriteSingleValue(beepIoExpander, 7, false);

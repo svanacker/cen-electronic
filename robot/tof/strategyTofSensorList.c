@@ -19,7 +19,7 @@
 #include "../../robot/match/startMatch.h"
 #include "../../robot/strategy/gameStrategyContext.h"
 #include "../../robot/strategy/gameStrategyMotionHandler.h"
-#include "../ioExpander/ioExpanderList.h"
+#include "../../drivers/ioExpander/ioExpanderList.h"
 
 // TOF MANAGEMENT
 

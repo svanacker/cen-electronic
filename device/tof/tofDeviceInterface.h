@@ -4,6 +4,12 @@
 #include "../../device/deviceInterface.h"
 #include "../../device/deviceConstants.h"
 
+/** Command header to do activate the beep . */
+#define COMMAND_TOF_BEEP_ON            'B'
+
+/** Command header to do disabled the beep associated to the tof. */
+#define COMMAND_TOF_BEEP_OFF           'b'
+
 /** Command header to get the sonar value. */
 #define COMMAND_TOF_GET_DISTANCE      'r'
 
