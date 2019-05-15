@@ -5,6 +5,19 @@
 
 #include "gameboard.h"
 
+// COORDINATES TRANSFORMATION
+
+/**
+* Convert print coordinates into X
+* @param x (mm)
+*/
+float convertColumnToX(unsigned int column);
+
+/**
+* Convert Line print coordinates into Y
+*/
+float convertLineToY(unsigned int line);
+
 // BASE FUNCTIONS
 
 /**

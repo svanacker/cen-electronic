@@ -13,7 +13,7 @@
 
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
-#include "error.h"
+#include "../../common/error/error.h"
 
 
 // SPECIFIC PART

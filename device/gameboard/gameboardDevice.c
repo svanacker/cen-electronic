@@ -109,8 +109,8 @@ void deviceGameboardHandleRawData(unsigned char commandHeader, InputStream* inpu
         gameBoard->showRobotTofsCones = false;
     }
     // Show/Hide Unreachable Area
-    else if (commandHeader == COMMAND_GAME_BOARD_HIDE_UNREACHABLE_AREA) {
-        ackCommand(outputStream, GAME_BOARD_DEVICE_HEADER, COMMAND_GAME_BOARD_HIDE_UNREACHABLE_AREA);
+    else if (commandHeader == COMMAND_GAME_BOARD_SHOW_UNREACHABLE_AREA) {
+        ackCommand(outputStream, GAME_BOARD_DEVICE_HEADER, COMMAND_GAME_BOARD_SHOW_UNREACHABLE_AREA);
         GameBoard* gameBoard = getGameboardDeviceGameBoard();
         gameBoard->showUnreachableArea = true;
     }

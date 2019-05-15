@@ -34,6 +34,7 @@ bool reachableByOpponentAlways(GameBoard* gameBoard, int* element, float x, floa
 GameBoardElement* addGameBoardElement(
                                       GameBoardElementList* gameBoardElementList, 
                                       GameboardPrintFunction* gameBoardPrintFunction,
-                                      GameboardIsReachableByOpponentRobot* reachableByOpponentRobotFunction);
+                                      GameboardIsReachableByOpponentRobot* reachableByOpponentRobotFunction,
+                                      enum GameBoardElementType gameBoardElementType);
 
 #endif

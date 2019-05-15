@@ -45,6 +45,9 @@
 #define GAME_BOARD_BIG_DISTRIBUTOR_WIDTH                  7.0f
 #define GAME_BOARD_BIG_DISTRIBUTOR_HEIGHT               600.0f
 
+// SLOPE
+#define GAME_BOARD_SLOPE_WIDTH                          400.0f
+
 #define GAME_BOARD_SMALL_DISTRIBUTOR_X                 2000.0f
 #define GAME_BOARD_SMALL_DISTRIBUTOR_Y                   75.0f
 #define GAME_BOARD_SMALL_DISTRIBUTOR_WIDTH                7.0f
@@ -61,17 +64,21 @@
 
 // ACCELERATOR
 #define GAME_BOARD_ACCELERATOR_X                          0.0f
-#define GAME_BOARD_ACCELERATOR_Y                       1300.0f
+#define GAME_BOARD_ACCELERATOR_Y                       1700.0f
 #define GAME_BOARD_ACCELERATOR_WIDTH                     40.0f
-#define GAME_BOARD_ACCELERATOR_HEIGHT                    80.0f
+#define GAME_BOARD_ACCELERATOR_HEIGHT                   800.0f
 
 
 // GOLDENIUM
 #define GAME_BOARD_GOLDENIUM_X                            0.0f
 // TODO : To check !
-#define GAME_BOARD_GOLDENIUM_Y                          735.0f
+#define GAME_BOARD_GOLDENIUM_Y                         2265.0f
 #define GAME_BOARD_GOLDENIUM_WIDTH                       40.0f
 #define GAME_BOARD_GOLDENIUM_HEIGHT                      80.0f
+
+// WINDOWING
+#define GAME_BOARD_TOF_WINDOW_WIDTH                     160.0f
+#define GAME_BOARD_TOF_SMALL_WINDOW_WIDTH               80.0f
 
 /**
  * Add the 2019 Gameboard elementzs.

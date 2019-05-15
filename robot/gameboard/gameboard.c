@@ -287,7 +287,30 @@ void fillGameBoardCharElements(GameBoard* gameBoard, int* element) {
         GameBoardElement* gameBoardElement = getGameBoardElement(gameBoardElementList, i);
 
         GameboardPrintFunction* printFunction = gameBoardElement->printFunction;
-        printFunction(gameBoard, (int*)gameBoardElement);
+        if (gameBoardElement->type == GAME_BOARD_ELEMENT_PRINT_ONLY
+            || gameBoardElement->type == GAME_BOARD_ELEMENT_PRINT_AND_REACHABLE) {
+            printFunction(gameBoard, (int*)gameBoardElement);
+        }
+
+        if (!gameBoard->showUnreachableArea) {
+            continue;
+        }
+        if (gameBoardElement->type == GAME_BOARD_ELEMENT_REACHABLE_ONLY
+            || gameBoardElement->type == GAME_BOARD_ELEMENT_PRINT_AND_REACHABLE) {
+            // Excluding  area
+            unsigned int line;
+            unsigned int column;
+            for (line = 0; line <= GAMEBOARD_LINE_COUNT; line++) {
+                float y = convertLineToY(line);
+                for (column = 0; column <= GAMEBOARD_COLUMN_COUNT; column++) {
+                    float x = convertColumnToX(column);
+                    bool reachabled = gameBoardElement->reachableByOpponentRobotFunction(gameBoard, element, x, y, 0.0f);
+                    if (!reachabled) {
+                        gameBoard->pixels[column][line] = 'X';
+                    }
+                }
+            }
+        }
     }
 
     // Targets
@@ -353,13 +376,21 @@ void robotPositionPrint(GameBoard* gameBoard, int* element) {
 }
 
 bool isPointInTheCollisionArea(GameBoard* gameBoard, Point* collisionPoint) {
-    // The robot could not be more close to the border than 150.0f
-    float windowLimit = 250.0f;
-    if (collisionPoint->x <= windowLimit || collisionPoint->x >= GAMEBOARD_WIDTH - windowLimit) {
-        return false;
-    }
-    if (collisionPoint->y <= windowLimit || collisionPoint->y >= GAMEBOARD_HEIGHT - windowLimit) {
-        return false;
+    unsigned int i;
+    GameBoardElementList* gameBoardElementList = gameBoard->gameBoardElementList;
+    unsigned int elementSize = gameBoardElementList->size;
+
+    for (i = 0; i < elementSize; i++) {
+        GameBoardElement* gameBoardElement = getGameBoardElement(gameBoardElementList, i);
+
+        if (gameBoardElement->type == GAME_BOARD_ELEMENT_REACHABLE_ONLY
+            || gameBoardElement->type == GAME_BOARD_ELEMENT_PRINT_AND_REACHABLE) {
+            bool reachabled = gameBoardElement->reachableByOpponentRobotFunction(gameBoard, (int*) gameBoardElement, collisionPoint->x, collisionPoint->y, 0.0f);
+            // If the point is unreachable by the robot, we must not consider it as a collision
+            if (!reachabled) {
+                return false;
+            }
+        }
     }
     return true;
 }

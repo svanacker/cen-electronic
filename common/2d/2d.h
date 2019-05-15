@@ -1,6 +1,8 @@
 #ifndef _2D_H
 #define _2D_H
 
+#include <stdbool.h>
+
 /**
  * Define a Point structure.
  */
@@ -73,5 +75,19 @@ void rotate(Point* resultPoint, float angleInRadians, float x, float y);
  * Do the projection of a point along a distance and an angle
  */
 void computeDirectionPoint(Point* ref, Point* result, float distance, float angleRadian);
+
+// MANAGEMENT OF AREA
+
+/**
+* Is the point in the rectangle ?
+* @param x the upper left coordinates of the rectangle
+* @param y the upper left coordinates of the rectangle
+* @param width the width of the rectangle
+* @param height the height of the rectangle
+* @param pointX the X coordinate of the point that we want to test if it's inside the rectangle
+* @param pointX the X coordinate of the point that we want to test if it's inside the rectangle
+* @return true if the point is inside the rectangle, false else
+*/
+bool isInRectangle(float x, float y, float width, float height, float pointX, float pointY);
 
 #endif

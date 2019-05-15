@@ -40,12 +40,13 @@ bool rectangleUnReachableByOpponentAlways(GameBoard* gameBoard, int* element, fl
 
 GameBoardElement* addReachableByOpponentRobotGameBoardElement(GameBoardElementList* gameBoardElementList, 
                                                               GameboardPrintFunction* gameBoardPrintFunction) {
-    return addGameBoardElement(gameBoardElementList, gameBoardPrintFunction, reachableByOpponentAlways);
+    return addGameBoardElement(gameBoardElementList, gameBoardPrintFunction, reachableByOpponentAlways, GAME_BOARD_ELEMENT_PRINT_ONLY);
 }
 
 GameBoardElement* addGameBoardElement(GameBoardElementList* gameBoardElementList,
                                       GameboardPrintFunction* gameBoardPrintFunction,
-                                      GameboardIsReachableByOpponentRobot* reachableByOpponentRobotFunction) {
+                                      GameboardIsReachableByOpponentRobot* reachableByOpponentRobotFunction,
+                                      enum GameBoardElementType gameBoardElementType) {
     if (gameBoardElementList == NULL || gameBoardElementList->maxSize == 0) {
         writeError(ROBOT_GAMEBOARD_ELEMENT_LIST_NULL);
         return NULL;
@@ -56,6 +57,7 @@ GameBoardElement* addGameBoardElement(GameBoardElementList* gameBoardElementList
         GameBoardElement* gameBoardElement = getGameBoardElement(gameBoardElementList, size);
         gameBoardElement->printFunction = gameBoardPrintFunction;
         gameBoardElement->reachableByOpponentRobotFunction = reachableByOpponentRobotFunction;
+        gameBoardElement->type = gameBoardElementType;
         gameBoardElementList->size++;
         return gameBoardElement;
     }

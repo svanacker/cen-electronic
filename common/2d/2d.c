@@ -46,3 +46,9 @@ void computeDirectionPoint(Point* ref, Point* result, float distance, float angl
     result->x = ref->x + dca;
     result->y = ref->y + dsa;
 }
+
+// AREA DETECTION
+
+bool isInRectangle(float x, float y, float width, float height, float pointX, float pointY) {
+    return (x <= pointX && pointX <= x + width) && (y <= pointY && pointY <= y + height);
+}

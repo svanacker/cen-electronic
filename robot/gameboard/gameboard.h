@@ -64,6 +64,8 @@ struct GameBoardElement {
     GameboardPrintFunction* printFunction;
     /** If we consider that this area is not reachable by the robot (so we do not stop if the Time Of Flight show a specific presence). */
     GameboardIsReachableByOpponentRobot* reachableByOpponentRobotFunction;
+    /** The type of GameBoardElement */
+    enum GameBoardElementType type;
 };
 
 /**

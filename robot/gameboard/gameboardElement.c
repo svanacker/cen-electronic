@@ -33,6 +33,21 @@ int convertYToLine(float y) {
     return (int) ((GAMEBOARD_HEIGHT - y) / getYResolutionLength());
 }
 
+/**
+* Convert print coordinates into X
+* @param x (mm)
+*/
+float convertColumnToX(unsigned int column) {
+    return getXResolutionLength() * (float) column;
+}
+
+/**
+* Convert Line print coordinates into Y
+*/
+float convertLineToY(unsigned int line) {
+    return (getYResolutionLength() * (float) (GAMEBOARD_LINE_COUNT - line));
+}
+
 // BASE FUNCTIONS
 
 void setGameBoardPixel(GameBoard* gameBoard, float x, float y, unsigned char c) {
