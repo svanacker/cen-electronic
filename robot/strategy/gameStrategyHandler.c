@@ -53,6 +53,11 @@ void updateNearestLocation(GameStrategyContext* gameStrategyContext) {
 
 GameTarget* findNextTarget(GameStrategyContext* gameStrategyContext) {
     updateNearestLocation(gameStrategyContext);
+    
+    // We wait the notification
+    if (gameStrategyContext->trajectoryType != TRAJECTORY_TYPE_NONE) {
+        return NULL;
+    }
 
     // Find best Target, store LocationList in the context in currentTrajectory
     GameTarget* result = computeBestNextTarget(gameStrategyContext);
@@ -176,6 +181,10 @@ bool handleTrajectoryToActionStart(GameStrategyContext* gameStrategyContext) {
     PathList* pathList = getNavigationPathList(navigation);
     PathData* pathData = getPathOfLocations(pathList, startLocation, endLocation);
 
+    // We wait that we end the move
+    if (gameStrategyContext->trajectoryType != TRAJECTORY_TYPE_NONE) {
+        return false;
+    }
     // Check if to follow the path, we need to do first a rotation (to avoid problem on bSpline)
     if (!motionRotateToFollowPath(gameStrategyContext, pathData)) {
         // If this is not the case, we ask to follow the path

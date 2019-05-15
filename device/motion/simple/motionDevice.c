@@ -76,9 +76,9 @@ void internalNotify(OutputStream* notificationOutputStream, char statusHeader, c
     notifyAbsolutePositionWithoutHeader(notificationOutputStream, true);
 
     
-    appendString(debugOutputStream, "Motion ");
+    appendString(debugOutputStream, "Motion:");
     appendString(debugOutputStream, notifyString);
-    appendString(debugOutputStream, "t=");
+    appendString(debugOutputStream, ", t=");
     appendDecf(debugOutputStream, getPidTimeInSecond());
     appendStringLN(debugOutputStream, ")");
 }

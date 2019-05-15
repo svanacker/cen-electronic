@@ -295,7 +295,7 @@ void waitForInstruction() {
     handleStreamInstruction(&notifyInputBuffer, &notifyOutputBuffer, &notifyOutputStream, &notifyOutputStream, &filterRemoveCRLF, NULL);
     
     // Manage Motion
-    handleInstructionAndMotion(&pidMotion, &standardOutputStream);
+    handleInstructionAndMotion(&pidMotion, &notifyOutputStream);
     
     // Notify the change of position (useful to know where we are when we detect an object with the tof
     // We must know if we see an object inside the gameboard or outside

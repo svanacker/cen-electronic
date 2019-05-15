@@ -135,7 +135,7 @@ bool motionRotateToFollowPath(GameStrategyContext* gameStrategyContext, PathData
             gameStrategyContext->robotAngleRadian += diff + 0.001f;
         }
         else {
-            motionDriverLeft((float)diff);
+            motionDriverLeft(radToDeg(diff));
             gameStrategyContext->trajectoryType = TRAJECTORY_TYPE_ROTATION;
         }
     }
@@ -146,7 +146,7 @@ bool motionRotateToFollowPath(GameStrategyContext* gameStrategyContext, PathData
             gameStrategyContext->robotAngleRadian += diff + 0.001f;
         }
         else {
-            motionDriverRight((float)-diff);
+            motionDriverRight(radToDeg(-diff));
             gameStrategyContext->trajectoryType = TRAJECTORY_TYPE_ROTATION;
         }
     }
