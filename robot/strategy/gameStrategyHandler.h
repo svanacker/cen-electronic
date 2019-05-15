@@ -13,7 +13,7 @@
 #define DEBUG_OPPONENT_ROBOT
 
 /** Minimum angle to add a rotation in degrees. */
-#define ANGLE_ROTATION_MIN 5.0f
+#define ANGLE_ROTATION_MIN_DEGREE 5.0f
 
 /** Distance of the opponent to a path to make it unavailable in mm. */
 #define DISTANCE_OPPONENT_TO_PATH 200.0f

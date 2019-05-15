@@ -8,6 +8,7 @@
 #define     ANGLE_DECI_DEG_60            0x0258
 #define     ANGLE_DECI_DEG_90            0x0384
 #define     ANGLE_DECI_DEG_180           0x0708
+#define     ANGLE_DECI_DEG_135           0x0546
 #define     ANGLE_DECI_DEG_225           0x08CA
 
 #define     ANGLE_DECI_DEG_300           0x0BB8

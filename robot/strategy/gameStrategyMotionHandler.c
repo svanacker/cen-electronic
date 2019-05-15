@@ -122,25 +122,35 @@ bool motionRotateToFollowPath(GameStrategyContext* gameStrategyContext, PathData
     float angle = getPathStartAngleRadian(pathData);
 
     float diff = mod2PI(angle - gameStrategyContext->robotAngleRadian);
-    if (fabs(diff) < ANGLE_ROTATION_MIN) {
+    if (fabs(diff) < degToRad(ANGLE_ROTATION_MIN_DEGREE)) {
         return false;
     }
 
-
-    // Simulate as if the robot goes to the position with a small error to be sure
-    // that we do not rely the navigation on just exact computation
-    if (gameStrategyContext->simulateMove) {
-        gameStrategyContext->robotAngleRadian += diff + 0.001f;
+    if (diff > 0.0f) {
+        appendStringAndDecf(getDebugOutputStreamLogger(), "motionDriverLeft:", radToDeg(diff));
+        println(getDebugOutputStreamLogger());
+        // Simulate as if the robot goes to the position with a small error to be sure
+        // that we do not rely the navigation on just exact computation
+        if (gameStrategyContext->simulateMove) {
+            gameStrategyContext->robotAngleRadian += diff + 0.001f;
+        }
+        else {
+            motionDriverLeft((float)diff);
+            gameStrategyContext->trajectoryType = TRAJECTORY_TYPE_ROTATION;
+        }
     }
     else {
-        if (diff > 0.0f) {
-            motionDriverLeft((float)diff);
+        appendStringAndDecf(getDebugOutputStreamLogger(), "motionDriverRight:", radToDeg(-diff));
+        println(getDebugOutputStreamLogger());
+        if (gameStrategyContext->simulateMove) {
+            gameStrategyContext->robotAngleRadian += diff + 0.001f;
         }
         else {
             motionDriverRight((float)-diff);
+            gameStrategyContext->trajectoryType = TRAJECTORY_TYPE_ROTATION;
         }
-        gameStrategyContext->trajectoryType = TRAJECTORY_TYPE_ROTATION;
     }
+    
 
     return true;
 }

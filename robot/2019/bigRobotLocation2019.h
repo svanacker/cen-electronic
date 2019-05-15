@@ -33,10 +33,12 @@
 #define KEY_POINT_1_Y                                                       1500
 #define KEY_POINT_1_ANGLE_DECI_DEG                            ANGLE_DECI_DEG_180
 
+// Key point to be able to do a transition from REDIUM_DROP_ZONE then to
+// go on BIG_DISTRIBUTOR_LINE_1
 #define KEY_POINT_2                                                        "KEP2"
 #define KEY_POINT_2_X                                                        800
 #define KEY_POINT_2_Y                                                        600
-#define KEY_POINT_2_ANGLE_DECI_DEG                              ANGLE_DECI_DEG_0
+#define KEY_POINT_2_ANGLE_DECI_DEG                            -ANGLE_DECI_DEG_135
 
 // BIG DISTRIBUTOR
 #define BIG_DISTRIBUTOR_LINE_1                                            "BDL1"
