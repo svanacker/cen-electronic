@@ -193,6 +193,7 @@ void clearLastError();
 
 #define IO_EXPANDER_LIST_NOT_INITIALIZED                                  0x2500
 #define IO_EXPANDER_LIST_ILLEGAL_INDEX                                    0x2501
+#define IO_EXPANDER_NULL                                                  0x2502
 
 // PID
 

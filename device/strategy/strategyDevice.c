@@ -105,14 +105,21 @@ void deviceStrategyHandleRawData(unsigned char commandHeader, InputStream* input
         TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, tofIndex);
         unsigned int i;
         for (i = 0; i < 100; i++) {
+
             timerDelayMilliSeconds(100);
             if (i % 10 == 0) {
                 appendCRLF(debugOutputStream);
             }
+            // unsigned int distance = 
             tofSensor->tofGetDistanceMM(tofSensor);
             bool detection = isTofDistanceUnderThreshold(tofSensor);
             if (detection) {
+                append(debugOutputStream, 'X');
+                tofSensorListBeepOn(tofSensorList);
+            }
+            else {
                 append(debugOutputStream, '.');
+                tofSensorListBeepOff(tofSensorList);
             }
         }
     }

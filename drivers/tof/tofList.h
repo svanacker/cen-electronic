@@ -8,6 +8,7 @@
 #include "../../common/io/outputStream.h"
 
 #include "tof.h"
+#include "../../drivers/ioExpander/ioExpander.h"
 
 // Forward declaration
 typedef struct TofSensorList TofSensorList;
@@ -23,6 +24,8 @@ typedef void tofSensorListDebugTableFunction(OutputStream* outputStream, TofSens
 struct TofSensorList {
     /** An array of pointer on tofSensor. */
     TofSensor(*tofSensorArray)[];
+    /** The IO Expander used to beep */
+    IOExpander* beepIoExpander;
     /** the size of the list. */
     unsigned int size;
     /** If Debug Mode is activated .*/
@@ -57,5 +60,9 @@ TofSensor* getTofSensorByIndex(TofSensorList* tofSensorList, unsigned int index)
  * @return the size of the tof Sensor List.
  */
 unsigned int getTofSensorListSize(TofSensorList* tofSensorList);
+
+void tofSensorListBeepOn(TofSensorList* tofSensorList);
+
+void tofSensorListBeepOff(TofSensorList* tofSensorList);
 
 #endif

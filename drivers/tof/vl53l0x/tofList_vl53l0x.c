@@ -77,6 +77,7 @@ void initTofSensorListVL53L0X(TofSensorList* tofSensorList,
                               bool debug,
                               bool enableAllSensors,
                               bool changeAddressAllSensors) {
+    tofSensorList->beepIoExpander = optionalIOExpander;
     
     initIOExpanderForTofSensorList(ioExpander, size % 8);
     initIOExpanderForTofSensorList(optionalIOExpander, size % 8);
