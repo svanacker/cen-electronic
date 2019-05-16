@@ -48,13 +48,20 @@ void fork2019MoveServo(ServoList* servoList,
         unsigned int leftPosition,
         unsigned rightPosition,
         bool wait) {
-    if (leftRight == FORK_2019_LEFT_AND_RIGHT_INDEX || leftRight == FORK_2019_LEFT_INDEX) {
+    if (leftRight == FORK_2019_LEFT_INDEX) {
         Servo* servo = getServo(servoList, leftServoIndex);
         pwmServo(servo, leftSpeed, leftPosition, wait);
     }
-    if (leftRight == FORK_2019_LEFT_AND_RIGHT_INDEX || leftRight == FORK_2019_RIGHT_INDEX) {
+    else if (leftRight == FORK_2019_RIGHT_INDEX) {
         Servo* servo = getServo(servoList, rightServoIndex);
         pwmServo(servo, rightSpeed, rightPosition, wait);
+    }
+    else if (leftRight == FORK_2019_LEFT_AND_RIGHT_INDEX) {
+        Servo* leftServo = getServo(servoList, leftServoIndex);
+        // We don't wait both time for left & right (the delay is blocking), so we don't put "wait", but false on delay parameter
+        pwmServo(leftServo, leftSpeed, leftPosition, false);
+        Servo* rightServo = getServo(servoList, rightServoIndex);
+        pwmServo(rightServo, rightSpeed, rightPosition, wait);
     }
 }
 
