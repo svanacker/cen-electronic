@@ -63,12 +63,12 @@ void deviceTofHandleRawData(unsigned char commandHeader, InputStream* inputStrea
     else if (commandHeader == COMMAND_TOF_BEEP_ON) {
         ackCommand(outputStream, TOF_DEVICE_HEADER, COMMAND_TOF_BEEP_ON);
         TofSensorList* tofSensorList = getTofDeviceTofSensorList();
-        tofSensorListBeepOn(tofSensorList);
+        tofSensorListBeep(tofSensorList, true);
     }
     else if (commandHeader == COMMAND_TOF_BEEP_OFF) {
         ackCommand(outputStream, TOF_DEVICE_HEADER, COMMAND_TOF_BEEP_OFF);
         TofSensorList* tofSensorList = getTofDeviceTofSensorList();
-        tofSensorListBeepOff(tofSensorList);
+        tofSensorListBeep(tofSensorList, false);
     }
     else if (commandHeader == COMMAND_TOF_SEARCH_IF_COLLIDING) {
         ackCommand(outputStream, TOF_DEVICE_HEADER, COMMAND_TOF_SEARCH_IF_COLLIDING);
@@ -98,15 +98,10 @@ void deviceTofHandleRawData(unsigned char commandHeader, InputStream* inputStrea
                     break;
                 }
             }
-            if (detected) {
-                tofSensorListBeepOn(tofSensorList);
-            }
-            else {
-                tofSensorListBeepOff(tofSensorList);
-            }
+            tofSensorListBeep(tofSensorList, detected);
         }
         // Off the beep at the end
-        tofSensorListBeepOff(tofSensorList);
+        tofSensorListBeep(tofSensorList, false);
     }
 }
 

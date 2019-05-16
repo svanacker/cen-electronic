@@ -135,17 +135,19 @@ void setTofListNameAndOrientationAngle(TofSensorList* tofSensorList, float dista
 void handleTofSensorList(GameStrategyContext* gameStrategyContext, StartMatch* startMatch, TofSensorList* tofSensorList, GameBoard* gameBoard) {
     RobotConfig* robotConfig = gameStrategyContext->robotConfig;
     // We only lookup if the match is started !
-    
     if (!startMatch->isMatchStartedFunction(startMatch)) {
+        tofSensorListBeep(tofSensorList, false);
         return;
     }
     // If Sonar is disabled, we don't check it !
     if (!isSonarActivated(robotConfig)) {
+        tofSensorListBeep(tofSensorList, false);
         return;
     }
     unsigned int index;
     enum TrajectoryType trajectoryType = gameStrategyContext->trajectoryType;
     if (trajectoryType == TRAJECTORY_TYPE_NONE || trajectoryType == TRAJECTORY_TYPE_ROTATION) {
+        tofSensorListBeep(tofSensorList, false);
         return;
     }
     for (index = 0; index < tofSensorList->size; index++) {
@@ -153,7 +155,7 @@ void handleTofSensorList(GameStrategyContext* gameStrategyContext, StartMatch* s
         if (!tofSensor->enabled) {
             continue;
         }
-        if (!tofSensor->type != TOF_SENSOR_TYPE_COLLISION) {
+        if (tofSensor->type != TOF_SENSOR_TYPE_COLLISION) {
             continue;
         }
         
@@ -178,6 +180,8 @@ void handleTofSensorList(GameStrategyContext* gameStrategyContext, StartMatch* s
         Point* pointOfView = gameStrategyContext->robotPosition;
         float pointOfViewAngleRadian = gameStrategyContext->robotAngleRadian;
         bool detected = tofComputeDetectedPointIfAny(tofSensor, pointOfView, pointOfViewAngleRadian, &detectedPoint);
+        
+        tofSensorListBeep(tofSensorList, detected);
 
         if (!detected) {
             continue;

@@ -26,6 +26,8 @@ struct TofSensorList {
     TofSensor(*tofSensorArray)[];
     /** The IO Expander used to beep */
     IOExpander* beepIoExpander;
+    /** To know the value of beep, we don't want to invoke too frequently the IOExpander to send the same value */
+    bool beepValue;
     /** the size of the list. */
     unsigned int size;
     /** If Debug Mode is activated .*/
@@ -61,8 +63,9 @@ TofSensor* getTofSensorByIndex(TofSensorList* tofSensorList, unsigned int index)
  */
 unsigned int getTofSensorListSize(TofSensorList* tofSensorList);
 
-void tofSensorListBeepOn(TofSensorList* tofSensorList);
-
-void tofSensorListBeepOff(TofSensorList* tofSensorList);
+/**
+* Activate or not the beep on tofSensorList.
+*/
+void tofSensorListBeep(TofSensorList* tofSensorList, bool beepValue);
 
 #endif

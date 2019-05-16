@@ -22,7 +22,8 @@
 #define WEIGHING_MACHINE_FRONT                                              "WMF"
 #define WEIGHING_MACHINE_FRONT_X                                            1200
 #define WEIGHING_MACHINE_FRONT_Y                                            1200
-#define WEIGHING_MACHINE_FRONT_ANGLE_DECI_DEG                   ANGLE_DECI_DEG_0
+#define WEIGHING_MACHINE_FRONT_FROM_GOLDENIUM_ANGLE_DECI_DEG  ANGLE_DECI_DEG_135
+#define WEIGHING_MACHINE_FRONT_TO_DROP_ANGLE_DECI_DEG           ANGLE_DECI_DEG_0
 
 // Weighing Machine DROP
 #define WEIGHING_MACHINE_DROP                                              "WMD"

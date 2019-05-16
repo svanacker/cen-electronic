@@ -26,7 +26,7 @@ int deviceFork2019GetInterface(unsigned char commandHeader, DeviceInterfaceMode 
     }
     else if (commandHeader == COMMAND_2019_ELEVATOR_DISTRIBUTOR_SCAN) {
         if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("ELEVATOR Dist Scan");
+            setFunctionNoArgumentAndNoResult("ELEVATOR Distributor Scan");
         }
         return commandLengthValueForMode(mode, 0, 0);
     }

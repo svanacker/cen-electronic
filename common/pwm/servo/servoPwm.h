@@ -132,6 +132,7 @@ struct Servo {
 #define MG996R_MAX_SPEED_UNDER_LOAD__NO_LOAD       66
 #define MAX_SPEED_UNDER_LOAD__1_SECOND_60_DEG      11
 #define MAX_SPEED_UNDER_LOAD__500_MS_60_DEG        22
+#define MAX_SPEED_UNDER_LOAD__250_MS_60_DEG        44
 
 // INIT
 
