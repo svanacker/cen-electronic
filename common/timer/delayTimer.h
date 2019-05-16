@@ -8,9 +8,9 @@
 
 Timer* timerDelayMark(void);
 
-void timerDelayWaitMark(Timer* delayTimer, unsigned int delayMilliSeconds);
+void timerDelayWaitMark(Timer* delayTimer, unsigned long delayMilliSeconds);
 
-bool timerDelayTimeout(Timer* delayTimer, unsigned int delayMilliSeconds);
+bool timerDelayTimeout(Timer* delayTimer, unsigned long delayMilliSeconds);
 
 /**
  * WARNING : This method MUST NOT be used inside a method raised by an interruption itself.
@@ -21,7 +21,7 @@ bool timerDelayTimeout(Timer* delayTimer, unsigned int delayMilliSeconds);
  * interruptions are raised because it longers and leads to an anormal delay
  * @param delayMilliSeconds how much milliSeconds we wait
  */
-void timerDelayMilliSeconds(unsigned int delayMilliSeconds);
+void timerDelayMilliSeconds(unsigned long delayMilliSeconds);
 
 /**
  * Initialize a system delay timer used to be more precise than the

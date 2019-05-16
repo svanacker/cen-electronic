@@ -38,10 +38,12 @@ int deviceTofGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode,
     }
     else if (commandHeader == COMMAND_TOF_SEARCH_IF_COLLIDING) {
         if (fillDeviceArgumentList) {
-            setFunction("Search If Colliding for 10 secs", 1, 0);
+            setFunction("Search If Colliding for 10 secs", 3, 0);
             setArgumentUnsignedHex2(0, "tofIndex, FF if we check all");
+            setArgumentSeparator(1);
+            setArgumentUnsignedHex2(2, "Analysis length (seconds)");
         }
-        return commandLengthValueForMode(mode, 2, 0);
+        return commandLengthValueForMode(mode, 5, 0);
     }
 
     return DEVICE_HEADER_NOT_HANDLED;

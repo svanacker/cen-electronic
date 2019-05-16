@@ -32,13 +32,13 @@ Timer* timerDelayMark(void) {
     return timer;
 }
 
-bool timerDelayTimeout(Timer* delayTimer, unsigned int delayMilliSeconds) {
+bool timerDelayTimeout(Timer* delayTimer, unsigned long delayMilliSeconds) {
     // The frequency is 100 Hz => We multiply by 10
     unsigned timerSinceLastMarkThreshold = delayMilliSeconds / 10;
     return getTimeSinceLastMark(delayTimer) >= timerSinceLastMarkThreshold;
 }
 
-void timerDelayWaitMark(Timer* delayTimer, unsigned int delayMilliSeconds) {
+void timerDelayWaitMark(Timer* delayTimer, unsigned long delayMilliSeconds) {
     if (delayTimer == NULL) {   
         writeError(TIMER_NULL);
         return;
@@ -48,7 +48,7 @@ void timerDelayWaitMark(Timer* delayTimer, unsigned int delayMilliSeconds) {
     }
 }
 
-void timerDelayMilliSeconds(unsigned int delayMilliSeconds) {
+void timerDelayMilliSeconds(unsigned long delayMilliSeconds) {
     Timer* delayTimer = timerDelayMark();
     timerDelayWaitMark(delayTimer, delayMilliSeconds);
 }

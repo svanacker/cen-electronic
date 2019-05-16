@@ -75,9 +75,11 @@ void deviceTofHandleRawData(unsigned char commandHeader, InputStream* inputStrea
         TofSensorList* tofSensorList = getTofDeviceTofSensorList();
 
         unsigned int tofIndex = readHex2(inputStream);
+        checkIsSeparator(inputStream);
+        unsigned int durationSeconds = readHex2(inputStream);
         unsigned int startTofIndex = 0;
         unsigned int endTofIndex = getTofSensorListSize(tofSensorList) - 1;
-        if (tofIndex == 0xFF) {
+        if (tofIndex != 0xFF) {
             TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, tofIndex);
             if (tofSensor == NULL) {
                 return;
@@ -86,7 +88,7 @@ void deviceTofHandleRawData(unsigned char commandHeader, InputStream* inputStrea
             endTofIndex = tofIndex;
         }
         Timer* timerDelay = timerDelayMark();
-        while (!timerDelayTimeout(timerDelay, 10000)) {
+        while (!timerDelayTimeout(timerDelay, 1000 * durationSeconds)) {
             bool detected = false;
             for (tofIndex = startTofIndex; tofIndex <= endTofIndex; tofIndex++) {
                 TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, tofIndex);
@@ -103,6 +105,8 @@ void deviceTofHandleRawData(unsigned char commandHeader, InputStream* inputStrea
                 tofSensorListBeepOff(tofSensorList);
             }
         }
+        // Off the beep at the end
+        tofSensorListBeepOff(tofSensorList);
     }
 }
 
