@@ -17,8 +17,8 @@
 // Chaos Zone Front
 #define CHAOS_ZONE_FRONT                                                   "CZFR"
 #define CHAOS_ZONE_FRONT_X                                                  1250
-#define CHAOS_ZONE_FRONT_Y                                                  1200
-#define CHAOS_ZONE_FRONT_ANGLE_DECI_DEG                       ANGLE_DECI_DEG_225
+#define CHAOS_ZONE_FRONT_Y                                                  1150
+#define CHAOS_ZONE_FRONT_ANGLE_DECI_DEG                        ANGLE_DECI_DEG_135
 
 // Redium Drop Zone
 #define REDIUM_DROP_ZONE                                                   "RDRZ"

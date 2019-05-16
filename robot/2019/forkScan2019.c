@@ -37,6 +37,7 @@ void setForkTofListNameAndThreshold(TofSensorList* tofSensorList) {
 
     if (tofSensorListSize > FORK_2019_LEFT_TOF_INDEX) {
         TofSensor* backMiddleSensor = getTofSensorByIndex(tofSensorList, FORK_2019_LEFT_TOF_INDEX);
+        backMiddleSensor->type = TOF_SENSOR_TYPE_ACTION;
         backMiddleSensor->orientationRadian = 0.0f;
         backMiddleSensor->thresholdDistanceMM = FORK_2019_SCAN_DISTANCE_LEFT_THRESHOLD;
         backMiddleSensor->name = "FORK LEFT";
@@ -44,6 +45,7 @@ void setForkTofListNameAndThreshold(TofSensorList* tofSensorList) {
 
     if (tofSensorListSize > FORK_2019_RIGHT_TOF_INDEX) {
         TofSensor* backRightSensor = getTofSensorByIndex(tofSensorList, FORK_2019_RIGHT_TOF_INDEX);
+        backRightSensor->type = TOF_SENSOR_TYPE_ACTION;
         backRightSensor->orientationRadian = 0.0f;
         backRightSensor->thresholdDistanceMM = FORK_2019_SCAN_DISTANCE_RIGHT_THRESHOLD;
         backRightSensor->name = "FORK RIGHT";

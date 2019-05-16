@@ -20,11 +20,25 @@ typedef bool tofSensorInitFunction(TofSensor* TofSensor);
 typedef unsigned int tofSensorGetDistanceMMFunction(TofSensor* tofSensor);
 
 /**
+ * Type of TofSensor, someare used to detect collision, are used for actions
+ */
+enum TofSensorType {
+    /** The type was not defined */
+    TOF_SENSOR_TYPE_UNKNOWN = 0,
+    /** The tof is used to detect Collision. */
+    TOF_SENSOR_TYPE_COLLISION = 1,
+    /** The tof is used to detect actions. */
+    TOF_SENSOR_TYPE_ACTION = 2
+};
+
+/**
 * Defines the contract For one Tof Sensor.
 */
 struct TofSensor {
     /** An name for the sensor. */
     char* name;
+    /** The type of Sensor. */
+    enum TofSensorType type;
     /** If we enabled it. If disable, we do not try to initialize it .*/
     bool enabled;
     /** If we must change the address of the TOF at startup .*/

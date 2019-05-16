@@ -13,6 +13,7 @@
 
 #define TOF_SENSOR_INDEX_COLUMN_LENGTH		              4
 #define TOF_SENSOR_NAME_COLUMN_LENGTH		              13
+#define TOF_SENSOR_TYPE_COLUMN_LENGTH		              5
 #define TOF_SENSOR_ENABLE_COLUMN_LENGTH                    7
 #define TOF_SENSOR_CHANGE_ADRESS_COLUMN_LENGTH             7
 #define TOF_SENSOR_VALUE_THRESHOLD_COLUMN_LENGTH          10
@@ -26,6 +27,48 @@
 
 #define TOF_SENSOR_LAST_COLUMN		                      1
 
+// SERVO TYPE
+
+unsigned int appendTofSensorTypeAsString(OutputStream* outputStream, enum TofSensorType tofSensorType) {
+    if (tofSensorType == TOF_SENSOR_TYPE_UNKNOWN) {
+        return appendString(outputStream, "UNKNOWN");
+    }
+    else if (tofSensorType == TOF_SENSOR_TYPE_COLLISION) {
+        return appendString(outputStream, "COLLISION");
+    }
+    else if (tofSensorType == TOF_SENSOR_TYPE_ACTION) {
+        return appendString(outputStream, "ACTION");
+    }
+	return 0;
+}
+
+unsigned int appendTofSensorTypeAsShortString(OutputStream* outputStream, enum TofSensorType tofSensorType) {
+    if (tofSensorType == TOF_SENSOR_TYPE_UNKNOWN) {
+        return appendString(outputStream, "U");
+    }
+    else if (tofSensorType == TOF_SENSOR_TYPE_COLLISION) {
+        return appendString(outputStream, "C");
+    }
+    else if (tofSensorType == TOF_SENSOR_TYPE_ACTION) {
+        return appendString(outputStream, "A");
+    }
+	return 0;
+}
+
+unsigned int addTofSensorTypeTableData(OutputStream* outputStream, enum TofSensorType tofSensorType, int columnSize) {
+	appendTableSeparator(outputStream);
+	appendSpace(outputStream);
+	unsigned int length = appendTofSensorTypeAsString(outputStream, tofSensorType);
+	return length + appendSpaces(outputStream, columnSize - length) + 2;
+}
+
+unsigned int addTofSensorTypeShortTableData(OutputStream* outputStream, enum TofSensorType tofSensorType, int columnSize) {
+	appendTableSeparator(outputStream);
+	appendSpace(outputStream);
+	unsigned int length = appendTofSensorTypeAsShortString(outputStream, tofSensorType);
+	return length + appendSpaces(outputStream, columnSize - length) + 2;
+}
+
 /**
 * Private.
 */
@@ -35,6 +78,7 @@ void printTofSensorDebugTableHeader(OutputStream* outputStream) {
     // First header line
     appendStringHeader(outputStream, "Idx", TOF_SENSOR_INDEX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Name", TOF_SENSOR_NAME_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Type", TOF_SENSOR_TYPE_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Enable", TOF_SENSOR_ENABLE_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Change", TOF_SENSOR_CHANGE_ADRESS_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Threshold", TOF_SENSOR_VALUE_THRESHOLD_COLUMN_LENGTH);
@@ -48,6 +92,7 @@ void printTofSensorDebugTableHeader(OutputStream* outputStream) {
     // Second header line
     appendStringHeader(outputStream, "", TOF_SENSOR_INDEX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", TOF_SENSOR_NAME_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "", TOF_SENSOR_TYPE_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", TOF_SENSOR_ENABLE_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Address", TOF_SENSOR_CHANGE_ADRESS_COLUMN_LENGTH);
     appendStringHeader(outputStream, "(mm)", TOF_SENSOR_VALUE_THRESHOLD_COLUMN_LENGTH);
@@ -61,6 +106,7 @@ void printTofSensorDebugTableHeader(OutputStream* outputStream) {
     // Third header line
     appendStringHeader(outputStream, "", TOF_SENSOR_INDEX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", TOF_SENSOR_NAME_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "", TOF_SENSOR_TYPE_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", TOF_SENSOR_ENABLE_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", TOF_SENSOR_CHANGE_ADRESS_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", TOF_SENSOR_VALUE_THRESHOLD_COLUMN_LENGTH);
@@ -84,6 +130,7 @@ void printTofSensorTable(OutputStream* outputStream, TofSensorList* tofSensorLis
 
         appendDecTableData(outputStream, index, TOF_SENSOR_INDEX_COLUMN_LENGTH);
         appendStringTableData(outputStream, tofSensor->name, TOF_SENSOR_NAME_COLUMN_LENGTH);
+        addTofSensorTypeShortTableData(outputStream, tofSensor->type, TOF_SENSOR_TYPE_COLUMN_LENGTH);
         appendBoolAsStringTableData(outputStream, tofSensor->enabled, TOF_SENSOR_ENABLE_COLUMN_LENGTH);
         appendBoolAsStringTableData(outputStream, tofSensor->changeAddress, TOF_SENSOR_CHANGE_ADRESS_COLUMN_LENGTH);
         appendDecTableData(outputStream, tofSensor->thresholdDistanceMM, TOF_SENSOR_VALUE_THRESHOLD_COLUMN_LENGTH);

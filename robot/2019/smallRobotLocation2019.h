@@ -14,7 +14,7 @@
 
 // Goldenium (SMALL ROBOT)
 #define GOLDENIUM_FRONT                                                     "GOLD"
-#define GOLDENIUM_FRONT_X                                                     130
+#define GOLDENIUM_FRONT_X                                                     120
 #define GOLDENIUM_FRONT_Y                                                    2268
 #define GOLDENIUM_FRONT_ANGLE_DECI_DEG                         ANGLE_DECI_DEG_180
 

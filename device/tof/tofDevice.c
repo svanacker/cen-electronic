@@ -66,7 +66,7 @@ void deviceTofHandleRawData(unsigned char commandHeader, InputStream* inputStrea
     else if (commandHeader == COMMAND_TOF_BEEP_OFF) {
         ackCommand(outputStream, TOF_DEVICE_HEADER, COMMAND_TOF_BEEP_OFF);
         TofSensorList* tofSensorList = getTofDeviceTofSensorList();
-        tofSensorListBeepOn(tofSensorList);
+        tofSensorListBeepOff(tofSensorList);
     }
 }
 

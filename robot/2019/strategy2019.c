@@ -128,8 +128,6 @@ PathData* addNavigationPathWithColor(
 
 void initStrategy2019(GameStrategyContext* gameStrategyContext) {
     initColorAndStartPosition2019(gameStrategyContext);
-    float tofDistanceFactor = getSonarDistanceCheckFactor(gameStrategyContext->robotConfig);
-    setTofListNameAndOrientationAngle(gameStrategyContext->tofSensorList, tofDistanceFactor);
     showGameStrategyContextTeamColorAndStrategy(gameStrategyContext);
 
     gameStrategyContext->defaultAccelerationFactor = getAccelerationFactor(gameStrategyContext->robotConfig);

@@ -281,25 +281,32 @@ void waitForInstruction() {
         // notification handler must avoid to directly information in notification callback
         // and never to the call back device
     }
+    OutputStream* notifyBufferedOutputStream = getOutputStream(&notifyOutputBuffer);
     
     // I2C Stream
     // handleStreamInstruction(&i2cSlaveInputBuffer, &i2cSlaveOutputBuffer, NULL, &standardOutputStream, &filterRemoveCRLF, NULL);
 
     // STANDARD UART Stream
-    handleStreamInstruction(&standardInputBuffer, &standardOutputBuffer, &standardOutputStream, &notifyOutputStream, &filterRemoveCRLF, NULL);
+    handleStreamInstruction(&standardInputBuffer, &standardOutputBuffer, &standardOutputStream, notifyBufferedOutputStream, &filterRemoveCRLF, NULL);
 
     // DEBUG UART Stream
-    handleStreamInstruction(&debugInputBuffer, &debugOutputBuffer, &debugOutputStream, &notifyOutputStream, &filterRemoveCRLF, NULL);
+    handleStreamInstruction(&debugInputBuffer, &debugOutputBuffer, &debugOutputStream, notifyBufferedOutputStream, &filterRemoveCRLF, NULL);
 
     // NOTIFY UART (MOTOR BOARD -> MAIN BOARD)
-    handleStreamInstruction(&notifyInputBuffer, &notifyOutputBuffer, &notifyOutputStream, &notifyOutputStream, &filterRemoveCRLF, NULL);
+    // handleStreamInstruction(&notifyInputBuffer, &notifyOutputBuffer, &notifyOutputStream, notifyBufferedOutputStream, &filterRemoveCRLF, NULL);
     
     // Manage Motion
-    handleInstructionAndMotion(&pidMotion, &notifyOutputStream);
+    handleInstructionAndMotion(&pidMotion, notifyBufferedOutputStream);
     
+    // Copy the buffered notify to the serial NotifyOutputStream
+    copyInputToOutputStream(getInputStream(&notifyOutputBuffer), &notifyOutputStream, NULL, COPY_ALL);
+
     // Notify the change of position (useful to know where we are when we detect an object with the tof
     // We must know if we see an object inside the gameboard or outside
-    // trajectoryNotifyIfEnabledAndTreshold(&standardOutputStream);
+    trajectoryNotifyIfEnabledAndTreshold(&notifyBufferedOutputStream);
+    
+    // Copy the buffered notify to the serial NotifyOutputStream
+    copyInputToOutputStream(getInputStream(&notifyOutputBuffer), &notifyOutputStream, NULL, COPY_ALL);
 }
 
 int runMotorBoard() {

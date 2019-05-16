@@ -21,6 +21,8 @@
 #include "../../robot/gameboard/gameboardElementList.h"
 
 #include "../../robot/strategy/gameStrategyContext.h"
+#include "../../robot/tof/strategyTofSensorList.h"
+
 
 #include "../../main/mainBoard/mainBoardCommon.h"
 
@@ -29,6 +31,7 @@
 #include "../../robot/2019/forkScan2019.h"
 #include "../../robot/2019/distributor2019.h"
 #include "../../robot/2019/strategy2019.h"
+#include "../../robot/2019/strategyConfig2019.h"
 #include "../../robot/2019/gameBoardElement2019.h"
 
 // 2019 -> GameStrategyContext
@@ -87,7 +90,10 @@ GameBoard* initGameBoard2019(GameStrategyContext* gameStrategyContext) {
     return &gameBoard;
 }
 
-void mainBoardCommonStrategyMainEndInit2019(GameStrategyContext* gameStrategyContext) {        
+void mainBoardCommonStrategyMainEndInit2019(GameStrategyContext* gameStrategyContext) {
+    float tofDistanceFactor = getSonarDistanceCheckFactor(gameStrategyContext->robotConfig);
+    setTofListNameAndOrientationAngle(gameStrategyContext->tofSensorList, tofDistanceFactor);
+
     ServoList* servoList = gameStrategyContext->servoList;
     
     updateServoProperties2019(servoList);
