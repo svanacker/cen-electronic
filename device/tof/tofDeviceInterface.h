@@ -10,6 +10,8 @@
 /** Command header to do disabled the beep associated to the tof. */
 #define COMMAND_TOF_BEEP_OFF           'b'
 
+#define COMMAND_TOF_SEARCH_IF_COLLIDING 'c'
+
 /** Command header to get the sonar value. */
 #define COMMAND_TOF_GET_DISTANCE      'r'
 
@@ -18,6 +20,8 @@
 
 /** Command header to launch a tracker system with a notification system */
 #define COMMAND_TOF_TRACK             't'
+
+
 
 
 /**

@@ -4,6 +4,14 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+#include "cenTimer.h"
+
+Timer* timerDelayMark(void);
+
+void timerDelayWaitMark(Timer* delayTimer, unsigned int delayMilliSeconds);
+
+bool timerDelayTimeout(Timer* delayTimer, unsigned int delayMilliSeconds);
+
 /**
  * WARNING : This method MUST NOT be used inside a method raised by an interruption itself.
  * If we would like to do something frequently, use State Machine, and only use this method 

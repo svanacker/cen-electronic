@@ -7,11 +7,11 @@
 #include "timerList.h"
 #include "timerConstants.h"
 
-void timerDelayMilliSeconds(unsigned int delayMilliSeconds) {
-    TimerList* timerList = getTimerList();
+Timer* timerDelayMark(void) {
+        TimerList* timerList = getTimerList();
     // Avoid to be blocked
     if (!timerList->started) {
-        return;
+        return NULL;
     }
     // TODO : If we use markTimer inside a timer interrupt, we will blocked by the while loop which will never exit
 
@@ -19,20 +19,38 @@ void timerDelayMilliSeconds(unsigned int delayMilliSeconds) {
     Timer* timer = getTimerByCode(SYSTEM_TIMER_DELAY_CODE);
     if (timer == NULL) {
         writeError(TIMER_DELAY_NOT_FOUND);
-        return;
+        return NULL;
     }
     // If the timer is disabled, we will not be able to enter in the loop
     if (!timer->enabled) {
         writeError(TIMER_DELAY_DISABLED);
-        return;
+        return NULL;
     }
     // Mark the timer so that we could know when we need to release it
     markTimer(timer);
+    
+    return timer;
+}
+
+bool timerDelayTimeout(Timer* delayTimer, unsigned int delayMilliSeconds) {
     // The frequency is 100 Hz => We multiply by 10
     unsigned timerSinceLastMarkThreshold = delayMilliSeconds / 10;
-    while(getTimeSinceLastMark(timer) <= timerSinceLastMarkThreshold) {
+    return getTimeSinceLastMark(delayTimer) >= timerSinceLastMarkThreshold;
+}
+
+void timerDelayWaitMark(Timer* delayTimer, unsigned int delayMilliSeconds) {
+    if (delayTimer == NULL) {   
+        writeError(TIMER_NULL);
+        return;
+    }
+    while(!timerDelayTimeout(delayTimer, delayMilliSeconds)) {
         // Do nothing, other interrupt will occur
     }
+}
+
+void timerDelayMilliSeconds(unsigned int delayMilliSeconds) {
+    Timer* delayTimer = timerDelayMark();
+    timerDelayWaitMark(delayTimer, delayMilliSeconds);
 }
 
 /**

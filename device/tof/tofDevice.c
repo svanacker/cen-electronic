@@ -11,6 +11,8 @@
 #include "../../common/io/printWriter.h"
 #include "../../common/io/reader.h"
 
+#include "../../common/timer/delayTimer.h"
+
 #include "../../device/device.h"
 
 #include "../../common/log/logger.h"
@@ -67,6 +69,40 @@ void deviceTofHandleRawData(unsigned char commandHeader, InputStream* inputStrea
         ackCommand(outputStream, TOF_DEVICE_HEADER, COMMAND_TOF_BEEP_OFF);
         TofSensorList* tofSensorList = getTofDeviceTofSensorList();
         tofSensorListBeepOff(tofSensorList);
+    }
+    else if (commandHeader == COMMAND_TOF_SEARCH_IF_COLLIDING) {
+        ackCommand(outputStream, TOF_DEVICE_HEADER, COMMAND_TOF_SEARCH_IF_COLLIDING);
+        TofSensorList* tofSensorList = getTofDeviceTofSensorList();
+
+        unsigned int tofIndex = readHex2(inputStream);
+        unsigned int startTofIndex = 0;
+        unsigned int endTofIndex = getTofSensorListSize(tofSensorList) - 1;
+        if (tofIndex == 0xFF) {
+            TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, tofIndex);
+            if (tofSensor == NULL) {
+                return;
+            }
+            startTofIndex = tofIndex;
+            endTofIndex = tofIndex;
+        }
+        Timer* timerDelay = timerDelayMark();
+        while (!timerDelayTimeout(timerDelay, 10000)) {
+            bool detected = false;
+            for (tofIndex = startTofIndex; tofIndex <= endTofIndex; tofIndex++) {
+                TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, tofIndex);
+                tofSensor->tofGetDistanceMM(tofSensor);
+                if (isTofDistanceUnderThreshold(tofSensor)) {
+                    detected = true;
+                    break;
+                }
+            }
+            if (detected) {
+                tofSensorListBeepOn(tofSensorList);
+            }
+            else {
+                tofSensorListBeepOff(tofSensorList);
+            }
+        }
     }
 }
 

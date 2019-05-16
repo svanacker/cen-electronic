@@ -3,8 +3,6 @@
 
 #include "../../device/deviceInterface.h"
 
-#define COMMAND_STRATEGY_SEARCH_IF_COLLIDING               'c'
-
 /** Returns the global score */
 #define COMMAND_STRATEGY_GET_GLOBAL_SCORE                  'M'
 

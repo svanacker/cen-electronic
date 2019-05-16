@@ -96,33 +96,7 @@ void deviceStrategyHandleRawData(unsigned char commandHeader, InputStream* input
         float robotAngleRadian = context->robotAngleRadian;
         tofSensorList->tofSensorListDebugTable(debugOutputStream, tofSensorList, robotPosition, robotAngleRadian);
     }
-    else if (commandHeader == COMMAND_STRATEGY_SEARCH_IF_COLLIDING) {
-        ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_STRATEGY_SEARCH_IF_COLLIDING);
-        OutputStream* debugOutputStream = getInfoOutputStreamLogger();
-        GameStrategyContext* context = getStrategyDeviceGameStrategyContext();
-        TofSensorList* tofSensorList = context->tofSensorList;
-        unsigned int tofIndex = readHex2(inputStream);
-        TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, tofIndex);
-        unsigned int i;
-        for (i = 0; i < 100; i++) {
 
-            timerDelayMilliSeconds(100);
-            if (i % 10 == 0) {
-                appendCRLF(debugOutputStream);
-            }
-            // unsigned int distance = 
-            tofSensor->tofGetDistanceMM(tofSensor);
-            bool detection = isTofDistanceUnderThreshold(tofSensor);
-            if (detection) {
-                append(debugOutputStream, 'X');
-                tofSensorListBeepOn(tofSensorList);
-            }
-            else {
-                append(debugOutputStream, '.');
-                tofSensorListBeepOff(tofSensorList);
-            }
-        }
-    }
     // Debug
     else if (commandHeader == COMMAND_STRATEGY_DEBUG) {
         ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_STRATEGY_DEBUG);
