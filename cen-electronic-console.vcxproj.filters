@@ -1000,6 +1000,66 @@
     <Filter Include="Source Files\common\sensor\current">
       <UniqueIdentifier>{e4d7f5f4-de3e-4f2e-9734-e88237ba050d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\robot\2019\elevator">
+      <UniqueIdentifier>{a4635133-9552-4190-be61-2cd951f14620}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\robot\2019\smallRobot">
+      <UniqueIdentifier>{ed75eb19-6d4d-4f14-b6c0-e77d82fa85de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\robot\2019\elevator">
+      <UniqueIdentifier>{b7c7889a-53a3-448a-a311-7941221bccbf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\robot\2019\smallRobot">
+      <UniqueIdentifier>{d60f068d-35ce-40b9-9efc-1ca70e6acde5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\robot\2019\fork">
+      <UniqueIdentifier>{747f1b0d-80df-4c39-b762-64710f62ad32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\robot\2019\fork">
+      <UniqueIdentifier>{d9e5a438-f6b2-4da9-961e-0ad29db2dfc8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\robot\2019\strategy">
+      <UniqueIdentifier>{4639f456-36f8-4a23-b741-601491225a1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\robot\2019\gameboard">
+      <UniqueIdentifier>{cc7e8bee-9f5e-42ea-96fc-0e343258771e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\robot\2019\arm">
+      <UniqueIdentifier>{2fbd329a-9f29-4352-887b-0dd74d585707}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\robot\2019\electron">
+      <UniqueIdentifier>{4105742d-480e-46cc-b6ef-038190f1d968}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\robot\2019\bigRobot">
+      <UniqueIdentifier>{05247f99-2e81-4700-b53c-bcbc6e7740f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\robot\2019\distributor">
+      <UniqueIdentifier>{42673fc4-30e5-4a1c-817a-1fe22a130a10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\robot\2019\navigation">
+      <UniqueIdentifier>{a041fa04-6c8a-4b71-8c87-4988121fb5ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\robot\2019\electron">
+      <UniqueIdentifier>{35239411-b719-420a-aabb-5b1d4201bf2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\robot\2019\arm">
+      <UniqueIdentifier>{9d8a19a7-13dc-45d4-889e-b7e6d491bb5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\robot\2019\navigation">
+      <UniqueIdentifier>{7d549e58-4d7e-4e8b-8ea8-0d3fbe72bcfa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\robot\2019\bigRobot">
+      <UniqueIdentifier>{49b8ab86-80b0-4c59-927a-aa1f98fcfa55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\robot\2019\distributor">
+      <UniqueIdentifier>{df03007d-1633-4c0e-8d1f-9946da9d86a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\robot\2019\gameboard">
+      <UniqueIdentifier>{5206470a-26c8-4886-a7dd-89911b6bf070}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\robot\2019\strategy">
+      <UniqueIdentifier>{7dcc6856-3ba1-4daa-a4d7-0acacea4601a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -2016,12 +2076,6 @@
     <ClCompile Include="motion\pid\endDetection\parameters\motionEndDetectionParameterPersistence.c">
       <Filter>Source Files\motion\pid\endDetection\parameters</Filter>
     </ClCompile>
-    <ClCompile Include="robot\2019\gameBoardElement2019.c">
-      <Filter>Source Files\robot\2019</Filter>
-    </ClCompile>
-    <ClCompile Include="robot\2019\mainBoard2019.c">
-      <Filter>Source Files\robot\2019</Filter>
-    </ClCompile>
     <ClCompile Include="robot\tof\strategyTofSensorList.c">
       <Filter>Source Files\robot\tof</Filter>
     </ClCompile>
@@ -2030,27 +2084,6 @@
     </ClCompile>
     <ClCompile Include="common\pwm\servo\pc\servoListPc.c">
       <Filter>Source Files\common\pwm\servo\pc</Filter>
-    </ClCompile>
-    <ClCompile Include="robot\2019\forkDevice2019.c">
-      <Filter>Source Files\robot\2019</Filter>
-    </ClCompile>
-    <ClCompile Include="robot\2019\forkDeviceInterface2019.c">
-      <Filter>Source Files\robot\2019</Filter>
-    </ClCompile>
-    <ClCompile Include="robot\2019\distributor2019.c">
-      <Filter>Source Files\robot\2019</Filter>
-    </ClCompile>
-    <ClCompile Include="robot\2019\distributorDebug2019.c">
-      <Filter>Source Files\robot\2019</Filter>
-    </ClCompile>
-    <ClCompile Include="robot\2019\strategy2019.c">
-      <Filter>Source Files\robot\2019</Filter>
-    </ClCompile>
-    <ClCompile Include="robot\2019\strategy2019Utils.c">
-      <Filter>Source Files\robot\2019</Filter>
-    </ClCompile>
-    <ClCompile Include="robot\2019\strategyConfig2019.c">
-      <Filter>Source Files\robot\2019</Filter>
     </ClCompile>
     <ClCompile Include="drivers\sensor\current\pc\currentPc.c">
       <Filter>Source Files\drivers\sensor\current\pc</Filter>
@@ -2094,44 +2127,89 @@
     <ClCompile Include="common\io\bufferDebug.c">
       <Filter>Source Files\common\io</Filter>
     </ClCompile>
-    <ClCompile Include="robot\2019\fork2019.c">
-      <Filter>Source Files\robot\2019</Filter>
-    </ClCompile>
-    <ClCompile Include="robot\2019\bigRobotStrategy2019.c">
-      <Filter>Source Files\robot\2019</Filter>
-    </ClCompile>
-    <ClCompile Include="robot\2019\smallRobotStrategy2019.c">
-      <Filter>Source Files\robot\2019</Filter>
-    </ClCompile>
-    <ClCompile Include="robot\2019\smallRobotActions2019.c">
-      <Filter>Source Files\robot\2019</Filter>
-    </ClCompile>
-    <ClCompile Include="robot\2019\bigRobotActions2019.c">
-      <Filter>Source Files\robot\2019</Filter>
-    </ClCompile>
     <ClCompile Include="common\timer\delayTimer.c">
       <Filter>Source Files\common\timer</Filter>
     </ClCompile>
-    <ClCompile Include="robot\2019\electronLauncher2019.c">
+    <ClCompile Include="robot\2019\elevator\elevatorDevice2019.c">
+      <Filter>Source Files\robot\2019\elevator</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2019\arm\arm2019.c">
+      <Filter>Source Files\robot\2019\arm</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2019\bigRobot\bigRobotActions2019.c">
+      <Filter>Source Files\robot\2019\bigRobot</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2019\bigRobot\bigRobotStrategy2019.c">
+      <Filter>Source Files\robot\2019\bigRobot</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2019\distributor\distributor2019.c">
+      <Filter>Source Files\robot\2019\distributor</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2019\distributor\distributorDebug2019.c">
+      <Filter>Source Files\robot\2019\distributor</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2019\electron\electronLauncher2019.c">
+      <Filter>Source Files\robot\2019\electron</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2019\electron\electronLauncher2019Debug.c">
+      <Filter>Source Files\robot\2019\electron</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2019\electron\electronLauncherDevice2019.c">
+      <Filter>Source Files\robot\2019\electron</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2019\electron\electronLauncherDeviceInterface2019.c">
+      <Filter>Source Files\robot\2019\electron</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2019\fork\fork2019.c">
+      <Filter>Source Files\robot\2019\fork</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2019\fork\forkAccelerator2019.c">
+      <Filter>Source Files\robot\2019\fork</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2019\fork\forkDevice2019.c">
+      <Filter>Source Files\robot\2019\fork</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2019\fork\forkDeviceInterface2019.c">
+      <Filter>Source Files\robot\2019\fork</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2019\fork\forkGoldenium2019.c">
+      <Filter>Source Files\robot\2019\fork</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2019\fork\forkScan2019.c">
+      <Filter>Source Files\robot\2019\fork</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2019\gameboard\gameBoardElement2019.c">
+      <Filter>Source Files\robot\2019\gameboard</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2019\smallRobot\smallRobotActions2019.c">
+      <Filter>Source Files\robot\2019\smallRobot</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2019\smallRobot\smallRobotStrategy2019.c">
+      <Filter>Source Files\robot\2019\smallRobot</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2019\strategy\strategy2019.c">
+      <Filter>Source Files\robot\2019\strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2019\strategy\strategy2019Utils.c">
+      <Filter>Source Files\robot\2019\strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2019\strategy\strategyConfig2019.c">
+      <Filter>Source Files\robot\2019\strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2019\mainBoard2019.c">
       <Filter>Source Files\robot\2019</Filter>
     </ClCompile>
-    <ClCompile Include="robot\2019\electronLauncherDevice2019.c">
-      <Filter>Source Files\robot\2019</Filter>
+    <ClCompile Include="robot\2019\elevator\elevator2019.c">
+      <Filter>Source Files\robot\2019\elevator</Filter>
     </ClCompile>
-    <ClCompile Include="robot\2019\electronLauncherDeviceInterface2019.c">
-      <Filter>Source Files\robot\2019</Filter>
+    <ClCompile Include="robot\2019\elevator\elevatorDeviceInterface2019.c">
+      <Filter>Source Files\robot\2019\elevator</Filter>
     </ClCompile>
-    <ClCompile Include="robot\2019\arm2019.c">
-      <Filter>Source Files\robot\2019</Filter>
+    <ClCompile Include="robot\2019\arm\armDevice2019.c">
+      <Filter>Source Files\robot\2019\arm</Filter>
     </ClCompile>
-    <ClCompile Include="robot\2019\forkGoldenium2019.c">
-      <Filter>Source Files\robot\2019</Filter>
-    </ClCompile>
-    <ClCompile Include="robot\2019\forkScan2019.c">
-      <Filter>Source Files\robot\2019</Filter>
-    </ClCompile>
-    <ClCompile Include="robot\2019\electronLauncher2019Debug.c">
-      <Filter>Source Files\robot\2019</Filter>
+    <ClCompile Include="robot\2019\arm\armDeviceInterface2019.c">
+      <Filter>Source Files\robot\2019\arm</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -3197,15 +3275,6 @@
     <ClInclude Include="motion\pid\endDetection\parameters\motionEndDetectionParameterPersistence.h">
       <Filter>Header Files\motion\pid\endDetection\parameters</Filter>
     </ClInclude>
-    <ClInclude Include="robot\2019\score2019.h">
-      <Filter>Header Files\robot\2019</Filter>
-    </ClInclude>
-    <ClInclude Include="robot\2019\gameBoardElement2019.h">
-      <Filter>Header Files\robot\2019</Filter>
-    </ClInclude>
-    <ClInclude Include="robot\2019\mainBoard2019.h">
-      <Filter>Header Files\robot\2019</Filter>
-    </ClInclude>
     <ClInclude Include="robot\tof\strategyTofSensorList.h">
       <Filter>Header Files\robot\tof</Filter>
     </ClInclude>
@@ -3217,30 +3286,6 @@
     </ClInclude>
     <ClInclude Include="common\pwm\servo\pc\servoListPc.h">
       <Filter>Header Files\common\pwm\servo\pc</Filter>
-    </ClInclude>
-    <ClInclude Include="robot\2019\forkDevice2019.h">
-      <Filter>Header Files\robot\2019</Filter>
-    </ClInclude>
-    <ClInclude Include="robot\2019\forkDeviceInterface2019.h">
-      <Filter>Header Files\robot\2019</Filter>
-    </ClInclude>
-    <ClInclude Include="robot\2019\teamColor2019.h">
-      <Filter>Header Files\robot\2019</Filter>
-    </ClInclude>
-    <ClInclude Include="robot\2019\distributor2019.h">
-      <Filter>Header Files\robot\2019</Filter>
-    </ClInclude>
-    <ClInclude Include="robot\2019\distributorDebug2019.h">
-      <Filter>Header Files\robot\2019</Filter>
-    </ClInclude>
-    <ClInclude Include="robot\2019\strategy2019.h">
-      <Filter>Header Files\robot\2019</Filter>
-    </ClInclude>
-    <ClInclude Include="robot\2019\strategy2019Utils.h">
-      <Filter>Header Files\robot\2019</Filter>
-    </ClInclude>
-    <ClInclude Include="robot\2019\strategyConfig2019.h">
-      <Filter>Header Files\robot\2019</Filter>
     </ClInclude>
     <ClInclude Include="common\serial\serialLinkList.h">
       <Filter>Header Files\common\serial</Filter>
@@ -3299,65 +3344,116 @@
     <ClInclude Include="motion\motionConstants.h">
       <Filter>Header Files\motion</Filter>
     </ClInclude>
-    <ClInclude Include="robot\2019\fork2019.h">
-      <Filter>Header Files\robot\2019</Filter>
-    </ClInclude>
-    <ClInclude Include="robot\2019\location2019.h">
-      <Filter>Header Files\robot\2019</Filter>
-    </ClInclude>
-    <ClInclude Include="robot\2019\path2019.h">
-      <Filter>Header Files\robot\2019</Filter>
-    </ClInclude>
-    <ClInclude Include="robot\2019\angle2019.h">
-      <Filter>Header Files\robot\2019</Filter>
-    </ClInclude>
-    <ClInclude Include="robot\2019\bigRobotPath2019.h">
-      <Filter>Header Files\robot\2019</Filter>
-    </ClInclude>
-    <ClInclude Include="robot\2019\smallRobotPath2019.h">
-      <Filter>Header Files\robot\2019</Filter>
-    </ClInclude>
-    <ClInclude Include="robot\2019\bigRobotStrategy2019.h">
-      <Filter>Header Files\robot\2019</Filter>
-    </ClInclude>
-    <ClInclude Include="robot\2019\smallRobotStrategy2019.h">
-      <Filter>Header Files\robot\2019</Filter>
-    </ClInclude>
-    <ClInclude Include="robot\2019\smallRobotActions2019.h">
-      <Filter>Header Files\robot\2019</Filter>
-    </ClInclude>
-    <ClInclude Include="robot\2019\bigRobotActions2019.h">
-      <Filter>Header Files\robot\2019</Filter>
-    </ClInclude>
-    <ClInclude Include="robot\2019\bigRobotLocation2019.h">
-      <Filter>Header Files\robot\2019</Filter>
-    </ClInclude>
-    <ClInclude Include="robot\2019\smallRobotLocation2019.h">
-      <Filter>Header Files\robot\2019</Filter>
-    </ClInclude>
     <ClInclude Include="common\timer\delayTimer.h">
       <Filter>Header Files\common\timer</Filter>
     </ClInclude>
-    <ClInclude Include="robot\2019\electronLauncher2019.h">
+    <ClInclude Include="robot\2019\electron\electronLauncher2019.h">
+      <Filter>Header Files\robot\2019\electron</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\electron\electronLauncher2019Debug.h">
+      <Filter>Header Files\robot\2019\electron</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\electron\electronLauncherDevice2019.h">
+      <Filter>Header Files\robot\2019\electron</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\electron\electronLauncherDeviceInterface2019.h">
+      <Filter>Header Files\robot\2019\electron</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\elevator\elevatorDevice2019.h">
+      <Filter>Header Files\robot\2019\elevator</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\bigRobot\bigRobotActions2019.h">
+      <Filter>Header Files\robot\2019\bigRobot</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\bigRobot\bigRobotLocation2019.h">
+      <Filter>Header Files\robot\2019\bigRobot</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\bigRobot\bigRobotPath2019.h">
+      <Filter>Header Files\robot\2019\bigRobot</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\bigRobot\bigRobotStrategy2019.h">
+      <Filter>Header Files\robot\2019\bigRobot</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\smallRobot\smallRobotActions2019.h">
+      <Filter>Header Files\robot\2019\smallRobot</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\smallRobot\smallRobotLocation2019.h">
+      <Filter>Header Files\robot\2019\smallRobot</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\smallRobot\smallRobotPath2019.h">
+      <Filter>Header Files\robot\2019\smallRobot</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\smallRobot\smallRobotStrategy2019.h">
+      <Filter>Header Files\robot\2019\smallRobot</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\distributor\distributor2019.h">
+      <Filter>Header Files\robot\2019\distributor</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\distributor\distributorDebug2019.h">
+      <Filter>Header Files\robot\2019\distributor</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\fork\fork2019.h">
+      <Filter>Header Files\robot\2019\fork</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\fork\forkAccelerator2019.h">
+      <Filter>Header Files\robot\2019\fork</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\fork\forkDevice2019.h">
+      <Filter>Header Files\robot\2019\fork</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\fork\forkDeviceInterface2019.h">
+      <Filter>Header Files\robot\2019\fork</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\fork\forkGoldenium2019.h">
+      <Filter>Header Files\robot\2019\fork</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\fork\forkScan2019.h">
+      <Filter>Header Files\robot\2019\fork</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\strategy\score2019.h">
+      <Filter>Header Files\robot\2019\strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\strategy\strategy2019.h">
+      <Filter>Header Files\robot\2019\strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\strategy\strategy2019Utils.h">
+      <Filter>Header Files\robot\2019\strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\strategy\strategyConfig2019.h">
+      <Filter>Header Files\robot\2019\strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\strategy\teamColor2019.h">
+      <Filter>Header Files\robot\2019\strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\arm\arm2019.h">
+      <Filter>Header Files\robot\2019\arm</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\gameboard\gameBoardElement2019.h">
+      <Filter>Header Files\robot\2019\gameboard</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\navigation\angle2019.h">
+      <Filter>Header Files\robot\2019\navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\navigation\location2019.h">
+      <Filter>Header Files\robot\2019\navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\navigation\path2019.h">
+      <Filter>Header Files\robot\2019\navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\mainBoard2019.h">
       <Filter>Header Files\robot\2019</Filter>
     </ClInclude>
-    <ClInclude Include="robot\2019\electronLauncherDevice2019.h">
-      <Filter>Header Files\robot\2019</Filter>
+    <ClInclude Include="robot\2019\elevator\elevator2019.h">
+      <Filter>Header Files\robot\2019\elevator</Filter>
     </ClInclude>
-    <ClInclude Include="robot\2019\electronLauncherDeviceInterface2019.h">
-      <Filter>Header Files\robot\2019</Filter>
+    <ClInclude Include="robot\2019\elevator\elevatorDeviceInterface2019.h">
+      <Filter>Header Files\robot\2019\elevator</Filter>
     </ClInclude>
-    <ClInclude Include="robot\2019\arm2019.h">
-      <Filter>Header Files\robot\2019</Filter>
+    <ClInclude Include="robot\2019\arm\armDevice2019.h">
+      <Filter>Header Files\robot\2019\arm</Filter>
     </ClInclude>
-    <ClInclude Include="robot\2019\forkGoldenium2019.h">
-      <Filter>Header Files\robot\2019</Filter>
-    </ClInclude>
-    <ClInclude Include="robot\2019\forkScan2019.h">
-      <Filter>Header Files\robot\2019</Filter>
-    </ClInclude>
-    <ClInclude Include="robot\2019\electronLauncher2019Debug.h">
-      <Filter>Header Files\robot\2019</Filter>
+    <ClInclude Include="robot\2019\arm\armDeviceInterface2019.h">
+      <Filter>Header Files\robot\2019\arm</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

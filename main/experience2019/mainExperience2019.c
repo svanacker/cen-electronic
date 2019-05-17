@@ -31,9 +31,9 @@
 // 2019 Specific
 #include "../../drivers/tof/tofList.h"
 #include "../../drivers/tof/tof.h"
-#include "../../robot/2019/electronLauncher2019.h"
-#include "../../robot/2019/electronLauncherDevice2019.h"
-#include "../../robot/2019/electronLauncherDeviceInterface2019.h"
+#include "../../robot/2019/electron/electronLauncher2019.h"
+#include "../../robot/2019/electron/electronLauncherDevice2019.h"
+#include "../../robot/2019/electron/electronLauncherDeviceInterface2019.h"
 
 #include "../../robot/match/endMatch.h"
 #include "../../robot/match/endMatchDebug.h"

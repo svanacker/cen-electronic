@@ -64,8 +64,8 @@
 
 // 2019
 #include "../../robot/2019/mainBoard2019.h"
-#include "../../robot/2019/gameBoardElement2019.h"
-#include "../../robot/2019/score2019.h"
+#include "../../robot/2019/gameboard/gameBoardElement2019.h"
+#include "../../robot/2019/strategy/score2019.h"
 
 static GameStrategyContext* gameStrategyContext;
 static Navigation* navigation;

@@ -43,7 +43,6 @@
 #include "../../robot/strategy/gameTargetListDebug.h"
 #include "../../robot/strategy/gameStrategyHandler.h"
 
-#include "../../robot/2019/strategy2019.h"
 #include "../../robot/config/robotConfig.h"
 
 // Forward declaration

@@ -10,6 +10,7 @@
 #include "../../common/io/reader.h"
 
 #include "../../device/device.h"
+#include "../../device/deviceConstants.h"
 
 #include "../../drivers/battery/battery.h"
 

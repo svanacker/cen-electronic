@@ -211,11 +211,16 @@
 
 // 2019
 #include "../../robot/2019/mainBoard2019.h"
-#include "../../robot/2019/forkDeviceInterface2019.h"
-#include "../../robot/2019/forkDevice2019.h"
-#include "../../robot/2019/electronLauncher2019.h"
-#include "../../robot/2019/electronLauncherDevice2019.h"
-#include "../../robot/2019/electronLauncherDeviceInterface2019.h"
+#include "../../robot/2019/elevator/elevatorDeviceInterface2019.h"
+#include "../../robot/2019/elevator/elevatorDevice2019.h"
+
+#include "../../robot/2019/arm/armDeviceInterface2019.h"
+#include "../../robot/2019/arm/armDevice2019.h"
+#include "../../robot/2019/fork/forkDeviceInterface2019.h"
+#include "../../robot/2019/fork/forkDevice2019.h"
+#include "../../robot/2019/electron/electronLauncher2019.h"
+#include "../../robot/2019/electron/electronLauncherDevice2019.h"
+#include "../../robot/2019/electron/electronLauncherDeviceInterface2019.h"
 
 #include "../../robot/tof/strategyTofSensorList.h"
 
@@ -432,6 +437,8 @@ void initMainBoardLocalDevices(void) {
 
     // 2019 specific
 //    addLocalDevice(getStrategy2018DeviceInterface(), getStrategy2018DeviceDescriptor(distributor));
+    addLocalDevice(getElevator2019DeviceInterface(), getElevator2019DeviceDescriptor(&servoList));
+    addLocalDevice(getArm2019DeviceInterface(), getArm2019DeviceDescriptor(&servoList));
     addLocalDevice(getFork2019DeviceInterface(), getFork2019DeviceDescriptor(&servoList, &tofSensorList));
     addLocalDevice(getElectronLauncher2019DeviceInterface(), getElectronLauncher2019DeviceDescriptor(&launcher));
 

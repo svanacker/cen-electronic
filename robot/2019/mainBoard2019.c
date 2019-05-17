@@ -27,12 +27,12 @@
 #include "../../main/mainBoard/mainBoardCommon.h"
 
 // 2019
-#include "../../robot/2019/fork2019.h"
-#include "../../robot/2019/forkScan2019.h"
-#include "../../robot/2019/distributor2019.h"
-#include "../../robot/2019/strategy2019.h"
-#include "../../robot/2019/strategyConfig2019.h"
-#include "../../robot/2019/gameBoardElement2019.h"
+#include "../../robot/2019/fork/fork2019.h"
+#include "../../robot/2019/fork/forkScan2019.h"
+#include "../../robot/2019/distributor/distributor2019.h"
+#include "../../robot/2019/strategy/strategy2019.h"
+#include "../../robot/2019/strategy/strategyConfig2019.h"
+#include "../../robot/2019/gameboard/gameBoardElement2019.h"
 
 // 2019 -> GameStrategyContext
 static GameStrategyContext gameStrategyContext;

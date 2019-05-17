@@ -35,8 +35,10 @@
 
 // SMALL ROBOT PART
 #include "../../drivers/pwm/servo/servoPwmPca9685.h"
-#include "../../robot/2019/forkDeviceInterface2019.h"
-#include "../../robot/2019/forkDevice2019.h"
+#include "../../robot/2019/elevator/elevatorDeviceInterface2019.h"
+#include "../../robot/2019/elevator/elevatorDevice2019.h"
+#include "../../robot/2019/fork/forkDeviceInterface2019.h"
+#include "../../robot/2019/fork/forkDevice2019.h"
 
 // Robot Configuration
 static RobotConfig robotConfig;
@@ -148,6 +150,7 @@ int main(void) {
     addServoAllPca9685(servoList, servoI2cBusConnection);
     
     TofSensorList* tofSensorList = mainBoardCommonTofGetTofSensorList();
+    addLocalDevice(getElevator2019DeviceInterface(), getElevator2019DeviceDescriptor(servoList));
     addLocalDevice(getFork2019DeviceInterface(), getFork2019DeviceDescriptor(servoList, tofSensorList));
 
     /*

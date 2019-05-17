@@ -4,9 +4,11 @@
 /** Device header .*/
 #define BATTERY_DEVICE_HEADER                      'b'
 
+#define ACCELEROMETER_DEVICE_HEADER                'B'
+
 #define ROBOT_CONFIG_DEVICE_HEADER                 'c'
 
-#define CURRENT_SENSOR_DEVICE_HEADER                      'C'
+#define CURRENT_SENSOR_DEVICE_HEADER               'C'
 
 #define ADC_DEVICE_HEADER                          'd'
 
@@ -16,9 +18,7 @@
 
 #define EEPROM_DEVICE_HEADER                       'E'
 
-#define FILE_DEVICE_HEADER                         'f'
-
-#define LOG_DEVICE_HEADER                          'G'
+#define FILE_DEVICE_HEADER                         'F'
 
 #define IO_DEVICE_HEADER                           'g'
 
@@ -43,13 +43,12 @@
 /** Command to handle the Kinematics. */
 #define KINEMATICS_HEADER                          'K'
 
-/** Laser Beacon Device Header. */
-#define LASER_BEACON_DEVICE_HEADER                 'l'
-
 /**
  * Command header for LCD Device.
  */
 #define LCD_DEVICE_HEADER                          'L'
+
+#define LOG_DEVICE_HEADER                          'l'
 
 /**
  * Defines the header char used to identify the motion Device (high level).
@@ -71,8 +70,6 @@
  */
 #define NAVIGATION_DEVICE_HEADER                   'N'
 
-#define STRATEGY_2018_DEVICE_HEADER                'o'
-
 /** To set PID values */
 #define PID_DEVICE_HEADER                          'p'
 
@@ -83,12 +80,13 @@
 #define COMMAND_PING_DISPATCHER_INDEX              'Q'
 
 /** Command to debug the I2C (Master or Slave). */
-// TODO : Conflct !!
+// TODO : Conflict !!
 #define I2C_COMMON_DEBUG_DEVICE_HEADER             'Q'
 
 /** To access to each pin of the PIC */
 #define PIN_DEVICE_HEADER                          'q'
 
+// TODO : To REMOVE
 #define BEACON_RECEIVER_DEVICE_HEADER              'r'
 
 #define RELAY_DEVICE_HEADER                        'R'
@@ -106,9 +104,6 @@
 
 /** Header for Test Device. */
 #define TEST_DEVICE_HEADER                         't'
-
-/** Common Beacon device header. */
-#define COMMON_BEACON_DEVICE_HEADER                'u'
 
 /** Serial debug (U for "Uart"). */
 #define SERIAL_DEBUG_DEVICE_HEADER                 'U'
@@ -139,9 +134,6 @@
 /** To send the signal of start Match */
 #define START_MATCH_DEVICE_HEADER                   '!'
 
-/** To check if an object is in front of the robot */
-#define SONAR_DEVICE_HEADER                        '<'
-
 /** Time of flight device. */
 #define TOF_DEVICE_HEADER                          '['
 
@@ -152,14 +144,14 @@
 
 #define MOTION_SIMULATION_DEVICE_HEADER            '/' 
 
-#define ROBOT_INFRARED_DETECTOR_DEVICE_HEADER      '>'
+// 2019
 
-#define LAUNCHER_2018_DEVICE_HEADER                '_'
+#define ELEVATOR_2019_DEVICE_HEADER                '|'
 
 #define FORK_2019_DEVICE_HEADER                    '_'
 
-#define ELECTRON_LAUNCHER_2019_DEVICE_HEADER       '.'
+#define ARM_2019_DEVICE_HEADER                       'A'
 
-#define ACCELEROMETER_DEVICE_HEADER                '&'
+#define ELECTRON_LAUNCHER_2019_DEVICE_HEADER       '.'
 
 #endif
