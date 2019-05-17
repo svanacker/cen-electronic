@@ -151,6 +151,7 @@ bool fork2019TakeSimplePuck(ServoList* servoList, TofSensorList* tofSensorList) 
         return false;
     }
     
+    // Move to Bottom which is the level to take the distributor elements
     moveElevatorBottom(servoList, wait);
 
     // Fork Single Puck

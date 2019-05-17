@@ -37,9 +37,9 @@ PathList* getNavigationPathList(Navigation* navigation) {
     return navigation->paths;
 }
 
-Location* addNavigationLocation(Navigation* navigation, char* name, float x, float y) {
+Location* addNavigationLocation(Navigation* navigation, char* name, char* label, float x, float y) {
     LocationList* locationList = navigation->locationList;
-    Location* result = addNamedLocation(locationList, name, x, y);
+    Location* result = addNamedLocation(locationList, name, label, x, y);
     return result;
 }
 

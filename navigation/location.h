@@ -19,8 +19,10 @@ typedef struct Location Location;
  * Encapsulates the location.
  */
 struct Location {
-    /** The name. */
+    /** The name (fixed to be able to interact in console with them). */
     FixedCharArray name;
+    /** The label of the point */
+    char* label;
     /** The coordinates in x. */
     float x;
     /** The coordinates in y. */

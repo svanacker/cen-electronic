@@ -178,16 +178,16 @@ void initBigRobotLocations2019(GameStrategyContext* gameStrategyContext) {
     Navigation* navigation = gameStrategyContext->navigation;
     enum TeamColor teamColor = gameStrategyContext->color;
 
-    bigRobotStartAreaLocation = addLocationWithColors(teamColor, navigation, BIG_ROBOT_START_AREA, BIG_ROBOT_START_AREA_X, BIG_ROBOT_START_AREA_Y);
-    chaosFrontLocation = addLocationWithColors(teamColor, navigation, CHAOS_ZONE_FRONT, CHAOS_ZONE_FRONT_X, CHAOS_ZONE_FRONT_Y);
-    rediumDropZoneLocation = addLocationWithColors(teamColor, navigation, REDIUM_DROP_ZONE, REDIUM_DROP_ZONE_X, REDIUM_DROP_ZONE_Y);
-    acceleratorDropLocation = addLocationWithColors(teamColor, navigation, ACCELERATOR_DROP, ACCELERATOR_DROP_X, ACCELERATOR_DROP_Y);
+    bigRobotStartAreaLocation = addLocationWithColors(teamColor, navigation, BIG_ROBOT_START_AREA, BIG_ROBOT_START_AREA_LABEL, BIG_ROBOT_START_AREA_X, BIG_ROBOT_START_AREA_Y);
+    chaosFrontLocation = addLocationWithColors(teamColor, navigation, CHAOS_ZONE_FRONT, CHAOS_ZONE_FRONT_LABEL, CHAOS_ZONE_FRONT_X, CHAOS_ZONE_FRONT_Y);
+    rediumDropZoneLocation = addLocationWithColors(teamColor, navigation, REDIUM_DROP_ZONE, REDIUM_DROP_ZONE_LABEL, REDIUM_DROP_ZONE_X, REDIUM_DROP_ZONE_Y);
+    acceleratorDropLocation = addLocationWithColors(teamColor, navigation, ACCELERATOR_DROP, ACCELERATOR_DROP_LABEL, ACCELERATOR_DROP_X, ACCELERATOR_DROP_Y);
 
-    keyPoint1Location = addLocationWithColors(teamColor, navigation, KEY_POINT_1, KEY_POINT_1_X, KEY_POINT_1_Y);
-    keyPoint2Location = addLocationWithColors(teamColor, navigation, KEY_POINT_2, KEY_POINT_2_X, KEY_POINT_2_Y);
-    bigDistributorLine1FrontLocation = addLocationWithColors(teamColor, navigation, BIG_DISTRIBUTOR_LINE_1, BIG_DISTRIBUTOR_LINE_1_X, BIG_DISTRIBUTOR_LINE_1_Y);
-    bigDistributorLine2FrontLocation = addLocationWithColors(teamColor, navigation, BIG_DISTRIBUTOR_LINE_2, BIG_DISTRIBUTOR_LINE_2_X, BIG_DISTRIBUTOR_LINE_2_Y);
-    bigDistributorLine3FrontLocation = addLocationWithColors(teamColor, navigation, BIG_DISTRIBUTOR_LINE_3, BIG_DISTRIBUTOR_LINE_3_X, BIG_DISTRIBUTOR_LINE_3_Y);
+    keyPoint1Location = addLocationWithColors(teamColor, navigation, KEY_POINT_1, KEY_POINT_1_LABEL, KEY_POINT_1_X, KEY_POINT_1_Y);
+    keyPoint2Location = addLocationWithColors(teamColor, navigation, KEY_POINT_2, KEY_POINT_2_LABEL, KEY_POINT_2_X, KEY_POINT_2_Y);
+    bigDistributorLine1FrontLocation = addLocationWithColors(teamColor, navigation, BIG_DISTRIBUTOR_LINE_1, BIG_DISTRIBUTOR_LINE_1_LABEL,  BIG_DISTRIBUTOR_LINE_1_X, BIG_DISTRIBUTOR_LINE_1_Y);
+    bigDistributorLine2FrontLocation = addLocationWithColors(teamColor, navigation, BIG_DISTRIBUTOR_LINE_2, BIG_DISTRIBUTOR_LINE_2_LABEL, BIG_DISTRIBUTOR_LINE_2_X, BIG_DISTRIBUTOR_LINE_2_Y);
+    bigDistributorLine3FrontLocation = addLocationWithColors(teamColor, navigation, BIG_DISTRIBUTOR_LINE_3, BIG_DISTRIBUTOR_LINE_3_LABEL, BIG_DISTRIBUTOR_LINE_3_X, BIG_DISTRIBUTOR_LINE_3_Y);
 
 }
 
@@ -396,17 +396,17 @@ void initBigRobotTargetActionsItems2019(GameStrategyContext* gameStrategyContext
     // Big Distributor 1 Line 1
     addTargetActionItem(&bigDistributorLine1PrepareTargetActionItemList, &bigDistributorLine1PrepareTargetActionItem, &bigDistributorLinePrepare, "PREP DIST 1");
     addTargetActionItem(&bigDistributorLine1TakeTargetActionItemList, &bigDistributorLine1TakeTargetActionItem, &bigDistributorLineTake, "TAKE DIST 1");
-    addTargetActionItem(&bigDistributorLine1DropTargetActionItemList, &bigDistributorLine1DropTargetActionItem, &acceleratorDrop, "ACC DROP");
+    addTargetActionItem(&bigDistributorLine1DropTargetActionItemList, &bigDistributorLine1DropTargetActionItem, &bigDistributorAcceleratorDrop, "ACC DROP");
 
     // Big Distributor 1 Line 2
     addTargetActionItem(&bigDistributorLine2PrepareTargetActionItemList, &bigDistributorLine2PrepareTargetActionItem, &bigDistributorLinePrepare, "PREP DIST 3");
     addTargetActionItem(&bigDistributorLine2TakeTargetActionItemList, &bigDistributorLine2TakeTargetActionItem, &bigDistributorLineTake, "TAKE DIST 3");
-    addTargetActionItem(&bigDistributorLine2DropTargetActionItemList, &bigDistributorLine2DropTargetActionItem, &acceleratorDrop, "ACC DROP");
+    addTargetActionItem(&bigDistributorLine2DropTargetActionItemList, &bigDistributorLine2DropTargetActionItem, &bigDistributorAcceleratorDrop , "ACC DROP");
 
     // Big Distributor 1 Line 3
     addTargetActionItem(&bigDistributorLine3PrepareTargetActionItemList, &bigDistributorLine3PrepareTargetActionItem, &bigDistributorLinePrepare, "PREP DIST 3");
     addTargetActionItem(&bigDistributorLine3TakeTargetActionItemList, &bigDistributorLine3TakeTargetActionItem, &bigDistributorLineTake, "TAKE DIST 3");
-    addTargetActionItem(&bigDistributorLine3DropTargetActionItemList, &bigDistributorLine3DropTargetActionItem, &acceleratorDrop, "ACC DROP");
+    addTargetActionItem(&bigDistributorLine3DropTargetActionItemList, &bigDistributorLine3DropTargetActionItem, &bigDistributorAcceleratorDrop, "ACC DROP");
 }
 
 GameStrategy* initBigRobotStrategiesItems2019(GameStrategyContext* gameStrategyContext) {

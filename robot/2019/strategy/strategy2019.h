@@ -18,7 +18,7 @@
 */
 void initStrategy2019(GameStrategyContext* gameStrategyContext);
 
-Location* addLocationWithColors(enum TeamColor teamColor, Navigation* navigation, char* name, float x, float y);
+Location* addLocationWithColors(enum TeamColor teamColor, Navigation* navigation, char* name, char* label, float x, float y);
 
 PathData* addNavigationPathWithColor(
     enum TeamColor teamColor,

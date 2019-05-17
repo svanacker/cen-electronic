@@ -50,7 +50,7 @@ PathList* getNavigationPathList(Navigation* navigation);
 /**
  * Add the location to the navigation graph.
  */
-Location* addNavigationLocation(Navigation* navigation, char* name, float x, float y);
+Location* addNavigationLocation(Navigation* navigation, char* name, char* label, float x, float y);
 
 /**
  * Add the path to the navigation graph.

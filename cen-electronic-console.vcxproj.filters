@@ -1060,6 +1060,12 @@
     <Filter Include="Source Files\robot\2019\strategy">
       <UniqueIdentifier>{7dcc6856-3ba1-4daa-a4d7-0acacea4601a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\robot\2019\commonRobot">
+      <UniqueIdentifier>{135f84e2-2e35-4dbd-82f3-8d6b9571b243}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\robot\2019\commonRobot">
+      <UniqueIdentifier>{51c0d7a3-78f1-4bc3-9107-8d3a44acb137}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -2210,6 +2216,9 @@
     </ClCompile>
     <ClCompile Include="robot\2019\arm\armDeviceInterface2019.c">
       <Filter>Source Files\robot\2019\arm</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2019\commonRobot\commonRobotActions2019.c">
+      <Filter>Source Files\robot\2019\commonRobot</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -3454,6 +3463,9 @@
     </ClInclude>
     <ClInclude Include="robot\2019\arm\armDeviceInterface2019.h">
       <Filter>Header Files\robot\2019\arm</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\commonRobot\commonRobotActions2019.h">
+      <Filter>Header Files\robot\2019\commonRobot</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

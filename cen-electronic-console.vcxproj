@@ -429,6 +429,7 @@
     <ClCompile Include="robot\2019\arm\armDeviceInterface2019.c" />
     <ClCompile Include="robot\2019\bigRobot\bigRobotActions2019.c" />
     <ClCompile Include="robot\2019\bigRobot\bigRobotStrategy2019.c" />
+    <ClCompile Include="robot\2019\commonRobot\commonRobotActions2019.c" />
     <ClCompile Include="robot\2019\distributor\distributor2019.c" />
     <ClCompile Include="robot\2019\distributor\distributorDebug2019.c" />
     <ClCompile Include="robot\2019\electron\electronLauncher2019.c" />
@@ -834,6 +835,7 @@
     <ClInclude Include="robot\2019\bigRobot\bigRobotLocation2019.h" />
     <ClInclude Include="robot\2019\bigRobot\bigRobotPath2019.h" />
     <ClInclude Include="robot\2019\bigRobot\bigRobotStrategy2019.h" />
+    <ClInclude Include="robot\2019\commonRobot\commonRobotActions2019.h" />
     <ClInclude Include="robot\2019\distributor\distributor2019.h" />
     <ClInclude Include="robot\2019\distributor\distributorDebug2019.h" />
     <ClInclude Include="robot\2019\electron\electronLauncher2019.h" />

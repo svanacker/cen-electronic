@@ -32,11 +32,11 @@ void pathListTest(void) {
     PathData* pathDataBD;
     PathData* tmpPathData;
 
-    initLocation(&locationA, "A", 0, 0);
-    initLocation(&locationB, "B", 0, 0);
-    initLocation(&locationC, "C", 0, 0);
-    initLocation(&locationD, "D", 0, 0);
-    initLocation(&locationE, "E", 0, 0);
+    initLocation(&locationA, "A", "A", 0, 0);
+    initLocation(&locationB, "B", "B", 0, 0);
+    initLocation(&locationC, "C", "C", 0, 0);
+    initLocation(&locationD, "D", "D", 0, 0);
+    initLocation(&locationE, "E", "E", 0, 0);
 
     pathDataAB = addPath(&pathList);
     initPathData(pathDataAB, &locationA, &locationB, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);

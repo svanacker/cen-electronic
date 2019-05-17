@@ -122,8 +122,8 @@ unsigned int appendLocationLinkedPath(OutputStream* outputStream, Location* star
 // Tests Data
 
 void addLocationListTestsData(LocationList* locationList) {
-	addNamedLocation(locationList, "STAR", 10, 20);
-	addNamedLocation(locationList, "OBJ1", 200, 300);
-	addNamedLocation(locationList, "OBJ2", 400, 700);
-	addNamedLocation(locationList, "END", 1500, 2000);
+	addNamedLocation(locationList, "STAR", "STAR", 10, 20);
+	addNamedLocation(locationList, "OBJ1", "OBJ 1", 200, 300);
+	addNamedLocation(locationList, "OBJ2", "OBJ 2", 400, 700);
+	addNamedLocation(locationList, "END", "END", 1500, 2000);
 }

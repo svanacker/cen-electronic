@@ -49,6 +49,7 @@ Location* getLocation(LocationList* locationList, unsigned int index) {
 
 void copyLocation(Location* sourceLocation, Location* targetLocation) {
     copyFixedCharArray(&(sourceLocation->name), &(targetLocation->name));
+    targetLocation->label = sourceLocation->label;
     targetLocation->computedCost = sourceLocation->computedCost;
     targetLocation->computedHandled = sourceLocation->computedHandled;
     targetLocation->computedNextLocation = sourceLocation->computedNextLocation;
@@ -57,18 +58,19 @@ void copyLocation(Location* sourceLocation, Location* targetLocation) {
     targetLocation->y = sourceLocation->y;
 }
 
-void initLocation(Location* location, char* name, float x, float y) {
+void initLocation(Location* location, char* name, char* label, float x, float y) {
     FixedCharArray* existingLocationName = &(location->name);
     stringToFixedCharArray(name, existingLocationName);
     location->x = x;
     location->y = y;
+    location->label = label;
     location->computedCost = NO_COMPUTED_COST;
     location->computedHandled = false;
     location->computedNextLocation = NULL;
     location->computedPreviousLocation = NULL;
 }
 
-Location* addNamedLocation(LocationList* locationList, char* name, float x, float y) {
+Location* addNamedLocation(LocationList* locationList, char* name, char* label, float x, float y) {
     if (locationList == NULL || locationList->maxSize == 0) {
         writeError(LOCATION_LIST_NOT_INITIALIZED);
         return NULL;
@@ -77,7 +79,7 @@ Location* addNamedLocation(LocationList* locationList, char* name, float x, floa
     unsigned int size = locationList->size;
     if (size < locationList->maxSize) {
         Location* location = getLocation(locationList, size);
-        initLocation(location, name, x, y);
+        initLocation(location, name, label, x, y);
         locationList->size++;
         return location;
     }
@@ -87,11 +89,11 @@ Location* addNamedLocation(LocationList* locationList, char* name, float x, floa
     }
 }
 
-Location* addLocation(LocationList* locationList, FixedCharArray* s, float x, float y) {
-    Location* result = addNamedLocation(locationList, NULL, x, y);
+Location* addLocation(LocationList* locationList, FixedCharArray* name, char* label, float x, float y) {
+    Location* result = addNamedLocation(locationList, NULL, label, x, y);
     if (result != NULL) {
         FixedCharArray* target = &(result->name);
-        copyFixedCharArray(s, target);
+        copyFixedCharArray(name, target);
     }
     return NULL;
 }

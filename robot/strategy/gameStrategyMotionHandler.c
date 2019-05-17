@@ -162,9 +162,11 @@ bool motionFollowPath(GameStrategyContext* gameStrategyContext, PathData* pathDa
     }
     OutputStream* outputStream = getDebugOutputStreamLogger();
     appendString(outputStream, "motionFollowPath:");
-    appendFixedCharArray(outputStream, &(pathData->location1)->name);
-    appendString(outputStream, "->");
-    appendFixedCharArray(outputStream, &(pathData->location2)->name);
+    Location* location1 = pathData->location1;
+    appendString(outputStream, location1->label);
+    appendString(outputStream, "   ->   ");
+    Location* location2 = pathData->location2;
+    appendString(outputStream, location2->label);
     appendCRLF(outputStream);
 
     Location* location = pathData->location2;

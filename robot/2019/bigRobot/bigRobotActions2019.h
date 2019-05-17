@@ -7,7 +7,7 @@ bool bigDistributorLinePrepare(int* context);
 
 bool bigDistributorLineTake(int* context);
 
-bool acceleratorDrop(int* context);
+bool bigDistributorAcceleratorDrop(int* context);
 
 #endif
 

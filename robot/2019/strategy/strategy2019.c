@@ -92,12 +92,12 @@ void initColorAndStartPosition2019(GameStrategyContext* gameStrategyContext) {
     gameStrategyContext->robotAngleRadian = angleRadian;
 }
 
-Location* addLocationWithColors(enum TeamColor teamColor, Navigation* navigation, char* name, float x, float y) {
+Location* addLocationWithColors(enum TeamColor teamColor, Navigation* navigation, char* name, char* label, float x, float y) {
     LocationList* locationList = navigation->locationList;
     if (teamColor == TEAM_COLOR_2019_VIOLET) {
         y = GAMEBOARD_HEIGHT - y;
     }
-    Location* result = addNamedLocation(locationList, name, x, y);
+    Location* result = addNamedLocation(locationList, name, label, x, y);
     return result;
 }
 

@@ -103,16 +103,16 @@ void checkNavigationPathFinding1(void) {
     initNavigationTest();
 
     // locations
-    locationA = addNavigationLocation(&navigation, "A", 0, 0);
-    locationB = addNavigationLocation(&navigation, "B", 0, 0);
-    locationC = addNavigationLocation(&navigation, "C", 0, 0);
-    locationD = addNavigationLocation(&navigation, "D", 0, 0);
-    locationE = addNavigationLocation(&navigation, "E", 0, 0);
-    locationF = addNavigationLocation(&navigation, "F", 0, 0);
-    locationG = addNavigationLocation(&navigation, "G", 0, 0);
-    locationH = addNavigationLocation(&navigation, "H", 0, 0);
-    locationI = addNavigationLocation(&navigation, "I", 0, 0);
-    locationJ = addNavigationLocation(&navigation, "J", 0, 0);
+    locationA = addNavigationLocation(&navigation, "A", "A", 0, 0);
+    locationB = addNavigationLocation(&navigation, "B", "B", 0, 0);
+    locationC = addNavigationLocation(&navigation, "C", "C", 0, 0);
+    locationD = addNavigationLocation(&navigation, "D", "D", 0, 0);
+    locationE = addNavigationLocation(&navigation, "E", "E", 0, 0);
+    locationF = addNavigationLocation(&navigation, "F", "F", 0, 0);
+    locationG = addNavigationLocation(&navigation, "G", "G", 0, 0);
+    locationH = addNavigationLocation(&navigation, "H", "H", 0, 0);
+    locationI = addNavigationLocation(&navigation, "I", "I", 0, 0);
+    locationJ = addNavigationLocation(&navigation, "J", "J", 0, 0);
 
     pathAB = addNavigationPath(&navigation, locationA, locationB, 85, 0, 0, 0, 0, 0, 0);
     pathBF = addNavigationPath(&navigation, locationB, locationF, 80, 0, 0, 0, 0, 0, 0);
@@ -154,11 +154,11 @@ void checkNavigationPathFinding2(void) {
     initNavigationTest();
 
     // locations
-    locationS = addNavigationLocation(&navigation, "S", 0.0f, 0.0f);
-    locationU = addNavigationLocation(&navigation, "U", 0.0f, 0.0f);
-    locationX = addNavigationLocation(&navigation, "X", 0.0f, 0.0f);
-    locationV = addNavigationLocation(&navigation, "V", 0.0f, 0.0f);
-    locationY = addNavigationLocation(&navigation, "Y", 0.0f, 0.0f);
+    locationS = addNavigationLocation(&navigation, "S", "S", 0.0f, 0.0f);
+    locationU = addNavigationLocation(&navigation, "U", "U", 0.0f, 0.0f);
+    locationX = addNavigationLocation(&navigation, "X", "X", 0.0f, 0.0f);
+    locationV = addNavigationLocation(&navigation, "V", "V", 0.0f, 0.0f);
+    locationY = addNavigationLocation(&navigation, "Y", "Y", 0.0f, 0.0f);
 
     // paths
     pathSU = addNavigationPath(&navigation, locationS, locationU, 10.0f, 0, 0, 0, 0, 0, 0);

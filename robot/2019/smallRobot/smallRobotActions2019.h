@@ -25,7 +25,7 @@ bool smallDistributorLinePrepare(int* context);
 
 bool smallDistributorLineTake(int* context);
 
-bool smallDistributorLineDrop(int* context);
+bool smallDistributorAcceleratorDrop(int* context);
 
 #endif
 
