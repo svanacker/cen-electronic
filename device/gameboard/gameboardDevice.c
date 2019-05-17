@@ -35,7 +35,20 @@ bool isGameboardDeviceOk(void) {
 }
 
 void deviceGameboardHandleRawData(unsigned char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
-	if (commandHeader == COMMAND_GAME_BOARD_PRINT) {
+    if (commandHeader == COMMANDE_GAME_BOARD_COLLISION) {
+        ackCommand(outputStream, GAME_BOARD_DEVICE_HEADER, COMMANDE_GAME_BOARD_COLLISION);
+
+        GameBoard* gameBoard = getGameboardDeviceGameBoard();
+        Point collisionPoint;
+        collisionPoint.x = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
+        checkIsSeparator(inputStream);
+        collisionPoint.y = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
+
+        bool result = isPointInTheCollisionArea(gameBoard, &collisionPoint);
+        appendBool(outputStream, result);
+    }
+    // PRINT
+	else if (commandHeader == COMMAND_GAME_BOARD_PRINT) {
         OutputStream* debugOutputStream = getInfoOutputStreamLogger();
         ackCommand(outputStream, GAME_BOARD_DEVICE_HEADER, COMMAND_GAME_BOARD_PRINT);
         

@@ -25,28 +25,9 @@ void windowExclusion2019Print(GameBoard* gameBoard, int* element) {
 }
 
 bool windowExclusionNotReachable(GameBoard* gameBoard, int* element, float x, float y, float z) {
-    // Left Border
-    if (isInRectangle(0.0f, 0.0f,
-        GAME_BOARD_ACCELERATOR_WIDTH + GAME_BOARD_TOF_WINDOW_WIDTH, GAMEBOARD_HEIGHT,
-        x, y)) {
-        return false;
-    }
-    // Bottom Border
-    if (isInRectangle(0.0f, 0.0f,
-        GAMEBOARD_WIDTH, GAME_BOARD_TOF_WINDOW_WIDTH,
-        x, y)) {
-        return false;
-    }
-    // Top Border
-    if (isInRectangle(0.0f, GAMEBOARD_HEIGHT - GAME_BOARD_TOF_WINDOW_WIDTH,
-        GAMEBOARD_WIDTH, GAME_BOARD_TOF_WINDOW_WIDTH,
-        x, y)) {
-        return false;
-    }
-
-    // Right Border
-    if (isInRectangle(GAMEBOARD_WIDTH - GAME_BOARD_TOF_WINDOW_WIDTH, 0.0f,
-        GAME_BOARD_TOF_WINDOW_WIDTH, GAMEBOARD_HEIGHT,
+    // If it's outside of the rectangle of the gameboard with border, return false
+    if (!isInRectangle(GAME_BOARD_TOF_WINDOW_WIDTH, GAME_BOARD_TOF_WINDOW_WIDTH,
+        GAMEBOARD_WIDTH - 2 * GAME_BOARD_TOF_WINDOW_WIDTH, GAMEBOARD_HEIGHT - 2 * GAME_BOARD_TOF_WINDOW_WIDTH,
         x, y)) {
         return false;
     }

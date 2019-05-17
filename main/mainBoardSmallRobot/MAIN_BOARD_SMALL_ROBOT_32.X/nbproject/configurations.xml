@@ -536,6 +536,11 @@
         <itemPath>../../../robot/2019/bigRobot/bigRobotPath2019.h</itemPath>
         <itemPath>../../../robot/2019/bigRobot/bigRobotStrategy2019.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f42"
+                     displayName="robot.2019.commonRobot"
+                     projectFiles="true">
+        <itemPath>../../../robot/2019/commonRobot/commonRobotActions2019.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="f35"
                      displayName="robot.2019.distributor"
                      projectFiles="true">
@@ -685,8 +690,6 @@
                      displayName="client.motion.simple"
                      projectFiles="true">
         <itemPath>../../../client/motion/simple/clientMotion.c</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f9" displayName="client.robot.2018" projectFiles="true">
       </logicalFolder>
       <logicalFolder name="common.2d" displayName="common.2d" projectFiles="true">
         <itemPath>../../../common/2d/2d.c</itemPath>
@@ -1200,6 +1203,11 @@
         <itemPath>../../../robot/2019/bigRobot/bigRobotActions2019.c</itemPath>
         <itemPath>../../../robot/2019/bigRobot/bigRobotStrategy2019.c</itemPath>
       </logicalFolder>
+      <logicalFolder name="f41"
+                     displayName="robot.2019.commonRobot"
+                     projectFiles="true">
+        <itemPath>../../../robot/2019/commonRobot/commonRobotActions2019.c</itemPath>
+      </logicalFolder>
       <logicalFolder name="f34"
                      displayName="robot.2019.distributor"
                      projectFiles="true">
@@ -1227,12 +1235,12 @@
       <logicalFolder name="f39"
                      displayName="robot.2019.navigation"
                      projectFiles="true">
-        <itemPath>../../../robot/2019/smallRobot/smallRobotActions2019.c</itemPath>
-        <itemPath>../../../robot/2019/smallRobot/smallRobotStrategy2019.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f38"
                      displayName="robot.2019.smallRobot"
                      projectFiles="true">
+        <itemPath>../../../robot/2019/smallRobot/smallRobotStrategy2019.c</itemPath>
+        <itemPath>../../../robot/2019/smallRobot/smallRobotActions2019.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f40" displayName="robot.2019.strategy" projectFiles="true">
         <itemPath>../../../robot/2019/strategy/strategy2019.c</itemPath>

@@ -15,7 +15,19 @@ const char* getGameboardDeviceName(void) {
 }
 
 int deviceGameBoardGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
-    if (commandHeader == COMMAND_GAME_BOARD_PRINT) {
+    if (commandHeader == COMMANDE_GAME_BOARD_COLLISION) {
+        // same input/output
+        if (fillDeviceArgumentList) {
+            setFunction("Check Collision", 3, 1);
+            setArgumentFloatHex4(0, "x");
+            setArgumentSeparator(1);
+            setArgumentFloatHex4(2, "y");
+            setResultUnsignedChar1(0, "0 = not in coll. area, 1 = in coll. Area ");
+        }
+        return commandLengthValueForMode(mode, 9, 1);
+    }
+    // Print
+    else if (commandHeader == COMMAND_GAME_BOARD_PRINT) {
         // same input/output
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("printGameBoard");

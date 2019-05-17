@@ -3,6 +3,10 @@
 
 #include "../../device/deviceInterface.h"
 
+// Detected Collision Area
+#define COMMANDE_GAME_BOARD_COLLISION                 'c'
+
+// Print GameBoard
 #define COMMAND_GAME_BOARD_PRINT                      'd'
 
 // Location

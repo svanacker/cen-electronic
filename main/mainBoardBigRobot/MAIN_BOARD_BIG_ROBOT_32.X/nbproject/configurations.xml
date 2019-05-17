@@ -530,6 +530,11 @@
         <itemPath>../../../robot/2019/bigRobot/bigRobotPath2019.h</itemPath>
         <itemPath>../../../robot/2019/bigRobot/bigRobotStrategy2019.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f41"
+                     displayName="robot.2019.commonRobot"
+                     projectFiles="true">
+        <itemPath>../../../robot/2019/commonRobot/commonRobotActions2019.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="f35"
                      displayName="robot.2019.distributor"
                      projectFiles="true">
@@ -1185,6 +1190,11 @@
       <logicalFolder name="f31" displayName="robot.2019.bigRobot" projectFiles="true">
         <itemPath>../../../robot/2019/bigRobot/bigRobotActions2019.c</itemPath>
         <itemPath>../../../robot/2019/bigRobot/bigRobotStrategy2019.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f39"
+                     displayName="robot.2019.commonRobot"
+                     projectFiles="true">
+        <itemPath>../../../robot/2019/commonRobot/commonRobotActions2019.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f32"
                      displayName="robot.2019.distributor"

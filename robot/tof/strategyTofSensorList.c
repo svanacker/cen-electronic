@@ -181,8 +181,6 @@ void handleTofSensorList(GameStrategyContext* gameStrategyContext, StartMatch* s
         float pointOfViewAngleRadian = gameStrategyContext->robotAngleRadian;
         bool detected = tofComputeDetectedPointIfAny(tofSensor, pointOfView, pointOfViewAngleRadian, &detectedPoint);
         
-        tofSensorListBeep(tofSensorList, detected);
-
         if (!detected) {
             continue;
         }
@@ -197,9 +195,10 @@ void handleTofSensorList(GameStrategyContext* gameStrategyContext, StartMatch* s
             continue;
         }
         
-        
         // We must know if it's in the gameboard
         if (isPointInTheCollisionArea(gameBoard, &detectedPoint)) {
+            tofSensorListBeep(tofSensorList, detected);
+
             // motionDriverStop();
             motionDriverCancel();
             // Then we notify !

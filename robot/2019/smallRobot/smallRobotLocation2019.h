@@ -25,7 +25,7 @@
 #define WEIGHING_MACHINE_FRONT                                              "WMF"
 #define WEIGHING_MACHINE_FRONT_LABEL                     "Weighing Machine Front"
 #define WEIGHING_MACHINE_FRONT_X                                            1200
-#define WEIGHING_MACHINE_FRONT_Y                                            1200
+#define WEIGHING_MACHINE_FRONT_Y                                            1300
 #define WEIGHING_MACHINE_FRONT_FROM_GOLDENIUM_ANGLE_DECI_DEG  ANGLE_DECI_DEG_135
 #define WEIGHING_MACHINE_FRONT_TO_DROP_ANGLE_DECI_DEG           ANGLE_DECI_DEG_0
 
@@ -40,7 +40,7 @@
 #define BLUEIUM_RIGHT                                                     "BLUR"
 #define BLUEIUM_RIGHT_LABEL                                      "Blueium Right"
 #define BLUEIUM_RIGHT_X                                                    1300
-#define BLUEIUM_RIGHT_Y                                                     225
+#define BLUEIUM_RIGHT_Y                                                     250
 #define BLUEIUM_RIGHT_ANGLE_FROM_DECI_DEG                     ANGLE_DECI_DEG_90
 #define BLUEIUM_RIGHT_ANGLE_TO_DECI_DEG                        ANGLE_DECI_DEG_0
 
@@ -48,7 +48,7 @@
 #define SMALL_DISTRIBUTOR_LINE_1                                           "SDL1"
 #define SMALL_DISTRIBUTOR_LINE_1_LABEL                 "Small Distributor Line 1"
 #define SMALL_DISTRIBUTOR_LINE_1_X                                          1950
-#define SMALL_DISTRIBUTOR_LINE_1_Y                                           225
+#define SMALL_DISTRIBUTOR_LINE_1_Y                               BLUEIUM_RIGHT_Y
 #define SMALL_DISTRIBUTOR_LINE_1_ANGLE_DECI_DEG                 ANGLE_DECI_DEG_0
 
 #endif
