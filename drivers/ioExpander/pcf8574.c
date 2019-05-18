@@ -18,51 +18,45 @@
 // BASE FUNCTION
 
 unsigned char isPCF8574Present(I2cBusConnection* i2cBusConnection) {
-    I2cBus* i2cBus = i2cBusConnection->i2cBus;
-
     unsigned char result;
 
     portableMasterWaitSendI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterStartI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterWaitSendI2C(i2cBusConnection);
     result = portableMasterWriteI2C(i2cBusConnection, i2cBusConnection->i2cAddress);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterStopI2C(i2cBusConnection);
 
     return result;
 }
 
 void writePCF8574(I2cBusConnection* i2cBusConnection, unsigned char outData) {
-    I2cBus* i2cBus = i2cBusConnection->i2cBus;
-
     portableMasterWaitSendI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterStartI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     
     portableMasterWriteI2C(i2cBusConnection, i2cBusConnection->i2cAddress); // send write address
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterWriteI2C(i2cBusConnection, outData); // write new outputs to buffer
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterWriteI2C(i2cBusConnection, outData); // force data to output pins
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterStopI2C(i2cBusConnection);
 }
 
 unsigned char readPCF8574(I2cBusConnection* i2cBusConnection) {
-    I2cBus* i2cBus = i2cBusConnection->i2cBus;
-
     unsigned char result;
     portableMasterWaitSendI2C(i2cBusConnection);
     portableMasterStartI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     // send read address (bit zero is set)
     portableMasterWriteI2C(i2cBusConnection, i2cBusConnection->i2cAddress | 1);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     result = portableMasterReadI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterNackI2C(i2cBusConnection);
     portableMasterStopI2C(i2cBusConnection);
 

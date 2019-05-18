@@ -32,18 +32,16 @@ void tcs34725_write8(I2cBusConnection* i2cBusConnection, uint8_t reg, uint8_t va
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
     appendString(debugOutputStream, "write8\n");
 #endif    
-    I2cBus* i2cBus = i2cBusConnection->i2cBus;
-    
     portableMasterWaitSendI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterStartI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterWriteI2C(i2cBusConnection, TCS34725_ADDRESS);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterWriteI2C(i2cBusConnection, TCS34725_COMMAND_BIT | reg);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterWriteI2C(i2cBusConnection, value);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterStopI2C(i2cBusConnection);
 }
 
@@ -60,12 +58,10 @@ uint8_t tcs34725_read8(I2cBusConnection* i2cBusConnection, uint8_t reg) {
     appendHex2(debugOutputStream, reg);
     println(debugOutputStream);
 #endif
-    
-    I2cBus* i2cBus = i2cBusConnection->i2cBus;
     portableMasterWaitSendI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterStartI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
 
 #ifdef TCS34725_DEBUG
     appendString(debugOutputStream, "TCS34725_ADDRESS : ");
@@ -74,7 +70,7 @@ uint8_t tcs34725_read8(I2cBusConnection* i2cBusConnection, uint8_t reg) {
 #endif
     
     portableMasterWriteI2C(i2cBusConnection, TCS34725_ADDRESS);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
 
 #ifdef TCS34725_DEBUG
     appendString(debugOutputStream, "TCS34725_COMMAND_BIT | reg : ");
@@ -83,13 +79,13 @@ uint8_t tcs34725_read8(I2cBusConnection* i2cBusConnection, uint8_t reg) {
 #endif
     
     portableMasterWriteI2C(i2cBusConnection, TCS34725_COMMAND_BIT | reg);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     
     portableMasterStopI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
 
     portableMasterStartI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
 
     // Read
 #ifdef TCS34725_DEBUG    
@@ -99,15 +95,15 @@ uint8_t tcs34725_read8(I2cBusConnection* i2cBusConnection, uint8_t reg) {
 #endif
     /*
     portableMasterWriteI2C(i2cBusConnection, TCS34725_COMMAND_BIT | reg);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     */
     
     portableMasterWriteI2C(i2cBusConnection, TCS34725_ADDRESS | 0x01);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
 
     uint8_t x = portableMasterReadI2C(i2cBusConnection);
 
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterStopI2C(i2cBusConnection);
     return x;
 }
@@ -295,14 +291,12 @@ void tcs34725_clearInterrupt(Tcs34725* tcs34725) {
 #endif
     
     I2cBusConnection* i2cBusConnection = tcs34725->i2cBusConnection;
-    I2cBus* i2cBus = i2cBusConnection->i2cBus;
-
     portableMasterStartI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterWriteI2C(i2cBusConnection, TCS34725_ADDRESS);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterWriteI2C(i2cBusConnection, TCS34725_COMMAND_BIT | 0x66);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterStopI2C(i2cBusConnection);
 }
 

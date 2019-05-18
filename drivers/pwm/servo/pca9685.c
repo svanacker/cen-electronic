@@ -32,22 +32,21 @@ void pca9685_init(I2cBusConnection* i2cBusConnection) {
 
 void pca9685_reset(I2cBusConnection* i2cBusConnection) {
     // BUGGED : pca9685_write8(i2cBusConnection, I2C_GENERAL_ADDRESS, PCA9685_SOFTWARE_RESET);
-    I2cBus* i2cBus = i2cBusConnection->i2cBus;
 
     portableMasterWaitSendI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
 
     // Start / Address
     portableMasterStartI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterWriteI2C(i2cBusConnection, I2C_GENERAL_ADDRESS);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     // Register
     portableMasterWriteI2C(i2cBusConnection, PCA9685_SOFTWARE_RESET);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
 
     portableMasterStopI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     
     timerDelayMilliSeconds(10);
 }
@@ -73,32 +72,30 @@ void pca9685_setPWMFreq(I2cBusConnection* i2cBusConnection, float frequency) {
 }
 
 void pca9685_setPWM(I2cBusConnection* i2cBusConnection, unsigned char pwmIndex, unsigned int on, unsigned int off) {
-    I2cBus* i2cBus = i2cBusConnection->i2cBus;
-
     portableMasterWaitSendI2C(i2cBusConnection);
 
     portableMasterStartI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     
     // Address
     portableMasterWriteI2C(i2cBusConnection, i2cBusConnection->i2cAddress);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
 
     portableMasterWriteI2C(i2cBusConnection, LED0_ON_L + 4 * pwmIndex);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
 
     portableMasterWriteI2C(i2cBusConnection, on);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterWriteI2C(i2cBusConnection, on >> 8);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
 
     portableMasterWriteI2C(i2cBusConnection, off);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterWriteI2C(i2cBusConnection, off >> 8);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
 
     portableMasterStopI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
 }
 
 void pca9685_setPin(I2cBusConnection* i2cBusConnection, unsigned char pwmIndex, unsigned int value, bool invert) {
@@ -128,63 +125,58 @@ void pca9685_setPin(I2cBusConnection* i2cBusConnection, unsigned char pwmIndex, 
 }
 
 void pca9685_write8(I2cBusConnection* i2cBusConnection, unsigned char reg, unsigned char data) {
-    I2cBus* i2cBus = i2cBusConnection->i2cBus;
-
     portableMasterWaitSendI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
 
     // Start
     portableMasterStartI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
 
     // Address
     portableMasterWriteI2C(i2cBusConnection, i2cBusConnection->i2cAddress);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
 
     // Register
     portableMasterWriteI2C(i2cBusConnection, reg);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
 
     // Data
     portableMasterWriteI2C(i2cBusConnection, data);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
 
     portableMasterStopI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
 }
 
 unsigned char pca9685_read8(I2cBusConnection* i2cBusConnection, unsigned char reg) {
-    I2cBus* i2cBus = i2cBusConnection->i2cBus;
-
     unsigned char result;
     portableMasterWaitSendI2C(i2cBusConnection);
     
     // Start
     portableMasterStartI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
 
     // Address
     portableMasterWriteI2C(i2cBusConnection, i2cBusConnection->i2cAddress);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
 
     // Register
     portableMasterWriteI2C(i2cBusConnection, reg);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     
     // Restart in read mode
     portableMasterStartI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     
     // send read address (bit zero is set)
     portableMasterWriteI2C(i2cBusConnection, i2cBusConnection->i2cAddress | 1);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     
     result = portableMasterReadI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     
     // portableMasterAckI2C(i2cBusConnection);
     portableMasterNackI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterStopI2C(i2cBusConnection);
 
     return result;

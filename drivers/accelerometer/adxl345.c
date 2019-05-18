@@ -173,69 +173,66 @@ void adxl345_clearOffset(I2cBusConnection* i2cBusConnection) {
 }
 
 void adxl345_write8(I2cBusConnection* i2cBusConnection, unsigned char reg, unsigned char data) {
-    I2cBus* i2cBus = i2cBusConnection->i2cBus;
-
     portableMasterWaitSendI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
 
     // Start
     portableMasterStartI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
 
     // Address
     portableMasterWriteI2C(i2cBusConnection, i2cBusConnection->i2cAddress);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
 
     // Register
     portableMasterWriteI2C(i2cBusConnection, reg);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
 
     // Data
     portableMasterWriteI2C(i2cBusConnection, data);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
 
     portableMasterStopI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
 }
 
 void adxl345_readAccelerometerData(Accelerometer* accelerometer) {
     I2cBusConnection* i2cBusConnection = _ADXL345_getI2cBusConnection(accelerometer);
-    I2cBus* i2cBus = i2cBusConnection->i2cBus;
     AccelerometerData* accelerometerData = accelerometer->accelerometerData;
 
     portableMasterWaitSendI2C(i2cBusConnection);
     
     // Start
     portableMasterStartI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
 
     // Address
     portableMasterWriteI2C(i2cBusConnection, i2cBusConnection->i2cAddress);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
 
     // Register
     portableMasterWriteI2C(i2cBusConnection, REG_DATAX0);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
 
     portableMasterStopI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     
     // Restart in read mode
     portableMasterStartI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     
     // send read address (bit zero is set)
     portableMasterWriteI2C(i2cBusConnection, i2cBusConnection->i2cAddress | 1);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     
     // X
     accelerometerData->xRawLowValue = portableMasterReadI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterAckI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
 
     accelerometerData->xRawHighValue = portableMasterReadI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterAckI2C(i2cBusConnection);
 
     accelerometerData->xRawValue = (unsigned int) ((accelerometerData->xRawHighValue << 8) | accelerometerData->xRawLowValue);
@@ -245,15 +242,15 @@ void adxl345_readAccelerometerData(Accelerometer* accelerometer) {
     accelerometerData->milligXValue = adxl345_convertRawToMilliG(accelerometerData->xRawValue, accelerometer);
  
     // Y
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     accelerometerData->yRawLowValue = portableMasterReadI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterAckI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
 
     accelerometerData->yRawHighValue = portableMasterReadI2C(i2cBusConnection);
     portableMasterAckI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
 
     accelerometerData->yRawValue = (unsigned int) ((accelerometerData->yRawHighValue << 8) | accelerometerData->yRawLowValue);
     if (accelerometerData->yRawValue > 32768) {
@@ -263,14 +260,14 @@ void adxl345_readAccelerometerData(Accelerometer* accelerometer) {
 
     // Z
     accelerometerData->zRawLowValue = portableMasterReadI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterAckI2C(i2cBusConnection);
 
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     accelerometerData->zRawHighValue = portableMasterReadI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterNackI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterStopI2C(i2cBusConnection);
 
     accelerometerData->zRawValue = (unsigned int) ((accelerometerData->zRawHighValue << 8) | accelerometerData->zRawLowValue);
@@ -281,37 +278,35 @@ void adxl345_readAccelerometerData(Accelerometer* accelerometer) {
 }
 
 unsigned char adxl345_read8(I2cBusConnection* i2cBusConnection, unsigned char reg) {
-    I2cBus* i2cBus = i2cBusConnection->i2cBus;
-
     unsigned char result;
     portableMasterWaitSendI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     
     // Start
     portableMasterStartI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
 
     // Address
     portableMasterWriteI2C(i2cBusConnection, i2cBusConnection->i2cAddress);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
 
     // Register
     portableMasterWriteI2C(i2cBusConnection, reg);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     
     // Restart in read mode
     portableMasterStartI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     
     // send read address (bit zero is set)
     portableMasterWriteI2C(i2cBusConnection, i2cBusConnection->i2cAddress | 1);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     
     result = portableMasterReadI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
 
     portableMasterNackI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
 
     portableMasterStopI2C(i2cBusConnection);
     return result;

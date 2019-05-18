@@ -25,67 +25,64 @@ void _INA219_initSensor(Current* current) {
 }
 
 void ina219_write16(I2cBusConnection* i2cBusConnection, unsigned char reg, unsigned int data) {
-    I2cBus* i2cBus = i2cBusConnection->i2cBus;
     //I2C START 
     portableMasterStartI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     //I2C ADDRESS SELECT Write
     portableMasterWriteI2C(i2cBusConnection, i2cBusConnection->i2cAddress);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     //I2C REGISTER SELECT
     portableMasterWriteI2C(i2cBusConnection, reg);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     // I2C VALUE : MSB
     portableMasterWriteI2C(i2cBusConnection, (unsigned char) ((data & 0xFF00) >> 8));
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     // I2C VALUE : LSB
     portableMasterWriteI2C(i2cBusConnection, (unsigned char) (data & 0xFF));
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     
     portableMasterStopI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
 }
 
 unsigned int ina219_read16(I2cBusConnection* i2cBusConnection, unsigned char reg) {
-    I2cBus* i2cBus = i2cBusConnection->i2cBus;
-
     unsigned int result = 0;
     unsigned char msbValue = 0;
     unsigned char lsbValue = 0;
 
     //I2C START 
     portableMasterStartI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     //I2C ADDRESS SELECT Write
     portableMasterWriteI2C(i2cBusConnection, i2cBusConnection->i2cAddress);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     //I2C REGISTER SELECT
     portableMasterWriteI2C(i2cBusConnection, reg);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
 
     // Restart in read mode
     portableMasterStartI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
 
     //I2C ADDRESS SELECT Read
     portableMasterWriteI2C(i2cBusConnection, i2cBusConnection->i2cAddress | 0x01);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
 
     //I2C DATA READ
     msbValue = portableMasterReadI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterAckI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
 
     //I2C DATA READ
     lsbValue = portableMasterReadI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterAckI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
 
     //I2C STOP
     portableMasterStopI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
 
     result = (msbValue << 8) | lsbValue; 
 
@@ -104,30 +101,30 @@ void _INA219_writeAlertLimit(Current* current, int currentSensorValue) {
     I2cBus* i2cBus = i2cBusConnection->i2cBus;
 
     portableMasterStartI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterWriteI2C(i2cBusConnection, i2cBusConnection->i2cAddress);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterWriteI2C(i2cBusConnection, INA3221_OVER_CURRENT_SENSOR_REGISTER);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     unsigned char value = bcd2CharToDec(currentSensorValue);
     portableMasterWriteI2C(i2cBusConnection, value);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterWriteI2C(i2cBusConnection, 0x00);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterStopI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
 
     portableMasterStartI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterWriteI2C(i2cBusConnection, i2cBusConnection->i2cAddress);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterWriteI2C(i2cBusConnection, INA3221_CONFIGURATION_SENSOR_REGISTER);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterWriteI2C(i2cBusConnection, INA3221_OS_POLARITY_HIGH);
 
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterStopI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
      * */
 }
 

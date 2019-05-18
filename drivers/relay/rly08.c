@@ -14,17 +14,16 @@
 #define writeAddr RLY08_DEFAULT_ADDRESS
 
 void setRelayStates(I2cBusConnection* i2cBusConnection, unsigned int relayStates) {
-    I2cBus* bus = i2cBusConnection->i2cBus;
     portableMasterStartI2C(i2cBusConnection);
-    WaitI2C(bus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterWriteI2C(i2cBusConnection, writeAddr);
-    WaitI2C(bus);
+    WaitI2cBusConnection(i2cBusConnection);
     // send the register
     portableMasterWriteI2C(i2cBusConnection, RLY08_REGISTER_RELAY_STATES);
-    WaitI2C(bus);
+    WaitI2cBusConnection(i2cBusConnection);
     // send the value
     portableMasterWriteI2C(i2cBusConnection, relayStates);
-    WaitI2C(bus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterStopI2C(i2cBusConnection);
 }
 
@@ -37,35 +36,33 @@ void setRelayStates(I2cBusConnection* i2cBusConnection, unsigned int relayStates
 
 
 void sendRLY08Command(I2cBusConnection* i2cBusConnection, int command) {
-    I2cBus* bus = i2cBusConnection->i2cBus;
     portableMasterStartI2C(i2cBusConnection);
-    WaitI2C(bus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterWriteI2C(i2cBusConnection, writeAddr);
-    WaitI2C(bus);
+    WaitI2cBusConnection(i2cBusConnection);
     // send the register
     portableMasterWriteI2C(i2cBusConnection, RLY08_REGISTER_COMMAND);
-    WaitI2C(bus);
+    WaitI2cBusConnection(i2cBusConnection);
     // send the value
     portableMasterWriteI2C(i2cBusConnection, command);
-    WaitI2C(bus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterStopI2C(i2cBusConnection);
 }
 
 int getRelayStates(I2cBusConnection* i2cBusConnection) {
-    I2cBus* bus = i2cBusConnection->i2cBus;
     portableMasterStartI2C(i2cBusConnection);
-    WaitI2C(bus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterWriteI2C(i2cBusConnection, writeAddr);
-    WaitI2C(bus);
+    WaitI2cBusConnection(i2cBusConnection);
     // send the register
     portableMasterWriteI2C(i2cBusConnection, RLY08_REGISTER_RELAY_STATES);
-    WaitI2C(bus);
+    WaitI2cBusConnection(i2cBusConnection);
 
     portableMasterStartI2C(i2cBusConnection);
-    WaitI2C(bus);
+    WaitI2cBusConnection(i2cBusConnection);
     // send the address again with read bit
     portableMasterWriteI2C(i2cBusConnection, readAddr);
-    WaitI2C(bus);
+    WaitI2cBusConnection(i2cBusConnection);
     // send the register
     portableMasterWriteI2C(i2cBusConnection, RLY08_REGISTER_RELAY_STATES);
     // read the data - and send an ACK
@@ -75,21 +72,20 @@ int getRelayStates(I2cBusConnection* i2cBusConnection) {
 }
 
 void changeRLY08Address(I2cBusConnection* i2cBusConnection, int newAddress) {
-    I2cBus* bus = i2cBusConnection->i2cBus;
     portableMasterStartI2C(i2cBusConnection);
-    WaitI2C(bus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterWriteI2C(i2cBusConnection, writeAddr);
-    WaitI2C(bus);
+    WaitI2cBusConnection(i2cBusConnection);
     // command register
     portableMasterWriteI2C(i2cBusConnection, RLY08_REGISTER_COMMAND);
-    WaitI2C(bus);
+    WaitI2cBusConnection(i2cBusConnection);
 
     portableMasterStartI2C(i2cBusConnection);
-    WaitI2C(bus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterWriteI2C(i2cBusConnection, RLY08_CHANGE_ADDRESS_FIRST_COMMAND);
-    WaitI2C(bus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterWriteI2C(i2cBusConnection, RLY08_CHANGE_ADDRESS_SECOND_COMMAND);
-    WaitI2C(bus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterWriteI2C(i2cBusConnection, RLY08_CHANGE_ADDRESS_THIRD_COMMAND);
     portableMasterWriteI2C(i2cBusConnection, newAddress);
     portableMasterStopI2C(i2cBusConnection);
@@ -99,24 +95,23 @@ void changeRLY08Address(I2cBusConnection* i2cBusConnection, int newAddress) {
   * Gets the software revision of the software in the RLY08
   */
 unsigned int getRLY08SoftwareRevision(I2cBusConnection* i2cBusConnection) {
-    I2cBus* bus = i2cBusConnection->i2cBus;
     portableMasterStartI2C(i2cBusConnection);
     
-    WaitI2C(bus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterWriteI2C(i2cBusConnection, writeAddr);
-    WaitI2C(bus);
+    WaitI2cBusConnection(i2cBusConnection);
     // send the register
     portableMasterWriteI2C(i2cBusConnection, RLY08_REGISTER_SOFTWARE_REVISION);
-    WaitI2C(bus);
+    WaitI2cBusConnection(i2cBusConnection);
     
     portableMasterStartI2C(i2cBusConnection);
-    WaitI2C(bus);
+    WaitI2cBusConnection(i2cBusConnection);
     // send the address again with read bit
     portableMasterWriteI2C(i2cBusConnection, readAddr);
-    WaitI2C(bus);
+    WaitI2cBusConnection(i2cBusConnection);
     // read the data
     unsigned char data = portableMasterReadI2C(i2cBusConnection);
-    WaitI2C(bus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterStopI2C(i2cBusConnection);
     return data;
 }

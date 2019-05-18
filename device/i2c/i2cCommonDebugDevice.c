@@ -53,7 +53,7 @@ void deviceI2cCommonDebugHandleRawData(unsigned char header, InputStream* inputS
     else if (header == COMMAND_I2C_COMMON_DEBUG_WAIT) {
         ackCommand(outputStream, I2C_COMMON_DEBUG_DEVICE_HEADER, COMMAND_I2C_COMMON_DEBUG_WAIT);
         I2cBusConnection* i2cBusConnection = getI2cCommonDebugBusConnection(inputStream);
-        WaitI2C(i2cBusConnection->i2cBus);
+        WaitI2cBusConnection(i2cBusConnection);
     }
 }
 

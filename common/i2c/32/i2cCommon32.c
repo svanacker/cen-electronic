@@ -9,6 +9,11 @@
 
 #include "../../../common/error/error.h"
 #include "../../../common/i2c/i2cCommon.h"
+#include "../../../common/io/outputStream.h"
+#include "../../../common/io/printWriter.h"
+
+#include "../../../common/log/logger.h"
+
 
 I2C_MODULE getI2C_MODULE(unsigned char portIndex) {
     if (portIndex == I2C_BUS_PORT_1) {
@@ -33,7 +38,7 @@ I2C_MODULE getI2C_MODULE(unsigned char portIndex) {
     return 0;
 }
 
-void WaitI2C(I2cBus* i2cBus) {
+void internalWaitI2C(I2cBus* i2cBus, unsigned int address) {
     unsigned long count = 0;
     if (i2cBus == NULL) {
         IdleI2C1();
@@ -44,6 +49,8 @@ void WaitI2C(I2cBus* i2cBus) {
                 count++;
                 if (count > I2C_MAX_INSTRUCTION_COUNT_WHILE) {
                     writeError(I2C_TOO_MUCH_LOOP_WAIT_I2C_ERROR);
+                    appendStringAndDecLN (getErrorOutputStreamLogger(), "I2C Port=", i2cBus->port);
+                    appendStringAndDecLN (getErrorOutputStreamLogger(), "I2C Addr (Dec)=", address);
                     break;
                 }
             }
@@ -54,6 +61,8 @@ void WaitI2C(I2cBus* i2cBus) {
                 count++;
                 if (count > I2C_MAX_INSTRUCTION_COUNT_WHILE) {
                     writeError(I2C_TOO_MUCH_LOOP_WAIT_I2C_ERROR);
+                    appendStringAndDecLN (getErrorOutputStreamLogger(), "I2C Port=",i2cBus->port);
+                    appendStringAndDecLN (getErrorOutputStreamLogger(), "I2C Addr (Dec)=", address);
                     break;
                 }
 
@@ -66,9 +75,10 @@ void WaitI2C(I2cBus* i2cBus) {
                 count++;
                 if (count > I2C_MAX_INSTRUCTION_COUNT_WHILE) {
                     writeError(I2C_TOO_MUCH_LOOP_WAIT_I2C_ERROR);
+                    appendStringAndDecLN (getErrorOutputStreamLogger(), "I2C Port=", i2cBus->port);
+                    appendStringAndDecLN (getErrorOutputStreamLogger(), "I2C Addr (Dec)=", address);
                     break;
                 }
-
             }
         }
 #endif
@@ -78,12 +88,27 @@ void WaitI2C(I2cBus* i2cBus) {
                 count++;
                 if (count > I2C_MAX_INSTRUCTION_COUNT_WHILE) {
                     writeError(I2C_TOO_MUCH_LOOP_WAIT_I2C_ERROR);
+                    appendStringAndDecLN (getErrorOutputStreamLogger(), "I2C Port=", i2cBus->port);
+                    appendStringAndDecLN (getErrorOutputStreamLogger(), "I2C Addr (Dec)=", address);
                     break;
                 }
             }
         }
     }
-#endif
+#endif    
+}
+
+void WaitI2C(I2cBus* i2cBus) {
+    internalWaitI2C(i2cBus, 0x00);
+}
+
+void WaitI2cBusConnection(I2cBusConnection* i2cBusConnection) {
+    if (i2cBusConnection == NULL) {
+        writeError(I2C_BUS_CONNECTION_NULL);
+        return;
+    }
+    I2cBus* i2cBus = i2cBusConnection->i2cBus;
+    internalWaitI2C(i2cBus, i2cBusConnection->i2cAddress);
 }
 
 void portableCommonStartI2C(I2cBusConnection* i2cBusConnection) {

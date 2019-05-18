@@ -102,6 +102,13 @@ void initI2cBusConnection(I2cBusConnection* i2cBusConnection, I2cBus* i2cBus, un
  */
 void WaitI2C(I2cBus* i2cBus);
 
+/**
+ * Indirection for WaitI2CBus but with more detailled information (I2C Address)
+ * to detect the problems.
+ * @param i2cBusConnection
+ */
+void WaitI2cBusConnection(I2cBusConnection* i2cBusConnection);
+
 // DEBUG
 
 /**

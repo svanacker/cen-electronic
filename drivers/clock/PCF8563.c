@@ -27,47 +27,46 @@ I2cBusConnection* _pcf8563GetI2cBusConnection(Clock* clock) {
  */
 ClockData* _readPcf8563Clock(Clock* clock) {
     I2cBusConnection* i2cBusConnection = _pcf8563GetI2cBusConnection(clock);
-    I2cBus* i2cBus = i2cBusConnection->i2cBus;
 
     ClockData* clockData = &(clock->clockData);
 
     portableMasterStartI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterWriteI2C(i2cBusConnection, PCF8563_WRITE_ADDRESS);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterWriteI2C(i2cBusConnection, PCF8563_CLOCK_REGISTER);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterStopI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
 
     portableMasterStartI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterWriteI2C(i2cBusConnection, PCF8563_READ_ADDRESS);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
 
     clockData->second = portableMasterReadI2C(i2cBusConnection);
     portableMasterAckI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     clockData->minute = portableMasterReadI2C(i2cBusConnection);
     portableMasterAckI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     clockData->hour = portableMasterReadI2C(i2cBusConnection);
     portableMasterAckI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     clockData->day = portableMasterReadI2C(i2cBusConnection);
     portableMasterAckI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     clockData->dayofweek = portableMasterReadI2C(i2cBusConnection);
     portableMasterAckI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     clockData->month = portableMasterReadI2C(i2cBusConnection);
     portableMasterAckI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     clockData->year = portableMasterReadI2C(i2cBusConnection);
     portableMasterNackI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterStopI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     clockData->second = clockData->second & 0b01111111;
     clockData->minute = clockData->minute & 0b01111111;
     clockData->hour = clockData->hour & 0b00111111;
@@ -86,33 +85,32 @@ ClockData* _readPcf8563Clock(Clock* clock) {
  */
 void _writePcf8563Clock(Clock* clock) {
     I2cBusConnection* i2cBusConnection = _pcf8563GetI2cBusConnection(clock);
-    I2cBus* i2cBus = i2cBusConnection->i2cBus;
 
     ClockData* clockData = &(clock->clockData);
 
     portableMasterWaitSendI2C(i2cBusConnection);
     portableMasterStartI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterWriteI2C(i2cBusConnection, PCF8563_WRITE_ADDRESS);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterWriteI2C(i2cBusConnection, PCF8563_CLOCK_REGISTER);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterWriteI2C(i2cBusConnection, clockData->second);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterWriteI2C(i2cBusConnection, clockData->minute);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterWriteI2C(i2cBusConnection, clockData->hour);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterWriteI2C(i2cBusConnection, clockData->day);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterWriteI2C(i2cBusConnection, clockData->dayofweek);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterWriteI2C(i2cBusConnection, clockData->month);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterWriteI2C(i2cBusConnection, clockData->year);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
     portableMasterStopI2C(i2cBusConnection);
-    WaitI2C(i2cBus);
+    WaitI2cBusConnection(i2cBusConnection);
 }
 
 void initClockPCF8563(Clock* clock, I2cBusConnection* i2cBusConnection) {
