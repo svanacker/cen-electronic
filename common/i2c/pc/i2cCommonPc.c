@@ -13,6 +13,10 @@ void WaitI2C(I2cBus* i2cBus) {
     // Nothing to do
 }
 
+void WaitI2cBusConnection(I2cBusConnection* i2cBusConnection) {
+    // Nothing to do
+}
+
 I2cBusConnectionPc* getI2cBusConnectionPc(I2cBusConnection* i2cBusConnection) {
     I2cBusConnectionPc* result = (I2cBusConnectionPc*)i2cBusConnection->object;
     return result;

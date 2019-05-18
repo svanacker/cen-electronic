@@ -51,6 +51,10 @@ struct TofSensor {
     unsigned int lastDistanceMM;
     /** Stored the threshold for which we would like that it raises a notification. */
     unsigned int thresholdDistanceMM;
+    /** The threshold of how many detections must be done before we consider that the measure is valid */
+    unsigned int detectionThreshold;
+    /** The counter of how many detected were done. */
+    unsigned int detectedCount;
     /** The beam angle of what he could detect. */
     float beamAngleRadian;
     /** pointer on other object (useful for I2C Connection for example) .*/
@@ -108,7 +112,8 @@ void tofComputePoint(TofSensor* tofSensor,
 bool tofComputeDetectedPointIfAny(TofSensor* tofSensor, Point* pointOfView, float pointOfViewAngleRadian, Point* pointToUpdateIfAny);
 
 /**
- * 
+ * Is the tof sensor backward oriented, and in this case, we don't check them
+ * when we go forward 
  */
 bool isTofSensorBackwardOriented(TofSensor* tofSensor);
 

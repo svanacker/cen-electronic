@@ -68,4 +68,10 @@ unsigned int getTofSensorListSize(TofSensorList* tofSensorList);
 */
 void tofSensorListBeep(TofSensorList* tofSensorList, bool beepValue);
 
+/**
+ * Reset for all tof Sensor List the detection counter.
+ * @param tofSensorList
+ */
+void tofSensorListResetDetectionCount(TofSensorList* tofSensorList);
+
 #endif

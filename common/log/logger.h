@@ -1,6 +1,8 @@
 #ifndef LOGGER_H
 #define LOGGER_H
 
+#include <stdlib.h>
+
 #include "logLevel.h"
 #include "logHandler.h"
 #include "logHandlerList.h"
@@ -86,6 +88,20 @@ OutputStream* getErrorOutputStreamLogger();
 * @return an outputStream for log with ALWAYS level and default category level
 */
 OutputStream* getAlwaysOutputStreamLogger();
+
+/**
+ * Returns if the logger handle at least the debug level
+ * @return 
+ */
+bool isLoggerDebugEnabled(void);
+
+bool isLoggerInfoEnabled(void);
+
+bool isLoggerWarningEnabled(void);
+
+bool isLoggerErrorEnabled(void);
+
+bool isAlwaysWarningEnabled(void);
 
 /**
  * Returns the singleton for logger.

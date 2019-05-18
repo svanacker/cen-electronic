@@ -36,6 +36,7 @@ void setTofListNameAndOrientationAngle(TofSensorList* tofSensorList, float dista
         backRightSensor->orientationRadian = backRightSensor->angleFromRobotCenter;
         backRightSensor->thresholdDistanceMM = BACK_TOF_TO_BACK_OF_ROBOT_DISTANCE + (unsigned int ) (distanceFactor * BACK_RIGHT_SENSOR_DISTANCE_THRESHOLD);
         backRightSensor->name = "BACK RIGHT";
+        backRightSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
     }
     
     if (tofSensorListSize > BACK_MIDDLE_SENSOR_INDEX) {
@@ -47,6 +48,7 @@ void setTofListNameAndOrientationAngle(TofSensorList* tofSensorList, float dista
         backMiddleSensor->orientationRadian = backMiddleSensor->angleFromRobotCenter;
         backMiddleSensor->thresholdDistanceMM = BACK_TOF_TO_BACK_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * BACK_MIDDLE_SENSOR_DISTANCE_THRESHOLD);
         backMiddleSensor->name = "BACK MIDDLE";
+        backMiddleSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
     }
 
     if (tofSensorListSize > BACK_LEFT_SENSOR_INDEX) {
@@ -58,6 +60,7 @@ void setTofListNameAndOrientationAngle(TofSensorList* tofSensorList, float dista
         backLeftSensor->orientationRadian = backLeftSensor->angleFromRobotCenter;
         backLeftSensor->thresholdDistanceMM = BACK_TOF_TO_BACK_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * BACK_LEFT_SENSOR_DISTANCE_THRESHOLD);
         backLeftSensor->name = "BACK LEFT";
+        backLeftSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
     }
     // FRONT
     if (tofSensorListSize > FRONT_RIGHT_SENSOR_INDEX) {
@@ -69,6 +72,7 @@ void setTofListNameAndOrientationAngle(TofSensorList* tofSensorList, float dista
         frontRightSensor->orientationRadian = frontRightSensor->angleFromRobotCenter;
         frontRightSensor->thresholdDistanceMM = FRONT_TOF_TO_FRONT_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * FRONT_RIGHT_SENSOR_DISTANCE_THRESHOLD);
         frontRightSensor->name = "FRONT RIGHT";
+        frontRightSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
     }
     
     if (tofSensorListSize > FRONT_MIDDLE_SENSOR_INDEX) {
@@ -80,6 +84,7 @@ void setTofListNameAndOrientationAngle(TofSensorList* tofSensorList, float dista
         frontMiddleSensor->orientationRadian = frontMiddleSensor->angleFromRobotCenter;
         frontMiddleSensor->thresholdDistanceMM = FRONT_TOF_TO_FRONT_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * FRONT_MIDDLE_SENSOR_DISTANCE_THRESHOLD);
         frontMiddleSensor->name = "FRONT MIDDLE";
+        frontMiddleSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
     }
     
     if (tofSensorListSize > FRONT_LEFT_SENSOR_INDEX) {
@@ -91,6 +96,7 @@ void setTofListNameAndOrientationAngle(TofSensorList* tofSensorList, float dista
         frontLeftSensor->orientationRadian = frontLeftSensor->angleFromRobotCenter;
         frontLeftSensor->thresholdDistanceMM = FRONT_TOF_TO_FRONT_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * FRONT_LEFT_SENSOR_DISTANCE_THRESHOLD);
         frontLeftSensor->name = "FRONT LEFT";
+        frontLeftSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
     }
     
     // SIDE
@@ -102,6 +108,7 @@ void setTofListNameAndOrientationAngle(TofSensorList* tofSensorList, float dista
         frontSideLeftSensor->orientationRadian = degToRad(FRONT_SIDE_LEFT_SENSOR_ANGLE_DEGREE);
         frontSideLeftSensor->thresholdDistanceMM = FRONT_SIDE_TOF_TO_FRONT_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * FRONT_SIDE_LEFT_SENSOR_DISTANCE_THRESHOLD);
         frontSideLeftSensor->name = "FRONT SIDE L";
+        frontSideLeftSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
     }
     if (tofSensorListSize > FRONT_SIDE_RIGHT_SENSOR_INDEX) {
         TofSensor* frontSideRightSensor = getTofSensorByIndex(tofSensorList, FRONT_SIDE_RIGHT_SENSOR_INDEX);
@@ -111,6 +118,7 @@ void setTofListNameAndOrientationAngle(TofSensorList* tofSensorList, float dista
         frontSideRightSensor->orientationRadian = degToRad(FRONT_SIDE_RIGHT_SENSOR_ANGLE_DEGREE);
         frontSideRightSensor->thresholdDistanceMM = FRONT_SIDE_TOF_TO_FRONT_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * FRONT_SIDE_RIGHT_SENSOR_DISTANCE_THRESHOLD);
         frontSideRightSensor->name = "FRONT SIDE R";
+        frontSideRightSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
     }
     if (tofSensorListSize > BACK_SIDE_LEFT_SENSOR_INDEX) {
         TofSensor* backSideLeftSensor = getTofSensorByIndex(tofSensorList, BACK_SIDE_LEFT_SENSOR_INDEX); 
@@ -120,6 +128,7 @@ void setTofListNameAndOrientationAngle(TofSensorList* tofSensorList, float dista
         backSideLeftSensor->orientationRadian = degToRad(BACK_SIDE_LEFT_SENSOR_ANGLE_DEGREE);
         backSideLeftSensor->thresholdDistanceMM = FRONT_SIDE_TOF_TO_BACK_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * BACK_SIDE_LEFT_SENSOR_DISTANCE_THRESHOLD);
         backSideLeftSensor->name = "BACK SIDE L";
+        backSideLeftSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
     }
    if (tofSensorListSize > BACK_SIDE_RIGHT_SENSOR_INDEX) {
         TofSensor* backSideRightSensor = getTofSensorByIndex(tofSensorList, BACK_SIDE_RIGHT_SENSOR_INDEX);
@@ -129,6 +138,7 @@ void setTofListNameAndOrientationAngle(TofSensorList* tofSensorList, float dista
         backSideRightSensor->orientationRadian = degToRad(BACK_SIDE_RIGHT_SENSOR_ANGLE_DEGREE);
         backSideRightSensor->thresholdDistanceMM = FRONT_SIDE_TOF_TO_BACK_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * BACK_SIDE_RIGHT_SENSOR_DISTANCE_THRESHOLD);
         backSideRightSensor->name = "BACK SIDE R";
+        backSideRightSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
     }
 }
     
@@ -173,8 +183,18 @@ void handleTofSensorList(GameStrategyContext* gameStrategyContext, StartMatch* s
         
         unsigned int distance = tofSensor->tofGetDistanceMM(tofSensor);
         if (distance <= SENSOR_DISTANCE_MIN_TRESHOLD) {
+            if (tofSensor->detectedCount > 0) {
+                tofSensor->detectedCount--;
+            }
+        }
+        else {
+            tofSensor->detectedCount++;
+        }
+        
+        if (tofSensor->detectedCount < tofSensor->detectionThreshold) {
             continue;
         }
+
         // Recompute the real detected point
         Point detectedPoint;
         Point* pointOfView = gameStrategyContext->robotPosition;
@@ -185,6 +205,7 @@ void handleTofSensorList(GameStrategyContext* gameStrategyContext, StartMatch* s
             continue;
         }
         
+        /* We don't need this section anymore because trajectory notification on UART 5 works well !!
         // Update the position from the MOTOR BOARD. If we don't do it,
         // The board keep the original value from the latest move / notification or the latest callback
         // TODO : Clarify the usage of Robot Position
@@ -194,6 +215,7 @@ void handleTofSensorList(GameStrategyContext* gameStrategyContext, StartMatch* s
         if (!detected) {
             continue;
         }
+        */
         
         // We must know if it's in the gameboard
         if (isPointInTheCollisionArea(gameBoard, &detectedPoint)) {
@@ -218,6 +240,8 @@ void handleTofSensorList(GameStrategyContext* gameStrategyContext, StartMatch* s
             printPoint(alwaysOutputStream, &detectedPoint, "");
             // Block the notification system !
             gameStrategyContext->trajectoryType = TRAJECTORY_TYPE_NONE;
+            
+            tofSensorListResetDetectionCount(tofSensorList);
             
             // TODO 2018 : handleObstacle(gameStrategyContext);
             break;

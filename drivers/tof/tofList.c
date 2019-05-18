@@ -74,3 +74,12 @@ void tofSensorListBeep(TofSensorList* tofSensorList, bool value) {
 unsigned int getTofSensorListSize(TofSensorList* tofSensorList) {
     return tofSensorList->size;
 }
+
+void tofSensorListResetDetectionCount(TofSensorList* tofSensorList) {
+    unsigned int i;
+    unsigned int tofSensorListSize = tofSensorList->size;
+    for (i = 0; i < tofSensorListSize; i++) {
+        TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, i);
+        tofSensor->detectedCount = 0;
+    }
+}

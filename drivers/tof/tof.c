@@ -26,6 +26,8 @@ bool initTofSensor(TofSensor* tofSensor,
     tofSensor->thresholdDistanceMM = thresholdDistanceMM;
     tofSensor->orientationRadian = orientationRadian;
     tofSensor->object = object;
+    tofSensor->detectionThreshold = 1;
+    tofSensor->detectedCount = 0;
     // TODO : VL53L0X value of beam angle : https://forum.pololu.com/t/vl53l0x-beam-width-angle/11483
     // Be it could change for another tof
     tofSensor->beamAngleRadian = degToRad(25.0f);

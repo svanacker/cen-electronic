@@ -88,7 +88,7 @@ void handleInstructionAndMotion(PidMotion* pidMotion, OutputStream* notification
         // does not end
     } else if (motionType == DETECTED_MOTION_TYPE_POSITION_IN_PROGRESS) {
         // Notification is done at "TrajectoryDevice" and not in Motion
-        // notifyMovingIfEnabledAndThresholdReached(outputStream);
+        // notifyMoving(notificationOutputStream);
     } else if (motionType == DETECTED_MOTION_TYPE_POSITION_REACHED) {
         notifyReached(notificationOutputStream);
         stopPosition(pidMotion, false, notificationOutputStream);

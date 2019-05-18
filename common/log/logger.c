@@ -106,6 +106,27 @@ OutputStream* getAlwaysOutputStreamLogger() {
     return logger.outputStream;
 }
 
+// Convenient method to avoid to consume time for logging when not enabled
+bool isLoggerDebugEnabled(void) {
+    return logger.writeLogLevel >= LOG_LEVEL_DEBUG;
+}
+
+bool isLoggerInfoEnabled(void) {
+    return logger.writeLogLevel >= LOG_LEVEL_INFO;
+}
+
+bool isLoggerWarningEnabled(void) {
+    return logger.writeLogLevel >= LOG_LEVEL_WARNING;
+}
+
+bool isLoggerErrorEnabled(void) {
+    return logger.writeLogLevel >= LOG_LEVEL_ERROR;
+}
+
+bool isAlwaysWarningEnabled(void) {
+    return logger.writeLogLevel >= LOG_LEVEL_ALWAYS;
+}
+
 Logger* getLoggerInstance() {
     return &logger;
 }

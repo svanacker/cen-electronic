@@ -105,14 +105,14 @@ void mainBoardDeviceHandleTrajectoryDeviceNotification(const Device* device, con
   
     if (device->deviceInterface->deviceHeader == TRAJECTORY_DEVICE_HEADER) {
         if (commandHeader == NOTIFY_TRAJECTORY_CHANGED) {
-            /*
-            append(getDebugOutputStreamLogger(), commandHeader);
-            println(getDebugOutputStreamLogger());
-            */
             updateNewPositionFromNotification(notificationInputStream);
             checkIsSeparator(notificationInputStream);
             enum TrajectoryType trajectoryType = readHex(notificationInputStream);
             gameStrategyContext->trajectoryType = trajectoryType;
+            
+            if (isLoggerDebugEnabled()) {
+                appendStringCRLF(getDebugOutputStreamLogger(), "Traj. Dev. Notif. !");
+            }
         }
         else {
             writeError(NOTIFICATION_BAD_DEVICE_COMMAND_HANDLER_NOT_HANDLE);
@@ -141,9 +141,10 @@ void mainBoardDeviceHandleMotionDeviceNotification(const Device* device, const u
             checkIsChar(notificationInputStream, 'F');
             
             gameStrategyContext->trajectoryType = TRAJECTORY_TYPE_NONE;
-            
-            appendStringCRLF(getDebugOutputStreamLogger(), "Motion Device Notification !");
 
+            if (isLoggerDebugEnabled()) {
+                appendStringCRLF(getDebugOutputStreamLogger(), "Motion Dev. Notif. !");
+            }
         }
         else {
             writeError(NOTIFICATION_BAD_DEVICE_COMMAND_HANDLER_NOT_HANDLE);

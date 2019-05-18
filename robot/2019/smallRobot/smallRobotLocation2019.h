@@ -4,7 +4,7 @@
 #define SMALL_ROBOT_START_AREA                                              "SSTA"
 #define SMALL_ROBOT_START_AREA_LABEL                           "Small Robot Start"
 #define SMALL_ROBOT_START_AREA_X                                               600
-#define SMALL_ROBOT_START_AREA_Y                                               370
+#define SMALL_ROBOT_START_AREA_Y                                               380
 #define SMALL_ROBOT_START_AREA_ANGLE_DECI_DEG                    ANGLE_DECI_DEG_90
 
 // Accelerator (SMALL ROBOT)
@@ -18,7 +18,7 @@
 #define GOLDENIUM_FRONT                                                     "GOLD"
 #define GOLDENIUM_FRONT_LABEL                                         "Gold Front"
 #define GOLDENIUM_FRONT_X                                                     120
-#define GOLDENIUM_FRONT_Y                                                    2268
+#define GOLDENIUM_FRONT_Y                                                    2250
 #define GOLDENIUM_FRONT_ANGLE_DECI_DEG                         ANGLE_DECI_DEG_180
 
 // Weighing Machine FRONT
@@ -40,7 +40,7 @@
 #define BLUEIUM_RIGHT                                                     "BLUR"
 #define BLUEIUM_RIGHT_LABEL                                      "Blueium Right"
 #define BLUEIUM_RIGHT_X                                                    1300
-#define BLUEIUM_RIGHT_Y                                                     250
+#define BLUEIUM_RIGHT_Y                                                     260
 #define BLUEIUM_RIGHT_ANGLE_FROM_DECI_DEG                     ANGLE_DECI_DEG_90
 #define BLUEIUM_RIGHT_ANGLE_TO_DECI_DEG                        ANGLE_DECI_DEG_0
 

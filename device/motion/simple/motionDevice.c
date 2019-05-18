@@ -228,7 +228,7 @@ void deviceMotionHandleRawData(unsigned char commandHeader,
             notifyShocked(notificationOutputStream);
         }
         else {
-            OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+            OutputStream* debugOutputStream = getErrorOutputStreamLogger();
             appendString(debugOutputStream, "Unknown notification Type : ");
             append(debugOutputStream, notificationTypeChar);
             appendCRLF(debugOutputStream);
