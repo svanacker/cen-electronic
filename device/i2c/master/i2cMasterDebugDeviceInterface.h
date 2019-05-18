@@ -4,6 +4,12 @@
 #include "../../../device/deviceInterface.h"
 #include "../../../device/deviceConstants.h"
 
+/** Read the channel in case we use multiplexer. */
+#define COMMAND_I2C_MULTIPLEXER_GET_CHANNEL                  'c'
+
+/** Write the channel in case we use multiplexer. */
+#define COMMAND_I2C_MULTIPLEXER_SET_CHANNEL                  'C'
+
 /** Command to debug the I2C. */
 #define COMMAND_I2C_MASTER_DEBUG_PRINT_BUFFER                'd'
 

@@ -1066,6 +1066,18 @@
     <Filter Include="Header Files\robot\2019\commonRobot">
       <UniqueIdentifier>{51c0d7a3-78f1-4bc3-9107-8d3a44acb137}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\drivers\i2c">
+      <UniqueIdentifier>{05a0decc-3c40-42f0-ba32-210540afd00a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\drivers\i2c\multiplexer">
+      <UniqueIdentifier>{c5240ed0-c12b-4e50-be00-4a340a546f26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\drivers\i2c">
+      <UniqueIdentifier>{df1562d8-04f7-481c-a1bf-b226520d9dd4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\drivers\i2c\multiplexer">
+      <UniqueIdentifier>{fe32466c-c1a4-4c0b-b6ac-5d31bced20b2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -2219,6 +2231,9 @@
     </ClCompile>
     <ClCompile Include="robot\2019\commonRobot\commonRobotActions2019.c">
       <Filter>Source Files\robot\2019\commonRobot</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\i2c\multiplexer\tca9548A.c">
+      <Filter>Source Files\drivers\i2c\multiplexer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -3466,6 +3481,9 @@
     </ClInclude>
     <ClInclude Include="robot\2019\commonRobot\commonRobotActions2019.h">
       <Filter>Header Files\robot\2019\commonRobot</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\i2c\multiplexer\tca9548A.h">
+      <Filter>Header Files\drivers\i2c\multiplexer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

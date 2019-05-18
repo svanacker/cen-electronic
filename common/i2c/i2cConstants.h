@@ -196,6 +196,17 @@
 // PCF8573 Address
 #define PCF8573P_WRITE_ADDRESS     0xD0
 
+
+// TCA9548 : Conflict with SRF02 !
+#define TCA9548A_ADDRESS_0        0xE0
+#define TCA9548A_ADDRESS_1        0xE2
+#define TCA9548A_ADDRESS_2        0xE4
+#define TCA9548A_ADDRESS_3        0xE6
+#define TCA9548A_ADDRESS_4        0xE8
+#define TCA9548A_ADDRESS_5        0xEA
+#define TCA9548A_ADDRESS_6        0xEC
+#define TCA9548A_ADDRESS_7        0xEE
+
 // SRF02
 
 #define SRF02_ADDRESS_0         0xE0

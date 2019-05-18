@@ -10,12 +10,6 @@
 #include "../../common/io/outputStream.h"
 #include "../../common/i2c/i2cCommon.h"
 
-// base control address for PCF8574
-#define PCF8574_BASE_ADDRESS 0x40
-
-// base control address for PCF8574A
-#define PCF8574AP_BASE_ADDRESS 0x70
-
 /**
  * Check for presence of specific PCF8574 device.
  * @param i2cConnection on I2c bus (Simulates POO Programming)

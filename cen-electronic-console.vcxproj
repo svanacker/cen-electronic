@@ -330,6 +330,7 @@
     <ClCompile Include="drivers\driverStreamListener.c" />
     <ClCompile Include="drivers\driverTransmitter.c" />
     <ClCompile Include="drivers\file\eeprom\eepromFile.c" />
+    <ClCompile Include="drivers\i2c\multiplexer\tca9548A.c" />
     <ClCompile Include="drivers\ioExpander\ioExpander.c" />
     <ClCompile Include="drivers\ioExpander\ioExpanderDebug.c" />
     <ClCompile Include="drivers\ioExpander\ioExpanderList.c" />
@@ -722,6 +723,7 @@
     <ClInclude Include="drivers\driverStreamListener.h" />
     <ClInclude Include="drivers\driverTransmitter.h" />
     <ClInclude Include="drivers\file\eeprom\eepromFile.h" />
+    <ClInclude Include="drivers\i2c\multiplexer\tca9548A.h" />
     <ClInclude Include="drivers\ioExpander\ioExpander.h" />
     <ClInclude Include="drivers\ioExpander\ioExpanderList.h" />
     <ClInclude Include="drivers\io\ioExpanderDebug.h" />
