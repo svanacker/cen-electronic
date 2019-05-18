@@ -5,6 +5,8 @@
 
 #include "../../common/io/outputStream.h"
 
+#define I2C_MAX_INSTRUCTION_COUNT_WHILE              100000
+
 // forward declaration
 struct I2cBus;
 typedef struct I2cBus I2cBus;

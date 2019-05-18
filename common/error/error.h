@@ -151,6 +151,12 @@ void clearLastError();
 #define TOO_MUCH_I2C_BUS_CONNECTION				                          0x1021
 #define I2C_BUS_CONNECTION_LIST_ILLEGAL_INDEX                             0x1022
 
+#define I2C_START_I2C_ERROR                                               0x1040
+
+#define I2C_TOO_MUCH_LOOP_MASTER_WAIT_SEND_I2C_ERROR                      0x1050
+#define I2C_TOO_MUCH_LOOP_MASTER_READ_I2C_ERROR                           0x1051
+#define I2C_TOO_MUCH_LOOP_WAIT_I2C_ERROR                                  0x1052
+
 // DEVICE
 
 #define TOO_MUCH_DEVICES                                                  0x2000
