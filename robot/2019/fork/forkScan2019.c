@@ -65,6 +65,7 @@ bool forkScan(ServoList* servoList, TofSensorList* tofSensorList, unsigned int l
     else if (leftRight == FORK_2019_RIGHT_INDEX) {
         return forkScanFromRightToLeft(servoList, tofSensorList);
     }
+    // Double Scan for small Distributor
     else {
         Servo* servo = getServo(servoList, FORK_2019_SCAN_SERVO_INDEX);
         bool scanOk = forkScanFromLeftToRight(servoList, tofSensorList);
@@ -114,6 +115,9 @@ bool forkScanFromRightToLeft(ServoList* servoList, TofSensorList* tofSensorList)
             return true;
         }
     }
+    // If not found, we try to go back on the middle
+    moveElevatorMiddle(servoList, true);
+
     return false;
 }
 
@@ -134,5 +138,8 @@ bool forkScanFromLeftToRight(ServoList* servoList, TofSensorList* tofSensorList)
             return true;
         }
     }
+    // If not found, we try to go back on the middle
+    moveElevatorMiddle(servoList, true);
+
     return false;
 }
