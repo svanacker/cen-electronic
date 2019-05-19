@@ -1,15 +1,23 @@
 #include "ioExpanderDebug.h"
 
+#include <stdlib.h>
+
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
 #include "../../common/io/printTableWriter.h"
 
+#include "../../drivers/ioExpander/ioExpanderPcf8574.h"
+
 #include "ioExpanderList.h"
+#include "i2cCommon.h"
+#include "i2cDebug.h"
 
 #define IO_EXPANDER_IO_COUNT                      8
 
-#define IO_EXPANDER_INDEX_COLUMN_LENGTH		      15
-#define IO_EXPANDER_COUNT_COLUMN_LENGTH           10
+#define IO_EXPANDER_INDEX_COLUMN_LENGTH		      13
+#define IO_EXPANDER_COUNT_COLUMN_LENGTH           6
+#define IO_EXPANDER_BUS_COLUMN_LENGTH             15
+#define IO_EXPANDER_ADDRESS_COLUMN_LENGTH         8
 #define IO_EXPANDER_VALUE_COLUMN_LENGTH           5
 #define IO_EXPANDER_LAST_COLUMN		              0
 
@@ -23,6 +31,8 @@ void printIOExpanderDebugTableHeader(OutputStream* outputStream) {
     // First line
     appendStringHeader(outputStream, "IO Expander", IO_EXPANDER_INDEX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Count", IO_EXPANDER_COUNT_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Bus", IO_EXPANDER_BUS_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Address", IO_EXPANDER_ADDRESS_COLUMN_LENGTH);
 
     int ioIndex;
     for (ioIndex = IO_EXPANDER_IO_COUNT - 1; ioIndex >= 0; ioIndex--) {
@@ -33,6 +43,8 @@ void printIOExpanderDebugTableHeader(OutputStream* outputStream) {
     // Second line
     appendStringHeader(outputStream, "Index", IO_EXPANDER_INDEX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", IO_EXPANDER_COUNT_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "", IO_EXPANDER_BUS_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "(Hex)", IO_EXPANDER_ADDRESS_COLUMN_LENGTH);
     for (ioIndex = IO_EXPANDER_IO_COUNT - 1; ioIndex >= 0; ioIndex--) {
         appendStringAndDecHeader(outputStream, "", ioIndex, IO_EXPANDER_VALUE_COLUMN_LENGTH);
     }
@@ -48,10 +60,21 @@ void printIOExpanderStatesTable(OutputStream* outputStream, IOExpanderList* ioEx
 
     unsigned int ioExpanderIndex;
     for (ioExpanderIndex = 0; ioExpanderIndex < ioExpanderList->size; ioExpanderIndex++) {
-        appendDecTableData(outputStream, ioExpanderIndex, IO_EXPANDER_INDEX_COLUMN_LENGTH);
         IOExpander* ioExpander = getIOExpanderByIndex(ioExpanderList, ioExpanderIndex);
-
+        appendDecTableData(outputStream, ioExpanderIndex, IO_EXPANDER_INDEX_COLUMN_LENGTH);
         appendDecTableData(outputStream, ioExpander->count, IO_EXPANDER_COUNT_COLUMN_LENGTH);
+        
+        I2cBusConnection* i2cBusConnection = getIOExpanderBusConnection(ioExpander);
+        if (i2cBusConnection == NULL) {
+            appendStringTableData(outputStream, "-", IO_EXPANDER_BUS_COLUMN_LENGTH);
+            appendStringTableData(outputStream, "-", IO_EXPANDER_ADDRESS_COLUMN_LENGTH);
+        }
+        else {
+            I2cBus* i2cBus = i2cBusConnection->i2cBus;
+            const char* i2cPortAsString = getI2cPortAsString(i2cBus->port);
+            appendStringTableData(outputStream, i2cPortAsString, IO_EXPANDER_BUS_COLUMN_LENGTH);
+            appendHex2TableData(outputStream, i2cBusConnection->i2cAddress, IO_EXPANDER_ADDRESS_COLUMN_LENGTH);
+        }
 
         for (ioIndex = ioExpander->count - 1; ioIndex >= 0; ioIndex--) {
             bool value = ioExpander->ioExpanderReadSingleValue(ioExpander, ioIndex);

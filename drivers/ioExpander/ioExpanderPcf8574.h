@@ -11,6 +11,14 @@
 #include "ioExpander.h"
 
 /**
+ * Returns the associated I2cBusConnection link to the IOExpander.
+ * @param ioExpander
+ * @param i2cConnection
+ */
+I2cBusConnection* getIOExpanderBusConnection(IOExpander* ioExpander);
+
+
+/**
  * Init the PCF8574 by wrapping it into a specific Structure to handle it
  * transparently
  * @param ioExpander

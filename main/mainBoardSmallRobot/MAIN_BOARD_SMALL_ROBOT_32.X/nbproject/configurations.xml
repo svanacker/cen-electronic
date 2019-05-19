@@ -396,6 +396,11 @@
                      projectFiles="true">
         <itemPath>../../../drivers/eeprom/24c512.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f43"
+                     displayName="drivers.i2c.multiplexer"
+                     projectFiles="true">
+        <itemPath>../../../drivers/i2c/multiplexer/tca9548A.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="f4" displayName="drivers.ioExpander" projectFiles="true">
         <itemPath>../../../drivers/ioExpander/ioExpander.h</itemPath>
         <itemPath>../../../drivers/ioExpander/ioExpanderDebug.h</itemPath>
@@ -1077,6 +1082,11 @@
                      displayName="drivers.eeprom"
                      projectFiles="true">
         <itemPath>../../../drivers/eeprom/24c512.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f9"
+                     displayName="drivers.i2c.multiplexer"
+                     projectFiles="true">
+        <itemPath>../../../drivers/i2c/multiplexer/tca9548A.c</itemPath>
       </logicalFolder>
       <logicalFolder name="drivers.io" displayName="drivers.io" projectFiles="true">
       </logicalFolder>

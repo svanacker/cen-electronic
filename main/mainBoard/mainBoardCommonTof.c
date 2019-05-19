@@ -35,12 +35,6 @@
 static IOExpanderList ioExpanderList;
 static IOExpander ioExpanderArray[MAIN_BOARD_IO_EXPANDER_LIST_LENGTH];
 
-static IOExpander* tofIoExpander;
-static IOExpander* lateralTofIoExpander;
-
-static I2cBusConnection* tofIoExpanderBusConnection;
-static I2cBusConnection* lateralTofIoExpanderBusConnection;
-
 // TOF
 static TofSensorList tofSensorList;
 static TofSensor tofSensorArray[MAIN_BOARD_TOF_SENSOR_LIST_LENGTH];
@@ -56,15 +50,6 @@ void mainBoardCommonTofInitDrivers(I2cBus* i2cBus, I2cBus* i2cBus2, unsigned int
     appendString(getDebugOutputStreamLogger(), "IO Expander List ...");
     initIOExpanderList(&ioExpanderList, (IOExpander(*)[]) &ioExpanderArray, MAIN_BOARD_IO_EXPANDER_LIST_LENGTH);
     
-    // First Expander (Beacon + Fork)
-    tofIoExpander = getIOExpanderByIndex(&ioExpanderList, 0);
-    tofIoExpanderBusConnection = addI2cBusConnection(i2cBus, PCF8574_ADDRESS_0, true);
-    initIOExpanderPCF8574(tofIoExpander, tofIoExpanderBusConnection);
-    
-    lateralTofIoExpander = getIOExpanderByIndex(&ioExpanderList, 1);
-    lateralTofIoExpanderBusConnection = addI2cBusConnection(i2cBus2, PCF8574_ADDRESS_0, true);
-    initIOExpanderPCF8574(lateralTofIoExpander, lateralTofIoExpanderBusConnection);
-    
         // -> IO Button Board
     /*
     ioButtonBoardIoExpander = getIOExpanderByIndex(&ioExpanderList, 2);
@@ -79,40 +64,90 @@ void mainBoardCommonTofInitDrivers(I2cBus* i2cBus, I2cBus* i2cBus2, unsigned int
         
     // TOF
     if (tofSensorCount > 0) {
-        tofSensorArray[0].enabled = true;  
+        tofSensorArray[0].enabled = true;
+        tofSensorArray[0].useMultiplexer = true;
+        tofSensorArray[0].multiplexerAddress = TCA9548A_ADDRESS_1;
+        tofSensorArray[0].multiplexerChannel = 1;
     }
     if (tofSensorCount > 1) {
         tofSensorArray[1].enabled = true; 
+        tofSensorArray[1].useMultiplexer = true;
+        tofSensorArray[1].multiplexerAddress = TCA9548A_ADDRESS_1;
+        tofSensorArray[1].multiplexerChannel = 2;
     }
     if (tofSensorCount > 2) {
-        tofSensorArray[2].enabled = true;        
+        tofSensorArray[2].enabled = true;
+        tofSensorArray[2].useMultiplexer = true;
+        tofSensorArray[2].multiplexerAddress = TCA9548A_ADDRESS_1;
+        tofSensorArray[2].multiplexerChannel = 4;
     }
     if (tofSensorCount > 3) {
         tofSensorArray[3].enabled = true;
+        tofSensorArray[3].multiplexerAddress = TCA9548A_ADDRESS_1;
+        tofSensorArray[3].useMultiplexer = true;
+        tofSensorArray[3].multiplexerChannel = 8;
     }
     if (tofSensorCount > 4) {
-        tofSensorArray[4].enabled = true;        
+        tofSensorArray[4].enabled = true;
+        tofSensorArray[4].multiplexerAddress = TCA9548A_ADDRESS_1;
+        tofSensorArray[4].useMultiplexer = true;
+        tofSensorArray[4].multiplexerChannel = 16;
     }    
     if (tofSensorCount > 5) {
         tofSensorArray[5].enabled = true;
+        tofSensorArray[5].multiplexerAddress = TCA9548A_ADDRESS_1;
+        tofSensorArray[5].useMultiplexer = true;
+        tofSensorArray[5].multiplexerChannel = 32;
     }
     if (tofSensorCount > 6) {
-        tofSensorArray[6].enabled = true;
+        tofSensorArray[6].enabled = false;
+        tofSensorArray[6].multiplexerAddress = TCA9548A_ADDRESS_1;
+        tofSensorArray[6].useMultiplexer = true;
+        tofSensorArray[6].multiplexerChannel = 64;
+
     }
     if (tofSensorCount > 7) {
-        tofSensorArray[7].enabled = true;
+        tofSensorArray[7].enabled = false;
+        tofSensorArray[7].multiplexerAddress = TCA9548A_ADDRESS_1;
+        tofSensorArray[7].useMultiplexer = true;
+        tofSensorArray[7].multiplexerChannel = 128;
     }
+    // TCA9548A_ADDRESS_0 -----------------------------------------
     if (tofSensorCount > 8) {
         tofSensorArray[8].enabled = true;
+        tofSensorArray[8].multiplexerAddress = TCA9548A_ADDRESS_0;
+        tofSensorArray[8].useMultiplexer = true;
+        tofSensorArray[8].multiplexerChannel = 1;
     }
     if (tofSensorCount > 9) {
         tofSensorArray[9].enabled = true;
+        tofSensorArray[9].multiplexerAddress = TCA9548A_ADDRESS_0;
+        tofSensorArray[9].useMultiplexer = true;
+        tofSensorArray[9].multiplexerChannel = 2;
     }
     if (tofSensorCount > 10) {
         tofSensorArray[10].enabled = true;
+        tofSensorArray[10].multiplexerAddress = TCA9548A_ADDRESS_0;
+        tofSensorArray[10].useMultiplexer = true;
+        tofSensorArray[10].multiplexerChannel = 4;
     }
     if (tofSensorCount > 11) {
         tofSensorArray[11].enabled = true;
+        tofSensorArray[11].multiplexerAddress = TCA9548A_ADDRESS_0;
+        tofSensorArray[11].useMultiplexer = true;
+        tofSensorArray[11].multiplexerChannel = 8;
+    }
+    if (tofSensorCount > 12) {
+        tofSensorArray[12].enabled = true;
+        tofSensorArray[12].multiplexerAddress = TCA9548A_ADDRESS_0;
+        tofSensorArray[12].useMultiplexer = true;
+        tofSensorArray[12].multiplexerChannel = 16;
+    }
+    if (tofSensorCount > 13) {
+        tofSensorArray[13].enabled = true;
+        tofSensorArray[13].multiplexerAddress = TCA9548A_ADDRESS_0;
+        tofSensorArray[13].useMultiplexer = true;
+        tofSensorArray[13].multiplexerChannel = 32;
     }
     
     appendStringLN(getDebugOutputStreamLogger(), "TOF ...");
@@ -121,15 +156,6 @@ void mainBoardCommonTofInitDrivers(I2cBus* i2cBus, I2cBus* i2cBus2, unsigned int
                              (TofSensorVL53L0X(*)[]) &tofSensorVL53L0XArray,
                               // Size
                               tofSensorCount,
-                              // Bus
-                              i2cBus,
-                              // Other Bus if we use more than 8 tofs
-                              i2cBus2,
-                              // IO Expander, if null, we will not be able to
-                              // Manage several tof
-                              tofIoExpander,
-                              // Second IO Expander
-                              lateralTofIoExpander,            
                               // debug
                               true,
                               // enabledAllSensors

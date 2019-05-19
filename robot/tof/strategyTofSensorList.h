@@ -17,6 +17,9 @@
 #define BACK_MIDDLE_SENSOR_INDEX         4
 #define BACK_LEFT_SENSOR_INDEX           5
 
+#define DISABLE_SENSOR_1_INDEX           6
+#define DISABLE_SENSOR_2_INDEX           7
+
 #define FRONT_SIDE_LEFT_SENSOR_INDEX     8
 #define FRONT_SIDE_RIGHT_SENSOR_INDEX    9
 #define BACK_SIDE_LEFT_SENSOR_INDEX     10

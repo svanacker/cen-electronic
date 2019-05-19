@@ -20,6 +20,8 @@
 
 #include "../../../common/timer/delayTimer.h"
 
+#include "../../../drivers/i2c/multiplexer/tca9548A.h"
+
 
 // Store the latest status of the VL53L0X
 // indicates whether or not the sensor has encountered an error
@@ -325,7 +327,12 @@ bool tofSensorInitVL53L0X(TofSensor* tofSensor) {
  */
 unsigned int tofSensorGetDistanceVL53L0XMM(TofSensor* tofSensor) {
     TofSensorVL53L0X* tofSensorVL53L0X = getTofSensorVL53L0X(tofSensor);
-
+    
+    // If we use a multiplexer, we must select the channel first
+    if (tofSensor->useMultiplexer) {
+        I2cBusConnection* multiplexerBusConnection = getI2cBusConnectionBySlaveAddress(tofSensor->multiplexerAddress);
+        tca9548A_setChannel(multiplexerBusConnection, tofSensor->multiplexerChannel);
+    }
     // Single Mode
     // getSingleRangingMeasurement(tofSensorVL53L0X, false);
 

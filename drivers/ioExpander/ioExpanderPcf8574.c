@@ -68,6 +68,6 @@ void initIOExpanderPCF8574(IOExpander* ioExpander, I2cBusConnection* i2cBusConne
                    &ioExpanderPCF8574WriteValue,
                    &ioExpanderPCF8574ReadSingleValue,
                    &ioExpanderPCF8574WriteSingleValue,
-                   8,
+                   PCF8574_IO_COUNT,
                    (int*) i2cBusConnection);
 }

@@ -23,8 +23,9 @@
 
 #include "../../../common/timer/delayTimer.h"
 
-
 #include "../../../drivers/ioExpander/ioExpander.h"
+
+#include "../../../drivers/i2c/multiplexer/tca9548A.h"
 
 #include "../../../device/deviceConstants.h"
 
@@ -70,34 +71,13 @@ void initTofSensorListVL53L0X(TofSensorList* tofSensorList,
                               TofSensor(*tofSensorArray)[],
                               TofSensorVL53L0X(*tofSensorVL53L0XArray)[],
                               unsigned int size,
-                              I2cBus* i2cBus,
-                              I2cBus* optionalI2cBus,
-                              IOExpander* ioExpander,
-                              IOExpander* optionalIOExpander,
                               bool debug,
                               bool enableAllSensors,
                               bool changeAddressAllSensors) {
-    tofSensorList->beepIoExpander = optionalIOExpander;
-    
-    initIOExpanderForTofSensorList(ioExpander, size % 8);
-    initIOExpanderForTofSensorList(optionalIOExpander, size % 8);
-
     initTofSensorList(tofSensorList, tofSensorArray, size, debug, enableAllSensors, changeAddressAllSensors, &printTofSensorTableVL53L0X);
 
     unsigned int tofIndex;
-    I2cBusConnection* initialTofBusConnection;
     for (tofIndex = 0; tofIndex < size; tofIndex++) {
-        if (tofIndex == 0) {
-            // Fake Connection to be able to change the address
-            initialTofBusConnection = addI2cBusConnection(i2cBus, VL530X_ADDRESS_0, true);
-        }
-        if (tofIndex == 8) {
-            // VERY IMPORTANT : To avoid that this connection is found by getI2cBusConnectionBySlaveAddress
-            if (initialTofBusConnection != NULL) {
-                initialTofBusConnection->opened = false;
-            }
-            initialTofBusConnection = addI2cBusConnection(optionalI2cBus, VL530X_ADDRESS_0, true);
-        }
         // Get the abstract tof Sensor structure at the specified index
         TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, tofIndex);
         
@@ -106,6 +86,7 @@ void initTofSensorListVL53L0X(TofSensorList* tofSensorList,
             append(getAlwaysOutputStreamLogger(), '_');
             continue;
         }
+        I2cBusConnection* multiplexerBusConnection = getI2cBusConnectionBySlaveAddress(tofSensor->multiplexerAddress);
         
         appendStringAndDecLN(getDebugOutputStreamLogger(), "  TOF SENSOR->START:", tofIndex);
 
@@ -115,26 +96,17 @@ void initTofSensorListVL53L0X(TofSensorList* tofSensorList,
         // Shift to the right pointer address
         tofSensorVL53L0X += tofIndex;
 
-        if (ioExpander != NULL && tofSensor->changeAddress) {
-            // Activate only a specific TOF
-            appendStringAndDec(getDebugOutputStreamLogger(), "  IO Expander Write:", tofIndex);
-            
-            if (tofIndex < 8) {
-                ioExpander->ioExpanderWriteSingleValue(ioExpander, tofIndex, true);
-            }
-            else {
-                if (optionalIOExpander != NULL) {
-                    optionalIOExpander->ioExpanderWriteSingleValue(optionalIOExpander, tofIndex % 8, true);
-                }
-            }
-            // Delay to let the hardware part of the Sensor VL53L0X
+        if (tofSensor->useMultiplexer) {
+            unsigned char channel = tofSensor->multiplexerChannel;
+            unsigned char multiplexerAddress = tofSensor->multiplexerAddress;
+            appendStringAndDec(getDebugOutputStreamLogger(), "    MULTIPLEXER:addr=", multiplexerAddress);        
+            appendStringAndDecLN(getDebugOutputStreamLogger(), ", channel=", channel);        
+            tca9548A_setChannel(multiplexerBusConnection, channel);
             timerDelayMilliSeconds(10);
-            appendStringLN(getDebugOutputStreamLogger(), " ... OK");
         }
-
         appendString(getDebugOutputStreamLogger(), "    INIT VL53");        
         // Initialize the VL53L0X, but with the default address
-        bool successInit = initTofSensorVL53L0X(tofSensor, tofSensorVL53L0X, initialTofBusConnection, "", 0, 0.0f);
+        bool successInit = initTofSensorVL53L0X(tofSensor, tofSensorVL53L0X, multiplexerBusConnection, "", 0, 0.0f);
         if (!successInit) {
             append(getAlwaysOutputStreamLogger(), 'X');
             continue;
@@ -148,7 +120,7 @@ void initTofSensorListVL53L0X(TofSensorList* tofSensorList,
         }
         appendStringAndDec(getDebugOutputStreamLogger(), "    CHANGE ADDRESS FROM ", VL530X_ADDRESS_0);
         appendStringAndDec(getDebugOutputStreamLogger(), " TO ", tofBusAddress);
-        I2cBusConnection* tofBusConnection = addI2cBusConnection(initialTofBusConnection->i2cBus, tofBusAddress, true);
+        I2cBusConnection* tofBusConnection = addI2cBusConnection(multiplexerBusConnection->i2cBus, tofBusAddress, true);
         bool succeedToChangeAddress = tofSetAddress(tofSensorVL53L0X, tofBusConnection);
         if (succeedToChangeAddress) {
             append(getAlwaysOutputStreamLogger(), '[');

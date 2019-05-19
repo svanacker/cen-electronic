@@ -48,8 +48,10 @@ void deviceI2cMasterDebugHandleRawData(unsigned char header, InputStream* inputS
     // MULTIPLEXER
     if (header == COMMAND_I2C_MULTIPLEXER_SET_CHANNEL) {
         ackCommand(outputStream, I2C_MASTER_DEBUG_DEVICE_HEADER, COMMAND_I2C_MULTIPLEXER_SET_CHANNEL);
+        unsigned char multiplexerAddress = readHex2(inputStream);
+        checkIsSeparator(inputStream);
         unsigned char channel = readHex2(inputStream);
-        I2cBusConnection* multiplexerBusConnection = getI2cBusConnectionBySlaveAddress(TCA9548A_ADDRESS_0);
+        I2cBusConnection* multiplexerBusConnection = getI2cBusConnectionBySlaveAddress(multiplexerAddress);
         if (multiplexerBusConnection != NULL) {
             tca9548A_setChannel(multiplexerBusConnection, channel);
         }
@@ -59,7 +61,8 @@ void deviceI2cMasterDebugHandleRawData(unsigned char header, InputStream* inputS
     }
     else if (header == COMMAND_I2C_MULTIPLEXER_GET_CHANNEL) {
         ackCommand(outputStream, I2C_MASTER_DEBUG_DEVICE_HEADER, COMMAND_I2C_MULTIPLEXER_GET_CHANNEL);
-        I2cBusConnection* multiplexerBusConnection = getI2cBusConnectionBySlaveAddress(TCA9548A_ADDRESS_0);
+        unsigned char multiplexerAddress = readHex2(inputStream);
+        I2cBusConnection* multiplexerBusConnection = getI2cBusConnectionBySlaveAddress(multiplexerAddress);
         if (multiplexerBusConnection != NULL) {
             unsigned char channel = tca9548A_getChannel(multiplexerBusConnection);
             appendHex2(outputStream, channel);
