@@ -13,7 +13,7 @@
 #include "../../../common/log/logger.h"
 #include "../../../common/log/logLevel.h"
 
-void tca9548A_setChannel(I2cBusConnection* i2cBusConnection, unsigned char channel) {
+void tca9548A_setChannel(I2cBusConnection* i2cBusConnection, unsigned char channels) {
     portableMasterWaitSendI2C(i2cBusConnection);
 
     portableMasterStartI2C(i2cBusConnection);
@@ -22,7 +22,7 @@ void tca9548A_setChannel(I2cBusConnection* i2cBusConnection, unsigned char chann
     portableMasterWriteI2C(i2cBusConnection, i2cBusConnection->i2cAddress);
     WaitI2cBusConnection(i2cBusConnection);
 
-    portableMasterWriteI2C(i2cBusConnection, 1 << channel);
+    portableMasterWriteI2C(i2cBusConnection, channels);
     WaitI2cBusConnection(i2cBusConnection);
 
     portableMasterStopI2C(i2cBusConnection);
@@ -40,16 +40,10 @@ unsigned char tca9548A_getChannel(I2cBusConnection* i2cBusConnection) {
 
     // Read the register
     unsigned char raw = portableMasterReadI2C(i2cBusConnection);
-    unsigned char result = 0;
-    do  {
-        raw = raw >> 1;
-        result++;
-    } 
-    while (raw > 1);   
     WaitI2cBusConnection(i2cBusConnection);
 
     portableMasterNackI2C(i2cBusConnection);
     portableMasterStopI2C(i2cBusConnection);
     
-    return result;
+    return raw;
 }

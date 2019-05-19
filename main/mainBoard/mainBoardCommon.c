@@ -381,7 +381,7 @@ void mainBoardCommonInitCommonDrivers(void) {
     appendStringLN(getDebugOutputStreamLogger(), "OK");
     // -> TCA9548
     appendString(getDebugOutputStreamLogger(), "TCA9548 ...");
-    multiplexerI2cBusConnection = addI2cBusConnection(i2cBus, TCA9548A_ADDRESS_0, true);
+    multiplexerI2cBusConnection = addI2cBusConnection(i2cBus4, TCA9548A_ADDRESS_0, true);
     appendStringLN(getDebugOutputStreamLogger(), "OK");
     
     /*

@@ -33,9 +33,11 @@
 
 // IO Expander
 static IOExpanderList ioExpanderList;
+static IOExpander ioExpanderArray[MAIN_BOARD_IO_EXPANDER_LIST_LENGTH];
+
 static IOExpander* tofIoExpander;
 static IOExpander* lateralTofIoExpander;
-static IOExpander ioExpanderArray[MAIN_BOARD_IO_EXPANDER_LIST_LENGTH];
+
 static I2cBusConnection* tofIoExpanderBusConnection;
 static I2cBusConnection* lateralTofIoExpanderBusConnection;
 
@@ -51,7 +53,7 @@ void mainBoardCommonTofAddDevices(void) {
 
 void mainBoardCommonTofInitDrivers(I2cBus* i2cBus, I2cBus* i2cBus2, unsigned int tofSensorCount) {
     // IO Expander List
-    appendString(getDebugOutputStreamLogger(), "PCFs ...");
+    appendString(getDebugOutputStreamLogger(), "IO Expander List ...");
     initIOExpanderList(&ioExpanderList, (IOExpander(*)[]) &ioExpanderArray, MAIN_BOARD_IO_EXPANDER_LIST_LENGTH);
     
     // First Expander (Beacon + Fork)
@@ -63,6 +65,15 @@ void mainBoardCommonTofInitDrivers(I2cBus* i2cBus, I2cBus* i2cBus2, unsigned int
     lateralTofIoExpanderBusConnection = addI2cBusConnection(i2cBus2, PCF8574_ADDRESS_0, true);
     initIOExpanderPCF8574(lateralTofIoExpander, lateralTofIoExpanderBusConnection);
     
+        // -> IO Button Board
+    /*
+    ioButtonBoardIoExpander = getIOExpanderByIndex(&ioExpanderList, 2);
+    appendString(getDebugOutputStreamLogger(), "IO Button Board ...");
+    ioButtonBoardBusConnection = addI2cBusConnection(i2cBus2, PCF8574_ADDRESS_0);
+    appendStringLN(getDebugOutputStreamLogger(), "OK");
+    initIOExpanderPCF8574(ioButtonBoardIoExpander, ioButtonBoardBusConnection);
+    */
+
     // End of IOExpanderList
     appendStringLN(getDebugOutputStreamLogger(), "OK");
         

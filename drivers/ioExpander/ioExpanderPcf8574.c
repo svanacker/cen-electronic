@@ -17,7 +17,7 @@ I2cBusConnection* getIOExpanderBusConnection(IOExpander* ioExpander) {
     return (I2cBusConnection*) ioExpander->object;
 }
 
-// Forward declatation
+// Forward declaration
 unsigned char ioExpanderPCF8574ReadValue(IOExpander* ioExpander);
 
 bool ioExpanderPCF8574Init(IOExpander* ioExpander) {
