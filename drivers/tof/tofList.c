@@ -60,6 +60,7 @@ TofSensor* getTofSensorByIndex(TofSensorList* tofSensorList, unsigned int index)
 }
 
 void tofSensorListBeep(TofSensorList* tofSensorList, bool value) {
+    /*
     IOExpander* beepIoExpander = tofSensorList->beepIoExpander;
     if (beepIoExpander == NULL) {
         writeError(IO_EXPANDER_NULL);
@@ -69,6 +70,7 @@ void tofSensorListBeep(TofSensorList* tofSensorList, bool value) {
         tofSensorList->beepValue = value;
         beepIoExpander->ioExpanderWriteSingleValue(beepIoExpander, 7, value);
     }
+    */
 }
 
 unsigned int getTofSensorListSize(TofSensorList* tofSensorList) {

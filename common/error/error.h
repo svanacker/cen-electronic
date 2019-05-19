@@ -196,6 +196,7 @@ void clearLastError();
 #define TOF_SENSOR_LIST_ILLEGAL_INDEX                                     0x2401
 #define TOO_MUCH_TOF_SENSOR				                                  0x2402
 #define TOF_SENSOR_NULL                                                   0x2403
+#define TOF_SENSOR_OBJECT_NULL                                            0x2404
 
 #define IO_EXPANDER_LIST_NOT_INITIALIZED                                  0x2500
 #define IO_EXPANDER_LIST_ILLEGAL_INDEX                                    0x2501

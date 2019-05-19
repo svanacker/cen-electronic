@@ -15,6 +15,7 @@
 
 #include "../../../../common/io/outputStream.h"
 #include "../../../../common/io/printWriter.h"
+#include "error.h"
 
 // #define VL53L0X_DEBUG    0
 
@@ -22,6 +23,11 @@
 
 int32_t VL53L0X_write_multi(uint8_t deviceAddress, uint8_t index, uint8_t  *pdata, int32_t count) {
     I2cBusConnection* i2cBusConnection = getI2cBusConnectionBySlaveAddress(deviceAddress);
+    if (i2cBusConnection == NULL) {
+        writeError(I2C_BUS_CONNECTION_NULL);
+        appendStringAndDecLN(getErrorOutputStreamLogger(), "addr=", deviceAddress);
+        return VL53L0X_ERROR_CONTROL_INTERFACE;
+    }
     
     portableMasterWaitSendI2C(i2cBusConnection);
     // Wait till Start sequence is completed
@@ -68,6 +74,11 @@ int32_t VL53L0X_write_multi(uint8_t deviceAddress, uint8_t index, uint8_t  *pdat
 
 int32_t VL53L0X_read_multi(uint8_t deviceAddress,  uint8_t index, uint8_t  *pdata, int32_t count) {
     I2cBusConnection* i2cBusConnection = getI2cBusConnectionBySlaveAddress(deviceAddress);
+    if (i2cBusConnection == NULL) {
+        writeError(I2C_BUS_CONNECTION_NULL);
+        appendStringAndDecLN(getErrorOutputStreamLogger(), "addr=", deviceAddress);
+        return VL53L0X_ERROR_CONTROL_INTERFACE;
+    }
     
     portableMasterWaitSendI2C(i2cBusConnection);
     

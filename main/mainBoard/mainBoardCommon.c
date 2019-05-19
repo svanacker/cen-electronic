@@ -168,6 +168,7 @@
 #include "../../robot/config/32/robotConfigPic32.h"
 #include "../../common/pwm/servo/32/servoPwm32.h"
 #include "../../common/pwm/servo/32/servoList32.h"
+#include "i2c/multiplexer/tca9548A.h"
 
 // COMMON TO ALL MAIN BOARD
 
@@ -195,7 +196,8 @@ static I2cBusConnection* clockI2cBusConnection;
 // TEMPERATURE
 static Temperature temperature;
 static I2cBusConnection* temperatureI2cBusConnection;
-static I2cBusConnection* multiplexerI2cBusConnection;
+static I2cBusConnection* multiplexerI2cBusConnection0;
+static I2cBusConnection* multiplexerI2cBusConnection1;
 
 // CURRENT
 // static Current current;
@@ -381,9 +383,11 @@ void mainBoardCommonInitCommonDrivers(void) {
     appendStringLN(getDebugOutputStreamLogger(), "OK");
     // -> TCA9548
     appendString(getDebugOutputStreamLogger(), "TCA9548 ...");
-    multiplexerI2cBusConnection = addI2cBusConnection(i2cBus4, TCA9548A_ADDRESS_0, true);
+    multiplexerI2cBusConnection0 = addI2cBusConnection(i2cBus4, TCA9548A_ADDRESS_0, true);
+    tca9548A_setChannel(multiplexerI2cBusConnection0, 0x00);
+    multiplexerI2cBusConnection1 = addI2cBusConnection(i2cBus4, TCA9548A_ADDRESS_1, true);
+    tca9548A_setChannel(multiplexerI2cBusConnection1, 0x00);
     appendStringLN(getDebugOutputStreamLogger(), "OK");
-    
     /*
     //--> Current
     appendString(getDebugOutputStreamLogger(), "CURRENT...");

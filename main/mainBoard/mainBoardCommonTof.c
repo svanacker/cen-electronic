@@ -50,14 +50,10 @@ void mainBoardCommonTofInitDrivers(I2cBus* i2cBus, I2cBus* i2cBus2, unsigned int
     appendString(getDebugOutputStreamLogger(), "IO Expander List ...");
     initIOExpanderList(&ioExpanderList, (IOExpander(*)[]) &ioExpanderArray, MAIN_BOARD_IO_EXPANDER_LIST_LENGTH);
     
-        // -> IO Button Board
-    /*
-    ioButtonBoardIoExpander = getIOExpanderByIndex(&ioExpanderList, 2);
-    appendString(getDebugOutputStreamLogger(), "IO Button Board ...");
-    ioButtonBoardBusConnection = addI2cBusConnection(i2cBus2, PCF8574_ADDRESS_0);
-    appendStringLN(getDebugOutputStreamLogger(), "OK");
+    // -> IO Button Board
+    IOExpander* ioButtonBoardIoExpander = getIOExpanderByIndex(&ioExpanderList, 0);
+    I2cBusConnection* ioButtonBoardBusConnection = addI2cBusConnection(i2cBus2, PCF8574_ADDRESS_0, true);
     initIOExpanderPCF8574(ioButtonBoardIoExpander, ioButtonBoardBusConnection);
-    */
 
     // End of IOExpanderList
     appendStringLN(getDebugOutputStreamLogger(), "OK");
@@ -163,6 +159,7 @@ void mainBoardCommonTofInitDrivers(I2cBus* i2cBus, I2cBus* i2cBus2, unsigned int
                               // changeAddressAllSensors
                               true
             );
+    
 
     appendStringLN(getDebugOutputStreamLogger(), "OK");
     /*

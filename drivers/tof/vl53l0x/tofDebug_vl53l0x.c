@@ -99,10 +99,6 @@ void printTofSensorTableVL53L0X(OutputStream* outputStream, TofSensorList* tofSe
     for (index = 0; index < tofSensorList->size; index++) {
         TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, index);
         
-        if (!tofSensor->enabled) {
-            continue;
-        }
-
         // Tof Configuration Properties
         appendDecTableData(outputStream, index, TOF_SENSOR_VL53L0X_INDEX_COLUMN_LENGTH);      
 

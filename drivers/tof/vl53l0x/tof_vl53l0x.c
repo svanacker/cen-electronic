@@ -21,6 +21,7 @@
 #include "../../../common/timer/delayTimer.h"
 
 #include "../../../drivers/i2c/multiplexer/tca9548A.h"
+#include "error.h"
 
 
 // Store the latest status of the VL53L0X
@@ -202,11 +203,10 @@ bool tof_vl53l0x_begin(TofSensorVL53L0X* tofSensorVL53L0X, bool debug) {
     }
 }
 
-bool tofSetAddress(TofSensorVL53L0X* tofSensorVL53L0X, I2cBusConnection* newI2cBusConnection) {
+bool tofSetAddress(TofSensorVL53L0X* tofSensorVL53L0X, I2cBusConnection* i2cBusConnection, unsigned int newAddress) {
     tofSensorVL53L0X->status = VL53L0X_ERROR_NONE;
     VL53L0X_Dev_t* tofDevice = &(tofSensorVL53L0X->device);
 
-    uint8_t newAddress = newI2cBusConnection->i2cAddress;
     if (newAddress != VL530X_ADDRESS_0) {
         tofSensorVL53L0X->status = VL53L0X_SetDeviceAddress(tofDevice, newAddress);
         timerDelayMilliSeconds(30);
@@ -214,7 +214,7 @@ bool tofSetAddress(TofSensorVL53L0X* tofSensorVL53L0X, I2cBusConnection* newI2cB
 
     if (tofSensorVL53L0X->status == VL53L0X_ERROR_NONE) {
         tofDevice->I2cDevAddr = newAddress;
-        tofSensorVL53L0X->i2cBusConnection = newI2cBusConnection;
+        i2cBusConnection->i2cAddress = newAddress;
         return true;
     }
     return false;
@@ -326,8 +326,15 @@ bool tofSensorInitVL53L0X(TofSensor* tofSensor) {
  * @private
  */
 unsigned int tofSensorGetDistanceVL53L0XMM(TofSensor* tofSensor) {
+    if (tofSensor == NULL) {
+        writeError(TOF_SENSOR_NULL);
+        return 0;
+    }
     TofSensorVL53L0X* tofSensorVL53L0X = getTofSensorVL53L0X(tofSensor);
-    
+    if (tofSensorVL53L0X == NULL) {
+        writeError(TOF_SENSOR_OBJECT_NULL);
+        return 0;
+    }
     // If we use a multiplexer, we must select the channel first
     if (tofSensor->useMultiplexer) {
         I2cBusConnection* multiplexerBusConnection = getI2cBusConnectionBySlaveAddress(tofSensor->multiplexerAddress);

@@ -43,7 +43,7 @@ bool tof_vl53l0x_begin(TofSensorVL53L0X* tofSensorVL53L0X, bool debug);
  * @param newAddr
  * @return 
  */
-bool tofSetAddress(TofSensorVL53L0X* tofSensorVL53L0X, I2cBusConnection* newI2cBusConnection);
+bool tofSetAddress(TofSensorVL53L0X* tofSensorVL53L0X, I2cBusConnection* i2cBusConnection, unsigned int newAddress);
 
 /**
  * Get the status of the time of Flight Sensor
