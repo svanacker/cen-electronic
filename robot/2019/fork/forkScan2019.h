@@ -8,8 +8,8 @@
 #include "../../../drivers/tof/tofList.h"
 
 // TOF INDEX
-#define FORK_2019_LEFT_TOF_INDEX                                               6
-#define FORK_2019_RIGHT_TOF_INDEX                                              7
+#define FORK_2019_LEFT_TOF_INDEX                                              12
+#define FORK_2019_RIGHT_TOF_INDEX                                             11
 
 // TOF THRESHOLD
 #define FORK_2019_SCAN_DISTANCE_LEFT_THRESHOLD                                35
