@@ -1,6 +1,8 @@
 #include "i2cMaster.h"
 #include "../i2cCommon.h"
 
+#include "../../../common/error/error.h"
+
 #include "../../../common/log/logger.h"
 #include "../../../common/log/logLevel.h"
 
@@ -8,6 +10,9 @@
 #include "../../../common/io/buffer.h"
 
 void i2cMasterWriteBuffer(I2cBusConnection* i2cBusConnection, Buffer* buffer) {
+    if (i2cBusConnection->error != ERROR_NONE) {
+        return;
+    }
     portableMasterWaitSendI2C(i2cBusConnection);
     // Wait till Start sequence is completed
     WaitI2cBusConnection(i2cBusConnection);
@@ -31,6 +36,9 @@ void i2cMasterWriteBuffer(I2cBusConnection* i2cBusConnection, Buffer* buffer) {
 }
 
 void i2cMasterWriteChar(I2cBusConnection* i2cBusConnection, unsigned char address, unsigned char c) {
+    if (i2cBusConnection->error != ERROR_NONE) {
+        return;
+    }
     // We append to a buffer
     portableMasterStartI2C(i2cBusConnection);
     // Wait till Start sequence is completed
@@ -49,6 +57,9 @@ void i2cMasterWriteChar(I2cBusConnection* i2cBusConnection, unsigned char addres
 }
 
 unsigned char i2cMasterReadChar(I2cBusConnection* i2cBusConnection) {
+    if (i2cBusConnection->error != ERROR_NONE) {
+        return 0x00;
+    }
     portableMasterStartI2C(i2cBusConnection);
     WaitI2cBusConnection(i2cBusConnection);
 
@@ -65,6 +76,9 @@ unsigned char i2cMasterReadChar(I2cBusConnection* i2cBusConnection) {
 }
 
 unsigned char i2cMasterReadRegisterValue(I2cBusConnection* i2cBusConnection, unsigned char commandRegister) {
+    if (i2cBusConnection->error != ERROR_NONE) {
+        return 0x00;
+    }
     unsigned char address = i2cBusConnection->i2cAddress;
 
     // Set the register command
@@ -101,6 +115,9 @@ unsigned char i2cMasterReadRegisterValue(I2cBusConnection* i2cBusConnection, uns
 }
 
 void i2cMasterRegisterReadBuffer(I2cBusConnection* i2cBusConnection, unsigned char reg, unsigned int length, Buffer* buffer){
+    if (i2cBusConnection->error != ERROR_NONE) {
+        return;
+    }
     unsigned char address = i2cBusConnection->i2cAddress;
     // Set the register command
     i2cMasterWriteChar(i2cBusConnection, address, reg);
@@ -127,6 +144,9 @@ void i2cMasterRegisterReadBuffer(I2cBusConnection* i2cBusConnection, unsigned ch
 }
 
 void i2cMasterReadBuffer(I2cBusConnection* i2cBusConnection, unsigned int length, Buffer* buffer) {
+    if (i2cBusConnection->error != ERROR_NONE) {
+        return;
+    }
     unsigned char address = i2cBusConnection->i2cAddress;
 
     portableMasterStartI2C(i2cBusConnection);

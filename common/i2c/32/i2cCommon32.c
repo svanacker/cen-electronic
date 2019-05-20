@@ -39,6 +39,10 @@ I2C_MODULE getI2C_MODULE(unsigned char portIndex) {
 }
 
 void internalWaitI2C(I2cBus* i2cBus, unsigned int address) {
+    // If the bus is in error, does not try to continue
+    if (i2cBus->error != ERROR_NONE) {
+        return;
+    }
     unsigned long count = 0;
     if (i2cBus == NULL) {
         IdleI2C1();
@@ -48,6 +52,7 @@ void internalWaitI2C(I2cBus* i2cBus, unsigned int address) {
             while (I2C1CONbits.SEN || I2C1CONbits.PEN || I2C1CONbits.RSEN || I2C1CONbits.RCEN || I2C1CONbits.ACKEN || I2C1STATbits.TRSTAT) {
                 count++;
                 if (count > I2C_MAX_INSTRUCTION_COUNT_WHILE) {
+                    i2cBus->error = I2C_TOO_MUCH_LOOP_WAIT_I2C_ERROR;
                     writeError(I2C_TOO_MUCH_LOOP_WAIT_I2C_ERROR);
                     appendStringAndDecLN (getErrorOutputStreamLogger(), "I2C Port=", i2cBus->port);
                     appendStringAndDecLN (getErrorOutputStreamLogger(), "I2C Addr (Dec)=", address);
@@ -60,6 +65,7 @@ void internalWaitI2C(I2cBus* i2cBus, unsigned int address) {
             while (I2C2CONbits.SEN || I2C2CONbits.PEN || I2C2CONbits.RSEN || I2C2CONbits.RCEN || I2C2CONbits.ACKEN || I2C2STATbits.TRSTAT) {
                 count++;
                 if (count > I2C_MAX_INSTRUCTION_COUNT_WHILE) {
+                    i2cBus->error = I2C_TOO_MUCH_LOOP_WAIT_I2C_ERROR;
                     writeError(I2C_TOO_MUCH_LOOP_WAIT_I2C_ERROR);
                     appendStringAndDecLN (getErrorOutputStreamLogger(), "I2C Port=",i2cBus->port);
                     appendStringAndDecLN (getErrorOutputStreamLogger(), "I2C Addr (Dec)=", address);
@@ -74,6 +80,7 @@ void internalWaitI2C(I2cBus* i2cBus, unsigned int address) {
             while (I2C3CONbits.SEN || I2C3CONbits.PEN || I2C3CONbits.RSEN || I2C3CONbits.RCEN || I2C3CONbits.ACKEN || I2C3STATbits.TRSTAT) {
                 count++;
                 if (count > I2C_MAX_INSTRUCTION_COUNT_WHILE) {
+                    i2cBus->error = I2C_TOO_MUCH_LOOP_WAIT_I2C_ERROR;
                     writeError(I2C_TOO_MUCH_LOOP_WAIT_I2C_ERROR);
                     appendStringAndDecLN (getErrorOutputStreamLogger(), "I2C Port=", i2cBus->port);
                     appendStringAndDecLN (getErrorOutputStreamLogger(), "I2C Addr (Dec)=", address);
@@ -87,6 +94,7 @@ void internalWaitI2C(I2cBus* i2cBus, unsigned int address) {
             while (I2C4CONbits.SEN || I2C4CONbits.PEN || I2C4CONbits.RSEN || I2C4CONbits.RCEN || I2C4CONbits.ACKEN || I2C4STATbits.TRSTAT) {
                 count++;
                 if (count > I2C_MAX_INSTRUCTION_COUNT_WHILE) {
+                    i2cBus->error = I2C_TOO_MUCH_LOOP_WAIT_I2C_ERROR;
                     writeError(I2C_TOO_MUCH_LOOP_WAIT_I2C_ERROR);
                     appendStringAndDecLN (getErrorOutputStreamLogger(), "I2C Port=", i2cBus->port);
                     appendStringAndDecLN (getErrorOutputStreamLogger(), "I2C Addr (Dec)=", address);
@@ -107,11 +115,16 @@ void WaitI2cBusConnection(I2cBusConnection* i2cBusConnection) {
         writeError(I2C_BUS_CONNECTION_NULL);
         return;
     }
-    I2cBus* i2cBus = i2cBusConnection->i2cBus;
-    internalWaitI2C(i2cBus, i2cBusConnection->i2cAddress);
+    if (i2cBusConnection->error == ERROR_NONE) {
+        I2cBus* i2cBus = i2cBusConnection->i2cBus;
+        internalWaitI2C(i2cBus, i2cBusConnection->i2cAddress);        
+    }
 }
 
 void portableCommonStartI2C(I2cBusConnection* i2cBusConnection) {
+    if (i2cBusConnection->error != ERROR_NONE) {
+        return;
+    }
     I2cBus* i2cBus = i2cBusConnection->i2cBus;
 
     if (i2cBus == NULL) {
@@ -120,12 +133,16 @@ void portableCommonStartI2C(I2cBusConnection* i2cBusConnection) {
         I2C_MODULE i2cModule = getI2C_MODULE(i2cBus->port);
         I2C_RESULT result = I2CStart(i2cModule);
         if (result != I2C_SUCCESS) {
+            i2cBusConnection->error = I2C_START_I2C_ERROR;
             writeError(I2C_START_I2C_ERROR);
         }
     }
 }
 
 void portableCommonStopI2C(I2cBusConnection* i2cBusConnection) {
+    if (i2cBusConnection->error != ERROR_NONE) {
+        return;
+    }
     I2cBus* i2cBus = i2cBusConnection->i2cBus;
 
     if (i2cBus == NULL) {
@@ -137,6 +154,9 @@ void portableCommonStopI2C(I2cBusConnection* i2cBusConnection) {
 }
 
 void portableCommonAckI2C(I2cBusConnection* i2cBusConnection) {
+    if (i2cBusConnection->error != ERROR_NONE) {
+        return;
+    }
     I2cBus* i2cBus = i2cBusConnection->i2cBus;
 
     if (i2cBus == NULL) {
@@ -148,6 +168,9 @@ void portableCommonAckI2C(I2cBusConnection* i2cBusConnection) {
 }
 
 void portableCommonNackI2C(I2cBusConnection* i2cBusConnection) {
+    if (i2cBusConnection->error != ERROR_NONE) {
+        return;
+    }
     I2cBus* i2cBus = i2cBusConnection->i2cBus;
     if (i2cBus == NULL) {
         NotAckI2C1();

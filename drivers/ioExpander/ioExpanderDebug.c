@@ -2,15 +2,15 @@
 
 #include <stdlib.h>
 
+#include "../../common/i2c/i2cCommon.h"
+#include "../../common/i2c/i2cDebug.h"
+
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
 #include "../../common/io/printTableWriter.h"
 
 #include "../../drivers/ioExpander/ioExpanderPcf8574.h"
-
-#include "ioExpanderList.h"
-#include "i2cCommon.h"
-#include "i2cDebug.h"
+#include "../../drivers/ioExpander/ioExpanderList.h"
 
 #define IO_EXPANDER_IO_COUNT                      8
 
@@ -64,7 +64,10 @@ void printIOExpanderStatesTable(OutputStream* outputStream, IOExpanderList* ioEx
         appendDecTableData(outputStream, ioExpanderIndex, IO_EXPANDER_INDEX_COLUMN_LENGTH);
         appendDecTableData(outputStream, ioExpander->count, IO_EXPANDER_COUNT_COLUMN_LENGTH);
         
-        I2cBusConnection* i2cBusConnection = getIOExpanderBusConnection(ioExpander);
+        I2cBusConnection* i2cBusConnection = NULL;
+#ifndef PC_COMPILER
+        i2cBusConnection = getIOExpanderBusConnection(ioExpander);
+#endif
         if (i2cBusConnection == NULL) {
             appendStringTableData(outputStream, "-", IO_EXPANDER_BUS_COLUMN_LENGTH);
             appendStringTableData(outputStream, "-", IO_EXPANDER_ADDRESS_COLUMN_LENGTH);

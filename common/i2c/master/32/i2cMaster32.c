@@ -26,7 +26,13 @@ void portableMasterNackI2C(I2cBusConnection* i2cBusConnection) {
 }
 
 unsigned int portableMasterWriteI2C(I2cBusConnection* i2cBusConnection, unsigned char data) {
+    if (i2cBusConnection->error != ERROR_NONE) {
+        return 0x00;
+    }
     I2cBus* i2cBus = i2cBusConnection->i2cBus;
+    if (i2cBus->error != ERROR_NONE) {
+        return 0x00;
+    }
     if (i2cBus == NULL) {
         return MasterWriteI2C1(data);
     }
@@ -37,11 +43,17 @@ unsigned int portableMasterWriteI2C(I2cBusConnection* i2cBusConnection, unsigned
 }
 
 unsigned char portableMasterReadI2C(I2cBusConnection* i2cBusConnection) {
+    if (i2cBusConnection->error != ERROR_NONE) {
+        return 0x00;
+    }
     I2cBus* i2cBus = i2cBusConnection->i2cBus;
     if (i2cBus == NULL) {
         return MasterReadI2C1();
     }
     else {
+        if (i2cBus->error != ERROR_NONE) {
+            return 0x00;
+        }
         unsigned long count = 0;
         unsigned portIndex = i2cBus->port;
         if (portIndex == I2C_BUS_PORT_1) {
@@ -49,6 +61,7 @@ unsigned char portableMasterReadI2C(I2cBusConnection* i2cBusConnection) {
             while (I2C1CONbits.RCEN) {
                 count++;
                 if (count > I2C_MAX_INSTRUCTION_COUNT_WHILE) {
+                    i2cBusConnection->error = I2C_TOO_MUCH_LOOP_MASTER_READ_I2C_ERROR;
                     writeError(I2C_TOO_MUCH_LOOP_MASTER_READ_I2C_ERROR);
                     break;
                 }
@@ -63,6 +76,7 @@ unsigned char portableMasterReadI2C(I2cBusConnection* i2cBusConnection) {
             while (I2C2CONbits.RCEN) {
                 count++;
                 if (count > I2C_MAX_INSTRUCTION_COUNT_WHILE) {
+                    i2cBusConnection->error = I2C_TOO_MUCH_LOOP_MASTER_READ_I2C_ERROR;
                     writeError(I2C_TOO_MUCH_LOOP_MASTER_READ_I2C_ERROR);
                     break;
                 }
@@ -77,6 +91,7 @@ unsigned char portableMasterReadI2C(I2cBusConnection* i2cBusConnection) {
             while(I2C3CONbits.RCEN) {
                 count++;
                 if (count > I2C_MAX_INSTRUCTION_COUNT_WHILE) {
+                    i2cBusConnection->error = I2C_TOO_MUCH_LOOP_MASTER_READ_I2C_ERROR;
                     writeError(I2C_TOO_MUCH_LOOP_MASTER_READ_I2C_ERROR);
                     break;
                 }
@@ -91,6 +106,7 @@ unsigned char portableMasterReadI2C(I2cBusConnection* i2cBusConnection) {
             while(I2C4CONbits.RCEN) {
                 count++;
                 if (count > I2C_MAX_INSTRUCTION_COUNT_WHILE) {
+                    i2cBusConnection->error = I2C_TOO_MUCH_LOOP_MASTER_READ_I2C_ERROR;
                     writeError(I2C_TOO_MUCH_LOOP_MASTER_READ_I2C_ERROR);
                     break;
                 }
@@ -109,6 +125,9 @@ void portableMasterCloseI2C(I2cBus* i2cBus) {
         CloseI2C1();
     }
     else {
+        if (i2cBus->error != ERROR_NONE) {
+            return;
+        }
         unsigned portIndex = i2cBus->port;
         if (portIndex == I2C_BUS_PORT_1) {
             CloseI2C1();
@@ -140,6 +159,10 @@ void portableMasterCloseI2C(I2cBus* i2cBus) {
 }
 
 void portableMasterWaitSendI2C(I2cBusConnection* i2cBusConnection) {
+    if (i2cBusConnection->error != ERROR_NONE) {
+        return;
+    }
+
     I2cBus* i2cBus = i2cBusConnection->i2cBus;
     unsigned long count = 0;
     if (i2cBus == NULL) {
@@ -153,6 +176,9 @@ void portableMasterWaitSendI2C(I2cBusConnection* i2cBusConnection) {
         return;
     }
     else {
+        if (i2cBus->error != ERROR_NONE) {
+            return;
+        }
         unsigned portIndex = i2cBus->port;
         if (portIndex == I2C_BUS_PORT_1) {
             while (I2C1CONbits.SEN) {

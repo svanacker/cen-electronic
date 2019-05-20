@@ -57,6 +57,7 @@ void initI2cBus(I2cBus* i2cBus, enum I2cBusType i2cBusType, enum I2cPort i2cPort
     }
     i2cBus->busType = i2cBusType;
     i2cBus->port = i2cPort;
+    i2cBus->error = ERROR_NONE;
     checkI2cBus(i2cBus);
 }
 
@@ -72,6 +73,7 @@ void initI2cBusConnection(I2cBusConnection* i2cBusConnection, I2cBus* i2cBus, un
     i2cBusConnection->i2cBus = i2cBus;
     i2cBusConnection->i2cAddress = slaveAddress;
     i2cBusConnection->opened = true;
+    i2cBusConnection->error = ERROR_NONE;
 }
 
 void printI2cBus(OutputStream* outputStream, I2cBus* i2cBus) {

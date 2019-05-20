@@ -58,6 +58,8 @@ struct I2cBus {
     enum I2cPort port;
     /** Indicates if the Port is already initialized. */
     bool initialized;
+    /** Indicates the error if any on the i2cBus */
+    unsigned int error;
     // Configuration (PIC Internal use)
     unsigned int config;
     // An untyped object (For example to store a structure referencing the pipe Handle in Windows)
@@ -75,6 +77,9 @@ struct I2cBusConnection {
     unsigned char i2cAddress;
     // If the connection is established (useful for Windows Emulation with Pipe)
     bool opened;
+    // The first error on connection if any, useful to get information after 
+    // a troubleshoot
+    unsigned int error;
     // An untyped object (to store for PC : I2cSlaveBusConnectionPc)
     void* object;
 };

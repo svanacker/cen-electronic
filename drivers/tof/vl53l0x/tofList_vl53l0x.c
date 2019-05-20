@@ -74,6 +74,7 @@ void initTofSensorListVL53L0X(TofSensorList* tofSensorList,
         bool successInit = initTofSensorVL53L0X(tofSensor, tofSensorVL53L0X, tofBusConnection, "", 0, 0.0f);
         if (!successInit) {
             append(getAlwaysOutputStreamLogger(), 'X');
+            tofSensor->enabled = false;
             continue;
         }
         timerDelayMilliSeconds(30);
@@ -91,6 +92,7 @@ void initTofSensorListVL53L0X(TofSensorList* tofSensorList,
             }
             else {
                 append(getAlwaysOutputStreamLogger(), 'X');
+                tofSensor->enabled = false;
                 appendStringLN(getDebugOutputStreamLogger(), "...KO");
             }
         }
