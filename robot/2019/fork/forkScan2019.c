@@ -6,13 +6,16 @@
 #include <stdlib.h>
 
 #include "../../../common/error/error.h"
-#include "../../../common/log/logger.h"
+
+#include "../../../common/i2c/i2cCommon.h"
+
 #include "../../../common/io/outputStream.h"
 #include "../../../common/io/printWriter.h"
 #include "../../../common/io/printTableWriter.h"
 
+#include "../../../common/log/logger.h"
+
 #include "../../../common/timer/delayTimer.h"
-#include "i2cCommon.h"
 
 // ELEVATOR SCAN
 

@@ -3,6 +3,7 @@
 #include "i2cMaster.h"
 #include "i2cMasterInputStream.h"
 #include "i2cMasterSetup.h"
+
 #include "../../../common/i2c/i2cDebug.h"
 
 #include "../../../common/io/buffer.h"

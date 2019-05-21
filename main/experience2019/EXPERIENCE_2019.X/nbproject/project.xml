@@ -17,7 +17,6 @@
             <sourceRootList>
                 <sourceRootElem>..\..\..\common\serial</sourceRootElem>
                 <sourceRootElem>..\..\..\common\pwm\servo</sourceRootElem>
-                <sourceRootElem>..\..\..\common\i2c\master\32</sourceRootElem>
                 <sourceRootElem>..\..\..\device\system</sourceRootElem>
                 <sourceRootElem>..\..\..\device\airconditioning</sourceRootElem>
                 <sourceRootElem>..\..\..\device\timer</sourceRootElem>

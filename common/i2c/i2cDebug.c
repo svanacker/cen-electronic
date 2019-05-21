@@ -1,24 +1,18 @@
 #include "i2cDebug.h"
 
-#include <stdbool.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
-#include "i2cCommon.h"
 #include "i2cBusList.h"
-#include "i2cBusConnectionList.h"
-
-#include "../../common/commons.h"
 
 #include "../../common/error/error.h"
 
-#include "../../common/io/buffer.h"
 #include "../../common/io/bufferDebug.h"
+#include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
-#include "../../common/io/printTableWriter.h"
+#include "../../common/io/binaryPrintWriter.h"
 
-#include "../../common/log/logHandler.h"
 #include "../../common/log/logger.h"
-#include "../../common/log/logLevel.h"
 
 static Buffer* debugI2cInputBuffer;
 static Buffer* debugI2cOutputBuffer;
@@ -33,11 +27,11 @@ void setDebugI2cEnabled(bool enabled) {
 }
 
 void initI2CDebugBuffers(Buffer* aDebugI2cInputBuffer,
-                         unsigned char (*debugI2cInputBufferArray)[],
-                         unsigned int debugI2cInputBufferLength,
-                         Buffer* aDebugI2cOutputBuffer,
-                         unsigned char (*debugI2cOutputBufferArray)[],
-                         unsigned int debugI2cOutputBufferLength
+    unsigned char(*debugI2cInputBufferArray)[],
+    unsigned int debugI2cInputBufferLength,
+    Buffer* aDebugI2cOutputBuffer,
+    unsigned char(*debugI2cOutputBufferArray)[],
+    unsigned int debugI2cOutputBufferLength
 ) {
     debugI2cInputBuffer = aDebugI2cInputBuffer;
     debugI2cOutputBuffer = aDebugI2cOutputBuffer;
@@ -72,7 +66,7 @@ void printI2cDebugBuffers() {
     appendString(outputStreamLogger, "I2C:Is Enabled:");
     appendBool(outputStreamLogger, debugI2cEnabled);
     println(outputStreamLogger);
-   
+
     if (debugI2cInputBuffer != NULL) {
         appendString(outputStreamLogger, "I2C:In:");
         printDebugBuffer(outputStreamLogger, debugI2cInputBuffer);
@@ -85,145 +79,64 @@ void printI2cDebugBuffers() {
     }
 }
 
-// I2C BUS LIST
+void printI2cBus(OutputStream* outputStream, I2cBus* i2cBus) {
+    if (!checkI2cBusNotNull(i2cBus)) {
+        return;
+    }
 
-#define I2C_BUS_LIST_INDEX_COLUMN_LENGTH		   4
-#define I2C_BUS_LIST_BUS_TYPE_COLUMN_LENGTH       15
-#define I2C_BUS_LIST_PORT_COLUMN_LENGTH		      15
-#define I2C_BUS_LIST_INITIALIZED_COLUMN_LENGTH     8
-#define I2C_BUS_LIST_ERROR_COLUMN_LENGTH          12
-#define I2C_BUS_LIST_CONFIG_COLUMN_LENGTH          8
-#define I2C_BUS_LIST_LAST_COLUMN_LENGTH           20
+    // Type
+    appendString(outputStream, "I2C : type=");
+    if (i2cBus->busType == I2C_BUS_TYPE_UNKNOWN) {
+        appendString(outputStream, " !! UNKNOWN !!");    
+    }
+    if (i2cBus->busType == I2C_BUS_TYPE_MASTER) {
+        appendString(outputStream, "MASTER");    
+    }
+    else if (i2cBus->busType == I2C_BUS_TYPE_MASTER) {
+        appendString(outputStream, "SLAVE"); 
+    }
+    else {
+        appendString(outputStream, "??");
+    }
 
+    // PortIndex
+    appendStringAndDec(outputStream, ", portIndex=I2C_BUS_PORT_", i2cBus->port);
 
-/**
-* @private
-*/
-void printI2cBusListTableHeader(OutputStream* outputStream) {
-	println(outputStream);
-
-	// Table Header
-	appendTableHeaderSeparatorLine(outputStream);
-	appendStringHeader(outputStream, "Idx", I2C_BUS_LIST_INDEX_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "busType", I2C_BUS_LIST_BUS_TYPE_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "port", I2C_BUS_LIST_PORT_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "init ?", I2C_BUS_LIST_INITIALIZED_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "error (Hex)", I2C_BUS_LIST_ERROR_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "config", I2C_BUS_LIST_CONFIG_COLUMN_LENGTH);
-	appendEndOfTableColumn(outputStream, I2C_BUS_LIST_LAST_COLUMN_LENGTH);
-	appendTableHeaderSeparatorLine(outputStream);
+    // Config
+    appendString(outputStream, ", CONF=");
+    appendBinary16(outputStream, i2cBus->config, 4);
 }
 
-void printI2cBusList(OutputStream* outputStream) {
-	printI2cBusListTableHeader(outputStream);
-	int i;
-	for (i = 0; i < getI2cBusListCount(); i++) {
-		I2cBus* i2cBus = getI2cBusByIndex(i);
-		appendDecTableData(outputStream, i, I2C_BUS_LIST_INDEX_COLUMN_LENGTH);
-		const char* i2cBusTypeAsString = getI2cBusTypeAsString(i2cBus->busType);
-		appendStringTableData(outputStream, i2cBusTypeAsString, I2C_BUS_LIST_BUS_TYPE_COLUMN_LENGTH);
-		const char* i2cPortAsString = getI2cPortAsString(i2cBus->port);
-		appendStringTableData(outputStream, i2cPortAsString, I2C_BUS_LIST_PORT_COLUMN_LENGTH);
-		appendDecTableData(outputStream, i2cBus->initialized, I2C_BUS_LIST_INITIALIZED_COLUMN_LENGTH);
-        if (i2cBus->error == ERROR_NONE) {
-    		appendStringTableData(outputStream, "NONE", I2C_BUS_LIST_ERROR_COLUMN_LENGTH);
-        }
-        else {
-    		appendHex4TableData(outputStream, i2cBus->error, I2C_BUS_LIST_ERROR_COLUMN_LENGTH);
-        }
-		appendHex2TableData(outputStream, i2cBus->config, I2C_BUS_LIST_CONFIG_COLUMN_LENGTH);
-		appendEndOfTableColumn(outputStream, I2C_BUS_LIST_LAST_COLUMN_LENGTH);
+void printI2cBusConnection(OutputStream* outputStream, I2cBusConnection* i2cBusConnection) {
+    if (!checkI2cBusConnectionNotNull(i2cBusConnection)) {
+        return;
+    }
+
+    // Address
+    appendStringAndDec(outputStream, "I2cBusConnection : i2cAddress=", i2cBusConnection->i2cAddress);
+    appendString(outputStream, ", opened=");
+
+    // Opened
+    appendBool(outputStream, i2cBusConnection->opened);
+}
+
+const char* getI2cBusTypeAsString(enum I2cBusType i2cBusType) {
+	switch (i2cBusType) {
+		case I2C_BUS_TYPE_MASTER: return "I2C_MASTER";
+		case I2C_BUS_TYPE_SLAVE: return "I2C_SLAVE";
+		case I2C_BUS_TYPE_UNKNOWN: return "I2C_UNKOWN";
+		default: return "I2C_???";
 	}
-	appendTableHeaderSeparatorLine(outputStream);
+	return "I2C_???";
 }
 
-
-// I2C BUS CONNECTION LIST
-
-#define I2C_BUS_CONNECTION_LIST_INDEX_COLUMN_LENGTH		                 6
-#define I2C_BUS_CONNECTION_ADDRESS_COLUMN_LENGTH                        20
-#define I2C_BUS_CONNECTION_LIST_OPENED_COLUMN_LENGTH                    12
-#define I2C_BUS_CONNECTION_LIST_CONNECTION_ERROR_COLUMN_LENGTH          12
-#define I2C_BUS_CONNECTION_LIST_BUS_TYPE_COLUMN_LENGTH                  12
-#define I2C_BUS_CONNECTION_LIST_PORT_COLUMN_LENGTH                      15
-#define I2C_BUS_CONNECTION_LIST_BUS_ERROR_COLUMN_LENGTH                 12
-#define I2C_BUS_CONNECTION_LIST_LAST_COLUMN_LENGTH                      8
-
-/**
-* @private
-*/
-void printI2cBusConnectionListTableHeader(OutputStream* outputStream) {
-	println(outputStream);
-
-	// Table Header
-    // First Line
-	appendTableHeaderSeparatorLine(outputStream);
-	appendStringHeader(outputStream, "Idx", I2C_BUS_CONNECTION_LIST_INDEX_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "Connection", I2C_BUS_CONNECTION_ADDRESS_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "Connection", I2C_BUS_CONNECTION_LIST_OPENED_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "Connection", I2C_BUS_CONNECTION_LIST_CONNECTION_ERROR_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "bus", I2C_BUS_CONNECTION_LIST_BUS_TYPE_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "bus", I2C_BUS_CONNECTION_LIST_PORT_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "bus", I2C_BUS_CONNECTION_LIST_BUS_ERROR_COLUMN_LENGTH);
-	appendEndOfTableColumn(outputStream, I2C_BUS_CONNECTION_LIST_LAST_COLUMN_LENGTH);
-
-    // Second Line
-	appendStringHeader(outputStream, "(Dec)", I2C_BUS_CONNECTION_LIST_INDEX_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "slaveAddress (Hex)", I2C_BUS_CONNECTION_ADDRESS_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "opened", I2C_BUS_CONNECTION_LIST_OPENED_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "Error (Hex)", I2C_BUS_CONNECTION_LIST_CONNECTION_ERROR_COLUMN_LENGTH);
-    
-	appendStringHeader(outputStream, "type", I2C_BUS_CONNECTION_LIST_BUS_TYPE_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "port", I2C_BUS_CONNECTION_LIST_PORT_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "Error (Hex)", I2C_BUS_CONNECTION_LIST_BUS_ERROR_COLUMN_LENGTH);
-	appendEndOfTableColumn(outputStream, I2C_BUS_CONNECTION_LIST_LAST_COLUMN_LENGTH);
-
-
-	appendTableHeaderSeparatorLine(outputStream);
-}
-
-void printI2cBusConnectionList(OutputStream* outputStream) {
-	printI2cBusConnectionListTableHeader(outputStream);
-	int i;
-	for (i = 0; i < getI2cBusConnectionListCount(); i++) {
-		I2cBusConnection* i2cBusConnection = getI2cBusConnectionByIndex(i);
-		I2cBus* i2cBus = i2cBusConnection->i2cBus;
-		
-		// Index
-		appendDecTableData(outputStream, i, I2C_BUS_CONNECTION_LIST_INDEX_COLUMN_LENGTH);
-
-		// Connection Address
-        appendHex2TableData(outputStream, i2cBusConnection->i2cAddress, I2C_BUS_CONNECTION_ADDRESS_COLUMN_LENGTH);
-
-		// Connection Opened
-        appendBoolAsStringTableData(outputStream, i2cBusConnection->opened, I2C_BUS_CONNECTION_LIST_OPENED_COLUMN_LENGTH);
-        
-        // Connection Error if any
-        if (i2cBusConnection->error == ERROR_NONE) {
-    		appendStringTableData(outputStream, "NONE", I2C_BUS_CONNECTION_LIST_CONNECTION_ERROR_COLUMN_LENGTH);
-        }
-        else {
-    		appendHex4TableData(outputStream, i2cBusConnection->error, I2C_BUS_CONNECTION_LIST_CONNECTION_ERROR_COLUMN_LENGTH);
-        }
-		
-		// Bus Type
-		const char* i2cBusTypeAsString = getI2cBusTypeAsString(i2cBus->busType);
-		appendStringTableData(outputStream, i2cBusTypeAsString, I2C_BUS_CONNECTION_LIST_BUS_TYPE_COLUMN_LENGTH);
-		
-		// Bus Port
-		const char* i2cPortAsString = getI2cPortAsString(i2cBus->port);
-		appendStringTableData(outputStream, i2cPortAsString, I2C_BUS_CONNECTION_LIST_PORT_COLUMN_LENGTH);
-                
-        // Bus Error if any
-        if (i2cBus->error == ERROR_NONE) {
-    		appendStringTableData(outputStream, "NONE", I2C_BUS_CONNECTION_LIST_BUS_ERROR_COLUMN_LENGTH);
-        }
-        else {
-    		appendHex4TableData(outputStream, i2cBusConnection->error, I2C_BUS_CONNECTION_LIST_BUS_ERROR_COLUMN_LENGTH);
-        }
-
-        
-		appendEndOfTableColumn(outputStream, I2C_BUS_CONNECTION_LIST_LAST_COLUMN_LENGTH);
+const char* getI2cPortAsString(enum I2cPort i2cPort) {
+	switch (i2cPort) {
+		case I2C_BUS_PORT_1: return "I2C_BUS_PORT_1";
+		case I2C_BUS_PORT_2: return "I2C_BUS_PORT_2";
+		case I2C_BUS_PORT_3: return "I2C_BUS_PORT_3";
+		case I2C_BUS_PORT_4: return "I2C_BUS_PORT_4";
+		default: return "I2C_PORT_??";
 	}
-	appendTableHeaderSeparatorLine(outputStream);
+	return "I2C_PORT_??";
 }

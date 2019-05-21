@@ -2235,6 +2235,12 @@
     <ClCompile Include="drivers\i2c\multiplexer\tca9548A.c">
       <Filter>Source Files\drivers\i2c\multiplexer</Filter>
     </ClCompile>
+    <ClCompile Include="common\i2c\i2cBusConnectionListDebug.c">
+      <Filter>Source Files\common\i2c</Filter>
+    </ClCompile>
+    <ClCompile Include="common\i2c\i2cBusListDebug.c">
+      <Filter>Source Files\common\i2c</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -3484,6 +3490,12 @@
     </ClInclude>
     <ClInclude Include="drivers\i2c\multiplexer\tca9548A.h">
       <Filter>Header Files\drivers\i2c\multiplexer</Filter>
+    </ClInclude>
+    <ClInclude Include="common\i2c\i2cBusConnectionListDebug.h">
+      <Filter>Header Files\common\i2c</Filter>
+    </ClInclude>
+    <ClInclude Include="common\i2c\i2cBusListDebug.h">
+      <Filter>Header Files\common\i2c</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

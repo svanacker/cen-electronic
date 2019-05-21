@@ -72,6 +72,8 @@
         <itemPath>../../../common/i2c/i2cDebug.h</itemPath>
         <itemPath>../../../common/i2c/i2cBusList.h</itemPath>
         <itemPath>../../../common/i2c/i2cBusConnectionList.h</itemPath>
+        <itemPath>../../../common/i2c/i2cBusConnectionListDebug.h</itemPath>
+        <itemPath>../../../common/i2c/i2cBusListDebug.h</itemPath>
       </logicalFolder>
       <logicalFolder name="common.i2c.32"
                      displayName="common.i2c.32"
@@ -730,6 +732,8 @@
         <itemPath>../../../common/i2c/i2cCommon.c</itemPath>
         <itemPath>../../../common/i2c/i2cBusList.c</itemPath>
         <itemPath>../../../common/i2c/i2cBusConnectionList.c</itemPath>
+        <itemPath>../../../common/i2c/i2cBusConnectionListDebug.c</itemPath>
+        <itemPath>../../../common/i2c/i2cBusListDebug.c</itemPath>
       </logicalFolder>
       <logicalFolder name="common.i2c.32"
                      displayName="common.i2c.32"
@@ -1325,7 +1329,6 @@
   <sourceRootList>
     <Elem>..\..\..\common\serial</Elem>
     <Elem>..\..\..\common\pwm\servo</Elem>
-    <Elem>..\..\..\common\i2c\master\32</Elem>
     <Elem>..\..\..\device\system</Elem>
     <Elem>..\..\..\device\airconditioning</Elem>
     <Elem>..\..\..\device\timer</Elem>

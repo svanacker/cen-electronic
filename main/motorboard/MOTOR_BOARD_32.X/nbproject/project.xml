@@ -14,7 +14,6 @@
             <make-dep-projects/>
             <sourceRootList>
                 <sourceRootElem>..\..\..\common\serial</sourceRootElem>
-                <sourceRootElem>..\..\..\common\i2c\master\32</sourceRootElem>
                 <sourceRootElem>..\..\..\device\system</sourceRootElem>
                 <sourceRootElem>..\..\..\device\timer</sourceRootElem>
                 <sourceRootElem>..\..\..\common</sourceRootElem>

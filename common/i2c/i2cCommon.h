@@ -114,36 +114,6 @@ void WaitI2C(I2cBus* i2cBus);
  */
 void WaitI2cBusConnection(I2cBusConnection* i2cBusConnection);
 
-// DEBUG
-
-/**
-* Print the content of an I2cBus.
-* @param outputStream where we print the debug information
-* @param i2cBus the information about the i2c Bus
-*/
-void printI2cBus(OutputStream* outputStream, I2cBus* i2cBus);
-
-/**
-* Print the content of an I2cBusConnection.
-* @param outputStream where we print the debug information
-* @param i2cBusConnection the information about the i2c Bus Connection
-*/
-void printI2cBusConnection(OutputStream* outputStream, I2cBusConnection* i2cBusConnection);
-
-/**
- * Returns an I2cBusType into his String representation.
- * @param i2cBusType the type of i2cBus for which we want the String representation
- * @return a string representation of the I2cBusType
- */
-const char* getI2cBusTypeAsString(enum I2cBusType i2cBusType);
-
-/**
- * Returns an i2cPort into his String representation.
- * @param i2cPort the type of i2cPort for which we want the String representation
- * @return a string representation of the i2cPort
- */
-const char* getI2cPortAsString(enum I2cPort i2cPort);
-
 // CHECK FUNCTIONS
 bool checkI2cBusConnectionNotNull(I2cBusConnection* i2cBusConnection);
 bool checkI2cBusNotNull(I2cBus* i2cBus);
