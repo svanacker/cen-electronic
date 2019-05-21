@@ -79,22 +79,36 @@ void initTofSensorListVL53L0X(TofSensorList* tofSensorList,
         appendString(getDebugOutputStreamLogger(), "    INIT VL53");        
         // Initialize the VL53L0X, but with the default address
         unsigned char tofBusAddress = VL530X_ADDRESS_0;
+        unsigned char newTofBusAddress = VL530X_ADDRESS_0 + ((tofIndex + 1) << 1);
+
         I2cBusConnection* tofBusConnection = addI2cBusConnection(multiplexerBusConnection->i2cBus, tofBusAddress, true);
         bool successInit = initTofSensorVL53L0X(tofSensor, tofSensorVL53L0X, tofBusConnection, "", 0, 0.0f);
         if (!successInit) {
-            append(getAlwaysOutputStreamLogger(), 'X');
-            tofSensor->enabled = false;
-            continue;
+            // Maybe the sensor is always connected (by the Uart power) and has not reboot
+            // We try to reach it at the new address
+            tofBusConnection->i2cAddress = newTofBusAddress;
+            successInit = initTofSensorVL53L0X(tofSensor, tofSensorVL53L0X, tofBusConnection, "", 0, 0.0f);
+            
+            // If KO
+            if (!successInit) {
+                append(getAlwaysOutputStreamLogger(), 'X');
+                tofSensor->enabled = false;
+                continue;
+            }
+            else {
+                append(getAlwaysOutputStreamLogger(), 'x');
+                appendStringLN(getDebugOutputStreamLogger(), "...OK");
+            }
         }
+        // To let the hardware device initialize properly
         timerDelayMilliSeconds(30);
         
         appendStringLN(getDebugOutputStreamLogger(), "OK");
-        if (tofSensor->changeAddress) {
-            // Change the address to avoid tof I2C Address collision
-            tofBusAddress = VL530X_ADDRESS_0 + ((tofIndex + 1) << 1);
+        // If we must change the address and this is not yet done
+        if (tofSensor->changeAddress && tofBusConnection->i2cAddress != newTofBusAddress) {
             appendStringAndDec(getDebugOutputStreamLogger(), "    CHANGE ADDRESS FROM ", VL530X_ADDRESS_0);
-            appendStringAndDec(getDebugOutputStreamLogger(), " TO ", tofBusAddress);
-            bool succeedToChangeAddress = tofSetAddress(tofSensorVL53L0X, tofBusConnection, tofBusAddress);
+            appendStringAndDec(getDebugOutputStreamLogger(), " TO ", newTofBusAddress);
+            bool succeedToChangeAddress = tofSetAddress(tofSensorVL53L0X, tofBusConnection, newTofBusAddress);
             if (succeedToChangeAddress) {
                 append(getAlwaysOutputStreamLogger(), '[');
                 appendStringLN(getDebugOutputStreamLogger(), "...OK");
