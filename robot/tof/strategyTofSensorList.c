@@ -182,7 +182,8 @@ void handleTofSensorList(GameStrategyContext* gameStrategyContext, StartMatch* s
         }
         
         unsigned int distance = tofSensor->tofGetDistanceMM(tofSensor);
-        if (distance <= SENSOR_DISTANCE_MIN_TRESHOLD) {
+        // If the distance is not in the range
+        if (distance >= tofSensor->thresholdDistanceMM || distance <= SENSOR_DISTANCE_MIN_TRESHOLD) {
             if (tofSensor->detectedCount > 0) {
                 tofSensor->detectedCount--;
             }

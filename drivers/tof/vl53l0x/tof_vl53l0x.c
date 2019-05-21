@@ -309,7 +309,20 @@ VL53L0X_Error getContinousRangingMeasurement(TofSensorVL53L0X* tofSensorVL53L0X,
  * @return 
  */
 TofSensorVL53L0X* getTofSensorVL53L0X(TofSensor* tofSensor) {
+    if (tofSensor == NULL) {
+        writeError(TOF_SENSOR_NULL);
+        return NULL;
+    }
     return (TofSensorVL53L0X*) (tofSensor->object);
+}
+
+I2cBusConnection* getTofSensorVL53L0XI2cBusConnection(TofSensor* tofSensor) {
+    TofSensorVL53L0X* tofSensorVL53L0X = getTofSensorVL53L0X(tofSensor);
+    if (tofSensorVL53L0X == NULL) {
+        writeError(TOF_SENSOR_OBJECT_NULL);
+        return NULL;
+    }
+    return tofSensorVL53L0X->i2cBusConnection;
 }
 
 /**
@@ -318,6 +331,10 @@ TofSensorVL53L0X* getTofSensorVL53L0X(TofSensor* tofSensor) {
  */
 bool tofSensorInitVL53L0X(TofSensor* tofSensor) {
     TofSensorVL53L0X* tofSensorVL53L0X = getTofSensorVL53L0X(tofSensor);
+    if (tofSensorVL53L0X == NULL) {
+        writeError(TOF_SENSOR_OBJECT_NULL);
+        return false;
+    }
     return tof_vl53l0x_begin(tofSensorVL53L0X, true);
 }
 
@@ -334,6 +351,13 @@ unsigned int tofSensorGetDistanceVL53L0XMM(TofSensor* tofSensor) {
     if (tofSensorVL53L0X == NULL) {
         writeError(TOF_SENSOR_OBJECT_NULL);
         return 0;
+    }
+    // If we detect a problem of I2cBusConnection, we disable the tof !
+    if (tofSensorVL53L0X->i2cBusConnection != NULL) {
+        if (tofSensorVL53L0X->i2cBusConnection->error != ERROR_NONE) {
+            tofSensor->enabled = false;
+            return 0;
+        }
     }
     // If we use a multiplexer, we must select the channel first
     if (tofSensor->useMultiplexer) {

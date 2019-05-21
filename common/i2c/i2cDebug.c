@@ -126,10 +126,10 @@ void printI2cBusList(OutputStream* outputStream) {
 		appendStringTableData(outputStream, i2cPortAsString, I2C_BUS_LIST_PORT_COLUMN_LENGTH);
 		appendDecTableData(outputStream, i2cBus->initialized, I2C_BUS_LIST_INITIALIZED_COLUMN_LENGTH);
         if (i2cBus->error == ERROR_NONE) {
-    		appendStringTableData(outputStream, "NONE", I2C_BUS_LIST_CONFIG_COLUMN_LENGTH);
+    		appendStringTableData(outputStream, "NONE", I2C_BUS_LIST_ERROR_COLUMN_LENGTH);
         }
         else {
-    		appendHex4TableData(outputStream, i2cBus->error, I2C_BUS_LIST_CONFIG_COLUMN_LENGTH);
+    		appendHex4TableData(outputStream, i2cBus->error, I2C_BUS_LIST_ERROR_COLUMN_LENGTH);
         }
 		appendHex2TableData(outputStream, i2cBus->config, I2C_BUS_LIST_CONFIG_COLUMN_LENGTH);
 		appendEndOfTableColumn(outputStream, I2C_BUS_LIST_LAST_COLUMN_LENGTH);
@@ -145,9 +145,9 @@ void printI2cBusList(OutputStream* outputStream) {
 #define I2C_BUS_CONNECTION_LIST_OPENED_COLUMN_LENGTH                    12
 #define I2C_BUS_CONNECTION_LIST_CONNECTION_ERROR_COLUMN_LENGTH          12
 #define I2C_BUS_CONNECTION_LIST_BUS_TYPE_COLUMN_LENGTH                  12
-#define I2C_BUS_CONNECTION_LIST_PORT_COLUMN_LENGTH                      12
+#define I2C_BUS_CONNECTION_LIST_PORT_COLUMN_LENGTH                      15
 #define I2C_BUS_CONNECTION_LIST_BUS_ERROR_COLUMN_LENGTH                 12
-#define I2C_BUS_CONNECTION_LIST_LAST_COLUMN_LENGTH                      10
+#define I2C_BUS_CONNECTION_LIST_LAST_COLUMN_LENGTH                      8
 
 /**
 * @private

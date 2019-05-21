@@ -32,6 +32,14 @@ struct TofSensorVL53L0X {
 TofSensorVL53L0X* getTofSensorVL53L0X(TofSensor* tofSensor);
 
 /**
+ * Extract the bus Connection from the TofSensor.
+ * @param tofSensorVL53L0X
+ * @param debug
+ * @return 
+ */
+I2cBusConnection* getTofSensorVL53L0XI2cBusConnection(TofSensor* tofSensor);
+
+/**
  * Start the use of the Time Of Flight
  * @param debug
  * @return 

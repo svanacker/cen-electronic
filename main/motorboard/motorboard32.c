@@ -303,7 +303,7 @@ void waitForInstruction() {
 
     // Notify the change of position (useful to know where we are when we detect an object with the tof
     // We must know if we see an object inside the gameboard or outside
-    trajectoryNotifyIfEnabledAndTreshold(notifyBufferedOutputStream);
+    // trajectoryNotifyIfEnabledAndTreshold(notifyBufferedOutputStream);
     
     // Copy the buffered notify to the serial NotifyOutputStream
     copyInputToOutputStream(getInputStream(&notifyOutputBuffer), &notifyOutputStream, NULL, COPY_ALL);

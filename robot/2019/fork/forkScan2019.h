@@ -19,7 +19,9 @@
 #define FORK_2019_SCAN_MEASURE_COUNT                                           3
 #define FORK_2019_SCAN_MATCH_COUNT                                             2
 
-#define FORK_2019_SCAN_TIME_BETWEEN_MEASURE_MILLISECONDS                      10
+// VERY IMPORTANT to have more than 30 ms between calls, if not, the i2c link
+// seems to be quickly blocked
+#define FORK_2019_SCAN_TIME_BETWEEN_MEASURE_MILLISECONDS                      30
 
 // Scan Servo Value
 #define FORK_2019_SCAN_SPEED_FACTOR                                         0xFF

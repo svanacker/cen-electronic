@@ -359,9 +359,20 @@ void appendStringAndDec(OutputStream* stream, const char* s, long value) {
     appendDec(stream, value);
 }
 
+void appendStringAndHex2(OutputStream* stream, const char* s, unsigned char value) {
+    appendString(stream, s);
+    appendHex2(stream, value);
+}
+
 void appendStringAndDecLN(OutputStream* stream, const char* s, long value) {
     appendString(stream, s);
     appendDec(stream, value);
+    println(stream);
+}
+
+void appendStringAndHex2LN(OutputStream* stream, const char* s, unsigned char value) {
+    appendString(stream, s);
+    appendHex2(stream, value);
     println(stream);
 }
 

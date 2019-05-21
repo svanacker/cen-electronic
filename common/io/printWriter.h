@@ -232,6 +232,8 @@ int appendDecf(OutputStream* outputStream, float value);
 
 // AGGREGATE FUNCTION
 
+// -> FLOATING VALUES
+
 /**
  * Append a string followed by a float value.
  * @param outputStream the pointer on outputStream (POO simulation)
@@ -239,6 +241,8 @@ int appendDecf(OutputStream* outputStream, float value);
  * @param float the float value to write
  */
 void appendStringAndDecf(OutputStream* outputStream, const char* s, float value);
+
+// -> INTEGER / LONG VALUES
 
 /**
  * Append a string followed by a long value.
@@ -249,6 +253,12 @@ void appendStringAndDecf(OutputStream* outputStream, const char* s, float value)
 void appendStringAndDec(OutputStream* outputStream, const char* s, long value);
 
 void appendStringAndDecLN(OutputStream* outputStream, const char* s, long value);
+
+// -> HEXA VALUES
+
+void appendStringAndHex2(OutputStream* stream, const char* s, unsigned char value);
+
+void appendStringAndHex2LN(OutputStream* stream, const char* s, unsigned char value);
 
 /**
 * Append a string followed by a bool value.
