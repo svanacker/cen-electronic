@@ -26,10 +26,11 @@ void initTofSensorListPc(TofSensorList* tofSensorList, TofSensor(*tofSensorArray
     unsigned int tofIndex;
     for (tofIndex = 0; tofIndex < size; tofIndex++) {
         TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, tofIndex);
+        initTofSensorPc(tofSensor);
+
         char* tofName = (char*)malloc(TOF_NAME_PC_STRING_LENGTH * sizeof(char));
         snprintf(tofName, TOF_NAME_PC_STRING_LENGTH, "TOF PC ");
         snprintf(tofName + strlen(tofName), TOF_NAME_PC_STRING_LENGTH, "%d", tofIndex);
-
-        initTofSensorPc(tofSensor, tofName, 0, 0.0f);
+        tofSensor->name = tofName;
     }
 }

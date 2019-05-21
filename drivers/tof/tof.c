@@ -15,31 +15,40 @@
 bool initTofSensor(TofSensor* tofSensor, 
                     tofSensorInitFunction* tofSensorInit,
                     tofSensorGetDistanceMMFunction* tofGetDistanceMM,
-                    char* name,
-                    unsigned int thresholdDistanceMM,
-                    float orientationRadian,
                     int* object) {
+    // Important properties
     tofSensor->tofSensorInit = tofSensorInit;
     tofSensor->tofGetDistanceMM = tofGetDistanceMM;
-    tofSensor->name = name;
     tofSensor->lastDistanceMM = 0;
-    tofSensor->thresholdDistanceMM = thresholdDistanceMM;
-    tofSensor->orientationRadian = orientationRadian;
-    tofSensor->object = object;
+    
+    // Distance Threshold
+    tofSensor->thresholdMinDistanceMM = 1;
+    tofSensor->thresholdMaxDistanceMM = 65535;
     tofSensor->detectionThreshold = 1;
     tofSensor->detectedCount = 0;
+    
+    // Orientation and Beam Angle
     // TODO : VL53L0X value of beam angle : https://forum.pololu.com/t/vl53l0x-beam-width-angle/11483
     // Be it could change for another tof
     tofSensor->beamAngleRadian = degToRad(25.0f);
+    tofSensor->orientationRadian = 0.0f;
+    // Polar position / center of the robot
+    tofSensor->distanceFromRobotCenter = 0.0f;
+    tofSensor->angleFromRobotCenterRadian = 0.0f;
+
+    tofSensor->object = object;
+
     return tofSensor->tofSensorInit(tofSensor);
 }
 
-bool isTofDistanceUnderThreshold(TofSensor* tofSensor) {
+bool isTofDistanceInRange(TofSensor* tofSensor) {
     unsigned int distance = tofSensor->lastDistanceMM;
 
     // distance != 0 (means tof problem while measuring)
     // distance <= threshold
-    return (distance != 0 && distance < tofSensor->thresholdDistanceMM);
+    return (distance != 0 
+            && tofSensor->thresholdMinDistanceMM < distance 
+            && distance < tofSensor->thresholdMaxDistanceMM);
 }
 
 /**
@@ -82,7 +91,7 @@ bool tofComputeDetectedPointIfAny(TofSensor* tofSensor, Point* pointOfView, floa
     if (pointOfView == NULL) {
         return false;
     }
-    if (!isTofDistanceUnderThreshold(tofSensor)) {
+    if (!isTofDistanceInRange(tofSensor)) {
         // we do not provide any point
         return false;      
     }

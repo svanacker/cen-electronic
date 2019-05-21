@@ -67,8 +67,10 @@ struct TofSensor {
     tofSensorGetDistanceMMFunction* tofGetDistanceMM;
     /** Stored the value of the last call */
     unsigned int lastDistanceMM;
-    /** Stored the threshold for which we would like that it raises a notification. */
-    unsigned int thresholdDistanceMM;
+    /** Stored the threshold min for which we would like that it raises a notification. */
+    unsigned int thresholdMinDistanceMM;
+    /** Stored the threshold min for which we would like that it raises a notification. */
+    unsigned int thresholdMaxDistanceMM;
     /** The threshold of how many detections must be done before we consider that the measure is valid */
     unsigned int detectionThreshold;
     /** The counter of how many detected were done. */
@@ -92,20 +94,17 @@ struct TofSensor {
 bool initTofSensor(TofSensor* tofSensor, 
                     tofSensorInitFunction* tofSensorInit,
                     tofSensorGetDistanceMMFunction* tofGetDistanceMM,
-                    char* name,
-                    unsigned int thresholdDistanceMM,
-                    float orientationRadian,
                     int* object);
 
 // UTILS FUNCTION
 
 /**
- * Returns if the tof distance under the Threshold (which means that we detects
+ * Returns if the tof distance in the Threshold Range (which means that we detects
  * something)
  * @param tofSensor
- * @return true if distance > 0 & <= threshold of TofSensor
+ * @return true if distance > 0 & in [distanceMinThreshold .. distanceMaxThreshold]
  */
-bool isTofDistanceUnderThreshold(TofSensor* tofSensor);
+bool isTofDistanceInRange(TofSensor* tofSensor);
 
 /**
  * We compute the real point of the tofSensor by taking into account

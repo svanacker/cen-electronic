@@ -43,7 +43,8 @@ void setForkTofListNameAndThreshold(TofSensorList* tofSensorList) {
         TofSensor* backMiddleSensor = getTofSensorByIndex(tofSensorList, FORK_2019_LEFT_TOF_INDEX);
         backMiddleSensor->usageType = TOF_SENSOR_USAGE_TYPE_ACTION;
         backMiddleSensor->orientationRadian = 0.0f;
-        backMiddleSensor->thresholdDistanceMM = FORK_2019_SCAN_DISTANCE_LEFT_THRESHOLD;
+        backMiddleSensor->thresholdMinDistanceMM = FORK_2019_SCAN_DISTANCE_LEFT_MIN_THRESHOLD;
+        backMiddleSensor->thresholdMaxDistanceMM = FORK_2019_SCAN_DISTANCE_LEFT_MAX_THRESHOLD;
         backMiddleSensor->name = "FORK LEFT";
     }
 
@@ -51,7 +52,8 @@ void setForkTofListNameAndThreshold(TofSensorList* tofSensorList) {
         TofSensor* backRightSensor = getTofSensorByIndex(tofSensorList, FORK_2019_RIGHT_TOF_INDEX);
         backRightSensor->usageType = TOF_SENSOR_USAGE_TYPE_ACTION;
         backRightSensor->orientationRadian = 0.0f;
-        backRightSensor->thresholdDistanceMM = FORK_2019_SCAN_DISTANCE_RIGHT_THRESHOLD;
+        backRightSensor->thresholdMinDistanceMM = FORK_2019_SCAN_DISTANCE_RIGHT_MIN_THRESHOLD;
+        backRightSensor->thresholdMaxDistanceMM = FORK_2019_SCAN_DISTANCE_RIGHT_MAX_THRESHOLD;
         backRightSensor->name = "FORK RIGHT";
     }
 }
@@ -93,8 +95,7 @@ bool internalForkScan(TofSensor* tofSensor) {
     for (j = 0; j < FORK_2019_SCAN_MEASURE_COUNT; j++) {
         timerDelayMilliSeconds(FORK_2019_SCAN_TIME_BETWEEN_MEASURE_MILLISECONDS);
         unsigned int distance = tofSensor->tofGetDistanceMM(tofSensor);
-        if (distance > 0 && distance < tofSensor->thresholdDistanceMM) {
-            appendStringAndDecLN(getDebugOutputStreamLogger(), "threshold=", tofSensor->thresholdDistanceMM);
+        if (isTofDistanceInRange(tofSensor)) {
             appendStringAndDecLN(getDebugOutputStreamLogger(), "distance=", distance);
             matchCount++;
         }

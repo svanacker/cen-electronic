@@ -106,7 +106,7 @@ void deviceTofHandleRawData(unsigned char commandHeader, InputStream* inputStrea
             for (tofIndex = startTofIndex; tofIndex <= endTofIndex; tofIndex++) {
                 TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, tofIndex);
                 tofSensor->tofGetDistanceMM(tofSensor);
-                if (isTofDistanceUnderThreshold(tofSensor)) {
+                if (isTofDistanceInRange(tofSensor)) {
                     detected = true;
                     break;
                 }

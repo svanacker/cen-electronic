@@ -76,10 +76,7 @@ void printRangeStatus(VL53L0X_RangingMeasurementData_t* pRangingMeasurementData)
 
 bool initTofSensorVL53L0X(TofSensor* tofSensor,
                     TofSensorVL53L0X* tofSensorVL53L0X,       
-                    I2cBusConnection* i2cBusConnection,
-                    char* name,
-                    unsigned int thresholdDistanceMM,
-                    float orientationRadian);
+                    I2cBusConnection* i2cBusConnection);
 
 
 #endif

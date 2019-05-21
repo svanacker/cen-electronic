@@ -12,8 +12,10 @@
 #define FORK_2019_RIGHT_TOF_INDEX                                             11
 
 // TOF THRESHOLD
-#define FORK_2019_SCAN_DISTANCE_LEFT_THRESHOLD                                35
-#define FORK_2019_SCAN_DISTANCE_RIGHT_THRESHOLD                               35
+#define FORK_2019_SCAN_DISTANCE_LEFT_MIN_THRESHOLD                             5
+#define FORK_2019_SCAN_DISTANCE_LEFT_MAX_THRESHOLD                            35
+#define FORK_2019_SCAN_DISTANCE_RIGHT_MIN_THRESHOLD                             5
+#define FORK_2019_SCAN_DISTANCE_RIGHT_MAX_THRESHOLD                            35
 #define FORK_2019_SCAN_SERVO_DELTA_SERVO_POSITION                             30
 #define FORK_2019_SCAN_SERVO_DELTA_MILLISECONDS                               50
 #define FORK_2019_SCAN_MEASURE_COUNT                                           3

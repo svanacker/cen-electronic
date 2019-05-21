@@ -53,7 +53,7 @@ void deviceI2cMasterDebugHandleRawData(unsigned char header, InputStream* inputS
         unsigned char channel = readHex2(inputStream);
         I2cBusConnection* multiplexerBusConnection = getI2cBusConnectionBySlaveAddress(multiplexerAddress);
         if (multiplexerBusConnection != NULL) {
-            tca9548A_setChannel(multiplexerBusConnection, channel);
+            tca9548A_setChannelsMask(multiplexerBusConnection, channel);
         }
         else {
             writeError(I2C_BUS_CONNECTION_NULL);
@@ -64,7 +64,7 @@ void deviceI2cMasterDebugHandleRawData(unsigned char header, InputStream* inputS
         unsigned char multiplexerAddress = readHex2(inputStream);
         I2cBusConnection* multiplexerBusConnection = getI2cBusConnectionBySlaveAddress(multiplexerAddress);
         if (multiplexerBusConnection != NULL) {
-            unsigned char channel = tca9548A_getChannel(multiplexerBusConnection);
+            unsigned char channel = tca9548A_getChannelsMask(multiplexerBusConnection);
             appendHex2(outputStream, channel);
         }
         else {

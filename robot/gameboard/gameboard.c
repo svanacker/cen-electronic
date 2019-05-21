@@ -162,7 +162,7 @@ void drawRobotTofsCones(GameBoard* gameBoard, Point* robotPosition, float robotA
         // step Distance about 5 cm
         float stepDistance = 50.0f;
         for (angle = minAngle; angle < maxAngle; angle += stepAngle) {
-            for (distance = 0.0f; distance < tofSensor->thresholdDistanceMM; distance += stepDistance) {
+            for (distance = tofSensor->thresholdMinDistanceMM; distance < tofSensor->thresholdMaxDistanceMM; distance += stepDistance) {
                 Point p1;
                 tofComputePoint(tofSensor, &tofPointOfView, robotAngle, distance, angle, &p1);
                 unsigned char c = (unsigned char)((index% 26) + 48);

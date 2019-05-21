@@ -61,10 +61,6 @@
 #define BACK_SIDE_LEFT_SENSOR_DISTANCE_THRESHOLD     150
 #define BACK_SIDE_RIGHT_SENSOR_DISTANCE_THRESHOLD    150
 
-// MIN TRESHOLD : Do not detect too close of TOF (physically impossible because 
-// TOF are at the center of the robot !)
-#define SENSOR_DISTANCE_MIN_TRESHOLD            100
-
 /**
  * INIT
  * @param tofSensorList

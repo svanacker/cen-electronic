@@ -20,13 +20,13 @@
  * @param i2cBusConnection
  * @param channel a channel between 0 and 7 (and not a binary mask !)
  */
-void tca9548A_setChannel(I2cBusConnection* i2cBusConnection, unsigned char channel);
+void tca9548A_setChannelsMask(I2cBusConnection* i2cBusConnection, unsigned char channel);
 
 /**
  * Returns the I2C Channel (read operation of tca9548A_setChannel)
  * @param i2cBusConnection
  * @return a channel between 0 and 7
  */
-unsigned char tca9548A_getChannel(I2cBusConnection* i2cBusConnection);
+unsigned char tca9548A_getChannelsMask(I2cBusConnection* i2cBusConnection);
 
 #endif
