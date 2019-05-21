@@ -20,6 +20,7 @@
 #include "../../common/log/logHandler.h"
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
+
 // I2C BUS CONNECTION LIST
 
 #define I2C_BUS_CONNECTION_LIST_INDEX_COLUMN_LENGTH		                 6

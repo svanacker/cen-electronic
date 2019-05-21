@@ -12,7 +12,7 @@
 // COMMON PART
 #define TOF_SENSOR_INDEX_COLUMN_LENGTH		                            3
 #define TOF_SENSOR_NAME_COLUMN_LENGTH		                           13
-#define TOF_SENSOR_USAGE_TYPE_COLUMN_LENGTH		                        4
+#define TOF_SENSOR_USAGE_TYPE_COLUMN_LENGTH		                        5
 #define TOF_SENSOR_ENABLE_COLUMN_LENGTH                                 5
 
 // CONFIG PART
@@ -29,8 +29,8 @@
 // NETWORK PART
 
 #define TOF_SENSOR_CHANGE_ADRESS_COLUMN_LENGTH                          5
-#define TOF_SENSOR_USE_MULTIPLEXER_COLUMN_LENGTH                        7
-#define TOF_SENSOR_MULTIPLEXER_CHANNEL_COLUMN_LENGTH                    7
+#define TOF_SENSOR_USE_MULTIPLEXER_COLUMN_LENGTH                        10
+#define TOF_SENSOR_MULTIPLEXER_CHANNEL_COLUMN_LENGTH                    12
 
 #define TOF_SENSOR_LAST_COLUMN		                                    0
 

@@ -22,7 +22,7 @@
 // CONFIG
 
 // NETWORK
-#define TOF_SENSOR_VL53L0X_I2C_ADDRESS_COLUMN_LENGTH                        6
+#define TOF_SENSOR_VL53L0X_I2C_ADDRESS_COLUMN_LENGTH                       10
 #define TOF_SENSOR_VL53L0X_STATUS_COLUMN_LENGTH                             7
 
 // DETECTION
@@ -46,11 +46,10 @@ void printTofSensorNetworkDebugTableHeaderVL53L0X(OutputStream* outputStream) {
     // First header line
     appendStringHeader(outputStream, "Id", TOF_SENSOR_INDEX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Name", TOF_SENSOR_NAME_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "Type", TOF_SENSOR_USAGE_TYPE_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Enab.", TOF_SENSOR_ENABLE_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Chg.", TOF_SENSOR_CHANGE_ADRESS_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Use", TOF_SENSOR_USE_MULTIPLEXER_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "Multip.", TOF_SENSOR_MULTIPLEXER_CHANNEL_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Multiplexer", TOF_SENSOR_MULTIPLEXER_CHANNEL_COLUMN_LENGTH);
     appendStringHeader(outputStream, "I2c Addr.", TOF_SENSOR_VL53L0X_I2C_ADDRESS_COLUMN_LENGTH);
     appendStringHeader(outputStream, "VL53L0X", TOF_SENSOR_VL53L0X_STATUS_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, TOF_SENSOR_LAST_COLUMN);
@@ -62,6 +61,7 @@ void printTofSensorNetworkDebugTableHeaderVL53L0X(OutputStream* outputStream) {
     appendStringHeader(outputStream, "Addr", TOF_SENSOR_CHANGE_ADRESS_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Multip.", TOF_SENSOR_USE_MULTIPLEXER_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Channel", TOF_SENSOR_MULTIPLEXER_CHANNEL_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "(Hex)", TOF_SENSOR_VL53L0X_I2C_ADDRESS_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Status", TOF_SENSOR_VL53L0X_STATUS_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, TOF_SENSOR_LAST_COLUMN);
 
@@ -117,7 +117,6 @@ void printTofSensorDetectionDebugTableHeaderVL53L0X(OutputStream* outputStream) 
     // First header line
     appendStringHeader(outputStream, "Id", TOF_SENSOR_INDEX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Name", TOF_SENSOR_NAME_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "Type", TOF_SENSOR_USAGE_TYPE_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Enab.", TOF_SENSOR_ENABLE_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Thres", TOF_SENSOR_VALUE_THRESHOLD_MAX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Thres", TOF_SENSOR_VALUE_THRESHOLD_MIN_COLUMN_LENGTH);
@@ -132,17 +131,30 @@ void printTofSensorDetectionDebugTableHeaderVL53L0X(OutputStream* outputStream) 
     // Second header line
     appendStringHeader(outputStream, "", TOF_SENSOR_INDEX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", TOF_SENSOR_NAME_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "", TOF_SENSOR_USAGE_TYPE_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", TOF_SENSOR_ENABLE_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Hold", TOF_SENSOR_VALUE_THRESHOLD_MAX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Hold", TOF_SENSOR_VALUE_THRESHOLD_MIN_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "", TOF_SENSOR_VALUE_DETECTION_THRESHOLD_COUNT_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Thres", TOF_SENSOR_VALUE_DETECTION_THRESHOLD_COUNT_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Count", TOF_SENSOR_VALUE_DETECTED_COUNT_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "(mm)", TOF_SENSOR_VALUE_DISTANCE_DEC_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "(mm)", TOF_SENSOR_VALUE_DISTANCE_HEX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "(mm)", TOF_SENSOR_VALUE_OBJECT_X_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "(mm)", TOF_SENSOR_VALUE_OBJECT_Y_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, TOF_SENSOR_LAST_COLUMN);
+
+    // Third header line
+    appendStringHeader(outputStream, "", TOF_SENSOR_INDEX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "", TOF_SENSOR_NAME_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "", TOF_SENSOR_ENABLE_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "(mm)", TOF_SENSOR_VALUE_THRESHOLD_MAX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "(mm)", TOF_SENSOR_VALUE_THRESHOLD_MIN_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Hold", TOF_SENSOR_VALUE_DETECTION_THRESHOLD_COUNT_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", TOF_SENSOR_VALUE_DETECTED_COUNT_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "(mm) (Dec) ", TOF_SENSOR_VALUE_DISTANCE_DEC_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "(mm) (Hex) ", TOF_SENSOR_VALUE_DISTANCE_HEX_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "(mm) (Dec)", TOF_SENSOR_VALUE_OBJECT_X_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "(mm) (Dec)", TOF_SENSOR_VALUE_OBJECT_Y_COLUMN_LENGTH);
-    
+    appendStringHeader(outputStream, "(Dec)", TOF_SENSOR_VALUE_DISTANCE_DEC_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "(Hex)", TOF_SENSOR_VALUE_DISTANCE_HEX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "(Dec)", TOF_SENSOR_VALUE_OBJECT_X_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "(Dec)", TOF_SENSOR_VALUE_OBJECT_Y_COLUMN_LENGTH);
+
     appendEndOfTableColumn(outputStream, TOF_SENSOR_LAST_COLUMN);
 
     appendTableHeaderSeparatorLine(outputStream);
@@ -161,8 +173,8 @@ void printTofSensorDetectionTableVL53L0X(OutputStream* outputStream, TofSensorLi
         // DISTANCE & DETECTION COUNT THRESHOLD
         appendDecfTableData(outputStream, tofSensor->thresholdDistanceMM, TOF_SENSOR_VALUE_THRESHOLD_MIN_COLUMN_LENGTH);
         appendDecfTableData(outputStream, tofSensor->thresholdDistanceMM, TOF_SENSOR_VALUE_THRESHOLD_MAX_COLUMN_LENGTH);
-        appendDecfTableData(outputStream, tofSensor->detectionThreshold, TOF_SENSOR_VALUE_DETECTION_THRESHOLD_COUNT_COLUMN_LENGTH);
-        appendDecfTableData(outputStream, tofSensor->detectedCount, TOF_SENSOR_VALUE_DETECTION_THRESHOLD_COUNT_COLUMN_LENGTH);
+        appendDecTableData(outputStream, tofSensor->detectionThreshold, TOF_SENSOR_VALUE_DETECTION_THRESHOLD_COUNT_COLUMN_LENGTH);
+        appendDecTableData(outputStream, tofSensor->detectedCount, TOF_SENSOR_VALUE_DETECTED_COUNT_COLUMN_LENGTH);
 
         // DISTANCE
         TofSensorVL53L0X* tofSensorVL53L0X = getTofSensorVL53L0X(tofSensor);
