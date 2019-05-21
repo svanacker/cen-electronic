@@ -10,19 +10,23 @@
 /** Command header to do disabled the beep associated to the tof. */
 #define COMMAND_TOF_BEEP_OFF           'b'
 
+/** Command to test a tof or all tofs after a collision */
 #define COMMAND_TOF_SEARCH_IF_COLLIDING 'c'
 
 /** Command header to get the sonar value. */
 #define COMMAND_TOF_GET_DISTANCE      'r'
 
-/** Command header to debug all Tof */
-#define COMMAND_TOF_DEBUG             'd'
+/** Command header to debug the configuration (excluding network) of all tofs */
+#define COMMAND_TOF_LIST_CONFIG       'C'
+
+/** Command header to debug the network of all tofs */
+#define COMMAND_TOF_LIST_NETWORK      'N'
+
+/** Command header to debug the detection values of all tofs */
+#define COMMAND_TOF_LIST_DETECTED     'D'
 
 /** Command header to launch a tracker system with a notification system */
 #define COMMAND_TOF_TRACK             't'
-
-
-
 
 /**
 * Interface for Device "Time of Flight".

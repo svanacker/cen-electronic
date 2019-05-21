@@ -29,11 +29,11 @@ void setTofListNameAndOrientationAngle(TofSensorList* tofSensorList, float dista
     // What means the Robot going along the X axis
     if (tofSensorListSize > BACK_RIGHT_SENSOR_INDEX) {
         TofSensor* backRightSensor = getTofSensorByIndex(tofSensorList, BACK_RIGHT_SENSOR_INDEX);
-        backRightSensor->type = TOF_SENSOR_TYPE_COLLISION;
-        backRightSensor->angleFromRobotCenter = degToRad(BACK_RIGHT_SENSOR_ANGLE_DEGREE);
+        backRightSensor->usageType = TOF_SENSOR_USAGE_TYPE_COLLISION;
+        backRightSensor->angleFromRobotCenterRadian = degToRad(BACK_RIGHT_SENSOR_ANGLE_DEGREE);
         backRightSensor->distanceFromRobotCenter = 30.0f;
         // Same value than angleFromRobotCenter because placed on a circle
-        backRightSensor->orientationRadian = backRightSensor->angleFromRobotCenter;
+        backRightSensor->orientationRadian = backRightSensor->angleFromRobotCenterRadian;
         backRightSensor->thresholdDistanceMM = BACK_TOF_TO_BACK_OF_ROBOT_DISTANCE + (unsigned int ) (distanceFactor * BACK_RIGHT_SENSOR_DISTANCE_THRESHOLD);
         backRightSensor->name = "BACK RIGHT";
         backRightSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
@@ -41,11 +41,11 @@ void setTofListNameAndOrientationAngle(TofSensorList* tofSensorList, float dista
     
     if (tofSensorListSize > BACK_MIDDLE_SENSOR_INDEX) {
         TofSensor* backMiddleSensor = getTofSensorByIndex(tofSensorList, BACK_MIDDLE_SENSOR_INDEX);
-        backMiddleSensor->type = TOF_SENSOR_TYPE_COLLISION;
-        backMiddleSensor->angleFromRobotCenter = degToRad(BACK_MIDDLE_SENSOR_ANGLE_DEGREE);
+        backMiddleSensor->usageType = TOF_SENSOR_USAGE_TYPE_COLLISION;
+        backMiddleSensor->angleFromRobotCenterRadian = degToRad(BACK_MIDDLE_SENSOR_ANGLE_DEGREE);
         backMiddleSensor->distanceFromRobotCenter = 30.0f;
         // Same value than angleFromRobotCenter because placed on a circle
-        backMiddleSensor->orientationRadian = backMiddleSensor->angleFromRobotCenter;
+        backMiddleSensor->orientationRadian = backMiddleSensor->angleFromRobotCenterRadian;
         backMiddleSensor->thresholdDistanceMM = BACK_TOF_TO_BACK_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * BACK_MIDDLE_SENSOR_DISTANCE_THRESHOLD);
         backMiddleSensor->name = "BACK MIDDLE";
         backMiddleSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
@@ -53,11 +53,11 @@ void setTofListNameAndOrientationAngle(TofSensorList* tofSensorList, float dista
 
     if (tofSensorListSize > BACK_LEFT_SENSOR_INDEX) {
         TofSensor* backLeftSensor = getTofSensorByIndex(tofSensorList, BACK_LEFT_SENSOR_INDEX);
-        backLeftSensor->type = TOF_SENSOR_TYPE_COLLISION;
-        backLeftSensor->angleFromRobotCenter = degToRad(BACK_LEFT_SENSOR_ANGLE_DEGREE);
+        backLeftSensor->usageType = TOF_SENSOR_USAGE_TYPE_COLLISION;
+        backLeftSensor->angleFromRobotCenterRadian = degToRad(BACK_LEFT_SENSOR_ANGLE_DEGREE);
         backLeftSensor->distanceFromRobotCenter = 30.0f;
         // Same value than angleFromRobotCenter because placed on a circle
-        backLeftSensor->orientationRadian = backLeftSensor->angleFromRobotCenter;
+        backLeftSensor->orientationRadian = backLeftSensor->angleFromRobotCenterRadian;
         backLeftSensor->thresholdDistanceMM = BACK_TOF_TO_BACK_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * BACK_LEFT_SENSOR_DISTANCE_THRESHOLD);
         backLeftSensor->name = "BACK LEFT";
         backLeftSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
@@ -65,11 +65,11 @@ void setTofListNameAndOrientationAngle(TofSensorList* tofSensorList, float dista
     // FRONT
     if (tofSensorListSize > FRONT_RIGHT_SENSOR_INDEX) {
         TofSensor* frontRightSensor = getTofSensorByIndex(tofSensorList, FRONT_RIGHT_SENSOR_INDEX);
-        frontRightSensor->type = TOF_SENSOR_TYPE_COLLISION;
-        frontRightSensor->angleFromRobotCenter = degToRad(FRONT_RIGHT_SENSOR_ANGLE_DEGREE);
+        frontRightSensor->usageType = TOF_SENSOR_USAGE_TYPE_COLLISION;
+        frontRightSensor->angleFromRobotCenterRadian = degToRad(FRONT_RIGHT_SENSOR_ANGLE_DEGREE);
         frontRightSensor->distanceFromRobotCenter = 30.0f;
         // Same value than angleFromRobotCenter because placed on a circle
-        frontRightSensor->orientationRadian = frontRightSensor->angleFromRobotCenter;
+        frontRightSensor->orientationRadian = frontRightSensor->angleFromRobotCenterRadian;
         frontRightSensor->thresholdDistanceMM = FRONT_TOF_TO_FRONT_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * FRONT_RIGHT_SENSOR_DISTANCE_THRESHOLD);
         frontRightSensor->name = "FRONT RIGHT";
         frontRightSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
@@ -77,11 +77,11 @@ void setTofListNameAndOrientationAngle(TofSensorList* tofSensorList, float dista
     
     if (tofSensorListSize > FRONT_MIDDLE_SENSOR_INDEX) {
         TofSensor* frontMiddleSensor = getTofSensorByIndex(tofSensorList, FRONT_MIDDLE_SENSOR_INDEX);
-        frontMiddleSensor->type = TOF_SENSOR_TYPE_COLLISION;
-        frontMiddleSensor->angleFromRobotCenter = degToRad(FRONT_MIDDLE_SENSOR_ANGLE_DEGREE);
+        frontMiddleSensor->usageType = TOF_SENSOR_USAGE_TYPE_COLLISION;
+        frontMiddleSensor->angleFromRobotCenterRadian = degToRad(FRONT_MIDDLE_SENSOR_ANGLE_DEGREE);
         frontMiddleSensor->distanceFromRobotCenter = 30.0f;
         // Same value than angleFromRobotCenter because placed on a circle
-        frontMiddleSensor->orientationRadian = frontMiddleSensor->angleFromRobotCenter;
+        frontMiddleSensor->orientationRadian = frontMiddleSensor->angleFromRobotCenterRadian;
         frontMiddleSensor->thresholdDistanceMM = FRONT_TOF_TO_FRONT_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * FRONT_MIDDLE_SENSOR_DISTANCE_THRESHOLD);
         frontMiddleSensor->name = "FRONT MIDDLE";
         frontMiddleSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
@@ -89,11 +89,11 @@ void setTofListNameAndOrientationAngle(TofSensorList* tofSensorList, float dista
     
     if (tofSensorListSize > FRONT_LEFT_SENSOR_INDEX) {
         TofSensor* frontLeftSensor = getTofSensorByIndex(tofSensorList, FRONT_LEFT_SENSOR_INDEX);
-        frontLeftSensor->type = TOF_SENSOR_TYPE_COLLISION;
-        frontLeftSensor->angleFromRobotCenter = degToRad(FRONT_LEFT_SENSOR_ANGLE_DEGREE);
+        frontLeftSensor->usageType = TOF_SENSOR_USAGE_TYPE_COLLISION;
+        frontLeftSensor->angleFromRobotCenterRadian = degToRad(FRONT_LEFT_SENSOR_ANGLE_DEGREE);
         frontLeftSensor->distanceFromRobotCenter = 30.0f;
         // Same value than angleFromRobotCenter because placed on a circle
-        frontLeftSensor->orientationRadian = frontLeftSensor->angleFromRobotCenter;
+        frontLeftSensor->orientationRadian = frontLeftSensor->angleFromRobotCenterRadian;
         frontLeftSensor->thresholdDistanceMM = FRONT_TOF_TO_FRONT_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * FRONT_LEFT_SENSOR_DISTANCE_THRESHOLD);
         frontLeftSensor->name = "FRONT LEFT";
         frontLeftSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
@@ -102,8 +102,8 @@ void setTofListNameAndOrientationAngle(TofSensorList* tofSensorList, float dista
     // SIDE
     if (tofSensorListSize > FRONT_SIDE_LEFT_SENSOR_INDEX) {
         TofSensor* frontSideLeftSensor = getTofSensorByIndex(tofSensorList, FRONT_SIDE_LEFT_SENSOR_INDEX);
-        frontSideLeftSensor->type = TOF_SENSOR_TYPE_COLLISION;
-        frontSideLeftSensor->angleFromRobotCenter = degToRad(75.0f);
+        frontSideLeftSensor->usageType = TOF_SENSOR_USAGE_TYPE_COLLISION;
+        frontSideLeftSensor->angleFromRobotCenterRadian = degToRad(75.0f);
         frontSideLeftSensor->distanceFromRobotCenter = 150.0f;
         frontSideLeftSensor->orientationRadian = degToRad(FRONT_SIDE_LEFT_SENSOR_ANGLE_DEGREE);
         frontSideLeftSensor->thresholdDistanceMM = FRONT_SIDE_TOF_TO_FRONT_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * FRONT_SIDE_LEFT_SENSOR_DISTANCE_THRESHOLD);
@@ -112,8 +112,8 @@ void setTofListNameAndOrientationAngle(TofSensorList* tofSensorList, float dista
     }
     if (tofSensorListSize > FRONT_SIDE_RIGHT_SENSOR_INDEX) {
         TofSensor* frontSideRightSensor = getTofSensorByIndex(tofSensorList, FRONT_SIDE_RIGHT_SENSOR_INDEX);
-        frontSideRightSensor->type = TOF_SENSOR_TYPE_COLLISION;
-        frontSideRightSensor->angleFromRobotCenter = degToRad(-75.0f);
+        frontSideRightSensor->usageType = TOF_SENSOR_USAGE_TYPE_COLLISION;
+        frontSideRightSensor->angleFromRobotCenterRadian = degToRad(-75.0f);
         frontSideRightSensor->distanceFromRobotCenter = 150.0f;
         frontSideRightSensor->orientationRadian = degToRad(FRONT_SIDE_RIGHT_SENSOR_ANGLE_DEGREE);
         frontSideRightSensor->thresholdDistanceMM = FRONT_SIDE_TOF_TO_FRONT_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * FRONT_SIDE_RIGHT_SENSOR_DISTANCE_THRESHOLD);
@@ -122,8 +122,8 @@ void setTofListNameAndOrientationAngle(TofSensorList* tofSensorList, float dista
     }
     if (tofSensorListSize > BACK_SIDE_LEFT_SENSOR_INDEX) {
         TofSensor* backSideLeftSensor = getTofSensorByIndex(tofSensorList, BACK_SIDE_LEFT_SENSOR_INDEX); 
-        backSideLeftSensor->type = TOF_SENSOR_TYPE_COLLISION;
-        backSideLeftSensor->angleFromRobotCenter = degToRad(105.0f);
+        backSideLeftSensor->usageType = TOF_SENSOR_USAGE_TYPE_COLLISION;
+        backSideLeftSensor->angleFromRobotCenterRadian = degToRad(105.0f);
         backSideLeftSensor->distanceFromRobotCenter = 150.0f;
         backSideLeftSensor->orientationRadian = degToRad(BACK_SIDE_LEFT_SENSOR_ANGLE_DEGREE);
         backSideLeftSensor->thresholdDistanceMM = FRONT_SIDE_TOF_TO_BACK_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * BACK_SIDE_LEFT_SENSOR_DISTANCE_THRESHOLD);
@@ -132,8 +132,8 @@ void setTofListNameAndOrientationAngle(TofSensorList* tofSensorList, float dista
     }
    if (tofSensorListSize > BACK_SIDE_RIGHT_SENSOR_INDEX) {
         TofSensor* backSideRightSensor = getTofSensorByIndex(tofSensorList, BACK_SIDE_RIGHT_SENSOR_INDEX);
-        backSideRightSensor->type = TOF_SENSOR_TYPE_COLLISION;
-        backSideRightSensor->angleFromRobotCenter = degToRad(-105.0f);
+        backSideRightSensor->usageType = TOF_SENSOR_USAGE_TYPE_COLLISION;
+        backSideRightSensor->angleFromRobotCenterRadian = degToRad(-105.0f);
         backSideRightSensor->distanceFromRobotCenter = 150.0f;
         backSideRightSensor->orientationRadian = degToRad(BACK_SIDE_RIGHT_SENSOR_ANGLE_DEGREE);
         backSideRightSensor->thresholdDistanceMM = FRONT_SIDE_TOF_TO_BACK_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * BACK_SIDE_RIGHT_SENSOR_DISTANCE_THRESHOLD);
@@ -165,7 +165,7 @@ void handleTofSensorList(GameStrategyContext* gameStrategyContext, StartMatch* s
         if (!tofSensor->enabled) {
             continue;
         }
-        if (tofSensor->type != TOF_SENSOR_TYPE_COLLISION) {
+        if (tofSensor->usageType != TOF_SENSOR_USAGE_TYPE_COLLISION) {
             continue;
         }
         

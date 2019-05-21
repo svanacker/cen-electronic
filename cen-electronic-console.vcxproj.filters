@@ -2241,6 +2241,12 @@
     <ClCompile Include="common\i2c\i2cBusListDebug.c">
       <Filter>Source Files\common\i2c</Filter>
     </ClCompile>
+    <ClCompile Include="drivers\tof\tofListDebug.c">
+      <Filter>Source Files\drivers\tof</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\tof\pc\tofListDebugPc.c">
+      <Filter>Source Files\drivers\tof\pc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -3496,6 +3502,12 @@
     </ClInclude>
     <ClInclude Include="common\i2c\i2cBusListDebug.h">
       <Filter>Header Files\common\i2c</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\tof\tofListDebug.h">
+      <Filter>Header Files\drivers\tof</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\tof\pc\tofListDebugPc.h">
+      <Filter>Header Files\drivers\tof\pc</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -18,9 +18,21 @@ int deviceTofGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode,
         }
         return commandLengthValueForMode(mode, 2, 4);
     }
-    else if (commandHeader == COMMAND_TOF_DEBUG) {
+    else if (commandHeader == COMMAND_TOF_LIST_CONFIG) {
         if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("TOF Debug List");
+            setFunctionNoArgumentAndNoResult("TOF List Config");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }
+    else if (commandHeader == COMMAND_TOF_LIST_NETWORK) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("TOF List Network");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }
+    else if (commandHeader == COMMAND_TOF_LIST_DETECTED) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("TOF List Detection");
         }
         return commandLengthValueForMode(mode, 0, 0);
     }

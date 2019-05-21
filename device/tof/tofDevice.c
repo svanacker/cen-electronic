@@ -52,13 +52,26 @@ void deviceTofHandleRawData(unsigned char commandHeader, InputStream* inputStrea
         
         appendHex4(outputStream, distanceMM);
     }
-    else if (commandHeader == COMMAND_TOF_DEBUG) {
-        ackCommand(outputStream, TOF_DEVICE_HEADER, COMMAND_TOF_DEBUG);
+    else if (commandHeader == COMMAND_TOF_LIST_CONFIG) {
+        ackCommand(outputStream, TOF_DEVICE_HEADER, COMMAND_TOF_LIST_CONFIG);
         TofSensorList* tofSensorList = getTofDeviceTofSensorList();
         OutputStream* debugOutputStream = getInfoOutputStreamLogger();
-        // On this device, we dont't have access to the Point of View
-        // See StrategyDevice to have it !
-        tofSensorList->tofSensorListDebugTable(debugOutputStream, tofSensorList, NULL, 0.0f);
+        // We only print the config (not network neither call to detection is done)
+        tofSensorList->tofSensorListConfigTableDebug(debugOutputStream, tofSensorList);
+    }
+    else if (commandHeader == COMMAND_TOF_LIST_NETWORK) {
+        ackCommand(outputStream, TOF_DEVICE_HEADER, COMMAND_TOF_LIST_NETWORK);
+        TofSensorList* tofSensorList = getTofDeviceTofSensorList();
+        OutputStream* debugOutputStream = getInfoOutputStreamLogger();
+        // We only print the network (not config neither call to detection is done)
+        tofSensorList->tofSensorListNetworkTableDebug(debugOutputStream, tofSensorList);
+    }
+    else if (commandHeader == COMMAND_TOF_LIST_DETECTED) {
+        ackCommand(outputStream, TOF_DEVICE_HEADER, COMMAND_TOF_LIST_DETECTED);
+        TofSensorList* tofSensorList = getTofDeviceTofSensorList();
+        OutputStream* debugOutputStream = getInfoOutputStreamLogger();
+        // We only print the network (not config neither call to detection is done)
+        tofSensorList->tofSensorListDetectionTableDebug(debugOutputStream, tofSensorList, NULL, 0.0f);
     }
     else if (commandHeader == COMMAND_TOF_BEEP_ON) {
         ackCommand(outputStream, TOF_DEVICE_HEADER, COMMAND_TOF_BEEP_ON);

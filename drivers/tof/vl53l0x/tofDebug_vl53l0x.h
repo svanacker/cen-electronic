@@ -9,9 +9,14 @@
 
 #include "../../../common/io/outputStream.h"
 
+void printTofSensorConfigTableVL53L0X(OutputStream* outputStream, TofSensorList* tofSensorList);
+
+void printTofSensorNetworkTableVL53L0X(OutputStream* outputStream, TofSensorList* tofSensorList);
+
 /**
- * Print a list of tof Sensor VL53L0X.
+ * Print a list of tof Sensor VL53L0X (including the detection part but
+ * excluding the config & the network.
  */
-void printTofSensorTableVL53L0X(OutputStream* outputStream, TofSensorList* tofSensorList, Point* pointOfView, float pointOfViewAngleRadian);
+void printTofSensorDetectionTableVL53L0X(OutputStream* outputStream, TofSensorList* tofSensorList, Point* pointOfView, float pointOfViewAngleRadian);
 
 #endif

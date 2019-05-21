@@ -14,9 +14,25 @@
 typedef struct TofSensorList TofSensorList;
 
 /**
- * Define the specific function which must be used to debug the tofSensorList.
+* Define the specific function which must be used to see the configuration of the tof
+* (but excluding the distance detection & the network).
+*/
+typedef void TofSensorListConfigTableDebugFunction(OutputStream* outputStream, TofSensorList* tofSensorList);
+
+/**
+* Define the specific function which must be used to see the network 
+* (but excluding the distance detection & the config).
+*/
+typedef void TofSensorListNetworkTableDebugFunction(OutputStream* outputStream, TofSensorList* tofSensorList);
+
+/**
+ * Define the specific function which must be used to debug the tofSensorList in terms of 
+ * detection
  */
-typedef void tofSensorListDebugTableFunction(OutputStream* outputStream, TofSensorList* tofSensorList, Point* pointOfView, float pointOfViewAngleRadian);
+typedef void TofSensorListDetectionTableDebugFunction(OutputStream* outputStream,
+                                                      TofSensorList* tofSensorList,
+                                                      Point* pointOfView, 
+                                                      float pointOfViewAngleRadian);
 
 /**
  * The struct defining a list of Tof Sensors.
@@ -32,8 +48,12 @@ struct TofSensorList {
     unsigned int size;
     /** If Debug Mode is activated .*/
     bool debug;
-    /** For Debug purpose */
-    tofSensorListDebugTableFunction* tofSensorListDebugTable;
+    /** To Debug the configuration of the sensor (distance, threshold, angles ...) */
+    TofSensorListConfigTableDebugFunction* tofSensorListConfigTableDebug;
+    /** To Debug the network of the sensor (i2c adress, multiplexer ...) */
+    TofSensorListNetworkTableDebugFunction* tofSensorListNetworkTableDebug;
+    /** To Debug the detection part of the sensor (call to the getDistance function which could raise an error). */
+    TofSensorListDetectionTableDebugFunction* tofSensorListDetectionTableDebug;
 };
 
 /**
@@ -47,7 +67,9 @@ void initTofSensorList(TofSensorList* tofSensorList,
                        bool debug,
                        bool enabledAllSensors,
                        bool changeAddressAllSensors,
-                       tofSensorListDebugTableFunction* tofSensorListDebugTable
+                       TofSensorListConfigTableDebugFunction* tofSensorListConfigTableDebug,
+                       TofSensorListNetworkTableDebugFunction* tofSensorListNetworkTableDebug,
+                       TofSensorListDetectionTableDebugFunction* tofSensorListDetectionTableDebug
 );
 
 /**

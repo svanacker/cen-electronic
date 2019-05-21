@@ -16,19 +16,24 @@
 
 
 void initTofSensorList(TofSensorList* tofSensorList,
-                       TofSensor(*tofSensorArray)[],
-                       unsigned int tofSensorListSize,
-                        bool debug,
-                        bool enabledAllSensors,
-                        bool changeAddressAllSensors,
-                       tofSensorListDebugTableFunction* tofSensorListDebugTable) {
+    TofSensor(*tofSensorArray)[],
+    unsigned int tofSensorListSize,
+    bool debug,
+    bool enabledAllSensors,
+    bool changeAddressAllSensors,
+    TofSensorListConfigTableDebugFunction* tofSensorListConfigTableDebug,
+    TofSensorListNetworkTableDebugFunction* tofSensorListNetworkTableDebug,
+    TofSensorListDetectionTableDebugFunction* tofSensorListDetectionTableDebug
+) {
     if (tofSensorArray == NULL) {
         writeError(TOF_SENSOR_LIST_NOT_INITIALIZED);
     }
     tofSensorList->tofSensorArray = tofSensorArray;
     tofSensorList->size = tofSensorListSize;
     tofSensorList->debug = debug;
-    tofSensorList->tofSensorListDebugTable = tofSensorListDebugTable;
+    tofSensorList->tofSensorListConfigTableDebug = tofSensorListConfigTableDebug;
+    tofSensorList->tofSensorListNetworkTableDebug = tofSensorListNetworkTableDebug;
+    tofSensorList->tofSensorListDetectionTableDebug = tofSensorListDetectionTableDebug;
     unsigned int i;
     for (i = 0; i < tofSensorListSize; i++) {
         TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, i);

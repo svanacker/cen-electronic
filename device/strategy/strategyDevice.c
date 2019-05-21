@@ -93,7 +93,7 @@ void deviceStrategyHandleRawData(unsigned char commandHeader, InputStream* input
         TofSensorList* tofSensorList = context->tofSensorList;
         Point* robotPosition = context->robotPosition;
         float robotAngleRadian = context->robotAngleRadian;
-        tofSensorList->tofSensorListDebugTable(debugOutputStream, tofSensorList, robotPosition, robotAngleRadian);
+        tofSensorList->tofSensorListDetectionTableDebug(debugOutputStream, tofSensorList, robotPosition, robotAngleRadian);
     }
 
     // Debug

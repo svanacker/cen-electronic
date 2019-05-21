@@ -36,7 +36,16 @@ void initTofSensorListVL53L0X(TofSensorList* tofSensorList,
                               bool debug,
                               bool enableAllSensors,
                               bool changeAddressAllSensors) {
-    initTofSensorList(tofSensorList, tofSensorArray, size, debug, enableAllSensors, changeAddressAllSensors, &printTofSensorTableVL53L0X);
+    initTofSensorList(tofSensorList,
+                      tofSensorArray,
+                      size,
+                      debug, 
+                      enableAllSensors,
+                      changeAddressAllSensors, 
+                      &printTofSensorConfigTableVL53L0X,
+                      &printTofSensorNetworkTableVL53L0X,
+                      &printTofSensorDetectionTableVL53L0X
+                      );
 
     unsigned int tofIndex;
     for (tofIndex = 0; tofIndex < size; tofIndex++) {

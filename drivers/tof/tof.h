@@ -20,15 +20,27 @@ typedef bool tofSensorInitFunction(TofSensor* TofSensor);
 typedef unsigned int tofSensorGetDistanceMMFunction(TofSensor* tofSensor);
 
 /**
- * Type of TofSensor, someare used to detect collision, are used for actions
+ * Type of TofSensor (VL530X or PC for the moment)
  */
 enum TofSensorType {
-    /** The type was not defined */
+    /** The user type was not defined */
     TOF_SENSOR_TYPE_UNKNOWN = 0,
+    /** The Hardware version type. */
+    TOF_SENSOR_TYPE_VL53L0X = 1,
+    /** The Simulated type on PC. */
+    TOF_SENSOR_TYPE_PC = 2,
+};
+
+/**
+ * Type of TofSensor, someare used to detect collision, are used for actions
+ */
+enum TofSensorUsageType {
+    /** The user type was not defined */
+    TOF_SENSOR_USAGE_TYPE_UNKNOWN = 0,
     /** The tof is used to detect Collision. */
-    TOF_SENSOR_TYPE_COLLISION = 1,
+    TOF_SENSOR_USAGE_TYPE_COLLISION = 1,
     /** The tof is used to detect actions. */
-    TOF_SENSOR_TYPE_ACTION = 2
+    TOF_SENSOR_USAGE_TYPE_ACTION = 2
 };
 
 /**
@@ -38,7 +50,7 @@ struct TofSensor {
     /** An name for the sensor. */
     char* name;
     /** The type of Sensor. */
-    enum TofSensorType type;
+    enum TofSensorUsageType usageType;
     /** If we enabled it. If disable, we do not try to initialize it .*/
     bool enabled;
     /** If we must change the address of the TOF at startup .*/
@@ -69,7 +81,7 @@ struct TofSensor {
     /** The distance between the Sensor compared and the center of the robot. */
     float distanceFromRobotCenter;
     /** The angle of the central point of the Sensor compared to the center of the robot (with X axis along the going point). */
-    float angleFromRobotCenter;
+    float angleFromRobotCenterRadian;
     /** Generic pointer for context use */
     int* object;
 };

@@ -10,6 +10,7 @@
 
 #include "../../../../common/commons.h"
 #include "../../../../common/i2c/i2cCommon.h"
+#include "../../../../common/i2c/i2cDebug.h"
 #include "../../../../common/i2c/32/i2cCommon32.h"
 #include "../../../../common/i2c/master/i2cMaster.h"
 #include "../../../../common/log/logger.h"

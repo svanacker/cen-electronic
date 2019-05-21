@@ -345,11 +345,13 @@
     <ClCompile Include="drivers\sensor\current\pc\currentPc.c" />
     <ClCompile Include="drivers\sensor\temperature\pc\temperaturePc.c" />
     <ClCompile Include="drivers\test\testDriver.c" />
+    <ClCompile Include="drivers\tof\pc\tofListDebugPc.c" />
     <ClCompile Include="drivers\tof\pc\tofListPc.c" />
     <ClCompile Include="drivers\tof\pc\tofPc.c" />
     <ClCompile Include="drivers\tof\tof.c" />
     <ClCompile Include="drivers\tof\tofDebug.c" />
     <ClCompile Include="drivers\tof\tofList.c" />
+    <ClCompile Include="drivers\tof\tofListDebug.c" />
     <ClCompile Include="drivers\tof\vl53l0x\pc\vl53l0x_platform_pc.c" />
     <ClCompile Include="drivers\tof\vl53l0x\vl53l0x_api.c" />
     <ClCompile Include="drivers\tof\vl53l0x\vl53l0x_api_calibration.c" />
@@ -739,11 +741,13 @@
     <ClInclude Include="drivers\sensor\current\pc\currentPc.h" />
     <ClInclude Include="drivers\sensor\temperature\pc\temperaturePc.h" />
     <ClInclude Include="drivers\test\testDriver.h" />
+    <ClInclude Include="drivers\tof\pc\tofListDebugPc.h" />
     <ClInclude Include="drivers\tof\pc\tofListPc.h" />
     <ClInclude Include="drivers\tof\pc\tofPc.h" />
     <ClInclude Include="drivers\tof\tof.h" />
     <ClInclude Include="drivers\tof\tofDebug.h" />
     <ClInclude Include="drivers\tof\tofList.h" />
+    <ClInclude Include="drivers\tof\tofListDebug.h" />
     <ClInclude Include="drivers\tof\vl53l0x\vl53l0x_api.h" />
     <ClInclude Include="drivers\tof\vl53l0x\vl53l0x_api_calibration.h" />
     <ClInclude Include="drivers\tof\vl53l0x\vl53l0x_api_core.h" />

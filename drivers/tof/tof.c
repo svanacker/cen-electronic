@@ -55,7 +55,7 @@ void tofComputeTofPointOfView(TofSensor* tofSensor, Point* robotCentralPoint, fl
         resultPoint,
         tofSensor->distanceFromRobotCenter,
         robotOrientation + 
-        tofSensor->angleFromRobotCenter
+        tofSensor->angleFromRobotCenterRadian
         );
 }
 
