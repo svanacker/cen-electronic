@@ -202,6 +202,10 @@ void clearLastError();
 #define IO_EXPANDER_LIST_ILLEGAL_INDEX                                    0x2501
 #define IO_EXPANDER_NULL                                                  0x2502
 
+#define MULTIPLEXER_LIST_NOT_INITIALIZED                                  0x2600
+#define MULTIPLEXER_LIST_ILLEGAL_INDEX                                    0x2601
+#define MULTIPLEXER_NULL                                                  0x2602
+
 // PID
 
 #define PID_INDEX_INCORRECT                                               0x3000

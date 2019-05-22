@@ -27,8 +27,6 @@
 
 // DETECTION
 
-#define TOF_SENSOR_VL53L0X_LAST_COLUMN		                                0
-
 // ------------------------------------ CONFIG --------------------------------
 
 void printTofSensorConfigTableVL53L0X(OutputStream* outputStream, TofSensorList* tofSensorList) {
@@ -100,7 +98,7 @@ void printTofSensorNetworkTableVL53L0X(OutputStream* outputStream, TofSensorList
             uint8_t status = tofSensorVL53L0X->status;
             appendHex2TableData(outputStream, status, TOF_SENSOR_VL53L0X_STATUS_COLUMN_LENGTH);
         }
-        appendEndOfTableColumn(outputStream, TOF_SENSOR_VL53L0X_LAST_COLUMN);
+        appendEndOfTableColumn(outputStream, TOF_SENSOR_LAST_COLUMN);
     }
 
     appendTableHeaderSeparatorLine(outputStream);
@@ -204,7 +202,7 @@ void printTofSensorDetectionTableVL53L0X(OutputStream* outputStream, TofSensorLi
                 appendStringTableData(outputStream, "-", TOF_SENSOR_VALUE_OBJECT_Y_COLUMN_LENGTH);        
             }
         }
-        appendEndOfTableColumn(outputStream, TOF_SENSOR_VL53L0X_LAST_COLUMN);
+        appendEndOfTableColumn(outputStream, TOF_SENSOR_LAST_COLUMN);
     }
 
     appendTableHeaderSeparatorLine(outputStream);

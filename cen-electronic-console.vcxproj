@@ -260,6 +260,8 @@
     <ClCompile Include="device\i2c\i2cCommonDebugDeviceInterface.c" />
     <ClCompile Include="device\i2c\master\i2cMasterDebugDevice.c" />
     <ClCompile Include="device\i2c\master\i2cMasterDebugDeviceInterface.c" />
+    <ClCompile Include="device\i2c\multiplexer\multiplexerDevice.c" />
+    <ClCompile Include="device\i2c\multiplexer\multiplexerDeviceInterface.c" />
     <ClCompile Include="device\i2c\slave\i2cSlaveDebugDevice.c" />
     <ClCompile Include="device\i2c\slave\i2cSlaveDebugDeviceInterface.c" />
     <ClCompile Include="device\ioExpander\ioExpanderDevice.c" />
@@ -332,6 +334,11 @@
     <ClCompile Include="drivers\driverStreamListener.c" />
     <ClCompile Include="drivers\driverTransmitter.c" />
     <ClCompile Include="drivers\file\eeprom\eepromFile.c" />
+    <ClCompile Include="drivers\i2c\multiplexer\multiplexer.c" />
+    <ClCompile Include="drivers\i2c\multiplexer\multiplexerDebug.c" />
+    <ClCompile Include="drivers\i2c\multiplexer\multiplexerList.c" />
+    <ClCompile Include="drivers\i2c\multiplexer\multiplexerTca9548A.c" />
+    <ClCompile Include="drivers\i2c\multiplexer\pc\multiplexerPc.c" />
     <ClCompile Include="drivers\i2c\multiplexer\tca9548A.c" />
     <ClCompile Include="drivers\ioExpander\ioExpander.c" />
     <ClCompile Include="drivers\ioExpander\ioExpanderDebug.c" />
@@ -657,6 +664,8 @@
     <ClInclude Include="device\i2c\i2cCommonDebugDeviceInterface.h" />
     <ClInclude Include="device\i2c\master\i2cMasterDebugDevice.h" />
     <ClInclude Include="device\i2c\master\i2cMasterDebugDeviceInterface.h" />
+    <ClInclude Include="device\i2c\multiplexer\multiplexerDevice.h" />
+    <ClInclude Include="device\i2c\multiplexer\multiplexerDeviceInterface.h" />
     <ClInclude Include="device\i2c\slave\i2cSlaveDebugDevice.h" />
     <ClInclude Include="device\i2c\slave\i2cSlaveDebugDeviceInterface.h" />
     <ClInclude Include="device\ioExpander\ioExpanderDevice.h" />
@@ -729,6 +738,11 @@
     <ClInclude Include="drivers\driverStreamListener.h" />
     <ClInclude Include="drivers\driverTransmitter.h" />
     <ClInclude Include="drivers\file\eeprom\eepromFile.h" />
+    <ClInclude Include="drivers\i2c\multiplexer\multiplexer.h" />
+    <ClInclude Include="drivers\i2c\multiplexer\multiplexerDebug.h" />
+    <ClInclude Include="drivers\i2c\multiplexer\multiplexerList.h" />
+    <ClInclude Include="drivers\i2c\multiplexer\multiplexerTca9548A.h" />
+    <ClInclude Include="drivers\i2c\multiplexer\pc\multiplexerPc.h" />
     <ClInclude Include="drivers\i2c\multiplexer\tca9548A.h" />
     <ClInclude Include="drivers\ioExpander\ioExpander.h" />
     <ClInclude Include="drivers\ioExpander\ioExpanderList.h" />

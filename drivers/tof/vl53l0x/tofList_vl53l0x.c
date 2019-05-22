@@ -25,20 +25,24 @@
 
 #include "../../../drivers/ioExpander/ioExpander.h"
 
+#include "../../../drivers/i2c/multiplexer/multiplexerList.h"
 #include "../../../drivers/i2c/multiplexer/tca9548A.h"
 
 #include "../../../device/deviceConstants.h"
+#include "i2c/multiplexer/multiplexerTca9548A.h"
 
 void initTofSensorListVL53L0X(TofSensorList* tofSensorList, 
                               TofSensor(*tofSensorArray)[],
                               TofSensorVL53L0X(*tofSensorVL53L0XArray)[],
                               unsigned int size,
+                              MultiplexerList* multiplexerList,        
                               bool debug,
                               bool enableAllSensors,
                               bool changeAddressAllSensors) {
     initTofSensorList(tofSensorList,
                       tofSensorArray,
                       size,
+                      multiplexerList,
                       debug, 
                       enableAllSensors,
                       changeAddressAllSensors, 
@@ -57,7 +61,7 @@ void initTofSensorListVL53L0X(TofSensorList* tofSensorList,
             append(getAlwaysOutputStreamLogger(), '_');
             continue;
         }
-        I2cBusConnection* multiplexerBusConnection = getI2cBusConnectionBySlaveAddress(tofSensor->multiplexerAddress);
+        Multiplexer* multiplexer = getMultiplexerByIndex(multiplexerList, tofSensor->multiplexerIndex);
         
         appendStringAndDecLN(getDebugOutputStreamLogger(), "  TOF SENSOR->START:", tofIndex);
 
@@ -69,11 +73,10 @@ void initTofSensorListVL53L0X(TofSensorList* tofSensorList,
 
         if (tofSensor->useMultiplexer) {
             unsigned char channel = tofSensor->multiplexerChannel;
-            unsigned char multiplexerAddress = tofSensor->multiplexerAddress;
-            appendString(getDebugOutputStreamLogger(), "    MULTIPLEXER:addr=");
-            appendHex2(getDebugOutputStreamLogger(), multiplexerAddress);        
-            appendStringAndDecLN(getDebugOutputStreamLogger(), ", channel=", channel);        
-            tca9548A_setChannelsMask(multiplexerBusConnection, channel);
+            unsigned int multiplexerIndex = tofSensor->multiplexerIndex;
+            appendStringAndDecLN(getDebugOutputStreamLogger(), "    MULTIPLEXER:index=", multiplexerIndex);
+            appendStringAndDecLN(getDebugOutputStreamLogger(), ", channel=", channel);
+            multiplexer->multiplexerWriteChannelsMask(multiplexer, channel);
             timerDelayMilliSeconds(30);
         }
         appendString(getDebugOutputStreamLogger(), "    INIT VL53");        
@@ -81,13 +84,14 @@ void initTofSensorListVL53L0X(TofSensorList* tofSensorList,
         unsigned char tofBusAddress = VL530X_ADDRESS_0;
         unsigned char newTofBusAddress = VL530X_ADDRESS_0 + ((tofIndex + 1) << 1);
 
+        I2cBusConnection* multiplexerBusConnection = getMultiplexerI2cBusConnection(multiplexer);
         I2cBusConnection* tofBusConnection = addI2cBusConnection(multiplexerBusConnection->i2cBus, tofBusAddress, true);
-        bool successInit = initTofSensorVL53L0X(tofSensor, tofSensorVL53L0X, tofBusConnection);
+        bool successInit = initTofSensorVL53L0X(tofSensor, tofSensorVL53L0X, tofBusConnection, multiplexer);
         if (!successInit) {
             // Maybe the sensor is always connected (by the Uart power) and has not reboot
             // We try to reach it at the new address
             tofBusConnection->i2cAddress = newTofBusAddress;
-            successInit = initTofSensorVL53L0X(tofSensor, tofSensorVL53L0X, tofBusConnection);
+            successInit = initTofSensorVL53L0X(tofSensor, tofSensorVL53L0X, tofBusConnection, multiplexer);
             
             // If KO
             if (!successInit) {

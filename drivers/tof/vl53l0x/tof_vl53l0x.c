@@ -11,6 +11,8 @@
 
 #include "../../../common/delay/cenDelay.h"
 
+#include "../../../common/error/error.h"
+
 #include "../../../common/i2c/i2cConstants.h"
 
 #include "../../../common/io/outputStream.h"
@@ -20,9 +22,8 @@
 
 #include "../../../common/timer/delayTimer.h"
 
-#include "../../../drivers/i2c/multiplexer/tca9548A.h"
-#include "error.h"
-
+#include "../../../drivers/i2c/multiplexer/multiplexer.h"
+#include "../../../drivers/i2c/multiplexer/multiplexerList.h"
 
 // Store the latest status of the VL53L0X
 // indicates whether or not the sensor has encountered an error
@@ -360,9 +361,9 @@ unsigned int tofSensorGetDistanceVL53L0XMM(TofSensor* tofSensor) {
         }
     }
     // If we use a multiplexer, we must select the channel first
-    if (tofSensor->useMultiplexer) {
-        I2cBusConnection* multiplexerBusConnection = getI2cBusConnectionBySlaveAddress(tofSensor->multiplexerAddress);
-        tca9548A_setChannelsMask(multiplexerBusConnection, tofSensor->multiplexerChannel);
+    Multiplexer* multiplexer = tofSensorVL53L0X->multiplexer;
+    if (multiplexer != NULL) {
+        multiplexer->multiplexerWriteChannelsMask(multiplexer, tofSensor->multiplexerChannel);
     }
     // Single Mode
     // getSingleRangingMeasurement(tofSensorVL53L0X, false);
@@ -380,9 +381,11 @@ unsigned int tofSensorGetDistanceVL53L0XMM(TofSensor* tofSensor) {
 
 bool initTofSensorVL53L0X(TofSensor* tofSensor,
         TofSensorVL53L0X* tofSensorVL53L0X,
-        I2cBusConnection* i2cBusConnection
+        I2cBusConnection* i2cBusConnection,
+        Multiplexer* multiplexer
 ) {
     tofSensorVL53L0X->i2cBusConnection = i2cBusConnection;
+    tofSensorVL53L0X->multiplexer = multiplexer;
     return initTofSensor(tofSensor,
             &tofSensorInitVL53L0X,
             &tofSensorGetDistanceVL53L0XMM,

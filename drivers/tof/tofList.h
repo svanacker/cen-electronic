@@ -9,6 +9,8 @@
 
 #include "tof.h"
 #include "../../drivers/ioExpander/ioExpander.h"
+#include "../../drivers/i2c/multiplexer/multiplexerList.h"
+
 
 // Forward declaration
 typedef struct TofSensorList TofSensorList;
@@ -40,6 +42,8 @@ typedef void TofSensorListDetectionTableDebugFunction(OutputStream* outputStream
 struct TofSensorList {
     /** An array of pointer on tofSensor. */
     TofSensor(*tofSensorArray)[];
+    /** The Multiplexer List */
+    MultiplexerList* multiplexerList;
     /** The IO Expander used to beep */
     IOExpander* beepIoExpander;
     /** To know the value of beep, we don't want to invoke too frequently the IOExpander to send the same value */
@@ -64,6 +68,7 @@ struct TofSensorList {
 void initTofSensorList(TofSensorList* tofSensorList,
                        TofSensor(*tofSensorArray)[],
                        unsigned int tofSensorListSize,
+                       MultiplexerList* multiplexerList,
                        bool debug,
                        bool enabledAllSensors,
                        bool changeAddressAllSensors,

@@ -16,6 +16,10 @@
 #include "../../device/ioExpander/ioExpanderDeviceInterface.h"
 #include "../../device/ioExpander/ioExpanderDevice.h"
 
+// Multiplexer
+#include "../../device/i2c/multiplexer/multiplexerDeviceInterface.h"
+#include "../../device/i2c/multiplexer/multiplexerDevice.h"
+
 // Tof
 #include "../../device/tof/tofDevice.h"
 #include "../../device/tof/tofDeviceInterface.h"
@@ -27,6 +31,13 @@
 #include "../../drivers/ioExpander/ioExpanderPcf8574.h"
 #include "../../drivers/ioExpander/pcf8574.h"
 
+// MULTIPLEXER
+#include "../../drivers/i2c/multiplexer/multiplexer.h"
+#include "../../drivers/i2c/multiplexer/multiplexerDebug.h"
+#include "../../drivers/i2c/multiplexer/multiplexerList.h"
+#include "../../drivers/i2c/multiplexer/multiplexerTca9548A.h"
+#include "../../drivers/i2c/multiplexer/tca9548A.h"
+
 // TOF
 #include "../../drivers/tof/vl53l0x/tof_vl53l0x.h"
 #include "../../drivers/tof/vl53l0x/tofList_vl53l0x.h"
@@ -34,6 +45,10 @@
 // IO Expander
 static IOExpanderList ioExpanderList;
 static IOExpander ioExpanderArray[MAIN_BOARD_IO_EXPANDER_LIST_LENGTH];
+
+// Multiplexer
+static MultiplexerList multiplexerList;
+static Multiplexer multiplexerArray[MAIN_BOARD_MULTIPLEXER_LIST_LENGTH];
 
 // TOF
 static TofSensorList tofSensorList;
@@ -43,105 +58,132 @@ static TofSensorVL53L0X tofSensorVL53L0XArray[MAIN_BOARD_TOF_SENSOR_LIST_LENGTH]
 void mainBoardCommonTofAddDevices(void) {
     addLocalDevice(getTofDeviceInterface(), getTofDeviceDescriptor(&tofSensorList));
     addLocalDevice(getIOExpanderDeviceInterface(), getIOExpanderDeviceDescriptor(&ioExpanderList));
+    addLocalDevice(getMultiplexerDeviceInterface(), getMultiplexerDeviceDescriptor(&multiplexerList));
 }
 
-void mainBoardCommonTofInitDrivers(I2cBus* i2cBus, I2cBus* i2cBus2, unsigned int tofSensorCount) {
+void mainBoardCommonIOExpanderListInitDrivers(I2cBus* i2cBus) {
     // IO Expander List
     appendString(getDebugOutputStreamLogger(), "IO Expander List ...");
     initIOExpanderList(&ioExpanderList, (IOExpander(*)[]) &ioExpanderArray, MAIN_BOARD_IO_EXPANDER_LIST_LENGTH);
     
     // -> IO Button Board
     IOExpander* ioButtonBoardIoExpander = getIOExpanderByIndex(&ioExpanderList, 0);
-    I2cBusConnection* ioButtonBoardBusConnection = addI2cBusConnection(i2cBus2, PCF8574_ADDRESS_0, true);
+    I2cBusConnection* ioButtonBoardBusConnection = addI2cBusConnection(i2cBus, PCF8574_ADDRESS_0, true);
     initIOExpanderPCF8574(ioButtonBoardIoExpander, ioButtonBoardBusConnection);
 
     // End of IOExpanderList
     appendStringLN(getDebugOutputStreamLogger(), "OK");
+}
+
+void mainBoardCommonMultiplexerListInitDrivers(I2cBus* i2cBus) {
+    appendString(getDebugOutputStreamLogger(), "Multiplexer List ...");
+    initMultiplexerList(&multiplexerList, (Multiplexer(*)[]) &multiplexerArray, MAIN_BOARD_MULTIPLEXER_LIST_LENGTH);
+    
+    // -> Multiplexer 0 Board
+    Multiplexer* multiplexerExpander0 = getMultiplexerByIndex(&multiplexerList, 0);
+    I2cBusConnection* multiplexerBoardBusConnection0 = addI2cBusConnection(i2cBus, TCA9548A_ADDRESS_0, true);
+    initMultiplexerTca9548A(multiplexerExpander0, multiplexerBoardBusConnection0);
+
+    // -> Multiplexer 1 Board
+    Multiplexer* multiplexerExpander1 = getMultiplexerByIndex(&multiplexerList, 1);
+    I2cBusConnection* multiplexerBoardBusConnection1 = addI2cBusConnection(i2cBus, TCA9548A_ADDRESS_1, true);
+    initMultiplexerTca9548A(multiplexerExpander1, multiplexerBoardBusConnection1);
+
+    
+    appendStringLN(getDebugOutputStreamLogger(), "OK");
+}
+
+void mainBoardCommonTofInitDrivers(I2cBus* i2cBus, I2cBus* i2cBus2, unsigned int tofSensorCount) {
+    // IO Expander List
+    mainBoardCommonIOExpanderListInitDrivers(i2cBus2);
+    
+    // Multiplexer List
+    mainBoardCommonMultiplexerListInitDrivers(i2cBus2);
         
     // TOF
     if (tofSensorCount > 0) {
         tofSensorArray[0].enabled = true;
         tofSensorArray[0].useMultiplexer = true;
-        tofSensorArray[0].multiplexerAddress = TCA9548A_ADDRESS_1;
+        tofSensorArray[0].multiplexerIndex = 1;
         tofSensorArray[0].multiplexerChannel = 1;
     }
     if (tofSensorCount > 1) {
         tofSensorArray[1].enabled = true; 
         tofSensorArray[1].useMultiplexer = true;
-        tofSensorArray[1].multiplexerAddress = TCA9548A_ADDRESS_1;
+        tofSensorArray[1].multiplexerIndex = 1;
         tofSensorArray[1].multiplexerChannel = 2;
     }
     if (tofSensorCount > 2) {
         tofSensorArray[2].enabled = true;
         tofSensorArray[2].useMultiplexer = true;
-        tofSensorArray[2].multiplexerAddress = TCA9548A_ADDRESS_1;
+        tofSensorArray[2].multiplexerIndex = 1;
         tofSensorArray[2].multiplexerChannel = 4;
     }
     if (tofSensorCount > 3) {
         tofSensorArray[3].enabled = true;
-        tofSensorArray[3].multiplexerAddress = TCA9548A_ADDRESS_1;
+        tofSensorArray[3].multiplexerIndex = 1;
         tofSensorArray[3].useMultiplexer = true;
         tofSensorArray[3].multiplexerChannel = 8;
     }
     if (tofSensorCount > 4) {
         tofSensorArray[4].enabled = true;
-        tofSensorArray[4].multiplexerAddress = TCA9548A_ADDRESS_1;
+        tofSensorArray[4].multiplexerIndex = 1;
         tofSensorArray[4].useMultiplexer = true;
         tofSensorArray[4].multiplexerChannel = 16;
     }    
     if (tofSensorCount > 5) {
         tofSensorArray[5].enabled = true;
-        tofSensorArray[5].multiplexerAddress = TCA9548A_ADDRESS_1;
+        tofSensorArray[5].multiplexerIndex = 1;
         tofSensorArray[5].useMultiplexer = true;
         tofSensorArray[5].multiplexerChannel = 32;
     }
     if (tofSensorCount > 6) {
         tofSensorArray[6].enabled = false;
-        tofSensorArray[6].multiplexerAddress = TCA9548A_ADDRESS_1;
+        tofSensorArray[6].multiplexerIndex = 1;
         tofSensorArray[6].useMultiplexer = true;
         tofSensorArray[6].multiplexerChannel = 64;
 
     }
     if (tofSensorCount > 7) {
         tofSensorArray[7].enabled = false;
-        tofSensorArray[7].multiplexerAddress = TCA9548A_ADDRESS_1;
+        tofSensorArray[7].multiplexerIndex = 1;
         tofSensorArray[7].useMultiplexer = true;
         tofSensorArray[7].multiplexerChannel = 128;
     }
     // TCA9548A_ADDRESS_0 -----------------------------------------
     if (tofSensorCount > 8) {
         tofSensorArray[8].enabled = true;
-        tofSensorArray[8].multiplexerAddress = TCA9548A_ADDRESS_0;
+        tofSensorArray[8].multiplexerIndex = 0;
         tofSensorArray[8].useMultiplexer = true;
         tofSensorArray[8].multiplexerChannel = 1;
     }
     if (tofSensorCount > 9) {
         tofSensorArray[9].enabled = true;
-        tofSensorArray[9].multiplexerAddress = TCA9548A_ADDRESS_0;
+        tofSensorArray[9].multiplexerIndex = 0;
         tofSensorArray[9].useMultiplexer = true;
         tofSensorArray[9].multiplexerChannel = 2;
     }
     if (tofSensorCount > 10) {
         tofSensorArray[10].enabled = true;
-        tofSensorArray[10].multiplexerAddress = TCA9548A_ADDRESS_0;
+        tofSensorArray[10].multiplexerIndex = 0;
         tofSensorArray[10].useMultiplexer = true;
         tofSensorArray[10].multiplexerChannel = 4;
     }
     if (tofSensorCount > 11) {
         tofSensorArray[11].enabled = true;
-        tofSensorArray[11].multiplexerAddress = TCA9548A_ADDRESS_0;
+        tofSensorArray[11].multiplexerIndex = 0;
         tofSensorArray[11].useMultiplexer = true;
         tofSensorArray[11].multiplexerChannel = 8;
     }
     if (tofSensorCount > 12) {
         tofSensorArray[12].enabled = true;
-        tofSensorArray[12].multiplexerAddress = TCA9548A_ADDRESS_0;
+        tofSensorArray[12].multiplexerIndex = 0;
         tofSensorArray[12].useMultiplexer = true;
         tofSensorArray[12].multiplexerChannel = 16;
     }
     if (tofSensorCount > 13) {
         tofSensorArray[13].enabled = true;
-        tofSensorArray[13].multiplexerAddress = TCA9548A_ADDRESS_0;
+        tofSensorArray[13].multiplexerIndex = 0;
         tofSensorArray[13].useMultiplexer = true;
         tofSensorArray[13].multiplexerChannel = 32;
     }
@@ -152,6 +194,8 @@ void mainBoardCommonTofInitDrivers(I2cBus* i2cBus, I2cBus* i2cBus2, unsigned int
                              (TofSensorVL53L0X(*)[]) &tofSensorVL53L0XArray,
                               // Size
                               tofSensorCount,
+                              // MultiplexerList,
+                              &multiplexerList,
                               // debug
                               true,
                               // enabledAllSensors

@@ -8,25 +8,7 @@ const char* deviceI2cMasterDebugGetName(void) {
 }
 
 int deviceI2cMasterDebugGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
-    // MULTIPLEXER
-    if (commandHeader == COMMAND_I2C_MULTIPLEXER_SET_CHANNEL) {
-        if (fillDeviceArgumentList) {
-            setFunction("multiplexer set channel", 3, 0);
-            setArgumentUnsignedHex2(0, "multiplexer Write Address (Ex : E0)");
-            setArgumentSeparator(1);
-            setArgumentUnsignedHex2(2, "channel (0->7)");
-        }
-        return commandLengthValueForMode(mode, 5, 0);
-    }
-    else if (commandHeader == COMMAND_I2C_MULTIPLEXER_GET_CHANNEL) {
-        if (fillDeviceArgumentList) {
-            setFunction("multiplexer get channel", 1, 1);
-            setArgumentUnsignedHex2(0, "multiplexer Write Address (Ex : E0)");
-            setResultUnsignedHex2(0, "channel (0->7)");
-        }
-        return commandLengthValueForMode(mode, 2, 2);
-    }
-    else if (commandHeader == COMMAND_I2C_MASTER_DEBUG_PRINT_BUFFER) {
+    if (commandHeader == COMMAND_I2C_MASTER_DEBUG_PRINT_BUFFER) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("i2cDebug");
         }

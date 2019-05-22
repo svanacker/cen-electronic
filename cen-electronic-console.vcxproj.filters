@@ -1078,6 +1078,18 @@
     <Filter Include="Source Files\drivers\i2c\multiplexer">
       <UniqueIdentifier>{fe32466c-c1a4-4c0b-b6ac-5d31bced20b2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\device\i2c\multiplexer">
+      <UniqueIdentifier>{09343755-6e8f-449a-bb6c-e62bb816212e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\device\i2c\multiplexer">
+      <UniqueIdentifier>{755c6d44-d5ec-4fe2-a373-b3985aade1e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\drivers\i2c\multiplexer\pc">
+      <UniqueIdentifier>{706900b4-5f6e-4d77-824b-778405012eb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\drivers\i2c\multiplexer\pc">
+      <UniqueIdentifier>{d2832050-dffd-4515-8df2-d631e1695f0c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -2246,6 +2258,27 @@
     </ClCompile>
     <ClCompile Include="drivers\tof\pc\tofListDebugPc.c">
       <Filter>Source Files\drivers\tof\pc</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\i2c\multiplexer\multiplexer.c">
+      <Filter>Source Files\drivers\i2c\multiplexer</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\i2c\multiplexer\multiplexerDebug.c">
+      <Filter>Source Files\drivers\i2c\multiplexer</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\i2c\multiplexer\multiplexerList.c">
+      <Filter>Source Files\drivers\i2c\multiplexer</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\i2c\multiplexer\multiplexerTca9548A.c">
+      <Filter>Source Files\drivers\i2c\multiplexer</Filter>
+    </ClCompile>
+    <ClCompile Include="device\i2c\multiplexer\multiplexerDevice.c">
+      <Filter>Source Files\device\i2c\multiplexer</Filter>
+    </ClCompile>
+    <ClCompile Include="device\i2c\multiplexer\multiplexerDeviceInterface.c">
+      <Filter>Source Files\device\i2c\multiplexer</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\i2c\multiplexer\pc\multiplexerPc.c">
+      <Filter>Source Files\drivers\i2c\multiplexer\pc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -3508,6 +3541,27 @@
     </ClInclude>
     <ClInclude Include="drivers\tof\pc\tofListDebugPc.h">
       <Filter>Header Files\drivers\tof\pc</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\i2c\multiplexer\multiplexer.h">
+      <Filter>Header Files\drivers\i2c\multiplexer</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\i2c\multiplexer\multiplexerDebug.h">
+      <Filter>Header Files\drivers\i2c\multiplexer</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\i2c\multiplexer\multiplexerList.h">
+      <Filter>Header Files\drivers\i2c\multiplexer</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\i2c\multiplexer\multiplexerTca9548A.h">
+      <Filter>Header Files\drivers\i2c\multiplexer</Filter>
+    </ClInclude>
+    <ClInclude Include="device\i2c\multiplexer\multiplexerDevice.h">
+      <Filter>Header Files\device\i2c\multiplexer</Filter>
+    </ClInclude>
+    <ClInclude Include="device\i2c\multiplexer\multiplexerDeviceInterface.h">
+      <Filter>Header Files\device\i2c\multiplexer</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\i2c\multiplexer\pc\multiplexerPc.h">
+      <Filter>Header Files\drivers\i2c\multiplexer\pc</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

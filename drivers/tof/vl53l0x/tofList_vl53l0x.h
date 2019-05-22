@@ -9,12 +9,16 @@
 
 #include "../tof.h"
 #include "../tofList.h"
+
 #include "../../../drivers/ioExpander/ioExpander.h"
+
+#include "../../../drivers/i2c/multiplexer/multiplexerList.h"
 
 void initTofSensorListVL53L0X(TofSensorList* tofSensorList, 
                               TofSensor(*tofSensorArray)[],
                               TofSensorVL53L0X(*tofSensorVL53L0XArray)[],
                               unsigned int size,
+                              MultiplexerList* multiplexerList, 
                               bool debug,
                               bool enabledAllSensors,
                               bool changeAllAddresses);

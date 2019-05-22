@@ -31,6 +31,10 @@
 #include "../../drivers/ioExpander/ioExpanderList.h"
 #include "../../drivers/ioExpander/pc/ioExpanderPc.h"
 
+#include "../../drivers/i2c/multiplexer/multiplexer.h"
+#include "../../drivers/i2c/multiplexer/multiplexerList.h"
+#include "../../drivers/i2c/multiplexer/pc/multiplexerPc.h"
+
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
 #include "../../common/log/pc/consoleLogHandler.h"
@@ -81,6 +85,10 @@
 // IO
 #include "../../device/ioExpander/ioExpanderDevice.h"
 #include "../../device/ioExpander/ioExpanderDeviceInterface.h"
+
+// Multiplexer
+#include "../../device/i2c/multiplexer/multiplexerDevice.h"
+#include "../../device/i2c/multiplexer/multiplexerDeviceInterface.h"
 
 // MAIN
 #include "../../main/motorboard/motorBoardPc.h"
@@ -331,6 +339,13 @@ static IOExpander ioExpanderArray[MAIN_BOARD_PC_IO_EXPANDER_LIST_LENGTH];
 static int ioExpanderValue0;
 static int ioExpanderValue1;
 
+// Multiplexer
+static MultiplexerList multiplexerList;
+static Multiplexer multiplexerArray[MAIN_BOARD_PC_MULTIPLEXER_LIST_LENGTH];
+static int multiplexerValue0;
+static int multiplexerValue1;
+
+
 // 2019
 static ElectronLauncher2019 launcher;
 
@@ -421,6 +436,11 @@ void initMainBoardLocalDevices(void) {
     initIOExpanderPc(getIOExpanderByIndex(&ioExpanderList, 0), &ioExpanderValue0);
     initIOExpanderPc(getIOExpanderByIndex(&ioExpanderList, 1), &ioExpanderValue1);
     addLocalDevice(getIOExpanderDeviceInterface(), getIOExpanderDeviceDescriptor(&ioExpanderList));
+
+    // Multiplexer
+    initMultiplexerPc(getMultiplexerByIndex(&multiplexerList, 0), &multiplexerValue0);
+    initMultiplexerPc(getMultiplexerByIndex(&multiplexerList, 1), &multiplexerValue1);
+    addLocalDevice(getMultiplexerDeviceInterface(), getMultiplexerDeviceDescriptor(&multiplexerList));
 
     addLocalDevice(getCurrentSensorDeviceInterface(), getCurrentSensorDeviceDescriptor(&current));
     addLocalDevice(getTemperatureSensorDeviceInterface(), getTemperatureSensorDeviceDescriptor(&temperature));
@@ -560,11 +580,14 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
         MAIN_BOARD_PC_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH);
 
 
-    // TOF
+    // TOF List
     initTofSensorListPc(&tofSensorList, (TofSensor(*)[]) &tofSensorArray, MAIN_BOARD_PC_TOF_SENSOR_LIST_LENGTH);
 
-    // IO Expander
+    // IO Expander List
     initIOExpanderList(&ioExpanderList, (IOExpander(*)[]) &ioExpanderArray, MAIN_BOARD_PC_IO_EXPANDER_LIST_LENGTH);
+
+    // Multiplxer List
+    initMultiplexerList(&multiplexerList, (Multiplexer(*)[]) &multiplexerArray, MAIN_BOARD_PC_MULTIPLEXER_LIST_LENGTH);
 
 
     navigation = initNavigation2019();

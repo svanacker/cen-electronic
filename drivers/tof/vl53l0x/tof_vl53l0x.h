@@ -9,6 +9,8 @@
 #include "vl53l0x_def.h"
 #include "vl53l0x_platform.h"
 
+#include "../../../drivers/i2c/multiplexer/multiplexer.h"
+
 // Forward declaration
 typedef struct TofSensorVL53L0X TofSensorVL53L0X;
 
@@ -22,6 +24,7 @@ struct TofSensorVL53L0X {
     VL53L0X_DeviceInfo_t               deviceInfo;
     VL53L0X_RangingMeasurementData_t   rangingMeasurementData;
     I2cBusConnection*                  i2cBusConnection;
+    Multiplexer*                       multiplexer;
 };
 
 /**
@@ -76,7 +79,8 @@ void printRangeStatus(VL53L0X_RangingMeasurementData_t* pRangingMeasurementData)
 
 bool initTofSensorVL53L0X(TofSensor* tofSensor,
                     TofSensorVL53L0X* tofSensorVL53L0X,       
-                    I2cBusConnection* i2cBusConnection);
+                    I2cBusConnection* i2cBusConnection,
+                    Multiplexer* multiplexer);
 
 
 #endif

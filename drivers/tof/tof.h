@@ -58,9 +58,9 @@ struct TofSensor {
     /** True if we use a I2C Multiplexer */
     bool useMultiplexer;
     /** The address of the multiplexer. */
-    unsigned char multiplexerAddress;
+    unsigned int multiplexerIndex;
     /** The index of the multiplexer if we use it (0 to 7). */
-    unsigned char multiplexerChannel;
+    unsigned int multiplexerChannel;
     /** The function which must be used to init the tof Sensor */
     tofSensorInitFunction* tofSensorInit;
     /** The function which must be used to read the distance */

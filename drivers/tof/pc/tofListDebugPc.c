@@ -18,6 +18,6 @@ void printTofSensorNetworkTablePc(OutputStream* outputStream, TofSensorList* tof
 
 
 void printTofSensorDetectionTablePc(OutputStream* outputStream, TofSensorList* tofSensorList, Point* pointOfView, float pointOfViewAngleRadian) {
-    // TODO : Implementation
+    printTofSensorDetectionTable(outputStream, tofSensorList, pointOfView, pointOfViewAngleRadian);
 }
 

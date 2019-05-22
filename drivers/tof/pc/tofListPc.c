@@ -16,6 +16,7 @@
 void initTofSensorListPc(TofSensorList* tofSensorList, TofSensor(*tofSensorArray)[], unsigned int size) {
     initTofSensorList(tofSensorList, tofSensorArray,
                       size,
+                      NULL,
                       true,
                       true,
                       true,

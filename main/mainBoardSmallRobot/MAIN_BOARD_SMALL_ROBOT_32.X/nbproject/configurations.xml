@@ -257,6 +257,12 @@
         <itemPath>../../../device/i2c/master/i2cMasterDebugDevice.h</itemPath>
         <itemPath>../../../device/i2c/master/i2cMasterDebugDeviceInterface.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f44"
+                     displayName="device.i2c.multiplexer"
+                     projectFiles="true">
+        <itemPath>../../../device/i2c/multiplexer/multiplexerDevice.h</itemPath>
+        <itemPath>../../../device/i2c/multiplexer/multiplexerDeviceInterface.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="f3" displayName="device.ioExpander" projectFiles="true">
         <itemPath>../../../device/ioExpander/ioExpanderDevice.h</itemPath>
         <itemPath>../../../device/ioExpander/ioExpanderDeviceInterface.h</itemPath>
@@ -402,6 +408,10 @@
                      displayName="drivers.i2c.multiplexer"
                      projectFiles="true">
         <itemPath>../../../drivers/i2c/multiplexer/tca9548A.h</itemPath>
+        <itemPath>../../../drivers/i2c/multiplexer/multiplexer.h</itemPath>
+        <itemPath>../../../drivers/i2c/multiplexer/multiplexerDebug.h</itemPath>
+        <itemPath>../../../drivers/i2c/multiplexer/multiplexerList.h</itemPath>
+        <itemPath>../../../drivers/i2c/multiplexer/multiplexerTca9548A.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f4" displayName="drivers.ioExpander" projectFiles="true">
         <itemPath>../../../drivers/ioExpander/ioExpander.h</itemPath>
@@ -948,6 +958,12 @@
         <itemPath>../../../device/i2c/master/i2cMasterDebugDevice.c</itemPath>
         <itemPath>../../../device/i2c/master/i2cMasterDebugDeviceInterface.c</itemPath>
       </logicalFolder>
+      <logicalFolder name="f42"
+                     displayName="device.i2c.multiplexer"
+                     projectFiles="true">
+        <itemPath>../../../device/i2c/multiplexer/multiplexerDevice.c</itemPath>
+        <itemPath>../../../device/i2c/multiplexer/multiplexerDeviceInterface.c</itemPath>
+      </logicalFolder>
       <logicalFolder name="f4" displayName="device.ioExpander" projectFiles="true">
         <itemPath>../../../device/ioExpander/ioExpanderDevice.c</itemPath>
         <itemPath>../../../device/ioExpander/ioExpanderDeviceInterface.c</itemPath>
@@ -1092,6 +1108,10 @@
                      displayName="drivers.i2c.multiplexer"
                      projectFiles="true">
         <itemPath>../../../drivers/i2c/multiplexer/tca9548A.c</itemPath>
+        <itemPath>../../../drivers/i2c/multiplexer/multiplexer.c</itemPath>
+        <itemPath>../../../drivers/i2c/multiplexer/multiplexerDebug.c</itemPath>
+        <itemPath>../../../drivers/i2c/multiplexer/multiplexerList.c</itemPath>
+        <itemPath>../../../drivers/i2c/multiplexer/multiplexerTca9548A.c</itemPath>
       </logicalFolder>
       <logicalFolder name="drivers.io" displayName="drivers.io" projectFiles="true">
       </logicalFolder>

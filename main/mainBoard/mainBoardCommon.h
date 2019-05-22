@@ -23,6 +23,9 @@
 // IO EXPANDER
 #define MAIN_BOARD_IO_EXPANDER_LIST_LENGTH                             2
 
+// MULTIPLEXER
+#define MAIN_BOARD_MULTIPLEXER_LIST_LENGTH                             2
+
 // UART
 #define MAIN_BOARD_SERIAL_LINK_LIST_LENGTH                              4
 #define MAIN_BOARD_SERIAL_PORT_DEBUG                        SERIAL_PORT_2

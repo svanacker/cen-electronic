@@ -24,8 +24,6 @@
 
 #include "../../../drivers/test/testDriver.h"
 
-#include "../../../drivers/i2c/multiplexer/tca9548A.h"
-
 void deviceI2cMasterDebugInit(void) {
 }
 
@@ -45,35 +43,8 @@ I2cBusConnection* getI2cMasterDebugBusConnection(InputStream* inputStream) {
 }
 
 void deviceI2cMasterDebugHandleRawData(unsigned char header, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
-    // MULTIPLEXER
-    if (header == COMMAND_I2C_MULTIPLEXER_SET_CHANNEL) {
-        ackCommand(outputStream, I2C_MASTER_DEBUG_DEVICE_HEADER, COMMAND_I2C_MULTIPLEXER_SET_CHANNEL);
-        unsigned char multiplexerAddress = readHex2(inputStream);
-        checkIsSeparator(inputStream);
-        unsigned char channel = readHex2(inputStream);
-        I2cBusConnection* multiplexerBusConnection = getI2cBusConnectionBySlaveAddress(multiplexerAddress);
-        if (multiplexerBusConnection != NULL) {
-            tca9548A_setChannelsMask(multiplexerBusConnection, channel);
-        }
-        else {
-            writeError(I2C_BUS_CONNECTION_NULL);
-        }
-    }
-    else if (header == COMMAND_I2C_MULTIPLEXER_GET_CHANNEL) {
-        ackCommand(outputStream, I2C_MASTER_DEBUG_DEVICE_HEADER, COMMAND_I2C_MULTIPLEXER_GET_CHANNEL);
-        unsigned char multiplexerAddress = readHex2(inputStream);
-        I2cBusConnection* multiplexerBusConnection = getI2cBusConnectionBySlaveAddress(multiplexerAddress);
-        if (multiplexerBusConnection != NULL) {
-            unsigned char channel = tca9548A_getChannelsMask(multiplexerBusConnection);
-            appendHex2(outputStream, channel);
-        }
-        else {
-            writeError(I2C_BUS_CONNECTION_NULL);
-            appendHex2(outputStream, 0x00);
-        }
-    }
     // I2C Management
-    else if (header == COMMAND_I2C_MASTER_DEBUG_PRINT_BUFFER) {
+    if (header == COMMAND_I2C_MASTER_DEBUG_PRINT_BUFFER) {
         ackCommand(outputStream, I2C_MASTER_DEBUG_DEVICE_HEADER, COMMAND_I2C_MASTER_DEBUG_PRINT_BUFFER);
         printI2cDebugBuffers();
     }

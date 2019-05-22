@@ -22,6 +22,8 @@
 
 #define IO_DEVICE_HEADER                           'g'
 
+#define MULTIPLEXER_HEADER                         'G'
+
 // 'h' for Help
 #define SYSTEM_DEBUG_DEVICE_HEADER                 'h'
 

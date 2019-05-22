@@ -162,28 +162,85 @@ void printTofSensorNetworkTable(OutputStream* outputStream, TofSensorList* tofSe
 void printTofSensorDetectionDebugTableHeader(OutputStream* outputStream) {
     println(outputStream);
     appendTableHeaderSeparatorLine(outputStream);
-
     // First header line
     appendStringHeader(outputStream, "Id", TOF_SENSOR_INDEX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Name", TOF_SENSOR_NAME_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Enab.", TOF_SENSOR_ENABLE_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Thres", TOF_SENSOR_VALUE_THRESHOLD_MAX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Thres", TOF_SENSOR_VALUE_THRESHOLD_MIN_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Detect.", TOF_SENSOR_VALUE_DETECTION_THRESHOLD_COUNT_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Detected.", TOF_SENSOR_VALUE_DETECTED_COUNT_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Distance.", TOF_SENSOR_VALUE_DISTANCE_DEC_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Distance.", TOF_SENSOR_VALUE_DISTANCE_HEX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Detect. X", TOF_SENSOR_VALUE_OBJECT_X_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Detect. Y", TOF_SENSOR_VALUE_OBJECT_Y_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, TOF_SENSOR_LAST_COLUMN);
+    
+    // Second header line
+    appendStringHeader(outputStream, "", TOF_SENSOR_INDEX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "", TOF_SENSOR_NAME_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "", TOF_SENSOR_ENABLE_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Hold", TOF_SENSOR_VALUE_THRESHOLD_MAX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Hold", TOF_SENSOR_VALUE_THRESHOLD_MIN_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Thres", TOF_SENSOR_VALUE_DETECTION_THRESHOLD_COUNT_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Count", TOF_SENSOR_VALUE_DETECTED_COUNT_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "(mm)", TOF_SENSOR_VALUE_DISTANCE_DEC_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "(mm)", TOF_SENSOR_VALUE_DISTANCE_HEX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "(mm)", TOF_SENSOR_VALUE_OBJECT_X_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "(mm)", TOF_SENSOR_VALUE_OBJECT_Y_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, TOF_SENSOR_LAST_COLUMN);
+
+    // Third header line
+    appendStringHeader(outputStream, "", TOF_SENSOR_INDEX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "", TOF_SENSOR_NAME_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "", TOF_SENSOR_ENABLE_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "(mm)", TOF_SENSOR_VALUE_THRESHOLD_MAX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "(mm)", TOF_SENSOR_VALUE_THRESHOLD_MIN_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Hold", TOF_SENSOR_VALUE_DETECTION_THRESHOLD_COUNT_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "", TOF_SENSOR_VALUE_DETECTED_COUNT_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "(Dec)", TOF_SENSOR_VALUE_DISTANCE_DEC_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "(Hex)", TOF_SENSOR_VALUE_DISTANCE_HEX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "(Dec)", TOF_SENSOR_VALUE_OBJECT_X_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "(Dec)", TOF_SENSOR_VALUE_OBJECT_Y_COLUMN_LENGTH);
+
     appendEndOfTableColumn(outputStream, TOF_SENSOR_LAST_COLUMN);
 
     appendTableHeaderSeparatorLine(outputStream);
 }
 
 void printTofSensorDetectionTable(OutputStream* outputStream, TofSensorList* tofSensorList, Point* pointOfView, float pointOfViewAngleRadian) {
-    printTofSensorNetworkDebugTableHeader(outputStream);
+    printTofSensorDetectionDebugTableHeader(outputStream);
     unsigned int index;
     for (index = 0; index < tofSensorList->size; index++) {
         TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, index);
-
+        
         appendDecTableData(outputStream, index, TOF_SENSOR_INDEX_COLUMN_LENGTH);
         appendStringTableData(outputStream, tofSensor->name, TOF_SENSOR_NAME_COLUMN_LENGTH);
         appendBoolAsStringTableData(outputStream, tofSensor->enabled, TOF_SENSOR_ENABLE_COLUMN_LENGTH);
 
-        // TODO 
+        // DISTANCE & DETECTION COUNT THRESHOLD
+        appendDecfTableData(outputStream, tofSensor->thresholdMinDistanceMM, TOF_SENSOR_VALUE_THRESHOLD_MIN_COLUMN_LENGTH);
+        appendDecfTableData(outputStream, tofSensor->thresholdMaxDistanceMM, TOF_SENSOR_VALUE_THRESHOLD_MAX_COLUMN_LENGTH);
+        appendDecTableData(outputStream, tofSensor->detectionThreshold, TOF_SENSOR_VALUE_DETECTION_THRESHOLD_COUNT_COLUMN_LENGTH);
+        appendDecTableData(outputStream, tofSensor->detectedCount, TOF_SENSOR_VALUE_DETECTED_COUNT_COLUMN_LENGTH);
 
+        // DISTANCE
+        unsigned int distance = tofSensor->tofGetDistanceMM(tofSensor);
+        appendDecTableData(outputStream, distance, TOF_SENSOR_VALUE_DISTANCE_DEC_COLUMN_LENGTH);
+        appendHex4TableData(outputStream, distance, TOF_SENSOR_VALUE_DISTANCE_HEX_COLUMN_LENGTH);
+
+        // DetectedPoint if any
+        Point detectedPoint;
+        bool detected = tofComputeDetectedPointIfAny(tofSensor, pointOfView, pointOfViewAngleRadian, &detectedPoint);
+        // Distance to the point of View only if in the Threshold
+        if (detected) {
+            appendDecfTableData(outputStream, detectedPoint.x, TOF_SENSOR_VALUE_OBJECT_X_COLUMN_LENGTH);
+            appendDecfTableData(outputStream, detectedPoint.y, TOF_SENSOR_VALUE_OBJECT_Y_COLUMN_LENGTH);
+        }
+        else {
+            appendStringTableData(outputStream, "-", TOF_SENSOR_VALUE_OBJECT_X_COLUMN_LENGTH);
+            appendStringTableData(outputStream, "-", TOF_SENSOR_VALUE_OBJECT_Y_COLUMN_LENGTH);        
+        }
         appendEndOfTableColumn(outputStream, TOF_SENSOR_LAST_COLUMN);
     }
 
