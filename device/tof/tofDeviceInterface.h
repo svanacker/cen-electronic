@@ -28,6 +28,9 @@
 /** Command header to launch a tracker system with a notification system */
 #define COMMAND_TOF_TRACK             't'
 
+/** Command header to reset & restart a specific Tof */
+#define COMMAND_TOF_RESTART           'R'
+
 /**
 * Interface for Device "Time of Flight".
 */

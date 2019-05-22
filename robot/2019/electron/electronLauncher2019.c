@@ -65,9 +65,11 @@ void checkElectronLauncher2019RobotPlaced(ElectronLauncher2019* launcher) {
         return;
     }
     launcher->robotPlacedAnalysisCount++;
+    tofSensor->thresholdMinDistanceMM = ELECTRON_LAUNCHER_2019_ROBOT_PLACED_DISTANCE_MIN;
+    tofSensor->thresholdMaxDistanceMM = ELECTRON_LAUNCHER_2019_ROBOT_PLACED_DISTANCE_MAX;
+    
     unsigned int distanceMM = tofSensor->tofGetDistanceMM(tofSensor);
-    if (distanceMM > ELECTRON_LAUNCHER_2019_ROBOT_PLACED_DISTANCE_MIN 
-     && distanceMM < ELECTRON_LAUNCHER_2019_ROBOT_PLACED_DISTANCE_MAX) {
+    if (isTofDistanceInRange(tofSensor)) {
         // We only notify one time
         appendStringAndDec(getAlwaysOutputStreamLogger(), "ROBOT PLACED:", distanceMM);
         appendStringCRLF(getAlwaysOutputStreamLogger(), " mm");
@@ -91,8 +93,10 @@ void checkElectronLauncher2019RobotMoved(ElectronLauncher2019* launcher) {
     launcher->robotMovedAnalysisCount++;
     unsigned int distanceMM = 0;
     distanceMM = tofSensor->tofGetDistanceMM(tofSensor);
-    if (distanceMM > ELECTRON_LAUNCHER_2019_ROBOT_MOVED_DISTANCE_MIN
-            && distanceMM < ELECTRON_LAUNCHER_2019_ROBOT_MOVED_DISTANCE_MAX) {
+    tofSensor->thresholdMinDistanceMM = ELECTRON_LAUNCHER_2019_ROBOT_MOVED_DISTANCE_MIN;
+    tofSensor->thresholdMaxDistanceMM = ELECTRON_LAUNCHER_2019_ROBOT_MOVED_DISTANCE_MAX;
+    
+    if (isTofDistanceInRange(tofSensor)) {
         launcher->robotMovedDetectionCount++;
         // Store how many Count the detect
         if (launcher->robotMovedDetectionCount >= ELECTRON_LAUNCHER_2019_THRESHOLD_COUNT) {

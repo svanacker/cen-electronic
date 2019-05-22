@@ -158,7 +158,7 @@ void mainBoardDeviceHandleMotionDeviceNotification(const Device* device, const u
     }
 }
 
-void mainBoardCommonStrategyMainInitDrivers(RobotConfig* robotConfig) {
+GameStrategyContext* mainBoardCommonStrategyMainInitDrivers(RobotConfig* robotConfig) {
     // 2019
     navigation = initNavigation2019();
     EndMatch* endMatch = mainBoardCommonMatchGetEndMatch();
@@ -167,6 +167,8 @@ void mainBoardCommonStrategyMainInitDrivers(RobotConfig* robotConfig) {
 
     gameStrategyContext = initGameStrategyContext2019(robotConfig, endMatch, tofSensorList, servoList);
     gameBoard = initGameBoard2019(gameStrategyContext);
+    
+    return gameStrategyContext;
 }
 
 void mainBoardCommonStrategyMainEndInit(void) {      

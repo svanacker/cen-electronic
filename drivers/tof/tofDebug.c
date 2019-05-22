@@ -8,6 +8,30 @@
 
 #include "tof.h"
 
+// TYPE
+
+unsigned int appendTofSensorTypeAsString(OutputStream* outputStream, enum TofSensorType tofSensorType) {
+    if (tofSensorType == TOF_SENSOR_TYPE_UNKNOWN) {
+        return appendString(outputStream, "UNKNOWN");
+    }
+    else if (tofSensorType == TOF_SENSOR_TYPE_PC) {
+        return appendString(outputStream, "TOF PC");
+    }
+    else if (tofSensorType == TOF_SENSOR_TYPE_VL53L0X) {
+        return appendString(outputStream, "VL53L0X");
+    }
+	return 0;
+}
+
+unsigned int addTofSensorTypeTableData(OutputStream* outputStream, enum TofSensorType tofSensorType, int columnSize) {
+	appendTableSeparator(outputStream);
+	appendSpace(outputStream);
+	unsigned int length = appendTofSensorTypeAsString(outputStream, tofSensorType);
+	return length + appendSpaces(outputStream, columnSize - length) + 2;
+}
+
+// USAGE TYPE
+
 unsigned int appendTofSensorUsageTypeAsString(OutputStream* outputStream, enum TofSensorUsageType tofSensorUsageType) {
     if (tofSensorUsageType == TOF_SENSOR_USAGE_TYPE_UNKNOWN) {
         return appendString(outputStream, "UNKNOWN");

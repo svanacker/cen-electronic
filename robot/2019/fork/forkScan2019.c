@@ -17,6 +17,25 @@
 
 #include "../../../common/timer/delayTimer.h"
 
+// TOF CONFIG
+
+void forkScan2019ConfigTofList(TofSensor* leftForkScanSensor, TofSensor* rightForkScanSensor) {
+    if (leftForkScanSensor != NULL) {
+        leftForkScanSensor->usageType = TOF_SENSOR_USAGE_TYPE_ACTION;
+        leftForkScanSensor->orientationRadian = 0.0f;
+        leftForkScanSensor->thresholdMinDistanceMM = FORK_2019_SCAN_DISTANCE_LEFT_MIN_THRESHOLD;
+        leftForkScanSensor->thresholdMaxDistanceMM = FORK_2019_SCAN_DISTANCE_LEFT_MAX_THRESHOLD;
+        leftForkScanSensor->name = "FORK LEFT";
+    }
+    if (rightForkScanSensor != NULL) {
+        rightForkScanSensor->usageType = TOF_SENSOR_USAGE_TYPE_ACTION;
+        rightForkScanSensor->orientationRadian = 0.0f;
+        rightForkScanSensor->thresholdMinDistanceMM = FORK_2019_SCAN_DISTANCE_RIGHT_MIN_THRESHOLD;
+        rightForkScanSensor->thresholdMaxDistanceMM = FORK_2019_SCAN_DISTANCE_RIGHT_MAX_THRESHOLD;
+        rightForkScanSensor->name = "FORK RIGHT";
+    }
+}
+
 // ELEVATOR SCAN
 
 void moveElevatorLeft(ServoList* servoList, bool wait) {
@@ -33,31 +52,6 @@ void moveElevatorRight(ServoList* servoList, bool wait) {
     Servo* servo = getServo(servoList, FORK_2019_SCAN_SERVO_INDEX);
     pwmServo(servo, FORK_2019_SCAN_SPEED_FACTOR, FORK_2019_SCAN_RIGHT_SERVO_VALUE, wait);
 }
-
-// TOF
-
-void setForkTofListNameAndThreshold(TofSensorList* tofSensorList) {
-    unsigned int tofSensorListSize = getTofSensorListSize(tofSensorList);
-
-    if (tofSensorListSize > FORK_2019_LEFT_TOF_INDEX) {
-        TofSensor* backMiddleSensor = getTofSensorByIndex(tofSensorList, FORK_2019_LEFT_TOF_INDEX);
-        backMiddleSensor->usageType = TOF_SENSOR_USAGE_TYPE_ACTION;
-        backMiddleSensor->orientationRadian = 0.0f;
-        backMiddleSensor->thresholdMinDistanceMM = FORK_2019_SCAN_DISTANCE_LEFT_MIN_THRESHOLD;
-        backMiddleSensor->thresholdMaxDistanceMM = FORK_2019_SCAN_DISTANCE_LEFT_MAX_THRESHOLD;
-        backMiddleSensor->name = "FORK LEFT";
-    }
-
-    if (tofSensorListSize > FORK_2019_RIGHT_TOF_INDEX) {
-        TofSensor* backRightSensor = getTofSensorByIndex(tofSensorList, FORK_2019_RIGHT_TOF_INDEX);
-        backRightSensor->usageType = TOF_SENSOR_USAGE_TYPE_ACTION;
-        backRightSensor->orientationRadian = 0.0f;
-        backRightSensor->thresholdMinDistanceMM = FORK_2019_SCAN_DISTANCE_RIGHT_MIN_THRESHOLD;
-        backRightSensor->thresholdMaxDistanceMM = FORK_2019_SCAN_DISTANCE_RIGHT_MAX_THRESHOLD;
-        backRightSensor->name = "FORK RIGHT";
-    }
-}
-
 
 void moveElevatorDistributorScan(ServoList* servoList, bool wait) {
     Servo* servo = getServo(servoList, FORK_2019_ELEVATOR_SERVO_INDEX);

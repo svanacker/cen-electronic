@@ -10,6 +10,8 @@
 
 #include "../../common/log/logger.h"
 
+#include "../../common/math/cenMath.h"
+
 #include "../../device/deviceList.h"
 
 // IO Expander
@@ -41,6 +43,9 @@
 // TOF
 #include "../../drivers/tof/vl53l0x/tof_vl53l0x.h"
 #include "../../drivers/tof/vl53l0x/tofList_vl53l0x.h"
+
+// 2019 Specific
+#include "../../robot/2019/fork/forkScan2019.h"
 
 // IO Expander
 static IOExpanderList ioExpanderList;
@@ -93,107 +98,206 @@ void mainBoardCommonMultiplexerListInitDrivers(I2cBus* i2cBus) {
     appendStringLN(getDebugOutputStreamLogger(), "OK");
 }
 
-void mainBoardCommonTofInitDrivers(I2cBus* i2cBus, I2cBus* i2cBus2, unsigned int tofSensorCount) {
+void mainBoardCommonTofInitDrivers(I2cBus* i2cBus, float distanceFactor) {
     // IO Expander List
-    mainBoardCommonIOExpanderListInitDrivers(i2cBus2);
+    mainBoardCommonIOExpanderListInitDrivers(i2cBus);
     
     // Multiplexer List
-    mainBoardCommonMultiplexerListInitDrivers(i2cBus2);
-        
-    // TOF
-    if (tofSensorCount > 0) {
-        tofSensorArray[0].enabled = true;
-        tofSensorArray[0].useMultiplexer = true;
-        tofSensorArray[0].multiplexerIndex = 1;
-        tofSensorArray[0].multiplexerChannel = 1;
-    }
-    if (tofSensorCount > 1) {
-        tofSensorArray[1].enabled = true; 
-        tofSensorArray[1].useMultiplexer = true;
-        tofSensorArray[1].multiplexerIndex = 1;
-        tofSensorArray[1].multiplexerChannel = 2;
-    }
-    if (tofSensorCount > 2) {
-        tofSensorArray[2].enabled = true;
-        tofSensorArray[2].useMultiplexer = true;
-        tofSensorArray[2].multiplexerIndex = 1;
-        tofSensorArray[2].multiplexerChannel = 4;
-    }
-    if (tofSensorCount > 3) {
-        tofSensorArray[3].enabled = true;
-        tofSensorArray[3].multiplexerIndex = 1;
-        tofSensorArray[3].useMultiplexer = true;
-        tofSensorArray[3].multiplexerChannel = 8;
-    }
-    if (tofSensorCount > 4) {
-        tofSensorArray[4].enabled = true;
-        tofSensorArray[4].multiplexerIndex = 1;
-        tofSensorArray[4].useMultiplexer = true;
-        tofSensorArray[4].multiplexerChannel = 16;
-    }    
-    if (tofSensorCount > 5) {
-        tofSensorArray[5].enabled = true;
-        tofSensorArray[5].multiplexerIndex = 1;
-        tofSensorArray[5].useMultiplexer = true;
-        tofSensorArray[5].multiplexerChannel = 32;
-    }
-    if (tofSensorCount > 6) {
-        tofSensorArray[6].enabled = false;
-        tofSensorArray[6].multiplexerIndex = 1;
-        tofSensorArray[6].useMultiplexer = true;
-        tofSensorArray[6].multiplexerChannel = 64;
+    mainBoardCommonMultiplexerListInitDrivers(i2cBus);
 
+    // TOF
+    if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > BACK_RIGHT_SENSOR_INDEX) {
+        TofSensor* frontRightSensor = &(tofSensorArray[FRONT_RIGHT_SENSOR_INDEX]);
+        frontRightSensor->usageType = TOF_SENSOR_USAGE_TYPE_COLLISION;
+        frontRightSensor->angleFromRobotCenterRadian = degToRad(FRONT_RIGHT_SENSOR_ANGLE_DEGREE);
+        frontRightSensor->distanceFromRobotCenter = 30.0f;
+        // Same value than angleFromRobotCenter because placed on a circle
+        frontRightSensor->orientationRadian = frontRightSensor->angleFromRobotCenterRadian;
+        frontRightSensor->thresholdMinDistanceMM = BACK_TOF_TO_BACK_OF_ROBOT_DISTANCE;
+        frontRightSensor->thresholdMaxDistanceMM = FRONT_TOF_TO_FRONT_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * FRONT_RIGHT_SENSOR_DISTANCE_THRESHOLD);
+        frontRightSensor->name = "FRONT RIGHT";
+        frontRightSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
+
+        frontRightSensor->enabled = true;
+        frontRightSensor->useMultiplexer = true;
+        frontRightSensor->multiplexerIndex = 1;
+        frontRightSensor->multiplexerChannel = 1;
     }
-    if (tofSensorCount > 7) {
-        tofSensorArray[7].enabled = false;
-        tofSensorArray[7].multiplexerIndex = 1;
-        tofSensorArray[7].useMultiplexer = true;
-        tofSensorArray[7].multiplexerChannel = 128;
+    if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > FRONT_MIDDLE_SENSOR_INDEX) {
+        TofSensor* frontMiddleSensor = &(tofSensorArray[FRONT_MIDDLE_SENSOR_INDEX]);
+        frontMiddleSensor->usageType = TOF_SENSOR_USAGE_TYPE_COLLISION;
+        frontMiddleSensor->angleFromRobotCenterRadian = degToRad(FRONT_MIDDLE_SENSOR_ANGLE_DEGREE);
+        frontMiddleSensor->distanceFromRobotCenter = 30.0f;
+        // Same value than angleFromRobotCenter because placed on a circle
+        frontMiddleSensor->orientationRadian = frontMiddleSensor->angleFromRobotCenterRadian;
+        frontMiddleSensor->thresholdMinDistanceMM = BACK_TOF_TO_BACK_OF_ROBOT_DISTANCE;
+        frontMiddleSensor->thresholdMaxDistanceMM = FRONT_TOF_TO_FRONT_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * FRONT_MIDDLE_SENSOR_DISTANCE_THRESHOLD);
+        frontMiddleSensor->name = "FRONT MIDDLE";
+        frontMiddleSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
+
+        frontMiddleSensor->enabled = true; 
+        frontMiddleSensor->useMultiplexer = true;
+        frontMiddleSensor->multiplexerIndex = 1;
+        frontMiddleSensor->multiplexerChannel = 2;
     }
-    // TCA9548A_ADDRESS_0 -----------------------------------------
-    if (tofSensorCount > 8) {
-        tofSensorArray[8].enabled = true;
-        tofSensorArray[8].multiplexerIndex = 0;
-        tofSensorArray[8].useMultiplexer = true;
-        tofSensorArray[8].multiplexerChannel = 1;
+    if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > FRONT_LEFT_SENSOR_INDEX) {
+        TofSensor* frontLeftSensor = &(tofSensorArray[FRONT_LEFT_SENSOR_INDEX]);
+        frontLeftSensor->usageType = TOF_SENSOR_USAGE_TYPE_COLLISION;
+        frontLeftSensor->angleFromRobotCenterRadian = degToRad(FRONT_LEFT_SENSOR_ANGLE_DEGREE);
+        frontLeftSensor->distanceFromRobotCenter = 30.0f;
+        // Same value than angleFromRobotCenter because placed on a circle
+        frontLeftSensor->orientationRadian = frontLeftSensor->angleFromRobotCenterRadian;
+        frontLeftSensor->thresholdMinDistanceMM = BACK_TOF_TO_BACK_OF_ROBOT_DISTANCE;
+        frontLeftSensor->thresholdMaxDistanceMM = FRONT_TOF_TO_FRONT_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * FRONT_LEFT_SENSOR_DISTANCE_THRESHOLD);
+        frontLeftSensor->name = "FRONT LEFT";
+        frontLeftSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
+
+        frontLeftSensor->enabled = true;
+        frontLeftSensor->useMultiplexer = true;
+        frontLeftSensor->multiplexerIndex = 1;
+        frontLeftSensor->multiplexerChannel = 4;
     }
-    if (tofSensorCount > 9) {
-        tofSensorArray[9].enabled = true;
-        tofSensorArray[9].multiplexerIndex = 0;
-        tofSensorArray[9].useMultiplexer = true;
-        tofSensorArray[9].multiplexerChannel = 2;
+    if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > BACK_RIGHT_SENSOR_INDEX) {
+        TofSensor* backRightSensor = &(tofSensorArray[BACK_RIGHT_SENSOR_INDEX]);
+        backRightSensor->usageType = TOF_SENSOR_USAGE_TYPE_COLLISION;
+        backRightSensor->angleFromRobotCenterRadian = degToRad(BACK_RIGHT_SENSOR_ANGLE_DEGREE);
+        backRightSensor->distanceFromRobotCenter = 30.0f;
+        // Same value than angleFromRobotCenter because placed on a circle
+        backRightSensor->orientationRadian = backRightSensor->angleFromRobotCenterRadian;
+        backRightSensor->thresholdMinDistanceMM = BACK_TOF_TO_BACK_OF_ROBOT_DISTANCE;
+        backRightSensor->thresholdMaxDistanceMM = BACK_TOF_TO_BACK_OF_ROBOT_DISTANCE + (unsigned int ) (distanceFactor * BACK_RIGHT_SENSOR_DISTANCE_THRESHOLD);
+        backRightSensor->name = "BACK RIGHT";
+        backRightSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
+
+        backRightSensor->enabled = true;
+        backRightSensor->multiplexerIndex = 1;
+        backRightSensor->useMultiplexer = true;
+        backRightSensor->multiplexerChannel = 8;
     }
-    if (tofSensorCount > 10) {
-        tofSensorArray[10].enabled = true;
-        tofSensorArray[10].multiplexerIndex = 0;
-        tofSensorArray[10].useMultiplexer = true;
-        tofSensorArray[10].multiplexerChannel = 4;
-    }
-    if (tofSensorCount > 11) {
-        tofSensorArray[11].enabled = true;
-        tofSensorArray[11].multiplexerIndex = 0;
-        tofSensorArray[11].useMultiplexer = true;
-        tofSensorArray[11].multiplexerChannel = 8;
-    }
-    if (tofSensorCount > 12) {
-        tofSensorArray[12].enabled = true;
-        tofSensorArray[12].multiplexerIndex = 0;
-        tofSensorArray[12].useMultiplexer = true;
-        tofSensorArray[12].multiplexerChannel = 16;
-    }
-    if (tofSensorCount > 13) {
-        tofSensorArray[13].enabled = true;
-        tofSensorArray[13].multiplexerIndex = 0;
-        tofSensorArray[13].useMultiplexer = true;
-        tofSensorArray[13].multiplexerChannel = 32;
+    if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > BACK_MIDDLE_SENSOR_INDEX) {
+        TofSensor* backMiddleSensor = &(tofSensorArray[BACK_MIDDLE_SENSOR_INDEX]);
+        backMiddleSensor->usageType = TOF_SENSOR_USAGE_TYPE_COLLISION;
+        backMiddleSensor->angleFromRobotCenterRadian = degToRad(BACK_MIDDLE_SENSOR_ANGLE_DEGREE);
+        backMiddleSensor->distanceFromRobotCenter = 30.0f;
+        // Same value than angleFromRobotCenter because placed on a circle
+        backMiddleSensor->orientationRadian = backMiddleSensor->angleFromRobotCenterRadian;
+        backMiddleSensor->thresholdMinDistanceMM = BACK_TOF_TO_BACK_OF_ROBOT_DISTANCE;
+        backMiddleSensor->thresholdMaxDistanceMM = BACK_TOF_TO_BACK_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * BACK_MIDDLE_SENSOR_DISTANCE_THRESHOLD);
+        backMiddleSensor->name = "BACK MIDDLE";
+        backMiddleSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
+
+        backMiddleSensor->enabled = true;
+        backMiddleSensor->multiplexerIndex = 1;
+        backMiddleSensor->useMultiplexer = true;
+        backMiddleSensor->multiplexerChannel = 16;
+    }    
+    if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > 5) {
+        TofSensor* backLeftSensor = &(tofSensorArray[BACK_LEFT_SENSOR_INDEX]);
+        backLeftSensor->usageType = TOF_SENSOR_USAGE_TYPE_COLLISION;
+        backLeftSensor->angleFromRobotCenterRadian = degToRad(BACK_LEFT_SENSOR_ANGLE_DEGREE);
+        backLeftSensor->distanceFromRobotCenter = 30.0f;
+        // Same value than angleFromRobotCenter because placed on a circle
+        backLeftSensor->orientationRadian = backLeftSensor->angleFromRobotCenterRadian;
+        backLeftSensor->thresholdMinDistanceMM = BACK_TOF_TO_BACK_OF_ROBOT_DISTANCE;
+        backLeftSensor->thresholdMaxDistanceMM = BACK_TOF_TO_BACK_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * BACK_LEFT_SENSOR_DISTANCE_THRESHOLD);
+        backLeftSensor->name = "BACK LEFT";
+        backLeftSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
+
+        backLeftSensor->enabled = true;
+        backLeftSensor->multiplexerIndex = 1;
+        backLeftSensor->useMultiplexer = true;
+        backLeftSensor->multiplexerChannel = 32;
     }
     
+    // NOT USED
+    if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > 6) {
+        tofSensorArray[6].enabled = false;
+
+    }
+    if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > 7) {
+        tofSensorArray[7].enabled = false;
+    }
+    
+    // TCA9548A_ADDRESS_0 -----------------------------------------
+    if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > FRONT_SIDE_LEFT_SENSOR_INDEX) {
+        TofSensor* frontSideLeftSensor = &(tofSensorArray[FRONT_SIDE_LEFT_SENSOR_INDEX]);
+        frontSideLeftSensor->usageType = TOF_SENSOR_USAGE_TYPE_COLLISION;
+        frontSideLeftSensor->angleFromRobotCenterRadian = degToRad(75.0f);
+        frontSideLeftSensor->distanceFromRobotCenter = 150.0f;
+        frontSideLeftSensor->orientationRadian = degToRad(FRONT_SIDE_LEFT_SENSOR_ANGLE_DEGREE);
+        frontSideLeftSensor->thresholdMinDistanceMM = FRONT_SIDE_TOF_TO_FRONT_OF_ROBOT_DISTANCE;
+        frontSideLeftSensor->thresholdMaxDistanceMM = FRONT_SIDE_TOF_TO_FRONT_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * FRONT_SIDE_LEFT_SENSOR_DISTANCE_THRESHOLD);
+        frontSideLeftSensor->name = "FRONT SIDE L";
+        frontSideLeftSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
+
+        frontSideLeftSensor->enabled = true;
+        frontSideLeftSensor->multiplexerIndex = 0;
+        frontSideLeftSensor->useMultiplexer = true;
+        frontSideLeftSensor->multiplexerChannel = 1;
+    }
+    if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > FRONT_SIDE_RIGHT_SENSOR_INDEX) {
+        TofSensor* frontSideRightSensor = &(tofSensorArray[FRONT_SIDE_RIGHT_SENSOR_INDEX]);
+        frontSideRightSensor->usageType = TOF_SENSOR_USAGE_TYPE_COLLISION;
+        frontSideRightSensor->angleFromRobotCenterRadian = degToRad(-75.0f);
+        frontSideRightSensor->distanceFromRobotCenter = 150.0f;
+        frontSideRightSensor->orientationRadian = degToRad(FRONT_SIDE_RIGHT_SENSOR_ANGLE_DEGREE);
+        frontSideRightSensor->thresholdMinDistanceMM = FRONT_SIDE_TOF_TO_FRONT_OF_ROBOT_DISTANCE;
+        frontSideRightSensor->thresholdMaxDistanceMM = FRONT_SIDE_TOF_TO_FRONT_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * FRONT_SIDE_RIGHT_SENSOR_DISTANCE_THRESHOLD);
+        frontSideRightSensor->name = "FRONT SIDE R";
+        frontSideRightSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
+        
+        frontSideRightSensor->enabled = true;
+        frontSideRightSensor->multiplexerIndex = 0;
+        frontSideRightSensor->useMultiplexer = true;
+        frontSideRightSensor->multiplexerChannel = 2;
+    }
+    if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > BACK_SIDE_RIGHT_SENSOR_INDEX) {
+        TofSensor* backSideRightSensor = &(tofSensorArray[BACK_SIDE_RIGHT_SENSOR_INDEX]);
+        backSideRightSensor->usageType = TOF_SENSOR_USAGE_TYPE_COLLISION;
+        backSideRightSensor->angleFromRobotCenterRadian = degToRad(-105.0f);
+        backSideRightSensor->distanceFromRobotCenter = 150.0f;
+        backSideRightSensor->orientationRadian = degToRad(BACK_SIDE_RIGHT_SENSOR_ANGLE_DEGREE);
+        backSideRightSensor->thresholdMinDistanceMM = FRONT_SIDE_TOF_TO_BACK_OF_ROBOT_DISTANCE;
+        backSideRightSensor->thresholdMaxDistanceMM = FRONT_SIDE_TOF_TO_BACK_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * BACK_SIDE_RIGHT_SENSOR_DISTANCE_THRESHOLD);
+        backSideRightSensor->name = "BACK SIDE R";
+        backSideRightSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
+        
+        backSideRightSensor->enabled = true;
+        backSideRightSensor->multiplexerIndex = 0;
+        backSideRightSensor->useMultiplexer = true;
+        backSideRightSensor->multiplexerChannel = 4;
+    }
+    // TOF 11 & 12 are defined in forkScan2019.c
+    if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > BACK_SIDE_LEFT_SENSOR_INDEX) {
+        TofSensor* backSideLeftSensor = &(tofSensorArray[BACK_SIDE_LEFT_SENSOR_INDEX]); 
+        backSideLeftSensor->usageType = TOF_SENSOR_USAGE_TYPE_COLLISION;
+        backSideLeftSensor->angleFromRobotCenterRadian = degToRad(105.0f);
+        backSideLeftSensor->distanceFromRobotCenter = 150.0f;
+        backSideLeftSensor->orientationRadian = degToRad(BACK_SIDE_LEFT_SENSOR_ANGLE_DEGREE);
+        backSideLeftSensor->thresholdMinDistanceMM = FRONT_SIDE_TOF_TO_BACK_OF_ROBOT_DISTANCE;
+        backSideLeftSensor->thresholdMaxDistanceMM = FRONT_SIDE_TOF_TO_BACK_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * BACK_SIDE_LEFT_SENSOR_DISTANCE_THRESHOLD);
+        backSideLeftSensor->name = "BACK SIDE L";
+        backSideLeftSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
+        
+        backSideLeftSensor->enabled = true;
+        backSideLeftSensor->multiplexerIndex = 0;
+        backSideLeftSensor->useMultiplexer = true;
+        backSideLeftSensor->multiplexerChannel = 32;
+    }
+    if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > FORK_2019_LEFT_TOF_INDEX &&
+        MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > FORK_2019_RIGHT_TOF_INDEX) {
+        TofSensor* leftForkScanSensor = &(tofSensorArray[BACK_SIDE_LEFT_SENSOR_INDEX]); 
+        TofSensor* rightForkScanSensor = &(tofSensorArray[BACK_SIDE_RIGHT_SENSOR_INDEX]); 
+        forkScan2019ConfigTofList(leftForkScanSensor, rightForkScanSensor);
+    }
+    
+    // HARDWARE Initialization
     appendStringLN(getDebugOutputStreamLogger(), "TOF ...");
     initTofSensorListVL53L0X(&tofSensorList,
                              (TofSensor(*)[]) &tofSensorArray,
                              (TofSensorVL53L0X(*)[]) &tofSensorVL53L0XArray,
                               // Size
-                              tofSensorCount,
+                              MAIN_BOARD_TOF_SENSOR_LIST_LENGTH,
                               // MultiplexerList,
                               &multiplexerList,
                               // debug
@@ -203,18 +307,8 @@ void mainBoardCommonTofInitDrivers(I2cBus* i2cBus, I2cBus* i2cBus2, unsigned int
                               // changeAddressAllSensors
                               true
             );
-    
 
     appendStringLN(getDebugOutputStreamLogger(), "OK");
-    /*
-    // -> Color : IMPORTANT !!! : Initialize COLOR after TOF because they share the same address
-    // And not the same bus, but it uses "getI2cBusConnectionBySlaveAddress" ... which does not distinguish the bus ...
-    appendStringLN(getDebugOutputStreamLogger(), "COLOR ...");
-    colorBusConnection = addI2cBusConnection(i2cBus4, TCS34725_ADDRESS, true);
-    initTcs34725Struct(&tcs34725, colorBusConnection);
-    initColorSensorTcs34725(&colorSensor, &colorValue, &colorSensorFindColorType2018, &tcs34725);
-    appendStringLN(getDebugOutputStreamLogger(), "OK");
-    */
 }
 
 TofSensorList* mainBoardCommonTofGetTofSensorList(void) {

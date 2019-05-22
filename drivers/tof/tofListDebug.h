@@ -12,6 +12,7 @@
 // COMMON PART
 #define TOF_SENSOR_INDEX_COLUMN_LENGTH		                            3
 #define TOF_SENSOR_NAME_COLUMN_LENGTH		                           13
+#define TOF_SENSOR_TYPE_COLUMN_LENGTH		                            7
 #define TOF_SENSOR_USAGE_TYPE_COLUMN_LENGTH		                        5
 #define TOF_SENSOR_ENABLE_COLUMN_LENGTH                                 5
 
@@ -28,7 +29,9 @@
 
 // NETWORK PART
 
+#define TOF_SENSOR_I2C_BUS_INDEX_COLUMN_LENGTH                          5
 #define TOF_SENSOR_CHANGE_ADRESS_COLUMN_LENGTH                          5
+#define TOF_SENSOR_I2C_BUS_NEW_ADDRESS_COLUMN_LENGTH                    8
 #define TOF_SENSOR_USE_MULTIPLEXER_COLUMN_LENGTH                        10
 #define TOF_SENSOR_MULTIPLEXER_CHANNEL_COLUMN_LENGTH                    12
 
@@ -36,10 +39,12 @@
 
 // DETECTION PART
 
-#define TOF_SENSOR_VALUE_DISTANCE_DEC_COLUMN_LENGTH                     10
-#define TOF_SENSOR_VALUE_DISTANCE_HEX_COLUMN_LENGTH                     10
-#define TOF_SENSOR_VALUE_OBJECT_X_COLUMN_LENGTH                         10
-#define TOF_SENSOR_VALUE_OBJECT_Y_COLUMN_LENGTH                         10
+#define TOF_SENSOR_VALUE_DISTANCE_IN_RANGE_COLUMN_LENGTH                8
+
+#define TOF_SENSOR_VALUE_DISTANCE_DEC_COLUMN_LENGTH                     8
+#define TOF_SENSOR_VALUE_DISTANCE_HEX_COLUMN_LENGTH                     8
+#define TOF_SENSOR_VALUE_OBJECT_X_COLUMN_LENGTH                         8
+#define TOF_SENSOR_VALUE_OBJECT_Y_COLUMN_LENGTH                         8
 
 
 

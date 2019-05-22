@@ -84,6 +84,7 @@ void deviceTofHandleRawData(unsigned char commandHeader, InputStream* inputStrea
         tofSensorListBeep(tofSensorList, false);
     }
     else if (commandHeader == COMMAND_TOF_SEARCH_IF_COLLIDING) {
+        // TO : Place it in tof !
         ackCommand(outputStream, TOF_DEVICE_HEADER, COMMAND_TOF_SEARCH_IF_COLLIDING);
         TofSensorList* tofSensorList = getTofDeviceTofSensorList();
 
@@ -115,6 +116,15 @@ void deviceTofHandleRawData(unsigned char commandHeader, InputStream* inputStrea
         }
         // Off the beep at the end
         tofSensorListBeep(tofSensorList, false);
+    }
+    else if (commandHeader == COMMAND_TOF_RESTART) {
+        ackCommand(outputStream, TOF_DEVICE_HEADER, COMMAND_TOF_RESTART);
+        unsigned char tofIndex = readHex2(inputStream);
+        TofSensorList* tofSensorList = getTofDeviceTofSensorList();
+        TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, tofIndex);
+        
+        bool restartSuccess = tofRestart(tofSensor);
+        appendBool(outputStream, restartSuccess);
     }
 }
 

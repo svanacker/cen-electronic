@@ -1,3 +1,5 @@
+#include "mainExperience2019.h"
+
 #include "../../common/commons.h"
 
 #include <stdbool.h>
@@ -31,6 +33,9 @@
 // 2019 Specific
 #include "../../drivers/tof/tofList.h"
 #include "../../drivers/tof/tof.h"
+
+#include "../../main/experience2019/mainExperience2019Tof.h"
+
 #include "../../robot/2019/electron/electronLauncher2019.h"
 #include "../../robot/2019/electron/electronLauncherDevice2019.h"
 #include "../../robot/2019/electron/electronLauncherDeviceInterface2019.h"
@@ -53,7 +58,7 @@ void initMainBoardDevicesDescriptor() {
 
     mainBoardCommonAddDevices(&robotConfig);
     mainBoardCommonLcdAddDevices();
-    mainBoardCommonTofAddDevices();
+    mainExperience2019TofAddDevices();
     
     // 2019 specific
     addLocalDevice(getElectronLauncher2019DeviceInterface(), getElectronLauncher2019DeviceDescriptor(&launcher));
@@ -99,14 +104,14 @@ void mainBoardMainPhase2(void) {
     mainBoardCommonInitTimerList();
     mainBoardCommonInitCommonDrivers();
 
-    mainBoardCommonTofInitDrivers(mainBoardCommonGetMainI2cBus(), mainBoardCommonGetAlternativeI2cBus(), MAIN_EXPERIENCE_2019_TOF_SENSOR_LIST_COUNT);
+    TofSensorList* tofSensorList = mainExperience2019TofInitDrivers();
     
     // 2019 specific
     initElectronLauncher2019(&launcher,
                              &endMatch,
                              &robotConfig,
                              mainBoardCommonGetServoList(),
-                             mainBoardCommonTofGetTofSensorList());
+                             tofSensorList);
     
     initEndMatch(&endMatch, &robotConfig, MATCH_DURATION);
 }

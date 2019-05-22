@@ -50,9 +50,15 @@ struct TofSensor {
     /** An name for the sensor. */
     char* name;
     /** The type of Sensor. */
+    enum TofSensorType type;
+    /** The usage type of Sensor. */
     enum TofSensorUsageType usageType;
     /** If we enabled it. If disable, we do not try to initialize it .*/
     bool enabled;
+    
+    // NETWORK
+    /** The i2cBus index which must be used .*/
+    unsigned int i2cBusIndex;
     /** If we must change the address of the TOF at startup .*/
     bool changeAddress;
     /** True if we use a I2C Multiplexer */
@@ -61,8 +67,8 @@ struct TofSensor {
     unsigned int multiplexerIndex;
     /** The index of the multiplexer if we use it (0 to 7). */
     unsigned int multiplexerChannel;
-    /** The function which must be used to init the tof Sensor */
-    tofSensorInitFunction* tofSensorInit;
+    
+    // DISTANCE & TRESHOLD
     /** The function which must be used to read the distance */
     tofSensorGetDistanceMMFunction* tofGetDistanceMM;
     /** Stored the value of the last call */
@@ -75,6 +81,8 @@ struct TofSensor {
     unsigned int detectionThreshold;
     /** The counter of how many detected were done. */
     unsigned int detectedCount;
+    
+    // CONFIG
     /** The beam angle of what he could detect. */
     float beamAngleRadian;
     /** pointer on other object (useful for I2C Connection for example) .*/
@@ -84,6 +92,12 @@ struct TofSensor {
     float distanceFromRobotCenter;
     /** The angle of the central point of the Sensor compared to the center of the robot (with X axis along the going point). */
     float angleFromRobotCenterRadian;
+
+    // IMPLEMENTATION CALL BACK
+    /** The function which must be used to init the tof Sensor */
+    tofSensorInitFunction* tofSensorInit;
+    
+    // EXTENSION OBJECT
     /** Generic pointer for context use */
     int* object;
 };
@@ -95,6 +109,14 @@ bool initTofSensor(TofSensor* tofSensor,
                     tofSensorInitFunction* tofSensorInit,
                     tofSensorGetDistanceMMFunction* tofGetDistanceMM,
                     int* object);
+
+/**
+ * Restart a Tof Sensor (useful if the I2c Bus Connection has a problem).
+ * @param tofSensor the tofSensor to restart
+ * @return 
+ */
+bool tofRestart(TofSensor* tofSensor);
+
 
 // UTILS FUNCTION
 

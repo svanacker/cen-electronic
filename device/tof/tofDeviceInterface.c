@@ -57,6 +57,14 @@ int deviceTofGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode,
         }
         return commandLengthValueForMode(mode, 5, 0);
     }
+    else if (commandHeader == COMMAND_TOF_RESTART) {
+        if (fillDeviceArgumentList) {
+            setFunction("TOF Restart", 1, 1);
+            setArgumentUnsignedHex2(0, "Tof Index");
+            setResultUnsignedChar1(0, "0 = KO, 1 = Success");
+        }
+        return commandLengthValueForMode(mode, 2, 1);
+    }
 
     return DEVICE_HEADER_NOT_HANDLED;
 }

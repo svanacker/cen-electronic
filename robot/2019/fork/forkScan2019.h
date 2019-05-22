@@ -5,6 +5,7 @@
 
 #include "../../../common/pwm/servo/servoList.h"
 
+#include "../../../drivers/tof/tof.h"
 #include "../../../drivers/tof/tofList.h"
 
 // TOF INDEX
@@ -35,7 +36,7 @@
 
 // FORK SCAN
 
-void setForkTofListNameAndThreshold(TofSensorList* tofSensorList);
+void forkScan2019ConfigTofList(TofSensor* leftForkScanSensor, TofSensor* rightForkScanSensor);
 
 bool forkScan(ServoList* servoList, TofSensorList* tofSensorList, unsigned int leftRight);
 

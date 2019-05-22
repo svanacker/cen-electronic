@@ -5,6 +5,8 @@
 
 #include "../../common/2d/2d.h"
 
+#include "../../common/error/error.h"
+
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
 
@@ -39,6 +41,12 @@ bool initTofSensor(TofSensor* tofSensor,
     tofSensor->object = object;
 
     return tofSensor->tofSensorInit(tofSensor);
+}
+
+bool tofRestart(TofSensor* tofSensor) {
+    // TODO : TO BE IMPLEMENTED
+    writeError(TOF_SENSOR_RESTART_NOT_CONFIGURED);
+    return true;
 }
 
 bool isTofDistanceInRange(TofSensor* tofSensor) {

@@ -5,6 +5,8 @@
 
 #include "../../robot/config/robotConfig.h"
 
+#include "../../robot/strategy/gameStrategyContext.h"
+
 /**
  * Add the devices linked to the strategy.
  * @param portIndex
@@ -19,7 +21,7 @@ void mainBoardCommonStrategyHandleStreamInstruction();
 /**
  * Main Board Strategy Driver Init Part.
  */
-void mainBoardCommonStrategyMainInitDrivers(RobotConfig* robotConfig);
+GameStrategyContext* mainBoardCommonStrategyMainInitDrivers(RobotConfig* robotConfig);
 
 /**
  * Main Board Strategy Init Part (After the Drivers Init).

@@ -40,6 +40,8 @@
 #include "../../robot/2019/fork/forkDeviceInterface2019.h"
 #include "../../robot/2019/fork/forkDevice2019.h"
 
+#include "../../robot/2019/strategy/strategyConfig2019.h"
+
 // Robot Configuration
 static RobotConfig robotConfig;
 
@@ -119,14 +121,17 @@ void mainBoardMainPhase2(void) {
     mainBoardCommonInitTimerList();
     mainBoardCommonInitCommonDrivers();
     
+    // ROBOT2019 : PCA9685
+    ServoList* servoList = mainBoardCommonGetServoList();
+    // I2cBus* i2cBus = mainBoardCommonGetMainI2cBus();
+    I2cBus* i2cBus = mainBoardCommonGetAlternativeI2cBus();
+    I2cBusConnection* servoI2cBusConnection = addI2cBusConnection(i2cBus, PCA9685_ADDRESS_0, true);
+    addServoAllPca9685(servoList, servoI2cBusConnection);
+    
     // Initialise the Strategy first so that we could show the color & stragegy
     // index at a very early stage
-    mainBoardCommonStrategyMainInitDrivers(&robotConfig);
-    unsigned int tofSensorCount = MAIN_BOARD_TOF_SENSOR_LIST_LENGTH; 
-    if (!isSonarActivated(&robotConfig)) {
-        tofSensorCount = 0; 
-    }
-    mainBoardCommonTofInitDrivers(mainBoardCommonGetMainI2cBus(), mainBoardCommonGetAlternativeI2cBus(), tofSensorCount);
+    float tofDistanceFactor = getSonarDistanceCheckFactor(&robotConfig);
+    mainBoardCommonTofInitDrivers(&robotConfig, i2cBus, tofDistanceFactor);
     mainBoardCommonMatchMainInitDrivers(&robotConfig, isMatchStarted32, mainBoardWaitForInstruction, loopUnWaitForInstruction);    
 }
 
@@ -143,34 +148,11 @@ int main(void) {
     mainBoardMainPhase2();
     mainBoardMainPhase3();
     
-    // PCA9685
-    ServoList* servoList = mainBoardCommonGetServoList();
-    I2cBus* i2cBus = mainBoardCommonGetMainI2cBus();
-    I2cBusConnection* servoI2cBusConnection = addI2cBusConnection(i2cBus, PCA9685_ADDRESS_0, true);
-    addServoAllPca9685(servoList, servoI2cBusConnection);
-    
     TofSensorList* tofSensorList = mainBoardCommonTofGetTofSensorList();
-    addLocalDevice(getElevator2019DeviceInterface(), getElevator2019DeviceDescriptor(servoList));
+    ServoList* servoList = mainBoardCommonGetServoList();
+	addLocalDevice(getElevator2019DeviceInterface(), getElevator2019DeviceDescriptor(servoList));
     addLocalDevice(getFork2019DeviceInterface(), getFork2019DeviceDescriptor(servoList, tofSensorList));
 
-    /*
-    appendStringCRLF(getInfoOutputStreamLogger(), "PWM START");
-    I2cBus* i2cBus = getI2cBusByIndex(0);
-    I2cBusConnection* pca9685BusConnection = addI2cBusConnection(i2cBus, 0x80, true);
-    pca9685_init(pca9685BusConnection);
-    */
- /*   
-    while (1) {
-        delaymSec(10);
-        // adxl345_debugValueRegisterList(getInfoOutputStreamLogger(), adxl345BusConnection, &accelerometerData);
-        // adxl345_debugValueRegisterListIfShock(getInfoOutputStreamLogger(), adxl345BusConnection, &accelerometerData);
-        unsigned int sampleCount = adx345_readSampleCount(adxl345BusConnection);
-        if (sampleCount > 0) {
-            adxl345_debugMainRegisterList(getInfoOutputStreamLogger(), adxl345BusConnection);
-        }
-    }
-    */
-    
     mainBoardCommonStrategyMainLoop();
 
     while (true) {

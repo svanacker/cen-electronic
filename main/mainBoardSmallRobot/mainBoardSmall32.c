@@ -42,6 +42,8 @@
 #include "../../robot/2019/fork/forkDeviceInterface2019.h"
 #include "../../robot/2019/fork/forkDevice2019.h"
 
+#include "../../robot/2019/strategy/strategyConfig2019.h"
+
 // Robot Configuration
 static RobotConfig robotConfig;
 
@@ -131,11 +133,9 @@ void mainBoardMainPhase2(void) {
     // Initialise the Strategy first so that we could show the color & stragegy
     // index at a very early stage
     mainBoardCommonStrategyMainInitDrivers(&robotConfig);
-    unsigned int tofSensorCount = MAIN_BOARD_TOF_SENSOR_LIST_LENGTH; 
-    if (!isSonarActivated(&robotConfig)) {
-        tofSensorCount = 0; 
-    }
-    mainBoardCommonTofInitDrivers(mainBoardCommonGetMainI2cBus(), mainBoardCommonGetAlternativeI2cBus(), tofSensorCount);
+
+    float tofDistanceFactor = getSonarDistanceCheckFactor(&robotConfig);
+    mainBoardCommonTofInitDrivers(i2cBus, tofDistanceFactor);
     mainBoardCommonMatchMainInitDrivers(&robotConfig, isMatchStarted32, mainBoardWaitForInstruction, loopUnWaitForInstruction);
 }
 

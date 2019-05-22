@@ -88,9 +88,9 @@ typedef struct {
     /** Tof List */
     TofSensorList* tofSensorList;
     /** How many analysis of Robot Placed was done (to detect if we do the check */
-    unsigned robotPlacedAnalysisCount;
+    unsigned int robotPlacedAnalysisCount;
     /** How many analysis of Robot Placed was done (to detect if we do the check */
-    unsigned robotMovedAnalysisCount;
+    unsigned int robotMovedAnalysisCount;
     /** How many times the robot Moved was found for the last check */
     unsigned int robotMovedDetectionCount;
 } ElectronLauncher2019;

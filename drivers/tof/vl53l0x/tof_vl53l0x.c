@@ -386,6 +386,7 @@ bool initTofSensorVL53L0X(TofSensor* tofSensor,
 ) {
     tofSensorVL53L0X->i2cBusConnection = i2cBusConnection;
     tofSensorVL53L0X->multiplexer = multiplexer;
+    tofSensor->type = TOF_SENSOR_TYPE_VL53L0X;
     return initTofSensor(tofSensor,
             &tofSensorInitVL53L0X,
             &tofSensorGetDistanceVL53L0XMM,

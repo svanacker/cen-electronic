@@ -5,6 +5,14 @@
 
 #include "../../common/io/outputStream.h"
 
+// TYPE
+
+unsigned int appendTofSensorTypeAsString(OutputStream* outputStream, enum TofSensorType tofSensorType);
+
+unsigned int addTofSensorTypeTableData(OutputStream* outputStream, enum TofSensorType tofSensorType, int columnSize);
+
+// USAGE TYPE
+
 unsigned int appendTofSensorUsageTypeAsString(OutputStream* outputStream, enum TofSensorUsageType tofSensorUsageType);
 
 unsigned int appendTofSensorUsageTypeAsShortString(OutputStream* outputStream, enum TofSensorUsageType tofSensorUsageType);

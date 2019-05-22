@@ -220,6 +220,12 @@
         <itemPath>../../../device/i2c/master/i2cMasterDebugDevice.h</itemPath>
         <itemPath>../../../device/i2c/master/i2cMasterDebugDeviceInterface.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f13"
+                     displayName="device.i2c.multiplexer"
+                     projectFiles="true">
+        <itemPath>../../../device/i2c/multiplexer/multiplexerDevice.h</itemPath>
+        <itemPath>../../../device/i2c/multiplexer/multiplexerDeviceInterface.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="f3" displayName="device.ioExpander" projectFiles="true">
         <itemPath>../../../device/ioExpander/ioExpanderDevice.h</itemPath>
         <itemPath>../../../device/ioExpander/ioExpanderDeviceInterface.h</itemPath>
@@ -318,6 +324,10 @@
                      displayName="drivers.i2c.multiplexer"
                      projectFiles="true">
         <itemPath>../../../drivers/i2c/multiplexer/tca9548A.h</itemPath>
+        <itemPath>../../../drivers/i2c/multiplexer/multiplexer.h</itemPath>
+        <itemPath>../../../drivers/i2c/multiplexer/multiplexerDebug.h</itemPath>
+        <itemPath>../../../drivers/i2c/multiplexer/multiplexerList.h</itemPath>
+        <itemPath>../../../drivers/i2c/multiplexer/multiplexerTca9548A.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f4" displayName="drivers.ioExpander" projectFiles="true">
         <itemPath>../../../drivers/ioExpander/ioExpander.h</itemPath>
@@ -359,6 +369,7 @@
         <itemPath>../../../drivers/tof/tof.h</itemPath>
         <itemPath>../../../drivers/tof/tofDebug.h</itemPath>
         <itemPath>../../../drivers/tof/tofList.h</itemPath>
+        <itemPath>../../../drivers/tof/tofListDebug.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f1" displayName="drivers.tof.vl53l0x" projectFiles="true">
         <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_api.h</itemPath>
@@ -380,12 +391,12 @@
       </logicalFolder>
       <logicalFolder name="f28" displayName="main.experience2019" projectFiles="true">
         <itemPath>../mainExperience2019.h</itemPath>
+        <itemPath>../mainExperience2019Tof.h</itemPath>
       </logicalFolder>
       <logicalFolder name="main" displayName="main.mainboard" projectFiles="true">
         <itemPath>../../mainBoard/mainBoardCommon.h</itemPath>
         <itemPath>../../mainBoard/mainBoardPc.h</itemPath>
         <itemPath>../../mainBoard/mainBoardCommonLcd.h</itemPath>
-        <itemPath>../../mainBoard/mainBoardCommonTof.h</itemPath>
         <itemPath>../../mainBoard/mainBoardCommonMatch.h</itemPath>
       </logicalFolder>
       <logicalFolder name="robot" displayName="robot" projectFiles="true">
@@ -680,6 +691,12 @@
         <itemPath>../../../device/i2c/master/i2cMasterDebugDevice.c</itemPath>
         <itemPath>../../../device/i2c/master/i2cMasterDebugDeviceInterface.c</itemPath>
       </logicalFolder>
+      <logicalFolder name="f13"
+                     displayName="device.i2c.multiplexer"
+                     projectFiles="true">
+        <itemPath>../../../device/i2c/multiplexer/multiplexerDevice.c</itemPath>
+        <itemPath>../../../device/i2c/multiplexer/multiplexerDeviceInterface.c</itemPath>
+      </logicalFolder>
       <logicalFolder name="f4" displayName="device.ioExpander" projectFiles="true">
         <itemPath>../../../device/ioExpander/ioExpanderDevice.c</itemPath>
         <itemPath>../../../device/ioExpander/ioExpanderDeviceInterface.c</itemPath>
@@ -771,6 +788,10 @@
                      displayName="drivers.i2c.multiplexer"
                      projectFiles="true">
         <itemPath>../../../drivers/i2c/multiplexer/tca9548A.c</itemPath>
+        <itemPath>../../../drivers/i2c/multiplexer/multiplexer.c</itemPath>
+        <itemPath>../../../drivers/i2c/multiplexer/multiplexerDebug.c</itemPath>
+        <itemPath>../../../drivers/i2c/multiplexer/multiplexerList.c</itemPath>
+        <itemPath>../../../drivers/i2c/multiplexer/multiplexerTca9548A.c</itemPath>
       </logicalFolder>
       <logicalFolder name="drivers.io" displayName="drivers.io" projectFiles="true">
       </logicalFolder>
@@ -805,6 +826,7 @@
         <itemPath>../../../drivers/tof/tof.c</itemPath>
         <itemPath>../../../drivers/tof/tofDebug.c</itemPath>
         <itemPath>../../../drivers/tof/tofList.c</itemPath>
+        <itemPath>../../../drivers/tof/tofListDebug.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f1" displayName="drivers.tof.vl53l0x" projectFiles="true">
         <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_api.c</itemPath>
@@ -826,11 +848,11 @@
       </logicalFolder>
       <logicalFolder name="f28" displayName="main.experience2019" projectFiles="true">
         <itemPath>../mainExperience2019.c</itemPath>
+        <itemPath>../mainExperience2019Tof.c</itemPath>
       </logicalFolder>
       <logicalFolder name="main" displayName="main.mainboard" projectFiles="true">
         <itemPath>../../mainBoard/mainBoardCommon.c</itemPath>
         <itemPath>../../mainBoard/mainBoardCommonLcd.c</itemPath>
-        <itemPath>../../mainBoard/mainBoardCommonTof.c</itemPath>
         <itemPath>../../mainBoard/mainBoardCommonMatch.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f7" displayName="robot" projectFiles="true">

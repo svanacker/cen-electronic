@@ -22,6 +22,7 @@ unsigned int tofSensorGetDistanceMMPc(TofSensor* TofSensor) {
 }
 
 void initTofSensorPc(TofSensor* tofSensor) {
+    tofSensor->type = TOF_SENSOR_TYPE_PC;
     initTofSensor(tofSensor, 
                  &tofSensorInitPc, 
                  &tofSensorGetDistanceMMPc,

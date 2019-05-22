@@ -91,9 +91,6 @@ GameBoard* initGameBoard2019(GameStrategyContext* gameStrategyContext) {
 }
 
 void mainBoardCommonStrategyMainEndInit2019(GameStrategyContext* gameStrategyContext) {
-    float tofDistanceFactor = getSonarDistanceCheckFactor(gameStrategyContext->robotConfig);
-    setTofListNameAndOrientationAngle(gameStrategyContext->tofSensorList, tofDistanceFactor);
-
     ServoList* servoList = gameStrategyContext->servoList;
     
     updateServoProperties2019(servoList);
@@ -101,7 +98,4 @@ void mainBoardCommonStrategyMainEndInit2019(GameStrategyContext* gameStrategyCon
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
     appendStringCRLF(debugOutputStream, "fork2019Init");
     fork2019Init(servoList);
-    
-    TofSensorList* tofSensorList = gameStrategyContext->tofSensorList;;
-    setForkTofListNameAndThreshold(tofSensorList);
 }

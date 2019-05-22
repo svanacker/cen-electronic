@@ -61,8 +61,6 @@ void initTofSensorListVL53L0X(TofSensorList* tofSensorList,
             append(getAlwaysOutputStreamLogger(), '_');
             continue;
         }
-        Multiplexer* multiplexer = getMultiplexerByIndex(multiplexerList, tofSensor->multiplexerIndex);
-        
         appendStringAndDecLN(getDebugOutputStreamLogger(), "  TOF SENSOR->START:", tofIndex);
 
         // Get the specific structure in the provide array
@@ -71,7 +69,10 @@ void initTofSensorListVL53L0X(TofSensorList* tofSensorList,
         // Shift to the right pointer address
         tofSensorVL53L0X += tofIndex;
 
+        Multiplexer* multiplexer = NULL;
+
         if (tofSensor->useMultiplexer) {
+            multiplexer = getMultiplexerByIndex(multiplexerList, tofSensor->multiplexerIndex);
             unsigned char channel = tofSensor->multiplexerChannel;
             unsigned int multiplexerIndex = tofSensor->multiplexerIndex;
             appendStringAndDecLN(getDebugOutputStreamLogger(), "    MULTIPLEXER:index=", multiplexerIndex);
