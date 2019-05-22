@@ -131,7 +131,7 @@ void mainBoardMainPhase2(void) {
     // Initialise the Strategy first so that we could show the color & stragegy
     // index at a very early stage
     float tofDistanceFactor = getSonarDistanceCheckFactor(&robotConfig);
-    mainBoardCommonTofInitDrivers(&robotConfig, i2cBus, tofDistanceFactor);
+    mainBoardCommonTofInitDrivers(i2cBus, tofDistanceFactor);
     mainBoardCommonMatchMainInitDrivers(&robotConfig, isMatchStarted32, mainBoardWaitForInstruction, loopUnWaitForInstruction);    
 }
 

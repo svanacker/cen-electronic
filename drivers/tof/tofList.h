@@ -44,12 +44,20 @@ struct TofSensorList {
     TofSensor(*tofSensorArray)[];
     /** The Multiplexer List */
     MultiplexerList* multiplexerList;
-    /** The IO Expander used to beep */
-    IOExpander* beepIoExpander;
-    /** To know the value of beep, we don't want to invoke too frequently the IOExpander to send the same value */
-    bool beepValue;
     /** the size of the list. */
     unsigned int size;
+
+    // BEEP MANAGEMENT
+    /** The IO Expander used to beep */
+    IOExpander* beepIoExpander;
+    /** The ground io pin used to beep */
+    unsigned int groundBeepIoPin;
+    /** The +5V io pin used to beep */
+    unsigned int vccBeepIoPin;
+    /** To know the value of beep, we don't want to invoke too frequently the IOExpander to send the same value */
+    bool beepValue;
+
+    // IMPLEMENTATION CALLBACK
     /** If Debug Mode is activated .*/
     bool debug;
     /** To Debug the configuration of the sensor (distance, threshold, angles ...) */
