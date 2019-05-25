@@ -21,4 +21,14 @@ unsigned int addTofSensorUsageTypeTableData(OutputStream* outputStream, enum Tof
 
 unsigned int addTofSensorUsageTypeShortTableData(OutputStream* outputStream, enum TofSensorUsageType tofSensorUsageType, int columnSize);
 
+// START RESULT TYPE
+
+unsigned int appendTofSensorStartResultAsString(OutputStream* outputStream, enum TofSensorStartResult tofSensorStartResult);
+
+unsigned int appendTofSensorStartResultAsShortString(OutputStream* outputStream, enum TofSensorStartResult tofSensorStartResult);
+
+unsigned int appendTofSensorStartResultTableData(OutputStream* outputStream, enum TofSensorStartResult tofSensorStartResult, int columnSize);
+
+unsigned int appendTofSensorStartResultShortTableData(OutputStream* outputStream, enum TofSensorStartResult tofSensorStartResult, int columnSize);
+
 #endif

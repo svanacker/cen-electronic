@@ -461,6 +461,7 @@
         <itemPath>../../../drivers/tof/tofDebug.h</itemPath>
         <itemPath>../../../drivers/tof/tofList.h</itemPath>
         <itemPath>../../../drivers/tof/tofListDebug.h</itemPath>
+        <itemPath>../../../drivers/tof/tofDetectionUtils.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f1" displayName="drivers.tof.vl53l0x" projectFiles="true">
         <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_api.h</itemPath>
@@ -479,6 +480,8 @@
         <itemPath>../../../drivers/tof/vl53l0x/tofDebug_vl53l0x.h</itemPath>
         <itemPath>../../../drivers/tof/vl53l0x/tofList_vl53l0x.h</itemPath>
         <itemPath>../../../drivers/tof/vl53l0x/tof_vl53l0x.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/tofNetwork_vl53l0x.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/tofRanging_vl53l0x.h</itemPath>
       </logicalFolder>
       <logicalFolder name="main" displayName="main.mainboard" projectFiles="true">
         <itemPath>../../mainBoard/mainBoardCommon.h</itemPath>
@@ -1168,6 +1171,7 @@
         <itemPath>../../../drivers/tof/tofDebug.c</itemPath>
         <itemPath>../../../drivers/tof/tofList.c</itemPath>
         <itemPath>../../../drivers/tof/tofListDebug.c</itemPath>
+        <itemPath>../../../drivers/tof/tofDetectionUtils.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f1" displayName="drivers.tof.vl53l0x" projectFiles="true">
         <itemPath>../../../drivers/tof/vl53l0x/vl53l0x_api.c</itemPath>
@@ -1181,6 +1185,8 @@
         <itemPath>../../../drivers/tof/vl53l0x/tofDebug_vl53l0x.c</itemPath>
         <itemPath>../../../drivers/tof/vl53l0x/tofList_vl53l0x.c</itemPath>
         <itemPath>../../../drivers/tof/vl53l0x/tof_vl53l0x.c</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/tofNetwork_vl53l0x.c</itemPath>
+        <itemPath>../../../drivers/tof/vl53l0x/tofRanging_vl53l0x.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f2"
                      displayName="drivers.tof.vl53l0x.32"

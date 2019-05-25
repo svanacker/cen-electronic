@@ -80,22 +80,23 @@ void mainBoardCommonIOExpanderListInitDrivers(I2cBus* i2cBus) {
     appendStringLN(getDebugOutputStreamLogger(), "OK");
 }
 
-void mainBoardCommonMultiplexerListInitDrivers(I2cBus* i2cBus) {
+MultiplexerList* mainBoardCommonMultiplexerListInitDrivers(I2cBus* i2cBus) {
     appendString(getDebugOutputStreamLogger(), "Multiplexer List ...");
     initMultiplexerList(&multiplexerList, (Multiplexer(*)[]) &multiplexerArray, MAIN_BOARD_MULTIPLEXER_LIST_LENGTH);
     
     // -> Multiplexer 0 Board
     Multiplexer* multiplexerExpander0 = getMultiplexerByIndex(&multiplexerList, 0);
     I2cBusConnection* multiplexerBoardBusConnection0 = addI2cBusConnection(i2cBus, TCA9548A_ADDRESS_0, true);
-    initMultiplexerTca9548A(multiplexerExpander0, multiplexerBoardBusConnection0);
+    initMultiplexerTca9548A(multiplexerExpander0, multiplexerBoardBusConnection0, true);
 
     // -> Multiplexer 1 Board
     Multiplexer* multiplexerExpander1 = getMultiplexerByIndex(&multiplexerList, 1);
     I2cBusConnection* multiplexerBoardBusConnection1 = addI2cBusConnection(i2cBus, TCA9548A_ADDRESS_1, true);
-    initMultiplexerTca9548A(multiplexerExpander1, multiplexerBoardBusConnection1);
-
+    initMultiplexerTca9548A(multiplexerExpander1, multiplexerBoardBusConnection1, true);
     
     appendStringLN(getDebugOutputStreamLogger(), "OK");
+    
+    return &multiplexerList;
 }
 
 void mainBoardCommonTofInitDrivers(I2cBus* i2cBus, float distanceFactor) {
@@ -119,9 +120,10 @@ void mainBoardCommonTofInitDrivers(I2cBus* i2cBus, float distanceFactor) {
         frontRightSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
 
         frontRightSensor->enabled = true;
-        frontRightSensor->useMultiplexer = true;
-        frontRightSensor->multiplexerIndex = 1;
-        frontRightSensor->multiplexerChannel = 1;
+        frontRightSensor->changeAddress = true;
+        frontRightSensor->targetAddress = VL530X_ADDRESS_0;
+        frontRightSensor->multiplexer = getMultiplexerByIndex(&multiplexerList, 1);
+        frontRightSensor->multiplexerChannel = MULTIPLEXER_CHANNEL_0;
     }
     if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > FRONT_MIDDLE_SENSOR_INDEX) {
         TofSensor* frontMiddleSensor = &(tofSensorArray[FRONT_MIDDLE_SENSOR_INDEX]);
@@ -136,9 +138,10 @@ void mainBoardCommonTofInitDrivers(I2cBus* i2cBus, float distanceFactor) {
         frontMiddleSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
 
         frontMiddleSensor->enabled = true; 
-        frontMiddleSensor->useMultiplexer = true;
-        frontMiddleSensor->multiplexerIndex = 1;
-        frontMiddleSensor->multiplexerChannel = 2;
+        frontMiddleSensor->changeAddress = true;
+        frontMiddleSensor->targetAddress = VL530X_ADDRESS_1;
+        frontMiddleSensor->multiplexer = getMultiplexerByIndex(&multiplexerList, 1);
+        frontMiddleSensor->multiplexerChannel = MULTIPLEXER_CHANNEL_1;
     }
     if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > FRONT_LEFT_SENSOR_INDEX) {
         TofSensor* frontLeftSensor = &(tofSensorArray[FRONT_LEFT_SENSOR_INDEX]);
@@ -153,9 +156,10 @@ void mainBoardCommonTofInitDrivers(I2cBus* i2cBus, float distanceFactor) {
         frontLeftSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
 
         frontLeftSensor->enabled = true;
-        frontLeftSensor->useMultiplexer = true;
-        frontLeftSensor->multiplexerIndex = 1;
-        frontLeftSensor->multiplexerChannel = 4;
+        frontLeftSensor->changeAddress = true;
+        frontLeftSensor->targetAddress = VL530X_ADDRESS_2;
+        frontLeftSensor->multiplexer = getMultiplexerByIndex(&multiplexerList, 1);
+        frontLeftSensor->multiplexerChannel = MULTIPLEXER_CHANNEL_2;
     }
     if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > BACK_RIGHT_SENSOR_INDEX) {
         TofSensor* backRightSensor = &(tofSensorArray[BACK_RIGHT_SENSOR_INDEX]);
@@ -170,9 +174,10 @@ void mainBoardCommonTofInitDrivers(I2cBus* i2cBus, float distanceFactor) {
         backRightSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
 
         backRightSensor->enabled = true;
-        backRightSensor->multiplexerIndex = 1;
-        backRightSensor->useMultiplexer = true;
-        backRightSensor->multiplexerChannel = 8;
+        backRightSensor->changeAddress = true;
+        backRightSensor->targetAddress = VL530X_ADDRESS_3;
+        backRightSensor->multiplexer = getMultiplexerByIndex(&multiplexerList, 1);
+        backRightSensor->multiplexerChannel = MULTIPLEXER_CHANNEL_3;
     }
     if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > BACK_MIDDLE_SENSOR_INDEX) {
         TofSensor* backMiddleSensor = &(tofSensorArray[BACK_MIDDLE_SENSOR_INDEX]);
@@ -187,9 +192,10 @@ void mainBoardCommonTofInitDrivers(I2cBus* i2cBus, float distanceFactor) {
         backMiddleSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
 
         backMiddleSensor->enabled = true;
-        backMiddleSensor->multiplexerIndex = 1;
-        backMiddleSensor->useMultiplexer = true;
-        backMiddleSensor->multiplexerChannel = 16;
+        backMiddleSensor->changeAddress = true;
+        backMiddleSensor->targetAddress = VL530X_ADDRESS_4;
+        backMiddleSensor->multiplexer = getMultiplexerByIndex(&multiplexerList, 1);
+        backMiddleSensor->multiplexerChannel = MULTIPLEXER_CHANNEL_4;
     }    
     if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > 5) {
         TofSensor* backLeftSensor = &(tofSensorArray[BACK_LEFT_SENSOR_INDEX]);
@@ -204,9 +210,10 @@ void mainBoardCommonTofInitDrivers(I2cBus* i2cBus, float distanceFactor) {
         backLeftSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
 
         backLeftSensor->enabled = true;
-        backLeftSensor->multiplexerIndex = 1;
-        backLeftSensor->useMultiplexer = true;
-        backLeftSensor->multiplexerChannel = 32;
+        backLeftSensor->changeAddress = true;
+        backLeftSensor->targetAddress = VL530X_ADDRESS_5;
+        backLeftSensor->multiplexer = getMultiplexerByIndex(&multiplexerList, 1);
+        backLeftSensor->multiplexerChannel = MULTIPLEXER_CHANNEL_5;
     }
     
     // NOT USED
@@ -231,9 +238,10 @@ void mainBoardCommonTofInitDrivers(I2cBus* i2cBus, float distanceFactor) {
         frontSideLeftSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
 
         frontSideLeftSensor->enabled = true;
-        frontSideLeftSensor->multiplexerIndex = 0;
-        frontSideLeftSensor->useMultiplexer = true;
-        frontSideLeftSensor->multiplexerChannel = 1;
+        frontSideLeftSensor->changeAddress = true;
+        frontSideLeftSensor->targetAddress = VL530X_ADDRESS_8;
+        frontSideLeftSensor->multiplexer = getMultiplexerByIndex(&multiplexerList, 0);
+        frontSideLeftSensor->multiplexerChannel = MULTIPLEXER_CHANNEL_0;
     }
     if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > FRONT_SIDE_RIGHT_SENSOR_INDEX) {
         TofSensor* frontSideRightSensor = &(tofSensorArray[FRONT_SIDE_RIGHT_SENSOR_INDEX]);
@@ -247,9 +255,10 @@ void mainBoardCommonTofInitDrivers(I2cBus* i2cBus, float distanceFactor) {
         frontSideRightSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
         
         frontSideRightSensor->enabled = true;
-        frontSideRightSensor->multiplexerIndex = 0;
-        frontSideRightSensor->useMultiplexer = true;
-        frontSideRightSensor->multiplexerChannel = 2;
+        frontSideRightSensor->changeAddress = true;
+        frontSideRightSensor->targetAddress = VL530X_ADDRESS_9;
+        frontSideRightSensor->multiplexer = getMultiplexerByIndex(&multiplexerList, 0);
+        frontSideRightSensor->multiplexerChannel = MULTIPLEXER_CHANNEL_1;
     }
     if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > BACK_SIDE_RIGHT_SENSOR_INDEX) {
         TofSensor* backSideRightSensor = &(tofSensorArray[BACK_SIDE_RIGHT_SENSOR_INDEX]);
@@ -263,9 +272,10 @@ void mainBoardCommonTofInitDrivers(I2cBus* i2cBus, float distanceFactor) {
         backSideRightSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
         
         backSideRightSensor->enabled = true;
-        backSideRightSensor->multiplexerIndex = 0;
-        backSideRightSensor->useMultiplexer = true;
-        backSideRightSensor->multiplexerChannel = 4;
+        backSideRightSensor->changeAddress = true;
+        backSideRightSensor->targetAddress = VL530X_ADDRESS_10;
+        backSideRightSensor->multiplexer = getMultiplexerByIndex(&multiplexerList, 0);
+        backSideRightSensor->multiplexerChannel = MULTIPLEXER_CHANNEL_2;
     }
     // TOF 11 & 12 are defined in forkScan2019.c
     if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > BACK_SIDE_LEFT_SENSOR_INDEX) {
@@ -280,15 +290,16 @@ void mainBoardCommonTofInitDrivers(I2cBus* i2cBus, float distanceFactor) {
         backSideLeftSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
         
         backSideLeftSensor->enabled = true;
-        backSideLeftSensor->multiplexerIndex = 0;
-        backSideLeftSensor->useMultiplexer = true;
-        backSideLeftSensor->multiplexerChannel = 32;
+        backSideLeftSensor->changeAddress = true;
+        backSideLeftSensor->targetAddress = VL530X_ADDRESS_14;
+        backSideLeftSensor->multiplexer = getMultiplexerByIndex(&multiplexerList, 1);
+        backSideLeftSensor->multiplexerChannel = MULTIPLEXER_CHANNEL_5;
     }
     if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > FORK_2019_LEFT_TOF_INDEX &&
         MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > FORK_2019_RIGHT_TOF_INDEX) {
         TofSensor* leftForkScanSensor = &(tofSensorArray[BACK_SIDE_LEFT_SENSOR_INDEX]); 
         TofSensor* rightForkScanSensor = &(tofSensorArray[BACK_SIDE_RIGHT_SENSOR_INDEX]); 
-        forkScan2019ConfigTofList(leftForkScanSensor, rightForkScanSensor);
+        forkScan2019ConfigTofList(leftForkScanSensor, rightForkScanSensor, &multiplexerList);
     }
     
     // HARDWARE Initialization
@@ -298,13 +309,7 @@ void mainBoardCommonTofInitDrivers(I2cBus* i2cBus, float distanceFactor) {
                              (TofSensorVL53L0X(*)[]) &tofSensorVL53L0XArray,
                               // Size
                               MAIN_BOARD_TOF_SENSOR_LIST_LENGTH,
-                              // MultiplexerList,
-                              &multiplexerList,
                               // debug
-                              true,
-                              // enabledAllSensors
-                              false,
-                              // changeAddressAllSensors
                               true
             );
 

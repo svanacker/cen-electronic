@@ -18,9 +18,6 @@ void initTofSensorListVL53L0X(TofSensorList* tofSensorList,
                               TofSensor(*tofSensorArray)[],
                               TofSensorVL53L0X(*tofSensorVL53L0XArray)[],
                               unsigned int size,
-                              MultiplexerList* multiplexerList, 
-                              bool debug,
-                              bool enabledAllSensors,
-                              bool changeAllAddresses);
+                              bool debug);
 
 #endif

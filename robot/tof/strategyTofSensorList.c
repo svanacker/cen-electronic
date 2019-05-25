@@ -13,6 +13,7 @@
 #include "../../common/log/logger.h"
 
 #include "../../drivers/tof/tofList.h"
+#include "../../drivers/tof/tofDetectionUtils.h"
 
 #include "../../robot/robot.h"
 #include "../../robot/gameboard/gameboard.h"

@@ -71,3 +71,65 @@ unsigned int addTofSensorUsageTypeShortTableData(OutputStream* outputStream, enu
 	unsigned int length = appendTofSensorUsageTypeAsShortString(outputStream, tofSensorUsageType);
 	return length + appendSpaces(outputStream, columnSize - length) + 2;
 }
+
+
+// START RESULT TYPE
+
+unsigned int appendTofSensorStartResultAsString(OutputStream* outputStream, enum TofSensorStartResult tofSensorStartResult) {
+    if (tofSensorStartResult == TOF_SENSOR_START_RESULT_UNKNOWN) {
+        return appendString(outputStream, "UNKNOWN");
+    }
+    else if (tofSensorStartResult == TOF_SENSOR_START_RESULT_DISABLED) {
+        return appendString(outputStream, "DISABLED");
+    }
+    else if (tofSensorStartResult == TOF_SENSOR_START_RESULT_OK) {
+        return appendString(outputStream, "OK");
+    }
+    else if (tofSensorStartResult == TOF_SENSOR_START_RESULT_ALREADY_STARTED) {
+        return appendString(outputStream, "ALREADY STARTED");
+    }
+    else if (tofSensorStartResult == TOF_SENSOR_START_RESULT_INIT_PROBLEM) {
+        return appendString(outputStream, "INIT PROBLEM");
+    }
+    else if (tofSensorStartResult == TOF_SENSOR_START_RESULT_CHANGE_ADDRESS_PROBLEM) {
+        return appendString(outputStream, "CHANGE ADDR PROB.");
+    }
+	return 0;
+}
+
+unsigned int appendTofSensorStartResultAsShortString(OutputStream* outputStream, enum TofSensorStartResult tofSensorStartResult) {
+    if (tofSensorStartResult == TOF_SENSOR_START_RESULT_UNKNOWN) {
+        return appendString(outputStream, "?");
+    }
+    else if (tofSensorStartResult == TOF_SENSOR_START_RESULT_DISABLED) {
+        return appendString(outputStream, "_");
+    }
+    else if (tofSensorStartResult == TOF_SENSOR_START_RESULT_OK) {
+        return appendString(outputStream, "[");
+    }
+    else if (tofSensorStartResult == TOF_SENSOR_START_RESULT_ALREADY_STARTED) {
+        return appendString(outputStream, "S");
+    }
+    else if (tofSensorStartResult == TOF_SENSOR_START_RESULT_INIT_PROBLEM) {
+        return appendString(outputStream, "X");
+    }
+    else if (tofSensorStartResult == TOF_SENSOR_START_RESULT_CHANGE_ADDRESS_PROBLEM) {
+        return appendString(outputStream, "A");
+    }
+	return 0;
+}
+
+unsigned int appendTofSensorStartResultTableData(OutputStream* outputStream, enum TofSensorStartResult tofSensorStartResult, int columnSize) {
+	appendTableSeparator(outputStream);
+	appendSpace(outputStream);
+	unsigned int length = appendTofSensorStartResultAsString(outputStream, tofSensorStartResult);
+	return length + appendSpaces(outputStream, columnSize - length) + 2;
+}
+
+unsigned int appendTofSensorStartResultShortTableData(OutputStream* outputStream, enum TofSensorStartResult tofSensorStartResult, int columnSize) {
+	appendTableSeparator(outputStream);
+	appendSpace(outputStream);
+	unsigned int length = appendTofSensorStartResultAsShortString(outputStream, tofSensorStartResult);
+	return length + appendSpaces(outputStream, columnSize - length) + 2;
+}
+

@@ -9,8 +9,6 @@
 #include "vl53l0x_def.h"
 #include "vl53l0x_platform.h"
 
-#include "../../../drivers/i2c/multiplexer/multiplexer.h"
-
 // Forward declaration
 typedef struct TofSensorVL53L0X TofSensorVL53L0X;
 
@@ -24,7 +22,6 @@ struct TofSensorVL53L0X {
     VL53L0X_DeviceInfo_t               deviceInfo;
     VL53L0X_RangingMeasurementData_t   rangingMeasurementData;
     I2cBusConnection*                  i2cBusConnection;
-    Multiplexer*                       multiplexer;
 };
 
 /**
@@ -33,14 +30,6 @@ struct TofSensorVL53L0X {
  * @return 
  */
 TofSensorVL53L0X* getTofSensorVL53L0X(TofSensor* tofSensor);
-
-/**
- * Extract the bus Connection from the TofSensor.
- * @param tofSensorVL53L0X
- * @param debug
- * @return 
- */
-I2cBusConnection* getTofSensorVL53L0XI2cBusConnection(TofSensor* tofSensor);
 
 /**
  * Start the use of the Time Of Flight
@@ -61,14 +50,6 @@ bool tofSetAddress(TofSensorVL53L0X* tofSensorVL53L0X, I2cBusConnection* i2cBusC
  * @return 
  */
 VL53L0X_Error tofGetStatus(TofSensorVL53L0X* tofSensorVL53L0X);
-
-/**
- * Do a single ranging Measurement
- * @param debug if we want to debug or not
- * @return 
- */
-VL53L0X_Error getSingleRangingMeasurement(TofSensorVL53L0X* tofSensorVL53L0X, bool debug);
-
 /**
  * Show the data of the measurement
  * @param pRangingMeasurementData
@@ -77,10 +58,15 @@ void printRangeStatus(VL53L0X_RangingMeasurementData_t* pRangingMeasurementData)
 
 // TOF OBJECT IMPLEMENTATION (POO)
 
-bool initTofSensorVL53L0X(TofSensor* tofSensor,
-                    TofSensorVL53L0X* tofSensorVL53L0X,       
-                    I2cBusConnection* i2cBusConnection,
-                    Multiplexer* multiplexer);
+/**
+ * INitialize the Structure of Data, but does not start really the tofSensor
+ * @param tofSensor
+ * @param tofSensorVL53L0X
+ * @param i2cBusConnection
+ * @return 
+ */
+void initTofSensorVL53L0X(TofSensor* tofSensor,
+                    TofSensorVL53L0X* tofSensorVL53L0X);
 
 
 #endif

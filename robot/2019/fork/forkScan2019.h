@@ -8,6 +8,8 @@
 #include "../../../drivers/tof/tof.h"
 #include "../../../drivers/tof/tofList.h"
 
+#include "../../../drivers/i2c/multiplexer/multiplexerList.h"
+
 // TOF INDEX
 #define FORK_2019_LEFT_TOF_INDEX                                              12
 #define FORK_2019_RIGHT_TOF_INDEX                                             11
@@ -36,7 +38,7 @@
 
 // FORK SCAN
 
-void forkScan2019ConfigTofList(TofSensor* leftForkScanSensor, TofSensor* rightForkScanSensor);
+void forkScan2019ConfigTofList(TofSensor* leftForkScanSensor, TofSensor* rightForkScanSensor, MultiplexerList* multiplexerList);
 
 bool forkScan(ServoList* servoList, TofSensorList* tofSensorList, unsigned int leftRight);
 

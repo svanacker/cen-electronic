@@ -13,14 +13,15 @@
 #include "../../../drivers/i2c/multiplexer/multiplexerTca9548A.h"
 #include "../../../drivers/i2c/multiplexer/multiplexerList.h"
 
-#define MULTIPLEXER_IO_COUNT                      8
+#define MULTIPLEXER_IO_COUNT                                          8
 
-#define MULTIPLEXER_INDEX_COLUMN_LENGTH		     13
-#define MULTIPLEXER_COUNT_COLUMN_LENGTH           6
-#define MULTIPLEXER_BUS_COLUMN_LENGTH            15
-#define MULTIPLEXER_ADDRESS_COLUMN_LENGTH         8
-#define MULTIPLEXER_CHANNEL_ENABLE_COLUMN_LENGTH         5
-#define MULTIPLEXER_LAST_COLUMN		              0
+#define MULTIPLEXER_INDEX_COLUMN_LENGTH		                          8
+#define MULTIPLEXER_COUNT_COLUMN_LENGTH                               6
+#define MULTIPLEXER_USE_CACHE_CHANNEL_MASK_COLUMN_LENGTH              6
+#define MULTIPLEXER_BUS_COLUMN_LENGTH                                15
+#define MULTIPLEXER_ADDRESS_COLUMN_LENGTH                             8
+#define MULTIPLEXER_CHANNEL_ENABLE_COLUMN_LENGTH                      5
+#define MULTIPLEXER_LAST_COLUMN		                                  0
 
 /**
 * Private.
@@ -30,10 +31,11 @@ void printMultiplexerDebugTableHeader(OutputStream* outputStream) {
     appendTableHeaderSeparatorLine(outputStream);
 
     // First line
-    appendStringHeader(outputStream, "Multiplexer", MULTIPLEXER_INDEX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Multip.", MULTIPLEXER_INDEX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Count", MULTIPLEXER_COUNT_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Bus", MULTIPLEXER_BUS_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Address", MULTIPLEXER_ADDRESS_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Use", MULTIPLEXER_USE_CACHE_CHANNEL_MASK_COLUMN_LENGTH);
 
     int multiplexerIndex;
     for (multiplexerIndex = MULTIPLEXER_IO_COUNT - 1; multiplexerIndex >= 0; multiplexerIndex--) {
@@ -42,10 +44,12 @@ void printMultiplexerDebugTableHeader(OutputStream* outputStream) {
     appendEndOfTableColumn(outputStream, MULTIPLEXER_LAST_COLUMN);
 
     // Second line
-    appendStringHeader(outputStream, "Index", MULTIPLEXER_INDEX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Id", MULTIPLEXER_INDEX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", MULTIPLEXER_COUNT_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", MULTIPLEXER_BUS_COLUMN_LENGTH);
     appendStringHeader(outputStream, "(Hex)", MULTIPLEXER_ADDRESS_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Cache", MULTIPLEXER_USE_CACHE_CHANNEL_MASK_COLUMN_LENGTH);
+
     for (multiplexerIndex = MULTIPLEXER_IO_COUNT - 1; multiplexerIndex >= 0; multiplexerIndex--) {
         appendStringAndDecHeader(outputStream, "", multiplexerIndex, MULTIPLEXER_CHANNEL_ENABLE_COLUMN_LENGTH);
     }
@@ -77,6 +81,10 @@ void printMultiplexerTable(OutputStream* outputStream, MultiplexerList* multiple
             appendStringTableData(outputStream, i2cPortAsString, MULTIPLEXER_BUS_COLUMN_LENGTH);
             appendHex2TableData(outputStream, i2cBusConnection->i2cAddress, MULTIPLEXER_ADDRESS_COLUMN_LENGTH);
         }
+        
+        appendBoolAsStringTableData(outputStream, multiplexer->useChannelMasksCache, MULTIPLEXER_USE_CACHE_CHANNEL_MASK_COLUMN_LENGTH);
+        
+        // ALL CHANNELS
         signed int channelIndex;
         for (channelIndex = (signed int) multiplexer->channelCount - 1; channelIndex >= 0; channelIndex--) {
             bool value = multiplexer->multiplexerGetChannelEnable(multiplexer, (unsigned int) channelIndex);

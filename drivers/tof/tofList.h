@@ -9,7 +9,6 @@
 
 #include "tof.h"
 #include "../../drivers/ioExpander/ioExpander.h"
-#include "../../drivers/i2c/multiplexer/multiplexerList.h"
 
 
 // Forward declaration
@@ -42,8 +41,6 @@ typedef void TofSensorListDetectionTableDebugFunction(OutputStream* outputStream
 struct TofSensorList {
     /** An array of pointer on tofSensor. */
     TofSensor(*tofSensorArray)[];
-    /** The Multiplexer List */
-    MultiplexerList* multiplexerList;
     /** the size of the list. */
     unsigned int size;
 
@@ -76,10 +73,7 @@ struct TofSensorList {
 void initTofSensorList(TofSensorList* tofSensorList,
                        TofSensor(*tofSensorArray)[],
                        unsigned int tofSensorListSize,
-                       MultiplexerList* multiplexerList,
                        bool debug,
-                       bool enabledAllSensors,
-                       bool changeAddressAllSensors,
                        TofSensorListConfigTableDebugFunction* tofSensorListConfigTableDebug,
                        TofSensorListNetworkTableDebugFunction* tofSensorListNetworkTableDebug,
                        TofSensorListDetectionTableDebugFunction* tofSensorListDetectionTableDebug

@@ -196,8 +196,6 @@ static I2cBusConnection* clockI2cBusConnection;
 // TEMPERATURE
 static Temperature temperature;
 static I2cBusConnection* temperatureI2cBusConnection;
-static I2cBusConnection* multiplexerI2cBusConnection0;
-static I2cBusConnection* multiplexerI2cBusConnection1;
 
 // CURRENT
 // static Current current;
@@ -380,13 +378,6 @@ void mainBoardCommonInitCommonDrivers(void) {
     appendString(getDebugOutputStreamLogger(), "TEMPERATURE ...");
     temperatureI2cBusConnection = addI2cBusConnection(i2cBus, LM75A_ADDRESS, true);
     initTemperatureLM75A(&temperature, temperatureI2cBusConnection);
-    appendStringLN(getDebugOutputStreamLogger(), "OK");
-    // -> TCA9548
-    appendString(getDebugOutputStreamLogger(), "TCA9548 ...");
-    multiplexerI2cBusConnection0 = addI2cBusConnection(i2cBus4, TCA9548A_ADDRESS_0, true);
-    tca9548A_setChannelsMask(multiplexerI2cBusConnection0, 0x00);
-    multiplexerI2cBusConnection1 = addI2cBusConnection(i2cBus4, TCA9548A_ADDRESS_1, true);
-    tca9548A_setChannelsMask(multiplexerI2cBusConnection1, 0x00);
     appendStringLN(getDebugOutputStreamLogger(), "OK");
     /*
     //--> Current

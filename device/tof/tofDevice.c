@@ -21,6 +21,7 @@
 #include "../../common/i2c/i2cBusConnectionList.h"
 
 #include "../../drivers/tof/tof.h"
+#include "../../drivers/tof/tofDetectionUtils.h"
 #include "../../drivers/tof/tofList.h"
 #include "../../drivers/tof/tofDebug.h"
 

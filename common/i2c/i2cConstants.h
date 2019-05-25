@@ -54,18 +54,22 @@
 
 
 // VL530X
-#define VL530X_ADDRESS_0        0x52
-#define VL530X_ADDRESS_1        0x54
-#define VL530X_ADDRESS_2        0x56
-#define VL530X_ADDRESS_3        0x58
-#define VL530X_ADDRESS_4        0x5A
-#define VL530X_ADDRESS_5        0x5C
-#define VL530X_ADDRESS_6        0x5E
-#define VL530X_ADDRESS_7        0x60
-#define VL530X_ADDRESS_8        0x62
-#define VL530X_ADDRESS_9        0x64
-#define VL530X_ADDRESS_10       0x66
-#define VL530X_ADDRESS_11       0x68
+#define VL530X_ADDRESS_BASE_ADDRESS        0x52
+#define VL530X_ADDRESS_0                   0x54
+#define VL530X_ADDRESS_1                   0x56
+#define VL530X_ADDRESS_2                   0x58
+#define VL530X_ADDRESS_3                   0x5A
+#define VL530X_ADDRESS_4                   0x5C
+#define VL530X_ADDRESS_5                   0x5E
+#define VL530X_ADDRESS_6                   0x60
+#define VL530X_ADDRESS_7                   0x62
+#define VL530X_ADDRESS_8                   0x64
+#define VL530X_ADDRESS_9                   0x66
+#define VL530X_ADDRESS_10                  0x68
+#define VL530X_ADDRESS_11                  0x6A
+#define VL530X_ADDRESS_12                  0x6C
+#define VL530X_ADDRESS_13                  0x6E
+#define VL530X_ADDRESS_14                  0x70
 
 // PCF8574A
 

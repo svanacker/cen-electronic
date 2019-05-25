@@ -2280,6 +2280,9 @@
     <ClCompile Include="drivers\i2c\multiplexer\pc\multiplexerPc.c">
       <Filter>Source Files\drivers\i2c\multiplexer\pc</Filter>
     </ClCompile>
+    <ClCompile Include="drivers\tof\tofDetectionUtils.c">
+      <Filter>Source Files\drivers\tof</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -3562,6 +3565,9 @@
     </ClInclude>
     <ClInclude Include="drivers\i2c\multiplexer\pc\multiplexerPc.h">
       <Filter>Header Files\drivers\i2c\multiplexer\pc</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\tof\tofDetectionUtils.h">
+      <Filter>Header Files\drivers\tof</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

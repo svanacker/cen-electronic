@@ -357,6 +357,7 @@
     <ClCompile Include="drivers\tof\pc\tofPc.c" />
     <ClCompile Include="drivers\tof\tof.c" />
     <ClCompile Include="drivers\tof\tofDebug.c" />
+    <ClCompile Include="drivers\tof\tofDetectionUtils.c" />
     <ClCompile Include="drivers\tof\tofList.c" />
     <ClCompile Include="drivers\tof\tofListDebug.c" />
     <ClCompile Include="drivers\tof\vl53l0x\pc\vl53l0x_platform_pc.c" />
@@ -760,6 +761,7 @@
     <ClInclude Include="drivers\tof\pc\tofPc.h" />
     <ClInclude Include="drivers\tof\tof.h" />
     <ClInclude Include="drivers\tof\tofDebug.h" />
+    <ClInclude Include="drivers\tof\tofDetectionUtils.h" />
     <ClInclude Include="drivers\tof\tofList.h" />
     <ClInclude Include="drivers\tof\tofListDebug.h" />
     <ClInclude Include="drivers\tof\vl53l0x\vl53l0x_api.h" />

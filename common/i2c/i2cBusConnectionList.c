@@ -67,6 +67,22 @@ I2cBusConnection* addI2cBusConnection(I2cBus* i2cBus, unsigned char i2cSlaveAddr
     }
 }
 
+I2cBusConnection* getOrCreateI2cBusConnection(I2cBus* i2cBus, unsigned char i2cSlaveAddress, bool defaultInitConnection) {
+    int size = i2cBusConnectionList.size;
+    int i;
+    for (i = 0; i < size; i++) {
+        I2cBusConnection* i2cBusConnection = getI2cBusConnectionByIndex(i);
+        if (i2cBusConnection->i2cBus != i2cBus) {
+            continue;
+        }
+        if (i2cBusConnection->i2cAddress == i2cSlaveAddress) {
+            return i2cBusConnection;
+        }
+    }
+    // If no Bus Connection was found, we add it !
+    return addI2cBusConnection(i2cBus, i2cSlaveAddress, defaultInitConnection);
+}
+
 I2cBusConnection* getI2cBusConnectionBySlaveAddress(unsigned char slaveAddress) {
     int size = i2cBusConnectionList.size;
     int i;

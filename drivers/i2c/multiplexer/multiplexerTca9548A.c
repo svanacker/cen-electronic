@@ -38,7 +38,16 @@ unsigned char multiplexerTca9548AReadChannelsMask(Multiplexer* multiplexer) {
 
 void multiplexerTca9548AWriteChannelsMask(Multiplexer* multiplexer, unsigned char channelsMask) {
     I2cBusConnection* i2cBusConnection = getMultiplexerI2cBusConnection(multiplexer);
-    tca9548A_setChannelsMask(i2cBusConnection, channelsMask);
+    if (multiplexer->useChannelMasksCache) {
+        // We write into the channel ONLY if the new value is different
+        if (channelsMask != multiplexer->_lastChannelsMask) {
+            tca9548A_setChannelsMask(i2cBusConnection, channelsMask);
+        }
+    }
+    else {
+        tca9548A_setChannelsMask(i2cBusConnection, channelsMask);
+        
+    }
     multiplexer->_lastChannelsMask = channelsMask;
 }
 
@@ -61,7 +70,7 @@ void multiplexerTca9548A4SetChannelEnable(Multiplexer* multiplexer, unsigned int
     multiplexerTca9548AWriteChannelsMask(multiplexer, valueToWrite);  
 }
 
-void initMultiplexerTca9548A(Multiplexer* multiplexer, I2cBusConnection* i2cBusConnection) {
+void initMultiplexerTca9548A(Multiplexer* multiplexer, I2cBusConnection* i2cBusConnection, bool useChannelMasksCache) {
     initMultiplexer(multiplexer,
                    &multiplexerTca9548AInit,
                    &multiplexerTca9548AReadChannelsMask,
@@ -69,5 +78,6 @@ void initMultiplexerTca9548A(Multiplexer* multiplexer, I2cBusConnection* i2cBusC
                    &multiplexerTca9548AGetChannelEnable,
                    &multiplexerTca9548A4SetChannelEnable,
                    TCA9548A_CHANNEL_COUNT,
+                   useChannelMasksCache,
                    (int*) i2cBusConnection);
 }

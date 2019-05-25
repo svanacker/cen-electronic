@@ -21,7 +21,7 @@ I2cBusList* getI2cBusList() {
     return &i2cBusList;
 }
 
-void initI2cBusList(I2cBus(*i2cBusListArray)[], unsigned char i2cBusListSize) {
+void initI2cBusList(I2cBus(*i2cBusListArray)[], unsigned int i2cBusListSize) {
     if (i2cBusListArray == NULL) {
         writeError(I2C_BUS_LIST_NOT_INITIALIZED);
     }
@@ -30,7 +30,7 @@ void initI2cBusList(I2cBus(*i2cBusListArray)[], unsigned char i2cBusListSize) {
     i2cBusList.size = 0;
 }
 
-I2cBus* getI2cBusByIndex(int index) {
+I2cBus* getI2cBusByIndex(unsigned int index) {
 	if (i2cBusList.maxSize == 0) {
 		writeError(I2C_BUS_LIST_NOT_INITIALIZED);
 		return NULL;

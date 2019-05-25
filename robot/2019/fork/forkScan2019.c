@@ -8,6 +8,7 @@
 #include "../../../common/error/error.h"
 
 #include "../../../common/i2c/i2cCommon.h"
+#include "../../../common/i2c/i2cConstants.h"
 
 #include "../../../common/io/outputStream.h"
 #include "../../../common/io/printWriter.h"
@@ -17,15 +18,28 @@
 
 #include "../../../common/timer/delayTimer.h"
 
+#include "../../../drivers/tof/tofDetectionUtils.h"
+#include "../../../drivers/i2c/multiplexer/multiplexerList.h"
+
 // TOF CONFIG
 
-void forkScan2019ConfigTofList(TofSensor* leftForkScanSensor, TofSensor* rightForkScanSensor) {
+void forkScan2019ConfigTofList(TofSensor* leftForkScanSensor, TofSensor* rightForkScanSensor, MultiplexerList* multiplexerList) {
     if (leftForkScanSensor != NULL) {
         leftForkScanSensor->usageType = TOF_SENSOR_USAGE_TYPE_ACTION;
         leftForkScanSensor->orientationRadian = 0.0f;
         leftForkScanSensor->thresholdMinDistanceMM = FORK_2019_SCAN_DISTANCE_LEFT_MIN_THRESHOLD;
         leftForkScanSensor->thresholdMaxDistanceMM = FORK_2019_SCAN_DISTANCE_LEFT_MAX_THRESHOLD;
         leftForkScanSensor->name = "FORK LEFT";
+        
+        leftForkScanSensor->changeAddress = true;
+        leftForkScanSensor->targetAddress = VL530X_ADDRESS_12;
+        leftForkScanSensor->multiplexer = getMultiplexerByIndex(multiplexerList, 0);
+        leftForkScanSensor->multiplexerChannel = MULTIPLEXER_CHANNEL_4;
+        
+        // RESTART
+        leftForkScanSensor->hardwareRestartable = true;
+        leftForkScanSensor->hardwareRestartIOExpanderIndex = 0;
+        leftForkScanSensor->hardwareRestartIOExpanderIoIndex = 0;
     }
     if (rightForkScanSensor != NULL) {
         rightForkScanSensor->usageType = TOF_SENSOR_USAGE_TYPE_ACTION;
@@ -33,6 +47,14 @@ void forkScan2019ConfigTofList(TofSensor* leftForkScanSensor, TofSensor* rightFo
         rightForkScanSensor->thresholdMinDistanceMM = FORK_2019_SCAN_DISTANCE_RIGHT_MIN_THRESHOLD;
         rightForkScanSensor->thresholdMaxDistanceMM = FORK_2019_SCAN_DISTANCE_RIGHT_MAX_THRESHOLD;
         rightForkScanSensor->name = "FORK RIGHT";
+        
+        rightForkScanSensor->changeAddress = true;
+        rightForkScanSensor->targetAddress = VL530X_ADDRESS_11;
+        rightForkScanSensor->multiplexer = getMultiplexerByIndex(multiplexerList, 0);
+        rightForkScanSensor->multiplexerChannel = MULTIPLEXER_CHANNEL_3;
+        rightForkScanSensor->hardwareRestartable = true;
+        rightForkScanSensor->hardwareRestartIOExpanderIndex = 0;
+        rightForkScanSensor->hardwareRestartIOExpanderIoIndex = 0;
     }
 }
 

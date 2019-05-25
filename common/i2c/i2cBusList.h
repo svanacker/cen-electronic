@@ -12,9 +12,9 @@ typedef struct {
     /** An array of pointer on i2cBus Descriptor. */
     I2cBus(*busArray)[];
     /** the size of the list. */
-    unsigned char size;
+    unsigned int size;
     /** the max size of the list. */
-    unsigned char maxSize;
+    unsigned int maxSize;
 } I2cBusList;
 
 /**
@@ -22,7 +22,7 @@ typedef struct {
  * @param busArray the array presized with I2cBus
  * @param busListSize the size of the array of I2cBus
  */
-void initI2cBusList(I2cBus(*busArray)[], unsigned char busListSize);
+void initI2cBusList(I2cBus(*busArray)[], unsigned int busListSize);
 
 /**
  * Return the dispatcher list.
@@ -40,7 +40,7 @@ I2cBus* addI2cBus(enum I2cBusType i2cBusType, enum I2cPort i2cPort);
  * @param index the index of the i2cBus to get.
  * @return a i2cBus at the right index.
  */
-I2cBus* getI2cBusByIndex(int index);
+I2cBus* getI2cBusByIndex(unsigned int index);
 
 /**
  * Find the i2cBus by his type in the list.

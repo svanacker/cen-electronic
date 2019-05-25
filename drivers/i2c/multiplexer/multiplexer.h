@@ -7,6 +7,16 @@
 struct Multiplexer;
 typedef struct Multiplexer Multiplexer;
 
+#define MULTIPLEXER_CHANNEL_0                 0
+#define MULTIPLEXER_CHANNEL_1                 1
+#define MULTIPLEXER_CHANNEL_2                 2
+#define MULTIPLEXER_CHANNEL_3                 3
+#define MULTIPLEXER_CHANNEL_4                 4
+#define MULTIPLEXER_CHANNEL_5                 5
+#define MULTIPLEXER_CHANNEL_6                 6
+#define MULTIPLEXER_CHANNEL_7                 7
+
+
 /**
  * Type of function to Multiplexer.
  */
@@ -52,6 +62,8 @@ struct Multiplexer {
     unsigned int channelCount;
     /** Last value (must not be handled by external systems) */
     unsigned int _lastChannelsMask;
+    /** Do we use a cache to avoid sending always lots of I2c command if we use the configure always the same channelMasks */
+    bool useChannelMasksCache;
     /** pointer on other object (useful for I2C Connection for example) .*/
     int* object;
 };
@@ -66,6 +78,21 @@ void initMultiplexer(Multiplexer* multiplexer,
                     MultiplexerGetChannelEnableFunction* multiplexerGetChannelEnable,
                     MultiplexerSetChannelEnableFunction* multiplexerSetChannelEnable,
                    unsigned int channelCount,
+                   bool useChannelMasksCache,
                    int* object);
+
+// UTILS FUNCTION
+
+/**
+ * Activate a specific channel and disable all others !
+ * @param multiplexer
+ * @param channelIndex
+ */
+void multiplexerEnableOnly(Multiplexer* multiplexer, unsigned int channelIndex);
+    
+
+void multiplexerDisableAll(Multiplexer* multiplexer);
+
+void multiplexerEnableAll(Multiplexer* multiplexer);
 
 #endif

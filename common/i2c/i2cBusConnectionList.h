@@ -39,6 +39,15 @@ I2cBusConnectionList* getI2cBusConnectionList();
 I2cBusConnection* addI2cBusConnection(I2cBus* i2cBus, unsigned char slaveAddress, bool defaultInitConnection);
 
 /**
+ * Retrieve an existing i2cBusConnection, and if none, create it and returns it.
+ * @param i2cBus
+ * @param i2cSlaveAddress
+ * @param defaultInitConnection
+ * @return 
+ */
+I2cBusConnection* getOrCreateI2cBusConnection(I2cBus* i2cBus, unsigned char i2cSlaveAddress, bool defaultInitConnection);
+
+/**
  * Get a i2cBusConnection by his index.
  * @param index the index of the i2cBusConnection to get.
  * @return a i2cBusConnection at the right index.

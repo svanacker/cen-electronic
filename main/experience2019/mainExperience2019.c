@@ -104,7 +104,7 @@ void mainBoardMainPhase2(void) {
     mainBoardCommonInitTimerList();
     mainBoardCommonInitCommonDrivers();
 
-    TofSensorList* tofSensorList = mainExperience2019TofInitDrivers();
+    TofSensorList* tofSensorList = mainExperience2019TofInitDrivers(mainBoardCommonGetAlternativeI2cBus());
     
     // 2019 specific
     initElectronLauncher2019(&launcher,

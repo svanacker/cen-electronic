@@ -8,6 +8,8 @@
 #include "tofPc.h"
 #include "tofListDebugPc.h"
 
+#include "../../../common/math/cenMath.h"
+
 #include "../tofList.h"
 #include "../tofDebug.h"
 
@@ -16,9 +18,6 @@
 void initTofSensorListPc(TofSensorList* tofSensorList, TofSensor(*tofSensorArray)[], unsigned int size) {
     initTofSensorList(tofSensorList, tofSensorArray,
                       size,
-                      NULL,
-                      true,
-                      true,
                       true,
                       &printTofSensorConfigTablePc,
                       &printTofSensorNetworkTablePc,
@@ -33,5 +32,10 @@ void initTofSensorListPc(TofSensorList* tofSensorList, TofSensor(*tofSensorArray
         snprintf(tofName, TOF_NAME_PC_STRING_LENGTH, "TOF PC ");
         snprintf(tofName + strlen(tofName), TOF_NAME_PC_STRING_LENGTH, "%d", tofIndex);
         tofSensor->name = tofName;
+
+        tofSensor->beamAngleRadian = degToRad(25.0f);
+
+        // When the whole initialization is done, we could start the tof !
+        tofStart(tofSensor);
     }
 }

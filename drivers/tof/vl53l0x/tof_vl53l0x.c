@@ -1,4 +1,6 @@
 #include "tof_vl53l0x.h"
+#include "tofNetwork_vl53l0x.h"
+#include "tofRanging_vl53l0x.h"
 
 #include "../tof.h"
 
@@ -11,6 +13,7 @@
 
 #include "../../../common/delay/cenDelay.h"
 
+
 #include "../../../common/error/error.h"
 
 #include "../../../common/i2c/i2cConstants.h"
@@ -19,6 +22,8 @@
 #include "../../../common/io/printWriter.h"
 
 #include "../../../common/log/logger.h"
+
+#include "../../../common/math/cenMath.h"
 
 #include "../../../common/timer/delayTimer.h"
 
@@ -103,8 +108,7 @@ bool tof_vl53l0x_begin(TofSensorVL53L0X* tofSensorVL53L0X, bool debug) {
         }
 
         tofSensorVL53L0X->status = VL53L0X_StaticInit(tofDevice); // Device Initialization
-    }
-    else {
+    } else {
         return false;
     }
 
@@ -120,8 +124,7 @@ bool tof_vl53l0x_begin(TofSensorVL53L0X* tofSensorVL53L0X, bool debug) {
             appendStringAndDec(debugOutputStream, "refSpadCount = ", refSpadCount);
             appendStringAndDec(debugOutputStream, ", isApertureSpads = ", isApertureSpads);
         }
-    }
-    else {
+    } else {
         return false;
     }
 
@@ -132,8 +135,7 @@ bool tof_vl53l0x_begin(TofSensorVL53L0X* tofSensorVL53L0X, bool debug) {
 
         // Device Initialization
         tofSensorVL53L0X->status = VL53L0X_PerformRefCalibration(tofDevice, &VhvSettings, &PhaseCal);
-    }
-    else {
+    } else {
         return false;
     }
 
@@ -142,52 +144,46 @@ bool tof_vl53l0x_begin(TofSensorVL53L0X* tofSensorVL53L0X, bool debug) {
         if (debug) {
             appendStringLN(debugOutputStream, "VL53L0X: SetDeviceMode");
         }
-        
+
         // In Single
         // tofSensorVL53L0X->status = VL53L0X_SetDeviceMode(tofDevice, VL53L0X_DEVICEMODE_SINGLE_RANGING);
 
         // In continuous
         tofSensorVL53L0X->status = VL53L0X_SetDeviceMode(tofDevice, VL53L0X_DEVICEMODE_CONTINUOUS_RANGING);
-    }
-    else {
+    } else {
         return false;
     }
 
     // Enable/Disable Sigma and Signal check
     if (tofSensorVL53L0X->status == VL53L0X_ERROR_NONE) {
         tofSensorVL53L0X->status = VL53L0X_SetLimitCheckEnable(tofDevice, VL53L0X_CHECKENABLE_SIGMA_FINAL_RANGE, 1);
-    }
-    else {
+    } else {
         return false;
     }
 
     if (tofSensorVL53L0X->status == VL53L0X_ERROR_NONE) {
         tofSensorVL53L0X->status = VL53L0X_SetLimitCheckEnable(tofDevice, VL53L0X_CHECKENABLE_SIGNAL_RATE_FINAL_RANGE, 1);
-    }
-    else {
+    } else {
         return false;
     }
 
     if (tofSensorVL53L0X->status == VL53L0X_ERROR_NONE) {
         tofSensorVL53L0X->status = VL53L0X_SetLimitCheckEnable(tofDevice, VL53L0X_CHECKENABLE_RANGE_IGNORE_THRESHOLD, 1);
-    }
-    else {
+    } else {
         return false;
     }
 
     if (tofSensorVL53L0X->status == VL53L0X_ERROR_NONE) {
         tofSensorVL53L0X->status = VL53L0X_SetLimitCheckValue(tofDevice, VL53L0X_CHECKENABLE_RANGE_IGNORE_THRESHOLD, (FixPoint1616_t) (1.5 * 0.023 * 65536));
-    }
-    else {
+    } else {
         return false;
     }
-    
+
     // If in Continuous Mode
-    if(tofSensorVL53L0X->status == VL53L0X_ERROR_NONE) {
-		appendString(debugOutputStream, "Call of VL53L0X_StartMeasurement ...");
-		tofSensorVL53L0X->status = VL53L0X_StartMeasurement(tofDevice);
-    }
-    else {
+    if (tofSensorVL53L0X->status == VL53L0X_ERROR_NONE) {
+        appendString(debugOutputStream, "Call of VL53L0X_StartMeasurement ...");
+        tofSensorVL53L0X->status = VL53L0X_StartMeasurement(tofDevice);
+    } else {
         return false;
     }
 
@@ -195,113 +191,13 @@ bool tof_vl53l0x_begin(TofSensorVL53L0X* tofSensorVL53L0X, bool debug) {
         return true;
     } else {
         if (debug) {
-            OutputStream* errorOutputStream = getDebugOutputStreamLogger(); 
+            OutputStream* errorOutputStream = getDebugOutputStreamLogger();
             appendString(errorOutputStream, "VL53L0X Error: ");
             appendDec(errorOutputStream, tofSensorVL53L0X->status);
         }
 
         return false;
     }
-}
-
-bool tofSetAddress(TofSensorVL53L0X* tofSensorVL53L0X, I2cBusConnection* i2cBusConnection, unsigned int newAddress) {
-    tofSensorVL53L0X->status = VL53L0X_ERROR_NONE;
-    VL53L0X_Dev_t* tofDevice = &(tofSensorVL53L0X->device);
-
-    if (newAddress != VL530X_ADDRESS_0) {
-        tofSensorVL53L0X->status = VL53L0X_SetDeviceAddress(tofDevice, newAddress);
-        timerDelayMilliSeconds(30);
-    }
-
-    if (tofSensorVL53L0X->status == VL53L0X_ERROR_NONE) {
-        tofDevice->I2cDevAddr = newAddress;
-        i2cBusConnection->i2cAddress = newAddress;
-        return true;
-    }
-    return false;
-}
-
-VL53L0X_Error getSingleRangingMeasurement(TofSensorVL53L0X* tofSensorVL53L0X, bool debug) {
-    tofSensorVL53L0X->status = VL53L0X_ERROR_NONE;
-    VL53L0X_Dev_t* tofDevice = &(tofSensorVL53L0X->device);
-    VL53L0X_RangingMeasurementData_t* rangingMeasurementData = &(tofSensorVL53L0X->rangingMeasurementData);
-
-    FixPoint1616_t limitCheckCurrent;
-    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
-    if (tofSensorVL53L0X->status == VL53L0X_ERROR_NONE) {
-        if (debug) {
-            appendString(debugOutputStream, "sVL53L0X: PerformSingleRangingMeasurement\n");
-        }
-        tofSensorVL53L0X->status = VL53L0X_PerformSingleRangingMeasurement(tofDevice, rangingMeasurementData);
-
-        if (debug) {
-            VL53L0X_GetLimitCheckCurrent(tofDevice, VL53L0X_CHECKENABLE_RANGE_IGNORE_THRESHOLD, &limitCheckCurrent);
-
-            appendString(debugOutputStream, "RANGE IGNORE THRESHOLD: ");
-            appendDecf(debugOutputStream, limitCheckCurrent / 65536.0f);
-            println(debugOutputStream);
-            appendString(debugOutputStream, "Measured distance: ");
-            appendDecf(debugOutputStream, rangingMeasurementData->RangeMilliMeter);
-            println(debugOutputStream);
-        }
-    }
-
-    return tofSensorVL53L0X->status;
-}
-
-VL53L0X_Error waitMeasurementDataReady(VL53L0X_DEV Dev) {
-    VL53L0X_Error Status = VL53L0X_ERROR_NONE;
-    uint8_t NewDatReady = 0;
-    uint32_t LoopNb;
-
-    // Wait until it finished
-    // use timeout to avoid deadlock
-    if (Status == VL53L0X_ERROR_NONE) {
-        LoopNb = 0;
-        do {
-            Status = VL53L0X_GetMeasurementDataReady(Dev, &NewDatReady);
-            if ((NewDatReady == 0x01) || Status != VL53L0X_ERROR_NONE) {
-                break;
-            }
-            LoopNb = LoopNb + 1;
-            VL53L0X_PollingDelay(Dev);
-        } while (LoopNb < VL53L0X_DEFAULT_MAX_LOOP);
-
-        if (LoopNb >= VL53L0X_DEFAULT_MAX_LOOP) {
-            Status = VL53L0X_ERROR_TIME_OUT;
-        }
-    }
-
-    return Status;
-}
-
-VL53L0X_Error getContinousRangingMeasurement(TofSensorVL53L0X* tofSensorVL53L0X, bool debug) {
-    tofSensorVL53L0X->status = VL53L0X_ERROR_NONE;
-    VL53L0X_Dev_t* tofDevice = &(tofSensorVL53L0X->device);
-    VL53L0X_RangingMeasurementData_t* rangingMeasurementData = &(tofSensorVL53L0X->rangingMeasurementData);
-
-    FixPoint1616_t limitCheckCurrent;
-    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
-    if (tofSensorVL53L0X->status == VL53L0X_ERROR_NONE) {
-        if (debug) {
-            appendString(debugOutputStream, "sVL53L0X: VL53L0X_GetRangingMeasurementData\n");
-        }
-        waitMeasurementDataReady(tofDevice);
-        tofSensorVL53L0X->status = VL53L0X_GetRangingMeasurementData(tofDevice, rangingMeasurementData);
-
-        if (debug) {
-            VL53L0X_GetLimitCheckCurrent(tofDevice, VL53L0X_CHECKENABLE_RANGE_IGNORE_THRESHOLD, &limitCheckCurrent);
-
-            appendString(debugOutputStream, "RANGE IGNORE THRESHOLD: ");
-            appendDecf(debugOutputStream, limitCheckCurrent / 65536.0f);
-            println(debugOutputStream);
-            appendString(debugOutputStream, "Measured distance: ");
-            appendDecf(debugOutputStream, rangingMeasurementData->RangeMilliMeter);
-            println(debugOutputStream);
-        }
-    }
-
-    return tofSensorVL53L0X->status;
 }
 
 /**
@@ -317,79 +213,78 @@ TofSensorVL53L0X* getTofSensorVL53L0X(TofSensor* tofSensor) {
     return (TofSensorVL53L0X*) (tofSensor->object);
 }
 
-I2cBusConnection* getTofSensorVL53L0XI2cBusConnection(TofSensor* tofSensor) {
-    TofSensorVL53L0X* tofSensorVL53L0X = getTofSensorVL53L0X(tofSensor);
-    if (tofSensorVL53L0X == NULL) {
-        writeError(TOF_SENSOR_OBJECT_NULL);
-        return NULL;
-    }
-    return tofSensorVL53L0X->i2cBusConnection;
-}
-
 /**
  * Tof POO Implementation for VL53L0X
  * @private
  */
-bool tofSensorInitVL53L0X(TofSensor* tofSensor) {
+bool tofSensorStartVL53L0X(TofSensor* tofSensor, bool restart, bool debug) {
     TofSensorVL53L0X* tofSensorVL53L0X = getTofSensorVL53L0X(tofSensor);
     if (tofSensorVL53L0X == NULL) {
         writeError(TOF_SENSOR_OBJECT_NULL);
         return false;
     }
-    return tof_vl53l0x_begin(tofSensorVL53L0X, true);
-}
+    if (restart) {
+        // The Tof structure are already initialized, so we just recall
+        if (tofSensor->hardwareRestartable) {
 
-/**
- * Tof POO Implementation for VL53L0X
- * @private
- */
-unsigned int tofSensorGetDistanceVL53L0XMM(TofSensor* tofSensor) {
-    if (tofSensor == NULL) {
-        writeError(TOF_SENSOR_NULL);
-        return 0;
-    }
-    TofSensorVL53L0X* tofSensorVL53L0X = getTofSensorVL53L0X(tofSensor);
-    if (tofSensorVL53L0X == NULL) {
-        writeError(TOF_SENSOR_OBJECT_NULL);
-        return 0;
-    }
-    // If we detect a problem of I2cBusConnection, we disable the tof !
-    if (tofSensorVL53L0X->i2cBusConnection != NULL) {
-        if (tofSensorVL53L0X->i2cBusConnection->error != ERROR_NONE) {
-            tofSensor->enabled = false;
-            return 0;
         }
+        // TODO
+        // bool successInit = tof_vl53l0x_begin(tofSensorVL53L0X, true);
+        // I2cBusConnection* tofBusConnection = tofSensorSelectRightI2cBusConnection(tofSensor, VL530X_ADDRESS_BASE_ADDRESS, true);
+        return true;
+    } else {
+        if (debug) {
+            appendString(getDebugOutputStreamLogger(), "    INIT VL53 ...");
+        }
+
+        I2cBusConnection* tofBusConnection = tofSensorSelectRightI2cBusConnection(tofSensor, VL530X_ADDRESS_BASE_ADDRESS, debug);
+        tofSensorVL53L0X->i2cBusConnection = tofBusConnection;
+
+        bool successInit = tof_vl53l0x_begin(tofSensorVL53L0X, true);
+        if (!successInit) {
+            // Maybe the sensor is always connected (by the Uart power) and has not reboot
+            // We try to reach it at the new address
+            tofBusConnection->i2cAddress = tofSensor->targetAddress;
+            successInit = tof_vl53l0x_begin(tofSensorVL53L0X, true);
+
+            // If KO
+            if (!successInit) {
+                tofSensor->startResult = TOF_SENSOR_START_RESULT_INIT_PROBLEM;
+                tofSensor->enabled = false;
+                return false;
+            } else {
+                tofSensor->startResult = TOF_SENSOR_START_RESULT_ALREADY_STARTED;
+            }
+            // To let the hardware device initialise properly
+            timerDelayMilliSeconds(30);
+        } else {
+            if (tofSensorChangeAddressIfNeeded(tofSensor)) {
+                tofSensor->startResult = TOF_SENSOR_START_RESULT_OK;
+            }
+            else {
+                tofSensor->startResult = TOF_SENSOR_START_RESULT_CHANGE_ADDRESS_PROBLEM;
+            }
+        }
+
+        if (debug) {
+            appendStringLN(getDebugOutputStreamLogger(), "OK");
+        }
+        return tof_vl53l0x_begin(tofSensorVL53L0X, true);
     }
-    // If we use a multiplexer, we must select the channel first
-    Multiplexer* multiplexer = tofSensorVL53L0X->multiplexer;
-    if (multiplexer != NULL) {
-        multiplexer->multiplexerWriteChannelsMask(multiplexer, tofSensor->multiplexerChannel);
-    }
-    // Single Mode
-    // getSingleRangingMeasurement(tofSensorVL53L0X, false);
-
-    // Continous Mode
-    getContinousRangingMeasurement(tofSensorVL53L0X, false);
-
-    VL53L0X_RangingMeasurementData_t* data = &(tofSensorVL53L0X->rangingMeasurementData);
-    
-    // Store the last Value
-    tofSensor->lastDistanceMM = data->RangeMilliMeter;
-
-    return data->RangeMilliMeter;
 }
 
-bool initTofSensorVL53L0X(TofSensor* tofSensor,
-        TofSensorVL53L0X* tofSensorVL53L0X,
-        I2cBusConnection* i2cBusConnection,
-        Multiplexer* multiplexer
-) {
-    tofSensorVL53L0X->i2cBusConnection = i2cBusConnection;
-    tofSensorVL53L0X->multiplexer = multiplexer;
+void initTofSensorVL53L0X(TofSensor* tofSensor,
+        TofSensorVL53L0X* tofSensorVL53L0X
+        ) {
     tofSensor->type = TOF_SENSOR_TYPE_VL53L0X;
-    return initTofSensor(tofSensor,
-            &tofSensorInitVL53L0X,
+
+    // Orientation and Beam Angle
+    // TODO : VL53L0X value of beam angle : https://forum.pololu.com/t/vl53l0x-beam-width-angle/11483
+    // Be it could change for another tof
+    tofSensor->beamAngleRadian = degToRad(25.0f);
+
+    initTofSensor(tofSensor,
+            &tofSensorStartVL53L0X,
             &tofSensorGetDistanceVL53L0XMM,
             (int*) tofSensorVL53L0X);
-
 }

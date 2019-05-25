@@ -20,6 +20,8 @@
 
 #include "../../../robot/match/endMatch.h"
 
+#include "../../../drivers/tof/tofDetectionUtils.h"
+
 void updateElectronLauncherState(ElectronLauncher2019* launcher, enum ElectronLauncher2019State newState) {
     if (launcher == NULL) {
         writeError(ELECTRON_LAUNCHER_2019_NULL);

@@ -3,16 +3,15 @@
 
 #include <stdbool.h>
 
-#include "../../common/2d/2d.h"
+#include "../../drivers/i2c/multiplexer/multiplexer.h"
 
 // Forward declaration
 typedef struct TofSensor TofSensor;
 
 /**
- * Type of function to initialize the Tof Sensor.
- * We need an ioExpander so that we could select the right tof Sensor
+ * Real implementation of start, or restart
  */
-typedef bool tofSensorInitFunction(TofSensor* TofSensor);
+typedef bool tofSensorStartFunction(TofSensor* TofSensor, bool restart, bool debug);
 
 /**
  * Define the function which must be used to get the distance 
@@ -32,7 +31,7 @@ enum TofSensorType {
 };
 
 /**
- * Type of TofSensor, someare used to detect collision, are used for actions
+ * Type of TofSensor, some are used to detect collision, are used for actions
  */
 enum TofSensorUsageType {
     /** The user type was not defined */
@@ -41,6 +40,20 @@ enum TofSensorUsageType {
     TOF_SENSOR_USAGE_TYPE_COLLISION = 1,
     /** The tof is used to detect actions. */
     TOF_SENSOR_USAGE_TYPE_ACTION = 2
+};
+
+/**
+ * Enum to determine how was the latest start, if the tof was successful 
+ * started or not
+ */
+enum TofSensorStartResult {
+    TOF_SENSOR_START_RESULT_UNKNOWN = 0,
+    TOF_SENSOR_START_RESULT_DISABLED = 1,
+    TOF_SENSOR_START_RESULT_OK = 2,
+    TOF_SENSOR_START_RESULT_ALREADY_STARTED = 3,
+    TOF_SENSOR_START_RESULT_INIT_PROBLEM = 4,
+    TOF_SENSOR_START_RESULT_CHANGE_ADDRESS_PROBLEM = 5,
+    
 };
 
 /**
@@ -53,6 +66,8 @@ struct TofSensor {
     enum TofSensorType type;
     /** The usage type of Sensor. */
     enum TofSensorUsageType usageType;
+    /** The latest status of start for this Sensor. */
+    enum TofSensorStartResult startResult;
     /** If we enabled it. If disable, we do not try to initialize it .*/
     bool enabled;
     
@@ -61,12 +76,20 @@ struct TofSensor {
     unsigned int i2cBusIndex;
     /** If we must change the address of the TOF at startup .*/
     bool changeAddress;
-    /** True if we use a I2C Multiplexer */
-    bool useMultiplexer;
-    /** The address of the multiplexer. */
-    unsigned int multiplexerIndex;
-    /** The index of the multiplexer if we use it (0 to 7). */
+    /** The new address that we would like to reach */
+    unsigned int targetAddress;
+    /** The multiplexer (could be null if not used). */
+    Multiplexer* multiplexer;
+    /** The channel to use inside the multiplexer if we use it (MULTIPLEXER_CHANNEL_0 to MULTIPLEXER_CHANNEL_7). */
     unsigned int multiplexerChannel;
+    
+    // RESTART
+    /** If the tof is connected to a mechanism which could restart it */
+    bool hardwareRestartable;
+    /** The index of the IOExpander. */
+    unsigned int hardwareRestartIOExpanderIndex;
+    /** The index of the IO, which is connected to the XShut pin of the tof  */
+    unsigned int hardwareRestartIOExpanderIoIndex;
     
     // DISTANCE & TRESHOLD
     /** The function which must be used to read the distance */
@@ -94,8 +117,8 @@ struct TofSensor {
     float angleFromRobotCenterRadian;
 
     // IMPLEMENTATION CALL BACK
-    /** The function which must be used to init the tof Sensor */
-    tofSensorInitFunction* tofSensorInit;
+    /** The real function which do something on the Hardware */
+    tofSensorStartFunction* tofSensorStart;
     
     // EXTENSION OBJECT
     /** Generic pointer for context use */
@@ -105,10 +128,17 @@ struct TofSensor {
 /**
  * Init a Tof Sensor
  */
-bool initTofSensor(TofSensor* tofSensor, 
-                    tofSensorInitFunction* tofSensorInit,
+void initTofSensor(TofSensor* tofSensor, 
+                    tofSensorStartFunction* tofSensorStart,
                     tofSensorGetDistanceMMFunction* tofGetDistanceMM,
                     int* object);
+
+/**
+ * Start the Tof Sensor for the first time.
+ * @param tofSensor
+ * @return 
+ */
+bool tofStart(TofSensor* tofSensor);
 
 /**
  * Restart a Tof Sensor (useful if the I2c Bus Connection has a problem).
@@ -116,44 +146,5 @@ bool initTofSensor(TofSensor* tofSensor,
  * @return 
  */
 bool tofRestart(TofSensor* tofSensor);
-
-
-// UTILS FUNCTION
-
-/**
- * Returns if the tof distance in the Threshold Range (which means that we detects
- * something)
- * @param tofSensor
- * @return true if distance > 0 & in [distanceMinThreshold .. distanceMaxThreshold]
- */
-bool isTofDistanceInRange(TofSensor* tofSensor);
-
-/**
- * We compute the real point of the tofSensor by taking into account
- * - The point of view (robotCentralPoint) and his orientation
- * - The position (polar coordinates) of the tofSensor
- * - The distance to the center of the Robot
- */
-void tofComputeTofPointOfView(TofSensor* tofSensor, Point* robotCentralPoint, float robotOrientation, Point* resultPoint);
-
-void tofComputePoint(TofSensor* tofSensor,
-    Point* tofPointOfView,
-    float pointOfViewAngleRadian,
-    float distance,
-    float coneAngle,
-    Point* resultPoint);
-
-/**
- * Compute if a something is detected from the pointOfView (Robot->position and robot->angle) and if something is detected,
- * them the point given in parameter will be updated.
- * @return true if a something was detected
- */
-bool tofComputeDetectedPointIfAny(TofSensor* tofSensor, Point* pointOfView, float pointOfViewAngleRadian, Point* pointToUpdateIfAny);
-
-/**
- * Is the tof sensor backward oriented, and in this case, we don't check them
- * when we go forward 
- */
-bool isTofSensorBackwardOriented(TofSensor* tofSensor);
 
 #endif
