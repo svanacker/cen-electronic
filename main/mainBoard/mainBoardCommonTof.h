@@ -11,6 +11,11 @@
 // TOFS
 #define MAIN_BOARD_TOF_SENSOR_LIST_LENGTH                                     14
 
+// BEEP MANAGEMENT
+#define MAIN_BOARD_TOF_BEEP_IO_EXPANDER_INDEX                                  0
+#define MAIN_BOARD_TOF_BEEP_IO_EXPANDER_GROUND_PIN_INDEX                       6
+#define MAIN_BOARD_TOF_BEEP_IO_EXPANDER_VCC_PIN_INDEX                          7
+
 // TOF MANAGEMENT
 
 #define FRONT_RIGHT_SENSOR_INDEX         0

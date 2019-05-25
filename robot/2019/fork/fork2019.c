@@ -165,6 +165,9 @@ bool fork2019TakeSimplePuck(ServoList* servoList, TofSensorList* tofSensorList) 
 
 
 void updateServoProperties2019(ServoList* servoList) {
+    if (servoList == NULL) {
+        writeError(SERVO_LIST_NULL);
+    }
 
     // Arm (For small Robot only))
     getServo(servoList, FORK_2019_LEFT_ARM_SERVO_INDEX)->name = "ARM LEFT";

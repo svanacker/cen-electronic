@@ -80,6 +80,16 @@ void initTofSensorList(TofSensorList* tofSensorList,
 );
 
 /**
+ * Initialise the Beep part of the tofSensor List
+ * @param beepIoExpander
+ * @param groundBeepIoPin
+ * @param vccBeepIoPin
+ */
+void initTofSensorListBeep(TofSensorList* tofSensorList,
+                           IOExpander* beepIoExpander,
+                           unsigned int groundBeepIoPin,
+                           unsigned int vccBeepIoPin);
+/**
  * Get a tof Sensor by his index.
  * @param index the index of the tofSensor to get.
  * @return a tofSensor at the right index.

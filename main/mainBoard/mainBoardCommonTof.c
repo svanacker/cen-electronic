@@ -312,6 +312,13 @@ void mainBoardCommonTofInitDrivers(I2cBus* i2cBus, float distanceFactor) {
                               // debug
                               true
             );
+    
+    // BEEP
+    IOExpander* beepIOExpander = getIOExpanderByIndex(&ioExpanderList, MAIN_BOARD_TOF_BEEP_IO_EXPANDER_INDEX);
+    initTofSensorListBeep(&tofSensorList, 
+                          beepIOExpander, 
+                          MAIN_BOARD_TOF_BEEP_IO_EXPANDER_GROUND_PIN_INDEX,
+                          MAIN_BOARD_TOF_BEEP_IO_EXPANDER_VCC_PIN_INDEX);
 
     appendStringLN(getDebugOutputStreamLogger(), "OK");
 }

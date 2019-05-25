@@ -251,6 +251,7 @@ void clearLastError();
 #define TOO_MUCH_STRATEGY_ITEMS                                           0x5020
 #define TOO_MUCH_TARGETS                                                  0x5030
 #define TARGET_IS_NULL                                                    0x5031
+#define GAME_STRATEGY_CONTEXT_NULL                                        0x5032
 
 #define TOO_MUCH_LOCATIONS                                                0x5040
 #define LOCATION_LIST_NULL                                                0x5041
@@ -300,6 +301,9 @@ void clearLastError();
 #define ROBOT_CONFIG_MUST_BE_SPACE_CHAR_ERROR                             0x6301
 #define ROBOT_CONFIG_FILE_LENGTH_ERROR                                    0x6302
 #define ROBOT_CONFIG_ERROR                                                0x6303
+
+#define ROBOT_POSITION_NULL                                               0x6400
+
 
 // PC
 #define PC_FILE_NOT_FOUND                                                 0x7000

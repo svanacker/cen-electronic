@@ -121,6 +121,8 @@ void mainBoardMainPhase2(void) {
     mainBoardCommonInitTimerList();
     mainBoardCommonInitCommonDrivers();
     
+    mainBoardCommonStrategyMainInitDrivers(&robotConfig);
+    
     // ROBOT2019 : PCA9685
     ServoList* servoList = mainBoardCommonGetServoList();
     // I2cBus* i2cBus = mainBoardCommonGetMainI2cBus();
@@ -148,6 +150,7 @@ int main(void) {
     mainBoardMainPhase2();
     mainBoardMainPhase3();
     
+    // Initialise the 2019 specific Devices
     TofSensorList* tofSensorList = mainBoardCommonTofGetTofSensorList();
     ServoList* servoList = mainBoardCommonGetServoList();
 	addLocalDevice(getElevator2019DeviceInterface(), getElevator2019DeviceDescriptor(servoList));

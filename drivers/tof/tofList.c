@@ -52,6 +52,15 @@ TofSensor* getTofSensorByIndex(TofSensorList* tofSensorList, unsigned int index)
 	return result;
 }
 
+void initTofSensorListBeep(TofSensorList* tofSensorList,
+                           IOExpander* beepIoExpander,
+                           unsigned int groundBeepIoPin,
+                           unsigned int vccBeepIoPin) {
+    tofSensorList->beepIoExpander = beepIoExpander;
+    tofSensorList->groundBeepIoPin = groundBeepIoPin;
+    tofSensorList->vccBeepIoPin = vccBeepIoPin;
+}
+
 void tofSensorListBeep(TofSensorList* tofSensorList, bool value) {
     IOExpander* beepIoExpander = tofSensorList->beepIoExpander;
     if (beepIoExpander == NULL) {

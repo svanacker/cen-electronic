@@ -74,7 +74,15 @@ void initGameStrategyMotionHandler(GameStrategyContext* gameStrategyContext) {
 
 
 bool updateRobotPositionFromMainBoardToMotorBoard(GameStrategyContext* gameStrategyContext) {
+    if (gameStrategyContext == NULL) {
+        writeError(GAME_STRATEGY_CONTEXT_NULL);
+        return false;
+    }
     Point* robotPosition = gameStrategyContext->robotPosition;
+    if (robotPosition == NULL) {
+        writeError(ROBOT_POSITION_NULL);
+        return false;
+    }
     return clientTrajectorySetAbsolutePosition(robotPosition->x, robotPosition->y, gameStrategyContext->robotAngleRadian);
 }
 
