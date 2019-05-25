@@ -226,12 +226,37 @@ bool tofSensorStartVL53L0X(TofSensor* tofSensor, bool restart, bool debug) {
     if (restart) {
         // The Tof structure are already initialized, so we just recall
         if (tofSensor->hardwareRestartable) {
-
+            IOExpander* hardRestartIOExpander = tofSensor->hardwareRestartIOExpander;
+            if (hardRestartIOExpander == NULL) {
+                writeError(IO_EXPANDER_NULL);
+                return false;
+            }
+            // Shutdown via XSHUT pin to low
+            hardRestartIOExpander->ioExpanderWriteSingleValue(hardRestartIOExpander, tofSensor->hardwareRestartIOExpanderIoIndex, false);
+            timerDelayMilliSeconds(10);
+            // Start via XSHUT pin to high
+            hardRestartIOExpander->ioExpanderWriteSingleValue(hardRestartIOExpander, tofSensor->hardwareRestartIOExpanderIoIndex, true);
+            timerDelayMilliSeconds(30);
+            
+            // Execute after the HARD RESET the standard start
+            return tofStart(tofSensor);
         }
-        // TODO
-        // bool successInit = tof_vl53l0x_begin(tofSensorVL53L0X, true);
-        // I2cBusConnection* tofBusConnection = tofSensorSelectRightI2cBusConnection(tofSensor, VL530X_ADDRESS_BASE_ADDRESS, true);
-        return true;
+        else {
+            // For the "Soft" restart, the connection is already set, but we need to use
+            // The multiplexer ...
+            tofSensorSelectRightI2cBusConnection(tofSensor, tofSensor->targetAddress, debug);
+        }
+        bool successInit = tof_vl53l0x_begin(tofSensorVL53L0X, true);
+        if (!successInit) {
+            tofSensor->startResult = TOF_SENSOR_START_RESULT_INIT_PROBLEM;
+            tofSensor->enabled = false;
+            return false;
+        } else {
+            tofSensor->startResult = TOF_SENSOR_START_RESULT_ALREADY_STARTED;
+            return true;
+        }
+        // To let the hardware device initialise properly
+        timerDelayMilliSeconds(30);
     } else {
         if (debug) {
             appendString(getDebugOutputStreamLogger(), "    INIT VL53 ...");
@@ -260,17 +285,16 @@ bool tofSensorStartVL53L0X(TofSensor* tofSensor, bool restart, bool debug) {
         } else {
             if (tofSensorChangeAddressIfNeeded(tofSensor)) {
                 tofSensor->startResult = TOF_SENSOR_START_RESULT_OK;
-            }
-            else {
+            } else {
                 tofSensor->startResult = TOF_SENSOR_START_RESULT_CHANGE_ADDRESS_PROBLEM;
             }
         }
-
-        if (debug) {
-            appendStringLN(getDebugOutputStreamLogger(), "OK");
-        }
-        return tof_vl53l0x_begin(tofSensorVL53L0X, true);
     }
+
+    if (debug) {
+        appendStringLN(getDebugOutputStreamLogger(), "OK");
+    }
+    return tof_vl53l0x_begin(tofSensorVL53L0X, true);
 }
 
 void initTofSensorVL53L0X(TofSensor* tofSensor,

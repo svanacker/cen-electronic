@@ -5,13 +5,15 @@
 
 #include "../../drivers/i2c/multiplexer/multiplexer.h"
 
+#include "../../drivers/ioExpander/ioExpander.h"
+
 // Forward declaration
 typedef struct TofSensor TofSensor;
 
 /**
  * Real implementation of start, or restart
  */
-typedef bool tofSensorStartFunction(TofSensor* TofSensor, bool restart, bool debug);
+typedef bool tofSensorStartFunction(TofSensor* tofSensor, bool restart, bool debug);
 
 /**
  * Define the function which must be used to get the distance 
@@ -87,7 +89,7 @@ struct TofSensor {
     /** If the tof is connected to a mechanism which could restart it */
     bool hardwareRestartable;
     /** The index of the IOExpander. */
-    unsigned int hardwareRestartIOExpanderIndex;
+    IOExpander* hardwareRestartIOExpander;
     /** The index of the IO, which is connected to the XShut pin of the tof  */
     unsigned int hardwareRestartIOExpanderIoIndex;
     

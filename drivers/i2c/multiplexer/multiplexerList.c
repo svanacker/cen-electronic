@@ -31,7 +31,7 @@ Multiplexer* getMultiplexerByIndex(MultiplexerList* multiplexerList, unsigned in
         return NULL;
     }
 	if (index < 0 || index >= multiplexerList->size) {
-		writeError(MULTIPLEXER_LIST_NOT_INITIALIZED);
+		writeError(MULTIPLEXER_LIST_ILLEGAL_INDEX);
 		return NULL;
 	}
     Multiplexer* result = (Multiplexer*) multiplexerList->multiplexerArray;

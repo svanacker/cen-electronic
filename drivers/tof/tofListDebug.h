@@ -30,16 +30,16 @@
 
 // NETWORK PART
 
-#define TOF_SENSOR_I2C_BUS_INDEX_COLUMN_LENGTH                          8
-#define TOF_SENSOR_CHANGE_ADRESS_COLUMN_LENGTH                          5
-#define TOF_SENSOR_TARGET_ADRESS_COLUMN_LENGTH                          5
-#define TOF_SENSOR_I2C_BUS_NEW_ADDRESS_COLUMN_LENGTH                    8
-#define TOF_SENSOR_USE_MULTIPLEXER_COLUMN_LENGTH                        10
-#define TOF_SENSOR_MULTIPLEXER_CHANNEL_COLUMN_LENGTH                    7
-#define TOF_SENSOR_RESTART_IO_EXPANDER_INDEX_COLUMN_LENGTH              8
-#define TOF_SENSOR_RESTART_IO_EXPANDER_IO_INDEX_COLUMN_LENGTH           8
+#define TOF_SENSOR_I2C_BUS_INDEX_COLUMN_LENGTH                                 8
+#define TOF_SENSOR_CHANGE_ADRESS_COLUMN_LENGTH                                 5
+#define TOF_SENSOR_TARGET_ADRESS_COLUMN_LENGTH                                 5
+#define TOF_SENSOR_I2C_BUS_NEW_ADDRESS_COLUMN_LENGTH                           8
+#define TOF_SENSOR_USE_MULTIPLEXER_COLUMN_LENGTH                              10
+#define TOF_SENSOR_MULTIPLEXER_CHANNEL_COLUMN_LENGTH                           7
+#define TOF_SENSOR_HAS_HARDWARE_RESTART_COLUMN_LENGTH                          8
+#define TOF_SENSOR_HARDWARE_RESTART_IO_EXPANDER_IO_INDEX_COLUMN_LENGTH         8
 
-#define TOF_SENSOR_LAST_COLUMN		                                    0
+#define TOF_SENSOR_LAST_COLUMN		                                           0
 
 // DETECTION PART
 

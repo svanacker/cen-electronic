@@ -72,10 +72,12 @@ void mainBoardCommonIOExpanderListInitDrivers(void) {
     appendString(getDebugOutputStreamLogger(), "IO Expander List ...");
     initIOExpanderList(&ioExpanderList, (IOExpander(*)[]) &ioExpanderArray, MAIN_BOARD_IO_EXPANDER_LIST_LENGTH);
     
-    // -> IO Button Board
-    IOExpander* ioButtonBoardIoExpander = getIOExpanderByIndex(&ioExpanderList, 0);
-    I2cBusConnection* ioButtonBoardBusConnection = addI2cBusConnection(ioExpanderBus, PCF8574_ADDRESS_0, true);
-    initIOExpanderPCF8574(ioButtonBoardIoExpander, ioButtonBoardBusConnection);
+    // -> IO Expander (either classical or IOButtonBoard)
+    IOExpander* ioExpander = getIOExpanderByIndex(&ioExpanderList, 0);
+    I2cBusConnection* ioExpanderBusConnection = addI2cBusConnection(ioExpanderBus, PCF8574_ADDRESS_0, true);
+    initIOExpanderPCF8574(ioExpander, ioExpanderBusConnection);
+    // We need to be sure that the VL530X will not be resetted by the IO Expander
+    ioExpander->ioExpanderWriteValue(ioExpander, 0xFF);
 
     // End of IOExpanderList
     appendStringLN(getDebugOutputStreamLogger(), "OK");
@@ -301,7 +303,7 @@ void mainBoardCommonTofInitDrivers(float distanceFactor) {
         MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > FORK_2019_RIGHT_TOF_INDEX) {
         TofSensor* leftForkScanSensor = &(tofSensorArray[FORK_2019_LEFT_TOF_INDEX]); 
         TofSensor* rightForkScanSensor = &(tofSensorArray[FORK_2019_RIGHT_TOF_INDEX]); 
-        forkScan2019ConfigTofList(leftForkScanSensor, rightForkScanSensor, &multiplexerList);
+        forkScan2019ConfigTofList(leftForkScanSensor, rightForkScanSensor, &multiplexerList, &ioExpanderList);
     }
     
     // HARDWARE Initialization

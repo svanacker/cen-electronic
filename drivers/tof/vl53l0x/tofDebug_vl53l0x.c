@@ -53,8 +53,8 @@ void printTofSensorNetworkDebugTableHeaderVL53L0X(OutputStream* outputStream) {
     appendStringHeader(outputStream, "Multi", TOF_SENSOR_MULTIPLEXER_CHANNEL_COLUMN_LENGTH);
     appendStringHeader(outputStream, "I2c Addr.", TOF_SENSOR_VL53L0X_I2C_ADDRESS_COLUMN_LENGTH);
     appendStringHeader(outputStream, "VL53L0X", TOF_SENSOR_VL53L0X_STATUS_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "Restart", TOF_SENSOR_RESTART_IO_EXPANDER_INDEX_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "Restart", TOF_SENSOR_RESTART_IO_EXPANDER_IO_INDEX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Hard", TOF_SENSOR_HAS_HARDWARE_RESTART_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Restart", TOF_SENSOR_HARDWARE_RESTART_IO_EXPANDER_IO_INDEX_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, TOF_SENSOR_LAST_COLUMN);
 
     // Second header line
@@ -69,8 +69,8 @@ void printTofSensorNetworkDebugTableHeaderVL53L0X(OutputStream* outputStream) {
     appendStringHeader(outputStream, "plexer", TOF_SENSOR_MULTIPLEXER_CHANNEL_COLUMN_LENGTH);
     appendStringHeader(outputStream, "(Hex)", TOF_SENSOR_VL53L0X_I2C_ADDRESS_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Status", TOF_SENSOR_VL53L0X_STATUS_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "Index", TOF_SENSOR_RESTART_IO_EXPANDER_INDEX_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "IO Index", TOF_SENSOR_RESTART_IO_EXPANDER_IO_INDEX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Reset ?", TOF_SENSOR_HAS_HARDWARE_RESTART_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "IO Index", TOF_SENSOR_HARDWARE_RESTART_IO_EXPANDER_IO_INDEX_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, TOF_SENSOR_LAST_COLUMN);
     
     // Third header line
@@ -85,8 +85,8 @@ void printTofSensorNetworkDebugTableHeaderVL53L0X(OutputStream* outputStream) {
     appendStringHeader(outputStream, "Channel", TOF_SENSOR_MULTIPLEXER_CHANNEL_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", TOF_SENSOR_VL53L0X_I2C_ADDRESS_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", TOF_SENSOR_VL53L0X_STATUS_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "", TOF_SENSOR_RESTART_IO_EXPANDER_INDEX_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "", TOF_SENSOR_RESTART_IO_EXPANDER_IO_INDEX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "", TOF_SENSOR_HAS_HARDWARE_RESTART_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "", TOF_SENSOR_HARDWARE_RESTART_IO_EXPANDER_IO_INDEX_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, TOF_SENSOR_LAST_COLUMN);
 
     appendTableHeaderSeparatorLine(outputStream);
@@ -108,12 +108,11 @@ void printTofSensorNetworkTableVL53L0X(OutputStream* outputStream, TofSensorList
         appendDecTableData(outputStream, tofSensor->multiplexerChannel, TOF_SENSOR_MULTIPLEXER_CHANNEL_COLUMN_LENGTH);
         
         TofSensorVL53L0X* tofSensorVL53L0X = getTofSensorVL53L0X(tofSensor);
-        if (tofSensorVL53L0X == NULL || !tofSensor->enabled) {
-            appendStringTableData(outputStream, "NULL", TOF_SENSOR_VL53L0X_I2C_ADDRESS_COLUMN_LENGTH);
-            appendStringTableData(outputStream, "N/A", TOF_SENSOR_VL53L0X_STATUS_COLUMN_LENGTH);
+        // I2C ADDRESSS
+        if (tofSensorVL53L0X == NULL) {
+            appendStringTableData(outputStream, "N/A", TOF_SENSOR_VL53L0X_I2C_ADDRESS_COLUMN_LENGTH);
         }
         else {
-            // I2C ADDRESSE
             I2cBusConnection* i2cBusConnection = tofSensorVL53L0X->i2cBusConnection;        
             if (i2cBusConnection != NULL) {
                 unsigned char i2cBusConnectionAddress = i2cBusConnection->i2cAddress;
@@ -122,13 +121,18 @@ void printTofSensorNetworkTableVL53L0X(OutputStream* outputStream, TofSensorList
             else {
                 appendStringTableData(outputStream, "Bus NULL", TOF_SENSOR_VL53L0X_I2C_ADDRESS_COLUMN_LENGTH);
             }
+        }
+        if (!tofSensor->enabled) {
+            appendStringTableData(outputStream, "N/A", TOF_SENSOR_VL53L0X_STATUS_COLUMN_LENGTH);
+        }
+        else {
             // STATUS
             uint8_t status = tofSensorVL53L0X->status;
             appendHex2TableData(outputStream, status, TOF_SENSOR_VL53L0X_STATUS_COLUMN_LENGTH);
         }
         // Restart
-        appendDecTableData(outputStream, tofSensor->hardwareRestartIOExpanderIndex, TOF_SENSOR_RESTART_IO_EXPANDER_INDEX_COLUMN_LENGTH);
-        appendDecTableData(outputStream, tofSensor->hardwareRestartIOExpanderIoIndex, TOF_SENSOR_RESTART_IO_EXPANDER_IO_INDEX_COLUMN_LENGTH);
+        appendBoolAsStringTableData(outputStream, tofSensor->hardwareRestartIOExpander != NULL, TOF_SENSOR_HAS_HARDWARE_RESTART_COLUMN_LENGTH);
+        appendDecTableData(outputStream, tofSensor->hardwareRestartIOExpanderIoIndex, TOF_SENSOR_HARDWARE_RESTART_IO_EXPANDER_IO_INDEX_COLUMN_LENGTH);
 
         appendEndOfTableColumn(outputStream, TOF_SENSOR_LAST_COLUMN);
     }

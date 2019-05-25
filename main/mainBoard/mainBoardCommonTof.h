@@ -11,12 +11,12 @@
 // TOFS
 #define MAIN_BOARD_TOF_SENSOR_LIST_LENGTH                                     14
 // I2C PORT 4
-#define MAIN_BOARD_TOF_SENSOR_LIST_BUS_INDEX                                   1
+#define MAIN_BOARD_TOF_SENSOR_LIST_BUS_INDEX                                   0
 #define MAIN_BOARD_MULTIPLEXER_BUS_INDEX    MAIN_BOARD_TOF_SENSOR_LIST_BUS_INDEX
 
 // BEEP MANAGEMENT
 // I2C PORT 1
-#define MAIN_BOARD_TOF_EXPANDER_BUS_INDEX                                      0
+#define MAIN_BOARD_TOF_EXPANDER_BUS_INDEX                                      1
 #define MAIN_BOARD_TOF_BEEP_IO_EXPANDER_INDEX                                  0
 #define MAIN_BOARD_TOF_BEEP_IO_EXPANDER_GROUND_PIN_INDEX                       6
 #define MAIN_BOARD_TOF_BEEP_IO_EXPANDER_VCC_PIN_INDEX                          7

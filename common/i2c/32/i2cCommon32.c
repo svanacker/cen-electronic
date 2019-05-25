@@ -135,7 +135,7 @@ void portableCommonStartI2C(I2cBusConnection* i2cBusConnection) {
         if (result != I2C_SUCCESS) {
             i2cBusConnection->error = I2C_START_I2C_ERROR;
             writeError(I2C_START_I2C_ERROR);
-            appendStringAndHex2(getErrorOutputStreamLogger(), "I2c Addr=", i2cBusConnection->i2cAddress);
+            appendStringAndHex2LN(getErrorOutputStreamLogger(), "I2c Addr=", i2cBusConnection->i2cAddress);
         }
     }
 }

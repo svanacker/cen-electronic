@@ -131,8 +131,8 @@ void printTofSensorNetworkDebugTableHeader(OutputStream* outputStream) {
     appendStringHeader(outputStream, "I2c", TOF_SENSOR_TARGET_ADRESS_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Use", TOF_SENSOR_USE_MULTIPLEXER_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Multip.", TOF_SENSOR_MULTIPLEXER_CHANNEL_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "Restart", TOF_SENSOR_RESTART_IO_EXPANDER_INDEX_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "Restart", TOF_SENSOR_RESTART_IO_EXPANDER_IO_INDEX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Hart", TOF_SENSOR_HAS_HARDWARE_RESTART_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Restart", TOF_SENSOR_HARDWARE_RESTART_IO_EXPANDER_IO_INDEX_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, TOF_SENSOR_LAST_COLUMN);
 
     // Second header line
@@ -144,8 +144,8 @@ void printTofSensorNetworkDebugTableHeader(OutputStream* outputStream) {
     appendStringHeader(outputStream, "Addr", TOF_SENSOR_TARGET_ADRESS_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Multip.", TOF_SENSOR_USE_MULTIPLEXER_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Channel", TOF_SENSOR_MULTIPLEXER_CHANNEL_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "Index", TOF_SENSOR_RESTART_IO_EXPANDER_INDEX_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "IO Index", TOF_SENSOR_RESTART_IO_EXPANDER_IO_INDEX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Reset ?", TOF_SENSOR_HAS_HARDWARE_RESTART_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "IO Index", TOF_SENSOR_HARDWARE_RESTART_IO_EXPANDER_IO_INDEX_COLUMN_LENGTH);
     
     appendEndOfTableColumn(outputStream, TOF_SENSOR_LAST_COLUMN);
 
@@ -169,8 +169,8 @@ void printTofSensorNetworkTable(OutputStream* outputStream, TofSensorList* tofSe
         appendBoolAsStringTableData(outputStream, tofSensor->multiplexer != NULL, TOF_SENSOR_USE_MULTIPLEXER_COLUMN_LENGTH);
         appendDecTableData(outputStream, tofSensor->multiplexerChannel, TOF_SENSOR_MULTIPLEXER_CHANNEL_COLUMN_LENGTH);
         // Restart
-        appendDecTableData(outputStream, tofSensor->hardwareRestartIOExpanderIndex, TOF_SENSOR_RESTART_IO_EXPANDER_INDEX_COLUMN_LENGTH);
-        appendDecTableData(outputStream, tofSensor->hardwareRestartIOExpanderIoIndex, TOF_SENSOR_RESTART_IO_EXPANDER_IO_INDEX_COLUMN_LENGTH);
+        appendBoolTableData(outputStream, tofSensor->hardwareRestartIOExpander != NULL, TOF_SENSOR_HAS_HARDWARE_RESTART_COLUMN_LENGTH);
+        appendDecTableData(outputStream, tofSensor->hardwareRestartIOExpanderIoIndex, TOF_SENSOR_HARDWARE_RESTART_IO_EXPANDER_IO_INDEX_COLUMN_LENGTH);
 
         appendEndOfTableColumn(outputStream, TOF_SENSOR_LAST_COLUMN);
     }

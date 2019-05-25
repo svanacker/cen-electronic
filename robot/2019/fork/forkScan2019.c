@@ -19,11 +19,17 @@
 #include "../../../common/timer/delayTimer.h"
 
 #include "../../../drivers/tof/tofDetectionUtils.h"
+
+#include "../../../drivers/ioExpander/ioExpanderList.h"
+
 #include "../../../drivers/i2c/multiplexer/multiplexerList.h"
 
 // TOF CONFIG
 
-void forkScan2019ConfigTofList(TofSensor* leftForkScanSensor, TofSensor* rightForkScanSensor, MultiplexerList* multiplexerList) {
+void forkScan2019ConfigTofList(TofSensor* leftForkScanSensor,
+                              TofSensor* rightForkScanSensor,
+                              MultiplexerList* multiplexerList,
+                              IOExpanderList* ioExpanderList) {
     if (leftForkScanSensor != NULL) {
         leftForkScanSensor->name = "FORK LEFT";
         leftForkScanSensor->enabled = true;
@@ -39,8 +45,8 @@ void forkScan2019ConfigTofList(TofSensor* leftForkScanSensor, TofSensor* rightFo
         
         // RESTART
         leftForkScanSensor->hardwareRestartable = true;
-        leftForkScanSensor->hardwareRestartIOExpanderIndex = 0;
-        leftForkScanSensor->hardwareRestartIOExpanderIoIndex = 0;
+        leftForkScanSensor->hardwareRestartIOExpander = getIOExpanderByIndex(ioExpanderList, FORK_2019_HARDWARE_IO_EXPANDER_INDEX);
+        leftForkScanSensor->hardwareRestartIOExpanderIoIndex = FORK_2019_LEFT_HARDWARE_IO_EXPANDER_IO_INDEX;
     }
     if (rightForkScanSensor != NULL) {
         rightForkScanSensor->name = "FORK RIGHT";
@@ -56,8 +62,8 @@ void forkScan2019ConfigTofList(TofSensor* leftForkScanSensor, TofSensor* rightFo
         rightForkScanSensor->multiplexer = getMultiplexerByIndex(multiplexerList, 0);
         rightForkScanSensor->multiplexerChannel = MULTIPLEXER_CHANNEL_3;
         rightForkScanSensor->hardwareRestartable = true;
-        rightForkScanSensor->hardwareRestartIOExpanderIndex = 0;
-        rightForkScanSensor->hardwareRestartIOExpanderIoIndex = 0;
+        rightForkScanSensor->hardwareRestartIOExpander = getIOExpanderByIndex(ioExpanderList, FORK_2019_HARDWARE_IO_EXPANDER_INDEX);
+        rightForkScanSensor->hardwareRestartIOExpanderIoIndex = FORK_2019_RIGHT_HARDWARE_IO_EXPANDER_IO_INDEX;
     }
 }
 
@@ -127,54 +133,67 @@ bool internalForkScan(TofSensor* tofSensor) {
 }
 
 bool forkScanFromRightToLeft(ServoList* servoList, TofSensorList* tofSensorList) {
+    appendStringLN(getDebugOutputStreamLogger(),  "forkScanFromRightToLeft");
+
     Servo* servo = getServo(servoList, FORK_2019_SCAN_SERVO_INDEX);
 
     TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, FORK_2019_RIGHT_TOF_INDEX);
-    if (internalForkScan(tofSensor)) {
-        return true;
-    }
-    if (!tofSensor->enabled) {
+    if (tofSensor == NULL) {
+        writeError(TOF_SENSOR_NULL);
         return false;
     }
-    else {
-        moveElevatorRight(servoList, true);
+    if (!tofSensor->enabled) {
+        // If disabled , we try to go back on the middle
+        moveElevatorMiddle(servoList, true);
+        return false;
+    }
+    
+    moveElevatorRight(servoList, true);
 
-        unsigned int i;
-        for (i = FORK_2019_SCAN_RIGHT_SERVO_VALUE; i < FORK_2019_SCAN_LEFT_SERVO_VALUE; i += FORK_2019_SCAN_SERVO_DELTA_SERVO_POSITION) {
-            pwmServo(servo, FORK_2019_SCAN_SPEED_FACTOR, i, false);
-            timerDelayMilliSeconds(FORK_2019_SCAN_SERVO_DELTA_MILLISECONDS);
+    unsigned int i;
+    for (i = FORK_2019_SCAN_RIGHT_SERVO_VALUE; i < FORK_2019_SCAN_LEFT_SERVO_VALUE; i += FORK_2019_SCAN_SERVO_DELTA_SERVO_POSITION) {
+        pwmServo(servo, FORK_2019_SCAN_SPEED_FACTOR, i, false);
+        timerDelayMilliSeconds(FORK_2019_SCAN_SERVO_DELTA_MILLISECONDS);
+        // Scan several time
+        if (internalForkScan(tofSensor)) {
+            return true;
         }
     }
     
-    // If disabled or not found, we try to go back on the middle
+    // If not found, we try to go back on the middle
     moveElevatorMiddle(servoList, true);
 
     return false;
 }
 
 bool forkScanFromLeftToRight(ServoList* servoList, TofSensorList* tofSensorList) {
-    Servo* servo = getServo(servoList, FORK_2019_SCAN_SERVO_INDEX);
-
-    unsigned int i;
+    appendStringLN(getDebugOutputStreamLogger(),  "forkScanFromLeftToRight");
+    
+    // Avoid to do the scan if 
     TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, FORK_2019_LEFT_TOF_INDEX);
     if (tofSensor == NULL) {
         writeError(TOF_SENSOR_NULL);
         return false;
     }
     if (!tofSensor->enabled) {
+        // If disabled , we try to go back on the middle
+        moveElevatorMiddle(servoList, true);
         return false;
     }
-    else {
-        moveElevatorLeft(servoList, true);
-        for (i = FORK_2019_SCAN_LEFT_SERVO_VALUE; i > FORK_2019_SCAN_RIGHT_SERVO_VALUE; i -= FORK_2019_SCAN_SERVO_DELTA_SERVO_POSITION) {
-            pwmServo(servo, FORK_2019_SCAN_SPEED_FACTOR, i, false);
-            timerDelayMilliSeconds(FORK_2019_SCAN_SERVO_DELTA_MILLISECONDS);
-            if (internalForkScan(tofSensor)) {
-                return true;
-            }
+
+    Servo* servo = getServo(servoList, FORK_2019_SCAN_SERVO_INDEX);
+
+    unsigned int i;
+    moveElevatorLeft(servoList, true);
+    for (i = FORK_2019_SCAN_LEFT_SERVO_VALUE; i > FORK_2019_SCAN_RIGHT_SERVO_VALUE; i -= FORK_2019_SCAN_SERVO_DELTA_SERVO_POSITION) {
+        pwmServo(servo, FORK_2019_SCAN_SPEED_FACTOR, i, false);
+        timerDelayMilliSeconds(FORK_2019_SCAN_SERVO_DELTA_MILLISECONDS);
+        // Scan several time
+        if (internalForkScan(tofSensor)) {
+            return true;
         }
     }
-    // If disabled or not found, we try to go back on the middle
+    // If not found, we try to go back on the middle
     moveElevatorMiddle(servoList, true);
 
     return false;

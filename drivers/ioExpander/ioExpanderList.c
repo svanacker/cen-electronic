@@ -31,7 +31,7 @@ IOExpander* getIOExpanderByIndex(IOExpanderList* ioExpanderList, unsigned int in
         return NULL;
     }
 	if (index < 0 || index >= ioExpanderList->size) {
-		writeError(IO_EXPANDER_LIST_NOT_INITIALIZED);
+		writeError(IO_EXPANDER_LIST_ILLEGAL_INDEX);
 		return NULL;
 	}
     IOExpander* result = (IOExpander*) ioExpanderList->ioExpanderArray;

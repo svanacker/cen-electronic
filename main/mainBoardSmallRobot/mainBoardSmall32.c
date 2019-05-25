@@ -126,7 +126,7 @@ void mainBoardMainPhase2(void) {
     // ROBOT2019 : PCA9685
     ServoList* servoList = mainBoardCommonGetServoList();
     // I2cBus* i2cBus = mainBoardCommonGetMainI2cBus();
-    I2cBus* i2cBus = mainBoardCommonGetAlternativeI2cBus();
+    I2cBus* i2cBus = getI2cBusByIndex(MAIN_BOARD_SERVO_I2C_BUS_INDEX);
     I2cBusConnection* servoI2cBusConnection = addI2cBusConnection(i2cBus, PCA9685_ADDRESS_0, true);
     addServoAllPca9685(servoList, servoI2cBusConnection);
 

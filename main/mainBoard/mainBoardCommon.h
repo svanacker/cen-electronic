@@ -18,6 +18,7 @@
 #define MAIN_BOARD_TIMER_LIST_LENGTH                                   10
 
 // SERVO 
+#define MAIN_BOARD_SERVO_I2C_BUS_INDEX                                  0
 #define MAIN_BOARD_SERVO_LIST_LENGTH                                   21
 
 // IO EXPANDER
