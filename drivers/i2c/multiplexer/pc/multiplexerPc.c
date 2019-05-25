@@ -47,5 +47,6 @@ void initMultiplexerPc(Multiplexer* multiplexer, int* multiplexerValue) {
                    &multiplexerPcReadGetChannelEnable,
                    &multiplexerPcSetChannelEnable,
                    MULTIPLEXER_CHANNEL_COUNT,
+                   true,
                    multiplexerValue);
 }

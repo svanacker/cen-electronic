@@ -25,11 +25,12 @@
 
 void forkScan2019ConfigTofList(TofSensor* leftForkScanSensor, TofSensor* rightForkScanSensor, MultiplexerList* multiplexerList) {
     if (leftForkScanSensor != NULL) {
+        leftForkScanSensor->name = "FORK LEFT";
+        leftForkScanSensor->enabled = true;
         leftForkScanSensor->usageType = TOF_SENSOR_USAGE_TYPE_ACTION;
         leftForkScanSensor->orientationRadian = 0.0f;
         leftForkScanSensor->thresholdMinDistanceMM = FORK_2019_SCAN_DISTANCE_LEFT_MIN_THRESHOLD;
         leftForkScanSensor->thresholdMaxDistanceMM = FORK_2019_SCAN_DISTANCE_LEFT_MAX_THRESHOLD;
-        leftForkScanSensor->name = "FORK LEFT";
         
         leftForkScanSensor->changeAddress = true;
         leftForkScanSensor->targetAddress = VL530X_ADDRESS_12;
@@ -42,11 +43,13 @@ void forkScan2019ConfigTofList(TofSensor* leftForkScanSensor, TofSensor* rightFo
         leftForkScanSensor->hardwareRestartIOExpanderIoIndex = 0;
     }
     if (rightForkScanSensor != NULL) {
+        rightForkScanSensor->name = "FORK RIGHT";
+        rightForkScanSensor->enabled = true;
         rightForkScanSensor->usageType = TOF_SENSOR_USAGE_TYPE_ACTION;
+        
         rightForkScanSensor->orientationRadian = 0.0f;
         rightForkScanSensor->thresholdMinDistanceMM = FORK_2019_SCAN_DISTANCE_RIGHT_MIN_THRESHOLD;
         rightForkScanSensor->thresholdMaxDistanceMM = FORK_2019_SCAN_DISTANCE_RIGHT_MAX_THRESHOLD;
-        rightForkScanSensor->name = "FORK RIGHT";
         
         rightForkScanSensor->changeAddress = true;
         rightForkScanSensor->targetAddress = VL530X_ADDRESS_11;

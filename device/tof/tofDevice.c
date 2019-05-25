@@ -77,18 +77,22 @@ void deviceTofHandleRawData(unsigned char commandHeader, InputStream* inputStrea
     else if (commandHeader == COMMAND_TOF_BEEP_ON) {
         ackCommand(outputStream, TOF_DEVICE_HEADER, COMMAND_TOF_BEEP_ON);
         TofSensorList* tofSensorList = getTofDeviceTofSensorList();
-        tofSensorListBeep(tofSensorList, true);
+        tofSensorList->beepLocked = true;
+        tofSensorListBeepOverrideLock(tofSensorList, true);
     }
     else if (commandHeader == COMMAND_TOF_BEEP_OFF) {
         ackCommand(outputStream, TOF_DEVICE_HEADER, COMMAND_TOF_BEEP_OFF);
         TofSensorList* tofSensorList = getTofDeviceTofSensorList();
-        tofSensorListBeep(tofSensorList, false);
+        tofSensorList->beepLocked = true;
+        tofSensorListBeepOverrideLock(tofSensorList, false);
     }
     else if (commandHeader == COMMAND_TOF_SEARCH_IF_COLLIDING) {
         // TO : Place it in tof !
         ackCommand(outputStream, TOF_DEVICE_HEADER, COMMAND_TOF_SEARCH_IF_COLLIDING);
         TofSensorList* tofSensorList = getTofDeviceTofSensorList();
 
+        tofSensorList->beepLocked = true;
+        
         unsigned int tofIndex = readHex2(inputStream);
         checkIsSeparator(inputStream);
         unsigned int durationSeconds = readHex2(inputStream);
@@ -107,16 +111,21 @@ void deviceTofHandleRawData(unsigned char commandHeader, InputStream* inputStrea
             bool detected = false;
             for (tofIndex = startTofIndex; tofIndex <= endTofIndex; tofIndex++) {
                 TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, tofIndex);
+                if (!tofSensor->enabled) {
+                    continue;
+                }
                 tofSensor->tofGetDistanceMM(tofSensor);
                 if (isTofDistanceInRange(tofSensor)) {
                     detected = true;
                     break;
                 }
             }
-            tofSensorListBeep(tofSensorList, detected);
+            tofSensorListBeepOverrideLock(tofSensorList, detected);
         }
         // Off the beep at the end
-        tofSensorListBeep(tofSensorList, false);
+        tofSensorListBeepOverrideLock(tofSensorList, false);
+
+        tofSensorList->beepLocked = false;
     }
     else if (commandHeader == COMMAND_TOF_RESTART) {
         ackCommand(outputStream, TOF_DEVICE_HEADER, COMMAND_TOF_RESTART);

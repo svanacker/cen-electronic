@@ -135,7 +135,7 @@ void mainBoardMainPhase2(void) {
     mainBoardCommonStrategyMainInitDrivers(&robotConfig);
 
     float tofDistanceFactor = getSonarDistanceCheckFactor(&robotConfig);
-    mainBoardCommonTofInitDrivers(i2cBus, tofDistanceFactor);
+    mainBoardCommonTofInitDrivers(tofDistanceFactor);
     mainBoardCommonMatchMainInitDrivers(&robotConfig, isMatchStarted32, mainBoardWaitForInstruction, loopUnWaitForInstruction);
 }
 

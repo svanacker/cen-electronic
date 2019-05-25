@@ -66,32 +66,34 @@ void mainBoardCommonTofAddDevices(void) {
     addLocalDevice(getMultiplexerDeviceInterface(), getMultiplexerDeviceDescriptor(&multiplexerList));
 }
 
-void mainBoardCommonIOExpanderListInitDrivers(I2cBus* i2cBus) {
+void mainBoardCommonIOExpanderListInitDrivers(void) {
+    I2cBus* ioExpanderBus = getI2cBusByIndex(MAIN_BOARD_TOF_EXPANDER_BUS_INDEX);
     // IO Expander List
     appendString(getDebugOutputStreamLogger(), "IO Expander List ...");
     initIOExpanderList(&ioExpanderList, (IOExpander(*)[]) &ioExpanderArray, MAIN_BOARD_IO_EXPANDER_LIST_LENGTH);
     
     // -> IO Button Board
     IOExpander* ioButtonBoardIoExpander = getIOExpanderByIndex(&ioExpanderList, 0);
-    I2cBusConnection* ioButtonBoardBusConnection = addI2cBusConnection(i2cBus, PCF8574_ADDRESS_0, true);
+    I2cBusConnection* ioButtonBoardBusConnection = addI2cBusConnection(ioExpanderBus, PCF8574_ADDRESS_0, true);
     initIOExpanderPCF8574(ioButtonBoardIoExpander, ioButtonBoardBusConnection);
 
     // End of IOExpanderList
     appendStringLN(getDebugOutputStreamLogger(), "OK");
 }
 
-MultiplexerList* mainBoardCommonMultiplexerListInitDrivers(I2cBus* i2cBus) {
+MultiplexerList* mainBoardCommonMultiplexerListInitDrivers(void) {
+    I2cBus* multiplexerBus = getI2cBusByIndex(MAIN_BOARD_MULTIPLEXER_BUS_INDEX);
     appendString(getDebugOutputStreamLogger(), "Multiplexer List ...");
     initMultiplexerList(&multiplexerList, (Multiplexer(*)[]) &multiplexerArray, MAIN_BOARD_MULTIPLEXER_LIST_LENGTH);
     
     // -> Multiplexer 0 Board
     Multiplexer* multiplexerExpander0 = getMultiplexerByIndex(&multiplexerList, 0);
-    I2cBusConnection* multiplexerBoardBusConnection0 = addI2cBusConnection(i2cBus, TCA9548A_ADDRESS_0, true);
+    I2cBusConnection* multiplexerBoardBusConnection0 = addI2cBusConnection(multiplexerBus, TCA9548A_ADDRESS_0, true);
     initMultiplexerTca9548A(multiplexerExpander0, multiplexerBoardBusConnection0, true);
 
     // -> Multiplexer 1 Board
     Multiplexer* multiplexerExpander1 = getMultiplexerByIndex(&multiplexerList, 1);
-    I2cBusConnection* multiplexerBoardBusConnection1 = addI2cBusConnection(i2cBus, TCA9548A_ADDRESS_1, true);
+    I2cBusConnection* multiplexerBoardBusConnection1 = addI2cBusConnection(multiplexerBus, TCA9548A_ADDRESS_1, true);
     initMultiplexerTca9548A(multiplexerExpander1, multiplexerBoardBusConnection1, true);
     
     appendStringLN(getDebugOutputStreamLogger(), "OK");
@@ -99,12 +101,12 @@ MultiplexerList* mainBoardCommonMultiplexerListInitDrivers(I2cBus* i2cBus) {
     return &multiplexerList;
 }
 
-void mainBoardCommonTofInitDrivers(I2cBus* i2cBus, float distanceFactor) {
+void mainBoardCommonTofInitDrivers(float distanceFactor) {
     // IO Expander List
-    mainBoardCommonIOExpanderListInitDrivers(i2cBus);
+    mainBoardCommonIOExpanderListInitDrivers();
     
     // Multiplexer List
-    mainBoardCommonMultiplexerListInitDrivers(i2cBus);
+    mainBoardCommonMultiplexerListInitDrivers();
 
     // TOF
     if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > BACK_RIGHT_SENSOR_INDEX) {
@@ -291,14 +293,14 @@ void mainBoardCommonTofInitDrivers(I2cBus* i2cBus, float distanceFactor) {
         
         backSideLeftSensor->enabled = true;
         backSideLeftSensor->changeAddress = true;
-        backSideLeftSensor->targetAddress = VL530X_ADDRESS_14;
-        backSideLeftSensor->multiplexer = getMultiplexerByIndex(&multiplexerList, 1);
+        backSideLeftSensor->targetAddress = VL530X_ADDRESS_13;
+        backSideLeftSensor->multiplexer = getMultiplexerByIndex(&multiplexerList, 0);
         backSideLeftSensor->multiplexerChannel = MULTIPLEXER_CHANNEL_5;
     }
     if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > FORK_2019_LEFT_TOF_INDEX &&
         MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > FORK_2019_RIGHT_TOF_INDEX) {
-        TofSensor* leftForkScanSensor = &(tofSensorArray[BACK_SIDE_LEFT_SENSOR_INDEX]); 
-        TofSensor* rightForkScanSensor = &(tofSensorArray[BACK_SIDE_RIGHT_SENSOR_INDEX]); 
+        TofSensor* leftForkScanSensor = &(tofSensorArray[FORK_2019_LEFT_TOF_INDEX]); 
+        TofSensor* rightForkScanSensor = &(tofSensorArray[FORK_2019_RIGHT_TOF_INDEX]); 
         forkScan2019ConfigTofList(leftForkScanSensor, rightForkScanSensor, &multiplexerList);
     }
     

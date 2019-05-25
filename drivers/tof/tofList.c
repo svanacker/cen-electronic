@@ -61,17 +61,28 @@ void initTofSensorListBeep(TofSensorList* tofSensorList,
     tofSensorList->vccBeepIoPin = vccBeepIoPin;
 }
 
-void tofSensorListBeep(TofSensorList* tofSensorList, bool value) {
+void internalTofSensorListBeep(TofSensorList* tofSensorList, bool beepValue, bool overrideLock) {
+    if (tofSensorList->beepLocked && !overrideLock) {
+        return;
+    }
     IOExpander* beepIoExpander = tofSensorList->beepIoExpander;
     if (beepIoExpander == NULL) {
         writeError(IO_EXPANDER_NULL);
         return;
     }
-    if (tofSensorList->beepValue != value) {
-        tofSensorList->beepValue = value;
+    if (tofSensorList->beepValue != beepValue) {
+        tofSensorList->beepValue = beepValue;
         beepIoExpander->ioExpanderWriteSingleValue(beepIoExpander, tofSensorList->groundBeepIoPin, false);
-        beepIoExpander->ioExpanderWriteSingleValue(beepIoExpander, tofSensorList->vccBeepIoPin, value);
+        beepIoExpander->ioExpanderWriteSingleValue(beepIoExpander, tofSensorList->vccBeepIoPin, beepValue);
     }
+}
+
+void tofSensorListBeep(TofSensorList* tofSensorList, bool beepValue) {
+    internalTofSensorListBeep(tofSensorList, beepValue, false);
+}
+
+void tofSensorListBeepOverrideLock(TofSensorList* tofSensorList, bool beepValue) {
+    internalTofSensorListBeep(tofSensorList, beepValue, true);
 }
 
 unsigned int getTofSensorListSize(TofSensorList* tofSensorList) {

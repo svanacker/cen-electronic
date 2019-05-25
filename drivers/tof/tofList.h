@@ -53,6 +53,8 @@ struct TofSensorList {
     unsigned int vccBeepIoPin;
     /** To know the value of beep, we don't want to invoke too frequently the IOExpander to send the same value */
     bool beepValue;
+    /** If we lock the beep so that we could avoid that automatic code change his value */
+    bool beepLocked;
 
     // IMPLEMENTATION CALLBACK
     /** If Debug Mode is activated .*/
@@ -106,6 +108,8 @@ unsigned int getTofSensorListSize(TofSensorList* tofSensorList);
 * Activate or not the beep on tofSensorList.
 */
 void tofSensorListBeep(TofSensorList* tofSensorList, bool beepValue);
+
+void tofSensorListBeepOverrideLock(TofSensorList* tofSensorList, bool beepValue);
 
 /**
  * Reset for all tof Sensor List the detection counter.

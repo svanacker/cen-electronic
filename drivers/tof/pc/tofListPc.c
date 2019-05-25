@@ -34,7 +34,7 @@ void initTofSensorListPc(TofSensorList* tofSensorList, TofSensor(*tofSensorArray
         tofSensor->name = tofName;
 
         tofSensor->beamAngleRadian = degToRad(25.0f);
-
+        tofSensor->enabled = true;
         // When the whole initialization is done, we could start the tof !
         tofStart(tofSensor);
     }
