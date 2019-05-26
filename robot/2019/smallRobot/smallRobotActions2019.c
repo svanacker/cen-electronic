@@ -50,9 +50,6 @@ bool acceleratorArmOn(int* context) {
 bool acceleratorRotationIfNeeded(int* context) {
     GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
     appendStringCRLF(getDebugOutputStreamLogger(), "-> acceleratorRotationIfNeeded");
-    if (degToRad(85) > gameStrategyContext->robotAngleRadian && gameStrategyContext->robotAngleRadian < degToRad(95)) {
-        return true;
-    }
     if (isViolet(gameStrategyContext)) {
         // Left
         if (gameStrategyContext->simulateMove) {

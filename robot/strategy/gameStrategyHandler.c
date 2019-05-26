@@ -72,8 +72,8 @@ bool executeTargetActionItemList(GameStrategyContext* gameStrategyContext, GameT
     // Loop on all action Items to do
     for (actionItemIndex = 0; actionItemIndex < actionItemList->size; actionItemIndex++) {
         GameTargetActionItem* actionItem = getGameTargetActionItem(actionItemList, actionItemIndex);
-        // Do only action not done
-        if (actionItem->status != ACTION_ITEM_STATUS_TODO) {
+        // Do only action not done and enabled
+        if (actionItem->status != ACTION_ITEM_STATUS_TODO || !(actionItem->enabled)) {
             continue;
         }
 

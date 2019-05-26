@@ -24,8 +24,10 @@ enum ActionItemStatus {
     ACTION_ITEM_STATUS_TODO = 1,
     // The item action was done
     ACTION_ITEM_STATUS_DONE = 2,
+    // The item action is disabled,
+    ACTION_ITEM_STATUS_DISABLED = 3,
     // The item action is in error,
-    ACTION_ITEM_STATUS_ERROR = 3
+    ACTION_ITEM_STATUS_ERROR = 4
 };
 
 /**
@@ -34,6 +36,8 @@ enum ActionItemStatus {
 typedef struct GameTargetActionItem {
     /** Name of the action Item */
     char* name;
+    /** If the action is enabled or not */
+    bool enabled;
     /** The statut if the action item was done or not. */
     enum ActionItemStatus status;
     /** Function which will be called. */

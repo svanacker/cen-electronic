@@ -13,7 +13,7 @@
 #define ACCELERATOR_DROP                                                     "DROP"
 #define ACCELERATOR_DROP_LABEL                                               "Accelerator Drop"
 #define ACCELERATOR_DROP_X                                                     140
-#define ACCELERATOR_DROP_Y                                                    1850
+#define ACCELERATOR_DROP_Y                                                    2000
 #define ACCELERATOR_DROP_DECI_DEG                               ANGLE_DECI_DEG_180
 
 // Chaos Zone Front

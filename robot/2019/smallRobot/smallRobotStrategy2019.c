@@ -354,6 +354,9 @@ void initSmallRobotTargetActionsItems2019(GameStrategyContext* gameStrategyConte
     // Accelerator => We remove the arm when reaching the drop (drop is done by the move of the robot)
     addTargetActionItem(&acceleratorPrepareTargetActionItemList, &acceleratorPrepareTargetActionItem, &acceleratorArmOn, "ACC ARM ON");
     addTargetActionItem(&acceleratorDropTargetActionItemList, &acceleratorRotationTargetActionItem, &acceleratorRotationIfNeeded, "ROTATION");
+    // We don't activate it for most Strategies
+    acceleratorRotationTargetActionItem.enabled = false;
+
     addTargetActionItem(&acceleratorDropTargetActionItemList, &acceleratorDropTargetActionItem, &acceleratorArmOff, "ACC ARM Off");
 
     // Goldenium Take
@@ -403,6 +406,7 @@ GameStrategy* initSmallRobotStrategiesItems2019(GameStrategyContext* gameStrateg
         Navigation* navigation = gameStrategyContext->navigation;
         PathData* path = getPathOfLocations(navigation->paths, smallRobotStartAreaLocation, acceleratorFrontLocation);
         path->cost = 3000.0f;
+        acceleratorRotationTargetActionItem.enabled = true;
         addGameStrategyItem(&smallRobotStrategy5AcceleratorCenteredTakeDropGoldeniumSmallDist, &acceleratorStrategyItem, &acceleratorTarget);
         addGameStrategyItem(&smallRobotStrategy5AcceleratorCenteredTakeDropGoldeniumSmallDist, &takeGoldeniumStrategyItem, &goldeniumTakeTarget);
         addGameStrategyItem(&smallRobotStrategy5AcceleratorCenteredTakeDropGoldeniumSmallDist, &dropGoldeniumStrategyItem, &goldeniumDropTarget);

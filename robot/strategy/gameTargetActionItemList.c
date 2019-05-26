@@ -33,6 +33,7 @@ void addTargetActionItem(GameTargetActionItemList* targetActionItemList,
         targetActionItem->name = name;
 //      targetActionItem->timeToAchieve = timeToAchieve;
         targetActionItem->status = ACTION_ITEM_STATUS_TODO;
+        targetActionItem->enabled = true;
         targetActionItemList->items[size] = targetActionItem;
         targetActionItemList->size++;
     }
@@ -51,7 +52,7 @@ unsigned int getGameTargetActionItemTodoCount(GameTargetActionItemList* targetAc
     int size = targetActionItemList->size;
     for (i = 0; i < size; i++) {
         GameTargetActionItem* targetActionItem = targetActionItemList->items[i];
-        if (targetActionItem->status == ACTION_ITEM_STATUS_TODO) {
+        if (targetActionItem->enabled && targetActionItem->status == ACTION_ITEM_STATUS_TODO) {
             result++;
         }
     }
@@ -68,6 +69,11 @@ bool doGameTargetActionItem(GameTargetActionItem* gameTargetActionItem, int* con
     if (gameTargetActionItem->actionItemFunction == NULL) {
         writeError(TOO_MUCH_TARGET_ACTION_ITEM_FUNCTION_NULL);
         return false;
+    }
+    if (!gameTargetActionItem->enabled) {
+        gameTargetActionItem->status = ACTION_ITEM_STATUS_DISABLED;
+
+        return true;
     }
     GameTargetActionFunction* doFunction = gameTargetActionItem->actionItemFunction;
 
