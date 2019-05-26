@@ -7,7 +7,7 @@ static LARGE_INTEGER Frequency;
 
 // WINDOWS NON PORTABLE FUNCTION
 
-void delaymSec(unsigned int mSecond) {
+void delayMilliSecs(unsigned int mSecond) {
     Sleep(mSecond);
 }
 
@@ -29,41 +29,14 @@ LONGLONG getElapsedTimeInMicroSeconds(LARGE_INTEGER StartingTime) {
     return ElapsedMicroseconds.QuadPart;
 }
 
-void delayUs(void) {
+void delayMicroSecs(unsigned int microSeconds) {
     initPerformanceCounter();
     LARGE_INTEGER StartingTime;
 
     QueryPerformanceCounter(&StartingTime);
     while (true) {
         LONGLONG ElapsedMicroseconds = getElapsedTimeInMicroSeconds(StartingTime);
-        if (ElapsedMicroseconds >= 1) {
-            break;
-        }
-    }
-}
-
-void delay10us(unsigned char value) {
-    initPerformanceCounter();
-    LARGE_INTEGER StartingTime;
-
-    QueryPerformanceCounter(&StartingTime);
-    while (true) {
-        LONGLONG ElapsedMicroseconds = getElapsedTimeInMicroSeconds(StartingTime);
-        if (ElapsedMicroseconds >= 10 * value) {
-            break;
-        }
-    }
-}
-
-void delay100us(unsigned char value) {
-    initPerformanceCounter();
-
-    LARGE_INTEGER StartingTime;
-    QueryPerformanceCounter(&StartingTime);
-
-    while (true) {
-        LONGLONG ElapsedMicroseconds = getElapsedTimeInMicroSeconds(StartingTime);
-        if (ElapsedMicroseconds >= 100 * value) {
+        if (ElapsedMicroseconds >= microSeconds) {
             break;
         }
     }

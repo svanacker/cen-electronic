@@ -1,8 +1,4 @@
 #ifndef CEN_DELAY_32_H
 #define CEN_DELAY_32_H
 
-#define VALUE_FOR_10_MICRO_SECOND    10
-#define VALUE_FOR_100_MICRO_SECOND   123
-#define VALUE_FOR_1000_MICRO_SECOND  1250
-
 #endif

@@ -69,7 +69,6 @@ void drawString(GameBoard* gameBoard, float x, float y, unsigned char* s) {
     unsigned int count = 2;
     unsigned char column = convertXToColumn(x);
     unsigned char line = convertYToLine(y);
-    setGameBoardArray(gameBoard, column, line, 'x');
     while (*s != '\0') {
         setGameBoardArray(gameBoard, column + count, line, *s++);
         count++;

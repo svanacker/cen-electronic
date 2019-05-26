@@ -14,11 +14,20 @@
 #define ACCELERATOR_FRONT_Y                                                    1700
 #define ACCELERATOR_FRONT_DECI_DEG                                ANGLE_DECI_DEG_90
 
+// Accelerator centered (SMALL ROBOT)
+#define ACCELERATOR_CENTER                                                    "ACCC"
+#define ACCELERATOR_CENTER_LABEL                               "Accelerator Center 2"
+#define ACCELERATOR_CENTER_X                                                    1000
+#define ACCELERATOR_CENTER_Y                                                    1500
+#define ACCELERATOR_CENTER_START_DECI_DEG                          ANGLE_DECI_DEG_90
+#define ACCELERATOR_CENTER_END_DECI_DEG                           ANGLE_DECI_DEG_180
+
+
 // Goldenium (SMALL ROBOT)
 #define GOLDENIUM_FRONT                                                     "GOLD"
 #define GOLDENIUM_FRONT_LABEL                                         "Gold Front"
 #define GOLDENIUM_FRONT_X                                                     120
-#define GOLDENIUM_FRONT_Y                                                    2250
+#define GOLDENIUM_FRONT_Y                                                    2260
 #define GOLDENIUM_FRONT_ANGLE_DECI_DEG                         ANGLE_DECI_DEG_180
 
 // Weighing Machine FRONT

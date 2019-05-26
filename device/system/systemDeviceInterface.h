@@ -31,6 +31,9 @@
 /** Command to wait a certain amount of time (in milliseconds). */
 #define COMMAND_WAIT               'W'
 
+/** Command to read the value of the read Core Timer value */
+#define COMMAND_READ_CORE_TIMER    't'
+
 /** Command to show the name of the BOARD. */
 #define COMMAND_BOARD_NAME           'N'
 

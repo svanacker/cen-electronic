@@ -65,9 +65,9 @@ void interruptGameStrategyMotionCallbackFunc(Timer* timer) {
 
 void initGameStrategyMotionHandler(GameStrategyContext* gameStrategyContext) {
         Timer* timer = addTimer(TIMER_STRATEGY_MOTION_HANDLER_UPDATE_ROBOT_POSITION,
-                            TIME_DIVIDER_5_HERTZ,
+                            TIME_DIVIDER_3_HERTZ,
                             &interruptGameStrategyMotionCallbackFunc,
-                            "TIMER DELAY", 
+                            "MOTION UPDATE", 
 							(int*) gameStrategyContext);
         timer->enabled = true;
 }

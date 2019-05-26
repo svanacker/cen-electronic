@@ -41,7 +41,7 @@ bool remoteDriverDataDispatcherTransmit(DriverDataDispatcher* dispatcher,
     // Wait the response : TODO : Have a smaller delay
     int dataReceived = 0;
     int counter = 0;
-    delaymSec(2);
+    delayMilliSecs(2);
 
     // Wait as soon as we do not receive all the response
     while (dataReceived < dataToReceiveCount) {
@@ -49,7 +49,7 @@ bool remoteDriverDataDispatcherTransmit(DriverDataDispatcher* dispatcher,
         // limit data reception to 1
         dataReceived += copyInputToOutputStream(dispatcherInputStream, responseOutputStream, NULL, 1);
         counter++;
-        delay100us(1);
+        delayMicroSecs(100);
 
         if (counter > 1000) {
             writeError(DISPATCHER_LINK_ERROR);

@@ -108,10 +108,21 @@ void deviceSystemHandleRawData(unsigned char header, InputStream* inputStream, O
     else if (header == COMMAND_NOTIFICATION) {
         ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_NOTIFICATION);
         printDeviceListNotification(getInfoOutputStreamLogger(), false);
-    } else if (header == COMMAND_WAIT) {
+    }
+    else if (header == COMMAND_READ_CORE_TIMER) {
+        ackCommand(outputStream, SYSTEM_DEVICE_HEADER, COMMAND_READ_CORE_TIMER);
+#ifdef PC_COMPILER
+        appendString(getAlwaysOutputStreamLogger(), "Unsupported Operation");
+        appendHex8(outputStream, 0);
+#else
+        unsigned int coreTimer = ReadCoreTimer();
+        appendHex8(outputStream, coreTimer);
+#endif // PC_COMPILER
+    } 
+    else if (header == COMMAND_WAIT) {
         appendAck(outputStream);
         unsigned int milliSeconds = readHex4(inputStream);
-        delaymSec(milliSeconds);
+        delayMilliSecs(milliSeconds);
         append(outputStream, SYSTEM_DEVICE_HEADER);
         append(outputStream, COMMAND_WAIT);
     } else if (header == COMMAND_BOARD_NAME) {

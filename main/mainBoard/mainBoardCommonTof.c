@@ -46,6 +46,7 @@
 
 // 2019 Specific
 #include "../../robot/2019/fork/forkScan2019.h"
+#include "../../robot/2019/strategy/strategyConfig2019.h"
 
 // IO Expander
 static IOExpanderList ioExpanderList;
@@ -103,12 +104,15 @@ MultiplexerList* mainBoardCommonMultiplexerListInitDrivers(void) {
     return &multiplexerList;
 }
 
-void mainBoardCommonTofInitDrivers(float distanceFactor) {
+void mainBoardCommonTofInitDrivers(RobotConfig* robotConfig) {
     // IO Expander List
     mainBoardCommonIOExpanderListInitDrivers();
     
     // Multiplexer List
     mainBoardCommonMultiplexerListInitDrivers();
+
+    float distanceFactor = getSonarDistanceCheckFactor(robotConfig);
+    bool collisionEnabled = isSonarActivated(robotConfig);
 
     // TOF
     if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > BACK_RIGHT_SENSOR_INDEX) {
@@ -123,7 +127,7 @@ void mainBoardCommonTofInitDrivers(float distanceFactor) {
         frontRightSensor->name = "FRONT RIGHT";
         frontRightSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
 
-        frontRightSensor->enabled = true;
+        frontRightSensor->enabled = collisionEnabled;
         frontRightSensor->changeAddress = true;
         frontRightSensor->targetAddress = VL530X_ADDRESS_0;
         frontRightSensor->multiplexer = getMultiplexerByIndex(&multiplexerList, 1);
@@ -141,7 +145,7 @@ void mainBoardCommonTofInitDrivers(float distanceFactor) {
         frontMiddleSensor->name = "FRONT MIDDLE";
         frontMiddleSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
 
-        frontMiddleSensor->enabled = true; 
+        frontMiddleSensor->enabled = collisionEnabled; 
         frontMiddleSensor->changeAddress = true;
         frontMiddleSensor->targetAddress = VL530X_ADDRESS_1;
         frontMiddleSensor->multiplexer = getMultiplexerByIndex(&multiplexerList, 1);
@@ -159,7 +163,7 @@ void mainBoardCommonTofInitDrivers(float distanceFactor) {
         frontLeftSensor->name = "FRONT LEFT";
         frontLeftSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
 
-        frontLeftSensor->enabled = true;
+        frontLeftSensor->enabled = collisionEnabled;
         frontLeftSensor->changeAddress = true;
         frontLeftSensor->targetAddress = VL530X_ADDRESS_2;
         frontLeftSensor->multiplexer = getMultiplexerByIndex(&multiplexerList, 1);
@@ -177,7 +181,7 @@ void mainBoardCommonTofInitDrivers(float distanceFactor) {
         backRightSensor->name = "BACK RIGHT";
         backRightSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
 
-        backRightSensor->enabled = true;
+        backRightSensor->enabled = collisionEnabled;
         backRightSensor->changeAddress = true;
         backRightSensor->targetAddress = VL530X_ADDRESS_3;
         backRightSensor->multiplexer = getMultiplexerByIndex(&multiplexerList, 1);
@@ -195,7 +199,7 @@ void mainBoardCommonTofInitDrivers(float distanceFactor) {
         backMiddleSensor->name = "BACK MIDDLE";
         backMiddleSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
 
-        backMiddleSensor->enabled = true;
+        backMiddleSensor->enabled = collisionEnabled;
         backMiddleSensor->changeAddress = true;
         backMiddleSensor->targetAddress = VL530X_ADDRESS_4;
         backMiddleSensor->multiplexer = getMultiplexerByIndex(&multiplexerList, 1);
@@ -213,7 +217,7 @@ void mainBoardCommonTofInitDrivers(float distanceFactor) {
         backLeftSensor->name = "BACK LEFT";
         backLeftSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
 
-        backLeftSensor->enabled = true;
+        backLeftSensor->enabled = collisionEnabled;
         backLeftSensor->changeAddress = true;
         backLeftSensor->targetAddress = VL530X_ADDRESS_5;
         backLeftSensor->multiplexer = getMultiplexerByIndex(&multiplexerList, 1);
@@ -241,7 +245,7 @@ void mainBoardCommonTofInitDrivers(float distanceFactor) {
         frontSideLeftSensor->name = "FRONT SIDE L";
         frontSideLeftSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
 
-        frontSideLeftSensor->enabled = true;
+        frontSideLeftSensor->enabled = collisionEnabled;
         frontSideLeftSensor->changeAddress = true;
         frontSideLeftSensor->targetAddress = VL530X_ADDRESS_8;
         frontSideLeftSensor->multiplexer = getMultiplexerByIndex(&multiplexerList, 0);
@@ -258,7 +262,7 @@ void mainBoardCommonTofInitDrivers(float distanceFactor) {
         frontSideRightSensor->name = "FRONT SIDE R";
         frontSideRightSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
         
-        frontSideRightSensor->enabled = true;
+        frontSideRightSensor->enabled = collisionEnabled;
         frontSideRightSensor->changeAddress = true;
         frontSideRightSensor->targetAddress = VL530X_ADDRESS_9;
         frontSideRightSensor->multiplexer = getMultiplexerByIndex(&multiplexerList, 0);
@@ -275,7 +279,7 @@ void mainBoardCommonTofInitDrivers(float distanceFactor) {
         backSideRightSensor->name = "BACK SIDE R";
         backSideRightSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
         
-        backSideRightSensor->enabled = true;
+        backSideRightSensor->enabled = collisionEnabled;
         backSideRightSensor->changeAddress = true;
         backSideRightSensor->targetAddress = VL530X_ADDRESS_10;
         backSideRightSensor->multiplexer = getMultiplexerByIndex(&multiplexerList, 0);
@@ -293,7 +297,7 @@ void mainBoardCommonTofInitDrivers(float distanceFactor) {
         backSideLeftSensor->name = "BACK SIDE L";
         backSideLeftSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
         
-        backSideLeftSensor->enabled = true;
+        backSideLeftSensor->enabled = collisionEnabled;
         backSideLeftSensor->changeAddress = true;
         backSideLeftSensor->targetAddress = VL530X_ADDRESS_13;
         backSideLeftSensor->multiplexer = getMultiplexerByIndex(&multiplexerList, 0);

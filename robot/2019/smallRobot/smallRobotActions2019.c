@@ -1,7 +1,11 @@
 #include "smallRobotActions2019.h"
 
+#include "../../../common/math/cenMath.h"
+
 #include "../../../common/io/outputStream.h"
 #include "../../../common/io/printWriter.h"
+
+#include "../../../common/timer/delayTimer.h"
 
 #include "../../../common/log/logger.h"
 
@@ -9,7 +13,10 @@
 
 #include "../../../robot/strategy/gameStrategyContext.h"
 
+#include "../../../client/motion/simple/clientMotion.h"
+
 // 2019
+#include "../../../robot/2019/navigation/angle2019.h"
 #include "../../../robot/2019/arm/arm2019.h"
 #include "../../../robot/2019/commonRobot/commonRobotActions2019.h"
 #include "../../../robot/2019/fork/fork2019.h"
@@ -21,7 +28,7 @@
 #define SMALL_DISTRIBUTOR_DROP_ACTION_LOG_NAME        " -> smallDistributorDrop "
 
 
-// -------------------------------------------- ARM  -----------------------------------------------
+// -------------------------------------------- ARM & ACCELERATOR -----------------------------------------------
 
 bool acceleratorArmOn(int* context) {
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
@@ -37,6 +44,35 @@ bool acceleratorArmOn(int* context) {
         arm2019On(servoList, FORK_2019_LEFT_INDEX);
     }
     // TODO
+    return true;
+}
+
+bool acceleratorRotationIfNeeded(int* context) {
+    GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
+    appendStringCRLF(getDebugOutputStreamLogger(), "-> acceleratorRotationIfNeeded");
+    if (degToRad(85) > gameStrategyContext->robotAngleRadian && gameStrategyContext->robotAngleRadian < degToRad(95)) {
+        return true;
+    }
+    if (isViolet(gameStrategyContext)) {
+        // Left
+        if (gameStrategyContext->simulateMove) {
+            gameStrategyContext->robotAngleRadian += degToRad(DEG_90);
+        }
+        else {
+            motionDriverLeft(DEG_90);
+                timerDelayMilliSeconds(1000);
+        }
+    }
+    else {
+        // Right
+        if (gameStrategyContext->simulateMove) {
+            gameStrategyContext->robotAngleRadian -= degToRad(DEG_90);
+        }
+        else {
+            motionDriverRight(DEG_90);
+            timerDelayMilliSeconds(1000);
+        }
+    }
     return true;
 }
 

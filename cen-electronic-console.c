@@ -59,7 +59,7 @@ int main(int argumentCount, char* arguments[])
         // And After the main Board
         runMainBoardPC(false, false);
 
-        delaymSec(10);
+        delayMilliSecs(10);
     }
     else {
         char* boardName = arguments[1];

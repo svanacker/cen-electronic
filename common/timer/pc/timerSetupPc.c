@@ -25,7 +25,7 @@ DWORD WINAPI timerCallback(LPVOID lpvParam) {
     const STEP_IN_MILLISECONDS = 10000;
 
     while (true) {
-        delaymSec(1);
+        delayMilliSecs(1);
         totalElapsedMicroseconds = getElapsedTimeInMicroSeconds(startTime);
         if (totalElapsedMicroseconds - elapsedMicrosecondsTriggered > STEP_IN_MILLISECONDS) {
             elapsedMicrosecondsTriggered += STEP_IN_MILLISECONDS;

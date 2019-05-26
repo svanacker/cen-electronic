@@ -98,6 +98,12 @@ void setArgumentUnsignedHex6(int index, const char* name) {
     deviceMethodMetaData.arguments[index].name = name;
 }
 
+void setArgumentUnsignedHex8(int index, const char* name) {
+    deviceMethodMetaData.arguments[index].type = DEVICE_ARG_UNSIGNED_HEX_8;
+    deviceMethodMetaData.arguments[index].name = name;
+}
+
+
 // Float
 
 void setArgumentFloatHex2(int index, const char* name) {
@@ -157,6 +163,11 @@ void setResultUnsignedHex4(int index, const char* name) {
 
 void setResultUnsignedHex6(int index, const char* name) {
     deviceMethodMetaData.results[index].type = DEVICE_ARG_UNSIGNED_HEX_6;
+    deviceMethodMetaData.results[index].name = name;
+}
+
+void setResultUnsignedHex8(int index, const char* name) {
+    deviceMethodMetaData.results[index].type = DEVICE_ARG_UNSIGNED_HEX_8;
     deviceMethodMetaData.results[index].name = name;
 }
 

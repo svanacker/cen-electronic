@@ -64,9 +64,9 @@ void pca9685_setPWMFreq(I2cBusConnection* i2cBusConnection, float frequency) {
  
     // Frequency could only be change if sleep
     pca9685_write8(i2cBusConnection, PCA9685_MODE1, PCA9685_MODE1_MASK_ALLCALL | PCA9685_MODE1_MASK_SLEEP);
-    delaymSec(5);
+    delayMilliSecs(5);
     pca9685_write8(i2cBusConnection, PCA9685_PRESCALE, prescale);            // set the prescaler
-    delaymSec(5);
+    delayMilliSecs(5);
     // Stop sleeping
     pca9685_write8(i2cBusConnection, PCA9685_MODE1, PCA9685_MODE1_MASK_ALLCALL | PCA9685_MODE1_MASK_AUTO_INC);
 }

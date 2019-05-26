@@ -21,7 +21,7 @@ void startMatchPc(void) {
 
 bool isMatchStartedPc(StartMatch* startMatch) {
     // Delay to avoid that it is always looping on reading the file
-    delaymSec(100);
+    delayMilliSecs(100);
 
     FILE* filePointer;
 

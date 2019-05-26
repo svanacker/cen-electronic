@@ -138,7 +138,7 @@ void handleAndWaitMSec(PidMotion* pidMotion, OutputStream* notificationOutputStr
     unsigned long DELAY = 10;
     unsigned long counter;
     for (counter = 0; counter < delayMs; counter += DELAY) {
-        delaymSec(DELAY);
+        delayMilliSecs(DELAY);
         handleInstructionAndMotion(pidMotion, notificationOutputStream);
     }
 }

@@ -117,4 +117,8 @@ void tofSensorListBeepOverrideLock(TofSensorList* tofSensorList, bool beepValue)
  */
 void tofSensorListResetDetectionCount(TofSensorList* tofSensorList);
 
+// UTILS METHODS
+
+void tofSensorListSetEnableUsageType(TofSensorList* tofSensorList, enum TofSensorUsageType usageType, bool enabled);
+
 #endif

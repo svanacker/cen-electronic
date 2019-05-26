@@ -287,10 +287,10 @@ void waitForInstruction() {
     // handleStreamInstruction(&i2cSlaveInputBuffer, &i2cSlaveOutputBuffer, NULL, &standardOutputStream, &filterRemoveCRLF, NULL);
 
     // STANDARD UART Stream
-    handleStreamInstruction(&standardInputBuffer, &standardOutputBuffer, &standardOutputStream, notifyBufferedOutputStream, &filterRemoveCRLF, NULL);
+    handleStreamInstruction(&standardInputBuffer, &standardOutputBuffer, &standardOutputStream, notifyBufferedOutputStream, &filterRemoveCRLF_255, NULL);
 
     // DEBUG UART Stream
-    handleStreamInstruction(&debugInputBuffer, &debugOutputBuffer, &debugOutputStream, notifyBufferedOutputStream, &filterRemoveCRLF, NULL);
+    handleStreamInstruction(&debugInputBuffer, &debugOutputBuffer, &debugOutputStream, notifyBufferedOutputStream, &filterRemoveCRLF_255, NULL);
 
     // NOTIFY UART (MOTOR BOARD -> MAIN BOARD)
     // handleStreamInstruction(&notifyInputBuffer, &notifyOutputBuffer, &notifyOutputStream, notifyBufferedOutputStream, &filterRemoveCRLF, NULL);
@@ -299,14 +299,14 @@ void waitForInstruction() {
     handleInstructionAndMotion(&pidMotion, notifyBufferedOutputStream);
     
     // Copy the buffered notify to the serial NotifyOutputStream
-    copyInputToOutputStream(getInputStream(&notifyOutputBuffer), &notifyOutputStream, NULL, COPY_ALL);
+    copyInputToOutputStream(getInputStream(&notifyOutputBuffer), &notifyOutputStream, &filterRemoveCRLF_255, COPY_ALL);
 
     // Notify the change of position (useful to know where we are when we detect an object with the tof
     // We must know if we see an object inside the gameboard or outside
     // trajectoryNotifyIfEnabledAndTreshold(notifyBufferedOutputStream);
     
     // Copy the buffered notify to the serial NotifyOutputStream
-    copyInputToOutputStream(getInputStream(&notifyOutputBuffer), &notifyOutputStream, NULL, COPY_ALL);
+    copyInputToOutputStream(getInputStream(&notifyOutputBuffer), &notifyOutputStream, &filterRemoveCRLF_255, COPY_ALL);
 }
 
 int runMotorBoard() {

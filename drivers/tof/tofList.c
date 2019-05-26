@@ -90,10 +90,33 @@ unsigned int getTofSensorListSize(TofSensorList* tofSensorList) {
 }
 
 void tofSensorListResetDetectionCount(TofSensorList* tofSensorList) {
+    if (tofSensorList == NULL) {
+        writeError(TOF_SENSOR_LIST_NULL);
+        return;
+    }
     unsigned int i;
     unsigned int tofSensorListSize = tofSensorList->size;
     for (i = 0; i < tofSensorListSize; i++) {
         TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, i);
         tofSensor->detectedCount = 0;
     }
+}
+
+// UTILS METHODS
+
+void tofSensorListSetEnableUsageType(TofSensorList* tofSensorList, enum TofSensorUsageType usageType, bool enabled) {
+    if (tofSensorList == NULL) {
+        writeError(TOF_SENSOR_LIST_NULL);
+        return;
+    }
+
+    unsigned int i;
+    unsigned int tofSensorListSize = tofSensorList->size;
+    for (i = 0; i < tofSensorListSize; i++) {
+        TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, i);
+        if (tofSensor->usageType == usageType) {
+            tofSensor->enabled = enabled;
+        }
+    }
+    
 }

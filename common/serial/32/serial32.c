@@ -61,7 +61,8 @@ void serialPutc(enum SerialPort serialPort, unsigned char c) {
     UARTSendDataByte(uart, c);
     // Avoid to saturate the serial output buffer
     // At 115 200 bauds, we need 100 microseconds to send a char
-    delay100us(1);
+    // But inside the same time, there is some interrupt
+    delayMicroSecs(100);
 
     while (!UARTTransmissionHasCompleted(uart)) {
     

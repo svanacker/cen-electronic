@@ -66,7 +66,7 @@ DWORD WINAPI serialInputInterruptCallback(LPVOID lpvParam) {
         if (c == 0) {
             continue;
         }
-        delayUs();
+        delayMicroSecs(1);
         OutputStream* outputStream = getOutputStream(serialInputBuffer1);
         // Fill the internal Buffer
         append(outputStream, c);

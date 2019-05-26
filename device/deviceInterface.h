@@ -263,6 +263,10 @@ void setArgumentSignedHex4(int index, const char* name);
 * Set the argument of the deviceArgumentList with index for name
 */
 void setArgumentUnsignedHex6(int index, const char* name);
+/**
+* Set the argument of the deviceArgumentList with index for name
+*/
+void setArgumentUnsignedHex8(int index, const char* name);
 
 /**
  * Set the argument of the deviceArgumentList with index for name.
@@ -318,6 +322,11 @@ void setResultUnsignedHex4(int index, const char* name);
 * Set the result of the deviceMethodMetaData with index for name
 */
 void setResultUnsignedHex6(int index, const char* name);
+
+/**
+* Set the result of the deviceMethodMetaData with index for name
+*/
+void setResultUnsignedHex8(int index, const char* name);
 
 /**
 *  Set the result of the deviceMethodMetaData with index for name

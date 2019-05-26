@@ -555,8 +555,8 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
     }
 
     // CONFIG
-    initRobotConfigPc(&robotConfig, ROBOT_TYPE_BIG);
-    // initRobotConfigPc(&robotConfig, ROBOT_TYPE_SMALL);
+    // initRobotConfigPc(&robotConfig, ROBOT_TYPE_BIG);
+    initRobotConfigPc(&robotConfig, ROBOT_TYPE_SMALL);
 
     // EEPROM
     initEepromPc(&eeprom, "MAIN_BOARD_EEPROM");
@@ -646,7 +646,7 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
     getTimerByCode(ROBOT_OBSTACLE_TIMER_CODE)->enabled = true;
     getTimerByCode(END_MATCH_DETECTOR_TIMER_CODE)->enabled = true;
 
-    delaymSec(100);
+    delayMilliSecs(100);
 
     setDebugI2cEnabled(false);
 

@@ -67,6 +67,7 @@ static Location* blueiumRightLocation;
 static Location* smallDistributorLine1Location;
 static Location* smallRobotStartAreaLocation;
 static Location* acceleratorFrontLocation;
+static Location* acceleratorCenteredLocation;
 static Location* goldeniumFrontLocation;
 static Location* weighingMachineFrontLocation;
 static Location* weighingMachineDropLocation;
@@ -75,6 +76,9 @@ static Location* weighingMachineDropLocation;
 
 // Small Robot
 PathData* smallRobotStartArea_to_accelerator_Path;
+PathData* smallRobotStartArea_to_acceleratorCentered_Path;
+PathData* acceleratorCentered_to_accelerator_Path;
+
 PathData* acceleratorFront_to_goldeniumFront_Path;
 PathData* goldeniumFront_to_weighingMachineFront_Path;
 PathData* weighingMachineFront_to_weighingMachineDrop_Path;
@@ -134,6 +138,7 @@ static GameTargetActionItemList smallDistributorLine1DropTargetActionItemList;
 // ------------------------------------------------------- TARGET ACTION ITEM LIST ---------------------------------------------------
 
 static GameTargetActionItem acceleratorPrepareTargetActionItem;
+static GameTargetActionItem acceleratorRotationTargetActionItem;
 static GameTargetActionItem acceleratorDropTargetActionItem;
 
 static GameTargetActionItem goldeniumPrepareTakeTargetActionItem;
@@ -157,6 +162,7 @@ static GameStrategy smallRobotStrategy1Accelerator;
 static GameStrategy smallRobotStrategy2AcceleratorTakeGoldenium;
 static GameStrategy smallRobotStrategy3AcceleratorTakeDropGoldenium;
 static GameStrategy smallRobotStrategy4AcceleratorTakeDropGoldeniumSmallDist;
+static GameStrategy smallRobotStrategy5AcceleratorCenteredTakeDropGoldeniumSmallDist;
 
 // ------------------------------------------------------- STRATEGY ITEM -------------------------------------------------------------
 
@@ -174,6 +180,7 @@ void initSmallRobotLocations2019(GameStrategyContext* gameStrategyContext) {
 
     smallRobotStartAreaLocation = addLocationWithColors(teamColor, navigation, SMALL_ROBOT_START_AREA, SMALL_ROBOT_START_AREA_LABEL, SMALL_ROBOT_START_AREA_X, SMALL_ROBOT_START_AREA_Y);
     acceleratorFrontLocation = addLocationWithColors(teamColor, navigation, ACCELERATOR_FRONT, ACCELERATOR_FRONT_LABEL, ACCELERATOR_FRONT_X, ACCELERATOR_FRONT_Y);
+    acceleratorCenteredLocation = addLocationWithColors(teamColor, navigation, ACCELERATOR_CENTER, ACCELERATOR_CENTER_LABEL, ACCELERATOR_CENTER_X, ACCELERATOR_CENTER_Y);
     goldeniumFrontLocation = addLocationWithColors(teamColor, navigation, GOLDENIUM_FRONT, GOLDENIUM_FRONT_LABEL, GOLDENIUM_FRONT_X, GOLDENIUM_FRONT_Y);
     weighingMachineFrontLocation = addLocationWithColors(teamColor, navigation, WEIGHING_MACHINE_FRONT, WEIGHING_MACHINE_FRONT_LABEL, WEIGHING_MACHINE_FRONT_X, WEIGHING_MACHINE_FRONT_Y);
     weighingMachineDropLocation = addLocationWithColors(teamColor, navigation, WEIGHING_MACHINE_DROP, WEIGHING_MACHINE_DROP_LABEL, WEIGHING_MACHINE_DROP_X, WEIGHING_MACHINE_DROP_Y);
@@ -199,6 +206,30 @@ void initSmallRobotPaths2019(GameStrategyContext* gameStrategyContext) {
         deciDegreeToRad(ACCELERATOR_FRONT_DECI_DEG),
         aFactor * SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_ACCELERATION_FACTOR,
         speedFactor * SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_SPEED_FACTOR);
+
+    smallRobotStartArea_to_acceleratorCentered_Path = addNavigationPathWithColor(teamColor,
+        navigation,
+        smallRobotStartAreaLocation,
+        acceleratorCenteredLocation,
+        SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_CENTERED_COST,
+        SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_CENTERED_CP1,
+        SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_CENTERED_CP2,
+        deciDegreeToRad(SMALL_ROBOT_START_AREA_ANGLE_DECI_DEG),
+        deciDegreeToRad(ACCELERATOR_CENTER_START_DECI_DEG),
+        aFactor * SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_CENTERED_ACCELERATION_FACTOR,
+        speedFactor * SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_CENTERED_SPEED_FACTOR);
+
+    acceleratorCentered_to_accelerator_Path = addNavigationPathWithColor(teamColor,
+        navigation,
+        acceleratorCenteredLocation,
+        acceleratorFrontLocation,
+        ACCELERATOR_CENTERED_TO_ACCELERATOR_COST,
+        ACCELERATOR_CENTERED_TO_ACCELERATOR_CP1,
+        ACCELERATOR_CENTERED_TO_ACCELERATOR_CP2,
+        deciDegreeToRad(ACCELERATOR_CENTER_END_DECI_DEG),
+        deciDegreeToRad(ACCELERATOR_CENTER_END_DECI_DEG),
+        aFactor * ACCELERATOR_CENTERED_TO_ACCELERATOR_ACCELERATION_FACTOR,
+        speedFactor * SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_CENTERED_SPEED_FACTOR);
 
     acceleratorFront_to_goldeniumFront_Path = addNavigationPathWithColor(teamColor,
         navigation,
@@ -322,6 +353,7 @@ void initSmallRobotTargetActions2019(GameStrategyContext* gameStrategyContext) {
 void initSmallRobotTargetActionsItems2019(GameStrategyContext* gameStrategyContext) {
     // Accelerator => We remove the arm when reaching the drop (drop is done by the move of the robot)
     addTargetActionItem(&acceleratorPrepareTargetActionItemList, &acceleratorPrepareTargetActionItem, &acceleratorArmOn, "ACC ARM ON");
+    addTargetActionItem(&acceleratorDropTargetActionItemList, &acceleratorRotationTargetActionItem, &acceleratorRotationIfNeeded, "ROTATION");
     addTargetActionItem(&acceleratorDropTargetActionItemList, &acceleratorDropTargetActionItem, &acceleratorArmOff, "ACC ARM Off");
 
     // Goldenium Take
@@ -360,12 +392,22 @@ GameStrategy* initSmallRobotStrategiesItems2019(GameStrategyContext* gameStrateg
         addGameStrategyItem(&smallRobotStrategy3AcceleratorTakeDropGoldenium, &dropGoldeniumStrategyItem, &goldeniumDropTarget);
         return &smallRobotStrategy3AcceleratorTakeDropGoldenium;
     }
-    else if (strategyId == SMALL_ROBOT_STRATEGY_3_ACCELERATOR_TAKE_DROP_GOLDENIUM_SMALL_DIST) {
+    else if (strategyId == SMALL_ROBOT_STRATEGY_4_ACCELERATOR_TAKE_DROP_GOLDENIUM_SMALL_DIST) {
         addGameStrategyItem(&smallRobotStrategy4AcceleratorTakeDropGoldeniumSmallDist, &acceleratorStrategyItem, &acceleratorTarget);
         addGameStrategyItem(&smallRobotStrategy4AcceleratorTakeDropGoldeniumSmallDist, &takeGoldeniumStrategyItem, &goldeniumTakeTarget);
         addGameStrategyItem(&smallRobotStrategy4AcceleratorTakeDropGoldeniumSmallDist, &dropGoldeniumStrategyItem, &goldeniumDropTarget);
         addGameStrategyItem(&smallRobotStrategy4AcceleratorTakeDropGoldeniumSmallDist, &smallDistributorLine1StrategyItem, &smallDistributorLine1Target);
         return &smallRobotStrategy4AcceleratorTakeDropGoldeniumSmallDist;
+    }
+    else if (strategyId == SMALL_ROBOT_STRATEGY_5_ACCELERATOR_CENTER_GOLDENIUM_SMALL_DIST) {
+        Navigation* navigation = gameStrategyContext->navigation;
+        PathData* path = getPathOfLocations(navigation->paths, smallRobotStartAreaLocation, acceleratorFrontLocation);
+        path->cost = 3000.0f;
+        addGameStrategyItem(&smallRobotStrategy5AcceleratorCenteredTakeDropGoldeniumSmallDist, &acceleratorStrategyItem, &acceleratorTarget);
+        addGameStrategyItem(&smallRobotStrategy5AcceleratorCenteredTakeDropGoldeniumSmallDist, &takeGoldeniumStrategyItem, &goldeniumTakeTarget);
+        addGameStrategyItem(&smallRobotStrategy5AcceleratorCenteredTakeDropGoldeniumSmallDist, &dropGoldeniumStrategyItem, &goldeniumDropTarget);
+        addGameStrategyItem(&smallRobotStrategy5AcceleratorCenteredTakeDropGoldeniumSmallDist, &smallDistributorLine1StrategyItem, &smallDistributorLine1Target);
+        return &smallRobotStrategy5AcceleratorCenteredTakeDropGoldeniumSmallDist;
     }
     writeError(STRATEGY_NOT_DEFINED);
     return NULL;

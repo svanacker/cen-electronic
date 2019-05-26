@@ -87,7 +87,7 @@ void mainBoardCommonTofAddDevices(void);
  * Useful when we just want to initialize 2 tof like for Experience 2019 Main
  * Program.
  */
-void mainBoardCommonTofInitDrivers(float distanceFactor);
+void mainBoardCommonTofInitDrivers(RobotConfig* robotConfig);
 
 /**
  * Returns the list of Tof Sensor.

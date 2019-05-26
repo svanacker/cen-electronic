@@ -7,6 +7,8 @@
 
 bool acceleratorArmOn(int* context);
 
+bool acceleratorRotationIfNeeded(int* context);
+
 bool acceleratorArmOff(int* context);
 
 // GOLDENIUM

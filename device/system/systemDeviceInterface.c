@@ -57,6 +57,14 @@ int deviceSystemGetInterface(unsigned char commandHeader, DeviceInterfaceMode mo
         }
         return commandLengthValueForMode(mode, 4, 0);
     }
+    // Read Core Timer
+    else if (commandHeader == COMMAND_READ_CORE_TIMER) {
+        if (fillDeviceArgumentList) {
+            setFunction("Read Core Timer", 0, 1);
+            setResultUnsignedHex8(0, "Core Timer Counter");                
+        }
+        return commandLengthValueForMode(mode, 0, 8);
+    }
     // usage
     else if (commandHeader == COMMAND_USAGE) {
         if (fillDeviceArgumentList) {

@@ -134,7 +134,7 @@ void tcs34725_enable(I2cBusConnection* i2cBusConnection) {
 #endif
     
     tcs34725_write8(i2cBusConnection, TCS34725_ENABLE, TCS34725_ENABLE_PON);
-    delaymSec(3);
+    delayMilliSecs(3);
     tcs34725_write8(i2cBusConnection, TCS34725_ENABLE, TCS34725_ENABLE_PON | TCS34725_ENABLE_AEN);
 }
 

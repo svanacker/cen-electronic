@@ -134,8 +134,7 @@ void mainBoardMainPhase2(void) {
     // index at a very early stage
     mainBoardCommonStrategyMainInitDrivers(&robotConfig);
 
-    float tofDistanceFactor = getSonarDistanceCheckFactor(&robotConfig);
-    mainBoardCommonTofInitDrivers(tofDistanceFactor);
+    mainBoardCommonTofInitDrivers(&robotConfig);
     mainBoardCommonMatchMainInitDrivers(&robotConfig, isMatchStarted32, mainBoardWaitForInstruction, loopUnWaitForInstruction);
 }
 

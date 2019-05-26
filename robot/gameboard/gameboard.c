@@ -51,7 +51,7 @@ void initGameBoard(GameBoard* gameBoard,
     gameBoard->showPath = true;
     gameBoard->showUnavailablePath = true;
     gameBoard->showOutgoingPath = false;
-    gameBoard->showUnreachableArea = true;
+    gameBoard->showUnreachableArea = false;
     gameBoard->showRobot = true;
     gameBoard->showRobotTofsCones = false;
 
@@ -245,7 +245,7 @@ void fillGameBoardCharElements(GameBoard* gameBoard, int* element) {
         unsigned int i;
         for (i = 0; i < locationSize; i++) {
             Location* location = getLocation(locationList, i);
-            drawString(gameBoard, location->x, location->y, location->name);
+            drawString(gameBoard, location->x, location->y, (unsigned char*) location->label);
         }
     }
 

@@ -102,7 +102,7 @@ void handleI2CDataFromMaster(I2cBusConnection* i2cBusConnection) {
 DWORD WINAPI masterToSlaveCallback(LPVOID lpvParam) {
     printf("PC : I2C Master -> Slave listening !\r\n");
     while (true) {
-        delayUs();
+        delayMicroSecs(1);
         I2cBusConnection* i2cBusConnection = (I2cBusConnection*)lpvParam;
         handleI2CDataFromMaster(i2cBusConnection);
     }
@@ -114,7 +114,7 @@ DWORD WINAPI masterToSlaveCallback(LPVOID lpvParam) {
 DWORD WINAPI slaveToMasterCallback(LPVOID lpvParam) {
     printf("PC : I2 Slave -> Master listening !\r\n");
     while (true) {
-        delayUs();
+        delayMicroSecs(1);
         I2cBusConnection* i2cBusConnection = (I2cBusConnection*)lpvParam;
         sendI2CDataToMaster(i2cBusConnection);
     }
