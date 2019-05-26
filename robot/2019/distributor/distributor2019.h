@@ -6,70 +6,28 @@
 #include "../../../common/io/outputStream.h"
 #include "../../../common/io/printWriter.h"
 
-#include "../../../drivers/colorSensor/colorSensor.h"
+#include "../../../common/pwm/servo/servoList.h"
 
-#include "../../../robot/strategy/teamColor.h"
+#include "../../../common/log/logger.h"
+#include "../../../common/log/logLevel.h"
 
-/**
- * Determine the type of content in the distributor
- */
-enum PuckPlaceHolder {
-    /** The puck place holder is empty */
-    PUCK_PLACE_HOLDER_EMPTY,
-    /** The puck place holder is filled but color unknown */
-    PUCK_PLACE_HOLDER_COLOR_UNKNOWN,
-    /** The puck place holder is filled with Redium */
-    PUCK_PLACE_HOLDER_REDIUM,
-    /** The puck place holder is filled with Greenium */
-    PUCK_PLACE_HOLDER_GREENIUM,
-    /** The puck place holder is filled with Blueium */
-    PUCK_PLACE_HOLDER_BLUEIUM,
-};
+#include "../../../common/timer/delayTimer.h"
 
-struct BigDistributor;
-typedef struct BigDistributor BigDistributor;
-
-#define BIG_DISTRIBUTOR_ITEM_COUNT    6
+#include "../../../drivers/tof/tofList.h"
 
 /**
- * Store the big distributor "Shadow object".
+ * Prepare the fork to take something on the Distributor
+ * @param servoList
+ * @param leftRight
+ * @return 
  */
-struct BigDistributor {
-    /** The color that we must handle */
-    enum TeamColor teamColor;
-    /** The content of the BigDistributor  */
-    enum PuckPlaceHolder(placeHolders)[BIG_DISTRIBUTOR_ITEM_COUNT];
-};
-
-// COLOR DETECTION
-
-/** Threshold for GREENIUM DETECTION */
-#define PUCK_2019_GREENIUM_R_LOW_THRESHOLD          0
-#define PUCK_2019_GREENIUM_R_HIGH_THRESHOLD        15
-#define PUCK_2019_GREENIUM_G_LOW_THRESHOLD          5
-#define PUCK_2019_GREENIUM_G_HIGH_THRESHOLD       255
-#define PUCK_2019_GREENIUM_B_LOW_THRESHOLD          0
-#define PUCK_2019_GREENIUM_B_HIGH_THRESHOLD        12
-
-/** Threshold for BLUEIUM DETECTION */
-#define PUCK_2019_BLUEIUM_R_LOW_THRESHOLD         5
-#define PUCK_2019_BLUEIUM_R_HIGH_THRESHOLD        15
-#define PUCK_2019_BLUEIUM_G_LOW_THRESHOLD         20
-#define PUCK_2019_BLUEIUM_G_HIGH_THRESHOLD        255
-#define PUCK_2019_BLUEIUM_B_LOW_THRESHOLD          0
-#define PUCK_2019_BLUEIUM_B_HIGH_THRESHOLD        12
-
-/** Threshold for REDIUM DETECTION */
-#define PUCK_2019_REDIUM_R_LOW_THRESHOLD         5
-#define PUCK_2019_REDIUM_R_HIGH_THRESHOLD        255
-#define PUCK_2019_REDIUM_G_LOW_THRESHOLD         0
-#define PUCK_2019_REDIUM_G_HIGH_THRESHOLD        20
-#define PUCK_2019_REDIUM_B_LOW_THRESHOLD          0
-#define PUCK_2019_REDIUM_B_HIGH_THRESHOLD        12
+bool distributor2019PrepareTake(ServoList* servoList);
 
 /**
- * Init the distributor.
+ * All actions to take a 2 Pucks.
+ * @param servoList
  */
-void initDistributor2019(BigDistributor* bigDistributor, enum TeamColor teamColor);
+bool distributor2019Take(ServoList* servoList, TofSensorList* tofSensorList);
+
 
 #endif

@@ -38,9 +38,6 @@ GameStrategyContext* initGameStrategyContext2019(RobotConfig* robotConfig,
 
 GameBoard* initGameBoard2019(GameStrategyContext* gameStrategyContext);
 
-void initDistributor2019(BigDistributor* bigDistributor, enum TeamColor teamColor);
-
-
 void mainBoardCommonStrategyMainEndInit2019(GameStrategyContext* gameStrategyContext);
 
 #endif

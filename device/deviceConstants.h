@@ -152,7 +152,9 @@
 
 #define FORK_2019_DEVICE_HEADER                    '_'
 
-#define ARM_2019_DEVICE_HEADER                       'A'
+#define DISTRIBUTOR_2019_DEVICE_HEADER             'D'
+
+#define ARM_2019_DEVICE_HEADER                     'A'
 
 #define ELECTRON_LAUNCHER_2019_DEVICE_HEADER       '.'
 

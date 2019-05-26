@@ -566,7 +566,8 @@
                      displayName="robot.2019.distributor"
                      projectFiles="true">
         <itemPath>../../../robot/2019/distributor/distributor2019.h</itemPath>
-        <itemPath>../../../robot/2019/distributor/distributorDebug2019.h</itemPath>
+        <itemPath>../../../robot/2019/distributor/distributorDevice2019.h</itemPath>
+        <itemPath>../../../robot/2019/distributor/distributorDeviceInterface2019.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f36" displayName="robot.2019.elevator" projectFiles="true">
         <itemPath>../../../robot/2019/elevator/elevator2019.h</itemPath>
@@ -1257,7 +1258,8 @@
                      displayName="robot.2019.distributor"
                      projectFiles="true">
         <itemPath>../../../robot/2019/distributor/distributor2019.c</itemPath>
-        <itemPath>../../../robot/2019/distributor/distributorDebug2019.c</itemPath>
+        <itemPath>../../../robot/2019/distributor/distributorDevice2019.c</itemPath>
+        <itemPath>../../../robot/2019/distributor/distributorDeviceInterface2019.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f35" displayName="robot.2019.elevator" projectFiles="true">
         <itemPath>../../../robot/2019/elevator/elevator2019.c</itemPath>

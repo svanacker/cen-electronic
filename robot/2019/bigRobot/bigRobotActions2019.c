@@ -11,7 +11,7 @@
 #include "../../../robot/2019/commonRobot/commonRobotActions2019.h"
 #include "../../../robot/2019/fork/fork2019.h"
 #include "../../../robot/2019/fork/forkAccelerator2019.h"
-
+#include "../../../robot/2019/distributor/distributor2019.h"
 
 bool bigDistributorLinePrepare(int* context) {
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
@@ -29,7 +29,7 @@ bool bigDistributorLineTake(int* context) {
     GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
     ServoList* servoList = gameStrategyContext->servoList;
     TofSensorList* tofSensorList = gameStrategyContext->tofSensorList;
-    fork2019TakeSimplePuck(servoList, tofSensorList);
+    distributor2019Take(servoList, tofSensorList);
 
     return true;
 }

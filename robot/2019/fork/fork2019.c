@@ -126,43 +126,6 @@ void fork2019Init(ServoList* servoList) {
     moveForkBack(servoList, FORK_2019_LEFT_AND_RIGHT_INDEX, wait);
 }
 
-bool fork2019PrepareTakeSimplePuck(ServoList* servoList) {
-    // We do not wait because this action is a preparing action, so we could do during the robot moves
-    bool wait = false;
-
-    // Fork Push Off for both
-    moveForkPushOff(servoList, FORK_2019_LEFT_AND_RIGHT_INDEX, wait);
-    
-    // Fork Push Off for both
-    moveForkBack(servoList, FORK_2019_LEFT_AND_RIGHT_INDEX, wait);
-
-    // Elevator
-    moveElevatorDistributorScan(servoList, wait);
-    
-    return true;
-}
-
-bool fork2019TakeSimplePuck(ServoList* servoList, TofSensorList* tofSensorList) {
-    // We wait because all actions must be finished before going to the next step !
-    bool wait = true;
-
-    // TODO : Scan to do => Return false if the scan is KO
-    if (!forkScan(servoList, tofSensorList, FORK_2019_LEFT_AND_RIGHT_INDEX)) {
-        return false;
-    }
-    
-    // Move to Bottom which is the level to take the distributor elements
-    moveElevatorBottom(servoList, wait);
-
-    // Fork Single Puck
-    moveForkSimplePuck(servoList, FORK_2019_LEFT_AND_RIGHT_INDEX, wait);
-
-    // Elevator Up to free the Puck
-    moveElevatorInitPosition(servoList, wait);
-
-    return true;
-}
-
 
 void updateServoProperties2019(ServoList* servoList) {
     if (servoList == NULL) {

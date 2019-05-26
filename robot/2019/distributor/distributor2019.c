@@ -1,5 +1,6 @@
 #include "distributor2019.h"
-#include "distributorDebug2019.h"
+
+#include <stdbool.h>
 
 #include "../../../common/color/color.h"
 
@@ -11,55 +12,50 @@
 #include "../../../common/log/logger.h"
 #include "../../../common/log/logLevel.h"
 
-#include "../../../robot/2019/strategy/score2019.h"
-#include "../../../robot/2019/strategy/teamColor2019.h"
-
-#include "../../../drivers/colorSensor/colorSensor.h"
-#include "../../../drivers/colorSensor/colorSensorDebug.h"
-
 #include "../../../robot/strategy/teamColor.h"
 
+#include "../../../robot/2019/elevator/elevator2019.h"
+#include "../../../robot/2019/fork/forkScan2019.h"
+#include "../../../robot/2019/fork/fork2019.h"
 
-enum ColorType colorSensorFindColorType2019(ColorSensor* colorSensor) {
-    Color* color = colorSensor->colorSensorReadValue(colorSensor);
+
+bool distributor2019PrepareTake(ServoList* servoList) {
+    // We do not wait because this action is a preparing action, so we could do during the robot moves
+    bool wait = false;
+
+    // Fork Push Off for both
+    moveForkPushOff(servoList, FORK_2019_LEFT_AND_RIGHT_INDEX, wait);
     
-    if (isColorInRange(color, 
-        PUCK_2019_GREENIUM_R_LOW_THRESHOLD, 
-        PUCK_2019_GREENIUM_R_HIGH_THRESHOLD,
-        PUCK_2019_GREENIUM_G_LOW_THRESHOLD,
-        PUCK_2019_GREENIUM_G_HIGH_THRESHOLD,
-        PUCK_2019_GREENIUM_B_LOW_THRESHOLD,
-        PUCK_2019_GREENIUM_B_HIGH_THRESHOLD)
-        && (color->G > color->R)    
-            ) {
-        return COLOR_TYPE_GREEN;
-        }
-    else if (isColorInRange(color,
-        PUCK_2019_BLUEIUM_R_LOW_THRESHOLD,
-        PUCK_2019_BLUEIUM_R_HIGH_THRESHOLD,
-        PUCK_2019_BLUEIUM_G_LOW_THRESHOLD,
-        PUCK_2019_BLUEIUM_G_HIGH_THRESHOLD,
-        PUCK_2019_BLUEIUM_B_LOW_THRESHOLD,
-        PUCK_2019_BLUEIUM_B_HIGH_THRESHOLD)
-        && (color->R > 2 * color->G)    
-            ) {
-        return COLOR_TYPE_BLUE;
-    }
-    else if (isColorInRange(color,
-        PUCK_2019_REDIUM_R_LOW_THRESHOLD,
-        PUCK_2019_REDIUM_R_HIGH_THRESHOLD,
-        PUCK_2019_REDIUM_G_LOW_THRESHOLD,
-        PUCK_2019_REDIUM_G_HIGH_THRESHOLD,
-        PUCK_2019_REDIUM_B_LOW_THRESHOLD,
-        PUCK_2019_REDIUM_B_HIGH_THRESHOLD)
-        && (color->R > 2 * color->G)
-        ) {
-        return COLOR_TYPE_RED;
-    }
-    return COLOR_TYPE_UNKNOWN;
+    // Fork Push Off for both
+    moveForkBack(servoList, FORK_2019_LEFT_AND_RIGHT_INDEX, wait);
+
+    // Elevator
+    moveElevatorDistributorScan(servoList, wait);
+    
+    return true;
 }
 
-void initDistributor2019(BigDistributor* bigDistributor, enum TeamColor teamColor) {
-    bigDistributor->teamColor = teamColor;
-    // TODO : init
+/**
+ * All actions to take a 2 Pucks.
+ * @param servoList
+ */
+bool distributor2019Take(ServoList* servoList, TofSensorList* tofSensorList) {
+    // We wait because all actions must be finished before going to the next step !
+    bool wait = true;
+
+    // TODO : Scan to do => Return false if the scan is KO
+    if (!forkScan(servoList, tofSensorList, FORK_2019_LEFT_AND_RIGHT_INDEX)) {
+        return false;
+    }
+    
+    // Move to Bottom which is the level to take the distributor elements
+    moveElevatorBottom(servoList, wait);
+
+    // Fork Single Puck
+    moveForkSimplePuck(servoList, FORK_2019_LEFT_AND_RIGHT_INDEX, wait);
+
+    // Elevator Up to free the Puck
+    moveElevatorInitPosition(servoList, wait);
+
+    return true;
 }

@@ -48,13 +48,6 @@ int deviceFork2019GetInterface(unsigned char commandHeader, DeviceInterfaceMode 
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
-        // TAKE
-    else if (commandHeader == COMMAND_2019_FORK_TAKE_SIMPLE_PUCK) {
-        if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("Take Simple Puck");
-        }
-        return commandLengthValueForMode(mode, 0, 0);
-    }
     else if (commandHeader == COMMAND_2019_FORK_PREPARE_TAKE_GOLDENIUM) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Prep Take Gold.");
@@ -75,14 +68,6 @@ int deviceFork2019GetInterface(unsigned char commandHeader, DeviceInterfaceMode 
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
-        // FORK ACCELERATOR DROP
-    else if (commandHeader == COMMAND_2019_FORK_ACCELERATOR_DROP) {
-        if (fillDeviceArgumentList) {
-            setFunction("Accelerator Drop", 1, 0);
-            setArgumentUnsignedChar1(0, "First side to release (1=L, 2=R)");
-        }
-        return commandLengthValueForMode(mode, 1, 0);
-    }        // SCAN
     else if (commandHeader == COMMAND_2019_FORK_SCAN) {
         if (fillDeviceArgumentList) {
             setFunction("Fork Scan", 1, 1);

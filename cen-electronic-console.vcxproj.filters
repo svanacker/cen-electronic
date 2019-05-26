@@ -2175,9 +2175,6 @@
     <ClCompile Include="robot\2019\distributor\distributor2019.c">
       <Filter>Source Files\robot\2019\distributor</Filter>
     </ClCompile>
-    <ClCompile Include="robot\2019\distributor\distributorDebug2019.c">
-      <Filter>Source Files\robot\2019\distributor</Filter>
-    </ClCompile>
     <ClCompile Include="robot\2019\electron\electronLauncher2019.c">
       <Filter>Source Files\robot\2019\electron</Filter>
     </ClCompile>
@@ -2282,6 +2279,12 @@
     </ClCompile>
     <ClCompile Include="drivers\tof\tofDetectionUtils.c">
       <Filter>Source Files\drivers\tof</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2019\distributor\distributorDevice2019.c">
+      <Filter>Source Files\robot\2019\distributor</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2019\distributor\distributorDeviceInterface2019.c">
+      <Filter>Source Files\robot\2019\distributor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -3461,9 +3464,6 @@
     <ClInclude Include="robot\2019\distributor\distributor2019.h">
       <Filter>Header Files\robot\2019\distributor</Filter>
     </ClInclude>
-    <ClInclude Include="robot\2019\distributor\distributorDebug2019.h">
-      <Filter>Header Files\robot\2019\distributor</Filter>
-    </ClInclude>
     <ClInclude Include="robot\2019\fork\fork2019.h">
       <Filter>Header Files\robot\2019\fork</Filter>
     </ClInclude>
@@ -3568,6 +3568,12 @@
     </ClInclude>
     <ClInclude Include="drivers\tof\tofDetectionUtils.h">
       <Filter>Header Files\drivers\tof</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\distributor\distributorDevice2019.h">
+      <Filter>Header Files\robot\2019\distributor</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\distributor\distributorDeviceInterface2019.h">
+      <Filter>Header Files\robot\2019\distributor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

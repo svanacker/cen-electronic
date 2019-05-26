@@ -22,6 +22,7 @@
 #include "../../../robot/2019/fork/fork2019.h"
 #include "../../../robot/2019/fork/forkGoldenium2019.h"
 #include "../../../robot/2019/strategy/strategy2019Utils.h"
+#include "../../../robot/2019/distributor/distributor2019.h"
 
 #define SMALL_DISTRIBUTOR_PREPARE_ACTION_LOG_NAME     "-> smallDistributorLinePrepare"
 #define SMALL_DISTRIBUTOR_TAKE_ACTION_LOG_NAME        "-> smallDistributorLineTake"
@@ -157,7 +158,7 @@ bool smallDistributorLinePrepare(int* context) {
     appendStringCRLF(debugOutputStream, SMALL_DISTRIBUTOR_PREPARE_ACTION_LOG_NAME);
     GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
     ServoList* servoList = gameStrategyContext->servoList;
-    fork2019Init(servoList);
+    distributor2019PrepareTake(servoList);
 
     return true;
 }
@@ -168,7 +169,7 @@ bool smallDistributorLineTake(int* context) {
     GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
     ServoList* servoList = gameStrategyContext->servoList;
     TofSensorList* tofSensorList = gameStrategyContext->tofSensorList;
-    fork2019TakeSimplePuck(servoList, tofSensorList);
+    distributor2019Take(servoList, tofSensorList);
 
     return true;
 }

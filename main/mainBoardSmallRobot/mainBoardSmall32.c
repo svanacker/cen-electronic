@@ -37,6 +37,9 @@
 #include "../../drivers/pwm/servo/servoPwmPca9685.h"
 #include "../../robot/2019/arm/armDeviceInterface2019.h"
 #include "../../robot/2019/arm/armDevice2019.h"
+#include "../../robot/2019/distributor/distributorDeviceInterface2019.h"
+#include "../../robot/2019/distributor/distributorDevice2019.h"
+#include "../../robot/2019/elevator/elevatorDevice2019.h"
 #include "../../robot/2019/elevator/elevatorDeviceInterface2019.h"
 #include "../../robot/2019/elevator/elevatorDevice2019.h"
 #include "../../robot/2019/fork/forkDeviceInterface2019.h"
@@ -156,6 +159,7 @@ int main(void) {
 	addLocalDevice(getArm2019DeviceInterface(), getArm2019DeviceDescriptor(servoList));
 	addLocalDevice(getElevator2019DeviceInterface(), getElevator2019DeviceDescriptor(servoList));
     addLocalDevice(getFork2019DeviceInterface(), getFork2019DeviceDescriptor(servoList, tofSensorList));
+    addLocalDevice(getDistributor2019DeviceInterface(), getDistributor2019DeviceDescriptor(servoList, tofSensorList));
    
     mainBoardCommonStrategyMainLoop();
 
