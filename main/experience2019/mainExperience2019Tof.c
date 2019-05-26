@@ -106,7 +106,7 @@ TofSensorList* mainExperience2019TofInitDrivers(I2cBus* i2cBus) {
         tofSensorArray[0].multiplexerChannel = MULTIPLEXER_CHANNEL_0;
         
         tofSensorArray[0].hardwareRestartable = false;
-        tofSensorArray[0].hardwareRestartIOExpanderIndex = 0;
+        tofSensorArray[0].hardwareRestartIOExpander = NULL;
         tofSensorArray[0].hardwareRestartIOExpanderIoIndex = 0;
 
     }
@@ -126,7 +126,7 @@ TofSensorList* mainExperience2019TofInitDrivers(I2cBus* i2cBus) {
         tofSensorArray[1].multiplexerChannel = MULTIPLEXER_CHANNEL_1;
  
         tofSensorArray[1].hardwareRestartable = false;
-        tofSensorArray[1].hardwareRestartIOExpanderIndex = 0;
+        tofSensorArray[1].hardwareRestartIOExpander = NULL;
         tofSensorArray[1].hardwareRestartIOExpanderIoIndex = 0;
     }
 

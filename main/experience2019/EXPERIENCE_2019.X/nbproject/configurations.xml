@@ -502,6 +502,9 @@
                      projectFiles="true">
         <itemPath>../../../common/delay/cenDelay.c</itemPath>
       </logicalFolder>
+      <logicalFolder name="f14" displayName="common.delay.32" projectFiles="true">
+        <itemPath>../../../common/delay/32/cenDelay32.c</itemPath>
+      </logicalFolder>
       <logicalFolder name="common.eeprom"
                      displayName="common.eeprom"
                      projectFiles="true">

@@ -153,7 +153,7 @@ void setSelectionIndex(int selectionIndex) {
 void readAndLatchPositions(void) {
     // Ask to update the position
     OE = 1;
-    delaymSec(1);
+    delayMicroSecs(1);
 
     // block the position (use latch)
     OE = 0;
