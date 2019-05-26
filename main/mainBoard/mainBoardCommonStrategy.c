@@ -108,8 +108,13 @@ void mainBoardDeviceHandleTrajectoryDeviceNotification(const Device* device, con
         if (commandHeader == NOTIFY_TRAJECTORY_CHANGED) {
             updateNewPositionFromNotification(notificationInputStream);
             checkIsSeparator(notificationInputStream);
-            enum TrajectoryType trajectoryType = readHex(notificationInputStream);
-            gameStrategyContext->trajectoryType = trajectoryType;
+            readHex(notificationInputStream);
+            // enum TrajectoryType trajectoryType = readHex(notificationInputStream);
+            // WE DO NOT MODIFY the Trajectory Type, The master data management of 
+            // This data must be either the MAIN_BOARD or the MOTOR_BOARD on a MOTION_DEVICE_HEADER 
+            // and not on a TRAJECTORY_DEVICE_HEADER
+            
+            // gameStrategyContext->trajectoryType = trajectoryType;
             
             if (isLoggerDebugEnabled()) {
                 appendStringCRLF(getDebugOutputStreamLogger(), "Traj. Dev. Notif. !");

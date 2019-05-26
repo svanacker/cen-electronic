@@ -86,18 +86,6 @@ void handleTofSensorList(GameStrategyContext* gameStrategyContext, StartMatch* s
             continue;
         }
         
-        /* We don't need this section anymore because trajectory notification on UART 5 works well !!
-        // Update the position from the MOTOR BOARD. If we don't do it,
-        // The board keep the original value from the latest move / notification or the latest callback
-        // TODO : Clarify the usage of Robot Position
-        updateIfNeededRobotPositionFromMotorBoardToMainBoard(gameStrategyContext);
-        detected = tofComputeDetectedPointIfAny(tofSensor, pointOfView, pointOfViewAngleRadian, &detectedPoint);
-
-        if (!detected) {
-            continue;
-        }
-        */
-        
         // We must know if it's in the gameboard
         if (isPointInTheCollisionArea(gameBoard, &detectedPoint)) {
             tofSensorListBeep(tofSensorList, detected);

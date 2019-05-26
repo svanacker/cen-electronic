@@ -23,12 +23,4 @@ void handleInstructionAndMotion(PidMotion* pidMotion, OutputStream* notification
  */
 void handleAndWaitFreeMotion(PidMotion* pidMotion, OutputStream* notificationOutputStream);
 
-/**
- * Handle and wait after a delay of milliseconds.
- * TODO : breaks if there is another instruction ???
- */
-void handleAndWaitMSec(PidMotion* pidMotion, OutputStream* notificationOutputStream, unsigned long delayMs);
-
-
-
 #endif

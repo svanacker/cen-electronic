@@ -49,9 +49,11 @@ bool remoteDriverDataDispatcherTransmit(DriverDataDispatcher* dispatcher,
         // limit data reception to 1
         dataReceived += copyInputToOutputStream(dispatcherInputStream, responseOutputStream, NULL, 1);
         counter++;
-        delayMicroSecs(100);
+        delayMicroSecs(200);
 
-        if (counter > 1000) {
+        // With a counter of 10000 * 200 (delayMicroSecs), it let 4 secs to have 
+        // a response !
+        if (counter > 20000) {
             writeError(DISPATCHER_LINK_ERROR);
             appendString (getErrorOutputStreamLogger(), "Dispatcher:");
             appendString(getErrorOutputStreamLogger(), dispatcher->name);

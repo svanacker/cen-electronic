@@ -87,6 +87,7 @@ bool updateRobotPositionFromMainBoardToMotorBoard(GameStrategyContext* gameStrat
 }
 
 void updateIfNeededRobotPositionFromMotorBoardToMainBoard(GameStrategyContext* gameStrategyContext) {
+    return;
     // To avoid to continously ask the position
     if (!gameStrategyContext->robotPositionToUpdateInterruptFlag) {
         return;

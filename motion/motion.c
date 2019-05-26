@@ -133,12 +133,3 @@ void handleAndWaitFreeMotion(PidMotion* pidMotion, OutputStream* notificationOut
         }
     }
 }
-
-void handleAndWaitMSec(PidMotion* pidMotion, OutputStream* notificationOutputStream, unsigned long delayMs) {
-    unsigned long DELAY = 10;
-    unsigned long counter;
-    for (counter = 0; counter < delayMs; counter += DELAY) {
-        delayMilliSecs(DELAY);
-        handleInstructionAndMotion(pidMotion, notificationOutputStream);
-    }
-}
