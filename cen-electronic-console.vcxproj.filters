@@ -1090,6 +1090,12 @@
     <Filter Include="Header Files\drivers\i2c\multiplexer\pc">
       <UniqueIdentifier>{d2832050-dffd-4515-8df2-d631e1695f0c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\robot\2019\goldenium">
+      <UniqueIdentifier>{286ce603-7c6a-4c59-bc2e-a1f898e59e04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\robot\2019\goldenium">
+      <UniqueIdentifier>{13aafdb3-2f89-41ae-a561-eeb922f3fdae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -2199,9 +2205,6 @@
     <ClCompile Include="robot\2019\fork\forkDeviceInterface2019.c">
       <Filter>Source Files\robot\2019\fork</Filter>
     </ClCompile>
-    <ClCompile Include="robot\2019\fork\forkGoldenium2019.c">
-      <Filter>Source Files\robot\2019\fork</Filter>
-    </ClCompile>
     <ClCompile Include="robot\2019\fork\forkScan2019.c">
       <Filter>Source Files\robot\2019\fork</Filter>
     </ClCompile>
@@ -2285,6 +2288,15 @@
     </ClCompile>
     <ClCompile Include="robot\2019\distributor\distributorDeviceInterface2019.c">
       <Filter>Source Files\robot\2019\distributor</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2019\goldenium\goldenium2019.c">
+      <Filter>Source Files\robot\2019\goldenium</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2019\goldenium\goldeniumDevice2019.c">
+      <Filter>Source Files\robot\2019\goldenium</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2019\goldenium\goldeniumDeviceInterface2019.c">
+      <Filter>Source Files\robot\2019\goldenium</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -3476,9 +3488,6 @@
     <ClInclude Include="robot\2019\fork\forkDeviceInterface2019.h">
       <Filter>Header Files\robot\2019\fork</Filter>
     </ClInclude>
-    <ClInclude Include="robot\2019\fork\forkGoldenium2019.h">
-      <Filter>Header Files\robot\2019\fork</Filter>
-    </ClInclude>
     <ClInclude Include="robot\2019\fork\forkScan2019.h">
       <Filter>Header Files\robot\2019\fork</Filter>
     </ClInclude>
@@ -3574,6 +3583,15 @@
     </ClInclude>
     <ClInclude Include="robot\2019\distributor\distributorDeviceInterface2019.h">
       <Filter>Header Files\robot\2019\distributor</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\goldenium\goldenium2019.h">
+      <Filter>Header Files\robot\2019\goldenium</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\goldenium\goldeniumDevice2019.h">
+      <Filter>Header Files\robot\2019\goldenium</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2019\goldenium\goldeniumDeviceInterface2019.h">
+      <Filter>Header Files\robot\2019\goldenium</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

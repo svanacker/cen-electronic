@@ -48,7 +48,7 @@ void moveElevatorUp(ServoList* servoList, bool wait) {
 
 void moveElevatorAcceleratorSecondDrop(ServoList* servoList, bool wait) {
     Servo* servo = getServo(servoList, FORK_2019_ELEVATOR_SERVO_INDEX);
-    pwmServo(servo, FORK_2019_ELEVATOR_SPEED_FACTOR, FORK_2019_ELEVATOR_UP_SERVO_VALUE, wait);
+    pwmServo(servo, FORK_2019_ELEVATOR_SPEED_FACTOR, FORK_2019_ELEVATOR_SECOND_DROP_SERVO_VALUE, wait);
 }
 
 void moveElevatorToTakeGoldenium(ServoList* servoList, bool wait) {

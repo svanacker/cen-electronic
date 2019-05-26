@@ -26,7 +26,27 @@
 
 #include "../../../robot/2019/elevator/elevator2019.h"
 
-bool fork2019AcceleratorDrop(ServoList* servoList, unsigned int firstLeftRightServoIndex, unsigned int secondLeftRightServoIndex) {
+bool accelerator2019FakeInit(ServoList* servoList) {
+    // Do as it there was some puck in the fork
+    moveForkSimplePuck(servoList, FORK_2019_LEFT_AND_RIGHT_INDEX, true);
+
+    // Elevator Init
+    moveElevatorInitPosition (servoList, false);
+    
+    return true;
+}
+
+bool accelerator2019PrepareDrop(ServoList* servoList) {
+    // Elevator Up to the max
+    moveElevatorUp(servoList, false);
+    
+    // Fork Push Off to release at the right angle
+    moveForkPushOffAllWithoutWait(servoList);
+    
+    return true;
+}
+
+bool accelerator2019Drop(ServoList* servoList, unsigned int firstLeftRightServoIndex, unsigned int secondLeftRightServoIndex) {
     // We wait because all actions must be finished before going to the next step !
     bool wait = true;
 

@@ -3,7 +3,6 @@
 #include "../arm/arm2019.h"
 #include "fork2019.h"
 #include "forkAccelerator2019.h"
-#include "forkGoldenium2019.h"
 #include "forkScan2019.h"
 
 #include "forkDeviceInterface2019.h"
@@ -83,21 +82,6 @@ void deviceFork2019HandleRawData(unsigned char commandHeader, InputStream* input
     else if (commandHeader == COMMAND_2019_FORK_INIT) {
         ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_FORK_INIT);
         fork2019Init(servoList);
-    }
-    else if (commandHeader == COMMAND_2019_FORK_PREPARE_TAKE_GOLDENIUM) {
-        ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_FORK_PREPARE_TAKE_GOLDENIUM);
-        fork2019PrepareTakeGoldenium(servoList, FORK_2019_LEFT_AND_RIGHT_INDEX);
-    }
-    else if (commandHeader == COMMAND_2019_FORK_TAKE_GOLDENIUM) {
-        ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_FORK_TAKE_GOLDENIUM);
-        unsigned int side = readHex(inputStream);
-        bool scanOk = fork2019TakeGoldenium(servoList, tofSensorList, side);
-        appendBool(outputStream, scanOk);
-    }
-    else if (commandHeader == COMMAND_2019_FORK_DROP_GOLDENIUM) {
-        ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_FORK_DROP_GOLDENIUM);
-        unsigned int side = readHex(inputStream);
-        fork2019DropGoldenium(servoList, side);
     }
     // Scan
     else if (commandHeader == COMMAND_2019_FORK_SCAN) {

@@ -17,10 +17,10 @@ bool acceleratorDrop(int* context, const char* logName) {
     GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
     ServoList* servoList = gameStrategyContext->servoList;
     if (isViolet(gameStrategyContext)) {
-        fork2019AcceleratorDrop(servoList, FORK_2019_RIGHT_INDEX, FORK_2019_LEFT_INDEX);
+        accelerator2019Drop(servoList, FORK_2019_RIGHT_INDEX, FORK_2019_LEFT_INDEX);
     }
     else {
-        fork2019AcceleratorDrop(servoList, FORK_2019_LEFT_INDEX, FORK_2019_RIGHT_INDEX);
+        accelerator2019Drop(servoList, FORK_2019_LEFT_INDEX, FORK_2019_RIGHT_INDEX);
     }
 
     return true;

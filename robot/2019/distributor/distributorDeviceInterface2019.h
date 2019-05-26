@@ -4,14 +4,20 @@
 #include "../../../device/device.h"
 #include "../../../device/deviceConstants.h"
 
-// ACCELERATOR DROP
-#define COMMAND_2019_DISTRIBUTOR_ACCELERATOR_DROP        'D'
-
 // PREPARE TAKE
-#define COMMAND_2019_DISTRIBUTOR_PREPARE_TAKE            'P'
+#define COMMAND_2019_DISTRIBUTOR_PREPARE_TAKE                    't'
 
 // TAKE
-#define COMMAND_2019_DISTRIBUTOR_TAKE                    'T'
+#define COMMAND_2019_DISTRIBUTOR_TAKE                            'T'
+
+// ACCELERATOR PREPARATOR DROP
+#define COMMAND_2019_DISTRIBUTOR_ACCELERATOR_FAKE_INIT           'i'
+
+#define COMMAND_2019_DISTRIBUTOR_ACCELERATOR_PREPARE_DROP        'd'
+
+
+// ACCELERATOR DROP
+#define COMMAND_2019_DISTRIBUTOR_ACCELERATOR_DROP                'D'
 
 /**
  * Get the device interface for Distributor 2019.

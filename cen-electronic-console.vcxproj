@@ -457,9 +457,11 @@
     <ClCompile Include="robot\2019\fork\forkAccelerator2019.c" />
     <ClCompile Include="robot\2019\fork\forkDevice2019.c" />
     <ClCompile Include="robot\2019\fork\forkDeviceInterface2019.c" />
-    <ClCompile Include="robot\2019\fork\forkGoldenium2019.c" />
     <ClCompile Include="robot\2019\fork\forkScan2019.c" />
     <ClCompile Include="robot\2019\gameboard\gameBoardElement2019.c" />
+    <ClCompile Include="robot\2019\goldenium\goldenium2019.c" />
+    <ClCompile Include="robot\2019\goldenium\goldeniumDevice2019.c" />
+    <ClCompile Include="robot\2019\goldenium\goldeniumDeviceInterface2019.c" />
     <ClCompile Include="robot\2019\mainBoard2019.c" />
     <ClCompile Include="robot\2019\smallRobot\smallRobotActions2019.c" />
     <ClCompile Include="robot\2019\smallRobot\smallRobotStrategy2019.c" />
@@ -877,9 +879,11 @@
     <ClInclude Include="robot\2019\fork\forkAccelerator2019.h" />
     <ClInclude Include="robot\2019\fork\forkDevice2019.h" />
     <ClInclude Include="robot\2019\fork\forkDeviceInterface2019.h" />
-    <ClInclude Include="robot\2019\fork\forkGoldenium2019.h" />
     <ClInclude Include="robot\2019\fork\forkScan2019.h" />
     <ClInclude Include="robot\2019\gameboard\gameBoardElement2019.h" />
+    <ClInclude Include="robot\2019\goldenium\goldenium2019.h" />
+    <ClInclude Include="robot\2019\goldenium\goldeniumDevice2019.h" />
+    <ClInclude Include="robot\2019\goldenium\goldeniumDeviceInterface2019.h" />
     <ClInclude Include="robot\2019\mainBoard2019.h" />
     <ClInclude Include="robot\2019\navigation\angle2019.h" />
     <ClInclude Include="robot\2019\navigation\location2019.h" />

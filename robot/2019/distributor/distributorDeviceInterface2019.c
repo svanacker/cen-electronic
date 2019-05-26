@@ -10,20 +10,36 @@ const char* deviceDistributor2019GetName(void) {
 }
 
 int deviceDistributor2019GetInterface(unsigned char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
-    // PREPARE TAKE
+    // DISTRIBUTOR
+    // Prepare Take
     if (commandHeader == COMMAND_2019_DISTRIBUTOR_PREPARE_TAKE) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Prepare Take Distributor");
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
-    // TAKE
+    // -> Take
     else if (commandHeader == COMMAND_2019_DISTRIBUTOR_TAKE) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Take 2 Pucks on Distributor");
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
+    // ACCELERATOR
+    // -> Fake INit
+    else if (commandHeader == COMMAND_2019_DISTRIBUTOR_ACCELERATOR_FAKE_INIT) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("Fake Init");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }
+    else if (commandHeader == COMMAND_2019_DISTRIBUTOR_ACCELERATOR_PREPARE_DROP) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("Prepare Drop");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }
+    // -> Drop
     else if (commandHeader == COMMAND_2019_DISTRIBUTOR_ACCELERATOR_DROP) {
         if (fillDeviceArgumentList) {
             setFunction("Accelerator Drop", 1, 0);

@@ -6,11 +6,24 @@
 #include "../../../common/pwm/servo/servoList.h"
 #include "../../../drivers/tof/tofList.h"
 
+/**
+ * Used only for Device to test easily the accelerator.
+ * @param servoList
+ * @return 
+ */
+bool accelerator2019FakeInit(ServoList* servoList);
+
+/**
+ * Function which must be called before reaching the accelerator Drop.
+ * @param servoList
+ * @return 
+ */
+bool accelerator2019PrepareDrop(ServoList* servoList);
 
 /**
  * The actions to to release the Puck in Accelerator
  * @param servoList
  */
-bool fork2019AcceleratorDrop(ServoList* servoList, unsigned int firstLeftRightServoIndex, unsigned int secondLeftRightServoIndex);
+bool accelerator2019Drop(ServoList* servoList, unsigned int firstLeftRightServoIndex, unsigned int secondLeftRightServoIndex);
 
 #endif

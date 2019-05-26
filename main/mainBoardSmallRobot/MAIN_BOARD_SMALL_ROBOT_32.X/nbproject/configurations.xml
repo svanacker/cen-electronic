@@ -579,13 +579,19 @@
         <itemPath>../../../robot/2019/fork/forkAccelerator2019.h</itemPath>
         <itemPath>../../../robot/2019/fork/forkDevice2019.h</itemPath>
         <itemPath>../../../robot/2019/fork/forkDeviceInterface2019.h</itemPath>
-        <itemPath>../../../robot/2019/fork/forkGoldenium2019.h</itemPath>
         <itemPath>../../../robot/2019/fork/forkScan2019.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f38"
                      displayName="robot.2019.gameboard"
                      projectFiles="true">
         <itemPath>../../../robot/2019/gameboard/gameBoardElement2019.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f45"
+                     displayName="robot.2019.goldenium"
+                     projectFiles="true">
+        <itemPath>../../../robot/2019/goldenium/goldenium2019.h</itemPath>
+        <itemPath>../../../robot/2019/goldenium/goldeniumDevice2019.h</itemPath>
+        <itemPath>../../../robot/2019/goldenium/goldeniumDeviceInterface2019.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f39"
                      displayName="robot.2019.navigation"
@@ -1271,13 +1277,19 @@
         <itemPath>../../../robot/2019/fork/forkAccelerator2019.c</itemPath>
         <itemPath>../../../robot/2019/fork/forkDevice2019.c</itemPath>
         <itemPath>../../../robot/2019/fork/forkDeviceInterface2019.c</itemPath>
-        <itemPath>../../../robot/2019/fork/forkGoldenium2019.c</itemPath>
         <itemPath>../../../robot/2019/fork/forkScan2019.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f37"
                      displayName="robot.2019.gameboard"
                      projectFiles="true">
         <itemPath>../../../robot/2019/gameboard/gameBoardElement2019.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f44"
+                     displayName="robot.2019.goldenium"
+                     projectFiles="true">
+        <itemPath>../../../robot/2019/goldenium/goldenium2019.c</itemPath>
+        <itemPath>../../../robot/2019/goldenium/goldeniumDevice2019.c</itemPath>
+        <itemPath>../../../robot/2019/goldenium/goldeniumDeviceInterface2019.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f39"
                      displayName="robot.2019.navigation"

@@ -41,6 +41,8 @@
 #include "../../robot/2019/elevator/elevatorDevice2019.h"
 #include "../../robot/2019/fork/forkDeviceInterface2019.h"
 #include "../../robot/2019/fork/forkDevice2019.h"
+#include "../../robot/2019/goldenium/goldeniumDeviceInterface2019.h"
+#include "../../robot/2019/goldenium/goldeniumDevice2019.h"
 
 #include "../../robot/2019/strategy/strategyConfig2019.h"
 
@@ -157,6 +159,7 @@ int main(void) {
 	addLocalDevice(getElevator2019DeviceInterface(), getElevator2019DeviceDescriptor(servoList));
     addLocalDevice(getFork2019DeviceInterface(), getFork2019DeviceDescriptor(servoList, tofSensorList));
     addLocalDevice(getDistributor2019DeviceInterface(), getDistributor2019DeviceDescriptor(servoList, tofSensorList));
+    addLocalDevice(getGoldenium2019DeviceInterface(), getGoldenium2019DeviceDescriptor(servoList, tofSensorList));
 
     mainBoardCommonStrategyMainLoop();
 

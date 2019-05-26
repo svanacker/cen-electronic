@@ -99,11 +99,15 @@ void moveForkSimplePuck(ServoList* servoList, unsigned int leftRight, bool wait)
 
 void moveForkDoublePuck(ServoList* servoList, unsigned int leftRight, bool wait);
 
+void moveForkBackAllWithoutWait(ServoList* servoList);
+
 // FORK PUSH (small device under the Fork to facilitate the release)
 
 void moveForkPushOff(ServoList* servoList, unsigned int leftRight, bool wait);
 
 void moveForkPushOn(ServoList* servoList, unsigned int leftRight, bool wait);
+
+void moveForkPushOffAllWithoutWait(ServoList* servoList);
 
 // COMPLEX OPERATIONS
 

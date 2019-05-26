@@ -156,6 +156,8 @@
 
 #define ARM_2019_DEVICE_HEADER                     'A'
 
+#define GOLDENIUM_2019_DEVICE_HEADER               'o'
+
 #define ELECTRON_LAUNCHER_2019_DEVICE_HEADER       '.'
 
 #endif

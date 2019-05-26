@@ -46,7 +46,8 @@ bool deviceDistributor2019IsOk(void) {
 }
 
 void deviceDistributor2019HandleRawData(unsigned char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
-     // Take
+    // DISTRIBUTOR
+    // PrepareTake
     if (commandHeader == COMMAND_2019_DISTRIBUTOR_PREPARE_TAKE) {
         ackCommand(outputStream, DISTRIBUTOR_2019_DEVICE_HEADER, COMMAND_2019_DISTRIBUTOR_PREPARE_TAKE);
         distributor2019PrepareTake(servoList);
@@ -56,15 +57,26 @@ void deviceDistributor2019HandleRawData(unsigned char commandHeader, InputStream
         ackCommand(outputStream, DISTRIBUTOR_2019_DEVICE_HEADER, COMMAND_2019_DISTRIBUTOR_TAKE);
         distributor2019Take(servoList, tofSensorList);
     }
+    // DROP
+    // Fake Accelerator Drop
+    else if (commandHeader == COMMAND_2019_DISTRIBUTOR_ACCELERATOR_FAKE_INIT) {
+        ackCommand(outputStream, DISTRIBUTOR_2019_DEVICE_HEADER, COMMAND_2019_DISTRIBUTOR_ACCELERATOR_FAKE_INIT);
+        accelerator2019FakeInit(servoList);
+    }
+    // Prepare Fork Accelerator Drop
+    else if (commandHeader == COMMAND_2019_DISTRIBUTOR_ACCELERATOR_PREPARE_DROP) {
+        ackCommand(outputStream, DISTRIBUTOR_2019_DEVICE_HEADER, COMMAND_2019_DISTRIBUTOR_ACCELERATOR_PREPARE_DROP);
+        accelerator2019PrepareDrop(servoList);
+    }
     // Fork Accelerator Drop
     else if (commandHeader == COMMAND_2019_DISTRIBUTOR_ACCELERATOR_DROP) {
         ackCommand(outputStream, DISTRIBUTOR_2019_DEVICE_HEADER, COMMAND_2019_DISTRIBUTOR_ACCELERATOR_DROP);
         unsigned int firstSideToRelease = readHex(inputStream);
         if (firstSideToRelease == FORK_2019_LEFT_INDEX) {
-            fork2019AcceleratorDrop(servoList, FORK_2019_LEFT_INDEX, FORK_2019_RIGHT_INDEX);
+            accelerator2019Drop(servoList, FORK_2019_LEFT_INDEX, FORK_2019_RIGHT_INDEX);
         }
         else {
-            fork2019AcceleratorDrop(servoList, FORK_2019_RIGHT_INDEX, FORK_2019_LEFT_INDEX);
+            accelerator2019Drop(servoList, FORK_2019_RIGHT_INDEX, FORK_2019_LEFT_INDEX);
         }
     }
 

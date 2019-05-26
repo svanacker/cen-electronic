@@ -230,6 +230,12 @@
 #include "../../robot/2019/electron/electronLauncherDevice2019.h"
 #include "../../robot/2019/electron/electronLauncherDeviceInterface2019.h"
 
+#include "../../robot/2019/distributor/distributorDeviceInterface2019.h"
+#include "../../robot/2019/distributor/distributorDevice2019.h"
+#include "../../robot/2019/goldenium/goldeniumDeviceInterface2019.h"
+#include "../../robot/2019/goldenium/goldeniumDevice2019.h"
+
+
 #include "../../robot/tof/strategyTofSensorList.h"
 
 // Logs
@@ -460,6 +466,9 @@ void initMainBoardLocalDevices(void) {
     addLocalDevice(getElevator2019DeviceInterface(), getElevator2019DeviceDescriptor(&servoList));
     addLocalDevice(getArm2019DeviceInterface(), getArm2019DeviceDescriptor(&servoList));
     addLocalDevice(getFork2019DeviceInterface(), getFork2019DeviceDescriptor(&servoList, &tofSensorList));
+    addLocalDevice(getDistributor2019DeviceInterface(), getDistributor2019DeviceDescriptor(&servoList, &tofSensorList));
+    addLocalDevice(getGoldenium2019DeviceInterface(), getGoldenium2019DeviceDescriptor(&servoList, &tofSensorList));
+
     addLocalDevice(getElectronLauncher2019DeviceInterface(), getElectronLauncher2019DeviceDescriptor(&launcher));
 
 }

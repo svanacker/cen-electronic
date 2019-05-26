@@ -20,7 +20,7 @@
 #include "../../../robot/2019/arm/arm2019.h"
 #include "../../../robot/2019/commonRobot/commonRobotActions2019.h"
 #include "../../../robot/2019/fork/fork2019.h"
-#include "../../../robot/2019/fork/forkGoldenium2019.h"
+#include "../../../robot/2019/goldenium/goldenium2019.h"
 #include "../../../robot/2019/strategy/strategy2019Utils.h"
 #include "../../../robot/2019/distributor/distributor2019.h"
 

@@ -28,12 +28,6 @@
 // INIT
 #define COMMAND_2019_FORK_INIT                    'i'
 
-#define COMMAND_2019_FORK_PREPARE_TAKE_GOLDENIUM  'g'
-
-#define COMMAND_2019_FORK_TAKE_GOLDENIUM          'h'
-
-#define COMMAND_2019_FORK_DROP_GOLDENIUM          'j'
-
 // SCAN
 #define COMMAND_2019_FORK_SCAN                    'S'
 

@@ -1,7 +1,7 @@
-#include "forkGoldenium2019.h"
+#include "goldenium2019.h"
 
-#include "fork2019.h"
-#include "forkScan2019.h"
+#include "../fork/fork2019.h"
+#include "../fork/forkScan2019.h"
 #include "../elevator/elevator2019.h"
 
 bool fork2019PrepareTakeGoldenium(ServoList* servoList, unsigned int leftRight) {

@@ -27,7 +27,6 @@
 
 #include "forkScan2019.h"
 #include "../elevator/elevator2019.h"
-#include "forkGoldenium2019.h"
 #include "../arm/arm2019.h"
 
 /**
@@ -74,6 +73,10 @@ void moveForkBack(ServoList* servoList, unsigned int leftRight, bool wait) {
             wait);
 }
 
+void moveForkBackAllWithoutWait(ServoList* servoList) {
+    moveForkBack(servoList, FORK_2019_LEFT_AND_RIGHT_INDEX, false);
+}
+
 void moveForkSimplePuck(ServoList* servoList, unsigned int leftRight, bool wait) {
     fork2019MoveServo(servoList, leftRight,
             FORK_2019_LEFT_SERVO_FORK_INDEX, FORK_2019_RIGHT_SERVO_FORK_INDEX,
@@ -104,6 +107,10 @@ void moveForkPushOn(ServoList* servoList, unsigned int leftRight, bool wait) {
             FORK_2019_SERVO_PUSH_LEFT_SPEED_FACTOR, FORK_2019_SERVO_PUSH_LEFT_SPEED_FACTOR,
             FORK_2019_SERVO_PUSH_LEFT_ON_SERVO_VALUE, FORK_2019_SERVO_PUSH_RIGHT_ON_SERVO_VALUE,
             wait);
+}
+
+void moveForkPushOffAllWithoutWait(ServoList* servoList) {
+    moveForkPushOff(servoList, FORK_2019_LEFT_AND_RIGHT_INDEX, false);
 }
 
 
