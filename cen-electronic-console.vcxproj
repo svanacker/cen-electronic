@@ -507,6 +507,7 @@
     <ClCompile Include="robot\strategy\gameStrategyItem.c" />
     <ClCompile Include="robot\strategy\gameStrategyList.c" />
     <ClCompile Include="robot\strategy\gameStrategyListDebug.c" />
+    <ClCompile Include="robot\strategy\gameStrategyPositionHandler.c" />
     <ClCompile Include="robot\strategy\gameTarget.c" />
     <ClCompile Include="robot\strategy\gameTargetAction.c" />
     <ClCompile Include="robot\strategy\gameTargetActionDebug.c" />
@@ -939,6 +940,7 @@
     <ClInclude Include="robot\strategy\gameStrategyItem.h" />
     <ClInclude Include="robot\strategy\gameStrategyList.h" />
     <ClInclude Include="robot\strategy\gameStrategyListDebug.h" />
+    <ClInclude Include="robot\strategy\gameStrategyPositionHandler.h" />
     <ClInclude Include="robot\strategy\gameTarget.h" />
     <ClInclude Include="robot\strategy\gameTargetAction.h" />
     <ClInclude Include="robot\strategy\gameTargetActionDebug.h" />

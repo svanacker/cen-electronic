@@ -32,7 +32,7 @@
 #include "../../robot/strategy/gameTargetList.h"
 #include "../../robot/strategy/gameStrategyContext.h"
 #include "../../robot/strategy/gameStrategyHandler.h"
-#include "../../robot/strategy/gameStrategyMotionHandler.h"
+#include "../../robot/strategy/gameStrategyPositionHandler.h"
 
 
 #ifdef _MSC_VER

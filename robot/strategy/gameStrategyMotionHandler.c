@@ -39,90 +39,6 @@
 #include "../../robot/strategy/gameTargetList.h"
 #include "../../robot/robot.h"
 
-/**
- * @private / Callback
- */
-void interruptGameStrategyMotionCallbackFunc(Timer* timer) {
-    if (timer == NULL) {
-        writeError(TIMER_NULL);
-        return;
-    }
-    GameStrategyContext* gameStrategyContext = (GameStrategyContext*) timer->object;
-    if (gameStrategyContext == NULL) {
-        writeError(TIMER_OBJECT_NULL);
-        return;
-    }
-    
-    // We don't will ask the position to the motor Board if the robot is not 
-    // moving
-    enum TrajectoryType trajectoryType = gameStrategyContext->trajectoryType;
-    if (trajectoryType == TRAJECTORY_TYPE_NONE) {
-        return;
-    }
-    
-    gameStrategyContext->robotPositionToUpdateInterruptFlag = true;
-}
-
-void initGameStrategyMotionHandler(GameStrategyContext* gameStrategyContext) {
-        Timer* timer = addTimer(TIMER_STRATEGY_MOTION_HANDLER_UPDATE_ROBOT_POSITION,
-                            TIME_DIVIDER_3_HERTZ,
-                            &interruptGameStrategyMotionCallbackFunc,
-                            "MOTION UPDATE", 
-							(int*) gameStrategyContext);
-        timer->enabled = true;
-}
-
-
-bool updateRobotPositionFromMainBoardToMotorBoard(GameStrategyContext* gameStrategyContext) {
-    if (gameStrategyContext == NULL) {
-        writeError(GAME_STRATEGY_CONTEXT_NULL);
-        return false;
-    }
-    Point* robotPosition = gameStrategyContext->robotPosition;
-    if (robotPosition == NULL) {
-        writeError(ROBOT_POSITION_NULL);
-        return false;
-    }
-    return clientTrajectorySetAbsolutePosition(robotPosition->x, robotPosition->y, gameStrategyContext->robotAngleRadian);
-}
-
-void updateIfNeededRobotPositionFromMotorBoardToMainBoard(GameStrategyContext* gameStrategyContext) {
-    return;
-    // To avoid to continously ask the position
-    if (!gameStrategyContext->robotPositionToUpdateInterruptFlag) {
-        return;
-    }
-    // Update the position from the MOTOR BOARD. If we don't do it,
-    // The board keep the original value from the latest move
-    // TODO : Clarify the usage of Robot Position
-    RobotPosition robotPosition;
-    clientTrajectoryUpdateRobotPosition(&robotPosition);
-    gameStrategyContext->robotPosition->x = robotPosition.x;
-    gameStrategyContext->robotPosition->y = robotPosition.y;
-    gameStrategyContext->robotAngleRadian = robotPosition.angleRadian;
-
-    // To avoid to continously ask the position, the flag will be changed by a frequent timer interruption
-    gameStrategyContext->robotPositionToUpdateInterruptFlag = false;
-
-}
-
-Location* getNearestLocationFromGameStrategyContext(GameStrategyContext* gameStrategyContext) {
-    Navigation* navigation = gameStrategyContext->navigation;
-    LocationList* navigationLocationList = getNavigationLocationList(navigation);
-
-    Point* robotPosition = gameStrategyContext->robotPosition;
-
-    // Find nearest location
-    // The robot could not be exactly at the location, so we search the closest location
-    float x = robotPosition->x;
-    float y = robotPosition->y;
-    return getNearestLocation(navigationLocationList, x, y, MAX_DISTANCE_NEAREST_LOCATION);
-}
-
-void clearCurrentTarget(GameStrategyContext* gameStrategyContext) {
-    gameStrategyContext->currentTarget = NULL;
-}
-
 bool motionRotateToFollowPath(GameStrategyContext* gameStrategyContext, PathData* pathData) {
     if (pathData == NULL) {
         writeError(PATH_NULL);
@@ -200,6 +116,31 @@ bool motionFollowPath(GameStrategyContext* gameStrategyContext, PathData* pathDa
         else {
             gameStrategyContext->trajectoryType = TRAJECTORY_TYPE_FORWARD;
         }
+    }
+    return true;
+}
+
+// COMBINAISON OF FOLLOW / ROTATE
+
+bool followComputedNextPath(GameStrategyContext* gameStrategyContext) {
+    Navigation* navigation = gameStrategyContext->navigation;
+    // navigation->path
+    Location* startLocation = gameStrategyContext->nearestLocation;
+    if (startLocation == NULL) {
+        writeError(LOCATION_START_NULL);
+        return false;
+    }
+    Location* endLocation = startLocation->computedNextLocation;
+    if (endLocation == NULL) {
+        // writeError(LOCATION_END_NULL); // No need to throw an exception
+        return false;
+    }
+    PathList* pathList = getNavigationPathList(navigation);
+    PathData* pathData = getPathOfLocations(pathList, startLocation, endLocation);
+    // Check if to follow the path, we need to do first a rotation (to avoid problem on bSpline)
+    if (!motionRotateToFollowPath(gameStrategyContext, pathData)) {
+        // If this is not the case, we ask to follow the path
+        return motionFollowPath(gameStrategyContext, pathData);
     }
     return true;
 }

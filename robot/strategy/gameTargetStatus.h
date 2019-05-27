@@ -9,8 +9,6 @@
 enum GameTargetStatus {
     /** The target is Available. */
     TARGET_AVAILABLE = 0,
-    /** We reach the starting point of the target .*/
-    TARGET_STARTING_POINT_REACHED = 1,
     /** The target is Handled. */
     TARGET_HANDLED = 2,
     /** The target is missed. */

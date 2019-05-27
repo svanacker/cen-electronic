@@ -216,6 +216,7 @@
 
 #include "../../robot/strategy/gameStrategyHandler.h"
 #include "../../robot/strategy/gameStrategyMotionHandler.h"
+#include "../../robot/strategy/gameStrategyPositionHandler.h"
 
 // 2019
 #include "../../robot/2019/mainBoard2019.h"
@@ -564,8 +565,8 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
     }
 
     // CONFIG
-    // initRobotConfigPc(&robotConfig, ROBOT_TYPE_BIG);
-    initRobotConfigPc(&robotConfig, ROBOT_TYPE_SMALL);
+    initRobotConfigPc(&robotConfig, ROBOT_TYPE_BIG);
+    // initRobotConfigPc(&robotConfig, ROBOT_TYPE_SMALL);
 
     // EEPROM
     initEepromPc(&eeprom, "MAIN_BOARD_EEPROM");

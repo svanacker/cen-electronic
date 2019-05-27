@@ -677,6 +677,7 @@
         <itemPath>../../../robot/strategy/gameTargetActionDebug.h</itemPath>
         <itemPath>../../../robot/strategy/gameStrategyCollisionHandler.h</itemPath>
         <itemPath>../../../robot/strategy/gameStrategyMotionHandler.h</itemPath>
+        <itemPath>../../../robot/strategy/gameStrategyPositionHandler.h</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.strategy.factor"
                      displayName="robot.strategy.factor"
@@ -1362,6 +1363,7 @@
         <itemPath>../../../robot/strategy/gameTargetActionDebug.c</itemPath>
         <itemPath>../../../robot/strategy/gameStrategyCollisionHandler.c</itemPath>
         <itemPath>../../../robot/strategy/gameStrategyMotionHandler.c</itemPath>
+        <itemPath>../../../robot/strategy/gameStrategyPositionHandler.c</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.strategy.factor"
                      displayName="robot.strategy.factor"

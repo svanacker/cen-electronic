@@ -2298,6 +2298,9 @@
     <ClCompile Include="robot\2019\goldenium\goldeniumDeviceInterface2019.c">
       <Filter>Source Files\robot\2019\goldenium</Filter>
     </ClCompile>
+    <ClCompile Include="robot\strategy\gameStrategyPositionHandler.c">
+      <Filter>Source Files\robot\strategy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -3592,6 +3595,9 @@
     </ClInclude>
     <ClInclude Include="robot\2019\goldenium\goldeniumDeviceInterface2019.h">
       <Filter>Header Files\robot\2019\goldenium</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\strategy\gameStrategyPositionHandler.h">
+      <Filter>Header Files\robot\strategy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

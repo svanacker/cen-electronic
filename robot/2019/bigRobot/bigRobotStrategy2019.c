@@ -110,35 +110,33 @@ static GameTarget bigDistributorLine3Target;
 static GameTargetAction chaosTakeTargetAction;
 static GameTargetAction chaosDropTargetAction;
 
+static GameTargetAction bigDistributorLine1PrepareTakeTargetAction;
 static GameTargetAction bigDistributorLine1TakeTargetAction;
-static GameTargetAction bigDistributorLine1MoveTargetAction1;
-static GameTargetAction bigDistributorLine1MoveTargetAction2;
 static GameTargetAction bigDistributorLine1DropTargetAction;
 
+static GameTargetAction bigDistributorLine2PrepareTakeTargetAction;
 static GameTargetAction bigDistributorLine2TakeTargetAction;
-static GameTargetAction bigDistributorLine2MoveTargetAction1;
-static GameTargetAction bigDistributorLine2MoveTargetAction2;
 static GameTargetAction bigDistributorLine2DropTargetAction;
 
+static GameTargetAction bigDistributorLine3PrepareTakeTargetAction;
 static GameTargetAction bigDistributorLine3TakeTargetAction;
-static GameTargetAction bigDistributorLine3MoveTargetAction1;
-static GameTargetAction bigDistributorLine3MoveTargetAction2;
 static GameTargetAction bigDistributorLine3DropTargetAction;
 
 // ------------------------------------------------------- TARGETS ACTIONS ITEM LIST --------------------------------------------------------
 
 // Big Robot
 static GameTargetActionItemList chaosTakeTargetActionItemList;
+static GameTargetActionItemList chaosDropTargetActionItemList;
 
-static GameTargetActionItemList bigDistributorLine1PrepareTargetActionItemList;
+static GameTargetActionItemList bigDistributorLine1PrepareTakeTargetActionItemList;
 static GameTargetActionItemList bigDistributorLine1TakeTargetActionItemList;
 static GameTargetActionItemList bigDistributorLine1DropTargetActionItemList;
 
-static GameTargetActionItemList bigDistributorLine2PrepareTargetActionItemList;
+static GameTargetActionItemList bigDistributorLine2PrepareTakeTargetActionItemList;
 static GameTargetActionItemList bigDistributorLine2TakeTargetActionItemList;
 static GameTargetActionItemList bigDistributorLine2DropTargetActionItemList;
 
-static GameTargetActionItemList bigDistributorLine3PrepareTargetActionItemList;
+static GameTargetActionItemList bigDistributorLine3PrepareTakeTargetActionItemList;
 static GameTargetActionItemList bigDistributorLine3TakeTargetActionItemList;
 static GameTargetActionItemList bigDistributorLine3DropTargetActionItemList;
 
@@ -369,24 +367,21 @@ void initBigRobotTargets2019(GameStrategyContext* gameStrategyContext) {
 void initBigRobotTargetActions2019(GameStrategyContext* gameStrategyContext) {
     // CHAOS
     addTargetPrepareAction(&(chaosTarget.actionList), &chaosTakeTargetAction, chaosFrontLocation, CHAOS_TAKE_TIME_TO_ACHIEVE, &chaosTakeTargetActionItemList);
-    addTargetMoveAction(&(chaosTarget.actionList), &chaosDropTargetAction, chaosFrontLocation, rediumDropZoneLocation, CHAOS_DROP_TIME_TO_ACHIEVE);
+    addTargetTakeAction(&(chaosTarget.actionList), &chaosDropTargetAction, rediumDropZoneLocation, CHAOS_DROP_TIME_TO_ACHIEVE, &chaosDropTargetActionItemList);
 
     // BIG DISTRIBUTOR LINE 1
-    addTargetHandlingAction(&(bigDistributorLine1Target.actionList), &bigDistributorLine1TakeTargetAction, bigDistributorLine1FrontLocation, BIG_DISTRIBUTOR_LINE_1_TAKE_TIME_TO_ACHIEVE, &bigDistributorLine1TakeTargetActionItemList);
-    addTargetMoveAction(&(bigDistributorLine1Target.actionList), &bigDistributorLine1MoveTargetAction1, bigDistributorLine1FrontLocation, keyPoint1Location, BIG_DISTRIBUTOR_LINE_1_MOVE_TIME_TO_ACHIEVE);
-    addTargetMoveAction(&(bigDistributorLine1Target.actionList), &bigDistributorLine1MoveTargetAction2, keyPoint1Location, acceleratorDropLocation, BIG_DISTRIBUTOR_LINE_1_MOVE_TIME_TO_ACHIEVE);
+    addTargetPrepareAction(&(bigDistributorLine1Target.actionList), &bigDistributorLine1PrepareTakeTargetAction, NULL, BIG_DISTRIBUTOR_LINE_1_PREPARE_TAKE_TIME_TO_ACHIEVE, &bigDistributorLine1PrepareTakeTargetActionItemList);
+    addTargetTakeAction(&(bigDistributorLine1Target.actionList), &bigDistributorLine1TakeTargetAction, bigDistributorLine1FrontLocation, BIG_DISTRIBUTOR_LINE_1_TAKE_TIME_TO_ACHIEVE, &bigDistributorLine1TakeTargetActionItemList);
     addTargetDropAction(&(bigDistributorLine1Target.actionList), &bigDistributorLine1DropTargetAction, acceleratorDropLocation, BIG_DISTRIBUTOR_LINE_1_DROP_TIME_TO_ACHIEVE, &bigDistributorLine1DropTargetActionItemList);
 
     // BIG DISTRIBUTOR LINE 2
-    addTargetHandlingAction(&(bigDistributorLine2Target.actionList), &bigDistributorLine2TakeTargetAction, bigDistributorLine2FrontLocation, BIG_DISTRIBUTOR_LINE_2_TAKE_TIME_TO_ACHIEVE, &bigDistributorLine2TakeTargetActionItemList);
-    addTargetMoveAction(&(bigDistributorLine2Target.actionList), &bigDistributorLine2MoveTargetAction1, bigDistributorLine2FrontLocation, keyPoint1Location, BIG_DISTRIBUTOR_LINE_2_MOVE_TIME_TO_ACHIEVE);
-    addTargetMoveAction(&(bigDistributorLine2Target.actionList), &bigDistributorLine2MoveTargetAction2, keyPoint1Location, acceleratorDropLocation, BIG_DISTRIBUTOR_LINE_2_MOVE_TIME_TO_ACHIEVE);
+    addTargetPrepareAction(&(bigDistributorLine2Target.actionList), &bigDistributorLine2PrepareTakeTargetAction, NULL, BIG_DISTRIBUTOR_LINE_2_PREPARE_TAKE_TIME_TO_ACHIEVE, &bigDistributorLine2PrepareTakeTargetActionItemList);
+    addTargetTakeAction(&(bigDistributorLine2Target.actionList), &bigDistributorLine2TakeTargetAction, bigDistributorLine2FrontLocation, BIG_DISTRIBUTOR_LINE_2_TAKE_TIME_TO_ACHIEVE, &bigDistributorLine2TakeTargetActionItemList);
     addTargetDropAction(&(bigDistributorLine2Target.actionList), &bigDistributorLine2DropTargetAction, acceleratorDropLocation, BIG_DISTRIBUTOR_LINE_2_DROP_TIME_TO_ACHIEVE, &bigDistributorLine2DropTargetActionItemList);
 
     // BIG DISTRIBUTOR LINE 3
-    addTargetHandlingAction(&(bigDistributorLine3Target.actionList), &bigDistributorLine3TakeTargetAction, bigDistributorLine3FrontLocation, BIG_DISTRIBUTOR_LINE_3_TAKE_TIME_TO_ACHIEVE, &bigDistributorLine3TakeTargetActionItemList);
-    addTargetMoveAction(&(bigDistributorLine3Target.actionList), &bigDistributorLine3MoveTargetAction1, bigDistributorLine2FrontLocation, keyPoint1Location, BIG_DISTRIBUTOR_LINE_3_MOVE_TIME_TO_ACHIEVE);
-    addTargetMoveAction(&(bigDistributorLine3Target.actionList), &bigDistributorLine3MoveTargetAction2, keyPoint1Location, acceleratorDropLocation, BIG_DISTRIBUTOR_LINE_2_MOVE_TIME_TO_ACHIEVE);
+    addTargetPrepareAction(&(bigDistributorLine3Target.actionList), &bigDistributorLine3PrepareTakeTargetAction, NULL, BIG_DISTRIBUTOR_LINE_3_PREPARE_TAKE_TIME_TO_ACHIEVE, &bigDistributorLine3PrepareTakeTargetActionItemList);
+    addTargetTakeAction(&(bigDistributorLine3Target.actionList), &bigDistributorLine3TakeTargetAction, bigDistributorLine3FrontLocation, BIG_DISTRIBUTOR_LINE_3_TAKE_TIME_TO_ACHIEVE, &bigDistributorLine3TakeTargetActionItemList);
     addTargetDropAction(&(bigDistributorLine3Target.actionList), &bigDistributorLine3DropTargetAction, acceleratorDropLocation, BIG_DISTRIBUTOR_LINE_3_DROP_TIME_TO_ACHIEVE, &bigDistributorLine3DropTargetActionItemList);
 }
 
@@ -394,17 +389,17 @@ void initBigRobotTargetActionsItems2019(GameStrategyContext* gameStrategyContext
     // Chaos : No specific action to do
 
     // Big Distributor 1 Line 1
-    addTargetActionItem(&bigDistributorLine1PrepareTargetActionItemList, &bigDistributorLine1PrepareTargetActionItem, &bigDistributorLinePrepare, "PREP DIST 1");
+    addTargetActionItem(&bigDistributorLine1PrepareTakeTargetActionItemList, &bigDistributorLine1PrepareTargetActionItem, &bigDistributorLinePrepare, "PREP DIST 1");
     addTargetActionItem(&bigDistributorLine1TakeTargetActionItemList, &bigDistributorLine1TakeTargetActionItem, &bigDistributorLineTake, "TAKE DIST 1");
     addTargetActionItem(&bigDistributorLine1DropTargetActionItemList, &bigDistributorLine1DropTargetActionItem, &bigDistributorAcceleratorDrop, "ACC DROP");
 
     // Big Distributor 1 Line 2
-    addTargetActionItem(&bigDistributorLine2PrepareTargetActionItemList, &bigDistributorLine2PrepareTargetActionItem, &bigDistributorLinePrepare, "PREP DIST 3");
+    addTargetActionItem(&bigDistributorLine2PrepareTakeTargetActionItemList, &bigDistributorLine2PrepareTargetActionItem, &bigDistributorLinePrepare, "PREP DIST 3");
     addTargetActionItem(&bigDistributorLine2TakeTargetActionItemList, &bigDistributorLine2TakeTargetActionItem, &bigDistributorLineTake, "TAKE DIST 3");
     addTargetActionItem(&bigDistributorLine2DropTargetActionItemList, &bigDistributorLine2DropTargetActionItem, &bigDistributorAcceleratorDrop , "ACC DROP");
 
     // Big Distributor 1 Line 3
-    addTargetActionItem(&bigDistributorLine3PrepareTargetActionItemList, &bigDistributorLine3PrepareTargetActionItem, &bigDistributorLinePrepare, "PREP DIST 3");
+    addTargetActionItem(&bigDistributorLine3PrepareTakeTargetActionItemList, &bigDistributorLine3PrepareTargetActionItem, &bigDistributorLinePrepare, "PREP DIST 3");
     addTargetActionItem(&bigDistributorLine3TakeTargetActionItemList, &bigDistributorLine3TakeTargetActionItem, &bigDistributorLineTake, "TAKE DIST 3");
     addTargetActionItem(&bigDistributorLine3DropTargetActionItemList, &bigDistributorLine3DropTargetActionItem, &bigDistributorAcceleratorDrop, "ACC DROP");
 }

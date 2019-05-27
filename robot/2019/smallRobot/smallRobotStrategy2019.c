@@ -346,7 +346,7 @@ void initSmallRobotTargetActions2019(GameStrategyContext* gameStrategyContext) {
 
     // SMALL DISTRIBUTOR LINE 1 TARGET
     addTargetPrepareAction(&(smallDistributorLine1Target.actionList), &smallDistributorLine1PrepareTargetAction, blueiumRightLocation, SMALL_DISTRIBUTOR_LINE_1_PREPARE_TIME_TO_ACHIEVE, &smallDistributorLine1PrepareTargetActionItemList);
-    addTargetHandlingAction(&(smallDistributorLine1Target.actionList), &smallDistributorLine1TakeTargetAction, smallDistributorLine1Location, SMALL_DISTRIBUTOR_LINE_1_TAKE_TIME_TO_ACHIEVE, &smallDistributorLine1TakeTargetActionItemList);
+    addTargetTakeAction(&(smallDistributorLine1Target.actionList), &smallDistributorLine1TakeTargetAction, smallDistributorLine1Location, SMALL_DISTRIBUTOR_LINE_1_TAKE_TIME_TO_ACHIEVE, &smallDistributorLine1TakeTargetActionItemList);
     addTargetDropAction(&(smallDistributorLine1Target.actionList), &smallDistributorLine1DropTargetAction, weighingMachineDropLocation, SMALL_DISTRIBUTOR_LINE_1_DROP_TIME_TO_ACHIEVE, &smallDistributorLine1DropTargetActionItemList);
 }
 

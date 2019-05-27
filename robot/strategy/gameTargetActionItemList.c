@@ -63,7 +63,26 @@ int getGameTargetActionItemCount(GameTargetActionItemList* targetActionItemList)
     return targetActionItemList->size;
 }
 
-// DOING
+// ACTIONS
+
+bool executeTargetActionItemList(GameTargetActionItemList* actionItemList, int* context) {
+    bool result = true;
+    unsigned int actionItemIndex;
+    // Loop on all action Items to do
+    for (actionItemIndex = 0; actionItemIndex < actionItemList->size; actionItemIndex++) {
+        GameTargetActionItem* actionItem = getGameTargetActionItem(actionItemList, actionItemIndex);
+        // Do only action not done and enabled
+        if (actionItem->status != ACTION_ITEM_STATUS_TODO || !(actionItem->enabled)) {
+            continue;
+        }
+
+        // Do the action item, and track if there will be an error
+        if (!doGameTargetActionItem(actionItem, context)) {
+            result = false;
+        }
+    }
+    return result;
+}
 
 bool doGameTargetActionItem(GameTargetActionItem* gameTargetActionItem, int* context) {
     if (gameTargetActionItem->actionItemFunction == NULL) {

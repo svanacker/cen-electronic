@@ -21,7 +21,7 @@ enum ActionType {
     // The action is an action of preparation of an action of Handling (to earn time)
     ACTION_TYPE_PREPARE = 2,
     // The action is an action of handling an object (but it does not provide some points)
-    ACTION_TYPE_HANDLE = 3,
+    ACTION_TYPE_TAKE = 3,
     // The action is often an action of release or dropping and object, which becomes the real target
     ACTION_TYPE_DROP = 4
 };
@@ -43,6 +43,17 @@ enum ActionStatus {
 };
 
 /**
+* Define the priority of the actions !
+*/
+#define ACTION_PRIORITY_HIGHEST             100
+#define ACTION_PRIORITY_NORMAL              50
+#define ACTION_PRIORITY_LOWEST               0
+
+#define ACTION_PRIORITY_DROP_STANDARD        ACTION_PRIORITY_LOWEST
+#define ACTION_PRIORITY_TAKE_STANDARD        ACTION_PRIORITY_NORMAL
+#define ACTION_PRIORITY_PREPARE_STANDARD     ACTION_PRIORITY_HIGHEST
+
+/**
  * Encapsulates the target action.
  */
 typedef struct GameTargetAction {
@@ -58,6 +69,8 @@ typedef struct GameTargetAction {
     enum ActionStatus status;
     // Reference to GameTargetActionListItem, can be NULL
     GameTargetActionItemList* actionItemList;
+    // Priority (from 0 = lowPriority, n = high Priority)
+    unsigned int priority;
 } GameTargetAction;
 
 /**
@@ -68,6 +81,7 @@ void initGameTargetAction(GameTargetAction* targetAction,
                           Location* endLocation,
                           enum ActionType actionType,
                           float timeToAchieve,
+                          unsigned int priority,
                           GameTargetActionItemList* actionItemList);
 
 /**

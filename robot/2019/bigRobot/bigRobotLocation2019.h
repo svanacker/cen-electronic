@@ -49,8 +49,8 @@
 // BIG DISTRIBUTOR
 #define BIG_DISTRIBUTOR_LINE_1                                            "BDL1"
 #define BIG_DISTRIBUTOR_LINE_1_LABEL                                      "Big Distributor Line 1"
-#define BIG_DISTRIBUTOR_LINE_1_X                                            1450
-#define BIG_DISTRIBUTOR_LINE_1_Y                                             525
+#define BIG_DISTRIBUTOR_LINE_1_X                                            1465
+#define BIG_DISTRIBUTOR_LINE_1_Y                                             650
 #define BIG_DISTRIBUTOR_LINE_1_ANGLE_DECI_DEG                     ANGLE_DECI_DEG_0
 
 #define BIG_DISTRIBUTOR_LINE_2                                            "BDL2"

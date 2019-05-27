@@ -261,7 +261,8 @@ void clearLastError();
 #define LOCATION_SOURCE_TARGET_EQUAL                                      0x5044
 #define LOCATION_DOES_NOT_EXIST                                           0x5045
 #define LOCATION_NULL                                                     0x5046
-
+#define LOCATION_START_NULL                                               0x5047
+#define LOCATION_END_NULL                                                 0x5048
 
 #define TOO_MUCH_PATHS                                                    0x5050
 #define PATH_LIST_NULL                                                    0x5051

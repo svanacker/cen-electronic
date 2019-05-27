@@ -18,7 +18,7 @@ bool bigDistributorLinePrepare(int* context) {
     appendStringCRLF(debugOutputStream, "-> bigDistributorLinePrepare");
     GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
     ServoList* servoList = gameStrategyContext->servoList;
-    fork2019Init(servoList);
+    distributor2019PrepareTake(servoList);
 
     return true;
 }

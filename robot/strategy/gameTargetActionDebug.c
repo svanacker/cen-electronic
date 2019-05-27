@@ -19,8 +19,8 @@ unsigned int appendActionTypeAsString(OutputStream* outputStream, enum ActionTyp
     else if (actionType == ACTION_TYPE_PREPARE) {
         return appendString(outputStream, "PREP");
     }
-    else if (actionType == ACTION_TYPE_HANDLE) {
-        return appendString(outputStream, "HANDLE");
+    else if (actionType == ACTION_TYPE_TAKE) {
+        return appendString(outputStream, "TAKE");
     }
     else if (actionType == ACTION_TYPE_DROP) {
         return appendString(outputStream, "DROP");

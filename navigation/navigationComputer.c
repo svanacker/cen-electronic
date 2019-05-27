@@ -83,13 +83,16 @@ float computeBestPath(Navigation* navigation, Location* start, Location* end) {
         }
     }
     // Compute the success from the predecessor
-    Location* tmpLocation = end;
-    while (tmpLocation->computedPreviousLocation != NULL) {
-        // Reverse the link
-        tmpLocation->computedPreviousLocation->computedNextLocation = tmpLocation;
-        tmpLocation = tmpLocation->computedPreviousLocation;
-    }
+    if (end != NULL) {
+        Location* tmpLocation = end;
+        while (tmpLocation->computedPreviousLocation != NULL) {
+            // Reverse the link
+            tmpLocation->computedPreviousLocation->computedNextLocation = tmpLocation;
+            tmpLocation = tmpLocation->computedPreviousLocation;
+        }
 
-    // return best cost
-    return getComputedCost(end);
+        // return best cost
+        return getComputedCost(end);
+    }
+    return 0.0f;
 }

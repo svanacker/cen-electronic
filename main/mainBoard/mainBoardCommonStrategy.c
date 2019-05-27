@@ -55,6 +55,7 @@
 #include "../../robot/strategy/teamColor.h"
 #include "../../robot/strategy/gameStrategyHandler.h"
 #include "../../robot/strategy/gameStrategyMotionHandler.h"
+#include "../../robot/strategy/gameStrategyPositionHandler.h"
 #include "../../robot/strategy/gameStrategyCollisionHandler.h"
 #include "../../robot/strategy/gameTargetList.h"
 

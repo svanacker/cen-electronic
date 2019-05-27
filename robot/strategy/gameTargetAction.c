@@ -22,12 +22,14 @@ void initGameTargetAction(GameTargetAction* targetAction,
     Location* endLocation,
     enum ActionType actionType,
     float timeToAchieve,
+    unsigned int priority,
     GameTargetActionItemList* actionItemList) {
     targetAction->startLocation = startLocation;
     targetAction->endLocation = endLocation;
     targetAction->status = ACTION_STATUS_TODO;
     targetAction->type = actionType;
     targetAction->timeToAchieve = timeToAchieve;
+    targetAction->priority = priority;
     targetAction->actionItemList = actionItemList;
 }
 

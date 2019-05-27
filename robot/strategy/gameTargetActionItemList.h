@@ -52,6 +52,8 @@ int getGameTargetActionItemCount(GameTargetActionItemList* list);
 
 // DO ACTIONS
 
+bool executeTargetActionItemList(GameTargetActionItemList* actionItemList, int* context);
+
 /**
  * Call the real method by passing a context and the object to do
  */

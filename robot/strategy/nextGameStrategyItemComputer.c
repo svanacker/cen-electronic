@@ -32,7 +32,6 @@ GameTarget* computeBestNextTarget(GameStrategyContext* strategyContext) {
         return NULL;
     }
     Navigation* navigation = strategyContext->navigation;
-    Location* currentLocation = strategyContext->nearestLocation;
 
     float maxOpportunityFactor = -1.0f;
     // Loop on potential target
@@ -67,17 +66,25 @@ GameTarget* computeBestNextTarget(GameStrategyContext* strategyContext) {
             Location* startLocation = targetAction->startLocation;
             Location* endLocation = targetAction->endLocation;
 
+            // Add the equivalent of timeToAchieve with cost (could vary because the speed / acceleration factor could be change)
+            // TODO : Manage the equivalence factor : 1 second = equivalent of going a cost of 500.0f
+            cost += 500.0f * targetAction->timeToAchieve;
+
+            if (startLocation == NULL) {
+                continue;
+            }
+
             // First, we compute the cost to go to the beginning of the start Location of the first action
             if (actionIndex == 0) {
                 cost += computeBestPath(navigation, strategyContext->nearestLocation, startLocation);
             }
 
+            if (endLocation == NULL) {
+                continue;
+            }
+
             // Add the cost of each moving to do the action
             cost += computeBestPath(navigation, startLocation, endLocation);
-
-            // Add the equivalent of timeToAchieve with cost (could vary because the speed / acceleration factor could be change)
-            // TODO : Manage the equivalence factor : 1 second = equivalent of going a cost of 500.0f
-            cost += 500.0f * targetAction->timeToAchieve;
 
             if (cost >= MAX_COST) {
                 continue;
@@ -91,13 +98,6 @@ GameTarget* computeBestNextTarget(GameStrategyContext* strategyContext) {
             maxOpportunityFactor = target->currentComputedOpportunityFactor;
             result = target;
         }
-    }
-
-    // updates the trajectory to fit to the best target
-    if (result != NULL) {
-        Location* startLocation = result->startLocation;
-        // Recompute the best Path (could be erased by previous compute)
-        computeBestPath(navigation, currentLocation, startLocation);
     }
     return result;
 }

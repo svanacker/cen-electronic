@@ -22,10 +22,24 @@ typedef struct GameTargetActionList {
     unsigned int size;
 } GameTargetActionList;
 
+// BASIC LIST MANAGEMENT ----------------------------------
+
 /**
  * Clear the target Action and the corresponding items.
  */
 void clearTargetActionList(GameTargetActionList* targetActionList);
+
+/**
+ * Get the target action at index.
+ */
+GameTargetAction* getGameTargetAction(GameTargetActionList* list, int index);
+
+/**
+ * Get the count of target action.
+ */
+int getGameTargetActionCount(GameTargetActionList* list);
+
+// ADD ACTION METHOD UTILS ----------------------------------
 
 /**
  * Add an action to the target.
@@ -43,7 +57,7 @@ void addTargetPrepareAction(GameTargetActionList* targetActionList,
     float timeToAchieve,
     GameTargetActionItemList* actionItemList);
 
-void addTargetHandlingAction(GameTargetActionList* targetActionList,
+void addTargetTakeAction(GameTargetActionList* targetActionList,
     GameTargetAction* targetAction,
     Location* location,
     float timeToAchieve,
@@ -55,25 +69,16 @@ void addTargetDropAction(GameTargetActionList* targetActionList,
     float timeToAchieve,
     GameTargetActionItemList* actionItemList);
 
+// FINDER METHODS -----------------------
 
 /**
- * Get the target action at index.
- */
-GameTargetAction* getGameTargetAction(GameTargetActionList* list, int index);
+*/
+GameTargetAction* getNextGameTargetActionTodoByLocation(GameTargetActionList* targetActionList, Location* location);
 
 /**
- * Returns the first location (start) location to reach.
+ * Return the next Game Target Action to do by priority, whatever the location.
+ * Indeed, we must do PREPARE or TAKE Actions (and going them if necessary) BEFORE doing DROP !!
  */
-bool isAnyActionStartedOrDone(GameTargetActionList* list);
-
-/**
- * Return the next Game Target Action to do if any.
- */
-GameTargetAction* getNextGameTargetActionTodo(GameTargetActionList* targetActionList, Location* location);
-
-/**
- * Get the count of target action.
- */
-int getGameTargetActionCount(GameTargetActionList* list);
+GameTargetAction* getNextGameTargetActionTodoByPriority(GameTargetActionList* targetActionList);
 
 #endif
