@@ -91,6 +91,10 @@ void showGameStrategyContextTeamColorAndStrategy(GameStrategyContext* gameStrate
     RobotConfig* robotConfig = gameStrategyContext->robotConfig;
     unsigned int speedIndex = (robotConfig->robotConfigReadInt(robotConfig) & CONFIG_SPEED_MASK) >> CONFIG_SPEED_SHIFT_BIT_VALUE;
     appendDec(outputStream, speedIndex);
+    // MANUAL MODE if activated
+    if (!gameStrategyContext->loopTargetAndActions) {
+        appendStringLN(outputStream, "!! MANUAL MODE !!");
+    }
     // TOF
     unsigned int sonarIndex = (robotConfig->robotConfigReadInt(robotConfig) & CONFIG_SONAR_MASK) >> CONFIG_SONAR_SHIFT_BIT_VALUE;
     appendString(outputStream, "TOF:");

@@ -94,7 +94,7 @@ void eepromWriteLong(Eeprom* eeprom_, unsigned long index, unsigned long value) 
     eeprom_->eepromWriteChar(eeprom_, index + 3, value & 0xFF);
 }
 
-void eepromWriteUnsignedFloat(Eeprom* eeprom_, unsigned long index, float value, unsigned int digitPrecision) {
+void eepromWriteFloat(Eeprom* eeprom_, unsigned long index, float value, unsigned int digitPrecision) {
     bool negative = false;
     if (value < -0.000001f) {
         negative = true;

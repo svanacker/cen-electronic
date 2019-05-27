@@ -166,7 +166,7 @@ void eepromWriteLong(Eeprom* eeprom_, unsigned long index, unsigned long value);
 * was the digit precision to store the comma
 * @throws EEPROM_NEGATIVE_FLOAT_NOT_ALLOWED if the value is negative
 */
-void eepromWriteUnsignedFloat(Eeprom* eeprom_, unsigned long index, float value, unsigned int digitPrecision);
+void eepromWriteFloat(Eeprom* eeprom_, unsigned long index, float value, unsigned int digitPrecision);
                 
 /**
  * Returns true if the eeprom is initialized (if the fields of callbacks are NOT NULL), false else.

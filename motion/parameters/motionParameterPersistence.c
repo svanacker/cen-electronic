@@ -71,7 +71,7 @@ float internalLoadMotionParameterItem(Eeprom* motionParameterEeprom, unsigned lo
 void internalSaveMotionParameterItem(Eeprom* motionParameterEeprom, unsigned long index, float value, unsigned int digitPrecision) {
     // Check of eeprom (not null, initialized) are done by caller
     unsigned long dataIndex = EEPROM_MOTION_PARAMETERS_START_INDEX + index * MOTION_PARAMETER_DATA_SIZE;
-    eepromWriteUnsignedFloat(motionParameterEeprom, dataIndex, value, digitPrecision);
+    eepromWriteFloat(motionParameterEeprom, dataIndex, value, digitPrecision);
 }
 
 void internalLoadMotionParameter(Eeprom* motionParameterEeprom, enum MotionParameterType motionParameterType, bool loadDefaultValues) {

@@ -109,7 +109,7 @@ bool isMatchFinished(EndMatch* endMatch) {
         return false;
     }
     if (!endMatch->endMatchDetectorDeviceTimer->enabled) {
-        appendStringLN(getErrorOutputStreamLogger(), "You must enable end Match Timer before");
+        return false;
     }
     bool result = endMatch->currentTimeInSecond >= endMatch->matchDurationInSecond;
 

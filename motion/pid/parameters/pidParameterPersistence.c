@@ -83,7 +83,7 @@ void internalSavePidParameter(PidMotion* pidMotion, unsigned int pidIndex, unsig
     Eeprom* _eeprom = pidMotion->pidPersistenceEeprom;
     // Compute the real index
     unsigned long realDataEepromIndex = EEPROM_PID_PARAMETERS_START_INDEX + (realIndex * EEPROM_PID_PARAMETERS_VALUE_LENGTH);
-	eepromWriteUnsignedFloat (_eeprom, realDataEepromIndex, value, PID_VALUE_DIGIT_PRECISION);
+	eepromWriteFloat (_eeprom, realDataEepromIndex, value, PID_VALUE_DIGIT_PRECISION);
 }
 
 

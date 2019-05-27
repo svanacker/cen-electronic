@@ -63,6 +63,7 @@ void initMainBoardDevicesDescriptor() {
     mainBoardCommonLcdAddDevices();
     mainBoardCommonMotorAddDevices(MAIN_BOARD_SERIAL_PORT_MOTOR);
     mainBoardCommonStrategyAddDevices(MAIN_BOARD_SERIAL_PORT_MOTOR);
+    mainBoardCommonMatchAddDevices();
     mainBoardCommonTofAddDevices();
     mainBoardCommonMeca1AddDevices();
 
