@@ -64,8 +64,15 @@ unsigned long eepromReadLong(Eeprom* eeprom_, unsigned long index) {
 }
 
 float eepromReadUnsignedFloat(Eeprom* eeprom_, unsigned long index, unsigned int digitPrecision) {
+    unsigned long longValue = eepromReadLong(eeprom_, index);
+    float result = (float)longValue;
+    if (longValue > 0x80000000) {
+        longValue -= 0x80000000;
+        result = -((float)longValue);
+    }
+
     // we store it as a long value) excluding digit after comma (but we multiply it before)
-    float result = (float) eepromReadLong(eeprom_, index);
+
     unsigned int i;
     for (i = 0; i < digitPrecision; i++) {
         result /= 10.0f;
@@ -88,9 +95,9 @@ void eepromWriteLong(Eeprom* eeprom_, unsigned long index, unsigned long value) 
 }
 
 void eepromWriteUnsignedFloat(Eeprom* eeprom_, unsigned long index, float value, unsigned int digitPrecision) {
+    bool negative = false;
     if (value < -0.000001f) {
-        writeError(EEPROM_NEGATIVE_FLOAT_NOT_ALLOWED);
-        return;
+        negative = true;
     }
     // we store it as a long value) excluding digit after comma (but we multiply it before)
     float valueToStore = value;
@@ -98,7 +105,11 @@ void eepromWriteUnsignedFloat(Eeprom* eeprom_, unsigned long index, float value,
     for (i = 0; i < digitPrecision; i++) {
         valueToStore *= 10.0f;
     }
-    eepromWriteLong(eeprom_, index, (unsigned long) valueToStore);
+    unsigned long valueToStoreLong = (unsigned long)valueToStore;
+    if (negative) {
+        valueToStoreLong = 0x80000000 - valueToStoreLong;
+    }
+    eepromWriteLong(eeprom_, index, valueToStoreLong);
 }
 
 long getMaxIndex(Eeprom* eeprom_) {

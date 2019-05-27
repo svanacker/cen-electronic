@@ -32,7 +32,7 @@
 #define SMALL_ROBOT_KINEMATICS_CODER_WHEEL_AVERAGE_DIAMETER_MM_DEFAULT_VALUE                     29.37f
 
 // To compensate difference between Coder Wheels Diameter (mm)
-#define BIG_ROBOT_KINEMATICS_CODER_WHEEL_AVERAGE_DELTA_DIAMETER_MM_DEFAULT_VALUE                 0.000f 
+#define BIG_ROBOT_KINEMATICS_CODER_WHEEL_AVERAGE_DELTA_DIAMETER_MM_DEFAULT_VALUE                 -.050f 
 #define SMALL_ROBOT_KINEMATICS_CODER_WHEEL_AVERAGE_DELTA_DIAMETER_MM_DEFAULT_VALUE               0.000f  
 
 /** Default wheels distance (mm)). */

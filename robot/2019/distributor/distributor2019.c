@@ -54,8 +54,8 @@ bool distributor2019Take(ServoList* servoList, TofSensorList* tofSensorList) {
     // Fork Single Puck
     moveForkSimplePuck(servoList, FORK_2019_LEFT_AND_RIGHT_INDEX, wait);
 
-    // Elevator Up to free the Puck
-    moveElevatorInitPosition(servoList, wait);
+    // Elevator Up to free the and prepare to put either in the Weighing Machine, or in the Accelerator Front
+    moveElevatorUp(servoList, wait);
 
     return true;
 }
