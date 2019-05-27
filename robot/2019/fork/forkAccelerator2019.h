@@ -20,10 +20,17 @@ bool accelerator2019FakeInit(ServoList* servoList);
  */
 bool accelerator2019PrepareDrop(ServoList* servoList);
 
+bool accelerator2019FakeMoveForward(void);
+
 /**
  * The actions to to release the Puck in Accelerator
  * @param servoList
  */
 bool accelerator2019Drop(ServoList* servoList, unsigned int firstLeftRightServoIndex, unsigned int secondLeftRightServoIndex);
+
+// COMPLETE SEQUENCE
+
+bool accelerator2019CompleteSequence(ServoList* servoList, unsigned int firstLeftRightServoIndex, unsigned int secondLeftRightServoIndex);
+
 
 #endif

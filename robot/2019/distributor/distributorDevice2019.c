@@ -68,6 +68,11 @@ void deviceDistributor2019HandleRawData(unsigned char commandHeader, InputStream
         ackCommand(outputStream, DISTRIBUTOR_2019_DEVICE_HEADER, COMMAND_2019_DISTRIBUTOR_ACCELERATOR_PREPARE_DROP);
         accelerator2019PrepareDrop(servoList);
     }
+    // Fake Move Forward
+    else if (commandHeader == COMMAND_2019_DISTRIBUTOR_ACCELERATOR_FAKE_MOVE_FORWARD) {
+        ackCommand(outputStream, DISTRIBUTOR_2019_DEVICE_HEADER, COMMAND_2019_DISTRIBUTOR_ACCELERATOR_FAKE_MOVE_FORWARD);
+        accelerator2019FakeMoveForward();
+    }
     // Fork Accelerator Drop
     else if (commandHeader == COMMAND_2019_DISTRIBUTOR_ACCELERATOR_DROP) {
         ackCommand(outputStream, DISTRIBUTOR_2019_DEVICE_HEADER, COMMAND_2019_DISTRIBUTOR_ACCELERATOR_DROP);
@@ -77,6 +82,17 @@ void deviceDistributor2019HandleRawData(unsigned char commandHeader, InputStream
         }
         else {
             accelerator2019Drop(servoList, FORK_2019_RIGHT_INDEX, FORK_2019_LEFT_INDEX);
+        }
+    }
+    // Complete Sequence
+    else if (commandHeader == COMMAND_2019_DISTRIBUTOR_ACCELERATOR_COMPLETE_SEQUENCE) {
+        ackCommand(outputStream, DISTRIBUTOR_2019_DEVICE_HEADER, COMMAND_2019_DISTRIBUTOR_ACCELERATOR_COMPLETE_SEQUENCE);
+        unsigned int firstSideToRelease = readHex(inputStream);
+        if (firstSideToRelease == FORK_2019_LEFT_INDEX) {
+            accelerator2019CompleteSequence(servoList, FORK_2019_LEFT_INDEX, FORK_2019_RIGHT_INDEX);
+        }
+        else {
+            accelerator2019CompleteSequence(servoList, FORK_2019_RIGHT_INDEX, FORK_2019_LEFT_INDEX);
         }
     }
 

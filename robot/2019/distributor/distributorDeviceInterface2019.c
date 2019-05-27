@@ -26,16 +26,24 @@ int deviceDistributor2019GetInterface(unsigned char commandHeader, DeviceInterfa
         return commandLengthValueForMode(mode, 0, 0);
     }
     // ACCELERATOR
-    // -> Fake INit
+    // -> Fake Init
     else if (commandHeader == COMMAND_2019_DISTRIBUTOR_ACCELERATOR_FAKE_INIT) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Fake Init");
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
+    // -> Prepare Drop
     else if (commandHeader == COMMAND_2019_DISTRIBUTOR_ACCELERATOR_PREPARE_DROP) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Prepare Drop");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }
+    // -> Fake Move Forward
+    else if (commandHeader == COMMAND_2019_DISTRIBUTOR_ACCELERATOR_FAKE_MOVE_FORWARD) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("Fake Move Forward");
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
@@ -47,6 +55,15 @@ int deviceDistributor2019GetInterface(unsigned char commandHeader, DeviceInterfa
         }
         return commandLengthValueForMode(mode, 1, 0);
     }
+    // -> Complete Sequence
+    else if (commandHeader == COMMAND_2019_DISTRIBUTOR_ACCELERATOR_COMPLETE_SEQUENCE) {
+        if (fillDeviceArgumentList) {
+            setFunction("Accelerator Complete Sequence", 1, 0);
+            setArgumentUnsignedChar1(0, "First side to release (1=L, 2=R)");
+        }
+        return commandLengthValueForMode(mode, 1, 0);
+    }
+    
 
     return DEVICE_HEADER_NOT_HANDLED;
 }

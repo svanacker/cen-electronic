@@ -24,6 +24,8 @@
 
 #include "../../../common/timer/delayTimer.h"
 
+#include "../../../client/motion/simple/clientMotion.h"
+
 #include "../../../robot/2019/elevator/elevator2019.h"
 
 bool accelerator2019FakeInit(ServoList* servoList) {
@@ -44,6 +46,10 @@ bool accelerator2019PrepareDrop(ServoList* servoList) {
     moveForkPushOffAllWithoutWait(servoList);
     
     return true;
+}
+
+bool accelerator2019FakeMoveForward(void) {
+    return motionDriverForward(100.0f);
 }
 
 bool accelerator2019Drop(ServoList* servoList, unsigned int firstLeftRightServoIndex, unsigned int secondLeftRightServoIndex) {
@@ -78,4 +84,20 @@ bool accelerator2019Drop(ServoList* servoList, unsigned int firstLeftRightServoI
     moveForkPushOff(servoList, secondLeftRightServoIndex, false);
 
     return true;
+}
+
+bool accelerator2019CompleteSequence(ServoList* servoList, unsigned int firstLeftRightServoIndex, unsigned int secondLeftRightServoIndex) {
+    accelerator2019FakeInit(servoList);
+    
+    delayMilliSecs(1000);
+    
+    accelerator2019PrepareDrop(servoList);
+    
+    delayMilliSecs(1000);
+    
+    accelerator2019FakeMoveForward();
+    
+    delayMilliSecs(1000);
+    
+    return accelerator2019Drop(servoList, firstLeftRightServoIndex, secondLeftRightServoIndex);
 }

@@ -16,17 +16,6 @@ void setReadyForNextMotion(bool value);
 bool isReadyForNextMotion();
 
 /**
-* Set the motion instruction index.
-*/
-void incMotionInstructionIndex();
-
-/**
-* Returns the index of motion instruction.
-*/
-unsigned int getMotionInstructionIndex();
-
-
-/**
 * Ask the motor to go to a position (pulse argument).
 * @return true if the driver answer
 */
