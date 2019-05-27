@@ -42,7 +42,7 @@
 #define WEIGHING_MACHINE_DROP                                              "WMD"
 #define WEIGHING_MACHINE_DROP_LABEL                      "Weighing Machine Drop"
 #define WEIGHING_MACHINE_DROP_X                                            1500
-#define WEIGHING_MACHINE_DROP_Y                                            1300
+#define WEIGHING_MACHINE_DROP_Y                                            1315
 #define WEIGHING_MACHINE_DROP_ANGLE_DECI_DEG                   ANGLE_DECI_DEG_0
 
 // Blueium Right (to go to small Distributor)
