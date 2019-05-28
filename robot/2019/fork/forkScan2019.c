@@ -23,6 +23,7 @@
 #include "../../../drivers/ioExpander/ioExpanderList.h"
 
 #include "../../../drivers/i2c/multiplexer/multiplexerList.h"
+#include "../../../robot/robot.h"
 
 // TOF CONFIG
 
@@ -67,21 +68,57 @@ void forkScan2019ConfigTofList(TofSensor* leftForkScanSensor,
     }
 }
 
+unsigned int getScanLeftServoValue(void) {
+    if (getRobotType() == ROBOT_TYPE_BIG) {
+        return FORK_2019_BIG_ROBOT_SCAN_LEFT_SERVO_VALUE;
+    }
+    else if (getRobotType() == ROBOT_TYPE_SMALL) {
+        return FORK_2019_SMALL_ROBOT_SCAN_LEFT_SERVO_VALUE;        
+    }
+    return 1500;
+}
+
+unsigned int getScanMiddleServoValue(void) {
+    if (getRobotType() == ROBOT_TYPE_BIG) {
+        return FORK_2019_BIG_ROBOT_SCAN_MIDDLE_SERVO_VALUE;
+    }
+    else if (getRobotType() == ROBOT_TYPE_SMALL) {
+        return FORK_2019_SMALL_ROBOT_SCAN_MIDDLE_SERVO_VALUE;        
+    }
+    return 1500;
+}
+
+unsigned int getScanRightServoValue(void) {
+    if (getRobotType() == ROBOT_TYPE_BIG) {
+        return FORK_2019_BIG_ROBOT_SCAN_RIGHT_SERVO_VALUE;
+    }
+    else if (getRobotType() == ROBOT_TYPE_SMALL) {
+        return FORK_2019_SMALL_ROBOT_SCAN_RIGHT_SERVO_VALUE;        
+    }
+    return 1500;
+}
+
+
 // ELEVATOR SCAN
+
+void moveElevatorScanAtValue(ServoList* servoList, unsigned int value, bool wait) {
+    Servo* servo = getServo(servoList, FORK_2019_SCAN_SERVO_INDEX);
+    pwmServo(servo, FORK_2019_SCAN_SPEED_FACTOR, value, true);
+}
 
 void moveElevatorLeft(ServoList* servoList, bool wait) {
     Servo* servo = getServo(servoList, FORK_2019_SCAN_SERVO_INDEX);
-    pwmServo(servo, FORK_2019_SCAN_SPEED_FACTOR, FORK_2019_SCAN_LEFT_SERVO_VALUE, wait);
+    pwmServo(servo, FORK_2019_SCAN_SPEED_FACTOR, getScanLeftServoValue(), wait);
 }
 
 void moveElevatorMiddle(ServoList* servoList, bool wait) {
     Servo* servo = getServo(servoList, FORK_2019_SCAN_SERVO_INDEX);
-    pwmServo(servo, FORK_2019_SCAN_SPEED_FACTOR, FORK_2019_SCAN_MIDDLE_SERVO_VALUE, wait);
+    pwmServo(servo, FORK_2019_SCAN_SPEED_FACTOR, getScanMiddleServoValue(), wait);
 }
 
 void moveElevatorRight(ServoList* servoList, bool wait) {
     Servo* servo = getServo(servoList, FORK_2019_SCAN_SERVO_INDEX);
-    pwmServo(servo, FORK_2019_SCAN_SPEED_FACTOR, FORK_2019_SCAN_RIGHT_SERVO_VALUE, wait);
+    pwmServo(servo, FORK_2019_SCAN_SPEED_FACTOR, getScanRightServoValue(), wait);
 }
 
 void moveElevatorDistributorScan(ServoList* servoList, bool wait) {
@@ -151,7 +188,7 @@ bool forkScanFromRightToLeft(ServoList* servoList, TofSensorList* tofSensorList)
     moveElevatorRight(servoList, true);
 
     unsigned int i;
-    for (i = FORK_2019_SCAN_RIGHT_SERVO_VALUE; i < FORK_2019_SCAN_LEFT_SERVO_VALUE; i += FORK_2019_SCAN_SERVO_DELTA_SERVO_POSITION) {
+    for (i = getScanRightServoValue(); i < getScanLeftServoValue(); i += FORK_2019_SCAN_SERVO_DELTA_SERVO_POSITION) {
         pwmServo(servo, FORK_2019_SCAN_SPEED_FACTOR, i, false);
         timerDelayMilliSeconds(FORK_2019_SCAN_SERVO_DELTA_MILLISECONDS);
         // Scan several time
@@ -185,7 +222,7 @@ bool forkScanFromLeftToRight(ServoList* servoList, TofSensorList* tofSensorList)
 
     unsigned int i;
     moveElevatorLeft(servoList, true);
-    for (i = FORK_2019_SCAN_LEFT_SERVO_VALUE; i > FORK_2019_SCAN_RIGHT_SERVO_VALUE; i -= FORK_2019_SCAN_SERVO_DELTA_SERVO_POSITION) {
+    for (i = getScanLeftServoValue(); i > getScanRightServoValue(); i -= FORK_2019_SCAN_SERVO_DELTA_SERVO_POSITION) {
         pwmServo(servo, FORK_2019_SCAN_SPEED_FACTOR, i, false);
         timerDelayMilliSeconds(FORK_2019_SCAN_SERVO_DELTA_MILLISECONDS);
         // Scan several time

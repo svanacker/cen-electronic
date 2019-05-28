@@ -25,6 +25,8 @@
 #define COMMAND_2019_ELEVATOR_UP                   'U'
 
 // LEFT / RIGHT / MIDDLE
+#define COMMAND_2019_ELEVATOR_SCAN_VALUE           'V' 
+
 #define COMMAND_2019_ELEVATOR_LEFT                 'L'
 
 #define COMMAND_2019_ELEVATOR_MIDDLE               'M'

@@ -27,6 +27,7 @@
 #include "../../navigation/locationListComputer.h"
 #include "../../navigation/navigationComputer.h"
 
+#include "../../robot/robot.h"
 #include "../../robot/config/robotConfig.h"
 #include "../../robot/strategy/gameTarget.h"
 #include "../../robot/strategy/gameTargetList.h"
@@ -86,9 +87,7 @@ void drawRobot(GameBoard* gameBoard, Point* robotPosition, float angle) {
     float x = robotPosition->x;
     float y = robotPosition->y;
 
-    GameStrategyContext* strategyContext = gameBoard->gameStrategyContext;
-    RobotConfig* robotConfig = strategyContext->robotConfig;
-    enum RobotType robotType = robotConfig->robotType;
+    enum RobotType robotType = getRobotType();
     // Draw the central point
     if (robotType == ROBOT_TYPE_BIG) {
         drawPoint(gameBoard, robotPosition, 'B');

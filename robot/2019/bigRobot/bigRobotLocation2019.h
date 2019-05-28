@@ -12,7 +12,7 @@
 // Accelerator Drop Zone (BIG ROBOT)
 #define ACCELERATOR_DROP                                                     "DROP"
 #define ACCELERATOR_DROP_LABEL                                               "Accelerator Drop"
-#define ACCELERATOR_DROP_X                                                     140
+#define ACCELERATOR_DROP_X                                                     100
 #define ACCELERATOR_DROP_Y                                                    2000
 #define ACCELERATOR_DROP_DECI_DEG                               ANGLE_DECI_DEG_180
 
@@ -57,8 +57,8 @@
 // BIG DISTRIBUTOR
 #define BIG_DISTRIBUTOR_LINE_1                                            "BDL1"
 #define BIG_DISTRIBUTOR_LINE_1_LABEL                                      "Big Distributor Line 1"
-#define BIG_DISTRIBUTOR_LINE_1_X                                            1465
-#define BIG_DISTRIBUTOR_LINE_1_Y                                             650
+#define BIG_DISTRIBUTOR_LINE_1_X                                            1480
+#define BIG_DISTRIBUTOR_LINE_1_Y                                             540
 #define BIG_DISTRIBUTOR_LINE_1_ANGLE_DECI_DEG                     ANGLE_DECI_DEG_0
 
 #define BIG_DISTRIBUTOR_LINE_2                                            "BDL2"

@@ -72,7 +72,7 @@ void initColorAndStartPosition2019(GameStrategyContext* gameStrategyContext) {
         gameStrategyContext->color = TEAM_COLOR_2019_VIOLET;
     }
     float angleDeciDegree = 0;
-    enum RobotType robotType = robotConfig->robotType;
+    enum RobotType robotType = getRobotType();
     if (robotType == ROBOT_TYPE_BIG) {
         gameStrategyContext->robotPosition->x = BIG_ROBOT_START_AREA_X;
         gameStrategyContext->robotPosition->y = BIG_ROBOT_START_AREA_Y;
@@ -133,8 +133,7 @@ void initStrategy2019(GameStrategyContext* gameStrategyContext) {
     gameStrategyContext->defaultAccelerationFactor = getAccelerationFactor(gameStrategyContext->robotConfig);
     gameStrategyContext->defaultSpeedFactor = getSpeedFactor(gameStrategyContext->robotConfig);
 
-    RobotConfig* robotConfig = gameStrategyContext->robotConfig;
-    enum RobotType robotType = robotConfig->robotType;
+    enum RobotType robotType = getRobotType();
 
     // We only load the item relative to the strategy Index chosen
     unsigned int strategyId = gameStrategyContext->strategyId;

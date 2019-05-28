@@ -28,6 +28,8 @@
 struct GameStrategyContext;
 typedef struct GameStrategyContext GameStrategyContext;
 
+// TODO : Move on 2019 Package
+
 // Index if no Strategy
 #define NO_STRATEGY_INDEX                                                      0
 
@@ -43,7 +45,9 @@ typedef struct GameStrategyContext GameStrategyContext;
 #define BIG_ROBOT_STRATEGY_1_CHAOS                                             1
 #define BIG_ROBOT_STRATEGY_2_BIG_DISTRIBUTOR_LINE_1                            2
 #define BIG_ROBOT_STRATEGY_3_BIG_DISTRIBUTOR_LINE_1_2_3                        3
-#define BIG_ROBOT_STRATEGY_4_CHAOS_BIG_DISTRIBUTOR_LINE_1_2_3                  4
+#define BIG_ROBOT_STRATEGY_4_CHAOS_BIG_DISTRIBUTOR_LINE_1                      4
+#define BIG_ROBOT_STRATEGY_5_CHAOS_BIG_DISTRIBUTOR_LINE_1_2                    5
+#define BIG_ROBOT_STRATEGY_6_CHAOS_BIG_DISTRIBUTOR_LINE_1_2_3                  6
 
 /**
  * Encapsulates the context of the strategy.

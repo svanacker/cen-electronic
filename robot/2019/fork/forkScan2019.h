@@ -27,7 +27,7 @@
 #define FORK_2019_SCAN_DISTANCE_RIGHT_MIN_THRESHOLD                             5
 #define FORK_2019_SCAN_DISTANCE_RIGHT_MAX_THRESHOLD                            35
 #define FORK_2019_SCAN_SERVO_DELTA_SERVO_POSITION                             30
-#define FORK_2019_SCAN_SERVO_DELTA_MILLISECONDS                               50
+#define FORK_2019_SCAN_SERVO_DELTA_MILLISECONDS                               100
 #define FORK_2019_SCAN_MEASURE_COUNT                                           3
 #define FORK_2019_SCAN_MATCH_COUNT                                             2
 
@@ -37,10 +37,16 @@
 
 // Scan Servo Value
 #define FORK_2019_SCAN_SPEED_FACTOR                                         0xFF
-// TODO : To change
-#define FORK_2019_SCAN_MIDDLE_SERVO_VALUE                                   1400
-#define FORK_2019_SCAN_LEFT_SERVO_VALUE                                     1800
-#define FORK_2019_SCAN_RIGHT_SERVO_VALUE                                    1100
+
+// BIG ROBOT
+#define FORK_2019_BIG_ROBOT_SCAN_MIDDLE_SERVO_VALUE                         1500
+#define FORK_2019_BIG_ROBOT_SCAN_LEFT_SERVO_VALUE                           1850
+#define FORK_2019_BIG_ROBOT_SCAN_RIGHT_SERVO_VALUE                          1150
+
+// SMALL ROBOT
+#define FORK_2019_SMALL_ROBOT_SCAN_MIDDLE_SERVO_VALUE                       1360
+#define FORK_2019_SMALL_ROBOT_SCAN_LEFT_SERVO_VALUE                         1760
+#define FORK_2019_SMALL_ROBOT_SCAN_RIGHT_SERVO_VALUE                        1000
 
 
 // FORK SCAN

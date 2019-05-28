@@ -9,7 +9,7 @@
 void initRobotConfig(RobotConfig* robotConfig,
                      enum RobotType robotType, 
                 robotConfigReadIntFunction* robotConfigReadInt, robotConfigWriteIntFunction* robotConfigWriteInt){
-    robotConfig->robotType = robotType;
+    setRobotType(robotType);
     robotConfig->robotConfigReadInt = robotConfigReadInt;
     robotConfig->robotConfigWriteInt = robotConfigWriteInt;
 }

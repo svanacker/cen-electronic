@@ -81,8 +81,6 @@ typedef void robotConfigWriteIntFunction(RobotConfig* robotConfig, unsigned int 
  * Defines the contract for switch robot configuration.
  */
 struct RobotConfig {
-    // The type of the robot
-    enum RobotType robotType;
     /** The function which must be used to read the robot configuration */
     robotConfigReadIntFunction* robotConfigReadInt;
     /** The function which can be used if we change the config. */

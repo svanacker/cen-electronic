@@ -163,7 +163,9 @@ static GameTargetActionItem bigDistributorLine3DropTargetActionItem;
 static GameStrategy bigRobotStrategy1Chaos;
 static GameStrategy bigRobotStrategy2BigDistributorLine1;
 static GameStrategy bigRobotStrategy3BigDistributorLine123;
-static GameStrategy bigRobotStrategy4ChaosBigDistributorLine123;
+static GameStrategy bigRobotStrategy4ChaosBigDistributorLine1;
+static GameStrategy bigRobotStrategy5ChaosBigDistributorLine12;
+static GameStrategy bigRobotStrategy6ChaosBigDistributorLine123;
 
 // ------------------------------------------------------- STRATEGY ITEM -------------------------------------------------------------
 
@@ -260,7 +262,7 @@ void initBigRobotPaths2019(GameStrategyContext* gameStrategyContext) {
     keyPoint2_to_bigDistributorLine1Front = addNavigationPathWithColor(teamColor,
         navigation,
         keyPoint2Location,
-        bigDistributorLine2FrontLocation,
+        bigDistributorLine1FrontLocation,
         KEY_POINT_2_TO_BIGDISTRIBUTOR_LINE_1_FRONT_COST,
         KEY_POINT_2_TO_BIGDISTRIBUTOR_LINE_1_FRONT_CP1,
         KEY_POINT_2_TO_BIGDISTRIBUTOR_LINE_1_FRONT_CP2,
@@ -425,12 +427,23 @@ GameStrategy* initBigRobotStrategiesItems2019(GameStrategyContext* gameStrategyC
         addGameStrategyItem(&bigRobotStrategy3BigDistributorLine123, &bigDistributorLine3StrategyItem, &bigDistributorLine3Target);
         return &bigRobotStrategy3BigDistributorLine123;
     }
-    else if (strategyId == BIG_ROBOT_STRATEGY_4_CHAOS_BIG_DISTRIBUTOR_LINE_1_2_3) {
-        addGameStrategyItem(&bigRobotStrategy4ChaosBigDistributorLine123, &chaosStrategyItem, &chaosTarget);
-        addGameStrategyItem(&bigRobotStrategy4ChaosBigDistributorLine123, &bigDistributorLine1StrategyItem, &bigDistributorLine1Target);
-        addGameStrategyItem(&bigRobotStrategy4ChaosBigDistributorLine123, &bigDistributorLine2StrategyItem, &bigDistributorLine2Target);
-        addGameStrategyItem(&bigRobotStrategy4ChaosBigDistributorLine123, &bigDistributorLine3StrategyItem, &bigDistributorLine3Target);
-        return &bigRobotStrategy4ChaosBigDistributorLine123;
+    else if (strategyId == BIG_ROBOT_STRATEGY_4_CHAOS_BIG_DISTRIBUTOR_LINE_1) {
+        addGameStrategyItem(&bigRobotStrategy4ChaosBigDistributorLine1, &chaosStrategyItem, &chaosTarget);
+        addGameStrategyItem(&bigRobotStrategy4ChaosBigDistributorLine1, &bigDistributorLine1StrategyItem, &bigDistributorLine1Target);
+        return &bigRobotStrategy4ChaosBigDistributorLine1;
+    }
+    else if (strategyId == BIG_ROBOT_STRATEGY_5_CHAOS_BIG_DISTRIBUTOR_LINE_1_2) {
+        addGameStrategyItem(&bigRobotStrategy5ChaosBigDistributorLine12, &chaosStrategyItem, &chaosTarget);
+        addGameStrategyItem(&bigRobotStrategy5ChaosBigDistributorLine12, &bigDistributorLine1StrategyItem, &bigDistributorLine1Target);
+        addGameStrategyItem(&bigRobotStrategy5ChaosBigDistributorLine12, &bigDistributorLine2StrategyItem, &bigDistributorLine2Target);
+        return &bigRobotStrategy5ChaosBigDistributorLine12;
+    }
+    else if (strategyId == BIG_ROBOT_STRATEGY_6_CHAOS_BIG_DISTRIBUTOR_LINE_1_2_3) {
+        addGameStrategyItem(&bigRobotStrategy6ChaosBigDistributorLine123, &chaosStrategyItem, &chaosTarget);
+        addGameStrategyItem(&bigRobotStrategy6ChaosBigDistributorLine123, &bigDistributorLine1StrategyItem, &bigDistributorLine1Target);
+        addGameStrategyItem(&bigRobotStrategy6ChaosBigDistributorLine123, &bigDistributorLine2StrategyItem, &bigDistributorLine2Target);
+        addGameStrategyItem(&bigRobotStrategy6ChaosBigDistributorLine123, &bigDistributorLine3StrategyItem, &bigDistributorLine3Target);
+        return &bigRobotStrategy6ChaosBigDistributorLine123;
     }
     writeError(STRATEGY_NOT_DEFINED);
     return NULL;
@@ -441,5 +454,7 @@ void initBigRobotStrategies2019(GameStrategyContext* gameStrategyContext) {
     addGameStrategy(&bigRobotStrategy1Chaos, BIG_ROBOT_STRATEGY_1_CHAOS, "CHAOS");
     addGameStrategy(&bigRobotStrategy2BigDistributorLine1, BIG_ROBOT_STRATEGY_2_BIG_DISTRIBUTOR_LINE_1, "DIST 1");
     addGameStrategy(&bigRobotStrategy3BigDistributorLine123, BIG_ROBOT_STRATEGY_3_BIG_DISTRIBUTOR_LINE_1_2_3, "DIST 123");
-    addGameStrategy(&bigRobotStrategy4ChaosBigDistributorLine123, BIG_ROBOT_STRATEGY_4_CHAOS_BIG_DISTRIBUTOR_LINE_1_2_3, "CHAOS / DIST 123");
+    addGameStrategy(&bigRobotStrategy4ChaosBigDistributorLine1, BIG_ROBOT_STRATEGY_4_CHAOS_BIG_DISTRIBUTOR_LINE_1, "CHAOS / DIST 1");
+    addGameStrategy(&bigRobotStrategy4ChaosBigDistributorLine1, BIG_ROBOT_STRATEGY_5_CHAOS_BIG_DISTRIBUTOR_LINE_1_2, "CHAOS / DIST 12");
+    addGameStrategy(&bigRobotStrategy4ChaosBigDistributorLine1, BIG_ROBOT_STRATEGY_6_CHAOS_BIG_DISTRIBUTOR_LINE_1_2_3, "CHAOS / DIST 13");
 }

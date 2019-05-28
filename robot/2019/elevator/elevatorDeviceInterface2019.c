@@ -30,6 +30,14 @@ int deviceElevator2019GetInterface(unsigned char commandHeader, DeviceInterfaceM
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
+    // LEFT / MIDDLE / RIGHT
+    if (commandHeader == COMMAND_2019_ELEVATOR_SCAN_VALUE) {
+        if (fillDeviceArgumentList) {
+            setFunction("Elevator Lateral Value", 1, 0);
+            setArgumentUnsignedHex4(0, "Servo Position Value");
+        }
+        return commandLengthValueForMode(mode, 4, 0);
+    }
     else if (commandHeader == COMMAND_2019_ELEVATOR_LEFT) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("ELEVATOR Left");

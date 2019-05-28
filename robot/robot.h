@@ -6,6 +6,8 @@
 #include "../common/commons.h"
 #include "../common/io/outputStream.h"
 
+#include "robotType.h"
+
 /**
  * Define the Structure which stores RobotPosition.
  */
@@ -18,66 +20,9 @@ typedef struct RobotPosition {
     float angleRadian;
 } RobotPosition;
 
-/**
- * Structure to store the information about the robot
- * @return 
- */
-typedef struct Robot {
-    // The position of the robot
-    RobotPosition* robotPosition;
-} Robot;
+void setRobotType(enum RobotType robotType);
 
-/**
- * Constructor.
- * Initialize the structure with the robot.
- * @param robot
- * @param robotPosition
- */
-void initRobot(Robot* robot, RobotPosition* robotPosition);
-    
-/** 
- * Defines some information needed by MainBoard about the status of the Robot.
- * Very precise information about the position of the robot is handled by the trajectory handler
- */
+enum RobotType getRobotType();
 
-// Time in seconds
-#define TIME_FOR_OBSTACLE_NEW_NOTIFICATION             4
-
-// MAIN FUNCTIONS
-
-/**
-* Returns true if we must stop the robot
-*/
-bool isRobotMustStop();
-
-/**
-* Change the fact that the robot must stop
-*/
-void setRobotMustStop(bool value);
-
-/**
-* Stop the robot and avoid the PIC to restart.
-*/
-void stopRobot(void);
-
-void stopRobotObstacle(void);
-
-// POSITION
-
-float getRobotPositionX();
-
-float getRobotPositionY();
-
-float getRobotAngle();
-
-void updateRobotPosition(float x, float y, float angle);
-
-void printRobotPosition(OutputStream* outputStream);
-
-bool isRobotPositionChanged();
-
-void resetRobotPositionChanged();
-
-void setRobotPositionChanged();
 
 #endif
