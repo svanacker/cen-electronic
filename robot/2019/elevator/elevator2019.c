@@ -27,6 +27,10 @@
 
 #include "../../../robot/2019/fork/fork2019.h"
 
+#include "../../../robot/robot.h"
+#include "../../../robot/robotType.h"
+
+
 unsigned int getElevatorBottomServoValue(void) {
     if (getRobotType() == ROBOT_TYPE_BIG) {
         return FORK_2019_BIG_ROBOT_ELEVATOR_BOTTOM_SERVO_VALUE;

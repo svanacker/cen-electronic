@@ -23,17 +23,17 @@
 
 // TOF THRESHOLD
 #define FORK_2019_SCAN_DISTANCE_LEFT_MIN_THRESHOLD                             5
-#define FORK_2019_SCAN_DISTANCE_LEFT_MAX_THRESHOLD                            35
-#define FORK_2019_SCAN_DISTANCE_RIGHT_MIN_THRESHOLD                             5
-#define FORK_2019_SCAN_DISTANCE_RIGHT_MAX_THRESHOLD                            35
+#define FORK_2019_SCAN_DISTANCE_LEFT_MAX_THRESHOLD                            32
+#define FORK_2019_SCAN_DISTANCE_RIGHT_MIN_THRESHOLD                            5
+#define FORK_2019_SCAN_DISTANCE_RIGHT_MAX_THRESHOLD                           32
 #define FORK_2019_SCAN_SERVO_DELTA_SERVO_POSITION                             30
-#define FORK_2019_SCAN_SERVO_DELTA_MILLISECONDS                               100
+#define FORK_2019_SCAN_SERVO_DELTA_MILLISECONDS                              100
 #define FORK_2019_SCAN_MEASURE_COUNT                                           3
 #define FORK_2019_SCAN_MATCH_COUNT                                             2
 
 // VERY IMPORTANT to have more than 30 ms between calls, if not, the i2c link
 // seems to be quickly blocked
-#define FORK_2019_SCAN_TIME_BETWEEN_MEASURE_MILLISECONDS                      30
+#define FORK_2019_SCAN_TIME_BETWEEN_MEASURE_MILLISECONDS                      50
 
 // Scan Servo Value
 #define FORK_2019_SCAN_SPEED_FACTOR                                         0xFF

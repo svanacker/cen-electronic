@@ -45,9 +45,9 @@ typedef struct GameStrategyContext GameStrategyContext;
 #define BIG_ROBOT_STRATEGY_1_CHAOS                                             1
 #define BIG_ROBOT_STRATEGY_2_BIG_DISTRIBUTOR_LINE_1                            2
 #define BIG_ROBOT_STRATEGY_3_BIG_DISTRIBUTOR_LINE_1_2_3                        3
-#define BIG_ROBOT_STRATEGY_4_CHAOS_BIG_DISTRIBUTOR_LINE_2                      4
-#define BIG_ROBOT_STRATEGY_5_CHAOS_BIG_DISTRIBUTOR_LINE_2_3                    5
-#define BIG_ROBOT_STRATEGY_6_CHAOS_BIG_DISTRIBUTOR_LINE_2_3_1                  6
+#define BIG_ROBOT_STRATEGY_4_CHAOS_BIG_DISTRIBUTOR_LINE_3                      4
+#define BIG_ROBOT_STRATEGY_5_CHAOS_BIG_DISTRIBUTOR_LINE_3_2                    5
+#define BIG_ROBOT_STRATEGY_6_CHAOS_BIG_DISTRIBUTOR_LINE_3_2_1                  6
 
 /**
  * Encapsulates the context of the strategy.

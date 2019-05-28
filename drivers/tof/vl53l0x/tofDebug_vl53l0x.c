@@ -188,6 +188,7 @@ void printTofSensorDetectionDebugTableHeaderVL53L0X(OutputStream* outputStream) 
     appendStringHeader(outputStream, "(Hex)", TOF_SENSOR_VALUE_DISTANCE_HEX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "(mm)", TOF_SENSOR_VALUE_OBJECT_X_COLUMN_LENGTH);
     appendStringHeader(outputStream, "(mm)", TOF_SENSOR_VALUE_OBJECT_Y_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, TOF_SENSOR_LAST_COLUMN);
 
     // 4th header line
     appendStringHeader(outputStream, "", TOF_SENSOR_INDEX_COLUMN_LENGTH);
