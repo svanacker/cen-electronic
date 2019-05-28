@@ -121,9 +121,20 @@ void moveElevatorRight(ServoList* servoList, bool wait) {
     pwmServo(servo, FORK_2019_SCAN_SPEED_FACTOR, getScanRightServoValue(), wait);
 }
 
+unsigned int getElevatorScanHeightServoValue(void) {
+    if (getRobotType() == ROBOT_TYPE_BIG) {
+        return FORK_2019_BIG_ROBOT_ELEVATOR_DISTRIBUTOR_SCAN_SERVO_VALUE;
+    }
+    else if (getRobotType() == ROBOT_TYPE_SMALL) {
+        return FORK_2019_SMALL_ROBOT_ELEVATOR_DISTRIBUTOR_SCAN_SERVO_VALUE;        
+    }
+    return 1500;
+}
+
+
 void moveElevatorDistributorScan(ServoList* servoList, bool wait) {
     Servo* servo = getServo(servoList, FORK_2019_ELEVATOR_SERVO_INDEX);
-    pwmServo(servo, FORK_2019_ELEVATOR_SPEED_FACTOR, FORK_2019_ELEVATOR_DISTRIBUTOR_SCAN_SERVO_VALUE, wait);
+    pwmServo(servo, FORK_2019_ELEVATOR_SPEED_FACTOR, getElevatorScanHeightServoValue(), wait);
 }
 
 bool forkScan(ServoList* servoList, TofSensorList* tofSensorList, unsigned int leftRight) {

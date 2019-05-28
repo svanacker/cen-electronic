@@ -44,9 +44,9 @@
 #define FORK_2019_BIG_ROBOT_SCAN_RIGHT_SERVO_VALUE                          1150
 
 // SMALL ROBOT
-#define FORK_2019_SMALL_ROBOT_SCAN_MIDDLE_SERVO_VALUE                       1360
-#define FORK_2019_SMALL_ROBOT_SCAN_LEFT_SERVO_VALUE                         1760
-#define FORK_2019_SMALL_ROBOT_SCAN_RIGHT_SERVO_VALUE                        1000
+#define FORK_2019_SMALL_ROBOT_SCAN_MIDDLE_SERVO_VALUE                       1410
+#define FORK_2019_SMALL_ROBOT_SCAN_LEFT_SERVO_VALUE                         1860
+#define FORK_2019_SMALL_ROBOT_SCAN_RIGHT_SERVO_VALUE                         960
 
 
 // FORK SCAN
