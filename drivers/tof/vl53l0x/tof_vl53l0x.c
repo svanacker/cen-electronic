@@ -305,7 +305,7 @@ void initTofSensorVL53L0X(TofSensor* tofSensor,
     // Orientation and Beam Angle
     // TODO : VL53L0X value of beam angle : https://forum.pololu.com/t/vl53l0x-beam-width-angle/11483
     // Be it could change for another tof
-    tofSensor->beamAngleRadian = degToRad(25.0f);
+    tofSensor->beamAngleRadian = degToRad(TOF_VL53L0X_BEAM_ANGLE_DEGREE);
 
     initTofSensor(tofSensor,
             &tofSensorStartVL53L0X,

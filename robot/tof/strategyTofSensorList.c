@@ -15,6 +15,8 @@
 #include "../../drivers/tof/tofList.h"
 #include "../../drivers/tof/tofDetectionUtils.h"
 
+#include "../../motion/simulation/motionSimulation.h"
+
 #include "../../robot/robot.h"
 #include "../../robot/gameboard/gameboard.h"
 #include "../../robot/match/startMatch.h"
@@ -91,7 +93,12 @@ void handleTofSensorList(GameStrategyContext* gameStrategyContext, StartMatch* s
             tofSensorListBeep(tofSensorList, detected);
 
             // motionDriverStop();
-            motionDriverCancel();
+            if (gameStrategyContext->simulateMove) {
+                simulateMotionCancel(gameStrategyContext);
+            }
+            else {
+                motionDriverCancel();
+            }
             // Then we notify !
             OutputStream* alwaysOutputStream = getAlwaysOutputStreamLogger();
             println(alwaysOutputStream);

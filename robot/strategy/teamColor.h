@@ -5,10 +5,12 @@
 
 /** Define the color for the team. */
 enum TeamColor {
+    /** Unknown Color */
+    TEAM_COLOR_UNKNOWN = 0,
     /** 2019 Violet Color. */
-    TEAM_COLOR_VIOLET = 0,
-    /** 2018 Yellow Color. */
-    TEAM_COLOR_YELLOW = 1
+    TEAM_COLOR_VIOLET = 1,
+    /** 2019 Yellow Color. */
+    TEAM_COLOR_YELLOW = 2
 };
 
 /** 

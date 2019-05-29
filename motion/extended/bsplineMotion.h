@@ -9,6 +9,16 @@
 #include "../extended/bspline.h"
 
 /**
+ * TODO
+ */
+void updateSimpleSplineWithDistance(BSplineCurve* curve,
+    float destX, float destY,
+    float destAngle,
+    float distance1, float distance2,
+    float accelerationFactor, float speedFactor,
+    bool relative);
+
+/**
  * Go from the relative destination to the initial Position of the robot
  * Computes the bezier Point so that the curve is not to huge
  * @param relativeDestX the relative X destination point

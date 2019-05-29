@@ -27,6 +27,11 @@
 #define TIMER_STRATEGY_MOTION_HANDLER_UPDATE_ROBOT_POSITION           15
 
 /**
+* Defines the timer used by the PC to simulate the move of the Robot
+*/
+#define TIMER_MOTION_SIMULATION_PC                               17
+
+/**
 * Defines the index for the timer which detects end of the match.
 */
 #define END_MATCH_DETECTOR_TIMER_CODE                  20

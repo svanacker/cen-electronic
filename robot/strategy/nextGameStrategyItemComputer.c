@@ -26,6 +26,9 @@
 #include "../../navigation/location.h"
 
 GameTarget* computeBestNextTarget(GameStrategyContext* strategyContext) {
+    if (strategyContext->nearestLocation == NULL) {
+        return NULL;
+    }
     GameTarget* result = NULL;
     GameStrategy* gameStrategy = strategyContext->gameStrategy;
     if (gameStrategy == NULL) {

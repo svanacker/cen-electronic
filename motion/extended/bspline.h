@@ -100,8 +100,9 @@ void copyBSplineData(BSplinePointData* source, BSplinePointData* target);
 /**
  * Compute the length of a bezier arc curve.
  * @param bSplineCurve the curve for which we compute the length
- * @param bezierPoints the point which define the bezier curve
- */
+ * @param timeIncremnt between 0.0f and 1.0f (max for a bezier curve). If the value is very small,
+ * the accuracy of length is better, but it takes more time to compute
+*/
 float computeBSplineArcLength(BSplineCurve* bSplineCurve, float timeIncrement);
 
 /**

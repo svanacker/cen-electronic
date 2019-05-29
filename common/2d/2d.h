@@ -90,4 +90,14 @@ void computeDirectionPoint(Point* ref, Point* result, float distance, float angl
 */
 bool isInRectangle(float x, float y, float width, float height, float pointX, float pointY);
 
+/**
+* Is the point in the circle.
+* @param pointX the X coordinate of the point that we want to test if it's inside the rectangle
+* @param pointX the X coordinate of the point that we want to test if it's inside the rectangle
+* @return true if the point is inside the rectangle, false else
+*/
+bool isInCircle2(float circleCenterX, float circleCenterY, float circleRadius, float pointX, float pointY);
+
+bool isInCircle(Point* circleCenterPoint, Point* point, float circleRadius);
+
 #endif

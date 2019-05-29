@@ -94,6 +94,9 @@
 #include "../../main/motorboard/motorBoardPc.h"
 #include "../../main/meca1/mechanicalMainBoard1Pc.h"
 
+// MOTION
+#include "../../motion/simulation/motionSimulation.h"
+
 // CONFIG
 #include "../../robot/config/pc/robotConfigPc.h"
 #include "../../robot/config/robotConfigDevice.h"
@@ -225,6 +228,10 @@
 // Fake Robot
 #include "../../robot/fake/fakeRobot.h"
 
+// Other MainBoard
+#include "../../main/mainBoard/mainBoardCommonTof.h"
+#include "../../main/mainBoard/mainBoardCommonTofPc.h"
+
 // 2019
 #include "../../robot/2019/mainBoard2019.h"
 #include "../../robot/2019/elevator/elevatorDeviceInterface2019.h"
@@ -343,10 +350,6 @@ static GameStrategyContext* gameStrategyContext;
 static GameBoard* gameBoard;
 static Navigation* navigation;
 
-// TOF
-static TofSensorList tofSensorList;
-static TofSensor tofSensorArray[MAIN_BOARD_PC_TOF_SENSOR_LIST_LENGTH];
-
 // IOExpander
 static IOExpanderList ioExpanderList;
 static IOExpander ioExpanderArray[MAIN_BOARD_PC_IO_EXPANDER_LIST_LENGTH];
@@ -416,7 +419,11 @@ bool mainBoardPcWaitForInstruction(StartMatch* startMatch) {
             NULL);
     }
 
-    // Protection againt the start before the match
+    // Handle Tof
+    if (gameStrategyContext != NULL) {
+        handleTofSensorList(gameStrategyContext, startMatch, gameStrategyContext->tofSensorList, gameBoard);
+    }
+    // Protection against the start before the match
     if (startMatch->isMatchStartedFunction(startMatch)) {
         if (gameStrategyContext->loopTargetAndActions) {
             return nextTargetOrNextStep(gameStrategyContext);
@@ -442,7 +449,7 @@ void initMainBoardLocalDevices(void) {
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
     addLocalDevice(getLogDeviceInterface(), getLogDeviceDescriptor());
     addLocalDevice(getLCDDeviceInterface(), getLCDDeviceDescriptor());
-    addLocalDevice(getTofDeviceInterface(), getTofDeviceDescriptor(&tofSensorList));
+    addLocalDevice(getTofDeviceInterface(), getTofDeviceDescriptor(mainBoardCommonTofGetTofSensorList()));
 
 
     //  IO Expander
@@ -472,9 +479,9 @@ void initMainBoardLocalDevices(void) {
 //    addLocalDevice(getStrategy2018DeviceInterface(), getStrategy2018DeviceDescriptor(distributor));
     addLocalDevice(getElevator2019DeviceInterface(), getElevator2019DeviceDescriptor(&servoList));
     addLocalDevice(getArm2019DeviceInterface(), getArm2019DeviceDescriptor(&servoList));
-    addLocalDevice(getFork2019DeviceInterface(), getFork2019DeviceDescriptor(&servoList, &tofSensorList));
-    addLocalDevice(getDistributor2019DeviceInterface(), getDistributor2019DeviceDescriptor(&servoList, &tofSensorList));
-    addLocalDevice(getGoldenium2019DeviceInterface(), getGoldenium2019DeviceDescriptor(&servoList, &tofSensorList));
+    addLocalDevice(getFork2019DeviceInterface(), getFork2019DeviceDescriptor(&servoList, mainBoardCommonTofGetTofSensorList()));
+    addLocalDevice(getDistributor2019DeviceInterface(), getDistributor2019DeviceDescriptor(&servoList, mainBoardCommonTofGetTofSensorList()));
+    addLocalDevice(getGoldenium2019DeviceInterface(), getGoldenium2019DeviceDescriptor(&servoList, mainBoardCommonTofGetTofSensorList()));
 
     addLocalDevice(getElectronLauncher2019DeviceInterface(), getElectronLauncher2019DeviceDescriptor(&launcher));
 
@@ -571,8 +578,8 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
     }
 
     // CONFIG
-    initRobotConfigPc(&robotConfig, ROBOT_TYPE_BIG);
-    // initRobotConfigPc(&robotConfig, ROBOT_TYPE_SMALL);
+    // initRobotConfigPc(&robotConfig, ROBOT_TYPE_BIG);
+    initRobotConfigPc(&robotConfig, ROBOT_TYPE_SMALL);
 
     // EEPROM
     initEepromPc(&eeprom, "MAIN_BOARD_EEPROM");
@@ -595,10 +602,6 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
         (char(*)[]) &i2cMasterDebugOutputBufferArray,
         MAIN_BOARD_PC_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH);
 
-
-    // TOF List
-    initTofSensorListPc(&tofSensorList, (TofSensor(*)[]) &tofSensorArray, MAIN_BOARD_PC_TOF_SENSOR_LIST_LENGTH);
-
     // IO Expander List
     initIOExpanderList(&ioExpanderList, (IOExpander(*)[]) &ioExpanderArray, MAIN_BOARD_PC_IO_EXPANDER_LIST_LENGTH);
 
@@ -606,13 +609,19 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
     initMultiplexerList(&multiplexerList, (Multiplexer(*)[]) &multiplexerArray, MAIN_BOARD_PC_MULTIPLEXER_LIST_LENGTH);
 
     // Fake Robot
-    initFakeRobot(1000.0f, 1500.0f, 0.0f, 17.0f);
+    initFakeRobot(400.0f, 1000.0f, 0.0f, 140.0f);
+    // initFakeRobot(0.0f, 0.0f, 0.0f, 140.0f);
 
     navigation = initNavigation2019();
-    gameStrategyContext = initGameStrategyContext2019(&robotConfig, &endMatch, &tofSensorList, &servoList);
+    gameStrategyContext = initGameStrategyContext2019(&robotConfig, &endMatch, mainBoardCommonTofGetTofSensorList(), &servoList);
+
+    // Init the Tof as soon with have the gameStrategyContext
+    mainBoardCommonTofInitDriversPc(&robotConfig, &multiplexerList, &ioExpanderList, gameStrategyContext);
+
     // For PC, we simulate the move
     gameStrategyContext->simulateMove = true;
     gameBoard = initGameBoard2019(gameStrategyContext);
+    initMotionSimulation(gameStrategyContext);
 
     // Init the drivers
     initDrivers(&driverRequestBuffer, (char(*)[]) &driverRequestBufferArray, MAIN_BOARD_PC_REQUEST_DRIVER_BUFFER_LENGTH,

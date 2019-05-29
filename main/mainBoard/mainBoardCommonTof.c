@@ -44,7 +44,7 @@ static TofSensorList tofSensorList;
 static TofSensor tofSensorArray[MAIN_BOARD_TOF_SENSOR_LIST_LENGTH];
 
 TofSensorList* mainBoardCommonTofInitDrivers(RobotConfig* robotConfig, MultiplexerList* multiplexerList, IOExpanderList* ioExpanderList) {
-    tofSensorList.tofSensorArray = &tofSensorArray;
+    (&tofSensorList)->tofSensorArray = (TofSensor(*)[]) &tofSensorArray;
     
     float distanceFactor = getSonarDistanceCheckFactor(robotConfig);
     bool collisionEnabled = isSonarActivated(robotConfig);

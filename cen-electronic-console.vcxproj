@@ -372,6 +372,7 @@
     <ClCompile Include="drivers\tof\vl53l0x\vl53l0x_platform_common.c" />
     <ClCompile Include="drivers\tof\vl53l0x\vl53l0x_platform_log.c" />
     <ClCompile Include="main\mainBoard\mainBoardCommonTof.c" />
+    <ClCompile Include="main\mainBoard\mainBoardCommonTofPc.c" />
     <ClCompile Include="main\mainBoard\mainBoardPc.c" />
     <ClCompile Include="main\meca1\mechanicalMainBoard1Pc.c" />
     <ClCompile Include="main\motorboard\motorBoardPc.c" />
@@ -789,6 +790,7 @@
     <ClInclude Include="drivers\tof\vl53l0x\vl53l0x_types.h" />
     <ClInclude Include="main\mainBoard\mainBoardCommon.h" />
     <ClInclude Include="main\mainBoard\mainBoardCommonTof.h" />
+    <ClInclude Include="main\mainBoard\mainBoardCommonTofPc.h" />
     <ClInclude Include="main\mainBoard\mainBoardPc.h" />
     <ClInclude Include="main\meca1\mechanicalMainBoard1Common.h" />
     <ClInclude Include="main\meca1\mechanicalMainBoard1Pc.h" />
@@ -852,6 +854,7 @@
     <ClInclude Include="motion\position\trajectoryTypeDebug.h" />
     <ClInclude Include="motion\simple\motionCalibration.h" />
     <ClInclude Include="motion\simple\simpleMotion.h" />
+    <ClInclude Include="motion\simulation\motionSimulation.h" />
     <ClInclude Include="navigation\location.h" />
     <ClInclude Include="navigation\locationList.h" />
     <ClInclude Include="navigation\locationListComputer.h" />

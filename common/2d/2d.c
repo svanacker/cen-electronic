@@ -52,3 +52,11 @@ void computeDirectionPoint(Point* ref, Point* result, float distance, float angl
 bool isInRectangle(float x, float y, float width, float height, float pointX, float pointY) {
     return (x <= pointX && pointX <= x + width) && (y <= pointY && pointY <= y + height);
 }
+
+bool isInCircle2(float circleCenterX, float circleCenterY, float circleRadius, float pointX, float pointY) {
+    return distanceBetweenPoints2(circleCenterX, circleCenterY, pointX, pointY) <= circleRadius;
+}
+
+bool isInCircle(Point* circleCenterPoint, Point* point, float circleRadius) {
+    return distanceBetweenPoints(circleCenterPoint, point) <= circleRadius;
+}

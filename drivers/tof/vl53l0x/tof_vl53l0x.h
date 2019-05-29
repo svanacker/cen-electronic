@@ -9,6 +9,8 @@
 #include "vl53l0x_def.h"
 #include "vl53l0x_platform.h"
 
+#define TOF_VL53L0X_BEAM_ANGLE_DEGREE    25.0f
+
 // Forward declaration
 typedef struct TofSensorVL53L0X TofSensorVL53L0X;
 

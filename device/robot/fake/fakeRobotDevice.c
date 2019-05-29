@@ -67,7 +67,6 @@ void deviceFakeRobotHandleRawData(unsigned char header, InputStream* inputStream
         fakeRobot->angleRadian = (float)readHex4(inputStream);
         checkIsSeparator(inputStream);
         fakeRobot->radius = (float)readHex4(inputStream);
-        checkIsSeparator(inputStream);
     }
 }
 

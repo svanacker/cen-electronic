@@ -1114,6 +1114,9 @@
     <Filter Include="Header Files\device\robot\fake">
       <UniqueIdentifier>{b7285664-f65d-40d9-90e3-16b0a63bb030}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\motion\simulation">
+      <UniqueIdentifier>{e1827713-9068-468a-a8df-158b656002da}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -1712,9 +1715,6 @@
     </ClCompile>
     <ClCompile Include="common\system\system.c">
       <Filter>Source Files\common\system</Filter>
-    </ClCompile>
-    <ClCompile Include="motion\simulation\motionSimulation.c">
-      <Filter>Source Files\motion\simulation</Filter>
     </ClCompile>
     <ClCompile Include="device\motion\simulation\motionSimulationDevice.c">
       <Filter>Source Files\device\motion\simulation</Filter>
@@ -2330,6 +2330,12 @@
     </ClCompile>
     <ClCompile Include="main\mainBoard\mainBoardCommonTof.c">
       <Filter>Source Files\main\mainBoard</Filter>
+    </ClCompile>
+    <ClCompile Include="main\mainBoard\mainBoardCommonTofPc.c">
+      <Filter>Source Files\main\mainBoard</Filter>
+    </ClCompile>
+    <ClCompile Include="motion\simulation\motionSimulation.c">
+      <Filter>Source Files\motion\simulation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -3640,6 +3646,12 @@
     </ClInclude>
     <ClInclude Include="main\mainBoard\mainBoardCommonTof.h">
       <Filter>Header Files\main\mainBoard</Filter>
+    </ClInclude>
+    <ClInclude Include="main\mainBoard\mainBoardCommonTofPc.h">
+      <Filter>Header Files\main\mainBoard</Filter>
+    </ClInclude>
+    <ClInclude Include="motion\simulation\motionSimulation.h">
+      <Filter>Header Files\motion\simulation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
