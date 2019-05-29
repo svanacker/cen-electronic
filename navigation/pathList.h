@@ -69,4 +69,10 @@ unsigned int getPathCount(PathList* pathList);
 
 void pathListDecreaseObstacleCost(PathList* pathList);
 
+/**
+* When Temporary Paths have been used and the robot is now back to permanent Location, we must mark the pathData which were generated
+* as reusable.
+*/
+void pathListClearTemporaryPaths(PathList* pathList);
+
 #endif

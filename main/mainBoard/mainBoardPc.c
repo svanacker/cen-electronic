@@ -151,6 +151,10 @@
 #include "../../device/motor/pwmMotorDevice.h"
 #include "../../device/motor/pwmMotorDeviceInterface.h"
 
+// ROBOT
+#include "../../device/robot/fake/fakeRobotDevice.h"
+#include "../../device/robot/fake/fakeRobotDeviceInterface.h"
+
 // SENSOR->TEMPERATURE
 #include "../../device/sensor/temperature/temperatureSensor.h"
 #include "../../device/sensor/temperature/temperatureSensorDevice.h"
@@ -217,6 +221,9 @@
 #include "../../robot/strategy/gameStrategyHandler.h"
 #include "../../robot/strategy/gameStrategyMotionHandler.h"
 #include "../../robot/strategy/gameStrategyPositionHandler.h"
+
+// Fake Robot
+#include "../../robot/fake/fakeRobot.h"
 
 // 2019
 #include "../../robot/2019/mainBoard2019.h"
@@ -352,7 +359,6 @@ static Multiplexer multiplexerArray[MAIN_BOARD_PC_MULTIPLEXER_LIST_LENGTH];
 static int multiplexerValue0;
 static int multiplexerValue1;
 
-
 // 2019
 static ElectronLauncher2019 launcher;
 
@@ -459,8 +465,8 @@ void initMainBoardLocalDevices(void) {
     // TODO
     // addLocalDevice(getRelayDeviceInterface(), getRelayDeviceDescriptor(&relay));
     // addLocalDevice(getColorSensorDeviceInterface(), getColorSensorDeviceDescriptor(&colorSensor));
-    // addLocalDevice(getTofDeviceInterface(), getTofDeviceDescriptor(&tofSensorList));
     addLocalDevice(getGameboardDeviceInterface(), getGameboardDeviceDescriptor(gameBoard));
+    addLocalDevice(getFakeRobotDeviceInterface(), getFakeRobotDeviceDescriptor(getFakeRobotInstance()));
 
     // 2019 specific
 //    addLocalDevice(getStrategy2018DeviceInterface(), getStrategy2018DeviceDescriptor(distributor));
@@ -599,6 +605,8 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
     // Multiplxer List
     initMultiplexerList(&multiplexerList, (Multiplexer(*)[]) &multiplexerArray, MAIN_BOARD_PC_MULTIPLEXER_LIST_LENGTH);
 
+    // Fake Robot
+    initFakeRobot(1000.0f, 1500.0f, 0.0f, 17.0f);
 
     navigation = initNavigation2019();
     gameStrategyContext = initGameStrategyContext2019(&robotConfig, &endMatch, &tofSensorList, &servoList);

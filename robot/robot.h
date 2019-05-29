@@ -16,7 +16,7 @@ typedef struct RobotPosition {
     float x;
     // y in millimeter
     float y;
-    // angle in decidegree
+    // orientation Angle
     float angleRadian;
 } RobotPosition;
 

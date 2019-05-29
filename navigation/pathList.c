@@ -117,3 +117,31 @@ void pathListDecreaseObstacleCost(PathList* pathList) {
         decreaseObstacleCost(pathData);
     }
 }
+
+void pathListClearTemporaryPaths(PathList* pathList) {
+    unsigned int i;
+    unsigned int size = pathList->size;
+    for (i = 0; i < size; i++) {
+        PathData* pathData = getPath(pathList, i);
+        if (pathData->usageType == PATH_DATA_USAGE_TYPE_TEMPORARY) {
+            pathData->usageType = PATH_DATA_USAGE_TYPE_TO_BE_REUSE;
+        }
+    }
+}
+
+PathData* findPathDataToRecycleIfAny(PathList* pathList) {
+    unsigned int i;
+    unsigned int size = pathList->size;
+    for (i = 0; i < size; i++) {
+        PathData* pathData = getPath(pathList, i);
+        if (pathData->usageType == PATH_DATA_USAGE_TYPE_TO_BE_REUSE) {
+            return pathData;
+        }
+    }
+    return NULL;
+}
+
+
+void addTemporaryPathListFromLocation(PathList* pathList, LocationList* locationList, Location* location) {
+    
+}

@@ -23,6 +23,7 @@
 #include "../mainBoard/mainBoardCommonMotor.h"
 #include "../mainBoard/mainBoardCommonStrategy.h"
 #include "../mainBoard/mainBoardCommonTof.h"
+#include "../mainBoard/mainBoardCommonTof32.h"
 
 #include "../../drivers/pwm/servo/servoPwmPca9685.h"
 #include "../../drivers/pwm/servo/pca9685.h"
@@ -64,7 +65,7 @@ void initMainBoardDevicesDescriptor() {
     mainBoardCommonMotorAddDevices(MAIN_BOARD_SERIAL_PORT_MOTOR);
     mainBoardCommonStrategyAddDevices(MAIN_BOARD_SERIAL_PORT_MOTOR);
     mainBoardCommonMatchAddDevices();
-    mainBoardCommonTofAddDevices();
+    mainBoardCommonTofAddDevices32();
     mainBoardCommonMeca1AddDevices();
 
     // Call the init on each devices
@@ -141,7 +142,7 @@ void mainBoardMainPhase2(void) {
     // index at a very early stage
     mainBoardCommonStrategyMainInitDrivers(&robotConfig);
 
-    mainBoardCommonTofInitDrivers(&robotConfig);
+    mainBoardCommonTofInitDrivers32(&robotConfig);
     mainBoardCommonMatchMainInitDrivers(&robotConfig, isMatchStarted32, mainBoardWaitForInstruction, loopUnWaitForInstruction);
 }
 

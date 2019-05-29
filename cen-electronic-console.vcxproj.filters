@@ -1096,6 +1096,24 @@
     <Filter Include="Source Files\robot\2019\goldenium">
       <UniqueIdentifier>{13aafdb3-2f89-41ae-a561-eeb922f3fdae}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\robot\fake">
+      <UniqueIdentifier>{042f2761-5e2a-409d-b482-257e592503cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\robot\fake">
+      <UniqueIdentifier>{631084ac-79f1-40eb-95cc-c88fcd81d6b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\device\robot">
+      <UniqueIdentifier>{78025533-ef1e-48d6-bd83-7ff753825ab4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\device\robot\fake">
+      <UniqueIdentifier>{ef68e7c1-ef2f-4bef-9635-054719bad325}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\device\robot">
+      <UniqueIdentifier>{f92d6e91-da3d-4336-8b9d-94218144565b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\device\robot\fake">
+      <UniqueIdentifier>{b7285664-f65d-40d9-90e3-16b0a63bb030}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -2300,6 +2318,18 @@
     </ClCompile>
     <ClCompile Include="robot\strategy\gameStrategyPositionHandler.c">
       <Filter>Source Files\robot\strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\fake\fakeRobot.c">
+      <Filter>Source Files\robot\fake</Filter>
+    </ClCompile>
+    <ClCompile Include="device\robot\fake\fakeRobotDevice.c">
+      <Filter>Source Files\device\robot\fake</Filter>
+    </ClCompile>
+    <ClCompile Include="device\robot\fake\fakeRobotDeviceInterface.c">
+      <Filter>Source Files\device\robot\fake</Filter>
+    </ClCompile>
+    <ClCompile Include="main\mainBoard\mainBoardCommonTof.c">
+      <Filter>Source Files\main\mainBoard</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -3598,6 +3628,18 @@
     </ClInclude>
     <ClInclude Include="robot\strategy\gameStrategyPositionHandler.h">
       <Filter>Header Files\robot\strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\fake\fakeRobot.h">
+      <Filter>Header Files\robot\fake</Filter>
+    </ClInclude>
+    <ClInclude Include="device\robot\fake\fakeRobotDevice.h">
+      <Filter>Header Files\device\robot\fake</Filter>
+    </ClInclude>
+    <ClInclude Include="device\robot\fake\fakeRobotDeviceInterface.h">
+      <Filter>Header Files\device\robot\fake</Filter>
+    </ClInclude>
+    <ClInclude Include="main\mainBoard\mainBoardCommonTof.h">
+      <Filter>Header Files\main\mainBoard</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

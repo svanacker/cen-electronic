@@ -492,6 +492,7 @@
         <itemPath>../../mainBoard/mainBoardCommonTof.h</itemPath>
         <itemPath>../../mainBoard/mainBoardCommonStrategy.h</itemPath>
         <itemPath>../../mainBoard/mainBoardCommonMatch.h</itemPath>
+        <itemPath>../../mainBoard/mainBoardCommonTof32.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f28"
                      displayName="main.mainBoardSmallRobot"
@@ -627,6 +628,9 @@
                      displayName="robot.config.32"
                      projectFiles="true">
         <itemPath>../../../robot/config/32/robotConfigPic32.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f46" displayName="robot.fake" projectFiles="true">
+        <itemPath>../../../robot/fake/fakeRobot.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f18" displayName="robot.gameboard" projectFiles="true">
         <itemPath>../../../robot/gameboard/gameboard.h</itemPath>
@@ -1212,6 +1216,7 @@
         <itemPath>../../mainBoard/mainBoardCommonTof.c</itemPath>
         <itemPath>../../mainBoard/mainBoardCommonStrategy.c</itemPath>
         <itemPath>../../mainBoard/mainBoardCommonMatch.c</itemPath>
+        <itemPath>../../mainBoard/mainBoardCommonTof32.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f28"
                      displayName="main.mainBoardSmallRobot"
@@ -1319,6 +1324,9 @@
                      displayName="robot.config.32"
                      projectFiles="true">
         <itemPath>../../../robot/config/32/robotConfigPic32.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f46" displayName="robot.fake" projectFiles="true">
+        <itemPath>../../../robot/fake/fakeRobot.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f17" displayName="robot.gameboard" projectFiles="true">
         <itemPath>../../../robot/gameboard/gameboard.c</itemPath>

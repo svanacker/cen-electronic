@@ -294,6 +294,8 @@
     <ClCompile Include="device\pc\pcDeviceInterface.c" />
     <ClCompile Include="device\relay\relayDevice.c" />
     <ClCompile Include="device\relay\relayDeviceInterface.c" />
+    <ClCompile Include="device\robot\fake\fakeRobotDevice.c" />
+    <ClCompile Include="device\robot\fake\fakeRobotDeviceInterface.c" />
     <ClCompile Include="device\sensor\current\currentSensor.c" />
     <ClCompile Include="device\sensor\current\currentSensorDevice.c" />
     <ClCompile Include="device\sensor\current\currentSensorDeviceInterface.c" />
@@ -369,6 +371,7 @@
     <ClCompile Include="drivers\tof\vl53l0x\vl53l0x_platform.c" />
     <ClCompile Include="drivers\tof\vl53l0x\vl53l0x_platform_common.c" />
     <ClCompile Include="drivers\tof\vl53l0x\vl53l0x_platform_log.c" />
+    <ClCompile Include="main\mainBoard\mainBoardCommonTof.c" />
     <ClCompile Include="main\mainBoard\mainBoardPc.c" />
     <ClCompile Include="main\meca1\mechanicalMainBoard1Pc.c" />
     <ClCompile Include="main\motorboard\motorBoardPc.c" />
@@ -473,6 +476,7 @@
     <ClCompile Include="robot\config\robotConfigDebug.c" />
     <ClCompile Include="robot\config\robotConfigDevice.c" />
     <ClCompile Include="robot\config\robotConfigDeviceInterface.c" />
+    <ClCompile Include="robot\fake\fakeRobot.c" />
     <ClCompile Include="robot\gameboard\gameboard.c" />
     <ClCompile Include="robot\gameboard\gameboardBSplinePrint.c" />
     <ClCompile Include="robot\gameboard\gameboardElement.c" />
@@ -703,6 +707,8 @@
     <ClInclude Include="device\pc\pcDeviceInterface.h" />
     <ClInclude Include="device\relay\relayDevice.h" />
     <ClInclude Include="device\relay\relayDeviceInterface.h" />
+    <ClInclude Include="device\robot\fake\fakeRobotDevice.h" />
+    <ClInclude Include="device\robot\fake\fakeRobotDeviceInterface.h" />
     <ClInclude Include="device\sensor\current\currentSensor.h" />
     <ClInclude Include="device\sensor\current\currentSensorDevice.h" />
     <ClInclude Include="device\sensor\current\currentSensorDeviceInterface.h" />
@@ -782,6 +788,7 @@
     <ClInclude Include="drivers\tof\vl53l0x\vl53l0x_tuning.h" />
     <ClInclude Include="drivers\tof\vl53l0x\vl53l0x_types.h" />
     <ClInclude Include="main\mainBoard\mainBoardCommon.h" />
+    <ClInclude Include="main\mainBoard\mainBoardCommonTof.h" />
     <ClInclude Include="main\mainBoard\mainBoardPc.h" />
     <ClInclude Include="main\meca1\mechanicalMainBoard1Common.h" />
     <ClInclude Include="main\meca1\mechanicalMainBoard1Pc.h" />
@@ -903,6 +910,7 @@
     <ClInclude Include="robot\config\robotConfigDebug.h" />
     <ClInclude Include="robot\config\robotConfigDevice.h" />
     <ClInclude Include="robot\config\robotConfigDeviceInterface.h" />
+    <ClInclude Include="robot\fake\fakeRobot.h" />
     <ClInclude Include="robot\gameboard\gameboard.h" />
     <ClInclude Include="robot\gameboard\gameboardBSplinePrint.h" />
     <ClInclude Include="robot\gameboard\gameboardElement.h" />
