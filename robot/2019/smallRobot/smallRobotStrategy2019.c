@@ -137,7 +137,7 @@ static GameTargetActionItemList smallDistributorLine1DropTargetActionItemList;
 
 // ------------------------------------------------------- TARGET ACTION ITEM LIST ---------------------------------------------------
 
-static GameTargetActionItem acceleratorPrepareTargetActionItem;
+static GameTargetActionItem acceleratorPrepareTargetActionItem1;
 static GameTargetActionItem acceleratorRotationTargetActionItem;
 static GameTargetActionItem acceleratorDropTargetActionItem;
 
@@ -352,7 +352,8 @@ void initSmallRobotTargetActions2019(GameStrategyContext* gameStrategyContext) {
 
 void initSmallRobotTargetActionsItems2019(GameStrategyContext* gameStrategyContext) {
     // Accelerator => We remove the arm when reaching the drop (drop is done by the move of the robot)
-    addTargetActionItem(&acceleratorPrepareTargetActionItemList, &acceleratorPrepareTargetActionItem, &acceleratorArmOn, "ACC ARM ON");
+    addTargetActionItem(&acceleratorPrepareTargetActionItemList, &acceleratorPrepareTargetActionItem1, &acceleratorArmOn, "ACC ARM ON");
+
     addTargetActionItem(&acceleratorDropTargetActionItemList, &acceleratorRotationTargetActionItem, &acceleratorRotationIfNeeded, "ROTATION");
     // We don't activate it for most Strategies
     acceleratorRotationTargetActionItem.enabled = false;

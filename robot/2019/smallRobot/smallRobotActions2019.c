@@ -19,6 +19,7 @@
 #include "../../../robot/2019/navigation/angle2019.h"
 #include "../../../robot/2019/arm/arm2019.h"
 #include "../../../robot/2019/commonRobot/commonRobotActions2019.h"
+#include "../../../robot/2019/elevator/elevator2019.h"
 #include "../../../robot/2019/fork/fork2019.h"
 #include "../../../robot/2019/goldenium/goldenium2019.h"
 #include "../../../robot/2019/strategy/strategy2019Utils.h"
@@ -44,6 +45,8 @@ bool acceleratorArmOn(int* context) {
         // Left Arm
         arm2019On(servoList, FORK_2019_LEFT_INDEX);
     }
+    // We will take the goldenium just after
+    moveElevatorToScanGoldenium(servoList, false);
     // TODO
     return true;
 }

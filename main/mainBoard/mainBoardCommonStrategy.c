@@ -3,6 +3,9 @@
 #include "mainBoardCommonMatch.h"
 
 #include "../../common/2d/2d.h"
+
+#include "../../common/delay/cenDelay.h"
+
 #include "../../common/error/error.h"
 
 #include "../../common/io/buffer.h"
@@ -67,7 +70,8 @@
 #include "../../robot/2019/mainBoard2019.h"
 #include "../../robot/2019/gameboard/gameBoardElement2019.h"
 #include "../../robot/2019/strategy/score2019.h"
-#include "cenDelay.h"
+
+#include "../../client/motion/simple/clientMotion.h"
 
 static GameStrategyContext* gameStrategyContext;
 static Navigation* navigation;
@@ -182,7 +186,7 @@ void mainBoardCommonStrategyMainEndInit(void) {
     // Update this on the MOTOR BOARD to synchronize the position !
     appendStringLN(getDebugOutputStreamLogger(), "Update Robot Position MainBoard->Motor Board");
     updateRobotPositionFromMainBoardToMotorBoard(gameStrategyContext);
-
+    
     appendStringLN(getDebugOutputStreamLogger(), "mainBoardCommonStrategyMainEndInit2019");
     mainBoardCommonStrategyMainEndInit2019(gameStrategyContext);
 }

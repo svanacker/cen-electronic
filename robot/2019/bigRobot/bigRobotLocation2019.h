@@ -47,8 +47,8 @@
 // go on BIG_DISTRIBUTOR_LINE_1 or BIG_DISTRIBUTOR_LINE_2
 #define KEY_POINT_2                                                        "KEP2"
 #define KEY_POINT_2_LABEL                                                  "Key Point 2"
-#define KEY_POINT_2_X                                                        800
-#define KEY_POINT_2_Y                                                        600
+#define KEY_POINT_2_X                                                        900
+#define KEY_POINT_2_Y                                                        700
 #define KEY_POINT_2_ANGLE_DECI_DEG                            -ANGLE_DECI_DEG_135
 #define KEY_POINT_2_FROM_REDIUM_ZONE_ANGLE_DECI_DEG           -ANGLE_DECI_DEG_135
 #define KEY_POINT_2_TO_DISTRIBUTOR_ANGLE_DECI_DEG               ANGLE_DECI_DEG_0
@@ -59,7 +59,7 @@
 #define BIG_DISTRIBUTOR_LINE_1                                            "BDL1"
 #define BIG_DISTRIBUTOR_LINE_1_LABEL                                      "Big Distributor Line 1"
 #define BIG_DISTRIBUTOR_LINE_1_X                                            1480
-#define BIG_DISTRIBUTOR_LINE_1_Y                                             540
+#define BIG_DISTRIBUTOR_LINE_1_Y                                             550
 #define BIG_DISTRIBUTOR_LINE_1_ANGLE_DECI_DEG                     ANGLE_DECI_DEG_0
 
 #define BIG_DISTRIBUTOR_LINE_2                                            "BDL2"
