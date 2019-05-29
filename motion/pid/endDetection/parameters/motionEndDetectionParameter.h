@@ -45,7 +45,8 @@ typedef struct MotionEndDetectionParameter {
     */
     float timeRangeAnalysisInSecond;
     /** 
-     * The delay in milliseconds for which we do not try to check the end detection parameter.
+     * The delay in seconds (but often in milliseconds, we use float)
+     * for which we do not try to check the end detection parameter.
      * It avoids that the robot stop immediately the begin of motion, because it analyses 
      * if the robot is blocked or has ended his trajectory
     */

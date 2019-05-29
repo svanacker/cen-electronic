@@ -9,12 +9,16 @@
 
 // BASIC STATUS PARAMETER PHASE DETECTION
 
-#define ACCELERATION_TOO_HIGH_THRESHOLD_FACTOR_DEFAULT_VALUE    20.0f
+// Factor has no unit, we compare either normal acceleration, speed, or too high u !
+#define ACCELERATION_TOO_HIGH_THRESHOLD_FACTOR_DEFAULT_VALUE    30.0f
 #define SPEED_TOO_LOW_THRESHOLD_FACTOR_DEFAULT_VALUE            5.0f
-#define U_TOO_HIGH_THRESHOLD_FACTOR_DEFAULT_VALUE               5.0f
+#define U_TOO_HIGH_THRESHOLD_FACTOR_DEFAULT_VALUE               8.0f
+
 // In mm / sec
-#define SPEED_MIN_THRESHOLD_DEFAULT_VALUE                       20.0f
+#define SPEED_MIN_THRESHOLD_DEFAULT_VALUE                       10.0f
+
 // U is between 0 and 255 (or superior, but corresponding to max value)
+// To avoid that we send power but not enough to move the robot !
 #define U_MIN_THRESHOLD_DEFAULT_VALUE                           20.0f
 
 // PARAMETERS USED IN AGGREGATION PHASE DETECTION
@@ -23,6 +27,7 @@
 #define ABS_DELTA_POSITION_INTEGRAL_FACTOR_THRESHOLD_DEFAULT_VALUE 1.0f
 
 /**
+ * No Unit, as it is a factor
 * Defines the u integral factor integral for which we consider that there is a blocking.
 * For example, if the value is equal to 4, it indicates that if the average integral of U is more than
 * the normal value of u (with no load), we must consider it as a blocking
@@ -38,12 +43,12 @@
 /**
 * The delay in seconds for which we consider that we are blocked or if we have reached if we don't go anymore
 */
-#define BLOCKING_OR_REACH_DETECTION_DELAY_DEFAULT_VALUE           0.1f
+#define BLOCKING_OR_REACH_DETECTION_DELAY_DEFAULT_VALUE           0.2f
 
 /**
 * The delay for which we do not try to know if the robot is rolling or blocked
 */
-#define BLOCKING_OR_REACH_SKIP_DETECTION_DELAY_DEFAULT_VALUE      0.3f
+#define BLOCKING_OR_REACH_SKIP_DETECTION_DELAY_DEFAULT_VALUE      0.6f
 
 void loadMotionEndDetectionParameters(MotionEndDetectionParameter* motionEndDetectionParameter, Eeprom* motionEndDetectionParametersEeprom, bool loadDefaultValues);
 
