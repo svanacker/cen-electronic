@@ -57,6 +57,7 @@ float getPathEndAngleRadian(PathData* pathData);
  * Initializes the PathData structure with all informations.
  */
 void initPathData(PathData* pathData,
+                  enum PathDataUsageType usageType,
                         Location* location1,
                          Location* location2, 
                          float cost,

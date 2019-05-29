@@ -97,6 +97,8 @@ struct GameStrategyContext {
     bool loopTargetAndActions;
     /** If we consider that we must update the position (by timer). */
     bool robotPositionToUpdateInterruptFlag;
+    /** The current PathData. */
+    PathData* currentPath;
 };
 
 /**

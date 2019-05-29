@@ -30,7 +30,7 @@ void initLocationList(LocationList* locationList, Location(*locationListArray)[]
  * @param x the x coordinates of the location point
  * @param y the x coordinates of the location point
  */
-void initLocation(Location* location, char* name, char* label, float x, float y);
+void initLocation(Location* location, enum LocationUsageType usageType, char* name, char* label, float x, float y);
 
 /**
  * Clear the location list.
@@ -54,13 +54,13 @@ bool isEmptyLocationList(LocationList* locationList);
  * Add a location to the list, but with a pointer on a string
  * @param locationList the pointer on the struct (POO Programming)
  */
-Location* addNamedLocation(LocationList* locationList, char* name, char* label, float x, float y);
+Location* addNamedLocation(LocationList* locationList, enum LocationUsageType usageType, char* name, char* label, float x, float y);
 
 /**
 * Add a location to the list, but with a char pointer structure.
 * @param locationList the pointer on the struct (POO Programming)
 */
-Location* addLocation(LocationList* locationList, FixedCharArray* name, char* label, float x, float y);
+Location* addLocation(LocationList* locationList, enum LocationUsageType usageType, FixedCharArray* name, char* label, float x, float y);
 
 /**
  * Copy the location from the source to the target location, by copying all fields by value.
@@ -109,5 +109,13 @@ unsigned int getLocationCount(LocationList* locationList);
 * Get how many location in the collection which are not already handled.
 */
 unsigned int getLocationNotHandledCount(LocationList* locationList);
+
+// TEMPORARY LOCATIONS
+
+Location* addTemporaryLocation(LocationList* locationList, float x, float y);
+
+void locationListClearTemporaryLocations(LocationList* locationList);
+
+Location* findLocationToRecycleIfAny(LocationList* locationList);
 
 #endif

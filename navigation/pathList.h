@@ -75,4 +75,6 @@ void pathListDecreaseObstacleCost(PathList* pathList);
 */
 void pathListClearTemporaryPaths(PathList* pathList);
 
+PathData* findPathDataToRecycleIfAny(PathList* pathList);
+
 #endif

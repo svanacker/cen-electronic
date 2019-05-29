@@ -4,6 +4,7 @@
 #include "locationListDebug.h"
 #include "locationList.h"
 #include "location.h"
+#include "locationDebug.h"
 
 #include "../common/2d/2d.h"
 
@@ -18,6 +19,7 @@
 // DEBUG AS TABLE
 
 #define LOCATION_LIST_LOCATION_INDEX_COLUMN_LENGTH           4
+#define LOCATION_LIST_LOCATION_USAGE_TYPE_COLUMN_LENGTH      3
 #define LOCATION_LIST_LOCATION_NAME_COLUMN_LENGTH            8 
 #define LOCATION_LIST_LOCATION_NAME_HEX_COLUMN_LENGTH        9
 #define LOCATION_LIST_LOCATION_X_COLUMN_LENGTH               8
@@ -38,6 +40,7 @@ void printLocationListHeader(OutputStream* outputStream) {
     // Line Header 1
 	appendTableHeaderSeparatorLine(outputStream);
     appendStringHeader(outputStream, "Idx", LOCATION_LIST_LOCATION_INDEX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Usa", LOCATION_LIST_LOCATION_USAGE_TYPE_COLUMN_LENGTH);
     appendStringHeader(outputStream, "name", LOCATION_LIST_LOCATION_NAME_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "name", LOCATION_LIST_LOCATION_NAME_HEX_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "x", LOCATION_LIST_LOCATION_X_COLUMN_LENGTH);
@@ -50,6 +53,8 @@ void printLocationListHeader(OutputStream* outputStream) {
     appendEndOfTableColumn(outputStream, LOCATION_LIST_LOCATION_LAST_COLUMN_LENGTH);
     // Line Header 2
     appendStringHeader(outputStream, "", LOCATION_LIST_LOCATION_INDEX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "ge", LOCATION_LIST_LOCATION_USAGE_TYPE_COLUMN_LENGTH);
+
     appendStringHeader(outputStream, "", LOCATION_LIST_LOCATION_NAME_COLUMN_LENGTH);
     appendStringHeader(outputStream, "(hex)", LOCATION_LIST_LOCATION_NAME_HEX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", LOCATION_LIST_LOCATION_X_COLUMN_LENGTH);
@@ -64,6 +69,7 @@ void printLocationListHeader(OutputStream* outputStream) {
 
 void printLocationTable(OutputStream* outputStream, Location* location, unsigned int locationIndex) {
     appendDecTableData(outputStream, locationIndex, LOCATION_LIST_LOCATION_INDEX_COLUMN_LENGTH);
+    addLocationUsageTypeShortTableData(outputStream, location->usageType, LOCATION_LIST_LOCATION_USAGE_TYPE_COLUMN_LENGTH);
     if (location != NULL) {
         appendFixedCharArrayTableData(outputStream, &(location->name), LOCATION_LIST_LOCATION_NAME_COLUMN_LENGTH);
         appendHexFixedCharArrayTableData(outputStream, &(location->name), LOCATION_LIST_LOCATION_NAME_HEX_COLUMN_LENGTH);
@@ -122,8 +128,8 @@ unsigned int appendLocationLinkedPath(OutputStream* outputStream, Location* star
 // Tests Data
 
 void addLocationListTestsData(LocationList* locationList) {
-	addNamedLocation(locationList, "STAR", "STAR", 10, 20);
-	addNamedLocation(locationList, "OBJ1", "OBJ 1", 200, 300);
-	addNamedLocation(locationList, "OBJ2", "OBJ 2", 400, 700);
-	addNamedLocation(locationList, "END", "END", 1500, 2000);
+	addNamedLocation(locationList, LOCATION_USAGE_TYPE_PERMANENT, "STAR", "STAR", 10, 20);
+	addNamedLocation(locationList, LOCATION_USAGE_TYPE_PERMANENT, "OBJ1", "OBJ 1", 200, 300);
+	addNamedLocation(locationList, LOCATION_USAGE_TYPE_PERMANENT, "OBJ2", "OBJ 2", 400, 700);
+	addNamedLocation(locationList, LOCATION_USAGE_TYPE_PERMANENT, "END", "END", 1500, 2000);
 }

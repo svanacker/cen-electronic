@@ -140,8 +140,3 @@ PathData* findPathDataToRecycleIfAny(PathList* pathList) {
     }
     return NULL;
 }
-
-
-void addTemporaryPathListFromLocation(PathList* pathList, LocationList* locationList, Location* location) {
-    
-}

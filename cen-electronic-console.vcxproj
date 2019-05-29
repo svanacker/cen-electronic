@@ -431,6 +431,7 @@
     <ClCompile Include="motion\simple\simpleMotion.c" />
     <ClCompile Include="motion\simulation\motionSimulation.c" />
     <ClCompile Include="navigation\location.c" />
+    <ClCompile Include="navigation\locationDebug.c" />
     <ClCompile Include="navigation\locationList.c" />
     <ClCompile Include="navigation\locationListComputer.c" />
     <ClCompile Include="navigation\locationListDebug.c" />
@@ -439,6 +440,7 @@
     <ClCompile Include="navigation\navigationDebug.c" />
     <ClCompile Include="navigation\outgoingPathList.c" />
     <ClCompile Include="navigation\path.c" />
+    <ClCompile Include="navigation\pathDebug.c" />
     <ClCompile Include="navigation\pathList.c" />
     <ClCompile Include="navigation\pathListDebug.c" />
     <ClCompile Include="robot\2019\arm\arm2019.c" />
@@ -512,6 +514,7 @@
     <ClCompile Include="robot\strategy\gameStrategyItem.c" />
     <ClCompile Include="robot\strategy\gameStrategyList.c" />
     <ClCompile Include="robot\strategy\gameStrategyListDebug.c" />
+    <ClCompile Include="robot\strategy\gameStrategyOutsidePathHandler.c" />
     <ClCompile Include="robot\strategy\gameStrategyPositionHandler.c" />
     <ClCompile Include="robot\strategy\gameTarget.c" />
     <ClCompile Include="robot\strategy\gameTargetAction.c" />
@@ -856,6 +859,7 @@
     <ClInclude Include="motion\simple\simpleMotion.h" />
     <ClInclude Include="motion\simulation\motionSimulation.h" />
     <ClInclude Include="navigation\location.h" />
+    <ClInclude Include="navigation\locationDebug.h" />
     <ClInclude Include="navigation\locationList.h" />
     <ClInclude Include="navigation\locationListComputer.h" />
     <ClInclude Include="navigation\locationListDebug.h" />
@@ -865,6 +869,7 @@
     <ClInclude Include="navigation\outgoingPath.h" />
     <ClInclude Include="navigation\outgoingPathList.h" />
     <ClInclude Include="navigation\path.h" />
+    <ClInclude Include="navigation\pathDebug.h" />
     <ClInclude Include="navigation\pathList.h" />
     <ClInclude Include="navigation\pathListDebug.h" />
     <ClInclude Include="resource.h" />
@@ -951,6 +956,7 @@
     <ClInclude Include="robot\strategy\gameStrategyItem.h" />
     <ClInclude Include="robot\strategy\gameStrategyList.h" />
     <ClInclude Include="robot\strategy\gameStrategyListDebug.h" />
+    <ClInclude Include="robot\strategy\gameStrategyOutsidePathHandler.h" />
     <ClInclude Include="robot\strategy\gameStrategyPositionHandler.h" />
     <ClInclude Include="robot\strategy\gameTarget.h" />
     <ClInclude Include="robot\strategy\gameTargetAction.h" />

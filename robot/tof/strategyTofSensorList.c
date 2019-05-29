@@ -90,15 +90,24 @@ void handleTofSensorList(GameStrategyContext* gameStrategyContext, StartMatch* s
         
         // We must know if it's in the gameboard
         if (isPointInTheCollisionArea(gameBoard, &detectedPoint)) {
-            tofSensorListBeep(tofSensorList, detected);
 
             // motionDriverStop();
             if (gameStrategyContext->simulateMove) {
+#ifdef PC_COMPILER   
                 simulateMotionCancel(gameStrategyContext);
+#endif
             }
             else {
                 motionDriverCancel();
             }
+            // We beep after to gain some ms !
+            tofSensorListBeep(tofSensorList, detected);
+            PathData* currentPath = gameStrategyContext->currentPath;
+            if (currentPath != NULL) {
+                // Good value to find
+                updateObstacleCostIfObstacle(currentPath);
+            }
+
             // Then we notify !
             OutputStream* alwaysOutputStream = getAlwaysOutputStreamLogger();
             println(alwaysOutputStream);

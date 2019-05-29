@@ -58,7 +58,8 @@ void copyLocation(Location* sourceLocation, Location* targetLocation) {
     targetLocation->y = sourceLocation->y;
 }
 
-void initLocation(Location* location, char* name, char* label, float x, float y) {
+void initLocation(Location* location, enum LocationUsageType usageType, char* name, char* label, float x, float y) {
+    location->usageType = usageType;
     FixedCharArray* existingLocationName = &(location->name);
     stringToFixedCharArray(name, existingLocationName);
     location->x = x;
@@ -70,7 +71,7 @@ void initLocation(Location* location, char* name, char* label, float x, float y)
     location->computedPreviousLocation = NULL;
 }
 
-Location* addNamedLocation(LocationList* locationList, char* name, char* label, float x, float y) {
+Location* addNamedLocation(LocationList* locationList, enum LocationUsageType locationUsageType, char* name, char* label, float x, float y) {
     if (locationList == NULL || locationList->maxSize == 0) {
         writeError(LOCATION_LIST_NOT_INITIALIZED);
         return NULL;
@@ -79,7 +80,7 @@ Location* addNamedLocation(LocationList* locationList, char* name, char* label, 
     unsigned int size = locationList->size;
     if (size < locationList->maxSize) {
         Location* location = getLocation(locationList, size);
-        initLocation(location, name, label, x, y);
+        initLocation(location, locationUsageType, name, label, x, y);
         locationList->size++;
         return location;
     }
@@ -89,8 +90,8 @@ Location* addNamedLocation(LocationList* locationList, char* name, char* label, 
     }
 }
 
-Location* addLocation(LocationList* locationList, FixedCharArray* name, char* label, float x, float y) {
-    Location* result = addNamedLocation(locationList, NULL, label, x, y);
+Location* addLocation(LocationList* locationList, enum LocationUsageType locationUsageType, FixedCharArray* name, char* label, float x, float y) {
+    Location* result = addNamedLocation(locationList, locationUsageType, NULL, label, x, y);
     if (result != NULL) {
         FixedCharArray* target = &(result->name);
         copyFixedCharArray(name, target);
@@ -182,4 +183,43 @@ void clearLocationTmpInfo(LocationList* locationList) {
         location->computedPreviousLocation = NULL;
         location->computedHandled = false;
     }
+}
+
+// TEMPORARY LOCATIONS
+
+Location* addTemporaryLocation(LocationList* locationList, float x, float y) {
+    Location* result = findLocationToRecycleIfAny(locationList);
+    if (result == NULL) {
+        result = addNamedLocation(locationList, LOCATION_USAGE_TYPE_TEMPORARY, "TMP", "TMP", x, y);
+    }
+    else {
+        result->x = x;
+        result->y = y;
+        result->usageType = LOCATION_USAGE_TYPE_TEMPORARY;
+    }
+
+    return result;
+}
+
+void locationListClearTemporaryLocations(LocationList* locationList) {
+    unsigned int i;
+    unsigned int size = locationList->size;
+    for (i = 0; i < size; i++) {
+        Location* location = getLocation(locationList, i);
+        if (location->usageType == LOCATION_USAGE_TYPE_TEMPORARY) {
+            location->usageType = LOCATION_USAGE_TYPE_TO_BE_REUSE;
+        }
+    }
+}
+
+Location* findLocationToRecycleIfAny(LocationList* locationList) {
+    unsigned int i;
+    unsigned int size = locationList->size;
+    for (i = 0; i < size; i++) {
+        Location* location = getLocation(locationList, i);
+        if (location->usageType == LOCATION_USAGE_TYPE_TO_BE_REUSE) {
+            return location;
+        }
+    }
+    return NULL;
 }

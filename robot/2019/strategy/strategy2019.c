@@ -97,7 +97,7 @@ Location* addLocationWithColors(enum TeamColor teamColor, Navigation* navigation
     if (teamColor == TEAM_COLOR_2019_VIOLET) {
         y = GAMEBOARD_HEIGHT - y;
     }
-    Location* result = addNamedLocation(locationList, name, label, x, y);
+    Location* result = addNamedLocation(locationList, LOCATION_USAGE_TYPE_PERMANENT, name, label, x, y);
     return result;
 }
 
@@ -122,7 +122,7 @@ PathData* addNavigationPathWithColor(
         angle2 = mod2PI(-angle2);
     }
 
-    initPathData(pathData, location1, location2, cost, controlPointDistance1, controlPointDistance2, angle1, angle2, accelerationFactor, speedFactor);
+    initPathData(pathData, PATH_DATA_USAGE_TYPE_PERMANENT, location1, location2, cost, controlPointDistance1, controlPointDistance2, angle1, angle2, accelerationFactor, speedFactor);
     return pathData;
 }
 

@@ -5,6 +5,7 @@
 #include "location.h"
 #include "pathList.h"
 #include "path.h"
+#include "pathDebug.h"
 
 #include "../common/io/outputStream.h"
 #include "../common/io/printWriter.h"
@@ -15,6 +16,7 @@
 #include "../common/error/error.h"
 
 #define PATH_LIST_INDEX_COLUMN_LENGTH                        3
+#define PATH_LIST_USAGE_TYPE_COLUMN_LENGTH                   3
 #define PATH_LIST_NAME_1_COLUMN_LENGTH                       5
 #define PATH_LIST_NAME_2_COLUMN_LENGTH                       5
 #define PATH_LIST_NAME_HEX_1_COLUMN_LENGTH                   9
@@ -38,11 +40,12 @@ void printPathListHeader(OutputStream* outputStream) {
 	// Table Header
 	appendTableHeaderSeparatorLine(outputStream);
     // Header Line 1
-    appendStringHeader(outputStream, "Idx", PATH_LIST_INDEX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Id", PATH_LIST_INDEX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Usa", PATH_LIST_USAGE_TYPE_COLUMN_LENGTH);
     appendStringHeader(outputStream, "loc.", PATH_LIST_NAME_1_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "loc.", PATH_LIST_NAME_2_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "loc.", PATH_LIST_NAME_HEX_1_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "loc.", PATH_LIST_NAME_HEX_2_COLUMN_LENGTH);
+//	appendStringHeader(outputStream, "loc.", PATH_LIST_NAME_HEX_1_COLUMN_LENGTH);
+//	appendStringHeader(outputStream, "loc.", PATH_LIST_NAME_HEX_2_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "cost", PATH_LIST_COST_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Obst.", PATH_LIST_OBSTACLE_COST_COLUMN_LENGTH);
     appendStringHeader(outputStream, "cp 1", PATH_LIST_CP1_COLUMN_LENGTH);
@@ -57,10 +60,13 @@ void printPathListHeader(OutputStream* outputStream) {
 
     // Header Line 2
     appendStringHeader(outputStream, "", PATH_LIST_INDEX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "ge", PATH_LIST_USAGE_TYPE_COLUMN_LENGTH);
     appendStringHeader(outputStream, "1", PATH_LIST_NAME_1_COLUMN_LENGTH);
     appendStringHeader(outputStream, "2", PATH_LIST_NAME_2_COLUMN_LENGTH);
+    /*
     appendStringHeader(outputStream, "1 Hex", PATH_LIST_NAME_HEX_1_COLUMN_LENGTH);
     appendStringHeader(outputStream, "2 Hex", PATH_LIST_NAME_HEX_2_COLUMN_LENGTH);
+    */
     appendStringHeader(outputStream, "", PATH_LIST_COST_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Cost", PATH_LIST_OBSTACLE_COST_COLUMN_LENGTH);
     appendStringHeader(outputStream, "(mm)", PATH_LIST_CP1_COLUMN_LENGTH);
@@ -77,6 +83,8 @@ void printPathListHeader(OutputStream* outputStream) {
 
 void printPathTable(OutputStream* outputStream, PathData* pathData, unsigned int index) {
 	appendDecTableData(outputStream, index, PATH_LIST_INDEX_COLUMN_LENGTH);
+    addPathDataUsageTypeShortTableData(outputStream, pathData->usageType, PATH_LIST_USAGE_TYPE_COLUMN_LENGTH);
+
     Location* location1 = pathData->location1;
     Location* location2 = pathData->location2;
 
@@ -94,7 +102,8 @@ void printPathTable(OutputStream* outputStream, PathData* pathData, unsigned int
         appendStringTableData(outputStream, "", PATH_LIST_NAME_2_COLUMN_LENGTH);
     }
 
-    // Location Name in Hex
+    // Location Name in Hex => Use another command to get them
+    /*
     if (location1 != NULL) {
         appendHexFixedCharArrayTableData(outputStream, &(pathData->location1->name), PATH_LIST_NAME_HEX_1_COLUMN_LENGTH);
     }
@@ -107,6 +116,7 @@ void printPathTable(OutputStream* outputStream, PathData* pathData, unsigned int
     else {
         appendStringTableData(outputStream, "", PATH_LIST_NAME_HEX_2_COLUMN_LENGTH);
     }
+    */
 	appendDecfTableData(outputStream, pathData->cost, PATH_LIST_COST_COLUMN_LENGTH);
     appendDecfTableData(outputStream, pathData->obstacleCost, PATH_LIST_OBSTACLE_COST_COLUMN_LENGTH);
     appendDecfTableData(outputStream, pathData->controlPointDistance1, PATH_LIST_CP1_COLUMN_LENGTH);

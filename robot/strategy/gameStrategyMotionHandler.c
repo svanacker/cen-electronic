@@ -104,11 +104,15 @@ bool motionFollowPath(GameStrategyContext* gameStrategyContext, PathData* pathDa
     float cp1 = pathData->controlPointDistance1;
     float cp2 = pathData->controlPointDistance2;
 
+    gameStrategyContext->currentPath = pathData;
+
     // Simulate as if the robot goes to the position with a small error to be sure that 
     // algorithm to find nearest position are ok
     if (gameStrategyContext->simulateMove) {
+#ifdef PC_COMPILER        
         simulateBSplineAbsolute(gameStrategyContext, location->x, location->y, angleRadian, cp1, cp2,
             pathData->accelerationFactor, pathData->speedFactor);
+#endif
     }
     else {
         clientExtendedMotionBSplineAbsolute(location->x, location->y, angleRadian, cp1, cp2,

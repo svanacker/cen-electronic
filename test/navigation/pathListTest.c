@@ -32,20 +32,20 @@ void pathListTest(void) {
     PathData* pathDataBD;
     PathData* tmpPathData;
 
-    initLocation(&locationA, "A", "A", 0, 0);
-    initLocation(&locationB, "B", "B", 0, 0);
-    initLocation(&locationC, "C", "C", 0, 0);
-    initLocation(&locationD, "D", "D", 0, 0);
-    initLocation(&locationE, "E", "E", 0, 0);
+    initLocation(&locationA, LOCATION_USAGE_TYPE_PERMANENT, "A", "A", 0, 0);
+    initLocation(&locationB, LOCATION_USAGE_TYPE_PERMANENT, "B", "B", 0, 0);
+    initLocation(&locationC, LOCATION_USAGE_TYPE_PERMANENT, "C", "C", 0, 0);
+    initLocation(&locationD, LOCATION_USAGE_TYPE_PERMANENT, "D", "D", 0, 0);
+    initLocation(&locationE, LOCATION_USAGE_TYPE_PERMANENT, "E", "E", 0, 0);
 
     pathDataAB = addPath(&pathList);
-    initPathData(pathDataAB, &locationA, &locationB, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
+    initPathData(pathDataAB, PATH_DATA_USAGE_TYPE_PERMANENT, &locationA, &locationB, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
 
     pathDataAC = addPath(&pathList);
-    initPathData(pathDataAC, &locationA, &locationC, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
+    initPathData(pathDataAC, PATH_DATA_USAGE_TYPE_PERMANENT, &locationA, &locationC, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
 
     pathDataBD = addPath(&pathList);
-    initPathData(pathDataBD, &locationB, &locationD, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
+    initPathData(pathDataBD, PATH_DATA_USAGE_TYPE_PERMANENT, &locationB, &locationD, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
 
     // getPath
     tmpPathData = getPath(&pathList, 2);

@@ -538,6 +538,8 @@
         <itemPath>../../../navigation/outgoingPathList.h</itemPath>
         <itemPath>../../../navigation/locationListComputer.h</itemPath>
         <itemPath>../../../navigation/navigationComputer.h</itemPath>
+        <itemPath>../../../navigation/locationDebug.h</itemPath>
+        <itemPath>../../../navigation/pathDebug.h</itemPath>
       </logicalFolder>
       <logicalFolder name="robot" displayName="robot" projectFiles="true">
         <itemPath>../../../robot/robot.h</itemPath>
@@ -688,6 +690,7 @@
         <itemPath>../../../robot/strategy/gameStrategyMotionHandler.h</itemPath>
         <itemPath>../../../robot/strategy/gameTargetActionDebug.h</itemPath>
         <itemPath>../../../robot/strategy/gameStrategyPositionHandler.h</itemPath>
+        <itemPath>../../../robot/strategy/gameStrategyOutsidePathHandler.h</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.strategy.factor"
                      displayName="robot.strategy.factor"
@@ -1244,6 +1247,8 @@
         <itemPath>../../../navigation/outgoingPathList.c</itemPath>
         <itemPath>../../../navigation/locationListComputer.c</itemPath>
         <itemPath>../../../navigation/navigationComputer.c</itemPath>
+        <itemPath>../../../navigation/locationDebug.c</itemPath>
+        <itemPath>../../../navigation/pathDebug.c</itemPath>
       </logicalFolder>
       <logicalFolder name="robot" displayName="robot" projectFiles="true">
         <itemPath>../../../robot/robot.c</itemPath>
@@ -1384,6 +1389,7 @@
         <itemPath>../../../robot/strategy/gameStrategyMotionHandler.c</itemPath>
         <itemPath>../../../robot/strategy/gameTargetActionDebug.c</itemPath>
         <itemPath>../../../robot/strategy/gameStrategyPositionHandler.c</itemPath>
+        <itemPath>../../../robot/strategy/gameStrategyOutsidePathHandler.c</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.strategy.factor"
                      displayName="robot.strategy.factor"
