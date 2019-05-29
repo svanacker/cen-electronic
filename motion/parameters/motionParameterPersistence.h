@@ -12,8 +12,8 @@
 #define DEFAULT_FORWARD_SPEED                    512.0f
 
 // Default Rotation
-#define DEFAULT_ROTATION_ACCELERATION            192.0f
-#define DEFAULT_ROTATION_SPEED                   384.0f
+#define DEFAULT_ROTATION_ACCELERATION            128.0f
+#define DEFAULT_ROTATION_SPEED                   256.0f
 
 // One Wheel
 #define DEFAULT_ROTATION_ONE_WHEEL_ACCELERATION  256.0f
