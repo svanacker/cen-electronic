@@ -33,6 +33,8 @@ struct EndMatch {
     bool endOfMatchNotified;
     /** The score which must be shown. */
     unsigned int scoreToShow;
+    /** If we show the score at the end. */
+    bool showScoreAtTheEndOfMatch;
 };
 
 /**

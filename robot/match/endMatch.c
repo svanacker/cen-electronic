@@ -79,9 +79,13 @@ void showRemainingTime(EndMatch* endMatch, OutputStream* outputStream) {
 
 void showEndAndScore(EndMatch* endMatch, OutputStream* outputStream) {
     clearScreen();
-    appendString(outputStream, "End : Score = ");
-    appendDec(outputStream, endMatch->scoreToShow);
-    appendStringLN(outputStream, " pts");
+    appendString(outputStream, "End !");
+
+    if (endMatch->showScoreAtTheEndOfMatch) {
+        appendString(outputStream, " Score = ");
+        appendDec(outputStream, endMatch->scoreToShow);
+        appendStringLN(outputStream, " pts");
+    }
 }
 
 bool showEndAndScoreIfNeeded(EndMatch* endMatch, OutputStream* outputStream) {

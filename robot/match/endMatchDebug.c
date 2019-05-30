@@ -73,6 +73,12 @@ void printEndOfMatchTable(OutputStream* outputStream, EndMatch* endMatch) {
     appendEndOfTableColumn(outputStream, END_MATCH_LAST_COLUMN_LENGTH);
     appendTableHeaderSeparatorLine(outputStream);
 
+    // If we show the score at the end
+    appendStringTableData(outputStream, "Show Score at the end", END_MATCH_KEY_COLUMN_LENGTH);
+    appendBoolTableData(outputStream, endMatch->showScoreAtTheEndOfMatch, END_MATCH_VALUE_DEC_COLUMN_LENGTH);
+    appendBoolTableData(outputStream, endMatch->showScoreAtTheEndOfMatch, END_MATCH_VALUE_HEX_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, END_MATCH_LAST_COLUMN_LENGTH);
+
     // Score to show
     appendStringTableData(outputStream, "Score to Show", END_MATCH_KEY_COLUMN_LENGTH);
     appendDecTableData(outputStream, endMatch->scoreToShow, END_MATCH_VALUE_DEC_COLUMN_LENGTH);
