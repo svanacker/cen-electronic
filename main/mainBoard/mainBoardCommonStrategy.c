@@ -93,10 +93,13 @@ void updateNewPositionFromNotification(InputStream* inputStream) {
     float y = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
     checkIsSeparator(inputStream);
     float angleDegree = readHexFloat4(inputStream, ANGLE_DIGIT_DEGREE_PRECISION);
+    checkIsSeparator(inputStream);
+    float speed = readHexFloat4(inputStream, SPEED_DIGIT_MMSEC_PRECISION);
     
     gameStrategyContext->robotPosition->x = x;
     gameStrategyContext->robotPosition->y = y;
     gameStrategyContext->robotAngleRadian = degToRad(angleDegree);
+    gameStrategyContext->robotSpeed = speed;
     
     /*
     printPoint(getDebugOutputStreamLogger(), gameStrategyContext->robotPosition, "");
@@ -120,6 +123,7 @@ void mainBoardDeviceHandleTrajectoryDeviceNotification(const Device* device, con
             // and not on a TRAJECTORY_DEVICE_HEADER
             
             // gameStrategyContext->trajectoryType = trajectoryType;
+            mainBoardCommonUpdateTofMaxDistanceMM(gameStrategyContext, 200.0f, 800.0f);
             
             if (isLoggerDebugEnabled()) {
                 appendStringCRLF(getDebugOutputStreamLogger(), "Traj. Dev. Notif. !");

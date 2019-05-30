@@ -14,22 +14,25 @@
 #include "../../common/log/logLevel.h"
 
 #include "../../motion/position/coders.h"
+#include "pidTimer.h"
 
-#define TRAJECTORY_X_DEC_COLUMN_LENGTH	                             8
-#define TRAJECTORY_Y_DEC_COLUMN_LENGTH	                             8
-#define TRAJECTORY_X_HEX_COLUMN_LENGTH	                             7
-#define TRAJECTORY_Y_HEX_COLUMN_LENGTH	                             7
-#define TRAJECTORY_ANGLE_DEC_COLUMN_LENGTH	                         9
-#define TRAJECTORY_ANGLE_INIT_DEC_COLUMN_LENGTH	                    11
+#define TRAJECTORY_X_DEC_COLUMN_LENGTH	                             7
+#define TRAJECTORY_Y_DEC_COLUMN_LENGTH	                             7
+#define TRAJECTORY_X_HEX_COLUMN_LENGTH	                             5
+#define TRAJECTORY_Y_HEX_COLUMN_LENGTH	                             5
+#define TRAJECTORY_ANGLE_DEC_COLUMN_LENGTH	                         7
+#define TRAJECTORY_ANGLE_INIT_DEC_COLUMN_LENGTH	                     9
+#define TRAJECTORY_PID_TIME_SECONDS_DEC_COLUMN_LENGTH	             7
+#define TRAJECTORY_SPEED_DEC_COLUMN_LENGTH	                         7
 // NOTIFICATION
 // -> PARAMETERS
 #define TRAJECTORY_LAST_NOTIFY_ENABLED_COLUMN_LENGTH                 7
-#define TRAJECTORY_LAST_NOTIFY_DISTANCE_THRESHOLD_COLUMN_LENGTH      10
-#define TRAJECTORY_LAST_NOTIFY_ANGLE_RADIAN_THRESHOLD_COLUMN_LENGTH  10
+#define TRAJECTORY_LAST_NOTIFY_DISTANCE_THRESHOLD_COLUMN_LENGTH      8
+#define TRAJECTORY_LAST_NOTIFY_ANGLE_RADIAN_THRESHOLD_COLUMN_LENGTH  9
 // -> VALUES
-#define TRAJECTORY_LAST_NOTIFY_X_DEC_COLUMN_LENGTH                   8
-#define TRAJECTORY_LAST_NOTIFY_Y_DEC_COLUMN_LENGTH                   8
-#define TRAJECTORY_LAST_NOTIFY_ANGLE_DEC_COLUMN_LENGTH               8
+#define TRAJECTORY_LAST_NOTIFY_X_DEC_COLUMN_LENGTH                   9
+#define TRAJECTORY_LAST_NOTIFY_Y_DEC_COLUMN_LENGTH                   9
+#define TRAJECTORY_LAST_NOTIFY_ANGLE_DEC_COLUMN_LENGTH               9
 
 #define TRAJECTORY_LEFT_DEC_COLUMN_LENGTH	                        11
 #define TRAJECTORY_RIGHT_DEC_COLUMN_LENGTH	                        12
@@ -49,7 +52,9 @@ void printDebugPosition(OutputStream* outputStream) {
 	appendStringHeader(outputStream, "x", TRAJECTORY_X_DEC_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "y", TRAJECTORY_Y_DEC_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "orient.", TRAJECTORY_ANGLE_DEC_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "angle Ini.", TRAJECTORY_ANGLE_INIT_DEC_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "angle", TRAJECTORY_ANGLE_INIT_DEC_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "pid",  TRAJECTORY_PID_TIME_SECONDS_DEC_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "Speed", TRAJECTORY_SPEED_DEC_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "x", TRAJECTORY_X_HEX_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "y", TRAJECTORY_Y_HEX_COLUMN_LENGTH);
     // -> Notification Parameters
@@ -66,14 +71,16 @@ void printDebugPosition(OutputStream* outputStream) {
     // Second line header
 	appendStringHeader(outputStream, "mm", TRAJECTORY_X_DEC_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "mm", TRAJECTORY_Y_DEC_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "(degree)", TRAJECTORY_ANGLE_DEC_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "(degree)", TRAJECTORY_ANGLE_INIT_DEC_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "(deg)", TRAJECTORY_ANGLE_DEC_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "Ini.(deg)", TRAJECTORY_ANGLE_INIT_DEC_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "time",  TRAJECTORY_PID_TIME_SECONDS_DEC_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "mm/s", TRAJECTORY_SPEED_DEC_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "mm", TRAJECTORY_X_HEX_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "mm", TRAJECTORY_Y_HEX_COLUMN_LENGTH);
     // -> Notification Parameters
     appendStringHeader(outputStream, "On/Off", TRAJECTORY_LAST_NOTIFY_ENABLED_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "Threshold", TRAJECTORY_LAST_NOTIFY_DISTANCE_THRESHOLD_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "Threshold", TRAJECTORY_LAST_NOTIFY_ANGLE_RADIAN_THRESHOLD_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "Thresh.", TRAJECTORY_LAST_NOTIFY_DISTANCE_THRESHOLD_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "Thresh.", TRAJECTORY_LAST_NOTIFY_ANGLE_RADIAN_THRESHOLD_COLUMN_LENGTH);
     // -> Notification Values
 	appendStringHeader(outputStream, "x (mm)", TRAJECTORY_LAST_NOTIFY_X_DEC_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "y (mm)", TRAJECTORY_LAST_NOTIFY_Y_DEC_COLUMN_LENGTH);
@@ -85,16 +92,18 @@ void printDebugPosition(OutputStream* outputStream) {
 	appendStringHeader(outputStream, "(Dec)", TRAJECTORY_Y_DEC_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "(Dec)", TRAJECTORY_ANGLE_DEC_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "(Dec)", TRAJECTORY_ANGLE_INIT_DEC_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "(sec)",  TRAJECTORY_PID_TIME_SECONDS_DEC_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "(Dec)", TRAJECTORY_SPEED_DEC_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "(Hex)", TRAJECTORY_X_HEX_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "(Hex)", TRAJECTORY_Y_HEX_COLUMN_LENGTH);
     // -> Notification Threshold
     appendStringHeader(outputStream, "", TRAJECTORY_LAST_NOTIFY_ENABLED_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "Dist(mm)", TRAJECTORY_LAST_NOTIFY_DISTANCE_THRESHOLD_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "Angle(deg)", TRAJECTORY_LAST_NOTIFY_ANGLE_RADIAN_THRESHOLD_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "Ang.(deg)", TRAJECTORY_LAST_NOTIFY_ANGLE_RADIAN_THRESHOLD_COLUMN_LENGTH);
     // -> Notification values
 	appendStringHeader(outputStream, "(Dec)", TRAJECTORY_LAST_NOTIFY_X_DEC_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "(Dec)", TRAJECTORY_LAST_NOTIFY_Y_DEC_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "(Degree)", TRAJECTORY_LAST_NOTIFY_ANGLE_DEC_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "(Deg)", TRAJECTORY_LAST_NOTIFY_ANGLE_DEC_COLUMN_LENGTH);
 	appendEndOfTableColumn(outputStream, 0);
     
 	appendTableHeaderSeparatorLine(outputStream);
@@ -111,12 +120,16 @@ void printDebugPosition(OutputStream* outputStream) {
 	appendDecfTableData(outputStream, radToDeg(position->orientation), TRAJECTORY_ANGLE_DEC_COLUMN_LENGTH);
 	appendDecfTableData(outputStream, radToDeg(position->initialOrientation), TRAJECTORY_ANGLE_INIT_DEC_COLUMN_LENGTH);
 
+    // Speed
+    TrajectoryInfo* trajectory = getTrajectory();
+    appendDecfTableData(outputStream, getPidTimeInSecond(), TRAJECTORY_PID_TIME_SECONDS_DEC_COLUMN_LENGTH);
+    appendDecfTableData(outputStream, trajectory->lastSpeed, TRAJECTORY_SPEED_DEC_COLUMN_LENGTH);
+    
     // Hex
-	appendHexFloat6TableData(outputStream, point->x, POSITION_DIGIT_MM_PRECISION, TRAJECTORY_X_HEX_COLUMN_LENGTH);
-    appendHexFloat6TableData(outputStream, point->y, POSITION_DIGIT_MM_PRECISION, TRAJECTORY_Y_HEX_COLUMN_LENGTH);
+	appendHexFloat4TableData(outputStream, point->x, POSITION_DIGIT_MM_PRECISION, TRAJECTORY_X_HEX_COLUMN_LENGTH);
+    appendHexFloat4TableData(outputStream, point->y, POSITION_DIGIT_MM_PRECISION, TRAJECTORY_Y_HEX_COLUMN_LENGTH);
     
     // Notification
-    TrajectoryInfo* trajectory = getTrajectory();
     // -> Parameters
     appendBoolAsStringTableData(outputStream, trajectory->notifyChange, TRAJECTORY_LAST_NOTIFY_ENABLED_COLUMN_LENGTH);
 	appendDecfTableData(outputStream, trajectory->thresholdDistance, TRAJECTORY_LAST_NOTIFY_DISTANCE_THRESHOLD_COLUMN_LENGTH);

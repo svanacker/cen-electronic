@@ -159,6 +159,11 @@ void printGameStrategyContext(OutputStream* outputStream, GameStrategyContext* c
     appendDecfTableData(outputStream, radToDeg(context->robotAngleRadian), GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
     appendStringTableData(outputStream, "Degree", GAME_STRATEGY_CONTEXT_UNIT_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, GAME_STRATEGY_CONTEXT_LAST_COLUMN);
+    // -> Speed
+    appendStringTableData(outputStream, "robotPosition.speed", GAME_STRATEGY_CONTEXT_KEY_COLUMN_LENGTH);
+    appendDecfTableData(outputStream, context->robotSpeed, GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
+    appendStringTableData(outputStream, "mm / sec", GAME_STRATEGY_CONTEXT_UNIT_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, GAME_STRATEGY_CONTEXT_LAST_COLUMN);
     // -> Trajectory Type
     appendStringTableData(outputStream, "trajectoryType", GAME_STRATEGY_CONTEXT_KEY_COLUMN_LENGTH);
     addTrajectoryTypeTableData(outputStream, context->trajectoryType, GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);

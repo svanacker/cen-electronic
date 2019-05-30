@@ -36,13 +36,15 @@ bool isTrajectoryDeviceOk(void) {
     return true;
 }
 
-void notifyAbsolutePositionWithoutHeader(OutputStream* notificationOutputStream, bool fakeData) {
+void notifyAbsolutePositionAndSpeedWithoutHeader(OutputStream* notificationOutputStream, bool fakeData) {
     Position* p = getPosition();
     appendHexFloat4(notificationOutputStream, p->pos.x, POSITION_DIGIT_MM_PRECISION);
     appendSeparator(notificationOutputStream);
     appendHexFloat4(notificationOutputStream, p->pos.y, POSITION_DIGIT_MM_PRECISION);
     appendSeparator(notificationOutputStream);
     appendHexFloat4(notificationOutputStream, radToDeg(p->orientation), ANGLE_DIGIT_DEGREE_PRECISION);
+    appendSeparator(notificationOutputStream);
+    appendHexFloat4(notificationOutputStream, getTrajectory()->lastSpeed, SPEED_DIGIT_MMSEC_PRECISION);
     if (fakeData) {
         // Fake data To Align Notification Size
         appendSeparator(notificationOutputStream);
@@ -58,7 +60,7 @@ void deviceTrajectoryHandleRawData(unsigned char header,
         ackCommand(outputStream, TRAJECTORY_DEVICE_HEADER, COMMAND_TRAJECTORY_GET_ABSOLUTE_POSITION);
 
         updateTrajectoryWithNoThreshold();
-        notifyAbsolutePositionWithoutHeader(outputStream, false);
+        notifyAbsolutePositionAndSpeedWithoutHeader(outputStream, false);
     }
     else if (header == COMMAND_TRAJECTORY_DEBUG_GET_ABSOLUTE_POSITION) {
         ackCommand(outputStream, TRAJECTORY_DEVICE_HEADER, COMMAND_TRAJECTORY_DEBUG_GET_ABSOLUTE_POSITION);
@@ -146,17 +148,25 @@ bool trajectoryNotifyIfEnabledAndTreshold(OutputStream* notificationOutputStream
     }
     float distanceSinceLastNotification = getDistanceBetweenLastNotificationAndCurrentRobotPosition();
     float absoluteAngleRadianSinceLastNotification = getAbsoluteAngleRadianBetweenLastNotificationAndCurrentRobotPosition();
-    
     if (distanceSinceLastNotification > trajectory->thresholdDistance
         || absoluteAngleRadianSinceLastNotification > trajectory->thresholdAngleRadian) {
+
+        // !!!!!!!!!!!!!!!!!!!!!! PROBLEM OF TIMER CLOCK => REMOVE * 2.0f, when
+        // it's fixed
+        trajectory->lastSpeed = getAverageSpeedSinceLastNotification(distanceSinceLastNotification) * 2.0f;
+
         Position* p = getPosition();
         append(notificationOutputStream, TRAJECTORY_DEVICE_HEADER);
         append(notificationOutputStream, NOTIFY_TRAJECTORY_CHANGED);
-        // XXXXXX-YYYYYY-AAAA
-        notifyAbsolutePositionWithoutHeader(notificationOutputStream, false);
+        // XXXX-YYYY-AAAA-SSSS-T
+        // where XXXX is the x coordinates in mm
+        // YYYY is the y coordinates in mm
+        // AAAA is the angle of the robot
+        // SSSS is the speed in mm / s
+        notifyAbsolutePositionAndSpeedWithoutHeader(notificationOutputStream, false);
         // We must add "Trajectory Type"
         enum TrajectoryType trajectoryType = computeTrajectoryType(distanceSinceLastNotification, absoluteAngleRadianSinceLastNotification);
-        // "-X" where X is the type of Trajectory
+        // "-T" where T is the type of Trajectory
         appendSeparator(notificationOutputStream);
         appendHex(notificationOutputStream, trajectoryType);
         clearLastNotificationData();

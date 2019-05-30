@@ -14,6 +14,8 @@
 #include "../../robot/config/robotConfig.h"
 #include "../../drivers/tof/tofList.h"
 
+#include "../../robot/strategy/gameStrategyContext.h"
+
 // TOFS
 #define MAIN_BOARD_TOF_SENSOR_LIST_LENGTH                                     14
 // I2C PORT 4
@@ -89,6 +91,11 @@
  * Program.
  */
 TofSensorList* mainBoardCommonTofInitDrivers(RobotConfig* robotConfig, MultiplexerList* multiplexerList, IOExpanderList* ioExpanderList);
+
+/**
+ * Function used to update the threshold of the Tof regarding the speed of the robot.
+ */
+void mainBoardCommonUpdateTofMaxDistanceMM(GameStrategyContext* gameStrategyContext, float marginDistanceMM, float maxDistanceMM);
 
 /**
  * Returns the list of Tof Sensor.

@@ -152,8 +152,8 @@ void printTofSensorDetectionDebugTableHeaderVL53L0X(OutputStream* outputStream) 
     appendStringHeader(outputStream, "Id", TOF_SENSOR_INDEX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Name", TOF_SENSOR_NAME_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Enab.", TOF_SENSOR_ENABLE_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "Thres", TOF_SENSOR_VALUE_THRESHOLD_MAX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Thres", TOF_SENSOR_VALUE_THRESHOLD_MIN_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Thres", TOF_SENSOR_VALUE_THRESHOLD_MAX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Detect.", TOF_SENSOR_VALUE_DETECTION_THRESHOLD_COUNT_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Detect.", TOF_SENSOR_VALUE_DETECTED_COUNT_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Dist.", TOF_SENSOR_VALUE_DISTANCE_DEC_COLUMN_LENGTH);
@@ -166,8 +166,8 @@ void printTofSensorDetectionDebugTableHeaderVL53L0X(OutputStream* outputStream) 
     appendStringHeader(outputStream, "", TOF_SENSOR_INDEX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", TOF_SENSOR_NAME_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", TOF_SENSOR_ENABLE_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "Hold", TOF_SENSOR_VALUE_THRESHOLD_MAX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Hold", TOF_SENSOR_VALUE_THRESHOLD_MIN_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Hold", TOF_SENSOR_VALUE_THRESHOLD_MAX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Thres", TOF_SENSOR_VALUE_DETECTION_THRESHOLD_COUNT_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Count", TOF_SENSOR_VALUE_DETECTED_COUNT_COLUMN_LENGTH);
     appendStringHeader(outputStream, "(mm)", TOF_SENSOR_VALUE_DISTANCE_DEC_COLUMN_LENGTH);
@@ -180,8 +180,8 @@ void printTofSensorDetectionDebugTableHeaderVL53L0X(OutputStream* outputStream) 
     appendStringHeader(outputStream, "", TOF_SENSOR_INDEX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", TOF_SENSOR_NAME_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", TOF_SENSOR_ENABLE_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "(max)", TOF_SENSOR_VALUE_THRESHOLD_MAX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "(min)", TOF_SENSOR_VALUE_THRESHOLD_MIN_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "(max)", TOF_SENSOR_VALUE_THRESHOLD_MAX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Hold", TOF_SENSOR_VALUE_DETECTION_THRESHOLD_COUNT_COLUMN_LENGTH);
     appendStringHeader(outputStream, "(Dec)", TOF_SENSOR_VALUE_DETECTED_COUNT_COLUMN_LENGTH);
     appendStringHeader(outputStream, "(Dec)", TOF_SENSOR_VALUE_DISTANCE_DEC_COLUMN_LENGTH);
@@ -194,8 +194,8 @@ void printTofSensorDetectionDebugTableHeaderVL53L0X(OutputStream* outputStream) 
     appendStringHeader(outputStream, "", TOF_SENSOR_INDEX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", TOF_SENSOR_NAME_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", TOF_SENSOR_ENABLE_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "(mm)", TOF_SENSOR_VALUE_THRESHOLD_MAX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "(mm)", TOF_SENSOR_VALUE_THRESHOLD_MIN_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "(mm)", TOF_SENSOR_VALUE_THRESHOLD_MAX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Hold", TOF_SENSOR_VALUE_DETECTION_THRESHOLD_COUNT_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", TOF_SENSOR_VALUE_DETECTED_COUNT_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", TOF_SENSOR_VALUE_DISTANCE_DEC_COLUMN_LENGTH);

@@ -1,4 +1,8 @@
+#include <math.h>
+
 #include "mainBoardCommonTof.h"
+
+#include "../../common/math/cenMath.h"
 
 #include "../../common/i2c/i2cConstants.h"
 #include "../../common/i2c/i2cBusList.h"
@@ -36,12 +40,44 @@
 #include "../../drivers/i2c/multiplexer/multiplexerDebug.h"
 #include "../../drivers/i2c/multiplexer/multiplexerList.h"
 
+// Tof
+#include "../../drivers/tof/tof.h"
+
 // 2019 Specific
 #include "../../robot/2019/fork/forkScan2019.h"
 #include "../../robot/2019/strategy/strategyConfig2019.h"
+#include "gameStrategyContext.h"
 
 static TofSensorList tofSensorList;
 static TofSensor tofSensorArray[MAIN_BOARD_TOF_SENSOR_LIST_LENGTH];
+
+void mainBoardCommonUpdateTofMaxDistanceMM(GameStrategyContext* gameStrategyContext, float marginDistanceMM, float maxDistanceMM) {
+    RobotConfig* robotConfig = gameStrategyContext->robotConfig;
+    float distanceFactor = getSonarDistanceCheckFactor(robotConfig);
+    unsigned int tofIndex;
+    for (tofIndex = 0; tofIndex < tofSensorList.size; tofIndex++) {
+        TofSensor* tofSensor = getTofSensorByIndex(&tofSensorList, tofIndex);
+        if (!tofSensor->enabled || tofSensor->usageType != TOF_SENSOR_USAGE_TYPE_COLLISION) {
+            continue;
+        }
+        float distanceToStopMM = 0.0f;
+        if (gameStrategyContext->robotSpeed > 0.0f) {
+            // Ex : At 2 m ^s -2, we need timeToDecelerate = currentSpeed / maxDeceleration  = time to stop
+            // distanceToStop = (currentSpeed²) / (maxDeceleration * 2.0f)
+            float maxDeceleration = 500.0f; // 500 mm^s-2 on the robot
+            // We convert the speed in m^s-1
+            float robotSpeed = gameStrategyContext->robotSpeed;
+            // We multiply by 2.0f because the opponent robot could do the same
+            // We divide by a factor of 
+            distanceToStopMM = ((robotSpeed * robotSpeed) / maxDeceleration) * distanceFactor;
+        }
+        // Min (to reach the border of the robot) + distanceToStop + small Margin
+        tofSensor->thresholdMaxDistanceMM = tofSensor->thresholdMinDistanceMM + distanceToStopMM + marginDistanceMM;
+        if (distanceToStopMM > maxDistanceMM) {
+            tofSensor->thresholdMaxDistanceMM = maxDistanceMM;
+        }
+    }
+}
 
 TofSensorList* mainBoardCommonTofInitDrivers(RobotConfig* robotConfig, MultiplexerList* multiplexerList, IOExpanderList* ioExpanderList) {
     (&tofSensorList)->tofSensorArray = (TofSensor(*)[]) &tofSensorArray;

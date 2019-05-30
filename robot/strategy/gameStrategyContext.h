@@ -64,6 +64,8 @@ struct GameStrategyContext {
     GameStrategy* gameStrategy;
     /** Position of robot. */
     Point* robotPosition;
+    /** Last Speed of robot. */
+    float robotSpeed;
     /** Angle of the robot in radians. */
     float robotAngleRadian;
     /** The nearestLocation of the robot. */

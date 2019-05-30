@@ -47,7 +47,10 @@ static TrajectoryInfo trajectory = {
     // trajectory->lastRight,
     0.0f,
     // trajectory->lastAngle
+    0.0f,
+    // trajectory -> lastPidTime
     0.0f
+    // trajectory -> lastSpeed
 };
 
 TrajectoryInfo* getTrajectory(void) {
@@ -66,6 +69,7 @@ void clearLastNotificationData(void) {
     trajectory.lastNotificationPosition.pos.x = trajectory.position.pos.x;
     trajectory.lastNotificationPosition.pos.y = trajectory.position.pos.y;
     trajectory.lastNotificationPosition.orientation = trajectory.position.orientation;
+    trajectory.lastPidTimeInSeconds = getPidTimeInSecond();
     // No meaning for initialOrientation for lastNotification
 }
 
@@ -252,8 +256,16 @@ enum TrajectoryType computeTrajectoryType(float distanceSinceLastNotification, f
 float getDistanceBetweenLastNotificationAndCurrentRobotPosition(void) {
     Point* lastNotificationPoint = &(trajectory.lastNotificationPosition.pos);
     Point* currentPosition = &(trajectory.position.pos);
-    
     return distanceBetweenPoints(lastNotificationPoint, currentPosition);
+}
+
+float getAverageSpeedSinceLastNotification(float distance) {
+    float lastPidTime = trajectory.lastPidTimeInSeconds;
+    float currentPidTime = getPidTimeInSecond();
+    if (distance != 0.0f) {
+        return distance / (currentPidTime - lastPidTime);
+    }
+    return 0.0f;
 }
 
 float getAbsoluteAngleRadianBetweenLastNotificationAndCurrentRobotPosition(void) {

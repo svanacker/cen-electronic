@@ -73,7 +73,7 @@ void internalNotify(OutputStream* notificationOutputStream, char statusHeader, c
     appendCRLF(debugOutputStream);
     
     // send position
-    notifyAbsolutePositionWithoutHeader(notificationOutputStream, true);
+    notifyAbsolutePositionAndSpeedWithoutHeader(notificationOutputStream, true);
 
     
     appendString(debugOutputStream, "Motion:");
