@@ -88,6 +88,9 @@ bool moveAlongPath(PathData* pathData) {
 
 void updateObstacleCostIfObstacle(PathData* pathData) {
     pathData->obstacleCost = COST_IF_OBSTACLE;
+#ifdef PC_COMPILER
+    pathData->obstacleCost = COST_IF_OBSTACLE * 2;
+#endif
 }
 
 void decreaseObstacleCost(PathData* pathData) {

@@ -25,6 +25,15 @@ float angleOfVector(Point* p0, Point* p1) {
     return result;    
 }
 
+float angleOfVector2(float p0x, float p0y, float p1x, float p1y) {
+    float diffX = (p1x - p0x);
+    float diffY = (p1y - p0y);
+
+    float result = atan2f(diffY, diffX);
+
+    return result;
+}
+
 // 2D TRANSFORMATIONS
 
 void rotate(Point* resultPoint, float angle, float x, float y) {

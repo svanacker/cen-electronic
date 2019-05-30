@@ -55,6 +55,8 @@ float distanceBetweenPoints2(float x0, float y0, float x1, float y1);
  */
 float angleOfVector(Point* p0, Point* p1);
 
+float angleOfVector2(float p0x, float p0y, float p1x, float p1y);
+
 /**
 * Scale a coordinates system by applying a factor for x and y.
 * @param point the point that we want to transform

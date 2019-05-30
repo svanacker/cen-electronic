@@ -16,6 +16,10 @@ Location* getNearestLocation(LocationList* locationList, float x, float y, float
         if (location == NULL) {
             continue;
         }
+        if (location->usageType != LOCATION_USAGE_TYPE_PERMANENT && location->usageType != LOCATION_USAGE_TYPE_TEMPORARY) {
+            continue;
+        }
+
         // Do not consider points which are too away
         float distance = distanceBetweenPoints2(location->x, location->y, x, y);
         if (distance > maxDistance) {
@@ -52,6 +56,11 @@ Location* extractMinCostLocation(LocationList* locationList) {
     // Loop every Location
     for (locationIndex = 0; locationIndex < size; locationIndex++) {
         Location* location = getLocation(locationList, locationIndex);
+
+        if (location->usageType != LOCATION_USAGE_TYPE_PERMANENT && location->usageType != LOCATION_USAGE_TYPE_TEMPORARY) {
+            continue;
+        }
+
         // we only manage only unhandled location point
         if (location->computedHandled) {
             continue;

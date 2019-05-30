@@ -114,6 +114,9 @@ void pathListDecreaseObstacleCost(PathList* pathList) {
     unsigned int size = pathList->size;
     for (i = 0; i < size; i++) {
         PathData* pathData = getPath(pathList, i);
+        if (pathData->usageType != PATH_DATA_USAGE_TYPE_PERMANENT && pathData->usageType != PATH_DATA_USAGE_TYPE_TEMPORARY) {
+            continue;
+        }
         decreaseObstacleCost(pathData);
     }
 }
@@ -125,6 +128,7 @@ void pathListClearTemporaryPaths(PathList* pathList) {
         PathData* pathData = getPath(pathList, i);
         if (pathData->usageType == PATH_DATA_USAGE_TYPE_TEMPORARY) {
             pathData->usageType = PATH_DATA_USAGE_TYPE_TO_BE_REUSE;
+            pathData->cost = 0.0f;
         }
     }
 }

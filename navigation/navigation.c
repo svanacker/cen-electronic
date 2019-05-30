@@ -67,6 +67,9 @@ void addTemporaryPathListFromLocation(Navigation* navigation, Location* fromLoca
     unsigned int locationListSize = locationList->size;
     for (locationIndex = 0; locationIndex < locationListSize; locationIndex++) {
         Location* location = getLocation(locationList, locationIndex);
+        if (location->usageType != LOCATION_USAGE_TYPE_PERMANENT) {
+            continue;
+        }
 
         // We don't create a path with the same origin and target !
         if (location == fromLocation) {
@@ -77,6 +80,8 @@ void addTemporaryPathListFromLocation(Navigation* navigation, Location* fromLoca
         if (location == excludeLocation) {
             continue;
         }
+
+        startAngle = angleOfVector2(fromLocation->x, fromLocation->y, location->x, location->y);
 
         // if (location->usage == )
         float distance = distanceBetweenLocations(fromLocation, location);

@@ -122,6 +122,7 @@ void initGameStrategyContext(GameStrategyContext* gameStrategyContext,
  */
 void showGameStrategyContextTeamColorAndStrategy(GameStrategyContext* gameStrategyContext);
 
+void updateStrategyContextTrajectoryType(GameStrategyContext* gameStrategyContext, enum TrajectoryType trajectoryType);
 
 #endif
 

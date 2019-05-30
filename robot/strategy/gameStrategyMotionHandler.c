@@ -65,8 +65,8 @@ bool motionRotateToFollowPath(GameStrategyContext* gameStrategyContext, PathData
         }
         else {
             motionDriverLeft(radToDeg(diff));
-            gameStrategyContext->trajectoryType = TRAJECTORY_TYPE_ROTATION;
         }
+        updateStrategyContextTrajectoryType(gameStrategyContext, TRAJECTORY_TYPE_ROTATION);
     }
     else {
         appendStringAndDecf(getDebugOutputStreamLogger(), "motionDriverRight:", radToDeg(-diff));
@@ -76,8 +76,8 @@ bool motionRotateToFollowPath(GameStrategyContext* gameStrategyContext, PathData
         }
         else {
             motionDriverRight(radToDeg(-diff));
-            gameStrategyContext->trajectoryType = TRAJECTORY_TYPE_ROTATION;
         }
+        updateStrategyContextTrajectoryType(gameStrategyContext, TRAJECTORY_TYPE_ROTATION);
     }
     
 
@@ -118,10 +118,10 @@ bool motionFollowPath(GameStrategyContext* gameStrategyContext, PathData* pathDa
         clientExtendedMotionBSplineAbsolute(location->x, location->y, angleRadian, cp1, cp2,
             pathData->accelerationFactor, pathData->speedFactor);
         if (cp1 < 0.0f) {
-            gameStrategyContext->trajectoryType = TRAJECTORY_TYPE_BACKWARD;
+            updateStrategyContextTrajectoryType(gameStrategyContext, TRAJECTORY_TYPE_BACKWARD);
         }
         else {
-            gameStrategyContext->trajectoryType = TRAJECTORY_TYPE_FORWARD;
+            updateStrategyContextTrajectoryType(gameStrategyContext, TRAJECTORY_TYPE_FORWARD);
         }
     }
     return true;

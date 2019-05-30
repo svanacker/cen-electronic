@@ -16,6 +16,7 @@
 #include "../../drivers/tof/tofList.h"
 
 #include "../../motion/motionConstants.h"
+#include "../../motion/position/trajectoryDebug.h"
 
 /**
  * @private
@@ -77,6 +78,16 @@ void initGameStrategyContext(GameStrategyContext* gameStrategyContext,
 
     // Complex init
     initGameStrategyIndex(gameStrategyContext);
+}
+
+void updateStrategyContextTrajectoryType(GameStrategyContext* gameStrategyContext, enum TrajectoryType trajectoryType) {
+    if (trajectoryType != gameStrategyContext->trajectoryType) {
+        appendTrajectoryTypeAsString(getDebugOutputStreamLogger(), gameStrategyContext->trajectoryType);
+        appendString(getDebugOutputStreamLogger(), " -> ");
+        appendTrajectoryTypeAsString(getDebugOutputStreamLogger(), trajectoryType);
+        appendCRLF(getDebugOutputStreamLogger());
+    }
+    gameStrategyContext->trajectoryType = trajectoryType;
 }
 
 void showGameStrategyContextTeamColorAndStrategy(GameStrategyContext* gameStrategyContext) {

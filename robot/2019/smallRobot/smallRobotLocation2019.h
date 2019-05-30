@@ -8,7 +8,7 @@
 #define SMALL_ROBOT_START_AREA_ANGLE_DECI_DEG                    ANGLE_DECI_DEG_90
 
 // Accelerator (SMALL ROBOT)
-#define ACCELERATOR_FRONT                                                     "ACCE"
+#define ACCELERATOR_FRONT                                                     "ACCF"
 #define ACCELERATOR_FRONT_LABEL                                  "Accelerator Front"
 #define ACCELERATOR_FRONT_X                                                     200
 #define ACCELERATOR_FRONT_Y                                                    1700

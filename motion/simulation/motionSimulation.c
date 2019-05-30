@@ -62,7 +62,7 @@ void interruptMotionSimulationCallbackFunc(Timer* timer) {
 
     // BSpline Follow
     if (bSplineTime > 1.0f) {
-        gameStrategyContext->trajectoryType = TRAJECTORY_TYPE_NONE;
+        updateStrategyContextTrajectoryType(gameStrategyContext, TRAJECTORY_TYPE_NONE);
         simulateFlag = false;
     }
     else {
@@ -108,10 +108,10 @@ void simulateBSplineAbsolute(GameStrategyContext* gameStrategyContext, float des
     // At 5Hz, we must increment by 
     bSplineIncrement = 250.0f / distance / 5.0f;
     if (dist0 > 0.0f) {
-        gameStrategyContext->trajectoryType = TRAJECTORY_TYPE_FORWARD;
+        updateStrategyContextTrajectoryType(gameStrategyContext, TRAJECTORY_TYPE_FORWARD);
     }
     else {
-        gameStrategyContext->trajectoryType = TRAJECTORY_TYPE_BACKWARD;
+        updateStrategyContextTrajectoryType(gameStrategyContext, TRAJECTORY_TYPE_BACKWARD);
     }
     simulateFlag = true;
 }

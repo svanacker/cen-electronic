@@ -244,6 +244,9 @@ void fillGameBoardCharElements(GameBoard* gameBoard, int* element) {
         unsigned int i;
         for (i = 0; i < locationSize; i++) {
             Location* location = getLocation(locationList, i);
+            if (location->usageType != LOCATION_USAGE_TYPE_PERMANENT && location->usageType != LOCATION_USAGE_TYPE_TEMPORARY) {
+                continue;
+            }
             drawString(gameBoard, location->x, location->y, (unsigned char*) location->label);
         }
     }
@@ -256,6 +259,9 @@ void fillGameBoardCharElements(GameBoard* gameBoard, int* element) {
         unsigned int i;
         for (i = 0; i < pathSize; i++) {
             PathData* pathData = getPath(pathList, i);
+            if (pathData->usageType != PATH_DATA_USAGE_TYPE_PERMANENT && pathData->usageType != PATH_DATA_USAGE_TYPE_TEMPORARY) {
+                continue;
+            }
             // We try to use the alphabet to avoid that path could not be easily read
             unsigned char c = (char)((i % 26) + 97);
             gamePathPrint(gameBoard, (int*)pathData, c);

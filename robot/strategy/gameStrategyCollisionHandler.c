@@ -112,6 +112,9 @@ void updatePathsAvailability(GameStrategyContext* gameStrategyContext) {
     BSplineCurve curve;
     for (i = 0; i < paths->size; i++) {
         PathData* pathData = getPath(paths, i);
+        if (pathData->usageType != PATH_DATA_USAGE_TYPE_PERMANENT && pathData->usageType != PATH_DATA_USAGE_TYPE_TEMPORARY) {
+            continue;
+        }
         if (computePath) {
             isPathAvailable(gameStrategyContext, pathData, &curve);
         }

@@ -163,6 +163,9 @@ unsigned int getLocationNotHandledCount(LocationList* locationList) {
     unsigned int size = locationList->size;
     for (i = 0; i < size; i++) {
         Location* location = getLocation(locationList, i);
+        if (location->usageType != LOCATION_USAGE_TYPE_PERMANENT && location->usageType != LOCATION_USAGE_TYPE_PERMANENT) {
+            continue;
+        }
         if (location->computedHandled) {
             result++;
         }

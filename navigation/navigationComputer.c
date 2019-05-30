@@ -9,6 +9,9 @@ void updateOutgoingPaths(Navigation* navigation, Location* location) {
     int pathSize = getPathCount(navigation->paths);
     for (i = 0; i < pathSize; i++) {
         PathData* pathData = getPath(navigation->paths, i);
+        if (pathData->usageType != PATH_DATA_USAGE_TYPE_PERMANENT && pathData->usageType != PATH_DATA_USAGE_TYPE_TEMPORARY) {
+            continue;
+        }
         // Check the path which start at location
         if (pathData->location1 == location) {
             addOutgoingPath(navigation->tmpOutgoingPaths, pathData);
@@ -47,6 +50,10 @@ float computeBestPath(Navigation* navigation, Location* start, Location* end) {
         for (i = 0; i < locationSize; i++) {
             // We only manage location which are not already handled (simulate the creation of a new list)
             Location* tmpLocation = getLocation(locationList, i);
+            // Only manage Permanent & Temporary
+            if (tmpLocation->usageType != LOCATION_USAGE_TYPE_PERMANENT && tmpLocation->usageType != LOCATION_USAGE_TYPE_TEMPORARY) {
+                continue;
+            }
             if (tmpLocation->computedHandled) {
                 continue;
             }

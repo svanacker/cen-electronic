@@ -35,8 +35,9 @@ void initStrategyHandler(GameStrategyContext* gameStrategyContext) {
 }
 
 
-void updateGameStrategyContextNearestLocation(GameStrategyContext* gameStrategyContext) {
+Location* updateGameStrategyContextNearestLocation(GameStrategyContext* gameStrategyContext) {
     gameStrategyContext->nearestLocation = getNearestLocationFromGameStrategyContext (gameStrategyContext);
+    return gameStrategyContext->nearestLocation;
 }
 
 GameTarget* findNextTarget(GameStrategyContext* gameStrategyContext) {
@@ -96,10 +97,11 @@ bool handleNextMoveActionOrAction(GameStrategyContext* gameStrategyContext) {
     // Start Location could be null if the nearest Location was not found (because too far)
     if (nearestLocation == NULL) {
         gameStrategyCreateOutsideTemporaryPaths(gameStrategyContext);
-        return false;
+        // We have a new temporary location where the robot is !
+        nearestLocation = updateGameStrategyContextNearestLocation(gameStrategyContext);
     }
     else {
-        // Try to recycle the points !
+        // Try to recycle the temporary Paths & Locations !
         gameStrategyClearOusideTemporaryPathsAndLocations(gameStrategyContext);
     }
 

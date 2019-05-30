@@ -124,7 +124,7 @@ void handleTofSensorList(GameStrategyContext* gameStrategyContext, StartMatch* s
             appendStringCRLF(alwaysOutputStream, "Detected Point :");
             printPoint(alwaysOutputStream, &detectedPoint, "");
             // Block the notification system !
-            gameStrategyContext->trajectoryType = TRAJECTORY_TYPE_NONE;
+            updateStrategyContextTrajectoryType(gameStrategyContext, TRAJECTORY_TYPE_NONE);
             
             tofSensorListResetDetectionCount(tofSensorList);
             

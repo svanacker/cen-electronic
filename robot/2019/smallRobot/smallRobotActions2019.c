@@ -60,8 +60,10 @@ bool acceleratorRotationIfNeeded(int* context) {
             gameStrategyContext->robotAngleRadian += degToRad(DEG_90);
         }
         else {
-            motionDriverLeft(DEG_90);
+            if (gameStrategyContext->robotAngleRadian >= degToRad(-10.0f) && gameStrategyContext->robotAngleRadian <= degToRad(10.0f)) {
+                motionDriverLeft(DEG_90);
                 timerDelayMilliSeconds(1000);
+            }
         }
     }
     else {
@@ -70,8 +72,10 @@ bool acceleratorRotationIfNeeded(int* context) {
             gameStrategyContext->robotAngleRadian -= degToRad(DEG_90);
         }
         else {
-            motionDriverRight(DEG_90);
-            timerDelayMilliSeconds(1000);
+            if (gameStrategyContext->robotAngleRadian >= degToRad(170.0f) && gameStrategyContext->robotAngleRadian <= degToRad(190.0f)) {
+                motionDriverRight(DEG_90);
+                timerDelayMilliSeconds(1000);
+            }
         }
     }
     return true;
