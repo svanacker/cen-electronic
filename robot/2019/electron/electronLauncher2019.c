@@ -108,8 +108,9 @@ void checkElectronLauncher2019RobotMoved(ElectronLauncher2019* launcher) {
         }
     }
     else {
-        if (launcher->robotMovedDetectionCount > 0) {
-            launcher->robotMovedDetectionCount--;
+        launcher->robotMovedDetectionCount -= 20;
+        if (launcher->robotMovedDetectionCount < 0) {
+            launcher->robotMovedDetectionCount = 0;
         }
     }
 }
@@ -141,7 +142,10 @@ void checkElectronLauncher2019ShowRemainingTime(ElectronLauncher2019* launcher) 
     if (endMatch == NULL) {
         writeError(ROBOT_END_MATCH_NULL);
     }
-    showRemainingTime(endMatch, getAlwaysOutputStreamLogger());
+    if (launcher->timerCount %10 == 0) {
+        showRemainingTime(endMatch, getAlwaysOutputStreamLogger());
+        
+    }
 }
 
 // ACTIONS
@@ -216,6 +220,7 @@ void electronLauncher2019CallbackFunc(Timer* timer) {
         return;
     }
     launcher->doNextAction = true;
+    launcher->timerCount++;
 }
 
 // INIT
@@ -242,7 +247,7 @@ void initElectronLauncher2019(ElectronLauncher2019* launcher,
     Timer* timer = getTimerByCode(ELECTRON_LAUNCHER_2019_TIMER_CODE);
     if (timer == NULL) {
         timer = addTimer(ELECTRON_LAUNCHER_2019_TIMER_CODE,
-            TIME_DIVIDER_1_HERTZ,
+            TIME_DIVIDER_10_HERTZ,
             &electronLauncher2019CallbackFunc,
             "ELEC LAUNC 2019",
             (int*)launcher);
@@ -283,16 +288,17 @@ void handleElectronLauncherActions(ElectronLauncher2019* launcher) {
         writeError(TOF_SENSOR_LIST_NOT_INITIALIZED);
         return;
     }
-    unsigned distanceMM = tofSensor->tofGetDistanceMM(tofSensor);
-    appendStringAndDec(getAlwaysOutputStreamLogger(), "DIST=", distanceMM);
-    appendStringCRLF(getAlwaysOutputStreamLogger(), " mm");
-
+    if (launcher->timerCount % 10 == 0) {
+        unsigned distanceMM = tofSensor->tofGetDistanceMM(tofSensor);
+        appendStringAndDec(getAlwaysOutputStreamLogger(), "DIST=", distanceMM);
+        appendStringAndDec(getAlwaysOutputStreamLogger(), " mm (", launcher->robotMovedDetectionCount);
+        appendStringLN(getAlwaysOutputStreamLogger(), ")");
+    }
     checkElectronLauncher2019RobotPlaced(launcher);
     checkElectronLauncher2019RobotMoved(launcher);
     checkElectronLauncher2019ToLaunch(launcher);
     checkElectronLauncher2019ShowRemainingTime(launcher);
-    
+
     // Avoid to do it in continous mode
     launcher->doNextAction = false;
-
 }
