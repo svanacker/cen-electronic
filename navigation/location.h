@@ -6,8 +6,8 @@
 #include "../common/string/cenString.h"
 #include "../common/io/outputStream.h"
 
-#define MAX_COST                                20000.0f
-#define COST_IF_OBSTACLE                        10000.0f
+#define MAX_COST                               200000.0f
+#define COST_IF_OBSTACLE                         5000.0f
 #define COST_DECREASE_STEP                       1000.0f
 #define NO_COMPUTED_COST                           -1.0f
 #define MAX_DISTANCE_NEAREST_LOCATION              50.0f

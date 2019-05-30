@@ -72,6 +72,7 @@ void initGameStrategyContext(GameStrategyContext* gameStrategyContext,
     if (obstacleTimer != NULL) {
         obstacleTimer->callback = obstacleTimerCallbackFunc;
     }
+    obstacleTimer->enabled = true;
 
     // Position Management
     initGameStrategyMotionHandler(gameStrategyContext);

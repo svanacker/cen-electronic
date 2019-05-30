@@ -10,8 +10,8 @@
 #include "../../../motion/simple/simpleMotion.h"
 #include "../../../motion/extended/bsplineMotion.h"
 
-#define STRATEGY_2019_NAVIGATION_LOCATION_LIST_ARRAY_LENGTH        30
-#define STRATEGY_2019_NAVIGATION_PATH_LIST_ARRAY_LENGTH            50
+#define STRATEGY_2019_NAVIGATION_LOCATION_LIST_ARRAY_LENGTH        100
+#define STRATEGY_2019_NAVIGATION_PATH_LIST_ARRAY_LENGTH            500
 
 /**
 * Init all elements for 2019.

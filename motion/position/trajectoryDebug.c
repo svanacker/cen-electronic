@@ -14,7 +14,7 @@
 #include "../../common/log/logLevel.h"
 
 #include "../../motion/position/coders.h"
-#include "pidTimer.h"
+#include "../../motion/pid/pidTimer.h"
 
 #define TRAJECTORY_X_DEC_COLUMN_LENGTH	                             7
 #define TRAJECTORY_Y_DEC_COLUMN_LENGTH	                             7

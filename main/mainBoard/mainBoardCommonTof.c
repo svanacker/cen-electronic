@@ -46,7 +46,7 @@
 // 2019 Specific
 #include "../../robot/2019/fork/forkScan2019.h"
 #include "../../robot/2019/strategy/strategyConfig2019.h"
-#include "gameStrategyContext.h"
+#include "../../robot/strategy/gameStrategyContext.h"
 
 static TofSensorList tofSensorList;
 static TofSensor tofSensorArray[MAIN_BOARD_TOF_SENSOR_LIST_LENGTH];
@@ -72,9 +72,9 @@ void mainBoardCommonUpdateTofMaxDistanceMM(GameStrategyContext* gameStrategyCont
             distanceToStopMM = ((robotSpeed * robotSpeed) / maxDeceleration) * distanceFactor;
         }
         // Min (to reach the border of the robot) + distanceToStop + small Margin
-        tofSensor->thresholdMaxDistanceMM = tofSensor->thresholdMinDistanceMM + distanceToStopMM + marginDistanceMM;
+        tofSensor->thresholdMaxDistanceMM = (unsigned int) (tofSensor->thresholdMinDistanceMM + distanceToStopMM + marginDistanceMM);
         if (distanceToStopMM > maxDistanceMM) {
-            tofSensor->thresholdMaxDistanceMM = maxDistanceMM;
+            tofSensor->thresholdMaxDistanceMM = (unsigned int) maxDistanceMM;
         }
     }
 }

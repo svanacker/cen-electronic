@@ -77,6 +77,7 @@ static Location* chaosZoneSmallRobotLocation;
 static Location* bigDistributorLine3Location;
 static Location* rediumGreeniumFrontDropLocation;
 static Location* rediumGreeniumDropLocation;
+static Location* goldGatewayLocation;
 
 // ------------------------------------------------------- PATHS -------------------------------------------------------------------------
 
@@ -100,6 +101,14 @@ PathData* chaosZoneSmallRobot_to_weighingMachineDrop_Path;
 PathData* chaosZoneSmallRobot_to_bigDistributorLine3_Path;
 PathData* bigDistributorLine3_to_rediumGreeniumFrontDrop_Path;
 PathData* rediumGreeniumFrontDrop_to_rediumGreeniumDropZone_Path;
+
+PathData* goldeniumFront_to_acceleratorCentered_Path;
+PathData* acceleratorCentered_to_weighingMachineFront_Path;
+
+// Gateway
+PathData* goldeniumFront_to_goldGateway_Path;
+PathData* goldGateway_to_acceleratorCentered_Path;
+PathData* goldGateway_to_start_Path;
 
 // Go back Home
 PathData* weighingMachineDrop_to_smallRobotStartArea_Path;
@@ -219,6 +228,7 @@ void initSmallRobotLocations2019(GameStrategyContext* gameStrategyContext) {
     bigDistributorLine3Location = addLocationWithColors(teamColor, navigation, BIG_DISTRIBUTOR_LINE_3, BIG_DISTRIBUTOR_LINE_3_LABEL, BIG_DISTRIBUTOR_LINE_3_X, BIG_DISTRIBUTOR_LINE_3_Y);
     rediumGreeniumFrontDropLocation = addLocationWithColors(teamColor, navigation, REDIUM_GREENIUM_FRONT_DROP, REDIUM_GREENIUM_FRONT_DROP_LABEL, REDIUM_GREENIUM_FRONT_DROP_X, REDIUM_GREENIUM_FRONT_DROP_Y);
     rediumGreeniumDropLocation = addLocationWithColors(teamColor, navigation, REDIUM_GREENIUM_DROP_ZONE, REDIUM_GREENIUM_DROP_ZONE_LABEL, REDIUM_GREENIUM_DROP_X, REDIUM_GREENIUM_DROP_Y);
+    goldGatewayLocation = addLocationWithColors(teamColor, navigation, "GGAT", "Gold Gateway", 400.0f, 2150.0f);
 }
 
 void initSmallRobotPaths2019(GameStrategyContext* gameStrategyContext) {
@@ -416,7 +426,71 @@ void initSmallRobotPaths2019(GameStrategyContext* gameStrategyContext) {
         aFactor * REDIUM_GREENIUM_FRONT_DROP_TO_REDIUM_GREENIUM_DROP_ZONE_ACCELERATOR_FACTOR,
         speedFactor * REDIUM_GREENIUM_FRONT_DROP_TO_REDIUM_GREENIUM_DROP_ZONE_SPEED_FACTOR
     );
+    
+    goldeniumFront_to_acceleratorCentered_Path = addNavigationPathWithColor(teamColor,
+        navigation,
+        goldeniumFrontLocation,
+        acceleratorCenteredLocation,
+        1200.0f,
+        -350.0f,
+        -400.0f,
+        deciDegreeToRad(180.0f),
+        deciDegreeToRad(180.0f),
+        aFactor * 0.3f,
+        speedFactor * 0.3f
+    );
+    
+    acceleratorCentered_to_weighingMachineFront_Path = addNavigationPathWithColor(teamColor,
+        navigation,
+        acceleratorCenteredLocation,
+        weighingMachineFrontLocation,
+        1000.0f,
+        200.0f,
+        300.0f,
+        deciDegreeToRad(0.0f),
+        deciDegreeToRad(0.0f),
+        aFactor * 0.5f,
+        speedFactor * 0.5f
+    );
 
+    goldeniumFront_to_goldGateway_Path = addNavigationPathWithColor(teamColor,
+        navigation,
+            goldeniumFrontLocation,
+            goldGatewayLocation,
+            600.0f,
+            -300.0f,
+            -100.0f,
+            deciDegreeToRad(180.0f),
+            deciDegreeToRad(180.0f),
+        aFactor * 0.3f,
+        speedFactor * 0.3f
+            );
+    
+    goldGateway_to_acceleratorCentered_Path = addNavigationPathWithColor(teamColor,
+        navigation,
+            goldGatewayLocation,
+            acceleratorCenteredLocation,
+            1200.0f,
+            300.0f,
+            200.0f,
+            deciDegreeToRad(-90.0f),
+            deciDegreeToRad(-90.0f),
+        aFactor * 0.5f,
+        speedFactor * 0.5f
+     );
+    
+    goldGateway_to_start_Path = addNavigationPathWithColor(teamColor,
+        navigation,
+            goldGatewayLocation,
+            smallRobotStartAreaLocation,
+            2000.0f,
+            300.0f,
+            200.0f,
+            deciDegreeToRad(-90.0f),
+            deciDegreeToRad(-90.0f),
+        aFactor * 0.5f,
+        speedFactor * 0.5f
+     );
 }
 
 void initSmallRobotTargets2019(GameStrategyContext* gameStrategyContext) {
