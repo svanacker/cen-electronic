@@ -15,6 +15,8 @@
 
 #include "../../../drivers/tof/tofList.h"
 
+#define DISTRIBUTOR_2019_SCAN_RETRY_COUNT                2
+
 /**
  * Prepare the fork to take something on the Distributor
  * @param servoList

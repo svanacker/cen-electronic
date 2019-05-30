@@ -44,6 +44,8 @@
 
 #include "../../../robot/tof/strategyTofSensorList.h"
 
+#include "../../../robot/2019/commonRobot/commonRobotLocations2019.h"
+
 #include "../../../robot/2019/bigRobot/bigRobotActions2019.h"
 #include "../../../robot/2019/bigRobot/bigRobotLocation2019.h"
 #include "../../../robot/2019/bigRobot/bigRobotPath2019.h"
@@ -75,7 +77,7 @@ static Location* acceleratorDropLocation;
 static Location* bigDistributorLine1FrontLocation;
 static Location* bigDistributorLine2FrontLocation;
 static Location* bigDistributorLine3FrontLocation;
-
+static Location* blueiumGreeniumCenteredLocation;
 
 // ------------------------------------------------------- PATHS -------------------------------------------------------------------------
 
@@ -95,6 +97,8 @@ PathData* keyPoint1_to_bigDistributorLine2Front;
 PathData* bigDistributorLine2Front_to_keyPoint1;
 PathData* keyPoint1_to_bigDistributorLine3Front;
 PathData* bigDistributorLine3Front_to_keyPoint1;
+
+PathData* bigDistributorLine1Front_to_blueiumGreeniumPoint;
 
 // Big Distributor & Keypoint2
 PathData* keyPoint2_to_bigDistributorLine2Front;
@@ -194,7 +198,7 @@ void initBigRobotLocations2019(GameStrategyContext* gameStrategyContext) {
     bigDistributorLine1FrontLocation = addLocationWithColors(teamColor, navigation, BIG_DISTRIBUTOR_LINE_1, BIG_DISTRIBUTOR_LINE_1_LABEL,  BIG_DISTRIBUTOR_LINE_1_X, BIG_DISTRIBUTOR_LINE_1_Y);
     bigDistributorLine2FrontLocation = addLocationWithColors(teamColor, navigation, BIG_DISTRIBUTOR_LINE_2, BIG_DISTRIBUTOR_LINE_2_LABEL, BIG_DISTRIBUTOR_LINE_2_X, BIG_DISTRIBUTOR_LINE_2_Y);
     bigDistributorLine3FrontLocation = addLocationWithColors(teamColor, navigation, BIG_DISTRIBUTOR_LINE_3, BIG_DISTRIBUTOR_LINE_3_LABEL, BIG_DISTRIBUTOR_LINE_3_X, BIG_DISTRIBUTOR_LINE_3_Y);
-
+    blueiumGreeniumCenteredLocation = addLocationWithColors(teamColor, navigation, BLUEIUM_GREENIUM_POINT, BLUEIUM_GREENIUM_POINT_LABEL, BLUEIUM_GREENIUM_POINT_X, BLUEIUM_GREENIUM_POINT_Y);
 }
 
 void initBigRobotPaths2019(GameStrategyContext* gameStrategyContext) {
@@ -410,6 +414,18 @@ void initBigRobotPaths2019(GameStrategyContext* gameStrategyContext) {
         deciDegreeToRad(KEY_POINT_1_FROM_DISTRIBUTOR_ANGLE_DECI_DEG),
         aFactor * BIGDISTRIBUTOR_LINE_3_FRONT_TO_KEY_POINT_1_ACCELERATION_FACTOR,
         speedFactor * BIGDISTRIBUTOR_LINE_3_FRONT_TO_KEY_POINT_1_SPEED_FACTOR);
+    
+    bigDistributorLine1Front_to_blueiumGreeniumPoint = addNavigationPathWithColor(teamColor,
+        navigation,
+        bigDistributorLine1FrontLocation,
+        blueiumGreeniumCenteredLocation,
+        500.0f,
+        -300.0f,
+        -300.0f,
+        deciDegreeToRad(ANGLE_DECI_DEG_0),
+        deciDegreeToRad(ANGLE_DECI_DEG_90),
+        aFactor * 0.5f,
+        speedFactor * 0.5f);
 }
 
 
@@ -429,7 +445,8 @@ void initBigRobotTargetActions2019(GameStrategyContext* gameStrategyContext) {
     // BIG DISTRIBUTOR LINE 1
     addTargetPrepareAction(&(bigDistributorLine1Target.actionList), &bigDistributorLine1PrepareTakeTargetAction, NULL, BIG_DISTRIBUTOR_LINE_1_PREPARE_TAKE_TIME_TO_ACHIEVE, &bigDistributorLine1PrepareTakeTargetActionItemList);
     addTargetTakeAction(&(bigDistributorLine1Target.actionList), &bigDistributorLine1TakeTargetAction, bigDistributorLine1FrontLocation, BIG_DISTRIBUTOR_LINE_1_TAKE_TIME_TO_ACHIEVE, &bigDistributorLine1TakeTargetActionItemList);
-    addTargetDropAction(&(bigDistributorLine1Target.actionList), &bigDistributorLine1DropTargetAction, acceleratorDropLocation, BIG_DISTRIBUTOR_LINE_1_DROP_TIME_TO_ACHIEVE, &bigDistributorLine1DropTargetActionItemList);
+    // addTargetDropAction(&(bigDistributorLine1Target.actionList), &bigDistributorLine1DropTargetAction, acceleratorDropLocation, BIG_DISTRIBUTOR_LINE_1_DROP_TIME_TO_ACHIEVE, &bigDistributorLine1DropTargetActionItemList);
+    addTargetDropAction(&(bigDistributorLine1Target.actionList), &bigDistributorLine1DropTargetAction, blueiumGreeniumCenteredLocation, BIG_DISTRIBUTOR_LINE_1_DROP_TIME_TO_ACHIEVE, &bigDistributorLine1DropTargetActionItemList);
 
     // BIG DISTRIBUTOR LINE 2
     addTargetPrepareAction(&(bigDistributorLine2Target.actionList), &bigDistributorLine2PrepareTakeTargetAction, NULL, BIG_DISTRIBUTOR_LINE_2_PREPARE_TAKE_TIME_TO_ACHIEVE, &bigDistributorLine2PrepareTakeTargetActionItemList);

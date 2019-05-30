@@ -29,5 +29,13 @@ bool smallDistributorLineTake(int* context);
 
 bool smallDistributorAcceleratorDrop(int* context);
 
+// BIG DISTRIBUTOR LINE 3
+
+bool bigDistributorLine3Prepare(int* context);
+
+bool bigDistributorLine3Take(int* context);
+
+bool bigDistributorLine3Drop(int* context);
+
 #endif
 

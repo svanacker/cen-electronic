@@ -44,8 +44,9 @@ bool distributor2019Take(ServoList* servoList, TofSensorList* tofSensorList) {
     bool wait = true;
 
     // TODO : Scan to do => Return false if the scan is KO
-    if (!forkScan(servoList, tofSensorList, FORK_2019_LEFT_AND_RIGHT_INDEX)) {
-        return false;
+    forkScan2019ConfigTofListForDistributor(tofSensorList);
+    if (forkScan(servoList, tofSensorList, DISTRIBUTOR_2019_SCAN_RETRY_COUNT, FORK_2019_LEFT_AND_RIGHT_INDEX)) {
+        moveElevatorMiddle(servoList, wait);
     }
     
     // Move to Bottom which is the level to take the distributor elements

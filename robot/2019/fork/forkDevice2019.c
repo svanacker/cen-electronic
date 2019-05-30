@@ -86,8 +86,11 @@ void deviceFork2019HandleRawData(unsigned char commandHeader, InputStream* input
     // Scan
     else if (commandHeader == COMMAND_2019_FORK_SCAN) {
         ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_FORK_SCAN);
+        unsigned int retryCount = readHex(inputStream);
+        checkIsSeparator(inputStream);
         unsigned int side = readHex(inputStream);
-        bool scanOk = forkScan(servoList, tofSensorList, side);
+        // Scan 
+        bool scanOk = forkScan(servoList, tofSensorList, retryCount, side);
         appendBool(outputStream, scanOk);
     }
 }

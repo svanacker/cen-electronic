@@ -18,6 +18,13 @@ int deviceDistributor2019GetInterface(unsigned char commandHeader, DeviceInterfa
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
+    // -> Elevator Height to Take
+    else if (commandHeader == COMMAND_2019_DISTRIBUTOR_TAKE_HEIGHT) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("Move to the height to take Dist Puck");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }
     // -> Take
     else if (commandHeader == COMMAND_2019_DISTRIBUTOR_TAKE) {
         if (fillDeviceArgumentList) {

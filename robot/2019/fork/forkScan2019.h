@@ -22,10 +22,16 @@
 #define FORK_2019_RIGHT_HARDWARE_IO_EXPANDER_IO_INDEX                          1
 
 // TOF THRESHOLD
-#define FORK_2019_SCAN_DISTANCE_LEFT_MIN_THRESHOLD                             5
-#define FORK_2019_SCAN_DISTANCE_LEFT_MAX_THRESHOLD                            32
-#define FORK_2019_SCAN_DISTANCE_RIGHT_MIN_THRESHOLD                            5
-#define FORK_2019_SCAN_DISTANCE_RIGHT_MAX_THRESHOLD                           32
+#define FORK_2019_SCAN_GOLDENIUM_DISTANCE_LEFT_MIN_THRESHOLD                   5
+#define FORK_2019_SCAN_GOLDENIUM_DISTANCE_LEFT_MAX_THRESHOLD                  35
+#define FORK_2019_SCAN_GOLDENIUM_DISTANCE_RIGHT_MIN_THRESHOLD                  5
+#define FORK_2019_SCAN_GOLDENIUM_DISTANCE_RIGHT_MAX_THRESHOLD                 35
+
+#define FORK_2019_SCAN_DISTRIBUTOR_DISTANCE_LEFT_MIN_THRESHOLD                 5
+#define FORK_2019_SCAN_DISTRIBUTOR_DISTANCE_LEFT_MAX_THRESHOLD                32
+#define FORK_2019_SCAN_DISTRIBUTOR_DISTANCE_RIGHT_MIN_THRESHOLD                5
+#define FORK_2019_SCAN_DISTRIBUTOR_DISTANCE_RIGHT_MAX_THRESHOLD               32
+
 #define FORK_2019_SCAN_SERVO_DELTA_SERVO_POSITION                             30
 #define FORK_2019_SCAN_SERVO_DELTA_MILLISECONDS                              100
 #define FORK_2019_SCAN_MEASURE_COUNT                                           3
@@ -55,10 +61,14 @@ void forkScan2019ConfigTofList(TofSensor* leftForkScanSensor,
                               MultiplexerList* multiplexerList,
                               IOExpanderList* ioExpanderList);
 
-bool forkScan(ServoList* servoList, TofSensorList* tofSensorList, unsigned int leftRight);
+bool forkScan(ServoList* servoList, TofSensorList* tofSensorList, unsigned int retryCount, unsigned int leftRight);
 
-bool forkScanFromLeftToRight(ServoList* servoList, TofSensorList* tofSensorList);
+bool forkScanFromLeftToRight(ServoList* servoList, TofSensorList* tofSensorList, unsigned int retryCount);
 
-bool forkScanFromRightToLeft(ServoList* servoList, TofSensorList* tofSensorList);
+bool forkScanFromRightToLeft(ServoList* servoList, TofSensorList* tofSensorList, unsigned int retryCount);
+
+void forkScan2019ConfigTofListForGoldenium(TofSensorList* tofSensorList);
+
+void forkScan2019ConfigTofListForDistributor(TofSensorList* tofSensorList);
 
 #endif

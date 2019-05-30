@@ -3671,6 +3671,9 @@
     <ClInclude Include="navigation\locationDebug.h">
       <Filter>Header Files\navigation</Filter>
     </ClInclude>
+    <ClInclude Include="robot\2019\commonRobot\commonRobotLocations2019.h">
+      <Filter>Header Files\robot\2019\commonRobot</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="cen-electronic-console.rc">

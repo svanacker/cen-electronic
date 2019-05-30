@@ -36,8 +36,8 @@ void forkScan2019ConfigTofList(TofSensor* leftForkScanSensor,
         leftForkScanSensor->enabled = true;
         leftForkScanSensor->usageType = TOF_SENSOR_USAGE_TYPE_ACTION;
         leftForkScanSensor->orientationRadian = 0.0f;
-        leftForkScanSensor->thresholdMinDistanceMM = FORK_2019_SCAN_DISTANCE_LEFT_MIN_THRESHOLD;
-        leftForkScanSensor->thresholdMaxDistanceMM = FORK_2019_SCAN_DISTANCE_LEFT_MAX_THRESHOLD;
+        leftForkScanSensor->thresholdMinDistanceMM = FORK_2019_SCAN_GOLDENIUM_DISTANCE_LEFT_MIN_THRESHOLD;
+        leftForkScanSensor->thresholdMaxDistanceMM = FORK_2019_SCAN_GOLDENIUM_DISTANCE_LEFT_MAX_THRESHOLD;
         
         leftForkScanSensor->changeAddress = true;
         leftForkScanSensor->targetAddress = VL530X_ADDRESS_12;
@@ -55,8 +55,8 @@ void forkScan2019ConfigTofList(TofSensor* leftForkScanSensor,
         rightForkScanSensor->usageType = TOF_SENSOR_USAGE_TYPE_ACTION;
         
         rightForkScanSensor->orientationRadian = 0.0f;
-        rightForkScanSensor->thresholdMinDistanceMM = FORK_2019_SCAN_DISTANCE_RIGHT_MIN_THRESHOLD;
-        rightForkScanSensor->thresholdMaxDistanceMM = FORK_2019_SCAN_DISTANCE_RIGHT_MAX_THRESHOLD;
+        rightForkScanSensor->thresholdMinDistanceMM = FORK_2019_SCAN_GOLDENIUM_DISTANCE_RIGHT_MIN_THRESHOLD;
+        rightForkScanSensor->thresholdMaxDistanceMM = FORK_2019_SCAN_GOLDENIUM_DISTANCE_RIGHT_MIN_THRESHOLD;
         
         rightForkScanSensor->changeAddress = true;
         rightForkScanSensor->targetAddress = VL530X_ADDRESS_11;
@@ -65,6 +65,32 @@ void forkScan2019ConfigTofList(TofSensor* leftForkScanSensor,
         rightForkScanSensor->hardwareRestartable = true;
         rightForkScanSensor->hardwareRestartIOExpander = getIOExpanderByIndex(ioExpanderList, FORK_2019_HARDWARE_IO_EXPANDER_INDEX);
         rightForkScanSensor->hardwareRestartIOExpanderIoIndex = FORK_2019_RIGHT_HARDWARE_IO_EXPANDER_IO_INDEX;
+    }
+}
+
+void forkScan2019ConfigTofListForGoldenium(TofSensorList* tofSensorList) {
+    TofSensor* leftForkScanSensor = getTofSensorByIndex(tofSensorList, FORK_2019_LEFT_TOF_INDEX);
+    if (leftForkScanSensor != NULL) {
+        leftForkScanSensor->thresholdMinDistanceMM = FORK_2019_SCAN_GOLDENIUM_DISTANCE_LEFT_MIN_THRESHOLD;
+        leftForkScanSensor->thresholdMaxDistanceMM = FORK_2019_SCAN_GOLDENIUM_DISTANCE_LEFT_MAX_THRESHOLD;
+    }
+    TofSensor* rightForkScanSensor = getTofSensorByIndex(tofSensorList, FORK_2019_RIGHT_TOF_INDEX);
+    if (rightForkScanSensor != NULL) {
+        rightForkScanSensor->thresholdMinDistanceMM = FORK_2019_SCAN_GOLDENIUM_DISTANCE_RIGHT_MIN_THRESHOLD;
+        rightForkScanSensor->thresholdMaxDistanceMM = FORK_2019_SCAN_GOLDENIUM_DISTANCE_RIGHT_MAX_THRESHOLD;
+    }
+}
+
+void forkScan2019ConfigTofListForDistributor(TofSensorList* tofSensorList) {
+    TofSensor* leftForkScanSensor = getTofSensorByIndex(tofSensorList, FORK_2019_LEFT_TOF_INDEX);
+    if (leftForkScanSensor != NULL) {
+        leftForkScanSensor->thresholdMinDistanceMM = FORK_2019_SCAN_DISTRIBUTOR_DISTANCE_LEFT_MIN_THRESHOLD;
+        leftForkScanSensor->thresholdMaxDistanceMM = FORK_2019_SCAN_DISTRIBUTOR_DISTANCE_LEFT_MAX_THRESHOLD;
+    }
+    TofSensor* rightForkScanSensor = getTofSensorByIndex(tofSensorList, FORK_2019_RIGHT_TOF_INDEX);
+    if (rightForkScanSensor != NULL) {
+        rightForkScanSensor->thresholdMinDistanceMM = FORK_2019_SCAN_DISTRIBUTOR_DISTANCE_RIGHT_MIN_THRESHOLD;
+        rightForkScanSensor->thresholdMaxDistanceMM = FORK_2019_SCAN_DISTRIBUTOR_DISTANCE_RIGHT_MAX_THRESHOLD;
     }
 }
 
@@ -137,22 +163,22 @@ void moveElevatorDistributorScan(ServoList* servoList, bool wait) {
     pwmServo(servo, FORK_2019_ELEVATOR_SPEED_FACTOR, getElevatorScanHeightServoValue(), wait);
 }
 
-bool forkScan(ServoList* servoList, TofSensorList* tofSensorList, unsigned int leftRight) {
+bool forkScan(ServoList* servoList, TofSensorList* tofSensorList, unsigned retryCount, unsigned int leftRight) {
     if (leftRight == FORK_2019_LEFT_INDEX) {
-        return forkScanFromLeftToRight(servoList, tofSensorList);
+        return forkScanFromLeftToRight(servoList, tofSensorList, retryCount);
     }
     else if (leftRight == FORK_2019_RIGHT_INDEX) {
-        return forkScanFromRightToLeft(servoList, tofSensorList);
+        return forkScanFromRightToLeft(servoList, tofSensorList, retryCount);
     }
-    // Double Scan for small Distributor
+    // Double Scan for small / Big Distributor
     else {
         Servo* servo = getServo(servoList, FORK_2019_SCAN_SERVO_INDEX);
-        bool scanOk = forkScanFromLeftToRight(servoList, tofSensorList);
+        bool scanOk = forkScanFromLeftToRight(servoList, tofSensorList, retryCount);
         if (!scanOk) {
             return false;
         }
         unsigned int servoPosition = servo->currentPosition;
-        scanOk = forkScanFromRightToLeft(servoList, tofSensorList);
+        scanOk = forkScanFromRightToLeft(servoList, tofSensorList, retryCount);
         if (!scanOk) {
             return false;
         }
@@ -180,7 +206,7 @@ bool internalForkScan(TofSensor* tofSensor) {
     return false;
 }
 
-bool forkScanFromRightToLeft(ServoList* servoList, TofSensorList* tofSensorList) {
+bool forkScanFromRightToLeft(ServoList* servoList, TofSensorList* tofSensorList, unsigned int retryCount) {
     appendStringLN(getDebugOutputStreamLogger(),  "forkScanFromRightToLeft");
 
     Servo* servo = getServo(servoList, FORK_2019_SCAN_SERVO_INDEX);
@@ -196,25 +222,27 @@ bool forkScanFromRightToLeft(ServoList* servoList, TofSensorList* tofSensorList)
         return false;
     }
     
-    moveElevatorRight(servoList, true);
-
-    unsigned int i;
-    for (i = getScanRightServoValue(); i < getScanLeftServoValue(); i += FORK_2019_SCAN_SERVO_DELTA_SERVO_POSITION) {
-        pwmServo(servo, FORK_2019_SCAN_SPEED_FACTOR, i, false);
-        timerDelayMilliSeconds(FORK_2019_SCAN_SERVO_DELTA_MILLISECONDS);
-        // Scan several time
-        if (internalForkScan(tofSensor)) {
-            return true;
+    unsigned int retryIndex;
+    for (retryIndex = 0; retryIndex < retryCount; retryIndex++) {
+        moveElevatorRight(servoList, true);
+        unsigned int i;
+        for (i = getScanRightServoValue(); i < getScanLeftServoValue(); i += FORK_2019_SCAN_SERVO_DELTA_SERVO_POSITION) {
+            pwmServo(servo, FORK_2019_SCAN_SPEED_FACTOR, i, false);
+            timerDelayMilliSeconds(FORK_2019_SCAN_SERVO_DELTA_MILLISECONDS);
+            // Scan several time
+            if (internalForkScan(tofSensor)) {
+                return true;
+            }
         }
     }
-    
+
     // If not found, we try to go back on the middle
     moveElevatorMiddle(servoList, true);
 
     return false;
 }
 
-bool forkScanFromLeftToRight(ServoList* servoList, TofSensorList* tofSensorList) {
+bool forkScanFromLeftToRight(ServoList* servoList, TofSensorList* tofSensorList, unsigned int retryCount) {
     appendStringLN(getDebugOutputStreamLogger(),  "forkScanFromLeftToRight");
     
     // Avoid to do the scan if 
@@ -232,13 +260,16 @@ bool forkScanFromLeftToRight(ServoList* servoList, TofSensorList* tofSensorList)
     Servo* servo = getServo(servoList, FORK_2019_SCAN_SERVO_INDEX);
 
     unsigned int i;
-    moveElevatorLeft(servoList, true);
-    for (i = getScanLeftServoValue(); i > getScanRightServoValue(); i -= FORK_2019_SCAN_SERVO_DELTA_SERVO_POSITION) {
-        pwmServo(servo, FORK_2019_SCAN_SPEED_FACTOR, i, false);
-        timerDelayMilliSeconds(FORK_2019_SCAN_SERVO_DELTA_MILLISECONDS);
-        // Scan several time
-        if (internalForkScan(tofSensor)) {
-            return true;
+    unsigned int retryIndex;
+    for (retryIndex = 0; retryIndex < retryCount; retryIndex++) {
+        moveElevatorLeft(servoList, true);
+        for (i = getScanLeftServoValue(); i > getScanRightServoValue(); i -= FORK_2019_SCAN_SERVO_DELTA_SERVO_POSITION) {
+            pwmServo(servo, FORK_2019_SCAN_SPEED_FACTOR, i, false);
+            timerDelayMilliSeconds(FORK_2019_SCAN_SERVO_DELTA_MILLISECONDS);
+            // Scan several time
+            if (internalForkScan(tofSensor)) {
+                return true;
+            }
         }
     }
     // If not found, we try to go back on the middle

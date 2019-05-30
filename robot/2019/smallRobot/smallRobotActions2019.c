@@ -29,6 +29,9 @@
 #define SMALL_DISTRIBUTOR_TAKE_ACTION_LOG_NAME        "-> smallDistributorLineTake"
 #define SMALL_DISTRIBUTOR_DROP_ACTION_LOG_NAME        " -> smallDistributorDrop "
 
+#define BIG_DISTRIBUTOR_LINE_3_PREPARE_ACTION_LOG_NAME     "-> bigDistributorLinePrepare"
+#define BIG_DISTRIBUTOR_LINE_3_TAKE_ACTION_LOG_NAME        "-> bigDistributorLineTake"
+#define BIG_DISTRIBUTOR_LINE_3_DROP_ACTION_LOG_NAME        " -> bigDistributorDrop "
 
 // -------------------------------------------- ARM & ACCELERATOR -----------------------------------------------
 
@@ -183,5 +186,38 @@ bool smallDistributorLineTake(int* context) {
 
 bool smallDistributorAcceleratorDrop(int* context) {
     return acceleratorDrop(context, SMALL_DISTRIBUTOR_DROP_ACTION_LOG_NAME);
+}
+
+// -------------------------------------------- BIG DISTRIBUTOR LINE 3 / REDIUM GREENIUM 
+
+bool bigDistributorLine3Prepare(int* context) {
+    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+    appendStringCRLF(debugOutputStream, BIG_DISTRIBUTOR_LINE_3_PREPARE_ACTION_LOG_NAME);
+    GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
+    ServoList* servoList = gameStrategyContext->servoList;
+    distributor2019PrepareTake(servoList);
+
+    return true;
+}
+
+bool bigDistributorLine3Take(int* context) {
+    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+    appendStringCRLF(debugOutputStream, BIG_DISTRIBUTOR_LINE_3_TAKE_ACTION_LOG_NAME);
+    GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
+    ServoList* servoList = gameStrategyContext->servoList;
+    TofSensorList* tofSensorList = gameStrategyContext->tofSensorList;
+    distributor2019Take(servoList, tofSensorList);
+
+    return true;
+}
+
+bool bigDistributorLine3Drop(int* context) {
+    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+    appendStringCRLF(debugOutputStream, BIG_DISTRIBUTOR_LINE_3_DROP_ACTION_LOG_NAME);
+    GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
+    ServoList* servoList = gameStrategyContext->servoList;
+    moveForkBack(servoList, FORK_2019_LEFT_AND_RIGHT_INDEX, true);
+
+    return true;
 }
 

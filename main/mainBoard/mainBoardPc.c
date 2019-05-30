@@ -578,8 +578,8 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
     }
 
     // CONFIG
-    // initRobotConfigPc(&robotConfig, ROBOT_TYPE_BIG);
-    initRobotConfigPc(&robotConfig, ROBOT_TYPE_SMALL);
+    initRobotConfigPc(&robotConfig, ROBOT_TYPE_BIG);
+    // initRobotConfigPc(&robotConfig, ROBOT_TYPE_SMALL);
 
     // EEPROM
     initEepromPc(&eeprom, "MAIN_BOARD_EEPROM");
@@ -609,7 +609,7 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
     initMultiplexerList(&multiplexerList, (Multiplexer(*)[]) &multiplexerArray, MAIN_BOARD_PC_MULTIPLEXER_LIST_LENGTH);
 
     // Fake Robot
-    initFakeRobot(300.0f, 1200.0f, 0.0f, 140.0f);
+    // initFakeRobot(300.0f, 1200.0f, 0.0f, 140.0f);
     // initFakeRobot(0.0f, 0.0f, 0.0f, 140.0f);
 
     navigation = initNavigation2019();

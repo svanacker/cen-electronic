@@ -6,6 +6,7 @@
 #include "../../../common/pwm/servo/servoList.h"
 #include "../../../drivers/tof/tofList.h"
 
+#define GOLDENIUM_2019_SCAN_RETRY_COUNT                3
 
 bool fork2019PrepareTakeGoldenium(ServoList* servoList, unsigned int leftRight);
 

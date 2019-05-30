@@ -45,6 +45,14 @@
 #define WEIGHING_MACHINE_DROP_Y                                            1300
 #define WEIGHING_MACHINE_DROP_ANGLE_DECI_DEG                   ANGLE_DECI_DEG_0
 
+// Chaos Zone Small Robot
+#define CHAOS_ZONE_SMALL_ROBOT                                            "CZSR"
+#define CHAOS_ZONE_SMALL_ROBOT_LABEL                    "Chaos Zone Small Robot"
+#define CHAOS_ZONE_SMALL_ROBOT_X                                           1050
+#define CHAOS_ZONE_SMALL_ROBOT_Y                                            950
+#define CHAOS_ZONE_SMALL_ROBOT_ANGLE_DECI_DEG                                 0
+
+
 // Blueium Right (to go to small Distributor)
 #define BLUEIUM_RIGHT                                                     "BLUR"
 #define BLUEIUM_RIGHT_LABEL                                      "Blueium Right"

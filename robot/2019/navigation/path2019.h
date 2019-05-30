@@ -20,6 +20,10 @@
 #define SMALL_DISTRIBUTOR_LINE_1_TAKE_TIME_TO_ACHIEVE                      6.0f
 #define SMALL_DISTRIBUTOR_LINE_1_DROP_TIME_TO_ACHIEVE                      6.0f
 
+#define BIG_DISTRIBUTOR_LINE_3_GREENIUM_PREPARE_TIME_TO_ACHIEVE            0.0f
+#define BIG_DISTRIBUTOR_LINE_3_GREENIUM_TAKE_TIME_TO_ACHIEVE              10.0f
+#define BIG_DISTRIBUTOR_LINE_3_GREENIUM_DROP_TIME_TO_ACHIEVE               6.0f
+
 #define CHAOS_TAKE_TIME_TO_ACHIEVE                                         0.0f
 #define CHAOS_DROP_TIME_TO_ACHIEVE                                         0.0f
 

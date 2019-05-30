@@ -881,6 +881,7 @@
     <ClInclude Include="robot\2019\bigRobot\bigRobotPath2019.h" />
     <ClInclude Include="robot\2019\bigRobot\bigRobotStrategy2019.h" />
     <ClInclude Include="robot\2019\commonRobot\commonRobotActions2019.h" />
+    <ClInclude Include="robot\2019\commonRobot\commonRobotLocations2019.h" />
     <ClInclude Include="robot\2019\distributor\distributor2019.h" />
     <ClInclude Include="robot\2019\distributor\distributorDevice2019.h" />
     <ClInclude Include="robot\2019\distributor\distributorDeviceInterface2019.h" />

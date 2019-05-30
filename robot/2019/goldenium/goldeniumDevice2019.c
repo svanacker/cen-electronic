@@ -46,17 +46,17 @@ bool deviceGoldenium2019IsOk(void) {
 
 void deviceGoldenium2019HandleRawData(unsigned char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     if (commandHeader == COMMAND_2019_FORK_PREPARE_TAKE_GOLDENIUM) {
-        ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_FORK_PREPARE_TAKE_GOLDENIUM);
+        ackCommand(outputStream, GOLDENIUM_2019_DEVICE_HEADER, COMMAND_2019_FORK_PREPARE_TAKE_GOLDENIUM);
         fork2019PrepareTakeGoldenium(servoList, FORK_2019_LEFT_AND_RIGHT_INDEX);
     }
     else if (commandHeader == COMMAND_2019_FORK_TAKE_GOLDENIUM) {
-        ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_FORK_TAKE_GOLDENIUM);
+        ackCommand(outputStream, GOLDENIUM_2019_DEVICE_HEADER, COMMAND_2019_FORK_TAKE_GOLDENIUM);
         unsigned int side = readHex(inputStream);
         bool scanOk = fork2019TakeGoldenium(servoList, tofSensorList, side);
         appendBool(outputStream, scanOk);
     }
     else if (commandHeader == COMMAND_2019_FORK_DROP_GOLDENIUM) {
-        ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_FORK_DROP_GOLDENIUM);
+        ackCommand(outputStream, GOLDENIUM_2019_DEVICE_HEADER, COMMAND_2019_FORK_DROP_GOLDENIUM);
         unsigned int side = readHex(inputStream);
         fork2019DropGoldenium(servoList, side);
     }

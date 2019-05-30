@@ -58,7 +58,13 @@ int deviceElevator2019GetInterface(unsigned char commandHeader, DeviceInterfaceM
     }
     else if (commandHeader == COMMAND_2019_ELEVATOR_GOLDENIUM_POSITION) {
         if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("ELEVATOR Goldenium Pos.");
+            setFunctionNoArgumentAndNoResult("ELEVATOR Gold Take Pos.");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }
+    else if (commandHeader == COMMAND_2019_ELEVATOR_SCAN_GOLDENIUM_POSITION) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("ELEVATOR Gold Scan Pos.");
         }
         return commandLengthValueForMode(mode, 0, 0);
     }

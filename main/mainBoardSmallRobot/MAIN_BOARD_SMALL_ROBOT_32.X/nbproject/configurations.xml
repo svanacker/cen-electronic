@@ -564,6 +564,7 @@
                      displayName="robot.2019.commonRobot"
                      projectFiles="true">
         <itemPath>../../../robot/2019/commonRobot/commonRobotActions2019.h</itemPath>
+        <itemPath>../../../robot/2019/commonRobot/commonRobotLocations2019.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f35"
                      displayName="robot.2019.distributor"
