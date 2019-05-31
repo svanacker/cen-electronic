@@ -4,6 +4,8 @@
 
 #include <stdbool.h>
 
+#include "../../robot/match/startMatch.h"
+
 #define MAIN_BOARD_PC_NAME    "mainBoardPc"
 #define MAIN_BOARD_PC_ROBOT_MANAGER   "robotManager"
 
@@ -55,7 +57,7 @@
 // Timers
 #define MAIN_BOARD_PC_TIMER_LIST_LENGTH                         10
 
-
+bool mainBoardPcChecklist(StartMatch* startMatch);
 
 /**
  * Start Point to emulate the main Board PC.

@@ -9,6 +9,7 @@
 
 #include "../../common/delay/cenDelay.h"
 #include "../../common/io/printWriter.h"
+#include "../../common/io/printTableWriter.h"
 #include "../../common/log/logger.h"
 
 
@@ -32,7 +33,8 @@
 #include "../../common/i2c/i2cCommon.h"
 #include "../../common/i2c/i2cConstants.h"
 #include "../../common/i2c/i2cBusConnectionList.h"
-#include "printTableWriter.h"
+
+#include "../../robot/2019/mainBoard2019.h"
 
 // SMALL ROBOT PART
 #include "../../drivers/pwm/servo/servoPwmPca9685.h"
@@ -143,7 +145,7 @@ void mainBoardMainPhase2(void) {
     mainBoardCommonStrategyMainInitDrivers(&robotConfig);
 
     mainBoardCommonTofInitDrivers32(&robotConfig);
-    mainBoardCommonMatchMainInitDrivers(&robotConfig, isMatchStarted32, mainBoardWaitForInstruction, loopUnWaitForInstruction);
+    mainBoardCommonMatchMainInitDrivers(&robotConfig, &startupCheckList2019, isMatchStarted32, mainBoardWaitForInstruction, loopUnWaitForInstruction);
 }
 
 void mainBoardMainPhase3(void) {

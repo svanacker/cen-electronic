@@ -29,10 +29,13 @@
 // 2019
 #include "../../robot/2019/fork/fork2019.h"
 #include "../../robot/2019/fork/forkScan2019.h"
+#include "../../robot/2019/elevator/elevator2019.h"
 #include "../../robot/2019/distributor/distributor2019.h"
 #include "../../robot/2019/strategy/strategy2019.h"
 #include "../../robot/2019/strategy/strategyConfig2019.h"
 #include "../../robot/2019/gameboard/gameBoardElement2019.h"
+#include "arm/arm2019.h"
+#include "elevator/elevator2019.h"
 
 // 2019 -> GameStrategyContext
 static GameStrategyContext gameStrategyContext;
@@ -57,6 +60,24 @@ static GameBoard gameBoard;
 static BSplineCurve gameBoardCurve;
 static GameBoardElementList gameBoardElementList;
 static GameBoardElement gameBoardElementListArray[MAIN_BOARD_2019_GAME_BOARD_PRINT_ELEMENT_ARRAY_LENGTH];
+
+bool startupCheckList2019(StartMatch* startMatch) {
+    ServoList* servoList = gameStrategyContext.servoList;
+    arm2019On(servoList, FORK_2019_LEFT_INDEX);
+    arm2019On(servoList, FORK_2019_RIGHT_INDEX);
+    
+    moveElevatorScanAtValue(servoList, 1300, false);
+    
+    timerDelayMilliSeconds(200);
+    
+    moveElevatorMiddle(servoList, false);
+    
+    arm2019Off(servoList, FORK_2019_LEFT_INDEX);
+    arm2019Off(servoList, FORK_2019_RIGHT_INDEX);
+
+    return true;
+}
+
 
 Navigation* initNavigation2019(void) {
     // Navigation

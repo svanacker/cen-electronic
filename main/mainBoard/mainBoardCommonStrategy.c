@@ -211,7 +211,18 @@ void mainBoardCommonStrategyMainLoop(void) {
     StartMatch* startMatch = mainBoardCommonMatchGetStartMatch();
     EndMatch* endMatch = mainBoardCommonMatchGetEndMatch();
     
-    mainBoardCommonMatchLoopUntilStart();
+    // Check just before
+    if (startMatch->startupCheckListFunction == NULL) {
+        writeError(ROBOT_START_MATCH_CHECKLIST_NOT_DEFINED);
+    }
+    else {
+        if (!startMatch->startupCheckListFunction(startMatch)) {
+            writeError(ROBOT_START_MATCH_CHECKLIST_ERROR);
+        }
+    }
+    
+    // Wait the start of the robot
+    loopUntilStart(startMatch);
 
     while (true) {
         if (!startMatch->matchHandleInstructionFunction(startMatch)) {

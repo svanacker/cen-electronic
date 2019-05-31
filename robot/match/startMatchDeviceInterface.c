@@ -11,6 +11,13 @@ const char* getStartMatchDeviceName(void) {
 }
 
 int deviceStartMatchGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
+    if (commandHeader == COMMAND_CHECKLIST_MATCH) {
+        if (fillDeviceArgumentList) {
+            setFunction("Checklist match", 0, 1);
+            setResultUnsignedChar1(0, "ok (1) / ko (0)");
+        }
+        return commandLengthValueForMode(mode, 0, 1);
+    }
     if (commandHeader == COMMAND_MATCH_IS_STARTED) {
         if (fillDeviceArgumentList) {
             setFunction("is Started", 0, 1);

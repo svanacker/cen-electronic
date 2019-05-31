@@ -377,6 +377,10 @@ void mainBoardDeviceHandleNotification(const Device* device, const unsigned char
     }
 }
 
+bool mainBoardPcChecklist(StartMatch* startMatch) {
+    return true;
+}
+
 bool mainBoardPcWaitForInstruction(StartMatch* startMatch) {
     while (handleNotificationFromDispatcherList(TRANSMIT_I2C, MOTOR_BOARD_I2C_ADDRESS)) {
         // loop for all notification
@@ -639,7 +643,7 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
 
     // Start Match
     initEndMatch(&endMatch, &robotConfig, MATCH_DURATION);
-    initStartMatch(&startMatch, &robotConfig, &endMatch, isMatchStartedPc, mainBoardPcWaitForInstruction, mainBoardPcWaitForInstruction);
+    initStartMatch(&startMatch, &robotConfig, &endMatch, startupCheckList2019, isMatchStartedPc, mainBoardPcWaitForInstruction, mainBoardPcWaitForInstruction);
 
     // 2019 : Launcher
     // initElectronLauncher2019(&launcher, &robotConfig, &servoList, &tofSensorList);

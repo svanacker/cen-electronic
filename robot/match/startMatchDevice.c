@@ -56,7 +56,13 @@ void notifyStarted(StartMatch* startMatch, OutputStream* pcOutputStream) {
 }
 
 void deviceStartMatchDetectorHandleRawData(unsigned char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
-    if (commandHeader == COMMAND_MATCH_IS_STARTED) {
+    if (commandHeader == COMMAND_CHECKLIST_MATCH) {
+        StartMatch* startMatch = getStartMatchDetectorStartMatchObject();
+        bool checkListResult = startMatch->startupCheckListFunction(startMatch);
+        ackCommand(outputStream, START_MATCH_DEVICE_HEADER, COMMAND_CHECKLIST_MATCH);
+        appendHex2(outputStream, checkListResult);
+    }
+    else if (commandHeader == COMMAND_MATCH_IS_STARTED) {
         StartMatch* startMatch = getStartMatchDetectorStartMatchObject();
         int value = isMatchStarted(startMatch);
         ackCommand(outputStream, START_MATCH_DEVICE_HEADER, COMMAND_MATCH_IS_STARTED);

@@ -36,6 +36,8 @@
 
 // SMALL ROBOT PART
 #include "../../drivers/pwm/servo/servoPwmPca9685.h"
+
+#include "../../robot/2019/mainBoard2019.h"
 #include "../../robot/2019/distributor/distributorDeviceInterface2019.h"
 #include "../../robot/2019/distributor/distributorDevice2019.h"
 #include "../../robot/2019/elevator/elevatorDeviceInterface2019.h"
@@ -139,7 +141,7 @@ void mainBoardMainPhase2(void) {
     // Initialise the Strategy first so that we could show the color & stragegy
     // index at a very early stage
     mainBoardCommonTofInitDrivers32(&robotConfig);
-    mainBoardCommonMatchMainInitDrivers(&robotConfig, isMatchStarted32, mainBoardWaitForInstruction, loopUnWaitForInstruction);    
+    mainBoardCommonMatchMainInitDrivers(&robotConfig, &startupCheckList2019, isMatchStarted32, mainBoardWaitForInstruction, loopUnWaitForInstruction);    
 }
 
 void mainBoardMainPhase3(void) {

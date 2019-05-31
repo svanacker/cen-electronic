@@ -35,11 +35,21 @@ typedef bool MatchHandleInstructionFunction(StartMatch* startMatch);
 typedef bool IsMatchStartedFunction(StartMatch* startMatch);
 
 /**
+ * Call back function which must be called just one time before the wait for 
+ * Start
+ * @return true if everything is ok, false and throw an error if something is 
+ * wrong
+ */
+typedef bool StartupCheckListFunction(StartMatch* startMatch);
+
+/**
  * Define the Structure which stores all informations needed for StartMatch.
  */
 struct StartMatch {
     /** To get the configuration. */
     RobotConfig* robotConfig;
+    /** The function which must be called just before the check if we start or not */
+    StartupCheckListFunction* startupCheckListFunction;
     /** The function which must be used to know if the match is started or not. */
     IsMatchStartedFunction* isMatchStartedFunction;
     /** The function which must be called when the robot wait for start (to be able to continue to manage instruction */
@@ -62,6 +72,7 @@ struct StartMatch {
 void initStartMatch(StartMatch* startMatch,
                     RobotConfig* robotConfig,
                     EndMatch* endMatch,
+                    StartupCheckListFunction* startupCheckListFunction,
                     IsMatchStartedFunction* isMatchStartedFunctionParam,
                     LoopUntilStartHandleFunction* loopUntilStartHandleFunction,
                     MatchHandleInstructionFunction* matchHandleInstructionFunction);

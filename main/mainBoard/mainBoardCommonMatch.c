@@ -19,10 +19,6 @@ void mainBoardCommonMatchAddDevices(void) {
     addLocalDevice(getEndMatchDetectorDeviceInterface(), getEndMatchDetectorDeviceDescriptor(&endMatch));
 }
 
-void mainBoardCommonMatchLoopUntilStart(void) {
-    loopUntilStart(&startMatch);
-}
-
 StartMatch* mainBoardCommonMatchGetStartMatch(void) {
     return &startMatch;
 }
@@ -32,6 +28,7 @@ EndMatch* mainBoardCommonMatchGetEndMatch(void) {
 }
 
 void mainBoardCommonMatchMainInitDrivers(RobotConfig* robotConfig, 
+                                         StartupCheckListFunction* startupCheckListFunction,
                                          IsMatchStartedFunction* isMatchStartedFunctionParam, 
                                          LoopUntilStartHandleFunction* loopUntilStartHandleFunction,
                                          MatchHandleInstructionFunction* matchHandleInstructionFunction) {
@@ -39,6 +36,7 @@ void mainBoardCommonMatchMainInitDrivers(RobotConfig* robotConfig,
     initStartMatch(&startMatch,
                    robotConfig,
                    &endMatch,
+                   startupCheckListFunction,
                    isMatchStartedFunctionParam,
                   loopUntilStartHandleFunction,
                 matchHandleInstructionFunction);
