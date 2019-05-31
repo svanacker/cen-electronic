@@ -28,7 +28,9 @@
 #define ELECTRON_LAUNCHER_2019_ROBOT_MOVED_DISTANCE_MAX                        10000
 
 // CHECK / THRESHOLD
-#define ELECTRON_LAUNCHER_2019_THRESHOLD_COUNT                                  30
+#define ELECTRON_LAUNCHER_2019_THRESHOLD_COUNT                                25
+#define ELECTRON_LAUNCHER_2019_MISSED_DECREMENT_VALUE                          5
+
 
 // RELEASE TRY COUNT 
 #define ELECTRON_LAUNCHER_2019_RELEASE_TRY_COUNT                                2

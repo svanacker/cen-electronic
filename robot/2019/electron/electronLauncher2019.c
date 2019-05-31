@@ -108,7 +108,7 @@ void checkElectronLauncher2019RobotMoved(ElectronLauncher2019* launcher) {
         }
     }
     else {
-        launcher->robotMovedDetectionCount -= 10;
+        launcher->robotMovedDetectionCount -= ELECTRON_LAUNCHER_2019_MISSED_DECREMENT_VALUE;
         if (launcher->robotMovedDetectionCount < 0) {
             launcher->robotMovedDetectionCount = 0;
         }
