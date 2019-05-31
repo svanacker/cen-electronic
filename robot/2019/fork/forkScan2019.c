@@ -56,7 +56,7 @@ void forkScan2019ConfigTofList(TofSensor* leftForkScanSensor,
         
         rightForkScanSensor->orientationRadian = 0.0f;
         rightForkScanSensor->thresholdMinDistanceMM = FORK_2019_SCAN_GOLDENIUM_DISTANCE_RIGHT_MIN_THRESHOLD;
-        rightForkScanSensor->thresholdMaxDistanceMM = FORK_2019_SCAN_GOLDENIUM_DISTANCE_RIGHT_MIN_THRESHOLD;
+        rightForkScanSensor->thresholdMaxDistanceMM = FORK_2019_SCAN_GOLDENIUM_DISTANCE_RIGHT_MAX_THRESHOLD;
         
         rightForkScanSensor->changeAddress = true;
         rightForkScanSensor->targetAddress = VL530X_ADDRESS_11;
@@ -90,7 +90,13 @@ void forkScan2019ConfigTofListForDistributor(TofSensorList* tofSensorList) {
     TofSensor* rightForkScanSensor = getTofSensorByIndex(tofSensorList, FORK_2019_RIGHT_TOF_INDEX);
     if (rightForkScanSensor != NULL) {
         rightForkScanSensor->thresholdMinDistanceMM = FORK_2019_SCAN_DISTRIBUTOR_DISTANCE_RIGHT_MIN_THRESHOLD;
-        rightForkScanSensor->thresholdMaxDistanceMM = FORK_2019_SCAN_DISTRIBUTOR_DISTANCE_RIGHT_MAX_THRESHOLD;
+        enum RobotType robotType = getRobotType();
+        if (robotType == ROBOT_TYPE_BIG) {
+            rightForkScanSensor->thresholdMaxDistanceMM = FORK_2019_SCAN_BIG_ROBOT_DISTRIBUTOR_DISTANCE_RIGHT_MAX_THRESHOLD;
+        }
+        else {
+            rightForkScanSensor->thresholdMaxDistanceMM = FORK_2019_SCAN_SMALL_ROBOT_DISTRIBUTOR_DISTANCE_RIGHT_MAX_THRESHOLD;
+        }
     }
 }
 
