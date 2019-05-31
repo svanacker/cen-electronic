@@ -293,7 +293,7 @@ void initSmallRobotPaths2019(GameStrategyContext* gameStrategyContext) {
         ACCELERATOR_CENTERED_TO_ACCELERATOR_COST,
         ACCELERATOR_CENTERED_TO_ACCELERATOR_CP1,
         ACCELERATOR_CENTERED_TO_ACCELERATOR_CP2,
-        deciDegreeToRad(ACCELERATOR_CENTER_END_DECI_DEG),
+        deciDegreeToRad(ACCELERATOR_CENTER_START_DECI_DEG),
         deciDegreeToRad(ACCELERATOR_CENTER_END_DECI_DEG),
         aFactor * ACCELERATOR_CENTERED_TO_ACCELERATOR_ACCELERATION_FACTOR,
         speedFactor * SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_CENTERED_SPEED_FACTOR);
@@ -608,7 +608,7 @@ void initSmallRobotTargetActionsItems2019(GameStrategyContext* gameStrategyConte
 
     addTargetActionItem(&acceleratorDropTargetActionItemList, &acceleratorRotationTargetActionItem, &acceleratorRotationIfNeeded, "ROTATION");
     // We don't activate it for most Strategies
-    acceleratorRotationTargetActionItem.enabled = false;
+    // acceleratorRotationTargetActionItem.enabled = false;
 
     addTargetActionItem(&acceleratorDropTargetActionItemList, &acceleratorDropTargetActionItem, &acceleratorArmOff, "ACC ARM Off");
 

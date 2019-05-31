@@ -19,8 +19,8 @@
 #define ACCELERATOR_CENTER_LABEL                               "Accelerator Center 2"
 #define ACCELERATOR_CENTER_X                                                    600
 #define ACCELERATOR_CENTER_Y                                                    1200
-#define ACCELERATOR_CENTER_START_DECI_DEG                          ANGLE_DECI_DEG_90
-#define ACCELERATOR_CENTER_END_DECI_DEG                           ANGLE_DECI_DEG_180
+#define ACCELERATOR_CENTER_START_DECI_DEG                          ANGLE_DECI_DEG_135
+#define ACCELERATOR_CENTER_END_DECI_DEG                           ANGLE_DECI_DEG_90
 
 
 // Goldenium (SMALL ROBOT)
