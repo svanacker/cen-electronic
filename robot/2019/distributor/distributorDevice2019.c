@@ -56,7 +56,8 @@ void deviceDistributor2019HandleRawData(unsigned char commandHeader, InputStream
     // Take
     else if (commandHeader == COMMAND_2019_DISTRIBUTOR_TAKE) {
         ackCommand(outputStream, DISTRIBUTOR_2019_DEVICE_HEADER, COMMAND_2019_DISTRIBUTOR_TAKE);
-        distributor2019Take(servoList, tofSensorList);
+        unsigned int side = readHex(inputStream);
+        distributor2019Take(servoList, tofSensorList, side);
     }
     // Only the Height
     else if (commandHeader == COMMAND_2019_DISTRIBUTOR_TAKE_HEIGHT) {

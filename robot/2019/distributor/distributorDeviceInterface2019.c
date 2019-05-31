@@ -28,9 +28,10 @@ int deviceDistributor2019GetInterface(unsigned char commandHeader, DeviceInterfa
     // -> Take
     else if (commandHeader == COMMAND_2019_DISTRIBUTOR_TAKE) {
         if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("Take 2 Pucks on Distributor");
+            setFunction("Take 2 Pucks on Distributor", 1, 0);
+            setArgumentUnsignedChar1(0, "Side (1=L, 2=R)");
         }
-        return commandLengthValueForMode(mode, 0, 0);
+        return commandLengthValueForMode(mode, 1, 0);
     }
     // ACCELERATOR
     // -> Fake Init

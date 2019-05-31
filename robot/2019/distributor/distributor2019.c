@@ -39,13 +39,13 @@ bool distributor2019PrepareTake(ServoList* servoList) {
  * All actions to take a 2 Pucks.
  * @param servoList
  */
-bool distributor2019Take(ServoList* servoList, TofSensorList* tofSensorList) {
+bool distributor2019Take(ServoList* servoList, TofSensorList* tofSensorList, unsigned int leftRightIndex) {
     // We wait because all actions must be finished before going to the next step !
     bool wait = true;
 
     // TODO : Scan to do => Return false if the scan is KO
     forkScan2019ConfigTofListForDistributor(tofSensorList);
-    if (forkScan(servoList, tofSensorList, DISTRIBUTOR_2019_SCAN_RETRY_COUNT, FORK_2019_LEFT_AND_RIGHT_INDEX)) {
+    if (!forkScan(servoList, tofSensorList, DISTRIBUTOR_2019_SCAN_RETRY_COUNT, leftRightIndex)) {
         moveElevatorMiddle(servoList, wait);
     }
     

@@ -179,7 +179,13 @@ bool smallDistributorLineTake(int* context) {
     GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
     ServoList* servoList = gameStrategyContext->servoList;
     TofSensorList* tofSensorList = gameStrategyContext->tofSensorList;
-    distributor2019Take(servoList, tofSensorList);
+    
+    if (isViolet(gameStrategyContext)) {
+        distributor2019Take(servoList, tofSensorList, FORK_2019_RIGHT_INDEX);
+    }
+    else {
+        distributor2019Take(servoList, tofSensorList, FORK_2019_LEFT_INDEX);
+    }
 
     return true;
 }
@@ -206,7 +212,13 @@ bool bigDistributorLine3Take(int* context) {
     GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
     ServoList* servoList = gameStrategyContext->servoList;
     TofSensorList* tofSensorList = gameStrategyContext->tofSensorList;
-    distributor2019Take(servoList, tofSensorList);
+    
+    if (isViolet(gameStrategyContext)) {
+        distributor2019Take(servoList, tofSensorList, FORK_2019_RIGHT_INDEX);
+    }
+    else {
+        distributor2019Take(servoList, tofSensorList, FORK_2019_LEFT_INDEX);
+    }
 
     return true;
 }

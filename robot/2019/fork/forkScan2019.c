@@ -268,6 +268,9 @@ bool forkScanFromLeftToRight(ServoList* servoList, TofSensorList* tofSensorList,
             timerDelayMilliSeconds(FORK_2019_SCAN_SERVO_DELTA_MILLISECONDS);
             // Scan several time
             if (internalForkScan(tofSensor)) {
+                if (getRobotType() == ROBOT_TYPE_BIG) {
+                    pwmServo(servo, FORK_2019_SCAN_SPEED_FACTOR, i + FORK_2019_SCAN_SERVO_DELTA_SERVO_POSITION, false);                    
+                }
                 return true;
             }
         }

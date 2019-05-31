@@ -27,7 +27,7 @@
 #define GOLDENIUM_FRONT                                                     "GOLD"
 #define GOLDENIUM_FRONT_LABEL                                         "Gold Front"
 #define GOLDENIUM_FRONT_X                                                     110
-#define GOLDENIUM_FRONT_Y                                                    2265
+#define GOLDENIUM_FRONT_Y                                                    2270
 #define GOLDENIUM_FRONT_ANGLE_DECI_DEG                         ANGLE_DECI_DEG_180
 
 // Weighing Machine FRONT

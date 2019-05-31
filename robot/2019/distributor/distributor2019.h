@@ -29,7 +29,7 @@ bool distributor2019PrepareTake(ServoList* servoList);
  * All actions to take a 2 Pucks.
  * @param servoList
  */
-bool distributor2019Take(ServoList* servoList, TofSensorList* tofSensorList);
+bool distributor2019Take(ServoList* servoList, TofSensorList* tofSensorList, unsigned int leftRightIndex);
 
 
 #endif
