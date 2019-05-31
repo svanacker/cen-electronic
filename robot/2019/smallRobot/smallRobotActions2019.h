@@ -37,5 +37,13 @@ bool bigDistributorLine3Take(int* context);
 
 bool bigDistributorLine3Drop(int* context);
 
+// BIG DISTRIBUTOR LINE 2
+
+bool bigDistributorLine2Prepare(int* context);
+
+bool bigDistributorLine2Take(int* context);
+
+bool bigDistributorLine2Drop(int* context);
+
 #endif
 

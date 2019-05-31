@@ -75,8 +75,10 @@ static Location* weighingMachineFrontLocation;
 static Location* weighingMachineDropLocation;
 static Location* chaosZoneSmallRobotLocation;
 static Location* bigDistributorLine3Location;
+static Location* bigDistributorLine2Location;
 static Location* rediumGreeniumFrontDropLocation;
 static Location* rediumGreeniumDropLocation;
+static Location* blueiumGreeniumDropLocation;
 static Location* goldGatewayLocation;
 
 // ------------------------------------------------------- PATHS -------------------------------------------------------------------------
@@ -96,12 +98,19 @@ PathData* bluiumRight_to_smallDistributor_Path;
 PathData* smallDistributor_to_bluiumRight_Path;
 PathData* bluiumRight_to_weighingMachineDrop_Path;
 
+// Line 3
 PathData* weighingMachineDrop_to_chaosZoneSmallRobot_Path;
 PathData* chaosZoneSmallRobot_to_weighingMachineDrop_Path;
 PathData* chaosZoneSmallRobot_to_bigDistributorLine3_Path;
 PathData* bigDistributorLine3_to_rediumGreeniumFrontDrop_Path;
 PathData* rediumGreeniumFrontDrop_to_rediumGreeniumDropZone_Path;
 
+// Line 2
+PathData* rediumGreeniumDropZone_to_chaosZoneSmallRobot_Path;
+PathData* chaosZoneSmallRobot_to_bigDistributorLine2_Path;
+PathData* bigDistributorLine2_to_blueiumGreeniumDrop_Path;
+
+// New Points
 PathData* goldeniumFront_to_acceleratorCentered_Path;
 PathData* acceleratorCentered_to_weighingMachineFront_Path;
 
@@ -121,6 +130,7 @@ static GameTarget goldeniumTakeTarget;
 static GameTarget goldeniumDropTarget;
 static GameTarget smallDistributorLine1Target;
 static GameTarget bigDistributorLine3RediumGreeniumTarget;
+static GameTarget bigDistributorLine2BlueiumGreeniumTarget;
 
 // ------------------------------------------------------- TARGETS ACTIONS ---------------------------------------------------------------
 
@@ -140,6 +150,10 @@ static GameTargetAction smallDistributorLine1DropTargetAction;
 static GameTargetAction bigDistributorLine3PrepareTargetAction;
 static GameTargetAction bigDistributorLine3TakeTargetAction;
 static GameTargetAction bigDistributorLine3DropTargetAction;
+
+static GameTargetAction bigDistributorLine2PrepareTargetAction;
+static GameTargetAction bigDistributorLine2TakeTargetAction;
+static GameTargetAction bigDistributorLine2DropTargetAction;
 
 // ------------------------------------------------------- TARGETS ACTIONS ITEM LIST --------------------------------------------------------
 
@@ -165,7 +179,10 @@ static GameTargetActionItemList bigDistributorLine3RediumGreeniumPrepareTargetAc
 static GameTargetActionItemList bigDistributorLine3RediumGreeniumTakeTargetActionItemList;
 static GameTargetActionItemList bigDistributorLine3RediumGreeniumDropTargetActionItemList;
 
-
+// Big Distributor 2 -> Blueium / Greenium Drop Zone
+static GameTargetActionItemList bigDistributorLine2BlueiumGreeniumPrepareTargetActionItemList;
+static GameTargetActionItemList bigDistributorLine2BlueiumGreeniumTakeTargetActionItemList;
+static GameTargetActionItemList bigDistributorLine2BlueiumGreeniumDropTargetActionItemList;
 
 // ------------------------------------------------------- TARGET ACTION ITEM LIST ---------------------------------------------------
 
@@ -187,6 +204,9 @@ static GameTargetActionItem bigDistributorLine3RediumGreeniumPrepareTargetAction
 static GameTargetActionItem bigDistributorLine3RediumGreeniumTakeTargetActionItem;
 static GameTargetActionItem bigDistributorLine3RediumGreeniumDropTargetActionItem;
 
+static GameTargetActionItem bigDistributorLine2BlueiumGreeniumPrepareTargetActionItem;
+static GameTargetActionItem bigDistributorLine2BlueiumGreeniumTakeTargetActionItem;
+static GameTargetActionItem bigDistributorLine2BlueiumGreeniumDropTargetActionItem;
 
 // ------------------------------------------------------- STRATEGIES ----------------------------------------------------------------
 
@@ -209,6 +229,7 @@ static GameStrategyItem takeGoldeniumStrategyItem;
 static GameStrategyItem dropGoldeniumStrategyItem;
 static GameStrategyItem smallDistributorLine1StrategyItem;
 static GameStrategyItem bigDistributorLine3StrategyItem;
+static GameStrategyItem bigDistributorLine2StrategyItem;
 
 // ------------------------------------------------------- INITIALIZATION ------------------------------------------------------------
 
@@ -226,8 +247,11 @@ void initSmallRobotLocations2019(GameStrategyContext* gameStrategyContext) {
     smallDistributorLine1Location = addLocationWithColors(teamColor, navigation, SMALL_DISTRIBUTOR_LINE_1, SMALL_DISTRIBUTOR_LINE_1_LABEL, SMALL_DISTRIBUTOR_LINE_1_X, SMALL_DISTRIBUTOR_LINE_1_Y);
     chaosZoneSmallRobotLocation = addLocationWithColors(teamColor, navigation, CHAOS_ZONE_SMALL_ROBOT, CHAOS_ZONE_SMALL_ROBOT_LABEL, CHAOS_ZONE_SMALL_ROBOT_X, CHAOS_ZONE_SMALL_ROBOT_Y);
     bigDistributorLine3Location = addLocationWithColors(teamColor, navigation, BIG_DISTRIBUTOR_LINE_3, BIG_DISTRIBUTOR_LINE_3_LABEL, BIG_DISTRIBUTOR_LINE_3_X, BIG_DISTRIBUTOR_LINE_3_Y);
+    bigDistributorLine2Location = addLocationWithColors(teamColor, navigation, BIG_DISTRIBUTOR_LINE_2, BIG_DISTRIBUTOR_LINE_2_LABEL, BIG_DISTRIBUTOR_LINE_2_X, BIG_DISTRIBUTOR_LINE_2_Y);
     rediumGreeniumFrontDropLocation = addLocationWithColors(teamColor, navigation, REDIUM_GREENIUM_FRONT_DROP, REDIUM_GREENIUM_FRONT_DROP_LABEL, REDIUM_GREENIUM_FRONT_DROP_X, REDIUM_GREENIUM_FRONT_DROP_Y);
     rediumGreeniumDropLocation = addLocationWithColors(teamColor, navigation, REDIUM_GREENIUM_DROP_ZONE, REDIUM_GREENIUM_DROP_ZONE_LABEL, REDIUM_GREENIUM_DROP_X, REDIUM_GREENIUM_DROP_Y);
+    blueiumGreeniumDropLocation = addLocationWithColors(teamColor, navigation, "BGDZ", "Blueium Greenium Drop", 1050.0f, 300.0f);
+
     goldGatewayLocation = addLocationWithColors(teamColor, navigation, "GGAT", "Gold Gateway", 400.0f, 2150.0f);
 }
 
@@ -414,6 +438,7 @@ void initSmallRobotPaths2019(GameStrategyContext* gameStrategyContext) {
         speedFactor * BIG_DISTRIBUTOR_LINE_3_TO_REDIUM_GREENIUM_FRONT_SPEED_FACTOR
     );
 
+    
     rediumGreeniumFrontDrop_to_rediumGreeniumDropZone_Path = addNavigationPathWithColor(teamColor,
         navigation,
         rediumGreeniumFrontDropLocation,
@@ -426,7 +451,7 @@ void initSmallRobotPaths2019(GameStrategyContext* gameStrategyContext) {
         aFactor * REDIUM_GREENIUM_FRONT_DROP_TO_REDIUM_GREENIUM_DROP_ZONE_ACCELERATOR_FACTOR,
         speedFactor * REDIUM_GREENIUM_FRONT_DROP_TO_REDIUM_GREENIUM_DROP_ZONE_SPEED_FACTOR
     );
-    
+
     goldeniumFront_to_acceleratorCentered_Path = addNavigationPathWithColor(teamColor,
         navigation,
         goldeniumFrontLocation,
@@ -436,8 +461,8 @@ void initSmallRobotPaths2019(GameStrategyContext* gameStrategyContext) {
         -400.0f,
         deciDegreeToRad(180.0f),
         deciDegreeToRad(180.0f),
-        aFactor * 0.3f,
-        speedFactor * 0.3f
+        aFactor * 0.5f,
+        speedFactor * 0.5f
     );
     
     acceleratorCentered_to_weighingMachineFront_Path = addNavigationPathWithColor(teamColor,
@@ -462,8 +487,8 @@ void initSmallRobotPaths2019(GameStrategyContext* gameStrategyContext) {
             -100.0f,
             deciDegreeToRad(180.0f),
             deciDegreeToRad(180.0f),
-        aFactor * 0.3f,
-        speedFactor * 0.3f
+        aFactor * 0.5f,
+        speedFactor * 0.5f
             );
     
     goldGateway_to_acceleratorCentered_Path = addNavigationPathWithColor(teamColor,
@@ -491,6 +516,47 @@ void initSmallRobotPaths2019(GameStrategyContext* gameStrategyContext) {
         aFactor * 0.5f,
         speedFactor * 0.5f
      );
+    
+        
+    // Go back to Line 2
+    rediumGreeniumDropZone_to_chaosZoneSmallRobot_Path = addNavigationPathWithColor(teamColor,
+        navigation,
+        rediumGreeniumDropLocation,
+        chaosZoneSmallRobotLocation,
+        700.0f,
+        -300.0f,
+        -300.0f,
+        deciDegreeToRad(REDIUM_GREENIUM_FRONT_DROP_TO_ANGLE_DECI),
+        deciDegreeToRad(REDIUM_GREENIUM_FRONT_DROP_TO_ANGLE_DECI),
+        aFactor * REDIUM_GREENIUM_FRONT_DROP_TO_REDIUM_GREENIUM_DROP_ZONE_ACCELERATOR_FACTOR,
+        speedFactor * REDIUM_GREENIUM_FRONT_DROP_TO_REDIUM_GREENIUM_DROP_ZONE_SPEED_FACTOR
+    );
+    
+    chaosZoneSmallRobot_to_bigDistributorLine2_Path = addNavigationPathWithColor(teamColor,
+        navigation,
+        chaosZoneSmallRobotLocation,
+        bigDistributorLine2Location,
+        500.0f,
+        100.0f,
+        250.0f,
+        deciDegreeToRad(0.0f),
+        deciDegreeToRad(0.0f),
+        aFactor * REDIUM_GREENIUM_FRONT_DROP_TO_REDIUM_GREENIUM_DROP_ZONE_ACCELERATOR_FACTOR,
+        speedFactor * REDIUM_GREENIUM_FRONT_DROP_TO_REDIUM_GREENIUM_DROP_ZONE_SPEED_FACTOR
+    );
+    
+    bigDistributorLine2_to_blueiumGreeniumDrop_Path = addNavigationPathWithColor(teamColor,
+        navigation,
+        bigDistributorLine2Location,
+        blueiumGreeniumDropLocation,
+        500.0f,
+        -200.0f,
+        -200.0f,
+        deciDegreeToRad(0.0f),
+        deciDegreeToRad(90.0f),
+        aFactor * REDIUM_GREENIUM_FRONT_DROP_TO_REDIUM_GREENIUM_DROP_ZONE_ACCELERATOR_FACTOR,
+        speedFactor * REDIUM_GREENIUM_FRONT_DROP_TO_REDIUM_GREENIUM_DROP_ZONE_SPEED_FACTOR
+    );
 }
 
 void initSmallRobotTargets2019(GameStrategyContext* gameStrategyContext) {
@@ -502,7 +568,8 @@ void initSmallRobotTargets2019(GameStrategyContext* gameStrategyContext) {
 
     // TODO : SCORE_POINT_2019_ADD_ATOM_ACCELERATOR is false
     addGameTarget(&smallDistributorLine1Target, "SMALL_DIST_1_TARGET", SCORE_POINT_2019_ADD_ATOM_ACCELERATOR, smallDistributorLine1Location, weighingMachineDropLocation);
-    addGameTarget(&bigDistributorLine3RediumGreeniumTarget, "BIG_DIST_RED_TARGET", 10, bigDistributorLine3Location, rediumGreeniumDropLocation);
+    addGameTarget(&bigDistributorLine3RediumGreeniumTarget, "BIG_DIST_RED_TARGET_3", 10.0f, bigDistributorLine3Location, rediumGreeniumDropLocation);
+    // addGameTarget(&bigDistributorLine2RediumGreeniumTarget, "BIG_DIST_RED_TARGET_2", 5.0f, bigDistributorLine2Location, blueiumGreeniumDropLocation);
 }
 
 void initSmallRobotTargetActions2019(GameStrategyContext* gameStrategyContext) {
@@ -527,6 +594,12 @@ void initSmallRobotTargetActions2019(GameStrategyContext* gameStrategyContext) {
     addTargetPrepareAction(&(bigDistributorLine3RediumGreeniumTarget.actionList), &bigDistributorLine3PrepareTargetAction, chaosZoneSmallRobotLocation, BIG_DISTRIBUTOR_LINE_3_GREENIUM_PREPARE_TIME_TO_ACHIEVE, &bigDistributorLine3RediumGreeniumPrepareTargetActionItemList);
     addTargetTakeAction(&(bigDistributorLine3RediumGreeniumTarget.actionList), &bigDistributorLine3TakeTargetAction, bigDistributorLine3Location, BIG_DISTRIBUTOR_LINE_3_GREENIUM_TAKE_TIME_TO_ACHIEVE, &bigDistributorLine3RediumGreeniumTakeTargetActionItemList);
     addTargetDropAction(&(bigDistributorLine3RediumGreeniumTarget.actionList), &bigDistributorLine3DropTargetAction, rediumGreeniumDropLocation, BIG_DISTRIBUTOR_LINE_3_GREENIUM_DROP_TIME_TO_ACHIEVE, &bigDistributorLine3RediumGreeniumDropTargetActionItemList);
+    
+    // BIG DISTRIBUTOR LINE 3 / BLUEIUM GREENIUM TARGET
+    addTargetPrepareAction(&(bigDistributorLine2BlueiumGreeniumTarget.actionList), &bigDistributorLine2PrepareTargetAction, chaosZoneSmallRobotLocation, BIG_DISTRIBUTOR_LINE_3_GREENIUM_PREPARE_TIME_TO_ACHIEVE, &bigDistributorLine2BlueiumGreeniumPrepareTargetActionItemList);
+    addTargetTakeAction(&(bigDistributorLine2BlueiumGreeniumTarget.actionList), &bigDistributorLine2TakeTargetAction, bigDistributorLine2Location, BIG_DISTRIBUTOR_LINE_3_GREENIUM_TAKE_TIME_TO_ACHIEVE, &bigDistributorLine2BlueiumGreeniumTakeTargetActionItemList);
+    addTargetDropAction(&(bigDistributorLine2BlueiumGreeniumTarget.actionList), &bigDistributorLine2DropTargetAction, blueiumGreeniumDropLocation, BIG_DISTRIBUTOR_LINE_3_GREENIUM_DROP_TIME_TO_ACHIEVE, &bigDistributorLine2BlueiumGreeniumDropTargetActionItemList);
+    
 }
 
 void initSmallRobotTargetActionsItems2019(GameStrategyContext* gameStrategyContext) {
@@ -551,6 +624,11 @@ void initSmallRobotTargetActionsItems2019(GameStrategyContext* gameStrategyConte
     addTargetActionItem(&bigDistributorLine3RediumGreeniumPrepareTargetActionItemList, &bigDistributorLine3RediumGreeniumPrepareTargetActionItem, &bigDistributorLine3Prepare, "BIG DIST LINE 3 PREP");
     addTargetActionItem(&bigDistributorLine3RediumGreeniumTakeTargetActionItemList, &bigDistributorLine3RediumGreeniumTakeTargetActionItem, &bigDistributorLine3Take, "BIG DIST LINE 3 TAKE");
     addTargetActionItem(&bigDistributorLine3RediumGreeniumDropTargetActionItemList, &bigDistributorLine3RediumGreeniumDropTargetActionItem, &bigDistributorLine3Drop, "BIG DIST LINE 3 DROP");
+
+    // Big Distributor Line 2 Blueium Greenium Target
+    addTargetActionItem(&bigDistributorLine2BlueiumGreeniumPrepareTargetActionItemList, &bigDistributorLine2BlueiumGreeniumPrepareTargetActionItem, &bigDistributorLine2Prepare, "BIG DIST LINE 2 PREP");
+    addTargetActionItem(&bigDistributorLine2BlueiumGreeniumTakeTargetActionItemList, &bigDistributorLine2BlueiumGreeniumTakeTargetActionItem, &bigDistributorLine2Take, "BIG DIST LINE 2 TAKE");
+    addTargetActionItem(&bigDistributorLine2BlueiumGreeniumDropTargetActionItemList, &bigDistributorLine2BlueiumGreeniumDropTargetActionItem, &bigDistributorLine2Drop, "BIG DIST LINE 2 DROP");
 
     // Small Distributor Line 1 Target
     addTargetActionItem(&smallDistributorLine1PrepareTargetActionItemList, &smallDistributorLine1PrepareTargetActionItem, &smallDistributorLinePrepare, "SMALL DIST PREP");
@@ -603,6 +681,7 @@ GameStrategy* initSmallRobotStrategiesItems2019(GameStrategyContext* gameStrateg
         addGameStrategyItem(&smallRobotStrategy6AcceleratorTakeDropGoldeniumBigDist, &takeGoldeniumStrategyItem, &goldeniumTakeTarget);
         addGameStrategyItem(&smallRobotStrategy6AcceleratorTakeDropGoldeniumBigDist, &dropGoldeniumStrategyItem, &goldeniumDropTarget);
         addGameStrategyItem(&smallRobotStrategy6AcceleratorTakeDropGoldeniumBigDist, &bigDistributorLine3StrategyItem, &bigDistributorLine3RediumGreeniumTarget);
+        addGameStrategyItem(&smallRobotStrategy6AcceleratorTakeDropGoldeniumBigDist, &bigDistributorLine2StrategyItem, &bigDistributorLine2BlueiumGreeniumTarget);
         return &smallRobotStrategy6AcceleratorTakeDropGoldeniumBigDist;
     }
 

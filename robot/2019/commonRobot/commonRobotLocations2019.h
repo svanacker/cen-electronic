@@ -20,7 +20,8 @@
 #define BIG_DISTRIBUTOR_LINE_2                                            "BDL2"
 #define BIG_DISTRIBUTOR_LINE_2_LABEL                                      "Big Distributor Line 2"
 #define BIG_DISTRIBUTOR_LINE_2_X                        BIG_DISTRIBUTOR_LINE_1_X
-#define BIG_DISTRIBUTOR_LINE_2_Y                  BIG_DISTRIBUTOR_LINE_1_Y + 200
+// We have a shift on the robot of 10 mm 
+#define BIG_DISTRIBUTOR_LINE_2_Y                  BIG_DISTRIBUTOR_LINE_1_Y + 190
 #define BIG_DISTRIBUTOR_LINE_2_ANGLE_DECI_DEG                   ANGLE_DECI_DEG_0
 
 #define BIG_DISTRIBUTOR_LINE_3                                            "BDL3"

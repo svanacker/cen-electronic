@@ -29,9 +29,13 @@
 #define SMALL_DISTRIBUTOR_TAKE_ACTION_LOG_NAME        "-> smallDistributorLineTake"
 #define SMALL_DISTRIBUTOR_DROP_ACTION_LOG_NAME        " -> smallDistributorDrop "
 
-#define BIG_DISTRIBUTOR_LINE_3_PREPARE_ACTION_LOG_NAME     "-> bigDistributorLinePrepare"
-#define BIG_DISTRIBUTOR_LINE_3_TAKE_ACTION_LOG_NAME        "-> bigDistributorLineTake"
-#define BIG_DISTRIBUTOR_LINE_3_DROP_ACTION_LOG_NAME        " -> bigDistributorDrop "
+#define BIG_DISTRIBUTOR_LINE_3_PREPARE_ACTION_LOG_NAME     "-> bigDistributorLine3Prepare"
+#define BIG_DISTRIBUTOR_LINE_3_TAKE_ACTION_LOG_NAME        "-> bigDistributorLine3Take"
+#define BIG_DISTRIBUTOR_LINE_3_DROP_ACTION_LOG_NAME        "-> bigDistributorDrop3"
+
+#define BIG_DISTRIBUTOR_LINE_2_PREPARE_ACTION_LOG_NAME     "-> bigDistributorLine2Prepare"
+#define BIG_DISTRIBUTOR_LINE_2_TAKE_ACTION_LOG_NAME        "-> bigDistributorLine2Take"
+#define BIG_DISTRIBUTOR_LINE_2_DROP_ACTION_LOG_NAME        "-> bigDistributorDrop2"
 
 // -------------------------------------------- ARM & ACCELERATOR -----------------------------------------------
 
@@ -233,3 +237,41 @@ bool bigDistributorLine3Drop(int* context) {
     return true;
 }
 
+// -------------------------------------------- BIG DISTRIBUTOR LINE 2 / BLUEIUM / GREENIUM
+
+bool bigDistributorLine2Prepare(int* context) {
+    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+    appendStringCRLF(debugOutputStream, BIG_DISTRIBUTOR_LINE_2_PREPARE_ACTION_LOG_NAME);
+    GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
+    ServoList* servoList = gameStrategyContext->servoList;
+    distributor2019PrepareTake(servoList);
+
+    return true;
+}
+
+bool bigDistributorLine2Take(int* context) {
+    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+    appendStringCRLF(debugOutputStream, BIG_DISTRIBUTOR_LINE_2_TAKE_ACTION_LOG_NAME);
+    GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
+    ServoList* servoList = gameStrategyContext->servoList;
+    TofSensorList* tofSensorList = gameStrategyContext->tofSensorList;
+    
+    if (isViolet(gameStrategyContext)) {
+        distributor2019Take(servoList, tofSensorList, FORK_2019_RIGHT_INDEX);
+    }
+    else {
+        distributor2019Take(servoList, tofSensorList, FORK_2019_LEFT_INDEX);
+    }
+
+    return true;
+}
+
+bool bigDistributorLine2Drop(int* context) {
+    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+    appendStringCRLF(debugOutputStream, BIG_DISTRIBUTOR_LINE_2_DROP_ACTION_LOG_NAME);
+    GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
+    ServoList* servoList = gameStrategyContext->servoList;
+    moveForkBack(servoList, FORK_2019_LEFT_AND_RIGHT_INDEX, true);
+
+    return true;
+}
