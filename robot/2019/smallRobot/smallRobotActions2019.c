@@ -263,6 +263,9 @@ bool bigDistributorLine2Take(int* context) {
     else {
         distributor2019Take(servoList, tofSensorList, FORK_2019_LEFT_INDEX);
     }
+    
+    // The last move, and we don't want to hurt the Big Robot => We disabled the tof
+    tofSensorListSetEnableUsageType(tofSensorList, TOF_SENSOR_USAGE_TYPE_COLLISION, false);
 
     return true;
 }

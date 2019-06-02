@@ -69,6 +69,7 @@ static Location* blueiumRightLocation;
 static Location* smallDistributorLine1Location;
 static Location* smallRobotStartAreaLocation;
 static Location* acceleratorFrontLocation;
+static Location* smallRobotKeyPointLocation;
 static Location* acceleratorCenteredLocation;
 static Location* goldeniumFrontLocation;
 static Location* weighingMachineFrontLocation;
@@ -87,7 +88,7 @@ static Location* goldGatewayLocation;
 PathData* smallRobotStartArea_to_accelerator_Path;
 PathData* smallRobotStartArea_to_acceleratorCentered_Path;
 PathData* acceleratorCentered_to_accelerator_Path;
-
+PathData* keypoint1_to_acceleratorCentered_Path;
 PathData* acceleratorFront_to_goldeniumFront_Path;
 PathData* goldeniumFront_to_weighingMachineFront_Path;
 PathData* weighingMachineFront_to_weighingMachineDrop_Path;
@@ -111,12 +112,12 @@ PathData* chaosZoneSmallRobot_to_bigDistributorLine2_Path;
 PathData* bigDistributorLine2_to_blueiumGreeniumDrop_Path;
 
 // New Points
-PathData* goldeniumFront_to_acceleratorCentered_Path;
-PathData* acceleratorCentered_to_weighingMachineFront_Path;
+PathData* goldeniumFront_to_keypoint_Path;
+PathData* keypoint1_to_weighingMachineFront_Path;
 
 // Gateway
 PathData* goldeniumFront_to_goldGateway_Path;
-PathData* goldGateway_to_acceleratorCentered_Path;
+PathData* goldGateway_to_keypoint1_Path;
 PathData* goldGateway_to_start_Path;
 
 // Go back Home
@@ -240,6 +241,8 @@ void initSmallRobotLocations2019(GameStrategyContext* gameStrategyContext) {
     smallRobotStartAreaLocation = addLocationWithColors(teamColor, navigation, SMALL_ROBOT_START_AREA, SMALL_ROBOT_START_AREA_LABEL, SMALL_ROBOT_START_AREA_X, SMALL_ROBOT_START_AREA_Y);
     acceleratorFrontLocation = addLocationWithColors(teamColor, navigation, ACCELERATOR_FRONT, ACCELERATOR_FRONT_LABEL, ACCELERATOR_FRONT_X, ACCELERATOR_FRONT_Y);
     acceleratorCenteredLocation = addLocationWithColors(teamColor, navigation, ACCELERATOR_CENTER, ACCELERATOR_CENTER_LABEL, ACCELERATOR_CENTER_X, ACCELERATOR_CENTER_Y);
+    smallRobotKeyPointLocation = addLocationWithColors(teamColor, navigation, SMALL_ROBOT_KEYPOINT, SMALL_ROBOT_KEYPOINT_LABEL, SMALL_ROBOT_KEYPOINT_X, SMALL_ROBOT_KEYPOINT_Y);
+    
     goldeniumFrontLocation = addLocationWithColors(teamColor, navigation, GOLDENIUM_FRONT, GOLDENIUM_FRONT_LABEL, GOLDENIUM_FRONT_X, GOLDENIUM_FRONT_Y);
     weighingMachineFrontLocation = addLocationWithColors(teamColor, navigation, WEIGHING_MACHINE_FRONT, WEIGHING_MACHINE_FRONT_LABEL, WEIGHING_MACHINE_FRONT_X, WEIGHING_MACHINE_FRONT_Y);
     weighingMachineDropLocation = addLocationWithColors(teamColor, navigation, WEIGHING_MACHINE_DROP, WEIGHING_MACHINE_DROP_LABEL, WEIGHING_MACHINE_DROP_X, WEIGHING_MACHINE_DROP_Y);
@@ -298,6 +301,18 @@ void initSmallRobotPaths2019(GameStrategyContext* gameStrategyContext) {
         aFactor * ACCELERATOR_CENTERED_TO_ACCELERATOR_ACCELERATION_FACTOR,
         speedFactor * SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_CENTERED_SPEED_FACTOR);
 
+    keypoint1_to_acceleratorCentered_Path = addNavigationPathWithColor(teamColor,
+        navigation,
+        smallRobotKeyPointLocation,
+        acceleratorCenteredLocation,
+        500.0f,
+        100.0f,
+        100.0f,
+        deciDegreeToRad(90.0f),
+        deciDegreeToRad(90.0f),
+        aFactor * 0.5f,
+        speedFactor * 0.5f);
+    
     acceleratorFront_to_goldeniumFront_Path = addNavigationPathWithColor(teamColor,
         navigation,
         acceleratorFrontLocation,
@@ -452,10 +467,10 @@ void initSmallRobotPaths2019(GameStrategyContext* gameStrategyContext) {
         speedFactor * REDIUM_GREENIUM_FRONT_DROP_TO_REDIUM_GREENIUM_DROP_ZONE_SPEED_FACTOR
     );
 
-    goldeniumFront_to_acceleratorCentered_Path = addNavigationPathWithColor(teamColor,
+    goldeniumFront_to_keypoint_Path = addNavigationPathWithColor(teamColor,
         navigation,
         goldeniumFrontLocation,
-        acceleratorCenteredLocation,
+        smallRobotKeyPointLocation,
         1200.0f,
         -350.0f,
         -400.0f,
@@ -465,9 +480,9 @@ void initSmallRobotPaths2019(GameStrategyContext* gameStrategyContext) {
         speedFactor * 0.5f
     );
     
-    acceleratorCentered_to_weighingMachineFront_Path = addNavigationPathWithColor(teamColor,
+    keypoint1_to_weighingMachineFront_Path = addNavigationPathWithColor(teamColor,
         navigation,
-        acceleratorCenteredLocation,
+        smallRobotKeyPointLocation,
         weighingMachineFrontLocation,
         1000.0f,
         200.0f,
@@ -491,10 +506,10 @@ void initSmallRobotPaths2019(GameStrategyContext* gameStrategyContext) {
         speedFactor * 0.5f
             );
     
-    goldGateway_to_acceleratorCentered_Path = addNavigationPathWithColor(teamColor,
+    goldGateway_to_keypoint1_Path = addNavigationPathWithColor(teamColor,
         navigation,
             goldGatewayLocation,
-            acceleratorCenteredLocation,
+            smallRobotKeyPointLocation,
             1200.0f,
             300.0f,
             200.0f,
@@ -569,7 +584,7 @@ void initSmallRobotTargets2019(GameStrategyContext* gameStrategyContext) {
     // TODO : SCORE_POINT_2019_ADD_ATOM_ACCELERATOR is false
     addGameTarget(&smallDistributorLine1Target, "SMALL_DIST_1_TARGET", SCORE_POINT_2019_ADD_ATOM_ACCELERATOR, smallDistributorLine1Location, weighingMachineDropLocation);
     addGameTarget(&bigDistributorLine3RediumGreeniumTarget, "BIG_DIST_RED_TARGET_3", 10.0f, bigDistributorLine3Location, rediumGreeniumDropLocation);
-    // addGameTarget(&bigDistributorLine2RediumGreeniumTarget, "BIG_DIST_RED_TARGET_2", 5.0f, bigDistributorLine2Location, blueiumGreeniumDropLocation);
+    addGameTarget(&bigDistributorLine2BlueiumGreeniumTarget, "BIG_DIST_RED_TARGET_2", 5.0f, bigDistributorLine2Location, blueiumGreeniumDropLocation);
 }
 
 void initSmallRobotTargetActions2019(GameStrategyContext* gameStrategyContext) {
@@ -595,7 +610,7 @@ void initSmallRobotTargetActions2019(GameStrategyContext* gameStrategyContext) {
     addTargetTakeAction(&(bigDistributorLine3RediumGreeniumTarget.actionList), &bigDistributorLine3TakeTargetAction, bigDistributorLine3Location, BIG_DISTRIBUTOR_LINE_3_GREENIUM_TAKE_TIME_TO_ACHIEVE, &bigDistributorLine3RediumGreeniumTakeTargetActionItemList);
     addTargetDropAction(&(bigDistributorLine3RediumGreeniumTarget.actionList), &bigDistributorLine3DropTargetAction, rediumGreeniumDropLocation, BIG_DISTRIBUTOR_LINE_3_GREENIUM_DROP_TIME_TO_ACHIEVE, &bigDistributorLine3RediumGreeniumDropTargetActionItemList);
     
-    // BIG DISTRIBUTOR LINE 3 / BLUEIUM GREENIUM TARGET
+    // BIG DISTRIBUTOR LINE 2 / BLUEIUM GREENIUM TARGET
     addTargetPrepareAction(&(bigDistributorLine2BlueiumGreeniumTarget.actionList), &bigDistributorLine2PrepareTargetAction, chaosZoneSmallRobotLocation, BIG_DISTRIBUTOR_LINE_3_GREENIUM_PREPARE_TIME_TO_ACHIEVE, &bigDistributorLine2BlueiumGreeniumPrepareTargetActionItemList);
     addTargetTakeAction(&(bigDistributorLine2BlueiumGreeniumTarget.actionList), &bigDistributorLine2TakeTargetAction, bigDistributorLine2Location, BIG_DISTRIBUTOR_LINE_3_GREENIUM_TAKE_TIME_TO_ACHIEVE, &bigDistributorLine2BlueiumGreeniumTakeTargetActionItemList);
     addTargetDropAction(&(bigDistributorLine2BlueiumGreeniumTarget.actionList), &bigDistributorLine2DropTargetAction, blueiumGreeniumDropLocation, BIG_DISTRIBUTOR_LINE_3_GREENIUM_DROP_TIME_TO_ACHIEVE, &bigDistributorLine2BlueiumGreeniumDropTargetActionItemList);
