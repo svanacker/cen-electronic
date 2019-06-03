@@ -1,5 +1,7 @@
 #include <math.h>
 
+#include <stdbool.h>
+
 #include "2d.h"
 #include "../../common/math/cenMath.h"
 
@@ -68,4 +70,45 @@ bool isInCircle2(float circleCenterX, float circleCenterY, float circleRadius, f
 
 bool isInCircle(Point* circleCenterPoint, Point* point, float circleRadius) {
     return distanceBetweenPoints(circleCenterPoint, point) <= circleRadius;
+}
+
+// ROTATION on 3 Points
+
+/**
+ * Implementation inspired from : http://paulbourke.net/geometry/circlesphere/Circle.cpp
+ * @param a
+ * @param b
+ * @param c
+ * @param centeredPointIfAny
+ * @param radius
+ * @return 
+ */
+bool computeRotationCenteredPoint(Point* a, Point* b, Point* c, Point* centeredPointIfAny) {
+    float yDelta_a = b->y - a->y;
+    float xDelta_a = b->x - a->x;
+    float yDelta_b = c->y - b->y;
+    float xDelta_b = c->x - b->x;
+    
+    // If points are too closed
+    if (fabs(xDelta_a) <= 0.000000001 && fabs(yDelta_b) <= 0.000000001){
+		centeredPointIfAny->x = 0.5f * (b->x + c->x);
+		centeredPointIfAny->y = 0.5f *(a->y + b->y);
+       
+		return true;
+	}
+	
+	// IsPerpendicular() assure that xDelta(s) are not zero
+	double aSlope = yDelta_a / xDelta_a; // 
+	double bSlope = yDelta_b / xDelta_b;
+    
+    // checking whether the given points are colinear. 	
+	if (fabs(aSlope - bSlope) <= 0.000000001){	
+		return false;
+	}
+
+    centeredPointIfAny->x = (aSlope * bSlope * (a->y - c->y) + bSlope * (a->x + b->x)
+        - aSlope*(b->x+ c->x)) / (2.0f * (bSlope - aSlope) );
+    centeredPointIfAny->y = -1.0f *(centeredPointIfAny->x - (a->x + b->x) / 2.0f) / aSlope +  (a->y + b->y) / 2.0f;
+
+    return true;
 }

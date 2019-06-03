@@ -104,4 +104,8 @@ bool isInCircle2(float circleCenterX, float circleCenterY, float circleRadius, f
 
 bool isInCircle(Point* circleCenterPoint, Point* point, float circleRadius);
 
+// 3 POINTS / CIRCLE
+
+bool computeRotationCenteredPoint(Point* a, Point* b, Point* c, Point* centeredPointIfAny);
+
 #endif
