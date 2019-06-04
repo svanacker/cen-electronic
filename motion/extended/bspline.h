@@ -7,7 +7,7 @@
 #include "../../common/io/printWriter.h"
 
 /**
- * Extended motion to generate more complexe trajectory like
+ * Extended motion to generate more complex trajectory like
  * Bezier / B-Spline curve, cycloid, and not only rotation, and translation move.
  * @author svanacker
  * @version 19/05/2010
