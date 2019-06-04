@@ -55,9 +55,9 @@ typedef struct BSplineCurve {
     bool backward;
     // The length of the curve.
     float curveLength;
-    // accelerationFactor
+    // accelerationFactor (between 0 and 1.0, with 1.0 = maximal acceleration factor of the system (constraints by the motors)
     float accelerationFactor;
-    // speedFactor
+    // speedFactor (between 0 and 1.0, with 1.0 = maximal speed factor of the system (constraints by the motors)
     float speedFactor;
 } BSplineCurve;
 
@@ -81,12 +81,64 @@ void resetBSplineCurve(BSplineCurve* bSplineCurve, float p0x, float p0y, bool ba
  */
 void computeBSplinePoint(BSplineCurve* bSplineCurve, float time, Point* resultPoint);
 
+// DERIVATIVE n (speed / orientation)
+
+void computeBSplineDerivativeComponents(BSplineCurve* bSplineCurve, float t, Point* derivativeResult);
+
+/**
+ * Because of the curve, the speed or the acceleration is not the same 
+ * between the center of the robot and the left and right wheels.
+ * @param curve
+ * @param time
+ * @param distanceToCurve
+ * @return 
+ */
+float computeSpeedFactorToCenterDueToCurve(BSplineCurve* curve, float time, float distanceToCurve);
+
 /**
  * Compute the orientation of bezier points at the parametric value t.
  * @param bSplineCurve the curve we want to compute
  * @param t value in [0..1]
  */
 float computeBSplineOrientationWithDerivative(BSplineCurve* bSplineCurve, float t);
+
+// DERIVATIVE n + 1 (acceleration)
+
+/**
+ * Compute the parameterized components (x and y) of the derivative of the bspline.
+ * @param bSplineCurve
+ * @param t value in [0..1]
+ * @param accelerationResult contains the result for the both components (x / y)
+ */
+void computeBSplineAccelerationComponent(BSplineCurve* bSplineCurve, float t, Point* accelerationResult);
+
+/**
+ * Because of the curve, the normal acceleration is not the same 
+ * between the center of the robot and the left and right wheels.
+ * @param curve
+ * @param time
+ * @param distanceToCurve
+ * @return 
+ */
+float computeAccelerationFactorToCenterDueToCurve(BSplineCurve* curve, float time, float speedFactor);
+
+// CURVATURE / RADIUS
+
+/**
+ * Compute the radius of the BSpline by a geometrical approach (3 points / center). 
+ * @param bSplineCurve
+ * @param t
+ * @return 
+ */
+float computeBSplineCurveRadius(BSplineCurve* bSplineCurve, float t);
+
+/**
+ * Compute the curvature but by using the derivative / acceleration functions.
+ * @param bSplineCurve
+ * @param t
+ * @return 
+ */
+float computeBSplineCurvature(BSplineCurve* bSplineCurve, float t);
 
 // BSPlinePointData
 

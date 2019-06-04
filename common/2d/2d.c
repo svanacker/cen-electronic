@@ -98,8 +98,8 @@ bool computeRotationCenteredPoint(Point* a, Point* b, Point* c, Point* centeredP
 	}
 	
 	// IsPerpendicular() assure that xDelta(s) are not zero
-	double aSlope = yDelta_a / xDelta_a; // 
-	double bSlope = yDelta_b / xDelta_b;
+	float aSlope = yDelta_a / xDelta_a; // 
+    float bSlope = yDelta_b / xDelta_b;
     
     // checking whether the given points are colinear. 	
 	if (fabs(aSlope - bSlope) <= 0.000000001){	
