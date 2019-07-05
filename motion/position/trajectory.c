@@ -95,7 +95,6 @@ bool adjustXPosition(float x, float thresholdDistance) {
         return false;
     }
     trajectory.position.pos.x = x;
-    trajectory.position.orientation = 0.0f;
     return true;
 }
 
@@ -105,7 +104,6 @@ bool adjustYPosition(float y, float thresholdDistance) {
         return false;
     }
     trajectory.position.pos.y = y;
-    trajectory.position.orientation = 0.0f;
     return true;
 }
 

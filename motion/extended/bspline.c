@@ -227,6 +227,15 @@ float computeTimeWithInterpolation(BSplinePointData* beforePointData,
     return result;
 }
 
+float computeTimeWithInterpolationAndDichotomy(BSplineCurve* bSplineCurve, BSplinePointData* beforePointData, float speed) {
+    float deltaTime = 0.001f;
+    while (true) {
+        computeBSplineCurveRadius(bSplineCurve, beforePointData->time + deltaTime);
+        
+        
+    }
+}
+
 float computeBSplineTimeAtDistance(BSplineCurve* bSplineCurve, float distance) {
     if (isFloatNegative(distance)) {
         writeError(MOTION_BSPLINE_DISTANCE_MUST_BE_POSITIVE);
