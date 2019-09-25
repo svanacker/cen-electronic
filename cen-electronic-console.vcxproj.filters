@@ -1117,6 +1117,45 @@
     <Filter Include="Header Files\motion\simulation">
       <UniqueIdentifier>{e1827713-9068-468a-a8df-158b656002da}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\robot\2020">
+      <UniqueIdentifier>{adf08914-1e97-4999-9c69-cf9c3f0419b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\robot\2020">
+      <UniqueIdentifier>{a525a8e1-27f4-49d9-89d6-5761a117f9b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\robot\2020\gameboard">
+      <UniqueIdentifier>{0755c011-3fe1-4b7d-95fe-412ae7edcf6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\robot\2020\gameboard">
+      <UniqueIdentifier>{c6732274-18f8-4094-81b1-213e9d477911}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\robot\2020\strategy">
+      <UniqueIdentifier>{ab18b711-7d23-4ee3-98a0-0b9cb24a4b3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\robot\2020\strategy">
+      <UniqueIdentifier>{49e83e85-5da3-4386-9453-4c16fe8e111f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\robot\2020\commonRobot">
+      <UniqueIdentifier>{6fc37921-4063-4c77-8151-a9e357762b43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\robot\2020\commonRobot">
+      <UniqueIdentifier>{bc04afe4-a4a0-441d-bef6-f3cdb9820687}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\robot\2020\bigRobot">
+      <UniqueIdentifier>{6840d270-c5bf-488f-a8f1-b13d5a39f3c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\robot\2020\bigRobot">
+      <UniqueIdentifier>{64d29d43-96ca-4835-a3cd-f6569e73de69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\robot\2020\navigation">
+      <UniqueIdentifier>{5fc8dada-f5e7-4fe2-aa1e-d14c6a84bc76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\robot\2020\smallRobot">
+      <UniqueIdentifier>{9dcfb210-09c2-4924-82b5-2f062d6acdb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\robot\2020\smallRobot">
+      <UniqueIdentifier>{dcea7dc3-d6d7-4e8a-a3b3-900f614bf951}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -2345,6 +2384,36 @@
     </ClCompile>
     <ClCompile Include="navigation\locationDebug.c">
       <Filter>Source Files\navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2020\mainBoard2020.c">
+      <Filter>Source Files\robot\2020</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2020\gameboard\gameBoardElement2020.c">
+      <Filter>Source Files\robot\2020\gameboard</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2020\strategy\strategy2020.c">
+      <Filter>Source Files\robot\2020\strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2020\strategy\strategy2020Utils.c">
+      <Filter>Source Files\robot\2020\strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2020\strategy\strategyConfig2020.c">
+      <Filter>Source Files\robot\2020\strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2020\commonRobot\commonRobotActions2020.c">
+      <Filter>Source Files\robot\2020\commonRobot</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2020\bigRobot\bigRobotActions2020.c">
+      <Filter>Source Files\robot\2020\bigRobot</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2020\bigRobot\bigRobotStrategy2020.c">
+      <Filter>Source Files\robot\2020\bigRobot</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2020\smallRobot\smallRobotStrategy2020.c">
+      <Filter>Source Files\robot\2020\smallRobot</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2020\smallRobot\smallRobotActions2020.c">
+      <Filter>Source Files\robot\2020\smallRobot</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -3673,6 +3742,66 @@
     </ClInclude>
     <ClInclude Include="robot\2019\commonRobot\commonRobotLocations2019.h">
       <Filter>Header Files\robot\2019\commonRobot</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2020\mainBoard2020.h">
+      <Filter>Header Files\robot\2020</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2020\gameboard\gameBoardElement2020.h">
+      <Filter>Header Files\robot\2020\gameboard</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2020\strategy\score2020.h">
+      <Filter>Header Files\robot\2020\strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2020\strategy\strategy2020.h">
+      <Filter>Header Files\robot\2020\strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2020\strategy\strategy2020Utils.h">
+      <Filter>Header Files\robot\2020\strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2020\strategy\strategyConfig2020.h">
+      <Filter>Header Files\robot\2020\strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2020\strategy\teamColor2020.h">
+      <Filter>Header Files\robot\2020\strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2020\commonRobot\commonRobotLocations2020.h">
+      <Filter>Header Files\robot\2020\commonRobot</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2020\commonRobot\commonRobotActions2020.h">
+      <Filter>Header Files\robot\2020\commonRobot</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2020\bigRobot\bigRobotActions2020.h">
+      <Filter>Header Files\robot\2020\bigRobot</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2020\bigRobot\bigRobotLocation2020.h">
+      <Filter>Header Files\robot\2020\bigRobot</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2020\bigRobot\bigRobotPath2020.h">
+      <Filter>Header Files\robot\2020\bigRobot</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2020\bigRobot\bigRobotStrategy2020.h">
+      <Filter>Header Files\robot\2020\bigRobot</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2020\navigation\angle2020.h">
+      <Filter>Header Files\robot\2020\navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2020\navigation\location2020.h">
+      <Filter>Header Files\robot\2020\navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2020\navigation\path2020.h">
+      <Filter>Header Files\robot\2020\navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2020\smallRobot\smallRobotLocation2020.h">
+      <Filter>Header Files\robot\2020\smallRobot</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2020\smallRobot\smallRobotPath2020.h">
+      <Filter>Header Files\robot\2020\smallRobot</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2020\smallRobot\smallRobotStrategy2020.h">
+      <Filter>Header Files\robot\2020\smallRobot</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2020\smallRobot\smallRobotActions2020.h">
+      <Filter>Header Files\robot\2020\smallRobot</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

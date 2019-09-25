@@ -34,7 +34,7 @@ void windowExclusion2019Print(GameBoard* gameBoard, int* element) {
     // Do nothing
 }
 
-bool windowExclusionNotReachable(GameBoard* gameBoard, int* element, float x, float y, float z) {
+bool windowExclusionNotReachable2019(GameBoard* gameBoard, int* element, float x, float y, float z) {
     // If it's outside of the rectangle of the gameboard with border, return false
     if (!isInRectangle(GAME_BOARD_TOF_WINDOW_WIDTH, GAME_BOARD_TOF_WINDOW_WIDTH,
         GAMEBOARD_WIDTH - 2 * GAME_BOARD_TOF_WINDOW_WIDTH, GAMEBOARD_HEIGHT - 2 * GAME_BOARD_TOF_WINDOW_WIDTH,
@@ -221,7 +221,7 @@ void goldeniumPrint(GameBoard* gameBoard, int* element) {
 
 void addGameBoardElements2019(GameBoardElementList* gameBoardElementList) {
     // Excluding zone
-    addGameBoardElement(gameBoardElementList, &windowExclusion2019Print, &windowExclusionNotReachable, GAME_BOARD_ELEMENT_REACHABLE_ONLY);
+    addGameBoardElement(gameBoardElementList, &windowExclusion2019Print, &windowExclusionNotReachable2019, GAME_BOARD_ELEMENT_REACHABLE_ONLY);
 
     // Periodic Table
     addGameBoardElement(gameBoardElementList, &periodicTableRediumPrint, &periodicTableRediumNotReachable, GAME_BOARD_ELEMENT_PRINT_AND_REACHABLE);

@@ -1,8 +1,8 @@
 #include <stdlib.h>
 
-#include "strategy2019Utils.h"
-#include "strategy2019.h"
-#include "teamColor2019.h"
+#include "strategy2020Utils.h"
+#include "strategy2020.h"
+#include "teamColor2020.h"
 
 #include "../../../common/io/outputStream.h"
 #include "../../../common/io/printWriter.h"
@@ -29,15 +29,15 @@
 
 // COLOR MANAGEMENT
 
-bool isViolet2019(GameStrategyContext* gameStrategyContext) {
-    return gameStrategyContext->color == TEAM_COLOR_2019_VIOLET;
+bool isBlue2020(GameStrategyContext* gameStrategyContext) {
+    return gameStrategyContext->color == TEAM_COLOR_2020_BLUE;
 }
 
 /**
  * Change the location for color.
  */
-void changeLocationsForColor2019(GameStrategyContext* gameStrategyContext) {
-    if (isViolet2019(gameStrategyContext)) {
+void changeLocationsForColor2020(GameStrategyContext* gameStrategyContext) {
+    if (isBlue2020(gameStrategyContext)) {
         return;
     }
     Navigation* navigation = gameStrategyContext->navigation;
@@ -50,8 +50,8 @@ void changeLocationsForColor2019(GameStrategyContext* gameStrategyContext) {
     }
 }
 
-float changeAngleForColor2019(GameStrategyContext* gameStrategyContext, float angle) {
-    if (isViolet2019(gameStrategyContext)) {
+float changeAngleForColor2020(GameStrategyContext* gameStrategyContext, float angle) {
+    if (isBlue2020(gameStrategyContext)) {
         return angle;
     } else {
         return -angle;

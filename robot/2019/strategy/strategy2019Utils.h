@@ -8,15 +8,15 @@
 
 #include "../../strategy/gameStrategyContext.h"
 
-bool isViolet(GameStrategyContext* gameStrategyContext);
+bool isViolet2019(GameStrategyContext* gameStrategyContext);
 
 /**
  * Change the location for color.
  */
-void changeLocationsForColor(GameStrategyContext* gameStrategyContext);
+void changeLocationsForColor2019(GameStrategyContext* gameStrategyContext);
 
-void changePathsForColor(GameStrategyContext* gameStrategyContext);
+void changePathsForColor2019(GameStrategyContext* gameStrategyContext);
 
-float changeAngleForColor(GameStrategyContext* gameStrategyContext, float angle);
+float changeAngleForColor2019(GameStrategyContext* gameStrategyContext, float angle);
 
 #endif

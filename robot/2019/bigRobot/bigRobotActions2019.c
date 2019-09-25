@@ -29,7 +29,7 @@ bool bigDistributorLineTake(int* context) {
     GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
     ServoList* servoList = gameStrategyContext->servoList;
     TofSensorList* tofSensorList = gameStrategyContext->tofSensorList;
-    if (isViolet(gameStrategyContext)) {
+    if (isViolet2019(gameStrategyContext)) {
         distributor2019Take(servoList, tofSensorList, FORK_2019_LEFT_INDEX);
     }
     else {

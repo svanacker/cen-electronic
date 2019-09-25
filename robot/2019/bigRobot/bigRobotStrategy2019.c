@@ -188,17 +188,17 @@ void initBigRobotLocations2019(GameStrategyContext* gameStrategyContext) {
     Navigation* navigation = gameStrategyContext->navigation;
     enum TeamColor teamColor = gameStrategyContext->color;
 
-    bigRobotStartAreaLocation = addLocationWithColors(teamColor, navigation, BIG_ROBOT_START_AREA, BIG_ROBOT_START_AREA_LABEL, BIG_ROBOT_START_AREA_X, BIG_ROBOT_START_AREA_Y);
-    chaosFrontLocation = addLocationWithColors(teamColor, navigation, CHAOS_ZONE_FRONT, CHAOS_ZONE_FRONT_LABEL, CHAOS_ZONE_FRONT_X, CHAOS_ZONE_FRONT_Y);
-    rediumDropZoneLocation = addLocationWithColors(teamColor, navigation, REDIUM_DROP_ZONE, REDIUM_DROP_ZONE_LABEL, REDIUM_DROP_ZONE_X, REDIUM_DROP_ZONE_Y);
-    acceleratorDropLocation = addLocationWithColors(teamColor, navigation, ACCELERATOR_DROP, ACCELERATOR_DROP_LABEL, ACCELERATOR_DROP_X, ACCELERATOR_DROP_Y);
+    bigRobotStartAreaLocation = addLocationWithColors2019(teamColor, navigation, BIG_ROBOT_START_AREA, BIG_ROBOT_START_AREA_LABEL, BIG_ROBOT_START_AREA_X, BIG_ROBOT_START_AREA_Y);
+    chaosFrontLocation = addLocationWithColors2019(teamColor, navigation, CHAOS_ZONE_FRONT, CHAOS_ZONE_FRONT_LABEL, CHAOS_ZONE_FRONT_X, CHAOS_ZONE_FRONT_Y);
+    rediumDropZoneLocation = addLocationWithColors2019(teamColor, navigation, REDIUM_DROP_ZONE, REDIUM_DROP_ZONE_LABEL, REDIUM_DROP_ZONE_X, REDIUM_DROP_ZONE_Y);
+    acceleratorDropLocation = addLocationWithColors2019(teamColor, navigation, ACCELERATOR_DROP, ACCELERATOR_DROP_LABEL, ACCELERATOR_DROP_X, ACCELERATOR_DROP_Y);
 
-    keyPoint1Location = addLocationWithColors(teamColor, navigation, KEY_POINT_1, KEY_POINT_1_LABEL, KEY_POINT_1_X, KEY_POINT_1_Y);
-    keyPoint2Location = addLocationWithColors(teamColor, navigation, KEY_POINT_2, KEY_POINT_2_LABEL, KEY_POINT_2_X, KEY_POINT_2_Y);
-    bigDistributorLine1FrontLocation = addLocationWithColors(teamColor, navigation, BIG_DISTRIBUTOR_LINE_1, BIG_DISTRIBUTOR_LINE_1_LABEL,  BIG_DISTRIBUTOR_LINE_1_X, BIG_DISTRIBUTOR_LINE_1_Y);
-    bigDistributorLine2FrontLocation = addLocationWithColors(teamColor, navigation, BIG_DISTRIBUTOR_LINE_2, BIG_DISTRIBUTOR_LINE_2_LABEL, BIG_DISTRIBUTOR_LINE_2_X, BIG_DISTRIBUTOR_LINE_2_Y);
-    bigDistributorLine3FrontLocation = addLocationWithColors(teamColor, navigation, BIG_DISTRIBUTOR_LINE_3, BIG_DISTRIBUTOR_LINE_3_LABEL, BIG_DISTRIBUTOR_LINE_3_X, BIG_DISTRIBUTOR_LINE_3_Y);
-    blueiumGreeniumCenteredLocation = addLocationWithColors(teamColor, navigation, BLUEIUM_GREENIUM_POINT, BLUEIUM_GREENIUM_POINT_LABEL, BLUEIUM_GREENIUM_POINT_X, BLUEIUM_GREENIUM_POINT_Y);
+    keyPoint1Location = addLocationWithColors2019(teamColor, navigation, KEY_POINT_1, KEY_POINT_1_LABEL, KEY_POINT_1_X, KEY_POINT_1_Y);
+    keyPoint2Location = addLocationWithColors2019(teamColor, navigation, KEY_POINT_2, KEY_POINT_2_LABEL, KEY_POINT_2_X, KEY_POINT_2_Y);
+    bigDistributorLine1FrontLocation = addLocationWithColors2019(teamColor, navigation, BIG_DISTRIBUTOR_LINE_1, BIG_DISTRIBUTOR_LINE_1_LABEL,  BIG_DISTRIBUTOR_LINE_1_X, BIG_DISTRIBUTOR_LINE_1_Y);
+    bigDistributorLine2FrontLocation = addLocationWithColors2019(teamColor, navigation, BIG_DISTRIBUTOR_LINE_2, BIG_DISTRIBUTOR_LINE_2_LABEL, BIG_DISTRIBUTOR_LINE_2_X, BIG_DISTRIBUTOR_LINE_2_Y);
+    bigDistributorLine3FrontLocation = addLocationWithColors2019(teamColor, navigation, BIG_DISTRIBUTOR_LINE_3, BIG_DISTRIBUTOR_LINE_3_LABEL, BIG_DISTRIBUTOR_LINE_3_X, BIG_DISTRIBUTOR_LINE_3_Y);
+    blueiumGreeniumCenteredLocation = addLocationWithColors2019(teamColor, navigation, BLUEIUM_GREENIUM_POINT, BLUEIUM_GREENIUM_POINT_LABEL, BLUEIUM_GREENIUM_POINT_X, BLUEIUM_GREENIUM_POINT_Y);
 }
 
 void initBigRobotPaths2019(GameStrategyContext* gameStrategyContext) {
@@ -209,7 +209,7 @@ void initBigRobotPaths2019(GameStrategyContext* gameStrategyContext) {
     float speedFactor = gameStrategyContext->defaultSpeedFactor;
 
     // Big Robot
-    bigRobotStartArea_to_bigDistributorLine1Front = addNavigationPathWithColor(teamColor,
+    bigRobotStartArea_to_bigDistributorLine1Front = addNavigationPathWithColor2019(teamColor,
         navigation,
         bigRobotStartAreaLocation,
         bigDistributorLine1FrontLocation,
@@ -221,7 +221,7 @@ void initBigRobotPaths2019(GameStrategyContext* gameStrategyContext) {
         aFactor * BIG_ROBOT_STARTAREA_TO_BIGDISTRIBUTOR_LINE_1_FRONT_ACCELERATION_FACTOR,
         speedFactor * BIG_ROBOT_STARTAREA_TO_BIGDISTRIBUTOR_LINE_1_FRONT_SPEED_FACTOR);
 
-    bigRobotStartArea_to_chaosZoneFront = addNavigationPathWithColor(teamColor,
+    bigRobotStartArea_to_chaosZoneFront = addNavigationPathWithColor2019(teamColor,
         navigation,
         bigRobotStartAreaLocation,
         chaosFrontLocation,
@@ -233,7 +233,7 @@ void initBigRobotPaths2019(GameStrategyContext* gameStrategyContext) {
         aFactor * BIG_ROBOT_STARTAREA_TO_CHAOS_ZONE_FRONT_ACCELERATION_FACTOR,
         speedFactor * BIG_ROBOT_STARTAREA_TO_CHAOS_ZONE_FRONT_SPEED_FACTOR);
 
-    chaosZoneFront_to_rediumDropZone = addNavigationPathWithColor(teamColor,
+    chaosZoneFront_to_rediumDropZone = addNavigationPathWithColor2019(teamColor,
         navigation,
         chaosFrontLocation,
         rediumDropZoneLocation,
@@ -245,7 +245,7 @@ void initBigRobotPaths2019(GameStrategyContext* gameStrategyContext) {
         aFactor * CHAOS_ZONE_FRONT_TO_REDIUM_DROP_ZONE_ACCELERATION_FACTOR,
         speedFactor * CHAOS_ZONE_FRONT_TO_REDIUM_DROP_ZONE_SPEED_FACTOR);
 
-    rediumDropZone_to_keyPoint1 = addNavigationPathWithColor(teamColor,
+    rediumDropZone_to_keyPoint1 = addNavigationPathWithColor2019(teamColor,
         navigation,
         rediumDropZoneLocation,
         keyPoint1Location,
@@ -257,7 +257,7 @@ void initBigRobotPaths2019(GameStrategyContext* gameStrategyContext) {
         aFactor * REDIUM_DROP_ZONE_TO_KEY_POINT_1_ACCELERATION_FACTOR,
         speedFactor * REDIUM_DROP_ZONE_TO_KEY_POINT_1_SPEED_FACTOR);
 
-    rediumDropZone_to_keyPoint2 = addNavigationPathWithColor(teamColor,
+    rediumDropZone_to_keyPoint2 = addNavigationPathWithColor2019(teamColor,
         navigation,
         rediumDropZoneLocation,
         keyPoint2Location,
@@ -269,7 +269,7 @@ void initBigRobotPaths2019(GameStrategyContext* gameStrategyContext) {
         aFactor * REDIUM_DROP_ZONE_TO_KEY_POINT_2_ACCELERATION_FACTOR,
         speedFactor * REDIUM_DROP_ZONE_TO_KEY_POINT_2_SPEED_FACTOR);
 
-    keyPoint2_to_bigDistributorLine1Front = addNavigationPathWithColor(teamColor,
+    keyPoint2_to_bigDistributorLine1Front = addNavigationPathWithColor2019(teamColor,
         navigation,
         keyPoint2Location,
         bigDistributorLine1FrontLocation,
@@ -282,7 +282,7 @@ void initBigRobotPaths2019(GameStrategyContext* gameStrategyContext) {
         speedFactor * KEY_POINT_2_TO_BIGDISTRIBUTOR_LINE_1_FRONT_SPEED_FACTOR);
 
 
-    bigDistributorLine1Front_to_keyPoint1 = addNavigationPathWithColor(teamColor,
+    bigDistributorLine1Front_to_keyPoint1 = addNavigationPathWithColor2019(teamColor,
         navigation,
         bigDistributorLine1FrontLocation,
         keyPoint1Location,
@@ -294,7 +294,7 @@ void initBigRobotPaths2019(GameStrategyContext* gameStrategyContext) {
         aFactor * BIGDISTRIBUTOR_LINE1_FRONT_TO_KEY_POINT_1_ACCELERATION_FACTOR,
         speedFactor * BIGDISTRIBUTOR_LINE1_FRONT_TO_KEY_POINT_1_SPEED_FACTOR);
 
-    keyPoint1_to_acceleratorDrop = addNavigationPathWithColor(teamColor,
+    keyPoint1_to_acceleratorDrop = addNavigationPathWithColor2019(teamColor,
         navigation,
         keyPoint1Location,
         acceleratorDropLocation,
@@ -306,7 +306,7 @@ void initBigRobotPaths2019(GameStrategyContext* gameStrategyContext) {
         aFactor * KEY_POINT_1_TO_ACCELERATOR_DROP_ACCELERATION_FACTOR,
         speedFactor * KEY_POINT_1_TO_ACCELERATOR_DROP_SPEED_FACTOR);
 
-    acceleratorDrop_to_keyPoint1 = addNavigationPathWithColor(teamColor,
+    acceleratorDrop_to_keyPoint1 = addNavigationPathWithColor2019(teamColor,
         navigation,
         acceleratorDropLocation,
         keyPoint1Location,
@@ -318,7 +318,7 @@ void initBigRobotPaths2019(GameStrategyContext* gameStrategyContext) {
         aFactor * ACCELERATOR_DROP_TO_KEY_POINT_1_ACCELERATION_FACTOR,
         speedFactor * ACCELERATOR_DROP_TO_KEY_POINT_1_SPEED_FACTOR);
 
-    keyPoint1_to_bigDistributorLine2Front = addNavigationPathWithColor(teamColor,
+    keyPoint1_to_bigDistributorLine2Front = addNavigationPathWithColor2019(teamColor,
         navigation,
         keyPoint1Location,
         bigDistributorLine2FrontLocation,
@@ -330,7 +330,7 @@ void initBigRobotPaths2019(GameStrategyContext* gameStrategyContext) {
         aFactor * KEY_POINT_1_TO_BIGDISTRIBUTOR_LINE_2_FRONT_ACCELERATION_FACTOR,
         speedFactor * KEY_POINT_1_TO_BIGDISTRIBUTOR_LINE_2_FRONT_SPEED_FACTOR);
 
-    bigDistributorLine2Front_to_keyPoint1 = addNavigationPathWithColor(teamColor,
+    bigDistributorLine2Front_to_keyPoint1 = addNavigationPathWithColor2019(teamColor,
         navigation,
         bigDistributorLine2FrontLocation,
         keyPoint1Location,
@@ -342,7 +342,7 @@ void initBigRobotPaths2019(GameStrategyContext* gameStrategyContext) {
         aFactor * BIGDISTRIBUTOR_LINE2_FRONT_TO_KEY_POINT_1_ACCELERATION_FACTOR,
         speedFactor * BIGDISTRIBUTOR_LINE2_FRONT_TO_KEY_POINT_1_SPEED_FACTOR);
 
-    keyPoint2_to_bigDistributorLine2Front = addNavigationPathWithColor(teamColor,
+    keyPoint2_to_bigDistributorLine2Front = addNavigationPathWithColor2019(teamColor,
         navigation,
         keyPoint2Location,
         bigDistributorLine2FrontLocation,
@@ -354,7 +354,7 @@ void initBigRobotPaths2019(GameStrategyContext* gameStrategyContext) {
         aFactor * KEY_POINT_2_TO_BIGDISTRIBUTOR_LINE_2_FRONT_ACCELERATION_FACTOR,
         speedFactor * KEY_POINT_2_TO_BIGDISTRIBUTOR_LINE_2_FRONT_SPEED_FACTOR);
 
-    bigDistributorLine2Front_to_keyPoint2 = addNavigationPathWithColor(teamColor,
+    bigDistributorLine2Front_to_keyPoint2 = addNavigationPathWithColor2019(teamColor,
         navigation,
         bigDistributorLine2FrontLocation,
         keyPoint2Location,
@@ -366,7 +366,7 @@ void initBigRobotPaths2019(GameStrategyContext* gameStrategyContext) {
         aFactor * BIGDISTRIBUTOR_LINE2_FRONT_TO_KEY_POINT_2_ACCELERATION_FACTOR,
         speedFactor * BIGDISTRIBUTOR_LINE2_FRONT_TO_KEY_POINT_2_SPEED_FACTOR);
 
-    keyPoint2_to_bigDistributorLine3Front = addNavigationPathWithColor(teamColor,
+    keyPoint2_to_bigDistributorLine3Front = addNavigationPathWithColor2019(teamColor,
         navigation,
         keyPoint2Location,
         bigDistributorLine3FrontLocation,
@@ -378,7 +378,7 @@ void initBigRobotPaths2019(GameStrategyContext* gameStrategyContext) {
         aFactor * KEY_POINT_2_TO_BIGDISTRIBUTOR_LINE_3_FRONT_ACCELERATION_FACTOR,
         speedFactor * KEY_POINT_2_TO_BIGDISTRIBUTOR_LINE_3_FRONT_SPEED_FACTOR);
 
-    bigDistributorLine2Front_to_keyPoint2 = addNavigationPathWithColor(teamColor,
+    bigDistributorLine2Front_to_keyPoint2 = addNavigationPathWithColor2019(teamColor,
         navigation,
         bigDistributorLine2FrontLocation,
         keyPoint2Location,
@@ -391,7 +391,7 @@ void initBigRobotPaths2019(GameStrategyContext* gameStrategyContext) {
         speedFactor * BIGDISTRIBUTOR_LINE3_FRONT_TO_KEY_POINT_2_SPEED_FACTOR);
 
 
-    keyPoint1_to_bigDistributorLine3Front = addNavigationPathWithColor(teamColor,
+    keyPoint1_to_bigDistributorLine3Front = addNavigationPathWithColor2019(teamColor,
         navigation,
         keyPoint1Location,
         bigDistributorLine3FrontLocation,
@@ -403,7 +403,7 @@ void initBigRobotPaths2019(GameStrategyContext* gameStrategyContext) {
         aFactor * KEY_POINT_1_TO_BIGDISTRIBUTOR_LINE_3_FRONT_ACCELERATION_FACTOR,
         speedFactor * KEY_POINT_1_TO_BIGDISTRIBUTOR_LINE_3_FRONT_SPEED_FACTOR);
 
-    bigDistributorLine3Front_to_keyPoint1 = addNavigationPathWithColor(teamColor,
+    bigDistributorLine3Front_to_keyPoint1 = addNavigationPathWithColor2019(teamColor,
         navigation,
         bigDistributorLine3FrontLocation,
         keyPoint1Location,
@@ -415,7 +415,7 @@ void initBigRobotPaths2019(GameStrategyContext* gameStrategyContext) {
         aFactor * BIGDISTRIBUTOR_LINE_3_FRONT_TO_KEY_POINT_1_ACCELERATION_FACTOR,
         speedFactor * BIGDISTRIBUTOR_LINE_3_FRONT_TO_KEY_POINT_1_SPEED_FACTOR);
     
-    bigDistributorLine1Front_to_blueiumGreeniumPoint = addNavigationPathWithColor(teamColor,
+    bigDistributorLine1Front_to_blueiumGreeniumPoint = addNavigationPathWithColor2019(teamColor,
         navigation,
         bigDistributorLine1FrontLocation,
         blueiumGreeniumCenteredLocation,

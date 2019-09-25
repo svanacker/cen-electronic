@@ -1,7 +1,7 @@
-#ifndef STRATEGY_2019_H
-#define STRATEGY_2019_H
+#ifndef STRATEGY_2020_H
+#define STRATEGY_2020_H
 
-#include "score2019.h"
+#include "score2020.h"
 
 #include "../../../robot/strategy/gameStrategyContext.h"
 #include "../../../robot/strategy/gameTarget.h"
@@ -10,17 +10,18 @@
 #include "../../../motion/simple/simpleMotion.h"
 #include "../../../motion/extended/bsplineMotion.h"
 
-#define STRATEGY_2019_NAVIGATION_LOCATION_LIST_ARRAY_LENGTH        100
-#define STRATEGY_2019_NAVIGATION_PATH_LIST_ARRAY_LENGTH            500
+#define STRATEGY_2020_NAVIGATION_LOCATION_LIST_ARRAY_LENGTH        100
+#define STRATEGY_2020_NAVIGATION_PATH_LIST_ARRAY_LENGTH            500
 
 /**
-* Init all elements for 2019.
+* Init all elements for 2020.
 */
-void initStrategy2019(GameStrategyContext* gameStrategyContext);
+void initStrategy2020(GameStrategyContext* gameStrategyContext);
 
-Location* addLocationWithColors2019(enum TeamColor teamColor, Navigation* navigation, char* name, char* label, float x, float y);
+Location* addLocationWithColors(enum TeamColor teamColor, Navigation* navigation, char* name, char* label, float x, float y);
 
-PathData* addNavigationPathWithColor2019(
+// TODO : Add it into generic version
+PathData* addNavigationPathWithColor(
     enum TeamColor teamColor,
     Navigation* navigation,
     Location* location1,

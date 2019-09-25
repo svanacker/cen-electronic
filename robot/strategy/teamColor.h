@@ -7,9 +7,9 @@
 enum TeamColor {
     /** Unknown Color */
     TEAM_COLOR_UNKNOWN = 0,
-    /** 2019 Violet Color. */
-    TEAM_COLOR_VIOLET = 1,
-    /** 2019 Yellow Color. */
+    /** 2020 Blue Color. */
+    TEAM_COLOR_BLUE = 1,
+    /** 2020 Yellow Color. */
     TEAM_COLOR_YELLOW = 2
 };
 

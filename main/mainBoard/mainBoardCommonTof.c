@@ -53,7 +53,7 @@ static TofSensor tofSensorArray[MAIN_BOARD_TOF_SENSOR_LIST_LENGTH];
 
 void mainBoardCommonUpdateTofMaxDistanceMM(GameStrategyContext* gameStrategyContext, float marginDistanceMM, float maxDistanceMM) {
     RobotConfig* robotConfig = gameStrategyContext->robotConfig;
-    float distanceFactor = getSonarDistanceCheckFactor(robotConfig);
+    float distanceFactor = getSonarDistanceCheckFactor2019(robotConfig);
     unsigned int tofIndex;
     for (tofIndex = 0; tofIndex < tofSensorList.size; tofIndex++) {
         TofSensor* tofSensor = getTofSensorByIndex(&tofSensorList, tofIndex);

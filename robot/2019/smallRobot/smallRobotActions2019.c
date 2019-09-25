@@ -44,7 +44,7 @@ bool acceleratorArmOn(int* context) {
     appendStringCRLF(debugOutputStream, "-> Accelerator Arm On");
     GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
     ServoList* servoList = gameStrategyContext->servoList;
-    if (isViolet(gameStrategyContext)) {
+    if (isViolet2019(gameStrategyContext)) {
         // Right Arm
         arm2019On(servoList, FORK_2019_RIGHT_INDEX);
     }
@@ -61,7 +61,7 @@ bool acceleratorArmOn(int* context) {
 bool acceleratorRotationIfNeeded(int* context) {
     GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
     appendStringCRLF(getDebugOutputStreamLogger(), "-> acceleratorRotationIfNeeded");
-    if (isViolet(gameStrategyContext)) {
+    if (isViolet2019(gameStrategyContext)) {
         // Left
         if (gameStrategyContext->simulateMove) {
             gameStrategyContext->robotAngleRadian += degToRad(DEG_90);
@@ -94,7 +94,7 @@ bool acceleratorArmOff(int* context) {
     appendStringCRLF(debugOutputStream, "-> Accelerator Arm Off");
     GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
     ServoList* servoList = gameStrategyContext->servoList;
-    if (isViolet(gameStrategyContext)) {
+    if (isViolet2019(gameStrategyContext)) {
         // Right Arm
         arm2019Off(servoList, FORK_2019_RIGHT_INDEX);
     }
@@ -113,7 +113,7 @@ bool goldeniumPrepareTake(int* context) {
     appendStringCRLF(debugOutputStream, "-> goldeniumPrepareTake");
     GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
     ServoList* servoList = gameStrategyContext->servoList;
-    if (isViolet(gameStrategyContext)) {
+    if (isViolet2019(gameStrategyContext)) {
         fork2019PrepareTakeGoldenium(servoList, FORK_2019_RIGHT_INDEX);
     }
     else {
@@ -128,7 +128,7 @@ bool goldeniumTake(int* context) {
     GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
     ServoList* servoList = gameStrategyContext->servoList;
     TofSensorList* tofSensorList = gameStrategyContext->tofSensorList; 
-    if (isViolet(gameStrategyContext)) {
+    if (isViolet2019(gameStrategyContext)) {
         fork2019TakeGoldenium(servoList, tofSensorList, FORK_2019_RIGHT_INDEX);
     }
     else {
@@ -156,7 +156,7 @@ bool goldeniumDrop(int* context) {
     appendStringCRLF(debugOutputStream, "-> goldeniumDrop");
     GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
     ServoList* servoList = gameStrategyContext->servoList;
-    if (isViolet(gameStrategyContext)) {
+    if (isViolet2019(gameStrategyContext)) {
         fork2019DropGoldenium(servoList, FORK_2019_RIGHT_INDEX);
     }
     else {
@@ -185,7 +185,7 @@ bool smallDistributorLineTake(int* context) {
     ServoList* servoList = gameStrategyContext->servoList;
     TofSensorList* tofSensorList = gameStrategyContext->tofSensorList;
     
-    if (isViolet(gameStrategyContext)) {
+    if (isViolet2019(gameStrategyContext)) {
         distributor2019Take(servoList, tofSensorList, FORK_2019_RIGHT_INDEX);
     }
     else {
@@ -218,7 +218,7 @@ bool bigDistributorLine3Take(int* context) {
     ServoList* servoList = gameStrategyContext->servoList;
     TofSensorList* tofSensorList = gameStrategyContext->tofSensorList;
     
-    if (isViolet(gameStrategyContext)) {
+    if (isViolet2019(gameStrategyContext)) {
         distributor2019Take(servoList, tofSensorList, FORK_2019_RIGHT_INDEX);
     }
     else {
@@ -257,7 +257,7 @@ bool bigDistributorLine2Take(int* context) {
     ServoList* servoList = gameStrategyContext->servoList;
     TofSensorList* tofSensorList = gameStrategyContext->tofSensorList;
     
-    if (isViolet(gameStrategyContext)) {
+    if (isViolet2019(gameStrategyContext)) {
         distributor2019Take(servoList, tofSensorList, FORK_2019_RIGHT_INDEX);
     }
     else {

@@ -3,11 +3,11 @@
 
 #include "../../../robot/config/robotConfig.h"
 
-float getAccelerationFactor(RobotConfig* robotConfig);
+float getAccelerationFactor2019(RobotConfig* robotConfig);
 
-float getSpeedFactor(RobotConfig* robotConfig);
+float getSpeedFactor2019(RobotConfig* robotConfig);
 
-float getSonarDistanceCheckFactor(RobotConfig* robotConfig);
+float getSonarDistanceCheckFactor2019(RobotConfig* robotConfig);
 
 #endif
 

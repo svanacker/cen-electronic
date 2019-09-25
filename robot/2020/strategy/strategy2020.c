@@ -39,37 +39,34 @@
 
 #include "../../../robot/tof/strategyTofSensorList.h"
 
-#include "../../../robot/2019/bigRobot/bigRobotPath2019.h"
-#include "../../../robot/2019/bigRobot/bigRobotStrategy2019.h"
-#include "../../../robot/2019/bigRobot/bigRobotLocation2019.h"
+#include "../../../robot/2020/bigRobot/bigRobotPath2020.h"
+#include "../../../robot/2020/bigRobot/bigRobotStrategy2020.h"
+#include "../../../robot/2020/bigRobot/bigRobotLocation2020.h"
 
-#include "../../../robot/2019/fork/fork2019.h"
-#include "../../../robot/2019/fork/forkDevice2019.h"
+#include "../../../robot/2020/navigation/angle2020.h"
+#include "../../../robot/2020/navigation/location2020.h"
+#include "../../../robot/2020/navigation/path2020.h"
 
-#include "../../../robot/2019/navigation/angle2019.h"
-#include "../../../robot/2019/navigation/location2019.h"
-#include "../../../robot/2019/navigation/path2019.h"
+#include "../../../robot/2020/smallRobot/smallRobotLocation2020.h"
+#include "../../../robot/2020/smallRobot/smallRobotPath2020.h"
+#include "../../../robot/2020/smallRobot/smallRobotStrategy2020.h"
 
-#include "../../../robot/2019/smallRobot/smallRobotLocation2019.h"
-#include "../../../robot/2019/smallRobot/smallRobotPath2019.h"
-#include "../../../robot/2019/smallRobot/smallRobotStrategy2019.h"
+#include "../../../robot/2020/strategy/teamColor2020.h"
 
-#include "../../../robot/2019/strategy/teamColor2019.h"
+#include "../../../robot/2020/strategy/strategy2020.h"
+#include "../../../robot/2020/strategy/strategy2020Utils.h"
+#include "../../../robot/2020/strategy/strategyConfig2020.h"
 
-#include "../../../robot/2019/strategy/strategy2019.h"
-#include "../../../robot/2019/strategy/strategy2019Utils.h"
-#include "../../../robot/2019/strategy/strategyConfig2019.h"
-
-void initColorAndStartPosition2019(GameStrategyContext* gameStrategyContext) {
+void initColorAndStartPosition2020(GameStrategyContext* gameStrategyContext) {
     RobotConfig* robotConfig = gameStrategyContext->robotConfig;
     unsigned int configValue = robotConfig->robotConfigReadInt(robotConfig);
 
     // Configure the color so that we could use isViolet after, could NOT be used before !
     if (configValue & CONFIG_COLOR_YELLOW_MASK) {
-        gameStrategyContext->color = TEAM_COLOR_2019_YELLOW;
+        gameStrategyContext->color = TEAM_COLOR_2020_YELLOW;
     }
     else {
-        gameStrategyContext->color = TEAM_COLOR_2019_VIOLET;
+        gameStrategyContext->color = TEAM_COLOR_2020_BLUE;
     }
     float angleDeciDegree = 0;
     enum RobotType robotType = getRobotType();
@@ -84,7 +81,7 @@ void initColorAndStartPosition2019(GameStrategyContext* gameStrategyContext) {
         angleDeciDegree = SMALL_ROBOT_START_AREA_ANGLE_DECI_DEG;
     }
     // Symetry
-	if (isViolet2019(gameStrategyContext)) {
+	if (isBlue2020(gameStrategyContext)) {
         angleDeciDegree = -angleDeciDegree;
         gameStrategyContext->robotPosition->y = GAMEBOARD_HEIGHT - gameStrategyContext->robotPosition->y;
 	}
@@ -92,9 +89,9 @@ void initColorAndStartPosition2019(GameStrategyContext* gameStrategyContext) {
     gameStrategyContext->robotAngleRadian = angleRadian;
 }
 
-Location* addLocationWithColors2019(enum TeamColor teamColor, Navigation* navigation, char* name, char* label, float x, float y) {
+Location* addLocationWithColors(enum TeamColor teamColor, Navigation* navigation, char* name, char* label, float x, float y) {
     LocationList* locationList = navigation->locationList;
-    if (teamColor == TEAM_COLOR_2019_VIOLET) {
+    if (teamColor == TEAM_COLOR_2020_BLUE) {
         y = GAMEBOARD_HEIGHT - y;
     }
     Location* result = addNamedLocation(locationList, LOCATION_USAGE_TYPE_PERMANENT, name, label, x, y);
@@ -103,7 +100,7 @@ Location* addLocationWithColors2019(enum TeamColor teamColor, Navigation* naviga
 
 // PATHS
 
-PathData* addNavigationPathWithColor2019(
+PathData* addNavigationPathWithColor(
     enum TeamColor teamColor,
     Navigation* navigation,
     Location* location1,
@@ -117,7 +114,7 @@ PathData* addNavigationPathWithColor2019(
     float speedFactor) {
     PathData* pathData = addPath(navigation->paths);
 
-    if (teamColor == TEAM_COLOR_2019_VIOLET) {
+    if (teamColor == TEAM_COLOR_2020_BLUE) {
         angle1 = mod2PI(-angle1);
         angle2 = mod2PI(-angle2);
     }
@@ -126,12 +123,12 @@ PathData* addNavigationPathWithColor2019(
     return pathData;
 }
 
-void initStrategy2019(GameStrategyContext* gameStrategyContext) {
-    initColorAndStartPosition2019(gameStrategyContext);
+void initStrategy2020(GameStrategyContext* gameStrategyContext) {
+    initColorAndStartPosition2020(gameStrategyContext);
     showGameStrategyContextTeamColorAndStrategy(gameStrategyContext);
 
-    gameStrategyContext->defaultAccelerationFactor = getAccelerationFactor2019(gameStrategyContext->robotConfig);
-    gameStrategyContext->defaultSpeedFactor = getSpeedFactor2019(gameStrategyContext->robotConfig);
+    gameStrategyContext->defaultAccelerationFactor = getAccelerationFactor(gameStrategyContext->robotConfig);
+    gameStrategyContext->defaultSpeedFactor = getSpeedFactor(gameStrategyContext->robotConfig);
 
     enum RobotType robotType = getRobotType();
 
@@ -139,30 +136,30 @@ void initStrategy2019(GameStrategyContext* gameStrategyContext) {
     unsigned int strategyId = gameStrategyContext->strategyId;
 
     if (robotType == ROBOT_TYPE_SMALL) {
-        initSmallRobotLocations2019(gameStrategyContext);
-        initSmallRobotPaths2019(gameStrategyContext);
+        initSmallRobotLocations2020(gameStrategyContext);
+        initSmallRobotPaths2020(gameStrategyContext);
 
-        initSmallRobotTargets2019(gameStrategyContext);
-        initSmallRobotTargetActions2019(gameStrategyContext);
-        initSmallRobotTargetActionsItems2019(gameStrategyContext);
+        initSmallRobotTargets2020(gameStrategyContext);
+        initSmallRobotTargetActions2020(gameStrategyContext);
+        initSmallRobotTargetActionsItems2020(gameStrategyContext);
 
-        initSmallRobotStrategies2019(gameStrategyContext);
+        initSmallRobotStrategies2020(gameStrategyContext);
         if (strategyId != NO_STRATEGY_INDEX) {
-            gameStrategyContext->gameStrategy = initSmallRobotStrategiesItems2019(gameStrategyContext);
+            gameStrategyContext->gameStrategy = initSmallRobotStrategiesItems2020(gameStrategyContext);
         }
     }
     else if (robotType == ROBOT_TYPE_BIG) {
-        initBigRobotLocations2019(gameStrategyContext);
-        initBigRobotPaths2019(gameStrategyContext);
+        initBigRobotLocations2020(gameStrategyContext);
+        initBigRobotPaths2020(gameStrategyContext);
 
-        initBigRobotTargets2019(gameStrategyContext);
-        initBigRobotTargetActions2019(gameStrategyContext);
-        initBigRobotTargetActionsItems2019(gameStrategyContext);
+        initBigRobotTargets2020(gameStrategyContext);
+        initBigRobotTargetActions2020(gameStrategyContext);
+        initBigRobotTargetActionsItems2020(gameStrategyContext);
 
-        initBigRobotStrategies2019(gameStrategyContext);
+        initBigRobotStrategies2020(gameStrategyContext);
 
         if (strategyId != NO_STRATEGY_INDEX) {
-            gameStrategyContext->gameStrategy = initBigRobotStrategiesItems2019(gameStrategyContext);
+            gameStrategyContext->gameStrategy = initBigRobotStrategiesItems2020(gameStrategyContext);
         }
     }
     else {
