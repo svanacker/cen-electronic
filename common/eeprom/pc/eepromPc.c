@@ -73,7 +73,7 @@ void eepromPcWriteChar(Eeprom* eeprom_, unsigned long index, unsigned char value
     eepromPcWriteCharIntoFile(eeprom_, index, value);
 }
 
-char eepromPcReadChar(Eeprom* eeprom_, unsigned long index) {
+unsigned char eepromPcReadChar(Eeprom* eeprom_, unsigned long index) {
     if (index >= EEPROM_PC_MAX_INDEX) {
         writeError(EEPROM_OUT_OF_BOUNDS);
         return 0;

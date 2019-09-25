@@ -122,9 +122,9 @@ void test_filterRemoveCRLF(void) {
     TEST_ASSERT_EQUAL(*outputPointer, LF);
 
     // CR -> CR but returns false
-    actual = filterRemoveCRLF(CR, outputPointer);
+    actual = filterRemoveCRLF(CARRIAGE_RETURN, outputPointer);
     TEST_ASSERT_FALSE(actual);
-    TEST_ASSERT_EQUAL(*outputPointer, CR);
+    TEST_ASSERT_EQUAL(*outputPointer, CARRIAGE_RETURN);
 
 }
 
@@ -149,9 +149,9 @@ void test_filterRemoveCRLF_255(void) {
     TEST_ASSERT_EQUAL(*outputPointer, LF);
 
     // CR -> CR but returns false
-    actual = filterRemoveCRLF(CR, outputPointer);
+    actual = filterRemoveCRLF(CARRIAGE_RETURN, outputPointer);
     TEST_ASSERT_FALSE(actual);
-    TEST_ASSERT_EQUAL(*outputPointer, CR);
+    TEST_ASSERT_EQUAL(*outputPointer, CARRIAGE_RETURN);
 
     // "ÿ" = '\255'
     actual = filterRemoveCRLF_255('ÿ', outputPointer);

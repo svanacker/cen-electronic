@@ -1,4 +1,4 @@
-#ifndef CIENT_CLOCK_H
+#ifndef CLIENT_CLOCK_H
 #define CLIENT_CLOCK_H
 
 #include <stdbool.h>

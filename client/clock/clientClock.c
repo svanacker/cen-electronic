@@ -43,7 +43,7 @@ bool clientClockGetClockData(ClockData* clockData) {
 
 bool clientClockWriteHourRemoteClockData(ClockData* clockData, int dispatcherIndex) {
     OutputStream* outputStream = getDriverRequestOutputStream();
-    InputStream* resultStream = getDriverResponseInputStream();
+    // InputStream* resultStream = getDriverResponseInputStream();
 
     // To select the Dispatcher
     append(outputStream, DISPATCHER_COMMAND_HEADER);
@@ -62,7 +62,7 @@ bool clientClockWriteHourRemoteClockData(ClockData* clockData, int dispatcherInd
 
 bool clientClockWriteDateRemoteClockData(ClockData* clockData, int dispatcherIndex) {
     OutputStream* outputStream = getDriverRequestOutputStream();
-    InputStream* resultStream = getDriverResponseInputStream();
+    // InputStream* resultStream = getDriverResponseInputStream();
 
     // To select the Dispatcher
     append(outputStream, DISPATCHER_COMMAND_HEADER);

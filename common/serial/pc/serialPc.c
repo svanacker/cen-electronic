@@ -16,30 +16,30 @@
 static HANDLE serialInputPipeHandle1;
 static HANDLE serialOutputPipeHandle1;
 
-HANDLE getSerialInputPipeHandle(enum SerialPorty serialPort) {
+HANDLE getSerialInputPipeHandle(enum SerialPort serialPort) {
     if (serialPort == SERIAL_PORT_1) {
         return serialInputPipeHandle1;
     }
     return NULL;
 }
 
-void openSerial(enum SerialPorty serialPort, unsigned long baudRate) {
+void openSerial(enum SerialPort serialPort, unsigned long baudRate) {
     if (serialPort == SERIAL_PORT_1) {
         serialInputPipeHandle1 = initClientPipe(PIPE_SERIAL_INPUT_NAME_1);
         serialOutputPipeHandle1 = initServerPipe(PIPE_SERIAL_OUTPUT_NAME_1);
     }   
 }
 
-void openSerialAtDefaultSpeed(enum SerialPorty serialPort) {
+void openSerialAtDefaultSpeed(enum SerialPort serialPort) {
     openSerial(serialPort, 0);
 }
 
-void closeSerial(enum SerialPorty serialPort) {
+void closeSerial(enum SerialPort serialPort) {
     CloseHandle(serialInputPipeHandle1);
     CloseHandle(serialOutputPipeHandle1);
 }
 
-void serialPutc(enum SerialPorty serialPort, unsigned char c) {
+void serialPutc(enum SerialPort serialPort, unsigned char c) {
     writeCharToPipe(serialOutputPipeHandle1, c);
 }
 

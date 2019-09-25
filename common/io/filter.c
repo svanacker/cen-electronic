@@ -47,7 +47,7 @@ bool filterBinaryToValueChar(unsigned char c, unsigned char* output) {
 
 bool filterRemoveCRLF(unsigned char c, unsigned char* output) {
     *output = c;
-    if (c == CR || c == LF) {
+    if (c == CARRIAGE_RETURN || c == LF) {
         return false;
     }
     return true;
@@ -55,7 +55,7 @@ bool filterRemoveCRLF(unsigned char c, unsigned char* output) {
 
 bool filterRemoveCRLF_255(unsigned char c, unsigned char* output) {
     *output = c;
-    if (c == CR || c == LF || c == 255) {
+    if (c == CARRIAGE_RETURN || c == LF || c == 255) {
         return false;
     }
     return true;

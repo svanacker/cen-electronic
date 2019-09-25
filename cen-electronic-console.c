@@ -7,7 +7,7 @@
 #include "common/delay/cenDelay.h"
 
 #include "main/mainBoard/mainBoardPc.h"
-#include "main/motorBoard/motorBoardPc.h"
+#include "main/motorboard/motorBoardPc.h"
 #include "main/meca1/mechanicalMainBoard1Pc.h"
 #include "test/allTests.h"
 #include "common/pc/process/processHelper.h"

@@ -169,7 +169,7 @@ float computeNormalAccelerationAtCenter(BSplineCurve* bSplineCurve, float t) {
 }
 
 float computeTangentialAccelerationAtCenter(BSplineCurve* bSplineCurve, float t) {
-
+    return 0.0f;
 }
 
 void copyBSplineData(BSplinePointData* source, BSplinePointData* target) {

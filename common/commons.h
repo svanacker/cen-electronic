@@ -53,7 +53,7 @@
 #define LF 10
 
 /** Carriage return : \r". */
-#define CR 13
+#define CARRIAGE_RETURN 13
 
 /** Clear Screnn. */
 #define CLS 12

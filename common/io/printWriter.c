@@ -117,7 +117,7 @@ unsigned int appendStringCRLF(OutputStream* outputStream, const char* s) {
 }
 
 unsigned int appendCR(OutputStream* outputStream) {
-    append(outputStream, CR);
+    append(outputStream, CARRIAGE_RETURN);
 	return 1;
 }
 
@@ -127,7 +127,7 @@ unsigned int appendLF(OutputStream* outputStream) {
 }
 
 unsigned int appendCRLF(OutputStream* outputStream) {
-    append(outputStream, CR);
+    append(outputStream, CARRIAGE_RETURN);
     append(outputStream, LF);
 	return 2;
 }
