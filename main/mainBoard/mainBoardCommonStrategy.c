@@ -72,6 +72,7 @@
 #include "../../robot/2019/strategy/score2019.h"
 
 #include "../../client/motion/simple/clientMotion.h"
+#include "2019/arm/arm2019.h"
 
 static GameStrategyContext* gameStrategyContext;
 static Navigation* navigation;
@@ -227,6 +228,31 @@ void mainBoardCommonStrategyMainLoop(void) {
     while (true) {
         if (!startMatch->matchHandleInstructionFunction(startMatch)) {
             break;
+        }
+        
+        if (gameStrategyContext != NULL) {
+            TofSensorList* tofSensorList = gameStrategyContext->tofSensorList;
+            ServoList* servoList = gameStrategyContext->servoList;
+            if (tofSensorList != NULL) {
+                TofSensor* leftFrontSensor = getTofSensorByIndex(tofSensorList, FRONT_LEFT_SENSOR_INDEX);
+                unsigned int leftFrontDistance = leftFrontSensor->tofGetDistanceMM(leftFrontSensor);
+
+                TofSensor* middleFrontSensor = getTofSensorByIndex(tofSensorList, FRONT_MIDDLE_SENSOR_INDEX);
+                unsigned int middleFrontDistance = middleFrontSensor->tofGetDistanceMM(middleFrontSensor);
+
+                TofSensor* rightFrontSensor = getTofSensorByIndex(tofSensorList, FRONT_RIGHT_SENSOR_INDEX);
+                unsigned int rightFrontDistance = rightFrontSensor->tofGetDistanceMM(rightFrontSensor);
+                
+                if (leftFrontDistance > 0 && leftFrontDistance < 50 
+                   && middleFrontDistance > 0 && middleFrontDistance < 50
+                   && rightFrontDistance > 0 && rightFrontDistance < 50) {
+                        arm2019On(servoList, 0);
+                        delayMilliSecs(1000);
+                }
+                else {
+                    arm2019Off(servoList, 0);                
+                }
+            }
         }
         
         // Protection against the start before the match
