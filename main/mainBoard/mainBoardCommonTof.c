@@ -44,8 +44,7 @@
 #include "../../drivers/tof/tof.h"
 
 // 2019 Specific
-#include "../../robot/2019/fork/forkScan2019.h"
-#include "../../robot/2019/strategy/strategyConfig2019.h"
+#include "../../robot/2020/strategy/strategyConfig2020.h"
 #include "../../robot/strategy/gameStrategyContext.h"
 
 static TofSensorList tofSensorList;
@@ -53,7 +52,7 @@ static TofSensor tofSensorArray[MAIN_BOARD_TOF_SENSOR_LIST_LENGTH];
 
 void mainBoardCommonUpdateTofMaxDistanceMM(GameStrategyContext* gameStrategyContext, float marginDistanceMM, float maxDistanceMM) {
     RobotConfig* robotConfig = gameStrategyContext->robotConfig;
-    float distanceFactor = getSonarDistanceCheckFactor2019(robotConfig);
+    float distanceFactor = (float) getSonarDistanceCheckFactor(robotConfig);
     unsigned int tofIndex;
     for (tofIndex = 0; tofIndex < tofSensorList.size; tofIndex++) {
         TofSensor* tofSensor = getTofSensorByIndex(&tofSensorList, tofIndex);
@@ -82,10 +81,11 @@ void mainBoardCommonUpdateTofMaxDistanceMM(GameStrategyContext* gameStrategyCont
 TofSensorList* mainBoardCommonTofInitDrivers(RobotConfig* robotConfig, MultiplexerList* multiplexerList, IOExpanderList* ioExpanderList) {
     (&tofSensorList)->tofSensorArray = (TofSensor(*)[]) &tofSensorArray;
     
-    float distanceFactor = getSonarDistanceCheckFactor(robotConfig);
+    float distanceFactor = (float) getSonarDistanceCheckFactor(robotConfig);
     bool collisionEnabled = isSonarActivated(robotConfig);
 
     // TOF
+#pragma warning( disable : 6326)
     if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > BACK_RIGHT_SENSOR_INDEX) {
         TofSensor* frontRightSensor = &(tofSensorArray[FRONT_RIGHT_SENSOR_INDEX]);
         frontRightSensor->usageType = TOF_SENSOR_USAGE_TYPE_COLLISION;
@@ -273,12 +273,6 @@ TofSensorList* mainBoardCommonTofInitDrivers(RobotConfig* robotConfig, Multiplex
         backSideLeftSensor->targetAddress = VL530X_ADDRESS_13;
         backSideLeftSensor->multiplexer = getMultiplexerByIndex(multiplexerList, 0);
         backSideLeftSensor->multiplexerChannel = MULTIPLEXER_CHANNEL_5;
-    }
-    if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > FORK_2019_LEFT_TOF_INDEX &&
-        MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > FORK_2019_RIGHT_TOF_INDEX) {
-        TofSensor* leftForkScanSensor = &(tofSensorArray[FORK_2019_LEFT_TOF_INDEX]);
-        TofSensor* rightForkScanSensor = &(tofSensorArray[FORK_2019_RIGHT_TOF_INDEX]);
-        forkScan2019ConfigTofList(leftForkScanSensor, rightForkScanSensor, multiplexerList, ioExpanderList);
     }
     
     return &tofSensorList;

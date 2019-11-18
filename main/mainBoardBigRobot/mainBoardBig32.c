@@ -37,17 +37,9 @@
 // SMALL ROBOT PART
 #include "../../drivers/pwm/servo/servoPwmPca9685.h"
 
-#include "../../robot/2019/mainBoard2019.h"
-#include "../../robot/2019/distributor/distributorDeviceInterface2019.h"
-#include "../../robot/2019/distributor/distributorDevice2019.h"
-#include "../../robot/2019/elevator/elevatorDeviceInterface2019.h"
-#include "../../robot/2019/elevator/elevatorDevice2019.h"
-#include "../../robot/2019/fork/forkDeviceInterface2019.h"
-#include "../../robot/2019/fork/forkDevice2019.h"
-#include "../../robot/2019/goldenium/goldeniumDeviceInterface2019.h"
-#include "../../robot/2019/goldenium/goldeniumDevice2019.h"
+#include "../../robot/2020/mainBoard2020.h"
 
-#include "../../robot/2019/strategy/strategyConfig2019.h"
+#include "../../robot/2020/strategy/strategyConfig2020.h"
 
 // Robot Configuration
 static RobotConfig robotConfig;
@@ -141,7 +133,7 @@ void mainBoardMainPhase2(void) {
     // Initialise the Strategy first so that we could show the color & stragegy
     // index at a very early stage
     mainBoardCommonTofInitDrivers32(&robotConfig);
-    mainBoardCommonMatchMainInitDrivers(&robotConfig, &startupCheckList2019, isMatchStarted32, mainBoardWaitForInstruction, loopUnWaitForInstruction);    
+    mainBoardCommonMatchMainInitDrivers(&robotConfig, &startupCheckList2020, isMatchStarted32, mainBoardWaitForInstruction, loopUnWaitForInstruction);    
 }
 
 void mainBoardMainPhase3(void) {
@@ -157,13 +149,9 @@ int main(void) {
     mainBoardMainPhase2();
     mainBoardMainPhase3();
     
-    // Initialise the 2019 specific Devices
+    // Initialise the 2020 specific Devices
     TofSensorList* tofSensorList = mainBoardCommonTofGetTofSensorList();
     ServoList* servoList = mainBoardCommonGetServoList();
-	addLocalDevice(getElevator2019DeviceInterface(), getElevator2019DeviceDescriptor(servoList));
-    addLocalDevice(getFork2019DeviceInterface(), getFork2019DeviceDescriptor(servoList, tofSensorList));
-    addLocalDevice(getDistributor2019DeviceInterface(), getDistributor2019DeviceDescriptor(servoList, tofSensorList));
-    addLocalDevice(getGoldenium2019DeviceInterface(), getGoldenium2019DeviceDescriptor(servoList, tofSensorList));
 
     mainBoardCommonStrategyMainLoop();
 

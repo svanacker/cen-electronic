@@ -97,22 +97,22 @@ GameStrategyContext* initGameStrategyContext2019(RobotConfig* robotConfig, EndMa
     return &gameStrategyContext;
 }
 
-GameBoard* initGameBoard2019(GameStrategyContext* gameStrategyContext) {
+GameBoard* initGameBoard2019(GameStrategyContext* gameStrategyContextParam) {
     initFirstTimeBSplineCurve(&gameBoardCurve);
     initGameBoard(&gameBoard,
         &gameBoardCurve,
         &gameBoardElementList,
         (GameBoardElement(*)[]) &gameBoardElementListArray,
         MAIN_BOARD_2019_GAME_BOARD_PRINT_ELEMENT_ARRAY_LENGTH,
-        gameStrategyContext);
+        gameStrategyContextParam);
 
     addGameBoardElements2019(&gameBoardElementList);
 
     return &gameBoard;
 }
 
-void mainBoardCommonStrategyMainEndInit2019(GameStrategyContext* gameStrategyContext) {
-    ServoList* servoList = gameStrategyContext->servoList;    
+void mainBoardCommonStrategyMainEndInit2019(GameStrategyContext* gameStrategyContextParam) {
+    ServoList* servoList = gameStrategyContextParam->servoList;
     appendStringCRLF(getDebugOutputStreamLogger(), "updateServoProperties2019");
     updateServoProperties2019(servoList);
     

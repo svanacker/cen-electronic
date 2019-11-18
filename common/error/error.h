@@ -315,5 +315,6 @@ void clearLastError();
 // SPECIFIC 2019
 #define ELECTRON_LAUNCHER_2019_NULL                                       0x7100
 
+// SPECIFIC 2020
 
 #endif

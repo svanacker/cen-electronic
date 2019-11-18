@@ -281,7 +281,7 @@ void hd44780_writeChar(unsigned char c) {
     hd44780_setCursorRowAndColumn(currentRow, currentColumn);
 
     // does not handle CR
-    if (c == CR) {
+    if (c == CARRIAGE_RETURN) {
         return;
     }
     if (c == LF) {

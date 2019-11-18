@@ -232,24 +232,8 @@
 #include "../../main/mainBoard/mainBoardCommonTof.h"
 #include "../../main/mainBoard/mainBoardCommonTofPc.h"
 
-// 2019
-#include "../../robot/2019/mainBoard2019.h"
-#include "../../robot/2019/elevator/elevatorDeviceInterface2019.h"
-#include "../../robot/2019/elevator/elevatorDevice2019.h"
-
-#include "../../robot/2019/arm/armDeviceInterface2019.h"
-#include "../../robot/2019/arm/armDevice2019.h"
-#include "../../robot/2019/fork/forkDeviceInterface2019.h"
-#include "../../robot/2019/fork/forkDevice2019.h"
-#include "../../robot/2019/electron/electronLauncher2019.h"
-#include "../../robot/2019/electron/electronLauncherDevice2019.h"
-#include "../../robot/2019/electron/electronLauncherDeviceInterface2019.h"
-
-#include "../../robot/2019/distributor/distributorDeviceInterface2019.h"
-#include "../../robot/2019/distributor/distributorDevice2019.h"
-#include "../../robot/2019/goldenium/goldeniumDeviceInterface2019.h"
-#include "../../robot/2019/goldenium/goldeniumDevice2019.h"
-
+// 2020
+#include "../../robot/2020/mainBoard2020.h"
 
 #include "../../robot/tof/strategyTofSensorList.h"
 
@@ -362,9 +346,6 @@ static Multiplexer multiplexerArray[MAIN_BOARD_PC_MULTIPLEXER_LIST_LENGTH];
 static int multiplexerValue0;
 static int multiplexerValue1;
 
-// 2019
-static ElectronLauncher2019 launcher;
-
 static bool connectToRobotManager = false;
 
 void mainBoardDeviceHandleNotification(const Device* device, const unsigned char commandHeader, InputStream* inputStream) {
@@ -377,11 +358,11 @@ void mainBoardDeviceHandleNotification(const Device* device, const unsigned char
     }
 }
 
-bool mainBoardPcChecklist(StartMatch* startMatch) {
+bool mainBoardPcChecklist(StartMatch* startMatchParam) {
     return true;
 }
 
-bool mainBoardPcWaitForInstruction(StartMatch* startMatch) {
+bool mainBoardPcWaitForInstruction(StartMatch* startMatchParam) {
     while (handleNotificationFromDispatcherList(TRANSMIT_I2C, MOTOR_BOARD_I2C_ADDRESS)) {
         // loop for all notification
         // notification handler must avoid to directly information in notification callback
@@ -425,12 +406,14 @@ bool mainBoardPcWaitForInstruction(StartMatch* startMatch) {
 
     // Handle Tof
     if (gameStrategyContext != NULL) {
-        handleTofSensorList(gameStrategyContext, startMatch, gameStrategyContext->tofSensorList, gameBoard);
+        handleTofSensorList(gameStrategyContext, startMatchParam, gameStrategyContext->tofSensorList, gameBoard);
     }
     // Protection against the start before the match
-    if (startMatch->isMatchStartedFunction(startMatch)) {
-        if (gameStrategyContext->loopTargetAndActions) {
-            return nextTargetOrNextStep(gameStrategyContext);
+    if (startMatchParam->isMatchStartedFunction(startMatchParam)) {
+        if (gameStrategyContext != NULL) {
+            if (gameStrategyContext->loopTargetAndActions) {
+                return nextTargetOrNextStep(gameStrategyContext);
+            }
         }
     }
 
@@ -479,16 +462,7 @@ void initMainBoardLocalDevices(void) {
     addLocalDevice(getGameboardDeviceInterface(), getGameboardDeviceDescriptor(gameBoard));
     addLocalDevice(getFakeRobotDeviceInterface(), getFakeRobotDeviceDescriptor(getFakeRobotInstance()));
 
-    // 2019 specific
-//    addLocalDevice(getStrategy2018DeviceInterface(), getStrategy2018DeviceDescriptor(distributor));
-    addLocalDevice(getElevator2019DeviceInterface(), getElevator2019DeviceDescriptor(&servoList));
-    addLocalDevice(getArm2019DeviceInterface(), getArm2019DeviceDescriptor(&servoList));
-    addLocalDevice(getFork2019DeviceInterface(), getFork2019DeviceDescriptor(&servoList, mainBoardCommonTofGetTofSensorList()));
-    addLocalDevice(getDistributor2019DeviceInterface(), getDistributor2019DeviceDescriptor(&servoList, mainBoardCommonTofGetTofSensorList()));
-    addLocalDevice(getGoldenium2019DeviceInterface(), getGoldenium2019DeviceDescriptor(&servoList, mainBoardCommonTofGetTofSensorList()));
-
-    addLocalDevice(getElectronLauncher2019DeviceInterface(), getElectronLauncher2019DeviceDescriptor(&launcher));
-
+    // 2020 specific
 }
 
 void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
@@ -616,15 +590,15 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
     // initFakeRobot(300.0f, 1200.0f, 0.0f, 140.0f);
     initFakeRobot(900.0f, 1800.0f, 0.0f, 140.0f);
 
-    navigation = initNavigation2019();
-    gameStrategyContext = initGameStrategyContext2019(&robotConfig, &endMatch, mainBoardCommonTofGetTofSensorList(), &servoList);
+    navigation = initNavigation2020();
+    gameStrategyContext = initGameStrategyContext2020(&robotConfig, &endMatch, mainBoardCommonTofGetTofSensorList(), &servoList);
 
     // Init the Tof as soon with have the gameStrategyContext
     mainBoardCommonTofInitDriversPc(&robotConfig, &multiplexerList, &ioExpanderList, gameStrategyContext);
 
     // For PC, we simulate the move
     gameStrategyContext->simulateMove = true;
-    gameBoard = initGameBoard2019(gameStrategyContext);
+    gameBoard = initGameBoard2020(gameStrategyContext);
     initMotionSimulation(gameStrategyContext);
 
     // Init the drivers
@@ -643,10 +617,7 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
 
     // Start Match
     initEndMatch(&endMatch, &robotConfig, MATCH_DURATION);
-    initStartMatch(&startMatch, &robotConfig, &endMatch, startupCheckList2019, isMatchStartedPc, mainBoardPcWaitForInstruction, mainBoardPcWaitForInstruction);
-
-    // 2019 : Launcher
-    // initElectronLauncher2019(&launcher, &robotConfig, &servoList, &tofSensorList);
+    initStartMatch(&startMatch, &robotConfig, &endMatch, startupCheckList2020, isMatchStartedPc, mainBoardPcWaitForInstruction, mainBoardPcWaitForInstruction);
 
     initMainBoardLocalDevices();
 
@@ -662,10 +633,6 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
         addI2cRemoteDevice(getExtendedMotionDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
         addI2cRemoteDevice(getRobotKinematicsDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
         addI2cRemoteDevice(getMotionSimulationDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
-
-        // MECHANICAL BOARD 1
-        // addI2cRemoteDevice(getLauncher2018DeviceInterface(), MECHANICAL_BOARD_1_I2C_ADDRESS);
-
     }
     initDevices();
 
@@ -681,7 +648,7 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
 
     setDebugI2cEnabled(false);
 
-    mainBoardCommonStrategyMainEndInit2019(gameStrategyContext);
+    mainBoardCommonStrategyMainEndInit2020(gameStrategyContext);
 
     // Wait until the match start
     loopUntilStart(&startMatch);
@@ -690,9 +657,6 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
         mainBoardPcWaitForInstruction(&startMatch);
 
         updateIfNeededRobotPositionFromMotorBoardToMainBoard(gameStrategyContext);
-
-        // 2019 Actions for Experience
-        handleElectronLauncherActions(&launcher);
 
         // Show the end of the match
         showEndAndScoreIfNeeded(&endMatch, getAlwaysOutputStreamLogger());

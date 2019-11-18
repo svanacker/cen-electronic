@@ -11,8 +11,8 @@ enum RobotType {
     ROBOT_TYPE_BIG = 1,
     // The Small robot authorized for Eurobot
     ROBOT_TYPE_SMALL = 2,
-    // Experience 2019,
-    ROBOT_TYPE_EXPERIENCE_2019,
+    // LIGHTHOUSE 2019,
+    ROBOT_TYPE_LIGHTHOUSE_2020,
 };
 
 #endif

@@ -66,10 +66,10 @@
 #include "../../robot/tof/strategyTofSensorList.h"
 #include "../../robot/gameboard/gameboard.h"
 
-// 2019
-#include "../../robot/2019/mainBoard2019.h"
-#include "../../robot/2019/gameboard/gameBoardElement2019.h"
-#include "../../robot/2019/strategy/score2019.h"
+// 2019 : TODO : To Move
+#include "../../robot/2020/mainBoard2020.h"
+#include "../../robot/2020/gameboard/gameBoardElement2020.h"
+#include "../../robot/2020/strategy/score2020.h"
 
 #include "../../client/motion/simple/clientMotion.h"
 
@@ -174,14 +174,14 @@ void mainBoardDeviceHandleMotionDeviceNotification(const Device* device, const u
 }
 
 GameStrategyContext* mainBoardCommonStrategyMainInitDrivers(RobotConfig* robotConfig) {
-    // 2019
-    navigation = initNavigation2019();
+    // 2020
+    navigation = initNavigation2020();
     EndMatch* endMatch = mainBoardCommonMatchGetEndMatch();
     TofSensorList* tofSensorList = mainBoardCommonTofGetTofSensorList();
     ServoList* servoList = mainBoardCommonGetServoList();
 
-    gameStrategyContext = initGameStrategyContext2019(robotConfig, endMatch, tofSensorList, servoList);
-    gameBoard = initGameBoard2019(gameStrategyContext);
+    gameStrategyContext = initGameStrategyContext2020(robotConfig, endMatch, tofSensorList, servoList);
+    gameBoard = initGameBoard2020(gameStrategyContext);
     
     return gameStrategyContext;
 }
@@ -192,7 +192,7 @@ void mainBoardCommonStrategyMainEndInit(void) {
     updateRobotPositionFromMainBoardToMotorBoard(gameStrategyContext);
     
     appendStringLN(getDebugOutputStreamLogger(), "mainBoardCommonStrategyMainEndInit2019");
-    mainBoardCommonStrategyMainEndInit2019(gameStrategyContext);
+    mainBoardCommonStrategyMainEndInit2020(gameStrategyContext);
 }
 
 

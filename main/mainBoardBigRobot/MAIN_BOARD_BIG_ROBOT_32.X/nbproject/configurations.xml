@@ -538,77 +538,47 @@
         <itemPath>../../../robot/robotType.h</itemPath>
         <itemPath>../../../robot/robotTypeDebug.h</itemPath>
       </logicalFolder>
-      <logicalFolder name="f22" displayName="robot.2019" projectFiles="true">
-        <itemPath>../../../robot/2019/mainBoard2019.h</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f33" displayName="robot.2019.arm" projectFiles="true">
-        <itemPath>../../../robot/2019/arm/arm2019.h</itemPath>
-        <itemPath>../../../robot/2019/arm/armDevice2019.h</itemPath>
-        <itemPath>../../../robot/2019/arm/armDeviceInterface2019.h</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f34" displayName="robot.2019.bigRobot" projectFiles="true">
-        <itemPath>../../../robot/2019/bigRobot/bigRobotActions2019.h</itemPath>
-        <itemPath>../../../robot/2019/bigRobot/bigRobotLocation2019.h</itemPath>
-        <itemPath>../../../robot/2019/bigRobot/bigRobotPath2019.h</itemPath>
-        <itemPath>../../../robot/2019/bigRobot/bigRobotStrategy2019.h</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f41"
-                     displayName="robot.2019.commonRobot"
-                     projectFiles="true">
-        <itemPath>../../../robot/2019/commonRobot/commonRobotActions2019.h</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f35"
-                     displayName="robot.2019.distributor"
-                     projectFiles="true">
-        <itemPath>../../../robot/2019/distributor/distributor2019.h</itemPath>
-        <itemPath>../../../robot/2019/distributor/distributorDevice2019.h</itemPath>
-        <itemPath>../../../robot/2019/distributor/distributorDeviceInterface2019.h</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f36" displayName="robot.2019.elevator" projectFiles="true">
-        <itemPath>../../../robot/2019/elevator/elevator2019.h</itemPath>
-        <itemPath>../../../robot/2019/elevator/elevatorDevice2019.h</itemPath>
-        <itemPath>../../../robot/2019/elevator/elevatorDeviceInterface2019.h</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f37" displayName="robot.2019.fork" projectFiles="true">
-        <itemPath>../../../robot/2019/fork/fork2019.h</itemPath>
-        <itemPath>../../../robot/2019/fork/forkAccelerator2019.h</itemPath>
-        <itemPath>../../../robot/2019/fork/forkDevice2019.h</itemPath>
-        <itemPath>../../../robot/2019/fork/forkDeviceInterface2019.h</itemPath>
-        <itemPath>../../../robot/2019/fork/forkScan2019.h</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f38"
-                     displayName="robot.2019.gameboard"
-                     projectFiles="true">
-        <itemPath>../../../robot/2019/gameboard/gameBoardElement2019.h</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f44"
-                     displayName="robot.2019.goldenium"
-                     projectFiles="true">
-        <itemPath>../../../robot/2019/goldenium/goldenium2019.h</itemPath>
-        <itemPath>../../../robot/2019/goldenium/goldeniumDevice2019.h</itemPath>
-        <itemPath>../../../robot/2019/goldenium/goldeniumDeviceInterface2019.h</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f39"
-                     displayName="robot.2019.navigation"
-                     projectFiles="true">
-        <itemPath>../../../robot/2019/navigation/angle2019.h</itemPath>
-        <itemPath>../../../robot/2019/navigation/location2019.h</itemPath>
-        <itemPath>../../../robot/2019/navigation/path2019.h</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f8"
-                     displayName="robot.2019.smallRobot"
-                     projectFiles="true">
-        <itemPath>../../../robot/2019/smallRobot/smallRobotActions2019.h</itemPath>
-        <itemPath>../../../robot/2019/smallRobot/smallRobotLocation2019.h</itemPath>
-        <itemPath>../../../robot/2019/smallRobot/smallRobotPath2019.h</itemPath>
-        <itemPath>../../../robot/2019/smallRobot/smallRobotStrategy2019.h</itemPath>
-      </logicalFolder>
       <logicalFolder name="f40" displayName="robot.2019.strategy" projectFiles="true">
         <itemPath>../../../robot/2019/strategy/score2019.h</itemPath>
         <itemPath>../../../robot/2019/strategy/strategy2019.h</itemPath>
         <itemPath>../../../robot/2019/strategy/strategy2019Utils.h</itemPath>
         <itemPath>../../../robot/2019/strategy/strategyConfig2019.h</itemPath>
         <itemPath>../../../robot/2019/strategy/teamColor2019.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f22" displayName="robot.2020" projectFiles="true">
+        <itemPath>../../../robot/2020/mainBoard2020.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f34" displayName="robot.2020.bigRobot" projectFiles="true">
+        <itemPath>../../../robot/2020/bigRobot/bigRobotActions2020.h</itemPath>
+        <itemPath>../../../robot/2020/bigRobot/bigRobotLocation2020.h</itemPath>
+        <itemPath>../../../robot/2020/bigRobot/bigRobotPath2020.h</itemPath>
+        <itemPath>../../../robot/2020/bigRobot/bigRobotStrategy2020.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f41"
+                     displayName="robot.2020.commonRobot"
+                     projectFiles="true">
+        <itemPath>../../../robot/2020/commonRobot/commonRobotActions2020.h</itemPath>
+        <itemPath>../../../robot/2020/commonRobot/commonRobotLocations2020.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f38"
+                     displayName="robot.2020.gameboard"
+                     projectFiles="true">
+        <itemPath>../../../robot/2020/gameboard/gameBoardElement2020.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f39"
+                     displayName="robot.2020.navigation"
+                     projectFiles="true">
+        <itemPath>../../../robot/2020/navigation/angle2020.h</itemPath>
+        <itemPath>../../../robot/2020/navigation/location2020.h</itemPath>
+        <itemPath>../../../robot/2020/navigation/path2020.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f8"
+                     displayName="robot.2020.smallRobot"
+                     projectFiles="true">
+        <itemPath>../../../robot/2020/smallRobot/smallRobotActions2020.h</itemPath>
+        <itemPath>../../../robot/2020/smallRobot/smallRobotLocation2020.h</itemPath>
+        <itemPath>../../../robot/2020/smallRobot/smallRobotPath2020.h</itemPath>
+        <itemPath>../../../robot/2020/smallRobot/smallRobotStrategy2020.h</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.config"
                      displayName="robot.config"
@@ -1240,68 +1210,37 @@
         <itemPath>../../../robot/robot.c</itemPath>
         <itemPath>../../../robot/robotTypeDebug.c</itemPath>
       </logicalFolder>
-      <logicalFolder name="f22" displayName="robot.2019" projectFiles="true">
-        <itemPath>../../../robot/2019/mainBoard2019.c</itemPath>
+      <logicalFolder name="f22" displayName="robot.2020" projectFiles="true">
+        <itemPath>../../../robot/2020/mainBoard2020.c</itemPath>
       </logicalFolder>
-      <logicalFolder name="f9" displayName="robot.2019.arm" projectFiles="true">
-        <itemPath>../../../robot/2019/arm/arm2019.c</itemPath>
-        <itemPath>../../../robot/2019/arm/armDevice2019.c</itemPath>
-        <itemPath>../../../robot/2019/arm/armDeviceInterface2019.c</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f31" displayName="robot.2019.bigRobot" projectFiles="true">
-        <itemPath>../../../robot/2019/bigRobot/bigRobotActions2019.c</itemPath>
-        <itemPath>../../../robot/2019/bigRobot/bigRobotStrategy2019.c</itemPath>
+      <logicalFolder name="f31" displayName="robot.2020.bigRobot" projectFiles="true">
+        <itemPath>../../../robot/2020/bigRobot/bigRobotActions2020.c</itemPath>
+        <itemPath>../../../robot/2020/bigRobot/bigRobotStrategy2020.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f39"
-                     displayName="robot.2019.commonRobot"
+                     displayName="robot.2020.commonRobot"
                      projectFiles="true">
-        <itemPath>../../../robot/2019/commonRobot/commonRobotActions2019.c</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f32"
-                     displayName="robot.2019.distributor"
-                     projectFiles="true">
-        <itemPath>../../../robot/2019/distributor/distributor2019.c</itemPath>
-        <itemPath>../../../robot/2019/distributor/distributorDevice2019.c</itemPath>
-        <itemPath>../../../robot/2019/distributor/distributorDeviceInterface2019.c</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f33" displayName="robot.2019.elevator" projectFiles="true">
-        <itemPath>../../../robot/2019/elevator/elevatorDevice2019.c</itemPath>
-        <itemPath>../../../robot/2019/elevator/elevator2019.c</itemPath>
-        <itemPath>../../../robot/2019/elevator/elevatorDeviceInterface2019.c</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f34" displayName="robot.2019.fork" projectFiles="true">
-        <itemPath>../../../robot/2019/fork/fork2019.c</itemPath>
-        <itemPath>../../../robot/2019/fork/forkAccelerator2019.c</itemPath>
-        <itemPath>../../../robot/2019/fork/forkDevice2019.c</itemPath>
-        <itemPath>../../../robot/2019/fork/forkDeviceInterface2019.c</itemPath>
-        <itemPath>../../../robot/2019/fork/forkScan2019.c</itemPath>
+        <itemPath>../../../robot/2020/commonRobot/commonRobotActions2020.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f35"
-                     displayName="robot.2019.gameboard"
+                     displayName="robot.2020.gameboard"
                      projectFiles="true">
-        <itemPath>../../../robot/2019/gameboard/gameBoardElement2019.c</itemPath>
+        <itemPath>../../../robot/2020/gameboard/gameBoardElement2020.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f43"
-                     displayName="robot.2019.goldenium"
-                     projectFiles="true">
-        <itemPath>../../../robot/2019/goldenium/goldenium2019.c</itemPath>
-        <itemPath>../../../robot/2019/goldenium/goldeniumDevice2019.c</itemPath>
-        <itemPath>../../../robot/2019/goldenium/goldeniumDeviceInterface2019.c</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f36"
-                     displayName="robot.2019.navigation"
+                     displayName="robot.2020.goldenium"
                      projectFiles="true">
       </logicalFolder>
       <logicalFolder name="f38"
-                     displayName="robot.2019.smallRobot"
+                     displayName="robot.2020.smallRobot"
                      projectFiles="true">
-        <itemPath>../../../robot/2019/smallRobot/smallRobotActions2019.c</itemPath>
-        <itemPath>../../../robot/2019/smallRobot/smallRobotStrategy2019.c</itemPath>
+        <itemPath>../../../robot/2020/smallRobot/smallRobotActions2020.c</itemPath>
+        <itemPath>../../../robot/2020/smallRobot/smallRobotStrategy2020.c</itemPath>
       </logicalFolder>
-      <logicalFolder name="f37" displayName="robot.2019.strategy" projectFiles="true">
-        <itemPath>../../../robot/2019/strategy/strategy2019.c</itemPath>
-        <itemPath>../../../robot/2019/strategy/strategy2019Utils.c</itemPath>
-        <itemPath>../../../robot/2019/strategy/strategyConfig2019.c</itemPath>
+      <logicalFolder name="f37" displayName="robot.2020.strategy" projectFiles="true">
+        <itemPath>../../../robot/2020/strategy/strategy2020.c</itemPath>
+        <itemPath>../../../robot/2020/strategy/strategy2020Utils.c</itemPath>
+        <itemPath>../../../robot/2020/strategy/strategyConfig2020.c</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.config"
                      displayName="robot.config"

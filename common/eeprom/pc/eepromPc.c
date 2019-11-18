@@ -117,8 +117,8 @@ void eepromPcDump(Eeprom* eeprom_) {
     }
 }
 
-void initEepromPc(Eeprom* eepromPc, char* fileName) {
-    initEeprom(eepromPc,
+void initEepromPc(Eeprom* eepromPcParam, char* fileName) {
+    initEeprom(eepromPcParam,
         EEPROM_TYPE_FILE,
         EEPROM_PC_MAX_INDEX,
         eepromPcWriteChar,
@@ -128,5 +128,5 @@ void initEepromPc(Eeprom* eepromPc, char* fileName) {
         eepromPcReload,
         eepromPcDump,
         fileName);
-    eepromPcReload(eepromPc);
+    eepromPcReload(eepromPcParam);
 }

@@ -12,7 +12,7 @@ void mainBoardCommonTofAddDevices32(void);
 
 /**
  * Main Part of MAIN_BOARD for Tof initialization (Driver).
- * Useful when we just want to initialize 2 tof like for Experience 2019 Main
+ * Useful when we just want to initialize 2 tof like for Specific Year Main
  * Program.
  */
 void mainBoardCommonTofInitDrivers32(RobotConfig* robotConfig);
