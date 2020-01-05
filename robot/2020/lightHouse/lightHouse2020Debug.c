@@ -1,0 +1,142 @@
+#include "lightHouse2020Debug.h"
+
+#include <stdlib.h>
+#include <stdbool.h>
+
+#include "lightHouse2020.h"
+
+#include "../../../common/error/error.h"
+
+#include "../../../common/pwm/servo/servoList.h"
+#include "../../../common/io/outputStream.h"
+#include "../../../common/io/printWriter.h"
+#include "../../../common/io/printTableWriter.h"
+
+#include "../../../common/log/logger.h"
+
+#define LIGHT_HOUSE_2020_KEY_COLUMN_LENGTH     40
+#define LIGHT_HOUSE_2020_VALUE_COLUMN_LENGTH   25
+#define LIGHT_HOUSE_2020_UNIT_COLUMN_LENGTH    10
+#define LIGHT_HOUSE_2020_LAST_COLUMN            0
+
+unsigned int printLightHouseState(OutputStream* outputStream, enum LightHouse2020State state) {
+    if (state == LIGHT_HOUSE_STATE_UNKNOWN) {
+        return appendString(outputStream, "UNKNOWN");
+    }
+    else if (state == LIGHT_HOUSE_STATE_INITIALIZED) {
+        return appendString(outputStream, "INITIALIZED");
+    }
+    else if (state == LIGHT_HOUSE_STATE_SEARCH_ROBOT_PLACED) {
+        return appendString(outputStream, "SEARCH ROBOT PLACED");
+    }
+    else if (state == LIGHT_HOUSE_STATE_ROBOT_PLACED) {
+        return appendString(outputStream, "ROBOT PLACED");
+    }
+    else if (state == LIGHT_HOUSE_STATE_SEARCH_ROBOT_NEAR) {
+        return appendString(outputStream, "SEARCH ROBOT NEAR");
+    }
+    else if (state == LIGHT_HOUSE_STATE_ROBOT_NEAR) {
+        return appendString(outputStream, "ROBOT NEAR");
+    }
+    else if (state == LIGHT_HOUSE_STATE_TO_LAUNCH) {
+        return appendString(outputStream, "TO LAUNCH");
+    }
+    else if (state == LIGHT_HOUSE_STATE_LAUNCHED) {
+        return appendString(outputStream, "LAUNCHED");
+    }
+    else if (state == LIGHT_HOUSE_STATE_SHOW_REMAINING_TIME) {
+        return appendString(outputStream, "SHOW REMAINING TIME");
+    }
+    else {
+        return appendString(outputStream, "???");
+    }
+}
+
+unsigned int addLightHouseStateTypeTableData(OutputStream* outputStream, enum LightHouse2020State state, int columnSize) {
+    appendTableSeparator(outputStream);
+    appendSpace(outputStream);
+    unsigned int length = printLightHouseState(outputStream, state);
+    return length + appendSpaces(outputStream, columnSize - length) + 2;
+}
+
+
+void printLightHouse2020TableHeader(OutputStream* outputStream) {
+    println(outputStream);
+
+    // Table Header
+    appendTableHeaderSeparatorLine(outputStream);
+    appendStringHeader(outputStream, "Key", LIGHT_HOUSE_2020_KEY_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Value", LIGHT_HOUSE_2020_VALUE_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Unit", LIGHT_HOUSE_2020_UNIT_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, LIGHT_HOUSE_2020_LAST_COLUMN);
+    appendTableHeaderSeparatorLine(outputStream);
+}
+
+void lightHouse2020Debug(LightHouse2020* lightHouse, OutputStream* outputStream) {
+    printLightHouse2020TableHeader(outputStream);
+
+    appendStringTableData(outputStream, "State", LIGHT_HOUSE_2020_KEY_COLUMN_LENGTH);
+    addLightHouseStateTypeTableData(outputStream, lightHouse->state, LIGHT_HOUSE_2020_VALUE_COLUMN_LENGTH);
+    appendStringTableData(outputStream, "-", LIGHT_HOUSE_2020_UNIT_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, LIGHT_HOUSE_2020_LAST_COLUMN);
+
+    appendTableHeaderSeparatorLine(outputStream);
+
+    // Tof Index
+    appendStringTableData(outputStream, "Tof Index", LIGHT_HOUSE_2020_KEY_COLUMN_LENGTH);
+    appendDecTableData(outputStream, lightHouse->tofIndex, LIGHT_HOUSE_2020_VALUE_COLUMN_LENGTH);
+    appendStringTableData(outputStream, "-", LIGHT_HOUSE_2020_UNIT_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, LIGHT_HOUSE_2020_LAST_COLUMN);
+
+    appendStringTableData(outputStream, "Current Dist.", LIGHT_HOUSE_2020_KEY_COLUMN_LENGTH);
+    TofSensor* tofSensor = lightHouse->tofSensor;
+    if (tofSensor != NULL) {
+        unsigned int distanceMM = tofSensor->tofGetDistanceMM(tofSensor);
+        appendDecTableData(outputStream, distanceMM, LIGHT_HOUSE_2020_VALUE_COLUMN_LENGTH);
+    }
+    else {
+        appendStringTableData(outputStream, "TOF NULL", LIGHT_HOUSE_2020_VALUE_COLUMN_LENGTH);
+    }
+    appendStringTableData(outputStream, "mm", LIGHT_HOUSE_2020_UNIT_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, LIGHT_HOUSE_2020_LAST_COLUMN);
+
+    appendStringTableData(outputStream, "Threshold - Min", LIGHT_HOUSE_2020_KEY_COLUMN_LENGTH);
+    appendDecTableData(outputStream, LIGHT_HOUSE_2020_ROBOT_PLACED_DISTANCE_MIN, LIGHT_HOUSE_2020_VALUE_COLUMN_LENGTH);
+    appendStringTableData(outputStream, "mm", LIGHT_HOUSE_2020_UNIT_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, LIGHT_HOUSE_2020_LAST_COLUMN);
+
+    appendStringTableData(outputStream, "Threshold - Max", LIGHT_HOUSE_2020_KEY_COLUMN_LENGTH);
+    appendDecTableData(outputStream, LIGHT_HOUSE_2020_ROBOT_PLACED_DISTANCE_MAX, LIGHT_HOUSE_2020_VALUE_COLUMN_LENGTH);
+    appendStringTableData(outputStream, "mm", LIGHT_HOUSE_2020_UNIT_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, LIGHT_HOUSE_2020_LAST_COLUMN);
+
+    appendTableHeaderSeparatorLine(outputStream);
+
+    appendStringTableData(outputStream, "Robot Placed - Analysis Count", LIGHT_HOUSE_2020_KEY_COLUMN_LENGTH);
+    appendDecTableData(outputStream, lightHouse->robotPlacedAnalysisCount, LIGHT_HOUSE_2020_VALUE_COLUMN_LENGTH);
+    appendStringTableData(outputStream, "-", LIGHT_HOUSE_2020_UNIT_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, LIGHT_HOUSE_2020_LAST_COLUMN);
+
+
+    appendTableHeaderSeparatorLine(outputStream);
+
+    // Robot Moved
+
+    appendStringTableData(outputStream, "Robot Near - Analysis Count", LIGHT_HOUSE_2020_KEY_COLUMN_LENGTH);
+    appendDecTableData(outputStream, lightHouse->robotNearAnalysisCount, LIGHT_HOUSE_2020_VALUE_COLUMN_LENGTH);
+    appendStringTableData(outputStream, "-", LIGHT_HOUSE_2020_UNIT_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, LIGHT_HOUSE_2020_LAST_COLUMN);
+
+
+    appendStringTableData(outputStream, "RobotNearDetectionCount - Threshold", LIGHT_HOUSE_2020_KEY_COLUMN_LENGTH);
+    appendDecTableData(outputStream, LIGHT_HOUSE_2020_THRESHOLD_COUNT, LIGHT_HOUSE_2020_VALUE_COLUMN_LENGTH);
+    appendStringTableData(outputStream, "-", LIGHT_HOUSE_2020_UNIT_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, LIGHT_HOUSE_2020_LAST_COLUMN);
+    
+    appendStringTableData(outputStream, "RobotNearDetectionCount - Measured", LIGHT_HOUSE_2020_KEY_COLUMN_LENGTH);
+    appendDecTableData(outputStream, lightHouse->robotNearDetectionCount, LIGHT_HOUSE_2020_VALUE_COLUMN_LENGTH);
+    appendStringTableData(outputStream, "-", LIGHT_HOUSE_2020_UNIT_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, LIGHT_HOUSE_2020_LAST_COLUMN);
+
+    appendTableHeaderSeparatorLine(outputStream);
+}

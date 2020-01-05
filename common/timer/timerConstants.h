@@ -42,6 +42,10 @@
 
 #define ELECTRON_LAUNCHER_2019_TIMER_CODE              99
 
+// 2020 Specific
+
+#define LIGHT_HOUSE_2020_TIMER_CODE                   100
+
 // DEMO
 #define DEMO_TIMER_CODE                               124
 

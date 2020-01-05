@@ -23,19 +23,19 @@
  */
 void printDeviceDebugHeader(OutputStream* outputStream) {
 	appendTableHeaderSeparatorLine(outputStream);
-	appendStringHeader(outputStream, "deviceName", DEVICE_DEBUG_NAME_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "device Name", DEVICE_DEBUG_NAME_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "cmd", DEVICE_DEBUG_HEADER_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "error Code", DEVICE_DEBUG_ERROR_CODE_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "transmit", DEVICE_DEBUG_TRANSMIT_MODE_COLUMN_LENGTH);
 	appendStringHeader(outputStream, "address", DEVICE_DEBUG_ADDRESS_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "addString", DEVICE_DEBUG_ADDRESS_STRING_COLUMN_LENGTH);
+	appendStringHeader(outputStream, "address String", DEVICE_DEBUG_ADDRESS_STRING_COLUMN_LENGTH);
 	appendEndOfTableColumn(outputStream, DEVICE_DEBUG_LAST_COLUMN_LENGTH);
 	appendTableHeaderSeparatorLine(outputStream);
 }
 
 void printDeviceList(OutputStream* outputStream) {
     int size = getDeviceCount();
-    appendStringAndDec(outputStream, ", deviceCount=", size);
+    appendStringAndDec(outputStream, ", device Count=", size);
     int i;
 	println(outputStream);
 	printDeviceDebugHeader(outputStream);

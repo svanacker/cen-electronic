@@ -316,5 +316,6 @@ void clearLastError();
 #define ELECTRON_LAUNCHER_2019_NULL                                       0x7100
 
 // SPECIFIC 2020
+#define LIGHT_HOUSE_2020_NULL                                             0x7101
 
 #endif

@@ -164,6 +164,6 @@
 
 // 2020
 
-
+#define LIGHT_HOUSE_2020_DEVICE_HEADER             '.'
 
 #endif
