@@ -14,7 +14,7 @@ void loadRobotKinematicsParameters(RobotKinematics* robotKinematics, Eeprom* eep
     }
     enum RobotType robotType = robotKinematics->robotType;
     if (loadDefaultValues) {
-        if (robotType == ROBOT_TYPE_BIG) {
+        if (robotType == ROBOT_TYPE_BIG || robotType == ROBOT_TYPE_UNKNOWN) {
             // Coder Value
             robotKinematics->coderWheelAverageDiameterMM = BIG_ROBOT_KINEMATICS_CODER_WHEEL_AVERAGE_DIAMETER_MM_DEFAULT_VALUE;
             robotKinematics->coderWheelAverageDeltaDiameterMM = BIG_ROBOT_KINEMATICS_CODER_WHEEL_AVERAGE_DELTA_DIAMETER_MM_DEFAULT_VALUE;

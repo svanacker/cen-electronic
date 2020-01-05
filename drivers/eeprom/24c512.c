@@ -120,7 +120,7 @@ void _writeEeprom24C512Char(Eeprom* eeprom_, unsigned long index, unsigned char 
     WaitI2cBusConnection(i2cBusConnection);
     portableMasterStopI2C(i2cBusConnection);
     WaitI2cBusConnection(i2cBusConnection);
-    delayMilliSecs(3); // in Datasheet, write needs 5 milliSeconds, but it seems that 1ms is enough
+    delayMilliSecs(10); // in Datasheet, write needs 5 milliSeconds, but it seems that 1ms is enough
 }
 
 /**

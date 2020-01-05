@@ -397,11 +397,11 @@ int runMotorBoard() {
     i2cMasterInitialize(masterI2cBus);
     
     // EEPROM : If Eeprom is installed
-    eepromI2cBusConnection = addI2cBusConnection(masterI2cBus, ST24C512_ADDRESS_0, true);
-    init24C512Eeprom(&eeprom_, eepromI2cBusConnection);
+    //eepromI2cBusConnection = addI2cBusConnection(masterI2cBus, ST24C512_ADDRESS_0, true);
+    // init24C512Eeprom(&eeprom_, eepromI2cBusConnection);
     
     // EEPROM : If we use Software Eeprom
-    // initEepromMemory(&eeprom_, &memoryEepromArray, MOTOR_BOARD_MEMORY_EEPROM_LENGTH);
+    initEepromMemory(&eeprom_, &memoryEepromArray, MOTOR_BOARD_MEMORY_EEPROM_LENGTH);
     
     // Clock
     // -> Clock

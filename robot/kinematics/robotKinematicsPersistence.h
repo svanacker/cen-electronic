@@ -28,37 +28,37 @@
 // -> CODER WHEEL
 
 /** Average coder wheel diameter (mm). */
-#define BIG_ROBOT_KINEMATICS_CODER_WHEEL_AVERAGE_DIAMETER_MM_DEFAULT_VALUE                       29.49f
+#define BIG_ROBOT_KINEMATICS_CODER_WHEEL_AVERAGE_DIAMETER_MM_DEFAULT_VALUE                       35.80f
 #define SMALL_ROBOT_KINEMATICS_CODER_WHEEL_AVERAGE_DIAMETER_MM_DEFAULT_VALUE                     29.37f
 
 // To compensate difference between Coder Wheels Diameter (mm)
-#define BIG_ROBOT_KINEMATICS_CODER_WHEEL_AVERAGE_DELTA_DIAMETER_MM_DEFAULT_VALUE                 -.050f 
+#define BIG_ROBOT_KINEMATICS_CODER_WHEEL_AVERAGE_DELTA_DIAMETER_MM_DEFAULT_VALUE                 -.000f 
 #define SMALL_ROBOT_KINEMATICS_CODER_WHEEL_AVERAGE_DELTA_DIAMETER_MM_DEFAULT_VALUE               0.000f  
 
 /** Default wheels distance (mm)). */
-#define BIG_ROBOT_KINEMATICS_CODER_WHEEL_DISTANCE_BETWEEN_WHEELS_MM_DEFAULT_VALUE                282.625f
+#define BIG_ROBOT_KINEMATICS_CODER_WHEEL_DISTANCE_BETWEEN_WHEELS_MM_DEFAULT_VALUE                114.000f
 #define SMALL_ROBOT_KINEMATICS_CODER_WHEEL_DISTANCE_BETWEEN_WHEELS_MM_DEFAULT_VALUE              267.575f
 
 
 // FOR 7500 x 4 (quadratic) = 30 000
-#define BIG_ROBOT_KINEMATICS_CODER_WHEEL_PULSE_BY_ROTATION_DEFAULT_VALUE                         20000.0f
+#define BIG_ROBOT_KINEMATICS_CODER_WHEEL_PULSE_BY_ROTATION_DEFAULT_VALUE                         4096.0f
 #define SMALL_ROBOT_KINEMATICS_CODER_WHEEL_PULSE_BY_ROTATION_DEFAULT_VALUE                       20000.0f
 
 // -> MOTOR WHEEL
 
 // The average diameter of the motor wheel
-#define BIG_ROBOT_KINEMATICS_MOTOR_WHEEL_AVERAGE_DIAMETER_MM_DEFAULT_VALUE                         62.0f
+#define BIG_ROBOT_KINEMATICS_MOTOR_WHEEL_AVERAGE_DIAMETER_MM_DEFAULT_VALUE                         70.51f
 #define SMALL_ROBOT_KINEMATICS_MOTOR_WHEEL_AVERAGE_DIAMETER_MM_DEFAULT_VALUE                       62.0f
 
 
 // The average distance between motor wheel. It could be needed when we do some rotation, between the must apply 
 // a factor between the distance of motor and the distance of coder wheel. This is not the case when we go forward
-#define BIG_ROBOT_KINEMATICS_MOTOR_WHEEL_DISTANCE_BETWEEN_WHEELS_MM_DEFAULT_VALUE                240.00f
+#define BIG_ROBOT_KINEMATICS_MOTOR_WHEEL_DISTANCE_BETWEEN_WHEELS_MM_DEFAULT_VALUE                258.00f
 #define SMALL_ROBOT_KINEMATICS_MOTOR_WHEEL_DISTANCE_BETWEEN_WHEELS_MM_DEFAULT_VALUE              185.00f
 
 // How many rotation the motor do by second at full speed (full PWM) with nominal input tension
-#define BIG_ROBOT_KINEMATICS_MOTOR_WHEEL_ROTATION_BY_SECONDS_AT_FULL_SPEED_DEFAULT_VALUE           7.0f
-#define SMALL_ROBOT_KINEMATICS_MOTOR_WHEEL_ROTATION_BY_SECONDS_AT_FULL_SPEED_DEFAULT_VALUE         7.0f
+#define BIG_ROBOT_KINEMATICS_MOTOR_WHEEL_ROTATION_BY_SECONDS_AT_FULL_SPEED_DEFAULT_VALUE           3.0f
+#define SMALL_ROBOT_KINEMATICS_MOTOR_WHEEL_ROTATION_BY_SECONDS_AT_FULL_SPEED_DEFAULT_VALUE         3.0f
 
 // The max torque at nominal input tension : default value for 2642W012CXR (Faulhaber)
 #define BIG_ROBOT_KINEMATICS_MOTOR_MAX_TORQUE_MILLI_NEWTON_DEFAULT_VALUE                          25.0f
