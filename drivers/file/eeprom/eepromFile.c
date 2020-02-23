@@ -10,8 +10,6 @@
 #include "../../../common/log/logger.h"
 #include "../../../common/log/logLevel.h"
 
-#include "../../eeprom/24c512.h"
-
 #include "../../../external/fatfs/ff.h"
 #include "../../../external/fatfs/diskio.h"
 

@@ -14,8 +14,9 @@
 #define LIGHT_HOUSE_2020_SERVO_INDEX                             0
 
 // SERVO VALUE
-#define LIGHT_HOUSE_2020_SERVO_LEFT_VALUE                        650
+#define LIGHT_HOUSE_2020_SERVO_LEFT_VALUE                        500
 #define LIGHT_HOUSE_2020_SERVO_RIGHT_VALUE                       2500
+#define LIGHT_HOUSE_2020_SERVO_SPEED                             0
 
 // DISTANCE
 #define LIGHT_HOUSE_2020_ROBOT_PLACED_DISTANCE_MIN                        450

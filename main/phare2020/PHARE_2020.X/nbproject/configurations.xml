@@ -226,6 +226,10 @@
         <itemPath>../../../device/i2c/multiplexer/multiplexerDevice.h</itemPath>
         <itemPath>../../../device/i2c/multiplexer/multiplexerDeviceInterface.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f16" displayName="device.io" projectFiles="true">
+        <itemPath>../../../device/io/ioDevice.h</itemPath>
+        <itemPath>../../../device/io/ioDeviceInterface.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="f3" displayName="device.ioExpander" projectFiles="true">
         <itemPath>../../../device/ioExpander/ioExpanderDevice.h</itemPath>
         <itemPath>../../../device/ioExpander/ioExpanderDeviceInterface.h</itemPath>
@@ -233,6 +237,10 @@
       <logicalFolder name="device.lcd" displayName="device.lcd" projectFiles="true">
         <itemPath>../../../device/lcd/lcdDevice.h</itemPath>
         <itemPath>../../../device/lcd/lcdDeviceInterface.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f14" displayName="device.led" projectFiles="true">
+        <itemPath>../../../device/led/ledDevice.h</itemPath>
+        <itemPath>../../../device/led/ledDeviceInterface.h</itemPath>
       </logicalFolder>
       <logicalFolder name="device.log" displayName="device.log" projectFiles="true">
         <itemPath>../../../device/log/logDevice.h</itemPath>
@@ -339,6 +347,9 @@
       <logicalFolder name="drivers.lcd" displayName="drivers.lcd" projectFiles="true">
         <itemPath>../../../drivers/lcd/lcd.h</itemPath>
         <itemPath>../../../drivers/lcd/lcdHd44780.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f15" displayName="drivers.led" projectFiles="true">
+        <itemPath>../../../drivers/led/led.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f23" displayName="drivers.pwm.servo" projectFiles="true">
         <itemPath>../../../drivers/pwm/servo/pca9685.h</itemPath>
@@ -704,6 +715,10 @@
         <itemPath>../../../device/i2c/multiplexer/multiplexerDevice.c</itemPath>
         <itemPath>../../../device/i2c/multiplexer/multiplexerDeviceInterface.c</itemPath>
       </logicalFolder>
+      <logicalFolder name="f17" displayName="device.io" projectFiles="true">
+        <itemPath>../../../device/io/ioDevice.c</itemPath>
+        <itemPath>../../../device/io/ioDeviceInterface.c</itemPath>
+      </logicalFolder>
       <logicalFolder name="f4" displayName="device.ioExpander" projectFiles="true">
         <itemPath>../../../device/ioExpander/ioExpanderDevice.c</itemPath>
         <itemPath>../../../device/ioExpander/ioExpanderDeviceInterface.c</itemPath>
@@ -711,6 +726,10 @@
       <logicalFolder name="device.lcd" displayName="device.lcd" projectFiles="true">
         <itemPath>../../../device/lcd/lcdDevice.c</itemPath>
         <itemPath>../../../device/lcd/lcdDeviceInterface.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f15" displayName="device.led" projectFiles="true">
+        <itemPath>../../../device/led/ledDevice.c</itemPath>
+        <itemPath>../../../device/led/ledDeviceInterface.c</itemPath>
       </logicalFolder>
       <logicalFolder name="device.log" displayName="device.log" projectFiles="true">
         <itemPath>../../../device/log/logDevice.c</itemPath>
@@ -813,6 +832,9 @@
         <itemPath>../../../drivers/lcd/lcd.c</itemPath>
         <itemPath>../../../drivers/lcd/lcdHd44780.c</itemPath>
         <itemPath>../../../drivers/lcd/lcdProvider_Hd44780.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f16" displayName="drivers.led" projectFiles="true">
+        <itemPath>../../../drivers/led/led.c</itemPath>
       </logicalFolder>
       <logicalFolder name="drivers.sensor.temperature"
                      displayName="drivers.sensor.temperature"

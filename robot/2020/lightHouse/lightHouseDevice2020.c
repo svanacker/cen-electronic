@@ -68,7 +68,7 @@ void deviceLightHouse2020HandleRawData(unsigned char commandHeader, InputStream*
     // SIMULATE ROBOT NEAR
     else if (commandHeader == COMMAND_LIGHT_HOUSE_2020_SIMULATE_ROBOT_NEAR) {
         ackCommand(outputStream, LIGHT_HOUSE_2020_DEVICE_HEADER, COMMAND_LIGHT_HOUSE_2020_SIMULATE_ROBOT_NEAR);
-        lightHouse2020SimulateRobotPlacedAndNear(lightHouse);
+        // lightHouse2020SimulateRobotPlacedAndNear(lightHouse);
     }
 }
 

@@ -216,6 +216,25 @@ void lightHouse2020CallbackFunc(Timer* timer) {
     }
     lightHouse->doNextAction = true;
     lightHouse->timerCount++;
+    
+    ServoList* servoList = lightHouse->servoList;
+    Servo* servo = getServo(servoList, LIGHT_HOUSE_2020_SERVO_INDEX);
+
+    // To initialize rotation
+    unsigned int servoTargetPosition = pwmServoReadTargetPosition(servo);
+    if (servoTargetPosition != LIGHT_HOUSE_2020_SERVO_LEFT_VALUE && servoTargetPosition != LIGHT_HOUSE_2020_SERVO_RIGHT_VALUE) {
+        pwmServo(servo, LIGHT_HOUSE_2020_SERVO_SPEED, LIGHT_HOUSE_2020_SERVO_LEFT_VALUE, false);
+    }
+
+    unsigned int servoCurrentPosition = pwmServoReadCurrentPosition(servo);
+    
+    // Change sense when reaching current
+    if (servoCurrentPosition >= LIGHT_HOUSE_2020_SERVO_RIGHT_VALUE) {
+        pwmServo(servo, LIGHT_HOUSE_2020_SERVO_SPEED, LIGHT_HOUSE_2020_SERVO_LEFT_VALUE, false);
+    }
+    else if (servoCurrentPosition <= LIGHT_HOUSE_2020_SERVO_LEFT_VALUE) {
+        pwmServo(servo, LIGHT_HOUSE_2020_SERVO_SPEED, LIGHT_HOUSE_2020_SERVO_RIGHT_VALUE, false);
+    }
 }
 
 // INIT

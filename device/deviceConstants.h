@@ -1,7 +1,10 @@
 #ifndef DEVICE_CONSTANTS_H
 #define DEVICE_CONSTANTS_H
 
+
 /** Device header .*/
+#define IO_HEADER                                  '@'
+
 #define BATTERY_DEVICE_HEADER                      'b'
 
 #define ACCELEROMETER_DEVICE_HEADER                'B'
@@ -144,7 +147,7 @@
 /** TODO */
 #define ROBOT_SONAR_DETECTOR_DEVICE_HEADER         '#'
 
-#define MOTION_SIMULATION_DEVICE_HEADER            '/' 
+#define MOTION_SIMULATION_DEVICE_HEADER            '/'
 
 // 2019
 

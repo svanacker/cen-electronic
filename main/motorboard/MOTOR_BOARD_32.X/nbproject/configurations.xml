@@ -88,6 +88,7 @@
         <itemPath>../../../common/io/nullOutputStream.h</itemPath>
         <itemPath>../../../common/io/printTableWriter.h</itemPath>
         <itemPath>../../../common/io/bufferDebug.h</itemPath>
+        <itemPath>../../../common/io/pin.h</itemPath>
       </logicalFolder>
       <logicalFolder name="common.log" displayName="common.log" projectFiles="true">
         <itemPath>../../../common/log/logHandler.h</itemPath>
@@ -198,6 +199,10 @@
                      projectFiles="true">
         <itemPath>../../../device/i2c/slave/i2cSlaveDebugDevice.h</itemPath>
         <itemPath>../../../device/i2c/slave/i2cSlaveDebugDeviceInterface.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f8" displayName="device.io" projectFiles="true">
+        <itemPath>../../../device/io/ioDevice.h</itemPath>
+        <itemPath>../../../device/io/ioDeviceInterface.h</itemPath>
       </logicalFolder>
       <logicalFolder name="device.log" displayName="device.log" projectFiles="true">
         <itemPath>../../../device/log/logDevice.h</itemPath>
@@ -524,6 +529,7 @@
         <itemPath>../../../common/io/nullOutputStream.c</itemPath>
         <itemPath>../../../common/io/printTableWriter.c</itemPath>
         <itemPath>../../../common/io/bufferDebug.c</itemPath>
+        <itemPath>../../../common/io/pin.c</itemPath>
       </logicalFolder>
       <logicalFolder name="common.log" displayName="common.log" projectFiles="true">
         <itemPath>../../../common/log/logger.c</itemPath>
@@ -629,6 +635,10 @@
                      projectFiles="true">
         <itemPath>../../../device/i2c/slave/i2cSlaveDebugDevice.c</itemPath>
         <itemPath>../../../device/i2c/slave/i2cSlaveDebugDeviceInterface.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f8" displayName="device.io" projectFiles="true">
+        <itemPath>../../../device/io/ioDevice.c</itemPath>
+        <itemPath>../../../device/io/ioDeviceInterface.c</itemPath>
       </logicalFolder>
       <logicalFolder name="device.log" displayName="device.log" projectFiles="true">
         <itemPath>../../../device/log/logDevice.c</itemPath>

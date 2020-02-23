@@ -19,6 +19,9 @@
 #include "../../common/system/system.h"
 #include "../../device/deviceList.h"
 
+#include "../../device/io/ioDevice.h"
+#include "../../device/io/ioDeviceInterface.h"
+
 // COMMON PART
 #include "../mainBoard/mainBoardCommon.h"
 #include "../mainBoard/mainBoardCommonLcd.h"
@@ -43,6 +46,7 @@
 #include "../../robot/match/endMatchDebug.h"
 #include "../../robot/match/endMatchDetectorDevice.h"
 #include "../../robot/match/endMatchDetectorDeviceInterface.h"
+#include "io/ioDeviceInterface.h"
 
 
 // Robot Configuration
@@ -58,6 +62,8 @@ void initMainBoardDevicesDescriptor() {
     mainBoardCommonAddDevices(&robotConfig);
     mainBoardCommonLcdAddDevices();
     mainLightHouse2020TofAddDevices();
+
+    addLocalDevice(getIODeviceInterface(), getIODeviceDescriptor());
     
     // 2020 specific
     addLocalDevice(getLightHouse2020DeviceInterface(), getLightHouse2020DeviceDescriptor(&lightHouse));

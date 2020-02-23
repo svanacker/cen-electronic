@@ -120,6 +120,9 @@ void clearLastError();
 // COLOR
 #define COLOR_SENSOR_NULL                                                 0x04A0
 
+// LED
+#define LED_ARRAY_NULL                                                    0x04A8
+
 // ACCELEROMETER
 #define ACCELEROMETER_SENSOR_SETUP_PROBLEM                                0x04B0
 

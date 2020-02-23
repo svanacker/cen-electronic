@@ -104,6 +104,10 @@
 #include "../../device/i2c/slave/i2cSlaveDebugDevice.h"
 #include "../../device/i2c/slave/i2cSlaveDebugDeviceInterface.h"
 
+// IO
+#include "../../device/io/ioDevice.h"
+#include "../../device/io/ioDeviceInterface.h"
+
 // Motors (PWM)
 #include "../../device/motor/pwmMotorDevice.h"
 #include "../../device/motor/pwmMotorDeviceInterface.h"
@@ -248,6 +252,8 @@ static Device deviceListArray[MOTOR_BOARD_DEVICE_LIST_LENGTH];
 void initDevicesDescriptor() {
     initDeviceList(&deviceListArray, MOTOR_BOARD_DEVICE_LIST_LENGTH);
 
+    addLocalDevice(getIODeviceInterface(), getIODeviceDescriptor());
+
     // Common I2C
     addLocalDevice(getI2cCommonDebugDeviceInterface(), getI2cCommonDebugDeviceDescriptor(mainBoardI2cBusConnection));
 
@@ -317,7 +323,6 @@ int runMotorBoard() {
     INTEnableInterrupts();
 
     setBoardName(MOTOR_BOARD_PIC_NAME);
-    
 
     initSerialLinkList(&serialLinkListArray, MOTOR_BOARD_SERIAL_LINK_LIST_LENGTH);
 
@@ -425,6 +430,11 @@ int runMotorBoard() {
 
     // Init the timers management
     startTimerList(true);
+    
+    // IO
+    // RB12 & RB 13 are IO of MOTOR_BOARD
+    TRISBbits.TRISB12 = 1;
+    TRISBbits.TRISB13 = 1;
 
     while (1) {
         waitForInstruction();
