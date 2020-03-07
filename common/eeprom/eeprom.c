@@ -105,9 +105,9 @@ void eepromWriteFloat(Eeprom* eeprom_, unsigned long index, float value, unsigne
     for (i = 0; i < digitPrecision; i++) {
         valueToStore *= 10.0f;
     }
-    unsigned long valueToStoreLong = (unsigned long)valueToStore;
+    long valueToStoreLong = (long) valueToStore;
     if (negative) {
-        valueToStoreLong = 0x80000000 - valueToStoreLong;
+        valueToStoreLong = 0x80000000L - valueToStoreLong;
     }
     eepromWriteLong(eeprom_, index, valueToStoreLong);
 }

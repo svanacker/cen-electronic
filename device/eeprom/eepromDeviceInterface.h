@@ -41,6 +41,11 @@
 #define COMMAND_READ_INT_EEPROM         'R'
 
 /**
+* Defines the header to read a float from the Eeprom.
+*/
+#define COMMAND_READ_FLOAT_EEPROM         'l'
+
+/**
 * Defines the header to write one byte on the Eeprom.
 */
 #define COMMAND_WRITE_BYTE_EEPROM         'w'
@@ -49,6 +54,11 @@
 * Defines the header to write one int on the Eeprom.
 */
 #define COMMAND_WRITE_INT_EEPROM         'W'
+
+/**
+* Defines the header to write float on the Eeprom.
+*/
+#define COMMAND_WRITE_FLOAT_EEPROM       'V'
 
 /**
 * Defines the header to read the buffer from the Eeprom

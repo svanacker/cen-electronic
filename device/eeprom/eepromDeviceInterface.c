@@ -63,6 +63,16 @@ int deviceEepromGetInterface(unsigned char header, DeviceInterfaceMode mode, boo
         }
         return commandLengthValueForMode(mode, 4, 4);
     }
+    else if (header == COMMAND_READ_FLOAT_EEPROM) {
+        if (fillDeviceArgumentList) {
+            setFunction("Float Read", 3, 1);
+            setArgumentUnsignedHex4(0, "address");
+            setArgumentSeparator(1);
+            setArgumentUnsignedHex2(2, "digitPrecision");
+            setResultFloatHex4(0, "float (4)");
+        }
+        return commandLengthValueForMode(mode, 7, 4);
+    }
     else if (header == COMMAND_WRITE_BYTE_EEPROM) {
         if (fillDeviceArgumentList) {
             setFunction("Byte Write", 3, 0);
@@ -80,6 +90,17 @@ int deviceEepromGetInterface(unsigned char header, DeviceInterfaceMode mode, boo
             setArgumentUnsignedHex4(2, "int");
         }
         return commandLengthValueForMode(mode, 9, 0);
+    }
+    else if (header == COMMAND_WRITE_FLOAT_EEPROM) {
+        if (fillDeviceArgumentList) {
+            setFunction("Float Write", 5, 0);
+            setArgumentUnsignedHex4(0, "address");
+            setArgumentSeparator(1);
+            setArgumentFloatHex4(2, "float");
+            setArgumentSeparator(3);
+            setArgumentUnsignedHex2(4, "digitPrecision");
+        }
+        return commandLengthValueForMode(mode, 12, 0);
     }
     else if (header == COMMAND_READ_BLOCK_EEPROM) {
         if (fillDeviceArgumentList) {

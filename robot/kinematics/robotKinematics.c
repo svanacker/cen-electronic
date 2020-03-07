@@ -131,38 +131,68 @@ float getCoderWheelsDistanceFromCenter(RobotKinematics* robotKinematics) {
 // DIFFERENT LENGTH FOR ONE PULSE (left, right, average)
 
 float getCoderLeftWheelFactor(RobotKinematics* robotKinematics) {
+    // Avoid division by O
+    if (robotKinematics->coderWheelAverageDiameterMM < 0.0000001f) {
+        return 1.0f;
+    }
     return 1.0f + robotKinematics->coderWheelAverageDeltaDiameterMM / robotKinematics->coderWheelAverageDiameterMM;
 }
 
 float getCoderRightWheelFactor(RobotKinematics* robotKinematics) {
+    // Avoid division by O
+    if (robotKinematics->coderWheelAverageDiameterMM < 0.0000001f) {
+        return 1.0f;
+    }
     return 1.0f - robotKinematics->coderWheelAverageDeltaDiameterMM / robotKinematics->coderWheelAverageDiameterMM;
 }
 
 float getCoderLeftWheelLengthForOnePulse(RobotKinematics* robotKinematics) {
+    // Avoid division by O
+    if (robotKinematics->coderWheelPulseByRotation < 0.0000001f) {
+        return 0.0f;
+    }
     return (getCoderLeftWheelDiameter(robotKinematics) * PI) / robotKinematics->coderWheelPulseByRotation;
 }
 
 float getCoderRightWheelLengthForOnePulse(RobotKinematics* robotKinematics) {
+    // Avoid division by O
+    if (robotKinematics->coderWheelPulseByRotation < 0.0000001f) {
+        return 0.0f;
+    }
     return (getCoderRightWheelDiameter(robotKinematics) * PI) / robotKinematics->coderWheelPulseByRotation;
 }
 
 float getCoderAverageWheelLengthForOnePulse(RobotKinematics* robotKinematics) {
+    // Avoid division by O
+    if (robotKinematics->coderWheelPulseByRotation < 0.0000001f) {
+        return 0.0f;
+    }
     return (getCoderWheelAverageDiameterMM(robotKinematics) * PI) / robotKinematics->coderWheelPulseByRotation;
 }
 
 // COMPUTE INVOLVING MOTOR AND CODERS
 
 float getCoderWheelAndMotorWheelAverageDiameterFactor(RobotKinematics* robotKinematics) {
+    // Avoid division by O
+    if (robotKinematics->motorWheelAverageDiameterMM < 0.0000001f) {
+        return 0.0f;
+    }
     return robotKinematics->coderWheelAverageDiameterMM / robotKinematics->motorWheelAverageDiameterMM;
 }
 
 float getCoderWheelPulseBySecondsAtFullSpeed(RobotKinematics* robotKinematics, bool rotationMode) {
     float coderMotorWheelsFactor = getCoderWheelAndMotorWheelAverageDiameterFactor(robotKinematics);
+    if (coderMotorWheelsFactor < 0.0000001f) {
+        return 0.0f;
+    }
     // coder rotation are depending on the rotation of motor, but by integrating the motor / coder diameter factor
     float coderRotationBySecond = (robotKinematics->motorWheelRotationBySecondAtFullSpeed / coderMotorWheelsFactor);
     if (rotationMode) {
         // In this case, when we rotate, if motor distance is less than coder distance,
         // there will be more pulse at coder than if coder & motor was at the same distance
+        if (robotKinematics->motorWheelDistanceBetweenWheelsMM < 0.0000001f) {
+            return 0.0f;
+        }
         coderRotationBySecond *= robotKinematics->coderWheelDistanceBetweenWheelsMM / robotKinematics->motorWheelDistanceBetweenWheelsMM;
     }
     // We multiply by the amount of pulse by rotation
@@ -215,7 +245,9 @@ float getRobotAccelerationMaxMillimeterBySecondSquare(RobotKinematics* robotKine
     // * Radius = Diameter / 2
     // 2*  Motors which provider power
     // => Robot Acceleration = (Motor Torque * motorReductorRadio / Motor Diameter) / Weight
-
+    if (robotKinematics->motorWheelAverageDiameterMM < 0.001f && robotKinematics->robotWeightGrams < 0.001f) {
+        return 0.0f;
+    }
     float result = (robotKinematics->motorMaxTorqueMilliNewton * 0.001f); // Torque in Newton Meter
     result *= robotKinematics->motorReductorRatio;
     result /= (robotKinematics->motorWheelAverageDiameterMM * 0.001f); // Diameter in Meter

@@ -58,7 +58,7 @@ void printDevice(OutputStream* outputStream, const Device* device) {
 
         DeviceDescriptor* deviceDescriptor = device->descriptor;
         if (deviceDescriptor != NULL && deviceDescriptor->initErrorCode != 0) {
-            appendDecTableData(outputStream, deviceDescriptor->initErrorCode, DEVICE_DEBUG_ERROR_CODE_COLUMN_LENGTH);
+            appendHex4TableData(outputStream, deviceDescriptor->initErrorCode, DEVICE_DEBUG_ERROR_CODE_COLUMN_LENGTH);
         }
         else {
             appendStringTableData(outputStream, "OK", DEVICE_DEBUG_ERROR_CODE_COLUMN_LENGTH);

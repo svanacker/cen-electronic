@@ -82,6 +82,14 @@ void deviceEepromHandleRawData(unsigned char commandHeader, InputStream* inputSt
         int value = eepromReadInt(eeprom_, address);
         appendHex4(outputStream, value);
     }
+    else if (commandHeader == COMMAND_READ_FLOAT_EEPROM) {
+        ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_READ_FLOAT_EEPROM);
+        unsigned long address = readHex4(inputStream);
+        checkIsSeparator(inputStream);
+        unsigned char digitPrecision = readHex2(inputStream);
+        float value = eepromReadUnsignedFloat(eeprom_, address, digitPrecision);
+        appendHexFloat4(outputStream, value, digitPrecision);
+    }
     else if (commandHeader == COMMAND_WRITE_BYTE_EEPROM) {
         ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_WRITE_BYTE_EEPROM);
         unsigned long address = readHex4(inputStream);
@@ -95,6 +103,15 @@ void deviceEepromHandleRawData(unsigned char commandHeader, InputStream* inputSt
         checkIsSeparator(inputStream);
         int data = readHex4(inputStream);
         eepromWriteInt(eeprom_, address, data);
+    }
+    else if (commandHeader == COMMAND_WRITE_FLOAT_EEPROM) {
+        ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_WRITE_FLOAT_EEPROM);
+        unsigned long address = readHex4(inputStream);
+        checkIsSeparator(inputStream);
+        int data = readHex4(inputStream);
+        checkIsSeparator(inputStream);
+        unsigned char digitPrecision = readHex2(inputStream);
+        eepromWriteFloat(eeprom_, address, (float) data, digitPrecision);
     }
     else if (commandHeader == COMMAND_READ_BLOCK_EEPROM) {
         ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_READ_BLOCK_EEPROM);
