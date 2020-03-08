@@ -443,6 +443,9 @@
     <ClCompile Include="navigation\pathDebug.c" />
     <ClCompile Include="navigation\pathList.c" />
     <ClCompile Include="navigation\pathListDebug.c" />
+    <ClCompile Include="robot\2020\arm\arm2020.c" />
+    <ClCompile Include="robot\2020\arm\armDevice2020.c" />
+    <ClCompile Include="robot\2020\arm\armDeviceInterface2020.c" />
     <ClCompile Include="robot\2020\bigRobot\bigRobotActions2020.c" />
     <ClCompile Include="robot\2020\bigRobot\bigRobotStrategy2020.c" />
     <ClCompile Include="robot\2020\commonRobot\commonRobotActions2020.c" />
@@ -852,6 +855,9 @@
     <ClInclude Include="navigation\pathList.h" />
     <ClInclude Include="navigation\pathListDebug.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="robot\2020\arm\arm2020.h" />
+    <ClInclude Include="robot\2020\arm\armDevice2020.h" />
+    <ClInclude Include="robot\2020\arm\armDeviceInterface2020.h" />
     <ClInclude Include="robot\2020\bigRobot\bigRobotActions2020.h" />
     <ClInclude Include="robot\2020\bigRobot\bigRobotLocation2020.h" />
     <ClInclude Include="robot\2020\bigRobot\bigRobotPath2020.h" />

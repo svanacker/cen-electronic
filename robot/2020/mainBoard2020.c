@@ -26,7 +26,7 @@
 
 #include "../../main/mainBoard/mainBoardCommon.h"
 
-// 2019
+// 2020
 #include "../../robot/2020/strategy/strategy2020.h"
 #include "../../robot/2020/strategy/strategyConfig2020.h"
 #include "../../robot/2020/gameboard/gameBoardElement2020.h"

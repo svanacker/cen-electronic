@@ -548,6 +548,11 @@
       <logicalFolder name="f22" displayName="robot.2020" projectFiles="true">
         <itemPath>../../../robot/2020/mainBoard2020.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f33" displayName="robot.2020.arm" projectFiles="true">
+        <itemPath>../../../robot/2020/arm/arm2020.h</itemPath>
+        <itemPath>../../../robot/2020/arm/armDevice2020.h</itemPath>
+        <itemPath>../../../robot/2020/arm/armDeviceInterface2020.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="f34" displayName="robot.2020.bigRobot" projectFiles="true">
         <itemPath>../../../robot/2020/bigRobot/bigRobotActions2020.h</itemPath>
         <itemPath>../../../robot/2020/bigRobot/bigRobotLocation2020.h</itemPath>
@@ -1212,6 +1217,11 @@
       </logicalFolder>
       <logicalFolder name="f22" displayName="robot.2020" projectFiles="true">
         <itemPath>../../../robot/2020/mainBoard2020.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f9" displayName="robot.2020.arm" projectFiles="true">
+        <itemPath>../../../robot/2020/arm/arm2020.c</itemPath>
+        <itemPath>../../../robot/2020/arm/armDevice2020.c</itemPath>
+        <itemPath>../../../robot/2020/arm/armDeviceInterface2020.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f31" displayName="robot.2020.bigRobot" projectFiles="true">
         <itemPath>../../../robot/2020/bigRobot/bigRobotActions2020.c</itemPath>

@@ -170,6 +170,11 @@
 #include "../../common/pwm/servo/32/servoList32.h"
 #include "i2c/multiplexer/tca9548A.h"
 
+// 2020
+#include "../../robot/2020/arm/armDeviceInterface2020.h"
+#include "../../robot/2020/arm/armDevice2020.h"
+
+
 // COMMON TO ALL MAIN BOARD
 
 // I2C => PORT 1 (for All Peripherical, including Eeprom / Clock / Temperature)
@@ -336,6 +341,7 @@ void mainBoardCommonAddDevices(RobotConfig* robotConfig) {
     
     // ACCELEROMETER
     // addLocalDevice(getAccelerometerDeviceInterface(), getAccelerometerDeviceDescriptor(&accelerometer));
+    addLocalDevice(getArm2020DeviceInterface(), getArm2020DeviceDescriptor(&servoList));
 
     // ROBOT CONFIG
     addLocalDevice(getRobotConfigDeviceInterface(), getRobotConfigDeviceDescriptor(robotConfig));

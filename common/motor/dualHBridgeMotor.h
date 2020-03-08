@@ -33,6 +33,34 @@ typedef unsigned char dualHBridgeMotorGetSoftwareRevisionFunction(DualHBridgeMot
 typedef void dualHBridgeMotorWriteValueFunction(DualHBridgeMotor* dualHBridgeMotor, signed int hBridgeSpeed1, signed int hBridgeSpeed2);
 
 /**
+ * Define the type of action to do when analyzing stop event.
+ */
+enum DualHBridgePinUsageType {
+    /** The pin is not assigned */
+    NO_USAGE = 0,
+    /** The pin is assigned to detect start of the motor 1 */
+    MOTOR_1_START = 1,
+    /** The pin is assigned to detect end of the motor 1*/
+    MOTOR_1_END = 2,
+    /** The pin is assigned to detect start of the motor 2 */
+    MOTOR_2_START = 3,
+    /** The pin is assigned to detect end of the motor 2 */
+    MOTOR_2_END = 4
+};
+
+/**
+ * Define the type of action to do when analyzing stop event.
+ */
+enum DualHBridgePinStopEventType {
+    /** No Action to do */
+    NO_ACTION = 0,
+    /** If we must stop when the value is low. */
+    LOW_STOP = 1,
+    /** If we stop when the value is high. */
+    HIGH_STOP = 2,
+};
+
+/**
 * Defines the contract for the Dual HBridge Motor.
 */
 struct DualHBridgeMotor {
@@ -48,6 +76,14 @@ struct DualHBridgeMotor {
     signed int motorSpeed1;
     /** To store the value of the motorSpeed2 (do not modify it without calling public methods) */
     signed int motorSpeed2;
+    /** To know what the pin1 is used for */
+    enum DualHBridgePinUsageType pin1UsageType;
+    /** To know what the pin2 is used for */
+    enum DualHBridgePinUsageType pin2UsageType;
+    /** the action to do when we analyze pin 1 */
+    enum DualHBridgePinStopEventType pin1StopEventType;
+    /** the action to do when we analyze pin 2 */
+    enum DualHBridgePinStopEventType pin2StopEventType;
     /** pointer on other object (useful for I2C Connection for example) .*/
     int* object;
 };
@@ -77,5 +113,9 @@ void stopMotors(DualHBridgeMotor* dualHBridgeMotor);
  */
 void setMotorSpeeds(DualHBridgeMotor* dualHBridgeMotor, signed int hBridgeSpeed1, signed int hBridgeSpeed2);
 
+/**
+ * Init the Dual HBridge Time 
+ */
+void initDualHBridgeTimer(DualHBridgeMotor* dualHBridgeMotor);
 
 #endif

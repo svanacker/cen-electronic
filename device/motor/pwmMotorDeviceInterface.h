@@ -30,6 +30,11 @@
 #define COMMAND_NORMAL_TEST_MOTOR    'T'
 
 /**
+ * Set the usage of each pin. 
+ */
+#define COMMAND_SET_PIN_USAGE_MOTOR  'p'
+
+/**
 * Interface for Device.
 */
 DeviceInterface* getMotorDeviceInterface();

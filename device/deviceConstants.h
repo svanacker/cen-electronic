@@ -151,21 +151,23 @@
 
 // 2019
 
-#define ELEVATOR_2019_DEVICE_HEADER                '|'
+// #define ELEVATOR_2019_DEVICE_HEADER                '|'
 
-#define FORK_2019_DEVICE_HEADER                    '_'
+// #define FORK_2019_DEVICE_HEADER                    '_'
 
-#define DISTRIBUTOR_2019_DEVICE_HEADER             'D'
+// #define DISTRIBUTOR_2019_DEVICE_HEADER             'D'
 
-#define ARM_2019_DEVICE_HEADER                     'A'
+// #define ARM_2019_DEVICE_HEADER                     'A'
 
-#define GOLDENIUM_2019_DEVICE_HEADER               'o'
+// #define GOLDENIUM_2019_DEVICE_HEADER               'o'
 
-#define ELECTRON_LAUNCHER_2019_DEVICE_HEADER       '.'
+// #define ELECTRON_LAUNCHER_2019_DEVICE_HEADER       '.'
 
 #define FAKE_ROBOT_DEVICE_HEADER                   '*'
 
 // 2020
+
+#define ARM_2020_DEVICE_HEADER                     '_'
 
 #define LIGHT_HOUSE_2020_DEVICE_HEADER             '.'
 

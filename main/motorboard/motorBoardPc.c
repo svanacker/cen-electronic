@@ -346,8 +346,8 @@ void runMotorBoardPC(bool singleMode) {
     }
     
     // Eeprom
-    // initEepromPc(&eeprom, "MOTOR_BOARD_PC_EEPROM");
-    initEepromMemory(&eeprom, (char(*)[]) &memoryEepromArray, MOTOR_BOARD_PC_MEMORY_EEPROM_LENGTH);
+    initEepromPc(&eeprom, "MOTOR_BOARD_PC_EEPROM");
+    // initEepromMemory(&eeprom, (char(*)[]) &memoryEepromArray, MOTOR_BOARD_PC_MEMORY_EEPROM_LENGTH);
 
     // HBridge Fake Motor Pwm
     initDualHBridgeMotorPc(&dualHBridgeMotor);

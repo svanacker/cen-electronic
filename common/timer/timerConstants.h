@@ -20,14 +20,17 @@
 /** The code of the timer (used to update value of servo). */
 #define SERVO_TIMER_CODE                               10
 
+/** The code of the timer (used to update value of pwm). */
+#define MOTOR_TIMER_CODE                               13
+
 /**
  * Defines the timer used by the strategy to continously get the robot
- * position
+ * position.
  */
 #define TIMER_STRATEGY_MOTION_HANDLER_UPDATE_ROBOT_POSITION           15
 
 /**
-* Defines the timer used by the PC to simulate the move of the Robot
+* Defines the timer used by the PC to simulate the move of the Robot.
 */
 #define TIMER_MOTION_SIMULATION_PC                               17
 

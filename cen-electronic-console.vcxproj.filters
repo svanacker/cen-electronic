@@ -1078,6 +1078,12 @@
     <Filter Include="Source Files\robot\2020\smallRobot">
       <UniqueIdentifier>{dcea7dc3-d6d7-4e8a-a3b3-900f614bf951}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\robot\2020\arm">
+      <UniqueIdentifier>{4e9dfcc1-65dc-43ce-b32d-7c660b1d02b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\robot\2020\arm">
+      <UniqueIdentifier>{35fb1c2e-1b03-49c3-ae43-8d2953923623}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cen-electronic-console.c">
@@ -2243,6 +2249,15 @@
     </ClCompile>
     <ClCompile Include="robot\2020\smallRobot\smallRobotActions2020.c">
       <Filter>Source Files\robot\2020\smallRobot</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2020\arm\arm2020.c">
+      <Filter>Source Files\robot\2020\arm</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2020\arm\armDevice2020.c">
+      <Filter>Source Files\robot\2020\arm</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\2020\arm\armDeviceInterface2020.c">
+      <Filter>Source Files\robot\2020\arm</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -3508,6 +3523,15 @@
     </ClInclude>
     <ClInclude Include="robot\2020\smallRobot\smallRobotActions2020.h">
       <Filter>Header Files\robot\2020\smallRobot</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2020\arm\arm2020.h">
+      <Filter>Header Files\robot\2020\arm</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2020\arm\armDevice2020.h">
+      <Filter>Header Files\robot\2020\arm</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\2020\arm\armDeviceInterface2020.h">
+      <Filter>Header Files\robot\2020\arm</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

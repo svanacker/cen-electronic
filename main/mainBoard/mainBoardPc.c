@@ -234,6 +234,8 @@
 
 // 2020
 #include "../../robot/2020/mainBoard2020.h"
+#include "../../robot/2020/arm/armDeviceInterface2020.h"
+#include "../../robot/2020/arm/armDevice2020.h"
 
 #include "../../robot/tof/strategyTofSensorList.h"
 
@@ -463,6 +465,7 @@ void initMainBoardLocalDevices(void) {
     addLocalDevice(getFakeRobotDeviceInterface(), getFakeRobotDeviceDescriptor(getFakeRobotInstance()));
 
     // 2020 specific
+    addLocalDevice(getArm2020DeviceInterface(), getArm2020DeviceDescriptor(&servoList));
 }
 
 void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {

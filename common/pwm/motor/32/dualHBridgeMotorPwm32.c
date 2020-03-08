@@ -6,6 +6,7 @@
 
 #include "../../../../common/error/error.h"
 #include "../../../../common/setup/32/clockConstants32.h"
+#include "../../../../common/io/pin.h"
 
 #include "../../pwmPic.h"
 
