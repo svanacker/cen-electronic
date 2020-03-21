@@ -105,10 +105,6 @@
 #include "../../device/i2c/master/i2cMasterDebugDevice.h"
 #include "../../device/i2c/master/i2cMasterDebugDeviceInterface.h"
 
-// LOG
-#include "../../device/led/ledDevice.h"
-#include "../../device/led/ledDeviceInterface.h"
-
 // SERIAL
 #include "../../device/serial/serialDebugDevice.h"
 #include "../../device/serial/serialDebugDeviceInterface.h"
@@ -156,9 +152,6 @@
 
 // -> Eeprom
 #include "../../drivers/eeprom/24c512.h"
-
-// -> LED
-#include "../../drivers/led/pca9685/ledPca9685.h"
 
 // -> System
 #include "../../drivers/system/systemDriver.h"
@@ -211,13 +204,6 @@ static I2cBusConnection* clockI2cBusConnection;
 
 // IO
 static PinList pinList;
-
-// LED
-static LedArray ledArray;
-static I2cBusConnection* ledArrayBusConnection;
-
-// LOG
-static LedArray ledArray;
 
 // SPECIFIC
 
@@ -358,7 +344,6 @@ void mainBoardCommonAddDevices(RobotConfig* robotConfig) {
     addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor(&servoList));
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
     addLocalDevice(getIODeviceInterface(), getIODeviceDescriptor(&pinList));
-    addLocalDevice(getLedDeviceInterface(), getLedDeviceDescriptor(&ledArray));
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
     addLocalDevice(getTemperatureSensorDeviceInterface(), getTemperatureSensorDeviceDescriptor(&temperature));
     // addLocalDevice(getCurrentSensorDeviceInterface(), getCurrentSensorDeviceDescriptor(&current));
@@ -408,11 +393,6 @@ void mainBoardCommonInitCommonDrivers(void) {
     appendString(getDebugOutputStreamLogger(), "CLOCK ...");
     clockI2cBusConnection = addI2cBusConnection(i2cBus, PCF8563_WRITE_ADDRESS, true);
     initClockPCF8563(&clock, clockI2cBusConnection);
-    appendStringLN(getDebugOutputStreamLogger(), "OK");
-    // -> LED
-    appendString(getDebugOutputStreamLogger(), "LED ...");
-    ledArrayBusConnection = addI2cBusConnection(i2cBus, PCA9685_ADDRESS_1, true);
-    initLedArrayPca9685(&ledArray, ledArrayBusConnection);
     appendStringLN(getDebugOutputStreamLogger(), "OK");
     // -> Temperature
     appendString(getDebugOutputStreamLogger(), "TEMPERATURE ...");

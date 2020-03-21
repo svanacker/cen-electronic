@@ -21,7 +21,7 @@ typedef bool LedArrayInitFunction(LedArray* ledArray);
  * @param G the G value of the RGB value
  * @param B the B value of the RGB value
  */
-typedef void LedArrayWriteValueFunction(LedArray* ledArray, unsigned int ledIndex, unsigned char R, unsigned char G, unsigned char B);
+typedef void LedArrayWriteValueFunction(LedArray* ledArray, unsigned int ledIndex, unsigned int R, unsigned int G, unsigned int B);
 
 /**
  * Defines the contract for led Array.

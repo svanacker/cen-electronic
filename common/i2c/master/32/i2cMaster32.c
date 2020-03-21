@@ -66,10 +66,10 @@ unsigned char portableMasterReadI2C(I2cBusConnection* i2cBusConnection) {
             }
             I2C1STATbits.I2COV = 0;
             return (I2C1RCV);
-        }#if defined _I2C2
+        }
+#if defined _I2C2
         else if (portIndex == I2C_BUS_PORT_2) {
-TODO:
-            Throw Not Implemented
+            // TODO: Throw Not Implemented
             I2C2CONbits.RCEN = 1;
             while (I2C2CONbits.RCEN) {
                 count++;
@@ -81,7 +81,8 @@ TODO:
             }
             I2C2STATbits.I2COV = 0;
             return (I2C2RCV);
-        }#endif
+        }
+#endif
 #if defined _I2C3
         else if (portIndex == I2C_BUS_PORT_3) {
             I2C3CONbits.RCEN = 1;
@@ -95,7 +96,8 @@ TODO:
             }
             I2C3STATbits.I2COV = 0;
             return (I2C3RCV);
-        }#endif
+        }
+#endif
 #if defined _I2C4
         else if (portIndex == I2C_BUS_PORT_4) {
             I2C4CONbits.RCEN = 1;
@@ -126,10 +128,12 @@ void portableMasterCloseI2C(I2cBus* i2cBus) {
         unsigned portIndex = i2cBus->port;
         if (portIndex == I2C_BUS_PORT_1) {
             CloseI2C1();
-        }#if defined _I2C2
+        }
+#if defined _I2C2
         else if (portIndex == I2C_BUS_PORT_2) {
             CloseI2C2();
-        }#endif
+        }
+#endif
 #if defined _I2C3
         else if (portIndex == I2C_BUS_PORT_3) {
             // TODO : Throw Not Implemented
@@ -137,7 +141,8 @@ void portableMasterCloseI2C(I2cBus* i2cBus) {
             // DisableIntSI2C3,
             // DisableIntMI2C3,
             // DisableIntBI2C3
-        }#endif
+        }
+#endif
 #if defined _I2C4
         else if (portIndex == I2C_BUS_PORT_4) {
             // TODO : Throw Not Implemented
@@ -179,7 +184,8 @@ void portableMasterWaitSendI2C(I2cBusConnection* i2cBusConnection) {
                     break;
                 }
             }
-        }#if defined _I2C2
+        }
+#if defined _I2C2
         else if (portIndex == I2C_BUS_PORT_2) {
             while (I2C2CONbits.SEN) {
                 count++;
@@ -188,7 +194,8 @@ void portableMasterWaitSendI2C(I2cBusConnection* i2cBusConnection) {
                     break;
                 }
             }
-        }#endif
+        }
+#endif
 #if defined _I2C3
         else if (portIndex == I2C_BUS_PORT_3) {
             while (I2C3CONbits.SEN) {
@@ -198,7 +205,8 @@ void portableMasterWaitSendI2C(I2cBusConnection* i2cBusConnection) {
                     break;
                 }
             }
-        }#endif
+        }
+#endif
 #if defined _I2C4
         else if (portIndex == I2C_BUS_PORT_4) {
             while (I2C4CONbits.SEN) {

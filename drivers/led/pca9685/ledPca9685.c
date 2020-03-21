@@ -33,6 +33,10 @@ bool ledArrayInitPca9685(LedArray* ledArray) {
  */
 void ledArrayWriteValuePca9685(LedArray* ledArray, unsigned int ledIndex, unsigned char R, unsigned char G, unsigned char B) {
     // TODO
+    I2cBusConnection* i2cBusConnection = getLedArrayI2cBusConnection(ledArray);
+    pca9685_setPWM(i2cBusConnection, ledIndex * 3, 4095 - B * 16, B * 16);
+    pca9685_setPWM(i2cBusConnection, ledIndex * 3 + 1, 4095 - G * 16, G * 16);
+    pca9685_setPWM(i2cBusConnection, ledIndex * 3 + 2, 4095 - R * 16, R * 16);
 }
 
 void initLedArrayPca9685(LedArray* ledArray, I2cBusConnection* i2cBusConnection) {

@@ -37,7 +37,18 @@
 #include "../../robot/2020/mainBoard2020.h"
 
 // SMALL ROBOT PART
+
+// LED
+#include "../../device/led/ledDevice.h"
+#include "../../device/led/ledDeviceInterface.h"
+
+// -> LED
+#include "../../drivers/led/pca9685/ledPca9685.h"
+// -> SERVO
 #include "../../drivers/pwm/servo/servoPwmPca9685.h"
+
+// -> ARM
+
 #include "../../robot/2020/arm/armDeviceInterface2020.h"
 #include "../../robot/2020/arm/armDevice2020.h"
 
@@ -46,6 +57,10 @@
 
 // Robot Configuration
 static RobotConfig robotConfig;
+
+// LED
+static LedArray ledArray;
+static I2cBusConnection* ledArrayBusConnection;
 
 /**
  * @private
@@ -60,6 +75,8 @@ void initMainBoardDevicesDescriptor() {
     mainBoardCommonMatchAddDevices();
     mainBoardCommonTofAddDevices32();
     mainBoardCommonMeca1AddDevices();
+
+    addLocalDevice(getLedDeviceInterface(), getLedDeviceDescriptor(&ledArray));
 
     // Call the init on each devices
     initDevices();
@@ -124,12 +141,18 @@ void mainBoardMainPhase2(void) {
     mainBoardCommonInitTimerList();
     mainBoardCommonInitCommonDrivers();
 
-    // ROBOT2019 : PCA9685
+    // ROBOT2020 : PCA9685 for SERVO
     ServoList* servoList = mainBoardCommonGetServoList();
     // I2cBus* i2cBus = mainBoardCommonGetMainI2cBus();
     I2cBus* i2cBus = getI2cBusByIndex(MAIN_BOARD_SERVO_I2C_BUS_INDEX);
-    I2cBusConnection* servoI2cBusConnection = addI2cBusConnection(i2cBus, PCA9685_ADDRESS_0, true);
-    addServoAllPca9685(servoList, servoI2cBusConnection);
+    // I2cBusConnection* servoI2cBusConnection = addI2cBusConnection(i2cBus, PCA9685_ADDRESS_0, true);
+    // addServoAllPca9685(servoList, servoI2cBusConnection);
+
+    // -> LED
+    appendString(getDebugOutputStreamLogger(), "LED ...");
+    ledArrayBusConnection = addI2cBusConnection(i2cBus, PCA9685_ADDRESS_3, true);
+    initLedArrayPca9685(&ledArray, ledArrayBusConnection);
+    appendStringLN(getDebugOutputStreamLogger(), "OK");
 
     // Initialise the Strategy first so that we could show the color & stragegy
     // index at a very early stage

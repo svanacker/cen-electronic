@@ -98,14 +98,14 @@
 
 
 // PCA9685
-#define PCA9685_ADDRESS_0             0x80
-#define PCA9685_ADDRESS_1             0x82
-#define PCA9685_ADDRESS_2             0x84
-#define PCA9685_ADDRESS_3             0x86
-#define PCA9685_ADDRESS_4             0x88
-#define PCA9685_ADDRESS_5             0x8A
-#define PCA9685_ADDRESS_6             0x8C
-#define PCA9685_ADDRESS_7             0x8E
+#define PCA9685_ADDRESS_0             0x80  // A0 = 0, A1 = 0, A2 = 0
+#define PCA9685_ADDRESS_1             0x82  // A0 = 1, A1 = 0, A2 = 0
+#define PCA9685_ADDRESS_2             0x84  // A0 = 0, A1 = 1, A2 = 0
+#define PCA9685_ADDRESS_3             0x86  // A0 = 1, A1 = 1, A2 = 0
+#define PCA9685_ADDRESS_4             0x88  // A0 = 0, A1 = 0, A2 = 1
+#define PCA9685_ADDRESS_5             0x8A  // A0 = 1, A1 = 0, A2 = 1
+#define PCA9685_ADDRESS_6             0x8C  // A0 = 0, A1 = 1, A2 = 1
+#define PCA9685_ADDRESS_7             0x8E  // A0 = 1, A1 = 1, A2 = 1
 
 // INA3221
 #define INA3221_ADDRESS_0                   0x80   // A0 -> GND

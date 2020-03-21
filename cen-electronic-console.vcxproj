@@ -1,984 +1,984 @@
-<?xml version='1.0' encoding='UTF-8' ?> 
-<!-- was: no XML declaration present -->
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <ItemGroup Label="ProjectConfigurations">
-        <ProjectConfiguration Include="Debug|Win32">
-            <Configuration>Debug</Configuration>
-            <Platform>Win32</Platform>
-        </ProjectConfiguration>
-        <ProjectConfiguration Include="Debug|x64">
-            <Configuration>Debug</Configuration>
-            <Platform>x64</Platform>
-        </ProjectConfiguration>
-        <ProjectConfiguration Include="Release|Win32">
-            <Configuration>Release</Configuration>
-            <Platform>Win32</Platform>
-        </ProjectConfiguration>
-        <ProjectConfiguration Include="Release|x64">
-            <Configuration>Release</Configuration>
-            <Platform>x64</Platform>
-        </ProjectConfiguration>
-    </ItemGroup>
-    <PropertyGroup Label="Globals">
-        <ProjectGuid>{DCB1D86A-5AE0-4527-B347-96E0815B3D74}</ProjectGuid>
-        <Keyword>Win32Proj</Keyword>
-        <RootNamespace>cenelectronicconsole</RootNamespace>
-        <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    </PropertyGroup>
-    <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-        <ConfigurationType>Application</ConfigurationType>
-        <UseDebugLibraries>true</UseDebugLibraries>
-        <PlatformToolset>v142</PlatformToolset>
-        <CharacterSet>Unicode</CharacterSet>
-    </PropertyGroup>
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-        <ConfigurationType>Application</ConfigurationType>
-        <UseDebugLibraries>true</UseDebugLibraries>
-        <PlatformToolset>v142</PlatformToolset>
-        <CharacterSet>Unicode</CharacterSet>
-    </PropertyGroup>
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-        <ConfigurationType>Application</ConfigurationType>
-        <UseDebugLibraries>false</UseDebugLibraries>
-        <PlatformToolset>v142</PlatformToolset>
-        <WholeProgramOptimization>true</WholeProgramOptimization>
-        <CharacterSet>Unicode</CharacterSet>
-    </PropertyGroup>
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-        <ConfigurationType>Application</ConfigurationType>
-        <UseDebugLibraries>false</UseDebugLibraries>
-        <PlatformToolset>v142</PlatformToolset>
-        <WholeProgramOptimization>true</WholeProgramOptimization>
-        <CharacterSet>Unicode</CharacterSet>
-    </PropertyGroup>
-    <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-    <ImportGroup Label="ExtensionSettings">
-    </ImportGroup>
-    <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-        <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    </ImportGroup>
-    <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
-        <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    </ImportGroup>
-    <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-        <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    </ImportGroup>
-    <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
-        <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    </ImportGroup>
-    <PropertyGroup Label="UserMacros" />
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-        <LinkIncremental>true</LinkIncremental>
-        <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    </PropertyGroup>
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-        <LinkIncremental>true</LinkIncremental>
-        <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    </PropertyGroup>
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-        <LinkIncremental>false</LinkIncremental>
-    </PropertyGroup>
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-        <LinkIncremental>false</LinkIncremental>
-    </PropertyGroup>
-    <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-        <ClCompile>
-            <PrecompiledHeader>
-            </PrecompiledHeader>
-            <WarningLevel>Level3</WarningLevel>
-            <Optimization>Disabled</Optimization>
-            <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-        </ClCompile>
-        <Link>
-            <SubSystem>Console</SubSystem>
-            <GenerateDebugInformation>true</GenerateDebugInformation>
-        </Link>
-    </ItemDefinitionGroup>
-    <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-        <ClCompile>
-            <PrecompiledHeader>
-            </PrecompiledHeader>
-            <WarningLevel>Level3</WarningLevel>
-            <Optimization>Disabled</Optimization>
-            <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-        </ClCompile>
-        <Link>
-            <SubSystem>Console</SubSystem>
-            <GenerateDebugInformation>true</GenerateDebugInformation>
-        </Link>
-    </ItemDefinitionGroup>
-    <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-        <ClCompile>
-            <WarningLevel>Level3</WarningLevel>
-            <PrecompiledHeader>
-            </PrecompiledHeader>
-            <Optimization>MaxSpeed</Optimization>
-            <FunctionLevelLinking>true</FunctionLevelLinking>
-            <IntrinsicFunctions>true</IntrinsicFunctions>
-            <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-        </ClCompile>
-        <Link>
-            <SubSystem>Console</SubSystem>
-            <GenerateDebugInformation>true</GenerateDebugInformation>
-            <EnableCOMDATFolding>true</EnableCOMDATFolding>
-            <OptimizeReferences>true</OptimizeReferences>
-        </Link>
-    </ItemDefinitionGroup>
-    <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-        <ClCompile>
-            <WarningLevel>Level3</WarningLevel>
-            <PrecompiledHeader>
-            </PrecompiledHeader>
-            <Optimization>MaxSpeed</Optimization>
-            <FunctionLevelLinking>true</FunctionLevelLinking>
-            <IntrinsicFunctions>true</IntrinsicFunctions>
-            <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-        </ClCompile>
-        <Link>
-            <SubSystem>Console</SubSystem>
-            <GenerateDebugInformation>true</GenerateDebugInformation>
-            <EnableCOMDATFolding>true</EnableCOMDATFolding>
-            <OptimizeReferences>true</OptimizeReferences>
-        </Link>
-    </ItemDefinitionGroup>
-    <ItemGroup>
-        <ClCompile Include="cen-electronic-console.c" />
-        <ClCompile Include="client\clock\clientClock.c" />
-        <ClCompile Include="client\motion\extended\clientExtendedMotion.c" />
-        <ClCompile Include="client\motion\position\clientTrajectory.c" />
-        <ClCompile Include="client\motion\simple\clientMotion.c" />
-        <ClCompile Include="common\2d\2d.c" />
-        <ClCompile Include="common\2d\2dDebug.c" />
-        <ClCompile Include="common\adc\adcutils.c" />
-        <ClCompile Include="common\adc\pc\adcutilsPc.c" />
-        <ClCompile Include="common\ascii\asciiUtils.c" />
-        <ClCompile Include="common\clock\clock.c" />
-        <ClCompile Include="common\color\color.c" />
-        <ClCompile Include="common\color\colorDebug.c" />
-        <ClCompile Include="common\delay\pc\cenDelayPc.c" />
-        <ClCompile Include="common\eeprom\eeprom.c" />
-        <ClCompile Include="common\eeprom\eepromAreas.c" />
-        <ClCompile Include="common\eeprom\eepromType.c" />
-        <ClCompile Include="common\eeprom\memoryEeprom.c" />
-        <ClCompile Include="common\eeprom\pc\eepromPc.c" />
-        <ClCompile Include="common\error\error.c" />
-        <ClCompile Include="common\i2c\i2cBusConnectionList.c" />
-        <ClCompile Include="common\i2c\i2cBusConnectionListDebug.c" />
-        <ClCompile Include="common\i2c\i2cBusList.c" />
-        <ClCompile Include="common\i2c\i2cBusListDebug.c" />
-        <ClCompile Include="common\i2c\i2cCommon.c" />
-        <ClCompile Include="common\i2c\i2cDebug.c" />
-        <ClCompile Include="common\i2c\master\i2cMaster.c" />
-        <ClCompile Include="common\i2c\master\i2cMasterInputStream.c" />
-        <ClCompile Include="common\i2c\master\i2cMasterOutputStream.c" />
-        <ClCompile Include="common\i2c\master\pc\i2cMasterPc.c" />
-        <ClCompile Include="common\i2c\master\pc\i2cMasterSetupPc.c" />
-        <ClCompile Include="common\i2c\pc\i2cCommonPc.c" />
-        <ClCompile Include="common\i2c\slave\i2cSlave.c" />
-        <ClCompile Include="common\i2c\slave\i2cSlaveLink.c" />
-        <ClCompile Include="common\i2c\slave\pc\i2cSlaveInterruptPc.c" />
-        <ClCompile Include="common\i2c\slave\pc\i2cSlavePc.c" />
-        <ClCompile Include="common\i2c\slave\pc\i2cSlaveSetupPc.c" />
-        <ClCompile Include="common\io\binaryPrintWriter.c" />
-        <ClCompile Include="common\io\binaryWriter.c" />
-        <ClCompile Include="common\io\buffer.c" />
-        <ClCompile Include="common\io\bufferDebug.c" />
-        <ClCompile Include="common\io\compositeOutputStream.c" />
-        <ClCompile Include="common\io\filter.c" />
-        <ClCompile Include="common\io\inputStream.c" />
-        <ClCompile Include="common\io\ioUtils.c" />
-        <ClCompile Include="common\io\nullOutputStream.c" />
-        <ClCompile Include="common\io\outputStream.c" />
-        <ClCompile Include="common\io\pc\consoleInputStream.c" />
-        <ClCompile Include="common\io\pc\consoleOutputStream.c" />
-        <ClCompile Include="common\io\pc\pinPc.c" />
-        <ClCompile Include="common\io\pin.c" />
-        <ClCompile Include="common\io\pinDebug.c" />
-        <ClCompile Include="common\io\printTableWriter.c" />
-        <ClCompile Include="common\io\printWriter.c" />
-        <ClCompile Include="common\io\reader.c" />
-        <ClCompile Include="common\io\streamLink.c" />
-        <ClCompile Include="common\log\logger.c" />
-        <ClCompile Include="common\log\loggerDebug.c" />
-        <ClCompile Include="common\log\logHandler.c" />
-        <ClCompile Include="common\log\logHandlerList.c" />
-        <ClCompile Include="common\log\logLevel.c" />
-        <ClCompile Include="common\log\pc\consoleLogHandler.c" />
-        <ClCompile Include="common\math\bcdUtils.c" />
-        <ClCompile Include="common\math\bitList.c" />
-        <ClCompile Include="common\math\cenMath.c" />
-        <ClCompile Include="common\math\hexUtils.c" />
-        <ClCompile Include="common\math\pc\randomPc.c" />
-        <ClCompile Include="common\math\random.c" />
-        <ClCompile Include="common\motor\dualHBridgeMotor.c" />
-        <ClCompile Include="common\motor\pc\dualHBridgeMotorPc.c" />
-        <ClCompile Include="common\pc\file\fileUtils.c" />
-        <ClCompile Include="common\pc\pipe\pipeClientHelper.c" />
-        <ClCompile Include="common\pc\pipe\pipeServerHelper.c" />
-        <ClCompile Include="common\pc\process\processHelper.c" />
-        <ClCompile Include="common\pc\thread\threadHelper.c" />
-        <ClCompile Include="common\pwm\servo\pc\servoListPc.c" />
-        <ClCompile Include="common\pwm\servo\pc\servoPwmPc.c" />
-        <ClCompile Include="common\pwm\servo\servoList.c" />
-        <ClCompile Include="common\pwm\servo\servoPwm.c" />
-        <ClCompile Include="common\pwm\servo\servoPwmDebug.c" />
-        <ClCompile Include="common\sensor\current\current.c" />
-        <ClCompile Include="common\sensor\temperature\temperature.c" />
-        <ClCompile Include="common\serial\pc\serialInputInterruptPc.c" />
-        <ClCompile Include="common\serial\pc\serialPc.c" />
-        <ClCompile Include="common\serial\serialLink.c" />
-        <ClCompile Include="common\serial\serialLinkDebug.c" />
-        <ClCompile Include="common\serial\serialLinkList.c" />
-        <ClCompile Include="common\serial\serialOutputStream.c" />
-        <ClCompile Include="common\string\cenString.c" />
-        <ClCompile Include="common\system\system.c" />
-        <ClCompile Include="common\timer\cenTimer.c" />
-        <ClCompile Include="common\timer\delayTimer.c" />
-        <ClCompile Include="common\timer\pc\timerSetupPc.c" />
-        <ClCompile Include="common\timer\timerDebug.c" />
-        <ClCompile Include="common\timer\timerList.c" />
-        <ClCompile Include="device\adc\adcDevice.c" />
-        <ClCompile Include="device\adc\adcDeviceInterface.c" />
-        <ClCompile Include="device\battery\batteryDevice.c" />
-        <ClCompile Include="device\battery\batteryDeviceInterface.c" />
-        <ClCompile Include="device\beacon\beaconReceiverDeviceInterface.c" />
-        <ClCompile Include="device\clock\clockDevice.c" />
-        <ClCompile Include="device\clock\clockDeviceInterface.c" />
-        <ClCompile Include="device\color\colorDevice.c" />
-        <ClCompile Include="device\color\colorDeviceInterface.c" />
-        <ClCompile Include="device\device.c" />
-        <ClCompile Include="device\deviceDebug.c" />
-        <ClCompile Include="device\deviceDescriptor.c" />
-        <ClCompile Include="device\deviceInterface.c" />
-        <ClCompile Include="device\deviceList.c" />
-        <ClCompile Include="device\deviceUsage.c" />
-        <ClCompile Include="device\dispatcher\dataDispatcherDevice.c" />
-        <ClCompile Include="device\dispatcher\dataDispatcherDeviceInterface.c" />
-        <ClCompile Include="device\dispatcher\deviceDataDispatcher.c" />
-        <ClCompile Include="device\eeprom\eepromDevice.c" />
-        <ClCompile Include="device\eeprom\eepromDeviceInterface.c" />
-        <ClCompile Include="device\gameboard\gameboardDevice.c" />
-        <ClCompile Include="device\gameboard\gameboardDeviceInterface.c" />
-        <ClCompile Include="device\i2c\i2cCommonDebugDevice.c" />
-        <ClCompile Include="device\i2c\i2cCommonDebugDeviceInterface.c" />
-        <ClCompile Include="device\i2c\master\i2cMasterDebugDevice.c" />
-        <ClCompile Include="device\i2c\master\i2cMasterDebugDeviceInterface.c" />
-        <ClCompile Include="device\i2c\multiplexer\multiplexerDevice.c" />
-        <ClCompile Include="device\i2c\multiplexer\multiplexerDeviceInterface.c" />
-        <ClCompile Include="device\i2c\slave\i2cSlaveDebugDevice.c" />
-        <ClCompile Include="device\i2c\slave\i2cSlaveDebugDeviceInterface.c" />
-        <ClCompile Include="device\ioExpander\ioExpanderDevice.c" />
-        <ClCompile Include="device\ioExpander\ioExpanderDeviceInterface.c" />
-        <ClCompile Include="device\io\ioDevice.c" />
-        <ClCompile Include="device\io\ioDeviceInterface.c" />
-        <ClCompile Include="device\lcd\lcdDevice.c" />
-        <ClCompile Include="device\lcd\lcdDeviceInterface.c" />
-        <ClCompile Include="device\led\ledDevice.c" />
-        <ClCompile Include="device\led\ledDeviceInterface.c" />
-        <ClCompile Include="device\log\logDevice.c" />
-        <ClCompile Include="device\log\logDeviceInterface.c" />
-        <ClCompile Include="device\motion\extended\extendedMotionDevice.c" />
-        <ClCompile Include="device\motion\extended\extendedMotionDeviceInterface.c" />
-        <ClCompile Include="device\motion\pid\pidDebugDevice.c" />
-        <ClCompile Include="device\motion\pid\pidDebugDeviceInterface.c" />
-        <ClCompile Include="device\motion\pid\pidDevice.c" />
-        <ClCompile Include="device\motion\pid\pidDeviceInterface.c" />
-        <ClCompile Include="device\motion\position\codersDevice.c" />
-        <ClCompile Include="device\motion\position\codersDeviceInterface.c" />
-        <ClCompile Include="device\motion\position\trajectoryDevice.c" />
-        <ClCompile Include="device\motion\position\trajectoryDeviceInterface.c" />
-        <ClCompile Include="device\motion\simple\motionDevice.c" />
-        <ClCompile Include="device\motion\simple\motionDeviceInterface.c" />
-        <ClCompile Include="device\motion\simulation\motionSimulationDevice.c" />
-        <ClCompile Include="device\motion\simulation\motionSimulationDeviceInterface.c" />
-        <ClCompile Include="device\motor\md22Device.c" />
-        <ClCompile Include="device\motor\md22DeviceInterface.c" />
-        <ClCompile Include="device\motor\pwmMotorDevice.c" />
-        <ClCompile Include="device\motor\pwmMotorDeviceInterface.c" />
-        <ClCompile Include="device\navigation\navigationDevice.c" />
-        <ClCompile Include="device\navigation\navigationDeviceInterface.c" />
-        <ClCompile Include="device\pc\pcDevice.c" />
-        <ClCompile Include="device\pc\pcDeviceInterface.c" />
-        <ClCompile Include="device\relay\relayDevice.c" />
-        <ClCompile Include="device\relay\relayDeviceInterface.c" />
-        <ClCompile Include="device\robot\fake\fakeRobotDevice.c" />
-        <ClCompile Include="device\robot\fake\fakeRobotDeviceInterface.c" />
-        <ClCompile Include="device\sensor\current\currentSensor.c" />
-        <ClCompile Include="device\sensor\current\currentSensorDevice.c" />
-        <ClCompile Include="device\sensor\current\currentSensorDeviceInterface.c" />
-        <ClCompile Include="device\sensor\temperature\temperatureSensor.c" />
-        <ClCompile Include="device\sensor\temperature\temperatureSensorDevice.c" />
-        <ClCompile Include="device\sensor\temperature\temperatureSensorDeviceInterface.c" />
-        <ClCompile Include="device\serial\serialDebugDevice.c" />
-        <ClCompile Include="device\serial\serialDebugDeviceInterface.c" />
-        <ClCompile Include="device\servo\servoDevice.c" />
-        <ClCompile Include="device\servo\servoDeviceInterface.c" />
-        <ClCompile Include="device\strategy\strategyDevice.c" />
-        <ClCompile Include="device\strategy\strategyDeviceInterface.c" />
-        <ClCompile Include="device\system\systemDevice.c" />
-        <ClCompile Include="device\system\systemDeviceInterface.c" />
-        <ClCompile Include="device\test\testDevice.c" />
-        <ClCompile Include="device\test\testDeviceInterface.c" />
-        <ClCompile Include="device\timer\timerDevice.c" />
-        <ClCompile Include="device\timer\timerDeviceInterface.c" />
-        <ClCompile Include="device\tof\tofDevice.c" />
-        <ClCompile Include="device\tof\tofDeviceInterface.c" />
-        <ClCompile Include="device\transmitMode.c" />
-        <ClCompile Include="drivers\battery\battery.c" />
-        <ClCompile Include="drivers\beacon\beaconReceiverDriver.c" />
-        <ClCompile Include="drivers\clock\pc\pcClock.c" />
-        <ClCompile Include="drivers\clock\softClock.c" />
-        <ClCompile Include="drivers\colorSensor\colorSensor.c" />
-        <ClCompile Include="drivers\colorSensor\colorSensorDebug.c" />
-        <ClCompile Include="drivers\colorSensor\pc\colorSensorPc.c" />
-        <ClCompile Include="drivers\dispatcher\dataDispatcherDeviceDriver.c" />
-        <ClCompile Include="drivers\dispatcher\driverDataDispatcher.c" />
-        <ClCompile Include="drivers\dispatcher\driverDataDispatcherDebug.c" />
-        <ClCompile Include="drivers\dispatcher\driverDataDispatcherList.c" />
-        <ClCompile Include="drivers\dispatcher\i2cDriverDataDispatcher.c" />
-        <ClCompile Include="drivers\dispatcher\localDriverDataDispatcher.c" />
-        <ClCompile Include="drivers\dispatcher\remoteDriverDataDispatcher.c" />
-        <ClCompile Include="drivers\driver.c" />
-        <ClCompile Include="drivers\driverList.c" />
-        <ClCompile Include="drivers\driverStreamListener.c" />
-        <ClCompile Include="drivers\driverTransmitter.c" />
-        <ClCompile Include="drivers\file\eeprom\eepromFile.c" />
-        <ClCompile Include="drivers\i2c\multiplexer\multiplexer.c" />
-        <ClCompile Include="drivers\i2c\multiplexer\multiplexerDebug.c" />
-        <ClCompile Include="drivers\i2c\multiplexer\multiplexerList.c" />
-        <ClCompile Include="drivers\i2c\multiplexer\multiplexerTca9548A.c" />
-        <ClCompile Include="drivers\i2c\multiplexer\pc\multiplexerPc.c" />
-        <ClCompile Include="drivers\i2c\multiplexer\tca9548A.c" />
-        <ClCompile Include="drivers\ioExpander\ioExpander.c" />
-        <ClCompile Include="drivers\ioExpander\ioExpanderDebug.c" />
-        <ClCompile Include="drivers\ioExpander\ioExpanderList.c" />
-        <ClCompile Include="drivers\ioExpander\pc\ioExpanderPc.c" />
-        <ClCompile Include="drivers\lcd\lcd.c" />
-        <ClCompile Include="drivers\lcd\pc\lcdProvider_Pc.c" />
-        <ClCompile Include="drivers\led\led.c" />
-        <ClCompile Include="drivers\led\pc\ledPc.c" />
-        <ClCompile Include="drivers\relay\pc\relayPc.c" />
-        <ClCompile Include="drivers\relay\relay.c" />
-        <ClCompile Include="drivers\relay\relayDebug.c" />
-        <ClCompile Include="drivers\sensor\current\pc\currentPc.c" />
-        <ClCompile Include="drivers\sensor\temperature\pc\temperaturePc.c" />
-        <ClCompile Include="drivers\test\testDriver.c" />
-        <ClCompile Include="drivers\tof\pc\tofListDebugPc.c" />
-        <ClCompile Include="drivers\tof\pc\tofListPc.c" />
-        <ClCompile Include="drivers\tof\pc\tofPc.c" />
-        <ClCompile Include="drivers\tof\tof.c" />
-        <ClCompile Include="drivers\tof\tofDebug.c" />
-        <ClCompile Include="drivers\tof\tofDetectionUtils.c" />
-        <ClCompile Include="drivers\tof\tofList.c" />
-        <ClCompile Include="drivers\tof\tofListDebug.c" />
-        <ClCompile Include="drivers\tof\vl53l0x\pc\vl53l0x_platform_pc.c" />
-        <ClCompile Include="drivers\tof\vl53l0x\vl53l0x_api.c" />
-        <ClCompile Include="drivers\tof\vl53l0x\vl53l0x_api_calibration.c" />
-        <ClCompile Include="drivers\tof\vl53l0x\vl53l0x_api_core.c" />
-        <ClCompile Include="drivers\tof\vl53l0x\vl53l0x_api_ranging.c" />
-        <ClCompile Include="drivers\tof\vl53l0x\vl53l0x_api_strings.c" />
-        <ClCompile Include="drivers\tof\vl53l0x\vl53l0x_platform.c" />
-        <ClCompile Include="drivers\tof\vl53l0x\vl53l0x_platform_common.c" />
-        <ClCompile Include="drivers\tof\vl53l0x\vl53l0x_platform_log.c" />
-        <ClCompile Include="main\mainBoard\mainBoardCommonTof.c" />
-        <ClCompile Include="main\mainBoard\mainBoardCommonTofPc.c" />
-        <ClCompile Include="main\mainBoard\mainBoardPc.c" />
-        <ClCompile Include="main\meca1\mechanicalMainBoard1Pc.c" />
-        <ClCompile Include="main\motorboard\motorBoardPc.c" />
-        <ClCompile Include="motion\extended\bspline.c" />
-        <ClCompile Include="motion\extended\bsplineCSVExport.c" />
-        <ClCompile Include="motion\extended\bsplineDebug.c" />
-        <ClCompile Include="motion\extended\bsplineMotion.c" />
-        <ClCompile Include="motion\extended\bsplinePersistence.c" />
-        <ClCompile Include="motion\motion.c" />
-        <ClCompile Include="motion\parameters\motionParameter.c" />
-        <ClCompile Include="motion\parameters\motionParameterDebug.c" />
-        <ClCompile Include="motion\parameters\motionParameterPersistence.c" />
-        <ClCompile Include="motion\parameters\motionParameterType.c" />
-        <ClCompile Include="motion\parameters\motionParameterTypeDebug.c" />
-        <ClCompile Include="motion\pid\alphaTheta.c" />
-        <ClCompile Include="motion\pid\computer\bSplinePidComputer.c" />
-        <ClCompile Include="motion\pid\computer\pidComputer.c" />
-        <ClCompile Include="motion\pid\computer\simplePidComputer.c" />
-        <ClCompile Include="motion\pid\detectedMotionType.c" />
-        <ClCompile Include="motion\pid\endDetection\blocked\motionBlockedDetection.c" />
-        <ClCompile Include="motion\pid\endDetection\failed\motionFailedDetection.c" />
-        <ClCompile Include="motion\pid\endDetection\motionEndDetectionDebug.c" />
-        <ClCompile Include="motion\pid\endDetection\motionEndDetectionStatusUpdater.c" />
-        <ClCompile Include="motion\pid\endDetection\obstacle\motionObstacleDetection.c" />
-        <ClCompile Include="motion\pid\endDetection\parameters\motionEndDetectionParameter.c" />
-        <ClCompile Include="motion\pid\endDetection\parameters\motionEndDetectionParameterPersistence.c" />
-        <ClCompile Include="motion\pid\endDetection\reached\motionReachedDetection.c" />
-        <ClCompile Include="motion\pid\endDetection\shocked\motionShockedDetection.c" />
-        <ClCompile Include="motion\pid\instructionType.c" />
-        <ClCompile Include="motion\pid\motionInstruction.c" />
-        <ClCompile Include="motion\pid\motionInstructionDebug.c" />
-        <ClCompile Include="motion\pid\parameters\pidParameterDebug.c" />
-        <ClCompile Include="motion\pid\parameters\pidParameterPersistence.c" />
-        <ClCompile Include="motion\pid\pc\pidPc.c" />
-        <ClCompile Include="motion\pid\pid.c" />
-        <ClCompile Include="motion\pid\pidComputationInstructionValues.c" />
-        <ClCompile Include="motion\pid\pidComputationInstructionValuesDebug.c" />
-        <ClCompile Include="motion\pid\pidComputationValues.c" />
-        <ClCompile Include="motion\pid\pidDebug.c" />
-        <ClCompile Include="motion\pid\pidMotion.c" />
-        <ClCompile Include="motion\pid\pidMotionDefinitionState.c" />
-        <ClCompile Include="motion\pid\pidMotionType.c" />
-        <ClCompile Include="motion\pid\pidTimer.c" />
-        <ClCompile Include="motion\pid\pidType.c" />
-        <ClCompile Include="motion\pid\pidTypeDebug.c" />
-        <ClCompile Include="motion\pid\pidTypeOptimizer.c" />
-        <ClCompile Include="motion\pid\profile\pidMotionProfileComputer.c" />
-        <ClCompile Include="motion\pid\profile\profileType.c" />
-        <ClCompile Include="motion\position\coderErrorComputer.c" />
-        <ClCompile Include="motion\position\codersDebug.c" />
-        <ClCompile Include="motion\position\mockCoder\mockCoders.c" />
-        <ClCompile Include="motion\position\trajectory.c" />
-        <ClCompile Include="motion\position\trajectoryDebug.c" />
-        <ClCompile Include="motion\position\trajectoryTypeDebug.c" />
-        <ClCompile Include="motion\simple\motionCalibration.c" />
-        <ClCompile Include="motion\simple\simpleMotion.c" />
-        <ClCompile Include="motion\simulation\motionSimulation.c" />
-        <ClCompile Include="navigation\location.c" />
-        <ClCompile Include="navigation\locationDebug.c" />
-        <ClCompile Include="navigation\locationList.c" />
-        <ClCompile Include="navigation\locationListComputer.c" />
-        <ClCompile Include="navigation\locationListDebug.c" />
-        <ClCompile Include="navigation\navigation.c" />
-        <ClCompile Include="navigation\navigationComputer.c" />
-        <ClCompile Include="navigation\navigationDebug.c" />
-        <ClCompile Include="navigation\outgoingPathList.c" />
-        <ClCompile Include="navigation\path.c" />
-        <ClCompile Include="navigation\pathDebug.c" />
-        <ClCompile Include="navigation\pathList.c" />
-        <ClCompile Include="navigation\pathListDebug.c" />
-        <ClCompile Include="robot\2020\arm\arm2020.c" />
-        <ClCompile Include="robot\2020\arm\armDevice2020.c" />
-        <ClCompile Include="robot\2020\arm\armDeviceInterface2020.c" />
-        <ClCompile Include="robot\2020\bigRobot\bigRobotActions2020.c" />
-        <ClCompile Include="robot\2020\bigRobot\bigRobotStrategy2020.c" />
-        <ClCompile Include="robot\2020\commonRobot\commonRobotActions2020.c" />
-        <ClCompile Include="robot\2020\gameboard\gameBoardElement2020.c" />
-        <ClCompile Include="robot\2020\mainBoard2020.c" />
-        <ClCompile Include="robot\2020\smallRobot\smallRobotActions2020.c" />
-        <ClCompile Include="robot\2020\smallRobot\smallRobotStrategy2020.c" />
-        <ClCompile Include="robot\2020\strategy\strategy2020.c" />
-        <ClCompile Include="robot\2020\strategy\strategy2020Utils.c" />
-        <ClCompile Include="robot\2020\strategy\strategyConfig2020.c" />
-        <ClCompile Include="robot\config\pc\robotConfigPc.c" />
-        <ClCompile Include="robot\config\robotConfig.c" />
-        <ClCompile Include="robot\config\robotConfigDebug.c" />
-        <ClCompile Include="robot\config\robotConfigDevice.c" />
-        <ClCompile Include="robot\config\robotConfigDeviceInterface.c" />
-        <ClCompile Include="robot\fake\fakeRobot.c" />
-        <ClCompile Include="robot\gameboard\gameboard.c" />
-        <ClCompile Include="robot\gameboard\gameboardBSplinePrint.c" />
-        <ClCompile Include="robot\gameboard\gameboardElement.c" />
-        <ClCompile Include="robot\gameboard\gameboardElementList.c" />
-        <ClCompile Include="robot\kinematics\robotKinematics.c" />
-        <ClCompile Include="robot\kinematics\robotKinematicsDebug.c" />
-        <ClCompile Include="robot\kinematics\robotKinematicsDevice.c" />
-        <ClCompile Include="robot\kinematics\robotKinematicsDeviceInterface.c" />
-        <ClCompile Include="robot\kinematics\robotKinematicsPersistence.c" />
-        <ClCompile Include="robot\match\endMatch.c" />
-        <ClCompile Include="robot\match\endMatchDebug.c" />
-        <ClCompile Include="robot\match\endMatchDetectorDevice.c" />
-        <ClCompile Include="robot\match\endMatchDetectorDeviceInterface.c" />
-        <ClCompile Include="robot\match\pc\startMatchDetectorPc.c" />
-        <ClCompile Include="robot\match\startMatch.c" />
-        <ClCompile Include="robot\match\startMatchDebug.c" />
-        <ClCompile Include="robot\match\startMatchDevice.c" />
-        <ClCompile Include="robot\match\startMatchDeviceInterface.c" />
-        <ClCompile Include="robot\robot.c" />
-        <ClCompile Include="robot\robotTypeDebug.c" />
-        <ClCompile Include="robot\strategy\factor\composedGainFactor.c" />
-        <ClCompile Include="robot\strategy\factor\distanceGainFactor.c" />
-        <ClCompile Include="robot\strategy\factor\opponentRobotGainFactor.c" />
-        <ClCompile Include="robot\strategy\factor\timeGainFactor.c" />
-        <ClCompile Include="robot\strategy\gameStrategy.c" />
-        <ClCompile Include="robot\strategy\gameStrategyCollisionHandler.c" />
-        <ClCompile Include="robot\strategy\gameStrategyContext.c" />
-        <ClCompile Include="robot\strategy\gameStrategyContextDebug.c" />
-        <ClCompile Include="robot\strategy\gameStrategyDebug.c" />
-        <ClCompile Include="robot\strategy\gameStrategyHandler.c" />
-        <ClCompile Include="robot\strategy\gameStrategyMotionHandler.c" />
-        <ClCompile Include="robot\strategy\gameStrategyItem.c" />
-        <ClCompile Include="robot\strategy\gameStrategyList.c" />
-        <ClCompile Include="robot\strategy\gameStrategyListDebug.c" />
-        <ClCompile Include="robot\strategy\gameStrategyOutsidePathHandler.c" />
-        <ClCompile Include="robot\strategy\gameStrategyPositionHandler.c" />
-        <ClCompile Include="robot\strategy\gameTarget.c" />
-        <ClCompile Include="robot\strategy\gameTargetAction.c" />
-        <ClCompile Include="robot\strategy\gameTargetActionDebug.c" />
-        <ClCompile Include="robot\strategy\gameTargetActionItem.c" />
-        <ClCompile Include="robot\strategy\gameTargetActionItemDebug.c" />
-        <ClCompile Include="robot\strategy\gameTargetActionItemList.c" />
-        <ClCompile Include="robot\strategy\gameTargetActionList.c" />
-        <ClCompile Include="robot\strategy\gameTargetActionListDebug.c" />
-        <ClCompile Include="robot\strategy\gameTargetList.c" />
-        <ClCompile Include="robot\strategy\gameTargetListDebug.c" />
-        <ClCompile Include="robot\strategy\gameTargetStatus.c" />
-        <ClCompile Include="robot\strategy\nextGameStrategyItemComputer.c" />
-        <ClCompile Include="robot\strategy\teamColor.c" />
-        <ClCompile Include="robot\tof\strategyTofSensorList.c" />
-        <ClCompile Include="test\allTests.c" />
-        <ClCompile Include="test\common\2d\2dTest.c" />
-        <ClCompile Include="test\common\eeprom\memoryEepromTest.c" />
-        <ClCompile Include="test\common\io\bufferTest.c" />
-        <ClCompile Include="test\common\io\compositeOutputStreamTest.c" />
-        <ClCompile Include="test\common\io\filterTest.c" />
-        <ClCompile Include="test\common\io\ioUtilsTest.c" />
-        <ClCompile Include="test\common\io\printWriterTest.c" />
-        <ClCompile Include="test\common\io\readerTest.c" />
-        <ClCompile Include="test\common\math\bcdUtilsTest.c" />
-        <ClCompile Include="test\common\math\bitListTest.c" />
-        <ClCompile Include="test\common\math\cenMathTest.c" />
-        <ClCompile Include="test\common\math\hexUtilsTest.c" />
-        <ClCompile Include="test\device\deviceTest.c" />
-        <ClCompile Include="test\device\system\systemDeviceTest.c" />
-        <ClCompile Include="test\drivers\dispatchers\driverDataDispatcherListTest.c" />
-        <ClCompile Include="test\drivers\test\testDriverTest.c" />
-        <ClCompile Include="test\navigation\locationListTest.c" />
-        <ClCompile Include="test\navigation\navigationTest.c" />
-        <ClCompile Include="test\navigation\pathListTest.c" />
-        <ClCompile Include="test\unity\unity.c" />
-    </ItemGroup>
-    <ItemGroup>
-        <ClInclude Include="client\motion\extended\clientExtendedMotion.h" />
-        <ClInclude Include="client\motion\position\clientTrajectory.h" />
-        <ClInclude Include="client\motion\simple\clientMotion.h" />
-        <ClInclude Include="common\2d\2d.h" />
-        <ClInclude Include="common\2d\2dDebug.h" />
-        <ClInclude Include="common\ascii\asciiUtils.h" />
-        <ClInclude Include="common\clock\clock.h" />
-        <ClInclude Include="common\cmd\commonCommand.h" />
-        <ClInclude Include="common\color\color.h" />
-        <ClInclude Include="common\color\colorDebug.h" />
-        <ClInclude Include="common\commons.h" />
-        <ClInclude Include="common\delay\cenDelay.h" />
-        <ClInclude Include="common\delay\pc\cenDelayPc.h" />
-        <ClInclude Include="common\eeprom\eeprom.h" />
-        <ClInclude Include="common\eeprom\eepromAreas.h" />
-        <ClInclude Include="common\eeprom\memoryEeprom.h" />
-        <ClInclude Include="common\eeprom\pc\eepromPc.h" />
-        <ClInclude Include="common\error\error.h" />
-        <ClInclude Include="common\i2c\i2cBusConnectionList.h" />
-        <ClInclude Include="common\i2c\i2cBusConnectionListDebug.h" />
-        <ClInclude Include="common\i2c\i2cBusList.h" />
-        <ClInclude Include="common\i2c\i2cBusListDebug.h" />
-        <ClInclude Include="common\i2c\i2cCommon.h" />
-        <ClInclude Include="common\i2c\i2cConstants.h" />
-        <ClInclude Include="common\i2c\i2cDebug.h" />
-        <ClInclude Include="common\i2c\master\i2cMaster.h" />
-        <ClInclude Include="common\i2c\master\i2cMasterInputStream.h" />
-        <ClInclude Include="common\i2c\master\i2cMasterOutputStream.h" />
-        <ClInclude Include="common\i2c\master\i2cMasterSetup.h" />
-        <ClInclude Include="common\i2c\master\pc\i2cMasterPc.h" />
-        <ClInclude Include="common\i2c\master\pc\i2cMasterSetupPc.h" />
-        <ClInclude Include="common\i2c\pc\i2cCommonPc.h" />
-        <ClInclude Include="common\i2c\slave\i2cSlave.h" />
-        <ClInclude Include="common\i2c\slave\i2cSlaveLink.h" />
-        <ClInclude Include="common\i2c\slave\i2cSlaveSetup.h" />
-        <ClInclude Include="common\i2c\slave\i2cSlaveStream.h" />
-        <ClInclude Include="common\i2c\slave\pc\i2cSlaveInterruptPc.h" />
-        <ClInclude Include="common\i2c\slave\pc\i2cSlavePc.h" />
-        <ClInclude Include="common\i2c\slave\pc\i2cSlaveSetupPc.h" />
-        <ClInclude Include="common\io\binaryPrintWriter.h" />
-        <ClInclude Include="common\io\binaryWriter.h" />
-        <ClInclude Include="common\io\buffer.h" />
-        <ClInclude Include="common\io\bufferDebug.h" />
-        <ClInclude Include="common\io\cenIO.h" />
-        <ClInclude Include="common\io\compositeOutputStream.h" />
-        <ClInclude Include="common\io\filter.h" />
-        <ClInclude Include="common\io\inputStream.h" />
-        <ClInclude Include="common\io\ioUtils.h" />
-        <ClInclude Include="common\io\nullOutputStream.h" />
-        <ClInclude Include="common\io\outputStream.h" />
-        <ClInclude Include="common\io\pc\consoleInputStream.h" />
-        <ClInclude Include="common\io\pc\consoleOutputStream.h" />
-        <ClInclude Include="common\io\pc\pinPc.h" />
-        <ClInclude Include="common\io\pin.h" />
-        <ClInclude Include="common\io\pinDebug.h" />
-        <ClInclude Include="common\io\printTableWriter.h" />
-        <ClInclude Include="common\io\printWriter.h" />
-        <ClInclude Include="common\io\reader.h" />
-        <ClInclude Include="common\io\stream.h" />
-        <ClInclude Include="common\io\streamLink.h" />
-        <ClInclude Include="common\log\logger.h" />
-        <ClInclude Include="common\log\loggerDebug.h" />
-        <ClInclude Include="common\log\logHandler.h" />
-        <ClInclude Include="common\log\logHandlerList.h" />
-        <ClInclude Include="common\log\logLevel.h" />
-        <ClInclude Include="common\log\pc\consoleLogHandler.h" />
-        <ClInclude Include="common\math\bcdUtils.h" />
-        <ClInclude Include="common\math\bitList.h" />
-        <ClInclude Include="common\math\cenMath.h" />
-        <ClInclude Include="common\math\hexUtils.h" />
-        <ClInclude Include="common\math\random.h" />
-        <ClInclude Include="common\motor\pc\dualHBridgeMotorPc.h" />
-        <ClInclude Include="common\pc\file\fileUtils.h" />
-        <ClInclude Include="common\pc\pipe\pipeClientHelper.h" />
-        <ClInclude Include="common\pc\pipe\pipeServerHelper.h" />
-        <ClInclude Include="common\pc\process\processHelper.h" />
-        <ClInclude Include="common\pc\thread\threadHelper.h" />
-        <ClInclude Include="common\pwm\motor\dualHBridgeMotorPwm.h" />
-        <ClInclude Include="common\pwm\servo\pc\servoListPc.h" />
-        <ClInclude Include="common\pwm\servo\pc\servoPwmPc.h" />
-        <ClInclude Include="common\pwm\servo\servoList.h" />
-        <ClInclude Include="common\pwm\servo\servoPwm.h" />
-        <ClInclude Include="common\pwm\servo\servoPwmDebug.h" />
-        <ClInclude Include="common\sensor\current\current.h" />
-        <ClInclude Include="common\sensor\temperature\temperature.h" />
-        <ClInclude Include="common\serial\pc\serialPc.h" />
-        <ClInclude Include="common\serial\serial.h" />
-        <ClInclude Include="common\serial\serialInputInterrupt.h" />
-        <ClInclude Include="common\serial\serialLink.h" />
-        <ClInclude Include="common\serial\serialLinkDebug.h" />
-        <ClInclude Include="common\serial\serialLinkList.h" />
-        <ClInclude Include="common\serial\serialOutputStream.h" />
-        <ClInclude Include="common\system\system.h" />
-        <ClInclude Include="common\timer\cenTimer.h" />
-        <ClInclude Include="common\timer\delayTimer.h" />
-        <ClInclude Include="common\timer\timerDebug.h" />
-        <ClInclude Include="common\timer\timerInterrupt.h" />
-        <ClInclude Include="common\timer\timerList.h" />
-        <ClInclude Include="common\timer\timerSetup.h" />
-        <ClInclude Include="device\adc\adcDevice.h" />
-        <ClInclude Include="device\adc\adcDeviceInterface.h" />
-        <ClInclude Include="device\battery\batteryDevice.h" />
-        <ClInclude Include="device\battery\batteryDeviceInterface.h" />
-        <ClInclude Include="device\beacon\beaconReceiverDeviceInterface.h" />
-        <ClInclude Include="device\clock\clockDevice.h" />
-        <ClInclude Include="device\clock\clockDeviceInterface.h" />
-        <ClInclude Include="device\color\colorDevice.h" />
-        <ClInclude Include="device\color\colorDeviceInterface.h" />
-        <ClInclude Include="device\device.h" />
-        <ClInclude Include="device\deviceConstants.h" />
-        <ClInclude Include="device\deviceDebug.h" />
-        <ClInclude Include="device\deviceDescriptor.h" />
-        <ClInclude Include="device\deviceInterface.h" />
-        <ClInclude Include="device\deviceList.h" />
-        <ClInclude Include="device\deviceUsage.h" />
-        <ClInclude Include="device\dispatcher\dataDispatcherDevice.h" />
-        <ClInclude Include="device\dispatcher\dataDispatcherDeviceInterface.h" />
-        <ClInclude Include="device\dispatcher\deviceDataDispatcher.h" />
-        <ClInclude Include="device\eeprom\eepromDevice.h" />
-        <ClInclude Include="device\eeprom\eepromDeviceInterface.h" />
-        <ClInclude Include="device\gameboard\gameboardDevice.h" />
-        <ClInclude Include="device\gameboard\gameboardDeviceInterface.h" />
-        <ClInclude Include="device\i2c\i2cCommonDebugDevice.h" />
-        <ClInclude Include="device\i2c\i2cCommonDebugDeviceInterface.h" />
-        <ClInclude Include="device\i2c\master\i2cMasterDebugDevice.h" />
-        <ClInclude Include="device\i2c\master\i2cMasterDebugDeviceInterface.h" />
-        <ClInclude Include="device\i2c\multiplexer\multiplexerDevice.h" />
-        <ClInclude Include="device\i2c\multiplexer\multiplexerDeviceInterface.h" />
-        <ClInclude Include="device\i2c\slave\i2cSlaveDebugDevice.h" />
-        <ClInclude Include="device\i2c\slave\i2cSlaveDebugDeviceInterface.h" />
-        <ClInclude Include="device\ioExpander\ioExpanderDevice.h" />
-        <ClInclude Include="device\ioExpander\ioExpanderDeviceInterface.h" />
-        <ClInclude Include="device\lcd\lcdDevice.h" />
-        <ClInclude Include="device\lcd\lcdDeviceInterface.h" />
-        <ClInclude Include="device\log\logDevice.h" />
-        <ClInclude Include="device\log\logDeviceInterface.h" />
-        <ClInclude Include="device\motion\extended\extendedMotionDevice.h" />
-        <ClInclude Include="device\motion\extended\extendedMotionDeviceInterface.h" />
-        <ClInclude Include="device\motion\pid\pidDebugDevice.h" />
-        <ClInclude Include="device\motion\pid\pidDebugDeviceInterface.h" />
-        <ClInclude Include="device\motion\pid\pidDevice.h" />
-        <ClInclude Include="device\motion\pid\pidDeviceInterface.h" />
-        <ClInclude Include="device\motion\position\codersDevice.h" />
-        <ClInclude Include="device\motion\position\codersDeviceInterface.h" />
-        <ClInclude Include="device\motion\position\trajectoryDevice.h" />
-        <ClInclude Include="device\motion\position\trajectoryDeviceInterface.h" />
-        <ClInclude Include="device\motion\simple\motionDevice.h" />
-        <ClInclude Include="device\motion\simple\motionDeviceInterface.h" />
-        <ClInclude Include="device\motion\simulation\motionSimulationDevice.h" />
-        <ClInclude Include="device\motion\simulation\motionSimulationDeviceInterface.h" />
-        <ClInclude Include="device\motor\md22Device.h" />
-        <ClInclude Include="device\motor\md22DeviceInterface.h" />
-        <ClInclude Include="device\motor\pwmMotorDevice.h" />
-        <ClInclude Include="device\motor\pwmMotorDeviceInterface.h" />
-        <ClInclude Include="device\navigation\navigationDevice.h" />
-        <ClInclude Include="device\navigation\navigationDeviceInterface.h" />
-        <ClInclude Include="device\pc\pcDevice.h" />
-        <ClInclude Include="device\pc\pcDeviceInterface.h" />
-        <ClInclude Include="device\relay\relayDevice.h" />
-        <ClInclude Include="device\relay\relayDeviceInterface.h" />
-        <ClInclude Include="device\robot\fake\fakeRobotDevice.h" />
-        <ClInclude Include="device\robot\fake\fakeRobotDeviceInterface.h" />
-        <ClInclude Include="device\sensor\current\currentSensor.h" />
-        <ClInclude Include="device\sensor\current\currentSensorDevice.h" />
-        <ClInclude Include="device\sensor\current\currentSensorDeviceInterface.h" />
-        <ClInclude Include="device\sensor\temperature\temperatureSensor.h" />
-        <ClInclude Include="device\sensor\temperature\temperatureSensorDevice.h" />
-        <ClInclude Include="device\sensor\temperature\temperatureSensorDeviceInterface.h" />
-        <ClInclude Include="device\serial\serialDebugDevice.h" />
-        <ClInclude Include="device\serial\serialDebugDeviceInterface.h" />
-        <ClInclude Include="device\servo\servoDevice.h" />
-        <ClInclude Include="device\servo\servoDeviceInterface.h" />
-        <ClInclude Include="device\strategy\strategyDevice.h" />
-        <ClInclude Include="device\strategy\strategyDeviceInterface.h" />
-        <ClInclude Include="device\system\systemDevice.h" />
-        <ClInclude Include="device\system\systemDeviceInterface.h" />
-        <ClInclude Include="device\test\testDevice.h" />
-        <ClInclude Include="device\test\testDeviceInterface.h" />
-        <ClInclude Include="device\timer\timerDevice.h" />
-        <ClInclude Include="device\timer\timerDeviceInterface.h" />
-        <ClInclude Include="device\tof\tofDevice.h" />
-        <ClInclude Include="device\tof\tofDeviceInterface.h" />
-        <ClInclude Include="device\transmitMode.h" />
-        <ClInclude Include="drivers\battery\battery.h" />
-        <ClInclude Include="drivers\beacon\beaconReceiverDriver.h" />
-        <ClInclude Include="drivers\clock\pc\pcClock.h" />
-        <ClInclude Include="drivers\clock\softClock.h" />
-        <ClInclude Include="drivers\colorSensor\colorSensor.h" />
-        <ClInclude Include="drivers\colorSensor\colorSensorDebug.h" />
-        <ClInclude Include="drivers\colorSensor\pc\colorSensorPc.h" />
-        <ClInclude Include="drivers\dispatcher\dataDispatcherDeviceDriver.h" />
-        <ClInclude Include="drivers\dispatcher\driverDataDispatcher.h" />
-        <ClInclude Include="drivers\dispatcher\driverDataDispatcherDebug.h" />
-        <ClInclude Include="drivers\dispatcher\driverDataDispatcherList.h" />
-        <ClInclude Include="drivers\dispatcher\i2cDriverDataDispatcher.h" />
-        <ClInclude Include="drivers\dispatcher\localDriverDataDispatcher.h" />
-        <ClInclude Include="drivers\dispatcher\remoteDriverDataDispatcher.h" />
-        <ClInclude Include="drivers\driver.h" />
-        <ClInclude Include="drivers\driverList.h" />
-        <ClInclude Include="drivers\driverStreamListener.h" />
-        <ClInclude Include="drivers\driverTransmitter.h" />
-        <ClInclude Include="drivers\file\eeprom\eepromFile.h" />
-        <ClInclude Include="drivers\i2c\multiplexer\multiplexer.h" />
-        <ClInclude Include="drivers\i2c\multiplexer\multiplexerDebug.h" />
-        <ClInclude Include="drivers\i2c\multiplexer\multiplexerList.h" />
-        <ClInclude Include="drivers\i2c\multiplexer\multiplexerTca9548A.h" />
-        <ClInclude Include="drivers\i2c\multiplexer\pc\multiplexerPc.h" />
-        <ClInclude Include="drivers\i2c\multiplexer\tca9548A.h" />
-        <ClInclude Include="drivers\ioExpander\ioExpander.h" />
-        <ClInclude Include="drivers\ioExpander\ioExpanderList.h" />
-        <ClInclude Include="drivers\io\ioExpanderDebug.h" />
-        <ClInclude Include="drivers\io\pc\ioExpanderPc.h" />
-        <ClInclude Include="drivers\lcd\lcd.h" />
-        <ClInclude Include="drivers\led\led.h" />
-        <ClInclude Include="drivers\led\pc\ledPc.h" />
-        <ClInclude Include="drivers\relay\pc\relayPc.h" />
-        <ClInclude Include="drivers\relay\relay.h" />
-        <ClInclude Include="drivers\relay\relayDebug.h" />
-        <ClInclude Include="drivers\sensor\current\pc\currentPc.h" />
-        <ClInclude Include="drivers\sensor\temperature\pc\temperaturePc.h" />
-        <ClInclude Include="drivers\test\testDriver.h" />
-        <ClInclude Include="drivers\tof\pc\tofListDebugPc.h" />
-        <ClInclude Include="drivers\tof\pc\tofListPc.h" />
-        <ClInclude Include="drivers\tof\pc\tofPc.h" />
-        <ClInclude Include="drivers\tof\tof.h" />
-        <ClInclude Include="drivers\tof\tofDebug.h" />
-        <ClInclude Include="drivers\tof\tofDetectionUtils.h" />
-        <ClInclude Include="drivers\tof\tofList.h" />
-        <ClInclude Include="drivers\tof\tofListDebug.h" />
-        <ClInclude Include="drivers\tof\vl53l0x\vl53l0x_api.h" />
-        <ClInclude Include="drivers\tof\vl53l0x\vl53l0x_api_calibration.h" />
-        <ClInclude Include="drivers\tof\vl53l0x\vl53l0x_api_core.h" />
-        <ClInclude Include="drivers\tof\vl53l0x\vl53l0x_api_ranging.h" />
-        <ClInclude Include="drivers\tof\vl53l0x\vl53l0x_api_strings.h" />
-        <ClInclude Include="drivers\tof\vl53l0x\vl53l0x_def.h" />
-        <ClInclude Include="drivers\tof\vl53l0x\vl53l0x_device.h" />
-        <ClInclude Include="drivers\tof\vl53l0x\vl53l0x_i2c_platform.h" />
-        <ClInclude Include="drivers\tof\vl53l0x\vl53l0x_interrupt_threshold_settings.h" />
-        <ClInclude Include="drivers\tof\vl53l0x\vl53l0x_platform.h" />
-        <ClInclude Include="drivers\tof\vl53l0x\vl53l0x_platform_log.h" />
-        <ClInclude Include="drivers\tof\vl53l0x\vl53l0x_tuning.h" />
-        <ClInclude Include="drivers\tof\vl53l0x\vl53l0x_types.h" />
-        <ClInclude Include="main\mainBoard\mainBoardCommon.h" />
-        <ClInclude Include="main\mainBoard\mainBoardCommonTof.h" />
-        <ClInclude Include="main\mainBoard\mainBoardCommonTofPc.h" />
-        <ClInclude Include="main\mainBoard\mainBoardPc.h" />
-        <ClInclude Include="main\meca1\mechanicalMainBoard1Common.h" />
-        <ClInclude Include="main\meca1\mechanicalMainBoard1Pc.h" />
-        <ClInclude Include="main\motorboard\motorBoardCommon.h" />
-        <ClInclude Include="main\motorboard\motorBoardPc.h" />
-        <ClInclude Include="motion\extended\bspline.h" />
-        <ClInclude Include="motion\extended\bsplineCSVExport.h" />
-        <ClInclude Include="motion\extended\bsplineDebug.h" />
-        <ClInclude Include="motion\extended\bsplineMotion.h" />
-        <ClInclude Include="motion\extended\bsplinePersistence.h" />
-        <ClInclude Include="motion\motion.h" />
-        <ClInclude Include="motion\motionConstants.h" />
-        <ClInclude Include="motion\parameters\motionParameter.h" />
-        <ClInclude Include="motion\parameters\motionParameterDebug.h" />
-        <ClInclude Include="motion\parameters\motionParameterPersistence.h" />
-        <ClInclude Include="motion\parameters\motionParameterType.h" />
-        <ClInclude Include="motion\parameters\motionParameterTypeDebug.h" />
-        <ClInclude Include="motion\pid\alphaTheta.h" />
-        <ClInclude Include="motion\pid\computer\bSplinePidComputer.h" />
-        <ClInclude Include="motion\pid\computer\pidComputer.h" />
-        <ClInclude Include="motion\pid\computer\simplePidComputer.h" />
-        <ClInclude Include="motion\pid\detectedMotionType.h" />
-        <ClInclude Include="motion\pid\endDetection\blocked\motionBlockedDetection.h" />
-        <ClInclude Include="motion\pid\endDetection\failed\motionFailedDetection.h" />
-        <ClInclude Include="motion\pid\endDetection\motionEndDetection.h" />
-        <ClInclude Include="motion\pid\endDetection\motionEndDetectionDebug.h" />
-        <ClInclude Include="motion\pid\endDetection\motionEndDetectionStatusUpdater.h" />
-        <ClInclude Include="motion\pid\endDetection\obstacle\motionObstacleDetection.h" />
-        <ClInclude Include="motion\pid\endDetection\parameters\motionEndDetectionParameter.h" />
-        <ClInclude Include="motion\pid\endDetection\parameters\motionEndDetectionParameterPersistence.h" />
-        <ClInclude Include="motion\pid\endDetection\reached\motionReachedDetection.h" />
-        <ClInclude Include="motion\pid\endDetection\shocked\motionShockedDetection.h" />
-        <ClInclude Include="motion\pid\instructionType.h" />
-        <ClInclude Include="motion\pid\motionInstruction.h" />
-        <ClInclude Include="motion\pid\motionInstructionDebug.h" />
-        <ClInclude Include="motion\pid\parameters\pidGlobalParameters.h" />
-        <ClInclude Include="motion\pid\parameters\pidParameter.h" />
-        <ClInclude Include="motion\pid\parameters\pidParameterDebug.h" />
-        <ClInclude Include="motion\pid\parameters\pidParameterPersistence.h" />
-        <ClInclude Include="motion\pid\pc\pidPc.h" />
-        <ClInclude Include="motion\pid\pid.h" />
-        <ClInclude Include="motion\pid\pidComputationInstructionValues.h" />
-        <ClInclude Include="motion\pid\pidComputationInstructionValuesDebug.h" />
-        <ClInclude Include="motion\pid\pidComputationValues.h" />
-        <ClInclude Include="motion\pid\pidConstants.h" />
-        <ClInclude Include="motion\pid\pidMotion.h" />
-        <ClInclude Include="motion\pid\pidMotionDefinitionState.h" />
-        <ClInclude Include="motion\pid\pidMotionType.h" />
-        <ClInclude Include="motion\pid\pidTimer.h" />
-        <ClInclude Include="motion\pid\pidType.h" />
-        <ClInclude Include="motion\pid\pidTypeDebug.h" />
-        <ClInclude Include="motion\pid\pidTypeOptimizer.h" />
-        <ClInclude Include="motion\pid\profileType.h" />
-        <ClInclude Include="motion\pid\profile\pidMotionProfileComputer.h" />
-        <ClInclude Include="motion\pid\profile\profileType.h" />
-        <ClInclude Include="motion\position\coderErrorComputer.h" />
-        <ClInclude Include="motion\position\coders.h" />
-        <ClInclude Include="motion\position\codersDebug.h" />
-        <ClInclude Include="motion\position\trajectory.h" />
-        <ClInclude Include="motion\position\trajectoryDebug.h" />
-        <ClInclude Include="motion\position\trajectoryTypeDebug.h" />
-        <ClInclude Include="motion\simple\motionCalibration.h" />
-        <ClInclude Include="motion\simple\simpleMotion.h" />
-        <ClInclude Include="motion\simulation\motionSimulation.h" />
-        <ClInclude Include="navigation\location.h" />
-        <ClInclude Include="navigation\locationDebug.h" />
-        <ClInclude Include="navigation\locationList.h" />
-        <ClInclude Include="navigation\locationListComputer.h" />
-        <ClInclude Include="navigation\locationListDebug.h" />
-        <ClInclude Include="navigation\navigation.h" />
-        <ClInclude Include="navigation\navigationComputer.h" />
-        <ClInclude Include="navigation\navigationDebug.h" />
-        <ClInclude Include="navigation\outgoingPath.h" />
-        <ClInclude Include="navigation\outgoingPathList.h" />
-        <ClInclude Include="navigation\path.h" />
-        <ClInclude Include="navigation\pathDebug.h" />
-        <ClInclude Include="navigation\pathList.h" />
-        <ClInclude Include="navigation\pathListDebug.h" />
-        <ClInclude Include="resource.h" />
-        <ClInclude Include="robot\2020\arm\arm2020.h" />
-        <ClInclude Include="robot\2020\arm\armDevice2020.h" />
-        <ClInclude Include="robot\2020\arm\armDeviceInterface2020.h" />
-        <ClInclude Include="robot\2020\bigRobot\bigRobotActions2020.h" />
-        <ClInclude Include="robot\2020\bigRobot\bigRobotLocation2020.h" />
-        <ClInclude Include="robot\2020\bigRobot\bigRobotPath2020.h" />
-        <ClInclude Include="robot\2020\bigRobot\bigRobotStrategy2020.h" />
-        <ClInclude Include="robot\2020\commonRobot\commonRobotActions2020.h" />
-        <ClInclude Include="robot\2020\commonRobot\commonRobotLocations2020.h" />
-        <ClInclude Include="robot\2020\gameboard\gameBoardElement2020.h" />
-        <ClInclude Include="robot\2020\mainBoard2020.h" />
-        <ClInclude Include="robot\2020\navigation\angle2020.h" />
-        <ClInclude Include="robot\2020\navigation\location2020.h" />
-        <ClInclude Include="robot\2020\navigation\path2020.h" />
-        <ClInclude Include="robot\2020\smallRobot\smallRobotActions2020.h" />
-        <ClInclude Include="robot\2020\smallRobot\smallRobotLocation2020.h" />
-        <ClInclude Include="robot\2020\smallRobot\smallRobotPath2020.h" />
-        <ClInclude Include="robot\2020\smallRobot\smallRobotStrategy2020.h" />
-        <ClInclude Include="robot\2020\strategy\score2020.h" />
-        <ClInclude Include="robot\2020\strategy\strategy2020.h" />
-        <ClInclude Include="robot\2020\strategy\strategy2020Utils.h" />
-        <ClInclude Include="robot\2020\strategy\strategyConfig2020.h" />
-        <ClInclude Include="robot\2020\strategy\teamColor2020.h" />
-        <ClInclude Include="robot\config\pc\robotConfigPc.h" />
-        <ClInclude Include="robot\config\robotConfig.h" />
-        <ClInclude Include="robot\config\robotConfigDebug.h" />
-        <ClInclude Include="robot\config\robotConfigDevice.h" />
-        <ClInclude Include="robot\config\robotConfigDeviceInterface.h" />
-        <ClInclude Include="robot\fake\fakeRobot.h" />
-        <ClInclude Include="robot\gameboard\gameboard.h" />
-        <ClInclude Include="robot\gameboard\gameboardBSplinePrint.h" />
-        <ClInclude Include="robot\gameboard\gameboardElement.h" />
-        <ClInclude Include="robot\gameboard\gameboardElementList.h" />
-        <ClInclude Include="robot\kinematics\robotKinematics.h" />
-        <ClInclude Include="robot\kinematics\robotKinematicsDebug.h" />
-        <ClInclude Include="robot\kinematics\robotKinematicsDevice.h" />
-        <ClInclude Include="robot\kinematics\robotKinematicsDeviceInterface.h" />
-        <ClInclude Include="robot\kinematics\robotKinematicsPersistence.h" />
-        <ClInclude Include="robot\match\endMatch.h" />
-        <ClInclude Include="robot\match\endMatchDebug.h" />
-        <ClInclude Include="robot\match\endMatchDetectorDevice.h" />
-        <ClInclude Include="robot\match\endMatchDetectorDeviceInterface.h" />
-        <ClInclude Include="robot\match\pc\startMatchDetectorPc.h" />
-        <ClInclude Include="robot\match\startMatch.h" />
-        <ClInclude Include="robot\match\startMatchDebug.h" />
-        <ClInclude Include="robot\match\startMatchDetector.h" />
-        <ClInclude Include="robot\match\startMatchDeviceInterface.h" />
-        <ClInclude Include="robot\robot.h" />
-        <ClInclude Include="robot\robotConstants.h" />
-        <ClInclude Include="robot\robotType.h" />
-        <ClInclude Include="robot\robotTypeDebug.h" />
-        <ClInclude Include="robot\strategy\factor\composedGainFactor.h" />
-        <ClInclude Include="robot\strategy\factor\distanceGainFactor.h" />
-        <ClInclude Include="robot\strategy\factor\gainFactor.h" />
-        <ClInclude Include="robot\strategy\factor\opponentRobotGainFactor.h" />
-        <ClInclude Include="robot\strategy\factor\timeGainFactor.h" />
-        <ClInclude Include="robot\strategy\gameStrategy.h" />
-        <ClInclude Include="robot\strategy\gameStrategyCollisionHandler.h" />
-        <ClInclude Include="robot\strategy\gameStrategyContext.h" />
-        <ClInclude Include="robot\strategy\gameStrategyContextDebug.h" />
-        <ClInclude Include="robot\strategy\gameStrategyDebug.h" />
-        <ClInclude Include="robot\strategy\gameStrategyHandler.h" />
-        <ClInclude Include="robot\strategy\gameStrategyMotionHandler.h" />
-        <ClInclude Include="robot\strategy\gameStrategyItem.h" />
-        <ClInclude Include="robot\strategy\gameStrategyList.h" />
-        <ClInclude Include="robot\strategy\gameStrategyListDebug.h" />
-        <ClInclude Include="robot\strategy\gameStrategyOutsidePathHandler.h" />
-        <ClInclude Include="robot\strategy\gameStrategyPositionHandler.h" />
-        <ClInclude Include="robot\strategy\gameTarget.h" />
-        <ClInclude Include="robot\strategy\gameTargetAction.h" />
-        <ClInclude Include="robot\strategy\gameTargetActionDebug.h" />
-        <ClInclude Include="robot\strategy\gameTargetActionItem.h" />
-        <ClInclude Include="robot\strategy\gameTargetActionItemDebug.h" />
-        <ClInclude Include="robot\strategy\gameTargetActionItemList.h" />
-        <ClInclude Include="robot\strategy\gameTargetActionList.h" />
-        <ClInclude Include="robot\strategy\gameTargetActionListDebug.h" />
-        <ClInclude Include="robot\strategy\gameTargetList.h" />
-        <ClInclude Include="robot\strategy\gameTargetListDebug.h" />
-        <ClInclude Include="robot\strategy\gameTargetStatus.h" />
-        <ClInclude Include="robot\strategy\nextGameStrategyItemComputer.h" />
-        <ClInclude Include="robot\strategy\teamColor.h" />
-        <ClInclude Include="robot\tof\strategyTofSensorList.h" />
-        <ClInclude Include="test\allTests.h" />
-        <ClInclude Include="test\common\2d\2dTest.h" />
-        <ClInclude Include="test\common\eeprom\memoryEepromTest.h" />
-        <ClInclude Include="test\common\io\bufferTest.h" />
-        <ClInclude Include="test\common\io\compositeOutputStreamTest.h" />
-        <ClInclude Include="test\common\io\filterTest.h" />
-        <ClInclude Include="test\common\io\ioUtilsTest.h" />
-        <ClInclude Include="test\common\io\printWriterTest.h" />
-        <ClInclude Include="test\common\io\readerTest.h" />
-        <ClInclude Include="test\common\math\bcdUtilsTest.h" />
-        <ClInclude Include="test\common\math\bitListTest.h" />
-        <ClInclude Include="test\common\math\cenMathTest.h" />
-        <ClInclude Include="test\common\math\hexUtilsTest.h" />
-        <ClInclude Include="test\device\system\systemDeviceTest.h" />
-        <ClInclude Include="test\drivers\dispatchers\driverDataDispatcherListTest.h" />
-        <ClInclude Include="test\drivers\test\testDriverTest.h" />
-        <ClInclude Include="test\motion\bspline\bsplineListTest.h" />
-        <ClInclude Include="test\navigation\locationListTest.h" />
-        <ClInclude Include="test\navigation\navigationTest.h" />
-        <ClInclude Include="test\navigation\pathListTest.h" />
-        <ClInclude Include="test\unity\unity.h" />
-        <ClInclude Include="test\unity\unity_internals.h" />
-    </ItemGroup>
-    <ItemGroup>
-        <ResourceCompile Include="cen-electronic-console.rc" />
-    </ItemGroup>
-    <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-    <ImportGroup Label="ExtensionTargets">
-    </ImportGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{DCB1D86A-5AE0-4527-B347-96E0815B3D74}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>cenelectronicconsole</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="cen-electronic-console.c" />
+    <ClCompile Include="client\clock\clientClock.c" />
+    <ClCompile Include="client\motion\extended\clientExtendedMotion.c" />
+    <ClCompile Include="client\motion\position\clientTrajectory.c" />
+    <ClCompile Include="client\motion\simple\clientMotion.c" />
+    <ClCompile Include="common\2d\2d.c" />
+    <ClCompile Include="common\2d\2dDebug.c" />
+    <ClCompile Include="common\adc\adcutils.c" />
+    <ClCompile Include="common\adc\pc\adcutilsPc.c" />
+    <ClCompile Include="common\ascii\asciiUtils.c" />
+    <ClCompile Include="common\clock\clock.c" />
+    <ClCompile Include="common\color\color.c" />
+    <ClCompile Include="common\color\colorDebug.c" />
+    <ClCompile Include="common\delay\pc\cenDelayPc.c" />
+    <ClCompile Include="common\eeprom\eeprom.c" />
+    <ClCompile Include="common\eeprom\eepromAreas.c" />
+    <ClCompile Include="common\eeprom\eepromType.c" />
+    <ClCompile Include="common\eeprom\memoryEeprom.c" />
+    <ClCompile Include="common\eeprom\pc\eepromPc.c" />
+    <ClCompile Include="common\error\error.c" />
+    <ClCompile Include="common\i2c\i2cBusConnectionList.c" />
+    <ClCompile Include="common\i2c\i2cBusConnectionListDebug.c" />
+    <ClCompile Include="common\i2c\i2cBusList.c" />
+    <ClCompile Include="common\i2c\i2cBusListDebug.c" />
+    <ClCompile Include="common\i2c\i2cCommon.c" />
+    <ClCompile Include="common\i2c\i2cDebug.c" />
+    <ClCompile Include="common\i2c\master\i2cMaster.c" />
+    <ClCompile Include="common\i2c\master\i2cMasterInputStream.c" />
+    <ClCompile Include="common\i2c\master\i2cMasterOutputStream.c" />
+    <ClCompile Include="common\i2c\master\pc\i2cMasterPc.c" />
+    <ClCompile Include="common\i2c\master\pc\i2cMasterSetupPc.c" />
+    <ClCompile Include="common\i2c\pc\i2cCommonPc.c" />
+    <ClCompile Include="common\i2c\slave\i2cSlave.c" />
+    <ClCompile Include="common\i2c\slave\i2cSlaveLink.c" />
+    <ClCompile Include="common\i2c\slave\pc\i2cSlaveInterruptPc.c" />
+    <ClCompile Include="common\i2c\slave\pc\i2cSlavePc.c" />
+    <ClCompile Include="common\i2c\slave\pc\i2cSlaveSetupPc.c" />
+    <ClCompile Include="common\io\binaryPrintWriter.c" />
+    <ClCompile Include="common\io\binaryWriter.c" />
+    <ClCompile Include="common\io\buffer.c" />
+    <ClCompile Include="common\io\bufferDebug.c" />
+    <ClCompile Include="common\io\compositeOutputStream.c" />
+    <ClCompile Include="common\io\filter.c" />
+    <ClCompile Include="common\io\inputStream.c" />
+    <ClCompile Include="common\io\ioUtils.c" />
+    <ClCompile Include="common\io\nullOutputStream.c" />
+    <ClCompile Include="common\io\outputStream.c" />
+    <ClCompile Include="common\io\pc\consoleInputStream.c" />
+    <ClCompile Include="common\io\pc\consoleOutputStream.c" />
+    <ClCompile Include="common\io\pc\pinPc.c" />
+    <ClCompile Include="common\io\pin.c" />
+    <ClCompile Include="common\io\printTableWriter.c" />
+    <ClCompile Include="common\io\printWriter.c" />
+    <ClCompile Include="common\io\reader.c" />
+    <ClCompile Include="common\io\streamLink.c" />
+    <ClCompile Include="common\log\logger.c" />
+    <ClCompile Include="common\log\loggerDebug.c" />
+    <ClCompile Include="common\log\logHandler.c" />
+    <ClCompile Include="common\log\logHandlerList.c" />
+    <ClCompile Include="common\log\logLevel.c" />
+    <ClCompile Include="common\log\pc\consoleLogHandler.c" />
+    <ClCompile Include="common\math\bcdUtils.c" />
+    <ClCompile Include="common\math\bitList.c" />
+    <ClCompile Include="common\math\cenMath.c" />
+    <ClCompile Include="common\math\hexUtils.c" />
+    <ClCompile Include="common\math\pc\randomPc.c" />
+    <ClCompile Include="common\math\random.c" />
+    <ClCompile Include="common\motor\dualHBridgeMotor.c" />
+    <ClCompile Include="common\motor\pc\dualHBridgeMotorPc.c" />
+    <ClCompile Include="common\pc\file\fileUtils.c" />
+    <ClCompile Include="common\pc\pipe\pipeClientHelper.c" />
+    <ClCompile Include="common\pc\pipe\pipeServerHelper.c" />
+    <ClCompile Include="common\pc\process\processHelper.c" />
+    <ClCompile Include="common\pc\thread\threadHelper.c" />
+    <ClCompile Include="common\pwm\servo\pc\servoListPc.c" />
+    <ClCompile Include="common\pwm\servo\pc\servoPwmPc.c" />
+    <ClCompile Include="common\pwm\servo\servoList.c" />
+    <ClCompile Include="common\pwm\servo\servoPwm.c" />
+    <ClCompile Include="common\pwm\servo\servoPwmDebug.c" />
+    <ClCompile Include="common\sensor\current\current.c" />
+    <ClCompile Include="common\sensor\temperature\temperature.c" />
+    <ClCompile Include="common\serial\pc\serialInputInterruptPc.c" />
+    <ClCompile Include="common\serial\pc\serialPc.c" />
+    <ClCompile Include="common\serial\serialLink.c" />
+    <ClCompile Include="common\serial\serialLinkDebug.c" />
+    <ClCompile Include="common\serial\serialLinkList.c" />
+    <ClCompile Include="common\serial\serialOutputStream.c" />
+    <ClCompile Include="common\string\cenString.c" />
+    <ClCompile Include="common\system\system.c" />
+    <ClCompile Include="common\timer\cenTimer.c" />
+    <ClCompile Include="common\timer\delayTimer.c" />
+    <ClCompile Include="common\timer\pc\timerSetupPc.c" />
+    <ClCompile Include="common\timer\timerDebug.c" />
+    <ClCompile Include="common\timer\timerList.c" />
+    <ClCompile Include="device\adc\adcDevice.c" />
+    <ClCompile Include="device\adc\adcDeviceInterface.c" />
+    <ClCompile Include="device\battery\batteryDevice.c" />
+    <ClCompile Include="device\battery\batteryDeviceInterface.c" />
+    <ClCompile Include="device\beacon\beaconReceiverDeviceInterface.c" />
+    <ClCompile Include="device\clock\clockDevice.c" />
+    <ClCompile Include="device\clock\clockDeviceInterface.c" />
+    <ClCompile Include="device\color\colorDevice.c" />
+    <ClCompile Include="device\color\colorDeviceInterface.c" />
+    <ClCompile Include="device\device.c" />
+    <ClCompile Include="device\deviceDebug.c" />
+    <ClCompile Include="device\deviceDescriptor.c" />
+    <ClCompile Include="device\deviceInterface.c" />
+    <ClCompile Include="device\deviceList.c" />
+    <ClCompile Include="device\deviceUsage.c" />
+    <ClCompile Include="device\dispatcher\dataDispatcherDevice.c" />
+    <ClCompile Include="device\dispatcher\dataDispatcherDeviceInterface.c" />
+    <ClCompile Include="device\dispatcher\deviceDataDispatcher.c" />
+    <ClCompile Include="device\eeprom\eepromDevice.c" />
+    <ClCompile Include="device\eeprom\eepromDeviceInterface.c" />
+    <ClCompile Include="device\gameboard\gameboardDevice.c" />
+    <ClCompile Include="device\gameboard\gameboardDeviceInterface.c" />
+    <ClCompile Include="device\i2c\i2cCommonDebugDevice.c" />
+    <ClCompile Include="device\i2c\i2cCommonDebugDeviceInterface.c" />
+    <ClCompile Include="device\i2c\master\i2cMasterDebugDevice.c" />
+    <ClCompile Include="device\i2c\master\i2cMasterDebugDeviceInterface.c" />
+    <ClCompile Include="device\i2c\multiplexer\multiplexerDevice.c" />
+    <ClCompile Include="device\i2c\multiplexer\multiplexerDeviceInterface.c" />
+    <ClCompile Include="device\i2c\slave\i2cSlaveDebugDevice.c" />
+    <ClCompile Include="device\i2c\slave\i2cSlaveDebugDeviceInterface.c" />
+    <ClCompile Include="device\ioExpander\ioExpanderDevice.c" />
+    <ClCompile Include="device\ioExpander\ioExpanderDeviceInterface.c" />
+    <ClCompile Include="device\io\ioDevice.c" />
+    <ClCompile Include="device\io\ioDeviceInterface.c" />
+    <ClCompile Include="device\lcd\lcdDevice.c" />
+    <ClCompile Include="device\lcd\lcdDeviceInterface.c" />
+    <ClCompile Include="device\led\ledDevice.c" />
+    <ClCompile Include="device\led\ledDeviceInterface.c" />
+    <ClCompile Include="device\log\logDevice.c" />
+    <ClCompile Include="device\log\logDeviceInterface.c" />
+    <ClCompile Include="device\motion\extended\extendedMotionDevice.c" />
+    <ClCompile Include="device\motion\extended\extendedMotionDeviceInterface.c" />
+    <ClCompile Include="device\motion\pid\pidDebugDevice.c" />
+    <ClCompile Include="device\motion\pid\pidDebugDeviceInterface.c" />
+    <ClCompile Include="device\motion\pid\pidDevice.c" />
+    <ClCompile Include="device\motion\pid\pidDeviceInterface.c" />
+    <ClCompile Include="device\motion\position\codersDevice.c" />
+    <ClCompile Include="device\motion\position\codersDeviceInterface.c" />
+    <ClCompile Include="device\motion\position\trajectoryDevice.c" />
+    <ClCompile Include="device\motion\position\trajectoryDeviceInterface.c" />
+    <ClCompile Include="device\motion\simple\motionDevice.c" />
+    <ClCompile Include="device\motion\simple\motionDeviceInterface.c" />
+    <ClCompile Include="device\motion\simulation\motionSimulationDevice.c" />
+    <ClCompile Include="device\motion\simulation\motionSimulationDeviceInterface.c" />
+    <ClCompile Include="device\motor\md22Device.c" />
+    <ClCompile Include="device\motor\md22DeviceInterface.c" />
+    <ClCompile Include="device\motor\pwmMotorDevice.c" />
+    <ClCompile Include="device\motor\pwmMotorDeviceInterface.c" />
+    <ClCompile Include="device\navigation\navigationDevice.c" />
+    <ClCompile Include="device\navigation\navigationDeviceInterface.c" />
+    <ClCompile Include="device\pc\pcDevice.c" />
+    <ClCompile Include="device\pc\pcDeviceInterface.c" />
+    <ClCompile Include="device\relay\relayDevice.c" />
+    <ClCompile Include="device\relay\relayDeviceInterface.c" />
+    <ClCompile Include="device\robot\fake\fakeRobotDevice.c" />
+    <ClCompile Include="device\robot\fake\fakeRobotDeviceInterface.c" />
+    <ClCompile Include="device\sensor\current\currentSensor.c" />
+    <ClCompile Include="device\sensor\current\currentSensorDevice.c" />
+    <ClCompile Include="device\sensor\current\currentSensorDeviceInterface.c" />
+    <ClCompile Include="device\sensor\temperature\temperatureSensor.c" />
+    <ClCompile Include="device\sensor\temperature\temperatureSensorDevice.c" />
+    <ClCompile Include="device\sensor\temperature\temperatureSensorDeviceInterface.c" />
+    <ClCompile Include="device\serial\serialDebugDevice.c" />
+    <ClCompile Include="device\serial\serialDebugDeviceInterface.c" />
+    <ClCompile Include="device\servo\servoDevice.c" />
+    <ClCompile Include="device\servo\servoDeviceInterface.c" />
+    <ClCompile Include="device\strategy\strategyDevice.c" />
+    <ClCompile Include="device\strategy\strategyDeviceInterface.c" />
+    <ClCompile Include="device\system\systemDevice.c" />
+    <ClCompile Include="device\system\systemDeviceInterface.c" />
+    <ClCompile Include="device\test\testDevice.c" />
+    <ClCompile Include="device\test\testDeviceInterface.c" />
+    <ClCompile Include="device\timer\timerDevice.c" />
+    <ClCompile Include="device\timer\timerDeviceInterface.c" />
+    <ClCompile Include="device\tof\tofDevice.c" />
+    <ClCompile Include="device\tof\tofDeviceInterface.c" />
+    <ClCompile Include="device\transmitMode.c" />
+    <ClCompile Include="drivers\battery\battery.c" />
+    <ClCompile Include="drivers\beacon\beaconReceiverDriver.c" />
+    <ClCompile Include="drivers\clock\pc\pcClock.c" />
+    <ClCompile Include="drivers\clock\softClock.c" />
+    <ClCompile Include="drivers\colorSensor\colorSensor.c" />
+    <ClCompile Include="drivers\colorSensor\colorSensorDebug.c" />
+    <ClCompile Include="drivers\colorSensor\pc\colorSensorPc.c" />
+    <ClCompile Include="drivers\dispatcher\dataDispatcherDeviceDriver.c" />
+    <ClCompile Include="drivers\dispatcher\driverDataDispatcher.c" />
+    <ClCompile Include="drivers\dispatcher\driverDataDispatcherDebug.c" />
+    <ClCompile Include="drivers\dispatcher\driverDataDispatcherList.c" />
+    <ClCompile Include="drivers\dispatcher\i2cDriverDataDispatcher.c" />
+    <ClCompile Include="drivers\dispatcher\localDriverDataDispatcher.c" />
+    <ClCompile Include="drivers\dispatcher\remoteDriverDataDispatcher.c" />
+    <ClCompile Include="drivers\driver.c" />
+    <ClCompile Include="drivers\driverList.c" />
+    <ClCompile Include="drivers\driverStreamListener.c" />
+    <ClCompile Include="drivers\driverTransmitter.c" />
+    <ClCompile Include="drivers\file\eeprom\eepromFile.c" />
+    <ClCompile Include="drivers\i2c\multiplexer\multiplexer.c" />
+    <ClCompile Include="drivers\i2c\multiplexer\multiplexerDebug.c" />
+    <ClCompile Include="drivers\i2c\multiplexer\multiplexerList.c" />
+    <ClCompile Include="drivers\i2c\multiplexer\multiplexerTca9548A.c" />
+    <ClCompile Include="drivers\i2c\multiplexer\pc\multiplexerPc.c" />
+    <ClCompile Include="drivers\i2c\multiplexer\tca9548A.c" />
+    <ClCompile Include="drivers\ioExpander\ioExpander.c" />
+    <ClCompile Include="drivers\ioExpander\ioExpanderDebug.c" />
+    <ClCompile Include="drivers\ioExpander\ioExpanderList.c" />
+    <ClCompile Include="drivers\ioExpander\pc\ioExpanderPc.c" />
+    <ClCompile Include="drivers\lcd\lcd.c" />
+    <ClCompile Include="drivers\lcd\pc\lcdProvider_Pc.c" />
+    <ClCompile Include="drivers\led\led.c" />
+    <ClCompile Include="drivers\led\pc\ledPc.c" />
+    <ClCompile Include="drivers\relay\pc\relayPc.c" />
+    <ClCompile Include="drivers\relay\relay.c" />
+    <ClCompile Include="drivers\relay\relayDebug.c" />
+    <ClCompile Include="drivers\sensor\current\pc\currentPc.c" />
+    <ClCompile Include="drivers\sensor\temperature\pc\temperaturePc.c" />
+    <ClCompile Include="drivers\test\testDriver.c" />
+    <ClCompile Include="drivers\tof\pc\tofListDebugPc.c" />
+    <ClCompile Include="drivers\tof\pc\tofListPc.c" />
+    <ClCompile Include="drivers\tof\pc\tofPc.c" />
+    <ClCompile Include="drivers\tof\tof.c" />
+    <ClCompile Include="drivers\tof\tofDebug.c" />
+    <ClCompile Include="drivers\tof\tofDetectionUtils.c" />
+    <ClCompile Include="drivers\tof\tofList.c" />
+    <ClCompile Include="drivers\tof\tofListDebug.c" />
+    <ClCompile Include="drivers\tof\vl53l0x\pc\vl53l0x_platform_pc.c" />
+    <ClCompile Include="drivers\tof\vl53l0x\vl53l0x_api.c" />
+    <ClCompile Include="drivers\tof\vl53l0x\vl53l0x_api_calibration.c" />
+    <ClCompile Include="drivers\tof\vl53l0x\vl53l0x_api_core.c" />
+    <ClCompile Include="drivers\tof\vl53l0x\vl53l0x_api_ranging.c" />
+    <ClCompile Include="drivers\tof\vl53l0x\vl53l0x_api_strings.c" />
+    <ClCompile Include="drivers\tof\vl53l0x\vl53l0x_platform.c" />
+    <ClCompile Include="drivers\tof\vl53l0x\vl53l0x_platform_common.c" />
+    <ClCompile Include="drivers\tof\vl53l0x\vl53l0x_platform_log.c" />
+    <ClCompile Include="main\mainBoard\mainBoardCommonTof.c" />
+    <ClCompile Include="main\mainBoard\mainBoardCommonTofPc.c" />
+    <ClCompile Include="main\mainBoard\mainBoardPc.c" />
+    <ClCompile Include="main\meca1\mechanicalMainBoard1Pc.c" />
+    <ClCompile Include="main\motorboard\motorBoardPc.c" />
+    <ClCompile Include="motion\extended\bspline.c" />
+    <ClCompile Include="motion\extended\bsplineCSVExport.c" />
+    <ClCompile Include="motion\extended\bsplineDebug.c" />
+    <ClCompile Include="motion\extended\bsplineMotion.c" />
+    <ClCompile Include="motion\extended\bsplinePersistence.c" />
+    <ClCompile Include="motion\motion.c" />
+    <ClCompile Include="motion\parameters\motionParameter.c" />
+    <ClCompile Include="motion\parameters\motionParameterDebug.c" />
+    <ClCompile Include="motion\parameters\motionParameterPersistence.c" />
+    <ClCompile Include="motion\parameters\motionParameterType.c" />
+    <ClCompile Include="motion\parameters\motionParameterTypeDebug.c" />
+    <ClCompile Include="motion\pid\alphaTheta.c" />
+    <ClCompile Include="motion\pid\computer\bSplinePidComputer.c" />
+    <ClCompile Include="motion\pid\computer\pidComputer.c" />
+    <ClCompile Include="motion\pid\computer\simplePidComputer.c" />
+    <ClCompile Include="motion\pid\detectedMotionType.c" />
+    <ClCompile Include="motion\pid\endDetection\blocked\motionBlockedDetection.c" />
+    <ClCompile Include="motion\pid\endDetection\failed\motionFailedDetection.c" />
+    <ClCompile Include="motion\pid\endDetection\motionEndDetectionDebug.c" />
+    <ClCompile Include="motion\pid\endDetection\motionEndDetectionStatusUpdater.c" />
+    <ClCompile Include="motion\pid\endDetection\obstacle\motionObstacleDetection.c" />
+    <ClCompile Include="motion\pid\endDetection\parameters\motionEndDetectionParameter.c" />
+    <ClCompile Include="motion\pid\endDetection\parameters\motionEndDetectionParameterPersistence.c" />
+    <ClCompile Include="motion\pid\endDetection\reached\motionReachedDetection.c" />
+    <ClCompile Include="motion\pid\endDetection\shocked\motionShockedDetection.c" />
+    <ClCompile Include="motion\pid\instructionType.c" />
+    <ClCompile Include="motion\pid\motionInstruction.c" />
+    <ClCompile Include="motion\pid\motionInstructionDebug.c" />
+    <ClCompile Include="motion\pid\parameters\pidParameterDebug.c" />
+    <ClCompile Include="motion\pid\parameters\pidParameterPersistence.c" />
+    <ClCompile Include="motion\pid\pc\pidPc.c" />
+    <ClCompile Include="motion\pid\pid.c" />
+    <ClCompile Include="motion\pid\pidComputationInstructionValues.c" />
+    <ClCompile Include="motion\pid\pidComputationInstructionValuesDebug.c" />
+    <ClCompile Include="motion\pid\pidComputationValues.c" />
+    <ClCompile Include="motion\pid\pidDebug.c" />
+    <ClCompile Include="motion\pid\pidMotion.c" />
+    <ClCompile Include="motion\pid\pidMotionDefinitionState.c" />
+    <ClCompile Include="motion\pid\pidMotionType.c" />
+    <ClCompile Include="motion\pid\pidTimer.c" />
+    <ClCompile Include="motion\pid\pidType.c" />
+    <ClCompile Include="motion\pid\pidTypeDebug.c" />
+    <ClCompile Include="motion\pid\pidTypeOptimizer.c" />
+    <ClCompile Include="motion\pid\profile\pidMotionProfileComputer.c" />
+    <ClCompile Include="motion\pid\profile\profileType.c" />
+    <ClCompile Include="motion\position\coderErrorComputer.c" />
+    <ClCompile Include="motion\position\codersDebug.c" />
+    <ClCompile Include="motion\position\mockCoder\mockCoders.c" />
+    <ClCompile Include="motion\position\trajectory.c" />
+    <ClCompile Include="motion\position\trajectoryDebug.c" />
+    <ClCompile Include="motion\position\trajectoryTypeDebug.c" />
+    <ClCompile Include="motion\simple\motionCalibration.c" />
+    <ClCompile Include="motion\simple\simpleMotion.c" />
+    <ClCompile Include="motion\simulation\motionSimulation.c" />
+    <ClCompile Include="navigation\location.c" />
+    <ClCompile Include="navigation\locationDebug.c" />
+    <ClCompile Include="navigation\locationList.c" />
+    <ClCompile Include="navigation\locationListComputer.c" />
+    <ClCompile Include="navigation\locationListDebug.c" />
+    <ClCompile Include="navigation\navigation.c" />
+    <ClCompile Include="navigation\navigationComputer.c" />
+    <ClCompile Include="navigation\navigationDebug.c" />
+    <ClCompile Include="navigation\outgoingPathList.c" />
+    <ClCompile Include="navigation\path.c" />
+    <ClCompile Include="navigation\pathDebug.c" />
+    <ClCompile Include="navigation\pathList.c" />
+    <ClCompile Include="navigation\pathListDebug.c" />
+    <ClCompile Include="robot\2020\arm\arm2020.c" />
+    <ClCompile Include="robot\2020\arm\armDevice2020.c" />
+    <ClCompile Include="robot\2020\arm\armDeviceInterface2020.c" />
+    <ClCompile Include="robot\2020\bigRobot\bigRobotActions2020.c" />
+    <ClCompile Include="robot\2020\bigRobot\bigRobotStrategy2020.c" />
+    <ClCompile Include="robot\2020\commonRobot\commonRobotActions2020.c" />
+    <ClCompile Include="robot\2020\gameboard\gameBoardElement2020.c" />
+    <ClCompile Include="robot\2020\mainBoard2020.c" />
+    <ClCompile Include="robot\2020\smallRobot\smallRobotActions2020.c" />
+    <ClCompile Include="robot\2020\smallRobot\smallRobotStrategy2020.c" />
+    <ClCompile Include="robot\2020\strategy\strategy2020.c" />
+    <ClCompile Include="robot\2020\strategy\strategy2020Utils.c" />
+    <ClCompile Include="robot\2020\strategy\strategyConfig2020.c" />
+    <ClCompile Include="robot\config\pc\robotConfigPc.c" />
+    <ClCompile Include="robot\config\robotConfig.c" />
+    <ClCompile Include="robot\config\robotConfigDebug.c" />
+    <ClCompile Include="robot\config\robotConfigDevice.c" />
+    <ClCompile Include="robot\config\robotConfigDeviceInterface.c" />
+    <ClCompile Include="robot\fake\fakeRobot.c" />
+    <ClCompile Include="robot\gameboard\gameboard.c" />
+    <ClCompile Include="robot\gameboard\gameboardBSplinePrint.c" />
+    <ClCompile Include="robot\gameboard\gameboardElement.c" />
+    <ClCompile Include="robot\gameboard\gameboardElementList.c" />
+    <ClCompile Include="robot\kinematics\robotKinematics.c" />
+    <ClCompile Include="robot\kinematics\robotKinematicsDebug.c" />
+    <ClCompile Include="robot\kinematics\robotKinematicsDevice.c" />
+    <ClCompile Include="robot\kinematics\robotKinematicsDeviceInterface.c" />
+    <ClCompile Include="robot\kinematics\robotKinematicsPersistence.c" />
+    <ClCompile Include="robot\match\endMatch.c" />
+    <ClCompile Include="robot\match\endMatchDebug.c" />
+    <ClCompile Include="robot\match\endMatchDetectorDevice.c" />
+    <ClCompile Include="robot\match\endMatchDetectorDeviceInterface.c" />
+    <ClCompile Include="robot\match\pc\startMatchDetectorPc.c" />
+    <ClCompile Include="robot\match\startMatch.c" />
+    <ClCompile Include="robot\match\startMatchDebug.c" />
+    <ClCompile Include="robot\match\startMatchDevice.c" />
+    <ClCompile Include="robot\match\startMatchDeviceInterface.c" />
+    <ClCompile Include="robot\robot.c" />
+    <ClCompile Include="robot\robotTypeDebug.c" />
+    <ClCompile Include="robot\strategy\factor\composedGainFactor.c" />
+    <ClCompile Include="robot\strategy\factor\distanceGainFactor.c" />
+    <ClCompile Include="robot\strategy\factor\opponentRobotGainFactor.c" />
+    <ClCompile Include="robot\strategy\factor\timeGainFactor.c" />
+    <ClCompile Include="robot\strategy\gameStrategy.c" />
+    <ClCompile Include="robot\strategy\gameStrategyCollisionHandler.c" />
+    <ClCompile Include="robot\strategy\gameStrategyContext.c" />
+    <ClCompile Include="robot\strategy\gameStrategyContextDebug.c" />
+    <ClCompile Include="robot\strategy\gameStrategyDebug.c" />
+    <ClCompile Include="robot\strategy\gameStrategyHandler.c" />
+    <ClCompile Include="robot\strategy\gameStrategyMotionHandler.c" />
+    <ClCompile Include="robot\strategy\gameStrategyItem.c" />
+    <ClCompile Include="robot\strategy\gameStrategyList.c" />
+    <ClCompile Include="robot\strategy\gameStrategyListDebug.c" />
+    <ClCompile Include="robot\strategy\gameStrategyOutsidePathHandler.c" />
+    <ClCompile Include="robot\strategy\gameStrategyPositionHandler.c" />
+    <ClCompile Include="robot\strategy\gameTarget.c" />
+    <ClCompile Include="robot\strategy\gameTargetAction.c" />
+    <ClCompile Include="robot\strategy\gameTargetActionDebug.c" />
+    <ClCompile Include="robot\strategy\gameTargetActionItem.c" />
+    <ClCompile Include="robot\strategy\gameTargetActionItemDebug.c" />
+    <ClCompile Include="robot\strategy\gameTargetActionItemList.c" />
+    <ClCompile Include="robot\strategy\gameTargetActionList.c" />
+    <ClCompile Include="robot\strategy\gameTargetActionListDebug.c" />
+    <ClCompile Include="robot\strategy\gameTargetList.c" />
+    <ClCompile Include="robot\strategy\gameTargetListDebug.c" />
+    <ClCompile Include="robot\strategy\gameTargetStatus.c" />
+    <ClCompile Include="robot\strategy\nextGameStrategyItemComputer.c" />
+    <ClCompile Include="robot\strategy\teamColor.c" />
+    <ClCompile Include="robot\tof\strategyTofSensorList.c" />
+    <ClCompile Include="test\allTests.c" />
+    <ClCompile Include="test\common\2d\2dTest.c" />
+    <ClCompile Include="test\common\eeprom\memoryEepromTest.c" />
+    <ClCompile Include="test\common\io\bufferTest.c" />
+    <ClCompile Include="test\common\io\compositeOutputStreamTest.c" />
+    <ClCompile Include="test\common\io\filterTest.c" />
+    <ClCompile Include="test\common\io\ioUtilsTest.c" />
+    <ClCompile Include="test\common\io\printWriterTest.c" />
+    <ClCompile Include="test\common\io\readerTest.c" />
+    <ClCompile Include="test\common\math\bcdUtilsTest.c" />
+    <ClCompile Include="test\common\math\bitListTest.c" />
+    <ClCompile Include="test\common\math\cenMathTest.c" />
+    <ClCompile Include="test\common\math\hexUtilsTest.c" />
+    <ClCompile Include="test\device\deviceTest.c" />
+    <ClCompile Include="test\device\system\systemDeviceTest.c" />
+    <ClCompile Include="test\drivers\dispatchers\driverDataDispatcherListTest.c" />
+    <ClCompile Include="test\drivers\test\testDriverTest.c" />
+    <ClCompile Include="test\navigation\locationListTest.c" />
+    <ClCompile Include="test\navigation\navigationTest.c" />
+    <ClCompile Include="test\navigation\pathListTest.c" />
+    <ClCompile Include="test\unity\unity.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="client\motion\extended\clientExtendedMotion.h" />
+    <ClInclude Include="client\motion\position\clientTrajectory.h" />
+    <ClInclude Include="client\motion\simple\clientMotion.h" />
+    <ClInclude Include="common\2d\2d.h" />
+    <ClInclude Include="common\2d\2dDebug.h" />
+    <ClInclude Include="common\ascii\asciiUtils.h" />
+    <ClInclude Include="common\clock\clock.h" />
+    <ClInclude Include="common\cmd\commonCommand.h" />
+    <ClInclude Include="common\color\color.h" />
+    <ClInclude Include="common\color\colorDebug.h" />
+    <ClInclude Include="common\commons.h" />
+    <ClInclude Include="common\delay\cenDelay.h" />
+    <ClInclude Include="common\delay\pc\cenDelayPc.h" />
+    <ClInclude Include="common\eeprom\eeprom.h" />
+    <ClInclude Include="common\eeprom\eepromAreas.h" />
+    <ClInclude Include="common\eeprom\memoryEeprom.h" />
+    <ClInclude Include="common\eeprom\pc\eepromPc.h" />
+    <ClInclude Include="common\error\error.h" />
+    <ClInclude Include="common\i2c\i2cBusConnectionList.h" />
+    <ClInclude Include="common\i2c\i2cBusConnectionListDebug.h" />
+    <ClInclude Include="common\i2c\i2cBusList.h" />
+    <ClInclude Include="common\i2c\i2cBusListDebug.h" />
+    <ClInclude Include="common\i2c\i2cCommon.h" />
+    <ClInclude Include="common\i2c\i2cConstants.h" />
+    <ClInclude Include="common\i2c\i2cDebug.h" />
+    <ClInclude Include="common\i2c\master\i2cMaster.h" />
+    <ClInclude Include="common\i2c\master\i2cMasterInputStream.h" />
+    <ClInclude Include="common\i2c\master\i2cMasterOutputStream.h" />
+    <ClInclude Include="common\i2c\master\i2cMasterSetup.h" />
+    <ClInclude Include="common\i2c\master\pc\i2cMasterPc.h" />
+    <ClInclude Include="common\i2c\master\pc\i2cMasterSetupPc.h" />
+    <ClInclude Include="common\i2c\pc\i2cCommonPc.h" />
+    <ClInclude Include="common\i2c\slave\i2cSlave.h" />
+    <ClInclude Include="common\i2c\slave\i2cSlaveLink.h" />
+    <ClInclude Include="common\i2c\slave\i2cSlaveSetup.h" />
+    <ClInclude Include="common\i2c\slave\i2cSlaveStream.h" />
+    <ClInclude Include="common\i2c\slave\pc\i2cSlaveInterruptPc.h" />
+    <ClInclude Include="common\i2c\slave\pc\i2cSlavePc.h" />
+    <ClInclude Include="common\i2c\slave\pc\i2cSlaveSetupPc.h" />
+    <ClInclude Include="common\io\binaryPrintWriter.h" />
+    <ClInclude Include="common\io\binaryWriter.h" />
+    <ClInclude Include="common\io\buffer.h" />
+    <ClInclude Include="common\io\bufferDebug.h" />
+    <ClInclude Include="common\io\cenIO.h" />
+    <ClInclude Include="common\io\compositeOutputStream.h" />
+    <ClInclude Include="common\io\filter.h" />
+    <ClInclude Include="common\io\inputStream.h" />
+    <ClInclude Include="common\io\ioUtils.h" />
+    <ClInclude Include="common\io\nullOutputStream.h" />
+    <ClInclude Include="common\io\outputStream.h" />
+    <ClInclude Include="common\io\pc\consoleInputStream.h" />
+    <ClInclude Include="common\io\pc\consoleOutputStream.h" />
+    <ClInclude Include="common\io\pc\pinPc.h" />
+    <ClInclude Include="common\io\pin.h" />
+    <ClInclude Include="common\io\printTableWriter.h" />
+    <ClInclude Include="common\io\printWriter.h" />
+    <ClInclude Include="common\io\reader.h" />
+    <ClInclude Include="common\io\stream.h" />
+    <ClInclude Include="common\io\streamLink.h" />
+    <ClInclude Include="common\log\logger.h" />
+    <ClInclude Include="common\log\loggerDebug.h" />
+    <ClInclude Include="common\log\logHandler.h" />
+    <ClInclude Include="common\log\logHandlerList.h" />
+    <ClInclude Include="common\log\logLevel.h" />
+    <ClInclude Include="common\log\pc\consoleLogHandler.h" />
+    <ClInclude Include="common\math\bcdUtils.h" />
+    <ClInclude Include="common\math\bitList.h" />
+    <ClInclude Include="common\math\cenMath.h" />
+    <ClInclude Include="common\math\hexUtils.h" />
+    <ClInclude Include="common\math\random.h" />
+    <ClInclude Include="common\motor\pc\dualHBridgeMotorPc.h" />
+    <ClInclude Include="common\pc\file\fileUtils.h" />
+    <ClInclude Include="common\pc\pipe\pipeClientHelper.h" />
+    <ClInclude Include="common\pc\pipe\pipeServerHelper.h" />
+    <ClInclude Include="common\pc\process\processHelper.h" />
+    <ClInclude Include="common\pc\thread\threadHelper.h" />
+    <ClInclude Include="common\pwm\motor\dualHBridgeMotorPwm.h" />
+    <ClInclude Include="common\pwm\servo\pc\servoListPc.h" />
+    <ClInclude Include="common\pwm\servo\pc\servoPwmPc.h" />
+    <ClInclude Include="common\pwm\servo\servoList.h" />
+    <ClInclude Include="common\pwm\servo\servoPwm.h" />
+    <ClInclude Include="common\pwm\servo\servoPwmDebug.h" />
+    <ClInclude Include="common\sensor\current\current.h" />
+    <ClInclude Include="common\sensor\temperature\temperature.h" />
+    <ClInclude Include="common\serial\pc\serialPc.h" />
+    <ClInclude Include="common\serial\serial.h" />
+    <ClInclude Include="common\serial\serialInputInterrupt.h" />
+    <ClInclude Include="common\serial\serialLink.h" />
+    <ClInclude Include="common\serial\serialLinkDebug.h" />
+    <ClInclude Include="common\serial\serialLinkList.h" />
+    <ClInclude Include="common\serial\serialOutputStream.h" />
+    <ClInclude Include="common\system\system.h" />
+    <ClInclude Include="common\timer\cenTimer.h" />
+    <ClInclude Include="common\timer\delayTimer.h" />
+    <ClInclude Include="common\timer\timerDebug.h" />
+    <ClInclude Include="common\timer\timerInterrupt.h" />
+    <ClInclude Include="common\timer\timerList.h" />
+    <ClInclude Include="common\timer\timerSetup.h" />
+    <ClInclude Include="device\adc\adcDevice.h" />
+    <ClInclude Include="device\adc\adcDeviceInterface.h" />
+    <ClInclude Include="device\battery\batteryDevice.h" />
+    <ClInclude Include="device\battery\batteryDeviceInterface.h" />
+    <ClInclude Include="device\beacon\beaconReceiverDeviceInterface.h" />
+    <ClInclude Include="device\clock\clockDevice.h" />
+    <ClInclude Include="device\clock\clockDeviceInterface.h" />
+    <ClInclude Include="device\color\colorDevice.h" />
+    <ClInclude Include="device\color\colorDeviceInterface.h" />
+    <ClInclude Include="device\device.h" />
+    <ClInclude Include="device\deviceConstants.h" />
+    <ClInclude Include="device\deviceDebug.h" />
+    <ClInclude Include="device\deviceDescriptor.h" />
+    <ClInclude Include="device\deviceInterface.h" />
+    <ClInclude Include="device\deviceList.h" />
+    <ClInclude Include="device\deviceUsage.h" />
+    <ClInclude Include="device\dispatcher\dataDispatcherDevice.h" />
+    <ClInclude Include="device\dispatcher\dataDispatcherDeviceInterface.h" />
+    <ClInclude Include="device\dispatcher\deviceDataDispatcher.h" />
+    <ClInclude Include="device\eeprom\eepromDevice.h" />
+    <ClInclude Include="device\eeprom\eepromDeviceInterface.h" />
+    <ClInclude Include="device\gameboard\gameboardDevice.h" />
+    <ClInclude Include="device\gameboard\gameboardDeviceInterface.h" />
+    <ClInclude Include="device\i2c\i2cCommonDebugDevice.h" />
+    <ClInclude Include="device\i2c\i2cCommonDebugDeviceInterface.h" />
+    <ClInclude Include="device\i2c\master\i2cMasterDebugDevice.h" />
+    <ClInclude Include="device\i2c\master\i2cMasterDebugDeviceInterface.h" />
+    <ClInclude Include="device\i2c\multiplexer\multiplexerDevice.h" />
+    <ClInclude Include="device\i2c\multiplexer\multiplexerDeviceInterface.h" />
+    <ClInclude Include="device\i2c\slave\i2cSlaveDebugDevice.h" />
+    <ClInclude Include="device\i2c\slave\i2cSlaveDebugDeviceInterface.h" />
+    <ClInclude Include="device\ioExpander\ioExpanderDevice.h" />
+    <ClInclude Include="device\ioExpander\ioExpanderDeviceInterface.h" />
+    <ClInclude Include="device\io\ioDevice.h" />
+    <ClInclude Include="device\io\ioDeviceInterface.h" />
+    <ClInclude Include="device\lcd\lcdDevice.h" />
+    <ClInclude Include="device\lcd\lcdDeviceInterface.h" />
+    <ClInclude Include="device\led\ledDevice.h" />
+    <ClInclude Include="device\led\ledDeviceInterface.h" />
+    <ClInclude Include="device\log\logDevice.h" />
+    <ClInclude Include="device\log\logDeviceInterface.h" />
+    <ClInclude Include="device\motion\extended\extendedMotionDevice.h" />
+    <ClInclude Include="device\motion\extended\extendedMotionDeviceInterface.h" />
+    <ClInclude Include="device\motion\pid\pidDebugDevice.h" />
+    <ClInclude Include="device\motion\pid\pidDebugDeviceInterface.h" />
+    <ClInclude Include="device\motion\pid\pidDevice.h" />
+    <ClInclude Include="device\motion\pid\pidDeviceInterface.h" />
+    <ClInclude Include="device\motion\position\codersDevice.h" />
+    <ClInclude Include="device\motion\position\codersDeviceInterface.h" />
+    <ClInclude Include="device\motion\position\trajectoryDevice.h" />
+    <ClInclude Include="device\motion\position\trajectoryDeviceInterface.h" />
+    <ClInclude Include="device\motion\simple\motionDevice.h" />
+    <ClInclude Include="device\motion\simple\motionDeviceInterface.h" />
+    <ClInclude Include="device\motion\simulation\motionSimulationDevice.h" />
+    <ClInclude Include="device\motion\simulation\motionSimulationDeviceInterface.h" />
+    <ClInclude Include="device\motor\md22Device.h" />
+    <ClInclude Include="device\motor\md22DeviceInterface.h" />
+    <ClInclude Include="device\motor\pwmMotorDevice.h" />
+    <ClInclude Include="device\motor\pwmMotorDeviceInterface.h" />
+    <ClInclude Include="device\navigation\navigationDevice.h" />
+    <ClInclude Include="device\navigation\navigationDeviceInterface.h" />
+    <ClInclude Include="device\pc\pcDevice.h" />
+    <ClInclude Include="device\pc\pcDeviceInterface.h" />
+    <ClInclude Include="device\relay\relayDevice.h" />
+    <ClInclude Include="device\relay\relayDeviceInterface.h" />
+    <ClInclude Include="device\robot\fake\fakeRobotDevice.h" />
+    <ClInclude Include="device\robot\fake\fakeRobotDeviceInterface.h" />
+    <ClInclude Include="device\sensor\current\currentSensor.h" />
+    <ClInclude Include="device\sensor\current\currentSensorDevice.h" />
+    <ClInclude Include="device\sensor\current\currentSensorDeviceInterface.h" />
+    <ClInclude Include="device\sensor\temperature\temperatureSensor.h" />
+    <ClInclude Include="device\sensor\temperature\temperatureSensorDevice.h" />
+    <ClInclude Include="device\sensor\temperature\temperatureSensorDeviceInterface.h" />
+    <ClInclude Include="device\serial\serialDebugDevice.h" />
+    <ClInclude Include="device\serial\serialDebugDeviceInterface.h" />
+    <ClInclude Include="device\servo\servoDevice.h" />
+    <ClInclude Include="device\servo\servoDeviceInterface.h" />
+    <ClInclude Include="device\strategy\strategyDevice.h" />
+    <ClInclude Include="device\strategy\strategyDeviceInterface.h" />
+    <ClInclude Include="device\system\systemDevice.h" />
+    <ClInclude Include="device\system\systemDeviceInterface.h" />
+    <ClInclude Include="device\test\testDevice.h" />
+    <ClInclude Include="device\test\testDeviceInterface.h" />
+    <ClInclude Include="device\timer\timerDevice.h" />
+    <ClInclude Include="device\timer\timerDeviceInterface.h" />
+    <ClInclude Include="device\tof\tofDevice.h" />
+    <ClInclude Include="device\tof\tofDeviceInterface.h" />
+    <ClInclude Include="device\transmitMode.h" />
+    <ClInclude Include="drivers\battery\battery.h" />
+    <ClInclude Include="drivers\beacon\beaconReceiverDriver.h" />
+    <ClInclude Include="drivers\clock\pc\pcClock.h" />
+    <ClInclude Include="drivers\clock\softClock.h" />
+    <ClInclude Include="drivers\colorSensor\colorSensor.h" />
+    <ClInclude Include="drivers\colorSensor\colorSensorDebug.h" />
+    <ClInclude Include="drivers\colorSensor\pc\colorSensorPc.h" />
+    <ClInclude Include="drivers\dispatcher\dataDispatcherDeviceDriver.h" />
+    <ClInclude Include="drivers\dispatcher\driverDataDispatcher.h" />
+    <ClInclude Include="drivers\dispatcher\driverDataDispatcherDebug.h" />
+    <ClInclude Include="drivers\dispatcher\driverDataDispatcherList.h" />
+    <ClInclude Include="drivers\dispatcher\i2cDriverDataDispatcher.h" />
+    <ClInclude Include="drivers\dispatcher\localDriverDataDispatcher.h" />
+    <ClInclude Include="drivers\dispatcher\remoteDriverDataDispatcher.h" />
+    <ClInclude Include="drivers\driver.h" />
+    <ClInclude Include="drivers\driverList.h" />
+    <ClInclude Include="drivers\driverStreamListener.h" />
+    <ClInclude Include="drivers\driverTransmitter.h" />
+    <ClInclude Include="drivers\file\eeprom\eepromFile.h" />
+    <ClInclude Include="drivers\i2c\multiplexer\multiplexer.h" />
+    <ClInclude Include="drivers\i2c\multiplexer\multiplexerDebug.h" />
+    <ClInclude Include="drivers\i2c\multiplexer\multiplexerList.h" />
+    <ClInclude Include="drivers\i2c\multiplexer\multiplexerTca9548A.h" />
+    <ClInclude Include="drivers\i2c\multiplexer\pc\multiplexerPc.h" />
+    <ClInclude Include="drivers\i2c\multiplexer\tca9548A.h" />
+    <ClInclude Include="drivers\ioExpander\ioExpander.h" />
+    <ClInclude Include="drivers\ioExpander\ioExpanderList.h" />
+    <ClInclude Include="drivers\io\ioExpanderDebug.h" />
+    <ClInclude Include="drivers\io\pc\ioExpanderPc.h" />
+    <ClInclude Include="drivers\lcd\lcd.h" />
+    <ClInclude Include="drivers\led\led.h" />
+    <ClInclude Include="drivers\led\pc\ledPc.h" />
+    <ClInclude Include="drivers\relay\pc\relayPc.h" />
+    <ClInclude Include="drivers\relay\relay.h" />
+    <ClInclude Include="drivers\relay\relayDebug.h" />
+    <ClInclude Include="drivers\sensor\current\pc\currentPc.h" />
+    <ClInclude Include="drivers\sensor\temperature\pc\temperaturePc.h" />
+    <ClInclude Include="drivers\test\testDriver.h" />
+    <ClInclude Include="drivers\tof\pc\tofListDebugPc.h" />
+    <ClInclude Include="drivers\tof\pc\tofListPc.h" />
+    <ClInclude Include="drivers\tof\pc\tofPc.h" />
+    <ClInclude Include="drivers\tof\tof.h" />
+    <ClInclude Include="drivers\tof\tofDebug.h" />
+    <ClInclude Include="drivers\tof\tofDetectionUtils.h" />
+    <ClInclude Include="drivers\tof\tofList.h" />
+    <ClInclude Include="drivers\tof\tofListDebug.h" />
+    <ClInclude Include="drivers\tof\vl53l0x\vl53l0x_api.h" />
+    <ClInclude Include="drivers\tof\vl53l0x\vl53l0x_api_calibration.h" />
+    <ClInclude Include="drivers\tof\vl53l0x\vl53l0x_api_core.h" />
+    <ClInclude Include="drivers\tof\vl53l0x\vl53l0x_api_ranging.h" />
+    <ClInclude Include="drivers\tof\vl53l0x\vl53l0x_api_strings.h" />
+    <ClInclude Include="drivers\tof\vl53l0x\vl53l0x_def.h" />
+    <ClInclude Include="drivers\tof\vl53l0x\vl53l0x_device.h" />
+    <ClInclude Include="drivers\tof\vl53l0x\vl53l0x_i2c_platform.h" />
+    <ClInclude Include="drivers\tof\vl53l0x\vl53l0x_interrupt_threshold_settings.h" />
+    <ClInclude Include="drivers\tof\vl53l0x\vl53l0x_platform.h" />
+    <ClInclude Include="drivers\tof\vl53l0x\vl53l0x_platform_log.h" />
+    <ClInclude Include="drivers\tof\vl53l0x\vl53l0x_tuning.h" />
+    <ClInclude Include="drivers\tof\vl53l0x\vl53l0x_types.h" />
+    <ClInclude Include="main\mainBoard\mainBoardCommon.h" />
+    <ClInclude Include="main\mainBoard\mainBoardCommonTof.h" />
+    <ClInclude Include="main\mainBoard\mainBoardCommonTofPc.h" />
+    <ClInclude Include="main\mainBoard\mainBoardPc.h" />
+    <ClInclude Include="main\meca1\mechanicalMainBoard1Common.h" />
+    <ClInclude Include="main\meca1\mechanicalMainBoard1Pc.h" />
+    <ClInclude Include="main\motorboard\motorBoardCommon.h" />
+    <ClInclude Include="main\motorboard\motorBoardPc.h" />
+    <ClInclude Include="motion\extended\bspline.h" />
+    <ClInclude Include="motion\extended\bsplineCSVExport.h" />
+    <ClInclude Include="motion\extended\bsplineDebug.h" />
+    <ClInclude Include="motion\extended\bsplineMotion.h" />
+    <ClInclude Include="motion\extended\bsplinePersistence.h" />
+    <ClInclude Include="motion\motion.h" />
+    <ClInclude Include="motion\motionConstants.h" />
+    <ClInclude Include="motion\parameters\motionParameter.h" />
+    <ClInclude Include="motion\parameters\motionParameterDebug.h" />
+    <ClInclude Include="motion\parameters\motionParameterPersistence.h" />
+    <ClInclude Include="motion\parameters\motionParameterType.h" />
+    <ClInclude Include="motion\parameters\motionParameterTypeDebug.h" />
+    <ClInclude Include="motion\pid\alphaTheta.h" />
+    <ClInclude Include="motion\pid\computer\bSplinePidComputer.h" />
+    <ClInclude Include="motion\pid\computer\pidComputer.h" />
+    <ClInclude Include="motion\pid\computer\simplePidComputer.h" />
+    <ClInclude Include="motion\pid\detectedMotionType.h" />
+    <ClInclude Include="motion\pid\endDetection\blocked\motionBlockedDetection.h" />
+    <ClInclude Include="motion\pid\endDetection\failed\motionFailedDetection.h" />
+    <ClInclude Include="motion\pid\endDetection\motionEndDetection.h" />
+    <ClInclude Include="motion\pid\endDetection\motionEndDetectionDebug.h" />
+    <ClInclude Include="motion\pid\endDetection\motionEndDetectionStatusUpdater.h" />
+    <ClInclude Include="motion\pid\endDetection\obstacle\motionObstacleDetection.h" />
+    <ClInclude Include="motion\pid\endDetection\parameters\motionEndDetectionParameter.h" />
+    <ClInclude Include="motion\pid\endDetection\parameters\motionEndDetectionParameterPersistence.h" />
+    <ClInclude Include="motion\pid\endDetection\reached\motionReachedDetection.h" />
+    <ClInclude Include="motion\pid\endDetection\shocked\motionShockedDetection.h" />
+    <ClInclude Include="motion\pid\instructionType.h" />
+    <ClInclude Include="motion\pid\motionInstruction.h" />
+    <ClInclude Include="motion\pid\motionInstructionDebug.h" />
+    <ClInclude Include="motion\pid\parameters\pidGlobalParameters.h" />
+    <ClInclude Include="motion\pid\parameters\pidParameter.h" />
+    <ClInclude Include="motion\pid\parameters\pidParameterDebug.h" />
+    <ClInclude Include="motion\pid\parameters\pidParameterPersistence.h" />
+    <ClInclude Include="motion\pid\pc\pidPc.h" />
+    <ClInclude Include="motion\pid\pid.h" />
+    <ClInclude Include="motion\pid\pidComputationInstructionValues.h" />
+    <ClInclude Include="motion\pid\pidComputationInstructionValuesDebug.h" />
+    <ClInclude Include="motion\pid\pidComputationValues.h" />
+    <ClInclude Include="motion\pid\pidConstants.h" />
+    <ClInclude Include="motion\pid\pidMotion.h" />
+    <ClInclude Include="motion\pid\pidMotionDefinitionState.h" />
+    <ClInclude Include="motion\pid\pidMotionType.h" />
+    <ClInclude Include="motion\pid\pidTimer.h" />
+    <ClInclude Include="motion\pid\pidType.h" />
+    <ClInclude Include="motion\pid\pidTypeDebug.h" />
+    <ClInclude Include="motion\pid\pidTypeOptimizer.h" />
+    <ClInclude Include="motion\pid\profileType.h" />
+    <ClInclude Include="motion\pid\profile\pidMotionProfileComputer.h" />
+    <ClInclude Include="motion\pid\profile\profileType.h" />
+    <ClInclude Include="motion\position\coderErrorComputer.h" />
+    <ClInclude Include="motion\position\coders.h" />
+    <ClInclude Include="motion\position\codersDebug.h" />
+    <ClInclude Include="motion\position\trajectory.h" />
+    <ClInclude Include="motion\position\trajectoryDebug.h" />
+    <ClInclude Include="motion\position\trajectoryTypeDebug.h" />
+    <ClInclude Include="motion\simple\motionCalibration.h" />
+    <ClInclude Include="motion\simple\simpleMotion.h" />
+    <ClInclude Include="motion\simulation\motionSimulation.h" />
+    <ClInclude Include="navigation\location.h" />
+    <ClInclude Include="navigation\locationDebug.h" />
+    <ClInclude Include="navigation\locationList.h" />
+    <ClInclude Include="navigation\locationListComputer.h" />
+    <ClInclude Include="navigation\locationListDebug.h" />
+    <ClInclude Include="navigation\navigation.h" />
+    <ClInclude Include="navigation\navigationComputer.h" />
+    <ClInclude Include="navigation\navigationDebug.h" />
+    <ClInclude Include="navigation\outgoingPath.h" />
+    <ClInclude Include="navigation\outgoingPathList.h" />
+    <ClInclude Include="navigation\path.h" />
+    <ClInclude Include="navigation\pathDebug.h" />
+    <ClInclude Include="navigation\pathList.h" />
+    <ClInclude Include="navigation\pathListDebug.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="robot\2020\arm\arm2020.h" />
+    <ClInclude Include="robot\2020\arm\armDevice2020.h" />
+    <ClInclude Include="robot\2020\arm\armDeviceInterface2020.h" />
+    <ClInclude Include="robot\2020\bigRobot\bigRobotActions2020.h" />
+    <ClInclude Include="robot\2020\bigRobot\bigRobotLocation2020.h" />
+    <ClInclude Include="robot\2020\bigRobot\bigRobotPath2020.h" />
+    <ClInclude Include="robot\2020\bigRobot\bigRobotStrategy2020.h" />
+    <ClInclude Include="robot\2020\commonRobot\commonRobotActions2020.h" />
+    <ClInclude Include="robot\2020\commonRobot\commonRobotLocations2020.h" />
+    <ClInclude Include="robot\2020\gameboard\gameBoardElement2020.h" />
+    <ClInclude Include="robot\2020\mainBoard2020.h" />
+    <ClInclude Include="robot\2020\navigation\angle2020.h" />
+    <ClInclude Include="robot\2020\navigation\location2020.h" />
+    <ClInclude Include="robot\2020\navigation\path2020.h" />
+    <ClInclude Include="robot\2020\smallRobot\smallRobotActions2020.h" />
+    <ClInclude Include="robot\2020\smallRobot\smallRobotLocation2020.h" />
+    <ClInclude Include="robot\2020\smallRobot\smallRobotPath2020.h" />
+    <ClInclude Include="robot\2020\smallRobot\smallRobotStrategy2020.h" />
+    <ClInclude Include="robot\2020\strategy\score2020.h" />
+    <ClInclude Include="robot\2020\strategy\strategy2020.h" />
+    <ClInclude Include="robot\2020\strategy\strategy2020Utils.h" />
+    <ClInclude Include="robot\2020\strategy\strategyConfig2020.h" />
+    <ClInclude Include="robot\2020\strategy\teamColor2020.h" />
+    <ClInclude Include="robot\config\pc\robotConfigPc.h" />
+    <ClInclude Include="robot\config\robotConfig.h" />
+    <ClInclude Include="robot\config\robotConfigDebug.h" />
+    <ClInclude Include="robot\config\robotConfigDevice.h" />
+    <ClInclude Include="robot\config\robotConfigDeviceInterface.h" />
+    <ClInclude Include="robot\fake\fakeRobot.h" />
+    <ClInclude Include="robot\gameboard\gameboard.h" />
+    <ClInclude Include="robot\gameboard\gameboardBSplinePrint.h" />
+    <ClInclude Include="robot\gameboard\gameboardElement.h" />
+    <ClInclude Include="robot\gameboard\gameboardElementList.h" />
+    <ClInclude Include="robot\kinematics\robotKinematics.h" />
+    <ClInclude Include="robot\kinematics\robotKinematicsDebug.h" />
+    <ClInclude Include="robot\kinematics\robotKinematicsDevice.h" />
+    <ClInclude Include="robot\kinematics\robotKinematicsDeviceInterface.h" />
+    <ClInclude Include="robot\kinematics\robotKinematicsPersistence.h" />
+    <ClInclude Include="robot\match\endMatch.h" />
+    <ClInclude Include="robot\match\endMatchDebug.h" />
+    <ClInclude Include="robot\match\endMatchDetectorDevice.h" />
+    <ClInclude Include="robot\match\endMatchDetectorDeviceInterface.h" />
+    <ClInclude Include="robot\match\pc\startMatchDetectorPc.h" />
+    <ClInclude Include="robot\match\startMatch.h" />
+    <ClInclude Include="robot\match\startMatchDebug.h" />
+    <ClInclude Include="robot\match\startMatchDetector.h" />
+    <ClInclude Include="robot\match\startMatchDeviceInterface.h" />
+    <ClInclude Include="robot\robot.h" />
+    <ClInclude Include="robot\robotConstants.h" />
+    <ClInclude Include="robot\robotType.h" />
+    <ClInclude Include="robot\robotTypeDebug.h" />
+    <ClInclude Include="robot\strategy\factor\composedGainFactor.h" />
+    <ClInclude Include="robot\strategy\factor\distanceGainFactor.h" />
+    <ClInclude Include="robot\strategy\factor\gainFactor.h" />
+    <ClInclude Include="robot\strategy\factor\opponentRobotGainFactor.h" />
+    <ClInclude Include="robot\strategy\factor\timeGainFactor.h" />
+    <ClInclude Include="robot\strategy\gameStrategy.h" />
+    <ClInclude Include="robot\strategy\gameStrategyCollisionHandler.h" />
+    <ClInclude Include="robot\strategy\gameStrategyContext.h" />
+    <ClInclude Include="robot\strategy\gameStrategyContextDebug.h" />
+    <ClInclude Include="robot\strategy\gameStrategyDebug.h" />
+    <ClInclude Include="robot\strategy\gameStrategyHandler.h" />
+    <ClInclude Include="robot\strategy\gameStrategyMotionHandler.h" />
+    <ClInclude Include="robot\strategy\gameStrategyItem.h" />
+    <ClInclude Include="robot\strategy\gameStrategyList.h" />
+    <ClInclude Include="robot\strategy\gameStrategyListDebug.h" />
+    <ClInclude Include="robot\strategy\gameStrategyOutsidePathHandler.h" />
+    <ClInclude Include="robot\strategy\gameStrategyPositionHandler.h" />
+    <ClInclude Include="robot\strategy\gameTarget.h" />
+    <ClInclude Include="robot\strategy\gameTargetAction.h" />
+    <ClInclude Include="robot\strategy\gameTargetActionDebug.h" />
+    <ClInclude Include="robot\strategy\gameTargetActionItem.h" />
+    <ClInclude Include="robot\strategy\gameTargetActionItemDebug.h" />
+    <ClInclude Include="robot\strategy\gameTargetActionItemList.h" />
+    <ClInclude Include="robot\strategy\gameTargetActionList.h" />
+    <ClInclude Include="robot\strategy\gameTargetActionListDebug.h" />
+    <ClInclude Include="robot\strategy\gameTargetList.h" />
+    <ClInclude Include="robot\strategy\gameTargetListDebug.h" />
+    <ClInclude Include="robot\strategy\gameTargetStatus.h" />
+    <ClInclude Include="robot\strategy\nextGameStrategyItemComputer.h" />
+    <ClInclude Include="robot\strategy\teamColor.h" />
+    <ClInclude Include="robot\tof\strategyTofSensorList.h" />
+    <ClInclude Include="test\allTests.h" />
+    <ClInclude Include="test\common\2d\2dTest.h" />
+    <ClInclude Include="test\common\eeprom\memoryEepromTest.h" />
+    <ClInclude Include="test\common\io\bufferTest.h" />
+    <ClInclude Include="test\common\io\compositeOutputStreamTest.h" />
+    <ClInclude Include="test\common\io\filterTest.h" />
+    <ClInclude Include="test\common\io\ioUtilsTest.h" />
+    <ClInclude Include="test\common\io\printWriterTest.h" />
+    <ClInclude Include="test\common\io\readerTest.h" />
+    <ClInclude Include="test\common\math\bcdUtilsTest.h" />
+    <ClInclude Include="test\common\math\bitListTest.h" />
+    <ClInclude Include="test\common\math\cenMathTest.h" />
+    <ClInclude Include="test\common\math\hexUtilsTest.h" />
+    <ClInclude Include="test\device\system\systemDeviceTest.h" />
+    <ClInclude Include="test\drivers\dispatchers\driverDataDispatcherListTest.h" />
+    <ClInclude Include="test\drivers\test\testDriverTest.h" />
+    <ClInclude Include="test\motion\bspline\bsplineListTest.h" />
+    <ClInclude Include="test\navigation\locationListTest.h" />
+    <ClInclude Include="test\navigation\navigationTest.h" />
+    <ClInclude Include="test\navigation\pathListTest.h" />
+    <ClInclude Include="test\unity\unity.h" />
+    <ClInclude Include="test\unity\unity_internals.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="cen-electronic-console.rc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
 </Project>

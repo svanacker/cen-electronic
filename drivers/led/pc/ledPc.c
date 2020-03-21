@@ -21,7 +21,7 @@ bool ledArrayInitPc(LedArray* ledArray) {
  * PC Implementation Write the color (RGB) value of the specified led.
  * @param ledIndex the index of the led
  */
-void ledArrayWriteValuePc(LedArray* ledArray, unsigned int ledIndex, unsigned char R, unsigned char G, unsigned char B) {
+void ledArrayWriteValuePc(LedArray* ledArray, unsigned int ledIndex, unsigned int R, unsigned int G, unsigned int B) {
     appendStringAndDecLN(getInfoOutputStreamLogger(), "R=", R);
     appendStringAndDecLN(getInfoOutputStreamLogger(), "G=", G);
     appendStringAndDecLN(getInfoOutputStreamLogger(), "B=", B);

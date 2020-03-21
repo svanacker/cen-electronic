@@ -48,11 +48,11 @@ void deviceLedHandleRawData(unsigned char commandHeader, InputStream* inputStrea
         LedArray* ledArray = getLedArrayFromDeviceDescriptor();
         unsigned char ledIndex = readHex2(inputStream);
         checkIsSeparator(inputStream);
-        unsigned char r = readHex2(inputStream);
+        unsigned int r = readHex2(inputStream);
         checkIsSeparator(inputStream);
-        unsigned char g = readHex2(inputStream);
+        unsigned int g = readHex2(inputStream);
         checkIsSeparator(inputStream);
-        unsigned char b = readHex2(inputStream);
+        unsigned int b = readHex2(inputStream);
         ledArray->ledArrayWriteValue(ledArray, ledIndex, r, g, b);
     }
 }
